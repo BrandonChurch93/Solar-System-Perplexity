@@ -1,9 +1,33 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T12:14:57.110Z",
+ "pushed": "2026-11-23T12:32:01.276Z",
  "head": "b6bd73037752f5000f0aa3dd22320e5b44aadb86",
- "note": "M2 state: S2 top down sheet with far fill, rise plates without hole, horizon band diagnosis; commit b6bd7303",
+ "note": "far wash on the globe side: gap tone matched within 0.04, second horizon and comb remain; consecutive frames rendering",
  "looks": [
+  {
+   "time": "2026-11-23T12:32:00.626Z",
+   "file": "20261123123200626-note-w4-zoom.jpg",
+   "source": "out/work/mercury/place/tmp/w4-zoom.jpg",
+   "kind": "note",
+   "label": "rejected try w4: bright smooth rim reads as air",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T12:32:00.035Z",
+   "file": "20261123123200035-note-w3-zoom.jpg",
+   "source": "out/work/mercury/place/tmp/w3-zoom.jpg",
+   "kind": "note",
+   "label": "far wash, horizon at 740 and 996 three times enlarged: second horizon, comb",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T12:31:59.446Z",
+   "file": "20261123123159446-note-w3.jpg",
+   "source": "out/work/mercury/place/tmp/w3.jpg",
+   "kind": "note",
+   "label": "far wash, w3: 728 736 740 742 992 996 998 1000 1004 draft",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-23T12:14:56.499Z",
    "file": "20261123121456499-note-B34r2-view.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/mercury/place/tmp/r7-rise-T.jpg",
    "kind": "note",
    "label": "rise 989 990 991 994 996 998 larger",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T11:55:58.076Z",
-   "file": "20261123115558076-note-r7-d.jpg",
-   "source": "out/work/mercury/place/tmp/r7-d.jpg",
-   "kind": "note",
-   "label": "rise draft 1020 to 1035",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T11:55:57.520Z",
-   "file": "20261123115557520-note-r7-c.jpg",
-   "source": "out/work/mercury/place/tmp/r7-c.jpg",
-   "kind": "note",
-   "label": "rise draft 996 to 1016: wrong: dark band along the horizon 992 to 1000 (ground beyond the horizon of the place picture)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T11:55:56.977Z",
-   "file": "20261123115556977-note-r7-b.jpg",
-   "source": "out/work/mercury/place/tmp/r7-b.jpg",
-   "kind": "note",
-   "label": "rise first render, draft 960 to 994, T at 990 (rise plates made by code from the rise view): 989 990 991 one picture",
    "stop": "mercury"
   }
  ]
