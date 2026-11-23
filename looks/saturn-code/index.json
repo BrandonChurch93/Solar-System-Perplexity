@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T09:14:10.382Z",
+ "pushed": "2026-11-23T09:34:11.818Z",
  "head": "747239c3f31a605973e98434b323e0e17c7cb488",
- "note": "ice near the camera: grains in the sheet on Kepler rows, first pass, raised ice with parallax next",
+ "note": "ice: stones as lit balls with shadows, on the sheet and on levels above it for parallax; motion proof next",
  "looks": [
+  {
+   "time": "2026-11-23T09:34:11.262Z",
+   "file": "20261123093411262-note-look_ice2_nearleft.jpg",
+   "source": "../../../../tmp/v/look_ice2_nearleft.png",
+   "kind": "note",
+   "label": "near left at native size, approved beside the film: stones and grain, second pass (A ring still too lilac and too flat)"
+  },
+  {
+   "time": "2026-11-23T09:34:10.609Z",
+   "file": "20261123093410609-note-look_3720_ice2.jpg",
+   "source": "../../../../tmp/v/look_3720_ice2.png",
+   "kind": "note",
+   "label": "3720 draft: stones of ice from code, resting on the sheet and floating on levels above it, each with its shadow; grain as relief"
+  },
   {
    "time": "2026-11-23T09:14:09.798Z",
    "file": "20261123091409798-note-look_ice1_nearleft.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/v/pair_mid.png",
    "kind": "note",
    "label": "3720 mid field at native size, approved close beside ladder three"
-  },
-  {
-   "time": "2026-11-23T08:30:01.486Z",
-   "file": "20261123083001486-note-pair_nearleft.jpg",
-   "source": "../../../../tmp/v/pair_nearleft.png",
-   "kind": "note",
-   "label": "3720 near left at native size, approved close beside ladder three: mine too smooth and too coloured, measured by band (band_energy.py)"
-  },
-  {
-   "time": "2026-11-23T08:18:43.712Z",
-   "file": "20261123081843712-note-hold3.jpg",
-   "source": "../../../../tmp/v/hold3.jpg",
-   "kind": "note",
-   "label": "hold 3465: approved hero, kept build on main, code scene now (red shadow edge and pale A ring are faults to mend)"
   }
  ]
 }
