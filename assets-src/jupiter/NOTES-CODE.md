@@ -37,3 +37,30 @@ Judging: R1 compares 3150 with the approved image region by region (composition,
 - The storm on the hold globe (hero pixels in the wrap): lon -17.5, lat -10, half axes about 13.2 x 7.9 degrees. So the globe's storm is about 35 times larger than the close view's storm at the close view's horizon. One scale cannot serve both: this is the main design question (see "Design").
 - Sun at the hold: sunDir (-0.744, 0.140, 0.653) in the set frame, n.l at the storm about 0.81. The close image has a low raking Sun from the upper left and a terminator at the lower right.
 - Engine: the terrain view is drawn in a frame with its origin at the spot on the unit sphere and axes (right, normal, -heading), camera relative (`set.world.position = origin - camera`). Poses of `plan.terrain()` are in that frame.
+
+## Measured on this VM (2026-11-23, 06:50 UTC)
+
+Software WebGL cost, full 1920 x 1080 frame, nanoseconds per pixel per loop pass (bench outside the repo):
+- empty loop 0.7; `textureLod` bilinear 5.7 to 7.3 at level 0, about 4 at level 2.5; trilinear 7 to 11; `textureGrad` 16 to 27 (avoid, compute the level by hand).
+- hash value noise in arithmetic 2.8 to 3.2, cheaper than a fetch.
+- 6 s per sample is about 2900 ns per pixel, about 4400 ns per ground pixel. A march of about 100 steps per pixel is affordable.
+- `npm run build` 5 s. A draft still of 3150 on the frozen build: 20.6 s.
+
+## Geometry of the close view (tool `deck/geom.py`)
+
+- The terrain frame is the camera frame of the approved image at the fit: camera at the origin at mid shutter of 3150, identity quaternion, looking down -z, x right, y up.
+- Nadir in that frame (-0.2722, -0.8852, -0.3772). Planet centre C = nadir x (R + 1), R = 331.946 units, camera height 1 unit. 1 unit = 0.1725 degrees on the sphere. Horizon 25.8 units away.
+- Close image 2816 x 1584, focal 1267.46 px (864 px at 1080p). Storm centre px (1132, 552).
+- Chart: origin S = the point of the sphere under the storm pixel (3.957 units from the camera), en = up at S, ey = the ground direction of the ray to S, ex = right. Camera in the chart: (0, -3.834), height 1.
+- Ground under the frame corners: bottom centre (0.39, -3.15), bottom left (-0.57, -3.18), bottom right (2.28, -3.07), frame centre (0.65, -1.43).
+- Height over the sphere of a chart point p (no cancellation): h = (2 R z + x^2 + y^2 + z^2) / (sqrt(R^2 + 2 R z + |p|^2) + R).
+
+## Design (07:10 UTC, to be tested at M1)
+
+Deck = a height field on the sphere, marched per pixel in the chart, camera relative. No mesh, no plate projected from a camera.
+- A tool in `assets-src/jupiter/deck/` makes the coarse fields over the chart (colour without the light, cloud top height, masks for where towers stand and where the deck is combed, a stream function). Two candidates through the same shader: A fields from functions alone, B fields laid back from the approved image at the scale it truly resolves, the outside and the far part by code.
+- Everything finer than the fields comes from functions in the shader, made down to the pixel footprint: billow octaves for cloud tops (real height, they are marched), stripes along the streamlines for the combed parts.
+- Light is live: albedo x a curve over the Sun's height on the true sphere (so the terminator lies across the view) x the shading and the shadows of the marched tops. The Sun can then ramp over the dive (Part B).
+- The limb, the haze toward it and the thin blue line come from the shader; the stars from the engine's sky patch as before.
+- Flight: level, at constant height over the sphere, forward along a gentle left arc round the storm (the image is banked left), pose equal to the fit at mid shutter of 3150.
+- G13: the texels view will report the finest generated octave per pixel, counted. To be said at M2.
