@@ -1,64 +1,64 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T19:05:43.322Z",
+ "pushed": "2026-11-23T19:46:00.014Z",
  "head": "a284d546da297bf99fcb54429cdd9e8cafa90267",
- "note": "READY a284d54: one look from far to near, the globe's fine bands from functions; proofs",
+ "note": "round 2: new rise path (lift and pull back as one move, no stall), chunks tried whiter as ice; drafts, not committed yet",
  "looks": [
   {
-   "time": "2026-11-23T18:59:28.664Z",
-   "file": "20261123185928664-note-b_3815.jpg",
-   "source": "../../../../tmp/v/r12/b_3815.png",
+   "time": "2026-11-23T19:45:30.990Z",
+   "file": "20261123194530990-note-c_white_zoom.jpg",
+   "source": "../../../../tmp/v/r17/c_white_zoom.png",
    "kind": "note",
-   "label": "3815 draft, closest pass to the globe"
+   "label": "chunk bodies zoomed, before and after, over the globe and over the C ring"
   },
   {
-   "time": "2026-11-23T18:59:27.975Z",
-   "file": "20261123185927975-note-b_3866.jpg",
-   "source": "../../../../tmp/v/r12/b_3866.png",
+   "time": "2026-11-23T19:45:30.409Z",
+   "file": "20261123194530409-note-c_white.jpg",
+   "source": "../../../../tmp/v/r17/c_white.png",
    "kind": "note",
-   "label": "3866 draft, rise"
+   "label": "chunks at 3808, before left and whiter ice right"
   },
   {
-   "time": "2026-11-23T18:59:27.403Z",
-   "file": "20261123185927403-note-c_3780.jpg",
-   "source": "../../../../tmp/v/r12/c_3780.png",
+   "time": "2026-11-23T19:45:29.840Z",
+   "file": "20261123194529840-note-cGlobe.jpg",
+   "source": "../../../../tmp/v/r15/cGlobe.png",
    "kind": "note",
-   "label": "3780 draft native crop, the globe near the lens with streaks from functions"
+   "label": "new rise path, globe at 3824 at native size, still soft"
   },
   {
-   "time": "2026-11-23T18:59:26.725Z",
-   "file": "20261123185926725-note-b_3720.jpg",
-   "source": "../../../../tmp/v/r12/b_3720.png",
+   "time": "2026-11-23T19:45:29.213Z",
+   "file": "20261123194529213-note-cMoon.jpg",
+   "source": "../../../../tmp/v/r15/cMoon.png",
    "kind": "note",
-   "label": "3720 draft, one look from far to near"
+   "label": "new rise path, the moon rising over the limb 3856 to 3859"
   },
   {
-   "time": "2026-11-23T18:59:26.120Z",
-   "file": "20261123185926120-note-fine_3820.jpg",
-   "source": "../../../../tmp/v/r12/fine_3820.png",
+   "time": "2026-11-23T19:45:28.495Z",
+   "file": "20261123194528495-note-cA.jpg",
+   "source": "../../../../tmp/v/r15/cA.png",
    "kind": "note",
-   "label": "3820 nograin native crop of the globe: map alone, with the functions"
+   "label": "new rise path, near sheet at native size 3812 to 3823"
   },
   {
-   "time": "2026-11-23T18:59:25.476Z",
-   "file": "20261123185925476-note-fine_3810.jpg",
-   "source": "../../../../tmp/v/r12/fine_3810.png",
+   "time": "2026-11-23T19:45:27.544Z",
+   "file": "20261123194527544-note-s5.jpg",
+   "source": "../../../../tmp/v/r15/s5.png",
    "kind": "note",
-   "label": "3810 nograin native crop of the globe: map alone, with the functions"
+   "label": "new rise path, drafts 3808 to 3823 every frame, where the old path stalled"
   },
   {
-   "time": "2026-11-23T18:59:24.865Z",
-   "file": "20261123185924865-note-proof2_2.jpg",
-   "source": "../../../../tmp/v/r8/proof2_2.png",
+   "time": "2026-11-23T19:45:26.905Z",
+   "file": "20261123194526905-note-s4.jpg",
+   "source": "../../../../tmp/v/r15/s4.png",
    "kind": "note",
-   "label": "point 2 proof: new above, f06bc5c below, 3620 3625 3630 draft"
+   "label": "new rise path, drafts 3864, 3870, 3876, 3882"
   },
   {
-   "time": "2026-11-23T18:59:24.262Z",
-   "file": "20261123185924262-note-proof2_1.jpg",
-   "source": "../../../../tmp/v/r8/proof2_1.png",
+   "time": "2026-11-23T19:45:26.256Z",
+   "file": "20261123194526256-note-s3.jpg",
+   "source": "../../../../tmp/v/r15/s3.png",
    "kind": "note",
-   "label": "point 2 proof: new above, f06bc5c below, 3605 3610 3615 draft"
+   "label": "new rise path, drafts 3840, 3846, 3852, 3858"
   }
  ]
 }
