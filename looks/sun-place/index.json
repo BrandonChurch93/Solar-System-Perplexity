@@ -1,9 +1,31 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T17:37:27.749Z",
- "head": "76efaddc6fbd213f380a09dd5b085472d1431cec",
- "note": "76efaddc: handover report every part exit 0, hold bytes kept; G13 and G5/G17 running; still wrong: ground pool at the left foot in the release 99 px wide against 27 approved",
+ "pushed": "2026-11-23T18:03:59.689Z",
+ "head": "0158d376eecbd925e67cc3a163162e17dcccd2b9",
+ "note": "sun: left foot pool in the release, parts taken apart at frame 8 (ground cap, launch, surge)",
  "looks": [
+  {
+   "time": "2026-11-23T18:03:59.069Z",
+   "file": "20261123180359069-note-w8-foot.jpg",
+   "source": "out/work/sun/life/v/w8-foot.jpg",
+   "kind": "note",
+   "label": "left foot at frame 8, draft, twice native with near white mask: before, ground light capped, launch off, surge off",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T17:47:35.220Z",
+   "file": "20261123174735220-job-frame-00000.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "sun.terrain frame 0, final tier, nograin view, from the running measure job",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 0,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
   {
    "time": "2026-11-23T17:37:26.512Z",
    "file": "20261123173726512-note-q-footrow.jpg",
@@ -27,20 +49,6 @@
    "kind": "note",
    "label": "76efaddc, draft: rise every frame 180 to 191",
    "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T17:36:38.021Z",
-   "file": "20261123173638021-job-frame-00000.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "sun.terrain frame 0, draft tier, texels view, from the running measure job",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 0,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
   },
   {
    "time": "2026-11-23T17:36:08.678Z",
@@ -76,18 +84,6 @@
    "segment": "sun.rise",
    "first": 204,
    "last": 215,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T17:34:59.410Z",
-   "file": "20261123173459410-sheet-sun-rise-draft-across.jpg",
-   "source": "out/work/handover/sun-rise-draft-across.png",
-   "kind": "sheet",
-   "label": "sun rise, every frame 210 to 221 (across T, frame 216), draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "first": 210,
-   "last": 221,
    "tier": "draft"
   }
  ]
