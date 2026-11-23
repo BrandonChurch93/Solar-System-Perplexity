@@ -1,9 +1,76 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T16:07:23.435Z",
- "head": "c2524de5bd9440329d7d2c096f151342019c649d",
- "note": "Sun: handover report of the rise passes with the pixel sight cure (side mean 0.004, p99 1; flow gap 0.081 px); hold 270, 271, 300, 330, 449 and surface 0, 60, 90, 120, 179 byte equal; 360 final equals the kept still; G13 and G5 G17 running",
+ "pushed": "2026-11-23T16:29:08.887Z",
+ "head": "944bf37747ea517cc7b0f2b31228f2aaf664b0c8",
+ "note": "Sun: 944bf377 named as the cure of the side difference at T (full handover report passes after the merge of main 3974ce7e; G5 G17 at the final tier running). Next: mail 296 points 1 to 3",
  "looks": [
+  {
+   "time": "2026-11-23T16:29:07.399Z",
+   "file": "20261123162907399-note-ho-top.jpg",
+   "source": "out/work/sun/life/v/ho-top.png",
+   "kind": "note",
+   "label": "Sun rise from straight above the place, globe side alone, 269 down to 216 (handover tool, draft), commit 944bf377",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T16:27:15.043Z",
+   "file": "20261123162715043-sheet-sun-rise-top.jpg",
+   "source": "out/work/handover/sun-rise-top.png",
+   "kind": "sheet",
+   "label": "sun rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 216), place picture off, draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "first": 216,
+   "last": 269,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T16:26:11.221Z",
+   "file": "20261123162611221-sheet-sun-rise-draft-after.jpg",
+   "source": "out/work/handover/sun-rise-draft-after.png",
+   "kind": "sheet",
+   "label": "sun rise, every frame 217 to 228 (after T, frame 216), draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "first": 217,
+   "last": 228,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T16:26:09.341Z",
+   "file": "20261123162609341-sheet-sun-rise-draft-before.jpg",
+   "source": "out/work/handover/sun-rise-draft-before.png",
+   "kind": "sheet",
+   "label": "sun rise, every frame 204 to 215 (before T, frame 216), draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "first": 204,
+   "last": 215,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T16:26:07.421Z",
+   "file": "20261123162607421-sheet-sun-rise-draft-across.jpg",
+   "source": "out/work/handover/sun-rise-draft-across.png",
+   "kind": "sheet",
+   "label": "sun rise, every frame 210 to 221 (across T, frame 216), draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "first": 210,
+   "last": 221,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T16:16:39.318Z",
+   "file": "20261123161639318-compare-sun-rise-sides.jpg",
+   "source": "out/work/handover/sun-rise-sides.png",
+   "kind": "compare",
+   "label": "sun rise, both sides at T (frame 216) and their difference times 8",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 216,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-23T16:07:22.246Z",
    "file": "20261123160722246-note-ho-sides.jpg",
@@ -19,82 +86,6 @@
    "kind": "note",
    "label": "Sun rise, handover tool sheet across T (210 to 221), draft, pixel sight cure (uncommitted): report passes, side difference mean 0.004 p99 1, flow gap mean 0.081 px",
    "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T16:06:43.738Z",
-   "file": "20261123160643738-job-frame-00000.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "sun.terrain frame 0, draft tier, texels view, from the running measure job",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 0,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-23T16:06:13.695Z",
-   "file": "20261123160613695-frame-f360-final.jpg",
-   "source": "out/work/sun/life/f360-final.png",
-   "kind": "frame",
-   "label": "sun.hold frame 360, final tier",
-   "stop": "sun",
-   "segment": "sun.hold",
-   "frame": 360,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "3c1375ab69256384"
-  },
-  {
-   "time": "2026-11-23T15:59:29.614Z",
-   "file": "20261123155929614-sheet-sun-rise-top.jpg",
-   "source": "out/work/handover/sun-rise-top.png",
-   "kind": "sheet",
-   "label": "sun rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 216), place picture off, draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "first": 216,
-   "last": 269,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T15:58:26.791Z",
-   "file": "20261123155826791-sheet-sun-rise-draft-after.jpg",
-   "source": "out/work/handover/sun-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "sun rise, every frame 217 to 228 (after T, frame 216), draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "first": 217,
-   "last": 228,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T15:58:24.943Z",
-   "file": "20261123155824943-sheet-sun-rise-draft-before.jpg",
-   "source": "out/work/handover/sun-rise-draft-before.png",
-   "kind": "sheet",
-   "label": "sun rise, every frame 204 to 215 (before T, frame 216), draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "first": 204,
-   "last": 215,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T15:58:22.988Z",
-   "file": "20261123155822988-sheet-sun-rise-draft-across.jpg",
-   "source": "out/work/handover/sun-rise-draft-across.png",
-   "kind": "sheet",
-   "label": "sun rise, every frame 210 to 221 (across T, frame 216), draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "first": 210,
-   "last": 221,
-   "tier": "draft"
   }
  ]
 }
