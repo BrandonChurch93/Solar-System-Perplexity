@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T19:19:34.049Z",
+ "pushed": "2026-11-23T19:48:41.658Z",
  "head": "488113e897506b4a508c1712072eb4c497be1b9a",
- "note": "batch A trial: rim falloff and ring arcs at 5006; plate fault under the eye found, not cured",
+ "note": "issue 10 and item 7 traced to the sky turn of the dive; hole trial dropped; a later turn is on test",
  "looks": [
+  {
+   "time": "2026-11-23T19:48:40.969Z",
+   "file": "20261123194840969-note-h-ur.jpg",
+   "source": "../../../../tmp/h-ur.png",
+   "kind": "note",
+   "label": "Item 7 found: the warm grainy patch at the limb at 4707 is the film's own band, brought in by the sky turn of the dive; right column is a dimming trial (draft, native crops)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T19:48:40.352Z",
+   "file": "20261123194840352-note-h-sun.jpg",
+   "source": "../../../../tmp/h-sun.png",
+   "kind": "note",
+   "label": "Trial, dropped: a hole in the hold plate at its Sun through the dive leaves a dark disc in the stars (draft, 4682 to 4700, native crop upper right)",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-23T19:19:33.453Z",
    "file": "20261123191933453-note-f4996-eye.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/a4707.jpg",
    "kind": "note",
    "label": "batch A trial: 4707 with dive rampIn 0.5 (slower start), draft",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T18:58:34.088Z",
-   "file": "20261123185834088-note-ring5006-4x.jpg",
-   "source": "../../../../tmp/ring5006-4x.png",
-   "kind": "note",
-   "label": "r39 item 5: ring at 5006 draft 4x, strokes are the grain, no blur",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T18:58:33.495Z",
-   "file": "20261123185833495-note-eye-layers.jpg",
-   "source": "../../../../tmp/eye-layers.png",
-   "kind": "note",
-   "label": "r39 item 2: 4707 eye, full, no laid layer, globe alone: the white cut pieces are the laid cirrus",
    "stop": "neptune"
   }
  ]
