@@ -1,9 +1,105 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-23T21:52:35.094Z",
- "head": "145d9a971dc49fa89ed91a1dd66fb33457d60d1a",
- "note": "21:56 UTC. Review tier sheets of 3060 to 3239 every sixth frame (31 frames, commit 145d9a9) for the clip, as mail 322 asks. The frames themselves are in out/work/jupiter/frames/v1 on my VM only.",
+ "pushed": "2026-11-23T22:17:48.454Z",
+ "head": "092b0f4250b4a6831dbe13d354eb371ada5a7a1c",
+ "note": "22:18 UTC. Calm step (commit 092b0f4, merged with main 1ce3137): cyan patch east of the storm calmed, shade no longer ends in a straight line above 2.4 units; draft tier. Still wrong: straight crease in the shade 3030 to 3041 and 3252 to 3264, change of view at 3024 and 3270 is still a change of scene (work for plan F starts now)",
  "looks": [
+  {
+   "time": "2026-11-23T22:17:41.144Z",
+   "file": "20261123221741144-note-c1-3036-crop.jpg",
+   "source": "../work/f/c1-3036-crop.jpg",
+   "kind": "note",
+   "label": "Still wrong, commit 092b0f4, frame 3036 crop: a straight dark crease inside the storm's shade near x 1280 to 1460, y 727",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T22:17:39.946Z",
+   "file": "20261123221739946-note-c2-rise-strip.jpg",
+   "source": "../work/f/c2-rise-strip.jpg",
+   "kind": "note",
+   "label": "Calm step, commit 092b0f4, draft tier, rise across the change of view, consecutive frames 3267 to 3273",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T22:17:38.671Z",
+   "file": "20261123221738671-note-c2-dive-strip.jpg",
+   "source": "../work/f/c2-dive-strip.jpg",
+   "kind": "note",
+   "label": "Calm step, commit 092b0f4, draft tier, dive across the change of view, consecutive frames 3021 to 3027",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T22:17:37.479Z",
+   "file": "20261123221737479-note-c1-full-03024.jpg",
+   "source": "../work/f/c1-full-03024.jpg",
+   "kind": "note",
+   "label": "Calm step, commit 092b0f4, frame 3024 draft tier, first frame of the close side",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T22:17:36.372Z",
+   "file": "20261123221736372-note-c1g6-T.jpg",
+   "source": "../work/f/c1g6-T.jpg",
+   "kind": "note",
+   "label": "Calm step, commit 092b0f4, draft tier: left before (145d9a9), right after, at 3024 (top) and 3270 (bottom). The cyan patch east of the storm is gone, a faint grey green tint is left",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T22:16:57.668Z",
+   "file": "20261123221657668-frame-f03150.jpg",
+   "source": "out/work/jupiter/frames/c3/f03150.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3150, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "9614bd9287a4f3ac"
+  },
+  {
+   "time": "2026-11-23T22:16:12.354Z",
+   "file": "20261123221612354-frame-f03018.jpg",
+   "source": "out/work/jupiter/frames/c3/f03018.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 3018, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 3018,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "9614bd9287a4f3ac"
+  },
+  {
+   "time": "2026-11-23T22:14:48.508Z",
+   "file": "20261123221448508-frame-f02820.jpg",
+   "source": "out/work/jupiter/frames/c3/f02820.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2820, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2820,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "9614bd9287a4f3ac"
+  },
+  {
+   "time": "2026-11-23T22:05:27.516Z",
+   "file": "20261123220527516-frame-f03271.jpg",
+   "source": "out/work/jupiter/frames/c2/f03271.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3271, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3271,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "45f909e84c1a1464"
+  },
   {
    "time": "2026-11-23T21:52:33.871Z",
    "file": "20261123215233871-note-v1-view6.jpg",
@@ -27,58 +123,6 @@
    "kind": "note",
    "label": "Review tier, commit 145d9a9, surface view every sixth frame: 3168 to 3198",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T21:52:30.317Z",
-   "file": "20261123215230317-note-v1-sheet3.jpg",
-   "source": "../work/f/v1-sheet3.jpg",
-   "kind": "note",
-   "label": "Review tier, commit 145d9a9, surface view every sixth frame: 3132 to 3162",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T21:52:29.558Z",
-   "file": "20261123215229558-note-v1-sheet2.jpg",
-   "source": "../work/f/v1-sheet2.jpg",
-   "kind": "note",
-   "label": "Review tier, commit 145d9a9, surface view every sixth frame: 3096 to 3126",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T21:52:28.997Z",
-   "file": "20261123215228997-note-v1-sheet1.jpg",
-   "source": "../work/f/v1-sheet1.jpg",
-   "kind": "note",
-   "label": "Review tier, commit 145d9a9, surface view every sixth frame: 3060 to 3090",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T21:52:26.410Z",
-   "file": "20261123215226410-frame-f02820.jpg",
-   "source": "out/work/jupiter/frames/c1/f02820.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2820, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2820,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "45f909e84c1a1464"
-  },
-  {
-   "time": "2026-11-23T21:51:13.845Z",
-   "file": "20261123215113845-frame-f03239.jpg",
-   "source": "out/work/jupiter/frames/v1/f03239.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3239, review tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3239,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "45f909e84c1a1464"
   }
  ]
 }
