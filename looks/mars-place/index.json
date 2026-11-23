@@ -1,9 +1,47 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-23T17:40:21.748Z",
+ "pushed": "2026-11-23T18:09:02.168Z",
  "head": "46ba063ef015d4d02814cfe012dcaa94725c97c7",
- "note": "17:41 tone at T: thinner ground haze brings the globe under the picture from 21.5 to 17.0 (near field level with the picture); seventh bake running (far field: hue of the picture, veins damped)",
+ "note": "seventh bake: under 16.7 dive 16.6 rise (was 21.5 21.2), stills rendering",
  "looks": [
+  {
+   "time": "2026-11-23T18:09:01.488Z",
+   "file": "20261123180901488-note-topdown-r9.jpg",
+   "source": "out/work/place/view/topdown-r9.jpg",
+   "kind": "note",
+   "label": "seventh bake top down ladder",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T18:09:00.889Z",
+   "file": "20261123180900889-note-twin-38-16-pic.jpg",
+   "source": "out/work/place/view/twin-38-16-pic.jpg",
+   "kind": "note",
+   "label": "seventh force: 3.8 and 1.6 plates seen from the twin over the place picture",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T18:08:37.776Z",
+   "file": "20261123180837776-compare-mars-rise-under.jpg",
+   "source": "out/work/handover/mars-rise-under.png",
+   "kind": "compare",
+   "label": "mars rise, the globe side at T (frame 2692) with the place picture, alone, and their difference times 4",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "frame": 2692,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T18:08:09.168Z",
+   "file": "20261123180809168-compare-mars-dive-under.jpg",
+   "source": "out/work/handover/mars-dive-under.png",
+   "kind": "compare",
+   "label": "mars dive, the globe side at T (frame 2454) with the place picture, alone, and their difference times 4",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2454,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-23T17:40:21.088Z",
    "file": "20261123174021088-note-sheet-u-rise.jpg",
@@ -41,50 +79,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "e85c8d53a860dafc"
-  },
-  {
-   "time": "2026-11-23T17:32:42.114Z",
-   "file": "20261123173242114-frame-u2454.jpg",
-   "source": "out/work/place/view/u2454.png",
-   "kind": "frame",
-   "label": "mars.dive frame 2454, draft tier",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2454,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e85c8d53a860dafc"
-  },
-  {
-   "time": "2026-11-23T17:16:52.698Z",
-   "file": "20261123171652698-compare-mars-rise-under.jpg",
-   "source": "out/work/handover/mars-rise-under.png",
-   "kind": "compare",
-   "label": "mars rise, the globe side at T (frame 2692) with the place picture, alone, and their difference times 4",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "frame": 2692,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T17:16:23.528Z",
-   "file": "20261123171623528-compare-mars-dive-under.jpg",
-   "source": "out/work/handover/mars-dive-under.png",
-   "kind": "compare",
-   "label": "mars dive, the globe side at T (frame 2454) with the place picture, alone, and their difference times 4",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2454,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T17:10:19.262Z",
-   "file": "20261123171019262-note-p0.7-twin.jpg",
-   "source": "out/work/place/plate/p0.7-twin.jpg",
-   "kind": "note",
-   "label": "0.7 deg plate with take 3 seen from the twin (above) over the place picture (below), force.py's own view, before the bake",
-   "stop": "mars"
   }
  ]
 }
