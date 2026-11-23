@@ -1,9 +1,69 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-23T11:00:52.332Z",
+ "pushed": "2026-11-23T11:29:02.503Z",
  "head": "cff2ea81330131ba6748ad3cfadf4d1c7db8dbbb",
- "note": "h6: harness sheets with T plates; rise still wrong: two Suns 1549 to 1554, ground of the frame at T stands out pale from 1553",
+ "note": "MAIL 247 items 1 to 3 in work: air dome on the globe side, the Sun's own light kept at its direction; one Sun in dive and rise stills",
  "looks": [
+  {
+   "time": "2026-11-23T11:29:01.937Z",
+   "file": "20261123112901937-note-s1-d.jpg",
+   "source": "../../../../tmp/v/s1-d.jpg",
+   "kind": "note",
+   "label": "rise 1553 1556 1560 draft, old rise path: one Sun leaving at the top. Still wrong: the pale fan of the frame at T against olive pebbled plates round it",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T11:28:43.024Z",
+   "file": "20261123112843024-note-s1-c.jpg",
+   "source": "../../../../tmp/v/s1-c.jpg",
+   "kind": "note",
+   "label": "1343 (dive T) 1544 (rise T) 1547 1550 draft: one Sun, it keeps its direction while the limb sinks; no black band",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T11:28:42.476Z",
+   "file": "20261123112842476-note-s1-b.jpg",
+   "source": "../../../../tmp/v/s1-b.jpg",
+   "kind": "note",
+   "label": "dive 1332 1338 draft, whole frame and native crop: one Sun above the limb, no dark line at the limb, no green spot",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T11:28:30.436Z",
+   "file": "20261123112830436-frame-f-1560.jpg",
+   "source": "out/work/venus/place/s1/f-1560.png",
+   "kind": "frame",
+   "label": "venus.rise frame 1560, draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "frame": 1560,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8b9f780b26a50bc3"
+  },
+  {
+   "time": "2026-11-23T11:23:46.106Z",
+   "file": "20261123112346106-frame-f-1343.jpg",
+   "source": "out/work/venus/place/s1/f-1343.png",
+   "kind": "frame",
+   "label": "venus.dive frame 1343, draft tier",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "frame": 1343,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8b9f780b26a50bc3"
+  },
+  {
+   "time": "2026-11-23T11:22:21.784Z",
+   "file": "20261123112221784-note-s1-a.jpg",
+   "source": "../../../../tmp/v/s1-a.jpg",
+   "kind": "note",
+   "label": "dive 1316 1320 1326 draft: one Sun, the painted bloom, comes in at the top; no hard dot",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-23T11:00:51.782Z",
    "file": "20261123110051782-note-rise-4.jpg",
@@ -19,74 +79,6 @@
    "kind": "note",
    "label": "h6 dive 1331 to 1342, draft, T plates of all five levels",
    "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T11:00:50.715Z",
-   "file": "20261123110050715-note-rise-b.jpg",
-   "source": "out/work/venus/place/h6/rise-b.jpg",
-   "kind": "note",
-   "label": "h6 rise 1545 to 1556, draft: T plates of all five levels; two Suns at 1549 to 1554, pale ground of the frame at T against olive ground round it",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T10:53:37.027Z",
-   "file": "20261123105337027-sheet-venus-rise-draft-after.jpg",
-   "source": "out/work/handover/venus-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "venus rise, every frame 1545 to 1556 (after T, frame 1544), draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1545,
-   "last": 1556,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T10:53:35.277Z",
-   "file": "20261123105335277-sheet-venus-rise-draft-across.jpg",
-   "source": "out/work/handover/venus-rise-draft-across.png",
-   "kind": "sheet",
-   "label": "venus rise, every frame 1538 to 1549 (across T, frame 1544), draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1538,
-   "last": 1549,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T10:53:33.491Z",
-   "file": "20261123105333491-sheet-venus-rise-draft-before.jpg",
-   "source": "out/work/handover/venus-rise-draft-before.png",
-   "kind": "sheet",
-   "label": "venus rise, every frame 1532 to 1543 (before T, frame 1544), draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1532,
-   "last": 1543,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T10:51:40.594Z",
-   "file": "20261123105140594-sheet-venus-dive-draft-after.jpg",
-   "source": "out/work/handover/venus-dive-draft-after.png",
-   "kind": "sheet",
-   "label": "venus dive, every frame 1344 to 1349 (after T, frame 1343), draft tier",
-   "stop": "venus",
-   "segment": "venus.dive",
-   "first": 1344,
-   "last": 1349,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T10:51:39.315Z",
-   "file": "20261123105139315-sheet-venus-dive-draft-across.jpg",
-   "source": "out/work/handover/venus-dive-draft-across.png",
-   "kind": "sheet",
-   "label": "venus dive, every frame 1337 to 1348 (across T, frame 1343), draft tier",
-   "stop": "venus",
-   "segment": "venus.dive",
-   "first": 1337,
-   "last": 1348,
-   "tier": "draft"
   }
  ]
 }
