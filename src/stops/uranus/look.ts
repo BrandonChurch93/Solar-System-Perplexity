@@ -82,7 +82,7 @@ export const deckRings: RingLook = {
 
 export const deckStrands = { count: 48, spread: 0.012, amp: [0.004, 0.02] as [number, number], minSpan: 2.1 }
 
-export const show = { rings: true, moons: true, deck: true, globe: true, sky: true, cover: true, side: null as null | 'orbit' | 'terrain' }
+export const show = { rings: true, moons: true, deck: true, globe: true, sky: true, cover: true, side: null as null | 'orbit' | 'terrain', down: false }
 
 export const halo = {
   size: [64, 64] as [number, number],

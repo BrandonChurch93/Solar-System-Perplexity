@@ -1,7 +1,20 @@
 {
- "aheadUnits": 3.0,
- "halfTan": 0.2493,
+ "aheadUnits": 1.0,
+ "aimUnits": 2.2,
+ "halfTan": 0.28,
  "levels": 4,
- "feather": 0.1,
- "size": 4096
+ "feather": 0.06,
+ "size": 4096,
+ "supersample": [1, 1, 2, 2],
+ "clockRef": 3.25,
+ "masterRows": 1080,
+ "handoverCameras": ["cam4199", "cam4379"],
+ "detail": { "lambda0": 0.1, "octaves": 6, "amp": 0.3, "slope": 0.4, "stretch": 5.0, "bend": 0.5, "curl": 0.18, "gate": [0.7, 1.8], "zoneUnits": 0.5, "wisp": 0.1, "wispTint": [1.1, 1.0, 0.97] },
+ "mask": { "deg": [9.5, 13.3], "lobes": [[2, 0.06, 0.7], [3, 0.05, 2.1], [5, 0.03, 4.0]], "noise": 0.05, "noiseUnits": 6.0 },
+ "fieldSize": 256,
+ "fieldSigmaDeg": 2.0,
+ "previewGain": 1.0,
+ "patchCommit": "cf300549",
+ "patchSource": [["patch-1.jpg", 80.0], ["patch-2.jpg", 46.0], ["patch-3.jpg", 24.0], ["patch-4.jpg", 12.2]],
+ "patchKeep": 2
 }

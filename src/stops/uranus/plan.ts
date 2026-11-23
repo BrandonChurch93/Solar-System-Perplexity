@@ -7,6 +7,8 @@ import { coverWindow } from '../../director/timeline'
 import deck from './deck.json'
 import fit from './fit.json'
 import { haze, shape, show } from './look'
+import place from './place.json'
+import plates from './plates.json'
 
 export const params: MoveParams = {
   hold: { orbitDeg: 6, axis: [0.2, 1, 0], push: -0.03 },
@@ -153,9 +155,21 @@ export class UranusPlan extends StopPlan {
     return { position: shaped(local.position.clone().sub(CENTRE).multiplyScalar(UNIT).applyQuaternion(r)), quaternion: r.multiply(local.quaternion), vfov: local.vfov }
   }
 
+  above(time: number): Pose {
+    const seg = this.seg.dive!
+    const u = Math.min(Math.max((time - seg.start) / (seg.end - seg.start - 1 / config.fps), 0), 1)
+    const top = this.hold(seg.start - this.seg.hold.start).position.length() - 1
+    const h = top * Math.pow(place.heightRadii / top, u)
+    const r = this.deckFrame(time)
+    const n = new THREE.Vector3().fromArray(plates.n).applyQuaternion(r)
+    const position = shaped(n.clone().multiplyScalar(1 + h))
+    return { position, quaternion: lookAt(position, shaped(n), new THREE.Vector3().fromArray(plates.u).applyQuaternion(r)), vfov: this.p.terrain.vfov }
+  }
+
   dive(time: number): OrbitShot {
     const seg = this.seg.dive!
     const c = this.coverCenter(seg)
+    if (show.down) return { pose: this.above(time), view: 'orbit' }
     if (show.side) return show.side === 'orbit' ? { pose: this.mapped(this.entryPath(time), time), view: 'orbit' } : { pose: this.entryPath(time), view: 'terrain' }
     if (time >= c) return { pose: this.entryPath(time), view: 'terrain' }
     const d = this.p.dive
