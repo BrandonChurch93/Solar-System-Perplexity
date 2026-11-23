@@ -1,7 +1,13 @@
 import type { ViewKind } from '../core/types'
 import { forceSide } from '../director/handover'
 
-export interface Probe { view: string; side: ViewKind | null; shut: boolean; time: number | null; place: boolean; mask: boolean; picture: boolean }
+// dump: the place picture itself, one frame sized window of it at a time and one picture pixel per frame pixel, for tools that lay it back onto the
+// body. x and y are the window's top left corner in picture pixels. 'image' is the picture's scene value through the film curve (no sky, no lens,
+// no exposure, no grade), 'alpha' its cover. Use it with the ungraded view, which writes the values through the display curve alone: a plate made
+// from it and read back through the inverse film curve is the scene value again.
+export interface PlaceDump { x: number; y: number; what: 'image' | 'alpha' }
+
+export interface Probe { view: string; side: ViewKind | null; shut: boolean; time: number | null; place: boolean; mask: boolean; picture: boolean; dump?: PlaceDump }
 
 export function parseProbe(diag: string): Probe {
   const parts = diag.split('/').map((s) => s.trim()).filter((s) => s.length > 0)
@@ -16,7 +22,12 @@ export function parseProbe(diag: string): Probe {
     } else if (key === 'noplace') out.place = false
     else if (key === 'mask') out.mask = true
     else if (key === 'picture') out.picture = true
-    else throw new Error('unknown diagnostic option ' + part)
+    else if (key === 'dump' && value !== undefined) {
+      const [x, y, what] = value.split(',')
+      if (!Number.isInteger(Number(x)) || !Number.isInteger(Number(y)) || (what !== 'image' && what !== 'alpha')) throw new Error('unknown diagnostic option ' + part)
+      out.picture = true
+      out.dump = { x: Number(x), y: Number(y), what }
+    } else throw new Error('unknown diagnostic option ' + part)
   }
   return out
 }
@@ -32,6 +43,7 @@ export function probeString(p: Partial<Probe>): string {
   else if (p.shut) parts.push('shut')
   if (p.place === false) parts.push('noplace')
   if (p.mask) parts.push('mask')
-  if (p.picture) parts.push('picture')
+  if (p.dump) parts.push('dump=' + p.dump.x + ',' + p.dump.y + ',' + p.dump.what)
+  else if (p.picture) parts.push('picture')
   return parts.join('/')
 }

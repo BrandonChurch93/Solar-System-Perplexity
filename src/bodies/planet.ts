@@ -84,11 +84,17 @@ void main() {
   vClip = gl_Position.xyw;
 }`
 
-export const MAX_PATCHES = 6
+export const MAX_PATCHES = 10
+export const BASE_PATCHES = 6
 
-const PATCH_SAMPLERS = Array.from({ length: MAX_PATCHES }, (_, i) => 'uniform sampler2D uPatch' + i + ';').join('\n')
+export function patchSlots(levels: number): number {
+  if (levels > MAX_PATCHES) throw new Error('too many patch levels')
+  return Math.max(BASE_PATCHES, levels)
+}
 
-const PATCH_LEVELS = Array.from({ length: MAX_PATCHES }, (_, i) => `    if (uPatchCount > ${i}.5) {
+const patchSamplers = (slots: number): string => Array.from({ length: slots }, (_, i) => 'uniform sampler2D uPatch' + i + ';').join('\n')
+
+const patchLevels = (slots: number): string => Array.from({ length: slots }, (_, i) => `    if (uPatchCount > ${i}.5) {
       vec2 q = g * uPatchScale[${i}];
       float w = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent));
       if (w > 0.0) albedo = mix(albedo, textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb, w);
@@ -97,15 +103,15 @@ const PATCH_LEVELS = Array.from({ length: MAX_PATCHES }, (_, i) => `    if (uPat
       near = max(near, w * uPatchNear[${i}]);
     }`).join('\n')
 
-const FRAG = /* glsl */ `
+const frag = (slots: number): string => /* glsl */ `
 precision highp float;
 uniform sampler2D uMap;
 uniform sampler2D uHeight;
 uniform sampler2D uStorm;
-${PATCH_SAMPLERS}
-uniform float uPatchScale[${MAX_PATCHES}];
-uniform float uPatchSize[${MAX_PATCHES}];
-uniform float uPatchNear[${MAX_PATCHES}];
+${patchSamplers(slots)}
+uniform float uPatchScale[${slots}];
+uniform float uPatchSize[${slots}];
+uniform float uPatchNear[${slots}];
 uniform float uPatchCount;
 uniform float uFeather;
 uniform vec2 uPatchFade;
@@ -203,7 +209,7 @@ void main() {
     gy *= uGrad;
     float front = step(0.3, dn);
     float parent = texels;
-${PATCH_LEVELS}
+${patchLevels(slots)}
   }
   vec3 east = cross(vec3(0.0, 1.0, 0.0), d);
   float el = length(east);
@@ -272,15 +278,15 @@ export class Planet {
       return w ? 1 / (2 * Math.tan(THREE.MathUtils.degToRad(w) / 2)) : 1
     }
     const size = (i: number): number => (p?.textures[i]?.image as unknown as { width: number } | undefined)?.width ?? 1
-    const levels = Array.from({ length: MAX_PATCHES }, (_, i) => i)
-    if ((p?.textures.length ?? 0) > MAX_PATCHES) throw new Error('too many patch levels')
+    const slots = patchSlots(p?.textures.length ?? 0)
+    const levels = Array.from({ length: slots }, (_, i) => i)
     const spot = p?.spot.clone().normalize() ?? new THREE.Vector3(0, 0, 1)
     const east = new THREE.Vector3(0, 1, 0).cross(spot).normalize()
     const north = spot.clone().cross(east)
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
       vertexShader: VERT,
-      fragmentShader: FRAG,
+      fragmentShader: frag(slots),
       uniforms: {
         ...hazeUniforms(o.haze),
         uGrazingShape: { value: new THREE.Vector4(g?.depth ?? 0, g?.width ?? 1, g?.duskWidth ?? 1, g?.power ?? 1) },
