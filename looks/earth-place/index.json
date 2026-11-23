@@ -1,9 +1,41 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-23T18:21:22.818Z",
+ "pushed": "2026-11-23T18:40:46.574Z",
  "head": "cdaaa89328e887996fbeb2f85cd815d6331d6213",
- "note": "shutter trial running (6 done, 10 and 8 next); native crops of 1857 and 1882 to 1894 show the border of the cloud field and the coasts that fade under the lay back",
+ "note": "shutter trial stills at 6, 8, 10 px for 1857 and 2156; field density trial",
  "looks": [
+  {
+   "time": "2026-11-23T18:40:45.245Z",
+   "file": "20261123184045245-note-dens4.jpg",
+   "source": "../../../../tmp/gl/dens4.jpg",
+   "kind": "note",
+   "label": "trial of a new field density over the hold's map: outline no longer the sector, still too solid",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T18:40:44.146Z",
+   "file": "20261123184044146-note-c2156-1.jpg",
+   "source": "../../../../tmp/gl/trial/c2156-1.jpg",
+   "kind": "note",
+   "label": "2156 final tier, shutter limit 6, 8, 10 px, limb and Moon, native",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T18:40:42.913Z",
+   "file": "20261123184042913-note-c1857-1.jpg",
+   "source": "../../../../tmp/gl/trial/c1857-1.jpg",
+   "kind": "note",
+   "label": "1857 final tier, shutter limit 6, 8, 10 px, upper right, native",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T18:40:41.729Z",
+   "file": "20261123184041729-note-c1857-0.jpg",
+   "source": "../../../../tmp/gl/trial/c1857-0.jpg",
+   "kind": "note",
+   "label": "1857 final tier, shutter limit 6, 8, 10 px, field, native",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-23T18:21:21.553Z",
    "file": "20261123182121553-note-sideR.jpg",
@@ -34,44 +66,6 @@
    "source": "../../../../tmp/gl/limb-1857.jpg",
    "kind": "note",
    "label": "1857 limb native crop, limit 6 and 8",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T18:21:17.042Z",
-   "file": "20261123182117042-note-s6-1857-a.jpg",
-   "source": "../../../../tmp/gl/s6-1857-a.jpg",
-   "kind": "note",
-   "label": "1857 final, shutter limit 6 px, native crop",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T18:21:15.840Z",
-   "file": "20261123182115840-note-outline-1857.jpg",
-   "source": "../../../../tmp/gl/outline-1857.jpg",
-   "kind": "note",
-   "label": "1857 draft with the level windows drawn over it",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T17:57:42.486Z",
-   "file": "20261123175742486-frame-f1857-final-a.jpg",
-   "source": "out/work/earth/place/r2/f1857-final-a.png",
-   "kind": "frame",
-   "label": "earth.dive frame 1857, final tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1857,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "743c10b0a56aaca7"
-  },
-  {
-   "time": "2026-11-23T17:50:20.746Z",
-   "file": "20261123175020746-note-look-1755-v3-d.jpg",
-   "source": "out/work/earth/place/look-1755-v3-d.jpg",
-   "kind": "note",
-   "label": "dive 1866 to 1900, old against glint cure plus veil (draft)",
    "stop": "earth"
   }
  ]
