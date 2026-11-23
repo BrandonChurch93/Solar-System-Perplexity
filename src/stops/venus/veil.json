@@ -1,4 +1,5 @@
 {
+  "note": "The cover veil is never drawn any more and its picture is not loaded and not in public (mail 324, memory): file names the picture the sheet was made for (assets-src/venus/RECIPE.md, Cover veil). The veil code that still reads these values is to be taken out in a later step.",
   "file": "veil-clouds.jpg",
   "pad": 0.12507626601586333,
   "mean": [
