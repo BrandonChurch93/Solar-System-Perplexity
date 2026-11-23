@@ -1,9 +1,49 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T20:12:44.091Z",
+ "pushed": "2026-11-23T20:27:53.684Z",
  "head": "488113e897506b4a508c1712072eb4c497be1b9a",
- "note": "sky turn held to 4723: one star 4688 to 4710, corner clean; kept frames 0 pixels differ; proof chain runs",
+ "note": "batch A proved on kept frames (0 px differ), one Sun 4680 to 4709; item 3 blocks are hard cirrus bits of the globe's patch alpha",
  "looks": [
+  {
+   "time": "2026-11-23T20:27:52.268Z",
+   "file": "20261123202752268-note-p40-dashes.jpg",
+   "source": "../../../../tmp/p40-dashes.png",
+   "kind": "note",
+   "label": "alpha and rgb of patch-40 at the same bits",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T20:27:50.955Z",
+   "file": "20261123202750955-note-A4707-E.jpg",
+   "source": "../../../../tmp/A4707-E.png",
+   "kind": "note",
+   "label": "4707 crop E draft x2: hard cirrus bits = the blocks of item 3",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T20:27:49.744Z",
+   "file": "20261123202749744-note-A4707-ur.jpg",
+   "source": "../../../../tmp/A4707-ur.png",
+   "kind": "note",
+   "label": "4707 upper right native, cold stars, clean limb",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T20:27:48.535Z",
+   "file": "20261123202748535-note-A-dive2.jpg",
+   "source": "../../../../tmp/A-dive2.jpg",
+   "kind": "note",
+   "label": "batch A draft 4696 to 4711",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T20:27:47.366Z",
+   "file": "20261123202747366-note-A-dive1.jpg",
+   "source": "../../../../tmp/A-dive1.jpg",
+   "kind": "note",
+   "label": "batch A draft 4680 to 4695, one Sun",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-23T20:12:43.483Z",
    "file": "20261123201243483-note-h5006-ringtop.jpg",
@@ -26,46 +66,6 @@
    "source": "../../../../tmp/i-sun.png",
    "kind": "note",
    "label": "neptune dive 4688 to 4710 one star with its flare, sky turn held",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T19:48:40.969Z",
-   "file": "20261123194840969-note-h-ur.jpg",
-   "source": "../../../../tmp/h-ur.png",
-   "kind": "note",
-   "label": "Item 7 found: the warm grainy patch at the limb at 4707 is the film's own band, brought in by the sky turn of the dive; right column is a dimming trial (draft, native crops)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T19:48:40.352Z",
-   "file": "20261123194840352-note-h-sun.jpg",
-   "source": "../../../../tmp/h-sun.png",
-   "kind": "note",
-   "label": "Trial, dropped: a hole in the hold plate at its Sun through the dive leaves a dark disc in the stars (draft, 4682 to 4700, native crop upper right)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T19:19:33.453Z",
-   "file": "20261123191933453-note-f4996-eye.jpg",
-   "source": "../../../../tmp/f4996-eye.png",
-   "kind": "note",
-   "label": "4996 eye at 2x: cream streak and tan patch under the eye are in the place plates, still wrong",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T19:19:32.898Z",
-   "file": "20261123191932898-note-f5006.jpg",
-   "source": "../../../../tmp/f5006.jpg",
-   "kind": "note",
-   "label": "5006 draft, batch A in the working tree, not yet proved",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T19:19:32.308Z",
-   "file": "20261123191932308-note-e-ring5006.jpg",
-   "source": "../../../../tmp/e-ring5006.png",
-   "kind": "note",
-   "label": "5006 ring grain averaged along the ring's own circles",
    "stop": "neptune"
   }
  ]
