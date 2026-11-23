@@ -1,9 +1,25 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-23T09:02:50.025Z",
+ "pushed": "2026-11-23T09:28:40.896Z",
  "head": "9a27f0c0f17b02f76093d4e1014ee48683129e08",
- "note": "S2: limb zone compared at the twin, far zone and horizon trim still open",
+ "note": "S2 second pass: far cloud sheet on the plate, place in early; fan shape and tone step to fix",
  "looks": [
+  {
+   "time": "2026-11-23T09:28:40.261Z",
+   "file": "20261123092840261-note-dive-down-sheet.jpg",
+   "source": "out/work/earth/place/down/dive-down-sheet.jpg",
+   "kind": "note",
+   "label": "earth place: top down dive sheet, 12 frames, draft, place comes in early (height 3.2 to 1.4). Wrong: the cloud sheet has the straight edges of the close canvas and reads as a white fan from 1846 to 1877; the footprint is darker than the sea around it",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T09:28:39.441Z",
+   "file": "20261123092839441-note-f01915-check.jpg",
+   "source": "out/work/earth/place/sides/f01915-check.jpg",
+   "kind": "note",
+   "label": "earth place: sides at 1915 with the cloud sheet repainted into the far zone of the plate. Far zone now reads alike. Still open: a dark gap 20 to 30 px under the limb where the plate ends, limb band too pale, sky black against dark blue",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-23T09:02:49.365Z",
    "file": "20261123090249365-note-far-look.jpg",
@@ -59,34 +75,6 @@
    "stop": "earth",
    "segment": "earth.terrain",
    "frame": 2010,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "2d9dda353bfd7b6d"
-  },
-  {
-   "time": "2026-11-23T08:22:28.487Z",
-   "file": "20261123082228487-compare-compare-earth-hold-view.jpg",
-   "source": "out/work/compare/compare-earth-hold-view.jpg",
-   "kind": "compare",
-   "label": "earth.hold: approved image left, film frame right, final tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1755,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "2d9dda353bfd7b6d"
-  },
-  {
-   "time": "2026-11-23T08:22:24.394Z",
-   "file": "20261123082224394-still-f01755-16x9-final-full.jpg",
-   "source": "out/work/stills/f01755-16x9-final-full.png",
-   "kind": "still",
-   "label": "earth.hold frame 1755, final tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1755,
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
