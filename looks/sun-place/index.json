@@ -1,9 +1,41 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T17:09:29.433Z",
- "head": "be822da6ed202db81069a3669641a9f4b659a87f",
- "note": "cure for mail 296 at draft: release keeps its strands, frame 60 near approved, thrown arc in drops; full 0 to 179 still rendering",
+ "pushed": "2026-11-23T17:24:20.140Z",
+ "head": "76efaddc6fbd213f380a09dd5b085472d1431cec",
+ "note": "cure for mail 296 committed as 76efaddc (draft, every frame 0 to 179 looked at); hold bytes kept; machine checks running",
  "looks": [
+  {
+   "time": "2026-11-23T17:24:19.503Z",
+   "file": "20261123172419503-note-q-every12.jpg",
+   "source": "out/work/sun/life/v/q-every12.jpg",
+   "kind": "note",
+   "label": "cure, draft: every 12th frame 0 to 179",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T17:24:18.892Z",
+   "file": "20261123172418892-note-q-foot.jpg",
+   "source": "out/work/sun/life/v/q-foot.jpg",
+   "kind": "note",
+   "label": "cure, draft: left foot, approved, before and now",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T17:24:18.307Z",
+   "file": "20261123172418307-note-q-100n.jpg",
+   "source": "out/work/sun/life/v/q-100n.jpg",
+   "kind": "note",
+   "label": "cure, draft: frame 100 native, before and now (dashes against threads)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T17:24:17.631Z",
+   "file": "20261123172417631-note-q-100.jpg",
+   "source": "out/work/sun/life/v/q-100.jpg",
+   "kind": "note",
+   "label": "cure, draft: arcade 100 to 105 native, threads with soft clumps",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-23T17:09:27.980Z",
    "file": "20261123170927980-note-full1-024.jpg",
@@ -35,44 +67,6 @@
    "kind": "note",
    "label": "cure, draft: arcade 26 to 31 native, strands separate in the release",
    "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T16:53:26.841Z",
-   "file": "20261123165326841-note-b2-60.jpg",
-   "source": "out/work/sun/life/v/b2-60.jpg",
-   "kind": "note",
-   "label": "Sun frame 60: approved, before (944bf377), now (work tree, draft). Near white share of the arcade 0.0079, 0.0355, 0.0122",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T16:53:25.794Z",
-   "file": "20261123165325794-note-b2-26.jpg",
-   "source": "out/work/sun/life/v/b2-26.jpg",
-   "kind": "note",
-   "label": "Sun 26 to 31 NOW (work tree, draft, not yet a commit): strands separate, near white share 0.035 against 0.15",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T16:53:24.791Z",
-   "file": "20261123165324791-note-b0-26.jpg",
-   "source": "out/work/sun/life/v/b0-26.jpg",
-   "kind": "note",
-   "label": "Sun 26 to 31 BEFORE (944bf377, draft): the arcade burns out to one white mass (mail 296 point 1)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T16:29:12.010Z",
-   "file": "20261123162912010-job-frame-00000.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "sun.terrain frame 0, final tier, nograin view, from the running measure job",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 0,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
   }
  ]
 }
