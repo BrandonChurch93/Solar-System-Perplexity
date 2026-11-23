@@ -1,0 +1,120 @@
+{
+ "critic": "R3",
+ "score": 4,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-07.png",
+      "where": "crop P, center and lower half of the main storm",
+      "what": "The cloud filaments pinch into a tight circular wrap around a comparatively smooth, horizontally smeared eye. The abrupt change in texture direction makes the storm look like a warped patch.",
+      "fix": "Rebuild the vortex with continuous curved advection and carry fine cloud structure through the eye and surrounding flow without a pinched center."
+     },
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "crops B, C and E, sunlit bands and right-hand surface of the close globe",
+      "what": "Broad regions are directionally smeared, with bright clouds feathering into streaks and very little crisp detail between them. The close-up reads as an enlarged soft texture.",
+      "fix": "Restore fine atmospheric structure at the close-up scale, including sharper cloud filaments and small variations across the bands; reduce any broad directional filtering."
+     },
+     {
+      "severity": "minor",
+      "file": "image-03.png",
+      "where": "crops J and K, outer top ring arc",
+      "what": "The illuminated outer ring resolves to a nearly uniform hairline with a bright rim, giving it the look of a drawn outline against the softer inner bands.",
+      "fix": "Give the outer band a resolved optical-depth profile with a softer edge and subtle variation across its width."
+     },
+     {
+      "severity": "minor",
+      "file": "image-04.png",
+      "where": "crops V and W, lower-right star field",
+      "what": "Several brighter stars resolve into soft, slightly stretched colored blobs instead of compact points.",
+      "fix": "Keep the bright star cores tighter and use a smaller, more restrained halo and color fringe."
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 4,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-13.png",
+      "where": "whole globe disc, worst lower half and centre (crops A, E, P, Q, V, W)",
+      "what": "the planet surface is a smeared, radially streaked blur, like a motion-blur or swirl filter; no cloud or terrain detail holds up at native size and it reads as airbrushed paint",
+      "fix": "re-render the globe from a sharp equirectangular texture with real cloud structure and remove any blur or smear pass"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "storm feature right of centre (crop Q)",
+      "what": "the white cloud ring is a pasted patch: crisp clumped blobs on top of a blurred base, with no shading or blending into the surrounding atmosphere",
+      "fix": "paint the storm into the same cloud layer and resolution as the rest of the surface, with soft edges and lighting that matches the terminator"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "rings, upper right (crops C, F, L, M)",
+      "what": "the rings are thin, ghostly, semi-transparent concentric strokes that show only behind the planet and stop at the limb; no near-side arc crosses the disc and they cast no shadow, so they look like a flat overlay",
+      "fix": "model the rings as a lit 3D annulus with a front arc crossing the globe, density bands, and a shadow on the planet"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "Milky Way band, left and upper right (crops D, G, T, C, F)",
+      "what": "the galaxy band is oversaturated orange-brown, with blotchy cloud-like clumps and big bright stars packed into it; it looks like a stock texture stamped on, and it reads in front of the rings",
+      "fix": "tone the band down to a faint, desaturated haze behind the stars and rings with finer dust lanes"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "left end of rings above the limb (crops B, J) and right end at the limb (crops H, Q)",
+      "what": "the outer ring arc stops dead in empty space above the atmosphere on the left, and on the right the strokes fade into the haze in a pinched point; nothing explains the ring ending",
+      "fix": "carry the ring geometry through so it meets the limb correctly or passes behind the planet, with occlusion and a planet shadow on the rings"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "ring band across the top (crops B, C, F, G, K, L)",
+      "what": "the rings are made of uniform, hairline, evenly lit strokes, like a vector overlay, with no particle texture, no change in opacity and no lighting falloff toward the sun",
+      "fix": "use a ring texture with radial density variation and scatter, lit by the sun's direction and with forward scattering near the glare"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "night side, lower left (crops D, N, S, T)",
+      "what": "large near-black area with almost no detail and faint blocky banding in the dark gradient",
+      "fix": "add dither or grain, and faint terminator detail or city/airglow to break up the gradient"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "day-side cloud deck, lower right (crops U, V, W)",
+      "what": "clouds are soft directional streaks with a uniform painted look; at native size they're blurry and low-detail",
+      "fix": "use higher-frequency cloud detail with some vertical structure and shadowing"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "right edge sky (crop S, 1824,433)",
+      "what": "faint vertical streaks in the dark sky beside the limb, carried over from the smear on the globe",
+      "fix": "keep any blur or smear pass off the background star layer"
+     }
+    ]
+   }
+  }
+ ]
+}
