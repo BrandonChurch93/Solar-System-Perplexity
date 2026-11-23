@@ -23,7 +23,7 @@ export const params: MoveParams = {
   spinDegPerSecond: 0.9,
   moonDegPerSecond: -1.2,
   tint: [0.9, 0.5, 0.3],
-  handover: { dive: { place: { valid: place.dive.valid as [number, number, number, number] } }, rise: { place: { valid: place.rise.valid as [number, number, number, number] } } },
+  handover: { dive: { skyFloor: true, place: { valid: place.dive.valid as [number, number, number, number] }, path: place.dive.path }, rise: { at: 0.2, placeFrames: 26, skyFloor: true, place: { valid: place.rise.valid as [number, number, number, number], maxEnlarge: place.rise.maxEnlarge, enlargeSoft: place.rise.enlargeSoft } } },
 }
 
 export const plan = new StopPlan('mars', fit as Fit, params)
