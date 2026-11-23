@@ -1,9 +1,61 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T14:58:37.336Z",
- "head": "c4473f6757be610b6e0748b6c74e802dfa88fc5a",
- "note": "5fd4b413: handover report passes both ways; its sheets; G13 probe sheets; G15 green at 1393 MB",
+ "pushed": "2026-11-23T15:55:17.186Z",
+ "head": "5b4bd230b376adcfdade1cb40367339afdcdea04",
+ "note": "15:56 VM: 4721 cure under way (plate 16 moved south, new take for the strip, texels view counts a plate by what is drawn), baking; nothing proven yet",
  "looks": [
+  {
+   "time": "2026-11-23T15:55:16.384Z",
+   "file": "20261123155516384-note-take16-moved-south-strip.jpg",
+   "source": "out/work/nep/s10/take16-moved-south-strip.jpg",
+   "kind": "note",
+   "label": "the southern fifth at the size of the take: guide above, take 3 below",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T15:55:15.720Z",
+   "file": "20261123155515720-note-take16-moved-guide-and-take3.jpg",
+   "source": "out/work/nep/s10/take16-moved-guide-and-take3.jpg",
+   "kind": "note",
+   "label": "16 degree plate moved south: guide (left) and take 3 (right); only the fine band of the take is used and only in the southern 1.5 degrees",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T15:55:15.067Z",
+   "file": "20261123155515067-note-texels-4721-old-rule-against-new.jpg",
+   "source": "out/work/nep/s10/texels-4721-old-rule-against-new.jpg",
+   "kind": "note",
+   "label": "4721 texels view: left the tree of d39658df (2.50 percent soft, bottom left corner outside the 16 degree plate), right plate 16 moved 1.5 degrees south, count only, old files",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T15:40:29.414Z",
+   "file": "20261123154029414-job-frame-05006.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "neptune.rise frame 5006, final tier, nograin view, from the running measure job",
+   "stop": "neptune",
+   "segment": "neptune.rise",
+   "frame": 5006,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-23T15:27:50.553Z",
+   "file": "20261123152750553-job-frame-04707.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "neptune.dive frame 4707, final tier, nograin view, from the running measure job",
+   "stop": "neptune",
+   "segment": "neptune.dive",
+   "frame": 4707,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
   {
    "time": "2026-11-23T14:58:16.461Z",
    "file": "20261123145816461-job-frame-04530.jpg",
@@ -32,46 +84,6 @@
    "source": "out/work/nep/s8/ho-rise-across.jpg",
    "kind": "note",
    "label": "handover report sheet rise across, draft, tree of 5fd4b413",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T14:58:00.668Z",
-   "file": "20261123145800668-note-ho-rise-before.jpg",
-   "source": "out/work/nep/s8/ho-rise-before.jpg",
-   "kind": "note",
-   "label": "handover report sheet rise before, draft, tree of 5fd4b413",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T14:58:00.091Z",
-   "file": "20261123145800091-note-ho-dive-after.jpg",
-   "source": "out/work/nep/s8/ho-dive-after.jpg",
-   "kind": "note",
-   "label": "handover report sheet dive after, draft, tree of 5fd4b413",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T14:57:59.336Z",
-   "file": "20261123145759336-note-ho-dive-across.jpg",
-   "source": "out/work/nep/s8/ho-dive-across.jpg",
-   "kind": "note",
-   "label": "handover report sheet dive across, draft, tree of 5fd4b413",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T14:57:58.683Z",
-   "file": "20261123145758683-note-ho-dive-before.jpg",
-   "source": "out/work/nep/s8/ho-dive-before.jpg",
-   "kind": "note",
-   "label": "handover report sheet dive before, draft, tree of 5fd4b413",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T14:57:58.114Z",
-   "file": "20261123145758114-note-soft.jpg",
-   "source": "out/work/nep/s8/soft.jpg",
-   "kind": "note",
-   "label": "s8 soft.jpg (5fd4b413 tree or its step before)",
    "stop": "neptune"
   }
  ]
