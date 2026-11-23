@@ -5,11 +5,12 @@ import { openCapture, pageFault } from './lib/browser'
 import { segmentAtFrame } from '../src/director/timeline'
 
 interface Counts { programs: number; textures: number; buffers: number }
-interface Api { ahead(frame: number, tier: string, all?: boolean): Promise<number>; renderFrame(frame: number, tier: string): Promise<void>; counts(): Counts }
+interface Api { setRate(rate: number): void; ahead(frame: number, tier: string, all?: boolean): Promise<number>; renderFrame(frame: number, tier: string): Promise<void>; counts(): Counts }
 
 // The warm start of the live player (kit/PROGRESS.md, second review note of 2026-11-23, plan H 3).
-//   npm run warm -- [--first F] [--last L] [--format ID] [--step 0.5] [--player] [--cold] [--write] [--label NAME]
+//   npm run warm -- [--first F] [--last L] [--format ID] [--rate 2] [--player] [--cold] [--write] [--label NAME]
 // Draws the frames first..last in film order the way the player does: showcase.ahead (loads and warm draws), showcase.renderFrame, showcase.counts.
+// --rate 2 draws the half frames too, as a display faster than the film asks for them.
 // Exit 1 when a frame of a dive, a rise or a travel made a program, uploaded a texture or made a buffer. A piece starts at the first frame of a hold
 // (or at frame 0), where the player is warm. --player takes the live page and the web assets instead of the capture page. --cold leaves the warm
 // start out and only lists. --write adds every frame outside a hold that did work to src/core/warm.json and exits 0: run it, then run again without
@@ -23,7 +24,7 @@ const format = a.format ?? cfg.formatKeys.preview
 const first = a.first ? Number(a.first) : 0
 const last = a.last ? Number(a.last) : cfg.frameCount - 1
 const cold = a.cold === 'true'
-const step = a.step ? Number(a.step) : 1
+const rate = a.rate ? Number(a.rate) : 1
 const label = a.label ?? (cold ? 'cold' : 'warm')
 const guarded = ['dive', 'rise', 'travel']
 const dir = join(WORK, 'warm')
@@ -37,15 +38,17 @@ const bad: string[] = []
 const found: number[] = []
 const t0 = Date.now()
 try {
-  for (let f = first; f <= last; f += step) {
+  await s.page.evaluate((r) => (window as unknown as { showcase: Api }).showcase.setRate(r), rate)
+  for (let i = first * rate; i <= last * rate; i++) {
+    const f = i / rate
     const t = Date.now()
-    const c = await s.page.evaluate(async ([frame, tr, warm, start]) => {
+    const c = await s.page.evaluate(async ([index, frame, tr, warm, start]) => {
       const api = (window as unknown as { showcase: Api }).showcase
       const drawn = warm ? await api.ahead(frame as number, tr as string, start as boolean) : 0
       const before = api.counts()
-      await api.renderFrame(frame as number, tr as string)
+      await api.renderFrame(index as number, tr as string)
       return { ...api.counts(), drawn, before }
-    }, [f, tier, !cold, f === first] as const)
+    }, [i, f, tier, !cold, i === first * rate] as const)
     const fault = await pageFault(s.page)
     if (fault) throw new Error('frame ' + f + ' is not usable: ' + fault)
     const seg = segmentAtFrame(f)
@@ -57,12 +60,12 @@ try {
       if (guarded.includes(seg.kind)) bad.push(line)
       if (seg.kind !== 'hold' && f !== first) found.push(f)
     }
-    if (Math.floor(f - first) % 300 === 299 && Number.isInteger(f)) console.log('at ' + f + ', ' + ((Date.now() - t0) / 1000).toFixed(0) + ' s')
+    if ((i - first * rate) % 300 === 299) console.log('at ' + f + ', ' + ((Date.now() - t0) / 1000).toFixed(0) + ' s')
   }
 } finally {
   await s.close()
 }
-console.log('frames ' + first + '..' + last + ' in steps of ' + step + ' at ' + format + ', tier ' + tier + (player ? ', the player\'s path' : ', the capture path') + (cold ? ', cold' : ', warm start') + ': ' + bad.length + ' frames of a dive, rise or travel did work')
+console.log('frames ' + first + '..' + last + ' at ' + rate + ' pictures a film frame, ' + format + ', tier ' + tier + (player ? ', the player\'s path' : ', the capture path') + (cold ? ', cold' : ', warm start') + ': ' + bad.length + ' frames of a dive, rise or travel did work')
 if (a.write === 'true') {
   const table = join(ROOT, 'src/core/warm.json')
   const was = JSON.parse(readFileSync(table, 'utf8')) as { recipe: string; frames: number[] }
