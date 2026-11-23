@@ -1,9 +1,95 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-23T20:30:55.039Z",
- "head": "650009df756f97cd844c9eb4f1f49a125c09e32f",
- "note": "ninth bake: new 1.6 and 0.7 takes break the spokes near the place; the outer strokes are the 3.8 plate",
+ "pushed": "2026-11-23T20:45:07.255Z",
+ "head": "1fc262b031ee70ecc0a1c9110fbaebe7f48138fa",
+ "note": "ninth bake: proofs green, G13 and handover report running for the READY line",
  "looks": [
+  {
+   "time": "2026-11-23T20:45:06.372Z",
+   "file": "20261123204506372-note-p16-detail.jpg",
+   "source": "out/work/place/view/p16-detail.jpg",
+   "kind": "note",
+   "label": "trial not taken: 1.6 plate with broadDetail 0.85",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T20:45:05.653Z",
+   "file": "20261123204505653-note-xz2446.jpg",
+   "source": "out/work/place/view/xz2446.jpg",
+   "kind": "note",
+   "label": "ninth bake, 2446 at draft, native crop: near ground dark with bright crest lines",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T20:38:58.918Z",
+   "file": "20261123203858918-job-frame-02250.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "mars.hold frame 2250, draft tier, texels view, from the running measure job",
+   "stop": "mars",
+   "segment": "mars.hold",
+   "frame": 2250,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-23T20:36:17.498Z",
+   "file": "20261123203617498-frame-final-2580.jpg",
+   "source": "out/work/place/view/final-2580.png",
+   "kind": "frame",
+   "label": "mars.terrain frame 2580, final tier",
+   "stop": "mars",
+   "segment": "mars.terrain",
+   "frame": 2580,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "45f909e84c1a1464"
+  },
+  {
+   "time": "2026-11-23T20:35:18.587Z",
+   "file": "20261123203518587-frame-final-2325.jpg",
+   "source": "out/work/place/view/final-2325.png",
+   "kind": "frame",
+   "label": "mars.hold frame 2325, final tier",
+   "stop": "mars",
+   "segment": "mars.hold",
+   "frame": 2325,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "45f909e84c1a1464"
+  },
+  {
+   "time": "2026-11-23T20:34:25.136Z",
+   "file": "20261123203425136-frame-f02782-draft.jpg",
+   "source": "out/work/samebytes/b9/f02782-draft.png",
+   "kind": "frame",
+   "label": "mars.travel frame 2782, draft tier",
+   "stop": "mars",
+   "segment": "mars.travel",
+   "frame": 2782,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "45f909e84c1a1464"
+  },
+  {
+   "time": "2026-11-23T20:33:37.082Z",
+   "file": "20261123203337082-frame-f02212-draft.jpg",
+   "source": "out/work/samebytes/b9/f02212-draft.png",
+   "kind": "frame",
+   "label": "earth.travel frame 2212, draft tier",
+   "stop": "earth",
+   "segment": "earth.travel",
+   "frame": 2212,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "45f909e84c1a1464"
+  },
   {
    "time": "2026-11-23T20:30:54.326Z",
    "file": "20261123203054326-note-xz2440.jpg",
@@ -11,80 +97,6 @@
    "kind": "note",
    "label": "2440 draft: left eighth bake (ridges run to the mesa like spokes), right ninth",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T20:30:53.735Z",
-   "file": "20261123203053735-note-xz2427.jpg",
-   "source": "out/work/place/view/xz2427.jpg",
-   "kind": "note",
-   "label": "2427 draft native crop: left eighth bake, right ninth: the maze of mesas near the middle; the strokes further out are the 3.8 plate",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T20:30:53.148Z",
-   "file": "20261123203053148-note-sheet-z-rise.jpg",
-   "source": "out/work/place/view/sheet-z-rise.jpg",
-   "kind": "note",
-   "label": "ninth bake, rise draft 2695 to 2726",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T20:30:52.591Z",
-   "file": "20261123203052591-note-sheet-z-dive.jpg",
-   "source": "out/work/place/view/sheet-z-dive.jpg",
-   "kind": "note",
-   "label": "ninth bake (1.6 take 5, 0.7 take 4), dive draft 2418 to 2454",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T20:29:32.511Z",
-   "file": "20261123202932511-frame-z2722.jpg",
-   "source": "out/work/place/view/z2722.png",
-   "kind": "frame",
-   "label": "mars.rise frame 2722, draft tier",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "frame": 2722,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e85c8d53a860dafc"
-  },
-  {
-   "time": "2026-11-23T20:23:12.598Z",
-   "file": "20261123202312598-frame-z2450.jpg",
-   "source": "out/work/place/view/z2450.png",
-   "kind": "frame",
-   "label": "mars.dive frame 2450, draft tier",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2450,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e85c8d53a860dafc"
-  },
-  {
-   "time": "2026-11-23T20:20:54.384Z",
-   "file": "20261123202054384-compare-mars-rise-under.jpg",
-   "source": "out/work/handover/mars-rise-under.png",
-   "kind": "compare",
-   "label": "mars rise, the globe side at T (frame 2692) with the place picture, alone, and their difference times 4",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "frame": 2692,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T20:20:26.506Z",
-   "file": "20261123202026506-compare-mars-dive-under.jpg",
-   "source": "out/work/handover/mars-dive-under.png",
-   "kind": "compare",
-   "label": "mars dive, the globe side at T (frame 2454) with the place picture, alone, and their difference times 4",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2454,
-   "tier": "draft"
   }
  ]
 }
