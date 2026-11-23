@@ -1,9 +1,37 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T12:40:15.785Z",
- "head": "f76f04b4e6f45a87aa864940ddf08b4aca2d8b2c",
- "note": "soft outer rim by function, second blocks (sheet toned, lit faces, shadows), hold checked against head",
+ "pushed": "2026-11-23T12:58:11.357Z",
+ "head": "f9007f07a1ffc3c29ef4d022f13b96c432236b2d",
+ "note": "blocks third version: white ice with own shapes, floaters through the whole skim; review tier proofs rendering",
  "looks": [
+  {
+   "time": "2026-11-23T12:58:09.987Z",
+   "file": "20261123125809987-note-c3630_s.jpg",
+   "source": "../../../../tmp/v/b3e/c3630_s.jpg",
+   "kind": "note",
+   "label": "draft 3630, soft shore and floaters, blocks third version"
+  },
+  {
+   "time": "2026-11-23T12:58:08.826Z",
+   "file": "20261123125808826-note-c3720_bl.jpg",
+   "source": "../../../../tmp/v/b3/c3720_bl.png",
+   "kind": "note",
+   "label": "draft 3720 bottom left at native size, blocks third version"
+  },
+  {
+   "time": "2026-11-23T12:58:08.058Z",
+   "file": "20261123125808058-note-c3765_bl.jpg",
+   "source": "../../../../tmp/v/b3e/c3765_bl.png",
+   "kind": "note",
+   "label": "draft 3765 bottom left at native size, blocks third version"
+  },
+  {
+   "time": "2026-11-23T12:58:06.102Z",
+   "file": "20261123125806102-note-sheet.jpg",
+   "source": "../../../../tmp/v/b3e/sheet.jpg",
+   "kind": "note",
+   "label": "draft, every 15th frame 3630 to 3795, blocks third version (white ice, own shapes)"
+  },
   {
    "time": "2026-11-23T12:40:15.232Z",
    "file": "20261123124015232-note-holdpair.jpg",
@@ -31,34 +59,6 @@
    "source": "../../../../tmp/v/b2/sheet.jpg",
    "kind": "note",
    "label": "draft sheet 3567 3600 3625 3630 3675 3720 3765 3809 3815 3840 3866 with soft outer rim and second blocks"
-  },
-  {
-   "time": "2026-11-23T12:19:32.210Z",
-   "file": "20261123121932210-note-f_3720.jpg",
-   "source": "../../../../tmp/v/b1/f_3720.png",
-   "kind": "note",
-   "label": "3720 draft, 1 sample: first blocks of ice (instanced bodies with faces and shadows) on the fitted pose"
-  },
-  {
-   "time": "2026-11-23T11:59:25.351Z",
-   "file": "20261123115925351-note-end_over.jpg",
-   "source": "../../../../tmp/v/p1/end_over.jpg",
-   "kind": "note",
-   "label": "left: draft 3810 with the new flight; right: draft 3720 at half weight over the approved close after the pose fit (limb rms 7.8 px)"
-  },
-  {
-   "time": "2026-11-23T11:59:24.805Z",
-   "file": "20261123115924805-note-sheet.jpg",
-   "source": "../../../../tmp/v/p1/sheet.jpg",
-   "kind": "note",
-   "label": "new flight after mail 252 at draft, frames 3630 3675 3765 3810 (clockwise from top left: 3630, 3675, 3810 lower right, 3765 lower left): pose at 3720 fitted to the approved close, descent 2.2 fold over the view"
-  },
-  {
-   "time": "2026-11-23T11:30:43.494Z",
-   "file": "20261123113043494-note-zp_nearleft.jpg",
-   "source": "../../../../tmp/v/zp_nearleft.png",
-   "kind": "note",
-   "label": "3720 draft: approved close (left) and film (right), A ring near left at 2x"
   }
  ]
 }
