@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs'
 import { afterAll, describe, expect, it } from 'vitest'
 import { config } from '../src/config'
 import { handoverFrame, handoverOf } from '../src/director/handover'
@@ -78,5 +79,18 @@ describe('the cover sheet of a stop round', () => {
         if (s && !p.handsOver) expect(run(s, true)).toEqual(run(s, false))
       }
     }
+  })
+
+  it('is asked for by every pack command of the round tool, stop rounds and whole film rounds alike', () => {
+    const lines = readFileSync(new URL('../tools/round.py', import.meta.url), 'utf8').split('\n')
+    const at = lines.findIndex((l) => l.startsWith('def tiers('))
+    const body = lines.slice(at, lines.findIndex((l, i) => i > at && l.startsWith('def '))).join('\n')
+    expect(body).toMatch(/if tool == 'pack':\n\s+return ' --place-window' \+/)
+    expect(body.indexOf("if tool == 'pack'")).toBeLessThan(body.indexOf('if not t'))
+    const commands = lines.filter((l) => /npm run (-s )?pack -- /.test(l))
+    expect(commands.length).toBe(7)
+    const extra = lines.filter((l) => /^\s+extra = tiers\(s, 'pack'\)/.test(l))
+    expect(extra.length).toBe(1)
+    for (const l of commands) expect(l.includes("tiers(s, 'pack')") || /% \(s\['phase'\], n, extra\)/.test(l)).toBe(true)
   })
 })

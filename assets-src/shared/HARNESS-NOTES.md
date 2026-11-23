@@ -316,6 +316,18 @@ Checks: pyflakes clean, tsc clean, vitest 26 files 175 tests passed, build ok. N
 
 State at 18:40 UTC on 2026-11-23: MAIL 305 (cc980678) and MAIL 323 (a14827fc, head be4e4b97) sent with DONE; the ticks are off since 00:40 UTC; three timer jobs (WAKE 5, WAKE 5, WAKE 8) done. A question of `saturn_coder` on G13 answered by mail from the code only (the measure counts the red byte of the texels view; the Sun's ground is the precedent for function detail, switched at half weight; acceptance is the Builder's word). My sandbox has 2.4 GB free, `requireDisk` wants 3, so `pack` and `pack --plan` do not start here; `worker` (5.2 GB) is the first thing to remove if a pack must run here.
 
+## MAIL 325 (2026-11-23 18:41 UTC): the place window in the whole film rounds too
+
+The Builder's word on MAIL 323: the tie stands (a dive shows up to T, a rise from T on); my reading of item 2 was wrong, the whole film rounds must show the same cover frames as a stop round.
+
+Change: `tiers(s, 'pack')` in `tools/round.py` now always starts with ` --place-window`, and the two explicit flags of MAIL 323 are gone, so all seven pack commands of the tool carry it: stop `jobs`, stop `pack`, `film_plan` (used by `film_touched`), the `--plan` of `film_jobs`, the job command `cmd` of `film_jobs`, the `--join` of `film_place`, and `film_pack` (through `extra`). `tools/pack.ts` and `tools/lib/render.ts` are as in MAIL 323. The flag only acts where a handover exists, so a stop with a cover keeps its frames in every round, and Phase 5 rounds have no cover sheets at all. Test: a sixth test in `tests/coversheet.test.ts` reads `tools/round.py` and checks that `tiers` gives the flag for the pack before it looks at the tier and that each of the seven pack commands goes through `tiers(s, 'pack')` or `extra`.
+
+What follows in a polish round: `touched` compares `motion-<part>.png` by its pixels against the base, the name stays, so the cover sheets of the stops with a handover count as changed in the first polish round after this, which is true. A `plan.json` written by `film_plan` before this change keeps the old tile list of that round; the pack reads the frames live.
+
+The rule when a place window is longer than the sheet: the sheet is still `critics.contactSheetFrames` frames, centred on the middle of the window, so neither end of the window is on it and T (which sits at the end of a dive's window and at the start of a rise's) is not shown. On main bab673f that is the Mars rise: window 2685 to 2711 (27 frames), sheet 2692 to 2703, T 2685 not on it. When a window is shorter than the sheet, the sheet reaches past both ends of it by the same number of frames, give or take the one frame of the tie. A window of 12 or 13 frames shows all of it, or all but the end frame away from T.
+
+G13 and detail from functions (asked by `saturn_coder`, answered by mail, copy to the Builder): the texels view counts only the number the material hands to `diagOut`; it cannot see functions. A true report: the cells of the finest octave that is really drawn at that pixel, from the same expression and uniforms as the beauty path, counted only where the function detail has its weight (the Sun's ground switches at half weight), never a constant, and the counted flag left alone. The tools have no rule on contrast; G17 only looks at the judged hold and terrain frames, so the proof that the detail is seen is a native crop and a sharpness number from the coder, and the bar is the Builder's.
+
 ## Not covered
 
 - No run at the final or review tier, so the cost model (4.3 s per sample, a fast frame four times a slow one) is not checked against a real worker; `--sample-seconds` moves it.

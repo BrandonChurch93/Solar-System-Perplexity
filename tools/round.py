@@ -241,10 +241,10 @@ def still_tier(s):
 
 def tiers(s, tool):
     t = s.get('tier')
+    if tool == 'pack':
+        return ' --place-window' + (' --tier %s --motion-tier %s' % (t, t) if t else '')
     if not t:
         return ''
-    if tool == 'pack':
-        return ' --tier %s --motion-tier %s' % (t, t)
     return ' --tier %s' % t + (' --every %d' % s['every'] if tool == 'measure' and s.get('every') else '')
 
 
@@ -277,7 +277,7 @@ def jobs(a):
         if 'stills' in only:
             paths.append('out/work/stills/f*-16x9-%s-full.png out/work/stills/f*-16x9-%s-full.png.json' % (still_tier(s), still_tier(s)))
         pre = 'Before the command: `rm -rf out/work/packs/.cache/%s out/work/stills/*-%s-full.png*`. ' % (r, still_tier(s))
-        out.append({'name': name, 'message': 'JOB %s. Commit %s. %sCommand: `npm run pack -- --phase %d --round %d --stop %s --only %s --place-window%s`. %s' % (name, sha, pre, s['phase'], n, stop, ','.join(only), tiers(s, 'pack'), tar(name, paths))})
+        out.append({'name': name, 'message': 'JOB %s. Commit %s. %sCommand: `npm run pack -- --phase %d --round %d --stop %s --only %s%s`. %s' % (name, sha, pre, s['phase'], n, stop, ','.join(only), tiers(s, 'pack'), tar(name, paths))})
     (rdir(n) / 'jobs.json').write_text(json.dumps(out, indent=1))
     print(json.dumps([j['name'] for j in out]))
 
@@ -347,7 +347,7 @@ def pack(a):
     stop = s['stop']
     # a stop round of phase 6 needs the stop pack of phase 4; in pack.ts phase 6 without --only is the whole film path
     pack_phase = 4 if s['phase'] == 6 else s['phase']
-    out = subprocess.run('npm run -s pack -- --phase %d --round %d --stop %s --place-window%s' % (pack_phase, n, stop, tiers(s, 'pack')), shell=True, cwd=ROOT, capture_output=True, text=True)
+    out = subprocess.run('npm run -s pack -- --phase %d --round %d --stop %s%s' % (pack_phase, n, stop, tiers(s, 'pack')), shell=True, cwd=ROOT, capture_output=True, text=True)
     print((out.stdout + out.stderr)[-900:])
     if out.returncode != 0:
         sys.exit(1)
