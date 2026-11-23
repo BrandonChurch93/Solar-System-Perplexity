@@ -9,6 +9,15 @@ export const diagUniform: THREE.IUniform<number> = { value: 0 }
 
 export const gradUniform: THREE.IUniform<number> = { value: 1 }
 
+export const fineUniform: THREE.IUniform<number> = { value: 1 }
+
+export const biasUniform: THREE.IUniform<number> = { value: 0 }
+
+export function setFine(scale: number): void {
+  fineUniform.value = scale
+  biasUniform.value = Math.log2(scale)
+}
+
 export function setSamples(count: number, floor: number, soft = 0): void {
   const sharp = Math.max(1 / Math.sqrt(Math.max(count, 1)), floor)
   gradUniform.value = soft > 0 ? sharp + (1 - sharp) * soft : sharp
