@@ -1,9 +1,55 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-23T10:12:07.024Z",
+ "pushed": "2026-11-23T10:41:54.454Z",
  "head": "4ddf9dba01cb6fc61c31fbcf63286864142cb84f",
- "note": "E2 merged and opted in: first handover run, sides at T differ by a lens shaped 3 to 5 percent (bloom undo), far band pink before the place picture",
+ "note": "side difference at T now 0.10 both ways (bloom undo fix); rim of the bare globe tuned to the close side; cast on the far sheet; dark pool still open",
  "looks": [
+  {
+   "time": "2026-11-23T10:41:53.498Z",
+   "file": "20261123104153498-note-dd1877.jpg",
+   "source": "out/work/earth/place/tmp/dd1877.jpg",
+   "kind": "note",
+   "label": "top down f1877 before today's fixes: pink deck, dark pool and streaks round the glint (still open)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T10:41:52.806Z",
+   "file": "20261123104152806-note-cast-dry.jpg",
+   "source": "out/work/earth/place/tmp/cast-dry.jpg",
+   "kind": "note",
+   "label": "far sheet and deck, top down: before and after the cast toward the close picture's own cloud colour",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T10:41:51.823Z",
+   "file": "20261123104151823-note-rim-1915.jpg",
+   "source": "out/work/earth/place/proof/rim-1915.jpg",
+   "kind": "note",
+   "label": "f1915 rim: close side, bare globe before, bare globe with the new air values",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T10:25:04.124Z",
+   "file": "20261123102504124-compare-earth-rise-sides.jpg",
+   "source": "out/work/handover/earth-rise-sides.png",
+   "kind": "compare",
+   "label": "earth rise, both sides at T (frame 2100) and their difference times 8",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2100,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T10:24:32.896Z",
+   "file": "20261123102432896-compare-earth-dive-sides.jpg",
+   "source": "out/work/handover/earth-dive-sides.png",
+   "kind": "compare",
+   "label": "earth dive, both sides at T (frame 1919) and their difference times 8",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1919,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-23T10:12:06.419Z",
    "file": "20261123101206419-note-earth-dive-sides.jpg",
@@ -27,61 +73,6 @@
    "kind": "note",
    "label": "earth dive: T minus 12 to T minus 1, engine E2, draft",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T10:12:04.516Z",
-   "file": "20261123101204516-note-dive-down-sheet.jpg",
-   "source": "out/work/earth/place/down/dive-down-sheet.jpg",
-   "kind": "note",
-   "label": "earth place: top down dive sheet with the cloud deck in the far ring, globe side alone, place picture off",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T10:09:48.685Z",
-   "file": "20261123100948685-sheet-earth-rise-draft-after.jpg",
-   "source": "out/work/handover/earth-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "earth rise, every frame 2101 to 2112 (after T, frame 2100), draft tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "first": 2101,
-   "last": 2112,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T10:09:46.805Z",
-   "file": "20261123100946805-sheet-earth-rise-draft-across.jpg",
-   "source": "out/work/handover/earth-rise-draft-across.png",
-   "kind": "sheet",
-   "label": "earth rise, every frame 2100 to 2105 (across T, frame 2100), draft tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "first": 2100,
-   "last": 2105,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T10:07:42.860Z",
-   "file": "20261123100742860-compare-earth-rise-sides.jpg",
-   "source": "out/work/handover/earth-rise-sides.png",
-   "kind": "compare",
-   "label": "earth rise, both sides at T (frame 2100) and their difference times 8",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2100,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T10:07:13.135Z",
-   "file": "20261123100713135-sheet-earth-dive-draft-across.jpg",
-   "source": "out/work/handover/earth-dive-draft-across.png",
-   "kind": "sheet",
-   "label": "earth dive, every frame 1913 to 1919 (across T, frame 1919), draft tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "first": 1913,
-   "last": 1919,
-   "tier": "draft"
   }
  ]
 }
