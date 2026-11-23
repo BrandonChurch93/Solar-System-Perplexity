@@ -1,9 +1,16 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-23T18:58:43.622Z",
- "head": "650e87bbb24ed743778a159041e58cc40ea08407",
- "note": "E6 and the sky hooks pushed (63f9dfd); byte proofs against the E6 tree and main are rendering",
+ "pushed": "2026-11-23T19:41:37.936Z",
+ "head": "c3199d33a442ae351ec087ba6d74288279c6e6e4",
+ "note": "Floor on the shutter share (handover.minShutter) built and pushed with two trial branches; rendering Mars 2440 and the rise at T with floor 0.25",
  "looks": [
+  {
+   "time": "2026-11-23T19:41:36.820Z",
+   "file": "20261123194136820-note-cmp-2694-three.jpg",
+   "source": "../../../../tmp/tone/cmp-2694-three.png",
+   "kind": "note",
+   "label": "Mars rise 2694 and 2695, fifth bake: today, tone shares 1, tone shares 2, draft tier"
+  },
   {
    "time": "2026-11-23T18:58:42.389Z",
    "file": "20261123185842389-note-f04195-review.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/e6/after/f02705-review.png",
    "kind": "note",
    "label": "E6 capped shutter (6 px), Mars frame 2705, review tier, 16 samples, commit aca5732"
-  },
-  {
-   "time": "2026-11-23T18:45:16.739Z",
-   "file": "20261123184516739-note-f02692-review.jpg",
-   "source": "../../../../tmp/e6/after/f02692-review.png",
-   "kind": "note",
-   "label": "E6 capped shutter (6 px), Mars frame 2692, review tier, 16 samples, commit aca5732"
   }
  ]
 }
