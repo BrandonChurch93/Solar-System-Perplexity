@@ -200,15 +200,15 @@
     }
   },
   "globeFine": {
-    "note": "the fine structure of the globe's bands near the lens, from functions under the texels of the 8192 map (globe.ts bandFine): streaks along the bands, value noise over cells of latitude and longitude in octaves that halve. reach: the structure is whole where the surface is nearer to the lens than the first distance and absent beyond the second (planet radii, by the logarithm), so the hold and the dive do not have it. cell: the cell of latitude of the first octave in radians; stretch: how many times longer a cell is along the band than across; octaves: how many; amount: the strength of the first octave on the logarithm of the cloud colour, fall: the factor on it per octave; bend: by how many cells an octave is shifted across the band by the octave before it; pixels: the width of a cell in pixels (one over the cells that a pixel step crosses) up to which an octave is absent and from which it is whole, so the finest octave at half strength or more has between one and two cells a pixel; tint: the strength per colour, the blue more so that a dark streak is warmer; calm: by this share the sharpening of the map's own texels (showcase look.fine) steps back where the structure is whole, since at this nearness it would sharpen the grid of the map; seed. The texels view counts, only where the structure is whole, the cells a pixel of the finest octave that is drawn at half strength or more, from the same coordinates and weights as the picture.",
+    "note": "the fine structure of the globe's bands near the lens, from functions under the texels of the 8192 map (globe.ts bandFine): streaks along the bands, value noise over cells of latitude and longitude in octaves that halve. reach: the structure is whole where the surface is nearer to the lens than the first distance and absent beyond the second (planet radii, by the logarithm), so the hold and the dive do not have it. cell: the cell of latitude of the first octave in radians; stretch: how many times longer a cell is along the band than across; octaves: how many; amount: the strength of the first octave on the logarithm of the cloud colour, fall: the factor on it per octave; bend: by how many cells an octave is shifted across the band by the octave before it; pixels: the width of a cell in pixels (one over the cells that a pixel step crosses) up to which an octave is absent and from which it is whole, so the finest octave at half strength or more has between one and two cells a pixel; tint: the strength per colour, the blue more so that a dark streak is warmer; zone: some belts are more streaked than others, the strength runs between the first and the second value with a value of its own per cell of latitude of the third value (radians); relief: toward the terminator the low sun sets the relief of the cloud tops off more strongly, the strength grows by the first value where the cosine of the Sun's angle is at or under the second and not at all from the third on; wide: the sharpening of the map's small features (showcase look.fine) sets them off against a neighbourhood of so many pixels in the far view; near the lens that neighbourhood is never fewer than this many texels of the map, so the features of the map keep their contrast when a texel grows to a pixel and the globe has no brighter tone where it is nearest; seed. The texels view counts, only where the structure is whole, the cells a pixel of the finest octave that is drawn at half strength or more, from the same coordinates and weights as the picture.",
     "reach": [
       1.3,
-      2.0
+      1.75
     ],
     "cell": 0.0056,
-    "stretch": 6,
+    "stretch": 14,
     "octaves": 8,
-    "amount": 0.09,
+    "amount": 0.14,
     "fall": 0.88,
     "bend": 0.6,
     "pixels": [
@@ -220,7 +220,17 @@
       1.1,
       1.3
     ],
-    "calm": 1.0,
+    "zone": [
+      0.4,
+      1.6,
+      0.03
+    ],
+    "relief": [
+      1.5,
+      -0.1,
+      0.45
+    ],
+    "wide": 20,
     "seed": 4127
   }
 }

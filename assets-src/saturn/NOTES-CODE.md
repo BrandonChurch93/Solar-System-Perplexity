@@ -1461,3 +1461,214 @@ the fine bands of the globe from functions are "in the picture but faint, and on
 (frames 3804 to 3828) carries nothing at any scale". The report: npm run measure -- --stop saturn --carried
 3804,3810-3812 [--tier draft]; a tile is flagged when the texels view says sharp, it is not dark and its band
 energy (luma blurred 0.6 px minus 2.0 px, squared, mean) is under 2e-5.
+
+## 19:49 to 20:30: round 2 milestone b9b333e, then the globe near the lens
+
+Milestone b9b333e (19:57 UTC, pushed, mailed 19:59): the new rise path (plan.ts riseAt) and the chunks as pale
+ice, on top of the merge of main e13dc05. Gate lines on that tree:
+PASS G11  every asset has a row or a recipe
+PASS G15  at most 2 sets per frame; finished stops: saturn/web 281 MB, saturn/full 774 MB
+Review tier on the new rise (this VM): 3820 28 samples 133 s, 3848 40 samples 153 s, 3866 55 samples 239 s. Seen:
+the blur follows the pan, no double image; the globe at 3820 pale and flat (the fault below).
+The orange arc at 3828 near (1050, 960) is the glow of the globe's limb seen through the ring sheet.
+
+Mails, in short (the words are the Builder's):
+- 335 (20:09): a284d54 is on main as 32c488a (d135). Checked there: 115 of 115 draft reference frames, 11 differ,
+  all inside 3540 to 3884; 3465 at the final tier is the kept still byte for byte; handover report passes both
+  ways; G13 pass on 495 of 495 frames; G5 pass; G17 pass (3465 median 1.055; 3720 median 0.902, p25 0.346, worst
+  tiles [11,5] 0.0097, [10,5] 0.0376, [0,6] 0.0515, [0,5] 0.058, [1,7] 0.0615 of the approved energy: "the right
+  middle and the lower left of the terrain frame carry far less detail than the approved close"). Open for this
+  round: 1 the bright patch behind the limb, 3804 to 3828, tiles x 16 to 24, y 1 to 11 of the 32 by 18 grid,
+  "luma 0.90 and it carries nothing at any scale. It reads as a blown flat area, not as a lit globe"; 2 "The
+  globe function is faint: band energy two to three times the floor only"; 3 the moon is gone from 3589 on.
+  My own list stands. "Keep the numbering of your open list". READY needs: full sha, tsc, tests, G11, G15 web
+  and full, G13 on every frame of the dive and rise, the handover report verdict with every part.
+- 340 (20:30): main is a9ed9a0. The shutter of dives and rises (d140): handover.maxBlurPx 14 with
+  handover.minShutter 0.5, on main in about 40 minutes; the draft tier does not change. "Do not add blur,
+  softness or a cover of your own to hide a fault at the handover". Brandon's words stay the measure: "the goal
+  would be to make it seamless. Like there's actually a place on the planet that the camera's going to." The
+  place has to be in the picture early, agree with the globe around it in tone, and the camera travels to it in
+  one move.
+
+The globe near the lens (items 1 and 2 of mail 335), what was found:
+- The map is 8192 wide: about one texel a pixel at the nearest surface (lens to cloud tops 0.95 radii at 3818 to
+  3824). The kept look sets the map's small features off against a neighbourhood of look.fine[0] pixels (8); near
+  the lens 8 pixels are 8 texels, a neighbourhood too small to hold anything, and a284d54 switched that boost off
+  where the functions are whole (calm 1). So the globe near the lens had neither the map's contrast nor a strong
+  function: flat, and a few percent brighter where it was nearest (a tone wedge by distance).
+- The function itself was faint: amount 0.09 on the logarithm of the colour, cells only 6 times longer than
+  wide (short dashes, not streaks).
+
+What was done (globe.ts, skim.json globeFine):
+1. wide 20: the neighbourhood of the kept boost is, near the lens, never fewer than 20 texels of the map, so the
+   map's features keep their contrast when a texel grows to a pixel; calm is gone (the boost is whole
+   everywhere). This also removes the tone wedge.
+2. amount 0.09 to 0.14, stretch 6 to 14: long laminar streaks along the bands.
+3. zone [0.4, 1.6, 0.03]: the strength of the streaks changes from belt to belt (a value per 0.03 radians of
+   latitude), so some belts are calm and some streaked.
+4. relief [1.5, -0.1, 0.45]: toward the terminator the strength grows (up to 2.5 times where the cosine of the
+   Sun's angle is at or under -0.1, none from 0.45 on).
+The count of the texels view is unchanged: the cells a pixel of the finest octave drawn at half strength or
+more, only where the structure is whole.
+
+Measured, drafts (band energy: luma blurred 0.6 px minus 2.0 px, squared, mean over a 60 px tile; floor 2e-5):
+- Carried report (npm run measure -- --stop saturn --carried 3804,3816,3828 --tier draft), flagged tiles:
+  a284d54 and b9b333e as the Builder saw them; boost only: 3804 4, 3816 0, 3828 8; with all four changes:
+  3804 2 (31,14 and 31,15), 3816 0, 3828 4 (13,16 and 31,16, 30,17, 31,17).
+- The Builder's patch (tiles x 16 to 24, y 1 to 11): band energy least 2.8e-5 (3804), 3.6e-5 (3816), 5.9e-5
+  (3828); median 1.8e-4, 1.8e-4, 1.9e-4; before the change the bright patch inside the limb had 1.2e-5 to 2.5e-5.
+- The tiles still flagged: 31,14 to 31,17 and 30,17 are the darkest part of the dusk in the lower right corner
+  (luma 0.15 to 0.31, energy 5.6e-6 to 1.9e-5: the same relative contrast as the lit side, the measure is
+  absolute); 13,16 at 3828 is a smooth lane of the ring sheet at the bottom (energy 1.85e-5), not the globe.
+- 3720 changes with it: 12.85 percent of the pixels, all on the globe (x 825 to 1911, y 7 to 908), at most 39
+  levels (246 pixels over 30, near the terminator at x 1224 to 1460, y 416 to 619). The near half of the globe
+  was soft in a284d54 and b9b333e (the map magnified), it now carries streaks at about half strength (the lens
+  is 1.62 radii from the cloud tops at 3720, reach [1.3, 2.0]). The approved close has a smooth globe there
+  (its globe tiles carry 0.2e-5 to 8e-5, under the floor of G17, so G17 does not see the globe).
+- Lens to the nearest cloud tops by frame (out/scratch/dist.ts): 3680 2.00, 3720 1.62, 3760 1.30, 3800 1.05,
+  3810 0.99, 3820 0.95, 3830 0.99, 3840 1.17, 3850 1.62, 3860 2.56. So the streaks begin at 3680, are whole at
+  the nearest point from 3760 and are gone again at 3855.
+
+The moon (item 3), measured on drafts 3580 to 3592: Titan is 40 px wide, 20 radii behind the globe, at
+(1532, 463) at 3580, lit half toward the globe. The dive swings the lens around the globe, the far sky moves
+about 10 px a frame against the limb, and the night limb crosses the moon from 3586 (touch) to 3590 (gone).
+The night side is 5 of 255 against a sky of 8: the limb cannot be seen, 30 px below the moon it can (against the
+lit far arc of the rings). Stars set behind the limb in the same frames. Cures that were weighed: light on the
+night side (ring light) changes the bytes of the hold and the judged frames; a moon nearer or elsewhere changes
+the bytes of the hold (it moves 0.3 degrees a second there); another dive path would have to be proven again
+from the start. Left, and said so.
+
+The fit at 3720 (item 6), measured on the nograin draft against the approved close (12 by 8 tiles, g17.py):
+median 0.677, p25 0.289; worst [11,5] 0.014, [10,5] 0.036, [2,7] 0.060, [1,7] 0.060, [1,6] 0.124.
+- [10,5] and [11,5]: in the approved close the ring sheet passes in front of the globe there (its waterline
+  runs from (940, 500) to (1920, 660)); in the film the waterline is 120 to 140 px lower ((950, 620) to
+  (1920, 800)) and those tiles show the night side of the globe. A matter of the pose (height over distance).
+- The lower left ([0..3, 4..7], ratios 0.06 to 0.3): the approved close has crisp ringlets 3 to 10 px wide
+  with dark gaps between them and a fine speckle of ice on every ringlet, band energy 2.5e-3 to 6.8e-3; the
+  film has smooth lanes 10 to 40 px wide with soft edges, a few thin lines and sparse grains, 3e-4 to 1.7e-3.
+- Why: at 3720 the lens is 0.40 radii above the plane and the bottom of the frame is 0.69 radii away, so a
+  pixel there is 5e-4 radii wide and 9e-4 radii deep. The ladder of ringlets (ringfine.json) has strength only
+  from octave 6 on (0.002 radii and finer: 2 px and less at the bottom of the frame); octaves 4 and 5 (0.008
+  and 0.004 radii: 4 to 16 px there) carry no strength because at those scales the sheet is the profile of the
+  kept ring picture, which is soft there (the hero resolves about 0.0035 radii). So the near field lacks
+  contrast exactly at 3 to 16 px. near.wide adds level to octave 5 only from 2.5 footprints on.
+
+## 20:44 to 21:10: the globe at the review tier, and why the sheet at 3720 is the far look
+
+Review tier with the globe change (reach [1.3, 2.0]): 3816 and 3828 carry streaks and mottle on the globe near
+the lens, no flat area; 3828 is smeared by the true blur of the rise.
+
+The globe's reach, still open at 21:10:
+- reach [1.3, 2.0]: the patch (tiles x 16 to 24, y 1 to 11) has no tile under the floor at 3804 (least 3.11e-5),
+  but at 3720 the lower half of the globe is streaked. The approved close has a smooth globe with soft wavy bands
+  and swirls and no fine streaks.
+- reach [1.2, 1.62]: 3720 mottled, not streaked, but at 3804 two limb tiles (16,8), (16,9) fall to 1.7e-5.
+- reach [1.3, 1.75] is the next test (function weight 0.17 at the nearest globe point of 3720, 0.27 at the limb
+  end of 3804, 1.58 radii away).
+
+Item 6, the fit at 3720. The main finding: handover.kept.reach [0.6, 1.3] are distances in planet radii
+(field.ts takes their logarithms; an earlier note that read them as 1.82 to 3.67 radii was wrong). So the
+model's own light, with the ladder of ringlets, shows only where the sheet is within 1.3 radii of the lens. At
+3720 its weight is 0.91 at 0.69 radii (the bottom edge), 0.60 at 0.85, 0.27 at 1.0, 0.07 at 1.15: at least half
+only below y about 880. The rest of the frame is the far look: the kept profile, soft at 0.0035 radii, with no
+ringlet under that at all. That is why the mid field of 3720 has broad soft lanes where the approved close has
+crisp ringlets.
+
+Looks rendered to see it (drafts, render tree, values restored after):
+- far everywhere (reach [0.000001, 0.000002]), model everywhere (reach [12, 13]), the film, and the film
+  without the sweep in the ladder filter ("nosweep").
+- Region means at 3720 (R, G, B, sd of luma). x 300 to 600, y 800 to 1000: film 0.501, 0.450, 0.408, sd 0.128;
+  far 0.575, 0.503, 0.444, sd 0.135; model 0.452, 0.419, 0.388, sd 0.126; approved 0.422, 0.390, 0.366, sd 0.218.
+  x 0 to 200, y 700 to 1000: film 0.598, 0.537, 0.481, sd 0.096; far 0.655, 0.579, 0.508; model 0.495, 0.470,
+  0.437; approved 0.468, 0.435, 0.399, sd 0.146. x 1000 to 1300, y 760 to 900: film 0.805, 0.729, 0.636, sd
+  0.117; model 0.787, 0.712, 0.638, sd 0.139; approved 0.775, 0.698, 0.626, sd 0.087.
+- So the model's light is nearer to the approved in the A ring (about 20 percent darker and greyer than the far
+  look) and in the contrast of the ringlets; without the sweep the lower left gains only part of what is missing
+  (sd 0.149 against 0.128 and the approved 0.218): the blur is only part of the gap.
+
+Numbers at 3720 (out/scratch/sweep.ts): radial footprint in 1e-4 radii, distance to the lens, and the slide of
+the picture across the ringlets in footprints a frame, at x 0, 160, 320, 640, 960, 1280, 1600:
+- y 600: fp 7.3 to 73, distance 1.40 to 2.03, slide 7.9, 6.4, 4.5, 1.6, 0.4, 0.1
+- y 700: fp 5.9 to 58, distance 1.15 to 1.86, slide 10.1, 7.7, 5.5, 2.7, 1.2, 0.5, 0.3
+- y 800: fp 5.2 to 35, distance 0.98 to 1.41, slide 12.1, 9.4, 7.2, 4.1, 2.4, 1.4, 0.9
+- y 900: fp 4.5 to 22.5, distance 0.86 to 1.15, slide 14.3, 11.6, 9.3, 5.9, 3.9, 2.6, 1.9
+- y 1000: fp 3.9 to 16, distance 0.77 to 0.98, slide 17, 14.2, 11.7, 8.1, 5.7, 4.1, 3.2
+- y 1079: fp 3.5 to 12.5, distance 0.72 to 0.88
+With half a shutter the blur across the ringlets is under 2 px at y 600 from x 400, y 700 from x 500, y 800
+from x 650, y 900 from x 950, y 1000 from x 1300. The mid field and the right can carry crisp ringlets; the
+lower left cannot while the path and the shutter stand (they are the Builder's: mail 311, and d140 keeps the
+whole shutter in the terrain).
+
+Distances that bound a cure (out/scratch/pmin.ts, gmin.ts):
+- Least distance from the lens to the ring plane inside the span of the kept profile (radius up to 2.5): 3588
+  2.046, 3589 2.018, 3590 1.991, 3591 1.968, 3592 1.943, 3592.5 1.928, 3593 1.918; then 3600 1.66, 3620 1.26,
+  3640 1.01, 3660 0.87, 3680 0.80, 3700 0.73, 3720 0.67.
+- Lens to the nearest cloud tops: 3540 4.48, 3580 3.60, 3590 3.36, 3600 3.13, 3620 2.74, 3630 2.60, 3660 2.22,
+  3680 2.00, 3700 1.80, 3720 1.62 (farthest in frame 2.41), 3760 1.30, 3800 1.05, 3810 0.99, 3820 0.95, 3830
+  0.98, 3840 1.17, 3850 1.62, 3860 2.56, 3870 4.30.
+
+The design that follows from it ("detail on the far look"), coded at 21:05 and taken back at 21:21 (see below):
+- The ladder of ringlets belongs to both looks. A second reach, skim.json handover.kept.detail [1.0, 1.9]
+  (planet radii, by the logarithm of the distance; uniform uRfDetail beside uRfReach): the ladder is whole
+  nearer than the first and absent beyond the second. In the far look its factors act on the kept look's colour
+  (times the brightness factor and the tint) and on its opacity (1 - (1 - a)^factor); the model's branch takes
+  the same weight. So the tone still changes only inside 1.3 radii and the ringlets resolve from 1.9 radii in.
+- While the kept set still draws takes (to 3592.02) no part of the kept profile is nearer than 1.94 radii, so
+  the frames of the window do not change (a loop of zero trips where the weight is 0).
+- ringfine.json bunchFrom 6: the octaves before it have their whole strength everywhere (was a literal 2 in the
+  shader, which never counted because octaves under 4 are not worked out); it lets octaves 4 and 5 be given an
+  even strength.
+
+## 21:10 to 21:40 UTC: the far look ladder taken back, the globe function chosen, the step of mail 348
+
+Taken back at 21:21 (not in the commit): the "detail on the far look" edits (sheet.ts, field.ts, ringfine.json,
+skim.json handover.kept.detail). Judged on drafts and one review frame: detail reach [1.0, 1.9] left 3630
+identical to b9b333e and changed 3720 hardly; with octaves 4 and 5 raised (levels 0.22, 0.3, edge 0.1) the G17
+median at 3720 was 0.690 at the draft tier (0.682 before) and 0.978 at the review tier (17 samples, 107.9 s)
+with the 25th percentile 0.379. Small gain, unproven on the dive, so it waits. The patch is kept outside the
+repo (detail.patch, detail.skim.json in the scratch folder of this VM); the design above stands as a plan.
+
+What the fit at 3720 is made of (g17grid.py: the 12 by 8 grid of G17 ratios against the approved):
+- Draft film: median 0.682, 25th percentile 0.287; lower left tiles 0.06 to 0.3; bottom right 1.1 to 2.5.
+- The same frame without the sweep of the shutter: median 0.861, 25th percentile 0.504, lower left 0.27 to
+  1.54. So most of the lower left deficit is the blur of the picture sliding 10 to 17 px a frame across the
+  ringlets; the path and the shutter are the Builder's (mails 311, 340).
+- Right middle tiles [10,5], [11,5]: the pose (the sheet stands 120 px lower than in the approved there).
+- Colour (chroma.py): the A ring at the left is 20 percent brighter than the approved with half its contrast
+  and a third of its chroma variation; bottom right mean colour matches (0.762, 0.691, 0.606 against 0.755,
+  0.681, 0.611).
+
+The globe near the lens (skim.json globeFine, globe.ts bandFine), chosen: reach [1.3, 1.75] radii from the
+lens to the surface, cell 0.0056, stretch 14, 8 octaves, amount 0.14, fall 0.88, zone [0.4, 1.6, 0.03], relief
+[1.5, -0.1, 0.45], wide 20. Beyond 1.75 radii the function is switched off whole (uBandFine.x 0), and the lens
+is 2.60 radii from the cloud tops at 3630 and farther before it, so the hold and the dive keep their bytes.
+3720 (1.62 radii) changes: a faint mottle on the globe. Measured on drafts 3804, 3816, 3828 in the Builder's
+patch (tiles x 16 to 24, y 1 to 11 of 32 by 18): least band energy 2.73e-5, 3.61e-5, 6.17e-5, median 2.0e-4,
+none under the floor 2e-5 (reach [1.2, 1.62] left two tiles under it at 3804; reach [1.3, 2.0] streaked 3720).
+At 3832 the globe is streaked along its bands at the review tier; amount 0.11 would put limb tiles under the
+floor again.
+
+Mail 348 (21:17), the Builder's look clip of b9b333e, review tier, five machines:
+1. A step in the rings between 3832 and 3834 (cream white with bright near strips, then tan and duller, the
+   band layout shifts).
+2. The globe pale and flat 3806 to 3832, the night side comes in from 3834, bands deepen from 3842.
+3. 3854 to 3884 one true scene.
+
+What I measured on 1 (one process, this VM):
+- Drafts of every frame 3830 to 3836 on the committed rings: lower left quarter mean R 0.673, 0.667, 0.661,
+  0.656, 0.652, 0.649, 0.646; whole frame mean R 0.664, 0.664, 0.664, 0.664, 0.663, 0.661, 0.658. No step.
+- Review stills 3832 (37 samples, 191.6 s) and 3834 (35 samples, 176.3 s), each alone: lower left quarter mean
+  0.679, 0.594, 0.506 and 0.668, 0.584, 0.496; same strips, same band layout, shifted by the flight only.
+- The count of samples steps at 3832 (31 at 3831, 37 at 3832) because the motion estimate of the harness steps
+  from 18.5 to 21.9 px there: a probe of its grid starts to meet the plane. The flight itself has no step
+  (riseAt is one expression of time); the knot of the view trapeze (handover.rise.rise 0.3) is at 3832.2 and
+  is a knot of the rate, not of the view.
+- Nothing in model.ts, set.ts, field.ts or sheet.ts keeps a value from one frame to the next: every uniform is
+  set from the time and the pose each take.
+So the step does not show in one process. Suspects outside this folder: a boundary between two machines of the
+job (state or checkout), or the trial shutter. Asked the Builder which frames each machine drew.
+
+What does slide with height in the rise and is still open: everything model.ts blends by `close` (ring gain,
+saturation, tints, flatten, the ladder set, ice, grains) starts to go back at height 0.6 (frame 3830.5) and is
+done at 1.8. It is smooth (close 0.992 at 3832, 0.959 at 3834) but it is a tone that slides with height, not
+with distance (mail 315). Not changed in this commit.
