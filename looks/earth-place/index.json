@@ -1,9 +1,17 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-23T12:28:23.966Z",
+ "pushed": "2026-11-23T12:35:48.910Z",
  "head": "311c1304436f35772adf7960f4a2d3308852d828",
- "note": "12:30 sky law checked on frames, far cloud being rebuilt from cloud bodies with cast shadows",
+ "note": "12:50 far cloud field of bodies laid out, not in the globe yet",
  "looks": [
+  {
+   "time": "2026-11-23T12:35:48.258Z",
+   "file": "20261123123548258-note-field-laid-12h50.jpg",
+   "source": "out/work/earth/place/proof/field-laid-12h50.jpg",
+   "kind": "note",
+   "label": "12:50 the new far cloud laid out top down on a test ground (24 degrees, left) and a part of it at native size (right): bodies with lit sides and cast shadows, the field ends in bodies; not in the globe yet",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-23T12:27:43.493Z",
    "file": "20261123122743493-note-field-takes-12h30.jpg",
@@ -64,14 +72,6 @@
    "source": "out/work/earth/place/down/dive-down-sheet.jpg",
    "kind": "note",
    "label": "M2 S2 proof: top down dive, globe alone, place picture off, 12 frames, draft",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T11:10:56.397Z",
-   "file": "20261123111056397-note-earth-rise-sides.jpg",
-   "source": "out/work/handover/earth-rise-sides.png",
-   "kind": "note",
-   "label": "M2 rise, both sides at T and their difference",
    "stop": "earth"
   }
  ]
