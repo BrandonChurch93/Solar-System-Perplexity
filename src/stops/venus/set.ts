@@ -256,6 +256,9 @@ export const createSet: SetFactory = async (ctx) => {
       ;(gu.uToneEye!.value as THREE.Vector3).copy(bodyEyeAtT(after ? 'rise' : 'dive'))
       ;(gu.uToneLook!.value as THREE.Vector4).y = byHeight(place.tone.heights)
       ;(gu.uDusk!.value as THREE.Vector4).set(duskGain * Math.pow(place.dusk.tint[0], pl.dusk), duskGain * Math.pow(place.dusk.tint[1], pl.dusk), duskGain * Math.pow(place.dusk.tint[2], pl.dusk), duskGain / place.dusk.gain)
+      // The plates hold the light of the place at the full gain and the full tint (the tone map takes them to the globe's look drawn so),
+      // so they are drawn with the share of both that the globe has now: the place and the globe about it keep one colour at every exposure.
+      ;(gu.uPlaceDusk!.value as THREE.Vector3).set(Math.pow(place.dusk.tint[0], pl.dusk - 1), Math.pow(place.dusk.tint[1], pl.dusk - 1), Math.pow(place.dusk.tint[2], pl.dusk - 1)).multiplyScalar(duskGain / place.dusk.gain)
       ;(gu.uHoldLook!.value as THREE.Vector4).x = ending ? 0 : look.hold.weight
       ;(gu.uSwirl!.value as THREE.Vector4).w = state.time > terrainMid ? THREE.MathUtils.degToRad(look.swirl.deg) : 0
       gu.uWeaveLit!.value = state.time > terrainMid ? look.weave.rise.lit : look.weave.lit

@@ -142,6 +142,7 @@ uniform vec3 uToneEye;
 uniform vec4 uToneLook;
 uniform vec2 uTonePower;
 uniform vec4 uDusk;
+uniform vec3 uPlaceDusk;
 uniform vec3 uAirDeck[10];
 uniform vec3 uAirFwd;
 uniform vec3 uAirRight;
@@ -424,7 +425,7 @@ ${PLACE_GLSL}
         vec4 tone = textureGrad(uPlaceTone, pg * uToneLook.x + 0.5, pgx * uToneLook.x * uGrad, pgy * uToneLook.x * uGrad);
         light = mix(tone.rgb * pow(max(light, vec3(uTonePower.y)), vec3(tone.a)), light, same);
       }
-      col = mix(col, light * uDusk.w, cover * uPlaceOn);
+      col = mix(col, light * uPlaceDusk, cover * uPlaceOn);
       texels = mix(texels, placeTexels, uPlaceOn);
     }
   }
@@ -503,7 +504,7 @@ export class Globe {
         uToneLook: { value: new THREE.Vector4(1 / (2 * Math.tan(THREE.MathUtils.degToRad(o.place.tone.widthDeg) / 2)), 1, o.place.tone.cos[0], o.place.tone.cos[1]) },
         uTonePower: { value: new THREE.Vector2(o.place.tone.power, o.place.tone.floor) },
         uAirDeck: { value: o.air.deck }, uAirFwd: { value: new THREE.Vector3(0, 0, -1) }, uAirRight: { value: new THREE.Vector3(1, 0, 0) }, uAirHaze: { value: new THREE.Vector4(0, 0.05, 1, THREE.MathUtils.degToRad(o.air.deckSpanDeg)) },
-        uDusk: { value: new THREE.Vector4(1, 1, 1, 1) },
+        uDusk: { value: new THREE.Vector4(1, 1, 1, 1) }, uPlaceDusk: { value: new THREE.Vector3(1, 1, 1) },
         uMapWidth: { value: o.mapWidth },
         uSpin: { value: 0 }, uGain: { value: 1 }, uCarry: { value: new THREE.Vector4(1, 1, 1, 1) }, uCarryTint: { value: new THREE.Vector3(1, 1, 1) }, uCarryOn: { value: 0 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
         uCurve: { value: o.curve.map((c) => new THREE.Vector3(c[0], c[1], c[2])) },

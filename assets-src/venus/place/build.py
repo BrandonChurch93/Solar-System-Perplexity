@@ -210,6 +210,60 @@ def nest(tag, own):
     return child_into(own, tag, c), c
 
 
+def heal(own, tag):
+    """A kept outpainting take may hold a straight line along stretches of the border of the child's square, where its guide showed the
+    child up to that border and the take painted another cloud beyond it. Such a stretch is found by the step in tone across the
+    border: the difference of the logarithm of the tone ring.heal.step pixels to either side, smoothed along the border (along), at
+    its largest within near pixels of the border, over its mean between far pixels from it (a cloud form gives about 1, a straight
+    line several times that; eased over from). There the picture just outside the border is mirrored inward over a band whose depth
+    follows a smooth noise, so the child's texture ends along an irregular line inside its square, in the part where the child shows
+    the parent's picture anyway (nest). Not where the laid back picture stands."""
+    hl = BUILD['ring']['heal']
+    size = own.shape[0]
+    n, o = square(tag, size)
+    y = np.log(own @ tiles.LUMA + 0.02)
+    trust = resize(read(WORK / f'trust-{tag}.png', cv2.IMREAD_GRAYSCALE), size)
+    rng = np.random.default_rng(hl['seed'])
+    nz = cv2.GaussianBlur(rng.standard_normal((size, size)).astype(np.float32), (0, 0), hl['noise'][1])
+    nz = nz / nz.std() * hl['noise'][0]
+    depth = hl['depth'] * n
+    e = hl['axis'] * n
+    grid = np.arange(size, dtype=np.float32)
+    ds = np.arange(-hl['far'][1], hl['far'][1] + 1)
+    out = own
+    found = {}
+    for side in ('left', 'right', 'top', 'bottom'):
+        # the picture turned so the side runs along axis 0
+        a = out if side in ('left', 'right') else out.transpose(1, 0, 2)
+        ya, ta, na = (v if side in ('left', 'right') else v.T for v in (y, trust, nz))
+        if side in ('left', 'top'):
+            border = o
+            axis = o - e
+            t = grid - axis  # distance inside from the mirror axis
+        else:
+            border = o + n
+            axis = o + n + e
+            t = axis - grid
+        g = np.stack([ya[:, border + d + hl['step']] - ya[:, border + d - hl['step']] for d in ds], 1)
+        g = np.abs(cv2.GaussianBlur(g.astype(np.float32), (1, 0), hl['along']))
+        r = g[:, np.abs(ds) <= hl['near']].max(1) / (g[:, np.abs(ds) >= hl['far'][0]].mean(1) + 0.004)
+        w = lay.smooth(hl['from'][0], hl['from'][1], r)
+        w[:o] = 0
+        w[o + n:] = 0
+        found[side] = round(float((w > 0.5).mean() * size / n), 3)
+        w = cv2.dilate(w.reshape(-1, 1), np.ones((2 * hl['reach'] + 1, 1), np.uint8))  # past the ends of the stretch
+        w = np.clip(cv2.GaussianBlur(w, (1, 0), hl['reach'] / 2).ravel(), 0, 1)
+        k = w[:, None] * (1 - lay.smooth(hl['ease'][0], hl['ease'][1], t[None, :] / depth + na)) * (t[None, :] >= 0) * (t[None, :] < 1.6 * depth) * (1 - ta)
+        src = np.clip(2 * axis - grid, 0, size - 1).astype(np.float32)
+        mapx = np.ascontiguousarray(np.broadcast_to(src[None, :], (size, size)))
+        mapy = np.ascontiguousarray(np.broadcast_to(grid[:, None], (size, size)))
+        mir = cv2.remap(np.ascontiguousarray(a), mapx, mapy, cv2.INTER_LINEAR)
+        a = a * (1 - k[..., None]) + mir * k[..., None]
+        out = np.ascontiguousarray(a if side in ('left', 'right') else a.transpose(1, 0, 2))
+    print(tag, 'healed shares of the sides of the child square', found)
+    return out
+
+
 def to_tiles(tag, out):
     """comp-4096.png of a level and its four tile inputs."""
     write(WORK / tag / 'comp-4096.png', out)
@@ -232,7 +286,7 @@ def ring_guide(tag):
     along a smooth noise (so the take does not keep a square), on flat grey. The take must paint everything that is grey."""
     rg = BUILD['ring']
     size = BUILD['guideSize']
-    n = rg['guideChild'].get(tag) or square(tag, size)[0]
+    n = square(tag, size)[0]
     o = (size - n) // 2
     child = TAGS[TAGS.index(tag) + 1]
     c = resize(read(WORK / child / 'plate-raw.png'), n)
@@ -246,7 +300,9 @@ def ring_guide(tag):
     d = np.minimum(np.minimum(xx, n - 1 - xx), np.minimum(yy, n - 1 - yy)) / n
     for amount, sigma in rg['matte']['noise']:
         d = d + amount * noise(sigma)
-    m = lay.smooth(rg['matte']['edge'][0], rg['matte']['edge'][1], d)[..., None]
+    m = lay.smooth(rg['matte']['edge'][0], rg['matte']['edge'][1], d)
+    # Closed at the border of the square: the noise may not carry the child up to the border, where it would end in a straight line.
+    m = (m * lay.smooth(0.0, rg['matte']['close'], np.minimum(np.minimum(xx, n - 1 - xx), np.minimum(yy, n - 1 - yy)) / n))[..., None]
     g = np.full((size, size, 3), rg['grey'], np.float32)
     g[o:o + n, o:o + n] = g[o:o + n, o:o + n] * (1 - m) + c * m
     cv2.imwrite(str(WORK / tag / 'ring-guide.jpg'), np.clip(g * 255 + 0.5, 0, 255).astype(np.uint8), [cv2.IMWRITE_JPEG_QUALITY, 95])
@@ -254,14 +310,14 @@ def ring_guide(tag):
 
 
 def ring(tag, take):
-    """As comp, for an outpainting take: the take is set to the true square of the child (the guide of a kept take may have held the
-    child at another size, build.ring.guideChild), its tones go to the tones of the plate of the earlier method (the globe's own look
+    """As comp, for an outpainting take: the take is set to the true square of the child (a kept take may hold the child at another
+    size than its guide did, build.ring.takeChild), its tones go to the tones of the plate of the earlier method (the globe's own look
     in the ring, the close image near the place) at the scale build.ring.lockSigmaDeg, so only its cloud forms are new."""
     rg = BUILD['ring']
     size = BUILD['guideSize']
     r = resize(read(WORK / tag / f'ring-take-{take}.png'), size)
     n = square(tag, size)[0]
-    was = rg['guideChild'].get(tag) or n
+    was = rg['takeChild'].get(tag) or n
     if was != n:
         k = n / was
         r = cv2.warpAffine(r, np.float32([[k, 0, size / 2 * (1 - k)], [0, k, size / 2 * (1 - k)]]), (size, size), flags=cv2.INTER_LANCZOS4, borderMode=cv2.BORDER_REFLECT)
@@ -321,6 +377,8 @@ def plate(tag):
     tiles.assemble(str(WORK / tag / 'comp-4096.png'), str(WORK / tag), str(WORK / tag / 'tiles-4096.png'), BUILD['tileLockSigma'], tk, True)
     out = keep(read(WORK / tag / 'tiles-4096.png'), tag, True, False)
     i = TAGS.index(tag)
+    if tag in BUILD['ring']['heal']['levels']:
+        out = heal(out, tag)
     if i + 1 < len(TAGS):
         out, c = nest(tag, out)
         write(WORK / TAGS[i + 1] / 'plate-4096.png', c)

@@ -6,27 +6,27 @@
   "levels": [
     {
       "tag": "w",
-      "file": "place2-w.jpg",
+      "file": "place3-w.jpg",
       "widthDeg": 40.0
     },
     {
       "tag": "a",
-      "file": "place2-a.jpg",
+      "file": "place3-a.jpg",
       "widthDeg": 24.0
     },
     {
       "tag": "b",
-      "file": "place2-b.jpg",
+      "file": "place3-b.jpg",
       "widthDeg": 12.13304945
     },
     {
       "tag": "c",
-      "file": "place2-c.jpg",
+      "file": "place3-c.jpg",
       "widthDeg": 6.08357505
     },
     {
       "tag": "d",
-      "file": "place2-d.jpg",
+      "file": "place3-d.jpg",
       "widthDeg": 3.4
     }
   ],
@@ -56,8 +56,8 @@
     "look": [0.06, 6, 9]
   },
   "tone": {
-    "note": "The look of the place from above (assets-src/venus/place/tlay.py tone, files place-tone-<kind>.bin: size by size texels of four floats over the extent of level a, rows from south to north). The plates hold the tones of the close view at T: the far deck pale under its haze, the near towers dark against the Sun. Seen from above those tones are a pale fan over a dark hollow. So from above the light of the plates (the display value taken back through the film curve, not below floor) is raised to a power and multiplied by a factor per channel: the map holds the factor in its first three values and the power in the fourth. They take the mean of the logarithm of the light about every point (at sigmaDeg) to that of the globe's own look there (build.py base), and the spread of its forms smaller than fineDeg to contrast (the spread measured in the ring of towers of level a), the power within power; eased to no change between edge (shares of the half width of the map). They are used in full where the line of sight at a ground point is far from the line of sight of the camera at T, and not at all where the cosine between the two is above cos[1] (cos[0]: where they are in full, curve: the power of the ramp between); and only above the heights (radii, eased in the logarithm: no change below the lower one). At T the plates show as they are.",
-    "files": {"dive": "place-tone-dive.bin", "rise": "place-tone-rise.bin"},
+    "note": "The look of the place from above (assets-src/venus/place/tlay.py tone, files place3-tone-<kind>.bin: size by size texels of four floats over the extent of level a, rows from south to north). The plates hold the tones of the close view at T: the far deck pale under its haze, the near towers dark against the Sun. Seen from above those tones are a pale fan over a dark hollow. So from above the light of the plates (the display value taken back through the film curve, not below floor) is raised to a power and multiplied by a factor per channel: the map holds the factor in its first three values and the power in the fourth. They take the mean of the logarithm of the light about every point (at sigmaDeg) to that of the globe's own look there (build.py base), and the spread of its forms smaller than fineDeg to contrast (the spread measured in the ring of towers of level a), the power within power; eased to no change between edge (shares of the half width of the map). They are used in full where the line of sight at a ground point is far from the line of sight of the camera at T, and not at all where the cosine between the two is above cos[1] (cos[0]: where they are in full, curve: the power of the ramp between); and only above the heights (radii, eased in the logarithm: no change below the lower one). At T the plates show as they are.",
+    "files": {"dive": "place3-tone-dive.bin", "rise": "place3-tone-rise.bin"},
     "size": 256,
     "widthDeg": 24.0,
     "sigmaDeg": 1.0,
@@ -72,7 +72,7 @@
   },
 
   "dusk": {
-    "note": "The exposure of the globe side on the way to the place: the globe is drawn gain times brighter and turned by tint at the place, against the hold (the plates hold the light of the close image, which is exposed for dusk). Gain and tint rise in the logarithm over these shares of the dive and fall over these shares of the rise. The plates are drawn at the same exposure, so they are dim like the dusk about them when they come in.",
+    "note": "The exposure of the globe side on the way to the place: the globe is drawn gain times brighter and turned by tint at the place, against the hold (the plates hold the light of the close image, which is exposed for dusk). Gain and tint rise in the logarithm over these shares of the dive and fall over these shares of the rise. The plates are drawn at the same exposure and with the same share of the tint, so they are dim like the dusk about them when they come in and keep the colour of the globe about them at every exposure.",
     "gain": 4.5,
     "limbHeights": [0.5, 1.6],
     "limbNote": "The glow of the limb is a fit of the hold picture seen from far away. It is not raised by the gain, and in the dive and the rise it goes out between these two heights (radii, eased in the logarithm): below the lower one the horizon is made by the haze of the globe alone, so the fit does not lie on the cloud tops as a wide band with a red and a green edge.",
@@ -113,7 +113,7 @@
     "sun": { "file": "relief-air-sun.png", "limbFile": "relief-air-limb.png", "atDeg": [26.33, 2.5], "boxDeg": [32, 12, 20], "halfWidthDeg": 30, "smoothPx": 3, "rowMedian": 6, "coreDeg": 6, "edge": 0.25, "rimDeg": [1.2, 2.2], "rimHalfWidthDeg": 6, "turnDeg": 2.5, "heights": [0.16, 0.35] }
   },
   "atT": {
-    "note": "The plates at the T of a handover (assets-src/venus/place/tlay.py, files place-<tag>-dive.jpg and place-<tag>-rise.jpg): the close side drawn at T is laid back through the globe camera of T. tags: the levels that are made again for each handover. edge: feather inside the border of the frame, share of the frame height. trustSinElevation: from where on the laid back picture replaces the plate (sine of the elevation of the camera at T over the ground point). coverSinElevation: from where on the plate takes the tones of the picture. soft: softening of the border of the replaced part, share of the plate width. toneSigma: the scale at which tones are compared, share of the plate width, by level (finer on the wide levels, which the frame at T sees at a low angle: there the plate keeps only its finest forms and takes the rest from the picture). ratio and floor: limits of a tone ratio and the level added to both of its sides (of 1). shiftDeg: the globe draws its plates this far (degrees of arc, east and north in the plate) from where the camera of tcam.ts alone puts them; measured by tlay.py calib on level d from the draw of the globe at T laid back against the plate it shows (with the shift the left over is under 0.1 plate pixels), cause not found.",
+    "note": "The plates at the T of a handover (assets-src/venus/place/tlay.py, files place3-<tag>-dive.jpg and place3-<tag>-rise.jpg): the close side drawn at T is laid back through the globe camera of T. tags: the levels that are made again for each handover. edge: feather inside the border of the frame, share of the frame height. trustSinElevation: from where on the laid back picture replaces the plate (sine of the elevation of the camera at T over the ground point). coverSinElevation: from where on the plate takes the tones of the picture. soft: softening of the border of the replaced part, share of the plate width. toneSigma: the scale at which tones are compared, share of the plate width, by level (finer on the wide levels, which the frame at T sees at a low angle: there the plate keeps only its finest forms and takes the rest from the picture). ratio and floor: limits of a tone ratio and the level added to both of its sides (of 1). shiftDeg: the globe draws its plates this far (degrees of arc, east and north in the plate) from where the camera of tcam.ts alone puts them; measured by tlay.py calib on level d from the draw of the globe at T laid back against the plate it shows (with the shift the left over is under 0.1 plate pixels), cause not found.",
     "tags": ["w", "a", "b", "c", "d"],
     "shiftDeg": {"dive": [0.00006, 0.0044], "rise": [0.00075, 0.00518]},
     "edge": 0.06,
@@ -158,8 +158,8 @@
     },
     "takes": {
       "note": "The tile takes kept for every level (top left, top right, bottom left, bottom right). 0: no tile take, the composition as it is.",
-      "w": ["5", "5", "5", "5"],
-      "a": ["3", "3", "3", "3"],
+      "w": ["6", "6", "6", "6"],
+      "a": ["4", "4", "4", "4"],
       "b": ["3", "3", "3", "3"],
       "c": ["1", "1", "1", "1"],
       "d": ["0", "2", "0", "2"]
@@ -182,10 +182,11 @@
       "power": 1.5
     },
     "ring": {
-      "note": "Levels whose ring (the part outside the child) is painted new by an outpainting take (build.py ringguide, ring): the cloud of the close view seen from above, towers with lit sides and long shadows. grey: the flat value of the part to paint in the guide. matte: the border of the child in the guide, broken up by smooth noise (amount in shares of the child width, sigma in pixels of the guide) and eased over edge (shares of the child width). guideChild: the width in pixels of the child in the guide of the kept take, where it was not the true square. lockSigmaDeg: the tones of the take go to the tones of the plate of the earlier method at this scale, within clip. chroma: its colour goes this share of the way to the colour of that plate, taken at sigmaDeg.",
+      "note": "Levels whose ring (the part outside the child) is painted new by an outpainting take (build.py ringguide, ring): the cloud of the close view seen from above, towers with lit sides and long shadows. grey: the flat value of the part to paint in the guide. matte: the border of the child in the guide, broken up by smooth noise (amount in shares of the child width, sigma in pixels of the guide) and eased over edge (shares of the child width). close: the matte is zero at the border of the square and comes in over this share of the child width, so the child never ends in a straight line in the guide (the guide of the kept take of level a was made before this). takeChild: the width in pixels, at the size of the guide, at which the kept take holds the child, where the take did not keep the true square. heal: where the kept take of a level holds a straight line along the border of the child square (found by the step of the logarithm of the tone across the border, step pixels to either side, smoothed along the border over along pixels: its largest value within near pixels of the border over its mean between far pixels from it, eased over from, carried reach pixels past the ends of the stretch), the picture outside the border is mirrored inward about a line axis outside it, over depth (shares of the child width) moved by a smooth noise (amount, sigma in pixels) and eased over ease. lockSigmaDeg: the tones of the take go to the tones of the plate of the earlier method at this scale, within clip. chroma: its colour goes this share of the way to the colour of that plate, taken at sigmaDeg.",
       "grey": 0.5,
-      "matte": {"seed": 7, "noise": [[0.05, 40], [0.02, 12]], "edge": [0.03, 0.12]},
-      "guideChild": {},
+      "matte": {"seed": 7, "noise": [[0.05, 40], [0.02, 12]], "edge": [0.03, 0.12], "close": 0.03},
+      "takeChild": {"a": 1036},
+      "heal": {"levels": ["a"], "step": 2, "near": 4, "far": [8, 30], "along": 12, "from": [2.5, 4.0], "reach": 40, "depth": 0.045, "axis": 0.003, "ease": [0.4, 1.0], "noise": [0.3, 30], "seed": 11},
       "lockSigmaDeg": 1.0,
       "clip": [0.33, 3.0],
       "chroma": {"sigmaDeg": 0.3, "share": 0.75}
