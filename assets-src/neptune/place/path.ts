@@ -8,7 +8,7 @@ const kind = (process.argv[2] ?? 'dive') as 'dive' | 'rise'
 const seg = kind === 'dive' ? plan.seg.dive! : plan.seg.rise
 const fps = config.fps
 const eye0 = new THREE.Vector3().fromArray(place.storm.atSpinZero).normalize()
-const at = (t: number) => (kind === 'dive' ? plan.diveAt(t, 'orbit') : plan.riseAt(t, 'orbit'))
+const at = (t: number) => (kind === 'dive' ? plan.divePose(t, 'orbit') : plan.risePose(t, 'orbit'))
 const edge = (t: number) => (t < seg.start ? (kind === 'dive' ? plan.hold(t - plan.seg.hold.start) : plan.twin(plan.terrain(t - plan.seg.terrain.start), t)) : t >= seg.end ? (kind === 'dive' ? plan.twin(plan.terrain(t - plan.seg.terrain.start), t) : plan.exitPose(t)) : at(t))
 const rows: string[] = []
 let worst = 0

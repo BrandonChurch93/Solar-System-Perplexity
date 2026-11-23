@@ -1,7 +1,7 @@
 import * as THREE from 'three'
-import { config, type Segment } from '../../config'
-import type { CoverHorizon, Pose } from '../../core/types'
-import { StopPlan, type Fit, type MoveParams, type OrbitShot } from '../../director/moves'
+import { config } from '../../config'
+import type { Pose, ViewKind } from '../../core/types'
+import { StopPlan, type Fit, type MoveParams } from '../../director/moves'
 import { drift, lookAt } from '../../director/rig'
 import close from './close.json'
 import fit from './fit.json'
@@ -19,31 +19,18 @@ export const params: MoveParams = {
   light: { exposure: 1, skyExposure: 0.65, sunRadiusDeg: 0.14, sunGlare: 0.6, flare: 0 },
   skyAim: { orbit: [25.78793, 56.89437, -50.63077], terrain: [180, -12, 40] },
   cover: [0.27, 0.43, 0.8],
-  coverLow: [0.03, 0.075, 0.22],
-  coverTerrain: [0.4, 0.56, 0.85],
-  coverLowTerrain: [0.03, 0.065, 0.19],
-  coverTop: [0.3, 0.06],
-  coverEdge: [0.48, 0.5],
-  coverEdgeRise: [0.4, 0.5],
-  coverShell: [1.005, 1.03],
-  coverWindow: { dive: { seconds: 1, center: 0.7 } },
-  coverRush: { speed: 2.4, reach: 2.5, billow: [2.2, 0.9, 1], streak: [9, 2.2, 1.6], contrast: [0.6, 0.45] },
+  handover: { dive: { at: move.dive.at }, rise: { at: move.rise.at } },
   spinDegPerSecond: 1.3,
   moonDegPerSecond: 0.3,
   tint: [0.3, 0.5, 1],
 }
 
-const veil: { air: [number, number]; sea: [number, number]; clear: number; full: number } = { air: [1.005, 1.03], sea: [1.002, 1.012], clear: 0.15, full: 0.93 }
 const deck = new THREE.Vector3().fromArray(close.nadir).multiplyScalar(close.radius + 1)
 const onGlobe = new THREE.Quaternion().fromArray(place.toWorld)
 const offGlobe = onGlobe.clone().invert()
 const eye = new THREE.Vector3().fromArray(place.storm.atSpinZero).normalize()
 const eyeEast = new THREE.Vector3(0, 1, 0).cross(eye).normalize()
 const eyeNorth = eye.clone().cross(eyeEast)
-const rim: [number, number][] = [[-1, -1], [0, -1], [1, -1], [-1, 0], [1, 0], [-1, 1], [0, 1], [1, 1]]
-const hides = 0.4
-const closed = 0.98
-const emerge = 1
 export const steady = { hold: 0.5, terrain: 1 }
 const smooth = (x: number): number => {
   const t = Math.min(Math.max(x, 0), 1)
@@ -82,8 +69,6 @@ function posed(a: About): Pose {
 }
 
 class NeptunePlan extends StopPlan {
-  private amount = 0
-
   private steadied(pose: Pose, kind: 'hold' | 'terrain', tRel: number): Pose {
     const s = this.seg[kind]
     const fractions = config.raw.judged.fractions as Record<string, number>
@@ -140,22 +125,16 @@ class NeptunePlan extends StopPlan {
     })
   }
 
-  private sideOf(kind: 'dive' | 'rise', time: number): 'orbit' | 'terrain' {
-    const seg = kind === 'dive' ? this.seg.dive! : this.seg.rise
-    const low = time >= seg.start + move[kind].at * (seg.end - seg.start)
-    return (kind === 'dive') === low ? 'terrain' : 'orbit'
-  }
-
   twin(local: Pose, time: number): Pose {
     return this.spun(this.fromClose(local), time)
   }
 
-  diveAt(time: number, view: 'orbit' | 'terrain'): Pose {
+  override divePose(time: number, view: ViewKind): Pose {
     const pose = this.flown('dive', time)
     return view === 'orbit' ? this.spun(pose, time) : this.toClose(pose)
   }
 
-  riseAt(time: number, view: 'orbit' | 'terrain'): Pose {
+  override risePose(time: number, view: ViewKind): Pose {
     const pose = this.flown('rise', time)
     return view === 'orbit' ? this.spun(pose, time) : this.toClose(pose)
   }
@@ -166,53 +145,6 @@ class NeptunePlan extends StopPlan {
 
   override terrain(tRel: number): Pose {
     return this.steadied(super.terrain(tRel), 'terrain', tRel)
-  }
-
-  override dive(time: number): OrbitShot {
-    const view = this.sideOf('dive', time)
-    return { pose: this.diveAt(time, view), view }
-  }
-
-  override rise(time: number): OrbitShot {
-    const view = this.sideOf('rise', time)
-    return { pose: this.riseAt(time, view), view }
-  }
-
-  override coverAmount(seg: Segment, time: number): number {
-    const amount = super.coverAmount(seg, time)
-    this.amount = amount
-    this.p.coverHides = amount < closed ? hides : undefined
-    return amount
-  }
-
-  override skyUnderCover(amount: number, time: number): number {
-    const seg = this.seg.dive
-    if (!seg || time < this.coverCenter(seg) || time >= seg.end) return super.skyUnderCover(amount, time)
-    return Math.pow(1 - amount, emerge)
-  }
-
-  override horizon(view: 'orbit' | 'terrain', local: Pose): CoverHorizon {
-    const c = (view === 'orbit' ? local.position.clone().negate() : deck.clone().sub(local.position).divideScalar(close.radius)).applyQuaternion(local.quaternion.clone().invert())
-    const th = Math.tan(THREE.MathUtils.degToRad(local.vfov) / 2)
-    let far = 0
-    for (const [x, y] of rim) {
-      const reach = c.dot(new THREE.Vector3(x * th * this.fit.aspect, y * th, -1).normalize())
-      far = Math.max(far, reach > 0 ? Math.sqrt(Math.max(c.lengthSq() - reach * reach, 0)) : c.length())
-    }
-    const w = smooth((this.amount - veil.clear) / (veil.full - veil.clear))
-    const tight = view === 'orbit' ? veil.air : veil.sea
-    const lift = Math.max(far - tight[0], 0) * w
-    const edge: [number, number] = [tight[0] + lift * w, tight[1] + lift]
-    const base = super.horizon(view, local)
-    if (view === 'orbit') {
-      this.p.coverShell = edge
-      return base
-    }
-    this.p.coverSea = { centre: [deck.x, deck.y, deck.z], radius: close.radius, edge }
-    const nadir = c.clone().normalize()
-    const flat = Math.hypot(nadir.x, nadir.y)
-    const gap = Math.acos(Math.min(Math.max(-nadir.z, -1), 1)) - Math.asin(Math.min(1 / c.length(), 1))
-    return { normal: flat > 1e-5 ? [-nadir.x / flat, -nadir.y / flat] : [0, 1], offset: Math.tan(Math.min(Math.max(gap, -1.4), 1.4)), soft: base.soft }
   }
 }
 
