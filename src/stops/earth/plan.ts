@@ -4,6 +4,7 @@ import type { Pose } from '../../core/types'
 import { ramp, smooth, smoother } from '../../director/rig'
 import { StopPlan, type Fit, type MoveParams, type OrbitShot } from '../../director/moves'
 import fit from './fit.json'
+import { side, twin } from './place'
 
 export const params: MoveParams = {
   hold: { orbitDeg: 0, axis: [0.1, 1, 0], push: -0.035 },
@@ -235,6 +236,7 @@ export class Plan extends StopPlan {
         const k = Math.pow(e.drop[2], (time - centre) * config.fps)
         this.lower(shot.pose, e.drop[0] * k, THREE.MathUtils.degToRad(e.drop[1]) * k)
       }
+      if (side() === 'orbit') return { pose: twin(this, shot.pose, time), view: 'orbit' }
       return shot
     }
     if (time <= seg.start) return super.dive(time)
@@ -262,6 +264,7 @@ export class Plan extends StopPlan {
         const u = Math.min(f / l.ramp, 1)
         this.lower(shot.pose, l.rate * (l.ramp * (u * u * u - 0.5 * u * u * u * u) + Math.max(f - l.ramp, 0)), 0)
       }
+      if (side() === 'orbit' && time < centre) return { pose: twin(this, shot.pose, time), view: 'orbit' }
       return shot
     }
     const table = this.riseTable(t)

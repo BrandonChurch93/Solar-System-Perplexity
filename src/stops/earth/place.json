@@ -3,14 +3,30 @@
   "measured": "assets-src/earth/relief/camfit.py: 171 points of the horizon (red channel, first row over the dark sky plus 45 code values, one every 16 px), a cone of half angle 90 minus dip about the nadir fitted to their rays at the terrain view's field of view by soft L1 least squares; residual rms 0.045 degrees, largest 0.134. Height is 1 / cos(dip) - 1. Heading and spot are the plan's, kept so the terrain view's Sun and sky stay as they are. Checked by assets-src/earth/place/check.py.",
   "frame": 2010,
   "vfovDeg": 45,
-  "imageSize": [2816, 1584],
+  "imageSize": [
+    2816,
+    1584
+  ],
   "pitchDeg": 28.348,
   "rollDeg": -2.0044,
   "dipDeg": 14.0305,
   "horizonDeg": 14.3175,
   "height": 0.030751,
   "radius": 32.5197,
-  "nadir": [0.030783, -0.879541, -0.474826],
-  "spotScreen": [0.52, 0.46],
-  "headingDeg": 52.25
+  "nadir": [
+    0.030783,
+    -0.879541,
+    -0.474826
+  ],
+  "spotScreen": [
+    0.52,
+    0.46
+  ],
+  "headingDeg": 52.25,
+  "globe": {
+    "lon": -79.3,
+    "lat": 16.492,
+    "azimuthDeg": -50.594,
+    "how": "The nadir of the close camera on the body and the azimuth of its view from north. Chosen so that the long island of the close image lies on the island south of the large one in the patch pyramid (1.75 degrees west and 1.65 south of the spot), with the view within 6 degrees of the azimuth of the Sun so the glint lies ahead on both sides. Checked with assets-src/earth/place/overlay.py."
+  }
 }

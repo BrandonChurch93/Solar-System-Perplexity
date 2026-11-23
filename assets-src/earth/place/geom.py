@@ -65,9 +65,29 @@ NADIR = unit(RELIEF['nadir'])
 UP = -NADIR
 AHEAD = unit(np.array([0.0, 0.0, -1.0]) + UP[2] * UP)
 BL = np.stack([np.cross(AHEAD, UP), UP, -AHEAD], 1)
-TO_STOP = TERRAIN_FRAME @ BL.T
-TO_BODY = G.T @ TO_STOP
 CENTRE = NADIR * (R + 1)
+
+
+def frame_at(c):
+    c = unit(c)
+    e = unit(np.cross(Y, c))
+    return c, e, np.cross(c, e)
+
+
+def offset(c, east, north):
+    n, e, u = frame_at(c)
+    return unit(n + np.tan(np.radians(east)) * e + np.tan(np.radians(north)) * u)
+
+
+def to_body(c, az):
+    n, e, u = frame_at(c)
+    a = np.radians(az)
+    heading = np.cos(a) * u + np.sin(a) * e
+    return np.stack([np.cross(heading, n), n, -heading], 1) @ BL.T
+
+
+GLOBE = PLACE.get('globe')
+TO_BODY = to_body(direction(GLOBE['lon'], GLOBE['lat']), GLOBE['azimuthDeg']) if GLOBE else G.T @ TERRAIN_FRAME @ BL.T
 
 
 def local_to_body(p):
@@ -98,12 +118,6 @@ def sea(d):
     hit = (disc > 0) & (b > 0)
     t = b - np.sqrt(np.where(hit, disc, 0))
     return d * t[..., None], hit
-
-
-def frame_at(c):
-    c = unit(c)
-    e = unit(np.cross(Y, c))
-    return c, e, np.cross(c, e)
 
 
 def plate_dirs(c, width_deg, size):
