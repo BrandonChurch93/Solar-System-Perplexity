@@ -4,7 +4,8 @@
       [--inset FILE,WIDTH_DEG] [--corner SHARE] [--size 2048] --out LEAD.png
 --above is cropped about the place to --width-deg. Every --grey box (shares of the width, from the left and the
 top) is painted flat grey with corners rounded by --corner of the width. --inset lays a deeper plate into the
-middle, at its true size, over the grey: it tells the generator what the ground at the place is.
+middle, at its true size, over the grey: it tells the generator what the ground at the place is. Every --grey-over
+box is painted grey after the inset, so it also covers a part of the inset.
 """
 import argparse
 import cv2
@@ -15,6 +16,7 @@ ap.add_argument('--above', required=True)
 ap.add_argument('--width-deg', type=float, required=True)
 ap.add_argument('--grey', action='append', default=[])
 ap.add_argument('--inset', default='')
+ap.add_argument('--grey-over', action='append', default=[])
 ap.add_argument('--corner', type=float, default=0.04)
 ap.add_argument('--size', type=int, default=2048)
 ap.add_argument('--out', required=True)
@@ -47,5 +49,10 @@ if a.inset:
     c = int(round(float(w) / a.width_deg * n / 2)) * 2
     o = (n - c) // 2
     out[o:o + c, o:o + c] = cv2.resize(read(path), (c, c), interpolation=cv2.INTER_AREA)
+over = np.zeros((n, n), np.uint8)
+for box in a.grey_over:
+    x0, y0, x1, y1 = [int(round(float(v) * n)) for v in box.split(',')]
+    over[y0:y1, x0:x1] = 255
+out[cv2.morphologyEx(over, cv2.MORPH_OPEN, k) > 0] = (128, 128, 128)
 cv2.imwrite(a.out, out)
 print('grey share %.3f' % ((out == 128).all(axis=2).mean()))
