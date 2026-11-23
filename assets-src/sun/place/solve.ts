@@ -37,7 +37,7 @@ const mapSpot = plan.normal.clone().applyQuaternion(unfit)
 const mapNorth = plan.heading.clone().applyQuaternion(unfit)
 const patchEast = new THREE.Vector3(0, 1, 0).cross(mapSpot).normalize()
 const patchNorth = mapSpot.clone().cross(patchEast)
-const before = JSON.parse(readFileSync('src/stops/sun/place.json', 'utf8')) as { plates?: unknown }
+const before = JSON.parse(readFileSync('src/stops/sun/place.json', 'utf8')) as { plates?: unknown; onGlobe?: unknown }
 const plates = before.plates ?? { keepStretch: [3, 6], featherDeg: 0.25, matchDeg: 1.5, feather: 0.12, fade: [1.1, 1.7], levels: [{ file: 'place-12.jpg', widthDeg: 12 }] }
 const twinPosition = eye.clone().divideScalar(stage.radius).applyQuaternion(toBody)
 const out = {
@@ -58,6 +58,7 @@ const out = {
   stage: { radius: stage.radius, centre: arr(stage.centre), spot: arr(spotStage), toBody: arr(toBody, 8), note: 'a stage point p is the body point toBody * (p - centre) / radius; body axes are the world axes of the orbit view at the middle of the hold, the globe turns about its axis from there' },
   globe: { spot: arr(plan.normal, 8), north: arr(plan.heading, 8), mapSpot: arr(mapSpot, 8), mapNorth: arr(mapNorth, 8), patchNorthOffDeg: r(deg(patchNorth.angleTo(mapNorth)), 5), note: 'spot and north in body axes; mapSpot and mapNorth in the axes of the globe map (the mesh turned back by its fit), where the patch levels are laid: east = Y x mapSpot, north = mapSpot x east' },
   plates,
+  onGlobe: before.onGlobe,
   twin: { position: arr(twinPosition, 8), quaternion: arr(toBody, 8), vfovDeg: terrain.vfovDeg, note: 'the camera of the approved image on the unit sphere, body axes; the terrain view passes through it at frame 90' },
 }
 writeFileSync('src/stops/sun/place.json', JSON.stringify(out, null, 2) + '\n')

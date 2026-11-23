@@ -75,12 +75,7 @@
       1.1,
       1.7
     ],
-    "levels": [
-      {
-        "file": "place-12.jpg",
-        "widthDeg": 12
-      }
-    ]
+    "levels": []
   },
   "twin": {
     "position": [
@@ -96,5 +91,39 @@
     ],
     "vfovDeg": 55,
     "note": "the camera of the approved image on the unit sphere, body axes; the terrain view passes through it at frame 90"
+  },
+  "onGlobe": {
+    "capDeg": [
+      36,
+      44
+    ],
+    "fade": [
+      1.1,
+      1.7
+    ],
+    "lowLod": 3,
+    "note": "the globe draws the ground function of the close view itself round the place: inside capDeg of the stage nadir, while the globe map is enlarged (fade, map texels per pixel across the view). heights are camera heights in radii, each a smooth step in log height during the rise: tidy is where the close tone gives way to the map's own tone under the same cells, fringe and loops where those leave, corona and sky where the corona, the prominences and the far sky come in; lowLod is the mip step that splits a close texture into cells and tone",
+    "heights": {
+      "tidy": [
+        0.3,
+        1.5
+      ],
+      "fringe": [
+        0.12,
+        0.45
+      ],
+      "loops": [
+        1.2,
+        3.0
+      ],
+      "corona": [
+        0.1,
+        0.4
+      ],
+      "sky": [
+        0.1,
+        0.4
+      ]
+    }
   }
 }

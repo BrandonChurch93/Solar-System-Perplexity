@@ -26,10 +26,17 @@ export const createSet: SetFactory = async (ctx) => {
 
   const map = await ctx.texture(base + look.files.wrap, { srgb: true, anisotropy: 16, repeat: true })
   const grade = await ctx.texture(base + look.files.grade, { srgb: false, mips: false, anisotropy: 1, flipY: false })
-  const levels = await Promise.all(place.plates.levels.map((l) => ctx.texture(base + l.file, { srgb: true, anisotropy: 16 })))
-  const patches = { textures: levels, widthsDeg: place.plates.levels.map((l) => l.widthDeg), spot: new THREE.Vector3().fromArray(place.globe.mapSpot), feather: place.plates.feather, fade: place.plates.fade as [number, number] }
-  const globe = new SunGlobe({ map, grade, mapWidth: (map.image as unknown as { width: number }).width, look: look.globe, patches })
-  globe.mesh.quaternion.fromArray(fit.globe.quaternion)
+  const plate = await ctx.texture(base + look.files.plate, { srgb: true, anisotropy: 16, mirror: true })
+  const apron = await ctx.texture(base + look.files.apron, { srgb: true, anisotropy: 16, mirror: true })
+  const field = await ctx.texture(base + look.files.field, { srgb: true, anisotropy: 16 })
+  const ground = new Ground(plate, apron, field, await ctx.texture(base + look.files.loopsGlow, { srgb: true, mips: false, anisotropy: 1 }), grade, look.ground, opening.on ? look.opening.seethe : undefined)
+  const plates = place.plates.levels as { file: string; widthDeg: number }[]
+  const levels = await Promise.all(plates.map((l) => ctx.texture(base + l.file, { srgb: true, anisotropy: 16 })))
+  const patches = { textures: levels, widthsDeg: plates.map((l) => l.widthDeg), spot: new THREE.Vector3().fromArray(place.globe.mapSpot), feather: place.plates.feather, fade: place.plates.fade as [number, number] }
+  const fitTurn = new THREE.Quaternion().fromArray(fit.globe.quaternion)
+  const mapToStage = new THREE.Matrix3().setFromMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().fromArray(place.stage.toBody).invert().multiply(fitTurn)))
+  const globe = new SunGlobe({ map, grade, mapWidth: (map.image as unknown as { width: number }).width, look: look.globe, patches, place: { ground: ground.material.uniforms, toStage: mapToStage, capDeg: place.onGlobe.capDeg as [number, number], fade: place.onGlobe.fade as [number, number], lowLod: place.onGlobe.lowLod } })
+  globe.mesh.quaternion.copy(fitTurn)
   orbit.add(globe.mesh)
 
   const corona = new Corona(await ctx.texture(base + look.files.corona, { srgb: true, anisotropy: 4, repeat: true }), look.corona)
@@ -44,10 +51,6 @@ export const createSet: SetFactory = async (ctx) => {
   const far = new FarPoint()
   orbit.add(far.points)
 
-  const plate = await ctx.texture(base + look.files.plate, { srgb: true, anisotropy: 16, mirror: true })
-  const apron = await ctx.texture(base + look.files.apron, { srgb: true, anisotropy: 16, mirror: true })
-  const field = await ctx.texture(base + look.files.field, { srgb: true, anisotropy: 16 })
-  const ground = new Ground(plate, apron, field, await ctx.texture(base + look.files.loopsGlow, { srgb: true, mips: false, anisotropy: 1 }), grade, look.ground, opening.on ? look.opening.seethe : undefined)
   if (opening.on) ground.land(look.opening.surge.reach, look.opening.surge.veil)
   if (opening.on) ground.flash(look.opening.erupt.flash.span)
   const fringe = new Fringe(plate, await ctx.texture(base + look.files.haze, { srgb: true, anisotropy: 1 }), look.fringe)
@@ -57,18 +60,12 @@ export const createSet: SetFactory = async (ctx) => {
   world.add(backdropTerrain.mesh)
   const flare = new Flare(look.flare)
   world.add(flare.mesh)
-  const flareAt = plan.window[0] + look.flare.at
   const kernel = stage.onGround(stage.feet[0]![0]!, stage.feet[0]![1]!).sub(stage.centre).setLength(stage.radius + look.flare.lift).add(stage.centre)
-  const kernelGlobe = kernel.clone().sub(stage.centre).divideScalar(stage.radius).applyQuaternion(plan.toGlobe)
   const inGlobe = stage.centre.clone().multiplyScalar(-1 / stage.radius).applyQuaternion(plan.toGlobe)
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2 + config.shutterFraction / (2 * config.fps)
   const eye = new THREE.Vector3()
   const turn = new THREE.Quaternion()
   const carry = new THREE.Quaternion()
-  const spark = new THREE.Vector3()
-  const tint = new THREE.Vector3()
-  const tint2 = new THREE.Vector3().fromArray(look.dissolve.tint)
-  const calm = new THREE.Vector4()
   const wash = new THREE.Vector4()
   const burn = new THREE.Vector4()
   const pale = new THREE.Vector4()
@@ -84,7 +81,7 @@ export const createSet: SetFactory = async (ctx) => {
   const mCone = new THREE.Matrix3()
   const unfit = new THREE.Matrix3()
   orbit.matrixAutoUpdate = false
-  const d = look.dissolve
+  const by = place.onGlobe.heights
   const share = (x: number, r: [number, number]): number => THREE.MathUtils.smoothstep(x, r[0], r[1])
   const even = (x: number, r: [number, number]): number => 0.5 * (share(x, r) + THREE.MathUtils.clamp((x - r[0]) / (r[1] - r[0]), 0, 1))
 
@@ -94,11 +91,11 @@ export const createSet: SetFactory = async (ctx) => {
     update: (state, shot, view) => {
       const inOrbit = state.view === 'orbit'
       const kind = state.segment.kind
-      const x = kind === 'rise' ? plan.blend(state.time) : inOrbit ? 9 : -9
-      const mixed = inOrbit && x < 1
+      const rising = kind === 'rise'
+      const placing = inOrbit && rising
       orbit.visible = inOrbit && state.weight > 0
-      terrain.visible = !inOrbit || mixed
-      if (mixed) {
+      terrain.visible = !inOrbit || placing
+      if (placing) {
         carry.copy(plan.carry(state.time))
         terrain.quaternion.copy(carry).multiply(plan.toGlobe)
         terrain.scale.setScalar(1 / stage.radius)
@@ -113,35 +110,34 @@ export const createSet: SetFactory = async (ctx) => {
       const gain = 1 / shot.post.exposure
       const aspect = view.format.width / view.format.height
       const vignette = shot.post.vignette
-      const skyIn = share(x, d.sky)
+      eye.copy(world.position).negate().applyQuaternion(turn.copy(world.quaternion).invert())
+      if (placing) eye.applyQuaternion(turn.copy(carry).invert()).applyQuaternion(plan.toStage).multiplyScalar(stage.radius).add(stage.centre)
+      const height = Math.max(inOrbit ? world.position.length() - 1 : eye.distanceTo(stage.centre) / stage.radius - 1, 1e-4)
+      const above = (r: number[]): number => (rising ? THREE.MathUtils.smoothstep(Math.log(height), Math.log(r[0]!), Math.log(r[1]!)) : inOrbit ? 1 : 0)
+      const skyIn = above(by.sky)
       const shown = !inOrbit ? 0 : kind === 'travel' ? 1 - THREE.MathUtils.smoothstep(state.u, look.skyFade[0], look.skyFade[1]) : skyIn
       backdrop.update(shown, gain, vignette, aspect)
       backdropTerrain.update(terrain.visible ? 1 - skyIn : 0, gain, vignette, aspect)
-      const burst = kind === 'rise' ? flare.amount(state.time - flareAt) : 0
-      flare.update(inOrbit ? spark.copy(kernelGlobe).applyQuaternion(mixed ? carry : carry.identity()) : kernel, world, view.camera, burst, inOrbit ? 1 / stage.radius : 1, gain, aspect)
+      flare.update(kernel, world, view.camera, 0, 1, gain, aspect)
       if (terrain.visible) {
         const t = state.time - terrainMid
-        eye.copy(world.position).negate().applyQuaternion(turn.copy(world.quaternion).invert())
-        if (mixed) eye.applyQuaternion(turn.copy(carry).invert()).applyQuaternion(plan.toStage).multiplyScalar(stage.radius).add(stage.centre)
-        ground.show(mixed, 1 - share(x, d.ground), 1 - share(x, d.site))
+        ground.show(placing, 0, 0)
         const since = state.time - plan.seg.terrain.start
         const open = opening.on && kind === 'terrain' ? 1 - share(since, look.opening.fade) : 0
         const feet = loops.pulse(since)
         const surge = loops.surge(since, open)
         const erupt = loops.erupt(since, open)
-        ground.update(eye, t, gain * (1 + d.lit.amount * share(x, d.lit.over)), vignette, aspect, fringe.lod(view.camera.fov, view.format.height), look.flare.ground * burst, open, since, look.opening.feet.ground * open * 0.5 * (feet[0] + feet[1]), look.opening.surge.ground * surge[3], look.opening.surge.kick * surge[2], look.opening.erupt.flash.ground * erupt[2], look.opening.erupt.flash.veil * erupt[2])
-        fringe.update(eye, t, gain, vignette, aspect, view.camera.fov, view.format.height, 1 - share(x, d.fringe))
-        const strands = 1 - share(x, d.loops)
+        ground.update(eye, t, gain, vignette, aspect, fringe.lod(view.camera.fov, view.format.height), 0, open, since, look.opening.feet.ground * open * 0.5 * (feet[0] + feet[1]), look.opening.surge.ground * surge[3], look.opening.surge.kick * surge[2], look.opening.erupt.flash.ground * erupt[2], look.opening.erupt.flash.veil * erupt[2])
+        fringe.update(eye, t, gain, vignette, aspect, view.camera.fov, view.format.height, 1 - above(by.fringe))
+        const strands = 1 - above(by.loops)
         loops.mesh.visible = strands > 0
-        const late = kind === 'rise' ? share(state.time - plan.window[0], d.lean) : 0
-        loops.update(t, gain * strands, vignette, aspect, burst * look.flare.loops, Math.max(look.flare.cut * burst * burst, d.cut * late), late, open, since)
+        loops.update(t, gain * strands, vignette, aspect, 0, 0, 0, open, since)
         if (!inOrbit) return
       }
       const elapsed = state.time - plan.holdMid
       const spin = plan.spin(state.time)
-      const glow = share(x, d.corona)
-      const match = 1 - share(x, d.match)
-      const dim = 1 + (d.glow - 1) * match
+      globe.place(placing ? 1 : 0, 1 - above(by.tidy), 1 - above(by.corona))
+      const glow = above(by.corona)
       const leaving = kind === 'travel'
       const going = leaving ? even(state.u, look.leave.over) : 0
       const open = Math.pow(look.leave.open, going)
@@ -206,10 +202,10 @@ export const createSet: SetFactory = async (ctx) => {
         orbit.matrix.identity()
         unfit.identity()
       }
-      globe.update(elapsed, spin, gain, state.weight, vignette, aspect, tint.set(1, 1, 1).lerp(tint2, match), calm.set(d.calm.knee[0], d.calm.knee[1], d.calm.knee[2], d.calm.press * match), open, wash.set(look.leave.pale[0] * level, look.leave.pale[1] * level, look.leave.pale[2] * level, going > 0 ? Math.max(flat, 1e-6) : 0), look.leave.shade)
-      corona.update(world.position, unfit, state.rotation, elapsed, gain * dim * Math.pow(look.leave.corona, going), vignette, aspect, look.corona, glow * state.weight, look.corona.edge * (1 - tucked) + look.leave.edge * fitted, look.leave.veil * going, look.leave.ceil * plateEnd * gain * (0.2126 * look.leave.pale[0] + 0.7152 * look.leave.pale[1] + 0.0722 * look.leave.pale[2]), pale.set(look.leave.hue[0], look.leave.hue[1], look.leave.hue[2], going), tucked >= 1, look.leave.soft)
+      globe.update(elapsed, spin, gain, state.weight, vignette, aspect, undefined, undefined, open, wash.set(look.leave.pale[0] * level, look.leave.pale[1] * level, look.leave.pale[2] * level, going > 0 ? Math.max(flat, 1e-6) : 0), look.leave.shade)
+      corona.update(world.position, unfit, state.rotation, elapsed, gain * Math.pow(look.leave.corona, going), vignette, aspect, look.corona, glow * state.weight, look.corona.edge * (1 - tucked) + look.leave.edge * fitted, look.leave.veil * going, look.leave.ceil * plateEnd * gain * (0.2126 * look.leave.pale[0] + 0.7152 * look.leave.pale[1] + 0.0722 * look.leave.pale[2]), pale.set(look.leave.hue[0], look.leave.hue[1], look.leave.hue[2], going), tucked >= 1, look.leave.soft)
       globe.limb(world.position, unfit, corona.toSet)
-      prominences.update(elapsed, spin, gain * dim * open, vignette, aspect, glow * state.weight, burn.set(burnt, look.leave.burn.wide, look.leave.burn.level, look.leave.burn.cover), hot)
+      prominences.update(elapsed, spin, gain * open, vignette, aspect, glow * state.weight, burn.set(burnt, look.leave.burn.wide, look.leave.burn.level, look.leave.burn.cover), hot)
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
       const visible = radiusPx > 0.6

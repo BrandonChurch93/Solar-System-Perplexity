@@ -3,7 +3,11 @@ import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { EQUIRECT_GLSL } from '../../space/sky'
 import { NOISE_GLSL } from '../../terrain/relief'
+import { APRON_GLSL } from './apron'
+import fieldData from './field.json'
 import { GRADE_GLSL } from './grade'
+import { STAGE_GLSL } from './stage'
+import terrain from './terrain.json'
 
 export interface GlobeLook {
   limb: [number, number]
@@ -22,14 +26,30 @@ export interface GlobePatches {
   fade: [number, number]
 }
 
+export interface GlobePlace {
+  ground: Record<string, THREE.IUniform>
+  toStage: THREE.Matrix3
+  capDeg: [number, number]
+  fade: [number, number]
+  lowLod: number
+}
+
 export interface GlobeOptions {
   map: THREE.Texture
   grade: THREE.Texture
   mapWidth: number
   look: GlobeLook
   patches?: GlobePatches
+  place?: GlobePlace
   segments?: number
 }
+
+const PLACE_SHARED: [string, string][] = [
+  ['uPlate', 'uPlate'], ['uSize', 'uSize'], ['uApron', 'uApron'], ['uApronSize', 'uApronSize'], ['uApronOn', 'uApronOn'], ['uApronOut', 'uApronOut'], ['uApronEdge', 'uApronEdge'], ['uApronCell', 'uApronCell'],
+  ['uGlow', 'uGlow'], ['uField', 'uField'], ['uFieldSize', 'uFieldSize'], ['uOwn', 'uOwn'], ['uUp', 'uUp'], ['uLift', 'uLift'], ['uEven', 'uEven'], ['uEvenTint', 'uEvenTint'], ['uGlowReach', 'uGlowReach'],
+  ['uBox', 'uBox'], ['uGlowBeat', 'uGlowBeat'], ['uCellSize', 'uCellSize'], ['uGBoil', 'uBoil'], ['uTwinkle', 'uTwinkle'], ['uInflow', 'uInflow'], ['uInflowRate', 'uInflowRate'],
+  ['uEye', 'uCam'], ['uBand', 'uBand'], ['uLod', 'uLod'], ['uGSpot', 'uSpot'], ['uGSpotE', 'uSpotE'], ['uGSpotN', 'uSpotN'], ['uGTime', 'uTime'],
+]
 
 const VERT = /* glsl */ `
 out vec3 vLocal;
@@ -97,6 +117,45 @@ uniform vec2 uQuiet;
 uniform vec3 uHot;
 uniform vec4 uPulse;
 uniform vec4 uCell;
+uniform sampler2D uPlate;
+uniform vec2 uSize;
+uniform sampler2D uApron;
+uniform vec2 uApronSize;
+uniform float uApronOn;
+uniform float uApronOut;
+uniform float uApronEdge;
+uniform vec2 uApronCell;
+uniform sampler2D uGlow;
+uniform sampler2D uField;
+uniform vec4 uFieldSize;
+uniform vec4 uOwn;
+uniform vec4 uUp;
+uniform vec2 uLift;
+uniform vec4 uEven;
+uniform vec4 uEvenTint;
+uniform vec2 uGlowReach;
+uniform vec4 uBox;
+uniform float uGlowBeat;
+uniform float uCellSize;
+uniform vec4 uGBoil;
+uniform vec3 uTwinkle;
+uniform vec4 uInflow;
+uniform vec2 uInflowRate;
+uniform vec3 uEye;
+uniform vec2 uBand;
+uniform float uLod;
+uniform vec3 uGSpot;
+uniform vec3 uGSpotE;
+uniform vec3 uGSpotN;
+uniform float uGTime;
+uniform mat3 uToStage;
+uniform vec3 uNadir;
+uniform vec2 uCap;
+uniform vec2 uPlaceFade;
+uniform float uPlaceOn;
+uniform float uTidy;
+uniform float uBare;
+uniform float uLowLod;
 in vec3 vClip;
 in vec3 vLocal;
 in vec3 vWorldN;
@@ -108,6 +167,47 @@ ${INVERSE_FILMIC_GLSL}
 ${GRADE_GLSL}
 ${DIAG_GLSL}
 ${NOISE_GLSL}
+${STAGE_GLSL}
+${APRON_GLSL}
+float lumOf(sampler2D map, vec2 uv, float lod) {
+  return dot(textureLod(map, uv, lod).rgb, vec3(0.3, 0.5, 0.2));
+}
+vec3 boiledAt(sampler2D map, vec2 uv, vec2 dx, vec2 dy, vec2 cell, float lod, float calm, out vec3 low) {
+  vec2 e = cell * uGBoil.z;
+  float lX = lumOf(map, uv + vec2(e.x, 0.0), lod) - lumOf(map, uv - vec2(e.x, 0.0), lod);
+  float lY = lumOf(map, uv + vec2(0.0, e.y), lod) - lumOf(map, uv - vec2(0.0, e.y), lod);
+  vec2 push = vec2(lX, lY) * (uGBoil.x / (2.0 * uGBoil.z));
+  push /= sqrt(1.0 + dot(push, push) / (uGBoil.w * uGBoil.w));
+  float wide = lumOf(map, uv, lod + 2.0 + calm);
+  float slow = wide * 26.0 + lumOf(map, uv * 1.31 + 0.17, lod + 2.5 + calm) * 18.0;
+  float swing = 0.5 * (sin(uGTime * 6.283185307179586 / uGBoil.y + slow) - sin(slow));
+  low = inverseFilmic(grade(textureLod(map, uv, lod + uLowLod).rgb, 0.0));
+  return inverseFilmic(grade(textureGrad(map, uv + push * cell * swing, dx, dy).rgb, 0.0));
+}
+vec2 fieldShift(vec2 id) {
+  float lo = uFieldSize.z / uFieldSize.x + 0.02;
+  return mix(vec2(lo), vec2(1.0 - lo), vec2(vhash(vec3(id, 3.7)), vhash(vec3(id.yx + 17.3, 9.1))));
+}
+vec3 fieldTap(vec2 g, vec2 id, vec2 dx, vec2 dy) {
+  vec2 at = uFieldSize.z * vec2(id.x + 0.5 * id.y, 0.8660254 * id.y);
+  return textureGrad(uField, (g - at) / uFieldSize.x + fieldShift(id), dx, dy).rgb;
+}
+vec3 fieldAt(vec2 g, vec2 dx, vec2 dy, out vec3 mean) {
+  vec2 s = mat2(1.0, 0.0, -0.57735027, 1.15470054) * (g / uFieldSize.z);
+  vec2 base = floor(s);
+  vec3 t = vec3(fract(s), 0.0);
+  t.z = 1.0 - t.x - t.y;
+  bool lower = t.z > 0.0;
+  vec3 wt = lower ? vec3(t.z, t.y, t.x) : vec3(-t.z, 1.0 - t.y, 1.0 - t.x);
+  vec2 a = lower ? base : base + vec2(1.0, 1.0);
+  vec2 b = lower ? base + vec2(0.0, 1.0) : base + vec2(1.0, 0.0);
+  vec2 c = lower ? base + vec2(1.0, 0.0) : base + vec2(0.0, 1.0);
+  wt = pow(wt, vec3(uFieldSize.w));
+  wt /= wt.x + wt.y + wt.z;
+  mean = textureLod(uField, vec2(0.5), 20.0).rgb;
+  vec3 sum = wt.x * fieldTap(g, a, dx, dy) + wt.y * fieldTap(g, b, dx, dy) + wt.z * fieldTap(g, c, dx, dy);
+  return max(mean + (sum - mean) / sqrt(dot(wt, wt)), vec3(0.0));
+}
 vec3 spinY(vec3 d, float a) {
   float c = cos(a), s = sin(a);
   return vec3(c * d.x - s * d.z, d.y, s * d.x + c * d.z);
@@ -178,7 +278,115 @@ void main() {
   beat *= max(1.0 + uCell.x * churn, 0.35);
   float hot = smoothstep(uHot.x, uHot.y, min(lin.r, lin.g * 1.6));
   vec3 col = lin * ((uLimb.x + uLimb.y * (1.0 - mu)) / uLimb.x) * beat * (1.0 + uHot.z * hot * hot);
-  float rim = pow(1.0 - mu, uRimShape.y) * exp(-mu / uRimShape.x);
+  float placed = 0.0;
+  vec3 at = ST_CENTRE + ST_RADIUS * (uToStage * d);
+  vec3 lay = at - ST_DOWN;
+  vec2 gnd = vec2(dot(lay, ST_RIGHT), dot(lay, ST_FWD));
+  float ring = length(gnd);
+  vec2 arc = gnd * (ST_RADIUS * asin(min(ring / ST_RADIUS, 1.0)) / max(ring, 1e-4));
+  vec2 uvF = arc / uFieldSize.x;
+  vec2 dxF = dFdx(uvF) * uGrad;
+  vec2 dyF = dFdy(uvF) * uGrad;
+  vec2 uvP = stPlate(stImage(at));
+  vec2 dxP = dFdx(uvP) * uGrad;
+  vec2 dyP = dFdy(uvP) * uGrad;
+  vec2 ab = apImage(at);
+  vec2 uvB = apUv(ab);
+  vec2 dxB = dFdx(uvB) * uGrad;
+  vec2 dyB = dFdy(uvB) * uGrad;
+  float texF = diagTexels(uvF * uFieldSize.y);
+  float texP = diagTexels(uvP * uSize);
+  float texB = diagTexels(uvB * uApronSize);
+  vec3 ddx = dFdx(d);
+  vec3 ddy = dFdy(d);
+  float dA = dot(ddx, ddx);
+  float dC = dot(ddy, ddy);
+  float dB = dot(ddx, ddy);
+  float isoRate = sqrt(max(0.5 * (dA + dC - sqrt((dA - dC) * (dA - dC) + 4.0 * dB * dB)), 0.0)) * uMapWidth / 6.283185307179586;
+  float wPlace = uPlaceOn * smoothstep(uCap.x, uCap.y, dot(d, uNadir)) * (1.0 - smoothstep(uPlaceFade.x, uPlaceFade.y, isoRate));
+  for (int k = 0; k < (wPlace > 0.0 ? 1 : 0); k++) {
+    vec2 fromApex = gnd - ST_FOLD.yz;
+    float phi = atan(fromApex.x, fromApex.y);
+    float dist = length(at);
+    vec3 normal = normalize(at - ST_CENTRE);
+    float graze = clamp(dot(normal, -at / dist), 0.0, 1.0);
+    float now = clamp(dot(normal, normalize(uEye - at)), 0.0, 1.0);
+    float lift = smoothstep(uLift.x, uLift.y, now - graze);
+    float edge = ring;
+    for (int j = 0; j < (lift > 0.0 ? 1 : 0); j++) edge += lift * uUp.z * (vnoise(vec3(gnd * uUp.w, 1.7)) + 0.5 * vnoise(vec3(gnd * uUp.w * 2.7, 5.3)) - 0.75);
+    float own = (1.0 - smoothstep(mix(uOwn.x, uUp.x, lift), mix(uOwn.y, uUp.y, lift), edge)) * smoothstep(0.0, uOwn.z, min(ST_PHI.y - phi, phi - ST_PHI.x)) * smoothstep(ST_FOLD.x, ST_FOLD.x + uOwn.w, gnd.y);
+    float w = apWeight(at, ab) * uApronOn;
+    float bare = (1.0 - own) * (1.0 - w);
+    vec3 rel = at - uGSpot;
+    vec3 up = cross(uGSpotE, uGSpotN);
+    rel -= up * dot(rel, up);
+    float r = length(rel);
+    float psi = atan(dot(rel, uGSpotN), dot(rel, uGSpotE));
+    float band = smoothstep(uInflow.z * 0.85, uInflow.z * 1.35, r) * (1.0 - smoothstep(uInflow.w * 0.7, uInflow.w, r));
+    float strand = 9.0 * sin(psi * 23.0) + 7.0 * sin(psi * 57.0 + 1.3) + 5.0 * sin(psi * 131.0 + 0.4);
+    float wave = r / uInflow.w * uInflow.y * 6.283185307179586 + strand;
+    float inflow = 1.0 + uInflow.x * band * (0.6 * (sin(wave + uGTime * uInflowRate.x) - sin(wave)) + 0.4 * (sin(wave * 2.3 + uGTime * uInflowRate.y) - sin(wave * 2.3)));
+    vec2 gq = gnd * uTwinkle.z;
+    float flick = vnoise(vec3(gq, uGTime * uTwinkle.y)) - vnoise(vec3(gq, 0.0)) + 0.5 * (vnoise(vec3(gq * 2.3 + 7.3, uGTime * uTwinkle.y * 1.7 + 3.1)) - vnoise(vec3(gq * 2.3 + 7.3, 3.1)));
+    inflow *= max(1.0 + uTwinkle.x * flick, 0.35);
+    vec3 close = vec3(0.0);
+    vec3 fine = vec3(0.0);
+    vec3 mid = vec3(1.0);
+    for (int j = 0; j < ((w < 1.0 && own > 0.0) ? 1 : 0); j++) {
+      float tone = clamp(stLimb(now) / stLimb(graze), 0.25, 5.0);
+      float cellU = uCellSize / dist / (2.0 * ST_TAN.x * ST_CANVAS.z);
+      vec2 cell = vec2(cellU, cellU * max(graze, 0.08) * uSize.x / uSize.y);
+      vec3 low;
+      vec3 s = boiledAt(uPlate, uvP, dxP, dyP, cell, log2(max(cell.y * uSize.y * 0.25, 1.0)), 0.0, low);
+      vec3 even = mix(vec3(1.0), uEvenTint.rgb, smoothstep(uEven.x, uEven.y, ring)) * mix(1.0, uEvenTint.w, smoothstep(uEven.z, uEven.w, ring));
+      close = s * max(inflow, 0.0) * tone * mix(vec3(1.0), even, lift);
+      fine = s;
+      mid = low;
+    }
+    for (int j = 0; j < (bare > 0.0 ? 1 : 0); j++) {
+      float tone = clamp(stLimb(now) / stLimb(${fieldData.tone}), 0.25, 5.0);
+      vec3 mean;
+      vec3 f = inverseFilmic(fieldAt(arc, dxF, dyF, mean));
+      close = mix(f * max(inflow, 0.0) * tone, close, own);
+      fine = mix(f, fine, own);
+      mid = mix(inverseFilmic(mean), mid, own);
+    }
+    for (int j = 0; j < (w > 0.0 ? 1 : 0); j++) {
+      vec3 toEye = AP_EYE - at;
+      float away = length(toEye);
+      float seen = clamp(dot(normal, toEye / away), 0.0, 1.0);
+      float tone = clamp(stLimb(now) / stLimb(seen), 0.25, 5.0);
+      float cellU = uApronCell.x / away / (2.0 * AP_TAN.x);
+      vec2 cell = vec2(cellU, cellU * max(seen, 0.08) * uApronSize.x / uApronSize.y);
+      vec3 low;
+      vec3 s = boiledAt(uApron, uvB, dxB, dyB, cell, log2(max(cell.y * uApronSize.y * 0.25, 1.0)), uApronCell.y, low);
+      close = mix(close, s * max(inflow, 0.0) * tone, w);
+      fine = mix(fine, s, w);
+      mid = mix(mid, low, w);
+    }
+    vec3 to = ST_CENTRE - uEye;
+    float away = length(to);
+    vec3 c1 = to / away;
+    vec3 ray = normalize(at - uEye);
+    float el = (acos(clamp(dot(ray, c1), -1.0, 1.0)) - asin(clamp(ST_RADIUS / away, 0.0, 1.0))) * sqrt(max(away * away - ST_RADIUS * ST_RADIUS, 0.0)) / ST_RADIUS * tan(ST_ALPHA);
+    float limb = smoothstep(uBand.x, uBand.y, el);
+    vec2 gb = stImage(at);
+    for (int j = 0; j < (limb > 0.0 ? 1 : 0); j++) {
+      vec2 far = stImage(stLimbDir(ray, c1, el));
+      close = mix(close, inverseFilmic(textureLod(uPlate, stPlate(far), uLod).rgb), limb);
+      gb = mix(gb, far, limb);
+    }
+    vec3 lit = vec3(1.0);
+    gb = vec2((gb.x - uBox.x) / (uBox.z - uBox.x), 1.0 - (gb.y - uBox.y) / (uBox.w - uBox.y));
+    for (int j = 0; j < ((at.z < -0.5 && gb.x > 0.0 && gb.x < 1.0 && gb.y > 0.0 && gb.y < 1.0) ? 1 : 0); j++) {
+      lit += textureLod(uGlow, gb, 0.0).rgb * (uGlowBeat * (1.0 - lift * smoothstep(uGlowReach.x, uGlowReach.y, ring)));
+    }
+    vec3 detail = clamp(fine / max(mid, vec3(1e-4)), 0.0, 4.0);
+    col = mix(col, mix(col * detail, close, uTidy) * lit, wPlace);
+    placed = wPlace * uBare;
+    texels = mix(texels, bare > 0.5 ? texF : mix(texP, texB, step(0.5, w)), step(0.5, wPlace));
+  }
+  float rim = pow(1.0 - mu, uRimShape.y) * exp(-mu / uRimShape.x) * (1.0 - placed);
   for (int k = 0; k < (uRimBy.w > 0.0 && rim > 0.002 ? 1 : 0); k++) {
     vec3 ray = normalize(uFit * vPos);
     vec3 across = uToSet * (ray * dot(uCenter, ray) - uCenter);
@@ -212,6 +420,9 @@ export class SunGlobe {
     const spot = p?.spot.clone().normalize() ?? new THREE.Vector3(0, 0, 1)
     const east = new THREE.Vector3(0, 1, 0).cross(spot).normalize()
     const north = spot.clone().cross(east)
+    const down = new THREE.Vector3().fromArray(terrain.down).normalize()
+    const nadir = o.place ? down.clone().negate().applyMatrix3(o.place.toStage.clone().transpose()) : new THREE.Vector3(0, 0, 1)
+    const shared = Object.fromEntries(PLACE_SHARED.map(([name, from]) => [name, o.place?.ground[from] ?? { value: null }]))
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
       vertexShader: VERT,
@@ -235,6 +446,12 @@ export class SunGlobe {
         uHot: { value: new THREE.Vector3(l.hot.from, l.hot.to, l.hot.boost) },
         uPulse: { value: new THREE.Vector4(l.pulse.amount, l.pulse.rate, l.pulse.from, l.pulse.to) },
         uCell: { value: new THREE.Vector4(l.cell.amount, l.cell.rate, l.cell.scale, l.cell.fine) },
+        uToStage: { value: o.place?.toStage ?? new THREE.Matrix3() },
+        uNadir: { value: nadir },
+        uCap: { value: new THREE.Vector2(Math.cos(THREE.MathUtils.degToRad(o.place?.capDeg[1] ?? 44)), Math.cos(THREE.MathUtils.degToRad(o.place?.capDeg[0] ?? 36))) },
+        uPlaceFade: { value: new THREE.Vector2(o.place?.fade[0] ?? 1.1, o.place?.fade[1] ?? 1.7) },
+        uPlaceOn: { value: 0 }, uTidy: { value: 0 }, uBare: { value: 0 }, uLowLod: { value: o.place?.lowLod ?? 3 },
+        ...shared,
         uDiag: diagUniform, uGrad: gradUniform,
       },
     })
@@ -258,6 +475,12 @@ export class SunGlobe {
     else (u.uTint!.value as THREE.Vector3).set(1, 1, 1)
     u.uVignette!.value = vignette
     u.uAspect!.value = aspect
+  }
+
+  place(on: number, tidy: number, bare: number): void {
+    this.material.uniforms.uPlaceOn!.value = on
+    this.material.uniforms.uTidy!.value = tidy
+    this.material.uniforms.uBare!.value = bare
   }
 
   limb(center: THREE.Vector3, fit: THREE.Matrix3, toSet: THREE.Matrix3): void {
