@@ -197,6 +197,8 @@ export const createSet: SetFactory = async (ctx) => {
         const moving = seg.stop === plan.id && (seg.kind === 'dive' || seg.kind === 'rise')
         ground(state.time, shot.sun.dir, gain, moving ? reach(look.place.sky, eye.distanceTo(deckCentre) / deckJson.radius - 1) : 1, shot.post.vignette, aspect, shot.post.bloomStrength, view.place === true, view.place === true && view.camera.view ? [view.camera.view.fullWidth / view.camera.view.width, view.camera.view.fullHeight / view.camera.view.height] : [1, 1])
         lowArcs.mesh.visible = false
+        riseArcs.mesh.visible = false
+        riseRings.mesh.visible = false
         glow.mesh.visible = false
         return
       }
