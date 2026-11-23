@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { EQUIRECT_GLSL } from '../../space/sky'
+import patchJson from './patches.json'
 
 export const SPHERE_VERT = /* glsl */ `
 out vec3 vLocal;
@@ -33,7 +34,7 @@ vec3 lightAt(float ndl, float mu) {
   return textureLod(uLight, uv, 0.0).rgb;
 }`
 
-export const PATCH_COUNT = 4
+export const PATCH_COUNT = patchJson.levels.length
 
 const PATCH_SAMPLERS = Array.from({ length: PATCH_COUNT }, (_, i) => 'uniform sampler2D uPatch' + i + ';').join('\n')
 
@@ -45,10 +46,53 @@ const PATCH_LEVELS = Array.from({ length: PATCH_COUNT }, (_, i) => `    {
       texels = mix(texels, parent, step(0.5, w));
     }`).join('\n')
 
+export const PLATE_COUNT = 4
+
+const PLATE_SAMPLERS = Array.from({ length: PLATE_COUNT }, (_, i) => 'uniform sampler2D uPlate' + i + ';').join('\n')
+
+const PLATE_LEVELS = Array.from({ length: PLATE_COUNT }, (_, i) => `    {
+      vec2 q = pg * uPlateScale[${i}];
+      float w = smoothstep(0.5, 0.5 - uPlace.y, max(abs(q.x), abs(q.y)));
+      for (int j = 0; j < (w > 0.0 ? 1 : 0); j++) {
+        vec4 s = textureGrad(uPlate${i}, q + 0.5, px * uPlateScale[${i}], py * uPlateScale[${i}]);
+        aP = mix(aP, s.rgb * s.rgb * uPlace.z, ${i === 0 ? '1.0' : 'w'});
+        ${i === 0 ? 'tops = s.a;' : ''}
+      }
+      ${i === 0 ? 'field = textureLod(uPlaceField, q + 0.5, 0.0); wP = w * field.a;' : ''}
+      texP = mix(texP, pgd * uPlateScale[${i}] * uPlateSize[${i}], step(0.5, w));
+    }`).join('\n')
+
 const FRAG = /* glsl */ `
 precision highp float;
 uniform sampler2D uMap;
 ${PATCH_SAMPLERS}
+${PLATE_SAMPLERS}
+uniform float uPlateScale[${PLATE_COUNT}];
+uniform float uPlateSize[${PLATE_COUNT}];
+uniform vec3 uPlace;
+uniform vec3 uRelit;
+uniform vec2 uSteep;
+uniform vec2 uTops;
+uniform vec2 uTopSeen;
+uniform float uTopClear;
+uniform vec3 uTopWhite;
+uniform sampler2D uPlaceField;
+uniform vec3 uPlaceEye;
+uniform float uPlaceRef;
+uniform float uCloudTime;
+uniform mat3 uPlaceRot;
+uniform vec3 uPlaceN;
+uniform vec3 uPlaceE;
+uniform vec3 uPlaceU;
+uniform vec3 uDeckCentre;
+uniform float uDeckRadius;
+uniform vec3 uDeckF0;
+uniform vec3 uDeckR0;
+uniform vec4 uDeckFlow;
+uniform vec2 uDeckFlowDir;
+uniform float uDeckTime;
+uniform sampler2D uDeckLight;
+uniform vec3 uDeckLightSize;
 uniform float uPatchScale[${PATCH_COUNT}];
 uniform float uPatchSize[${PATCH_COUNT}];
 uniform float uFeather;
@@ -57,6 +101,7 @@ uniform vec3 uSpotN;
 uniform vec3 uSpotE;
 uniform vec3 uSpotU;
 uniform sampler2D uCloud;
+uniform sampler2D uShadow;
 uniform sampler2D uShade;
 uniform float uMapWidth;
 uniform float uGrad;
@@ -99,6 +144,12 @@ ${EQUIRECT_GLSL}
 ${INVERSE_FILMIC_GLSL}
 ${DIAG_GLSL}
 ${LIGHT_GLSL}
+vec3 deckLight(float mu, float psi) {
+  float m = clamp(mu, 0.0, 1.0);
+  float y = sqrt(max(1.0 - sqrt(max(1.0 - m * m, 0.0)), 0.0));
+  vec2 uv = vec2((clamp(psi / uDeckLightSize.z * 0.5 + 0.5, 0.0, 1.0) * (uDeckLightSize.x - 1.0) + 0.5) / uDeckLightSize.x, (y * (uDeckLightSize.y - 1.0) + 0.5) / uDeckLightSize.y);
+  return textureLod(uDeckLight, uv, 0.0).rgb;
+}
 vec3 shadeAt(vec3 d) {
   return textureLod(uShade, vec2(atan(d.x, d.z) / (2.0 * PI) + 0.5, asin(clamp(d.y, -1.0, 1.0)) / PI + 0.5), 0.0).rgb;
 }
@@ -113,7 +164,7 @@ void main() {
   vec3 d0 = normalize(vLocal);
   float lat = asin(clamp(d0.y, -1.0, 1.0));
   float bandTurn = uTime * rate(uBandRate, lat);
-  float cloudTurn = uTime * rate(uCloudRate, lat);
+  float cloudTurn = uCloudTime * rate(uCloudRate, lat);
   vec3 d = spinY(d0, uSpin + bandTurn);
   vec3 dc = spinY(d0, uSpin + cloudTurn);
   vec3 n = normalize(vWorldN);
@@ -141,8 +192,37 @@ void main() {
   for (int k = 0; k < (dn > 0.3 && texels * lean < uPatchFade.y ? 1 : 0); k++) {
 ${PATCH_LEVELS}
   }
-  vec3 albedo = inverseFilmic(enc);
-  vec2 cloud = equirectGrad(uCloud, dc, uGrad).rg;
+  vec3 nd = uPlaceRot * spinY(d0, uSpin + (uTime - uPlaceRef) * rate(uBandRate, lat));
+  vec3 pS = uDeckCentre + uDeckRadius * nd;
+  float alongF = dot(pS, uDeckF0) * uDeckFlowDir.y + dot(pS, uDeckR0) * uDeckFlowDir.x;
+  float acrossF = dot(pS, uDeckF0) * uDeckFlowDir.x - dot(pS, uDeckR0) * uDeckFlowDir.y;
+  float kF = uDeckTime * (uDeckFlow.x + uDeckFlow.y * sin(acrossF * uDeckFlow.z + uDeckFlow.w) + 0.4 * uDeckFlow.y * sin(acrossF * uDeckFlow.z * 2.7 + alongF * 0.11 + 1.3));
+  vec3 na = normalize(pS - (uDeckF0 * uDeckFlowDir.y + uDeckR0 * uDeckFlowDir.x) * kF - uDeckCentre);
+  float pn = dot(na, uPlaceN);
+  vec2 pg = vec2(dot(na, uPlaceE), dot(na, uPlaceU)) / max(pn, 0.05);
+  vec2 px = dFdx(pg);
+  vec2 py = dFdy(pg);
+  float pgd = sqrt(max(dot(px, px), dot(py, py)));
+  px *= uGrad;
+  py *= uGrad;
+  vec3 aP = vec3(0.0);
+  vec4 field = vec4(1.0, 1.0, 1.0, 0.0);
+  float wP = 0.0;
+  float tops = 0.0;
+  float texP = 0.0;
+  for (int k = 0; k < (pn > 0.5 && uPlace.x > 0.0 ? 1 : 0); k++) {
+${PLATE_LEVELS}
+  }
+  wP *= uPlace.x;
+  texels = mix(texels, texP, step(0.5, wP));
+  vec3 parentAlbedo = inverseFilmic(enc);
+  vec3 albedo = mix(parentAlbedo, aP * field.rgb, wP);
+  vec3 aEff = mix(parentAlbedo / field.rgb, aP, wP);
+  vec3 pD = uPlaceRot * spinY(d0, uSpin);
+  vec3 dvD = normalize(pD - uPlaceEye);
+  float muD = dot(pD, -dvD);
+  vec3 lD = deckLight(muD, atan(dot(dvD, uDeckR0), dot(dvD, uDeckF0)));
+  vec2 cloud = vec2(equirectGrad(uCloud, dc, uGrad).r, equirectGrad(uShadow, dc, uGrad).r) * (1.0 - wP);
   cloud.r = clamp(cloud.r * (1.0 + uCloudFine * (dot(albedo, vec3(1.0)) / max(dot(wide, vec3(1.0)), 1e-3) - 1.0)), 0.0, 1.0);
   vec2 fq = vec2(dot(d, uFaceE), dot(d, uFaceU)) * sqrt(2.0 / max(1.0 + dot(d, uFaceN), 0.05));
   vec2 fx = dFdx(fq) * (uFace.y * uGrad);
@@ -167,13 +247,20 @@ ${PATCH_LEVELS}
   vec2 rg = vec2(dFdx(ru), dFdy(ru));
   for (int k = 0; k < (uRingShade.x > 0.0 && along > 0.0 && ru > 0.0 && ru < 1.0 ? 1 : 0); k++) col *= 1.0 - uRingShade.x * lit * textureGrad(uRingProfile, vec2(ru, 0.5), vec2(rg.x, 0.0), vec2(rg.y, 0.0)).r;
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
-  col *= uNear * uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
+  vec3 own = col * uNear;
+  vec3 relit = aEff * lD;
+  vec3 luma = vec3(0.2126, 0.7152, 0.0722);
+  float lift = log2(max(dot(relit, luma), 1e-5) / max(dot(own, luma), 1e-5));
+  col = mix(own, relit, mix(uRelit.y, uRelit.x, smoothstep(-uRelit.z, uRelit.z, lift)) * (1.0 - smoothstep(uSteep.x, uSteep.y, muD)));
+  col += uNear * uTopWhite * (wP * tops * smoothstep(uTops.x, uTops.y, ndl) * smoothstep(uTopSeen.x, uTopSeen.y, muD) * uTopClear);
+  col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.15, 0.45, 0.9), vec2(bandTurn, cloudTurn) * 4.0, length(vView));
 }`
 
 export interface GlobeOptions {
   map: THREE.Texture
   cloud: THREE.Texture
+  shadow: THREE.Texture
   light: THREE.Texture
   shade: THREE.Texture
   lightSize: [number, number]
@@ -186,6 +273,22 @@ export interface GlobeOptions {
   wrapSoft: number
   patches: { textures: THREE.Texture[]; widthsDeg: number[]; spot: THREE.Vector3; feather: number; fade: [number, number] }
   face: { map: THREE.Texture; centre: [number, number, number]; reachDeg: number; fadeDeg: [number, number]; gain: number }
+  place: PlaceOptions
+}
+
+export interface PlaceOptions {
+  textures: THREE.Texture[]
+  halfTans: number[]
+  frame: { n: number[]; e: number[]; u: number[] }
+  rot: THREE.Quaternion
+  field: THREE.Texture
+  clockRef: number
+  aMax: number
+  steep: [number, number]
+  relitSoft: number
+  topLight: { sun: [number, number]; seen: [number, number]; white: [number, number, number] }
+  feather: number
+  deck: { centre: number[]; radius: number; f0: number[]; r0: number[]; flow: [number, number, number, number]; flowAngle: number; light: THREE.Texture; lightSize: number[]; psiMax: number }
 }
 
 export class Globe {
@@ -201,12 +304,15 @@ export class Globe {
     const faceN = new THREE.Vector3().fromArray(o.face.centre).normalize()
     const faceE = new THREE.Vector3(0, 1, 0).cross(faceN).normalize()
     const lambert = (deg: number): number => 2 * Math.sin(THREE.MathUtils.degToRad(deg) / 2)
+    const pl = o.place
+    if (pl.textures.length !== PLATE_COUNT) throw new Error('plate levels: ' + pl.textures.length)
+    const v3 = (a: number[]): THREE.Vector3 => new THREE.Vector3().fromArray(a)
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
       vertexShader: SPHERE_VERT,
       fragmentShader: FRAG,
       uniforms: {
-        uMap: { value: o.map }, uCloud: { value: o.cloud }, uLight: { value: o.light }, uShade: { value: o.shade }, uLightSize: { value: new THREE.Vector2().fromArray(o.lightSize) },
+        uMap: { value: o.map }, uCloud: { value: o.cloud }, uShadow: { value: o.shadow }, uLight: { value: o.light }, uShade: { value: o.shade }, uLightSize: { value: new THREE.Vector2().fromArray(o.lightSize) },
         uMapWidth: { value: (o.map.image as unknown as { width: number }).width },
         ...Object.fromEntries(p.textures.map((t, i) => ['uPatch' + i, { value: t }])),
         uPatchScale: { value: p.widthsDeg.map((w) => 1 / (2 * Math.tan(THREE.MathUtils.degToRad(w) / 2))) },
@@ -222,17 +328,27 @@ export class Globe {
         uCloudFine: { value: o.cloudFine },
         uFaceMap: { value: o.face.map }, uFace: { value: new THREE.Vector4(0, 0.5 / lambert(o.face.reachDeg), lambert(o.face.fadeDeg[0]), lambert(o.face.fadeDeg[1])) }, uFaceGain: { value: o.face.gain },
         uFaceN: { value: faceN }, uFaceE: { value: faceE }, uFaceU: { value: faceN.clone().cross(faceE) },
+        ...Object.fromEntries(pl.textures.map((t, i) => ['uPlate' + i, { value: t }])),
+        uPlateScale: { value: pl.halfTans.map((t) => 1 / (2 * t)) },
+        uPlateSize: { value: pl.textures.map((t) => (t.image as unknown as { width: number }).width) },
+        uPlace: { value: new THREE.Vector3(0, pl.feather, pl.aMax) }, uRelit: { value: new THREE.Vector3(0, 0, pl.relitSoft) }, uSteep: { value: new THREE.Vector2().fromArray(pl.steep) }, uTops: { value: new THREE.Vector2().fromArray(pl.topLight.sun) }, uTopSeen: { value: new THREE.Vector2().fromArray(pl.topLight.seen) }, uTopClear: { value: 0 }, uTopWhite: { value: new THREE.Vector3().fromArray(pl.topLight.white) }, uPlaceField: { value: pl.field }, uPlaceRef: { value: pl.clockRef }, uPlaceEye: { value: new THREE.Vector3(0, 1, 0) }, uCloudTime: { value: 0 },
+        uPlaceRot: { value: new THREE.Matrix3().setFromMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(pl.rot)) },
+        uPlaceN: { value: v3(pl.frame.n) }, uPlaceE: { value: v3(pl.frame.e) }, uPlaceU: { value: v3(pl.frame.u) },
+        uDeckCentre: { value: v3(pl.deck.centre) }, uDeckRadius: { value: pl.deck.radius }, uDeckF0: { value: v3(pl.deck.f0) }, uDeckR0: { value: v3(pl.deck.r0) },
+        uDeckFlow: { value: new THREE.Vector4().fromArray(pl.deck.flow) }, uDeckFlowDir: { value: new THREE.Vector2(Math.cos(pl.deck.flowAngle), Math.sin(pl.deck.flowAngle)) }, uDeckTime: { value: 0 },
+        uDeckLight: { value: pl.deck.light }, uDeckLightSize: { value: new THREE.Vector3(pl.deck.lightSize[0], pl.deck.lightSize[1], pl.deck.psiMax) },
         uDiag: diagUniform, uGrad: gradUniform,
       },
     })
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1, 384, 192), this.material)
   }
 
-  update(sun: THREE.Vector3, spin: number, time: number, gain: number, weight: number, vignette: number, aspect: number): void {
+  update(sun: THREE.Vector3, spin: number, time: number, clock: number, gain: number, weight: number, vignette: number, aspect: number): void {
     const u = this.material.uniforms
     ;(u.uSunW!.value as THREE.Vector3).copy(sun)
     u.uSpin!.value = spin
-    u.uTime!.value = time
+    u.uTime!.value = clock
+    u.uCloudTime!.value = time
     u.uGain!.value = gain
     u.uWeight!.value = weight
     u.uVignette!.value = vignette
@@ -257,6 +373,16 @@ export class Globe {
     this.mesh.updateWorldMatrix(true, false)
     ;(u.uToRing!.value as THREE.Matrix4).copy(ring.matrixWorld).invert().multiply(this.mesh.matrixWorld)
     ;(u.uRingSun!.value as THREE.Vector3).copy(sunLocal)
+  }
+
+  place(up: number, down: number, on: number, clear: number, deckTime: number, eye: THREE.Vector3): void {
+    const u = this.material.uniforms
+    u.uTopClear!.value = clear
+    ;(u.uPlaceEye!.value as THREE.Vector3).copy(eye)
+    ;(u.uRelit!.value as THREE.Vector3).x = up
+    ;(u.uRelit!.value as THREE.Vector3).y = down
+    ;(u.uPlace!.value as THREE.Vector3).x = on
+    u.uDeckTime!.value = deckTime
   }
 
   face(weight: number): void {

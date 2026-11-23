@@ -1,0 +1,216 @@
+{
+  "source": "references/approved/earth-close.jpg",
+  "measured": "assets-src/earth/relief/camfit.py: 171 points of the horizon (red channel, first row over the dark sky plus 45 code values, one every 16 px), a cone of half angle 90 minus dip about the nadir fitted to their rays at the terrain view's field of view by soft L1 least squares; residual rms 0.045 degrees, largest 0.134. Height is 1 / cos(dip) - 1. Heading and spot are the plan's, kept so the terrain view's Sun and sky stay as they are. Checked by assets-src/earth/place/check.py.",
+  "frame": 2010,
+  "vfovDeg": 45,
+  "imageSize": [
+    2816,
+    1584
+  ],
+  "pitchDeg": 28.348,
+  "rollDeg": -2.0044,
+  "dipDeg": 14.0305,
+  "horizonDeg": 14.3175,
+  "height": 0.030751,
+  "radius": 32.5197,
+  "nadir": [
+    0.030783,
+    -0.879541,
+    -0.474826
+  ],
+  "spotScreen": [
+    0.52,
+    0.46
+  ],
+  "headingDeg": 52.25,
+  "globe": {
+    "lon": -79.3,
+    "lat": 16.492,
+    "azimuthDeg": -50.594,
+    "how": "The nadir of the close camera on the body and the azimuth of its view from north. Chosen so that the long island of the close image lies on the island south of the large one in the patch pyramid (1.75 degrees west and 1.65 south of the spot), with the view within 6 degrees of the azimuth of the Sun so the glint lies ahead on both sides. Checked with assets-src/earth/place/overlay.py."
+  },
+  "plates": {
+    "how": "Top down gnomonic plates of the place, north up, about the point where the centre of the close frame meets the sea. Built by assets-src/earth/place/levels.py. The plate is the lay back of the approved close image where that looks at the ground steeply and its repaint where the lay back stretches, used as it is. The patch levels under it are the hold's levels with the plate laid in, and with the far cloud sheet of the place laid in where it reaches past the plate (assets-src/earth/place/ring.py). The place comes in while it is small: the first level is forced in inside earlyDeg about the centre between the two heights of look.descent.place. The tone is the low frequencies of what seaGain does to the hold's sea; it is added to the globe round the place by nearness (the descent ramp of look.ts) and taken from the place by farness, never on cloud (tone.cloud, code values of the darkest channel) and never on grey (tone.grey: the spread of the three channels over the brightest one, none under the first value, full from the second, so the shaded side of a cloud keeps its colour), so the look changes with height only. With nearness the place is drawn as the picture it is, times gain, where the Sun stands above day; the globe's own shading, city lights and shape give way by the same ramp.",
+    "centre": {
+      "lon": -82.122527,
+      "lat": 18.669862
+    },
+    "size": 4096,
+    "feather": 0.12,
+    "levels": [
+      {
+        "file": "place-12.jpg",
+        "widthDeg": 12,
+        "raster": 4096,
+        "size": 4096,
+        "offset": [
+          598,
+          -204
+        ]
+      },
+      {
+        "file": "place-5.jpg",
+        "widthDeg": 12,
+        "raster": 6144,
+        "size": 2688,
+        "offset": [
+          768,
+          -538
+        ]
+      }
+    ],
+    "tone": {
+      "file": "place-tone.bin",
+      "widthDeg": 32,
+      "size": 512,
+      "edge": 0.1,
+      "cloud": [
+        0.588,
+        0.824
+      ],
+      "grey": [
+        0.2,
+        0.45
+      ]
+    },
+    "toneSigmaDeg": 0.8,
+    "seaGain": [
+      0.55,
+      0.481,
+      0.371
+    ],
+    "holdCommit": "6da6c641",
+    "gain": [
+      1,
+      1,
+      1
+    ],
+    "day": [
+      0.02,
+      0.12
+    ],
+    "earlyDeg": 30,
+    "low": {
+      "file": "place-12-low.jpg",
+      "how": "The plate with the lay back of the close image put back wherever the image covers the ground, stretched parts included. The globe shows it instead of the plate where the camera sees the ground from the direction the close camera sees it: full when the two rays are angleDeg[1] apart or less, none from angleDeg[0], and only below height[0] (full gate from height[1], in radii above the sea). From straight above the plate with its repaint stays. The lay back ends inside the edge of the close image over a blur of fadeDeg degrees, so its edge is not a line on the sea. Nearer than fromDeg[0] degrees of arc to the point under the twin camera the plate already is the lay back and the low look is off (full from fromDeg[1]). The file holds a window of the plate raster (window: raster, size, offset as for a level) at size px, so its texels go where the lay back lies; the low look ends inside the window over feather times its width.",
+      "angleDeg": [
+        35,
+        10
+      ],
+      "height": [
+        0.6,
+        0.25
+      ],
+      "edgeDeg": 0.12,
+      "fadeDeg": 0.5,
+      "size": 2048,
+      "window": {
+        "raster": 4096,
+        "size": 3456,
+        "offset": [
+          -320,
+          320
+        ]
+      },
+      "feather": 0.03,
+      "fromDeg": [
+        4.2,
+        5.0
+      ]
+    },
+    "under": [
+      {
+        "file": "patch-96.jpg",
+        "widthDeg": 96,
+        "raster": 4096,
+        "size": 2400,
+        "offset": [
+          -138,
+          -52
+        ]
+      },
+      {
+        "file": "patch-48.jpg",
+        "widthDeg": 48,
+        "raster": 4096,
+        "size": 4096,
+        "offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "file": "patch-24.jpg",
+        "widthDeg": 24,
+        "raster": 4096,
+        "size": 4096,
+        "offset": [
+          -454,
+          98
+        ]
+      }
+    ],
+    "windows": "Each level is a square window of a gnomonic raster: widthDeg is the angle the whole raster spans, raster its size in px, size the window's size in px and offset the window's centre from the raster's centre in raster px (east, north), all for the full set. The levels in under lie in the plane about the plan's spot (assets.ts), the levels in levels in the plane about centre. The windows are placed over the ground the dive and the rise look at while that level is the finest one needed (out/work/earth/place/tmp/soft.ts, option need): the camera comes down over a point 3.9 degrees south east of centre and looks north west, so the windows sit between the two. A level comes in as the texel density of what is shown under it falls from fade[1] to fade[0] texels a pixel (assets.ts)."
+  },
+  "path": {
+    "how": "One steady move on the globe side for the dive and for the rise. The close side is the level glide of the terrain view carried on in time; its twin is the anchor. The globe side camera stands above the anchor by a factor exp(lift): lift and its rate are 0 at T, the rate eases over ease[0] frames to a constant, and over ease[1] frames into the rate of the hold (dive) or of the travel (rise). With k the share of the lift: the nadir goes from the anchor to the far pose over the span over, the view direction turns from the place to the far pose's over aim, the up vector over turn, each with a quintic ease. The handover of the dive is in its last frame and that of the rise in its first, so every frame of both is drawn from the globe side. rewind is the frame after T of the rise from which the spin is wound back to the state the travel starts with.",
+    "handover": {
+      "dive": {
+        "at": 0.99,
+        "dissolveFrames": 1,
+        "placeFrames": 12,
+        "skyFrames": 120
+      },
+      "rise": {
+        "at": 0.005,
+        "dissolveFrames": 1,
+        "placeFrames": 12,
+        "skyFrames": 120
+      }
+    },
+    "dive": {
+      "ease": [
+        22,
+        20
+      ],
+      "over": [
+        0.4,
+        1
+      ],
+      "aim": [
+        0.5,
+        1
+      ],
+      "turn": [
+        0.05,
+        1
+      ]
+    },
+    "rise": {
+      "ease": [
+        22,
+        26
+      ],
+      "over": [
+        0.4,
+        1
+      ],
+      "aim": [
+        0.5,
+        1
+      ],
+      "turn": [
+        0.05,
+        1
+      ]
+    },
+    "rewind": 0
+  },
+  "sky": {
+    "how": "One sky through T. The sky of the close view (the Sun's glow just above the frame, no stars beside it) is a picture at a fixed place on the sky. On the globe side it stands at full weight below the height low[0] and the hold's sky picture at full weight above low[1]; between them (in ln height) one gives way to the other. Both heights lie where the globe fills the whole frame in the dive and in the rise (no sky in frame from 1860 to 1896 and from 2121 to 2146, measured on a grid), so the glow enters and leaves the frame by the turn of the camera and nothing in the sky fades in view. skyFrames is longer than either segment so the engine's own share is above 0 on every frame and the weights here divide it out.",
+    "low": [
+      0.12,
+      0.5
+    ]
+  }
+}
