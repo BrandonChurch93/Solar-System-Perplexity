@@ -1,22 +1,22 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-23T21:06:21.883Z",
+ "pushed": "2026-11-23T21:22:28.571Z",
  "head": "c6f57f7b1ce801450ad4fab402e58815f982f8c9",
- "note": "measure on the tree of 20:00: G5 and G17 pass, G13 fails on 2139 to 2143 (2.1 to 3.9 percent soft, corner of the new climb beyond patch-48); cure in work",
+ "note": "G13 cure in work: the climb swings to the right of the glide heading so its frames stay on the 48 degree level; new veil carried past the lay back; levels are being rebuilt",
  "looks": [
   {
-   "time": "2026-11-23T20:58:37.816Z",
-   "file": "20261123205837816-job-frame-01857.jpg",
+   "time": "2026-11-23T21:14:39.172Z",
+   "file": "20261123211439172-job-frame-01862.jpg",
    "source": "memory",
    "kind": "job",
-   "label": "earth.dive frame 1857, final tier, nograin view, from the running measure job",
+   "label": "earth.dive frame 1862, draft tier, texels view, from the running g13 job",
    "stop": "earth",
    "segment": "earth.dive",
-   "frame": 1857,
-   "tier": "final",
+   "frame": 1862,
+   "tier": "draft",
    "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
+   "diag": "texels",
+   "job": "g13"
   },
   {
    "time": "2026-11-23T20:47:01.978Z",
