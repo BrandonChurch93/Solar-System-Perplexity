@@ -59,6 +59,50 @@ def sides(job):
     return numbers
 
 
+def under(job):
+    """The globe side alone against the globe side with the place picture, on the body where the pass draws the picture at more than half weight.
+
+    The body is a grid of 0 and 1 (rows from the top), the mask a picture of the pass weight as grey."""
+    a = rgb(job['picture'])
+    b = rgb(job['alone'])
+    h, w = a.shape[:2]
+    weight = rgb(job['mask']).mean(axis=2) / 255.0
+    grid = np.asarray(job['body'], dtype=np.float64)
+    rows, cols = grid.shape
+    bh, bw = h // rows, w // cols
+    body = np.zeros((h, w), dtype=bool)
+    body[: rows * bh, : cols * bw] = np.kron(grid > 0.5, np.ones((bh, bw), dtype=bool))
+    where = body & (weight > 0.5)
+    d = np.abs(a - b)
+    worst = d.max(axis=2)
+    n = int(where.sum())
+    numbers = {
+        'pixels': n,
+        'share': float(where.mean()),
+        'mean': float(d[where].mean()) if n else 0.0,
+        'p50': float(np.percentile(worst[where], 50)) if n else 0.0,
+        'p99': float(np.percentile(worst[where], 99)) if n else 0.0,
+        'meanSigned': [float(v) for v in (b - a)[where].mean(axis=0)] if n else [0.0, 0.0, 0.0],
+    }
+    if job.get('panel'):
+        limit = job.get('limit', 1400)
+        gain = job.get('gain', 2)
+        cell_w = (limit - 4 * 6) // 3
+        cell_h = round(cell_w * h / w)
+        label = 22
+        board = Image.new('RGB', (limit, cell_h + label + 12), (16, 16, 16))
+        draw = ImageDraw.Draw(board)
+        shown = np.clip(d * gain, 0, 255)
+        shown[~where] *= 0.25
+        tiles = [('globe side at T with the place picture', a), ('globe side at T alone', b), ('difference times ' + str(gain) + ', dim where not counted', shown)]
+        for i, (name, im) in enumerate(tiles):
+            x = 6 + i * (cell_w + 6)
+            board.paste(Image.fromarray(im.astype(np.uint8)).resize((cell_w, cell_h), Image.LANCZOS), (x, 6))
+            draw.text((x + 4, cell_h + 8), name, fill=(230, 230, 230), font=font(14))
+        board.save(job['panel'])
+    return numbers
+
+
 def frame(job):
     """Mean level, mean colour and the flat share of the body in one frame.
 
@@ -124,6 +168,8 @@ def main():
     op = job['op']
     if op == 'sides':
         reply = sides(job)
+    elif op == 'under':
+        reply = under(job)
     elif op == 'frame':
         reply = frame(job)
     elif op == 'frames':

@@ -157,6 +157,8 @@ uniform vec4 uLens;
 uniform vec2 uScale;
 uniform vec4 uDump;
 uniform float uDumpAs;
+uniform sampler2D uMatte;
+uniform float uMatteOn;
 in vec2 vUv;
 out vec4 outColor;
 ${FILMIC_GLSL}
@@ -200,6 +202,7 @@ void main() {
   float most = max(length(dx), length(dy)) * uLens.z;
   float fit = min(1.0, uLens.w / max(most, 1e-9)) * uLens.z;
   vec4 pic = textureGrad(uPicture, uv, dx / uSize * fit, dy / uSize * fit);
+  if (uMatteOn > 0.5) k *= textureGrad(uMatte, uv, dx / uSize * fit, dy / uSize * fit).r;
   if (mode == 1) {
     if (k <= 0.5) discard;
     float texels = min(pic.r * 2.0, 1.0) * sqrt(max(dot(dx, dx), dot(dy, dy)));
@@ -235,7 +238,7 @@ export class Place {
     uPicture: { value: null }, uSky: { value: null }, uSize: { value: new THREE.Vector2(1, 1) }, uRay: { value: new THREE.Vector4() }, uProj: { value: new THREE.Vector4() },
     uRel: { value: new THREE.Matrix3() }, uDelta: { value: new THREE.Vector3() }, uShift: { value: new THREE.Vector3() }, uCentre: { value: new THREE.Vector3() }, uBall: { value: new THREE.Vector4() },
     uHorizon: { value: new THREE.Vector4() }, uSinDip: { value: 0 }, uFeather: { value: new THREE.Vector4() }, uLimits: { value: new THREE.Vector4() }, uLens: { value: new THREE.Vector4() }, uScale: { value: new THREE.Vector2(1, 0) },
-    uDump: { value: new THREE.Vector4() }, uDumpAs: { value: 0 },
+    uDump: { value: new THREE.Vector4() }, uDumpAs: { value: 0 }, uMatte: { value: null }, uMatteOn: { value: 0 },
   }, { transparent: true, blending: THREE.CustomBlending, blendEquation: THREE.AddEquation, blendSrc: THREE.OneFactor, blendDst: THREE.OneMinusSrcAlphaFactor, blendSrcAlpha: THREE.ZeroFactor, blendDstAlpha: THREE.OneFactor })
 
   find(key: string): PlacePicture | null {
@@ -302,7 +305,7 @@ export class Place {
     this.copy.render(r, this.sky)
   }
 
-  render(r: THREE.WebGLRenderer, target: THREE.WebGLRenderTarget, pic: PlacePicture, place: PlaceState, camera: Pose, frame: THREE.PerspectiveCamera, mode: PlaceMode, vignette: number, aspect: number, grad: number, dump?: PlaceDump): void {
+  render(r: THREE.WebGLRenderer, target: THREE.WebGLRenderTarget, pic: PlacePicture, place: PlaceState, camera: Pose, frame: THREE.PerspectiveCamera, mode: PlaceMode, vignette: number, aspect: number, grad: number, dump?: PlaceDump, matte: THREE.Texture | null = null): void {
     const c = config.raw.handover.place
     const g = placeGeometry(camera, place)
     const u = this.lay.material.uniforms
@@ -327,6 +330,8 @@ export class Place {
     ;(u.uScale!.value as THREE.Vector2).set(l.scale, MODES[mode])
     ;(u.uDump!.value as THREE.Vector4).set(dump?.x ?? 0, dump?.y ?? 0, target.width, target.height)
     u.uDumpAs!.value = mode === 'picture' && dump ? (dump.what === 'alpha' ? 2 : 1) : 0
+    u.uMatte!.value = matte ?? pic.target.texture
+    u.uMatteOn!.value = matte ? 1 : 0
     const m = this.lay.material
     const plain = mode !== 'beauty'
     m.blending = plain ? THREE.NoBlending : THREE.CustomBlending

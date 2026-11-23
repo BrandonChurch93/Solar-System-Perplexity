@@ -2,11 +2,11 @@ import * as THREE from 'three'
 import { afterAll, describe, expect, it } from 'vitest'
 import { config } from '../src/config'
 import { needs } from '../src/core/caps'
-import { placeCamera, placeGeometry, placeLayout, placeUv, type PlaceLayout } from '../src/core/place'
+import { Place, placeCamera, placeGeometry, placeLayout, placeUv, type PlaceLayout } from '../src/core/place'
 import type { Pose, Shot } from '../src/core/types'
 import { parseProbe, probeString } from '../src/diagnostics/probe'
 import { FilmDirector } from '../src/director/film'
-import { handoverOf, placeWeight, skyTurnWeight, skyWeight } from '../src/director/handover'
+import { forceTop, handoverOf, placeWeight, skyTurnWeight, skyWeight } from '../src/director/handover'
 import { trapeze } from '../src/director/moves'
 import { plans } from '../src/director/plans'
 import { coveredPlan, filmWith, restorePlans } from './lib/covered'
@@ -410,18 +410,94 @@ describe('the curve of a descent', () => {
   })
 })
 
+describe('the land matte of a place picture', () => {
+  it('multiplies the weight of the pass after every limit, and only when a set gives one', () => {
+    const pass = new Place()
+    const lay = (pass as unknown as { lay: { material: THREE.ShaderMaterial } }).lay.material
+    const source = lay.fragmentShader
+    const cut = 'if (uMatteOn > 0.5) k *= textureGrad(uMatte, uv, dx / uSize * fit, dy / uSize * fit).r;'
+    expect(source.split(cut).length).toBe(2)
+    expect(source.indexOf(cut)).toBeGreaterThan(source.indexOf('float k = '))
+    // Every view reads the weight after the matte: the texel count, the mask and the picture itself.
+    for (const reader of ['if (k <= 0.5) discard;', 'outColor = vec4(k, k, k, 1.0);', 'outColor = vec4(col * k, k);']) {
+      expect(source.split(reader).length).toBe(2)
+      expect(source.indexOf(reader)).toBeGreaterThan(source.indexOf(cut))
+    }
+    const hd = handoverOf('mars', 'dive')!
+    const shot = film.shotAt(hd.firstFrame, hd.time, 'orbit')
+    const layout = placeLayout(master, shot.place!, 8192)
+    const texture = new THREE.Texture()
+    const matte = new THREE.Texture()
+    const pic = { key: 'test', target: { texture, width: layout.width, height: layout.height } as unknown as THREE.WebGLRenderTarget, layout, proj: [1, 1, 0, 0] as [number, number, number, number], used: 0 }
+    const u = lay.uniforms
+    const drawn: [number, THREE.Texture][] = []
+    const r = { setRenderTarget: () => undefined, render: () => drawn.push([u.uMatteOn!.value as number, u.uMatte!.value as THREE.Texture]) } as unknown as THREE.WebGLRenderer
+    const target = { width: master.width, height: master.height } as unknown as THREE.WebGLRenderTarget
+    const cam = frameCamera(shot.camera, master)
+    pass.render(r, target, pic, shot.place!, shot.camera, cam, 'beauty', 0, master.width / master.height, 1)
+    pass.render(r, target, pic, shot.place!, shot.camera, cam, 'beauty', 0, master.width / master.height, 1, undefined, matte)
+    pass.render(r, target, pic, shot.place!, shot.camera, cam, 'texels', 0, master.width / master.height, 1, undefined, null)
+    expect(drawn).toEqual([[0, texture], [1, matte], [0, texture]])
+  })
+})
+
+describe('the top down view of the harness', () => {
+  it('puts the globe camera straight above the place at the height and field of the path, the heading up, and only while it is forced', () => {
+    for (const p of handing) {
+      for (const kind of kinds) {
+        const s = seg(p.id, kind)
+        const h = handoverOf(p.id, kind)!
+        const sizes: number[] = []
+        for (let f = s.firstFrame; f < s.endFrame; f += 3) {
+          const time = (f + config.shutterFraction / 2) / fps
+          const plain = film.shotAt(f, time, 'orbit')
+          forceTop(true)
+          const top = film.shotAt(f, time, 'orbit')
+          const close = film.shotAt(f, time, 'terrain')
+          forceTop(false)
+          const place = p.place(kind, time)
+          const path = kind === 'dive' ? p.divePose(time, 'orbit') : p.risePose(time, 'orbit')
+          const above = p.above(kind, time, path)
+          expect(above.position.length()).toBeCloseTo(path.position.length(), 12)
+          expect(above.position.clone().normalize().distanceTo(place)).toBeLessThan(1e-9)
+          expect(above.vfov).toBe(path.vfov)
+          const dir = new THREE.Vector3(0, 0, -1).applyQuaternion(above.quaternion)
+          expect(dir.distanceTo(place.clone().negate())).toBeLessThan(1e-9)
+          const up = new THREE.Vector3(0, 1, 0).applyQuaternion(above.quaternion)
+          const twin = p.twin(p.closePose(kind, h.time), h.time)
+          const look = new THREE.Vector3(0, 0, -1).applyQuaternion(twin.quaternion).applyQuaternion(p.turn(h.time).invert()).applyQuaternion(p.turn(time))
+          const flat = look.addScaledVector(place, -look.dot(place)).normalize()
+          expect(up.dot(flat)).toBeGreaterThan(0.999)
+          // The film puts the pose into the set and adds its drift on the camera side, so the turn from the path's camera to the one above is the same angle in both, and the step between them the same length times the size of the set.
+          expect(deg(top.camera.quaternion, plain.camera.quaternion)).toBeCloseTo(deg(above.quaternion, path.quaternion), 6)
+          const step = above.position.distanceTo(path.position)
+          if (step > 1e-6) sizes.push(top.camera.position.distanceTo(plain.camera.position) / step)
+          expect(top.camera.vfov).toBe(plain.camera.vfov)
+          expect(deg(film.shotAt(f, time, 'terrain').camera.quaternion, close.camera.quaternion)).toBeLessThan(1e-4)
+          expect(film.shotAt(f, time, 'terrain').camera.position.distanceTo(close.camera.position)).toBe(0)
+          expect(deg(film.shotAt(f, time, 'orbit').camera.quaternion, plain.camera.quaternion)).toBeLessThan(1e-4)
+          expect(film.shotAt(f, time, 'orbit').camera.position.distanceTo(plain.camera.position)).toBe(0)
+        }
+        expect(sizes.length).toBeGreaterThan(4)
+        for (const v of sizes) expect(v / sizes[0]!).toBeCloseTo(1, 6)
+      }
+    }
+  })
+})
+
 describe('the options on a diagnostic string', () => {
   it('reads the view and every option and writes them back', () => {
-    expect(parseProbe('beauty')).toEqual({ view: 'beauty', side: null, shut: false, time: null, place: true, mask: false, picture: false })
-    expect(parseProbe('texels/side=orbit/shut')).toEqual({ view: 'texels', side: 'orbit', shut: true, time: null, place: true, mask: false, picture: false })
-    expect(parseProbe('beauty/side=terrain/t=81.80833/noplace')).toEqual({ view: 'beauty', side: 'terrain', shut: true, time: 81.80833, place: false, mask: false, picture: false })
+    expect(parseProbe('beauty')).toEqual({ view: 'beauty', side: null, shut: false, time: null, place: true, mask: false, picture: false, top: false })
+    expect(parseProbe('texels/side=orbit/shut')).toEqual({ view: 'texels', side: 'orbit', shut: true, time: null, place: true, mask: false, picture: false, top: false })
+    expect(parseProbe('beauty/side=terrain/t=81.80833/noplace')).toEqual({ view: 'beauty', side: 'terrain', shut: true, time: 81.80833, place: false, mask: false, picture: false, top: false })
+    expect(parseProbe('beauty/side=orbit/noplace/top')).toEqual({ view: 'beauty', side: 'orbit', shut: false, time: null, place: false, mask: false, picture: false, top: true })
     expect(parseProbe('beauty/mask').mask).toBe(true)
     expect(parseProbe('beauty/picture').picture).toBe(true)
-    expect(parseProbe('ungraded/side=orbit/dump=1497,889,image')).toEqual({ view: 'ungraded', side: 'orbit', shut: false, time: null, place: true, mask: false, picture: true, dump: { x: 1497, y: 889, what: 'image' } })
+    expect(parseProbe('ungraded/side=orbit/dump=1497,889,image')).toEqual({ view: 'ungraded', side: 'orbit', shut: false, time: null, place: true, mask: false, picture: true, top: false, dump: { x: 1497, y: 889, what: 'image' } })
     expect(probeString(parseProbe('ungraded/side=orbit/dump=0,0,alpha'))).toBe('ungraded/side=orbit/dump=0,0,alpha')
     expect(() => parseProbe('ungraded/dump=1.5,0,image')).toThrow()
     expect(() => parseProbe('ungraded/dump=0,0,colour')).toThrow()
-    for (const s of ['beauty', 'texels/side=orbit/shut', 'beauty/side=terrain/t=81.80833/noplace', 'beauty/side=orbit/mask', 'beauty/picture']) expect(probeString(parseProbe(s))).toBe(s)
+    for (const s of ['beauty', 'texels/side=orbit/shut', 'beauty/side=terrain/t=81.80833/noplace', 'beauty/side=orbit/mask', 'beauty/picture', 'beauty/side=orbit/noplace/top']) expect(probeString(parseProbe(s))).toBe(s)
     expect(() => parseProbe('beauty/side=left')).toThrow()
     expect(() => parseProbe('beauty/t=soon')).toThrow()
     expect(() => parseProbe('beauty/nothing')).toThrow()
