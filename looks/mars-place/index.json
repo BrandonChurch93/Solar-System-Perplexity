@@ -1,9 +1,61 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-23T16:05:58.372Z",
- "head": "864c6a5cbb429cbb3d872c6b8be3238e86c2005c",
- "note": "16:07 new 1.6 and 0.7 takes beside their leads; fifth bake (take 6 of the 3.8 plate) is running, frames follow",
+ "pushed": "2026-11-23T16:17:33.311Z",
+ "head": "661bff2367cc556ab5028b5c5fd84adb46cefd9b",
+ "note": "16:20 fifth bake: fan and stripes gone from above; at 2446 light flecks of the plate show through the shadowed mesa (worse than before), proofs running",
  "looks": [
+  {
+   "time": "2026-11-23T16:17:32.535Z",
+   "file": "20261123161732535-note-cmp-2446-n-r.jpg",
+   "source": "out/work/place/view/cmp-2446-n-r.jpg",
+   "kind": "note",
+   "label": "frame 2446 draft: 08ae5f44 (left) against the fifth bake with edgeIn (right), whole frame and the middle at full size: the new plates show light flecks through the shadowed mesa, worse there",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T16:17:31.821Z",
+   "file": "20261123161731821-note-sheet-r1.jpg",
+   "source": "out/work/place/view/sheet-r1.jpg",
+   "kind": "note",
+   "label": "fifth bake with the engineer's edgeIn, draft frames 2418, 2424, 2436, 2446",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T16:17:30.921Z",
+   "file": "20261123161730921-note-topdown-r5.jpg",
+   "source": "out/work/place/view/topdown-r5.jpg",
+   "kind": "note",
+   "label": "fifth bake from straight above, 60 to 0.12 deg across (take 6 of the 3.8 plate, new 1.6 and 0.7 takes): the fan and the terraced stripes are gone; the place is still paler than the land round it at 34 to 11 deg with a dark dot",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T16:17:21.642Z",
+   "file": "20261123161721642-frame-f02212-draft.jpg",
+   "source": "out/work/samebytes/r5/f02212-draft.png",
+   "kind": "frame",
+   "label": "earth.travel frame 2212, draft tier",
+   "stop": "earth",
+   "segment": "earth.travel",
+   "frame": 2212,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e85c8d53a860dafc"
+  },
+  {
+   "time": "2026-11-23T16:16:32.852Z",
+   "file": "20261123161632852-frame-r2446.jpg",
+   "source": "out/work/place/view/r2446.png",
+   "kind": "frame",
+   "label": "mars.dive frame 2446, draft tier",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2446,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e85c8d53a860dafc"
+  },
   {
    "time": "2026-11-23T15:45:44.357Z",
    "file": "20261123154544357-note-p07-take2-vs-lead.jpg",
@@ -27,66 +79,6 @@
    "kind": "note",
    "label": "baked 1.6 and 0.7 deg plates of 08ae5f44 from above: terraced stripes at the east rim and the pale south east blotch are the faults to cure",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T15:36:06.939Z",
-   "file": "20261123153606939-note-p38-take6-small.jpg",
-   "source": "out/work/place/gen/p38-take6-small.jpg",
-   "kind": "note",
-   "label": "3.8 deg plate take 6 of 6 from above (not baked yet): the fan east of the mesa is gone",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T15:30:52.827Z",
-   "file": "20261123153052827-frame-g17-2580.jpg",
-   "source": "out/work/place/final/g17-2580.png",
-   "kind": "frame",
-   "label": "mars.terrain frame 2580, final tier, nograin view",
-   "stop": "mars",
-   "segment": "mars.terrain",
-   "frame": 2580,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "engine": "3c1375ab69256384"
-  },
-  {
-   "time": "2026-11-23T15:28:25.229Z",
-   "file": "20261123152825229-job-frame-02325.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "mars.hold frame 2325, draft tier, nograin view, from the running measure job",
-   "stop": "mars",
-   "segment": "mars.hold",
-   "frame": 2325,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-23T15:20:54.416Z",
-   "file": "20261123152054416-sheet-mars-rise-top.jpg",
-   "source": "out/work/handover/mars-rise-top.png",
-   "kind": "sheet",
-   "label": "mars rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 2685), place picture off, draft tier",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "first": 2685,
-   "last": 2744,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T15:20:13.931Z",
-   "file": "20261123152013931-sheet-mars-rise-draft-after.jpg",
-   "source": "out/work/handover/mars-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "mars rise, every frame 2686 to 2697 (after T, frame 2685), draft tier",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "first": 2686,
-   "last": 2697,
-   "tier": "draft"
   }
  ]
 }
