@@ -6,7 +6,7 @@ import { defaultPost } from '../post/chain'
 import { StopPlan, easeInOut, type OrbitShot } from './moves'
 import { arc, drift, forward, lookAt, mix, ramp, slerpDir, smooth, smoother } from './rig'
 import { coverWindow, segmentAtFrame } from './timeline'
-import { handoverFrame, handoverOf, placeWeight, skyTurnWeight, skyWeight } from './handover'
+import { handoverFrame, handoverOf, placeWeight, skyTurnWeight, skyWeight, topForced } from './handover'
 import skyFrame from '../space/skyframe.json'
 import world from './world.json'
 import { aimAt, type SkyAims } from '../space/aim'
@@ -739,6 +739,7 @@ export class FilmDirector implements Director {
         const r: OrbitShot = forced ? { pose: segment.kind === 'dive' ? p.divePose(time, forced) : p.risePose(time, forced), view: forced } : segment.kind === 'dive' ? p.dive(time) : p.rise(time)
         local = r.pose
         view = r.view
+        if (view === 'orbit' && topForced()) local = p.topDown(segment.kind === 'dive' ? 'dive' : 'rise', time, local)
       }
       if ((segment.kind === 'dive' || segment.kind === 'rise') && !p.handsOver) {
         cover.amount = p.coverAmount(segment, time)
@@ -813,7 +814,7 @@ export class FilmDirector implements Director {
         if (weight > 0 && hand.picture) {
           const tw = inSet(s, p.twin(p.closePose(kind, hand.time), time))
           tw.quaternion.multiply(drift(hand.time))
-          place = { stop: p.id, kind, weight, frame: handoverFrame(hand), time: hand.time, live: hand.live, twin: tw, centre: s.origin.clone(), radius: 1, scale: hand.place.scale, margin: hand.place.margin, matte: hand.place.matte, valid: hand.place.valid, lens: hand.place.lens, seen: hand.place.seen, maxEnlarge: hand.place.maxEnlarge, enlargeSoft: hand.place.enlargeSoft }
+          place = { stop: p.id, kind, weight, frame: handoverFrame(hand), time: hand.time, live: hand.live, twin: tw, centre: s.origin.clone(), radius: 1, scale: hand.place.scale, margin: hand.place.margin, matte: hand.place.matte, valid: hand.place.valid, lens: hand.place.lens, seen: hand.place.seen, maxEnlarge: hand.place.maxEnlarge, enlargeSoft: hand.place.enlargeSoft, limbReachDeg: hand.place.limbReachDeg, limbHoldDeg: hand.place.limbHoldDeg }
         }
       }
       if (segment.kind === 'dive' || segment.kind === 'rise') {

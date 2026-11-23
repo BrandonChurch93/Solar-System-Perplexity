@@ -338,6 +338,16 @@ export class StopPlan {
     return this.target(kind, this.coverCenter(seg), time).centre
   }
 
+  // The harness's top down view: a camera straight above the place at the height and with the field of the given pose, looking down, the close
+  // side's heading up in the picture. It turns with the body, so a sheet of it shows one place coming closer.
+  topDown(kind: 'dive' | 'rise', time: number, pose: Pose): Pose {
+    const seg = kind === 'dive' ? this.seg.dive : this.seg.rise
+    if (!seg) throw new Error(this.id + ' has no ' + kind)
+    const t = this.target(kind, this.coverCenter(seg), time)
+    const position = t.centre.clone().multiplyScalar(pose.position.length())
+    return { position, quaternion: lookAt(position, new THREE.Vector3(0, 0, 0), t.ahead), vfov: pose.vfov }
+  }
+
   handoverPath(kind: 'dive' | 'rise'): { rise: number; fall: number; turnRise: number; turnFall: number; level: boolean; levelBy: number; sidestep?: Sidestep } {
     const base = kind === 'dive' ? config.raw.handover.descent : config.raw.handover.ascent
     const own = this.p.handover?.[kind]?.path

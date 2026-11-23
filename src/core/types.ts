@@ -62,6 +62,8 @@ export interface PlaceState {
   seen?: number
   maxEnlarge?: number
   enlargeSoft?: number
+  limbReachDeg?: number
+  limbHoldDeg?: [number, number]
 }
 
 export interface Shot {
@@ -125,6 +127,10 @@ export interface StopSet {
   near?: THREE.Object3D
   over?: THREE.Object3D
   sky?: SkyPatch[]
+  // A land matte for the place picture of a dive or a rise (cut/HANDOVER.md, E2): a grey picture over the whole field of the place picture, the frame
+  // plus its margins, upright as seen. 1 keeps the picture, 0 leaves the globe's own surface. It multiplies the weight of the pass per pixel after
+  // every other limit, so the picture can end along forms of the land. Inside the frame at T it has to be 1, or the sides differ at T.
+  placeMatte?: { dive?: THREE.Texture; rise?: THREE.Texture }
   update(state: SetState, shot: Shot, view: RenderView): void
   dispose(): void
 }

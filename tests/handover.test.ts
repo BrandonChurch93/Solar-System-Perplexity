@@ -378,7 +378,7 @@ describe('the forced side', () => {
     }
     walk(root)
     expect(files.length).toBeGreaterThan(50)
-    const users = files.filter((f) => /\bforceSide\b/.test(readFileSync(f, 'utf8'))).map((f) => f.slice(root.length + 1).replace(/\\/g, '/'))
+    const users = files.filter((f) => /\bforce(Side|Top)\b/.test(readFileSync(f, 'utf8'))).map((f) => f.slice(root.length + 1).replace(/\\/g, '/'))
     for (const u of users) expect(allowed).toContain(u)
   })
 })
