@@ -6,7 +6,7 @@ The Builder's memory. Read this first in every task. Update it before every comm
 
 - Current phase: 6 · Polish and deliver
 - Current stop: none. All nine stops are finished (Phase 4 gate, 00:52 UTC on 2026-11-22). Phase 5 is done: its three whole film rounds 30, 31 and 32 ran to the limit of three, round 32 closed at 11:55 UTC and its build is kept as the best of the three (main 4365a0f0, engine hash be043ade04a7ab6e: R5 7, R6 6, R7 6, R2 pass, R3 4, R4 6; 1 severe and 21 major, written under open items 79 to 100), and the Phase 5 gate held at 12:23 UTC with the preview film of that build in `out/preview.mp4`. Phase 6 step 1 runs: three polish rounds (33, 34, 35) on the open items, worst first, each judged only on the frames its batch touched. Round 33 closed at 15:26 UTC with 95 answers (13 severe, 97 major; motion better at Jupiter, Saturn, Mercury, Neptune and the Sun, so its build is the base of round 34). Round 34 closed at 17:40 UTC with 59 answers (10 severe, 80 major, written under open items 109 to 129; the opening at phone size passes with 9, compression 8, the whole film 6; motion at Mercury 3 and Earth 4, and the film's motion critic names two sky pops that are the camera's turn). Round 35, the last polish round, is cut at 18:30 UTC from take outs and small proven things, with at most one larger cure per stop as its own commit; then the best build of rounds 32 to 35 is frozen, and the record round, the sandbox master, the nine clips, the nine posts and the gauntlet follow
-- Current round: open: none. The next round is 37. Round numbers are global; rounds of different stops run at the same time, each written here when it starts
+- Current round: open: 37 (mercury). The next round is 38. Round numbers are global; rounds of different stops run at the same time, each written here when it starts
 - Next critic name: reviewer_1544
 - Blocked: no
 - App URL: https://grand-tour-film.pplx.app (review page: https://grand-tour-film.pplx.app/review.html). Visibility is set to Organization, so it asks for a sign-in. Site id 658cdf8a-abd6-46bd-a3ba-e37d5c3ba5a3. Private preview of the same build: https://www.perplexity.ai/computer/a/grand-tour-.DP5zrWnQuWx5hYYutNNyA
@@ -110,7 +110,7 @@ State is one of `not started`, `stand-in`, `in progress` or `finished`. A finish
 | Stop | State | Rounds run | R1 | R2 | R3 | R4 | R8 | Open items |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | sun | finished (530168f) | 3 | 9 | pass | 5 | 6 | pass | 46 to 53 |
-| mercury | finished (8c9aa59) | 3 | 9 | pass | 7 | 4 | pass | 69 to 78 |
+| mercury | in progress | 1 | 9 | pass | 7 | 4 | pass | 69 to 78 |
 | venus | finished (1259820) | 3 | 8 | fail | 5 | 6 | pass | 28 to 32 |
 | earth | finished (cb86bfe) | 3 | 9 | pass | 6 | 4 | pass | 54 to 61 |
 | mars | finished (0ee8c76) | 3 | 7 | pass | 5 | 6 | pass | 6 to 15 |
@@ -1233,6 +1233,7 @@ One line per round, written when the round starts: number, phase, stop. Scores a
 - Round 34, Phase 6, polish, round 2 of 3. Started 2026-11-22 16:09 UTC. Judged on main at 89ced51, only what the batch touched. R1 sun 8, R3 sun 6, R4 sun 6, R3 mercury 7, R4 mercury 3, R3 venus 4, R4 venus 7, R1 earth 7, R3 earth 5, R4 earth 4, R1 jupiter 9, R3 jupiter 5, R4 jupiter 7, R3 saturn 5, R4 saturn 8, R1 uranus 7, R3 uranus 5, R4 uranus 5, R1 neptune 9, R3 neptune 4, R4 neptune 6, R5 6, R6 9, R7 8, R3 whole film 5, R4 whole film 4, R2 earth pass, R8 sun pass, R8 earth pass, R8 jupiter pass, R8 neptune pass. 10 severe, 80 major. Next: Round 35, the last polish round: take outs and small proven things from the offers of the agents, and at most one larger cure of a severe open item per stop as its own commit, each proved whole on review sheets beside round 34. Then the best build of rounds 32 to 35 is frozen and the record round runs on it. `scorecards/round-034/`.
 - Round 35, Phase 6, polish, round 3 of 3. Started 2026-11-22 18:25 UTC. Judged on main at 5d93e4e, only what the batch touched. R1 sun 9, R3 sun 4, R4 sun 5, R3 mercury 5, R4 mercury 5, R1 earth 9, R3 earth 5, R4 earth 9, R1 jupiter 9, R3 jupiter 6, R4 jupiter 6, R1 saturn 6, R3 saturn 7, R4 saturn 6, R3 uranus 7, R4 uranus 5, R1 neptune 8, R3 neptune 5, R4 neptune 6, R5 7, R6 7, R7 9, R3 whole film 6, R4 whole film 5, R2 saturn pass, R8 sun pass, R8 earth pass, R8 jupiter pass, R8 neptune pass. 8 severe, 62 major. Next: Round 35 was the last of the three polish rounds, so nothing is fixed after it. Each commit of its batch is weighed against round 34 on the frames it changed, by the rule written at 18:26 UTC: a severe or major there that the picture of round 34 did not have takes the commit back. Then the best build is frozen and the record round 36 runs on it. `scorecards/round-035/`.
 - Round 36, Phase 6, record round, run 1 of 2. Started 2026-11-22 20:44 UTC. Judged on main at 567b3a5. A stop's pass bar holds for 0 of 9 stops. Whole film: R5 6, R6 8, R7 6, R2 pass, R3 5, R4 6; its pass bar does not hold. 15 severe, 93 major. The scores are under "Final scores". `scorecards/round-036/`.
+- Round 37, Phase 6, mercury, round 1 of 3. Started 2026-11-23 15:56 UTC.
 
 ## Final scores
 
