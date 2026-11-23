@@ -9,7 +9,8 @@ import { plans } from '../../../src/director/plans'
 import type { Pose } from '../../../src/core/types'
 
 // Writes the cameras of the Mars dive and rise in the body frame (the frame of the wrap map and the patches),
-// the twin at both handovers and the layout of the place picture. Read by the Python tools in this folder.
+// the twin at both handovers, the layout of the place picture and the frame of the close view on the globe
+// (terrain: a point of the close view times scale, turned by rotation, plus origin is its place in the body frame). Read by the Python tools in this folder.
 //   npx tsx assets-src/mars/place/geometry.ts [out.json]
 
 const out = resolve(process.argv[2] ?? 'out/work/place/geometry.json')
@@ -38,7 +39,9 @@ for (const kind of ['dive', 'rise'] as const) {
     const pose = side === 'orbit' ? (kind === 'dive' ? plan.divePose(mid, 'orbit') : plan.risePose(mid, 'orbit')) : plan.twin(plan.closePose(kind, mid), mid)
     frames.push({ frame: f, side, height: pose.position.length() - 1, ...body(pose, mid) })
   }
-  result[kind] = { T, frameT: handoverFrame(h), handover: h, close: { position: close.position.toArray(), quaternion: close.quaternion.toArray(), vfov: close.vfov }, twin: body(twin, T), layout, place: body({ position: plan.place(kind, T), quaternion: new THREE.Quaternion(), vfov: 0 }, T).position, frames }
+  const tf = plan.twinFrame(T)
+  const terrain = { rotation: toBody(T).multiply(tf.rotation).toArray(), origin: tf.origin.clone().applyQuaternion(toBody(T)).toArray(), scale: tf.scale }
+  result[kind] = { T, frameT: handoverFrame(h), handover: h, terrain, close: { position: close.position.toArray(), quaternion: close.quaternion.toArray(), vfov: close.vfov }, twin: body(twin, T), layout, place: body({ position: plan.place(kind, T), quaternion: new THREE.Quaternion(), vfov: 0 }, T).position, frames }
 }
 const hold = plan.seg.hold
 const still: unknown[] = []
