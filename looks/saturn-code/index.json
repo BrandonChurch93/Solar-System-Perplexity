@@ -1,0 +1,22 @@
+{
+ "folder": "saturn-code",
+ "pushed": "2026-11-23T06:56:23.368Z",
+ "head": "6da6c64146a47e56fe8d549e56883ed5b698ce67",
+ "note": "start: reading the frozen build, baseline draft of 3720 before the rebuild",
+ "looks": [
+  {
+   "time": "2026-11-23T06:54:48.256Z",
+   "file": "20261123065448256-still-f03720-16x9-draft-full.jpg",
+   "source": "out/work/stills/f03720-16x9-draft-full.png",
+   "kind": "still",
+   "label": "saturn.terrain frame 3720, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.terrain",
+   "frame": 3720,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "247ebad7e038ce06"
+  }
+ ]
+}
