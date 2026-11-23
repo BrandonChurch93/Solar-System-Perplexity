@@ -9,7 +9,7 @@ import { framePlan } from './motion'
 import { samplesFor, shutterMid } from './sampler'
 import { SetLoader } from './sets'
 import type { PlaceState, RenderView, Shot, SkyFloor, SkyPatch, ViewKind } from './types'
-import { floorRing } from './skyfloor'
+import { floorRing, sharedSkyWeight } from './skyfloor'
 import { Place, placeCamera, placeLayout, type PlaceMode, type PlacePicture } from './place'
 import { gradUniform, isRaw, setDiag, setFine, setSamples } from '../diagnostics/diag'
 import { applyProbe, parseProbe, type Probe } from '../diagnostics/probe'
@@ -320,12 +320,16 @@ export class Engine {
       this.skyPatches.length = 0
       const aims = this.director!.sky
       const share = shot.skyShare ?? 0
+      const high = shot.skyShareHigh
+      const shared = share > 0 || high !== undefined
       for (const state of shot.sets) {
         for (const patch of this.sets.get(state.id)?.sky ?? []) {
           const kind = shot.segment.kind
           let weight: number
-          if (share > 0) weight = patch.view === 'terrain' ? share * (patch.weight ? patch.weight(shot.time, 'terrain') : 1) : patch.view === state.view && kind !== 'rise' ? (1 - share) * (patch.weight ? patch.weight(shot.time, state.view) : 1) : 0
-          else {
+          if (shared) {
+            const w = sharedSkyWeight(patch.view, state.view, kind, share, high)
+            weight = w > 0 ? w * (patch.weight ? patch.weight(shot.time, patch.view === 'terrain' ? 'terrain' : state.view) : 1) : 0
+          } else {
             if (patch.view !== state.view) continue
             const arriving = kind === 'travel' && state.id !== shot.segment.stop
             const base = shot.segment.stop === config.endingId ? 0 : kind === 'travel' ? (arriving ? shot.skyPatch ?? THREE.MathUtils.smoothstep(shot.u, 0.2, 0.8) : 0) : kind === 'rise' && state.view === 'orbit' ? 0 : 1
@@ -337,7 +341,7 @@ export class Engine {
           this.skyPatches.push({ patch: share > 0 && shot.skyFloor && patch.view === 'terrain' ? this.floored(patch, shot.skyFloor) : patch, weight })
         }
       }
-      if (share > 0 && this.skyPatches.length > 1) this.skyPatches.sort((a, b) => (a.patch.view === 'terrain' ? 0 : 1) - (b.patch.view === 'terrain' ? 0 : 1))
+      if (shared && this.skyPatches.length > 1) this.skyPatches.sort((a, b) => (a.patch.view === 'terrain' ? 0 : 1) - (b.patch.view === 'terrain' ? 0 : 1))
       if (aims) this.sky.setFrame(aims.frame)
       this.sky.setPatches(this.skyPatches)
       this.sky.setStarLift(shot.skyStars ?? 0, config.raw.travel.sky.starLevel / Math.max(shot.skyExposure, 1e-3), config.raw.travel.sky.flightStars.level)

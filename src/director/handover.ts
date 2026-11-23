@@ -12,6 +12,10 @@ export interface Sidestep { right: number; up: number; by: number }
 export interface PathOptions { rise?: number; fall?: number; turnRise?: number; turnFall?: number; level?: boolean; levelBy?: number; sidestep?: Sidestep; fromDive?: number }
 export interface HandoverSide extends Partial<HandoverTimes> { skyFrames?: number; live?: boolean; picture?: boolean; place?: PlaceOptions; path?: PathOptions; skyFloor?: boolean }
 export interface HandoverParams { dive?: HandoverSide; rise?: HandoverSide }
+// The shares of the two sky layers on the globe side of a dive or rise that hands over: low for the sky of the close view, high for the sky
+// of the globe view. Both from 0 to 1. A stop may give its own through StopPlan.skyShare; without a high the globe view's sky keeps the
+// engine's rule (what low leaves in a dive, nothing in a rise).
+export interface SkyShares { low: number; high?: number }
 export interface Handover { time: number; firstFrame: number; lastFrame: number; placeFirstFrame: number; placeLastFrame: number; skyFrames: number; live: boolean; picture: boolean; place: PlaceOptions; skyFloor: boolean }
 
 const CELLS = 8

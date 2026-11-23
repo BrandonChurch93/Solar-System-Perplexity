@@ -620,6 +620,7 @@ export class FilmDirector implements Director {
     let skyStars = 0
     let skyPatch = 1
     let skyShare: number | undefined
+    let skyShareHigh: number | undefined
     let skyCarry: THREE.Quaternion | null = null
     let skyFloor: SkyFloor | null = null
     let place: PlaceState | undefined
@@ -800,8 +801,13 @@ export class FilmDirector implements Director {
       if (hand && view === 'orbit' && (segment.kind === 'dive' || segment.kind === 'rise')) {
         const kind = segment.kind
         const dive = kind === 'dive'
-        const turned = skyTurnWeight(segment, time)
-        skyShare = skyWeight(segment, time)
+        const carry = p.skyCarryShare(segment, time)
+        if (carry !== null && !(carry >= 0 && carry <= 1)) throw new Error(p.id + ': skyCarryShare must lie from 0 to 1')
+        const turned = carry ?? skyTurnWeight(segment, time)
+        const own = p.skyShare(segment, time)
+        if (own && !(own.low >= 0 && own.low <= 1 && (own.high === undefined || (own.high >= 0 && own.high <= 1)))) throw new Error(p.id + ': skyShare must give low and high from 0 to 1')
+        skyShare = own ? own.low : skyWeight(segment, time)
+        if (own && own.high !== undefined) skyShareHigh = own.high
         if (hand.skyFloor && skyShare > 0) skyFloor = this.skyFloorOf(index, kind, hand.time)
         skyGlow = mix(1, p.p.light.terrainSkyGlow ?? 1, skyShare)
         const low = this.sky.turns[p.id] ?? NO_TURN
@@ -843,7 +849,9 @@ export class FilmDirector implements Director {
         if (lift > 0) {
           const w = coverWindow(segment)
           const from = p.p.light.skyLiftFrom
-          const x = smooth(ramp(w ? (from === undefined ? w.lastFrame + 1 : mix(w.centerFrame, w.lastFrame + 1, from)) / config.fps : hand ? hand.time : segment.start, segment.end, time))
+          const liftAt = p.skyLiftAt(segment, time)
+          if (liftAt !== null && !Number.isFinite(liftAt)) throw new Error(p.id + ': skyLiftAt must give a time')
+          const x = smooth(ramp(w ? (from === undefined ? w.lastFrame + 1 : mix(w.centerFrame, w.lastFrame + 1, from)) / config.fps : hand ? hand.time : segment.start, segment.end, liftAt ?? time))
           skyStars = lift * (1 - (1 - x) * (1 - x))
           light = { ...light, sky: mix(light.sky, OPEN.openExposure, skyStars) }
         }
@@ -859,6 +867,7 @@ export class FilmDirector implements Director {
     const sun: SunState = { dir: this.sunWorld.clone(), color: SUN_COLOR, intensity: 3, angularRadius: light.radius, glare: light.glare * sunWeight }
     const out: Shot = { frame, time, segment, u, camera: pose, skyQuaternion: skyCarry ? skyCarry.multiply(pose.quaternion) : pose.quaternion.clone(), skyExposure: light.sky, skyGlow, skyTurn, skyStars, skyPatch, skyLook, near, far, sun, sets, post, cover, dust, farLight }
     if (skyShare !== undefined) out.skyShare = skyShare
+    if (skyShareHigh !== undefined) out.skyShareHigh = skyShareHigh
     if (skyFloor) out.skyFloor = skyFloor
     if (place) out.place = place
     return out

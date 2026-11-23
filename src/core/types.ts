@@ -91,6 +91,7 @@ export interface Shot {
   farLight?: number
   place?: PlaceState
   skyShare?: number
+  skyShareHigh?: number
   skyFloor?: SkyFloor
 }
 
