@@ -1,9 +1,25 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-23T07:53:38.899Z",
- "head": "9fb358b942ba6d5ea096bc44f0249e1601b27314",
- "note": "S2 first plate: guide, repaint take, blend with the lay back",
+ "pushed": "2026-11-23T08:17:33.885Z",
+ "head": "9a27f0c0f17b02f76093d4e1014ee48683129e08",
+ "note": "S2 plate at 4096 and the reworked levels, first renders running",
  "looks": [
+  {
+   "time": "2026-11-23T08:17:32.217Z",
+   "file": "20261123081732217-note-levels-look.jpg",
+   "source": "out/work/earth/place/levels-look.jpg",
+   "kind": "note",
+   "label": "S2: the four levels as stored (12, 24, 48, 96 degrees): place detail with the hold's regional tone",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T08:17:30.489Z",
+   "file": "20261123081730489-note-q12-g-look.jpg",
+   "source": "out/work/earth/place/q12-g-look.jpg",
+   "kind": "note",
+   "label": "S2: the 12 degree place plate at 4096, repaint take 2 with the sharp lay back blended in, seam of the first blend gone",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-23T07:53:38.183Z",
    "file": "20261123075338183-note-p12-cmp.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/earth/place/sides/f02101-check.jpg",
    "kind": "note",
    "label": "S1 at the chosen place, frame 2101 (rise start)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T07:36:05.798Z",
-   "file": "20261123073605798-note-f01915-check.jpg",
-   "source": "out/work/earth/place/sides/f01915-check.jpg",
-   "kind": "note",
-   "label": "S1 at the chosen place, frame 1915: close side, globe side from the twin, halves, mix",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T07:05:19.924Z",
-   "file": "20261123070519924-note-lay-look.jpg",
-   "source": "out/work/earth/place/lay-look.jpg",
-   "kind": "note",
-   "label": "first lay back of the close image, north up, 12 and 24 degrees about P, no repaint yet",
    "stop": "earth"
   }
  ]
