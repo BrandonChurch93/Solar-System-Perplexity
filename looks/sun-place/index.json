@@ -1,9 +1,45 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T14:53:56.624Z",
+ "pushed": "2026-11-23T15:10:56.943Z",
  "head": "c90dd570d85977fe1385403b0c6ec5b8477424c3",
- "note": "sun c90dd570: frame 90 back at the approved picture (2.96 against 6.50), frames 85 to 96 on consecutive frames, the two sides at T in crops",
+ "note": "sun: G5 and G17 green on c90dd570, 360 final is the kept still, G13 running; rise after T on consecutive frames",
  "looks": [
+  {
+   "time": "2026-11-23T15:10:55.330Z",
+   "file": "20261123151055330-note-rise-after-217-228.jpg",
+   "source": "out/work/sun/life/rise-after-217-228.jpg",
+   "kind": "note",
+   "label": "sun rise after T, frames 217 to 228, draft, sheet of the handover tool (2aedc0e7; these frames are byte equal on c90dd570 by sample 216)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T15:03:16.219Z",
+   "file": "20261123150316219-job-frame-00000.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "sun.terrain frame 0, draft tier, texels view, from the running measure job",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 0,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-23T15:02:48.405Z",
+   "file": "20261123150248405-frame-f360-final.jpg",
+   "source": "out/work/sun/life/f360-final.png",
+   "kind": "frame",
+   "label": "sun.hold frame 360, final tier",
+   "stop": "sun",
+   "segment": "sun.hold",
+   "frame": 360,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "ee77572156dd9714"
+  },
   {
    "time": "2026-11-23T14:53:55.929Z",
    "file": "20261123145355929-note-sides-crops.jpg",
@@ -42,42 +78,6 @@
    "source": "out/work/sun/life/c4-90-four.jpg",
    "kind": "note",
    "label": "sun frame 90, draft, film camera: approved image, kept still, 2aedc0e7, c90dd570 (difference to approved after blur 8 px: 2.73, 6.50, 2.96)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T14:52:20.766Z",
-   "file": "20261123145220766-job-frame-00000.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "sun.terrain frame 0, final tier, nograin view, from the running measure job",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 0,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-23T14:42:17.562Z",
-   "file": "20261123144217562-frame-exact-orbit.jpg",
-   "source": "out/work/sun/life/sides/exact-orbit.png",
-   "kind": "frame",
-   "label": "sun.rise frame 216, draft tier, beauty/side=orbit/t=7.208333 view",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "frame": 216,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty/side=orbit/t=7.208333",
-   "engine": "ee77572156dd9714"
-  },
-  {
-   "time": "2026-11-23T14:34:43.107Z",
-   "file": "20261123143443107-note-p4-feet.jpg",
-   "source": "out/work/sun/life/p4-feet.jpg",
-   "kind": "note",
-   "label": "sun 2aedc0e7 against the approved stills at 60 and 90: feet and ground beside them (before the calm at 90)",
    "stop": "sun"
   }
  ]
