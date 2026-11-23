@@ -1,0 +1,46 @@
+{
+  "note": "The look of the globe side close to the ground, where the place picture comes in and goes out. Weight `near` runs from 0 at height `high` to 1 at height `low` (radii above the surface, log scale), on top of the descent look of look.ts. hazeDay, shellDay and shellTwilight scale the descent colours; hazeDepth and shellDepth scale the depths, hazeScaleHeight and shellScaleHeight the scale heights of the ground haze and the shell haze (thin layers under the camera: the far ground goes into the haze and the near ground stays clear, and the glow of the shell stays in a band along the horizon). glow: a lobe of haze light about the direction of the low Sun of the close view, one for the ground haze and one for the shell haze, each given against the camera of the dive twin at T: rightDeg to the right of its heading along the horizon, upDeg above it, colour in scene light, power its width. The close view carries this glow in its own air (relief.air.warm); without it the horizon steps when the picture fades in.",
+  "high": 0.03,
+  "low": 0.0022,
+  "hazeDay": [
+    0.45,
+    0.45,
+    0.45
+  ],
+  "hazeDepth": 1.1,
+  "shellDay": [
+    0.8,
+    0.8,
+    0.8
+  ],
+  "shellTwilight": [
+    1,
+    1,
+    1
+  ],
+  "shellDepth": 0.5,
+  "glow": {
+    "ground": {
+      "rightDeg": 45,
+      "upDeg": 10,
+      "colour": [
+        1.0,
+        0.7,
+        0.45
+      ],
+      "power": 12
+    },
+    "shell": {
+      "rightDeg": 48,
+      "upDeg": 0,
+      "colour": [
+        1.2,
+        0.85,
+        0.5
+      ],
+      "power": 3
+    }
+  },
+  "shellScaleHeight": 0.04,
+  "hazeScaleHeight": 0.15
+}

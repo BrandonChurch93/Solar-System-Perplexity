@@ -178,7 +178,10 @@ del acc, dm, mm, need
 # picture may end on the outline of what the twin sees
 far = cv2.distanceTransform((m < 0.5).astype(np.uint8), cv2.DIST_L2, 5) / size * a.width_deg
 fall = (1 - geom.smoothstep(0.0, fc['spreadDeg'], far)) * fc['spreadShare']
-plate = np.clip(R + Dp * (m * fc['share'])[..., None], 0, 1)
+# the hold fades with the stretch: where the twin looks along the ground, what the picture shows is cliff faces
+# pulled out over the land behind them. Held in full they read from above as strokes that run out from the twin.
+hold = fc['share'] * (fc['holdFar'] + (1 - fc['holdFar']) * (1 - geom.smoothstep(fc['holdFrom'], fc['holdTo'], stretch)))
+plate = np.clip(R + Dp * (m * hold)[..., None], 0, 1)
 # (a gain on the broad tone, not a sum: the take is often lit where the picture's near ground is dark, and a sum
 # leaves the land beside the fan brighter than the fan)
 sig = fc['toneBlur'] * size

@@ -2,8 +2,9 @@
 # From the takes to the baked pyramid, one step at a time (two jobs of 4096 px at once do not fit the machine).
 #   sh assets-src/mars/place/plates.sh [lay] [force] [bake]
 # lay: the land of dehaze.py laid back at the plate widths.
-# force: for every plate from the widest down: its base (the plate above, cropped, with the take nested), held to
-#        the picture. The widest base is the toned old land with the take of the 3.25 deg plate nested.
+# force: the 8.5 deg plate is its top down take, tone matched at its rim to the old land (it is not held: the twin
+#        sees it only along the ground). Then for every plate from 3.8 deg down: its base (the plate above, cropped,
+#        with the take nested), held to the picture.
 # bake: bake.py.
 set -e
 W=out/work/place
@@ -21,8 +22,9 @@ for step in "$@"; do
         python3 $P/layback.py --kind dive --width-deg $w --size 4096 --image $W/dehaze/dive-t.png --out $W/lay/dive-t-$w
       done ;;
     force)
-      python3 $P/bake.py --toned 3.8,$W/plate/toned-3.8.png
-      python3 $P/nestbase.py --above $W/plate/toned-3.8.png,3.8 --width-deg 3.8 --below $T/p3-take4.png,3.25 --out $W/plate/base-3.8.png
+      python3 $P/bake.py --toned 8.5,$W/plate/toned-8.5.png
+      python3 $P/nestbase.py --above $W/plate/toned-8.5.png,8.5 --width-deg 8.5 --below $T/p85-take1-x2.png,8.5 --out $W/plate/p8.5.png
+      python3 $P/nestbase.py --above $W/plate/p8.5.png,8.5 --width-deg 3.8 --below $T/p38-take5-x2.png,3.8 --out $W/plate/base-3.8.png
       held 3.8
       python3 $P/nestbase.py --above $W/plate/p3.8.png,3.8 --width-deg 1.6 --below $T/p12-take1.png,1.2 --out $W/plate/base-1.6.png
       held 1.6

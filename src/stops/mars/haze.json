@@ -22,7 +22,8 @@
   "forward": 1.2,
   "top": 10,
   "dayFrom": -0.3,
-  "dayTo": 0.95
+  "dayTo": 0.95,
+  "glow": true
  },
  "grazing": {
   "depth": 2.25,
@@ -93,7 +94,8 @@
   "forward": 1.2,
   "top": 6.27451,
   "dayFrom": 0.36826,
-  "dayTo": 0.61826
+  "dayTo": 0.61826,
+  "glow": true
  },
  "shellDir": [
   -0.51458,

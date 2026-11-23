@@ -13,6 +13,8 @@ import phobos from './phobos.json'
 import { plan } from './plan'
 import skyFrame from '../../space/skyframe.json'
 import skyJson from './sky.json'
+import nearJson from './near.json'
+import { handoverOf } from '../../director/handover'
 
 function direction(lonDeg: number, latDeg: number): THREE.Vector3 {
   const lon = THREE.MathUtils.degToRad(lonDeg)
@@ -93,6 +95,25 @@ export const createSet: SetFactory = async (ctx) => {
   const shellTwilightLow = new THREE.Vector3().fromArray(look.descent.shellTwilight)
   const edgeLow = new THREE.Vector2().fromArray(look.descent.edge)
   const edge = new THREE.Vector2()
+  // the glow of the close view's low Sun, as a direction in the stop's frame: from the twin of the dive at T
+  const glowGround = new THREE.Vector3(1, 0, 0)
+  const glowShell = new THREE.Vector3(1, 0, 0)
+  const glowWorld = new THREE.Vector3()
+  const diveT = handoverOf(plan.id, 'dive')?.time
+  if (diveT !== undefined) {
+    const twin = plan.twin(plan.closePose('dive', diveT), diveT)
+    const up = twin.position.clone().normalize()
+    const ahead = new THREE.Vector3(0, 0, -1).applyQuaternion(twin.quaternion)
+    ahead.addScaledVector(up, -ahead.dot(up)).normalize()
+    const right = new THREE.Vector3().crossVectors(ahead, up)
+    const aim = (out: THREE.Vector3, lobe: { rightDeg: number; upDeg: number }): void => {
+      const a = THREE.MathUtils.degToRad(lobe.rightDeg)
+      const e = THREE.MathUtils.degToRad(lobe.upDeg)
+      out.copy(ahead).multiplyScalar(Math.cos(a)).addScaledVector(right, Math.sin(a)).multiplyScalar(Math.cos(e)).addScaledVector(up, Math.sin(e)).normalize()
+    }
+    aim(glowGround, nearJson.glow.ground)
+    aim(glowShell, nearJson.glow.shell)
+  }
   const light = new THREE.Vector3()
   const glow = new THREE.Vector3()
   const holdPose = plan.hold(plan.holdMid - plan.seg.hold.start)
@@ -162,6 +183,20 @@ export const createSet: SetFactory = async (ctx) => {
       edge.set(look.haze.dayFrom ?? -0.16, look.haze.dayTo ?? 0.34).lerp(edgeLow, low)
       ;(pu.uHazeEdge!.value as THREE.Vector2).copy(edge)
       ;(su.uHazeEdge!.value as THREE.Vector2).set(look.shellHaze.dayFrom ?? -0.16, look.shellHaze.dayTo ?? 0.34).lerp(edgeLow, low)
+      const n = nearJson
+      const near = ending || diveT === undefined ? 0 : 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-5)) - Math.log(n.low)) / (Math.log(n.high) - Math.log(n.low)))
+      const mix = (v: THREE.Vector3, by: number[]): void => { v.set(v.x * (1 + (by[0]! - 1) * near), v.y * (1 + (by[1]! - 1) * near), v.z * (1 + (by[2]! - 1) * near)) }
+      mix(pu.uHazeDay!.value as THREE.Vector3, n.hazeDay)
+      mix(su.uHazeDay!.value as THREE.Vector3, n.shellDay)
+      mix(su.uHazeTwilight!.value as THREE.Vector3, n.shellTwilight)
+      pu.uHazeTau!.value *= 1 + (n.hazeDepth - 1) * near
+      su.uHazeTau!.value *= 1 + (n.shellDepth - 1) * near
+      su.uHazeH!.value *= 1 + (n.shellScaleHeight - 1) * near
+      pu.uHazeH!.value = look.haze.scaleHeight * (1 + (n.hazeScaleHeight - 1) * near)
+      const gg = n.glow.ground
+      const gs = n.glow.shell
+      planet.setGlow(glowWorld.copy(glowGround).applyQuaternion(state.rotation), [gg.colour[0]! * near, gg.colour[1]! * near, gg.colour[2]! * near], gg.power)
+      shell.setGlow(glowWorld.copy(glowShell).applyQuaternion(state.rotation), [gs.colour[0]! * near, gs.colour[1]! * near, gs.colour[2]! * near], gs.power)
       planet.update(camera, light, plan.spin(state.time), gain, state.weight)
       pu.uVignette!.value = shot.post.vignette * (1 - low)
       pu.uAspect!.value = view.format.width / view.format.height
