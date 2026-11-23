@@ -117,6 +117,7 @@ export const createSet: SetFactory = async (ctx) => {
   const side = new THREE.Vector3()
   const sideCam = new THREE.Vector3()
   const ringLit = new THREE.Vector3()
+  const ringSeat = new THREE.Vector3()
   const edgeSun = new THREE.Vector3()
   const edgeTurn = THREE.MathUtils.degToRad(look.limb.edge.wideDeg)
   const holdPose = plan.hold(plan.holdMid - plan.seg.hold.start)
@@ -193,6 +194,7 @@ export const createSet: SetFactory = async (ctx) => {
       pu.uFlow!.value = look.flow.amount * (1 - home * (1 - deep)) * (1 - end * (1 - endLook.limb.flow))
       ;(pu.uCirrus!.value as THREE.Vector4).set(look.cirrus.amount * (1 - home) * (1 - end), look.cirrus.bend, look.cirrus.shadow, look.cirrus.floor)
       ;(pu.uClump!.value as THREE.Vector3).fromArray(look.cirrus.clump)
+      pu.uCirrusPx!.value = kind === 'dive' || kind === 'rise' ? move.cirrus.px * (1 - smooth((high - move.cirrus.height[0]!) / (move.cirrus.height[1]! - move.cirrus.height[0]!))) : 0
       ;(pu.uRimDir!.value as THREE.Vector3).copy(rimAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize()
       ;(pu.uCutDir!.value as THREE.Vector3).copy(cutAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize()
       ;(pu.uCut!.value as THREE.Vector4).w = home
@@ -239,6 +241,7 @@ export const createSet: SetFactory = async (ctx) => {
       planet.ending(end, look.limb, look.cloud, look.deck, look.night, ringLit, endLook.limb.shineNear + (1 - endLook.limb.shineNear) * behind, endLook.limb, crescent)
       ring.ending(end, camera, endLook.ring)
       ring.along(move.ring.along * moving)
+      air.ring(ringLit, ringSeat.copy(ring.mesh.position).applyQuaternion(state.rotation), look.ring.inner, look.ring.outer)
       ring.solid(rising ? smooth((state.u - look.ring.solid.rise[0]) / (look.ring.solid.rise[1] - look.ring.solid.rise[0])) : ending ? 1 - end : 0)
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)

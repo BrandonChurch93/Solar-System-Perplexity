@@ -139,6 +139,9 @@ precision highp float;
 in vec3 vPos;
 uniform float uGain;
 uniform int uDiag;
+uniform vec3 uRingN;
+uniform vec3 uRingC;
+uniform vec2 uRingRange;
 out vec4 outColor;
 ${AIR_GLSL}
 void main() {
@@ -153,6 +156,9 @@ void main() {
     col = lit.rgb * uGain;
     for (int j = 0; j < (uAirDim > 0.0 ? 1 : 0); j++) {
       behind = 1.0 - exp(-uAirDim * lit.a);
+      float tr = dot(uRingC - uCam, uRingN) / dot(dir, uRingN);
+      float rr = length(uCam + dir * tr - uRingC);
+      behind *= 1.0 - step(0.0, tr) * step(tr, b) * smoothstep(uRingRange.x, uRingRange.x + 0.03, rr) * (1.0 - smoothstep(uRingRange.y - 0.03, uRingRange.y, rr));
     }
   }
   outColor = vec4(col, behind);
@@ -213,7 +219,7 @@ export class Air {
       glslVersion: THREE.GLSL3,
       vertexShader: VERT,
       fragmentShader: FRAG,
-      uniforms: { ...airUniforms(params), uGain: { value: 1 }, uDiag: diag },
+      uniforms: { ...airUniforms(params), uGain: { value: 1 }, uDiag: diag, uRingN: { value: new THREE.Vector3(0, 1, 0) }, uRingC: { value: new THREE.Vector3() }, uRingRange: { value: new THREE.Vector2(-2, -1) } },
       side: THREE.BackSide,
       blending: THREE.CustomBlending,
       blendEquation: THREE.AddEquation,
@@ -233,6 +239,13 @@ export class Air {
 
   share(uniforms: Record<string, THREE.IUniform>): void {
     this.users.push(uniforms)
+  }
+
+  ring(normal: THREE.Vector3, centre: THREE.Vector3, inner: number, outer: number): void {
+    const u = this.material.uniforms
+    ;(u.uRingN!.value as THREE.Vector3).copy(normal)
+    ;(u.uRingC!.value as THREE.Vector3).copy(centre)
+    ;(u.uRingRange!.value as THREE.Vector2).set(inner, outer)
   }
 
   update(camera: THREE.Vector3, light: THREE.Vector3, rotation: THREE.Quaternion, home: number, line: number, gain: number, near = 0, tint?: number[], seat = 1, thin = 1, amount = 1, moving = 0, moves?: AirMoves): void {

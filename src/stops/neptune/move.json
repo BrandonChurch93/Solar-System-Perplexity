@@ -24,7 +24,7 @@
   ]
  },
  "rim": {
-  "how": "The air at the limb in the dive and the rise. line and layers: for the line shell and the three layers of haze.json the values that take the place of away there (cosine to the Sun where the light begins, where it is whole, gain): the line weaker and the light falling over a wider span of the limb, so the rim is a falloff that tapers into the night side. dim: how much of the sky behind the air goes for each unit of its optical depth, so a star at the bright edge is dimmed. All of it by the weight of near, and by the share the view is away from the hold's.",
+  "how": "The air at the limb in the dive and the rise. line and layers: for the line shell and the three layers of haze.json the values that take the place of away there (cosine to the Sun where the light begins, where it is whole, gain): the line weaker and the light falling over a wider span of the limb, so the rim is a falloff that tapers into the night side. dim: how much of the sky behind the air goes for each unit of its optical depth, so a star at the bright edge is dimmed. The ring is not sky: where it lies in front of the air on the line of sight nothing is taken from it, so its bands run across the limb unbroken. All of it by the weight of near, and by the share the view is away from the hold's.",
   "line": [
    -0.6,
    0.9,
@@ -52,5 +52,13 @@
  "sky": {
   "how": "turnFrame: the first frame of the dive that is drawn with the sky turned to the sky of the close view; every frame before it keeps the sky of the hold. The engine's own law turns the sky from the first frame of the dive to the handover, about 113 degrees in all. The plate of the hold carries the approved picture's flare around the Sun and the Sun stays where the light comes from, so that turn drew the flare away from the Sun (two stars at 4688 and 4696) and by 4707 it had brought the film's warm band to the limb. Here the sky stays with the Sun until the Sun has set behind the limb (4709) and the globe fills the frame but for the upper right corner: at 4722 that corner reaches 1.1 degrees past the limb (40 px), at 4723 0.8, and from 4723 to 4730 only the glow of the air is seen in it (assets-src/neptune/place/skyin.ts prints the corner per frame). The turn is whole long before the sky of the close view fades in (24 frames before the handover at 4758), so that sky no longer swings into place. The rise keeps the engine's law.",
   "turnFrame": 4723
+ },
+ "cirrus": {
+  "how": "The edges of the globe's cirrus in the dive and the rise. The opacity of the cirrus in the globe's own levels is nearly two valued, so read with a footprint of one pixel a small cloud is a hard white bit with stepped edges, and the samples of the shutter lay such a bit out as a row of square copies (round 39: clouds that break into blocky square patches at 4707; the critic asked for filtering so that the cloud edges are continuous). px: the footprint, in pixels of the frame, with which the cirrus opacity is read in these moves; the hold reads it with 1 (look.ts clouds.soft). Only the opacity of the cirrus is read wider, the deck, the plates and the shadows are read as before. height: camera heights above the deck in radii, the law whole below the first and none from the second on, so the hold, the start of the dive and the end of the rise are drawn as before.",
+  "px": 2.0,
+  "height": [
+   1.5,
+   2.3
+  ]
  }
 }
