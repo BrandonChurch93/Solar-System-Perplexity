@@ -1,63 +1,23 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-23T16:23:19.850Z",
- "head": "e55a251014e4965a89781fd3c22aa6b0f9ed9d0d",
- "note": "16:23 UTC limb cure: the orange rim no longer goes out at 3024 or comes on at 3270; report passes both ways",
+ "pushed": "2026-11-23T16:43:23.683Z",
+ "head": "1db511ce6ff5dccdd3a54d715b9bf0ea19d4e71b",
+ "note": "Mail 299: the two red lines of the every frame part seen on the frames; cure in work (exposure ride, slower pull back)",
  "looks": [
   {
-   "time": "2026-11-23T16:23:18.695Z",
-   "file": "20261123162318695-note-jupiter-dive-draft-before.jpg",
-   "source": "out/work/handover/jupiter-dive-draft-before.png",
+   "time": "2026-11-23T16:43:23.091Z",
+   "file": "20261123164323091-note-s1-rise-3294-3314.jpg",
+   "source": "../work/f/s1-rise-3294-3314.jpg",
    "kind": "note",
-   "label": "Dive before T after the limb cure (draft)",
+   "label": "1db511c rise 3290 to 3314, draft: pull back at 12.5 percent a frame, night side swings in; body level 165 to 41, step 10.89 into 3305 (limit 6)",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T16:23:17.618Z",
-   "file": "20261123162317618-note-jupiter-rise-draft-after.jpg",
-   "source": "out/work/handover/jupiter-rise-draft-after.png",
+   "time": "2026-11-23T16:43:22.496Z",
+   "file": "20261123164322496-note-s1-dive-2970-2992.jpg",
+   "source": "../work/f/s1-dive-2970-2992.jpg",
    "kind": "note",
-   "label": "Rise after T after the limb cure (draft)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T16:23:16.642Z",
-   "file": "20261123162316642-note-jupiter-rise-draft-across.jpg",
-   "source": "out/work/handover/jupiter-rise-draft-across.png",
-   "kind": "note",
-   "label": "Rise across T after the limb cure (draft)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T16:23:15.508Z",
-   "file": "20261123162315508-note-jupiter-dive-draft-across.jpg",
-   "source": "out/work/handover/jupiter-dive-draft-across.png",
-   "kind": "note",
-   "label": "Dive across T after the limb cure (draft)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T16:23:14.925Z",
-   "file": "20261123162314925-note-limb8-dive.jpg",
-   "source": "../work/f/limb8-dive.png",
-   "kind": "note",
-   "label": "Limb before (top row) and with the engine's limb option alone (second row), 3018 to 3023, 3 times",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T16:23:14.205Z",
-   "file": "20261123162314205-note-l2-rise-limb.jpg",
-   "source": "../work/f/l2-rise-limb.png",
-   "kind": "note",
-   "label": "Limb cure: every frame 3268 to 3282 at the limb, 2 times (new)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T16:23:13.554Z",
-   "file": "20261123162313554-note-l2-dive-limb.jpg",
-   "source": "../work/f/l2-dive-limb.png",
-   "kind": "note",
-   "label": "Limb cure: every frame 3012 to 3025 at the limb, 2 times (new)",
+   "label": "1db511c dive 2970 to 2999, draft: the lit face fills the frame; body level 116 to 185, step 6.66 into 2980 (limit 6)",
    "stop": "jupiter"
   }
  ]
