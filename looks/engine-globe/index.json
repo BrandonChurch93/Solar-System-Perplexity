@@ -1,9 +1,16 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-23T12:42:07.529Z",
- "head": "2e8a84984631679c48784bec7972f813d7dc85c1",
- "note": "fadeMinor off and on with the real Mars plates (agent/mars-place 41d7784) at 2448 and 2704, draft, side=orbit noplace. 2448: fine axis under 0.5 texels 0.3946 to 0.0156 of ground, 23.5 percent of ground pixels change. 2704 is on the old path of that branch (red under 1.0 0.1041 both).",
+ "pushed": "2026-11-23T13:00:36.879Z",
+ "head": "f6dcf00227eb2496ff9ba5b461e10851b587187d",
+ "note": "fadeMinor with the real Mars plates: pairs at 2448 and 2704 and three tenth of a frame steps at 2448. Far band 1 sample error against 16 samples 0.468 off, 0.839 on.",
  "looks": [
+  {
+   "time": "2026-11-23T12:59:51.647Z",
+   "file": "20261123125951647-note-stripM-2448-steps.jpg",
+   "source": "out/work/t2/stripM-2448-steps.png",
+   "kind": "note",
+   "label": "fadeMinor off and on, Mars 2448, three steps of a tenth of a frame at 1 to 1, 1 sample, grain off; no sparkle seen"
+  },
   {
    "time": "2026-11-23T12:42:06.880Z",
    "file": "20261123124206880-note-pairM-2704-texels.jpg",
@@ -213,13 +220,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "d25ff0df3e34c07a"
-  },
-  {
-   "time": "2026-11-23T11:31:00.416Z",
-   "file": "20261123113100416-note-strip7-three-frames.jpg",
-   "source": "out/work/t2/strip7-three-frames.png",
-   "kind": "note",
-   "label": "fadeMinor moving check: frames 2453, 2454, 2455 before and after at 1 to 1, draft, grain off, scratch levels down to 0.6 deg; no sparkle seen"
   }
  ]
 }
