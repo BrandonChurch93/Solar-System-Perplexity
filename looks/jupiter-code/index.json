@@ -1,116 +1,78 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-23T17:10:00.397Z",
+ "pushed": "2026-11-23T17:34:55.403Z",
  "head": "1db511ce6ff5dccdd3a54d715b9bf0ea19d4e71b",
- "note": "Pace of the dive and the rise: worst level step 4.42 in the dive (was 6.66), 5.99 in the rise (was 10.89); close side steps are next",
+ "note": "17:37 UTC: air weight by time on the close side measured: dive worst level step 4.84 (was 6.16), rise 4.44 (was 5.94); globe side with the pace: dive 4.42, rise 5.99 at 3307 (being given more room). Fault found: the Milky Way flashes at the right edge 3291 to 3294 in the paced rise (the sky still turns while it is in view); cure in work.",
  "looks": [
   {
-   "time": "2026-11-23T17:09:59.384Z",
-   "file": "20261123170959384-note-p0-rise-3296-3303.jpg",
-   "source": "../work/f/p0-rise-3296-3303.jpg",
+   "time": "2026-11-23T17:34:54.759Z",
+   "file": "20261123173454759-note-p1-rise-3303-3314.jpg",
+   "source": "../work/f/p1-rise-3303-3314.jpg",
    "kind": "note",
-   "label": "jupiter rise 3296 to 3303 before the pace (commit 1db511c), for comparison",
+   "label": "jupiter rise 3303 to 3314, every frame, paced (draft)",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T17:09:58.180Z",
-   "file": "20261123170958180-note-p1-rise-d.jpg",
-   "source": "../work/f/p1-rise-d.jpg",
+   "time": "2026-11-23T17:34:54.047Z",
+   "file": "20261123173454047-note-q1-sky-a.jpg",
+   "source": "../work/f/q1-sky-a.jpg",
    "kind": "note",
-   "label": "jupiter rise with the pace, every frame from 3270, sheet d (draft tier, not committed yet)",
+   "label": "jupiter rise 3283 to 3302, every frame, paced; fault: the Milky Way flashes at the right edge 3291 to 3294 (draft)",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T17:09:56.997Z",
-   "file": "20261123170956997-note-p1-rise-c.jpg",
-   "source": "../work/f/p1-rise-c.jpg",
+   "time": "2026-11-23T17:34:53.477Z",
+   "file": "20261123173453477-note-q1-rise-c.jpg",
+   "source": "../work/f/q1-rise-c.jpg",
    "kind": "note",
-   "label": "jupiter rise with the pace, every frame from 3270, sheet c (draft tier, not committed yet)",
+   "label": "jupiter rise close side 3264 to 3270, every frame, air weight by time (draft)",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T17:09:56.049Z",
-   "file": "20261123170956049-note-p1-rise-b.jpg",
-   "source": "../work/f/p1-rise-b.jpg",
+   "time": "2026-11-23T17:34:52.873Z",
+   "file": "20261123173452873-note-q1-rise-b.jpg",
+   "source": "../work/f/q1-rise-b.jpg",
    "kind": "note",
-   "label": "jupiter rise with the pace, every frame from 3270, sheet b (draft tier, not committed yet)",
+   "label": "jupiter rise close side 3252 to 3263, every frame, air weight by time (draft)",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T17:09:54.995Z",
-   "file": "20261123170954995-note-p1-rise-a.jpg",
-   "source": "../work/f/p1-rise-a.jpg",
+   "time": "2026-11-23T17:34:52.276Z",
+   "file": "20261123173452276-note-q1-rise-a.jpg",
+   "source": "../work/f/q1-rise-a.jpg",
    "kind": "note",
-   "label": "jupiter rise with the pace, every frame from 3270, sheet a (draft tier, not committed yet)",
+   "label": "jupiter rise close side 3240 to 3251, every frame, air weight by time (draft)",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T17:09:54.342Z",
-   "file": "20261123170954342-note-p1-dive-e.jpg",
-   "source": "../work/f/p1-dive-e.jpg",
-   "kind": "note",
-   "label": "jupiter dive with the pace, every frame, sheet e (draft tier, not committed yet)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T17:09:53.321Z",
-   "file": "20261123170953321-note-p1-dive-d.jpg",
-   "source": "../work/f/p1-dive-d.jpg",
-   "kind": "note",
-   "label": "jupiter dive with the pace, every frame, sheet d (draft tier, not committed yet)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T17:09:52.323Z",
-   "file": "20261123170952323-note-p1-dive-c.jpg",
-   "source": "../work/f/p1-dive-c.jpg",
-   "kind": "note",
-   "label": "jupiter dive with the pace, every frame, sheet c (draft tier, not committed yet)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T17:09:51.063Z",
-   "file": "20261123170951063-note-p1-dive-b.jpg",
-   "source": "../work/f/p1-dive-b.jpg",
-   "kind": "note",
-   "label": "jupiter dive with the pace, every frame, sheet b (draft tier, not committed yet)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T17:09:50.134Z",
-   "file": "20261123170950134-note-p1-dive-a.jpg",
-   "source": "../work/f/p1-dive-a.jpg",
-   "kind": "note",
-   "label": "jupiter dive with the pace, every frame, sheet a (draft tier, not committed yet)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T17:09:36.836Z",
-   "file": "20261123170936836-frame-f03024.jpg",
-   "source": "out/work/jupiter/frames/thin-one/f03024.png",
+   "time": "2026-11-23T17:31:41.220Z",
+   "file": "20261123173141220-frame-f03295.jpg",
+   "source": "out/work/jupiter/frames/q1/f03295.png",
    "kind": "frame",
-   "label": "jupiter.dive frame 3024, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 3024,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "743c10b0a56aaca7"
-  },
-  {
-   "time": "2026-11-23T17:03:21.727Z",
-   "file": "20261123170321727-frame-f03312.jpg",
-   "source": "out/work/jupiter/frames/p1/f03312.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3312, draft tier",
+   "label": "jupiter.rise frame 3295, draft tier",
    "stop": "jupiter",
    "segment": "jupiter.rise",
-   "frame": 3312,
+   "frame": 3295,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
    "engine": "743c10b0a56aaca7"
+  },
+  {
+   "time": "2026-11-23T17:30:20.113Z",
+   "file": "20261123173020113-note-q1-dive-c.jpg",
+   "source": "../work/f/q1-dive-c.jpg",
+   "kind": "note",
+   "label": "jupiter dive close side 3048 to 3059, every frame, air weight by time (draft)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T17:30:19.523Z",
+   "file": "20261123173019523-note-q1-dive-b.jpg",
+   "source": "../work/f/q1-dive-b.jpg",
+   "kind": "note",
+   "label": "jupiter dive close side 3036 to 3047, every frame, air weight by time (draft)",
+   "stop": "jupiter"
   }
  ]
 }
