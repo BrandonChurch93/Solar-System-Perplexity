@@ -1,0 +1,15 @@
+Image 1 is a square, straight down (nadir) orbital photograph of canyon land on Mars, north at the top, about 41 km across. Its forms are right, but only the dark part in its right half shows the true look of this land. Everywhere else the look is wrong: too orange, too bright and flat, covered with round dark blobs and dots.
+
+Image 2 is an oblique aerial photograph taken low over the same land, looking east south east. It shows the true look: dark brown and rust layered rock, strata on every slope, sharp ridges with a lit crest and a shaded side, rubble and landslide lobes on the canyon floors, a low Sun.
+
+Task: redraw image 1 as one sharp nadir orbital photograph, the same framing and scale, north at the top, in which all of the land has the look of image 2.
+
+1. Keep every large landform of image 1 exactly where it is: every ridge line, mesa, trough and canyon floor keeps its place, its outline and its size. Laid over image 1, the result must line up with it everywhere.
+
+2. Replace the round blobs and dots by real relief: ridges and spurs of layered rock with a sunlit south south east side and a shaded north north west side, gullies, talus, rubble. No fields of craters, no round pits, no dots.
+
+3. Tone: dark. Shaded rock is deep brown, sunlit rock is rust and ochre, never bright orange, never pale. The left half is as dark and as brown as the right half, so the image reads as one piece of land under one light.
+
+4. Every cliff is seen from straight above: a thin winding band, never a tall face. No fan, no terraces, no stripes, no long parallel or curved lines. Nothing may radiate from one point like the spokes of a wheel.
+
+Light: a low Sun in the south south east, long shadows falling toward the north north west. A photograph from orbit: no horizon, no sky, no haze, no clouds, no text, no border, no vignette.

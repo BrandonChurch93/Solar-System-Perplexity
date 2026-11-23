@@ -1,0 +1,15 @@
+Image 1 is a square, straight down (nadir) orbital photograph of canyon land on Mars, north at the top, about 225 km across. Its broad layout of light and dark is right, and the square in its middle (about two fifths of the width) is right in every form: a maze of flat topped mesas, spurs and winding troughs, with a canyon in shadow and a paler plateau east of it. The land around that square is wrong.
+
+Image 2 is an oblique aerial photograph taken low over the middle of that land, looking east south east. It shows the true look of the rock: dark brown and rust layered rock, flat topped mesas with cliffs, strata on the slopes, rubble on the canyon floors, a low Sun.
+
+Task: redraw image 1 as one sharp, seamless nadir orbital photograph with the same framing, the same scale and north at the top.
+
+1. The middle square stays exactly as it is, and the outer margin of image 1 (about one tenth of the width on every side) keeps its landforms exactly where they are.
+
+2. The fault to repair lies between the two: long ridges and strokes that all run in toward the middle of the image like the spokes of a wheel. Replace them by the same kind of land as the middle square: an irregular maze of flat topped mesas, short spurs and winding troughs of different sizes that run in many directions, with strata on their slopes, talus and rubble. The mesas of the middle square run on into it without a break, so that nobody can tell where the square was.
+
+3. Keep the broad light and dark of image 1 where it is. The land reads as one piece of a canyon system under one light, the same from edge to edge.
+
+4. No herringbone, no fan, no pleats, no long parallel or curved lines. Nothing may radiate from one point or point toward the middle. No round pits, no fields of craters, no dots. Every cliff is seen from straight above as a thin winding band, never as a tall face.
+
+Light: a low Sun in the south south east, long shadows falling toward the north north west, the same everywhere. A photograph from orbit: no horizon, no sky, no haze, no cloud, no text, no border, no vignette.
