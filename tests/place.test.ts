@@ -670,7 +670,7 @@ describe('the top down view of the harness', () => {
           forceTop(false)
           const place = p.place(kind, time)
           const path = kind === 'dive' ? p.divePose(time, 'orbit') : p.risePose(time, 'orbit')
-          const above = p.above(kind, time, path)
+          const above = p.topDown(kind, time, path)
           expect(above.position.length()).toBeCloseTo(path.position.length(), 12)
           expect(above.position.clone().normalize().distanceTo(place)).toBeLessThan(1e-9)
           expect(above.vfov).toBe(path.vfov)
