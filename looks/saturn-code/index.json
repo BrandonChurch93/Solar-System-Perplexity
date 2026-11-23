@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T11:30:44.115Z",
- "head": "f3ee2fd2e54bd08810f46197c9acf3a52b8d41cf",
- "note": "skim: stones bug fixed (rays were flat in the sheet), six consecutive draft frames; next the review tier proofs for M2",
+ "pushed": "2026-11-23T11:59:25.903Z",
+ "head": "f76f04b4e6f45a87aa864940ddf08b4aca2d8b2c",
+ "note": "mail 252 point 3 and 1: pose at 3720 fitted to the approved close, new flight law with descent, next the ice blocks",
  "looks": [
+  {
+   "time": "2026-11-23T11:59:25.351Z",
+   "file": "20261123115925351-note-end_over.jpg",
+   "source": "../../../../tmp/v/p1/end_over.jpg",
+   "kind": "note",
+   "label": "left: draft 3810 with the new flight; right: draft 3720 at half weight over the approved close after the pose fit (limb rms 7.8 px)"
+  },
+  {
+   "time": "2026-11-23T11:59:24.805Z",
+   "file": "20261123115924805-note-sheet.jpg",
+   "source": "../../../../tmp/v/p1/sheet.jpg",
+   "kind": "note",
+   "label": "new flight after mail 252 at draft, frames 3630 3675 3765 3810 (clockwise from top left: 3630, 3675, 3810 lower right, 3765 lower left): pose at 3720 fitted to the approved close, descent 2.2 fold over the view"
+  },
   {
    "time": "2026-11-23T11:30:43.494Z",
    "file": "20261123113043494-note-zp_nearleft.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/v/look_3465_hold.png",
    "kind": "note",
    "label": "3465 hold draft after the pass: the thin rings take a tint in the hold too, sand at half strength"
-  },
-  {
-   "time": "2026-11-23T11:04:47.209Z",
-   "file": "20261123110447209-note-look_3720_rev.jpg",
-   "source": "../../../../tmp/v/look_3720_rev.png",
-   "kind": "note",
-   "label": "3720 review tier (6 samples): lanes of rose, blue grey and beige in the A ring, finer sand, no olive lanes"
-  },
-  {
-   "time": "2026-11-23T10:57:20.690Z",
-   "file": "20261123105720690-note-np_bn.jpg",
-   "source": "../../../../tmp/v/np_bn.png",
-   "kind": "note",
-   "label": "3720 B ring near at native size: approved left, mine right (draft)"
   }
  ]
 }
