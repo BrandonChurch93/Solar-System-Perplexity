@@ -67,7 +67,7 @@ def main():
     pitch = float(np.degrees(np.arcsin(-(np.array([0.0, 0.0, -1.0]) @ pgeo.UP))))
     out = {
         'how': 'assets-src/neptune/place/solve.py: the fitted camera of references/approved/neptune-close.jpg (close.json: field of view, nadir, radius from the dip and curve of its horizon) is carried onto the unit globe by X -> Q (X - C) / R. Q puts the centre of the close storm on the spot of the patch pyramid and sets the heading of the line from under the camera to the storm; the heading was chosen so the cirrus banks of the close image run east to west like the cirrus of the hero and the Sun of the globe stands ahead and to the right, where the close image is bright.',
-        'storm': {'pixel': close['storm'], 'lonDeg': spot['lon'], 'latDeg': spot['lat'], 'arcFromUnderCameraDeg': float(np.degrees(np.arccos(ns @ pgeo.UP))), 'headingDeg': HEADING_AT_STORM_DEG},
+        'storm': {'pixel': close['storm'], 'lonDeg': spot['lon'], 'latDeg': spot['lat'], 'arcFromUnderCameraDeg': float(np.degrees(np.arccos(ns @ pgeo.UP))), 'headingDeg': HEADING_AT_STORM_DEG, 'atSpinZero': (qw @ ns).tolist()},
         'camera': {
             'lonDeg': lonlat(under)[0], 'latDeg': lonlat(under)[1],
             'height': 1 / pgeo.R,

@@ -8,7 +8,12 @@
   "lonDeg": 0.2304,
   "latDeg": -20.1669,
   "arcFromUnderCameraDeg": 4.487900357937389,
-  "headingDeg": -30.0
+  "headingDeg": -30.0,
+  "atSpinZero": [
+   0.10357643170369778,
+   0.3796569644121584,
+   0.9193109031635481
+  ]
  },
  "camera": {
   "lonDeg": 2.57929066172792,
