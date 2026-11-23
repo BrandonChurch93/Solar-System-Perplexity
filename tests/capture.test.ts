@@ -7,6 +7,7 @@ import type { Shot } from '../src/core/types'
 import { FilmDirector } from '../src/director/film'
 import { plans } from '../src/director/plans'
 import { judgedFrames, segmentAtFrame } from '../src/director/timeline'
+import { Flow, FLOW } from '../src/space/travel/flow'
 
 const fps = config.fps
 const film = new FilmDirector(plans)
@@ -173,5 +174,32 @@ describe('the film at rate 2', () => {
       expect(shutterPosition(s.timeOffset, 1)).toBeCloseTo((i + 0.5) / 16, 10)
       expect(shutterPosition(0.5 + s.timeOffset, 1)).toBeCloseTo((i + 0.5) / 16, 10)
     })
+  })
+})
+
+describe('the flow of the dust and the belt', () => {
+  const flight = config.segments.filter((s) => FLOW.kinds.includes(s.kind))
+  it('is a function of time that passes through its knots', () => {
+    const flow = new Flow(film, FLOW.ease)
+    const a = film.shotAt(0, 0).camera.position.clone()
+    const b = a.clone()
+    const m = a.clone()
+    for (const seg of flight) {
+      for (const f of [seg.firstFrame, seg.firstFrame + 20, seg.endFrame - 2]) {
+        for (let step = 0; step < FLOW.stepsPerFrame; step++) {
+          flow.at(seg, f, step, a)
+          flow.at(seg, f, step + 1, b)
+          flow.at(seg, f + step / FLOW.stepsPerFrame, 0, m)
+          expect(m.toArray()).toEqual(a.toArray())
+          flow.at(seg, f, step + 0.5, m)
+          expect(m.distanceTo(a.clone().lerp(b, 0.5))).toBeLessThan(1e-12 + 1e-9 * a.distanceTo(b))
+          flow.at(seg, f, step + 1 - 1e-7, m)
+          expect(m.distanceTo(b)).toBeLessThan(1e-6 * (a.distanceTo(b) + 1e-9) + 1e-12)
+        }
+      }
+      flow.at(seg, seg.endFrame - 1, FLOW.stepsPerFrame, a)
+      flow.at(seg, seg.endFrame, 3, b)
+      expect(b.toArray()).toEqual(a.toArray())
+    }
   })
 })
