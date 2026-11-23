@@ -69,7 +69,7 @@
     "span": 0.35
   },
   "near": {
-    "note": "the strengths of the ladder for a camera near the sheet (the skim); the values above are for the hold. set.ts blends the two by the logarithm of the camera's height (skim.json light.heights). level, groove, hue, edge as above. rough and even: the two values of rough for the octaves below even.from and from it on, in the dense and in the thin rings. hue.follow: how far a brighter ringlet is also warmer and rosier (per unit of the logarithm of its brightness), in the dense and in the thin rings. footprints: an octave is drawn in full where its ringlets are twice this many pixels wide and not at all where they are this many (1 in the hold).",
+    "note": "the strengths of the ladder for a camera near the sheet (the skim); the values above are for the hold. set.ts blends the two by the logarithm of the camera's height (skim.json light.heights). level, groove, hue, edge as above. rough and even: the two values of rough for the octaves below even.from and from it on, in the dense and in the thin rings. hue.follow: how far a brighter ringlet is also warmer and rosier (per unit of the logarithm of its brightness), in the dense and in the thin rings. footprints: an octave is drawn in full where its ringlets are twice this many footprints wide and not at all where they are this many (1 in the hold; a footprint is the pixel times filterFloor when a frame takes many samples, so 1.34 draws no ringlet under one pixel and every ringlet over two in full: finer ones only beat with the pixel grid). filter: as filter above, for the skim: the half width, in footprints, that the edges and the thin lines of the ringlets are widened to (1.2 gives a line nearly two pixels wide, which a steep line needs to read as one line and not as a rope).",
     "level": {
       "dense": [0, 0, 0, 0.04, 0.1, 0.3, 0.32, 0.4, 0.3, 0.3],
       "thin": [0, 0, 0.03, 0.05, 0.07, 0.08, 0.36, 0.3, 0.34, 0.15]
@@ -103,6 +103,7 @@
       "dense": [0.6, 1.5],
       "thin": [0.05, 2.2]
     },
-    "footprints": 0.45
+    "footprints": 1.34,
+    "filter": 1.2
   }
 }

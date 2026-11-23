@@ -237,6 +237,7 @@ export function ringField(ctx: SetContext): RingField {
   const follow = new THREE.Vector4()
   const hueFit = new THREE.Vector4(fine.hue.warm, fine.hue.pink, fine.hue.green, fine.hue.gold)
   const fineFit = new THREE.Vector4(fine.first, fine.ratio, fine.filterFloor, 1)
+  const grooveFit = new THREE.Vector4(groove.dark, groove.bright, 0, fine.filter)
   const mix = THREE.MathUtils.lerp
   // the strengths of the ladder for a camera this near the sheet (0 in the hold, 1 in the skim)
   const set = (t: number): void => {
@@ -249,6 +250,7 @@ export function ringField(ctx: SetContext): RingField {
     rough[1]!.set(mix(fine.even.rough[0]!, near.even.dense[0]!, t), mix(fine.even.rough[1]!, near.even.dense[1]!, t), mix(fine.even.rough[0]!, near.even.thin[0]!, t), mix(fine.even.rough[1]!, near.even.thin[1]!, t))
     follow.set(near.hue.follow.dense[0]!, near.hue.follow.dense[1]!, near.hue.follow.thin[0]!, near.hue.follow.thin[1]!).multiplyScalar(t)
     fineFit.w = mix(1, near.footprints, t)
+    grooveFit.w = mix(fine.filter, near.filter, t)
     hueFit.z = mix(fine.hue.green, near.hue.green, t)
     hueFit.w = mix(fine.hue.gold, near.hue.gold, t)
   }
@@ -270,7 +272,7 @@ export function ringField(ctx: SetContext): RingField {
       uRfMore: { value: more },
       uRfAmp: { value: new THREE.Vector4(lanesMean, fine.tau, 0, fine.shift) },
       uRfGroove: { value: new THREE.Vector4(groove.width[0], groove.width[1] - groove.width[0], groove.rare, fine.slopeWidth) },
-      uRfGrooveFit: { value: new THREE.Vector4(groove.dark, groove.bright, lineMean, fine.filter) },
+      uRfGrooveFit: { value: grooveFit.setZ(lineMean) },
       uRfBunch: { value: new THREE.Vector4(fine.bunch[0], fine.bunch[1], groove.dense, groove.thin) },
       uRfLine: { value: new THREE.Vector4(groove.open, fine.jitter[0], fine.jitter[1], fine.even.from) },
       uRfRough: { value: rough },
