@@ -1,9 +1,17 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T07:32:26.462Z",
- "head": "8f12d9498fdbcb7dc96e788d60df356b0274c37d",
- "note": "S2 study: close side from 744 without cover; the crater on the levels against the laid back image",
+ "pushed": "2026-11-23T07:50:50.963Z",
+ "head": "fce2d6c7062674b5ebc491b71de9ec389145c542",
+ "note": "S2 A and B: anchor shift and pin, hold terrain travel 0 px; tiles next",
  "looks": [
+  {
+   "time": "2026-11-23T07:50:47.649Z",
+   "file": "20261123075047649-note-cmp-4-shift-g.jpg",
+   "source": "out/work/mercury/place/cmp-4-shift-g.jpg",
+   "kind": "note",
+   "label": "S2 step A: anchor shifted, the laid back crater on the levels crater (size gap 1.5 by 1.9 against 2.55 by 2.04 deg stays, the warp is next); 9 frames 0 px",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-23T07:32:24.800Z",
    "file": "20261123073224800-note-cmp-4.jpg",
@@ -67,20 +75,6 @@
    "stop": "neptune",
    "segment": "neptune.rise",
    "frame": 4994,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "job": "film"
-  },
-  {
-   "time": "2026-11-23T00:05:20.659Z",
-   "file": "20261123000520659-job-frame-05078.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "ending.retreat frame 5078, final tier, from the running film job",
-   "stop": "ending",
-   "segment": "ending.retreat",
-   "frame": 5078,
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
