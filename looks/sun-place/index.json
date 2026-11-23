@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T22:36:14.152Z",
+ "pushed": "2026-11-23T23:02:44.634Z",
  "head": "4e4ce56823b4859b96be2b337e0b45d2d69aea93",
- "note": "G 1 first picture of the function ground (unfinished)",
+ "note": "G 1 function ground: frame 60 beside the approved image, eight frames over the terrain, frame 168 close (unfinished)",
  "looks": [
+  {
+   "time": "2026-11-23T23:02:44.064Z",
+   "file": "20261123230244064-note-m2-168-crop.jpg",
+   "source": "out/work/sun/convect/m2-168-crop.jpg",
+   "kind": "note",
+   "label": "G 1, 23:03, unfinished. Frame 168 at native size (draft): the funnel of the spot, fibres with relief, near cells hide far ones, the horizon is the outline of the cells.",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T23:02:43.516Z",
+   "file": "20261123230243516-note-m2-evo.jpg",
+   "source": "out/work/sun/convect/m2-evo.jpg",
+   "kind": "note",
+   "label": "G 1, 23:03, unfinished. One box of the screen at frames 0, 24, 48, 72, 96, 120, 144, 168 (draft; the camera of the film moves in toward the spot).",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T23:02:42.942Z",
+   "file": "20261123230242942-note-m2-60-vs-approved.jpg",
+   "source": "out/work/sun/convect/m2-60-vs-approved.jpg",
+   "kind": "note",
+   "label": "G 1, 23:03, unfinished. Left: the approved close image. Right: frame 60, draft, the ground as geometry from functions (no picture read for the ground). No jets and no glow at the limb yet; the old fringe is still drawn behind it.",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-23T22:36:13.392Z",
    "file": "20261123223613392-note-a1-vs-ref.jpg",
@@ -42,42 +66,6 @@
    "source": "out/work/sun/life/v/lanes-mask.jpg",
    "kind": "note",
    "label": "held camera, kept build: how lane area is counted for the ground cure (picture, lanes under 0.7, lanes under 0.62 of the neighbourhood)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T21:48:16.322Z",
-   "file": "20261123214816322-job-frame-00221.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "sun.rise frame 221, draft tier, texels view, from the running measure job",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "frame": 221,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-23T21:38:11.813Z",
-   "file": "20261123213811813-job-frame-00112.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "sun.terrain frame 112, draft tier, texels view, from the running measure job",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 112,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-23T21:30:02.722Z",
-   "file": "20261123213002722-note-sim-lanes-two.jpg",
-   "source": "out/work/sun/life/v/sim-lanes-two.jpg",
-   "kind": "note",
-   "label": "simulation on the plate, not a render: lanes moving, frame 110 left, 170 right, both over each other below (red 110, cyan 170)",
    "stop": "sun"
   }
  ]
