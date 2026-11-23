@@ -1,9 +1,23 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-23T08:55:42.204Z",
+ "pushed": "2026-11-23T09:17:44.571Z",
  "head": "696515aceea8db19e6825ca2350bd9be1f838fcc",
- "note": "place of the dive decided (small oval in the wake); building top down plates from the laid back image",
+ "note": "plates: laying the close image back top down, locating the oval on the globe, canvases for the repaint next",
  "looks": [
+  {
+   "time": "2026-11-23T09:17:44.009Z",
+   "file": "20261123091744009-note-place-pair-s.jpg",
+   "source": "../work/f/place-pair-s.jpg",
+   "kind": "note",
+   "label": "the place on the globe, 6 degrees wide: the small orange oval in the wake, flow at rest (left) and as frozen for the dive (right)"
+  },
+  {
+   "time": "2026-11-23T09:17:43.360Z",
+   "file": "20261123091743360-note-fore-in-s.jpg",
+   "source": "../work/f/fore-in-s.jpg",
+   "kind": "note",
+   "label": "first top down canvas of the foreground plate: laid back close image (sharp near, blurred far), flat draft outside, before any repaint"
+  },
   {
    "time": "2026-11-23T08:55:41.654Z",
    "file": "20261123085541654-note-lay-near-crop1.jpg",
@@ -60,27 +74,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "2d9dda353bfd7b6d"
-  },
-  {
-   "time": "2026-11-23T08:28:01.723Z",
-   "file": "20261123082801723-frame-f03239.jpg",
-   "source": "out/work/jupiter/frames/v5r/f03239.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3239, review tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3239,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "2d9dda353bfd7b6d"
-  },
-  {
-   "time": "2026-11-23T08:26:32.668Z",
-   "file": "20261123082632668-note-v5-three.jpg",
-   "source": "../work/f/v5-three.jpg",
-   "kind": "note",
-   "label": "v5 frames 3060, 3150, 3239 in a row, draft"
   }
  ]
 }
