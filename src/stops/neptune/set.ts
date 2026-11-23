@@ -185,6 +185,9 @@ export const createSet: SetFactory = async (ctx) => {
       const thin = ending ? 1 : smooth(Math.sqrt(high * (high + 2)) / look.airThin.reach)
       air.update(camera, light, state.rotation, home, line, gain * state.weight, near, grade.air, 1 - deep, thin, 1 - limb)
       pu.uAirGround!.value = 1 - limb
+      const distant = ending ? 0 : 1 - smooth(Math.log(Math.max(high, 1e-6) / closeLook.lay.distant.height[1]!) / Math.log(closeLook.lay.distant.height[0]! / closeLook.lay.distant.height[1]!))
+      ;(pu.uDistantAir!.value as THREE.Vector4).set(closeLook.lay.distant.air[0]!, closeLook.lay.distant.air[1]!, closeLook.lay.distant.air[2]!, closeLook.lay.distant.veil)
+      ;(pu.uDistant!.value as THREE.Vector4).set((rising ? closeLook.lay.distant.rise : kind === 'dive' ? closeLook.lay.distant.dive : 0) * distant, closeLook.lay.distant.slant[0]!, closeLook.lay.distant.slant[1]!, Math.log2((pu.uMapWidth!.value as number) / closeLook.lay.distant.texels))
       pu.uFlow!.value = look.flow.amount * (1 - home * (1 - deep)) * (1 - end * (1 - endLook.limb.flow))
       ;(pu.uCirrus!.value as THREE.Vector4).set(look.cirrus.amount * (1 - home) * (1 - end), look.cirrus.bend, look.cirrus.shadow, look.cirrus.floor)
       ;(pu.uClump!.value as THREE.Vector3).fromArray(look.cirrus.clump)

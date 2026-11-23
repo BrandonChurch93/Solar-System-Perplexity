@@ -236,6 +236,8 @@ uniform vec4 uNearTint;
 uniform vec3 uNearFall;
 uniform vec2 uMelt;
 uniform vec4 uNight;
+uniform vec4 uDistant;
+uniform vec4 uDistantAir;
 in vec3 vClip;
 in vec3 vLocal;
 in vec3 vWorldN;
@@ -424,6 +426,11 @@ void main() {
   }
   float ndlc = dot(normalize(uBodyToWorld * pc), uSunW) + uEnd.x * uEndCresc.x;
   vec3 col = mix(deck, knot(uCloud, ndlc), alpha * smoothstep(-0.09, -0.03, ndlc)) * uTint;
+  for (int k = 0; k < (uDistant.x > 0.0 ? 1 : 0); k++) {
+    vec4 coarse = textureLod(uMap, fq, uDistant.w);
+    vec3 soft = mix(coarse.rgb / uCode * knot(uDeck, ndd), knot(uCloud, ndlc), min(coarse.a, 1.0) * (1.0 - placed) * keep * smoothstep(-0.09, -0.03, ndlc)) * uTint;
+    col = mix(col, mix(soft, uDistantAir.rgb * knot(uCloud, ndlc) * uTint, uDistantAir.a), uDistant.x * (1.0 - smoothstep(uDistant.y, uDistant.z, mu)));
+  }
   for (int k = 0; k < (uNear.x > 0.0 ? 1 : 0); k++) {
     vec3 nearCol = mix(vec3(dot(col, vec3(0.3, 0.5, 0.2))), col, uNear.w);
     float far = length(uCam);
@@ -545,7 +552,7 @@ export class NeptunePlanet {
         uCut: { value: new THREE.Vector4(l.cut, l.cutMu[0], l.cutMu[1], 0) }, uCutEdge: { value: new THREE.Vector2(l.cutFrom, l.cutTo) }, uCutDir: { value: new THREE.Vector3(1, 0, 0) },
         uLimbDark: { value: new THREE.Vector3(l.dark, l.darkMu[0], l.darkMu[1]) }, uDarkEdge: { value: new THREE.Vector2(l.darkFrom, l.darkTo) }, uDarkDir: { value: new THREE.Vector3(1, 0, 0) },
         uVeil: { value: new THREE.Vector4(l.veil[0], l.veil[1], l.veil[2], l.veilAmount) }, uVeilMu: { value: new THREE.Vector2().fromArray(l.veilMu) }, uVeilSun: { value: new THREE.Vector3().fromArray(l.veilSun) }, uVeilDir: { value: new THREE.Vector3(1, 0, 0) },
-        uTwi: { value: new THREE.Vector3().fromArray(l.twilight) }, uTwiSun: { value: new THREE.Vector4().fromArray(l.twilightSun) }, uAirShade: { value: new THREE.Vector4(l.shade[0], l.shade[1], l.shade[2], 1) }, uAirGround: { value: 1 },
+        uTwi: { value: new THREE.Vector3().fromArray(l.twilight) }, uTwiSun: { value: new THREE.Vector4().fromArray(l.twilightSun) }, uAirShade: { value: new THREE.Vector4(l.shade[0], l.shade[1], l.shade[2], 1) }, uAirGround: { value: 1 }, uDistant: { value: new THREE.Vector4(0, 0.1, 0.5, 4) }, uDistantAir: { value: new THREE.Vector4(1, 1, 1, 0) },
         uForward: { value: new THREE.Vector3().fromArray(l.forward) }, uForwardShape: { value: new THREE.Vector2(l.forwardWidth, l.forwardPower) },
         uNear: { value: new THREE.Vector4(0, 1, o.near.power, o.near.saturation) }, uNearTint: { value: new THREE.Vector4(o.near.tint[0], o.near.tint[1], o.near.tint[2], o.near.pivot) }, uNearFall: { value: new THREE.Vector3(0, 1, 1) },
         uField: { value: o.field.texture }, uFieldRange: { value: new THREE.Vector4(o.field.muMax, o.field.ndlMin, o.field.width, o.field.span) }, uFieldSide: { value: new THREE.Vector4(1, 0, 0, 0) }, uMelt: { value: new THREE.Vector2(l.melt[0], l.melt[2]) }, uNight: { value: new THREE.Vector4(0, o.night.edge[0], o.night.edge[1], Math.log2(o.mapWidth / o.night.texels)) },
