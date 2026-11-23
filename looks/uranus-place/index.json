@@ -1,9 +1,31 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-23T09:46:20.323Z",
- "head": "621db0ff39665354292e5d5fbf4d672fc82c6a80",
- "note": "dive sheet f: storm on the globe, one camera, swap at T still hard (no E2 yet)",
+ "pushed": "2026-11-23T10:00:44.486Z",
+ "head": "1d11abb4813a963c5f3efe807c4c5359464e2311",
+ "note": "rise sheet d: one steady pull back, ground holds through T, the sky still swaps (before E2)",
  "looks": [
+  {
+   "time": "2026-11-23T10:00:43.833Z",
+   "file": "20261123100043833-note-rise-d.jpg",
+   "source": "out/work/u/rise/rise-d.jpg",
+   "kind": "note",
+   "label": "uranus rise, every third frame 4380 to 4454 plus 4390 to 4395, draft, branch 621db0ff on main f74dc8a0, E1 only: hard sky swap at 4391 to 4392, ground holds",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T10:00:12.122Z",
+   "file": "20261123100012122-frame-d-4454.jpg",
+   "source": "out/work/u/rise/d-4454.png",
+   "kind": "frame",
+   "label": "uranus.rise frame 4454, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4454,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "2d9dda353bfd7b6d"
+  },
   {
    "time": "2026-11-23T09:46:16.044Z",
    "file": "20261123094616044-note-dive-f.jpg",
@@ -11,20 +33,6 @@
    "kind": "note",
    "label": "dive sheet f at f74dc8a0 + 621db0ff, draft, every third frame 4110 to 4199 plus 4183 to 4187: one steady move onto the storm, hard swap 4185 to 4186 until E2",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T09:46:14.962Z",
-   "file": "20261123094614962-frame-d-4383.jpg",
-   "source": "out/work/u/rise/d-4383.png",
-   "kind": "frame",
-   "label": "uranus.rise frame 4383, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4383,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "2d9dda353bfd7b6d"
   },
   {
    "time": "2026-11-23T09:45:04.471Z",
@@ -70,14 +78,6 @@
    "source": "out/work/u/down/down-d.jpg",
    "kind": "note",
    "label": "S2 top down dive sheet d (globe side alone, far light, no blur, main add6ccbe): the place as a round storm in the globe's bands, plates of bake c (mirrored tiling, replaced next by cut copies)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T08:55:54.604Z",
-   "file": "20261123085554604-note-rise-c.jpg",
-   "source": "out/work/u/rise/rise-c.jpg",
-   "kind": "note",
-   "label": "rise sheet c, one camera both sides, true eye light, plates of bake b, hard swap at 4391 to 4392 (no E2 yet), main add6ccbe",
    "stop": "uranus"
   }
  ]
