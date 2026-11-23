@@ -123,6 +123,10 @@ export class UranusPlan extends StopPlan {
     return { position: local.position.clone().sub(CENTRE).multiplyScalar(UNIT).applyQuaternion(r), quaternion: r.clone().multiply(local.quaternion), vfov: local.vfov }
   }
 
+  twin(local: Pose, time: number): Pose {
+    return this.seat(local, time)
+  }
+
   unseat(pose: Pose, time: number): Pose {
     const back = this.deckFrame(time).invert()
     return { position: pose.position.clone().applyQuaternion(back).divideScalar(UNIT).add(CENTRE), quaternion: back.multiply(pose.quaternion), vfov: pose.vfov }
