@@ -3,6 +3,7 @@ import { config, type FormatDef } from '../config'
 import { Accumulator } from './accumulator'
 import { OPTIONAL_EXTENSIONS, REQUIRED_EXTENSIONS, missing, needs } from './caps'
 import { Counter } from './counts'
+import { Warm } from './warm'
 import { floatTarget } from './pass'
 import { TILE, openTiles, type Tiles } from './tiles'
 import { midShutterCarry } from './held'
@@ -43,6 +44,7 @@ export class Engine {
   readonly canvas: HTMLCanvasElement
   readonly sets: SetLoader
   readonly counter: Counter
+  readonly warm = new Warm()
   readonly sky: Sky
   format: FormatDef
   assets: string
@@ -575,6 +577,16 @@ export class Engine {
     hidden.forEach((m, i) => {
       m.visible = was[i]!
     })
+  }
+
+  ahead(p: number, tier = 'draft', last = config.frameCount - 1, all = false): number {
+    return this.warm.step(this, p, tier, last, all)
+  }
+
+  warmDraw(frame: number, tier: string): void {
+    const kept = [this.lastFrame, this.lastShot, this.sampleCount] as const
+    this.drawFrame(frame, tier)
+    ;[this.lastFrame, this.lastShot, this.sampleCount] = kept
   }
 
   async prefetch(ids: string[]): Promise<void> {
