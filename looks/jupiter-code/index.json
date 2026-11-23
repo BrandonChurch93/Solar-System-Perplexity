@@ -1,71 +1,93 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-23T14:27:40.167Z",
+ "pushed": "2026-11-23T14:54:08.631Z",
  "head": "1e5bc0eac9105ac34a7b9314e0638dbf20a31a40",
- "note": "Dive without cover, first frames (draft d1). Twin lands on the small oval, Great Red Spot leads and passes below. Wrong and in work: dark slab of the approved view seen from above 3024 to 3052, cyan patch right of the vortex 3012 to 3036, plate tones differ at T.",
+ "note": "Dive and rise without cover, draft. Handover report all six pass (before air lift). Still wrong: far field and limb change near T, cyan patch right of the vortex, storm eye changes 3024 to 3042. G13 on dive and rise not yet measured.",
  "looks": [
   {
-   "time": "2026-11-23T14:27:39.593Z",
-   "file": "20261123142739593-note-d1-low.jpg",
-   "source": "../work/f/d1-low.jpg",
+   "time": "2026-11-23T14:54:08.047Z",
+   "file": "20261123145408047-note-d4-sheet.jpg",
+   "source": "../work/f/d4-sheet.jpg",
    "kind": "note",
-   "label": "dive d1 low part 3036 to 3059: dark slab of the approved view over pale plates, being fixed"
+   "label": "dive 3008 to 3056 and rise 3262 to 3282 draft, with air lift"
   },
   {
-   "time": "2026-11-23T14:27:39.015Z",
-   "file": "20261123142739015-note-d1-T.jpg",
-   "source": "../work/f/d1-T.jpg",
+   "time": "2026-11-23T14:54:07.366Z",
+   "file": "20261123145407366-note-d3-rise.jpg",
+   "source": "../work/f/d3-rise.jpg",
    "kind": "note",
-   "label": "dive d1 around T 3021 to 3027 (3023 globe side with place plates, 3024 close side)"
+   "label": "rise 3240 to 3314 draft, no cover"
   },
   {
-   "time": "2026-11-23T14:27:38.398Z",
-   "file": "20261123142738398-note-d1-sheet.jpg",
-   "source": "../work/f/d1-sheet.jpg",
+   "time": "2026-11-23T14:54:06.789Z",
+   "file": "20261123145406789-note-d3-dive.jpg",
+   "source": "../work/f/d3-dive.jpg",
    "kind": "note",
-   "label": "dive without cover, first run d1 (draft): 2970 to 3059, T at 3024"
+   "label": "dive 3024 to 3050 draft, tone and soft rim, no cover"
   },
   {
-   "time": "2026-11-23T14:26:16.511Z",
-   "file": "20261123142616511-frame-f03047.jpg",
-   "source": "out/work/jupiter/frames/d1/f03047.png",
+   "time": "2026-11-23T14:53:36.701Z",
+   "file": "20261123145336701-frame-f03274.jpg",
+   "source": "out/work/jupiter/frames/d4/f03274.png",
    "kind": "frame",
-   "label": "jupiter.dive frame 3047, draft tier",
+   "label": "jupiter.rise frame 3274, draft tier",
    "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 3047,
+   "segment": "jupiter.rise",
+   "frame": 3274,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
    "engine": "ee77572156dd9714"
   },
   {
-   "time": "2026-11-23T13:57:47.043Z",
-   "file": "20261123135747043-note-v27-3150-full.jpg",
-   "source": "../work/f/v27-3150-full.png",
-   "kind": "note",
-   "label": "v27 frame 3150 draft"
+   "time": "2026-11-23T14:52:21.040Z",
+   "file": "20261123145221040-frame-f03048.jpg",
+   "source": "out/work/jupiter/frames/d4/f03048.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 3048, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 3048,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "ee77572156dd9714"
   },
   {
-   "time": "2026-11-23T13:57:46.505Z",
-   "file": "20261123135746505-note-v27-3239-ll.jpg",
-   "source": "../work/f/v27-3239-ll.png",
-   "kind": "note",
-   "label": "v27 frame 3239 lower left at native size"
+   "time": "2026-11-23T14:49:43.284Z",
+   "file": "20261123144943284-sheet-jupiter-rise-draft-after.jpg",
+   "source": "out/work/handover/jupiter-rise-draft-after.png",
+   "kind": "sheet",
+   "label": "jupiter rise, every frame 3271 to 3282 (after T, frame 3270), draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "first": 3271,
+   "last": 3282,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T13:57:45.852Z",
-   "file": "20261123135745852-note-v27-3236-full.jpg",
-   "source": "../work/f/v27-3236-full.png",
-   "kind": "note",
-   "label": "v27 frame 3236 draft: dark dashes and cracks on the near deck gone, lower left still soft"
+   "time": "2026-11-23T14:49:41.518Z",
+   "file": "20261123144941518-sheet-jupiter-rise-draft-across.jpg",
+   "source": "out/work/handover/jupiter-rise-draft-across.png",
+   "kind": "sheet",
+   "label": "jupiter rise, every frame 3264 to 3275 (across T, frame 3270), draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "first": 3264,
+   "last": 3275,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T13:57:45.278Z",
-   "file": "20261123135745278-note-v27-sheet15.jpg",
-   "source": "../work/f/v27-sheet15.jpg",
-   "kind": "note",
-   "label": "v27 surface view, every 15th frame 3060 to 3239, draft, near deck fix"
+   "time": "2026-11-23T14:49:39.628Z",
+   "file": "20261123144939628-sheet-jupiter-rise-draft-before.jpg",
+   "source": "out/work/handover/jupiter-rise-draft-before.png",
+   "kind": "sheet",
+   "label": "jupiter rise, every frame 3258 to 3269 (before T, frame 3270), draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "first": 3258,
+   "last": 3269,
+   "tier": "draft"
   }
  ]
 }
