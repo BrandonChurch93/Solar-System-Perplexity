@@ -1,9 +1,51 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T21:05:59.667Z",
+ "pushed": "2026-11-23T21:29:15.289Z",
  "head": "b9b333ecfdce0e22506e45c9cd69b13e5a088ba1",
- "note": "item 6: ladder ringlets on the far look by distance (detail reach), globe reach test; drafts follow",
+ "note": "review stills 3832 and 3834 in one process show no step in the rings; checking the committed rings at the draft tier",
  "looks": [
+  {
+   "time": "2026-11-23T21:29:10.496Z",
+   "file": "20261123212910496-note-step2.jpg",
+   "source": "../../../../tmp/v/r20/step2.png",
+   "kind": "note",
+   "label": "drafts 3831 to 3835 around the step the Builder saw: none at the draft tier"
+  },
+  {
+   "time": "2026-11-23T21:29:09.777Z",
+   "file": "20261123212909777-note-rv_a1_3720.jpg",
+   "source": "../../../../tmp/v/r20/rv_a1_3720.png",
+   "kind": "note",
+   "label": "review 3720 of a trial variant (far look ladder, since reverted)"
+  },
+  {
+   "time": "2026-11-23T21:29:09.117Z",
+   "file": "20261123212909117-note-globe4_3720.jpg",
+   "source": "../../../../tmp/v/r20/globe4_3720.png",
+   "kind": "note",
+   "label": "3720 globe with the function, reach 1.3 to 1.75"
+  },
+  {
+   "time": "2026-11-23T21:29:08.464Z",
+   "file": "20261123212908464-note-rs_ll.jpg",
+   "source": "../../../../tmp/v/r20/rs_ll.png",
+   "kind": "note",
+   "label": "lower left of review 3832 (top) and 3834 (bottom) at full size: one look in a single process"
+  },
+  {
+   "time": "2026-11-23T21:29:07.776Z",
+   "file": "20261123212907776-note-rs_3834.jpg",
+   "source": "../../../../tmp/v/r20/rs_3834.png",
+   "kind": "note",
+   "label": "review still 3834, 35 samples, same tree"
+  },
+  {
+   "time": "2026-11-23T21:29:07.062Z",
+   "file": "20261123212907062-note-rs_3832.jpg",
+   "source": "../../../../tmp/v/r20/rs_3832.png",
+   "kind": "note",
+   "label": "review still 3832, 37 samples, work tree variant with globe function (single process): no step to 3834"
+  },
   {
    "time": "2026-11-23T21:05:59.070Z",
    "file": "20261123210559070-note-fit_rm.jpg",
@@ -17,48 +59,6 @@
    "source": "../../../../tmp/v/r19/fmm_3690.png",
    "kind": "note",
    "label": "3690: far, model, film"
-  },
-  {
-   "time": "2026-11-23T21:05:57.916Z",
-   "file": "20261123210557916-note-globe3_3720.jpg",
-   "source": "../../../../tmp/v/r19/globe3_3720.png",
-   "kind": "note",
-   "label": "3720 globe: reach 1.3 to 2.0, reach 1.2 to 1.62, approved"
-  },
-  {
-   "time": "2026-11-23T21:05:57.302Z",
-   "file": "20261123210557302-note-ll5_3720.jpg",
-   "source": "../../../../tmp/v/r19/ll5_3720.png",
-   "kind": "note",
-   "label": "3720 lower left: film, far, model, no sweep, approved"
-  },
-  {
-   "time": "2026-11-23T21:05:56.645Z",
-   "file": "20261123210556645-note-fm4_3720.jpg",
-   "source": "../../../../tmp/v/r19/fm4_3720.png",
-   "kind": "note",
-   "label": "3720: film, far look everywhere, model light everywhere, approved"
-  },
-  {
-   "time": "2026-11-23T21:05:56.039Z",
-   "file": "20261123210556039-note-rv3816_a.jpg",
-   "source": "../../../../tmp/v/r19/rv3816_a.png",
-   "kind": "note",
-   "label": "crop of review 3816, globe near the lens"
-  },
-  {
-   "time": "2026-11-23T21:05:55.349Z",
-   "file": "20261123210555349-note-rv_3828.jpg",
-   "source": "../../../../tmp/v/r19/rv_3828.png",
-   "kind": "note",
-   "label": "review tier 3828 with the globe function"
-  },
-  {
-   "time": "2026-11-23T21:05:54.652Z",
-   "file": "20261123210554652-note-rv_3816.jpg",
-   "source": "../../../../tmp/v/r19/rv_3816.png",
-   "kind": "note",
-   "label": "review tier 3816 with the globe function, reach 1.3 to 2.0"
   }
  ]
 }
