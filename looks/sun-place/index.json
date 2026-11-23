@@ -1,9 +1,49 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T09:13:42.266Z",
+ "pushed": "2026-11-23T09:28:05.429Z",
  "head": "181401cc490fb42f272621cd6691e84b47407af0",
- "note": "review tier frames through T (215 to 218); first pass of the cell map for the life of the close view",
+ "note": "228 before sheets and number: frozen camera mean abs change n to n+1 ground 1.94 loops 7.19 (90 on: ground 1.6 loops 1.9); first cell flow pass, penumbra wrong",
  "looks": [
+  {
+   "time": "2026-11-23T09:28:04.871Z",
+   "file": "20261123092804871-note-a1-crop90.jpg",
+   "source": "out/work/sun/life/a1-crop90.jpg",
+   "kind": "note",
+   "label": "228 first pass of the cell flow, frozen 90: before left, after right. Penumbra zigzag is wrong, being fixed",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T09:28:04.303Z",
+   "file": "20261123092804303-note-run120.jpg",
+   "source": "out/work/sun/life/before/run120.jpg",
+   "kind": "note",
+   "label": "228 before: frames 120 to 125",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T09:28:03.633Z",
+   "file": "20261123092803633-note-run40.jpg",
+   "source": "out/work/sun/life/before/run40.jpg",
+   "kind": "note",
+   "label": "228 before: frames 40 to 45",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T09:28:03.018Z",
+   "file": "20261123092803018-note-frozen6.jpg",
+   "source": "out/work/sun/life/before/frozen6.jpg",
+   "kind": "note",
+   "label": "228 before: camera frozen at pose of frame 90, every 6th frame",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T09:28:02.375Z",
+   "file": "20261123092802375-note-every10.jpg",
+   "source": "out/work/sun/life/before/every10.jpg",
+   "kind": "note",
+   "label": "228 before: every 10th frame 0 to 170, draft, build 181401cc",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-23T09:13:41.056Z",
    "file": "20261123091341056-note-chk-b.jpg",
@@ -26,46 +66,6 @@
    "source": "out/work/sun/pl/rv-sheet.jpg",
    "kind": "note",
    "label": "rise 215 to 218 at the review tier, T is in 216",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T08:43:11.877Z",
-   "file": "20261123084311877-note-so-a.jpg",
-   "source": "out/work/sun/pl/so-a.jpg",
-   "kind": "note",
-   "label": "top down dive sheet, globe side alone, 12 frames from the hold (269) down to the close view (180), draft",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T08:43:11.303Z",
-   "file": "20261123084311303-note-r5-d3.jpg",
-   "source": "out/work/sun/pl/r5-d3.jpg",
-   "kind": "note",
-   "label": "rise draft, every frame 228 to 234, then 240 to 264 by sixes",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T08:43:10.682Z",
-   "file": "20261123084310682-note-r5-d2.jpg",
-   "source": "out/work/sun/pl/r5-d2.jpg",
-   "kind": "note",
-   "label": "rise draft, every frame 216 to 227: T is in 216 (close side), 217 on is the globe side",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T08:43:09.700Z",
-   "file": "20261123084309700-note-r5-d1.jpg",
-   "source": "out/work/sun/pl/r5-d1.jpg",
-   "kind": "note",
-   "label": "rise draft, every frame 204 to 215 (close side), no blur",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T08:30:00.994Z",
-   "file": "20261123083000994-note-r4c.jpg",
-   "source": "out/work/sun/pl/r4c.jpg",
-   "kind": "note",
-   "label": "rise draft full size: 216 (T), 228, 234, 240, spot and loops from above",
    "stop": "sun"
   }
  ]
