@@ -138,6 +138,7 @@ export const createSet: SetFactory = async (ctx) => {
   const ringUnit = look.place.ringMove.match[1] / look.place.ringMove.match[0]
   const hoops = look.place.ringMove.hoops
   const glow = new Glow(deckHalo, 2000 / deckJson.radius)
+  glow.material.uniforms.uUnder!.value = look.place.under
   const over = new THREE.Group()
   over.add(glow.mesh, lowArcs.mesh, riseArcs.mesh, riseRings.mesh)
   const origin = new THREE.Vector3()
@@ -177,7 +178,7 @@ export const createSet: SetFactory = async (ctx) => {
   for (const [view, def] of Object.entries(skyJson)) {
     const wide = 1 + 2 * def.margin
     const t = Math.tan(THREE.MathUtils.degToRad(def.vfovDeg) / 2) * wide
-    sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, mips: false, anisotropy: 1 }), aim: new THREE.Quaternion(), tan: [t * 16 / 9, t], gain: def.gain, add: def.add, ring: def.ring as [number, number, number, number], edge: def.margin / wide })
+    sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, mips: false, anisotropy: 1 }), aim: new THREE.Quaternion(), tan: [t * 16 / 9, t], gain: def.gain, add: def.add, ring: def.ring as [number, number, number, number], edge: def.margin / wide, weight: (time, v) => plan.patchWeight(time, v) })
   }
 
   return {
@@ -226,8 +227,9 @@ export const createSet: SetFactory = async (ctx) => {
       globe.near(look.near.tint, near)
       const relit = low && !look.show.down
       const plated = low ? reach(look.place.plates[kind as 'dive' | 'rise'], altitude) : 0
-      if (low) globe.place(relit ? reach(look.place.light.up, altitude) : 0, relit ? reach(look.place.light.down, altitude) : 0, plated, state.time - terrainMid, look.place.fixedEye ? eyes[kind as 'dive' | 'rise'] : eyeAt(kind as 'dive' | 'rise', state.time))
-      else globe.place(0, 0, 0, state.time - terrainMid, eyes.dive)
+      globe.rim(low ? reach(look.place.rim.span, altitude) * (1 - reach(look.place.rim.near, altitude)) : 0, look.place.rim.feather, look.place.rim.wave)
+      if (low) globe.place(relit ? reach(look.place.light.up, altitude) : 0, relit ? reach(look.place.light.down, altitude) : 0, plated, state.time - terrainMid, look.place.fixedEye ? eyes[kind as 'dive' | 'rise'] : eyeAt(kind as 'dive' | 'rise', state.time), kind === 'rise' ? look.place.tops.climb : look.place.tops.shell[1])
+      else globe.place(0, 0, 0, state.time - terrainMid, eyes.dive, look.place.tops.shell[1])
       globe.face(left ? look.face.weight : 0)
       halo.update(sun, gain * state.weight * (1 + (look.near.halo - 1) * near) * (1 - sky), plan.spin(state.time), clock)
       placeEye()

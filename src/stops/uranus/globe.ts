@@ -40,7 +40,7 @@ const PATCH_SAMPLERS = Array.from({ length: PATCH_COUNT }, (_, i) => 'uniform sa
 
 const PATCH_LEVELS = Array.from({ length: PATCH_COUNT }, (_, i) => `    {
       vec2 q = g * uPatchScale[${i}];
-      float w = smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent * lean));
+      float w = smoothstep(0.5, 0.5 - ${i === 0 ? 'uPatchRim.x' : 'uFeather'}, max(abs(q.x), abs(q.y))${i === 0 ? ' + uPatchRim.y * (0.5 + 0.25 * sin(q.x * 41.0 + 1.3) * sin(q.y * 33.0 + 0.7) + 0.25 * sin(q.x * 87.0 - q.y * 71.0 + 2.1))' : ''}) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent * lean));
       for (int j = 0; j < (w > 0.0 ? 1 : 0); j++) enc = mix(enc, textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb, w);
       parent = gd * uPatchScale[${i}] * uPatchSize[${i}];
       texels = mix(texels, parent, step(0.5, w));
@@ -102,6 +102,7 @@ uniform vec3 uDeckLightSize;
 uniform float uPatchScale[${PATCH_COUNT}];
 uniform float uPatchSize[${PATCH_COUNT}];
 uniform float uFeather;
+uniform vec2 uPatchRim;
 uniform vec2 uPatchFade;
 uniform vec3 uSpotN;
 uniform vec3 uSpotE;
@@ -352,7 +353,7 @@ export class Globe {
         ...Object.fromEntries(p.textures.map((t, i) => ['uPatch' + i, { value: t }])),
         uPatchScale: { value: p.widthsDeg.map((w) => 1 / (2 * Math.tan(THREE.MathUtils.degToRad(w) / 2))) },
         uPatchSize: { value: p.textures.map((t) => (t.image as unknown as { width: number }).width) },
-        uFeather: { value: p.feather }, uPatchFade: { value: new THREE.Vector2().fromArray(p.fade) },
+        uFeather: { value: p.feather }, uPatchRim: { value: new THREE.Vector2(p.feather, 0) }, uPatchFade: { value: new THREE.Vector2().fromArray(p.fade) },
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
         uSpin: { value: 0 }, uTime: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uNear: { value: new THREE.Vector3(1, 1, 1) }, uSoft: { value: 0 }, uSharp: { value: new THREE.Vector2(o.sharp[0], o.sharp[1]) }, uWrapSoft: { value: o.wrapSoft }, uToRing: { value: new THREE.Matrix4() }, uRingProfile: { value: null }, uRingShade: { value: new THREE.Vector3(0, 1, 2) }, uRingN: { value: new THREE.Vector3(0, 1, 0) }, uRingSun: { value: new THREE.Vector3(0, 1, 0) }, uShadeMix: { value: 1 },
         uSunW: { value: new THREE.Vector3(1, 0, 0) },
@@ -410,9 +411,16 @@ export class Globe {
     ;(u.uRingSun!.value as THREE.Vector3).copy(sunLocal)
   }
 
-  place(up: number, down: number, on: number, deckTime: number, eye: THREE.Vector3): void {
+  rim(on: number, feather: number, wave: number): void {
+    const u = this.material.uniforms
+    const base = u.uFeather!.value as number
+    ;(u.uPatchRim!.value as THREE.Vector2).set(base + (feather - base) * on, wave * on)
+  }
+
+  place(up: number, down: number, on: number, deckTime: number, eye: THREE.Vector3, above: number): void {
     const u = this.material.uniforms
     ;(u.uPlaceEye!.value as THREE.Vector3).copy(eye)
+    ;(u.uTopShell!.value as THREE.Vector2).y = above
     ;(u.uRelit!.value as THREE.Vector3).x = up
     ;(u.uRelit!.value as THREE.Vector3).y = down
     ;(u.uPlace!.value as THREE.Vector3).x = on
