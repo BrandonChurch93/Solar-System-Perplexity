@@ -59,6 +59,9 @@ export interface PlaceState {
   matte?: 'pair' | 'alpha'
   valid?: [number, number, number, number]
   lens?: number
+  seen?: number
+  maxEnlarge?: number
+  enlargeSoft?: number
 }
 
 export interface Shot {
@@ -84,7 +87,10 @@ export interface Shot {
   farLight?: number
   place?: PlaceState
   skyShare?: number
+  skyFloor?: SkyFloor
 }
+
+export interface SkyFloor { nadir: THREE.Vector3; dip: number }
 
 export interface TextureOptions { srgb?: boolean; mips?: boolean; repeat?: boolean; mirror?: boolean; anisotropy?: number; flipY?: boolean; linear?: boolean; channels?: 1 }
 
