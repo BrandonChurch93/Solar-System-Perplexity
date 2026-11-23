@@ -19,10 +19,11 @@
     "pitchDeg": 0
   },
   "light": {
-    "note": "exposure of the globe and of the rings in the hold and in the skim, blended by the logarithm of the camera's height between the two heights",
+    "note": "exposure of the globe and of the rings and how much of its colour the ice keeps, first in the hold and then in the skim, blended by the logarithm of the camera's height between the two heights (the lower height is the skim)",
     "heights": [0.35, 1.6],
-    "globe": [1, 1],
-    "rings": [1, 1],
+    "globe": [1, 1.5],
+    "rings": [1, 0.85],
+    "ringSaturation": [1, 0.62],
     "heroRange": [0.6, 1.6]
   }
 }

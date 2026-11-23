@@ -296,3 +296,111 @@ light near the terminator, the halo, the shadow. Then M2.
 - The hold (3465) must still come out as the same picture as the kept still, and the dive needs no swap, so
   after E3 the dive is one move through one scene. At the next milestone say whether the hold changed by a
   single pixel, and push a sheet of every 15th frame of 3630 to 3809 plus consecutive frames 3718 to 3723.
+
+### Day 1, 08:05 to 09:10 UTC: ladders two to four, the light by angle, the tools that measure them
+
+State of the branch: local head 1f7e9c1 (merge of origin/main 1e492e9 with E1) plus the work below.
+Scratch in /tmp/v (not in the repo, rebuild if lost): go.sh [hold] renders 3720 (nograin, tier from $TIER)
+and prints G17 and the contrast table; mk.py cuts native pairs beside the approved; fine.py is the contrast
+table (rms of ln luma, ln red over blue, ln green in three bands of scale, film / approved).
+
+What the two approved images measure (tools in assets-src/saturn/code):
+
+- band_energy.py FILM [APPROVED] [hold]: contrast by band of wavelength across and along the ringlets.
+  Approved close, display rms percent across the ringlets in bands 2-4, 4-8, 8-16, 16-32, 32-64, 64-128 px:
+  A near 11.7, 19.8, 11.3, 11.8, 4.9, 4.0; B near 7.9, 8.7, 7.7, 6.0, 2.5, 1.7; B far 7.7, 10.4, 10.0, 8.9,
+  8.4, 9.0. Along the lanes (grain) in bands 2-4, 4-8, 8-16, 16-32 px: A near 5.6, 5.0, 4.2, 3.4; B near
+  3.0, 2.8, 2.0, 1.9. The code scene has about 1 along the lanes until the grain is built.
+- skim_map.py: with no argument the radius, cosine of the view, phase and radii per pixel at the patches;
+  with FILM [APPROVED] the scene linear light by ring and by cosine of the view. Patches of 3720 (pixel:
+  radius, mu, phase, radii per pixel): A near left (260, 930): 2.156, 0.478, 131.7, 0.00046; A left (120,
+  700): 2.143, 0.339, 142.0, 0.00056; A far left (190, 500): 2.078, 0.205, 148.7, 0.00093; B near (1100,
+  900): 1.738, 0.377, 111.6, 0.00153; B far (640, 470): 1.641, 0.132, 140.4, 0.0037.
+- hero_light.py: how the hero's rings change with the angle of view and the phase. Thin ring (A and the
+  division) over the left sector: 0.57 at phase 85, 0.9 at 100, 1.0 at 109 to 120. The close wants the thin
+  ring at about 0.93 at 128, 0.63 at 137, 0.5 at 145, 0.4 at 150.
+- The film's tone curve passes only 0.34 (B ring) and 0.59 (A ring) of the scene contrast to the display.
+  So the ladder works in the logarithm of the brightness with strengths that look large.
+- No single light gives both approved images: the close's globe is 1.63 times the hero's, its rings 0.85
+  times, its ice less saturated (red and blue over luma: close B 1.30, 0.70 and A 1.12, 0.84; the hero's
+  ink gives B 1.50, 0.56). So skim.json light blends exposure of globe and rings and the saturation of the
+  ice by the logarithm of the camera's height between the hold and the skim. Tell /root at M2.
+- The sky of the skim already has the approved's numbers (mean rgb 0.031 0.044 0.063 in both; share of
+  pixels over 0.3: 0.0021 film, 0.0014 approved): the sky patch of the kept build is aimed by the plan at
+  the judged frame and follows the new pose by itself. It is a picture fixed on the sky, not on the plane.
+
+The light law of the sheet (sheet.ts, sheet.json): brightness = knots * ladder * seen(tau, mu) *
+pow(clamp((mu0 + muHero) / (mu0 + mu)), power) * phase gain, with a power and phase knots for a dense sheet
+and for a thin one (the model's thin row: 0 inside 1.93, 1 from 1.95 out). The ice loses colour with the
+law in the thin ring (grey). Stars are covered by any part of the sheet that holds ice (starCover times
+the slant depth), the globe by the true depth.
+
+Ladders:
+
+- Two (plateaus, linear strengths): G17 0.760 at draft, but striped like a barcode and too colourful.
+- Three (thin row, law, star cover): too smooth, candy colours, G17 0.255. Found skim.json light arrays in
+  the wrong order (hold first, then skim) and fixed them.
+- Four (levels in the logarithm, two tables dense and thin, bunches from the octave two steps wider, hue
+  after the loss of colour): G17 1.42 at review, overshoot, lines too hard and even.
+- Four b (thin signed lines at the edges of the ringlets in place of deep plateaus; the mean of the lines
+  divided out): G17 0.544; mid bands on the approved (A near 0.103 against 0.108, B near 0.047 against
+  0.045), fine band under it (0.153 against 0.221, the rest is grain that is not built yet).
+- Four c: ten octaves from 0.128 (the two widest are soft zones of colour only), per octave edge softness,
+  hue cut at the fine octaves (the coloured hairlines are gone), filterFloor 0.75: the ladder is filtered
+  with the pixel's footprint times max(uGrad, 0.75) so that four samples do not bead the thin lines. G17
+  0.454. The A ring came out lilac (blue over luma 0.97 against 0.84): the wide zone of colour sat on rose
+  with blue. pinkAxis blue now -0.01, grey 0.5.
+- The hero beside the hold: the hero's Cassini division is all but black with stars through it and two or
+  three thin grey ringlets; mine was dark brown. Its profile there is the blur of its neighbours. So
+  ring_model.py now sets the division itself between 1.969 and 2.047: depth 0.006, four thin ringlets,
+  neutral ink. starCover 60.
+- The hero's B ring is dense warm hairlines at 2 to 6 px, its A ring smooth with grain. So the structure at
+  0.008 to 0.016 radii must be lines rather than plateaus: fine in the hold, sparse dark lines between
+  smooth zones in the skim. Levels cut, lines raised (in progress).
+
+Pose facts to tell /root at M2: the approved close draws bright ring almost to the globe (dark zone about
+60 px) while the rigid world fitted to the hero has the B ring's inner edge about 250 px from the limb and
+the Cassini band about 100 px left of the approved one; the globe's shadow on the rings lies about 4 deg
+outside the right edge at azimuth 17 (27 would thin the lit globe); a lone lowering (height 0.22, foot
+2.40) raises the junction about 90 px but moves the Cassini band up about 124 px (to try with skim_view.py
+after M2). The hold changed: every ring pixel is now drawn by the code field.
+
+E1 to do (after M2): SaturnPlan.divePose(time, view) and risePose(time, view) (orbit = join pose, terrain =
+local(join pose)), base dive and rise pick with sideAt, handover: {} in params, same sky on both sides at T
+(skyGain, patchWeight, seat). Read src/director/handover.ts, moves.ts 400 to 480,
+assets-src/shared/HANDOVER-NOTES.md. Saturn cover centres 3594 (dive) and 3840 (rise).
+
+Next: grain and sparkle anchored in the plane with Kepler drift, instanced ice near the camera, soft
+thickness, junction, limb halo, terminator. Then M2.
+
+## Mail 231 from /root (about 09:12 UTC day 1): the ice moves up the order
+
+- "I saw your fourth ladder at 3720: the ring plane is rich now and reads as code, not as a stretched
+  picture. Good. Your own list of what is wrong (lines too hard, pale outer ring) is right."
+- "The change: the ice near the camera moves up the order, right after the hardness of the lines. Reason:
+  the ring pattern is the same all along the flight, so the pattern alone cannot show that the camera moves
+  forward. Brandon asked early on for clear forward movement and depth across the whole length of every
+  surface view, and his newest note (08:43 UTC, on the Sun) says a surface view whose matter does not
+  visibly move is lack luster. On Saturn that movement is the ice: grains and clumps with size and depth
+  that pass the lens with parallax, each on its own orbit so near ones overtake far ones, merging into the
+  sheet with distance with no seam. Also let the fine structure of the sheet itself carry things that
+  travel along the orbit (clumps, wakes, a spoke or two), so the plane is seen to turn under the camera."
+- "Proof with it: six consecutive frames at two places, and a sheet of every 15th frame 3630 to 3809. In
+  consecutive frames the eye must see at once which way the camera flies."
+- No answer needed.
+
+Result of the lines after 09:10 (ladder four d: levels cut, lines raised, bunches 0.1 to 2.0, the division
+set by the model): 3720 G17 0.673 at review (A near fine band 0.211 against 0.221, mid 0.166 against 0.108:
+thin ring lines a little too strong), hold G17 1.120, p25 0.738 against the hero. The beading of thin
+lines at four samples is gone with filterFloor 0.75.
+
+Plan for the ice (09:20):
+- In the sheet shader, grain anchored in the plane: rows in radius, cells in azimuth, each row turning
+  rigidly at the Kepler rate of its radius (spin 1.4 deg per second at 1.86 radii, rate goes with radius
+  to the power -1.5), three fixed sizes in radii so near grains are larger on screen and far ones merge
+  into the sheet; each grain an ellipse on the plane filtered by the pixel's footprint in both directions.
+- Wakes: longer soft clumps pitched to the orbit; spokes: two or three soft radial smudges in the B ring
+  that turn with the globe.
+- Raised ice: layers or instanced grains above the sheet with true parallax, lit by the Sun.
+- The camera flies 0.04 radii a second, the A ring orbits at 0.042 radii a second, to the right in frame
+  (prograde, seen from the north side). Both are seen: grains ride the lanes while the lanes slide down.

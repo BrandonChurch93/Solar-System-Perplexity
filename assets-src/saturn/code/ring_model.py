@@ -30,10 +30,14 @@ TAU_REF = 1.6       # depth of a sheet as bright as L_REF
 L_REF = 0.45
 TAU_POWER = 1.6
 TAU_MAX = 3.5
-DUST = {'tau': 0.006, 'length': 0.045, 'ice': 0.26}                 # the sheet of dust outside the outer edge
-STRANDS = [(2.418, 0.0035, 0.022), (2.408, 0.0018, 0.008), (2.431, 0.0022, 0.006)]   # radius, half width, depth
-FINE = [(1.2, 0.8), (1.26, 1.0), (1.5, 1.0), (1.56, 0.8), (1.93, 0.8), (1.95, 1.1), (2.06, 1.1), (2.08, 1.6), (2.3, 1.6), (2.34, 1.0), (2.5, 0.8)]
-GAP = {'from': 1.948, 'to': 2.058, 'edge': 0.006, 'tau': 0.05, 'ice': 0.11}   # the Cassini division is thin, not empty
+DUST = {'tau': 0.004, 'length': 0.045, 'ice': 0.26}                 # the sheet of dust outside the outer edge
+STRANDS = [(2.418, 0.0026, 0.012)]   # radius, half width, depth
+FINE = [(1.2, 0.8), (1.26, 1.0), (2.34, 1.0), (2.5, 0.8)]
+GAP = {'from': 1.969, 'to': 2.047, 'edge': [0.003, 0.008], 'tau': 0.006, 'ice': 0.11, 'ink': [0.96, 1.0, 1.08]}   # the Cassini division between the hero's two edges is all but empty: a thin sheet of grey dust
+RINGLETS = [(1.984, 0.0016, 0.07), (2.001, 0.0012, 0.05), (2.019, 0.0022, 0.09), (2.036, 0.0014, 0.06)]   # in the division: radius, half width, depth
+C_RING = {'to': 1.5, 'edge': 0.03, 'tau': 0.32, 'lum': 0.1, 'power': 0.6}   # the inner ring is dark ice, deeper than its brightness says
+THIN = [(1.2, 0), (1.93, 0), (1.95, 1), (2.5, 1)]   # where the sheet returns light like a thin one (hero_light.py): the division and the A ring
+MU_REF = 0.40       # cosine of the view to the normal where the profile was measured (the hero's left sector)
 CHROMA_SIGMA = 0.006
 CHROMA_TOP = 0.6    # the hero clips above this, where the colour of a bin can not be trusted
 LUMA = np.array([0.2126, 0.7152, 0.0722])
@@ -53,7 +57,7 @@ for c in range(3):
 col = np.maximum(col - SKY, 0)
 
 mu0 = abs(geom.SUN_L[1])
-muh = abs(geom.CAM_L[1]) / np.linalg.norm(geom.CAM_L)
+muh = MU_REF
 kh = 1 / mu0 + 1 / muh
 
 r = SPAN[0] + (np.arange(KNOTS) + 0.5) / KNOTS * (SPAN[1] - SPAN[0])
@@ -82,10 +86,14 @@ rim = np.clip((r - INNER) / EDGE, 0, 1) * np.clip((OUTER - r) / EDGE, 0, 1)
 lum *= rim
 
 tau = np.minimum(TAU_REF * (lum / L_REF) ** TAU_POWER, TAU_MAX)
-gap = np.clip((r - GAP['from']) / GAP['edge'], 0, 1) * np.clip((GAP['to'] - r) / GAP['edge'], 0, 1)
-thin = np.maximum(tau, GAP['tau'] * gap)
-lum = lum + GAP['ice'] * ((1 - np.exp(-thin * kh)) - (1 - np.exp(-tau * kh))) * gap
-tau = thin
+# the division: the hero's profile there is the blur of its neighbours, so the model sets its own sheet
+gap = np.clip((r - GAP['from']) / GAP['edge'][0], 0, 1) * np.clip((GAP['to'] - r) / GAP['edge'][1], 0, 1)
+gap = gap * gap * (3 - 2 * gap)
+lets = GAP['tau'] + sum(depth * np.exp(-0.5 * ((r - at) / wide) ** 2) for at, wide, depth in RINGLETS)
+tau = tau * (1 - gap) + lets * gap
+lum = lum * (1 - gap) + GAP['ice'] * (1 - np.exp(-lets * kh)) * gap
+inner = np.clip((C_RING['to'] - r) / C_RING['edge'], 0, 1) * rim
+tau = np.maximum(tau, inner * C_RING['tau'] * (np.maximum(lum, 1e-4) / C_RING['lum']) ** C_RING['power'])
 # outside the outer edge: dust and strands, with the brightness they return to the hero's camera
 out = np.maximum(r - OUTER, 0)
 dust = np.where(r > OUTER, DUST['tau'] * np.exp(-out / DUST['length']) * np.clip((SPAN[1] - r) / 0.03, 0, 1), 0)
@@ -108,12 +116,14 @@ good = den > 0.5
 smooth = np.where(good[:, None], num / np.maximum(den[:, None], 1e-6), np.nan)
 for c in range(3):
     chroma[:, c] = np.interp(r, rc[good], smooth[good, c])
+chroma = chroma * (1 - gap[:, None]) + np.array(GAP['ink'])[None, :] * gap[:, None]
 chroma /= (chroma @ LUMA)[:, None]
 
 fine = np.interp(r, [f[0] for f in FINE], [f[1] for f in FINE])
+thin_w = np.interp(r, [f[0] for f in THIN], [f[1] for f in THIN])
 
 model = {
-    'source': 'assets-src/saturn/code/ring_model.py, the ring sheet by radius measured on the approved hero: normal optical depth, the brightness returned to the hero camera, the colour of the ice as red and blue over luma, the strength of the finer structure',
+    'source': 'assets-src/saturn/code/ring_model.py, the ring sheet by radius measured on the approved hero: normal optical depth, the brightness returned to the hero camera, the colour of the ice as red and blue over luma, the strength of the finer structure, and how far the sheet returns light like a thin one',
     'span': list(SPAN),
     'knots': KNOTS,
     'inner': INNER,
@@ -125,6 +135,7 @@ model = {
     'red': [round(float(v), 3) for v in chroma[:, 0]],
     'blue': [round(float(v), 3) for v in chroma[:, 2]],
     'fine': [round(float(v), 3) for v in fine],
+    'thin': [round(float(v), 3) for v in thin_w],
 }
 path = os.path.join(geom.STOP, 'ringfield.json')
 with open(path, 'w') as f:

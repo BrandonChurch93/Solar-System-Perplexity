@@ -46,16 +46,26 @@ uniform float uVignette;
 uniform float uAspect;
 uniform float uFinest;
 uniform vec4 uShade;
+uniform vec4 uViewFit;
+uniform vec3 uPhase[${look.phase.deg.length}];
+uniform float uSat;
 uniform vec3 uFloor;
 uniform vec3 uLayer;
 out vec4 outColor;
 ${DIAG_GLSL}
 ${RING_FIELD_GLSL}
 ${GLOBE_SHADOW_GLSL}
+// what the sheet returns at a phase angle over what it returns where the model was measured, for a dense
+// sheet (x) and a thin one (y): straight lines between the knots, flat outside
+vec2 phaseGain(float deg) {
+  vec2 g = uPhase[0].yz;
+  for (int k = 1; k < ${look.phase.deg.length}; k++) g = mix(g, uPhase[k].yz, clamp((deg - uPhase[k - 1].x) / (uPhase[k].x - uPhase[k - 1].x), 0.0, 1.0));
+  return g;
+}
 void main() {
   vec2 q = vLocal.xz;
   float r = length(q);
-  float fp = length(vec2(dFdx(r), dFdy(r))) * uGrad;
+  float fp = ringFootprint(length(vec2(dFdx(r), dFdy(r))), uGrad);
   float texels = diagTexels(q / uFinest);
   vec3 P = vec3(q.x, 0.0, q.y);
   vec3 ray = P - uCamL;
@@ -68,18 +78,25 @@ void main() {
   for (int k = 0; k < (mine ? 1 : 0); k++) {
     vec2 knots = ringKnots(r, fp);
     vec4 ink = ringInk(r);
+    float thin = ringThin(r);
     float tau = knots.x;
     float lum = knots.y;
-    vec3 tone = ink.rgb;
-    ringFine(r, fp, ink.a, tau, lum, tone);
+    vec3 tint;
+    ringFine(r, fp, ink.a, thin, dot(q / r, normalize(uSunL.xz)), tau, lum, tint);
     float dist = length(ray);
     float mu = max(abs(ray.y) / dist, 1e-3);
     float mu0 = max(abs(uSunL.y), 0.02);
     bool same = uCamL.y * uSunL.y > 0.0;
     float seen = same ? ringSat(tau * (1.0 / mu0 + 1.0 / mu)) / max(ringSat(tau * uRfLight.x), 1e-6) : uShade.w * exp(-tau / mu0) * ringSat(tau / mu) / max(ringSat(tau * uRfLight.x), 1e-6);
-    float law = mix(1.0, (uRfLight.y + uRfLight.z) / (mu0 + mu), uShade.x);
+    float deg = degrees(acos(clamp(dot(ray, uSunL) / -dist, -1.0, 1.0)));
+    vec2 byPhase = phaseGain(deg);
+    float law = pow(clamp((uRfLight.y + uRfLight.z) / (mu0 + mu), uViewFit.x, uViewFit.y), mix(uShade.x, uShade.y, thin)) * mix(byPhase.x, byPhase.y, thin);
+    vec3 tone = mix(vec3(1.0), ink.rgb, uSat * mix(1.0, min(law, 1.0), thin * uViewFit.z)) * tint;
     vec3 lit = globeShadow(P, uSunL, uPolar);
-    alpha = 1.0 - exp(-tau / mu);
+    // stars do not show through any part of the sheet that holds ice; the globe shows through by the true depth
+    float bn = dot(cs, ds) / length(ds);
+    float behind = front ? 1.0 - smoothstep(0.97, 1.0, sqrt(max(dot(cs, cs) - bn * bn, 0.0))) : 0.0;
+    alpha = 1.0 - exp(-tau / mu * mix(uViewFit.w, 1.0, behind));
     col = lum * tone * (seen * law * uShade.z) * mix(uFloor, vec3(1.0), lit);
   }
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
@@ -116,7 +133,10 @@ export class Sheet {
       uCamL: { value: new THREE.Vector3(0, 1, 3) }, uSunL: { value: new THREE.Vector3(1, 0.2, 0) }, uPolar: { value: polar },
       uGrad: gradUniform, uDiag: diagUniform, uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
       uFinest: { value: field.finest },
-      uShade: { value: new THREE.Vector4(look.view, look.phase, look.gain[0], look.unlit) },
+      uShade: { value: new THREE.Vector4(look.view.dense, look.view.thin, look.gain[0], look.unlit) },
+      uViewFit: { value: new THREE.Vector4(look.view.clamp[0], look.view.clamp[1], look.grey, look.starCover) },
+      uPhase: { value: look.phase.deg.map((deg, k) => new THREE.Vector3(deg, look.phase.dense[k], look.phase.thin[k])) },
+      uSat: { value: 1 },
       uShadowFit: { value: new THREE.Vector4(look.shadow.soft[0], look.shadow.soft[1], 0, 0) },
       uShadowReach: { value: new THREE.Vector3().fromArray(look.shadow.reach) },
       uFloor: { value: new THREE.Vector3().fromArray(look.shadow.floor) },

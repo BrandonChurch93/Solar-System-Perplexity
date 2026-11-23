@@ -144,6 +144,7 @@ export const createSet: SetFactory = async (ctx) => {
       ;(ru.uCamL!.value as THREE.Vector3).copy(camL)
       ;(ru.uSunL!.value as THREE.Vector3).copy(sunL)
       ;(ru.uShade!.value as THREE.Vector4).z = THREE.MathUtils.lerp(sheetJson.gain[0]!, sheetJson.gain[1]!, close) * THREE.MathUtils.lerp(tune.rings[0]!, tune.rings[1]!, close)
+      ru.uSat!.value = THREE.MathUtils.lerp(tune.ringSaturation[0]!, tune.ringSaturation[1]!, close)
       ru.uGain!.value = gain
       ru.uWeight!.value = state.weight
       ru.uVignette!.value = shot.post.vignette

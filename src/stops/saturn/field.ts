@@ -27,15 +27,20 @@ uniform vec4 uRfFine;
 uniform vec4 uRfAmp;
 uniform vec4 uRfGroove;
 uniform vec4 uRfGrooveFit;
+uniform vec4 uRfBunch;
+uniform vec4 uRfLine;
 uniform vec4 uRfHue;
 uniform vec3 uRfWarm;
 uniform vec3 uRfPink;
+uniform vec4 uRfOct[${fine.octaves}];
+uniform vec4 uRfTint[${fine.octaves}];
+uniform float uRfEdge[${fine.octaves}];
 uniform vec4 uRfWaves[${fine.waves.trains.length}];
 uniform vec4 uRfWaveFit;
 uniform vec4 uRfWaveEnds;
 ${RING_HASH_GLSL}
 float ringRows() {
-  return 2.0 * uRfSpan.w + 3.0;
+  return 2.0 * uRfSpan.w + 4.0;
 }
 float ringLevel(float fp) {
   return clamp(log2(max(fp * uRfSpan.y * uRfSpan.z, 1.0)), 0.0, uRfSpan.w - 1.0);
@@ -50,6 +55,7 @@ float ringDepth(float r, float fp) {
   float x = (r - uRfSpan.x) * uRfSpan.y;
   return textureLod(uRfMap, vec2(x, (ringLevel(fp) + 0.5) / ringRows()), 0.0).r;
 }
+// the colour of the ice (red, green, blue over luma) and the strength of the finer structure at r
 vec4 ringInk(float r) {
   float x = (r - uRfSpan.x) * uRfSpan.y;
   float rows = ringRows();
@@ -57,48 +63,82 @@ vec4 ringInk(float r) {
   float blue = textureLod(uRfMap, vec2(x, (2.0 * uRfSpan.w + 1.5) / rows), 0.0).r;
   return vec4(red, (1.0 - 0.2126 * red - 0.0722 * blue) / 0.7152, blue, textureLod(uRfMap, vec2(x, (2.0 * uRfSpan.w + 2.5) / rows), 0.0).r);
 }
+// how far the sheet at r is a thin sheet (1) or a dense one (0) in the way it returns light
+float ringThin(float r) {
+  return textureLod(uRfMap, vec2((r - uRfSpan.x) * uRfSpan.y, (2.0 * uRfSpan.w + 3.5) / ringRows()), 0.0).r;
+}
 vec3 ringBits(uint h) {
   return vec3(float(h & 1023u), float((h >> 10) & 1023u), float((h >> 20) & 1023u)) * (1.0 / 1023.0);
 }
-// One octave of ringlets at x, in cells: plateaus whose edges are jittered inside each cell, and at each edge a
-// groove of its own width and depth. f is the half width of the pixel in cells. Returns the level and two hue
-// offsets (-1 to 1) and how much of the pixel lies in a groove, weighted by the groove's depth.
-vec4 ringOctave(float x, uint seed, float f) {
+// One octave of ringlets at x, in cells: plateaus whose edges are jittered inside each cell; at each edge a thin
+// line, bright or dark, of its own width and strength, and the slope of the step as a second thin line. f is
+// the half width of the pixel in cells. Returns the level (-1 to 1), the slope line (signed) and the share of
+// the pixel that lies in a line times the line's strength (signed), two hue offsets (-1 to 1) and one more
+// value of the plateau (0 to 1) that the octave two steps finer takes as the strength of its bunches.
+vec3 ringOctave(float x, uint seed, float f, out vec2 hue, out float spare) {
   float cell = floor(x);
   float t = x - cell;
-  uint s = ringPcg(seed);
-  uint base = uint(int(cell)) + s;
-  vec3 prev = ringBits(ringPcg(base - 2u));
+  uint base = uint(int(cell)) + ringPcg(seed);
+  uint h0 = ringPcg(base - 2u);
+  vec3 prev = ringBits(h0);
+  float prevB = ringUnit(ringPcg(h0 + 77u));
+  float accB = prevB;
   vec3 acc = prev;
-  float groove = 0.0;
+  float line = 0.0;
+  float slope = 0.0;
+  float wl = max(uRfGroove.w, f);
   for (int k = -1; k <= 1; k++) {
     uint h = ringPcg(base + uint(k));
     vec3 v = ringBits(h);
     vec3 e = ringBits(ringPcg(h));
     float d = t - float(k) - (0.2 + 0.6 * e.x);
-    acc += (v - prev) * smoothstep(-f, f, d);
+    float step = smoothstep(-f, f, d);
+    float vb = ringUnit(ringPcg(h + 77u));
+    acc += (v - prev) * step;
+    accB += (vb - prevB) * step;
+    prevB = vb;
     float wide = uRfGroove.x + uRfGroove.y * e.y * e.y;
-    float deep = smoothstep(uRfGroove.z, 1.0, e.z);
-    groove += deep * clamp(min(d + f, wide) - max(d - f, -wide), 0.0, 2.0 * f) / (2.0 * f);
+    float s = e.z * 2.0 - 1.0;
+    line += sign(s) * smoothstep(uRfGroove.z, 1.0, abs(s)) * clamp(min(d + f, wide) - max(d - f, -wide), 0.0, 2.0 * f) / (2.0 * f);
+    slope += (v.x - prev.x) * (uRfGroove.w / wl) * max(1.0 - abs(d) / wl, 0.0);
     prev = v;
   }
-  return vec4(acc * 2.0 - 1.0, groove);
+  hue = acc.yz * 2.0 - 1.0;
+  spare = accB;
+  return vec3(acc.x * 2.0 - 1.0, slope, clamp(line, -1.0, 1.0));
 }
-void ringFine(float r, float fp, float amp, inout float tau, inout float lum, inout vec3 ink) {
+// The finer structure: a ladder of octaves, each seen only where it is wider than the pixel. side is the
+// cosine between the radius and the Sun's direction on the plane: slopes that face the Sun are brighter.
+// thin is ringThin(r): the dense and the thin rings have their own strengths per octave. tint is the factor on
+// the colour of the ice that the ringlets at this radius carry.
+void ringFine(float r, float fp, float amp, float thin, float side, inout float tau, inout float lum, out vec3 tint) {
   float wave = uRfFine.x;
   float kl = 1.0;
   float kt = 1.0;
   vec2 hue = vec2(0.0);
+  // ringlets come in bunches: the strength of an octave follows a field that changes two octaves more slowly
+  float bunch = 0.0;
+  float next = 0.0;
   for (int o = 0; o < ${fine.octaves}; o++) {
     float seen = clamp(wave / (fp * uRfFine.w) - 1.0, 0.0, 1.0);
-    float gain = amp * min(1.0, (float(o) + 1.0) * uRfAmp.z);
-    float dark = gain * uRfGrooveFit.x;
-    float gap = gain * uRfGrooveFit.y;
     for (int k = 0; k < (seen > 0.0 ? 1 : 0); k++) {
-      vec4 q = ringOctave(r / wave + float(o) * uRfAmp.w, uint(o) + 1u, max(uRfFine.z, uRfGrooveFit.w * fp / wave));
-      kl *= (1.0 + gain * seen * uRfAmp.x * q.x) * mix(1.0, (1.0 - min(dark * q.w, 1.0)) / (1.0 - dark * uRfGrooveFit.z), seen);
-      kt *= (1.0 + gain * seen * uRfAmp.y * q.x) * mix(1.0, (1.0 - min(gap * q.w, 1.0)) / (1.0 - gap * uRfGrooveFit.z), seen);
-      hue += seen * gain * q.yz;
+      vec4 a = uRfOct[o];
+      vec2 h;
+      float b;
+      vec3 q = ringOctave(r / wave + float(o) * uRfAmp.w, uint(o) + 1u, max(uRfEdge[o], uRfGrooveFit.w * fp / wave), h, b);
+      float rough = o < 2 ? 1.0 : mix(uRfAmp.x, uRfAmp.z, smoothstep(uRfBunch.x, uRfBunch.y, bunch));
+      float g = amp * seen * rough;
+      // the level moves the brightness by a factor (even in the logarithm), divided by its mean so that the
+      // sheet keeps its brightness where the octave is too fine to see; so do the lines, dark ones deeper
+      // than bright ones are bright, and a dark line is a thinner sheet
+      float e = g * mix(a.x, a.w, thin);
+      float et = e * uRfAmp.y;
+      float l = g * a.z * mix(uRfBunch.z, uRfBunch.w, thin);
+      kl *= exp(e * q.x + g * a.y * side * q.y + l * q.z * (q.z > 0.0 ? uRfGrooveFit.y : uRfGrooveFit.x)) / ((1.0 + e * e * (1.0 / 6.0 + e * e / 120.0)) * (1.0 + l * uRfGrooveFit.z));
+      kt *= exp(et * q.x + l * q.z * uRfLine.x) / (1.0 + et * et * (1.0 / 6.0 + et * et / 120.0));
+      hue += amp * seen * mix(uRfTint[o].xy, uRfTint[o].zw, thin) * h;
+      bunch = next;
+      next = b;
     }
     wave *= uRfFine.y;
   }
@@ -115,7 +155,11 @@ void ringFine(float r, float fp, float amp, inout float tau, inout float lum, in
   }
   lum *= kl;
   tau *= kt;
-  ink *= 1.0 + uRfWarm * (hue.x * uRfHue.x) + uRfPink * (hue.y * uRfHue.y);
+  tint = exp(uRfWarm * (hue.x * uRfHue.x) + uRfPink * (hue.y * uRfHue.y));
+}
+// the footprint the ladder is filtered with: the pixel's, however many samples a frame takes, down to a floor
+float ringFootprint(float pixel, float grad) {
+  return pixel * max(grad, uRfFine.z);
 }
 float ringSat(float x) {
   return x < 1e-3 ? x : 1.0 - exp(-x);
@@ -151,7 +195,7 @@ export interface RingField { uniforms: Record<string, THREE.IUniform>; texture: 
 export function ringField(ctx: SetContext): RingField {
   const n = model.knots
   const levels = Math.round(Math.log2(n)) + 1
-  const rows = 2 * levels + 3
+  const rows = 2 * levels + 4
   const data = new Float32Array(n * rows)
   for (let l = 0; l < levels; l++) {
     data.set(boxed(model.tau, 1 << l), l * n)
@@ -160,13 +204,14 @@ export function ringField(ctx: SetContext): RingField {
   data.set(model.red, 2 * levels * n)
   data.set(model.blue, (2 * levels + 1) * n)
   data.set(model.fine, (2 * levels + 2) * n)
+  data.set(model.thin, (2 * levels + 3) * n)
   const texture = ctx.floatTexture(data, n, rows)
   const span = model.span as [number, number]
   const ends = fine.waves
   const groove = fine.groove
-  // the share of a cell that lies in a groove, weighted by depth: one edge per cell, half width w0 + (w1 - w0) u^2,
-  // depth smoothstep(rare, 1, v) with u and v even on 0 to 1
-  const grooveMean = 2 * (groove.width[0] + (groove.width[1] - groove.width[0]) / 3) * meanSmoothstep(groove.rare)
+  // the mean of a line over a cell, to first order in its strength: one edge per cell, half width
+  // w0 + (w1 - w0) u^2, strength smoothstep(rare, 1, v) with u and v even on 0 to 1, half of them dark
+  const lineMean = (groove.width[0] + (groove.width[1] - groove.width[0]) / 3) * meanSmoothstep(groove.rare) * (groove.bright - groove.dark)
   return {
     texture,
     finest: fine.first * Math.pow(fine.ratio, fine.octaves - 1),
@@ -174,13 +219,18 @@ export function ringField(ctx: SetContext): RingField {
       uRfMap: { value: texture },
       uRfSpan: { value: new THREE.Vector4(span[0], 1 / (span[1] - span[0]), n, levels) },
       uRfLight: { value: new THREE.Vector4(1 / model.muSun + 1 / model.muHero, model.muSun, model.muHero, 0) },
-      uRfFine: { value: new THREE.Vector4(fine.first, fine.ratio, fine.edge, fine.footprints) },
-      uRfAmp: { value: new THREE.Vector4(fine.lum, fine.tau, 1 / fine.easeIn, fine.shift) },
-      uRfGroove: { value: new THREE.Vector4(groove.width[0], groove.width[1] - groove.width[0], groove.rare, 0) },
-      uRfGrooveFit: { value: new THREE.Vector4(groove.dark, groove.open, grooveMean, fine.filter) },
+      uRfFine: { value: new THREE.Vector4(fine.first, fine.ratio, fine.filterFloor, fine.footprints) },
+      uRfEdge: { value: Array.from({ length: fine.octaves }, (_, o) => fine.edge[o] ?? 0) },
+      uRfAmp: { value: new THREE.Vector4(fine.rough[0], fine.tau, fine.rough[1], fine.shift) },
+      uRfGroove: { value: new THREE.Vector4(groove.width[0], groove.width[1] - groove.width[0], groove.rare, fine.slopeWidth) },
+      uRfGrooveFit: { value: new THREE.Vector4(groove.dark, groove.bright, lineMean, fine.filter) },
+      uRfBunch: { value: new THREE.Vector4(fine.bunch[0], fine.bunch[1], groove.dense, groove.thin) },
+      uRfLine: { value: new THREE.Vector4(groove.open, 0, 0, 0) },
       uRfHue: { value: new THREE.Vector4(fine.hue.warm, fine.hue.pink, 0, 0) },
       uRfWarm: { value: new THREE.Vector3().fromArray(fine.hue.warmAxis) },
       uRfPink: { value: new THREE.Vector3().fromArray(fine.hue.pinkAxis) },
+      uRfOct: { value: Array.from({ length: fine.octaves }, (_, o) => new THREE.Vector4(fine.level.dense[o] ?? 0, fine.slope[o] ?? 0, groove.strength[o] ?? 0, fine.level.thin[o] ?? 0)) },
+      uRfTint: { value: Array.from({ length: fine.octaves }, (_, o) => new THREE.Vector4(fine.hue.dense.warm[o] ?? 0, fine.hue.dense.pink[o] ?? 0, fine.hue.thin.warm[o] ?? 0, fine.hue.thin.pink[o] ?? 0)) },
       uRfWaves: { value: fine.waves.trains.map((t) => new THREE.Vector4(t[0], t[1], t[2], t[3])) },
       uRfWaveFit: { value: new THREE.Vector4(ends.lum, ends.tau, ends.tight, 0) },
       uRfWaveEnds: { value: new THREE.Vector4(ends.rise[0], ends.rise[1], ends.fall[0], ends.fall[1]) },

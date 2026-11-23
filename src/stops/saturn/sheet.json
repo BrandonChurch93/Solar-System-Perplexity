@@ -1,15 +1,27 @@
 {
-  "source": "how the ring sheet is lit and drawn (sheet.ts). Lengths in planet radii, angles as sines.",
+  "source": "how the ring sheet is lit and drawn (sheet.ts). Lengths in planet radii, angles in degrees. The view and phase numbers are measured on the approved hero (assets-src/saturn/code/hero_light.py) between phase 80 and 120; the last phase knot is set on the approved close.",
   "segments": 720,
-  "view": 0.25,
-  "phase": 0,
+  "view": {
+    "note": "brightness goes with ((cosine of the Sun + cosine of the view where the model was measured) / (cosine of the Sun + cosine of the view)) to a power: one for a dense sheet, one for a thin one, the ratio held between two limits",
+    "dense": 0,
+    "thin": 2,
+    "clamp": [0.4, 1.15]
+  },
+  "phase": {
+    "note": "brightness at these phase angles over the brightness where the model was measured, for a dense and a thin sheet, straight lines between and flat outside. Up to 120 degrees from the approved hero, beyond from the approved close.",
+    "deg": [80, 100, 110, 120, 150],
+    "dense": [0.74, 0.87, 1.03, 1.03, 0.95],
+    "thin": [0.57, 0.9, 1, 1, 0.4]
+  },
+  "grey": 0.5,
+  "starCover": 60,
   "gain": [1, 1],
   "unlit": 0.12,
   "shadow": {
     "note": "the globe's shadow on the plane: edge half width at the limb and its growth per radius along the Sun's ray, how much farther each colour reaches into the shadow, and what is left inside it",
     "soft": [0.006, 0.012],
-    "reach": [2.6, 1.6, 1],
-    "floor": [0.012, 0.016, 0.024]
+    "reach": [1.25, 1.1, 1],
+    "floor": [0.006, 0.008, 0.012]
   },
   "layer": [0.95, 0.7, 0.2]
 }
