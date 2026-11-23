@@ -1,9 +1,61 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T22:03:13.840Z",
- "head": "e2baa50e0ca74d7259e0e03a496e2a0543894526",
- "note": "27d64e76 merged with main 25bbe774 as e2baa50e (local, in proof): side difference at T cured, dive ramp 0.38",
+ "pushed": "2026-11-23T22:36:09.186Z",
+ "head": "f7a9e0012da7f546eac24a2d5f51a5ff7cb49f27",
+ "note": "22:37 VM: layout of the function scene read from the approved image; deep.ts written, first frame of 4860 next",
  "looks": [
+  {
+   "time": "2026-11-23T22:36:08.588Z",
+   "file": "20261123223608588-note-lay-cirrus.jpg",
+   "source": "../../../../tmp/lay-cirrus.jpg",
+   "kind": "note",
+   "label": "plan: the same at cirrus height, streamer lines read from it",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T22:36:08.009Z",
+   "file": "20261123223608009-note-lay-deck.jpg",
+   "source": "../../../../tmp/lay-deck.jpg",
+   "kind": "note",
+   "label": "plan: the approved close image laid on the ground in band coordinates (deck), the layout the function scene is fitted to",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T22:18:14.724Z",
+   "file": "20261123221814724-sheet-neptune-dive-draft-after.jpg",
+   "source": "out/work/handover/neptune-dive-draft-after.png",
+   "kind": "sheet",
+   "label": "neptune dive, every frame 4759 to 4769 (after T, frame 4758), draft tier",
+   "stop": "neptune",
+   "segment": "neptune.dive",
+   "first": 4759,
+   "last": 4769,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T22:18:13.077Z",
+   "file": "20261123221813077-sheet-neptune-dive-draft-before.jpg",
+   "source": "out/work/handover/neptune-dive-draft-before.png",
+   "kind": "sheet",
+   "label": "neptune dive, every frame 4746 to 4757 (before T, frame 4758), draft tier",
+   "stop": "neptune",
+   "segment": "neptune.dive",
+   "first": 4746,
+   "last": 4757,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T22:18:11.299Z",
+   "file": "20261123221811299-sheet-neptune-dive-draft-across.jpg",
+   "source": "out/work/handover/neptune-dive-draft-across.png",
+   "kind": "sheet",
+   "label": "neptune dive, every frame 4752 to 4763 (across T, frame 4758), draft tier",
+   "stop": "neptune",
+   "segment": "neptune.dive",
+   "first": 4752,
+   "last": 4763,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-23T22:03:12.557Z",
    "file": "20261123220312557-note-corner.jpg",
@@ -27,56 +79,6 @@
    "kind": "note",
    "label": "neptune dive after the cure of the dim: 4757 (above) and 4758 (below) at the limb, 2x, draft: the glow above the limb no longer steps at T (sides at T: mean 0.065 dive, 0.064 rise, pass)",
    "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T22:02:15.460Z",
-   "file": "20261123220215460-compare-neptune-dive-sides.jpg",
-   "source": "out/work/handover/neptune-dive-sides.png",
-   "kind": "compare",
-   "label": "neptune dive, both sides at T (frame 4758) and their difference times 8",
-   "stop": "neptune",
-   "segment": "neptune.dive",
-   "frame": 4758,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T21:51:49.187Z",
-   "file": "20261123215149187-compare-neptune-rise-sides.jpg",
-   "source": "out/work/handover/neptune-rise-sides.png",
-   "kind": "compare",
-   "label": "neptune rise, both sides at T (frame 4956) and their difference times 8",
-   "stop": "neptune",
-   "segment": "neptune.rise",
-   "frame": 4956,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T21:49:09.167Z",
-   "file": "20261123214909167-note-F-dive4.jpg",
-   "source": "../../../../tmp/F-dive4.jpg",
-   "kind": "note",
-   "label": "neptune dive 4743 to 4769 at draft on 001f0a73 (not READY: side difference and early rate fail)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T21:49:08.553Z",
-   "file": "20261123214908553-note-sides-crop.jpg",
-   "source": "../../../../tmp/sides-crop.png",
-   "kind": "note",
-   "label": "neptune dive, T 4758 both sides at the limb, 2x crop (globe side above, close side below): the dim of batch A darkens the close canvas glow on the globe side, a jump at T that the handover report caught (side mean 0.79). Being cured.",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T21:41:24.377Z",
-   "file": "20261123214124377-sheet-neptune-dive-top.jpg",
-   "source": "out/work/handover/neptune-dive-top.png",
-   "kind": "sheet",
-   "label": "neptune dive, the globe side alone from straight above the place, 12 frames from the far end to T (frame 4758), place picture off, draft tier",
-   "stop": "neptune",
-   "segment": "neptune.dive",
-   "first": 4680,
-   "last": 4758,
-   "tier": "draft"
   }
  ]
 }
