@@ -1,9 +1,16 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T16:01:26.885Z",
- "head": "569bef703bc72ec8c07f4a9cf85eb4c71dcc078f",
- "note": "READY proofs: hold 3465 at the final tier beside the hero and the kept still; G17 red at 3720 (0.519)",
+ "pushed": "2026-11-23T16:32:45.664Z",
+ "head": "d4015b736cd5730b85dfa25af760e8aca642cd20",
+ "note": "mail 298 point 1: the hold is drawn by the kept build's set again, byte equal drafts 3390 3465 3539; the dive goes over to the ring model by takes",
  "looks": [
+  {
+   "time": "2026-11-23T16:32:44.854Z",
+   "file": "20261123163244854-note-b_3465.jpg",
+   "source": "../../../../tmp/v/p1/b_3465.png",
+   "kind": "note",
+   "label": "hold 3465 draft, drawn by the kept set inside the one set: byte equal to main"
+  },
   {
    "time": "2026-11-23T16:01:25.612Z",
    "file": "20261123160125612-note-hold3465_pair.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/v/t7r/three_mid.png",
    "kind": "note",
    "label": "3719, 3720, 3721 at the review tier, middle at native size: three frames in a row"
-  },
-  {
-   "time": "2026-11-23T15:42:13.622Z",
-   "file": "20261123154213622-note-three_ll.jpg",
-   "source": "../../../../tmp/v/t7r/three_ll.png",
-   "kind": "note",
-   "label": "3719, 3720, 3721 at the review tier, lower left at native size: three frames in a row"
   }
  ]
 }
