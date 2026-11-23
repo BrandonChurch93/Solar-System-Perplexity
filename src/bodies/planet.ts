@@ -3,7 +3,7 @@ import { DIAG_GLSL, diagUniform, gradUniform } from '../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../post/chain'
 import { implicitUniform } from '../core/texel'
 import { EQUIRECT_GLSL } from '../space/sky'
-import { HAZE_GLSL, hazeUniforms, type HazeParams } from './haze'
+import { hazeGlsl, hazeUniforms, setHazeGlow, type HazeParams } from './haze'
 
 export interface PlanetLight {
   wrap: number
@@ -28,6 +28,7 @@ export interface PatchSet {
   fade: [number, number]
   nearDeg: number
   own?: boolean[]
+  ownGain?: boolean
   fadeMinor?: boolean
 }
 
@@ -96,7 +97,7 @@ export function patchSlots(levels: number): number {
 
 const patchSamplers = (slots: number): string => Array.from({ length: slots }, (_, i) => 'uniform sampler2D uPatch' + i + ';').join('\n')
 
-export interface PatchShader { slots: number; own: boolean; minor: boolean }
+export interface PatchShader { slots: number; own: boolean; gain: boolean; minor: boolean; glow: boolean }
 
 const patchRead = (i: number): string => `textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb`
 
@@ -128,7 +129,8 @@ ${patchSamplers(o.slots)}
 uniform float uPatchScale[${o.slots}];
 uniform float uPatchSize[${o.slots}];
 uniform float uPatchNear[${o.slots}];${o.own ? `
-uniform float uPatchOwn[${o.slots}];` : ''}${o.minor ? `
+uniform float uPatchOwn[${o.slots}];` : ''}${o.gain ? `
+uniform vec3 uOwnGain;` : ''}${o.minor ? `
 uniform float uPatchAniso[${o.slots}];
 uniform float uMapAniso;` : ''}
 uniform float uPatchCount;
@@ -178,7 +180,7 @@ out vec4 outColor;
 ${EQUIRECT_GLSL}
 ${INVERSE_FILMIC_GLSL}
 ${DIAG_GLSL}
-${HAZE_GLSL}
+${hazeGlsl(o.glow)}
 vec3 spinY(vec3 d, float a) {
   float c = cos(a), s = sin(a);
   return vec3(c * d.x - s * d.z, d.y, s * d.x + c * d.z);
@@ -262,7 +264,7 @@ ${patchLevels(o)}
     lin *= mix(1.0, 2.0 / (1.0 + l / uNightFlat.x), dark);
   }
   vec3 col = lin * shade * uTint;${o.own ? `
-  if (own > 0.0) col = mix(col, inverseFilmic(ownSum / own), own);` : ''}
+  if (own > 0.0) col = mix(col, inverseFilmic(ownSum / own${o.gain ? ' * uOwnGain' : ''}), own);` : ''}
   vec3 at;
   float tau = hazeDepth(dir, true, at);
   col = col * exp(-tau * uExtinction) + hazeLight(n, dir) * (1.0 - exp(-tau));
@@ -314,6 +316,8 @@ export class Planet {
     const levels = Array.from({ length: slots }, (_, i) => i)
     if (p?.own && p.own.length !== p.textures.length) throw new Error('own needs one entry per patch level')
     const own = p?.own?.some((x) => x) === true
+    const gain = p?.ownGain === true
+    if (gain && !own) throw new Error('ownGain needs an own level')
     const minor = p?.fadeMinor === true
     const aniso = (t: THREE.Texture | undefined): number => Math.max(t?.anisotropy ?? 1, 1)
     const spot = p?.spot.clone().normalize() ?? new THREE.Vector3(0, 0, 1)
@@ -322,7 +326,7 @@ export class Planet {
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
       vertexShader: VERT,
-      fragmentShader: frag({ slots, own, minor }),
+      fragmentShader: frag({ slots, own, gain, minor, glow: o.haze.glow === true }),
       uniforms: {
         ...hazeUniforms(o.haze),
         uGrazingShape: { value: new THREE.Vector4(g?.depth ?? 0, g?.width ?? 1, g?.duskWidth ?? 1, g?.power ?? 1) },
@@ -341,6 +345,7 @@ export class Planet {
         uPatchNear: { value: levels.map((i) => ((p?.widthsDeg[i] ?? 360) <= (p?.nearDeg ?? 0) ? 1 : 0)) },
         uPatchCount: { value: p?.textures.length ?? 0 },
         ...(own ? { uPatchOwn: { value: levels.map((i) => (p?.own?.[i] ? 1 : 0)) } } : {}),
+        ...(gain ? { uOwnGain: { value: new THREE.Vector3(1, 1, 1) } } : {}),
         ...(minor ? { uPatchAniso: { value: levels.map((i) => aniso(p?.textures[i])) }, uMapAniso: { value: aniso(o.map) } } : {}),
         uFeather: { value: p?.feather ?? 0.12 }, uPatchFade: { value: new THREE.Vector2(p?.fade[0] ?? 1.1, p?.fade[1] ?? 1.7) },
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
@@ -369,6 +374,16 @@ export class Planet {
     u.uWeight!.value = weight
     this.mesh.updateWorldMatrix(true, false)
     this.bodyToWorld.setFromMatrix4(this.m4.extractRotation(this.mesh.matrixWorld))
+  }
+
+  setOwnGain(gain: [number, number, number]): void {
+    const u = this.material.uniforms.uOwnGain
+    if (!u) throw new Error('this planet has no own gain')
+    ;(u.value as THREE.Vector3).fromArray(gain)
+  }
+
+  setGlow(direction: THREE.Vector3, colour: [number, number, number], power: number): void {
+    setHazeGlow(this.material.uniforms, direction, colour, power)
   }
 
   dispose(): void {
