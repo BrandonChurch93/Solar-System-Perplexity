@@ -1,9 +1,37 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-23T20:39:29.406Z",
+ "pushed": "2026-11-23T21:06:21.883Z",
  "head": "c6f57f7b1ce801450ad4fab402e58815f982f8c9",
- "note": "earth: handover report passes on both moves, kept frames keep their bytes, gate green; measure running; next the haze past the lay back (dome 1874 to 1889, 2120 to 2131)",
+ "note": "measure on the tree of 20:00: G5 and G17 pass, G13 fails on 2139 to 2143 (2.1 to 3.9 percent soft, corner of the new climb beyond patch-48); cure in work",
  "looks": [
+  {
+   "time": "2026-11-23T20:58:37.816Z",
+   "file": "20261123205837816-job-frame-01857.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "earth.dive frame 1857, final tier, nograin view, from the running measure job",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1857,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-23T20:47:01.978Z",
+   "file": "20261123204701978-job-frame-02105.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "earth.rise frame 2105, draft tier, texels view, from the running measure job",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2105,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-23T20:39:28.430Z",
    "file": "20261123203928430-note-s-2136-2147.jpg",
@@ -19,20 +47,6 @@
    "kind": "note",
    "label": "rise 2124 to 2135 every frame, draft: the veil ends in a straight edge at 2124 to 2131 (the dome of the dive, seen from the climb)",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T20:36:56.264Z",
-   "file": "20261123203656264-job-frame-01891.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "earth.dive frame 1891, draft tier, texels view, from the running measure job",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1891,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
   },
   {
    "time": "2026-11-23T20:26:52.253Z",
@@ -86,18 +100,6 @@
    "segment": "earth.rise",
    "first": 2100,
    "last": 2174,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T20:21:50.934Z",
-   "file": "20261123202150934-sheet-earth-rise-draft-after.jpg",
-   "source": "out/work/handover/earth-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "earth rise, every frame 2101 to 2112 (after T, frame 2100), draft tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "first": 2101,
-   "last": 2112,
    "tier": "draft"
   }
  ]
