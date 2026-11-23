@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T22:47:39.718Z",
- "head": "d95a46b9d7aa56db7796bd7a0b9c291a48a416a8",
- "note": "step 1 of mail 374: the pace rebuilt as one move in four measures; study of 3720 with one ring look",
+ "pushed": "2026-11-23T23:08:54.845Z",
+ "head": "0a965c8dddf9e40a466c683a0ee48acd8c5f88ef",
+ "note": "step 1 of mail 374: the pace under the smooth tool (dive green, rise in work), the by time blends onto height and distance in work; sky test: the hold without its patch shows the film's own star field",
  "looks": [
+  {
+   "time": "2026-11-23T23:08:50.085Z",
+   "file": "20261123230850085-note-three_3720.jpg",
+   "source": "../../../../tmp/v/r23/three_3720.png",
+   "kind": "note",
+   "label": "3720: approved close, the film now, the far look of the rings everywhere (study for step 2)"
+  },
+  {
+   "time": "2026-11-23T23:08:49.398Z",
+   "file": "20261123230849398-note-nosky_sheet.jpg",
+   "source": "../../../../tmp/v/r23/nosky_sheet.png",
+   "kind": "note",
+   "label": "sky test, not a build: left the film now (hold 3465, skim 3720), right the same frames with both sky patches off, the film's own star field"
+  },
   {
    "time": "2026-11-23T22:47:38.993Z",
    "file": "20261123224738993-note-far_3720.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/v/r21/e6_3832.png",
    "kind": "note",
    "label": "c984dd4 stop on the trial engine (7d9f486, shutter 0.64), frame 3832, review tier, 24 samples"
-  },
-  {
-   "time": "2026-11-23T21:58:41.667Z",
-   "file": "20261123215841667-note-rv_globe.jpg",
-   "source": "../../../../tmp/v/r21/rv_globe.png",
-   "kind": "note",
-   "label": "c984dd4 frame 3832, review tier, the globe at full size: band function under the map, streaked by the blur"
-  },
-  {
-   "time": "2026-11-23T21:58:40.711Z",
-   "file": "20261123215840711-note-rv_full.jpg",
-   "source": "../../../../tmp/v/r21/rv_full.png",
-   "kind": "note",
-   "label": "c984dd4 frame 3832, review tier, plain engine, 37 samples"
   }
  ]
 }
