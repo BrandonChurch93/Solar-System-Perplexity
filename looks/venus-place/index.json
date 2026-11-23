@@ -1,9 +1,23 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-23T18:18:10.181Z",
+ "pushed": "2026-11-23T18:18:20.317Z",
  "head": "5afbfa2b5793a2d81eba049fb1307d073d97e38a",
  "note": "item 1 by code: exposure ramp earlier in the dive and later in the rise, fine contrast of the tone map 0.4 to 0.55; full draft render of both moves running",
  "looks": [
+  {
+   "time": "2026-11-23T18:18:13.331Z",
+   "file": "20261123181813331-frame-f01286.jpg",
+   "source": "out/work/seq/1260-1349/f01286.png",
+   "kind": "frame",
+   "label": "venus.dive frame 1286, draft tier",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "frame": 1286,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "743c10b0a56aaca7"
+  },
   {
    "time": "2026-11-23T18:18:09.032Z",
    "file": "20261123181809032-note-e2-1292.jpg",
@@ -35,20 +49,6 @@
    "kind": "note",
    "label": "1282, 1287 at draft: old above, earlier exposure ramp below",
    "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T18:17:27.059Z",
-   "file": "20261123181727059-frame-f01274.jpg",
-   "source": "out/work/seq/1260-1349/f01274.png",
-   "kind": "frame",
-   "label": "venus.dive frame 1274, draft tier",
-   "stop": "venus",
-   "segment": "venus.dive",
-   "frame": 1274,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "743c10b0a56aaca7"
   },
   {
    "time": "2026-11-23T18:09:10.624Z",
