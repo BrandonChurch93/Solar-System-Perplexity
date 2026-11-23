@@ -1,9 +1,30 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-23T16:09:48.315Z",
- "head": "06488b1b272df8519e7bf443a90cac0ef6316bc1",
- "note": "06488b1 named: fromDive and the Mars values merged with main c9bc056; same bytes check of the other stops runs; next the strokes of the place picture on steep faces",
+ "pushed": "2026-11-23T16:35:11.317Z",
+ "head": "cf32e781e8a477b80e33d04b50cee47285b5d47a",
+ "note": "follow test (picture from the camera's own eye) on Mars 2444 and 2446, draft; E4 of the newest Mars plates running",
  "looks": [
+  {
+   "time": "2026-11-23T16:35:06.451Z",
+   "file": "20261123163506451-note-2446-follow-crops.jpg",
+   "source": "out/work/follow/2446-follow-crops.png",
+   "kind": "note",
+   "label": "Mars dive 2446 draft crops at full size: left committed, right follow test; far wall strokes fewer but not gone"
+  },
+  {
+   "time": "2026-11-23T16:35:05.727Z",
+   "file": "20261123163505727-note-2444-follow-vs-committed.jpg",
+   "source": "out/work/follow/2444-follow-vs-committed.png",
+   "kind": "note",
+   "label": "Mars dive 2444 draft: top as committed, bottom the follow test; test only"
+  },
+  {
+   "time": "2026-11-23T16:35:04.506Z",
+   "file": "20261123163504506-note-2446-follow-vs-committed.jpg",
+   "source": "out/work/follow/2446-follow-vs-committed.png",
+   "kind": "note",
+   "label": "Mars dive 2446 draft: top as committed (picture from the eye of T laid flat), bottom the follow test (picture from the camera's own eye); test only, not committed"
+  },
   {
    "time": "2026-11-23T16:09:43.462Z",
    "file": "20261123160943462-note-cmp-2698-far.jpg",
@@ -38,27 +59,6 @@
    "source": "out/work/edgein/fd2-2718-2729.png",
    "kind": "note",
    "label": "Mars rise with fromDive, T 2692 (draft): frames 2718 to 2729"
-  },
-  {
-   "time": "2026-11-23T15:51:33.327Z",
-   "file": "20261123155133327-note-fd2-2706-2717.jpg",
-   "source": "out/work/edgein/fd2-2706-2717.png",
-   "kind": "note",
-   "label": "Mars rise with fromDive, T 2692 (draft): frames 2706 to 2717, the plates alone"
-  },
-  {
-   "time": "2026-11-23T15:51:32.407Z",
-   "file": "20261123155132407-note-fd2-2694-2705.jpg",
-   "source": "out/work/edgein/fd2-2694-2705.png",
-   "kind": "note",
-   "label": "Mars rise with fromDive, T 2692 (draft): frames 2694 to 2705, the place window ends at 2704"
-  },
-  {
-   "time": "2026-11-23T15:51:31.228Z",
-   "file": "20261123155131228-note-fd2-2682-2693.jpg",
-   "source": "out/work/edgein/fd2-2682-2693.png",
-   "kind": "note",
-   "label": "Mars rise with fromDive, T 2692 (draft): frames 2682 to 2693, T is 2692"
   }
  ]
 }
