@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T15:22:44.410Z",
- "head": "6618cfc5cde62cd65b1b7cef8fb21821b8043c47",
- "note": "four sided patch 738 to 743: band tone matched by code, edge found to be the picture border",
+ "pushed": "2026-11-23T15:50:59.737Z",
+ "head": "97427e1080d40efec39efdb330153f48f685dc78",
+ "note": "four sided patch: plates continue the picture past its border, edgeIn on; spine of the mirror still to cure",
  "looks": [
+  {
+   "time": "2026-11-23T15:50:59.160Z",
+   "file": "20261123155059160-note-ei2left.jpg",
+   "source": "out/work/mercury/place/tmp/ei2left.jpg",
+   "kind": "note",
+   "label": "same state, left border 740 to 744 at 1 to 1: the spine of the mirror",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T15:50:58.372Z",
+   "file": "20261123155058372-note-ei2dive.jpg",
+   "source": "out/work/mercury/place/tmp/ei2dive.jpg",
+   "kind": "note",
+   "label": "dive 736 738 740 / 741 742 743, draft, not committed: plates continue the place picture past its border (mirror, by code), band tone matched, edgeIn 0.4 0.4 0.4 0.25. The four sided patch is gone; a faint spine with chevrons remains at the left border (next: no symmetry there)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-23T15:22:28.955Z",
    "file": "20261123152228955-note-w738.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/mercury/place/tmp/ho-rise-draft-after.jpg",
    "kind": "note",
    "label": "a42801fb handover sheet rise-draft-after (draft, crater band, feather 0.02)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T14:41:54.645Z",
-   "file": "20261123144154645-note-ho-rise-draft-across.jpg",
-   "source": "out/work/mercury/place/tmp/ho-rise-draft-across.jpg",
-   "kind": "note",
-   "label": "a42801fb handover sheet rise-draft-across (draft, crater band, feather 0.02)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T14:41:54.068Z",
-   "file": "20261123144154068-note-ho-dive-draft-after.jpg",
-   "source": "out/work/mercury/place/tmp/ho-dive-draft-after.jpg",
-   "kind": "note",
-   "label": "a42801fb handover sheet dive-draft-after (draft, crater band, feather 0.02)",
    "stop": "mercury"
   }
  ]
