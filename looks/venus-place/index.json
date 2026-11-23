@@ -1,9 +1,17 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-23T07:15:06.577Z",
+ "pushed": "2026-11-23T07:28:04.134Z",
  "head": "ad59ffc0df8fbe7c8574b0923da3f01475befb4c",
- "note": "M1 check picture after the exact hit fix",
+ "note": "S3 first try of the one move dive path (globe side, every 8th frame); plates still rough, fan edges and raw globe visible",
  "looks": [
+  {
+   "time": "2026-11-23T07:28:02.598Z",
+   "file": "20261123072802598-note-sheet-dive.jpg",
+   "source": "out/work/venus/place/p1/sheet-dive.jpg",
+   "kind": "note",
+   "label": "S3 first try: new dive path on the globe side, every 8th frame 1260 to 1348, draft, no blur; plates still the rough laid back fan (hard edges, raw globe around it)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-23T07:14:58.673Z",
    "file": "20261123071458673-note-m1-check3-split.jpg",
@@ -82,14 +90,6 @@
    "source": "out/work/venus/place/m1-laid.jpg",
    "kind": "note",
    "label": "venus plates a, b, c (24, 9, 3.4 deg) as laid back, masked",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T07:04:20.498Z",
-   "file": "20261123070420498-note-m1-tops.jpg",
-   "source": "out/work/venus/place/m1-tops.jpg",
-   "kind": "note",
-   "label": "venus first plates from straight above at heights 0.4, 0.12, 0.04 radii, rough, no repaint yet",
    "stop": "venus"
   }
  ]
