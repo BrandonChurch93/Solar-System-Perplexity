@@ -1,64 +1,64 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-23T10:02:15.317Z",
+ "pushed": "2026-11-23T10:27:56.087Z",
  "head": "1f087db4b748c6d1dc9b966af39dfbe9a1517a64",
- "note": "Jupiter plates: near plate kept (take 2), mid plate repaint running; E2 merged",
+ "note": "plates made and nested (fore, near, mid, far), baked; first draft of the plate deck at 3150: detail too strong and aliased, fixing with footprint filtering",
  "looks": [
   {
-   "time": "2026-11-23T10:02:14.718Z",
-   "file": "20261123100214718-note-mid-in-s.jpg",
-   "source": "../work/f/mid-in-s.jpg",
+   "time": "2026-11-23T10:27:55.522Z",
+   "file": "20261123102755522-note-v6-c2.jpg",
+   "source": "../work/f/v6-c2.jpg",
    "kind": "note",
-   "label": "mid plate canvas: the globe's own albedo at the place with the near plate laid in"
+   "label": "plate deck first draft 3150, native crop far field | approved: grain from unfiltered plates and detail"
   },
   {
-   "time": "2026-11-23T10:02:14.172Z",
-   "file": "20261123100214172-note-near-t2j-c2.jpg",
-   "source": "../work/f/near-t2j-c2.jpg",
+   "time": "2026-11-23T10:27:54.999Z",
+   "file": "20261123102754999-note-v6-c0.jpg",
+   "source": "../work/f/v6-c0.jpg",
    "kind": "note",
-   "label": "near plate, towers north of the funnel at full size"
+   "label": "plate deck first draft 3150, native crop storm | approved"
   },
   {
-   "time": "2026-11-23T10:02:13.543Z",
-   "file": "20261123100213543-note-near-t2j-c1.jpg",
-   "source": "../work/f/near-t2j-c1.jpg",
+   "time": "2026-11-23T10:27:54.463Z",
+   "file": "20261123102754463-note-v6-3150-cmp.jpg",
+   "source": "../work/f/v6-3150-cmp.jpg",
    "kind": "note",
-   "label": "near plate, centre at full size"
+   "label": "first draft of the plate deck at 3150 | approved | difference: function detail far too strong and aliased, being fixed"
   },
   {
-   "time": "2026-11-23T10:02:12.913Z",
-   "file": "20261123100212913-note-near-t2j-s.jpg",
-   "source": "../work/f/near-t2j-s.jpg",
+   "time": "2026-11-23T10:27:53.815Z",
+   "file": "20261123102753815-note-bake-check.jpg",
+   "source": "../work/f/bake-check.jpg",
    "kind": "note",
-   "label": "near plate after the join (canvas tone, the take's detail, sharp funnel kept), kept"
+   "label": "bake: near height map, near roughness, far plate"
   },
   {
-   "time": "2026-11-23T10:02:12.258Z",
-   "file": "20261123100212258-note-near-t2-s.jpg",
-   "source": "../work/f/near-t2-s.jpg",
+   "time": "2026-11-23T10:27:53.301Z",
+   "file": "20261123102753301-note-near-nest-s.jpg",
+   "source": "../work/f/near-nest-s.jpg",
    "kind": "note",
-   "label": "near plate, repaint take 2 as it came"
+   "label": "near plate, nested set"
   },
   {
-   "time": "2026-11-23T10:02:11.575Z",
-   "file": "20261123100211575-note-near-in-s.jpg",
-   "source": "../work/f/near-in-s.jpg",
+   "time": "2026-11-23T10:27:52.781Z",
+   "file": "20261123102752781-note-mid-nest-s.jpg",
+   "source": "../work/f/mid-nest-s.jpg",
    "kind": "note",
-   "label": "near plate canvas for the repaint (laid back close image at its own exposure, haze flattened, tone carried past the fan)"
+   "label": "mid plate with the near plate nested in by code (radial feather 6.5 to 9.2 units)"
   },
   {
-   "time": "2026-11-23T09:36:33.321Z",
-   "file": "20261123093633321-note-near-in-s.jpg",
-   "source": "../work/f/near-in-s.jpg",
+   "time": "2026-11-23T10:27:52.260Z",
+   "file": "20261123102752260-note-fore-t1-c1.jpg",
+   "source": "../work/f/fore-t1-c1.jpg",
    "kind": "note",
-   "label": "plates: canvas of the near plate (20 units wide): the close image laid back top down, sharp at the storm, soft where it did not resolve; flat colour outside its fan"
+   "label": "fore plate take 1, native crop 1"
   },
   {
-   "time": "2026-11-23T09:36:32.791Z",
-   "file": "20261123093632791-note-mid-t1-s.jpg",
-   "source": "../work/f/mid-t1-s.jpg",
+   "time": "2026-11-23T10:27:51.750Z",
+   "file": "20261123102751750-note-fore-t1-c0.jpg",
+   "source": "../work/f/fore-t1-c0.jpg",
    "kind": "note",
-   "label": "plates: mid plate, first repaint, rejected: rich and top down, but the storm is drawn five times too large (it took the globe's orange oval for the funnel)"
+   "label": "fore plate take 1, native crop 0"
   }
  ]
 }
