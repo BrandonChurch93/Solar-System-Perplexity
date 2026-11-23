@@ -151,7 +151,7 @@
     }
   },
   "handover": {
-    "note": "the dive and the rise: one flight through one world, no picture is swapped and no cover is drawn. at: the share of the dive or the rise at which the engine changes from the view in the frame of the globe to the view in the frame of the skim (both show the same world from the same lens); skyFrames: over how many frames the picture of the sky of the hold gives way to that of the skim before that, and that of the skim to the open sky after it in the rise. dive.rise and dive.fall: the distance of the lens to the globe's surface falls by a steady factor a frame through the middle of the dive; over the first share (rise) that rate comes up from the hold's own, over the last share (fall) it comes to the skim's own, so neither end has a step in speed. rise.rise and rise.fall: the shares of the rise over which the way out is taken up from the skim's own motion and comes to the motion after the rise, the middle is steady. place.ahead: the place the tool watches is the point of the ring plane this far ahead of the foot of the lens at the middle of the skim.",
+    "note": "the dive and the rise: one flight through one world, no picture is swapped and no cover is drawn. at: the share of the dive or the rise at which the engine changes from the view in the frame of the globe to the view in the frame of the skim (both show the same world from the same lens); skyFrames: over how many frames the picture of the sky of the hold gives way to that of the skim before that, and that of the skim to the open sky after it in the rise. dive.rise and dive.fall: the distance of the lens to the globe's surface falls by a steady factor a frame through the middle of the dive; over the first share (rise) that rate comes up from the hold's own, over the last share (fall) it comes to the skim's own, so neither end has a step in speed. rise.rise and rise.fall: the shares of the rise over which the way out is taken up from the skim's own motion and comes to the motion after the rise, the middle is steady. place.ahead: the place the tool watches is the point of the ring plane this far ahead of the foot of the lens at the middle of the skim. rise.climb.rise and rise.climb.fall: in the rise the height over the plane goes from the skim's to the way out's by a steady factor a frame through the middle; over the first share (rise) that rate comes up from the skim's own, over the last share (fall) it comes to that of the travel after the rise. rise.back: the foot of the lens on the plane goes from the skim's to the way out's by the share of the height already won, to this power; over one the lens lifts off before it draws back, so the plane never stands still under it.",
     "dive": {
       "at": 0.55,
       "skyFrames": 30,
@@ -187,8 +187,13 @@
     "rise": {
       "at": 0.667,
       "skyFrames": 20,
-      "rise": 0.25,
-      "fall": 0.2
+      "rise": 0.3,
+      "fall": 0.3,
+      "climb": {
+        "rise": 0.25,
+        "fall": 0.3
+      },
+      "back": 1.4
     },
     "place": {
       "ahead": 1.0

@@ -207,7 +207,38 @@ export class SaturnPlan extends StopPlan {
     if (time < d.start) return this.hold(time - this.seg.hold.start)
     if (time < d.end) return this.join(this.hold(time - this.seg.hold.start), this.skimAt(time), this.diveShare(time), this.diveReach(time))
     if (time < r.start) return this.skimAt(time)
-    return this.join(this.skimAt(time), this.after(time), this.riseShare(time))
+    return this.riseAt(time)
+  }
+
+  // The rise: the lens lifts off the plane before it draws back. The height goes from the skim's to the way
+  // out's by its own share (a steady factor a frame through the middle, skim.json handover.rise.climb), and the
+  // foot on the plane goes from one to the other by the height already won, to a power (handover.rise.back):
+  // over one the climb leads and the way back is taken where the lens is high, so the plane never stands still
+  // under the lens and the speed over the height comes up without a step. The view (where the globe stands in
+  // the picture, how it leans, the field of view) goes over by the share of handover.rise.rise and fall.
+  private riseAt(time: number): Pose {
+    const seg = this.seg.rise
+    const d = skimJson.handover.rise
+    const a = this.skimAt(time)
+    const b = this.after(time)
+    const u = (time - seg.start) / (seg.end - seg.start)
+    if (u <= 0) return a
+    if (u >= 1) return b
+    const n = this.ringNormal
+    const ha = a.position.dot(n)
+    const hb = b.position.dot(n)
+    const fa = a.position.clone().addScaledVector(n, -ha)
+    const fb = b.position.clone().addScaledVector(n, -hb)
+    const climb = trapeze(u, d.climb.rise, d.climb.fall)
+    const h = ha > 1e-4 && hb > 1e-4 ? ha * Math.pow(hb / ha, climb) : mix(ha, hb, climb)
+    const won = hb === ha ? climb : Math.min(Math.max((h - ha) / (hb - ha), 0), 1)
+    const position = fa.lerp(fb, Math.pow(won, d.back)).addScaledVector(n, h)
+    const w = this.riseShare(time)
+    const ka = this.framing(a)
+    const kb = this.framing(b)
+    const turn = Math.atan2(Math.sin(kb[2] - ka[2]), Math.cos(kb[2] - ka[2]))
+    const vfov = a.vfov * Math.pow(b.vfov / a.vfov, w)
+    return this.framed(position, mix(ka[0], kb[0], w), mix(ka[1], kb[1], w), ka[2] + turn * w, 1 / (Math.tan(THREE.MathUtils.degToRad(vfov) / 2) * position.length()))
   }
 
   // The two views of the handover show the same world from the same lens: the close view is the flight seen in

@@ -1397,3 +1397,67 @@ before and after the merge), then the notebook. The gate of mail 326 on this tre
 PASS G11  every asset has a row or a recipe
 PASS G15  at most 2 sets per frame; finished stops: saturn/web 281 MB, saturn/full 774 MB
 Not done in this pass: the capped shutter (E6) is not on main; nothing of it is in this folder.
+
+## 19:05 to now: after the READY (a284d54), round 2: a new path for the rise
+
+READY sent 19:05 UTC on a284d54 (merge of main 1466487 on top of 9ed4ef4 and 8d42701; only kit/PROGRESS.md
+came with that merge). After it: drafts 3690, 3750, 3800, 3830 viewed, one look.
+
+The rise as it was (out/scratch/rise.ts and rise4.ts with OLD=1; ring frame forward, right, height):
+- The way out lies 3.66 radii behind, 1.46 left and 2.67 above the skim's end, so every rise is a pull back.
+- join() moved the foot and the height by one share: the foot straight, the height by a steady factor. So the
+  way back was taken while the lens was still low: speed over height 2.37 percent a frame in the skim, 2.12 at
+  3812, 0.90 at 3816 (the stall, the climb near zero), then 3.99 backward at 3820, 7.74 at 3824, 10.35 at
+  3828, 12.62 at 3848. Mean flow on the screen (16 by 9 grid of plane and globe points, pixels a frame): 5.2
+  in the skim, 2.3 at 3816, 16 at 3830 with single points at 70, then 33.2 at 3870 and from there to 0.7 at
+  3884 (largest change 3.7 px a frame per frame at 3878).
+
+The new path (plan.ts riseAt, numbers in skim.json handover.rise):
+- The height goes from the skim's to the way out's by its own share (climb.rise, climb.fall: a steady factor a
+  frame through the middle). The foot goes by the share of the height already won, to the power back. Over one
+  the lens lifts off first and draws back where it is high: the forward speed turns into the climb and only
+  then into the way back, the plane never stands still under the lens.
+- The view (the globe's place in the picture, its lean, the field of view) goes over by handover.rise.rise and
+  fall as before; the globe moves from x 1650 to x 692, that pan is most of the flow (18 px a frame).
+- Why a climb first: a plane point at the angle th under the level moves on the screen by
+  (climb over height) sin th cos th + (forward over height) sin th sin th a frame, so a climb keeps the plane
+  flowing the way the skim's forward flight did, while a way back at low height reverses it.
+- Tried by numbers (rise4.ts: step, climb rise, climb fall, back, view rise, view fall): back 1.0 stalls again
+  (forward reverses at 3816), 1.3 to 1.6 turn forward into up into back with no dip, 2.0 has higher peaks
+  (28 px mean). Longer ramps lower the change a frame and raise the plateau.
+- Taken for the first drafts: climb 0.25 and 0.3, back 1.4, view 0.3 and 0.3. Mean flow 5.2 (skim), 6.1 at
+  3815, 8.3, 12.2, 15.9, 19.0, 20.9 at 3830, then 21 to 22 up to 3857, 24.9 at 3863, 20.3 at 3869, 11.1 at
+  3875, 0.4 at 3884; largest change 1.67 px a frame per frame (was 3.71). Lens to the cloud tops: least 0.95
+  at 3818 to 3824 (was 0.97 at 3816).
+- The handover tool's rate rule for a rise (tools/handover.ts line 325): the mean rate of the distance to the
+  unit sphere from T (3860) to the last frame, and no frame of the rise over 2 times it. Old path 1.39 times
+  at 3870; the new one 1.68 times at 3864. Longer falls push this up (0.35 gives 1.82 to 1.87).
+
+Seen and measured on the new path (19:19 to 19:48 UTC, all drafts, folder /tmp/v/r15 and r17 on this VM):
+- Every frame 3808 to 3823 (sheet s5 and the near sheet at native size, cA): no stall and no jump, the ringlets
+  run on through the lift, the grain streaks lengthen with the climb. Every 4th frame to 3836, every 6th to
+  3882 (s1 to s4): one continuous lift and pull back, the globe crosses from the right to the left.
+- Texel views 3812 to 3852 every 4th frame: soft share 0.000 percent in all eleven, least 1.004 (3812 to
+  3832), then 1.067, 1.075, 1.176, 1.318, 1.498.
+- The moon rises over the globe's limb in three frames, 3856 to 3859 (cMoon): an occultation, it does not fade.
+- The brown speckled cloud at the lower right of 3858 and in the open sky at 3870 to 3882 is the Milky Way of
+  the sky, seen through the gap and the C ring where the globe's shadow lies (the kept picture has it too).
+- Still wrong on this path: the globe near the lens is soft and flat at 3808 to 3836 (cGlobe at 3824); the
+  rise ends with a brake, mean flow 24.9 px a frame at 3863 down to 0.4 at 3884, into the kept way out.
+- Frames before the rise keep their bytes against a284d54 apart from the chunks (below): 3465 and 3539 equal
+  the kept hold byte for byte, 3567 equals the draft of a284d54.
+
+The chunks as ice (grains.json levels, third value): white 0.3 to 0.75 and gain 0.5 to 1.0. Before, the large
+pieces were brown three ball bodies, dark against the globe and the C ring, and read as rocks (c_bodies,
+c_body_zoom). After, they are pale ice lit like the sheet (c_white, c_white_zoom, c_3720_chunks). Changed
+pixels, draft against draft: 3630 0.19 percent, 3720 0.32, 3780 0.42, 3800 0.24, all in the bodies and the
+glow around them (six clusters at 3800, twelve at 3720). G17 on the draft of 3720 against the approved close:
+median 0.68145 before and 0.68145 after, p25 0.28672 both (the draft with the grain; the number sent with
+the READY, 0.902, was the nograin view at the review tier).
+
+Main e13dc05 merged at 19:49 UTC (3935678; sun folders, kit/PROGRESS.md, the harness report "carried":
+tools/measure/carried.ts, tests/carried.test.ts). PROGRESS d134 names an open item for this folder: on a284d54
+the fine bands of the globe from functions are "in the picture but faint, and one bright patch behind the limb
+(frames 3804 to 3828) carries nothing at any scale". The report: npm run measure -- --stop saturn --carried
+3804,3810-3812 [--tier draft]; a tile is flagged when the texels view says sharp, it is not dark and its band
+energy (luma blurred 0.6 px minus 2.0 px, squared, mean) is under 2e-5.
