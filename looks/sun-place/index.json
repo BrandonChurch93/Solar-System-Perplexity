@@ -1,9 +1,39 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T18:45:15.915Z",
- "head": "2ba81df32219dad81eace37dc85aaded6e403895",
- "note": "sun: 2ba81df3 under proof (handover every part pass); release 26 to 31; rise 250 to 270 at native size",
+ "pushed": "2026-11-23T19:07:48.428Z",
+ "head": "86dfc2d34fbdc139a061ea28aa372af9664c573c",
+ "note": "sun: mail 327 point 1 in work (the quiet third 58 to 100): what moves per frame, mine and the kept build",
  "looks": [
+  {
+   "time": "2026-11-23T19:07:47.371Z",
+   "file": "20261123190747371-note-diff-kept.jpg",
+   "source": "out/work/sun/life/v/diff-kept.jpg",
+   "kind": "note",
+   "label": "the same for the kept build (main before the life, 0eae595e) at 66 and 74: the arcade is still bright from the burst, every strand edge changes",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T19:07:46.365Z",
+   "file": "20261123190746365-note-diff-66-150.jpg",
+   "source": "out/work/sun/life/v/diff-66-150.jpg",
+   "kind": "note",
+   "label": "what changes between two frames in the loops box (right: change times 4), draft, 9971c23a: 66, 90, 120, 150. At 90 only the camera moves",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T18:54:46.688Z",
+   "file": "20261123185446688-job-frame-00000.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "sun.terrain frame 0, draft tier, texels view, from the running measure job",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 0,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-23T18:45:14.633Z",
    "file": "20261123184514633-note-spot-out.jpg",
@@ -50,41 +80,6 @@
    "segment": "sun.rise",
    "first": 217,
    "last": 228,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T18:43:04.233Z",
-   "file": "20261123184304233-sheet-sun-rise-draft-before.jpg",
-   "source": "out/work/handover/sun-rise-draft-before.png",
-   "kind": "sheet",
-   "label": "sun rise, every frame 204 to 215 (before T, frame 216), draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "first": 204,
-   "last": 215,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T18:43:02.419Z",
-   "file": "20261123184302419-sheet-sun-rise-draft-across.jpg",
-   "source": "out/work/handover/sun-rise-draft-across.png",
-   "kind": "sheet",
-   "label": "sun rise, every frame 210 to 221 (across T, frame 216), draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "first": 210,
-   "last": 221,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T18:33:32.463Z",
-   "file": "20261123183332463-compare-sun-rise-sides.jpg",
-   "source": "out/work/handover/sun-rise-sides.png",
-   "kind": "compare",
-   "label": "sun rise, both sides at T (frame 216) and their difference times 8",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "frame": 216,
    "tier": "draft"
   }
  ]
