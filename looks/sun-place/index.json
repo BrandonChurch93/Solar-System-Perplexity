@@ -1,9 +1,49 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T10:08:29.099Z",
+ "pushed": "2026-11-23T10:27:25.093Z",
  "head": "c500257fdf2398613c3b546d32955a7af9646c3e",
- "note": "life of the close view: loops and flare alive through 170; ground cells have two faults at native size (dashes, straight map edges), both in work",
+ "note": "ground of the close view: life carried by light, no dragging, fold fault cured; proofs rendering",
  "looks": [
+  {
+   "time": "2026-11-23T10:27:24.327Z",
+   "file": "20261123102724327-note-g1.jpg",
+   "source": "out/work/sun/life/g1.jpg",
+   "kind": "note",
+   "label": "globe side with the same life: rise frames 200, 216, 247 (old kept still of 247 at lower right, the rise path is the M2 path)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T10:27:23.749Z",
+   "file": "20261123102723749-note-a8-second.jpg",
+   "source": "out/work/sun/life/a8-second.jpg",
+   "kind": "note",
+   "label": "REJECTED take: inner read from the picture's relief, ground turns to wax",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T10:27:23.166Z",
+   "file": "20261123102723166-note-seam2.jpg",
+   "source": "out/work/sun/life/seam2.png",
+   "kind": "note",
+   "label": "FAULT cured: rows folded over at cell edges (top before, middle and bottom now, 5x)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T10:27:22.592Z",
+   "file": "20261123102722592-note-a10-six.jpg",
+   "source": "out/work/sun/life/a10-six.jpg",
+   "kind": "note",
+   "label": "ground, frozen camera, frames 90 96 102 108 114 120 at native size: cells brighten and dim, beads in the penumbra",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T10:27:21.965Z",
+   "file": "20261123102721965-note-a10-ba.jpg",
+   "source": "out/work/sun/life/a10-ba.jpg",
+   "kind": "note",
+   "label": "ground at native size, frozen pose 90: before (top) and now (bottom). Nothing dragged any more, the life is light",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-23T10:08:17.589Z",
    "file": "20261123100817589-note-plate-check-crop.jpg",
@@ -26,46 +66,6 @@
    "source": "out/work/sun/life/a7-haze.jpg",
    "kind": "note",
    "label": "life: first low haze, frozen camera, too heavy, retuned since",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T10:08:15.962Z",
-   "file": "20261123100815962-note-n1-ba.jpg",
-   "source": "out/work/sun/life/n1-ba.jpg",
-   "kind": "note",
-   "label": "life: loops before and after at 40, 60, 120, 170",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T10:08:15.389Z",
-   "file": "20261123100815389-note-n1-l166.jpg",
-   "source": "out/work/sun/life/n1-l166.jpg",
-   "kind": "note",
-   "label": "life: loops native, frames 166 to 171",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T10:08:14.834Z",
-   "file": "20261123100814834-note-n1-l120.jpg",
-   "source": "out/work/sun/life/n1-l120.jpg",
-   "kind": "note",
-   "label": "life: loops native, frames 120 to 125",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T10:08:14.261Z",
-   "file": "20261123100814261-note-n1-l40.jpg",
-   "source": "out/work/sun/life/n1-l40.jpg",
-   "kind": "note",
-   "label": "life: loops native, frames 40 to 45",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T10:08:13.626Z",
-   "file": "20261123100813626-note-n1-every10.jpg",
-   "source": "out/work/sun/life/n1-every10.jpg",
-   "kind": "note",
-   "label": "life: every 10th frame 0 to 170, normal flight, draft (before haze and map fix)",
    "stop": "sun"
   }
  ]
