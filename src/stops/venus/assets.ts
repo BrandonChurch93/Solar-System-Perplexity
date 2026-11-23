@@ -1,4 +1,6 @@
 import apronJson from './aprons.json'
+import placeJson from './place.json'
+import platesJson from './plates.json'
 import reliefJson from './relief.json'
 import type { CloudReliefDef } from './relief'
 import wrapJson from './wrap.json'
@@ -21,6 +23,20 @@ export const patches = {
   ] as { file: string; widthDeg: number }[],
   feather: 0.12,
   fade: [1.02, 1.5] as [number, number],
+}
+
+const ahead = (platesJson.aheadDeg * Math.PI) / 180
+const under = placeJson.place.under.direction
+const heading = placeJson.place.heading
+
+export const place = {
+  levels: platesJson.levels as { tag: string; file: string; widthDeg: number }[],
+  mask: platesJson.maskFile,
+  centre: [0, 1, 2].map((i) => under[i]! * Math.cos(ahead) + heading[i]! * Math.sin(ahead)) as [number, number, number],
+  feather: platesJson.feather,
+  fade: platesJson.fade as [number, number],
+  heading: heading as [number, number, number],
+  near: { high: platesJson.near.high, low: platesJson.near.low },
 }
 
 const TINTS: [number, number, number][] = [[0.85, 0.3, 0.25], [0.3, 0.75, 0.35], [0.9, 0.75, 0.2], [0.4, 0.5, 0.9]]

@@ -1,0 +1,43 @@
+{
+  "note": "The plates of the place (assets-src/venus/place/lay.py). Centre: aheadDeg of arc ahead of the point under the twin of place.json, along its heading. source is the 2x upscale of the approved close image (RECIPE.md), fallback the approved image itself. feather and fade are read by the globe shader like those of the patch pyramid.",
+  "source": "out/work/venus/close-5632.png",
+  "fallback": "references/approved/venus-close.jpg",
+  "aheadDeg": 2.0,
+  "size": 4096,
+  "levels": [
+    {
+      "tag": "a",
+      "file": "place-a.jpg",
+      "widthDeg": 24.0
+    },
+    {
+      "tag": "b",
+      "file": "place-b.jpg",
+      "widthDeg": 9.0
+    },
+    {
+      "tag": "c",
+      "file": "place-c.jpg",
+      "widthDeg": 3.4
+    }
+  ],
+  "mask": {
+    "edge": 0.02,
+    "graze": [
+      0.012,
+      0.05
+    ]
+  },
+  "maskFile": "place-mask.png",
+  "maskSize": 1024,
+  "feather": 0.06,
+  "fade": [
+    1.02,
+    1.5
+  ],
+  "near": {
+    "note": "The plates come in with nearness: weight 0 above high, 1 below low (camera height in radii, smooth in the logarithm).",
+    "high": 1.6,
+    "low": 0.4
+  }
+}

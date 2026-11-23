@@ -3,6 +3,7 @@ import * as THREE from 'three'
 import { StopPlan, type Fit, type MoveParams, type OrbitShot } from '../../director/moves'
 import { coverWindow } from '../../director/timeline'
 import type { CoverHorizon, Pose } from '../../core/types'
+import { place } from './assets'
 import fit from './fit.json'
 import reliefJson from './relief.json'
 
@@ -54,6 +55,10 @@ const hermite = (x: number, a: number, da: number, b: number, db: number): numbe
 
 interface Limb { tilt: number; gap: number }
 
+interface Probe { side: 'orbit' | 'terrain'; tRel?: number; top?: number; vfov?: number }
+
+const probe = (): Probe | undefined => (globalThis as { __venusProbe?: Probe }).__venusProbe
+
 class VenusPlan extends StopPlan {
   private ends: { roll: [number, number]; pitch: [number, number]; end: [number, number, number, number] } | null = null
 
@@ -69,7 +74,26 @@ class VenusPlan extends StopPlan {
     return [side < 0 ? b : a, { tilt: (b.tilt - a.tilt) / dt, gap: (b.gap - a.gap) / dt }]
   }
 
+  twin(time: number, close: Pose): Pose {
+    const rot = this.turn(time).multiply(this.terrainFrame)
+    return { position: close.position.clone().sub(deck.centre).divideScalar(deck.radius).applyQuaternion(rot), quaternion: rot.clone().multiply(close.quaternion), vfov: close.vfov }
+  }
+
+  above(time: number, height: number, vfov: number): Pose {
+    const toPlan = this.turn(time).multiply(new THREE.Quaternion().fromArray(fit.globe.quaternion))
+    const centre = new THREE.Vector3().fromArray(place.centre).applyQuaternion(toPlan)
+    const head = new THREE.Vector3().fromArray(place.heading).applyQuaternion(toPlan)
+    const position = centre.clone().multiplyScalar(1 + height)
+    return { position, quaternion: new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().lookAt(position, new THREE.Vector3(), head)), vfov }
+  }
+
   override dive(time: number): OrbitShot {
+    const pr = probe()
+    if (pr) {
+      if (pr.top !== undefined) return { pose: this.above(time, pr.top, pr.vfov ?? 60), view: 'orbit' }
+      const close = this.terrain(pr.tRel ?? time - this.seg.terrain.start)
+      return pr.side === 'terrain' ? { pose: close, view: 'terrain' } : { pose: this.twin(time, close), view: 'orbit' }
+    }
     const shot = super.dive(time)
     const seg = this.seg.dive!
     const centre = this.coverCenter(seg)
@@ -122,11 +146,13 @@ class VenusPlan extends StopPlan {
   }
 
   override coverAmount(seg: Segment, time: number): number {
+    if (probe()) return 0
     const x = this.phase(seg, time)
     return x === null ? 0 : veil.sky * ease((1 - Math.abs(x)) / (1 - veil.shoulder))
   }
 
   veilAmount(seg: Segment, time: number): number {
+    if (probe()) return 0
     const x = this.phase(seg, time)
     if (x === null) return 0
     const h = veil[seg.kind as 'dive' | 'rise']
@@ -151,6 +177,7 @@ class VenusPlan extends StopPlan {
   }
 
   release(seg: Segment, time: number): number {
+    if (probe()) return 1
     const w = coverWindow(seg)
     if (!w || (seg.kind !== 'dive' && seg.kind !== 'rise')) return 1
     const f = time * config.fps - w.centerFrame

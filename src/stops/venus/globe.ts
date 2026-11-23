@@ -18,6 +18,17 @@ export interface GlobePatches {
   fade: [number, number]
 }
 
+export const PLACE_LEVELS = 3
+
+export interface GlobePlace {
+  textures: THREE.Texture[]
+  mask: THREE.Texture
+  widthsDeg: number[]
+  centre: THREE.Vector3
+  feather: number
+  fade: [number, number]
+}
+
 export interface GlobeFlow {
   map: THREE.Texture
   strength: number
@@ -40,6 +51,7 @@ export interface GlobeOptions {
   curve: number[][]
   haze: HazeParams
   patches: GlobePatches
+  place: GlobePlace
   flow: GlobeFlow
   bolts: GlobeBolts
   limb: THREE.Texture
@@ -83,6 +95,21 @@ const PATCH_LEVELS = Array.from({ length: MAX_PATCHES }, (_, i) => `    if (uPat
       near = max(near, w * step(${i}.5, 2.0));
     }`).join('\n')
 
+const PLACE_SAMPLERS = Array.from({ length: PLACE_LEVELS }, (_, i) => 'uniform sampler2D uPlace' + i + ';').join('\n')
+
+const PLACE_GLSL = Array.from({ length: PLACE_LEVELS }, (_, i) => `    {
+      vec2 q = pg * uPlaceScale[${i}];
+      float w = smoothstep(0.5, 0.5 - uPlaceLook.x, max(abs(q.x), abs(q.y)))${i > 0 ? ' * (1.0 - smoothstep(uPlaceLook.y, uPlaceLook.z, parentPlace))' : ''};
+      for (int k = 0; k < (w > 0.0 ? 1 : 0); k++) {
+        w *= textureLod(uPlaceMask, q + 0.5, 0.0).${'rgb'[i]};
+        vec3 c = textureGrad(uPlace${i}, q + 0.5, pgx * uPlaceScale[${i}] * uGrad, pgy * uPlaceScale[${i}] * uGrad).rgb;
+        laid = laid * (1.0 - w) + c * w;
+        cover = cover * (1.0 - w) + w;
+        placeTexels = mix(placeTexels, pgd * uPlaceScale[${i}] * uPlaceSize[${i}], w);
+      }
+      parentPlace = pgd * uPlaceScale[${i}] * uPlaceSize[${i}];
+    }`).join('\n')
+
 const TAP_LEVELS = Array.from({ length: MAX_PATCHES }, (_, i) => `    for (int k = 0; k < (wl[${i}] > 0.0 ? 1 : 0); k++) a = mix(a, textureGrad(uPatch${i}, gm * uPatchScale[${i}] + 0.5, major * uPatchScale[${i}], minor * uPatchScale[${i}]).rgb, wl[${i}]);`).join('\n')
 
 const FRAG = /* glsl */ `
@@ -94,6 +121,15 @@ ${PATCH_SAMPLERS}
 uniform float uPatchScale[${MAX_PATCHES}];
 uniform float uPatchSize[${MAX_PATCHES}];
 uniform float uPatchCount;
+${PLACE_SAMPLERS}
+uniform sampler2D uPlaceMask;
+uniform vec3 uPlaceN;
+uniform vec3 uPlaceE;
+uniform vec3 uPlaceU;
+uniform float uPlaceScale[${PLACE_LEVELS}];
+uniform float uPlaceSize[${PLACE_LEVELS}];
+uniform vec3 uPlaceLook;
+uniform float uPlaceOn;
 uniform float uFeather;
 uniform vec2 uPatchFade;
 uniform vec3 uSpotN;
@@ -350,6 +386,23 @@ ${TAP_LEVELS}
     float cl = max(dot(col, vec3(0.2126, 0.7152, 0.0722)), 1e-5);
     col = mix(col, mix(vec3(cl), col, uCarry.x) * pow(cl / uCarry.z, uCarry.y - 1.0) * uCarry.w * uCarryTint, uCarryOn);
   }
+  vec3 dp = spinY(onSphere(uCamObj, normalize(vLocal - uCamObj)), uSpin);
+  float pn = dot(dp, uPlaceN);
+  vec2 pg = vec2(dot(dp, uPlaceE), dot(dp, uPlaceU)) / max(pn, 0.05);
+  vec2 pgx = dFdx(pg);
+  vec2 pgy = dFdy(pg);
+  float pgd = sqrt(max(dot(pgx, pgx), dot(pgy, pgy)));
+  for (int pass = 0; pass < (uPlaceOn > 0.0 && pn > 0.3 ? 1 : 0); pass++) {
+    vec3 laid = vec3(0.0);
+    float cover = 0.0;
+    float parentPlace = 0.0;
+    float placeTexels = texels;
+${PLACE_GLSL}
+    for (int k = 0; k < (cover > 0.0 ? 1 : 0); k++) {
+      col = mix(col, inverseFilmic(laid / cover), cover * uPlaceOn);
+      texels = mix(texels, placeTexels, uPlaceOn);
+    }
+  }
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.9, 0.75, 0.3), vec2(drift + uDrift.y * band, 0.0) * 8.0, length(vView));
@@ -387,6 +440,7 @@ export class Globe {
     }
     const [spot, east, north] = frame(p.spot)
     const [bn, be, bu] = frame(o.bolts.center)
+    const [placeN, placeE, placeU] = frame(o.place.centre)
     this.count = o.bolts.cells.length
     this.cells = levels.concat(Array.from({ length: MAX_CELLS - MAX_PATCHES }, (_, i) => i + MAX_PATCHES)).map((i) => {
       const c = o.bolts.cells[i]
@@ -405,6 +459,13 @@ export class Globe {
         uPatchCount: { value: p.textures.length },
         uFeather: { value: p.feather }, uPatchFade: { value: new THREE.Vector2(p.fade[0], p.fade[1]) },
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
+        ...Object.fromEntries(Array.from({ length: PLACE_LEVELS }, (_, i) => ['uPlace' + i, { value: o.place.textures[i] ?? o.place.textures[0] ?? o.map }])),
+        uPlaceMask: { value: o.place.mask },
+        uPlaceN: { value: placeN }, uPlaceE: { value: placeE }, uPlaceU: { value: placeU },
+        uPlaceScale: { value: Array.from({ length: PLACE_LEVELS }, (_, i) => 1 / (2 * Math.tan(THREE.MathUtils.degToRad(o.place.widthsDeg[i] ?? 90) / 2))) },
+        uPlaceSize: { value: Array.from({ length: PLACE_LEVELS }, (_, i) => (o.place.textures[i]?.image as unknown as { width: number } | undefined)?.width ?? 1) },
+        uPlaceLook: { value: new THREE.Vector3(o.place.feather, o.place.fade[0], o.place.fade[1]) },
+        uPlaceOn: { value: 0 },
         uMapWidth: { value: o.mapWidth },
         uSpin: { value: 0 }, uGain: { value: 1 }, uCarry: { value: new THREE.Vector4(1, 1, 1, 1) }, uCarryTint: { value: new THREE.Vector3(1, 1, 1) }, uCarryOn: { value: 0 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
         uCurve: { value: o.curve.map((c) => new THREE.Vector3(c[0], c[1], c[2])) },

@@ -267,6 +267,16 @@ What it is: the cloud texture of the stop's own cover (`src/stops/venus/veil.ts`
 - Takes: 2. Take 1 joined the tile by a cross fade with itself half a tile away: every cloud appeared twice (`out/work/venus/veil-tiled.jpg` of that take showed the doubled banks). Take 2, kept, is the seam cut above.
 - Checks: `out/work/venus/veil-tiled.jpg` (the tile 2 by 2): no line at the joins, no doubled cloud. No text, no stars, no sky in the tile.
 
+## Place plates
+
+### public/assets/venus/{full,web}/place-a.jpg, place-b.jpg, place-c.jpg, place-mask.png, src/stops/venus/place.json, src/stops/venus/plates.json
+
+The place of the dive is the cloud field of the approved close image, laid back onto the globe (mail 214, `cut/HANDOVER.md` Part B).
+
+1. Camera of the close image: `python3 assets-src/venus/place/horizon.py` fits pitch, roll and dip to the 70 traced horizon points of `assets-src/venus/place/horizon-points.json` (values in the notebook, entry "State 07:05"). `npx tsx assets-src/venus/place/solve.ts` writes `src/stops/venus/place.json`: the camera of the terrain view's judged frame carried onto the unit sphere (the twin), the point under it, its heading, the aim of its optical axis and the footprint of the frame.
+2. First plates, state of milestone 1 (rough, no repaint, no generation): `python3 assets-src/venus/place/lay.py export`. Input `out/work/venus/close-5632.png` (the 2x upscale of the approved close image, see "Terrain view, inputs made once"). Every plate pixel is a point of the unit sphere in the gnomonic frame of `src/stops/venus/plates.json` (centre 2 deg ahead of the point under the twin, the twin's heading up, widths 24, 9 and 3.4 deg, 4096 px); it is projected into the twin and takes the colour of the close image there. `place-mask.png` (1024 px) holds where each plate has picture: red, green and blue for the three plates, with the edge of the frame and the grazing band near the horizon feathered (`plates.json`, `mask`). JPEG 94 4:4:4, `full` at 4096 and `web` at 2048.
+3. Check: `npx tsx assets-src/venus/place/check.ts --frames 1349 --trel 3.0083333 --sides terrain,orbit --tier draft --out out/work/venus/place/NAME` draws the close side and the globe side from the same camera; `--tops 0.4,0.12,0.04` adds views from straight above at those heights.
+
 ## File list
 
 Every file below exists in both sets (`full` and `web`); the section that makes it is named after it.
@@ -285,5 +295,6 @@ Every file below exists in both sets (`full` and `web`); the section that makes 
 - `public/assets/venus/<set>/sky-terrain.webp`: Terrain view, `air.py` then `sky/stars.py build terrain`.
 - `public/assets/venus/<set>/patch-a.jpg`, `public/assets/venus/<set>/patch-b.jpg`, `public/assets/venus/<set>/patch-c.jpg`, `public/assets/venus/<set>/patch-d.jpg`: Dive patches, `patch.py export`.
 - `public/assets/venus/<set>/veil-clouds.jpg`: Cover veil, `veil/tile.py`.
+- `public/assets/venus/<set>/place-a.jpg`, `public/assets/venus/<set>/place-b.jpg`, `public/assets/venus/<set>/place-c.jpg`, `public/assets/venus/<set>/place-mask.png`: Place plates, `place/lay.py export`.
 
 Kept beside the scripts, not loaded by the set: `assets-src/venus/sky/uncorrected/sky-hold.webp` and `assets-src/venus/sky/uncorrected/sky-terrain.webp` (the two sky patches before the star cure, the inputs of `sky/stars.py`).

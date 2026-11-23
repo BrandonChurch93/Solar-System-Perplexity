@@ -4,7 +4,7 @@ import { FarPoint } from '../../bodies/farpoint'
 import type { Pose, SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { diagUniform } from '../../diagnostics/diag'
 import { smooth } from '../../director/rig'
-import { patches, relief as reliefDefs, wrap } from './assets'
+import { patches, place, relief as reliefDefs, wrap } from './assets'
 import { Globe } from './globe'
 import * as look from './look'
 import { deck, plan, veil as timing } from './plan'
@@ -79,6 +79,9 @@ export const createSet: SetFactory = async (ctx) => {
   const boltMap = await ctx.texture(base + 'bolt.jpg', { srgb: true })
   const patchTextures: THREE.Texture[] = []
   for (const level of patches.levels) patchTextures.push(await ctx.texture(base + level.file, { srgb: true, anisotropy: 16 }))
+  const placeTextures: THREE.Texture[] = []
+  for (const level of place.levels) placeTextures.push(await ctx.texture(base + level.file, { srgb: true, anisotropy: 16 }))
+  const placeMask = await ctx.texture(base + place.mask, { srgb: false, anisotropy: 1 })
   const limbMap = await ctx.dataTexture(base + look.limb.file, LIMB.azimuth + 1, LIMB.half * 4, 4)
   const globeTurn = new THREE.Quaternion().fromArray(fit.globe.quaternion)
   const holdBack = globeTurn.clone().invert()
@@ -93,6 +96,7 @@ export const createSet: SetFactory = async (ctx) => {
     hold: { ...look.hold, map: holdMap, right: new THREE.Vector3(1, 0, 0).applyQuaternion(holdBack), up: new THREE.Vector3(0, 1, 0).applyQuaternion(holdBack), forward: new THREE.Vector3(0, 0, -1).applyQuaternion(holdBack), centre: [-holdCam.x / holdCam.z, -holdCam.y / holdCam.z], half: look.hold.margin / Math.sqrt(holdCam.lengthSq() - 1), lod: Math.log2(wrap.sets[key].color[0] / look.hold.base) },
     swirl: { axis: direction(look.swirl.lon, look.swirl.lat), wideDeg: look.swirl.wideDeg },
     patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: spotBody, feather: patches.feather, fade: patches.fade },
+    place: { textures: placeTextures, mask: placeMask, widthsDeg: place.levels.map((l) => l.widthDeg), centre: new THREE.Vector3().fromArray(place.centre), feather: place.feather, fade: place.fade },
     flow: { map: flowMap, strength: look.drift.strength, shadow: look.drift.shadow, shadowOffset: look.drift.shadowOffset },
     bolts: { map: boltMap, center: direction(wrap.bolt.lon, wrap.bolt.lat), widthDeg: wrap.bolt.widthDeg, gain: 1, color: look.boltColor, cells: look.cells.map((c) => ({ dir: direction(c.lon, c.lat), radiusDeg: c.radiusDeg, painted: c.painted })) },
   })
@@ -191,6 +195,7 @@ export const createSet: SetFactory = async (ctx) => {
       ;(gu.uTint!.value as THREE.Vector3).set(1, 1, 1).lerp(tintLow, low)
       const vignette = shot.post.vignette * (1 - low)
       gu.uCarryOn!.value = 1 - released
+      gu.uPlaceOn!.value = ending ? 0 : 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-4)) - Math.log(place.near.low)) / (Math.log(place.near.high) - Math.log(place.near.low)))
       ;(gu.uHoldLook!.value as THREE.Vector4).x = ending ? 0 : look.hold.weight
       ;(gu.uSwirl!.value as THREE.Vector4).w = state.time > terrainMid ? THREE.MathUtils.degToRad(look.swirl.deg) : 0
       gu.uWeaveLit!.value = state.time > terrainMid ? look.weave.rise.lit : look.weave.lit
