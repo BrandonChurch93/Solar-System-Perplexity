@@ -1,9 +1,25 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-23T12:35:48.910Z",
- "head": "311c1304436f35772adf7960f4a2d3308852d828",
- "note": "12:50 far cloud field of bodies laid out, not in the globe yet",
+ "pushed": "2026-11-23T12:51:59.034Z",
+ "head": "4b9faf39035ec151b2f43d5bfdb4d3f276d42ca2",
+ "note": "12:52 cloud field as bodies on every level, first lay, not yet rendered",
  "looks": [
+  {
+   "time": "2026-11-23T12:51:58.471Z",
+   "file": "20261123125158471-note-lv24.jpg",
+   "source": "out/work/earth/place/tmp/lv24.jpg",
+   "kind": "note",
+   "label": "12:52 level 24 degrees with the field laid over the hold and the plate; field reads too dense and too grey, dots on dark land remain",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T12:51:57.761Z",
+   "file": "20261123125157761-note-f12-look.jpg",
+   "source": "out/work/earth/place/f12-look.jpg",
+   "kind": "note",
+   "label": "12:52 plate with the cloud field as bodies (left) and the low plate (right), top down, 12 degrees",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-23T12:35:48.258Z",
    "file": "20261123123548258-note-field-laid-12h50.jpg",
@@ -56,22 +72,6 @@
    "source": "out/work/earth/place/down/rise-orbit-sheet.jpg",
    "kind": "note",
    "label": "M2 rise along the real path, globe alone, 12 frames",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T11:10:59.021Z",
-   "file": "20261123111059021-note-dive-orbit-sheet.jpg",
-   "source": "out/work/earth/place/down/dive-orbit-sheet.jpg",
-   "kind": "note",
-   "label": "M2 dive along the real path, globe alone, 12 frames",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T11:10:57.710Z",
-   "file": "20261123111057710-note-dive-down-sheet.jpg",
-   "source": "out/work/earth/place/down/dive-down-sheet.jpg",
-   "kind": "note",
-   "label": "M2 S2 proof: top down dive, globe alone, place picture off, 12 frames, draft",
    "stop": "earth"
   }
  ]
