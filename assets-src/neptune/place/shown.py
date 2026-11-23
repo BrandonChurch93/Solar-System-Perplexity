@@ -3,7 +3,7 @@
 A shown plate is a top down picture of the place in the look of the close view itself (display values, like the close
 canvases), with its own alpha. The globe draws it through the inverse of its tone curve and of its near grade, so at
 low heights it is seen exactly as painted. The file holds the plate with its coarse light taken out (divided by the tone
-map, see flat()): the globe multiplies the light back in as the camera comes down. So the 8 bit values of the file are
+map, see stored()): the globe multiplies the light back in as the camera comes down. So the 8 bit values of the file are
 those of evenly lit ground, and the near black foreground of the close view is made by darkening good values, not by
 lifting values of 1 to 5 of 255 (which showed as a red brown smear from above). Inside the ground the close canvas saw, the plate is the close side's own
 deck layer laid back through the camera of place.json (no cirrus, no cirrus shadow: the live close layer draws those
@@ -61,12 +61,12 @@ def seen_deck(level, size=SIZE):
     return r['deck'][..., :3].astype(np.float32), dist, r['under'].astype(np.float32), r['stretch'].astype(np.float32)
 
 
-def save(rgba, name, level=None):
-    """Writes the plate; with a level, with its coarse light taken out (flat). The small picture returned is the plate
-    as painted."""
+def save(rgba, name, level=None, report=None, zone=None):
+    """Writes the plate; with a level, with its coarse light taken out and its dark ground mended (stored). The small
+    picture returned is the plate as painted."""
     shown = (np.clip(rgba, 0, 1) * 255 + 0.5).astype(np.uint8)
     if level is not None:
-        rgba = np.dstack([flat(rgba[..., :3], level, -1.0), rgba[..., 3]])
+        rgba = np.dstack([stored(rgba[..., :3], level, zone, report), rgba[..., 3]])
     out = (np.clip(rgba, 0, 1) * 255 + 0.5).astype(np.uint8)
     im = Image.fromarray(out, 'RGBA')
     im.save(os.path.join(OUT, 'full', name), quality=92, method=4, exact=True)
@@ -186,7 +186,7 @@ def plate(level, parent):
             keep = SIZE / 48
             take = np.clip(blur(base, keep) * (fine / np.maximum(blur(fine, keep), 1e-3)) ** FINE.get(str(level['widthDeg']), 1.0), 0, 1)
     rgb = settle(take, deck, exact, SIZE * CARRY[0] / level['widthDeg'], SIZE * CARRY[1] / level['widthDeg'])
-    return np.dstack([rgb, np.maximum(alpha, exact)]).astype(np.float32), base, (exact > 0.5).mean()
+    return np.dstack([rgb, np.maximum(alpha, exact)]).astype(np.float32), exact, (exact > 0.5).mean()
 
 
 def linear(c):
@@ -199,23 +199,93 @@ def display(c):
     return np.where(c <= 0.0031308, c * 12.92, 1.055 * np.maximum(c, 0) ** (1 / 2.4) - 0.055)
 
 
+def lum(c):
+    return c @ np.array([0.3, 0.5, 0.2], np.float32)
+
+
+def globe_on(level):
+    """The globe as drawn (the master of the widest plate) on this plate."""
+    widest = levels()[0]
+    globe = read(os.path.join(MASTERS, 'globe-%s.jpg' % widest['widthDeg']))
+    return globe if level['widthDeg'] == widest['widthDeg'] else np.clip(from_parent(globe, widest, level), 0, 1)
+
+
 def tone(rgb):
-    """The coarse tone of the place against the globe as drawn: log2 of the ratio of the widest plate's blur to the
-    globe's blur (in light, per channel, blur toneDeg degrees), coded as 0.5 + log2 / toneStops. The plates are stored
-    divided by it (flat) and the globe multiplies it back in by the share of the close view's light, so the place comes
-    in with the globe's own coarse light and dark, and the light of the close view grows in over the whole dive
-    (patches.json place.tone). rgb: the widest plate as painted."""
+    """The coarse light of the place against the globe as drawn, coded as 0.5 + stops / toneStops (patches.json
+    place.tone). The plates are stored divided by it and the globe multiplies it back in by the share of the close
+    view's light, which grows in over the whole dive. rgb: the widest plate as painted.
+
+    Two parts. Where the place is lit, only what is wider than wideDeg degrees: log2 of the plate's blur over the
+    globe's blur, per channel. So the stored plate holds every arm of the swirl, and the storm has its arms from the
+    moment the plates are in (while it is small in frame); what grows in afterwards is one soft gain. Where the place
+    is darker than the globe by more than floor stops at the blur deg (the foreground of the close view), the light
+    itself: log2 of the two luminances at that blur, plus floor, the same in all channels. So from high up that ground
+    is the globe's own blue, floor stops down, and the dark of the close view grows in over it."""
     level = levels()[0]
     cfg = PATCHES['place']['tone']
-    globe = read(os.path.join(MASTERS, 'globe-%s.jpg' % level['widthDeg']))
-    sigma = SIZE * cfg['deg'] / level['widthDeg']
-    ratio = np.log2(np.maximum(blur(linear(rgb), sigma), 1e-4) / np.maximum(blur(linear(globe), sigma), 1e-4))
+    globe = linear(read(os.path.join(MASTERS, 'globe-%s.jpg' % level['widthDeg'])))
+    light = linear(rgb)
+    wide_sigma, fine_sigma = SIZE * cfg['wideDeg'] / level['widthDeg'], SIZE * cfg['deg'] / level['widthDeg']
+    wide = np.log2(np.maximum(blur(light, wide_sigma), 1e-4) / np.maximum(blur(globe, wide_sigma), 1e-4))
+    fine = np.log2(np.maximum(blur(lum(light), fine_sigma), 1e-4) / np.maximum(blur(lum(globe), fine_sigma), 1e-4))
+    dark = wide.mean(-1) - fine
+    m = smoothstep(cfg['floor'] - cfg['soft'], cfg['floor'] + cfg['soft'], dark)[..., None]
+    ratio = wide + m * (fine[..., None] + cfg['floor'] - wide)
     code = np.clip(0.5 + ratio / cfg['stops'], 0, 1)
     small = cv2.resize(code.astype(np.float32), (cfg['size'], cfg['size']), interpolation=cv2.INTER_AREA)
     out = Image.fromarray((small * 255 + 0.5).astype(np.uint8), 'RGB')
     for tier in ('full', 'web'):
         out.save(os.path.join(OUT, tier, cfg['file']), lossless=True)
-    print(cfg['file'], 'stops min %.2f max %.2f' % (ratio.min(), ratio.max()), flush=True)
+    print(cfg['file'], 'stops min %.2f max %.2f, share held dark %.4f' % (ratio.min(), ratio.max(), float(m.mean())), flush=True)
+
+
+def palette():
+    """The colour of the globe as drawn by its brightness: medians of log2 R/B and G/B per half stop of luminance."""
+    widest = levels()[0]
+    g = linear(read(os.path.join(MASTERS, 'globe-%s.jpg' % widest['widthDeg']), 1024))
+    l = np.log2(np.maximum(lum(g), 1e-5)).ravel()
+    rb = np.log2((g[..., 0] + 1e-4) / (g[..., 2] + 1e-4)).ravel()
+    gb = np.log2((g[..., 1] + 1e-4) / (g[..., 2] + 1e-4)).ravel()
+    xs, rs, gs = [], [], []
+    for lo in np.arange(-9.0, 0.0, 0.5):
+        sel = (l >= lo) & (l < lo + 0.5)
+        if sel.sum() >= 2000:
+            xs.append(lo + 0.25)
+            rs.append(float(np.median(rb[sel])))
+            gs.append(float(np.median(gb[sel])))
+    return np.array(xs, np.float32), np.array(rs, np.float32), np.array(gs, np.float32)
+
+
+def stored(rgb, level, zone, report=None):
+    """The plate as painted to the plate as the file holds it: its coarse light divided out (the tone map), and where
+    that lifts the plate by more than a stop or two, mended. Lifted ground is the dark foreground of the close view.
+    By the stops of lift (place.tone.hue) a texel keeps its brightness and takes the colour the globe has at that
+    brightness, so no ground seen from high up has a colour the globe does not have. Inside the exact zone (zone, the
+    laid back canvas) that ground is 8 bit values of 1 to 12 of 255, whose noise the lift turns into a purple brown
+    stain with dark streaks: there, past place.tone.mend stops of lift, the texel is the globe as drawn itself, floor
+    stops down. The repaint outside the zone is made in float and keeps its own detail. Multiplied by the tone map
+    again the mended ground is as dark as the close view has it, in the globe's blue. The same change of colour, at
+    any lift, for a texel redder than the globe at its brightness by place.tone.red stops (none, full): the canvas
+    is tan where its cirrus was taken out, and from above, where the cirrus slab is thin, that showed as a tan
+    fringe beside the white."""
+    cfg = PATCHES['place']['tone']
+    t = stops(level)
+    lift = -t.mean(-1)
+    light = linear(np.clip(rgb, 0, 1)) * 2.0 ** -t
+    xs, rs, gs = palette()
+    l = np.maximum(lum(light), 1e-6)
+    ll = np.log2(l)
+    r, g = 2.0 ** np.interp(ll, xs, rs), 2.0 ** np.interp(ll, xs, gs)
+    b = l / (0.3 * r + 0.5 * g + 0.2)
+    hued = np.dstack([r * b, g * b, b]).astype(np.float32)
+    red = np.log2((light[..., 0] + 1e-4) / (light[..., 2] + 1e-4)) - np.interp(ll, xs, rs)
+    k = np.maximum(smoothstep(cfg['hue'][0], cfg['hue'][1], lift), smoothstep(cfg['red'][0], cfg['red'][1], red))[..., None]
+    light = light * (1 - k) + hued * k
+    w = (smoothstep(cfg['mend'][0], cfg['mend'][1], lift) * zone)[..., None]
+    light = light * (1 - w) + linear(globe_on(level)) * 2.0 ** -cfg['floor'] * w
+    if report is not None:
+        report.update(hued=float(k.mean()), mended=float(w.mean()), clipped=float((light > 1).mean()), plain=(lift < cfg['hue'][0]) & (red < cfg['red'][0]))
+    return np.clip(display(light), 0, 1).astype(np.float32)
 
 
 def stops(level):
@@ -233,15 +303,16 @@ def stops(level):
     return (cv2.remap(code, px, py, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE) - 0.5) * cfg['stops']
 
 
-def flat(rgb, level, sign):
-    """sign -1: the plate as painted to the plate as stored (its coarse light divided out). sign +1: back again."""
-    return np.clip(display(linear(np.clip(rgb, 0, 1)) * 2.0 ** (sign * stops(level))), 0, 1).astype(np.float32)
+def lit(rgb, level):
+    """The plate as the file holds it to the plate as the globe shows it with the close view's light fully in."""
+    return np.clip(display(linear(np.clip(rgb, 0, 1)) * 2.0 ** stops(level)), 0, 1).astype(np.float32)
 
 
 def painted(level):
-    """A plate read back from the assets, as painted (RGBA)."""
+    """A plate read back from the assets, with the close view's light in (RGBA): as painted, but for the mended dark
+    ground."""
     file = np.asarray(Image.open(os.path.join(OUT, 'full', level['file'])).convert('RGBA'), np.float32) / 255
-    return np.dstack([flat(file[..., :3], level, 1.0), file[..., 3]]).astype(np.float32)
+    return np.dstack([lit(file[..., :3], level), file[..., 3]]).astype(np.float32)
 
 
 if __name__ == '__main__':
@@ -260,13 +331,13 @@ if __name__ == '__main__':
         elif mode == 'guide' and mine:
             guide(level, np.clip(from_parent(painted(parent), parent, level)[..., :3], 0, 1), 'guide%s.png' % level['widthDeg'])
         elif mode in ('all', 'bake') and mine:
-            rgba, _, share = plate(level, parent)
+            rgba, zone, share = plate(level, parent)
             if parent is None:
                 tone(rgba[..., :3])
-            over = float((linear(rgba[..., :3]) * 2.0 ** -stops(level) > 1).mean())
-            tiles.append(save(rgba, level['file'], level))
-            back = painted(level)[..., :3]
-            print(level['file'], 'exact share %.3f, clipped when flat %.5f, read back against painted: mean %.4f, p99 %.4f of 1' % (share, over, float(np.abs(back - rgba[..., :3]).mean()), float(np.percentile(np.abs(back - rgba[..., :3]), 99))), flush=True)
+            rep = {}
+            tiles.append(save(rgba, level['file'], level, rep, zone))
+            gap = np.abs(painted(level)[..., :3] - rgba[..., :3])
+            print(level['file'], 'exact share %.3f, clipped when stored %.5f, share recoloured %.4f, share mended %.4f, read back against painted where not lifted: mean %.4f, p99 %.4f of 1; everywhere: mean %.4f, p99 %.4f' % (share, rep['clipped'], rep['hued'], rep['mended'], *((float(gap[rep['plain']].mean()), float(np.percentile(gap[rep['plain']], 99))) if rep['plain'].any() else (0.0, 0.0)), float(gap.mean()), float(np.percentile(gap, 99))), flush=True)
         parent = level
     if tiles:
         Image.fromarray(np.concatenate(tiles, 1)).save(os.path.join(WORK, 'shown-%s%s.jpg' % (mode, '' if only is None else '-' + only)), quality=88)

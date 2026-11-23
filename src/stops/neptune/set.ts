@@ -162,6 +162,7 @@ export const createSet: SetFactory = async (ctx) => {
       const tone = smooth(Math.log(closeLook.lay.tone[0]! / Math.max(high, 1e-6)) / Math.log(closeLook.lay.tone[0]! / closeLook.lay.tone[1]!))
       const low = tone
       const closeLight = Math.pow(tone, closeLook.lay.lightPower)
+      const ground = smooth(Math.log(closeLook.lay.ground[0]! / Math.max(high, 1e-6)) / Math.log(closeLook.lay.ground[0]! / closeLook.lay.ground[1]!))
       const lens = shot.post.vignette * Math.max(home, tone)
       const near = look.near.amount * low
       const deep = smooth((look.diving.from - high) / (look.diving.from - look.diving.to))
@@ -173,7 +174,7 @@ export const createSet: SetFactory = async (ctx) => {
       const layEdge = closeLook.lay.edge[1]! + (closeLook.lay.edge[0]! - closeLook.lay.edge[1]!) * smooth(Math.log(Math.max(high, 1e-6) / closeLook.lay.edgeHeight[1]!) / Math.log(closeLook.lay.edgeHeight[0]! / closeLook.lay.edgeHeight[1]!))
       if (lay > 0) {
         laySeat.copy(camera).applyQuaternion(layBack.copy(state.rotation).invert())
-        laid.update(laid.lay(laySeat, plan.laid(state.time), lay, lay * tone, settle, limb, rising ? layRef.rise : layRef.dive, grade, near, layEdge), state.time - terrainMid, gain * state.weight, lens, view.format.width / view.format.height, shot.post.bloomStrength * settle)
+        laid.update(laid.lay(laySeat, plan.laid(state.time), lay, lay * tone, ground, settle, limb, rising ? layRef.rise : layRef.dive, grade, near, layEdge), state.time - terrainMid, gain * state.weight, lens, view.format.width / view.format.height, shot.post.bloomStrength * settle)
         layTurn.copy(laid.mesh.quaternion).invert().multiply(planet.mesh.quaternion)
         const spin = plan.spin(state.time)
         layEast.copy(pu.uSpotE!.value as THREE.Vector3).applyAxisAngle(spinAxis, spin).applyQuaternion(layTurn)

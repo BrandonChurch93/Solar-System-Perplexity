@@ -58,6 +58,7 @@ uniform float uLaySat;
 uniform vec4 uLayCloud;
 uniform float uLayCore;
 uniform float uLayDeck;
+uniform float uLayGround;
 uniform vec3 uLayBox;
 uniform mat3 uLaySpot;
 uniform vec4 uLayTone;
@@ -232,7 +233,7 @@ void main() {
     float graze = 1.0 - smoothstep(uLayFit.x, uLayFit.y, dot(-rd, nd) / max(fitted, 1e-3));
     float honest = graze * smoothstep(uLayFit.z, uLayFit.w, worst);
     float whole = max(inCanvas, uLayGlow);
-    float ground = uLayDeck * whole * max(max(nearZone, honest), uLayGlow);
+    float ground = uLayDeck * uLayGround * whole * max(max(nearZone, honest), uLayGlow);
     vec2 inCloud = smoothstep(vec2(0.0), vec2(uLayCloud.x), vec2(min(xyCloud.x - uLayBox.x, uLayBox.y - xyCloud.x), xyCloud.y - uLayBox.z));
     float cloudNear = smoothstep(uLayCloud.w, uLayCloud.z, dot(normalize(oc + rd * (tHit >= 0.0 ? tHit : -b)), uHome.xyz));
     float ac = cloudAlpha * max(max(uLayDeck * whole * honest, uLay.x * inCloud.x * inCloud.y * cloudNear), uLayGlow);
@@ -344,7 +345,7 @@ export class Closeup {
         uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uBloomWide: { value: maps.bloom }, uBloomPre: { value: new THREE.Vector3(0, look.bloomPre[1], look.bloomPre[0]) },
         uFineMap: { value: maps.fine }, uFine: { value: new THREE.Vector2(look.fine[0], look.fine[1]) }, uDiag: diagUniform,
         uLay: { value: new THREE.Vector4(0, Math.cos(THREE.MathUtils.degToRad(look.lay.nearDeg[1]!)), Math.cos(THREE.MathUtils.degToRad(look.lay.nearDeg[0]!)), look.lay.edge[0]!) },
-        uLayFit: { value: new THREE.Vector4(look.lay.graze[0], look.lay.graze[1], look.lay.texels[0], look.lay.texels[1]) }, uLayGlow: { value: 0 }, uLaySky: { value: 0 }, uLayLimb: { value: new THREE.Vector3(look.lay.limb[0], look.lay.limb[1], Math.cos(Math.acos(radius / (radius + 1)) - look.sightMargin)) }, uLayRef: { value: new THREE.Vector3(0, 1, 0) }, uLayCore: { value: look.lay.coreEdge }, uLayDeck: { value: 0 }, uLayBox: { value: new THREE.Vector3().fromArray(look.lay.cloudBox) }, uLaySpot: { value: new THREE.Matrix3() }, uLayTone: { value: new THREE.Vector4(0, 0, 1, 0) }, uLayToneMap: { value: maps.tone ?? maps.glow }, uLayGrade: { value: new THREE.Vector4(1, 1, 1, 1) }, uLaySat: { value: 1 }, uLayCloud: { value: new THREE.Vector4(look.lay.cloudEdge, look.lay.edgeRange, Math.cos(THREE.MathUtils.degToRad(look.lay.cloudDeg[0]!)), Math.cos(THREE.MathUtils.degToRad(look.lay.cloudDeg[1]!))) },
+        uLayFit: { value: new THREE.Vector4(look.lay.graze[0], look.lay.graze[1], look.lay.texels[0], look.lay.texels[1]) }, uLayGlow: { value: 0 }, uLaySky: { value: 0 }, uLayLimb: { value: new THREE.Vector3(look.lay.limb[0], look.lay.limb[1], Math.cos(Math.acos(radius / (radius + 1)) - look.sightMargin)) }, uLayRef: { value: new THREE.Vector3(0, 1, 0) }, uLayCore: { value: look.lay.coreEdge }, uLayGround: { value: 1 }, uLayDeck: { value: 0 }, uLayBox: { value: new THREE.Vector3().fromArray(look.lay.cloudBox) }, uLaySpot: { value: new THREE.Matrix3() }, uLayTone: { value: new THREE.Vector4(0, 0, 1, 0) }, uLayToneMap: { value: maps.tone ?? maps.glow }, uLayGrade: { value: new THREE.Vector4(1, 1, 1, 1) }, uLaySat: { value: 1 }, uLayCloud: { value: new THREE.Vector4(look.lay.cloudEdge, look.lay.edgeRange, Math.cos(THREE.MathUtils.degToRad(look.lay.cloudDeg[0]!)), Math.cos(THREE.MathUtils.degToRad(look.lay.cloudDeg[1]!))) },
       },
     })
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(radius * (1 + look.glowTop), laid ? 256 : 96, laid ? 128 : 64), this.material)
@@ -357,10 +358,11 @@ export class Closeup {
     }
   }
 
-  lay(camera: THREE.Vector3, turn: THREE.Quaternion, amount: number, deck: number, glow: number, sky: number, ref: THREE.Vector3, grade: { tint: number[]; gain: number; saturation: number }, near: number, edge: number): THREE.Vector3 {
+  lay(camera: THREE.Vector3, turn: THREE.Quaternion, amount: number, deck: number, ground: number, glow: number, sky: number, ref: THREE.Vector3, grade: { tint: number[]; gain: number; saturation: number }, near: number, edge: number): THREE.Vector3 {
     this.mesh.quaternion.copy(turn)
     ;(this.material.uniforms.uLay!.value as THREE.Vector4).x = amount
     this.material.uniforms.uLayDeck!.value = deck
+    this.material.uniforms.uLayGround!.value = ground
     ;(this.material.uniforms.uLay!.value as THREE.Vector4).w = edge
     this.material.uniforms.uLayGlow!.value = glow
     this.material.uniforms.uLaySky!.value = sky

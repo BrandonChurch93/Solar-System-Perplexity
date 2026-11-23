@@ -1927,3 +1927,97 @@ For jupiter_coder, saturn_coder, sun_builder, globe_engineer: nothing to change 
 - Rise 4990 to 5000 (`s5/a/rise-b.jpg`): no wedge. A small red brown smudge is left south east of the eye at 4990 to 4996. It is not the plate: at 4990 the layer's own ground is drawn at weight 0.44 and lifted by 3 stops from the near black of the canvas. To try: the layer's ground comes in later (a power of the tone ramp), so the plates carry the ground until the lift is small.
 - Dive 4692 to 4728 every second frame (`s5/a/dive-a.jpg`, `/tmp/steps.py`): vivid blue to 4712, slate from 4716. Chroma 32.1 at 4692, 39.2 at 4704, 35.7 at 4712, 27.0 at 4720, 20.1 at 4728. L p10 / p90 in the middle of the frame: 2/67, 15/62 (4700), 23/58 (4704), 26/52 (4708), 25/48 (4710), 23/47 (4712), 17/47 (4716), 9/52 (4720), 3/64 (4728). The spread still has a low of 23 at 4710. Largest level step over two frames 5.9 (4696), largest colour step over two frames 9.6 (4696): per frame about half of that. The small red smudge under the eye is there at 4696 to 4712.
 - Next by MAIL 265: commit this step, merge main 03510ddd or later, tests, the whole dive and rise, push, report.
+
+### MAIL 268 from the Builder, read at 12:48 VM (high), word for word
+
+"From the Builder (/root) to neptune_builder. Mail 268. I rendered your commit 74e3c04b at the draft tier on the render machines: dive 4680 to 4769 and rise 4950 to 5024 (4970 to 4979 still on the way), and looked at every frame.
+
+What holds: both ways read as one place. The dark spot with its white cloud is on the globe at 4680, the camera goes to it, and it is the same storm the surface view flies over; on the rise it stays put from 4950 until the globe is small, and Triton comes in from the frame edge at 5008. No cover, no cut. That is the goal of the review note and it is met in the large.
+
+What is still wrong, in order of weight:
+1. A dark purple brown smear below the spot, 4696 to 4713 on the dive and 4980 to 4995 on the rise. It looks like a bruise on the cloud deck and belongs to neither picture. Find which layer makes it and remove it.
+2. 4700 to 4718: the swirl around the spot grows arms that the globe does not have a moment earlier, so the storm seems to change while the camera comes in. The globe needs the same arms at that place from the start (in its own detail level), or the arms must already be on the globe when the place first fills a tenth of the frame.
+3. Items 3 to 5 of mail 248 stay open.
+
+Send me the commit when 1 and 2 are done and I render both ways at the review tier. Then your stop gets its full check and its rounds. Report by message to /root, short."
+
+- 12:49 VM: after the merge of main e54b29e8 (194d2071, local): `npx tsc --noEmit` clean, `npx vitest run` 155 of 155 passed, `npm run build` built. Path tool before and after the merge (`/tmp/path-dive-before.txt` against `-after`, same for rise): byte for byte the same. Neptune flies its own `divePose` and `risePose`, so E3 does not move its line; no old path option needed.
+
+### 12:50 to 13:05 VM, MAIL 268 items 1 and 2: where the stain and the growing arms come from
+
+- Looks pushed at 12:49 VM (sheets of chain `s5/a`).
+- Item 2, the arms. Read on `s5/a/dive-a.jpg` (4692 to 4728): at 4692 to 4700 the storm is a dark oval with fine threads, from 4704 to 4716 wide bright arms grow round it. Cause: since f8378cd8 the plate files hold only what is finer than 0.5 degrees and the tone map holds the rest, so every arm wider than half a degree was "coarse light" and came in with the height (tone share 0.29 at 4704, 0.57 at 4712, 0.82 at 4720). In 74e3c04b (what the Builder rendered) the same thing happened with a blur of 1 degree. The storm fills about 3 percent of the frame at 4692, 7 at 4700, 12 at 4704 (oval measured on the sheet), so the arms grew in while the place was past a tenth of the frame.
+- Item 1, the stain. Previews of the 26 degree plate at 2048 px (`/tmp/tonec.jpg`, `/tmp/tonec-crop.jpg`, `/tmp/red.jpg`, `/tmp/under.jpg`), and numbers on the 16 degree plate (`/tmp/pal.py`):
+  - No texel of the plate as painted is red: log2 R/B in light is minus 3.4 at the median and under minus 2.1 at the 99.5th percentile for luminance 2^-6 to 2^-4. The ground under the eye is 1 to 12 of 255 and less saturated than lit ground; lifted by 3 to 5 stops (old plates: lifted in the shader; flat plates: lifted in the file, and the live layer's own canvas lifted in its shader by the share left), its colour noise and the pale haze of the deck canvas where the cirrus bank was taken out become a purple brown and tan band right under the eye, with dark streaks ("teeth") where the foreground rows of the canvas are stretched.
+  - It is not ground hidden behind the cirrus on the same ray: the cirrus alpha laid back (`/tmp/under.jpg`) lies 1.5 degrees further south west.
+  - Two layers make it: the plates (wherever the tone map lifts them by more than about a stop) and the ground of the live layer (drawn at weight lay times tone from 4680 on, lifted by up to 3 stops at 4704 to 4712).
+- What is changed (13:00 VM):
+  - `shown.py tone()`: two parts. Lit ground: only what is wider than `wideDeg` 4 degrees, per channel (max plus 0.44 stops). So the files hold every arm and the storm has them as soon as the plates are in (`lay.dive` 0 to 0.19, frames 4680 to 4697). Dark ground (darker than the globe by more than `floor` 0.5 stops at 0.5 degrees, soft plus and minus 0.6): the luminance ratio plus the floor, the same in all channels, so the tone map can not carry a colour.
+  - `shown.py stored()`: by the stops of lift a texel keeps its brightness and takes the globe's colour at that brightness (`hue` 0.7 to 1.7 stops; `palette()`: medians of R/B and G/B of the globe master per half stop), and past `mend` 2.5 to 3.5 stops it is the globe as drawn, floor stops down. Preview: full light against painted mean 0.0003, p99 0.0096 of 1 (the mended part is near black either way).
+  - Layer ground: new `lay.ground` [0.3, 0.1] radii in `closeup.json`, uniform `uLayGround` in `closeup.ts`: the ground of the live layer comes in between those heights (dive about 4719 to 4736, rise 4971 to 4983), when the close light is 0.8 or more in and the lift left is under 1 stop. Above, the plates alone carry the ground. The cirrus of the layer is not touched.
+
+### MAIL 275 from the Builder, read at 13:16 VM (high), word for word
+
+"From the Builder (/root) to every stop builder and coder. Mail 275: how your stop gets to its critic rounds. No answer needed unless a point below is red for you.
+
+1. A stop is taken onto main and its round 1 starts (rounds are numbered on from 37, up to three per stop, every critic each round) when four things hold on one commit that you name:
+ a. both handovers run with no cover and read as one place (Jupiter and Saturn: also the surface view from code; the Sun: the surface view with its new motion and the rise);
+ b. the machine checks are green on every frame you changed: G5, G13 and G17 as the harness gives them, and the handover report of `npm run handover -- --stop <id>`;
+ c. the frames you may not change keep their bytes (your hold and your surface view where it is approved, at the draft tier everywhere and at the final tier on the judged frames);
+ d. build, tsc and tests are green on a merge of the newest main.
+ It does not have to be finished. What is still wrong goes to the critics with the rest. Do not wait for a perfect state: when a to d hold, send me "READY <stop> <commit>" with the list of what you still see as wrong.
+2. Takes of generated assets: kit/06-ASSETS.md gives six takes per asset per round, and six per phase for an asset made outside a round. A mail of mine with findings is not a round. If an asset has used its six in this phase, keep its best take and say so in your READY line. In a round each asset has six again where a critic asks for a change. Work by code has no take limit.
+3. I render every commit you name at every frame on the render machines and write what I see. Push your code branch whenever your looks show something you want judged, and name the commit."
+
+### 13:05 to 13:20 VM, bake and trial chain `s6/a`
+
+- First bake (13:00): the mend went by lift alone and took 25 percent of the 6 degree plate (the deep plates lie in the dark foreground). Wrong: the repaint outside the exact zone is made in float and has no 8 bit noise. Second bake (13:04 to 13:09): `stored()` mends only inside the exact zone, the colour rule holds everywhere. Printout: tone map minus 4.73 to plus 0.46 stops, share held dark 0.12. Clipped when stored 0 in all five. Share mended 0.0034, 0.0091, 0.0234, 0.0632 (26, 16, 10, 6 degrees); share recoloured 0.062, 0.162, 0.389, 0.724. Read back against painted where not lifted: mean 0.0036 to 0.0051, p99 0.014 to 0.020 of 1. The 3.5 degree plate was written, its printout failed (no texel of it is unlifted; the print now handles that).
+- Stored plates round the eye (`s6/a/stored-crop.jpg`, 26 and 16 degrees): arms and bright core in the file. Left in the file: pale tan clumps south west of the eye (lit ground, not lifted: the deck canvas where the cirrus was taken out), a row of dark streaks under the south rim of the eye, a pale band at the upper edge of the mended ground.
+- Trial chain `s6/a` (13:10 to 13:18 VM, `lay.ground` [0.3, 0.1]):
+  - Both sides at T: rise 4956 mean 0.064, p99 1, p99.9 2, over 4: 0.012 percent; dive 4758 mean 0.065, p99 1, p99.9 2, over 4: 0.008 percent. Unchanged.
+  - Dive every fourth frame 4684 to 4740 (`dive-t1.jpg`, `dive-t2.jpg`, native crop `crop-dive.jpg`): the globe's dark oval at 4684; the swirl with its bright core and all arms by 4696; from 4696 to 4740 one picture that grows. No purple or brown under the eye in the native crops of 4696 to 4716. What is there: a soft dark blue shade south of the eye that deepens from 4708 on (the foreground of the close view coming in), a pale tan fringe beside the small white cirrus streak at 4700 to 4712, and the dark shapes under the cirrus bank (shadows in the deck canvas) coming in over 4724 to 4736 with the layer's ground.
+  - Rise every fourth frame 4968 to 5004 (`rise-t1.jpg`): the swirl keeps its arms to 5004; the dark shade south of the eye pales from 4980 to 4992; no purple.
+- `lay.ground` widened to [0.5, 0.1] so the layer's ground and its shadows come in over about 4711 to 4736 (rise 4971 to 4989) instead of 17 frames; at 4716 its weight is 0.12 and the lift left 1.4 stops at most.
+- 13:18 VM: full chain `s6/b` started: sides at T, same bits on eight kept frames, dive 4680 to 4769, rise 4950 to 5024. Looks pushed 13:18 VM.
+
+### 13:20 to 13:46 VM, chain `s6/b` read: dive every frame, rise 4950 to 4987
+
+State rendered: the working tree after the second bake, `lay.ground` [0.5, 0.1]. Draft, film path.
+
+- Both sides at T (side forced): rise 4956 mean 0.064, p99 1, p99.9 2, share over 4: 0.012 percent; dive 4758 mean 0.065, p99 1, p99.9 2, over 4: 0.008 percent. Same as before the bake.
+- Same bits against `out/work/nep/e1/` (`place/same.py`), the first run after the merge of main with E3 and with the new layer uniform: 4605, 4640, 4679, 4770, 4860, 4949, 5025, 5085: 0 of 2,073,600 pixels differ in each.
+- Dive, every frame 4680 to 4769 looked at (`dive-01.jpg` to `dive-07.jpg`, 12 frames a sheet; native crops `crop-in.jpg` 4680 to 4702, `crop-mid.jpg` 4704 to 4724, `crop-low.jpg` 4726 to 4741):
+  - 4680 to 4696: the globe's dark oval with the white crescent at its west rim turns into the place's blue swirl with a small dark core while the plates come in (`lay.dive`). The storm fills about 1 percent of the frame at 4680 and 5 at 4697. The crescent is gone by 4694. This is a change of the storm that can be seen frame by frame; it happens while the storm is small. Not cured: the hold's globe may not change and the close view's storm is not the hold's oval.
+  - 4697 to 4769: one picture that grows. The arms are all there from 4697 on. No purple and no brown under the eye in any frame.
+  - What is there: the dark blue shade south of the eye deepens from 4708 to 4724 (the close view's foreground, by the tone map). The cirrus bank south west of the eye is pale tan at 4700 to 4712 and white from 4716: seen from above the cirrus slab is thin and the canvas under it is tan where its cirrus was taken out. An olive grey mottle north west of the bank at 4712 to 4732 (the same tan clumps, first in the plates, then in the layer's ground). A few red brown specks of a pixel or two in the dark foreground at 4735 to 4741 (the layer's ground, the canvas as the close view has it).
+  - Through T (4758) no frame can be named. Stars come in over 4744 to 4756.
+  - Steps per frame (`/tmp/steps.py`, `steps-dive.txt`): largest level step 3.1 (4696), largest colour step 4.9 (4696); limits 6 and 8. Chroma in the middle of the frame 28.6 (4680), 39.0 (4704), 34.9 (4712), 26.1 (4720), 19.1 (4732), 22.2 (4768). L p10 / p90: 2/70 (4680), 23/59 (4704), 25/56 (4708), 22/53 (4712), 17/54 (4716), 9/58 (4720), 3/65 (4728). The spread has its low at 4708 to 4712: 31 (was 23 at 4710 in `s5/a`). That is MAIL 248 item 3 measured again: the low is the stretch where the dark limb has left the frame and the dark foreground has not come in; the arms in the plates lift it by 8.
+- Rise, every frame 4950 to 4987 looked at (`rise-01.jpg` to `rise-03.jpg`; native crops `crop-rise-low.jpg` 4962 to 4977, `crop-rise-mid.jpg` 4978 to 4987): no frame can be named at T (4956). The swirl keeps its arms. No purple brown smear under the eye; a few red brown specks of a pixel or two under the bank at 4978 and 4980. The grey wisps west of the eye (the canvas ground) are replaced by the smooth streaks of the plates over 4971 to 4986, with an olive tan mottle north west of the bank and a tan haze left of it at 4984 to 4987 (the tan clumps in the plates). The dark shade south of the eye is nearly black at 4978 and pales by 4987. White clouds of the hold's cirrus come in at the left edge from 4981.
+- Cause of the tan, measured on the stored plates (`/tmp/tan.py`, `out/work/nep/s6/tan-10.jpg`): log2 R/B of a texel less the globe's median at the same brightness (`palette()`): p99 0.49 (16 degrees) and 0.62 (10 degrees), largest 1.5; share over 0.5 stops 0.0097 and 0.0181, all inside the exact zone: a band under the eye where the bank lies and streaks at the far end of the zone.
+- Change written (13:32 VM, not yet baked: the chain is rendering): `stored()` gives a texel the globe's colour at its brightness also by its redness, `patches.json` `place.tone.red` (stops over the globe's R/B at that brightness: none, full).
+- MAIL 242 item 2 was done at 10:46 to 10:56 VM (`home` 0 through the rise, near grade on the tone's weight); to be confirmed on 4988 to 5024 of this chain.
+
+### MAIL 279 from the Builder, read at 13:55 VM by this clock (high; the mail is stamped 13:56 UTC), word for word
+
+"MAIL 279 from the Builder (/root), 13:56 UTC. A time for READY.
+
+The rule of mail 275 stands. This adds a time, so that no stop waits on its last fault while fresh critics could already be looking at it.
+
+1. Mercury, Venus, Earth, Mars plates, Uranus, Neptune, Sun: send "READY <stop> <commit>" by 15:30 UTC at the latest. Earlier is better: send it the moment (a) to (d) of mail 275 hold.
+2. Jupiter, Saturn: by 16:30 UTC at the latest, with the dive and the rise in it (no cover, no swap that shows).
+3. At that time I take the newest commit you have named, as long as it builds on a merge of newest main, its tests pass, the frames that may not change keep their bytes and G15 holds. What is still wrong then goes into round 1 as your own list beside the critics' issues. So keep your branch in a state that can be taken: commit and push whole steps, never half a step.
+4. With READY send: the commit, your list of what is still wrong with frame numbers, and which frames changed since my last render of your stop, so I render only those.
+5. Each stop then gets up to three rounds with fresh critics. You go on working between the rounds, on your list and on what the critics name.
+
+No answer is needed. Go on with your work."
+
+- STANDING from MAIL 279: READY neptune by 15:30 VM at the latest; with it the commit, the list of what is still wrong with frame numbers, and the frames changed since the Builder's last render (74e3c04b); whole steps only on the branch; G15 must hold.
+
+### 13:46 to 14:03 VM, the red rule, third bake, chain `s6/c`
+
+- Read of chain `s6/b` finished (rise 4986 to 5024, every frame): the pale olive tan band left of the bank 4984 to 4992 is the same tan as on the dive; the hold's white cirrus comes in at the left edge from 4981; rings come into the frame by the camera's turn from 4991, the moon at 5008; plates go out 4998 to 5024 while the storm is tiny; 5024 to 5025 step 0.0.
+- Tan cause measured (`/tmp/tan.py`, `out/work/nep/s6/tan-10.jpg`): excess of log2 R/B over the globe's median at the same brightness, p99 0.49 stops in the 16 degree plate, 0.62 in the 10 degree one, largest 1.5, share over half a stop 0.0097 and 0.0181, all inside the exact zone (the close canvas, warm haze round the bank).
+- Change: `stored()` in `shown.py` takes the colour rule also by redness, `patches.json` `place.tone.red` [0.3, 0.9] stops. Third bake 13:51 to 13:55 VM, printout in RECIPE.md.
+- Chain `s6/c` (draft, film path, 13:55 to 14:05 VM): same bits 0 of 2,073,600 on 4605, 4640, 4679, 4770, 4860, 4949, 5025, 5085. Sides at T: rise 4956 mean 0.064, p99 1; dive 4758 mean 0.065, p99 1.
+- What the red rule gave, measured: little. Share of warm pixels (log2 R/B over minus 0.6, not white) in the crop round the eye, second bake against third: 4704 0.00429 to 0.00422, 4712 0.00552 to 0.00514, 4716 0.00882 to 0.00808, 4720 0.01395 to 0.01304, 4728 0.02917 to 0.02860. Side by side crops (`s6/c/cmp-bank.jpg`): the tan patch at the bank at 4704 is fainter, an olive tinge stays 4704 to 4728. From about 4716 the warm share grows with the layer's own ground (canvas), which the plates do not hold. Not cured: on the list.
+- Plan to 15:30 VM (MAIL 279): commit the S6 step, merge main 9b316e4e, tsc, tests, build, same bits, G15, push, report. Then handover report (draft), measure (G13 every frame, G5 and G17 judged), final tier bytes on 4605 and 4860, READY.
