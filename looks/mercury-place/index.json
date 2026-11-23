@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T21:14:03.865Z",
+ "pushed": "2026-11-23T21:41:16.238Z",
  "head": "0595a6ec458e9a3a3274b28d2b576ee30de32a8b",
- "note": "plate edge cure in draft crops; rise horizon band still open, cause being narrowed",
+ "note": "handover limb step and halo step closed at 743 to 744 and 990 to 991 (draft); far band under the limb still swaps at 990 to 991",
  "looks": [
+  {
+   "time": "2026-11-23T21:41:15.674Z",
+   "file": "20261123214115674-note-sink-d.jpg",
+   "source": "out/work/mercury/place/h1/sink-d.jpg",
+   "kind": "note",
+   "label": "dive 741 to 744 limb, before left and after right: the globe's limb sinks onto the terrain's limb before the handover",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T21:41:14.998Z",
+   "file": "20261123214114998-note-f-sheet1.jpg",
+   "source": "out/work/mercury/place/h1/f-sheet1.jpg",
+   "kind": "note",
+   "label": "draft 988 to 993 after the halo fade and the limb sink: limb row steps 990 to 991 now 10 to 12 px (were 0 to 1), sky strip above the limb 26 to 25 (was 40 to 25)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-23T21:14:03.276Z",
    "file": "20261123211403276-note-v2-hz.jpg",
@@ -56,22 +72,6 @@
    "source": "out/work/mercury/place/f1/ol/pair738.jpg",
    "kind": "note",
    "label": "20:20 draft 738 beauty over a copy with the picture's weight contours (0.05 red, 0.5 yellow, 0.95 green of the plateau, display space)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T20:18:02.591Z",
-   "file": "20261123201802591-note-r992.jpg",
-   "source": "out/work/mercury/place/f1/sh/r992.jpg",
-   "kind": "note",
-   "label": "20:15 draft 992 to 999 every frame: rise after the handover at 990; pale flat far field still there, one horizon",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T20:18:02.003Z",
-   "file": "20261123201802003-note-d740.jpg",
-   "source": "out/work/mercury/place/f1/sh/d740.jpg",
-   "kind": "note",
-   "label": "20:15 draft 740 to 747 every frame, merged tree: dive handover at 744",
    "stop": "mercury"
   }
  ]
