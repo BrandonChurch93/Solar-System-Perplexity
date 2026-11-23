@@ -1,0 +1,15 @@
+Edit Image 1, a strict top-down nadir photograph from low orbit of a tropical sea with islands, cloud fields and a sun glint (12 x 12 degrees, 1:1 square, north at the top). Image 2 is an oblique photograph of the same place, for the finish of the clouds and the sea only.
+
+KEEP EXACTLY, at the same pixel position, shape, size, brightness and hue:
+- the cream white sun glint in the middle and its falloff,
+- every island, coastline, land mass and turquoise bank,
+- all cloud fields and cloud shadows in the middle, in the upper half and along the left side,
+- the overall brightness of every region: bright where Image 1 is bright, deep blue where it is deep blue. No vignette.
+
+CHANGE ONLY the open sea in the lower right half of the picture and along the bottom edge between the land masses, which is unfinished:
+- The flat white blobs with hard edges there become natural clusters of small cumulus seen from straight above: lumpy white tops with delicate soft edges, the same kind and the same scale as the cumulus in the middle of the picture, each with a short soft shadow on the sea that falls toward the lower right (the Sun is low in the upper left).
+- Between them scatter more small cumulus puffs, a few short cloud streets and thin cloud lines, so the lower right half is about one fifth cloud, with open water between.
+- The embossed dark ridges, plateaus and terraces in the navy sea there disappear. The water becomes smooth deep blue open sea with fine swell texture and faint current streaks, the same hue as the deep water left of the middle, a little darker toward the lower right corner.
+- No new land, no new islands, no reefs there.
+
+No streaks, no smears, no motion blur. Strict nadir map filling the square edge to edge. No horizon, no limb, no atmosphere glow, no stars, no border, no text, no watermark.

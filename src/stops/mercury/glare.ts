@@ -7,6 +7,7 @@ export interface GlareLook {
   fall: Record<GlareSide, number>
   span: Record<GlareSide, number>
   height: number
+  keep: [number, number]
   color: [number, number, number]
   halo: [number, number]
   core: [number, number]
@@ -14,6 +15,7 @@ export interface GlareLook {
   bar: [number, number, number]
   turn: number
   terrainSun: [number, number]
+  leave: { radius: number; gain: number; from: [number, number] }
 }
 
 const VERT = /* glsl */ `
@@ -35,6 +37,7 @@ uniform vec2 uHalo;
 uniform vec2 uCore;
 uniform vec2 uRays;
 uniform vec3 uBar;
+uniform vec2 uWide;
 uniform int uDiag;
 in vec2 vNdc;
 out vec4 outColor;
@@ -54,7 +57,8 @@ void main() {
   float x = d.x / uBar.x;
   float y = d.y / uBar.y;
   float bar = uBar.z / ((1.0 + x * x) * (1.0 + y * y) * (1.0 + y * y));
-  float g = uHalo.y / (h * h) + uCore.y / (k * k * k) + uRays.y * rays / (1.0 + pow(r / uRays.x, 3.0)) + bar;
+  float w = 1.0 + (r / uWide.x) * (r / uWide.x);
+  float g = uHalo.y / (h * h) + uCore.y / (k * k * k) + uRays.y * rays / (1.0 + pow(r / uRays.x, 3.0)) + bar + uWide.y / (w * w);
   outColor = vec4(mix(uColor, vec3(1.0), clamp(g * uBloom * 0.25, 0.0, 1.0)) * (uBloom * g * uGain), 0.0);
   if (uDiag >= 2) discard;
 }`
@@ -71,7 +75,7 @@ export class Glare {
       blending: THREE.CustomBlending, blendEquation: THREE.AddEquation, blendSrc: THREE.OneFactor, blendDst: THREE.OneFactor, blendSrcAlpha: THREE.ZeroFactor, blendDstAlpha: THREE.OneFactor,
       uniforms: {
         uSun: { value: new THREE.Vector2() }, uBloom: { value: 0 }, uGain: { value: 1 }, uAspect: { value: 16 / 9 }, uPhase: { value: 0 }, uColor: { value: new THREE.Vector3().fromArray(look.color) },
-        uHalo: { value: new THREE.Vector2().fromArray(look.halo) }, uCore: { value: new THREE.Vector2().fromArray(look.core) }, uRays: { value: new THREE.Vector2().fromArray(look.rays) }, uBar: { value: new THREE.Vector3().fromArray(look.bar) }, uDiag: diag,
+        uHalo: { value: new THREE.Vector2().fromArray(look.halo) }, uCore: { value: new THREE.Vector2().fromArray(look.core) }, uRays: { value: new THREE.Vector2().fromArray(look.rays) }, uBar: { value: new THREE.Vector3().fromArray(look.bar) }, uWide: { value: new THREE.Vector2(look.leave.radius, 0) }, uDiag: diag,
       },
     })
     this.mesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), this.material)
@@ -85,14 +89,17 @@ export class Glare {
     return Math.max((Math.exp(-Math.abs(frames) / this.look.fall[side]) - end) / (1 - end), 0)
   }
 
-  update(amount: number, sun: THREE.Vector3, camera: THREE.PerspectiveCamera, gain: number, aspect: number, time: number): void {
+  update(amount: number, sun: THREE.Vector3, camera: THREE.PerspectiveCamera, gain: number, aspect: number, time: number, leaving = 0): void {
     const bloom = this.look.peak * amount
     const v = this.v.copy(sun).applyQuaternion(this.q.copy(camera.quaternion).invert())
     this.mesh.visible = bloom > 1e-4 && v.z < -0.05
     if (!this.mesh.visible) return
     const u = this.material.uniforms
     const tan = Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2)
-    ;(u.uSun!.value as THREE.Vector2).set(v.x / -v.z / tan, v.y / -v.z / tan)
+    const x = v.x / -v.z / tan
+    const y = v.y / -v.z / tan
+    ;(u.uSun!.value as THREE.Vector2).set(x, y)
+    ;(u.uWide!.value as THREE.Vector2).y = leaving * this.look.leave.gain * THREE.MathUtils.smoothstep(Math.max(Math.abs(x) / aspect - 1, Math.abs(y) - 1, 0), this.look.leave.from[0], this.look.leave.from[1])
     u.uBloom!.value = bloom
     u.uGain!.value = gain
     u.uAspect!.value = aspect
