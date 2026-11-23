@@ -182,7 +182,8 @@ async function sides(line: Line): Promise<Record<string, unknown> & Verdict> {
   return { ...n, close, globe, difference: stem + '-difference.png', panel: stem + '-sides.png', pass: why.length === 0, why }
 }
 
-interface UnderNumbers { pixels: number; share: number; mean: number; p50: number; p99: number; meanSigned: number[] }
+interface UnderPart { pixels: number; share: number; mean: number; p50: number; p99: number; meanSigned: number[] }
+interface UnderNumbers extends UnderPart { sky: UnderPart; tone: number; detail: number }
 
 // What lies under the place picture at T: the globe side drawn alone (place picture off) against the globe side with the picture, on the body where
 // the pass draws the picture at more than half weight. The place window fades from the one to the other, so this is how far the plates are from
@@ -422,7 +423,9 @@ try {
       out.under = u
       if (!u.none) {
         verdicts.push(['under the place picture', u])
-        md.push('Under the place picture at T (the globe side alone against the globe side with the picture, on the ' + round((u.share as number) * 100, 1) + ' percent of the frame where the body carries the picture at more than half weight): mean difference ' + round(u.mean as number, 2) + ', median ' + u.p50 + ', 99th percentile ' + u.p99 + '; the globe alone is ' + (u.meanSigned as number[]).map((v) => (v >= 0 ? 'plus ' : 'minus ') + Math.abs(round(v, 1))).join(', ') + ' in red, green and blue. Picture: `' + (u.panel as string).replace(ROOT + '/', '') + '`.', '')
+        md.push('Under the place picture at T (the globe side alone against the globe side with the picture, on the ' + round((u.share as number) * 100, 1) + ' percent of the frame where the body carries the picture at more than half weight): mean difference ' + round(u.mean as number, 2) + ', median ' + u.p50 + ', 99th percentile ' + u.p99 + '; the globe alone is ' + (u.meanSigned as number[]).map((v) => (v >= 0 ? 'plus ' : 'minus ') + Math.abs(round(v, 1))).join(', ') + ' in red, green and blue. Of the difference, tone (the means of ' + L.blockPx + ' px blocks) carries ' + round(u.tone as number, 2) + ' and detail (what is left inside the blocks) ' + round(u.detail as number, 2) + '. Picture: `' + (u.panel as string).replace(ROOT + '/', '') + '`.', '')
+        const sky = u.sky as UnderPart
+        if (sky.pixels > 0) md.push('In the sky at T (not judged), on the ' + round(sky.share * 100, 1) + ' percent of the frame where the picture is drawn off the body at more than half weight: mean difference ' + round(sky.mean, 2) + ', median ' + sky.p50 + ', 99th percentile ' + sky.p99 + '; the globe side alone is ' + sky.meanSigned.map((v) => (v >= 0 ? 'plus ' : 'minus ') + Math.abs(round(v, 1))).join(', ') + ' in red, green and blue.', '')
       }
     }
     if (only.includes('flow')) {
