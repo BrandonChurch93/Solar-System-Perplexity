@@ -1,5 +1,6 @@
 import { StopPlan, type Fit, type MoveParams } from '../../director/moves'
 import fit from './fit.json'
+import place from './place.json'
 
 export const params: MoveParams = {
   hold: { orbitDeg: -8, axis: [-0.15, 1, 0], push: -0.04 },
@@ -22,6 +23,7 @@ export const params: MoveParams = {
   spinDegPerSecond: 0.9,
   moonDegPerSecond: -1.2,
   tint: [0.9, 0.5, 0.3],
+  handover: { dive: { place: { valid: place.dive.valid as [number, number, number, number] } }, rise: { place: { valid: place.rise.valid as [number, number, number, number] } } },
 }
 
 export const plan = new StopPlan('mars', fit as Fit, params)
