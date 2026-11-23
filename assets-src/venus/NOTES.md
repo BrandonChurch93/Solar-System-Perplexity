@@ -1753,3 +1753,33 @@ No frame of main changed (115 draft frames with the same bytes). Merge origin/ma
 - Stills s3 (draft, as cut) 1555 to 1570: the Sun leaves at the top between 1558 and 1561, the limb reaches the top edge at 1567 and is gone at the centre by 1570; the plates round the place are olive, pebbled and combed with bright orange and white stripes at upper right (item 5, not done). Dive 1310: limb in frame with no air over it yet; 1314 the Sun's glow at the top edge; 1318 the lower half of the Sun; 1322 the whole bloom.
 - Judged frames at draft on this tree (`out/work/venus/place/same/n4-<frame>.png`): 1185 and 1440 have the same bytes as the base stills of the frozen build; 1605 (first frame of the travel) has the same bytes as at M2; 1604 differs from the M2 still in 300535 pixels, largest 33 of 255, mean 0.126, 8375 pixels over 4, spread over the whole frame (the rise shape changed, so the last frame at u 0.99 is not the same sub pixel pose); the step 1604 to 1605 is mean 1.486 (M2: 1.452). turn.ts at 1604: height 4.3978 with both shapes, ratio 1.0018 (was 1.0017).
 - Sheet of the four judged frames beside the kept stills: `/tmp/v/judged4.jpg` (in the looks). 1287 and 1586 are much closer to the globe than the kept stills, as since M2 (the steady move).
+
+## State 12:08 (23 Nov, VM time): items 1 to 4 pushed and reported. Read this first after a compaction
+
+- Pushed: `agent/venus-place` at 6326371c (ca10e1cb items 1 to 4, ddaf2925 merge of origin/main da69509a, 6326371c recipe and notes). Looks pushed 12:05 (next by 12:35).
+- Report sent to the Builder at 12:07 (high priority): items 1 to 4 done, the rise T is now frame 1542, CUES and SHOTS stale, the numbers of the state 12:02, the list of what is still wrong. He renders both moves at the review tier with the shutter open.
+- Next: item 5 of MAIL 247, the plates between the wide globe and the deck (dive 1290 to 1314, rise 1555 to 1585): "Real detail, not an enlarged take: at most one texel per pixel is the limit, not the aim." Then the rest of M3.
+
+## Mail from handover_engineer (23 Nov, about 12:12 VM time), low priority, no answer needed
+
+- E3 of the handover engine is pushed on `agent/engine-handover` at 0d14d1c, not on main yet; the Builder proves it first. It changes the generic globe side path of every stop that opted in with `handover: {}`: a steady descent or climb, a level glide near the ground. T, the place window, the sky carry and the picture are unchanged.
+- Options per stop and kind, all optional: the old path back with `handover: { dive: { path: { turnFall: 0.3, level: false } } }`; `path.levelBy` (dive 0.8, rise 0.5); `path.sidestep: { right, up, by }`; `skyFloor: true` (fades a carried terrain sky plate out below the twin's horizon; "ask for it if your terrain sky plate is real sky only above its horizon and you see streaks or a mirror above the limb as the globe camera climbs"); `place: { seen, maxEnlarge, enlargeSoft }` beside `valid` (maxEnlarge cuts the picture where it is enlarged more than that many times, generic 3).
+- For Venus: the dive and the rise fly my own path (`src/stops/venus/path.ts`, `move.json`), not the generic one. When E3 lands on main: merge, run the harness, and check that frames of both moves did not change (stills 1310, 1343, 1542, 1560 against this tree).
+
+## MAIL 265 (23 Nov, 12:36 UTC), from the Builder, high priority, word for word (the parts for other builders left out are marked)
+
+"MAIL 265 from the Builder (/root), 12:36 UTC. E3 is on main.
+
+Main is at 03510ddd. It holds the handover engine of agent/engine-handover 0d14d1cf: the steady descent in the generic path, its mirror for the rise, the sky floor, the sidestep option. Proven by me before it was taken: 105 of 105 draft frames outside the Mars dive and rise keep their bytes, 2325 and 2580 at the final tier equal the kept stills, four review tier frames equal main, 155 tests green.
+
+What it means for a stop that has opted in and uses the generic path (read `assets-src/shared/HANDOVER-NOTES.md`, section "E3 as built"):
+1. Your dive and rise fly another line after the merge. Height falls by a near constant ratio per frame, the camera comes down a line of sight to the place and levels into the glide of your close view. The low end of the path is the close pose at T carried on with its own speed and spin over `coastFrames`.
+2. If the new line does not fit your stop yet, keep the old one for now with `handover: { dive: { path: { turnFall: 0.3, level: false } } }` (and the same under `rise`). Say so in your report, with the reason.
+3. New options, off unless you ask: `path.sidestep { right, up, by }` to pass a moon or a ring, `skyFloor` for a carried sky plate that has no true sky under its horizon, `path.levelBy`.
+4. A stop that has not opted in keeps every byte.
+
+Do now, in this order: finish the step you are in, merge origin/main, build, run the tests, render your dive and your rise at the draft tier and look at every frame, push, and report the commit with what is still wrong. Do not wait for an answer."
+
+(Then lines for mars_place_builder, handover_engineer and the other builders; nothing in them for Venus.)
+
+- Venus flies its own path (`src/stops/venus/path.ts`, `move.json`), so after the merge the frames of both moves should keep their bytes. To be measured, not assumed.
