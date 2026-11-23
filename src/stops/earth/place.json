@@ -206,13 +206,13 @@
       "dive": {
         "at": 0.99,
         "dissolveFrames": 1,
-        "placeFrames": 12,
+        "placeFrames": 0,
         "skyFrames": 120
       },
       "rise": {
         "at": 0.005,
         "dissolveFrames": 1,
-        "placeFrames": 12,
+        "placeFrames": 0,
         "skyFrames": 120
       }
     },
@@ -276,6 +276,17 @@
     "low": [
       0.12,
       0.5
+    ]
+  },
+  "onGlobe": {
+    "how": "The close view's ground (the sea layer and the towers of relief.ts, the same meshes and texels the surface view draws) stands on the globe as an object of the globe world, placed by the fixed transform of place.ts, so the globe side shows the surface view's own ground and not a copy of it. It shows by the same angle and height as the low look of the plates (plates.low.angleDeg, plates.low.height), ends on the ground between farDeg[0] and farDeg[1] degrees of arc from the point under the close camera, and inside the edge of the picture's canvas over rim[0] of its width at the sides and rim[1] of its height at the near edge. Beyond the camera's own horizon it is not drawn. On the globe the mesh is not bent to the limb (look.ground.lock is off) and the push and the shimmer of the surface view stand still at the value they have at the change of view.",
+    "farDeg": [
+      11.5,
+      13.5
+    ],
+    "rim": [
+      0.14,
+      0.08
     ]
   }
 }

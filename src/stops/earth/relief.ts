@@ -28,10 +28,13 @@ export interface GroundLook {
   plain: [number, number]
 }
 
+export interface GroundOnGlobe { angleDeg: number[]; farDeg: number[]; rim: number[] }
+
 const VERT = /* glsl */ `
 uniform vec3 uEye;
 uniform vec4 uSea;
 uniform vec2 uLock;
+uniform vec4 uShow;
 in vec2 aImage;
 out vec2 vImage;
 out vec2 vUv;
@@ -55,7 +58,7 @@ vec3 place(vec3 p) {
   float turn = asin(min(uSea.w / c1, 1.0)) - asin(uSea.w / c0) + up0 - acos(along);
   vec3 side = normalize(w * along - n1);
   vec3 q = uEye + (cos(turn) * w + sin(turn) * side) * far;
-  return mix(p, q, smoothstep(uLock.x, uLock.y, lift));
+  return mix(p, q, uShow.x > 0.0 ? 0.0 : smoothstep(uLock.x, uLock.y, lift));
 }
 void main() {
   vImage = aImage;
@@ -88,6 +91,11 @@ uniform vec3 uLayer;
 uniform float uGrad;
 uniform float uFine;
 uniform float uBias;
+uniform vec3 uEye;
+uniform vec4 uSea;
+uniform vec4 uShow;
+uniform vec4 uReach;
+uniform vec4 uCanvas;
 in vec2 vImage;
 in vec2 vUv;
 in vec3 vView;
@@ -97,6 +105,16 @@ out vec4 outColor;
 ${INVERSE_FILMIC_GLSL}
 ${DIAG_GLSL}
 ${NOISE_GLSL}
+float shown() {
+  if (uShow.x <= 0.0) return 1.0;
+  vec3 up = vLocal - uSea.xyz;
+  if (dot(up, uEye - vLocal) <= 0.0) return 0.0;
+  float arc = dot(normalize(up), normalize(-uSea.xyz));
+  float off = dot(normalize(uEye - vLocal), normalize(-vLocal));
+  vec2 q = (vImage - uCanvas.xy) / uCanvas.zw;
+  float rim = smoothstep(0.0, uReach.z, min(q.x, 1.0 - q.x)) * smoothstep(0.0, uReach.w, 1.0 - q.y);
+  return uShow.y * smoothstep(uShow.z, uShow.w, off) * smoothstep(uReach.x, uReach.y, arc) * rim;
+}
 vec3 masks() {
   vec2 mq = (vImage - uMaskBox.xy) / uMaskBox.zw;
   return texture(uMasks, vec2(mq.x, 1.0 - mq.y), uBias).rgb;
@@ -146,8 +164,9 @@ void main() {
   float sparkle = 0.6 * (vnoise(vec3(g, uShimmer.z + 7.3)) - vnoise(vec3(g, 7.3))) + 0.4 * (vnoise(vec3(g * 2.3 + 4.1, uShimmer.z * 1.7 + 3.1)) - vnoise(vec3(g * 2.3 + 4.1, 3.1)));
   float glint = 1.0 + uShimmer.x * m.r * fine * sparkle * 2.0;
   col = clear(col * glint * uGain * lens(), soft * glint * uGain * lens(), 1.0);
-  outColor = diagOut(vec4(col, ground), diagTexels(uv * uSize), step(0.5, ground), uLayer, shift / uImage * 60.0, length(vView));
-  if (uDiag >= 2 && ground < 0.5) discard;
+  float on = shown();
+  outColor = diagOut(vec4(col * on, ground * on), diagTexels(uv * uSize), step(0.5, ground * on), uLayer, shift / uImage * 60.0, length(vView));
+  if (on <= 0.0 || (uDiag >= 2 && ground * on < 0.5)) discard;
 }`
 
 const TOWER_FRAG = /* glsl */ `
@@ -160,11 +179,12 @@ void main() {
   vec4 wide = textureGrad(uColor, uv, dFdx(vUv) * (uPlain.y * uFine), dFdy(vUv) * (uPlain.y * uFine));
   vec3 lit = inverseFilmic(texel.rgb) * uGain * lens();
   vec3 col = clear(lit, mix(lit, inverseFilmic(wide.rgb) * uGain * lens(), smoothstep(0.8, 1.0, wide.a)), texel.a);
-  outColor = diagOut(vec4(col, texel.a), diagTexels(uv * uSize), 1.0, uLayer, shift / uImage * 60.0, length(vView));
-  if (texel.a < 0.004 || (uDiag >= 2 && texel.a < 0.5)) discard;
+  float on = shown();
+  outColor = diagOut(vec4(col * on, texel.a * on), diagTexels(uv * uSize), 1.0, uLayer, shift / uImage * 60.0, length(vView));
+  if (texel.a * on < 0.004 || (uDiag >= 2 && texel.a * on < 0.5)) discard;
 }`
 
-interface Layer { mesh: THREE.Mesh; material: THREE.ShaderMaterial }
+interface Layer { mesh: THREE.Mesh; material: THREE.ShaderMaterial; depth: boolean }
 
 export class Ground {
   readonly group = new THREE.Group()
@@ -179,10 +199,11 @@ export class Ground {
     this.blank.needsUpdate = true
   }
 
-  static async load(ctx: SetContext, base: string, def: GroundDef, look: GroundLook): Promise<Ground> {
+  static async load(ctx: SetContext, base: string, def: GroundDef, look: GroundLook, globe: GroundOnGlobe): Promise<Ground> {
     const r = new Ground(look)
     const [W, H] = def.imageSize
     const th = Math.tan(THREE.MathUtils.degToRad(def.vfovDeg) / 2)
+    const cos = (deg: number): number => Math.cos(THREE.MathUtils.degToRad(deg))
     const aspect = W / H
     const centre = new THREE.Vector3().fromArray(def.nadir).normalize().multiplyScalar(def.radius + 1)
     const tangent = Math.sqrt(centre.lengthSq() - def.radius * def.radius)
@@ -254,7 +275,8 @@ export class Ground {
           uBox: { value: new THREE.Vector4().fromArray(box) }, uMaskBox: { value: new THREE.Vector4().fromArray(maskBox) }, uImage: { value: new THREE.Vector2(W, H) },
           uDrift: { value: new THREE.Vector2() }, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uOwnLens: { value: 0 }, uFrame: { value: new THREE.Vector4(1, 1, 0, 0) },
           uLayer: { value: new THREE.Vector3().fromArray(tint) }, uDiag: diagUniform, uGrad: gradUniform, uFine: fineUniform, uBias: biasUniform,
-          uEye: { value: new THREE.Vector3() }, uSea: { value: new THREE.Vector4(centre.x, centre.y, centre.z, def.radius) }, uLock: { value: new THREE.Vector2().fromArray(look.lock) }, ...extra,
+          uEye: { value: new THREE.Vector3() }, uSea: { value: new THREE.Vector4(centre.x, centre.y, centre.z, def.radius) }, uLock: { value: new THREE.Vector2().fromArray(look.lock) },
+          uShow: { value: new THREE.Vector4(0, 0, cos(globe.angleDeg[0]!), cos(globe.angleDeg[1]!)) }, uReach: { value: new THREE.Vector4(cos(globe.farDeg[1]!), cos(globe.farDeg[0]!), globe.rim[0]!, globe.rim[1]!) }, uCanvas: { value: new THREE.Vector4().fromArray(def.ground.box) }, ...extra,
         },
         transparent: true,
         blending: THREE.CustomBlending,
@@ -270,12 +292,12 @@ export class Ground {
       mesh.frustumCulled = false
       mesh.renderOrder = order
       r.group.add(mesh)
-      r.layers.push({ mesh, material })
+      r.layers.push({ mesh, material, depth })
     }
 
     const g = def.ground
     const groundMap = await ctx.texture(base + g.file, { srgb: true, anisotropy: 8 })
-    add(build(g.box, g.top, g.under ?? 0, look.mesh, (_x, _y, d) => sea(d)), groundMap, g.box, GROUND_FRAG, [0.25, 0.45, 0.85], 0, true, {
+    add(build(g.box, g.top, g.under ?? 0, look.mesh, (_x, _y, d) => sea(d)), groundMap, g.box, GROUND_FRAG, [0.25, 0.45, 0.85], 2, true, {
       uHorizon: { value: g.horizon.slice(0, 9) }, uHorizonSpan: { value: new THREE.Vector2().fromArray(g.horizonSpan) },
       uTop: { value: new THREE.Vector2(g.box[1], g.fade) }, uFold: { value: look.fold }, uUnder: { value: g.box[1] + g.box[3] - (g.skip ?? 0) }, uShimmer: { value: new THREE.Vector4(look.shimmer[0], look.shimmer[1], 0, 0) },
     })
@@ -300,17 +322,22 @@ export class Ground {
         const e = lift[(iy + 1) * dw + ix + 1]!
         return (a * (1 - tx) + b * tx) * (1 - ty) + (c * (1 - tx) + e * tx) * ty
       }
-      add(build(t.box, 0, 0, look.towerMesh, (x, y, d) => sea(d) * (1 - sample(x, y))), map, t.box, TOWER_FRAG, [0.95, 0.9, 0.8], 1, false, {})
+      add(build(t.box, 0, 0, look.towerMesh, (x, y, d) => sea(d) * (1 - sample(x, y))), map, t.box, TOWER_FRAG, [0.95, 0.9, 0.8], 3, false, {})
     }
     return r
   }
 
-  update(dt: number, gain: number, vignette: number, bloom: number, view: RenderView, eye: THREE.Vector3, under: number): void {
+  update(dt: number, gain: number, vignette: number, bloom: number, view: RenderView, eye: THREE.Vector3, under: number, onGlobe: number | null): void {
     const k = this.look
     const part = view.camera.view
     const cut = under > 0 && part !== null && part.enabled
     for (const l of this.layers) {
       const u = l.material.uniforms
+      const show = u.uShow!.value as THREE.Vector4
+      show.x = onGlobe === null ? 0 : 1
+      show.y = onGlobe ?? 0
+      l.material.depthTest = l.depth && onGlobe === null
+      l.material.depthWrite = l.depth && onGlobe === null
       ;(u.uEye!.value as THREE.Vector3).copy(eye)
       ;(u.uDrift!.value as THREE.Vector2).set(k.drift[0] * dt, k.drift[1] * dt)
       if (u.uShimmer) (u.uShimmer.value as THREE.Vector4).z = k.shimmer[2] * dt

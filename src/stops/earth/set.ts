@@ -15,6 +15,7 @@ import { Ground, type GroundDef } from './relief'
 import reliefJson from './relief.json'
 import * as look from './look'
 import placeJson from './place.json'
+import { centre as placeCentre, fromLocal, placeFrame, radius as placeRadius } from './place'
 import { plan } from './plan'
 import skyJson from './sky.json'
 
@@ -84,8 +85,13 @@ export const createSet: SetFactory = async (ctx) => {
   const far = new FarPoint()
   orbit.add(far.points)
 
-  const ground = await Ground.load(ctx, base, reliefJson as GroundDef, look.ground)
+  const ground = await Ground.load(ctx, base, reliefJson as GroundDef, look.ground, { angleDeg: plates.low.angleDeg, farDeg: placeJson.onGlobe.farDeg, rim: placeJson.onGlobe.rim })
   terrain.add(ground.group)
+  const onGlobe = new THREE.Group()
+  onGlobe.scale.setScalar(1 / placeRadius)
+  shape.add(onGlobe)
+  const toPlace = new THREE.Quaternion()
+  const eyePlace = new THREE.Vector3()
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2 + config.shutterFraction / (2 * config.fps)
 
   const skyLow = [Math.log(placeJson.sky.low[0]!), Math.log(placeJson.sky.low[1]!)]
@@ -139,7 +145,9 @@ export const createSet: SetFactory = async (ctx) => {
       if (!inOrbit) {
         back.copy(state.rotation).invert()
         eye.copy(world.position).applyQuaternion(back).negate()
-        ground.update(state.time - terrainMid, gain, shot.post.vignette, shot.post.bloomStrength, view, eye, view.place === true ? lens : 0)
+        if (ground.group.parent !== terrain) terrain.add(ground.group)
+        ground.group.visible = true
+        ground.update(state.time - terrainMid, gain, shot.post.vignette, shot.post.bloomStrength, view, eye, view.place === true ? lens : 0, null)
         return
       }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
@@ -169,7 +177,14 @@ export const createSet: SetFactory = async (ctx) => {
       gu.uUnborn!.value = 1 - born
       gu.uLights!.value = lights * (1 - low)
       gu.uNear!.value = low
-      gu.uLowLook!.value = ending ? 0 : smooth(Math.log(plates.low.height[0]! / Math.max(camera.length() - 1, 1e-4)) / Math.log(plates.low.height[0]! / plates.low.height[1]!))
+      const lowLook = ending ? 0 : smooth(Math.log(plates.low.height[0]! / Math.max(camera.length() - 1, 1e-4)) / Math.log(plates.low.height[0]! / plates.low.height[1]!))
+      gu.uLowLook!.value = lowLook
+      if (ground.group.parent !== onGlobe) onGlobe.add(ground.group)
+      ground.group.visible = lowLook > 0
+      onGlobe.quaternion.copy(plan.turn(state.time)).multiply(placeFrame).multiply(fromLocal).normalize()
+      onGlobe.position.copy(placeCentre).applyQuaternion(onGlobe.quaternion).multiplyScalar(-1 / placeRadius)
+      toPlace.copy(onGlobe.quaternion).invert()
+      if (lowLook > 0) ground.update(Math.min(Math.max(state.time, plan.seg.terrain.start), plan.seg.terrain.end) - terrainMid, gain, shot.post.vignette, shot.post.bloomStrength, view, eyePlace.copy(eye).applyQuaternion(toPlace).multiplyScalar(placeRadius).add(placeCentre), 0, lowLook)
       const turned = plan.spin(state.time)
       eyeBody.copy(eye).applyQuaternion(untilt)
       ;(gu.uEyeBody!.value as THREE.Vector3).set(Math.cos(turned) * eyeBody.x - Math.sin(turned) * eyeBody.z, eyeBody.y, Math.sin(turned) * eyeBody.x + Math.cos(turned) * eyeBody.z)
