@@ -72,7 +72,7 @@ export interface GlobeOptions {
   place: PlaceSet
   veil: { color: [number, number, number]; height: number; repeats: number }
   limbLit: [number, number, number]
-  edge: { pixels: number; inset: number; rim: number; cap: number; air: [number, number, number, number]; soft: [number, number]; low?: { sun: [number, number, number, number]; pixels: number; air: number; scale: number } }
+  edge: { pixels: number; inset: number; rim: number; cap: number; air: [number, number, number, number]; soft: [number, number]; near?: [number, number]; low?: { sun: [number, number, number, number]; pixels: number; air: number; scale: number } }
   pallShell: [number, number]
   segments?: number
 }
@@ -405,6 +405,8 @@ export class Globe {
   private readonly bodyToWorld = new THREE.Matrix3()
   private readonly toBody = new THREE.Matrix3()
   private readonly rim: number
+  private readonly edge: GlobeOptions['edge']
+  private readonly litEdge: [number, number, number, number]
   private readonly m4 = new THREE.Matrix4()
   private readonly sunMap = new THREE.Vector3()
 
@@ -476,6 +478,8 @@ export class Globe {
     ;(this.material.uniforms.uWispShape!.value as THREE.Vector4).w = 2.2 / peak
     const seg = o.segments ?? 320
     this.rim = o.edge.rim
+    this.edge = o.edge
+    this.litEdge = o.litEdge
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1, seg, seg / 2), this.material)
   }
 
@@ -488,6 +492,10 @@ export class Globe {
     u.uWeight!.value = weight
     const rim = Math.max(Math.min(this.rim, 0.4 * (camera.length() - 1)), 0)
     ;(u.uEdge!.value as THREE.Vector4).z = Math.max(rim, 1e-5)
+    const far = this.edge.near ? THREE.MathUtils.smoothstep(Math.log(Math.max(camera.length() - 1, 1e-9)), Math.log(this.edge.near[0]), Math.log(this.edge.near[1])) : 1
+    ;(u.uEdge!.value as THREE.Vector4).y = this.edge.inset * far
+    ;(u.uAir!.value as THREE.Vector4).x = this.edge.air[0] * far
+    ;(u.uLitEdge!.value as THREE.Vector4).set(this.litEdge[0] * far, this.litEdge[1] * far, this.litEdge[2], this.litEdge[3])
     this.mesh.scale.setScalar(1 + rim)
     this.mesh.updateWorldMatrix(true, false)
     this.bodyToWorld.setFromMatrix4(this.m4.extractRotation(this.mesh.matrixWorld))

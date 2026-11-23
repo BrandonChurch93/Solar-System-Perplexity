@@ -14,11 +14,18 @@
     "releaseAfterRise": 0.4
   },
   "handover": {
+    "limbNote": "place.limbReachDeg on both kinds: the globe draws a wide warm glow over its limb, the surface view a clean edge with a thin blue line. With the reach the engine carries the picture's horizon and sky onto the camera's limb with the weight of the place picture, so the limb of the surface view comes in over the frames of the place window and not in one frame (seen on 3021 to 3023 and 3271 to 3273 at 4 times).",
     "dive": {
-      "at": 0.6
+      "at": 0.6,
+      "place": {
+        "limbReachDeg": 8
+      }
     },
     "rise": {
-      "at": 0.4
+      "at": 0.4,
+      "place": {
+        "limbReachDeg": 8
+      }
     }
   },
   "solved": {
@@ -98,5 +105,12 @@
         0.69
       ]
     }
+  },
+  "limb": {
+    "note": "The globe's own rim near the place. From orbit the lit edge is drawn a little inside the sphere with a warm glow of air beyond it (look.ts litEdge and edge). Close above the tops that glow is the ground behind the horizon at a low cover, a mottled band tens of pixels wide, and the surface view has no such band. nearHeights: camera height over the sphere in radii; the inset of the lit edge and the cover of the glow are multiplied by a share that runs smoothly in the logarithm of the height from 0 at the first number to 1 at the second, and is exactly 1 above it, so every frame higher than the second number keeps its bytes (the hold, and the judged frames 2997 and 3296).",
+    "nearHeights": [
+      0.08,
+      0.38
+    ]
   }
 }
