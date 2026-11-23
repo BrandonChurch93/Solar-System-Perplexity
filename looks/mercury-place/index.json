@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T22:15:12.183Z",
- "head": "309fb7ffdb50d917e8660d7a05ed6afd810f7451",
- "note": "22:17 every frame of dive and rise at draft on 309fb7ff: one move both ways, handover report passes, under the picture 9.4 and 12.6 (warning); second note read, plan follows by mail",
+ "pushed": "2026-11-23T22:31:20.345Z",
+ "head": "174356d7fc0d44a9ab3dba8d5225bc1a88dbc329",
+ "note": "Starting point for the second note: both handovers with the place picture off. Dive 743 to 744: tone and relief step, small. Rise 990 to 991: the globe is paler and flat, the middle crater loses its relief. Pace (one rate curve) is being built next.",
  "looks": [
+  {
+   "time": "2026-11-23T22:31:19.801Z",
+   "file": "20261123223119801-note-sheet-rise.jpg",
+   "source": "out/work/mercury/place/np1/sheet-rise.jpg",
+   "kind": "note",
+   "label": "174356d7 rise 988 to 997 with the place picture OFF (draft): view changes 990 to 991",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T22:31:19.248Z",
+   "file": "20261123223119248-note-sheet-dive.jpg",
+   "source": "out/work/mercury/place/np1/sheet-dive.jpg",
+   "kind": "note",
+   "label": "174356d7 dive 738 to 747 with the place picture OFF (draft): view changes 743 to 744",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-23T22:15:11.578Z",
    "file": "20261123221511578-note-r992.jpg",
@@ -58,30 +74,6 @@
    "segment": "mercury.rise",
    "first": 991,
    "last": 1002,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T22:10:01.626Z",
-   "file": "20261123221001626-sheet-mercury-rise-draft-before.jpg",
-   "source": "out/work/handover/mercury-rise-draft-before.png",
-   "kind": "sheet",
-   "label": "mercury rise, every frame 978 to 989 (before T, frame 990), draft tier",
-   "stop": "mercury",
-   "segment": "mercury.rise",
-   "first": 978,
-   "last": 989,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T22:09:59.832Z",
-   "file": "20261123220959832-sheet-mercury-rise-draft-across.jpg",
-   "source": "out/work/handover/mercury-rise-draft-across.png",
-   "kind": "sheet",
-   "label": "mercury rise, every frame 984 to 995 (across T, frame 990), draft tier",
-   "stop": "mercury",
-   "segment": "mercury.rise",
-   "first": 984,
-   "last": 995,
    "tier": "draft"
   }
  ]
