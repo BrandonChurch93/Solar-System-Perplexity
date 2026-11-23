@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T16:20:14.583Z",
- "head": "97427e1080d40efec39efdb330153f48f685dc78",
- "note": "patch 738 to 743: cause found, the plate under the picture margin carries a copy, not the picture; terrain ends at the picture border; next the plate takes the terrain to its true end",
+ "pushed": "2026-11-23T16:45:38.167Z",
+ "head": "b7da15abef066f68c06350b1b277ae1de1eec6c1",
+ "note": "dive patch 738 to 743: field now reaches the terrain end, whole frames one ground, thin line at the junction in the plate still open",
  "looks": [
+  {
+   "time": "2026-11-23T16:45:37.592Z",
+   "file": "20261123164537592-note-dy743.jpg",
+   "source": "out/work/mercury/place/tmp/dy743.jpg",
+   "kind": "note",
+   "label": "mercury 743 left border 2x, left with the picture, right plates alone: thin dotted line and pale haze at the junction still in the plate; open",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T16:45:36.760Z",
+   "file": "20261123164536760-note-d7dive.jpg",
+   "source": "out/work/mercury/place/tmp/d7dive.jpg",
+   "kind": "note",
+   "label": "mercury dive 738 740 741 742 draft, working tree (field to the terrain end, border 64, dive margins cut): whole frames read as one ground; not committed",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-23T16:20:13.972Z",
    "file": "20261123162013972-note-edge4.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/mercury/place/tmp/ei2dive.jpg",
    "kind": "note",
    "label": "dive 736 738 740 / 741 742 743, draft, not committed: plates continue the place picture past its border (mirror, by code), band tone matched, edgeIn 0.4 0.4 0.4 0.25. The four sided patch is gone; a faint spine with chevrons remains at the left border (next: no symmetry there)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T15:22:28.955Z",
-   "file": "20261123152228955-note-w738.jpg",
-   "source": "out/work/mercury/place/tmp/w738.jpg",
-   "kind": "note",
-   "label": "738 whole, left 63dd08bc, right matched band (not committed)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T15:22:28.335Z",
-   "file": "20261123152228335-note-n741.jpg",
-   "source": "out/work/mercury/place/tmp/n741.jpg",
-   "kind": "note",
-   "label": "741 crop, left with the place picture, right plates alone (noplace). The plates alone have no straight edge: the edge is the border of the place picture (frame of T plus 3 percent margin), sharp picture against the crater field",
    "stop": "mercury"
   }
  ]
