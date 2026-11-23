@@ -1,9 +1,44 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T17:38:21.659Z",
- "head": "6c584f490741c0859e97c04a4e518aa28596ab60",
- "note": "mail 302 cure: the model draws the far look of the kept set from the kept profile; both scenes alone differ by a mean of 0.06 of 255; retuning the skim on the new knots",
+ "pushed": "2026-11-23T18:28:32.744Z",
+ "head": "20e47f29dfeae8b4c06d810aab63e58555f0d8a2",
+ "note": "answers to mails 315 and 318; drawing one look from far to near and a longer distance to the globe for G13",
  "looks": [
+  {
+   "time": "2026-11-23T18:28:32.077Z",
+   "file": "20261123182832077-note-moon_rev.jpg",
+   "source": "../../../../tmp/v/bld/moon_rev.png",
+   "kind": "note",
+   "label": "the moon goes behind the night limb 3586 to 3590 (crops of the review stills)"
+  },
+  {
+   "time": "2026-11-23T18:28:31.517Z",
+   "file": "20261123182831517-note-g13_3810.jpg",
+   "source": "../../../../tmp/v/t1/g13_3810.png",
+   "kind": "note",
+   "label": "G13: beauty 3809 and the soft mask of 3810 in red, the globe's map under one texel a pixel at the frame's edge"
+  },
+  {
+   "time": "2026-11-23T18:28:30.783Z",
+   "file": "20261123182830783-note-sheet_3621_3640.jpg",
+   "source": "../../../../tmp/v/r6/sheet_3621_3640.png",
+   "kind": "note",
+   "label": "drafts 3621 to 3640 on f06bc5c: steady approach, no plunge (mail 315 point 3)"
+  },
+  {
+   "time": "2026-11-23T18:28:30.057Z",
+   "file": "20261123182830057-note-slide_new.jpg",
+   "source": "../../../../tmp/v/slide_new.png",
+   "kind": "note",
+   "label": "the tone slide 3590 to 3630 on f06bc5c, before its cure (mail 315 point 2)"
+  },
+  {
+   "time": "2026-11-23T18:28:29.480Z",
+   "file": "20261123182829480-note-pair_3590.jpg",
+   "source": "../../../../tmp/v/r1/pair_3590.png",
+   "kind": "note",
+   "label": "pair at 3590 on f06bc5c: kept set alone, model alone, difference (mean 0.059 of 255)"
+  },
   {
    "time": "2026-11-23T17:38:20.900Z",
    "file": "20261123173820900-note-look_3720_draft.jpg",
@@ -24,41 +59,6 @@
    "source": "../../../../tmp/v/look_pair_3595.png",
    "kind": "note",
    "label": "3595 with the shutter closed: the kept set alone, the model alone, their difference times 8 (mean 0.06 of 255, 99th percentile 1)"
-  },
-  {
-   "time": "2026-11-23T17:03:46.933Z",
-   "file": "20261123170346933-note-sheet87.jpg",
-   "source": "../../../../tmp/v/q1/sheet87.png",
-   "kind": "note",
-   "label": "3587: kept with close 0 alone, old model alone, difference (before the cure)"
-  },
-  {
-   "time": "2026-11-23T17:03:46.263Z",
-   "file": "20261123170346263-note-sheet_3577.jpg",
-   "source": "../../../../tmp/v/q0/sheet_3577.png",
-   "kind": "note",
-   "label": "3577 state c605678: kept alone, model alone, difference (mail 302 point 3, before the cure)"
-  },
-  {
-   "time": "2026-11-23T16:32:44.854Z",
-   "file": "20261123163244854-note-b_3465.jpg",
-   "source": "../../../../tmp/v/p1/b_3465.png",
-   "kind": "note",
-   "label": "hold 3465 draft, drawn by the kept set inside the one set: byte equal to main"
-  },
-  {
-   "time": "2026-11-23T16:01:25.612Z",
-   "file": "20261123160125612-note-hold3465_pair.jpg",
-   "source": "../../../../tmp/v/fin/hold3465_pair.png",
-   "kind": "note",
-   "label": "hold 3465 final tier: this build and the kept still, their difference times 4, crops at native size (this build left)"
-  },
-  {
-   "time": "2026-11-23T16:01:24.537Z",
-   "file": "20261123160124537-note-hold3465_three.jpg",
-   "source": "../../../../tmp/v/fin/hold3465_three.png",
-   "kind": "note",
-   "label": "hold 3465 at the final tier: this build, the approved hero, the kept still (left to right)"
   }
  ]
 }
