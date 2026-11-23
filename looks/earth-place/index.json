@@ -1,72 +1,87 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-23T09:50:34.535Z",
- "head": "9a27f0c0f17b02f76093d4e1014ee48683129e08",
- "note": "S2: far ring to the limb, rim retuned; fan shape of the sheet from above still to fix",
+ "pushed": "2026-11-23T10:12:07.024Z",
+ "head": "4ddf9dba01cb6fc61c31fbcf63286864142cb84f",
+ "note": "E2 merged and opted in: first handover run, sides at T differ by a lens shaped 3 to 5 percent (bloom undo), far band pink before the place picture",
  "looks": [
   {
-   "time": "2026-11-23T09:50:33.060Z",
-   "file": "20261123095033060-note-dive-down-sheet.jpg",
+   "time": "2026-11-23T10:12:06.419Z",
+   "file": "20261123101206419-note-earth-dive-sides.jpg",
+   "source": "out/work/handover/earth-dive-sides.png",
+   "kind": "note",
+   "label": "earth dive: the two sides at T and their difference, mean 0.788",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T10:12:05.778Z",
+   "file": "20261123101205778-note-earth-rise-draft-after.jpg",
+   "source": "out/work/handover/earth-rise-draft-after.png",
+   "kind": "note",
+   "label": "earth rise: T plus 1 to T plus 12, engine E2, draft",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T10:12:05.138Z",
+   "file": "20261123101205138-note-earth-dive-draft-before.jpg",
+   "source": "out/work/handover/earth-dive-draft-before.png",
+   "kind": "note",
+   "label": "earth dive: T minus 12 to T minus 1, engine E2, draft",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T10:12:04.516Z",
+   "file": "20261123101204516-note-dive-down-sheet.jpg",
    "source": "out/work/earth/place/down/dive-down-sheet.jpg",
    "kind": "note",
-   "label": "earth place: top down dive sheet, 12 frames, draft. The tent with straight edges is gone, but the cloud sheet is still a fan with a clean arc on top (1852 to 1877). A wider cloud deck with an irregular margin is being built to replace it. 1896 to 1919 sharp, no blur",
+   "label": "earth place: top down dive sheet with the cloud deck in the far ring, globe side alone, place picture off",
    "stop": "earth"
   },
   {
-   "time": "2026-11-23T09:50:30.746Z",
-   "file": "20261123095030746-note-f01915-check.jpg",
-   "source": "out/work/earth/place/sides/f01915-check.jpg",
-   "kind": "note",
-   "label": "earth place: both sides at 1915, draft. Far cloud sheet now runs to the limb on the globe side, sky floor and glow above the limb retuned (rim rows differ by 18.9 code values, ground rows 19.3, sky rows 12.0). Still wrong: the globe's limb edge is hard where the close picture goes blue to pale over 8 px, a little green land at the far right under the limb",
-   "stop": "earth"
+   "time": "2026-11-23T10:09:48.685Z",
+   "file": "20261123100948685-sheet-earth-rise-draft-after.jpg",
+   "source": "out/work/handover/earth-rise-draft-after.png",
+   "kind": "sheet",
+   "label": "earth rise, every frame 2101 to 2112 (after T, frame 2100), draft tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "first": 2101,
+   "last": 2112,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T09:28:40.261Z",
-   "file": "20261123092840261-note-dive-down-sheet.jpg",
-   "source": "out/work/earth/place/down/dive-down-sheet.jpg",
-   "kind": "note",
-   "label": "earth place: top down dive sheet, 12 frames, draft, place comes in early (height 3.2 to 1.4). Wrong: the cloud sheet has the straight edges of the close canvas and reads as a white fan from 1846 to 1877; the footprint is darker than the sea around it",
-   "stop": "earth"
+   "time": "2026-11-23T10:09:46.805Z",
+   "file": "20261123100946805-sheet-earth-rise-draft-across.jpg",
+   "source": "out/work/handover/earth-rise-draft-across.png",
+   "kind": "sheet",
+   "label": "earth rise, every frame 2100 to 2105 (across T, frame 2100), draft tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "first": 2100,
+   "last": 2105,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T09:28:39.441Z",
-   "file": "20261123092839441-note-f01915-check.jpg",
-   "source": "out/work/earth/place/sides/f01915-check.jpg",
-   "kind": "note",
-   "label": "earth place: sides at 1915 with the cloud sheet repainted into the far zone of the plate. Far zone now reads alike. Still open: a dark gap 20 to 30 px under the limb where the plate ends, limb band too pale, sky black against dark blue",
-   "stop": "earth"
+   "time": "2026-11-23T10:07:42.860Z",
+   "file": "20261123100742860-compare-earth-rise-sides.jpg",
+   "source": "out/work/handover/earth-rise-sides.png",
+   "kind": "compare",
+   "label": "earth rise, both sides at T (frame 2100) and their difference times 8",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2100,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T09:02:49.365Z",
-   "file": "20261123090249365-note-far-look.jpg",
-   "source": "out/work/earth/place/far-look.jpg",
-   "kind": "note",
-   "label": "earth place: far zone at 1915, close side above, globe side below, rows 150 to 470. To do: cloud sheet in the far zone of the plate, sky glow, stars",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T09:02:48.513Z",
-   "file": "20261123090248513-note-f01915-check.jpg",
-   "source": "out/work/earth/place/sides/f01915-check.jpg",
-   "kind": "note",
-   "label": "earth place: sides at 1915 after the limb haze, air rim and mist change. Horizon of the close side 5.8 px below the globe limb (trim pending). Far zone still differs: close side has a white cloud sheet to the horizon, globe side has sea and land",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T08:42:39.349Z",
-   "file": "20261123084239349-note-dive-down-sheet.jpg",
-   "source": "out/work/earth/place/down/dive-down-sheet.jpg",
-   "kind": "note",
-   "label": "S2: top down dive sheet, globe side alone, 12 frames log uniform in height from the hold (3.37 radii) to the twin (0.031), draft tier, camera straight above the place with the real path's up vector (so the picture turns)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T08:42:38.134Z",
-   "file": "20261123084238134-note-f01915-check.jpg",
-   "source": "out/work/earth/place/sides/f01915-check.jpg",
-   "kind": "note",
-   "label": "S1 and S2: frame 1915, close side and globe side from the twin, draft tier. Tone now added in the code domain. Still wrong: the globe side has a broad pale haze band below the horizon where the close side has cloud bands, stars in its sky, horizon edge 4 px higher",
-   "stop": "earth"
+   "time": "2026-11-23T10:07:13.135Z",
+   "file": "20261123100713135-sheet-earth-dive-draft-across.jpg",
+   "source": "out/work/handover/earth-dive-draft-across.png",
+   "kind": "sheet",
+   "label": "earth dive, every frame 1913 to 1919 (across T, frame 1919), draft tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "first": 1913,
+   "last": 1919,
+   "tier": "draft"
   }
  ]
 }
