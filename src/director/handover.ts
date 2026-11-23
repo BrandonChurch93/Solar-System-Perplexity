@@ -17,6 +17,7 @@ const EDGE = 1e-6
 const known = new Map<string, Handover | null>()
 let knownAt = -1
 let forced: ViewKind | null = null
+let above = false
 
 function smooth(t: number): number {
   const x = Math.min(Math.max(t, 0), 1)
@@ -115,6 +116,16 @@ export function skyTurnWeight(seg: Segment, time: number): number {
 
 export function forceSide(view: ViewKind | null): void {
   forced = view
+}
+
+// The top down view of the harness (E4, the check of S2): the globe camera of a dive or a rise is put straight above the place, at the height and
+// with the field it has on the film's path. Like forceSide it is for the harness only and must not be reachable from the film path.
+export function forceTop(on: boolean): void {
+  above = on
+}
+
+export function topForced(): boolean {
+  return above
 }
 
 export function handoverFrame(h: Handover): number {

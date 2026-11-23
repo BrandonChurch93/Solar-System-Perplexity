@@ -6,7 +6,7 @@ import { defaultPost } from '../post/chain'
 import { StopPlan, easeInOut, type OrbitShot } from './moves'
 import { arc, drift, forward, lookAt, mix, ramp, slerpDir, smooth, smoother } from './rig'
 import { coverWindow, segmentAtFrame } from './timeline'
-import { handoverFrame, handoverOf, placeWeight, skyTurnWeight, skyWeight } from './handover'
+import { handoverFrame, handoverOf, placeWeight, skyTurnWeight, skyWeight, topForced } from './handover'
 import skyFrame from '../space/skyframe.json'
 import world from './world.json'
 import { aimAt, type SkyAims } from '../space/aim'
@@ -739,6 +739,7 @@ export class FilmDirector implements Director {
         const r: OrbitShot = forced ? { pose: segment.kind === 'dive' ? p.divePose(time, forced) : p.risePose(time, forced), view: forced } : segment.kind === 'dive' ? p.dive(time) : p.rise(time)
         local = r.pose
         view = r.view
+        if (view === 'orbit' && topForced()) local = p.above(segment.kind === 'dive' ? 'dive' : 'rise', time, local)
       }
       if ((segment.kind === 'dive' || segment.kind === 'rise') && !p.handsOver) {
         cover.amount = p.coverAmount(segment, time)

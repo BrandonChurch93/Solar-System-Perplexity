@@ -1,5 +1,5 @@
 import type { ViewKind } from '../core/types'
-import { forceSide } from '../director/handover'
+import { forceSide, forceTop } from '../director/handover'
 
 // dump: the place picture itself, one frame sized window of it at a time and one picture pixel per frame pixel, for tools that lay it back onto the
 // body. x and y are the window's top left corner in picture pixels. 'image' is the picture's scene value through the film curve (no sky, no lens,
@@ -7,11 +7,13 @@ import { forceSide } from '../director/handover'
 // from it and read back through the inverse film curve is the scene value again.
 export interface PlaceDump { x: number; y: number; what: 'image' | 'alpha' }
 
-export interface Probe { view: string; side: ViewKind | null; shut: boolean; time: number | null; place: boolean; mask: boolean; picture: boolean; dump?: PlaceDump }
+// top: the globe camera of a dive or a rise is put straight above the place, at the height and with the field of the film's path (the check of
+// the plates: with noplace every frame must look like one place coming closer).
+export interface Probe { view: string; side: ViewKind | null; shut: boolean; time: number | null; place: boolean; mask: boolean; picture: boolean; top: boolean; dump?: PlaceDump }
 
 export function parseProbe(diag: string): Probe {
   const parts = diag.split('/').map((s) => s.trim()).filter((s) => s.length > 0)
-  const out: Probe = { view: parts[0] ?? 'beauty', side: null, shut: false, time: null, place: true, mask: false, picture: false }
+  const out: Probe = { view: parts[0] ?? 'beauty', side: null, shut: false, time: null, place: true, mask: false, picture: false, top: false }
   for (const part of parts.slice(1)) {
     const [key, value] = part.split('=')
     if (key === 'side' && (value === 'orbit' || value === 'terrain')) out.side = value
@@ -22,6 +24,7 @@ export function parseProbe(diag: string): Probe {
     } else if (key === 'noplace') out.place = false
     else if (key === 'mask') out.mask = true
     else if (key === 'picture') out.picture = true
+    else if (key === 'top') out.top = true
     else if (key === 'dump' && value !== undefined) {
       const [x, y, what] = value.split(',')
       if (!Number.isInteger(Number(x)) || !Number.isInteger(Number(y)) || (what !== 'image' && what !== 'alpha')) throw new Error('unknown diagnostic option ' + part)
@@ -34,6 +37,7 @@ export function parseProbe(diag: string): Probe {
 
 export function applyProbe(p: Probe | null): void {
   forceSide(p ? p.side : null)
+  forceTop(p ? p.top : false)
 }
 
 export function probeString(p: Partial<Probe>): string {
@@ -43,6 +47,7 @@ export function probeString(p: Partial<Probe>): string {
   else if (p.shut) parts.push('shut')
   if (p.place === false) parts.push('noplace')
   if (p.mask) parts.push('mask')
+  if (p.top) parts.push('top')
   if (p.dump) parts.push('dump=' + p.dump.x + ',' + p.dump.y + ',' + p.dump.what)
   else if (p.picture) parts.push('picture')
   return parts.join('/')
