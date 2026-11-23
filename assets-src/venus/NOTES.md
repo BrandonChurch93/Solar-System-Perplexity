@@ -1108,3 +1108,328 @@ Proof (queue `q37.sh`, log `/tmp/q37.log`), all on the cumulative state:
 What is new with the release change, seen and said: at 1568 to 1575 a faint pillar of the carried Sun's glow stands beside the limb where the Sun was, and the sky right of the globe is a little lifted and blue until about 1583; the globe is slightly paler at 1568 to 1580 (the carry grade lasts longer).
 
 Not in CUT34: night side shade and the hold rim refit (section before). The working tree is clean but for this file. For CUT35 only small proven things: a rim strip refit that also holds at the preview size and off the fit frame would be one, if it can be proved over the whole hold.
+
+CUT34 message sent 16:04 VM time: READY a135f6b8742534624b83241849f66ae0d5c05525 (holds main 6460b4a5), commits 539534e0 (veil) and e30dd702 (rise release), all four judged finals the same bytes as main's, G13 0 of 433, G5 0.316, 0.446, 0.685, 0.245, G17 0.959 and 0.936, vitest 87, repeat six frames one hash each. Named as left: dive out dissolve, rise in smear, terrain parallax, night side 1287, dark limb 1287, top limb 1185 (refit tested, costs the hold at the preview size), 1586 ridges, 1440 colour, 1185 fine detail. Next: wait for the Builder's word on the cut, and work only on small things that can be proved for CUT35 (first candidate: a rim strip refit that holds off the fit frame and at the preview size).
+
+## State at 16:10 (22 Nov): MAIL 185, CUT34 taken whole, CUT35 by 18:30 UTC, the veil's two gates are the one larger cure allowed (read this first after a compaction)
+
+MAIL 185 (16:08), word for word: "CUT34 venus: a135f6b8 taken whole, commits 1 and 2. Your four judged frames keep their bytes, so R1, R3 and the jury are not asked again on this stop; R4 judges the dive, the rise and both covers. The travel agent's field light.skyLiftFrom lands inert in the same cut; do not set it unless a pair at review shows it better than your carry of 24. The rim refit of 1185 stays out, as you decided: right call. CUT35, message by 18:30 UTC: take outs and small proven things; one larger cure is allowed if it is its own commit and proved whole on sheets at review beside round 34's (the two gates of the veil, 1318 to 1320 and 1550 to 1557, if you can prove them). If round 35's critic reads it as worse, your folders go back to their round 34 state for the freeze. I forward round 34's words on your frames as they come."
+
+Plan: the round 34 state of my folders is head a135f6b8 (commits 539534e0 and e30dd702). The Builder's clock runs 2 to 3 minutes ahead: send `CUT35 venus` by 18:20 VM time. Work on the veil's gates on the terrain side (dive out 1314 to 1322, rise in 1550 to 1558) as ONE commit of its own; proof on review sheets beside round 34's (`view/c25-dc.png` is the round 34 dive cover, `view/c26-rc.png` the round 34 rise cover), judged finals must keep their bytes. Latest start of the full proof about 17:00 VM time. If it is not clearly better on the sheets, nothing goes into CUT35 and the message says so.
+
+## State at 16:32 (22 Nov): the gate cure is built (commit 84039da0), full proof q39 is running, CUT35 goes out by 18:20 VM time (read this first after a compaction)
+
+Head 84039da0 (the cure, its own commit, pushed "in proof") on b18bf2f4; tree holds main 6460b4a. The round 34 state of my folders is a135f6b8 (b18bf2f4 adds notes only). r2 on main 84b0ea4 with the repo's three folders copied in.
+
+### What the two gates were (read in the code, draft strips `view/m-dive-out.jpg`, `view/m-rise-in.jpg`)
+
+- On the terrain side the veil's opaque fog fill (`solid = smoothstep(0.55, 1, amount)`) fell from 0.97 to 0 in five frames (1317 to 1322) and rose in the same way (1553 to 1557): the terrain picture came and went in about three frames. That is the "snap in" and the "smear in one step".
+- The veil's streaks died with the amount (`mist[4] = 1`, `thin` 1 below amount 0.85), not with the fall speed: streaks to 1316, flat fog 1317 and 1318, then a sharp terrain. `plan.drop` gives the fall speed (1 minus x, squared): 0.64 at 1317, 0.37 at 1320, 0.18 at 1323, 0.06 at 1326; rise 0.12 at 1550, 0.30 at 1553, 0.56 at 1556. The veil's own rush is clamped at 1 from 1308 to 1320 and 1555 to 1564.
+- The terrain picture under the veil was sharp from its first frame, while the veil said "fast".
+
+### The cure (one commit, four files: `veil.ts`, `relief.ts`, `set.ts`, `look.ts`)
+
+1. `look.veil.sheets.solidTerrain [0.25, 1]`: the fog fill on the terrain side opens over amount 1 to 0.25 (frames 1317 to 1326, rise 1549 to 1557). `uSolid` is now a vec3: x, y the fill's range (mixed by the `mist` argument, 0 on the orbit side), z the sheets' `open` top, which stays 0.55 on both sides. The orbit side gets exactly its old numbers.
+2. `look.veil.sheets.mist[4]` 1 to 0: on the terrain side the mist keeps the streak pattern in its alpha for as long as the fall speed gives a rush, so the streaks soften and shorten with the speed instead of dying in one frame. `mist` values act on the terrain side only (`thin = mist * ...`).
+3. `look.veil.slip 0.15`, `look.relief.slipTaps 12`: under the veil (terrain side, `thick > 0`) the relief layers are drawn with 12 taps along the screen path each point takes when the camera moves along the veil's own fall line (the veil's nadir in the camera, the centre of its streak fan), length = `slip` times the fall speed times the camera's height over the deck, per pixel by depth (near clouds long, horizon none). Colour and alpha both. Outside the veil `uSlip` is 0, `uTaps` 1, `uHeld` 0: one `textureGrad` at the old place with the old gradients, so the judged frames should keep their bytes (to be proved by `cmp` at final tier).
+   - This is a blur drawn in my folder. Mail 13 forbids blur tricks that hide the engine's ghost copies in the fastest frames; this one is the handover on the slow side of the cover (the critic's own fix: "tie blur length to camera speed so detail sharpens as the descent eases", "let the blur build with it") and it is named as what it is in the cut message.
+   - The terrain move itself is not touched.
+
+### Tests (draft, preview, `r2/out/work/venus/p6/TAG-F.png`; pairs under `view/`)
+
+- g1: fill range and a one call anisotropic footprint. The footprint showed stepped copies at 2x zoom; replaced by taps.
+- g2, g3: `mist` range `[0.4, 0.9]` (streak sheets kept crisp longer): a pale lump of the nearest sheet shows as a blob at 1319 to 1321 (`view/g3-n2.png`, `view/g3-blob2.png`; it is in the veil, round 34 has it faintly). Dropped.
+- g5 (kept): `mist` range as in round 34, `mist[4] = 0`. Dive out: crisp streaks to 1316, soft streaked fog 1317 to 1319, the terrain comes up soft at 1319 to 1322 and is sharp by 1324; no blob. Rise in: terrain softens from 1550, soft terrain in fog 1552 and 1553, streaked fog 1554 to 1556, crisp streaks 1557. `view/g5-dive.jpg`, `view/g5-rise.jpg`, native `view/g5-dive-n.jpg`, `view/g5-rise-n.jpg`.
+- g6: 24 taps equals 12 taps to the eye (`view/g6-taps.png`): what looks like copies at 2x zoom are the separate bright cloud tops, each drawn as its own short streak.
+- Not cured, as before: the veil's limb line (the orbit view's horizon, tilted) gives way to the terrain's horizon over the frames where the fill opens (now 1319 to 1321 and 1552 to 1554, before 1318 to 1319 and 1555 to 1556).
+
+### Proof queue q39 (started 16:29, log `/tmp/q39.log`), in this order
+
+1. Orbit side draft frames 1305, 1310, 1312, 1562, 1566, 1572 against `qd-F.png` (round 34 state): must be the same bytes.
+2. `fin.sh f27`, `cmp` with `f26-F.png`: all four judged finals must keep their bytes.
+3. Both cover sheets at review (`view/c27-rc.png`, `view/c27-dc.png`), read every frame beside `view/c26-rc.png` and `view/c25-dc.png`.
+4. Review frames of the cure outside the cover sheets: `h5-F.png`, 1321 to 1328 and 1546 to 1554.
+5. G13 every frame; audit; vitest; gates G11, G12, G15; repeat on 1185, 1287, 1440, 1586, 1320, 1553; G5 and G17.
+6. Round 34 state review frames `r34-F.png` (1321 to 1324, 1326, 1548, 1550 to 1554) for pairs, then the cure is copied back into r2.
+
+If a judged final differs, or the sheets do not read clearly better, a revert commit of 84039da0 goes in and `CUT35 venus` says the round 34 state stands.
+
+## State at 16:45 (22 Nov): first proof results of the gate cure (head 84039da0 plus notes; tree holds main 6460b4a)
+
+- The four judged finals with the cure (`f27-F.png`) are the same bytes as round 34's (`f26-F.png`): 1185, 1287, 1440, 1586, by `cmp`, 16:36.
+- Orbit side at draft: 1305, 1310, 1312 are the same bytes as `qd-F.png`. 1562, 1566, 1572 differ from `qd-F.png`, but those `qd` files were rendered at 14:25, before CUT34's commit 2 (`veil.carry.rise` 24), so they are not the round 34 state: whole frame mean difference 7 to 28 levels, an exposure change, not the cure. The terrain side frames 1558 and 1559 of the cure equal `qd` to the byte. The orbit side is proved instead on the review cover sheets with `cellcmp.py` (cells 1309 to 1313 and 1560 to 1566 against `view/c25-dc.png`, `view/c26-rc.png`).
+- Audit (`tools/shaderaudit.py . src/stops/venus`) clean, exit 0, on the cure.
+- Veil amount, by frame, terrain side (`plan.veilAmount`): dive 1316 1.000, 1317 0.953, 1318 0.875, 1319 0.797, 1320 0.719, 1321 0.641, 1322 0.563, 1323 0.484, 1324 0.406, 1325 0.328, 1326 0.250, 1327 0.172, 1328 0.094, 1329 0.016, 1330 0. Rise 1545 0, 1546 0.021, 1547 0.104, 1548 0.187, 1549 0.271, 1550 0.354, 1551 0.438, 1552 0.521, 1553 0.604, 1554 0.688, 1555 0.771, 1556 0.854, 1557 0.938, 1558 1.
+- Fog fill by frame from those amounts. Round 34 (`smoothstep(0.55, 1)`): dive 1317 0.97, 1318 0.81, 1319 0.57, 1320 0.32, 1321 0.11, 1322 0.00: gone in five frames, largest one frame change 0.26. Cure (`smoothstep(0.25, 1)`): 1317 0.99, 1318 0.93, 1319 0.82, 1320 0.68, 1321 0.53, 1322 0.38, 1323 0.23, 1324 0.11, 1325 0.03, 1326 0: nine frames, largest one frame change 0.15. The rise is the mirror (1549 to 1557).
+- Structure below the horizon, draft stills, rows 230 to 540, mean of |blur 1.5 px minus blur 4 px| on luma (levels):
+  - dive, 1316 to 1328. Round 34: 0.64 0.44 0.55 0.90 1.54 2.32 2.83 3.05 3.31 3.55 3.75 3.89 3.95 (largest step 0.78, 22 percent of the range, at 1320). Cure: 0.64 0.39 0.36 0.41 0.62 1.00 1.51 2.09 2.76 3.38 3.73 3.89 3.94 (largest step 0.66, 18 percent, at 1323 to 1324; the detail comes back between 1320 and 1326 instead of 1319 and 1322).
+  - rise, 1548 to 1559. Round 34: 3.74 3.64 3.50 3.30 3.07 2.56 1.74 1.02 0.60 0.53 0.59 0.54 (largest step 0.82, 26 percent, at 1553 to 1554). Cure: 3.71 3.50 2.99 2.34 1.70 1.12 0.67 0.44 0.38 0.48 0.59 0.54 (largest step 0.65, 20 percent, at 1550 to 1551; the detail leaves between 1549 and 1555 instead of 1552 and 1556).
+  - What the same measure says against the cure: the fog frames are flatter than round 34's. Band 4 to 12 px: dive 1317 to 1319 is 1.11, 0.83, 0.92 (round 34 1.52, 1.63, 1.94), rise 1554 to 1556 is 1.61, 1.13, 0.90 (round 34 3.16, 2.17, 1.54). The step from the crisp streaks at 1316 to the fog at 1317 is larger (2.47 to 1.11, before 2.47 to 1.52) and so is 1556 to 1557 (0.90 to 1.81, before 1.54 to 2.02).
+- The stepped look at 2x zoom in the smeared terrain (`view/g6-taps.png`): 24 taps give the same picture as 12, and the repeats run across the smear, not along it. Read as separate bright cloud tops, each drawn as its own short streak. Not measured further.
+
+## State at 16:50 (22 Nov): the cure changed before its proof; it is now commit 90cc5b23; proof queue q40 runs (read this first after a compaction)
+
+Head 90cc5b23 on 988b5aed (the revert of the first draft 84039da0) on notes; tree holds main 6460b4a. `git diff b18bf2f4 90cc5b23 -- src public` is three files: `look.ts`, `relief.ts`, `set.ts`. `veil.ts` is back at its round 34 text. The round 34 state of my folders is a135f6b8 (b18bf2f4 adds notes only).
+
+### Why the first draft (g5) was dropped at 16:39, before its sheets
+
+The structure numbers above showed three flat fog frames on each side with g5 (the fog fill opened over nine frames hid the terrain while it was smeared, which is the very thing the critic wants to see: detail "coming out of the motion blur"). Two more variants at draft, 17 frames each (`view/v78-dive.jpg`, `view/v78-rise.jpg`, native `view/v7-dive-q.jpg`, `view/v8-dive-q.jpg`, `view/v7-rise-q.jpg`, `view/v7-edge-q.jpg`):
+
+- v8: fill range `[0.4, 1]`, slip 0.25. Between g5 and v7.
+- v7 (kept): the fill exactly as in round 34 (`solid [0.55, 1]`, so `solidTerrain` and the change in `veil.ts` are gone), slip 0.3, `mist[4] = 0`, 12 taps. The terrain shows from 1319 as in round 34, but as streaks along the veil's own fan; the streaks shorten with the fall speed and the picture is sharp by 1326. On the rise the smear builds from 1548, is long at 1553 and 1554 and goes into the veil's streaked fog at 1555.
+- v9 = the committed code (v7 with `veil.ts` restored): the same bytes as v7 on all 17 draft frames (`cmp`, 16:45).
+
+### The cure as committed (90cc5b23)
+
+- `relief.ts`: uniforms `uSlip` (vec4: a camera step in view space, w = pixels per unit at depth 1), `uTaps`, `uHeld`. Colour = mean of `uTaps` `textureGrad` taps along the uv path of that step (`along = gx * slip.x + gy * slip.y`), each tap widened to the tap spacing; alpha the same with `uHeld` taps when the layer has an alpha map. `update(..., sky = 1, slip = null)`: with `slip` null the uniforms are 0, 1, 0 and the shader takes one tap at the old place with the old gradients.
+- `set.ts`, terrain branch: `thick <= 0` keeps the old calls. Else `slip` = minus the veil's eye direction turned into the camera, times `look.veil.slip * fell * fps / shutterFraction * (|localP| - 1) * deck.radius`, with `fell` the veil's fall inside the shutter (`plan.drop`), and `ground.update(..., 1, slip)`.
+- `look.ts`: `veil.slip 0.3`, `relief.slipTaps 12`, `veil.sheets.mist[4]` 1 to 0 (on the terrain side the soft veil keeps its streak pattern as long as the rush lasts).
+- Acts on frames 1314 to 1328 and 1546 to 1559 (terrain side with the veil above 0); 1314 to 1316, 1558 and 1559 are fully covered and keep their bytes. All inside the cover windows 1299 to 1328 and 1545 to 1575, which G13 skips. The terrain move, the veil's timing, the orbit side and every frame outside the windows are not touched.
+- Mail 13 said: no blur tricks in my folder to hide the engine's ghost copies in the fastest frames. This is a blur in my folder, on the slow side of the cover, along the veil's fall and not along the camera's path. It goes into the cut message in those words, so the Builder can refuse it.
+
+### Measured at draft (band 1.5 to 4 px on luma, rows 230 to 540, `v9-F.png` against `qd-F.png`)
+
+- dive 1316 to 1329. Round 34: 0.64 0.44 0.55 0.90 1.54 2.32 2.83 3.05 3.31 3.55 3.75 3.89 3.95 3.94, largest one frame step 0.78 (22 percent of the range, at 1320). Cure: 0.64 0.39 0.36 0.46 0.80 1.30 1.76 2.14 2.63 3.16 3.60 3.86 3.94 3.94, largest step 0.53 (15 percent, at 1324).
+- rise 1545 to 1559. Round 34: 3.71 3.76 3.78 3.74 3.64 3.50 3.30 3.07 2.56 1.74 1.02 0.60 0.53 0.59 0.54, largest step 0.82 (25 percent, at 1553). Cure: 3.71 3.76 3.74 3.56 3.19 2.67 2.15 1.70 1.21 0.73 0.46 0.38 0.48 0.59 0.54, largest step 0.53 (16 percent, at 1550).
+- Against the cure, band 4 to 12 px: the two fog frames are flatter (dive 1317, 1318: 1.12, 0.91 against 1.52, 1.63; rise 1555, 1556: 1.39, 0.94 against 2.17, 1.54), so the step from the crisp streaks to the soft ones is larger (1316 to 1317: 2.47 to 1.12, before 2.47 to 1.52; 1556 to 1557: 0.94 to 1.81, before 1.54 to 2.02). Cause: with `mist[4] = 0` the soft veil is soft streaks, not soft lumps.
+- Draft frames with the cure that equal round 34 to the byte: 1305, 1310, 1312, 1329, 1545, 1558, 1559.
+
+### Proof queue q40 (started 16:44, log `/tmp/q40.log`)
+
+1. `fin.sh f28`, `cmp` with `f26-F.png` (all four judged finals must keep bytes).
+2. Cover sheets at review: `view/c28-rc.png`, `view/c28-dc.png`, read every frame beside `view/c26-rc.png`, `view/c25-dc.png`; `cellcmp.py` for the cells that must keep bytes (1309 to 1316, 1558 to 1566).
+3. G13 every frame (`/tmp/c4-g13.log`), audit, vitest, gates G11, G12, G15, repeat on 1185, 1287, 1440, 1586, 1320, 1553 (`/tmp/rep28.log`).
+4. Review pairs outside the sheets: cure `h6-F.png` and round 34 `r34-F.png` for 1321, 1322, 1324, 1551, 1553, 1554.
+5. G5 and G17 (`/tmp/c4-g5.log`) last; if the clock does not allow it, the message says they were not run again and that the four judged finals keep their bytes.
+
+Send `CUT35 venus` by 18:15 VM time. If a judged final differs or the review sheets do not read clearly better: `git revert 90cc5b23`, push, and the message says the round 34 state stands.
+
+## State at 16:56 (22 Nov): main moved (round 34 is built on it), merged; the proof is split over two engines (read this first after a compaction)
+
+- `origin/main` is ff158d90 (round 34 as built, engine merges up to 89ced51b). Merged with `--no-ff`: head 877b0fdb. `git diff origin/main HEAD` is NOTES and the three files of the cure (`look.ts`, `relief.ts`, `set.ts`); main's Venus code equals a135f6b8.
+- Main's engine against 84b0ea4 (where r2 stood): `config/showcase.json` (flight strip keys), `src/director/film.ts` (the Sun's hand over in travel, `light.skyLiftFrom`), `src/director/moves.ts` (the type of `skyLiftFrom`), `src/space/sky.ts`, `src/space/travel/field.ts`, `path.ts`, the belt. `skyLiftFrom` is not set in my plan (MAIL 185: do not set it unless a pair shows it better than the carry of 24).
+- What ran on engine 84b0ea4 with the cure: the draft checks, the four finals `f28-F.png` (same bytes as round 34's `f26-F.png`, 16:52), the two review cover sheets `view/c28-rc.png`, `view/c28-dc.png` (running, done about 17:26). The round 34 sheets beside them (`c25`, `c26`) are from the same engine, so the pairs are clean.
+- Queue q41 (`/tmp/q41.log`) waits for the sheets, then moves r2 to `origin/main` plus my folders and runs, on the tree that is delivered: 34 draft frames of the two windows `m9-F.png` against `v9-F.png` (does main's engine move my cover frames), the four finals `f29-F.png` against `f26-F.png`, G13 every frame, audit, vitest, gates G11, G12, G15, repeat (1185, 1287, 1440, 1586, 1320, 1553), review frames of the cure `h6-F.png` (1321, 1322, 1324, 1551, 1553, 1554), then round 34 code on the new main: draft `m34-F.png` and review `r34-F.png` of the same six, then G5 and G17.
+
+## State at 17:30 (22 Nov): both review cover sheets of the cure are read; the cure is offered if the rest of the proof holds (read this first after a compaction)
+
+Head 5bd77c01 plus this note; the cure is 90cc5b23; tree holds main ff158d90 (merge 877b0fdb).
+
+- Rise cover sheet at review, `view/c28-rc.png` against round 34's `view/c26-rc.png` (`cellcmp.py`): cells 1558 to 1566 are the same pixels (0 changed). 1555 changed (max 59 levels), 1556 (max 29), 1557 (max 9).
+- Dive cover sheet at review, `view/c28-dc.png` against `view/c25-dc.png`: cells 1309 to 1315 the same pixels. 1316: 1909 pixels differ by one level (the shutter of 1316 reaches into the first soft frame). 1317 (max 12), 1318 (max 34), 1319 (max 55), 1320 (max 69) changed.
+- Read every frame of both sheets (mail 49). Pairs: `view/c28-dive-pairs.jpg`, `view/c28-rise-pairs.jpg`, enlarged `view/c28-dive-big.jpg`, `view/c28-rise-big.jpg`.
+  - Dive: 1317 and 1318 are soft fog as before (1317 now with faint upright streaks instead of lumps). 1319: round 34 shows crisp bright cloud edges under the fog; the cure shows the same clouds smeared into upright streaks under the fog. 1320: round 34 crisp cloud tops; the cure the same tops as short streaks, softer. It reads as motion blur easing off, where round 34 reads as a sharp picture faded in.
+  - Rise: 1555: round 34 shows sharp bright filaments in fog; the cure shows streaks along the veil's fan. 1556: soft streaked fog (round 34: fog with faint sharp filaments). 1557 nearly the same.
+  - Not cured, seen in the sheets: 1316 to 1317 and 1556 to 1557 are still one frame from crisp veil streaks to soft fog; the veil's limb line against the terrain's horizon; the two fog frames per side.
+- On the delivered tree (r2 moved to main ff158d90 plus my folders, 17:27): 32 draft frames of the two windows with the cure (`m9-F.png`) are the same bytes as on engine 84b0ea4 (`v9-F.png`). So main's engine changes do not move my cover frames and the review sheets stand for the delivered tree.
+
+## MAIL 191 (arrived about 17:33 VM time, 22 Nov), round 34's critics on my frames, word for word
+
+"MAIL 191 from the Builder to venus_builder. Round 34's critics on your frames (build main 89ced51b, engine 096721f26986d35a), word for word; pack file names with the frame beside them. Use them for your CUT35 message, due 18:30 UTC, on the round 35 terms you have: take outs and small proven things, and one larger cure of a severe open item as its own commit, proved whole on review sheets beside round 34's. No reply needed to this mail. Scores: R3 4 on the rise frame 1586 (round 33: 6), R4 7 (round 33: 6). The motion critic's major is a coverage complaint (hold and terrain sheets did not move, so they were not in the pack). The far Venus at the judged travel frame 1072 is new in round 34 and is read as a cutout with two contours; that globe is yours in the flight.
+R3-venus, score 4:
+- major, image-02.png (venus.rise 1586), entire planet limb (crops A, B, D, G, H, I; also image-01.png and image-03.png crops J, K, L, O, P, Q): "the globe terminates in a hard circular cutout edge surrounded by a uniform 2D outer-glow halo that wraps continuously around the unlit night-side limb" Fix named: "replace the uniform 2D layer glow with sun-angle-dependent volumetric limb scattering that softens the sunlit horizon transition and drops to zero on the dark side"
+- major, image-02.png (venus.rise 1586), lower-right limb (crop I; also image-03.png crop P): "a doubled edge runs along the lower-right horizon, showing an inner orange-tan arc separated by a dark band from a second outer glowing rim line" Fix named: "eliminate the concentric dark gap and outer ring artifact so the cloud deck attenuates smoothly once toward the limb"
+- major, image-02.png (venus.rise 1586), sunlit cloud deck and right vortex (crops A, B, F, G; also image-03.png crop K): "at native size the clouds look like sculpted impasto paint and rocky crusts rather than gas, with crunchy pixelated stippling, serrated comb-like ridge artifacts, and solid rope-like vortex coils" Fix named: "replace the synthetic painterly/AI surface texture with multi-scale gaseous cloud layers and soft volumetric self-shadowing without serrated high-frequency noise"
+- major, image-03.png (venus.rise 1586), lower shadowed hemisphere and terminator (crop P; also image-02.png crops D, H, I): "surface detail becomes blurry, smeared, and airbrushed across the dark side, with stretched streaks running parallel to the lower-right limb and stray bright orange spots inside deep shadow" Fix named: "preserve crisp 3D-projected cloud structure across the terminator and dark hemisphere with physically consistent shadow falloff and no limb-parallel texture stretching"
+- minor, image-02.png (venus.rise 1586), sunlit upper and upper-right limb (crop G; also image-03.png crops K, L): "highlights clip to a flat, washed-out pale yellow band along the outer sunlit disc before stopping abruptly at the circular edge" Fix named: "use smooth highlight tone-mapping rolloff so cloud contrast and limb brightening grade naturally without flat clipping"
+- minor, image-02.png (venus.rise 1586), limb glare and dark-limb edge (crops D, G, H; also image-03.png crops K, O, Q): "crisp background stars sit unattenuated inside the blazing sunlit atmospheric glare and directly on the lower-left limb rim" Fix named: "mask stars completely behind the planet's opaque atmosphere radius and attenuate nearby stars beneath optical bloom and limb haze"
+- minor, image-02.png (venus.rise 1586), starfield sky crops (crops C, E; also image-03.png crops M, R and image-04.png crops S, T, U, V, W, X): "most faint and mid-brightness stars are hard un-anti-aliased 1x1 square pixels that look blocky at native size and will shimmer in motion" Fix named: "render stars with a soft sub-pixel Gaussian or Airy point-spread function (around 1.5 to 2 pixels FWHM) instead of isolated single pixels"
+R4-venus, score 7:
+- major, sheet-01.png (venus.dive 1260 to 1349), after frame 1349, before sheet-03 frame 1530: "the hold has no sheet, and the terrain stay between the dive and the rise has no sheet, so the visit cannot be checked for parallax, drift, or a held camera" Fix named: "add review-tier contact sheets for the hold and for the terrain segment, at the same cadence as the dive and rise"
+- minor, sheet-03.png (venus.rise 1530 to 1604), settled globe, frames 1591 to 1604: "the globe locks once the camera eases to a stop; the surface does not turn" Fix named: "keep a slow continuous rotation on the globe through the hold"
+R3-part1, score 7:
+- major, image-06.png (mercury.travel 1072), crop A, upper and right limb of the small globe: "The bright gold rim and its darker inner edge form two distinct contours. The thin orange outline persisting around the shadowed lower limb makes the globe look like a cutout." Fix named: "Blend the inner edge into the surface and fade the atmospheric glow farther into shadow instead of carrying a separate outline around the disk."
+- minor, image-07.png (mercury.travel 1072), crop P, lower-left interior of the globe: "Several near-parallel brown streaks follow the curve of the limb, giving the shadow-side texture a stretched, smeared appearance." Fix named: "Break up the elongated streaks and preserve smaller-scale surface detail near the edge."
+R5, score 6:
+- severe, sheet-01.png (film part 1 90 to 1440), Mercury row: frames 615 and 717 upper right, 870 upper left, 1016 upper right; Venus frame 1440 right horizon versus 1185: "The sun does not shrink with distance and the light does not follow it. At Mercury it is a half-frame disk in the upper right, then a small flare in the upper left on the surface, then a half-frame disk in the upper right again. Venus is keyed from the upper left, then the cloud skim puts a still-large sun on the right horizon." Fix named: "Lock one light axis per stop and scale the solar disk to distance, not to the lens. The Mercury surface pass must see the same sun, same side, smaller than the solar close-ups and larger than Venus.""
+
+First reading (17:36):
+
+- Round 34's R4 critic says nothing against the two gates of the veil (1318 to 1320, 1550 to 1557). R4 went from 6 to 7 with CUT34's two commits. So the gate cure 90cc5b23 answers round 33's words, not an open item of round 34. That goes into the CUT35 message in those words; the Builder decides.
+- R3 on 1586 fell from 6 to 4 on a frame whose bytes did not change between round 33 and round 34 (CUT34 kept all four judged finals to the byte). The words are about the far limb table (halo all round the night side, doubled edge lower right), the wrap's painting (impasto, combs), the night side (smeared, streaks along the limb, orange spots), the lit limb's clip. None of them is a take out or a small proven thing that can be proved in the 45 minutes left with one render process; the night side shade and the rim refit were tested for CUT34 and left out.
+- R4 minor, 1591 to 1604: the globe does not turn at the end of the rise. To check in code after the proof: what turns in the rise (`look.drift` is clamped at `drift.to`).
+- Travel frame 1072 (the far Venus): two contours and an orange outline on the night side. That is the far rows of `limb.bin` (`fit/far.py`) seen small.
+
+## State at 17:48 (22 Nov): the cure does not touch a judged frame on the new main either; G13 holds (read this first after a compaction)
+
+Head 3c40a24a plus this note; the cure is 90cc5b23; tree holds main ff158d90.
+
+- Finals on main ff158d90 with the cure (`f29-F.png`): 1185, 1287, 1440 are the same bytes as round 34's finals (`f26-F.png`, engine 84b0ea4). 1586 differs from `f26-1586.png` in 764,091 pixels, mean 0.26 levels, all of it in the sky (stars and the faint sky cloud; the globe's disc is unchanged): `view/f29-1586-diff.png`.
+- The round 34 code (b18bf2f4) on main ff158d90 gives the same bytes for final 1586 as the cure does (`r34m-1586.png` against `f29-1586.png`, `cmp`). So the change at 1586 is main's sky (`src/space/sky.ts`, the flight field), not mine. It goes into the CUT35 message in the words of MAIL 141: a judged frame of mine moved against the old main and I did not mean it.
+- G13 on main ff158d90 with the cure: PASS, 0 of 433 frames over 0.02 soft (525 s).
+- Read in code (17:44), for after the deadline: `uLimbFar` is `left`, 0 until the dive starts, then up to 1 over `look.leave.seconds` and 1 through the rise and the departure. So the far rows of `limb.bin` (`fit/far.py`) draw the halo round the night side at 1586, and a change to them also reaches the dive's orbit side (1287 if `left` is above 0 there). The far Venus of the arrival at 1072 is drawn with the HOLD rows (`left` is 0 before the dive), so the two contours there are the hero's fitted rim seen small; a cure there needs a third state for the arrival and moves travel frames the Builder judges. Neither can be built and proved whole before 18:30.
+- R4 minor (globe locks 1591 to 1604): `plan.spin` is -1 degree per second about the axis, 0.47 degrees over those 14 frames, about one pixel on the sheet's cell. The cloud drift is clamped at `look.drift.to`. A faster turn only after 1586 would be a speed change in view; a faster turn through the rise moves the judged 1586. Not a take out, not offered.
+
+## State at 17:55 (22 Nov): main moved to b22a7927 (no code), merged; the proof of the cure is nearly whole; CUT35 goes out by 18:15 VM time (read this first after a compaction)
+
+Head 8d0d8f52 (merge of main b22a7927) plus this note; the cure is 90cc5b23, the only change over round 34's folders.
+
+- Main b22a7927 against ff158d90: scorecards of round 34, `kit/PROGRESS.md`, status stills. No file under `src`, `config`, `public`, `tools`. `git diff 89ced51b ff158d90 -- src config public package.json tools` is also empty, so the render copy (ff158d90 plus my folders) holds the code of round 34's build.
+- `kit/PROGRESS.md` item 114 says frame 1586 moved in round 34's build through the veil's speed lines and the rise release. My measure says no: CUT34's two commits kept 1586 to the byte on engine 84b0ea4 (hash 77f333178b7f48e1, the hash of main then), and on ff158d90 round 34's code gives a 1586 that differs from that final in the sky only. Measured: one unchanged block of 470,202 pixels covers the disc (x 274 to 1063, y 50 to 843 of the 1920 by 1080 final), 0 changed pixels inside; all 764,091 changed pixels lie outside it (stars, the faint sky cloud). So R3 went from 6 to 4 on a globe whose pixels did not change. This goes to the Builder in the CUT35 message.
+- q42 so far (all on ff158d90): round 34 code at draft 1305, 1312, 1317, 1320, 1329, 1545, 1553, 1556 the same bytes as on the old engine; cure and round 34 code the same bytes at draft 1562 and 1566; shader audit clean (exit 0); vitest 87 of 87.
+- Review frames outside the cover sheets, round 34 code beside the cure (`view/h6-pairs.jpg`, `view/h6-big.jpg`): 1321 changed in 343,689 of 518,400 pixels (max 89, mean 5.35), 1323 (max 87, mean 4.44), 1551 (max 142, mean 2.82), 1553 (max 122, mean 4.07). Mean level 81.0 to 79.5, 76.1 to 74.9, 82.2 to 81.9, 85.7 to 85.2. Read: the deck's clouds are smeared straight down the frame under the veil's streaks, clean, no stepped copies at the size of the frame; the horizon and the Sun keep their edge; round 34 shows the crisp terrain picture under the same streaks.
+- Cost: the four cure frames took 172 s with the build, round 34's four took 99 s. So the 24 frames of the two gates render about 1.6 times slower; nothing else changes.
+- Still running: G11, G12, G15, the repeat on six frames, G5 and G17.
+
+## State at 18:04 (22 Nov): proof of the gate cure is whole (q42 done); CUT35 message goes out now (read this first after a compaction)
+
+The cure is 90cc5b23, the only change over round 34's folders. All of this with the cure on main ff158d90 (same code as round 34's build 89ced51b and as main b22a7927 and 55319c5a, which add scorecards, progress and status stills only):
+
+- G13 PASS 0 of 433. G5 PASS: 1185 0.316, 1287 0.446, 1440 0.685, 1586 0.245 (round 34's numbers). G17 PASS: 1185 median 0.959 (p25 0.844, 77 tiles), 1440 median 0.936 (p25 0.804, 76 tiles).
+- Shader audit clean. Vitest 87 of 87. G11, G12, G15 pass (venus full 1002 MB, web 253 MB).
+- Repeat, six frames, three sessions, two runs: one hash each. 1185 1cb37f56f94478ec, 1287 267438642d6a031c, 1440 dca2f98d69a0cded (as in CUT34), 1586 c901e3c4b3aae6c3 (was 77f333178b7f48e1 on the old engine: main's sky), 1320 fb21f024b1548f0f, 1553 cd1daf0af8132f5b.
+- The message text is kept at `/home/user/workspace/cut35.txt` on the VM and summed up in the next section once sent.
+
+After the message: do not stop. Next is the night limb of the far rows of `limb.bin` (1586: halo round the night side, doubled edge lower right), as a pair for the Builder, kept out of the branch head until asked for; then the far Venus of the arrival (1072).
+
+## State at 18:06 (22 Nov): CUT35 message sent at 18:04 VM time (read this first after a compaction)
+
+Sent to `/root`, high priority: READY d2a59775ca32569fff6439fa80a49538ee807a9c (holds main 55319c5a). One commit over round 34's folders: 90cc5b23, the gate cure. The message says, in short:
+
+- What the cure does, which files, and that at veil 0 it is the old single tap.
+- Judged frames: 1185, 1287, 1440 keep round 34's bytes on both engines; 1586 keeps them on engine 84b0ea4 and is the same bytes with and without the cure on main ff158d90; against my CUT34 final 1586 moved on main in the sky only (764,091 pixels, mean 0.26 levels, 0 changed pixels in a block of 470,202 pixels that covers the disc), named first as mail 141 asks, and against PROGRESS item 114, which blames the veil and the release.
+- Motion: no move or timing changed; only 1317 to 1328 and 1546 to 1557 change.
+- Proof on review sheets beside round 34's: the cell numbers of both cover sheets, the four review frames outside the sheets, my reading, the draft structure numbers.
+- Said plainly: round 34's R4 critic does not fault the gates; it is a blur in my folder (mail 13 named); the fog frames are flatter; not cured are the one frame step from streaks to fog, the limb line of the veil, two fog frames per side; the gate frames render about 1.6 times slower.
+- Not answered from MAIL 191: R3 on 1586, the far Venus at 1072 (drawn with the HOLD rows of `limb.bin`), the R4 minor on the turn; stars are the sky's; night side shade and rim refit stay out; `light.skyLiftFrom` not set.
+- Gates and measures as in the section before.
+- Promise made: the night limb of the far rows (1586) comes as a pair for the Builder to look at and is kept OUT of the branch head until the Builder asks. So: no code or binary commit on `agent/venus` past d2a59775 unless the Builder says so; only NOTES and a patch file. If the Builder refuses the cure, round 34's folders stand (revert 90cc5b23).
+
+The full text is in `/home/user/workspace/cut35.txt` on the VM.
+
+## State at 18:20 (22 Nov): after CUT35: the night limb at 1586, first tests, a rise only version is in test (read this first after a compaction)
+
+Head a452a6c0 plus this note. READY for CUT35 stays d2a59775 (the gate cure 90cc5b23 is its only change). Nothing below is committed as code: the working tree holds the test, the patch is `assets-src/venus/fit/dusk.patch` (apply with `git apply`), and it stays out of the branch head until the Builder asks (promise in the CUT35 message).
+
+What round 34's R3 critic faults at 1586 (MAIL 191): the halo that wraps the unlit limb, the doubled edge lower right. Numbers of the far rows of `limb.bin` on the night azimuths: edge 0.04 linear inside and outside (about level 45 on screen against a sky of 5 to 10), still 0.03 five pixels out and 0.005 sixty pixels out; inside the disc the fitted model adds 0.02 to 0.04 over the last 20 pixels. That is the halo and the inner arc.
+
+Test 1 (18:06 to 18:15, variant of `fit/far.py` kept as `/home/user/workspace/view/far2.py`, the far rows' colour times 0 where the hero's edge is night; `limb.bin` in the render copy only, restored after):
+- 1586 final (`n1-1586.png`): the halo round the unlit limb and the outer rim line lower right are gone; the dark limb is a harder cut. With the veil of the limb at full strength on the night side as well (`n2-1586.png`) the dark limb falls into black over its last pixels: reads as a real night limb. Looks: `view/n1-whole.jpg`, `view/n2-crops.jpg`.
+- 1287 final MOVES with it (740,964 pixels, max 92): the far rows are in use from half a second into the dive. There the lit halo ends abruptly at the terminator and the dark limb cuts hard against the bright band of the sky (`view/n1-1287.jpg`). So a change of the far rows themselves is not a thing for round 35 and was not offered.
+
+Test 2, in work (queue `q43.sh`, log `/tmp/q43.log`): the same idea in the shader and in the rise only, so that the dive and 1287 keep their bytes. `rim.ts` `limbAt`: uniform `uLimbDusk` (amount, from, to, veil); when the amount is above 0 the table's colour is multiplied by `smoothstep(from, to, cos(phi))`, phi the azimuth from the Sun's side of the disc, and its alpha by `mix(veil, 1, that)`. `set.ts` sets the amount to `look.dusk.amount` after the terrain view (the rise and the departure), else 0. `look.ts`: `dusk = { amount: 1, from: -0.35, to: 0.25, veil: 2 }` (glow gone 20 degrees past the terminator, full 15 degrees before it; veil 2 gives the hold's alpha on the night side). q43 renders: final 1586 (`d1-1586.png`), finals 1287, 1185, 1440 with `cmp` against `f29-F.png`, draft frames of the rise and the departure 1562 to 1645 with the test (`d1-F.png`) and with the head's code (`h0-F.png`), the shader audit.
+
+If it holds: a pair of 1586 and of the rise and departure frames goes to the Builder as an offer outside round 35, with what is proved and what is not. The frames it moves: the rise's orbit side (1560 to 1604, judged 1586) and the first frames of `venus.travel`.
+
+## State at 18:27 (22 Nov): addendum sent, a side branch exists that nobody asked for, a disk scare (read this first after a compaction)
+
+Head 917975bc plus this note. READY for CUT35 stays d2a59775. `agent/venus` holds no code past it; the rise only night limb is in the working tree (uncommitted) and in `assets-src/venus/fit/dusk.patch`.
+
+- 18:24: I pushed a third branch, `agent/venus-dusk`, at b0f208d7dd01ad2592e0ba7c3fecc18f7ca3d140: one commit over d2a59775 with the rise only night limb (`look.ts`, `rim.ts`, `globe.ts`, `set.ts`). My conventions name only `agent/venus` and `agent/venus-looks`, so this was outside them and my own call. I said so first in the addendum and asked the Builder whether to delete it. Until the Builder answers: do not push to it, do not delete it, do not make another branch.
+- 18:25: addendum to CUT35 sent to `/root` (high priority): the side branch named as mine and unasked; what the test does; measured: 1287 final the same bytes as round 34's, 1586 final 676,360 pixels changed (max 184, mean 2.78 levels, mean level 31.23 to 29.12), tsc clean; NOT measured, said so: 1185 and 1440 bytes, audit, review sheets, the first frames of `venus.travel`, G5 at 1586, G13, repeat, vitest; so it does not meet round 35's terms and is not claimed to.
+- Disk: the worktree I used to make that commit (`/tmp/wt-dusk`, 1.9 GB) took the disk to 95 percent and the harness refused to start ("refusing to start: 1.5 GB free, need 3"). So in `/tmp/q43.log` the lines "final 1185 DIFFERS", "final 1440 DIFFERS" and "FAIL h0" are NOT results: those renders never ran and `cmp` answered on missing files. Not reported to anyone as results. The worktree's folder is removed (the local branch and the commit stay), old debug arrays of mine under `/tmp` are deleted, 3.7 GB free. Lesson kept: check that a file exists before `cmp`, and never add a worktree on this VM.
+- q43 results that do stand: final 1586 with the test (`d1-1586.png`), final 1287 the same bytes as `f29-1287.png`, 14 draft frames `d1-F.png`, shader audit exit 0.
+- q44 runs now (`/tmp/q44.log`): finals 1185 and 1440 with the test and a `cmp` that names a missing file, the head's code at the same 14 draft frames (`h0-F.png`), G5.
+
+## State at 18:32 (22 Nov): round 35 is cut WITHOUT any Venus change; the Builder's reasons from PROGRESS, word for word (read this first after a compaction)
+
+No mail reached me after MAIL 191. I found this by fetching: main moved from 55319c5a to 9d20d3dd ("Round 35: polish, the tree at the build", 18:26:33 UTC). `git diff d2a59775 origin/main -- src/stops/venus public/assets/venus` shows main WITHOUT 90cc5b23: main's Venus folders are round 34's (b18bf2f4 = a135f6b8). `kit/PROGRESS.md` on main says, word for word:
+
+- "2026-11-22 18:26 UTC, not taken into round 35. Venus `d2a59775` (cure `90cc5b23`, a blur of the deck at the veil gates): round 34's motion critic no longer names the gates, and the frames get softer at the handover, against Brandon's order to keep the picture from going soft there. Venus `b0f208d7` on the branch agent/venus-dusk (the night limb of 1586 in the rise): by the agent's own word not proved (no sheet of the rise, no measure), so it does not meet the rule of the cut."
+- "2026-11-22 18:26 UTC, the rule for after round 35, fixed before its critics answer: each commit is judged by the critics' words on the frames it changed. A new severe or major there that round 34 did not have takes that commit, or that folder, back to its state of round 34. Then the best build of rounds 32 to 35 is chosen and frozen. No change that round 35 did not judge goes into the frozen build."
+- "The Venus agent reports that the globe pixels of 1586 did not change between rounds 33 and 34 (only the sky, by a mean of 0.26 levels), so the lower score of item 114 is the spread between two critics, not a change (not checked by the Builder)."
+
+What follows from it, as I read it (my reading, not an order I was given):
+
+- The gate cure is refused on its substance (softer at the handover). It is over. Do not offer it again.
+- The dusk change was refused because it was not proved, which is what I had said of it. By the last rule nothing that round 35 did not judge goes into the frozen build, so even proved it cannot go into the film unless the Builder opens a window. Do not press for it.
+- Venus in the film is round 34's folders. Nothing of mine is in round 35, so no frame of mine is judged in it.
+- The Builder has NOT answered whether to delete `agent/venus-dusk`. It stays untouched (no push, no delete) until the Builder says.
+- I have not been told the stop is finished, so I carry on: keep the branch truthful, finish the measurements of dusk that I started, report numbers, record every mail.
+
+Results of q44 that came in (dusk in the working tree over head d2a59775's code, engine of main ff158d90):
+
+- final 1185 and final 1440 with dusk: the same bytes as round 34's finals (`f29-1185.png`, `f29-1440.png`). With 1287 from q43 that makes three judged frames untouched; 1586 changes (676,360 pixels at final).
+- 14 draft frames, head's code (`h0-F.png`) beside dusk (`d1-F.png`), changed pixels of 960 by 540 and largest change: 1562 0; 1566 3,688, max 3; 1570 19,007, max 19; 1575 100,570, max 177; 1580 172,584, max 186; 1586 182,656, max 189; 1592 182,089; 1598 183,003; 1604 182,590; 1608 183,530; 1614 183,532; 1622 56,159, max 133 (Venus leaving the frame); 1632 0; 1645 0 (Venus out of frame). Mean level falls by about 2 of 32 while the globe is whole in frame (the glow gone). The change comes in under the veil (0 at 1562, 3 levels at 1566) and no frame of the 14 shows a step. Picture: `view/d1-rise.jpg`.
+
+## State at 18:38 (22 Nov): main 9d20d3dd merged, the refused cure taken out of the branch, dusk measured further (read this first after a compaction)
+
+- Merge 93abb4b7: `origin/main` 9d20d3dd (round 35's tree at the build) into `agent/venus`, `--no-ff`. Main changed other stops' folders and `src/space/belt` only; `git diff ff158d90 9d20d3dd -- src/stops/venus public/assets/venus assets-src/venus` is empty.
+- Commit 6f286a67: revert of 90cc5b23 (the gate cure), its own commit. Reason: PROGRESS 18:26 UTC refuses the cure on its substance, and my CUT35 message named this as what follows from a refusal. Checked: `git diff origin/main HEAD -- src/stops/venus public/assets/venus` is empty and so is the diff against b18bf2f4. So the head's `src` and `public` folders are round 34's, the bytes main holds. Against main the branch differs only in `assets-src/venus/NOTES.md` and `assets-src/venus/fit/dusk.patch`. My own call, not an order; one `git revert 6f286a67` brings the cure back if the Builder ever wants it.
+- The dusk test is in the working tree again, now over round 34's code (the patch applied clean; `fit/dusk.patch` rewritten against this head, same change lines, new offsets). `npx tsc --noEmit -p .` exit 0. It is NOT committed on `agent/venus`. `agent/venus-dusk` (b0f208d7, over the cure's base) is untouched and still waits for the Builder's word.
+- G5 with dusk (q44, engine ff158d90, over the cure's base): PASS, coverage 0.316, 0.446, 0.685, 0.245, round 34's numbers. The glow that went was not counted as coverage.
+- The render copy r2 now sits on main 9d20d3dd (round 35's tree). Old scratch renders deleted from `r2/out/work/venus/p6` (kept: c12-sheet, d1, f26 to f29, g6, h0, h6, m34, m9, n1, n2, qd, r34, r34m, v9); 4.6 GB free.
+- Queue q45 (`/home/user/workspace/q45.sh`, log `/tmp/q45.log`, started 18:36): part A, the four finals with main's own Venus folders on round 35's tree (`m35-F.png`) against round 34's (`f29-F.png`): did another stop's change move a judged frame of mine (Earth's hold sky patch changed and the sky behind my rise is Earth's). Part B, the same four with dusk (`d2-F.png`): 1185, 1287, 1440 against `m35`, 1586 against `d1-1586.png`. Then 48 draft frames, every frame 1558 to 1580 and every second to 1632, with main's code (`h1-F.png`) and with dusk (`d2-F.png`).
+- After q45: review stills in pairs along the rise and the departure, the rise cover sheet at review with dusk beside `view/c26-rc.png`, `measure --stop venus` (G5, G13, G17), repeat on 1575, 1586, 1600, audit, vitest. Then ONE short message to the Builder with the numbers, low priority, saying plainly that by the 18:26 rule it cannot go into the frozen build unless the Builder opens a window.
+
+## State at 18:45 (22 Nov): judged frames hold on round 35's tree; message sent (read this first after a compaction)
+
+- q45 part A (render copy on main 9d20d3dd, main's own Venus folders, final tier): 1586 (135 s, 64 samples), 1185 (48 s, 16 samples), 1440 (42 s), 1287 (150 s, 64 samples) are each the SAME BYTES as round 34's finals `f29-F.png` (rendered on ff158d90). No other stop's change in round 35 moved a judged frame of mine.
+- 18:44, message to `/root`, low priority, no question in it: the 18:26 record read and accepted; branch at c42c9d51 holds main 9d20d3dd; the cure reverted as 6f286a67; branch equals main in `src` and `public`; the four finals above; `agent/venus-dusk` untouched and waiting for the Builder's word; dusk measured for the record only, with what is and is not measured.
+- q45 goes on: 48 draft frames with main's code (`h1`), then dusk finals (`d2`), then 48 draft frames with dusk.
+
+## State at 18:54 (22 Nov): q45 results; a false line in its log named; q46 runs (read this first after a compaction)
+
+q45 (render copy on main 9d20d3dd, round 35's tree; dusk in the working tree over round 34's code):
+
+- Finals with dusk, `d2-F.png` against main's folders `m35-F.png`: 1185, 1440, 1287 the SAME BYTES. So dusk touches three of the four judged frames not at all, on round 35's tree as well.
+- Final 1586 with dusk against main's: 676,360 pixels changed, largest change 184 levels, mean level 31.23 to 29.12. The same three numbers as the first render at 18:20 (over the cure's base on ff158d90).
+- FALSE LINE in `/tmp/q45.log`, not a result: "final 1586, dusk over round 34's folders on 9d20d3dd against dusk over the cure on ff158d90: DIFFERS". `d1-1586.png` was no longer the final: q43 rendered its draft frames under the same tag and the draft of 1586 (960 by 540) overwrote the final (1920 by 1080). So that line compares a final with a draft. Whether the two dusk finals of 1586 are the same bytes is NOT known and cannot be known now; only the three numbers above agree. q45 would have done the same to `d2-1586.png`; I copied the final to `d2f-1586.png` before the drafts ran (checked: 1920 by 1080). Lesson: a tag holds one tier only; finals get a tag of their own.
+- 48 draft frames, main's code `h1-F.png` against dusk `d2-F.png` (960 by 540), changed pixels and largest change: 1558 to 1562: 0. 1563: 2 px, 1 level. 1564: 55, 1. 1565: 664, 1. 1566: 3,688, 3. 1567: 7,604, 5. 1568: 10,144, 7. 1569: 13,652, 12. 1570: 19,007, 19. 1571: 26,389, 30. 1572: 40,149, 53. 1573: 60,352, 91. 1574: 81,681, 151. 1575: 100,570, 177. 1576 to 1580: 121,999 to 172,584, 181 to 186. 1582 to 1614: 178,000 to 188,000, about 186. 1616: 160,124, 132. 1618: 117,066. 1620: 84,647. 1622: 56,159, 133. 1624: 20,586, 9. 1626 to 1632: 0.
+- Mean absolute difference per frame rises without a step: 0.00 until 1566, 0.01, 0.02, 0.04, 0.08, 0.18, 0.38, 0.76, 1.45, 2.13 (1575), 2.36, 2.50, 2.67, 2.71 (1579), then falls slowly to 1.98 at 1604 and holds to 1614, then falls as Venus leaves the frame (1.53, 1.02, 0.74, 0.47, 0.03, 0). Largest step between two frames: +0.69 (1573 to 1574), while the frame's own mean level falls by 7 per frame there. So the change comes in with the picture, not as a switch.
+- Of the rise cover sheet's 12 frames (1555 to 1566), 8 keep their bytes at draft and 4 change by at most 1, 1, 1 and 3 levels.
+- Pictures: `view/d2-switch.jpg` (12 pairs 1563 to 1584).
+
+q46 runs (`/home/user/workspace/q46.sh`, log `/tmp/q46.log`, started 18:54): review stills in pairs at 15 frames (`dr-F.png` dusk, `hr-F.png` main's code), shader audit, vitest, `measure --only G5,G13` (`/tmp/d3-measure.log`), repeat on 1575, 1586, 1600 (`/tmp/d3-rep.log`), the rise cover sheet at review with dusk (`view/d3-rc.png`). It syncs from the repo's working tree three times, the last time at the sheet: do not touch `src/stops/venus` in the repo until "q46 done".
+
+## State at 19:31 (22 Nov): review pairs of dusk read; the rest of q46 runs (read this first after a compaction)
+
+Review tier, preview format (960 by 540), main's Venus folders `hr-F.png` beside dusk `dr-F.png`, both on main 9d20d3dd. Changed pixels, largest change, mean level:
+
+- 1563: 0. 1564: 65 px, 1 level. 1565: 596, 1. 1566: 3,825, 3. So of the rise cover sheet's frames only 1564, 1565, 1566 change, by at most 3 levels.
+- 1570: 19,408, 18, 95.50 to 95.42. 1573: 61,273, 88, 74.21 to 73.44. 1575: 101,992, 160, 60.28 to 58.11. 1578: 156,702, 166, 44.89 to 42.19. 1582: 178,962, 175, 35.19 to 32.80. 1586: 182,218, 183, 32.63 to 30.51. 1595: 182,384, 183, 34.00 to 32.01. 1604: 182,377, 182, 34.33 to 32.35. 1612: 188,286, 151, 34.23 to 32.22. 1618: 117,555, 66, 20.50 to 19.44. 1622: 56,367, 72, 13.20 to 12.70.
+- Read (pictures `view/dr-pairs-a.jpg`, `-b.jpg`, `-c.jpg`): on main the glow wraps the whole disc from 1573 on and the unlit side stands in a ring of light; with dusk the glow runs round the lit half and ends near the terminator, and the unlit limb goes into black. From 1570 to 1575 the two are hard to tell apart (the unlit limb is still out of frame or under the veil). No frame of the 15 shows a step, a line or a new edge. The stars that the glow covered show next to the dark limb (that is the largest change, about 180 levels on single star pixels). The lit limb, the clouds and the night side's shading are the same pixels in kind: dusk answers only the first two majors of round 34's surface critic (halo round the unlit limb, doubled edge lower right), not the other two and not the minors.
+- Cost of these stills: 2 to 2.5 minutes each at 1563 to 1566, 17 to 18 minutes for the 15.
+
+## State at 19:48 (22 Nov): gates and measures with dusk (read this first after a compaction)
+
+All with dusk in the working tree over round 34's code, render copy on main 9d20d3dd (q46):
+
+- Shader audit exit 0. Vitest 17 files, 87 of 87 tests. `npx tsc --noEmit -p .` exit 0 (18:35).
+- G13 PASS: 0 of 433 frames over 0.02 soft. G5 PASS: coverage 0.316, 0.446, 0.685, 0.245 (round 34's numbers).
+- Repeat, 3 fresh sessions, 2 runs each: one hash per frame. 1575 8c72cf2c1613b2f5, 1586 7e9e9587f3192b9c, 1600 688ad5a6b5f1a5ab.
+- Not measured with dusk: G17 (its frames 1185 and 1440 keep their bytes at final, so it cannot move), G11, G12, G15 (no asset changed; the shader gains one uniform and a gated loop).
+- Still running: the rise cover sheet at review with dusk (`view/d3-rc.png`), about 18 minutes.
+
+## State at 20:06 (22 Nov): the rise cover sheet with dusk; main moved twice with no Venus change (read this first after a compaction)
+
+- Rise cover sheet at review with dusk, `view/d3-rc.png` (main 9d20d3dd), against round 34's `view/c26-rc.png` (`cellcmp.py`, 12 cells of 456 by 256): cells 1555 to 1563 are the same pixels (0 changed). 1564: 28 pixels, 1 level. 1565: 197, 1 level. 1566: 1,011 pixels, 79 of them over 1 level, largest 3. Read frame by frame: it is round 34's sheet.
+- Main moved to 9e0a31e2 (Neptune's ring, Earth's trim, status) and then to 70d5cb90 (scorecards only). Merged 9e0a31e2 as d1763adc (`--no-ff`); 70d5cb90 is merged before the next report. Neither touches a Venus folder. PROGRESS at 19:12 UTC: the Builder renders Venus's sheets and measures on round 35's build itself ("Their folders did not change, so round 35's critics are not asked about them"), and at 19:38 UTC: "The measures of Sun, Mercury, Venus, Earth, Mars, Jupiter, Saturn and Uranus are green on this build (G5, G13, G17)".
+- q47 runs (`/tmp/q47.log`): 22 draft frames outside the rise (arrival 1072 and 1100, hold, dive, both sides of the dive cover, terrain, the terrain side of the rise, 1640 and 1660 after Venus has left) with dusk and with main's code, a `cmp` each. Expected: the same bytes everywhere, since dusk is 0 until the middle of the terrain view.
+
+## State at 20:10 (22 Nov): dusk is measured whole and put away as a patch; the branch equals main; waiting for mail (read this first after a compaction)
+
+- q47: 22 draft frames outside the rise, dusk against main's code on main 9d20d3dd: 1072, 1100, 1110, 1150, 1259, 1262, 1280, 1300, 1310, 1313, 1314, 1320, 1340, 1400, 1500, 1529, 1530, 1540, 1550, 1557, 1640, 1660 are each the same bytes. With 1558 to 1562 and 1626 to 1632 from q45 that is 31 frames outside 1563 to 1624 with the same bytes. Dusk moves the rise's orbit side and the first 20 frames of `venus.travel`, nothing else.
+- The working tree is clean again: the four files went back to the head with `git checkout --` after a `cmp` showed the working diff and `assets-src/venus/fit/dusk.patch` to be the same bytes. The patch applies clean to the head (`git apply --check`). 4 files, 13 lines added, 3 removed. The render copy r2 holds the head's folders again (main 9d20d3dd under them).
+- Merge 62f4994a holds main 3f8d424a (scorecards and status only). I had written 70d5cb90 into the merge's message while main moved under the fetch; the commit was not pushed yet, so I set the message right with `--amend` before the push. No force was needed and none was used.
+- Branch state: `agent/venus` 62f4994a plus this note. `git diff --name-only origin/main HEAD` is `assets-src/venus/NOTES.md` and `assets-src/venus/fit/dusk.patch`. `src/stops/venus` and `public/assets/venus` are main's bytes, round 34's folders.
+- `agent/venus-dusk` (b0f208d7) is untouched. It sits on the cure's base, which is refused, so if dusk is ever wanted the patch is the thing to take, not that branch. Still the Builder's call whether I delete it.
+
+The whole record of dusk, in one place (rendered on main 9d20d3dd, beside main's own Venus folders):
+
+1. Finals: 1185, 1287, 1440 the same bytes. 1586: 676,360 of 2,073,600 pixels change, largest 184 levels, mean level 31.23 to 29.12 (`d2f-1586.png` beside `m35-1586.png`).
+2. Draft, 48 frames 1558 to 1632: first change at 1563 (2 pixels, 1 level), grows with the picture, largest one frame step of the mean difference 0.69 levels (1573 to 1574), last change at 1624.
+3. Review, 15 pairs 1563 to 1622: read, no step, line or new edge.
+4. Rise cover sheet at review: 9 of 12 cells are round 34's pixels; 1564, 1565, 1566 change by at most 1, 1, 3 levels.
+5. G13 PASS 0 of 433. G5 PASS 0.316, 0.446, 0.685, 0.245. Repeat 1575, 1586, 1600: one hash each. Audit exit 0. Vitest 87 of 87. tsc exit 0.
+6. What it answers: the first two majors of round 34's surface critic on 1586 (the halo round the unlit limb, the doubled edge lower right). What it does not: the clouds read as paint, the smeared night side, the clipped lit limb, the stars, the far Venus at 1072.
+7. What I do not know: how a critic reads the unlit limb without any glow. It is now a dark edge that goes into black, with stars right beside it.
+
+Next: nothing of mine is in round 35 and nothing new goes into the frozen build (PROGRESS 18:26 UTC). I wait for the Builder's mail. On a mail: write it into this file word for word first, merge main if it moved, then do what it says. Do not start new cures on my own; do not touch `agent/venus-dusk`.
+
+- 20:11, message to `/root`, low priority, no question in it: branch c8134532 holds main 3f8d424a and equals main in `src` and `public`; dusk is not in the branch and is the patch; its whole record as in the list above; what it answers and what not; the false comparison in my own log named as never sent; `agent/venus-dusk` untouched; I start no new cure and wait for mail.
+
+## MAIL of 22 Nov, arrived about 20:11 VM time: NEW ROLE, the film is frozen, I am a render worker now (read this first after a compaction)
+
+From `/root`, high priority, word for word (the three placeholders in point 6 are written in angle brackets):
+
+"NEW ROLE, from the Builder. The film is frozen and your building work is finished; nothing more of it goes onto main. For the rest of this task you are a render worker for the master of the film (every frame at the final tier). Do this now, in this order:
+1. Save your own work: commit whatever is open on your own branch (no push needed). Do not edit, commit or push anything after that.
+2. In your repo: `git fetch --depth 1 origin 567b3a555461d1e7d88300dbe5febc52073da828`, then `git checkout --detach 567b3a555461d1e7d88300dbe5febc52073da828`. `git rev-parse HEAD` must print that hash. Then `npm ci` and `npm run build`.
+3. Read `assets-src/shared/RENDER-WORKER.md`. It is your brief from now on (its clone step is already done).
+4. A render command refuses to start under 3 GB of free disk. If `df -h .` shows less than 6 GB free, delete old harness output under `out/work/` (chunks, stills, sheets, packs, clips); none of it is needed any more.
+5. Proof that your VM draws the same pixels as mine: `npm run -s still -- --frame 2325 --tier draft --out /tmp/ref2325.png`, then `sha256sum /tmp/ref2325.png`. It must print fd128b1a999f76fa079027e50ace59ac82ec5083c1c53b65667f23176a9a98cf.
+6. Answer with one line and nothing else: `WORKER READY <nproc> cores, <free GB> GB free, <the first 16 characters of your hash>`. If your hash differs, answer `WORKER DIFFERENT <your full hash>` instead and stop.
+Then wait. Your jobs come in the next message."
+
+What this means for this file: the building of Venus is finished. This is the last entry and the last commit on `agent/venus`. Nothing is open: the working tree was clean, the night limb test is the patch `fit/dusk.patch`, the gate cure is reverted, `agent/venus-dusk` (b0f208d7) was never answered and stays as it is. From here on the brief is `assets-src/shared/RENDER-WORKER.md` at commit 567b3a555461d1e7d88300dbe5febc52073da828, and no file in the repo is edited, committed or pushed by me. My worker notes are kept outside the repo, in `/home/user/workspace/WORKER-NOTES.md`.
