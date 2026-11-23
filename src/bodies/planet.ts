@@ -27,6 +27,8 @@ export interface PatchSet {
   feather: number
   fade: [number, number]
   nearDeg: number
+  own?: boolean[]
+  fadeMinor?: boolean
 }
 
 export interface StormParams {
@@ -94,24 +96,41 @@ export function patchSlots(levels: number): number {
 
 const patchSamplers = (slots: number): string => Array.from({ length: slots }, (_, i) => 'uniform sampler2D uPatch' + i + ';').join('\n')
 
-const patchLevels = (slots: number): string => Array.from({ length: slots }, (_, i) => `    if (uPatchCount > ${i}.5) {
+export interface PatchShader { slots: number; own: boolean; minor: boolean }
+
+const patchRead = (i: number): string => `textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb`
+
+const patchLevels = (o: PatchShader): string => Array.from({ length: o.slots }, (_, i) => `    if (uPatchCount > ${i}.5) {
       vec2 q = g * uPatchScale[${i}];
-      float w = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent));
-      if (w > 0.0) albedo = mix(albedo, textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb, w);
-      parent = gd * uPatchScale[${i}] * uPatchSize[${i}];
+      float w = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, ${o.minor ? 'fine' : 'parent'}));
+      ${o.own ? `if (w > 0.0) {
+        vec3 t = ${patchRead(i)};
+        float o = uPatchOwn[${i}];
+        albedo = mix(albedo, t, w * (1.0 - o));
+        ownSum = ownSum * (1.0 - w) + t * (w * o);
+        own = own * (1.0 - w) + w * o;
+      }` : `if (w > 0.0) albedo = mix(albedo, ${patchRead(i)}, w);`}
+      parent = gd * uPatchScale[${i}] * uPatchSize[${i}];${o.minor ? `
+      float thin = ga * uPatchScale[${i}] * uPatchSize[${i}];
+      float cap = gd / uPatchAniso[${i}] * uPatchScale[${i}] * uPatchSize[${i}];
+      fine = max(thin, cap);
+      drawn = mix(drawn, thin / max(cap, 1.0), step(0.5, w));` : ''}
       texels = mix(texels, parent, step(0.5, w));
       near = max(near, w * uPatchNear[${i}]);
     }`).join('\n')
 
-const frag = (slots: number): string => /* glsl */ `
+const frag = (o: PatchShader): string => /* glsl */ `
 precision highp float;
 uniform sampler2D uMap;
 uniform sampler2D uHeight;
 uniform sampler2D uStorm;
-${patchSamplers(slots)}
-uniform float uPatchScale[${slots}];
-uniform float uPatchSize[${slots}];
-uniform float uPatchNear[${slots}];
+${patchSamplers(o.slots)}
+uniform float uPatchScale[${o.slots}];
+uniform float uPatchSize[${o.slots}];
+uniform float uPatchNear[${o.slots}];${o.own ? `
+uniform float uPatchOwn[${o.slots}];` : ''}${o.minor ? `
+uniform float uPatchAniso[${o.slots}];
+uniform float uMapAniso;` : ''}
 uniform float uPatchCount;
 uniform float uFeather;
 uniform vec2 uPatchFade;
@@ -198,18 +217,29 @@ void main() {
   vec3 albedo = equirectGrad(uMap, dc, uGrad * (1.0 + uGrazingDetail.z * detail)).rgb;
   float texels = diagTexelsDir(d, uMapWidth);
   float dn = dot(d, uSpotN);
-  float near = 0.0;
+  float near = 0.0;${o.own ? `
+  float own = 0.0;
+  vec3 ownSum = vec3(0.0);` : ''}${o.minor ? `
+  float drawn = 0.0;` : ''}
   if (uPatchCount > 0.5) {
     float inv = 1.0 / max(dn, 0.05);
     vec2 g = vec2(dot(d, uSpotE), dot(d, uSpotU)) * inv;
     vec2 gx = dFdx(g);
     vec2 gy = dFdy(g);
-    float gd = sqrt(max(dot(gx, gx), dot(gy, gy)));
+    float gd = sqrt(max(dot(gx, gx), dot(gy, gy)));${o.minor ? `
+    float ga = abs(gx.x * gy.y - gx.y * gy.x) / max(gd, 1e-20);
+    vec3 wx = dFdx(d);
+    vec3 wy = dFdy(d);
+    float wd = sqrt(max(dot(wx, wx), dot(wy, wy)));
+    float thin = length(cross(wx, wy)) / max(wd, 1e-20) * uMapWidth / (2.0 * PI);
+    float cap = wd / uMapAniso * uMapWidth / (2.0 * PI);
+    float fine = max(thin, cap);
+    drawn = thin / max(cap, 1.0);` : ''}
     gx *= uGrad;
     gy *= uGrad;
     float front = step(0.3, dn);
     float parent = texels;
-${patchLevels(slots)}
+${patchLevels(o)}
   }
   vec3 east = cross(vec3(0.0, 1.0, 0.0), d);
   float el = length(east);
@@ -231,7 +261,8 @@ ${patchLevels(slots)}
     float l = dot(lin, vec3(0.2126, 0.7152, 0.0722));
     lin *= mix(1.0, 2.0 / (1.0 + l / uNightFlat.x), dark);
   }
-  vec3 col = lin * shade * uTint;
+  vec3 col = lin * shade * uTint;${o.own ? `
+  if (own > 0.0) col = mix(col, inverseFilmic(ownSum / own), own);` : ''}
   vec3 at;
   float tau = hazeDepth(dir, true, at);
   col = col * exp(-tau * uExtinction) + hazeLight(n, dir) * (1.0 - exp(-tau));
@@ -245,7 +276,8 @@ ${patchLevels(slots)}
   }
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
-  outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.15, 0.45, 0.9), vec2(flow * 8.0, 0.0), length(vView));
+  outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.15, 0.45, 0.9), vec2(flow * 8.0, 0.0), length(vView));${o.minor ? `
+  if (uDiag == 2 && uPatchCount > 0.5) outColor.b = clamp(drawn * 0.5, 0.0, 1.0);` : ''}
 }`
 
 function curve(l: PlanetLight): THREE.Vector3[] {
@@ -280,13 +312,17 @@ export class Planet {
     const size = (i: number): number => (p?.textures[i]?.image as unknown as { width: number } | undefined)?.width ?? 1
     const slots = patchSlots(p?.textures.length ?? 0)
     const levels = Array.from({ length: slots }, (_, i) => i)
+    if (p?.own && p.own.length !== p.textures.length) throw new Error('own needs one entry per patch level')
+    const own = p?.own?.some((x) => x) === true
+    const minor = p?.fadeMinor === true
+    const aniso = (t: THREE.Texture | undefined): number => Math.max(t?.anisotropy ?? 1, 1)
     const spot = p?.spot.clone().normalize() ?? new THREE.Vector3(0, 0, 1)
     const east = new THREE.Vector3(0, 1, 0).cross(spot).normalize()
     const north = spot.clone().cross(east)
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
       vertexShader: VERT,
-      fragmentShader: frag(slots),
+      fragmentShader: frag({ slots, own, minor }),
       uniforms: {
         ...hazeUniforms(o.haze),
         uGrazingShape: { value: new THREE.Vector4(g?.depth ?? 0, g?.width ?? 1, g?.duskWidth ?? 1, g?.power ?? 1) },
@@ -304,6 +340,8 @@ export class Planet {
         uPatchScale: { value: levels.map(scale) }, uPatchSize: { value: levels.map(size) },
         uPatchNear: { value: levels.map((i) => ((p?.widthsDeg[i] ?? 360) <= (p?.nearDeg ?? 0) ? 1 : 0)) },
         uPatchCount: { value: p?.textures.length ?? 0 },
+        ...(own ? { uPatchOwn: { value: levels.map((i) => (p?.own?.[i] ? 1 : 0)) } } : {}),
+        ...(minor ? { uPatchAniso: { value: levels.map((i) => aniso(p?.textures[i])) }, uMapAniso: { value: aniso(o.map) } } : {}),
         uFeather: { value: p?.feather ?? 0.12 }, uPatchFade: { value: new THREE.Vector2(p?.fade[0] ?? 1.1, p?.fade[1] ?? 1.7) },
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
         uStormAxis: { value: o.storm?.axis.clone().normalize() ?? new THREE.Vector3(0, 1, 0) },
