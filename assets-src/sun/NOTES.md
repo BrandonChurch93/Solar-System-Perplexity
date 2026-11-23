@@ -1624,3 +1624,84 @@ R5, score 6:
 - The grey patch on the bottom limb at 247 is in the map near the pole; with the turn it sits 35 px further right (945, 978 to about 980, 979 at 1920). Not answered.
 - Main is at b22a7927 (round 34 closed; kit, status stills, scorecards only). My open items there: 109 (frame 90, the near ground; the corner), 110 (R3's majors), 111 (R4's slide, hold and opening), 128 and 129 (495 and the flights).
 - `dr/after.sh` renders drafts 190 to 225 at spin 1 and the final of 495, then: merge main, notes and CUT35.md, push, the replacement CUT35 to `/root` before 18:30.
+
+## 18:21 UTC: CUT35 sun sent again, as a replacement, with the number
+
+- Sent to `/root` at about 18:21 UTC, high priority, ten new pictures (11 to 20); the text is `assets-src/sun/CUT35.md`; the first message of 17:39 is kept as `out/work/sun/dr/CUT35-first.md` (and in commit 5ac86e82).
+- READY 02e8dbc1e954dbf9ccf08017668bf2fbddd9c581 (holds main 55319c5a). Commits: corner 24d509dd5a0c05cdbef5365dcfec1285ac927c81, the number 20d06b435ff304d7aae3255c83d03c2cf4715189. The corner alone is 795fbfdc0287d8164010165d7d17f0cfc769dfc5.
+- Rise at spin 1, drafts only: 190, 200, 210 differ from the corner's by 9, 33, 36 levels in the mean (the ground turns with the globe at the new rate, so the camera's way over the ground in 180 to 214 differs a little), 215, 220, 225 show the face further round; 204 to 218 every second frame is one steady pull back (`dr/cut35-rise-drafts-204-218-spin1.jpg`).
+- The final of 495 at spin 1 ran from 18:13:53 and was stopped by me at 18:17:41 for the clock; draft 495 is 2abff83e7edc5756 against 9164709975e19223 (spin 3.4). Round 34's final of 495 is 621a8e5b9e62341f (`hk3/fin5`).
+- Named as prices in the message: G17 at 360 1.032 to 1.030 (25th percentile 0.996 to 0.994), 247 and 495 another face of the same globe, 360 moved by 0.1 px, the boil alone on a still globe in the hold.
+- Open after this cut: the slide of the near ground in the opening (item 111, second half; it is `climb.ease.speed`, the camera's ground speed, and 0, 60, 90 are on their poses), items 110, 128, 129, the seam contrast and near field focus at 90 (109).
+- Next: wait for the Builder's word. If he takes only the corner, the plan file goes back to 3.4 only on his word (it is its own commit, 20d06b43).
+
+## 18:27 UTC: 495 at the final tier, a low priority note sent
+
+- Final of 495 with the number (`dr/fin/f00495.png`): 60ae8e7d76be2773, mirrorcheck clean, 238 s.
+- `hk3/fin5/f00495.png` (621a8e5b9e62341f, 14:36) is no fair pair: it is from before the leave changed on main (paler disc, no limb strip) and differs over the whole frame (mean 4.1 levels). The fair pair is the drafts `dr/ref/f00495.png` (3.4) and `dr/c/f00495.png` (1), both on today's tree: difference only in the Sun's box, columns 998 to 1919, rows 0 to 687, mean 0.78.
+- Sent to `/root` as a low priority note at 18:27; READY stays 02e8dbc1. Branch head dd0e7430 and later add only CUT35.md and notes.
+- Working tree: `plan.ts` at 1 (committed in 20d06b43). Round 35 is cut at 18:30. Now waiting for the Builder's word.
+
+## NEW ROLE mail from the Builder (arrived after the cut of round 35), verbatim
+
+NEW ROLE, from the Builder. The film is frozen and your building work is finished; nothing more of it goes onto main. For the rest of this task you are a render worker for the master of the film (every frame at the final tier). Do this now, in this order:
+1. Save your own work: commit whatever is open on your own branch (no push needed). Do not edit, commit or push anything after that.
+2. In your repo: `git fetch --depth 1 origin 567b3a555461d1e7d88300dbe5febc52073da828`, then `git checkout --detach 567b3a555461d1e7d88300dbe5febc52073da828`. `git rev-parse HEAD` must print that hash. Then `npm ci` and `npm run build`.
+3. Read `assets-src/shared/RENDER-WORKER.md`. It is your brief from now on (its clone step is already done).
+4. A render command refuses to start under 3 GB of free disk. If `df -h .` shows less than 6 GB free, delete old harness output under `out/work/` (chunks, stills, sheets, packs, clips); none of it is needed any more.
+5. Proof that your VM draws the same pixels as mine: `npm run -s still -- --frame 2325 --tier draft --out /tmp/ref2325.png`, then `sha256sum /tmp/ref2325.png`. It must print fd128b1a999f76fa079027e50ace59ac82ec5083c1c53b65667f23176a9a98cf.
+6. Answer with one line and nothing else: `WORKER READY <nproc> cores, <free GB> GB free, <the first 16 characters of your hash>`. If your hash differs, answer `WORKER DIFFERENT <your full hash>` instead and stop.
+Then wait. Your jobs come in the next message.
+
+- State when it arrived: branch `agent/sun` at 97bc90fc (pushed), READY of CUT35 02e8dbc1, working tree clean. No word had come on whether the number (20d06b43) was taken.
+- From here on the repo is on the Builder's commit 567b3a555461d1e7d88300dbe5febc52073da828, detached, and I edit, commit and push nothing. My memory as a worker is kept outside the repo in `/home/user/workspace/WORKER-NOTES.md`. These notes stay readable with `git show agent/sun:assets-src/sun/NOTES.md`.
+
+## 21:50 UTC 22 November to 00:54 UTC 23 November: render worker for the master
+
+- Detached on 567b3a55, proof hash of frame 2325 matched. Jobs rendered and sent as tar pieces: film-16x9-final-378 (uranus.dive 4165 to 4169, 62 min), 380 (uranus.dive 4175 to 4179, 61 min), 389 (uranus.terrain 4320 to 4349, 37 min), 274 (jupiter.dive 3012 to 3014, 19 min). `LIST DONE` sent 00:54 UTC. The worker log is outside the repo: `/home/user/workspace/WORKER-NOTES.md`.
+- Old harness output deleted for disk on the Builder's word: the rendered frame files `f#####.png` under `out/work/sun` and the files of `out/work/stills` and `out/work/sheets`. Scripts, arrays and pictures in `out/work/sun` are still there.
+
+# TASK OF MAIL 212 (23 November 2026): the place on the Sun, branch `agent/sun-place`
+
+This is the task now. It replaces everything above as the thing to do; the sections above are history and knowledge. The mail in full:
+
+> MAIL 212 from the Builder (/root). A new task for you, sun_builder. It replaces anything you still held. Answer with one line as soon as your new branch exists: "ACK 212 <branch> <commit>".
+> 
+> What happened since your last work. The film was frozen (main, commit 567b3a55), the record round ran, the master, the nine clips and the nine posts were made. Brandon watched it and wrote this note at 05:57 UTC on 2026-11-23. It outranks the kit's cover rules:
+> 
+> "The main issue I have is the transitions between the planet view and the moment before the surface view comes in, it's a blurry mess, and it's obviously a transition. I think the goal would be to make it seamless. Like there's actually a place on the planet that the camera's going to. Hey next, the surface for Jupiter, and Saturn both look completely weird. It looks like an image that is being stretched and contorted it shouldn't look like that. It should look like it's actually generated out of code."
+> 
+> So every dive and every rise in the film is rebuilt: no cover, no wash, no stall and rush, no swap that can be seen. The spec is cut/HANDOVER.md on main. Part B of it is yours for sun.
+> 
+> Setup
+> - git fetch origin main, then git checkout -b agent/sun-place FETCH_HEAD. Main holds the kept build. Whatever is on your old branch and not on main was not taken: do not carry code across. Carry your notebook across if yours is newer than main's (assets-src/sun/NOTES.md), and commit it first.
+> - npm ci if the lock file changed, npm run build, npx vitest run: green before you change anything.
+> - Read whole, from disk: cut/HANDOVER.md; kit/PROGRESS.md section "Review note of 2026-11-23" and the open items 149, 111, 131 and 46 to 53 (the critics' words on your dive and rise in the frozen build); AGENTS.md and kit/addenda/ again; your own notebook.
+> - Write this task into your notebook before you start, with this mail's number, so it survives a compaction.
+> 
+> The task, in this order
+> 1. S1 now: solve the camera of your approved close image (references/approved/sun-close.jpg) against the sphere at your spot and write src/stops/sun/place.json. Check it by drawing the globe side from that camera beside the close side at the same frame: horizon on horizon, features where they belong.
+> 2. S2 now: lay the place onto the globe as plates, repaint what the laying back stretches, match colour, nest them under your patch pyramid, hold G13 down the whole dive. Proof: the 12 frame top down dive sheet with no blur.
+> 3. S3: one steady move for dive and rise by the rules of E3. You may write your own path or wait for the generic one; write divePose(time, view) and risePose(time, view) against the contract of E1 in cut/HANDOVER.md either way.
+> 4. S4 and S5 when I tell you that E1 and E2 are on main (the engine is being built now by another agent, handover_engineer, and proven on Mars first): merge main, opt in, remove your cover, bring light, exposure, haze, Sun and sky to one function of time through T, and run npm run handover for dive and rise.
+> 
+> What may not change: your hold segment and your terrain segment. Their judged frames must come out as the same picture as the kept stills in out/stills/, because those chunks of the film are not rendered again. The travel after your rise is not rendered again either: your rise must end in the pose, the speed and the look that travel starts with today. The timeline does not change.
+> 
+> Your stop
+> - Frames: terrain 0 to 179, rise 180 to 269, hold 270 to 449. Judged: 0, 60, 90 (terrain), 247 (rise), 360 (hold). The Sun has no dive: the film opens in the close view. Your work is the rise, 180 to 269, and it must end in the hold's first pose and speed as today.
+> - The place is the sunspot with its loops, over the curved limb of the close image. As the camera pulls back, that sunspot with its arch has to stay in the picture as a place on the disc, shrinking, until it is one spot on the whole Sun. The granulation is alive on both sides: at T both sides must show the same cells in the same state, which is what the place picture of E2 gives; your plates and your globe side functions must agree with it around it.
+> - What the critics wrote about the rise of the frozen build: "the cover is an unaligned cross-dissolve that double-exposes two mismatched rigs: a steeper globe limb with bright white coronal streamers, upper-right red prominences, coarse mottled orange-white surface blotches, and a bright angled Milky Way band fades in directly over the flatter chromosphere horizon, central sunspot umbra, glowing magnetic arch, and dark starfield of the terrain view"; "the camera lacks mass and smooth easing in rise: it keeps creeping closer to the sunspot through frames 180-196, abruptly reverses into a violent whip-zoom that covers nearly the entire surface-to-full-disk pullback in just 33 frames (196-229), and then sits nearly parked for frames 245-269"; "thin 1px yellow filament loops near disk center (frames 216-222) and stars in the upper-right corner remain razor-sharp on top of a heavily radially smeared photosphere".
+> - The old cover was a flare bloom. It goes. Corona, streamers, prominences and the sky must be one function of time through T: nothing may fade in over the close view.
+> 
+> Working rules
+> - Your folders only: src/stops/sun/, assets-src/sun/, public/assets/sun/. Push only to agent/sun-place. Never main, never force, never rebase. If shared code must change, send the request to /root/handover_engineer by message, short and exact, and note it in your notebook.
+> - Looks at least every 30 minutes of working time, also while something renders, good or bad: npm run looks -- --push --folder sun-place --note "one line".
+> - Draft tier to iterate, review tier to prove. One render process at a time. Motion is judged on consecutive frames: look at every frame of every sheet yourself before you report.
+> - Image generation only through the skill named media, at most 6 takes per asset per round, recipe in assets-src/sun/RECIPE.md, binaries committed once per milestone. No file over 95 MB. Values the picture depends on live in config or in a JSON file of your stop. No Math.random, Date.now, performance.now on a pixel path.
+> - Every commit message ends with the trailer: Co-authored-by: Perplexity <noreply@perplexity.ai>. No em dashes, no en dashes, no exclamation points, no model names in any file or message.
+> - Report to /root by message at each milestone and when blocked: branch, commit, what to look at, what you measured, what is still wrong. Do not wait for an answer unless blocked. M1 is S1 with its check picture and the first laid back plate, rough is fine, within about 90 minutes. M2 is S2 and S3 with their proofs. M3 is the handover, dive and rise, with the E4 reports and the dense sheets.
+> - The bar: a viewer who steps through the frames one by one cannot name the frame where the scene changes, and every frame shows a place on the body that the camera is flying to or leaving.
+
+## Log of the place task
+
+- 06:41 UTC 23 November: branch `agent/sun-place` made from main 6da6c641. Notebook carried across from `agent/sun` bc111a2b (31 lines newer than main), this task written in, committed first. No code carried across from `agent/sun`.
