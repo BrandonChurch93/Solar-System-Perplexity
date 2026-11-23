@@ -1,0 +1,10 @@
+{
+  "note": "Values of assets-src/venus/place/wide.py: the wide ring about the place (level v), a gnomonic plate about the centre of the place plates. widthDeg and size: its extent and its pixels (the web set holds half). child: the level it is painted about. guideSize: the size of the outpainting take. grey: the flat value of the part to paint in the guide. matte: the border of the child in the guide, broken up by smooth noise (amount in shares of the child width, sigma in pixels of the guide), eased over edge (shares of the child width) and closed at the border of the square over close.",
+  "tag": "v",
+  "widthDeg": 90,
+  "size": 8192,
+  "child": "w",
+  "guideSize": 2048,
+  "grey": 0.5,
+  "matte": {"seed": 23, "noise": [[0.05, 25], [0.02, 8]], "edge": [0.03, 0.12], "close": 0.03}
+}

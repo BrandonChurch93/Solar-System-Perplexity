@@ -64,7 +64,8 @@
     "fineDeg": 0.35,
     "floor": 0.002,
     "colour": 0.8,
-    "contrast": 0.4,
+    "contrast": 0.55,
+    "contrastNote": "0.55 and not 0.4: with the short shutter of the dive and the rise the place field is seen sharp from above, and at 0.4 its fine forms were flat mud between crisp ridges (frames 1284 to 1295, 1580 to 1590). Measured on the draft frames, spread of the luminance in the crop x 610 to 1310, y 380 to 1080: 1287 25.1 to 28.6, 1586 22.3 to 24.3.",
     "power": [0.4, 3.0],
     "edge": [0.72, 0.92],
     "cos": [0.5, 0.995],
@@ -79,13 +80,14 @@
     "hueNote": "Drawn dimmer than they are held, the plates take their colour from their display value and not from their light, by hue times the share by which they are dimmer: the light of a highlight that the film curve pressed has far more colour than the picture shows, and dimmed it turned the lit sides of the towers red. At the handover the plates are not dimmed and show as they are.",
     "limbHeights": [0.5, 1.6],
     "limbNote": "The glow of the limb is a fit of the hold picture seen from far away. It is not raised by the gain, and in the dive and the rise it goes out between these two heights (radii, eased in the logarithm): below the lower one the horizon is made by the haze of the globe alone, so the fit does not lie on the cloud tops as a wide band with a red and a green edge.",
+    "rampNote": "The shares were 0.2 to 0.6 and 0.4 to 0.8. With them the mean level of the body fell from 115 at frame 1260 to 52 at 1290 before the gain had risen, and came back to 83 at 1314; in the rise 85 at 1560, 50 at 1578, 98 at 1601. The place field was dark mud in the judged frames 1287 and 1586. The gain now rises earlier in the dive and falls later in the rise, so the place is exposed while it is still small.",
     "dive": [
-      0.2,
-      0.6
+      0.1,
+      0.5
     ],
     "rise": [
-      0.4,
-      0.8
+      0.5,
+      0.9
     ],
     "tint": [
       1.12,

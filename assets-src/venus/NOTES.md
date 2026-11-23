@@ -2162,3 +2162,52 @@ Mail 311, item 2: 1287 and 1586 at draft, native size, six crops of 700 px each 
 7. 1586, x 0 to 200, y 0 to 300: a soft orange glow lies over the cells in the upper left corner (what it is has not been measured).
 
 Good at native size: 1287 upper left (the lit cloud with its towers), 1586 upper left and upper middle (cells, towers with lit sides and long shadows).
+
+### MAIL 316 from the Builder (/root), 18:14 UTC, to venus_builder, word for word. Read this first after a compaction
+
+"MAIL 316 from the Builder (/root), 18:14 UTC, to venus_builder. Your 18:11 report is read; 5afbfa2b is noted as the newest named commit for Venus. Round 41 (your round 1 of 3) is being judged on d908301d as started, its last sheet is rendering; you get the full list with the critics' words when it closes. Round 2 takes your newest checked commit together with the engine's capped shutter (E6), so there is time to go further before it.
+
+Your order is right. Two decisions from me:
+1. Item 1 by code first (exposure ramp of the dive, fine contrast of the tone map), tested on 1282 to 1298 before a full render, as you say.
+2. Items 2, 3 and 4 (the place ends as a patch against smooth streaks of the globe, at 1287 and 1586): make the wider ring. This is the fault Brandon named ("like there's actually a place on the planet that the camera's going to"), and with the short shutter the edge of the patch will show more, not less. A ring that reaches further out than level w is a new asset with its own recipe in assets-src/venus and its own six takes; do not spend w's last takes on it. Look and forms must run on from w with no step in tone, size of forms or sharpness, out to where the globe's own cloud map holds at the pixel scale of 1287 and 1586 (print texels per pixel at the border for both frames). Credits and time are not limits.
+3. Items 8 to 10 after that (the pale grey blue patch 1300 to 1307 and 1566 to 1574, the golden band 1560 to 1565, the Sun entering 1313 to 1319).
+Send READY with the commit when the report passes with every part and you have looked at both moves frame by frame; say per item cured, better or left."
+
+The item numbers are those of my report of 18:11 (the list in "State 18:10" above, items 1 to 7 there, then 8 tones change in view, 9 golden band along the limb in the rise, 10 the Sun entering at the top of the frame, 11 review tier and `atT.shiftDeg`).
+
+### MAIL 324 from the Builder (/root), 18:40 UTC, to venus_builder, word for word. It outranks the order of mail 316: cure both machine checks first
+
+"MAIL 324 from the Builder (/root), 18:40 UTC, to venus_builder. Two machine checks are red on your place, so Venus is not on main and round 41 has not gone to its critics. Cure both first; everything else on your list comes after.
+
+What I ran: your three folders of d908301d on main with the engineer's files (the byte check on twelve machines passed: 105 frames outside your dive and rise the same bytes as main, final 1185 and 1440 the kept stills). Then `npm run gate -- --phase 6 --only G11,G15 --g15-stops venus`:
+
+1. G15 FAIL: "venus/web uses 483 MB, limit 450; venus/full uses 1903 MB, limit 1400". The check opens the built app at the first frame of your hold and reads `showcase.memory().perSet.venus`, the whole set, for both asset sets; the limits are `assetSets.web.maxSetMemoryMb` and `assetSets.full.maxSetMemoryMb` in the config and they do not move. Fifteen plates of 4096 (w, a, b, c, d, each three times: plain, dive, rise) and two tone files are what broke it; 5afbfa2b has the same plates, so it fails the same way. Mars holds its place inside the limits (web 412, full 1379.5 of 1400), so it can be done. Ways I see, yours to choose and measure: the plain plates leave the set if only the dive and rise ones are drawn (or the other way round, one set of plates with the difference carried by the tone files); the outer levels w and a at half the size where their texels per pixel allow it (G13 says where); one channel layout less. Whatever you choose, G13 on all 495 frames must stay green and the look across both handovers must not get softer than it is.
+2. G11 FAIL: "missing: public/assets/venus/full/place3-a-dive.jpg, place3-a-rise.jpg, place3-b-dive.jpg, place3-b-rise.jpg, place3-c-dive.jpg, place3-c-rise.jpg, place3-d-dive.jpg, place3-d-rise.jpg" (it prints the first eight). The check wants the path of every file under `public/assets/venus/` as plain text in a RECIPE.md, either the real path or the one with `&lt;set&gt;` in place of web and full. Your recipe names them by pattern (`place3-&lt;tag&gt;-dive.jpg`); write each path out.
+
+Before you name a commit again, run exactly that gate line on your own tree and send me its two PASS lines with the numbers. From now on that holds for every commit you name. A stop cannot go to critics with a red machine check, and this one cost a check on twelve machines.
+
+Round 41: it is counted since 17:16 UTC and its critics have seen nothing. It is packed again on your next green commit, after the engine's capped shutter is on main (mail 311), so the smear on 1287 and 1586 goes out with it. You keep three rounds on the picture that will be delivered.
+
+My own look at the sheets of round 41 (review tier, d908301d), so you have them beside your list:
+- Dive 1284 to 1300: the place lies on the globe as a dark brown field with orange red flecks, about a third of the disc, crisp towers inside it and smooth cream cloud round it; it reads as a stain laid on, not as a region of the same cloud deck. Your items 1, 2 and the red (which you say 5afbfa2b cures).
+- Dive 1292 to 1325: zoom smear over the whole frame; the shutter cap is the engineer's, not yours.
+- Rise 1570 to 1591: the same dark field, now covering the left half of the disc, with smeared streaks; at 1591 the left half of the globe is a dark flat mass, and 1597 and 1604 still carry it as a shadow the hold frame 1259 does not have. Check 1604 against 1605 and against the hold: the globe must leave as the globe it came in as.
+- 1333 to 1349 and 1530 to 1550 (the low flight at both ends) hold up.
+
+Send READY with the full commit, the two gate lines, G13, G5, G17, the bytes of 1185 and 1440, the handover report and your looks. Merge main first (it moves within the half hour: the engineer's `fromDive` and the harness's new sheet across the handover)."
+
+(The mail arrived with the angle brackets of the two patterns written as HTML entities; they are kept as they came. Meant: the path with the word set in angle brackets in place of web and full, and the pattern place3, tag in angle brackets, dive.jpg.)
+
+### State 18:45, item 1 of mail 316 done by code; the proof chain stopped for mail 324
+
+Item 1 (the place field dark mud in 1287 and 1586), by code only:
+
+- `dusk.dive` [0.2, 0.6] to [0.1, 0.5], `dusk.rise` [0.4, 0.8] to [0.5, 0.9] (`plates.json`, `rampNote`): the gain rises earlier in the dive and falls later in the rise. Before, the mean level of the body fell from 115 at 1260 to 52 at 1290 and came back to 83 at 1314; in the rise 85 at 1560, 50 at 1578, 98 at 1601.
+- `tone.contrast` 0.4 to 0.55 (`contrastNote`); the tone files made again (`tlay.py tone dive`, `tone rise`: power 0.867 to 2.994 and 2.995, factor 0.0562 and 0.0527 to 984.2).
+- Tested first on 1282 to 1298 and 1574 to 1590 at the draft tier, judged on crops at native size, then both moves rendered in full. Spread of the luminance in the crop x 610 to 1310, y 380 to 1080, contrast 0.4 against 0.55 at the new shares: 1287 25.1 and 28.6, 1586 22.3 and 24.3, 1292 25.1 and 33.4.
+- Frames with other bytes than 41c78e7b (and than 8b65c470): 1265 to 1337 and 1545 to 1597. Same bytes: 1260 to 1264, 1338 to 1349, 1530 to 1544, 1598 to 1604.
+- Looked at the sheets of both moves (`out/work/venus/place/r11/`): no pop seen at sheet scale, the place field can be read. Item 1 is better, not cured: soft patches of the painted haze of plate a still lie beside crisp ridges in 1284 to 1295.
+
+Proofs on this tree: frames that may not change, draft, 37 of 37 byte equal; final tier 1185 and 1440 the kept stills (sha256 0539...cedd and b24b...25c3); G5 PASS (1185 coverage 0.316, 1287 0.907, 1440 0.685, 1586 0.887, invalid 0), G17 PASS (1185 median 0.959 p25 0.844; 1440 median 0.936 p25 0.804); build exit 0. NOT run on this tree: G13 on every frame and the handover harness. I stopped the chain at 18:44 when mail 324 came, because the cure of G15 changes the plates and every proof has to run again on that tree. This commit is not named to the Builder.
+
+The wide ring (mail 316, item 2), state when mail 324 came: `assets-src/venus/place/ringtex.ts` (texels per pixel on circles about the plate centre), `wide.py` and `wide.json` (the guide of the outpainting take), prompt `ringV`. One outpainting take made (take 1 of 6 of the ring of level v, `out/work/venus/place/v/ring-take-1.png`): a good cloud field, but its towers are about twice the size of the towers of level w and a soft halo lies round the rim of the centre in places. Not kept. The ring waits for the cure of G15: a plate of 8192 px with four channels and mips is 358 MB of the 1400 the full set may use.
