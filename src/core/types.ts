@@ -65,6 +65,7 @@ export interface PlaceState {
   limbReachDeg?: number
   limbHoldDeg?: [number, number]
   edgeIn?: [number, number, number, number]
+  toneIn?: [number, number, number, number]
 }
 
 export interface Shot {
@@ -90,6 +91,7 @@ export interface Shot {
   farLight?: number
   place?: PlaceState
   skyShare?: number
+  skyShareHigh?: number
   skyFloor?: SkyFloor
 }
 
@@ -107,7 +109,9 @@ export interface SetContext {
   floatTexture(data: Float32Array, width: number, height: number, repeat?: boolean): THREE.DataTexture
 }
 
-export interface RenderView { camera: THREE.PerspectiveCamera; diag: string; format: FormatDef; sample: number; samples: number; cameraPosition: THREE.Vector3; farLight?: number; place?: boolean; placeScale?: number }
+// shutter: the share of the film's shutter the frame keeps (E6, the capped shutter of a dive or a rise). 1 or absent: all of it. A set that takes a
+// time step from the shutter (one sample's share of it, for a smear along the motion) multiplies the step by this.
+export interface RenderView { camera: THREE.PerspectiveCamera; diag: string; format: FormatDef; sample: number; samples: number; cameraPosition: THREE.Vector3; farLight?: number; place?: boolean; placeScale?: number; shutter?: number }
 
 export interface SkyPatch {
   view: ViewKind
