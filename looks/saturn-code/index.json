@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T21:29:15.289Z",
- "head": "b9b333ecfdce0e22506e45c9cd69b13e5a088ba1",
- "note": "review stills 3832 and 3834 in one process show no step in the rings; checking the committed rings at the draft tier",
+ "pushed": "2026-11-23T21:41:42.566Z",
+ "head": "c984dd472881cb6b5832153beb9ead19ca1352ce",
+ "note": "c984dd4 pushed: globe function chosen, main merged; review stills 3831, 3832, 3834 show one look in one process",
  "looks": [
+  {
+   "time": "2026-11-23T21:41:41.236Z",
+   "file": "20261123214141236-note-m_3720.jpg",
+   "source": "../../../../tmp/v/r21/m_3720.png",
+   "kind": "note",
+   "label": "draft 3720 of c984dd4 (globe function inside 1.75 radii): mean difference to b9b333e 0.13 of 255"
+  },
+  {
+   "time": "2026-11-23T21:41:40.268Z",
+   "file": "20261123214140268-note-rv_cmp.jpg",
+   "source": "../../../../tmp/v/r21/rv_cmp.png",
+   "kind": "note",
+   "label": "review stills in one process, lower left: 3831 (31 samples, commit c984dd4) over 3832 (37 samples): one look, no step"
+  },
+  {
+   "time": "2026-11-23T21:41:39.322Z",
+   "file": "20261123214139322-note-cmp_ll.jpg",
+   "source": "../../../../tmp/v/r21/cmp_ll.png",
+   "kind": "note",
+   "label": "3832 lower left: draft of the commit (top), draft of the trial variant (middle), review 37 samples (bottom): the draft tier is crisper and whiter than the review tier in the rise"
+  },
   {
    "time": "2026-11-23T21:29:10.496Z",
    "file": "20261123212910496-note-step2.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/v/r20/rs_3834.png",
    "kind": "note",
    "label": "review still 3834, 35 samples, same tree"
-  },
-  {
-   "time": "2026-11-23T21:29:07.062Z",
-   "file": "20261123212907062-note-rs_3832.jpg",
-   "source": "../../../../tmp/v/r20/rs_3832.png",
-   "kind": "note",
-   "label": "review still 3832, 37 samples, work tree variant with globe function (single process): no step to 3834"
-  },
-  {
-   "time": "2026-11-23T21:05:59.070Z",
-   "file": "20261123210559070-note-fit_rm.jpg",
-   "source": "../../../../tmp/v/r18/fit_rm.png",
-   "kind": "note",
-   "label": "3720 right middle against the approved"
-  },
-  {
-   "time": "2026-11-23T21:05:58.490Z",
-   "file": "20261123210558490-note-fmm_3690.jpg",
-   "source": "../../../../tmp/v/r19/fmm_3690.png",
-   "kind": "note",
-   "label": "3690: far, model, film"
   }
  ]
 }
