@@ -44,20 +44,25 @@ const Z = new THREE.Vector3(0, 0, 1)
 const up0 = new THREE.Vector3().fromArray(relief.nadir).negate()
 const centre = up0.clone().multiplyScalar(-(relief.radius + 1))
 const ahead0 = new THREE.Vector3().fromArray(fields.chart.ey).addScaledVector(up0, -new THREE.Vector3().fromArray(fields.chart.ey).dot(up0)).normalize()
-const left0 = new THREE.Vector3().crossVectors(up0, ahead0)
 
 export function flight(seconds: number, vfov: number): Pose {
   const f = deck.flight
-  const turn = THREE.MathUtils.degToRad(f.turnDegPerSecond) * seconds
-  const rate = THREE.MathUtils.degToRad(f.turnDegPerSecond)
-  const along = Math.abs(rate) > 1e-9 ? f.unitsPerSecond * Math.sin(turn) / rate : f.unitsPerSecond * seconds
-  const aside = Math.abs(rate) > 1e-9 ? f.unitsPerSecond * (1 - Math.cos(turn)) / rate : 0
-  const high = relief.radius + 1
-  const up = up0.clone().multiplyScalar(high).addScaledVector(ahead0, along).addScaledVector(left0, aside).normalize()
+  const gain = f.endUnitsPerSecond - f.startUnitsPerSecond
+  const run = (u: number): number => f.seconds * (f.startUnitsPerSecond * u + gain * Math.pow(Math.max(u, 0), f.power + 1) / (f.power + 1))
+  const along = run(seconds / f.seconds + 0.5) - run(0.5)
+  const behind = Math.max(-along, 0) / run(0.5)
+  const high = relief.radius + 1 + f.startAbove * Math.pow(behind, f.sinkPower)
+  const up = up0.clone().multiplyScalar(relief.radius + 1).addScaledVector(ahead0, along).normalize()
   const position = centre.clone().addScaledVector(up, high)
-  const quaternion = new THREE.Quaternion().setFromUnitVectors(up0, up).multiply(new THREE.Quaternion().setFromAxisAngle(up0, turn))
+  const quaternion = new THREE.Quaternion().setFromUnitVectors(up0, up)
   return { position, quaternion, vfov }
 }
+
+export function exposure(seconds: number): number {
+  const f = deck.flight
+  return Math.pow(2, f.exposureStops * smooth((seconds / f.seconds + 0.5 - f.exposureFrom) / (1 - f.exposureFrom)))
+}
+
 const Y = new THREE.Vector3(0, 1, 0)
 
 export class JupiterPlan extends StopPlan {

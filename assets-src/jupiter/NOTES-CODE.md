@@ -244,3 +244,33 @@ Plan (10:45 UTC):
 - Bug found and fixed: a cream line on the right end of the limb at 3060. Two causes. The limb table's lookup wrapped below its first knot (now clamped to the knots, `uLimbShape.y`). And the far plate showed at grazing angles outside the image's fan with no air over it.
 - The air (`deck/air.py`, `deck.json` `air`, `deck-fields.json` `air`): measured on the view chart against the plates at the same ground. Per sine of the angle between ray and ground (24 knots by ratio from 0.002 to 0.4) the share of the plate's light that comes through, and per sine and turn of the ray from the Sun's azimuth (16 knots over 0 to 180 degrees, mirrored) the light the air adds. Green: through 0 under a sine of 0.02, 0.14 at 0.03 to 0.06, 0.52 at 0.1, 0.98 at 0.16, 1 from 0.2; added toward the Sun about 1.9 at the horizon, away from it 0.03. The shader applies it to the plates only (the image field holds its own air): `plate x through + added`. A steep ray sees the plates as they are, so the same function serves the dive from above. After it the line at the limb is gone, and 3150 keeps its bytes (no plate shows there).
 - Still open on the pictures: black chips in the fore plate (lay back holes near plate px (1210, 964), (1290, 969), (1310, 1294) of `fore-nest.png`), a black speck near frame (625, 880) and a comb near the funnel's lower rim near (520, 605) at 3239.
+
+## Mail 251 from the Builder (11:45 UTC): the every second frame render of fad3a82d
+
+The Builder rendered commit fad3a82d (the old code: the notebook pushes after it held no code) on the render machines, 3060 to 3238, every second frame, draft tier, and looked frame by frame.
+
+Good: from 3144 on a real flight over a rigid deck with true relief, the storm grows steadily, nothing bends, 3150 is close to the approved shot. Keep that.
+
+Wrong, in his order:
+1. 3060 to about 3140: the rich deck fills only a polygon round the storm, outside it the dark function field with straight edges (upright edge at the left 3060 to 3130, slanted edge lower right, a step along the bottom) and a grid of fine straight lines. No straight line and no change of material may be in frame in any frame: the wide canvas must reach past every frame edge from 3060 to 3239 at the same richness.
+2. 3200 to 3238, near deck lower left: rows of short dark dashes on the cloud walls (crops of 3210 and 3236) and soft enlarged patches between sharp ones. The near deck needs its own detail at that scale and the march must be clean there.
+3. The left third climbs to near white from 3192 on. Check against the approved image at the review tier and hold the exposure through the shot.
+4. Then life as in Mail 230: the storm turns, the bands shear past each other, the small eddies roll, tops rise and sink. Nothing dragged or stretched: detail made again at every scale. Proof on consecutive frames.
+5. Then the dive and the rise (S3 to S5).
+When 1 and 2 are done and pushed: say so with the commit, he renders every frame again.
+
+Mail 258 (11:55 UTC): main is at da69509a. `ctx.texture(path, {srgb: false, channels: 1})` gives a one channel texture (a quarter of the memory); `PatchSet.own?: boolean[]` a patch level with its own light (a plate that carries the light of the close view is not lit twice); `PatchSet.fadeMinor?: boolean` a level fades in by its fine axis on screen. `MAX_PATCHES` is 10. Notes in `assets-src/shared/GLOBE-NOTES.md`. Merge at the next commit.
+
+## v10 to v15 (11:40 to 12:00 UTC): items 1 to 3 of Mail 251
+
+Item 1 was fixed by the wide canvas and `flight.startAbove` 0.32 before the mail came (the Builder saw the commit before it). Sheet of 12 frames 3060 to 3239 at the draft tier: every frame a complete rich picture, no straight line, no change of material.
+
+Item 2, cause: the dashes are hidden zones (ground the fit camera did not see) and steep slopes of the lay back. There the trust flipped texel by texel to the plates, which are about 3 times softer and differ in tone. Now:
+- Trust = level ground length (analytic: `range / (F x sine)`, capped by the stored length) x the sine of the turn over the pixel's footprint. It is smooth and stays 1 in the whole surface view, so the plates never show in 3060 to 3239.
+- `deck/view.py` fills hidden texels (0.9 percent of the seen ones) and steep texels (stored length over `view.steep` 3 x the level length, 2 percent) column by column with the image mirrored from both sides (`mirror_fill`, cross faded, `view.hiddenSkip` 2, `view.hiddenPad` 1) and gives them the level length.
+- `look.stretch` [1.5, 1.0, 4, 0.001]: free magnification, plate detail clamp (off at 1), most blur, sine floor.
+- Rejected: a blur of stretched texels to 24 px times the plates' detail ratio (smooth smudges, dark wires and a rainbow line at thin zones); a tone scale of the fill per run (barcode stripes); a larger hidden pad (changes the crests at 3150). `flat` is a reserved word in GLSL (shader error "VALIDATE_STATUS false").
+- Measured on v14: mean abs diff to the approved image at 3150, draft tier: 4.57 (the kept still of the frozen build 4.33, M1 4.58).
+- Left at native size at the draft tier: stair steps on silhouettes (1 sample), a small jumble at the hidden zone under the funnel's lower rim near frame (500, 600) at 3239, the hatch grain of the function detail on magnified ground, the bottom strip of 3239 soft.
+
+Item 3, measured on drafts before the trim: frame mean luma 60.0 at 3150 (approved 59.4), 70.2 at 3195, 76.3 at 3239; left third mean 97 to 113; p95 and p99 flat (left third p99 243.3 in the approved image, 242.1 at 3239); share over 235 steady near 2 percent. So no highlight climbs: the bright sunward cloud fills more of the frame. Fix (v15): `deck.json` `flight.exposureFrom` 0.5, `exposureStops` -0.25: from the middle of the flight to its end the exposure eases by a quarter stop (`plan.ts` `exposure(seconds)`, used in `set.ts`). After it: mean 60.0 at 3150, 67.1 at 3195, 68.9 at 3210, 69.2 at 3225, 69.8 at 3239; left third mean 96.9, 108.0, 110.2, 108.3, 104.7; left third p99 242.3 falling to 238.9; share over 235 from 0.020 to 0.015.

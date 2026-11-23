@@ -5,12 +5,16 @@ import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 FIT = json.load(open(os.path.join(HERE, '..', 'relief', 'camera-fit.json')))
-W, H = FIT['size']
+DECK = json.load(open(os.path.join(HERE, '..', '..', '..', 'src', 'stops', 'jupiter', 'deck.json')))
+SCALE = DECK['tool']['canvas']['scale']
+W0, H0 = FIT['size']
+W, H = W0 * SCALE, H0 * SCALE
+OX, OY = (W - W0) // 2, (H - H0) // 2
 F = FIT['focalPx']
 NADIR = np.array(FIT['nadir'])
 R = FIT['radiusUnits']
 CENTRE = NADIR * (R + 1)
-STORM_PX = (1132.0, 552.0)
+STORM_PX = (1132.0 + OX, 552.0 + OY)
 
 
 def rays(x, y):
@@ -68,7 +72,7 @@ if __name__ == '__main__':
     print('ex', np.round(EX, 5), 'ey', np.round(EY, 5), 'en', np.round(EN, 5))
     print('camera in chart', [round(float(v), 4) for v in to_chart(cam)], 'height', round(float(np.linalg.norm(cam - CENTRE) - R), 5))
     print('up at camera', np.round(-NADIR, 5))
-    for name, (x, y) in {'bottom centre': (1408, 1583), 'bottom left': (0, 1583), 'bottom right': (2815, 1583), 'centre': (1408, 792), 'left mid': (0, 792), 'right 1200': (2815, 1200)}.items():
-        d = rays(x, y)
+    for name, (x, y) in {'bottom centre': (1408, 1583), 'bottom left': (0, 1583), 'bottom right': (2815, 1583), 'centre': (1408, 792), 'left mid': (0, 792), 'right 1200': (2815, 1200), 'canvas bottom centre': (1408, H - 1 - OY), 'canvas bottom left': (-OX, H - 1 - OY), 'canvas bottom right': (W - 1 - OX, H - 1 - OY), 'canvas left 1200': (-OX, 1200), 'canvas right 1600': (W - 1 - OX, 1600)}.items():
+        d = rays(x + OX, y + OY)
         t = hit(d)
         print(name, 'distance', round(float(t), 2), 'chart', [round(float(v), 2) for v in to_chart(d * t)])

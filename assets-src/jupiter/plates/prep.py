@@ -197,88 +197,97 @@ def base_of(name):
         blur = np.full(base.shape[:2], PL['parentBlurPx'], np.float32)
     else:
         base, clear = cleared_globe(m)
+        soften = PL['globeSoftenPx'].get(name, 0)
+        if soften > 0:
+            base = cv2.GaussianBlur(base, (0, 0), soften)
         blur = np.maximum(PL['globeBlurPx'][name], clear).astype(np.float32)
-    fixed = np.zeros(base.shape[:2], np.float32)
+    inset = np.zeros_like(base)
+    edge = np.full(base.shape[:2], -1e6, np.float32)
     fine = PL['inset'].get(name)
     if fine:
         f = PL[fine]
         plate = np.load(os.path.join(GEN, fine + '-plate.npy'))
         k = step / (f['size'][0] / f['pixels'][0])
         plate = cv2.GaussianBlur(plate, (0, 0), k * 0.5)
-        got = resample(plate, f, m, cv2.INTER_LINEAR)
+        inset = resample(plate, f, m, cv2.INTER_LINEAR)
         gx, gy = axes(m)
         X, Y = np.meshgrid(gx, gy)
-        edge = np.minimum(f['size'][0] / 2 - np.abs(X - f['centre'][0]), f['size'][1] / 2 - np.abs(Y - f['centre'][1]))
-        w = smooth(edge / (PL['bandPx'][0] * step))
-        base = base * (1 - w[..., None]) + got * w[..., None]
-        blur = blur * (1 - w) + 0.5 * w
-        band = PL['bandPx'][1] * np.exp(-(edge / (PL['bandPx'][0] * step)) ** 2)
-        extra = np.sqrt(np.maximum(band ** 2 - blur ** 2, 0)).astype(np.float32)
-        base = vblur(base.astype(np.float32), extra)
-        blur = np.maximum(blur, band)
-        fixed = (edge > 0).astype(np.float32)
-    return base.astype(np.float32), blur.astype(np.float32), fixed
+        edge = (np.minimum(f['size'][0] / 2 - np.abs(X - f['centre'][0]), f['size'][1] / 2 - np.abs(Y - f['centre'][1])) / step).astype(np.float32)
+    return base.astype(np.float32), blur.astype(np.float32), inset.astype(np.float32), edge
 
 
 def canvas(name):
     m = PL[name]
     step = m['size'][0] / m['pixels'][0]
     rgb, h, seen, along = image_lay(m)
-    base, base_blur, fixed = base_of(name)
+    under, base_blur, inset, edge = base_of(name)
+    bw, bb = PL['bandPx']
+    wi = smooth(edge / bw)
     lit = rgb / grade()
     known = cv2.erode(seen.astype(np.float32), np.ones((5, 5), np.uint8))
     blur = np.maximum(along / step * PL['softPx'], 0.3)
     soft, _ = blur_to(lit, known, blur)
-    use = known * (blur < base_blur + 1.0) * (fixed < 0.5)
+    u0, u1 = PL['useBlur']
+    use = known * (edge <= 0) * (1 - smooth((blur * step - u0) / (u1 - u0)))
+    if PL['parents'][name]:
+        use = use * (blur < base_blur + 1.0)
     k = max(m['pixels'][0] // 512, 1)
     small = lambda x: cv2.resize(x, (x.shape[1] // k, x.shape[0] // k), interpolation=cv2.INTER_AREA)
-    us = small(use)
+    up = lambda x: cv2.resize(x, (under.shape[1], under.shape[0]), interpolation=cv2.INTER_CUBIC)
+    us = small((use > 0.5).astype(np.float32))
     gx, gy = axes(m)
     X, Y = np.meshgrid(gx[k // 2::k][:us.shape[1]], gy[k // 2::k][:us.shape[0]])
-    eye = F.geom.to_chart(np.zeros(3))[:2]
+    eye = F.geom.to_chart(np.zeros(3))
     d0, d1, scale = PL['flatten']
     f = smooth((np.hypot(X - eye[0], Y - eye[1]) - d0) / (d1 - d0))
     tone, wt = nblur(small(soft), us, scale / step / k)
-    under = cv2.GaussianBlur(small(base), (0, 0), scale / step / k)
-    haze = np.log(np.clip(tone / np.maximum(under, 1e-6), 0.05, 20.0)) * f[..., None]
+    low = cv2.GaussianBlur(small(under), (0, 0), scale / step / k)
+    haze = np.log(np.clip(tone / np.maximum(low, 1e-6), 0.05, 20.0)) * f[..., None]
     haze = np.where(wt[..., None] > 0.05, haze, 0)
-    up = lambda x: cv2.resize(x, (base.shape[1], base.shape[0]), interpolation=cv2.INTER_CUBIC)
     soft = soft * np.exp(-up(haze))
+    w = cv2.GaussianBlur((use > 0.5).astype(np.float32), (0, 0), max(PL['feather'] / step, 2.0))
+    w = np.clip((w - 0.5) * 2, 0, 1) * (1 - wi)
+    base = under
     if not PL['parents'][name]:
-        tone, wt = nblur(small(soft), us, PL['carry'][0] / step / k)
-        under = cv2.GaussianBlur(small(base), (0, 0), PL['carry'][0] / step / k)
-        ratio = np.log(np.clip(tone / np.maximum(under, 1e-6), 0.05, 20.0))
+        have = soft * w[..., None] + inset * wi[..., None]
+        ws = small(w + wi)
+        tone, wt = nblur(small(have), ws, PL['carry'][0] / step / k)
+        low = cv2.GaussianBlur(small(under), (0, 0), PL['carry'][0] / step / k)
+        ratio = np.log(np.clip(tone / np.maximum(low, 1e-6), 0.05, 20.0))
         got = wt > 0.5
         dist = cv2.distanceTransform((~got).astype(np.uint8), cv2.DIST_L2, 5) * step * k
-        ratio = extend(ratio, got) * np.exp(-dist / PL['carry'][1])[..., None] * (1 - small(fixed))[..., None]
-        base = base * np.exp(up(ratio))
-    w = cv2.GaussianBlur(use, (0, 0), max(PL['feather'] / step, 2.0))
-    w = np.clip((w - 0.5) * 2, 0, 1)
-    out = soft * w[..., None] + base * (1 - w[..., None])
-    blur_map = blur * w + base_blur * (1 - w)
+        ratio = extend(ratio, got) * np.exp(-dist / PL['carry'][1])[..., None]
+        base = under * np.exp(up(ratio))
+    out = soft * w[..., None] + inset * wi[..., None] + base * (1 - w - wi)[..., None]
+    blur_map = blur * w + 0.5 * wi + base_blur * (1 - w - wi)
     inside = (w > 0.5).astype(np.uint8)
     d_in = cv2.distanceTransform(inside, cv2.DIST_L2, 5)
     d_out = cv2.distanceTransform(1 - inside, cv2.DIST_L2, 5)
-    dist = np.where(inside > 0, d_in, d_out)
-    bw, bb = PL['bandPx']
-    band = bb * np.exp(-(dist / bw) ** 2) * (1 - fixed)
+    dist = np.minimum(np.where(inside > 0, d_in, d_out), np.abs(edge))
+    band = bb * np.exp(-(dist / bw) ** 2)
     extra = np.sqrt(np.maximum(band ** 2 - blur_map ** 2, 0)).astype(np.float32)
     out = vblur(out.astype(np.float32), extra)
     blur_map = np.maximum(blur_map, band)
-    tie = np.where(inside > 0, blur_map, np.minimum(blur_map, bb + d_out * PL['free']))
-    tie = np.where(fixed > 0.5, blur_map, tie)
-    return out.astype(np.float32), blur_map.astype(np.float32), tie.astype(np.float32), w.astype(np.float32), h
+    free = np.minimum(d_out, np.where(edge > 0, 0, -edge))
+    tie = np.where((inside > 0) | (edge > 0), blur_map, np.minimum(blur_map, bb + free * PL['free']))
+    return out.astype(np.float32), blur_map.astype(np.float32), tie.astype(np.float32), np.maximum(w, wi).astype(np.float32), h, base.astype(np.float32)
 
 
 if __name__ == '__main__':
     name = sys.argv[1]
     os.makedirs(GEN, exist_ok=True)
-    out, blur, tie, w, h = canvas(name)
+    out, blur, tie, w, h, bare = canvas(name)
     np.save(os.path.join(GEN, name + '-canvas.npy'), out)
     np.save(os.path.join(GEN, name + '-blur.npy'), blur)
     np.save(os.path.join(GEN, name + '-tie.npy'), tie)
     np.save(os.path.join(GEN, name + '-wedge.npy'), w)
     np.save(os.path.join(GEN, name + '-h.npy'), h)
+    if not PL['parents'][name]:
+        _, base_blur, _, _ = base_of(name)
+        np.save(os.path.join(GEN, name + '_bare-canvas.npy'), bare)
+        np.save(os.path.join(GEN, name + '_bare-blur.npy'), base_blur)
+        np.save(os.path.join(GEN, name + '_bare-tie.npy'), base_blur)
     cv2.imwrite(os.path.join(GEN, name + '_in.png'), display(out * grade())[::-1, :, ::-1])
+    cv2.imwrite(os.path.join(GEN, name + '_bare_in.png'), display(bare * grade())[::-1, :, ::-1])
     fin = (blur < PL['finishedPx']) & (w > 0.5)
     print(name, 'image share', round(float((w > 0.5).mean()), 3), 'finished share', round(float(fin.mean()), 3), 'blur px pcts in the image part', np.round(np.percentile(blur[w > 0.5], [5, 50, 95]), 2))

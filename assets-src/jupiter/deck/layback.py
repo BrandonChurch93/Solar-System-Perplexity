@@ -32,10 +32,22 @@ def filmic(x):
     return np.clip((x * (a * x + b)) / (x * (c * x + d) + e), 0, 1)
 
 
+def canvas_display():
+    c = geom.DECK['tool']['canvas']
+    wide = cv2.imread(os.path.join(ROOT, c['file']), cv2.IMREAD_COLOR).astype(np.float32)
+    assert wide.shape[1] == geom.W and wide.shape[0] == geom.H
+    img = cv2.imread(os.path.join(ROOT, 'references', 'approved', 'jupiter-close.jpg'), cv2.IMREAD_COLOR).astype(np.float32)
+    ys, xs = np.mgrid[0:geom.H0, 0:geom.W0]
+    edge = np.minimum(np.minimum(xs, geom.W0 - 1 - xs), np.minimum(ys, geom.H0 - 1 - ys)).astype(np.float32)
+    t = np.clip((edge - c['feather'][0]) / (c['feather'][1] - c['feather'][0]), 0, 1)
+    w = (t * t * (3 - 2 * t))[..., None]
+    part = wide[geom.OY:geom.OY + geom.H0, geom.OX:geom.OX + geom.W0]
+    wide[geom.OY:geom.OY + geom.H0, geom.OX:geom.OX + geom.W0] = part * (1 - w) + img * w
+    return wide[..., ::-1] / 255
+
+
 def approved_scene():
-    img = cv2.imread(os.path.join(ROOT, 'references', 'approved', 'jupiter-close.jpg'), cv2.IMREAD_COLOR)
-    rgb = img[..., ::-1].astype(np.float64) / 255
-    return inverse_filmic(srgb_to_linear(rgb)).astype(np.float32)
+    return inverse_filmic(srgb_to_linear(canvas_display().astype(np.float64))).astype(np.float32)
 
 
 def grid(cx, cy, size, n):

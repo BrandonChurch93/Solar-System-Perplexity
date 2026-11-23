@@ -12,7 +12,9 @@ WORK = os.path.join(ROOT, 'out', 'work', 'jupiter', 'deck')
 
 
 def image_height(gain, sigma_px, reach):
-    d = np.fromfile(os.path.join(WORK, 'close-depth.raw'), dtype='<f4').reshape(geom.H, geom.W).astype(np.float64)
+    k = geom.DECK['tool']['canvas']['depthShrink']
+    d = np.fromfile(os.path.join(WORK, 'canvas-depth.raw'), dtype='<f4').reshape(geom.H // k, geom.W // k)
+    d = cv2.resize(d, (geom.W, geom.H), interpolation=cv2.INTER_CUBIC).astype(np.float64)
     ys, xs = np.mgrid[0:geom.H, 0:geom.W]
     r = geom.rays(xs, ys)
     t = geom.hit(r)

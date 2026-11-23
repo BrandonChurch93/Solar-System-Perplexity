@@ -11,7 +11,7 @@ import { Globe } from './globe'
 import { Io } from './io'
 import { Pall } from './pall'
 import * as look from './look'
-import { plan } from './plan'
+import { exposure, plan } from './plan'
 import reliefJson from './relief.json'
 import skyJson from './sky.json'
 
@@ -103,7 +103,7 @@ export const createSet: SetFactory = async (ctx) => {
       terrain.visible = !inOrbit
       const gain = 1 / shot.post.exposure
       if (!inOrbit) {
-        ground.update(gain, shot.post.vignette, view)
+        ground.update(gain * exposure(state.time - terrainMid), shot.post.vignette, view)
         return
       }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'

@@ -7,7 +7,7 @@ import numpy as np
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import geom
-from layback import ROOT, linear_to_srgb, srgb_to_linear
+from layback import ROOT, canvas_display, linear_to_srgb, srgb_to_linear
 
 STOP = os.path.join(ROOT, 'src', 'stops', 'jupiter')
 PUBLIC = os.path.join(ROOT, 'public', 'assets', 'jupiter')
@@ -20,7 +20,7 @@ class Surface:
         f = json.load(open(os.path.join(STOP, 'deck-fields.json')))
         self.lo, self.hi = f['heightRange']
         self.maps = []
-        for name in ('near', 'mid', 'far'):
+        for name in ('near', 'mid'):
             m = f['maps'][name]
             n = m['pixels'][kind]
             q = np.fromfile(os.path.join(PUBLIC, kind, 'deck-' + name + '-height.bin'), dtype='<u2').reshape(n, n).astype(np.float32) / 65535
@@ -44,7 +44,7 @@ class Surface:
             u = ((gx - c[0]) / size + 0.5) * n - 0.5
             v = ((gy - c[1]) / size + 0.5) * n - 0.5
             h += (w * cv2.remap(q, u.astype(np.float32), v.astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)).astype(np.float32)
-        return self.lo + h * (self.hi - self.lo)
+        return self.lo * (ws[0] + ws[1]).astype(np.float32) + h * (self.hi - self.lo)
 
 
     def flat(self, gx, gy, wide=4096):
@@ -97,6 +97,54 @@ def hidden(surface, p, eye, steps, first, grow):
     return out
 
 
+def reflect(i, lo, hi):
+    n = hi - lo
+    if n <= 0:
+        return np.full_like(i, lo)
+    k = np.mod(i - lo, 2 * n)
+    return lo + np.where(k > n, 2 * n - k, k)
+
+
+def mirror_fill(rgb, need, known, skip):
+    out = rgb.copy()
+    rows = rgb.shape[0]
+    filled = 0
+    for j in np.nonzero(need.any(0))[0]:
+        col = need[:, j]
+        kn = known[:, j]
+        edges = np.diff(np.concatenate([[0], col.astype(np.int8), [0]]))
+        starts = np.nonzero(edges == 1)[0]
+        ends = np.nonzero(edges == -1)[0] - 1
+        for r0, r1 in zip(starts, ends):
+            r = np.arange(r0, r1 + 1)
+            n = r1 - r0 + 1
+            a1 = r0 - 1 - skip
+            a0 = a1
+            while a0 - 1 >= 0 and kn[a0 - 1] and a1 - a0 < 4 * n:
+                a0 -= 1
+            b0 = r1 + 1 + skip
+            b1 = b0
+            while b1 + 1 < rows and kn[b1 + 1] and b1 - b0 < 4 * n:
+                b1 += 1
+            far_ok = a1 >= 0 and kn[max(a1, 0)]
+            near_ok = b0 < rows and kn[min(b0, rows - 1)]
+            if not far_ok and not near_ok:
+                continue
+            t = (r - r0 + 0.5) / n
+            w = t * t * (3 - 2 * t)
+            far = rgb[reflect(a1 - (r - r0), a0, a1), j] if far_ok else None
+            near = rgb[reflect(b0 + (r1 - r), b0, b1), j] if near_ok else None
+            if far is None:
+                fill = near
+            elif near is None:
+                fill = far
+            else:
+                fill = near * w[:, None] + far * (1 - w[:, None])
+            out[r, j] = fill
+            filled += n
+    return out, filled
+
+
 def build():
     v = CFG['view']
     theta = np.radians(v['thetaDeg'])
@@ -110,8 +158,7 @@ def build():
     px, py = geom.project(p)
     margin = v['imageMargin']
     seen = (p[..., 2] < 0) & (px >= margin) & (px <= geom.W - 1 - margin) & (py >= margin) & (py <= geom.H - 1 - margin)
-    img = cv2.imread(os.path.join(ROOT, 'references', 'approved', 'jupiter-close.jpg'), cv2.IMREAD_COLOR)
-    lin = srgb_to_linear(img[..., ::-1].astype(np.float64) / 255).astype(np.float32)
+    lin = srgb_to_linear(canvas_display().astype(np.float64)).astype(np.float32)
     rgb = cv2.remap(lin, px.astype(np.float32), py.astype(np.float32), cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
     rgb = np.clip(rgb, 0, 1)
     dt = np.gradient(p, axis=1)
@@ -124,22 +171,21 @@ def build():
     k = v['hiddenShrink']
     small = p[k // 2::k, k // 2::k]
     hid = hidden(surface, small, np.zeros(3), v['hiddenSteps'], v['hiddenFirst'], v['hiddenGrow'])
-    hid = cv2.dilate(hid.astype(np.uint8), np.ones((3, 3), np.uint8))
+    pad = 2 * v['hiddenPad'] + 1
+    hid = cv2.dilate(hid.astype(np.uint8), np.ones((pad, pad), np.uint8))
     hid = cv2.resize(hid, (nt, npsi), interpolation=cv2.INTER_NEAREST).astype(bool)
     lmin, lmax = v['lengthRange']
     known = seen & ~hid
     rows = np.arange(npsi)
     filled = 0
-    for j in range(nt):
-        need = seen[:, j] & hid[:, j]
-        kn = known[:, j]
-        if not need.any() or kn.sum() < 2:
-            continue
-        length[need, j] = np.exp(np.interp(rows[need], rows[kn], np.log(length[kn, j])))
-        filled += int(need.sum())
-    shown = np.round(linear_to_srgb(rgb) * 255).astype(np.uint8)
-    shown = cv2.inpaint(shown, (seen & hid).astype(np.uint8), v['hiddenFill'], cv2.INPAINT_TELEA)
-    rgb = np.where((seen & hid)[..., None], srgb_to_linear(shown.astype(np.float64) / 255), rgb)
+    up = (p - geom.CENTRE) / geom.R
+    level = (dist / geom.F) / np.maximum(-np.einsum('...k,...k->...', p, up) / dist, 1e-3)
+    steep = seen & ~hid & (length > v['steep'] * level)
+    steep = cv2.morphologyEx(steep.astype(np.uint8), cv2.MORPH_CLOSE, np.ones((3, 3), np.uint8)).astype(bool) & seen & ~hid
+    need = seen & (hid | steep)
+    length[need] = np.minimum(level, lmax)[need]
+    rgb, filled = mirror_fill(rgb, need, known & ~steep, v['hiddenSkip'])
+    print('steep share of seen', round(float(steep.sum() / max(seen.sum(), 1)), 4))
     a = 1 - np.clip(np.log2(np.maximum(length, lmin) / lmin) / np.log2(lmax / lmin), 0, 1)
     a = np.where(seen, np.maximum(a, 3 / 255), 0)
     print('view chart', nt, npsi, 'seen', round(float(seen.mean()), 3), 'hidden of seen', round(float((hid & seen).sum() / max(seen.sum(), 1)), 3), 'filled', filled)
@@ -164,6 +210,9 @@ def build():
         'pixels': {'full': [nt, npsi], 'web': [nt // 2, npsi // 2]},
         'lengthRange': [lmin, lmax],
         'focalPx': float(geom.F),
+        'half': [geom.W / 2, geom.H / 2],
+        'fade': v['fade'],
+        'axes': [[float(a) for a in geom.EX], [float(a) for a in geom.EY], [float(a) for a in geom.EN]],
     }
     json.dump(f, open(os.path.join(STOP, 'deck-fields.json'), 'w'), indent=1)
 
