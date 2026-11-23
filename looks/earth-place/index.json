@@ -1,9 +1,53 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-23T23:11:41.030Z",
- "head": "599855b2311e6701c929ddf90a2b02befe399124",
- "note": "step 1 trial: close ground drawn on the globe, place picture off; under 0.54 and 0.48 at T; not committed",
+ "pushed": "2026-11-23T23:45:06.720Z",
+ "head": "46fe41ce7edd072b89a447b2402af9ed55dd5513",
+ "note": "step 1 pushed as 46fe41ce; step 3 bodies in trial: two rim faults found on zooms, cure by a depth pass in work, not committed",
  "looks": [
+  {
+   "time": "2026-11-23T23:45:06.094Z",
+   "file": "20261123234506094-note-b2-z2118e.jpg",
+   "source": "../../../../tmp/gl/pw/b2-z2118e.jpg",
+   "kind": "note",
+   "label": "step 3 zoom of frame 2118: top step 1 (46fe41ce), middle trial b1 (dark line on a rim, bright lines in a tower), bottom trial b2 (lines gone, tower too dark while the place fades in: both faults open)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T23:45:05.401Z",
+   "file": "20261123234505401-note-b1-rise.jpg",
+   "source": "../../../../tmp/gl/pw/b1-rise.jpg",
+   "kind": "note",
+   "label": "step 3 towers as closed bodies, first trial b1, rise frames 2101 to 2124, draft, not committed",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T23:27:04.642Z",
+   "file": "20261123232704642-job-frame-02120.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "earth.rise frame 2120, draft tier, texels view, from the running g13 job",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2120,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "g13"
+  },
+  {
+   "time": "2026-11-23T23:17:00.467Z",
+   "file": "20261123231700467-job-frame-01862.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "earth.dive frame 1862, draft tier, texels view, from the running g13 job",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1862,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "g13"
+  },
   {
    "time": "2026-11-23T23:11:40.422Z",
    "file": "20261123231140422-note-earth-rise-draft-across.jpg",
@@ -43,49 +87,6 @@
    "first": 2100,
    "last": 2105,
    "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T23:08:08.147Z",
-   "file": "20261123230808147-compare-earth-rise-under.jpg",
-   "source": "out/work/handover/earth-rise-under.png",
-   "kind": "compare",
-   "label": "earth rise, the globe side at T (frame 2100) with the place picture, alone, and their difference times 4",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2100,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T23:08:06.773Z",
-   "file": "20261123230806773-sheet-earth-dive-draft-before.jpg",
-   "source": "out/work/handover/earth-dive-draft-before.png",
-   "kind": "sheet",
-   "label": "earth dive, every frame 1907 to 1918 (before T, frame 1919), draft tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "first": 1907,
-   "last": 1918,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T23:07:06.567Z",
-   "file": "20261123230706567-sheet-earth-dive-draft-across.jpg",
-   "source": "out/work/handover/earth-dive-draft-across.png",
-   "kind": "sheet",
-   "label": "earth dive, every frame 1913 to 1919 (across T, frame 1919), draft tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "first": 1913,
-   "last": 1919,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T23:05:52.627Z",
-   "file": "20261123230552627-note-o7-pair.jpg",
-   "source": "../../../../tmp/gl/pw/o7-pair.jpg",
-   "kind": "note",
-   "label": "step 1 trial: 1888 over 2124 at full size halved, where the ground of the close view meets the globe's plates",
-   "stop": "earth"
   }
  ]
 }
