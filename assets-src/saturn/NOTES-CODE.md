@@ -1206,3 +1206,44 @@ PLAN B FOR MAIL 298, POINT 1 (started 16:24)
   f671886b1bf3099675d2378858080385e2ac703a0dfb000a94861ad6e5cacd0e, at most 5.555 and 2.343 against the hero.
 - Honest limit: inside the dissolve the kept ringlets fade out and the model's fade in. The full cure is to
   build the model's field from the kept profile with the same warp, model octaves only below that scale.
+
+STATE 16:40 (c605678, pushed, not named)
+
+- Plan B is in: src/stops/saturn/kept (set, globe, rings, profile, look, ice from main, plan.ts an adapter on
+  the one live plan, pose.json the kept close pose numbers), model.ts (the model set, was set.ts), set.ts the
+  composer, skim.json handover.kept (from 0.31, to 0.53 of the dive: frames 3567.9 to 3587.7; strides).
+- Measured: drafts 3390, 3465, 3539 byte equal to main c9bc056 (/tmp/v/kept/k_*.png). 3465 final tier sha256
+  f671886b1bf3099675d2378858080385e2ac703a0dfb000a94861ad6e5cacd0e (the kept still's fingerprint); against
+  the hero 4.803, 2.124 blurred (script /tmp/v/herocmp.py; it gives the kept JPG still 5.051, 2.132).
+- Along the flight the kept set's weights stay at hold values through 3560 (pose 1, polar 1, close 0); from
+  3562 its own morph runs (pose 0.98 at 3562, 0.52 at 3572, 0.09 at 3582, 0 at 3590; polar 1, 0.46, 0.02, 0).
+- Vitest 170 of 170, tsc clean.
+- The rise in numbers (out/scratch/rise.ts): speed over the plane 2.37 percent of the height a frame forward
+  in the skim, 0.90 at 3816, then backward up to 12.6 at 3848. A pull back. Not a number to tune.
+
+MAIL 302 (16:42 UTC, high, verbatim)
+
+"MAIL 302 from the Builder to saturn_coder, 16:42 UTC. On your state of 16:40 (c605678).
+1. The kept set for the approach and the hold: accepted. 3465 with the kept still's own fingerprint is the
+proof I asked for.
+2. The dissolve of two whole pictures in 3568 to 3587 is not accepted as it stands. Twenty frames in which one
+set of ringlets fades out while another fades in elsewhere is a change of picture in view, the very thing the
+note of 05:57 UTC is about; a viewer stepping through names those frames at once. The cure is the one you named
+yourself at 16:11 as way (a), now for the dive instead of the hold: the model's coarse field is the kept ring
+picture. Take the radial profile (and the opacity) of the kept picture on the plane, as the model sees it along
+the dive, as the model's own profile down to the scale that picture resolves, and let the functions add only
+ringlets finer than that, growing with the closeness of the camera by pixel footprint. Then both scenes show
+the same ringlets in the same places through 3568 to 3587, the takes of the two scenes can share the shutter
+without a ghost, and what changes is light and fine detail, not the picture.
+3. The proof is a number, as for every other stop: both scenes drawn alone at the middle frame of the window
+(3577) and at its two ends with the shutter closed, their difference as a picture and as mean and 99th
+percentile. Aim: mean under 2 of 255 at 3577, no ringlet wider than 2 px present in one and absent in the
+other. Send the three pairs with the READY.
+4. Time: READY moves to 19:30 UTC so that this is in it. No single item may hold up the film, so at 19:30 UTC
+the newest named commit is taken; a dissolve of two different ring pictures would then be the first severe
+issue of round 1 in your own words.
+5. Render time is not yours to save: push the commit to agent/saturn-code, mail me its sha and the exact
+commands (G5, G13, G17, handover with every part, stills at any tier, review tier frames), and I run them on my
+machines in parallel and send you the files. Ask as often as you need.
+6. Point 8, the rise as a pull back with the jolt at 3816 to 3828: agreed that it needs a new rise path. After
+the READY, for round 2; it stays on the round 1 list in your words."
