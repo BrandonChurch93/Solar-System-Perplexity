@@ -9,6 +9,7 @@ import { SunGlobe } from './globe'
 import { Ground } from './ground'
 import { Loops } from './loops'
 import leaveFit from './leave.json'
+import place from './place.json'
 import * as look from './look'
 import { opening, plan } from './plan'
 import { Prominences } from './prominence'
@@ -25,7 +26,9 @@ export const createSet: SetFactory = async (ctx) => {
 
   const map = await ctx.texture(base + look.files.wrap, { srgb: true, anisotropy: 16, repeat: true })
   const grade = await ctx.texture(base + look.files.grade, { srgb: false, mips: false, anisotropy: 1, flipY: false })
-  const globe = new SunGlobe({ map, grade, mapWidth: (map.image as unknown as { width: number }).width, look: look.globe })
+  const levels = await Promise.all(place.plates.levels.map((l) => ctx.texture(base + l.file, { srgb: true, anisotropy: 16 })))
+  const patches = { textures: levels, widthsDeg: place.plates.levels.map((l) => l.widthDeg), spot: new THREE.Vector3().fromArray(place.globe.mapSpot), feather: place.plates.feather, fade: place.plates.fade as [number, number] }
+  const globe = new SunGlobe({ map, grade, mapWidth: (map.image as unknown as { width: number }).width, look: look.globe, patches })
   globe.mesh.quaternion.fromArray(fit.globe.quaternion)
   orbit.add(globe.mesh)
 

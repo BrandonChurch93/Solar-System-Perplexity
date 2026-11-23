@@ -1,0 +1,100 @@
+{
+  "source": "references/approved/sun-close.jpg",
+  "measured": "The limb of the approved close image is a conic in the picture. With the lens of the terrain view (vfov below, 16:9) every limb point is a ray from the camera, and the rays of a sphere limb lie on a cone round the nadir. assets-src/sun/terrain/fit.py fitted that cone to the limb read from two clean takes registered to the approved image (the direction of the nadir and the half angle, src/stops/sun/terrain.json down and alphaDeg). The half angle gives the dip and the height: dip = 90 - alpha, height = 1 / cos(dip) - 1. Pitch and roll are the angles of the camera axes to the nadir. The spot is the centre of the umbra (terrain.json spot), its ray met with the sphere. Heading: the far direction through the spot is the north of the globe at the spot (dive.headingDeg 0), so the aim has the bearing below. assets-src/sun/place/limb.py reads the limb again from the approved image itself and gives the residual below; assets-src/sun/place/solve.ts wrote this file.",
+  "frame": 90,
+  "vfovDeg": 55,
+  "aspect": 1.777778,
+  "heightRadii": 0.048481,
+  "dipDeg": 17.4916,
+  "limbHalfAngleDeg": 72.5084,
+  "pitchDeg": -20.5617,
+  "rollDeg": 1.1723,
+  "headingDeg": -0.0817,
+  "nadirToSpotDeg": 6.1167,
+  "spotBearingDeg": 2.9578,
+  "limbResidual": {
+    "columns": 69,
+    "medianPx": 11.38,
+    "rmsPx": 30.79,
+    "imageHeightPx": 1584,
+    "note": "the fitted limb lies on the top of the bright fringe; the photosphere edge between the loop feet sits about 2 percent of the frame height under it"
+  },
+  "stage": {
+    "radius": 20.6267,
+    "centre": [
+      -0.442461,
+      -20.244132,
+      -7.595623
+    ],
+    "spot": [
+      0.107366,
+      -0.27776,
+      -2.447574
+    ],
+    "toBody": [
+      0.52156164,
+      0.09735748,
+      -0.05269083,
+      0.84600157
+    ],
+    "note": "a stage point p is the body point toBody * (p - centre) / radius; body axes are the world axes of the orbit view at the middle of the hold, the globe turns about its axis from there"
+  },
+  "globe": {
+    "spot": [
+      0.23800208,
+      0.21349373,
+      0.94751013
+    ],
+    "north": [
+      -0.0520111,
+      0.97694443,
+      -0.20706139
+    ],
+    "mapSpot": [
+      0.23879979,
+      0.21355341,
+      0.94729594
+    ],
+    "mapNorth": [
+      -0.05218545,
+      0.97693139,
+      -0.20707907
+    ],
+    "patchNorthOffDeg": 0.0009,
+    "note": "spot and north in body axes; mapSpot and mapNorth in the axes of the globe map (the mesh turned back by its fit), where the patch levels are laid: east = Y x mapSpot, north = mapSpot x east"
+  },
+  "plates": {
+    "keepStretch": [
+      3,
+      6
+    ],
+    "featherDeg": 0.25,
+    "matchDeg": 1.5,
+    "feather": 0.12,
+    "fade": [
+      1.1,
+      1.7
+    ],
+    "levels": [
+      {
+        "file": "place-12.jpg",
+        "widthDeg": 12
+      }
+    ]
+  },
+  "twin": {
+    "position": [
+      0.24851743,
+      0.11356079,
+      1.0122525
+    ],
+    "quaternion": [
+      0.52156164,
+      0.09735748,
+      -0.05269083,
+      0.84600157
+    ],
+    "vfovDeg": 55,
+    "note": "the camera of the approved image on the unit sphere, body axes; the terrain view passes through it at frame 90"
+  }
+}

@@ -19,6 +19,7 @@ Every file under `public/assets/sun/`. The `web` file is always derived from the
 | `public/assets/sun/<set>/sky-terrain.webp` | Terrain view |
 | `public/assets/sun/<set>/haze.png` | Terrain view |
 | `public/assets/sun/<set>/grade.png` | Grade |
+| `public/assets/sun/<set>/place-12.jpg` | Place |
 
 `<set>` is `full` or `web`.
 
@@ -279,3 +280,19 @@ Apron corner:
 - Check: `python3 assets-src/sun/leave/fit.py LOG -` with a log that holds the camera quaternion and the engine's Sun per frame prints the limb of the painted disc and of the disc `sunplate.json` states, in px from the engine's Sun; the stated one gives the plate owner's table back to 0.1 px.
 - It copies Mercury's picture, rect and aim. If any of them changes, run both scripts again.
 - Nov 22, 14:05 UTC: the aim was read again (one `console.error` of `sunAim` in Mercury's set in a draft of frames 470 to 495, taken out again; it is the same at every frame of `sun.travel`): -0.1891262280154618, 0.10468355614156852, 0.6530252190059835, 0.7258310315027776. It had turned by 25.0 degrees about the direction of the Sun since the first fit (bec8e3f0), so the painted limb's long axis had turned with it and the globe lay up to 26 px outside the plate's limb on the left. `fit.py` holds the new aim, `leave.json` is written again. Check on drafts with the plate off and with the plate alone: the globe's edge lies on the new cone to 0.5 px rms at 486, 490 and 495 (`out/work/sun/hk3/edge.py`), the plate's limb to 1 to 3 px where no prominence hides it.
+
+
+## Place
+
+The place of the close view laid onto the globe (task of mail 212, `cut/HANDOVER.md` part B). All tools in `assets-src/sun/place/`, no model, no prompt so far.
+
+### src/stops/sun/place.json
+
+- Tool: `python3 assets-src/sun/place/limb.py` (reads the limb of `references/approved/sun-close.jpg` again, writes `out/work/sun/pl/limb.json`), then `npx tsx assets-src/sun/place/solve.ts`. It writes the camera of the approved close image against the sphere (height, dip, pitch, roll, heading), the stage to body transform, the spot and its north in body axes and in the axes of the globe map, and the twin camera. It keeps an existing `plates` block.
+
+### public/assets/sun/<set>/place-12.jpg
+
+- Output: 4096 x 4096 JPG (web 2048), a top down gnomonic picture of the ground round the spot, 12 deg wide (0.00293 deg per texel), east right, north up, in the display coding of `plate.jpg`. Level 0 of the patch levels of the globe (`place.plates.levels`).
+- Steps: `python3 assets-src/sun/place/layback.py 12 4096 out/work/sun/pl/lay12` lays `public/assets/sun/full/plate.jpg` (the approved image on its wide canvas, loops removed) back through the solved camera of `place.json` and writes the picture, what the camera sees, and the stretch of every texel (how many plate texels wide one source pixel is). Then `python3 assets-src/sun/place/plate.py 12 4096 place-12` keeps the laid back picture where the stretch is under `plates.keepStretch` (3 full, 6 none) and fills the rest with `field.jpg` in the same frame, tone matched over `plates.matchDeg`.
+- State: first rough plate of milestone 1. 45.5 percent of it is the laid back picture, the rest is the soft field (enlarged 2.96 times). The far half of the penumbra and the ground beyond are stretched and not repainted yet. Colour is not matched to the globe map yet.
+- Checks: `hero.py WIDTH_DEG SIZE OUT.png` cuts the globe map in the same frame; `check.py GLOBE.png CLOSE.jpg OUT.jpg [GLOBE_TEXELS.png]` puts the globe side from the solved camera beside the close side with the predicted limb marked; `same.py NEW.png KEPT.jpg` compares a new final tier render with a kept still in the kept still's own coding.
