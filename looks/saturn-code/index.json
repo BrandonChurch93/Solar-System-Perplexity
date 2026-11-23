@@ -1,9 +1,37 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T21:41:42.566Z",
+ "pushed": "2026-11-23T21:58:44.117Z",
  "head": "c984dd472881cb6b5832153beb9ead19ca1352ce",
- "note": "c984dd4 pushed: globe function chosen, main merged; review stills 3831, 3832, 3834 show one look in one process",
+ "note": "c984dd4 named for round 45; looking for the step of 3832 to 3834: none on the plain engine, a 12 percent step in crispness with the capped shutter; one process and lone stills give the same bytes at the draft tier",
  "looks": [
+  {
+   "time": "2026-11-23T21:58:42.861Z",
+   "file": "20261123215842861-note-e6_3832.jpg",
+   "source": "../../../../tmp/v/r21/e6_3832.png",
+   "kind": "note",
+   "label": "c984dd4 stop on the trial engine (7d9f486, shutter 0.64), frame 3832, review tier, 24 samples"
+  },
+  {
+   "time": "2026-11-23T21:58:41.667Z",
+   "file": "20261123215841667-note-rv_globe.jpg",
+   "source": "../../../../tmp/v/r21/rv_globe.png",
+   "kind": "note",
+   "label": "c984dd4 frame 3832, review tier, the globe at full size: band function under the map, streaked by the blur"
+  },
+  {
+   "time": "2026-11-23T21:58:40.711Z",
+   "file": "20261123215840711-note-rv_full.jpg",
+   "source": "../../../../tmp/v/r21/rv_full.png",
+   "kind": "note",
+   "label": "c984dd4 frame 3832, review tier, plain engine, 37 samples"
+  },
+  {
+   "time": "2026-11-23T21:58:39.775Z",
+   "file": "20261123215839775-note-e6_ll.jpg",
+   "source": "../../../../tmp/v/r21/e6_ll.png",
+   "kind": "note",
+   "label": "3831 and 3832 on the trial engine with the gentler shutter (top, middle) and 3832 on the plain engine (bottom), review tier, lower left at full size: one look, 3832 a little crisper with the cap"
+  },
   {
    "time": "2026-11-23T21:41:41.236Z",
    "file": "20261123214141236-note-m_3720.jpg",
@@ -31,34 +59,6 @@
    "source": "../../../../tmp/v/r20/step2.png",
    "kind": "note",
    "label": "drafts 3831 to 3835 around the step the Builder saw: none at the draft tier"
-  },
-  {
-   "time": "2026-11-23T21:29:09.777Z",
-   "file": "20261123212909777-note-rv_a1_3720.jpg",
-   "source": "../../../../tmp/v/r20/rv_a1_3720.png",
-   "kind": "note",
-   "label": "review 3720 of a trial variant (far look ladder, since reverted)"
-  },
-  {
-   "time": "2026-11-23T21:29:09.117Z",
-   "file": "20261123212909117-note-globe4_3720.jpg",
-   "source": "../../../../tmp/v/r20/globe4_3720.png",
-   "kind": "note",
-   "label": "3720 globe with the function, reach 1.3 to 1.75"
-  },
-  {
-   "time": "2026-11-23T21:29:08.464Z",
-   "file": "20261123212908464-note-rs_ll.jpg",
-   "source": "../../../../tmp/v/r20/rs_ll.png",
-   "kind": "note",
-   "label": "lower left of review 3832 (top) and 3834 (bottom) at full size: one look in a single process"
-  },
-  {
-   "time": "2026-11-23T21:29:07.776Z",
-   "file": "20261123212907776-note-rs_3834.jpg",
-   "source": "../../../../tmp/v/r20/rs_3834.png",
-   "kind": "note",
-   "label": "review still 3834, 35 samples, same tree"
   }
  ]
 }
