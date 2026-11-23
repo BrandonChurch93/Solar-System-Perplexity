@@ -1,9 +1,17 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-23T22:25:53.292Z",
- "head": "19880f1ed3a750248df4c68297a1f678c09b3d71",
- "note": "plan F step 1: the true heights of the Mars place from above and its meshes seen by the dive camera",
+ "pushed": "2026-11-23T22:27:51.641Z",
+ "head": "f08fa7cf5e50a4b72f670e365aa6524ed6045c25",
+ "note": "plan F step 1: shaded heights with the holes filled under the eye's sight",
  "looks": [
+  {
+   "time": "2026-11-23T22:27:51.074Z",
+   "file": "20261123222751074-note-f-all.jpg",
+   "source": "out/work/place/height/f-all.jpg",
+   "kind": "note",
+   "label": "Heights of the place as shaded relief from above, 0.7 and 1.6 degrees: grey is what the meshes give, blue tint is made by code (holes hung as a membrane, then lowered under the sight of the picture's eye; the wide blue outside the fan is not built yet)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-23T22:25:52.730Z",
    "file": "20261123222552730-note-h-all.jpg",
@@ -67,14 +75,6 @@
    "source": "out/work/place/view/p07-lead-take5.jpg",
    "kind": "note",
    "label": "0.7 degree plate from above: lead (tenth bake with the 0.3 take nested, left) and take 5 (right)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T22:05:26.264Z",
-   "file": "20261123220526264-note-p03-lead-take1.jpg",
-   "source": "out/work/place/view/p03-lead-take1.jpg",
-   "kind": "note",
-   "label": "0.3 degree plate from above: lead (tenth bake, left) and take 1 (right), ground outside the fan painted as relief",
    "stop": "mars"
   }
  ]
