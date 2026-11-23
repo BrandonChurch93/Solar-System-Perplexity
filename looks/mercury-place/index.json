@@ -1,9 +1,41 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T09:20:59.373Z",
+ "pushed": "2026-11-23T09:43:49.357Z",
  "head": "2afc5d610bc6c1b88e739adb593448e95c68ea8c",
- "note": "level 2 take a4: place mask fixed (close sky was inside it), no outline now; place still finer and greyer than its surroundings",
+ "note": "S2 repaint levels 3 and 4 built, plates v2 installed locally, first frames with the new path rendering",
  "looks": [
+  {
+   "time": "2026-11-23T09:43:45.497Z",
+   "file": "20261123094345497-note-L4-crop0-b.jpg",
+   "source": "out/work/mercury/place/repaint/L4-crop0-b.jpg",
+   "kind": "note",
+   "label": "S2 level 4 at full size, repainted ground west of the place",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T09:43:41.159Z",
+   "file": "20261123094341159-note-L4-bl-c.jpg",
+   "source": "out/work/mercury/place/repaint/L4-bl-c.jpg",
+   "kind": "note",
+   "label": "S2 level 4 lower left quarter with take a2: lead left, repaint right",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T09:43:37.451Z",
+   "file": "20261123094337451-note-L4-whole-b.jpg",
+   "source": "out/work/mercury/place/repaint/L4-whole-b.jpg",
+   "kind": "note",
+   "label": "S2 level 4 (9.5 deg) take a1: lead left, repaint right; lower left tile invented craters, retaken as a2",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T09:43:33.075Z",
+   "file": "20261123094333075-note-L3-whole-b.jpg",
+   "source": "out/work/mercury/place/repaint/L3-whole-b.jpg",
+   "kind": "note",
+   "label": "S2 level 3 (19 deg) take a1 with the night side kept from the lead: lead left, repaint right",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-23T09:20:58.550Z",
    "file": "20261123092058550-note-L2-crop-a4.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/mercury/place/repaint/L2-sheet-a3.jpg",
    "kind": "note",
    "label": "level 2 take a3: lead, built, raw centre take",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T08:58:17.476Z",
-   "file": "20261123085817476-note-L2-sheet-a2.jpg",
-   "source": "out/work/mercury/place/repaint/L2-sheet-a2.jpg",
-   "kind": "note",
-   "label": "S2 work, level 2 plate (38 deg) top down, take 2: left the lead (old ground in the light of T, place laid in), middle the repaint built from 5 generated tiles, right one raw centre tile at 2x. Surroundings now read as the same ground; the place is still a darker, denser blob: brightness match of the surroundings to the place is the next step. Not installed, not in the film yet.",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T08:38:25.342Z",
-   "file": "20261123083825342-note-lead-sheet.jpg",
-   "source": "out/work/mercury/place/repaint/lead-sheet.jpg",
-   "kind": "note",
-   "label": "S2 repaint leads, rough: level 3, level 4 (left side too dark, a scale error being fixed), style crop (wrong crop, shows flare and sky)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T08:38:22.437Z",
-   "file": "20261123083822437-note-sheet-v1.jpg",
-   "source": "out/work/mercury/place/plates/dive/sheet-v1.jpg",
-   "kind": "note",
-   "label": "S2 first pass plates by code, levels 2 to 4, not installed: the place wedge sits dark grey and photoreal inside the pale old terrain, so the surroundings need a repaint",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T08:20:36.698Z",
-   "file": "20261123082036698-note-cmp-l4.jpg",
-   "source": "out/work/mercury/place/tiles/cmp-l4.jpg",
-   "kind": "note",
-   "label": "laid back from the tiles, 9.5 deg about the spot: dive camera, rise camera, old patch-4 (the old level is another terrain in another style: all of it has to be remade from the place)",
    "stop": "mercury"
   }
  ]
