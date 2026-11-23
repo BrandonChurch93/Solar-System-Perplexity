@@ -1,0 +1,71 @@
+{
+ "critic": "R3",
+ "score": 4,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "left half, upper left, and lower left",
+      "what": "directional smear turns crater rims into streaks across about half the flyby; the same crops fail in image-06 tiles G and B, image-07 tiles N and O, and image-08 tiles U and V",
+      "fix": "shorten the blur so those native crops keep closed crater rims"
+     },
+     {
+      "severity": "minor",
+      "file": "image-06.png",
+      "where": "tile C, upper-right limb",
+      "what": "a warm halo and a streaked fringe sit on the airless edge",
+      "fix": "keep one sharp silhouette and drop the glow off the limb"
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "tile D, lower-left starfield",
+      "what": "a chromatic smear sits among the stars, with faint aperture ghosts on the night side",
+      "fix": "remove the ghost chain so it does not print on the planet or the stars"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 4,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-13.png",
+      "where": "upper-left illuminated face through the center-left terminator, also visible in image-14.png crops B, G, and I and image-15.png crops J and K",
+      "what": "Most of the globe is smeared into long directional streaks. Crater rims break into offset horizontal strips on the left, while round craters remain legible at center-right.",
+      "fix": "Check the globe at a frozen pose to distinguish texture distortion from blur. Correct any projection stretch, then shorten the blur or render it with enough temporal samples to retain continuous crater rims."
+     },
+     {
+      "severity": "major",
+      "file": "image-16.png",
+      "where": "lower shadowed globe, crops S and T, and the shadow transition in U",
+      "what": "Rectangular and diamond-shaped swatches and isolated bright dashes sit over an otherwise smooth dark surface, giving the terminator a patchy, tiled appearance.",
+      "fix": "Remove the block-shaped discontinuities in the shadow-side render and blend the terminator continuously while preserving faint, coherent surface detail."
+     },
+     {
+      "severity": "minor",
+      "file": "image-12.png",
+      "where": "near-field crater rim and ridges in crops T, W, and X",
+      "what": "Parts of the nearest terrain look soft and smeared despite hard, nearly white rim highlights and point glints. The sharper crater floor in image-10.png makes the loss of fine relief noticeable.",
+      "fix": "Preserve high-frequency detail in the nearest terrain and soften the brightest isolated glints without blurring neighboring rock."
+     }
+    ]
+   }
+  }
+ ]
+}

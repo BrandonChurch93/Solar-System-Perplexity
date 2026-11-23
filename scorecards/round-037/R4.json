@@ -1,0 +1,63 @@
+{
+ "critic": "R4",
+ "score": 4,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-03.png",
+   "where": "dive-to-terrain cover, frames 739-743, lower left and center",
+   "what": "a second misregistered terrain plate shows through as a hard-edged rectangle with doubled crater rims and a doubled limb line; the cover reads as two images laid over each other, not one move",
+   "fix": "drive both sides of the cover from one continuous camera path so the plates register exactly, or replace the dissolve with a single continuous render through the descent"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "frames 730 to 739, top of frame",
+   "what": "the sun pops in above the horizon and the horizon swings from a limb at the right to a wide arc across the top; direction and composition jump within the cover",
+   "fix": "keep the sun and limb continuous through the descent and pitch the camera up smoothly so the sun rises into frame over several frames"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "rise, frames 994 to 1000 and 1021 to 1027",
+   "what": "the sun disappears and the horizon tilt flips between 994 and 1000; between 1021 and 1027 the globe shrinks sharply, the sun moves, and a Milky Way band pops in at upper left",
+   "fix": "ease the pull-back with a continuous camera path, keep the sun and background stars locked to world space, and have the galactic band in the sky the whole time rather than switching it on"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-06.png",
+   "where": "terrain-to-rise cover, frames 990-996, horizon and ground",
+   "what": "the horizon doubles into two parallel lines and exposure lifts to a flat washed grey; the ground smears into streaky ghost copies instead of a smooth directional blur",
+   "fix": "use one camera with real motion blur across the cover, keep exposure matched on both sides, and keep the cover from crossfading two horizons that are out of register"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "dive, frames 706-722, crater field",
+   "what": "crater rims break into stepped bright copies with colored speckle, so the blur ghosts instead of smearing smoothly; the texture looks like it is being zoomed as a flat image",
+   "fix": "render true per-pixel motion blur with more samples and stream the higher-detail terrain in early so the dive does not upscale a low-res texture"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "main crater shadow, frames 829-973",
+   "what": "small white dash specks sit inside the crater's black shadow and move from frame to frame, which reads as crawling noise",
+   "fix": "clamp the specular highlights or fireflies in the shadowed area and denoise them consistently over time"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "sun starburst at top, frames 926-959",
+   "what": "the starburst rays change length and strength noticeably while the camera barely moves",
+   "fix": "tie the flare's strength to how much of the sun is visible and smooth that over time"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "terrain segment overall",
+   "what": "the near ground and the horizon have only weak parallax, so the view reads close to a slow pan over a single surface",
+   "fix": "lower the camera and add some lateral travel so the near craters slide clearly against the horizon"
+  }
+ ]
+}

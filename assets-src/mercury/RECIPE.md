@@ -20,7 +20,15 @@ Stand-ins for the Phase 2 blockout. Each is replaced when the stop is built.
 - Take kept: the only one.
 - Checks: the judged `terrain` frame lines up with the approved close image in `npm run compare`.
 
-## public/assets/mercury/{full,web}/patch-2.jpg, patch-3.jpg, patch-4.jpg (plates of the place, dive) and patch-3r.jpg, patch-4r.jpg (rise)
+## Plates of the place: patch-2.jpg, patch-3.jpg, patch-4.jpg (dive) and patch-3r.jpg, patch-4r.jpg (rise)
+
+Files, each in both sets (`<set>` is `full` at 4096 x 4096 and `web` at 2048 x 2048), all made by the steps of this section:
+
+- `public/assets/mercury/<set>/patch-2.jpg`: plate of the place for the dive, 38 deg wide (steps 1 to 5, 7; generation in step 4)
+- `public/assets/mercury/<set>/patch-3.jpg`: plate of the place for the dive, 19 deg wide (steps 1 to 5, 7; generation in step 4)
+- `public/assets/mercury/<set>/patch-4.jpg`: plate of the place for the dive, 9.5 deg wide (steps 1 to 5, 7; generation in step 4)
+- `public/assets/mercury/<set>/patch-3r.jpg`: plate of the place for the rise, 19 deg wide (steps 1 to 3 with `rise`, then 6 and 7 over the level 3 of the dive; no generation of its own, no takes)
+- `public/assets/mercury/<set>/patch-4r.jpg`: plate of the place for the rise, 9.5 deg wide (steps 1 to 3 with `rise`, then 6 and 7 over the level 4 of the dive; no generation of its own, no takes)
 
 The three deepest levels of the patch pyramid (38, 19 and 9.5 deg wide about the spot) are plates of the place: the ground of the close view at the handover, laid back onto the sphere, in the close view's own light inside 10 deg of the spot (ring feather to 15 deg, `src/stops/mercury/own.json`). Outside the ring level 2 is the old level. The dive uses `patch-2`, `patch-3`, `patch-4`; the rise binds `patch-3r` and `patch-4r` to the same two samplers (the same levels seen from the handover of the rise, because the relief of the close view shifts fine detail by 18 texels of level 4 in the median between the two views).
 
