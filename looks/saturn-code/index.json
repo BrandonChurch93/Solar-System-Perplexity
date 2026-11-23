@@ -1,9 +1,80 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T07:29:33.329Z",
+ "pushed": "2026-11-23T07:56:40.639Z",
  "head": "b9b585d8e328e58110c8e732b82fd0ab9195e6e3",
- "note": "writing the ring field, sheet and particle shaders; no render yet",
+ "note": "M1 rough: first ring plane from code, one rigid true world; ringlets, ice and light still to come",
  "looks": [
+  {
+   "time": "2026-11-23T07:56:39.965Z",
+   "file": "20261123075639965-note-compare-saturn-terrain.jpg",
+   "source": "out/work/compare/compare-saturn-terrain.jpg",
+   "kind": "note",
+   "label": "M1 rough: 3720 from code beside the approved close (compare sheet, draft tier)",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-23T07:56:39.403Z",
+   "file": "20261123075639403-note-row_m1.jpg",
+   "source": "../../../../tmp/v/row_m1.jpg",
+   "kind": "note",
+   "label": "M1 rough: frames 3630, 3720, 3809 of the skim from code, draft tier, one sample"
+  },
+  {
+   "time": "2026-11-23T07:56:25.717Z",
+   "file": "20261123075625717-compare-compare-saturn-terrain-view.jpg",
+   "source": "out/work/compare/compare-saturn-terrain-view.jpg",
+   "kind": "compare",
+   "label": "saturn.terrain: approved image left, film frame right, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.terrain",
+   "frame": 3720,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "247ebad7e038ce06"
+  },
+  {
+   "time": "2026-11-23T07:56:24.749Z",
+   "file": "20261123075624749-still-f03720-16x9-draft-full.jpg",
+   "source": "out/work/stills/f03720-16x9-draft-full.png",
+   "kind": "still",
+   "label": "saturn.terrain frame 3720, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.terrain",
+   "frame": 3720,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "247ebad7e038ce06"
+  },
+  {
+   "time": "2026-11-23T07:56:05.506Z",
+   "file": "20261123075605506-still-f03809-16x9-draft-full.jpg",
+   "source": "out/work/stills/f03809-16x9-draft-full.png",
+   "kind": "still",
+   "label": "saturn.terrain frame 3809, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.terrain",
+   "frame": 3809,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "247ebad7e038ce06"
+  },
+  {
+   "time": "2026-11-23T07:55:46.495Z",
+   "file": "20261123075546495-still-f03630-16x9-draft-full.jpg",
+   "source": "out/work/stills/f03630-16x9-draft-full.png",
+   "kind": "still",
+   "label": "saturn.terrain frame 3630, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.terrain",
+   "frame": 3630,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "247ebad7e038ce06"
+  },
   {
    "time": "2026-11-23T07:29:32.704Z",
    "file": "20261123072932704-note-chroma.jpg",
@@ -17,27 +88,6 @@
    "source": "assets-src/saturn/code/out/ring_model.png",
    "kind": "note",
    "label": "ring model by radius measured on the hero: luma, optical depth, ice brightness, colour"
-  },
-  {
-   "time": "2026-11-23T07:17:16.465Z",
-   "file": "20261123071716465-note-skim_pose_overlay.jpg",
-   "source": "../../../../tmp/v/skim_pose_overlay.jpg",
-   "kind": "note",
-   "label": "overlay of the rigid world on the approved close at the chosen skim pose (foot 2.44, height 0.30)"
-  },
-  {
-   "time": "2026-11-23T06:54:48.256Z",
-   "file": "20261123065448256-still-f03720-16x9-draft-full.jpg",
-   "source": "out/work/stills/f03720-16x9-draft-full.png",
-   "kind": "still",
-   "label": "saturn.terrain frame 3720, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.terrain",
-   "frame": 3720,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "247ebad7e038ce06"
   }
  ]
 }
