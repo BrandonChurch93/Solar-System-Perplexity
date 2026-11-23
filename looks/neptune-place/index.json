@@ -1,71 +1,71 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T13:33:08.726Z",
+ "pushed": "2026-11-23T14:02:56.336Z",
  "head": "194d20716ed85eb5d2d470ab30b1628c474908f7",
- "note": "s6/b: plates with arms from 4697, stain gone on the dive, tan fringe at the bank still there",
+ "note": "s6c: red rule changes little at the bank, same bits 0 on eight kept frames, sides at T 0.064 and 0.065",
  "looks": [
+  {
+   "time": "2026-11-23T14:02:55.121Z",
+   "file": "20261123140255121-note-cmp-bank.jpg",
+   "source": "out/work/nep/s6/c/cmp-bank.jpg",
+   "kind": "note",
+   "label": "s6 bank, second bake left, third bake right, 4704 4712 4720 4728",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T14:02:53.881Z",
+   "file": "20261123140253881-note-crop-mid.jpg",
+   "source": "out/work/nep/s6/c/crop-mid.jpg",
+   "kind": "note",
+   "label": "s6c third bake red rule, eye crops 4700 to 4728",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T14:02:53.113Z",
+   "file": "20261123140253113-note-rise-04.jpg",
+   "source": "out/work/nep/s6/b/rise-04.jpg",
+   "kind": "note",
+   "label": "s6b rise 4986 to 4997",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T14:02:52.248Z",
+   "file": "20261123140252248-note-rise-03.jpg",
+   "source": "out/work/nep/s6/b/rise-03.jpg",
+   "kind": "note",
+   "label": "s6b rise 4974 to 4985",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T14:02:51.008Z",
+   "file": "20261123140251008-note-rise-02.jpg",
+   "source": "out/work/nep/s6/b/rise-02.jpg",
+   "kind": "note",
+   "label": "s6b rise 4962 to 4973",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T14:02:49.748Z",
+   "file": "20261123140249748-note-dive-05.jpg",
+   "source": "out/work/nep/s6/b/dive-05.jpg",
+   "kind": "note",
+   "label": "s6b dive 4728 to 4739",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T14:02:48.568Z",
+   "file": "20261123140248568-note-dive-04.jpg",
+   "source": "out/work/nep/s6/b/dive-04.jpg",
+   "kind": "note",
+   "label": "s6b dive 4716 to 4727 second bake",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-23T13:32:57.303Z",
    "file": "20261123133257303-note-crop-mid.jpg",
    "source": "out/work/nep/s6/b/crop-mid.jpg",
    "kind": "note",
    "label": "s6/b native crops round the eye, 4704 to 4724 every second frame: no stain, tan fringe at the bank",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T13:32:56.617Z",
-   "file": "20261123133256617-note-crop-in.jpg",
-   "source": "out/work/nep/s6/b/crop-in.jpg",
-   "kind": "note",
-   "label": "s6/b native crops round the storm, 4680 to 4702 every second frame: plates coming in",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T13:32:55.948Z",
-   "file": "20261123133255948-note-dive-03.jpg",
-   "source": "out/work/nep/s6/b/dive-03.jpg",
-   "kind": "note",
-   "label": "s6/b dive 4704 to 4715, every frame, draft",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T13:32:54.958Z",
-   "file": "20261123133254958-note-dive-02.jpg",
-   "source": "out/work/nep/s6/b/dive-02.jpg",
-   "kind": "note",
-   "label": "s6/b dive 4692 to 4703, every frame, draft",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T13:32:53.828Z",
-   "file": "20261123133253828-note-dive-01.jpg",
-   "source": "out/work/nep/s6/b/dive-01.jpg",
-   "kind": "note",
-   "label": "s6/b dive 4680 to 4691, every frame, draft",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T13:18:21.016Z",
-   "file": "20261123131821016-note-rise-t1.jpg",
-   "source": "out/work/nep/s6/a/rise-t1.jpg",
-   "kind": "note",
-   "label": "trial: rise 4968 to 5004 every fourth frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T13:17:59.649Z",
-   "file": "20261123131759649-note-crop-dive.jpg",
-   "source": "out/work/nep/s6/a/crop-dive.jpg",
-   "kind": "note",
-   "label": "trial: native crop round the eye, 4696 to 4716 every fourth frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T13:17:58.985Z",
-   "file": "20261123131758985-note-dive-t1.jpg",
-   "source": "out/work/nep/s6/a/dive-t1.jpg",
-   "kind": "note",
-   "label": "trial: dive 4684 to 4716 every fourth frame, arms in the plate files, dark ground mended, layer ground late",
    "stop": "neptune"
   }
  ]
