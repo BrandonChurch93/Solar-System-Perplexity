@@ -1,8 +1,8 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-23T07:14:59.270Z",
+ "pushed": "2026-11-23T07:15:06.577Z",
  "head": "ad59ffc0df8fbe7c8574b0923da3f01475befb4c",
- "note": "M1: S1 check picture after the exact sphere hit fix (horizon on horizon within about 1 px), first rough laid back plates; judged frames byte equal with the probe unset",
+ "note": "M1 check picture after the exact hit fix",
  "looks": [
   {
    "time": "2026-11-23T07:14:58.673Z",
