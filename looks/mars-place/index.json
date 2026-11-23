@@ -1,9 +1,25 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-23T22:27:51.641Z",
+ "pushed": "2026-11-23T22:32:30.447Z",
  "head": "f08fa7cf5e50a4b72f670e365aa6524ed6045c25",
- "note": "plan F step 1: shaded heights with the holes filled under the eye's sight",
+ "note": "plan F: country heights by code from the plate's light, joined to the mesh heights",
  "looks": [
+  {
+   "time": "2026-11-23T22:32:29.878Z",
+   "file": "20261123223229878-note-see.jpg",
+   "source": "out/work/place/depth/see.jpg",
+   "kind": "note",
+   "label": "Tried and dropped: the pinned depth model on the plates from above (middle) reads a tilted plane, not heights; right the true mesh heights",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T22:32:29.294Z",
+   "file": "20261123223229294-note-c-all.jpg",
+   "source": "out/work/place/height/c-all.jpg",
+   "kind": "note",
+   "label": "Heights of the country by code, 0.7 degrees (top) and 1.6 degrees (bottom): left the plate as painted, right the heights as shaded relief. In the fan at the right the heights are the close view's own meshes (picture only, margins left out); everywhere else they are read from the light in the plate (slope along the Sun, gain fitted on the seen ground) on a base hung between the mesh borders",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-23T22:27:51.074Z",
    "file": "20261123222751074-note-f-all.jpg",
@@ -60,22 +76,6 @@
    "format": "16x9",
    "diag": "texels",
    "job": "measure"
-  },
-  {
-   "time": "2026-11-23T22:08:35.432Z",
-   "file": "20261123220835432-note-p16-lead-take6.jpg",
-   "source": "out/work/place/view/p16-lead-take6.jpg",
-   "kind": "note",
-   "label": "1.6 degree plate from above: lead (tenth bake with the 0.7 take nested, left) and take 6 (right)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T22:08:34.428Z",
-   "file": "20261123220834428-note-p07-lead-take5.jpg",
-   "source": "out/work/place/view/p07-lead-take5.jpg",
-   "kind": "note",
-   "label": "0.7 degree plate from above: lead (tenth bake with the 0.3 take nested, left) and take 5 (right)",
-   "stop": "mars"
   }
  ]
 }
