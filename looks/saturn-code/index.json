@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T10:38:42.281Z",
+ "pushed": "2026-11-23T10:57:21.236Z",
  "head": "0da1bbe8c2a6c37ed25509a62fdffd55bd6a7086",
- "note": "skim: halo and dusk on the globe near the sheet, stone shadows fade by slant; next the softening and colour pass and a grain of the sheet",
+ "note": "skim look pass: soft lanes, bunched grooves, lane hues, sand; next brightness of the A lanes, then review tier proofs",
  "looks": [
+  {
+   "time": "2026-11-23T10:57:20.690Z",
+   "file": "20261123105720690-note-np_bn.jpg",
+   "source": "../../../../tmp/v/np_bn.png",
+   "kind": "note",
+   "label": "3720 B ring near at native size: approved left, mine right (draft)"
+  },
+  {
+   "time": "2026-11-23T10:57:20.153Z",
+   "file": "20261123105720153-note-np_nl.jpg",
+   "source": "../../../../tmp/v/np_nl.png",
+   "kind": "note",
+   "label": "3720 A ring near left at native size: approved left, mine right (draft)"
+  },
+  {
+   "time": "2026-11-23T10:57:19.514Z",
+   "file": "20261123105719514-note-look_3720_soft.jpg",
+   "source": "../../../../tmp/v/look_3720_soft.png",
+   "kind": "note",
+   "label": "3720 draft: soft lanes with bunches of grooves, hues per lane, sand of the sheet (ladder with its own strengths near the sheet)"
+  },
   {
    "time": "2026-11-23T10:38:41.720Z",
    "file": "20261123103841720-note-np_bn.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/v/zp_nearleft.png",
    "kind": "note",
    "label": "3720 draft, A ring near left at 2x, approved left, mine right: blocks with faces, dashes are floater shadows (to remove)"
-  },
-  {
-   "time": "2026-11-23T09:58:32.296Z",
-   "file": "20261123095832296-note-zp_nearleft.jpg",
-   "source": "../../../../tmp/v/zp_nearleft.png",
-   "kind": "note",
-   "label": "3720 near left at 2x: approved (left) against the code scene (right), draft"
-  },
-  {
-   "time": "2026-11-23T09:58:31.662Z",
-   "file": "20261123095831662-note-d_3720.jpg",
-   "source": "../../../../tmp/v/d_3720.png",
-   "kind": "note",
-   "label": "3720 draft: ice as balls in a size ladder (dense small ones, blocks with shadows, floaters), wakes, spokes; path forward 0.5 sink 0.12"
-  },
-  {
-   "time": "2026-11-23T09:34:11.262Z",
-   "file": "20261123093411262-note-look_ice2_nearleft.jpg",
-   "source": "../../../../tmp/v/look_ice2_nearleft.png",
-   "kind": "note",
-   "label": "near left at native size, approved beside the film: stones and grain, second pass (A ring still too lilac and too flat)"
   }
  ]
 }
