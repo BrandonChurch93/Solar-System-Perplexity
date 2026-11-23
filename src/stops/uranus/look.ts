@@ -82,7 +82,7 @@ export const deckRings: RingLook = {
 
 export const deckStrands = { count: 48, spread: 0.012, amp: [0.004, 0.02] as [number, number], minSpan: 2.1 }
 
-export const show = { rings: true, moons: true, deck: true, globe: true, sky: true, cover: true }
+export const show = { rings: true, moons: true, deck: true, globe: true, sky: true, cover: true, side: null as null | 'orbit' | 'terrain' }
 
 export const halo = {
   size: [64, 64] as [number, number],
@@ -121,6 +121,8 @@ export const deck: DeckLook = {
   near: [1.0, 1.25],
   cloud: { height: 0.4, tile: 0.7, stretch: 1.4, group: 1.2, cover: [0.44, 0.6], curve: [0.14, 0.45], drift: 0.03, gain: 1.5, shade: 0.35, reach: [0.3, 0.62], tint: [2.16, 1.92, 1.8], lit: [0.02, 0.12] },
 }
+
+export const place = { light: [0.03, 0.6] as [number, number], plates: [1.5, 3] as [number, number] }
 
 export const near = { tint: [0.45, 0.5, 0.6] as [number, number, number], halo: 0.6, span: [0.12, 1] as [number, number] }
 

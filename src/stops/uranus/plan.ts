@@ -156,6 +156,7 @@ export class UranusPlan extends StopPlan {
   dive(time: number): OrbitShot {
     const seg = this.seg.dive!
     const c = this.coverCenter(seg)
+    if (show.side) return show.side === 'orbit' ? { pose: this.mapped(this.entryPath(time), time), view: 'orbit' } : { pose: this.entryPath(time), view: 'terrain' }
     if (time >= c) return { pose: this.entryPath(time), view: 'terrain' }
     const d = this.p.dive
     const fps = config.fps

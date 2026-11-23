@@ -12,6 +12,7 @@ import { Mist } from './mist'
 import * as look from './look'
 import { Moon } from './moons'
 import patchJson from './patches.json'
+import platesJson from './plates.json'
 import { plan } from './plan'
 import { fullLines, hairLines, parseLines, ringGeometry, ringProfile, Rings, strandLines } from './rings'
 import skyJson from './sky.json'
@@ -47,8 +48,16 @@ export const createSet: SetFactory = async (ctx) => {
   for (const level of patchJson.levels) patchTextures.push(await ctx.texture(base + level.file, { srgb: true, anisotropy: 16 }))
   const patches = { textures: patchTextures, widthsDeg: patchJson.levels.map((l) => l.widthDeg), spot: new THREE.Vector3().fromArray(patchJson.spot), feather: patchJson.feather, fade: patchJson.fade as [number, number] }
   const face = { map: await ctx.texture(base + 'face.jpg', { srgb: false, anisotropy: 16 }), ...look.face }
-  const globe = new Globe({ map, cloud, light, shade, patches, face, ...look.globe })
-  globe.mesh.quaternion.fromArray(fit.globe.quaternion)
+  const deckLight = await ctx.dataTexture(base + 'deck-light.bin', deckJson.lightSize[0]!, deckJson.lightSize[1]!, 4)
+  const plateTextures: THREE.Texture[] = []
+  for (const level of platesJson.levels) plateTextures.push(await ctx.texture(base + level.file, { srgb: false, anisotropy: 16 }))
+  const globeTurn = new THREE.Quaternion().fromArray(fit.globe.quaternion)
+  const place = {
+    textures: plateTextures, halfTans: platesJson.levels.map((l) => l.halfTan), frame: platesJson, rot: plan.terrainFrame.clone().invert().multiply(globeTurn), match: platesJson.match, aMax: platesJson.aMax, feather: platesJson.feather,
+    deck: { centre: deckJson.centre, radius: deckJson.radius, f0: deckJson.f0, r0: deckJson.r0, flow: look.deck.flow, flowAngle: deckJson.flowAngle, light: deckLight, lightSize: deckJson.lightSize, psiMax: deckJson.psiMax },
+  }
+  const globe = new Globe({ map, cloud, light, shade, patches, face, place, ...look.globe })
+  globe.mesh.quaternion.copy(globeTurn)
   const halo = new Halo(haloLut, look.halo.size, look.halo.range, { map, light, shade, lightSize: look.globe.lightSize, bandRate: look.globe.bandRate, turn: globe.mesh.quaternion, rim: look.halo.rim, rimSun: look.halo.rimSun })
   const shape = new THREE.Group()
   shape.quaternion.setFromUnitVectors(new THREE.Vector3(1, 0, 0), new THREE.Vector3().fromArray(look.shape.axis).normalize())
@@ -97,7 +106,7 @@ export const createSet: SetFactory = async (ctx) => {
     cloud: await ctx.texture(base + 'deck-cloud.jpg', { srgb: false, anisotropy: 16, repeat: true }),
     far: await ctx.texture(base + 'deck-far.jpg', { srgb: false, anisotropy: 16, repeat: true }),
     height: await ctx.dataTexture(base + 'deck-height.bin', deckJson.heightSize[0]!, deckJson.heightSize[1]!, 1),
-    light: await ctx.dataTexture(base + 'deck-light.bin', deckJson.lightSize[0]!, deckJson.lightSize[1]!, 4),
+    light: deckLight,
     halo: await ctx.dataTexture(base + 'deck-halo.bin', deckJson.haloSize[0]!, deckJson.haloSize[1]!, 4),
   }, key, look.deck)
   terrain.add(deck.group)
@@ -125,7 +134,7 @@ export const createSet: SetFactory = async (ctx) => {
 
   const sun = new THREE.Vector3()
   const turn = new THREE.Quaternion()
-  const place = (): void => {
+  const placeEye = (): void => {
     world.updateMatrix()
     eye.set(0, 0, 0).applyMatrix4(inverse.copy(world.matrix).invert())
   }
@@ -160,7 +169,7 @@ export const createSet: SetFactory = async (ctx) => {
       const aspect = view.format.width / view.format.height
       terrain.visible = !inOrbit
       if (!inOrbit) {
-        place()
+        placeEye()
         const seg = shot.segment
         const mine = seg.stop === plan.id
         const diving = mine && seg.kind === 'dive'
@@ -187,6 +196,9 @@ export const createSet: SetFactory = async (ctx) => {
       const nearing = mine && kind === 'dive' ? look.globe.diveSoft[0] * (1 - smooth(ramp(Math.log(look.globe.diveSoft[1]), Math.log(look.globe.diveSoft[2]), Math.log(Math.max(altitude, 1e-4))))) : 0
       globe.soften(left ? look.globe.soft : nearing, left ? look.globe.awayShade : 1)
       globe.near(look.near.tint, near)
+      const relit = low ? 1 - smooth(ramp(Math.log(look.place.light[0]), Math.log(look.place.light[1]), Math.log(Math.max(altitude, 1e-4)))) : 0
+      const plated = low ? 1 - smooth(ramp(Math.log(look.place.plates[0]), Math.log(look.place.plates[1]), Math.log(Math.max(altitude, 1e-4)))) : 0
+      globe.place(relit, plated, state.time - terrainMid)
       globe.face(left ? look.face.weight : 0)
       halo.update(sun, gain * state.weight * (1 + (look.near.halo - 1) * near), plan.spin(state.time), elapsed)
       const settling = (!mine && kind === 'travel') || (mine && kind === 'hold') ? smooth(ramp(look.arrival.rings[0], look.arrival.rings[1], (state.time - plan.seg.hold.start) * config.fps)) : 1
