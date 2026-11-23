@@ -1,9 +1,23 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-23T06:47:30.216Z",
+ "pushed": "2026-11-23T07:09:48.743Z",
  "head": "6902e99ebaa59199480ebf322c3fadb8ebb6af6c",
- "note": "start: reading the kept build, frozen frame 3150 at the draft tier as the baseline",
+ "note": "Stage 0: geometry and lay back tool written; deck shader from code is next",
  "looks": [
+  {
+   "time": "2026-11-23T07:09:48.207Z",
+   "file": "20261123070948207-note-layback-wide-s.jpg",
+   "source": "../work/layback-wide-s.jpg",
+   "kind": "note",
+   "label": "tool check: approved close image laid back top down, 60 x 40 units; the far part is stretched and will be made by code"
+  },
+  {
+   "time": "2026-11-23T07:09:47.642Z",
+   "file": "20261123070947642-note-layback-near-s.jpg",
+   "source": "../work/layback-near-s.jpg",
+   "kind": "note",
+   "label": "tool check: approved close image laid back top down near the storm (12 x 10 units), a layout guide only"
+  },
   {
    "time": "2026-11-23T06:46:29.044Z",
    "file": "20261123064629044-still-f03150-16x9-draft-full.jpg",
