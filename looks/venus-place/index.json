@@ -1,72 +1,84 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-23T16:18:58.282Z",
- "head": "6d3d78f3b65251ba1c168173cab36c44827f3231",
- "note": "venus: both moves rendered at draft with the ring of level a from the fifth take; proofs running",
+ "pushed": "2026-11-23T17:00:47.773Z",
+ "head": "d908301d9ede64dc9ed2c49217bfa2656bf0ff4f",
+ "note": "venus 8b65c470 named: G13, G5, G17, kept bytes and harness pass; next the tints and the tone change in view",
  "looks": [
   {
-   "time": "2026-11-23T16:18:57.338Z",
-   "file": "20261123161857338-note-rise-5.jpg",
-   "source": "out/work/venus/place/r9/rise-5.jpg",
+   "time": "2026-11-23T17:00:47.012Z",
+   "file": "20261123170047012-note-end-globes.jpg",
+   "source": "../../../../tmp/v/end-globes.jpg",
    "kind": "note",
-   "label": "venus rise, draft, consecutive frames (rise-5), ring of level a from the fifth take, level w new, plates tinted as the globe",
+   "label": "venus 1594, 1597, 1600, 1604 and the kept 1605, globe cut out: the end of the rise meets the travel",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T16:18:56.440Z",
-   "file": "20261123161856440-note-rise-4.jpg",
-   "source": "out/work/venus/place/r9/rise-4.jpg",
+   "time": "2026-11-23T17:00:46.469Z",
+   "file": "20261123170046469-note-n-1586.jpg",
+   "source": "../../../../tmp/v/n-1586.jpg",
    "kind": "note",
-   "label": "venus rise, draft, consecutive frames (rise-4), ring of level a from the fifth take, level w new, plates tinted as the globe",
+   "label": "venus 1586 (judged, rise), draft, commit 8b65c470: grey white ridges at the left, orange red tints, still wrong",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T16:18:55.494Z",
-   "file": "20261123161855494-note-rise-3.jpg",
-   "source": "out/work/venus/place/r9/rise-3.jpg",
+   "time": "2026-11-23T17:00:45.900Z",
+   "file": "20261123170045900-note-n-1287.jpg",
+   "source": "../../../../tmp/v/n-1287.jpg",
    "kind": "note",
-   "label": "venus rise, draft, consecutive frames (rise-3), ring of level a from the fifth take, level w new, plates tinted as the globe",
+   "label": "venus 1287 (judged, dive), draft, commit 8b65c470: dark brown field with orange red tints beside the cream cloud of the globe, still wrong",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T16:18:54.440Z",
-   "file": "20261123161854440-note-rise-2.jpg",
-   "source": "out/work/venus/place/r9/rise-2.jpg",
+   "time": "2026-11-23T17:00:45.330Z",
+   "file": "20261123170045330-note-across-rise.jpg",
+   "source": "../../../../tmp/v/across-rise.jpg",
    "kind": "note",
-   "label": "venus rise, draft, consecutive frames (rise-2), ring of level a from the fifth take, level w new, plates tinted as the globe",
+   "label": "venus rise handover, harness sheet of consecutive frames 1536 to 1547 across T 1542, draft, commit 8b65c470",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T16:18:53.681Z",
-   "file": "20261123161853681-note-rise-1.jpg",
-   "source": "out/work/venus/place/r9/rise-1.jpg",
+   "time": "2026-11-23T17:00:44.755Z",
+   "file": "20261123170044755-note-across-dive.jpg",
+   "source": "../../../../tmp/v/across-dive.jpg",
    "kind": "note",
-   "label": "venus rise, draft, consecutive frames (rise-1), ring of level a from the fifth take, level w new, plates tinted as the globe",
+   "label": "venus dive handover, harness sheet of consecutive frames 1337 to 1348 across T 1343, draft, commit 8b65c470",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T16:18:52.561Z",
-   "file": "20261123161852561-note-dive-6.jpg",
-   "source": "out/work/venus/place/r9/dive-6.jpg",
-   "kind": "note",
-   "label": "venus dive, draft, consecutive frames (dive-6), ring of level a from the fifth take, level w new, plates tinted as the globe",
-   "stop": "venus"
+   "time": "2026-11-23T16:59:22.452Z",
+   "file": "20261123165922452-sheet-venus-rise-top.jpg",
+   "source": "out/work/handover/venus-rise-top.png",
+   "kind": "sheet",
+   "label": "venus rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 1542), place picture off, draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "first": 1542,
+   "last": 1604,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T16:18:51.442Z",
-   "file": "20261123161851442-note-dive-5.jpg",
-   "source": "out/work/venus/place/r9/dive-5.jpg",
-   "kind": "note",
-   "label": "venus dive, draft, consecutive frames (dive-5), ring of level a from the fifth take, level w new, plates tinted as the globe",
-   "stop": "venus"
+   "time": "2026-11-23T16:58:40.694Z",
+   "file": "20261123165840694-sheet-venus-rise-draft-after.jpg",
+   "source": "out/work/handover/venus-rise-draft-after.png",
+   "kind": "sheet",
+   "label": "venus rise, every frame 1543 to 1554 (after T, frame 1542), draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "first": 1543,
+   "last": 1554,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T16:18:50.685Z",
-   "file": "20261123161850685-note-dive-4.jpg",
-   "source": "out/work/venus/place/r9/dive-4.jpg",
-   "kind": "note",
-   "label": "venus dive, draft, consecutive frames (dive-4), ring of level a from the fifth take, level w new, plates tinted as the globe",
-   "stop": "venus"
+   "time": "2026-11-23T16:58:38.933Z",
+   "file": "20261123165838933-sheet-venus-rise-draft-before.jpg",
+   "source": "out/work/handover/venus-rise-draft-before.png",
+   "kind": "sheet",
+   "label": "venus rise, every frame 1530 to 1541 (before T, frame 1542), draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "first": 1530,
+   "last": 1541,
+   "tier": "draft"
   }
  ]
 }
