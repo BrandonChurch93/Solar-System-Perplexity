@@ -33,6 +33,9 @@ export interface SetState {
   weight: number
   view: ViewKind
   ground?: number
+  // The turn of the body's surface at this time, in the set's own frame. Given on the globe side of a dive and a rise of a stop that opted in,
+  // where the camera follows the turning place: raw motion then tracks points that turn with the body.
+  turn?: THREE.Quaternion
 }
 
 export interface CoverHorizon { normal: [number, number]; offset: number; soft: number }
