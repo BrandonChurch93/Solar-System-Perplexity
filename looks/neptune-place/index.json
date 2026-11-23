@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T09:00:36.691Z",
+ "pushed": "2026-11-23T09:23:06.731Z",
  "head": "b14f0a7e8fb22ec7516cd510318725961e8b34a6",
- "note": "09:03 VM: L over first shown plates, geometry right, repaint of the surroundings is next",
+ "note": "09:27 VM S2 stage B: first repainted 26 deg plate under the live close layer; faults named in the labels, fixes in work",
  "looks": [
+  {
+   "time": "2026-11-23T09:23:06.151Z",
+   "file": "20261123092306151-note-sheet2.jpg",
+   "source": "out/work/nep/s2/b/sheet2.jpg",
+   "kind": "note",
+   "label": "S2 stage B sheet2, globe side forced: repainted spiral round the wedge; orange streaks near the limb and dark wedge edges still wrong",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T09:23:05.485Z",
+   "file": "20261123092305485-note-sheet1.jpg",
+   "source": "out/work/nep/s2/b/sheet1.jpg",
+   "kind": "note",
+   "label": "S2 stage B sheet1, globe side forced: repainted spiral round the wedge; orange streaks near the limb and dark wedge edges still wrong",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-23T09:00:36.103Z",
    "file": "20261123090036103-note-sheet2.jpg",
@@ -57,34 +73,6 @@
    "kind": "note",
    "label": "globe side 4769 beside close side 4770, rough plates: horizon and eye agree, cirrus 330 px off (stream and parallax), reason for the live close layer",
    "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T08:22:05.020Z",
-   "file": "20261123082205020-frame-f5085.jpg",
-   "source": "out/work/nep/e1/f5085.png",
-   "kind": "frame",
-   "label": "ending.retreat frame 5085, draft tier",
-   "stop": "ending",
-   "segment": "ending.retreat",
-   "frame": 5085,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "2d9dda353bfd7b6d"
-  },
-  {
-   "time": "2026-11-23T08:19:50.185Z",
-   "file": "20261123081950185-frame-f4949.jpg",
-   "source": "out/work/nep/e1/f4949.png",
-   "kind": "frame",
-   "label": "neptune.terrain frame 4949, draft tier",
-   "stop": "neptune",
-   "segment": "neptune.terrain",
-   "frame": 4949,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "2d9dda353bfd7b6d"
   }
  ]
 }
