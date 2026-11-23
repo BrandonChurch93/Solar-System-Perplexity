@@ -1,9 +1,61 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-23T19:37:18.405Z",
- "head": "05a70f35fbe27a064149eac0755331eb589f1f65",
- "note": "Gate G11 and G15 PASS on my tree (web 332 MB, full 1299 MB): memory cure by light alone plates for a, b, d, patches c and d out; 1310 before and after; harness running",
+ "pushed": "2026-11-23T19:58:42.945Z",
+ "head": "b1492bc1d1864eb295d117ce07d7aea7149d2c68",
+ "note": "b1492bc1: gates G11 and G15 green, G13 PASS 0 of 495 (worst 1561 1.18 percent); both moves looked at frame by frame; the place field still reads as a dark field 1280 to 1300 and 1578 to 1591",
  "looks": [
+  {
+   "time": "2026-11-23T19:58:41.837Z",
+   "file": "20261123195841837-note-rise-1578.jpg",
+   "source": "../../../../tmp/v/s5/rise-1578.jpg",
+   "kind": "note",
+   "label": "b1492bc1 draft: rise 1578 to 1589, every frame",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T19:58:40.748Z",
+   "file": "20261123195840748-note-dive-1284.jpg",
+   "source": "../../../../tmp/v/s5/dive-1284.jpg",
+   "kind": "note",
+   "label": "b1492bc1 draft: dive 1284 to 1295, every frame",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T19:58:39.536Z",
+   "file": "20261123195839536-note-leave.jpg",
+   "source": "../../../../tmp/v/leave.png",
+   "kind": "note",
+   "label": "b1492bc1 draft: hold 1259, rise 1597, 1604 and travel 1605 (main's frame), the globe cut out; 1604 against 1605 mean difference 1.49",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T19:56:16.987Z",
+   "file": "20261123195616987-job-frame-01185.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "venus.hold frame 1185, final tier, nograin view, from the running measure job",
+   "stop": "venus",
+   "segment": "venus.hold",
+   "frame": 1185,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-23T19:51:35.608Z",
+   "file": "20261123195135608-job-frame-01498.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "venus.terrain frame 1498, draft tier, texels view, from the running measure job",
+   "stop": "venus",
+   "segment": "venus.terrain",
+   "frame": 1498,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-23T19:37:17.413Z",
    "file": "20261123193717413-note-m3-diff-1310.jpg",
@@ -33,64 +85,6 @@
    "format": "16x9",
    "diag": "texels",
    "job": "g13f"
-  },
-  {
-   "time": "2026-11-23T19:20:02.435Z",
-   "file": "20261123192002435-frame-f01550.jpg",
-   "source": "out/work/venus/place/m3/f01550.png",
-   "kind": "frame",
-   "label": "venus.rise frame 1550, draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "frame": 1550,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e85c8d53a860dafc"
-  },
-  {
-   "time": "2026-11-23T19:19:11.067Z",
-   "file": "20261123191911067-frame-f01287.jpg",
-   "source": "out/work/venus/place/m3/f01287.png",
-   "kind": "frame",
-   "label": "venus.dive frame 1287, draft tier",
-   "stop": "venus",
-   "segment": "venus.dive",
-   "frame": 1287,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e85c8d53a860dafc"
-  },
-  {
-   "time": "2026-11-23T19:06:24.512Z",
-   "file": "20261123190624512-note-pc-1296.jpg",
-   "source": "../../../../tmp/v/pc-1296.png",
-   "kind": "note",
-   "label": "1296 x 0 to 457, y 507 to 1080: with patches c and d, without them, difference times 8 (memory cure, mail 324)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T18:44:04.818Z",
-   "file": "20261123184404818-job-frame-01110.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "venus.hold frame 1110, draft tier, texels view, from the running measure job",
-   "stop": "venus",
-   "segment": "venus.hold",
-   "frame": 1110,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-23T18:41:12.329Z",
-   "file": "20261123184112329-note-ring-take-1-view.jpg",
-   "source": "out/work/venus/place/v/ring-take-1-view.jpg",
-   "kind": "note",
-   "label": "venus wide ring (90 deg plate about the place), outpainting take 1 of 6: towers twice the size of level w and a soft halo at the rim of the centre, not kept",
-   "stop": "venus"
   }
  ]
 }
