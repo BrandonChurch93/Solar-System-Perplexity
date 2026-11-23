@@ -4,6 +4,7 @@ import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { smooth } from '../../director/rig'
 import { ringField } from './field'
 import { Globe, Shell } from './globe'
+import { iceField } from './ice'
 import * as look from './look'
 import { plan } from './plan'
 import { Sheet } from './sheet'
@@ -38,7 +39,8 @@ export const createSet: SetFactory = async (ctx) => {
   const hold = { texture: await ctx.dataTexture(base + holdLight.file, holdLight.width, holdLight.height, 4), matrix: heroM, camera: heroL, weight: poseW }
   const globe = new Globe(map, (map.image as unknown as { width: number }).width, table, hold, look.globe, look.haze, field.uniforms, polar)
   const shell = new Shell(look.shell, look.globe, field.uniforms, polar, look.shellReach)
-  const sheet = new Sheet(field, polar)
+  const ice = iceField()
+  const sheet = new Sheet(field, ice, polar)
   tilt.add(globe.mesh, shell.mesh, sheet.group)
   shell.mesh.renderOrder = 2.5
 
@@ -140,6 +142,7 @@ export const createSet: SetFactory = async (ctx) => {
       ;(su.uSunL!.value as THREE.Vector3).copy(sunL)
       su.uGain!.value = globeGain * state.weight
 
+      ice.set(plan.spin(state.time), close)
       const ru = sheet.uniforms
       ;(ru.uCamL!.value as THREE.Vector3).copy(camL)
       ;(ru.uSunL!.value as THREE.Vector3).copy(sunL)

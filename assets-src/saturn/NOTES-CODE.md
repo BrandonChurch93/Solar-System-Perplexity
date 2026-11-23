@@ -404,3 +404,59 @@ Plan for the ice (09:20):
 - Raised ice: layers or instanced grains above the sheet with true parallax, lit by the Sun.
 - The camera flies 0.04 radii a second, the A ring orbits at 0.042 radii a second, to the right in frame
   (prograde, seen from the north side). Both are seen: grains ride the lanes while the lanes slide down.
+
+## Mail 235 from /root (about 09:55 UTC day 1): E2 is on main, S4 can start
+
+- "The engine's E2 is on main at c9c23b29. It was checked on render machines: every frame of a stop that has
+  not opted in keeps its bytes, and Mars's judged hold and terrain frames keep theirs. Merge origin/main into
+  your branch now."
+- "What is new, and how a stop uses it, is in assets-src/shared/HANDOVER-NOTES.md, section 'How a stop uses
+  it'. In short: near T the globe side shows the place picture (the close side drawn at T), so the two sides
+  are one picture at T. StopPlan.twin(local, time) returns the twin for a close side pose, with exactly these
+  arguments: a plan that has its own method named twin must take the same arguments or rename its own. Also
+  closePose(kind, time) and place(kind, time), and per kind in MoveParams.handover: skyFrames, live, picture:
+  false, place: {scale, margin, valid, matte, lens}."
+- "With this the handover step S4 can start: opt in on your branch, give both sides' poses across the
+  windows, bring light, exposure, haze, the Sun and the sky to one function of time through T, remove your
+  cover."
+- "What Mars shows today, and what it means for you: at T no frame can be told from its neighbours. But the
+  place picture fades in over the globe's own ground during the 12 frames before T, and where the globe under
+  it is not the place, that reads as a dissolve between two pictures. Your plates decide that, the place
+  picture hides nothing before its window."
+- "After you opt in run: npm run handover -- --stop <id> --tier draft --only sides,flow,path,sheets. Look at
+  every frame of its sheets yourself and send the report with your milestone. Do not answer this mail, go on."
+
+## The ice, as built (10:00 UTC day 1), ice.ts and ice.json
+
+What failed first, and why:
+- Flat grains (ellipses on the plane, seven classes): at the skim's grazing view everything flat is squashed
+  to a third or a half across the line of sight, so grains of any size read as dashes that all lie level in
+  the frame: hatching. Along lane energy at B near stayed at a third of the approved in the two finest bands.
+  The approved's grain is the same size in both directions on screen, so the grains must have height.
+- Balls with one lookup per cell (the centre kept 2.9 radii from the cell walls): only sparse fields.
+
+What is built now:
+- Stones are balls. Resting classes (cells 0.0006 to 0.0192 radii, radius 0.2 to 0.36 of the cell, shares
+  0.85 down to 0.02) are the upper half of a ball on the sheet; a stone is looked for in the cell of the
+  point, in the next cell toward the lens (a dome shows over the plane behind it) and, for the three largest
+  classes, in the next cell toward the Sun (its shadow). Small ones show little of a ball's light (depth 0.5)
+  and are the sheet's grain, large ones are blocks with a lit cap, a dark body and a shadow toward the lens
+  (the skim looks sunward, phase 110 to 140 degrees).
+- Floating classes on five levels (0.004 to 0.14 radii above the sheet), drawn where the ray crosses the
+  level, each throwing its shadow down on the sheet at q + S.xz / S.y * h.
+- Wakes: two classes of long soft patches along the orbit (cells 0.012 and 0.006, 10 and 8 times longer than
+  wide), plus three spokes in the B ring that turn with the globe. Both are multiplied by the nearness of the
+  lens (0 in the hold), so the hold keeps its picture.
+- Every row turns by Kepler's third law from the orbit that keeps pace with the globe (1.86 radii), written
+  as s * sqrt(s) with s = sync radius over radius (no pow); one atan per level.
+
+The flight: assets-src/saturn/code/skim_flow.py prints the motion in pixels per frame of the plane, of ice on
+its orbit and of floaters at a few places. With the old path (forward 0.24 radii over the skim) the plane
+moved 1.8 px a frame at A near left and 0.4 at B near: too slow to read. Path now forward 0.5, sink 0.12
+(height 0.36 to 0.24): 4.2 px a frame at A near left (ice 4.2, floaters 4.2 to 7.4), B near plane 1.35, ice
+3.6, floaters to 6.4, B low right ice 5.6. The middle frame 3720 keeps its pose. TELL /root: the terrain
+path changed, so the poses at the end of the dive and at the start of the rise changed with it.
+
+Frame of the sheet shader (vLocal.xz): camera azimuth 90 to 95 degrees, B near at 98, A near left at 104,
+prograde is toward smaller azimuth, which is to the right in frame. Spin since the middle of the hold: 7.7
+degrees at 3630, 11.9 at 3720, 16.1 at 3809.

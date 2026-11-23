@@ -1,0 +1,63 @@
+{
+  "source": "the ice of the ring sheet that can be seen piece by piece: sizes in planet radii, angles in degrees. Read by ice.ts. Wakes, sand and stones lie on rows in radius; a row turns rigidly at the orbital rate of its radius, so every piece rides its own orbit and the rows shear against each other. Every piece is filtered by the size of the pixel and fades out where it gets smaller than a pixel, so the pieces merge into the sheet with distance.",
+  "orbit": {
+    "note": "the radius of the orbit that keeps pace with the globe's spin (the spin itself is spinDegPerSecond in plan.ts); the other orbits follow from it by Kepler's third law",
+    "syncRadius": 1.86
+  },
+  "filter": 0.5,
+  "fade": [0.3, 0.8],
+  "tau": 0.5,
+  "glintWhite": 0.5,
+  "weakest": 0.4,
+  "note": "tau: the share of a wake's tone that also moves the optical depth. glintWhite: how far the gloss of a stone is white rather than the colour of the ice. weakest: the tone of the faintest wake over the tone of the strongest.",
+  "stones": {
+    "note": "balls of ice lit by the Sun. Per class: radial size of a cell; how many times longer the cell is along the orbit; the share of cells that hold a stone where the sheet is dense; the stone's radius in cells, smallest and largest; the height of the level it floats on above the sheet (0: it rests on the sheet, half out of it); the share of stones that flash and how many times brighter their gloss is; depth: how much of the light and shade of a ball the stone shows (0: it is as bright as the sheet all over); throws: 1 if a resting class throws shadows on the sheet (floating stones always do); reach: how many radii the centre keeps from the walls of its cell. Resting classes lie closely: a stone is looked for in the cell of the point, in the next cell toward the lens and, if the class throws shadows, in the next cell toward the Sun, step cells away. viewFloor and sunFloor: the smallest sine of the angle between the plane and the ray to the lens and to the Sun that a stone's outline and shadow are drawn for (flatter rays are drawn as if at the floor, which bounds how far both reach on the plane). presence: the optical depth of the sheet at which about two thirds of the stones are there. ambient and direct: a stone's light over the light of the sheet, in its own shade and where it faces the Sun. glossPower and gloss: the Sun's mirror image on the ice. tone: how far a stone's own brightness varies. lobes: how far its outline leaves the circle. rough and roughPitch: how far its surface leaves the ball and how fine the bumps are. shadow: how much of the sheet's light a stone's shadow takes. lum and own: a floating stone is as bright as the sheet under it, but for the share own, which is its own brightness lum in the units of the ring model. clear: a level shows while the lens is this many times higher than it, fading in between the two.",
+    "cell": [0.0006, 0.0012, 0.0024, 0.0048, 0.0096, 0.0192, 0.012, 0.012, 0.024, 0.024, 0.048],
+    "aspect": [1, 1, 1, 1, 1, 1, 1.4, 1.4, 1.4, 1.4, 1.4],
+    "share": [0.85, 0.8, 0.6, 0.25, 0.08, 0.02, 0.3, 0.3, 0.25, 0.2, 0.12],
+    "size": [[0.2, 0.36], [0.2, 0.36], [0.2, 0.36], [0.2, 0.36], [0.2, 0.36], [0.2, 0.36], [0.04, 0.1], [0.04, 0.1], [0.03, 0.075], [0.03, 0.075], [0.02, 0.0625]],
+    "height": [0, 0, 0, 0, 0, 0, 0.004, 0.012, 0.03, 0.07, 0.14],
+    "glintShare": [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
+    "glint": [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+    "reach": [1.05, 1.05, 1.05, 1.05, 1.05, 1.05, 2.9, 2.9, 2.9, 2.9, 2.9],
+    "viewFloor": 0.4,
+    "sunFloor": 0.5,
+    "presence": 0.3,
+    "ambient": 0.6,
+    "direct": 2.0,
+    "glossPower": 24,
+    "gloss": 1.0,
+    "tone": 0.4,
+    "lobes": 0.14,
+    "rough": 0.3,
+    "shadow": 0.35,
+    "lum": 0.5,
+    "clear": [1.1, 1.4],
+    "own": 0.3,
+    "roughPitch": 7,
+    "depth": [0.5, 0.5, 0.6, 0.8, 1, 1, 1, 1, 1, 1, 1],
+    "throws": [0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1],
+    "step": 0.9
+  },
+  "wakes": {
+    "note": "long soft patches of the sheet, darker or brighter, that ride the orbit: they show that the plane turns. Each class in two sets of rows, the second half a row out from the first. Per class: radial size of a cell; how many times longer the cell is along the orbit; the pitch of the patch's long axis to the orbit; the share of cells that hold a patch; the patch's radial half size in cells, smallest and largest; how soft its edge is (0 a hard disc, 1 a soft blob); how far a dark patch and a bright patch move the logarithm of the brightness. Wakes show only near the sheet (not in the hold).",
+    "cell": [0.012, 0.006],
+    "aspect": [10, 8],
+    "pitchDeg": [2, 0],
+    "share": [0.5, 0.5],
+    "size": [[0.2, 0.45], [0.2, 0.45]],
+    "soft": [1, 1],
+    "dark": [0.1, 0.1],
+    "bright": [0.08, 0.08]
+  },
+  "spokes": {
+    "note": "soft radial smudges on the dense ring that turn with the globe. span: the radii they lie between; edge: how softly they end there; strength: how far the strongest moves the logarithm of the brightness (seen against the light they are bright); per spoke: its azimuth in the middle of the hold (degrees, against the turn of the orbits), its half width in degrees, how far it leans per radius, its tone over the strongest. Spokes show only near the sheet (not in the hold).",
+    "span": [1.6, 1.93],
+    "edge": 0.08,
+    "strength": 0.07,
+    "at": [104, 117, 133],
+    "widthDeg": [1.6, 2.4, 1.2],
+    "leanDegPerRadius": [-14, -22, -8],
+    "tone": [1, 0.7, 0.8]
+  }
+}

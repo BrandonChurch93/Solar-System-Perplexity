@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import { RING_FIELD_GLSL, type RingField } from './field'
+import { ICE_GLSL, type Ice } from './ice'
 import model from './ringfield.json'
 import look from './sheet.json'
 
@@ -55,6 +56,7 @@ out vec4 outColor;
 ${DIAG_GLSL}
 ${RING_FIELD_GLSL}
 ${GLOBE_SHADOW_GLSL}
+${ICE_GLSL}
 // what the sheet returns at a phase angle over what it returns where the model was measured, for a dense
 // sheet (x) and a thin one (y): straight lines between the knots, flat outside
 vec2 phaseGain(float deg) {
@@ -65,7 +67,12 @@ vec2 phaseGain(float deg) {
 void main() {
   vec2 q = vLocal.xz;
   float r = length(q);
-  float fp = ringFootprint(length(vec2(dFdx(r), dFdy(r))), uGrad);
+  float pixel = length(vec2(dFdx(r), dFdy(r)));
+  float fp = ringFootprint(pixel, uGrad);
+  vec2 qx = dFdx(q);
+  vec2 qy = dFdy(q);
+  float det = qx.x * qy.y - qx.y * qy.x;
+  mat2 toPixel = mat2(qy.y, -qx.y, -qy.x, qx.x) / (abs(det) > 1e-24 ? det : 1e-24);
   float texels = diagTexels(q / uFinest);
   vec3 P = vec3(q.x, 0.0, q.y);
   vec3 ray = P - uCamL;
@@ -83,6 +90,11 @@ void main() {
     float lum = knots.y;
     vec3 tint;
     ringFine(r, fp, ink.a, thin, dot(q / r, normalize(uSunL.xz)), tau, lum, tint);
+    float soft = uIceFit.w * fp / max(pixel, 1e-9);
+    float turn = atan(q.y, q.x) / 6.2831853;
+    vec2 grains = iceMarks(q, r, turn, toPixel, 1.0 / max(pixel, 1e-9), soft, ink.a);
+    lum *= grains.x;
+    tau *= grains.y;
     float dist = length(ray);
     float mu = max(abs(ray.y) / dist, 1e-3);
     float mu0 = max(abs(uSunL.y), 0.02);
@@ -97,7 +109,16 @@ void main() {
     float bn = dot(cs, ds) / length(ds);
     float behind = front ? 1.0 - smoothstep(0.97, 1.0, sqrt(max(dot(cs, cs) - bn * bn, 0.0))) : 0.0;
     alpha = 1.0 - exp(-tau / mu * mix(uViewFit.w, 1.0, behind));
-    col = lum * tone * (seen * law * uShade.z) * mix(uFloor, vec3(1.0), lit);
+    // the stones: their shadows on the sheet, the ones that rest on it, the ones that float above it
+    float shade;
+    vec3 rest;
+    vec4 raised;
+    iceStones(q, turn, uCamL, ray / dist, uSunL, length(toPixel * normalize(vec2(-ray.z, ray.x))), soft, uSat, shade, rest, raised);
+    vec3 under = mix(uFloor, vec3(1.0), lit) * uShade.z;
+    float dense = pow(clamp((uRfLight.y + uRfLight.z) / (mu0 + mu), uViewFit.x, uViewFit.y), uShade.x) * byPhase.x;
+    col = lum * (seen * law) * under * (tone * ((1.0 - uStoneLook.w * shade) * (1.0 - rest.x) + rest.y) + mix(tone, vec3(1.0), uIceOrbit.w) * rest.z);
+    col = col * (1.0 - raised.a) + raised.rgb * dense * under;
+    alpha = alpha * (1.0 - raised.a) + raised.a;
   }
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
@@ -112,7 +133,7 @@ export class Sheet {
   readonly uniforms: Record<string, THREE.IUniform>
   private readonly geometry: THREE.BufferGeometry
 
-  constructor(field: RingField, polar: number) {
+  constructor(field: RingField, ice: Ice, polar: number) {
     const seg = look.segments
     const span = model.span as [number, number]
     const inner = span[0]
@@ -130,6 +151,7 @@ export class Sheet {
     this.geometry.setIndex(index)
     this.uniforms = {
       ...field.uniforms,
+      ...ice.uniforms,
       uCamL: { value: new THREE.Vector3(0, 1, 3) }, uSunL: { value: new THREE.Vector3(1, 0.2, 0) }, uPolar: { value: polar },
       uGrad: gradUniform, uDiag: diagUniform, uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
       uFinest: { value: field.finest },

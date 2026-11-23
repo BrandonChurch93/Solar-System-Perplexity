@@ -12,8 +12,8 @@
   },
   "path": {
     "note": "travel over the whole skim: along the view axis on the plane, downward, sideways, and the turn of the camera",
-    "forward": 0.24,
-    "sink": 0.08,
+    "forward": 0.5,
+    "sink": 0.12,
     "side": 0,
     "yawDeg": 0,
     "pitchDeg": 0
