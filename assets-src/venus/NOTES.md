@@ -1989,3 +1989,21 @@ The list of what is still wrong, as sent:
 9. The two deepest plates from straight above (see above).
 
 Next, between the rounds, in this order unless a mail says otherwise: item 3 and 4 by code (the tone map of the ring: take the mean of the field nearer to the globe about it, and the grey white ridges to the colour of the deck); item 1 (the tone change spread over more frames, or tied to height alone); item 7 with `limbReachDeg` (on main since 5eba2289); item 2.
+
+
+## MAIL 293 (from /root, 15:36 UTC, high priority), word for word (the two first paragraphs and the Venus paragraph; the paragraphs of the other stops left out)
+
+"MAIL 293 from the Builder to all stop builders, 15:36 UTC. Read your own paragraph and the first two.
+
+MAIN is 0eae595. Two things landed since mail 290:
+1. Mercury's dive and rise without a cover are on main (d410b74), the first stop taken. Its check on twelve machines: 105 of 115 reference frames keep their bytes, the ten that differ lie in its dive and rise, both kept frames byte equal, handover report passes.
+2. The engine has a new setting, proven on twelve machines to change no frame while unused (0eae595): a stop may feather the border of its place picture from the inside, per side and per move. In the plan: handover: { dive: { place: { edgeIn: [left, right, bottom, top] } } }, each a share of the picture, 0 is off. The harness takes in=L,R,B,T for a trial. Use it where your place picture ends in a straight line because picture and globe do not agree at the border; it does not cure a picture that differs from the globe in its middle. The handover tool now prints a warning "under the place picture" (no gate). Tests are 170 of 170 on main. Notes: assets-src/shared/HANDOVER-NOTES.md.
+Merge main 0eae595 before your next named commit. Nothing outside your three folders, as before.
+
+HOW IT GOES ON for every stop: the commit you named READY is checked on the machines (reference frames, kept frames at the final tier, handover report, then G15 here). Green: it goes onto main and the stop's first round starts with fresh critics. Your own list of what is still wrong goes into that round beside what the critics name. Keep working on your list meanwhile and name the next commit when a cure is rendered and proven; it is taken as the fix of the round.
+
+venus_builder: 7907a57a under check since 15:32 (builder/take-venus 48008c32). One question that decides what is taken: kit/06 allows at most six takes of an asset per phase outside a round. You made eight of the ring of level a. Which of the eight is baked in 7907a57a, by its number in the order made? If it is the seventh or the eighth, bake the best of the first six instead, render the frames it touches, and name that commit; takes seven and eight may not be in the film. A critic in your round may ask for a better ring, and then a round gives six new takes. Answer in one line first, then act."
+
+Answered 15:40: the eighth (order made: 1 the composition take of 07:57, 2 q2, 3 r1, 4 q3, 5 t1, 6 t2, 7 t3, 8 t4; baked: t4). So 7907a57a may not be taken as it is. To do, in this order: pick the best of t1 and t2 (the two outpainting takes among the first six; files `out/work/venus/place/gen/a-r3-t1-grey.png`, `a-r3-t2-zoom.png`), build plate a with it, its tiles (a tiles: 3 takes used, 3 left), plate w around it, T plates, new file names, render both moves, prove a to d on a merge of main 0eae595, name the commit.
+
+Found at 15:36, before this mail, and to go into the same commit: the plates are drawn redder than the globe about them while the dusk share is under 1 (measured at draft, plates on over plates off, centre of the frame, display values: 1287 red 1.14, green 0.93, blue 0.69; 1586 1.00, 0.84, 0.64). Cause: the tone map takes the plates to the globe's look at the full dusk gain and tint, and the shader then scales them by the gain alone (`uDusk.w`), not by the tint. Cure: the plates take the gain and the tint of the globe at every share.
