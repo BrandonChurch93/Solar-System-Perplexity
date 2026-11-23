@@ -125,6 +125,7 @@ uniform float uHeightStep;
 uniform float uSpin;
 uniform float uGain;
 uniform float uWeight;
+uniform float uShow;
 uniform vec3 uTint;
 uniform float uWrap;
 uniform vec3 uCurve[33];
@@ -437,7 +438,7 @@ ${PATCH_LEVELS}
 ${CLOSE_DRAWS}
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   float k = uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
-  vec4 beauty = vec4((col * cov + rim) * k, cov);
+  vec4 beauty = vec4((col * cov + rim) * k, cov) * uShow;
   outColor = diagOut(beauty, texels, 1.0, vec3(0.55, 0.5, 0.45), vec2(0.0), t);
   if (uDiag >= 2 ? cov < 0.5 : cov <= 0.0 && dot(rim, vec3(1.0)) < 1e-6) discard;
 }`
@@ -497,7 +498,7 @@ export class Globe {
         uFeather: { value: p?.feather ?? 0.12 }, uPatchLean: { value: p?.lean ?? 0 }, uPatchFade: { value: new THREE.Vector2(p?.fade[0] ?? 1.1, p?.fade[1] ?? 1.7) }, uMend: { value: new THREE.Vector4(1000, 1000, 1, 0) },
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
         uMapWidth: { value: o.mapWidth }, uHeightStep: { value: (2 * Math.PI) / o.heightWidth },
-        uSpin: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
+        uSpin: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uShow: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
         uWrap: { value: l.wrap }, uCurve: { value: l.curve.map((k) => new THREE.Vector3(k[0], k[1], k[2])) }, uLimb: { value: l.limb.map((k) => new THREE.Vector3(k[0], k[1], k[2])) }, uLimbTo: { value: l.limbTo }, uNight: { value: new THREE.Vector3().fromArray(l.night) }, uNightDim: { value: 1 },
         uRelief: { value: new THREE.Vector4(l.relief, l.reliefNear, l.reliefDay, 0) }, uNightFlat: { value: new THREE.Vector4(l.nightFlat, l.nightDetail, l.nightVeil, l.nightVeilFrom) }, uNightSoft: { value: new THREE.Vector4(l.nightSoft[0], l.nightSoft[1], l.nightSoft[2], l.nightSoft[3]) }, uDusk: { value: new THREE.Vector4().fromArray(l.dusk.range) }, uDuskFrom: { value: l.dusk.from }, uReliefRange: { value: new THREE.Vector2().fromArray(l.reliefRange) }, uSil: { value: new THREE.Vector3(0, l.silhouette.floor, l.silhouette.taps) }, uSilWide: { value: new THREE.Vector2().fromArray(l.silhouette.wide) },
         uEdge: { value: l.edge },
@@ -579,6 +580,10 @@ export class Globe {
     ;(u.uMend!.value as THREE.Vector4).set(d.dot(u.uSpotE!.value as THREE.Vector3) / n, d.dot(u.uSpotU!.value as THREE.Vector3) / n, reach, from)
   }
 
+  show(amount: number): void {
+    this.material.uniforms.uShow!.value = amount
+  }
+
   near(weight: number, sink: number): void {
     this.material.uniforms.uCloseW!.value = weight
     this.material.uniforms.uSink!.value = sink
@@ -658,6 +663,7 @@ export class Globe {
     u.uAspect!.value = aspect
     this.mesh.updateWorldMatrix(true, false)
     this.center.setFromMatrixPosition(this.mesh.matrixWorld)
+    if (this.mesh.scale.x !== 1) this.center.divideScalar(this.mesh.scale.x)
     this.bodyToWorld.setFromMatrix4(this.m4.extractRotation(this.mesh.matrixWorld))
     const axis = this.axis.copy(this.center).normalize()
     ;(u.uGlareW!.value as THREE.Vector3).copy(glare).normalize()

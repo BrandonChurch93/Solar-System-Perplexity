@@ -62,6 +62,7 @@ export const close = { meet: true, shift: [0.09, 0.0] as [number, number], frame
 
 export const matte = { rows: 405, band: [0.014, 0.04] as [number, number], frames: 2 }
 export const limb = { sink: { dive: 0.081, rise: 0.163 }, frames: { dive: 8, rise: 12 } }
+export const under = { sink: 0.283, span: 0.45 }
 export const far = { color: [0.289, 0.26, 0.225] as [number, number, number], under: { dive: [0.05, 0.125] as [number, number], rise: [0.1, 0.155] as [number, number] }, sunFallDeg: 14, flat: 1, sunReach: 0.6, sunLevel: 2.6, lit: [0.0, 0.15] as [number, number], height: [0.05, 0.2] as [number, number], relief: [0.08, 0.5] as [number, number] }
 export const mend = { lon: 16.36, lat: -5.94, reach: 0.03, from: 1.8 }
 

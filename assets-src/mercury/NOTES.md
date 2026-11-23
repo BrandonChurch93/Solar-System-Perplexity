@@ -1684,3 +1684,41 @@ Seen on every frame (folders p3 and p4, sheets d1, d2, t, r1, r2).
 - Mail to /root at 23:12 with the commit, the numbers, the faults (dark corner 757 to 764, step at 977 to 978, pale globe 989 to 992, sky at left 1013 to 1021, judged 717 and 1016 are new pictures, still my own path) and the job text (smooth, measure, handover at draft, gate G11 and G15).
 - Next: plan F step 3 (the sphere under and round the relief in the close view), then step 2, the fill behind rims, the knobs. Looks due 23:35.
 
+## Mail from belt_builder, about 23:28 sandbox clock (verbatim): far Sun, no call in my set
+
+belt_builder to mercury_builder, far Sun, thanks for the list. First looks are with the Builder (frames 500, 520, 536, 615 with the body in your sky; branch agent/farsun 6a252ce5).
+Signature: there is no call in your set. The body draws itself inside Sky.render, after the stars, wherever `shot.sun.far` is set (film.ts sets it at every stop after the Sun and in every travel), at `sun.dir` with radius `sun.angularRadius`, with the sky's own camera turn (skyQuaternion), so in the dive and the rise it rides with the sky plates and the stars by construction, the same way the sky's own disc does. If your skyRide turn differs from the engine's skyQuaternion there, tell me which one is the truth and I follow it.
+The one line I changed in your set for my looks (yours to carry to main when you like it): set.ts 271, plate gain times `(shot.sun.far ? 0 : 1)`.
+What that means for your list: DROP shrink, surface, still, hide, inside, rate, lift, smear, and shown (the body is simply there the whole time). plate (one minus the engine's sky share in dive and rise): my body is in the sky pass, so it goes with the sky pass's own share; if the globe view's sky is not drawn by Sky.render there, tell me and I take a weight from you. breath: my body does not breathe as a whole (its cells live and die instead), so please take the 3 percent out of the ghosts or keep it on the ghosts alone, your call.
+Size: my disc is `sun.angularRadius` (9.20 degrees), not the plate's 10.81. For `clear` and for the streak's cut at the disc edges (limbLeft, limbRight) use sun.angularRadius about sunShown in place of sunJson.disc and sunRect; the edge is a true circle on the sky.
+Colour: at Mercury the body is golden orange with a darker red limb, not the plate's pale tone, so `look.sun.small.pale` and streakCore.warm may want a warmer value once you see it; I send you the frame when the look holds.
+
+To do from it (after the ground steps, or when the Builder says the far Sun is on main): plate gain times `(shot.sun.far ? 0 : 1)`; `clear` and the streak's edges by `sun.angularRadius` about `sunShown`; breath on the ghosts alone; drop the plate's shrink, surface, still, hide, inside, rate, lift, smear, shown. Answer owed: whether my skyRide turn equals the engine's skyQuaternion in dive and rise, and whether the globe view's sky is drawn by Sky.render there.
+
+## 23:35 sandbox clock: answer to belt_builder (sent)
+
+- The turn: in hold and travel my Sun is at `sun.dir` (0.000 degrees). In dive and rise it is not: `shown = camera.q * skyQuaternion^-1 * skyTurn * A * sun.dir`, A the inverse of `film.sky.orbits[mercury]` in the dive and of the next stop's in the rise, so the Sun rides with the stars while the star field turns. Angle against plain `sun.dir` (tool `out/work/mercury/place/tools/skyride.ts`): 690 0.000, 700 1.007, 720 15.118, 736 31.442, 748 38.695, 760 to 779 40.126; rise 960 to 977 42.262, 990 39.304, 1000 29.546, 1010 15.978, 1020 4.775, 1030 0.215, 1034 0.001. Told it mine is the truth there and that sampling the body in the stars' frame gives it for free.
+- The sky: the globe view's sky in dive and rise is drawn by Sky.render (engine.ts, every frame, both views). The plate's gain there is times `(1 - shot.skyShare)` (0.0003 at 736, 0.27 at 744, 0.75 at 752, 1 at 760; 0.92 at 982, 0.48 at 990, 0.015 at 1000); told it to take the same weight for the body or to say it wants another.
+
+## Plan F step 3: the sphere under and round the relief in the close view, 23:12 to 23:50 sandbox clock
+
+What it is. The close view drew only the relief meshes (ground and the wide mesh under it) on the limb plate and the sky, so wherever the frame looked past the edge of the meshes there was nothing. Now the planet itself stands under them: a second instance of the globe (`shell`), with the same plates, light and grade as the globe of the orbit view at the same moment, drawn in the close scene before the meshes.
+
+- `set.ts`: `globeOf()` builds the two instances; `shell.mesh` sits in the `terrain` group after limb and rim (renderOrder -3), scale `closeRadius`, centre at `nearUp * -(closeRadius + 1)`, turn `toClose` (the anchor frame's inverse times the fit's globe turn), spin 0. `paint()` holds every per frame setter of the globe, so both instances are fed by one function. In the close view of a dive or a rise the set asks the film for the same moment drawn from the orbit side (`film.shotAt(frame, time, 'orbit')`), takes that side's light, Sun, glare Sun and line, turns them by `toLow` (close camera turn times the inverse of the orbit camera turn) and paints the shell with them.
+- Presence is a function of height, not of the segment: `smoothstep(height, floor, floor + look.under.span)`, `floor` the larger of the terrain's own heights at its two ends (0.3017 close units over the camera's rest height), `span` 0.45. Full at and above 0.75 (frame 764 in the dive, 972 in the rise), nothing at and below the terrain's heights, so 780 to 959 keep their bytes and 779 to 780 and 959 to 960 show no step.
+- The shell's silhouette is sunk by `look.under.sink` 0.283 close units (the largest limb sink 0.163 plus the wide mesh's own drop 0.12), so its limb stays under the meshes' horizon. Without it (sink 0.081, the dive's value) the sphere showed as a second contour 1 to 3 px above the meshes' horizon from 760 to 766, with dark dashes where the far edge of the wide mesh's matte lay on it.
+- `globe.ts`: `uShow` (premultiplied presence, 1 for the orbit globe: same bytes) and `show()`; in `update` the centre is divided by the mesh scale so a scaled instance is still a unit sphere to the shader.
+- `look.ts`: `under = { sink: 0.283, span: 0.45 }`.
+
+Proof that the shell is in place: the same frame drawn both ways (`DIAG=beauty/side=orbit/noplace` against `DIAG=beauty/side=terrain`, 757, 760, 764, 771, folders s1o and s1t) shows the same ground at the same place, scale and turn.
+
+Measured (draft, folder `out/work/mercury/place/s2`, every frame 756 to 780 and 960 to 980 looked at).
+- Kept frames against `base`: 615, 689, 780, 870, 959, 1035 all 0 px. tsc clean, build green, 224 of 224 tests.
+- Against the pace step (folder p4 for the dive, p3 for the rise): differences over 8 levels only in the lower left corner (the hole that is now ground): 21790 px at 756, 33306 at 757, 46480 at 758, 61326 at 759, 71982 at 760, 51808 at 761, 30283 at 762, 10964 at 763, 701 at 764; plus the strip of the same corner along the bottom edge to x 973 (1744 to 7814 px, 756 to 761). Nowhere else: no line at the horizon. 765 to 777 at most 2 levels, falling from 57292 px to 12 px; 778 and 779 no pixel differs, so no step into 780.
+- Rise: 960 to 964 no pixel differs (no step out of 959); 965 to 978 at most 1 level (49 px at 965, about 12000 px at 972 to 977, 1298 at 978); 979 and 980 no pixel differs.
+- 750 to 754 (globe side with the place picture): 750 at most 3 levels, 752 one pixel over 8, 754 3611 px over 8 at x 379 to 739, y 791 to 896 (the picture's own corner, now ground).
+
+Seen, still wrong.
+- The ground the sphere shows in the corner is softer than the meshes beside it (the plates at their resolution): 759 at the left edge, 760 to 762 at the lower left. It reads as ground, not as a hole.
+- Rise 977 to 978: the change of view still steps. At 978 a pale bright band stands along the limb at the upper right where 977 shows darker ground to the horizon, and it grows through 980. This is the globe's own limb beyond the place picture; the cure is step 2 (the meshes and the limb plates drawn in the globe view, the place picture off).
+
