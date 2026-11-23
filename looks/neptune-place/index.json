@@ -1,9 +1,41 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T23:39:55.043Z",
- "head": "f7a9e0012da7f546eac24a2d5f51a5ff7cb49f27",
- "note": "deep.ts 4860 master draft beside approved, G17 own reading 0.913, 85 s a frame",
+ "pushed": "2026-11-23T23:48:12.247Z",
+ "head": "5bdf69cd4fd890e08a65ee3c4d2e386d6ac97575",
+ "note": "first look of deep.ts at 5bdf69cd: 4860 master draft beside approved, G17 own reading 0.929, 95 s a frame",
  "looks": [
+  {
+   "time": "2026-11-23T23:48:11.670Z",
+   "file": "20261123234811670-note-m-r1.jpg",
+   "source": "../../../../tmp/m-r1.jpg",
+   "kind": "note",
+   "label": "deep.ts frames 4859 to 4862 preview draft, crop at twice the size, near streamer (state r, 23:34 VM)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T23:48:11.118Z",
+   "file": "20261123234811118-note-m-r0.jpg",
+   "source": "../../../../tmp/m-r0.jpg",
+   "kind": "note",
+   "label": "deep.ts frames 4859 to 4862 preview draft, crop at twice the size, storm and far streamer (state r, 23:34 VM)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T23:48:10.415Z",
+   "file": "20261123234810415-note-c-M7.jpg",
+   "source": "../../../../tmp/c-M7.jpg",
+   "kind": "note",
+   "label": "FIRST LOOK deep.ts: crop of 4860 at master draft, full size (left) beside approved (right)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T23:48:09.847Z",
+   "file": "20261123234809847-note-s-M7.jpg",
+   "source": "../../../../tmp/s-M7.jpg",
+   "kind": "note",
+   "label": "FIRST LOOK deep.ts (commit 5bdf69cd, deep.json on true): frame 4860 at master draft (left) beside the approved close image (right), 23:45 VM; own G17 reading (nograin) median 0.929; 95 s a master draft frame",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-23T23:39:54.393Z",
    "file": "20261123233954393-note-c-M6.jpg",
@@ -35,42 +67,6 @@
    "kind": "note",
    "label": "deep.ts from functions, frame 4860 preview draft (left) beside the approved close image (right), 23:09 VM, unfinished",
    "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T22:53:34.186Z",
-   "file": "20261123225334186-note-d-f.jpg",
-   "source": "../../../../tmp/d-f.jpg",
-   "kind": "note",
-   "label": "deep.ts, the surface view from functions, 4860 at 960 wide draft (left) beside the approved image (right): unfinished, cirrus still soft, storm and deck first tone",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T22:36:08.588Z",
-   "file": "20261123223608588-note-lay-cirrus.jpg",
-   "source": "../../../../tmp/lay-cirrus.jpg",
-   "kind": "note",
-   "label": "plan: the same at cirrus height, streamer lines read from it",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T22:36:08.009Z",
-   "file": "20261123223608009-note-lay-deck.jpg",
-   "source": "../../../../tmp/lay-deck.jpg",
-   "kind": "note",
-   "label": "plan: the approved close image laid on the ground in band coordinates (deck), the layout the function scene is fitted to",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T22:18:14.724Z",
-   "file": "20261123221814724-sheet-neptune-dive-draft-after.jpg",
-   "source": "out/work/handover/neptune-dive-draft-after.png",
-   "kind": "sheet",
-   "label": "neptune dive, every frame 4759 to 4769 (after T, frame 4758), draft tier",
-   "stop": "neptune",
-   "segment": "neptune.dive",
-   "first": 4759,
-   "last": 4769,
-   "tier": "draft"
   }
  ]
 }
