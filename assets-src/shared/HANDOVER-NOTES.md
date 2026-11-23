@@ -343,6 +343,21 @@ Read this file first after a compaction, then the task mail, then `cut/HANDOVER.
   - Most samples at the review tier: Mars dive 123, Mars rise 116, Jupiter rise 116, Mercury rise 76, Uranus 67 and 69, Jupiter dive 68, Mercury dive 60, Neptune rise 59, Earth rise 46, Saturn rise 37, Earth dive 35, Neptune dive 34, Sun 29, Saturn dive 17.
 - The tone frames of the eighth bake are all rendered (draft, tree 0edcb08 = 40f8d5d merged with fab057c5): `/tmp/tone/fab/{off,s1,s2,glob}/`, sheets `/tmp/tone/sheet-{off,s1,s2,glob}-{rise,dive}.png` (2686 to 2697 and 2442 to 2453).
 
+### 20:40 to 20:50, the tone split read on the eighth Mars bake: not named for Mars
+
+- Commit 79de0c3 (d140 numbers and the tests) pushed and told to /root 20:31 with the line of frames. The three other settings are green on the merged tree too (6 and 0, 0 and 0, 14 and 0.25).
+- The eight sheets (off, shares 1, shares 2, no place; rise 2686 to 2697, dive 2442 to 2453) and full size crops of 2695 (`/tmp/tone/sheet-*.png`, `crop-2695-*.png`, `diff-2693.png`; in looks 20:34; sent to /root 20:41 as JPEG from `/tmp/tone/send/`).
+- Reading: off, shares 1 and shares 2 cannot be told apart at sheet size. At full size the lend darkens and reddens the outer parts of the picture a little. Tone of 40 px blocks against the globe alone: 2695 off 8.6, shares 1 7.4, shares 2 6.4 (near field rows 600 down 3.2, 2.5, 2.0; far band rows 280 to 560 18.3, 16.0, 14.1); 2450 off 8.1, 6.6, 5.4. At T (2693): near 5.4, far 19.1, sky 7.7; single rows of the far band 32 to 38, the horizon rows 44 to 51 in the middle. Step of the ground mean into 2694: minus 0.4 off, minus 1.1 shares 1, minus 1.3 shares 2.
+- What a viewer sees is not tone but content, in three places:
+  - (a) the far field is two pictures: the picture has the far canyon wall, the plateau and a pale plain in haze, the globe flat land with cracks and dunes. `PLACE-NOTES.md` of the place builder: the plates hold the picture only near the twin (`force.py` holdFrom 4, holdTo 12 texels per picture px), further out they are top down takes, because a lay back of ground seen at a grazing angle is a fan of streaks from above; "far wall and plateau missing in the plates" is on its open list.
+  - (b) the horizon: soft haze band in the picture, hard limb with a thin bright line and brighter stars in the globe; from 2694 the line shows through the picture, two horizons at the left in 2696 and 2697.
+  - (c) the knobs: the globe's own fine relief (lit knobs, combed ridges) beside the smooth plates, from the bottom and right edge inward. The same edge is in the globe alone, so no option of the picture touches it, and it stays after 2704.
+- The line sent to /root: the plates need no new bake for the tone split (it is computed at render time from the globe under the picture). I do not ask to name it for Mars: no gain a viewer can see. The option stays in the engine, off for every stop.
+- An idea not built and not mine to build (told to nobody yet in full): the far field could be laid back by depth, as a top down map of the land the picture shows (plateau and canyon floor at their true ground places, the walls thin), instead of onto the flat sphere along the view ray. That gives no spokes from above and puts the far land in the right places at T.
+- mars_place_builder 20:36: ninth bake by about 21:10 (new takes of the 1.6 and 0.7 plate, all levels from patch-wide down baked again, no change in `src/stops/mars` against fab057c5, merged with main e2c3b5ab; under at T dive 16.42, rise 16.27). /root takes the ninth or the eighth by 21:15.
+- Mercury 734 to 745 (off, no place, shares 1, shares 2) renders at the draft tier in `repo` (`/tmp/tone/merc.sh`, log `/tmp/tone/merc.log`, frames `/tmp/tone/merc/{off,glob,s1,s2}/`).
+- Disk: 3.6 GB free at 20:36; deleted the frames of the old handover runs in `repo-plates/out/work/handover/{mars-4f7b,mars-tone,mars-tone1}/frames` and `/tmp/e6/{after,afterR,before,hooks}` (the proof is /root's now): 5.7 GB free.
+
 ## E6 as built (18:30), the capped shutter
 
 - Numbers: `handover.maxBlurPx` (px of motion a frame of an opted in dive or rise may keep across its shutter) and `handover.blurEaseFrames` (the length of the ramp at a seam that moves more) in `config/showcase.json`; checked in `src/config.ts`. Nothing else is a number.
