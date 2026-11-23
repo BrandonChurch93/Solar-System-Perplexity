@@ -63,8 +63,9 @@ uniform vec3 uSkyLight;
 uniform vec4 uHaze;
 uniform vec3 uHazeWarm;
 uniform vec3 uHazeCool;
-uniform vec4 uLimb;
-uniform vec3 uLimbColor;
+uniform sampler2D uLimb;
+uniform vec4 uLimbKnots;
+uniform vec4 uLimbShape;
 uniform float uGain;
 uniform float uVignette;
 uniform float uAspect;
@@ -193,18 +194,12 @@ void main() {
     if (gm > 0.0) { tPrev = tm; gapPrev = gm; } else { t = tm; gap = gm; }
   }
   float cut = cutOf(w);
-  for (int i = 0; i < (hit ? 2 : 0); i++) {
-    vec3 p = E + D * t;
-    float fall = max(-(D.z + (D.x * p.x + D.y * p.y) / uRadius), 0.02);
-    t -= clamp((made(p.xy, cut, t * pix) - (above(p) - stored(p.xy, w))) / (fall + 0.5), -2.0 * cut, 2.0 * cut);
-  }
   vec2 q = vNdc * 0.5 * vec2(uAspect, 1.0);
   float vig = 1.0 / mix(1.0, 1.0 / pow(1.0 + dot(q, q) * 0.9, 2.0), uVignette);
   vec3 col = vec3(0.0);
   float alpha = 0.0;
   float texels = 0.0;
   vec3 tint = vec3(float(steps) / uMarch.w, 0.0, 0.0);
-  float sunward = dot(E.xy + D.xy * (hit ? t : 30.0), uSunAz);
   vec4 seen = vec4(0.0);
   for (int k = 0; k < (hit ? 1 : 0); k++) {
     vec3 p = E + D * t;
@@ -213,6 +208,11 @@ void main() {
     tint.b = seen.a;
   }
   for (int k = 0; k < (hit && seen.a < 1.0 ? 1 : 0); k++) {
+    for (int i = 0; i < 2; i++) {
+      vec3 pd = E + D * t;
+      float fall = max(-(D.z + (D.x * pd.x + D.y * pd.y) / uRadius), 0.02);
+      t -= (1.0 - seen.a) * clamp((made(pd.xy, cut, t * pix) - (above(pd) - stored(pd.xy, w))) / (fall + 0.5), -2.0 * cut, 2.0 * cut);
+    }
     vec3 p = E + D * t;
     vec2 g = p.xy;
     float foot = t * pix;
@@ -251,13 +251,17 @@ void main() {
     tint.g = float(shades) / uShadow.w;
   }
   col = mix(col, seen.rgb, seen.a);
-  float rise = max(tangent - uShell.x, 0.0);
-  float glow = hit ? 0.0 : uLimb.x * exp(-rise / uLimb.y) + uLimb.z * exp(-rise / uLimb.w);
-  float sunSide = texture(uLight, vec2((sunward - uLightRange.x) * uLightRange.y, 0.5)).r;
-  col += uLimbColor * glow * sunSide;
-  alpha = max(alpha, clamp(glow * sunSide, 0.0, 1.0));
+  for (int k = 0; k < (hit ? 0 : 1); k++) {
+    float rise = max(bD < 0.0 ? tangent : tangent + bD * bD / (2.0 * uRadius), 0.0);
+    vec3 up = normalize(E + vec3(0.0, 0.0, uRadius));
+    vec3 level = normalize(D - dot(D, up) * up);
+    float u = dot(E.xy + level.xy * sqrt(max(high, 0.0)), uSunAz);
+    vec2 at = vec2((u - uLimbKnots.x) * uLimbKnots.y, clamp(sqrt(rise * uLimbShape.x), 0.0, 1.0) * uLimbKnots.z + uLimbKnots.w);
+    for (int i = 0; i < (rise < 1.0 / uLimbShape.x ? 1 : 0); i++) col = vec3(texture(uLimb, at).r, texture(uLimb, at + vec2(0.0, 1.0 / 3.0)).r, texture(uLimb, at + vec2(0.0, 2.0 / 3.0)).r);
+    alpha = 1.0 - smoothstep(uLimbShape.z, uLimbShape.w, rise);
+  }
   outColor = diagOut(vec4(col * uGain * vig, alpha), texels, 1.0, tint, vec2(0.0), t);
-  if (alpha <= 0.0) discard;
+  if (!hit && (uDiag >= 2 || alpha + col.r + col.g + col.b <= 0.0)) discard;
 }`
 
 type Level = { centre: number[]; size: number; pixels: Record<string, number> }
@@ -310,6 +314,10 @@ export class CloudDeck {
     const az = THREE.MathUtils.degToRad(deck.light.azimuthDeg)
     const rad = THREE.MathUtils.degToRad
     const v = fields.view
+    const lk = fields.limb.knots
+    const lr = fields.limb.rows
+    const glow = new Float32Array(3 * lr * lk[2]!)
+    for (let ch = 0; ch < 3; ch++) for (let j = 0; j < lr; j++) for (let i = 0; i < lk[2]!; i++) glow[(ch * lr + j) * lk[2]! + i] = fields.limb.table[j]![i]![ch]!
     const vp = (v.pixels as Record<string, number[]>)[ctx.assets]!
     Object.assign(uniforms, {
       uLight: { value: ctx.floatTexture(level, level.length, 1) },
@@ -339,8 +347,9 @@ export class CloudDeck {
       uHaze: { value: new THREE.Vector4().fromArray(l.haze) },
       uHazeWarm: { value: new THREE.Vector3().fromArray(l.hazeWarm) },
       uHazeCool: { value: new THREE.Vector3().fromArray(l.hazeCool) },
-      uLimb: { value: new THREE.Vector4().fromArray(l.limb) },
-      uLimbColor: { value: new THREE.Vector3().fromArray(l.limbColor) },
+      uLimb: { value: ctx.floatTexture(glow, lk[2]!, 3 * lr) },
+      uLimbKnots: { value: new THREE.Vector4(lk[0]! - 0.5 * lk[1]!, 1 / (lk[2]! * lk[1]!), (lr - 1) / (3 * lr), 0.5 / (3 * lr)) },
+      uLimbShape: { value: new THREE.Vector4(1 / fields.limb.top, 0, fields.limb.cover[0]!, fields.limb.cover[1]!) },
       uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diagUniform, uGrad: gradUniform,
     })
     return new CloudDeck(uniforms)

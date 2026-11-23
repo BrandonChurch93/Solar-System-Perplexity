@@ -60,7 +60,7 @@ def build(name, scene, himg):
 
 if __name__ == '__main__':
     scene = approved_scene()
-    himg, _ = image_height(CFG['tool']['heightGain'])
+    himg, _ = image_height(CFG['tool']['heightGain'], CFG['tool']['reliefSigmaPx'], CFG['tool']['reliefReach'])
     himg = cv2.GaussianBlur(himg, (0, 0), CFG['tool']['depthBlurPx'])
     for name in sys.argv[1:] or ['near', 'far']:
         build(name, scene, himg)

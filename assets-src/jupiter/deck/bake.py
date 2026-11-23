@@ -150,4 +150,10 @@ if __name__ == '__main__':
         m = CFG['maps'][name]
         fields['maps'][name] = {'centre': m['centre'], 'size': m['size'], 'pixels': {'full': m['pixels'], 'web': m['pixels'] // 2}}
         print(name, 'albedo pcts', np.round(np.percentile(rgb @ LUMA, [1, 50, 99]), 3), 'height pcts', np.round(np.percentile(h, [0.1, 1, 50, 99, 99.9]), 3))
-    json.dump(fields, open(os.path.join(STOP, 'deck-fields.json'), 'w'), indent=1)
+    path = os.path.join(STOP, 'deck-fields.json')
+    if os.path.exists(path):
+        old = json.load(open(path))
+        for key in ('view', 'limb'):
+            if key in old:
+                fields[key] = old[key]
+    json.dump(fields, open(path, 'w'), indent=1)

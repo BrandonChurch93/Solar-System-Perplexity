@@ -85,9 +85,46 @@ Deck = a height field on the sphere, marched per pixel in the chart, camera rela
 - Draft softness: at 1 sample the footprint is a whole pixel and the chart is sampled one level down; at the review tier `uGrad` shrinks the footprint and it is sharp. Judge sharpness at the review tier only.
 - Kept still against the approved image: mean absolute difference 4.33 (display values). That is the mark the frozen build set at 3150.
 
-## Next (08:00 UTC)
+## Mail 225 from the Builder (08:01 UTC): E1 is on main
 
-1. M1 pictures: 3150 beside the approved image, 3060 / 3150 / 3239, a sheet of every 15th frame at draft, frames 3148 to 3153. Report M1.
-2. Top down plates by image generation led by the laid back wedge (media skill, recipe in `RECIPE.md`): fill the hidden zones, the outside of the wedge and the far part. They replace the function made colour of the three uniform maps and become the globe's deepest patch levels (Part B S2).
-3. Heights for the plates (depth tool on the plate, or from its own structure), function detail below the plate's scale.
-4. Speed: seconds per sample at the review tier.
+- Merged `origin/main` (E1 at 33ccccb6) into this branch at 3c8ae1d, build green. Never rebase.
+- Contract (`assets-src/shared/HANDOVER-NOTES.md`, "The contract of E1, for the stop builders"): opt in with a `handover` object in the params (even `{}`); `handover.dive` and `handover.rise` may set `at`, `dissolveFrames`, `placeFrames` (defaults in `config.handover`: dive at 0.6, rise at 0.4, dissolve 1 frame, place 12 frames; for Jupiter the dive swap would be frame 3024). `plan.divePose(time, view)` and `plan.risePose(time, view)` must give a valid pose on both sides across the place window and the dissolve; `plan.dive(time)` and `plan.rise(time)` pick the side with `sideAt`. The old property `risePose` is now `riseEnd`.
+- A stop that opted in has no cover and no added softness in its dive and rise; G13 then counts every frame of the dive and the rise.
+- Not on main yet: E2 (the place picture on the globe side), E3 (the steady descent in the generic plan), E4 (the measures). Opting in today gives a hard swap at T: a fair first measure of how far the two sides are apart, not S4.
+- `JupiterPlan.turn` freezes the planet's spin between the cover centres through `coverCenter`; look at it again when opting in.
+
+## v4 and v5 (08:05 to 08:40 UTC)
+
+- Limb glow. The engine's sky patch holds only the sky and the stars from 0.4 degrees over the horizon up; below that it is a dim brown fill, and the frozen deck drew the glow itself. So the glow is mine. Tool `deck/limb.py`: renders 3150 with the glow off (`limb.py clear`, then a draft frame), takes what the approved image has more than that render in the sky, and bins it over (tangent height of the ray over the sphere, the sunward coordinate of the ray's tangent point in the chart). The table (28 rows spaced by the square root of the height up to 1.4 units, 20 knots from -14 step 2 units, scene linear RGB) goes into `deck-fields.json` as `limb`; the shader reads it as one float texture and adds it to rays that miss the deck. Alpha 1 under 0.15 units and 0 over 0.45 hides the brown fill of the sky patch. Residual of the table against the image: mean under 0.005, rms 0.065, 0.035, 0.025. It is a function of the ray over the sphere, so it is right from any pose near this height; for the dive it has to be checked from higher up.
+- Hidden zones. The far field had vertical streaks: chart texels hidden behind towers held copies of the tower and bled through the filter. `deck/view.py` now fills hidden zones by inpainting (radius `view.hiddenFill`) and gives them an interpolated length, so they blend instead of smearing.
+- Far relief. The depth estimate is noise beyond about 10 units (stair steps at the horizon). `tool.reliefReach` 10 and `tool.reliefFade` [6, 10]: beyond that the deck is the smooth sphere and the image is paint on it. Parallax there is under a pixel over the whole flight, so nothing is lost.
+- `bake.py` now keeps the `view` and `limb` blocks of `deck-fields.json`. Order after a change of the maps: `fields.py near mid`, `bake.py`, `view.py`, `limb.py clear`, draft frame of 3150 into `out/work/jupiter/frames/limboff/`, `limb.py` on that frame.
+- The two fine detail steps of the march run only where the image is not trusted.
+
+Measured on v5 (frame 3150 against the approved image at 1920 x 1080):
+- mean absolute difference in display values: draft 4.58, review 4.64. The kept still of the frozen build: 4.33.
+- `tools/measure/g17.py`: draft median 0.64 (one sample is soft by design), review median 0.97, p25 0.84; the kept still 0.99. The bar is 0.8.
+- Time: boot 20 s, a draft frame 3.0 to 3.2 s. The engine raises the sample count with the motion in the shutter (0.6 px per sample): 3150 at the review tier took about 12 samples, 36 s. At the final tier the base is 16.
+- Flight: straight, 0.3 units a second, 0.9 units behind the fit pose at 3060 and 0.9 ahead at 3239. The storm grows 1.6 times over the view.
+
+What the pictures show (looks folder `jupiter-code`, v5):
+- 3150 is the approved image to within the draft softness; the limb and the far field are clean.
+- 3165 to 3239: a rigid storm that comes nearer, relief reads. Where the camera now sees behind towers or along slopes the fallback deck shows: grey green mottled patches, soft brown foreground. Colour and richness of the fallback are wrong.
+- 3060 to 3149: the camera is behind the fit pose and sees ground the image never held: the bottom 36 percent and a strip on the left at 3060 are the dark function deck, with a straight seam at the wedge border.
+- Cure for both: complete top down plates (Mail 224), colour matched to the image field, as the fallback.
+
+## Part B scale design (decided 08:10 UTC)
+
+- The storm of the hold: lon -17.5, lat -10, half axes 13.2 x 7.9 degrees. The vortex of the close image: 0.19 x 0.38 degrees, 35 times smaller. So the place of the dive is a small vortex inside the great storm, and it comes in while it is small on screen.
+- The deck maps continue the globe's patch pyramid (`patches.json`: centre lon -12 lat -10, levels 100, 61.58, 33.18 degrees): far 184.32 units = 31.8 degrees (about the globe's nearest patch, the whole great storm), mid 61.44 units = 10.6 degrees (the storm's inside), near 20.48 units = 3.53 degrees (the place).
+- Plates are made zoom style: each level's rim agrees with the level above, its centre is the level below. Perhaps a fore plate of 5.12 units at 2048 px near chart (0.5, -3.6) for the foreground outside the wedge.
+- The heading of the place on the globe is chosen so that the baked Sun of the close image (azimuth 130 degrees in the chart) agrees with the globe's Sun (sunDir (-0.744, 0.140, 0.653), n.l 0.81 at the storm). The dark lower right of the close image stays a local dark patch; the Sun does not move.
+- The close side must be drawable from far greater heights, so that T can be chosen freely.
+
+## Next (08:40 UTC)
+
+1. Report M1 (way B: the image at its truly resolved scale in a view matched chart on true relief, trust that depends on the view so it is never shown stretched; way A, functions alone, was far too poor).
+2. Plates by image generation led by the laid back wedge (media skill, recipe in `RECIPE.md`, at most 6 takes per asset per round): top down, nested, each colour matched to the level above. They become the fallback colour of the deck maps and the deepest levels of the globe's patches (Part B S2).
+3. Heights for the plates (from their own structure or the depth tool), function detail under the plate's scale.
+4. M2 proofs: 12 frame sheet, every sixth frame at the review tier, compare at 3150, G5, G13, G17, seconds per sample.
+5. S1 `place.json`, S3 steady descent, then opt in with `handover` once E2 is on main (S4, S5). Remove `deck.ts`, `pall.ts` and the cover use in `plan.ts`.

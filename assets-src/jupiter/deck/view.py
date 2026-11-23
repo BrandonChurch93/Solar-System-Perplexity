@@ -127,9 +127,22 @@ def build():
     hid = cv2.dilate(hid.astype(np.uint8), np.ones((3, 3), np.uint8))
     hid = cv2.resize(hid, (nt, npsi), interpolation=cv2.INTER_NEAREST).astype(bool)
     lmin, lmax = v['lengthRange']
+    known = seen & ~hid
+    rows = np.arange(npsi)
+    filled = 0
+    for j in range(nt):
+        need = seen[:, j] & hid[:, j]
+        kn = known[:, j]
+        if not need.any() or kn.sum() < 2:
+            continue
+        length[need, j] = np.exp(np.interp(rows[need], rows[kn], np.log(length[kn, j])))
+        filled += int(need.sum())
+    shown = np.round(linear_to_srgb(rgb) * 255).astype(np.uint8)
+    shown = cv2.inpaint(shown, (seen & hid).astype(np.uint8), v['hiddenFill'], cv2.INPAINT_TELEA)
+    rgb = np.where((seen & hid)[..., None], srgb_to_linear(shown.astype(np.float64) / 255), rgb)
     a = 1 - np.clip(np.log2(np.maximum(length, lmin) / lmin) / np.log2(lmax / lmin), 0, 1)
-    a = np.where(seen, np.where(hid, 1.5 / 255, np.maximum(a, 3 / 255)), 0)
-    print('view chart', nt, npsi, 'seen', round(float(seen.mean()), 3), 'hidden of seen', round(float((hid & seen).sum() / max(seen.sum(), 1)), 3))
+    a = np.where(seen, np.maximum(a, 3 / 255), 0)
+    print('view chart', nt, npsi, 'seen', round(float(seen.mean()), 3), 'hidden of seen', round(float((hid & seen).sum() / max(seen.sum(), 1)), 3), 'filled', filled)
     tt = np.degrees(np.arctan2(gx - geom.to_chart(np.zeros(3))[0], gy - geom.to_chart(np.zeros(3))[1]))
     print('theta of seen: min', round(float(tt[seen].min()), 1), 'max', round(float(tt[seen].max()), 1), 'length pcts of seen', np.round(np.percentile(length[seen], [1, 25, 50, 75, 99]), 4))
     out = np.concatenate([linear_to_srgb(rgb), a[..., None]], -1)

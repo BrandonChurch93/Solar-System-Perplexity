@@ -84,9 +84,11 @@
     "streakTone": 0.22,
     "cumulusTone": 0.5,
     "reliefFade": [
-      11,
-      21
-    ]
+      6,
+      10
+    ],
+    "reliefSigmaPx": 120,
+    "reliefReach": 10
   },
   "light": {
     "azimuthDeg": 130,
@@ -158,17 +160,6 @@
       0.5,
       0.65,
       0.9
-    ],
-    "limb": [
-      0.0,
-      0.08,
-      0.0,
-      0.6
-    ],
-    "limbColor": [
-      0.35,
-      0.6,
-      1.0
     ],
     "blend": [
       0.75,
@@ -261,6 +252,31 @@
     "lengthRange": [
       0.0005,
       8
-    ]
+    ],
+    "hiddenFill": 6
+  },
+  "limb": {
+    "note": "Glow over the limb as a table over (sunward place of the limb point, tangent height). deck/limb.py measures it on the approved image: python3 limb.py clear, render frame 3150 at the draft tier, python3 limb.py RENDER.png. cover = tangent heights between which the glow stops hiding the sky patch. Rows are spaced by the square root of the height.",
+    "fitSize": [
+      1920,
+      1080
+    ],
+    "knots": [
+      -14,
+      2,
+      20
+    ],
+    "rows": 28,
+    "top": 1.4,
+    "cover": [
+      0.15,
+      0.45
+    ],
+    "minPixels": 12,
+    "percentile": 45,
+    "darkKnots": 3,
+    "smoothRows": 0.7,
+    "smoothKnots": 0.8,
+    "fadeFrom": 0.75
   }
 }
