@@ -1,9 +1,33 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-23T12:58:53.696Z",
+ "pushed": "2026-11-23T13:26:46.572Z",
  "head": "a887167c365784db72a483642372954c2b14c714",
- "note": "after the E3 merge: no Venus frame changed; the faults of mail 266 as they stand; two failed tries for the ring",
+ "note": "mail 266 in work: ring of a and w painted new, tone map for the look from above; nothing rendered yet",
  "looks": [
+  {
+   "time": "2026-11-23T13:26:45.990Z",
+   "file": "20261123132645990-note-tone-rise.jpg",
+   "source": "../../../../tmp/v/gen/tone-rise.jpg",
+   "kind": "note",
+   "label": "mail 266 items 1, 2, 4: plate a at the rise T (left, earlier ring) and its look from above by the tone map (right)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T13:26:45.443Z",
+   "file": "20261123132645443-note-w-comp.jpg",
+   "source": "../../../../tmp/v/gen/w-comp.jpg",
+   "kind": "note",
+   "label": "mail 266 item 2: plate w (40 deg), composition before its detail tiles",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T13:26:44.766Z",
+   "file": "20261123132644766-note-a-plate3.jpg",
+   "source": "../../../../tmp/v/gen/a-plate3.jpg",
+   "kind": "note",
+   "label": "mail 266 item 2: plate a (24 deg) with its ring painted new, towers and long shadows, tones locked to the globe at 1 deg",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-23T12:58:30.251Z",
    "file": "20261123125830251-frame-n4-1586.jpg",
@@ -73,42 +97,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "6f5cd496b40446f2"
-  },
-  {
-   "time": "2026-11-23T12:54:01.422Z",
-   "file": "20261123125401422-sheet-venus-rise-draft-after.jpg",
-   "source": "out/work/handover/venus-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "venus rise, every frame 1543 to 1554 (after T, frame 1542), draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1543,
-   "last": 1554,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T12:53:59.671Z",
-   "file": "20261123125359671-sheet-venus-rise-draft-across.jpg",
-   "source": "out/work/handover/venus-rise-draft-across.png",
-   "kind": "sheet",
-   "label": "venus rise, every frame 1536 to 1547 (across T, frame 1542), draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1536,
-   "last": 1547,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T12:53:57.904Z",
-   "file": "20261123125357904-sheet-venus-rise-draft-before.jpg",
-   "source": "out/work/handover/venus-rise-draft-before.png",
-   "kind": "sheet",
-   "label": "venus rise, every frame 1530 to 1541 (before T, frame 1542), draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1530,
-   "last": 1541,
-   "tier": "draft"
   }
  ]
 }
