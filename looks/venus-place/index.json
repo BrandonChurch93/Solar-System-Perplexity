@@ -1,9 +1,33 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-23T20:41:28.032Z",
+ "pushed": "2026-11-23T21:08:44.978Z",
  "head": "2828642a70136a96efbc499eb2f3790c2680e485",
- "note": "try: the place takes tone and colour from the globe as drawn in the frame; wide ring being laid by code",
+ "note": "wide ring v is painted on window by window at the scale of the plate; first pass dropped for straight lines and copies, second pass in work",
  "looks": [
+  {
+   "time": "2026-11-23T21:08:44.401Z",
+   "file": "20261123210844401-note-plate.jpg",
+   "source": "out/work/venus/place/v/first/view/plate.jpg",
+   "kind": "note",
+   "label": "wide ring v, first pass after two waves (dropped: hard edges in the inputs gave straight lines and copies); shows how the plate grows from the middle",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T21:08:43.856Z",
+   "file": "20261123210843856-note-vs-w1-0.jpg",
+   "source": "../../../../tmp/v/vs-w1-0.jpg",
+   "kind": "note",
+   "label": "wide ring v, wave 1, four takes at 760 px: 0 is a copy of its lower half (not kept), 1 to 3 kept",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T21:08:43.293Z",
+   "file": "20261123210843293-note-try-b-pair.jpg",
+   "source": "../../../../tmp/v/try-b-pair.jpg",
+   "kind": "note",
+   "label": "wide ring v: a window at the scale of the plate, left half the middle of the plate (level w), right half grey as given (left picture) and as painted on (right picture)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-23T20:41:20.040Z",
    "file": "20261123204120040-note-live1-rise2.jpg",
@@ -49,36 +73,6 @@
    "kind": "note",
    "label": "2828642a draft: 1287 whole frame, the place as a dark field (still wrong)",
    "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T20:16:47.376Z",
-   "file": "20261123201647376-note-venus-rise-draft-across.jpg",
-   "source": "out/work/handover/venus-rise-draft-across.png",
-   "kind": "note",
-   "label": "2828642a draft: across the rise handover, 1536 to 1547 (T in 1542)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T20:16:46.603Z",
-   "file": "20261123201646603-note-venus-dive-draft-across.jpg",
-   "source": "out/work/handover/venus-dive-draft-across.png",
-   "kind": "note",
-   "label": "2828642a draft: across the dive handover, 1337 to 1348 (T in 1343)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T20:14:01.875Z",
-   "file": "20261123201401875-frame-f01570.jpg",
-   "source": "out/work/venus/place/same/m17/f01570.png",
-   "kind": "frame",
-   "label": "venus.rise frame 1570, draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "frame": 1570,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e85c8d53a860dafc"
   }
  ]
 }
