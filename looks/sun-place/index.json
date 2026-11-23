@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T10:46:19.706Z",
+ "pushed": "2026-11-23T11:03:42.830Z",
  "head": "c500257fdf2398613c3b546d32955a7af9646c3e",
- "note": "mail 241 received: before the loops rebuild; frozen sheet of the present state. Change per frame frozen now: ground 2.06, loops 8.53 (before 1.94 and 7.19 on the same five runs). Flow clumps, event retime, falling arc and loops lighting in sequence are being built",
+ "note": "sun terrain flow second take: clumps move 10 to 20 px a frame, loops too dim, tuning",
  "looks": [
+  {
+   "time": "2026-11-23T11:03:42.232Z",
+   "file": "20261123110342232-note-x2-kept.jpg",
+   "source": "out/work/sun/life/x2-kept.jpg",
+   "kind": "note",
+   "label": "approved close image, then frames 0, 60, 90 with the camera frozen at the pose of 90: loops too dim and patchy against the approved, being tuned",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T11:03:41.648Z",
+   "file": "20261123110341648-note-x2-six-top.jpg",
+   "source": "out/work/sun/life/x2-six-top.jpg",
+   "kind": "note",
+   "label": "loop top, frames 90 to 95 at native size, camera frozen, flow as clumps with dim between (second take, not yet tuned)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-23T10:46:18.618Z",
    "file": "20261123104618618-note-f1-every6.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/sun/life/a10-ba.jpg",
    "kind": "note",
    "label": "ground at native size, frozen pose 90: before (top) and now (bottom). Nothing dragged any more, the life is light",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T10:08:17.589Z",
-   "file": "20261123100817589-note-plate-check-crop.jpg",
-   "source": "out/work/sun/life/plate-check-crop.jpg",
-   "kind": "note",
-   "label": "FAULT: cell map still has straight edges down the flanks of cells (flood artefact), being rebuilt from the lanes",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T10:08:17.046Z",
-   "file": "20261123100817046-note-a7-line.jpg",
-   "source": "out/work/sun/life/a7-line.png",
-   "kind": "note",
-   "label": "FAULT: 1 px dark dashes along cell edges at native size, cause found (blended cell numbers), fix not yet rendered",
    "stop": "sun"
   }
  ]
