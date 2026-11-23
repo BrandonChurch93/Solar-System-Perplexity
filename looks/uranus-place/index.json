@@ -1,9 +1,39 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-23T09:12:57.983Z",
+ "pushed": "2026-11-23T09:28:03.548Z",
  "head": "4b1870f24303842355fa993d068674ddd7b01187",
- "note": "S2 top down sheet d: the place is a round storm on the globe; cut copies bake running; main add6ccbe",
+ "note": "S2 top down sheet e on bake d: one storm coming closer, no sticker, no mirror shapes; dive and rise sheets rendering; main add6ccbe",
  "looks": [
+  {
+   "time": "2026-11-23T09:28:02.891Z",
+   "file": "20261123092802891-note-laid-sheet-d.jpg",
+   "source": "out/work/u/place/laid-sheet-d.jpg",
+   "kind": "note",
+   "label": "S2 laid back plates 1 to 4, bake d (storm from cut copies of the picture's fan, no mirror shapes): top albedo, bottom on the globe with match and mask",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T09:28:02.219Z",
+   "file": "20261123092802219-note-down-e.jpg",
+   "source": "out/work/u/down/down-e.jpg",
+   "kind": "note",
+   "label": "S2 proof: top down dive sheet e (globe side alone, far light, no blur, 12 frames, main add6ccbe), plates of bake d: one round storm with an eye in the globe's bands, coming closer to the clouds of the close picture",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T09:28:01.466Z",
+   "file": "20261123092801466-frame-f-4110.jpg",
+   "source": "out/work/u/dive/f-4110.png",
+   "kind": "frame",
+   "label": "uranus.dive frame 4110, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4110,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "2d9dda353bfd7b6d"
+  },
   {
    "time": "2026-11-23T09:12:53.753Z",
    "file": "20261123091253753-note-laid-sheet-c.jpg",
@@ -19,20 +49,6 @@
    "kind": "note",
    "label": "S2 top down dive sheet d (globe side alone, far light, no blur, main add6ccbe): the place as a round storm in the globe's bands, plates of bake c (mirrored tiling, replaced next by cut copies)",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T09:11:40.653Z",
-   "file": "20261123091140653-frame-d-4199.jpg",
-   "source": "out/work/u/down/d-4199.png",
-   "kind": "frame",
-   "label": "uranus.dive frame 4199, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4199,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "2d9dda353bfd7b6d"
   },
   {
    "time": "2026-11-23T08:55:54.604Z",
@@ -62,22 +78,6 @@
    "source": "out/work/u/dive/eye.jpg",
    "kind": "note",
    "label": "place light on the globe side: fixed eye (milky patch, wrong) against true eye (dark from above, horizon brightens), main add6ccbe",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T08:52:07.318Z",
-   "file": "20261123085207318-note-dive-c.jpg",
-   "source": "out/work/u/dive/dive-c.jpg",
-   "kind": "note",
-   "label": "dive sheet c, one camera both sides, fixed eye light, plates of bake b, hard swap at 4186 (no E2 yet), main add6ccbe",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T08:30:46.665Z",
-   "file": "20261123083046665-note-laid-sheet.jpg",
-   "source": "out/work/u/place/laid-sheet.jpg",
-   "kind": "note",
-   "label": "uranus S2 laid back plates 1 to 4, bake b (top: albedo, bottom: on the globe with match and mask)",
    "stop": "uranus"
   }
  ]
