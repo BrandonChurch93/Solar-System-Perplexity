@@ -1,64 +1,71 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T19:46:00.014Z",
- "head": "a284d546da297bf99fcb54429cdd9e8cafa90267",
- "note": "round 2: new rise path (lift and pull back as one move, no stall), chunks tried whiter as ice; drafts, not committed yet",
+ "pushed": "2026-11-23T20:11:20.485Z",
+ "head": "b9b333ecfdce0e22506e45c9cd69b13e5a088ba1",
+ "note": "globe near the lens: fine bands from functions made visible (streaks along the bands, strength by latitude), bright patch behind the limb now carries structure; review frames of the new rise",
  "looks": [
   {
-   "time": "2026-11-23T19:45:30.990Z",
-   "file": "20261123194530990-note-c_white_zoom.jpg",
-   "source": "../../../../tmp/v/r17/c_white_zoom.png",
+   "time": "2026-11-23T20:11:19.829Z",
+   "file": "20261123201119829-note-b_3848.jpg",
+   "source": "../../../../tmp/v/r17r/b_3848.png",
    "kind": "note",
-   "label": "chunk bodies zoomed, before and after, over the globe and over the C ring"
+   "label": "3848 review tier, new rise (b9b333e)"
   },
   {
-   "time": "2026-11-23T19:45:30.409Z",
-   "file": "20261123194530409-note-c_white.jpg",
-   "source": "../../../../tmp/v/r17/c_white.png",
+   "time": "2026-11-23T20:11:19.194Z",
+   "file": "20261123201119194-note-b_3820.jpg",
+   "source": "../../../../tmp/v/r17r/b_3820.png",
    "kind": "note",
-   "label": "chunks at 3808, before left and whiter ice right"
+   "label": "3820 review tier, new rise (b9b333e): the globe pale and flat, the fault in work"
   },
   {
-   "time": "2026-11-23T19:45:29.840Z",
-   "file": "20261123194529840-note-cGlobe.jpg",
-   "source": "../../../../tmp/v/r15/cGlobe.png",
+   "time": "2026-11-23T20:11:18.556Z",
+   "file": "20261123201118556-note-b_3866.jpg",
+   "source": "../../../../tmp/v/r17r/b_3866.png",
    "kind": "note",
-   "label": "new rise path, globe at 3824 at native size, still soft"
+   "label": "3866 review tier, new rise (b9b333e)"
   },
   {
-   "time": "2026-11-23T19:45:29.213Z",
-   "file": "20261123194529213-note-cMoon.jpg",
-   "source": "../../../../tmp/v/r15/cMoon.png",
+   "time": "2026-11-23T20:11:17.996Z",
+   "file": "20261123201117996-note-flag_3828.jpg",
+   "source": "../../../../tmp/v/r18/flag_3828.png",
    "kind": "note",
-   "label": "new rise path, the moon rising over the limb 3856 to 3859"
+   "label": "3828 carried report tiles on the boost only tree (flagged tiles marked)"
   },
   {
-   "time": "2026-11-23T19:45:28.495Z",
-   "file": "20261123194528495-note-cA.jpg",
-   "source": "../../../../tmp/v/r15/cA.png",
+   "time": "2026-11-23T20:11:17.439Z",
+   "file": "20261123201117439-note-nz_3816.jpg",
+   "source": "../../../../tmp/v/r18/nz_3816.png",
    "kind": "note",
-   "label": "new rise path, near sheet at native size 3812 to 3823"
+   "label": "3816 draft at native size, globe from functions: stretch 14, amount 0.14, strength by latitude zone 0.4 to 1.6"
   },
   {
-   "time": "2026-11-23T19:45:27.544Z",
-   "file": "20261123194527544-note-s5.jpg",
-   "source": "../../../../tmp/v/r15/s5.png",
+   "time": "2026-11-23T20:11:16.778Z",
+   "file": "20261123201116778-note-c3s.jpg",
+   "source": "../../../../tmp/v/r18/c3s.png",
    "kind": "note",
-   "label": "new rise path, drafts 3808 to 3823 every frame, where the old path stalled"
+   "label": "3816 draft: boost, amount 0.14, amount 0.14 with stretch 14 (long streaks along the bands)"
   },
   {
-   "time": "2026-11-23T19:45:26.905Z",
-   "file": "20261123194526905-note-s4.jpg",
-   "source": "../../../../tmp/v/r15/s4.png",
+   "time": "2026-11-23T20:11:16.209Z",
+   "file": "20261123201116209-note-c3.jpg",
+   "source": "../../../../tmp/v/r18/c3.png",
    "kind": "note",
-   "label": "new rise path, drafts 3864, 3870, 3876, 3882"
+   "label": "3816 draft, globe near the lens: before (a284d54), with the surface fixed contrast boost, with the boost and amount 0.14"
   },
   {
-   "time": "2026-11-23T19:45:26.256Z",
-   "file": "20261123194526256-note-s3.jpg",
-   "source": "../../../../tmp/v/r15/s3.png",
-   "kind": "note",
-   "label": "new rise path, drafts 3840, 3846, 3852, 3858"
+   "time": "2026-11-23T20:09:44.206Z",
+   "file": "20261123200944206-job-frame-03804.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "saturn.terrain frame 3804, draft tier, texels view, from the running measure job",
+   "stop": "saturn",
+   "segment": "saturn.terrain",
+   "frame": 3804,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
   }
  ]
 }
