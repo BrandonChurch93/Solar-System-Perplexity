@@ -116,7 +116,7 @@ void main() {
     vec3 lit = globeShadow(P, uSunL, uPolar);
     // stars do not show through any part of the sheet that holds ice; the globe shows through by the true depth
     float bn = dot(cs, ds) / length(ds);
-    float behind = front ? 1.0 - smoothstep(0.97, 1.0, sqrt(max(dot(cs, cs) - bn * bn, 0.0))) : 0.0;
+    float behind = front ? 1.0 - smoothstep(uShadowFit.z, uShadowFit.w, sqrt(max(dot(cs, cs) - bn * bn, 0.0))) : 0.0;
     alpha = 1.0 - exp(-tau / mu * mix(uViewFit.w, 1.0, behind));
     // the stones: their shadows on the sheet, the ones that rest on it, the ones that float above it
     float shade;
@@ -172,7 +172,7 @@ export class Sheet {
       uTintDense: { value: new THREE.Vector3(1, 1, 1) },
       uTintThin: { value: new THREE.Vector3(1, 1, 1) },
       uFlatten: { value: new THREE.Vector4(1, 0, 0.04, 2) },
-      uShadowFit: { value: new THREE.Vector4(look.shadow.soft[0], look.shadow.soft[1], 0, 0) },
+      uShadowFit: { value: new THREE.Vector4(look.shadow.soft[0], look.shadow.soft[1], look.limb[0], look.limb[1]) },
       uShadowReach: { value: new THREE.Vector3().fromArray(look.shadow.reach) },
       uFloor: { value: new THREE.Vector3().fromArray(look.shadow.floor) },
       uLayer: { value: new THREE.Vector3().fromArray(look.layer) },

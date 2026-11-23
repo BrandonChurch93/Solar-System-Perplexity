@@ -562,3 +562,29 @@ red/blue across 0.41 0.34 0.43 0.50 0.49 0.25; B near luma across 0.88 0.70 0.88
 0.478 0.426 / 0.520 0.476 0.431; B near 0.782 0.700 0.619 / 0.758 0.689 0.612; B far 0.693 0.620 0.553 /
 0.728 0.645 0.563. G17 at draft after the last step: median 0.864, p25 0.411 (it was 0.693 at the softest
 step and 1.133 before the softening, when the lines were too hard).
+
+11:05 to 11:25 UTC, the hold re-checked, the sand in the hold, a bug in the stones
+
+- Review still of 3720: 70.8 s with 6 samples (about 11.8 s a sample). G17 on it: median 0.893, p25 0.470
+  (limit 0.8). Draft 3720: 0.864 and 0.411.
+- The hold with this ice (3465 at draft): the sand at full strength read as brushed cloth and the A ring was
+  brown rose and too dark. Changed: ice.json grain far 0.5 (the sand's share of its strength in the hold;
+  ice.set(spin, near) blends far to 1 by nearness), skim.json light.tint far and near (set.ts blends by
+  nearness; far dense [0.97, 1.04, 1.08], thin [1.21, 1.285, 1.21]; near dense [0.9, 0.926, 0.888], thin
+  [1.28, 1.42, 1.29]), a gentler far thin ladder (ringfine.json far level.thin and groove.strengthThin) and
+  far hue.green 0.4, hue.gold 1.0.
+- The hold after it (3465 at draft): G17 median 0.950, p25 0.570 (the kept build's still: 0.861). Mean rgb
+  hero / mine: A left 0.620 0.550 0.486 / 0.596 0.527 0.452 (before the last blue step), B left 0.875 0.798
+  0.694 / 0.853 0.766 0.655, B bottom 0.597 0.531 0.458 / 0.668 0.583 0.495. Still different in the hold: no
+  bright thin line at the A ring's outer edge, ringlets inside the Cassini division where the hero has a
+  clean dark gap, B ring broader zones than the hero's fine lines.
+- Commits e7c7a2a (skim look pass) and 9860e4d (merge of origin/main d690e42, ten patch levels), both pushed.
+- Six draft frames 3718 to 3723: the lanes slide about 4 px a frame toward the lower left and white stones
+  ride them, but small dark level dashes lay scattered over the near field and read as scratches.
+- The cause was a bug, not the look: in iceStones the two rays kept off the floor, Dc (view) and Sc (Sun),
+  were built as vec3(horizontal.xy, vertical), but the sheet is the plane y = 0 (e = vec3(e2.x, 0, e2.y)),
+  so the vertical part sat in z. Every resting stone was seen and shaded along a ray that lay nearly flat in
+  the sheet: a level dash. Fixed: Dc = vec3(dv.x * flat, vertical, dv.y * flat), the same for Sc. The bug
+  has been there since the stones were first written (d5b0f78), so every earlier picture of stones had it.
+  After the fix the resting stones are bodies with a lit top and the dashes are gone. G17 at draft 3720
+  after the fix: median 0.866, p25 0.413.

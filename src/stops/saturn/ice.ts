@@ -282,10 +282,12 @@ void iceStones(vec2 q, float turn, vec3 cam, vec3 D, vec3 S, float per, float so
   // rays no flatter to the plane than the floors: that bounds how far a stone and its shadow reach on the plane
   float dm = max(abs(D.y), uStoneFit.y);
   vec2 dv = normalize(D.xz);
-  vec3 Dc = vec3(dv * sqrt(1.0 - dm * dm), D.y < 0.0 ? -dm : dm);
+  float dflat = sqrt(1.0 - dm * dm);
+  vec3 Dc = vec3(dv.x * dflat, D.y < 0.0 ? -dm : dm, dv.y * dflat);
   float sm = max(abs(S.y), uStoneFit.z);
   vec2 sv = normalize(S.xz);
-  vec3 Sc = vec3(sv * sqrt(1.0 - sm * sm), S.y < 0.0 ? -sm : sm);
+  float sflat = sqrt(1.0 - sm * sm);
+  vec3 Sc = vec3(sv.x * sflat, S.y < 0.0 ? -sm : sm, sv.y * sflat);
   float r = length(q);
   vec2 et = vec2(-q.y, q.x) / r;
   // a shadow lies flat on the sheet: its smaller size on screen is the stone's seen at the slant of the view

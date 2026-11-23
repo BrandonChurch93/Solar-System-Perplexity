@@ -80,7 +80,7 @@ vec3 ringBits(uint h) {
 // value of the plateau (0 to 1) that the octave two steps finer takes as the strength of its bunches. lanes
 // is how far the ringlets take turns, one bright and the next dark, rather than each a level of its own.
 float ringLane(float v, int at, float lanes) {
-  float m = 0.15 + 0.35 * v;
+  float m = uRfLanes.z + uRfLanes.w * v;
   return mix(v, (at & 1) == 0 ? 0.5 + m : 0.5 - m, lanes);
 }
 vec3 ringOctave(float x, uint seed, float f, float lanes, out vec2 hue, out float spare) {
@@ -102,7 +102,7 @@ vec3 ringOctave(float x, uint seed, float f, float lanes, out vec2 hue, out floa
     vec3 v = ringBits(h);
     v.x = ringLane(v.x, at + k, lanes);
     vec3 e = ringBits(ringPcg(h));
-    float d = t - float(k) - (0.2 + 0.6 * e.x);
+    float d = t - float(k) - (uRfLine.y + uRfLine.z * e.x);
     float step = smoothstep(-f, f, d);
     float vb = ringUnit(ringPcg(h + 77u));
     acc += (v - prev) * step;
@@ -253,9 +253,11 @@ export function ringField(ctx: SetContext): RingField {
     hueFit.w = mix(fine.hue.gold, near.hue.gold, t)
   }
   set(0)
-  // the mean of the square of a ringlet's level where the ringlets take turns, over two: the level is
-  // 0.3 to 1 either way, even in between
-  const lanesMean = (0.3 * 0.3 + 0.3 + 1) / 6
+  // the mean of the square of a ringlet's level where the ringlets take turns, over two: the level lies
+  // between these two either way, even in between
+  const laneLow = 2 * fine.lanes.least
+  const laneHigh = 2 * (fine.lanes.least + fine.lanes.span)
+  const lanesMean = (laneLow * laneLow + laneLow * laneHigh + laneHigh * laneHigh) / 6
   return {
     texture,
     finest: fine.first * Math.pow(fine.ratio, fine.octaves - 1),
@@ -270,10 +272,10 @@ export function ringField(ctx: SetContext): RingField {
       uRfGroove: { value: new THREE.Vector4(groove.width[0], groove.width[1] - groove.width[0], groove.rare, fine.slopeWidth) },
       uRfGrooveFit: { value: new THREE.Vector4(groove.dark, groove.bright, lineMean, fine.filter) },
       uRfBunch: { value: new THREE.Vector4(fine.bunch[0], fine.bunch[1], groove.dense, groove.thin) },
-      uRfLine: { value: new THREE.Vector4(groove.open, 0, 0, fine.even.from) },
+      uRfLine: { value: new THREE.Vector4(groove.open, fine.jitter[0], fine.jitter[1], fine.even.from) },
       uRfRough: { value: rough },
       uRfFollow: { value: follow },
-      uRfLanes: { value: new THREE.Vector4(fine.lanes.from, fine.lanes.amount, 0, 0) },
+      uRfLanes: { value: new THREE.Vector4(fine.lanes.from, fine.lanes.amount, fine.lanes.least, fine.lanes.span) },
       uRfHue: { value: hueFit },
       uRfWarm: { value: new THREE.Vector3().fromArray(fine.hue.warmAxis) },
       uRfPink: { value: new THREE.Vector3().fromArray(fine.hue.pinkAxis) },

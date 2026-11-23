@@ -32,7 +32,7 @@ def orbit(point, seconds):
     """The same piece of ice a little later: it turns about the ring normal at the rate of its radius, toward
     decreasing atan2(z, x), as ice.ts turns its rows."""
     r = np.hypot(point[0], point[2])
-    a = -np.radians(SPIN) * (r / ICE['orbit']['syncRadius']) ** ICE['orbit']['power'] * seconds
+    a = -np.radians(SPIN) * (ICE['orbit']['syncRadius'] / r) ** 1.5 * seconds
     return np.array([point[0] * np.cos(a) - point[2] * np.sin(a), point[1], point[0] * np.sin(a) + point[2] * np.cos(a)])
 
 

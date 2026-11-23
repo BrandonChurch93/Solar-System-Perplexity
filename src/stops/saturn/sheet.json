@@ -23,5 +23,7 @@
     "reach": [1.25, 1.1, 1],
     "floor": [0.006, 0.008, 0.012]
   },
-  "layer": [0.95, 0.7, 0.2]
+  "layer": [0.95, 0.7, 0.2],
+  "limb": [0.97, 1.0],
+  "limbNote": "stars do not show through any part of the sheet that holds ice, but the globe shows through it by the true depth: a ray counts as ending on the globe if it passes its centre closer than the first number, and not at all beyond the second (planet radii)"
 }

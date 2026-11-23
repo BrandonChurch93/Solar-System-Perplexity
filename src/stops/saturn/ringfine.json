@@ -14,6 +14,8 @@
   "rough": [0.1, 2.0],
   "bunch": [0.25, 0.75],
   "edge": [0.3, 0.3, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04],
+  "jitter": [0.2, 0.6],
+  "jitterNote": "where in its cell a ringlet's edge lies: the first number plus the second times a value of its own (0 to 1), in cells",
   "filterFloor": 0.75,
   "filter": 0.6,
   "shift": 7.31,
@@ -60,9 +62,11 @@
     "rough": [0.6, 1.5]
   },
   "lanes": {
-    "note": "from this octave on the ringlets take turns, one bright and the next dark, by this amount (0: each ringlet has a level of its own): fine ringlets then carry little contrast at scales much wider than themselves, as in the approved close",
+    "note": "from this octave on the ringlets take turns, one bright and the next dark, by this amount (0: each ringlet has a level of its own): fine ringlets then carry little contrast at scales much wider than themselves, as in the approved close. A ringlet that takes its turn lies least + span * (its own value, 0 to 1) from the middle level, to the bright side or the dark side (the full range is 0.5 either way)",
     "from": 5,
-    "amount": 0.7
+    "amount": 0.7,
+    "least": 0.15,
+    "span": 0.35
   },
   "near": {
     "note": "the strengths of the ladder for a camera near the sheet (the skim); the values above are for the hold. set.ts blends the two by the logarithm of the camera's height (skim.json light.heights). level, groove, hue, edge as above. rough and even: the two values of rough for the octaves below even.from and from it on, in the dense and in the thin rings. hue.follow: how far a brighter ringlet is also warmer and rosier (per unit of the logarithm of its brightness), in the dense and in the thin rings. footprints: an octave is drawn in full where its ringlets are twice this many pixels wide and not at all where they are this many (1 in the hold).",
