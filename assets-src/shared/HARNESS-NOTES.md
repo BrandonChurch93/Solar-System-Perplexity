@@ -348,6 +348,8 @@ First use, 19:11 to 19:41 UTC, one render at a time:
 
 Reading: Saturn's globe says sharp and the picture carries detail of the right shape (ratio like the Sun's, far from an enlarged map), but faint: 40 to 120 times less energy than the Sun, two to three times the floor at the median, and 32 to 39 tiles of the globe under it in the bright patch. The report is true to its drawing; whether that contrast is enough is the Builder's bar. Copies of the JSONs: `/home/user/workspace/scratch/saturn-a284d546-draft.json`, `saturn-a284d546-review.json`, `saturn-main-c6d06a87-draft.json`, `sun-main-c6d06a87-draft.json`, `sun-main-c6d06a87-review.json` (not in the repo).
 
+State at 19:46 UTC on 2026-11-23: Mail 328 sent with DONE (head db7489fc, commits 24378447 and 4b6a07af) and one low priority mail with three corrections of wording (draft and review agree within about ten percent; the band 1.9 and over is the rings plus the globe's rim; the flags outside the bright patch sit at the lower right where the ring crosses the globe).
+
 Not run: the final tier (never), Saturn's hold and dive, other stops. Disk: `worker` removed (5.2 GB), a worktree `/home/user/workspace/sat` at a284d546 holds the Saturn run.
 
 ## Not covered
