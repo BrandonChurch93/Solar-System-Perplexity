@@ -1,64 +1,64 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T20:38:33.213Z",
+ "pushed": "2026-11-23T21:05:59.667Z",
  "head": "b9b333ecfdce0e22506e45c9cd69b13e5a088ba1",
- "note": "globe near the lens: streaks by zone with relief toward the terminator, proof frames rendering; near field at 3720 measured against the approved close",
+ "note": "item 6: ladder ringlets on the far look by distance (detail reach), globe reach test; drafts follow",
  "looks": [
   {
-   "time": "2026-11-23T20:38:32.566Z",
-   "file": "20261123203832566-note-lane_3828.jpg",
-   "source": "../../../../tmp/v/r18/lane_3828.png",
+   "time": "2026-11-23T21:05:59.070Z",
+   "file": "20261123210559070-note-fit_rm.jpg",
+   "source": "../../../../tmp/v/r18/fit_rm.png",
    "kind": "note",
-   "label": "3828 tile 13,16: a smooth lane of the ring sheet near the lens"
+   "label": "3720 right middle against the approved"
   },
   {
-   "time": "2026-11-23T20:38:31.990Z",
-   "file": "20261123203831990-note-m_zoom.jpg",
-   "source": "../../../../tmp/v/r18/m_zoom.png",
+   "time": "2026-11-23T21:05:58.490Z",
+   "file": "20261123210558490-note-fmm_3690.jpg",
+   "source": "../../../../tmp/v/r19/fmm_3690.png",
    "kind": "note",
-   "label": "the moon at the night limb 3584 to 3590, levels raised"
+   "label": "3690: far, model, film"
   },
   {
-   "time": "2026-11-23T20:38:31.440Z",
-   "file": "20261123203831440-note-fit_ll2.jpg",
-   "source": "../../../../tmp/v/r18/fit_ll2.png",
+   "time": "2026-11-23T21:05:57.916Z",
+   "file": "20261123210557916-note-globe3_3720.jpg",
+   "source": "../../../../tmp/v/r19/globe3_3720.png",
    "kind": "note",
-   "label": "3720 lower left 2x: film left, approved close right (smooth lanes against crisp ringlets)"
+   "label": "3720 globe: reach 1.3 to 2.0, reach 1.2 to 1.62, approved"
   },
   {
-   "time": "2026-11-23T20:38:30.866Z",
-   "file": "20261123203830866-note-fit_3720.jpg",
-   "source": "../../../../tmp/v/r18/fit_3720.png",
+   "time": "2026-11-23T21:05:57.302Z",
+   "file": "20261123210557302-note-ll5_3720.jpg",
+   "source": "../../../../tmp/v/r19/ll5_3720.png",
    "kind": "note",
-   "label": "3720 nograin draft over the approved close, the five worst G17 tiles boxed"
+   "label": "3720 lower left: film, far, model, no sweep, approved"
   },
   {
-   "time": "2026-11-23T20:38:30.247Z",
-   "file": "20261123203830247-note-dusk_3720.jpg",
-   "source": "../../../../tmp/v/r18/dusk_3720.png",
+   "time": "2026-11-23T21:05:56.645Z",
+   "file": "20261123210556645-note-fm4_3720.jpg",
+   "source": "../../../../tmp/v/r19/fm4_3720.png",
    "kind": "note",
-   "label": "3720 dusk of the globe, b9b333e against the globe cure"
+   "label": "3720: film, far look everywhere, model light everywhere, approved"
   },
   {
-   "time": "2026-11-23T20:38:29.653Z",
-   "file": "20261123203829653-note-globe_3720_half.jpg",
-   "source": "../../../../tmp/v/r18/globe_3720_half.png",
+   "time": "2026-11-23T21:05:56.039Z",
+   "file": "20261123210556039-note-rv3816_a.jpg",
+   "source": "../../../../tmp/v/r19/rv3816_a.png",
    "kind": "note",
-   "label": "3720 globe, b9b333e left and globe cure right, half size"
+   "label": "crop of review 3816, globe near the lens"
   },
   {
-   "time": "2026-11-23T20:38:29.045Z",
-   "file": "20261123203829045-note-nr_dusk.jpg",
-   "source": "../../../../tmp/v/r18/nr_dusk.png",
+   "time": "2026-11-23T21:05:55.349Z",
+   "file": "20261123210555349-note-rv_3828.jpg",
+   "source": "../../../../tmp/v/r19/rv_3828.png",
    "kind": "note",
-   "label": "draft 3816 dusk side of the globe near the lens with the terminator relief"
+   "label": "review tier 3828 with the globe function"
   },
   {
-   "time": "2026-11-23T20:38:28.425Z",
-   "file": "20261123203828425-note-nr_patch_3828.jpg",
-   "source": "../../../../tmp/v/r18/nr_patch_3828.png",
+   "time": "2026-11-23T21:05:54.652Z",
+   "file": "20261123210554652-note-rv_3816.jpg",
+   "source": "../../../../tmp/v/r19/rv_3816.png",
    "kind": "note",
-   "label": "draft 3828, the bright area behind the limb with the globe cure (wide 20, zone, relief), 2x"
+   "label": "review tier 3816 with the globe function, reach 1.3 to 2.0"
   }
  ]
 }
