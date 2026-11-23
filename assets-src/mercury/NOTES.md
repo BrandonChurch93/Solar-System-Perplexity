@@ -1676,3 +1676,11 @@ Seen on every frame (folders p3 and p4, sheets d1, d2, t, r1, r2).
 - The rise: the change of view 977 to 978 shows a small step in relief and tone; the globe 989 to 992 turns paler and flatter (the plates leaving by time); the sky at the left brightens from level 11.5 to 37 between 1013 and 1021 as the Sun enters.
 - Judged frames moved in height: 717 stands at about 1.2 radii (0.47 before), 1016 at 2.09 (1.20 before).
 
+## 23:08 to 23:12 sandbox clock: the pace step pushed and named (status, not READY)
+
+- Merge of main 2ab2691 into the branch: commit 8cb0327d019db89023e5cbeef8defd0c684b3430 (main carries the three folders as of 174356d7; the four conflicts were resolved by keeping the branch's files; `git diff 5033228d 8cb0327d` over my folders is empty). Pushed to agent/mercury-place.
+- After the merge: tsc clean, build green, 224 of 224 tests, kept draft frames 615, 689, 780, 870, 959, 1035 all 0 px against `base` (folder p5), smooth as before (dive green, rise red with 3 lines at 1036 and 1037).
+- The 3 red lines are the travel, measured: the same run on main 2ab2691 is red at the same frames (speed step 0.307 at 1037, 0.217 at rate 2 at 1036, over the old and larger mean). Tool `out/work/mercury/place/tools/leave.ts`: from 1036 the travel swings the camera round the planet by 0.015, 0.073, 0.176, 0.324 degrees a frame, the place moves 0.6, 3.1, 7.4, 13.6 px a frame; my rise ends at 0.09 px a frame; the limit is 0.08 of my mean of 5.2 px, 0.42 px a frame per frame. The pose there is the engine's `after()`. Told the Builder; I change nothing there.
+- Mail to /root at 23:12 with the commit, the numbers, the faults (dark corner 757 to 764, step at 977 to 978, pale globe 989 to 992, sky at left 1013 to 1021, judged 717 and 1016 are new pictures, still my own path) and the job text (smooth, measure, handover at draft, gate G11 and G15).
+- Next: plan F step 3 (the sphere under and round the relief in the close view), then step 2, the fill behind rims, the knobs. Looks due 23:35.
+
