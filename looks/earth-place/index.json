@@ -1,72 +1,84 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-23T13:28:14.142Z",
+ "pushed": "2026-11-23T13:49:58.133Z",
  "head": "4b9faf39035ec151b2f43d5bfdb4d3f276d42ca2",
- "note": "earth: pink flanks gone (tone only on coloured sea), wedge blobs wiped, dot pattern off the hazy land; still wrong: cream glint patch, hold clouds at the lower left as soft blobs, band under the horizon soft at the left",
+ "note": "handover run on the tree after levels-17: six verdicts pass at draft, side difference at T mean 0.101 and 0.103; glint patch far up and plate outline in the straight down view still wrong",
  "looks": [
   {
-   "time": "2026-11-23T13:28:13.454Z",
-   "file": "20261123132813454-note-c-a.jpg",
-   "source": "out/work/earth/place/m3/c-a.jpg",
+   "time": "2026-11-23T13:49:56.925Z",
+   "file": "20261123134956925-note-dive-down-sheet.jpg",
+   "source": "out/work/earth/place/down/dive-down-sheet.jpg",
    "kind": "note",
-   "label": "13:27 native crops: 2124 right, 2129 right, 2113 top right; 2129 top, 1900 top, 2113 top left (band under the horizon still soft at the left)",
+   "label": "dive seen straight down, 12 frames: cream glint patch 1858 to 1889 and plate outline still wrong",
    "stop": "earth"
   },
   {
-   "time": "2026-11-23T13:28:12.778Z",
-   "file": "20261123132812778-note-p-2129.jpg",
-   "source": "out/work/earth/place/m3/p-2129.jpg",
+   "time": "2026-11-23T13:49:55.565Z",
+   "file": "20261123134955565-note-rise-sky.jpg",
+   "source": "out/work/earth/place/tmp/hv/rise-sky.jpg",
    "kind": "note",
-   "label": "13:27 earth 2129 draft: far cloud as bodies with shadows, no pink flanks, wedge blobs wiped, dots off the land",
+   "label": "rise sky rows 0 to 150, frames 2100 to 2112, native",
    "stop": "earth"
   },
   {
-   "time": "2026-11-23T13:28:12.193Z",
-   "file": "20261123132812193-note-p-2124.jpg",
-   "source": "out/work/earth/place/m3/p-2124.jpg",
+   "time": "2026-11-23T13:49:54.693Z",
+   "file": "20261123134954693-note-rise-full-2108.jpg",
+   "source": "out/work/earth/place/tmp/hv/rise-full-2108.jpg",
    "kind": "note",
-   "label": "13:27 earth 2124 draft: far cloud as bodies with shadows, no pink flanks, wedge blobs wiped, dots off the land",
+   "label": "rise 2108 to 2111 draft",
    "stop": "earth"
   },
   {
-   "time": "2026-11-23T13:28:11.573Z",
-   "file": "20261123132811573-note-p-2113.jpg",
-   "source": "out/work/earth/place/m3/p-2113.jpg",
+   "time": "2026-11-23T13:49:53.564Z",
+   "file": "20261123134953564-note-rise-full-2100.jpg",
+   "source": "out/work/earth/place/tmp/hv/rise-full-2100.jpg",
    "kind": "note",
-   "label": "13:27 earth 2113 draft: far cloud as bodies with shadows, no pink flanks, wedge blobs wiped, dots off the land",
+   "label": "rise 2100 to 2103 draft",
    "stop": "earth"
   },
   {
-   "time": "2026-11-23T13:28:10.915Z",
-   "file": "20261123132810915-note-p-1900.jpg",
-   "source": "out/work/earth/place/m3/p-1900.jpg",
+   "time": "2026-11-23T13:49:52.382Z",
+   "file": "20261123134952382-note-dive-full-1915.jpg",
+   "source": "out/work/earth/place/tmp/hv/dive-full-1915.jpg",
    "kind": "note",
-   "label": "13:27 earth 1900 draft: far cloud as bodies with shadows, no pink flanks, wedge blobs wiped, dots off the land",
+   "label": "dive 1915 to 1918 draft",
    "stop": "earth"
   },
   {
-   "time": "2026-11-23T13:28:09.553Z",
-   "file": "20261123132809553-note-p-1876.jpg",
-   "source": "out/work/earth/place/m3/p-1876.jpg",
+   "time": "2026-11-23T13:49:51.324Z",
+   "file": "20261123134951324-note-dive-full-1907.jpg",
+   "source": "out/work/earth/place/tmp/hv/dive-full-1907.jpg",
    "kind": "note",
-   "label": "13:27 earth 1876 draft: far cloud as bodies with shadows, no pink flanks, wedge blobs wiped, dots off the land",
+   "label": "dive 1907 to 1910 draft, place window, tree after levels-17",
    "stop": "earth"
   },
   {
-   "time": "2026-11-23T13:08:13.285Z",
-   "file": "20261123130813285-note-p-2129.jpg",
-   "source": "out/work/earth/place/m3/p-2129.jpg",
-   "kind": "note",
-   "label": "earth 2129 draft, cloud field as bodies, before the grey gate of the tone",
-   "stop": "earth"
+   "time": "2026-11-23T13:48:12.540Z",
+   "file": "20261123134812540-job-frame-01680.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "earth.hold frame 1680, draft tier, texels view, from the running measure job",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1680,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
   },
   {
-   "time": "2026-11-23T13:08:12.658Z",
-   "file": "20261123130812658-note-p-2124.jpg",
-   "source": "out/work/earth/place/m3/p-2124.jpg",
-   "kind": "note",
-   "label": "earth 2124 draft, cloud field as bodies, before the grey gate of the tone",
-   "stop": "earth"
+   "time": "2026-11-23T13:47:39.515Z",
+   "file": "20261123134739515-frame-f02156.jpg",
+   "source": "out/work/earth/place/proof/f02156.png",
+   "kind": "frame",
+   "label": "earth.rise frame 2156, review tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2156,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "6f5cd496b40446f2"
   }
  ]
 }
