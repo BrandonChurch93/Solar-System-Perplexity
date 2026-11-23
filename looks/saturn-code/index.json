@@ -1,9 +1,16 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T11:59:25.903Z",
+ "pushed": "2026-11-23T12:19:32.878Z",
  "head": "f76f04b4e6f45a87aa864940ddf08b4aca2d8b2c",
- "note": "mail 252 point 3 and 1: pose at 3720 fitted to the approved close, new flight law with descent, next the ice blocks",
+ "note": "first true blocks of ice near the lens at 3720 (draft, streaks are one take of the shutter); next: soft outer edge by function, more and larger blocks toned like the sheet",
  "looks": [
+  {
+   "time": "2026-11-23T12:19:32.210Z",
+   "file": "20261123121932210-note-f_3720.jpg",
+   "source": "../../../../tmp/v/b1/f_3720.png",
+   "kind": "note",
+   "label": "3720 draft, 1 sample: first blocks of ice (instanced bodies with faces and shadows) on the fitted pose"
+  },
   {
    "time": "2026-11-23T11:59:25.351Z",
    "file": "20261123115925351-note-end_over.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/v/ht_l.png",
    "kind": "note",
    "label": "3465 hold, left: approved hero, kept build, mine (draft)"
-  },
-  {
-   "time": "2026-11-23T11:15:41.096Z",
-   "file": "20261123111541096-note-look_3465_hold.jpg",
-   "source": "../../../../tmp/v/look_3465_hold.png",
-   "kind": "note",
-   "label": "3465 hold draft after the pass: the thin rings take a tint in the hold too, sand at half strength"
   }
  ]
 }
