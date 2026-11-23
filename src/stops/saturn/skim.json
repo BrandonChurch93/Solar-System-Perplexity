@@ -24,6 +24,8 @@
       0.6,
       1.8
     ],
+    "globeNear": 0,
+    "globeNearNote": "the share of the near settings of the globe (its exposure, the halo, the dusk, the night side and its blur) that shows near the sheet: 0 keeps the globe of the hold from far to near, one look all the way; the shadow of the rings on the globe stays the kept one with it",
     "globe": [
       1,
       1.5
@@ -109,7 +111,7 @@
     }
   },
   "outer": {
-    "note": "near the sheet its outer rim is no edge: past the rim (ringfield.json outer) the ice goes on and thins out by two laws that add, each a depth at the rim (the normal optical depth) that falls by e over its length; all of it ends softly between the two radii of end. inset: the colour of that ice is read this far inside the rim. inkBy: how fast that colour takes over as the lens comes near. All of it shows by how near the lens is, none in the hold. rimReach: the brightness of that ice is the middle value of the model's knots from so many insets inside the rim to one inset inside it.",
+    "note": "near the sheet its outer rim is no edge: past the rim (ringfield.json outer) the ice goes on and thins out by two laws that add, each a depth at the rim (the normal optical depth) that falls by e over its length; all of it ends softly between the two radii of end. inset: the colour of that ice is read this far inside the rim. inkBy: how fast that colour takes over as the lens comes near. All of it shows by how near the lens is, none in the hold. rimReach: the brightness of that ice is the middle value of the model's knots from so many insets inside the rim to one inset inside it. grow: how that ice comes with the nearness of the lens in the dive: its depth is times the nearness to the power depth and its two lengths are times the nearness to the power length (no shorter than the share least), so it grows outward from the rim and no band of it shows away from the rim first; in the skim the nearness is 1 and all of it is there.",
     "depth": [
       0.55,
       0.006
@@ -141,6 +143,11 @@
       "lines": 0.4,
       "seed": 41,
       "shift": 7.31
+    },
+    "grow": {
+      "depth": 0.5,
+      "length": 1,
+      "least": 0.0001
     }
   },
   "handover": {
@@ -159,6 +166,11 @@
         0.578,
         0.978
       ],
+      "reach": [
+        0.6,
+        1.3
+      ],
+      "reachNote": "one look from far to near: after the window the sheet keeps the far look wherever it lies farther from the lens than the second distance (planet radii) and has the light of the model, with the ringlets, the sand and the grains it adds, nearer than the first, by the logarithm of the distance between; in the dive no part of the rings comes nearer than the second, so nothing of the rings changes with time alone there",
       "strides": [
         5,
         7,
@@ -181,5 +193,29 @@
     "place": {
       "ahead": 1.0
     }
+  },
+  "globeFine": {
+    "note": "the fine structure of the globe's bands near the lens, from functions under the texels of the 8192 map (globe.ts bandFine): streaks along the bands, value noise over cells of latitude and longitude in octaves that halve. reach: the structure is whole where the surface is nearer to the lens than the first distance and absent beyond the second (planet radii, by the logarithm), so the hold and the dive do not have it. cell: the cell of latitude of the first octave in radians; stretch: how many times longer a cell is along the band than across; octaves: how many; amount: the strength of the first octave on the logarithm of the cloud colour, fall: the factor on it per octave; bend: by how many cells an octave is shifted across the band by the octave before it; pixels: the width of a cell in pixels (one over the cells that a pixel step crosses) up to which an octave is absent and from which it is whole, so the finest octave at half strength or more has between one and two cells a pixel; tint: the strength per colour, the blue more so that a dark streak is warmer; calm: by this share the sharpening of the map's own texels (showcase look.fine) steps back where the structure is whole, since at this nearness it would sharpen the grid of the map; seed. The texels view counts, only where the structure is whole, the cells a pixel of the finest octave that is drawn at half strength or more, from the same coordinates and weights as the picture.",
+    "reach": [
+      1.3,
+      2.0
+    ],
+    "cell": 0.0056,
+    "stretch": 6,
+    "octaves": 8,
+    "amount": 0.09,
+    "fall": 0.88,
+    "bend": 0.6,
+    "pixels": [
+      0.25,
+      0.75
+    ],
+    "tint": [
+      1.0,
+      1.1,
+      1.3
+    ],
+    "calm": 1.0,
+    "seed": 4127
   }
 }

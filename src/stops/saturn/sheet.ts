@@ -262,15 +262,19 @@ void main() {
   float bb = sqrt(max(1.0 - od, 0.0));
   float bw = max(length(vec2(dFdx(bb), dFdy(bb))), 1e-5);
   float kx = (r - uKSpan.x) * uKSpan.y;
+  // one look from far to near: the sheet keeps the far look wherever it lies far from the lens, and the model's
+  // own light, with all it adds, shows only on the part of the sheet the lens has come near (skim.json
+  // handover.kept.reach, by the logarithm of the distance), so nothing changes with time alone
+  float wfar = max(uRfFar, smoothstep(uRfReach.x, uRfReach.y, log(max(length(ray), 1e-6))));
   vec4 farLook = vec4(0.0);
-  for (int k = 0; k < ((mine && uRfFar > 0.0 && kx > 0.0 && kx < 1.0) ? 1 : 0); k++) {
+  for (int k = 0; k < ((mine && wfar > 0.0 && kx > 0.0 && kx < 1.0) ? 1 : 0); k++) {
     vec3 on = cs + ds * ((-ob - sqrt(max(od * oa, 0.0))) / oa);
     float day = smoothstep(-0.05, 0.25, dot(normalize(vec3(on.x, on.y / uPolar, on.z)), normalize(uSunL)));
     farLook = keptSheet(r, atan(q.y, q.x), kx, pixel * uKSpan.y * float(uKProfN), abs(ray.y) / length(ray), kAlong, kMiss, kMw, front, od, bb, bw, day, max(uKFillet, 1.5 * pixel), uGrad, uSunL.y * uCamL.y < 0.0);
   }
   vec3 col = vec3(0.0);
   float alpha = 0.0;
-  for (int k = 0; k < ((mine && uRfFar < 1.0) ? 1 : 0); k++) {
+  for (int k = 0; k < ((mine && wfar < 1.0) ? 1 : 0); k++) {
     float tau;
     float lum;
     float thin;
@@ -311,9 +315,9 @@ void main() {
     // the sheet and the white sparks of its brightest grains
     col = lum * (seen * law) * under * (tone + mix(tone, vec3(1.0), uIceOrbit.w) * (sand.y * uIceFit.y));
   }
-  // the far look gives way to the model's own light as the lens closes in
-  col = mix(col, farLook.rgb, uRfFar);
-  alpha = mix(alpha, farLook.a, uRfFar);
+  // the far look gives way to the model's own light where the lens has closed in
+  col = mix(col, farLook.rgb, wfar);
+  alpha = mix(alpha, farLook.a, wfar);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   alpha *= uWeight;
@@ -441,8 +445,14 @@ export class Sheet {
 
   // near: how near the lens is to the sheet (0 in the hold, 1 in the skim): the ice past the rim shows by it
   set(near: number): void {
-    this.outer.y = skim.outer.depth[0]! * near
-    this.outer.w = skim.outer.depth[1]! * near
+    // the ice past the rim grows out of the rim: its depth and the lengths over which it thins out both come
+    // with the nearness (skim.json outer.grow), so no band of it shows away from the rim before the rim has it
+    const deep = Math.pow(near, skim.outer.grow.depth)
+    const wide = Math.max(Math.pow(near, skim.outer.grow.length), skim.outer.grow.least)
+    this.outer.y = skim.outer.depth[0]! * deep
+    this.outer.w = skim.outer.depth[1]! * deep
+    this.outer.z = skim.outer.length[0]! * wide
+    ;(this.uniforms.uOuter2!.value as THREE.Vector4).x = skim.outer.length[1]! * wide
     this.outerInk.y = Math.min(near * skim.outer.inkBy, 1)
   }
 

@@ -137,11 +137,13 @@ export const createModel: SetFactory = async (ctx) => {
       const farW = state.time < dive.end ? 1 - smooth((state.time - farFrom) / (farTo - farFrom)) : 0
       // how near the lens is to the sheet (0 in the hold, 1 in the skim); nothing of it shows with the far look
       const close = (1 - smooth((Math.log(Math.max(Math.abs(camL.y), 1e-3)) - logLo) / (logHi - logLo))) * (1 - farW)
+      // the globe has one look from far to near: this share of its near settings shows (skim.json light.globeNear)
+      const closeGlobe = close * tune.globeNear
       poseW.value = 1 - smooth((camL.distanceTo(heroL) - tune.heroRange[0]!) / (tune.heroRange[1]! - tune.heroRange[0]!))
       camS.set(camL.x, camL.y / polar, camL.z)
       sunS.set(sunL.x, sunL.y / polar, sunL.z).normalize()
       const gain = 1 / shot.post.exposure
-      const globeGain = gain * THREE.MathUtils.lerp(tune.globe[0]!, tune.globe[1]!, close)
+      const globeGain = gain * THREE.MathUtils.lerp(tune.globe[0]!, tune.globe[1]!, closeGlobe)
       const elapsed = state.time - plan.holdMid
       const aspect = view.format.width / view.format.height
 
@@ -149,10 +151,12 @@ export const createModel: SetFactory = async (ctx) => {
       const su = shell.material.uniforms
       ;(gu.uCam!.value as THREE.Vector3).copy(camS)
       gu.uLimbW!.value = poseW.value * look.limbShow
-      ;(gu.uFine!.value as THREE.Vector4).w = (1 - poseW.value) * (1 - close)
-      gu.uNightBlur!.value = look.globe.nightBlurFar + (look.globe.nightBlur - look.globe.nightBlurFar) * close
+      ;(gu.uFine!.value as THREE.Vector4).w = (1 - poseW.value) * (1 - closeGlobe)
+      gu.uNightBlur!.value = look.globe.nightBlurFar + (look.globe.nightBlur - look.globe.nightBlurFar) * closeGlobe
       su.uLimbW!.value = gu.uLimbW!.value
       gu.uInflate!.value = gu.uLimbW!.value > 0 ? look.globe.limbInflate : 1
+      // the fine structure of the bands from functions is drawn only when the lens is near enough for any of it
+      ;(gu.uBandFine!.value as THREE.Vector3).x = camS.length() - 1 < skimJson.globeFine.reach[1]! ? 1 : 0
       ;(gu.uSunW!.value as THREE.Vector3).copy(sunS)
       ;(gu.uSunL!.value as THREE.Vector3).copy(sunL)
       ;(gu.uLightL!.value as THREE.Vector3).copy(sunL)
@@ -167,10 +171,10 @@ export const createModel: SetFactory = async (ctx) => {
       ;(su.uCam!.value as THREE.Vector3).copy(camS)
       ;(su.uSunW!.value as THREE.Vector3).copy(sunS)
       ;(su.uSunL!.value as THREE.Vector3).copy(sunL)
-      su.uGain!.value = globeGain * state.weight * THREE.MathUtils.lerp(tune.halo.gain[0]!, tune.halo.gain[1]!, close)
-      su.uHazeH!.value = look.shell.scaleHeight * THREE.MathUtils.lerp(tune.halo.height[0]!, tune.halo.height[1]!, close)
-      ;(gu.uDusk!.value as THREE.Vector4).set(tune.dusk.from, tune.dusk.to, THREE.MathUtils.lerp(tune.dusk.amount[0]!, tune.dusk.amount[1]!, close), THREE.MathUtils.lerp(tune.dusk.night[0]!, tune.dusk.night[1]!, close))
-      gu.uDuskGrey!.value = THREE.MathUtils.lerp(tune.dusk.grey[0]!, tune.dusk.grey[1]!, close)
+      su.uGain!.value = globeGain * state.weight * THREE.MathUtils.lerp(tune.halo.gain[0]!, tune.halo.gain[1]!, closeGlobe)
+      su.uHazeH!.value = look.shell.scaleHeight * THREE.MathUtils.lerp(tune.halo.height[0]!, tune.halo.height[1]!, closeGlobe)
+      ;(gu.uDusk!.value as THREE.Vector4).set(tune.dusk.from, tune.dusk.to, THREE.MathUtils.lerp(tune.dusk.amount[0]!, tune.dusk.amount[1]!, closeGlobe), THREE.MathUtils.lerp(tune.dusk.night[0]!, tune.dusk.night[1]!, closeGlobe))
+      gu.uDuskGrey!.value = THREE.MathUtils.lerp(tune.dusk.grey[0]!, tune.dusk.grey[1]!, closeGlobe)
 
       const half = Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2)
       const focal = view.format.height / 2 / half
@@ -191,7 +195,7 @@ export const createModel: SetFactory = async (ctx) => {
       ;(ru.uShade!.value as THREE.Vector4).z = THREE.MathUtils.lerp(sheetJson.gain[0]!, sheetJson.gain[1]!, close) * THREE.MathUtils.lerp(tune.rings[0]!, tune.rings[1]!, close)
       ru.uSat!.value = THREE.MathUtils.lerp(tune.ringSaturation[0]!, tune.ringSaturation[1]!, close)
       field.set(close)
-      field.far(farW)
+      field.far(farW, Math.max(farW, 1 - closeGlobe))
       sheet.set(close)
       sheet.far(shadowL.copy(sunL).applyQuaternion(shadowTurn).normalize(), state.time < plan.seg.hold.end ? 0 : 1 - poseW.value, smooth((state.time - plan.seg.hold.end) / keptLook.rings.shadeSolid[1]), spinRate, elapsed)
       ;(ru.uFlatten!.value as THREE.Vector4).set(tune.flatten.pivot, THREE.MathUtils.lerp(tune.flatten.power[0]!, tune.flatten.power[1]!, close), tune.flatten.width, tune.flatten.reach)

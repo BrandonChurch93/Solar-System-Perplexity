@@ -3,6 +3,7 @@ import type { SetContext } from '../../core/types'
 import fine from './ringfine.json'
 import model from './ringfield.json'
 import rings from './rings.json'
+import skim from './skim.json'
 
 export const RING_HASH_GLSL = /* glsl */ `
 uint ringPcg(uint v) {
@@ -46,6 +47,8 @@ uniform vec4 uRfWaves[${fine.waves.trains.length}];
 uniform vec4 uRfWaveFit;
 uniform vec4 uRfWaveEnds;
 uniform float uRfFar;
+uniform float uRfFarGlobe;
+uniform vec2 uRfReach;
 // the radial profile of the kept ring picture (rings.bin, the rows of the hero) at x of its span, seen with
 // so many of its texels a pixel, as the kept set reads it (kept/profile.ts): the far look of the sheet
 // (sheet.ts) and the rings' shadow on the globe with that look are drawn from it
@@ -239,7 +242,7 @@ function meanSmoothstep(from: number): number {
   return sum / n
 }
 
-export interface RingField { uniforms: Record<string, THREE.IUniform>; texture: THREE.DataTexture; finest: number; set(near: number): void; far(weight: number): void }
+export interface RingField { uniforms: Record<string, THREE.IUniform>; texture: THREE.DataTexture; finest: number; set(near: number): void; far(weight: number, onGlobe: number): void }
 
 // profile: the radial profile of the kept ring picture (rings.bin), key: which of its sets
 export function ringField(ctx: SetContext, profile: THREE.DataTexture, key: 'full' | 'web'): RingField {
@@ -303,13 +306,18 @@ export function ringField(ctx: SetContext, profile: THREE.DataTexture, key: 'ful
   const lanesMean = (laneLow * laneLow + laneLow * laneHigh + laneHigh * laneHigh) / 6
   // how far the sheet is drawn with the far look of the kept set (sheet.ts)
   const farFit = { value: 0 }
+  // the same for the shadow of the rings on the globe (globe.ts), and where on the sheet the far look gives
+  // way to the model's own light: between these two distances from the lens, by their logarithms
+  const farGlobe = { value: 0 }
+  const reach = new THREE.Vector2(Math.log(skim.handover.kept.reach[0]!), Math.log(skim.handover.kept.reach[1]!))
   const rowsOf = rings.sets[key].hero
   return {
     texture,
     finest: fine.first * Math.pow(fine.ratio, fine.octaves - 1),
     set,
-    far: (weight: number): void => {
+    far: (weight: number, onGlobe: number): void => {
       farFit.value = weight
+      farGlobe.value = onGlobe
     },
     uniforms: {
       uRfMap: { value: texture },
@@ -335,7 +343,7 @@ export function ringField(ctx: SetContext, profile: THREE.DataTexture, key: 'ful
       uRfTint: { value: tint },
       uRfWaves: { value: fine.waves.trains.map((t) => new THREE.Vector4(t[0], t[1], t[2], t[3])) },
       uRfWaveFit: { value: new THREE.Vector4(ends.lum, ends.tau, ends.tight, fine.from) },
-      uRfFar: farFit,
+      uRfFar: farFit, uRfFarGlobe: farGlobe, uRfReach: { value: reach },
       uKProf: { value: profile }, uKProfN: { value: rings.sets[key].n }, uKProfLevels: { value: rowsOf.length },
       uKHeroRow: { value: Array.from({ length: 16 }, (_, i) => rowsOf[Math.min(i, rowsOf.length - 1)]!) },
       uKSpan: { value: new THREE.Vector2(rings.span[0]!, 1 / (rings.span[1]! - rings.span[0]!)) },
