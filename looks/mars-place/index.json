@@ -1,9 +1,69 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-23T18:48:36.742Z",
- "head": "8b7c9a408f24d97ce3a651d92f13bebd775a991a",
- "note": "8b7c9a40 named; judged frames 2427 and 2726 in native crops show the place as a disc of another colour; eighth bake (hue by height, not by place) is baking",
+ "pushed": "2026-11-23T19:17:08.927Z",
+ "head": "ac3eb4e25eded14e0cc098eec873b8d0be6a8b5d",
+ "note": "eighth bake: hue change moved from the plates into the look by height; grey disc at 2726 gone; dive and rise sheets follow",
  "looks": [
+  {
+   "time": "2026-11-23T19:17:08.313Z",
+   "file": "20261123191708313-note-wx2726.jpg",
+   "source": "out/work/place/view/wx2726.jpg",
+   "kind": "note",
+   "label": "2726 draft, native crop 700 px: left seventh bake (grey disc), right eighth: no disc of another hue",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T19:17:07.698Z",
+   "file": "20261123191707698-note-wx2427.jpg",
+   "source": "out/work/place/view/wx2427.jpg",
+   "kind": "note",
+   "label": "2427 draft, native crop 700 px: left seventh bake, right eighth (palette by height): the land in the globe's red",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T19:16:43.717Z",
+   "file": "20261123191643717-frame-x2454-noplace.jpg",
+   "source": "out/work/place/view/x2454-noplace.png",
+   "kind": "frame",
+   "label": "mars.dive frame 2454, draft tier, beauty/side=orbit/t=81.808333/noplace view",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2454,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty/side=orbit/t=81.808333/noplace",
+   "engine": "e85c8d53a860dafc"
+  },
+  {
+   "time": "2026-11-23T19:11:30.519Z",
+   "file": "20261123191130519-frame-x2726.jpg",
+   "source": "out/work/place/view/x2726.png",
+   "kind": "frame",
+   "label": "mars.rise frame 2726, draft tier",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "frame": 2726,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e85c8d53a860dafc"
+  },
+  {
+   "time": "2026-11-23T19:09:59.061Z",
+   "file": "20261123190959061-note-topdown-r11-T.jpg",
+   "source": "out/work/place/view/topdown-r11-T.jpg",
+   "kind": "note",
+   "label": "eighth bake, top down with the look at T (tint by height fully in)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T19:09:58.249Z",
+   "file": "20261123190958249-note-topdown-r11-high.jpg",
+   "source": "out/work/place/view/topdown-r11-high.jpg",
+   "kind": "note",
+   "label": "eighth bake, top down from above the near range: the place in the land's red, no disc of another hue",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-23T18:48:36.084Z",
    "file": "20261123184836084-note-w-T-cmp.jpg",
@@ -19,84 +79,6 @@
    "kind": "note",
    "label": "seventh bake 8b7c9a40, frame 2726 draft, native crop 700 px: the place as a grey lilac disc with a dark dot and a white smudge",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T18:48:34.498Z",
-   "file": "20261123184834498-note-w2427-crop.jpg",
-   "source": "out/work/place/view/w2427-crop.jpg",
-   "kind": "note",
-   "label": "seventh bake 8b7c9a40, frame 2427 draft, native crop 700 px: ridges run in to the middle, dark hollow with a pale soft smudge",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T18:31:42.430Z",
-   "file": "20261123183142430-frame-final-2580.jpg",
-   "source": "out/work/place/view/final-2580.png",
-   "kind": "frame",
-   "label": "mars.terrain frame 2580, final tier",
-   "stop": "mars",
-   "segment": "mars.terrain",
-   "frame": 2580,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e85c8d53a860dafc"
-  },
-  {
-   "time": "2026-11-23T18:30:45.544Z",
-   "file": "20261123183045544-frame-final-2325.jpg",
-   "source": "out/work/place/view/final-2325.png",
-   "kind": "frame",
-   "label": "mars.hold frame 2325, final tier",
-   "stop": "mars",
-   "segment": "mars.hold",
-   "frame": 2325,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e85c8d53a860dafc"
-  },
-  {
-   "time": "2026-11-23T18:29:11.276Z",
-   "file": "20261123182911276-frame-f02212-draft.jpg",
-   "source": "out/work/samebytes/b7/f02212-draft.png",
-   "kind": "frame",
-   "label": "earth.travel frame 2212, draft tier",
-   "stop": "earth",
-   "segment": "earth.travel",
-   "frame": 2212,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e85c8d53a860dafc"
-  },
-  {
-   "time": "2026-11-23T18:23:41.648Z",
-   "file": "20261123182341648-frame-w2454-noplace.jpg",
-   "source": "out/work/place/view/w2454-noplace.png",
-   "kind": "frame",
-   "label": "mars.dive frame 2454, draft tier, beauty/side=orbit/t=81.808333/noplace view",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2454,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty/side=orbit/t=81.808333/noplace",
-   "engine": "e85c8d53a860dafc"
-  },
-  {
-   "time": "2026-11-23T18:23:09.456Z",
-   "file": "20261123182309456-frame-w2726.jpg",
-   "source": "out/work/place/view/w2726.png",
-   "kind": "frame",
-   "label": "mars.rise frame 2726, draft tier",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "frame": 2726,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e85c8d53a860dafc"
   }
  ]
 }
