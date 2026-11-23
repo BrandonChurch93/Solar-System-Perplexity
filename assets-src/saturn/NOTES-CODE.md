@@ -729,3 +729,138 @@ The hold, checked against head f76f04b (both at draft, 3465, same machine):
   native size (holdpair.png in the looks: head left, now right).
 - The sweep term of the ringlet filter changes no pixel of the hold (measured: 0 pixels differ with and
   without it at 3465). The outer zone has depth 0 in the hold by its law (depth times nearness).
+
+12:45 to 13:00 UTC, after f9007f0: mail 270, blocks third version, a render tree
+
+MAIL 270 (high, about 12:47 UTC), verbatim: "From the Builder (/root) to saturn_coder. Mail 270. Got f9007f07.
+I am rendering 3630 to 3809 at the review tier on 18 render machines now and will write what I see. Carry on
+with points 1 and 2, then the dive and the rise (opt in to the handover, E3 is on main). The hold change you
+name (old stones gone as faint points) is accepted if the hold at the final tier still matches the approved
+image as well as before: check 3465 against the approved hero and name the number in your next report."
+
+Blocks, third version (blocks.ts, blocks.json), why:
+- The second version read as grey gravel: all blocks one shape, floaters dark specks against the globe. The
+  skim looks toward the Sun (phase 110 to 140 degrees), so a body that only reflects shows its dark side. Ice
+  is not opaque: each class now has `through` (light through the body, 0.55 to 0.7) and `white` (its own
+  albedo range), and the light is level 1.0, bounce 0.6, sky 0.5.
+- Shape: each block is a body of 80 faces (12 corners plus 30 edge middles, shape.round 0.55) and every
+  corner is moved in or out by a hash of its vertex number and the block's own seed (shape.jitter 0.3), so no
+  two blocks are alike.
+- Floaters (class 3) now have an absolute reach in radii (0.6 to 1.2), not in heights of the lens, because the
+  lens comes down through the skim and the old law left 6 floaters in view at the last frame. They pass the
+  lens (passes = 1): such a block fades out between 46 and 110 px of width (fade.largest) instead of
+  filling the frame.
+- One take of the shutter: the block is drawn out along its own way on screen with ramps at both ends (a
+  trapezoid of cover), its faces are shaded from the unsmeared body; the shadow is drawn out the same way.
+  This matters at the draft tier (1 take); at 16 takes each take's slide is a sixteenth.
+- Seen at draft, every 15th frame 3630 to 3795 (looks: saturn-code): white chunks with facets, floaters
+  through the whole skim, the soft shore at 3630. To judge at the review tier: whether the field of small
+  blocks is too busy over the bands (the approved close shows fine sand and soft bands, no blocks).
+
+A render tree: /tmp/v/sync.sh copies the working tree's sources to /home/user/workspace/rt (node_modules,
+public and references are links), and REPO=/home/user/workspace/rt makes st.sh, six.sh, every.sh render from
+there. So a long render reads a fixed copy and the sources can be edited meanwhile. Still one render at a time.
+
+13:14 UTC: MAIL 275 (high, to every stop builder and coder), verbatim core: "how your stop gets to its critic
+rounds. No answer needed unless a point below is red for you. 1. A stop is taken onto main and its round 1
+starts (rounds are numbered on from 37, up to three per stop, every critic each round) when four things hold on
+one commit that you name: a. both handovers run with no cover and read as one place (Jupiter and Saturn: also
+the surface view from code; the Sun: the surface view with its new motion and the rise); b. the machine checks
+are green on every frame you changed: G5, G13 and G17 as the harness gives them, and the handover report of
+`npm run handover -- --stop <id>`; c. the frames you may not change keep their bytes (your hold and your surface
+view where it is approved, at the draft tier everywhere and at the final tier on the judged frames); d. build,
+tsc and tests are green on a merge of the newest main. It does not have to be finished. What is still wrong
+goes to the critics with the rest. Do not wait for a perfect state: when a to d hold, send me "READY <stop>
+<commit>" with the list of what you still see as wrong. 2. Takes of generated assets: kit/06-ASSETS.md gives
+six takes per asset per round, and six per phase for an asset made outside a round. A mail of mine with
+findings is not a round. If an asset has used its six in this phase, keep its best take and say so in your
+READY line. In a round each asset has six again where a critic asks for a change. Work by code has no take
+limit. 3. I render every commit you name at every frame on the render machines and write what I see. Push your
+code branch whenever your looks show something you want judged, and name the commit."
+So the order now: blocks fourth version out (points 1 and 2), then the handover opt in at once, then READY.
+
+13:25 UTC: MAIL 276 (high), verbatim: "From the Builder (/root) to saturn_coder. Mail 276: all 180 frames of
+f9007f07 seen at the review tier (3630 to 3809, rendered on the render machines). The clip went to Brandon as
+work in progress.
+
+HOLDS, keep it: a real plane under one true flight in and down, nothing stretches or bends, the soft shore at
+3630, the fine ringlets of the inner rings near the globe (3740 to 3745 at x 600 to 1300, y 380 to 630 are the
+best part of the picture), the gap, the composition of 3720.
+
+WRONG, most important first:
+1. The ring reads as a floor. In the mid and near field (every frame; look at 3700 to 3705 and 3790 to 3795 at
+x 0 to 700, y 680 to 1080, and at 3740 below y 630) the sheet is a solid board of planks or straw, broken into
+dashes and box ends, with grey rocks lying ON it and casting shadows ONTO it. In the approved image the sheet
+is clean, continuous, crisp ringlets with a satin sheen right down to the bottom edge of the frame, and only a
+fine grain near the lens. Wanted:
+ a. The ringlets continuous and smooth in the mid and near field too: no plank ends, no dashes, no box shapes,
+ no cast shadow on a surface. With the ice switched off, 3720 must already read as the approved picture.
+ b. The ice only as ice: near the lens the sheet dissolves into many small bright grains and a few larger
+ chunks that FLOAT in a layer with depth (above and below the mid level of the plane, with parallax between
+ them, each on its own orbit speed), lit as ice (bright, a little translucent, a soft shadow side, shadows from
+ grain to grain only). Between them one sees the grains behind and dark space, never a floor. Far fewer large
+ chunks than now, more shapes, none box like.
+ c. With distance the grains go below a pixel and their sum is the ringlet colour, with no seam.
+2. A fine hatch like woven cloth near the lens (3700 to 3705 lower left, the blue grey band of 3720 at x 0 to
+350, y 560 to 1080). Something fine is not filtered for the pixel, or two line systems beat. Find it and filter
+it; it will shimmer in the film.
+3. Colour near the lens: olive green and blue grey patches read dirty. The approved lower left is cream, warm
+grey, rose and a little cool grey. Mid field level: ours 156 against 176 of the approved (mean of x 700 to 1300
+at the ring below the globe).
+4. The night side of the globe is brown: near the terminator (x 1600 to 1700, y 450 to 550) ours is 45, 26, 12,
+where the approved image goes to a neutral 12, 12, 11 within a narrow band. Narrow the terminator and take the
+orange out of it.
+5. The globe is smooth cream with little in it at this size (3740 crop). The approved globe has many fine bands
+with small swirls. Check the texels on the globe in this view and give it the fine banding.
+6. Fit at 3720 against the approved image (shares of the frame height): top of the globe 7 percent approved, 9
+ours; where the globe meets the near rings 57 approved, 69 ours; the far ring edge at the left frame edge 38
+approved, 35 ours. The globe is about a sixth too large and too low.
+7. Speed: the near field moves about 5 pixels a frame from 3660 to 3780 and 2 from 3790 on. Do not let the
+flight stall before the rise; the rise must take it over at cruise speed.
+8. Still to do after that: the dive (3540 to 3629) and the rise (3810 to 3884) as one scene with the surface
+view, with no cover and no swap that can be seen, and the hold 3465 number I asked for in mail 270.
+
+Order: 1 and 2 first, they decide whether this reads as Saturn's rings. Push looks as you go and name a commit
+when 1 and 2 are in; I render it at once. Then 8, then READY as mail 275 says."
+
+13:56 UTC: MAIL 279 (high), verbatim core: "A time for READY. The rule of mail 275 stands... 2. Jupiter,
+Saturn: by 16:30 UTC at the latest, with the dive and the rise in it (no cover, no swap that shows). 3. At that
+time I take the newest commit you have named, as long as it builds on a merge of newest main, its tests pass,
+the frames that may not change keep their bytes and G15 holds. What is still wrong then goes into round 1 as
+your own list beside the critics' issues. So keep your branch in a state that can be taken: commit and push
+whole steps, never half a step. 4. With READY send: the commit, your list of what is still wrong with frame
+numbers, and which frames changed since my last render of your stop, so I render only those. 5. Each stop then
+gets up to three rounds with fresh critics. You go on working between the rounds, on your list and on what the
+critics name. No answer is needed."
+
+MAIL 276 POINTS 1 AND 2, WHAT WAS WRONG AND WHAT IS THERE NOW (14:30 UTC)
+
+Diagnosis, each proven by switching the part off in the render tree and looking at 3720:
+- The planks, dashes and box ends were the wakes of ice.ts (ringlets cut along the orbit). Deleted.
+- The grey rocks with shadows on a surface were the blocks (blocks.ts, blocks.json). Deleted.
+- The hatch like woven cloth was the sand of ice.ts in the skim: fine points drawn out along the motion of
+  the lens, crossing the ringlets at an angle, two line systems. The sand now has strength times (1 minus
+  near), so it is the hold's sand only (the hold keeps its bytes: 3465 at the draft tier has 0 differing
+  pixels against f9007f0) and the skim has none.
+- With the ice off, 3720 reads as the approved picture: clean ringlets down to the bottom edge
+  (look "3720 draft with the ice switched off").
+
+What is there now: grains.ts and grains.json. One system of grains on three levels (sand, pebbles, chunks).
+- Every grain is a body of its own: a cell on the orbit of its radius (rows by radius, each row turns at its
+  own orbital speed, so near rows overtake far ones), a height of its own above or below the middle of the
+  plane, three lobes, lit by the Sun by angle with a soft shadow side and light through the rim.
+- The sum rule: where a level shows whole, the share grains.json.share of the sheet's optical depth is taken
+  out of the sheet (sheet.ts: taken = grainTaken(grainCells(tau), dist); left = tau - taken; the rest is in
+  the shade of the grains, exp(-taken / mu0)) and given to grains that have the sheet's own brightness at
+  their place. So grains plus rest add up to the sheet and there is no seam where they go below a few pixels.
+  Measured at 3720 and 3809, mean display level with grains over without: 0.91 to 1.07 in ten boxes with lift
+  0.3; lift is now 0.42 for the two counted levels.
+- A level shows by the width in pixels of its middle grain (levels.pixels): sand from 1.6 px, whole at 3 px.
+  With sand 0.00096 to 0.002 radii that is whole within about 0.56 radii of the lens and none beyond 1.05.
+  At 3720 the bottom edge is 0.67 to 1.06 away, so the sheet stays a sheet of ringlets down the frame and
+  dissolves only at the lower left; at 3809 (0.45 to 0.71) the lower third is grains.
+- Pebbles (0.003 to 0.007) are sparse bright ice over the sheet, chunks (0.008 to 0.03) are few, not counted
+  in the depth, float up to 0.05 (some 0.15) radii off the plane and give the parallax.
+- Per take the CPU lists the grains in view (about 310k at 3720, 420k at 3780, 100 to 190 ms), sorted far to
+  near, drawn as points with an analytic smear over the shutter.
+- Costs: a draft still is 12.6 to 13.8 s with grains and 12.1 to 12.4 s without (fixed costs included).

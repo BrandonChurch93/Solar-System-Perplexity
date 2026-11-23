@@ -58,6 +58,28 @@ float sheetLaw(float thin, float mu, float mu0, float deg) {
   return pow(clamp((uRfLight.y + uRfLight.z) / (mu0 + mu), uViewFit.x, uViewFit.y), mix(uShade.x, uShade.y, thin)) * mix(byPhase.x, byPhase.y, thin);
 }`
 
+// The sheet at the point q of the plane (radius r), seen with the footprint fp (radii): its optical depth and
+// its brightness where the model was measured, with the ringlets on them; how far it returns light as a thin
+// sheet (1) or a dense one (0); the colour of the ice with the strength of the finer structure; the factor
+// the ringlets there put on the colour; and the depth and the brightness of the model averaged over the width
+// of the zones (uFlatten.z). Needs RING_FIELD_GLSL and SHEET_OUTER_GLSL. The sheet and the grains near the
+// lens (grains.ts) both read the ice here, so a grain has the colour of the ringlet it lies in.
+export const SHEET_AT_GLSL = /* glsl */ `
+uniform vec3 uSunL;
+uniform vec4 uFlatten;
+void sheetAt(vec2 q, float r, float fp, out float tau, out float lum, out float thin, out vec4 ink, out vec3 tint, out vec2 wide) {
+  vec2 knots = ringKnots(r, fp);
+  float more = sheetOuter(r);
+  knots += vec2(more, sheetOuterLum(more));
+  float rc = sheetInkRadius(r);
+  ink = ringInk(rc);
+  thin = ringThin(rc);
+  tau = knots.x;
+  lum = knots.y;
+  ringFine(r, fp, ink.a, thin, dot(q / r, normalize(uSunL.xz)), tau, lum, tint);
+  wide = ringKnots(r, uFlatten.z);
+}`
+
 const VERT = /* glsl */ `
 out vec3 vLocal;
 out vec3 vView;
@@ -77,7 +99,6 @@ in vec3 vLocal;
 in vec3 vView;
 in vec3 vClip;
 uniform vec3 uCamL;
-uniform vec3 uSunL;
 uniform float uPolar;
 uniform int uPass;
 uniform float uGrad;
@@ -89,7 +110,6 @@ uniform float uFinest;
 uniform float uSat;
 uniform vec3 uTintDense;
 uniform vec3 uTintThin;
-uniform vec4 uFlatten;
 uniform vec3 uFloor;
 uniform vec3 uLayer;
 out vec4 outColor;
@@ -99,6 +119,7 @@ ${GLOBE_SHADOW_GLSL}
 ${ICE_GLSL}
 ${SHEET_OUTER_GLSL}
 ${SHEET_LAW_GLSL}
+${SHEET_AT_GLSL}
 void main() {
   vec2 q = vLocal.xz;
   float r = length(q);
@@ -112,7 +133,7 @@ void main() {
   vec3 ray = P - uCamL;
   // during one take the pixel's point slides over the ice: the ringlets are filtered by the pixel and by that
   vec2 sweep = iceSweep(q, r, ray);
-  float fp = ringFootprint(length(vec2(pixel, sweep.x * uIceFit2.z)), uGrad);
+  float fp = ringFootprint(length(vec2(pixel, sweep.x * uIceFit.x)), uGrad);
   vec3 cs = vec3(uCamL.x, uCamL.y / uPolar, uCamL.z);
   vec3 ds = vec3(ray.x, ray.y / uPolar, ray.z);
   bool front = -dot(cs, ds) > dot(ds, ds);
@@ -121,32 +142,34 @@ void main() {
   vec3 col = vec3(0.0);
   float alpha = 0.0;
   for (int k = 0; k < (mine ? 1 : 0); k++) {
-    vec2 knots = ringKnots(r, fp);
-    float more = sheetOuter(r);
-    knots += vec2(more, sheetOuterLum(more));
-    float rc = sheetInkRadius(r);
-    vec4 ink = ringInk(rc);
-    float thin = ringThin(rc);
-    float tau = knots.x;
-    float lum = knots.y;
+    float tau;
+    float lum;
+    float thin;
+    vec4 ink;
     vec3 tint;
-    ringFine(r, fp, ink.a, thin, dot(q / r, normalize(uSunL.xz)), tau, lum, tint);
-    float soft = uIceFit.w * fp / max(pixel, 1e-9);
+    vec2 wide;
+    sheetAt(q, r, fp, tau, lum, thin, ink, tint, wide);
     float turn = atan(q.y, q.x) / 6.2831853;
-    vec2 grains = iceMarks(q, r, turn, toPixel, 1.0 / max(pixel, 1e-9), soft, ink.a);
-    lum *= grains.x;
-    tau *= grains.y;
+    // the spokes show only near the sheet
+    float spokes = 0.0;
+    for (int j = 0; j < (uIceOrbit.z > 0.0 ? 1 : 0); j++) spokes = iceSpokes(r, turn);
+    lum *= exp(spokes * uIceOrbit.z);
     // near the sheet the broad zones of the dense rings are evener than from afar
-    lum *= pow(clamp(ringKnots(r, uFlatten.z).y / uFlatten.x, 1.0 / uFlatten.w, uFlatten.w), uFlatten.y * (1.0 - thin));
-    // the grain of the sheet and its sparks
-    vec2 sand = iceGrain(r, turn, 1.0 / max(pixel, 1e-9), length(toPixel * vec2(-q.y, q.x)) / r, thin, sweep);
+    lum *= pow(clamp(wide.y / uFlatten.x, 1.0 / uFlatten.w, uFlatten.w), uFlatten.y * (1.0 - thin));
+    // the sand of the sheet and its sparks, as the sheet is seen from afar
+    vec2 sand = iceSand(r, turn, 1.0 / max(pixel, 1e-9), length(toPixel * vec2(-q.y, q.x)) / r, thin, sweep);
     lum *= exp(sand.x);
-    tau *= exp(sand.x * uGrainFit.w);
+    tau *= exp(sand.x * uIceFit.z);
     float dist = length(ray);
     float mu = max(abs(ray.y) / dist, 1e-3);
     float mu0 = max(abs(uSunL.y), 0.02);
     bool same = uCamL.y * uSunL.y > 0.0;
-    float seen = same ? ringSat(tau * (1.0 / mu0 + 1.0 / mu)) / max(ringSat(tau * uRfLight.x), 1e-6) : uShade.w * exp(-tau / mu0) * ringSat(tau / mu) / max(ringSat(tau * uRfLight.x), 1e-6);
+    // near the lens a share of the ice is seen grain by grain (grains.ts): the sheet is what is left of it, and
+    // it lies in the shade of those grains
+    float taken = grainTaken(grainCells(tau), dist);
+    float left = tau - taken;
+    float shade = exp(-taken / mu0);
+    float seen = same ? shade * ringSat(left * (1.0 / mu0 + 1.0 / mu)) / max(ringSat(tau * uRfLight.x), 1e-6) : uShade.w * exp(-tau / mu0) * ringSat(tau / mu) / max(ringSat(tau * uRfLight.x), 1e-6);
     float deg = degrees(acos(clamp(dot(ray, uSunL) / -dist, -1.0, 1.0)));
     float law = sheetLaw(thin, mu, mu0, deg);
     vec3 tone = mix(vec3(1.0), ink.rgb, uSat * mix(1.0, min(law, 1.0), thin * uViewFit.z)) * tint * mix(uTintDense, uTintThin, thin);
@@ -154,10 +177,10 @@ void main() {
     // stars do not show through any part of the sheet that holds ice; the globe shows through by the true depth
     float bn = dot(cs, ds) / length(ds);
     float behind = front ? 1.0 - smoothstep(uShadowFit.z, uShadowFit.w, sqrt(max(dot(cs, cs) - bn * bn, 0.0))) : 0.0;
-    alpha = 1.0 - exp(-tau / mu * mix(uViewFit.w, 1.0, behind));
+    alpha = 1.0 - exp(-left / mu * mix(uViewFit.w, 1.0, behind));
     vec3 under = mix(uFloor, vec3(1.0), lit) * uShade.z;
     // the sheet and the white sparks of its brightest grains
-    col = lum * (seen * law) * under * (tone + mix(tone, vec3(1.0), uIceOrbit.w) * (sand.y * uIceFit2.y));
+    col = lum * (seen * law) * under * (tone + mix(tone, vec3(1.0), uIceOrbit.w) * (sand.y * uIceFit.y));
   }
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);

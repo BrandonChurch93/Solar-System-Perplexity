@@ -3,15 +3,14 @@ import { FarPoint } from '../../bodies/farpoint'
 import { config } from '../../config'
 import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { smooth } from '../../director/rig'
-import { Blocks, type Eye } from './blocks'
 import { ringField } from './field'
 import { Globe, Shell } from './globe'
+import { Grains, type Lens } from './grains'
 import { iceField } from './ice'
 import * as look from './look'
 import { plan } from './plan'
 import { Sheet } from './sheet'
 import { shotMatrix } from './shot'
-import blocksJson from './blocks.json'
 import holdLight from './hold-light.json'
 import iceJson from './ice.json'
 import lightJson from './light.json'
@@ -48,17 +47,9 @@ export const createSet: SetFactory = async (ctx) => {
   tilt.add(globe.mesh, shell.mesh, sheet.group)
   shell.mesh.renderOrder = 2.5
 
-  // the lens through the skim in the frame of the rings: the blocks are chosen by what it can see
-  const terrain = plan.seg.terrain
-  const eyes: Eye[] = []
-  for (let f = terrain.firstFrame + blocksJson.fade.frames[0]!; f < terrain.firstFrame + terrain.frames + blocksJson.fade.frames[1]!; f++) {
-    const time = (f + config.shutterFraction / 2) / config.fps
-    const pose = plan.flight(time)
-    eyes.push({ position: pose.position.clone().applyQuaternion(toTilt), quaternion: toTilt.clone().multiply(pose.quaternion), turns: plan.spin(time) / (2 * Math.PI) })
-  }
-  const skimTan = Math.tan(THREE.MathUtils.degToRad(skimJson.pose.vfov) / 2)
-  const blocks = new Blocks(sheet.uniforms, eyes, Math.floor(terrain.frames / 2) - blocksJson.fade.frames[0]!, ctx.format.height / 2 / skimTan, [(skimTan * ctx.format.width) / ctx.format.height, skimTan], iceJson.orbit.syncRadius, plan.p.spinDegPerSecond)
-  tilt.add(blocks.group)
+  // the ice near the lens, grain by grain
+  const grains = new Grains(sheet.uniforms, ice, iceJson.orbit.syncRadius)
+  tilt.add(grains.points)
 
   const streak = new Streak(look.streak)
   world.add(streak.mesh)
@@ -94,6 +85,8 @@ export const createSet: SetFactory = async (ctx) => {
   const turn = new THREE.Quaternion()
   const moon = new THREE.Vector3()
   const moved = new THREE.Vector3()
+  const lens: Lens = { position: camL, quaternion: new THREE.Quaternion(), turns: 0, tan: [1, 1], slack: 0 }
+  const farthestIce = skimJson.outer.end[1]!
   const tune = skimJson.light
   const tintDense = new THREE.Vector3().fromArray(tune.tint.near.dense)
   const tintThin = new THREE.Vector3().fromArray(tune.tint.near.thin)
@@ -163,12 +156,19 @@ export const createSet: SetFactory = async (ctx) => {
       su.uHazeH!.value = look.shell.scaleHeight * THREE.MathUtils.lerp(tune.halo.height[0]!, tune.halo.height[1]!, close)
       ;(gu.uDusk!.value as THREE.Vector4).set(tune.dusk.from, tune.dusk.to, THREE.MathUtils.lerp(tune.dusk.amount[0]!, tune.dusk.amount[1]!, close), THREE.MathUtils.lerp(tune.dusk.night[0]!, tune.dusk.night[1]!, close))
 
-      ice.set(plan.spin(state.time), close)
+      const half = Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2)
+      const focal = view.format.height / 2 / half
+      ice.set(plan.spin(state.time), close, focal)
       // one take of the frame: how far the lens moves and the orbits turn while its shutter is open
       const take = config.shutterFraction / config.fps / Math.max(view.samples, 1)
       moved.copy(plan.flight(state.time + take / 2).position).sub(plan.flight(state.time - take / 2).position).applyQuaternion(toTilt)
       ice.move.set(moved.x, moved.y, moved.z, (plan.spin(state.time + take / 2) - plan.spin(state.time - take / 2)) / (2 * Math.PI)).multiplyScalar(close)
-      blocks.set(view.format.height / 2 / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2), close > 0)
+      lens.quaternion.copy(toRing).multiply(view.camera.quaternion)
+      lens.turns = plan.spin(state.time) / (2 * Math.PI)
+      lens.tan[0] = half * aspect
+      lens.tan[1] = half
+      lens.slack = Math.hypot(ice.move.x, ice.move.y, ice.move.z) + 2 * Math.PI * farthestIce * Math.abs(ice.move.w)
+      grains.set(focal, view.format.width, view.format.height, close, lens)
       const ru = sheet.uniforms
       ;(ru.uCamL!.value as THREE.Vector3).copy(camL)
       ;(ru.uSunL!.value as THREE.Vector3).copy(sunL)
@@ -211,7 +211,7 @@ export const createSet: SetFactory = async (ctx) => {
       globe.dispose()
       shell.dispose()
       sheet.dispose()
-      blocks.dispose()
+      grains.dispose()
       titan.dispose()
       streak.dispose()
       far.dispose()
