@@ -1,9 +1,57 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T11:21:31.303Z",
- "head": "c500257fdf2398613c3b546d32955a7af9646c3e",
- "note": "sun terrain: flow along the loops tuned, event retimed, penumbra stripes cured; full frozen render running",
+ "pushed": "2026-11-23T11:37:46.568Z",
+ "head": "2509dba21dd75477de085867164f3a0b640ed4ec",
+ "note": "mail 250: event retimed so 60 and 90 sit in the approved shape, arcade lights up after the release, leading strands; three judged frames beside the approved image",
  "looks": [
+  {
+   "time": "2026-11-23T11:37:45.976Z",
+   "file": "20261123113745976-note-y1-late3.jpg",
+   "source": "out/work/sun/life/y1-late3.jpg",
+   "kind": "note",
+   "label": "Camera frozen, native size, frames 126, 150, 174 (lights 10 percent stronger than now)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T11:37:45.396Z",
+   "file": "20261123113745396-note-y1-late.jpg",
+   "source": "out/work/sun/life/y1-late.jpg",
+   "kind": "note",
+   "label": "Camera frozen, every 6th frame 72 to 174 (one take before: lights 10 percent stronger than now): the arcade lights up loop after loop from 57 to 162, low to high",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T11:37:44.831Z",
+   "file": "20261123113744831-note-y1-event.jpg",
+   "source": "out/work/sun/life/y1-event.jpg",
+   "kind": "note",
+   "label": "Camera frozen at the pose of 90, every 6th frame 0 to 66 (one take before the last lead values): foot, surge, flash, thrown arc out and back by 54",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T11:37:44.280Z",
+   "file": "20261123113744280-note-n4-six-top.jpg",
+   "source": "out/work/sun/life/n4-six-top.jpg",
+   "kind": "note",
+   "label": "Six consecutive frames 90 to 95 at native size, loop top, film camera, draft tier",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T11:37:43.726Z",
+   "file": "20261123113743726-note-n4-approved-loops.jpg",
+   "source": "out/work/sun/life/n4-approved-loops.jpg",
+   "kind": "note",
+   "label": "Mail 250 points 3 and 4: the loops at native size, approved beside frames 60 and 90. Leading strands brighter with a soft body, the others at 0.7. Loop mean level at 90: 79.6 against 76.2 approved; top of the loop 67.9 against 67.8",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T11:37:42.908Z",
+   "file": "20261123113742908-note-n4-approved4.jpg",
+   "source": "out/work/sun/life/n4-approved4.jpg",
+   "kind": "note",
+   "label": "Mail 250 point 3: approved close image beside frames 0, 60, 90 (film camera, draft tier), after the retime: surge up by 18, thrown arc open from 36 and down by about 55, arcade back in its rest shape by 57",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-23T11:21:30.608Z",
    "file": "20261123112130608-note-stripes-ba.jpg",
@@ -18,54 +66,6 @@
    "source": "out/work/sun/life/x5-event.jpg",
    "kind": "note",
    "label": "the event, camera frozen, every 6th frame 0 to 114: foot at 6, surge at the top by 18, flash at 21 to 24, arc thrown beyond the loop top from 30, opens from 62, falls back along the legs",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T11:21:29.284Z",
-   "file": "20261123112129284-note-x6-six-top.jpg",
-   "source": "out/work/sun/life/x6-six-top.jpg",
-   "kind": "note",
-   "label": "loop top, frames 90 to 95 at native size, camera frozen: clumps about 65 px long run along the strands at about 17 px a frame, dim between them",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T11:03:42.232Z",
-   "file": "20261123110342232-note-x2-kept.jpg",
-   "source": "out/work/sun/life/x2-kept.jpg",
-   "kind": "note",
-   "label": "approved close image, then frames 0, 60, 90 with the camera frozen at the pose of 90: loops too dim and patchy against the approved, being tuned",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T11:03:41.648Z",
-   "file": "20261123110341648-note-x2-six-top.jpg",
-   "source": "out/work/sun/life/x2-six-top.jpg",
-   "kind": "note",
-   "label": "loop top, frames 90 to 95 at native size, camera frozen, flow as clumps with dim between (second take, not yet tuned)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T10:46:18.618Z",
-   "file": "20261123104618618-note-f1-every6.jpg",
-   "source": "out/work/sun/life/f1-every6.jpg",
-   "kind": "note",
-   "label": "sun close view, camera frozen at pose 90, every 6th frame 0 to 174, state before the flow rebuild of mail 241 (ground calm and made by light; loops still with the small beads)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T10:27:24.327Z",
-   "file": "20261123102724327-note-g1.jpg",
-   "source": "out/work/sun/life/g1.jpg",
-   "kind": "note",
-   "label": "globe side with the same life: rise frames 200, 216, 247 (old kept still of 247 at lower right, the rise path is the M2 path)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T10:27:23.749Z",
-   "file": "20261123102723749-note-a8-second.jpg",
-   "source": "out/work/sun/life/a8-second.jpg",
-   "kind": "note",
-   "label": "REJECTED take: inner read from the picture's relief, ground turns to wax",
    "stop": "sun"
   }
  ]
