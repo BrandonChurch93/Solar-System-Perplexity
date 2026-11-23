@@ -14,6 +14,7 @@ import { Moon } from './moons'
 import patchJson from './patches.json'
 import platesJson from './plates.json'
 import { plan } from './plan'
+import { newRingMove, ringMove } from './ringmove'
 import { fullLines, hairLines, parseLines, ringGeometry, ringProfile, Rings, strandLines } from './rings'
 import skyJson from './sky.json'
 import { Veil } from './veil'
@@ -126,9 +127,19 @@ export const createSet: SetFactory = async (ctx) => {
   const lowArcs = new Rings(arcGeo, look.deckRings, arcCentre.clone().multiplyScalar(-1 / deckRingsJson.scale), false, true)
   lowArcs.mesh.scale.setScalar(deckRingsJson.scale / deckJson.radius)
   lowArcs.mesh.renderOrder = 8
+  const riseRings = new Rings(farGeo, look.rings, holdPose.position, false, true, true)
+  riseRings.mesh.renderOrder = 8
+  const riseArcs = new Rings(arcGeo, look.deckRings, arcCentre.clone().multiplyScalar(-1 / deckRingsJson.scale), false, true, true)
+  riseArcs.mesh.renderOrder = 8
+  const archScale = deckRingsJson.scale / deckJson.radius
+  const arch = { position: lowArcs.mesh.position, quaternion: lowArcs.mesh.quaternion, scale: archScale, normal: new THREE.Vector3().fromArray(deckRingsJson.normal).normalize() }
+  const moved = newRingMove()
+  const ringRatio = look.place.ringMove.match[1] / (look.place.ringMove.match[0] * archScale)
+  const ringUnit = look.place.ringMove.match[1] / look.place.ringMove.match[0]
+  const hoops = look.place.ringMove.hoops
   const glow = new Glow(deckHalo, 2000 / deckJson.radius)
   const over = new THREE.Group()
-  over.add(glow.mesh, lowArcs.mesh)
+  over.add(glow.mesh, lowArcs.mesh, riseArcs.mesh, riseRings.mesh)
   const origin = new THREE.Vector3()
   const ball = new THREE.Vector3()
   const seated = new THREE.Quaternion()
@@ -191,6 +202,9 @@ export const createSet: SetFactory = async (ctx) => {
       }
       const kind = shot.segment.kind
       const mine = shot.segment.stop === plan.id
+      const distance = world.position.length()
+      const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
+      const visible = radiusPx > 0.6
       const low = mine && (kind === 'dive' || kind === 'rise') && state.weight > 0
       const altitude = world.position.length() - 1
       const near = low ? reach(look.near.span, altitude) : 0
@@ -222,15 +236,39 @@ export const createSet: SetFactory = async (ctx) => {
       fixed(state.time)
       lowArcs.mesh.position.copy(arcCentre).applyQuaternion(skyTurn).sub(deckCentre).divideScalar(deckJson.radius).applyQuaternion(seated)
       lowArcs.mesh.quaternion.copy(seated).multiply(skyTurn)
-      const arch = low ? reach(kind === 'dive' ? look.place.arcs.dive : look.place.arcs.rise, altitude) : 0
-      lowArcs.update(shot.sun.dir, gain * state.weight * arch)
-      lowArcs.against(world.getWorldPosition(ball), 1, look.place.onSky)
-      lowArcs.mesh.visible = arch > 0 && look.show.rings
-      const ringed = low ? 1 - reach(kind === 'dive' ? look.place.rings.dive : look.place.rings.rise, altitude) : 1
+      const rising = low && kind === 'rise'
+      const open = rising ? 1 - reach(look.place.ringMove.span, altitude) : 0
+      const moving = open > 0
+      const handed = rising ? 1 - reach(look.place.ringMove.hand, altitude) : 1
+      const arched = low ? (rising ? 1 - smooth(ramp(look.place.ringMove.arch[0], look.place.ringMove.arch[1], open)) : reach(look.place.arcs.dive, altitude)) : 0
+      world.getWorldPosition(ball)
+      if (moving) {
+        const spread = smooth(ramp(look.place.ringMove.spread[0], look.place.ringMove.spread[1], open))
+        ringMove(moved, open, arch, ringNormal, ringRatio, eye)
+        riseArcs.mesh.position.copy(moved.centre)
+        riseArcs.mesh.quaternion.copy(moved.archTurn)
+        riseArcs.mesh.scale.setScalar(moved.archSize)
+        riseArcs.gather(arch.normal, hoops.arch, hoops.rings, 1 / ringUnit, spread, false, look.place.ringMove.show)
+        riseRings.mesh.position.copy(moved.centre)
+        riseRings.mesh.quaternion.copy(moved.turn)
+        riseRings.mesh.scale.setScalar(moved.size)
+        riseRings.gather(ringNormal, hoops.rings, hoops.arch, ringUnit, 1 - spread, true, look.place.ringMove.show)
+        riseArcs.update(shot.sun.dir, gain * state.weight * arched)
+        riseArcs.against(ball, 1, look.place.onSky)
+      }
+      riseArcs.mesh.visible = moving && arched > 0 && visible && look.show.rings
+      lowArcs.update(shot.sun.dir, gain * state.weight * arched)
+      lowArcs.against(ball, 1, look.place.onSky)
+      lowArcs.mesh.visible = !moving && arched > 0 && look.show.rings
+      const ringed = low ? (rising ? handed : 1 - reach(look.place.rings.dive, altitude)) : 1
       const settling = (!mine && kind === 'travel') || (mine && kind === 'hold') ? smooth(ramp(look.arrival.rings[0], look.arrival.rings[1], (state.time - plan.seg.hold.start) * config.fps)) : 1
       rings.update(sun, gain * state.weight * settling * ringed)
       const lifted = mine && left ? look.departing.rings[2] + (1 - look.departing.rings[2]) * smooth(ramp(look.departing.rings[0], look.departing.rings[1], altitude)) : 1
       farRings.update(sun, gain * state.weight * lifted * ringed)
+      const mid = moving ? 1 - handed : 0
+      riseRings.update(sun, gain * state.weight * lifted * mid)
+      riseRings.against(ball, 1, look.place.onSky)
+      riseRings.mesh.visible = mid > 0 && visible && look.show.rings
       globe.shadeRings(left ? look.rings.shade[0] : 0, farRings.mesh, farRings.sunLocal)
       const veiled = kind === 'travel' ? (mine ? 0 : THREE.MathUtils.smoothstep(shot.u, 0.2, 0.8)) : mine && kind === 'hold' ? 1 : mine && kind === 'dive' ? 1 - smooth(ramp(look.veil.dive[0], look.veil.dive[1], shot.u)) : 0
       veil.update(gain * state.weight * veiled * shot.skyGlow, shot.post.vignette, aspect)
@@ -243,9 +281,6 @@ export const createSet: SetFactory = async (ctx) => {
         bounce.copy(m.body.mesh.position).negate().normalize().applyQuaternion(state.rotation)
         m.body.update(left ? sun : moonLight.copy(m.light).applyQuaternion(state.rotation), bounce, gain * state.weight * (left ? look.moons.away : 1), shot.post.vignette, aspect, planetInverse, left ? look.moons.shine : 1)
       }
-      const distance = world.position.length()
-      const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
-      const visible = radiusPx > 0.6
       globe.mesh.visible = visible && look.show.globe
       halo.mesh.visible = visible && look.show.globe
       rings.mesh.visible = visible && look.show.rings && !left
@@ -269,6 +304,8 @@ export const createSet: SetFactory = async (ctx) => {
       glow.dispose()
       arcs.dispose()
       lowArcs.dispose()
+      riseRings.dispose()
+      riseArcs.dispose()
       arcGeo.dispose()
     },
   }
