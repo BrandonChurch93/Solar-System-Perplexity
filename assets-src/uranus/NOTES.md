@@ -1070,3 +1070,51 @@ READY format: "READY <commit> round 3", per item what changed, what is still wea
 - 18:42 FINALS ON ROUND 35's MAIN (tree dc7ff6c2 = main 8d650c11 plus notes; engine 247ebad7e038ce06, stop hash a5dd9ab65ef9c8db; `out/work/u/r14/m-NNNN.png`, `/tmp/u8-md5.txt`): 4035 6437560e145c4a58d2cd2031cfff3e4a, 4137 f8618691ae3774a59a6485c1c243fd81, 4290 637fb0a1908e003cf2602f3ee4fdfaaa, 4436 d9c0b208f5149043890be6496fa0b1ff, 4492 e67f16cb6fb3a394f27fb8f9ed8b0cfe: all five the bytes named in CUT35. The belt's engine change moves none of my judged frames. No message sent (I said I would speak only if a byte moved).
 - STATE while round 35 is judged: nothing rendering, nothing uncommitted in my folders. Waiting for the Builder's mail with round 35's words. If a commit is taken back: B (7a677e35) alone moves 4436 and the rise from 4402 and uranus.travel; A (839910d4) only 4165 to 4199; A2 (85e44dac) only the two covers 4151 to 4178 and 4388 to 4413.
 - 21:50 NEW ROLE by mail from /root (high): "The film is frozen and your building work is finished; nothing more of it goes onto main. For the rest of this task you are a render worker for the master of the film (every frame at the final tier)." Steps given: commit what is open here (no push), then no edit, commit or push; `git fetch --depth 1 origin 567b3a555461d1e7d88300dbe5febc52073da828`, `git checkout --detach` of it, `npm ci`, `npm run build`; read `assets-src/shared/RENDER-WORKER.md` (the brief from now on); under 6 GB free delete old harness output under `out/work/`; proof `npm run -s still -- --frame 2325 --tier draft --out /tmp/ref2325.png`, sha256 must be fd128b1a999f76fa079027e50ace59ac82ec5083c1c53b65667f23176a9a98cf; answer one line `WORKER READY <nproc> cores, <free GB> GB free, <first 16 characters of the hash>` or `WORKER DIFFERENT <full hash>`; then wait for jobs. This branch ends here at the commit that holds this line; the stop's building work is closed.
+
+## MAIL 216 from /root, about 06:40 UTC on 2026-11-23 (the active task; read this first after a compaction; word for word)
+
+"MAIL 216 from the Builder (/root). A new task for you, uranus_builder. It replaces anything you still held. Answer with one line as soon as your new branch exists: "ACK 216 <branch> <commit>".
+
+What happened since your last work. The film was frozen (main, commit 567b3a55), the record round ran, the master, the nine clips and the nine posts were made. Brandon watched it and wrote this note at 05:57 UTC on 2026-11-23. It outranks the kit's cover rules:
+
+"The main issue I have is the transitions between the planet view and the moment before the surface view comes in, it's a blurry mess, and it's obviously a transition. I think the goal would be to make it seamless. Like there's actually a place on the planet that the camera's going to. Hey next, the surface for Jupiter, and Saturn both look completely weird. It looks like an image that is being stretched and contorted it shouldn't look like that. It should look like it's actually generated out of code."
+
+So every dive and every rise in the film is rebuilt: no cover, no wash, no stall and rush, no swap that can be seen. The spec is cut/HANDOVER.md on main. Part B of it is yours for uranus.
+
+Setup
+- git fetch origin main, then git checkout -b agent/uranus-place FETCH_HEAD. Main holds the kept build. Whatever is on your old branch and not on main was not taken: do not carry code across. Carry your notebook across if yours is newer than main's (assets-src/uranus/NOTES.md), and commit it first.
+- npm ci if the lock file changed, npm run build, npx vitest run: green before you change anything.
+- Read whole, from disk: cut/HANDOVER.md; kit/PROGRESS.md section "Review note of 2026-11-23" and the open items 166, 124 and 141 (the critics' words on your dive and rise in the frozen build); AGENTS.md and kit/addenda/ again; your own notebook.
+- Write this task into your notebook before you start, with this mail's number, so it survives a compaction.
+
+The task, in this order
+1. S1 now: solve the camera of your approved close image (references/approved/uranus-close.jpg) against the sphere at your spot and write src/stops/uranus/place.json. Check it by drawing the globe side from that camera beside the close side at the same frame: horizon on horizon, features where they belong.
+2. S2 now: lay the place onto the globe as plates, repaint what the laying back stretches, match colour, nest them under your patch pyramid, hold G13 down the whole dive. Proof: the 12 frame top down dive sheet with no blur.
+3. S3: one steady move for dive and rise by the rules of E3. You may write your own path or wait for the generic one; write divePose(time, view) and risePose(time, view) against the contract of E1 in cut/HANDOVER.md either way.
+4. S4 and S5 when I tell you that E1 and E2 are on main (the engine is being built now by another agent, handover_engineer, and proven on Mars first): merge main, opt in, remove your cover, bring light, exposure, haze, Sun and sky to one function of time through T, and run npm run handover for dive and rise.
+
+What may not change: your hold segment and your terrain segment. Their judged frames must come out as the same picture as the kept stills in out/stills/, because those chunks of the film are not rendered again. The travel after your rise is not rendered again either: your rise must end in the pose, the speed and the look that travel starts with today. The timeline does not change.
+
+Your stop
+- Frames: hold 3960 to 4109, dive 4110 to 4199, terrain 4200 to 4379, rise 4380 to 4454. Judged: 4035, 4137, 4290, 4436.
+- The place is on the cyan cloud tops of the close image, with the ring arc and the Sun in its sky. The cloud forms of the close view are laid back onto the globe as plates; the ring arc and the Sun must be the same things in the same place on both sides at T.
+- The old cover was a pale cyan haze. It goes. A haze layer may exist only as a thing in the scene, with structure and parallax, never one colour across the frame.
+- What the critics wrote about the frozen build: "The soft diagonal band drops and washes out as a tighter, more curved limb takes over. The bright point above it keeps a smooth track, making the horizon change read as a reveal of a second view rather than one continuous ascent."; "The ring apex swings out toward the right while the galactic band swings back into the top of frame, and both are lost almost immediately in the cyan cover. The sampled poses read as a whip into the cover rather than a weighted approach."
+- The globe of Uranus is nearly featureless from far off. That makes the move itself the picture: the limb, the rings and the terminator must change with weight and without a whip, and the faint cloud forms must be there to arrive at.
+
+Working rules
+- Your folders only: src/stops/uranus/, assets-src/uranus/, public/assets/uranus/. Push only to agent/uranus-place. Never main, never force, never rebase. If shared code must change, send the request to /root/handover_engineer by message, short and exact, and note it in your notebook.
+- Looks at least every 30 minutes of working time, also while something renders, good or bad: npm run looks -- --push --folder uranus-place --note "one line".
+- Draft tier to iterate, review tier to prove. One render process at a time. Motion is judged on consecutive frames: look at every frame of every sheet yourself before you report.
+- Image generation only through the skill named media, at most 6 takes per asset per round, recipe in assets-src/uranus/RECIPE.md, binaries committed once per milestone. No file over 95 MB. Values the picture depends on live in config or in a JSON file of your stop. No Math.random, Date.now, performance.now on a pixel path.
+- Every commit message ends with the trailer: Co-authored-by: Perplexity <noreply@perplexity.ai>. No em dashes, no en dashes, no exclamation points, no model names in any file or message.
+- Report to /root by message at each milestone and when blocked: branch, commit, what to look at, what you measured, what is still wrong. Do not wait for an answer unless blocked. M1 is S1 with its check picture and the first laid back plate, rough is fine, within about 90 minutes. M2 is S2 and S3 with their proofs. M3 is the handover, dive and rise, with the E4 reports and the dense sheets.
+- The bar: a viewer who steps through the frames one by one cannot name the frame where the scene changes, and every frame shows a place on the body that the camera is flying to or leaving."
+
+### Log of MAIL 216 (UTC, 2026-11-23)
+
+- 06:42 branch `agent/uranus-place` made from origin/main 6da6c641; notebook carried across from my local `agent/uranus` (e52e2610), no code carried. Pushed 65c93101. `ACK 216 agent/uranus-place 65c931011b9cb907ddb2cda426f5fae427b1fe19` sent to /root (high).
+- 06:44 `npm run build` green, `npx vitest run` 87 of 87 in 17 files, before any change. The lock file did not change against 567b3a55.
+- 06:46 read whole from disk: `cut/HANDOVER.md`, PROGRESS section "Review note of 2026-11-23", items 124, 141, 166, `AGENTS.md`, the addenda 001 to 003.
+- M1 is due by about 08:10 UTC: `src/stops/uranus/place.json`, the S1 check picture, the first laid back plate.
+- Words of `cut/HANDOVER.md` I code against: E1 `handoverOf(stop, kind)`, `sideAt(seg, time)`, `placeWeight(seg, time)`, `MoveParams.handover = { dive?, rise? }` with `at`, `dissolveFrames`, `placeFrames`; `StopPlan.divePose(time, view)` and `risePose(time, view)`; the twin's height is `1 / cos(dip) - 1` for a level close view; E3 rate rules (`config.handover.maxRateOverMean`, by one fifth of the way to T the ratio is at least half the mean).
