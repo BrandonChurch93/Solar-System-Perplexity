@@ -1,9 +1,53 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-23T17:00:47.773Z",
+ "pushed": "2026-11-23T17:21:13.656Z",
  "head": "d908301d9ede64dc9ed2c49217bfa2656bf0ff4f",
- "note": "venus 8b65c470 named: G13, G5, G17, kept bytes and harness pass; next the tints and the tone change in view",
+ "note": "venus: orange red tints of the place cured by code, nine test frames before and after; full draft render of both moves running",
  "looks": [
+  {
+   "time": "2026-11-23T17:21:12.769Z",
+   "file": "20261123172112769-note-t10-b.jpg",
+   "source": "../../../../tmp/v/t10-b.jpg",
+   "kind": "note",
+   "label": "venus rise 1568 to 1586, four test frames, before (top) and after (bottom) the same cure",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T17:21:11.743Z",
+   "file": "20261123172111743-note-t10-a.jpg",
+   "source": "../../../../tmp/v/t10-a.jpg",
+   "kind": "note",
+   "label": "venus dive 1282 to 1304, five test frames, before (top) and after (bottom) the cure of the orange red tints: display colour kept when the plates are dimmed, tone map on luminance",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T17:21:06.343Z",
+   "file": "20261123172106343-frame-f01530.jpg",
+   "source": "out/work/seq/1530-1604/f01530.png",
+   "kind": "frame",
+   "label": "venus.rise frame 1530, draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "frame": 1530,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "743c10b0a56aaca7"
+  },
+  {
+   "time": "2026-11-23T17:20:23.763Z",
+   "file": "20261123172023763-frame-f01347.jpg",
+   "source": "out/work/seq/1260-1349/f01347.png",
+   "kind": "frame",
+   "label": "venus.dive frame 1347, draft tier",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "frame": 1347,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "743c10b0a56aaca7"
+  },
   {
    "time": "2026-11-23T17:00:47.012Z",
    "file": "20261123170047012-note-end-globes.jpg",
@@ -35,50 +79,6 @@
    "kind": "note",
    "label": "venus rise handover, harness sheet of consecutive frames 1536 to 1547 across T 1542, draft, commit 8b65c470",
    "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T17:00:44.755Z",
-   "file": "20261123170044755-note-across-dive.jpg",
-   "source": "../../../../tmp/v/across-dive.jpg",
-   "kind": "note",
-   "label": "venus dive handover, harness sheet of consecutive frames 1337 to 1348 across T 1343, draft, commit 8b65c470",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T16:59:22.452Z",
-   "file": "20261123165922452-sheet-venus-rise-top.jpg",
-   "source": "out/work/handover/venus-rise-top.png",
-   "kind": "sheet",
-   "label": "venus rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 1542), place picture off, draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1542,
-   "last": 1604,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T16:58:40.694Z",
-   "file": "20261123165840694-sheet-venus-rise-draft-after.jpg",
-   "source": "out/work/handover/venus-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "venus rise, every frame 1543 to 1554 (after T, frame 1542), draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1543,
-   "last": 1554,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T16:58:38.933Z",
-   "file": "20261123165838933-sheet-venus-rise-draft-before.jpg",
-   "source": "out/work/handover/venus-rise-draft-before.png",
-   "kind": "sheet",
-   "label": "venus rise, every frame 1530 to 1541 (before T, frame 1542), draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1530,
-   "last": 1541,
-   "tier": "draft"
   }
  ]
 }
