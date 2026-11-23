@@ -1,9 +1,33 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T18:53:01.571Z",
+ "pushed": "2026-11-23T19:14:27.252Z",
  "head": "3ec108739a61f9525815e1ba2ab2ac8715340e59",
- "note": "item 2 cause pinned at native size: globe alone band over the picture's horizon; item 3 path values chosen by table, frames next",
+ "note": "19:16 work in progress on mail 314 items 2 and 4: land matte and night side, faults shown, cures rendering",
  "looks": [
+  {
+   "time": "2026-11-23T19:14:26.634Z",
+   "file": "20261123191426634-note-n1016-x6.jpg",
+   "source": "out/work/mercury/place/tmp/n1016-x6.jpg",
+   "kind": "note",
+   "label": "the fault being cured: night side at 1016 at six times gain (plate edges in the dark)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T19:14:26.051Z",
+   "file": "20261123191426051-note-hz743.jpg",
+   "source": "out/work/mercury/place/tmp/hz743.jpg",
+   "kind": "note",
+   "label": "the fault being cured, native size: the doubled horizon at 743 (dark line of the picture's soft horizon under the band of globe)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T19:14:25.313Z",
+   "file": "20261123191425313-note-look-matte-dive.jpg",
+   "source": "out/work/mercury/place/tmp/look-matte-dive.jpg",
+   "kind": "note",
+   "label": "work in progress: land matte for the place picture of the dive (top: the picture's own alpha at 742, bottom: the matte that ends it under its horizon)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-23T18:53:00.955Z",
    "file": "20261123185300955-note-far0-rise.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/mercury/place/tmp/hzB1.jpg",
    "kind": "note",
    "label": "rise horizon 988 to 995 native, open fault: globe band above the picture's own horizon line",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T18:33:31.075Z",
-   "file": "20261123183331075-note-t-rise3.jpg",
-   "source": "out/work/mercury/place/tmp/t-rise3.jpg",
-   "kind": "note",
-   "label": "baseline working tree draft, every frame, t-rise3 (before the cures of mail 314)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T18:33:30.540Z",
-   "file": "20261123183330540-note-t-rise2.jpg",
-   "source": "out/work/mercury/place/tmp/t-rise2.jpg",
-   "kind": "note",
-   "label": "baseline working tree draft, every frame, t-rise2 (before the cures of mail 314)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T18:33:29.974Z",
-   "file": "20261123183329974-note-t-rise1.jpg",
-   "source": "out/work/mercury/place/tmp/t-rise1.jpg",
-   "kind": "note",
-   "label": "baseline working tree draft, every frame, t-rise1 (before the cures of mail 314)",
    "stop": "mercury"
   }
  ]
