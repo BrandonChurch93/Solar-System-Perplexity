@@ -144,7 +144,7 @@ export function placeGeometry(camera: Pose, place: Pick<PlaceState, 'twin' | 'ce
   }
 }
 
-export function placeUv(g: PlaceGeometry, proj: [number, number, number, number], ray: THREE.Vector3): { uv: [number, number]; hit: boolean; front: boolean; honest: number; hold: number } {
+export function placeUv(g: PlaceGeometry, proj: [number, number, number, number], ray: THREE.Vector3): { uv: [number, number]; hit: boolean; front: boolean; honest: number; hold: number; dir: THREE.Vector3 } {
   const d = ray.clone().normalize()
   const b = d.dot(g.centre)
   const disc = b * b - g.c
@@ -187,16 +187,51 @@ export function placeUv(g: PlaceGeometry, proj: [number, number, number, number]
   }
   const front = -q.z > 0
   const w = Math.max(-q.z, 1e-30)
-  return { uv: [((proj[0] * q.x + proj[2] * q.z) / w) * 0.5 + 0.5, ((proj[1] * q.y + proj[3] * q.z) / w) * 0.5 + 0.5], hit, front, honest, hold }
+  return { uv: [((proj[0] * q.x + proj[2] * q.z) / w) * 0.5 + 0.5, ((proj[1] * q.y + proj[3] * q.z) / w) * 0.5 + 0.5], hit, front, honest, hold, dir: q }
+}
+
+// Where the place pass reads the picture for a ray of the sky when the picture's horizon runs on the clock of the sky (limbSky): what
+// the shader does in VEIL_SIDE. Inside the picture it is the ray's own place. A ray that leaves the picture by a side, or looks away
+// from it, is turned about the line to the centre of the body until it meets the nearer side of the picture, so it reads that side at
+// its own height over the horizon: the haze goes on along the limb at the height it has in the picture. Above the top of the picture
+// it reads the top row. size is the picture's size in texels.
+export function horizonUv(g: PlaceGeometry, proj: [number, number, number, number], ray: THREE.Vector3, size: { width: number; height: number }): { uv: [number, number]; front: boolean } {
+  const got = placeUv(g, proj, ray)
+  const brim: [number, number] = [0.5 / size.width, 0.5 / size.height]
+  let [u, v] = got.uv
+  let front = got.front
+  if (!front || u < brim[0] || u > 1 - brim[0]) {
+    const q = got.dir.clone().normalize()
+    const side = (front ? u > 0.5 : q.x > 0) ? 1 - brim[0] : brim[0]
+    const up = g.up.clone().applyMatrix3(g.rel)
+    const n = new THREE.Vector3(proj[0], 0, proj[2] + 2 * side - 1)
+    const s = q.dot(up)
+    const c = Math.sqrt(Math.max(1 - s * s, 0))
+    const nu = n.dot(up)
+    const level = n.clone().addScaledVector(up, -nu)
+    const m = Math.max(level.length(), 1e-9)
+    const a = level.divideScalar(m)
+    const b = new THREE.Vector3().crossVectors(up, a)
+    const ct = Math.min(Math.max((-s * nu) / Math.max(c * m, 1e-9), -1), 1)
+    const base = up.clone().multiplyScalar(s).addScaledVector(a, ct * c)
+    const turn = b.multiplyScalar(Math.sqrt(1 - ct * ct) * c)
+    const one = base.clone().add(turn)
+    const two = base.clone().sub(turn)
+    const r = one.z < two.z ? one : two
+    front = -r.z > 0
+    const w = Math.max(-r.z, 1e-30)
+    u = ((proj[0] * r.x + proj[2] * r.z) / w) * 0.5 + 0.5
+    v = ((proj[1] * r.y + proj[3] * r.z) / w) * 0.5 + 0.5
+  }
+  return { uv: [Math.min(Math.max(u, brim[0]), 1 - brim[0]), Math.min(Math.max(v, brim[1]), 1 - brim[1])], front }
 }
 
 // The weight of the place pass on one ray when the picture's horizon runs on the clock of the sky (limbSky): what the shader does with
-// uVeil. ground is the weight the pass gives the ray by the picture's own rules. Without a horizon in the state it is that weight.
-export function horizonK(place: Pick<PlaceState, 'horizon'>, ray: { hit: boolean; front: boolean; hold: number }, ground: number): number {
-  if (place.horizon === undefined) return ground
-  const veil = ray.front ? place.horizon : 0
-  if (!ray.hit) return veil
-  return ray.hold > 0 ? Math.max(ground, veil * ray.hold) : ground
+// uVeil. ground is the weight the pass gives the ray by the picture's own rules, and a ray that hits the ball keeps it. A ray of the sky
+// takes the weight of the horizon and nothing else; front is then the one of horizonUv. Without a horizon in the state it is ground.
+export function horizonK(place: Pick<PlaceState, 'horizon'>, ray: { hit: boolean; front: boolean }, ground: number): number {
+  if (place.horizon === undefined || ray.hit) return ground
+  return ray.front ? place.horizon : 0
 }
 
 export function placeSkyGrad(g: PlaceGeometry, proj: [number, number, number, number], ray: THREE.Vector3, step: [number, number]): { dx: [number, number]; dy: [number, number] } {
@@ -315,20 +350,40 @@ void main() {
 // The horizon of the picture on the clock of the sky (limbSky). Two additions to the shader, so that a film in which no stop asks for it
 // compiles and runs the shader exactly as it was.
 // A ray that misses the ball is the picture's sky: the haze over the horizon with the frame's own stars behind it. It takes uVeil, the
-// weight of the horizon, alone: not the weight of the picture, not its sides, not its limits of enlargement and not the land matte. The band
-// just under the limb, where the picture holds its own horizon (limbHoldDeg), takes uVeil in the same way. Where such a ray leaves the
-// picture it reads the picture's nearest side, so the haze goes on along the horizon and up the sky and does not end on a line.
+// weight of the horizon, alone: not the weight of the picture, not its sides, not its limits of enlargement and not the land matte.
+// The ground keeps the picture's own weight, the band under the limb too: the picture's horizon row held there at the weight of the sky
+// stood on the globe as a stripe (Mars, 21:20). A ray of the sky that leaves the picture by a side, or looks away from it, is turned
+// about the line to the centre of the body until it meets the nearer side, so it reads that side at its own height over the horizon;
+// above the top of the picture it reads the top row. So the haze goes on along the limb and up the sky and does not end on a line.
 const VEIL_UNIFORMS = /* glsl */ `
 uniform float uVeil;`
 
 const VEIL_SIDE = /* glsl */ `  bool over = !(disc > 0.0 && b > 0.0);
-  if (mode != 3 && (over || hold > 0.0)) uv = clamp(uv, vec2(0.5) / uSize, vec2(1.0) - vec2(0.5) / uSize);
+  if (mode != 3 && over) {
+    vec2 brim = vec2(0.5) / uSize;
+    if (front < 0.5 || uv.x < brim.x || uv.x > 1.0 - brim.x) {
+      float hSide = (front > 0.5 ? uv.x > 0.5 : q.x > 0.0) ? 1.0 - brim.x : brim.x;
+      vec3 hUp = uRel * uHorizon.xyz;
+      vec3 hN = vec3(uProj.x, 0.0, uProj.z + 2.0 * hSide - 1.0);
+      vec3 hQ = normalize(q);
+      float hS = dot(hQ, hUp);
+      float hC = sqrt(max(1.0 - hS * hS, 0.0));
+      float hNu = dot(hN, hUp);
+      vec3 hLevel = hN - hUp * hNu;
+      float hM = max(length(hLevel), 1e-9);
+      vec3 hA = hLevel / hM;
+      float hCt = clamp(-hS * hNu / max(hC * hM, 1e-9), -1.0, 1.0);
+      vec3 hBase = hUp * hS + hA * (hCt * hC);
+      vec3 hTurn = cross(hUp, hA) * (sqrt(1.0 - hCt * hCt) * hC);
+      vec3 hR = (hBase + hTurn).z < (hBase - hTurn).z ? hBase + hTurn : hBase - hTurn;
+      front = -hR.z > 0.0 ? 1.0 : 0.0;
+      uv = (uProj.xy * hR.xy + uProj.zw * hR.z) / max(-hR.z, 1e-30) * 0.5 + 0.5;
+    }
+    uv = clamp(uv, brim, vec2(1.0) - brim);
+  }
 `
 
-const VEIL_WEIGHT = /* glsl */ `  if (mode != 3) {
-    if (over) k = uVeil * front;
-    else if (hold > 0.0) k = max(k, uVeil * front * hold);
-  }
+const VEIL_WEIGHT = /* glsl */ `  if (mode != 3 && over) k = uVeil * front;
 `
 
 const lay = (tone: boolean, veil = false): string => /* glsl */ `

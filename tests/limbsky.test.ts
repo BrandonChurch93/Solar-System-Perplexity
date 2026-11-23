@@ -2,8 +2,8 @@ import * as THREE from 'three'
 import { afterAll, describe, expect, it } from 'vitest'
 import raw from '../config/showcase.json'
 import { buildConfig, config, type Segment } from '../src/config'
-import { horizonK, Place, placeGeometry, placeLayout, placeUv } from '../src/core/place'
-import type { Pose } from '../src/core/types'
+import { horizonK, horizonUv, Place, placeCamera, placeGeometry, placeLayout, placeUv, type PlaceGeometry, type PlaceLayout } from '../src/core/place'
+import type { PlaceState, Pose } from '../src/core/types'
 import { applyProbe, parseProbe, probeString } from '../src/diagnostics/probe'
 import { FilmDirector } from '../src/director/film'
 import { handoverOf, horizonWeight, placeWeight, skyWeight, type HandoverParams, type SkyShares } from '../src/director/handover'
@@ -19,6 +19,7 @@ const reach = 8
 const asking: { handover: HandoverParams } = { handover: { dive: { place: { limbReachDeg: reach, limbSky: true } }, rise: { place: { limbReachDeg: reach, limbSky: true } } } }
 const held: { handover: HandoverParams } = { handover: { dive: { place: { limbReachDeg: reach } }, rise: { place: { limbReachDeg: reach } } } }
 const midTime = (f: number): number => (f + config.shutterFraction / 2) / fps
+const rad = THREE.MathUtils.degToRad
 // What a stop's own plan asks of the place picture in a dive or a rise: undefined where it asks nothing.
 const asked = (p: (typeof plans)[number], kind: (typeof kinds)[number]) => (p as unknown as { p?: { handover?: HandoverParams } }).p?.handover?.[kind]?.place
 
@@ -37,6 +38,29 @@ function frameCamera(pose: Pose): THREE.PerspectiveCamera {
   cam.updateProjectionMatrix()
   cam.updateMatrixWorld(true)
   return cam
+}
+
+// The place picture of a state as the pass lays it out: its size and the projection of its camera.
+function pictureOf(place: PlaceState): { layout: PlaceLayout; proj: Four } {
+  const layout = placeLayout(master, place, 8192)
+  const cam = new THREE.PerspectiveCamera()
+  placeCamera(cam, master, layout, place.twin, 0.001, 100)
+  const e = cam.projectionMatrix.elements
+  return { layout, proj: [e[0]!, e[5]!, e[8]!, e[9]!] }
+}
+
+// Rays in the camera's own frame at an angle under its limb (over it when negative), in the plane through the centre of the body and
+// the view axis.
+function overLimb(g: PlaceGeometry): (under: number) => THREE.Vector3 {
+  const down = g.centre.clone().normalize()
+  const axis = new THREE.Vector3(0, 0, -1)
+  const fore = axis.clone().addScaledVector(down, -axis.dot(down)).normalize()
+  const dip = Math.asin(g.sinDip)
+  return (under: number): THREE.Vector3 => {
+    // The angle from the line to the centre: 90 degrees less the dip is the limb.
+    const a = Math.PI / 2 - dip - under
+    return down.clone().multiplyScalar(Math.cos(a)).addScaledVector(fore, Math.sin(a))
+  }
 }
 
 afterAll(() => {
@@ -187,7 +211,7 @@ describe('the horizon of a place picture on the clock of the sky', () => {
     expect(() => buildConfig(gone)).toThrow(/missing key handover.place.limbSky/)
   })
 
-  it('gives a ray of the sky the weight of the horizon alone, and the band under the limb at least that weight times its hold', () => {
+  it('gives a ray of the sky the weight of the horizon alone and leaves the ground with the picture', () => {
     const plan = coveredPlan(asking)
     const film = filmWith(plan)
     const h = handoverOf(plan.id, 'rise')!
@@ -201,70 +225,116 @@ describe('the horizon of a place picture on the clock of the sky', () => {
     const g = placeGeometry(shot.camera, place)
     expect(g.reach).toBeGreaterThan(0)
     expect(g.sinDip).toBeGreaterThan(g.sinDipTwin)
-    const layout = placeLayout(master, place, 8192)
-    const twinCam = new THREE.PerspectiveCamera()
-    twinCam.fov = place.twin.vfov
-    twinCam.aspect = master.width / master.height
-    twinCam.updateProjectionMatrix()
-    const e = twinCam.projectionMatrix.elements
-    const proj: Four = [e[0]!, e[5]!, e[8]!, e[9]!]
-    expect(layout.width).toBeGreaterThan(master.width)
-    // Rays in the camera's own frame at angles over and under its limb, in the plane through the centre of the body and the view axis.
-    const down = g.centre.clone().normalize()
-    const axis = new THREE.Vector3(0, 0, -1)
-    const fore = axis.clone().addScaledVector(down, -axis.dot(down)).normalize()
-    const dip = Math.asin(g.sinDip)
-    const at = (under: number): THREE.Vector3 => {
-      // The angle from the line to the centre: 90 degrees less the dip is the limb; under is positive toward the ground.
-      const a = Math.PI / 2 - dip - under
-      return down.clone().multiplyScalar(Math.cos(a)).addScaledVector(fore, Math.sin(a))
-    }
-    const rad = THREE.MathUtils.degToRad
+    const { proj } = pictureOf(place)
+    const at = overLimb(g)
     const band = config.raw.handover.place.limbHoldDeg
     const sky = placeUv(g, proj, at(rad(-2)))
     expect(sky.hit).toBe(false)
     expect(sky.front).toBe(true)
     for (const ground of [0, 0.3, 1]) expect(horizonK(place, sky, ground)).toBe(place.horizon)
     expect(horizonK(place, { ...sky, front: false }, 1)).toBe(0)
-    const brink = placeUv(g, proj, at(rad(band[0]! / 2)))
-    expect(brink.hit).toBe(true)
-    expect(brink.hold).toBe(1)
-    expect(horizonK(place, brink, 0)).toBe(place.horizon)
-    expect(horizonK(place, brink, 1)).toBe(1)
-    const part = placeUv(g, proj, at(rad((band[0]! + band[1]!) / 2)))
-    expect(part.hold).toBeGreaterThan(0)
-    expect(part.hold).toBeLessThan(1)
-    expect(horizonK(place, part, 0)).toBeCloseTo(place.horizon! * part.hold, 12)
-    expect(horizonK(place, part, 0.9)).toBe(0.9)
-    const land = placeUv(g, proj, at(rad(band[1]! + 3)))
-    expect(land.hit).toBe(true)
-    expect(land.hold).toBe(0)
-    for (const ground of [0, 0.3, 1]) expect(horizonK(place, land, ground)).toBe(ground)
+    // The ground keeps the weight the picture gives it: under the limb, in the band where the picture holds its horizon, and further down.
+    for (const under of [band[0]! / 2, (band[0]! + band[1]!) / 2, band[1]! + 3]) {
+      const land = placeUv(g, proj, at(rad(under)))
+      expect(land.hit).toBe(true)
+      for (const ground of [0, 0.3, 1]) expect(horizonK(place, land, ground)).toBe(ground)
+    }
     // Without a horizon in the state every ray keeps the weight the picture's own rules give it.
     const plain = { ...place }
     delete plain.horizon
-    for (const ray of [sky, brink, part, land]) expect(horizonK(plain, ray, 0.4)).toBe(0.4)
+    for (const ray of [sky, placeUv(g, proj, at(rad(1)))]) expect(horizonK(plain, ray, 0.4)).toBe(0.4)
+  })
+
+  it('reads the sky of the picture at its own height over the horizon where a ray leaves the picture by a side', () => {
+    const plan = coveredPlan(asking)
+    const film = filmWith(plan)
+    for (const kind of kinds) {
+      const h = handoverOf(plan.id, kind)!
+      const f = kind === 'rise' ? h.placeLastFrame + 4 : h.placeFirstFrame - 4
+      const shot = film.shotAt(f, midTime(f), 'orbit')
+      const place = shot.place!
+      expect(place.weight).toBe(0)
+      const g = placeGeometry(shot.camera, place)
+      const { proj, layout } = pictureOf(place)
+      const brim = [0.5 / layout.width, 0.5 / layout.height] as const
+      const upTwin = g.up.clone().applyMatrix3(g.rel)
+      // The height of a place of the picture over the level of the twin, as the sine of the angle.
+      const height = (uv: readonly [number, number]): number => new THREE.Vector3((2 * uv[0] - 1 + proj[2]) / proj[0], (2 * uv[1] - 1 + proj[3]) / proj[1], -1).normalize().dot(upTwin)
+      const at = overLimb(g)
+      let inside = 0
+      let left = 0
+      let right = 0
+      let behind = 0
+      for (const over of [0.25, 1, 3]) {
+        for (let turn = -170; turn <= 170; turn += 5) {
+          const ray = at(rad(-over)).applyAxisAngle(g.up, rad(turn))
+          const raw = placeUv(g, proj, ray)
+          if (raw.hit) continue
+          const got = horizonUv(g, proj, ray, layout)
+          expect(got.front).toBe(true)
+          expect(got.uv[0]).toBeGreaterThanOrEqual(brim[0])
+          expect(got.uv[0]).toBeLessThanOrEqual(1 - brim[0])
+          expect(got.uv[1]).toBeGreaterThanOrEqual(brim[1])
+          expect(got.uv[1]).toBeLessThanOrEqual(1 - brim[1])
+          if (raw.front && raw.uv[0] >= brim[0] && raw.uv[0] <= 1 - brim[0]) {
+            // Inside the picture the ray reads its own place.
+            inside++
+            expect(got.uv[0]).toBe(raw.uv[0])
+            expect(got.uv[1]).toBe(Math.min(Math.max(raw.uv[1], brim[1]), 1 - brim[1]))
+            continue
+          }
+          // Outside it reads the nearer side, at the height over the horizon the ray itself has.
+          const side = (raw.front ? raw.uv[0] > 0.5 : raw.dir.x > 0) ? 1 - brim[0] : brim[0]
+          expect(got.uv[0]).toBeCloseTo(side, 9)
+          if (side < 0.5) left++
+          else right++
+          if (!raw.front) behind++
+          expect(got.uv[1]).toBeGreaterThan(brim[1])
+          expect(got.uv[1]).toBeLessThan(1 - brim[1])
+          expect(height(got.uv)).toBeCloseTo(raw.dir.clone().normalize().dot(upTwin), 9)
+        }
+      }
+      expect(inside).toBeGreaterThan(10)
+      expect(left).toBeGreaterThan(10)
+      expect(right).toBeGreaterThan(10)
+      expect(behind).toBeGreaterThan(10)
+      // A ray of the sky high over the picture reads its top row.
+      const high = horizonUv(g, proj, at(rad(-60)), layout)
+      expect(high.uv[1]).toBe(1 - brim[1])
+    }
   })
 
   it('leaves the shader of the picture as it was and adds the horizon to a second one', () => {
     const pass = new Place()
     const inner = pass as unknown as { lay: { material: THREE.ShaderMaterial }; veil: { material: THREE.ShaderMaterial } | null; veilSplit: { material: THREE.ShaderMaterial } | null; splitPass(): { material: THREE.ShaderMaterial }; veilPass(toned: boolean): { material: THREE.ShaderMaterial } }
     const plain = inner.lay.material.fragmentShader
-    for (const name of ['uVeil', 'bool over', 'clamp(uv,']) expect(plain.includes(name)).toBe(false)
+    for (const name of ['uVeil', 'bool over', 'brim']) expect(plain.includes(name)).toBe(false)
     expect(inner.veil).toBe(null)
     expect(inner.veilSplit).toBe(null)
     const declared = '\nuniform float uVeil;'
-    const side = '  bool over = !(disc > 0.0 && b > 0.0);\n  if (mode != 3 && (over || hold > 0.0)) uv = clamp(uv, vec2(0.5) / uSize, vec2(1.0) - vec2(0.5) / uSize);\n'
-    const weight = '  if (mode != 3) {\n    if (over) k = uVeil * front;\n    else if (hold > 0.0) k = max(k, uVeil * front * hold);\n  }\n'
+    const sideFrom = '  bool over = !(disc > 0.0 && b > 0.0);\n  if (mode != 3 && over) {\n    vec2 brim = vec2(0.5) / uSize;\n'
+    const sideTo = '    uv = clamp(uv, brim, vec2(1.0) - brim);\n  }\n'
+    const weight = '  if (mode != 3 && over) k = uVeil * front;\n'
+    const without = (text: string, from: string, to: string): string => {
+      const a = text.indexOf(from)
+      const b = text.indexOf(to, a)
+      expect(a).toBeGreaterThan(-1)
+      expect(b).toBeGreaterThan(a)
+      expect(text.indexOf(from, a + 1)).toBe(-1)
+      return text.slice(0, a) + text.slice(b + to.length)
+    }
     for (const [veiled, base] of [[inner.veilPass(false).material.fragmentShader, plain], [inner.veilPass(true).material.fragmentShader, inner.splitPass().material.fragmentShader]] as const) {
       // Taken out again, the additions leave the shader they were added to, character for character.
-      for (const part of [declared, side, weight]) expect(veiled.split(part).length).toBe(2)
-      expect(veiled.replace(declared, '').replace(side, '').replace(weight, '')).toBe(base)
+      for (const part of [declared, weight]) expect(veiled.split(part).length).toBe(2)
+      expect(without(veiled, sideFrom, sideTo).replace(declared, '').replace(weight, '')).toBe(base)
       // The side is read before the picture is, and the weight of the horizon is set after every limit of the picture, the land matte too.
-      expect(veiled.indexOf(side)).toBeLessThan(veiled.indexOf('  vec4 pic = textureGrad(uPicture, uv,'))
-      expect(veiled.indexOf(side)).toBeGreaterThan(veiled.indexOf('  float k = uLimits.x * front'))
+      expect(veiled.indexOf(sideTo)).toBeLessThan(veiled.indexOf('  vec4 pic = textureGrad(uPicture, uv,'))
+      expect(veiled.indexOf(sideFrom)).toBeGreaterThan(veiled.indexOf('  float k = uLimits.x * front'))
       expect(veiled.indexOf(weight)).toBeGreaterThan(veiled.indexOf('if (uMatteOn > 0.5) k *= '))
       expect(veiled.indexOf(weight)).toBeLessThan(veiled.indexOf('  if (mode == 1) {'))
+      // The ground is left alone: nothing of the horizon touches a ray that hits the ball.
+      const added = veiled.slice(veiled.indexOf(sideFrom), veiled.indexOf(sideTo))
+      expect(added.includes('hold')).toBe(false)
     }
     expect(inner.veil).not.toBe(null)
     expect(inner.veilSplit).not.toBe(null)

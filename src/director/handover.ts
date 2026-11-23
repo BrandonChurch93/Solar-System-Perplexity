@@ -16,10 +16,11 @@ export interface HandoverParams { dive?: HandoverSide; rise?: HandoverSide }
 // of the globe view. Both from 0 to 1. A stop may give its own through StopPlan.skyShare; without a high the globe view's sky keeps the
 // engine's rule (what low leaves in a dive, nothing in a rise).
 export interface SkyShares { low: number; high?: number }
-// limbSky: the horizon of the place picture runs on the clock of the sky and not on the picture's own. The sky of the picture and its band
-// along the limb take the share of the close view's sky (skyFrames, or the stop's own skyShare), never less than the weight of the picture,
-// and the sides of the picture do not count for them. So the haze over the limb, the limb under it and the stars behind it change as one
-// thing over the frames in which the sky itself changes, and the limb of the globe does not show through a picture that is half there.
+// limbSky: the horizon of the place picture runs on the clock of the sky and not on the picture's own. The sky of the picture (the haze
+// over the limb, with the frame's stars behind it) takes the share of the close view's sky (skyFrames, or the stop's own skyShare), never
+// less than the weight of the picture, and the sides of the picture do not count for it. So the haze over the limb, the line of the
+// globe's limb under it and the stars behind it change as one thing over the frames in which the sky itself changes, and the limb of the
+// globe does not come in under a picture that is half there. The ground of the picture keeps the picture's own weight.
 // It needs the picture's horizon held on the camera's limb (limbReachDeg above 0).
 export interface Handover { time: number; firstFrame: number; lastFrame: number; placeFirstFrame: number; placeLastFrame: number; skyFrames: number; live: boolean; picture: boolean; place: PlaceOptions; skyFloor: boolean; limbSky: boolean }
 

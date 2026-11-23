@@ -66,9 +66,10 @@ export interface PlaceState {
   limbHoldDeg?: [number, number]
   edgeIn?: [number, number, number, number]
   toneIn?: [number, number, number, number]
-  // The weight of the picture's horizon, that is of its sky and of its band along the limb, when the stop asked for limbSky: the share of the
-  // close view's sky on the globe side, never under the weight of the picture, whatever the picture's sides say. Absent: the horizon comes and
-  // goes with the picture, by its weight and its sides. A stop's globe may read it to bring its own limb to the picture's at T.
+  // The weight of the picture's horizon, that is of its sky (the haze over the limb with the stars behind it), when the stop asked for
+  // limbSky: the share of the close view's sky on the globe side, never under the weight of the picture, whatever the picture's sides say.
+  // Absent: the horizon comes and goes with the picture, by its weight and its sides. A stop's globe may read it to bring its own limb to
+  // the picture's at T.
   horizon?: number
 }
 
