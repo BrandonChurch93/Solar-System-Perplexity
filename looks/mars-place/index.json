@@ -1,9 +1,25 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-23T15:36:08.327Z",
- "head": "e2070298ee767c34d36bb6a19de8991dcb6de843",
- "note": "15:38 take 6 of the 3.8 plate and the baked 1.6 plate from above; bake with take 6 and a new 1.6 take is next",
+ "pushed": "2026-11-23T16:05:58.372Z",
+ "head": "864c6a5cbb429cbb3d872c6b8be3238e86c2005c",
+ "note": "16:07 new 1.6 and 0.7 takes beside their leads; fifth bake (take 6 of the 3.8 plate) is running, frames follow",
  "looks": [
+  {
+   "time": "2026-11-23T15:45:44.357Z",
+   "file": "20261123154544357-note-p07-take2-vs-lead.jpg",
+   "source": "out/work/place/gen/p07-take2-vs-lead.jpg",
+   "kind": "note",
+   "label": "0.7 deg plate take 2 of 6 (right) beside its lead, the middle of the 1.6 take 3 (left)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T15:45:43.604Z",
+   "file": "20261123154543604-note-p16-take3-vs-lead.jpg",
+   "source": "out/work/place/gen/p16-take3-vs-lead.jpg",
+   "kind": "note",
+   "label": "1.6 deg plate take 3 of 6 (right) beside its lead, the middle of the 3.8 take 6 (left): every form in place, no stripes",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-23T15:36:07.570Z",
    "file": "20261123153607570-note-forced-16-07.jpg",
@@ -70,30 +86,6 @@
    "segment": "mars.rise",
    "first": 2686,
    "last": 2697,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T15:20:11.986Z",
-   "file": "20261123152011986-sheet-mars-rise-draft-across.jpg",
-   "source": "out/work/handover/mars-rise-draft-across.png",
-   "kind": "sheet",
-   "label": "mars rise, every frame 2679 to 2690 (across T, frame 2685), draft tier",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "first": 2679,
-   "last": 2690,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T15:20:09.944Z",
-   "file": "20261123152009944-sheet-mars-rise-draft-before.jpg",
-   "source": "out/work/handover/mars-rise-draft-before.png",
-   "kind": "sheet",
-   "label": "mars rise, every frame 2673 to 2684 (before T, frame 2685), draft tier",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "first": 2673,
-   "last": 2684,
    "tier": "draft"
   }
  ]
