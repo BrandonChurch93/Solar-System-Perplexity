@@ -5,6 +5,7 @@ import { implicitUniform } from '../core/texel'
 import { EQUIRECT_GLSL } from '../space/sky'
 import { hazeGlsl, hazeUniforms, setHazeGlow, type HazeParams } from './haze'
 import { setHazeAir, type GlobeAir } from './air'
+import { ReliefCap, type CapOptions } from './cap'
 
 export interface PlanetLight {
   wrap: number
@@ -69,6 +70,7 @@ export interface PlanetOptions {
   patches?: PatchSet
   storm?: StormParams
   segments?: number
+  cap?: CapOptions
 }
 
 const VERT = /* glsl */ `
@@ -98,7 +100,7 @@ export function patchSlots(levels: number): number {
 
 const patchSamplers = (slots: number): string => Array.from({ length: slots }, (_, i) => 'uniform sampler2D uPatch' + i + ';').join('\n')
 
-export interface PatchShader { slots: number; own: boolean; gain: boolean; minor: boolean; glow: boolean }
+export interface PatchShader { slots: number; own: boolean; gain: boolean; minor: boolean; glow: boolean; cut?: boolean }
 
 const patchRead = (i: number): string => `textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb`
 
@@ -121,7 +123,7 @@ const patchLevels = (o: PatchShader): string => Array.from({ length: o.slots }, 
       near = max(near, w * uPatchNear[${i}]);
     }`).join('\n')
 
-const frag = (o: PatchShader): string => /* glsl */ `
+export const planetFrag = (o: PatchShader): string => /* glsl */ `
 precision highp float;
 uniform sampler2D uMap;
 uniform sampler2D uHeight;
@@ -134,7 +136,8 @@ uniform float uPatchOwn[${o.slots}];` : ''}${o.gain ? `
 uniform vec3 uOwnGain;` : ''}${o.minor ? `
 uniform float uPatchAniso[${o.slots}];
 uniform float uMapAniso;` : ''}
-uniform float uPatchCount;
+uniform float uPatchCount;${o.cut ? `
+uniform float uCapCut;` : ''}
 uniform float uFeather;
 uniform vec2 uPatchFade;
 uniform vec3 uSpotN;
@@ -280,7 +283,8 @@ ${patchLevels(o)}
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.15, 0.45, 0.9), vec2(flow * 8.0, 0.0), length(vView));${o.minor ? `
-  if (uDiag == 2 && uPatchCount > 0.5) outColor.b = clamp(drawn * 0.5, 0.0, 1.0);` : ''}
+  if (uDiag == 2 && uPatchCount > 0.5) outColor.b = clamp(drawn * 0.5, 0.0, 1.0);` : ''}${o.cut ? `
+  if (uCapCut > 0.0 && dn > 0.3 && max(abs(dot(d, uSpotE)), abs(dot(d, uSpotU))) < uCapCut * dn) discard;` : ''}
 }`
 
 function curve(l: PlanetLight): THREE.Vector3[] {
@@ -298,11 +302,17 @@ function curve(l: PlanetLight): THREE.Vector3[] {
   return out
 }
 
+const UP = new THREE.Vector3(0, 1, 0)
+
 export class Planet {
   readonly mesh: THREE.Mesh
   readonly material: THREE.ShaderMaterial
+  readonly cap?: ReliefCap
   private readonly bodyToWorld = new THREE.Matrix3()
   private readonly m4 = new THREE.Matrix4()
+  private readonly worldToBody = new THREE.Matrix3()
+  private readonly eye = new THREE.Vector3()
+  private readonly foot = new THREE.Vector2()
 
   constructor(o: PlanetOptions) {
     const p = o.patches
@@ -324,10 +334,11 @@ export class Planet {
     const spot = p?.spot.clone().normalize() ?? new THREE.Vector3(0, 0, 1)
     const east = new THREE.Vector3(0, 1, 0).cross(spot).normalize()
     const north = spot.clone().cross(east)
+    const text: PatchShader = { slots, own, gain, minor, glow: o.haze.glow === true }
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
       vertexShader: VERT,
-      fragmentShader: frag({ slots, own, gain, minor, glow: o.haze.glow === true }),
+      fragmentShader: planetFrag(o.cap ? { ...text, cut: true } : text),
       uniforms: {
         ...hazeUniforms(o.haze),
         uGrazingShape: { value: new THREE.Vector4(g?.depth ?? 0, g?.width ?? 1, g?.duskWidth ?? 1, g?.power ?? 1) },
@@ -358,12 +369,18 @@ export class Planet {
         uNightFlat: { value: new THREE.Vector3().fromArray(o.light.nightFlat ?? [0, 0, 0]) },
         uRelief: { value: o.light.relief }, uReliefNear: { value: o.light.reliefNear }, uLimb: { value: o.light.limb },
         uExtinction: { value: o.haze.extinction },
+        ...(o.cap ? { uCapCut: { value: 0 } } : {}),
         uBodyToWorld: { value: this.bodyToWorld },
         uDiag: diagUniform, uGrad: gradUniform, uImplicit: implicitUniform,
       },
     })
     const seg = o.segments ?? 320
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1, seg, seg / 2), this.material)
+    if (o.cap) {
+      const { uCapCut: _, ...shared } = this.material.uniforms
+      this.cap = new ReliefCap(planetFrag(text), shared, o.cap)
+      this.mesh.add(this.cap.mesh)
+    }
   }
 
   update(camera: THREE.Vector3, sun: THREE.Vector3, spin: number, gain: number, weight: number): void {
@@ -375,6 +392,12 @@ export class Planet {
     u.uWeight!.value = weight
     this.mesh.updateWorldMatrix(true, false)
     this.bodyToWorld.setFromMatrix4(this.m4.extractRotation(this.mesh.matrixWorld))
+    if (this.cap) {
+      const d = this.eye.copy(camera).applyMatrix3(this.worldToBody.copy(this.bodyToWorld).transpose()).normalize().applyAxisAngle(UP, -spin)
+      const dn = Math.max(d.dot(u.uSpotN!.value as THREE.Vector3), 0.05)
+      this.foot.set(d.dot(u.uSpotE!.value as THREE.Vector3) / dn, d.dot(u.uSpotU!.value as THREE.Vector3) / dn)
+      u.uCapCut!.value = this.cap.update(camera.length() / this.mesh.scale.x - 1, this.foot) ? this.cap.cut : 0
+    }
   }
 
   setAir(air: GlobeAir): void {
@@ -397,5 +420,6 @@ export class Planet {
   dispose(): void {
     this.mesh.geometry.dispose()
     this.material.dispose()
+    this.cap?.dispose()
   }
 }
