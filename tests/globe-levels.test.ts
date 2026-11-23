@@ -64,7 +64,7 @@ describe('the options of the patch levels', () => {
     const p = planetWith(4, { own, ownGain: true })
     const text = p.material.fragmentShader
     expect(text).toContain('uniform float uPatchOwn[6];\nuniform vec3 uOwnGain;')
-    expect(text).toContain('if (own > 0.0) col = mix(col, inverseFilmic(ownSum / own * uOwnGain), own);')
+    expect(text).toContain('if (own > 0.0) col = mix(col, inverseFilmic(ownSum / own) * uOwnGain, own);')
     expect(text.replace('\nuniform vec3 uOwnGain;', '').replace(' * uOwnGain', '')).toBe(before.material.fragmentShader)
     expect((p.material.uniforms.uOwnGain!.value as THREE.Vector3).toArray()).toEqual([1, 1, 1])
     p.setOwnGain([1.2, 1.1, 0.9])

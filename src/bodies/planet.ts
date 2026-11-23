@@ -264,7 +264,7 @@ ${patchLevels(o)}
     lin *= mix(1.0, 2.0 / (1.0 + l / uNightFlat.x), dark);
   }
   vec3 col = lin * shade * uTint;${o.own ? `
-  if (own > 0.0) col = mix(col, inverseFilmic(ownSum / own${o.gain ? ' * uOwnGain' : ''}), own);` : ''}
+  if (own > 0.0) col = mix(col, inverseFilmic(ownSum / own)${o.gain ? ' * uOwnGain' : ''}, own);` : ''}
   vec3 at;
   float tau = hazeDepth(dir, true, at);
   col = col * exp(-tau * uExtinction) + hazeLight(n, dir) * (1.0 - exp(-tau));
