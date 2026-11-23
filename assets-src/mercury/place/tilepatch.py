@@ -18,7 +18,7 @@ def rep(s, a, b):
 
 
 def noglare(f):
-    f['set.ts'] = rep(f['set.ts'], "glare.update(on ? Math.pow(Math.max((above(plan.low(state.time)) - above(null)) / (above(plan.low(covers[first ? 0 : 1]!)) - above(null)), 0), look.glare.height) : 0,", "glare.update(0,")
+    f['set.ts'] = rep(f['set.ts'], "glare.update(on ? keep(Math.pow(Math.max((above(plan.low(state.time)) - above(null)) / (above(plan.low(covers[first ? 0 : 1]!)) - above(null)), 0), look.glare.height)) : 0,", "glare.update(0,")
 
 
 def tiles(f, kind):
@@ -42,6 +42,16 @@ def tiles(f, kind):
     f['plan.ts'] = s
 
 
+def topdown(f):
+    s = f['plan.ts']
+    s = rep(s, "    return { position: position.applyQuaternion(turn), quaternion: turn.multiply(q), vfov: THREE.MathUtils.radToDeg(2 * Math.atan(Math.exp(lens))) }", """    const over = l.place.clone().normalize().multiplyScalar(position.length())
+    const down = new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().lookAt(over, new THREE.Vector3(), new THREE.Vector3(0, 1, 0)))
+    return { position: over.applyQuaternion(turn), quaternion: turn.multiply(down), vfov: THREE.MathUtils.radToDeg(2 * Math.atan(Math.exp(lens))) }""")
+    s = rep(s, "handover: { dive: { place:", "handover: { dive: { picture: false, place:")
+    f['plan.ts'] = s
+    f['set.ts'] = rep(f['set.ts'], "glare.update(diving ? keep(1) * smoother(ramp(-look.glare.span.dive, 0, fromDive)) : rising ? keep(1) * (1 - smoother(ramp(0, look.glare.span.rise, fromRise))) : 0,", "glare.update(0,")
+
+
 def on(name):
     assert not STATE.exists(), 'already patched: run off first'
     KEEP.mkdir(parents=True, exist_ok=True)
@@ -50,6 +60,8 @@ def on(name):
         (KEEP / n).write_text(s)
     if name == 'noglare':
         noglare(f)
+    elif name == 'topdown':
+        topdown(f)
     else:
         tiles(f, name)
     for n, s in f.items():

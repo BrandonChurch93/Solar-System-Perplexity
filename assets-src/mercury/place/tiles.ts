@@ -19,7 +19,8 @@ for (const [kind, s] of Object.entries(spec)) {
     return { frame: s.firstFrame + k, yawDeg: yaw, pitchDeg: pitch, matrix: [[m[0], m[4], m[8]], [m[1], m[5], m[9]], [m[2], m[6], m[10]]] }
   })
   const n = position.clone().normalize()
-  out[kind] = { atFrame: s.atFrame, vfovDeg: s.vfovDeg, position: position.toArray(), heightRadii: position.length() - 1, nadir: { lonDeg: THREE.MathUtils.radToDeg(Math.atan2(n.x, n.z)), latDeg: THREE.MathUtils.radToDeg(Math.asin(n.y)) }, tiles }
+  const sun = plan.lightDir.clone().applyQuaternion(plan.drawn(s.atFrame / config.fps).invert()).applyQuaternion(toBody)
+  out[kind] = { atFrame: s.atFrame, vfovDeg: s.vfovDeg, sun: sun.toArray(), position: position.toArray(), heightRadii: position.length() - 1, nadir: { lonDeg: THREE.MathUtils.radToDeg(Math.atan2(n.x, n.z)), latDeg: THREE.MathUtils.radToDeg(Math.asin(n.y)) }, tiles }
 }
 const a = plan.anchor
 const frame = new THREE.Matrix4().makeRotationFromQuaternion(toBody.clone().multiply(a.frame)).elements

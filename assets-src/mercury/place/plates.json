@@ -1,0 +1,170 @@
+{
+ "old": "1e492e92",
+ "size": 4096,
+ "quality": 94,
+ "levels": [
+  {
+   "n": 2,
+   "widthDeg": 38,
+   "ss": 4
+  },
+  {
+   "n": 3,
+   "widthDeg": 19,
+   "ss": 2
+  },
+  {
+   "n": 4,
+   "widthDeg": 9.5,
+   "ss": 1
+  }
+ ],
+ "mask": {
+  "widthDeg": 38,
+  "size": 1024,
+  "seen": [
+   0.3,
+   0.9
+  ],
+  "elong": [
+   8,
+   11
+  ],
+  "blurPx": 4
+ },
+ "sets": {
+  "dive": {
+   "levels": [
+    2,
+    3,
+    4
+   ],
+   "suffix": "",
+   "source": "B"
+  },
+  "rise": {
+   "levels": [
+    3,
+    4
+   ],
+   "suffix": "r",
+   "source": "B"
+  }
+ },
+ "repaint": {
+  "tile": 2240,
+  "input": 2048,
+  "seam": 128,
+  "edge": 200,
+  "lock": 26,
+  "gain": 1.8,
+  "oldBlur": 9,
+  "stretch": 0.5,
+  "sharp": [
+   2.2,
+   3.2
+  ],
+  "elong": [
+   5.5,
+   8
+  ],
+  "glare": [
+   0.3,
+   0.55
+  ],
+  "glareBlurDeg": 0.25,
+  "edgeDeg": 0.2,
+  "centre": {
+   "3": [
+    0.675,
+    0.465
+   ],
+   "4": [
+    0.62,
+    0.55
+   ]
+  },
+  "styleSize": 1280,
+  "matchLowDeg": 0.25,
+  "matchSoftDeg": 0.15,
+  "matchReachDeg": [
+   0.5,
+   4.0
+  ],
+  "seen": 0.98,
+  "matchClamp": [
+   0.6,
+   2.0
+  ],
+  "night": [
+   0.02,
+   0.035
+  ],
+  "nightBlurDeg": 0.2,
+  "zoneDeg": [
+   8.0,
+   14.0
+  ],
+  "zoneFlatDeg": 1.0,
+  "centreReachDeg": {
+   "2": [
+    0.9,
+    1.4
+   ]
+  },
+  "toneClamp": [
+   0.35,
+   2.5
+  ],
+  "layWeight": {
+   "rise": [
+    0.5,
+    0.9
+   ]
+  }
+ },
+ "band": {
+  "canvasDeg": 24,
+  "patchDeg": 0.8,
+  "overlapDeg": 0.2,
+  "detailDeg": 0.4,
+  "darkBlurDeg": 0.15,
+  "darkLimit": -1.1,
+  "candidates": 600,
+  "seed": 7,
+  "inPx": 8,
+  "fullDeg": 1.5,
+  "fadeDeg": 3.0,
+  "calm": 0.55,
+  "calmDeg": [
+   3.0,
+   6.0
+  ],
+  "calmLowDeg": 0.5,
+  "baseLevel": 3,
+  "baseSoftDeg": 0.15,
+  "baseLowDeg": 1.0,
+  "draw": 80,
+  "reuse": 0.5,
+  "seamSoftPx": 2,
+  "reachDeg": [
+   7.0,
+   9.0
+  ],
+  "farShare": 0.5,
+  "dusk": [
+   0.0,
+   0.105
+  ],
+  "duskFloor": 0.001,
+  "fillDeg": [
+   0.0025,
+   0.005,
+   0.01,
+   0.02,
+   0.04,
+   0.08
+  ],
+  "fillWindowDeg": 0.3
+ }
+}
