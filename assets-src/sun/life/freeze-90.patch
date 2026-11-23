@@ -1,0 +1,12 @@
+diff --git a/src/stops/sun/plan.ts b/src/stops/sun/plan.ts
+index 8459b12d..9758325d 100644
+--- a/src/stops/sun/plan.ts
++++ b/src/stops/sun/plan.ts
+@@ -133,6 +133,7 @@ export class SunPlan extends StopPlan {
+   }
+ 
+   override terrain(tRel: number): Pose {
++    tRel = (90 + 0.5 * config.shutterFraction) / config.fps - this.seg.terrain.start
+     const dur = this.seg.terrain.end - this.seg.terrain.start
+     const pivot = config.shutterFraction / (2 * config.fps * dur)
+     const g = this.p.terrain.gather ?? 0
