@@ -19,6 +19,7 @@ import { coverFrames } from '../src/director/timeline'
 // The measures of the handover (cut/HANDOVER.md, E4). One stop, its dive and its rise.
 //   npm run handover -- --stop ID [--kind dive|rise] [--tier draft|review] [--only sides,under,flow,frames,sheets,top]
 //                       [--params FILE --dist DIR --name NAME]   (judge another build of the stop, for example the frozen one)
+//   --parts across,before,after picks the sheets (all three when not given; the one across T is made first)
 // Everything is written to out/work/handover/. Exit 1 when a judged number is over its limit in config.handover.limits.
 
 type Kind = 'dive' | 'rise'
@@ -34,6 +35,7 @@ if (!stop || !cfg.stopIds.includes(stop)) {
 const sheetTier = a.tier ?? 'review'
 if (!Object.hasOwn(cfg.tiers, sheetTier)) throw new Error('unknown tier ' + sheetTier)
 const only = a.only ? a.only.split(',') : ['sides', 'under', 'flow', 'frames', 'sheets', 'top']
+const sheetParts = a.parts ? a.parts.split(',') : null
 const name = a.name ?? stop
 const dist = a.dist ? resolve(a.dist) : DIST
 const other = Boolean(a.dist)
@@ -385,14 +387,14 @@ async function sheets(line: Line, tier: string): Promise<string[]> {
   const count = cfg.raw.critics.contactSheetFrames
   const lo = Math.max(T - span, line.seg.firstFrame)
   const hi = Math.min(T + span, line.seg.endFrame - 1)
-  const files = new Map<number, string>()
-  for (let f = lo; f <= hi; f++) files.set(f, await still(f, tier, 'beauty'))
-  const parts: [string, number, number][] = [['before', lo, T - 1], ['across', Math.max(T - Math.floor(count / 2), lo), Math.min(T - Math.floor(count / 2) + count - 1, hi)], ['after', T + 1, hi]]
+  // The sheet across T first: its frames are the ones the swap is judged on, and the frames before T of a dive can ask for
+  // the most samples of the film. Each sheet is written as soon as its frames are there.
+  const parts: [string, number, number][] = [['across', Math.max(T - Math.floor(count / 2), lo), Math.min(T - Math.floor(count / 2) + count - 1, hi)], ['before', lo, T - 1], ['after', T + 1, hi]]
   const out: string[] = []
   for (const [part, first, last] of parts) {
-    if (last < first) continue
+    if (last < first || (sheetParts && !sheetParts.includes(part))) continue
     const inputs = []
-    for (let f = first; f <= last; f++) inputs.push({ path: files.get(f)!, label: 'f' + padFrame(f) + (f === T ? ' T' : f < T ? ' T' + (f - T) : ' T+' + (f - T)) })
+    for (let f = first; f <= last; f++) inputs.push({ path: await still(f, tier, 'beauty'), label: 'f' + padFrame(f) + (f === T ? ' T' : f < T ? ' T' + (f - T) : ' T+' + (f - T)) })
     const file = join(dir, name + '-' + line.kind + '-' + tier + '-' + part + '.png')
     image({ op: 'sheet', output: file, inputs, limit: cfg.raw.critics.maxImageLongEdgePx })
     addLook({ file }, { kind: 'sheet', label: stop + ' ' + line.kind + ', every frame ' + first + ' to ' + last + ' (' + part + ' T, frame ' + T + '), ' + tier + ' tier', stop: stop!, segment: line.seg.id, first, last, tier })
