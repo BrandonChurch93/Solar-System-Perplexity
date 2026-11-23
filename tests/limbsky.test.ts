@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { afterAll, describe, expect, it } from 'vitest'
 import raw from '../config/showcase.json'
 import { buildConfig, config, type Segment } from '../src/config'
-import { horizonK, horizonUv, Place, placeCamera, placeGeometry, placeLayout, placeUv, type PlaceGeometry, type PlaceLayout } from '../src/core/place'
+import { horizonK, horizonUv, lapOf, Place, placeCamera, placeGeometry, placeLayout, placeUv, type PlaceGeometry, type PlaceLayout } from '../src/core/place'
 import type { PlaceState, Pose } from '../src/core/types'
 import { applyProbe, parseProbe, probeString } from '../src/diagnostics/probe'
 import { FilmDirector } from '../src/director/film'
@@ -61,6 +61,12 @@ function overLimb(g: PlaceGeometry): (under: number) => THREE.Vector3 {
     const a = Math.PI / 2 - dip - under
     return down.clone().multiplyScalar(Math.cos(a)).addScaledVector(fore, Math.sin(a))
   }
+}
+
+// The angle under the camera's limb to which the lap of the ball reaches: a ray there passes the centre at the radius less the lap.
+function lapUnder(g: PlaceGeometry, lap: number): number {
+  const dip = Math.asin(g.sinDip)
+  return Math.PI / 2 - dip - Math.asin((1 - lap) * Math.cos(dip))
 }
 
 afterAll(() => {
@@ -181,6 +187,7 @@ describe('the horizon of a place picture on the clock of the sky', () => {
     refused({ dive: { place: { limbSky: true } }, rise: {} }, 'dive', /mars\.dive needs limbReachDeg above 0 for limbSky/)
     refused({ dive: {}, rise: { place: { limbReachDeg: 0, limbSky: true } } }, 'rise', /mars\.rise needs limbReachDeg above 0 for limbSky/)
     refused({ dive: { place: { limbReachDeg: reach, limbSky: 'yes' as unknown as boolean } }, rise: {} }, 'dive', /limbSky/)
+    for (const bad of [0.01, -0.01, Number.NaN]) refused({ dive: {}, rise: { place: { limbReachDeg: reach, limbSky: true, limbLap: bad } } }, 'rise', /mars\.rise needs limbLap between -0\.01 and 0\.01/)
     filmWith(coveredPlan({ handover: { dive: { place: { limbReachDeg: reach, limbSky: true } }, rise: { place: { limbSky: false } } } }))
     expect(handoverOf(COVERED, 'dive')!.limbSky).toBe(true)
     expect(handoverOf(COVERED, 'rise')!.limbSky).toBe(false)
@@ -209,6 +216,20 @@ describe('the horizon of a place picture on the clock of the sky', () => {
     const gone = JSON.parse(JSON.stringify(raw)) as typeof raw
     delete (gone.handover.place as { limbSky?: boolean }).limbSky
     expect(() => buildConfig(gone)).toThrow(/missing key handover.place.limbSky/)
+    // The lap of the ball is a number of the film too, small and of either sign.
+    for (const bad of [0.01, -0.01, 'none']) {
+      const off = JSON.parse(JSON.stringify(raw)) as typeof raw
+      ;(off.handover.place as { limbLap: unknown }).limbLap = bad
+      expect(() => buildConfig(off)).toThrow(/handover.place.limbLap/)
+    }
+    for (const good of [0, 0.0005, -0.0005]) {
+      const fine = JSON.parse(JSON.stringify(raw)) as typeof raw
+      fine.handover.place.limbLap = good
+      expect(() => buildConfig(fine)).not.toThrow()
+    }
+    const lapless = JSON.parse(JSON.stringify(raw)) as typeof raw
+    delete (lapless.handover.place as { limbLap?: number }).limbLap
+    expect(() => buildConfig(lapless)).toThrow(/missing key handover.place.limbLap/)
   })
 
   it('gives a ray of the sky the weight of the horizon alone and leaves the ground with the picture', () => {
@@ -230,19 +251,68 @@ describe('the horizon of a place picture on the clock of the sky', () => {
     const band = config.raw.handover.place.limbHoldDeg
     const sky = placeUv(g, proj, at(rad(-2)))
     expect(sky.hit).toBe(false)
+    expect(sky.sky).toBe(true)
     expect(sky.front).toBe(true)
     for (const ground of [0, 0.3, 1]) expect(horizonK(place, sky, ground)).toBe(place.horizon)
     expect(horizonK(place, { ...sky, front: false }, 1)).toBe(0)
-    // The ground keeps the weight the picture gives it: under the limb, in the band where the picture holds its horizon, and further down.
-    for (const under of [band[0]! / 2, (band[0]! + band[1]!) / 2, band[1]! + 3]) {
-      const land = placeUv(g, proj, at(rad(under)))
-      expect(land.hit).toBe(true)
-      for (const ground of [0, 0.3, 1]) expect(horizonK(place, land, ground)).toBe(ground)
+    // The ball is taken less its lap: the mesh of a globe lies a little inside its sphere, so a ray that meets the sphere this close to
+    // the limb is sky still where nobody has drawn the pixel, and takes the weight of the horizon.
+    const lap = config.raw.handover.place.limbLap
+    expect(lap).toBeGreaterThan(0)
+    expect(g.lap).toBe(lap * (2 - lap))
+    expect(lapOf(g, false)).toBe(g.lap)
+    expect(lapOf(g, true)).toBe(0)
+    const edge = lapUnder(g, lap)
+    expect(edge).toBeGreaterThan(0)
+    expect(edge).toBeLessThan(rad(0.5))
+    const lapped = placeUv(g, proj, at(edge * 0.5))
+    expect(lapped.hit).toBe(true)
+    expect(lapped.sky).toBe(true)
+    const read = horizonUv(g, proj, at(edge * 0.5), pictureOf(place).layout)
+    expect(read.front).toBe(true)
+    for (const ground of [0, 0.3, 1]) expect(horizonK(place, { sky: lapped.sky, front: read.front }, ground)).toBe(place.horizon)
+    // Where the globe itself has drawn the pixel the lap is ground: the depth of the frame tells, and the picture keeps its own weight.
+    const meshed = placeUv(g, proj, at(edge * 0.5), true)
+    expect(meshed.hit).toBe(true)
+    expect(meshed.sky).toBe(false)
+    for (const ground of [0, 0.3, 1]) expect(horizonK(place, meshed, ground)).toBe(ground)
+    // Over the limb of the sphere a drawn pixel is sky all the same: a moon in front of the haze.
+    expect(placeUv(g, proj, at(rad(-2)), true).sky).toBe(true)
+    expect(placeUv(g, proj, at(-edge * 0.5), true).sky).toBe(true)
+    // The ground keeps the weight the picture gives it: just under the lap, in the band where the picture holds its horizon, and further down.
+    for (const under of [edge * 1.5, edge + rad(band[0]! / 2), edge + rad((band[0]! + band[1]!) / 2), edge + rad(band[1]! + 3)]) {
+      for (const drawn of [false, true]) {
+        const land = placeUv(g, proj, at(under), drawn)
+        expect(land.hit).toBe(true)
+        expect(land.sky).toBe(false)
+        for (const ground of [0, 0.3, 1]) expect(horizonK(place, land, ground)).toBe(ground)
+      }
     }
+    // A stop sets the lap of its own globe: none, and a mesh that stands outside its sphere, where the ground reaches out over the limb.
+    const bare = placeGeometry(shot.camera, { ...place, limbLap: 0 })
+    expect(bare.lap).toBe(0)
+    for (const drawn of [false, true]) {
+      expect(lapOf(bare, drawn)).toBe(0)
+      expect(placeUv(bare, proj, at(edge * 0.5), drawn).sky).toBe(false)
+      expect(placeUv(bare, proj, at(-edge * 0.5), drawn).sky).toBe(true)
+    }
+    const proud = placeGeometry(shot.camera, { ...place, limbLap: -lap })
+    expect(proud.lap).toBe(-lap * (2 + lap))
+    expect(lapOf(proud, false)).toBe(0)
+    expect(lapOf(proud, true)).toBe(proud.lap)
+    const out = lapUnder(proud, -lap)
+    expect(out).toBeLessThan(0)
+    const outer = placeUv(proud, proj, at(out * 0.5), true)
+    expect(outer.hit).toBe(false)
+    expect(outer.sky).toBe(false)
+    for (const ground of [0, 0.3, 1]) expect(horizonK(place, outer, ground)).toBe(ground)
+    expect(placeUv(proud, proj, at(out * 0.5)).sky).toBe(true)
+    expect(placeUv(proud, proj, at(out * 1.5), true).sky).toBe(true)
+    expect(placeUv(proud, proj, at(-out * 0.5)).sky).toBe(false)
     // Without a horizon in the state every ray keeps the weight the picture's own rules give it.
     const plain = { ...place }
     delete plain.horizon
-    for (const ray of [sky, placeUv(g, proj, at(rad(1)))]) expect(horizonK(plain, ray, 0.4)).toBe(0.4)
+    for (const ray of [sky, lapped, placeUv(g, proj, at(rad(1)))]) expect(horizonK(plain, ray, 0.4)).toBe(0.4)
   })
 
   it('reads the sky of the picture at its own height over the horizon where a ray leaves the picture by a side', () => {
@@ -301,6 +371,37 @@ describe('the horizon of a place picture on the clock of the sky', () => {
       // A ray of the sky high over the picture reads its top row.
       const high = horizonUv(g, proj, at(rad(-60)), layout)
       expect(high.uv[1]).toBe(1 - brim[1])
+      // A ray in the lap of the ball reads the horizon of the picture in its own direction, the place a ray of the sky reaches as it
+      // comes down onto the limb, and round the sides it reads the side at that height.
+      const down = g.centre.clone().normalize()
+      const edge = lapUnder(g, config.raw.handover.place.limbLap)
+      const cosTwin = Math.sqrt(1 - g.sinDipTwin * g.sinDipTwin)
+      let own = 0
+      let round = 0
+      for (let turn = -175; turn <= 175; turn += 5) {
+        const ray = at(edge * 0.5).applyAxisAngle(down, rad(turn))
+        const raw = placeUv(g, proj, ray)
+        expect(raw.hit).toBe(true)
+        expect(raw.sky).toBe(true)
+        const got = horizonUv(g, proj, ray, layout)
+        expect(got.front).toBe(true)
+        expect(height(got.uv)).toBeCloseTo(-g.sinDipTwin, 9)
+        expect(placeUv(g, proj, ray, true).sky).toBe(false)
+        const d = ray.clone().normalize()
+        const s = d.dot(g.up)
+        const want = d.clone().addScaledVector(g.up, -s).multiplyScalar(cosTwin / Math.sqrt(1 - s * s)).addScaledVector(g.up, -g.sinDipTwin).applyMatrix3(g.rel)
+        const u = ((proj[0] * want.x + proj[2] * want.z) / -want.z) * 0.5 + 0.5
+        if (-want.z > 0 && u >= brim[0] && u <= 1 - brim[0]) {
+          own++
+          expect(got.uv[0]).toBeCloseTo(u, 12)
+          expect(got.uv[1]).toBeCloseTo(((proj[1] * want.y + proj[3] * want.z) / -want.z) * 0.5 + 0.5, 12)
+        } else {
+          round++
+          expect(Math.min(Math.abs(got.uv[0] - brim[0]), Math.abs(got.uv[0] - (1 - brim[0])))).toBeLessThan(1e-9)
+        }
+      }
+      expect(own).toBeGreaterThan(3)
+      expect(round).toBeGreaterThan(10)
     }
   })
 
@@ -308,13 +409,13 @@ describe('the horizon of a place picture on the clock of the sky', () => {
     const pass = new Place()
     const inner = pass as unknown as { lay: { material: THREE.ShaderMaterial }; veil: { material: THREE.ShaderMaterial } | null; veilSplit: { material: THREE.ShaderMaterial } | null; splitPass(): { material: THREE.ShaderMaterial }; veilPass(toned: boolean): { material: THREE.ShaderMaterial } }
     const plain = inner.lay.material.fragmentShader
-    for (const name of ['uVeil', 'bool over', 'brim']) expect(plain.includes(name)).toBe(false)
+    for (const name of ['uVeil', 'bool over', 'brim', 'gl_FragDepth']) expect(plain.includes(name)).toBe(false)
     expect(inner.veil).toBe(null)
     expect(inner.veilSplit).toBe(null)
-    const declared = '\nuniform float uVeil;'
-    const sideFrom = '  bool over = !(disc > 0.0 && b > 0.0);\n  if (mode != 3 && over) {\n    vec2 brim = vec2(0.5) / uSize;\n'
+    const declared = '\nuniform vec2 uVeil;'
+    const sideFrom = '  bool over = !(disc > uVeil.y && b > 0.0);\n  if (mode != 3 && over) {\n    vec2 brim = vec2(0.5) / uSize;\n'
     const sideTo = '    uv = clamp(uv, brim, vec2(1.0) - brim);\n  }\n'
-    const weight = '  if (mode != 3 && over) k = uVeil * front;\n'
+    const weight = '  if (mode != 3 && over) k = uVeil.x * front;\n  gl_FragDepth = 1.0;\n'
     const without = (text: string, from: string, to: string): string => {
       const a = text.indexOf(from)
       const b = text.indexOf(to, a)
@@ -332,9 +433,13 @@ describe('the horizon of a place picture on the clock of the sky', () => {
       expect(veiled.indexOf(sideFrom)).toBeGreaterThan(veiled.indexOf('  float k = uLimits.x * front'))
       expect(veiled.indexOf(weight)).toBeGreaterThan(veiled.indexOf('if (uMatteOn > 0.5) k *= '))
       expect(veiled.indexOf(weight)).toBeLessThan(veiled.indexOf('  if (mode == 1) {'))
-      // The ground is left alone: nothing of the horizon touches a ray that hits the ball.
+      // The ground is left alone: nothing of the horizon touches a ray that hits the ball under its lap, and the band in which the
+      // picture holds its horizon is not read.
       const added = veiled.slice(veiled.indexOf(sideFrom), veiled.indexOf(sideTo))
       expect(added.includes('hold')).toBe(false)
+      // The far depth is written on every path, before the first return and the one discard, for the test against the frame's depth.
+      expect(veiled.split('gl_FragDepth').length).toBe(2)
+      for (const stop of ['discard;', 'return;']) expect(veiled.indexOf('gl_FragDepth = 1.0;')).toBeLessThan(veiled.indexOf(stop))
     }
     expect(inner.veil).not.toBe(null)
     expect(inner.veilSplit).not.toBe(null)
@@ -360,13 +465,13 @@ describe('the horizon of a place picture on the clock of the sky', () => {
     const texture = new THREE.Texture()
     const pic = { key: 'test', target: { texture, width: layout.width, height: layout.height } as unknown as THREE.WebGLRenderTarget, layout, proj: [1, 1, 0, 0] as Four, used: 0 }
     const target = { width: master.width, height: master.height, texture: new THREE.Texture() } as unknown as THREE.WebGLRenderTarget
-    const drawn: { pass: string; mode: number; veil: number | null; blended: boolean }[] = []
+    const drawn: { pass: string; mode: number; veil: number | null; lap: number | null; blended: boolean; depth: 'all' | 'bare' | 'drawn' | 'other' }[] = []
     const r = {
       setRenderTarget: () => undefined,
       render: (scene: THREE.Scene) => {
         const m = (scene.children[0] as THREE.Mesh).material as THREE.ShaderMaterial
         const name = m === inner.lay.material ? 'plain' : m === inner.split?.material ? 'split' : m === inner.veil?.material ? 'veil' : m === inner.veilSplit?.material ? 'veilSplit' : m === inner.blur?.material ? 'blur' : 'other'
-        drawn.push({ pass: name, mode: name === 'blur' ? -1 : (m.uniforms.uScale!.value as THREE.Vector2).y, veil: name.startsWith('veil') ? (m.uniforms.uVeil!.value as number) : null, blended: m.blending !== THREE.NoBlending })
+        drawn.push({ pass: name, mode: name === 'blur' ? -1 : (m.uniforms.uScale!.value as THREE.Vector2).y, veil: name.startsWith('veil') ? (m.uniforms.uVeil!.value as THREE.Vector2).x : null, lap: name.startsWith('veil') ? (m.uniforms.uVeil!.value as THREE.Vector2).y : null, blended: m.blending !== THREE.NoBlending, depth: !m.depthTest ? 'all' : m.depthFunc === THREE.EqualDepth ? 'bare' : m.depthFunc === THREE.NotEqualDepth ? 'drawn' : 'other' })
       },
     } as unknown as THREE.WebGLRenderer
     const cam = frameCamera(shot.camera)
@@ -380,21 +485,33 @@ describe('the horizon of a place picture on the clock of the sky', () => {
     delete plain.horizon
     expect(draw(plain, 'beauty').map((d) => d.pass)).toEqual(['plain'])
     expect(inner.veil).toBe(null)
-    expect(draw(place, 'beauty')).toEqual([{ pass: 'veil', mode: 0, veil: place.horizon, blended: true }])
+    const lap = config.raw.handover.place.limbLap * (2 - config.raw.handover.place.limbLap)
+    // Two draws, each pixel once: where nobody has written depth with the lap under the sphere as sky, then where something has, with none.
+    expect(draw(place, 'beauty')).toEqual([{ pass: 'veil', mode: 0, veil: place.horizon, lap, blended: true, depth: 'bare' }, { pass: 'veil', mode: 0, veil: place.horizon, lap: 0, blended: true, depth: 'drawn' }])
+    expect(inner.veil!.material.depthTest).toBe(false)
+    expect(inner.veil!.material.depthWrite).toBe(false)
     // The mask of the harness shows the horizon too; its count of texels and the picture itself stay the picture's own.
-    expect(draw(place, 'mask')).toEqual([{ pass: 'veil', mode: 2, veil: place.horizon, blended: false }])
+    expect(draw(place, 'mask')).toEqual([{ pass: 'veil', mode: 2, veil: place.horizon, lap, blended: false, depth: 'bare' }, { pass: 'veil', mode: 2, veil: place.horizon, lap: 0, blended: false, depth: 'drawn' }])
+    // The lap of the ball is the stop's own where it gives one. With none the pass is drawn once and the depth of the frame is not asked.
+    expect(draw({ ...place, limbLap: 0 }, 'beauty')).toEqual([{ pass: 'veil', mode: 0, veil: place.horizon, lap: 0, blended: true, depth: 'all' }])
+    expect(draw({ ...place, limbLap: 0.0005 }, 'beauty').map((d) => [d.lap, d.depth])).toEqual([[0.0005 * (2 - 0.0005), 'bare'], [0, 'drawn']])
+    // A mesh that stands outside its sphere: the lap is ground where the globe has drawn.
+    expect(draw({ ...place, limbLap: -0.0005 }, 'beauty').map((d) => [d.lap, d.depth])).toEqual([[0, 'bare'], [-0.0005 * (2 + 0.0005), 'drawn']])
     expect(draw(place, 'texels').map((d) => d.pass)).toEqual(['plain'])
     expect(draw(place, 'picture').map((d) => d.pass)).toEqual(['plain'])
     // A picture that is not held on the limb has no horizon to give.
     expect(draw({ ...place, limbReachDeg: 0 }, 'beauty').map((d) => d.pass)).toEqual(['plain'])
     // Out of range it is held to 0 and 1.
-    expect(draw({ ...place, horizon: 1.5 }, 'beauty')[0]!.veil).toBe(1)
-    expect(draw({ ...place, horizon: -1 }, 'beauty')[0]!.veil).toBe(0)
+    expect(draw({ ...place, horizon: 1.5 }, 'beauty').map((d) => d.veil)).toEqual([1, 1])
+    expect(draw({ ...place, horizon: -1 }, 'beauty').map((d) => d.veil)).toEqual([0, 0])
     // With the broad tone lent by the globe the horizon rides on the tone's shader, and where the picture has no weight left the tone is not run.
     const toned = { ...place, toneIn: [0.5, 0.5, 0.5, 0.5] as Four }
-    expect(draw(toned, 'beauty').map((d) => d.pass)).toEqual(['veilSplit', 'blur', 'blur', 'veilSplit', 'blur', 'blur', 'veilSplit'])
-    expect(draw(toned, 'beauty').map((d) => d.veil)).toEqual([place.horizon, null, null, place.horizon, null, null, place.horizon])
-    expect(draw({ ...toned, weight: 0 }, 'beauty')).toEqual([{ pass: 'veil', mode: 0, veil: place.horizon, blended: true }])
+    // The broad tones are gathered without the frame's depth; the picture itself is then drawn in the two parts.
+    expect(draw(toned, 'beauty').map((d) => d.pass)).toEqual(['veilSplit', 'blur', 'blur', 'veilSplit', 'blur', 'blur', 'veilSplit', 'veilSplit'])
+    expect(draw(toned, 'beauty').map((d) => d.veil)).toEqual([place.horizon, null, null, place.horizon, null, null, place.horizon, place.horizon])
+    expect(draw(toned, 'beauty').map((d) => d.depth)).toEqual(['all', 'all', 'all', 'all', 'all', 'all', 'bare', 'drawn'])
+    expect(draw(toned, 'beauty').map((d) => d.lap)).toEqual([lap, null, null, lap, null, null, lap, 0])
+    expect(draw({ ...toned, weight: 0 }, 'beauty').map((d) => [d.pass, d.depth])).toEqual([['veil', 'bare'], ['veil', 'drawn']])
     expect(draw({ ...plain, toneIn: [0.5, 0.5, 0.5, 0.5] as Four }, 'beauty').map((d) => d.pass)).toEqual(['split', 'blur', 'blur', 'split', 'blur', 'blur', 'split'])
     pass.dispose()
   })
@@ -406,6 +523,13 @@ describe('the horizon of a place picture on the clock of the sky', () => {
     expect(parseProbe('beauty/side=orbit/limbsky=off').limbSky).toBe(false)
     for (const s of ['beauty/limbsky', 'beauty/side=orbit/limb=8/limbsky', 'beauty/noplace/limbsky=off', 'beauty/side=orbit/mask/limb=8/in=0.4,0.4,0.4,0.25/limbsky']) expect(probeString(parseProbe(s))).toBe(s)
     for (const bad of ['beauty/limbsky=1', 'beauty/limbsky=yes', 'beauty/limbsky=']) expect(() => parseProbe(bad)).toThrow()
+    // The lap of the ball beside it, for a look at what a globe needs.
+    expect(parseProbe('beauty/limbsky').lap).toBe(undefined)
+    expect(parseProbe('beauty/limbsky/lap=0.0002').lap).toBe(0.0002)
+    expect(parseProbe('beauty/limbsky/lap=0').lap).toBe(0)
+    expect(parseProbe('beauty/limbsky/lap=-0.0003').lap).toBe(-0.0003)
+    for (const s of ['beauty/limbsky/lap=0.0002', 'beauty/side=orbit/limb=8/limbsky/lap=0', 'beauty/limbsky/lap=-0.0003']) expect(probeString(parseProbe(s))).toBe(s)
+    for (const bad of ['beauty/lap', 'beauty/lap=', 'beauty/lap=0.01', 'beauty/lap=-0.01', 'beauty/lap=wide']) expect(() => parseProbe(bad)).toThrow()
     const quiet = coveredPlan(held)
     const film = filmWith(quiet)
     const h = handoverOf(COVERED, 'rise')!

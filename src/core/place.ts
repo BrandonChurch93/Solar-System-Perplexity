@@ -31,6 +31,9 @@ export interface PlaceGeometry {
   limbDip: number
   reach: number
   hold: [number, number]
+  // The lap of the ball at its limb, in the units of c: a ray whose b * b - c lies between 0 and this passes the limb of the sphere so
+  // close that the mesh of the globe may or may not be there (under the sphere when positive, over it when negative). Read by lapOf.
+  lap: number
 }
 
 const MODES: Record<PlaceMode, number> = { beauty: 0, texels: 1, mask: 2, picture: 3 }
@@ -111,7 +114,7 @@ export function placeCamera(cam: THREE.PerspectiveCamera, format: { width: numbe
   cam.updateMatrixWorld(true)
 }
 
-export function placeGeometry(camera: Pose, place: Pick<PlaceState, 'twin' | 'centre' | 'radius' | 'limbReachDeg' | 'limbHoldDeg'>): PlaceGeometry {
+export function placeGeometry(camera: Pose, place: Pick<PlaceState, 'twin' | 'centre' | 'radius' | 'limbReachDeg' | 'limbHoldDeg' | 'limbLap'>): PlaceGeometry {
   const back = camera.quaternion.clone().invert()
   const o = place.centre.clone().sub(camera.position)
   const distance = o.length()
@@ -125,6 +128,7 @@ export function placeGeometry(camera: Pose, place: Pick<PlaceState, 'twin' | 'ce
   const sinDip = Math.sqrt(Math.max(1 - (r / Math.max(distance, 1e-30)) ** 2, 0))
   const upTwin = tc.clone().divideScalar(Math.max(twinDistance, 1e-30))
   const band = place.limbHoldDeg ?? config.raw.handover.place.limbHoldDeg
+  const lap = place.limbLap ?? config.raw.handover.place.limbLap
   return {
     centre: o.clone().applyQuaternion(back),
     shift: shiftWorld.clone().applyQuaternion(back),
@@ -141,10 +145,21 @@ export function placeGeometry(camera: Pose, place: Pick<PlaceState, 'twin' | 'ce
     limbDip: sinDip - sinDipTwin,
     reach: Math.sin(THREE.MathUtils.degToRad(place.limbReachDeg ?? config.raw.handover.place.limbReachDeg)),
     hold: [Math.sin(THREE.MathUtils.degToRad(band[0]!)), Math.sin(THREE.MathUtils.degToRad(band[1]!))],
+    lap: r * r * lap * (2 - lap),
   }
 }
 
-export function placeUv(g: PlaceGeometry, proj: [number, number, number, number], ray: THREE.Vector3): { uv: [number, number]; hit: boolean; front: boolean; honest: number; hold: number; dir: THREE.Vector3 } {
+// Where the sky ends for a picture with a horizon of its own, in the units of c: a ray is of the sky unless its b * b - c is above this.
+// In the lap of the ball the frame itself tells: where something has written depth (drawn) the globe is there and the ray is ground,
+// where nothing has, the ray is sky. So a pixel nobody drew counts the lap under the sphere as sky, and a drawn pixel counts the lap
+// over the sphere as ground. A globe that writes no depth is sky throughout a lap under its sphere.
+export function lapOf(g: PlaceGeometry, drawn: boolean): number {
+  return drawn ? Math.min(g.lap, 0) : Math.max(g.lap, 0)
+}
+
+// sky: the ray is of the sky for a picture with a horizon of its own (lapOf), at a pixel where something has written depth (drawn) or
+// where nothing has.
+export function placeUv(g: PlaceGeometry, proj: [number, number, number, number], ray: THREE.Vector3, drawn = false): { uv: [number, number]; hit: boolean; sky: boolean; front: boolean; honest: number; hold: number; dir: THREE.Vector3 } {
   const d = ray.clone().normalize()
   const b = d.dot(g.centre)
   const disc = b * b - g.c
@@ -187,21 +202,34 @@ export function placeUv(g: PlaceGeometry, proj: [number, number, number, number]
   }
   const front = -q.z > 0
   const w = Math.max(-q.z, 1e-30)
-  return { uv: [((proj[0] * q.x + proj[2] * q.z) / w) * 0.5 + 0.5, ((proj[1] * q.y + proj[3] * q.z) / w) * 0.5 + 0.5], hit, front, honest, hold, dir: q }
+  return { uv: [((proj[0] * q.x + proj[2] * q.z) / w) * 0.5 + 0.5, ((proj[1] * q.y + proj[3] * q.z) / w) * 0.5 + 0.5], hit, sky: !(disc > lapOf(g, drawn) && b > 0), front, honest, hold, dir: q }
 }
 
 // Where the place pass reads the picture for a ray of the sky when the picture's horizon runs on the clock of the sky (limbSky): what
-// the shader does in VEIL_SIDE. Inside the picture it is the ray's own place. A ray that leaves the picture by a side, or looks away
-// from it, is turned about the line to the centre of the body until it meets the nearer side of the picture, so it reads that side at
-// its own height over the horizon: the haze goes on along the limb at the height it has in the picture. Above the top of the picture
-// it reads the top row. size is the picture's size in texels.
-export function horizonUv(g: PlaceGeometry, proj: [number, number, number, number], ray: THREE.Vector3, size: { width: number; height: number }): { uv: [number, number]; front: boolean } {
-  const got = placeUv(g, proj, ray)
+// the shader does in VEIL_SIDE. A ray of the sky is one that passes the ball less its lap at a pixel nobody drew (sky of placeUv, drawn
+// as there). Inside the picture it is the ray's own place, and for a ray in the lap, which meets the sphere but not the mesh of the
+// globe, the place a ray of the sky reaches as it comes down onto the limb: the picture's horizon in the ray's own direction. A ray
+// that leaves the picture by a side, or looks away from it, is turned about the line to the centre of the body until it meets the
+// nearer side of the picture, so it reads that side at its own height over the horizon: the haze goes on along the limb at the height
+// it has in the picture. Above the top of the picture it reads the top row. size is the picture's size in texels.
+export function horizonUv(g: PlaceGeometry, proj: [number, number, number, number], ray: THREE.Vector3, size: { width: number; height: number }, drawn = false): { uv: [number, number]; front: boolean } {
+  const got = placeUv(g, proj, ray, drawn)
   const brim: [number, number] = [0.5 / size.width, 0.5 / size.height]
   let [u, v] = got.uv
   let front = got.front
+  let dir = got.dir
+  if (got.sky && got.hit) {
+    const d = ray.clone().normalize()
+    const s = d.dot(g.up)
+    const along = d.addScaledVector(g.up, -s).multiplyScalar(Math.sqrt(Math.max(1 - g.sinDipTwin * g.sinDipTwin, 0)) / Math.max(Math.sqrt(Math.max(1 - s * s, 0)), 1e-6))
+    dir = along.addScaledVector(g.up, -g.sinDipTwin).applyMatrix3(g.rel)
+    front = -dir.z > 0
+    const w = Math.max(-dir.z, 1e-30)
+    u = ((proj[0] * dir.x + proj[2] * dir.z) / w) * 0.5 + 0.5
+    v = ((proj[1] * dir.y + proj[3] * dir.z) / w) * 0.5 + 0.5
+  }
   if (!front || u < brim[0] || u > 1 - brim[0]) {
-    const q = got.dir.clone().normalize()
+    const q = dir.clone().normalize()
     const side = (front ? u > 0.5 : q.x > 0) ? 1 - brim[0] : brim[0]
     const up = g.up.clone().applyMatrix3(g.rel)
     const n = new THREE.Vector3(proj[0], 0, proj[2] + 2 * side - 1)
@@ -227,10 +255,11 @@ export function horizonUv(g: PlaceGeometry, proj: [number, number, number, numbe
 }
 
 // The weight of the place pass on one ray when the picture's horizon runs on the clock of the sky (limbSky): what the shader does with
-// uVeil. ground is the weight the pass gives the ray by the picture's own rules, and a ray that hits the ball keeps it. A ray of the sky
-// takes the weight of the horizon and nothing else; front is then the one of horizonUv. Without a horizon in the state it is ground.
-export function horizonK(place: Pick<PlaceState, 'horizon'>, ray: { hit: boolean; front: boolean }, ground: number): number {
-  if (place.horizon === undefined || ray.hit) return ground
+// uVeil. ground is the weight the pass gives the ray by the picture's own rules, and a ray that meets the ball less its lap keeps it. A
+// ray of the sky (sky of placeUv) takes the weight of the horizon and nothing else; front is then the one of horizonUv. Without a
+// horizon in the state it is ground.
+export function horizonK(place: Pick<PlaceState, 'horizon'>, ray: { sky: boolean; front: boolean }, ground: number): number {
+  if (place.horizon === undefined || !ray.sky) return ground
   return ray.front ? place.horizon : 0
 }
 
@@ -349,18 +378,31 @@ void main() {
 
 // The horizon of the picture on the clock of the sky (limbSky). Two additions to the shader, so that a film in which no stop asks for it
 // compiles and runs the shader exactly as it was.
-// A ray that misses the ball is the picture's sky: the haze over the horizon with the frame's own stars behind it. It takes uVeil, the
+// A ray that misses the ball is the picture's sky: the haze over the horizon with the frame's own stars behind it. It takes uVeil.x, the
 // weight of the horizon, alone: not the weight of the picture, not its sides, not its limits of enlargement and not the land matte.
 // The ground keeps the picture's own weight, the band under the limb too: the picture's horizon row held there at the weight of the sky
-// stood on the globe as a stripe (Mars, 21:20). A ray of the sky that leaves the picture by a side, or looks away from it, is turned
-// about the line to the centre of the body until it meets the nearer side, so it reads that side at its own height over the horizon;
-// above the top of the picture it reads the top row. So the haze goes on along the limb and up the sky and does not end on a line.
+// stood on the globe as a stripe (Mars, 21:20). The ball is taken less its lap (uVeil.y, in the units of disc): the mesh of a globe lies
+// a little inside its sphere, and without the lap the globe's own sky, at its brightest on the limb, showed as a line of 1 to 2 px
+// between the sky and the ground (Mars, 21:30). In the lap the mesh is there in one pixel and not in the next, and the picture's horizon
+// at the weight of the sky on the globe's ground is a line too, a darker one (Mars, 22:05). So the pass is drawn twice, each pixel
+// once: where nothing has written depth with the lap under the sphere as sky, where something has with the lap over the sphere as
+// ground (lapOf); the shader writes the far depth for that test. A ray in the lap reads the picture's horizon in its own direction, the
+// place a ray of the sky reaches as it comes down onto the limb. A ray of the sky that leaves the picture by a side, or looks away from
+// it, is turned about the line to the centre of the body until it meets the nearer side, so it reads that side at its own height over
+// the horizon; above the top of the picture it reads the top row. So the haze goes on along the limb and up the sky and does not end
+// on a line.
 const VEIL_UNIFORMS = /* glsl */ `
-uniform float uVeil;`
+uniform vec2 uVeil;`
 
-const VEIL_SIDE = /* glsl */ `  bool over = !(disc > 0.0 && b > 0.0);
+const VEIL_SIDE = /* glsl */ `  bool over = !(disc > uVeil.y && b > 0.0);
   if (mode != 3 && over) {
     vec2 brim = vec2(0.5) / uSize;
+    if (disc > 0.0 && b > 0.0) {
+      float hLow = dot(d, uHorizon.xyz);
+      q = uRel * (uHorizon.xyz * -uHorizon.w + (d - uHorizon.xyz * hLow) * (sqrt(max(1.0 - uHorizon.w * uHorizon.w, 0.0)) / max(sqrt(max(1.0 - hLow * hLow, 0.0)), 1e-6)));
+      front = -q.z > 0.0 ? 1.0 : 0.0;
+      uv = (uProj.xy * q.xy + uProj.zw * q.z) / max(-q.z, 1e-30) * 0.5 + 0.5;
+    }
     if (front < 0.5 || uv.x < brim.x || uv.x > 1.0 - brim.x) {
       float hSide = (front > 0.5 ? uv.x > 0.5 : q.x > 0.0) ? 1.0 - brim.x : brim.x;
       vec3 hUp = uRel * uHorizon.xyz;
@@ -383,7 +425,8 @@ const VEIL_SIDE = /* glsl */ `  bool over = !(disc > 0.0 && b > 0.0);
   }
 `
 
-const VEIL_WEIGHT = /* glsl */ `  if (mode != 3 && over) k = uVeil * front;
+const VEIL_WEIGHT = /* glsl */ `  if (mode != 3 && over) k = uVeil.x * front;
+  gl_FragDepth = 1.0;
 `
 
 const lay = (tone: boolean, veil = false): string => /* glsl */ `
@@ -618,7 +661,7 @@ export class Place {
     const veiled = (mode === 'beauty' || mode === 'mask') && place.horizon !== undefined && g.reach > 0
     const pass = veiled ? this.veilPass(toned) : toned ? this.splitPass() : this.lay
     const u = pass.material.uniforms
-    if (veiled) u.uVeil!.value = Math.min(Math.max(place.horizon ?? 0, 0), 1)
+    if (veiled) (u.uVeil!.value as THREE.Vector2).set(Math.min(Math.max(place.horizon ?? 0, 0), 1), lapOf(g, false))
     const e = frame.projectionMatrix.elements
     u.uPicture!.value = pic.target.texture
     u.uSky!.value = this.sky?.texture ?? pic.target.texture
@@ -685,7 +728,17 @@ export class Place {
     const plain = mode !== 'beauty'
     m.blending = plain ? THREE.NoBlending : THREE.CustomBlending
     m.transparent = !plain
-    pass.render(r, target)
+    if (veiled && g.lap !== 0) {
+      // The lap of the ball: the pixels nobody has written depth into first, then the others, so every pixel is drawn once.
+      m.depthTest = true
+      m.depthFunc = THREE.EqualDepth
+      pass.render(r, target)
+      m.depthFunc = THREE.NotEqualDepth
+      ;(u.uVeil!.value as THREE.Vector2).y = lapOf(g, true)
+      pass.render(r, target)
+      m.depthTest = false
+      m.depthFunc = THREE.LessEqualDepth
+    } else pass.render(r, target)
   }
 
   private splitPass(): Pass {
@@ -695,10 +748,10 @@ export class Place {
 
   private veilPass(toned: boolean): Pass {
     if (toned) {
-      this.veilSplit ??= new Pass(lay(true, true), { ...layUniforms(), ...toneUniforms(), uVeil: { value: 0 } }, LAY_BLEND)
+      this.veilSplit ??= new Pass(lay(true, true), { ...layUniforms(), ...toneUniforms(), uVeil: { value: new THREE.Vector2() } }, LAY_BLEND)
       return this.veilSplit
     }
-    this.veil ??= new Pass(lay(false, true), { ...layUniforms(), uVeil: { value: 0 } }, LAY_BLEND)
+    this.veil ??= new Pass(lay(false, true), { ...layUniforms(), uVeil: { value: new THREE.Vector2() } }, LAY_BLEND)
     return this.veil
   }
 

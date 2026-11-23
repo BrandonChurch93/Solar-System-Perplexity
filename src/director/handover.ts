@@ -4,7 +4,7 @@ import type { ViewKind } from '../core/types'
 import { coverFrames, coverWindow, handoverChanges, handoverParams } from './timeline'
 
 export interface HandoverTimes { at: number; dissolveFrames: number; placeFrames: number }
-export interface PlaceOptions { scale?: number; margin?: number; matte?: 'pair' | 'alpha'; valid?: [number, number, number, number]; lens?: number; seen?: number; maxEnlarge?: number; enlargeSoft?: number; limbReachDeg?: number; limbHoldDeg?: [number, number]; edgeIn?: [number, number, number, number]; toneIn?: [number, number, number, number]; limbSky?: boolean }
+export interface PlaceOptions { scale?: number; margin?: number; matte?: 'pair' | 'alpha'; valid?: [number, number, number, number]; lens?: number; seen?: number; maxEnlarge?: number; enlargeSoft?: number; limbReachDeg?: number; limbHoldDeg?: [number, number]; edgeIn?: [number, number, number, number]; toneIn?: [number, number, number, number]; limbSky?: boolean; limbLap?: number }
 export interface Sidestep { right: number; up: number; by: number }
 // fromDive (the rise only): the close view of the rise leaves from the eye of the dive. From the start of the rise the stop's own close path is led
 // over to the pose the dive handed over at, by the share of the way to T raised to this power (1 or more: it starts from rest), so at T the camera
@@ -22,6 +22,9 @@ export interface SkyShares { low: number; high?: number }
 // globe's limb under it and the stars behind it change as one thing over the frames in which the sky itself changes, and the limb of the
 // globe does not come in under a picture that is half there. The ground of the picture keeps the picture's own weight.
 // It needs the picture's horizon held on the camera's limb (limbReachDeg above 0).
+// limbLap goes with it: the share of the radius by which the mesh of the globe lies under its sphere at the limb (over it when negative).
+// The sky of the picture reaches that far in under the limb of the sphere, so that the globe's own sky does not show as a line between
+// the picture's sky and the ground. It is read only with limbSky.
 export interface Handover { time: number; firstFrame: number; lastFrame: number; placeFirstFrame: number; placeLastFrame: number; skyFrames: number; live: boolean; picture: boolean; place: PlaceOptions; skyFloor: boolean; limbSky: boolean }
 
 const CELLS = 8
@@ -69,6 +72,7 @@ export function handoverOf(stop: string, kind: 'dive' | 'rise'): Handover | null
     if (lim && lim.edgeIn !== undefined && !(Array.isArray(lim.edgeIn) && lim.edgeIn.length === 4 && lim.edgeIn.every((x) => x >= 0 && x <= 1))) throw new Error('the place of ' + seg.id + ' needs edgeIn as four shares from 0 to 1: left, right, bottom, top')
     if (lim && lim.toneIn !== undefined && !(Array.isArray(lim.toneIn) && lim.toneIn.length === 4 && lim.toneIn.every((x) => x >= 0 && x <= 4))) throw new Error('the place of ' + seg.id + ' needs toneIn as four shares from 0 to 4: left, right, bottom, top')
     if (lim && lim.limbSky !== undefined && typeof lim.limbSky !== 'boolean') throw new Error('the place of ' + seg.id + ' needs limbSky as true or false')
+    if (lim && lim.limbLap !== undefined && !(lim.limbLap > -0.01 && lim.limbLap < 0.01)) throw new Error('the place of ' + seg.id + ' needs limbLap between -0.01 and 0.01')
     const picture = own[kind]?.picture !== false
     const limbSky = picture && (lim?.limbSky ?? config.raw.handover.place.limbSky)
     if (limbSky && !((lim?.limbReachDeg ?? config.raw.handover.place.limbReachDeg) > 0)) throw new Error('the place of ' + seg.id + ' needs limbReachDeg above 0 for limbSky: the horizon of the picture has to lie on the limb of the camera')

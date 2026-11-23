@@ -17,7 +17,9 @@ export interface PlaceDump { x: number; y: number; what: 'image' | 'alpha' }
 // the stop's own or the film's (handover.place.toneIn); 0,0,0,0 is the picture with its own tone throughout.
 // limbsky: the horizon of the place picture on the clock of the sky (handover.place.limbSky) for a stop that has not set it; limbsky=off the
 // picture without it for a stop that has. A stop whose picture is not held on the limb needs limb=DEG beside it, or nothing changes.
-export interface Probe { view: string; side: ViewKind | null; shut: boolean; time: number | null; place: boolean; mask: boolean; picture: boolean; top: boolean; dump?: PlaceDump; limb?: number; edgeIn?: [number, number, number, number]; toneIn?: [number, number, number, number]; limbSky?: boolean }
+// lap: the share of the radius by which the ground of the globe lies under its sphere at the limb, over it when negative
+// (handover.place.limbLap), in place of the stop's own or the film's; it is read only with a horizon on the clock of the sky.
+export interface Probe { view: string; side: ViewKind | null; shut: boolean; time: number | null; place: boolean; mask: boolean; picture: boolean; top: boolean; dump?: PlaceDump; limb?: number; edgeIn?: [number, number, number, number]; toneIn?: [number, number, number, number]; limbSky?: boolean; lap?: number }
 
 export function parseProbe(diag: string): Probe {
   const parts = diag.split('/').map((s) => s.trim()).filter((s) => s.length > 0)
@@ -36,6 +38,7 @@ export function parseProbe(diag: string): Probe {
     else if (key === 'limb' && value !== undefined && Number(value) >= 0 && Number(value) < 90) out.limb = Number(value)
     else if (key === 'in' && value !== undefined && value.split(',').length === 4 && value.split(',').every((x) => Number(x) >= 0 && Number(x) <= 1)) out.edgeIn = value.split(',').map(Number) as [number, number, number, number]
     else if (key === 'tone' && value !== undefined && value.split(',').length === 4 && value.split(',').every((x) => Number(x) >= 0 && Number(x) <= 4)) out.toneIn = value.split(',').map(Number) as [number, number, number, number]
+    else if (key === 'lap' && value !== undefined && value !== '' && Number(value) > -0.01 && Number(value) < 0.01) out.lap = Number(value)
     else if (key === 'limbsky' && (value === undefined || value === 'on' || value === 'off')) out.limbSky = value !== 'off'
     else if (key === 'dump' && value !== undefined) {
       const [x, y, what] = value.split(',')
@@ -65,6 +68,7 @@ export function probeString(p: Partial<Probe>): string {
   if (p.edgeIn !== undefined) parts.push('in=' + p.edgeIn.join(','))
   if (p.toneIn !== undefined) parts.push('tone=' + p.toneIn.join(','))
   if (p.limbSky !== undefined) parts.push(p.limbSky ? 'limbsky' : 'limbsky=off')
+  if (p.lap !== undefined) parts.push('lap=' + p.lap)
   if (p.dump) parts.push('dump=' + p.dump.x + ',' + p.dump.y + ',' + p.dump.what)
   else if (p.picture) parts.push('picture')
   return parts.join('/')

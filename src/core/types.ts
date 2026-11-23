@@ -64,6 +64,10 @@ export interface PlaceState {
   enlargeSoft?: number
   limbReachDeg?: number
   limbHoldDeg?: [number, number]
+  // With a horizon (below): the share of the radius by which the ground of the globe may lie under its sphere at the limb, the sag of its
+  // mesh (negative: over it, a mesh that stands outside its sphere). A ray that passes the centre further out than the radius less this
+  // share is taken for sky. Absent: the film's (handover.place.limbLap).
+  limbLap?: number
   edgeIn?: [number, number, number, number]
   toneIn?: [number, number, number, number]
   // The weight of the picture's horizon, that is of its sky (the haze over the limb with the stars behind it), when the stop asked for

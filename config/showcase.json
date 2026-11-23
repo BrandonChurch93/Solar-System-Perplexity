@@ -165,7 +165,7 @@
     "blurEaseFrames": 12,
     "minShutter": 0.5,
     "skyFloor": {"marginDeg": 0.25, "featherDeg": 4},
-    "place": {"scale": 2, "margin": 0.25, "maxShare": 0.5, "maxEdge": 4800, "edge": 0.8, "seen": 0.5, "enlargeSoft": 0.5, "lens": 1, "maxGradTexels": 8, "limbReachDeg": 0, "limbHoldDeg": [0.25, 0.75], "limbSky": false, "edgeIn": [0, 0, 0, 0], "toneIn": [0, 0, 0, 0], "tonePower": 0.5, "toneReach": 0.045, "toneCell": 8, "toneLandDeg": [1, 6]},
+    "place": {"scale": 2, "margin": 0.25, "maxShare": 0.5, "maxEdge": 4800, "edge": 0.8, "seen": 0.5, "enlargeSoft": 0.5, "lens": 1, "maxGradTexels": 8, "limbReachDeg": 0, "limbHoldDeg": [0.25, 0.75], "limbSky": false, "limbLap": 0.0001, "edgeIn": [0, 0, 0, 0], "toneIn": [0, 0, 0, 0], "tonePower": 0.5, "toneReach": 0.045, "toneCell": 8, "toneLandDeg": [1, 6]},
     "descent": {"rise": 0.2, "fall": 0.3, "turnRise": 0.2, "turnFall": 0.6, "level": true, "levelBy": 0.8, "targetReach": 0.5},
     "ascent": {"rise": 0.2, "fall": 0.3, "turnRise": 0.2, "turnFall": 0.6, "level": true, "levelBy": 0.5},
     "zenithDeg": [2, 8],
