@@ -1,9 +1,17 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-23T22:53:34.003Z",
+ "pushed": "2026-11-23T23:16:32.511Z",
  "head": "632d744175eea966ca502244f425afeafe2e8096",
- "note": "first bake of the heights c49c7dd5: pyramid beside plates, map grid, tool still 2442 with old colour",
+ "note": "heights second run (shaded, five levels); colour at true places is in the bake now running",
  "looks": [
+  {
+   "time": "2026-11-23T23:16:31.001Z",
+   "file": "20261123231631001-note-c3-shade.jpg",
+   "source": "out/work/place/country/c3-shade.jpg",
+   "kind": "note",
+   "label": "heights of the country, second run, five levels as shaded relief: the carried on canyon has wandering rims, the far ground of the fan takes the relief of the plate (no flat fan at 8.5 and 3.8); still wrong: smooth canyon walls, straight edge of the seen ground at 1.6 and 0.7",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-23T22:53:33.443Z",
    "file": "20261123225333443-note-t2442.jpg",
@@ -58,14 +66,6 @@
    "source": "out/work/place/height/f-all.jpg",
    "kind": "note",
    "label": "Heights of the place as shaded relief from above, 0.7 and 1.6 degrees: grey is what the meshes give, blue tint is made by code (holes hung as a membrane, then lowered under the sight of the picture's eye; the wide blue outside the fan is not built yet)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T22:25:52.730Z",
-   "file": "20261123222552730-note-h-all.jpg",
-   "source": "out/work/place/height/h-all.jpg",
-   "kind": "note",
-   "label": "The place from straight above at 0.3, 0.7, 1.6, 3.8 degrees: top heights rasterised from the meshes (white 0 km plateau, dark canyon to 7 km deep, blue never seen by the picture's eye), bottom the picture's colour at its true place",
    "stop": "mars"
   }
  ]
