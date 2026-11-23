@@ -1,71 +1,71 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T12:02:02.468Z",
- "head": "e912b46b0396a473f927d85afba3a1ad3e215800",
- "note": "MAIL 248 item 1: limb band one law through T, third try; sides at T mean 0.064 p99 1",
+ "pushed": "2026-11-23T12:20:23.571Z",
+ "head": "74e3c04b1196f30e98816e5d27081b2432a6e470",
+ "note": "S4 items 1 and 2 at 74e3c04b: rise and dive sheets every frame, limb crop, bank pairs",
  "looks": [
+  {
+   "time": "2026-11-23T12:20:22.992Z",
+   "file": "20261123122022992-note-bank-pairs.jpg",
+   "source": "out/work/nep/s4/h/bank-pairs.jpg",
+   "kind": "note",
+   "label": "S4 bank: film (left) against live layer forced on (right) at 4964, 4970, 4976",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T12:20:22.440Z",
+   "file": "20261123122022440-note-limb-g.jpg",
+   "source": "out/work/nep/s4/g/limb-g.jpg",
+   "kind": "note",
+   "label": "S4 rise limb native crop, 4956 close side then 4957 to 4964",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T12:20:21.906Z",
+   "file": "20261123122021906-note-dive-4756-4764.jpg",
+   "source": "out/work/nep/s4/h/dive-4756-4764.jpg",
+   "kind": "note",
+   "label": "S4 dive 4756 to 4764, T 4758",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T12:20:21.359Z",
+   "file": "20261123122021359-note-dive-4744-4755.jpg",
+   "source": "out/work/nep/s4/h/dive-4744-4755.jpg",
+   "kind": "note",
+   "label": "S4 dive 4744 to 4755",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T12:20:20.824Z",
+   "file": "20261123122020824-note-rise-4974-4989.jpg",
+   "source": "out/work/nep/s4/h/rise-4974-4989.jpg",
+   "kind": "note",
+   "label": "S4 rise 4974 to 4989, wedge 4982 to 4989 still there",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T12:20:20.290Z",
+   "file": "20261123122020290-note-rise-4962-4973.jpg",
+   "source": "out/work/nep/s4/h/rise-4962-4973.jpg",
+   "kind": "note",
+   "label": "S4 rise 4962 to 4973",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T12:20:19.736Z",
+   "file": "20261123122019736-note-rise-4950-4961.jpg",
+   "source": "out/work/nep/s4/h/rise-4950-4961.jpg",
+   "kind": "note",
+   "label": "S4 rise 4950 to 4961 as the film draws, T 4956, commit b69351b8",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-23T12:02:01.892Z",
    "file": "20261123120201892-note-limb-d.jpg",
    "source": "out/work/nep/s4/f/limb-d.jpg",
    "kind": "note",
    "label": "rise limb, second try (dropped): band goes thin between 4959 and 4960",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T12:02:01.148Z",
-   "file": "20261123120201148-note-limb-g.jpg",
-   "source": "out/work/nep/s4/g/limb-g.jpg",
-   "kind": "note",
-   "label": "rise 4956 to 4964 limb at native size: the rows under the limb are drawn as the handover camera saw them (third try)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T11:34:54.990Z",
-   "file": "20261123113454990-note-red.jpg",
-   "source": "out/work/nep/s4/x/red.jpg",
-   "kind": "note",
-   "label": "neptune 4957 4960 4964 4970 globe side, the layer's cirrus painted red: the bank is all there after T, it is small from above because it is near the fitted camera",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T11:34:54.021Z",
-   "file": "20261123113454021-note-limb-4955-4962.jpg",
-   "source": "out/work/nep/s4/e/limb-4955-4962.jpg",
-   "kind": "note",
-   "label": "neptune rise limb at native size 4955 to 4962: FAULT the limb band grows thicker and bluer over 4958 to 4962 (Air comes in by settle), sky patch stars thin out",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T11:34:53.277Z",
-   "file": "20261123113453277-note-rise-4965-4976.jpg",
-   "source": "out/work/nep/s4/e/rise-4965-4976.jpg",
-   "kind": "note",
-   "label": "neptune rise 4965 to 4976 as the film draws, draft: bank white mean 194 to 200 of 255, shrinks by the camera's height only",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T11:34:52.185Z",
-   "file": "20261123113452185-note-rise-4953-4964.jpg",
-   "source": "out/work/nep/s4/e/rise-4953-4964.jpg",
-   "kind": "note",
-   "label": "neptune rise 4953 to 4964 as the film draws, draft, S4 code not yet committed: no cover, T is 4956; sky dark to a thin limb on both sides; bank stays white",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T11:13:42.219Z",
-   "file": "20261123111342219-note-rgb-4990.jpg",
-   "source": "out/work/nep/s4/x/rgb-4990.jpg",
-   "kind": "note",
-   "label": "neptune 4990 red times 4, green times 2, blue: the dark wedge is in green and blue, not in red (cause of the purple smear)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T11:13:41.692Z",
-   "file": "20261123111341692-note-dive-b.jpg",
-   "source": "out/work/nep/s4/c/dive-b.jpg",
-   "kind": "note",
-   "label": "neptune dive 4728 to 4752, then both T frames (4758, 4956) from the globe side, draft",
    "stop": "neptune"
   }
  ]
