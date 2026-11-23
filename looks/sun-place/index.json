@@ -1,35 +1,67 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T14:34:43.801Z",
- "head": "2aedc0e7b6708ea2a4411a68e6adbabe12b1ba22",
- "note": "sun: handover tool run on 2aedc0e7 (side difference red: mean 9.35, p99 71), frame 360 final byte equal, frame 90 against approved before the fix",
+ "pushed": "2026-11-23T14:53:56.624Z",
+ "head": "c90dd570d85977fe1385403b0c6ec5b8477424c3",
+ "note": "sun c90dd570: frame 90 back at the approved picture (2.96 against 6.50), frames 85 to 96 on consecutive frames, the two sides at T in crops",
  "looks": [
   {
-   "time": "2026-11-23T14:34:43.107Z",
-   "file": "20261123143443107-note-p4-feet.jpg",
-   "source": "out/work/sun/life/p4-feet.jpg",
+   "time": "2026-11-23T14:53:55.929Z",
+   "file": "20261123145355929-note-sides-crops.jpg",
+   "source": "out/work/sun/life/sides-crops.png",
    "kind": "note",
-   "label": "sun 2aedc0e7 against the approved stills at 60 and 90: feet and ground beside them (before the calm at 90)",
+   "label": "sun rise, both sides at T (frame 216), three crops: terrain side, globe side, difference x4 (trial with exact sight lines, not committed): same cells, plate and apron shifted about 1.5 px",
    "stop": "sun"
   },
   {
-   "time": "2026-11-23T14:30:26.008Z",
-   "file": "20261123143026008-job-frame-00000.jpg",
+   "time": "2026-11-23T14:53:55.063Z",
+   "file": "20261123145355063-note-c1-loops.jpg",
+   "source": "out/work/sun/life/c1-loops.jpg",
+   "kind": "note",
+   "label": "sun calm at 90, loops, frames 78 to 106 (take before the sway and the haze were calmed too)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T14:53:54.034Z",
+   "file": "20261123145354034-note-c3-ground.jpg",
+   "source": "out/work/sun/life/c3-ground.jpg",
+   "kind": "note",
+   "label": "sun c90dd570, film camera, frames 85 to 96 at native size, near ground x 700 y 760",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T14:53:52.907Z",
+   "file": "20261123145352907-note-c3-leftleg.jpg",
+   "source": "out/work/sun/life/c3-leftleg.jpg",
+   "kind": "note",
+   "label": "sun c90dd570, film camera, frames 85 to 96 at native size, left leg x 560 y 230: the life's own light rests at 90",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T14:53:51.743Z",
+   "file": "20261123145351743-note-c4-90-four.jpg",
+   "source": "out/work/sun/life/c4-90-four.jpg",
+   "kind": "note",
+   "label": "sun frame 90, draft, film camera: approved image, kept still, 2aedc0e7, c90dd570 (difference to approved after blur 8 px: 2.73, 6.50, 2.96)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T14:52:20.766Z",
+   "file": "20261123145220766-job-frame-00000.jpg",
    "source": "memory",
    "kind": "job",
-   "label": "sun.terrain frame 0, draft tier, texels view, from the running measure job",
+   "label": "sun.terrain frame 0, final tier, nograin view, from the running measure job",
    "stop": "sun",
    "segment": "sun.terrain",
    "frame": 0,
-   "tier": "draft",
+   "tier": "final",
    "format": "16x9",
-   "diag": "texels",
+   "diag": "nograin",
    "job": "measure"
   },
   {
-   "time": "2026-11-23T14:27:44.905Z",
-   "file": "20261123142744905-frame-nolife-orbit.jpg",
-   "source": "out/work/sun/life/sides/nolife-orbit.png",
+   "time": "2026-11-23T14:42:17.562Z",
+   "file": "20261123144217562-frame-exact-orbit.jpg",
+   "source": "out/work/sun/life/sides/exact-orbit.png",
    "kind": "frame",
    "label": "sun.rise frame 216, draft tier, beauty/side=orbit/t=7.208333 view",
    "stop": "sun",
@@ -41,61 +73,11 @@
    "engine": "ee77572156dd9714"
   },
   {
-   "time": "2026-11-23T14:19:19.976Z",
-   "file": "20261123141919976-frame-f360-final.jpg",
-   "source": "out/work/sun/life/f360-final.png",
-   "kind": "frame",
-   "label": "sun.hold frame 360, final tier",
-   "stop": "sun",
-   "segment": "sun.hold",
-   "frame": 360,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "ee77572156dd9714"
-  },
-  {
-   "time": "2026-11-23T14:18:23.208Z",
-   "file": "20261123141823208-sheet-sun-rise-draft-after.jpg",
-   "source": "out/work/handover/sun-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "sun rise, every frame 217 to 228 (after T, frame 216), draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "first": 217,
-   "last": 228,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T14:18:21.443Z",
-   "file": "20261123141821443-sheet-sun-rise-draft-across.jpg",
-   "source": "out/work/handover/sun-rise-draft-across.png",
-   "kind": "sheet",
-   "label": "sun rise, every frame 210 to 221 (across T, frame 216), draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "first": 210,
-   "last": 221,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T14:18:19.624Z",
-   "file": "20261123141819624-sheet-sun-rise-draft-before.jpg",
-   "source": "out/work/handover/sun-rise-draft-before.png",
-   "kind": "sheet",
-   "label": "sun rise, every frame 204 to 215 (before T, frame 216), draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "first": 204,
-   "last": 215,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T14:09:33.542Z",
-   "file": "20261123140933542-note-r6-a.jpg",
-   "source": "out/work/sun/pl/r6-a.jpg",
+   "time": "2026-11-23T14:34:43.107Z",
+   "file": "20261123143443107-note-p4-feet.jpg",
+   "source": "out/work/sun/life/p4-feet.jpg",
    "kind": "note",
-   "label": "sun 2aedc0e7 rise, draft, frames 204 to 219 across T (216): field tiles with their finer level, G13 0 soft on 201 to 222 every 3rd",
+   "label": "sun 2aedc0e7 against the approved stills at 60 and 90: feet and ground beside them (before the calm at 90)",
    "stop": "sun"
   }
  ]
