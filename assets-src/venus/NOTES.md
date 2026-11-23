@@ -1625,3 +1625,30 @@ Still wrong, seen on these sheets:
 Mail from handover_engineer, 09:35 VM time (a peer, for information; the order to merge comes from the Builder): E2 is pushed on agent/engine-handover at 05e908e and is being checked for main. With it the base class has `twin(local: Pose, time: number): Pose` and the engine calls `plan.twin(closePose, time)`; my `VenusPlan.twin(time, close)` has the arguments the other way round and breaks tsc in `src/director/plans.ts` after the merge. To do before the merge: swap my arguments and make mine the override. Contract held by `tests/place.test.ts`: `divePose(T, 'orbit')` equals `twin(divePose(T, 'terrain'), T)` to 1e-5 of the height, the sky equal on both sides at T, the globe side C1 through T. Options per kind (at, dissolveFrames, placeFrames, skyFrames, live, picture, place.valid) are in `assets-src/shared/HANDOVER-NOTES.md`, "How a stop uses it".
 
 Next: tests, build, lint, commit M2, push, report to the Builder. Then the twin signature, a review tier sample of the dive, and the points 2 to 5 above while waiting for the Builder's word on E2.
+
+## State 09:42 (23 Nov, VM time): M2 committed 709e9b2b, pushed, reported to the Builder at 09:41
+
+Looks pushed 09:40 (looks head 753cf921), next by 10:10. Also measured before the commit: frame 1604 on the steady path against the film's own 1604 (old path): mean difference 0.084 of 255, disc centre within 0.02 px, radius within 0.01 px; the disc radius steps by minus 0.31 px from 1603 to 1604 on the steady path and by minus 0.18 px from 1604 to 1605 in the film. tsc clean, tests 103 of 103, build clean.
+
+Now: (1) the twin signature for E2 in my own folder, (2) a review tier sample of the dive, (3) the still wrong points 2 to 5 of "State 09:40". Merge of E2 and the opt in only on the Builder's word.
+
+## MAIL 235 (23 Nov, 09:51 VM time), from the Builder, word for word. Read this first after a compaction
+
+"MAIL 235 from the Builder (/root). The engine's E2 is on main at c9c23b29. It was checked on render machines: every frame of a stop that has not opted in keeps its bytes, and Mars's judged hold and terrain frames keep theirs. Merge origin/main into your branch now.
+
+What is new, and how a stop uses it, is in assets-src/shared/HANDOVER-NOTES.md, section "How a stop uses it". In short: near T the globe side shows the place picture (the close side drawn at T), so the two sides are one picture at T. StopPlan.twin(local, time) returns the twin for a close side pose, with exactly these arguments: a plan that has its own method named twin must take the same arguments or rename its own. Also closePose(kind, time) and place(kind, time), and per kind in MoveParams.handover: skyFrames, live, picture: false, place: {scale, margin, valid, matte, lens}.
+
+With this the handover step S4 can start: opt in on your branch, give both sides' poses across the windows, bring light, exposure, haze, the Sun and the sky to one function of time through T, remove your cover.
+
+What Mars shows today, and what it means for you: at T no frame can be told from its neighbours. But the place picture fades in over the globe's own ground during the 12 frames before T, and where the globe under it is not the place, that reads as a dissolve between two pictures. Your plates decide that, the place picture hides nothing before its window.
+
+After you opt in run: npm run handover -- --stop <id> --tier draft --only sides,flow,path,sheets. Look at every frame of its sheets yourself and send the report with your milestone. Do not answer this mail, go on."
+
+## State 09:52 (23 Nov, VM time): before the merge of E2. Read this first after a compaction
+
+- Commit d32536cd (local, to push with the merge): `VenusPlan.twin(close, time)`, the order the engine calls it in. Path numbers unchanged, tests pass.
+- Review tier: one frame costs 183 s here (`out/work/venus/place/p8/rdive-f1298-orbit.png`, pair with the draft frame `p8/pair-1298.jpg`: the same picture with motion blur along the move, no new fault seen). A full review sheet of 25 frames is 76 minutes, so review sheets come once, with the handover.
+- Queue p9 (09:47 to 09:52): the close side on the steady path at draft, 1322 to 1349 and 1530 to 1557 (`out/work/venus/place/p9/`, sheet `close-dive-1322.jpg`, pairs with the globe side `pairs-dive.jpg`). Seen on the dive: the close scene does not fill the frame from the steady path's camera before about 1340. At 1322 to 1333 the lower third is empty (the near edge of the relief, a slanted cut from lower left to right); at 1334 to 1339 a thin empty band at the bottom; from 1340 the frame is full. So T of the dive cannot lie before 1340 unless the close pose near T changes, and the place picture needs `place.valid` for its bottom and its sides.
+- Seen on the pairs (same camera, globe side left, close side right, 1326 to 1349): the horizon lies at the same height; the shafts and the dark mass are the same forms in the same region, but the close side's towers stand up from the deck and their heads sit 0.05 to 0.07 of the frame width from where the flat plates show them; the Sun of the close side is on the horizon with a wide glow at about 0.88 of the width, the Sun of the globe side is a small bare disc about 8 percent of the frame height above the limb at about 0.76 of the width; the sky of the close side is blue grey with stars, the globe side's is black with the star band.
+- The cause of the shifted towers, measured with `assets-src/venus/place/closecam.ts`: the plates are laid back from the camera of the judged frame 1440, the place picture is the close side at T, and the close camera travels between them (in heights of the judged twin: 1335 ahead -0.485, right 0.381, up 0.123; 1349 -0.420, 0.354, 0.107; 1529 0.409, -0.643, -0.109; 1545 0.482, -0.790, -0.130).
+- Decision: the two deepest plates are laid back per handover from the close side at that handover's T (the place picture itself, wider field), so the plates and the place picture are one picture in the place window. Levels w, a, b stay shared.
