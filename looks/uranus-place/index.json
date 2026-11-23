@@ -1,9 +1,31 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-23T07:45:14.902Z",
+ "pushed": "2026-11-23T08:03:38.215Z",
  "head": "cca3cfd440ccbc2b30bd66a7ff1bc7e77b5bea37",
- "note": "S2 first top down sheet, rough plates, bad: square sticker and black light from above, rebuild in progress",
+ "note": "S2 in work: plates recentred, colour field and soft mask, test bake; fan still reads as a shell",
  "looks": [
+  {
+   "time": "2026-11-23T08:03:37.682Z",
+   "file": "20261123080337682-frame-final-4456.jpg",
+   "source": "out/work/u/base/final-4456.png",
+   "kind": "frame",
+   "label": "uranus.travel frame 4456, final tier",
+   "stop": "uranus",
+   "segment": "uranus.travel",
+   "frame": 4456,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "247ebad7e038ce06"
+  },
+  {
+   "time": "2026-11-23T08:03:36.317Z",
+   "file": "20261123080336317-note-laid-sheet.jpg",
+   "source": "out/work/u/place/laid-sheet.jpg",
+   "kind": "note",
+   "label": "S2 plates recentred, test bake at 1024 px, main cf300549. Top row: albedo of the four nested plates. Bottom row: the same on the globe in far light with the new colour field and soft mask. Still wrong: the fan reads as a shell, streaks around it are soft",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-23T07:45:08.697Z",
    "file": "20261123074508697-note-down-a.jpg",
@@ -68,22 +90,6 @@
    "source": "out/work/u/s1/m1-4164.jpg",
    "kind": "note",
    "label": "M1 S1 check at 4164: globe side with first plates, beside the close side",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T07:25:00.507Z",
-   "file": "20261123072500507-note-m1-4199.jpg",
-   "source": "out/work/u/s1/m1-4199.jpg",
-   "kind": "note",
-   "label": "M1 S1 check at 4199 (T): globe side with first plates and place light, beside the close side, from the twin camera",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T07:13:18.698Z",
-   "file": "20261123071318698-note-laid-sheet.jpg",
-   "source": "out/work/u/place/laid-sheet.jpg",
-   "kind": "note",
-   "label": "S2 first lay back, main 6da6c641: the deck albedo as four nested top down plates, 28 to 3.5 deg wide, not repainted yet",
    "stop": "uranus"
   }
  ]
