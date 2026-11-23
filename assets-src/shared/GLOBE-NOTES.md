@@ -2,13 +2,14 @@
 
 Notebook of the globe engineer (brief 243). Folders: `src/bodies/`, `src/core/sets.ts`, `tests/globe-*.test.ts`, this file. Branch `agent/engine-globe`, started from `412d2d09`.
 
-Three options, all off by default. A stop that turns none of them on gets the shader text of the starting commit (sha256 `81b01893...` held by `tests/patches.test.ts`) and the same texture uploads.
+Four options, all off by default. A stop that turns none of them on gets the shader text of the starting commit (sha256 `81b01893...` held by `tests/patches.test.ts`) and the same texture uploads.
 
 | option | where | a stop turns it on with |
 | --- | --- | --- |
 | own light per patch level | `PatchSet.own` in `src/bodies/planet.ts` | `own: [false, false, true, ...]`, one entry per level, beside `widthsDeg` |
 | level fade by the fine axis | `PatchSet.fadeMinor` in `src/bodies/planet.ts` | `fadeMinor: true` |
 | one channel texture | `ctx.texture` in `src/core/sets.ts` | `ctx.texture(path, { srgb: false, channels: 1 })` |
+| haze glow about a direction of the stop | `HazeParams.glow` in `src/bodies/haze.ts` | `glow: true` in the haze params, then `planet.setGlow(direction, colour, power)` and `shell.setGlow(...)` each frame |
 
 Only the Mars set uses `src/bodies/planet.ts` today. The other stops have their own globe shaders and are not touched.
 
@@ -86,6 +87,27 @@ Still check for undersampling, scratch seven, frame 2454, every sample at the sh
 
 Not checked: another GPU than the software renderer of the harness; the film tier in motion (a clip).
 
+### Mars frames 2448 and 2704 with the plates of the Mars builder, draft tier
+
+Rendered in a scratch worktree at `agent/mars-place` 41d7784 (merged with main da69509a): eight levels, 96, 48 and 26 degrees lit, 13, 6.5, 3.25, 1.2 and 0.6 degrees own, `fadeMinor` true in `src/stops/mars/levels.json`. Off is the same file with `"fadeMinor": false`. `--diag "beauty/side=orbit/noplace"` and `texels/side=orbit/noplace`. Blue with the option off comes from a scratch build that writes blue but leaves the fade on the longer axis. Frame 2704 is on the path of that branch, older than the rise of main 03510ddd.
+
+| frame | ground pixels | fade | red under 1.0 | mean red | blue under 1.0 | blue under 0.5 |
+| --- | --- | --- | --- | --- | --- | --- |
+| 2448 | 1459307 | longer axis | 0.0000 | 1.686 | 0.8753 | 0.3946 |
+| 2448 | 1459307 | fadeMinor | 0.0000 | 1.870 | 0.4799 | 0.0156 |
+| 2704 | 1302406 | longer axis | 0.1041 | 1.552 | 0.9973 | 0.5297 |
+| 2704 | 1302406 | fadeMinor | 0.1041 | 1.680 | 0.9357 | 0.1851 |
+
+Beauty pictures, off against on: at 2448 the option changes 23.5 percent of the ground pixels by more than 2 of 255 (rows 310 to 879 of 1080, most in the far band about row 320); the mean gradient of those pixels rises from 10.79 to 14.52 levels. At 2704 it changes 21.8 percent (rows 386 to 857), gradient 9.03 to 12.09. Outside the ground no pixel moves by more than 1 level. Pairs in the looks: `pairM-2448-full`, `-crop` (far band at 2 to 1), `-texels`, and the same for 2704.
+
+What the pictures show: with the option off the far half of the ground is smeared along the view; with it on the dunes, the channel and the crater rims of the far band are drawn. Seen in both, so not from the fade: thin bright orange fringes on edges of the own levels, and a worm like texture in the near ground of the deepest levels. At 2704 red under 1.0 is 0.1041 with and without the option (G13 allows 0.02): there the near ground is past the finest level (0.6 degrees), which no fade rule can help.
+
+Moving check with these plates, frames 2447, 2448, 2449, draft, grain off, luminance in 8 bit levels over the ground: frame to frame mean 10.03 off and 10.77 on; second difference mean 16.38 and 17.81, p99 93.9 and 100.0, p99.9 137.7 and 143.9, max 222.9 both; detail, mean abs dx 2.058 and 2.641, dy 3.577 and 4.409. The camera moves many pixels a frame here, so these are mostly true motion: the second difference rises 9 percent with 28 percent more detail across.
+
+The same at steps of a tenth of a frame (`nograin/side=orbit/noplace/shut`, `t=81.6000`, `81.6033`, `81.6067`), 1 sample, over the far band (ground above row 570, 480107 pixels): step to step mean 3.12 off and 4.30 on; second difference mean 3.74 and 5.61, p99.9 67.4 and 85.9. Over all the ground: 5.26 and 6.38. The ratio of second difference to step is 1.40 off and 1.44 on over the ground, near the 1.73 of pictures with no relation between them, so even a tenth of a frame moves the fine detail by about a pixel and this check cannot tell shimmer from motion at this frame. No sparkle is seen in the three crops at 1 to 1 (`stripM-2448-steps` in the looks).
+
+Undersampling at the same instant (`t=81.6000`, 1 sample against the review tier picture), far band: mean difference 0.468 levels off and 0.839 on, p99 3.14 and 5.41, p99.9 5.57 and 9.35, max 27.0 and 27.7. Detail of the review picture there: dx 1.846 and 3.187, dy 5.109 and 7.322. So the single sample error rises 79 percent where the detail rises 43 to 73 percent: per unit of detail (error over dx plus dy) 0.067 off and 0.080 on. The option adds a little more single sample error than its detail alone explains. Not shown: whether this is seen in the film tier in motion.
+
 ## 3. One channel textures (`channels: 1`)
 
 `ctx.texture(path, { srgb: false, channels: 1 })` uploads the image as a one channel texture (`THREE.RedFormat`, R8) and counts it at 1 byte a pixel (4/3 with mips). Without the option nothing changes: RGBA8, 4 bytes a pixel.
@@ -114,6 +136,24 @@ Type: `SetContext.texture` takes `TextureOptions` from `src/core/types.ts` (owne
 
 Not built. The Mars builder measured that it would save 18 MB, not a level.
 
+## 5. Haze glow about a direction of the stop (`glow`)
+
+Asked by the Mars builder: the place picture has its glow on one side of the frame, and the haze had only the lobe about the sun (`hazeForward`, power 6), so no stop value could put light on one side.
+
+With `glow: true` in a `HazeParams` the haze text gets three uniforms and one more term inside `hazeLight`:
+
+```
+hazeLight = ((day + twilight) * hazeForward(dir) + night + uHazeGlow * pow(max(dot(dir, uHazeGlowDir), 0.0), uHazeGlowPower)) * uHazeStrength
+```
+
+`dir` is the view direction in world axes (the camera is the origin of the world in this engine). The term is not scaled by day or twilight; the stop fades the colour itself. It is multiplied by `uHazeStrength` and, like the rest of the haze light, by `1 - exp(-tau)` on the ground (`src/bodies/planet.ts`) and in the shell (`HazeShell`).
+
+How a stop uses it: put `glow: true` into the haze params of the planet (`look.haze`) and of each shell that should carry it, then each frame call `planet.setGlow(direction, colour, power)` and `shell.setGlow(direction, colour, power)`. `direction` is a world vector (normalised by the setter), `colour` is scene light `[r, g, b]`, `power` must be above 0. The colour starts at 0, so a stop that sets the option and never calls the setter draws the frames of today (with a different shader text). A setter on a haze without the option throws `this haze has no glow`.
+
+Off: `hazeGlsl(false)` is the constant `HAZE_GLSL`, which Venus, Jupiter, Saturn and Neptune include as before; its sha256 (`8e0c217f...`), the shell's text (`692d6d8b...`) and the planet's text (`81b01893...`) are held by `tests/globe-haze.test.ts`. No uniform is added when off.
+
+Measured in `tests/globe-gl.test.ts` (camera 3 radii out, glow direction 26.6 degrees off the view axis, haze depth 0.5): colour 0 and a direction behind the camera give the pixels of the build without the option, exactly; the added light has the channel ratios of the colour (1, 0.5, 0.25 to 1e-3), doubles with the colour, rises toward the glow direction, and the ratio between power 12 and power 6 at each pixel is the cosine to the sixth (to 1e-3).
+
 ## Proof with the options off
 
 Draft stills `out/work/stills/f%05d-16x9-draft-full.png`, sha256, frames 360 (sun.hold), 615 (mercury.hold), 717 (mercury.dive), 1185 (venus.hold), 1857 (earth.dive), 2325 (mars.hold), 2427 (mars.dive), 2997 (jupiter.dive), 3465 (saturn.hold), 4035 (uranus.hold), 4707 (neptune.dive). The references were rendered at `412d2d09` before any change. The runs are named in the log below.
@@ -123,3 +163,7 @@ Draft stills `out/work/stills/f%05d-16x9-draft-full.png`, sha256, frames 360 (su
 - Tasks 1, 2 and 3 (code and tests). `npx vitest run`: 64 files, 135 tests green, of them `tests/globe-levels.test.ts` (6, shader text per option set) and `tests/globe-gl.test.ts` (5, in the harness browser with its flags). Options off: the 11 draft stills are byte equal to the references (run with the planet shader change only, then again with every change in). Not yet shown: a film frame with an option on.
 - Task 2 on pictures: Mars 2454 `side=orbit/noplace` before and after, texels shares, three consecutive frames (section 2). The Mars set in the repository is unchanged; the flag was set only in a scratch worktree.
 - Merged main d690e42a (only `kit/PROGRESS.md` differs from the starting commit).
+- Haze glow (section 5), asked by the Mars builder. `npx vitest run`: 66 files, 140 tests green (`tests/globe-haze.test.ts` 4, one more in `tests/globe-gl.test.ts`). Options off: the 11 draft stills are byte equal to the references of `412d2d09` again. Not yet shown: a film frame with the glow on.
+- Glow on a picture (scratch worktree, never committed): Mars 2454 and 2448, `beauty/side=orbit/noplace`, draft, `glow: true` on `look.haze` and `look.shellHaze`, direction on the horizon 40 degrees right of the view axis, colour 1.0 0.55 0.35, power 12. Mean change of the frame by third of its width, in 8 bit levels (r g b), frame 2454: left 0.0 0.0 0.0, middle 3.5 2.7 2.0, right 28.9 23.6 17.9; frame 2448: left 0, middle 3.6 2.8 2.1, right 30.3 24.7 18.9. With the scratch edit removed the still of 2454 has the sha256 it had before the glow existed (29a3ada1...).
+- MAIL 255 item 2: fadeMinor off and on with the real plates of `agent/mars-place` 41d7784 at Mars 2448 and 2704 (section 2, last part). Nothing of the Mars stop was changed in this branch. Merged main 03510ddd.
+- Options off after the merge of main 03510ddd: the 11 draft stills at f6dcf002 are byte equal to the same frames rendered at main 03510ddd. Main itself differs from the references of `412d2d09` at frame 2427 only (the Mars dive of the handover engine). `npx vitest run`: 76 files, 160 tests green.
