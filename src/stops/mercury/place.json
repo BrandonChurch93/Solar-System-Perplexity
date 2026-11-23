@@ -1,0 +1,53 @@
+{
+ "image": "references/approved/mercury-close.jpg",
+ "frame": 870,
+ "vfovDeg": 60,
+ "heightRadii": 0.01620452,
+ "dipDeg": 10.24576,
+ "pitchDeg": -30.05236,
+ "rollDeg": 11.27132,
+ "headingDeg": 81.82897,
+ "nadir": {
+  "lonDeg": 14.557248,
+  "latDeg": -13.860339
+ },
+ "body": {
+  "position": [
+   0.247982991,
+   -0.243437924,
+   0.954941909
+  ],
+  "quaternion": [
+   0.354499727,
+   -0.213581679,
+   -0.590086251,
+   0.693188978
+  ]
+ },
+ "closeUnitsPerRadius": 61.711158,
+ "sun": {
+  "image": {
+   "azimuthDeg": 53.86598131012511,
+   "elevationDeg": -3.0670080036650287,
+   "pixel": [
+    745.0000000000001,
+    -40
+   ]
+  },
+  "film": {
+   "azimuthDeg": 53.10730076593313,
+   "elevationDeg": 7.105508607276233
+  }
+ },
+ "fit": {
+  "points": 17,
+  "residualDegMax": 0.05078,
+  "residualDegRms": 0.0222
+ },
+ "measured": [
+  "The horizon of the approved close image was traced at the steepest rise of brightness in each column (assets-src/mercury/relief/camfit.py) and a cone about the nadir was fitted to it with the field of view the terrain view uses (60 degrees): pitch, roll and dip are the three unknowns.",
+  "The dip gives the height: 1 / cos(dip) - 1 radii. The close scene counts the camera height as 1 unit, so the sphere has a radius of closeUnitsPerRadius units there.",
+  "The nadir and the heading on the globe come from the dive spot and the dive heading of the plan (src/stops/mercury/plan.ts, src/stops/mercury/close.ts anchor), the same mapping the close scene is flown with.",
+  "body is the camera in the frame of the globe textures (x = cos lat sin lon, y = sin lat, z = cos lat cos lon), at zero spin. heading is clockwise from north at the nadir. pitch is the view axis against the local level (negative looks down). roll is positive when the horizon falls to the right of the frame. The dip is also the arc from the nadir to the horizon. Written by assets-src/mercury/place/solve.ts."
+ ]
+}

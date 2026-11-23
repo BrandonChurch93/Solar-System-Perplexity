@@ -56,6 +56,19 @@ export function placeLayout(format: { width: number; height: number }, size: Pla
   return { scale, left, right, bottom, top, width: (W + left + right) * scale, height: (H + bottom + top) * scale, shift: scale % 2 === 0 ? 0.5 : 0 }
 }
 
+// How far the feather of each side of the picture reaches in over the frame, in texels of the picture: left, right, bottom, top.
+// A picture that comes in with a weight by time alone shows its sides as straight lines wherever the ground under it is not quite
+// the same ground. With edgeIn the picture comes in from the place outward: while its weight is low the feather of a side reaches
+// in over the frame by that side's share of the frame's width or height, and it draws back to the margin as the weight goes to 1.
+// At T the weight is 1 and the reach is 0, so the two sides stay equal there. All four shares 0 is the pass as it was.
+export function edgeReach(place: Pick<PlaceState, 'weight' | 'edgeIn'>, layout: PlaceLayout): [number, number, number, number] {
+  const share = place.edgeIn ?? config.raw.handover.place.edgeIn
+  const open = 1 - Math.min(Math.max(place.weight, 0), 1)
+  const width = layout.width - (layout.left + layout.right) * layout.scale
+  const height = layout.height - (layout.bottom + layout.top) * layout.scale
+  return [share[0] * open * width, share[1] * open * width, share[2] * open * height, share[3] * open * height]
+}
+
 export function placeCamera(cam: THREE.PerspectiveCamera, format: { width: number; height: number }, layout: PlaceLayout, pose: Pose, near: number, far: number): void {
   const s = layout.scale
   cam.fov = pose.vfov
@@ -411,8 +424,9 @@ export class Place {
     ;(u.uLimb!.value as THREE.Vector4).set(lifted ? g.limb.x : 0, lifted ? g.limb.y : 0, lifted ? g.limb.z : 0, lifted ? g.limbDip : 0)
     ;(u.uReach!.value as THREE.Vector2).set(lifted ? g.reach : 1, lifted ? 1 : 0)
     ;(u.uHold!.value as THREE.Vector2).set(g.hold[0], g.hold[1])
-    const feather = (px: number): number => 1 / Math.max(c.edge * (px * l.scale - 1), 1e-3)
-    ;(u.uFeather!.value as THREE.Vector4).set(feather(l.left), feather(l.right), feather(l.bottom), feather(l.top))
+    const [inLeft, inRight, inBottom, inTop] = edgeReach(place, l)
+    const feather = (px: number, inward: number): number => 1 / Math.max(c.edge * (px * l.scale - 1) + inward, 1e-3)
+    ;(u.uFeather!.value as THREE.Vector4).set(feather(l.left, inLeft), feather(l.right, inRight), feather(l.bottom, inBottom), feather(l.top, inTop))
     ;(u.uLimits!.value as THREE.Vector4).set(place.weight, place.seen ?? c.seen, place.maxEnlarge ?? config.raw.handover.maxEnlarge, place.enlargeSoft ?? c.enlargeSoft)
     ;(u.uLens!.value as THREE.Vector4).set(vignette * (place.lens ?? c.lens), aspect, grad / l.scale, c.maxGradTexels)
     ;(u.uScale!.value as THREE.Vector2).set(l.scale, MODES[mode])
