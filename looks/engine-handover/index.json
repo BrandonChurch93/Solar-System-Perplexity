@@ -1,83 +1,78 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-23T11:19:48.081Z",
+ "pushed": "2026-11-23T11:46:24.852Z",
  "head": "412d2d097ed760d43dd2094ac6d5eca2f8efb027",
- "note": "E3: dive and rise drafts with coast and steady descent; rise banked the horizon, now coding an in plane level glide",
+ "note": "E3: steady descent with a sidestep past Phobos, dive draft judged frame by frame, strokes at the rise traced",
  "looks": [
   {
-   "time": "2026-11-23T11:19:47.316Z",
-   "file": "20261123111947316-note-rise1-b.jpg",
-   "source": "out/work/e3/rise1-b.png",
+   "time": "2026-11-23T11:46:24.227Z",
+   "file": "20261123114624227-note-moon-up-crops.jpg",
+   "source": "out/work/e3/moon-up-crops.png",
    "kind": "note",
-   "label": "E3 rise draft 2698 to 2744 every 3, before the in plane glide"
+   "label": "E3 draft: Phobos at full size, frames 2402 to 2404, with the sidestep"
   },
   {
-   "time": "2026-11-23T11:19:46.523Z",
-   "file": "20261123111946523-note-rise1-c.jpg",
-   "source": "out/work/e3/rise1-c.png",
+   "time": "2026-11-23T11:46:23.566Z",
+   "file": "20261123114623566-note-moon-up-2400-2411.jpg",
+   "source": "out/work/e3/moon-up-2400-2411.png",
    "kind": "note",
-   "label": "E3 rise draft, T 2685, horizon banks from 2695 (being fixed)"
+   "label": "E3 draft: dive start 2400 to 2411 with the upward sidestep, Phobos leaves by the bottom edge"
   },
   {
-   "time": "2026-11-23T11:19:45.758Z",
-   "file": "20261123111945758-note-dive1-a.jpg",
-   "source": "out/work/e3/dive1-a.png",
-   "kind": "note",
-   "label": "E3 dive draft, frames near T, before the in plane glide"
-  },
-  {
-   "time": "2026-11-23T11:19:45.026Z",
-   "file": "20261123111945026-note-dive1-wide.jpg",
-   "source": "out/work/e3/dive1-wide.png",
-   "kind": "note",
-   "label": "E3 dive draft 2400 to 2453 every 3, spiral path, before the in plane glide"
-  },
-  {
-   "time": "2026-11-23T11:04:07.631Z",
-   "file": "20261123110407631-sheet-mars-rise-draft-after.jpg",
-   "source": "out/work/handover/mars-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "mars rise, every frame 2686 to 2697 (after T, frame 2685), draft tier",
+   "time": "2026-11-23T11:46:17.242Z",
+   "file": "20261123114617242-frame-f2701.jpg",
+   "source": "out/work/e3/f2701.png",
+   "kind": "frame",
+   "label": "mars.rise frame 2701, draft tier",
    "stop": "mars",
    "segment": "mars.rise",
-   "first": 2686,
-   "last": 2697,
-   "tier": "draft"
+   "frame": 2701,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "16326da7882ca5a5"
   },
   {
-   "time": "2026-11-23T11:04:05.858Z",
-   "file": "20261123110405858-sheet-mars-rise-draft-across.jpg",
-   "source": "out/work/handover/mars-rise-draft-across.png",
-   "kind": "sheet",
-   "label": "mars rise, every frame 2679 to 2690 (across T, frame 2685), draft tier",
+   "time": "2026-11-23T11:43:18.822Z",
+   "file": "20261123114318822-frame-f02400.jpg",
+   "source": "out/work/seq/2400-2411/f02400.png",
+   "kind": "frame",
+   "label": "mars.dive frame 2400, draft tier",
    "stop": "mars",
-   "segment": "mars.rise",
-   "first": 2679,
-   "last": 2690,
-   "tier": "draft"
+   "segment": "mars.dive",
+   "frame": 2400,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "16326da7882ca5a5"
   },
   {
-   "time": "2026-11-23T11:04:04.048Z",
-   "file": "20261123110404048-sheet-mars-rise-draft-before.jpg",
-   "source": "out/work/handover/mars-rise-draft-before.png",
-   "kind": "sheet",
-   "label": "mars rise, every frame 2673 to 2684 (before T, frame 2685), draft tier",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "first": 2673,
-   "last": 2684,
-   "tier": "draft"
+   "time": "2026-11-23T11:43:02.703Z",
+   "file": "20261123114302703-note-dive2-2448-2459.jpg",
+   "source": "out/work/e3/dive2-2448-2459.png",
+   "kind": "note",
+   "label": "E3 dive draft 2448 to 2459 across T 2454"
   },
   {
-   "time": "2026-11-23T11:00:18.505Z",
-   "file": "20261123110018505-compare-mars-rise-sides.jpg",
-   "source": "out/work/handover/mars-rise-sides.png",
-   "kind": "compare",
-   "label": "mars rise, both sides at T (frame 2685) and their difference times 8",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "frame": 2685,
-   "tier": "draft"
+   "time": "2026-11-23T11:43:01.991Z",
+   "file": "20261123114301991-note-dive2-2436-2447.jpg",
+   "source": "out/work/e3/dive2-2436-2447.png",
+   "kind": "note",
+   "label": "E3 dive draft 2436 to 2447: level glide into the place"
+  },
+  {
+   "time": "2026-11-23T11:43:01.255Z",
+   "file": "20261123114301255-note-dive2-2400-2411.jpg",
+   "source": "out/work/e3/dive2-2400-2411.png",
+   "kind": "note",
+   "label": "BAD E3 dive draft 2400 to 2411 before the sidestep: Phobos fills a third of frame 2406"
+  },
+  {
+   "time": "2026-11-23T11:43:00.435Z",
+   "file": "20261123114300435-note-rise2-strokes.jpg",
+   "source": "out/work/e3/rise2-strokes.png",
+   "kind": "note",
+   "label": "E3 rise 2697 to 2703 crop: light strokes at the far edge of the place picture (canyon wall stretched on the sphere)"
   }
  ]
 }
