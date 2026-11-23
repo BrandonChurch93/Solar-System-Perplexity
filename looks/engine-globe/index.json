@@ -1,12 +1,19 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-23T13:27:35.870Z",
- "head": "c022fd12888f5a07e098675e7457287a2174088e",
- "note": "ownGain on the real Mars plates at 2448, scratch values; gain 1 keeps the bytes",
+ "pushed": "2026-11-23T19:10:47.812Z",
+ "head": "e62c658fd965ff8346a6345360079711bbf9b245",
+ "note": "ownGain moved to the scene value; 2448 keeps its bytes on mars-place, 2426 moves by at most 4 of 255",
  "looks": [
   {
-   "time": "2026-11-23T13:26:31.650Z",
-   "file": "20261123132631650-still-f04707-16x9-draft-full.jpg",
+   "time": "2026-11-23T19:10:47.024Z",
+   "file": "20261123191047024-note-pair-scenegain-f2426.jpg",
+   "source": "out/work/t2/pair-scenegain-f2426.png",
+   "kind": "note",
+   "label": "ownGain on the scene value against main's form, Mars 2426 on agent/mars-place 8b7c9a40: at most 4 of 255"
+  },
+  {
+   "time": "2026-11-23T19:09:39.639Z",
+   "file": "20261123190939639-still-f04707-16x9-draft-full.jpg",
    "source": "out/work/stills/f04707-16x9-draft-full.png",
    "kind": "still",
    "label": "neptune.dive frame 4707, draft tier",
@@ -16,11 +23,11 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "ee77572156dd9714"
+   "engine": "45f909e84c1a1464"
   },
   {
-   "time": "2026-11-23T13:25:55.843Z",
-   "file": "20261123132555843-still-f04035-16x9-draft-full.jpg",
+   "time": "2026-11-23T19:08:52.144Z",
+   "file": "20261123190852144-still-f04035-16x9-draft-full.jpg",
    "source": "out/work/stills/f04035-16x9-draft-full.png",
    "kind": "still",
    "label": "uranus.hold frame 4035, draft tier",
@@ -30,11 +37,11 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "ee77572156dd9714"
+   "engine": "45f909e84c1a1464"
   },
   {
-   "time": "2026-11-23T13:25:23.567Z",
-   "file": "20261123132523567-still-f03465-16x9-draft-full.jpg",
+   "time": "2026-11-23T19:08:18.837Z",
+   "file": "20261123190818837-still-f03465-16x9-draft-full.jpg",
    "source": "out/work/stills/f03465-16x9-draft-full.png",
    "kind": "still",
    "label": "saturn.hold frame 3465, draft tier",
@@ -44,11 +51,11 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "ee77572156dd9714"
+   "engine": "45f909e84c1a1464"
   },
   {
-   "time": "2026-11-23T13:24:53.349Z",
-   "file": "20261123132453349-still-f02997-16x9-draft-full.jpg",
+   "time": "2026-11-23T19:07:48.426Z",
+   "file": "20261123190748426-still-f02997-16x9-draft-full.jpg",
    "source": "out/work/stills/f02997-16x9-draft-full.png",
    "kind": "still",
    "label": "jupiter.dive frame 2997, draft tier",
@@ -58,11 +65,11 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "ee77572156dd9714"
+   "engine": "45f909e84c1a1464"
   },
   {
-   "time": "2026-11-23T13:24:23.756Z",
-   "file": "20261123132423756-still-f02427-16x9-draft-full.jpg",
+   "time": "2026-11-23T19:07:17.952Z",
+   "file": "20261123190717952-still-f02427-16x9-draft-full.jpg",
    "source": "out/work/stills/f02427-16x9-draft-full.png",
    "kind": "still",
    "label": "mars.dive frame 2427, draft tier",
@@ -72,11 +79,11 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "ee77572156dd9714"
+   "engine": "45f909e84c1a1464"
   },
   {
-   "time": "2026-11-23T13:23:50.588Z",
-   "file": "20261123132350588-still-f02325-16x9-draft-full.jpg",
+   "time": "2026-11-23T19:06:44.509Z",
+   "file": "20261123190644509-still-f02325-16x9-draft-full.jpg",
    "source": "out/work/stills/f02325-16x9-draft-full.png",
    "kind": "still",
    "label": "mars.hold frame 2325, draft tier",
@@ -86,11 +93,11 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "ee77572156dd9714"
+   "engine": "45f909e84c1a1464"
   },
   {
-   "time": "2026-11-23T13:23:18.708Z",
-   "file": "20261123132318708-still-f01857-16x9-draft-full.jpg",
+   "time": "2026-11-23T19:06:10.746Z",
+   "file": "20261123190610746-still-f01857-16x9-draft-full.jpg",
    "source": "out/work/stills/f01857-16x9-draft-full.png",
    "kind": "still",
    "label": "earth.dive frame 1857, draft tier",
@@ -100,11 +107,11 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "ee77572156dd9714"
+   "engine": "45f909e84c1a1464"
   },
   {
-   "time": "2026-11-23T13:22:39.920Z",
-   "file": "20261123132239920-still-f01185-16x9-draft-full.jpg",
+   "time": "2026-11-23T19:05:31.949Z",
+   "file": "20261123190531949-still-f01185-16x9-draft-full.jpg",
    "source": "out/work/stills/f01185-16x9-draft-full.png",
    "kind": "still",
    "label": "venus.hold frame 1185, draft tier",
@@ -114,11 +121,11 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "ee77572156dd9714"
+   "engine": "45f909e84c1a1464"
   },
   {
-   "time": "2026-11-23T13:22:09.673Z",
-   "file": "20261123132209673-still-f00717-16x9-draft-full.jpg",
+   "time": "2026-11-23T19:05:00.532Z",
+   "file": "20261123190500532-still-f00717-16x9-draft-full.jpg",
    "source": "out/work/stills/f00717-16x9-draft-full.png",
    "kind": "still",
    "label": "mercury.dive frame 717, draft tier",
@@ -128,11 +135,11 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "ee77572156dd9714"
+   "engine": "45f909e84c1a1464"
   },
   {
-   "time": "2026-11-23T13:21:31.520Z",
-   "file": "20261123132131520-still-f00615-16x9-draft-full.jpg",
+   "time": "2026-11-23T19:04:22.322Z",
+   "file": "20261123190422322-still-f00615-16x9-draft-full.jpg",
    "source": "out/work/stills/f00615-16x9-draft-full.png",
    "kind": "still",
    "label": "mercury.hold frame 615, draft tier",
@@ -142,11 +149,11 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "ee77572156dd9714"
+   "engine": "45f909e84c1a1464"
   },
   {
-   "time": "2026-11-23T13:20:54.808Z",
-   "file": "20261123132054808-still-f00360-16x9-draft-full.jpg",
+   "time": "2026-11-23T19:03:43.267Z",
+   "file": "20261123190343267-still-f00360-16x9-draft-full.jpg",
    "source": "out/work/stills/f00360-16x9-draft-full.png",
    "kind": "still",
    "label": "sun.hold frame 360, draft tier",
@@ -156,7 +163,7 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "ee77572156dd9714"
+   "engine": "45f909e84c1a1464"
   },
   {
    "time": "2026-11-23T13:20:50.137Z",
@@ -213,13 +220,6 @@
    "source": "out/work/t2/pairM-2448-full.png",
    "kind": "note",
    "label": "fadeMinor off and on, Mars 2448 side=orbit noplace, 8 levels of agent/mars-place 41d7784"
-  },
-  {
-   "time": "2026-11-23T12:07:58.273Z",
-   "file": "20261123120758273-note-pair-glow-f2448.jpg",
-   "source": "out/work/t2/pair-glow-f2448.png",
-   "kind": "note",
-   "label": "haze glow off and on, Mars 2448 side=orbit/noplace, scratch values"
   }
  ]
 }
