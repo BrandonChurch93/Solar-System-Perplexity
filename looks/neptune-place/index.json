@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T22:53:34.826Z",
+ "pushed": "2026-11-23T23:14:00.571Z",
  "head": "f7a9e0012da7f546eac24a2d5f51a5ff7cb49f27",
- "note": "22:54 VM: first frames of the function scene at 4860 beside the approved image; 35 s a frame at 960 wide draft",
+ "note": "deep.ts frame 4860 n beside approved, master crop; deck fine detail and cirrus width next",
  "looks": [
+  {
+   "time": "2026-11-23T23:14:00.001Z",
+   "file": "20261123231400001-note-c-M1.jpg",
+   "source": "../../../../tmp/c-M1.jpg",
+   "kind": "note",
+   "label": "deep.ts, crop of 4860 at master draft (left) beside approved (right): deck too soft, cirrus steps show, 57 s a master draft frame",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T23:13:59.429Z",
+   "file": "20261123231359429-note-d-n.jpg",
+   "source": "../../../../tmp/d-n.jpg",
+   "kind": "note",
+   "label": "deep.ts from functions, frame 4860 preview draft (left) beside the approved close image (right), 23:09 VM, unfinished",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-23T22:53:34.186Z",
    "file": "20261123225334186-note-d-f.jpg",
@@ -63,22 +79,6 @@
    "first": 4752,
    "last": 4763,
    "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T22:03:12.557Z",
-   "file": "20261123220312557-note-corner.jpg",
-   "source": "../../../../tmp/corner.png",
-   "kind": "note",
-   "label": "neptune dive, top right corner 120 by 90 px, 3x, around the sky turn (trial with the dim gone below 0.4 radii: warm stars at 4722 and 4723; the commit keeps the dim to 0.2 radii)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T22:03:11.848Z",
-   "file": "20261123220311848-note-sunset.jpg",
-   "source": "../../../../tmp/sunset.jpg",
-   "kind": "note",
-   "label": "neptune dive with rampIn 0.38, upper right at native size, 4702 to 4710, draft: one Sun, it sets behind the limb between 4705 and 4706",
-   "stop": "neptune"
   }
  ]
 }
