@@ -33,6 +33,9 @@ export interface SetState {
   weight: number
   view: ViewKind
   ground?: number
+  // The turn of the body's surface at this time, in the set's own frame. Given on the globe side of a dive and a rise of a stop that opted in,
+  // where the camera follows the turning place: raw motion then tracks points that turn with the body.
+  turn?: THREE.Quaternion
 }
 
 export interface CoverHorizon { normal: [number, number]; offset: number; soft: number }
@@ -56,6 +59,9 @@ export interface PlaceState {
   matte?: 'pair' | 'alpha'
   valid?: [number, number, number, number]
   lens?: number
+  seen?: number
+  maxEnlarge?: number
+  enlargeSoft?: number
 }
 
 export interface Shot {
@@ -81,9 +87,12 @@ export interface Shot {
   farLight?: number
   place?: PlaceState
   skyShare?: number
+  skyFloor?: SkyFloor
 }
 
-export interface TextureOptions { srgb?: boolean; mips?: boolean; repeat?: boolean; mirror?: boolean; anisotropy?: number; flipY?: boolean; linear?: boolean }
+export interface SkyFloor { nadir: THREE.Vector3; dip: number }
+
+export interface TextureOptions { srgb?: boolean; mips?: boolean; repeat?: boolean; mirror?: boolean; anisotropy?: number; flipY?: boolean; linear?: boolean; channels?: 1 }
 
 export interface SetContext {
   assets: string

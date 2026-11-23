@@ -326,6 +326,25 @@ describe('the switches of a handover', () => {
     expect(b.kind).toBe('rise')
     restorePlans()
   })
+  it('hands the limits of a place to the pass only when a side asks, and refuses limits outside their range', () => {
+    const plain = filmWith(coveredPlan({ handover: { dive: {}, rise: {} } }))
+    const hd = handoverOf('mars', 'dive')!
+    const hr = handoverOf('mars', 'rise')!
+    const none = plain.shotAt(hd.firstFrame, hd.time, 'orbit').place!
+    expect([none.seen, none.maxEnlarge, none.enlargeSoft]).toEqual([undefined, undefined, undefined])
+    restorePlans()
+    const d = filmWith(coveredPlan({ handover: { dive: { place: { seen: 0.25, maxEnlarge: 6, enlargeSoft: 0.75 } }, rise: { place: { maxEnlarge: 2 } } } }))
+    const a = d.shotAt(hd.firstFrame, hd.time, 'orbit').place!
+    expect([a.seen, a.maxEnlarge, a.enlargeSoft]).toEqual([0.25, 6, 0.75])
+    const b = d.shotAt(hr.firstFrame, hr.time, 'orbit').place!
+    expect([b.seen, b.maxEnlarge, b.enlargeSoft]).toEqual([undefined, 2, undefined])
+    restorePlans()
+    for (const bad of [{ seen: 0 }, { seen: 1.5 }, { maxEnlarge: 1 }, { enlargeSoft: 0 }, { enlargeSoft: 1 }]) {
+      filmWith(coveredPlan({ handover: { dive: { place: bad } } }))
+      expect(() => handoverOf('mars', 'dive')).toThrow()
+      restorePlans()
+    }
+  })
   it('takes a place window of no frames: the picture is there in the dissolve only', () => {
     const d = filmWith(coveredPlan({ handover: { dive: { placeFrames: 0 }, rise: { placeFrames: 0 } } }))
     for (const [s, kind] of [[dive, 'dive'], [rise, 'rise']] as const) {
@@ -398,6 +417,10 @@ describe('the options on a diagnostic string', () => {
     expect(parseProbe('beauty/side=terrain/t=81.80833/noplace')).toEqual({ view: 'beauty', side: 'terrain', shut: true, time: 81.80833, place: false, mask: false, picture: false })
     expect(parseProbe('beauty/mask').mask).toBe(true)
     expect(parseProbe('beauty/picture').picture).toBe(true)
+    expect(parseProbe('ungraded/side=orbit/dump=1497,889,image')).toEqual({ view: 'ungraded', side: 'orbit', shut: false, time: null, place: true, mask: false, picture: true, dump: { x: 1497, y: 889, what: 'image' } })
+    expect(probeString(parseProbe('ungraded/side=orbit/dump=0,0,alpha'))).toBe('ungraded/side=orbit/dump=0,0,alpha')
+    expect(() => parseProbe('ungraded/dump=1.5,0,image')).toThrow()
+    expect(() => parseProbe('ungraded/dump=0,0,colour')).toThrow()
     for (const s of ['beauty', 'texels/side=orbit/shut', 'beauty/side=terrain/t=81.80833/noplace', 'beauty/side=orbit/mask', 'beauty/picture']) expect(probeString(parseProbe(s))).toBe(s)
     expect(() => parseProbe('beauty/side=left')).toThrow()
     expect(() => parseProbe('beauty/t=soon')).toThrow()

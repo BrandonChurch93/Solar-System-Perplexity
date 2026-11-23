@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { config, type Segment } from '../config'
 import type { Director } from '../core/engine'
-import type { CoverState, PlaceState, Pose, SetState, Shot, SunState, ViewKind } from '../core/types'
+import type { CoverState, PlaceState, Pose, SetState, Shot, SkyFloor, SunState, ViewKind } from '../core/types'
 import { defaultPost } from '../post/chain'
 import { StopPlan, easeInOut, type OrbitShot } from './moves'
 import { arc, drift, forward, lookAt, mix, ramp, slerpDir, smooth, smoother } from './rig'
@@ -76,6 +76,7 @@ export class FilmDirector implements Director {
   private readonly sunSwapSpan: [number, number] = SUN_SWAP
   private readonly openRef = new Map<number, number>()
   private readonly settled = new Map<number, [number, number]>()
+  private readonly skyFloors = new Map<string, SkyFloor>()
   private lookbackUp = new THREE.Vector3()
   private lookbackSun = new THREE.Vector3()
   private lookbackSide = new THREE.Vector3()
@@ -614,6 +615,7 @@ export class FilmDirector implements Director {
     let skyPatch = 1
     let skyShare: number | undefined
     let skyCarry: THREE.Quaternion | null = null
+    let skyFloor: SkyFloor | null = null
     let place: PlaceState | undefined
     const index = config.stopIds.indexOf(segment.stop)
     let skyLook = bandLook(segment.stop === config.endingId ? this.plans[this.plans.length - 1]!.id : segment.stop)
@@ -622,7 +624,8 @@ export class FilmDirector implements Director {
       const f = this.frames[i]!
       const rotation = view === 'terrain' ? f.rotation.clone().multiply(p.turn(time)).multiply(p.terrainFrame) : f.rotation.clone()
       const origin = view === 'terrain' ? p.spot.clone().applyQuaternion(p.turn(time)).applyQuaternion(f.rotation).add(f.origin) : f.origin.clone()
-      return { id: p.id, origin, rotation, time, local: time - p.firstSegment.start, segment, u, weight, view, ground: p.ground }
+      const turns = view === 'orbit' && p.handsOver && p.id === segment.stop && (segment.kind === 'dive' || segment.kind === 'rise')
+      return { id: p.id, origin, rotation, time, local: time - p.firstSegment.start, segment, u, weight, view, ground: p.ground, ...(turns ? { turn: p.turn(time) } : {}) }
     }
     const inSet = (s: SetState, p: Pose): Pose => ({ position: p.position.clone().applyQuaternion(s.rotation).add(s.origin), quaternion: s.rotation.clone().multiply(p.quaternion), vfov: p.vfov })
 
@@ -792,6 +795,7 @@ export class FilmDirector implements Director {
         const dive = kind === 'dive'
         const turned = skyTurnWeight(segment, time)
         skyShare = skyWeight(segment, time)
+        if (hand.skyFloor && skyShare > 0) skyFloor = this.skyFloorOf(index, kind, hand.time)
         skyGlow = mix(1, p.p.light.terrainSkyGlow ?? 1, skyShare)
         const low = this.sky.turns[p.id] ?? NO_TURN
         skyTurn = turned <= 0 ? skyTurn : turned >= 1 ? low : skyTurn.clone().slerp(low, turned)
@@ -809,7 +813,7 @@ export class FilmDirector implements Director {
         if (weight > 0 && hand.picture) {
           const tw = inSet(s, p.twin(p.closePose(kind, hand.time), time))
           tw.quaternion.multiply(drift(hand.time))
-          place = { stop: p.id, kind, weight, frame: handoverFrame(hand), time: hand.time, live: hand.live, twin: tw, centre: s.origin.clone(), radius: 1, scale: hand.place.scale, margin: hand.place.margin, matte: hand.place.matte, valid: hand.place.valid, lens: hand.place.lens }
+          place = { stop: p.id, kind, weight, frame: handoverFrame(hand), time: hand.time, live: hand.live, twin: tw, centre: s.origin.clone(), radius: 1, scale: hand.place.scale, margin: hand.place.margin, matte: hand.place.matte, valid: hand.place.valid, lens: hand.place.lens, seen: hand.place.seen, maxEnlarge: hand.place.maxEnlarge, enlargeSoft: hand.place.enlargeSoft }
         }
       }
       if (segment.kind === 'dive' || segment.kind === 'rise') {
@@ -848,7 +852,29 @@ export class FilmDirector implements Director {
     const sun: SunState = { dir: this.sunWorld.clone(), color: SUN_COLOR, intensity: 3, angularRadius: light.radius, glare: light.glare * sunWeight }
     const out: Shot = { frame, time, segment, u, camera: pose, skyQuaternion: skyCarry ? skyCarry.multiply(pose.quaternion) : pose.quaternion.clone(), skyExposure: light.sky, skyGlow, skyTurn, skyStars, skyPatch, skyLook, near, far, sun, sets, post, cover, dust, farLight }
     if (skyShare !== undefined) out.skyShare = skyShare
+    if (skyFloor) out.skyFloor = skyFloor
     if (place) out.place = place
+    return out
+  }
+
+  private skyFloorOf(index: number, kind: 'dive' | 'rise', time: number): SkyFloor | null {
+    const p = this.plans[index]!
+    const key = p.id + '|' + kind + '|' + time
+    const hit = this.skyFloors.get(key)
+    if (hit !== undefined) return hit
+    const aim = this.sky?.patches[p.id]?.terrain
+    let out: SkyFloor | null = null
+    if (aim) {
+      const close = p.closePose(kind, time)
+      const twin = p.twin(close, time)
+      const qc = this.frames[index]!.rotation.clone().multiply(p.turn(time)).multiply(p.terrainFrame).multiply(close.quaternion)
+      const turn = this.sky.turns[p.id] ?? NO_TURN
+      const nadir = twin.position.clone().normalize().negate().applyQuaternion(twin.quaternion.clone().invert())
+      nadir.applyQuaternion(qc).applyQuaternion(turn.clone().invert()).applyQuaternion(this.sky.frame).applyQuaternion(aim.clone().invert())
+      out = { nadir, dip: Math.acos(Math.min(1 / twin.position.length(), 1)) }
+    }
+    if (this.skyFloors.size > 32) this.skyFloors.clear()
+    if (out) this.skyFloors.set(key, out)
     return out
   }
 

@@ -237,7 +237,7 @@ function flow(line: Line): FlowNumbers & Verdict {
 
 interface FrameRow {
   frame: number; side: ViewKind; height: number; ratio: number | null; rate: number | null; place: [number, number] | null; motionCentre: number | null; motionEdge: number | null; motionMost: number
-  level?: number; colour?: number[]; bodyShare?: number; bodyLevel?: number; flatShare?: number; contrast?: number
+  level?: number; colour?: number[]; bodyShare?: number; bodyLevel?: number; bodyColour?: number[]; flatShare?: number; contrast?: number
 }
 interface ImageNumbers { level: number; colour: number[]; bodyShare: number; bodyLevel: number; bodyColour: number[]; flatShare: number; contrast: number }
 
@@ -274,7 +274,7 @@ async function frames(line: Line, withImages: boolean): Promise<{ rows: FrameRow
     const numbers = measure<ImageNumbers[]>({ op: 'frames', paths, bodies, floor: L.flatFloor })
     rows.forEach((r, i) => {
       const n = numbers[i]!
-      Object.assign(r, { level: round(n.level, 2), colour: n.colour.map((v) => round(v, 2)), bodyShare: round(n.bodyShare, 3), bodyLevel: round(n.bodyLevel, 2), flatShare: round(n.flatShare, 3), contrast: round(n.contrast, 2) })
+      Object.assign(r, { level: round(n.level, 2), colour: n.colour.map((v) => round(v, 2)), bodyShare: round(n.bodyShare, 3), bodyLevel: round(n.bodyLevel, 2), bodyColour: n.bodyColour.map((v) => round(v, 2)), flatShare: round(n.flatShare, 3), contrast: round(n.contrast, 2) })
     })
   }
   // The rate limits of E3, on the far part of the line: from the first frame to T in a dive, from T to the last frame in a rise.
@@ -311,22 +311,30 @@ async function frames(line: Line, withImages: boolean): Promise<{ rows: FrameRow
   if (dive && off.by > L.placeMiddle) why.push('the place leaves the middle of the frame: frame ' + off.frame + ' has it at ' + round(off.by, 2) + ' of the half frame, limit ' + L.placeMiddle)
   const judged: Record<string, unknown> = { meanRate: round(mean, 5), meanRatio: round(Math.exp(-mean * sign), 5), worstRate: { frame: worst.frame, overMean: round(worst.over, 3) }, early: { frame: fifth, overMean: round(early / mean, 3) }, placeOff: { frame: off.frame, share: round(off.by, 3), from, to } }
   if (withImages) {
+    // Steps are judged on the body alone (the blocks the body covers in both frames' own grids), so a globe that grows into a black sky or leaves it is not read as a cut. The whole frame steps are reported beside them.
     let level = { frame: -1, step: 0 }
     let colour = { frame: -1, step: 0 }
+    let whole = { frame: -1, step: 0 }
+    let wholeColour = { frame: -1, step: 0 }
     let flat = { frame: -1, share: 0 }
     rows.forEach((r, i) => {
       if (r.flatShare! > flat.share) flat = { frame: r.frame, share: r.flatShare! }
       const p = rows[i - 1]
       if (!p) return
-      const dl = Math.abs(r.level! - p.level!)
-      const dc = Math.max(...r.colour!.map((v, k) => Math.abs(v - p.colour![k]!)))
+      const wl = Math.abs(r.level! - p.level!)
+      const wc = Math.max(...r.colour!.map((v, k) => Math.abs(v - p.colour![k]!)))
+      if (wl > whole.step) whole = { frame: r.frame, step: wl }
+      if (wc > wholeColour.step) wholeColour = { frame: r.frame, step: wc }
+      if (Math.min(r.bodyShare!, p.bodyShare!) < L.bodyShare) return
+      const dl = Math.abs(r.bodyLevel! - p.bodyLevel!)
+      const dc = Math.max(...r.bodyColour!.map((v, k) => Math.abs(v - p.bodyColour![k]!)))
       if (dl > level.step) level = { frame: r.frame, step: dl }
       if (dc > colour.step) colour = { frame: r.frame, step: dc }
     })
-    if (level.step > L.levelStep) why.push('the mean level steps by ' + round(level.step, 2) + ' into frame ' + level.frame + ', limit ' + L.levelStep)
-    if (colour.step > L.colourStep) why.push('the mean colour steps by ' + round(colour.step, 2) + ' into frame ' + colour.frame + ', limit ' + L.colourStep)
+    if (level.step > L.levelStep) why.push('the mean level of the body steps by ' + round(level.step, 2) + ' into frame ' + level.frame + ', limit ' + L.levelStep)
+    if (colour.step > L.colourStep) why.push('the mean colour of the body steps by ' + round(colour.step, 2) + ' into frame ' + colour.frame + ', limit ' + L.colourStep)
     if (flat.share > L.flatShare) why.push('frame ' + flat.frame + ' has ' + round(flat.share * 100, 1) + ' percent of the body flat, limit ' + round(L.flatShare * 100, 1))
-    Object.assign(judged, { levelStep: { frame: level.frame, step: round(level.step, 2) }, colourStep: { frame: colour.frame, step: round(colour.step, 2) }, flat: { frame: flat.frame, share: round(flat.share, 3) } })
+    Object.assign(judged, { levelStep: { frame: level.frame, step: round(level.step, 2) }, colourStep: { frame: colour.frame, step: round(colour.step, 2) }, frameLevelStep: { frame: whole.frame, step: round(whole.step, 2) }, frameColourStep: { frame: wholeColour.frame, step: round(wholeColour.step, 2) }, flat: { frame: flat.frame, share: round(flat.share, 3) } })
   }
   return { rows, judged, pass: why.length === 0, why }
 }
@@ -381,11 +389,11 @@ try {
       out.frames = f.rows
       out.judged = f.judged
       verdicts.push(['every frame', f])
-      const j = f.judged as { meanRate: number; meanRatio: number; worstRate: { frame: number; overMean: number }; early: { frame: number; overMean: number }; placeOff: { frame: number; share: number }; levelStep?: { frame: number; step: number }; colourStep?: { frame: number; step: number }; flat?: { frame: number; share: number } }
+      const j = f.judged as { meanRate: number; meanRatio: number; worstRate: { frame: number; overMean: number }; early: { frame: number; overMean: number }; placeOff: { frame: number; share: number }; levelStep?: { frame: number; step: number }; colourStep?: { frame: number; step: number }; frameLevelStep?: { frame: number; step: number }; frameColourStep?: { frame: number; step: number }; flat?: { frame: number; share: number } }
       md.push('Height: mean ratio per frame ' + j.meanRatio + ' on the way ' + (kind === 'dive' ? 'to' : 'from') + ' T; fastest frame ' + j.worstRate.frame + ' at ' + j.worstRate.overMean + ' times the mean rate; frame ' + j.early.frame + ' (one fifth of the way) at ' + j.early.overMean + ' of the mean. The place is at most ' + j.placeOff.share + ' of the half frame from the middle (frame ' + j.placeOff.frame + ').')
-      if (j.levelStep && j.colourStep && j.flat) md.push('Largest step in mean level ' + j.levelStep.step + ' (into frame ' + j.levelStep.frame + '), in mean colour ' + j.colourStep.step + ' (into frame ' + j.colourStep.frame + '); largest flat share of the body ' + round(j.flat.share * 100, 1) + ' percent (frame ' + j.flat.frame + ').')
-      md.push('', '| frame | side | height | ratio | place x, y | motion centre | motion edge | level | colour | flat |', '| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |')
-      for (const r of f.rows) md.push('| ' + [r.frame + (r.frame === line.frameT ? ' T' : ''), r.side === 'orbit' ? 'globe' : 'close', r.height, r.ratio ?? '', r.place ? r.place.join(', ') : 'behind', r.motionCentre ?? '', r.motionEdge ?? '', r.level ?? '', r.colour ? r.colour.join(' ') : '', r.flatShare ?? ''].join(' | ') + ' |')
+      if (j.levelStep && j.colourStep && j.flat) md.push('Largest step between two frames, on the body: mean level ' + j.levelStep.step + ' (into frame ' + j.levelStep.frame + '), mean colour ' + j.colourStep.step + ' (into frame ' + j.colourStep.frame + '). On the whole frame, not judged: level ' + j.frameLevelStep!.step + ' (into frame ' + j.frameLevelStep!.frame + '), colour ' + j.frameColourStep!.step + ' (into frame ' + j.frameColourStep!.frame + '). Largest flat share of the body ' + round(j.flat.share * 100, 1) + ' percent (frame ' + j.flat.frame + ').')
+      md.push('', '| frame | side | height | ratio | place x, y | motion centre | motion edge | level | colour | body share | body level | body colour | flat |', '| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |')
+      for (const r of f.rows) md.push('| ' + [r.frame + (r.frame === line.frameT ? ' T' : ''), r.side === 'orbit' ? 'globe' : 'close', r.height, r.ratio ?? '', r.place ? r.place.join(', ') : 'behind', r.motionCentre ?? '', r.motionEdge ?? '', r.level ?? '', r.colour ? r.colour.join(' ') : '', r.bodyShare ?? '', r.bodyLevel ?? '', r.bodyColour ? r.bodyColour.join(' ') : '', r.flatShare ?? ''].join(' | ') + ' |')
       md.push('')
     }
     if (only.includes('sheets')) {

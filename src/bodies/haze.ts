@@ -21,6 +21,7 @@ export interface HazeParams {
   forward: number
   top: number
   core?: HazeCore
+  glow?: boolean
 }
 
 export const HAZE_GLSL = /* glsl */ `
@@ -77,6 +78,26 @@ vec3 hazeLight(vec3 at, vec3 dir) {
   return ((uHazeDay * day * day + uHazeTwilight * tw) * hazeForward(dir) + uHazeNight) * uHazeStrength;
 }`
 
+const GLOW_FROM = 'uniform float uHazeForward;'
+const LIGHT_FROM = 'hazeForward(dir) + uHazeNight) * uHazeStrength;'
+
+export function hazeGlsl(glow: boolean): string {
+  if (!glow) return HAZE_GLSL
+  if (!HAZE_GLSL.includes(GLOW_FROM) || !HAZE_GLSL.includes(LIGHT_FROM)) throw new Error('the haze text has no place for the glow')
+  return HAZE_GLSL
+    .replace(GLOW_FROM, GLOW_FROM + '\nuniform vec3 uHazeGlow;\nuniform vec3 uHazeGlowDir;\nuniform float uHazeGlowPower;')
+    .replace(LIGHT_FROM, 'hazeForward(dir) + uHazeNight + uHazeGlow * pow(max(dot(dir, uHazeGlowDir), 0.0), uHazeGlowPower)) * uHazeStrength;')
+}
+
+export function setHazeGlow(uniforms: Record<string, THREE.IUniform>, direction: THREE.Vector3, colour: [number, number, number], power: number): void {
+  const glow = uniforms.uHazeGlow
+  if (!glow) throw new Error('this haze has no glow: set glow in its params')
+  if (!(power > 0)) throw new Error('the glow power must be above 0')
+  ;(glow.value as THREE.Vector3).fromArray(colour)
+  ;(uniforms.uHazeGlowDir!.value as THREE.Vector3).copy(direction).normalize()
+  uniforms.uHazeGlowPower!.value = power
+}
+
 const VERT = /* glsl */ `
 out vec3 vPos;
 void main() {
@@ -85,7 +106,7 @@ void main() {
   gl_Position = projectionMatrix * viewMatrix * wp;
 }`
 
-const FRAG = /* glsl */ `
+const frag = (glow: boolean): string => /* glsl */ `
 precision highp float;
 in vec3 vPos;
 uniform float uGain;
@@ -95,7 +116,7 @@ uniform vec3 uCoreDay;
 uniform vec3 uCoreSun;
 uniform vec2 uCoreRange;
 out vec4 outColor;
-${HAZE_GLSL}
+${hazeGlsl(glow)}
 void main() {
   if (uDiag >= 2) discard;
   vec3 dir = normalize(vPos);
@@ -126,6 +147,7 @@ export function hazeUniforms(p: HazeParams): Record<string, THREE.IUniform> {
     uHazeNight: { value: new THREE.Vector3().fromArray(p.night ?? [0, 0, 0]) },
     uHazeStrength: { value: p.strength },
     uHazeForward: { value: p.forward },
+    ...(p.glow ? { uHazeGlow: { value: new THREE.Vector3() }, uHazeGlowDir: { value: new THREE.Vector3(1, 0, 0) }, uHazeGlowPower: { value: 1 } } : {}),
   }
 }
 
@@ -140,7 +162,7 @@ export class HazeShell implements Trim {
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
       vertexShader: VERT,
-      fragmentShader: FRAG,
+      fragmentShader: frag(p.glow === true),
       uniforms: {
         ...hazeUniforms(p), uGain: { value: 1 }, uDiag: diag,
         uCoreHeight: { value: p.core?.scaleHeight ?? 0 },
@@ -181,6 +203,10 @@ export class HazeShell implements Trim {
 
   show(): void {
     this.mesh.geometry = this.full
+  }
+
+  setGlow(direction: THREE.Vector3, colour: [number, number, number], power: number): void {
+    setHazeGlow(this.material.uniforms, direction, colour, power)
   }
 
   dispose(): void {
