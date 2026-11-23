@@ -1,9 +1,61 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-23T10:47:02.644Z",
+ "pushed": "2026-11-23T11:07:58.932Z",
  "head": "54f4ffc6b5f2c6f78bbd024d6f383e271e7a1ff3",
- "note": "S4 at 54f4ffc6: whole rise with the handover, every third frame; dive and top down sheets rendering",
+ "note": "dive g and top down g on the engine handover; two Suns at 4167 to 4176 found, fixing",
  "looks": [
+  {
+   "time": "2026-11-23T11:07:54.138Z",
+   "file": "20261123110754138-note-sun-fg.jpg",
+   "source": "../../../../tmp/sun-fg.png",
+   "kind": "note",
+   "label": "defect: two Suns in dive 4167 4170 4173 (pairs: before S4, now). Cause being fixed",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T11:07:53.326Z",
+   "file": "20261123110753326-note-down-g.jpg",
+   "source": "out/work/u/down/down-g.jpg",
+   "kind": "note",
+   "label": "top down dive sheet g, 12 frames, draft, tree of 54f4ffc6 (main c9c23b29)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T11:07:52.442Z",
+   "file": "20261123110752442-note-dive-g.jpg",
+   "source": "out/work/u/dive/dive-g.jpg",
+   "kind": "note",
+   "label": "dive sheet g, every third frame 4110 to 4199, draft, tree of 54f4ffc6 (main c9c23b29)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T11:07:47.660Z",
+   "file": "20261123110747660-job-frame-03960.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.hold frame 3960, draft tier, texels view, from the running measure job",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 3960,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-23T11:07:10.607Z",
+   "file": "20261123110710607-frame-g-4199.jpg",
+   "source": "out/work/u/down/g-4199.png",
+   "kind": "frame",
+   "label": "uranus.dive frame 4199, draft tier, beauty/noplace view",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4199,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty/noplace",
+   "engine": "8b9f780b26a50bc3"
+  },
   {
    "time": "2026-11-23T10:47:02.063Z",
    "file": "20261123104702063-note-rise-g-4.jpg",
@@ -19,20 +71,6 @@
    "kind": "note",
    "label": "uranus rise, every third frame 4380 to 4454, draft, S4 on 54f4ffc6 (main 06ea6488): one camera, place picture at T 4391, arch and dome as true things",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T10:46:41.441Z",
-   "file": "20261123104641441-frame-g-4110.jpg",
-   "source": "out/work/u/dive/g-4110.png",
-   "kind": "frame",
-   "label": "uranus.dive frame 4110, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4110,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "8b9f780b26a50bc3"
   },
   {
    "time": "2026-11-23T10:46:11.511Z",
