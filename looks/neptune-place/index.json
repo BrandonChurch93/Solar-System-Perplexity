@@ -1,9 +1,45 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T07:21:10.439Z",
- "head": "0bea475b707996cdf71663096f87598b7f1fda2c",
- "note": "S1 check with first rough plates: cirrus on cirrus, horizon rms 1.1 px; seam and old eye still wrong",
+ "pushed": "2026-11-23T07:39:18.430Z",
+ "head": "2d9cf1a66fb7ded37346e7daeebe018df6210801",
+ "note": "M1 committed 2d9cf1a6: hold and terrain frames pixel identical to main; next the new path and the rework of the levels",
  "looks": [
+  {
+   "time": "2026-11-23T07:39:16.521Z",
+   "file": "20261123073916521-note-same-as-main.jpg",
+   "source": "out/work/nep/place/same-as-main.jpg",
+   "kind": "note",
+   "label": "hold 4605 and terrain 4860: main (left) and this branch (right), draft, 0 pixels differ",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T07:35:14.004Z",
+   "file": "20261123073514004-frame-f4640.jpg",
+   "source": "out/work/nep/now/f4640.png",
+   "kind": "frame",
+   "label": "neptune.hold frame 4640, draft tier",
+   "stop": "neptune",
+   "segment": "neptune.hold",
+   "frame": 4640,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "247ebad7e038ce06"
+  },
+  {
+   "time": "2026-11-23T07:33:54.079Z",
+   "file": "20261123073354079-frame-f4949.jpg",
+   "source": "out/work/nep/now/f4949.png",
+   "kind": "frame",
+   "label": "neptune.terrain frame 4949, draft tier",
+   "stop": "neptune",
+   "segment": "neptune.terrain",
+   "frame": 4949,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "247ebad7e038ce06"
+  },
   {
    "time": "2026-11-23T07:21:03.674Z",
    "file": "20261123072103674-note-plates-rough.jpg",
@@ -19,20 +55,6 @@
    "kind": "note",
    "label": "S1 check with the first plates: globe side from the twin (top left) and close side (top right) at 4860, globe edges in red on the close frame, split view",
    "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T07:20:08.748Z",
-   "file": "20261123072008748-frame-twin-close-texels.jpg",
-   "source": "out/work/nep/place/twin-close-texels.png",
-   "kind": "frame",
-   "label": "neptune.terrain frame 4860, draft tier, texels view",
-   "stop": "neptune",
-   "segment": "neptune.terrain",
-   "frame": 4860,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "engine": "247ebad7e038ce06"
   },
   {
    "time": "2026-11-23T07:18:48.055Z",
@@ -63,34 +85,6 @@
    "kind": "note",
    "label": "S1 first check, before any plate: globe side from the twin (top, frame 4769 forced to the twin of 4860) over the close side at 4860. Horizon sits on horizon; the ground is still the old level 10",
    "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T00:31:39.747Z",
-   "file": "20261123003139747-job-frame-04981.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "neptune.rise frame 4981, final tier, from the running film job",
-   "stop": "neptune",
-   "segment": "neptune.rise",
-   "frame": 4981,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "job": "film"
-  },
-  {
-   "time": "2026-11-22T23:56:25.998Z",
-   "file": "20261122235625998-job-frame-04876.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "neptune.terrain frame 4876, final tier, from the running film job",
-   "stop": "neptune",
-   "segment": "neptune.terrain",
-   "frame": 4876,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "job": "film"
   }
  ]
 }
