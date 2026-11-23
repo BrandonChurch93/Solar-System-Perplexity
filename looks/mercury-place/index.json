@@ -1,9 +1,33 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T15:02:14.951Z",
- "head": "63dd08bc4ce206c3c85e4ee27fe25845ce4231bb",
- "note": "63dd08bc READY sent: alphaOne, full set 1380 MB, kept frames same bytes; next the land matte for the four sided patch 738 to 743",
+ "pushed": "2026-11-23T15:22:29.513Z",
+ "head": "6618cfc5cde62cd65b1b7cef8fb21821b8043c47",
+ "note": "four sided patch 738 to 743: band tone matched by code, edge found to be the picture border; next the engine option edgeIn when on main",
  "looks": [
+  {
+   "time": "2026-11-23T15:22:28.955Z",
+   "file": "20261123152228955-note-w738.jpg",
+   "source": "out/work/mercury/place/tmp/w738.jpg",
+   "kind": "note",
+   "label": "738 whole, left 63dd08bc, right matched band (not committed)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T15:22:28.335Z",
+   "file": "20261123152228335-note-n741.jpg",
+   "source": "out/work/mercury/place/tmp/n741.jpg",
+   "kind": "note",
+   "label": "741 crop, left with the place picture, right plates alone (noplace). The plates alone have no straight edge: the edge is the border of the place picture (frame of T plus 3 percent margin), sharp picture against the crater field",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T15:22:27.603Z",
+   "file": "20261123152227603-note-m741.jpg",
+   "source": "out/work/mercury/place/tmp/m741.jpg",
+   "kind": "note",
+   "label": "741 crop left part, left 63dd08bc, right band beside the place matched to the picture in linear mean and per octave (not committed). Tone closer, straight edge still there",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-23T15:02:14.350Z",
    "file": "20261123150214350-note-plates43.jpg",
@@ -43,38 +67,6 @@
    "kind": "note",
    "label": "a42801fb handover sheet dive-draft-after (draft, crater band, feather 0.02)",
    "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T14:41:53.288Z",
-   "file": "20261123144153288-note-ho-dive-draft-across.jpg",
-   "source": "out/work/mercury/place/tmp/ho-dive-draft-across.jpg",
-   "kind": "note",
-   "label": "a42801fb handover sheet dive-draft-across (draft, crater band, feather 0.02)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T14:36:41.889Z",
-   "file": "20261123143641889-sheet-mercury-rise-draft-after.jpg",
-   "source": "out/work/handover/mercury-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "mercury rise, every frame 991 to 1002 (after T, frame 990), draft tier",
-   "stop": "mercury",
-   "segment": "mercury.rise",
-   "first": 991,
-   "last": 1002,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T14:36:39.589Z",
-   "file": "20261123143639589-sheet-mercury-rise-draft-across.jpg",
-   "source": "out/work/handover/mercury-rise-draft-across.png",
-   "kind": "sheet",
-   "label": "mercury rise, every frame 984 to 995 (across T, frame 990), draft tier",
-   "stop": "mercury",
-   "segment": "mercury.rise",
-   "first": 984,
-   "last": 995,
-   "tier": "draft"
   }
  ]
 }
