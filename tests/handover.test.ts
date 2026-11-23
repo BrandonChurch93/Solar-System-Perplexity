@@ -208,7 +208,9 @@ describe('a stop that opted in', () => {
       // The side of a sample goes by its place in the shutter that is open, so the pattern is the one of the full shutter.
       samplesFor(16, share).forEach((x, i) => expect(sideAt(s, (f + x.timeOffset) / fps)).toBe(dissolveWeight(h, s.kind as 'dive' | 'rise', f) > shutterThreshold((i + 0.5) / 16) ? 'terrain' : 'orbit'))
     }
-    expect(shortened).toBeGreaterThan(0)
+    // Under a cap the frame of the swap keeps a part of its shutter at one seam at least; without one (handover.maxBlurPx 0) it keeps all of it.
+    if (config.raw.handover.maxBlurPx > 0) expect(shortened).toBeGreaterThan(0)
+    else expect(shortened).toBe(0)
     off()
   })
   it('runs the weight up through a longer dissolve in a dive and down in a rise', () => {

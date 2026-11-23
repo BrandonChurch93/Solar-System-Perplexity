@@ -315,6 +315,34 @@ Read this file first after a compaction, then the task mail, then `cut/HANDOVER.
 - Seen again in those frames, not from the floor: from 2693 on the globe's red shows at the edge of the place picture, and by 2694 the picture is a dark window with round corners on the red globe. That is the tone gap of the Mars rise on this branch (it carries main's Mars, not the newest bake). mars_place_builder named `agent/mars-place` fab057c5 at 19:44 (the tint commit, merged with main c8b4c8b9; 701a958e on top is notes only): tune the tone there.
 - `repo-before` was removed at 19:46 for disk (5.6 GB free after).
 
+### 20:00 to 20:17, Mail 334 and 336: the proof goes to /root, the off value of the cap, Mercury's test line, floor 0.5
+
+- Mail 334 (19:59): stop my byte proof, /root runs it on its machines on the tree that carries the numbers it chooses; start the tone split on `agent/mars-place` fab057c5 at once. The chain was changed without killing anything: `/tmp/e6/chain6.sh` (only exec'd at the end of chain7) was replaced by the tone chain.
+- Sent 20:10: the list R with what each group proves. 58 frames outside every dive and rise, 8 of Venus and Jupiter (first frame and a frame inside the cover window of dive and rise), 4 of Saturn. Since main 32c488a Saturn hands over (d135), so E6 applies to it: 3540, 3570, 3810 keep share 1 at cap 6 and 14, 3856 is capped (share 0.216 at cap 6) and went out of the list (69 frames, Mail 336). Ease frames exist only at cap 6: Saturn dive 3618 to 3629, Saturn rise 3810 to 3821, Uranus dive 4188 to 4199; at cap 14 no seam moves more than the cap. Under cap 6 Saturn has 42 capped frames in its dive (3556 to 3628) and 63 in its rise (3818 to 3880); under cap 14 none in the dive and 59 in the rise (3819 to 3877). /root tells saturn_coder. Scripts: `/tmp/e6/rmap.ts`, `/tmp/e6/eases.ts`.
+- mercury_builder (20:05): `tests/place.test.ts` named Mars as the one stop that may set `place.edgeIn` or `place.toneIn`; Mercury sets edgeIn (told to by /root, mail 304) and failed that one test. Now every stop is held against its own plan (`asked(p, kind)` reads `plan.p.handover[kind].place`). Commit 0b054d1 (test only); /root takes that file onto main.
+- Main b6c86a3 merged: f7f0b7c (Saturn from code, `tests/carried.test.ts` gone on main, a new test file comes with it). 212 of 212 in 29 files, build passes, G11 PASS.
+- The off value of the cap (asked for in Mail 334, agreed in Mail 336): `handover.maxBlurPx` 0 means no cap. `blurAllowed` returns Infinity at once, so the share is 1 everywhere; the check in `src/config.ts` takes 0. Three tests in `tests/shutter.test.ts` (group "the cap switched off (handover.maxBlurPx 0)") over all 5400 frames: share 1 whatever floor and ease; the plan at the three tiers equals the formula of main fdf97b8 written out in the test; the old sample times, and inside the dissolve the old side of every sample. The handover tool says "no cap" in its report (tried with `--only path` on the Mars rise). Commit aef3668, pushed, 215 of 215 in 29 files, build passes. Told /root 20:16.
+- Decision d136 (Mail 336): a cap by itself is ruled out (sharp frames far apart were called a major fault by the motion critics on Uranus 4126 to 4175, stepped copies on Mercury 706 to 722). The choice left is the whole shutter or a floor under the cap; /root decides on frames beside each other (Mars 2439 to 2441, Earth 1881 to 1883). Do not build past it.
+- Mars 2440 on the probe grid (`/tmp/e6/streak.ts`, no render): whole shutter 51 px at the middle of the right edge and 147 px at the right corner, samples review 128 (the tier's limit) and final 245; floor 0.5: 26 and 73 px, 123 and 123; floor 0.25: 13 and 37 px, 61 and 64; the middle of the frame keeps 2.6, 1.3, 0.7 px. Told /root 20:16.
+- Floor 0.5 on pixels (review, from 7d9f486e, `/tmp/e6/floor50/`: 2691 f0ffbaba5f2b9749efdf 51 samples, 2692 45453f611add3f402239 68, 2693 a34f6ba9ccb120aaf797 66), beside floor 0.25 and the cap alone (`/tmp/e6/floor50-whole.png`, `-rimBL.png`, `-mid.png`, `-rimR.png`, in looks): no copies; the blur is alike on both sides of T; the rim is a smooth streak of about 40 px; the cliff face in the middle is visibly softer than at floor 0.25.
+
+### 20:17 to 20:40, the shutter is set (d140, Mail 338): limit 14 px, never under half
+
+- Mail 337 asked for three trial branches on the eighth bake (whole shutter, floor 0.5, floor 0.25); Mail 338 (20:28) dropped them: /root set `handover.maxBlurPx` 14 with `handover.minShutter` 0.5 for the whole film (decision d140 in `kit/PROGRESS.md`). The whole shutter smears sharp ground where a dive is fastest (Earth 1882), a limit alone leaves sharp frames far apart, 0.25 is a quarter of that path only at the rim.
+- Main a9ed9a0 merged (a9dbd18): Jupiter from code (it hands over now, d137), my test line of the place options (bc2e4c4), the own gain of the globe (42b1585), d140. Stops that hand over: sun, mercury, earth, mars, jupiter, saturn, uranus, neptune. Venus alone is covered.
+- The two numbers are set in the handover block of `config/showcase.json`. What the tests needed so that they hold for whatever the film is set to (tried with the whole suite at 6 and 0, 0 and 0, 14 and 0.5, 14 and 0.25: 215 of 215 each time):
+  - `tests/shutter.test.ts`: the tests of the cap alone run with the film's own limit, and with 6 px where the film has none (`CAP`); the count of frames that keep less than the whole shutter is taken over the film, not per move (Saturn's dive moves 9.9 px at most, so at 14 px it has none).
+  - `tests/motion.test.ts`: no stop is named as the covered one (Jupiter hands over now); with a limit the most samples of the Neptune rise is what the limit or the floor leaves, without one it is more than the fast count.
+  - `tests/handover.test.ts`: the frame of the swap keeps a part of its shutter under a limit and all of it without one.
+- Frames with less than the whole shutter at 14 and 0.5 (`/tmp/e6/d140.ts`, no render; every one of these runs has frames at the floor, smallest share 0.5 everywhere; no seam frame needs the ease, the fastest seam moves 10.0 px, Uranus dive 4199):
+  - sun.rise 192 to 256 (30 at the floor); mercury.dive 697 to 750 (47), rise 989 to 1028 (37); earth.dive 1844 to 1906 (44), rise 2111 to 2160 (40);
+  - mars.dive 2404 to 2451 (45), rise on my branch 2678 to 2740 (57), rise as on main (T 2685) 2685 to 2686 and 2690 to 2740 (48);
+  - jupiter.dive 2977 to 3055 (65), rise 3244 to 3310 (47); saturn.dive none, rise 3819 to 3877 (44);
+  - uranus.dive 4119 to 4197 (70), rise 4389 to 4447 (54); neptune.dive 4689 to 4758 (59), rise 4954 to 5016 (57).
+  - Most across the open shutter (probe grid): Mars dive 73.2 px at 2440, Mars rise 69.2 at 2705, Jupiter rise 69.1 at 3274, Mercury rise 45.1 at 1003, Uranus 40.1 and 41.0, Jupiter dive 40.6, Mercury dive 35.8, Neptune rise 35.1, Earth rise 27.5, Saturn rise 21.7, Earth dive 20.6, Neptune dive 19.9, Sun 17.4.
+  - Most samples at the review tier: Mars dive 123, Mars rise 116, Jupiter rise 116, Mercury rise 76, Uranus 67 and 69, Jupiter dive 68, Mercury dive 60, Neptune rise 59, Earth rise 46, Saturn rise 37, Earth dive 35, Neptune dive 34, Sun 29, Saturn dive 17.
+- The tone frames of the eighth bake are all rendered (draft, tree 0edcb08 = 40f8d5d merged with fab057c5): `/tmp/tone/fab/{off,s1,s2,glob}/`, sheets `/tmp/tone/sheet-{off,s1,s2,glob}-{rise,dive}.png` (2686 to 2697 and 2442 to 2453).
+
 ## E6 as built (18:30), the capped shutter
 
 - Numbers: `handover.maxBlurPx` (px of motion a frame of an opted in dive or rise may keep across its shutter) and `handover.blurEaseFrames` (the length of the ramp at a seam that moves more) in `config/showcase.json`; checked in `src/config.ts`. Nothing else is a number.
@@ -420,20 +448,18 @@ Mail 332 (19:26, high): the floor (`handover.minShutter`) beside the cap, off by
 
 ## Next
 
-(rewritten 20:00)
+(rewritten 20:40)
 
-FIRST: what is rendering (`/tmp/e6/chain7.log`, then `/tmp/e6/chain6.log`).
-1. Floor 0.5 across T of the Mars rise (`/tmp/e6/floor50/f0269{1,2,3}-review.png`, 51, 68, 66 samples): look at them whole and in crops beside `/tmp/e6/floor25/`, tell /root in one line what the swap frame looks like with 40 px at the rim.
-2. The review byte proof: when "chain6 done" is in `/tmp/e6/chain6.log`, `/tmp/e6/cmp.sh /tmp/e6/afterR /tmp/e6/mainR review` (70 frames). Equal: the proof of MAIL 310 point 4 is complete, tell /root. A frame that differs: name it, find out which change did it. If /root says it runs the proof itself: kill the chain by pid and go to the tone split.
-3. Floor 0 on pixels (a formality, the plans are equal): 2440 and 2705 at review on c3199d3 must give 5ea0278afcee128a1d24 and c91cdf2c86fa5dcf689f.
-4. When /root has set cap and floor: the judged frames at the final tier from the branch for /root and the looks: Sun 247, Mercury 717 and 1016, Earth 1857 and 2156, Mars 2427 and 2726, Uranus 4137 and 4436, Neptune 4707 and 5006 (`/tmp/e6/chain5.sh` reads the commit from `/tmp/e6/final-commit` and the folder from `/tmp/e6/final-dir`).
-5. A cap measured at the middle: not built, /root decides (MAIL 326b).
+FIRST (Mail 338, in this order):
+1. DONE when this is committed: the two numbers of d140 with the tests, sha and the three results to /root.
+2. The line for the builders (above): sent with point 1.
+3. The tone split on the eighth bake (Mail 336 point 6): look at every frame of the eight sheets, crops at full size at the edges of the picture, then send /root the four sheets, my reading, and one clear line on whether the Mars plates must be baked again. What I measured before looking: the lend is computed at render time from the globe under the picture, so by itself it needs no new bake; the near field is within about 10 levels of the globe, the far band and the horizon differ by 40 to 65 levels and in kind (the globe has no canyon wall, no hazy plain, a thin limb line), and shares 1 darken the bright plain at the upper right of the picture.
 
-THEN the tone split (parked 18:05, MAIL 303):
-1. State: engine committed on `agent/engine-handover`, off for every stop (67270fb). `src/stops/mars/place.json` with `"toneIn": [1, 1, 1, 1]` on dive and rise plus `toneNote` is NOT committed: kept as `/tmp/tone/place.json.tone`. Shares 1 chosen over 2 on draft stills (`/tmp/tone/eNNNN-s1.png`, `-s2.png`).
-2. The E4 run `mars-tone1` in `repo-plates` was stopped at 18:27 for E6 after the 90 draft frames of the dive (`repo-plates/out/work/handover/mars-tone1/frames/fNNNNN-draft.png`, rendered on 4f7b2dd2 plus the tone patch with shares 1): look at 2446 to 2454 at full size. The rise was not rendered.
-3. mars_place_builder named fab057c5 at 19:44 (the tint commit on the seventh bake, merged with main c8b4c8b9; its draft `under`: dive 16.7, rise 16.6, as on 8b7c9a40). Tune `toneIn` on the newest named commit: merge it into a scratch commit in `repo-plates` (`git merge --no-commit`), E4 at the draft tier with and without `toneIn`, every frame looked at.
-4. If it holds: commit `place.json`, the before and after crops for /root (rise 2694 to 2698, dive 2446 to 2450, Mercury 738 to 741 with `tone=1,1,1,1`), READY to /root with (a) the byte proof with the option off, (b) E4 green with it on, (c) the crops, (d) the one line (in "How a stop uses it"). Tell the stop builders the one line.
+THEN the READY of MAIL 303:
+1. Choose the shares on the sheets. Kept copy of the opt in: `/tmp/tone/place.json.tone` (`"toneIn": [1, 1, 1, 1]` on dive and rise plus `toneNote`), not committed.
+2. E4 on Mars with the tone on, on the tree that carries the plates of fab057c5 (`npm run handover -- --stop mars --tier draft --name NAME`, every part green; `under` is a warning only, MAIL 288), Mercury 738 to 741 with `tone=...`, the before and after crops (rise 2694 to 2698, dive 2446 to 2450).
+3. READY to /root with (a) the byte proof with the option off (/root runs the proof of the engine itself since Mail 334), (b) E4 green with it on, (c) the crops, (d) the one line (in "How a stop uses it"). Tell mars_place_builder if the tilt or the place of the picture in the frame changes (G13).
+4. The judged frames at the final tier from the branch, now that the shutter is set: Sun 247, Mercury 717 and 1016, Earth 1857 and 2156, Mars 2427 and 2726, Uranus 4137 and 4436, Neptune 4707 and 5006 (`/tmp/e6/chain5.sh` reads the commit from `/tmp/e6/final-commit` and the folder from `/tmp/e6/final-dir`). /root renders the 18 judged stills on its machines too: ask before spending the hours.
 
 AFTER:
 5. `follow` (the strokes of the place picture): agreed with /root not to name it; the patch is `stash@{0}` ("follow patch on ef93f79").

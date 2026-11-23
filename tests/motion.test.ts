@@ -123,13 +123,18 @@ describe('samples of a frame', () => {
       return n
     }
     const fast = config.tiers.review!.fastSamplesPerFrame
-    expect(plans.find((p) => p.id === 'jupiter')!.handsOver).toBe(false)
-    expect(most('jupiter.rise')).toBeGreaterThan(fast)
+    const cap = config.raw.handover.maxBlurPx
+    // The full shutter: the rise of a stop that does not hand over, and every rise where the film runs without a cap (handover.maxBlurPx 0).
+    // No stop is named: which stops hand over changes as they opt in.
+    const full = plans.filter((p) => (!p.handsOver || !(cap > 0)) && config.segments.some((s) => s.id === p.id + '.rise'))
+    if (full.length > 0) expect(Math.max(...full.map((p) => most(p.id + '.rise')))).toBeGreaterThan(fast)
     expect(plans.find((p) => p.id === 'neptune')!.handsOver).toBe(true)
-    // With the cap alone the count is what the cap leaves; a floor on the share (handover.minShutter) keeps more blur in the fastest frames.
-    const capped = Math.max(fast, Math.ceil(config.raw.handover.maxBlurPx / step - 1e-9))
-    if (config.raw.handover.minShutter === 0) expect(most('neptune.rise')).toBe(capped)
-    else expect(most('neptune.rise')).toBeGreaterThanOrEqual(capped)
+    if (cap > 0) {
+      // With the cap alone the count is what the cap leaves; a floor on the share (handover.minShutter) keeps more blur in the fastest frames.
+      const capped = Math.max(fast, Math.ceil(cap / step - 1e-9))
+      if (config.raw.handover.minShutter === 0) expect(most('neptune.rise')).toBe(capped)
+      else expect(most('neptune.rise')).toBeGreaterThanOrEqual(capped)
+    } else expect(most('neptune.rise')).toBeGreaterThan(fast)
   })
 })
 

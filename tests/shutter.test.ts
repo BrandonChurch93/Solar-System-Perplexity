@@ -15,6 +15,11 @@ const numbers = config.raw.handover
 const kept = { maxBlurPx: numbers.maxBlurPx, blurEaseFrames: numbers.blurEaseFrames, minShutter: numbers.minShutter }
 // The cap is tested alone, with the floor off; the floor has its own tests at the end of this file and sets the shares it needs.
 numbers.minShutter = 0
+// It is tested with the film's own number, and with 6 px where the film runs without a cap (handover.maxBlurPx 0), so these tests hold for
+// whatever the film is set to.
+const CAP = kept.maxBlurPx > 0 ? kept.maxBlurPx : 6
+numbers.maxBlurPx = CAP
+const inFile = { ...kept, maxBlurPx: CAP, minShutter: 0 }
 const SIDES: ViewKind[] = ['orbit', 'terrain']
 const moving = config.segments.filter((s) => (s.kind === 'dive' || s.kind === 'rise') && handoverOf(s.stop, s.kind) !== null)
 const hands = (frame: number): boolean => moving.includes(segmentAtFrame(frame))
@@ -105,9 +110,10 @@ describe('the share of the shutter a frame keeps', () => {
     }
   })
   it('leaves the allowed motion across the shutter of every frame of a dive or a rise that hands over, and the full shutter where less moves', () => {
+    // Counted over the film: a slow dive under a high cap has no frame that moves more than the cap allows.
+    let capped = 0
     for (const s of moving) {
       const h = handoverOf(s.stop, s.kind as 'dive' | 'rise')!
-      let capped = 0
       for (let f = s.firstFrame; f < s.endFrame; f++) {
         const split = f >= h.firstFrame && f <= h.lastFrame
         const raw = motionOf(f, 0, config.shutterFraction)
@@ -135,8 +141,8 @@ describe('the share of the shutter a frame keeps', () => {
         const base = sampleCount('review', s.kind)
         expect(plan.samples).toBe(samplesNeeded(base, config.tiers.review!.maxSamplesPerFrame, plan.seen))
       }
-      expect(capped).toBeGreaterThan(0)
     }
+    expect(capped).toBeGreaterThan(0)
     expect(moving.length).toBeGreaterThan(0)
   })
   it('follows the path the harness forces', () => {
@@ -215,9 +221,9 @@ describe('the ease of the cap at a seam', () => {
       expect(blurAllowed(film, seam.edge)).toBe(numbers.maxBlurPx)
       expect(shutterScale(film, seam.edge)).toBeLessThan(1)
     } finally {
-      Object.assign(numbers, kept)
+      Object.assign(numbers, inFile)
     }
-    expect(blurAllowed(film, seam.edge)).toBe(Math.max(kept.maxBlurPx, seam.raw > kept.maxBlurPx ? seam.raw : 0))
+    expect(blurAllowed(film, seam.edge)).toBe(Math.max(CAP, seam.raw > CAP ? seam.raw : 0))
   })
 })
 
@@ -356,7 +362,7 @@ describe('the cap switched off (handover.maxBlurPx 0)', () => {
       numbers.maxBlurPx = 0
       run()
     } finally {
-      Object.assign(numbers, kept, { minShutter: 0 })
+      Object.assign(numbers, inFile)
     }
   }
   // The plan of a frame as it was before the capped shutter (framePlan of core/motion.ts on main fdf97b8), written out: the motion across the
