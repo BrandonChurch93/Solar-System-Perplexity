@@ -1,71 +1,64 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T20:11:20.485Z",
+ "pushed": "2026-11-23T20:38:33.213Z",
  "head": "b9b333ecfdce0e22506e45c9cd69b13e5a088ba1",
- "note": "globe near the lens: fine bands from functions made visible (streaks along the bands, strength by latitude), bright patch behind the limb now carries structure; review frames of the new rise",
+ "note": "globe near the lens: streaks by zone with relief toward the terminator, proof frames rendering; near field at 3720 measured against the approved close",
  "looks": [
   {
-   "time": "2026-11-23T20:11:19.829Z",
-   "file": "20261123201119829-note-b_3848.jpg",
-   "source": "../../../../tmp/v/r17r/b_3848.png",
+   "time": "2026-11-23T20:38:32.566Z",
+   "file": "20261123203832566-note-lane_3828.jpg",
+   "source": "../../../../tmp/v/r18/lane_3828.png",
    "kind": "note",
-   "label": "3848 review tier, new rise (b9b333e)"
+   "label": "3828 tile 13,16: a smooth lane of the ring sheet near the lens"
   },
   {
-   "time": "2026-11-23T20:11:19.194Z",
-   "file": "20261123201119194-note-b_3820.jpg",
-   "source": "../../../../tmp/v/r17r/b_3820.png",
+   "time": "2026-11-23T20:38:31.990Z",
+   "file": "20261123203831990-note-m_zoom.jpg",
+   "source": "../../../../tmp/v/r18/m_zoom.png",
    "kind": "note",
-   "label": "3820 review tier, new rise (b9b333e): the globe pale and flat, the fault in work"
+   "label": "the moon at the night limb 3584 to 3590, levels raised"
   },
   {
-   "time": "2026-11-23T20:11:18.556Z",
-   "file": "20261123201118556-note-b_3866.jpg",
-   "source": "../../../../tmp/v/r17r/b_3866.png",
+   "time": "2026-11-23T20:38:31.440Z",
+   "file": "20261123203831440-note-fit_ll2.jpg",
+   "source": "../../../../tmp/v/r18/fit_ll2.png",
    "kind": "note",
-   "label": "3866 review tier, new rise (b9b333e)"
+   "label": "3720 lower left 2x: film left, approved close right (smooth lanes against crisp ringlets)"
   },
   {
-   "time": "2026-11-23T20:11:17.996Z",
-   "file": "20261123201117996-note-flag_3828.jpg",
-   "source": "../../../../tmp/v/r18/flag_3828.png",
+   "time": "2026-11-23T20:38:30.866Z",
+   "file": "20261123203830866-note-fit_3720.jpg",
+   "source": "../../../../tmp/v/r18/fit_3720.png",
    "kind": "note",
-   "label": "3828 carried report tiles on the boost only tree (flagged tiles marked)"
+   "label": "3720 nograin draft over the approved close, the five worst G17 tiles boxed"
   },
   {
-   "time": "2026-11-23T20:11:17.439Z",
-   "file": "20261123201117439-note-nz_3816.jpg",
-   "source": "../../../../tmp/v/r18/nz_3816.png",
+   "time": "2026-11-23T20:38:30.247Z",
+   "file": "20261123203830247-note-dusk_3720.jpg",
+   "source": "../../../../tmp/v/r18/dusk_3720.png",
    "kind": "note",
-   "label": "3816 draft at native size, globe from functions: stretch 14, amount 0.14, strength by latitude zone 0.4 to 1.6"
+   "label": "3720 dusk of the globe, b9b333e against the globe cure"
   },
   {
-   "time": "2026-11-23T20:11:16.778Z",
-   "file": "20261123201116778-note-c3s.jpg",
-   "source": "../../../../tmp/v/r18/c3s.png",
+   "time": "2026-11-23T20:38:29.653Z",
+   "file": "20261123203829653-note-globe_3720_half.jpg",
+   "source": "../../../../tmp/v/r18/globe_3720_half.png",
    "kind": "note",
-   "label": "3816 draft: boost, amount 0.14, amount 0.14 with stretch 14 (long streaks along the bands)"
+   "label": "3720 globe, b9b333e left and globe cure right, half size"
   },
   {
-   "time": "2026-11-23T20:11:16.209Z",
-   "file": "20261123201116209-note-c3.jpg",
-   "source": "../../../../tmp/v/r18/c3.png",
+   "time": "2026-11-23T20:38:29.045Z",
+   "file": "20261123203829045-note-nr_dusk.jpg",
+   "source": "../../../../tmp/v/r18/nr_dusk.png",
    "kind": "note",
-   "label": "3816 draft, globe near the lens: before (a284d54), with the surface fixed contrast boost, with the boost and amount 0.14"
+   "label": "draft 3816 dusk side of the globe near the lens with the terminator relief"
   },
   {
-   "time": "2026-11-23T20:09:44.206Z",
-   "file": "20261123200944206-job-frame-03804.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "saturn.terrain frame 3804, draft tier, texels view, from the running measure job",
-   "stop": "saturn",
-   "segment": "saturn.terrain",
-   "frame": 3804,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
+   "time": "2026-11-23T20:38:28.425Z",
+   "file": "20261123203828425-note-nr_patch_3828.jpg",
+   "source": "../../../../tmp/v/r18/nr_patch_3828.png",
+   "kind": "note",
+   "label": "draft 3828, the bright area behind the limb with the globe cure (wide 20, zone, relief), 2x"
   }
  ]
 }
