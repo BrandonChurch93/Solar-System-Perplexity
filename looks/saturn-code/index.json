@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T08:18:44.270Z",
+ "pushed": "2026-11-23T08:30:02.609Z",
  "head": "1f7e9c17cfb8bb4618dc0ba127b5295ab131dd57",
- "note": "ladder second version measured against the approved close and the hero; reworking ringlets, ring light by ring, shadow edge",
+ "note": "ladder three is too smooth (fine detail 0.26 of the approved): measuring contrast by scale and light by angle against the approved close, next the ladder by those numbers",
  "looks": [
+  {
+   "time": "2026-11-23T08:30:02.034Z",
+   "file": "20261123083002034-note-pair_mid.jpg",
+   "source": "../../../../tmp/v/pair_mid.png",
+   "kind": "note",
+   "label": "3720 mid field at native size, approved close beside ladder three"
+  },
+  {
+   "time": "2026-11-23T08:30:01.486Z",
+   "file": "20261123083001486-note-pair_nearleft.jpg",
+   "source": "../../../../tmp/v/pair_nearleft.png",
+   "kind": "note",
+   "label": "3720 near left at native size, approved close beside ladder three: mine too smooth and too coloured, measured by band (band_energy.py)"
+  },
   {
    "time": "2026-11-23T08:18:43.712Z",
    "file": "20261123081843712-note-hold3.jpg",
@@ -60,27 +74,6 @@
    "kind": "note",
    "label": "M1 rough: 3720 from code beside the approved close (compare sheet, draft tier)",
    "stop": "saturn"
-  },
-  {
-   "time": "2026-11-23T07:56:39.403Z",
-   "file": "20261123075639403-note-row_m1.jpg",
-   "source": "../../../../tmp/v/row_m1.jpg",
-   "kind": "note",
-   "label": "M1 rough: frames 3630, 3720, 3809 of the skim from code, draft tier, one sample"
-  },
-  {
-   "time": "2026-11-23T07:56:25.717Z",
-   "file": "20261123075625717-compare-compare-saturn-terrain-view.jpg",
-   "source": "out/work/compare/compare-saturn-terrain-view.jpg",
-   "kind": "compare",
-   "label": "saturn.terrain: approved image left, film frame right, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.terrain",
-   "frame": 3720,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "247ebad7e038ce06"
   }
  ]
 }
