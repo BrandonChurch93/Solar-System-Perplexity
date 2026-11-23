@@ -4,6 +4,7 @@ import { join } from 'node:path'
 import { ROOT, WORK, args, ensureBuild, loadConfig, machineId, requireDisk } from './lib/common'
 import { decodePng, openSource } from './lib/frames'
 import { detailFrames } from './lib/render'
+import { CARRIED, carried } from './measure/carried'
 import { countTexels } from './measure/texels'
 import { judgedFrames, stopSegments } from '../src/director/timeline'
 import '../src/director/plans' // each plan sets its stop's cover window or its handover
@@ -39,6 +40,39 @@ const out: Record<string, unknown> = {
   stop, engineHash: hashes.engine, stopHashes: hashes.stops, stopHash: hashes.stops[stop], format: master, assets, browser: src.session.browserVersion, machine: machineId(), every, noCover,
 }
 const lines: string[] = []
+
+if (a.carried) {
+  const frames = [...new Set(a.carried.split(',').flatMap((x) => {
+    const m = /^(\d+)(?:-(\d+))?$/.exec(x.trim())
+    if (m === null) throw new Error('--carried takes frames and ranges: 3804,3810-3812')
+    return Array.from({ length: Number(m[2] ?? m[1]) - Number(m[1]) + 1 }, (_, i) => Number(m[1]) + i)
+  }))]
+  if (frames.length === 0 || frames.some((f) => f < 0 || f >= cfg.frameCount)) throw new Error('--carried: frames from 0 to ' + (cfg.frameCount - 1))
+  const pictureTier = a.tier ?? 'review'
+  const pad = (f: number): string => String(f).padStart(5, '0')
+  const shots: { frame: number; texels: Buffer; picture?: Buffer }[] = []
+  await src.setDiagnostic('texels')
+  for (const f of frames) shots.push({ frame: f, texels: (await src.render(f, g13Tier, 'png', false)).data! })
+  await src.setDiagnostic('nograin')
+  for (const s of shots) s.picture = (await src.render(s.frame, pictureTier, 'png', false)).data!
+  await src.close()
+  const results = shots.map((s) => {
+    writeFileSync(join(frameDir, 'carried-' + pad(s.frame) + '-' + g13Tier + '-texels.png'), s.texels)
+    writeFileSync(join(frameDir, 'carried-' + pad(s.frame) + '-' + pictureTier + '-nograin.png'), s.picture!)
+    const tx = decodePng(s.texels)
+    const g13 = countTexels(tx, d.minTexelsPerPixel)
+    const c = carried(tx, decodePng(s.picture!), d.minTexelsPerPixel)
+    const sci = (v: number | null): string => (v === null ? 'none' : v.toExponential(2))
+    const num = (v: number | null): string => (v === null ? 'none' : v.toFixed(3))
+    console.log('frame ' + s.frame + ' ' + (cfg.segments.find((x) => s.frame >= x.firstFrame && s.frame < x.endFrame)?.id ?? '') + ': G13 soft share ' + (g13.fraction * 100).toFixed(2) + '%, ' + c.judged + ' tiles judged, ' + c.dark + ' dark; says sharp: ' + c.sharp.tiles + ' tiles, band energy median ' + sci(c.sharp.energy) + ', fine over coarse ' + num(c.sharp.fineOverCoarse) + '; says soft: ' + c.soft.tiles + ' tiles, ' + sci(c.soft.energy) + ', ' + num(c.soft.fineOverCoarse) + '; flagged ' + c.flagged.length + (c.flagged.length ? ': ' + c.flagged.slice(0, 12).map((t) => t.join(',')).join(' ') + (c.flagged.length > 12 ? ' ...' : '') : ''))
+    for (const b of c.byReport) if (b.tiles) console.log('  report ' + (b.under === null ? b.from + ' and over' : b.from === 0 ? 'under ' + b.under : b.from + ' to under ' + b.under) + ': ' + b.tiles + ' tiles, report median ' + num(b.reported) + ', luma ' + num(b.luma) + ', band energy median ' + sci(b.energy) + ', least ' + sci(b.leastEnergy) + ', fine over coarse ' + num(b.fineOverCoarse) + ', flagged ' + b.flagged)
+    return { frame: s.frame, g13: { counted: g13.counted, soft: g13.soft, fraction: Number(g13.fraction.toFixed(5)), minTexels: Number(g13.minTexels.toFixed(3)) }, ...c }
+  })
+  const file = join(dir, stop + '-carried.json')
+  writeFileSync(file, JSON.stringify({ ...out, texelsTier: g13Tier, pictureTier, minTexelsPerPixel: d.minTexelsPerPixel, definition: CARRIED, frames: results }, null, 1))
+  console.log('wrote ' + file + '; a report beside G13, no gate reads it')
+  process.exit(0)
+}
 
 if (only.includes('G13')) {
   const frames = detailFrames(segs, noCover)

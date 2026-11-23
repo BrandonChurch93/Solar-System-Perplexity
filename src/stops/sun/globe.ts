@@ -50,7 +50,7 @@ const PLACE_SHARED: [string, string][] = [
   ['uPlate', 'uPlate'], ['uSize', 'uSize'], ['uApron', 'uApron'], ['uApronSize', 'uApronSize'], ['uApronOn', 'uApronOn'], ['uApronOut', 'uApronOut'], ['uApronEdge', 'uApronEdge'], ['uApronCell', 'uApronCell'],
   ['uGlow', 'uGlow'], ['uField', 'uField'], ['uFieldSize', 'uFieldSize'], ['uFieldFine', 'uFieldFine'], ['uFieldFineMore', 'uFieldFineMore'], ['uOwn', 'uOwn'], ['uUp', 'uUp'], ['uLift', 'uLift'], ['uEven', 'uEven'], ['uEvenTint', 'uEvenTint'], ['uGlowReach', 'uGlowReach'],
   ['uBox', 'uBox'], ['uGlowBeat', 'uGlowBeat'], ['uCellSize', 'uCellSize'], ['uTwinkle', 'uTwinkle'], ['uInflow', 'uInflow'], ['uInflowRate', 'uInflowRate'],
-  ['uEye', 'uCam'], ['uBand', 'uBand'], ['uLod', 'uLod'], ['uGSpot', 'uSpot'], ['uGSpotE', 'uSpotE'], ['uGSpotN', 'uSpotN'], ['uGTime', 'uTime'],
+  ['uEye', 'uCam'], ['uSightTurn', 'uSightTurn'], ['uPort', 'uPort'], ['uBand', 'uBand'], ['uLod', 'uLod'], ['uGSpot', 'uSpot'], ['uGSpotE', 'uSpotE'], ['uGSpotN', 'uSpotN'], ['uGTime', 'uTime'],
   ...LIFE_NAMES.map((name): [string, string] => [name, name]),
 ]
 
@@ -157,6 +157,9 @@ uniform vec3 uNadir;
 uniform vec2 uCap;
 uniform vec2 uPlaceFade;
 uniform float uPlaceOn;
+uniform mat4 projectionMatrix;
+uniform mat3 uSightTurn;
+uniform vec4 uPort;
 uniform float uTidy;
 uniform vec3 uSpotKeep;
 uniform float uBare;
@@ -274,6 +277,17 @@ void main() {
   vec3 col = lin * ((uLimb.x + uLimb.y * (1.0 - mu)) / uLimb.x) * beat * (1.0 + uHot.z * hot * hot);
   float placed = 0.0;
   vec3 at = ST_CENTRE + ST_RADIUS * (uToStage * d);
+  // Where the close ground is drawn (the rise), the place is where the line of sight of the pixel meets the ball
+  // of the stage, by the arithmetic of the ground: the sight comes from the lens and the turn of the camera. The
+  // pictures of the close view are seen from an eye one stage unit over the ground, so a place a ten thousandth
+  // of the radius off (the face of the mesh inside the ball, the sine of the spin) moves them by pixels.
+  for (int k = 0; k < (uPlaceOn > 0.0 ? 1 : 0); k++) {
+    vec2 ndc = (gl_FragCoord.xy - uPort.xy) / uPort.zw * 2.0 - 1.0;
+    vec3 sight = normalize(uSightTurn * vec3((ndc.x + projectionMatrix[2][0]) / projectionMatrix[0][0], (ndc.y + projectionMatrix[2][1]) / projectionMatrix[1][1], -1.0));
+    vec3 oc = uEye - ST_CENTRE;
+    float b = dot(oc, sight);
+    at = uEye + sight * (-b - sqrt(max(b * b - dot(oc, oc) + ST_RADIUS * ST_RADIUS, 0.0)));
+  }
   vec3 lay = at - ST_DOWN;
   vec2 gnd = vec2(dot(lay, ST_RIGHT), dot(lay, ST_FWD));
   float ring = length(gnd);
