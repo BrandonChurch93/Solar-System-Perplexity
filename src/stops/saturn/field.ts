@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import type { SetContext } from '../../core/types'
 import fine from './ringfine.json'
 import model from './ringfield.json'
+import rings from './rings.json'
 
 export const RING_HASH_GLSL = /* glsl */ `
 uint ringPcg(uint v) {
@@ -44,6 +45,29 @@ uniform vec4 uRfMore[${fine.octaves}];
 uniform vec4 uRfWaves[${fine.waves.trains.length}];
 uniform vec4 uRfWaveFit;
 uniform vec4 uRfWaveEnds;
+uniform float uRfFar;
+// the radial profile of the kept ring picture (rings.bin, the rows of the hero) at x of its span, seen with
+// so many of its texels a pixel, as the kept set reads it (kept/profile.ts): the far look of the sheet
+// (sheet.ts) and the rings' shadow on the globe with that look are drawn from it
+uniform highp sampler2D uKProf;
+uniform int uKProfN;
+uniform int uKProfLevels;
+uniform int uKHeroRow[16];
+uniform vec2 uKSpan;
+vec4 keptLevel(int row, int n, float x) {
+  float f = clamp(x * float(n) - 0.5, 0.0, float(n - 1));
+  int i = int(floor(f));
+  int j = min(i + 1, n - 1);
+  vec4 a = texelFetch(uKProf, ivec2(i & 8191, row + (i >> 13)), 0);
+  vec4 b = texelFetch(uKProf, ivec2(j & 8191, row + (j >> 13)), 0);
+  return mix(a, b, f - float(i));
+}
+vec4 keptProf(float x, float texels) {
+  float lod = clamp(log2(max(texels, 1.0)), 0.0, float(uKProfLevels - 1));
+  int l0 = int(floor(lod));
+  int l1 = min(l0 + 1, uKProfLevels - 1);
+  return mix(keptLevel(uKHeroRow[l0], uKProfN >> l0, x), keptLevel(uKHeroRow[l1], uKProfN >> l1, x), lod - float(l0));
+}
 ${RING_HASH_GLSL}
 float ringRows() {
   return 2.0 * uRfSpan.w + 4.0;
@@ -135,7 +159,8 @@ void ringFine(float r, float fp, float amp, float thin, float side, inout float 
   float next = 0.0;
   for (int o = 0; o < ${fine.octaves}; o++) {
     float seen = clamp(wave / (fp * uRfFine.w) - 1.0, 0.0, 1.0);
-    for (int k = 0; k < (seen > 0.0 ? 1 : 0); k++) {
+    // the octaves wider than the first one in use are the model's own profile (ringfield.json), not drawn here
+    for (int k = 0; k < ((seen > 0.0 && float(o) >= uRfWaveFit.w) ? 1 : 0); k++) {
       vec4 a = uRfOct[o];
       vec2 h;
       float b;
@@ -143,7 +168,7 @@ void ringFine(float r, float fp, float amp, float thin, float side, inout float 
       // near the sheet a ringlet that is many footprints wide on screen is drawn stronger, with a crisper edge
       // and less hue of its own (uRfWide, nothing of it in the hold): the picture then has ringlets at every
       // width on screen, as a sheet with structure at every scale has, and no broad bands of pastel colour
-      float wide = o < 2 ? 0.0 : smoothstep(uRfWide.x, uRfWide.y, wave / fp);
+      float wide = float(o) <= uRfWaveFit.w ? 0.0 : smoothstep(uRfWide.x, uRfWide.y, wave / fp);
       vec3 q = ringOctave(r / wave + float(o) * uRfAmp.w, uint(o) + 1u, max(uRfMore[o].x - (uRfMore[o].x - uRfWideFit.x) * (wide * uRfWideFit.y), uRfGrooveFit.w * fp / wave), lanes, h, b);
       float held = smoothstep(uRfBunch.x, uRfBunch.y, bunch);
       vec4 span = float(o) < uRfLine.w ? uRfRough[0] : uRfRough[1];
@@ -156,7 +181,7 @@ void ringFine(float r, float fp, float amp, float thin, float side, inout float 
       float et = e * uRfAmp.y;
       float l = g * mix(a.z * uRfBunch.z, uRfMore[o].y * uRfBunch.w, thin);
       float mean = mix(1.0 / 6.0, uRfAmp.x, lanes);
-      float wider = o < 2 ? 0.0 : smoothstep(uRfWideFit.z, uRfWideFit.w, wave / fp);
+      float wider = float(o) <= uRfWaveFit.w ? 0.0 : smoothstep(uRfWideFit.z, uRfWideFit.w, wave / fp);
       kl *= exp(e * q.x + g * a.y * side * q.y + l * q.z * (q.z > 0.0 ? uRfGrooveFit.y : uRfGrooveFit.x) - uRfWideDark * wider * g * (0.5 + 0.5 * q.x)) / ((1.0 + e * e * (mean + e * e / 120.0)) * (1.0 + l * uRfGrooveFit.z));
       kt *= exp(et * q.x + l * q.z * uRfLine.x) / (1.0 + et * et * (mean + et * et / 120.0));
       // a ringlet has a hue of its own, and a brighter one is warmer
@@ -214,9 +239,10 @@ function meanSmoothstep(from: number): number {
   return sum / n
 }
 
-export interface RingField { uniforms: Record<string, THREE.IUniform>; texture: THREE.DataTexture; finest: number; set(near: number): void }
+export interface RingField { uniforms: Record<string, THREE.IUniform>; texture: THREE.DataTexture; finest: number; set(near: number): void; far(weight: number): void }
 
-export function ringField(ctx: SetContext): RingField {
+// profile: the radial profile of the kept ring picture (rings.bin), key: which of its sets
+export function ringField(ctx: SetContext, profile: THREE.DataTexture, key: 'full' | 'web'): RingField {
   const n = model.knots
   const levels = Math.round(Math.log2(n)) + 1
   const rows = 2 * levels + 4
@@ -275,10 +301,16 @@ export function ringField(ctx: SetContext): RingField {
   const laneLow = 2 * fine.lanes.least
   const laneHigh = 2 * (fine.lanes.least + fine.lanes.span)
   const lanesMean = (laneLow * laneLow + laneLow * laneHigh + laneHigh * laneHigh) / 6
+  // how far the sheet is drawn with the far look of the kept set (sheet.ts)
+  const farFit = { value: 0 }
+  const rowsOf = rings.sets[key].hero
   return {
     texture,
     finest: fine.first * Math.pow(fine.ratio, fine.octaves - 1),
     set,
+    far: (weight: number): void => {
+      farFit.value = weight
+    },
     uniforms: {
       uRfMap: { value: texture },
       uRfSpan: { value: new THREE.Vector4(span[0], 1 / (span[1] - span[0]), n, levels) },
@@ -302,7 +334,11 @@ export function ringField(ctx: SetContext): RingField {
       uRfOct: { value: oct },
       uRfTint: { value: tint },
       uRfWaves: { value: fine.waves.trains.map((t) => new THREE.Vector4(t[0], t[1], t[2], t[3])) },
-      uRfWaveFit: { value: new THREE.Vector4(ends.lum, ends.tau, ends.tight, 0) },
+      uRfWaveFit: { value: new THREE.Vector4(ends.lum, ends.tau, ends.tight, fine.from) },
+      uRfFar: farFit,
+      uKProf: { value: profile }, uKProfN: { value: rings.sets[key].n }, uKProfLevels: { value: rowsOf.length },
+      uKHeroRow: { value: Array.from({ length: 16 }, (_, i) => rowsOf[Math.min(i, rowsOf.length - 1)]!) },
+      uKSpan: { value: new THREE.Vector2(rings.span[0]!, 1 / (rings.span[1]! - rings.span[0]!)) },
       uRfWaveEnds: { value: new THREE.Vector4(ends.rise[0], ends.rise[1], ends.fall[0], ends.fall[1]) },
     },
   }

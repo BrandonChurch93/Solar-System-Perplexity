@@ -42,7 +42,12 @@ float ringShadowAt(vec3 P, vec3 sunL, vec3 soft, float grad) {
   float rho = length(P.xz + sunL.xz * t);
   float fp = max(length(vec2(dFdx(rho), dFdy(rho))) * grad, soft.x + soft.y * max(t, 0.0));
   float tau = ringDepth(rho, fp);
-  return t > 0.0 ? 1.0 - exp(-tau * soft.z / max(abs(sunL.y), 0.02)) : 0.0;
+  float own = t > 0.0 ? 1.0 - exp(-tau * soft.z / max(abs(sunL.y), 0.02)) : 0.0;
+  // with the far look of the sheet its shadow is the kept set's: from the opacity of the kept profile
+  float x = (rho - uKSpan.x) * uKSpan.y;
+  float kept = 0.0;
+  for (int k = 0; k < ((uRfFar > 0.0 && t > 0.0 && x > 0.0 && x < 1.0) ? 1 : 0); k++) kept = 1.0 - pow(1.0 - min(keptProf(x, fp * uKSpan.y * float(uKProfN)).a, 0.999), soft.z);
+  return mix(own, kept, uRfFar);
 }`
 
 export const LIMB_GLSL = /* glsl */ `

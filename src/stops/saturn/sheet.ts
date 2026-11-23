@@ -1,8 +1,13 @@
 import * as THREE from 'three'
 import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
+import { INVERSE_FILMIC_GLSL } from '../../post/chain'
+import azimuth from './azimuth.json'
 import { RING_FIELD_GLSL, type RingField } from './field'
 import { ICE_GLSL, type Ice } from './ice'
+import * as keptLook from './kept/look'
+import { HASH_GLSL } from './kept/rings'
 import model from './ringfield.json'
+import ringsJson from './rings.json'
 import look from './sheet.json'
 import skim from './skim.json'
 
@@ -87,18 +92,101 @@ float sheetLaw(float thin, float mu, float mu0, float deg) {
 export const SHEET_AT_GLSL = /* glsl */ `
 uniform vec3 uSunL;
 uniform vec4 uFlatten;
+uniform vec3 uEven;
 void sheetAt(vec2 q, float r, float fp, out float tau, out float lum, out float thin, out vec4 ink, out vec3 tint, out vec2 wide) {
   vec2 knots = ringKnots(r, fp);
-  float more = sheetOuter(r);
-  for (int k = 0; k < (more > 0.0 ? 1 : 0); k++) more *= sheetOuterBands(r, fp);
-  knots += vec2(more, sheetOuterLum(more));
+  wide = ringKnots(r, uFlatten.z);
   float rc = sheetInkRadius(r);
   ink = ringInk(rc);
   thin = ringThin(rc);
+  // near the sheet the bands of the dense rings stand out less from their zone than from afar (uEven: the
+  // power on the brightness of a band this wide over its zone's, 1 from afar, and how far from 1 that ratio
+  // counts); the ringlets narrower than a band keep their contrast
+  float band = ringKnots(r, max(fp, uEven.z)).y;
+  knots.y *= pow(clamp(band / max(wide.y, 1e-4), 1.0 / uEven.y, uEven.y), (uEven.x - 1.0) * (1.0 - thin));
+  float more = sheetOuter(r);
+  for (int k = 0; k < (more > 0.0 ? 1 : 0); k++) more *= sheetOuterBands(r, fp);
+  knots += vec2(more, sheetOuterLum(more));
   tau = knots.x;
   lum = knots.y;
   ringFine(r, fp, ink.a, thin, dot(q / r, normalize(uSunL.xz)), tau, lum, tint);
-  wide = ringKnots(r, uFlatten.z);
+}`
+
+// The far look of the sheet: the sheet as the set of the kept build draws it once its picture of the hold has
+// become the plain radial profile (kept/rings.ts with no pose, no polar picture and no closeness), from the
+// same profile with the same numbers (kept/look.ts). In the dive the model shows this look while the kept set
+// still draws a share of the takes (skim.json handover.kept), so the two scenes are one picture there, and
+// leaves it for its own light as the lens closes in. Needs RING_FIELD_GLSL (the kept profile), HASH_GLSL and
+// INVERSE_FILMIC_GLSL.
+export const SHEET_FAR_GLSL = /* glsl */ `
+uniform vec2 uKEdge;
+uniform vec4 uKFit;
+uniform vec3 uKTone;
+uniform vec3 uKFloorHold;
+uniform vec4 uKFloorTone;
+uniform float uKAzGain[25];
+uniform float uKAzRadii[5];
+uniform vec3 uKShadowL;
+uniform vec3 uKPenumbra;
+uniform vec2 uKPenumbraFar;
+uniform vec2 uKSolid;
+uniform vec4 uKOver;
+uniform vec4 uKStrand;
+uniform float uKSheetR[9];
+uniform float uKSheetT[9];
+uniform float uKWedgeG[9];
+uniform vec4 uKSheetGlow;
+uniform vec4 uKSheetFit;
+uniform vec4 uKMottle;
+uniform float uKFillet;
+float keptAzRow(int i, vec4 h) {
+  return uKAzGain[i * 5] + uKAzGain[i * 5 + 1] * h.x + uKAzGain[i * 5 + 2] * h.y + uKAzGain[i * 5 + 3] * h.z + uKAzGain[i * 5 + 4] * h.w;
+}
+float keptAzGain(float r, float phi) {
+  int i = 0;
+  for (int k = 1; k < 4; k++) if (r >= uKAzRadii[k]) i = k;
+  float t = clamp((r - uKAzRadii[i]) / (uKAzRadii[i + 1] - uKAzRadii[i]), 0.0, 1.0);
+  vec4 h = vec4(cos(phi), sin(phi), cos(2.0 * phi), sin(2.0 * phi));
+  return clamp(mix(keptAzRow(i, h), keptAzRow(i + 1, h), t), 0.4, 1.7);
+}
+float keptKnots(float r, float t[9]) {
+  int i = 0;
+  for (int k = 1; k < 8; k++) if (r >= uKSheetR[k]) i = k;
+  return mix(t[i], t[i + 1], clamp((r - uKSheetR[i]) / (uKSheetR[i + 1] - uKSheetR[i]), 0.0, 1.0));
+}
+// colour and opacity of the far look at radius r and azimuth phi. x: the place in the profile, texels: profile
+// texels a pixel, mu: cosine of the view to the normal, along and miss: the place along and beside the axis of
+// the globe's shadow with mw the pixel's width of miss, fore: in front of the globe, od and bb with its width
+// bw: how the view ray passes the globe, day: how far the globe behind is in daylight, fw: the width of the
+// inner rim, grad: the scale of the gradients, unlit: the lens is on the side away from the Sun
+vec4 keptSheet(float r, float phi, float x, float texels, float mu, float along, float miss, float mw, bool fore, float od, float bb, float bw, float day, float fw, float grad, bool unlit) {
+  const vec3 luma = vec3(0.2126, 0.7152, 0.0722);
+  vec4 s = keptProf(x, texels * grad * uKFit.w);
+  float body = smoothstep(uKEdge.x - 0.004, uKEdge.x + 0.004, r) * (1.0 - smoothstep(uKEdge.y - 0.002, uKEdge.y + 0.002, r));
+  float ramp = smoothstep(uKFit.y, uKFit.z, r);
+  float a = 1.0 - pow(1.0 - min(max(s.a, uKFit.x * body * ramp), 0.999), clamp(uKFloorTone.w / max(mu, 0.02), 1.0, 8.0));
+  vec3 c = inverseFilmic(s.rgb) * uKTone * keptAzGain(r, phi);
+  float tu = (phi + uKMottle.z * pow(max(r, 1.0) / 1.86, -1.5) * uKMottle.w) / 6.283185307;
+  float inB = smoothstep(1.5, 1.6, r) * (1.0 - smoothstep(1.88, 1.95, r));
+  c *= 1.0 - uKMottle.x * inB * smoothstep(0.55, 0.9, vnoise(vec2(tu * 36.0, r * 3.0), 36)) + uKMottle.y * (vnoise(vec2(tu * 640.0, r * 70.0), 640) - 0.5);
+  float lit = along > 0.0 ? 1.0 : smoothstep(uKPenumbra.x - mw, uKPenumbra.y + mw + uKPenumbra.z * max(-along, 0.0) + uKPenumbraFar.y * max(-along - uKPenumbraFar.x, 0.0), miss);
+  float over = fore ? smoothstep(-0.05, 0.0, od) * smoothstep(uKEdge.x, uKEdge.x + uKOver.x, r) * lit : 0.0;
+  float keep = max(smoothstep(uKSheetFit.x, uKSheetFit.y, r), 1.0 - smoothstep(1.0 - bw, 1.0 + bw, bb));
+  float sheet = fore ? (1.0 - smoothstep(1.0 - bw, 1.0 + bw, bb)) * lit * smoothstep(uKEdge.x - fw, uKEdge.x + fw, r) * mix(1.0, keep, smoothstep(1.0 - bw, 1.0 + bw, bb)) * (1.0 - smoothstep(uKEdge.y - 0.002, uKEdge.y + 0.002, r)) : 0.0;
+  a = max(a, (1.0 - keptKnots(r, uKSheetT)) * sheet);
+  a = max(a, uKSolid.x * uKSolid.y * (1.0 - lit) * body * ramp);
+  vec3 wedge = uKSheetGlow.rgb * (1.0 - smoothstep(uKSheetFit.z, uKSheetFit.w, bb)) * keptKnots(r, uKWedgeG) * sheet * day;
+  for (int j = 0; j < (over > 0.0 ? 1 : 0); j++) {
+    float sx = (uKStrand.x + (r - uKEdge.x) * uKStrand.y - uKSpan.x) * uKSpan.y;
+    float sl = texels * grad * uKStrand.y * 1.5;
+    float zone = over * (1.0 - smoothstep(uKOver.y, uKOver.w, r));
+    float st = clamp(pow(max(dot(keptProf(sx, sl).rgb, luma), 1e-3) / max(dot(keptProf(sx, sl * 24.0).rgb, luma), 1e-3), uKStrand.z), 0.5, 1.6);
+    c *= mix(1.0, uKStrand.w * st, zone);
+  }
+  float dense = smoothstep(0.0, 0.6, dot(c, luma));
+  c = mix(uKFloorHold * (uKFloorTone.x + uKFloorTone.y * dense) * ramp * body, c, lit);
+  for (int j = 0; j < (unlit ? 1 : 0); j++) c *= uKFloorTone.z * (0.25 + 3.0 * s.a * (1.0 - s.a)) / max(s.a, 0.05);
+  return vec4(c + wedge, a);
 }`
 
 const VERT = /* glsl */ `
@@ -141,6 +229,9 @@ ${ICE_GLSL}
 ${SHEET_OUTER_GLSL}
 ${SHEET_LAW_GLSL}
 ${SHEET_AT_GLSL}
+${HASH_GLSL}
+${INVERSE_FILMIC_GLSL}
+${SHEET_FAR_GLSL}
 void main() {
   vec2 q = vLocal.xz;
   float r = length(q);
@@ -160,9 +251,26 @@ void main() {
   bool front = -dot(cs, ds) > dot(ds, ds);
   // past the span of the model there is ice only when the lens is near
   bool mine = front == (uPass == 1) && (uIceOrbit.z > 0.0 || r < uRfSpan.x + 1.0 / uRfSpan.y);
+  // what the far look needs of the pixel's gradients: the globe's shadow and how the view ray passes the globe
+  vec3 ks = normalize(vec3(uKShadowL.x, uKShadowL.y / uPolar, uKShadowL.z));
+  float kAlong = dot(P, ks);
+  float kMiss = length(P - ks * kAlong);
+  float kMw = 0.75 * length(vec2(dFdx(kMiss), dFdy(kMiss)));
+  float oa = dot(ds, ds);
+  float ob = dot(cs, ds);
+  float od = (ob * ob - oa * (dot(cs, cs) - 1.0)) / oa;
+  float bb = sqrt(max(1.0 - od, 0.0));
+  float bw = max(length(vec2(dFdx(bb), dFdy(bb))), 1e-5);
+  float kx = (r - uKSpan.x) * uKSpan.y;
+  vec4 farLook = vec4(0.0);
+  for (int k = 0; k < ((mine && uRfFar > 0.0 && kx > 0.0 && kx < 1.0) ? 1 : 0); k++) {
+    vec3 on = cs + ds * ((-ob - sqrt(max(od * oa, 0.0))) / oa);
+    float day = smoothstep(-0.05, 0.25, dot(normalize(vec3(on.x, on.y / uPolar, on.z)), normalize(uSunL)));
+    farLook = keptSheet(r, atan(q.y, q.x), kx, pixel * uKSpan.y * float(uKProfN), abs(ray.y) / length(ray), kAlong, kMiss, kMw, front, od, bb, bw, day, max(uKFillet, 1.5 * pixel), uGrad, uSunL.y * uCamL.y < 0.0);
+  }
   vec3 col = vec3(0.0);
   float alpha = 0.0;
-  for (int k = 0; k < (mine ? 1 : 0); k++) {
+  for (int k = 0; k < ((mine && uRfFar < 1.0) ? 1 : 0); k++) {
     float tau;
     float lum;
     float thin;
@@ -203,6 +311,9 @@ void main() {
     // the sheet and the white sparks of its brightest grains
     col = lum * (seen * law) * under * (tone + mix(tone, vec3(1.0), uIceOrbit.w) * (sand.y * uIceFit.y));
   }
+  // the far look gives way to the model's own light as the lens closes in
+  col = mix(col, farLook.rgb, uRfFar);
+  alpha = mix(alpha, farLook.a, uRfFar);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   alpha *= uWeight;
@@ -210,19 +321,19 @@ void main() {
   if (mine == false || (uDiag >= 2 && alpha < 0.5)) discard;
 }`
 
-// the brightness of a sheet too deep to see through, just inside the rim, where the model was measured
+// the brightness of a sheet too deep to see through, inside the rim, where the model was measured: the middle
+// value of the knots there, so that a bright line at the rim does not set it
 function rimLum(): number {
   const span = model.span as [number, number]
   const light = 1 / model.muSun + 1 / model.muHero
-  let sum = 0
-  let count = 0
+  const found: number[] = []
   for (let i = 0; i < model.knots; i++) {
-    const r = span[0] + ((span[1] - span[0]) * i) / (model.knots - 1)
-    if (r < model.outer - skim.outer.inset * 3 || r > model.outer - skim.outer.inset) continue
-    sum += model.lum[i]! / (1 - Math.exp(-model.tau[i]! * light))
-    count++
+    const r = span[0] + ((span[1] - span[0]) * (i + 0.5)) / model.knots
+    if (r < model.outer - skim.outer.inset * skim.outer.rimReach || r > model.outer - skim.outer.inset) continue
+    found.push(model.lum[i]! / (1 - Math.exp(-model.tau[i]! * light)))
   }
-  return sum / Math.max(count, 1)
+  found.sort((a, b) => a - b)
+  return found.length > 0 ? found[found.length >> 1]! : 0
 }
 
 // the depth of the sheet at radius r with the lens near it: the model inside the rim, past it the ice that
@@ -252,8 +363,14 @@ export class Sheet {
   private readonly outer = new THREE.Vector4(model.outer, 0, skim.outer.length[0], 0)
   private readonly outerInk = new THREE.Vector2(model.outer - skim.outer.inset, 0)
 
+  private readonly farShadow = new THREE.Vector3(1, 0.2, 0)
+  private readonly farPenumbra = new THREE.Vector3().fromArray(keptLook.rings.penumbra)
+  private readonly farSolid = new THREE.Vector2(0, keptLook.rings.shadeSolid[0])
+  private readonly farMottle = new THREE.Vector4(keptLook.rings.spokes, keptLook.rings.clumps, 0, 0)
+
   constructor(field: RingField, ice: Ice, polar: number) {
     const seg = look.segments
+    const kl = keptLook.rings
     const span = model.span as [number, number]
     const inner = span[0]
     const outer = Math.max(span[1], skim.outer.end[1]!) / Math.cos(Math.PI / seg)
@@ -280,7 +397,7 @@ export class Sheet {
       uSat: { value: 1 },
       uTintDense: { value: new THREE.Vector3(1, 1, 1) },
       uTintThin: { value: new THREE.Vector3(1, 1, 1) },
-      uFlatten: { value: new THREE.Vector4(1, 0, 0.04, 2) },
+      uFlatten: { value: new THREE.Vector4(1, 0, 0.04, 2) }, uEven: { value: new THREE.Vector3(1, 2, 0.01) },
       uShadowFit: { value: new THREE.Vector4(look.shadow.soft[0], look.shadow.soft[1], look.limb[0], look.limb[1]) },
       uShadowReach: { value: new THREE.Vector3().fromArray(look.shadow.reach) },
       uFloor: { value: new THREE.Vector3().fromArray(look.shadow.floor) },
@@ -291,6 +408,21 @@ export class Sheet {
       uOuterBands: { value: new THREE.Vector4(skim.outer.bands.gap, skim.outer.bands.soft, skim.outer.bands.width, skim.outer.bands.over) },
       uOuterWaves: { value: new THREE.Vector4(skim.outer.bands.waves[0], skim.outer.bands.waves[1], skim.outer.bands.waves[2], skim.outer.bands.seed) },
       uOuterGaps: { value: new THREE.Vector4(skim.outer.bands.floor, skim.outer.bands.lines, skim.outer.bands.filter, skim.outer.bands.shift) },
+      uKEdge: { value: new THREE.Vector2(ringsJson.inner, ringsJson.outer) },
+      uKFit: { value: new THREE.Vector4(kl.floorAlpha, kl.floorRamp[0], kl.floorRamp[1], kl.lodBias) },
+      uKTone: { value: new THREE.Vector3().fromArray(kl.heroTone) },
+      uKFloorHold: { value: new THREE.Vector3().fromArray(kl.floorHold) },
+      uKFloorTone: { value: new THREE.Vector4(kl.floorTone[0], kl.floorTone[1], kl.unlit, skim.handover.kept.view) },
+      uKAzGain: { value: azimuth.coeffs.flat() }, uKAzRadii: { value: azimuth.radii },
+      uKShadowL: { value: this.farShadow }, uKPenumbra: { value: this.farPenumbra }, uKPenumbraFar: { value: new THREE.Vector2().fromArray(kl.penumbraFar) },
+      uKSolid: { value: this.farSolid },
+      uKOver: { value: new THREE.Vector4().fromArray(kl.over) },
+      uKStrand: { value: new THREE.Vector4(kl.strand[0], kl.strand[1], kl.strand[2], kl.overTone[2]) },
+      uKSheetR: { value: kl.sheetRadii }, uKSheetT: { value: kl.sheetThrough }, uKWedgeG: { value: kl.wedgeGain },
+      uKSheetGlow: { value: new THREE.Vector4().fromArray(kl.sheetGlow) },
+      uKSheetFit: { value: new THREE.Vector4(kl.sheetFit[0], kl.sheetFit[1], kl.wedgeIn[0], kl.wedgeIn[1]) },
+      uKMottle: { value: this.farMottle },
+      uKFillet: { value: kl.fillet[3] },
     }
     for (const pass of [0, 1]) {
       const material = new THREE.ShaderMaterial({
@@ -312,6 +444,19 @@ export class Sheet {
     this.outer.y = skim.outer.depth[0]! * near
     this.outer.w = skim.outer.depth[1]! * near
     this.outerInk.y = Math.min(near * skim.outer.inkBy, 1)
+  }
+
+  // The numbers the kept set gives its rings for this take, for the far look (SHEET_FAR_GLSL; its weight is
+  // the field's, field.ts). shadow: the axis of the globe's shadow the kept set draws, soft: how far the
+  // shadow's edge is the soft one of the dive, solid: how far the shaded sheet has become solid, spin: the rate
+  // of the orbits (radians a second), time: seconds from the middle of the hold
+  far(shadow: THREE.Vector3, soft: number, solid: number, spin: number, time: number): void {
+    const kl = keptLook.rings
+    this.farShadow.copy(shadow)
+    this.farPenumbra.set(THREE.MathUtils.lerp(kl.penumbra[0], kl.penumbraAway[0], soft), THREE.MathUtils.lerp(kl.penumbra[1], kl.penumbraAway[1], soft), THREE.MathUtils.lerp(kl.penumbra[2], kl.penumbraAway[2], soft))
+    this.farSolid.x = solid
+    this.farMottle.z = spin
+    this.farMottle.w = time
   }
 
   dispose(): void {

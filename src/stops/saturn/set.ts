@@ -31,7 +31,8 @@ export const createSet: SetFactory = async (ctx) => {
       const count = Math.max(view.samples, 1)
       const stride = window.strides.find((s) => gcd(s, count) === 1) ?? 1
       const order = ((view.sample * stride) % count + 0.5) / count
-      const drawn = order < share ? model : kept
+      const alone: string = state.time >= plan.seg.hold.end ? window.alone : ''
+      const drawn = (alone === 'model' || (alone !== 'kept' && order < share)) ? model : kept
       const idle = drawn === model ? kept : model
       drawn.world.position.copy(world.position)
       drawn.world.quaternion.copy(world.quaternion)

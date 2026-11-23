@@ -1247,3 +1247,47 @@ commands (G5, G13, G17, handover with every part, stills at any tier, review tie
 machines in parallel and send you the files. Ask as often as you need.
 6. Point 8, the rise as a pull back with the jolt at 3816 to 3828: agreed that it needs a new rise path. After
 the READY, for round 2; it stays on the round 1 list in your words."
+
+MAIL 302 WORK (16:50 to 17:45): THE MODEL'S COARSE FIELD IS THE KEPT RING PICTURE
+
+- What was wrong at c605678: the kept set (K) and the model (M) drew two different ring pictures and the takes
+  of a frame were shared between them in 3568 to 3587. Measured with the shutter closed, each scene alone
+  (skim.json handover.kept.alone, a switch for the proof only, "" in the film): K against the old M mean 9.17
+  of 255 at 3568, 11.34 at 3577, 14.73 at 3587, 99th percentile 133, 135, 160.
+- The cure, as mail 302 asks:
+  1. The model's knots are the kept hero profile. assets-src/saturn/code/ring_model.py reads the hero rows of
+     public/assets/saturn/*/rings.bin (the kept build's own profile, 8192 knots): optical depth
+     -ln(1 - min(alpha, 0.999)) * 0.43, brightness the luma of the inverse filmic of the picture, colour of the
+     ice the hue of the kept picture at display luma 0.5 smoothed over 0.001 radii (the raw inverse filmic
+     chroma gave a pink comb of pinstripes). ringfield.json is regenerated from it (never print it: one line).
+  2. The ladder of ringlets (ringfine.json) starts below what the kept picture resolves: "from" 4, octaves 0 to
+     5 are zero in level, slope, grooves and hue, far and near (near hue keeps octave 5). The wide on screen
+     boost counts only for the octaves after "from".
+  3. The far look: sheet.ts SHEET_FAR_GLSL keptSheet is the kept ring shader's pure state (no pose, no polar
+     picture, no closeness) on the kept profile itself (field.ts keptLevel, keptProf; uniforms uKProf, uKProfN,
+     uKProfLevels, uKHeroRow, uKSpan). uRfFar mixes it with the model's own light in the sheet, in the ring
+     shadow on the globe (globe.ts: the kept law 1 - pow(1 - alpha, soft.z)) and in the field. The closeness of
+     everything in M is closeness by height times (1 - far weight).
+  4. The kept set stays the far picture in the dive: kept/set.ts holds its close layout, its skim haze and its
+     ice out after the hold (skim.json handover.kept.close 0).
+- Timeline of the dive now: 3540 to 3562 the hero picture (K, weights at hold values); 3562 to 3588 K's own
+  morph to its plain radial profile (pose weight 0.98 at 3562, 0.52 at 3572, 0.09 at 3582, 0 at 3590); 3588.06
+  to 3592.02 K to M by takes (from 0.534, to 0.578 of the dive): the two scenes are one picture there; 3592 to
+  3628 M's far look gives way to its own light (far [0.578, 0.978]); 3630 the skim.
+- Why the window sits after K's morph and not at 3568 to 3587: M draws the plain radial profile. The picture of
+  the hold is a layout by pose that only the kept shader has, so M can take over only once K is the pure
+  profile. K with close 0 against K's pure profile: 5.45 of 255 at 3568, 1.93 at 3577, 0.053 at 3587.
+- First pairs (window then 3588 to 3602, before the last edits to M's own look): K alone against M alone, draft,
+  shutter closed, 3588, 3595, 3602: mean 0.063, 0.062, 0.063 of 255, 99th percentile 1.0, max 65, 61, 58; 0.04
+  percent of the pixels differ by more than 8: two slivers a few pixels wide at the globe's limb where the rings
+  pass in front of and behind it. No ringlet differs.
+- The skim on the new knots was plainer at first (grey green A ring, a bright plain zone past the rim, a white B
+  ring). Changes to M's own look: sheet.ts rimLum is the median over outer.rimReach insets; uEven (skim.json
+  light.flatten.bands, bandReach, band) evens bands of the dense rings against their zone near the sheet;
+  light.ringSaturation [1, 0.9]; light.tint.far 1 (the far look has the kept picture's own colour);
+  light.tint.near dense [0.916, 0.926, 0.947], thin [0.75, 0.94, 1.04], fitted to the approved close in two
+  boxes (B ring near the lens: r/g 1.094 against 1.106, b/g 0.908 against 0.897, luma median 164 against 173,
+  95th percentile 235 against 211; A ring near the lens: r/g 1.083 against 1.083, b/g 0.923 against 0.917).
+  flatten.band 0.002 with bands 0.35 was tried and thrown out: the B ring loses its lines.
+- The draft tier does not show the ladder in the skim (one take sweeps the whole shutter); judge the skim's
+  lines at the review tier (3720 review: 93 s here).

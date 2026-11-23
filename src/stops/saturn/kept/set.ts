@@ -21,12 +21,14 @@ import polarJson from '../polar.json'
 import lightJson from '../light.json'
 import ringsJson from '../rings.json'
 import shadowJson from '../shadow.json'
+import skimJson from '../skim.json'
 import { Streak } from '../streak'
 import { Titan } from '../titan'
 
 // The set of the kept build (main), drawn for the approach, the hold and the first part of the dive: see ../set.ts.
 // The sky patches of the stop are given by the model set.
 export const createKept: SetFactory = async (ctx) => {
+  const window = skimJson.handover.kept
   const key = ctx.assets === 'full' ? 'full' : 'web'
   const base = 'saturn/' + ctx.assets + '/'
   const fit = plan.fit
@@ -171,6 +173,10 @@ export const createKept: SetFactory = async (ctx) => {
       close.value = 1 - smooth((Math.log(Math.max(Math.abs(camL.y), 1e-3)) - logLo) / (logHi - logLo))
       poseW.value = 1 - smooth((camL.distanceTo(heroL) - look.heroRange[0]) / (look.heroRange[1] - look.heroRange[0]))
       polarW.value = Math.max(smooth((Math.abs(camL.y) - look.polarHeight[0]) / (look.polarHeight[1] - look.polarHeight[0])), smooth((camL.length() - look.polarFar[0]) / (look.polarFar[1] - look.polarFar[0]))) * look.polarShow
+      // in the dive this set stays the far picture: the model takes the picture over before the lens is near,
+      // so what this set shows only near the sheet (the close layout, the skim's haze, the ice) is held out
+      const near = state.time > plan.seg.hold.end ? window.close : 1
+      close.value *= near
       const away = camL.distanceTo(skimL)
       gate.value = 1 - smooth((away - look.detailRange[0]) / (look.detailRange[1] - look.detailRange[0]))
       skimW.value = 1 - smooth((away - look.skimRange[0]) / (look.skimRange[1] - look.skimRange[0]))
@@ -230,7 +236,7 @@ export const createKept: SetFactory = async (ctx) => {
       ru.uVignette!.value = shot.post.vignette
       ru.uAspect!.value = aspect
       ;(ru.uSkimFit!.value as THREE.Vector4).w = Math.max(ru.uGrad!.value as number, look.rings.skimFoot)
-      const hazeW = 1 - smooth((away - look.shellRange[0]) / (look.shellRange[1] - look.shellRange[0]))
+      const hazeW = (1 - smooth((away - look.shellRange[0]) / (look.shellRange[1] - look.shellRange[0]))) * near
       ;(su.uHazeTwilight!.value as THREE.Vector3).fromArray(look.shell.twilight).multiplyScalar(1 - hazeW)
       ;(su.uHazeDay!.value as THREE.Vector3).fromArray(look.shell.day).multiply(dayTone.set(1, 1, 1).lerp(shellSkim, hazeW))
       su.uHazeH!.value = THREE.MathUtils.lerp(look.shell.scaleHeight, look.shellSkimDepth[0], hazeW)
@@ -252,7 +258,7 @@ export const createKept: SetFactory = async (ctx) => {
       ;(layout.uLayFill!.value as THREE.Vector4).set(ru.uSkimGap!.value * look.layFill[0], 1 - look.layFill[1], look.layFill[2], look.layFill[3])
 
       const iu = ice.material.uniforms
-      const iceW = 1 - smooth((Math.abs(camL.y) - look.ice.heightRange[0]) / (look.ice.heightRange[1] - look.ice.heightRange[0]))
+      const iceW = (1 - smooth((Math.abs(camL.y) - look.ice.heightRange[0]) / (look.ice.heightRange[1] - look.ice.heightRange[0]))) * near
       ice.mesh.visible = iceW > 0 && camL.y * sunL.y > 0
       ;(iu.uCamL!.value as THREE.Vector3).copy(camL)
       ;(iu.uShadowL!.value as THREE.Vector3).copy(shadowL)

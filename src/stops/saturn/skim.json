@@ -19,50 +19,119 @@
     "pitchDeg": 0
   },
   "light": {
-    "note": "exposure of the globe and of the rings and how much of its colour the ice keeps, first in the hold and then in the skim, blended by the logarithm of the camera's height between the two heights (the lower height is the skim); the strengths of the ladder of ringlets are blended the same way (ringfine.json near). tint: the factor on the colour of the dense and of the thin rings, far in the hold and near in the skim: both approved images have the thin rings brighter and less red than the model's ink, and the close has its dense rings a little darker. halo: the factor on the scale height and on the brightness of the glow outside the globe's limb. dusk: on the globe the light between these two cosines of the Sun's angle is cut down by a smooth step, by this amount, so the terminator is narrower near the sheet as in the approved close; dusk.night is the factor on the floor of light the night side keeps. dusk.grey: how far the night side is grey rather than the colour of the clouds in the last red light. flatten: the brightness of the dense rings averaged over width radii, over pivot (no further from 1 than reach times or one over reach), is raised to power: near the sheet the broad zones are evener, as in the approved close.",
-    "heights": [0.6, 1.8],
-    "globe": [1, 1.5],
-    "rings": [1, 0.85],
-    "ringSaturation": [1, 0.62],
-    "heroRange": [0.6, 1.6],
+    "note": "exposure of the globe and of the rings and how much of its colour the ice keeps, first in the hold and then in the skim, blended by the logarithm of the camera's height between the two heights (the lower height is the skim); the strengths of the ladder of ringlets are blended the same way (ringfine.json near). tint: the factor on the colour of the dense and of the thin rings, far in the hold and near in the skim: both approved images have the thin rings brighter and less red than the model's ink, and the close has its dense rings a little darker. halo: the factor on the scale height and on the brightness of the glow outside the globe's limb. dusk: on the globe the light between these two cosines of the Sun's angle is cut down by a smooth step, by this amount, so the terminator is narrower near the sheet as in the approved close; dusk.night is the factor on the floor of light the night side keeps. dusk.grey: how far the night side is grey rather than the colour of the clouds in the last red light. flatten: the brightness of the dense rings averaged over width radii, over pivot (no further from 1 than reach times or one over reach), is raised to power: near the sheet the broad zones are evener, as in the approved close. flatten.bands: the power on the brightness of a band of the dense rings (the model averaged over band radii) over that of its zone (averaged over width), far and near, counted no further from 1 than bandReach times: near the sheet the bands stand out less from their zone, as in the approved close; ringlets narrower than a band keep their contrast.",
+    "heights": [
+      0.6,
+      1.8
+    ],
+    "globe": [
+      1,
+      1.5
+    ],
+    "rings": [
+      1,
+      0.85
+    ],
+    "ringSaturation": [
+      1,
+      0.9
+    ],
+    "heroRange": [
+      0.6,
+      1.6
+    ],
     "tint": {
       "far": {
-        "dense": [0.97, 1.04, 1.08],
-        "thin": [1.21, 1.285, 1.21]
+        "dense": [
+          1,
+          1,
+          1
+        ],
+        "thin": [
+          1,
+          1,
+          1
+        ]
       },
       "near": {
-        "dense": [0.9, 0.926, 0.888],
-        "thin": [0.89, 0.966, 0.885]
+        "dense": [
+          0.916,
+          0.926,
+          0.947
+        ],
+        "thin": [
+          0.75,
+          0.94,
+          1.04
+        ]
       }
     },
     "halo": {
-      "height": [1, 0.4],
-      "gain": [1, 0.8]
+      "height": [
+        1,
+        0.4
+      ],
+      "gain": [
+        1,
+        0.8
+      ]
     },
     "dusk": {
       "from": -0.02,
       "to": 0.12,
-      "amount": [0, 1],
-      "night": [1, 0.5],
-      "grey": [0, 1]
+      "amount": [
+        0,
+        1
+      ],
+      "night": [
+        1,
+        0.5
+      ],
+      "grey": [
+        0,
+        1
+      ]
     },
     "flatten": {
       "pivot": 0.42,
-      "power": [0, -0.45],
+      "power": [
+        0,
+        -0.45
+      ],
       "width": 0.02,
-      "reach": 1.6
+      "reach": 1.6,
+      "bands": [
+        1,
+        0.45
+      ],
+      "bandReach": 8,
+      "band": 0.006
     }
   },
   "outer": {
-    "note": "near the sheet its outer rim is no edge: past the rim (ringfield.json outer) the ice goes on and thins out by two laws that add, each a depth at the rim (the normal optical depth) that falls by e over its length; all of it ends softly between the two radii of end. inset: the colour of that ice is read this far inside the rim. inkBy: how fast that colour takes over as the lens comes near. All of it shows by how near the lens is, none in the hold.",
-    "depth": [0.55, 0.006],
-    "length": [0.09, 0.45],
-    "end": [3.2, 3.9],
+    "note": "near the sheet its outer rim is no edge: past the rim (ringfield.json outer) the ice goes on and thins out by two laws that add, each a depth at the rim (the normal optical depth) that falls by e over its length; all of it ends softly between the two radii of end. inset: the colour of that ice is read this far inside the rim. inkBy: how fast that colour takes over as the lens comes near. All of it shows by how near the lens is, none in the hold. rimReach: the brightness of that ice is the middle value of the model's knots from so many insets inside the rim to one inset inside it.",
+    "depth": [
+      0.55,
+      0.006
+    ],
+    "length": [
+      0.09,
+      0.45
+    ],
+    "end": [
+      3.2,
+      3.9
+    ],
     "inset": 0.012,
+    "rimReach": 8,
     "inkBy": 8,
     "bands": {
       "note": "the ice past the rim lies in ringlets of its own: three sets of plateaus of these widths (waves, in radii). At the rim all of them are open; the share that is a gap grows to gap over the distance over past the rim. width: how soft the edge of a gap is, as a share of the range of levels. soft: the least softness of a plateau's edge in cells; filter: that softness in footprints. floor: the share of the depth a gap keeps. lines: the strength of the thin lines at the edges of the plateaus. seed and shift: which plateaus.",
-      "waves": [0.085, 0.031, 0.0115],
+      "waves": [
+        0.085,
+        0.031,
+        0.0115
+      ],
       "over": 0.3,
       "gap": 0.6,
       "width": 0.25,
@@ -83,10 +152,25 @@
       "fall": 0.25
     },
     "kept": {
-      "note": "the hold is drawn by the set of the kept build (kept/), the skim by the ring model. Between these two shares of the dive the picture goes from the one to the other: every take of a frame draws one of the two whole scenes from the same lens, the share of takes of the model rises by a smooth step, and the takes of each scene are spread over the open shutter by stride (a take is the model's when its number times stride, modulo the count, plus one half, over the count, is under the share; strides lists the candidates, the first without a common factor with the count is used). Before from every take is the kept set, after to every take is the model.",
-      "from": 0.31,
-      "to": 0.53,
-      "strides": [5, 7, 3, 11, 13, 1]
+      "note": "the approach and the hold are drawn by the set of the kept build (kept/), the skim by the ring model. In the dive the kept set first lets its picture of the hold go over to its plain radial profile (its own weights, by the lens's distance from the hero pose). Then, between the shares from and to of the dive, the picture goes from the kept set to the model: every take of a frame draws one of the two whole scenes from the same lens, the share of takes of the model rises by a smooth step, and the takes of each scene are spread over the open shutter by stride (a take is the model's when its number times stride, modulo the count, plus one half, over the count, is under the share; strides lists the candidates, the first without a common factor with the count is used). Before from every take is the kept set, after to every take is the model. Through that window the model draws the sheet with the far look: the kept set's own formula on the kept profile (sheet.ts), so the two scenes are one picture there. far: between these two shares of the dive the far look gives way to the model's own light and the lens's closeness begins to count (0 before, in full after). close: how much of its own closeness the kept set keeps in the dive (0: it stays the far picture). view: the cosine of the view to the normal at which the kept profile's opacity is the sheet's own (as in kept/rings.ts).",
+      "from": 0.534,
+      "to": 0.578,
+      "far": [
+        0.578,
+        0.978
+      ],
+      "strides": [
+        5,
+        7,
+        3,
+        11,
+        13,
+        1
+      ],
+      "close": 0,
+      "view": 0.43,
+      "alone": "",
+      "aloneNote": "for the proof of the window only: kept or model draws that scene alone in every take from the hold's end on; empty in the film"
     },
     "rise": {
       "at": 0.667,

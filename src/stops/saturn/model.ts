@@ -13,7 +13,10 @@ import { Sheet } from './sheet'
 import { shotMatrix } from './shot'
 import holdLight from './hold-light.json'
 import iceJson from './ice.json'
+import * as keptLook from './kept/look'
 import lightJson from './light.json'
+import ringsJson from './rings.json'
+import shadowJson from './shadow.json'
 import sheetJson from './sheet.json'
 import skimJson from './skim.json'
 import skyJson from './sky.json'
@@ -31,7 +34,9 @@ export const createModel: SetFactory = async (ctx) => {
   body.add(tilt)
   tilt.quaternion.fromArray(fit.globe.quaternion)
 
-  const field = ringField(ctx)
+  const key = ctx.assets === 'full' ? 'full' : 'web'
+  const sizes = ringsJson.sets[key]
+  const field = ringField(ctx, await ctx.dataTexture(base + 'rings.bin', sizes.width, sizes.height, 4), key)
   const map = await ctx.texture(base + 'wrap-color.jpg', { srgb: true, anisotropy: 16, repeat: true })
   const table = await ctx.dataTexture(base + lightJson.file, lightJson.width, lightJson.height, 4)
   const toTilt = tilt.quaternion.clone().invert()
@@ -92,6 +97,14 @@ export const createModel: SetFactory = async (ctx) => {
   const tintThin = new THREE.Vector3().fromArray(tune.tint.near.thin)
   const logLo = Math.log(tune.heights[0]!)
   const logHi = Math.log(tune.heights[1]!)
+  // the far look: through the window of the dive in which the kept set still draws a share of the takes the
+  // model shows the rings as the kept set does; from the window's end it goes over to its own light
+  const dive = plan.seg.dive!
+  const farFrom = dive.start + skimJson.handover.kept.far[0]! * (dive.end - dive.start)
+  const farTo = dive.start + skimJson.handover.kept.far[1]! * (dive.end - dive.start)
+  const shadowTurn = new THREE.Quaternion().setFromUnitVectors(plan.lightDir.clone().applyQuaternion(toTilt).normalize(), new THREE.Vector3().fromArray(shadowJson.local).normalize())
+  const shadowL = new THREE.Vector3()
+  const spinRate = THREE.MathUtils.degToRad(plan.p.spinDegPerSecond)
 
   return {
     id: plan.id,
@@ -121,7 +134,9 @@ export const createModel: SetFactory = async (ctx) => {
       const lit = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0
       light.copy(plan.lightDir).applyQuaternion(total).lerp(shot.sun.dir, lit).normalize()
       sunL.copy(light).applyQuaternion(toRing)
-      const close = 1 - smooth((Math.log(Math.max(Math.abs(camL.y), 1e-3)) - logLo) / (logHi - logLo))
+      const farW = state.time < dive.end ? 1 - smooth((state.time - farFrom) / (farTo - farFrom)) : 0
+      // how near the lens is to the sheet (0 in the hold, 1 in the skim); nothing of it shows with the far look
+      const close = (1 - smooth((Math.log(Math.max(Math.abs(camL.y), 1e-3)) - logLo) / (logHi - logLo))) * (1 - farW)
       poseW.value = 1 - smooth((camL.distanceTo(heroL) - tune.heroRange[0]!) / (tune.heroRange[1]! - tune.heroRange[0]!))
       camS.set(camL.x, camL.y / polar, camL.z)
       sunS.set(sunL.x, sunL.y / polar, sunL.z).normalize()
@@ -176,8 +191,11 @@ export const createModel: SetFactory = async (ctx) => {
       ;(ru.uShade!.value as THREE.Vector4).z = THREE.MathUtils.lerp(sheetJson.gain[0]!, sheetJson.gain[1]!, close) * THREE.MathUtils.lerp(tune.rings[0]!, tune.rings[1]!, close)
       ru.uSat!.value = THREE.MathUtils.lerp(tune.ringSaturation[0]!, tune.ringSaturation[1]!, close)
       field.set(close)
+      field.far(farW)
       sheet.set(close)
+      sheet.far(shadowL.copy(sunL).applyQuaternion(shadowTurn).normalize(), state.time < plan.seg.hold.end ? 0 : 1 - poseW.value, smooth((state.time - plan.seg.hold.end) / keptLook.rings.shadeSolid[1]), spinRate, elapsed)
       ;(ru.uFlatten!.value as THREE.Vector4).set(tune.flatten.pivot, THREE.MathUtils.lerp(tune.flatten.power[0]!, tune.flatten.power[1]!, close), tune.flatten.width, tune.flatten.reach)
+      ;(ru.uEven!.value as THREE.Vector3).set(THREE.MathUtils.lerp(tune.flatten.bands[0]!, tune.flatten.bands[1]!, close), tune.flatten.bandReach, tune.flatten.band)
       ;(ru.uTintDense!.value as THREE.Vector3).fromArray(tune.tint.far.dense).lerp(tintDense, close)
       ;(ru.uTintThin!.value as THREE.Vector3).fromArray(tune.tint.far.thin).lerp(tintThin, close)
       ru.uGain!.value = gain
