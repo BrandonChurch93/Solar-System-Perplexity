@@ -17,6 +17,8 @@ import { Limb } from './limb'
 import limbJson from './limb.json'
 import streakJson from './streak.json'
 import * as look from './look'
+import { LandMatte } from './matte'
+import matteJson from './matte.json'
 import { plan } from './plan'
 import { curve } from './pace'
 import { Rim } from './rim'
@@ -68,7 +70,7 @@ export const createSet: SetFactory = async (ctx) => {
 
   const globe = new Globe({
     map, mapWidth: (map.image as unknown as { width: number }).width, height: wrapHeight, heightWidth: wrap.height ? sizes.height[0] : 4096, light: look.light,
-    patches: patchTextures.length > 0 ? { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: patches.fade, nearDeg: patches.nearDeg, place: patches.place } : undefined,
+    patches: patchTextures.length > 0 ? { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, lean: patches.lean, fade: patches.fade, nearDeg: patches.nearDeg, place: patches.place } : undefined,
   })
   globe.mesh.quaternion.fromArray(fit.globe.quaternion)
   const far = new FarPoint()
@@ -173,9 +175,12 @@ export const createSet: SetFactory = async (ctx) => {
   globe.place(patches.place.gain, 1)
   if (patchTextures.length > 0) globe.mend(direction(look.mend.lon, look.mend.lat), look.mend.reach, look.mend.from)
 
+  const matte = { dive: new LandMatte(matteJson.dive, look.matte.rows, look.matte.band), rise: new LandMatte(matteJson.rise, look.matte.rows, look.matte.band) }
+
   return {
     id: plan.id,
     world,
+    placeMatte: { dive: matte.dive.texture, rise: matte.rise.texture },
     over,
     sky,
     update: (state, shot, view) => {
@@ -200,7 +205,8 @@ export const createSet: SetFactory = async (ctx) => {
         glare.update(on ? keep(Math.pow(Math.max((above(plan.low(state.time)) - above(null)) / (above(plan.low(covers[first ? 0 : 1]!)) - above(null)), 0), look.glare.height)) : 0, lowSunAt(state.time, state.rotation), view.camera, gain, aspect, state.time)
         ground.update(state.time - terrainMid, gain, shot.post.vignette, view)
         under.update(state.time - terrainMid, gain, shot.post.vignette, view)
-        limb.update(low.gain * shot.skyGlow * shot.skyExposure, shot.post.vignette, aspect)
+        const halo = !mine ? 1 : kind === 'dive' ? smoother(ramp(look.halo.dive[0], look.halo.dive[1], fromDive)) : kind === 'rise' ? 1 - smoother(ramp(look.halo.rise[0], look.halo.rise[1], fromRise)) : 1
+        limb.update(low.gain * shot.skyGlow * shot.skyExposure * halo, shot.post.vignette, aspect)
         rim.update(gain, shot.post.vignette, aspect)
         return
       }
@@ -231,12 +237,13 @@ export const createSet: SetFactory = async (ctx) => {
       const offAxis = THREE.MathUtils.radToDeg(rimSun.angleTo(forward.set(0, 0, -1).applyQuaternion(view.camera.quaternion)))
       const close = 0
       const grade = diving ? smoother(ramp(look.carry.dive[0], look.carry.dive[1], fromDive)) : rising ? 1 - smoother(ramp(look.carry.rise[0], look.carry.rise[1], fromRise)) : 0
-      globe.near(close, (wideImage.sink / closeRadius) * close)
+      const sunk = diving ? look.limb.sink.dive * smoother(ramp(-look.limb.frames.dive, 0, fromDive)) : rising ? look.limb.sink.rise * (1 - smoother(ramp(0, look.limb.frames.rise, fromRise))) : 0
+      globe.near(close, sunk / closeRadius)
       const high = (distance - 1) * closeRadius
       const capped = 0
       const way = rising ? 'rise' : 'dive'
       globe.clear(close > 0 ? look.close.haze.amount * THREE.MathUtils.smoothstep(high, look.close.haze.height[0], look.close.haze.height[1]) : 0, look.close.haze.level[way], [mix(-0.85, look.close.lift.cap[0], capped), mix(1.6, look.close.lift.cap[1], capped)], [look.close.lift.knee[way][0], look.close.lift.knee[way][1] * capped], close > 0 ? THREE.MathUtils.smoothstep(high, look.close.haze.calmHeight[0], look.close.haze.calmHeight[1]) : 0)
-      globe.far(diving || rising ? 1 - THREE.MathUtils.smoothstep(distance - 1, look.far.height[0], look.far.height[1]) : 0, look.far.mu[way], glareSun, look.far)
+      globe.far(diving || rising ? 1 - THREE.MathUtils.smoothstep(distance - 1, look.far.height[0], look.far.height[1]) : 0, look.far.under[way], glareSun, look.far)
       globe.wash(close > 0 ? look.close.haze.wash.amount * (1 - THREE.MathUtils.smoothstep(high, look.close.haze.wash.height[0], look.close.haze.wash.height[1])) : 0, look.close.haze.wash.cap)
       const reach = wideFar(high)
       globe.reach(reach - look.close.wide.soft, reach, wideFeather(high), look.close.wide.over)
@@ -244,8 +251,11 @@ export const createSet: SetFactory = async (ctx) => {
       globe.carry(mix(look.carry.gain, look.carry.lift, grade), look.carry.knee, look.carry.grey * grade)
       globe.silhouette(look.light.silhouette.amp * THREE.MathUtils.smoothstep(distance - 1, look.light.silhouette.fade[0], look.light.silhouette.fade[1]))
       globe.night(state.time > terrainMid ? look.light.nightAfter : 1, look.light.shoulder.strength * smoother(ramp(look.light.shoulder.frames[0], look.light.shoulder.frames[1], fromRise)))
+      matte.dive.set(diving ? 1 - smoother(ramp(-look.matte.frames, 0, fromDive)) : 0)
+      matte.rise.set(rising ? smoother(ramp(0, look.matte.frames, fromRise)) : 0)
+      globe.nightPlain(diving || rising ? 1 - THREE.MathUtils.smoothstep(distance - 1, look.light.nightPlain.height[0], look.light.nightPlain.height[1]) : 0, look.light.nightPlain.range)
       globe.kick(kick.fromArray(look.light.line.dir).applyQuaternion(state.rotation))
-      globe.spill(state.time > terrainMid ? look.light.rim.after : 1)
+      globe.spill(state.time > terrainMid ? look.light.rim.after : diving ? mix(1, look.light.rim.after, smoother(ramp(look.light.rim.fade[0], look.light.rim.fade[1], fromDive))) : 1)
       globe.update(light, rimSun, 1 - THREE.MathUtils.smoothstep(offAxis, look.light.glareLens[0], look.light.glareLens[1]), spin(state.time), gain, state.weight, Math.min(holdRadius / Math.max(radiusPx / view.format.height, 1e-6), 1), shot.post.vignette, aspect)
       globe.mesh.visible = radiusPx > 0.6 && state.weight > 0
       const fast = view.samples > 1 && (diving || rising)
@@ -317,6 +327,8 @@ export const createSet: SetFactory = async (ctx) => {
       under.dispose()
       limb.dispose()
       rim.dispose()
+      matte.dive.dispose()
+      matte.rise.dispose()
       wipe.geometry.dispose()
       wipe.material.dispose()
     },
