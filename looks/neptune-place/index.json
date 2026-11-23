@@ -1,75 +1,79 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T16:38:30.268Z",
+ "pushed": "2026-11-23T17:03:38.726Z",
  "head": "d73c77620f7a4ed441c8e3a3167f4b0181f9fc28",
- "note": "16:39 VM: rise after the G13 cure, every rise frame measured (worst 1.84 at 5000); recipe commit d73c7762 for G11; handover report running",
+ "note": "G13 cure: dive handover sheets on the new plates, top down sheet shows stretched cirrus of the laid layer, rise limb",
  "looks": [
   {
-   "time": "2026-11-23T16:38:28.844Z",
-   "file": "20261123163828844-note-soft-5000.jpg",
-   "source": "../../../../tmp/soft-5000.jpg",
+   "time": "2026-11-23T17:03:37.400Z",
+   "file": "20261123170337400-note-ho-rise-sky.jpg",
+   "source": "../../../../tmp/ho-rise-sky.jpg",
    "kind": "note",
-   "label": "G13 view of rise 4995, 4999, 5000, 5001 (red = under 1 texel per pixel): 5000 at 1.84 percent, a kept level at the frame's lower left edge; every rise frame is now measured, worst 1.84, limit 2",
+   "label": "rise 4955 to 4962 top of frame: the limb climbs out, no fade",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-23T16:38:27.612Z",
-   "file": "20261123163827612-note-b-rise2.jpg",
-   "source": "../../../../tmp/b-rise2.jpg",
+   "time": "2026-11-23T17:03:36.254Z",
+   "file": "20261123170336254-note-dv-crop.jpg",
+   "source": "../../../../tmp/dv-crop.jpg",
    "kind": "note",
-   "label": "rise 4982 to 4994 after the G13 cure; blue streaks east of the eye come back 4981 to 4983 (item 10), plate 26 edge as fine threads beside smooth ground bottom left 4985 to 4992 (item 11)",
+   "label": "cirrus bank at native size 4726 4730 4734 4738: wisps, red brown specks below it",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-23T16:38:26.453Z",
-   "file": "20261123163826453-note-b-rise1.jpg",
-   "source": "../../../../tmp/b-rise1.jpg",
+   "time": "2026-11-23T17:03:35.146Z",
+   "file": "20261123170335146-note-dv-b.jpg",
+   "source": "../../../../tmp/dv-b.jpg",
    "kind": "note",
-   "label": "rise 4970 to 4981 after the G13 cure (draft, merged tree): plate 26 ring 12 to 14.5 deg, plate 16 moved 1.5 deg south",
+   "label": "dive 4736 to 4751 film path draft, new plates",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-23T16:34:57.065Z",
-   "file": "20261123163457065-compare-neptune-dive-sides.jpg",
-   "source": "out/work/handover/neptune-dive-sides.png",
+   "time": "2026-11-23T17:03:33.978Z",
+   "file": "20261123170333978-note-dv-a.jpg",
+   "source": "../../../../tmp/dv-a.jpg",
+   "kind": "note",
+   "label": "dive 4720 to 4735 film path draft, new plates",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T17:03:32.779Z",
+   "file": "20261123170332779-note-neptune-dive-top.jpg",
+   "source": "out/work/handover/neptune-dive-top.png",
+   "kind": "note",
+   "label": "top down dive sheet, place picture off: cirrus of the laid layer is a comb of straight teeth from 4723",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T17:03:32.034Z",
+   "file": "20261123170332034-note-neptune-dive-draft-across.jpg",
+   "source": "out/work/handover/neptune-dive-draft-across.png",
+   "kind": "note",
+   "label": "dive across T 4752 to 4763, draft, new plates",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T16:53:21.988Z",
+   "file": "20261123165321988-compare-neptune-rise-sides.jpg",
+   "source": "out/work/handover/neptune-rise-sides.png",
    "kind": "compare",
-   "label": "neptune dive, both sides at T (frame 4758) and their difference times 8",
+   "label": "neptune rise, both sides at T (frame 4956) and their difference times 8",
    "stop": "neptune",
-   "segment": "neptune.dive",
-   "frame": 4758,
+   "segment": "neptune.rise",
+   "frame": 4956,
    "tier": "draft"
   },
   {
-   "time": "2026-11-23T16:20:53.814Z",
-   "file": "20261123162053814-note-c-south.jpg",
-   "source": "../../../../tmp/c-south.jpg",
-   "kind": "note",
-   "label": "4719 to 4722 bottom left at native size: the new south strip of plate 16",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T16:20:52.793Z",
-   "file": "20261123162052793-note-b-dive2.jpg",
-   "source": "../../../../tmp/b-dive2.jpg",
-   "kind": "note",
-   "label": "dive 4715 to 4730 after the cure, draft",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T16:20:51.417Z",
-   "file": "20261123162051417-note-b-dive1.jpg",
-   "source": "../../../../tmp/b-dive1.jpg",
-   "kind": "note",
-   "label": "dive 4700 to 4715 after the cure of G13 (plate 16 south, ring of plate 26 wider), draft",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T15:55:16.384Z",
-   "file": "20261123155516384-note-take16-moved-south-strip.jpg",
-   "source": "out/work/nep/s10/take16-moved-south-strip.jpg",
-   "kind": "note",
-   "label": "the southern fifth at the size of the take: guide above, take 3 below",
-   "stop": "neptune"
+   "time": "2026-11-23T16:53:08.175Z",
+   "file": "20261123165308175-sheet-neptune-dive-top.jpg",
+   "source": "out/work/handover/neptune-dive-top.png",
+   "kind": "sheet",
+   "label": "neptune dive, the globe side alone from straight above the place, 12 frames from the far end to T (frame 4758), place picture off, draft tier",
+   "stop": "neptune",
+   "segment": "neptune.dive",
+   "first": 4680,
+   "last": 4758,
+   "tier": "draft"
   }
  ]
 }
