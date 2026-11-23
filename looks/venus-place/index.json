@@ -1,9 +1,39 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-23T21:24:36.621Z",
+ "pushed": "2026-11-23T21:49:44.007Z",
  "head": "2828642a70136a96efbc499eb2f3790c2680e485",
- "note": "wide ring v in work: windows painted on from w with a layout sketch, 13 laid; nothing rendered with it yet",
+ "note": "wide ring v in the film at draft: 1287 and 1586 before and after, not committed yet",
  "looks": [
+  {
+   "time": "2026-11-23T21:49:43.424Z",
+   "file": "20261123214943424-note-look-1586.jpg",
+   "source": "../../../../tmp/v/look-1586.jpg",
+   "kind": "note",
+   "label": "1586 draft: above 2828642a, below the wide ring v with the live tone (not committed)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T21:49:42.855Z",
+   "file": "20261123214942855-note-look-1287.jpg",
+   "source": "../../../../tmp/v/look-1287.jpg",
+   "kind": "note",
+   "label": "1287 draft: above 2828642a, below the wide ring v with the live tone (not committed)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T21:49:08.273Z",
+   "file": "20261123214908273-frame-f01272.jpg",
+   "source": "out/work/venus/place/v2/f01272.png",
+   "kind": "frame",
+   "label": "venus.dive frame 1272, draft tier",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "frame": 1272,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e85c8d53a860dafc"
+  },
   {
    "time": "2026-11-23T21:24:36.028Z",
    "file": "20261123212436028-note-vs-w3-0.jpg",
@@ -43,36 +73,6 @@
    "kind": "note",
    "label": "wide ring v: a window at the scale of the plate, left half the middle of the plate (level w), right half grey as given (left picture) and as painted on (right picture)",
    "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T20:41:20.040Z",
-   "file": "20261123204120040-note-live1-rise2.jpg",
-   "source": "../../../../tmp/v/live1-rise2.jpg",
-   "kind": "note",
-   "label": "1586 and 1591 draft, left before, right the try (hue share still 1.0, red flecks)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T20:41:19.346Z",
-   "file": "20261123204119346-note-live1-1287.jpg",
-   "source": "../../../../tmp/v/live1-1287.jpg",
-   "kind": "note",
-   "label": "1287 draft, try: place tone and colour from the globe as drawn (top left before, right after, bottom left globe alone)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T20:32:40.554Z",
-   "file": "20261123203240554-frame-f01272.jpg",
-   "source": "out/work/venus/place/live1/f01272.png",
-   "kind": "frame",
-   "label": "venus.dive frame 1272, draft tier",
-   "stop": "venus",
-   "segment": "venus.dive",
-   "frame": 1272,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e85c8d53a860dafc"
   }
  ]
 }
