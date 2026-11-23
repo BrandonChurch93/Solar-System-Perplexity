@@ -1,5 +1,6 @@
 import { config, type Segment } from '../../config'
 import * as THREE from 'three'
+import type { HandoverParams } from '../../director/handover'
 import { StopPlan, type Fit, type MoveParams, type OrbitShot } from '../../director/moves'
 import { drift as cameraDrift } from '../../director/rig'
 import { coverWindow } from '../../director/timeline'
@@ -35,6 +36,7 @@ export const params: MoveParams = {
   moonDegPerSecond: 0,
   tint: [0.95, 0.8, 0.5],
   coverWindow: { dive: { seconds: 1 }, rise: { seconds: 1 } },
+  handover: moveJson.handover as HandoverParams,
 }
 
 export const veil = { sky: 0.02, shoulder: 0.35, carry: { dive: 12, rise: 24 }, band: [0.36, 2, 6], ease: 2, slow: 0.45, rush: 0.12, dive: { from: -0.95, full: -0.15, to: 0.15, clear: 0.95, span: 2.5 }, rise: { from: -0.95, full: -0.15, to: 0.15, clear: 1, span: 0.125 } }
@@ -86,7 +88,7 @@ class VenusPlan extends StopPlan {
   }
 
   // The similarity from the close scene onto the unit sphere of the globe: the engine's handover calls it as twin(closePose, time).
-  twin(close: Pose, time: number): Pose {
+  override twin(close: Pose, time: number): Pose {
     const rot = this.turn(time).multiply(this.terrainFrame)
     return { position: close.position.clone().sub(deck.centre).divideScalar(deck.radius).applyQuaternion(rot), quaternion: rot.clone().multiply(close.quaternion), vfov: close.vfov }
   }
