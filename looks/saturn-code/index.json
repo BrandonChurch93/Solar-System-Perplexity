@@ -1,9 +1,37 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T12:19:46.265Z",
+ "pushed": "2026-11-23T12:40:15.785Z",
  "head": "f76f04b4e6f45a87aa864940ddf08b4aca2d8b2c",
- "note": "first true blocks of ice near the lens at 3720 (draft, streaks are one take of the shutter); next: soft outer edge by function, more and larger blocks toned like the sheet",
+ "note": "soft outer rim by function, second blocks (sheet toned, lit faces, shadows), hold checked against head",
  "looks": [
+  {
+   "time": "2026-11-23T12:40:15.232Z",
+   "file": "20261123124015232-note-holdpair.jpg",
+   "source": "../../../../tmp/v/b2/holdpair.png",
+   "kind": "note",
+   "label": "hold 3465 crops: head left, now right (old stones gone from the hold)"
+  },
+  {
+   "time": "2026-11-23T12:40:14.722Z",
+   "file": "20261123124014722-note-c3809_s.jpg",
+   "source": "../../../../tmp/v/b2/c3809_s.jpg",
+   "kind": "note",
+   "label": "3809 draft, end of the skim"
+  },
+  {
+   "time": "2026-11-23T12:40:14.041Z",
+   "file": "20261123124014041-note-f_3720.jpg",
+   "source": "../../../../tmp/v/b2r/f_3720.png",
+   "kind": "note",
+   "label": "3720 review tier, fitted pose, second blocks"
+  },
+  {
+   "time": "2026-11-23T12:40:13.349Z",
+   "file": "20261123124013349-note-sheet.jpg",
+   "source": "../../../../tmp/v/b2/sheet.jpg",
+   "kind": "note",
+   "label": "draft sheet 3567 3600 3625 3630 3675 3720 3765 3809 3815 3840 3866 with soft outer rim and second blocks"
+  },
   {
    "time": "2026-11-23T12:19:32.210Z",
    "file": "20261123121932210-note-f_3720.jpg",
@@ -31,34 +59,6 @@
    "source": "../../../../tmp/v/zp_nearleft.png",
    "kind": "note",
    "label": "3720 draft: approved close (left) and film (right), A ring near left at 2x"
-  },
-  {
-   "time": "2026-11-23T11:30:42.834Z",
-   "file": "20261123113042834-note-six_bnear.jpg",
-   "source": "../../../../tmp/v/six_bnear.png",
-   "kind": "note",
-   "label": "3718 to 3723 draft, B ring near at 2x"
-  },
-  {
-   "time": "2026-11-23T11:30:42.216Z",
-   "file": "20261123113042216-note-six_nearleft.jpg",
-   "source": "../../../../tmp/v/six_nearleft.png",
-   "kind": "note",
-   "label": "3718 to 3723 draft, A ring near left at 2x"
-  },
-  {
-   "time": "2026-11-23T11:30:41.409Z",
-   "file": "20261123113041409-note-d_3720.jpg",
-   "source": "../../../../tmp/v/d_3720.png",
-   "kind": "note",
-   "label": "3720 draft, stones fixed (true rays), nograin"
-  },
-  {
-   "time": "2026-11-23T11:15:41.750Z",
-   "file": "20261123111541750-note-ht_l.jpg",
-   "source": "../../../../tmp/v/ht_l.png",
-   "kind": "note",
-   "label": "3465 hold, left: approved hero, kept build, mine (draft)"
   }
  ]
 }
