@@ -41,7 +41,7 @@ export function runAutopilot(engine: Engine, range: Range): void {
       return
     }
     if (origin < 0) origin = ts
-    let frame = range.first + Math.floor(((ts - origin) / 1000) * config.fps)
+    let frame = range.first + ((ts - origin) / 1000) * config.fps
     if (frame > range.last) frame = range.last
     if (frame === shown) return
     if (!engine.ready(frame)) {
@@ -139,7 +139,7 @@ export function runLive(engine: Engine, director: FilmDirector, loading: Loading
 
   function goFrame(frame: number): void {
     state.kind = 'frame'
-    state.frame = Math.min(Math.max(Math.floor(frame), 0), config.frameCount - 1)
+    state.frame = Math.min(Math.max(frame, 0), config.frameCount - 1)
     if (engine.ready(state.frame)) dirty = true
     else load()
     handle.onChange?.()
