@@ -3,8 +3,8 @@ import * as THREE from 'three'
 import { readFileSync, readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { config, type Segment } from '../src/config'
-import { framePlan, rawMotion, seenShare, softness } from '../src/core/motion'
-import { samplesFor, shutterMid } from '../src/core/sampler'
+import { blurAllowed, framePlan, rawMotion, seenShare, shutterScale, softness } from '../src/core/motion'
+import { samplesFor, shutterMid, shutterOffset } from '../src/core/sampler'
 import type { Pose, Shot, ViewKind } from '../src/core/types'
 import { FilmDirector } from '../src/director/film'
 import { dissolveWeight, forceSide, handoverFrame, handoverOf, judgedWindow, placeWeight, shutterThreshold, sideAt } from '../src/director/handover'
@@ -20,8 +20,9 @@ const seg = (stop: string, kind: string): Segment => config.segments.find((s) =>
 const dive = seg('mars', 'dive')
 const rise = seg('mars', 'rise')
 const moves = [dive, rise]
-const sampleTimes = (frame: number, count: number): number[] => samplesFor(count).map((s) => (frame + s.timeOffset) / fps)
-const closeShare = (s: Segment, frame: number, count: number): number => sampleTimes(frame, count).filter((t) => sideAt(s, t) === 'terrain').length / count
+// The sample times of a frame. With a film they are the ones the engine takes: spread over the share of the shutter that frame keeps (E6).
+const sampleTimes = (frame: number, count: number, film?: FilmDirector): number[] => samplesFor(count, film ? shutterScale(film, frame) : 1).map((s) => (frame + s.timeOffset) / fps)
+const closeShare = (s: Segment, frame: number, count: number, film?: FilmDirector): number => sampleTimes(frame, count, film).filter((t) => sideAt(s, t) === 'terrain').length / count
 const finite = (p: Pose): boolean => [...p.position.toArray(), ...p.quaternion.toArray(), p.vfov].every(Number.isFinite)
 const flat = (shot: Shot): string => JSON.stringify({ c: shot.camera, s: shot.sets, sky: [shot.skyQuaternion, shot.skyExposure, shot.skyGlow, shot.skyTurn, shot.skyStars, shot.skyPatch, shot.skyLook], sun: shot.sun, post: shot.post, cover: shot.cover, near: shot.near, far: shot.far, dust: shot.dust })
 const opt = (h: MoveParams['handover']): StopPlan => coveredPlan({ handover: h })
@@ -172,8 +173,8 @@ describe('a stop that opted in', () => {
     off()
     expect(coverWindow(dive)).not.toBeNull()
   })
-  it('swaps sides in the dissolve only, with both sides in every part of the shutter', () => {
-    opt({})
+  it('swaps sides in the dissolve only, with both sides in every part of the shutter that is open', () => {
+    const film = withMars(opt({}))
     const d = handoverOf('mars', 'dive')!
     const r = handoverOf('mars', 'rise')!
     for (let f = dive.firstFrame; f < dive.endFrame; f++) {
@@ -186,31 +187,42 @@ describe('a stop that opted in', () => {
       if (f >= r.firstFrame && f <= r.lastFrame) continue
       for (const n of [1, 16, 64]) expect(closeShare(rise, f, n)).toBe(f < r.firstFrame ? 1 : 0)
     }
+    let shortened = 0
     for (const [s, h] of [[dive, d], [rise, r]] as const) {
       const f = h.firstFrame
-      expect(closeShare(s, f, 16)).toBe(0.5)
-      expect(closeShare(s, f, 64)).toBe(0.5)
-      expect(closeShare(s, f, 1)).toBe(1)
-      const times = sampleTimes(f, 16)
+      const share = shutterScale(film, f)
+      if (share < 1) shortened++
+      expect(closeShare(s, f, 16, film)).toBe(0.5)
+      expect(closeShare(s, f, 64, film)).toBe(0.5)
+      expect(closeShare(s, f, 1, film)).toBe(1)
+      const times = sampleTimes(f, 16, film)
+      for (const t of times) {
+        expect(t * fps - f).toBeGreaterThanOrEqual(shutterOffset(0, share) - 1e-9)
+        expect(t * fps - f).toBeLessThanOrEqual(shutterOffset(1, share) + 1e-9)
+      }
       for (let cell = 0; cell < 8; cell++) {
         const pair = times.slice(cell * 2, cell * 2 + 2).map((t) => sideAt(s, t))
         expect(pair.sort()).toEqual(['orbit', 'terrain'])
       }
       for (const t of times) expect(sideAt(s, t)).toBe(sideAt(s, t))
+      // The side of a sample goes by its place in the shutter that is open, so the pattern is the one of the full shutter.
+      samplesFor(16, share).forEach((x, i) => expect(sideAt(s, (f + x.timeOffset) / fps)).toBe(dissolveWeight(h, s.kind as 'dive' | 'rise', f) > shutterThreshold((i + 0.5) / 16) ? 'terrain' : 'orbit'))
     }
+    expect(shortened).toBeGreaterThan(0)
+    off()
   })
   it('runs the weight up through a longer dissolve in a dive and down in a rise', () => {
-    opt({ dive: { dissolveFrames: 3 }, rise: { dissolveFrames: 3 } })
+    const film = withMars(opt({ dive: { dissolveFrames: 3 }, rise: { dissolveFrames: 3 } }))
     const d = handoverOf('mars', 'dive')!
     const r = handoverOf('mars', 'rise')!
     const want = [0.15625, 0.5, 0.84375]
     for (let k = 0; k < 3; k++) {
       expect(dissolveWeight(d, 'dive', d.firstFrame + k)).toBeCloseTo(want[k]!, 12)
       expect(dissolveWeight(r, 'rise', r.firstFrame + k)).toBeCloseTo(1 - want[k]!, 12)
-      expect(Math.abs(closeShare(dive, d.firstFrame + k, 64) - want[k]!)).toBeLessThanOrEqual(2 / 64)
-      expect(Math.abs(closeShare(rise, r.firstFrame + k, 64) - (1 - want[k]!))).toBeLessThanOrEqual(2 / 64)
+      expect(Math.abs(closeShare(dive, d.firstFrame + k, 64, film) - want[k]!)).toBeLessThanOrEqual(2 / 64)
+      expect(Math.abs(closeShare(rise, r.firstFrame + k, 64, film) - (1 - want[k]!))).toBeLessThanOrEqual(2 / 64)
       for (let cell = 0; cell < 8; cell++) {
-        const part = sampleTimes(d.firstFrame + k, 64).slice(cell * 8, cell * 8 + 8).filter((t) => sideAt(dive, t) === 'terrain').length
+        const part = sampleTimes(d.firstFrame + k, 64, film).slice(cell * 8, cell * 8 + 8).filter((t) => sideAt(dive, t) === 'terrain').length
         expect(Math.abs(part / 8 - want[k]!)).toBeLessThanOrEqual(1 / 8 + 1e-9)
       }
     }
@@ -295,7 +307,18 @@ describe('a stop that opted in', () => {
         if (!inside) continue
         const per = (['orbit', 'terrain'] as const).map((side) => rawMotion(film.shotAt(f, f / fps, side), film.shotAt(f, (f + shutterMid()) / fps, side), film.shotAt(f, (f + config.shutterFraction) / fps, side)))
         expect(p.raw).toBe(Math.max(...per))
-        expect(p.seen).toBe(p.raw)
+        // E6: the frame keeps the share of the shutter that leaves the allowed motion, and the count follows the motion across that share.
+        const [from, to] = [shutterOffset(0, p.shutter), shutterOffset(1, p.shutter)]
+        const left = (['orbit', 'terrain'] as const).map((side) => rawMotion(film.shotAt(f, (f + from) / fps, side), film.shotAt(f, (f + shutterMid()) / fps, side), film.shotAt(f, (f + to) / fps, side)))
+        expect(p.shutter).toBe(shutterScale(film, f))
+        if (p.shutter === 1) expect(p.seen).toBe(p.raw)
+        else {
+          expect(p.seen).toBe(Math.max(...left))
+          expect(p.seen).toBeLessThan(p.raw)
+          // At the floor (handover.minShutter) a frame keeps more than the cap allows; above it, what the cap allows.
+          if (p.shutter > config.raw.handover.minShutter) expect(Math.abs(p.seen / blurAllowed(film, f) - 1)).toBeLessThan(1e-4)
+          else expect(p.seen).toBeGreaterThan(blurAllowed(film, f) * (1 - 1e-4))
+        }
         for (const side of ['orbit', 'terrain'] as const) {
           for (const t of sampleTimes(f, 4)) {
             const shot = film.shotAt(f, t, side)

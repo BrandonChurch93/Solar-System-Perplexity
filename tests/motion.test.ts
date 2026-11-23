@@ -99,8 +99,11 @@ describe('samples of a frame', () => {
         expect(n).toBe(frameSamples(director, f, tier))
         expect(n).toBeGreaterThanOrEqual(base)
         expect(n).toBeLessThanOrEqual(Math.max(t.maxSamplesPerFrame, base))
-        const seen = plan.split ? plan.seen : shutterMotion(...ends(f))
-        if (!plan.split) expect(plan.seen).toBe(seen)
+        // In a frame that swaps sides the motion is taken per side, and in a frame with a shortened shutter (E6) across the share that is open.
+        const own = plan.split || plan.shutter < 1
+        const seen = own ? plan.seen : shutterMotion(...ends(f))
+        if (!own) expect(plan.seen).toBe(seen)
+        if (plan.shutter < 1) expect(plan.seen).toBeLessThan(plan.raw)
         if (n > base && n < t.maxSamplesPerFrame) expect(seen / n).toBeLessThanOrEqual(step + 1e-9)
         if (n === base && t.maxSamplesPerFrame > base) expect(seen).toBeLessThanOrEqual(base * step + 1e-9)
       }
@@ -112,11 +115,21 @@ describe('samples of a frame', () => {
       if (segmentAtFrame(f).kind === 'hold') for (const tier of ['review', 'final']) expect(frameSamples(director, f, tier)).toBe(config.tiers[tier]!.samplesPerFrame)
     }
   })
-  it('raises the count in the fastest part of a rise', () => {
-    const s = config.segments.find((x) => x.id === 'neptune.rise')!
-    let most = 0
-    for (let f = s.firstFrame; f < s.endFrame; f++) most = Math.max(most, frameSamples(director, f, 'review'))
-    expect(most).toBeGreaterThan(config.tiers.review!.fastSamplesPerFrame)
+  it('raises the count in the fastest part of a rise with the full shutter, and keeps it at what the blur left asks in a rise with a capped one', () => {
+    const most = (id: string): number => {
+      const s = config.segments.find((x) => x.id === id)!
+      let n = 0
+      for (let f = s.firstFrame; f < s.endFrame; f++) n = Math.max(n, frameSamples(director, f, 'review'))
+      return n
+    }
+    const fast = config.tiers.review!.fastSamplesPerFrame
+    expect(plans.find((p) => p.id === 'jupiter')!.handsOver).toBe(false)
+    expect(most('jupiter.rise')).toBeGreaterThan(fast)
+    expect(plans.find((p) => p.id === 'neptune')!.handsOver).toBe(true)
+    // With the cap alone the count is what the cap leaves; a floor on the share (handover.minShutter) keeps more blur in the fastest frames.
+    const capped = Math.max(fast, Math.ceil(config.raw.handover.maxBlurPx / step - 1e-9))
+    if (config.raw.handover.minShutter === 0) expect(most('neptune.rise')).toBe(capped)
+    else expect(most('neptune.rise')).toBeGreaterThanOrEqual(capped)
   })
 })
 
