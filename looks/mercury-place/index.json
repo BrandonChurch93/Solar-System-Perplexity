@@ -1,9 +1,17 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T10:05:25.126Z",
+ "pushed": "2026-11-23T10:34:28.202Z",
  "head": "1c4e948a77b3e36067ef7d7e12c0e76fb1c866b1",
- "note": "plates second pass: place fan visible against old ground, two Suns at 736, both being fixed",
+ "note": "S4 first render: cover gone, T agrees, dive Sun between 694 and 720 broken, plates third pass in work",
  "looks": [
+  {
+   "time": "2026-11-23T10:34:27.100Z",
+   "file": "20261123103427100-note-L2-lead-view.jpg",
+   "source": "out/work/mercury/place/repaint/L2-lead-view.jpg",
+   "kind": "note",
+   "label": "level 2 lead, wide tone zone 8 to 14 deg",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-23T10:05:24.540Z",
    "file": "20261123100524540-note-r1-736-743-745.jpg",
@@ -58,14 +66,6 @@
    "source": "out/work/mercury/place/repaint/L2-crop-a4.jpg",
    "kind": "note",
    "label": "level 2 take a4 built, 1:1 crop at the place",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T09:20:55.990Z",
-   "file": "20261123092055990-note-L2-mid-a4.jpg",
-   "source": "out/work/mercury/place/repaint/L2-mid-a4.jpg",
-   "kind": "note",
-   "label": "level 2 take a4: lead (left) and built plate (right), middle half: sky no longer leaks into the place, outline gone",
    "stop": "mercury"
   }
  ]
