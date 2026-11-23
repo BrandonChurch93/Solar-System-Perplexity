@@ -1725,3 +1725,31 @@ The order of work is now the order of this mail: 1 gap at the limb, 2 the lens g
 - Plates of the rise made again at the new T (`tcam.ts`, `/tmp/v/trise.sh 1542 51.40833333333333`, `tlay.py calib rise d`, `make rise`, `export rise`). Shift measured [0.00075, 0.005178], written as [0.00075, 0.00518], left over [-0.16, -0.04] plate pixels with a spread of 0.5.
 - `air.sun.heights` is now [0.16, 0.35] (was [0.10, 0.25] on the s1 stills): the painted Sun stays until the limb has left the frame in the rise.
 - Check stills of this state render now: `out/work/venus/place/s3/f-<frame>.png`.
+
+## MAIL 258 (23 Nov, about 11:54 VM time), from the Builder to every stop builder, word for word. No answer needed
+
+"MAIL 258 from the Builder (/root) to every stop builder.
+Main moved to da69509a. New in the globe shader and the loader, all off unless your stop asks (notes: assets-src/shared/GLOBE-NOTES.md):
+- `ctx.texture(path, {srgb: false, channels: 1})`: a one channel texture, a quarter of the memory. Use it for every mask and height map you load, if your set is near its memory limit.
+- `PatchSet.own?: boolean[]`: a patch level with its own light (a plate that already carries the light of the close view is not lit a second time).
+- `PatchSet.fadeMinor?: boolean`: a level fades in by its fine axis on screen, so a level seen at a grazing angle does not come in as a hard strip.
+MAX_PATCHES is 10.
+No frame of main changed (115 draft frames with the same bytes). Merge origin/main into your branch at your next commit. Nothing else changes for you: go on with the list of my last mail to you."
+
+- Done at 11:53: local commit ca10e1cb (items 1 to 4), then merge of origin/main da69509a (ddaf2925). tsc clean, vitest 135 of 135 after the merge. Not pushed yet: build, harness, judged frames come first.
+- GLOBE-NOTES says only the Mars set uses `src/bodies/planet.ts`; Venus has its own globe shader (`src/stops/venus/globe.ts`), so `own` and `fadeMinor` are not there for Venus unless I write them into my shader.
+
+## State 12:02 (23 Nov, VM time): items 1 to 4 of MAIL 247 on the frames of the harness. Read this first after a compaction
+
+- Tree: ca10e1cb (items 1 to 4) plus merge ddaf2925 of origin/main da69509a. tsc clean, vitest 135 of 135, build passes. Not pushed yet.
+- Harness h7 (`npm run -s handover -- --stop venus --tier draft --only sides,flow,path,sheets`): all six checks pass. Dive: T in frame 1343, side difference at T mean 0.052 of 255, 99.9th percentile 2, largest 133, 57 pixels over 16; flow gap mean 0.101 px a frame, largest 0.286. Rise: T in frame 1542 (51.40833 s), place window 1542 to 1554, side difference mean 0.052, 99.9th percentile 3, largest 47, 39 pixels over 16; flow gap mean 0.092, largest 0.236; the ground moves 25.3 px a frame at T.
+- The frames folder of the harness (`out/work/handover/venus/frames/`) still holds frames of earlier runs (1544 sides, 1555, 1556): only 1530 to 1554 of the rise are of this tree.
+- Sheets `out/work/venus/place/h7/{dive-a,dive-b,rise-a,rise-b,hz-dive,hz-rise}.jpg` and `/tmp/v/h7-limb.jpg` (limb at twice the size: 1542, 1543, 1545, 1547, 1549, 1551, 1553, 1554), every frame looked at:
+  - one Sun, the painted bloom, same size, in 1331 to 1349 and in 1531 to 1554; it stays where it is while the limb sinks;
+  - no dark line and no black band at the limb on either side of either T; the glow starts at the limb;
+  - no green and yellow spot on the deck;
+  - 1542 against 1543 (rise T): I cannot tell the sides apart at the limb at twice the size.
+- Seen and still wrong on these frames: a dashed thin white line on the limb in 1545 and a thin crisp bright line on the limb from 1547 on (the globe's rim against the dome); whitish crisp tufts at the lower left from 1546 on (plates); an olive tint at the far left of the deck and an orange line along the limb from 1551 on (the globe's own look coming back); a blue white patch near the right horizon in 1553 and 1554; in the dive an orange line along the limb in 1331 to 1334 and crisp white streaks in the far field 1331 to 1335.
+- Stills s3 (draft, as cut) 1555 to 1570: the Sun leaves at the top between 1558 and 1561, the limb reaches the top edge at 1567 and is gone at the centre by 1570; the plates round the place are olive, pebbled and combed with bright orange and white stripes at upper right (item 5, not done). Dive 1310: limb in frame with no air over it yet; 1314 the Sun's glow at the top edge; 1318 the lower half of the Sun; 1322 the whole bloom.
+- Judged frames at draft on this tree (`out/work/venus/place/same/n4-<frame>.png`): 1185 and 1440 have the same bytes as the base stills of the frozen build; 1605 (first frame of the travel) has the same bytes as at M2; 1604 differs from the M2 still in 300535 pixels, largest 33 of 255, mean 0.126, 8375 pixels over 4, spread over the whole frame (the rise shape changed, so the last frame at u 0.99 is not the same sub pixel pose); the step 1604 to 1605 is mean 1.486 (M2: 1.452). turn.ts at 1604: height 4.3978 with both shapes, ratio 1.0018 (was 1.0017).
+- Sheet of the four judged frames beside the kept stills: `/tmp/v/judged4.jpg` (in the looks). 1287 and 1586 are much closer to the globe than the kept stills, as since M2 (the steady move).
