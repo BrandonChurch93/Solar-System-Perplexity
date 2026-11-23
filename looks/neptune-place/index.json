@@ -1,9 +1,17 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T18:07:29.515Z",
- "head": "f8aac1810f720ecdb1ed0a861eb687050d94fb22",
- "note": "far ground haze in the rise (d8, uncommitted, proof green), dive fault with it, 4707 native crops with the blue blobs",
+ "pushed": "2026-11-23T18:28:22.832Z",
+ "head": "e841b2b53792e1d675a03c26b3f9caf4627ba95c",
+ "note": "blue specks of 4707 cured by code, pairs before and after; round 39 list read",
  "looks": [
+  {
+   "time": "2026-11-23T18:28:22.243Z",
+   "file": "20261123182822243-note-vivid-pairs.jpg",
+   "source": "../../../../tmp/vivid-pairs.jpg",
+   "kind": "note",
+   "label": "round 39 issue 1, electric blue specks: 4698 and 4707 at native size, before and with the limit on the plates' depth of colour (commit pushed)",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-23T18:07:28.826Z",
    "file": "20261123180728826-note-n4707-blue.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/d8-a.jpg",
    "kind": "note",
    "label": "rise 4956 to 4966 draft, far ground haze d8 (uncommitted): far ground stays pale and soft, canvas bank melts",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T17:28:23.755Z",
-   "file": "20261123172823755-note-cloud-alpha.jpg",
-   "source": "../../../../tmp/cloud-alpha.jpg",
-   "kind": "note",
-   "label": "wide cloud canvas alpha and colour, dark cloud left of the fitted frame (cause of olive tinge and specks)",
    "stop": "neptune"
   }
  ]
