@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T19:28:52.379Z",
+ "pushed": "2026-11-23T19:53:22.200Z",
  "head": "86dfc2d34fbdc139a061ea28aa372af9664c573c",
- "note": "sun: mail 327 point 1 in work: the arcade rings after the release and passes through the approved pose at 90 at speed; point 2 (longer travel of the thrown shell, its light on the ground, knots racing down the legs) rendering",
+ "note": "sun: racing knots after the release (s4), shell travel, kept ground with held camera; 80 to 100 at 8.49 against aim 8.67, in work",
  "looks": [
+  {
+   "time": "2026-11-23T19:53:21.626Z",
+   "file": "20261123195321626-note-held-kept.jpg",
+   "source": "out/work/sun/life/v/held-kept.jpg",
+   "kind": "note",
+   "label": "kept build 0eae595e, camera held at frame 90 pose, ground crop every 6 frames 110 to 170 and one line over 61 frames",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T19:53:21.044Z",
+   "file": "20261123195321044-note-s3-top-a.jpg",
+   "source": "out/work/sun/life/v/s3-top-a.jpg",
+   "kind": "note",
+   "label": "draft, working tree: shell leaving the crown, frames 24 to 52",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T19:53:20.301Z",
+   "file": "20261123195320301-note-s4-race.jpg",
+   "source": "out/work/sun/life/v/s4-race.png",
+   "kind": "note",
+   "label": "draft, working tree after 86dfc2d3: right leg x 1150 to 1410, y 120 to 450, every third frame 58 to 79, twice size: knots racing down after the release",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-23T19:28:51.759Z",
    "file": "20261123192851759-note-s2-six-86.jpg",
@@ -49,30 +73,6 @@
    "format": "16x9",
    "diag": "texels",
    "job": "measure"
-  },
-  {
-   "time": "2026-11-23T18:45:14.633Z",
-   "file": "20261123184514633-note-spot-out.jpg",
-   "source": "out/work/sun/life/v/spot-out.jpg",
-   "kind": "note",
-   "label": "rise 250, 256, 262 and hold 270, centre of the disc at twice native, draft: grain of the close ground at 250, the map from 256",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T18:45:13.440Z",
-   "file": "20261123184513440-note-ho-q2-after.jpg",
-   "source": "out/work/sun/life/v/ho-q2-after.jpg",
-   "kind": "note",
-   "label": "handover sheet after T (217 to 228), draft, commit 2ba81df3: the arcade thins and leaves",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T18:45:12.150Z",
-   "file": "20261123184512150-note-r-26.jpg",
-   "source": "out/work/sun/life/v/r-26.jpg",
-   "kind": "note",
-   "label": "release 26 to 31 at native size, draft, commit a24fe051: strands apart, feet narrow",
-   "stop": "sun"
   }
  ]
 }
