@@ -1,9 +1,33 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T12:20:23.571Z",
- "head": "74e3c04b1196f30e98816e5d27081b2432a6e470",
- "note": "S4 items 1 and 2 at 74e3c04b: rise and dive sheets every frame, limb crop, bank pairs",
+ "pushed": "2026-11-23T12:49:02.642Z",
+ "head": "194d20716ed85eb5d2d470ab30b1628c474908f7",
+ "note": "flat plates and soft carry (local): wedge gone, small smudge left; tracing the bruise and the arms of mail 268",
  "looks": [
+  {
+   "time": "2026-11-23T12:48:43.841Z",
+   "file": "20261123124843841-note-dive-a.jpg",
+   "source": "out/work/nep/s5/a/dive-a.jpg",
+   "kind": "note",
+   "label": "dive 4692 to 4728 every second frame, flat plates; smudge under the eye 4696 to 4712, contrast low near 4710",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T12:48:43.280Z",
+   "file": "20261123124843280-note-rise-b.jpg",
+   "source": "out/work/nep/s5/a/rise-b.jpg",
+   "kind": "note",
+   "label": "rise 4990 to 5000 every second frame, small red brown smudge south east of the eye still there",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T12:48:42.464Z",
+   "file": "20261123124842464-note-rise-a.jpg",
+   "source": "out/work/nep/s5/a/rise-a.jpg",
+   "kind": "note",
+   "label": "rise 4966 to 4988 every second frame, flat plates, no wedge (local f8378cd8)",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-23T12:20:22.992Z",
    "file": "20261123122022992-note-bank-pairs.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/nep/s4/h/rise-4974-4989.jpg",
    "kind": "note",
    "label": "S4 rise 4974 to 4989, wedge 4982 to 4989 still there",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T12:20:20.290Z",
-   "file": "20261123122020290-note-rise-4962-4973.jpg",
-   "source": "out/work/nep/s4/h/rise-4962-4973.jpg",
-   "kind": "note",
-   "label": "S4 rise 4962 to 4973",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T12:20:19.736Z",
-   "file": "20261123122019736-note-rise-4950-4961.jpg",
-   "source": "out/work/nep/s4/h/rise-4950-4961.jpg",
-   "kind": "note",
-   "label": "S4 rise 4950 to 4961 as the film draws, T 4956, commit b69351b8",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T12:02:01.892Z",
-   "file": "20261123120201892-note-limb-d.jpg",
-   "source": "out/work/nep/s4/f/limb-d.jpg",
-   "kind": "note",
-   "label": "rise limb, second try (dropped): band goes thin between 4959 and 4960",
    "stop": "neptune"
   }
  ]
