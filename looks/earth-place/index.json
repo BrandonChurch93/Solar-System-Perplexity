@@ -1,9 +1,25 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-23T08:42:40.237Z",
+ "pushed": "2026-11-23T09:02:50.025Z",
  "head": "9a27f0c0f17b02f76093d4e1014ee48683129e08",
- "note": "S2 and S3 first pictures: side check at 1915 after the tone fix, top down dive sheet on the new single move path",
+ "note": "S2: limb zone compared at the twin, far zone and horizon trim still open",
  "looks": [
+  {
+   "time": "2026-11-23T09:02:49.365Z",
+   "file": "20261123090249365-note-far-look.jpg",
+   "source": "out/work/earth/place/far-look.jpg",
+   "kind": "note",
+   "label": "earth place: far zone at 1915, close side above, globe side below, rows 150 to 470. To do: cloud sheet in the far zone of the plate, sky glow, stars",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T09:02:48.513Z",
+   "file": "20261123090248513-note-f01915-check.jpg",
+   "source": "out/work/earth/place/sides/f01915-check.jpg",
+   "kind": "note",
+   "label": "earth place: sides at 1915 after the limb haze, air rim and mist change. Horizon of the close side 5.8 px below the globe limb (trim pending). Far zone still differs: close side has a white cloud sheet to the horizon, globe side has sea and land",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-23T08:42:39.349Z",
    "file": "20261123084239349-note-dive-down-sheet.jpg",
@@ -75,22 +91,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "2d9dda353bfd7b6d"
-  },
-  {
-   "time": "2026-11-23T08:17:32.217Z",
-   "file": "20261123081732217-note-levels-look.jpg",
-   "source": "out/work/earth/place/levels-look.jpg",
-   "kind": "note",
-   "label": "S2: the four levels as stored (12, 24, 48, 96 degrees): place detail with the hold's regional tone",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T08:17:30.489Z",
-   "file": "20261123081730489-note-q12-g-look.jpg",
-   "source": "out/work/earth/place/q12-g-look.jpg",
-   "kind": "note",
-   "label": "S2: the 12 degree place plate at 4096, repaint take 2 with the sharp lay back blended in, seam of the first blend gone",
-   "stop": "earth"
   }
  ]
 }
