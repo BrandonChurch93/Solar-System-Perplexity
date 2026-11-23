@@ -1,6 +1,6 @@
 import * as THREE from 'three'
-import model from './closeModel.json'
-import rings from './rings.json'
+import model from '../closeModel.json'
+import rings from '../rings.json'
 
 export const RING_PROFILE_GLSL = /* glsl */ `
 uniform highp sampler2D uProf;
