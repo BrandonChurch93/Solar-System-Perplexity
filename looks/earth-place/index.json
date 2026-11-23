@@ -1,9 +1,75 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-23T19:50:00.863Z",
- "head": "cdaaa89328e887996fbeb2f85cd815d6331d6213",
- "note": "earth: new field edge and sizes at 1857, limb band out, climb with bank; dome at 1878 to 1890 still seen",
+ "pushed": "2026-11-23T20:21:33.342Z",
+ "head": "c6f57f7b1ce801450ad4fab402e58815f982f8c9",
+ "note": "earth: proof chain running on the new field, limb and climb; dome at 1874 to 1889 still seen",
  "looks": [
+  {
+   "time": "2026-11-23T20:21:32.273Z",
+   "file": "20261123202132273-note-s-1878-1889.jpg",
+   "source": "out/work/earth/place/all/sheets/s-1878-1889.jpg",
+   "kind": "note",
+   "label": "dive 1878 to 1889 every frame, draft: the lighter dome is still seen",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T20:13:50.664Z",
+   "file": "20261123201350664-compare-earth-rise-under.jpg",
+   "source": "out/work/handover/earth-rise-under.png",
+   "kind": "compare",
+   "label": "earth rise, the globe side at T (frame 2100) with the place picture, alone, and their difference times 4",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2100,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T20:13:01.157Z",
+   "file": "20261123201301157-sheet-earth-dive-top.jpg",
+   "source": "out/work/handover/earth-dive-top.png",
+   "kind": "sheet",
+   "label": "earth dive, the globe side alone from straight above the place, 12 frames from the far end to T (frame 1919), place picture off, draft tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "first": 1830,
+   "last": 1919,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T20:12:02.305Z",
+   "file": "20261123201202305-sheet-earth-dive-draft-before.jpg",
+   "source": "out/work/handover/earth-dive-draft-before.png",
+   "kind": "sheet",
+   "label": "earth dive, every frame 1907 to 1918 (before T, frame 1919), draft tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "first": 1907,
+   "last": 1918,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T20:12:00.512Z",
+   "file": "20261123201200512-sheet-earth-dive-draft-across.jpg",
+   "source": "out/work/handover/earth-dive-draft-across.png",
+   "kind": "sheet",
+   "label": "earth dive, every frame 1913 to 1919 (across T, frame 1919), draft tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "first": 1913,
+   "last": 1919,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T20:02:53.962Z",
+   "file": "20261123200253962-compare-earth-dive-under.jpg",
+   "source": "out/work/handover/earth-dive-under.png",
+   "kind": "compare",
+   "label": "earth dive, the globe side at T (frame 1919) with the place picture, alone, and their difference times 4",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1919,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-23T19:50:00.107Z",
    "file": "20261123195000107-note-s2-2136.jpg",
@@ -18,54 +84,6 @@
    "source": "../../../../tmp/gl/f1/s2-1866.jpg",
    "kind": "note",
    "label": "dive 1866 to 1888 every second frame, draft",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T19:49:58.739Z",
-   "file": "20261123194958739-note-1857-f2-full.jpg",
-   "source": "../../../../tmp/gl/f1/1857-f2-full.jpg",
-   "kind": "note",
-   "label": "1857 draft, field of three body sizes ending by thinning, night limb without the green band",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T19:22:53.794Z",
-   "file": "20261123192253794-note-look-1930-1857-native.jpg",
-   "source": "out/work/earth/place/look-1930-1857-native.jpg",
-   "kind": "note",
-   "label": "earth look-1930-1857-native draft, trial tree",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T19:22:53.220Z",
-   "file": "20261123192253220-note-look-1930-dive-field.jpg",
-   "source": "out/work/earth/place/look-1930-dive-field.jpg",
-   "kind": "note",
-   "label": "earth look-1930-dive-field draft, trial tree",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T19:22:52.598Z",
-   "file": "20261123192252598-note-look-1930-climb-b.jpg",
-   "source": "out/work/earth/place/look-1930-climb-b.jpg",
-   "kind": "note",
-   "label": "earth look-1930-climb-b draft, trial tree",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T19:22:51.943Z",
-   "file": "20261123192251943-note-look-1930-climb-a.jpg",
-   "source": "out/work/earth/place/look-1930-climb-a.jpg",
-   "kind": "note",
-   "label": "earth look-1930-climb-a draft, trial tree",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T19:09:28.749Z",
-   "file": "20261123190928749-note-field-density-look.jpg",
-   "source": "out/work/earth/place/field-density-look.jpg",
-   "kind": "note",
-   "label": "field density over the hold map, trial",
    "stop": "earth"
   }
  ]
