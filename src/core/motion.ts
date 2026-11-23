@@ -118,6 +118,7 @@ function motionOver(source: ShotSource, frame: number, split: boolean, from: num
 // The seams: the segments before and after run with the full shutter. Where the segment's own first or last frame moves more than maxBlurPx, the
 // blur a frame may keep rises to that motion over handover.blurEaseFrames with a smooth ramp, so that frame keeps its full shutter and no frame
 // steps. Where it moves less, the cap lets go by itself and there is no ramp.
+// The cap is off with handover.maxBlurPx 0: then no frame is capped, the share is 1 everywhere and the floor and the ease have nothing to do.
 // The floor (handover.minShutter, 0 for off): a capped frame never runs with less of the film's shutter than this share, scale = max(allowed / raw,
 // floor). A shutter that is far shorter than the step to the next frame shows a fast edge as separate sharp copies; with the floor the fastest
 // frames keep that share of their motion as blur instead, most at the rim of the picture and next to none at the place the camera goes to, and
@@ -157,6 +158,8 @@ export function blurAllowed(source: ShotSource, frame: number): number {
   const own = handing(frame)
   if (!own) return Infinity
   const max = config.raw.handover.maxBlurPx
+  // 0 switches the cap off: nothing is capped anywhere, every frame keeps the film's full shutter and its plan is the one of before E6.
+  if (!(max > 0)) return Infinity
   const ease = config.raw.handover.blurEaseFrames
   const cap = capOf(source)
   let allowed = max

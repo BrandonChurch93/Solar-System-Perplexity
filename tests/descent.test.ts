@@ -93,13 +93,19 @@ describe('the numbers of the path in the config', () => {
     const k = clone()
     k.handover.coastFrames = -1
     expect(() => buildConfig(k)).toThrow(/coastFrames/)
-    for (const [key, bad] of [['maxBlurPx', 0], ['blurEaseFrames', -1], ['blurEaseFrames', 1.5]] as const) {
+    for (const [key, bad] of [['maxBlurPx', -1], ['maxBlurPx', Number.NaN], ['blurEaseFrames', -1], ['blurEaseFrames', 1.5]] as const) {
       const b = clone() as unknown as { handover: Record<string, unknown> }
       b.handover[key] = bad
       expect(() => buildConfig(b)).toThrow(/maxBlurPx/)
       const gone = clone() as unknown as { handover: Record<string, unknown> }
       delete gone.handover[key]
       expect(() => buildConfig(gone)).toThrow(new RegExp('missing key handover.' + key))
+    }
+    // 0 is the cap switched off.
+    for (const fine of [0, 6, 14]) {
+      const b = clone() as unknown as { handover: Record<string, unknown> }
+      b.handover.maxBlurPx = fine
+      expect(() => buildConfig(b)).not.toThrow()
     }
     for (const bad of [-0.01, 1.01, Number.NaN]) {
       const b = clone() as unknown as { handover: Record<string, unknown> }

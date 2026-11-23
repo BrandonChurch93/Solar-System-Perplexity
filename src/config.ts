@@ -152,7 +152,7 @@ export function buildConfig(input: unknown, approvedExists?: (path: string) => b
   if (!Array.isArray(hz) || hz.length !== 2 || !(hz[0]! >= 0) || !(hz[1]! > hz[0]!) || !(hz[1]! < 90)) fail('handover.zenithDeg must be two angles, the first 0 or more, the second above it and under 90')
   if (!(r.handover.maxRateOverMean > 1)) fail('handover.maxRateOverMean must be above 1')
   if (!(r.handover.coastFrames >= 0)) fail('handover.coastFrames must be 0 or more')
-  if (!(r.handover.maxBlurPx > 0) || !isWhole(r.handover.blurEaseFrames) || !(r.handover.blurEaseFrames >= 0)) fail('handover.maxBlurPx must be above 0 and handover.blurEaseFrames a whole number, 0 or more')
+  if (!(r.handover.maxBlurPx >= 0) || !isWhole(r.handover.blurEaseFrames) || !(r.handover.blurEaseFrames >= 0)) fail('handover.maxBlurPx must be 0 (no cap) or more and handover.blurEaseFrames a whole number, 0 or more')
   if (!(r.handover.minShutter >= 0) || !(r.handover.minShutter <= 1)) fail('handover.minShutter must be 0 (off) to 1')
   if (!(r.handover.skyFloor.marginDeg >= 0) || !(r.handover.skyFloor.featherDeg > 0)) fail('handover.skyFloor.marginDeg must be 0 or more and handover.skyFloor.featherDeg above 0')
   const hl = r.handover.limits as Record<string, number>

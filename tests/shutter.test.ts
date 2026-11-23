@@ -348,3 +348,90 @@ describe('the floor of the share (handover.minShutter)', () => {
     }
   })
 })
+
+describe('the cap switched off (handover.maxBlurPx 0)', () => {
+  const tiers = ['draft', 'review', 'final']
+  const off = (run: () => void): void => {
+    try {
+      numbers.maxBlurPx = 0
+      run()
+    } finally {
+      Object.assign(numbers, kept, { minShutter: 0 })
+    }
+  }
+  // The plan of a frame as it was before the capped shutter (framePlan of core/motion.ts on main fdf97b8), written out: the motion across the
+  // film's whole shutter, on both sides inside the dissolve; the count of a tier follows from seen.
+  const before = (f: number): { raw: number; seen: number; soft: number; split: boolean } => {
+    const segment = segmentAtFrame(f)
+    const at = (offset: number, side?: ViewKind) => film.shotAt(f, (f + offset) / fps, side)
+    const h = segment.kind === 'dive' || segment.kind === 'rise' ? handoverOf(segment.stop, segment.kind) : null
+    if (h && f >= h.firstFrame && f <= h.lastFrame) {
+      const raw = Math.max(...SIDES.map((side) => rawMotion(at(0, side), at(shutterMid(), side), at(config.shutterFraction, side))))
+      return { raw, seen: raw, soft: 0, split: true }
+    }
+    const mid = at(shutterMid())
+    const raw = rawMotion(at(0), mid, at(config.shutterFraction))
+    return { raw, seen: raw * seenShare(mid), soft: h ? 0 : softness(raw), split: false }
+  }
+  it('gives every frame of the film its full shutter, whatever the floor and the ease are set to', () => {
+    off(() => {
+      for (const [floor, ease] of [[0, kept.blurEaseFrames], [0.5, kept.blurEaseFrames], [1, 0]] as const) {
+        numbers.minShutter = floor
+        numbers.blurEaseFrames = ease
+        for (let f = 0; f < config.frameCount; f++) {
+          expect(shutterScale(film, f)).toBe(1)
+          expect(blurAllowed(film, f)).toBe(Infinity)
+        }
+      }
+    })
+  })
+  it('leaves the plan of every frame of the film the formula it was before the cap, at the three tiers', () => {
+    off(() => {
+      let handing = 0
+      let split = 0
+      for (let f = 0; f < config.frameCount; f++) {
+        const kind = segmentAtFrame(f).kind
+        const old = before(f)
+        if (hands(f)) handing++
+        if (old.split) split++
+        for (const tier of tiers) {
+          const base = sampleCount(tier, kind)
+          const most = config.tiers[tier]!.maxSamplesPerFrame
+          expect(framePlan(film, f, tier)).toEqual({ samples: most <= base ? base : samplesNeeded(base, most, old.seen), ...old, shutter: 1 })
+        }
+      }
+      expect(handing).toBe(moving.reduce((a, s) => a + s.endFrame - s.firstFrame, 0))
+      expect(split).toBeGreaterThan(0)
+    })
+  })
+  it('leaves the samples of every frame the old ones: their times inside the frame, and in a frame that swaps sides the side of each', () => {
+    off(() => {
+      const counts = new Set<number>()
+      for (let f = 0; f < config.frameCount; f++) for (const tier of tiers) counts.add(framePlan(film, f, tier).samples)
+      expect(counts.size).toBeGreaterThan(3)
+      for (const n of counts) {
+        expect(samplesFor(n, 1)).toEqual(samplesFor(n))
+        samplesFor(n).forEach((x, i) => expect(x.timeOffset).toBe(((i + 0.5) / n) * config.shutterFraction))
+      }
+      let swapped = 0
+      for (const s of moving) {
+        const kind = s.kind as 'dive' | 'rise'
+        const h = handoverOf(s.stop, kind)!
+        for (let f = h.firstFrame; f <= h.lastFrame; f++) {
+          const weight = dissolveWeight(h, kind, f)
+          for (const tier of tiers) {
+            const plan = framePlan(film, f, tier)
+            for (const x of samplesFor(plan.samples, plan.shutter)) {
+              // The rule of before: the place of the time inside the film's whole shutter against the threshold.
+              const time = (f + x.timeOffset) / fps
+              const place = (time * fps - Math.floor(time * fps + 1e-9)) / config.shutterFraction
+              expect(sideAt(s, time)).toBe(weight > shutterThreshold(place) ? 'terrain' : 'orbit')
+              swapped++
+            }
+          }
+        }
+      }
+      expect(swapped).toBeGreaterThan(0)
+    })
+  })
+})
