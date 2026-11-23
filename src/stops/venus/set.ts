@@ -294,7 +294,8 @@ export const createSet: SetFactory = async (ctx) => {
       let taps = 0
       let smear = 1
       if (view.samples > 1 && state.segment.stop === plan.id && (kind === 'dive' || kind === 'rise') && thick < look.motion.hidden) {
-        const dt = config.shutterFraction / (view.samples * config.fps)
+        // One sample's share of the shutter that is open: the engine may keep only a share of the film's shutter in a dive or a rise (E6, view.shutter).
+        const dt = config.shutterFraction * (view.shutter ?? 1) / (view.samples * config.fps)
         const a = kind === 'dive' ? plan.dive(state.time) : plan.rise(state.time)
         const b = kind === 'dive' ? plan.dive(state.time + dt) : plan.rise(state.time + dt)
         if (a.view === 'orbit' && b.view === 'orbit') {
