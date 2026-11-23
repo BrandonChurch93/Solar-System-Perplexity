@@ -8,7 +8,7 @@ import { midShutterCarry } from './held'
 import { framePlan } from './motion'
 import { samplesFor, shutterMid } from './sampler'
 import { SetLoader } from './sets'
-import type { RenderView, Shot, SkyPatch } from './types'
+import type { RenderView, Shot, SkyPatch, ViewKind } from './types'
 import { isRaw, setDiag, setSamples } from '../diagnostics/diag'
 import { PostChain } from '../post/chain'
 import { Belt } from '../space/belt/belt'
@@ -23,7 +23,7 @@ import { marksIn } from '../terrain/shield'
 import { setsForFrame } from '../director/timeline'
 
 export interface Director {
-  shotAt(frame: number, time: number): Shot
+  shotAt(frame: number, time: number, side?: ViewKind): Shot
   glareOf?(shot: Shot): THREE.Vector3 | null
   readonly sky?: SkyAims
 }
@@ -221,10 +221,17 @@ export class Engine {
     const samples = samplesFor(plan.samples)
     this.soft = plan.soft
     const mid = this.director.shotAt(f, (f + shutterMid()) / config.fps)
+    let other: Shot | null = null
+    const midOf = (shot: Shot): Shot => {
+      const view = shot.sets[0]?.view
+      if (!plan.split || !view || view === mid.sets[0]?.view) return mid
+      other ??= this.director!.shotAt(f, (f + shutterMid()) / config.fps, view)
+      return other
+    }
     this.accumulator.begin()
     samples.forEach((s, i) => {
       const shot = samples.length === 1 ? mid : this.director!.shotAt(f, (f + s.timeOffset) / config.fps)
-      this.renderSample(shot, mid, s.jitterX, s.jitterY, i, samples.length)
+      this.renderSample(shot, midOf(shot), s.jitterX, s.jitterY, i, samples.length)
       this.accumulator.add(this.renderer, this.sampleTarget.texture, s.weight)
     })
     this.post.render(this.renderer, this.accumulator.texture, mid.post, f, this.diag, samples.length > 1)
