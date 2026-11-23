@@ -47,6 +47,42 @@ def dirs(gx, gy):
     return d / np.linalg.norm(d, axis=-1, keepdims=True)
 
 
+RELIEF = json.loads((ROOT / 'src/stops/mercury/relief.json').read_text())
+WIDE = json.loads((ROOT / 'src/stops/mercury/wide.json').read_text())
+
+
+def linear(v):
+    v = np.asarray(v, np.float32) / 255
+    return np.where(v <= 0.04045, v / 12.92, ((v + 0.055) / 1.055) ** 2.4).astype(np.float32)
+
+
+def srgb(v):
+    v = np.clip(v, 0, 1)
+    return np.where(v <= 0.0031308, v * 12.92, 1.055 * v ** (1 / 2.4) - 0.055).astype(np.float32)
+
+
+def quat(q):
+    x, y, z, w = q
+    return np.array([[1 - 2 * (y * y + z * z), 2 * (x * y - z * w), 2 * (x * z + y * w)], [2 * (x * y + z * w), 1 - 2 * (x * x + z * z), 2 * (y * z - x * w)], [2 * (x * z - y * w), 2 * (y * z + x * w), 1 - 2 * (x * x + y * y)]])
+
+
+def inside(v, size, vfov, box, border):
+    z = np.maximum(-v[..., 2], 1e-9)
+    f = size[1] / 2 / math.tan(math.radians(vfov) / 2)
+    px = size[0] / 2 + f * v[..., 0] / z
+    py = size[1] / 2 - f * v[..., 1] / z
+    edge = np.minimum(np.minimum(px - box[0], box[0] + box[2] - px), np.minimum(py - box[1], box[1] + box[3] - py))
+    return np.clip(edge / border, 0, 1) * (v[..., 2] < 0)
+
+
+def valid(d, border=160):
+    close = json.loads((WORK / 'tiles/cameras.json').read_text())['close']
+    x = (d - np.array(close['origin'])) @ np.array(close['matrix']) * close['radius']
+    a = inside(x, RELIEF['imageSize']['full'], RELIEF['vfovDeg'], RELIEF['box']['full'], border)
+    b = inside((x - np.array(WIDE['position'])) @ quat(WIDE['quaternion']), WIDE['imageSize']['full'], WIDE['vfovDeg'], WIDE['box']['full'], border)
+    return np.maximum(a, b).astype(np.float32)
+
+
 class Place:
     def __init__(self, kind, folder=None, feather=120):
         cams = json.loads((WORK / 'tiles/cameras.json').read_text())[kind]
@@ -56,7 +92,7 @@ class Place:
         self.tiles = []
         folder = Path(folder or WORK / 'tiles' / kind)
         for t in cams['tiles']:
-            img = cv2.cvtColor(cv2.imread(str(folder / ('f%d.png' % t['frame']))), cv2.COLOR_BGR2RGB)
+            img = linear(cv2.cvtColor(cv2.imread(str(folder / ('f%d.png' % t['frame']))), cv2.COLOR_BGR2RGB))
             self.tiles.append((np.array(t['matrix']), img))
 
     def sample(self, d):
@@ -85,7 +121,7 @@ class Place:
             total += wt
         rgb = acc / np.maximum(total, 1e-6)[..., None]
         ifov = math.radians(self.vfov) / self.tiles[0][1].shape[0]
-        return rgb, np.minimum(total, 1), np.where(front, 1 / np.maximum(cos, 1e-6), np.inf).astype(np.float32), (slant * ifov).astype(np.float32)
+        return rgb, np.minimum(total, 1) * valid(d), np.where(front, 1 / np.maximum(cos, 1e-6), np.inf).astype(np.float32), (slant * ifov).astype(np.float32)
 
     def level(self, off, width_deg, size, box=None, ss=1):
         x0, y0, x1, y1 = box or (0, 0, size, size)
@@ -104,5 +140,5 @@ if __name__ == '__main__':
     kind, lon, lat, width, size, out = sys.argv[1], float(sys.argv[2]), float(sys.argv[3]), float(sys.argv[4]), int(sys.argv[5]), sys.argv[6]
     p = Place(kind)
     rgb, seen, elong, gsd = p.level(gnomon(lon, lat), width, size)
-    Image.fromarray(np.clip(rgb, 0, 255).astype(np.uint8)).save(out)
+    Image.fromarray((srgb(rgb * seen[..., None]) * 255 + 0.5).astype(np.uint8)).save(out)
     print('seen', round(float((seen > 0.5).mean()), 4), 'elong under 2:', round(float(((elong < 2) & (seen > 0.5)).mean()), 4), 'under 3:', round(float(((elong < 3) & (seen > 0.5)).mean()), 4))

@@ -21,5 +21,8 @@ for (const [kind, s] of Object.entries(spec)) {
   const n = position.clone().normalize()
   out[kind] = { atFrame: s.atFrame, vfovDeg: s.vfovDeg, position: position.toArray(), heightRadii: position.length() - 1, nadir: { lonDeg: THREE.MathUtils.radToDeg(Math.atan2(n.x, n.z)), latDeg: THREE.MathUtils.radToDeg(Math.asin(n.y)) }, tiles }
 }
+const a = plan.anchor
+const frame = new THREE.Matrix4().makeRotationFromQuaternion(toBody.clone().multiply(a.frame)).elements
+out.close = { radius: closeRadius, origin: a.origin.clone().applyQuaternion(toBody).toArray(), matrix: [[frame[0], frame[4], frame[8]], [frame[1], frame[5], frame[9]], [frame[2], frame[6], frame[10]]] }
 writeFileSync(process.argv[2] ?? 'out/work/mercury/place/tiles/cameras.json', JSON.stringify(out, null, 1))
 console.log('written', Object.keys(out).join(' '))
