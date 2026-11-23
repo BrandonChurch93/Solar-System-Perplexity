@@ -65,6 +65,7 @@ if (a.carried) {
     const sci = (v: number | null): string => (v === null ? 'none' : v.toExponential(2))
     const num = (v: number | null): string => (v === null ? 'none' : v.toFixed(3))
     console.log('frame ' + s.frame + ' ' + (cfg.segments.find((x) => s.frame >= x.firstFrame && s.frame < x.endFrame)?.id ?? '') + ': G13 soft share ' + (g13.fraction * 100).toFixed(2) + '%, ' + c.judged + ' tiles judged, ' + c.dark + ' dark; says sharp: ' + c.sharp.tiles + ' tiles, band energy median ' + sci(c.sharp.energy) + ', fine over coarse ' + num(c.sharp.fineOverCoarse) + '; says soft: ' + c.soft.tiles + ' tiles, ' + sci(c.soft.energy) + ', ' + num(c.soft.fineOverCoarse) + '; flagged ' + c.flagged.length + (c.flagged.length ? ': ' + c.flagged.slice(0, 12).map((t) => t.join(',')).join(' ') + (c.flagged.length > 12 ? ' ...' : '') : ''))
+    for (const b of c.byReport) if (b.tiles) console.log('  report ' + (b.under === null ? b.from + ' and over' : b.from === 0 ? 'under ' + b.under : b.from + ' to under ' + b.under) + ': ' + b.tiles + ' tiles, report median ' + num(b.reported) + ', luma ' + num(b.luma) + ', band energy median ' + sci(b.energy) + ', least ' + sci(b.leastEnergy) + ', fine over coarse ' + num(b.fineOverCoarse) + ', flagged ' + b.flagged)
     return { frame: s.frame, g13: { counted: g13.counted, soft: g13.soft, fraction: Number(g13.fraction.toFixed(5)), minTexels: Number(g13.minTexels.toFixed(3)) }, ...c }
   })
   const file = join(dir, stop + '-carried.json')

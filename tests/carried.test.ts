@@ -54,6 +54,8 @@ describe('the report beside G13: what the material says against what the picture
     expect(r.soft.tiles).toBe(24)
     expect(r.tiles.find((t) => t.tile[0] === 0)!.reported).toBeCloseTo(1.004, 2)
     expect(r.tiles.find((t) => t.tile[0] === 7)!.says).toBe('soft')
+    expect(r.byReport.map((b) => [b.from, b.under, b.tiles, b.flagged])).toEqual([[0, 1.25, 48, 24], [1.25, 1.9, 0, 0], [1.9, null, 0, 0]])
+    expect(r.byReport[1]!.energy).toBeNull()
   })
 
   it('tells a map enlarged eight times from the same map at its own size by both numbers, and flags it when it is faint', () => {

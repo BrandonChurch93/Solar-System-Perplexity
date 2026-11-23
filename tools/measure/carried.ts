@@ -13,12 +13,15 @@ export const CARRIED = {
   minInsideShare: 0.5,
   darkLuma: 0.04,
   nothing: 2e-5,
+  reportBands: [1.25, 1.9],
+  byReport: 'the tiles that are not dark, sorted by their median report into under 1.25, 1.25 to under 1.9, and 1.9 and over (the view cannot say more than 2), so the tiles nearest the limit of G13 stand alone',
   flag: 'the tile says sharp (median reported texels at least detail.minTexelsPerPixel), is not dark, and its band energy is under nothing',
 }
 
 export interface CarriedTile { tile: [number, number]; inside: number; reported: number; soft: number; luma: number; energy: number; coarse: number; says: 'sharp' | 'soft'; dark: boolean; flag: boolean }
 export interface CarriedGroup { tiles: number; energy: number | null; fineOverCoarse: number | null }
-export interface CarriedFrame { tiles: CarriedTile[]; judged: number; dark: number; flagged: [number, number][]; sharp: CarriedGroup; soft: CarriedGroup }
+export interface CarriedBand extends CarriedGroup { from: number; under: number | null; reported: number | null; luma: number | null; leastEnergy: number | null; flagged: number }
+export interface CarriedFrame { tiles: CarriedTile[]; judged: number; dark: number; flagged: [number, number][]; sharp: CarriedGroup; soft: CarriedGroup; byReport: CarriedBand[] }
 
 function kernel(sigma: number): Float64Array {
   const r = Math.ceil(4 * sigma)
@@ -127,9 +130,13 @@ export function carried(texels: Pixels, picture: Pixels, minTexelsPerPixel: numb
     const energy = fine / red.length
     tiles.push({ tile: [i, j], inside: share, reported, soft: soft / red.length, luma: sum / red.length, energy, coarse: coarse / red.length, says, dark, flag: says === 'sharp' && dark === false && energy < CARRIED.nothing })
   }
-  const group = (says: 'sharp' | 'soft'): CarriedGroup => {
-    const t = tiles.filter((x) => x.says === says && x.dark === false)
-    return { tiles: t.length, energy: median(t.map((x) => x.energy)), fineOverCoarse: median(t.filter((x) => x.coarse > 0).map((x) => x.energy / x.coarse)) }
-  }
-  return { tiles, judged: tiles.length, dark: tiles.filter((x) => x.dark).length, flagged: tiles.filter((x) => x.flag).map((x) => x.tile), sharp: group('sharp'), soft: group('soft') }
+  const lit = tiles.filter((x) => x.dark === false)
+  const stats = (t: CarriedTile[]): CarriedGroup => ({ tiles: t.length, energy: median(t.map((x) => x.energy)), fineOverCoarse: median(t.filter((x) => x.coarse > 0).map((x) => x.energy / x.coarse)) })
+  const edges = [0, ...CARRIED.reportBands, null]
+  const byReport = edges.slice(0, -1).map((from, k): CarriedBand => {
+    const under = edges[k + 1] ?? null
+    const t = lit.filter((x) => x.reported >= from! && (under === null || x.reported < under))
+    return { from: from!, under, ...stats(t), reported: median(t.map((x) => x.reported)), luma: median(t.map((x) => x.luma)), leastEnergy: t.length ? Math.min(...t.map((x) => x.energy)) : null, flagged: t.filter((x) => x.flag).length }
+  })
+  return { tiles, judged: tiles.length, dark: tiles.filter((x) => x.dark).length, flagged: tiles.filter((x) => x.flag).map((x) => x.tile), sharp: stats(lit.filter((x) => x.says === 'sharp')), soft: stats(lit.filter((x) => x.says === 'soft')), byReport }
 }
