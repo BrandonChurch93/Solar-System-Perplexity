@@ -1,0 +1,434 @@
+{
+ "south": {
+  "take": "p12-t3-4096.png",
+  "of": 1024,
+  "featherPx": 14,
+  "keepCanvas": false,
+  "polygon": [
+   [
+    770,
+    520
+   ],
+   [
+    1024,
+    470
+   ],
+   [
+    1024,
+    905
+   ],
+   [
+    905,
+    905
+   ],
+   [
+    800,
+    945
+   ],
+   [
+    780,
+    1024
+   ],
+   [
+    500,
+    1024
+   ],
+   [
+    490,
+    935
+   ],
+   [
+    375,
+    935
+   ],
+   [
+    330,
+    860
+   ],
+   [
+    300,
+    800
+   ],
+   [
+    420,
+    770
+   ],
+   [
+    560,
+    730
+   ],
+   [
+    690,
+    640
+   ]
+  ]
+ },
+ "far": {
+  "take": "p12-t4-4096.png",
+  "fromDeg": [
+   5.0,
+   6.4
+  ],
+  "edgeDeg": 0.5,
+  "cloud": [
+   110,
+   225
+  ],
+  "lean": [
+   0.6,
+   0.5
+  ]
+ },
+ "ring": {
+  "take": "p24-t3-4096.png",
+  "widthDeg": 24,
+  "cloud": [
+   120,
+   215
+  ],
+  "cloudSigmaDeg": 0.02,
+  "moved": [
+   14,
+   40
+  ],
+  "movedSigmaDeg": 0.12,
+  "fromDeg": [
+   4.5,
+   6.0
+  ],
+  "edge": 0.1,
+  "deck": {
+   "fromDeg": [
+    5.0,
+    6.5
+   ],
+   "toDeg": [
+    11.5,
+    14.5
+   ],
+   "sideDeg": [
+    44,
+    70
+   ],
+   "rough": 1.0,
+   "cut": [
+    0.45,
+    0.55
+   ],
+   "seed": 11,
+   "fill": [
+    232,
+    224,
+    214
+   ],
+   "fillVary": 30
+  },
+  "tint": [
+   0.91,
+   0.959,
+   1.03
+  ],
+  "cells": [
+   0.12,
+   0.5
+  ],
+  "lean": 0.6
+ },
+ "cast": {
+  "size": 1024,
+  "fromDeg": [
+   5.0,
+   6.5
+  ],
+  "measureDeg": [
+   6.5,
+   9.5
+  ],
+  "bright": [
+   60,
+   95
+  ],
+  "edgeDeg": 0.25,
+  "cloud": [
+   140,
+   190
+  ],
+  "wideDeg": 1.2,
+  "share": [
+   0.08,
+   0.3
+  ],
+  "limit": [
+   0.8,
+   1.1
+  ]
+ },
+ "tone": {
+  "how": "Inside the plate the tone is the real low frequency difference of the plate and the hold, taken over open sea only (blue minus red in code values, no cloud), so from far up the plate carries the sea of the hold and the dark sea round the glint, a look of the low view, comes in with nearness. share is how much open sea the window must hold before the difference is trusted.",
+  "perDeg": 16,
+  "blue": [
+   6,
+   18
+  ],
+  "share": [
+   0.12,
+   0.35
+  ]
+ },
+ "fine": {
+  "how": "The deepest level is the plate brought to its raster with the detail of the lay back of the close image added where the plate is that lay back: where plate and lay back, both from the 12 degree raster, are no further apart than apart (code values, after a blur of sigmaDeg), inside the close image by edgeDeg, and where the image has at least sharp image px per level px.",
+  "sigmaDeg": 0.03,
+  "apart": [
+   6,
+   18
+  ],
+  "edgeDeg": 0.05,
+  "sharp": [
+   0.35,
+   0.6
+  ]
+ },
+ "strip": {
+  "how": "A level whose window reaches past the kept level of the hold is filled there from the 24 degree take of the ring asset (untinted): its detail under lowDeg, the tone of the level above over lowDeg. The fill gives way to the kept level over blendPx inside its edge. Where the take does not reach either, the level above stands in.",
+  "lowDeg": 0.4,
+  "blendPx": 32
+ },
+ "field": {
+  "how": "The far cloud of the place as bodies. Four generated top down pictures of a cumulus field over open sea (takes/field-t1..4.png, prompt-field.txt) are cut into cloud bodies. Alpha is the darkest channel between cloud[0] and the brightest value within rimPx (at least cloud[1]), so a rim beside bright cloud is a soft edge and a shaded flank is solid; a soft edge takes the colour of the bright cloud beside it (bleed: sigma px, power of the weight). glint: per take the half axes in px of an ellipse about the upper left corner where the take shows a sun glint; bodies with more than 0.3 of their area inside are dropped, and out to pale[0] times the ellipse the alpha limits rise to pale[1] and pale[2] so the pale sea is not taken for cloud. Bodies that touch the edge of a take are dropped. The cast shadow is the ratio of the sea to its lit level (shadow). Each take is turned so that its shadows run along the shadow of the Sun at the plate centre, reduced by scale, and used as it is and mirrored about that line. The bodies are laid on a raster of widthDeg about the plate centre on a jittered grid of step tile widths; a body stays with the chance (density times full) to the power, where density is the blurred mask of ring.py through ramp and, inside the plate, the plate's own far cloud (density.plate: the darkest channel of the plate through cloud after a blur of sigmaDeg, from fromDeg degrees of arc from the point under the twin camera). Shadows fall on the ground and, by onCloud, on bodies laid before. levels.py lays the field over every level and the plate: under it the plate gives way to the hold's own levels (12 degrees where that reaches, 24 beyond, calmed, through seaGain) by the density and by the far ramp of the block far, so the repaint of the far zone with its soft cloud and its dotted land is not used, the ground takes the shadows, and the bodies take white, the per channel ratio of the bright cloud (darkest channel over white.bright) of the lay back within white.nearDeg of the point under the twin camera to the bright cloud of the field, kept inside white.limit. In the low plate the lay back keeps its tones and takes the detail of the field: what the plate with the field differs by from its own blur over low.sigmaDeg, where the blurred alpha passes low.alpha and the lay back is cloud (low.cloud).",
+  "takes": [
+   "takes/field-t1.png",
+   "takes/field-t2.png",
+   "takes/field-t3.png",
+   "takes/field-t4.png"
+  ],
+  "raster": 8192,
+  "widthDeg": 24,
+  "scale": 0.7,
+  "cloud": [
+   45,
+   85
+  ],
+  "body": 0.5,
+  "growPx": 10,
+  "glint": [
+   [
+    800,
+    650
+   ],
+   [
+    900,
+    850
+   ],
+   null,
+   [
+    560,
+    480
+   ]
+  ],
+  "shadow": {
+   "refPx": 120,
+   "lit": 0.8,
+   "full": 0.85,
+   "floor": 0.3,
+   "fillPx": 4,
+   "softPx": 1.0,
+   "reachPx": 220,
+   "onCloud": 0.25
+  },
+  "density": {
+   "sigmaDeg": 0.35,
+   "ramp": [
+    0.2,
+    0.75
+   ],
+   "power": 1.5,
+   "plate": {
+    "file": "q12-g.png",
+    "widthDeg": 12,
+    "size": 1024,
+    "sigmaDeg": 0.05,
+    "cloud": [
+     120,
+     215
+    ],
+    "fromDeg": [
+     5.0,
+     6.4
+    ]
+   },
+   "full": 0.8
+  },
+  "step": 0.55,
+  "seed": 7,
+  "erode": 6,
+  "pale": [
+   1.7,
+   160,
+   205
+  ],
+  "rimPx": 5,
+  "bleed": [
+   2.5,
+   6
+  ],
+  "white": {
+   "nearDeg": 4.0,
+   "bright": 200,
+   "limit": [
+    0.9,
+    1.1
+   ]
+  },
+  "low": {
+   "sigmaDeg": 0.25,
+   "alpha": [
+    0.05,
+    0.4
+   ],
+   "cloud": [
+    120,
+    215
+   ]
+  }
+ },
+ "calm": {
+  "how": "The land of the hold's 12, 24 and 48 degree levels and of the plate carries a regular pattern of pale dots that reads as lights by day. Land is where green or pale ground stands near (green: code values the green channel must lead by; pale: what red and green must lead blue by; sigmaPx, reachPx, share) and the ground is warmer than the sea (warm), away from cloud (cloud: the darkest channel over the first value with red no more than the second above blue, where that stands wider than the disc below, widened by cloudPx). There the picture is its opening by a disc of dotPx radius (per level width in degrees; a level not named stays as it is), which takes away bright marks narrower than the disc and keeps every dark one, then its median over median times that radius (never brighter than the picture was) blurred by softPx, plus keep of what the opening took away. The plate keeps its land as it is only where the lay back covers it inside the window of the fine level, which carries the detail of the close view there; that window gives way to the calm over fineFadeDeg from its edge inward. Land under haze in the plate is bluer than the rule for the levels allows (measured on the land north of the place: blue leads green by -14 to 15 there, by 20 and more over the sea), so the plate has its own values in the block plate: blue is what green must lead blue by where no channel is over top (bright ground bluer than the first rule is the glint or the flank of a cloud, not land), warm as above.",
+  "green": 6,
+  "pale": [
+   30,
+   18
+  ],
+  "sigmaPx": 6,
+  "reachPx": 14,
+  "share": [
+   0.25,
+   0.6
+  ],
+  "warm": [
+   0,
+   6
+  ],
+  "dotPx": {
+   "12": 8,
+   "24": 5,
+   "48": 3
+  },
+  "softPx": 0.8,
+  "keep": 0.12,
+  "edgePx": 2.0,
+  "median": 3,
+  "cloud": [
+   165,
+   30
+  ],
+  "cloudPx": 4,
+  "fineFadeDeg": 0.3,
+  "plate": {
+   "blue": -14,
+   "top": 115,
+   "warm": [
+    -18,
+    -12
+   ]
+  }
+ },
+ "wipe": {
+  "how": "Marks of the repaint in the plate, painted over from their surround (inpainting, Telea, radius 5): x, y and radius in px of the 4096 plate. Inside reach times the radius everything brighter than bright (darkest channel, code values) is taken, grown by growPx, so the whole mark goes and the fill starts from the sea round it.",
+  "discs": [
+   [
+    1912,
+    3153,
+    70
+   ],
+   [
+    1716,
+    3122,
+    40
+   ],
+   [
+    1658,
+    3158,
+    30
+   ],
+   [
+    1752,
+    3442,
+    50
+   ],
+   [
+    1818,
+    3403,
+    30
+   ],
+   [
+    2070,
+    3335,
+    45
+   ],
+   [
+    2050,
+    3149,
+    22
+   ],
+   [
+    2030,
+    3188,
+    22
+   ],
+   [
+    1674,
+    3364,
+    35
+   ],
+   [
+    1671,
+    3420,
+    30
+   ],
+   [
+    1680,
+    3260,
+    45
+   ],
+   [
+    1795,
+    3248,
+    22
+   ],
+   [
+    1658,
+    3511,
+    40
+   ],
+   [
+    1614,
+    3400,
+    25
+   ],
+   [
+    1599,
+    3462,
+    22
+   ],
+   [
+    3020,
+    2168,
+    55
+   ],
+   [
+    3121,
+    2031,
+    45
+   ],
+   [
+    3080,
+    1987,
+    15
+   ]
+  ],
+  "softPx": 3,
+  "reach": 1.5,
+  "bright": 40,
+  "growPx": 12
+ }
+}

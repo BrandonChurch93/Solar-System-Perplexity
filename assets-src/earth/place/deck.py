@@ -1,0 +1,241 @@
+import json
+import sys
+from pathlib import Path
+
+import cv2
+import numpy as np
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import geom as g
+import ring
+from layback import WORK, centre
+
+SPEC = json.loads((Path(__file__).resolve().parent / 'mend.json').read_text())['field']
+P = centre()
+LUM = np.array([0.114, 0.587, 0.299], np.float32)
+
+
+def step(a, b, x):
+    t = np.clip((x - a) / (b - a), 0, 1)
+    return t * t * (3 - 2 * t)
+
+
+def mblur(v, m, s):
+    if v.ndim == 3:
+        return cv2.GaussianBlur(v * m[..., None], (0, 0), s) / np.maximum(cv2.GaussianBlur(m, (0, 0), s), 1e-4)[..., None]
+    return cv2.GaussianBlur(v * m, (0, 0), s) / np.maximum(cv2.GaussianBlur(m, (0, 0), s), 1e-4)
+
+
+def sun_image_dir(c):
+    sun = g.G.T @ np.array(g.FIT['sunDir'])
+    n, e, u = g.frame_at(c)
+    d = np.array([-(sun @ e), sun @ u])
+    return d / np.linalg.norm(d)
+
+
+def line_kernel(d, reach):
+    k = np.zeros((2 * reach + 1, 2 * reach + 1), np.uint8)
+    cv2.line(k, (reach, reach), (int(round(reach - d[0] * reach)), int(round(reach - d[1] * reach))), 1, 3)
+    return k
+
+
+def grow(labels, steps, inside):
+    lab = labels.astype(np.float32)
+    k = np.ones((3, 3), np.uint8)
+    for _ in range(steps):
+        wide = cv2.dilate(lab, k)
+        lab = np.where((lab > 0) | ~inside, lab, wide)
+    return lab.astype(np.int32)
+
+
+def bodies(a, spec):
+    solid = (a > spec['body']).astype(np.uint8)
+    count, labels = cv2.connectedComponents(cv2.erode(solid, np.ones((3, 3), np.uint8), iterations=spec['erode']))
+    labels = grow(labels, spec['erode'] + 2, solid > 0)
+    more, small = cv2.connectedComponents(((solid > 0) & (labels == 0)).astype(np.uint8))
+    labels = np.where(small > 0, small + count - 1, labels)
+    return grow(labels, spec['growPx'], a > 0.01)
+
+
+def matte(take, glint, spec=SPEC):
+    b, r = take[..., 0], take[..., 2]
+    lo = take.min(axis=2)
+    lum = take @ LUM
+    c0 = np.full(lo.shape, spec['cloud'][0], np.float32)
+    c1 = np.full(lo.shape, spec['cloud'][1], np.float32)
+    z = np.zeros(lo.shape, bool)
+    if glint:
+        yy, xx = np.mgrid[:lo.shape[0], :lo.shape[1]]
+        e = np.sqrt((xx / glint[0]) ** 2 + (yy / glint[1]) ** 2)
+        z = e < 1
+        t = np.clip((spec['pale'][0] - e) / (spec['pale'][0] - 1), 0, 1).astype(np.float32)
+        c0 += t * (spec['pale'][1] - spec['cloud'][0])
+        c1 += t * (spec['pale'][2] - spec['cloud'][1])
+    k = 2 * spec['rimPx'] + 1
+    top = np.maximum(cv2.dilate(lo, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (k, k))), c1)
+    a = np.clip((lo - c0) / (top - c0), 0, 1)
+    sea = ((lo < c0) & ~z).astype(np.float32)
+    ref = mblur(lum, sea, spec['shadow']['refPx'])
+    lit = sea * (lum > spec['shadow']['lit'] * ref)
+    ref = mblur(lum, lit, spec['shadow']['refPx'])
+    raw = np.clip(lum / np.maximum(ref, 1) / spec['shadow']['full'], spec['shadow']['floor'], 1)
+    near = cv2.GaussianBlur(sea, (0, 0), spec['shadow']['fillPx'])
+    fill = np.where(near > 0.05, cv2.GaussianBlur(raw * sea, (0, 0), spec['shadow']['fillPx']) / np.maximum(near, 0.05), 1)
+    m = cv2.GaussianBlur(np.where(sea > 0, raw, fill), (0, 0), spec['shadow']['softPx'])
+    m[z] = 1
+    w = (np.clip(lo, 0, 255) / 255) ** spec['bleed'][1]
+    bleed = cv2.GaussianBlur(take * w[..., None], (0, 0), spec['bleed'][0]) / np.maximum(cv2.GaussianBlur(w, (0, 0), spec['bleed'][0]), 1e-6)[..., None]
+    colour = np.where((a > 0.98)[..., None], take, bleed)
+    labels = bodies(a, spec)
+    bad = np.zeros(int(labels.max()) + 1, bool)
+    edge = np.zeros_like(labels, bool)
+    edge[:3] = edge[-3:] = edge[:, :3] = edge[:, -3:] = True
+    bad[np.unique(labels[edge])] = True
+    count = np.maximum(np.bincount(labels.ravel()), 1)
+    bad |= np.bincount(labels.ravel(), weights=z.ravel().astype(np.float64)) / count > 0.3
+    bad[0] = False
+    a = a * (labels > 0) * ~bad[labels]
+    labels[bad[labels]] = 0
+    return a.astype(np.float32), colour.astype(np.float32), m.astype(np.float32), labels, z
+
+
+def shadow_dir(a, m):
+    k = 4
+    n = a.shape[0] // k
+    x = cv2.resize(a, (n, n), interpolation=cv2.INTER_AREA)
+    y = cv2.resize(1 - m, (n, n), interpolation=cv2.INTER_AREA)
+    c = np.fft.irfft2(np.conj(np.fft.rfft2(x - x.mean())) * np.fft.rfft2(y - y.mean()), s=(n, n))
+    c = np.fft.fftshift(c)
+    yy, xx = np.mgrid[:n, :n] - n // 2
+    near = np.hypot(xx, yy) < 60
+    w = np.clip(c - 0.6 * c[near].max(), 0, None) * near
+    d = np.array([(w * xx).sum(), (w * yy).sum()]) / w.sum()
+    return d * k
+
+
+def variants(spec=SPEC):
+    want = sun_image_dir(P)
+    out = []
+    for name, glint in zip(spec['takes'], spec['glint']):
+        take = cv2.imread(str(WORK / name)).astype(np.float32)
+        a, colour, m, labels, z = matte(take, glint, spec)
+        d = shadow_dir(a, m)
+        turn = np.degrees(np.arctan2(-want[1], want[0]) - np.arctan2(-d[1], d[0]))
+        turn = (turn + 180) % 360 - 180
+        n = take.shape[0]
+        size = int(np.ceil(n * np.sqrt(2) * spec['scale'] / 2)) * 2
+        print(name, 'cover', round(float(a.mean()), 3), 'bodies', len(np.unique(labels)) - 1, 'glint share', round(float(z.mean()), 3), 'shadow offset px', np.round(d, 1), 'turn', round(float(turn), 1), flush=True)
+        for mirror in (False, True):
+            rot = cv2.getRotationMatrix2D((n / 2, n / 2), turn, spec['scale'])
+            rot[:, 2] += size / 2 - n / 2
+            if mirror:
+                ref = np.array([[2 * want[0] * want[0] - 1, 2 * want[0] * want[1]], [2 * want[0] * want[1], 2 * want[1] * want[1] - 1]])
+                c = np.array([size / 2, size / 2])
+                rot = np.hstack([ref @ rot[:, :2], (ref @ (rot[:, 2] - c) + c)[:, None]])
+            pre = cv2.GaussianBlur(a, (0, 0), 0.5 / spec['scale']) if spec['scale'] < 0.8 else a
+            wa = cv2.warpAffine(pre, rot, (size, size), flags=cv2.INTER_LINEAR)
+            wc = cv2.warpAffine(cv2.GaussianBlur(colour * a[..., None], (0, 0), 0.5 / spec['scale']) if spec['scale'] < 0.8 else colour * a[..., None], rot, (size, size), flags=cv2.INTER_LINEAR)
+            wm = cv2.warpAffine(m, rot, (size, size), flags=cv2.INTER_LINEAR, borderValue=1)
+            wl = cv2.warpAffine(labels.astype(np.float32), rot, (size, size), flags=cv2.INTER_NEAREST).astype(np.int32)
+            out.append((wa, wc, wm, wl, int(labels.max()) + 1))
+    return out, want
+
+
+def density(spec=SPEC):
+    from levels import hold_level, reproject, footprint, SPOT
+    from farin import reach as from_nadir
+    rs = ring.SPEC
+    ds = spec['density']
+    sheet = np.minimum(cv2.imread(str(WORK / rs['take'])).astype(np.float32) * np.array(rs['tint'], np.float32), 255)
+    small = cv2.resize(sheet, (2048, 2048), interpolation=cv2.INTER_AREA)
+    under, _ = reproject(hold_level(48), SPOT, 48, P, rs['widthDeg'], 2048)
+    reach = ring.mask(small, under)
+    per = 2048 / rs['widthDeg']
+    own = ds['plate']
+    k = own['size']
+    plate = cv2.resize(cv2.imread(str(WORK / own['file'])).astype(np.float32), (k, k), interpolation=cv2.INTER_AREA)
+    cloud = step(own['cloud'][0], own['cloud'][1], cv2.GaussianBlur(plate.min(axis=2), (0, 0), own['sigmaDeg'] * k / own['widthDeg']))
+    far = step(own['fromDeg'][0], own['fromDeg'][1], from_nadir(P, own['widthDeg'], k))
+    inner, _ = reproject(cloud * far, P, own['widthDeg'], P, rs['widthDeg'], 2048, signed=True)
+    w = footprint(P, rs['widthDeg'], 2048, P, own['widthDeg'])
+    reach = reach * (1 - w) + np.clip(inner, 0, 1) * w
+    wide = cv2.GaussianBlur(reach, (0, 0), ds['sigmaDeg'] * per)
+    return step(ds['ramp'][0], ds['ramp'][1], wide).astype(np.float32)
+
+
+def main():
+    spec = SPEC
+    n = spec['raster']
+    tiles, want = variants(spec)
+    dens = density(spec)
+    cv2.imwrite(str(WORK / 'field-density.png'), (dens * 255).astype(np.uint8))
+    k = n / dens.shape[0]
+    rng = np.random.default_rng(spec['seed'])
+    alpha = np.zeros((n, n), np.float32)
+    colour = np.zeros((n, n, 3), np.float32)
+    shade = np.ones((n, n), np.float32)
+    size = tiles[0][0].shape[0]
+    pitch = spec['step'] * spec['scale'] * 2048
+    ys, xs = np.nonzero(dens > 0.01)
+    x0, x1, y0, y1 = xs.min() * k, xs.max() * k, ys.min() * k, ys.max() * k
+    spots = []
+    row = 0
+    y = y0 - pitch / 2
+    while y < y1 + pitch / 2:
+        x = x0 - pitch / 2 + (pitch / 2 if row % 2 else 0)
+        while x < x1 + pitch / 2:
+            spots.append((x + rng.uniform(-0.3, 0.3) * pitch, y + rng.uniform(-0.3, 0.3) * pitch))
+            x += pitch
+        y += pitch * 0.87
+        row += 1
+    order = rng.permutation(len(spots))
+    last = -1
+    kernel = line_kernel(want, spec['shadow']['reachPx'] // 4)
+    used = 0
+    for i in order:
+        cx, cy = spots[i]
+        ox, oy = int(round(cx - size / 2)), int(round(cy - size / 2))
+        ax0, ay0, ax1, ay1 = max(ox, 0), max(oy, 0), min(ox + size, n), min(oy + size, n)
+        if ax1 - ax0 < 8 or ay1 - ay0 < 8:
+            continue
+        d = cv2.remap(dens, ((np.arange(ax0, ax1, dtype=np.float32) + 0.5) / k - 0.5)[None, :].repeat(ay1 - ay0, 0), ((np.arange(ay0, ay1, dtype=np.float32) + 0.5) / k - 0.5)[:, None].repeat(ax1 - ax0, 1), cv2.INTER_LINEAR)
+        if d.max() < 0.02:
+            continue
+        v = int(rng.integers(len(tiles)))
+        if v == last:
+            v = (v + 1) % len(tiles)
+        last = v
+        wa, wc, wm, wl, count = tiles[v]
+        sl = (slice(ay0 - oy, ay1 - oy), slice(ax0 - ox, ax1 - ox))
+        lab = wl[sl]
+        chance = rng.uniform(0, 1, count) ** (1 / spec['density']['power'])
+        sums = np.bincount(lab.ravel(), weights=d.ravel(), minlength=count)
+        counts = np.maximum(np.bincount(lab.ravel(), minlength=count), 1)
+        keep = (sums / counts) * spec['density']['full'] > chance
+        keep[0] = False
+        on = keep[lab]
+        a = wa[sl] * on
+        if a.max() <= 0:
+            continue
+        q = cv2.resize(on.astype(np.float32), (on.shape[1] // 4, on.shape[0] // 4), interpolation=cv2.INTER_AREA)
+        zone = cv2.resize(cv2.GaussianBlur(cv2.dilate((q > 0.02).astype(np.float32), kernel), (0, 0), 2), (on.shape[1], on.shape[0]), interpolation=cv2.INTER_LINEAR)
+        m = 1 - (1 - wm[sl]) * zone
+        w = (slice(ay0, ay1), slice(ax0, ax1))
+        dark = spec['shadow']['onCloud']
+        colour[w] = colour[w] * ((1 - a) * (1 - dark * (1 - m)))[..., None] + wc[sl] * (on * (1 - dark * (1 - shade[w])))[..., None]
+        alpha[w] = alpha[w] * (1 - a) + a
+        shade[w] *= m
+        used += 1
+    print('placed', used, 'of', len(spots), 'cover inside density over 0.9:', round(float(alpha[cv2.resize(dens, (n, n)) > 0.9].mean()), 3), flush=True)
+    np.save(WORK / 'field-alpha.npy', (alpha * 255 + 0.5).astype(np.uint8))
+    np.save(WORK / 'field-colour.npy', np.clip(colour + 0.5, 0, 255).astype(np.uint8))
+    np.save(WORK / 'field-shade.npy', (shade * 255 + 0.5).astype(np.uint8))
+    look = (30 + np.zeros((n, n, 3), np.float32) + np.array([70, 40, 10], np.float32)) * shade[..., None] * (1 - alpha[..., None]) + colour
+    cv2.imwrite(str(WORK / 'field-look.jpg'), cv2.resize(np.clip(look, 0, 255).astype(np.uint8), (2048, 2048), interpolation=cv2.INTER_AREA), [cv2.IMWRITE_JPEG_QUALITY, 90])
+    ys, xs = np.nonzero(alpha > 0.5)
+    cy, cx = int(np.median(ys)), int(np.median(xs))
+    cv2.imwrite(str(WORK / 'field-look-native.jpg'), np.clip(look[cy - 600:cy + 600, cx - 900:cx + 900], 0, 255).astype(np.uint8), [cv2.IMWRITE_JPEG_QUALITY, 92])
+
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,9 @@
+A strict top-down nadir photograph from low orbit of open tropical ocean, filled from edge to edge with a field of low marine cloud. 1:1 square, north at the top, about 650 km across. Image 1 is an oblique photograph of the same sea in the same light: use it only as the reference for the finish, the white of the cumulus, the blue grey of their shaded sides and the navy of the sea. Do not copy its viewpoint, its horizon, its sun glint or its islands.
+
+What the square shows:
+- Hundreds of separate cloud bodies of mixed size: clusters of towering cumulus 40 to 150 pixels wide with lumpy cauliflower tops, between them lines and groups of small cumulus 5 to 30 pixels wide, a few flat ragged stratocumulus rafts. About two thirds of the square is cloud, one third is sea showing between the clouds, evenly spread: the same cover and the same mix of sizes in every part of the square, also along the four edges and in the four corners.
+- The Sun is low, about 12 degrees above the horizon, in the upper left (north west). Every cloud body has a brilliant white sunlit flank toward the upper left and a blue grey shaded flank toward the lower right, and throws a long dark shadow toward the lower right, onto the sea and onto the lower clouds beside it. The shadows are 60 to 150 pixels long and all run in the same direction.
+- The sea between the clouds is one flat deep navy blue, the same everywhere, with no glint, no waves, no islands, no land, no shallows, no haze.
+- Every cloud edge is crisp and resolved to the pixel, with fine wisps and small detached puffs at the margins. No blur, no soft glow, no fog, no thin veil, no cirrus streaks.
+
+Strict nadir view filling the square edge to edge. No horizon, no limb, no atmosphere, no vignette, no border, no text, no watermark.
