@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T09:23:06.731Z",
- "head": "b14f0a7e8fb22ec7516cd510318725961e8b34a6",
- "note": "09:27 VM S2 stage B: first repainted 26 deg plate under the live close layer; faults named in the labels, fixes in work",
+ "pushed": "2026-11-23T09:54:10.570Z",
+ "head": "6a4f848967e754a011a39f4e2e75774c5e774ad3",
+ "note": "09:54 VM: main with E2 merged (6a4f8489, tsc clean). S2: soft takes for the 6 and 3.5 degree plates in; fault found: the place comes in over 4688 to 4694 as a visible repaint of the storm, reworking the plates so their coarse part is the globe's own",
  "looks": [
+  {
+   "time": "2026-11-23T09:54:04.386Z",
+   "file": "20261123095404386-note-sheet1.jpg",
+   "source": "out/work/nep/s2/d/sheet1.jpg",
+   "kind": "note",
+   "label": "S2 stage D, globe side 4704 4712 4728 4744 (threads round the storm at 4728, since replaced by soft takes)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T09:54:03.669Z",
+   "file": "20261123095403669-note-crop-in.jpg",
+   "source": "out/work/nep/s2/e/crop-in.jpg",
+   "kind": "note",
+   "label": "S2 stage E, storm crop 4684 to 4696 step 2: the place comes in over 6 frames and reads as a repaint (fault, being reworked)",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-23T09:23:06.151Z",
    "file": "20261123092306151-note-sheet2.jpg",
@@ -50,28 +66,6 @@
    "source": "out/work/nep/l1/sheet.jpg",
    "kind": "note",
    "label": "L first frames 4694 4712 4744 4769, globe side forced: layer geometry right, tone and edges and surroundings wrong",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T08:34:32.458Z",
-   "file": "20261123083432458-frame-f4769.jpg",
-   "source": "out/work/nep/l1/f4769.png",
-   "kind": "frame",
-   "label": "neptune.dive frame 4769, draft tier",
-   "stop": "neptune",
-   "segment": "neptune.dive",
-   "frame": 4769,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "2d9dda353bfd7b6d"
-  },
-  {
-   "time": "2026-11-23T08:25:18.250Z",
-   "file": "20261123082518250-note-cmp-4769-4770.jpg",
-   "source": "out/work/nep/place/cmp-4769-4770.jpg",
-   "kind": "note",
-   "label": "globe side 4769 beside close side 4770, rough plates: horizon and eye agree, cirrus 330 px off (stream and parallax), reason for the live close layer",
    "stop": "neptune"
   }
  ]
