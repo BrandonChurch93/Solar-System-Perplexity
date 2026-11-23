@@ -11,8 +11,8 @@ import { chunksOf, clock, frameName, rangeOf, under, wholePng, type Chunk, type 
 // The capture of the film on a machine with a graphics card (kit/PROGRESS.md, second review note of 2026-11-23, plan H).
 //   npm run capture -- [--stop ID] [--from K] [--to K] [--format uhd] [--rate 2] [--tier final] [--out DIR]
 //                      [--chunk 600] [--keep-frames] [--keep-parts] [--no-join] [--crf 12] [--browser chrome|PATH] [--headless] [--allow-software] [--ignore-limits]
-// Opens the built app in the installed browser, steps every capture frame with showcase.renderFrame(k, tier) and saves it as a PNG named by
-// its number. A run that was stopped goes on where it stopped: frames whose file is whole and chunks whose part is whole are skipped.
+// Opens the built app in the installed browser, steps every capture frame with showcase.renderFrame(k, tier) (after showcase.ahead when the page
+// has it: the loads and the warm start, all of them at the first frame of a page) and saves it as a PNG named by its number. A run that was stopped goes on where it stopped: frames whose file is whole and chunks whose part is whole are skipped.
 // With ffmpeg, every chunk of frames that is whole is encoded to a part at near lossless quality, the part is checked and the PNGs of that
 // chunk are removed (--keep-frames keeps them); at the end the parts are joined to one MP4 at fps times rate. A manifest lies beside the film.
 // --from and --to count capture frames (film frame times rate), both counted in. The limits of the machine's graphics are printed and written to
@@ -78,7 +78,7 @@ interface PartNote { name: string; first: number; last: number; frames: number; 
 interface Manifest {
   film: string | null; complete: boolean; frames: number; from: number; to: number; format: string; width: number; height: number; fps: number; filmFps: number; rate: number; tier: string
   commit: string; engineHash: string; browser: string; graphics: string; machineLimits: Limits | null; filmNeeds: typeof wanted; underNeeds: string[]; machine: string; secondsPerFrame: number | null; renderSecondsPerFrame: number | null; bytesPerFrame: number | null
-  framesRendered: number; framesKept: boolean; crf: number; chunk: number; parts: PartNote[]; started: string; updated: string; note?: string
+  framesRendered: number; warmStart: boolean | null; warmDraws: number; framesKept: boolean; crf: number; chunk: number; parts: PartNote[]; started: string; updated: string; note?: string
 }
 
 function commit(): string {
@@ -126,7 +126,7 @@ function serve(root: string): Promise<{ server: Server; url: string }> {
 }
 
 interface PageInfo { frameCount: number; fps: number; format: string; engineHash: string; rate?: number; captureFrames?: number }
-interface Open { browser: Browser; page: Page; info: PageInfo; limits: Limits; version: string }
+interface Open { browser: Browser; page: Page; info: PageInfo; limits: Limits; version: string; warm: boolean; fresh: boolean }
 
 async function openPage(url: string): Promise<Open> {
   const name = a.browser ?? 'chrome'
@@ -163,15 +163,17 @@ async function openPage(url: string): Promise<Open> {
     await browser.close()
     return fail('the browser has no WebGL 2. The film cannot be drawn in it.')
   }
-  return { browser, page, info, limits, version: browser.version() }
+  const warm = await page.evaluate(() => typeof (window as unknown as { showcase: { ahead?: unknown } }).showcase.ahead === 'function')
+  return { browser, page, info, limits, version: browser.version(), warm, fresh: true }
 }
 
-interface Shot { seconds: number; render: number; bytes: number }
+interface Shot { seconds: number; render: number; bytes: number; warmed: number }
 
-async function shoot(page: Page, k: number): Promise<Shot> {
+async function shoot(page: Page, k: number, warm: boolean, all: boolean): Promise<Shot> {
   const t0 = Date.now()
-  const r = await page.evaluate(async ([frame, t]) => {
-    const s = (window as unknown as { showcase: { renderFrame(f: number, t: string): Promise<void> } }).showcase
+  const r = await page.evaluate(async ([frame, t, filmFrame, ahead, every]) => {
+    const s = (window as unknown as { showcase: { renderFrame(f: number, t: string): Promise<void>; ahead?(f: number, t: string, all?: boolean): Promise<number> } }).showcase
+    const warmed = ahead ? Number(await s.ahead!(filmFrame as number, t as string, every as boolean)) || 0 : 0
     const before = performance.now()
     await s.renderFrame(frame as number, t as string)
     const render = (performance.now() - before) / 1000
@@ -182,9 +184,9 @@ async function shoot(page: Page, k: number): Promise<Shot> {
     const blob = await new Promise<Blob>((ok, no) => canvas.toBlob((b) => (b ? ok(b) : no(new Error('the canvas gave no picture'))), 'image/png'))
     const reply = await fetch('/__frame/' + frame, { method: 'POST', body: blob })
     if (!reply.ok) throw new Error('frame ' + frame + ' was not saved: ' + (await reply.text()))
-    return { render, bytes: blob.size }
-  }, [k, tier] as const)
-  return { seconds: (Date.now() - t0) / 1000, render: r.render, bytes: r.bytes }
+    return { render, bytes: blob.size, warmed }
+  }, [k, tier, k / rate, warm, all] as const)
+  return { seconds: (Date.now() - t0) / 1000, render: r.render, bytes: r.bytes, warmed: r.warmed }
 }
 
 function encodePart(c: Chunk): PartNote {
@@ -231,7 +233,7 @@ async function main(): Promise<void> {
   const m: Manifest = {
     film: null, complete: false, frames: total, from: range.from, to: range.to, format, width: size.width, height: size.height, fps, filmFps: cfg.fps, rate, tier, commit: commit(), engineHash: hashes.engine,
     browser: old.browser ?? '', graphics: old.graphics ?? '', machineLimits: old.machineLimits ?? null, filmNeeds: wanted, underNeeds: [], machine: machineId(), secondsPerFrame: old.secondsPerFrame ?? null, renderSecondsPerFrame: old.renderSecondsPerFrame ?? null, bytesPerFrame: old.bytesPerFrame ?? null,
-    framesRendered: old.framesRendered ?? 0, framesKept: keepFrames || !chunking, crf, chunk: chunking ? chunkSize : 0, parts: (old.parts ?? []).filter((p) => chunks.some((c) => c.name === p.name)), started: old.started ?? new Date().toISOString(), updated: new Date().toISOString(),
+    framesRendered: old.framesRendered ?? 0, warmStart: old.warmStart ?? null, warmDraws: old.warmDraws ?? 0, framesKept: keepFrames || !chunking, crf, chunk: chunking ? chunkSize : 0, parts: (old.parts ?? []).filter((p) => chunks.some((c) => c.name === p.name)), started: old.started ?? new Date().toISOString(), updated: new Date().toISOString(),
   }
   let spent = (old.secondsPerFrame ?? 0) * (old.framesRendered ?? 0)
   let renderSpent = (old.renderSecondsPerFrame ?? 0) * (old.framesRendered ?? 0)
@@ -325,7 +327,10 @@ async function main(): Promise<void> {
         for (let attempt = 1; ; attempt++) {
           try {
             const o = await ready()
-            const shot = await shoot(o.page, k)
+            const shot = await shoot(o.page, k, o.warm, o.fresh)
+            o.fresh = false
+            m.warmStart = o.warm
+            m.warmDraws += shot.warmed
             spent += shot.seconds
             renderSpent += shot.render
             byteSum += shot.bytes

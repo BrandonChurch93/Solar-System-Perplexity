@@ -29,11 +29,11 @@ import { judgeCurve, position, table, type CurveResult, type Fault, type Row } f
 // parity    the same film frame drawn at the first format of smooth.parity.formats and scaled down, against the frame drawn at the second (the
 //           film's): a few frames of the dive, the surface view and the rise (smooth.parity.at, shares of the segment). What a stop holds in
 //           pixels of the drawn format shows here as a difference.
-// counts    the work the graphics card is given per frame, as the page counts it (showcase.counts(): programs linked, texture uploads, buffers
-//           made): every film frame of the stop from its first segment to the end of its travel, in order on one fresh page, draft tier at the
-//           format smooth.counts.format; before each frame the warm start runs as the live player calls it (showcase.ahead(frame)) and its work
-//           counts for that frame. Judged: every frame of a dive, a rise and a travel against smooth.counts (zero). NOT MEASURED while the page
-//           has no counter.
+// counts    the work the graphics card is given per picture, as the page counts it (showcase.counts(): programs linked, texture uploads, buffers
+//           made): every capture frame of the stop from its first segment to the end of its travel, in order on one fresh page, draft tier at the
+//           format smooth.counts.format; before each one the warm start runs as the live player calls it (showcase.ahead(frame, tier, all), all
+//           true at the first) and its work counts for that picture. Judged: every picture of a dive, a rise and a travel against smooth.counts
+//           (zero). NOT MEASURED while the page has no counter.
 // Everything is written to out/work/smooth/<stop>.json and .md (<stop>-<kind> when --kind is given). Exit 1 when a number is over its limit in config smooth, or when a part that was
 // asked for could not be measured. --calibrate writes every number and exits 0: the run that sets the limits.
 
@@ -459,9 +459,9 @@ function parityText(p: PartResult & Partial<ParityOut>): string[] {
 }
 
 interface Work { programs: number; textures: number; buffers: number }
-interface CountRow extends Work { frame: number; segment: string; kind: string; ahead: Work | null }
+interface CountRow extends Work { k: number; frame: number; segment: string; kind: string; ahead: Work | null; warmed: number }
 interface CountSegment extends Work { segment: string; kind: string; judged: boolean; frames: number; framesWithWork: number; first: number | null }
-interface CountsOut { format: string; tier: string; warm: boolean; frames: [number, number]; segments: CountSegment[]; rows: CountRow[]; seconds: number }
+interface CountsOut { format: string; tier: string; warm: boolean; rate: number; frames: [number, number]; pictures: number; warmDraws: number; segments: CountSegment[]; rows: CountRow[]; seconds: number }
 
 async function countsPart(): Promise<PartResult & Partial<CountsOut>> {
   const C = S.counts
@@ -473,6 +473,7 @@ async function countsPart(): Promise<PartResult & Partial<CountsOut>> {
   const t0 = Date.now()
   const rows: CountRow[] = []
   let warm = false
+  let r = 1
   for (let attempt = 1; ; attempt++) {
     rows.length = 0
     try {
@@ -484,29 +485,32 @@ async function countsPart(): Promise<PartResult & Partial<CountsOut>> {
       })
       if (!has.counts) return { measured: false, pass: false, why: ['counts: NOT MEASURED, the page has no counter (showcase.counts) on this commit'] }
       warm = has.ahead
-      for (let from = first; from < end; from += 30) {
-        const to = Math.min(from + 30, end)
-        const got = await session.page.evaluate(async ([a0, a1, r, tier, ahead]) => {
-          const s = (window as unknown as { showcase: { renderFrame(f: number, t: string): Promise<void>; counts(): Work; ahead?(f: number): unknown } }).showcase
-          const out: { frame: number; ahead: Work | null; work: Work }[] = []
-          for (let f = a0 as number; f < (a1 as number); f++) {
+      r = pageRate
+      await session.page.evaluate(() => (window as unknown as { showcase: { counts(): unknown } }).showcase.counts())
+      for (let from = first * r; from < end * r; from += 30) {
+        const to = Math.min(from + 30, end * r)
+        const got = await session.page.evaluate(async ([k0, k1, rate, tier, ahead, start]) => {
+          const s = (window as unknown as { showcase: { renderFrame(f: number, t: string): Promise<void>; counts(): Work; ahead?(f: number, t: string, all?: boolean): Promise<number> } }).showcase
+          const out: { k: number; ahead: Work | null; warmed: number; work: Work }[] = []
+          for (let k = k0 as number; k < (k1 as number); k++) {
             let before: Work | null = null
+            let warmed = 0
             if (ahead) {
-              s.counts()
-              await s.ahead!(f)
+              warmed = Number(await s.ahead!(k / (rate as number), tier as string, k === start)) || 0
               before = s.counts()
             }
-            await s.renderFrame(f * (r as number), tier as string)
-            out.push({ frame: f, ahead: before, work: s.counts() })
+            await s.renderFrame(k, tier as string)
+            out.push({ k, ahead: before, warmed, work: s.counts() })
           }
           return out
-        }, [from, to, pageRate, C.tier, warm] as const)
+        }, [from, to, r, C.tier, warm, first * r] as const)
         for (const g of got) {
-          const seg = own.find((s) => g.frame >= s.firstFrame && g.frame < s.endFrame) ?? cfg.segments.find((s) => g.frame >= s.firstFrame && g.frame < s.endFrame)!
+          const frame = Math.floor(g.k / r)
+          const seg = own.find((x) => frame >= x.firstFrame && frame < x.endFrame) ?? cfg.segments.find((x) => frame >= x.firstFrame && frame < x.endFrame)!
           const b = g.ahead ?? { programs: 0, textures: 0, buffers: 0 }
-          rows.push({ frame: g.frame, segment: seg.id, kind: seg.kind, ahead: g.ahead, programs: g.work.programs + b.programs, textures: g.work.textures + b.textures, buffers: g.work.buffers + b.buffers })
+          rows.push({ k: g.k, frame, segment: seg.id, kind: seg.kind, ahead: g.ahead, warmed: g.warmed, programs: g.work.programs + b.programs, textures: g.work.textures + b.textures, buffers: g.work.buffers + b.buffers })
         }
-        console.log(stop + ' counts: frame ' + (to - 1) + ' of ' + first + ' to ' + (end - 1) + ', ' + Math.round((Date.now() - t0) / 1000) + ' s')
+        console.log(stop + ' counts: frame ' + position(to - 1, r) + ' of ' + first + ' to ' + (end - 1) + ', ' + Math.round((Date.now() - t0) / 1000) + ' s')
       }
       break
     } catch (e) {
@@ -529,7 +533,7 @@ async function countsPart(): Promise<PartResult & Partial<CountsOut>> {
     s.buffers += row.buffers
     if (row.programs + row.textures + row.buffers > 0) {
       s.framesWithWork++
-      s.first ??= row.frame
+      s.first ??= row.k
     }
   }
   const why: string[] = []
@@ -538,22 +542,22 @@ async function countsPart(): Promise<PartResult & Partial<CountsOut>> {
     const over = rows.filter((row) => row.segment === s.segment && (row.programs > C.programs || row.textures > C.textures || row.buffers > C.buffers))
     if (over.length === 0) continue
     const top = over.reduce((x, y) => (y.programs + y.textures + y.buffers > x.programs + x.textures + x.buffers ? y : x))
-    why.push('counts: ' + s.segment + ' makes ' + s.programs + ' programs, ' + s.textures + ' texture uploads and ' + s.buffers + ' buffers in ' + over.length + ' of its ' + s.frames + ' frames, first at frame ' + over[0]!.frame + ', most at frame ' + top.frame + ' (' + top.programs + ', ' + top.textures + ', ' + top.buffers + '), limit ' + C.programs + ', ' + C.textures + ', ' + C.buffers + ' a frame')
+    why.push('counts: ' + s.segment + ' makes ' + s.programs + ' programs, ' + s.textures + ' texture uploads and ' + s.buffers + ' buffers in ' + over.length + ' of its ' + s.frames + ' pictures, first at frame ' + position(over[0]!.k, r) + ', most at frame ' + position(top.k, r) + ' (' + top.programs + ', ' + top.textures + ', ' + top.buffers + '), limit ' + C.programs + ', ' + C.textures + ', ' + C.buffers + ' a picture')
   }
   const note = warm ? undefined : 'the page has no warm start call (showcase.ahead) on this commit: the frames were stepped without it'
-  return { measured: true, pass: why.length === 0, why, format: fmt, tier: C.tier, warm, frames: [first, end - 1], segments, rows: rows.filter((row) => row.programs + row.textures + row.buffers > 0), seconds: Math.round((Date.now() - t0) / 1000), ...(note ? { note } : {}) }
+  return { measured: true, pass: why.length === 0, why, format: fmt, tier: C.tier, warm, rate: r, frames: [first, end - 1], pictures: rows.length, warmDraws: rows.reduce((n, row) => n + row.warmed, 0), segments, rows: rows.filter((row) => row.programs + row.textures + row.buffers > 0), seconds: Math.round((Date.now() - t0) / 1000), ...(note ? { note } : {}) }
 }
 
 function countsText(p: PartResult & Partial<CountsOut>): string[] {
   const lines = [
-    'Every film frame from ' + p.frames![0] + ' to ' + p.frames![1] + ' in order on one fresh page, tier ' + p.tier + ' at ' + p.format + ', ' + p.seconds + ' s. ' + (p.warm ? 'Before each frame the warm start ran as the live player calls it; its work counts for that frame.' : 'No warm start call.') + ' Judged: dive, rise and travel, every frame.', '',
+    'Film frames ' + p.frames![0] + ' to ' + p.frames![1] + ' in order on one fresh page, ' + p.pictures + ' pictures at rate ' + p.rate + ', tier ' + p.tier + ' at ' + p.format + ', ' + p.seconds + ' s. ' + (p.warm ? 'Before each picture the warm start ran as the live player calls it (showcase.ahead, every due warm frame at the first picture): ' + p.warmDraws + ' warm draws. Its work counts for that picture and stands in brackets.' : 'No warm start call.') + ' Judged: dive, rise and travel, every picture.', '',
   ]
   if (p.why.length) lines.push(...p.why.map((w) => '- RED ' + w), '')
-  lines.push('| segment | judged | frames | frames with work | first | programs | texture uploads | buffers |', '|---|---|---|---|---|---|---|---|')
-  for (const s of p.segments ?? []) lines.push('| ' + [s.segment, s.judged ? 'yes' : 'no', s.frames, s.framesWithWork, s.first ?? '', s.programs, s.textures, s.buffers].join(' | ') + ' |')
-  lines.push('', 'Every frame with work (of the warm start call in brackets):', '', '| frame | segment | programs | texture uploads | buffers |', '|---|---|---|---|---|')
+  lines.push('| segment | judged | pictures | pictures with work | first | programs | texture uploads | buffers |', '|---|---|---|---|---|---|---|---|')
+  for (const s of p.segments ?? []) lines.push('| ' + [s.segment, s.judged ? 'yes' : 'no', s.frames, s.framesWithWork, s.first === null ? '' : position(s.first, p.rate!), s.programs, s.textures, s.buffers].join(' | ') + ' |')
+  lines.push('', 'Every picture with work (of the warm start call in brackets):', '', '| frame | segment | programs | texture uploads | buffers | warm draws |', '|---|---|---|---|---|---|')
   const part = (all: number, ahead: number | undefined): string => all + (ahead ? ' (' + ahead + ')' : '')
-  for (const r of p.rows ?? []) lines.push('| ' + [r.frame, r.segment, part(r.programs, r.ahead?.programs), part(r.textures, r.ahead?.textures), part(r.buffers, r.ahead?.buffers)].join(' | ') + ' |')
+  for (const r of p.rows ?? []) lines.push('| ' + [position(r.k, p.rate!), r.segment, part(r.programs, r.ahead?.programs), part(r.textures, r.ahead?.textures), part(r.buffers, r.ahead?.buffers), r.warmed || ''].join(' | ') + ' |')
   lines.push('')
   return lines
 }
