@@ -1,9 +1,58 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T07:56:40.639Z",
- "head": "b9b585d8e328e58110c8e732b82fd0ab9195e6e3",
- "note": "M1 rough: first ring plane from code, one rigid true world; ringlets, ice and light still to come",
+ "pushed": "2026-11-23T08:18:44.270Z",
+ "head": "1f7e9c17cfb8bb4618dc0ba127b5295ab131dd57",
+ "note": "ladder second version measured against the approved close and the hero; reworking ringlets, ring light by ring, shadow edge",
  "looks": [
+  {
+   "time": "2026-11-23T08:18:43.712Z",
+   "file": "20261123081843712-note-hold3.jpg",
+   "source": "../../../../tmp/v/hold3.jpg",
+   "kind": "note",
+   "label": "hold 3465: approved hero, kept build on main, code scene now (red shadow edge and pale A ring are faults to mend)"
+  },
+  {
+   "time": "2026-11-23T08:18:43.169Z",
+   "file": "20261123081843169-note-v2_pair_nearleft.jpg",
+   "source": "../../../../tmp/v/v2_pair_nearleft.png",
+   "kind": "note",
+   "label": "native crop near left: approved left, film right (ladder second version)"
+  },
+  {
+   "time": "2026-11-23T08:18:42.441Z",
+   "file": "20261123081842441-note-ng_3720.jpg",
+   "source": "../../../../tmp/v/ng_3720.png",
+   "kind": "note",
+   "label": "3720 draft, ringlet ladder second version (too striped and too colourful near, too smooth mid; being reworked)"
+  },
+  {
+   "time": "2026-11-23T08:03:48.073Z",
+   "file": "20261123080348073-compare-compare-saturn-hold-view.jpg",
+   "source": "out/work/compare/compare-saturn-hold-view.jpg",
+   "kind": "compare",
+   "label": "saturn.hold: approved image left, film frame right, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.hold",
+   "frame": 3465,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "247ebad7e038ce06"
+  },
+  {
+   "time": "2026-11-23T08:03:47.013Z",
+   "file": "20261123080347013-still-f03465-16x9-draft-full.jpg",
+   "source": "out/work/stills/f03465-16x9-draft-full.png",
+   "kind": "still",
+   "label": "saturn.hold frame 3465, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.hold",
+   "frame": 3465,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "247ebad7e038ce06"
+  },
   {
    "time": "2026-11-23T07:56:39.965Z",
    "file": "20261123075639965-note-compare-saturn-terrain.jpg",
@@ -32,62 +81,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "247ebad7e038ce06"
-  },
-  {
-   "time": "2026-11-23T07:56:24.749Z",
-   "file": "20261123075624749-still-f03720-16x9-draft-full.jpg",
-   "source": "out/work/stills/f03720-16x9-draft-full.png",
-   "kind": "still",
-   "label": "saturn.terrain frame 3720, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.terrain",
-   "frame": 3720,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "247ebad7e038ce06"
-  },
-  {
-   "time": "2026-11-23T07:56:05.506Z",
-   "file": "20261123075605506-still-f03809-16x9-draft-full.jpg",
-   "source": "out/work/stills/f03809-16x9-draft-full.png",
-   "kind": "still",
-   "label": "saturn.terrain frame 3809, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.terrain",
-   "frame": 3809,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "247ebad7e038ce06"
-  },
-  {
-   "time": "2026-11-23T07:55:46.495Z",
-   "file": "20261123075546495-still-f03630-16x9-draft-full.jpg",
-   "source": "out/work/stills/f03630-16x9-draft-full.png",
-   "kind": "still",
-   "label": "saturn.terrain frame 3630, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.terrain",
-   "frame": 3630,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "247ebad7e038ce06"
-  },
-  {
-   "time": "2026-11-23T07:29:32.704Z",
-   "file": "20261123072932704-note-chroma.jpg",
-   "source": "../../../../tmp/v/chroma.png",
-   "kind": "note",
-   "label": "hero ring colour over luma by radius in three sectors (measuring for the ring model)"
-  },
-  {
-   "time": "2026-11-23T07:17:17.023Z",
-   "file": "20261123071717023-note-ring_model.jpg",
-   "source": "assets-src/saturn/code/out/ring_model.png",
-   "kind": "note",
-   "label": "ring model by radius measured on the hero: luma, optical depth, ice brightness, colour"
   }
  ]
 }
