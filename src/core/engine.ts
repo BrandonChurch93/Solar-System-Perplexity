@@ -308,7 +308,8 @@ export class Engine {
     }
     const placed = this.probe.place && shot.place && shot.place.weight > 0 && (!raw || diag === 'texels') ? shot.place : null
     const limbed = placed && this.probe.limb !== undefined ? { ...placed, limbReachDeg: this.probe.limb } : placed
-    const place = limbed && this.probe.edgeIn !== undefined ? { ...limbed, edgeIn: this.probe.edgeIn } : limbed
+    const edged = limbed && this.probe.edgeIn !== undefined ? { ...limbed, edgeIn: this.probe.edgeIn } : limbed
+    const place = edged && this.probe.toneIn !== undefined ? { ...edged, toneIn: this.probe.toneIn } : edged
     const picture = place ? this.picture(place, shot) : null
     r.setRenderTarget(this.sampleTarget)
     r.clear(true, true, true)

@@ -65,6 +65,7 @@ export interface PlaceState {
   limbReachDeg?: number
   limbHoldDeg?: [number, number]
   edgeIn?: [number, number, number, number]
+  toneIn?: [number, number, number, number]
 }
 
 export interface Shot {

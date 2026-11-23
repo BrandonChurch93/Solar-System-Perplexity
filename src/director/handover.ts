@@ -3,7 +3,7 @@ import type { ViewKind } from '../core/types'
 import { coverFrames, coverWindow, handoverChanges, handoverParams } from './timeline'
 
 export interface HandoverTimes { at: number; dissolveFrames: number; placeFrames: number }
-export interface PlaceOptions { scale?: number; margin?: number; matte?: 'pair' | 'alpha'; valid?: [number, number, number, number]; lens?: number; seen?: number; maxEnlarge?: number; enlargeSoft?: number; limbReachDeg?: number; limbHoldDeg?: [number, number]; edgeIn?: [number, number, number, number] }
+export interface PlaceOptions { scale?: number; margin?: number; matte?: 'pair' | 'alpha'; valid?: [number, number, number, number]; lens?: number; seen?: number; maxEnlarge?: number; enlargeSoft?: number; limbReachDeg?: number; limbHoldDeg?: [number, number]; edgeIn?: [number, number, number, number]; toneIn?: [number, number, number, number] }
 export interface Sidestep { right: number; up: number; by: number }
 // fromDive (the rise only): the close view of the rise leaves from the eye of the dive. From the start of the rise the stop's own close path is led
 // over to the pose the dive handed over at, by the share of the way to T raised to this power (1 or more: it starts from rest), so at T the camera
@@ -54,6 +54,7 @@ export function handoverOf(stop: string, kind: 'dive' | 'rise'): Handover | null
     const lead = own.rise?.path?.fromDive
     if (lead !== undefined && (!(lead >= 1) || !Number.isFinite(lead) || !config.segments.some((s) => s.stop === stop && s.kind === 'dive'))) throw new Error('the rise of ' + stop + ' needs fromDive of 1 or more and a dive to leave from')
     if (lim && lim.edgeIn !== undefined && !(Array.isArray(lim.edgeIn) && lim.edgeIn.length === 4 && lim.edgeIn.every((x) => x >= 0 && x <= 1))) throw new Error('the place of ' + seg.id + ' needs edgeIn as four shares from 0 to 1: left, right, bottom, top')
+    if (lim && lim.toneIn !== undefined && !(Array.isArray(lim.toneIn) && lim.toneIn.length === 4 && lim.toneIn.every((x) => x >= 0 && x <= 4))) throw new Error('the place of ' + seg.id + ' needs toneIn as four shares from 0 to 4: left, right, bottom, top')
     out = { time: ((firstFrame + lastFrame) / 2 + config.shutterFraction / 2) / config.fps, firstFrame, lastFrame, placeFirstFrame, placeLastFrame, skyFrames: t.skyFrames, live: own[kind]?.live === true, picture: own[kind]?.picture !== false, place: own[kind]?.place ?? {}, skyFloor: own[kind]?.skyFloor === true }
   }
   known.set(key, out)

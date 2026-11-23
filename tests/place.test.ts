@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { afterAll, describe, expect, it } from 'vitest'
 import { config } from '../src/config'
 import { needs } from '../src/core/caps'
-import { edgeReach, Place, placeCamera, placeGeometry, placeLayout, placeSkyGrad, placeUv, type PlaceLayout } from '../src/core/place'
+import { edgeReach, Place, placeCamera, placeGeometry, placeLayout, placeSkyGrad, placeUv, toneGrid, toneReach, type PlaceLayout } from '../src/core/place'
 import type { Pose, Shot } from '../src/core/types'
 import { parseProbe, probeString } from '../src/diagnostics/probe'
 import { FilmDirector } from '../src/director/film'
@@ -555,8 +555,11 @@ describe('the switches of a handover', () => {
     const f = filmWith(coveredPlan({ handover: { rise: { place: { edgeIn: [0.4, 0.3, 0.2, 0.1] } } } }))
     expect([none.edgeIn, f.shotAt(hd.firstFrame, hd.time, 'orbit').place!.edgeIn, f.shotAt(hr.firstFrame, hr.time, 'orbit').place!.edgeIn]).toEqual([undefined, undefined, [0.4, 0.3, 0.2, 0.1]])
     restorePlans()
+    const t = filmWith(coveredPlan({ handover: { dive: { place: { toneIn: [0.5, 0.4, 0.3, 0.2] } } } }))
+    expect([none.toneIn, t.shotAt(hd.firstFrame, hd.time, 'orbit').place!.toneIn, t.shotAt(hr.firstFrame, hr.time, 'orbit').place!.toneIn]).toEqual([undefined, [0.5, 0.4, 0.3, 0.2], undefined])
+    restorePlans()
     type Four = [number, number, number, number]
-    for (const bad of [{ seen: 0 }, { seen: 1.5 }, { maxEnlarge: 1 }, { enlargeSoft: 0 }, { enlargeSoft: 1 }, { limbReachDeg: -1 }, { limbReachDeg: 90 }, { limbHoldDeg: [0.5, 0.5] as [number, number] }, { limbHoldDeg: [-0.1, 0.5] as [number, number] }, { limbHoldDeg: [0.5, 90] as [number, number] }, { edgeIn: [0.4, 0.4, 0.4] as unknown as Four }, { edgeIn: [0.4, 0.4, 0.4, 1.1] as Four }, { edgeIn: [-0.1, 0, 0, 0] as Four }]) {
+    for (const bad of [{ seen: 0 }, { seen: 1.5 }, { maxEnlarge: 1 }, { enlargeSoft: 0 }, { enlargeSoft: 1 }, { limbReachDeg: -1 }, { limbReachDeg: 90 }, { limbHoldDeg: [0.5, 0.5] as [number, number] }, { limbHoldDeg: [-0.1, 0.5] as [number, number] }, { limbHoldDeg: [0.5, 90] as [number, number] }, { edgeIn: [0.4, 0.4, 0.4] as unknown as Four }, { edgeIn: [0.4, 0.4, 0.4, 1.1] as Four }, { edgeIn: [-0.1, 0, 0, 0] as Four }, { toneIn: [0.5, 0.5, 0.5] as unknown as Four }, { toneIn: [0.5, 0.5, 0.5, 4.1] as Four }, { toneIn: [-0.1, 0, 0, 0] as Four }]) {
       filmWith(coveredPlan({ handover: { dive: { place: bad } } }))
       expect(() => handoverOf('mars', 'dive')).toThrow()
       restorePlans()
@@ -735,6 +738,161 @@ describe('the picture coming in from the place outward', () => {
   })
 })
 
+describe('the broad tone of the picture lent by the globe near its sides', () => {
+  const layout = placeLayout(master, { valid: [0.11, 0.06, 0.11, 0.125] }, 16384)
+  const wide = layout.width - (layout.left + layout.right) * layout.scale
+  const high = layout.height - (layout.bottom + layout.top) * layout.scale
+  type Four = [number, number, number, number]
+  it('is off unless a stop asks: the film wide shares are 0 and the reach is 0 at every weight', () => {
+    expect(c.place.toneIn).toEqual([0, 0, 0, 0])
+    for (const weight of [0, 0.09, 0.5, 0.99, 1]) expect(toneReach({ weight }, layout)).toEqual([0, 0, 0, 0])
+    for (const p of plans) for (const kind of kinds) if (p.id !== 'mars') expect(handoverOf(p.id, kind)?.place.toneIn).toBe(undefined)
+  })
+  it('opens from T with what is missing of the weight raised to tonePower, each side by its share of the frame, and is shut at T', () => {
+    const share: Four = [0.5, 0.4, 0.3, 0.2]
+    expect(c.place.tonePower).toBeGreaterThan(0)
+    expect(c.place.tonePower).toBeLessThanOrEqual(1)
+    expect(toneReach({ weight: 1, toneIn: share }, layout)).toEqual([0, 0, 0, 0])
+    const gone = toneReach({ weight: 0, toneIn: share }, layout)
+    expect(gone[0]).toBeCloseTo(0.5 * wide, 9)
+    expect(gone[1]).toBeCloseTo(0.4 * wide, 9)
+    expect(gone[2]).toBeCloseTo(0.3 * high, 9)
+    expect(gone[3]).toBeCloseTo(0.2 * high, 9)
+    let last = gone
+    for (const weight of [0.1, 0.25, 0.5, 0.75, 0.9, 0.99, 1]) {
+      const now = toneReach({ weight, toneIn: share }, layout)
+      now.forEach((v, i) => {
+        expect(v).toBeLessThan(last[i]!)
+        expect(v).toBeCloseTo(gone[i]! * Math.pow(1 - weight, c.place.tonePower), 9)
+      })
+      last = now
+    }
+    expect(toneReach({ weight: 1.5, toneIn: share }, layout)).toEqual([0, 0, 0, 0])
+    expect(toneReach({ weight: -1, toneIn: share }, layout)).toEqual(gone)
+    // Wider than the feather of the detail at every weight between, for equal shares: the tone leaves the sides before the detail does.
+    for (const weight of [0.1, 0.5, 0.9, 0.99]) {
+      const tone = toneReach({ weight, toneIn: share }, layout)
+      const edge = edgeReach({ weight, edgeIn: share }, layout)
+      tone.forEach((v, i) => expect(v).toBeGreaterThan(edge[i]!))
+    }
+  })
+  it('counts its blur in cells of the frame', () => {
+    const g = toneGrid(master.width, master.height)
+    expect([g.cols, g.rows]).toEqual([Math.ceil(master.width / c.place.toneCell), Math.ceil(master.height / c.place.toneCell)])
+    expect(g.sigma).toBeCloseTo((c.place.toneReach * master.height) / c.place.toneCell, 12)
+    expect(g.taps).toBe(Math.ceil(3 * g.sigma))
+    const odd = toneGrid(master.width + 1, master.height + 3)
+    expect([odd.cols, odd.rows]).toEqual([g.cols + 1, g.rows + 1])
+    expect(toneGrid(1, 1)).toMatchObject({ cols: 1, rows: 1 })
+  })
+  it('leaves the shader of the picture as it was and adds the tone to a second one', () => {
+    const pass = new Place()
+    const inner = pass as unknown as { lay: { material: THREE.ShaderMaterial }; split: { material: THREE.ShaderMaterial } | null; splitPass(): { material: THREE.ShaderMaterial } }
+    const plain = inner.lay.material.fragmentShader
+    for (const name of ['uUnder', 'uTone', 'uOwn', 'uToneFeather', 'uPixel', 'uLand', 'uCell', 'mode >= 4']) expect(plain.includes(name)).toBe(false)
+    expect(inner.split).toBe(null)
+    const split = inner.splitPass().material.fragmentShader
+    expect(split.length).toBeGreaterThan(plain.length)
+    // Taken out again, the additions leave the first shader, character for character.
+    const declared = split.slice(split.indexOf('\nuniform sampler2D uUnder;'), split.indexOf('\nin vec2 vUv;'))
+    const cell = '  dx /= uCell;\n  dy /= uCell;\n'
+    const fit = '  fit *= uCell;\n'
+    const tone = split.slice(split.indexOf('  float land = '), split.indexOf('  outColor = vec4(col * k, k);'))
+    for (const part of [declared, cell, fit, tone]) expect(split.split(part).length).toBe(2)
+    expect(split.replace(declared, '').replace(cell, '').replace(fit, '').replace(tone, '')).toBe(plain)
+    // The weight a cell counts with is the picture's own after every limit, and the tone is laid before the picture is weighted.
+    expect(split.indexOf('  if (mode >= 4) {')).toBeGreaterThan(split.indexOf('if (uMatteOn > 0.5) k *= '))
+    expect(split.indexOf('dx /= uCell;')).toBeLessThan(split.indexOf('float least = '))
+    // The tone is the ground's: the sky and the limb hold count for nothing in either tone and are lent nothing.
+    expect(tone.includes('float land = disc > 0.0 && b > 0.0 ? smoothstep(uLand.x, uLand.y, b / uBall.w - uSinDip) : 0.0;')).toBe(true)
+    expect(tone.includes('clamp(k / uLimits.x, 0.0, 1.0) * land')).toBe(true)
+    expect(tone.includes('(1.0 - wide.x * wide.y * wide.z * wide.w) * land')).toBe(true)
+    // The move from the picture's own tone to the globe's: scaled under its own tone, shifted over it, one value where the two meet.
+    expect(tone.includes('col = mix(col, mix(col + theirs - mine, col * theirs / max(mine, vec3(1e-6)), vec3(lessThanEqual(col, mine))), lent);')).toBe(true)
+    const move = (col: number, mine: number, theirs: number): number => (col <= mine ? (col * theirs) / Math.max(mine, 1e-6) : col + theirs - mine)
+    for (const [mine, theirs] of [[0.2, 0.36], [0.36, 0.2], [0.05, 0.4], [0.4, 0.05]] as const) {
+      expect(move(mine, mine, theirs)).toBeCloseTo(theirs, 12)
+      expect(move(mine + 1e-9, mine, theirs)).toBeCloseTo(move(mine, mine, theirs), 6)
+      let last = -1
+      for (let i = 0; i <= 40; i++) {
+        const v = move((i / 40) * 2 * mine, mine, theirs)
+        expect(v).toBeGreaterThanOrEqual(0)
+        expect(v).toBeGreaterThan(last)
+        last = v
+      }
+      expect(move(0, mine, theirs)).toBe(0)
+      expect(move(mine / 4, mine, theirs) / move(mine / 2, mine, theirs)).toBeCloseTo(0.5, 12)
+      expect(move(3 * mine, mine, theirs) - move(2 * mine, mine, theirs)).toBeCloseTo(mine, 12)
+    }
+    expect(plain.includes('float land')).toBe(false)
+    pass.dispose()
+  })
+  it('runs the tone passes only for a picture whose tone stays back, and never at T', () => {
+    const pass = new Place()
+    const inner = pass as unknown as { lay: { material: THREE.ShaderMaterial }; split: { material: THREE.ShaderMaterial } | null; blur: { material: THREE.ShaderMaterial } | null }
+    const hd = handoverOf('mars', 'dive')!
+    const before = (hd.placeFirstFrame + hd.firstFrame) / 2
+    const shot = film.shotAt(Math.floor(before), (Math.floor(before) + config.shutterFraction / 2) / fps, 'orbit')
+    expect(shot.place!.weight).toBeGreaterThan(0)
+    expect(shot.place!.weight).toBeLessThan(1)
+    const layoutOf = placeLayout(master, shot.place!, 8192)
+    const texture = new THREE.Texture()
+    const pic = { key: 'test', target: { texture, width: layoutOf.width, height: layoutOf.height } as unknown as THREE.WebGLRenderTarget, layout: layoutOf, proj: [1, 1, 0, 0] as Four, used: 0 }
+    const under = new THREE.Texture()
+    const target = { width: master.width, height: master.height, texture: under } as unknown as THREE.WebGLRenderTarget
+    let into: THREE.WebGLRenderTarget | null = null
+    const drawn: { pass: string; mode: number; cell: number; under: unknown; blended: boolean; into: THREE.WebGLRenderTarget | null; step: [number, number] }[] = []
+    const r = {
+      setRenderTarget: (t: THREE.WebGLRenderTarget | null) => { into = t },
+      render: (scene: THREE.Scene) => {
+        const m = (scene.children[0] as THREE.Mesh).material as THREE.ShaderMaterial
+        const name = m === inner.lay.material ? 'plain' : m === inner.split?.material ? 'split' : m === inner.blur?.material ? 'blur' : 'other'
+        const step = name === 'blur' ? (m.uniforms.uStep!.value as THREE.Vector2).toArray() as [number, number] : [0, 0] as [number, number]
+        drawn.push({ pass: name, mode: name === 'blur' ? -1 : (m.uniforms.uScale!.value as THREE.Vector2).y, cell: name === 'split' ? (m.uniforms.uCell!.value as number) : 0, under: name === 'split' ? m.uniforms.uUnder!.value : null, blended: m.blending !== THREE.NoBlending, into, step })
+      },
+    } as unknown as THREE.WebGLRenderer
+    const cam = frameCamera(shot.camera, master)
+    const aspect = master.width / master.height
+    const off = { ...shot.place!, toneIn: [0, 0, 0, 0] as Four }
+    const on = { ...shot.place!, toneIn: [0.5, 0.5, 0.5, 0.5] as Four }
+    pass.render(r, target, pic, off, shot.camera, cam, 'beauty', 0, aspect, 1)
+    expect(drawn.map((d) => d.pass)).toEqual(['plain'])
+    expect(inner.split).toBe(null)
+    drawn.length = 0
+    pass.render(r, target, pic, on, shot.camera, cam, 'beauty', 0, aspect, 1)
+    const g = toneGrid(master.width, master.height)
+    expect(drawn.map((d) => d.pass)).toEqual(['split', 'blur', 'blur', 'split', 'blur', 'blur', 'split'])
+    expect(drawn.map((d) => d.mode)).toEqual([4, -1, -1, 5, -1, -1, 0])
+    // The cells read the frame under the picture; the picture itself is then laid into that frame, which it may not read while it writes it.
+    expect(drawn[0]!.under).toBe(under)
+    expect(drawn[3]!.under).toBe(under)
+    expect(drawn[6]!.under).toBe(texture)
+    expect(drawn.map((d) => d.cell)).toEqual([master.width / g.cols, 0, 0, master.width / g.cols, 0, 0, 1])
+    expect(drawn.map((d) => d.blended)).toEqual([false, false, false, false, false, false, true])
+    expect(drawn[6]!.into).toBe(target)
+    for (const i of [0, 1, 2, 3, 4, 5]) expect([drawn[i]!.into!.width, drawn[i]!.into!.height]).toEqual([g.cols, g.rows])
+    // The ground counts from the first angle under the horizon to the second.
+    const land = inner.split!.material.uniforms.uLand!.value as THREE.Vector2
+    expect(land.x).toBeCloseTo(Math.sin(THREE.MathUtils.degToRad(c.place.toneLandDeg[0]!)), 12)
+    expect(land.y).toBeCloseTo(Math.sin(THREE.MathUtils.degToRad(c.place.toneLandDeg[1]!)), 12)
+    expect(land.y).toBeGreaterThan(land.x)
+    expect(drawn[0]!.into).toBe(drawn[2]!.into)
+    expect(drawn[3]!.into).toBe(drawn[5]!.into)
+    expect(drawn[0]!.into).not.toBe(drawn[3]!.into)
+    expect([drawn[1]!.step, drawn[2]!.step]).toEqual([[1 / g.cols, 0], [0, 1 / g.rows]])
+    // At T the weight is 1, the tone has nowhere to stay back from, and the pass is the one it always was.
+    drawn.length = 0
+    pass.render(r, target, pic, { ...on, weight: 1 }, shot.camera, cam, 'beauty', 0, aspect, 1)
+    expect(drawn.map((d) => d.pass)).toEqual(['plain'])
+    // The views of the harness that are not the picture itself take no tone.
+    drawn.length = 0
+    pass.render(r, target, pic, on, shot.camera, cam, 'mask', 0, aspect, 1)
+    pass.render(r, target, pic, on, shot.camera, cam, 'texels', 0, aspect, 1)
+    expect(drawn.map((d) => d.pass)).toEqual(['plain', 'plain'])
+    pass.dispose()
+  })
+})
+
 describe('the options on a diagnostic string', () => {
   it('reads the view and every option and writes them back', () => {
     expect(parseProbe('beauty')).toEqual({ view: 'beauty', side: null, shut: false, time: null, place: true, mask: false, picture: false, top: false })
@@ -759,6 +917,11 @@ describe('the options on a diagnostic string', () => {
     expect(parseProbe('beauty/in=0.4,0.3,0.2,0').edgeIn).toEqual([0.4, 0.3, 0.2, 0])
     expect(probeString(parseProbe('beauty/side=orbit/limb=2/in=0,0,0,0'))).toBe('beauty/side=orbit/limb=2/in=0,0,0,0')
     for (const bad of ['beauty/in', 'beauty/in=0.4', 'beauty/in=0.4,0.4,0.4', 'beauty/in=0.4,0.4,0.4,1.5', 'beauty/in=0.4,0.4,-0.1,0', 'beauty/in=a,b,c,d']) expect(() => parseProbe(bad)).toThrow()
+    expect(parseProbe('beauty/side=orbit').toneIn).toBe(undefined)
+    expect(parseProbe('beauty/tone=0.5,0.4,0.3,0').toneIn).toEqual([0.5, 0.4, 0.3, 0])
+    expect(parseProbe('beauty/tone=2,4,0.3,0').toneIn).toEqual([2, 4, 0.3, 0])
+    expect(probeString(parseProbe('beauty/side=orbit/in=0.4,0.4,0.4,0.25/tone=0,0,0,0'))).toBe('beauty/side=orbit/in=0.4,0.4,0.4,0.25/tone=0,0,0,0')
+    for (const bad of ['beauty/tone', 'beauty/tone=0.5', 'beauty/tone=0.5,0.5,0.5', 'beauty/tone=0.5,0.5,0.5,4.5', 'beauty/tone=0.5,0.5,-0.1,0', 'beauty/tone=a,b,c,d']) expect(() => parseProbe(bad)).toThrow()
     expect(() => parseProbe('beauty/side=left')).toThrow()
     expect(() => parseProbe('beauty/t=soon')).toThrow()
     expect(() => parseProbe('beauty/nothing')).toThrow()
