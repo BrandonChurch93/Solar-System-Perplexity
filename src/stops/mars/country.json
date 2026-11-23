@@ -1,0 +1,61 @@
+{
+  "note": "The heights of the country round the place, coarse to fine (assets-src/mars/place/country.py, countrybake.py). Square gnomonic plates about patches.spot, north up, the frame of the colour plates of the same width. height: raw little endian uint16, row major, row 0 at the north edge; radii over the unit sphere = low + v / 65535 * (high - low). In a band of edgeShare of its width at its border each level is the next coarser one; the outermost is 0 on its edge. seen: 255 where the height is the close view's own mesh as it is.",
+  "edgeShare": 0.12,
+  "levels": [
+    {
+      "height": "country-8p5.bin",
+      "seen": "country-8p5-seen.png",
+      "widthDeg": 8.5,
+      "size": {
+        "full": 2048,
+        "web": 1024
+      },
+      "low": -0.00224,
+      "high": 0.00044
+    },
+    {
+      "height": "country-3p8.bin",
+      "seen": "country-3p8-seen.png",
+      "widthDeg": 3.8,
+      "size": {
+        "full": 2048,
+        "web": 1024
+      },
+      "low": -0.0021,
+      "high": 0.00043
+    },
+    {
+      "height": "country-1p6.bin",
+      "seen": "country-1p6-seen.png",
+      "widthDeg": 1.6,
+      "size": {
+        "full": 2048,
+        "web": 1024
+      },
+      "low": -0.00213,
+      "high": 0.00032
+    },
+    {
+      "height": "country-0p7.bin",
+      "seen": "country-0p7-seen.png",
+      "widthDeg": 0.7,
+      "size": {
+        "full": 2048,
+        "web": 1024
+      },
+      "low": -0.00213,
+      "high": 0.00027
+    },
+    {
+      "height": "country-0p3.bin",
+      "seen": "country-0p3-seen.png",
+      "widthDeg": 0.3,
+      "size": {
+        "full": 2048,
+        "web": 1024
+      },
+      "low": -0.0021,
+      "high": 1e-05
+    }
+  ]
+}

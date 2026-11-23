@@ -193,5 +193,85 @@
   "airTo": 0.97,
   "endFrom": 0.9,
   "endTo": 1.0
+ },
+ "country": {
+  "note": "country.py: the heights of the country round the place, one plate per level of the globe's ladder, coarse to fine. size: texels along a side. picture: the plate as painted, whose light the made heights are read from. sunBearingDeg: where the light in the plates comes from, clockwise from north (fitted: 170 to 190). gainKm: km of height per unit of log brightness times degree (fitted on the seen ground: 76.4 on the 1.6 plate, 82.1 on 0.7). broadShare: waves longer than this share of the plate width are left to the coarser level. hold: how hard waves across the Sun are held down. joinShare: over this share of the width the made relief comes in beside seen ground. edgeShare: over this share of the width at its border a level is the coarser level itself (the outermost: the smooth sphere). zeroShare: farther than this share of the width from seen ground the mesh has no say. stepKm, clear: made ground is lowered by stepKm a pass until it is clear (times the distance) behind what the picture's eye saw. broadMostDeg: the longest wave read from the light at any level (in a plate of 8.5 degrees the broad tone is colour of the land, not slope; with 0.15 of the width the made relief had an rms of 2.7 km and heights of -16 to +12 km). plateauKm: seen ground above this is the plateau, whose roughness the made ground takes, octave by octave (rough: least and most of the factor on the relief read from the light). canyon: the canyon carried on beyond what the close view saw, along the pale trough of the globe's own map (wrap-color) west of the spot, read off a grid of half degrees: axis in degrees east and north of the spot, from the fan's south west edge outward; floorKm its depth where it leaves the seen ground (the mesh floor is -6.3 to -7.0 km there), halfFloorDeg and wallDeg its cross section as measured on the mesh canyon (0.3 degrees rim to rim), fallFromDeg to fallToDeg the length along the axis over which the depth falls off to nothing. far: beyond fromDeg from the foot of the picture's eye the mesh heights are smoothed with a radius of perDeg times the distance beyond it (seen from above the far field of the close view is ridged along the eye's rays: a small error of distance along a ray is a long streak on the ground); the seen mask ends at fromDeg. roughFar, roughFarDeg: beside seen ground the made relief has the mesh plateau's roughness; over roughFarDeg (at most a quarter of the plate) it rises to roughFar of what the light reads with the fitted gain. The step of the lowering is never more than 1.2 texels of the level (steps of 50 m stood as terraces in the 0.3 plate).",
+  "size": 2048,
+  "levels": [
+   {
+    "widthDeg": 8.5,
+    "picture": "public/assets/mars/full/place-8p5.jpg"
+   },
+   {
+    "widthDeg": 3.8,
+    "picture": "public/assets/mars/full/place-3p8.jpg"
+   },
+   {
+    "widthDeg": 1.6,
+    "picture": "assets-src/mars/place/takes/p16-take6.png"
+   },
+   {
+    "widthDeg": 0.7,
+    "picture": "assets-src/mars/place/takes/p07-take5.png"
+   },
+   {
+    "widthDeg": 0.3,
+    "picture": "assets-src/mars/place/takes/p03-take1.png"
+   }
+  ],
+  "sunBearingDeg": 175,
+  "gainKm": 79,
+  "broadShare": 0.15,
+  "hold": 0.35,
+  "joinShare": 0.0125,
+  "edgeShare": 0.12,
+  "zeroShare": 0.06,
+  "stepKm": 0.05,
+  "clear": 1.01,
+  "broadMostDeg": 0.25,
+  "plateauKm": -0.7,
+  "rough": [
+   0.0,
+   1.0
+  ],
+  "canyon": {
+   "axis": [
+    [
+     0.2,
+     -0.2
+    ],
+    [
+     -0.1,
+     -0.12
+    ],
+    [
+     -0.5,
+     0.05
+    ],
+    [
+     -1.0,
+     0.15
+    ],
+    [
+     -1.6,
+     0.2
+    ],
+    [
+     -2.4,
+     0.2
+    ]
+   ],
+   "floorKm": -6.3,
+   "halfFloorDeg": 0.06,
+   "wallDeg": 0.1,
+   "fallFromDeg": 0.35,
+   "fallToDeg": 2.4
+  },
+  "far": {
+   "fromDeg": 0.7,
+   "perDeg": 0.15
+  },
+  "roughFar": 0.5,
+  "roughFarDeg": 0.5
  }
 }

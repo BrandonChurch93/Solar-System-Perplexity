@@ -160,6 +160,7 @@ if cam:
     img = np.clip(col.reshape(NY, NX, 3), 0, 1)
     img[~seen] = [0.45, 0.2, 0.1]
     cv2.imwrite(a.out + '.png', np.round(img * 255).astype(np.uint8))
+    np.save(a.out + '-depth.npy', np.where(seen, -zbuf.reshape(NY, NX), np.inf).astype(np.float32))
     print('frame %d: the meshes cover %.4f of the frame' % (a.frame, seen.mean()))
     raise SystemExit(0)
 seen = np.isfinite(zbuf).reshape(N, N)
