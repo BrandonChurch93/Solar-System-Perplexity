@@ -1,9 +1,47 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-23T12:51:59.034Z",
+ "pushed": "2026-11-23T13:08:14.000Z",
  "head": "4b9faf39035ec151b2f43d5bfdb4d3f276d42ca2",
- "note": "12:52 cloud field as bodies on every level, first lay, not yet rendered",
+ "note": "earth: cloud field as bodies with cast shadows over every level, far zone of the plate gives way to the hold; pink flanks at the top corners still in these, fix in the render now",
  "looks": [
+  {
+   "time": "2026-11-23T13:08:13.285Z",
+   "file": "20261123130813285-note-p-2129.jpg",
+   "source": "out/work/earth/place/m3/p-2129.jpg",
+   "kind": "note",
+   "label": "earth 2129 draft, cloud field as bodies, before the grey gate of the tone",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T13:08:12.658Z",
+   "file": "20261123130812658-note-p-2124.jpg",
+   "source": "out/work/earth/place/m3/p-2124.jpg",
+   "kind": "note",
+   "label": "earth 2124 draft, cloud field as bodies, before the grey gate of the tone",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T13:08:11.834Z",
+   "file": "20261123130811834-note-p-1907.jpg",
+   "source": "out/work/earth/place/m3/p-1907.jpg",
+   "kind": "note",
+   "label": "earth 1907 draft, cloud field as bodies, before the grey gate of the tone",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T13:02:23.683Z",
+   "file": "20261123130223683-frame-t-1866.jpg",
+   "source": "out/work/earth/place/m3/t-1866.png",
+   "kind": "frame",
+   "label": "earth.dive frame 1866, draft tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1866,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "6f5cd496b40446f2"
+  },
   {
    "time": "2026-11-23T12:51:58.471Z",
    "file": "20261123125158471-note-lv24.jpg",
@@ -34,44 +72,6 @@
    "source": "out/work/earth/place/proof/field-takes-12h30.jpg",
    "kind": "note",
    "label": "12:30 new far cloud: two of four generated takes (top), their cut bodies with shadows on a test ground (lower left); the sky of the rise 2100 to 2118 with the Sun leaving by the turn (lower right)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T12:04:00.242Z",
-   "file": "20261123120400242-note-bare-globe-12h.jpg",
-   "source": "out/work/earth/place/proof/bare-globe-12h.jpg",
-   "kind": "note",
-   "label": "Bare globe side (place picture off) at 1884, 1895, 1900, 1907, 1915 with the windowed levels and the low look; last panel is the close side at 1915",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T11:35:42.712Z",
-   "file": "20261123113542712-note-tex-1884-soft.jpg",
-   "source": "out/work/earth/place/tmp/tex-1884-soft.jpg",
-   "kind": "note",
-   "label": "Frame 1884, where the globe has under one texel a pixel (magenta): far left beyond level 24, bottom right beyond the 12 degree plate",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T11:24:54.038Z",
-   "file": "20261123112454038-frame-tex-1908.jpg",
-   "source": "out/work/earth/place/tmp/tex-1908.png",
-   "kind": "frame",
-   "label": "earth.dive frame 1908, draft tier, texels view",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1908,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "engine": "17850b869227c6ee"
-  },
-  {
-   "time": "2026-11-23T11:10:59.909Z",
-   "file": "20261123111059909-note-rise-orbit-sheet.jpg",
-   "source": "out/work/earth/place/down/rise-orbit-sheet.jpg",
-   "kind": "note",
-   "label": "M2 rise along the real path, globe alone, 12 frames",
    "stop": "earth"
   }
  ]
