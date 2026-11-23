@@ -1,9 +1,33 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T17:41:09.166Z",
+ "pushed": "2026-11-23T18:10:07.928Z",
  "head": "3ec108739a61f9525815e1ba2ab2ac8715340e59",
- "note": "Mercury 17:41: junction cure rendered at draft (uncommitted), proof chain running; pale far slab top left 741 to 743 open",
+ "note": "mercury: rise far band, 717 full shutter and 717 native crop, all open faults",
  "looks": [
+  {
+   "time": "2026-11-23T18:10:07.232Z",
+   "file": "20261123181007232-note-n717-01.jpg",
+   "source": "out/work/mercury/place/tmp/n717-01.jpg",
+   "kind": "note",
+   "label": "mercury 717 draft native crop top middle: place plates paler with a straight left edge, open fault",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T18:10:06.678Z",
+   "file": "20261123181006678-note-r717-tl.jpg",
+   "source": "out/work/mercury/place/tmp/r717-tl.jpg",
+   "kind": "note",
+   "label": "mercury 717 review tier full shutter, top left native: rims drawn into slabs by the 59 px shutter, the engine cap E6 is the cure",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T18:10:05.946Z",
+   "file": "20261123181005946-note-risefar.jpg",
+   "source": "out/work/mercury/place/tmp/risefar.jpg",
+   "kind": "note",
+   "label": "mercury rise 990 to 993 draft, working tree: far band pale and flat beyond the horizon, second limb line, not cured",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-23T17:41:08.036Z",
    "file": "20261123174108036-note-topleft.jpg",
@@ -50,41 +74,6 @@
    "segment": "mercury.rise",
    "first": 978,
    "last": 989,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T17:36:40.945Z",
-   "file": "20261123173640945-sheet-mercury-rise-draft-across.jpg",
-   "source": "out/work/handover/mercury-rise-draft-across.png",
-   "kind": "sheet",
-   "label": "mercury rise, every frame 984 to 995 (across T, frame 990), draft tier",
-   "stop": "mercury",
-   "segment": "mercury.rise",
-   "first": 984,
-   "last": 995,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T17:35:50.956Z",
-   "file": "20261123173550956-compare-mercury-rise-under.jpg",
-   "source": "out/work/handover/mercury-rise-under.png",
-   "kind": "compare",
-   "label": "mercury rise, the globe side at T (frame 990) with the place picture, alone, and their difference times 4",
-   "stop": "mercury",
-   "segment": "mercury.rise",
-   "frame": 990,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T17:35:27.188Z",
-   "file": "20261123173527188-sheet-mercury-dive-draft-after.jpg",
-   "source": "out/work/handover/mercury-dive-draft-after.png",
-   "kind": "sheet",
-   "label": "mercury dive, every frame 745 to 756 (after T, frame 744), draft tier",
-   "stop": "mercury",
-   "segment": "mercury.dive",
-   "first": 745,
-   "last": 756,
    "tier": "draft"
   }
  ]
