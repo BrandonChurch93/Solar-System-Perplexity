@@ -1,9 +1,39 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-23T21:25:28.028Z",
- "head": "f37eeb933a52f5a0055a64a970674d3e61c2ce3b",
- "note": "21:27 G13 on all 165 frames of dive and rise fails on 4 (4184, 4185, 4425, 4426); cause found on the texel view, cure in work, no READY yet",
+ "pushed": "2026-11-23T21:57:29.252Z",
+ "head": "76596db242c70214590adffca43303f63478cf7d",
+ "note": "21:58 main eddf917d merged; rim.near [0.75, 1.3] kept (4423 to 4429 no soft pixels); chain K running: G13 on all 165 frames first",
  "looks": [
+  {
+   "time": "2026-11-23T21:57:28.611Z",
+   "file": "20261123215728611-note-line-4430.jpg",
+   "source": "../../../../tmp/k3/line-4430.png",
+   "kind": "note",
+   "label": "4430 draft lifted x3, lower left: port, near [0.75, 1.3], near [0.6, 1.1]; the dark band is the globe's own band, same in all three",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T21:57:27.870Z",
+   "file": "20261123215727870-note-rim-4425.jpg",
+   "source": "../../../../tmp/k/rim-4425.png",
+   "kind": "note",
+   "label": "4425 draft, main eddf917d: left port, right with rim.near (patch 1 rim back to its own feather low down); more ground detail lower left, no line",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T21:47:03.267Z",
+   "file": "20261123214703267-job-frame-04110.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.dive frame 4110, draft tier, texels view, from the running g13 job",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4110,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "g13"
+  },
   {
    "time": "2026-11-23T21:25:27.414Z",
    "file": "20261123212527414-note-s-4425.jpg",
@@ -35,20 +65,6 @@
    "job": "g13"
   },
   {
-   "time": "2026-11-23T21:05:24.778Z",
-   "file": "20261123210524778-job-frame-04110.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "uranus.dive frame 4110, draft tier, texels view, from the running g13 job",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4110,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "g13"
-  },
-  {
    "time": "2026-11-23T21:01:55.966Z",
    "file": "20261123210155966-sheet-uranus-rise-top.jpg",
    "source": "out/work/handover/uranus-rise-top.png",
@@ -70,30 +86,6 @@
    "segment": "uranus.rise",
    "first": 4392,
    "last": 4403,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T21:01:17.632Z",
-   "file": "20261123210117632-sheet-uranus-rise-draft-before.jpg",
-   "source": "out/work/handover/uranus-rise-draft-before.png",
-   "kind": "sheet",
-   "label": "uranus rise, every frame 4380 to 4390 (before T, frame 4391), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "first": 4380,
-   "last": 4390,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T21:01:15.964Z",
-   "file": "20261123210115964-sheet-uranus-rise-draft-across.jpg",
-   "source": "out/work/handover/uranus-rise-draft-across.png",
-   "kind": "sheet",
-   "label": "uranus rise, every frame 4385 to 4396 (across T, frame 4391), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "first": 4385,
-   "last": 4396,
    "tier": "draft"
   }
  ]
