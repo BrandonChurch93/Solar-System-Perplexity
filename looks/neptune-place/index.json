@@ -1,83 +1,71 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T17:28:24.291Z",
+ "pushed": "2026-11-23T18:07:29.515Z",
  "head": "f8aac1810f720ecdb1ed0a861eb687050d94fb22",
- "note": "17:29 VM: far arcs at 4962 to 4965 and the dark cloud in the wide canvas, both still wrong, cures in work; asset edit of the canvas undone because terrain frames changed",
+ "note": "far ground haze in the rise (d8, uncommitted, proof green), dive fault with it, 4707 native crops with the blue blobs",
  "looks": [
+  {
+   "time": "2026-11-23T18:07:28.826Z",
+   "file": "20261123180728826-note-n4707-blue.jpg",
+   "source": "../../../../tmp/n4707-blue.png",
+   "kind": "note",
+   "label": "FAULT 4707 draft, the blue blobs four times enlarged",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T18:07:28.252Z",
+   "file": "20261123180728252-note-n4707-01.jpg",
+   "source": "../../../../tmp/n4707-01.png",
+   "kind": "note",
+   "label": "FAULT 4707 draft native crop: saturated blue blobs right of the eye (plate saturation boost clips red to 0)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T18:07:27.651Z",
+   "file": "20261123180727651-note-d5-dive.jpg",
+   "source": "../../../../tmp/d5-dive.jpg",
+   "kind": "note",
+   "label": "FAULT dive 4741 to 4750 with the haze: pale block with a straight edge upper left, so the haze is rise only",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T18:07:27.056Z",
+   "file": "20261123180727056-note-d8-d.jpg",
+   "source": "../../../../tmp/d8-d.jpg",
+   "kind": "note",
+   "label": "rise 4984 to 4988 draft, haze d8: haze gone, tan patch beside the eye still there",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T18:07:26.497Z",
+   "file": "20261123180726497-note-d8-c.jpg",
+   "source": "../../../../tmp/d8-c.jpg",
+   "kind": "note",
+   "label": "rise 4978 to 4982 draft, haze d8: sharp again",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T18:07:25.921Z",
+   "file": "20261123180725921-note-d8-b.jpg",
+   "source": "../../../../tmp/d8-b.jpg",
+   "kind": "note",
+   "label": "rise 4968 to 4976 draft, haze d8: arcs come up from the middle of the frame over 4964 to 4972",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T18:07:25.302Z",
+   "file": "20261123180725302-note-d8-a.jpg",
+   "source": "../../../../tmp/d8-a.jpg",
+   "kind": "note",
+   "label": "rise 4956 to 4966 draft, far ground haze d8 (uncommitted): far ground stays pale and soft, canvas bank melts",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-23T17:28:23.755Z",
    "file": "20261123172823755-note-cloud-alpha.jpg",
    "source": "../../../../tmp/cloud-alpha.jpg",
    "kind": "note",
    "label": "wide cloud canvas alpha and colour, dark cloud left of the fitted frame (cause of olive tinge and specks)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T17:28:23.202Z",
-   "file": "20261123172823202-note-rs-top.jpg",
-   "source": "../../../../tmp/rs-top.jpg",
-   "kind": "note",
-   "label": "rise 4958 to 4967 upper third, fine white arcs come in at 4962 to 4965 (still wrong, cure in work)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T17:07:39.724Z",
-   "file": "20261123170739724-sheet-neptune-rise-top.jpg",
-   "source": "out/work/handover/neptune-rise-top.png",
-   "kind": "sheet",
-   "label": "neptune rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 4956), place picture off, draft tier",
-   "stop": "neptune",
-   "segment": "neptune.rise",
-   "first": 4956,
-   "last": 5024,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T17:05:32.820Z",
-   "file": "20261123170532820-sheet-neptune-rise-draft-after.jpg",
-   "source": "out/work/handover/neptune-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "neptune rise, every frame 4957 to 4968 (after T, frame 4956), draft tier",
-   "stop": "neptune",
-   "segment": "neptune.rise",
-   "first": 4957,
-   "last": 4968,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T17:05:31.049Z",
-   "file": "20261123170531049-sheet-neptune-rise-draft-before.jpg",
-   "source": "out/work/handover/neptune-rise-draft-before.png",
-   "kind": "sheet",
-   "label": "neptune rise, every frame 4950 to 4955 (before T, frame 4956), draft tier",
-   "stop": "neptune",
-   "segment": "neptune.rise",
-   "first": 4950,
-   "last": 4955,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T17:03:37.400Z",
-   "file": "20261123170337400-note-ho-rise-sky.jpg",
-   "source": "../../../../tmp/ho-rise-sky.jpg",
-   "kind": "note",
-   "label": "rise 4955 to 4962 top of frame: the limb climbs out, no fade",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T17:03:36.254Z",
-   "file": "20261123170336254-note-dv-crop.jpg",
-   "source": "../../../../tmp/dv-crop.jpg",
-   "kind": "note",
-   "label": "cirrus bank at native size 4726 4730 4734 4738: wisps, red brown specks below it",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T17:03:35.146Z",
-   "file": "20261123170335146-note-dv-b.jpg",
-   "source": "../../../../tmp/dv-b.jpg",
-   "kind": "note",
-   "label": "dive 4736 to 4751 film path draft, new plates",
    "stop": "neptune"
   }
  ]
