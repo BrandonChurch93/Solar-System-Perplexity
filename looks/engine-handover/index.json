@@ -1,9 +1,37 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-23T19:57:44.072Z",
- "head": "c3199d33a442ae351ec087ba6d74288279c6e6e4",
- "note": "Floor 0.25 looked at on Mars 2440 and across T of the rise; floor 0.5 at T is rendering, then the review byte proof",
+ "pushed": "2026-11-23T20:10:11.884Z",
+ "head": "f7f0b7cb2afed9456b89b5af2607530982ce32f3",
+ "note": "floor 0.5 on the Mars rise at T beside floor 0.25 and the cap alone; tone split on the eighth bake rendering",
  "looks": [
+  {
+   "time": "2026-11-23T20:10:10.989Z",
+   "file": "20261123201010989-note-floor50-rimR.jpg",
+   "source": "../../../../tmp/e6/floor50-rimR.png",
+   "kind": "note",
+   "label": "same nine frames, right rim at full size (x 1400 to 1920, y 330 to 690)"
+  },
+  {
+   "time": "2026-11-23T20:10:09.573Z",
+   "file": "20261123201009573-note-floor50-mid.jpg",
+   "source": "../../../../tmp/e6/floor50-mid.png",
+   "kind": "note",
+   "label": "same nine frames, middle at full size (x 700 to 1220, y 380 to 740): the cliff face softens at floor 0.5"
+  },
+  {
+   "time": "2026-11-23T20:10:08.543Z",
+   "file": "20261123201008543-note-floor50-rimBL.jpg",
+   "source": "../../../../tmp/e6/floor50-rimBL.png",
+   "kind": "note",
+   "label": "same nine frames, bottom left rim at full size (x 0 to 520, y 700 to 1060): streak about 20 px at floor 0.25, about 40 px at floor 0.5, no copies"
+  },
+  {
+   "time": "2026-11-23T20:10:07.266Z",
+   "file": "20261123201007266-note-floor50-whole.jpg",
+   "source": "../../../../tmp/e6/floor50-whole.png",
+   "kind": "note",
+   "label": "Mars rise 2691, 2692 (T), 2693 at review, whole frames: cap 6 alone, cap 14 with floor 0.25, cap 14 with floor 0.5"
+  },
   {
    "time": "2026-11-23T19:57:42.913Z",
    "file": "20261123195742913-note-floor-rise-5.jpg",
@@ -31,34 +59,6 @@
    "source": "../../../../tmp/e6/floor-rise-br.png",
    "kind": "note",
    "label": "Mars rise 2691, 2692, 2693 with floor 0.25, bottom right at full size: the globe's red at the edge of the place picture in 2693"
-  },
-  {
-   "time": "2026-11-23T19:52:06.989Z",
-   "file": "20261123195206989-note-floor-rise-ml.jpg",
-   "source": "../../../../tmp/e6/floor-rise-ml.png",
-   "kind": "note",
-   "label": "Mars rise 2691, 2692, 2693 with floor 0.25, left of the middle at full size"
-  },
-  {
-   "time": "2026-11-23T19:52:05.861Z",
-   "file": "20261123195205861-note-floor-rise-whole.jpg",
-   "source": "../../../../tmp/e6/floor-rise-whole.png",
-   "kind": "note",
-   "label": "Mars rise across T with floor 0.25, review tier: 2691 close, 2692 the swap frame, 2693 globe side; last the swap frame with the cap alone at 6 px"
-  },
-  {
-   "time": "2026-11-23T19:52:04.792Z",
-   "file": "20261123195204792-note-floor-2440-crops-c.jpg",
-   "source": "../../../../tmp/e6/floor-2440-crops-c.png",
-   "kind": "note",
-   "label": "Mars dive 2440 the middle at full size: cap 6 alone against floor 0.25 (the place stays sharp)"
-  },
-  {
-   "time": "2026-11-23T19:52:03.626Z",
-   "file": "20261123195203626-note-floor-2440-crops-b.jpg",
-   "source": "../../../../tmp/e6/floor-2440-crops-b.png",
-   "kind": "note",
-   "label": "Mars dive 2440 bottom left at full size: cap 6 alone against floor 0.25 (36.6 px of blur at the rim)"
   }
  ]
 }
