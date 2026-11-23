@@ -3,7 +3,7 @@ import { FarPoint } from '../../bodies/farpoint'
 import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { config } from '../../config'
 import { diagUniform } from '../../diagnostics/diag'
-import { handoverOf } from '../../director/handover'
+import { handoverOf, skyWeight } from '../../director/handover'
 import { smooth } from '../../director/rig'
 import { defaultPost } from '../../post/chain'
 import { Air } from './air'
@@ -14,7 +14,6 @@ import { Moon } from './moon'
 import { Ground, type GroundDef } from './relief'
 import reliefJson from './relief.json'
 import * as look from './look'
-import { tuned } from './place'
 import placeJson from './place.json'
 import { plan } from './plan'
 import skyJson from './sky.json'
@@ -36,6 +35,7 @@ export const createSet: SetFactory = async (ctx) => {
   for (const level of patches.levels) patchTextures.push(await ctx.texture(base + level.file, { srgb: true, anisotropy: 16 }))
 
   const plates = placeJson.plates
+  const lowPlate = await ctx.texture(base + plates.low.file, { srgb: true, anisotropy: 16 })
   const tone = new THREE.DataTexture(new Uint16Array(await ctx.buffer(base + plates.tone.file)), plates.tone.size, plates.tone.size, THREE.RGBAFormat, THREE.HalfFloatType)
   tone.minFilter = THREE.LinearFilter
   tone.magFilter = THREE.LinearFilter
@@ -44,7 +44,7 @@ export const createSet: SetFactory = async (ctx) => {
   const globe = new Globe({
     map, mapWidth: (map.image as unknown as { width: number }).width, cloud, emissive, far: farMap, farCloud, look: look.globe,
     sunHold: plan.lightDir.clone().applyQuaternion(new THREE.Quaternion().fromArray(fit.globe.quaternion).invert()),
-    patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: patches.fade, place: { centre: direction(plates.centre.lon, plates.centre.lat), from: patches.placeFrom, tone, toneDeg: plates.tone.widthDeg, toneCloud: plates.tone.cloud, earlyDeg: plates.earlyDeg, gain: plates.gain, day: plates.day } },
+    patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), windows: patches.levels.map((l) => (l.raster && l.size && l.offset ? { raster: l.raster, size: l.size, offset: l.offset } : undefined)), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: patches.fade, place: { centre: direction(plates.centre.lon, plates.centre.lat), from: patches.placeFrom, tone, toneDeg: plates.tone.widthDeg, toneCloud: plates.tone.cloud, toneGrey: plates.tone.grey, earlyDeg: plates.earlyDeg, gain: plates.gain, day: plates.day, low: { map: lowPlate, eye: direction(placeJson.globe.lon, placeJson.globe.lat).multiplyScalar(1 + placeJson.height), angleDeg: plates.low.angleDeg, fromDeg: plates.low.fromDeg } } },
   })
   globe.mesh.quaternion.fromArray(fit.globe.quaternion)
   globe.mesh.scale.fromArray(fit.globe.scale)
@@ -81,21 +81,34 @@ export const createSet: SetFactory = async (ctx) => {
   terrain.add(ground.group)
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2 + config.shutterFraction / (2 * config.fps)
 
+  const skyLow = [Math.log(placeJson.sky.low[0]!), Math.log(placeJson.sky.low[1]!)]
+  const skyWeights = (time: number): [number, number] | null => {
+    const down = plan.seg.dive!
+    const dive = time >= down.start && time < down.end
+    const seg = dive ? down : time >= plan.seg.rise.start && time < plan.seg.rise.end ? plan.seg.rise : null
+    if (!seg) return null
+    const height = (dive ? plan.divePose(time, 'orbit') : plan.risePose(time, 'orbit')).position.length() - 1
+    const high = smooth((Math.log(Math.max(height, 1e-6)) - skyLow[0]!) / (skyLow[1]! - skyLow[0]!))
+    const share = skyWeight(seg, time)
+    return [share < 1 ? high / (1 - share) : 0, share > 0 ? (1 - high) / share : 0]
+  }
   const sky: SkyPatch[] = []
   for (const [view, def] of Object.entries(skyJson)) {
     const wide = 1 + 2 * def.margin
     const tan = Math.tan(THREE.MathUtils.degToRad(def.vfovDeg) / 2) * wide
-    sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, mips: false, anisotropy: 1 }), aim: new THREE.Quaternion(), tan: [tan * 16 / 9, tan], gain: def.gain, add: def.add, ring: def.ring as [number, number, number, number], edge: def.edge })
+    const at = view === 'terrain' ? 1 : 0
+    sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, mips: false, anisotropy: 1 }), aim: new THREE.Quaternion(), tan: [tan * 16 / 9, tan], gain: def.gain, add: def.add, ring: def.ring as [number, number, number, number], edge: def.edge, weight: (time) => skyWeights(time)?.[at] ?? 1 })
   }
 
   const light = new THREE.Vector3()
   const camera = new THREE.Vector3()
   const eye = new THREE.Vector3()
   const eyeWorld = new THREE.Vector3()
+  const eyeBody = new THREE.Vector3()
   const back = new THREE.Quaternion()
   const sunLocal = new THREE.Vector3()
   const airTint = new THREE.Vector3()
-  const descent = tuned(look.descent)
+  const descent = look.descent
   const lens = defaultPost().vignette * config.raw.handover.place.lens
   const glowHome = new THREE.Vector3().fromArray(look.air.dir).normalize()
   const auroraHome = new THREE.Vector3().fromArray(look.aurora.eye).normalize()
@@ -148,6 +161,10 @@ export const createSet: SetFactory = async (ctx) => {
       gu.uUnborn!.value = 1 - born
       gu.uLights!.value = lights * (1 - low)
       gu.uNear!.value = low
+      gu.uLowLook!.value = ending ? 0 : smooth(Math.log(plates.low.height[0]! / Math.max(camera.length() - 1, 1e-4)) / Math.log(plates.low.height[0]! / plates.low.height[1]!))
+      const turned = plan.spin(state.time)
+      eyeBody.copy(eye).applyQuaternion(untilt)
+      ;(gu.uEyeBody!.value as THREE.Vector3).set(Math.cos(turned) * eyeBody.x - Math.sin(turned) * eyeBody.z, eyeBody.y, Math.sin(turned) * eyeBody.x + Math.cos(turned) * eyeBody.z)
       gu.uPlaceIn!.value = ending ? 0 : smooth(Math.log(d.place[0] / Math.max(camera.length() - 1, 1e-4)) / Math.log(d.place[0] / d.place[1]))
       ;(gu.uLimbShape!.value as THREE.Vector4).x = look.globe.limb.width + (d.haze.width - look.globe.limb.width) * low
       ;(gu.uLimbPale!.value as THREE.Vector3).fromArray(look.globe.limb.pale).multiply(airTint.set(1 + (d.haze.pale[0] - 1) * low, 1 + (d.haze.pale[1] - 1) * low, 1 + (d.haze.pale[2] - 1) * low))

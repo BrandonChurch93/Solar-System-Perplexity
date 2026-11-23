@@ -2115,3 +2115,124 @@ What the first sheets showed and what was changed for each.
 - The engine's sky frame for the close side (`turn * terrainFrame * close`) stands 28.66 degrees from my twin. It is the sky the kept terrain frames have, and the engine carries the globe's sky to it by T; nothing to change.
 - Pan settle, on paper (`out/work/earth/place/tmp/settle.ts`): the aim was a blend of two points at very different distances (the place, near; a point straight ahead of the far pose, about 4.4 radii away), so its share of the angle ran away as the camera came down. As a turn between the two directions (`slerpDir`) the largest change of the place's screen speed falls from 2.99 to 0.74 px a frame per frame in the dive (aim 0.5 to 1) and from 4.81 to 1.61 in the rise; the place stays within 0.117 and 0.151 of the half frame. Next round.
 
+## MAIL 246 from the Builder (about 11:20 UTC, no answer needed; verbatim)
+
+MAIL 246 from the Builder (/root). Main is at d690e42a: the planet shader takes up to ten patch levels now (it took six). The shader text of a globe with six levels or fewer is unchanged, and the proof on the render machines shows every frame of every stop keeps its bytes. Also in it: raw motion follows a body that turns under a camera that follows the place (only for a stop that opted in), and a probe option that dumps the place picture. Merge origin/main into your branch when it suits you; no answer needed. If your stop needs more than six levels to hold one texel per pixel through the dive and the rise, use them inside your memory budget and say so in your next report.
+
+## MAIL 254 from the Builder (11:45 UTC, high priority, binding; verbatim)
+
+MAIL 254 from the Builder (/root) to earth_builder. I rendered your commit e885b4e3 on the render machines at the draft tier, every frame of the dive (1830 to 1919, 1850 to 1859 still out) and of the rise (2100 to 2174), and looked at it frame by frame. Four sheets attached. No answer needed before your next report.
+
+What is good: this is the thing Brandon asked for. One place from the globe to the low pass and back, a steady move, no cover, and I cannot name the handover frame in either direction from the ground alone. Keep that.
+
+What is wrong, with frames, in the order I would fix it:
+1. The sky gives the handover away. Rise: the glow of the Sun stands at the top edge from 2100 to 2104 and is gone by 2107, while stars and the band of the Milky Way come in from 2107. Dive: stars until about 1910, the glow from 1914. The Sun, its glow, the stars and the band must be one sky through T: the same things at the same places with the same strength on both sides. If the close view has the Sun just above the frame, the globe side has it there too, and it leaves or enters the frame by the turn of the camera, never by a fade.
+2. The far cloud bank at the top right, 1900 to 1902 and 2113 to 2129: soft, with mauve patches, plainly softer than the clouds below it (crops of 1900 and 2124). It needs detail at that scale and the white of the near clouds.
+3. City lights as white dots on the islands by day (crops of 2129, also 1880 to 1900). No lights on the lit side.
+4. Single faults at native size: a straight upright edge in the sea at the right at 2129 where the colour steps to dark blue, soft white blobs at the bottom right of 1900 and at the top of 2129, a regular dot pattern in the cloud at the lower left of 1900 and of 2124.
+5. Your own list (G13 near T with the levels of 6 and 3 degrees, the band under the horizon, the embossed sea).
+
+When 1 to 4 are done and pushed, name the commit and I render every frame again, the place windows at the review tier too.
+
+Attached: `earth-native-crops.jpg`, `earth-rise-2100-2114.jpg`, `earth-dive-1900-1919.jpg`, `earth-rise-every-4.jpg`.
+
+## MAIL 258 from the Builder (low priority; verbatim)
+
+MAIL 258 from the Builder (/root) to every stop builder.
+Main moved to da69509a. New in the globe shader and the loader, all off unless your stop asks (notes: assets-src/shared/GLOBE-NOTES.md):
+- `ctx.texture(path, {srgb: false, channels: 1})`: a one channel texture, a quarter of the memory. Use it for every mask and height map you load, if your set is near its memory limit.
+- `PatchSet.own?: boolean[]`: a patch level with its own light (a plate that already carries the light of the close view is not lit a second time).
+- `PatchSet.fadeMinor?: boolean`: a level fades in by its fine axis on screen, so a level seen at a grazing angle does not come in as a hard strip.
+MAX_PATCHES is 10.
+No frame of main changed (115 draft frames with the same bytes). Merge origin/main into your branch at your next commit. Nothing else changes for you: go on with the list of my last mail to you.
+
+## MAIL 259 from the Builder (low priority, adds to mail 254; verbatim)
+
+MAIL 259 from the Builder (/root) to earth_builder. Adds to mail 254; same commit e885b4e3, draft tier, frames 1850 to 1879 of the dive, which had been missing from my clip.
+What works: from 1850 to 1879 it is one place coming closer at a steady rate, Yucatan, the Gulf and the islands stay where they are from frame to frame, nothing pops.
+What is wrong in those frames:
+5. The white cloud mass over the Gulf ends on its right in a cut outline against the dark sea, from 1862 to 1879: a soft white smear with a smooth hard border and no cloud structure at its edge (native crop at 1866: x 1170 to 1260, y 60 to 250; at 1876: x 1460 to 1560, y 40 to 190). It reads as the border of a mask. A cloud field must end in cloud shapes with detail at the pixel.
+6. The same cloud mass is one flat sheet with a cauliflower texture and no height: no shadow on the sea, the coast shows through it evenly. At this height clouds read as bodies with a lit side and a cast shadow.
+7. A pale cream patch in the open sea (near the centre from 1866, growing to about 120 px by 1876) reads as a blob laid on the water. If it is the glint, it needs the sparkle and the falloff of the close view; if it is a plate remnant, remove it.
+Order stays as in mail 254 (the sky first), then these three. Report the commit when the dive and the rise are worth a new clip. Say only what you measured.
+
+Attached: `crop-edge.jpg`.
+
+## MAIL 265 from the Builder (12:36 UTC, high priority, newest mail, binding; verbatim, the part for Earth)
+
+MAIL 265 from the Builder (/root), 12:36 UTC. E3 is on main.
+
+Main is at 03510ddd. It holds the handover engine of agent/engine-handover 0d14d1cf: the steady descent in the generic path, its mirror for the rise, the sky floor, the sidestep option. Proven by me before it was taken: 105 of 105 draft frames outside the Mars dive and rise keep their bytes, 2325 and 2580 at the final tier equal the kept stills, four review tier frames equal main, 155 tests green.
+
+What it means for a stop that has opted in and uses the generic path (read `assets-src/shared/HANDOVER-NOTES.md`, section "E3 as built"):
+1. Your dive and rise fly another line after the merge. Height falls by a near constant ratio per frame, the camera comes down a line of sight to the place and levels into the glide of your close view. The low end of the path is the close pose at T carried on with its own speed and spin over `coastFrames`.
+2. If the new line does not fit your stop yet, keep the old one for now with `handover: { dive: { path: { turnFall: 0.3, level: false } } }` (and the same under `rise`). Say so in your report, with the reason.
+3. New options, off unless you ask: `path.sidestep { right, up, by }` to pass a moon or a ring, `skyFloor` for a carried sky plate that has no true sky under its horizon, `path.levelBy`.
+4. A stop that has not opted in keeps every byte.
+
+Do now, in this order: finish the step you are in, merge origin/main, build, run the tests, render your dive and your rise at the draft tier and look at every frame, push, and report the commit with what is still wrong. Do not wait for an answer.
+
+## MAIL 275 from the Builder (about 13:14 UTC, high priority, no answer needed; verbatim)
+
+From the Builder (/root) to every stop builder and coder. Mail 275: how your stop gets to its critic rounds. No answer needed unless a point below is red for you.
+
+1. A stop is taken onto main and its round 1 starts (rounds are numbered on from 37, up to three per stop, every critic each round) when four things hold on one commit that you name:
+ a. both handovers run with no cover and read as one place (Jupiter and Saturn: also the surface view from code; the Sun: the surface view with its new motion and the rise);
+ b. the machine checks are green on every frame you changed: G5, G13 and G17 as the harness gives them, and the handover report of `npm run handover -- --stop <id>`;
+ c. the frames you may not change keep their bytes (your hold and your surface view where it is approved, at the draft tier everywhere and at the final tier on the judged frames);
+ d. build, tsc and tests are green on a merge of the newest main.
+ It does not have to be finished. What is still wrong goes to the critics with the rest. Do not wait for a perfect state: when a to d hold, send me "READY <stop> <commit>" with the list of what you still see as wrong.
+2. Takes of generated assets: kit/06-ASSETS.md gives six takes per asset per round, and six per phase for an asset made outside a round. A mail of mine with findings is not a round. If an asset has used its six in this phase, keep its best take and say so in your READY line. In a round each asset has six again where a critic asks for a change. Work by code has no take limit.
+3. I render every commit you name at every frame on the render machines and write what I see. Push your code branch whenever your looks show something you want judged, and name the commit.
+
+## 11:20 to 12:41 UTC: main merged three times, windowed levels, the low look, the sky law, the cloud field takes
+
+- Merges of main, never a rebase: d690e42a (ten patch levels in the shared planet; Earth has its own globe shader with six), ada385a1, and after MAIL 265 the head 03510ddd (engine E3) as the local commit 4b9faf39. Build and 155 tests green on that merge (`out/work/earth/place/vitest-e3.log`).
+- Earth flies its own `divePose` and `risePose` in `plan.ts`, so the generic E3 line (steady descent, `turnFall`, `level`) is not taken by this stop. The reason: the judged frames 1857 and 2156 and the pose, speed and look the kept travel starts with are tied to this path.
+- Levels as windows. A level is no longer a whole square about its centre but a window of a raster (`size`, `raster`, `offset` in `place.json`), so the memory goes where the camera looks: under levels on the SPOT plane `patch-96.jpg` (window 2400 of 4096), `patch-48.jpg`, `patch-24.jpg`; plate levels about P `place-12.jpg` (4096) and `place-5.jpg` (raster 6144 over 12 degrees, window 2688, 5.25 degrees). Five levels plus the low plate. This replaces the "two levels, 6 and 3 degrees" of the M2 report. Memory at the draft tier, frames 1876 to 2129: earth 1393 MB of the 1400 MB budget.
+- The low look. Near T the globe shows `place-12-low.jpg` (2048 px over 12 degrees): the lay back of the close view. It is gated by the angle between the eye and the twin eye at the ground point (`low.angle`), by height (`low.height`) and by the distance from the twin's nadir (`low.fromDeg`).
+- The sky (MAIL 254, 1). `place.json` block `sky`, `skyFrames` 120, `skyWeights(time)` in `set.ts`: the Sun, its glow, the stars and the band are one sky through T. Looked at on 15 draft frames: in the dive the Sun's glow enters at the top between 1903 and 1906 with the limb; in the rise the Sun stands at the top at 2100 and leaves through the top edge by 2109 to 2112 by the turn of the camera. No fade seen.
+- The cloud field asset: four of six takes this phase (`out/work/earth/place/takes/field-t1.png` to `field-t4.png`), recipe in `assets-src/earth/RECIPE.md`.
+- Request to the engineer, sent 13:29 UTC, low priority, to `/root/handover_engineer`: Earth wrote the share of the sky through its handover as its own function (`skyWeights(time)` in `set.ts`); a hook `skyShare(segment, time)` on the stop plan would be cleaner. No shared code was changed.
+
+## 12:41 to 13:20 UTC: the cloud field as bodies, the calm, the wipes, the hold under the field (MAIL 254, 2 to 4; MAIL 259, 5 and 6)
+
+- `deck.py` cuts the four takes into bodies (matte by the darkest channel against the local top, cast shadow map from the lit sea round each body, turned so the shadows fall the way the Sun of the place throws them) and lays them out on a grid with a seeded shuffle over 24 degrees about P (8192 px), each body kept or dropped by the density under it. Output `field-alpha.npy`, `field-colour.npy`, `field-shade.npy`, `field-density.png` in `out/work/earth/place/`. `deck-3.log`: cover of the takes 0.194, 0.171, 0.203, 0.195; 57 of 90 spots placed; cover where the density is over 0.9: 0.434. The first layout was too dense and grey (cover 0.761); `step` 0.55, `density.full` 0.8, `shadow.onCloud` 0.25 since.
+- Density: the cloud of the ring take outside the plate, the plate's own far cloud inside it (from 5.0 to 6.4 degrees from the nadir).
+- `levels.py` rewritten. The field is laid over every level, the plate and the fine level, so a cloud mass ends in bodies and the bodies throw shadows on the sea. The plate gives way to the hold's own levels (12 where it reaches, 24 beyond, through `seaGain`) by the density and by the far ramp; the far zone of the plate was a repaint with dots and streak blobs. The old composite of the ring sheet is gone.
+- `calm.py`: the dot pattern on land (reads as lights by day). Opening by a disc, then a median, on land only (green or pale ground near, warmer than the sea, away from cloud wider than the disc). A parameter named `r` clashed with the red channel in the first version; renamed `dot`.
+- Wipes (`mend.json` `wipe`): marks of the repaint in the plate, painted over from their surround.
+- `globe.ts`: uniform `uLowSize`, so the texel measure counts the low plate's own density where the low look shows. The `tuned()` hook is out of `place.ts` and `set.ts`.
+- First test frames (draft, `out/work/earth/place/m3/`): the field over the Gulf and Yucatan reads as bodies with shadows and ends in bodies; the far bank at the top of 1890 and 1900 has cumulus detail. Wrong: field bodies outside the low plate read pink to mauve in the top corners of 1890, 1900, 2124, 2129; two soft white wedges at 1890 and 1900; the cream patch of the glint.
+- The mauve, cause: the tone texture (what the plate's sea differs from the hold's by) was added on the grey flanks of clouds; its cloud gate looked at the darkest channel only. Fix: the tone also needs colour, `plates.tone.grey` [0.2, 0.45] (spread of the three channels over the brightest), uniform `uToneGrey`. After it the corners of 1890, 1900, 2124 and 2129 are white and grey.
+- The wedges, cause: two marks of the repaint in the plate at plate px (3020, 2168) and (3121, 2031); the disc of the wipe was smaller than the mark, so the fill started from the mark's own rim. The wipe now takes everything brighter than `bright` inside `reach` times the radius, grown by `growPx`.
+
+
+## MAIL 279 from the Builder (13:56 UTC, high priority, no answer needed; verbatim)
+
+The rule of mail 275 stands. This adds a time, so that no stop waits on its last fault while fresh critics could already be looking at it.
+
+1. Mercury, Venus, Earth, Mars plates, Uranus, Neptune, Sun: send "READY <stop> <commit>" by 15:30 UTC at the latest. Earlier is better: send it the moment (a) to (d) of mail 275 hold.
+2. Jupiter, Saturn: by 16:30 UTC at the latest, with the dive and the rise in it (no cover, no swap that shows).
+3. At that time I take the newest commit you have named, as long as it builds on a merge of newest main, its tests pass, the frames that may not change keep their bytes and G15 holds. What is still wrong then goes into round 1 as your own list beside the critics' issues. So keep your branch in a state that can be taken: commit and push whole steps, never half a step.
+4. With READY send: the commit, your list of what is still wrong with frame numbers, and which frames changed since my last render of your stop, so I render only those.
+5. Each stop then gets up to three rounds with fresh critics. You go on working between the rounds, on your list and on what the critics name.
+
+No answer is needed. Go on with your work.
+
+## 13:20 to 14:05 UTC: levels-17, the proof chain q11, every place window frame, the causes of G13 and of the cream patch
+
+- `calm.py` once more: hazy land (pale under thin cloud) is calmed too, disc 48 px. `levels-17.log`: calmed land share of the plate 0.1106; cast mean gain (blue, green, red) 0.983, 0.932, 0.863; share of the plate that gives way to the hold 0.4726; white gain of the field 1.009, 1.078, 1.098; fine level, share with the detail of the lay back 0.5101, detail rms 3.73; `patch-24` fill from the ring take 0.9122; tone range -93.4 to 42.4.
+- Proof chain `out/work/earth/place/q11.sh` on this tree (finished 13:56 UTC, log `q11.log`):
+  - shader audit exit 0; vitest 155 of 155 (`vitest.json`).
+  - Finals of the kept frames: 1755 sha256 50bb49bf, 2010 sha256 16af9335, the same as before the work.
+  - `npm run handover -- --stop earth --tier draft --only sides,flow,path,sheets` (`out/work/handover/earth.md`): six verdicts pass. Dive: side difference at T mean 0.101, median 0, p99 1, p99.9 3, largest 26 (0.956 percent of the pixels over 1, 0.011 percent over 4, 6 px over 16); flow gap mean 0.001 px, largest 0.002 px (1.08 and 1.081 px a frame on the two sides); pose gap 0; mean height ratio 0.94866 a frame, fastest frame 1855 at 1.304 times the mean; the place at most 0.123 of the half frame from the middle (1849). Rise: side difference mean 0.103, p99 1, p99.9 2, largest 34 (0.671 percent over 1, 0.006 percent over 4, 4 px over 16); flow gap mean 0.001 px, largest 0.003 px (2.523 and 2.524 px a frame); mean ratio 1.06632, fastest frame 2125 at 1.441 times the mean; the place at most 0.136 from the middle (2157).
+  - `path.ts` exit 0: hold into dive, dive into twin, twin into rise (speed 6.0044e-4 and 6.0009e-4, apart 3.51e-7), rise into travel (1.6667e-2 on both sides) all join.
+  - The rim and the horizon at T, from the two sides the harness wrote for 1919 and 2100 (copies in `out/work/earth/place/sides/`): `rim.py` mean absolute difference sky 0.0, rim 0.0, ground 0.0; `check.py` horizon row difference mean 0.0 px, largest 0.0 px, at both.
+  - Review stills of 1857 and 2156 (`proof/f01857.png`, 49 samples, `proof/f02156.png`) beside the kept stills: the new path stands much nearer at 1857 (height 1.03 radii) with strong zoom blur (29 px a frame at the edge of the frame); the dashes are the motion blur of cloud specks.
+  - G13, every third frame of dive and rise (`q11-measure.log`): FAIL, one frame of 165 over 0.02: 2118 at 2.07 percent. Next 2121 1.07, 2139 1.02, 2115 0.69, 1869 0.65, 2142 0.56, 1893 0.50.
+- Every frame of the place windows (1907 to 1919, 2100 to 2112; sheets `out/work/earth/place/tmp/hv/`) looked at: one place, no fault found; the sky stands; the Sun leaves through the top edge 2104 to 2112 (mean of the sky strip falls evenly from 153.6 to 82.3). The upright streak under the Sun is in the kept terrain still 2010 too.
+- Straight down sheet of the dive (`down/dive-down-sheet.jpg`): the place is on the globe; cream streak of the glint 1858 to 1889; in this straight down view an outline of the plate (teal inside, a darker ring) shows 1877 to 1889.
+- G13, the cause. A simulator of the texel measure (`out/work/earth/place/tmp/soft2.ts`, the path and the level laws in script, 8 px grid) names the texture under every soft pixel. 2114 to 2122: the low plate (2048 px over 12 degrees, 170 px a degree), on the ground 4.6 to 5.6 degrees from the point under the twin camera, at 0.82 to 0.98 texels a pixel. 2135 to 2142: level `patch-96`, peak 1.32 percent at 2140 in the simulator. The dive has no frame over. With the low plate 1.2 times as dense the simulator finds nothing soft from it. The lay back covers plate px x 0 to 3090, y 0 to 3333 only, so the low plate can be a window of the plate at the same 2048 px (next step).
+- The cream patch (MAIL 259, 7), the cause. Far up the shader moves the plate's sea to the hold's teal by the tone texture, but the gates `tone.cloud` and `tone.grey` leave out the cream core of the glint (blue about 190) and its grey haze flank. So the core stays cream on teal with a hard outline, with rust squiggles (cloud shadows on the sheen) 1866 to 1880; by 1890 (nearness 0.80) it reads as a glint. Not fixed yet. A first offline trial (`tmp/glint-proto.py`, a ratio map with a colour mask) failed: blue blotches.
+- Looks pushed 13:08, 13:28, 13:50 UTC (folder earth-place).

@@ -21,7 +21,7 @@ export const params: MoveParams = {
   rise: { azimuthDeg: 0, elevationDeg: 0, distance: 4.56, offset: [0, 0], driftSpeed: 0.5, rollDeg: 0 },
   travel: { turnDeg: 93, side: 1, turnEnd: 0.42 },
   arrive: { swingDeg: 20, axis: [0.15, 1, 0], from: 0.2, offset: [0.4, 0.3] },
-  light: { exposure: 1, skyExposure: 0.42, skyLow: [0.05, 0.7, 0], sunRadiusDeg: 1.8, sunGlare: 0.85, flare: 0.45, sunDir: [-0.692237, 0.508, 0.512586] },
+  light: { exposure: 1, skyExposure: 0.42, sunRadiusDeg: 1.8, sunGlare: 0.85, flare: 0.45, sunDir: [-0.692237, 0.508, 0.512586] },
   cover: [0.22, 0.34, 0.6],
   handover: path.handover,
   spinDegPerSecond: 1.1,
@@ -130,8 +130,7 @@ export class Plan extends StopPlan {
     const place = anchor.position.clone().addScaledVector(axis, -b - Math.sqrt(Math.max(b * b - anchor.position.lengthSq() + 1, 0)))
     const height = (anchor.position.length() - 1) * Math.exp(lift)
     const position = slerpDir(anchor.position.clone().normalize(), far.position.clone().normalize(), smoother(ramp(leg.over[0]!, leg.over[1]!, k))).multiplyScalar(1 + height)
-    const ahead = position.clone().addScaledVector(forward(far.quaternion), far.position.length())
-    const target = place.lerp(ahead, smoother(ramp(leg.aim[0]!, leg.aim[1]!, k)))
+    const target = position.clone().add(slerpDir(place.sub(position).normalize(), forward(far.quaternion), smoother(ramp(leg.aim[0]!, leg.aim[1]!, k))))
     const up = slerpDir(new THREE.Vector3(0, 1, 0).applyQuaternion(anchor.quaternion), new THREE.Vector3(0, 1, 0).applyQuaternion(far.quaternion), smoother(ramp(leg.turn[0]!, leg.turn[1]!, k)))
     return { position, quaternion: lookAt(position, target, up), vfov: mix(anchor.vfov, far.vfov, smoother(k)) }
   }
