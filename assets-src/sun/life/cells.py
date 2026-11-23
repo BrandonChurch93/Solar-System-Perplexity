@@ -6,11 +6,18 @@ Finds every granule of the picture (a watershed of the smoothed luminance, the s
 the size a cell of CELL stage units has in the picture at each pixel), and writes two pictures with
 the frame of the source picture, which the ground shader reads beside it:
 
-  cells-<name>.png  RGB: R, G the flow of the matter inside its cell, away from the cell's middle,
-                    zero in the middle and in the lanes (128 is zero, 127 levels are the length
-                    written to cells.json as a share of the picture, x to the right, y down);
-                    B a number of the cell (its rate), laid softly over the cell edges. Inside
-                    the penumbra of the sunspot the flow runs outward along the filaments.
+  cells-<name>.png  RGB: R, G the stream (128 is zero): the way down the slope of the depth in blue,
+                    from the middle of a cell to its lanes, as a direction on the ground (x along the
+                    rows of the picture, y down the picture). Its length is one on the flank of a cell
+                    and nil in the middle and in the lane. In the penumbra of the spot it points outward
+                    from the spot's middle, nil at the dark core; at the edge of the spot it has half
+                    its strength and gives way to the stream of the cells over RIM core radii.
+                    B how deep the pixel lies inside the bright ground: its distance from the nearest
+                    lane measured on the ground (the picture drawn apart where the view flattens it)
+                    against the size of a cell there; 255 is FULL times the depth of the middle of the
+                    median cell. It is rounded, so it has no crease, and no edge of the flood is in
+                    it. In the apron both are the plate's wherever the plate is drawn, so make the
+                    plate first.
   swell-<name>.png  RGB: R, G a point on the unit circle per cell (128 is zero), laid softly over the
                     cell edges: its angle is the cell's phase, its length is 1 inside a cell and falls
                     where neighbours disagree, in the spot and where no cell is known. B how far the
@@ -44,19 +51,18 @@ HOLLOW = 0.3
 VALLEY = 0.025
 ROOM = 3.0
 LEVELS = (1.0, 1.5, 2.2, 3.3, 5.0, 7.5, 11.0, 16.0, 24.0)
-FLOW = 0.5
-SHAPE = 1.4
-SOFT = 0.12
 DEPTH = 0.3
 ROUNDED = 0.06
 SURE = 0.8
-UNSURE = 0.25
-STEEP = 1.5
 NUMBER = 0.12
+FULL = 1.6
+LEAD = (0.01, 0.13)
+EASE = 0.08
+HOLD = 0.12
+RECT = 6.0
 PEN = (1.0, 2.9)
-PEN_EDGE = (0.15, 0.6)
-PEN_FLOW = 0.3
-FAR = 0.02
+PEN_EDGE = (0.15, 0.3)
+RIM = 0.2
 
 T = json.load(open('src/stops/sun/terrain.json'))
 A = json.load(open('src/stops/sun/apron.json'))
@@ -134,6 +140,11 @@ def by_level(stack, level):
         if m.any():
             out[m] = (stack[i][m] * (1 - f[m]) + stack[i + 1][m] * f[m])
     return out
+
+
+def ramp01(v):
+    v = np.clip(v, 0, 1)
+    return v * v * (3 - 2 * v)
 
 
 def hash01(a, b):
@@ -271,24 +282,9 @@ def make(name, check):
     inlane = np.bincount(labels[edge & valley], minlength=n + 1).astype(np.float64)
     sure = (inlane / np.maximum(count, 1) >= SURE) & ~np.concatenate([[False], still])
     yy, xx = np.mgrid[0:h, 0:w].astype(np.float32)
-    # the matter runs downhill on that relief, from the tops to the lanes
-    calm = by_level([cv2.GaussianBlur(inner, (0, 0), sg) for sg in LEVELS], level)
-    gx = cv2.Sobel(calm, cv2.CV_32F, 1, 0, ksize=3) / 8
-    gy = cv2.Sobel(calm, cv2.CV_32F, 0, 1, ksize=3) / 8
-    mag = np.hypot(gx, gy)
-    shape = np.sin(np.pi * np.clip(inner, 0, 1) ** SHAPE) * np.clip(mag * size / STEEP, 0, 1)
-    fx = -gx / np.maximum(mag, 1e-6) * shape
-    fy = -gy / np.maximum(mag, 1e-6) * shape
     far = np.clip((size - 3.0) / 5.0, 0, 1)
-    fx *= far
-    fy *= far
     half = size / 2
-    reach = np.where(cells, half, 0).astype(np.float32)
-    # the penumbra: outward along the filaments, on the ground, brought into the picture
-    east = np.array([1.0, 0, 0]) - up * up[0]
-    east /= np.linalg.norm(east)
-    north = np.cross(up, east)
-    psi = np.arctan2(rel @ north, rel @ east)
+    # the penumbra: one small step outward on the ground from the middle of the spot, brought into the picture
     out_dir = rel / np.maximum(np.linalg.norm(rel, axis=-1, keepdims=True), 1e-6)
     step = 0.02 * umbra
     q = p + out_dir * step - eye
@@ -306,29 +302,86 @@ def make(name, check):
         qx = ((q @ right) / z / (2 * TX) + 0.5) * w
         qy = ((0.5 - (q @ upc) / z / (2 * TY)) - A['top']) / (1 - A['top']) * h
     px_per = np.stack([qx - (xx + 0.5), qy - (yy + 0.5)], -1) / step
-    pen_len = umbra * (PEN[1] - PEN[0]) * PEN_FLOW
-    pfx = px_per[..., 0] * pen_len
-    pfy = px_per[..., 1] * pen_len
-    pen_reach = np.hypot(pfx, pfy)
-    gate = pen * ok
-    reach = np.where(gate > 0, np.maximum(pen_reach, 1e-3), reach).astype(np.float32)
-    ux = np.where(gate > 0, gate * pfx / np.maximum(pen_reach, 1e-3), fx)
-    uy = np.where(gate > 0, gate * pfy / np.maximum(pen_reach, 1e-3), fy)
     inner = np.where(inside, 1.0, inner).astype(np.float32)
-    soft = np.maximum(size * SOFT * 0.25, 0.7)
-    lv = np.interp(np.log(soft), np.log(LEVELS), np.arange(len(LEVELS))).astype(np.float32)
-    ux = by_level([cv2.GaussianBlur(ux.astype(np.float32), (0, 0), s) for s in LEVELS], lv)
-    uy = by_level([cv2.GaussianBlur(uy.astype(np.float32), (0, 0), s) for s in LEVELS], lv)
-    # flow in units of the picture: the red and green bytes times FLOW times reach (px of the half size map)
-    # the shader needs the length in uv, so the reach goes into the vector and one scale is stored
-    vx = ux * reach * FLOW
-    vy = uy * reach * FLOW
-    scale = float(np.percentile(np.hypot(vx, vy), 99.9))
-    vx = np.clip(vx / scale, -1, 1)
-    vy = np.clip(vy / scale, -1, 1)
+    # how deep in the bright ground, on the ground: the rows of the picture are drawn apart by how much the view
+    # flattens a cell there (not more than RECT times), the distance from the lanes is taken in that picture
+    # and brought back. It is rounded off like the other, so the ridge in the middle of a cell is no crease.
+    ratio = np.clip(np.where(ok & (tall > 0), wide / np.maximum(tall, 1e-3), 1.0), 1.0, RECT)
+    # (the middle value of the pixels of the row that lie on the ground: a row that is half sky has no say)
+    per_row = np.array([np.median(a[o]) if o.any() else np.nan for a, o in zip(ratio, ok)])
+    seen_rows = np.where(~np.isnan(per_row))[0]
+    per_row = np.interp(np.arange(h), seen_rows, per_row[seen_rows])
+    ys = np.concatenate([[0.0], np.cumsum(per_row)])
+    mids = ((ys[:-1] + ys[1:]) / 2).astype(np.float32)
+    h2 = int(np.ceil(ys[-1]))
+    rows = np.interp(np.arange(h2) + 0.5, mids, np.arange(h)).astype(np.float32)
+    cols = np.arange(w, dtype=np.float32)
+    # the edge of the spot is no lane here: a front would run along it as one long line
+    drawn = cv2.remap((lane & ~inside).astype(np.uint8), np.tile(cols, (h2, 1)), np.repeat(rows[:, None], w, 1), cv2.INTER_NEAREST)
+    far_depth = cv2.distanceTransform(1 - drawn, cv2.DIST_L2, 5)
+    deep = cv2.remap(far_depth, np.tile(cols, (h, 1)), np.repeat((mids - 0.5)[:, None], w, 1), cv2.INTER_LINEAR)
+    # against the size of a cell there, and so that the middle of the median cell of this picture stands at
+    # 1 / FULL: the two pictures then agree where they meet, whatever size each of them calls a cell
+    deep = deep / np.maximum(wide, 1.0)
+    tops = ndi.maximum(deep, labels, idx)
+    mid = float(np.median(tops[tops > 0]))
+    deep = np.clip(deep / (mid * FULL), 0, 1).astype(np.float32)
+    deep = by_level([cv2.GaussianBlur(deep, (0, 0), sg) for sg in LEVELS], np.interp(np.log(rounded), np.log(LEVELS), np.arange(len(LEVELS))).astype(np.float32))
+    deep = np.where(cells, deep, 0).astype(np.float32)
+    if name == 'apron':
+        # Where the plate lies over this picture the fronts must run as they do on the plate, or a line shows
+        # where the two meet: each picture finds its own lanes, and they are not the same lanes. So the depth
+        # of the plate is laid into this picture wherever the plate is drawn, and gives way to this picture's
+        # own over LEAD of the image's height in front of the line where the plate ends. The plate is made first.
+        theirs = cv2.imread(f'{OUT}/full/cells-plate.png')[..., 0].astype(np.float32) / 255
+        hp, wp = theirs.shape
+        z = np.maximum(-p[..., 2], 1e-3)
+        ix = (p[..., 0] / z / (2 * TX) + 0.5 - LEFT) / SPAN
+        iy = (0.5 - p[..., 1] / z / (2 * TY) - TOP) / SPAN
+        qx = (ix * wp - 0.5).astype(np.float32)
+        qy = ((iy * CANVAS[1] - PLATE_TOP) / (CANVAS[1] - PLATE_TOP) * hp - 0.5).astype(np.float32)
+        theirs = cv2.remap(theirs, qx, qy, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+
+        def ramp(v):
+            v = np.clip(v, 0, 1)
+            return v * v * (3 - 2 * v)
+        front = A['front']
+        line = front['side'] + (front['centre'] - front['side']) * (1 - ramp((np.abs(ix - front['at']) - front['span'][0]) / (front['span'][1] - front['span'][0])))
+        share = (1 - ramp((iy - line - LEAD[0]) / (LEAD[1] - LEAD[0]))) * ramp(ix / A['feather']) * ramp((1 - ix) / A['feather']) * ramp(qy / (0.03 * hp)) * (p[..., 2] < 0) * ok
+        deep = (deep + (theirs - deep) * share).astype(np.float32)
+        print('apron: share of the picture that takes the depth of the plate', round(float(share.mean()), 3))
+    # the stream: down the slope of that depth, from the middle of a cell to its lanes, as a direction on the
+    # ground (x along the rows of the picture, y down the picture, both in cell sizes of the place, so the
+    # shader turns it into the picture by the size a cell has there). Its length is the slope itself: one on
+    # the flank of a cell, nil in the middle and in the lane, since the depth is rounded there.
+    dist = (deep * wide * (mid * FULL)).astype(np.float32)
+    dist = by_level([cv2.GaussianBlur(dist, (0, 0), sg) for sg in LEVELS], np.interp(np.log(np.maximum(size * EASE, LEVELS[0])), np.log(LEVELS), np.arange(len(LEVELS))).astype(np.float32))
+    sx = -cv2.Sobel(dist, cv2.CV_32F, 1, 0, ksize=3) / 8
+    sy = -cv2.Sobel(dist, cv2.CV_32F, 0, 1, ksize=3) / 8 / per_row[:, None].astype(np.float32)
+    grip = np.clip(deep / HOLD, 0, 1)
+    grip = grip * grip * (3 - 2 * grip) * np.clip((size - 3.0) / 5.0, 0, 1)
+    # at the edge of the spot the depth ends in a step, which is no slope of the ground: the stream of the
+    # cells comes in over RIM core radii outside it
+    grip = grip * ramp01((r - PEN[1]) / RIM)
+    long = np.maximum(np.hypot(sx, sy), 1.0)
+    sx = np.where(cells, sx / long * grip, 0)
+    sy = np.where(cells, sy / long * grip, 0)
+    # the penumbra: outward along the ground from the middle of the spot, nil at the dark core, in the same
+    # measure (a step on the ground, in cell sizes of the place). At the edge of the spot it hands over to
+    # the stream of the cells without a ring of rest between: it is half its strength at the edge and nil
+    # RIM core radii outside it, where the cells' stream has come in whole.
+    ox = px_per[..., 0] / np.maximum(wide, 1e-3)
+    oy = px_per[..., 1] / np.maximum(tall, 1e-3)
+    on = np.maximum(np.hypot(ox, oy), 1e-6)
+    out = ramp01((r - PEN[0]) / PEN_EDGE[0]) * (1 - 0.5 * ramp01((r - (PEN[1] - RIM)) / RIM)) * (1 - ramp01((r - PEN[1]) / RIM)) * ok
+    out = np.where(r < PEN[1], out, 0.5 * (1 - ramp01((r - PEN[1]) / RIM)) * ok)
+    sx = sx + out * ox / on
+    sy = sy + out * oy / on
     flow = np.zeros((h, w, 3), np.uint8)
-    flow[..., 0] = np.round(128 + 127 * vx)
-    flow[..., 1] = np.round(128 + 127 * vy)
+    flow[..., 0] = np.round(128 + 127 * np.clip(sx, -1, 1))
+    flow[..., 1] = np.round(128 + 127 * np.clip(sy, -1, 1))
+    flow[..., 2] = np.round(255 * np.clip(deep, 0, 1))
+    print(name, 'stream: mean length on the cells', round(float(np.hypot(sx, sy)[cells].mean()), 3), 'share over 0.5', round(float((np.hypot(sx, sy)[cells] > 0.5).mean()), 3))
     # the two numbers of a cell. Both are laid softly over the edges the flood drew, so that no edge of the
     # flood can show: a number of the cell's rate (blue of the first picture) and a point on the unit circle
     # (red and green of the second), whose angle is the cell's phase and whose length falls to zero where
@@ -339,12 +392,10 @@ def make(name, check):
 
     def soften(v):
         return by_level([cv2.GaussianBlur(v.astype(np.float32), (0, 0), s) for s in LEVELS], ln)
-    weight = soften(quiet)
-    own = np.where(labels > 0, hash01(cx[lab], cy[lab]), 0.5).astype(np.float32)
-    own = np.where(sure[labels], own, UNSURE + (1 - UNSURE) * own).astype(np.float32)
-    own = np.where(weight > 0.05, soften(own * quiet) / np.maximum(weight, 0.05), 0.5)
-    flow[..., 2] = np.round(np.clip(own, 0, 1) * 255)
     second = np.where(labels > 0, hash01(cy[lab] + 3.1, cx[lab] + 1.7), 0).astype(np.float32)
+    # the shader takes a second number of the cell from its phase, |fract(second + 0.87) * 2 - 1|, and a cell
+    # closes if that is small. A cell that is not sure is kept out of that part of the circle.
+    second = np.where(sure[labels], second, np.mod(0.78 + 0.7 * second, 1.0)).astype(np.float32)
     held = inner * far
     swell = np.zeros((h, w, 3), np.uint8)
     for i, trig in enumerate((np.cos, np.sin)):
@@ -356,22 +407,45 @@ def make(name, check):
         b = swell if k == 1 else cv2.resize(swell, (w // k, h // k), interpolation=cv2.INTER_AREA)
         cv2.imwrite(f'{OUT}/{tier}/cells-{name}.png', cv2.cvtColor(a, cv2.COLOR_RGB2BGR), [cv2.IMWRITE_PNG_COMPRESSION, 9])
         cv2.imwrite(f'{OUT}/{tier}/swell-{name}.png', cv2.cvtColor(b, cv2.COLOR_RGB2BGR), [cv2.IMWRITE_PNG_COMPRESSION, 9])
-    meta = {'flow': [scale / w, scale / h], 'cells': int(n), 'size': [w, h]}
-    path = 'src/stops/sun/cells.json'
-    try:
-        data = json.load(open(path))
-    except FileNotFoundError:
-        data = {}
-    data[name] = meta
-    json.dump(data, open(path, 'w'), indent=2)
     print(name, 'still pieces', int(still.sum()), 'sure cells', int(sure.sum()))
-    print(name, 'cells', n, 'flow scale px', round(scale, 2), 'median half width px', round(float(np.median(half[labels > 0])), 1))
+    print(name, 'middle of the median cell, in cell sizes', round(mid, 3))
+    print(name, 'cells', n, 'median half width px', round(float(np.median(half[labels > 0])), 1))
     if check:
         np.savez_compressed(f'{DIR}/dbg-{name}.npz', smooth=smooth, first=first, labels=labels, valley=valley, level=level, size=size, seeds=seeds)
         show = (img * 255).astype(np.uint8).copy()
         show[edge & cells] = (0, 255, 255)
         show[seeds] = (255, 0, 0)
         show[(pen > 0.5) & ok] = (show[(pen > 0.5) & ok] * 0.6 + np.array([0, 60, 110])).astype(np.uint8)
+        # the largest cells, each with the lane that would cut it in two across its short side in the picture:
+        # the middle of that lane on the ground in cell sizes (what the shader calls g), its turn there and
+        # its half length. life.json takes its split sites from this list.
+        lay = p - DOWN
+        gnd = np.stack([lay @ RIGHT, lay @ FWD], -1)
+        ring = np.maximum(np.linalg.norm(gnd, axis=-1), 1e-4)
+        g = gnd * (RADIUS * np.arcsin(np.minimum(ring / RADIUS, 1.0)) / ring)[..., None] / CELL
+        flat = labels.ravel()
+        count = np.maximum(np.bincount(flat, minlength=n + 1), 1).astype(np.float64)
+
+        def mean(v):
+            return np.bincount(flat, v.ravel().astype(np.float64), minlength=n + 1) / count
+        room = np.bincount(flat, (1.0 / np.maximum(wide * tall, 1e-3)).ravel(), minlength=n + 1)
+        mx, my = mean(xx), mean(yy)
+        vxx, vyy, vxy = mean(xx * xx) - mx * mx, mean(yy * yy) - my * my, mean(xx * yy) - mx * my
+        half = (vxx + vyy) / 2
+        root = np.sqrt(np.maximum(half * half - (vxx * vyy - vxy * vxy), 0))
+        short = 2 * np.sqrt(np.maximum(half - root, 1e-9))
+        turn = 0.5 * np.arctan2(2 * vxy, vxx - vyy) + np.pi / 2
+        order = [k for k in np.argsort(-count) if k > 0 and not still[k - 1]][:60]
+        print(name, 'the cells that are largest in the picture: number, size in cells, the lane across it as [g x, g y, turn, half length], place in the map')
+        for k in order:
+            ends = []
+            for sign in (-1, 1):
+                ex = int(np.clip(mx[k] + sign * short[k] * np.cos(turn[k]), 0, w - 1))
+                ey = int(np.clip(my[k] + sign * short[k] * np.sin(turn[k]), 0, h - 1))
+                ends.append(g[ey, ex])
+            mid, span = (ends[0] + ends[1]) / 2, ends[1] - ends[0]
+            print(f'  {k:5d}  size {room[k]:5.2f}  [{mid[0]:.3f}, {mid[1]:.3f}, {np.arctan2(span[1], span[0]):.3f}, {np.hypot(span[0], span[1]) / 2:.3f}]  px {mx[k]:6.0f} {my[k]:6.0f}')
+            cv2.putText(show, str(k), (int(mx[k]) - 14, int(my[k]) + 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1, cv2.LINE_AA)
         cv2.imwrite(f'{DIR}/cells-{name}-check.jpg', cv2.cvtColor(show, cv2.COLOR_RGB2BGR), [cv2.IMWRITE_JPEG_QUALITY, 88])
         cv2.imwrite(f'{DIR}/cells-{name}-flow.jpg', cv2.cvtColor(flow, cv2.COLOR_RGB2BGR))
         cv2.imwrite(f'{DIR}/cells-{name}-swell.jpg', cv2.cvtColor(swell, cv2.COLOR_RGB2BGR))

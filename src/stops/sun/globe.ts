@@ -48,7 +48,7 @@ export interface GlobeOptions {
 
 const PLACE_SHARED: [string, string][] = [
   ['uPlate', 'uPlate'], ['uSize', 'uSize'], ['uApron', 'uApron'], ['uApronSize', 'uApronSize'], ['uApronOn', 'uApronOn'], ['uApronOut', 'uApronOut'], ['uApronEdge', 'uApronEdge'], ['uApronCell', 'uApronCell'],
-  ['uGlow', 'uGlow'], ['uField', 'uField'], ['uFieldSize', 'uFieldSize'], ['uOwn', 'uOwn'], ['uUp', 'uUp'], ['uLift', 'uLift'], ['uEven', 'uEven'], ['uEvenTint', 'uEvenTint'], ['uGlowReach', 'uGlowReach'],
+  ['uGlow', 'uGlow'], ['uField', 'uField'], ['uFieldSize', 'uFieldSize'], ['uFieldFine', 'uFieldFine'], ['uFieldFineMore', 'uFieldFineMore'], ['uOwn', 'uOwn'], ['uUp', 'uUp'], ['uLift', 'uLift'], ['uEven', 'uEven'], ['uEvenTint', 'uEvenTint'], ['uGlowReach', 'uGlowReach'],
   ['uBox', 'uBox'], ['uGlowBeat', 'uGlowBeat'], ['uCellSize', 'uCellSize'], ['uTwinkle', 'uTwinkle'], ['uInflow', 'uInflow'], ['uInflowRate', 'uInflowRate'],
   ['uEye', 'uCam'], ['uBand', 'uBand'], ['uLod', 'uLod'], ['uGSpot', 'uSpot'], ['uGSpotE', 'uSpotE'], ['uGSpotN', 'uSpotN'], ['uGTime', 'uTime'],
   ...LIFE_NAMES.map((name): [string, string] => [name, name]),
@@ -131,6 +131,8 @@ uniform vec2 uApronCell;
 uniform sampler2D uGlow;
 uniform sampler2D uField;
 uniform vec4 uFieldSize;
+uniform vec4 uFieldFine;
+uniform vec2 uFieldFineMore;
 uniform vec4 uOwn;
 uniform vec4 uUp;
 uniform vec2 uLift;
@@ -287,6 +289,7 @@ void main() {
   vec2 dxB = dFdx(uvB) * uGrad;
   vec2 dyB = dFdy(uvB) * uGrad;
   float texF = diagTexels(uvF * uFieldSize.y);
+  float finer = uFieldFine.x * (1.0 - smoothstep(uFieldFine.y, uFieldFine.z, texF));
   float texP = diagTexels(uvP * uSize);
   float texB = diagTexels(uvB * uApronSize);
   vec3 ddx = dFdx(d);
@@ -338,7 +341,7 @@ void main() {
       vec3 low = inverseFilmic(grade(textureLod(uPlate, uvP, log2(max(cell.y * uSize.y * 0.25, 1.0)) + uLowLod).rgb, 0.0));
       vec2 mv;
       seen = lifeSeen(dxP, dyP, uSize);
-      vec3 s = alive(uPlate, uCellsPlate, uSwellPlate, uLifeReach.xy, uvP, dxP, dyP, cell, uGTime, seen, spot, inner, mv);
+      vec3 s = alive(uPlate, uCellsPlate, uSwellPlate, arc / uCellSize, uvP, dxP, dyP, cell, 1.0, uGTime, seen, spot, inner, mv);
       vec3 even = mix(vec3(1.0), uEvenTint.rgb, smoothstep(uEven.x, uEven.y, ring)) * mix(1.0, uEvenTint.w, smoothstep(uEven.z, uEven.w, ring));
       close = s * max(inflow, 0.0) * tone * mix(vec3(1.0), even, lift);
       fine = s;
@@ -348,6 +351,13 @@ void main() {
       float tone = clamp(stLimb(now) / stLimb(${fieldData.tone}), 0.25, 5.0);
       vec3 mean;
       vec3 f = inverseFilmic(fieldAt(arc, dxF, dyF, mean));
+      for (int i = 0; i < (finer > 0.0 ? 1 : 0); i++) {
+        vec2 g2 = arc * uFieldFine.w + vec2(5.3, 2.9);
+        vec3 none;
+        vec3 hi = inverseFilmic(fieldAt(g2, dxF * uFieldFine.w, dyF * uFieldFine.w, none));
+        vec3 lo = inverseFilmic(fieldAt(g2, dxF * uFieldFine.w * uFieldFineMore.y, dyF * uFieldFine.w * uFieldFineMore.y, none));
+        f *= mix(1.0, pow(clamp(dot(hi, vec3(0.3, 0.5, 0.2)) / max(dot(lo, vec3(0.3, 0.5, 0.2)), 1e-4), 0.25, 4.0), uFieldFineMore.x), finer);
+      }
       close = mix(f * max(inflow, 0.0) * tone, close, own);
       fine = mix(f, fine, own);
       mid = mix(inverseFilmic(mean), mid, own);
@@ -363,7 +373,7 @@ void main() {
       vec2 mv;
       float in2;
       float seen2 = lifeSeen(dxB, dyB, uApronSize);
-      vec3 s = alive(uApron, uCellsApron, uSwellApron, uLifeReach.zw, uvB, dxB, dyB, cell, uGTime, seen2, spot, in2, mv);
+      vec3 s = alive(uApron, uCellsApron, uSwellApron, arc / uCellSize, uvB, dxB, dyB, cell, uCellSize / uApronCell.x, uGTime, seen2, spot, in2, mv);
       inner = mix(inner, in2, w);
       seen = mix(seen, seen2, w);
       close = mix(close, s * max(inflow, 0.0) * tone, w);
@@ -403,7 +413,7 @@ void main() {
     float closeShare = max(uTidy, keep);
     col = mix(col, pow(max(wideCol, vec3(1e-5)), vec3(1.0 - closeShare)) * pow(max(close, vec3(1e-5)), vec3(closeShare)) * lit, wPlace);
     placed = wPlace * uBare;
-    texels = mix(texels, bare > 0.5 ? texF : mix(texP, texB, step(0.5, w)), step(0.5, wPlace));
+    texels = mix(texels, bare > 0.5 ? texF * mix(1.0, uFieldFine.w, step(0.5, finer)) : mix(texP, texB, step(0.5, w)), step(0.5, wPlace));
   }
   float rim = pow(1.0 - mu, uRimShape.y) * exp(-mu / uRimShape.x) * (1.0 - placed);
   for (int k = 0; k < (uRimBy.w > 0.0 && rim > 0.002 ? 1 : 0); k++) {

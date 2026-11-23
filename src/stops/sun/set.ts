@@ -127,6 +127,7 @@ export const createSet: SetFactory = async (ctx) => {
         const erupt = loops.erupt(since, open)
         ground.update(eye, t, gain, vignette, aspect, fringe.lod(view.camera.fov, view.format.height), 0, open, since, look.opening.feet.ground * open * 0.5 * (feet[0] + feet[1]) + loops.lit(since), look.opening.surge.ground * surge[3], look.opening.surge.kick * surge[2], look.opening.erupt.flash.ground * erupt[2], look.opening.erupt.flash.veil * erupt[2])
         lifeFormat(ground.material.uniforms, view.format.height)
+        ground.material.uniforms.uFieldFine!.value.x = rising ? above(by.field) : 0
         fringe.update(eye, t, gain, vignette, aspect, view.camera.fov, view.format.height, 1 - above(by.fringe))
         const strands = 1 - above(by.loops)
         loops.mesh.visible = strands > 0
