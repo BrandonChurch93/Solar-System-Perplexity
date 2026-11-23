@@ -1,9 +1,39 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-23T21:21:21.524Z",
+ "pushed": "2026-11-23T21:40:39.657Z",
  "head": "145d9a971dc49fa89ed91a1dd66fb33457d60d1a",
- "note": "commit 145d9a9: rings bounded, lightning adds light (heart and spill), sheet shadows deeper; life only sheet and two six frame strips",
+ "note": "21:41 UTC. While the review tier sheets of 3060 to 3239 render (17 of 31 frames done): diagnosis and a first trial for the cyan patch and the straight edge of the dark area at the handover. Nothing here is in a commit yet.",
  "looks": [
+  {
+   "time": "2026-11-23T21:40:38.295Z",
+   "file": "20261123214038295-note-stage2.jpg",
+   "source": "../work/f/stage2.jpg",
+   "kind": "note",
+   "label": "Trial outside the film, not rendered yet: ground from straight above, before (top) and after (bottom) a new part of the tone field: the cyan area east of the storm calmed to the hue of its surround, and the storm's shade carried on past its straight end so it ends as a soft shadow. A straight step is still there in the darkest part; work goes on",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T21:40:36.907Z",
+   "file": "20261123214036907-note-near-navy.jpg",
+   "source": "../work/f/near-navy.jpg",
+   "kind": "note",
+   "label": "Diagnosis, not a film frame: the near plate from straight above, as painted (top) and lifted 6 times (bottom). The dark navy area right of the eye at 3024 and 3270 is the storm's cast shade in this plate; it ends at a straight line where the plate gives way to the globe's own picture",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T21:39:55.892Z",
+   "file": "20261123213955892-frame-f03156.jpg",
+   "source": "out/work/jupiter/frames/v1/f03156.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3156, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3156,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "45f909e84c1a1464"
+  },
   {
    "time": "2026-11-23T21:21:20.858Z",
    "file": "20261123212120858-note-g6-sheet.jpg",
@@ -26,106 +56,6 @@
    "source": "../work/f/g6-six-storm.jpg",
    "kind": "note",
    "label": "film, six frames in a row 3150 to 3155 at the storm, draft",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T21:21:18.462Z",
-   "file": "20261123212118462-note-h15-north.jpg",
-   "source": "../work/f/h15-north.jpg",
-   "kind": "note",
-   "label": "life only, north of the storm at 3060 3120 3180 3239: the sheet shadows drift over the cream deck",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T21:21:17.628Z",
-   "file": "20261123212117628-note-h15-storm.jpg",
-   "source": "../work/f/h15-storm.jpg",
-   "kind": "note",
-   "label": "life only, storm at 3060 3105 3150 3195 3239: the rings turn at their own rates",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T21:21:16.927Z",
-   "file": "20261123212116927-note-h15-life.jpg",
-   "source": "../work/f/h15-life.jpg",
-   "kind": "note",
-   "label": "life only sheet: camera held at the pose of 3150, time running, every 15th frame 3060 to 3239, draft",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T21:19:31.657Z",
-   "file": "20261123211931657-frame-f03210.jpg",
-   "source": "out/work/jupiter/frames/h15/f03210.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3210, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3210,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "45f909e84c1a1464"
-  },
-  {
-   "time": "2026-11-23T21:11:30.781Z",
-   "file": "20261123211130781-frame-f02820.jpg",
-   "source": "out/work/jupiter/frames/g6/f02820.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2820, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2820,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "45f909e84c1a1464"
-  },
-  {
-   "time": "2026-11-23T21:05:14.235Z",
-   "file": "20261123210514235-note-h12-flash.jpg",
-   "source": "../work/f/h12-flash.jpg",
-   "kind": "note",
-   "label": "bad: lightning glow reads as fog with blocks at 3158, being cured",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T21:05:13.626Z",
-   "file": "20261123210513626-note-g5-sheet.jpg",
-   "source": "../work/f/g5-sheet.jpg",
-   "kind": "note",
-   "label": "film draft 3060 to 3239 with the rings, camera moving",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T21:05:12.970Z",
-   "file": "20261123210512970-note-h10-strip.jpg",
-   "source": "../work/f/h10-strip.jpg",
-   "kind": "note",
-   "label": "rejected: cloud layer rings over the vortex, flat ribbons",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T21:05:12.411Z",
-   "file": "20261123210512411-note-h11-six-full.jpg",
-   "source": "../work/f/h11-six-full.jpg",
-   "kind": "note",
-   "label": "held camera six frames in a row 3150 to 3155, rings",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T21:05:11.811Z",
-   "file": "20261123210511811-note-h11-seq.jpg",
-   "source": "../work/f/h11-seq.jpg",
-   "kind": "note",
-   "label": "held camera 3060 to 3239 every 30th: rings of the deck turn at their own rates",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T20:41:48.130Z",
-   "file": "20261123204148130-note-r1-3210-hair8.jpg",
-   "source": "../work/f/r1-3210-hair8.png",
-   "kind": "note",
-   "label": "3210 review tier, lower left corner at 8 x: hairlines behind relief crests, not cured",
    "stop": "jupiter"
   }
  ]
