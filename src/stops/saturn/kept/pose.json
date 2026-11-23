@@ -1,0 +1,6 @@
+{
+  "source": "the close pose of the kept build as its plan made it (main, src/stops/saturn/plan.ts): the azimuth of that pose from the Sun's side in degrees and the factors on its height and distance. The kept set reads the pose only for weights that are 0 in every frame where the kept set is drawn (the approach, the hold and the first part of the dive). Read by kept/plan.ts.",
+  "azimuthDeg": -2,
+  "heightScale": 1,
+  "distanceScale": 1
+}
