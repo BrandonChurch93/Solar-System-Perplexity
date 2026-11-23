@@ -65,6 +65,7 @@ export const createSet: SetFactory = async (ctx) => {
   const eye = new THREE.Vector3()
   const turn = new THREE.Quaternion()
   const carry = new THREE.Quaternion()
+  const sight = new THREE.Quaternion()
   const wash = new THREE.Vector4()
   const burn = new THREE.Vector4()
   const pale = new THREE.Vector4()
@@ -120,6 +121,11 @@ export const createSet: SetFactory = async (ctx) => {
       if (terrain.visible) {
         const t = state.time - terrainMid
         ground.show(placing, 0, 0)
+        ground.material.uniforms.uExact!.value = rising ? 1 : 0
+        sight.copy(view.camera.quaternion).premultiply(turn.copy(world.quaternion).invert())
+        if (placing) sight.premultiply(turn.copy(carry).invert()).premultiply(plan.toStage)
+        ground.sight(sight, view.format.width, view.format.height)
+        ground.haze(1 - above(by.haze))
         const since = state.time - plan.seg.terrain.start
         const open = opening.on && kind === 'terrain' ? 1 - share(since, look.opening.fade) : 0
         const calm = lifeCalm(ground.material.uniforms, t)
