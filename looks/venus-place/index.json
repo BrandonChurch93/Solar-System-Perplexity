@@ -1,72 +1,94 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-23T14:36:56.699Z",
- "head": "29d14a02937bcb22a6ffa7ee9acf132d56a68879",
- "note": "every frame of dive and rise at draft, commit 29d14a02 (merge of main 33dd8cfa, widest plate reaches further out after G13 failed on 1576)",
+ "pushed": "2026-11-23T15:31:18.942Z",
+ "head": "6eae8441d52f9bfe1dad92c121349587939a5c3d",
+ "note": "READY venus 7907a57a: harness on the head passes; under the place picture dive 4.18, rise 4.09; top down sheets",
  "looks": [
   {
-   "time": "2026-11-23T14:36:55.655Z",
-   "file": "20261123143655655-note-rise-D.jpg",
-   "source": "out/work/venus/place/r7/rise-D.jpg",
+   "time": "2026-11-23T15:31:18.218Z",
+   "file": "20261123153118218-note-venus-rise-top.jpg",
+   "source": "../../../../tmp/v/venus-rise-top.jpg",
    "kind": "note",
-   "label": "rise 1590 to 1604 draft, 29d14a02",
+   "label": "rise, harness top down sheet, globe alone, head 7907a57a",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T14:36:54.479Z",
-   "file": "20261123143654479-note-rise-C.jpg",
-   "source": "out/work/venus/place/r7/rise-C.jpg",
+   "time": "2026-11-23T15:31:17.622Z",
+   "file": "20261123153117622-note-venus-dive-top.jpg",
+   "source": "../../../../tmp/v/venus-dive-top.jpg",
    "kind": "note",
-   "label": "rise 1570 to 1589 draft, 29d14a02",
+   "label": "dive, harness top down sheet, globe alone, head 7907a57a",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T14:36:53.701Z",
-   "file": "20261123143653701-note-rise-B.jpg",
-   "source": "out/work/venus/place/r7/rise-B.jpg",
-   "kind": "note",
-   "label": "rise 1550 to 1569 draft, 29d14a02",
-   "stop": "venus"
+   "time": "2026-11-23T15:30:20.151Z",
+   "file": "20261123153020151-sheet-venus-rise-top.jpg",
+   "source": "out/work/handover/venus-rise-top.png",
+   "kind": "sheet",
+   "label": "venus rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 1542), place picture off, draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "first": 1542,
+   "last": 1604,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T14:36:52.542Z",
-   "file": "20261123143652542-note-rise-A.jpg",
-   "source": "out/work/venus/place/r7/rise-A.jpg",
-   "kind": "note",
-   "label": "rise 1530 to 1549 draft, 29d14a02",
-   "stop": "venus"
+   "time": "2026-11-23T15:29:36.447Z",
+   "file": "20261123152936447-compare-venus-rise-under.jpg",
+   "source": "out/work/handover/venus-rise-under.png",
+   "kind": "compare",
+   "label": "venus rise, the globe side at T (frame 1542) with the place picture, alone, and their difference times 4",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "frame": 1542,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T14:36:51.717Z",
-   "file": "20261123143651717-note-dive-D.jpg",
-   "source": "out/work/venus/place/r7/dive-D.jpg",
-   "kind": "note",
-   "label": "dive 1332 to 1349 draft, 29d14a02",
-   "stop": "venus"
+   "time": "2026-11-23T15:29:19.173Z",
+   "file": "20261123152919173-sheet-venus-dive-top.jpg",
+   "source": "out/work/handover/venus-dive-top.png",
+   "kind": "sheet",
+   "label": "venus dive, the globe side alone from straight above the place, 12 frames from the far end to T (frame 1343), place picture off, draft tier",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "first": 1260,
+   "last": 1343,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T14:36:50.600Z",
-   "file": "20261123143650600-note-dive-C.jpg",
-   "source": "out/work/venus/place/r7/dive-C.jpg",
-   "kind": "note",
-   "label": "dive 1308 to 1331 draft, 29d14a02",
-   "stop": "venus"
+   "time": "2026-11-23T15:28:34.840Z",
+   "file": "20261123152834840-compare-venus-dive-under.jpg",
+   "source": "out/work/handover/venus-dive-under.png",
+   "kind": "compare",
+   "label": "venus dive, the globe side at T (frame 1343) with the place picture, alone, and their difference times 4",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "frame": 1343,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T14:36:49.581Z",
-   "file": "20261123143649581-note-dive-B.jpg",
-   "source": "out/work/venus/place/r7/dive-B.jpg",
-   "kind": "note",
-   "label": "dive 1284 to 1307 draft, 29d14a02",
-   "stop": "venus"
+   "time": "2026-11-23T15:27:06.551Z",
+   "file": "20261123152706551-sheet-venus-rise-draft-after.jpg",
+   "source": "out/work/handover/venus-rise-draft-after.png",
+   "kind": "sheet",
+   "label": "venus rise, every frame 1543 to 1554 (after T, frame 1542), draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "first": 1543,
+   "last": 1554,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T14:36:48.578Z",
-   "file": "20261123143648578-note-dive-A.jpg",
-   "source": "out/work/venus/place/r7/dive-A.jpg",
-   "kind": "note",
-   "label": "dive 1260 to 1283 draft, 29d14a02",
-   "stop": "venus"
+   "time": "2026-11-23T15:26:20.918Z",
+   "file": "20261123152620918-sheet-venus-rise-draft-before.jpg",
+   "source": "out/work/handover/venus-rise-draft-before.png",
+   "kind": "sheet",
+   "label": "venus rise, every frame 1530 to 1541 (before T, frame 1542), draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "first": 1530,
+   "last": 1541,
+   "tier": "draft"
   }
  ]
 }
