@@ -1,9 +1,75 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-23T07:13:24.481Z",
+ "pushed": "2026-11-23T07:26:45.339Z",
  "head": "18520d80ed4a06937c3ffcc084258155ce586cca",
- "note": "S1: twin solved, horizon check at 4199; first lay back of the place, rough",
+ "note": "M1: twin solved, globe side with first plates and the deck light beside the close side at 4199 and 4164; ground matches within 1 px, sky and limb glow still differ",
  "looks": [
+  {
+   "time": "2026-11-23T07:25:58.128Z",
+   "file": "20261123072558128-frame-final-4035.jpg",
+   "source": "out/work/u/s1/final-4035.jpg",
+   "kind": "frame",
+   "label": "uranus.hold frame 4035, final tier",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "247ebad7e038ce06"
+  },
+  {
+   "time": "2026-11-23T07:25:07.165Z",
+   "file": "20261123072507165-note-m1-4199-split.jpg",
+   "source": "out/work/u/s1/m1-4199-split.jpg",
+   "kind": "note",
+   "label": "M1 at 4199 full size: left half globe side, right half close side",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T07:25:03.696Z",
+   "file": "20261123072503696-note-m1-4164.jpg",
+   "source": "out/work/u/s1/m1-4164.jpg",
+   "kind": "note",
+   "label": "M1 S1 check at 4164: globe side with first plates, beside the close side",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T07:25:00.507Z",
+   "file": "20261123072500507-note-m1-4199.jpg",
+   "source": "out/work/u/s1/m1-4199.jpg",
+   "kind": "note",
+   "label": "M1 S1 check at 4199 (T): globe side with first plates and place light, beside the close side, from the twin camera",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T07:23:56.446Z",
+   "file": "20261123072356446-frame-norm-4290.jpg",
+   "source": "out/work/u/s1/norm-4290.png",
+   "kind": "frame",
+   "label": "uranus.terrain frame 4290, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.terrain",
+   "frame": 4290,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "247ebad7e038ce06"
+  },
+  {
+   "time": "2026-11-23T07:18:35.675Z",
+   "file": "20261123071835675-frame-plate-4164.jpg",
+   "source": "out/work/u/s1/plate-4164.png",
+   "kind": "frame",
+   "label": "uranus.dive frame 4164, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4164,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "247ebad7e038ce06"
+  },
   {
    "time": "2026-11-23T07:13:18.698Z",
    "file": "20261123071318698-note-laid-sheet.jpg",
@@ -19,90 +85,6 @@
    "kind": "note",
    "label": "S1 check, frame 4199, main 6da6c641: globe side from the twin beside the close side; horizon of the close side 4.9 px below the globe (2 to 8), 0.2 px with the globe made round",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T07:12:16.103Z",
-   "file": "20261123071216103-frame-round-layers-4199.jpg",
-   "source": "out/work/u/s1/round-layers-4199.png",
-   "kind": "frame",
-   "label": "uranus.dive frame 4199, draft tier, layers view",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4199,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "layers",
-   "engine": "247ebad7e038ce06"
-  },
-  {
-   "time": "2026-11-23T00:41:20.318Z",
-   "file": "20261123004120318-job-frame-04417.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "uranus.rise frame 4417, final tier, from the running film job",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4417,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "job": "film"
-  },
-  {
-   "time": "2026-11-23T00:30:21.247Z",
-   "file": "20261123003021247-job-frame-05102.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "ending.retreat frame 5102, final tier, from the running film job",
-   "stop": "ending",
-   "segment": "ending.retreat",
-   "frame": 5102,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "job": "film"
-  },
-  {
-   "time": "2026-11-23T00:10:22.327Z",
-   "file": "20261123001022327-job-frame-04492.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "uranus.travel frame 4492, final tier, from the running film job",
-   "stop": "uranus",
-   "segment": "uranus.travel",
-   "frame": 4492,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "job": "film"
-  },
-  {
-   "time": "2026-11-22T23:50:33.985Z",
-   "file": "20261122235033985-job-frame-03898.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "saturn.travel frame 3898, final tier, from the running film job",
-   "stop": "saturn",
-   "segment": "saturn.travel",
-   "frame": 3898,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "job": "film"
-  },
-  {
-   "time": "2026-11-22T23:27:36.839Z",
-   "file": "20261122232736839-job-frame-03613.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "saturn.dive frame 3613, final tier, from the running film job",
-   "stop": "saturn",
-   "segment": "saturn.dive",
-   "frame": 3613,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "job": "film"
   }
  ]
 }
