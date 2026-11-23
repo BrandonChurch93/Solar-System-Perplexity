@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T23:28:32.267Z",
+ "pushed": "2026-11-23T23:54:13.668Z",
  "head": "0a965c8dddf9e40a466c683a0ee48acd8c5f88ef",
- "note": "step 1: one sky for the stop (way A): the hold's patch leaves by pose, the skim's sky is the film's field; nothing rendered of the by height handover yet",
+ "note": "step 1: sky way A (hold's sky leaves by distance from the hold's path, skim sky is the film's field through air by height), rise pace under the smooth limits, dive sequence rendering",
  "looks": [
+  {
+   "time": "2026-11-23T23:54:12.944Z",
+   "file": "20261123235412944-note-d_3720.jpg",
+   "source": "../../../../tmp/v/r24/d_3720.png",
+   "kind": "note",
+   "label": "3720 draft with the air of the stop, way A of the sky"
+  },
+  {
+   "time": "2026-11-23T23:54:12.236Z",
+   "file": "20261123235412236-note-e_3595.jpg",
+   "source": "../../../../tmp/v/r24/e_3595.png",
+   "kind": "note",
+   "label": "3595 draft: kept scene under the film's own stars, the hold's sky picture gone by distance from the hold's path, air at 0.37"
+  },
+  {
+   "time": "2026-11-23T23:54:11.552Z",
+   "file": "20261123235411552-note-sky2_d.jpg",
+   "source": "../../../../tmp/v/r24/sky2_d.png",
+   "kind": "note",
+   "label": "3720 upper half, draft: approved close on top, below the film's own star field through the air of the stop (stars dimmed by height, glow of the dust and halo of the lit globe as functions of the ray), no sky picture"
+  },
   {
    "time": "2026-11-23T23:28:31.564Z",
    "file": "20261123232831564-note-sky3_3720.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/v/r22/att_crop.png",
    "kind": "note",
    "label": "lower left at clip scale: above machines 3828 to 3836 every second, below mine on E6 3831 to 3834"
-  },
-  {
-   "time": "2026-11-23T22:24:36.600Z",
-   "file": "20261123222436600-note-att_vs_mine.jpg",
-   "source": "../../../../tmp/v/r22/att_vs_mine.png",
-   "kind": "note",
-   "label": "above the machines clip of b9b333ec 3830 3832 3834 3836, below c984dd4 on main E6 at review 3831 to 3834"
-  },
-  {
-   "time": "2026-11-23T22:24:35.954Z",
-   "file": "20261123222435954-note-rise_f.jpg",
-   "source": "../../../../tmp/v/r21/rise_f.png",
-   "kind": "note",
-   "label": "rise at draft 3872 3876 3880 3884"
-  },
-  {
-   "time": "2026-11-23T22:24:35.337Z",
-   "file": "20261123222435337-note-rise_all.jpg",
-   "source": "../../../../tmp/v/r21/rise_all.png",
-   "kind": "note",
-   "label": "rise at draft, one process, all 79 frames 3806 to 3884 (c984dd4 pictures)"
   }
  ]
 }
