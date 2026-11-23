@@ -1,9 +1,41 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T19:53:22.200Z",
+ "pushed": "2026-11-23T20:19:49.663Z",
  "head": "86dfc2d34fbdc139a061ea28aa372af9664c573c",
- "note": "sun: racing knots after the release (s4), shell travel, kept ground with held camera; 80 to 100 at 8.49 against aim 8.67, in work",
+ "note": "sun: ground with a held camera, kept against mine (1.63 against 9.80 a frame near); full draft render 0 to 269 of the working tree at frame 100",
  "looks": [
+  {
+   "time": "2026-11-23T20:19:48.654Z",
+   "file": "20261123201948654-note-f3-036.jpg",
+   "source": "out/work/sun/life/v/f3-036.jpg",
+   "kind": "note",
+   "label": "draft, working tree: frames 36 to 47",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T20:19:47.675Z",
+   "file": "20261123201947675-note-f3-024.jpg",
+   "source": "out/work/sun/life/v/f3-024.jpg",
+   "kind": "note",
+   "label": "draft, working tree (full render in work): frames 24 to 35, the shell leaves the crown",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T20:19:46.512Z",
+   "file": "20261123201946512-note-held.jpg",
+   "source": "out/work/sun/life/v/held.jpg",
+   "kind": "note",
+   "label": "camera held, ground crop x 780 to 1100, y 800 to 980 every 6 frames 110 to 170: kept build above, working tree below",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T20:19:45.480Z",
+   "file": "20261123201945480-note-held-time.jpg",
+   "source": "out/work/sun/life/v/held-time.jpg",
+   "kind": "note",
+   "label": "camera held, one line of the ground (y 890, x 300 to 1620) over frames 110 to 170: kept build 0eae595e above, working tree below. Change per frame, near ground: kept 1.63, mine 9.80",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-23T19:53:21.626Z",
    "file": "20261123195321626-note-held-kept.jpg",
@@ -35,44 +67,6 @@
    "kind": "note",
    "label": "frames 86 to 91 of the second try, arcade at native size, draft: change per frame in the loops box 60 to 80: 12.60, 80 to 100: 9.39 (before 7.52, 6.27); frame 90 against the approved image 3.03 (before 2.96)",
    "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T19:28:51.023Z",
-   "file": "20261123192851023-note-kymo-s2.jpg",
-   "source": "out/work/sun/life/v/kymo-s2.jpg",
-   "kind": "note",
-   "label": "time strips (one line of the picture over frames 56 to 104, time runs down; right leg, left leg, crown): above the first try of the ringing arcade, below the second (it passes through the approved pose at frame 90 at full speed instead of resting there). Draft, not committed",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T19:07:47.371Z",
-   "file": "20261123190747371-note-diff-kept.jpg",
-   "source": "out/work/sun/life/v/diff-kept.jpg",
-   "kind": "note",
-   "label": "the same for the kept build (main before the life, 0eae595e) at 66 and 74: the arcade is still bright from the burst, every strand edge changes",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T19:07:46.365Z",
-   "file": "20261123190746365-note-diff-66-150.jpg",
-   "source": "out/work/sun/life/v/diff-66-150.jpg",
-   "kind": "note",
-   "label": "what changes between two frames in the loops box (right: change times 4), draft, 9971c23a: 66, 90, 120, 150. At 90 only the camera moves",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T18:54:46.688Z",
-   "file": "20261123185446688-job-frame-00000.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "sun.terrain frame 0, draft tier, texels view, from the running measure job",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 0,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
   }
  ]
 }
