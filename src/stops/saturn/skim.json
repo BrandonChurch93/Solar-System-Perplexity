@@ -82,6 +82,12 @@
       "rise": 0.2,
       "fall": 0.25
     },
+    "kept": {
+      "note": "the hold is drawn by the set of the kept build (kept/), the skim by the ring model. Between these two shares of the dive the picture goes from the one to the other: every take of a frame draws one of the two whole scenes from the same lens, the share of takes of the model rises by a smooth step, and the takes of each scene are spread over the open shutter by stride (a take is the model's when its number times stride, modulo the count, plus one half, over the count, is under the share; strides lists the candidates, the first without a common factor with the count is used). Before from every take is the kept set, after to every take is the model.",
+      "from": 0.31,
+      "to": 0.53,
+      "strides": [5, 7, 3, 11, 13, 1]
+    },
     "rise": {
       "at": 0.667,
       "skyFrames": 20,

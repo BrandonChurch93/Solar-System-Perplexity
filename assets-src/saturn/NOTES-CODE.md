@@ -1151,3 +1151,58 @@ STILL WRONG AT READY (the list sent with it)
    limb fast at 3870 to 3872.
 9. The bodies near the lens: few shapes, some read as pale beads (3750 to 3809).
 10. The terminator may read hard at 3630 to 3660.
+
+MAIL 298 (16:16 UTC, high, verbatim)
+
+"MAIL 298 from the Builder to saturn_coder, 16:16 UTC. READY d4015b7 is read. The list is what a READY should
+be: measured, with the bad news first. Decision: (b). It is not taken with this hold. The hold is a judged
+frame and R1 holds it against the approved hero; 14.56 against 5.05 gives away a frame that was right, and for
+every stop the frames that may not change must keep their picture. A round started on d4015b7 would also spend
+one of Saturn's three rounds on three things you already know (the hold, G17 at 3720, G13 at 3801 to 3828). In
+this order: 1. The hold. 3465 at the final tier must be the same picture as the kept still: against the
+approved hero no worse than the kept still's two numbers (5.05, and 2.13 after the 12 px blur) by more than a
+tenth, with the bright outer line of the A ring, the thin lines outside it, the Cassini division at its width
+and the C ring over the globe all there. The way you name is right: down to the scale the hold resolves, the
+radial profile of the model is the kept ring picture itself, and the model adds ringlets only below that
+scale, so nothing of the model shows in the hold and its detail comes in as the camera closes. Check 3390 and
+3539 as well, and the first dive frames 3540 to 3560: no ringlet may move, appear or fade while it is wider
+than a pixel. 2. G13 at 3801 to 3828: the finer code layer on the globe, which is also your point 5. 3. G17 at
+3720. You name the cause yourself: the flight's blur across the ringlets wipes lines of 3 to 12 px. The
+approved image has sharp ringlets in the lower left and near the lens. Cure the cause over the whole skim, not
+at the judged frame alone: less of the flight across the ringlets and more along them with the globe kept
+ahead, or near structure that is wider than the blur. Say which you chose and why. No change of speed around
+3720. Then name the commit. READY by 18:30 UTC with point 1 done and proven by the same numbers; points 2 and
+3 in it if they are rendered and proven by then. If point 1 is not there by 18:30 UTC, the newest named commit
+is taken as it stands and the hold is the first severe issue of Saturn's round 1, because no single item may
+hold up the film. Run the handover tool with every part before you name it (no --only): the parts frames,
+under and top were not in your run. My own take check had the same gap until 16:10 UTC. Points 4 to 10 of your
+list go into round 1 as you wrote them. Your point 8 (the jolt in the rise at 3816 to 3828) is a motion fault
+a critic will name at once: take it up right after point 1 if it is cheap."
+
+WHAT THE KEPT HOLD IS (read 16:17 to 16:23 from origin/main c9bc056)
+
+The kept rings in the hold are not a plain radial profile. rings.ts at uClose 0 draws: the polar picture of the
+hero (polar-rings.jpg, weight uPolarW, texel density uPolarFit.z and .w), an inner map (polar-inner.jpg, the C
+ring), the radial profile rings.bin (hero rows, n 32768, width 8192, height 40) read at a radius warped by
+azimuth (polar-warp.bin, uPolarShape), arcs outside the edge, rim tint and halo, sparkle, mottle turning with
+Kepler time. set.ts drives it with close (from the camera height over the plane, look.closeRange), poseW (the
+distance to the hero pose, look.heroRange), polarW, gate, skimW, the kept globe, shell and streak. A radial
+model cannot reach 5.05; the hold has to be drawn by the kept code itself.
+
+PLAN B FOR MAIL 298, POINT 1 (started 16:24)
+
+- The kept build's Saturn code goes verbatim into src/stops/saturn/kept/ (set, globe, rings, profile, look,
+  ice, shot, streak, titan, plan and the kept JSON files they import), import paths one level deeper, the same
+  assets under saturn/.
+- My set.ts builds both sets and gives the engine one set. For every take either the kept set or the model set
+  is visible, never both: kept for the approach, the whole hold and the dive through 3560, then a dissolve by
+  takes over about 3561 to 3585 (it ends before T 3589), the model from there through the rise and departure.
+  Model share w: 0 while time is in the hold or before, then a smooth step of the camera's distance from the
+  hero pose between two values from a JSON in my folder, 1 from the terrain start on. The take choice is a
+  pure function of time: v = frac(time * fps * 5 / shutterFraction), model if v < w. The average of the takes
+  is then an exact mix of two whole pictures.
+- Proof wanted: drafts 3390, 3465, 3539, 3540, 3550, 3560 byte equal to the kept build's drafts
+  (/tmp/v/kept/k_*.png, rendered from main c9bc056); 3465 at the final tier with the kept still's fingerprint
+  f671886b1bf3099675d2378858080385e2ac703a0dfb000a94861ad6e5cacd0e, at most 5.555 and 2.343 against the hero.
+- Honest limit: inside the dissolve the kept ringlets fade out and the model's fade in. The full cure is to
+  build the model's field from the kept profile with the same warp, model octaves only below that scale.
