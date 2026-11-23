@@ -1,9 +1,37 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-23T16:48:24.410Z",
+ "pushed": "2026-11-23T17:17:52.045Z",
  "head": "cf32e781e8a477b80e33d04b50cee47285b5d47a",
- "note": "draft E4 of both Mars kinds on 4f7b2dd2 (fifth bake): sheets, under pictures, the far wall crop",
+ "note": "tone split in the engine: Mars rise and dive with shares 0.5 against today, Mercury 738 to 741 before",
  "looks": [
+  {
+   "time": "2026-11-23T17:17:51.159Z",
+   "file": "20261123171751159-note-merc-today.jpg",
+   "source": "../../../../tmp/tone/merc-today.png",
+   "kind": "note",
+   "label": "Mercury dive 738 to 741 today on the tone tree, draft: the pale four sided outline at the left"
+  },
+  {
+   "time": "2026-11-23T17:17:49.979Z",
+   "file": "20261123171749979-note-eseq-dive.jpg",
+   "source": "../../../../tmp/tone/eseq-dive.png",
+   "kind": "note",
+   "label": "tone split, Mars dive 2446 2448 2450: today above, engine with shares 0.5 below"
+  },
+  {
+   "time": "2026-11-23T17:17:48.866Z",
+   "file": "20261123171748866-note-eseq-rise.jpg",
+   "source": "../../../../tmp/tone/eseq-rise.png",
+   "kind": "note",
+   "label": "tone split, Mars rise 2694 2695 2696 2698: today above, engine with shares 0.5 below"
+  },
+  {
+   "time": "2026-11-23T17:17:47.889Z",
+   "file": "20261123171747889-note-tri-2696.jpg",
+   "source": "../../../../tmp/tone/tri-2696.png",
+   "kind": "note",
+   "label": "tone split, Mars rise 2696: today, engine with shares 0.5, simulation of the whole tone, the mask and the globe alone"
+  },
   {
    "time": "2026-11-23T16:48:23.843Z",
    "file": "20261123164823843-note-mars-4f7b-rise-under.jpg",
@@ -35,36 +63,6 @@
    "kind": "note",
    "label": "Mars 4f7b2dd2 dive 2442 to 2453, draft E4 sheet (place window)",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T16:48:21.343Z",
-   "file": "20261123164821343-note-mars-4f7b-rise-draft-across.jpg",
-   "source": "out/work/e4-4f7b/mars-4f7b-rise-draft-across.png",
-   "kind": "note",
-   "label": "Mars 4f7b2dd2 rise 2686 to 2697, draft E4 sheet across T 2692",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T16:48:20.710Z",
-   "file": "20261123164820710-note-mars-4f7b-rise-draft-after.jpg",
-   "source": "out/work/e4-4f7b/mars-4f7b-rise-draft-after.png",
-   "kind": "note",
-   "label": "Mars 4f7b2dd2 rise 2693 to 2704, draft E4 sheet: the picture is a dark island on lighter, redder plate ground (tone under the picture)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T16:48:20.100Z",
-   "file": "20261123164820100-note-wall-2444-2454-08ae.jpg",
-   "source": "out/work/e4-4f7b/wall-2444-2454-08ae.png",
-   "kind": "note",
-   "label": "the same crop on the plates of 08ae5f4 for comparison"
-  },
-  {
-   "time": "2026-11-23T16:48:19.452Z",
-   "file": "20261123164819452-note-wall-2444-2454-4f7b.jpg",
-   "source": "out/work/e4-4f7b/wall-2444-2454-4f7b.png",
-   "kind": "note",
-   "label": "Mars 4f7b2dd2 dive, far canyon wall (x 330 to 810, y 400 to 660) at 2444 to 2454, draft: the wall comes in as a ghost over red veined plate ground"
   }
  ]
 }
