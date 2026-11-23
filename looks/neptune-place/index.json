@@ -1,8 +1,8 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T21:19:39.674Z",
+ "pushed": "2026-11-23T21:19:49.843Z",
  "head": "001f0a73e338fba6056d2b32740098f18d532355",
- "note": "ring fault at the 5006 limb found and cured; blocky patches of 4707 traced to hard cirrus bits times shutter samples, cirrus opacity read with 2 px in the moves; final proof chain running",
+ "note": "ring fault at the 5006 limb found and cured; blocky patches of 4707 traced; final proof chain running",
  "looks": [
   {
    "time": "2026-11-23T21:19:39.068Z",
