@@ -1978,3 +1978,28 @@ Working rules
 **Clock**: mail read 06:41 UTC. M1 (S1 with its check picture and the first laid back plate, rough is fine) is due about 08:10 UTC. Looks every 30 minutes of working time to folder `earth-place`.
 
 **State at the start**: branch `agent/earth-place` cut from main 6da6c641 ("Spec for the review note: cut/HANDOVER.md, owners and decisions"). My old branch `agent/earth` (local f8a1f834, pushed 98ae71ba) holds notes only beyond main; no code is carried across. This notebook is carried across (it was 127 lines newer than main's).
+
+## 06:44 to 06:56 UTC: reading, facts, plan
+
+Setup green: `npm ci`, `npm run build` exit 0, `npx vitest run` 17 files 87 tests. Read whole: `cut/HANDOVER.md`, PROGRESS "Review note of 2026-11-23", open items 54, 55, 105, 118, 157, AGENTS.md, addenda 001 to 003.
+
+**Facts checked in code (the base of the plan)**
+- Close side: its local frame is the camera frame of the judged frame 2010 (camera at the origin, identity rotation at the shutter centre). The sea sphere has centre `nadir * (radius + 1)` and radius 32.5197 camera heights (`relief.json`), so 1 local unit is 1 camera height, 1 / 32.5197 of the body radius. `terrain(tRel)` is a level glide: position (side 0.3, rise 0.237, forward 0.44) times u, no height change of note, about 0.0019 heights per frame at 1920 and 0.0045 at 2100.
+- `film.ts` gives the terrain view the rotation `frame.rotation * turn(time) * terrainFrame` with `terrainFrame = basis(heading x normal, normal, -heading)`, so the terrain view's local Y is the spot's normal. The close camera looks 28.35 degrees below its local horizontal, so the Sun and sky of the terrain view sit 28.35 degrees pitched against true geometry. They must stay (terrain is frozen): `spot {0.52, 0.46}` and `headingDeg 52.25` do not move.
+- Spot in body coordinates: lon -77.4757, lat 18.1499 (matches `assets.ts`). Heading azimuth in the body frame: -50.59 degrees from north (toward the north west). The close frame's centre meets the sea 3.46 degrees ahead of the nadir at lon -80.33 lat 20.33 (called P below). The frame bottom is 1.45 degrees ahead, the canvas bottom 1.02, the horizon 14.03.
+- Globe: `set.ts` wraps globe and air in the `shape` matrix (about 1.0043, 0.9908, 0.9975 with shear), so the drawn globe is not the unit sphere, up to 1 percent of the radius, a third of the close camera's height. Plan: bring `shape` to identity as the camera goes down (function of height), so the twin is true at the place.
+- Patches: gnomonic about one centre (the spot), 96, 48, 24, 12 degrees at 4096 px; off at the hold. No live glint in the globe shader. Baked patches switch off the live cloud.
+- `Plan.clock` rewinds the spin by 11.5 s at the rise cover centre, and `set.ts` reads `clock(time) !== time` as "after the rise". Travel needs the rewound state at 2175, so the rewind must become a smooth function of time across the rise (the critics saw the snap: item 118).
+
+**Plan**
+- S1: `src/stops/earth/place.json` (the solved camera, how measured), `assets-src/earth/place/geom.py` (the same maths in Python for the plates), a twin helper in `src/stops/earth/place.ts`, a check picture: globe side from the twin beside the close side at one frame.
+- S2: plates centred on P, 12 and 6 degrees (maybe 3), under the 96, 48, 24 levels reworked so the features agree. Sharp where the close image looks down steeply, repainted where stretched, behind and beside the camera wedge, and the cloud towers as cumulus seen from above. Glint: decide after the laid back plate is seen (baked in the plate or live on the globe).
+- S3 dive: the close side pose is the pure terrain glide extended back; the globe side ends in the twin of it with pose and velocity equal at T; height falls on a smooth trapezoid of rate in ln(height); the place stays at the frame centre; the limb stays in the top of the frame all the way down; the screen turns steadily from the hold's up to the heading; vfov 30 to 45.
+- S3 rise: the mirror, into `exitPose` with weights that reach 1 at 2175 with zero slope; `clock` made continuous.
+- S4 and S5 after the Builder's word.
+
+## 06:56 UTC: first files
+
+- `src/stops/earth/place.json` written (values from `relief.json` and the plan, measured by `assets-src/earth/relief/camfit.py`).
+- `assets-src/earth/place/geom.py`: body to close frame and back, gnomonic plate directions, the close image's projection. Checked: the spot comes out at lon -77.4757 lat 18.1499.
+- `assets-src/earth/place/layback.py WIDTH SIZE NAME`: lays `out/work/earth/relief/canvas-full-1x.png` back as a north up gnomonic plate centred on P, writes the plate and a sharpness map (image px per plate px along the worse axis) to `out/work/earth/place/`. First run at 2048 px: the 12 degree plate is covered to 54 percent by the close image; at least 1 image px per plate px on 10 percent of it, at least half on 21 percent. The 24 degree plate: 21 percent covered. The laid back picture reads as one place from above: the glint as a bright lane, the island and its turquoise banks on the right, the towers smeared away from the camera (they need repainting), the horizon haze as a pale arc on the far side.

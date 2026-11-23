@@ -1,0 +1,16 @@
+{
+  "source": "references/approved/earth-close.jpg",
+  "measured": "assets-src/earth/relief/camfit.py: 171 points of the horizon (red channel, first row over the dark sky plus 45 code values, one every 16 px), a cone of half angle 90 minus dip about the nadir fitted to their rays at the terrain view's field of view by soft L1 least squares; residual rms 0.045 degrees, largest 0.134. Height is 1 / cos(dip) - 1. Heading and spot are the plan's, kept so the terrain view's Sun and sky stay as they are. Checked by assets-src/earth/place/check.py.",
+  "frame": 2010,
+  "vfovDeg": 45,
+  "imageSize": [2816, 1584],
+  "pitchDeg": 28.348,
+  "rollDeg": -2.0044,
+  "dipDeg": 14.0305,
+  "horizonDeg": 14.3175,
+  "height": 0.030751,
+  "radius": 32.5197,
+  "nadir": [0.030783, -0.879541, -0.474826],
+  "spotScreen": [0.52, 0.46],
+  "headingDeg": 52.25
+}
