@@ -1,9 +1,49 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-23T18:51:51.172Z",
+ "pushed": "2026-11-23T19:22:52.326Z",
  "head": "06034e1621b088c54d0e237c67ede0d852bc1ddb",
- "note": "round 38 issue 2 drawn: the footprint of the place picture misses the frame on 4174 to 4185; the sky of the dive as it is; nothing cured yet",
+ "note": "mail 320 items 1, 2, 7: sky trial (one Sun, one sky from 4152 to 4412), picture only in the frame of T, the 4035 limb beside the approved hero, limb dashes found and cured in the trial; scratch tree on main 8eba73e9",
  "looks": [
+  {
+   "time": "2026-11-23T19:22:51.609Z",
+   "file": "20261123192251609-note-limb-dots2.jpg",
+   "source": "../../../../tmp/limb-dots2.png",
+   "kind": "note",
+   "label": "uranus dive 4170 limb times 5: dotted black line along the limb (below, in every tree since 11:39) and with the glow reaching 0.003 rad under the limb (above)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T19:22:51.036Z",
+   "file": "20261123192251036-note-t8-swap-rise-l.jpg",
+   "source": "../../../../tmp/t8-swap-rise-l.png",
+   "kind": "note",
+   "label": "uranus rise swap at native size, trial: 4391 (close view) left, 4392 (globe alone) right; the globe alone lacks the grain and has level streaks in the far band",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T19:22:50.446Z",
+   "file": "20261123192250446-note-limb-4035.jpg",
+   "source": "../../../../tmp/limb-4035.png",
+   "kind": "note",
+   "label": "uranus hold 4035 right limb at native size: approved hero left, film right (kept final still); warm spill at (1346, 560)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T19:22:49.874Z",
+   "file": "20261123192249874-note-t8-rise.jpg",
+   "source": "../../../../tmp/t8-rise.jpg",
+   "kind": "note",
+   "label": "uranus rise 4391 to 4427, tree 06034e16 beside the sky trial: the Sun keeps its size until it leaves the frame at 4409",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T19:22:49.273Z",
+   "file": "20261123192249273-note-t8-dive.jpg",
+   "source": "../../../../tmp/t8-dive.jpg",
+   "kind": "note",
+   "label": "uranus dive 4152 to 4186, tree 06034e16 (main 8eba73e9) beside the sky trial: the close view's sky patch whole from 4152, picture only in the frame of T",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-23T18:51:39.958Z",
    "file": "20261123185139958-note-sky-dive.jpg",
@@ -27,70 +67,6 @@
    "kind": "note",
    "label": "Issue 2 of round 38, the drawing asked for: dive 4170 to 4190 (tree 06034e16, main 8eba73e9, draft) with the footprint of the place picture laid over. Red: side of the picture. Yellow: inside it the picture is whole. The footprint does not cover the frame on 4174 to 4185, every frame where the picture has weight; 4186 is covered",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T18:39:57.705Z",
-   "file": "20261123183957705-frame-f04109.jpg",
-   "source": "out/work/seq/3960-4109/f04109.png",
-   "kind": "frame",
-   "label": "uranus.hold frame 4109, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4109,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "743c10b0a56aaca7"
-  },
-  {
-   "time": "2026-11-23T18:33:47.348Z",
-   "file": "20261123183347348-frame-f04376.jpg",
-   "source": "out/work/seq/4376-4379/f04376.png",
-   "kind": "frame",
-   "label": "uranus.terrain frame 4376, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.terrain",
-   "frame": 4376,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "743c10b0a56aaca7"
-  },
-  {
-   "time": "2026-11-23T18:28:57.285Z",
-   "file": "20261123182857285-sheet-uranus-rise-draft-after.jpg",
-   "source": "out/work/handover/uranus-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "uranus rise, every frame 4392 to 4403 (after T, frame 4391), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "first": 4392,
-   "last": 4403,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T18:28:09.894Z",
-   "file": "20261123182809894-sheet-uranus-rise-draft-before.jpg",
-   "source": "out/work/handover/uranus-rise-draft-before.png",
-   "kind": "sheet",
-   "label": "uranus rise, every frame 4380 to 4390 (before T, frame 4391), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "first": 4380,
-   "last": 4390,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T18:27:37.262Z",
-   "file": "20261123182737262-sheet-uranus-rise-draft-across.jpg",
-   "source": "out/work/handover/uranus-rise-draft-across.png",
-   "kind": "sheet",
-   "label": "uranus rise, every frame 4385 to 4396 (across T, frame 4391), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "first": 4385,
-   "last": 4396,
-   "tier": "draft"
   }
  ]
 }
