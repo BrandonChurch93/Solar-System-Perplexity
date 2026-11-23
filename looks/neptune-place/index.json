@@ -1,9 +1,55 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T21:49:09.747Z",
- "head": "001f0a73e338fba6056d2b32740098f18d532355",
- "note": "001f0a73 not READY: handover report fails on side difference at T (dim) and early rate (rampIn 0.5); both being cured",
+ "pushed": "2026-11-23T22:03:13.840Z",
+ "head": "e2baa50e0ca74d7259e0e03a496e2a0543894526",
+ "note": "27d64e76 merged with main 25bbe774 as e2baa50e (local, in proof): side difference at T cured, dive ramp 0.38",
  "looks": [
+  {
+   "time": "2026-11-23T22:03:12.557Z",
+   "file": "20261123220312557-note-corner.jpg",
+   "source": "../../../../tmp/corner.png",
+   "kind": "note",
+   "label": "neptune dive, top right corner 120 by 90 px, 3x, around the sky turn (trial with the dim gone below 0.4 radii: warm stars at 4722 and 4723; the commit keeps the dim to 0.2 radii)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T22:03:11.848Z",
+   "file": "20261123220311848-note-sunset.jpg",
+   "source": "../../../../tmp/sunset.jpg",
+   "kind": "note",
+   "label": "neptune dive with rampIn 0.38, upper right at native size, 4702 to 4710, draft: one Sun, it sets behind the limb between 4705 and 4706",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T22:03:10.729Z",
+   "file": "20261123220310729-note-T-limb.jpg",
+   "source": "../../../../tmp/T-limb.png",
+   "kind": "note",
+   "label": "neptune dive after the cure of the dim: 4757 (above) and 4758 (below) at the limb, 2x, draft: the glow above the limb no longer steps at T (sides at T: mean 0.065 dive, 0.064 rise, pass)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T22:02:15.460Z",
+   "file": "20261123220215460-compare-neptune-dive-sides.jpg",
+   "source": "out/work/handover/neptune-dive-sides.png",
+   "kind": "compare",
+   "label": "neptune dive, both sides at T (frame 4758) and their difference times 8",
+   "stop": "neptune",
+   "segment": "neptune.dive",
+   "frame": 4758,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T21:51:49.187Z",
+   "file": "20261123215149187-compare-neptune-rise-sides.jpg",
+   "source": "out/work/handover/neptune-rise-sides.png",
+   "kind": "compare",
+   "label": "neptune rise, both sides at T (frame 4956) and their difference times 8",
+   "stop": "neptune",
+   "segment": "neptune.rise",
+   "frame": 4956,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-23T21:49:09.167Z",
    "file": "20261123214909167-note-F-dive4.jpg",
@@ -21,17 +67,6 @@
    "stop": "neptune"
   },
   {
-   "time": "2026-11-23T21:41:39.265Z",
-   "file": "20261123214139265-compare-neptune-rise-sides.jpg",
-   "source": "out/work/handover/neptune-rise-sides.png",
-   "kind": "compare",
-   "label": "neptune rise, both sides at T (frame 4956) and their difference times 8",
-   "stop": "neptune",
-   "segment": "neptune.rise",
-   "frame": 4956,
-   "tier": "draft"
-  },
-  {
    "time": "2026-11-23T21:41:24.377Z",
    "file": "20261123214124377-sheet-neptune-dive-top.jpg",
    "source": "out/work/handover/neptune-dive-top.png",
@@ -41,53 +76,6 @@
    "segment": "neptune.dive",
    "first": 4680,
    "last": 4758,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T21:38:33.161Z",
-   "file": "20261123213833161-sheet-neptune-dive-draft-after.jpg",
-   "source": "out/work/handover/neptune-dive-draft-after.png",
-   "kind": "sheet",
-   "label": "neptune dive, every frame 4759 to 4769 (after T, frame 4758), draft tier",
-   "stop": "neptune",
-   "segment": "neptune.dive",
-   "first": 4759,
-   "last": 4769,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T21:38:31.484Z",
-   "file": "20261123213831484-sheet-neptune-dive-draft-before.jpg",
-   "source": "out/work/handover/neptune-dive-draft-before.png",
-   "kind": "sheet",
-   "label": "neptune dive, every frame 4746 to 4757 (before T, frame 4758), draft tier",
-   "stop": "neptune",
-   "segment": "neptune.dive",
-   "first": 4746,
-   "last": 4757,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T21:38:29.632Z",
-   "file": "20261123213829632-sheet-neptune-dive-draft-across.jpg",
-   "source": "out/work/handover/neptune-dive-draft-across.png",
-   "kind": "sheet",
-   "label": "neptune dive, every frame 4752 to 4763 (across T, frame 4758), draft tier",
-   "stop": "neptune",
-   "segment": "neptune.dive",
-   "first": 4752,
-   "last": 4763,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T21:22:37.284Z",
-   "file": "20261123212237284-compare-neptune-dive-sides.jpg",
-   "source": "out/work/handover/neptune-dive-sides.png",
-   "kind": "compare",
-   "label": "neptune dive, both sides at T (frame 4758) and their difference times 8",
-   "stop": "neptune",
-   "segment": "neptune.dive",
-   "frame": 4758,
    "tier": "draft"
   }
  ]
