@@ -1,9 +1,30 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-23T09:17:44.571Z",
- "head": "696515aceea8db19e6825ca2350bd9be1f838fcc",
- "note": "plates: laying the close image back top down, locating the oval on the globe, canvases for the repaint next",
+ "pushed": "2026-11-23T09:36:33.850Z",
+ "head": "8c91c1941a7200118d92651c1f45771ba9fc816d",
+ "note": "plates by repaint: canvases from the laid back close image, first take of the mid plate rejected (storm too large), near plate first now",
  "looks": [
+  {
+   "time": "2026-11-23T09:36:33.321Z",
+   "file": "20261123093633321-note-near-in-s.jpg",
+   "source": "../work/f/near-in-s.jpg",
+   "kind": "note",
+   "label": "plates: canvas of the near plate (20 units wide): the close image laid back top down, sharp at the storm, soft where it did not resolve; flat colour outside its fan"
+  },
+  {
+   "time": "2026-11-23T09:36:32.791Z",
+   "file": "20261123093632791-note-mid-t1-s.jpg",
+   "source": "../work/f/mid-t1-s.jpg",
+   "kind": "note",
+   "label": "plates: mid plate, first repaint, rejected: rich and top down, but the storm is drawn five times too large (it took the globe's orange oval for the funnel)"
+  },
+  {
+   "time": "2026-11-23T09:36:32.255Z",
+   "file": "20261123093632255-note-mid-in-s.jpg",
+   "source": "../work/f/mid-in-s.jpg",
+   "kind": "note",
+   "label": "plates: first canvas of the mid plate (61 units wide): the globe's own albedo at the place, the close image laid back top down inside its fan, soft parts marked by blur"
+  },
   {
    "time": "2026-11-23T09:17:44.009Z",
    "file": "20261123091744009-note-place-pair-s.jpg",
@@ -39,41 +60,6 @@
    "kind": "note",
    "label": "v5 compare at 3150, review tier",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T08:30:58.791Z",
-   "file": "20261123083058791-note-v5r-three.jpg",
-   "source": "../work/f/v5r-three.jpg",
-   "kind": "note",
-   "label": "v5 frames 3060, 3150, 3239 at the review tier"
-  },
-  {
-   "time": "2026-11-23T08:29:51.199Z",
-   "file": "20261123082951199-compare-compare-jupiter-terrain-view.jpg",
-   "source": "out/work/compare/compare-jupiter-terrain-view.jpg",
-   "kind": "compare",
-   "label": "jupiter.terrain: approved image left, film frame right, review tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "2d9dda353bfd7b6d"
-  },
-  {
-   "time": "2026-11-23T08:29:50.197Z",
-   "file": "20261123082950197-still-f03150-16x9-review-full.jpg",
-   "source": "out/work/stills/f03150-16x9-review-full.png",
-   "kind": "still",
-   "label": "jupiter.terrain frame 3150, review tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "2d9dda353bfd7b6d"
   }
  ]
 }
