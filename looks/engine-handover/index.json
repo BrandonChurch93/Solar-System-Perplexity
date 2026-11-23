@@ -1,9 +1,37 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-23T21:04:59.179Z",
- "head": "a9f7d7af6793e4ab99617e80c1391e5fc305fb27",
- "note": "MAIL 342 c: Mercury 738 to 741 with and without the feather beside the globe alone",
+ "pushed": "2026-11-23T21:23:10.052Z",
+ "head": "9f850d9afd9a95f195e5f34b36cf402b63c303cd",
+ "note": "limbSky: the horizon of the place picture on the clock of the sky, Mars rise off and on at draft on the ninth bake; first try, a stripe under the limb still to cure",
  "looks": [
+  {
+   "time": "2026-11-23T21:23:09.379Z",
+   "file": "20261123212309379-note-c-rise-on-L2.jpg",
+   "source": "../../../../tmp/hz/c-rise-on-L2.png",
+   "kind": "note",
+   "label": "Mars rise 2702 to 2709, left 720 px at full size, ON (first try)"
+  },
+  {
+   "time": "2026-11-23T21:23:08.749Z",
+   "file": "20261123212308749-note-c-rise-on-L1.jpg",
+   "source": "../../../../tmp/hz/c-rise-on-L1.png",
+   "kind": "note",
+   "label": "Mars rise 2694 to 2701, left 720 px at full size, ON (first try): the haze stays on the sky clock, a dark stripe under the limb is the picture's own horizon row, to be cured"
+  },
+  {
+   "time": "2026-11-23T21:23:08.111Z",
+   "file": "20261123212308111-note-c-rise-off-L1.jpg",
+   "source": "../../../../tmp/hz/c-rise-off-L1.png",
+   "kind": "note",
+   "label": "Mars rise 2694 to 2701, left 720 px at full size, OFF: the hard limb line of the globe comes in under the haze from 2695"
+  },
+  {
+   "time": "2026-11-23T21:23:06.952Z",
+   "file": "20261123212306952-note-s-rise-on-a.jpg",
+   "source": "../../../../tmp/hz/s-rise-on-a.png",
+   "kind": "note",
+   "label": "Mars rise 2692 to 2707, draft, ninth bake, horizon on the sky clock (limbsky, first try with the band under the limb)"
+  },
   {
    "time": "2026-11-23T21:04:57.749Z",
    "file": "20261123210457749-note-merc-in4.jpg",
@@ -31,34 +59,6 @@
    "source": "../../../../tmp/hz/b-2447.png",
    "kind": "note",
    "label": "Mars dive 2445, 2447, 2449: film edgeIn 0.4, film 0.8, globe alone"
-  },
-  {
-   "time": "2026-11-23T20:57:31.162Z",
-   "file": "20261123205731162-note-b-2447-low.jpg",
-   "source": "../../../../tmp/hz/b-2447-low.png",
-   "kind": "note",
-   "label": "Mars dive 2447 bottom band at full size: film edgeIn 0.4, film 0.8, globe alone: the same border in all three"
-  },
-  {
-   "time": "2026-11-23T20:57:30.500Z",
-   "file": "20261123205730500-note-b-2698.jpg",
-   "source": "../../../../tmp/hz/b-2698.png",
-   "kind": "note",
-   "label": "Mars 2698 lower left at full size: film with edgeIn 0.4, film with edgeIn 0.8, globe alone: the border does not move"
-  },
-  {
-   "time": "2026-11-23T20:57:29.803Z",
-   "file": "20261123205729803-note-plates.jpg",
-   "source": "../../../../tmp/hz/plates.png",
-   "kind": "note",
-   "label": "Mars eighth bake, the stop's own plates 0.3, 0.7, 1.6, 3.8 deg: the lay back of the picture beside generated ground with painted knobs"
-  },
-  {
-   "time": "2026-11-23T20:57:29.073Z",
-   "file": "20261123205729073-note-b-2696-three.jpg",
-   "source": "../../../../tmp/tone/b-2696-three.png",
-   "kind": "note",
-   "label": "Mars 2696: film, globe alone, weight of the picture: the border sits at the same pixels in the film and in the globe alone"
   }
  ]
 }
