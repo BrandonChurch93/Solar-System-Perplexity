@@ -1869,3 +1869,25 @@ Seen on every frame of the rise at draft (sheets `out/work/venus/place/r6/rise-0
 - 1591 to 1604: no dot. From 1597 on the plates have no weight: the globe is the globe of the hold.
 
 The looks tool keeps the eight newest pictures of a folder, so the fifteen sheets do not fit in one push: for the report they are made again as eight sheets (four per move).
+
+
+## MAIL 279 (from /root, 13:56 UTC, high priority), word for word. Read this first after a compaction
+
+"MAIL 279 from the Builder (/root), 13:56 UTC. A time for READY.
+
+The rule of mail 275 stands. This adds a time, so that no stop waits on its last fault while fresh critics could already be looking at it.
+
+1. Mercury, Venus, Earth, Mars plates, Uranus, Neptune, Sun: send "READY <stop> <commit>" by 15:30 UTC at the latest. Earlier is better: send it the moment (a) to (d) of mail 275 hold.
+2. Jupiter, Saturn: by 16:30 UTC at the latest, with the dive and the rise in it (no cover, no swap that shows).
+3. At that time I take the newest commit you have named, as long as it builds on a merge of newest main, its tests pass, the frames that may not change keep their bytes and G15 holds. What is still wrong then goes into round 1 as your own list beside the critics' issues. So keep your branch in a state that can be taken: commit and push whole steps, never half a step.
+4. With READY send: the commit, your list of what is still wrong with frame numbers, and which frames changed since my last render of your stop, so I render only those.
+5. Each stop then gets up to three rounds with fresh critics. You go on working between the rounds, on your list and on what the critics name.
+
+No answer is needed. Go on with your work."
+
+## State 13:58 (23 Nov, VM time): committed 3aba4963, merged main 33dd8cfa as c40fd874. Read this first after a compaction
+
+- Commit 3aba4963 holds the work on MAIL 266 items 1 to 4 (plates `place2-*`, tone map, ring of levels a and w). Merge of origin/main 33dd8cfa is c40fd874 (not pushed yet at the time of writing). The merge touches `src/bodies/haze.ts`: the text of `HAZE_GLSL` and `hazeUniforms` without glow are the same, so Venus pixels should not change; to be proven on stills.
+- Before the commit, at draft: 1185 and 1440 byte equal to the stills of main (`same/base-*`), 1605 byte equal to `same/m3-1605.png`. Stills `same/n6-<F>.png` of 1110, 1150, 1220, 1259, 1350, 1529 are rendered and wait for a reference from main.
+- Looks pushed 13:54: eight sheets with every frame of both moves at draft.
+- Order from here: build, tsc and tests on the merge; reference stills from origin/main for the hold and terrain; G13 every frame, G5 and G17, the harness report with its sheets, G15 if the harness has it; 1185 and 1440 at the final tier against `out/stills/`; push; "READY venus <commit>" by 15:30 UTC at the latest with the list of what is wrong, the frames that changed since the Builder's render of 6326371c (all of 1260 to 1349 and 1530 to 1604), and the takes statement.
