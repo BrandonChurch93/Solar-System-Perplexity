@@ -1,0 +1,22 @@
+{
+ "folder": "jupiter-code",
+ "pushed": "2026-11-23T06:47:30.216Z",
+ "head": "6902e99ebaa59199480ebf322c3fadb8ebb6af6c",
+ "note": "start: reading the kept build, frozen frame 3150 at the draft tier as the baseline",
+ "looks": [
+  {
+   "time": "2026-11-23T06:46:29.044Z",
+   "file": "20261123064629044-still-f03150-16x9-draft-full.jpg",
+   "source": "out/work/stills/f03150-16x9-draft-full.png",
+   "kind": "still",
+   "label": "jupiter.terrain frame 3150, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "247ebad7e038ce06"
+  }
+ ]
+}
