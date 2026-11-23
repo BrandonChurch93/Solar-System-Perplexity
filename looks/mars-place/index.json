@@ -1,9 +1,39 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-23T12:35:10.097Z",
- "head": "41d778481693a63ea908321b5fb93b1008caaa85",
- "note": "dense draft sheets of dive and rise on main's path with the first eight level ladder (41d7784): one place comes closer; haze band and the land beside the fan still step at 2447 to 2448",
+ "pushed": "2026-11-23T12:59:04.606Z",
+ "head": "f7aa13d775f55df8e5aeabc1f15cb5b10c8f8bce",
+ "note": "new ladder on the E3 path: lower half of 2454 globe alone matches the film frame (13.2 of 255), the horizon haze does not yet; from above the place is still an island with radial strokes: new top down takes for the 8.5 and 3.8 deg plates come next",
  "looks": [
+  {
+   "time": "2026-11-23T12:59:04.037Z",
+   "file": "20261123125904037-note-cmp-c1.jpg",
+   "source": "out/work/place/view/cmp-c1.jpg",
+   "kind": "note",
+   "label": "mars E3 path, new ladder: 2436 film; 2448 globe alone; 2448 film; 2454 globe alone; 2454 film (close side)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T12:59:03.317Z",
+   "file": "20261123125903317-note-topdown-m2f.jpg",
+   "source": "out/work/place/view/topdown-m2f.jpg",
+   "kind": "note",
+   "label": "mars: top down on the eight level ladder 96 to 0.3 deg (straight down, 12 widths): the place still reads as a pale island with radial strokes on plain ground",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T12:54:29.370Z",
+   "file": "20261123125429370-frame-s2436-c.jpg",
+   "source": "out/work/place/view/s2436-c.png",
+   "kind": "frame",
+   "label": "mars.dive frame 2436, draft tier",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2436,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "6f5cd496b40446f2"
+  },
   {
    "time": "2026-11-23T12:33:38.707Z",
    "file": "20261123123338707-sheet-mars-rise-draft-after.jpg",
@@ -63,46 +93,6 @@
    "first": 2448,
    "last": 2459,
    "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T12:31:42.041Z",
-   "file": "20261123123142041-sheet-mars-dive-draft-before.jpg",
-   "source": "out/work/handover/mars-dive-draft-before.png",
-   "kind": "sheet",
-   "label": "mars dive, every frame 2442 to 2453 (before T, frame 2454), draft tier",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "first": 2442,
-   "last": 2453,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T12:14:51.002Z",
-   "file": "20261123121451002-frame-f02782-draft.jpg",
-   "source": "out/work/samebytes/m2a/f02782-draft.png",
-   "kind": "frame",
-   "label": "mars.travel frame 2782, draft tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "frame": 2782,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "c049c4c0efb85c12"
-  },
-  {
-   "time": "2026-11-23T12:14:05.434Z",
-   "file": "20261123121405434-frame-f02212-draft.jpg",
-   "source": "out/work/samebytes/m2a/f02212-draft.png",
-   "kind": "frame",
-   "label": "earth.travel frame 2212, draft tier",
-   "stop": "earth",
-   "segment": "earth.travel",
-   "frame": 2212,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "c049c4c0efb85c12"
   }
  ]
 }
