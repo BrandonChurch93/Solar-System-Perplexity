@@ -52,7 +52,7 @@ export const createSet: SetFactory = async (ctx) => {
     field, near: look.near.dive, night: look.night,
     map, mapWidth: (map.image as unknown as { width: number }).width, code: look.code, deck: look.deck, cloud: look.cloud, air: look.air, limb: look.limb, clouds: look.clouds,
     storm: { axis: direction(look.storm.lon, look.storm.lat), radiusDeg: look.storm.radiusDeg },
-    patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: [patches.fade[0]!, patches.fade[1]!], clearDeg: [patches.place.clearDeg[0]!, patches.place.clearDeg[1]!], shownFrom: patches.place.shownFrom, home: direction(place.camera.lonDeg, place.camera.latDeg), plainDeg: [patches.place.plainDeg[0]!, patches.place.plainDeg[1]!], offsetsDeg: patches.levels.map((l) => [l.offsetDeg[0]!, l.offsetDeg[1]!] as [number, number]), tone: toneMap },
+    patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: [patches.fade[0]!, patches.fade[1]!], clearDeg: [patches.place.clearDeg[0]!, patches.place.clearDeg[1]!], shownFrom: patches.place.shownFrom, home: direction(place.camera.lonDeg, place.camera.latDeg), plainDeg: [patches.place.plainDeg[0]!, patches.place.plainDeg[1]!], vivid: [patches.place.vivid[0]!, patches.place.vivid[1]!], offsetsDeg: patches.levels.map((l) => [l.offsetDeg[0]!, l.offsetDeg[1]!] as [number, number]), tone: toneMap },
     hold: { map: holdMap, box: look.held.box, head: look.held.head },
     mend: { map: mendMap, box: look.mended.box },
     flow,

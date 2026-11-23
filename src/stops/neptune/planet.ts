@@ -66,6 +66,7 @@ export interface PatchSet {
   shownFrom?: number
   home?: THREE.Vector3
   plainDeg?: [number, number]
+  vivid?: [number, number]
   offsetsDeg?: [number, number][]
   tone?: THREE.Texture
 }
@@ -236,6 +237,7 @@ uniform vec4 uNearTint;
 uniform vec3 uNearFall;
 uniform vec2 uMelt;
 uniform vec4 uNight;
+uniform vec2 uVivid;
 uniform vec4 uDistant;
 uniform vec4 uDistantAir;
 in vec3 vClip;
@@ -422,7 +424,10 @@ void main() {
   for (int k = 0; k < (shown.a > 0.0 ? 1 : 0); k++) {
     vec3 plate = min(shown.rgb / shown.a * exp2(uToneAmt * (textureLod(uTone, toneUv, 0.0).rgb - 0.5)), vec3(0.98));
     vec3 seen = inverseFilmic(plate) / (uNearTint.rgb * uNear.y);
-    deck = mix(deck, mix(vec3(dot(seen, vec3(0.3, 0.5, 0.2))), seen, 1.0 / uNear.w) / uTint, shown.a);
+    float grey = dot(seen, vec3(0.3, 0.5, 0.2));
+    float want = (grey - min(seen.r, min(seen.g, seen.b))) / max(grey, 1e-5) * mix(1.0 / uNear.w, 1.0, uNear.x);
+    float got = uVivid.x + (uVivid.y - uVivid.x) * (1.0 - exp(-max(want - uVivid.x, 0.0) / (uVivid.y - uVivid.x)));
+    deck = mix(deck, mix(vec3(grey), seen, (want > uVivid.x ? got / want : 1.0) / uNear.w) / uTint, shown.a);
   }
   float ndlc = dot(normalize(uBodyToWorld * pc), uSunW) + uEnd.x * uEndCresc.x;
   vec3 col = mix(deck, knot(uCloud, ndlc), alpha * smoothstep(-0.09, -0.03, ndlc)) * uTint;
@@ -536,7 +541,7 @@ export class NeptunePlanet {
         uFeather: { value: p?.feather ?? 0.12 }, uPatchFade: { value: new THREE.Vector2(p?.fade[0] ?? 1.1, p?.fade[1] ?? 1.7) },
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
         uPlace: { value: new THREE.Vector3(Math.cos(THREE.MathUtils.degToRad(p?.clearDeg?.[0] ?? 0)), Math.cos(THREE.MathUtils.degToRad(p?.clearDeg?.[1] ?? 1)), 0) },
-        uPatchOff: { value: levels.map(offset) }, uShown: { value: 0 }, uTone: { value: p?.tone ?? o.map }, uToneAmt: { value: 0 }, uHomeN: { value: p?.home ?? new THREE.Vector3(0, 0, 1) }, uPlain: { value: new THREE.Vector3(Math.cos(THREE.MathUtils.degToRad(p?.plainDeg?.[0] ?? 0)), Math.cos(THREE.MathUtils.degToRad(p?.plainDeg?.[1] ?? 1)), 0) },
+        uPatchOff: { value: levels.map(offset) }, uShown: { value: 0 }, uTone: { value: p?.tone ?? o.map }, uToneAmt: { value: 0 }, uVivid: { value: new THREE.Vector2(p?.vivid?.[0] ?? 1e9, p?.vivid?.[1] ?? 2e9) }, uHomeN: { value: p?.home ?? new THREE.Vector3(0, 0, 1) }, uPlain: { value: new THREE.Vector3(Math.cos(THREE.MathUtils.degToRad(p?.plainDeg?.[0] ?? 0)), Math.cos(THREE.MathUtils.degToRad(p?.plainDeg?.[1] ?? 1)), 0) },
         uSpin: { value: 0 }, uStream: { value: 0 }, uShear: { value: new THREE.Vector2(o.clouds.shear, o.clouds.shearBands) },
         uStormAxis: { value: o.storm.axis.clone().normalize() }, uStormRadius: { value: THREE.MathUtils.degToRad(o.storm.radiusDeg) }, uStormAngle: { value: 0 },
         uCloudHeight: { value: o.clouds.height }, uCloudSoft: { value: o.clouds.soft }, uShadow: { value: new THREE.Vector3(o.clouds.shadow, o.clouds.shadowSoft, 0.12) },
