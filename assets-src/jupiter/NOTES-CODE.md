@@ -34,7 +34,7 @@ Judging: R1 compares 3150 with the approved image region by region (composition,
 - Tiers: draft 1 sample, review 4 (16 in fast kinds), final 16 (64 in fast kinds). The terrain view is not a fast kind.
 - Old fit of the close image (old notebook, `relief/camfit.py`): vfov 64, focal 1267.46 px at 2816 wide, nadir in camera space (-0.272, -0.885, -0.377), dip 4.44 deg, roll 17.09 deg. Height above the sphere from the dip: 1 / cos(4.44 deg) - 1 = 0.00301 radii.
 - The storm in the close image, from the old deck: centre px (1132, 552) of 2816 x 1584, ground half axes 1.12 x 2.18 camera heights, so about 0.19 x 0.38 degrees on the sphere at that height.
-- The storm on the hold globe (hero pixels in the wrap): lon -17.5, lat -10, half axes about 13.2 x 7.9 degrees. So the globe's storm is about 35 times larger than the close view's storm at the close view's horizon. One scale cannot serve both: this is the main design question (see "Design").
+- The storm on the hold globe (hero pixels in the wrap): lon -17.5, lat -10. Corrected 08:45 UTC: `look.spot.axesDeg` [7.0, 4.3] are half axes, so the storm is about 14 x 8.6 degrees (the 13.2 x 7.9 of the old notebook are full axes). The vortex of the close image is about 0.5 degrees wide: 1/28 of the storm's length. One scale cannot serve both: see "The place of the dive".
 - Sun at the hold: sunDir (-0.744, 0.140, 0.653) in the set frame, n.l at the storm about 0.81. The close image has a low raking Sun from the upper left and a terminator at the lower right.
 - Engine: the terrain view is drawn in a frame with its origin at the spot on the unit sphere and axes (right, normal, -heading), camera relative (`set.world.position = origin - camera`). Poses of `plan.terrain()` are in that frame.
 
@@ -115,11 +115,35 @@ What the pictures show (looks folder `jupiter-code`, v5):
 
 ## Part B scale design (decided 08:10 UTC)
 
-- The storm of the hold: lon -17.5, lat -10, half axes 13.2 x 7.9 degrees. The vortex of the close image: 0.19 x 0.38 degrees, 35 times smaller. So the place of the dive is a small vortex inside the great storm, and it comes in while it is small on screen.
+- Superseded by "The place of the dive" below (way B): the place is not inside the great storm.
 - The deck maps continue the globe's patch pyramid (`patches.json`: centre lon -12 lat -10, levels 100, 61.58, 33.18 degrees): far 184.32 units = 31.8 degrees (about the globe's nearest patch, the whole great storm), mid 61.44 units = 10.6 degrees (the storm's inside), near 20.48 units = 3.53 degrees (the place).
 - Plates are made zoom style: each level's rim agrees with the level above, its centre is the level below. Perhaps a fore plate of 5.12 units at 2048 px near chart (0.5, -3.6) for the foreground outside the wedge.
 - The heading of the place on the globe is chosen so that the baked Sun of the close image (azimuth 130 degrees in the chart) agrees with the globe's Sun (sunDir (-0.744, 0.140, 0.653), n.l 0.81 at the storm). The dark lower right of the close image stays a local dark patch; the Sun does not move.
 - The close side must be drawable from far greater heights, so that T can be chosen freely.
+
+## The place of the dive (decided 08:55 UTC, Mail 229, decision d88 of the Builder)
+
+Measured in `public/assets/jupiter/full/wrap-color.jpg` (8192 x 4096, lon = (x / W - 0.5) * 360, lat = (0.5 - y / H) * 180) and in the laid back image, display values:
+- Great Red Spot inside: (226, 154, 94). Its long axis 14 degrees, short 8.6.
+- The cream wake north west of it (lon -31 to -22, lat -10.3 to -1.3): (222, 204, 181).
+- A small orange oval in that wake, in the approved hero: lon -26.6, lat -5.8, about 1.45 x 1.0 degrees, 12 px in the hold; core (223, 174, 126).
+- Close image ground within 8 units of the vortex: (163, 146, 129); times 1.365 = (222, 199, 176), the wake's cream. Within 4 units: (139, 113, 94); times 1.6 = (222, 181, 150), near the oval's core. The funnel itself (145, 94, 68).
+- So the close image is exposed about one stop under the hold (display factor 1.365, linear about 2), and its chroma is the wake's, not the Great Red Spot's.
+
+Way A (the place is the centre of the Great Red Spot) would need a region 5 to 9 degrees wide to turn from orange to cream while it fills a third of the frame. Way B: the place is the small oval. The Builder took B (Mail 229) with these conditions:
+1. The Great Red Spot leads the dive: in frame and growing through the first two thirds of the dive, then it passes under or beside the camera as a huge turning storm with its collar and wake in full detail. Plates and levels must carry it at that size, G13 on every frame. The dive reads as a flight down over the Great Red Spot to a red storm at its edge, never as a turn away from it.
+2. The small oval is in frame from the moment it resolves and stays near the middle of the frame from about 15 px on. No step in its size, turn or colour when the close side takes over.
+3. Check where the flank of the Great Red Spot lies as seen from the close camera. If any of it is inside the horizon in the direction of view, the far ground must show it as it is. The approved image has cream to the horizon, so choose the heading that the image's own light and bands allow; say which way the camera looks and what lies there.
+4. The rise shows the Great Red Spot coming back into frame as the camera climbs.
+5. The exposure ramp of about one stop: one function of time through T, spread over the whole dive so no frame shows a step, the same in reverse on the rise.
+6. The hold stays the same bytes at 2895 (checked against the kept still).
+
+Geometry of B (computed 08:50 UTC):
+- At lon -26.6, lat -5.8 the Sun of the globe (sunDir (-0.744, 0.140, 0.653)) stands 64 degrees high; its ground azimuth is 148 degrees from east, counted toward north (32 degrees north of west). The chart has the Sun at 130 degrees from chart +x. For the baked light to agree the heading (chart +y) is 108 degrees from east: 18 degrees west of north.
+- The Great Red Spot's centre lies 8.9 degrees east and 4.2 south of the place, 9.8 degrees away, 25 degrees south of east. With the heading above it is behind and to the right of the close camera, out of the frame (the frame takes azimuths -43 to 73 degrees round the heading).
+- The horizon of the close view is 4.45 degrees away. The orange of the Great Red Spot starts about 3.6 degrees east of the place.
+
+Light: the plates keep the baked shading of the low Sun (the richness), but the large gradient of the close image (bright haze toward the Sun, dark blue grey away from it) and its exposure are not a property of the place on the globe. Plan: plates stored flat (matched to the globe), a smooth grade field (gain and add per place) brings them to the image; its amount is a function of the camera's height over the deck (haze along grazing paths), so it is the same in the dive and the rise and has no step at T.
 
 ## Next (08:40 UTC)
 
