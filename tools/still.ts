@@ -17,7 +17,7 @@ const { png, seconds, samples } = await renderPngFresh(() => openCapture({ dist:
 const s = held.session!
 const dir = join(WORK, 'stills')
 mkdirSync(dir, { recursive: true })
-const file = a.out ?? join(dir, 'f' + String(frame).padStart(5, '0') + '-' + format + '-' + tier + '-' + assets + (diag === 'beauty' ? '' : '-' + diag) + '.png')
+const file = a.out ?? join(dir, 'f' + String(frame).padStart(5, '0') + '-' + format + '-' + tier + '-' + assets + (diag === 'beauty' ? '' : '-' + diag.replace(/[^A-Za-z0-9.]+/g, '_')) + '.png')
 writeFileSync(file, png)
 writeRecord(file, { engineHash: hashes.engine, stopHashes: hashes.stops, format, tier, assets, diag, browser: s.browserVersion, machine: machineId(), frame, extra: { seconds, samples } })
 console.log(file + ' ' + seconds.toFixed(1) + 's ' + samples + ' samples')

@@ -1,17 +1,19 @@
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterAll, afterEach, describe, expect, it } from 'vitest'
 import { config } from '../src/config'
 import { FilmDirector } from '../src/director/film'
 import { StopPlan, type Fit } from '../src/director/moves'
 import { plans } from '../src/director/plans'
 import { coverTiming, coverWindow, setCoverWindow } from '../src/director/timeline'
-import { params } from '../src/stops/mars/plan'
-import fit from '../src/stops/mars/fit.json'
+import { coveredFit as fit, coveredParams, coveredPlan, restorePlans } from './lib/covered'
 
 const c = config.raw.cover
 const seg = (kind: string): (typeof config.segments)[number] => config.segments.find((s) => s.stop === 'mars' && s.kind === kind)!
 const dive = seg('dive')
 const rise = seg('rise')
-const own = plans.find((p) => p.id === 'mars')!.p.coverWindow
+const params = coveredParams()
+const own = coveredPlan().p.coverWindow
+
+afterAll(() => restorePlans())
 const amounts = (plan: StopPlan, s: typeof rise): number[] => Array.from({ length: s.frames }, (_, i) => plan.coverAmount(s, (s.firstFrame + i) / config.fps))
 
 describe('cover window of a stop', () => {
