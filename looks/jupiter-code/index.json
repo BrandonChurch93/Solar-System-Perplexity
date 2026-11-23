@@ -1,9 +1,63 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-23T17:34:55.403Z",
+ "pushed": "2026-11-23T17:52:24.883Z",
  "head": "1db511ce6ff5dccdd3a54d715b9bf0ea19d4e71b",
- "note": "17:37 UTC: air weight by time on the close side measured: dive worst level step 4.84 (was 6.16), rise 4.44 (was 5.94); globe side with the pace: dive 4.42, rise 5.99 at 3307 (being given more room). Fault found: the Milky Way flashes at the right edge 3291 to 3294 in the paced rise (the sky still turns while it is in view); cure in work.",
+ "note": "17:52 UTC. Rise with the pace and the new tail: worst body level step 5.21 into 3309 at the draft tier (limit 6). Sky trial: the turn is finished early, behind the planet; with 17 frames the Milky Way still crosses the top right corner at 3281 to 3283, a shorter turn is rendering. Nothing committed yet.",
  "looks": [
+  {
+   "time": "2026-11-23T17:52:19.476Z",
+   "file": "20261123175219476-note-q1-3296-final.jpg",
+   "source": "../work/f/q1-3296-final.jpg",
+   "kind": "note",
+   "label": "3296 at the final tier with the pace",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T17:52:18.742Z",
+   "file": "20261123175218742-note-q2-corner-3276-3284.jpg",
+   "source": "../work/f/q2-corner-3276-3284.png",
+   "kind": "note",
+   "label": "top right corner 3276 to 3284 at full size: the Milky Way crosses the corner 3281 to 3283 (sky turn in 17 frames)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T17:52:18.108Z",
+   "file": "20261123175218108-note-q2-rise-3270-3285.jpg",
+   "source": "../work/f/q2-rise-3270-3285.jpg",
+   "kind": "note",
+   "label": "rise 3270 to 3285 draft, sky turn in 17 frames",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T17:52:17.509Z",
+   "file": "20261123175217509-note-q2-sky-b.jpg",
+   "source": "../work/f/q2-sky-b.jpg",
+   "kind": "note",
+   "label": "rise 3299 to 3314 draft, pace with the new tail",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T17:52:16.897Z",
+   "file": "20261123175216897-note-q2-sky-a.jpg",
+   "source": "../work/f/q2-sky-a.jpg",
+   "kind": "note",
+   "label": "rise 3283 to 3298 draft, pace with the new tail, sky turn done by 3287",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T17:49:37.006Z",
+   "file": "20261123174937006-frame-f03280.jpg",
+   "source": "out/work/jupiter/frames/q2/f03280.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3280, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3280,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "743c10b0a56aaca7"
+  },
   {
    "time": "2026-11-23T17:34:54.759Z",
    "file": "20261123173454759-note-p1-rise-3303-3314.jpg",
@@ -45,33 +99,11 @@
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T17:31:41.220Z",
-   "file": "20261123173141220-frame-f03295.jpg",
-   "source": "out/work/jupiter/frames/q1/f03295.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3295, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3295,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "743c10b0a56aaca7"
-  },
-  {
    "time": "2026-11-23T17:30:20.113Z",
    "file": "20261123173020113-note-q1-dive-c.jpg",
    "source": "../work/f/q1-dive-c.jpg",
    "kind": "note",
    "label": "jupiter dive close side 3048 to 3059, every frame, air weight by time (draft)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T17:30:19.523Z",
-   "file": "20261123173019523-note-q1-dive-b.jpg",
-   "source": "../work/f/q1-dive-b.jpg",
-   "kind": "note",
-   "label": "jupiter dive close side 3036 to 3047, every frame, air weight by time (draft)",
    "stop": "jupiter"
   }
  ]
