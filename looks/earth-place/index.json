@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-23T07:37:11.579Z",
+ "pushed": "2026-11-23T07:53:38.899Z",
  "head": "9fb358b942ba6d5ea096bc44f0249e1601b27314",
- "note": "S1 at the chosen place: horizon on horizon within 2 to 5 px; the globe side does not show the place yet (no plates, no glint, wide pale rim)",
+ "note": "S2 first plate: guide, repaint take, blend with the lay back",
  "looks": [
+  {
+   "time": "2026-11-23T07:53:38.183Z",
+   "file": "20261123075338183-note-p12-cmp.jpg",
+   "source": "out/work/earth/place/p12-cmp.jpg",
+   "kind": "note",
+   "label": "S2 lay back (left, contours of sharpness 1, 0.5, 0.25) beside repaint take 2 (right), same crop",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T07:53:37.604Z",
+   "file": "20261123075337604-note-p12-g-look.jpg",
+   "source": "out/work/earth/place/p12-g-look.jpg",
+   "kind": "note",
+   "label": "S2 first 12 degree plate, top down: lay back where steep, repaint elsewhere, seams still faint at the edge of the close canvas",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T07:53:36.373Z",
+   "file": "20261123075336373-note-p12-guide-look.jpg",
+   "source": "out/work/earth/place/p12-guide-look.jpg",
+   "kind": "note",
+   "label": "S2 guide for the 12 degree plate about the frame centre: pyramid level, lay back of the close image, guide",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-23T07:36:08.845Z",
    "file": "20261123073608845-note-ov-m.jpg",
@@ -43,36 +67,6 @@
    "kind": "note",
    "label": "first lay back of the close image, north up, 12 and 24 degrees about P, no repaint yet",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T07:05:16.720Z",
-   "file": "20261123070516720-note-f02101-check.jpg",
-   "source": "out/work/earth/place/sides/f02101-check.jpg",
-   "kind": "note",
-   "label": "S1 check, frame 2101: close side, globe side from the twin, half and half, both",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T07:05:13.046Z",
-   "file": "20261123070513046-note-f01915-check.jpg",
-   "source": "out/work/earth/place/sides/f01915-check.jpg",
-   "kind": "note",
-   "label": "S1 check, frame 1915: close side, globe side from the twin, half and half, both",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T01:16:44.655Z",
-   "file": "20261123011644655-job-frame-05021.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "neptune.rise frame 5021, final tier, from the running film job",
-   "stop": "neptune",
-   "segment": "neptune.rise",
-   "frame": 5021,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "job": "film"
   }
  ]
 }
