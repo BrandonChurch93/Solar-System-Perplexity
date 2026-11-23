@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T06:56:23.368Z",
- "head": "6da6c64146a47e56fe8d549e56883ed5b698ce67",
- "note": "start: reading the frozen build, baseline draft of 3720 before the rebuild",
+ "pushed": "2026-11-23T07:17:17.594Z",
+ "head": "b9b585d8e328e58110c8e732b82fd0ab9195e6e3",
+ "note": "measured the hero rings into a model by radius; chose the skim pose in one rigid world; writing the ring field shader",
  "looks": [
+  {
+   "time": "2026-11-23T07:17:17.023Z",
+   "file": "20261123071717023-note-ring_model.jpg",
+   "source": "assets-src/saturn/code/out/ring_model.png",
+   "kind": "note",
+   "label": "ring model by radius measured on the hero: luma, optical depth, ice brightness, colour"
+  },
+  {
+   "time": "2026-11-23T07:17:16.465Z",
+   "file": "20261123071716465-note-skim_pose_overlay.jpg",
+   "source": "../../../../tmp/v/skim_pose_overlay.jpg",
+   "kind": "note",
+   "label": "overlay of the rigid world on the approved close at the chosen skim pose (foot 2.44, height 0.30)"
+  },
   {
    "time": "2026-11-23T06:54:48.256Z",
    "file": "20261123065448256-still-f03720-16x9-draft-full.jpg",
