@@ -1,0 +1,85 @@
+{
+ "critic": "R3",
+ "score": 2,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 2,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-05.png",
+      "where": "entire globe surface, land, ocean, and clouds (crops A-X in image-06.png, image-07.png, image-08.png)",
+      "what": "Extreme radial zoom-blur and low-resolution texture stretching across the entire closer view; continents, coastlines, and South American terrain are heavily smeared and blurry, while cloud and highlight details break into blocky, stepped, pixelated radial streaks (especially visible in image-06.png crops B, D, E, H and image-08.png crops T, U, V).",
+      "fix": "Use higher-resolution planetary surface and cloud textures or multi-scale procedural detail for close camera distances, and either disable radial motion blur on static judged frames or increase motion-blur sampling and texture filtering so features do not smear into pixelated blocks."
+     },
+     {
+      "severity": "severe",
+      "file": "image-05.png",
+      "where": "Gulf of Mexico, Yucatan, Cuba, and Caribbean Sea (image-06.png crops A, F, G and image-07.png crops K, L, P, Q)",
+      "what": "A dense, noisy patch of fine cellular popcorn clouds and a bright orange-white sunlit island/reef patch in the central Caribbean abruptly terminate with a hard circular patch border, clashing starkly with the surrounding low-resolution smeared base map.",
+      "fix": "Blend high-resolution local detail patches seamlessly into the global base map with wide, feathered transitions and matching resolution/blur characteristics, or use a unified high-resolution global cloud and bathymetry map."
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "upper right limb (image-07.png crop N)",
+      "what": "The planetary limb and atmospheric edge exhibit a dull, muddy greenish-brown double-edge halo with color banding against space instead of a clean atmospheric scattering falloff.",
+      "fix": "Ensure the atmospheric scattering shader maintains proper Rayleigh blue/cyan spectral falloff and smooth alpha blending at grazing angles on the darkened limb."
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "upper right limb aurora and city lights on the day-night terminator (image-02.png crops C, E, H)",
+      "what": "The green and red aurora curtains look slightly airbrushed with soft streaky columns, and golden city lights appear along the sunlit eastern coast of South America and Caribbean islands before the terminator has fully transitioned to night.",
+      "fix": "Mask city emissive lights strictly to the night side past the twilight zone, and add finer vertical ray structure to the aurora."
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "upper right sky (image-03.png crop M)",
+      "what": "The Moon has a slightly soft, low-contrast airbrushed appearance with a very sharp geometric terminator.",
+      "fix": "Sharpen lunar crater micro-detail and normal mapping near the lunar terminator."
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-14.png",
+      "where": "Americas, Andes, hurricane, and limb-cloud tiles",
+      "what": "land, clouds, coasts, and city lights are dragged into parallel streaks and do not hold detail at native size",
+      "fix": "remove the directional blur so terrain and cloud edges stay sharp"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "sky beside the disc, and the moon at the upper right",
+      "what": "stars stay crisp points while the globe and moon are streaked, so the blur reads as a filter on one layer",
+      "fix": "blur the whole exposure together, or leave the planet and moon as sharp as the stars"
+     },
+     {
+      "severity": "minor",
+      "file": "image-16.png",
+      "where": "sunlit cloud strip and the southern coast",
+      "what": "bright edges along the streaks break into stepped dashes and faint color fringes",
+      "fix": "stop resampling those edges through the blur"
+     }
+    ]
+   }
+  }
+ ]
+}

@@ -3,7 +3,7 @@ import { execFileSync } from 'node:child_process'
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import type { Config, Segment } from '../../src/config'
-import { judgedWindow } from '../../src/director/handover'
+import { handoverOf, judgedWindow } from '../../src/director/handover'
 import { coverWindow, setsForFrame } from '../../src/director/timeline'
 import '../../src/director/plans' // each plan sets its stop's cover window or its handover
 import { openCapture, renderPngFresh, type Session } from './browser'
@@ -56,10 +56,17 @@ export function spread(first: number, last: number, limit: number): number[] {
   return Array.from({ length: count }, (_, i) => count === 1 ? first : first + Math.round(i * (last - first) / (count - 1)))
 }
 
-export function sheetFrames(cfg: Config, segment: Segment, cover: boolean): FrameSpec[] {
+export function sheetFrames(cfg: Config, segment: Segment, cover: boolean, placeWindow = false): FrameSpec[] {
   const limit = cfg.raw.critics.contactSheetFrames
   let frames: number[]
-  if (cover) {
+  const h = cover && placeWindow && (segment.kind === 'dive' || segment.kind === 'rise') ? handoverOf(segment.stop, segment.kind) : null
+  if (h) {
+    // the run is centred on the place window; a spare half frame goes to the end where the sides change, the last frame of a dive, the first of a rise
+    const count = Math.min(segment.endFrame - segment.firstFrame, limit)
+    const start = (h.placeFirstFrame + h.placeLastFrame - (count - 1)) / 2
+    const first = Math.max(segment.firstFrame, Math.min(segment.endFrame - count, segment.kind === 'dive' ? Math.ceil(start) : Math.floor(start)))
+    frames = Array.from({ length: count }, (_, i) => first + i)
+  } else if (cover) {
     const window = judgedWindow(segment)
     if (window === null) throw new Error(segment.id + ' has neither a cover window nor a handover')
     const count = Math.min(window.lastFrame - window.firstFrame + 1, limit)
