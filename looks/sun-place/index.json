@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T08:11:34.561Z",
+ "pushed": "2026-11-23T08:30:01.767Z",
  "head": "df56a11e24cac54aa0d812857a52a75c0c331463",
- "note": "rise as one path, T in an all photosphere frame, no flare, weights by height; loops and map tone still to fix",
+ "note": "rise by the new steady move, T in frame 216 with no sky in frame; speckle on plage cured; short spike at left loop foot still there, fix rendering",
  "looks": [
+  {
+   "time": "2026-11-23T08:30:00.994Z",
+   "file": "20261123083000994-note-r4c.jpg",
+   "source": "out/work/sun/pl/r4c.jpg",
+   "kind": "note",
+   "label": "rise draft full size: 216 (T), 228, 234, 240, spot and loops from above",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T08:29:59.764Z",
+   "file": "20261123082959764-note-r4-a.jpg",
+   "source": "out/work/sun/pl/r4-a.jpg",
+   "kind": "note",
+   "label": "rise draft, frames 204 to 246, new move, colour speckle cured, loop spike half cured",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-23T08:11:33.664Z",
    "file": "20261123081133664-note-r1-b.jpg",
@@ -57,34 +73,6 @@
    "kind": "note",
    "label": "S1 check: globe side from the solved camera with the first plate (left clean, right with the predicted limb marked) beside the kept still of frame 90",
    "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T07:20:34.282Z",
-   "file": "20261123072034282-frame-j270.jpg",
-   "source": "out/work/sun/pl/j270.png",
-   "kind": "frame",
-   "label": "sun.hold frame 270, final tier",
-   "stop": "sun",
-   "segment": "sun.hold",
-   "frame": 270,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "247ebad7e038ce06"
-  },
-  {
-   "time": "2026-11-23T07:19:15.386Z",
-   "file": "20261123071915386-frame-j090.jpg",
-   "source": "out/work/sun/pl/j090.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 90, final tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 90,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "247ebad7e038ce06"
   }
  ]
 }
