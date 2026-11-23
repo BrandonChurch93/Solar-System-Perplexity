@@ -1,42 +1,56 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-23T20:45:07.255Z",
- "head": "1fc262b031ee70ecc0a1c9110fbaebe7f48138fa",
- "note": "ninth bake: proofs green, G13 and handover report running for the READY line",
+ "pushed": "2026-11-23T21:20:28.110Z",
+ "head": "3ae32d022c3df90851ca03f0f28ae4e4751aacc3",
+ "note": "ninth bake named READY; trial on the border round the lay back (grain hold, wandering edge)",
  "looks": [
   {
-   "time": "2026-11-23T20:45:06.372Z",
-   "file": "20261123204506372-note-p16-detail.jpg",
-   "source": "out/work/place/view/p16-detail.jpg",
+   "time": "2026-11-23T21:20:27.325Z",
+   "file": "20261123212027325-note-g03-view.jpg",
+   "source": "out/work/place/view/g03-view.jpg",
    "kind": "note",
-   "label": "trial not taken: 1.6 plate with broadDetail 0.85",
+   "label": "0.3 plate from above, gain 1.6: left ninth bake, right trial with grain hold and wandering fan edge",
    "stop": "mars"
   },
   {
-   "time": "2026-11-23T20:45:05.653Z",
-   "file": "20261123204505653-note-xz2446.jpg",
-   "source": "out/work/place/view/xz2446.jpg",
+   "time": "2026-11-23T21:20:26.361Z",
+   "file": "20261123212026361-note-h2696-b9.jpg",
+   "source": "out/work/place/view/h2696-b9.jpg",
    "kind": "note",
-   "label": "ninth bake, 2446 at draft, native crop: near ground dark with bright crest lines",
+   "label": "ninth bake, 2696 at draft: smooth picture ground ends on ground with bright crests, straight edge at the right",
    "stop": "mars"
   },
   {
-   "time": "2026-11-23T20:38:58.918Z",
-   "file": "20261123203858918-job-frame-02250.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "mars.hold frame 2250, draft tier, texels view, from the running measure job",
+   "time": "2026-11-23T21:15:35.264Z",
+   "file": "20261123211535264-frame-m2726.jpg",
+   "source": "out/work/place/view/m2726.png",
+   "kind": "frame",
+   "label": "mars.rise frame 2726, draft tier",
    "stop": "mars",
-   "segment": "mars.hold",
-   "frame": 2250,
+   "segment": "mars.rise",
+   "frame": 2726,
    "tier": "draft",
    "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
+   "diag": "beauty",
+   "engine": "45f909e84c1a1464"
   },
   {
-   "time": "2026-11-23T20:36:17.498Z",
-   "file": "20261123203617498-frame-final-2580.jpg",
+   "time": "2026-11-23T21:14:20.451Z",
+   "file": "20261123211420451-frame-m2454.jpg",
+   "source": "out/work/place/view/m2454.png",
+   "kind": "frame",
+   "label": "mars.dive frame 2454, draft tier",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2454,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "45f909e84c1a1464"
+  },
+  {
+   "time": "2026-11-23T21:09:49.544Z",
+   "file": "20261123210949544-frame-final-2580.jpg",
    "source": "out/work/place/view/final-2580.png",
    "kind": "frame",
    "label": "mars.terrain frame 2580, final tier",
@@ -49,8 +63,8 @@
    "engine": "45f909e84c1a1464"
   },
   {
-   "time": "2026-11-23T20:35:18.587Z",
-   "file": "20261123203518587-frame-final-2325.jpg",
+   "time": "2026-11-23T21:08:48.583Z",
+   "file": "20261123210848583-frame-final-2325.jpg",
    "source": "out/work/place/view/final-2325.png",
    "kind": "frame",
    "label": "mars.hold frame 2325, final tier",
@@ -63,9 +77,9 @@
    "engine": "45f909e84c1a1464"
   },
   {
-   "time": "2026-11-23T20:34:25.136Z",
-   "file": "20261123203425136-frame-f02782-draft.jpg",
-   "source": "out/work/samebytes/b9/f02782-draft.png",
+   "time": "2026-11-23T21:07:55.163Z",
+   "file": "20261123210755163-frame-f02782-draft.jpg",
+   "source": "out/work/samebytes/b9m/f02782-draft.png",
    "kind": "frame",
    "label": "mars.travel frame 2782, draft tier",
    "stop": "mars",
@@ -77,9 +91,9 @@
    "engine": "45f909e84c1a1464"
   },
   {
-   "time": "2026-11-23T20:33:37.082Z",
-   "file": "20261123203337082-frame-f02212-draft.jpg",
-   "source": "out/work/samebytes/b9/f02212-draft.png",
+   "time": "2026-11-23T21:07:06.644Z",
+   "file": "20261123210706644-frame-f02212-draft.jpg",
+   "source": "out/work/samebytes/b9m/f02212-draft.png",
    "kind": "frame",
    "label": "earth.travel frame 2212, draft tier",
    "stop": "earth",
@@ -89,14 +103,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "45f909e84c1a1464"
-  },
-  {
-   "time": "2026-11-23T20:30:54.326Z",
-   "file": "20261123203054326-note-xz2440.jpg",
-   "source": "out/work/place/view/xz2440.jpg",
-   "kind": "note",
-   "label": "2440 draft: left eighth bake (ridges run to the mesa like spokes), right ninth",
-   "stop": "mars"
   }
  ]
 }
