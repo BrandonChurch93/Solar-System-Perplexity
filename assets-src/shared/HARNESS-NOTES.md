@@ -328,6 +328,28 @@ The rule when a place window is longer than the sheet: the sheet is still `criti
 
 G13 and detail from functions (asked by `saturn_coder`, answered by mail, copy to the Builder): the texels view counts only the number the material hands to `diagOut`; it cannot see functions. A true report: the cells of the finest octave that is really drawn at that pixel, from the same expression and uniforms as the beauty path, counted only where the function detail has its weight (the Sun's ground switches at half weight), never a constant, and the counted flag left alone. The tools have no rule on contrast; G17 only looks at the judged hold and terrain frames, so the proof that the detail is seen is a native crop and a sharpness number from the coder, and the bar is the Builder's.
 
+## Mail 328 (2026-11-23 19:07 UTC): a report beside G13, what the material says against what the picture carries
+
+Asked: a test that holds the texels view against a sharpness measure of the nograin frame, as a report beside G13 (no threshold moves, no pass rule changes), per frame or frame list, on any commit, through `npm run measure` with a flag.
+
+Built, four files, nothing under `src/`, `tools/lib/` untouched:
+- `tools/measure/carried.ts` (new): `carried(texels, picture, minTexelsPerPixel)` and its definition `CARRIED` (`report-against-picture-v1`). Grid 32 by 18 (60 px tiles in the master). A pixel is used when it counts in the texels view and all pixels within 6 px count too, so limbs and matte edges add nothing; a tile is judged when half of its pixels are used. Per tile: the median report (red byte over 255 times 2, the view cannot say more than 2), the share of soft pixels, the mean luma, the energy of the band of G17 (sigma 0.6 minus 2.0, mean square), the energy of the band below (2.0 minus 6.0). Flag: says sharp (median at least `detail.minTexelsPerPixel`), not dark (luma above 0.04), energy under 2e-5 (the flat tile floor of G17). Also the tiles by band of the report (under 1.25, 1.25 to under 1.9, 1.9 and over).
+- `tools/measure.ts`: `--carried FRAMES` (list and ranges), `--tier` for the picture (default review, texels always draft). It renders, prints, writes `out/work/measure/<stop>-carried.json` and the PNGs in `out/work/measure/<stop>/carried-NNNNN-*.png`, then leaves. The G5, G13, G17 path is as it was and `<stop>.json` is not written.
+- `tools/measure/README.md`: a section on it. `tests/carried.test.ts`: six tests on synthetic pictures.
+
+How to run it on another commit without merging: a worktree of that commit, `node_modules` linked, `tools/measure.ts` and `tools/measure/carried.ts` copied in (the tools of a284d546 were the same as main's), nothing committed there.
+
+What the scale means (from the test picture, noise drawn at 1, 2, 4, 8, 16 px per cell with linear filtering): fine over coarse 13.6, 4.3, 0.68, 0.12, 0.05. A picture of nature with detail at every scale sits near 1. So a ratio near 1 is detail down to the pixel, a ratio near 0.1 is a map drawn eight times too large. The energy is contrast squared: 4e-5 is a band signal of 0.6 percent of full scale (rms), the floor 2e-5 is 0.45 percent.
+
+First use, 19:11 to 19:41 UTC, one render at a time:
+- Saturn, `agent/saturn-code` a284d546, frames 3804, 3810, 3815, 3820, 3828, draft (1.5 min) and review (12 min). G13: 0 soft pixels in all five, least 1.051, 1.012, 1.004, 1.004, 1.145. Globe tiles (report under 1.9, 145 to 186 tiles a frame): band energy median 4.0e-5 to 5.5e-5 at both tiers for 3804 to 3820 (2.6e-5 to 3.1e-5 at review in 3828, a fast frame, where the review tier spreads 16 samples over the shutter and so adds motion blur), fine over coarse 0.75 to 0.97 (0.57 to 0.66 in 3828 review). Flagged at review: 39, 36, 34, 40, 56 tiles of 451 to 459; 32 to 39 of them in one patch at tiles x 16 to 24, y 1 to 11, the lit side of the globe behind the limb, luma 0.90, fine 1.6e-5 and coarse 1.7e-5: flat at both scales, washed out by light, not a mosaic. The twelve tiles nearest the least report (x 29 to 31, y 8 to 13, report 1.00 to 1.09 in 3804 to 3820) carry 1.3e-5 to 6.2e-5 with ratio 0.42 to 1.06 at review; flagged among them: 2, 1, 0, 0 and 3 in 3828.
+- Sun on main c6d06a87 (merged into my branch), frames 60, 120 (terrain), 204, 208, 212, 216, 220 (rise) at draft, 120 and 216 at review: no tile flagged in any; band energy median 2.2e-3 to 5.0e-3 at draft, 2.6e-3 and 1.8e-3 at review; least tile 1.8e-4, nine times the floor; fine over coarse 0.42 to 0.83.
+- Saturn on main c6d06a87, same frames, draft: another camera (the night side of the globe is in frame and counted), so it is not a before and after. 51 to 65 flagged; their median luma is 0.07 to 0.25 in four frames (the night side) and 0.74 in 3810.
+
+Reading: Saturn's globe says sharp and the picture carries detail of the right shape (ratio like the Sun's, far from an enlarged map), but faint: 40 to 120 times less energy than the Sun, two to three times the floor at the median, and 32 to 39 tiles of the globe under it in the bright patch. The report is true to its drawing; whether that contrast is enough is the Builder's bar. Copies of the JSONs: `/home/user/workspace/scratch/saturn-a284d546-draft.json`, `saturn-a284d546-review.json`, `saturn-main-c6d06a87-draft.json`, `sun-main-c6d06a87-draft.json`, `sun-main-c6d06a87-review.json` (not in the repo).
+
+Not run: the final tier (never), Saturn's hold and dive, other stops. Disk: `worker` removed (5.2 GB), a worktree `/home/user/workspace/sat` at a284d546 holds the Saturn run.
+
 ## Not covered
 
 - No run at the final or review tier, so the cost model (4.3 s per sample, a fast frame four times a slow one) is not checked against a real worker; `--sample-seconds` moves it.
