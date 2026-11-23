@@ -1,9 +1,65 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-23T07:46:47.724Z",
- "head": "49e63f04916d3187abec573d93cdf67fb44ed625",
- "note": "march deck v2 at 3150: coarse image fields plus functions is far too poor; next the image field at its true resolved scale in a view matched chart",
+ "pushed": "2026-11-23T08:26:33.274Z",
+ "head": "3c8ae1d0a4bf0f4427c586bacff079bb284bf8bf",
+ "note": "v5: image field in a view matched chart on true relief, limb glow from a measured table; outside the wedge still the poor function deck (plates next)",
  "looks": [
+  {
+   "time": "2026-11-23T08:26:32.668Z",
+   "file": "20261123082632668-note-v5-three.jpg",
+   "source": "../work/f/v5-three.jpg",
+   "kind": "note",
+   "label": "v5 frames 3060, 3150, 3239 in a row, draft"
+  },
+  {
+   "time": "2026-11-23T08:26:32.152Z",
+   "file": "20261123082632152-note-v5-cmp.jpg",
+   "source": "../work/f/v5-cmp.jpg",
+   "kind": "note",
+   "label": "v5 frame 3150: approved image, render, difference x4"
+  },
+  {
+   "time": "2026-11-23T08:26:31.594Z",
+   "file": "20261123082631594-note-v5-consec.jpg",
+   "source": "../work/f/v5-consec.jpg",
+   "kind": "note",
+   "label": "v5 consecutive frames 3148 to 3153, draft"
+  },
+  {
+   "time": "2026-11-23T08:26:30.766Z",
+   "file": "20261123082630766-note-v5-sheet15.jpg",
+   "source": "../work/f/v5-sheet15.jpg",
+   "kind": "note",
+   "label": "v5 surface view, every 15th frame 3060 to 3239, draft, no blur"
+  },
+  {
+   "time": "2026-11-23T08:24:52.922Z",
+   "file": "20261123082452922-frame-f03151.jpg",
+   "source": "out/work/jupiter/frames/v5/f03151.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3151, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3151,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "2d9dda353bfd7b6d"
+  },
+  {
+   "time": "2026-11-23T07:55:58.136Z",
+   "file": "20261123075558136-still-v3-3150.jpg",
+   "source": "out/work/stills/v3-3150.png",
+   "kind": "still",
+   "label": "jupiter.terrain frame 3150, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "247ebad7e038ce06"
+  },
   {
    "time": "2026-11-23T07:46:47.179Z",
    "file": "20261123074647179-note-near-albedo-s.jpg",
@@ -17,48 +73,6 @@
    "source": "../work/f/v2-3150.jpg",
    "kind": "note",
    "label": "jupiter terrain 3150 draft, march deck v2: coarse image fields plus function streaks and towers, far too poor beside the approved image"
-  },
-  {
-   "time": "2026-11-23T07:43:20.005Z",
-   "file": "20261123074320005-still-v2-3150.jpg",
-   "source": "out/work/stills/v2-3150.png",
-   "kind": "still",
-   "label": "jupiter.terrain frame 3150, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "247ebad7e038ce06"
-  },
-  {
-   "time": "2026-11-23T07:21:08.125Z",
-   "file": "20261123072108125-note-near-lay-s.jpg",
-   "source": "../work/f/near-lay-s.jpg",
-   "kind": "note",
-   "label": "tool check: colour laid back onto the relief, blurred to what the image truly resolves; a field source only, the far part comes from code"
-  },
-  {
-   "time": "2026-11-23T07:21:07.434Z",
-   "file": "20261123072107434-note-image-height-s.jpg",
-   "source": "../work/f/image-height-s.jpg",
-   "kind": "note",
-   "label": "tool check: cloud top relief of the approved image from the depth tool, the base for laying fields back onto their true surface"
-  },
-  {
-   "time": "2026-11-23T07:09:48.207Z",
-   "file": "20261123070948207-note-layback-wide-s.jpg",
-   "source": "../work/layback-wide-s.jpg",
-   "kind": "note",
-   "label": "tool check: approved close image laid back top down, 60 x 40 units; the far part is stretched and will be made by code"
-  },
-  {
-   "time": "2026-11-23T07:09:47.642Z",
-   "file": "20261123070947642-note-layback-near-s.jpg",
-   "source": "../work/layback-near-s.jpg",
-   "kind": "note",
-   "label": "tool check: approved close image laid back top down near the storm (12 x 10 units), a layout guide only"
   }
  ]
 }
