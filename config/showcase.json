@@ -161,7 +161,7 @@
     "maxEnlarge": 3,
     "maxRateOverMean": 2,
     "coastFrames": 8,
-    "maxBlurPx": 6,
+    "maxBlurPx": 14,
     "blurEaseFrames": 12,
     "skyFloor": {"marginDeg": 0.25, "featherDeg": 4},
     "place": {"scale": 2, "margin": 0.25, "maxShare": 0.5, "maxEdge": 4800, "edge": 0.8, "seen": 0.5, "enlargeSoft": 0.5, "lens": 1, "maxGradTexels": 8, "limbReachDeg": 0, "limbHoldDeg": [0.25, 0.75], "edgeIn": [0, 0, 0, 0], "toneIn": [0, 0, 0, 0], "tonePower": 0.5, "toneReach": 0.045, "toneCell": 8, "toneLandDeg": [1, 6]},
