@@ -1,0 +1,68 @@
+{
+  "source": "the ice that is part of the ring sheet itself: sizes in planet radii, angles in degrees. Read by ice.ts. Everything lies on rows in radius; a row turns rigidly at the orbital rate of its radius, so every piece rides its own orbit and the rows shear against each other. The ice that is seen grain by grain near the lens is in grains.json.",
+  "orbit": {
+    "note": "the radius of the orbit that keeps pace with the globe's spin (the spin itself is spinDegPerSecond in plan.ts); the other orbits follow from it by Kepler's third law",
+    "syncRadius": 1.86
+  },
+  "glintWhite": 0.5,
+  "sweep": 1.0,
+  "note": "glintWhite: how far a spark of the sand is white rather than the colour of the ice. sweep: the share of the way the pixel's point slides over the ice during one take by which the ringlets and the sand are filtered (1: the true blur of the shutter).",
+  "spokes": {
+    "note": "soft radial smudges on the dense ring that turn with the globe. span: the radii they lie between; edge: how softly they end there; strength: how far the strongest moves the logarithm of the brightness (seen against the light they are bright); per spoke: its azimuth in the middle of the hold (degrees, against the turn of the orbits), its half width in degrees, how far it leans per radius, its tone over the strongest. Spokes show only near the sheet (not in the hold).",
+    "span": [
+      1.6,
+      1.93
+    ],
+    "edge": 0.08,
+    "strength": 0.07,
+    "at": [
+      104,
+      117,
+      133
+    ],
+    "widthDeg": [
+      1.6,
+      2.4,
+      1.2
+    ],
+    "leanDegPerRadius": [
+      -14,
+      -22,
+      -8
+    ],
+    "tone": [
+      1,
+      0.7,
+      0.8
+    ]
+  },
+  "sand": {
+    "note": "the sand of the sheet: the grain of the sheet as it is seen from afar, in the hold. It has no strength near the sheet (it fades with the nearness of the lens, by the logarithm of the camera's height as the light does), where the ice is seen grain by grain (grains.json). It has grains of many sizes, from finest by doublings; a size is a pair, across and along the orbit, and each size is a field of smooth noise that lies in the sheet, every row of cells on its own orbit. Seen at a slant a round grain would be a dash, so what a layer shows at a point is the sand whose grains are its number of pixels across and along the orbit there, blended between the sizes next to that; where the sheet is so far that the coarsest sand is finer than that, the sand merges into the sheet. Per layer: pixels; dense and thin: how far it moves the logarithm of the brightness in the dense and in the thin rings; sparks: 1 if its brightest grains are white sparks. hard: a grain's edge takes the share 1 minus twice this of the way to the next grain (0: the smoothest noise). tau: the share of the brightness that also moves the optical depth. far: the share of a layer's strength that the hold shows. spark: how strong the sparks are in the dense and in the thin rings, from the first value of the noise to the second; spark.gain: the brightness of a spark.",
+    "finest": 0.0002,
+    "doublings": 7,
+    "layers": [
+      {
+        "pixels": 1.1,
+        "dense": 0.3,
+        "thin": 0.28,
+        "sparks": 1
+      },
+      {
+        "pixels": 5.6,
+        "dense": 0.08,
+        "thin": 0.08,
+        "sparks": 0
+      }
+    ],
+    "tau": 0.5,
+    "spark": {
+      "dense": 0.0,
+      "thin": 0.6,
+      "from": 0.97,
+      "to": 1.0,
+      "gain": 1.0
+    },
+    "hard": 0.2,
+    "far": 0.5
+  }
+}

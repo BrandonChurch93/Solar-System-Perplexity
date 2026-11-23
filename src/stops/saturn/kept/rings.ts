@@ -1,11 +1,11 @@
 import * as THREE from 'three'
-import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
+import { DIAG_GLSL, diagUniform, gradUniform } from '../../../diagnostics/diag'
 import { LIMB_GLSL } from './globe'
-import { INVERSE_FILMIC_GLSL } from '../../post/chain'
-import azimuth from './azimuth.json'
+import { INVERSE_FILMIC_GLSL } from '../../../post/chain'
+import azimuth from '../azimuth.json'
 import { RING_LAYOUT_GLSL, RING_PROFILE_GLSL } from './profile'
-import ringsJson from './rings.json'
-import { SHOT_GLSL } from './shot'
+import ringsJson from '../rings.json'
+import { SHOT_GLSL } from '../shot'
 
 export interface RingLook {
   shadowFloor: [number, number, number]
