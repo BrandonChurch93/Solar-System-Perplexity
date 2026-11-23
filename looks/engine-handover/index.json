@@ -1,9 +1,16 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-23T20:57:47.598Z",
+ "pushed": "2026-11-23T21:04:59.179Z",
  "head": "a9f7d7af6793e4ab99617e80c1391e5fc305fb27",
- "note": "MAIL 342: the horizon across T measured on Mars (before), the border of point b traced into the stop's own plates, Mercury 738 to 741 film beside globe alone",
+ "note": "MAIL 342 c: Mercury 738 to 741 with and without the feather beside the globe alone",
  "looks": [
+  {
+   "time": "2026-11-23T21:04:57.749Z",
+   "file": "20261123210457749-note-merc-in4.jpg",
+   "source": "../../../../tmp/hz/merc-in4.png",
+   "kind": "note",
+   "label": "Mercury 740 and 738 lower left at full size, main's Mercury: film (no edgeIn), film with in=0.4,0.4,0.4,0.25, globe alone: the straight sides go with the feather, the pale band left is the globe's own"
+  },
   {
    "time": "2026-11-23T20:57:33.319Z",
    "file": "20261123205733319-note-merc-740-crop.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/tone/b-2696-three.png",
    "kind": "note",
    "label": "Mars 2696: film, globe alone, weight of the picture: the border sits at the same pixels in the film and in the globe alone"
-  },
-  {
-   "time": "2026-11-23T20:57:28.478Z",
-   "file": "20261123205728478-note-hz-dive-off-R.jpg",
-   "source": "../../../../tmp/tone/hz-dive-off-R.png",
-   "kind": "note",
-   "label": "Mars dive across T 2454, film, horizon at full size, right 720 px (before)"
   }
  ]
 }
