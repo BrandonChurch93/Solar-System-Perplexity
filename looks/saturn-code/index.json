@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T12:58:11.357Z",
+ "pushed": "2026-11-23T13:25:30.497Z",
  "head": "f9007f07a1ffc3c29ef4d022f13b96c432236b2d",
- "note": "blocks third version: white ice with own shapes, floaters through the whole skim; review tier proofs rendering",
+ "note": "Mail 276 taken: working on 1 (sheet reads as a floor) and 2 (woven hatch); these are the last pictures before that work",
  "looks": [
+  {
+   "time": "2026-11-23T13:25:29.850Z",
+   "file": "20261123132529850-note-f_3720.jpg",
+   "source": "../../../../tmp/v/b5r/f_3720.png",
+   "kind": "note",
+   "label": "3720 review tier, blocks gathered, grain over the whole shutter; the hatch at lower left is still there (Mail 276 point 2)"
+  },
+  {
+   "time": "2026-11-23T13:25:29.216Z",
+   "file": "20261123132529216-note-f_3720.jpg",
+   "source": "../../../../tmp/v/b5/f_3720.png",
+   "kind": "note",
+   "label": "3720 draft, blocks gathered in groups, grain over the whole shutter"
+  },
+  {
+   "time": "2026-11-23T13:25:28.535Z",
+   "file": "20261123132528535-note-f_3720.jpg",
+   "source": "../../../../tmp/v/b4r/f_3720.png",
+   "kind": "note",
+   "label": "3720 review tier, blocks fourth version before gathering (17 takes, 5.7 s a take)"
+  },
   {
    "time": "2026-11-23T12:58:09.987Z",
    "file": "20261123125809987-note-c3630_s.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/v/b2/holdpair.png",
    "kind": "note",
    "label": "hold 3465 crops: head left, now right (old stones gone from the hold)"
-  },
-  {
-   "time": "2026-11-23T12:40:14.722Z",
-   "file": "20261123124014722-note-c3809_s.jpg",
-   "source": "../../../../tmp/v/b2/c3809_s.jpg",
-   "kind": "note",
-   "label": "3809 draft, end of the skim"
-  },
-  {
-   "time": "2026-11-23T12:40:14.041Z",
-   "file": "20261123124014041-note-f_3720.jpg",
-   "source": "../../../../tmp/v/b2r/f_3720.png",
-   "kind": "note",
-   "label": "3720 review tier, fitted pose, second blocks"
-  },
-  {
-   "time": "2026-11-23T12:40:13.349Z",
-   "file": "20261123124013349-note-sheet.jpg",
-   "source": "../../../../tmp/v/b2/sheet.jpg",
-   "kind": "note",
-   "label": "draft sheet 3567 3600 3625 3630 3675 3720 3765 3809 3815 3840 3866 with soft outer rim and second blocks"
   }
  ]
 }
