@@ -1,0 +1,237 @@
+{
+ "critic": "R3",
+ "score": 5.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-02.png",
+      "where": "crop C upper-right solar disk (also image-03.png crop M upper-left and image-01.png upper-center disk)",
+      "what": "an axis-aligned 90-degree rectangular patch corner and seam cuts across the solar granulation where a darker orange tile meets a paler yellow region",
+      "fix": "blend or regenerate the solar surface texture seamlessly across 3D/UV patch boundaries so no straight vertical or horizontal tile edges remain"
+     },
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "crop A upper crescent terminator and interior of the planet (also image-07.png crop P and image-05.png center)",
+      "what": "the inner edge of the backlit crescent forms a doubled ring with an unnatural orange-to-cyan/green color fringe, while the dark nightside is blotchy and soft with stray bright white/pink pixel specks near 1-2 o'clock",
+      "fix": "smooth the atmospheric scattering falloff across the terminator without chromatic ringing, sharpen and unify the nightside surface detail, and remove the stray bright pixel fireflies/bleed-through"
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "crops A, E, and G solar limb and prominences (also image-03.png crops L, N, and R)",
+      "what": "the coronal prominence loops are noticeably blurry and airbrushed at native scale compared to the crisp photosphere granulation, and a hard geometric rim line separates the right sphere edge from the corona",
+      "fix": "increase fine filament detail in the coronal loops to match native pixel sharpness and soften the photosphere-to-chromosphere limb transition"
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "crop C lower-left active region (also image-03.png crop L lower-right and crop R upper-left)",
+      "what": "bright solar highlights clip to flat, featureless white patches and adjacent granulation appears softer and lower-contrast than the upper-right globe",
+      "fix": "preserve high-frequency granulation detail in bright active regions with smoother highlight roll-off instead of hard white clipping"
+     },
+     {
+      "severity": "minor",
+      "file": "image-06.png",
+      "where": "crop A lower-left planet limb around 7-8 o'clock (also image-07.png crop P)",
+      "what": "the thin backlit orange rim breaks into jagged single-pixel stair-steps with smeared diagonal streaks just inside the limb",
+      "fix": "apply higher supersampling/anti-aliasing along the thin grazing-angle atmospheric rim and fix texture stretching near the limb"
+     },
+     {
+      "severity": "minor",
+      "file": "image-03.png",
+      "where": "crops K and L lower-middle corona left of the solar limb (also image-01.png left of limb)",
+      "what": "a strictly horizontal bright streak extends straight left across the K/L boundary like a screen-space bloom artifact rather than radial coronal structure",
+      "fix": "use radially isotropic bloom or volumetric coronal rays instead of axis-aligned horizontal blur streaks"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-10.png",
+      "where": "globe in crop A, lit cloud banks",
+      "what": "clouds jump from dark ocean to flat near-white in one or two pixels, and the terrain under them is soft and airbrushed",
+      "fix": "feather the cloud edges and add finer structure in the clouds and coastlines"
+     },
+     {
+      "severity": "minor",
+      "file": "image-14.png",
+      "where": "limb and disk of the reddish globe in crop A",
+      "what": "the surface is smooth, and the orange limb drops to a thin blue fringe in about two pixels instead of blending",
+      "fix": "soften the limb and widen the atmospheric falloff into the surface"
+     },
+     {
+      "severity": "minor",
+      "file": "image-10.png",
+      "where": "small moon, lower right of the globe crop",
+      "what": "the moon is a soft speck about a dozen pixels across, with no resolved surface",
+      "fix": "shade a small resolved body, or keep it a dim point"
+     }
+    ]
+   }
+  },
+  {
+   "part": 3,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-22.png",
+      "where": "crop A, right side of the rings",
+      "what": "The planet shadow reads as a near-black cutout with ruler-straight edges; it abruptly wipes out the ring bands and chops off the bright outer rim.",
+      "fix": "Project the globe's umbra and penumbra onto the ring plane and preserve subtle ring structure through the shadow transition."
+     },
+     {
+      "severity": "minor",
+      "file": "image-23.png",
+      "where": "crop Q, lit globe and blue polar cap",
+      "what": "The blue cap is a soft spot and the surrounding cloud bands are smooth concentric arcs, giving the globe an airbrushed finish.",
+      "fix": "Break up the cap and bands with subtle, irregular cloud detail while keeping the broad color transitions."
+     },
+     {
+      "severity": "minor",
+      "file": "image-18.png",
+      "where": "crop C, lit rock beneath the dark upper-right face",
+      "what": "Fine rock grain becomes dense, high-contrast speckle on the lit ridges while the nearby shadowed pits look comparatively soft.",
+      "fix": "Reduce the finest bump contrast and retain more mid-scale relief and tonal separation inside the pits."
+     },
+     {
+      "severity": "minor",
+      "file": "image-20.png",
+      "where": "crops S and V, brightest stars",
+      "what": "A few bright stars spread into soft round blobs instead of retaining tight cores.",
+      "fix": "Tighten the star cores and reserve broader bloom for the brightest points."
+     }
+    ]
+   }
+  },
+  {
+   "part": 4,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-29.png",
+      "where": "moon at upper left (~395,185), all round its limb",
+      "what": "a dark ring a few pixels wide surrounds the moon and blocks out the stars behind it, so it reads as a cut-out pasted onto the sky; the limb also steps in visible pixels",
+      "fix": "stop the occlusion mask at the true limb (no dilated black matte), antialias the edge, and render the moon at a higher internal resolution"
+     },
+     {
+      "severity": "major",
+      "file": "image-29.png",
+      "where": "blue planet (~700,583), area just outside the limb and the ring ellipses",
+      "what": "a dark disc reaches past the limb and darkens the sky and stars around the planet. The rings are only faint dark concentric lines that look like a halo or a ripple artifact, not lit ring material",
+      "fix": "remove the dark matte or shadow outside the limb, give the rings a lit, translucent particle look with forward-scatter brightness, and let the stars show through the gaps"
+     },
+     {
+      "severity": "major",
+      "file": "image-26.png",
+      "where": "crops F and E (Milky Way core, lower centre of image-25); image-28 crop U; image-32 crop W",
+      "what": "the galactic dust has repeated diagonal brush-stroke streaks, a smeared painted or flow-noise texture that looks airbrushed rather than like fractal dust lanes",
+      "fix": "replace the directional streak noise with multi-octave fractal dust and filament structure at varied scales, and break up the repeated stroke direction"
+     },
+     {
+      "severity": "minor",
+      "file": "image-25.png",
+      "where": "lower edge of the Milky Way band (~450-1050, 650-788) and the right-hand blob (~900-1050, 540-700)",
+      "what": "the nebula ends in rounded, blob-shaped clumps with fairly clean outlines, like separate patches stamped on the sky",
+      "fix": "feather the band's falloff over a much larger distance and add faint diffuse glow and dust beyond the bright clumps"
+     },
+     {
+      "severity": "minor",
+      "file": "image-29.png",
+      "where": "upper right sky (~850-1100, 0-250) and the left side of the Milky Way band",
+      "what": "the faint blue-grey haze patches are smooth and featureless, with soft but noticeable patch edges against the black",
+      "fix": "add low-contrast structure and grain to the haze, or reduce its opacity so it blends in"
+     },
+     {
+      "severity": "minor",
+      "file": "image-25.png",
+      "where": "star field everywhere (e.g. image-26 crop C, image-27 crops J-L)",
+      "what": "stars are single-pixel or 2x2 squares of nearly uniform size, with no PSF falloff on the bright ones, so the field looks like a stippled noise texture",
+      "fix": "render the stars with a proper point-spread function, give them a wider magnitude range, and add a faint glow to the brightest"
+     },
+     {
+      "severity": "minor",
+      "file": "image-29.png",
+      "where": "planet disc",
+      "what": "the cloud bands are soft and slightly smeared at native size, and the terminator is smooth and airbrushed with little detail",
+      "fix": "raise the planet texture resolution and add fine band turbulence and detail near the terminator"
+     }
+    ]
+   }
+  },
+  {
+   "part": 5,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-38.png",
+      "where": "Milky Way band across tiles B, C, E, F, G, H (and image-39.png tiles J, K, L)",
+      "what": "the Milky Way background texture is visibly blocky, pixelated, and blurry at native crop scale, with smeared dust lanes and baked-in stars stretched into large fuzzy blobs (such as lower-left of tile C / lower-right of tile F) beneath crisp 1-pixel point stars",
+      "fix": "replace the low-resolution skybox texture with a higher-resolution or procedural galactic dust map that holds up at 1:1 pixel scale and remove baked-in blurry star blobs"
+     },
+     {
+      "severity": "major",
+      "file": "image-38.png",
+      "where": "illuminated right and lower-right limb in tiles B, D, I (and image-39.png tiles N, O)",
+      "what": "a doubled edge with an inner dark trough separates the outer atmospheric glow from the globe along the lower-right crescent limb, and the inner sphere horizon forms a jagged stair-stepped cyan line inside the atmosphere",
+      "fix": "compute continuous optical-depth falloff across the limb and supersample the sphere-to-atmosphere transition so no dark seam, doubled rim, or aliased inner edge appears"
+     },
+     {
+      "severity": "major",
+      "file": "image-34.png",
+      "where": "illuminated upper limb in tiles B, H, I (and image-35.png tiles K, N, O)",
+      "what": "the geometric horizon of the planet cuts a hard, stair-stepped bright cyan line right through the softer atmospheric limb glow",
+      "fix": "antialias the globe silhouette and blend surface scattering smoothly into the outer atmospheric halo across the horizon"
+     },
+     {
+      "severity": "minor",
+      "file": "image-35.png",
+      "where": "Neptune cloud deck and Great Dark Spot in tiles N, O (and image-34.png tiles D, H; image-39.png tiles N, O)",
+      "what": "the planetary surface texture is soft, blurry, and airbrushed at native resolution, lacking fine cloud structure compared to the crisp stars and geometry",
+      "fix": "increase the planetary texture resolution or layer high-frequency procedural cloud detail so the cloud bands and storm stay sharp in 1:1 crops"
+     },
+     {
+      "severity": "minor",
+      "file": "image-38.png",
+      "where": "curved outer ringlets in tiles B, I and unlit planet limb in image-39.png tile N and image-36.png tiles S, T",
+      "what": "jagged pixel stair-stepping is visible along the narrow bright ring arcs and along the dark silhouette edge of the globe against the starfield",
+      "fix": "apply higher multisample or supersample antialiasing to the planet geometry silhouette and ring shader evaluation"
+     }
+    ]
+   }
+  }
+ ]
+}

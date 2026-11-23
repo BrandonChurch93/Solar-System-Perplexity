@@ -1,0 +1,63 @@
+{
+ "critic": "R5",
+ "score": 6,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "Venus 1185, Earth 1755, Mars 2325, Jupiter 2895, Saturn 3465, Uranus 4035 versus Mercury 615 and Neptune 4605",
+   "what": "The key light changes direction from stop to stop. Mercury and Neptune are lit from the right, where the Sun appears in frame. Venus is lit almost face-on from behind the camera. Earth, Mars, Jupiter, Saturn and Uranus are lit from the left or upper left. The Sun reads as a different light at every stop, which breaks the idea of one journey outward from it.",
+   "fix": "Pick one solar direction relative to the flight path, for example screen right and slightly behind. Relight every hero planet so its terminator agrees with that direction and with any visible Sun position."
+  },
+  {
+   "severity": "major",
+   "file": "sheet-01.png … sheet-04.png",
+   "where": "every planet stop",
+   "what": "Every stop uses the same move pattern: a tiny dot, a medium push-in, a near-identical tighter push-in, a surface or limb close-up, a medium pull-back, then a recede. Pairs such as 1755/1857/2156, 2325/2427, 2895/2997 and 3465/3567/3866 look almost the same, so the middle of the film feels mechanical and doesn't build.",
+   "fix": "Vary the grammar per stop: an orbit or arc around Saturn's rings, a flyby past a moon, a reveal from the night side, a fast whip past Mars. Drop the duplicate hold frames and save the longest, slowest move for the finale."
+  },
+  {
+   "severity": "major",
+   "file": "sheet-04.png",
+   "where": "4436–5362 sky background",
+   "what": "The Milky Way changes from a soft blue-grey star field in the inner system to a thick, saturated orange-brown dust band in the Uranus and Neptune shots. The grade of the sky jumps, so it doesn't feel like one sky.",
+   "fix": "Use one consistent sky dome and color grade for the galactic band across all stops. Only rotate it with camera direction and don't change its saturation or warmth."
+  },
+  {
+   "severity": "major",
+   "file": "sheet-04.png",
+   "where": "Neptune 5006–5362",
+   "what": "Neptune carries a bold, clearly visible ring system that looks like Uranus's and Saturn's. Real Neptune rings are very faint and clumpy. The bold rings blur the identities of the ice giants, and the ring plane also shifts between frames.",
+   "fix": "Reduce Neptune's rings to faint, thin arcs, or remove them, and keep the ring plane fixed relative to the planet."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-03.png",
+   "where": "Uranus 4035–4137",
+   "what": "Uranus's rings sit in a different plane from its cloud banding. The rings read as face-on circles while the bands run horizontally, so the extreme axial tilt doesn't hold together.",
+   "fix": "Align the rings with the equator and the banding, and show the tilt clearly."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-02.png",
+   "where": "Earth limb 1755–2156, Mars 2726",
+   "what": "Earth's green aurora sits on the fully sunlit limb, where it looks like a chroma artifact. The Mars pull-back at 2726 has a glassy, front-lit rim that doesn't match the side lighting at 2325.",
+   "fix": "Move the aurora to the night side or the polar terminator and dim it. Match the Mars pull-back lighting to the earlier Mars shots."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-02.png",
+   "where": "Phobos 2325",
+   "what": "The moon in front of Mars is oversized and lit flatter and greyer than Mars, so it reads as composited.",
+   "fix": "Shrink it or push it farther from camera, and match its key-light direction and color temperature to Mars."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "ending 5235–5362",
+   "what": "The finale is just Neptune receding to a dark crescent. It looks very much like every other exit, so the ending doesn't land with any extra weight. There is no last look back toward a tiny Sun, and the heliopause isn't marked.",
+   "fix": "Give the ending a distinct beat: a turn back to a star-like Sun among the stars, or a long final hold with the camera still."
+  }
+ ]
+}

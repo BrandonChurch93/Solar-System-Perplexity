@@ -1,0 +1,92 @@
+{
+ "critic": "R3",
+ "score": 4.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-07.png",
+      "where": "crops J–K, upper hemisphere and pale cloud bands",
+      "what": "The upper vortex field and cloud filaments are visibly smeared along the bands. Against the pin-sharp stars, the enlarged globe looks soft and resampled.",
+      "fix": "Render the close view from higher-resolution cloud detail and reduce directional filtering or blur on the globe."
+     },
+     {
+      "severity": "major",
+      "file": "image-02.png",
+      "where": "crop A, moon and shadow just right of the Great Red Spot",
+      "what": "The near-black, elongated shadow looks like a flat oval stuck to the moon. Its interior loses the cloud structure almost completely, and the blur is most apparent at the far tip. The same cutout look recurs in image-07.png, crop P.",
+      "fix": "Project the shadow onto the curved cloud layer, use a coherent penumbra, and preserve faint cloud variation in indirect light."
+     },
+     {
+      "severity": "minor",
+      "file": "image-06.png",
+      "where": "crops B and D, sunlit left limb",
+      "what": "The bright rim blooms into a broad cream-white strip that wipes out some of the cloud filaments just inside the limb.",
+      "fix": "Reduce highlight clipping and keep the atmospheric falloff outside the disc separate from the cloud highlights."
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 4,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-13.png",
+      "where": "planet disc, vertical line near x≈930 running from the top limb to the bottom limb (crops A, L, Q in image-14/15)",
+      "what": "the terminator is a straight, near-vertical hard edge. The day side stops on a ruler-straight seam instead of an elliptical, softly graded day-night boundary, so it reads as a flat mask laid over the texture",
+      "fix": "shade the sphere with a proper N·L term so the terminator follows the curve of the globe, and add a wide, soft falloff (plus some atmospheric scatter) across the boundary"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "night side, right half of the disc (crops C, E, M, R in image-14/15)",
+      "what": "the dark hemisphere is a near-flat black disc with a faint ghost outline. It has no limb rim or cloud-band detail, and you can make out a faint, slightly mismatched second disc edge against the stars",
+      "fix": "add a thin backlit atmospheric rim along the night limb, keep a trace of the band texture in the shadow, and line the dark disc edge up exactly with the lit limb"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "lower half and lower right foreground (crops D, E, H, S–W in image-10/11/12)",
+      "what": "the near terrain dissolves into smeared, airbrushed swirl strokes with muddy low-contrast blacks. The cloud forms lose volume and read as painterly brush texture at native size. The blue glowing specks (crops E, U, V) look like noise or sparkle rather than a physical feature",
+      "fix": "render the foreground cloud tops at higher detail with proper shadowing, lift the shadows slightly to keep the structure readable, and either justify the blue lights (lightning in the cloud with a glow) or remove them"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "storm vortex wall and upper left bright limb (crops A, B, F, J in image-10/11)",
+      "what": "the vortex rings are concentric and a bit too uniform and stylised, with a slightly plastic sheen on the orange layers. The far upper left limb blows out to a flat cream haze with little texture",
+      "fix": "break up the vortex rings with turbulent irregularity and finer filamentary detail, and roll off the highlight near the sunlit limb so the bands keep some texture"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "moon in front of the planet (crop Q in image-15)",
+      "what": "the moon looks pasted on: its lighting and edge sharpness don't match the planet behind it, and it casts no shadow or contact cue on the cloud deck",
+      "fix": "match the moon's light direction and edge softness to the planet, and either add its shadow on the cloud tops or place it clearly in front with matching depth of field"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "starfield, all sky crops (image-14/15/16)",
+      "what": "the stars are mostly crisp points, but they are spread very evenly with no density variation, so the field reads as procedural noise",
+      "fix": "vary star density and brightness, using clustering and a faint galactic band, so the field does not look uniformly scattered"
+     }
+    ]
+   }
+  }
+ ]
+}

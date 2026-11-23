@@ -1,0 +1,56 @@
+{
+ "critic": "R4",
+ "score": 3,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-02.png",
+   "where": "frames 722-739, sun and planet limb",
+   "what": "camera angle, field of view, horizon orientation, and sun position jump abruptly: the large yellow sun at the right edge in 722 shrinks into a small ball at upper right over black sky in 730, then leaps to upper-left-center as a white diffraction starburst in 739 while the vertical right limb flips to a diagonal horizon",
+   "fix": "drive the entire dive from one continuous 3D camera path and unified sun light source so the limb angle and solar position travel smoothly into the terrain entry frame"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-06.png",
+   "where": "frames 985-996, full frame across cover",
+   "what": "camera motion reverses direction across the cover via a visible cross-dissolve: frames 985-992 push forward and downward over the terrain, then frames 993-996 pull rapidly backward from a brighter globe while the foreground crater dissolves out, the sun slides rightward, a dark ghost band appears above the right limb, and an orange nebula pops into the upper-left sky",
+   "fix": "decelerate forward terrain motion and pull upward and backward before the cover so velocity direction, horizon curvature, surface brightness, sun position, and background sky match the outgoing 3D globe seamlessly"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-05.png",
+   "where": "frames 1000-1034, sun, globe, and left sky",
+   "what": "between frames 1000 and 1007 the small white starburst sun pops into a huge yellow solar disc at the right edge while the pale gray globe shifts to warm brown shading and a bright orange dust cloud appears on the left, failing to match the blue-black sky and lower-left orbiting body from the opening hold in sheet-01.png",
+   "fix": "use a consistent solar scale, planet shader, and background starfield across hold, dive, and rise so the flight returns seamlessly to the same space environment it left"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "frames 739-744, horizon, sun, and cratered surface",
+   "what": "the dive-to-terrain cover shows a multi-frame double exposure where a dark curved ghost band lingers in the upper-right sky above the incoming terrain horizon, the sun slides leftward while changing flare shape, and two misaligned crater fields dissolve through one another",
+   "fix": "register the outgoing globe horizon, crater coordinates, skybox, and solar flare position to the terrain camera at the handoff so the cover reads as one unbroken camera move"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "frames 698-714, upper-left sky, lower-left body, and terminator",
+   "what": "entering the dive swaps visibly from the hold plate to a different 3D globe setup: between frames 698 and 706 the upper-left starfield drops to solid black, the bright orbiting dot at lower left vanishes, and sharper procedural bump craters pop in along the terminator",
+   "fix": "render the hold and dive from the same 3D globe, starfield, and scene elements so lighting, surface relief, and background stars carry across without a rig swap"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "frames 739-742, high-contrast crater rims on right side",
+   "what": "fast radial motion breaks into discrete, comb-like stepped ghost copies along bright crater edges rather than a smooth continuous motion blur (also visible in sheet-06.png frames 988-994)",
+   "fix": "increase shutter sub-frame sampling or apply continuous motion-vector blur during peak dive and rise speeds so edges streak smoothly without multi-copy stepping"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "frames 845-959, bright radial crater at mid-left",
+   "what": "bright white ejecta rays on the mid-left crater extrude upward into sharp vertical spikes as parallax increases (continuing into sheet-05.png frames 960-987) because bright albedo streaks are displaced as tall terrain height",
+   "fix": "decouple high-albedo ejecta rays from the elevation displacement map so surface ray markings remain flat on the terrain instead of stretching into needles"
+  }
+ ]
+}

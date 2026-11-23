@@ -1,0 +1,35 @@
+{
+ "critic": "reviewer_1358",
+ "score": 8,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "crops E, F, H (Milky Way band, right of the planet)",
+   "what": "the Milky Way dust lanes and fine star clusters are softer and slightly smeared; fine-detail energy is about 10-15% lower than in -a, and the dark dust filaments read less crisply",
+   "fix": "restore fine texture in the galactic band: less denoise/smoothing, sharper small stars and dust lanes"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "crops C, F, E (ring arcs near the sun flare, upper right)",
+   "what": "the thin ring strands and the stars between them are slightly softer, with about 15-20% less fine detail than -a; individual ringlets merge a little",
+   "fix": "sharpen the ring ringlets and background stars back to -a's crispness"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "overall, especially the right-middle sun and ring area and the lower-right atmosphere",
+   "what": "the image is slightly lifted and cooler-brighter (mean about +0.5 to 2 levels in the blue/cyan channels) and has a little less contrast",
+   "fix": "pull midtones and highlights down slightly and restore contrast to match -a"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "right third (Milky Way behind the rings) and top-centre ring arcs",
+   "what": "the galactic band and the thin ring strands are a touch softer than in -a, with slightly less fine detail",
+   "fix": "keep more micro-detail in the galactic band and ring strands (less smoothing)"
+  }
+ ]
+}

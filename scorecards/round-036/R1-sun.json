@@ -1,0 +1,21 @@
+{
+ "critic": "R1",
+ "score": 9,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "left coronal loop footpoint above the solar limb (also crop A in pair-04-b.png)",
+   "what": "the thin horizontal golden lens-flare streak crossing the bright eruption base in pair-03-a.png is missing",
+   "fix": "restore the subtle horizontal optical flare streak across the bright left footpoint glow"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "Milky Way background sky in crops H and I",
+   "what": "the faintest pinpoint stars and fine dust grain are very slightly softer than in pair-02-a.png",
+   "fix": "preserve slightly crisper high-frequency star points and fine nebula grain in the dark sky"
+  }
+ ]
+}

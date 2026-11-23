@@ -1,0 +1,120 @@
+{
+ "critic": "R3",
+ "score": 6.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "top edge, above the polar vortex (crops F, K)",
+      "what": "the globe's top limb and its glow run into the frame edge and get cut off, so the halo looks like a flat band along the border instead of a clean falloff",
+      "fix": "shrink the globe or move it down so the whole limb and atmosphere glow sit inside the frame with dark sky above"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "sunlit left limb (crops B, D, K, P)",
+      "what": "the lit hemisphere blows out to a smooth cream with no cloud detail, plus a wide bloom, so the limb looks airbrushed and plastic",
+      "fix": "pull the highlights back, keep cloud texture right out to the limb, and make the atmosphere rim thinner and tighter"
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "sunlit left limb (crops B, D, K, O, T)",
+      "what": "same blown-out, airbrushed band along the lit limb, with no texture in the outer 10-15% of the disc",
+      "fix": "lower the exposure on the dayside limb and keep the cloud detail visible through the haze"
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "night side, right half (crops C, E, I, L, P, Q, U)",
+      "what": "the night side is just a darker, greyer copy of the day texture with full cloud relief and no real terminator gradient, so the light looks flat and the shading looks like a colour adjustment",
+      "fix": "move into real darkness past a soft terminator; only the twilight band should show raking-light relief"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "dark right limb (crops C, E, H, R, V)",
+      "what": "a thin bright rim line runs along the unlit limb and reads as a doubled or outlined edge next to the dark disc",
+      "fix": "fade the rim with the light angle so it is strongest near the sun side and almost gone on the far night limb"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "lower centre, night side (crop I, Q)",
+      "what": "the violet lightning squiggles are sharp and saturated and sit on top of the cloud instead of glowing through it, so they look stuck on",
+      "fix": "blur and scatter the flashes under the cloud tops, lower their saturation, and add a soft local glow"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "mid-disc feathered bands (crops A, P, Q)",
+      "what": "the feather or brushstroke cloud texture repeats the same streak shape over and over and looks painted rather than fluid",
+      "fix": "break up the repeated streaks with more varied scales of turbulence"
+     },
+     {
+      "severity": "minor",
+      "file": "image-05.png",
+      "where": "planet edge against the Milky Way, right side (crops G, I, Q)",
+      "what": "a soft dark haze stands off the night limb, giving it a slight halo against the bright Milky Way",
+      "fix": "tighten the outer edge of the atmosphere on the night side so the disc meets the sky cleanly"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "lower-right, bottom, and lower-left limb (native crops image-14.png D, H, I and image-15.png O, P, Q)",
+      "what": "doubled and tripled concentric rim bands separated by dark gaps wrap around the lower-right and unlit nightside limb as a detached halo, with pinpoint stars sitting directly on top of the limb band",
+      "fix": "replace the multi-ring limb shell with a single smooth atmospheric scattering falloff that fades out on the unlit nightside and occludes background stars behind the limb"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "upper-left and middle-right globe surface (native crops image-14.png A, B, F, G and image-15.png K)",
+      "what": "two tight spiral vortices pinch and swirl on the visible face of the globe with stretched painterly brush-like cloud streaks and noisy stippled orange-brown patches",
+      "fix": "relax the pinched bullseye vortices into natural planetary cloud bands and render uniform fine-scale cloud-top detail instead of painterly streaks and stippled patches"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "near-field foreground clouds along the bottom third (native crops image-10.png D, E, I and image-12.png T, V, W, X)",
+      "what": "near foreground clouds are soft, blurry, and smeared with diagonal airbrushed strokes at native size compared to the sharp middle-ground cumulus towers",
+      "fix": "preserve crisp turbulent cloud-top detail across the foreground layer so near surfaces hold up at native resolution without smeared airbrushed areas"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "shadowed terminator and nightside cloud deck (native crops image-14.png D, H, I and image-15.png O, P)",
+      "what": "cloud texture across the dark lower-left hemisphere turns muddy, soft, and airbrushed where light falls off",
+      "fix": "maintain crisp cloud micro-structure into low-angle terminator lighting and let the nightside drop cleanly into dark shadow rather than smeared brushstrokes"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "upper-right solar glare and horizon limb (native crops image-10.png C, G and image-11.png L, M, N)",
+      "what": "an artificial horizontal lens-flare bar cuts across the sky to the right border, creating a banded horizontal haze layer above the limb while sharp stars remain visible inside the bright solar glare",
+      "fix": "remove the horizontal flare streak, smooth the vertical atmospheric glow gradient above the limb, and wash out stars inside intense solar glare and dense horizon haze"
+     }
+    ]
+   }
+  }
+ ]
+}

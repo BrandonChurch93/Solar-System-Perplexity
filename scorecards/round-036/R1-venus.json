@@ -1,0 +1,63 @@
+{
+ "critic": "R1",
+ "score": 9,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "Starfield on both sides of the globe and in the lower sky",
+   "what": "The dust lane matches, but fine stars are subtly displaced to the right relative to the globe and some points are less distinct.",
+   "fix": "Register the sky separately to the target and preserve the pinpoint star cores when resampling."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "Upper limb through the upper-right shoulder",
+   "what": "The rim has a slightly harder, more orange outer line than the target's softer gold-to-black transition.",
+   "fix": "Reduce the narrow orange fringe and restore the target's smoother atmospheric falloff."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "Sunlit central cloud bands and upper storm",
+   "what": "The broad shapes and lighting match, but some fine cloud filaments are slightly softer.",
+   "fix": "Recover the target's fine-scale cloud contrast without sharpening the whole disc or changing its grade."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "Lightning clusters in the lower shadowed hemisphere",
+   "what": "Some flashes are slightly broader and hotter, with a little more spill into the adjacent cloud.",
+   "fix": "Trim the glow and peak brightness locally so the flashes sit as tightly in the dark cloud as in the target."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "Sky in tiles B, C, D, E, F, G and H; limb in C; cloud detail in A and lightning in I",
+   "what": "The hold crops confirm the slight star registration and definition loss, narrow warm upper rim, softer cloud filaments and marginally stronger lightning.",
+   "fix": "Apply the hold-frame corrections at source, then regenerate the matching crops."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "Center cloud towers, down-light shadow faces and left foreground ridges",
+   "what": "Some shadow faces are slightly warmer and more lifted, and a few high-contrast left ridges sit fractionally lower. The ray direction and large cloud geometry still match.",
+   "fix": "Cool and deepen those shadow faces slightly and tighten local ridge registration without shifting the whole frame."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "Upper starfield and sun-side horizon immediately below the flare",
+   "what": "The finest stars are a little softer, and the bright haze slightly flattens the narrow cloud layering under the flare.",
+   "fix": "Preserve the smallest star cores and recover subtle layer separation under the flare without reducing the sun's overall bloom."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "Clouds in tiles A, D, E, F and I; sky and horizon in B, C, G and H",
+   "what": "The terrain crops show the same small cloud-edge drift, warmer shadow faces, reduced fine star definition and slightly flatter flare-side layering.",
+   "fix": "Correct cloud registration and shadow tone locally, preserve the small stars and match the narrow horizon contrast before recropping."
+  }
+ ]
+}

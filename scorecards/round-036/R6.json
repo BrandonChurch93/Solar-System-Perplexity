@@ -1,0 +1,21 @@
+{
+ "critic": "R6",
+ "score": 8,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "image-08.png",
+   "where": "top center frame border",
+   "what": "the expanding outer coronal loop strands touch and clip against the top edge of the frame in image-08.png and image-09.png",
+   "fix": "tilt up slightly or widen initial framing so the rising magnetic arch retains clean dark-space headroom throughout the hook"
+  },
+  {
+   "severity": "minor",
+   "file": "image-01.png",
+   "where": "full frame / lower solar surface",
+   "what": "the coronal arch begins already fully bridged and camera motion across image-01.png to image-09.png is minimal, leaving the bottom half of the frame visually static at phone width",
+   "fix": "add a more noticeable camera push-in or begin earlier in the plasma eruption so the silhouette transforms more dramatically during the opening seconds"
+  }
+ ]
+}

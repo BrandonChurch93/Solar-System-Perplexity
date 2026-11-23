@@ -1,0 +1,49 @@
+{
+ "critic": "R1",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-02-b.png",
+   "where": "sunlit left and upper-left limb of Mars (crops B, D, H; also pair-01-b.png left limb)",
+   "what": "the sunlit planet disc terminates in a hard, stair-stepped circular cutout edge against the outer halo instead of blending through the soft pale cyan-blue inner atmospheric layer seen in -a",
+   "fix": "anti-alias and feather the sunlit sphere edge and composite the inner cyan-blue atmospheric scattering bloom across the limb boundary so the surface blends smoothly into the outer glow"
+  },
+  {
+   "severity": "major",
+   "file": "pair-02-b.png",
+   "where": "upper-right limb of Mars (crop C; also pair-01-b.png upper-right limb)",
+   "what": "the cyan-blue atmospheric rim glow fades out near the top of crop C and is missing along most of the upper-right limb, exposing a raw stair-stepped sphere silhouette against space plus a small stray blue smudge off the limb",
+   "fix": "extend and soften the cyan-blue atmospheric rim glow continuously down the upper-right limb to match -a, anti-alias the dark limb silhouette, and remove the stray blue dot outside the limb"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "Phobos upper-left sunlit rim (crop G; also pair-01-b.png)",
+   "what": "a thin double-contour matte seam and slight pixel stair-stepping appear along Phobos's upper-left sunlit edge against Mars",
+   "fix": "tighten and anti-alias the Phobos cutout/mesh edge to eliminate the parallel rim seam so it forms a single clean contour like -a"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "right dark hemisphere and terminator of Mars (crops C, E, I; also pair-01-b.png)",
+   "what": "the subtle cool blue night-side cloud/haze patches on the dark hemisphere in crops E and I are missing, and rust terrain near the upper-right terminator in crops C and E is slightly brighter and more orange",
+   "fix": "restore the faint cool blue atmospheric haze patches over the lower-right dark hemisphere and slightly darken/cool the terminator shadow relief to match -a"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "central canyon floor (crop A; also pair-03-b.png center valley)",
+   "what": "the diagonal band of warm dusty mist across the shadowed canyon floor is slightly brighter and thicker than in -a, slightly lifting valley mid-shadows",
+   "fix": "reduce the opacity and brightness of the warm valley-floor haze slightly to restore the deeper canyon shadow contrast of -a"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "lower-left shadowed foreground cliff (crop D; also pair-03-b.png lower-left cliff)",
+   "what": "high-frequency rock grain inside the darkest shadowed cliff strata is slightly softer than in -a",
+   "fix": "preserve slightly crisper micro-texture in the dark foreground cliff shadows"
+  }
+ ]
+}
