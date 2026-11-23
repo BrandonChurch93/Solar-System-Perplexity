@@ -186,7 +186,7 @@ export const createSet: SetFactory = async (ctx) => {
       }
       const thin = ending ? 1 : smooth(Math.sqrt(high * (high + 2)) / look.airThin.reach)
       const moving = kind === 'dive' || kind === 'rise' ? 1 - smooth((high - move.near.height[0]!) / (move.near.height[1]! - move.near.height[0]!)) : 0
-      air.update(camera, light, state.rotation, home, line, gain * state.weight, near, grade.air, 1 - deep, thin, 1 - limb, moving, move.rim)
+      air.update(camera, light, state.rotation, home, line, gain * state.weight, near, grade.air, 1 - deep, thin, 1 - limb, moving, move.rim, smooth((high - move.rim.dimHeight[0]!) / (move.rim.dimHeight[1]! - move.rim.dimHeight[0]!)))
       pu.uAirGround!.value = 1 - limb
       const distant = ending ? 0 : 1 - smooth(Math.log(Math.max(high, 1e-6) / closeLook.lay.distant.height[1]!) / Math.log(closeLook.lay.distant.height[0]! / closeLook.lay.distant.height[1]!))
       ;(pu.uDistantAir!.value as THREE.Vector4).set(closeLook.lay.distant.air[0]!, closeLook.lay.distant.air[1]!, closeLook.lay.distant.air[2]!, closeLook.lay.distant.veil)

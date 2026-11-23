@@ -248,7 +248,7 @@ export class Air {
     ;(u.uRingRange!.value as THREE.Vector2).set(inner, outer)
   }
 
-  update(camera: THREE.Vector3, light: THREE.Vector3, rotation: THREE.Quaternion, home: number, line: number, gain: number, near = 0, tint?: number[], seat = 1, thin = 1, amount = 1, moving = 0, moves?: AirMoves): void {
+  update(camera: THREE.Vector3, light: THREE.Vector3, rotation: THREE.Quaternion, home: number, line: number, gain: number, near = 0, tint?: number[], seat = 1, thin = 1, amount = 1, moving = 0, moves?: AirMoves, dimming = 1): void {
     this.thin = thin
     for (const u of this.users) {
       const hue = u.uAirNear!.value as THREE.Vector4
@@ -273,7 +273,7 @@ export class Air {
       const away = moves && moving > 0 ? ln.away.map((v, k) => v + (moves.line[k]! - v) * moving) : ln.away
       ;(u.uLineEdge!.value as THREE.Vector2).set(away[0]! + (ln.dayFrom - away[0]!) * home, away[1]! + (ln.dayTo - away[1]!) * home)
       ;(u.uLineDay!.value as THREE.Vector3).fromArray(ln.day).multiplyScalar(away[2]! + (1 - away[2]!) * home)
-      u.uAirDim!.value = moves ? moves.dim * moving * (1 - home) : 0
+      u.uAirDim!.value = moves ? moves.dim * moving * (1 - home) * dimming : 0
       ;(u.uLineShape!.value as THREE.Vector4).w = line
       ;(u.uLineTail!.value as THREE.Vector3).fromArray(ln.tail).multiplyScalar(home)
       ;(u.uLineFade!.value as THREE.Vector3).z = ln.fade[2] * home
