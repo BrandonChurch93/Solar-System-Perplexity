@@ -1,62 +1,84 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-23T21:40:51.938Z",
+ "pushed": "2026-11-23T21:52:35.094Z",
  "head": "145d9a971dc49fa89ed91a1dd66fb33457d60d1a",
- "note": "21:41 UTC. While the review tier sheets of 3060 to 3239 render: diagnosis and a first trial for the cyan patch and the straight edge of the dark area at the handover. Nothing here is in a commit yet.",
+ "note": "21:56 UTC. Review tier sheets of 3060 to 3239 every sixth frame (31 frames, commit 145d9a9) for the clip, as mail 322 asks. The frames themselves are in out/work/jupiter/frames/v1 on my VM only.",
  "looks": [
   {
-   "time": "2026-11-23T21:40:38.295Z",
-   "file": "20261123214038295-note-stage2.jpg",
-   "source": "../work/f/stage2.jpg",
+   "time": "2026-11-23T21:52:33.871Z",
+   "file": "20261123215233871-note-v1-view6.jpg",
+   "source": "../work/f/v1-view6.jpg",
    "kind": "note",
-   "label": "Trial outside the film, not rendered yet: ground from straight above, before (top) and after (bottom) a new part of the tone field: the cyan area east of the storm calmed to the hue of its surround, and the storm's shade carried on past its straight end so it ends as a soft shadow. A straight step is still there in the darkest part; work goes on",
+   "label": "Review tier, commit 145d9a9, frame 3239 (last of the surface view). Still wrong here: soft pale streaked band at the left edge below the storm, hairlines lower left",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T21:40:36.907Z",
-   "file": "20261123214036907-note-near-navy.jpg",
-   "source": "../work/f/near-navy.jpg",
+   "time": "2026-11-23T21:52:32.695Z",
+   "file": "20261123215232695-note-v1-sheet5.jpg",
+   "source": "../work/f/v1-sheet5.jpg",
    "kind": "note",
-   "label": "Diagnosis, not a film frame: the near plate from straight above, as painted (top) and lifted 6 times (bottom). The dark navy area right of the eye at 3024 and 3270 is the storm's cast shade in this plate; it ends at a straight line where the plate gives way to the globe's own picture",
+   "label": "Review tier, commit 145d9a9, surface view every sixth frame: 3204 to 3234",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T21:39:55.892Z",
-   "file": "20261123213955892-frame-f03156.jpg",
-   "source": "out/work/jupiter/frames/v1/f03156.png",
+   "time": "2026-11-23T21:52:31.428Z",
+   "file": "20261123215231428-note-v1-sheet4.jpg",
+   "source": "../work/f/v1-sheet4.jpg",
+   "kind": "note",
+   "label": "Review tier, commit 145d9a9, surface view every sixth frame: 3168 to 3198",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T21:52:30.317Z",
+   "file": "20261123215230317-note-v1-sheet3.jpg",
+   "source": "../work/f/v1-sheet3.jpg",
+   "kind": "note",
+   "label": "Review tier, commit 145d9a9, surface view every sixth frame: 3132 to 3162",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T21:52:29.558Z",
+   "file": "20261123215229558-note-v1-sheet2.jpg",
+   "source": "../work/f/v1-sheet2.jpg",
+   "kind": "note",
+   "label": "Review tier, commit 145d9a9, surface view every sixth frame: 3096 to 3126",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T21:52:28.997Z",
+   "file": "20261123215228997-note-v1-sheet1.jpg",
+   "source": "../work/f/v1-sheet1.jpg",
+   "kind": "note",
+   "label": "Review tier, commit 145d9a9, surface view every sixth frame: 3060 to 3090",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T21:52:26.410Z",
+   "file": "20261123215226410-frame-f02820.jpg",
+   "source": "out/work/jupiter/frames/c1/f02820.png",
    "kind": "frame",
-   "label": "jupiter.terrain frame 3156, review tier",
+   "label": "jupiter.hold frame 2820, draft tier",
    "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3156,
-   "tier": "review",
+   "segment": "jupiter.hold",
+   "frame": 2820,
+   "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
    "engine": "45f909e84c1a1464"
   },
   {
-   "time": "2026-11-23T21:21:20.858Z",
-   "file": "20261123212120858-note-g6-sheet.jpg",
-   "source": "../work/f/g6-sheet.jpg",
-   "kind": "note",
-   "label": "film draft: 3060 to 3239 every 15th, then 2997, 3024, 3270",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T21:21:20.167Z",
-   "file": "20261123212120167-note-g6-six-flash.jpg",
-   "source": "../work/f/g6-six-flash.jpg",
-   "kind": "note",
-   "label": "film, six frames in a row 3156 to 3161 at the lightning site near (1340, 870), draft",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T21:21:19.281Z",
-   "file": "20261123212119281-note-g6-six-storm.jpg",
-   "source": "../work/f/g6-six-storm.jpg",
-   "kind": "note",
-   "label": "film, six frames in a row 3150 to 3155 at the storm, draft",
-   "stop": "jupiter"
+   "time": "2026-11-23T21:51:13.845Z",
+   "file": "20261123215113845-frame-f03239.jpg",
+   "source": "out/work/jupiter/frames/v1/f03239.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3239, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3239,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "45f909e84c1a1464"
   }
  ]
 }
