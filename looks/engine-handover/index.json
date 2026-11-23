@@ -1,21 +1,21 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-23T07:02:31.682Z",
- "head": "6da6c64146a47e56fe8d549e56883ed5b698ce67",
- "note": "E1 contract written with 16 unit tests, 103 tests green; baseline of the frozen build rendering before the same bytes proof",
+ "pushed": "2026-11-23T07:33:47.295Z",
+ "head": "f980f5715ab459be7f721eb63857283cdae19c56",
+ "note": "M1 sent: E1 contract in, 47 judged and 85 cover frames the same bytes at draft; now coding E2, the place picture on the globe side",
  "looks": [
   {
-   "time": "2026-11-23T07:02:30.114Z",
-   "file": "20261123070230114-note-before-mars-cover-draft.jpg",
-   "source": "out/work/handover-notes/before-mars-cover-draft.png",
+   "time": "2026-11-23T07:33:46.686Z",
+   "file": "20261123073346686-note-e1-mars-cover-same-bytes.jpg",
+   "source": "out/work/handover/e1-mars-cover-same-bytes.jpg",
    "kind": "note",
-   "label": "BEFORE (frozen build, draft): Mars dive cover frames 2446 2453 2454 2455 2461 over rise 2692 2699 2700 2701 2707. This is the baseline the engine must not change for stops that did not opt in",
+   "label": "E1 build, Mars cover frames at draft, the same bytes as the frozen build (no stop opted in yet)",
    "stop": "mars"
   },
   {
-   "time": "2026-11-23T06:58:15.625Z",
-   "file": "20261123065815625-frame-f04728-draft.jpg",
-   "source": "out/work/samebytes/before/f04728-draft.png",
+   "time": "2026-11-23T07:32:30.090Z",
+   "file": "20261123073230090-frame-f04728-draft.jpg",
+   "source": "out/work/samebytes/after/f04728-draft.png",
    "kind": "frame",
    "label": "neptune.dive frame 4728, draft tier",
    "stop": "neptune",
@@ -24,12 +24,12 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "247ebad7e038ce06"
+   "engine": "2d9dda353bfd7b6d"
   },
   {
-   "time": "2026-11-23T06:57:18.981Z",
-   "file": "20261123065718981-frame-f04164-draft.jpg",
-   "source": "out/work/samebytes/before/f04164-draft.png",
+   "time": "2026-11-23T07:31:31.540Z",
+   "file": "20261123073131540-frame-f04164-draft.jpg",
+   "source": "out/work/samebytes/after/f04164-draft.png",
    "kind": "frame",
    "label": "uranus.dive frame 4164, draft tier",
    "stop": "uranus",
@@ -38,12 +38,12 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "247ebad7e038ce06"
+   "engine": "2d9dda353bfd7b6d"
   },
   {
-   "time": "2026-11-23T06:56:27.635Z",
-   "file": "20261123065627635-frame-f03832-draft.jpg",
-   "source": "out/work/samebytes/before/f03832-draft.png",
+   "time": "2026-11-23T07:30:39.183Z",
+   "file": "20261123073039183-frame-f03832-draft.jpg",
+   "source": "out/work/samebytes/after/f03832-draft.png",
    "kind": "frame",
    "label": "saturn.rise frame 3832, draft tier",
    "stop": "saturn",
@@ -52,12 +52,12 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "247ebad7e038ce06"
+   "engine": "2d9dda353bfd7b6d"
   },
   {
-   "time": "2026-11-23T06:55:39.570Z",
-   "file": "20261123065539570-frame-f03270-draft.jpg",
-   "source": "out/work/samebytes/before/f03270-draft.png",
+   "time": "2026-11-23T07:29:51.016Z",
+   "file": "20261123072951016-frame-f03270-draft.jpg",
+   "source": "out/work/samebytes/after/f03270-draft.png",
    "kind": "frame",
    "label": "jupiter.rise frame 3270, draft tier",
    "stop": "jupiter",
@@ -66,12 +66,12 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "247ebad7e038ce06"
+   "engine": "2d9dda353bfd7b6d"
   },
   {
-   "time": "2026-11-23T06:54:51.963Z",
-   "file": "20261123065451963-frame-f03016-draft.jpg",
-   "source": "out/work/samebytes/before/f03016-draft.png",
+   "time": "2026-11-23T07:29:02.653Z",
+   "file": "20261123072902653-frame-f03016-draft.jpg",
+   "source": "out/work/samebytes/after/f03016-draft.png",
    "kind": "frame",
    "label": "jupiter.dive frame 3016, draft tier",
    "stop": "jupiter",
@@ -80,12 +80,12 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "247ebad7e038ce06"
+   "engine": "2d9dda353bfd7b6d"
   },
   {
-   "time": "2026-11-23T06:54:02.275Z",
-   "file": "20261123065402275-frame-f02137-draft.jpg",
-   "source": "out/work/samebytes/before/f02137-draft.png",
+   "time": "2026-11-23T07:28:12.869Z",
+   "file": "20261123072812869-frame-f02137-draft.jpg",
+   "source": "out/work/samebytes/after/f02137-draft.png",
    "kind": "frame",
    "label": "earth.rise frame 2137, draft tier",
    "stop": "earth",
@@ -94,12 +94,12 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "247ebad7e038ce06"
+   "engine": "2d9dda353bfd7b6d"
   },
   {
-   "time": "2026-11-23T06:53:12.814Z",
-   "file": "20261123065312814-frame-f01876-draft.jpg",
-   "source": "out/work/samebytes/before/f01876-draft.png",
+   "time": "2026-11-23T07:27:23.220Z",
+   "file": "20261123072723220-frame-f01876-draft.jpg",
+   "source": "out/work/samebytes/after/f01876-draft.png",
    "kind": "frame",
    "label": "earth.dive frame 1876, draft tier",
    "stop": "earth",
@@ -108,7 +108,7 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "247ebad7e038ce06"
+   "engine": "2d9dda353bfd7b6d"
   }
  ]
 }
