@@ -1,83 +1,71 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-23T11:53:12.673Z",
- "head": "cff2ea81330131ba6748ad3cfadf4d1c7db8dbbb",
- "note": "MAIL 247 items 1 to 4 on draft stills: one Sun, no gap at the limb, rise turn spread (limb leaves at 1566), T of the rise in 1542; plates still combed",
+ "pushed": "2026-11-23T12:05:52.116Z",
+ "head": "6326371c6cc14caf97cfdb8045a0a463eba97dec",
+ "note": "6326371c: harness passes; every frame about both T; limb crops; judged frames beside kept stills",
  "looks": [
   {
-   "time": "2026-11-23T11:53:12.064Z",
-   "file": "20261123115312064-note-s3-c.jpg",
-   "source": "../../../../tmp/v/s3-c.jpg",
+   "time": "2026-11-23T12:05:51.529Z",
+   "file": "20261123120551529-note-judged4.jpg",
+   "source": "../../../../tmp/v/judged4.jpg",
    "kind": "note",
-   "label": "dive: draft stills 1310 1314 1318 1322, the painted Sun enters at the top",
+   "label": "judged frames 1185 1287 1440 1586 on 6326371c (left) beside the kept stills (right)",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T11:53:11.476Z",
-   "file": "20261123115311476-note-s3-b.jpg",
-   "source": "../../../../tmp/v/s3-b.jpg",
+   "time": "2026-11-23T12:05:50.847Z",
+   "file": "20261123120550847-note-h7-limb.jpg",
+   "source": "../../../../tmp/v/h7-limb.jpg",
    "kind": "note",
-   "label": "rise, new shape: draft stills 1555 1558 1561 1564 1567 1570 (plates still combed, item 5)",
+   "label": "rise limb at twice the size: 1542 (T, close side) 1543 1545 1547 1549 1551 1553 1554",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T11:53:10.891Z",
-   "file": "20261123115310891-note-s3-a.jpg",
-   "source": "../../../../tmp/v/s3-a.jpg",
+   "time": "2026-11-23T12:05:50.304Z",
+   "file": "20261123120550304-note-hz-rise.jpg",
+   "source": "out/work/venus/place/h7/hz-rise.jpg",
    "kind": "note",
-   "label": "rise, new shape and T in 1542: draft stills 1541 1542 1543 1546 1549 1552",
+   "label": "rise 1539 to 1554, horizon at full size",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T11:52:36.046Z",
-   "file": "20261123115236046-frame-f-1322.jpg",
-   "source": "out/work/venus/place/s3/f-1322.png",
-   "kind": "frame",
-   "label": "venus.dive frame 1322, draft tier",
-   "stop": "venus",
-   "segment": "venus.dive",
-   "frame": 1322,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "8b9f780b26a50bc3"
-  },
-  {
-   "time": "2026-11-23T11:50:04.910Z",
-   "file": "20261123115004910-frame-f-1570.jpg",
-   "source": "out/work/venus/place/s3/f-1570.png",
-   "kind": "frame",
-   "label": "venus.rise frame 1570, draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "frame": 1570,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "8b9f780b26a50bc3"
-  },
-  {
-   "time": "2026-11-23T11:29:01.937Z",
-   "file": "20261123112901937-note-s1-d.jpg",
-   "source": "../../../../tmp/v/s1-d.jpg",
+   "time": "2026-11-23T12:05:49.771Z",
+   "file": "20261123120549771-note-rise-b.jpg",
+   "source": "out/work/venus/place/h7/rise-b.jpg",
    "kind": "note",
-   "label": "rise 1553 1556 1560 draft, old rise path: one Sun leaving at the top. Still wrong: the pale fan of the frame at T against olive pebbled plates round it",
+   "label": "rise 1543 to 1554, every frame, draft",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T11:28:43.024Z",
-   "file": "20261123112843024-note-s1-c.jpg",
-   "source": "../../../../tmp/v/s1-c.jpg",
+   "time": "2026-11-23T12:05:49.232Z",
+   "file": "20261123120549232-note-rise-a.jpg",
+   "source": "out/work/venus/place/h7/rise-a.jpg",
    "kind": "note",
-   "label": "1343 (dive T) 1544 (rise T) 1547 1550 draft: one Sun, it keeps its direction while the limb sinks; no black band",
+   "label": "rise 1531 to 1542 (T), every frame, draft",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T11:28:42.476Z",
-   "file": "20261123112842476-note-s1-b.jpg",
-   "source": "../../../../tmp/v/s1-b.jpg",
+   "time": "2026-11-23T12:05:48.652Z",
+   "file": "20261123120548652-note-hz-dive.jpg",
+   "source": "out/work/venus/place/h7/hz-dive.jpg",
    "kind": "note",
-   "label": "dive 1332 1338 draft, whole frame and native crop: one Sun above the limb, no dark line at the limb, no green spot",
+   "label": "dive 1331 to 1346, horizon at full size",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T12:05:48.111Z",
+   "file": "20261123120548111-note-dive-b.jpg",
+   "source": "out/work/venus/place/h7/dive-b.jpg",
+   "kind": "note",
+   "label": "dive 1343 (T) to 1349, every frame, draft",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T12:05:47.541Z",
+   "file": "20261123120547541-note-dive-a.jpg",
+   "source": "out/work/venus/place/h7/dive-a.jpg",
+   "kind": "note",
+   "label": "dive 1331 to 1342, every frame, draft, commit 6326371c",
    "stop": "venus"
   }
  ]
