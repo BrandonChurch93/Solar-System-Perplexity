@@ -1433,3 +1433,58 @@ From `/root`, high priority, word for word (the three placeholders in point 6 ar
 Then wait. Your jobs come in the next message."
 
 What this means for this file: the building of Venus is finished. This is the last entry and the last commit on `agent/venus`. Nothing is open: the working tree was clean, the night limb test is the patch `fit/dusk.patch`, the gate cure is reverted, `agent/venus-dusk` (b0f208d7) was never answered and stays as it is. From here on the brief is `assets-src/shared/RENDER-WORKER.md` at commit 567b3a555461d1e7d88300dbe5febc52073da828, and no file in the repo is edited, committed or pushed by me. My worker notes are kept outside the repo, in `/home/user/workspace/WORKER-NOTES.md`.
+
+## Correction and record of the render worker hours (written 23 Nov 06:45)
+
+- Correction: the heading above says the NEW ROLE mail arrived "about 20:11 VM time". That is wrong. It arrived about 21:50 VM time on 22 Nov. 20:11 was the time of my own last message before it. I saw the error right after the save commit and could not fix it then, because the mail forbade any edit, commit or push after that commit. That save commit (992c018f on local `agent/venus`) was never pushed; remote `agent/venus` stays at b62d033c.
+- Render worker, 22 Nov 21:50 to 23 Nov 00:39, on commit 567b3a55: proof still 2325 matched (fd128b1a999f76fa...). Jobs rendered and sent as tar pieces: film-16x9-final-316 (jupiter.travel 3384-3389), 360 (saturn.travel 3948-3951, 3952-3955), 406 (uranus.rise 4444-4451 in four spans), 409 (uranus.travel 4463-4466), 443 (neptune.terrain 4770-4799), 445 (neptune.terrain 4830-4859), 455 (neptune.rise 4985-4988). Taken off my list by later mails and never started: 457, 432, 459. `LIST DONE` sent 00:39. Timing seen on this VM at final tier: 40 to 55 s per frame in neptune.terrain, 3 to 7.5 minutes per frame in travel and rise segments.
+- Not carried to the new branch, by the rule of mail 214 (no code across): `assets-src/venus/fit/dusk.patch` (the rise only night limb test). It stays on local `agent/venus` (992c018f) and its record is in the entries above.
+
+## MAIL 214 (arrived 23 Nov about 06:40 VM time): NEW TASK, the place. Read this first after a compaction
+
+From `/root`, high priority, word for word:
+
+"MAIL 214 from the Builder (/root). A new task for you, venus_builder. It replaces anything you still held. Answer with one line as soon as your new branch exists: "ACK 214 <branch> <commit>".
+
+What happened since your last work. The film was frozen (main, commit 567b3a55), the record round ran, the master, the nine clips and the nine posts were made. Brandon watched it and wrote this note at 05:57 UTC on 2026-11-23. It outranks the kit's cover rules:
+
+"The main issue I have is the transitions between the planet view and the moment before the surface view comes in, it's a blurry mess, and it's obviously a transition. I think the goal would be to make it seamless. Like there's actually a place on the planet that the camera's going to. Hey next, the surface for Jupiter, and Saturn both look completely weird. It looks like an image that is being stretched and contorted it shouldn't look like that. It should look like it's actually generated out of code."
+
+So every dive and every rise in the film is rebuilt: no cover, no wash, no stall and rush, no swap that can be seen. The spec is cut/HANDOVER.md on main. Part B of it is yours for venus.
+
+Setup
+- git fetch origin main, then git checkout -b agent/venus-place FETCH_HEAD. Main holds the kept build. Whatever is on your old branch and not on main was not taken: do not carry code across. Carry your notebook across if yours is newer than main's (assets-src/venus/NOTES.md), and commit it first.
+- npm ci if the lock file changed, npm run build, npx vitest run: green before you change anything.
+- Read whole, from disk: cut/HANDOVER.md; kit/PROGRESS.md section "Review note of 2026-11-23" and the open items 154, 115 and 28 to 32 (the critics' words on your dive and rise in the frozen build); AGENTS.md and kit/addenda/ again; your own notebook.
+- Write this task into your notebook before you start, with this mail's number, so it survives a compaction.
+
+The task, in this order
+1. S1 now: solve the camera of your approved close image (references/approved/venus-close.jpg) against the sphere at your spot and write src/stops/venus/place.json. Check it by drawing the globe side from that camera beside the close side at the same frame: horizon on horizon, features where they belong.
+2. S2 now: lay the place onto the globe as plates, repaint what the laying back stretches, match colour, nest them under your patch pyramid, hold G13 down the whole dive. Proof: the 12 frame top down dive sheet with no blur.
+3. S3: one steady move for dive and rise by the rules of E3. You may write your own path or wait for the generic one; write divePose(time, view) and risePose(time, view) against the contract of E1 in cut/HANDOVER.md either way.
+4. S4 and S5 when I tell you that E1 and E2 are on main (the engine is being built now by another agent, handover_engineer, and proven on Mars first): merge main, opt in, remove your cover, bring light, exposure, haze, Sun and sky to one function of time through T, and run npm run handover for dive and rise.
+
+What may not change: your hold segment and your terrain segment. Their judged frames must come out as the same picture as the kept stills in out/stills/, because those chunks of the film are not rendered again. The travel after your rise is not rendered again either: your rise must end in the pose, the speed and the look that travel starts with today. The timeline does not change.
+
+Your stop
+- Frames: hold 1110 to 1259, dive 1260 to 1349, terrain 1350 to 1529, rise 1530 to 1604. Judged: 1185, 1287, 1440, 1586.
+- The place is on the cloud tops of the close image, with the rays and the low Sun. Venus has no ground in view, so the cloud tops are the place: the cloud forms of the close view laid back onto the globe as plates, so that on the way down the camera flies to those very forms.
+- The old cover was a bright haze 31 frames long, the longest in the film. It goes. A real haze layer may exist only as a thing in the scene: with structure, passing with parallax, the place seen through or round it, never one colour across the frame.
+- What the critics wrote about the rise of the frozen build: "the rise pops: a close sunlit horizon becomes a half-globe, the sun leaves the frame, and the view direction changes in six frames"; "fast motion tears the limb into wavy accordion ridges instead of a smooth blur".
+
+Working rules
+- Your folders only: src/stops/venus/, assets-src/venus/, public/assets/venus/. Push only to agent/venus-place. Never main, never force, never rebase. If shared code must change, send the request to /root/handover_engineer by message, short and exact, and note it in your notebook.
+- Looks at least every 30 minutes of working time, also while something renders, good or bad: npm run looks -- --push --folder venus-place --note "one line".
+- Draft tier to iterate, review tier to prove. One render process at a time. Motion is judged on consecutive frames: look at every frame of every sheet yourself before you report.
+- Image generation only through the skill named media, at most 6 takes per asset per round, recipe in assets-src/venus/RECIPE.md, binaries committed once per milestone. No file over 95 MB. Values the picture depends on live in config or in a JSON file of your stop. No Math.random, Date.now, performance.now on a pixel path.
+- Every commit message ends with the trailer: Co-authored-by: Perplexity <noreply@perplexity.ai>. No em dashes, no en dashes, no exclamation points, no model names in any file or message.
+- Report to /root by message at each milestone and when blocked: branch, commit, what to look at, what you measured, what is still wrong. Do not wait for an answer unless blocked. M1 is S1 with its check picture and the first laid back plate, rough is fine, within about 90 minutes. M2 is S2 and S3 with their proofs. M3 is the handover, dive and rise, with the E4 reports and the dense sheets.
+- The bar: a viewer who steps through the frames one by one cannot name the frame where the scene changes, and every frame shows a place on the body that the camera is flying to or leaving."
+
+What I do with it, in order (state 06:45, 23 Nov):
+
+- Branch `agent/venus-place` made from main 6da6c641. First commit c0d2ad0c carries this notebook across. No code carried.
+- Next: push, send `ACK 214 agent/venus-place <commit>`; then build and vitest green; read cut/HANDOVER.md whole, PROGRESS "Review note of 2026-11-23" and items 154, 115, 28 to 32, AGENTS.md, kit/addenda; then S1.
+- M1 is due about 08:10 VM time (90 minutes): S1 (place.json plus the check picture) and the first laid back plate, rough.
+- Looks every 30 minutes with `npm run looks -- --push --folder venus-place --note "..."`.
+- The Builder's clock runs 2 to 3 minutes ahead of this VM's `date -u`.
