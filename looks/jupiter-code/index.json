@@ -1,68 +1,56 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-23T18:51:12.548Z",
+ "pushed": "2026-11-23T19:14:55.358Z",
  "head": "c91222cae67882b2a3b921631ab697e2ea785872",
- "note": "Jupiter life: storm turn in, haze trial 1 (too faint, veil over the dark blue rejected), next wisps with shadows and lightning",
+ "note": "Jupiter surface view: haze trials 3 to 5 over the deck (h3 too strong, h5 takes the tone of its ground), 3239 lower left wash seen at native; next the flight eases before the pale zone and the level is held",
  "looks": [
   {
-   "time": "2026-11-23T18:51:11.919Z",
-   "file": "20261123185111919-note-h1-3150-diff.jpg",
-   "source": "../work/f/h1-3150-diff.jpg",
+   "time": "2026-11-23T19:14:54.751Z",
+   "file": "20261123191454751-note-h5-3239-sw.jpg",
+   "source": "../work/f/h5-3239-sw.jpg",
    "kind": "note",
-   "label": "Where the first haze sits at 3150 (difference to the frame without it, times 8): long streaks beyond the storm, a pale veil over the dark blue at the right that I do not keep",
+   "label": "jupiter surface life trial h5-3239-sw (haze layers with shadows, draft, not final)",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T18:51:11.315Z",
-   "file": "20261123185111315-note-h1-sheet.jpg",
-   "source": "../work/f/h1-sheet.jpg",
+   "time": "2026-11-23T19:14:54.188Z",
+   "file": "20261123191454188-note-h5-3239.jpg",
+   "source": "../work/f/h5-3239.jpg",
    "kind": "note",
-   "label": "Life trial h1, draft: storm turn 2 deg a second (bound 8) and a first thin haze, frames 3060 3105 3195 3239. Haze still far too faint to see; wash lower left at 3239 and the climbing level are still there",
+   "label": "jupiter surface life trial h5-3239 (haze layers with shadows, draft, not final)",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T18:46:36.621Z",
-   "file": "20261123184636621-frame-f03060.jpg",
-   "source": "out/work/jupiter/frames/h1/f03060.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3060, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3060,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "743c10b0a56aaca7"
-  },
-  {
-   "time": "2026-11-23T18:41:10.107Z",
-   "file": "20261123184110107-note-n2997-1.jpg",
-   "source": "../work/f/n2997-1.png",
+   "time": "2026-11-23T19:14:53.653Z",
+   "file": "20261123191453653-note-h5-3150-crop.jpg",
+   "source": "../work/f/h5-3150-crop.jpg",
    "kind": "note",
-   "label": "jupiter 2997 draft native crop 1: soft left third beside the sharp middle, place as a patch",
+   "label": "jupiter surface life trial h5-3150-crop (haze layers with shadows, draft, not final)",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T18:41:09.489Z",
-   "file": "20261123184109489-note-l1-sheet.jpg",
-   "source": "../work/f/l1-sheet.jpg",
+   "time": "2026-11-23T19:14:53.101Z",
+   "file": "20261123191453101-note-h5-3150.jpg",
+   "source": "../work/f/h5-3150.jpg",
    "kind": "note",
-   "label": "jupiter surface view 3060 to 3239 every 15th frame, draft, storm turn on (first trial), camera flying",
+   "label": "jupiter surface life trial h5-3150 (haze layers with shadows, draft, not final)",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T18:28:06.364Z",
-   "file": "20261123182806364-frame-f03270.jpg",
-   "source": "out/work/jupiter/frames/b2/f03270.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3270, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3270,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "743c10b0a56aaca7"
+   "time": "2026-11-23T19:14:52.562Z",
+   "file": "20261123191452562-note-h4-3150.jpg",
+   "source": "../work/f/h4-3150.jpg",
+   "kind": "note",
+   "label": "jupiter surface life trial h4-3150 (haze layers with shadows, draft, not final)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T19:14:51.956Z",
+   "file": "20261123191451956-note-h3-3150-crop.jpg",
+   "source": "../work/f/h3-3150-crop.jpg",
+   "kind": "note",
+   "label": "jupiter surface life trial h3-3150-crop (haze layers with shadows, draft, not final)",
+   "stop": "jupiter"
   }
  ]
 }
