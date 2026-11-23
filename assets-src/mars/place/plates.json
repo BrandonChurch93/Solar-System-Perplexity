@@ -58,13 +58,13 @@
   "paletteLum": 1.0
  },
  "force": {
-  "note": "force.py: pictureStep is the grid of the twin's picture the comparison runs on (picture px), blurPx the blur of the difference (picture px), share how much of it is added, directFrom to directTo the stretch (plate texels per picture px) over which the lay back itself stops being used; spreadDeg is how far outside the fan the difference fades out (degrees on the ground), spreadShare its share at the edge, spreadBlurPx the blur of the spread field (plate px); edgePx the feather of the fan edge on the plate (plate px); calmShare how far the broad colour of the far fan (seen, but through thick haze) is brought to the land around it, calmBlurDeg the blur of that comparison (degrees), calmLeast and calmMost the limits of the ratio; groundBlur: the difference is blurred on the ground with a radius of blurPx x stretch x groundBlur plate px; calmHue how far the far fan takes the hue of the land around; outside the fan the broad tone of the take (blur of toneBlur of the plate width) is brought by a gain (toneLeast to toneMost) to the tone at the nearest edge of the fan, fading over spreadDeg; holdFrom to holdTo: the stretch over which the hold falls from full to holdFar of it (cliff faces laid back over the land behind them read from above as strokes that run out from the twin)",
+  "note": "force.py: pictureStep is the grid of the twin's picture the comparison runs on (picture px), blurPx the blur of the difference (picture px), share how much of it is added, directFrom to directTo the stretch (plate texels per picture px) over which the lay back itself stops being used; spreadDeg is how far outside the fan the difference fades out (degrees on the ground), spreadShare its share at the edge, spreadBlurPx the blur of the spread field (plate px); edgePx the feather of the fan edge on the plate (plate px); calmShare how far the broad colour of the far fan (seen, but through thick haze) is brought to the land around it, calmBlurDeg the blur of that comparison (degrees), calmLeast and calmMost the limits of the ratio; groundBlur: the difference is blurred on the ground with a radius of blurPx x stretch x groundBlur plate px; calmHue how far the far fan takes the hue of the land around; outside the fan the broad tone of the take (blur of toneBlur of the plate width) is brought by a gain (toneLeast to toneMost) to the tone at the nearest edge of the fan, fading over spreadDeg; holdFromDeg to holdToDeg: the ground one picture px covers along the view (degrees) over which the hold and the sharp lay back fall away, about 0.33 to 0.5 degrees from the twin's foot (cliff faces laid back over the land behind them read from above as strokes that run out from the twin); beyond it only the broad tone of the picture is held, the difference blurred round on the ground over broadDeg",
   "pictureStep": 2,
   "blurPx": 16,
   "share": 1.0,
   "directFrom": 1.5,
   "directTo": 3.0,
-  "spreadDeg": 0.6,
+  "spreadDeg": 1.2,
   "spreadShare": 1.0,
   "spreadBlurPx": 24,
   "edgePx": 96,
@@ -77,9 +77,9 @@
   "toneBlur": 0.012,
   "toneLeast": 0.15,
   "toneMost": 3.0,
-  "holdFrom": 4.0,
-  "holdTo": 12.0,
-  "holdFar": 0.3
+  "holdFromDeg": 0.00054,
+  "holdToDeg": 0.00124,
+  "broadDeg": 0.06
  },
  "bake": {
   "note": "bake.py: plates from the deepest up (look: the plate of force.py, empty for the toned old land), the new lit level, the lit levels above that take the difference, the options of the stop; matchBlur and matchReach (shares of the plate width): the broad difference to the plate above is added at the rim and fades out matchReach inside it; matchLeast and matchMost bound the gain of the rim match; lookKnee and lookMost: the luminance of a plate (look values) is bent over above lookKnee and never passes lookMost",

@@ -55,7 +55,7 @@ export const createSet: SetFactory = async (ctx) => {
   const planet = new Planet({
     map, mapWidth: (map.image as unknown as { width: number }).width, height: wrapHeight, heightWidth: sizes.height[0], light: look.light, haze: look.haze, grazing: look.grazing,
     patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: patches.fade, nearDeg: patches.nearDeg,
-      ...(patches.levels.some((l) => l.own) ? { own: patches.levels.map((l) => l.own === true) } : {}), ...(patches.fadeMinor ? { fadeMinor: true } : {}) },
+      ...(patches.levels.some((l) => l.own) ? { own: patches.levels.map((l) => l.own === true), ownGain: true } : {}), ...(patches.fadeMinor ? { fadeMinor: true } : {}) },
     storm: { mask: stormMask, axis: direction(wrap.storm.lon, wrap.storm.lat), radius: THREE.MathUtils.degToRad(wrap.storm.radiusDeg) },
   })
   planet.mesh.quaternion.fromArray(fit.globe.quaternion)
@@ -99,6 +99,7 @@ export const createSet: SetFactory = async (ctx) => {
   const glowGround = new THREE.Vector3(1, 0, 0)
   const glowShell = new THREE.Vector3(1, 0, 0)
   const glowWorld = new THREE.Vector3()
+  const ownGain: [number, number, number] = [1, 1, 1]
   const diveT = handoverOf(plan.id, 'dive')?.time
   if (diveT !== undefined) {
     const twin = plan.twin(plan.closePose('dive', diveT), diveT)
@@ -197,6 +198,20 @@ export const createSet: SetFactory = async (ctx) => {
       const gs = n.glow.shell
       planet.setGlow(glowWorld.copy(glowGround).applyQuaternion(state.rotation), [gg.colour[0]! * near, gg.colour[1]! * near, gg.colour[2]! * near], gg.power)
       shell.setGlow(glowWorld.copy(glowShell).applyQuaternion(state.rotation), [gs.colour[0]! * near, gs.colour[1]! * near, gs.colour[2]! * near], gs.power)
+      // the own levels carry the look of the place at T; on the way down the lit levels round them change with the
+      // descent look, and the close view of the rise is lit brighter than that of the dive: a gain by height
+      const table = state.time > terrainMid ? n.ownGain.rise : n.ownGain.dive
+      const height = Math.log(Math.max(camera.length() - 1, 1e-5))
+      ownGain[0] = ownGain[1] = ownGain[2] = 1
+      if (!ending && diveT !== undefined) {
+        let i = 0
+        while (i < table.length - 2 && height < Math.log(table[i + 1]!.height)) i++
+        const a = table[i]!
+        const b = table[i + 1]!
+        const k = Math.min(Math.max((Math.log(a.height) - height) / (Math.log(a.height) - Math.log(b.height)), 0), 1)
+        for (let c = 0; c < 3; c++) ownGain[c] = a.gain[c]! + (b.gain[c]! - a.gain[c]!) * k
+      }
+      planet.setOwnGain(ownGain)
       planet.update(camera, light, plan.spin(state.time), gain, state.weight)
       pu.uVignette!.value = shot.post.vignette * (1 - low)
       pu.uAspect!.value = view.format.width / view.format.height

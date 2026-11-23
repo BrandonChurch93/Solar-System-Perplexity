@@ -178,10 +178,20 @@ del acc, dm, mm, need
 # picture may end on the outline of what the twin sees
 far = cv2.distanceTransform((m < 0.5).astype(np.uint8), cv2.DIST_L2, 5) / size * a.width_deg
 fall = (1 - geom.smoothstep(0.0, fc['spreadDeg'], far)) * fc['spreadShare']
-# the hold fades with the stretch: where the twin looks along the ground, what the picture shows is cliff faces
-# pulled out over the land behind them. Held in full they read from above as strokes that run out from the twin.
-hold = fc['share'] * (fc['holdFar'] + (1 - fc['holdFar']) * (1 - geom.smoothstep(fc['holdFrom'], fc['holdTo'], stretch)))
-plate = np.clip(R + Dp * (m * hold)[..., None], 0, 1)
+# the hold is whole only near the twin: where the twin looks along the ground, what the picture shows is cliff faces
+# pulled out over the land behind them, and held in full they read from above as strokes that run out from the twin.
+# The measure is the ground one picture px covers along the view (degrees), the same on every plate. Beyond holdToDeg
+# only the broad tone of the picture is held (the difference blurred round on the ground over broadDeg).
+reach = stretch * (a.width_deg / size)
+near = 1 - geom.smoothstep(fc['holdFromDeg'], fc['holdToDeg'], reach)
+q = 8
+sig = max(fc['broadDeg'] / a.width_deg * size / q, 0.5)
+ms = cv2.resize(m, (size // q, size // q), interpolation=cv2.INTER_AREA)
+broad = cv2.GaussianBlur(cv2.resize(Dp * m[..., None], (size // q, size // q), interpolation=cv2.INTER_AREA), (0, 0), sig) / np.maximum(cv2.GaussianBlur(ms, (0, 0), sig), 0.05)[..., None]
+broad = cv2.resize(broad, (size, size), interpolation=cv2.INTER_CUBIC)
+Dp = Dp * near[..., None] + broad * (1 - near)[..., None]
+del broad, ms
+plate = np.clip(R + Dp * (m * fc['share'])[..., None], 0, 1)
 # (a gain on the broad tone, not a sum: the take is often lit where the picture's near ground is dark, and a sum
 # leaves the land beside the fan brighter than the fan)
 sig = fc['toneBlur'] * size
@@ -193,7 +203,7 @@ out = np.clip(geom.texel_of(Rsc * (1 + (gain - 1) * fall[..., None])), 0, 1)
 plate = plate * m[..., None] + out * (1 - m)[..., None]
 del Ps, Rsc, tone, gain, out
 report('held to the picture', plate)
-direct = m * (1 - geom.smoothstep(fc['directFrom'], fc['directTo'], stretch))
+direct = m * (1 - geom.smoothstep(fc['directFrom'], fc['directTo'], stretch)) * near
 plate = plate * (1 - direct[..., None]) + L[..., :3] * direct[..., None]
 report('with the sharp lay back', plate)
 print('lay back leads on %.4f of the plate, is used as it is on %.4f' % ((m > 0.5).mean(), (direct > 0.5).mean()))

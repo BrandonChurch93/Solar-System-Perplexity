@@ -42,5 +42,44 @@
     }
   },
   "shellScaleHeight": 0.04,
-  "hazeScaleHeight": 0.15
+  "hazeScaleHeight": 0.15,
+  "ownGain": {
+    "note": "Gain on the levels with their own light (linear look values), by height above the surface (radii, between entries by log height; held beyond the ends): dive for the way down, rise for the way up. Measured: see assets-src/mars/PLACE-NOTES.md.",
+    "dive": [
+      {
+        "height": 1,
+        "gain": [
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "height": 0.001,
+        "gain": [
+          1,
+          1,
+          1
+        ]
+      }
+    ],
+    "rise": [
+      {
+        "height": 1,
+        "gain": [
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "height": 0.001,
+        "gain": [
+          1,
+          1,
+          1
+        ]
+      }
+    ]
+  }
 }
