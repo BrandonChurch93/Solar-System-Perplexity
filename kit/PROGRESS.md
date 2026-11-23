@@ -6,7 +6,7 @@ The Builder's memory. Read this first in every task. Update it before every comm
 
 - Current phase: 6 · Polish and deliver
 - Current stop: none. All nine stops are finished (Phase 4 gate, 00:52 UTC on 2026-11-22). Phase 5 is done: its three whole film rounds 30, 31 and 32 ran to the limit of three, round 32 closed at 11:55 UTC and its build is kept as the best of the three (main 4365a0f0, engine hash be043ade04a7ab6e: R5 7, R6 6, R7 6, R2 pass, R3 4, R4 6; 1 severe and 21 major, written under open items 79 to 100), and the Phase 5 gate held at 12:23 UTC with the preview film of that build in `out/preview.mp4`. Phase 6 step 1 runs: three polish rounds (33, 34, 35) on the open items, worst first, each judged only on the frames its batch touched. Round 33 closed at 15:26 UTC with 95 answers (13 severe, 97 major; motion better at Jupiter, Saturn, Mercury, Neptune and the Sun, so its build is the base of round 34). Round 34 closed at 17:40 UTC with 59 answers (10 severe, 80 major, written under open items 109 to 129; the opening at phone size passes with 9, compression 8, the whole film 6; motion at Mercury 3 and Earth 4, and the film's motion critic names two sky pops that are the camera's turn). Round 35, the last polish round, is cut at 18:30 UTC from take outs and small proven things, with at most one larger cure per stop as its own commit; then the best build of rounds 32 to 35 is frozen, and the record round, the sandbox master, the nine clips, the nine posts and the gauntlet follow
-- Current round: open: 37 (mercury), 38 (uranus), 39 (neptune), 40 (earth). The next round is 41. Round numbers are global; rounds of different stops run at the same time, each written here when it starts
+- Current round: open: 37 (mercury), 38 (uranus), 39 (neptune), 40 (earth), 41 (venus). The next round is 42. Round numbers are global; rounds of different stops run at the same time, each written here when it starts
 - Next critic name: reviewer_1544
 - Blocked: no
 - App URL: https://grand-tour-film.pplx.app (review page: https://grand-tour-film.pplx.app/review.html). Visibility is set to Organization, so it asks for a sign-in. Site id 658cdf8a-abd6-46bd-a3ba-e37d5c3ba5a3. Private preview of the same build: https://www.perplexity.ai/computer/a/grand-tour-.DP5zrWnQuWx5hYYutNNyA
@@ -111,7 +111,7 @@ State is one of `not started`, `stand-in`, `in progress` or `finished`. A finish
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | sun | finished (530168f) | 3 | 9 | pass | 5 | 6 | pass | 46 to 53 |
 | mercury | in progress | 1 | 9 | pass | 7 | 4 | pass | 69 to 78 |
-| venus | finished (1259820) | 3 | 8 | fail | 5 | 6 | pass | 28 to 32 |
+| venus | in progress | 1 | 8 | fail | 5 | 6 | pass | 28 to 32 |
 | earth | in progress | 1 | 9 | pass | 6 | 4 | pass | 54 to 61 |
 | mars | finished (0ee8c76) | 3 | 7 | pass | 5 | 6 | pass | 6 to 15 |
 | jupiter | finished (530168f) | 3 | 10 | pass | 7 | 5 | pass | 33 to 37 |
@@ -1244,6 +1244,7 @@ One line per round, written when the round starts: number, phase, stop. Scores a
 - Round 38, Phase 6, uranus, round 1 of 3. Started 2026-11-23 15:56 UTC.
 - Round 39, Phase 6, neptune, round 1 of 3. Started 2026-11-23 15:56 UTC.
 - Round 40, Phase 6, earth, round 1 of 3. Started 2026-11-23 15:57 UTC.
+- Round 41, Phase 6, venus, round 1 of 3. Started 2026-11-23 17:16 UTC.
 
 ## Final scores
 
