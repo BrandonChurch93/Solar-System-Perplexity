@@ -1,9 +1,17 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T06:53:15.106Z",
- "head": "55c9d6b1c273932f2d114987bfda4a4f5b1ef195",
- "note": "S1: twin of the close view solved, horizon on horizon within 4 px at 1920; the ground is not yet the same ground (S2)",
+ "pushed": "2026-11-23T06:55:41.822Z",
+ "head": "96d6c832563c0746301e3ba43d6b801eb4e391d3",
+ "note": "M1: S1 check sheet and the first laid back plate (rough)",
  "looks": [
+  {
+   "time": "2026-11-23T06:55:17.870Z",
+   "file": "20261123065517870-note-m1-plate.jpg",
+   "source": "out/work/mercury/place/m1-plate.jpg",
+   "kind": "note",
+   "label": "M1 first laid back plate (rough): the approved close image laid through the twin onto the sphere, its stretch, and the same beside patch-4 as shipped",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-23T06:53:13.193Z",
    "file": "20261123065313193-note-s1-check-a.jpg",
@@ -95,14 +103,6 @@
    "format": "16x9",
    "diag": "beauty",
    "job": "film"
-  },
-  {
-   "time": "2026-11-22T18:11:25.199Z",
-   "file": "20261122181125199-note-dive-690-724-ghost-fade.jpg",
-   "source": "out/work/mercury/p6/r35/dive-690-724-ghost-fade.jpg",
-   "kind": "note",
-   "label": "dive 690 694 698 702 / 706 710 717 724 draft, tree c8e4a1dd on main 55319c5a: the lens ghosts fade out over the first fifth of the dive",
-   "stop": "mercury"
   }
  ]
 }
