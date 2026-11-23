@@ -19,6 +19,7 @@ import { coverFrames } from '../src/director/timeline'
 // The measures of the handover (cut/HANDOVER.md, E4). One stop, its dive and its rise.
 //   npm run handover -- --stop ID [--kind dive|rise] [--tier draft|review] [--only sides,under,flow,frames,sheets,top]
 //                       [--params FILE --dist DIR --name NAME]   (judge another build of the stop, for example the frozen one)
+//   --parts across,before,after picks the sheets (all three when not given; the one across T is made first)
 // Everything is written to out/work/handover/. Exit 1 when a judged number is over its limit in config.handover.limits.
 
 type Kind = 'dive' | 'rise'
@@ -34,6 +35,7 @@ if (!stop || !cfg.stopIds.includes(stop)) {
 const sheetTier = a.tier ?? 'review'
 if (!Object.hasOwn(cfg.tiers, sheetTier)) throw new Error('unknown tier ' + sheetTier)
 const only = a.only ? a.only.split(',') : ['sides', 'under', 'flow', 'frames', 'sheets', 'top']
+const sheetParts = a.parts ? a.parts.split(',') : null
 const name = a.name ?? stop
 const dist = a.dist ? resolve(a.dist) : DIST
 const other = Boolean(a.dist)
@@ -182,7 +184,8 @@ async function sides(line: Line): Promise<Record<string, unknown> & Verdict> {
   return { ...n, close, globe, difference: stem + '-difference.png', panel: stem + '-sides.png', pass: why.length === 0, why }
 }
 
-interface UnderNumbers { pixels: number; share: number; mean: number; p50: number; p99: number; meanSigned: number[] }
+interface UnderPart { pixels: number; share: number; mean: number; p50: number; p99: number; meanSigned: number[] }
+interface UnderNumbers extends UnderPart { sky: UnderPart; tone: number; detail: number }
 
 // What lies under the place picture at T: the globe side drawn alone (place picture off) against the globe side with the picture, on the body where
 // the pass draws the picture at more than half weight. The place window fades from the one to the other, so this is how far the plates are from
@@ -384,14 +387,14 @@ async function sheets(line: Line, tier: string): Promise<string[]> {
   const count = cfg.raw.critics.contactSheetFrames
   const lo = Math.max(T - span, line.seg.firstFrame)
   const hi = Math.min(T + span, line.seg.endFrame - 1)
-  const files = new Map<number, string>()
-  for (let f = lo; f <= hi; f++) files.set(f, await still(f, tier, 'beauty'))
-  const parts: [string, number, number][] = [['before', lo, T - 1], ['across', Math.max(T - Math.floor(count / 2), lo), Math.min(T - Math.floor(count / 2) + count - 1, hi)], ['after', T + 1, hi]]
+  // The sheet across T first: its frames are the ones the swap is judged on, and the frames before T of a dive can ask for
+  // the most samples of the film. Each sheet is written as soon as its frames are there.
+  const parts: [string, number, number][] = [['across', Math.max(T - Math.floor(count / 2), lo), Math.min(T - Math.floor(count / 2) + count - 1, hi)], ['before', lo, T - 1], ['after', T + 1, hi]]
   const out: string[] = []
   for (const [part, first, last] of parts) {
-    if (last < first) continue
+    if (last < first || (sheetParts && !sheetParts.includes(part))) continue
     const inputs = []
-    for (let f = first; f <= last; f++) inputs.push({ path: files.get(f)!, label: 'f' + padFrame(f) + (f === T ? ' T' : f < T ? ' T' + (f - T) : ' T+' + (f - T)) })
+    for (let f = first; f <= last; f++) inputs.push({ path: await still(f, tier, 'beauty'), label: 'f' + padFrame(f) + (f === T ? ' T' : f < T ? ' T' + (f - T) : ' T+' + (f - T)) })
     const file = join(dir, name + '-' + line.kind + '-' + tier + '-' + part + '.png')
     image({ op: 'sheet', output: file, inputs, limit: cfg.raw.critics.maxImageLongEdgePx })
     addLook({ file }, { kind: 'sheet', label: stop + ' ' + line.kind + ', every frame ' + first + ' to ' + last + ' (' + part + ' T, frame ' + T + '), ' + tier + ' tier', stop: stop!, segment: line.seg.id, first, last, tier })
@@ -422,7 +425,9 @@ try {
       out.under = u
       if (!u.none) {
         verdicts.push(['under the place picture', u])
-        md.push('Under the place picture at T (the globe side alone against the globe side with the picture, on the ' + round((u.share as number) * 100, 1) + ' percent of the frame where the body carries the picture at more than half weight): mean difference ' + round(u.mean as number, 2) + ', median ' + u.p50 + ', 99th percentile ' + u.p99 + '; the globe alone is ' + (u.meanSigned as number[]).map((v) => (v >= 0 ? 'plus ' : 'minus ') + Math.abs(round(v, 1))).join(', ') + ' in red, green and blue. Picture: `' + (u.panel as string).replace(ROOT + '/', '') + '`.', '')
+        md.push('Under the place picture at T (the globe side alone against the globe side with the picture, on the ' + round((u.share as number) * 100, 1) + ' percent of the frame where the body carries the picture at more than half weight): mean difference ' + round(u.mean as number, 2) + ', median ' + u.p50 + ', 99th percentile ' + u.p99 + '; the globe alone is ' + (u.meanSigned as number[]).map((v) => (v >= 0 ? 'plus ' : 'minus ') + Math.abs(round(v, 1))).join(', ') + ' in red, green and blue. Of the difference, tone (the means of ' + L.blockPx + ' px blocks) carries ' + round(u.tone as number, 2) + ' and detail (what is left inside the blocks) ' + round(u.detail as number, 2) + '. Picture: `' + (u.panel as string).replace(ROOT + '/', '') + '`.', '')
+        const sky = u.sky as UnderPart
+        if (sky.pixels > 0) md.push('In the sky at T (not judged), on the ' + round(sky.share * 100, 1) + ' percent of the frame where the picture is drawn off the body at more than half weight: mean difference ' + round(sky.mean, 2) + ', median ' + sky.p50 + ', 99th percentile ' + sky.p99 + '; the globe side alone is ' + sky.meanSigned.map((v) => (v >= 0 ? 'plus ' : 'minus ') + Math.abs(round(v, 1))).join(', ') + ' in red, green and blue.', '')
       }
     }
     if (only.includes('flow')) {

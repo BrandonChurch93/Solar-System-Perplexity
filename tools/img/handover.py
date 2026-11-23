@@ -60,9 +60,10 @@ def sides(job):
 
 
 def under(job):
-    """The globe side alone against the globe side with the place picture, on the body where the pass draws the picture at more than half weight.
+    """The globe side alone against the globe side with the place picture, where the pass draws the picture at more than half weight.
 
-    The body is a grid of 0 and 1 (rows from the top), the mask a picture of the pass weight as grey."""
+    Counted on the body, and beside it on the sky. The body is a grid of 0 and 1 (rows from the top), the mask a picture of the pass weight as
+    grey. Tone is the part of the difference that the means of whole blocks carry, detail is what is left inside the blocks."""
     a = rgb(job['picture'])
     b = rgb(job['alone'])
     h, w = a.shape[:2]
@@ -72,18 +73,38 @@ def under(job):
     bh, bw = h // rows, w // cols
     body = np.zeros((h, w), dtype=bool)
     body[: rows * bh, : cols * bw] = np.kron(grid > 0.5, np.ones((bh, bw), dtype=bool))
-    where = body & (weight > 0.5)
+    drawn = weight > 0.5
+    where = body & drawn
+    above = ~body & drawn
+    above[rows * bh :, :] = False
+    above[:, cols * bw :] = False
     d = np.abs(a - b)
     worst = d.max(axis=2)
-    n = int(where.sum())
-    numbers = {
-        'pixels': n,
-        'share': float(where.mean()),
-        'mean': float(d[where].mean()) if n else 0.0,
-        'p50': float(np.percentile(worst[where], 50)) if n else 0.0,
-        'p99': float(np.percentile(worst[where], 99)) if n else 0.0,
-        'meanSigned': [float(v) for v in (b - a)[where].mean(axis=0)] if n else [0.0, 0.0, 0.0],
-    }
+    signed = b - a
+
+    def part(mask):
+        n = int(mask.sum())
+        return {
+            'pixels': n,
+            'share': float(mask.mean()),
+            'mean': float(d[mask].mean()) if n else 0.0,
+            'p50': float(np.percentile(worst[mask], 50)) if n else 0.0,
+            'p99': float(np.percentile(worst[mask], 99)) if n else 0.0,
+            'meanSigned': [float(v) for v in signed[mask].mean(axis=0)] if n else [0.0, 0.0, 0.0],
+        }
+
+    numbers = part(where)
+    numbers['sky'] = part(above)
+    cells = where[: rows * bh, : cols * bw].reshape(rows, bh, cols, bw).mean(axis=(1, 3)) > 0.5
+    if cells.any():
+        means = signed[: rows * bh, : cols * bw].reshape(rows, bh, cols, bw, 3).mean(axis=(1, 3))
+        inner = np.abs(signed[: rows * bh, : cols * bw] - np.kron(means, np.ones((bh, bw, 1))))
+        full = np.kron(cells, np.ones((bh, bw), dtype=bool))
+        numbers['tone'] = float(np.abs(means[cells]).mean())
+        numbers['detail'] = float(inner[full].mean())
+    else:
+        numbers['tone'] = 0.0
+        numbers['detail'] = 0.0
     if job.get('panel'):
         limit = job.get('limit', 1400)
         gain = job.get('gain', 2)
@@ -93,7 +114,7 @@ def under(job):
         board = Image.new('RGB', (limit, cell_h + label + 12), (16, 16, 16))
         draw = ImageDraw.Draw(board)
         shown = np.clip(d * gain, 0, 255)
-        shown[~where] *= 0.25
+        shown[~drawn] *= 0.25
         tiles = [('globe side at T with the place picture', a), ('globe side at T alone', b), ('difference times ' + str(gain) + ', dim where not counted', shown)]
         for i, (name, im) in enumerate(tiles):
             x = 6 + i * (cell_w + 6)
