@@ -1672,3 +1672,97 @@ What does slide with height in the rise and is still open: everything model.ts b
 saturation, tints, flatten, the ladder set, ice, grains) starts to go back at height 0.6 (frame 3830.5) and is
 done at 1.8. It is smooth (close 0.992 at 3832, 0.959 at 3834) but it is a tone that slides with height, not
 with distance (mail 315). Not changed in this commit.
+
+## 21:40 to 22:00 UTC: the commit for round 45 is named, the step of mail 348 looked for on two engines
+
+Commit: 114e2d6 (globe function, notebook), then main a9a5b9f merged in (never rebased): c984dd4, pushed 21:34.
+- Merge recipe: `git fetch --depth 1 origin main` gives "refusing to merge unrelated histories" on this shallow
+  clone; `git fetch --depth 40 origin main; git merge FETCH_HEAD` finds the base. Main holds this stop's three
+  folders as of a284d54, so the merge conflicts in my own files (plan.ts, skim.json, globe.ts, grains.json, this
+  notebook). Resolved with `git checkout 114e2d6 -- src/stops/saturn assets-src/saturn public/assets/saturn`,
+  then checked: my folders equal 114e2d6, nothing outside them differs from main. The merge brought
+  src/bodies/planet.ts and three tests, no engine change (the gentler shutter is not on main at a9a5b9f).
+- On c984dd4: tsc exit 0; vitest 27 files, 186 passed;
+  "PASS G11  every asset has a row or a recipe";
+  "PASS G15  at most 2 sets per frame; finished stops: saturn/web 281 MB, saturn/full 774 MB".
+- Bytes of drafts: 3465 and 3539 equal the kept build, 3567 equals r12, 3630 equals b9b333e; 3720 differs from
+  b9b333e (mean 0.130 of 255, 99th percentile 4, max 18: the globe function); 3832 equal before and after the
+  merge. G17 at 3720, draft: median 0.681, 25th percentile 0.287.
+- Not run here: G13 on every frame of 3540 to 3884 (47 minutes on this VM) and the handover report. Said so in
+  the mail, with the commands.
+
+Mail to the Builder, 21:47 (high): c984dd472881cb6b5832153beb9ead19ca1352ce named for the round, gate lines,
+what was not run, the measurements on items 1 and 2 of mail 348, my open list 1 to 8.
+
+The step between 3832 and 3834 (mail 348, item 1), what was tried and what it showed:
+- Review stills of the commit, each alone, plain engine: 3831 (31 samples), 3832 (37), 3834 (35). Lower left
+  quarter mean 0.692 0.607 0.520, 0.686 0.602 0.515, 0.674 0.593 0.505; ringlet contrast (sd of log luma across
+  the bands) 0.061, 0.063, 0.067. One look.
+- The trial engine with the gentler shutter (branch agent/handover-trial-floor50-14, 7d9f486: maxBlurPx 14,
+  blurEaseFrames 12, minShutter 0.5) with this stop folder, in /home/user/workspace/trial. Its shutter in the
+  rise: 0.757 at 3830, 0.759 at 3831, 0.640 at 3832, 0.654, 0.670, 0.688, 0.709, 0.732, 0.755 at 3838; capped
+  from 3817 to 3873; at its floor 0.5 from 3856 to 3868. So the shutter falls by 16 percent in one frame at
+  3832. Cause: the motion estimate of the harness (src/core/motion.ts) steps from 18.5 to 21.9 px there, when
+  one more probe of its grid meets the ground plane of the terrain view; the flight has no step.
+  Review stills on that engine, 24 samples each: 3831 lower left mean 0.687 0.602 0.516, ringlet contrast 0.075;
+  3832 mean 0.678 0.594 0.508, contrast 0.084. So with the cap 3832 is 12 percent crisper than 3831 (plain
+  engine: 3 percent), the same tone and the same band layout. A small step in crispness, in the other direction
+  than the mail describes (duller from 3834). Not the step of the mail, or a small part of it.
+- One process, draft tier: `npm run seq -- --first 3829 --last 3836 --tier draft` (68 s for 8 frames). Every
+  frame 3830 to 3836 has the same bytes as the same frame drawn alone. So nothing in the scene or the engine
+  carries over from one frame to the next at the draft tier.
+- The grains: grains.ts stops collecting at grains.json capacity (900000) and would then drop the later rows
+  and levels in one frame. Not measured in the rise yet (see below).
+
+Draft against review in the rise (open item 8): at 3832 the draft is whiter and crisper with fine cream streaks
+(lower left ringlet contrast 0.099, mean 0.661 0.580 0.498), the review still has broad tan bands (0.063, mean
+0.686 0.602 0.515). Cause: iceSweep (ice.ts) draws the grain of the sheet out by the travel of the lens during
+one take (model.ts `take`, `moved`), not by the turn of the lens, and the lens turns fast in the rise. The film
+tiers show the true blur by their takes; the draft tier shows a picture nobody will see. When the engine passes
+its shutter (`view.shutter` on the trial branches), `take` must use it; the Builder asked not to set a shutter
+here before that engine is on main.
+
+The globe at 3832, review tier (rv_globe.png, full size): streaked along its bands by the blur, mottled, a few
+small orange specks; not flat. Shading toward the limb is still missing before 3834 (open item 2).
+
+## 22:00 to 22:10 UTC: no state between frames, the grains are not cut, and a correction of my own numbers
+
+- One process, review tier: `npm run seq -- --first 3831 --last 3834 --tier review` (31, 37, 36, 35 samples, about
+  135 s a frame). 3831, 3832 and 3834 have the same bytes as the same frames drawn alone. Lower left quarter mean
+  R 0.692, 0.686, 0.680, 0.674; ringlet contrast 0.061, 0.063, 0.064, 0.067: even steps. So at both tiers the
+  picture is a function of the frame alone on this engine, and the stop has no step between 3832 and 3834.
+- Grains (out/scratch/count.ts builds Grains without a renderer and counts what one take draws): at most 52,432
+  (frame 3814) of a capacity of 900,000 over the whole flight, so the cut at the capacity never acts. In the rise:
+  16,555 at 3826, 5,300 at 3828, 617 at 3830, 256 at 3832, 234 at 3834, 145 at 3854, 0 from 3860. The sand
+  leaves the picture between 3826 and 3830 as the lens climbs from 0.34 to 0.40 radii.
+- CORRECTION. The heights I wrote down for the rise before (0.59 at 3830, 0.636 at 3832, 0.686 at 3834, and
+  "close 0.992 at 3832, 0.959 at 3834", "from frame 3830.5") were wrong. Measured from plan.flight and from the
+  director (out/scratch/h.ts, d.ts; both agree):
+
+  | frame | height over the plane | foot | lens to cloud tops | close |
+  |---|---|---|---|---|
+  | 3630 | 0.587 | 3.553 | 2.612 | 1.000 |
+  | 3720 | 0.396 | 2.591 | 1.628 | 1.000 |
+  | 3800 | 0.279 | 2.029 | 1.052 | 1.000 |
+  | 3814 | 0.264 | 1.952 | 0.974 | 1.000 |
+  | 3826 | 0.336 | 1.924 | 0.959 | 1.000 |
+  | 3832 | 0.431 | 1.958 | 1.015 | 1.000 |
+  | 3834 | 0.469 | 1.979 | 1.046 | 1.000 |
+  | 3840 | 0.607 | 2.076 | 1.183 | 1.000 |
+  | 3842 | 0.663 | 2.124 | 1.247 | 0.977 |
+  | 3848 | 0.865 | 2.327 | 1.517 | 0.741 |
+  | 3852 | 1.038 | 2.531 | 1.780 | 0.502 |
+  | 3856 | 1.248 | 2.811 | 2.133 | 0.260 |
+  | 3860 | 1.505 | 3.193 | 2.602 | 0.071 |
+  | 3864 | 1.819 | 3.710 | 3.223 | 0.000 |
+  | 3884 | 2.938 | 5.906 | 5.745 | 0.000 |
+
+  So everything model.ts blends by `close` slides between frames 3839.7 and 3864 in the rise (heights 0.6 to
+  1.8), and nothing of the rings is blended by height between 3832 and 3834. The band function of the globe
+  (reach 1.3 to 1.75 radii from the cloud tops) fades out between 3843 and 3852: where the Builder saw the bands
+  of the globe deepen (mail 348, item 2).
+- Mail to the Builder, 22:08 (high): these measurements, the shutter step of the trial engine at 3832 (in the
+  engine's measure, not in this folder), the correction, and a request for his frames 3830 to 3836 or the
+  engine sha and the span of each machine.
+- Disk: 3.2 GB free at 22:05 (renders refuse under 3). Old picture folders in /tmp/v removed (kept: kept, hold,
+  r12, r17 to r21, g13, the scripts); 4.9 GB free after.
