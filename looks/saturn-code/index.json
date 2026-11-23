@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T10:11:53.260Z",
+ "pushed": "2026-11-23T10:38:42.281Z",
  "head": "0da1bbe8c2a6c37ed25509a62fdffd55bd6a7086",
- "note": "ice near the camera: blocks with faces tried, dashes found to be floater shadows; next sand, colour of the A ring, finer lines",
+ "note": "skim: halo and dusk on the globe near the sheet, stone shadows fade by slant; next the softening and colour pass and a grain of the sheet",
  "looks": [
+  {
+   "time": "2026-11-23T10:38:41.720Z",
+   "file": "20261123103841720-note-np_bn.jpg",
+   "source": "../../../../tmp/v/np_bn.png",
+   "kind": "note",
+   "label": "3720 B near, native: approved left, mine right"
+  },
+  {
+   "time": "2026-11-23T10:38:41.182Z",
+   "file": "20261123103841182-note-np_nl.jpg",
+   "source": "../../../../tmp/v/np_nl.png",
+   "kind": "note",
+   "label": "3720 A near left, native: approved left, mine right (mine still hard thin lines, browner)"
+  },
+  {
+   "time": "2026-11-23T10:38:40.517Z",
+   "file": "20261123103840517-note-d_3720.jpg",
+   "source": "../../../../tmp/v/d_3720.png",
+   "kind": "note",
+   "label": "3720 review tier, 6 samples, halo and dusk pass (before the softening pass)"
+  },
   {
    "time": "2026-11-23T10:11:38.355Z",
    "file": "20261123101138355-note-d_3720.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/v/look_ice2_nearleft.png",
    "kind": "note",
    "label": "near left at native size, approved beside the film: stones and grain, second pass (A ring still too lilac and too flat)"
-  },
-  {
-   "time": "2026-11-23T09:34:10.609Z",
-   "file": "20261123093410609-note-look_3720_ice2.jpg",
-   "source": "../../../../tmp/v/look_3720_ice2.png",
-   "kind": "note",
-   "label": "3720 draft: stones of ice from code, resting on the sheet and floating on levels above it, each with its shadow; grain as relief"
-  },
-  {
-   "time": "2026-11-23T09:14:09.798Z",
-   "file": "20261123091409798-note-look_ice1_nearleft.jpg",
-   "source": "../../../../tmp/v/look_ice1_nearleft.png",
-   "kind": "note",
-   "label": "near left at 2x, approved beside the film: grain in the sheet, first pass"
-  },
-  {
-   "time": "2026-11-23T09:14:09.118Z",
-   "file": "20261123091409118-note-look_3720_ice1.jpg",
-   "source": "../../../../tmp/v/look_3720_ice1.png",
-   "kind": "note",
-   "label": "3720 draft, first grains of ice in the sheet (too soft, too sparse yet)"
   }
  ]
 }
