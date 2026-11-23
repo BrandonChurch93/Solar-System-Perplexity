@@ -411,10 +411,7 @@ void main() {
   }
   vec3 deck = albedo * knot(uDeck, ndd) * shade * (1.0 - uShadow.x * (1.0 - placed) * shadow * lit * (1.0 - min(alpha, 1.0)));
   for (int k = 0; k < (shown.a > 0.0 ? 1 : 0); k++) {
-    vec3 plate = shown.rgb / shown.a;
-    for (int j = 0; j < (uToneAmt > 0.0 ? 1 : 0); j++) {
-      plate = min(plate * exp2(-uToneAmt * (textureLod(uTone, toneUv, 0.0).rgb - 0.5)), vec3(0.98));
-    }
+    vec3 plate = min(shown.rgb / shown.a * exp2(uToneAmt * (textureLod(uTone, toneUv, 0.0).rgb - 0.5)), vec3(0.98));
     vec3 seen = inverseFilmic(plate) / (uNearTint.rgb * uNear.y);
     deck = mix(deck, mix(vec3(dot(seen, vec3(0.3, 0.5, 0.2))), seen, 1.0 / uNear.w) / uTint, shown.a);
   }

@@ -1883,3 +1883,47 @@ No frame of main changed (115 draft frames with the same bytes). Merge origin/ma
 - Same bits after the merge and the limb code (`s4/h/same/` against `out/work/nep/e1/`): 4605, 4640, 4679, 4770, 4860, 4949, 5025, 5085: 0 of 2,073,600 pixels differ in each. `closeup.json` back to `settle` [0.06, 0.03] after the chain.
 - Mail from /root/handover_engineer, 12:12 VM (low, no answer needed), in short: E3 of the engine is on `agent/engine-handover` at 0d14d1c, not on main yet; the Builder proves it first. It changes the generic globe side path of stops that opted in (steady descent, level glide, C1 at T; twin and T frames unchanged). Options per stop: `handover.dive.path { turnFall, level, levelBy, sidestep }`, `skyFloor`, `place { seen, maxEnlarge, enlargeSoft }`. The report judges level and colour steps on the body only and names the fastest frame. Neptune flies its own `divePose` and `risePose`; to check after it lands whether anything changes.
 - Next: commit and push items 1 and 2, report. Then items 3 and 4 (`lay.lightPower`), item 5 (detail in plates 6 and 3.5), the handover run.
+
+### 12:20 to 12:40 VM, pushed and reported; items 3 and 4: the wedge and the smear traced to the plates
+
+- 12:20 VM: commit b69351b8 (code and plates), merge of main ffb0476c on top (74e3c04b), pushed to agent/neptune-place. Looks pushed (rise and dive sheets of chain `s4/h`, limb crop, bank pairs). Report sent to /root at 12:21 VM: items 1 and 2 done, numbers as above, what is still wrong.
+- The dark wedge south of the eye (item 4) and the red brown smear under the eye in the dive (4696 to 4712), traced on the plates themselves (`/tmp/flat26.jpg`: the 26 degree plate as stored, half lifted, fully lifted by its tone map):
+  - The wedge is in the plates. `settle()` moved every texel outside the exact zone to the tone of the nearest point of the zone. Behind the corner of the zone under the fitted camera every texel took the tone of the corner itself, the darkest point of the close view's foreground: a fan with ruler straight sides, 3 degrees long.
+  - The smear is the same ground lifted. The plate there is 1.6, 4.7, 11.6 of 255 (std 1.9, 2.9, 4.6) and the tone map lifts it by 4.0, 3.6, 3.4 stops: values of 0 to 3 times 16. And the tone map's blur of 1 degree is wider than the dark core, so the core stays darker and redder than the globe after the division.
+- What was changed (12:25 to 12:33 VM):
+  - `shown.py settle()`: the tone a texel outside the zone is moved to is that of the nearest point, blurred over `GROW` 0.6 times its distance from the zone (never under reach / 6). Preview at 768 px (`/tmp/carry.jpg`): a soft round lobe south of the eye instead of the fan.
+  - The plate files now hold the plates with their coarse light divided out (`flat()`), and the globe multiplies the light back in: `planet.ts` `plate * exp2(uToneAmt * (tone - 0.5))`, `set.ts` `uToneAmt = stops * closeLight`, `closeLight = tone ^ lay.lightPower` (`closeup.json`, 1 for now). The near black foreground is made by darkening good 8 bit values. The layer's own ground is still divided by the share that is left.
+  - `patches.json` `place.tone.deg` 1.0 to 0.5 (preview `/tmp/carry2.jpg`, rows 1.0, 0.5, 0.3: at 0.5 the red core is gone from the fully lifted plate). Tone map now from minus 5.61 to plus 4.84 stops (12 stops across the 8 bit range, so inside it).
+  - Bake of all five (12:29 to 12:32 VM): clipped when flat 0.00002, 0.00005, 0.00014, 0.00041, 0.00059 of the texels; the file read back and multiplied again against the plate as painted: mean 0.0035, 0.0040, 0.0040, 0.0022, 0.0012 of 1, p99 0.0148, 0.0195, 0.0226, 0.0139, 0.0072 (the lossy file, quality 92).
+- Chain `out/work/nep/s5/a/` (started 12:33 VM): sides at T, rise 4966 to 5000 every second frame, dive 4692 to 4728 every second frame, six frames near T, eight same bits frames.
+  - Both sides at T, new plates: rise 4956 mean 0.064, p99 1, p99.9 2, over 4: 0.012 percent. Dive 4758 mean 0.065, p99 1, p99.9 2, over 4: 0.008 percent. The same as before the change.
+  - Rise 4966 to 4988 looked at (`s5/a/rise-a.jpg`): no wedge with straight sides. A soft dark shade south of the bank is left at 4978 to 4988, it shrinks and pales with the height. No purple.
+
+### MAIL 265 from the Builder, read at 12:38 VM (high), word for word
+
+"MAIL 265 from the Builder (/root), 12:36 UTC. E3 is on main.
+
+Main is at 03510ddd. It holds the handover engine of agent/engine-handover 0d14d1cf: the steady descent in the generic path, its mirror for the rise, the sky floor, the sidestep option. Proven by me before it was taken: 105 of 105 draft frames outside the Mars dive and rise keep their bytes, 2325 and 2580 at the final tier equal the kept stills, four review tier frames equal main, 155 tests green.
+
+What it means for a stop that has opted in and uses the generic path (read `assets-src/shared/HANDOVER-NOTES.md`, section "E3 as built"):
+1. Your dive and rise fly another line after the merge. Height falls by a near constant ratio per frame, the camera comes down a line of sight to the place and levels into the glide of your close view. The low end of the path is the close pose at T carried on with its own speed and spin over `coastFrames`.
+2. If the new line does not fit your stop yet, keep the old one for now with `handover: { dive: { path: { turnFall: 0.3, level: false } } }` (and the same under `rise`). Say so in your report, with the reason.
+3. New options, off unless you ask: `path.sidestep { right, up, by }` to pass a moon or a ring, `skyFloor` for a carried sky plate that has no true sky under its horizon, `path.levelBy`.
+4. A stop that has not opted in keeps every byte.
+
+Do now, in this order: finish the step you are in, merge origin/main, build, run the tests, render your dive and your rise at the draft tier and look at every frame, push, and report the commit with what is still wrong. Do not wait for an answer.
+
+For mars_place_builder: `src/stops/mars/plan.ts` and `place.json` changed on main (the engineer owns them). Dive T is frame 2454, place window 2442 to 2454. Rise T is frame 2685, place window 2685 to 2711. Bake and judge on this path from now on. What I see at E3 on every frame at the draft tier: the place picture comes in as a four sided patch on plain red ground from 2444 to 2449; in the rise it stands as a dark six sided patch on a plain red globe from 2693 to 2703. Your first plates at 2454 (your look of 12:11) already read as the same mesa and canyon, that is the right road. I render your branch on the render machines as soon as you name a commit that holds the ground round the place.
+
+For handover_engineer: go on with E4 and your M3. Tell me when the colour step into 2449 is inside your limit with the plates of mars_place_builder merged, not before.
+
+For jupiter_coder, saturn_coder, sun_builder, globe_engineer: nothing to change in your current step. Merge main when you next push."
+
+- To do with it, in its order: finish the step (plates and tone, chain `s5/a`), merge origin/main (03510ddd), build, tests, render the whole dive (4680 to 4769) and the whole rise (4950 to 5024) at the draft tier, look at every frame, push, report. Neptune flies its own `divePose` and `risePose`: to measure after the merge whether its line changed (path tool, frames before and after).
+
+### 12:40 to 12:47 VM, chain `s5/a` read
+
+- Same bits with the flat plates and the new line in `planet.ts` (`s5/a/same/` against `out/work/nep/e1/`): 4605, 4640, 4679, 4770, 4860, 4949, 5025, 5085: 0 of 2,073,600 pixels differ in each.
+- Rise 4990 to 5000 (`s5/a/rise-b.jpg`): no wedge. A small red brown smudge is left south east of the eye at 4990 to 4996. It is not the plate: at 4990 the layer's own ground is drawn at weight 0.44 and lifted by 3 stops from the near black of the canvas. To try: the layer's ground comes in later (a power of the tone ramp), so the plates carry the ground until the lift is small.
+- Dive 4692 to 4728 every second frame (`s5/a/dive-a.jpg`, `/tmp/steps.py`): vivid blue to 4712, slate from 4716. Chroma 32.1 at 4692, 39.2 at 4704, 35.7 at 4712, 27.0 at 4720, 20.1 at 4728. L p10 / p90 in the middle of the frame: 2/67, 15/62 (4700), 23/58 (4704), 26/52 (4708), 25/48 (4710), 23/47 (4712), 17/47 (4716), 9/52 (4720), 3/64 (4728). The spread still has a low of 23 at 4710. Largest level step over two frames 5.9 (4696), largest colour step over two frames 9.6 (4696): per frame about half of that. The small red smudge under the eye is there at 4696 to 4712.
+- Next by MAIL 265: commit this step, merge main 03510ddd or later, tests, the whole dive and rise, push, report.

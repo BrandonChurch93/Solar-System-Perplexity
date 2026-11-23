@@ -75,7 +75,7 @@
   1.6
  ],
  "place": {
-  "how": "Levels from shownFrom on are shown plates: top down pictures of the place in the look of the close view, with their own alpha, drawn through the inverse of the tone curve and of the near grade (assets-src/neptune/place/shown.py). They come in with the place (closeup.json lay.dive and lay.rise, shares of the segment, while the storm is small in frame). offsetDeg moves a level off the spot, degrees east and north, so the deepest plates lie where the dive and the rise look at ground the close canvas never saw. clearDeg: inside the first arc from the spot the cirrus of the levels above is cleared with the same ramp, outside the second it is untouched. plainDeg: arc from the point under the camera of place.json; inside the first a shown plate is seen as painted, without the globe's air, limb and field steps that follow the near grade (the live close layer has none of them, and near that point its border is narrow), outside the second it has them all. tone: a small map over the widest plate, log2 of the place's coarse light against the globe's (blur of deg degrees, stops stops across the 8 bit range, shown.py tone). While the camera is high the plates are divided by it, so only what is finer than that blur changes when the place comes in; the coarse light and dark of the close view grow in with closeup.json lay.tone.",
+  "how": "Levels from shownFrom on are shown plates: top down pictures of the place in the look of the close view, with their own alpha, drawn through the inverse of the tone curve and of the near grade (assets-src/neptune/place/shown.py). They come in with the place (closeup.json lay.dive and lay.rise, shares of the segment, while the storm is small in frame). offsetDeg moves a level off the spot, degrees east and north, so the deepest plates lie where the dive and the rise look at ground the close canvas never saw. clearDeg: inside the first arc from the spot the cirrus of the levels above is cleared with the same ramp, outside the second it is untouched. plainDeg: arc from the point under the camera of place.json; inside the first a shown plate is seen as painted, without the globe's air, limb and field steps that follow the near grade (the live close layer has none of them, and near that point its border is narrow), outside the second it has them all. tone: a small map over the widest plate, log2 of the place's coarse light against the globe's (blur of deg degrees, stops stops across the 8 bit range, written by shown.py when it bakes the widest plate). The plate files hold the plates divided by it, and the globe multiplies it back in by the share of the close view's light (closeup.json lay.tone and lay.lightPower). So while the camera is high only what is finer than that blur changes when the place comes in, the coarse light and dark of the close view grow in with the height, and the near black foreground of the close view is made by darkening good 8 bit values instead of lifting values of 1 to 5 of 255.",
   "shownFrom": 3,
   "clearDeg": [
    7,
@@ -87,7 +87,7 @@
   ],
   "tone": {
    "file": "place-tone.webp",
-   "deg": 1.0,
+   "deg": 0.5,
    "stops": 12,
    "size": 512
   }
