@@ -1,9 +1,33 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T23:05:55.417Z",
- "head": "a441095b0ceb574254e76624e900c9c1982cd7c7",
- "note": "pace step: one path per move, smooth green in my frames; bad: dark corner at lower left 757 to 764",
+ "pushed": "2026-11-23T23:32:50.549Z",
+ "head": "8ccaa7a4887810a1e23cd482e7cc7d3fe1fa4f7b",
+ "note": "step 3 draft, not committed: the sphere fills the corner beyond the relief 757 to 764; open fault a thin second contour at the horizon 761 to 766",
  "looks": [
+  {
+   "time": "2026-11-23T23:32:46.220Z",
+   "file": "20261123233246220-note-horizon6.jpg",
+   "source": "out/work/mercury/place/s1/horizon6.png",
+   "kind": "note",
+   "label": "open fault: thin second contour at the horizon 761 to 766 (old, new, orbit side)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T23:32:45.627Z",
+   "file": "20261123233245627-note-crop-sides.jpg",
+   "source": "out/work/mercury/place/s1/crop-sides.jpg",
+   "kind": "note",
+   "label": "same frame drawn both ways, orbit side and close side, 757 760 764 771",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T23:32:44.896Z",
+   "file": "20261123233244896-note-sheet-a.jpg",
+   "source": "out/work/mercury/place/s1/sheet-a.jpg",
+   "kind": "note",
+   "label": "step 3 draft: sphere under and round the relief in the close view, 756 to 779 and rise",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-23T23:05:45.934Z",
    "file": "20261123230545934-note-sheet-r2.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/mercury/place/np1/sheet-dive.jpg",
    "kind": "note",
    "label": "174356d7 dive 738 to 747 with the place picture OFF (draft): view changes 743 to 744",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T22:15:11.578Z",
-   "file": "20261123221511578-note-r992.jpg",
-   "source": "out/work/mercury/place/m1/sheets/r992.jpg",
-   "kind": "note",
-   "label": "rise 992 to 999, draft: far ground under the limb still pale and flat",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T22:15:11.039Z",
-   "file": "20261123221511039-note-r984.jpg",
-   "source": "out/work/mercury/place/m1/sheets/r984.jpg",
-   "kind": "note",
-   "label": "rise 984 to 991 through the change of view at 990, draft",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T22:15:10.503Z",
-   "file": "20261123221510503-note-d740.jpg",
-   "source": "out/work/mercury/place/m1/sheets/d740.jpg",
-   "kind": "note",
-   "label": "dive 740 to 747 through the change of view at 744, draft",
    "stop": "mercury"
   }
  ]
