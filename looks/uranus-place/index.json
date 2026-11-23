@@ -1,90 +1,72 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-23T17:52:19.584Z",
+ "pushed": "2026-11-23T18:21:57.197Z",
  "head": "06034e1621b088c54d0e237c67ede0d852bc1ddb",
- "note": "06034e16 (local, in proof): shell tops and the dive's plate span; under the place picture 2.11 dive, 4.99 rise; main 8eba73e9; finals keep their bytes, rise renders",
+ "note": "Chain E on 06034e16: every frame of rise and dive; mail 311 native crops of 4137 and 4436 with the two faults found; main 8eba73e9",
  "looks": [
   {
-   "time": "2026-11-23T17:52:19.007Z",
-   "file": "20261123175219007-note-under-rise.jpg",
-   "source": "../../../../tmp/under-rise.jpg",
+   "time": "2026-11-23T18:21:55.877Z",
+   "file": "20261123182155877-note-rim-4436.jpg",
+   "source": "../../../../tmp/rim-4436.jpg",
    "kind": "note",
-   "label": "Under the place picture, rise T 4391, tree 06034e16: mean 4.99 of 255, limit 6",
+   "label": "Mail 311: judged frame 4436 at draft, native size, lower left of the globe. Left 06034e16: the detail of patch 1 stops at a straight line. Right TRIAL: its side with a wide feather and a wave. Below: both lifted",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-23T17:52:18.085Z",
-   "file": "20261123175218085-note-under-dive.jpg",
-   "source": "../../../../tmp/under-dive.jpg",
+   "time": "2026-11-23T18:21:54.929Z",
+   "file": "20261123182154929-note-j4137-a.jpg",
+   "source": "../../../../tmp/j4137-a.png",
    "kind": "note",
-   "label": "Under the place picture, dive T 4186, tree 06034e16: mean 2.11 of 255, limit 6",
+   "label": "Mail 311: judged frame 4137 at draft, native size, 700 px round the storm, tree 06034e16. Fault: the eye of the storm is a smooth patch with straight sides (plate 2)",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-23T17:52:16.938Z",
-   "file": "20261123175216938-note-s5-b.jpg",
-   "source": "../../../../tmp/s5-b.jpg",
+   "time": "2026-11-23T18:21:54.219Z",
+   "file": "20261123182154219-note-e-dive-2.jpg",
+   "source": "../../../../tmp/e-dive-2.jpg",
    "kind": "note",
-   "label": "For comparison 82516be3 (named 17:36): the storm comes in from 4118 and is still gaining at 4127",
+   "label": "Dive 4158 to 4181, same tree: the bank keeps its light and goes over the limb, nothing dims in place",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-23T17:52:15.792Z",
-   "file": "20261123175215792-note-s5-a.jpg",
-   "source": "../../../../tmp/s5-a.jpg",
+   "time": "2026-11-23T18:21:53.313Z",
+   "file": "20261123182153313-note-e-dive-1.jpg",
+   "source": "../../../../tmp/e-dive-1.jpg",
    "kind": "note",
-   "label": "Dive 4110 to 4127 on 06034e16 files (scratch tree render, main c9bc056d under it), draft, crop round the globe: the dive's plates come in between 4.55 and 3.2 R, the storm is whole by 4121 while it is a speck",
+   "label": "Dive 4134 to 4157, same tree",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-23T17:42:41.479Z",
-   "file": "20261123174241479-frame-final-4290.jpg",
-   "source": "out/work/u/base/final-4290.png",
-   "kind": "frame",
-   "label": "uranus.terrain frame 4290, final tier",
-   "stop": "uranus",
-   "segment": "uranus.terrain",
-   "frame": 4290,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "743c10b0a56aaca7"
+   "time": "2026-11-23T18:21:52.165Z",
+   "file": "20261123182152165-note-e-dive-0.jpg",
+   "source": "../../../../tmp/e-dive-0.jpg",
+   "kind": "note",
+   "label": "Dive 4110 to 4133, every frame, tree 06034e16: the storm is whole by 4121",
+   "stop": "uranus"
   },
   {
-   "time": "2026-11-23T17:41:06.121Z",
-   "file": "20261123174106121-compare-uranus-rise-under.jpg",
-   "source": "out/work/handover/uranus-rise-under.png",
-   "kind": "compare",
-   "label": "uranus rise, the globe side at T (frame 4391) with the place picture, alone, and their difference times 4",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4391,
-   "tier": "draft"
+   "time": "2026-11-23T18:21:51.024Z",
+   "file": "20261123182151024-note-e-rise-2.jpg",
+   "source": "../../../../tmp/e-rise-2.jpg",
+   "kind": "note",
+   "label": "Rise 4420 to 4439, same tree",
+   "stop": "uranus"
   },
   {
-   "time": "2026-11-23T17:40:11.920Z",
-   "file": "20261123174011920-compare-uranus-dive-under.jpg",
-   "source": "out/work/handover/uranus-dive-under.png",
-   "kind": "compare",
-   "label": "uranus dive, the globe side at T (frame 4186) with the place picture, alone, and their difference times 4",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4186,
-   "tier": "draft"
+   "time": "2026-11-23T18:21:49.800Z",
+   "file": "20261123182149800-note-e-rise-1.jpg",
+   "source": "../../../../tmp/e-rise-1.jpg",
+   "kind": "note",
+   "label": "Rise 4400 to 4419, same tree: the bank comes over the limb 4403 to 4406, one ring system",
+   "stop": "uranus"
   },
   {
-   "time": "2026-11-23T17:37:57.903Z",
-   "file": "20261123173757903-frame-final-4035.jpg",
-   "source": "out/work/u/base/final-4035.png",
-   "kind": "frame",
-   "label": "uranus.hold frame 4035, final tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "743c10b0a56aaca7"
+   "time": "2026-11-23T18:21:48.696Z",
+   "file": "20261123182148696-note-e-rise-0.jpg",
+   "source": "../../../../tmp/e-rise-0.jpg",
+   "kind": "note",
+   "label": "Rise 4380 to 4399, every frame, tree 06034e16 (main 8eba73e9), draft: the white tops on the shell, the streak comes out under the limb at 4396",
+   "stop": "uranus"
   }
  ]
 }
