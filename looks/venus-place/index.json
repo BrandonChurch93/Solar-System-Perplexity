@@ -1,78 +1,90 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-23T17:31:05.385Z",
- "head": "41c78e7bf75f67da0b437295584e623c284eb6dc",
- "note": "venus 41c78e7b: orange red tints cured by code, both moves rendered at draft; G13 running",
+ "pushed": "2026-11-23T18:18:10.181Z",
+ "head": "5afbfa2b5793a2d81eba049fb1307d073d97e38a",
+ "note": "item 1 by code: exposure ramp earlier in the dive and later in the rise, fine contrast of the tone map 0.4 to 0.55; full draft render of both moves running",
  "looks": [
   {
-   "time": "2026-11-23T17:31:04.785Z",
-   "file": "20261123173104785-note-rise-4.jpg",
-   "source": "out/work/venus/place/r10/rise-4.jpg",
+   "time": "2026-11-23T18:18:09.032Z",
+   "file": "20261123181809032-note-e2-1292.jpg",
+   "source": "../../../../tmp/v/e2-1292.jpg",
    "kind": "note",
-   "label": "venus rise 1578 to 1589, consecutive, draft, commit 41c78e7b",
+   "label": "1292 native crop: tone contrast 0.4 left, 0.55 right",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T17:31:04.147Z",
-   "file": "20261123173104147-note-rise-3.jpg",
-   "source": "out/work/venus/place/r10/rise-3.jpg",
+   "time": "2026-11-23T18:18:08.241Z",
+   "file": "20261123181808241-note-e2-1287.jpg",
+   "source": "../../../../tmp/v/e2-1287.jpg",
    "kind": "note",
-   "label": "venus rise 1566 to 1577, consecutive, draft, commit 41c78e7b",
+   "label": "1287 native crop x 610 to 1310, y 380 to 1080: tone contrast 0.4 left, 0.55 right",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T17:31:03.356Z",
-   "file": "20261123173103356-note-rise-2.jpg",
-   "source": "out/work/venus/place/r10/rise-2.jpg",
+   "time": "2026-11-23T18:18:07.193Z",
+   "file": "20261123181807193-note-e1-p3.jpg",
+   "source": "../../../../tmp/v/e1-p3.jpg",
    "kind": "note",
-   "label": "venus rise 1554 to 1565, consecutive, draft, commit 41c78e7b: golden band along the limb 1560 to 1565, still wrong",
+   "label": "1574, 1586 at draft: old above, later exposure ramp below",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T17:31:02.745Z",
-   "file": "20261123173102745-note-dive-3.jpg",
-   "source": "out/work/venus/place/r10/dive-3.jpg",
+   "time": "2026-11-23T18:18:06.023Z",
+   "file": "20261123181806023-note-e1-p1.jpg",
+   "source": "../../../../tmp/v/e1-p1.jpg",
    "kind": "note",
-   "label": "venus dive 1296 to 1307, consecutive, draft, commit 41c78e7b: pale grey blue patch comes up 1300 to 1307, still wrong",
+   "label": "1282, 1287 at draft: old above, earlier exposure ramp below",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T17:31:02.100Z",
-   "file": "20261123173102100-note-dive-2.jpg",
-   "source": "out/work/venus/place/r10/dive-2.jpg",
-   "kind": "note",
-   "label": "venus dive 1284 to 1295, consecutive, draft, commit 41c78e7b",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T17:31:01.494Z",
-   "file": "20261123173101494-note-n1586.jpg",
-   "source": "../../../../tmp/v/n1586.jpg",
-   "kind": "note",
-   "label": "venus 1586 (judged, rise), draft, commit 41c78e7b: orange red gone, crisp grey ridges at the left, dark field, still wrong",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T17:31:00.877Z",
-   "file": "20261123173100877-note-n1287.jpg",
-   "source": "../../../../tmp/v/n1287.jpg",
-   "kind": "note",
-   "label": "venus 1287 (judged, dive), draft, commit 41c78e7b: orange red gone, the place is a dark olive brown field beside the cream globe, soft smeared band at its left, still wrong",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T17:29:32.218Z",
-   "file": "20261123172932218-frame-f01605.jpg",
-   "source": "out/work/venus/place/same/n12/f01605.png",
+   "time": "2026-11-23T18:17:27.059Z",
+   "file": "20261123181727059-frame-f01274.jpg",
+   "source": "out/work/seq/1260-1349/f01274.png",
    "kind": "frame",
-   "label": "venus.travel frame 1605, draft tier",
+   "label": "venus.dive frame 1274, draft tier",
    "stop": "venus",
-   "segment": "venus.travel",
-   "frame": 1605,
+   "segment": "venus.dive",
+   "frame": 1274,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
    "engine": "743c10b0a56aaca7"
+  },
+  {
+   "time": "2026-11-23T18:09:10.624Z",
+   "file": "20261123180910624-sheet-venus-rise-top.jpg",
+   "source": "out/work/handover/venus-rise-top.png",
+   "kind": "sheet",
+   "label": "venus rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 1542), place picture off, draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "first": 1542,
+   "last": 1604,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T18:08:28.099Z",
+   "file": "20261123180828099-sheet-venus-rise-draft-after.jpg",
+   "source": "out/work/handover/venus-rise-draft-after.png",
+   "kind": "sheet",
+   "label": "venus rise, every frame 1543 to 1554 (after T, frame 1542), draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "first": 1543,
+   "last": 1554,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T18:08:26.339Z",
+   "file": "20261123180826339-sheet-venus-rise-draft-before.jpg",
+   "source": "out/work/handover/venus-rise-draft-before.png",
+   "kind": "sheet",
+   "label": "venus rise, every frame 1530 to 1541 (before T, frame 1542), draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "first": 1530,
+   "last": 1541,
+   "tier": "draft"
   }
  ]
 }
