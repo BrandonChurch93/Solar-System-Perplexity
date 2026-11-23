@@ -1,0 +1,550 @@
+{
+ "chunks": [
+  {
+   "text": "[Sun Surface]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic electronic space music",
+    "pulsing analog arpeggios and warm synth pads",
+    "instrumental only",
+    "great production quality",
+    "wide stereo space",
+    "soft opening",
+    "starts at once with a warm low synth drone",
+    "gentle shimmering texture",
+    "no beat",
+    "low energy"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "loud",
+    "drums",
+    "fade in"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Sun Rise]",
+   "duration_ms": 3000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic electronic space music",
+    "pulsing analog arpeggios and warm synth pads",
+    "instrumental only",
+    "gentle swell",
+    "filter slowly opening",
+    "soft riser",
+    "growing"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Sun Revealed]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic electronic space music",
+    "pulsing analog arpeggios and warm synth pads",
+    "instrumental only",
+    "warm simple motif enters",
+    "wide pad and soft sub bass",
+    "moderate level",
+    "calm and weightless",
+    "medium energy"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Travel To Mercury]",
+   "duration_ms": 3000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic electronic space music",
+    "pulsing analog arpeggios and warm synth pads",
+    "instrumental only",
+    "crescendo",
+    "arpeggio fading in",
+    "riser",
+    "building tension",
+    "getting louder"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Mercury Arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic electronic space music",
+    "pulsing analog arpeggios and warm synth pads",
+    "instrumental only",
+    "loud and powerful",
+    "high energy",
+    "huge synth chord and deep sub bass hit on the first beat",
+    "bright glinting arpeggios and crystalline bells",
+    "bright sequencer arpeggio and steady pulse",
+    "soaring melodic lead"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "sparse"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Mercury Surface Then Build]",
+   "duration_ms": 11000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic electronic space music",
+    "pulsing analog arpeggios and warm synth pads",
+    "instrumental only",
+    "starts soft and gentle with a thin texture and no beat",
+    "soft glassy pad and sparse bell tones",
+    "low energy for the first half",
+    "then a crescendo with a rising arpeggio and opening filter",
+    "riser and snare roll at the end",
+    "getting louder into the next section"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Venus Arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic electronic space music",
+    "pulsing analog arpeggios and warm synth pads",
+    "instrumental only",
+    "loud and powerful",
+    "high energy",
+    "huge synth chord and deep sub bass hit on the first beat",
+    "lush thick detuned pads, warm and full",
+    "bright sequencer arpeggio and steady pulse",
+    "soaring melodic lead"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "sparse"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Venus Surface Then Build]",
+   "duration_ms": 11000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic electronic space music",
+    "pulsing analog arpeggios and warm synth pads",
+    "instrumental only",
+    "starts soft and gentle with a thin texture and no beat",
+    "soft dense drone with slow swells",
+    "low energy for the first half",
+    "then a crescendo with a rising arpeggio and opening filter",
+    "riser and snare roll at the end",
+    "getting louder into the next section"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Earth Arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic electronic space music",
+    "pulsing analog arpeggios and warm synth pads",
+    "instrumental only",
+    "loud and powerful",
+    "high energy",
+    "huge synth chord and deep sub bass hit on the first beat",
+    "warm hopeful chords and a singing lead synth",
+    "bright sequencer arpeggio and steady pulse",
+    "soaring melodic lead"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "sparse"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Earth Surface Then Build]",
+   "duration_ms": 11000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic electronic space music",
+    "pulsing analog arpeggios and warm synth pads",
+    "instrumental only",
+    "starts soft and gentle with a thin texture and no beat",
+    "soft electric piano tones over a warm pad",
+    "low energy for the first half",
+    "then a crescendo with a rising arpeggio and opening filter",
+    "riser and snare roll at the end",
+    "getting louder into the next section"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Mars Arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic electronic space music",
+    "pulsing analog arpeggios and warm synth pads",
+    "instrumental only",
+    "loud and powerful",
+    "high energy",
+    "huge synth chord and deep sub bass hit on the first beat",
+    "driving bass sequence, gritty arpeggio, punchy drums",
+    "bright sequencer arpeggio and steady pulse",
+    "soaring melodic lead"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "sparse"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Mars Surface Then Build]",
+   "duration_ms": 11000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic electronic space music",
+    "pulsing analog arpeggios and warm synth pads",
+    "instrumental only",
+    "starts soft and gentle with a thin texture and no beat",
+    "soft pulsing drone and a dry sparse sequence",
+    "low energy for the first half",
+    "then a crescendo with a rising arpeggio and opening filter",
+    "riser and snare roll at the end",
+    "getting louder into the next section"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Jupiter Arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic electronic space music",
+    "pulsing analog arpeggios and warm synth pads",
+    "instrumental only",
+    "loud and powerful",
+    "high energy",
+    "huge synth chord and deep sub bass hit on the first beat",
+    "massive sub bass, towering chords, heavy slow drums",
+    "bright sequencer arpeggio and steady pulse",
+    "soaring melodic lead"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "sparse"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Jupiter Surface Then Build]",
+   "duration_ms": 11000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic electronic space music",
+    "pulsing analog arpeggios and warm synth pads",
+    "instrumental only",
+    "starts soft and gentle with a thin texture and no beat",
+    "soft deep sub drone and slow swirling textures",
+    "low energy for the first half",
+    "then a crescendo with a rising arpeggio and opening filter",
+    "riser and snare roll at the end",
+    "getting louder into the next section"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Saturn Arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic electronic space music",
+    "pulsing analog arpeggios and warm synth pads",
+    "instrumental only",
+    "loud and powerful",
+    "high energy",
+    "huge synth chord and deep sub bass hit on the first beat",
+    "grand shimmering arpeggios and glittering wide pads",
+    "bright sequencer arpeggio and steady pulse",
+    "soaring melodic lead"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "sparse"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Saturn Surface Then Build]",
+   "duration_ms": 11000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic electronic space music",
+    "pulsing analog arpeggios and warm synth pads",
+    "instrumental only",
+    "starts soft and gentle with a thin texture and no beat",
+    "soft glassy bell tones and a delicate shimmer",
+    "low energy for the first half",
+    "then a crescendo with a rising arpeggio and opening filter",
+    "riser and snare roll at the end",
+    "getting louder into the next section"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Uranus Arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic electronic space music",
+    "pulsing analog arpeggios and warm synth pads",
+    "instrumental only",
+    "loud and powerful",
+    "high energy",
+    "huge synth chord and deep sub bass hit on the first beat",
+    "icy bright digital textures over powerful wide chords",
+    "bright sequencer arpeggio and steady pulse",
+    "soaring melodic lead"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "sparse"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Uranus Surface Then Build]",
+   "duration_ms": 11000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic electronic space music",
+    "pulsing analog arpeggios and warm synth pads",
+    "instrumental only",
+    "starts soft and gentle with a thin texture and no beat",
+    "soft thin drone and clear sine tones",
+    "low energy for the first half",
+    "then a crescendo with a rising arpeggio and opening filter",
+    "riser and snare roll at the end",
+    "getting louder into the next section"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Neptune Arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic electronic space music",
+    "pulsing analog arpeggios and warm synth pads",
+    "instrumental only",
+    "loud and powerful",
+    "high energy",
+    "huge synth chord and deep sub bass hit on the first beat",
+    "dark heavy bass waves, powerful slow chords, immense",
+    "bright sequencer arpeggio and steady pulse",
+    "soaring melodic lead"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "sparse"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Neptune Surface Then Build]",
+   "duration_ms": 12500,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic electronic space music",
+    "pulsing analog arpeggios and warm synth pads",
+    "instrumental only",
+    "starts soft and gentle with a thin texture and no beat",
+    "soft low dark drone and a lonely lead tone",
+    "low energy for the first half",
+    "then the biggest build of the piece",
+    "all layers rising",
+    "long riser and opening filters",
+    "getting louder and louder"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Looking Back, Final Climax]",
+   "duration_ms": 12000,
+   "positive_styles": [
+    "120 BPM",
+    "cinematic electronic space music",
+    "pulsing analog arpeggios and warm synth pads",
+    "instrumental only",
+    "D major",
+    "the loudest moment of the whole piece",
+    "very high energy",
+    "massive wall of synth chords and deep sub bass",
+    "soaring lead melody and bright arpeggios",
+    "steady strong pulse",
+    "sustained at full power to the very end"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "soft",
+    "sparse",
+    "fade out"
+   ],
+   "context_adherence": "low"
+  }
+ ]
+}

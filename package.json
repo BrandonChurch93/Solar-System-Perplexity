@@ -40,6 +40,7 @@
     "gauntlet": "python3 tools/gauntlet.py",
     "shots": "tsx tools/shots.ts",
     "handover": "tsx tools/handover.ts",
+    "smooth": "tsx tools/smooth.ts",
     "warm": "tsx tools/warmcheck.ts"
   },
   "dependencies": {
