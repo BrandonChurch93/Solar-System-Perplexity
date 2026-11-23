@@ -2,6 +2,8 @@ import * as THREE from 'three'
 import { FarPoint } from '../../bodies/farpoint'
 import type { SetFactory } from '../../core/types'
 import { config } from '../../config'
+import { Surface } from './convect'
+import { Jets } from './jets'
 import { Corona } from './corona'
 import { Fringe } from './fringe'
 import { SunGlobe } from './globe'
@@ -58,7 +60,9 @@ export const createSet: SetFactory = async (ctx) => {
   const fringe = new Fringe(plate, await ctx.texture(base + look.files.haze, { srgb: true, anisotropy: 1 }), look.fringe)
   const loops = new Loops(await ctx.texture(base + look.files.loops, { srgb: true, anisotropy: 8 }), grade, (data, size) => ctx.floatTexture(data, size, size, true), look.loops, opening.on ? look.opening : undefined)
   const backdropTerrain = new SkyCard(await ctx.texture(base + look.skyTerrain.file, { srgb: true, mips: false, anisotropy: 1 }), look.skyTerrain)
-  terrain.add(ground.mesh, fringe.mesh, loops.mesh)
+  const surface = new Surface(ground.material.uniforms)
+  const jets = new Jets(ground.material.uniforms)
+  terrain.add(ground.mesh, surface.mesh, fringe.mesh, jets.glow, jets.mesh, loops.mesh)
   world.add(backdropTerrain.mesh)
   const inGlobe = stage.centre.clone().multiplyScalar(-1 / stage.radius).applyQuaternion(plan.toGlobe)
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2 + config.shutterFraction / (2 * config.fps)
@@ -134,8 +138,13 @@ export const createSet: SetFactory = async (ctx) => {
         const erupt = loops.erupt(since, open)
         ground.update(eye, t, gain, vignette, aspect, fringe.lod(view.camera.fov, view.format.height), 0, open, since, look.opening.feet.ground * open * 0.5 * (feet[0] + feet[1]) + calm * loops.lit(since), look.opening.surge.ground * surge[3], look.opening.surge.kick * surge[2], look.opening.erupt.flash.ground * erupt[2] + loops.shell(since, open), look.opening.erupt.flash.veil * erupt[2], look.opening.feet.ground * open * 0.5 * (feet[0] + feet[1]))
         lifeFormat(ground.material.uniforms, view.format.height)
+        surface.mesh.visible = !placing
+        ground.mesh.visible = placing
+        surface.update(t)
         ground.material.uniforms.uFieldFine!.value.x = rising ? above(by.field) : 0
         fringe.update(eye, t, gain, vignette, aspect, view.camera.fov, view.format.height, 1 - above(by.fringe))
+        fringe.mesh.visible = placing
+        jets.update(t, placing ? 0 : 1 - above(by.fringe))
         const strands = 1 - above(by.loops)
         loops.mesh.visible = strands > 0
         loops.trim(above(by.strands))
@@ -230,6 +239,8 @@ export const createSet: SetFactory = async (ctx) => {
       backdrop.dispose()
       backdropTerrain.dispose()
       ground.dispose()
+      surface.dispose()
+      jets.dispose()
       fringe.dispose()
       loops.dispose()
     },
