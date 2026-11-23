@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T23:14:00.571Z",
+ "pushed": "2026-11-23T23:39:55.043Z",
  "head": "f7a9e0012da7f546eac24a2d5f51a5ff7cb49f27",
- "note": "deep.ts frame 4860 n beside approved, master crop; deck fine detail and cirrus width next",
+ "note": "deep.ts 4860 master draft beside approved, G17 own reading 0.913, 85 s a frame",
  "looks": [
+  {
+   "time": "2026-11-23T23:39:54.393Z",
+   "file": "20261123233954393-note-c-M6.jpg",
+   "source": "../../../../tmp/c-M6.jpg",
+   "kind": "note",
+   "label": "deep.ts, crop of 4860 at master draft, full size (left) beside approved (right): cirrus still too even, no grey sides",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T23:39:53.792Z",
+   "file": "20261123233953792-note-s-M6.jpg",
+   "source": "../../../../tmp/s-M6.jpg",
+   "kind": "note",
+   "label": "deep.ts from functions, frame 4860 at master draft (left) beside the approved close image (right), 23:39 VM; own G17 reading median 0.913; 85 s a master draft frame; unfinished",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-23T23:14:00.001Z",
    "file": "20261123231400001-note-c-M1.jpg",
@@ -54,30 +70,6 @@
    "segment": "neptune.dive",
    "first": 4759,
    "last": 4769,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T22:18:13.077Z",
-   "file": "20261123221813077-sheet-neptune-dive-draft-before.jpg",
-   "source": "out/work/handover/neptune-dive-draft-before.png",
-   "kind": "sheet",
-   "label": "neptune dive, every frame 4746 to 4757 (before T, frame 4758), draft tier",
-   "stop": "neptune",
-   "segment": "neptune.dive",
-   "first": 4746,
-   "last": 4757,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T22:18:11.299Z",
-   "file": "20261123221811299-sheet-neptune-dive-draft-across.jpg",
-   "source": "out/work/handover/neptune-dive-draft-across.png",
-   "kind": "sheet",
-   "label": "neptune dive, every frame 4752 to 4763 (across T, frame 4758), draft tier",
-   "stop": "neptune",
-   "segment": "neptune.dive",
-   "first": 4752,
-   "last": 4763,
    "tier": "draft"
   }
  ]
