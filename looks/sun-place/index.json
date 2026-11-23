@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T23:24:52.952Z",
- "head": "4e4ce56823b4859b96be2b337e0b45d2d69aea93",
- "note": "G 1 function ground with lumps, jets and limb glow: frames 0, 60, 90 beside the approved image, nine consecutive frames, the limb (unfinished)",
+ "pushed": "2026-11-23T23:46:46.768Z",
+ "head": "4a26272392321afecc04a808669f537d98c747a3",
+ "note": "23:48 unfinished: cells now whole bulbs (centre to lane profile, normal from the height, heat by height). Frame 60 draft: G17 median 1.01, lower quarter 0.75; blur 40 px difference ground 0.061, whole 0.047. Lanes still too wide and pale, tops too bright, spot not yet reworked",
  "looks": [
+  {
+   "time": "2026-11-23T23:46:46.188Z",
+   "file": "20261123234646188-note-c7-bulbs-frame60-whole.jpg",
+   "source": "../../../../tmp/c7-bulbs-frame60-whole.jpg",
+   "kind": "note",
+   "label": "frame 60 whole, approved left, bulbs right (unfinished)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T23:46:45.614Z",
+   "file": "20261123234645614-note-c7-bulbs-frame60-near.jpg",
+   "source": "../../../../tmp/c7-bulbs-frame60-near.jpg",
+   "kind": "note",
+   "label": "frame 60 near ground, approved left, bulbs right (unfinished)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-23T23:24:52.228Z",
    "file": "20261123232452228-note-b2-evo.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/sun/convect/m2-evo.jpg",
    "kind": "note",
    "label": "G 1, 23:03, unfinished. One box of the screen at frames 0, 24, 48, 72, 96, 120, 144, 168 (draft; the camera of the film moves in toward the spot).",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T23:02:42.942Z",
-   "file": "20261123230242942-note-m2-60-vs-approved.jpg",
-   "source": "out/work/sun/convect/m2-60-vs-approved.jpg",
-   "kind": "note",
-   "label": "G 1, 23:03, unfinished. Left: the approved close image. Right: frame 60, draft, the ground as geometry from functions (no picture read for the ground). No jets and no glow at the limb yet; the old fringe is still drawn behind it.",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T22:36:13.392Z",
-   "file": "20261123223613392-note-a1-vs-ref.jpg",
-   "source": "out/work/sun/convect/a1-vs-ref.jpg",
-   "kind": "note",
-   "label": "G 1 first picture 22:37, unfinished. Top: frame 60 of the named commit (the picture ground). Bottom: frame 60 with the ground as a displaced mesh from the cell functions (no picture read for the ground). Cells too smooth and too tall, spot flat, lanes too light: all still to do.",
    "stop": "sun"
   }
  ]
