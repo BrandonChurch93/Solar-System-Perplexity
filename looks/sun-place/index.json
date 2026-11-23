@@ -1,9 +1,45 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T21:30:03.891Z",
+ "pushed": "2026-11-23T21:49:25.597Z",
  "head": "c0ad4f17e1b9be38dcb6a0f53b61d8ba55b7b97e",
- "note": "proof of items 1 to 3 runs (handover pass, G5 pass, G17 pass, G13 running); ground cure simulated, render after the proof",
+ "note": "G13 on every frame still runs; READY for items 1 to 3 follows it; ground cure waits for the render slot",
  "looks": [
+  {
+   "time": "2026-11-23T21:49:24.260Z",
+   "file": "20261123214924260-note-lanes-mask.jpg",
+   "source": "out/work/sun/life/v/lanes-mask.jpg",
+   "kind": "note",
+   "label": "held camera, kept build: how lane area is counted for the ground cure (picture, lanes under 0.7, lanes under 0.62 of the neighbourhood)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T21:48:16.322Z",
+   "file": "20261123214816322-job-frame-00221.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "sun.rise frame 221, draft tier, texels view, from the running measure job",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 221,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-23T21:38:11.813Z",
+   "file": "20261123213811813-job-frame-00112.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "sun.terrain frame 112, draft tier, texels view, from the running measure job",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 112,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-23T21:30:02.722Z",
    "file": "20261123213002722-note-sim-lanes-two.jpg",
@@ -19,20 +55,6 @@
    "kind": "note",
    "label": "simulation on the plate, not a render: ground cure of mail 344, eight consecutive frames (each life of a look shows another piece of the cell)",
    "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T21:28:11.073Z",
-   "file": "20261123212811073-job-frame-00000.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "sun.terrain frame 0, draft tier, texels view, from the running measure job",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 0,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
   },
   {
    "time": "2026-11-23T21:17:42.092Z",
@@ -69,26 +91,6 @@
    "first": 204,
    "last": 215,
    "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T21:16:36.278Z",
-   "file": "20261123211636278-sheet-sun-rise-draft-across.jpg",
-   "source": "out/work/handover/sun-rise-draft-across.png",
-   "kind": "sheet",
-   "label": "sun rise, every frame 210 to 221 (across T, frame 216), draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "first": 210,
-   "last": 221,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T21:11:44.351Z",
-   "file": "20261123211144351-note-q3-60.jpg",
-   "source": "out/work/sun/life/v/q3-60.jpg",
-   "kind": "note",
-   "label": "approved image left, frame 60 of the final tree right",
-   "stop": "sun"
   }
  ]
 }
