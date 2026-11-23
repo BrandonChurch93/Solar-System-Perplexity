@@ -454,12 +454,16 @@ describe('the two sides of a stop that hands over', () => {
           const w = placeWeight(s, time)
           expect(globe.skyShare).toBe(skyWeight(s, time))
           expect(skyTurnWeight(s, time)).toBeGreaterThanOrEqual(0)
+          // A stop that asked for limbSky keeps the horizon of the picture for as long as the sky of the close view has a share.
+          const horizon = h.limbSky ? Math.max(w, globe.skyShare!) : 0
           if (w > 0 && h.picture) {
             inside++
             expect(globe.place!.weight).toBe(w)
             expect(f).toBeGreaterThanOrEqual(h.placeFirstFrame)
             expect(f).toBeLessThanOrEqual(h.placeLastFrame)
-          } else expect(globe.place).toBeUndefined()
+          } else if (horizon > 0) expect(globe.place!.weight).toBe(0)
+          else expect(globe.place).toBeUndefined()
+          if (globe.place) expect(globe.place.horizon).toBe(h.limbSky ? horizon : undefined)
           expect(film.shotAt(f, time, 'terrain').place).toBeUndefined()
         }
         if (h.picture) expect(inside).toBeGreaterThan(0)
@@ -909,6 +913,7 @@ describe('the options on a diagnostic string', () => {
     expect(() => parseProbe('ungraded/dump=1.5,0,image')).toThrow()
     expect(() => parseProbe('ungraded/dump=0,0,colour')).toThrow()
     for (const s of ['beauty', 'texels/side=orbit/shut', 'beauty/side=terrain/t=81.80833/noplace', 'beauty/side=orbit/mask', 'beauty/picture', 'beauty/side=orbit/noplace/top']) expect(probeString(parseProbe(s))).toBe(s)
+    for (const s of ['beauty', 'beauty/side=orbit/limb=2/in=0,0,0,0/tone=0,0,0,0']) expect('limbSky' in parseProbe(s)).toBe(false)
     expect(parseProbe('beauty/side=orbit/limb=0').limb).toBe(0)
     expect(parseProbe('beauty/limb=2.5').limb).toBe(2.5)
     expect(parseProbe('beauty/side=orbit').limb).toBe(undefined)

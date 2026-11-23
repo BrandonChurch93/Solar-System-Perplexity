@@ -309,7 +309,7 @@ export class Engine {
       }
       this.attached = wanted
     }
-    const placed = this.probe.place && shot.place && shot.place.weight > 0 && (!raw || diag === 'texels') ? shot.place : null
+    const placed = this.probe.place && shot.place && (shot.place.weight > 0 || (shot.place.horizon ?? 0) > 0) && (!raw || diag === 'texels') ? shot.place : null
     const limbed = placed && this.probe.limb !== undefined ? { ...placed, limbReachDeg: this.probe.limb } : placed
     const edged = limbed && this.probe.edgeIn !== undefined ? { ...limbed, edgeIn: this.probe.edgeIn } : limbed
     const place = edged && this.probe.toneIn !== undefined ? { ...edged, toneIn: this.probe.toneIn } : edged

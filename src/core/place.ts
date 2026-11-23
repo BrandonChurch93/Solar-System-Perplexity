@@ -190,6 +190,15 @@ export function placeUv(g: PlaceGeometry, proj: [number, number, number, number]
   return { uv: [((proj[0] * q.x + proj[2] * q.z) / w) * 0.5 + 0.5, ((proj[1] * q.y + proj[3] * q.z) / w) * 0.5 + 0.5], hit, front, honest, hold }
 }
 
+// The weight of the place pass on one ray when the picture's horizon runs on the clock of the sky (limbSky): what the shader does with
+// uVeil. ground is the weight the pass gives the ray by the picture's own rules. Without a horizon in the state it is that weight.
+export function horizonK(place: Pick<PlaceState, 'horizon'>, ray: { hit: boolean; front: boolean; hold: number }, ground: number): number {
+  if (place.horizon === undefined) return ground
+  const veil = ray.front ? place.horizon : 0
+  if (!ray.hit) return veil
+  return ray.hold > 0 ? Math.max(ground, veil * ray.hold) : ground
+}
+
 export function placeSkyGrad(g: PlaceGeometry, proj: [number, number, number, number], ray: THREE.Vector3, step: [number, number]): { dx: [number, number]; dy: [number, number] } {
   const w = ray.clone().applyMatrix3(g.rel)
   const e = g.rel.elements
@@ -303,7 +312,26 @@ void main() {
   outColor = sum / total;
 }`
 
-const lay = (tone: boolean): string => /* glsl */ `
+// The horizon of the picture on the clock of the sky (limbSky). Two additions to the shader, so that a film in which no stop asks for it
+// compiles and runs the shader exactly as it was.
+// A ray that misses the ball is the picture's sky: the haze over the horizon with the frame's own stars behind it. It takes uVeil, the
+// weight of the horizon, alone: not the weight of the picture, not its sides, not its limits of enlargement and not the land matte. The band
+// just under the limb, where the picture holds its own horizon (limbHoldDeg), takes uVeil in the same way. Where such a ray leaves the
+// picture it reads the picture's nearest side, so the haze goes on along the horizon and up the sky and does not end on a line.
+const VEIL_UNIFORMS = /* glsl */ `
+uniform float uVeil;`
+
+const VEIL_SIDE = /* glsl */ `  bool over = !(disc > 0.0 && b > 0.0);
+  if (mode != 3 && (over || hold > 0.0)) uv = clamp(uv, vec2(0.5) / uSize, vec2(1.0) - vec2(0.5) / uSize);
+`
+
+const VEIL_WEIGHT = /* glsl */ `  if (mode != 3) {
+    if (over) k = uVeil * front;
+    else if (hold > 0.0) k = max(k, uVeil * front * hold);
+  }
+`
+
+const lay = (tone: boolean, veil = false): string => /* glsl */ `
 precision highp float;
 uniform sampler2D uPicture;
 uniform sampler2D uSky;
@@ -327,7 +355,7 @@ uniform vec2 uScale;
 uniform vec4 uDump;
 uniform float uDumpAs;
 uniform sampler2D uMatte;
-uniform float uMatteOn;${tone ? TONE_UNIFORMS : ''}
+uniform float uMatteOn;${tone ? TONE_UNIFORMS : ''}${veil ? VEIL_UNIFORMS : ''}
 in vec2 vUv;
 out vec4 outColor;
 ${FILMIC_GLSL}
@@ -405,9 +433,9 @@ ${tone ? TONE_CELL : ''}  vec4 edge = clamp((vec4(pt.x, uSize.x - pt.x, pt.y, uS
   if (hold > 0.0) k = max(k, uLimits.x * front * edge.x * edge.y * edge.z * edge.w * hold);
   float most = max(length(dx), length(dy)) * uLens.z;
   float fit = min(1.0, uLens.w / max(most, 1e-9)) * uLens.z;
-${tone ? '  fit *= uCell;\n' : ''}  vec4 pic = textureGrad(uPicture, uv, dx / uSize * fit, dy / uSize * fit);
+${tone ? '  fit *= uCell;\n' : ''}${veil ? VEIL_SIDE : ''}  vec4 pic = textureGrad(uPicture, uv, dx / uSize * fit, dy / uSize * fit);
   if (uMatteOn > 0.5) k *= textureGrad(uMatte, uv, dx / uSize * fit, dy / uSize * fit).r;
-  if (mode == 1) {
+${veil ? VEIL_WEIGHT : ''}  if (mode == 1) {
     if (k <= 0.5) discard;
     float texels = min(pic.r * 2.0, 1.0) * sqrt(max(dot(dx, dx), dot(dy, dy)));
     outColor = vec4(clamp(texels * 0.5, 0.0, 1.0), pic.g, 0.0, 1.0);
@@ -438,6 +466,10 @@ function layUniforms(): Record<string, THREE.IUniform> {
   }
 }
 
+function toneUniforms(): Record<string, THREE.IUniform> {
+  return { uUnder: { value: null }, uTone: { value: null }, uOwn: { value: null }, uToneFeather: { value: new THREE.Vector4() }, uPixel: { value: new THREE.Vector2() }, uLand: { value: new THREE.Vector2() }, uCell: { value: 1 } }
+}
+
 const LAY_BLEND: Partial<THREE.ShaderMaterialParameters> = { transparent: true, blending: THREE.CustomBlending, blendEquation: THREE.AddEquation, blendSrc: THREE.OneFactor, blendDst: THREE.OneMinusSrcAlphaFactor, blendSrcAlpha: THREE.ZeroFactor, blendDstAlpha: THREE.OneFactor }
 
 export class Place {
@@ -451,6 +483,8 @@ export class Place {
   private readonly pack = new Pass(PACK, { uBlack: { value: null }, uWhite: { value: null }, uPair: { value: 1 } }, { blending: THREE.NoBlending })
   private readonly lay = new Pass(lay(false), layUniforms(), LAY_BLEND)
   private split: Pass | null = null
+  private veil: Pass | null = null
+  private veilSplit: Pass | null = null
   private blur: Pass | null = null
   private toneGlobe: THREE.WebGLRenderTarget | null = null
   private toneOwn: THREE.WebGLRenderTarget | null = null
@@ -525,9 +559,11 @@ export class Place {
     const g = placeGeometry(camera, place)
     const l = pic.layout
     const wide = toneReach(place, l)
-    const toned = mode === 'beauty' && wide.some((x) => x > 0)
-    const pass = toned ? this.splitPass() : this.lay
+    const toned = mode === 'beauty' && place.weight > 0 && wide.some((x) => x > 0)
+    const veiled = (mode === 'beauty' || mode === 'mask') && place.horizon !== undefined && g.reach > 0
+    const pass = veiled ? this.veilPass(toned) : toned ? this.splitPass() : this.lay
     const u = pass.material.uniforms
+    if (veiled) u.uVeil!.value = Math.min(Math.max(place.horizon ?? 0, 0), 1)
     const e = frame.projectionMatrix.elements
     u.uPicture!.value = pic.target.texture
     u.uSky!.value = this.sky?.texture ?? pic.target.texture
@@ -598,8 +634,17 @@ export class Place {
   }
 
   private splitPass(): Pass {
-    this.split ??= new Pass(lay(true), { ...layUniforms(), uUnder: { value: null }, uTone: { value: null }, uOwn: { value: null }, uToneFeather: { value: new THREE.Vector4() }, uPixel: { value: new THREE.Vector2() }, uLand: { value: new THREE.Vector2() }, uCell: { value: 1 } }, LAY_BLEND)
+    this.split ??= new Pass(lay(true), { ...layUniforms(), ...toneUniforms() }, LAY_BLEND)
     return this.split
+  }
+
+  private veilPass(toned: boolean): Pass {
+    if (toned) {
+      this.veilSplit ??= new Pass(lay(true, true), { ...layUniforms(), ...toneUniforms(), uVeil: { value: 0 } }, LAY_BLEND)
+      return this.veilSplit
+    }
+    this.veil ??= new Pass(lay(false, true), { ...layUniforms(), uVeil: { value: 0 } }, LAY_BLEND)
+    return this.veil
   }
 
   private blurPass(): Pass {
@@ -633,8 +678,12 @@ export class Place {
     this.pack.dispose()
     this.lay.dispose()
     this.split?.dispose()
+    this.veil?.dispose()
+    this.veilSplit?.dispose()
     this.blur?.dispose()
     this.split = null
+    this.veil = null
+    this.veilSplit = null
     this.blur = null
   }
 }

@@ -7,7 +7,7 @@ import { defaultPost } from '../post/chain'
 import { StopPlan, easeInOut, type OrbitShot } from './moves'
 import { arc, drift, forward, lookAt, mix, ramp, slerpDir, smooth, smoother } from './rig'
 import { coverWindow, segmentAtFrame } from './timeline'
-import { handoverFrame, handoverOf, placeWeight, shutterScales, skyTurnWeight, skyWeight, topForced } from './handover'
+import { handoverFrame, handoverOf, horizonWeight, placeWeight, shutterScales, skyTurnWeight, skyWeight, topForced } from './handover'
 import skyFrame from '../space/skyframe.json'
 import world from './world.json'
 import { aimAt, type SkyAims } from '../space/aim'
@@ -823,10 +823,12 @@ export class FilmDirector implements Director {
           skyCarry = new THREE.Quaternion().slerp(qc.multiply(qt.invert()), turned)
         }
         const weight = placeWeight(segment, time)
-        if (weight > 0 && hand.picture) {
+        const horizon = horizonWeight(hand, weight, skyShare)
+        if ((weight > 0 || (horizon ?? 0) > 0) && hand.picture) {
           const tw = inSet(s, p.twin(p.closePose(kind, hand.time), time))
           tw.quaternion.multiply(drift(hand.time))
           place = { stop: p.id, kind, weight, frame: handoverFrame(hand), time: hand.time, live: hand.live, twin: tw, centre: s.origin.clone(), radius: 1, scale: hand.place.scale, margin: hand.place.margin, matte: hand.place.matte, valid: hand.place.valid, lens: hand.place.lens, seen: hand.place.seen, maxEnlarge: hand.place.maxEnlarge, enlargeSoft: hand.place.enlargeSoft, limbReachDeg: hand.place.limbReachDeg, limbHoldDeg: hand.place.limbHoldDeg, edgeIn: hand.place.edgeIn, toneIn: hand.place.toneIn }
+          if (horizon !== undefined) place.horizon = horizon
         }
       }
       if (segment.kind === 'dive' || segment.kind === 'rise') {

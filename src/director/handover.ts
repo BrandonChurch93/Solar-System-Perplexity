@@ -4,7 +4,7 @@ import type { ViewKind } from '../core/types'
 import { coverFrames, coverWindow, handoverChanges, handoverParams } from './timeline'
 
 export interface HandoverTimes { at: number; dissolveFrames: number; placeFrames: number }
-export interface PlaceOptions { scale?: number; margin?: number; matte?: 'pair' | 'alpha'; valid?: [number, number, number, number]; lens?: number; seen?: number; maxEnlarge?: number; enlargeSoft?: number; limbReachDeg?: number; limbHoldDeg?: [number, number]; edgeIn?: [number, number, number, number]; toneIn?: [number, number, number, number] }
+export interface PlaceOptions { scale?: number; margin?: number; matte?: 'pair' | 'alpha'; valid?: [number, number, number, number]; lens?: number; seen?: number; maxEnlarge?: number; enlargeSoft?: number; limbReachDeg?: number; limbHoldDeg?: [number, number]; edgeIn?: [number, number, number, number]; toneIn?: [number, number, number, number]; limbSky?: boolean }
 export interface Sidestep { right: number; up: number; by: number }
 // fromDive (the rise only): the close view of the rise leaves from the eye of the dive. From the start of the rise the stop's own close path is led
 // over to the pose the dive handed over at, by the share of the way to T raised to this power (1 or more: it starts from rest), so at T the camera
@@ -16,7 +16,12 @@ export interface HandoverParams { dive?: HandoverSide; rise?: HandoverSide }
 // of the globe view. Both from 0 to 1. A stop may give its own through StopPlan.skyShare; without a high the globe view's sky keeps the
 // engine's rule (what low leaves in a dive, nothing in a rise).
 export interface SkyShares { low: number; high?: number }
-export interface Handover { time: number; firstFrame: number; lastFrame: number; placeFirstFrame: number; placeLastFrame: number; skyFrames: number; live: boolean; picture: boolean; place: PlaceOptions; skyFloor: boolean }
+// limbSky: the horizon of the place picture runs on the clock of the sky and not on the picture's own. The sky of the picture and its band
+// along the limb take the share of the close view's sky (skyFrames, or the stop's own skyShare), never less than the weight of the picture,
+// and the sides of the picture do not count for them. So the haze over the limb, the limb under it and the stars behind it change as one
+// thing over the frames in which the sky itself changes, and the limb of the globe does not show through a picture that is half there.
+// It needs the picture's horizon held on the camera's limb (limbReachDeg above 0).
+export interface Handover { time: number; firstFrame: number; lastFrame: number; placeFirstFrame: number; placeLastFrame: number; skyFrames: number; live: boolean; picture: boolean; place: PlaceOptions; skyFloor: boolean; limbSky: boolean }
 
 const CELLS = 8
 const STEP = 0.618
@@ -26,6 +31,7 @@ const known = new Map<string, Handover | null>()
 let knownAt = -1
 let forced: ViewKind | null = null
 let above = false
+let horizon: boolean | null = null
 let shutterOf: ((frame: number) => number) | null = null
 
 function smooth(t: number): number {
@@ -61,7 +67,11 @@ export function handoverOf(stop: string, kind: 'dive' | 'rise'): Handover | null
     if (lead !== undefined && (!(lead >= 1) || !Number.isFinite(lead) || !config.segments.some((s) => s.stop === stop && s.kind === 'dive'))) throw new Error('the rise of ' + stop + ' needs fromDive of 1 or more and a dive to leave from')
     if (lim && lim.edgeIn !== undefined && !(Array.isArray(lim.edgeIn) && lim.edgeIn.length === 4 && lim.edgeIn.every((x) => x >= 0 && x <= 1))) throw new Error('the place of ' + seg.id + ' needs edgeIn as four shares from 0 to 1: left, right, bottom, top')
     if (lim && lim.toneIn !== undefined && !(Array.isArray(lim.toneIn) && lim.toneIn.length === 4 && lim.toneIn.every((x) => x >= 0 && x <= 4))) throw new Error('the place of ' + seg.id + ' needs toneIn as four shares from 0 to 4: left, right, bottom, top')
-    out = { time: ((firstFrame + lastFrame) / 2 + config.shutterFraction / 2) / config.fps, firstFrame, lastFrame, placeFirstFrame, placeLastFrame, skyFrames: t.skyFrames, live: own[kind]?.live === true, picture: own[kind]?.picture !== false, place: own[kind]?.place ?? {}, skyFloor: own[kind]?.skyFloor === true }
+    if (lim && lim.limbSky !== undefined && typeof lim.limbSky !== 'boolean') throw new Error('the place of ' + seg.id + ' needs limbSky as true or false')
+    const picture = own[kind]?.picture !== false
+    const limbSky = picture && (lim?.limbSky ?? config.raw.handover.place.limbSky)
+    if (limbSky && !((lim?.limbReachDeg ?? config.raw.handover.place.limbReachDeg) > 0)) throw new Error('the place of ' + seg.id + ' needs limbReachDeg above 0 for limbSky: the horizon of the picture has to lie on the limb of the camera')
+    out = { time: ((firstFrame + lastFrame) / 2 + config.shutterFraction / 2) / config.fps, firstFrame, lastFrame, placeFirstFrame, placeLastFrame, skyFrames: t.skyFrames, live: own[kind]?.live === true, picture, place: own[kind]?.place ?? {}, skyFloor: own[kind]?.skyFloor === true, limbSky }
   }
   known.set(key, out)
   return out
@@ -130,6 +140,13 @@ export function skyWeight(seg: Segment, time: number): number {
   return time < full ? 1 : h.skyFrames > 0 ? smooth(1 - (time - full) / (h.skyFrames / fps)) : 0
 }
 
+// The weight of the horizon of the place picture (limbSky): the share of the close view's sky, never under the weight of the picture.
+// undefined where the handover did not ask for it, and the horizon then goes with the picture.
+export function horizonWeight(h: Handover, weight: number, skyShare: number): number | undefined {
+  if (!h.picture || !(horizon ?? h.limbSky)) return undefined
+  return Math.min(Math.max(weight, skyShare, 0), 1)
+}
+
 export function skyTurnWeight(seg: Segment, time: number): number {
   if (seg.kind !== 'dive' && seg.kind !== 'rise') return 0
   const h = handoverOf(seg.stop, seg.kind)
@@ -148,6 +165,12 @@ export function forceSide(view: ViewKind | null): void {
 // with the field it has on the film's path. Like forceSide it is for the harness only and must not be reachable from the film path.
 export function forceTop(on: boolean): void {
   above = on
+}
+
+// limbSky as the harness asks for it, for a look at a stop that has not set it (or at one that has, without it): true, false, or null for
+// what the stop says. For the harness only, like forceSide.
+export function forceLimbSky(on: boolean | null): void {
+  horizon = on
 }
 
 export function topForced(): boolean {
