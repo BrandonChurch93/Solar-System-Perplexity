@@ -1,9 +1,17 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T08:38:26.465Z",
+ "pushed": "2026-11-23T08:58:20.244Z",
  "head": "2afc5d610bc6c1b88e739adb593448e95c68ea8c",
- "note": "S2 first pass plates and repaint leads, nothing installed yet, style gap between place and old ground is open",
+ "note": "level 2 repaint take 2: surroundings match in style, place still reads as a darker blob",
  "looks": [
+  {
+   "time": "2026-11-23T08:58:17.476Z",
+   "file": "20261123085817476-note-L2-sheet-a2.jpg",
+   "source": "out/work/mercury/place/repaint/L2-sheet-a2.jpg",
+   "kind": "note",
+   "label": "S2 work, level 2 plate (38 deg) top down, take 2: left the lead (old ground in the light of T, place laid in), middle the repaint built from 5 generated tiles, right one raw centre tile at 2x. Surroundings now read as the same ground; the place is still a darker, denser blob: brightness match of the surroundings to the place is the next step. Not installed, not in the film yet.",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-23T08:38:25.342Z",
    "file": "20261123083825342-note-lead-sheet.jpg",
@@ -58,14 +66,6 @@
    "source": "out/work/mercury/place/cmp-4.jpg",
    "kind": "note",
    "label": "the crater: level 1, level 3, the laid back close image, 4 deg across, same frame (sizes do not agree: 2.5 by 2.0 against 1.5 by 1.8 deg)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T07:32:22.140Z",
-   "file": "20261123073222140-note-close-sheet.jpg",
-   "source": "out/work/mercury/place/close-sheet.jpg",
-   "kind": "note",
-   "label": "close side 744 to 780 with the glare cover off, draft (study for T)",
    "stop": "mercury"
   }
  ]
