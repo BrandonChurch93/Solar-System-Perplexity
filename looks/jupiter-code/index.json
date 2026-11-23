@@ -1,9 +1,66 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-23T11:46:55.899Z",
+ "pushed": "2026-11-23T11:55:07.346Z",
  "head": "37289eb3bc693c9ec16cd000d22d1e9750c04a5a",
- "note": "Mail 251 item 2: the dashes are hidden zones and steep slopes of the lay back; filling them by mirrored image texture, trust from the level ground length",
+ "note": "Jupiter surface view v15: wide canvas in every frame, hidden zones filled, exposure eased over the second half",
  "looks": [
+  {
+   "time": "2026-11-23T11:55:06.747Z",
+   "file": "20261123115506747-note-v15-row.jpg",
+   "source": "../work/f/v15-row.jpg",
+   "kind": "note",
+   "label": "v15 exposure eased by a quarter stop over the second half: approved, 3150, 3195, 3210, 3225, 3239"
+  },
+  {
+   "time": "2026-11-23T11:55:06.104Z",
+   "file": "20261123115506104-note-v14-sheet.jpg",
+   "source": "../work/f/v14-sheet.jpg",
+   "kind": "note",
+   "label": "v14 surface view, 12 frames 3060 to 3239 at the draft tier: wide canvas in every frame, no straight edge"
+  },
+  {
+   "time": "2026-11-23T11:55:05.405Z",
+   "file": "20261123115505405-note-v14-3239-zones.jpg",
+   "source": "../work/f/v14-3239-zones.png",
+   "kind": "note",
+   "label": "v14 3239, the zones the fill replaced (hidden and steep ground of the lay back)"
+  },
+  {
+   "time": "2026-11-23T11:55:04.837Z",
+   "file": "20261123115504837-note-v14-3239-bl.jpg",
+   "source": "../work/f/v14-3239-bl.jpg",
+   "kind": "note",
+   "label": "v14 3239, native crop of the lower left at the draft tier: hidden zones filled, no dashes"
+  },
+  {
+   "time": "2026-11-23T11:52:19.191Z",
+   "file": "20261123115219191-sheet-jupiter.terrain-16x9-draft.jpg",
+   "source": "out/work/sheets/jupiter.terrain-16x9-draft.png",
+   "kind": "sheet",
+   "label": "Contact sheet jupiter.terrain, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "first": 3060,
+   "last": 3239,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8b9f780b26a50bc3"
+  },
+  {
+   "time": "2026-11-23T11:51:38.212Z",
+   "file": "20261123115138212-frame-f03060-draft.jpg",
+   "source": "out/work/sheets/.frames-BdnGiD/f03060-draft.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3060, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3060,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8b9f780b26a50bc3"
+  },
   {
    "time": "2026-11-23T11:46:55.217Z",
    "file": "20261123114655217-note-v12-3239-dots.jpg",
@@ -17,55 +74,6 @@
    "source": "../work/f/v12n-3239-zones.png",
    "kind": "note",
    "label": "v12 without the blur of stretched texels: wires gone, small taffy on steep slopes"
-  },
-  {
-   "time": "2026-11-23T11:46:53.990Z",
-   "file": "20261123114653990-note-v12-3239-zones.jpg",
-   "source": "../work/f/v12-3239-zones.png",
-   "kind": "note",
-   "label": "v12 3239 three zones at 3x: wires and a rainbow line from the plate detail ratio"
-  },
-  {
-   "time": "2026-11-23T11:46:53.406Z",
-   "file": "20261123114653406-note-v12-3239-bl.jpg",
-   "source": "../work/f/v12-3239-bl.jpg",
-   "kind": "note",
-   "label": "v12 3239 lower left: hidden zones filled by mirroring the image on both sides (kept)"
-  },
-  {
-   "time": "2026-11-23T11:46:52.831Z",
-   "file": "20261123114652831-note-v11-3239-bl.jpg",
-   "source": "../work/f/v11-3239-bl.jpg",
-   "kind": "note",
-   "label": "v11 3239 lower left: hidden zones blurred to smudges (rejected)"
-  },
-  {
-   "time": "2026-11-23T11:46:52.236Z",
-   "file": "20261123114652236-note-v10-3239-bl.jpg",
-   "source": "../work/f/v10-3239-bl.jpg",
-   "kind": "note",
-   "label": "v10 3239 lower left native: trust from the level ground length, stretched texels blurred (comb and wires still there)"
-  },
-  {
-   "time": "2026-11-23T11:46:22.451Z",
-   "file": "20261123114622451-frame-layers-3239.jpg",
-   "source": "out/work/jupiter/frames/v12/layers-3239.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3239, draft tier, layers view",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3239,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "layers",
-   "engine": "8b9f780b26a50bc3"
-  },
-  {
-   "time": "2026-11-23T11:30:28.047Z",
-   "file": "20261123113028047-note-v9a-3060-limb.jpg",
-   "source": "../work/f/v9a-3060-limb.jpg",
-   "kind": "note",
-   "label": "v9a: limb end at 3060 with the measured air over the plates, streak gone"
   }
  ]
 }
