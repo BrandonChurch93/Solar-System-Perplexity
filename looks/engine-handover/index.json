@@ -1,9 +1,16 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-23T22:41:23.285Z",
- "head": "67938ff56cf5e7d1e0dae0e05f42cf6993536e67",
- "note": "Plan E: the one move is being coded (pace.ts, the bell, the measure); no new pictures since 22:23, the first E sheets of Mars follow",
+ "pushed": "2026-11-23T22:55:42.068Z",
+ "head": "8d6521e67d05db217b78bef6b346c85c9c2c6b05",
+ "note": "Plan E measure pushed (8d6521e): pace.ts mirrors npm run smooth to the third decimal; all nine stops red today; next the one move",
  "looks": [
+  {
+   "time": "2026-11-23T22:55:41.409Z",
+   "file": "20261123225541409-note-pace-before.jpg",
+   "source": "../../../../tmp/hz/pace-before.png",
+   "kind": "note",
+   "label": "Plan E, before: the pace of every dive and rise on main f0c67f1 (fall, turn, speed over the mean, half frames); all 17 red"
+  },
   {
    "time": "2026-11-23T22:23:34.378Z",
    "file": "20261123222334378-note-c-depth-zoom.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/hz/c-rise-on2-L1.png",
    "kind": "note",
    "label": "limbSky second version (sky alone, c148dd1), Mars rise 2694 to 2701, left 720 px at full size: the stripe is gone, a 1 px bright line of the globe's limb is left (the mesh of the globe lies up to 2 px inside the sphere the pass computes)"
-  },
-  {
-   "time": "2026-11-23T21:23:09.379Z",
-   "file": "20261123212309379-note-c-rise-on-L2.jpg",
-   "source": "../../../../tmp/hz/c-rise-on-L2.png",
-   "kind": "note",
-   "label": "Mars rise 2702 to 2709, left 720 px at full size, ON (first try)"
   }
  ]
 }
