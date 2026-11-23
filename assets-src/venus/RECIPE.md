@@ -304,6 +304,27 @@ Takes made (limit 6 per asset per round):
 
 What the takes taught: the composition model paints cloud forms only where the guide leads it clearly, and returns a soft guide nearly unchanged; the tile model adds real cloud detail to soft cloud forms, but invents shapes inside soft shadow shafts and makes a crust out of blotchy inputs. Rejected takes are kept in `out/work/venus/place/<tag>/old/` on the build machine only.
 
+## Place plates at the two handovers
+
+### public/assets/venus/{full,web}/place-w-dive.jpg, place-a-dive.jpg, place-b-dive.jpg, place-c-dive.jpg, place-d-dive.jpg and the same five with -rise (4096 x 4096 and 2048 x 2048)
+
+No image generation. The plates of the section above hold the close image laid back from the twin of the terrain view's judged frame. At the T of a handover the close side stands elsewhere and its layers have shifted, so each handover gets its own set of the five levels, made from the close side as the film draws it at T. The globe side shows the dive set before the terrain view and the rise set after it (`place.levels` in `src/stops/venus/assets.ts`, fields `dive` and `rise`). Every value is in `src/stops/venus/plates.json` (`atT`). Work files live in `out/work/venus/place/t/` (not committed).
+
+1. The camera at T: `npx tsx assets-src/venus/place/tcam.ts --json out/work/venus/place/tcam.json` writes the film's globe side camera at the T of the dive and of the rise (frame, time, position, axes, field of view, height) in the body fixed frame of the globe.
+2. The two draws at T, per handover, with the frame and the time of step 1 (dive 1343 and 44.775, rise 1542 and 51.40833333333333):
+   - close side: `npm run -s still -- --frame FRAME --tier draft --format uhd --diag "nograin/side=terrain/t=SECONDS" --out out/work/venus/place/t/close-FRAME.png`. Look at its lowest rows at full size: the close scene must fill the frame (see `assets-src/venus/place/fill.ts` and the notebook, "State 11:42").
+   - globe side without the place picture and with the plates of the section above: set `atT.tags` in `plates.json` to `[]` for this draw only, then `npm run -s still -- --frame FRAME --tier draft --format uhd --diag "nograin/side=orbit/t=SECONDS/noplace" --out out/work/venus/place/t/globe-FRAME.png`, then put `atT.tags` back.
+3. `python3 assets-src/venus/place/tlay.py calib KIND d` (run in `assets-src/venus/place/`; KIND is dive or rise) lays the globe draw back through the camera of step 1 and measures how far the plate d it shows lies from the plate file. The result goes to `atT.shiftDeg` (dive [0.00006, 0.0044], rise [0.00075, 0.00518] deg east and north; with it the left over is under 0.2 plate pixels). The cause of this shift is not found.
+4. `python3 assets-src/venus/place/tlay.py make KIND` writes `out/work/venus/place/t/<kind>-<tag>.png` for the five levels: where the camera at T sees the ground steeply enough (`trustSinElevation`) the laid back close draw replaces the plate; over the rest of the ground in the frame (`coverSinElevation`) the plate keeps its forms and takes the tones of the draw at the scale `toneSigma`; outside the frame the plate stays. Tones go through the globe's own shading: the globe draw of step 2, laid back the same way, says how a plate value shows.
+5. `python3 assets-src/venus/place/tlay.py export KIND` writes the ten files of that handover (JPEG quality 92, 4:4:4).
+6. After any change of a path shape or of a T in `src/stops/venus/move.json`, steps 1 to 5 run again for that handover.
+
+## Air of the place on the globe side
+
+### public/assets/venus/{full,web}/relief-air-sun.png, relief-air-limb.png
+
+No image generation. `python3 assets-src/venus/place/airsun.py` (run in `assets-src/venus/place/`) splits the air picture of the close side (`relief-air.png`, unchanged, still used by the close side) into two files for the dome the globe side draws near the place: `relief-air-sun.png` (the Sun's own light, 1024 x 512, even steps of azimuth and elevation about the Sun, `air.sun.boxDeg` in `plates.json`) and `relief-air-limb.png` (the rest, in the layout of the air picture). The globe side lays the rest from the limb upward and the Sun's light from the limb as it stood at T, so the Sun keeps its direction while the limb sinks or climbs. Every value is `air.sun` in `plates.json`. The script prints how far the sum of the two files is from the air picture (of 255: mean 0.346, 99th percentile 10.54, largest 27.7) and writes the check sheet `out/work/venus/place/t/airsun.jpg`.
+
 ## File list
 
 Every file below exists in both sets (`full` and `web`); the section that makes it is named after it.
@@ -323,5 +344,7 @@ Every file below exists in both sets (`full` and `web`); the section that makes 
 - `public/assets/venus/<set>/patch-a.jpg`, `public/assets/venus/<set>/patch-b.jpg`, `public/assets/venus/<set>/patch-c.jpg`, `public/assets/venus/<set>/patch-d.jpg`: Dive patches, `patch.py export`.
 - `public/assets/venus/<set>/veil-clouds.jpg`: Cover veil, `veil/tile.py`.
 - `public/assets/venus/<set>/place-w.jpg`, `public/assets/venus/<set>/place-a.jpg`, `public/assets/venus/<set>/place-b.jpg`, `public/assets/venus/<set>/place-c.jpg`, `public/assets/venus/<set>/place-d.jpg`: Place plates, `place/lay.py`, then `place/build.py` (guide, comp, plate, export).
+- `public/assets/venus/<set>/place-<tag>-dive.jpg` and `public/assets/venus/<set>/place-<tag>-rise.jpg` for the tags w, a, b, c, d: Place plates at the two handovers, `place/tcam.ts`, the two draws at T, `place/tlay.py` (calib, make, export).
+- `public/assets/venus/<set>/relief-air-sun.png`, `public/assets/venus/<set>/relief-air-limb.png`: Air of the place on the globe side, `place/airsun.py`.
 
 Kept beside the scripts, not loaded by the set: `assets-src/venus/sky/uncorrected/sky-hold.webp` and `assets-src/venus/sky/uncorrected/sky-terrain.webp` (the two sky patches before the star cure, the inputs of `sky/stars.py`).

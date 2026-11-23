@@ -30,8 +30,13 @@ const under = placeJson.place.under.direction
 const heading = placeJson.place.heading
 
 export const place = {
-  levels: platesJson.levels as { tag: string; file: string; widthDeg: number }[],
+  // The levels made again for each handover (assets-src/venus/place/tlay.py) have one picture for the dive and one for the rise.
+  levels: platesJson.levels.map((l) => {
+    const twice = platesJson.atT.tags.includes(l.tag)
+    return { ...l, dive: twice ? l.file.replace('.jpg', '-dive.jpg') : l.file, rise: twice ? l.file.replace('.jpg', '-rise.jpg') : l.file }
+  }) as { tag: string; file: string; widthDeg: number; dive: string; rise: string }[],
   rim: platesJson.rim,
+  air: { heights: platesJson.air.heights as [number, number], sunHeights: platesJson.air.sun.heights as [number, number], haze: platesJson.air.haze },
   centre: [0, 1, 2].map((i) => under[i]! * Math.cos(ahead) + heading[i]! * Math.sin(ahead)) as [number, number, number],
   feather: platesJson.feather,
   fade: platesJson.fade as [number, number],
@@ -60,6 +65,7 @@ function reliefDef(key: 'full' | 'web'): CloudReliefDef {
     masks: 'relief-masks.png',
     maskBox: box(reliefJson.masks.box),
     air: 'relief-air.png',
+    airSun: { file: platesJson.air.sun.file, limbFile: platesJson.air.sun.limbFile, atDeg: platesJson.air.sun.atDeg as [number, number], boxDeg: platesJson.air.sun.boxDeg as [number, number, number] },
   }
 }
 

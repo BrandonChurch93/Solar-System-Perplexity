@@ -52,6 +52,7 @@ export interface GlobeOptions {
   haze: HazeParams
   patches: GlobePatches
   place: GlobePlace
+  air: { deck: THREE.Vector3[]; deckSpanDeg: number }
   flow: GlobeFlow
   bolts: GlobeBolts
   limb: THREE.Texture
@@ -129,6 +130,10 @@ uniform float uPlaceSize[${PLACE_LEVELS}];
 uniform vec4 uPlaceLook;
 uniform float uPlaceOn;
 uniform vec4 uDusk;
+uniform vec3 uAirDeck[10];
+uniform vec3 uAirFwd;
+uniform vec3 uAirRight;
+uniform vec4 uAirHaze;
 uniform float uFeather;
 uniform vec2 uPatchFade;
 uniform vec3 uSpotN;
@@ -403,6 +408,14 @@ ${PLACE_GLSL}
       texels = mix(texels, placeTexels, uPlaceOn);
     }
   }
+  for (int pass = 0; pass < (uAirHaze.x > 0.0 ? 1 : 0); pass++) {
+    vec3 airUp = normalize(uCam);
+    vec3 level = dir - airUp * dot(dir, airUp);
+    float az = atan(dot(level, uAirRight), dot(level, uAirFwd));
+    float at = (1.0 - abs(mod(az / uAirHaze.w * 0.5 + 0.5, 2.0) - 1.0)) * 9.0;
+    int i = int(min(floor(at), 8.0));
+    col = mix(col, inverseFilmic(mix(uAirDeck[i], uAirDeck[i + 1], at - float(i))) * uAirHaze.z * uDusk.w, uAirHaze.x * exp(-mu / uAirHaze.y));
+  }
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.9, 0.75, 0.3), vec2(drift + uDrift.y * band, 0.0) * 8.0, length(vView));
@@ -465,6 +478,7 @@ export class Globe {
         uPlaceSize: { value: Array.from({ length: PLACE_LEVELS }, (_, i) => (o.place.textures[i]?.image as unknown as { width: number } | undefined)?.width ?? 1) },
         uPlaceLook: { value: new THREE.Vector4(o.place.feather, o.place.fade[0], o.place.fade[1], o.place.rim * 0.5) },
         uPlaceOn: { value: 0 },
+        uAirDeck: { value: o.air.deck }, uAirFwd: { value: new THREE.Vector3(0, 0, -1) }, uAirRight: { value: new THREE.Vector3(1, 0, 0) }, uAirHaze: { value: new THREE.Vector4(0, 0.05, 1, THREE.MathUtils.degToRad(o.air.deckSpanDeg)) },
         uDusk: { value: new THREE.Vector4(1, 1, 1, 1) },
         uMapWidth: { value: o.mapWidth },
         uSpin: { value: 0 }, uGain: { value: 1 }, uCarry: { value: new THREE.Vector4(1, 1, 1, 1) }, uCarryTint: { value: new THREE.Vector3(1, 1, 1) }, uCarryOn: { value: 0 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
