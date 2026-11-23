@@ -42,6 +42,7 @@ const stopKinds = new Set(['hold', 'dive', 'terrain', 'rise'])
 const only = a.only ? new Set(a.only.split(',')) : null
 const stressTier = a['stress-tier'] ?? cfg.raw.quality.stress.tier
 const span = a.frames ? /^(\d+)-(\d+)$/.exec(a.frames) : null
+const placeWindow = a['place-window'] !== undefined
 if (a.frames && (span === null || only === null || only.size !== 1)) throw new Error('--frames A-B goes with --only and one sheet')
 const started = Date.now()
 
@@ -280,7 +281,7 @@ async function motion(segments: Segment[], scope?: string, sheets?: Set<string>)
       if (art) list.push(art)
     }
     if ((s.kind === 'dive' || s.kind === 'rise') && (pick === null || pick.has(s.id + '-cover'))) {
-      const art = await sheet(s.id + '-cover', sheetFrames(cfg, s, true), { kind: 'cover', segment: s.id })
+      const art = await sheet(s.id + '-cover', sheetFrames(cfg, s, true, placeWindow), { kind: 'cover', segment: s.id })
       if (art) list.push(art)
     }
   }
@@ -349,7 +350,7 @@ function plan(): object {
     if (between === false && (phase !== 6 || stopKinds.has(s.kind) === false)) continue
     const each = (frames: FrameSpec[]): number[][] => frames.map((f) => [f.frame, samplesOf(f.frame, motionTier)])
     sheets.push({ part: s.id, stop: between ? null : s.stop, samples: cost(sheetFrames(cfg, s, false)), tiles: each(sheetFrames(cfg, s, false)) })
-    if (between === false && (s.kind === 'dive' || s.kind === 'rise')) sheets.push({ part: s.id + '-cover', stop: s.stop, samples: cost(sheetFrames(cfg, s, true)), tiles: each(sheetFrames(cfg, s, true)) })
+    if (between === false && (s.kind === 'dive' || s.kind === 'rise')) sheets.push({ part: s.id + '-cover', stop: s.stop, samples: cost(sheetFrames(cfg, s, true, placeWindow)), tiles: each(sheetFrames(cfg, s, true, placeWindow)) })
   }
   const frames = a.judged ? { judged: judgedFrames().map((j) => ({ frame: j.frame, segment: j.segment, stop: j.stop, kind: cfg.segments.find((s) => s.id === j.segment)?.kind, why: j.why })) } : {}
   return {
