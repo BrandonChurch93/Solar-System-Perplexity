@@ -152,6 +152,13 @@ void main() {
   outColor = vec4(sum / total, 1.0);
 }`
 
+export const FILMIC_GLSL = /* glsl */ `
+vec3 filmic(vec3 x) {
+  x = max(x, vec3(0.0));
+  const float a = 2.51, b = 0.03, c = 2.43, d = 0.59, e = 0.14;
+  return clamp((x * (a * x + b)) / (x * (c * x + d) + e), 0.0, 1.0);
+}`
+
 export const INVERSE_FILMIC_GLSL = /* glsl */ `
 vec3 inverseFilmic(vec3 y) {
   y = clamp(y, 0.0, 0.985);
