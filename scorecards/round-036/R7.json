@@ -1,0 +1,81 @@
+{
+ "critic": "R7",
+ "score": 6.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R7",
+    "score": 10,
+    "pass": true,
+    "issues": []
+   }
+  },
+  {
+   "part": 2,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R7",
+    "score": 8,
+    "pass": true,
+    "issues": [
+     {
+      "severity": "minor",
+      "file": "image-16.png",
+      "where": "Crops E and I, Mars's shadow-side terrain",
+      "what": "The encode flattens some subtle shadow detail into patchy dark areas, although crater rims and larger ridges still read clearly.",
+      "fix": "Give the dark terrain more bitrate or retain more local contrast in its mid-scale relief."
+     },
+     {
+      "severity": "minor",
+      "file": "image-14.png",
+      "where": "Crops B and I, faint stars just outside Mars's bright limb",
+      "what": "Some discrete faint stars dim or disappear in the encoded haze; the brighter stars and overall limb glow remain intact.",
+      "fix": "Raise the local contrast of the faint stars you want to retain rather than boosting the entire star field."
+     }
+    ]
+   }
+  },
+  {
+   "part": 3,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R7",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-20.png, image-22.png, image-24.png",
+      "where": "crop E (1328,704) and the empty dark sky in lower right of the frame",
+      "what": "in the encoded frame (right) the near-black sky breaks into flat macroblocks with faint green and magenta tint patches, and most of the faint background stars disappear, leaving only the bright ones. The source has a smooth noisy floor dense with dim stars. This is easy to see when brightened, and it shows as crawling blotches on a good display",
+      "fix": "give dark flat areas more bits: lower CRF or raise the bitrate floor in the stress profile, use aq-mode 3 (or a higher aq-strength) and a psy-rd/deblock tune for low luma, encode at 10-bit to stop the dark-level quantization, and render faint stars a little brighter or larger so they survive quantization"
+     },
+     {
+      "severity": "minor",
+      "file": "image-22.png, image-24.png",
+      "where": "crop H/I (224,424), the night side of the ice giant below the ring shadow",
+      "what": "the dark blue cloud bands go soft and blocky, with faint 8–16 px block edges and stepped tones where the source has fine streaks and a smooth gradient",
+      "fix": "same dark-region bitrate and 10-bit changes; add a little dither or grain to the dark limb gradient before encoding"
+     },
+     {
+      "severity": "minor",
+      "file": "image-18.png",
+      "where": "crop E (1328,704) terminator and crop D (368,704) dust haze",
+      "what": "the dim terrain past the terminator gets blotchy and loses its small crater detail, and the haze over the basin turns a little waxy. The surfaces still read, but the mid-dark texture is visibly smoothed",
+      "fix": "raise the bits given to low-luma textured regions (aq-mode 3) or lower CRF a step"
+     },
+     {
+      "severity": "minor",
+      "file": "image-18.png",
+      "where": "crop C (1328,164)",
+      "what": "the two sides do not match: the source crop is motion-smeared while the encoded crop is sharp, so this pair probably comes from different frames or different motion-blur states. That makes the comparison unreliable here",
+      "fix": "pull the source and encoded stills from the exact same frame index or timestamp when building the pack"
+     }
+    ]
+   }
+  }
+ ]
+}

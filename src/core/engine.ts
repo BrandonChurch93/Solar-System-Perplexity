@@ -8,8 +8,11 @@ import { midShutterCarry } from './held'
 import { framePlan } from './motion'
 import { samplesFor, shutterMid } from './sampler'
 import { SetLoader } from './sets'
-import type { RenderView, Shot, SkyPatch } from './types'
-import { isRaw, setDiag, setSamples } from '../diagnostics/diag'
+import type { PlaceState, RenderView, Shot, SkyFloor, SkyPatch, ViewKind } from './types'
+import { floorRing, sharedSkyWeight } from './skyfloor'
+import { Place, placeCamera, placeLayout, type PlaceMode, type PlacePicture } from './place'
+import { gradUniform, isRaw, setDiag, setFine, setSamples } from '../diagnostics/diag'
+import { applyProbe, parseProbe, type Probe } from '../diagnostics/probe'
 import { PostChain } from '../post/chain'
 import { Belt } from '../space/belt/belt'
 import { Dust } from '../space/dust'
@@ -23,7 +26,7 @@ import { marksIn } from '../terrain/shield'
 import { setsForFrame } from '../director/timeline'
 
 export interface Director {
-  shotAt(frame: number, time: number): Shot
+  shotAt(frame: number, time: number, side?: ViewKind): Shot
   glareOf?(shot: Shot): THREE.Vector3 | null
   readonly sky?: SkyAims
 }
@@ -41,8 +44,11 @@ export class Engine {
   readonly sky: Sky
   format: FormatDef
   assets: string
-  diag = 'beauty'
+  private asked_ = 'beauty'
+  private probe: Probe = parseProbe('beauty')
   director: Director | null = null
+  private readonly place = new Place()
+  private readonly over = new THREE.Scene()
   private readonly camera = new THREE.PerspectiveCamera(30, 16 / 9, 0.01, 1000)
   private readonly world = new THREE.Scene()
   private readonly near = new THREE.Scene()
@@ -54,6 +60,7 @@ export class Engine {
   readonly belt = new Belt()
   private skyAssets = ''
   private readonly skyPatches: { patch: SkyPatch; weight: number }[] = []
+  private readonly floors = new WeakMap<SkyPatch, { floor: SkyFloor; patch: SkyPatch }>()
   private skyTexture: THREE.Texture | null = null
   private skyBand: THREE.Texture | null = null
   private skyStrip: THREE.Texture | null = null
@@ -66,6 +73,7 @@ export class Engine {
   private readonly carry = new THREE.Matrix4()
   private sampleCount = 1
   private soft = 0
+  private shutter = 1
   private asked = 0
   private lastFrame: { frame: number; tier: string } | null = null
   private readonly marked = new WeakSet<THREE.Material>()
@@ -97,10 +105,20 @@ export class Engine {
     this.canvas.addEventListener('webglcontextrestored', () => void this.revive().catch((e: unknown) => console.error(e)))
   }
 
+  get diag(): string {
+    return this.asked_
+  }
+
+  set diag(value: string) {
+    this.probe = parseProbe(value)
+    this.asked_ = value
+  }
+
   private async revive(): Promise<void> {
     const gl = this.renderer.getContext()
     for (const e of [...REQUIRED_EXTENSIONS, ...OPTIONAL_EXTENSIONS]) gl.getExtension(e)
     this.renderer.setClearColor(0x000000, 0)
+    this.place.reset()
     const ids = this.sets.loadedIds()
     const last = this.lastFrame
     const shot = this.lastShot
@@ -108,6 +126,7 @@ export class Engine {
     this.sets.reset()
     this.world.clear()
     this.near.clear()
+    this.over.clear()
     this.attached = []
     this.skyAssets = ''
     await this.ensureSky()
@@ -128,6 +147,7 @@ export class Engine {
     this.accumulator = new Accumulator(width, height)
     this.post.resize(width, height)
     this.camera.aspect = width / height
+    this.place.reset()
   }
 
   setFormat(id: string): void {
@@ -217,17 +237,30 @@ export class Engine {
   private drawFrame(f: number, tier: string): void {
     if (!this.director) return
     this.lastFrame = { frame: f, tier }
+    const probe = this.probe
+    applyProbe(probe)
     const plan = framePlan(this.director, f, tier)
-    const samples = samplesFor(plan.samples)
+    const samples = samplesFor(plan.samples, plan.shutter)
     this.soft = plan.soft
-    const mid = this.director.shotAt(f, (f + shutterMid()) / config.fps)
+    this.shutter = plan.shutter
+    const still = probe.shut
+    const middle = probe.time ?? (f + shutterMid()) / config.fps
+    const mid = this.director.shotAt(f, middle)
+    let other: Shot | null = null
+    const midOf = (shot: Shot): Shot => {
+      const view = shot.sets[0]?.view
+      if (!plan.split || !view || view === mid.sets[0]?.view) return mid
+      other ??= this.director!.shotAt(f, middle, view)
+      return other
+    }
     this.accumulator.begin()
     samples.forEach((s, i) => {
-      const shot = samples.length === 1 ? mid : this.director!.shotAt(f, (f + s.timeOffset) / config.fps)
-      this.renderSample(shot, mid, s.jitterX, s.jitterY, i, samples.length)
+      const shot = samples.length === 1 || still ? mid : this.director!.shotAt(f, (f + s.timeOffset) / config.fps)
+      this.renderSample(shot, midOf(shot), s.jitterX, s.jitterY, i, samples.length)
       this.accumulator.add(this.renderer, this.sampleTarget.texture, s.weight)
     })
-    this.post.render(this.renderer, this.accumulator.texture, mid.post, f, this.diag, samples.length > 1)
+    applyProbe(null)
+    this.post.render(this.renderer, this.accumulator.texture, mid.post, f, probe.view, samples.length > 1)
     this.lastShot = mid
     this.sampleCount = samples.length
     this.flush()
@@ -236,10 +269,11 @@ export class Engine {
   renderLive(shot: Shot): void {
     this.lastFrame = null
     this.soft = 0
+    this.shutter = 1
     this.accumulator.begin()
     this.renderSample(shot, shot, 0, 0, 0, 1)
     this.accumulator.add(this.renderer, this.sampleTarget.texture, 1)
-    this.post.render(this.renderer, this.accumulator.texture, shot.post, shot.frame, this.diag)
+    this.post.render(this.renderer, this.accumulator.texture, shot.post, shot.frame, this.probe.view)
     this.lastShot = shot
     this.sampleCount = 1
   }
@@ -256,50 +290,72 @@ export class Engine {
     cam.updateProjectionMatrix()
     cam.updateMatrixWorld(true)
     const r = this.renderer
-    const raw = isRaw(this.diag)
-    setDiag(this.diag)
+    const diag = this.probe.view
+    const raw = isRaw(diag)
+    setDiag(diag)
     setSamples(count, GRAD_FLOOR, this.soft)
     implicitUniform.value = this.sky.cull ? 1 : 0
-    r.setRenderTarget(this.sampleTarget)
-    r.clear(true, true, true)
-    if (!raw) {
-      this.skyPatches.length = 0
-      const aims = this.director!.sky
-      for (const state of shot.sets) {
-        for (const patch of this.sets.get(state.id)?.sky ?? []) {
-          if (patch.view !== state.view) continue
-          const kind = shot.segment.kind
-          const arriving = kind === 'travel' && state.id !== shot.segment.stop
-          const base = shot.segment.stop === config.endingId ? 0 : kind === 'travel' ? (arriving ? shot.skyPatch ?? THREE.MathUtils.smoothstep(shot.u, 0.2, 0.8) : 0) : kind === 'rise' && state.view === 'orbit' ? 0 : 1
-          const weight = patch.weight ? base * patch.weight(shot.time, state.view) : base
-          if (weight <= 0) continue
-          const aim = aims?.patches[state.id]?.[patch.view]
-          if (aim) patch.aim.copy(aim)
-          this.skyPatches.push({ patch, weight })
-        }
-      }
-      if (aims) this.sky.setFrame(aims.frame)
-      this.sky.setPatches(this.skyPatches)
-      this.sky.setStarLift(shot.skyStars ?? 0, config.raw.travel.sky.starLevel / Math.max(shot.skyExposure, 1e-3), config.raw.travel.sky.flightStars.level)
-      this.sky.setBandLook(shot.skyLook ?? 0)
-    }
-    const view: RenderView = { camera: cam, diag: this.diag, format: this.format, sample: index, samples: count, cameraPosition: shot.camera.position, farLight: shot.farLight }
     const wanted = shot.sets.map((s) => s.id)
     if (wanted.join('|') !== this.attached.join('|')) {
       this.world.clear()
       this.near.clear()
+      this.over.clear()
       for (const id of wanted) {
         const set = this.sets.get(id)
         if (!set) throw new Error('set not loaded: ' + id)
         this.world.add(set.world)
         if (set.near) this.near.add(set.near)
+        if (set.over) this.over.add(set.over)
       }
       this.attached = wanted
     }
+    const placed = this.probe.place && shot.place && shot.place.weight > 0 && (!raw || diag === 'texels') ? shot.place : null
+    const limbed = placed && this.probe.limb !== undefined ? { ...placed, limbReachDeg: this.probe.limb } : placed
+    const edged = limbed && this.probe.edgeIn !== undefined ? { ...limbed, edgeIn: this.probe.edgeIn } : limbed
+    const place = edged && this.probe.toneIn !== undefined ? { ...edged, toneIn: this.probe.toneIn } : edged
+    const picture = place ? this.picture(place, shot) : null
+    r.setRenderTarget(this.sampleTarget)
+    r.clear(true, true, true)
+    if (!raw) {
+      this.skyPatches.length = 0
+      const aims = this.director!.sky
+      const share = shot.skyShare ?? 0
+      const high = shot.skyShareHigh
+      const shared = share > 0 || high !== undefined
+      for (const state of shot.sets) {
+        for (const patch of this.sets.get(state.id)?.sky ?? []) {
+          const kind = shot.segment.kind
+          let weight: number
+          if (shared) {
+            const w = sharedSkyWeight(patch.view, state.view, kind, share, high)
+            weight = w > 0 ? w * (patch.weight ? patch.weight(shot.time, patch.view === 'terrain' ? 'terrain' : state.view) : 1) : 0
+          } else {
+            if (patch.view !== state.view) continue
+            const arriving = kind === 'travel' && state.id !== shot.segment.stop
+            const base = shot.segment.stop === config.endingId ? 0 : kind === 'travel' ? (arriving ? shot.skyPatch ?? THREE.MathUtils.smoothstep(shot.u, 0.2, 0.8) : 0) : kind === 'rise' && state.view === 'orbit' ? 0 : 1
+            weight = patch.weight ? base * patch.weight(shot.time, state.view) : base
+          }
+          if (weight <= 0) continue
+          const aim = aims?.patches[state.id]?.[patch.view]
+          if (aim) patch.aim.copy(aim)
+          this.skyPatches.push({ patch: share > 0 && shot.skyFloor && patch.view === 'terrain' ? this.floored(patch, shot.skyFloor) : patch, weight })
+        }
+      }
+      if (shared && this.skyPatches.length > 1) this.skyPatches.sort((a, b) => (a.patch.view === 'terrain' ? 0 : 1) - (b.patch.view === 'terrain' ? 0 : 1))
+      if (aims) this.sky.setFrame(aims.frame)
+      this.sky.setPatches(this.skyPatches)
+      this.sky.setStarLift(shot.skyStars ?? 0, config.raw.travel.sky.starLevel / Math.max(shot.skyExposure, 1e-3), config.raw.travel.sky.flightStars.level)
+      this.sky.setBandLook(shot.skyLook ?? 0)
+    }
+    const view: RenderView = { camera: cam, diag, format: this.format, sample: index, samples: count, cameraPosition: shot.camera.position, farLight: shot.farLight, shutter: this.shutter }
     for (const state of shot.sets) {
       const set = this.sets.get(state.id)!
       set.world.position.copy(state.origin).sub(shot.camera.position)
       set.world.quaternion.copy(state.rotation)
+      if (set.over) {
+        set.over.position.copy(set.world.position)
+        set.over.quaternion.copy(set.world.quaternion)
+      }
       set.update(state, shot, view)
     }
     const held = this.held
@@ -317,7 +373,7 @@ export class Engine {
     const ground = !raw && this.sky.cull ? this.shield() : null
     const covered = ground !== null && ground.screen(r, cam, width, height, TILE)
     r.setRenderTarget(this.sampleTarget)
-    const early = !covered && !raw && this.sky.cull && this.sortWorld()
+    const early = !place && !covered && !raw && this.sky.cull && this.sortWorld()
     let open: Tiles | null = null
     if (early) {
       this.renderWorld(cam, this.veiled)
@@ -344,6 +400,7 @@ export class Engine {
       if (shot.dust > 0) this.dust.render(r, this.sampleTarget, this.director!, shot, view, sun)
       cam.fov = shot.camera.vfov
       cam.updateProjectionMatrix()
+      if (picture) this.place.keepSky(r, this.sampleTarget)
       r.setRenderTarget(this.sampleTarget)
     }
     if (early) this.renderWorld(cam, this.solid)
@@ -356,8 +413,75 @@ export class Engine {
       r.render(this.near, cam)
     }
     this.belt.render(r, this.sampleTarget, this.director!, shot, view)
+    if (place && picture) {
+      const mode: PlaceMode = raw ? 'texels' : this.probe.mask ? 'mask' : this.probe.picture ? 'picture' : 'beauty'
+      this.place.render(r, this.sampleTarget, picture, place, shot.camera, cam, mode, shot.post.vignette, width / height, gradUniform.value, this.probe.dump, this.sets.get(place.stop)?.placeMatte?.[place.kind] ?? null)
+    }
+    if (this.over.children.length > 0) {
+      r.setRenderTarget(this.sampleTarget)
+      r.render(this.over, cam)
+    }
     if (raw) return
     if (shot.cover.amount > 0 && coverReaches(shot.cover, shot.camera.vfov, width / height)) this.cover.render(r, this.sampleTarget, shot.cover, shot.post.exposure, shot.camera.vfov, width / height)
+  }
+
+  private floored(patch: SkyPatch, floor: SkyFloor): SkyPatch {
+    if (patch.ring[2] >= 0) return patch
+    const hit = this.floors.get(patch)
+    if (hit && hit.floor === floor) return hit.patch
+    const ring = floorRing(floor, patch.tan, config.raw.handover.skyFloor)
+    const cut = ring ? { ...patch, ring } : patch
+    this.floors.set(patch, { floor, patch: cut })
+    return cut
+  }
+
+  private picture(place: PlaceState, shot: Shot): PlacePicture | null {
+    const director = this.director!
+    const r = this.renderer
+    const diag = this.probe.view
+    const raw = isRaw(diag)
+    const caps = r.capabilities
+    const layout = placeLayout(this.format, place, Math.min(caps.maxTextureSize, r.getContext().getParameter(r.getContext().MAX_RENDERBUFFER_SIZE) as number))
+    const grad = gradUniform.value
+    const key = [place.stop, place.kind, place.live ? 'live' : place.time, this.assets, this.format.id, raw ? diag : 'beauty', grad, layout.scale, layout.left, layout.right, layout.bottom, layout.top, place.matte ?? 'pair'].join('|')
+    if (!place.live) {
+      const kept = this.place.find(key)
+      if (kept) return kept
+    }
+    const at = director.shotAt(place.frame, place.time, 'terrain')
+    const now = place.live ? director.shotAt(shot.frame, shot.time, 'terrain') : at
+    const states = at.sets.map((s, i) => {
+      const n = now.sets[i]
+      return n && n !== s && n.id === s.id ? { ...s, time: n.time, local: n.local, u: n.u } : s
+    })
+    if (states.map((s) => s.id).join('|') !== this.attached.join('|')) return null
+    const pshot: Shot = { ...at, time: now.time, u: now.u, sets: states, post: { ...at.post, vignette: 0 } }
+    const cam = this.place.camera
+    placeCamera(cam, this.format, layout, at.camera, at.near, at.far)
+    const view: RenderView = { camera: cam, diag, format: { ...this.format, width: this.format.width * layout.scale, height: this.format.height * layout.scale }, sample: 0, samples: 1, cameraPosition: at.camera.position, farLight: at.farLight, place: true, placeScale: layout.scale }
+    for (const state of states) {
+      const set = this.sets.get(state.id)!
+      set.world.position.copy(state.origin).sub(at.camera.position)
+      set.world.quaternion.copy(state.rotation)
+      set.update(state, pshot, view)
+    }
+    gradUniform.value = grad * layout.scale
+    setFine(layout.scale)
+    const draw = (target: THREE.WebGLRenderTarget, white: boolean): void => {
+      r.setRenderTarget(target)
+      r.setClearColor(white ? 0xffffff : 0x000000, white ? 1 : 0)
+      r.clear(true, true, true)
+      r.render(this.world, cam)
+      if (this.near.children.length > 0) {
+        r.clearDepth()
+        r.render(this.near, cam)
+      }
+    }
+    const picture = this.place.build(r, key, layout, raw ? 'raw' : place.matte ?? 'pair', place.live, Math.min(8, caps.getMaxAnisotropy()), draw)
+    r.setClearColor(0x000000, 0)
+    gradUniform.value = grad
+    setFine(1)
+    return picture
   }
 
   private hold(shot: Shot, mid: Shot): void {

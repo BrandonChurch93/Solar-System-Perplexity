@@ -1,0 +1,148 @@
+{
+ "critic": "R3",
+ "score": 5.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "lower edge of the globe where the near rings cross (crops A, G, Q in image-02/03)",
+      "what": "the globe is drawn on top of the near ring arcs: its lower limb sits over the rings as a clean pasted edge, with a faint grey halo, instead of the rings passing in front of the planet; it reads as a cut-out layer",
+      "fix": "depth-sort so the near ring section occludes the lower globe, and remove the matte halo along the limb"
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "lower edge of the globe over the rings (crops A, O, P in image-06/07)",
+      "what": "same layering fault as frame 1: the planet's bottom limb overlaps the near rings with a hard pasted edge, and the dark half shows a soft grey rim",
+      "fix": "composite the rings in front of the lower hemisphere and clean the limb matte"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "night side and terminator of the globe (crops A, Q)",
+      "what": "the terminator is an almost straight diagonal smear with no curvature, and the shadowed half is a muddy airbrushed gradient with no cloud bands, so the globe reads as a flat split disc rather than a lit sphere",
+      "fix": "light a true sphere so the terminator curves with the limb, and keep low-light band detail on the night side"
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "night side and terminator of the globe (crops A, P)",
+      "what": "same straight, soft terminator and featureless airbrushed dark hemisphere",
+      "fix": "re-light with correct spherical falloff and keep texture in the shadow"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "lower right sky beside the ring shadow (crops W, X in image-04)",
+      "what": "two horizontal pale-blue streaks cross the black sky and the ring shadow; they are stray light bars with no source",
+      "fix": "remove the horizontal flare streaks"
+     },
+     {
+      "severity": "minor",
+      "file": "image-05.png",
+      "where": "sky around and behind the rings (crops B, E, G, H, Q)",
+      "what": "orange nebula patches and large orange star glows look like blobs smeared over the starfield, and stars show through the shadowed ring area in crop E",
+      "fix": "make stars point-like and the nebula subtle; keep the shadowed ring opaque"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "north pole hexagon/vortex (crop L)",
+      "what": "the pole vortex is a soft blue smudge with no edge structure; the storm swirls nearby are airbrushed",
+      "fix": "sharpen the polar vortex and band edges at native size"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "moon at upper right (crop M)",
+      "what": "the moon is a soft orange disc with a blurred terminator and no surface detail; the same in image-05 crop L",
+      "fix": "give the moon a sharp limb and some surface or haze detail"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "ring surfaces throughout (crops B, D, F, G, V)",
+      "what": "the rings have a brushed-metal look: uniform scratch streaks plus fine noise grain, more like stretched texture than ringlets",
+      "fix": "replace the streak noise with smooth radial ringlet density and less grain"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "dark sky at lower left (crop T)",
+      "what": "blocky compression and colour noise show in the black sky when brightened",
+      "fix": "export at higher quality or dither the dark gradient"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-09.png",
+      "where": "lower-left planet limb behind the inner C-ring (native crops A in image-10.png and Q in image-11.png)",
+      "what": "the sunlit globe silhouette forms a hard, stair-stepped diagonal cutout across the translucent inner ring with an abrupt jump in brightness and tint, while the warm atmospheric limb glow cuts off completely where the ring crosses",
+      "fix": "soften the planet's limb roll-off with proper optical depth attenuation and allow the atmospheric limb scattering to transmit continuously behind the semi-transparent C-ring with supersampled antialiasing"
+     },
+     {
+      "severity": "severe",
+      "file": "image-13.png",
+      "where": "upper and upper-right north polar limb (native crop J in image-15.png and crop A in image-14.png)",
+      "what": "a detached warm amber halo floats several pixels outside the cool blue polar limb with a visible dark gap in between, creating a doubled edge around the globe",
+      "fix": "anchor atmospheric scattering directly to the planet surface radius with a continuous radial density falloff and match the scattering hue to the local polar atmosphere so no dark gap or floating outer arc forms"
+     },
+     {
+      "severity": "major",
+      "file": "image-14.png",
+      "where": "planet limbs, moon limb, and narrow ring gaps across both stops (crops A and B in image-14.png, crops J and N in image-15.png, crop S in image-16.png, crops A and C in image-10.png, crop L in image-11.png)",
+      "what": "the sunlit and night-side silhouettes of Saturn, the sunlit limb of the orange moon, and thin oblique ring divisions like the Encke gap show raw 1-pixel stair-stepping and moire aliasing at native size",
+      "fix": "render geometry silhouettes with multi-sample antialiasing, add a soft atmospheric haze limb to Titan and Saturn, and apply anisotropic filtering or radial band-limiting to high-frequency ring textures"
+     },
+     {
+      "severity": "major",
+      "file": "image-14.png",
+      "where": "Milky Way sky background and inner ring gap (crops A, E, G, H, I in image-14.png, crops P and Q in image-15.png, crops V and W in image-16.png)",
+      "what": "the Milky Way dust and star-cloud texture is low-resolution, blurry, and blocky with noisy quantization speckles and blobby unresolved stars that clash with the crisp 1-pixel overlaid point stars, especially inside the inner ring gap next to the dark limb",
+      "fix": "replace the skybox with a higher-resolution, smoothly graded deep-sky map at native pixel density or procedurally render subtle dust lanes free of upscaling blocks and baked star blobs"
+     },
+     {
+      "severity": "major",
+      "file": "image-10.png",
+      "where": "cloud bands near the terminator and sunlit ring surfaces (crops C, E, H in image-10.png, crop M in image-11.png, crop T in image-12.png, crop O in image-15.png)",
+      "what": "isolated 1-to-2-pixel bright hot dots are scattered across smooth gas-giant cloud bands and ring lanes like stuck pixels or background stars bleeding through opaque surfaces",
+      "fix": "mask background stars strictly by opaque planet and optically thick ring alpha, and clamp or filter sub-pixel procedural noise spikes in the cloud and ring shaders"
+     },
+     {
+      "severity": "minor",
+      "file": "image-14.png",
+      "where": "space just outside the outer A-ring edge (crop E in image-14.png, crop V in image-16.png, crop B in image-10.png, crops J and K in image-11.png)",
+      "what": "faint detached ghost bands hover outside the sunlit ring edge in the first frame and cast unnaturally dark concentric shadow stripes that dim the Milky Way behind the shadowed outer ring in the second frame",
+      "fix": "reduce the optical depth/opacity of tenuous outer F-ring bands to near zero in transmission so they do not silhouette darkly against background nebulae, and clean up outer ring texture boundary clamping"
+     },
+     {
+      "severity": "minor",
+      "file": "image-10.png",
+      "where": "globe cloud deck just inside the night-side terminator (crop H in image-10.png and crops M and R in image-11.png)",
+      "what": "a faint straight meridian seam line runs vertically down the darkened cloud texture from the mid-northern storm band to the ring plane",
+      "fix": "use seamless 3D spherical coordinates or blended equirectangular UV wrapping for the planetary cloud texture so no longitude seam is present"
+     }
+    ]
+   }
+  }
+ ]
+}

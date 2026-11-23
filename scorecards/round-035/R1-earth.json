@@ -1,0 +1,49 @@
+{
+ "critic": "R1",
+ "score": 9,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "Right-side night limb, including the small green glows east and southeast of South America (pair-02-b.png crops E, H and I)",
+   "what": "The localized auroral accents are much fainter, especially the compact lower green streak and the patch just inside the mid-right limb. The surrounding blue edge also reads a little broader.",
+   "fix": "Restore the two localized green peaks and their short filament texture without lifting the surrounding night-side blacks; keep the blue edge confined to the limb."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "Upper-right green curtain, red fringe and immediately adjacent sky (pair-02-b.png crop C)",
+   "what": "The curtain has softer, less distinct vertical rays and a more diffuse green spill, with less separation between the narrow green strands and red fringe.",
+   "fix": "Recover the thin vertical green rays and their local contrast, confine the spill, and retain the soft red falloff behind them."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "Daylit Americas, Pacific cloud bands and night-side South American lights (crops A, F, G and H)",
+   "what": "The fine Gulf and Caribbean shoreline, Andes texture, cloud filaments and individual city lights resolve less crisply; a few bright points merge into softer clusters.",
+   "fix": "Restore the native fine texture and point separation selectively while leaving the established daylight and night-side grade in place."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "Moon, star field and sunlit cyan limb (pair-02-b.png crops B, D, F and G)",
+   "what": "The Moon's surface markings and small stars are slightly softer; the blue limb has a less distinct bright core against its wider halo.",
+   "fix": "Recover subtle lunar crater contrast and tight stellar points, and separate the thin cyan-white limb core from its outer falloff."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "Atmospheric ribbon across the upper horizon (pair-04-b.png crops B and C)",
+   "what": "The blue-to-white transition is slightly more diffuse, reducing definition along the bright inner horizon and the nearest horizontal cloud layers.",
+   "fix": "Bring back the narrow bright transition and the delicate cloud layering without hardening the outer atmospheric fade."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "Central sun track, foreground cloud rims and shadow edges, and the right-hand shallow banks and island coast (crops A and D through I)",
+   "what": "The sunlit water's ripple and glint texture is less crisp, foreground clouds and shadows lose a little edge definition, and the coastline and shoal markings are slightly softened.",
+   "fix": "Recover fine-scale contrast in the water, cloud rims and coastal detail without changing the sun track, shadow direction or blue and turquoise grade."
+  }
+ ]
+}

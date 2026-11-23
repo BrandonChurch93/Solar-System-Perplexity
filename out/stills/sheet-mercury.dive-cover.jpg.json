@@ -1,14 +1,14 @@
 {
- "engineHash": "f854c8146f64c7e4",
+ "engineHash": "247ebad7e038ce06",
  "stopHashes": {
-  "mercury": "a646fd32007c7ab8"
+  "mercury": "3264078c6b99b4d5"
  },
  "format": "16x9",
  "tier": "review",
  "assets": "full",
  "diag": "beauty",
  "browser": "147.0.7727.15",
- "machine": "space-sandbox 4x Intel(R) Xeon(R) Processor @ 2.90GHz",
+ "machine": "space-sandbox 2x Intel(R) Xeon(R) Processor @ 2.90GHz",
  "first": 739,
  "last": 750,
  "extra": {
@@ -28,7 +28,7 @@
   ],
   "kind": "cover",
   "segment": "mercury.dive",
-  "signature": "[\"8330d18889d361d0f911761f2b103b96dc7647de49b79f1a6f5eb32cb3b52376\",[\"58d1489d68482c1f0210c6f0edd039fe2ff60fafd16501b6e750981824b90735\",92]]",
+  "signature": "[\"e0e849522b607fcee0a5dbfa12bcc242b445a91e69ae23375b123e0746754a1a\",[\"58d1489d68482c1f0210c6f0edd039fe2ff60fafd16501b6e750981824b90735\",92]]",
   "quality": 92
  }
 }

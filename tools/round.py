@@ -219,7 +219,8 @@ def start(a):
         if not state(m).get('deferred'):
             sys.exit('round %d was not started with --defer' % m)
     done = sorted(set(finished(PROG.read_text()) + [stop] + [state(m)['stop'] for m in others]))
-    green, build = checks(n, '--phase %d --g15-stops %s' % (phase, ','.join(done)), a.allow_red)
+    gate_args = '--phase %d --g15-stops %s' % (phase, ','.join(done)) + (' --only ' + MACHINE if phase == 6 else '')
+    green, build = checks(n, gate_args, a.allow_red)
     s = state(n)
     sha = commit('Round %d: %s from agent/%s at %s' % (n, stop, stop, s.get('agentHead', 'main')))
     full = sh('git rev-parse HEAD').strip()
@@ -240,10 +241,10 @@ def still_tier(s):
 
 def tiers(s, tool):
     t = s.get('tier')
+    if tool == 'pack':
+        return ' --place-window' + (' --tier %s --motion-tier %s' % (t, t) if t else '')
     if not t:
         return ''
-    if tool == 'pack':
-        return ' --tier %s --motion-tier %s' % (t, t)
     return ' --tier %s' % t + (' --every %d' % s['every'] if tool == 'measure' and s.get('every') else '')
 
 
@@ -344,7 +345,9 @@ def pack(a):
     n = a.round
     s = state(n)
     stop = s['stop']
-    out = subprocess.run('npm run -s pack -- --phase %d --round %d --stop %s%s' % (s['phase'], n, stop, tiers(s, 'pack')), shell=True, cwd=ROOT, capture_output=True, text=True)
+    # a stop round of phase 6 needs the stop pack of phase 4; in pack.ts phase 6 without --only is the whole film path
+    pack_phase = 4 if s['phase'] == 6 else s['phase']
+    out = subprocess.run('npm run -s pack -- --phase %d --round %d --stop %s%s' % (pack_phase, n, stop, tiers(s, 'pack')), shell=True, cwd=ROOT, capture_output=True, text=True)
     print((out.stdout + out.stderr)[-900:])
     if out.returncode != 0:
         sys.exit(1)

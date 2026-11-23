@@ -1,0 +1,63 @@
+{
+ "critic": "R3",
+ "score": 6,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "image-05.png",
+   "where": "cloud deck and Great Red Spot",
+   "what": "the swirls are soft and airbrushed, and this stop is about half as sharp as the other",
+   "fix": "rebuild the belts with fine filaments so the brush strokes disappear"
+  },
+  {
+   "severity": "major",
+   "file": "image-01.png",
+   "where": "cloud deck and Great Red Spot, crops A and I",
+   "what": "at native size the bands still read as combed paint, with flat light and no cloud-top relief",
+   "fix": "add small-scale turbulence and shadow between cloud layers"
+  },
+  {
+   "severity": "major",
+   "file": "image-01.png",
+   "where": "right-hand night limb, crops C, E, and G",
+   "what": "the dark edge is a hard mask and the stars are cut off in a clean arc",
+   "fix": "add a faint rim of scattered light and soften the occlusion"
+  },
+  {
+   "severity": "major",
+   "file": "image-05.png",
+   "where": "right-hand night limb, crops E, G, and Q",
+   "what": "the same hard cutout against the Milky Way, with no haze on the unlit limb",
+   "fix": "carry a thin atmosphere around the night edge"
+  },
+  {
+   "severity": "major",
+   "file": "image-01.png",
+   "where": "Io and its shadow, crop A",
+   "what": "Io is a soft painted sphere and the shadow is a flat black oval that ignores the clouds",
+   "fix": "break the umbra over cloud height and sharpen Io, with a little bounce light"
+  },
+  {
+   "severity": "major",
+   "file": "image-05.png",
+   "where": "Io and its shadow, crop I",
+   "what": "the moon and the oval shadow are softer and just as flat",
+   "fix": "use the same relief and penumbra treatment as the other stop"
+  },
+  {
+   "severity": "minor",
+   "file": "image-01.png",
+   "where": "left sunlit limb, crops B and D",
+   "what": "the atmosphere clips to a thin white rim instead of a wide falloff",
+   "fix": "widen the haze and pull the highlight back from white"
+  },
+  {
+   "severity": "minor",
+   "file": "image-02.png",
+   "where": "sky crops F and H, and the Milky Way in C",
+   "what": "brighter stars are soft discs a few pixels across",
+   "fix": "tighten the point spread so bright stars stay points"
+  }
+ ]
+}

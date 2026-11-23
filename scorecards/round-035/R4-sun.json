@@ -1,0 +1,56 @@
+{
+ "critic": "R4",
+ "score": 5,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "frames 216 to 217, whole surface and right limb",
+   "what": "the cover pops: the pale tan, close-up surface turns into a saturated orange-red disk with dark spots and a white plage in one frame, and red prominences suddenly appear on the right limb. The color and exposure do not carry across, so it reads as two shots dissolved together rather than one move",
+   "fix": "use one continuous surface shader and grade across the cover, ramp the change in saturation and scale over 10 or more frames, and bring the limb prominences in with the pull-back instead of cutting them in"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "frames 213 to 218, coronal loop and sunspot at center",
+   "what": "the loop and sunspot from the terrain view fade out in place as double, semi-transparent copies (two arches visible in 214 to 216) while a different spot layout fades in. It ghosts instead of moving away with the surface",
+   "fix": "keep the close-up active region in the same world position on the global model so it shrinks with the camera, rather than cross-fading two layers"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "frames 204 to 212, horizon and surface texture",
+   "what": "the rise starts abruptly. In 8 frames the horizon curvature, the granule scale and the exposure all jump: crisp dark granules turn into a washed-out, blurred tan surface and the arch collapses to a small flare. There is no eased start out of the terrain hold",
+   "fix": "ease the start of the rise (slow-in over about 0.5 s), keep the exposure locked, and let the granulation shrink continuously with the distance"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-04.png",
+   "where": "frames 270 to 449, full disk and corona",
+   "what": "the hold is dead: the sunspots, plage, prominences and coronal streamers sit in exactly the same places for about 180 frames. There is no rotation, no flicker of the prominences and no drift in the corona, so it reads as a still image",
+   "fix": "add a slow differential rotation, gentle animated motion in the prominences and slow streamer drift, all at believable, non-repeating speeds"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-02.png",
+   "where": "frames 222 to 237, disk size and starfield",
+   "what": "the pull-back to the full disk decelerates hard. The disk shrinks a lot between 222 and 229 and again by 237, then stops dead at 245, and the stars and Milky Way fade in late rather than being present from the start",
+   "fix": "extend the ease-out over a longer tail and keep the starfield exposure constant through the rise"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "frames 16 to 49, coronal loop",
+   "what": "the loop arcade brightens sharply at 33 and then changes shape into a taller double arch by 49, which reads as a pop rather than plasma flow",
+   "fix": "smooth the loop intensity curve and morph the loop geometry more slowly"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "frames 0 to 179, near ground versus horizon",
+   "what": "the terrain parallax is weak. The near granulation and the horizon move almost together, so depth comes mostly from the static curvature",
+   "fix": "add some forward or lateral travel so the foreground granules slide clearly faster than the limb"
+  }
+ ]
+}

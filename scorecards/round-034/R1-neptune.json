@@ -1,0 +1,63 @@
+{
+ "critic": "R1",
+ "score": 9,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "lower-left night-side outline and foreground ring crossing (pair-02 crop D)",
+   "what": "The disk edge reads as a hard dark cutout, and the crossing ring is broader and more visible than the faint diffuse streak in the target.",
+   "fix": "Soften the dark silhouette and reduce the foreground ring opacity and edge contrast, leaving only the target's faint broken glints."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "top limb and illuminated right flank (pair-02 crops C, E, F, G and I)",
+   "what": "The top rim is more etched and even; down the right flank the atmospheric wash looks thicker and more cyan, with a darker strip separating the lower-right surface from the outer rim.",
+   "fix": "Soften the top rim peak, pull back the cyan wash on the lit flank, and blend the lower-right atmosphere into the surface so it does not read as a separate shell."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "upper-left moon (pair-02 crop B shows the lit edge)",
+   "what": "The moon is slightly smaller vertically and rounder-looking, with less crater relief and a darker, softer left terminator.",
+   "fix": "Match the reference disk silhouette and phase gradient, and restore crisp crater relief on the lit face without over-sharpening the edge."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "upper-right star core",
+   "what": "A small dark notch interrupts the center of the otherwise matching flare.",
+   "fix": "Remove the notch and keep the target's uninterrupted white core and existing flare rays."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "main storm and left-side cloud filaments (pair-02 crops A and H)",
+   "what": "The brightest storm ridges look slightly smoother and heavier, and some of the finer adjacent filaments are less distinct.",
+   "fix": "Restore the fine filament contrast and taper the broadest highlights while preserving the matched storm placement."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "right-side background ring and adjacent starfield (pair-02 crops G and I)",
+   "what": "The outbound ring strands are a little more sharply drawn and the nearby star points read slightly heavier than in the reference.",
+   "fix": "Reduce the ring-strand and star-point contrast locally while preserving the arc and existing star placement."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "central dark vortex and upstream spiral (pair-04 crops A and G)",
+   "what": "Fine blue streaks fill the storm eye and tighten its rim. The target has a quieter, darker center with a softer transition to the spiral.",
+   "fix": "Suppress the fine streaks in the center and ease the local contrast at the inner rim without flattening the outer spiral."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "foreground cloud ridge and its shadow from lower left to lower right (pair-04 crops D, E, H and I)",
+   "what": "Fine backlit wisps and the shadow texture beneath the ridge are slightly softer, particularly along the thinning right-hand tail.",
+   "fix": "Restore selective strand detail on the bright edges and subtle texture in the cast shadow without raising the black floor."
+  }
+ ]
+}

@@ -1,14 +1,14 @@
 {
- "engineHash": "f854c8146f64c7e4",
+ "engineHash": "247ebad7e038ce06",
  "stopHashes": {
-  "jupiter": "bf3a6fa3f51a1e4d"
+  "jupiter": "e92e46df4195fb6b"
  },
  "format": "16x9",
  "tier": "review",
  "assets": "full",
  "diag": "beauty",
  "browser": "147.0.7727.15",
- "machine": "space-sandbox 4x Intel(R) Xeon(R) Processor @ 2.90GHz",
+ "machine": "space-sandbox 2x Intel(R) Xeon(R) Processor @ 2.90GHz",
  "first": 3240,
  "last": 3314,
  "extra": {
@@ -28,7 +28,7 @@
   ],
   "kind": "sheet",
   "segment": "jupiter.rise",
-  "signature": "[\"4c9ec2596fb6b6f7291c9ecdece94e184a58b5f6f07f86e7ec16b9f08c20a7b8\",[\"58d1489d68482c1f0210c6f0edd039fe2ff60fafd16501b6e750981824b90735\",92]]",
+  "signature": "[\"356fad52aa2362092c2f969410a7f8ff8a09a86328a1ecf305336d9a3077a46a\",[\"58d1489d68482c1f0210c6f0edd039fe2ff60fafd16501b6e750981824b90735\",92]]",
   "quality": 92
  }
 }

@@ -1,0 +1,551 @@
+[
+ {
+  "name": "reviewer_1278",
+  "role": "R1-sun",
+  "model": "claude_opus_5_5",
+  "files": [
+   "R1-sun/pair-01-a.png",
+   "R1-sun/pair-01-b.png",
+   "R1-sun/pair-02-a.png",
+   "R1-sun/pair-02-b.png",
+   "R1-sun/pair-03-a.png",
+   "R1-sun/pair-03-b.png",
+   "R1-sun/pair-04-a.png",
+   "R1-sun/pair-04-b.png"
+  ]
+ },
+ {
+  "name": "reviewer_1279",
+  "role": "R3-sun-part1",
+  "model": "gemini_4_carbon",
+  "files": [
+   "R3-sun-part1/image-01.png",
+   "R3-sun-part1/image-02.png",
+   "R3-sun-part1/image-03.png",
+   "R3-sun-part1/image-04.png",
+   "R3-sun-part1/image-05.png",
+   "R3-sun-part1/image-06.png",
+   "R3-sun-part1/image-07.png",
+   "R3-sun-part1/image-08.png"
+  ]
+ },
+ {
+  "name": "reviewer_1280",
+  "role": "R3-sun-part2",
+  "model": "grok_4_7",
+  "files": [
+   "R3-sun-part2/image-09.png",
+   "R3-sun-part2/image-10.png",
+   "R3-sun-part2/image-11.png",
+   "R3-sun-part2/image-12.png",
+   "R3-sun-part2/image-13.png",
+   "R3-sun-part2/image-14.png",
+   "R3-sun-part2/image-15.png",
+   "R3-sun-part2/image-16.png"
+  ]
+ },
+ {
+  "name": "reviewer_1281",
+  "role": "R3-sun-part3",
+  "model": "gpt_6_2_sol",
+  "files": [
+   "R3-sun-part3/image-17.png",
+   "R3-sun-part3/image-18.png",
+   "R3-sun-part3/image-19.png",
+   "R3-sun-part3/image-20.png"
+  ]
+ },
+ {
+  "name": "reviewer_1282",
+  "role": "R4-sun",
+  "model": "claude_opus_5_5",
+  "files": [
+   "R4-sun/sheet-01.png",
+   "R4-sun/sheet-02.png",
+   "R4-sun/sheet-03.png",
+   "R4-sun/sheet-04.png"
+  ]
+ },
+ {
+  "name": "reviewer_1283",
+  "role": "R3-mercury",
+  "model": "gemini_4_carbon",
+  "files": [
+   "R3-mercury/image-01.png",
+   "R3-mercury/image-02.png",
+   "R3-mercury/image-03.png",
+   "R3-mercury/image-04.png"
+  ]
+ },
+ {
+  "name": "reviewer_1284",
+  "role": "R4-mercury",
+  "model": "grok_4_7",
+  "files": [
+   "R4-mercury/sheet-01.png",
+   "R4-mercury/sheet-02.png",
+   "R4-mercury/sheet-03.png"
+  ]
+ },
+ {
+  "name": "reviewer_1285",
+  "role": "R1-earth",
+  "model": "gpt_6_2_sol",
+  "files": [
+   "R1-earth/pair-01-a.png",
+   "R1-earth/pair-01-b.png",
+   "R1-earth/pair-02-a.png",
+   "R1-earth/pair-02-b.png",
+   "R1-earth/pair-03-a.png",
+   "R1-earth/pair-03-b.png",
+   "R1-earth/pair-04-a.png",
+   "R1-earth/pair-04-b.png"
+  ]
+ },
+ {
+  "name": "reviewer_1286",
+  "role": "R3-earth-part1",
+  "model": "claude_opus_5_5",
+  "files": [
+   "R3-earth-part1/image-01.png",
+   "R3-earth-part1/image-02.png",
+   "R3-earth-part1/image-03.png",
+   "R3-earth-part1/image-04.png",
+   "R3-earth-part1/image-05.png",
+   "R3-earth-part1/image-06.png",
+   "R3-earth-part1/image-07.png",
+   "R3-earth-part1/image-08.png"
+  ]
+ },
+ {
+  "name": "reviewer_1287",
+  "role": "R3-earth-part2",
+  "model": "gemini_4_carbon",
+  "files": [
+   "R3-earth-part2/image-09.png",
+   "R3-earth-part2/image-10.png",
+   "R3-earth-part2/image-11.png",
+   "R3-earth-part2/image-12.png"
+  ]
+ },
+ {
+  "name": "reviewer_1288",
+  "role": "R4-earth",
+  "model": "grok_4_7",
+  "files": [
+   "R4-earth/sheet-01.png",
+   "R4-earth/sheet-02.png",
+   "R4-earth/sheet-03.png",
+   "R4-earth/sheet-04.png",
+   "R4-earth/sheet-05.png"
+  ]
+ },
+ {
+  "name": "reviewer_1289",
+  "role": "R1-jupiter",
+  "model": "gemini_4_carbon",
+  "files": [
+   "R1-jupiter/pair-01-a.png",
+   "R1-jupiter/pair-01-b.png",
+   "R1-jupiter/pair-02-a.png",
+   "R1-jupiter/pair-02-b.png",
+   "R1-jupiter/pair-03-a.png",
+   "R1-jupiter/pair-03-b.png",
+   "R1-jupiter/pair-04-a.png",
+   "R1-jupiter/pair-04-b.png"
+  ]
+ },
+ {
+  "name": "reviewer_1290",
+  "role": "R3-jupiter",
+  "model": "grok_4_7",
+  "files": [
+   "R3-jupiter/image-01.png",
+   "R3-jupiter/image-02.png",
+   "R3-jupiter/image-03.png",
+   "R3-jupiter/image-04.png",
+   "R3-jupiter/image-05.png",
+   "R3-jupiter/image-06.png",
+   "R3-jupiter/image-07.png",
+   "R3-jupiter/image-08.png"
+  ]
+ },
+ {
+  "name": "reviewer_1291",
+  "role": "R4-jupiter",
+  "model": "gpt_6_2_sol",
+  "files": [
+   "R4-jupiter/sheet-01.png",
+   "R4-jupiter/sheet-02.png"
+  ]
+ },
+ {
+  "name": "reviewer_1292",
+  "role": "R1-saturn",
+  "model": "grok_4_7",
+  "files": [
+   "R1-saturn/pair-01-a.png",
+   "R1-saturn/pair-01-b.png",
+   "R1-saturn/pair-02-a.png",
+   "R1-saturn/pair-02-b.png",
+   "R1-saturn/pair-03-a.png",
+   "R1-saturn/pair-03-b.png",
+   "R1-saturn/pair-04-a.png",
+   "R1-saturn/pair-04-b.png"
+  ]
+ },
+ {
+  "name": "reviewer_1293",
+  "role": "R3-saturn",
+  "model": "gpt_6_2_sol",
+  "files": [
+   "R3-saturn/image-01.png",
+   "R3-saturn/image-02.png",
+   "R3-saturn/image-03.png",
+   "R3-saturn/image-04.png"
+  ]
+ },
+ {
+  "name": "reviewer_1294",
+  "role": "R4-saturn",
+  "model": "claude_opus_5_5",
+  "files": [
+   "R4-saturn/sheet-01.png",
+   "R4-saturn/sheet-02.png",
+   "R4-saturn/sheet-03.png"
+  ]
+ },
+ {
+  "name": "reviewer_1295",
+  "role": "R3-uranus",
+  "model": "gpt_6_2_sol",
+  "files": [
+   "R3-uranus/image-01.png",
+   "R3-uranus/image-02.png",
+   "R3-uranus/image-03.png",
+   "R3-uranus/image-04.png"
+  ]
+ },
+ {
+  "name": "reviewer_1296",
+  "role": "R4-uranus",
+  "model": "claude_opus_5_5",
+  "files": [
+   "R4-uranus/sheet-01.png",
+   "R4-uranus/sheet-02.png",
+   "R4-uranus/sheet-03.png",
+   "R4-uranus/sheet-04.png"
+  ]
+ },
+ {
+  "name": "reviewer_1297",
+  "role": "R1-neptune",
+  "model": "claude_opus_5_5",
+  "files": [
+   "R1-neptune/pair-01-a.png",
+   "R1-neptune/pair-01-b.png",
+   "R1-neptune/pair-02-a.png",
+   "R1-neptune/pair-02-b.png",
+   "R1-neptune/pair-03-a.png",
+   "R1-neptune/pair-03-b.png",
+   "R1-neptune/pair-04-a.png",
+   "R1-neptune/pair-04-b.png"
+  ]
+ },
+ {
+  "name": "reviewer_1298",
+  "role": "R3-neptune",
+  "model": "gemini_4_carbon",
+  "files": [
+   "R3-neptune/image-01.png",
+   "R3-neptune/image-02.png",
+   "R3-neptune/image-03.png",
+   "R3-neptune/image-04.png",
+   "R3-neptune/image-05.png",
+   "R3-neptune/image-06.png",
+   "R3-neptune/image-07.png",
+   "R3-neptune/image-08.png"
+  ]
+ },
+ {
+  "name": "reviewer_1299",
+  "role": "R4-neptune",
+  "model": "grok_4_7",
+  "files": [
+   "R4-neptune/sheet-01.png",
+   "R4-neptune/sheet-02.png",
+   "R4-neptune/sheet-03.png",
+   "R4-neptune/sheet-04.png",
+   "R4-neptune/sheet-05.png"
+  ]
+ },
+ {
+  "name": "reviewer_1300",
+  "role": "R5",
+  "model": "gpt_6_2_sol",
+  "files": [
+   "R5/sheet-01.png",
+   "R5/sheet-02.png",
+   "R5/sheet-03.png",
+   "R5/sheet-04.png",
+   "R5/sheet-05.png"
+  ]
+ },
+ {
+  "name": "reviewer_1301",
+  "role": "R6",
+  "model": "claude_opus_5_5",
+  "files": [
+   "R6/image-01.png",
+   "R6/image-02.png",
+   "R6/image-03.png",
+   "R6/image-04.png",
+   "R6/image-05.png",
+   "R6/image-06.png",
+   "R6/image-07.png",
+   "R6/image-08.png",
+   "R6/image-09.png"
+  ]
+ },
+ {
+  "name": "reviewer_1302",
+  "role": "R7-part1",
+  "model": "gemini_4_carbon",
+  "files": [
+   "R7-part1/image-01.png",
+   "R7-part1/image-02.png",
+   "R7-part1/image-03.png",
+   "R7-part1/image-04.png",
+   "R7-part1/image-05.png",
+   "R7-part1/image-06.png",
+   "R7-part1/image-07.png",
+   "R7-part1/image-08.png"
+  ]
+ },
+ {
+  "name": "reviewer_1303",
+  "role": "R7-part2",
+  "model": "grok_4_7",
+  "files": [
+   "R7-part2/image-09.png",
+   "R7-part2/image-10.png",
+   "R7-part2/image-11.png",
+   "R7-part2/image-12.png"
+  ]
+ },
+ {
+  "name": "reviewer_1304",
+  "role": "R3-part1",
+  "model": "gpt_6_2_sol",
+  "files": [
+   "R3-part1/image-01.png",
+   "R3-part1/image-02.png",
+   "R3-part1/image-03.png",
+   "R3-part1/image-04.png",
+   "R3-part1/image-05.png",
+   "R3-part1/image-06.png",
+   "R3-part1/image-07.png",
+   "R3-part1/image-08.png"
+  ]
+ },
+ {
+  "name": "reviewer_1305",
+  "role": "R3-part2",
+  "model": "claude_opus_5_5",
+  "files": [
+   "R3-part2/image-09.png",
+   "R3-part2/image-10.png",
+   "R3-part2/image-11.png",
+   "R3-part2/image-12.png"
+  ]
+ },
+ {
+  "name": "reviewer_1306",
+  "role": "R4",
+  "model": "gemini_4_carbon",
+  "files": [
+   "R4/sheet-01.png",
+   "R4/sheet-02.png",
+   "R4/sheet-03.png",
+   "R4/sheet-04.png",
+   "R4/sheet-05.png",
+   "R4/sheet-06.png"
+  ]
+ },
+ {
+  "name": "reviewer_1307",
+  "role": "R2",
+  "model": "claude_opus_5_5",
+  "files": [
+   "R2/image-02.png"
+  ]
+ },
+ {
+  "name": "reviewer_1308",
+  "role": "R2",
+  "model": "gpt_6_2_sol",
+  "files": [
+   "R2/image-02.png"
+  ]
+ },
+ {
+  "name": "reviewer_1309",
+  "role": "R2",
+  "model": "gemini_4_carbon",
+  "files": [
+   "R2/image-02.png"
+  ]
+ },
+ {
+  "name": "reviewer_1310",
+  "role": "R2",
+  "model": "kimi_k3",
+  "files": [
+   "R2/image-02.png"
+  ]
+ },
+ {
+  "name": "reviewer_1311",
+  "role": "R2",
+  "model": "grok_4_7",
+  "files": [
+   "R2/image-02.png"
+  ]
+ },
+ {
+  "name": "reviewer_1312",
+  "role": "R2",
+  "model": "claude_opus_5_5",
+  "files": [
+   "R2/image-04.png"
+  ]
+ },
+ {
+  "name": "reviewer_1313",
+  "role": "R2",
+  "model": "gpt_6_2_sol",
+  "files": [
+   "R2/image-04.png"
+  ]
+ },
+ {
+  "name": "reviewer_1314",
+  "role": "R2",
+  "model": "gemini_4_carbon",
+  "files": [
+   "R2/image-04.png"
+  ]
+ },
+ {
+  "name": "reviewer_1315",
+  "role": "R2",
+  "model": "kimi_k3",
+  "files": [
+   "R2/image-04.png"
+  ]
+ },
+ {
+  "name": "reviewer_1316",
+  "role": "R2",
+  "model": "grok_4_7",
+  "files": [
+   "R2/image-04.png"
+  ]
+ },
+ {
+  "name": "reviewer_1317",
+  "role": "R8",
+  "model": "claude_sonnet_5_5",
+  "files": [
+   "R8/image-04.png"
+  ]
+ },
+ {
+  "name": "reviewer_1318",
+  "role": "R8",
+  "model": "gpt_6_2_sol",
+  "files": [
+   "R8/image-04.png"
+  ]
+ },
+ {
+  "name": "reviewer_1319",
+  "role": "R8",
+  "model": "gemini_4_carbon",
+  "files": [
+   "R8/image-04.png"
+  ]
+ },
+ {
+  "name": "reviewer_1320",
+  "role": "R8",
+  "model": "claude_sonnet_5_5",
+  "files": [
+   "R8/image-06.png"
+  ]
+ },
+ {
+  "name": "reviewer_1321",
+  "role": "R8",
+  "model": "gpt_6_2_sol",
+  "files": [
+   "R8/image-06.png"
+  ]
+ },
+ {
+  "name": "reviewer_1322",
+  "role": "R8",
+  "model": "gemini_4_carbon",
+  "files": [
+   "R8/image-06.png"
+  ]
+ },
+ {
+  "name": "reviewer_1323",
+  "role": "R8",
+  "model": "claude_sonnet_5_5",
+  "files": [
+   "R8/image-07.png"
+  ]
+ },
+ {
+  "name": "reviewer_1324",
+  "role": "R8",
+  "model": "gpt_6_2_sol",
+  "files": [
+   "R8/image-07.png"
+  ]
+ },
+ {
+  "name": "reviewer_1325",
+  "role": "R8",
+  "model": "gemini_4_carbon",
+  "files": [
+   "R8/image-07.png"
+  ]
+ },
+ {
+  "name": "reviewer_1326",
+  "role": "R8",
+  "model": "claude_sonnet_5_5",
+  "files": [
+   "R8/image-08.png"
+  ]
+ },
+ {
+  "name": "reviewer_1327",
+  "role": "R8",
+  "model": "gpt_6_2_sol",
+  "files": [
+   "R8/image-08.png"
+  ]
+ },
+ {
+  "name": "reviewer_1328",
+  "role": "R8",
+  "model": "gemini_4_carbon",
+  "files": [
+   "R8/image-08.png"
+  ]
+ }
+]

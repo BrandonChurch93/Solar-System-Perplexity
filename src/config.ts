@@ -33,7 +33,7 @@ const REQUIRED = [
   'formats.master', 'formats.preview', 'formats.uhd', 'platform.maxWidth', 'platform.maxHeight', 'platform.maxFps', 'platform.maxBitrateMbps', 'platform.loopsAtOrUnderSeconds',
   'export.container', 'export.videoCodec', 'export.bitrateMbps', 'export.warmUpFrames', 'export.proofSeconds', 'export.memoryTestSeconds', 'export.files.master', 'export.files.uhd', 'export.files.clip', 'export.files.preview',
   'previewFilm.bitrateMbps', 'tiers.draft', 'tiers.review', 'tiers.final', 'motion.fastKinds', 'motion.maxStepPx', 'motion.probeGrid', 'motion.bodyReach', 'motion.minBodyPx', 'motion.terrainGround', 'motion.softFromPx', 'motion.softToPx', 'assetSets.web', 'assetSets.full', 'sets.maxLoaded', 'lookLockStop', 'buildOrderAfterLookLock',
-  'stops', 'segments', 'cover.seconds', 'cover.diveCenterFraction', 'cover.riseCenterFraction', 'judged.fractions', 'detail.minTexelsPerPixel', 'detail.maxSoftPixelFraction', 'detail.minSharpnessRatio', 'detail.minBodyCoverage',
+  'stops', 'segments', 'cover.seconds', 'cover.diveCenterFraction', 'cover.riseCenterFraction', 'handover.dive.at', 'handover.dive.dissolveFrames', 'handover.dive.placeFrames', 'handover.rise.at', 'handover.rise.dissolveFrames', 'handover.rise.placeFrames', 'handover.dive.skyFrames', 'handover.rise.skyFrames', 'handover.place.scale', 'handover.place.margin', 'handover.place.maxShare', 'handover.place.maxEdge', 'handover.place.edge', 'handover.place.seen', 'handover.maxEnlarge', 'handover.place.enlargeSoft', 'handover.place.lens', 'handover.place.maxGradTexels', 'handover.place.limbReachDeg', 'handover.place.limbHoldDeg', 'handover.place.edgeIn', 'handover.place.toneIn', 'handover.place.tonePower', 'handover.place.toneReach', 'handover.place.toneCell', 'handover.place.toneLandDeg', 'handover.descent.rise', 'handover.descent.fall', 'handover.descent.turnRise', 'handover.descent.turnFall', 'handover.descent.level', 'handover.descent.levelBy', 'handover.descent.targetReach', 'handover.ascent.rise', 'handover.ascent.fall', 'handover.ascent.turnRise', 'handover.ascent.turnFall', 'handover.ascent.level', 'handover.ascent.levelBy', 'handover.zenithDeg', 'handover.coastFrames', 'handover.maxBlurPx', 'handover.blurEaseFrames', 'handover.minShutter', 'handover.skyFloor.marginDeg', 'handover.skyFloor.featherDeg', 'handover.maxRateOverMean', 'handover.limits.sideMean', 'handover.limits.sideP99', 'handover.limits.flowStepFrames', 'handover.limits.flowGapMeanPx', 'handover.limits.backRate', 'handover.limits.flowGapMaxPx', 'handover.limits.earlyShare', 'handover.limits.earlyRateOverMean', 'handover.limits.placeMiddle', 'handover.limits.levelStep', 'handover.limits.colourStep', 'handover.limits.underMean', 'handover.limits.bodyShare', 'handover.limits.flatShare', 'handover.limits.flatFloor', 'handover.limits.blockPx', 'handover.limits.sheetFrames', 'handover.limits.differenceGain', 'handover.limits.underGain', 'judged.fractions', 'detail.minTexelsPerPixel', 'detail.maxSoftPixelFraction', 'detail.minSharpnessRatio', 'detail.minBodyCoverage',
   'assets.maxTakesPerAsset', 'quality.passScore', 'critics.maxImageLongEdgePx', 'critics.contactSheetFrames', 'critics.phonePreviewWidthPx', 'critics.maxFilesPerMessage',
   'sandbox.chunkBudgetMinutes', 'sandbox.maxFramesOnDisk', 'sandbox.minFreeDiskGb', 'sandbox.maxRenderProcesses',
   'status.maxGapMinutes', 'status.minGapMinutes', 'status.maxPictures', 'status.inlineMaxTries',
@@ -118,6 +118,47 @@ export function buildConfig(input: unknown, approvedExists?: (path: string) => b
   if (m.probeGrid.length !== 2 || m.probeGrid.some((n) => !isWhole(n) || n < 2)) fail('motion.probeGrid needs two whole numbers of at least 2')
   if (!(m.bodyReach >= 1) || !(m.minBodyPx >= 0) || !(m.terrainGround > 0)) fail('motion.bodyReach must be at least 1, motion.minBodyPx at least 0 and motion.terrainGround above 0')
   if (!(m.softFromPx >= 0) || !(m.softToPx > m.softFromPx)) fail('motion.softToPx must be above motion.softFromPx, and that at least 0')
+  for (const kind of ['dive', 'rise'] as const) {
+    const h = r.handover[kind]
+    if (!(h.at > 0 && h.at < 1)) fail('handover.' + kind + '.at must lie between 0 and 1')
+    if (!isWhole(h.dissolveFrames) || !(h.dissolveFrames >= 1)) fail('handover.' + kind + '.dissolveFrames must be a whole number of at least 1')
+    if (!isWhole(h.placeFrames) || !(h.placeFrames >= 0)) fail('handover.' + kind + '.placeFrames must be a whole number, 0 or more')
+    if (!isWhole(h.skyFrames) || !(h.skyFrames >= 0)) fail('handover.' + kind + '.skyFrames must be a whole number, 0 or more')
+  }
+  const hp = r.handover.place
+  if (!isWhole(hp.scale) || !(hp.scale >= 1)) fail('handover.place.scale must be a whole number of at least 1')
+  if (!(hp.maxShare >= 0) || !(hp.maxShare <= 2)) fail('handover.place.maxShare must lie between 0 and 2')
+  if (!(hp.margin >= 0) || !(hp.margin <= hp.maxShare)) fail('handover.place.margin must lie between 0 and handover.place.maxShare')
+  if (!isWhole(hp.maxEdge) || !(hp.maxEdge >= 256)) fail('handover.place.maxEdge must be a whole number of at least 256')
+  if (!(hp.edge > 0 && hp.edge <= 1) || !(hp.seen > 0 && hp.seen <= 1)) fail('handover.place.edge and handover.place.seen must be above 0 and at most 1')
+  if (!(r.handover.maxEnlarge > 1) || !(hp.enlargeSoft > 0 && hp.enlargeSoft < 1)) fail('handover.maxEnlarge must be above 1 and handover.place.enlargeSoft between 0 and 1')
+  if (!(hp.lens >= 0) || !(hp.maxGradTexels >= 1)) fail('handover.place.lens must be 0 or more and handover.place.maxGradTexels at least 1')
+  if (!(hp.limbReachDeg >= 0 && hp.limbReachDeg < 90)) fail('handover.place.limbReachDeg must be 0 or more and under 90')
+  if (!Array.isArray(hp.limbHoldDeg) || hp.limbHoldDeg.length !== 2 || !(hp.limbHoldDeg[0]! >= 0) || !(hp.limbHoldDeg[1]! > hp.limbHoldDeg[0]!) || !(hp.limbHoldDeg[1]! < 90)) fail('handover.place.limbHoldDeg must be two angles, the first 0 or more, the second above it and under 90')
+  if (!Array.isArray(hp.edgeIn) || hp.edgeIn.length !== 4 || !hp.edgeIn.every((x: number) => x >= 0 && x <= 1)) fail('handover.place.edgeIn must be four shares from 0 to 1: left, right, bottom, top')
+  if (!Array.isArray(hp.toneIn) || hp.toneIn.length !== 4 || !hp.toneIn.every((x: number) => x >= 0 && x <= 4)) fail('handover.place.toneIn must be four shares from 0 to 4: left, right, bottom, top')
+  if (!(hp.tonePower > 0 && hp.tonePower <= 1) || !(hp.toneReach > 0 && hp.toneReach <= 0.5) || !isWhole(hp.toneCell) || !(hp.toneCell >= 1)) fail('handover.place.tonePower must be above 0 and at most 1, handover.place.toneReach above 0 and at most 0.5, handover.place.toneCell a whole number of at least 1')
+  if (!Array.isArray(hp.toneLandDeg) || hp.toneLandDeg.length !== 2 || !(hp.toneLandDeg[0]! >= 0) || !(hp.toneLandDeg[1]! > hp.toneLandDeg[0]!) || !(hp.toneLandDeg[1]! < 90)) fail('handover.place.toneLandDeg must be two angles under the horizon, the first 0 or more, the second above it and under 90')
+  const hd = r.handover.descent
+  if (!(hd.targetReach > 0 && hd.targetReach <= 1)) fail('handover.descent.targetReach must be above 0 and at most 1')
+  for (const name of ['descent', 'ascent'] as const) {
+    const path = r.handover[name]
+    if (!(path.rise >= 0) || !(path.fall > 0) || !(path.rise + path.fall <= 1)) fail('handover.' + name + '.rise and handover.' + name + '.fall must be 0 or more, above 0, and add up to at most 1')
+    if (!(path.turnRise >= 0) || !(path.turnFall > 0) || !(path.turnRise + path.turnFall <= 1)) fail('handover.' + name + '.turnRise and handover.' + name + '.turnFall must be 0 or more, above 0, and add up to at most 1')
+    if (typeof path.level !== 'boolean') fail('handover.' + name + '.level must be true or false')
+    if (!(path.levelBy > 0 && path.levelBy <= 1)) fail('handover.' + name + '.levelBy must be above 0 and at most 1')
+  }
+  const hz = r.handover.zenithDeg
+  if (!Array.isArray(hz) || hz.length !== 2 || !(hz[0]! >= 0) || !(hz[1]! > hz[0]!) || !(hz[1]! < 90)) fail('handover.zenithDeg must be two angles, the first 0 or more, the second above it and under 90')
+  if (!(r.handover.maxRateOverMean > 1)) fail('handover.maxRateOverMean must be above 1')
+  if (!(r.handover.coastFrames >= 0)) fail('handover.coastFrames must be 0 or more')
+  if (!(r.handover.maxBlurPx >= 0) || !isWhole(r.handover.blurEaseFrames) || !(r.handover.blurEaseFrames >= 0)) fail('handover.maxBlurPx must be 0 (no cap) or more and handover.blurEaseFrames a whole number, 0 or more')
+  if (!(r.handover.minShutter >= 0) || !(r.handover.minShutter <= 1)) fail('handover.minShutter must be 0 (off) to 1')
+  if (!(r.handover.skyFloor.marginDeg >= 0) || !(r.handover.skyFloor.featherDeg > 0)) fail('handover.skyFloor.marginDeg must be 0 or more and handover.skyFloor.featherDeg above 0')
+  const hl = r.handover.limits as Record<string, number>
+  for (const [key, value] of Object.entries(hl)) if (!(value > 0)) fail('handover.limits.' + key + ' must be above 0')
+  if (!(hl.earlyShare! < 1) || !(hl.placeMiddle! <= 1) || !(hl.flatShare! <= 1) || !(hl.bodyShare! <= 1) || !(hl.flowStepFrames! <= 1)) fail('handover.limits.earlyShare must be under 1, handover.limits.placeMiddle, handover.limits.flatShare, handover.limits.bodyShare and handover.limits.flowStepFrames at most 1')
+  if (!isWhole(hl.blockPx!) || !isWhole(hl.sheetFrames!)) fail('handover.limits.blockPx and handover.limits.sheetFrames must be whole numbers')
   return {
     raw: r,
     name: r.name,

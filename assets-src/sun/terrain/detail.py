@@ -11,6 +11,8 @@ ZONE = (0.635, 0.705)
 SPOT = (0.5237, 0.609, 0.33, 0.185, 0.6)
 TONE = (150, 520)
 CORNER = ((0.60, 1.0), (0.655, 0.83), (0.74, 0.735), (0.86, 0.69), (1.0, 0.67), (1.0, 1.0))
+CORNER_TAKE = 'W-1'
+CORNER_APRON = ('A-9', 'A-8', 2, 49, 12, 1.12)
 WIDEN = 90
 EDGE = 48
 FLOOR = 0.02
@@ -128,14 +130,19 @@ def compose(out_full, out_web, check):
         small = cv2.resize(x, (pw // q, ph // q), interpolation=cv2.INTER_AREA)
         return cv2.resize(cv2.GaussianBlur(small, (0, 0), s / q), (pw, ph), interpolation=cv2.INTER_CUBIC)
 
-    out = np.empty_like(b)
-    for s, part in ((TONE[0], 1 - c), (TONE[1], c)):
-        ratio = (low(b, s) + FLOOR) / (low(take, s) + FLOOR)
-        if s == TONE[0]:
-            out[:] = take * ratio * part[..., None]
-        else:
-            out += take * ratio * part[..., None]
-        del ratio
+    out = take * ((low(b, TONE[0]) + FLOOR) / (low(take, TONE[0]) + FLOOR)) * (1 - c)[..., None]
+    sigma = TONE[1]
+    if CORNER_TAKE:
+        del take
+        up = read(f'{DIR}/take-low-x2-{CORNER_TAKE}.png')
+        info = json.load(open(f'{DIR}/place-{CORNER_TAKE}.json'))
+        m = np.vstack([np.array(info['matrix'], dtype=np.float64), [0, 0, 1]])
+        sx, sy = up.shape[1] / NATIVE[0], (up.shape[0] + 2 * CROP) / NATIVE[1]
+        u = np.array([[sx, 0, 0.5 * sx - 0.5], [0, sy, 0.5 * sy - 0.5 - 2 * CROP], [0, 0, 1]])
+        take = cv2.warpAffine(up, (u @ m @ a)[:2], (pw, ph), flags=cv2.INTER_CUBIC | cv2.WARP_INVERSE_MAP, borderMode=cv2.BORDER_REFLECT_101).astype(np.float32) / 255
+        del up
+        sigma = TONE[0]
+    out += take * ((low(b, sigma) + FLOOR) / (low(take, sigma) + FLOOR)) * c[..., None]
     del take
     q = 4
     small = cv2.resize(b, (pw // q, ph // q), interpolation=cv2.INTER_AREA)
@@ -291,15 +298,42 @@ def apron_layer(tag, shape, sigma):
     return lt - cv2.GaussianBlur(lt, (0, 0), sigma * s), a
 
 
+def apron_corner():
+    a = read(f'{DIR}/apron-base-low-x-W-3.png').astype(np.int16)
+    b = read(f'{DIR}/apron-base-low-x.png').astype(np.int16)
+    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (CORNER_APRON[3], CORNER_APRON[3]))
+    m = (np.abs(a - b).max(2) > CORNER_APRON[2]).astype(np.uint8)
+    m = cv2.dilate(cv2.morphologyEx(m, cv2.MORPH_CLOSE, kernel), kernel)
+    return cv2.GaussianBlur(m.astype(np.float32), (0, 0), CORNER_APRON[4])
+
+
 def apron_build(out_full, out_web, check):
     h, w = read(f'{DIR}/apron-base.png').shape[:2]
     ow, oh = APRON_OUT
+    if CORNER_TAKE:
+        cm = apron_corner()
+        b, res = apron_make('apron-base-low-x.png', cm)
+        res = apron_make('apron-base-low-x-W-3.png', None)[1] * (1 - cm[..., None]) + res * cm[..., None]
+        print('corner share of the apron picture', round(float(cm.mean()), 4))
+    else:
+        b, res = apron_make('apron-base-low-x.png', None)
+    write(out_full, res, 92)
+    write(out_web, cv2.resize(res, (ow // 2, oh // 2), interpolation=cv2.INTER_AREA), 88)
+    write(check, np.concatenate([cv2.resize(b, (w, h // 2), interpolation=cv2.INTER_AREA), cv2.resize(res, (w, h // 2), interpolation=cv2.INTER_AREA)], 0), 92)
+    print('mean before', (b[oh // 4:].mean((0, 1)) * 255).round(2).tolist(), 'after', (res[oh // 4:].mean((0, 1)) * 255).round(2).tolist())
+
+
+def apron_make(base, cm):
+    h, w = read(f'{DIR}/apron-base.png').shape[:2]
+    ow, oh = APRON_OUT
     s = ow / w
-    b = read(f'{DIR}/apron-base-low-x.png').astype(np.float32) / 255
+    b = read(f'{DIR}/{base}').astype(np.float32) / 255
     assert b.shape[:2] == (oh, ow)
     key = np.array([0.299, 0.587, 0.114], np.float32)
     tag, sigma, gain, crown, tint, soft, lift, tone = APRON_LANES
     e, a = apron_layer(tag, (h, w), sigma)
+    if cm is not None:
+        e += (apron_layer(CORNER_APRON[0], (h, w), sigma)[0] * CORNER_APRON[5] - e) * cm
     grey = cv2.cvtColor(read(f'{DIR}/apron-grey.png'), cv2.COLOR_RGB2GRAY).astype(np.float32) / 255
     grey = cv2.warpAffine(grey, a[:2], (ow, oh), flags=cv2.INTER_LINEAR | cv2.WARP_INVERSE_MAP, borderMode=cv2.BORDER_REPLICATE)
     grey = step(cv2.distanceTransform((grey > 0.5).astype(np.uint8), cv2.DIST_L2, 5), 0, soft * s)
@@ -324,6 +358,8 @@ def apron_build(out_full, out_web, check):
     del band, lb
     tag, sigma, gain, up = APRON_VEINS
     v, _ = apron_layer(tag, (h, w), sigma)
+    if cm is not None:
+        v += (apron_layer(CORNER_APRON[1], (h, w), sigma)[0] * CORNER_APRON[5] - v) * cm
     e += v * np.where(v < 0, gain * (1 - APRON_BRIGHT[2] * bright), gain * up)
     del v
     e *= grey
@@ -343,22 +379,20 @@ def apron_build(out_full, out_web, check):
             r = (low(b[..., ch], tone * s) + APRON_FLOOR) / (low(out[..., ch], tone * s) + APRON_FLOOR)
             out[..., ch] *= 1 + (r - 1) * np.where(r > 1, keep, 1)
         del keep
-    if os.path.exists(f'{DIR}/apron-tone.npy'):
-        t = cv2.resize(np.load(f'{DIR}/apron-tone.npy'), (ow, oh), interpolation=cv2.INTER_CUBIC)
+    path = f'{DIR}/apron-tone-{CORNER_TAKE}.npy' if cm is not None and os.path.exists(f'{DIR}/apron-tone-{CORNER_TAKE}.npy') else f'{DIR}/apron-tone.npy'
+    if os.path.exists(path):
+        t = cv2.resize(np.load(path), (ow, oh), interpolation=cv2.INTER_CUBIC)
         out *= 1 + (t - 1) * np.where(t > 1, 1 - APRON_HOLD[2] * step(out.max(2), APRON_HOLD[0], APRON_HOLD[1])[..., None], 1)
         del t
     np.clip(out, 0, 1, out=out)
-    if os.path.exists(f'{DIR}/apron-curve.npy'):
-        c = np.load(f'{DIR}/apron-curve.npy')
-        for ch in range(3):
-            out[..., ch] *= 1 + (np.interp(out[..., ch] * 255, np.arange(256), c[:, ch]).astype(np.float32) - 1) * grey
-        np.clip(out, 0, 1, out=out)
+    for path in [f'{DIR}/apron-curve.npy'] + ([f'{DIR}/apron-curve-{CORNER_TAKE}.npy'] if cm is not None else []):
+        if os.path.exists(path):
+            c = np.load(path)
+            for ch in range(3):
+                out[..., ch] *= 1 + (np.interp(out[..., ch] * 255, np.arange(256), c[:, ch]).astype(np.float32) - 1) * grey
+            np.clip(out, 0, 1, out=out)
     sky = step(np.arange(oh, dtype=np.float32), APRON_SKY[0] * oh, APRON_SKY[1] * oh)[:, None, None]
-    res = b + (out - b) * sky
-    write(out_full, res, 92)
-    write(out_web, cv2.resize(res, (ow // 2, oh // 2), interpolation=cv2.INTER_AREA), 88)
-    write(check, np.concatenate([cv2.resize(b, (w, h // 2), interpolation=cv2.INTER_AREA), cv2.resize(res, (w, h // 2), interpolation=cv2.INTER_AREA)], 0), 92)
-    print('mean before', (b[oh // 4:].mean((0, 1)) * 255).round(2).tolist(), 'after', (res[oh // 4:].mean((0, 1)) * 255).round(2).tolist())
+    return b, b + (out - b) * sky
 
 
 def apron_tone(frame):
@@ -377,7 +411,10 @@ def apron_tone(frame):
     t[~hit] = 1
     t = t[h // 2:]
     path = f'{DIR}/apron-tone.npy'
-    if os.path.exists(path):
+    if CORNER_TAKE:
+        first, path = path, f'{DIR}/apron-tone-{CORNER_TAKE}.npy'
+        t = t * np.load(path if os.path.exists(path) else first)
+    elif os.path.exists(path):
         t = t * np.load(path)
     t = np.clip(t, APRON_MATCH[4], APRON_MATCH[5])
     np.save(path, t.astype(np.float32))
@@ -397,6 +434,9 @@ def apron_curve(frame):
     at = np.linspace(0.5, 99.5, 100)
     v = np.arange(256, dtype=np.float64)
     path = f'{DIR}/apron-curve.npy'
+    if CORNER_TAKE:
+        zone = cv2.fillPoly(np.zeros((h, w), np.uint8), [np.array([(x * w, y * h) for x, y in CORNER]).astype(np.int32)], 1) > 0
+        path, hi = f'{DIR}/apron-curve-{CORNER_TAKE}.npy', 1.0
     old = np.load(path) if os.path.exists(path) else np.ones((256, 3))
     new = np.ones((256, 3))
     for ch in range(3):

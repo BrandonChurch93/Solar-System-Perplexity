@@ -1,0 +1,42 @@
+{
+ "critic": "R3",
+ "score": 5,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "image-02.png",
+   "where": "crop C upper-center sky (also image-03.png crop M upper-left and image-01.png upper-right sky between planet and Sun)",
+   "what": "a straight, slightly tilted horizontal patch edge cuts across the sky: dense stars and Milky Way dust appear below the line while the region above drops abruptly to empty black space",
+   "fix": "extend a single seamless starfield across the entire sky background and blend solar glare over it without hard rectangular layer borders"
+  },
+  {
+   "severity": "major",
+   "file": "image-03.png",
+   "where": "crop L sunlit right limb (also image-02.png crops C and E, and image-01.png right limb)",
+   "what": "the sunlit planet edge shows hard 1-pixel stair-stepped aliasing sitting inside a uniform, detached orange rim halo",
+   "fix": "render the globe silhouette with clean subpixel anti-aliasing and remove or physically integrate the artificial orange outer glow layer"
+  },
+  {
+   "severity": "major",
+   "file": "image-03.png",
+   "where": "crop L sunlit hemisphere and limb (also image-02.png crops G, C, and E)",
+   "what": "the brightly lit surface becomes soft, blurry, and flat-lit compared to the crisp terminator, with craters near the sunlit limb stretched into flat painted outlines lacking geometric relief",
+   "fix": "use higher-resolution albedo and displacement maps on the sunlit hemisphere so crater rims retain sharp micro-relief and proper foreshortening right to the horizon"
+  },
+  {
+   "severity": "minor",
+   "file": "image-02.png",
+   "where": "crop E right sky and crop I left-side starfield (also image-03.png crop R and image-04.png crop V)",
+   "what": "many stars near the lower-right limb are multi-pixel smeared blobs and short worm-like clumps, noticeably softer and coarser than stars further right in crop I",
+   "fix": "render background stars at uniform crisp point-spread sharpness without upscaled or denoised blob artifacts"
+  },
+  {
+   "severity": "minor",
+   "file": "image-02.png",
+   "where": "crop C middle-right solar corona transition (also image-03.png crop M left-center)",
+   "what": "faint horizontal streaks and banding run across the dusty solar glow where the corona overlaps the starfield patch",
+   "fix": "dither and smooth the coronal falloff in higher bit depth and remove horizontal compositing streaks"
+  }
+ ]
+}

@@ -1,18 +1,18 @@
 {
- "engineHash": "f854c8146f64c7e4",
+ "engineHash": "247ebad7e038ce06",
  "stopHashes": {
-  "sun": "c25a1bc1a5958b3c",
-  "mercury": "a646fd32007c7ab8",
-  "venus": "4a0019eb37f2a74d",
-  "earth": "a1573c1a4a29dc23",
-  "mars": "353338cc5c905af5",
-  "jupiter": "bf3a6fa3f51a1e4d",
-  "saturn": "a301db93a38deae8",
-  "uranus": "5afa91dfab8a6bc7",
-  "neptune": "85801023ee439540"
+  "sun": "078d8530e996c8b2",
+  "mercury": "3264078c6b99b4d5",
+  "venus": "54d2208ee58b3ad9",
+  "earth": "2b75dbd9c40c8387",
+  "mars": "2e6bd53c2517a02a",
+  "jupiter": "e92e46df4195fb6b",
+  "saturn": "47a787cd7f78408c",
+  "uranus": "a5dd9ab65ef9c8db",
+  "neptune": "091f37a616e0d16e"
  },
  "format": "16x9",
- "tier": "review",
+ "tier": "final",
  "assets": "full",
  "diag": "beauty",
  "browser": "147.0.7727.15",
@@ -36,2477 +36,2477 @@
     {
      "frame": 540,
      "invalid": 0,
-     "coverage": 0.35094
+     "coverage": 0.3498
     },
     {
      "frame": 541,
      "invalid": 0,
-     "coverage": 0.35114
+     "coverage": 0.35
     },
     {
      "frame": 542,
      "invalid": 0,
-     "coverage": 0.35133
+     "coverage": 0.35019
     },
     {
      "frame": 543,
      "invalid": 0,
-     "coverage": 0.35153
+     "coverage": 0.35039
     },
     {
      "frame": 544,
      "invalid": 0,
-     "coverage": 0.35173
+     "coverage": 0.35058
     },
     {
      "frame": 545,
      "invalid": 0,
-     "coverage": 0.35192
+     "coverage": 0.35078
     },
     {
      "frame": 546,
      "invalid": 0,
-     "coverage": 0.35212
+     "coverage": 0.35098
     },
     {
      "frame": 547,
      "invalid": 0,
-     "coverage": 0.35232
+     "coverage": 0.35117
     },
     {
      "frame": 548,
      "invalid": 0,
-     "coverage": 0.35251
+     "coverage": 0.35137
     },
     {
      "frame": 549,
      "invalid": 0,
-     "coverage": 0.35271
+     "coverage": 0.35156
     },
     {
      "frame": 550,
      "invalid": 0,
-     "coverage": 0.35291
+     "coverage": 0.35176
     },
     {
      "frame": 551,
      "invalid": 0,
-     "coverage": 0.35311
+     "coverage": 0.35195
     },
     {
      "frame": 552,
      "invalid": 0,
-     "coverage": 0.3533
+     "coverage": 0.35215
     },
     {
      "frame": 553,
      "invalid": 0,
-     "coverage": 0.3535
+     "coverage": 0.35235
     },
     {
      "frame": 554,
      "invalid": 0,
-     "coverage": 0.3537
+     "coverage": 0.35254
     },
     {
      "frame": 555,
      "invalid": 0,
-     "coverage": 0.3539
+     "coverage": 0.35274
     },
     {
      "frame": 556,
      "invalid": 0,
-     "coverage": 0.35409
+     "coverage": 0.35293
     },
     {
      "frame": 557,
      "invalid": 0,
-     "coverage": 0.35429
+     "coverage": 0.35313
     },
     {
      "frame": 558,
      "invalid": 0,
-     "coverage": 0.35448
+     "coverage": 0.35332
     },
     {
      "frame": 559,
      "invalid": 0,
-     "coverage": 0.35468
+     "coverage": 0.35352
     },
     {
      "frame": 560,
      "invalid": 0,
-     "coverage": 0.35488
+     "coverage": 0.35371
     },
     {
      "frame": 561,
      "invalid": 0,
-     "coverage": 0.35508
+     "coverage": 0.35391
     },
     {
      "frame": 562,
      "invalid": 0,
-     "coverage": 0.35528
+     "coverage": 0.3541
     },
     {
      "frame": 563,
      "invalid": 0,
-     "coverage": 0.35547
+     "coverage": 0.3543
     },
     {
      "frame": 564,
      "invalid": 0,
-     "coverage": 0.35567
+     "coverage": 0.35449
     },
     {
      "frame": 565,
      "invalid": 0,
-     "coverage": 0.35587
+     "coverage": 0.35469
     },
     {
      "frame": 566,
      "invalid": 0,
-     "coverage": 0.35606
+     "coverage": 0.35488
     },
     {
      "frame": 567,
      "invalid": 0,
-     "coverage": 0.35626
+     "coverage": 0.35508
     },
     {
      "frame": 568,
      "invalid": 0,
-     "coverage": 0.35646
+     "coverage": 0.35528
     },
     {
      "frame": 569,
      "invalid": 0,
-     "coverage": 0.35666
+     "coverage": 0.35547
     },
     {
      "frame": 570,
      "invalid": 0,
-     "coverage": 0.35685
+     "coverage": 0.35567
     },
     {
      "frame": 571,
      "invalid": 0,
-     "coverage": 0.35705
+     "coverage": 0.35587
     },
     {
      "frame": 572,
      "invalid": 0,
-     "coverage": 0.35725
+     "coverage": 0.35606
     },
     {
      "frame": 573,
      "invalid": 0,
-     "coverage": 0.35745
+     "coverage": 0.35626
     },
     {
      "frame": 574,
      "invalid": 0,
-     "coverage": 0.35764
+     "coverage": 0.35645
     },
     {
      "frame": 575,
      "invalid": 0,
-     "coverage": 0.35784
+     "coverage": 0.35665
     },
     {
      "frame": 576,
      "invalid": 0,
-     "coverage": 0.35803
+     "coverage": 0.35685
     },
     {
      "frame": 577,
      "invalid": 0,
-     "coverage": 0.35823
+     "coverage": 0.35704
     },
     {
      "frame": 578,
      "invalid": 0,
-     "coverage": 0.35842
+     "coverage": 0.35724
     },
     {
      "frame": 579,
      "invalid": 0,
-     "coverage": 0.35862
+     "coverage": 0.35743
     },
     {
      "frame": 580,
      "invalid": 0,
-     "coverage": 0.35882
+     "coverage": 0.35763
     },
     {
      "frame": 581,
      "invalid": 0,
-     "coverage": 0.35901
+     "coverage": 0.35783
     },
     {
      "frame": 582,
      "invalid": 0,
-     "coverage": 0.35921
+     "coverage": 0.35802
     },
     {
      "frame": 583,
      "invalid": 0,
-     "coverage": 0.35941
+     "coverage": 0.35822
     },
     {
      "frame": 584,
      "invalid": 0,
-     "coverage": 0.3596
+     "coverage": 0.35841
     },
     {
      "frame": 585,
      "invalid": 0,
-     "coverage": 0.3598
+     "coverage": 0.35861
     },
     {
      "frame": 586,
      "invalid": 0,
-     "coverage": 0.35999
+     "coverage": 0.35881
     },
     {
      "frame": 587,
      "invalid": 0,
-     "coverage": 0.36019
+     "coverage": 0.359
     },
     {
      "frame": 588,
      "invalid": 0,
-     "coverage": 0.36039
+     "coverage": 0.3592
     },
     {
      "frame": 589,
      "invalid": 0,
-     "coverage": 0.36059
+     "coverage": 0.3594
     },
     {
      "frame": 590,
      "invalid": 0,
-     "coverage": 0.36079
+     "coverage": 0.35959
     },
     {
      "frame": 591,
      "invalid": 0,
-     "coverage": 0.36099
+     "coverage": 0.35979
     },
     {
      "frame": 592,
      "invalid": 0,
-     "coverage": 0.36119
+     "coverage": 0.35999
     },
     {
      "frame": 593,
      "invalid": 0,
-     "coverage": 0.36139
+     "coverage": 0.36019
     },
     {
      "frame": 594,
      "invalid": 0,
-     "coverage": 0.36158
+     "coverage": 0.36038
     },
     {
      "frame": 595,
      "invalid": 0,
-     "coverage": 0.36178
+     "coverage": 0.36058
     },
     {
      "frame": 596,
      "invalid": 0,
-     "coverage": 0.36199
+     "coverage": 0.36078
     },
     {
      "frame": 597,
      "invalid": 0,
-     "coverage": 0.36219
+     "coverage": 0.36098
     },
     {
      "frame": 598,
      "invalid": 0,
-     "coverage": 0.36238
+     "coverage": 0.36118
     },
     {
      "frame": 599,
      "invalid": 0,
-     "coverage": 0.36258
+     "coverage": 0.36138
     },
     {
      "frame": 600,
      "invalid": 0,
-     "coverage": 0.36278
+     "coverage": 0.36158
     },
     {
      "frame": 601,
      "invalid": 0,
-     "coverage": 0.36298
+     "coverage": 0.36178
     },
     {
      "frame": 602,
      "invalid": 0,
-     "coverage": 0.36318
+     "coverage": 0.36198
     },
     {
      "frame": 603,
      "invalid": 0,
-     "coverage": 0.36338
+     "coverage": 0.36218
     },
     {
      "frame": 604,
      "invalid": 0,
-     "coverage": 0.36357
+     "coverage": 0.36238
     },
     {
      "frame": 605,
      "invalid": 0,
-     "coverage": 0.36378
+     "coverage": 0.36258
     },
     {
      "frame": 606,
      "invalid": 0,
-     "coverage": 0.36397
+     "coverage": 0.36278
     },
     {
      "frame": 607,
      "invalid": 0,
-     "coverage": 0.36418
+     "coverage": 0.36299
     },
     {
      "frame": 608,
      "invalid": 0,
-     "coverage": 0.36438
+     "coverage": 0.36319
     },
     {
      "frame": 609,
      "invalid": 0,
-     "coverage": 0.36458
+     "coverage": 0.36339
     },
     {
      "frame": 610,
      "invalid": 0,
-     "coverage": 0.36478
+     "coverage": 0.3636
     },
     {
      "frame": 611,
      "invalid": 0,
-     "coverage": 0.36498
+     "coverage": 0.3638
     },
     {
      "frame": 612,
      "invalid": 0,
-     "coverage": 0.36519
+     "coverage": 0.364
     },
     {
      "frame": 613,
      "invalid": 0,
-     "coverage": 0.36539
+     "coverage": 0.36421
     },
     {
      "frame": 614,
      "invalid": 0,
-     "coverage": 0.3656
+     "coverage": 0.36442
     },
     {
      "frame": 615,
      "invalid": 0,
-     "coverage": 0.3658
+     "coverage": 0.36462
     },
     {
      "frame": 616,
      "invalid": 0,
-     "coverage": 0.36601
+     "coverage": 0.36483
     },
     {
      "frame": 617,
      "invalid": 0,
-     "coverage": 0.36621
+     "coverage": 0.36503
     },
     {
      "frame": 618,
      "invalid": 0,
-     "coverage": 0.36642
+     "coverage": 0.36524
     },
     {
      "frame": 619,
      "invalid": 0,
-     "coverage": 0.36663
+     "coverage": 0.36544
     },
     {
      "frame": 620,
      "invalid": 0,
-     "coverage": 0.36684
+     "coverage": 0.36565
     },
     {
      "frame": 621,
      "invalid": 0,
-     "coverage": 0.36705
+     "coverage": 0.36586
     },
     {
      "frame": 622,
      "invalid": 0,
-     "coverage": 0.36726
+     "coverage": 0.36607
     },
     {
      "frame": 623,
      "invalid": 0,
-     "coverage": 0.36747
+     "coverage": 0.36628
     },
     {
      "frame": 624,
      "invalid": 0,
-     "coverage": 0.36768
+     "coverage": 0.36649
     },
     {
      "frame": 625,
      "invalid": 0,
-     "coverage": 0.36789
+     "coverage": 0.3667
     },
     {
      "frame": 626,
      "invalid": 0,
-     "coverage": 0.3681
+     "coverage": 0.36691
     },
     {
      "frame": 627,
      "invalid": 0,
-     "coverage": 0.36832
+     "coverage": 0.36712
     },
     {
      "frame": 628,
      "invalid": 0,
-     "coverage": 0.36853
+     "coverage": 0.36733
     },
     {
      "frame": 629,
      "invalid": 0,
-     "coverage": 0.36875
+     "coverage": 0.36754
     },
     {
      "frame": 630,
      "invalid": 0,
-     "coverage": 0.36896
+     "coverage": 0.36775
     },
     {
      "frame": 631,
      "invalid": 0,
-     "coverage": 0.36918
+     "coverage": 0.36796
     },
     {
      "frame": 632,
      "invalid": 0,
-     "coverage": 0.3694
+     "coverage": 0.36817
     },
     {
      "frame": 633,
      "invalid": 0,
-     "coverage": 0.36961
+     "coverage": 0.36838
     },
     {
      "frame": 634,
      "invalid": 0,
-     "coverage": 0.36983
+     "coverage": 0.36859
     },
     {
      "frame": 635,
      "invalid": 0,
-     "coverage": 0.37004
+     "coverage": 0.3688
     },
     {
      "frame": 636,
      "invalid": 0,
-     "coverage": 0.37026
+     "coverage": 0.36901
     },
     {
      "frame": 637,
      "invalid": 0,
-     "coverage": 0.37048
+     "coverage": 0.36923
     },
     {
      "frame": 638,
      "invalid": 0,
-     "coverage": 0.37069
+     "coverage": 0.36944
     },
     {
      "frame": 639,
      "invalid": 0,
-     "coverage": 0.37091
+     "coverage": 0.36965
     },
     {
      "frame": 640,
      "invalid": 0,
-     "coverage": 0.37113
+     "coverage": 0.36987
     },
     {
      "frame": 641,
      "invalid": 0,
-     "coverage": 0.37134
+     "coverage": 0.37008
     },
     {
      "frame": 642,
      "invalid": 0,
-     "coverage": 0.37156
+     "coverage": 0.3703
     },
     {
      "frame": 643,
      "invalid": 0,
-     "coverage": 0.37177
+     "coverage": 0.37051
     },
     {
      "frame": 644,
      "invalid": 0,
-     "coverage": 0.37199
+     "coverage": 0.37073
     },
     {
      "frame": 645,
      "invalid": 0,
-     "coverage": 0.37221
+     "coverage": 0.37094
     },
     {
      "frame": 646,
      "invalid": 0,
-     "coverage": 0.37243
+     "coverage": 0.37115
     },
     {
      "frame": 647,
      "invalid": 0,
-     "coverage": 0.37265
+     "coverage": 0.37137
     },
     {
      "frame": 648,
      "invalid": 0,
-     "coverage": 0.37287
+     "coverage": 0.37158
     },
     {
      "frame": 649,
      "invalid": 0,
-     "coverage": 0.37308
+     "coverage": 0.3718
     },
     {
      "frame": 650,
      "invalid": 0,
-     "coverage": 0.3733
+     "coverage": 0.37201
     },
     {
      "frame": 651,
      "invalid": 0,
-     "coverage": 0.37352
+     "coverage": 0.37223
     },
     {
      "frame": 652,
      "invalid": 0,
-     "coverage": 0.37374
+     "coverage": 0.37245
     },
     {
      "frame": 653,
      "invalid": 0,
-     "coverage": 0.37396
+     "coverage": 0.37266
     },
     {
      "frame": 654,
      "invalid": 0,
-     "coverage": 0.37418
+     "coverage": 0.37288
     },
     {
      "frame": 655,
      "invalid": 0,
-     "coverage": 0.3744
+     "coverage": 0.37309
     },
     {
      "frame": 656,
      "invalid": 0,
-     "coverage": 0.37461
+     "coverage": 0.37331
     },
     {
      "frame": 657,
      "invalid": 0,
-     "coverage": 0.37483
+     "coverage": 0.37352
     },
     {
      "frame": 658,
      "invalid": 0,
-     "coverage": 0.37505
+     "coverage": 0.37374
     },
     {
      "frame": 659,
      "invalid": 0,
-     "coverage": 0.37527
+     "coverage": 0.37396
     },
     {
      "frame": 660,
      "invalid": 0,
-     "coverage": 0.37549
+     "coverage": 0.37417
     },
     {
      "frame": 661,
      "invalid": 0,
-     "coverage": 0.37571
+     "coverage": 0.37439
     },
     {
      "frame": 662,
      "invalid": 0,
-     "coverage": 0.37593
+     "coverage": 0.37461
     },
     {
      "frame": 663,
      "invalid": 0,
-     "coverage": 0.37615
+     "coverage": 0.37483
     },
     {
      "frame": 664,
      "invalid": 0,
-     "coverage": 0.37637
+     "coverage": 0.37504
     },
     {
      "frame": 665,
      "invalid": 0,
-     "coverage": 0.37659
+     "coverage": 0.37526
     },
     {
      "frame": 666,
      "invalid": 0,
-     "coverage": 0.37681
+     "coverage": 0.37547
     },
     {
      "frame": 667,
      "invalid": 0,
-     "coverage": 0.37703
+     "coverage": 0.37569
     },
     {
      "frame": 668,
      "invalid": 0,
-     "coverage": 0.37725
+     "coverage": 0.37591
     },
     {
      "frame": 669,
      "invalid": 0,
-     "coverage": 0.37747
+     "coverage": 0.37613
     },
     {
      "frame": 670,
      "invalid": 0,
-     "coverage": 0.37769
+     "coverage": 0.37634
     },
     {
      "frame": 671,
      "invalid": 0,
-     "coverage": 0.37791
+     "coverage": 0.37656
     },
     {
      "frame": 672,
      "invalid": 0,
-     "coverage": 0.37813
+     "coverage": 0.37678
     },
     {
      "frame": 673,
      "invalid": 0,
-     "coverage": 0.37835
+     "coverage": 0.37699
     },
     {
      "frame": 674,
      "invalid": 0,
-     "coverage": 0.37856
+     "coverage": 0.37721
     },
     {
      "frame": 675,
      "invalid": 0,
-     "coverage": 0.37878
+     "coverage": 0.37743
     },
     {
      "frame": 676,
      "invalid": 0,
-     "coverage": 0.379
+     "coverage": 0.37764
     },
     {
      "frame": 677,
      "invalid": 0,
-     "coverage": 0.37922
+     "coverage": 0.37786
     },
     {
      "frame": 678,
      "invalid": 0,
-     "coverage": 0.37943
+     "coverage": 0.37807
     },
     {
      "frame": 679,
      "invalid": 0,
-     "coverage": 0.37965
+     "coverage": 0.37829
     },
     {
      "frame": 680,
      "invalid": 0,
-     "coverage": 0.37987
+     "coverage": 0.37851
     },
     {
      "frame": 681,
      "invalid": 0,
-     "coverage": 0.38009
+     "coverage": 0.37873
     },
     {
      "frame": 682,
      "invalid": 0,
-     "coverage": 0.3803
+     "coverage": 0.37894
     },
     {
      "frame": 683,
      "invalid": 0,
-     "coverage": 0.38052
+     "coverage": 0.37916
     },
     {
      "frame": 684,
      "invalid": 0,
-     "coverage": 0.38073
+     "coverage": 0.37937
     },
     {
      "frame": 685,
      "invalid": 0,
-     "coverage": 0.38095
+     "coverage": 0.37959
     },
     {
      "frame": 686,
      "invalid": 0,
-     "coverage": 0.38116
+     "coverage": 0.37981
     },
     {
      "frame": 687,
      "invalid": 0,
-     "coverage": 0.38137
+     "coverage": 0.38002
     },
     {
      "frame": 688,
      "invalid": 0,
-     "coverage": 0.38159
+     "coverage": 0.38024
     },
     {
      "frame": 689,
      "invalid": 0,
-     "coverage": 0.3818
+     "coverage": 0.38046
     },
     {
      "frame": 690,
      "invalid": 0,
-     "coverage": 0.38202
+     "coverage": 0.38068
     },
     {
      "frame": 691,
      "invalid": 0,
-     "coverage": 0.38223
+     "coverage": 0.38089
     },
     {
      "frame": 692,
      "invalid": 0,
-     "coverage": 0.38245
+     "coverage": 0.38111
     },
     {
      "frame": 693,
      "invalid": 0,
-     "coverage": 0.38269
+     "coverage": 0.38136
     },
     {
      "frame": 694,
      "invalid": 0,
-     "coverage": 0.38303
+     "coverage": 0.3817
     },
     {
      "frame": 695,
      "invalid": 0,
-     "coverage": 0.3836
+     "coverage": 0.38226
     },
     {
      "frame": 696,
      "invalid": 0,
-     "coverage": 0.38464
+     "coverage": 0.3833
     },
     {
      "frame": 697,
      "invalid": 0,
-     "coverage": 0.38647
+     "coverage": 0.38511
     },
     {
      "frame": 698,
      "invalid": 0,
-     "coverage": 0.38949
+     "coverage": 0.3881
     },
     {
      "frame": 699,
      "invalid": 0,
-     "coverage": 0.39408
+     "coverage": 0.39267
     },
     {
      "frame": 700,
      "invalid": 0,
-     "coverage": 0.40055
+     "coverage": 0.39908
     },
     {
      "frame": 701,
      "invalid": 0,
-     "coverage": 0.40892
+     "coverage": 0.40742
     },
     {
      "frame": 702,
      "invalid": 0,
-     "coverage": 0.419
+     "coverage": 0.4175
     },
     {
      "frame": 703,
      "invalid": 0,
-     "coverage": 0.43053
+     "coverage": 0.42899
     },
     {
      "frame": 704,
      "invalid": 0,
-     "coverage": 0.44311
+     "coverage": 0.44152
     },
     {
      "frame": 705,
      "invalid": 0,
-     "coverage": 0.45593
+     "coverage": 0.4543
     },
     {
      "frame": 706,
      "invalid": 0,
-     "coverage": 0.46924
+     "coverage": 0.46758
     },
     {
      "frame": 707,
      "invalid": 0,
-     "coverage": 0.48275
+     "coverage": 0.48115
     },
     {
      "frame": 708,
      "invalid": 0,
-     "coverage": 0.49615
+     "coverage": 0.49453
     },
     {
      "frame": 709,
      "invalid": 0,
-     "coverage": 0.50919
+     "coverage": 0.50752
     },
     {
      "frame": 710,
      "invalid": 0,
-     "coverage": 0.52126
+     "coverage": 0.51963
     },
     {
      "frame": 711,
      "invalid": 0,
-     "coverage": 0.53216
+     "coverage": 0.53048
     },
     {
      "frame": 712,
      "invalid": 0,
-     "coverage": 0.54145
+     "coverage": 0.53975
     },
     {
      "frame": 713,
      "invalid": 0,
-     "coverage": 0.54905
+     "coverage": 0.54731
     },
     {
      "frame": 714,
      "invalid": 0,
-     "coverage": 0.55494
+     "coverage": 0.55313
     },
     {
      "frame": 715,
      "invalid": 0,
-     "coverage": 0.55926
+     "coverage": 0.55743
     },
     {
      "frame": 716,
      "invalid": 0,
-     "coverage": 0.5624
+     "coverage": 0.56055
     },
     {
      "frame": 717,
      "invalid": 0,
-     "coverage": 0.56488
+     "coverage": 0.56303
     },
     {
      "frame": 718,
      "invalid": 0,
-     "coverage": 0.5685
+     "coverage": 0.56658
     },
     {
      "frame": 719,
      "invalid": 0,
-     "coverage": 0.57868
+     "coverage": 0.57619
     },
     {
      "frame": 720,
      "invalid": 0,
-     "coverage": 0.59916
+     "coverage": 0.59534
     },
     {
      "frame": 721,
      "invalid": 0,
-     "coverage": 0.63085
+     "coverage": 0.62504
     },
     {
      "frame": 722,
      "invalid": 0,
-     "coverage": 0.67175
+     "coverage": 0.66365
     },
     {
      "frame": 723,
      "invalid": 0,
-     "coverage": 0.71357
+     "coverage": 0.70629
     },
     {
      "frame": 724,
      "invalid": 0,
-     "coverage": 0.7426
+     "coverage": 0.73835
     },
     {
      "frame": 725,
      "invalid": 0,
-     "coverage": 0.76102
+     "coverage": 0.76023
     },
     {
      "frame": 726,
      "invalid": 0,
-     "coverage": 0.77321
+     "coverage": 0.77535
     },
     {
      "frame": 727,
      "invalid": 0,
-     "coverage": 0.78253
+     "coverage": 0.78718
     },
     {
      "frame": 728,
      "invalid": 0,
-     "coverage": 0.79039
+     "coverage": 0.79764
     },
     {
      "frame": 729,
      "invalid": 0,
-     "coverage": 0.79667
+     "coverage": 0.80638
     },
     {
      "frame": 730,
      "invalid": 0,
-     "coverage": 0.8011
+     "coverage": 0.81334
     },
     {
      "frame": 731,
      "invalid": 0,
-     "coverage": 0.8037
+     "coverage": 0.81828
     },
     {
      "frame": 732,
      "invalid": 0,
-     "coverage": 0.80319
+     "coverage": 0.82079
     },
     {
      "frame": 733,
      "invalid": 0,
-     "coverage": 0.79893
+     "coverage": 0.81968
     },
     {
      "frame": 734,
      "invalid": 0,
-     "coverage": 0.7899
+     "coverage": 0.81358
     },
     {
      "frame": 735,
      "invalid": 0,
-     "coverage": 0.77622
+     "coverage": 0.80254
     },
     {
      "frame": 736,
      "invalid": 0,
-     "coverage": 0.75806
+     "coverage": 0.78656
     },
     {
      "frame": 737,
      "invalid": 0,
-     "coverage": 0.7352
+     "coverage": 0.7662
     },
     {
      "frame": 738,
      "invalid": 0,
-     "coverage": 0.70762
+     "coverage": 0.74206
     },
     {
      "frame": 739,
      "invalid": 0,
-     "coverage": 0.67867
+     "coverage": 0.71563
     },
     {
      "frame": 740,
      "invalid": 0,
-     "coverage": 0.65846
+     "coverage": 0.69611
     },
     {
      "frame": 741,
      "invalid": 0,
-     "coverage": 0.64956
+     "coverage": 0.69609
     },
     {
      "frame": 742,
      "invalid": 0,
-     "coverage": 0.65307
+     "coverage": 0.69992
     },
     {
      "frame": 743,
      "invalid": 0,
-     "coverage": 0.66292
+     "coverage": 0.70499
     },
     {
      "frame": 744,
      "invalid": 0,
-     "coverage": 0.66818
+     "coverage": 0.71358
     },
     {
      "frame": 745,
      "invalid": 0,
-     "coverage": 0.67543
+     "coverage": 0.72067
     },
     {
      "frame": 746,
      "invalid": 0,
-     "coverage": 0.68247
+     "coverage": 0.72654
     },
     {
      "frame": 747,
      "invalid": 0,
-     "coverage": 0.68922
+     "coverage": 0.73137
     },
     {
      "frame": 748,
      "invalid": 0,
-     "coverage": 0.69568
+     "coverage": 0.73535
     },
     {
      "frame": 749,
      "invalid": 0,
-     "coverage": 0.70194
+     "coverage": 0.73863
     },
     {
      "frame": 750,
      "invalid": 0,
-     "coverage": 0.70804
+     "coverage": 0.74136
     },
     {
      "frame": 751,
      "invalid": 0,
-     "coverage": 0.71391
+     "coverage": 0.74376
     },
     {
      "frame": 752,
      "invalid": 0,
-     "coverage": 0.71949
+     "coverage": 0.74601
     },
     {
      "frame": 753,
      "invalid": 0,
-     "coverage": 0.72483
+     "coverage": 0.74806
     },
     {
      "frame": 754,
      "invalid": 0,
-     "coverage": 0.72988
+     "coverage": 0.74985
     },
     {
      "frame": 755,
      "invalid": 0,
-     "coverage": 0.73467
+     "coverage": 0.75137
     },
     {
      "frame": 756,
      "invalid": 0,
-     "coverage": 0.73926
+     "coverage": 0.75265
     },
     {
      "frame": 757,
      "invalid": 0,
-     "coverage": 0.74363
+     "coverage": 0.75375
     },
     {
      "frame": 758,
      "invalid": 0,
-     "coverage": 0.74778
+     "coverage": 0.7547
     },
     {
      "frame": 759,
      "invalid": 0,
-     "coverage": 0.75173
+     "coverage": 0.75555
     },
     {
      "frame": 760,
      "invalid": 0,
-     "coverage": 0.75546
+     "coverage": 0.75632
     },
     {
      "frame": 761,
      "invalid": 0,
-     "coverage": 0.75899
+     "coverage": 0.75703
     },
     {
      "frame": 762,
      "invalid": 0,
-     "coverage": 0.7623
+     "coverage": 0.75769
     },
     {
      "frame": 763,
      "invalid": 0,
-     "coverage": 0.76541
+     "coverage": 0.75833
     },
     {
      "frame": 764,
      "invalid": 0,
-     "coverage": 0.7683
+     "coverage": 0.75893
     },
     {
      "frame": 765,
      "invalid": 0,
-     "coverage": 0.77099
+     "coverage": 0.75953
     },
     {
      "frame": 766,
      "invalid": 0,
-     "coverage": 0.77347
+     "coverage": 0.76011
     },
     {
      "frame": 767,
      "invalid": 0,
-     "coverage": 0.77576
+     "coverage": 0.76068
     },
     {
      "frame": 768,
      "invalid": 0,
-     "coverage": 0.77784
+     "coverage": 0.76124
     },
     {
      "frame": 769,
      "invalid": 0,
-     "coverage": 0.77972
+     "coverage": 0.7618
     },
     {
      "frame": 770,
      "invalid": 0,
-     "coverage": 0.7814
+     "coverage": 0.76236
     },
     {
      "frame": 771,
      "invalid": 0,
-     "coverage": 0.78289
+     "coverage": 0.7629
     },
     {
      "frame": 772,
      "invalid": 0,
-     "coverage": 0.7842
+     "coverage": 0.76345
     },
     {
      "frame": 773,
      "invalid": 0,
-     "coverage": 0.78532
+     "coverage": 0.76399
     },
     {
      "frame": 774,
      "invalid": 0,
-     "coverage": 0.78626
+     "coverage": 0.76453
     },
     {
      "frame": 775,
      "invalid": 0,
-     "coverage": 0.78702
+     "coverage": 0.76506
     },
     {
      "frame": 776,
      "invalid": 0,
-     "coverage": 0.78761
+     "coverage": 0.76559
     },
     {
      "frame": 777,
      "invalid": 0,
-     "coverage": 0.78805
+     "coverage": 0.76612
     },
     {
      "frame": 778,
      "invalid": 0,
-     "coverage": 0.78833
+     "coverage": 0.76664
     },
     {
      "frame": 779,
      "invalid": 0,
-     "coverage": 0.78848
+     "coverage": 0.76716
     },
     {
      "frame": 780,
      "invalid": 0,
-     "coverage": 0.78848
+     "coverage": 0.76767
     },
     {
      "frame": 781,
      "invalid": 0,
-     "coverage": 0.7885
+     "coverage": 0.76818
     },
     {
      "frame": 782,
      "invalid": 0,
-     "coverage": 0.78851
+     "coverage": 0.76869
     },
     {
      "frame": 783,
      "invalid": 0,
-     "coverage": 0.78853
+     "coverage": 0.76919
     },
     {
      "frame": 784,
      "invalid": 0,
-     "coverage": 0.78855
+     "coverage": 0.76969
     },
     {
      "frame": 785,
      "invalid": 0,
-     "coverage": 0.78857
+     "coverage": 0.77019
     },
     {
      "frame": 786,
      "invalid": 0,
-     "coverage": 0.78859
+     "coverage": 0.77069
     },
     {
      "frame": 787,
      "invalid": 0,
-     "coverage": 0.78861
+     "coverage": 0.77118
     },
     {
      "frame": 788,
      "invalid": 0,
-     "coverage": 0.78864
+     "coverage": 0.77167
     },
     {
      "frame": 789,
      "invalid": 0,
-     "coverage": 0.78867
+     "coverage": 0.77215
     },
     {
      "frame": 790,
      "invalid": 0,
-     "coverage": 0.7887
+     "coverage": 0.77263
     },
     {
      "frame": 791,
      "invalid": 0,
-     "coverage": 0.78874
+     "coverage": 0.77311
     },
     {
      "frame": 792,
      "invalid": 0,
-     "coverage": 0.78877
+     "coverage": 0.77359
     },
     {
      "frame": 793,
      "invalid": 0,
-     "coverage": 0.78881
+     "coverage": 0.77406
     },
     {
      "frame": 794,
      "invalid": 0,
-     "coverage": 0.78885
+     "coverage": 0.77453
     },
     {
      "frame": 795,
      "invalid": 0,
-     "coverage": 0.7889
+     "coverage": 0.77499
     },
     {
      "frame": 796,
      "invalid": 0,
-     "coverage": 0.78895
+     "coverage": 0.77546
     },
     {
      "frame": 797,
      "invalid": 0,
-     "coverage": 0.78899
+     "coverage": 0.77592
     },
     {
      "frame": 798,
      "invalid": 0,
-     "coverage": 0.78905
+     "coverage": 0.77637
     },
     {
      "frame": 799,
      "invalid": 0,
-     "coverage": 0.7891
+     "coverage": 0.77683
     },
     {
      "frame": 800,
      "invalid": 0,
-     "coverage": 0.78916
+     "coverage": 0.77727
     },
     {
      "frame": 801,
      "invalid": 0,
-     "coverage": 0.78922
+     "coverage": 0.77772
     },
     {
      "frame": 802,
      "invalid": 0,
-     "coverage": 0.78928
+     "coverage": 0.77816
     },
     {
      "frame": 803,
      "invalid": 0,
-     "coverage": 0.78934
+     "coverage": 0.7786
     },
     {
      "frame": 804,
      "invalid": 0,
-     "coverage": 0.78941
+     "coverage": 0.77903
     },
     {
      "frame": 805,
      "invalid": 0,
-     "coverage": 0.78948
+     "coverage": 0.77946
     },
     {
      "frame": 806,
      "invalid": 0,
-     "coverage": 0.78955
+     "coverage": 0.77988
     },
     {
      "frame": 807,
      "invalid": 0,
-     "coverage": 0.78962
+     "coverage": 0.78031
     },
     {
      "frame": 808,
      "invalid": 0,
-     "coverage": 0.7897
+     "coverage": 0.78072
     },
     {
      "frame": 809,
      "invalid": 0,
-     "coverage": 0.78977
+     "coverage": 0.78114
     },
     {
      "frame": 810,
      "invalid": 0,
-     "coverage": 0.78986
+     "coverage": 0.78154
     },
     {
      "frame": 811,
      "invalid": 0,
-     "coverage": 0.78994
+     "coverage": 0.78195
     },
     {
      "frame": 812,
      "invalid": 0,
-     "coverage": 0.79002
+     "coverage": 0.78235
     },
     {
      "frame": 813,
      "invalid": 0,
-     "coverage": 0.7901
+     "coverage": 0.78274
     },
     {
      "frame": 814,
      "invalid": 0,
-     "coverage": 0.79019
+     "coverage": 0.78313
     },
     {
      "frame": 815,
      "invalid": 0,
-     "coverage": 0.79028
+     "coverage": 0.78351
     },
     {
      "frame": 816,
      "invalid": 0,
-     "coverage": 0.79037
+     "coverage": 0.78389
     },
     {
      "frame": 817,
      "invalid": 0,
-     "coverage": 0.79046
+     "coverage": 0.78426
     },
     {
      "frame": 818,
      "invalid": 0,
-     "coverage": 0.79055
+     "coverage": 0.78463
     },
     {
      "frame": 819,
      "invalid": 0,
-     "coverage": 0.79065
+     "coverage": 0.78499
     },
     {
      "frame": 820,
      "invalid": 0,
-     "coverage": 0.79074
+     "coverage": 0.78535
     },
     {
      "frame": 821,
      "invalid": 0,
-     "coverage": 0.79084
+     "coverage": 0.7857
     },
     {
      "frame": 822,
      "invalid": 0,
-     "coverage": 0.79093
+     "coverage": 0.78604
     },
     {
      "frame": 823,
      "invalid": 0,
-     "coverage": 0.79103
+     "coverage": 0.78638
     },
     {
      "frame": 824,
      "invalid": 0,
-     "coverage": 0.79113
+     "coverage": 0.78671
     },
     {
      "frame": 825,
      "invalid": 0,
-     "coverage": 0.79122
+     "coverage": 0.78703
     },
     {
      "frame": 826,
      "invalid": 0,
-     "coverage": 0.79132
+     "coverage": 0.78734
     },
     {
      "frame": 827,
      "invalid": 0,
-     "coverage": 0.79142
+     "coverage": 0.78765
     },
     {
      "frame": 828,
      "invalid": 0,
-     "coverage": 0.79152
+     "coverage": 0.78796
     },
     {
      "frame": 829,
      "invalid": 0,
-     "coverage": 0.79161
+     "coverage": 0.78825
     },
     {
      "frame": 830,
      "invalid": 0,
-     "coverage": 0.79171
+     "coverage": 0.78854
     },
     {
      "frame": 831,
      "invalid": 0,
-     "coverage": 0.79181
+     "coverage": 0.78881
     },
     {
      "frame": 832,
      "invalid": 0,
-     "coverage": 0.7919
+     "coverage": 0.78908
     },
     {
      "frame": 833,
      "invalid": 0,
-     "coverage": 0.792
+     "coverage": 0.78935
     },
     {
      "frame": 834,
      "invalid": 0,
-     "coverage": 0.79209
+     "coverage": 0.7896
     },
     {
      "frame": 835,
      "invalid": 0,
-     "coverage": 0.79218
+     "coverage": 0.78984
     },
     {
      "frame": 836,
      "invalid": 0,
-     "coverage": 0.79228
+     "coverage": 0.79008
     },
     {
      "frame": 837,
      "invalid": 0,
-     "coverage": 0.79237
+     "coverage": 0.79031
     },
     {
      "frame": 838,
      "invalid": 0,
-     "coverage": 0.79246
+     "coverage": 0.79052
     },
     {
      "frame": 839,
      "invalid": 0,
-     "coverage": 0.79254
+     "coverage": 0.79073
     },
     {
      "frame": 840,
      "invalid": 0,
-     "coverage": 0.79263
+     "coverage": 0.79093
     },
     {
      "frame": 841,
      "invalid": 0,
-     "coverage": 0.79271
+     "coverage": 0.79112
     },
     {
      "frame": 842,
      "invalid": 0,
-     "coverage": 0.7928
+     "coverage": 0.7913
     },
     {
      "frame": 843,
      "invalid": 0,
-     "coverage": 0.79288
+     "coverage": 0.79147
     },
     {
      "frame": 844,
      "invalid": 0,
-     "coverage": 0.79295
+     "coverage": 0.79163
     },
     {
      "frame": 845,
      "invalid": 0,
-     "coverage": 0.79303
+     "coverage": 0.79178
     },
     {
      "frame": 846,
      "invalid": 0,
-     "coverage": 0.7931
+     "coverage": 0.79192
     },
     {
      "frame": 847,
      "invalid": 0,
-     "coverage": 0.79318
+     "coverage": 0.79205
     },
     {
      "frame": 848,
      "invalid": 0,
-     "coverage": 0.79324
+     "coverage": 0.79217
     },
     {
      "frame": 849,
      "invalid": 0,
-     "coverage": 0.79331
+     "coverage": 0.79228
     },
     {
      "frame": 850,
      "invalid": 0,
-     "coverage": 0.79338
+     "coverage": 0.79238
     },
     {
      "frame": 851,
      "invalid": 0,
-     "coverage": 0.79344
+     "coverage": 0.79246
     },
     {
      "frame": 852,
      "invalid": 0,
-     "coverage": 0.7935
+     "coverage": 0.79254
     },
     {
      "frame": 853,
      "invalid": 0,
-     "coverage": 0.79355
+     "coverage": 0.7926
     },
     {
      "frame": 854,
      "invalid": 0,
-     "coverage": 0.79361
+     "coverage": 0.79266
     },
     {
      "frame": 855,
      "invalid": 0,
-     "coverage": 0.79366
+     "coverage": 0.7927
     },
     {
      "frame": 856,
      "invalid": 0,
-     "coverage": 0.79371
+     "coverage": 0.79273
     },
     {
      "frame": 857,
      "invalid": 0,
-     "coverage": 0.79375
+     "coverage": 0.79275
     },
     {
      "frame": 858,
      "invalid": 0,
-     "coverage": 0.79379
+     "coverage": 0.79276
     },
     {
      "frame": 859,
      "invalid": 0,
-     "coverage": 0.79383
+     "coverage": 0.79276
     },
     {
      "frame": 860,
      "invalid": 0,
-     "coverage": 0.79387
+     "coverage": 0.79275
     },
     {
      "frame": 861,
      "invalid": 0,
-     "coverage": 0.79391
+     "coverage": 0.79272
     },
     {
      "frame": 862,
      "invalid": 0,
-     "coverage": 0.79394
+     "coverage": 0.79269
     },
     {
      "frame": 863,
      "invalid": 0,
-     "coverage": 0.79397
+     "coverage": 0.79264
     },
     {
      "frame": 864,
      "invalid": 0,
-     "coverage": 0.79399
+     "coverage": 0.79258
     },
     {
      "frame": 865,
      "invalid": 0,
-     "coverage": 0.79402
+     "coverage": 0.79251
     },
     {
      "frame": 866,
      "invalid": 0,
-     "coverage": 0.79404
+     "coverage": 0.79243
     },
     {
      "frame": 867,
      "invalid": 0,
-     "coverage": 0.79406
+     "coverage": 0.79234
     },
     {
      "frame": 868,
      "invalid": 0,
-     "coverage": 0.79407
+     "coverage": 0.79223
     },
     {
      "frame": 869,
      "invalid": 0,
-     "coverage": 0.79409
+     "coverage": 0.79212
     },
     {
      "frame": 870,
      "invalid": 0,
-     "coverage": 0.7941
+     "coverage": 0.792
     },
     {
      "frame": 871,
      "invalid": 0,
-     "coverage": 0.79411
+     "coverage": 0.79186
     },
     {
      "frame": 872,
      "invalid": 0,
-     "coverage": 0.79411
+     "coverage": 0.79171
     },
     {
      "frame": 873,
      "invalid": 0,
-     "coverage": 0.79412
+     "coverage": 0.79155
     },
     {
      "frame": 874,
      "invalid": 0,
-     "coverage": 0.79412
+     "coverage": 0.79138
     },
     {
      "frame": 875,
      "invalid": 0,
-     "coverage": 0.79413
+     "coverage": 0.7912
     },
     {
      "frame": 876,
      "invalid": 0,
-     "coverage": 0.79413
+     "coverage": 0.79101
     },
     {
      "frame": 877,
      "invalid": 0,
-     "coverage": 0.79412
+     "coverage": 0.79081
     },
     {
      "frame": 878,
      "invalid": 0,
-     "coverage": 0.79412
+     "coverage": 0.7906
     },
     {
      "frame": 879,
      "invalid": 0,
-     "coverage": 0.79412
+     "coverage": 0.79037
     },
     {
      "frame": 880,
      "invalid": 0,
-     "coverage": 0.79411
+     "coverage": 0.79014
     },
     {
      "frame": 881,
      "invalid": 0,
-     "coverage": 0.7941
+     "coverage": 0.7899
     },
     {
      "frame": 882,
      "invalid": 0,
-     "coverage": 0.79409
+     "coverage": 0.78964
     },
     {
      "frame": 883,
      "invalid": 0,
-     "coverage": 0.79409
+     "coverage": 0.78938
     },
     {
      "frame": 884,
      "invalid": 0,
-     "coverage": 0.79408
+     "coverage": 0.7891
     },
     {
      "frame": 885,
      "invalid": 0,
-     "coverage": 0.79407
+     "coverage": 0.78882
     },
     {
      "frame": 886,
      "invalid": 0,
-     "coverage": 0.79406
+     "coverage": 0.78853
     },
     {
      "frame": 887,
      "invalid": 0,
-     "coverage": 0.79405
+     "coverage": 0.78822
     },
     {
      "frame": 888,
      "invalid": 0,
-     "coverage": 0.79403
+     "coverage": 0.78791
     },
     {
      "frame": 889,
      "invalid": 0,
-     "coverage": 0.79402
+     "coverage": 0.78759
     },
     {
      "frame": 890,
      "invalid": 0,
-     "coverage": 0.79401
+     "coverage": 0.78726
     },
     {
      "frame": 891,
      "invalid": 0,
-     "coverage": 0.794
+     "coverage": 0.78692
     },
     {
      "frame": 892,
      "invalid": 0,
-     "coverage": 0.79399
+     "coverage": 0.78657
     },
     {
      "frame": 893,
      "invalid": 0,
-     "coverage": 0.79398
+     "coverage": 0.78621
     },
     {
      "frame": 894,
      "invalid": 0,
-     "coverage": 0.79398
+     "coverage": 0.78584
     },
     {
      "frame": 895,
      "invalid": 0,
-     "coverage": 0.79397
+     "coverage": 0.78546
     },
     {
      "frame": 896,
      "invalid": 0,
-     "coverage": 0.79396
+     "coverage": 0.78508
     },
     {
      "frame": 897,
      "invalid": 0,
-     "coverage": 0.79396
+     "coverage": 0.78469
     },
     {
      "frame": 898,
      "invalid": 0,
-     "coverage": 0.79395
+     "coverage": 0.78428
     },
     {
      "frame": 899,
      "invalid": 0,
-     "coverage": 0.79395
+     "coverage": 0.78387
     },
     {
      "frame": 900,
      "invalid": 0,
-     "coverage": 0.79395
+     "coverage": 0.78346
     },
     {
      "frame": 901,
      "invalid": 0,
-     "coverage": 0.79395
+     "coverage": 0.78303
     },
     {
      "frame": 902,
      "invalid": 0,
-     "coverage": 0.79395
+     "coverage": 0.78259
     },
     {
      "frame": 903,
      "invalid": 0,
-     "coverage": 0.79396
+     "coverage": 0.78215
     },
     {
      "frame": 904,
      "invalid": 0,
-     "coverage": 0.79396
+     "coverage": 0.7817
     },
     {
      "frame": 905,
      "invalid": 0,
-     "coverage": 0.79397
+     "coverage": 0.78124
     },
     {
      "frame": 906,
      "invalid": 0,
-     "coverage": 0.79398
+     "coverage": 0.78078
     },
     {
      "frame": 907,
      "invalid": 0,
-     "coverage": 0.794
+     "coverage": 0.7803
     },
     {
      "frame": 908,
      "invalid": 0,
-     "coverage": 0.79401
+     "coverage": 0.77982
     },
     {
      "frame": 909,
      "invalid": 0,
-     "coverage": 0.79403
+     "coverage": 0.77933
     },
     {
      "frame": 910,
      "invalid": 0,
-     "coverage": 0.79405
+     "coverage": 0.77884
     },
     {
      "frame": 911,
      "invalid": 0,
-     "coverage": 0.79407
+     "coverage": 0.77833
     },
     {
      "frame": 912,
      "invalid": 0,
-     "coverage": 0.7941
+     "coverage": 0.77782
     },
     {
      "frame": 913,
      "invalid": 0,
-     "coverage": 0.79413
+     "coverage": 0.7773
     },
     {
      "frame": 914,
      "invalid": 0,
-     "coverage": 0.79416
+     "coverage": 0.77678
     },
     {
      "frame": 915,
      "invalid": 0,
-     "coverage": 0.7942
+     "coverage": 0.77624
     },
     {
      "frame": 916,
      "invalid": 0,
-     "coverage": 0.79424
+     "coverage": 0.7757
     },
     {
      "frame": 917,
      "invalid": 0,
-     "coverage": 0.79428
+     "coverage": 0.77515
     },
     {
      "frame": 918,
      "invalid": 0,
-     "coverage": 0.79432
+     "coverage": 0.7746
     },
     {
      "frame": 919,
      "invalid": 0,
-     "coverage": 0.79437
+     "coverage": 0.77403
     },
     {
      "frame": 920,
      "invalid": 0,
-     "coverage": 0.79442
+     "coverage": 0.77346
     },
     {
      "frame": 921,
      "invalid": 0,
-     "coverage": 0.79447
+     "coverage": 0.77288
     },
     {
      "frame": 922,
      "invalid": 0,
-     "coverage": 0.79453
+     "coverage": 0.7723
     },
     {
      "frame": 923,
      "invalid": 0,
-     "coverage": 0.79459
+     "coverage": 0.7717
     },
     {
      "frame": 924,
      "invalid": 0,
-     "coverage": 0.79465
+     "coverage": 0.7711
     },
     {
      "frame": 925,
      "invalid": 0,
-     "coverage": 0.79472
+     "coverage": 0.77049
     },
     {
      "frame": 926,
      "invalid": 0,
-     "coverage": 0.79479
+     "coverage": 0.76988
     },
     {
      "frame": 927,
      "invalid": 0,
-     "coverage": 0.79486
+     "coverage": 0.76925
     },
     {
      "frame": 928,
      "invalid": 0,
-     "coverage": 0.79493
+     "coverage": 0.76862
     },
     {
      "frame": 929,
      "invalid": 0,
-     "coverage": 0.79501
+     "coverage": 0.76798
     },
     {
      "frame": 930,
      "invalid": 0,
-     "coverage": 0.79509
+     "coverage": 0.76733
     },
     {
      "frame": 931,
      "invalid": 0,
-     "coverage": 0.79518
+     "coverage": 0.76667
     },
     {
      "frame": 932,
      "invalid": 0,
-     "coverage": 0.79526
+     "coverage": 0.76601
     },
     {
      "frame": 933,
      "invalid": 0,
-     "coverage": 0.79535
+     "coverage": 0.76533
     },
     {
      "frame": 934,
      "invalid": 0,
-     "coverage": 0.79545
+     "coverage": 0.76465
     },
     {
      "frame": 935,
      "invalid": 0,
-     "coverage": 0.79554
+     "coverage": 0.76396
     },
     {
      "frame": 936,
      "invalid": 0,
-     "coverage": 0.79564
+     "coverage": 0.76326
     },
     {
      "frame": 937,
      "invalid": 0,
-     "coverage": 0.79574
+     "coverage": 0.76255
     },
     {
      "frame": 938,
      "invalid": 0,
-     "coverage": 0.79584
+     "coverage": 0.76183
     },
     {
      "frame": 939,
      "invalid": 0,
-     "coverage": 0.79594
+     "coverage": 0.7611
     },
     {
      "frame": 940,
      "invalid": 0,
-     "coverage": 0.79605
+     "coverage": 0.76036
     },
     {
      "frame": 941,
      "invalid": 0,
-     "coverage": 0.79616
+     "coverage": 0.75962
     },
     {
      "frame": 942,
      "invalid": 0,
-     "coverage": 0.79626
+     "coverage": 0.75886
     },
     {
      "frame": 943,
      "invalid": 0,
-     "coverage": 0.79638
+     "coverage": 0.75809
     },
     {
      "frame": 944,
      "invalid": 0,
-     "coverage": 0.79649
+     "coverage": 0.75732
     },
     {
      "frame": 945,
      "invalid": 0,
-     "coverage": 0.7966
+     "coverage": 0.75653
     },
     {
      "frame": 946,
      "invalid": 0,
-     "coverage": 0.79672
+     "coverage": 0.75573
     },
     {
      "frame": 947,
      "invalid": 0,
-     "coverage": 0.79684
+     "coverage": 0.75492
     },
     {
      "frame": 948,
      "invalid": 0,
-     "coverage": 0.79696
+     "coverage": 0.7541
     },
     {
      "frame": 949,
      "invalid": 0,
-     "coverage": 0.79707
+     "coverage": 0.75327
     },
     {
      "frame": 950,
      "invalid": 0,
-     "coverage": 0.79719
+     "coverage": 0.75244
     },
     {
      "frame": 951,
      "invalid": 0,
-     "coverage": 0.79732
+     "coverage": 0.75159
     },
     {
      "frame": 952,
      "invalid": 0,
-     "coverage": 0.79744
+     "coverage": 0.75074
     },
     {
      "frame": 953,
      "invalid": 0,
-     "coverage": 0.79756
+     "coverage": 0.74988
     },
     {
      "frame": 954,
      "invalid": 0,
-     "coverage": 0.79768
+     "coverage": 0.74904
     },
     {
      "frame": 955,
      "invalid": 0,
-     "coverage": 0.7978
+     "coverage": 0.7482
     },
     {
      "frame": 956,
      "invalid": 0,
-     "coverage": 0.79793
+     "coverage": 0.74739
     },
     {
      "frame": 957,
      "invalid": 0,
-     "coverage": 0.79805
+     "coverage": 0.74659
     },
     {
      "frame": 958,
      "invalid": 0,
-     "coverage": 0.79817
+     "coverage": 0.74581
     },
     {
      "frame": 959,
      "invalid": 0,
-     "coverage": 0.79829
+     "coverage": 0.74504
     },
     {
      "frame": 960,
      "invalid": 0,
-     "coverage": 0.79845
+     "coverage": 0.74431
     },
     {
      "frame": 961,
      "invalid": 0,
-     "coverage": 0.79854
+     "coverage": 0.74358
     },
     {
      "frame": 962,
      "invalid": 0,
-     "coverage": 0.7986
+     "coverage": 0.74288
     },
     {
      "frame": 963,
      "invalid": 0,
-     "coverage": 0.7986
+     "coverage": 0.7422
     },
     {
      "frame": 964,
      "invalid": 0,
-     "coverage": 0.79855
+     "coverage": 0.74152
     },
     {
      "frame": 965,
      "invalid": 0,
-     "coverage": 0.79844
+     "coverage": 0.74086
     },
     {
      "frame": 966,
      "invalid": 0,
-     "coverage": 0.79827
+     "coverage": 0.74021
     },
     {
      "frame": 967,
      "invalid": 0,
-     "coverage": 0.79804
+     "coverage": 0.73955
     },
     {
      "frame": 968,
      "invalid": 0,
-     "coverage": 0.79775
+     "coverage": 0.73889
     },
     {
      "frame": 969,
      "invalid": 0,
-     "coverage": 0.79739
+     "coverage": 0.73821
     },
     {
      "frame": 970,
      "invalid": 0,
-     "coverage": 0.79697
+     "coverage": 0.73752
     },
     {
      "frame": 971,
      "invalid": 0,
-     "coverage": 0.79648
+     "coverage": 0.73681
     },
     {
      "frame": 972,
      "invalid": 0,
-     "coverage": 0.79592
+     "coverage": 0.73607
     },
     {
      "frame": 973,
      "invalid": 0,
-     "coverage": 0.79528
+     "coverage": 0.73529
     },
     {
      "frame": 974,
      "invalid": 0,
-     "coverage": 0.79458
+     "coverage": 0.73445
     },
     {
      "frame": 975,
      "invalid": 0,
-     "coverage": 0.7938
+     "coverage": 0.73355
     },
     {
      "frame": 976,
      "invalid": 0,
-     "coverage": 0.79295
+     "coverage": 0.73255
     },
     {
      "frame": 977,
      "invalid": 0,
-     "coverage": 0.79203
+     "coverage": 0.73142
     },
     {
      "frame": 978,
      "invalid": 0,
-     "coverage": 0.79103
+     "coverage": 0.73013
     },
     {
      "frame": 979,
      "invalid": 0,
-     "coverage": 0.78995
+     "coverage": 0.72863
     },
     {
      "frame": 980,
      "invalid": 0,
-     "coverage": 0.78879
+     "coverage": 0.72687
     },
     {
      "frame": 981,
      "invalid": 0,
-     "coverage": 0.78755
+     "coverage": 0.72475
     },
     {
      "frame": 982,
      "invalid": 0,
-     "coverage": 0.78624
+     "coverage": 0.72219
     },
     {
      "frame": 983,
      "invalid": 0,
-     "coverage": 0.78485
+     "coverage": 0.71909
     },
     {
      "frame": 984,
      "invalid": 0,
-     "coverage": 0.78337
+     "coverage": 0.71529
     },
     {
      "frame": 985,
      "invalid": 0,
-     "coverage": 0.78182
+     "coverage": 0.71066
     },
     {
      "frame": 986,
      "invalid": 0,
-     "coverage": 0.78018
+     "coverage": 0.70499
     },
     {
      "frame": 987,
      "invalid": 0,
-     "coverage": 0.77846
+     "coverage": 0.69806
     },
     {
      "frame": 988,
      "invalid": 0,
-     "coverage": 0.77665
+     "coverage": 0.68963
     },
     {
      "frame": 989,
      "invalid": 0,
-     "coverage": 0.77476
+     "coverage": 0.6794
     },
     {
      "frame": 990,
      "invalid": 0,
-     "coverage": 0.77085
+     "coverage": 0.66953
     },
     {
      "frame": 991,
      "invalid": 0,
-     "coverage": 0.76746
+     "coverage": 0.65934
     },
     {
      "frame": 992,
      "invalid": 0,
-     "coverage": 0.76004
+     "coverage": 0.6521
     },
     {
      "frame": 993,
      "invalid": 0,
-     "coverage": 0.75067
+     "coverage": 0.64932
     },
     {
      "frame": 994,
      "invalid": 0,
-     "coverage": 0.74369
+     "coverage": 0.65109
     },
     {
      "frame": 995,
      "invalid": 0,
-     "coverage": 0.73727
+     "coverage": 0.65638
     },
     {
      "frame": 996,
      "invalid": 0,
-     "coverage": 0.73223
+     "coverage": 0.66372
     },
     {
      "frame": 997,
      "invalid": 0,
-     "coverage": 0.72862
+     "coverage": 0.67096
     },
     {
      "frame": 998,
      "invalid": 0,
-     "coverage": 0.72586
+     "coverage": 0.67098
     },
     {
      "frame": 999,
      "invalid": 0,
-     "coverage": 0.72309
+     "coverage": 0.67592
     },
     {
      "frame": 1000,
      "invalid": 0,
-     "coverage": 0.72022
+     "coverage": 0.66753
     },
     {
      "frame": 1001,
      "invalid": 0,
-     "coverage": 0.71236
+     "coverage": 0.65933
     },
     {
      "frame": 1002,
      "invalid": 0,
-     "coverage": 0.69348
+     "coverage": 0.65306
     },
     {
      "frame": 1003,
      "invalid": 0,
-     "coverage": 0.65869
+     "coverage": 0.64844
     },
     {
      "frame": 1004,
      "invalid": 0,
-     "coverage": 0.61597
+     "coverage": 0.64468
     },
     {
      "frame": 1005,
      "invalid": 0,
-     "coverage": 0.57317
+     "coverage": 0.64109
     },
     {
      "frame": 1006,
      "invalid": 0,
-     "coverage": 0.53392
+     "coverage": 0.63631
     },
     {
      "frame": 1007,
      "invalid": 0,
-     "coverage": 0.49784
+     "coverage": 0.62309
     },
     {
      "frame": 1008,
      "invalid": 0,
-     "coverage": 0.45299
+     "coverage": 0.58827
     },
     {
      "frame": 1009,
      "invalid": 0,
-     "coverage": 0.41426
+     "coverage": 0.52396
     },
     {
      "frame": 1010,
      "invalid": 0,
-     "coverage": 0.38462
+     "coverage": 0.46209
     },
     {
      "frame": 1011,
      "invalid": 0,
-     "coverage": 0.364
+     "coverage": 0.41046
     },
     {
      "frame": 1012,
      "invalid": 0,
-     "coverage": 0.34957
+     "coverage": 0.36827
     },
     {
      "frame": 1013,
      "invalid": 0,
-     "coverage": 0.33802
+     "coverage": 0.34003
     },
     {
      "frame": 1014,
      "invalid": 0,
-     "coverage": 0.32866
+     "coverage": 0.32271
     },
     {
      "frame": 1015,
      "invalid": 0,
-     "coverage": 0.32348
+     "coverage": 0.31417
     },
     {
      "frame": 1016,
      "invalid": 0,
-     "coverage": 0.32059
+     "coverage": 0.3109
     },
     {
      "frame": 1017,
      "invalid": 0,
-     "coverage": 0.31809
+     "coverage": 0.30837
     },
     {
      "frame": 1018,
      "invalid": 0,
-     "coverage": 0.3157
+     "coverage": 0.30597
     },
     {
      "frame": 1019,
      "invalid": 0,
-     "coverage": 0.3134
+     "coverage": 0.30367
     },
     {
      "frame": 1020,
      "invalid": 0,
-     "coverage": 0.31118
+     "coverage": 0.30146
     },
     {
      "frame": 1021,
      "invalid": 0,
-     "coverage": 0.30904
+     "coverage": 0.29935
     },
     {
      "frame": 1022,
      "invalid": 0,
-     "coverage": 0.30699
+     "coverage": 0.29734
     },
     {
      "frame": 1023,
      "invalid": 0,
-     "coverage": 0.30503
+     "coverage": 0.29544
     },
     {
      "frame": 1024,
      "invalid": 0,
-     "coverage": 0.30316
+     "coverage": 0.29363
     },
     {
      "frame": 1025,
      "invalid": 0,
-     "coverage": 0.3014
+     "coverage": 0.29193
     },
     {
      "frame": 1026,
      "invalid": 0,
-     "coverage": 0.29973
+     "coverage": 0.29033
     },
     {
      "frame": 1027,
      "invalid": 0,
-     "coverage": 0.29818
+     "coverage": 0.28885
     },
     {
      "frame": 1028,
      "invalid": 0,
-     "coverage": 0.29675
+     "coverage": 0.28749
     },
     {
      "frame": 1029,
      "invalid": 0,
-     "coverage": 0.29548
+     "coverage": 0.28629
     },
     {
      "frame": 1030,
      "invalid": 0,
-     "coverage": 0.2944
+     "coverage": 0.28528
     },
     {
      "frame": 1031,
      "invalid": 0,
-     "coverage": 0.29352
+     "coverage": 0.28446
     },
     {
      "frame": 1032,
      "invalid": 0,
-     "coverage": 0.29281
+     "coverage": 0.28381
     },
     {
      "frame": 1033,
      "invalid": 0,
-     "coverage": 0.29222
+     "coverage": 0.28328
     },
     {
      "frame": 1034,
      "invalid": 0,
-     "coverage": 0.29099
+     "coverage": 0.2821
     }
    ],
    "failed": []
@@ -2537,12 +2537,17 @@
    "colorRange": "tv",
    "durationSeconds": 16.5
   },
+  "timing": {
+   "evenDecodeTimes": true,
+   "packetsRewritten": 22,
+   "reorderFrames": 2
+  },
   "stop": "mercury",
   "clipRange": {
    "firstFrame": 540,
    "endFrame": 1035
   },
   "rendered": [],
-  "signature": "[\"13bc9e26fb03de72876b3efad2471779a29af7361c2dce84c8be12f1363cad45\",\"copy\"]"
+  "signature": "[\"2e0640cef16f6e699e72ee2f8b664f27b5fe488743743b4db1f307677ab93370\",\"copy\"]"
  }
 }

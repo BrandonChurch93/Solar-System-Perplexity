@@ -1,0 +1,35 @@
+{
+ "critic": "R6",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "image-01.png through image-09.png",
+   "where": "whole sequence",
+   "what": "the change across the hook is slow and incremental: the loop brightens and rises a little and the camera pushes in slightly, but no single event lands that rewards staying; at phone size frames 1-5 look almost identical",
+   "fix": "front-load a clear event in the first second, such as the loop snapping or erupting, a flare burst at a footpoint, or a faster push toward the arch, so the motion reads at thumbnail size"
+  },
+  {
+   "severity": "major",
+   "file": "image-01.png",
+   "where": "upper middle arch",
+   "what": "in the first frame the loop is thin, dim and only partly formed, so the hero subject is weaker than the granulated surface below it",
+   "fix": "open with the arch already bright and fully drawn, or raise its brightness and thickness in frame 0 so it is the first thing the eye catches"
+  },
+  {
+   "severity": "minor",
+   "file": "image-01.png",
+   "where": "lower half of frame",
+   "what": "the granulation fills about half the frame with busy, similar-value detail that competes with the loop and turns to texture noise at 400 px wide",
+   "fix": "lower the horizon or darken and defocus the near-field granulation so the arch and sunspot dominate"
+  },
+  {
+   "severity": "minor",
+   "file": "image-01.png",
+   "where": "overall composition",
+   "what": "the wide landscape framing leaves the subject small on a vertical feed and puts about 40 percent of the frame into dark starfield",
+   "fix": "crop tighter on the arch and sunspot or recompose for a vertical delivery"
+  }
+ ]
+}

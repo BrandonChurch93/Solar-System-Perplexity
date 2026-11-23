@@ -1,0 +1,35 @@
+{
+ "critic": "R3",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "image-04.png",
+   "where": "crops U and V, lower left and lower right ring arcs",
+   "what": "Multiple ring strands lose contrast over the same short span, so the bright outer arc reads like a cut-off stroke on both sides instead of a continuous ring in shadow.",
+   "fix": "Keep the strands continuous through the shadow and vary their opacity and falloff so they do not terminate together."
+  },
+  {
+   "severity": "major",
+   "file": "image-03.png",
+   "where": "crops P and Q, left-side polar region and center of the shadowed globe",
+   "what": "The left side resolves into a broad, soft oval swirl, while the adjacent surface turns into long, parallel, smeared bands with little fine structure. The distortion is visible in the full frame.",
+   "fix": "Reduce the apparent polar stretching and add irregular, resolved cloud structure across the darker bands."
+  },
+  {
+   "severity": "minor",
+   "file": "image-01.png",
+   "where": "across the upper third of the globe, at the terminator",
+   "what": "The shadow falls in a broad, uniformly soft strip that suppresses cloud texture and gives the transition an airbrushed look.",
+   "fix": "Preserve low-contrast cloud detail through the transition and vary the penumbra with the cloud structure."
+  },
+  {
+   "severity": "minor",
+   "file": "image-02.png",
+   "where": "crops C and G, sunlit limb",
+   "what": "A near-white rim sits under a broad cyan glow, making the edge look outlined against the rings and star field.",
+   "fix": "Lower the peak rim intensity and let the atmospheric glow taper continuously into the surrounding sky."
+  }
+ ]
+}

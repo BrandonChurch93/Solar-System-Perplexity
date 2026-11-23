@@ -1,0 +1,19 @@
+Repaint Image 1 as a strict top-down nadir photograph from low orbit of a tropical sea with islands, cloud fields and a sun glint (12 x 12 degrees, 1:1 square, north at the top). Same place, same layout, seen from straight above.
+
+WHAT IMAGE 1 IS:
+A rough map of the place. Its bright middle and left were projected onto the map from an oblique photograph (Image 2 shows that photograph, for the finish of the clouds, the sea and the glint only). The projection stretched everything that stands up or lies far away: cloud towers became long white and dark smears pointing to the upper left, and the far cloud bands in the upper left became a milky blur. The darker map around it (right and bottom) is already top-down.
+
+KEEP EXACTLY, at the same pixel position, shape, size, brightness and hue when scaled back to Image 1:
+- the cream white sun glint on the sea in the middle and its soft falloff,
+- the long narrow island right of the middle with its turquoise banks, the round turquoise bank and the small cays next to it,
+- every coastline and every land mass of Image 1 (the large island across the top, the land at the left edge, the land in the lower left, the islands at the right edge and in the lower right corner),
+- the overall brightness of every region: bright where Image 1 is bright, deep blue where it is deep blue. No vignette.
+
+REPAINT:
+- Every stretched cloud smear becomes a compact cluster of cumulus seen from straight above: crisp lumpy white tops with delicate edges, standing at the lower right end of the smear, each with a short soft shadow on the sea that falls toward the lower right (the Sun is low in the upper left). No streaks, no smears, no motion blur anywhere.
+- The milky blur in the upper left becomes fields of small cumulus, cloud streets and a few larger cloud clusters seen from straight above over deep blue sea, about half cloud and half sea. Over the large island at the top and over the land at the left the cloud is broken and the green land shows through the gaps.
+- The straight seams and the curved seam where the bright projected part meets the darker map disappear: sea, glint falloff and cloud fields continue across them without any edge, and the darker map beyond takes the same photographic finish, with scattered small cumulus and their shadows on a deep blue sea.
+- Sea: deep blue water with fine swell texture and faint current streaks, sharp reef edges and sand ripples inside the turquoise shallows.
+- Land: sharp coastlines, forested ridges, canopy texture, in the existing colours. No city lights.
+
+Strict nadir map filling the square edge to edge. No horizon, no limb, no atmosphere glow, no stars, no border, no text, no watermark.

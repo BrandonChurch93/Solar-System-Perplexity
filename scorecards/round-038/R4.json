@@ -1,0 +1,49 @@
+{
+ "critic": "R4",
+ "score": 5,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-03.png",
+   "where": "lower-left quadrant in frames 4181-4185 (also visible in sheet-02.png frames 4175 and 4183)",
+   "what": "the straight left and bottom edges of the warped terrain picture enter the frame during the dive-to-terrain cover, showing a dark L-shaped rectangular corner over the brighter 3D cloud deck until frame 4186",
+   "fix": "add overscan or higher scale to the terrain plate and adjust the cover timing/feathering so no border of the terrain image ever enters the viewport"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "upper-right sky, rings, and globe center between frames 4400 and 4407",
+   "what": "across the terrain-to-rise cover the sun shrinks roughly fivefold from a wide bloom with horizontal flare to a small dot, the Milky Way dust band under the rings drops out to black sky, a horizontal back-ring line appears at the right limb, and a large white circular storm abruptly appears on the globe",
+   "fix": "match sun bloom, sky/Milky Way orientation, ring thickness and geometry, and cloud-deck features between the terrain view and the 3D globe render across the cover"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "sky, rings, sun, and cloud deck across frames 4167-4183",
+   "what": "the 3D dive render (pitch-black sky inside a flat gray ring band, tiny sun, white circular storm) mismatches the incoming terrain view (Milky Way band, thin double ringlets, large sun flare, smooth cyan streaks), so exposure and scene elements visibly swap across the cover",
+   "fix": "align lighting, sun flare, ring appearance, starfield/Milky Way placement, and surface clouds between the 3D dive scene and the terrain plate so the cover reads as one unbroken move"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "fast dive frames 4126-4175 (and fast rise frames 4400-4441 in sheet-05.png)",
+   "what": "fast camera motion has zero motion blur; stars, thin ring arcs, the planet limb, and cloud edges remain razor-sharp pinhole snapshots despite moving tens of pixels per frame",
+   "fix": "render fast camera moves with continuous shutter motion blur using enough subframes to produce a smooth blur without ghosted edge copies"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-03.png",
+   "where": "thin bright ringlets and 1-pixel stars in frames 4186-4192 (and frames 4386-4397 in sheet-06.png)",
+   "what": "unfiltered 1-pixel stair-stepped ring lines and point stars alias during slow subpixel camera drift, causing 60-110 gray-level frame-to-frame shimmer along the rings and star twinkling",
+   "fix": "supersample and prefilter thin ring arcs and soften point-star radii slightly above 1.5 pixels to eliminate subpixel crawling and shimmer"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-06.png",
+   "where": "entire sheet, frames 4386-4397",
+   "what": "the consecutive-frame sheet for the second cover starts early inside terrain and cuts off at frame 4397 mid-dissolve before the handoff into the 3D rise globe finishes around frame 4407",
+   "fix": "shift the cover contact-sheet range forward (roughly frames 4394-4405) so consecutive frames span the complete terrain-to-rise transition"
+  }
+ ]
+}

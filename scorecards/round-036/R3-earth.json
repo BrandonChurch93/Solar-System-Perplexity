@@ -1,0 +1,99 @@
+{
+ "critic": "R3",
+ "score": 5.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-07.png",
+      "where": "crop L (1368,0,456,433), sky immediately left of the Moon (also haloing the Moon in image-03.png crop M)",
+      "what": "a distinct ~120px dark circular patch sits in the sky background to the left of the Moon where green-channel sky glow drops by more than half, exposing an offset matte or leftover Moon cutout on the sky plate",
+      "fix": "composite the Moon over a clean, unmasked starfield and nebula background with no baked circular cutout or dark halo"
+     },
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "crops A, E, F, G, and H across the Earth globe (and image-07.png crops J, K, P; image-08.png crop U)",
+      "what": "at native size the closer Earth view is visibly soft and under-resolved (~35% sharpness loss vs image-02.png): South American city lights smear into blurry 4-6px blobs, coastlines and Arctic islands blur, and clouds near the western limb in crop F show blocky texels and flat baked-on stretching without relief",
+      "fix": "use higher-resolution Earth albedo, night-lights, and separate cloud maps (16K-32K or tiled detail) so terrain, city lights, and foreshortened clouds stay crisp throughout the camera push-in"
+     },
+     {
+      "severity": "major",
+      "file": "image-02.png",
+      "where": "crops C, H, and I on the dark side of the globe, and upper-right limb in image-06.png crop C",
+      "what": "airbrushed neon-green streaks are painted directly onto the flat Earth surface texture at mid- and low-latitudes (over the mid-Atlantic, the West African coast in crop I, and the South Atlantic off Brazil in crop H), while the external green aurora rays in image-06.png crop C stop in a hard seam along the geometric sphere silhouette",
+      "fix": "remove baked green paint from the surface texture and render the aurora as an elevated 3D volumetric shell confined to the polar oval so it wraps continuously across the limb"
+     },
+     {
+      "severity": "major",
+      "file": "image-03.png",
+      "where": "crop M Moon disk and sunlit left limb (and enlarged Moon across image-07.png crops L and M)",
+      "what": "the lunar surface texture is soft and blocky at native pixel scale, and the bright sunlit left limb has visible stair-stepped pixel aliasing",
+      "fix": "apply a higher-resolution lunar texture map and render the Moon silhouette with supersampled or multisampled anti-aliasing"
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "Arctic cap in crop G (and image-06.png crop G) and Southern Ocean near bottom limb in crop H / image-04.png crop V",
+      "what": "polar ice and cloud detail smear into a featureless pinched cap toward the North Pole, and ocean/cloud texture stretches tangentially into blurred bands south of Tierra del Fuego",
+      "fix": "use cube-map or polar-corrected UV mapping with high-latitude detail textures to eliminate equirectangular pole pinching and tangential smearing"
+     },
+     {
+      "severity": "minor",
+      "file": "image-07.png",
+      "where": "crop Q dark eastern limb against the Milky Way, and Milky Way background in image-02.png crop I",
+      "what": "the dark limb carries a faint stepped green-teal rim against the starfield, and faint Milky Way dust clouds show mild blocky color noise behind crisp 1-2px procedural stars",
+      "fix": "anti-alias and feather the night-side atmospheric rim optical depth and use an uncompressed, higher-bit-depth nebula map matching the star sharpness"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-14.png",
+      "where": "tiles A, F, G and H: Andes, Central American spine, Rockies, Sierra Madre and Baja",
+      "what": "ridges are bump-mapped and beveled, so the land reads as a raised relief globe rather than a planet at this scale",
+      "fix": "flatten the displacement to orbital scale and keep only broad, soft shading"
+     },
+     {
+      "severity": "major",
+      "file": "image-16.png",
+      "where": "lower-left tile V, night side of South America; same streaking in image-14.png tiles E and H",
+      "what": "city lights, coasts and cloud bands are smeared on a diagonal while the stars in the same crops stay sharp",
+      "fix": "remove the directional blur on the planet layer, or match it on the starfield if the blur is meant to be exposure motion"
+     },
+     {
+      "severity": "major",
+      "file": "image-14.png",
+      "where": "tile A, Caribbean, Bahamas, Gulf of Mexico and Central American coasts",
+      "what": "shallow water is a flat saturated cyan shelf with a hard edge against deep ocean",
+      "fix": "replace the color mask with a gradual depth gradient and break up the shelf color"
+     },
+     {
+      "severity": "minor",
+      "file": "image-15.png",
+      "where": "gibbous moon in the mid-left crop, also upper right of image-13.png",
+      "what": "the lunar surface is softer and lower-detail than the pinpoint stars beside it",
+      "fix": "raise crater and mare detail so the disk holds up at the same scale as the starfield"
+     }
+    ]
+   }
+  }
+ ]
+}

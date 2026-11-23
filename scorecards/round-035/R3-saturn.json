@@ -1,0 +1,35 @@
+{
+ "critic": "R3",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "image-02.png",
+   "where": "crop A, beneath the lit limb where the globe meets the near rings",
+   "what": "A short, abrupt diagonal cutoff continues below the globe into the near-ring texture, making the overlap look like a compositing seam.",
+   "fix": "Separate near- and far-ring occlusion at the globe silhouette and keep the near-ring texture continuous through the crossing."
+  },
+  {
+   "severity": "major",
+   "file": "image-04.png",
+   "where": "crops T and V–X, nearest ring bands",
+   "what": "Fine grain repeats at much the same scale across neighboring bands, and long, uniformly stretched grooves give the foreground a brushed rather than particulate texture.",
+   "fix": "Vary particle scale and density between bands, break up the long streaks along the arcs, and filter the tightest grooves at output resolution."
+  },
+  {
+   "severity": "minor",
+   "file": "image-04.png",
+   "where": "crop V, lower-left edge of the bright ring bordering the dark gap",
+   "what": "A fuzzy gray wedge interrupts the otherwise dark gap and cuts across the fine ringlets instead of following their arcs.",
+   "fix": "Remove the localized spill from the gap or constrain it to the ring geometry if it is intended as scattering."
+  },
+  {
+   "severity": "minor",
+   "file": "image-03.png",
+   "where": "crop L, the bright globe just inside the lower-left limb",
+   "what": "The brightest cloud bands lose most of their fine contrast and soften into an airbrushed cream patch.",
+   "fix": "Roll off the highlights more gently and preserve subtle cloud-band contrast in the illuminated limb."
+  }
+ ]
+}

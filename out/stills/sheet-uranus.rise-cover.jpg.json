@@ -1,0 +1,34 @@
+{
+ "engineHash": "247ebad7e038ce06",
+ "stopHashes": {
+  "uranus": "a5dd9ab65ef9c8db"
+ },
+ "format": "16x9",
+ "tier": "review",
+ "assets": "full",
+ "diag": "beauty",
+ "browser": "147.0.7727.15",
+ "machine": "space-sandbox 2x Intel(R) Xeon(R) Processor @ 2.90GHz",
+ "first": 4405,
+ "last": 4416,
+ "extra": {
+  "frames": [
+   4405,
+   4406,
+   4407,
+   4408,
+   4409,
+   4410,
+   4411,
+   4412,
+   4413,
+   4414,
+   4415,
+   4416
+  ],
+  "kind": "cover",
+  "segment": "uranus.rise",
+  "signature": "[\"32f46c0377c580b8f7316345294fca619c24df828f38adf2a0586d8ba521f88a\",[\"58d1489d68482c1f0210c6f0edd039fe2ff60fafd16501b6e750981824b90735\",92]]",
+  "quality": 92
+ }
+}

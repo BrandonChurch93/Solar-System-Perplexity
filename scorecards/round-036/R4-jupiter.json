@@ -1,0 +1,42 @@
+{
+ "critic": "R4",
+ "score": 4,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-03.png",
+   "where": "planet limb, sky above horizon, and full surface across frames 3019-3030",
+   "what": "across the dive cover an opaque tan blur blankets the globe while the limb whips across the top of frame and reverses slope from up-right (3019) to down-right (3025) in six frames; simultaneously the starfield cuts to pure black (3019-3024) before fading in a new Milky Way sky (3025-3030) over a misaligned double horizon",
+   "fix": "align the 3D globe dive roll, limb angle, starfield, and color grade to the terrain entry framing before the cover begins so the horizon slope and stars carry continuously without blacking out space or doubling the limb"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-06.png",
+   "where": "upper horizon, sky, and planet limb across frames 3265-3276",
+   "what": "the rise cover creates a blurry double horizon on the upper left (3265-3269), drops the starry sky completely to pitch black (3269-3270) before fading in a different Milky Way background (3271-3276), and snaps a nearly flat horizon into a tight northern polar cap (3271-3276) disconnected from the storm latitude",
+   "fix": "pull the 3D rise camera straight out from the storm's actual southern latitude with matched limb curvature, continuous star visibility, and volumetric cloud pass-through instead of cross-fading through black sky and Jupiter's north pole"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-04.png",
+   "where": "central storm eye and sunlit cloud bands on the left across frames 3060-3239",
+   "what": "the terrain plate deforms as a single 2D warped image rather than moving with 3D depth parallax: the vortex eye stretches horizontally from roughly 1.5:1 in 3060 to 3:1 by 3239, smearing the left-side cloud ridges into taffy-like streaks while foreground clouds and the distant limb remain locked to one plane",
+   "fix": "separate cloud decks into true 3D altitude layers so near clouds move against the distant horizon with genuine parallax, and reduce UV warp amplitude so the vortex eye and cloud textures hold their proportions"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "dive target region and upper limb across frames 3010-3051",
+   "what": "after diving toward warm cream-and-ochre bands around the Great Red Spot in 3010, the murky tan cover haze lingers over the dark teal-and-rust terrain until 3051, leaving a ghostly blurry limb above the crisp blue atmosphere in 3027-3043 alongside an abrupt color and exposure shift",
+   "fix": "clear the cloud pass-through cleanly as the camera exits the upper haze by 3030 and match color temperature and exposure between the sunlit globe bands and the storm terrain"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "storm vortex in frames 3240-3260 and globe pullback in frames 3274-3287",
+   "what": "at the start of the rise (3240-3260) the 2D storm plate rapidly twists into a rubbery teardrop warp while reversing star drift direction, and after exiting the north limb in 3274 the camera pitches steeply down across 3280-3287 to reveal the Great Red Spot near the bottom of frame instead of rising along one continuous path",
+   "fix": "replace the rapid 2D swirl warp in 3240-3260 with eased 3D upward camera pullback and maintain a single continuous ascent vector directly away from the Great Red Spot through 3287"
+  }
+ ]
+}

@@ -193,6 +193,7 @@ export class Air {
   private readonly lineAim: THREE.Vector3
   private readonly users: Record<string, THREE.IUniform>[] = []
   private readonly work = new THREE.Vector3()
+  private thin = 1
 
   constructor(readonly params: AirParams, diag: THREE.IUniform<number>) {
     this.material = new THREE.ShaderMaterial({
@@ -217,7 +218,8 @@ export class Air {
     this.users.push(uniforms)
   }
 
-  update(camera: THREE.Vector3, light: THREE.Vector3, rotation: THREE.Quaternion, home: number, line: number, gain: number, near = 0, tint?: number[], seat = 1): void {
+  update(camera: THREE.Vector3, light: THREE.Vector3, rotation: THREE.Quaternion, home: number, line: number, gain: number, near = 0, tint?: number[], seat = 1, thin = 1, amount = 1): void {
+    this.thin = thin
     for (const u of this.users) {
       const hue = u.uAirNear!.value as THREE.Vector4
       if (tint) hue.set(tint[0]!, tint[1]!, tint[2]!, near)
@@ -231,6 +233,7 @@ export class Air {
       const days = u.uAirDay!.value as THREE.Vector3[]
       for (let i = 0; i < AIR_LAYERS; i++) {
         const l = this.params.layers[i]!
+        shapes[i]!.x = l.scaleHeight * thin
         shapes[i]!.z = l.away[0] + (l.dayFrom - l.away[0]) * home
         shapes[i]!.w = l.away[1] + (l.dayTo - l.away[1]) * home
         days[i]!.fromArray(l.day).multiplyScalar(l.away[2] + (1 - l.away[2]) * home)
@@ -249,7 +252,7 @@ export class Air {
       ;(u.uCrestHead!.value as THREE.Vector4).set(this.work.x, this.work.y, this.work.z, ln.crest.head[3])
       ;(u.uCrestAim!.value as THREE.Vector3).fromArray(ln.crest.aim).applyQuaternion(rotation).normalize()
     }
-    this.material.uniforms.uGain!.value = gain
+    this.material.uniforms.uGain!.value = gain * amount
   }
 
   dispose(): void {
@@ -266,7 +269,8 @@ export class Air {
       const nights = u.uAirNight!.value as THREE.Vector3[]
       for (let i = 0; i < AIR_LAYERS; i++) {
         const l = this.params.layers[i]!
-        shapes[i]!.x = l.scaleHeight + (e.scaleHeight[i]! - l.scaleHeight) * end
+        const deep = l.scaleHeight * this.thin
+        shapes[i]!.x = deep + (e.scaleHeight[i]! - deep) * end
         shapes[i]!.z += (from - shift - shapes[i]!.z) * end
         shapes[i]!.w += (top - shift - shapes[i]!.w) * end
         days[i]!.lerp(this.work.fromArray(e.day[i]!), end)

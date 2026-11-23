@@ -1,11 +1,13 @@
 import * as THREE from 'three'
 import { config, type Segment } from '../config'
 import type { Director } from '../core/engine'
-import type { CoverState, Pose, SetState, Shot, SunState, ViewKind } from '../core/types'
+import { shutterScale } from '../core/motion'
+import type { CoverState, PlaceState, Pose, SetState, Shot, SkyFloor, SunState, ViewKind } from '../core/types'
 import { defaultPost } from '../post/chain'
-import { StopPlan, easeInOut } from './moves'
+import { StopPlan, easeInOut, type OrbitShot } from './moves'
 import { arc, drift, forward, lookAt, mix, ramp, slerpDir, smooth, smoother } from './rig'
 import { coverWindow, segmentAtFrame } from './timeline'
+import { handoverFrame, handoverOf, placeWeight, shutterScales, skyTurnWeight, skyWeight, topForced } from './handover'
 import skyFrame from '../space/skyframe.json'
 import world from './world.json'
 import { aimAt, type SkyAims } from '../space/aim'
@@ -75,6 +77,10 @@ export class FilmDirector implements Director {
   private readonly sunSwapSpan: [number, number] = SUN_SWAP
   private readonly openRef = new Map<number, number>()
   private readonly settled = new Map<number, [number, number]>()
+  private readonly skyFloors = new Map<string, SkyFloor>()
+  // E6: the share of the film's shutter a frame keeps, as this film's own shots measure it. The film that is asked for a shot hands it to the
+  // handover, where a sample takes its side by its position inside the shutter that is open.
+  private readonly shutterOf = (frame: number): number => shutterScale(this, frame)
   private lookbackUp = new THREE.Vector3()
   private lookbackSun = new THREE.Vector3()
   private lookbackSide = new THREE.Vector3()
@@ -83,6 +89,7 @@ export class FilmDirector implements Director {
   sky: SkyAims = { frame: new THREE.Quaternion(), turns: {}, orbits: {}, patches: {}, fitted: { frame: 0, terrainFrame: 0 }, anchor: '', follows: {}, open: {} }
 
   constructor(plans: StopPlan[]) {
+    shutterScales(this.shutterOf)
     this.plans = plans
     this.frames.push({ rotation: new THREE.Quaternion(), origin: new THREE.Vector3() })
     this.approach.push(new THREE.Vector3(0, 0, -1))
@@ -184,7 +191,7 @@ export class FilmDirector implements Director {
     const frame = judged(a.stop + '.hold')!
     const f = anchor.clone().multiply(cam(frame).invert())
     const out: SkyAims = { frame: round(f), turns: {}, orbits: {}, patches: {}, fitted: { frame, terrainFrame: judged(a.tstop + '.terrain')! }, anchor: a.stop, follows: {}, open: {} }
-    const bare = (q: StopPlan, seg?: Segment): boolean => !!seg && !!coverWindow(seg) && q.coverAmount(seg, q.coverCenter(seg)) === 0
+    const bare = (q: StopPlan, seg?: Segment): boolean => q.coverBare(seg)
     this.plans.forEach((p, i) => {
       const before = this.plans[i - 1]
       if (bare(p, p.seg.dive) || bare(p, p.seg.rise)) out.open[p.id] = true
@@ -592,7 +599,8 @@ export class FilmDirector implements Director {
     return own.applyQuaternion(new THREE.Quaternion().slerp(new THREE.Quaternion().setFromUnitVectors(own, place), share)).applyQuaternion(shot.camera.quaternion).normalize()
   }
 
-  shotAt(frame: number, time: number): Shot {
+  shotAt(frame: number, time: number, forced?: ViewKind): Shot {
+    shutterScales(this.shutterOf)
     const segment = segmentAtFrame(frame)
     const u = (time - segment.start) / (segment.end - segment.start)
     const post = defaultPost()
@@ -611,6 +619,11 @@ export class FilmDirector implements Director {
     let skyTurn = NO_TURN
     let skyStars = 0
     let skyPatch = 1
+    let skyShare: number | undefined
+    let skyShareHigh: number | undefined
+    let skyCarry: THREE.Quaternion | null = null
+    let skyFloor: SkyFloor | null = null
+    let place: PlaceState | undefined
     const index = config.stopIds.indexOf(segment.stop)
     let skyLook = bandLook(segment.stop === config.endingId ? this.plans[this.plans.length - 1]!.id : segment.stop)
     const state = (i: number, view: ViewKind, weight = 1): SetState => {
@@ -618,7 +631,8 @@ export class FilmDirector implements Director {
       const f = this.frames[i]!
       const rotation = view === 'terrain' ? f.rotation.clone().multiply(p.turn(time)).multiply(p.terrainFrame) : f.rotation.clone()
       const origin = view === 'terrain' ? p.spot.clone().applyQuaternion(p.turn(time)).applyQuaternion(f.rotation).add(f.origin) : f.origin.clone()
-      return { id: p.id, origin, rotation, time, local: time - p.firstSegment.start, segment, u, weight, view, ground: p.ground }
+      const turns = view === 'orbit' && p.handsOver && p.id === segment.stop && (segment.kind === 'dive' || segment.kind === 'rise')
+      return { id: p.id, origin, rotation, time, local: time - p.firstSegment.start, segment, u, weight, view, ground: p.ground, ...(turns ? { turn: p.turn(time) } : {}) }
     }
     const inSet = (s: SetState, p: Pose): Pose => ({ position: p.position.clone().applyQuaternion(s.rotation).add(s.origin), quaternion: s.rotation.clone().multiply(p.quaternion), vfov: p.vfov })
 
@@ -729,9 +743,12 @@ export class FilmDirector implements Director {
         local = p.terrain(time - segment.start)
         view = 'terrain'
       } else {
-        const r = segment.kind === 'dive' ? p.dive(time) : p.rise(time)
+        const r: OrbitShot = forced ? { pose: segment.kind === 'dive' ? p.divePose(time, forced) : p.risePose(time, forced), view: forced } : segment.kind === 'dive' ? p.dive(time) : p.rise(time)
         local = r.pose
         view = r.view
+        if (view === 'orbit' && topForced()) local = p.topDown(segment.kind === 'dive' ? 'dive' : 'rise', time, local)
+      }
+      if ((segment.kind === 'dive' || segment.kind === 'rise') && !p.handsOver) {
         cover.amount = p.coverAmount(segment, time)
         if (p.p.coverHides !== undefined) cover.hides = p.p.coverHides
         const hidden = p.coverHidden(segment, time)
@@ -780,6 +797,38 @@ export class FilmDirector implements Director {
       }
       pose = inSet(s, local)
       sets = [s]
+      const hand = (segment.kind === 'dive' || segment.kind === 'rise') && p.handsOver ? handoverOf(p.id, segment.kind) : null
+      if (hand && view === 'orbit' && (segment.kind === 'dive' || segment.kind === 'rise')) {
+        const kind = segment.kind
+        const dive = kind === 'dive'
+        const carry = p.skyCarryShare(segment, time)
+        if (carry !== null && !(carry >= 0 && carry <= 1)) throw new Error(p.id + ': skyCarryShare must lie from 0 to 1')
+        const turned = carry ?? skyTurnWeight(segment, time)
+        const own = p.skyShare(segment, time)
+        if (own && !(own.low >= 0 && own.low <= 1 && (own.high === undefined || (own.high >= 0 && own.high <= 1)))) throw new Error(p.id + ': skyShare must give low and high from 0 to 1')
+        skyShare = own ? own.low : skyWeight(segment, time)
+        if (own && own.high !== undefined) skyShareHigh = own.high
+        if (hand.skyFloor && skyShare > 0) skyFloor = this.skyFloorOf(index, kind, hand.time)
+        skyGlow = mix(1, p.p.light.terrainSkyGlow ?? 1, skyShare)
+        const low = this.sky.turns[p.id] ?? NO_TURN
+        skyTurn = turned <= 0 ? skyTurn : turned >= 1 ? low : skyTurn.clone().slerp(low, turned)
+        const f = this.frames[index]!
+        if (turned > 0) {
+          const from = (dive ? hand.placeFirstFrame : hand.firstFrame) / config.fps
+          const to = ((dive ? hand.lastFrame : hand.placeLastFrame) + 1) / config.fps
+          const tc = Math.min(Math.max(time, from), to)
+          const close = p.closePose(kind, tc)
+          const qc = f.rotation.clone().multiply(p.turn(tc)).multiply(p.terrainFrame).multiply(close.quaternion)
+          const qt = f.rotation.clone().multiply(p.twin(close, tc).quaternion)
+          skyCarry = new THREE.Quaternion().slerp(qc.multiply(qt.invert()), turned)
+        }
+        const weight = placeWeight(segment, time)
+        if (weight > 0 && hand.picture) {
+          const tw = inSet(s, p.twin(p.closePose(kind, hand.time), time))
+          tw.quaternion.multiply(drift(hand.time))
+          place = { stop: p.id, kind, weight, frame: handoverFrame(hand), time: hand.time, live: hand.live, twin: tw, centre: s.origin.clone(), radius: 1, scale: hand.place.scale, margin: hand.place.margin, matte: hand.place.matte, valid: hand.place.valid, lens: hand.place.lens, seen: hand.place.seen, maxEnlarge: hand.place.maxEnlarge, enlargeSoft: hand.place.enlargeSoft, limbReachDeg: hand.place.limbReachDeg, limbHoldDeg: hand.place.limbHoldDeg, edgeIn: hand.place.edgeIn, toneIn: hand.place.toneIn }
+        }
+      }
       if (segment.kind === 'dive' || segment.kind === 'rise') {
         const share = p.skyTurnShare(segment, time)
         if (share !== null) {
@@ -793,14 +842,16 @@ export class FilmDirector implements Director {
         far = 4000
       } else {
         const d = Math.abs(local.position.length() - 1)
-        near = Math.min(Math.max(0.02 * d, 0.0004), 1)
+        near = Math.min(Math.max(0.02 * d, p.handsOver ? Math.min(0.0004, 0.2 * d) : 0.0004), 1)
         const low = p.p.light.skyLow
-        if (low && segment.kind !== 'hold') light = { ...light, sky: light.sky * mix(low[2], 1, smooth(ramp(low[0], low[1], d))) }
+        if (low && segment.kind !== 'hold') light = { ...light, sky: light.sky * (skyShare === undefined ? mix(low[2], 1, smooth(ramp(low[0], low[1], d))) : mix(mix(low[2], 1, smooth(ramp(low[0], low[1], d))), 1, skyShare)) }
         const lift = segment.kind === 'rise' && index > 0 ? riseLift(p.id) : 0
         if (lift > 0) {
           const w = coverWindow(segment)
           const from = p.p.light.skyLiftFrom
-          const x = smooth(ramp(w ? (from === undefined ? w.lastFrame + 1 : mix(w.centerFrame, w.lastFrame + 1, from)) / config.fps : segment.start, segment.end, time))
+          const liftAt = p.skyLiftAt(segment, time)
+          if (liftAt !== null && !Number.isFinite(liftAt)) throw new Error(p.id + ': skyLiftAt must give a time')
+          const x = smooth(ramp(w ? (from === undefined ? w.lastFrame + 1 : mix(w.centerFrame, w.lastFrame + 1, from)) / config.fps : hand ? hand.time : segment.start, segment.end, liftAt ?? time))
           skyStars = lift * (1 - (1 - x) * (1 - x))
           light = { ...light, sky: mix(light.sky, OPEN.openExposure, skyStars) }
         }
@@ -814,7 +865,33 @@ export class FilmDirector implements Director {
     post.exposure = light.exposure
     post.flare = flare
     const sun: SunState = { dir: this.sunWorld.clone(), color: SUN_COLOR, intensity: 3, angularRadius: light.radius, glare: light.glare * sunWeight }
-    return { frame, time, segment, u, camera: pose, skyQuaternion: pose.quaternion.clone(), skyExposure: light.sky, skyGlow, skyTurn, skyStars, skyPatch, skyLook, near, far, sun, sets, post, cover, dust, farLight }
+    const out: Shot = { frame, time, segment, u, camera: pose, skyQuaternion: skyCarry ? skyCarry.multiply(pose.quaternion) : pose.quaternion.clone(), skyExposure: light.sky, skyGlow, skyTurn, skyStars, skyPatch, skyLook, near, far, sun, sets, post, cover, dust, farLight }
+    if (skyShare !== undefined) out.skyShare = skyShare
+    if (skyShareHigh !== undefined) out.skyShareHigh = skyShareHigh
+    if (skyFloor) out.skyFloor = skyFloor
+    if (place) out.place = place
+    return out
+  }
+
+  private skyFloorOf(index: number, kind: 'dive' | 'rise', time: number): SkyFloor | null {
+    const p = this.plans[index]!
+    const key = p.id + '|' + kind + '|' + time
+    const hit = this.skyFloors.get(key)
+    if (hit !== undefined) return hit
+    const aim = this.sky?.patches[p.id]?.terrain
+    let out: SkyFloor | null = null
+    if (aim) {
+      const close = p.closePose(kind, time)
+      const twin = p.twin(close, time)
+      const qc = this.frames[index]!.rotation.clone().multiply(p.turn(time)).multiply(p.terrainFrame).multiply(close.quaternion)
+      const turn = this.sky.turns[p.id] ?? NO_TURN
+      const nadir = twin.position.clone().normalize().negate().applyQuaternion(twin.quaternion.clone().invert())
+      nadir.applyQuaternion(qc).applyQuaternion(turn.clone().invert()).applyQuaternion(this.sky.frame).applyQuaternion(aim.clone().invert())
+      out = { nadir, dip: Math.acos(Math.min(1 / twin.position.length(), 1)) }
+    }
+    if (this.skyFloors.size > 32) this.skyFloors.clear()
+    if (out) this.skyFloors.set(key, out)
+    return out
   }
 
   liveShot(c: LiveControl, frame: number): Shot {

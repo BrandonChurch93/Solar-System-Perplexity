@@ -1,0 +1,120 @@
+{
+ "critic": "R3",
+ "score": 5.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-01.png / image-05.png",
+      "where": "upper right limb, aurora (crops C, L, M)",
+      "what": "the aurora is a saturated green band of separate brush-stroke streaks with a red haze above it. It sits outside the globe like a painted sticker, does not wrap around the curve of the atmosphere, and in image-01 it stops in a hard edge at about 2 o'clock",
+      "fix": "render the aurora as a volume that follows the curve of the limb, with soft vertical curtains, lower saturation, and a fade at both ends. Make it partly see-through over the night side"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png / image-05.png",
+      "where": "eastern South America and the terminator (crops A, H, E / H, P)",
+      "what": "city lights show through land that is still lit by daylight, so the day texture and the night texture are both visible in the same place. The terminator is a soft airbrushed darkening rather than a real twilight band",
+      "fix": "mask the night-lights layer with the sun angle so it only appears past the terminator, and add a narrow warm twilight gradient along the line"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png / image-05.png",
+      "where": "dark right-hand limb (crops C, E, I, R / C, E, Q)",
+      "what": "the atmosphere glow stops at the terminator. The night-side edge is a sharp, hard disc edge against the stars, while the day side has a thick even blue rim. This reads as a sprite rather than a planet",
+      "fix": "carry a thin, dim scattering rim around the night side and make the day-side glow fade softly into space instead of keeping one uniform thickness"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png / image-05.png",
+      "where": "whole globe surface (crops A, G, P / A, G, J)",
+      "what": "the surface looks airbrushed and over-processed: neon turquoise shallows, oversharpened relief on the Rockies and Andes that looks embossed, and lighting that is flat and even across the whole disc. Cloud swirls repeat the same comma shape several times in the Pacific and Atlantic",
+      "fix": "lower the shallow-water saturation, soften the relief sharpening, add proper falloff from the sun and specular glint on the ocean, and vary the shapes of the cloud systems"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "western limb (crops B, D, F)",
+      "what": "the blue rim is very bright and has a halo-like outer glow that looks like a bloom layer placed on top. Clouds near the edge look stretched and smeared",
+      "fix": "reduce the bloom radius and intensity, and correct the cloud texture's foreshortening near the limb"
+     },
+     {
+      "severity": "minor",
+      "file": "image-04.png / image-08.png",
+      "where": "dark sky areas (crops T, W / S, V)",
+      "what": "in the near-black sky, compression shows a faint block pattern, and some stars are coloured blobs a few pixels wide rather than sharp points",
+      "fix": "add a little dither to the dark gradients and render the stars as sharp sub-pixel points with controlled sizes"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png / image-05.png",
+      "where": "Moon, upper right (crop M / L)",
+      "what": "the Moon is a small, evenly lit disc whose phase does not match the sun direction lighting Earth, and it has a slightly soft outline",
+      "fix": "light the Moon from the same direction as Earth and sharpen its outline"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-10.png",
+      "where": "crops B, D, E, I (and image-11.png crop P; image-12.png crops U, V)",
+      "what": "the atmosphere shell creates a bright doubled outer line separated from the inner cloud limb on the sunlit side, and remains visible as an unlit blue-grey Fresnel halo around the dark night limb",
+      "fix": "replace the discrete outer shell rim with smooth volumetric atmospheric scattering that blends continuously from the surface and attenuates to zero across the terminator onto the night side"
+     },
+     {
+      "severity": "major",
+      "file": "image-11.png",
+      "where": "crop M, upper-right Moon (and upper right of image-09.png)",
+      "what": "the Moon surface texture is blurry and smudged with no crisp crater detail at native scale, while its sunlit upper-left limb has visible stair-stepped pixel aliasing",
+      "fix": "use a higher-resolution lunar albedo and relief map matched to native pixel density and properly anti-alias or supersample the lunar silhouette"
+     },
+     {
+      "severity": "major",
+      "file": "image-11.png",
+      "where": "crop K above north limb (and image-10.png crops B, F, H; image-12.png crop V)",
+      "what": "the Milky Way backdrop is visibly pixelated and lower resolution than the sharp point-star overlay, turning dense star fields into coarse multi-pixel blobs that also shine through the bright upper atmospheric glow",
+      "fix": "source or render the Milky Way map at native angular resolution matching the starfield PSF and attenuate background stars behind bright atmospheric scattering"
+     },
+     {
+      "severity": "major",
+      "file": "image-10.png",
+      "where": "crops F, E, H, D (and image-11.png crops K, L, Q; image-12.png crop V)",
+      "what": "the Arctic polar cap north of Canada and Greenland blurs into a smeared white wash, South American night lights resolve as soft blocky yellow blobs, and clouds near the western and southern limbs stretch flatly along the sphere",
+      "fix": "increase resolution of polar albedo, night-light emission, and cloud maps without polar pinching, and add volumetric or parallax thickness to clouds at grazing limb angles"
+     },
+     {
+      "severity": "minor",
+      "file": "image-10.png",
+      "where": "crops C, I, E (and image-11.png crops L, M)",
+      "what": "the aurora borealis looks like soft airbrushed radial streaks on an offset shell, and stray green aurora patches appear near low-latitude West African and South Atlantic limbs",
+      "fix": "render auroras as volumetric geomagnetic curtains restricted to high-latitude ovals with crisp lower edges and mask out stray low-latitude emission"
+     },
+     {
+      "severity": "minor",
+      "file": "image-10.png",
+      "where": "crops A, G, H (Rockies, Central America, Andes, and Pacific coastlines)",
+      "what": "exaggerated bump shading produces crunchy embossed ridges along mountain chains, and an airbrushed neon-turquoise shallow-water fringe outlines deep-water Pacific coasts",
+      "fix": "reduce continental bump/normal relief strength for orbital viewing distance and drive coastal water color from real bathymetry rather than a uniform shoreline mask"
+     }
+    ]
+   }
+  }
+ ]
+}

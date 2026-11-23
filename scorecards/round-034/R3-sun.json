@@ -1,0 +1,113 @@
+{
+ "critic": "R3",
+ "score": 6.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "near foreground granulation, bottom third (crops S-W in image-04, D/G in image-02)",
+      "what": "the granules look like glossy wet plastic or molten caramel. They have hard specular hotspots, a fine scratch-like streak texture inside each cell and a sculpted, airbrushed look. They read as a rendered material, not glowing plasma",
+      "fix": "remove the specular/gloss term and drive the granules with emissive brightness only (bright cell centres, dark lanes), with softer, smoother intensity inside the cells"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "coronal loops over the sunspot (crops A, C, F, H in image-02; K, L in image-03)",
+      "what": "the loops are made of thin, sharp, sparkler-like streaks, with spark particles and drips falling from the arcs. They look like long-exposure fireworks or a particle effect, not plasma flux tubes, and the particle origin is obvious",
+      "fix": "build the loops from fewer, thicker, softly glowing strands with smooth falloff along each tube; drop the falling spark particles and droplet streaks"
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "bottom limb of the disc, just left of centre (about x 690-740, y 705-720; crop V in image-08)",
+      "what": "a small desaturated grey-green smudge sits on the limb. It breaks the orange surface and looks like a texture seam or a stray patch",
+      "fix": "find the texture seam or bad patch at that spot on the sphere map and paint it out, or rotate the map so the seam is off the visible disc"
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "corona all round the disc (crops B, D, E, G, U, V, W in image-06/07/08)",
+      "what": "the corona streamers are opaque, milky-white brush strokes that start hard at the limb. Some of them overlap the disc edge, and they look painted rather than diffuse and emissive. The bottom streamers in V/U look like smeared paint",
+      "fix": "make the corona additive and much more transparent, with a radial falloff that starts behind the limb, and use fine filamentary structure instead of broad strokes"
+     },
+     {
+      "severity": "minor",
+      "file": "image-05.png",
+      "where": "disc surface (crops A, F, P, Q)",
+      "what": "the surface texture is a busy, high-frequency mush. It is noisy and somewhat oversharpened, with no clear granulation scale, and it does not darken towards the limb",
+      "fix": "add limb darkening and use a cleaner granulation/supergranulation texture at a consistent scale; reduce sharpening"
+     },
+     {
+      "severity": "minor",
+      "file": "image-05.png",
+      "where": "prominences at left and right limb (crops C, D, E, H, M, O)",
+      "what": "the prominences are saturated red ribbons with hard, cut-out edges, sitting on top of the corona like a pasted layer",
+      "fix": "soften the prominence edges, raise their emissive glow and blend them additively with the corona"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "upper limb behind the loops (crops I, N, O in image-02/03)",
+      "what": "the spicule fringe along the horizon is a uniform comb of short hairs, repeated evenly along the limb",
+      "fix": "vary the length, density and brightness of the spicules along the limb"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "sky, upper left (crops B, J, K)",
+      "what": "a Milky Way band is visible behind the Sun's close-up limb, and there is a dense star field right up against a blindingly bright surface. It holds up at native size, but it looks like a stock backdrop",
+      "fix": "dim the star field and the galactic band close to the bright limb, or remove them"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-12.png",
+      "where": "crop V (912,866,456,214), southern solar globe just inside the bottom limb (also visible at bottom of disk in image-09.png)",
+      "what": "equirectangular UV pole pinching and concentric swirling compress the solar surface texture into a desaturated pale point surrounded by stretched rings",
+      "fix": "use cube-sphere, triplanar, or polar-patched mapping on the solar globe so surface detail stays isotropic all the way to the poles without pinching"
+     },
+     {
+      "severity": "major",
+      "file": "image-10.png",
+      "where": "crops B, C, D, E, and G across the inner corona, spicule rim, and prominences (also in image-11.png crops K, L, M, P, R)",
+      "what": "crisp 1-2 px white star dots shine unattenuated through the bright inner corona, 1-2 px off the limb over chromospheric spicules, and directly on top of opaque red prominence plasma (e.g., lower-right prominence base in crop E and upper-right loop in crop C), exposing an unmasked additive star layer",
+      "fix": "occlude the starfield behind the solar disk, spicule fringe, and prominence alpha, and extinguish stars smoothly within the bright coronal glare"
+     },
+     {
+      "severity": "minor",
+      "file": "image-10.png",
+      "where": "crops H and I along the left and right Milky Way bands (also in image-11.png crops J, O, R and image-12.png crop S)",
+      "what": "the Milky Way background bitmap is soft and visibly upscaled at native size with smeared 4-7 px baked-in star blobs (including diagonally stretched blobs near the top-left of crop J) clashing against sharp 1-2 px procedural stars stamped on top",
+      "fix": "use a higher-resolution starless Milky Way dust/nebula map at native pixel scale and generate all stars with a consistent anti-aliased point-spread profile"
+     },
+     {
+      "severity": "minor",
+      "file": "image-10.png",
+      "where": "crops C, D, and E along thin outer prominence filaments and the equatorial solar limb",
+      "what": "fine outer prominence tendrils break into 1 px stair-stepped segments and isolated pixels at native scale, and the equatorial photospheric edge meets the spicule fringe in a slightly hard 1-2 px bright rim line",
+      "fix": "supersample thin prominence filaments and soften the radial opacity falloff across the photosphere-to-chromosphere limb boundary"
+     }
+    ]
+   }
+  }
+ ]
+}

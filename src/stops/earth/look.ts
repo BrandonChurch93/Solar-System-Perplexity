@@ -41,14 +41,14 @@ export const onset = [-0.1334, 1.2, 0.6]
 export const ebb = [0, 0.3]
 export const back = [1.03, 1.35]
 export const lights = [0.025, 0.065, 0.9]
+export const lightsFrom = [0.2, 0.9]
 
 export const shape: number[][] = shapeJson.matrix
 
-export const descent = { high: 0.7, low: 0.05, air: 0.25, glow: { dive: [0.15, 1.1, 1.15] as [number, number, number], rise: [0.6, 2.4, 2] as [number, number, number] } }
+export const descent = { high: 0.7, low: 0.05, place: [3.2, 1.4] as [number, number], air: 0.19, inner: 0.06, line: [0.1, 1] as [number, number], fog: [0, 0, 0] as [number, number, number], rim: [0.1, 0.37, 0.62] as [number, number, number], haze: { width: 0.05, pale: [0.84, 0.87, 0.89] as [number, number, number] }, mist: [0, 0, 0, 0.00055] as [number, number, number, number], glow: [0.11, 0.83, 0.86] as [number, number, number] }
 
 export const moon: MoonLook = { ...moonJson, lift: 1.02, round: 0.6, edge: 1.7, near: 0.1 }
 export const aurora: AuroraLook = { ...auroraJson, wave: [0.24, 17, 2.1], tail: [0.78, 0.86], day: [0.02, 0.38] }
 
 export const ground: GroundLook = { mesh: 480, towerMesh: 640, drift: [-3.2, 0.1], shimmer: [0.3, 220, 1.6, 0], fold: 110, lock: [-0.014, -0.003], bloom: 1, plain: [1, 5] }
 
-export const veil = { lead: 0.5, full: 0.08, tail: [0.85, 0.5] as [number, number], peak: [0.65, 0.6] as [number, number], deck: { grain: [4, 14, 40] as [number, number, number], gain: [1.3, 1, 0.5] as [number, number, number], rush: [0.86, 1.1] as [number, number], lit: [0.55, 1] as [number, number] }, rim: [0.985, 1.003] as [number, number], near: { depth: [0.035, 0.09] as [number, number], grain: [50, 40] as [number, number], gain: [1.3, 1, 0.5] as [number, number, number] } }

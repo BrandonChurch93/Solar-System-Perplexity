@@ -1,0 +1,49 @@
+{
+ "critic": "R1",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "left and center vortex, and the cloud deck beneath it",
+   "what": "the storm texture sits 1 px left of the approved frame, and the sunlit ridges are about 4 percent lower in local contrast",
+   "fix": "move that cloud texture right 1 px and restore the filament contrast on the ridges"
+  },
+  {
+   "severity": "major",
+   "file": "pair-04-b.png",
+   "where": "cells F, B, A, G, E, H, and the ridges in D",
+   "what": "native crops are off the approved windows: F is 2 px left, B, A, and G are 1 px left, E is 1 px up-left, and H is 1 px down-left. On D, F, and B the ridges are flatter, the crests are duller, and the near-blacks are slightly lifted",
+   "fix": "slide F right 2 px, B, A, and G right 1 px, E down and right 1 px, and H up and right 1 px, then restore ridge micro-contrast, lift the crests, and hold the blacks down"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "Io, its shadow, and the Great Red Spot",
+   "what": "those features sit 1 px up and left of the approved frame, and the shadow edge and spot filaments are slightly darker and softer",
+   "fix": "move Io, the shadow, and the spot down and right 1 px, and bring the shadow-edge and spot contrast back"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "cell A (Io, shadow, Great Red Spot) and cell I (banded disk)",
+   "what": "the same 1 px up-left offset, with a softer shadow edge and red-spot texture after alignment",
+   "fix": "shift both crops down and right 1 px and restore the shadow-edge and spot contrast"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "sunlit limb, upper and outer halo",
+   "what": "the first 2 px outside the limb are hotter, and the halo from about 2 to 20 px is darker, so the glow dies early",
+   "fix": "pull the immediate rim down and widen and soften the outer falloff to the approved halo"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "night-side cloud crests and blue discharges",
+   "what": "placement matches, but micro-contrast is low and the crests are slightly dull",
+   "fix": "restore fine crest contrast and discharge snap without moving them"
+  }
+ ]
+}

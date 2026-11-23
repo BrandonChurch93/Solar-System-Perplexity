@@ -1,0 +1,56 @@
+{
+ "critic": "R1",
+ "score": 9,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "lower-right ring shadow and the streak that crosses it (crop E in pair-02-b.png)",
+   "what": "The shadow edge is softer, the faint ring grooves read less distinctly against the darker fill, and the small warm flare accent is weaker.",
+   "fix": "Tighten the cast-shadow edge slightly, lift just enough shadow detail to recover the curved ring lines, and restore the faint warm accent without brightening the whole shadow."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "sunlit rings from the left arc through the foreground and right exit (crops B, D, F, G, H and I in pair-02-b.png)",
+   "what": "Some of the fine stripes and outer/gap edges drift slightly from the target, and the broad beige foreground band looks smoother and pinker.",
+   "fix": "Keep the overall ellipse and framing, but tune the stripe and gap positions locally, recover the fine striation contrast and take a little pink out of the broad band."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "sky around the moon, above the planet and behind the right rings (crops B, C and H in pair-02-b.png)",
+   "what": "Point stars are more conspicuous and the sky has a slightly busier speckled texture; the moon itself remains well matched.",
+   "fix": "Dial back the brightness and prominence of the small stars and keep the diffuse blue-black sky structure."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "dark right hemisphere and blue limb (crops A, C and E in pair-02-b.png)",
+   "what": "The shadow-side limb and its internal bands separate a little less cleanly from the surrounding blacks.",
+   "fix": "Recover a trace of cool rim separation and low-contrast banding on the night side while preserving the deep blacks."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "upper limb, lit cloud bands and terminator (crops A, C and H in pair-04-b.png)",
+   "what": "The warm halo is slightly less diffuse, while the upper blue-gray and gold bands are a little less clearly separated and the cloud texture near the terminator reads coarser.",
+   "fix": "Give the warm glow a slightly broader falloff and recover the thin, softly separated bands without sharpening the terminator."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "left sky over the receding rings (crop B in pair-04-b.png)",
+   "what": "The point stars are brighter and more prominent, drawing attention away from the much fainter arcs at the ring horizon.",
+   "fix": "Reduce the bright star points and preserve the subtle ring traces against the dark sky."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "left ring sweep and foreground stripes (crops D, E, F, G and I in pair-04-b.png)",
+   "what": "A few narrow bands slip in position or contrast, and the bright foreground has slightly less line definition against the grain.",
+   "fix": "Match the local placement and tonal accents of the fine bands and separate their detail from the grain without altering the matched sweep."
+  }
+ ]
+}

@@ -1,0 +1,98 @@
+{
+ "critic": "R4",
+ "score": 4.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R4",
+    "score": 4,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "sheet-03.png",
+      "where": "frames 1652-1666, Milky Way band behind Earth",
+      "what": "the Milky Way pops in: missing at 1652, a corner patch at upper right in 1659, then a full diagonal band across the frame at 1666, while Earth and the Moon hardly move. The sky jumps rather than staying put",
+      "fix": "lock the galaxy backdrop to the world-space sky sphere so it only moves with camera rotation; do not fade or swap it per shot"
+     },
+     {
+      "severity": "severe",
+      "file": "sheet-09.png",
+      "where": "frames 5112-5122, upper half of frame",
+      "what": "the ending shot pops a bright Milky Way band into the top third within about 10 frames, while Neptune moves only slightly. This breaks the ending's continuity",
+      "fix": "keep the backdrop constant through the ending, or reveal it only through a slow camera tilt that matches the planet's parallax"
+     },
+     {
+      "severity": "major",
+      "file": "sheet-01.png",
+      "where": "frames 458-466, solar disc",
+      "what": "the Sun's surface jumps from dark, high-contrast orange granulation to a washed-out pale yellow disc in 8 frames, with no matching camera move. This is an exposure or shader pop",
+      "fix": "ramp exposure and surface shading over at least 30 frames with an eased curve, tied to the dolly distance"
+     },
+     {
+      "severity": "major",
+      "file": "sheet-06.png",
+      "where": "frames 3328-3335, lower center",
+      "what": "Jupiter leaves toward the right, then a lit limb appears at bottom center on the next frame. The direction of travel is broken and reads as a cut or a reversed pan",
+      "fix": "keep one continuous heading through the exit; if this is a second body, frame it in the direction of travel, or remove it"
+     },
+     {
+      "severity": "major",
+      "file": "sheet-04.png",
+      "where": "frames 2236-2242, Phobos in front of Mars",
+      "what": "the moon snaps from the upper right of the Mars disc to the lower center in 6 frames. That is far faster than the camera or the planet moves, so it reads as a teleport",
+      "fix": "slow the moon's orbit, or derive its screen motion from the camera path so it shows consistent parallax"
+     },
+     {
+      "severity": "major",
+      "file": "sheet-05.png",
+      "where": "frames 2772-2792, asteroid field",
+      "what": "the hero asteroid zigzags: it moves right from 2772 to 2779, jumps back left and down by 2785, then right again at 2792. Rocks pop in and out at the frame edges",
+      "fix": "give the asteroids one consistent parallax direction that matches the forward camera move, and spawn them outside the frustum"
+     },
+     {
+      "severity": "major",
+      "file": "sheet-07.png",
+      "where": "frames 3925-3946, galaxy band",
+      "what": "the Milky Way band drops out entirely at 3932, then reappears behind Uranus at 3946, in 14 frames. The backdrop flickers instead of holding",
+      "fix": "keep the sky backdrop at constant exposure during travel; use only gradual, eased exposure adaptation"
+     },
+     {
+      "severity": "major",
+      "file": "sheet-08.png",
+      "where": "frames 4489-4516, Neptune's moon and the distant Sun",
+      "what": "the moon jumps from near Neptune (4489) to the top-left corner (4495), vanishes (4502), and returns (4509). The bright Sun star appears from nothing at 4516",
+      "fix": "keep the moon's orbit continuous in screen space; fade the Sun in, or have it enter through camera rotation"
+     },
+     {
+      "severity": "minor",
+      "file": "sheet-02.png",
+      "where": "frames 1042-1048, Mercury",
+      "what": "Mercury goes from crisp and lit to a dark, soft, blurred disc in 6 frames. The blur and darkening are stronger than the camera's speed explains",
+      "fix": "scale motion blur and shading to the actual screen-space velocity, and ease the exit"
+     },
+     {
+      "severity": "minor",
+      "file": "sheet-09.png",
+      "where": "frames 5079-5101, Neptune lighting",
+      "what": "the lit limb swings from upper left to the right side over about 20 frames while the ring tilt flattens fast. The light seems to jump rather than the camera orbiting smoothly",
+      "fix": "keep the light direction fixed in world space and slow the orbit so the terminator rotates gradually"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R4",
+    "score": 10,
+    "pass": true,
+    "issues": []
+   }
+  }
+ ]
+}

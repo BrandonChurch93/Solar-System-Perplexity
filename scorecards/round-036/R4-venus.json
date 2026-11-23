@@ -1,0 +1,21 @@
+{
+ "critic": "R4",
+ "score": 5,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-05.png",
+   "where": "frames 1564 to 1570",
+   "what": "the rise pops: a close sunlit horizon becomes a half-globe, the sun leaves the frame, and the view direction changes in six frames",
+   "fix": "keep one eased pull-away so scale, horizon, and the sun still match across these frames"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-06.png",
+   "where": "upper limb, frames 1565-1566",
+   "what": "fast motion tears the limb into wavy accordion ridges instead of a smooth blur",
+   "fix": "replace the peak-speed frames with one directional blur and a single smooth limb"
+  }
+ ]
+}
