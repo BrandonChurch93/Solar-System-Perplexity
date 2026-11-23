@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T08:58:20.244Z",
+ "pushed": "2026-11-23T09:12:58.924Z",
  "head": "2afc5d610bc6c1b88e739adb593448e95c68ea8c",
- "note": "level 2 repaint take 2: surroundings match in style, place still reads as a darker blob",
+ "note": "level 2 take a3 (bad): place still reads as a pasted polygon, generator invents craters; path numbers measured, nothing rendered yet",
  "looks": [
+  {
+   "time": "2026-11-23T09:12:55.445Z",
+   "file": "20261123091255445-note-L2-crop.jpg",
+   "source": "out/work/mercury/place/repaint/L2-crop.jpg",
+   "kind": "note",
+   "label": "level 2 take a3 built, 1:1 crop at the place: outline and invented craters, not good enough",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T09:12:52.033Z",
+   "file": "20261123091252033-note-L2-sheet-a3.jpg",
+   "source": "out/work/mercury/place/repaint/L2-sheet-a3.jpg",
+   "kind": "note",
+   "label": "level 2 take a3: lead, built, raw centre take",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-23T08:58:17.476Z",
    "file": "20261123085817476-note-L2-sheet-a2.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/mercury/place/tiles/pano-dive.jpg",
    "kind": "note",
    "label": "close side panorama from the camera of T (dive, 744.25), 8 tiles joined, green is the film frame: the place has ground only inside the frame plus a small margin",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T07:50:47.649Z",
-   "file": "20261123075047649-note-cmp-4-shift-g.jpg",
-   "source": "out/work/mercury/place/cmp-4-shift-g.jpg",
-   "kind": "note",
-   "label": "S2 step A: anchor shifted, the laid back crater on the levels crater (size gap 1.5 by 1.9 against 2.55 by 2.04 deg stays, the warp is next); 9 frames 0 px",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T07:32:24.800Z",
-   "file": "20261123073224800-note-cmp-4.jpg",
-   "source": "out/work/mercury/place/cmp-4.jpg",
-   "kind": "note",
-   "label": "the crater: level 1, level 3, the laid back close image, 4 deg across, same frame (sizes do not agree: 2.5 by 2.0 against 1.5 by 1.8 deg)",
    "stop": "mercury"
   }
  ]
