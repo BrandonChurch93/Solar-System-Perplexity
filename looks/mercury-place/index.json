@@ -1,9 +1,33 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T22:31:20.345Z",
- "head": "174356d7fc0d44a9ab3dba8d5225bc1a88dbc329",
- "note": "Starting point for the second note: both handovers with the place picture off. Dive 743 to 744: tone and relief step, small. Rise 990 to 991: the globe is paler and flat, the middle crater loses its relief. Pace (one rate curve) is being built next.",
+ "pushed": "2026-11-23T23:05:46.530Z",
+ "head": "a441095b0ceb574254e76624e900c9c1982cd7c7",
+ "note": "pace step: one path per move, smooth green in my frames; bad: dark corner at lower left 757 to 764",
  "looks": [
+  {
+   "time": "2026-11-23T23:05:45.934Z",
+   "file": "20261123230545934-note-sheet-r2.jpg",
+   "source": "out/work/mercury/place/p3/sheet-r2.jpg",
+   "kind": "note",
+   "label": "pace step, rise 993 to 1035 every frame",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T23:05:45.241Z",
+   "file": "20261123230545241-note-sheet-r1.jpg",
+   "source": "out/work/mercury/place/p3/sheet-r1.jpg",
+   "kind": "note",
+   "label": "pace step, rise 958 to 992 every frame, T at 977",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T23:05:44.290Z",
+   "file": "20261123230544290-note-sheet-t.jpg",
+   "source": "out/work/mercury/place/p4/sheet-t.jpg",
+   "kind": "note",
+   "label": "pace step, dive 750 to 779 every frame, T at 760: one pace, but a dark corner at lower left 757 to 764 (close view has no ground there)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-23T22:31:19.801Z",
    "file": "20261123223119801-note-sheet-rise.jpg",
@@ -43,38 +67,6 @@
    "kind": "note",
    "label": "dive 740 to 747 through the change of view at 744, draft",
    "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T22:15:09.948Z",
-   "file": "20261123221509948-note-d732.jpg",
-   "source": "out/work/mercury/place/m1/sheets/d732.jpg",
-   "kind": "note",
-   "label": "dive 732 to 739, draft, merged state 309fb7ff, every frame",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T22:10:57.390Z",
-   "file": "20261123221057390-sheet-mercury-rise-top.jpg",
-   "source": "out/work/handover/mercury-rise-top.png",
-   "kind": "sheet",
-   "label": "mercury rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 990), place picture off, draft tier",
-   "stop": "mercury",
-   "segment": "mercury.rise",
-   "first": 990,
-   "last": 1034,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T22:10:03.486Z",
-   "file": "20261123221003486-sheet-mercury-rise-draft-after.jpg",
-   "source": "out/work/handover/mercury-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "mercury rise, every frame 991 to 1002 (after T, frame 990), draft tier",
-   "stop": "mercury",
-   "segment": "mercury.rise",
-   "first": 991,
-   "last": 1002,
-   "tier": "draft"
   }
  ]
 }
