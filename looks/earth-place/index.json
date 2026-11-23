@@ -1,9 +1,17 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-23T12:04:00.986Z",
- "head": "cc583ada8bf5d4ee08a2112c6741835b193d14dd",
- "note": "Earth place: five windowed levels and the low look in, bare globe at 1915 beside the close side; sky, deck, dots and glint of mails 254 and 259 in work",
+ "pushed": "2026-11-23T12:27:45.184Z",
+ "head": "311c1304436f35772adf7960f4a2d3308852d828",
+ "note": "12:30 sky law checked on frames, far cloud being rebuilt from cloud bodies with cast shadows",
  "looks": [
+  {
+   "time": "2026-11-23T12:27:43.493Z",
+   "file": "20261123122743493-note-field-takes-12h30.jpg",
+   "source": "out/work/earth/place/proof/field-takes-12h30.jpg",
+   "kind": "note",
+   "label": "12:30 new far cloud: two of four generated takes (top), their cut bodies with shadows on a test ground (lower left); the sky of the rise 2100 to 2118 with the Sun leaving by the turn (lower right)",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-23T12:04:00.242Z",
    "file": "20261123120400242-note-bare-globe-12h.jpg",
@@ -64,14 +72,6 @@
    "source": "out/work/handover/earth-rise-sides.png",
    "kind": "note",
    "label": "M2 rise, both sides at T and their difference",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T11:10:55.081Z",
-   "file": "20261123111055081-note-earth-dive-sides.jpg",
-   "source": "out/work/handover/earth-dive-sides.png",
-   "kind": "note",
-   "label": "M2 dive, both sides at T and their difference",
    "stop": "earth"
   }
  ]
