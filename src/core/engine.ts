@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { config, type FormatDef } from '../config'
 import { Accumulator } from './accumulator'
 import { OPTIONAL_EXTENSIONS, REQUIRED_EXTENSIONS, missing, needs } from './caps'
+import { Counter } from './counts'
 import { floatTarget } from './pass'
 import { TILE, openTiles, type Tiles } from './tiles'
 import { midShutterCarry } from './held'
@@ -41,6 +42,7 @@ export class Engine {
   readonly renderer: THREE.WebGLRenderer
   readonly canvas: HTMLCanvasElement
   readonly sets: SetLoader
+  readonly counter: Counter
   readonly sky: Sky
   format: FormatDef
   assets: string
@@ -92,6 +94,7 @@ export class Engine {
     this.renderer.autoClear = false
     this.renderer.setClearColor(0x000000, 0)
     const gl = this.renderer.getContext() as WebGL2RenderingContext
+    this.counter = new Counter(gl)
     const lacking = missing(gl, needs(assets, format.id))
     if (lacking.length > 0) throw new Error('this browser lacks: ' + lacking.join(', '))
     for (const e of OPTIONAL_EXTENSIONS) gl.getExtension(e)
