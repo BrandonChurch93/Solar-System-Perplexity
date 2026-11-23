@@ -1,9 +1,17 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T16:45:38.167Z",
+ "pushed": "2026-11-23T17:22:27.153Z",
  "head": "b7da15abef066f68c06350b1b277ae1de1eec6c1",
- "note": "dive patch 738 to 743: field now reaches the terrain end, whole frames one ground, thin line at the junction in the plate still open",
+ "note": "dive patch: junction between picture and copied ground now a minimum cut, not a straight line; plates only, render follows",
  "looks": [
+  {
+   "time": "2026-11-23T17:22:26.117Z",
+   "file": "20261123172226117-note-seamz-dive.jpg",
+   "source": "out/work/mercury/place/tmp/seamz-dive.jpg",
+   "kind": "note",
+   "label": "mercury plate level 4 at 1 to 1, far left of the T frame, working tree: left the plate, right the same with the field edge (red), the outer edge of the place picture (green) and the new junction (yellow, minimum cut between picture and copied ground). Not rendered yet, not committed",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-23T16:45:37.592Z",
    "file": "20261123164537592-note-dy743.jpg",
@@ -58,14 +66,6 @@
    "source": "out/work/mercury/place/tmp/ei2left.jpg",
    "kind": "note",
    "label": "same state, left border 740 to 744 at 1 to 1: the spine of the mirror",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T15:50:58.372Z",
-   "file": "20261123155058372-note-ei2dive.jpg",
-   "source": "out/work/mercury/place/tmp/ei2dive.jpg",
-   "kind": "note",
-   "label": "dive 736 738 740 / 741 742 743, draft, not committed: plates continue the place picture past its border (mirror, by code), band tone matched, edgeIn 0.4 0.4 0.4 0.25. The four sided patch is gone; a faint spine with chevrons remains at the left border (next: no symmetry there)",
    "stop": "mercury"
   }
  ]
