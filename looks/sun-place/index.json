@@ -1,9 +1,17 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T10:27:25.093Z",
+ "pushed": "2026-11-23T10:46:19.706Z",
  "head": "c500257fdf2398613c3b546d32955a7af9646c3e",
- "note": "ground of the close view: life carried by light, no dragging, fold fault cured; proofs rendering",
+ "note": "mail 241 received: before the loops rebuild; frozen sheet of the present state. Change per frame frozen now: ground 2.06, loops 8.53 (before 1.94 and 7.19 on the same five runs). Flow clumps, event retime, falling arc and loops lighting in sequence are being built",
  "looks": [
+  {
+   "time": "2026-11-23T10:46:18.618Z",
+   "file": "20261123104618618-note-f1-every6.jpg",
+   "source": "out/work/sun/life/f1-every6.jpg",
+   "kind": "note",
+   "label": "sun close view, camera frozen at pose 90, every 6th frame 0 to 174, state before the flow rebuild of mail 241 (ground calm and made by light; loops still with the small beads)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-23T10:27:24.327Z",
    "file": "20261123102724327-note-g1.jpg",
@@ -58,14 +66,6 @@
    "source": "out/work/sun/life/a7-line.png",
    "kind": "note",
    "label": "FAULT: 1 px dark dashes along cell edges at native size, cause found (blended cell numbers), fix not yet rendered",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T10:08:16.508Z",
-   "file": "20261123100816508-note-a7-haze.jpg",
-   "source": "out/work/sun/life/a7-haze.jpg",
-   "kind": "note",
-   "label": "life: first low haze, frozen camera, too heavy, retuned since",
    "stop": "sun"
   }
  ]
