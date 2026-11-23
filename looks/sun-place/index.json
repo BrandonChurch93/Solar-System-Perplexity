@@ -1,9 +1,47 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T16:29:08.887Z",
- "head": "944bf37747ea517cc7b0f2b31228f2aaf664b0c8",
- "note": "Sun: 944bf377 named as the cure of the side difference at T (full handover report passes after the merge of main 3974ce7e; G5 G17 at the final tier running). Next: mail 296 points 1 to 3",
+ "pushed": "2026-11-23T16:53:27.645Z",
+ "head": "be822da6ed202db81069a3669641a9f4b659a87f",
+ "note": "Sun: mail 296 in work, not yet a commit. 26 to 31 strands separate (near white 0.035 against 0.15), frame 60 near white 0.012 against 0.036 (approved 0.008), dashes: floor between clumps raised from 0.19 to 0.59. Still wrong: thrown arc ends in a cut at 40 to 46 (cure rendering)",
  "looks": [
+  {
+   "time": "2026-11-23T16:53:26.841Z",
+   "file": "20261123165326841-note-b2-60.jpg",
+   "source": "out/work/sun/life/v/b2-60.jpg",
+   "kind": "note",
+   "label": "Sun frame 60: approved, before (944bf377), now (work tree, draft). Near white share of the arcade 0.0079, 0.0355, 0.0122",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T16:53:25.794Z",
+   "file": "20261123165325794-note-b2-26.jpg",
+   "source": "out/work/sun/life/v/b2-26.jpg",
+   "kind": "note",
+   "label": "Sun 26 to 31 NOW (work tree, draft, not yet a commit): strands separate, near white share 0.035 against 0.15",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T16:53:24.791Z",
+   "file": "20261123165324791-note-b0-26.jpg",
+   "source": "out/work/sun/life/v/b0-26.jpg",
+   "kind": "note",
+   "label": "Sun 26 to 31 BEFORE (944bf377, draft): the arcade burns out to one white mass (mail 296 point 1)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T16:29:12.010Z",
+   "file": "20261123162912010-job-frame-00000.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "sun.terrain frame 0, final tier, nograin view, from the running measure job",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 0,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
   {
    "time": "2026-11-23T16:29:07.399Z",
    "file": "20261123162907399-note-ho-top.jpg",
@@ -47,45 +85,6 @@
    "first": 204,
    "last": 215,
    "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T16:26:07.421Z",
-   "file": "20261123162607421-sheet-sun-rise-draft-across.jpg",
-   "source": "out/work/handover/sun-rise-draft-across.png",
-   "kind": "sheet",
-   "label": "sun rise, every frame 210 to 221 (across T, frame 216), draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "first": 210,
-   "last": 221,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T16:16:39.318Z",
-   "file": "20261123161639318-compare-sun-rise-sides.jpg",
-   "source": "out/work/handover/sun-rise-sides.png",
-   "kind": "compare",
-   "label": "sun rise, both sides at T (frame 216) and their difference times 8",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "frame": 216,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T16:07:22.246Z",
-   "file": "20261123160722246-note-ho-sides.jpg",
-   "source": "out/work/sun/life/v/ho-sides.png",
-   "kind": "note",
-   "label": "Sun rise, both sides at T and their difference times 8 (black), pixel sight cure",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T16:07:20.836Z",
-   "file": "20261123160720836-note-ho-across.jpg",
-   "source": "out/work/sun/life/v/ho-across.png",
-   "kind": "note",
-   "label": "Sun rise, handover tool sheet across T (210 to 221), draft, pixel sight cure (uncommitted): report passes, side difference mean 0.004 p99 1, flow gap mean 0.081 px",
-   "stop": "sun"
   }
  ]
 }
