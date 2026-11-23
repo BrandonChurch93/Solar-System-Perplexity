@@ -1,9 +1,49 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T11:10:05.174Z",
+ "pushed": "2026-11-23T11:33:41.193Z",
  "head": "ba28cb3a9ccd7e8a8e895a3a7d45d363e4f5a0d7",
- "note": "dive with third pass plates: Sun and T good, the wedge of the place still reads by style; next: fill around the wedge in the style of the place",
+ "note": "band of place ground quilted around the place by code: the wedge is gone on the dive frames; next: dusk behind the place, detail farther out, top down sheet",
  "looks": [
+  {
+   "time": "2026-11-23T11:33:40.562Z",
+   "file": "20261123113340562-note-r5-c.jpg",
+   "source": "out/work/mercury/place/tmp/r5-c.jpg",
+   "kind": "note",
+   "label": "dive r5 draft 740 to 745, T at 744: wrong: thin strip at the left edge at 740 to 743 where the place picture ends (place.valid set)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T11:33:40.015Z",
+   "file": "20261123113340015-note-r5-b.jpg",
+   "source": "out/work/mercury/place/tmp/r5-b.jpg",
+   "kind": "note",
+   "label": "dive r5 draft 728 to 738: one cratered ground to the horizon; wrong: pale soft slabs at the left edge at 728 to 732",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T11:33:39.357Z",
+   "file": "20261123113339357-note-r5-a.jpg",
+   "source": "out/work/mercury/place/tmp/r5-a.jpg",
+   "kind": "note",
+   "label": "dive r5 draft 704 to 724 with the band: no wedge; wrong: soft grey ground with white blobs low left at 716 to 724 (night side shown lit)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T11:33:38.800Z",
+   "file": "20261123113338800-note-B234-view.jpg",
+   "source": "out/work/mercury/place/tmp/B234-view.jpg",
+   "kind": "note",
+   "label": "plates with the band, levels 2 3 4",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T11:33:38.141Z",
+   "file": "20261123113338141-note-B4-edge.jpg",
+   "source": "out/work/mercury/place/tmp/B4-edge.jpg",
+   "kind": "note",
+   "label": "level 4 at the edge of the place after the band: ground cut from the sharp place and quilted around it by code (assets-src/mercury/place/band.py), no generation; the straight edge is gone",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-23T11:10:04.612Z",
    "file": "20261123111004612-note-L234-view.jpg",
@@ -26,46 +66,6 @@
    "source": "out/work/mercury/place/tmp/r4-b.jpg",
    "kind": "note",
    "label": "dive r4 draft 728 to 738: steady approach, Sun enters at the top; wrong: straight edges of the wedge, white slabs and black holes around it",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T11:10:02.972Z",
-   "file": "20261123111002972-note-r4-a.jpg",
-   "source": "out/work/mercury/place/tmp/r4-a.jpg",
-   "kind": "note",
-   "label": "dive r4 draft 700 to 724, third pass plates: the Sun sets behind the limb; wrong: the place is a darker wedge with straight edges inside bold white relief",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T10:59:45.478Z",
-   "file": "20261123105945478-note-L4-lead-view.jpg",
-   "source": "out/work/mercury/place/repaint/L4-lead-view.jpg",
-   "kind": "note",
-   "label": "level 4 lead (9.5 deg): place right, old relief left, the style gap that the repaint has to close",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T10:59:44.936Z",
-   "file": "20261123105944936-note-L3-edge-cmp.jpg",
-   "source": "out/work/mercury/place/tmp/L3-edge-cmp.jpg",
-   "kind": "note",
-   "label": "level 3 at the place, 6.4 deg: left take a4 with a blurred ring (soft, rejected), right take a3 with the new edge tone (sharp, straight edge of the fan still readable)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T10:59:44.375Z",
-   "file": "20261123105944375-note-r3-b.jpg",
-   "source": "out/work/mercury/place/tmp/r3-b.jpg",
-   "kind": "note",
-   "label": "dive r3 draft 708 to 724: the Sun sets behind the limb by 716 (old plates still installed)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T10:59:43.508Z",
-   "file": "20261123105943508-note-r3-a.jpg",
-   "source": "out/work/mercury/place/tmp/r3-a.jpg",
-   "kind": "note",
-   "label": "dive r3 draft 689 to 706: no ride, the Sun plate stays on the sky's Sun, hold frame 689 0 px",
    "stop": "mercury"
   }
  ]
