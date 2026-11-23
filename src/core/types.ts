@@ -62,6 +62,8 @@ export interface PlaceState {
   seen?: number
   maxEnlarge?: number
   enlargeSoft?: number
+  limbReachDeg?: number
+  limbHoldDeg?: [number, number]
 }
 
 export interface Shot {

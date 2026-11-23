@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { afterAll, describe, expect, it } from 'vitest'
 import { config } from '../src/config'
 import { needs } from '../src/core/caps'
-import { Place, placeCamera, placeGeometry, placeLayout, placeUv, type PlaceLayout } from '../src/core/place'
+import { Place, placeCamera, placeGeometry, placeLayout, placeSkyGrad, placeUv, type PlaceLayout } from '../src/core/place'
 import type { Pose, Shot } from '../src/core/types'
 import { parseProbe, probeString } from '../src/diagnostics/probe'
 import { FilmDirector } from '../src/director/film'
@@ -90,6 +90,8 @@ describe('the layout of a place picture', () => {
 describe('the projection of a place picture', () => {
   const twin: Pose = { position: new THREE.Vector3(0.02, 1.0017, -0.01), quaternion: new THREE.Quaternion().setFromEuler(new THREE.Euler(-0.37, 0.4, 0.02)), vfov: 60 }
   const state = { twin, centre: new THREE.Vector3(0, 0, 0), radius: 1 }
+  const reachDeg = 8
+  const reaching = { ...state, limbReachDeg: reachDeg }
 
   it('is the identity at T: every frame pixel centre meets a texel centre, on the ground and in the sky', () => {
     for (const size of [{}, { valid: [0.11, 0.06, 0.11, 0.125] as [number, number, number, number] }, { scale: 1 }, { scale: 3, margin: 0.1 }]) {
@@ -162,13 +164,14 @@ describe('the projection of a place picture', () => {
       if (camera.position.length() - 1 > 0.02) expect(hidden).toBeGreaterThan(0)
     }
   })
-  it('keeps a direction of the sky where the twin saw it and calls the sky below the horizon of the twin unseen', () => {
+  it('keeps a direction of the sky where the twin saw it and calls the sky below the horizon of the twin unseen, when the limb is not held', () => {
     const layout = placeLayout(master, {}, 16384)
     const pic = new THREE.PerspectiveCamera()
     placeCamera(pic, master, layout, twin, 0.0001, 10)
     const camera: Pose = { position: twin.position.clone().multiplyScalar(1.02), quaternion: twin.quaternion.clone().multiply(new THREE.Quaternion().setFromEuler(new THREE.Euler(0.25, 0, 0))), vfov: 60 }
     const cam = frameCamera(camera, master)
-    const g = placeGeometry(camera, state)
+    const g = placeGeometry(camera, { ...state, limbReachDeg: 0 })
+    expect(g.reach).toBe(0)
     const out = twin.position.clone().normalize()
     const dipTwin = Math.acos(1 / twin.position.length())
     let above = 0
@@ -187,6 +190,207 @@ describe('the projection of a place picture', () => {
       }
     }
     expect(above).toBeGreaterThan(10)
+  })
+  it('holds the horizon of the picture on the limb of the camera: the sky above is lifted by the gap, less and less up to the reach', () => {
+    const layout = placeLayout(master, {}, 16384)
+    const pic = new THREE.PerspectiveCamera()
+    placeCamera(pic, master, layout, twin, 0.0001, 10)
+    const out = twin.position.clone().normalize()
+    const side = new THREE.Vector3(1, 0, 0).cross(out).normalize()
+    const ahead = new THREE.Vector3(0, 0, -1).applyQuaternion(twin.quaternion)
+    ahead.addScaledVector(out, -ahead.dot(out)).normalize()
+    const sinTwin = Math.sqrt(1 - 1 / twin.position.lengthSq())
+    const cameras: Pose[] = [
+      { position: twin.position.clone().multiplyScalar(1.0005), quaternion: twin.quaternion.clone(), vfov: 60 },
+      { position: twin.position.clone().multiplyScalar(1.003).addScaledVector(side, 0.004), quaternion: twin.quaternion.clone().multiply(new THREE.Quaternion().setFromEuler(new THREE.Euler(0.1, 0.05, 0))), vfov: 60 },
+      { position: twin.position.clone().addScaledVector(ahead, -0.03).setLength(twin.position.length() * 1.0002), quaternion: twin.quaternion.clone().multiply(new THREE.Quaternion().setFromEuler(new THREE.Euler(0.05, -0.1, 0))), vfov: 60 },
+      { position: twin.position.clone().multiplyScalar(1.12), quaternion: twin.quaternion.clone().multiply(new THREE.Quaternion().setFromEuler(new THREE.Euler(-0.2, 0, 0))), vfov: 60 },
+    ]
+    let lifted = 0
+    let lowered = 0
+    let wide = 0
+    for (const camera of cameras) {
+      const g = placeGeometry(camera, reaching)
+      const off = placeGeometry(camera, state)
+      expect(c.place.limbReachDeg).toBe(0)
+      expect(off.reach).toBe(0)
+      expect(g.reach).toBeCloseTo(Math.sin(THREE.MathUtils.degToRad(reachDeg)), 12)
+      const cam = frameCamera(camera, master)
+      const upCamera = camera.position.clone().normalize()
+      const sinCamera = Math.sqrt(1 - 1 / camera.position.lengthSq())
+      const world = (u: [number, number]): THREE.Vector3 => new THREE.Vector3(u[0] * 2 - 1, u[1] * 2 - 1, 0.5).unproject(pic).normalize()
+      for (let x = 30; x < master.width; x += 170) {
+        let last = -Infinity
+        let first = true
+        for (let y = master.height - 0.5; y > 0; y -= 1) {
+          const ray = pixelRay(cam, master, x, y)
+          const got = placeUv(g, projOf(pic), ray)
+          if (got.hit) continue
+          const plain = placeUv(off, projOf(pic), ray)
+          const d = ray.clone().normalize().applyQuaternion(camera.quaternion)
+          const own = d.dot(upCamera) + sinCamera
+          const gap = own - (d.dot(out) + sinTwin)
+          const reach = Math.max(g.reach, 2 * Math.abs(gap))
+          expect(got.honest).toBe(1)
+          if (!got.front || !plain.front) continue
+          const e = world(got.uv)
+          const under = e.dot(out) + sinTwin
+          const t = Math.min(own / reach, 1)
+          expect(under).toBeCloseTo(own - gap * t * t * (3 - 2 * t), 6)
+          if (first) expect(under).toBeLessThan(own + 1e-6 + Math.abs(gap) * 3 * (own / reach) ** 2)
+          first = false
+          expect(under).toBeGreaterThan(-1e-7)
+          expect(under).toBeGreaterThan(last)
+          last = under
+          const level = (v: THREE.Vector3): THREE.Vector3 => v.clone().addScaledVector(out, -v.dot(out)).normalize()
+          if (Math.abs(d.dot(out)) < 0.99) expect(level(e).dot(level(d))).toBeGreaterThan(1 - 1e-9)
+          if (own >= reach) {
+            expect(got.uv[0]).toBeCloseTo(plain.uv[0], 9)
+            expect(got.uv[1]).toBeCloseTo(plain.uv[1], 9)
+          }
+          if (2 * Math.abs(gap) > g.reach) wide++
+          if (gap > 1e-6 && own < reach) lifted++
+          if (gap < -1e-6 && own < reach) lowered++
+        }
+      }
+    }
+    expect(lifted).toBeGreaterThan(100)
+    expect(lowered).toBeGreaterThan(100)
+    expect(wide).toBeGreaterThan(100)
+  })
+  it('fills the ground the twin could not see with the horizon of the picture, and holds the weight in a band under the limb', () => {
+    const layout = placeLayout(master, {}, 16384)
+    const pic = new THREE.PerspectiveCamera()
+    placeCamera(pic, master, layout, twin, 0.0001, 10)
+    const out = twin.position.clone().normalize()
+    const sinTwin = Math.sqrt(1 - 1 / twin.position.lengthSq())
+    const [from, to] = c.place.limbHoldDeg.map((a) => Math.sin(THREE.MathUtils.degToRad(a))) as [number, number]
+    const world = (u: [number, number]): THREE.Vector3 => new THREE.Vector3(u[0] * 2 - 1, u[1] * 2 - 1, 0.5).unproject(pic).normalize()
+    let beyond = 0
+    let held = 0
+    let free = 0
+    for (const lift of [1.0003, 1.002, 1.02]) {
+      const camera: Pose = { position: twin.position.clone().multiplyScalar(lift), quaternion: twin.quaternion.clone().multiply(new THREE.Quaternion().setFromEuler(new THREE.Euler(lift > 1.01 ? -0.1 : 0.02, 0, 0))), vfov: 60 }
+      const cam = frameCamera(camera, master)
+      const g = placeGeometry(camera, reaching)
+      const off = placeGeometry(camera, { ...state, limbReachDeg: 0 })
+      const sinCamera = Math.sqrt(1 - 1 / camera.position.lengthSq())
+      const upCamera = camera.position.clone().normalize()
+      for (let x = 30; x < master.width; x += 340) {
+        let edge: { ground: [number, number]; sky: [number, number] | null } | null = null
+        let limb = master.height
+        while (limb > 0 && placeUv(g, projOf(pic), pixelRay(cam, master, x, limb - 0.5)).hit) limb--
+        const rows: number[] = []
+        for (let y = master.height - 0.5; y > limb + 40; y -= 7) rows.push(y)
+        for (let y = limb + 40; y > limb + 2; y -= 0.5) rows.push(y)
+        for (let y = limb + 2; y > limb - 2; y -= 0.05) rows.push(y)
+        for (const y of rows) {
+          const ray = pixelRay(cam, master, x, y)
+          const got = placeUv(g, projOf(pic), ray)
+          const plain = placeUv(off, projOf(pic), ray)
+          expect(plain.hold).toBe(0)
+          if (!got.hit) {
+            expect(got.hold).toBe(0)
+            if (edge && !edge.sky) edge.sky = got.uv
+            continue
+          }
+          edge = { ground: got.uv, sky: null }
+          const d = ray.clone().normalize().applyQuaternion(camera.quaternion)
+          const depth = -d.dot(upCamera) - sinCamera
+          const t = Math.min(Math.max((depth - from) / (to - from), 0), 1)
+          expect(got.hold).toBeCloseTo(1 - t * t * (3 - 2 * t), 6)
+          if (got.hold === 1) held++
+          if (got.hold === 0) free++
+          expect(got.honest).toBe(plain.honest)
+          if (plain.honest >= 0) {
+            expect(got.uv[0]).toBeCloseTo(plain.uv[0], 9)
+            expect(got.uv[1]).toBeCloseTo(plain.uv[1], 9)
+            continue
+          }
+          beyond++
+          const e = world(got.uv)
+          expect(e.dot(out) + sinTwin).toBeCloseTo(0, 6)
+          const b = d.dot(camera.position)
+          const point = camera.position.clone().addScaledVector(d, -b - Math.sqrt(b * b - (camera.position.lengthSq() - 1)))
+          const level = (v: THREE.Vector3): THREE.Vector3 => v.clone().addScaledVector(out, -v.dot(out)).normalize()
+          expect(level(e).dot(level(point))).toBeGreaterThan(1 - 1e-9)
+        }
+        if (edge?.sky) {
+          expect(Math.abs(edge.sky[1] - edge.ground[1]) * layout.height).toBeLessThan(1)
+          expect(Math.abs(edge.sky[0] - edge.ground[0]) * layout.width).toBeLessThan(1)
+        }
+      }
+    }
+    expect(beyond).toBeGreaterThan(50)
+    expect(held).toBeGreaterThan(50)
+    expect(free).toBeGreaterThan(50)
+  })
+  it('knows the size of a pixel of sky in the picture without asking its neighbours, so a pixel on the limb is not judged by the ground beside it', () => {
+    const layout = placeLayout(master, {}, 16384)
+    const pic = new THREE.PerspectiveCamera()
+    placeCamera(pic, master, layout, twin, 0.0001, 10)
+    const cameras: Pose[] = [
+      twin,
+      { position: twin.position.clone().multiplyScalar(1.003), quaternion: twin.quaternion.clone().multiply(new THREE.Quaternion().setFromEuler(new THREE.Euler(0.1, 0.05, 0.3))), vfov: 60 },
+      { position: twin.position.clone().multiplyScalar(1.12), quaternion: twin.quaternion.clone().multiply(new THREE.Quaternion().setFromEuler(new THREE.Euler(-0.2, 0.4, -0.2))), vfov: 38 },
+    ]
+    let seen = 0
+    for (const camera of cameras) {
+      const off = placeGeometry(camera, { ...state, limbReachDeg: 0 })
+      const cam = frameCamera(camera, master)
+      const e = cam.projectionMatrix.elements
+      const step: [number, number] = [2 / master.width / e[0]!, 2 / master.height / e[5]!]
+      const h = 0.25
+      for (let x = 40.5; x < master.width; x += 233) {
+        for (let y = 20.5; y < master.height; y += 97) {
+          const at = (dx: number, dy: number) => placeUv(off, projOf(pic), pixelRay(cam, master, x + dx, y + dy))
+          const mid = at(0, 0)
+          const around = [at(h, 0), at(-h, 0), at(0, -h), at(0, h)]
+          if (mid.hit || !mid.front || around.some((a) => a.hit || !a.front)) continue
+          const got = placeSkyGrad(off, projOf(pic), pixelRay(cam, master, x, y), step)
+          const size = Math.hypot(got.dx[0], got.dx[1], got.dy[0], got.dy[1])
+          expect(Math.abs(got.dx[0] - (around[0]!.uv[0] - around[1]!.uv[0]) / (2 * h))).toBeLessThan(size * 1e-4)
+          expect(Math.abs(got.dx[1] - (around[0]!.uv[1] - around[1]!.uv[1]) / (2 * h))).toBeLessThan(size * 1e-4)
+          expect(Math.abs(got.dy[0] - (around[2]!.uv[0] - around[3]!.uv[0]) / (2 * h))).toBeLessThan(size * 1e-4)
+          expect(Math.abs(got.dy[1] - (around[2]!.uv[1] - around[3]!.uv[1]) / (2 * h))).toBeLessThan(size * 1e-4)
+          if (camera === twin) {
+            expect(got.dx[0] * layout.width).toBeCloseTo(layout.scale, 6)
+            expect(got.dy[1] * layout.height).toBeCloseTo(layout.scale, 6)
+            expect(Math.abs(got.dx[1] * layout.height)).toBeLessThan(1e-9)
+            expect(Math.abs(got.dy[0] * layout.width)).toBeLessThan(1e-9)
+          }
+          seen++
+        }
+      }
+    }
+    expect(seen).toBeGreaterThan(60)
+  })
+
+  it('lifts nothing at T, to the last bit', () => {
+    const layout = placeLayout(master, {}, 16384)
+    const pic = new THREE.PerspectiveCamera()
+    placeCamera(pic, master, layout, twin, 0.0001, 10)
+    const cam = frameCamera(twin, master)
+    const g = placeGeometry(twin, reaching)
+    const off = placeGeometry(twin, { ...state, limbReachDeg: 0 })
+    expect(g.limb.length()).toBe(0)
+    expect(g.limbDip).toBe(0)
+    let sky = 0
+    for (let x = 0.5; x < master.width; x += 97) {
+      for (let y = 0.5; y < master.height; y += 31) {
+        const ray = pixelRay(cam, master, x, y)
+        const a = placeUv(g, projOf(pic), ray)
+        const b = placeUv(off, projOf(pic), ray)
+        expect(a.uv).toEqual(b.uv)
+        expect(a.hit).toBe(b.hit)
+        if (a.hit) expect(a.honest).toBeCloseTo(1, 9)
+        if (!a.hit) {
+          sky++
+          expect(b.honest).toBeCloseTo(1, 9)
+        }
+      }
+    }
+    expect(sky).toBeGreaterThan(100)
   })
 })
 
@@ -339,7 +543,16 @@ describe('the switches of a handover', () => {
     const b = d.shotAt(hr.firstFrame, hr.time, 'orbit').place!
     expect([b.seen, b.maxEnlarge, b.enlargeSoft]).toEqual([undefined, 2, undefined])
     restorePlans()
-    for (const bad of [{ seen: 0 }, { seen: 1.5 }, { maxEnlarge: 1 }, { enlargeSoft: 0 }, { enlargeSoft: 1 }]) {
+    const e = filmWith(coveredPlan({ handover: { dive: { place: { limbReachDeg: 0 } }, rise: { place: { limbReachDeg: 3, limbHoldDeg: [0.1, 0.4] } } } }))
+    const er = e.shotAt(hr.firstFrame, hr.time, 'orbit').place!
+    expect([none.limbReachDeg, e.shotAt(hd.firstFrame, hd.time, 'orbit').place!.limbReachDeg, er.limbReachDeg]).toEqual([undefined, 0, 3])
+    expect([none.limbHoldDeg, er.limbHoldDeg]).toEqual([undefined, [0.1, 0.4]])
+    const own = placeGeometry(er.twin, er)
+    expect(own.hold[0]).toBeCloseTo(Math.sin(THREE.MathUtils.degToRad(0.1)), 12)
+    expect(own.hold[1]).toBeCloseTo(Math.sin(THREE.MathUtils.degToRad(0.4)), 12)
+    expect(own.reach).toBeCloseTo(Math.sin(THREE.MathUtils.degToRad(3)), 12)
+    restorePlans()
+    for (const bad of [{ seen: 0 }, { seen: 1.5 }, { maxEnlarge: 1 }, { enlargeSoft: 0 }, { enlargeSoft: 1 }, { limbReachDeg: -1 }, { limbReachDeg: 90 }, { limbHoldDeg: [0.5, 0.5] as [number, number] }, { limbHoldDeg: [-0.1, 0.5] as [number, number] }, { limbHoldDeg: [0.5, 90] as [number, number] }]) {
       filmWith(coveredPlan({ handover: { dive: { place: bad } } }))
       expect(() => handoverOf('mars', 'dive')).toThrow()
       restorePlans()
@@ -498,6 +711,13 @@ describe('the options on a diagnostic string', () => {
     expect(() => parseProbe('ungraded/dump=1.5,0,image')).toThrow()
     expect(() => parseProbe('ungraded/dump=0,0,colour')).toThrow()
     for (const s of ['beauty', 'texels/side=orbit/shut', 'beauty/side=terrain/t=81.80833/noplace', 'beauty/side=orbit/mask', 'beauty/picture', 'beauty/side=orbit/noplace/top']) expect(probeString(parseProbe(s))).toBe(s)
+    expect(parseProbe('beauty/side=orbit/limb=0').limb).toBe(0)
+    expect(parseProbe('beauty/limb=2.5').limb).toBe(2.5)
+    expect(parseProbe('beauty/side=orbit').limb).toBe(undefined)
+    expect(probeString(parseProbe('beauty/side=orbit/shut/top/limb=0'))).toBe('beauty/side=orbit/shut/top/limb=0')
+    expect(() => parseProbe('beauty/limb=-1')).toThrow()
+    expect(() => parseProbe('beauty/limb=90')).toThrow()
+    expect(() => parseProbe('beauty/limb')).toThrow()
     expect(() => parseProbe('beauty/side=left')).toThrow()
     expect(() => parseProbe('beauty/t=soon')).toThrow()
     expect(() => parseProbe('beauty/nothing')).toThrow()

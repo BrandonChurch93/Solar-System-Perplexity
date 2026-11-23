@@ -9,7 +9,9 @@ export interface PlaceDump { x: number; y: number; what: 'image' | 'alpha' }
 
 // top: the globe camera of a dive or a rise is put straight above the place, at the height and with the field of the film's path (the check of
 // the plates: with noplace every frame must look like one place coming closer).
-export interface Probe { view: string; side: ViewKind | null; shut: boolean; time: number | null; place: boolean; mask: boolean; picture: boolean; top: boolean; dump?: PlaceDump }
+// limb: the reach in degrees over which the place pass holds the picture's horizon on the camera's limb, in place of the stop's own or the film
+// wide number (0 turns it off).
+export interface Probe { view: string; side: ViewKind | null; shut: boolean; time: number | null; place: boolean; mask: boolean; picture: boolean; top: boolean; dump?: PlaceDump; limb?: number }
 
 export function parseProbe(diag: string): Probe {
   const parts = diag.split('/').map((s) => s.trim()).filter((s) => s.length > 0)
@@ -25,6 +27,7 @@ export function parseProbe(diag: string): Probe {
     else if (key === 'mask') out.mask = true
     else if (key === 'picture') out.picture = true
     else if (key === 'top') out.top = true
+    else if (key === 'limb' && value !== undefined && Number(value) >= 0 && Number(value) < 90) out.limb = Number(value)
     else if (key === 'dump' && value !== undefined) {
       const [x, y, what] = value.split(',')
       if (!Number.isInteger(Number(x)) || !Number.isInteger(Number(y)) || (what !== 'image' && what !== 'alpha')) throw new Error('unknown diagnostic option ' + part)
@@ -48,6 +51,7 @@ export function probeString(p: Partial<Probe>): string {
   if (p.place === false) parts.push('noplace')
   if (p.mask) parts.push('mask')
   if (p.top) parts.push('top')
+  if (p.limb !== undefined) parts.push('limb=' + p.limb)
   if (p.dump) parts.push('dump=' + p.dump.x + ',' + p.dump.y + ',' + p.dump.what)
   else if (p.picture) parts.push('picture')
   return parts.join('/')
