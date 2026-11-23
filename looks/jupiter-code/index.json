@@ -1,9 +1,51 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-23T10:27:56.087Z",
+ "pushed": "2026-11-23T10:42:03.958Z",
  "head": "1f087db4b748c6d1dc9b966af39dfbe9a1517a64",
- "note": "plates made and nested (fore, near, mid, far), baked; first draft of the plate deck at 3150: detail too strong and aliased, fixing with footprint filtering",
+ "note": "plate deck drawn with footprint filtering; 3150 and 3239 hold, 3060 shows the margin problem outside the image's fan; next: haze table by view angle, margin tone, slower approach",
  "looks": [
+  {
+   "time": "2026-11-23T10:42:03.394Z",
+   "file": "20261123104203394-note-v6p-3239.jpg",
+   "source": "../work/f/v6p-3239.jpg",
+   "kind": "note",
+   "label": "plates only draft 3239"
+  },
+  {
+   "time": "2026-11-23T10:42:02.851Z",
+   "file": "20261123104202851-note-v6p-3060.jpg",
+   "source": "../work/f/v6p-3060.jpg",
+   "kind": "note",
+   "label": "plates only draft 3060"
+  },
+  {
+   "time": "2026-11-23T10:42:02.310Z",
+   "file": "20261123104202310-note-v6p-3150.jpg",
+   "source": "../work/f/v6p-3150.jpg",
+   "kind": "note",
+   "label": "plates only (image field off) draft 3150: the plates carry the composition by themselves"
+  },
+  {
+   "time": "2026-11-23T10:42:01.742Z",
+   "file": "20261123104201742-note-v6a-3239.jpg",
+   "source": "../work/f/v6a-3239.jpg",
+   "kind": "note",
+   "label": "plate deck draft 3239 (camera 0.9 units ahead of the fit pose)"
+  },
+  {
+   "time": "2026-11-23T10:42:01.173Z",
+   "file": "20261123104201173-note-v6a-3060.jpg",
+   "source": "../work/f/v6a-3060.jpg",
+   "kind": "note",
+   "label": "plate deck draft 3060: BAD, ground outside the image's fan shows the repaint's bright cumulus at low resolution; fix under way (tone field, slower approach)"
+  },
+  {
+   "time": "2026-11-23T10:42:00.595Z",
+   "file": "20261123104200595-note-v6a-3150.jpg",
+   "source": "../work/f/v6a-3150.jpg",
+   "kind": "note",
+   "label": "plate deck draft 3150 after footprint filtering (image field over plates), mean abs diff to approved 4.56"
+  },
   {
    "time": "2026-11-23T10:27:55.522Z",
    "file": "20261123102755522-note-v6-c2.jpg",
@@ -17,48 +59,6 @@
    "source": "../work/f/v6-c0.jpg",
    "kind": "note",
    "label": "plate deck first draft 3150, native crop storm | approved"
-  },
-  {
-   "time": "2026-11-23T10:27:54.463Z",
-   "file": "20261123102754463-note-v6-3150-cmp.jpg",
-   "source": "../work/f/v6-3150-cmp.jpg",
-   "kind": "note",
-   "label": "first draft of the plate deck at 3150 | approved | difference: function detail far too strong and aliased, being fixed"
-  },
-  {
-   "time": "2026-11-23T10:27:53.815Z",
-   "file": "20261123102753815-note-bake-check.jpg",
-   "source": "../work/f/bake-check.jpg",
-   "kind": "note",
-   "label": "bake: near height map, near roughness, far plate"
-  },
-  {
-   "time": "2026-11-23T10:27:53.301Z",
-   "file": "20261123102753301-note-near-nest-s.jpg",
-   "source": "../work/f/near-nest-s.jpg",
-   "kind": "note",
-   "label": "near plate, nested set"
-  },
-  {
-   "time": "2026-11-23T10:27:52.781Z",
-   "file": "20261123102752781-note-mid-nest-s.jpg",
-   "source": "../work/f/mid-nest-s.jpg",
-   "kind": "note",
-   "label": "mid plate with the near plate nested in by code (radial feather 6.5 to 9.2 units)"
-  },
-  {
-   "time": "2026-11-23T10:27:52.260Z",
-   "file": "20261123102752260-note-fore-t1-c1.jpg",
-   "source": "../work/f/fore-t1-c1.jpg",
-   "kind": "note",
-   "label": "fore plate take 1, native crop 1"
-  },
-  {
-   "time": "2026-11-23T10:27:51.750Z",
-   "file": "20261123102751750-note-fore-t1-c0.jpg",
-   "source": "../work/f/fore-t1-c0.jpg",
-   "kind": "note",
-   "label": "fore plate take 1, native crop 0"
   }
  ]
 }
