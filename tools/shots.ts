@@ -1,7 +1,7 @@
 import { writeFileSync } from 'node:fs'
 import { config } from '../src/config'
 import { plans } from '../src/director/plans'
-import { coverWindow } from '../src/director/timeline'
+import { swapOf as swap } from './lib/cues'
 
 const inFrame: Record<string, { hold: string; terrain: string; next: string }> = {
   sun: { hold: 'the full disc, sunspots, bright regions, prominences on both limbs, corona, stars', terrain: 'boiling granulation, a sunspot, plasma loops arching over it, the curved horizon, stars above', next: 'Mercury as a dark speck beside the glare' },
@@ -39,12 +39,12 @@ for (const seg of config.segments) {
     end = 'the hero framing seen from half the arc past it. The midpoint matches the approved hero image'
     what = f.hold
   } else if (seg.kind === 'dive' && p && f) {
-    const w = coverWindow(seg)!
+    const w = swap(seg)
     lens = hero + ' to ' + p.terrain.vfov + ' deg'
-    move = 'fall on a logarithmic altitude curve toward the spot, heading ' + p.dive.headingDeg + ' deg, bowing ' + side(p.dive.bow, 'right', 'left') + ', roll ' + p.dive.rollDeg + ' deg. Cover from frame ' + w.firstFrame + ' to ' + w.lastFrame
+    move = 'fall on a logarithmic altitude curve toward the spot, heading ' + p.dive.headingDeg + ' deg, bowing ' + side(p.dive.bow, 'right', 'left') + ', roll ' + p.dive.rollDeg + ' deg. ' + w.move
     start = 'the end of the hold'
     end = 'the first frame of the terrain move, still slowing'
-    what = 'the globe growing until the spot fills the frame, the cover haze, then the terrain'
+    what = w.seen === 'cover' ? 'the globe growing until the spot fills the frame, the cover haze, then the terrain' : 'the globe growing until the place fills the frame and becomes the terrain'
   } else if (seg.kind === 'terrain' && p && f) {
     lens = p.terrain.vfov + ' deg'
     move = plan!.id === 'sun' ? 'low flight forward ' + p.terrain.forward + ' units with a ' + p.terrain.rise + ' rise' : 'low flight forward ' + p.terrain.forward + ' units, ' + side(p.terrain.side, 'sliding right', 'sliding left') + ' ' + Math.abs(p.terrain.side) + ', rising ' + p.terrain.rise + ', yaw ' + p.terrain.yawDeg + ' deg'
@@ -52,12 +52,12 @@ for (const seg of config.segments) {
     end = 'past the approved close framing. The midpoint matches the approved close image'
     what = f.terrain
   } else if (seg.kind === 'rise' && p && f) {
-    const w = coverWindow(seg)!
+    const w = swap(seg)
     lens = p.terrain.vfov + ' to ' + hero + ' deg'
-    move = plan!.id === 'sun' ? 'pull back and up through the flare. Cover from frame ' + w.firstFrame + ' to ' + w.lastFrame : 'climb on its own line, azimuth ' + p.rise.azimuthDeg + ' deg, elevation ' + p.rise.elevationDeg + ' deg, to distance ' + p.rise.distance + ', roll ' + p.rise.rollDeg + ' deg. Cover from frame ' + w.firstFrame + ' to ' + w.lastFrame
+    move = plan!.id === 'sun' ? 'pull back and up through the flare. ' + w.move : 'climb on its own line, azimuth ' + p.rise.azimuthDeg + ' deg, elevation ' + p.rise.elevationDeg + ' deg, to distance ' + p.rise.distance + ', roll ' + p.rise.rollDeg + ' deg. ' + w.move
     start = 'the last frame of the terrain move'
     end = plan!.id === 'sun' ? 'the whole disc centered, arriving at the hold' : 'the whole body in frame, set ' + side(p.rise.offset[0], 'right', 'left') + ' of center, still drifting out'
-    what = 'the terrain, the cover, then the whole body'
+    what = w.seen === 'cover' ? 'the terrain, the cover, then the whole body' : 'the terrain, the place falling away, then the whole body'
   } else if (seg.kind === 'travel' && p && f) {
     const next = plans[at + 1]!
     lens = hero + ' deg'
