@@ -1,32 +1,100 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-23T23:24:53.809Z",
+ "pushed": "2026-11-23T23:49:21.264Z",
  "head": "505d1ea911cb3c7e747de1f57d4a98b6718c691b",
- "note": "step 2 (one scene) in work, draft frames, not committed: deck program drawn in the globe view, place picture off, every weight by camera height; plates on the globe now sit on the deck's relief",
+ "note": "23:52 UTC. Step 2 (one scene) in the working tree, not committed: every frame of the dive at draft. Measured: worst level step 5.31 into 3035, worst colour step 5.73 into 3030, mean difference 3059 to 3060 3.80. Rise is rendering.",
  "looks": [
   {
-   "time": "2026-11-23T23:24:53.214Z",
-   "file": "20261123232453214-note-p2a-3020-crop.jpg",
-   "source": "../work/f/p2a-3020-crop.jpg",
+   "time": "2026-11-23T23:49:20.225Z",
+   "file": "20261123234920225-frame-f03250.jpg",
+   "source": "out/work/jupiter/frames/p2r/f03250.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3250, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3250,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "94288983d3b2cf97"
+  },
+  {
+   "time": "2026-11-23T23:49:16.006Z",
+   "file": "20261123234916006-note-p2d-3039-left.jpg",
+   "source": "../work/f/p2d-3039-left.jpg",
    "kind": "note",
-   "label": "step 2 in work (draft): 3020 at full size, the eye in the blend of globe plates and deck, no double edge now",
+   "label": "step 2 draft, 3039 left edge at full size: cloud bank smeared down its steep faces (still wrong, goes with steps 5 and 4)",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T23:24:52.640Z",
-   "file": "20261123232452640-note-p2a-rise.jpg",
-   "source": "../work/f/p2a-rise.jpg",
+   "time": "2026-11-23T23:49:14.807Z",
+   "file": "20261123234914807-note-p2d-dif-3059-3060.jpg",
+   "source": "../work/f/p2d-dif-3059-3060.jpg",
    "kind": "note",
-   "label": "step 2 in work (draft): 3030, 3060, rise 3270 to 3296",
+   "label": "step 2 draft, difference 3059 to 3060 across the change of view (mean 3.80)",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T23:24:51.940Z",
-   "file": "20261123232451940-note-p2a-dive.jpg",
-   "source": "../work/f/p2a-dive.jpg",
+   "time": "2026-11-23T23:49:13.840Z",
+   "file": "20261123234913840-note-p2d-5.jpg",
+   "source": "../work/f/p2d-5.jpg",
    "kind": "note",
-   "label": "step 2 in work (draft, not committed): the deck's own program on the globe, weights by height, relief under the plates; dive 2997 to 3026",
+   "label": "step 2 not committed yet, draft, dive every frame sheet 5 of 0 to 5 (2990 to 3060), one scene, place picture off, weights by height",
    "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T23:49:12.498Z",
+   "file": "20261123234912498-note-p2d-4.jpg",
+   "source": "../work/f/p2d-4.jpg",
+   "kind": "note",
+   "label": "step 2 not committed yet, draft, dive every frame sheet 4 of 0 to 5 (2990 to 3060), one scene, place picture off, weights by height",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T23:49:11.661Z",
+   "file": "20261123234911661-note-p2d-3.jpg",
+   "source": "../work/f/p2d-3.jpg",
+   "kind": "note",
+   "label": "step 2 not committed yet, draft, dive every frame sheet 3 of 0 to 5 (2990 to 3060), one scene, place picture off, weights by height",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T23:49:10.399Z",
+   "file": "20261123234910399-note-p2d-2.jpg",
+   "source": "../work/f/p2d-2.jpg",
+   "kind": "note",
+   "label": "step 2 not committed yet, draft, dive every frame sheet 2 of 0 to 5 (2990 to 3060), one scene, place picture off, weights by height",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T23:49:09.329Z",
+   "file": "20261123234909329-note-p2d-1.jpg",
+   "source": "../work/f/p2d-1.jpg",
+   "kind": "note",
+   "label": "step 2 not committed yet, draft, dive every frame sheet 1 of 0 to 5 (2990 to 3060), one scene, place picture off, weights by height",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T23:49:08.294Z",
+   "file": "20261123234908294-note-p2d-0.jpg",
+   "source": "../work/f/p2d-0.jpg",
+   "kind": "note",
+   "label": "step 2 not committed yet, draft, dive every frame sheet 0 of 0 to 5 (2990 to 3060), one scene, place picture off, weights by height",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T23:45:31.443Z",
+   "file": "20261123234531443-frame-f03239.jpg",
+   "source": "out/work/jupiter/frames/p2r/f03239.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3239, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3239,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "94288983d3b2cf97"
   }
  ]
 }
