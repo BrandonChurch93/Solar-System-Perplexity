@@ -1,64 +1,64 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-23T20:34:29.576Z",
- "head": "79de0c3f1bffddd73032be51cfc775cd67cbd163",
- "note": "tone split on the eighth Mars bake: four variants across the rise and the dive; the far field of picture and globe differ in kind, not in tone",
+ "pushed": "2026-11-23T20:57:38.135Z",
+ "head": "a9f7d7af6793e4ab99617e80c1391e5fc305fb27",
+ "note": "MAIL 342: the horizon across T measured on Mars (before), the border of point b traced into the stop's own plates, Mercury 738 to 741 film beside globe alone",
  "looks": [
   {
-   "time": "2026-11-23T20:34:28.962Z",
-   "file": "20261123203428962-note-diff-2693.jpg",
-   "source": "../../../../tmp/tone/diff-2693.png",
+   "time": "2026-11-23T20:57:33.319Z",
+   "file": "20261123205733319-note-merc-740-crop.jpg",
+   "source": "../../../../tmp/hz/merc-740-crop.png",
    "kind": "note",
-   "label": "Mars 2693: with the picture, the globe alone, difference gain 4"
+   "label": "Mercury 740 lower left at full size: film (hard four sided pale slab) beside globe alone (no slab)"
   },
   {
-   "time": "2026-11-23T20:34:28.376Z",
-   "file": "20261123203428376-note-crop-2695-bl.jpg",
-   "source": "../../../../tmp/tone/crop-2695-bl.png",
+   "time": "2026-11-23T20:57:32.574Z",
+   "file": "20261123205732574-note-merc-off.jpg",
+   "source": "../../../../tmp/hz/merc-off.png",
    "kind": "note",
-   "label": "Mars 2695 full size, lower left"
+   "label": "Mercury dive 738 to 741 on main's Mercury: film beside globe alone"
   },
   {
-   "time": "2026-11-23T20:34:27.806Z",
-   "file": "20261123203427806-note-crop-2695-br.jpg",
-   "source": "../../../../tmp/tone/crop-2695-br.png",
+   "time": "2026-11-23T20:57:31.840Z",
+   "file": "20261123205731840-note-b-2447.jpg",
+   "source": "../../../../tmp/hz/b-2447.png",
    "kind": "note",
-   "label": "Mars 2695 full size, lower right: the knobs of the globe beside the plates are in the globe alone too"
+   "label": "Mars dive 2445, 2447, 2449: film edgeIn 0.4, film 0.8, globe alone"
   },
   {
-   "time": "2026-11-23T20:34:27.215Z",
-   "file": "20261123203427215-note-crop-2695-tr.jpg",
-   "source": "../../../../tmp/tone/crop-2695-tr.png",
+   "time": "2026-11-23T20:57:31.162Z",
+   "file": "20261123205731162-note-b-2447-low.jpg",
+   "source": "../../../../tmp/hz/b-2447-low.png",
    "kind": "note",
-   "label": "Mars 2695 full size, upper right: off, shares 1, shares 2, the globe alone"
+   "label": "Mars dive 2447 bottom band at full size: film edgeIn 0.4, film 0.8, globe alone: the same border in all three"
   },
   {
-   "time": "2026-11-23T20:34:26.639Z",
-   "file": "20261123203426639-note-crop-2695-top.jpg",
-   "source": "../../../../tmp/tone/crop-2695-top.png",
+   "time": "2026-11-23T20:57:30.500Z",
+   "file": "20261123205730500-note-b-2698.jpg",
+   "source": "../../../../tmp/hz/b-2698.png",
    "kind": "note",
-   "label": "Mars 2695 full size, upper left: off, shares 1, shares 2, the globe alone. The far field is two different pictures"
+   "label": "Mars 2698 lower left at full size: film with edgeIn 0.4, film with edgeIn 0.8, globe alone: the border does not move"
   },
   {
-   "time": "2026-11-23T20:34:25.853Z",
-   "file": "20261123203425853-note-sheet-glob-dive.jpg",
-   "source": "../../../../tmp/tone/sheet-glob-dive.png",
+   "time": "2026-11-23T20:57:29.803Z",
+   "file": "20261123205729803-note-plates.jpg",
+   "source": "../../../../tmp/hz/plates.png",
    "kind": "note",
-   "label": "Mars dive 2442 to 2453, eighth bake, draft, the globe alone (no place picture)"
+   "label": "Mars eighth bake, the stop's own plates 0.3, 0.7, 1.6, 3.8 deg: the lay back of the picture beside generated ground with painted knobs"
   },
   {
-   "time": "2026-11-23T20:34:25.209Z",
-   "file": "20261123203425209-note-sheet-s2-dive.jpg",
-   "source": "../../../../tmp/tone/sheet-s2-dive.png",
+   "time": "2026-11-23T20:57:29.073Z",
+   "file": "20261123205729073-note-b-2696-three.jpg",
+   "source": "../../../../tmp/tone/b-2696-three.png",
    "kind": "note",
-   "label": "Mars dive 2442 to 2453, eighth bake, draft, tone split shares 2"
+   "label": "Mars 2696: film, globe alone, weight of the picture: the border sits at the same pixels in the film and in the globe alone"
   },
   {
-   "time": "2026-11-23T20:34:24.572Z",
-   "file": "20261123203424572-note-sheet-s1-dive.jpg",
-   "source": "../../../../tmp/tone/sheet-s1-dive.png",
+   "time": "2026-11-23T20:57:28.478Z",
+   "file": "20261123205728478-note-hz-dive-off-R.jpg",
+   "source": "../../../../tmp/tone/hz-dive-off-R.png",
    "kind": "note",
-   "label": "Mars dive 2442 to 2453, eighth bake, draft, tone split shares 1"
+   "label": "Mars dive across T 2454, film, horizon at full size, right 720 px (before)"
   }
  ]
 }
