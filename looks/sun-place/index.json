@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T11:03:42.830Z",
+ "pushed": "2026-11-23T11:21:31.303Z",
  "head": "c500257fdf2398613c3b546d32955a7af9646c3e",
- "note": "sun terrain flow second take: clumps move 10 to 20 px a frame, loops too dim, tuning",
+ "note": "sun terrain: flow along the loops tuned, event retimed, penumbra stripes cured; full frozen render running",
  "looks": [
+  {
+   "time": "2026-11-23T11:21:30.608Z",
+   "file": "20261123112130608-note-stripes-ba.jpg",
+   "source": "out/work/sun/life/stripes-ba.png",
+   "kind": "note",
+   "label": "FAULT found and cured: the old wave on the penumbra fibres drew stripes two pixels wide at one sample a pixel (frames 10 to 80 and 100 to 170, also in the committed state); removed, the fibres carry clumps now",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T11:21:29.930Z",
+   "file": "20261123112129930-note-x5-event.jpg",
+   "source": "out/work/sun/life/x5-event.jpg",
+   "kind": "note",
+   "label": "the event, camera frozen, every 6th frame 0 to 114: foot at 6, surge at the top by 18, flash at 21 to 24, arc thrown beyond the loop top from 30, opens from 62, falls back along the legs",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T11:21:29.284Z",
+   "file": "20261123112129284-note-x6-six-top.jpg",
+   "source": "out/work/sun/life/x6-six-top.jpg",
+   "kind": "note",
+   "label": "loop top, frames 90 to 95 at native size, camera frozen: clumps about 65 px long run along the strands at about 17 px a frame, dim between them",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-23T11:03:42.232Z",
    "file": "20261123110342232-note-x2-kept.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/sun/life/a8-second.jpg",
    "kind": "note",
    "label": "REJECTED take: inner read from the picture's relief, ground turns to wax",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T10:27:23.166Z",
-   "file": "20261123102723166-note-seam2.jpg",
-   "source": "out/work/sun/life/seam2.png",
-   "kind": "note",
-   "label": "FAULT cured: rows folded over at cell edges (top before, middle and bottom now, 5x)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T10:27:22.592Z",
-   "file": "20261123102722592-note-a10-six.jpg",
-   "source": "out/work/sun/life/a10-six.jpg",
-   "kind": "note",
-   "label": "ground, frozen camera, frames 90 96 102 108 114 120 at native size: cells brighten and dim, beads in the penumbra",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T10:27:21.965Z",
-   "file": "20261123102721965-note-a10-ba.jpg",
-   "source": "out/work/sun/life/a10-ba.jpg",
-   "kind": "note",
-   "label": "ground at native size, frozen pose 90: before (top) and now (bottom). Nothing dragged any more, the life is light",
    "stop": "sun"
   }
  ]
