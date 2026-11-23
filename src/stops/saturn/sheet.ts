@@ -4,6 +4,7 @@ import { RING_FIELD_GLSL, type RingField } from './field'
 import { ICE_GLSL, type Ice } from './ice'
 import model from './ringfield.json'
 import look from './sheet.json'
+import skim from './skim.json'
 
 export const GLOBE_SHADOW_GLSL = /* glsl */ `
 uniform vec4 uShadowFit;
@@ -16,6 +17,45 @@ vec3 globeShadow(vec3 P, vec3 sunL, float polar) {
   float w = uShadowFit.x + uShadowFit.y * max(-b, 0.0);
   vec3 lit = smoothstep(vec3(1.0) - w * uShadowReach, vec3(1.0 + w), vec3(d));
   return b < 0.0 ? lit : vec3(1.0);
+}`
+
+// Near the sheet its outer rim is no edge: past the rim the ice goes on outward and thins out, fast at first
+// and then as a long thin veil that ends softly. Needs RING_FIELD_GLSL.
+export const SHEET_OUTER_GLSL = /* glsl */ `
+uniform vec4 uOuter;
+uniform vec4 uOuter2;
+uniform vec2 uOuterInk;
+// the depth that adds to the sheet at radius r: none inside the rim, and none in the hold
+float sheetOuter(float r) {
+  float past = r - uOuter.x;
+  return past > 0.0 ? (uOuter.y * exp(-past / uOuter.z) + uOuter.w * exp(-past / uOuter2.x)) * (1.0 - smoothstep(uOuter2.y, uOuter2.z, r)) : 0.0;
+}
+// the brightness that depth returns where the model was measured
+float sheetOuterLum(float depth) {
+  return uOuter2.w * ringSat(depth * uRfLight.x);
+}
+// the radius the colour of the ice is read at: past the rim the ice has the colour of the rim
+float sheetInkRadius(float r) {
+  return r - max(r - uOuterInk.x, 0.0) * uOuterInk.y;
+}`
+
+// How the brightness of the sheet goes with the angles of the Sun and of the view.
+export const SHEET_LAW_GLSL = /* glsl */ `
+uniform vec4 uShade;
+uniform vec4 uViewFit;
+uniform vec3 uPhase[${look.phase.deg.length}];
+// what the sheet returns at a phase angle over what it returns where the model was measured, for a dense
+// sheet (x) and a thin one (y): straight lines between the knots, flat outside
+vec2 phaseGain(float deg) {
+  vec2 g = uPhase[0].yz;
+  for (int k = 1; k < ${look.phase.deg.length}; k++) g = mix(g, uPhase[k].yz, clamp((deg - uPhase[k - 1].x) / (uPhase[k].x - uPhase[k - 1].x), 0.0, 1.0));
+  return g;
+}
+// the factor on the brightness for a sheet that is thin (1) or dense (0), seen at the cosine mu, lit at the
+// cosine mu0, at the phase angle deg
+float sheetLaw(float thin, float mu, float mu0, float deg) {
+  vec2 byPhase = phaseGain(deg);
+  return pow(clamp((uRfLight.y + uRfLight.z) / (mu0 + mu), uViewFit.x, uViewFit.y), mix(uShade.x, uShade.y, thin)) * mix(byPhase.x, byPhase.y, thin);
 }`
 
 const VERT = /* glsl */ `
@@ -46,9 +86,6 @@ uniform float uWeight;
 uniform float uVignette;
 uniform float uAspect;
 uniform float uFinest;
-uniform vec4 uShade;
-uniform vec4 uViewFit;
-uniform vec3 uPhase[${look.phase.deg.length}];
 uniform float uSat;
 uniform vec3 uTintDense;
 uniform vec3 uTintThin;
@@ -60,18 +97,12 @@ ${DIAG_GLSL}
 ${RING_FIELD_GLSL}
 ${GLOBE_SHADOW_GLSL}
 ${ICE_GLSL}
-// what the sheet returns at a phase angle over what it returns where the model was measured, for a dense
-// sheet (x) and a thin one (y): straight lines between the knots, flat outside
-vec2 phaseGain(float deg) {
-  vec2 g = uPhase[0].yz;
-  for (int k = 1; k < ${look.phase.deg.length}; k++) g = mix(g, uPhase[k].yz, clamp((deg - uPhase[k - 1].x) / (uPhase[k].x - uPhase[k - 1].x), 0.0, 1.0));
-  return g;
-}
+${SHEET_OUTER_GLSL}
+${SHEET_LAW_GLSL}
 void main() {
   vec2 q = vLocal.xz;
   float r = length(q);
   float pixel = length(vec2(dFdx(r), dFdy(r)));
-  float fp = ringFootprint(pixel, uGrad);
   vec2 qx = dFdx(q);
   vec2 qy = dFdy(q);
   float det = qx.x * qy.y - qx.y * qy.x;
@@ -79,16 +110,23 @@ void main() {
   float texels = diagTexels(q / uFinest);
   vec3 P = vec3(q.x, 0.0, q.y);
   vec3 ray = P - uCamL;
+  // during one take the pixel's point slides over the ice: the ringlets are filtered by the pixel and by that
+  vec2 sweep = iceSweep(q, r, ray);
+  float fp = ringFootprint(length(vec2(pixel, sweep.x * uIceFit2.z)), uGrad);
   vec3 cs = vec3(uCamL.x, uCamL.y / uPolar, uCamL.z);
   vec3 ds = vec3(ray.x, ray.y / uPolar, ray.z);
   bool front = -dot(cs, ds) > dot(ds, ds);
-  bool mine = front == (uPass == 1);
+  // past the span of the model there is ice only when the lens is near
+  bool mine = front == (uPass == 1) && (uIceOrbit.z > 0.0 || r < uRfSpan.x + 1.0 / uRfSpan.y);
   vec3 col = vec3(0.0);
   float alpha = 0.0;
   for (int k = 0; k < (mine ? 1 : 0); k++) {
     vec2 knots = ringKnots(r, fp);
-    vec4 ink = ringInk(r);
-    float thin = ringThin(r);
+    float more = sheetOuter(r);
+    knots += vec2(more, sheetOuterLum(more));
+    float rc = sheetInkRadius(r);
+    vec4 ink = ringInk(rc);
+    float thin = ringThin(rc);
     float tau = knots.x;
     float lum = knots.y;
     vec3 tint;
@@ -101,7 +139,7 @@ void main() {
     // near the sheet the broad zones of the dense rings are evener than from afar
     lum *= pow(clamp(ringKnots(r, uFlatten.z).y / uFlatten.x, 1.0 / uFlatten.w, uFlatten.w), uFlatten.y * (1.0 - thin));
     // the grain of the sheet and its sparks
-    vec2 sand = iceGrain(r, turn, 1.0 / max(pixel, 1e-9), length(toPixel * vec2(-q.y, q.x)) / r, thin);
+    vec2 sand = iceGrain(r, turn, 1.0 / max(pixel, 1e-9), length(toPixel * vec2(-q.y, q.x)) / r, thin, sweep);
     lum *= exp(sand.x);
     tau *= exp(sand.x * uGrainFit.w);
     float dist = length(ray);
@@ -110,25 +148,16 @@ void main() {
     bool same = uCamL.y * uSunL.y > 0.0;
     float seen = same ? ringSat(tau * (1.0 / mu0 + 1.0 / mu)) / max(ringSat(tau * uRfLight.x), 1e-6) : uShade.w * exp(-tau / mu0) * ringSat(tau / mu) / max(ringSat(tau * uRfLight.x), 1e-6);
     float deg = degrees(acos(clamp(dot(ray, uSunL) / -dist, -1.0, 1.0)));
-    vec2 byPhase = phaseGain(deg);
-    float law = pow(clamp((uRfLight.y + uRfLight.z) / (mu0 + mu), uViewFit.x, uViewFit.y), mix(uShade.x, uShade.y, thin)) * mix(byPhase.x, byPhase.y, thin);
+    float law = sheetLaw(thin, mu, mu0, deg);
     vec3 tone = mix(vec3(1.0), ink.rgb, uSat * mix(1.0, min(law, 1.0), thin * uViewFit.z)) * tint * mix(uTintDense, uTintThin, thin);
     vec3 lit = globeShadow(P, uSunL, uPolar);
     // stars do not show through any part of the sheet that holds ice; the globe shows through by the true depth
     float bn = dot(cs, ds) / length(ds);
     float behind = front ? 1.0 - smoothstep(uShadowFit.z, uShadowFit.w, sqrt(max(dot(cs, cs) - bn * bn, 0.0))) : 0.0;
     alpha = 1.0 - exp(-tau / mu * mix(uViewFit.w, 1.0, behind));
-    // the stones: their shadows on the sheet, the ones that rest on it, the ones that float above it
-    float shade;
-    vec4 rest;
-    vec4 raised;
-    iceStones(q, turn, uCamL, ray / dist, uSunL, length(toPixel * normalize(vec2(-ray.z, ray.x))), soft, uSat, shade, rest, raised);
     vec3 under = mix(uFloor, vec3(1.0), lit) * uShade.z;
-    float dense = pow(clamp((uRfLight.y + uRfLight.z) / (mu0 + mu), uViewFit.x, uViewFit.y), uShade.x) * byPhase.x;
-    col = lum * (seen * law) * under * (tone * ((1.0 - uStoneLook.w * shade) * (1.0 - rest.x) + rest.y - rest.w) + mix(tone, vec3(1.0), uIceOrbit.w) * (rest.z + sand.y * uStoneLit.w));
-    col += uStoneTint * (uStoneFar.x * rest.w * dense) * under;
-    col = col * (1.0 - raised.a) + raised.rgb * dense * under;
-    alpha = alpha * (1.0 - raised.a) + raised.a;
+    // the sheet and the white sparks of its brightest grains
+    col = lum * (seen * law) * under * (tone + mix(tone, vec3(1.0), uIceOrbit.w) * (sand.y * uIceFit2.y));
   }
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
@@ -137,17 +166,53 @@ void main() {
   if (mine == false || (uDiag >= 2 && alpha < 0.5)) discard;
 }`
 
+// the brightness of a sheet too deep to see through, just inside the rim, where the model was measured
+function rimLum(): number {
+  const span = model.span as [number, number]
+  const light = 1 / model.muSun + 1 / model.muHero
+  let sum = 0
+  let count = 0
+  for (let i = 0; i < model.knots; i++) {
+    const r = span[0] + ((span[1] - span[0]) * i) / (model.knots - 1)
+    if (r < model.outer - skim.outer.inset * 3 || r > model.outer - skim.outer.inset) continue
+    sum += model.lum[i]! / (1 - Math.exp(-model.tau[i]! * light))
+    count++
+  }
+  return sum / Math.max(count, 1)
+}
+
+// the depth of the sheet at radius r with the lens near it: the model inside the rim, past it the ice that
+// thins out (the same law as sheetOuter in the shader)
+export function sheetDepth(r: number): number {
+  const span = model.span as [number, number]
+  const x = ((r - span[0]) / (span[1] - span[0])) * (model.knots - 1)
+  let tau = 0
+  if (x >= 0 && x <= model.knots - 1) {
+    const i = Math.min(Math.floor(x), model.knots - 2)
+    tau = model.tau[i]! + (model.tau[i + 1]! - model.tau[i]!) * (x - i)
+  }
+  const o = skim.outer
+  const past = r - model.outer
+  if (past > 0) {
+    const end = Math.min(Math.max((r - o.end[0]!) / (o.end[1]! - o.end[0]!), 0), 1)
+    tau += (o.depth[0]! * Math.exp(-past / o.length[0]!) + o.depth[1]! * Math.exp(-past / o.length[1]!)) * (1 - end * end * (3 - 2 * end))
+  }
+  return tau
+}
+
 export class Sheet {
   readonly group = new THREE.Group()
   readonly materials: THREE.ShaderMaterial[] = []
   readonly uniforms: Record<string, THREE.IUniform>
   private readonly geometry: THREE.BufferGeometry
+  private readonly outer = new THREE.Vector4(model.outer, 0, skim.outer.length[0], 0)
+  private readonly outerInk = new THREE.Vector2(model.outer - skim.outer.inset, 0)
 
   constructor(field: RingField, ice: Ice, polar: number) {
     const seg = look.segments
     const span = model.span as [number, number]
     const inner = span[0]
-    const outer = span[1] / Math.cos(Math.PI / seg)
+    const outer = Math.max(span[1], skim.outer.end[1]!) / Math.cos(Math.PI / seg)
     const pos = new Float32Array((seg + 1) * 2 * 3)
     const index: number[] = []
     for (let i = 0; i <= seg; i++) {
@@ -176,6 +241,9 @@ export class Sheet {
       uShadowReach: { value: new THREE.Vector3().fromArray(look.shadow.reach) },
       uFloor: { value: new THREE.Vector3().fromArray(look.shadow.floor) },
       uLayer: { value: new THREE.Vector3().fromArray(look.layer) },
+      uOuter: { value: this.outer },
+      uOuter2: { value: new THREE.Vector4(skim.outer.length[1], skim.outer.end[0], skim.outer.end[1], rimLum()) },
+      uOuterInk: { value: this.outerInk },
     }
     for (const pass of [0, 1]) {
       const material = new THREE.ShaderMaterial({
@@ -190,6 +258,13 @@ export class Sheet {
       this.materials.push(material)
       this.group.add(mesh)
     }
+  }
+
+  // near: how near the lens is to the sheet (0 in the hold, 1 in the skim): the ice past the rim shows by it
+  set(near: number): void {
+    this.outer.y = skim.outer.depth[0]! * near
+    this.outer.w = skim.outer.depth[1]! * near
+    this.outerInk.y = Math.min(near * skim.outer.inkBy, 1)
   }
 
   dispose(): void {

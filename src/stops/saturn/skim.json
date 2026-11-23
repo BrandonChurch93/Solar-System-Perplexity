@@ -1,26 +1,26 @@
 {
   "source": "the camera of the skim over the ring plane and how the light changes with the camera's height. Lengths in planet radii, angles in degrees. Read by plan.ts and set.ts.",
   "pose": {
-    "note": "the middle of the skim: where the camera stands (azimuth from the Sun's side, radius of its foot on the plane, height), and how it looks (the globe this far right of the view axis, tilt down, roll)",
-    "azimuthDeg": 17,
-    "foot": 2.44,
-    "height": 0.3,
-    "yawDeg": 25.51,
-    "tiltDeg": 7.72,
-    "rollDeg": -12.87,
+    "note": "the middle of the skim: where the camera stands (azimuth from the Sun's side, radius of its foot on the plane, height), and how it looks (the globe this far right of the view axis, tilt down, roll). Fitted by assets-src/saturn/code/pose_fit.py so that the true world lies on the approved close image: the lit limb of the globe, the edge of night and the two edges of the dark gap.",
+    "azimuthDeg": 4.72,
+    "foot": 2.589,
+    "height": 0.3955,
+    "yawDeg": 22.22,
+    "tiltDeg": 11.14,
+    "rollDeg": -8.76,
     "vfov": 48
   },
   "path": {
-    "note": "travel over the whole skim: along the view axis on the plane, downward, sideways, and the turn of the camera",
-    "forward": 0.5,
-    "sink": 0.12,
+    "note": "travel over the whole skim: forward is the length of the way along the view axis on the plane; descent is the height at the start over the height at the end. The height falls by the same share in every frame and the speed over the plane goes with the height, so the sheet passes under the lens at the same number of pixels a frame all the way; side is the travel sideways, yawDeg and pitchDeg the turn of the camera over the skim.",
+    "forward": 1.7,
+    "descent": 2.2,
     "side": 0,
     "yawDeg": 0,
     "pitchDeg": 0
   },
   "light": {
     "note": "exposure of the globe and of the rings and how much of its colour the ice keeps, first in the hold and then in the skim, blended by the logarithm of the camera's height between the two heights (the lower height is the skim); the strengths of the ladder of ringlets are blended the same way (ringfine.json near). tint: the factor on the colour of the dense and of the thin rings, far in the hold and near in the skim: both approved images have the thin rings brighter and less red than the model's ink, and the close has its dense rings a little darker. halo: the factor on the scale height and on the brightness of the glow outside the globe's limb. dusk: on the globe the light between these two cosines of the Sun's angle is cut down by a smooth step, by this amount, so the terminator is narrower near the sheet as in the approved close; dusk.night is the factor on the floor of light the night side keeps. flatten: the brightness of the dense rings averaged over width radii, over pivot (no further from 1 than reach times or one over reach), is raised to power: near the sheet the broad zones are evener, as in the approved close.",
-    "heights": [0.35, 1.6],
+    "heights": [0.6, 1.8],
     "globe": [1, 1.5],
     "rings": [1, 0.85],
     "ringSaturation": [1, 0.62],
@@ -51,5 +51,13 @@
       "width": 0.02,
       "reach": 1.6
     }
+  },
+  "outer": {
+    "note": "near the sheet its outer rim is no edge: past the rim (ringfield.json outer) the ice goes on and thins out by two laws that add, each a depth at the rim (the normal optical depth) that falls by e over its length; all of it ends softly between the two radii of end. inset: the colour of that ice is read this far inside the rim. inkBy: how fast that colour takes over as the lens comes near. All of it shows by how near the lens is, none in the hold.",
+    "depth": [0.55, 0.006],
+    "length": [0.09, 0.45],
+    "end": [3.2, 3.9],
+    "inset": 0.012,
+    "inkBy": 8
   }
 }

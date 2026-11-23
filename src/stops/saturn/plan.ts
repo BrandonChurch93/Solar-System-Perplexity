@@ -10,7 +10,7 @@ export const params: MoveParams = {
   hold: { orbitDeg: 7, axis: [-0.2, 1, 0.1], push: -0.03 },
   spot: { x: 0.256, y: 0.856, on: 'rings' },
   dive: { headingDeg: -35, altitude: 0.03, back: 0.1, ahead: 0.3, bow: -0.12, rollDeg: -4 },
-  terrain: { vfov: skimJson.pose.vfov, forward: skimJson.path.forward, rise: -skimJson.path.sink, side: skimJson.path.side, yawDeg: skimJson.path.yawDeg, pitchDeg: skimJson.path.pitchDeg, entryHeight: 0.72, entryBack: 1.1, entryPitchDeg: 3.6, exitHeight: 1.6, exitForward: 1.5, exitPitchDeg: 6, ground: 0 },
+  terrain: { vfov: skimJson.pose.vfov, forward: skimJson.path.forward, rise: -skimJson.pose.height * (Math.sqrt(skimJson.path.descent) - 1 / Math.sqrt(skimJson.path.descent)), side: skimJson.path.side, yawDeg: skimJson.path.yawDeg, pitchDeg: skimJson.path.pitchDeg, entryHeight: 0.72, entryBack: 1.1, entryPitchDeg: 3.6, exitHeight: 1.6, exitForward: 1.5, exitPitchDeg: 6, ground: 0 },
   rise: { azimuthDeg: -14, elevationDeg: 6, distance: 6.6, offset: [-0.28, -0.12], driftSpeed: 0.08, rollDeg: 0 },
   travel: { turnDeg: 88, side: -1, turnEnd: 0.5 },
   arrive: { swingDeg: -23.5, axis: [-0.866, 0.216, -0.027], power: 3, from: 0.35, offset: [-0.25, 0.1] },
@@ -59,12 +59,18 @@ export class SaturnPlan extends StopPlan {
     this.toTerrain = this.terrainFrame.clone().invert()
   }
 
+  // The skim: the height falls by the same share in every frame and the speed over the plane goes with the
+  // height, so the sheet passes under the lens at a steady number of pixels a frame. u is the time from the
+  // middle of the skim over its length; along is the share of the way done since the middle.
   skimAt(time: number): Pose {
     const path = skimJson.path
     const seg = this.seg.terrain
     const dur = seg.end - seg.start
     const u = (time - seg.start) / dur - 0.5 - config.shutterFraction / (2 * config.fps * dur)
-    const position = this.skimPosition.clone().addScaledVector(this.skimForward, path.forward * u).addScaledVector(this.skimRight, path.side * u).addScaledVector(this.ringNormal, -path.sink * u)
+    const k = Math.log(path.descent)
+    const fall = Math.exp(-k * u)
+    const along = k === 0 ? u : (1 - fall) / (2 * Math.sinh(k / 2))
+    const position = this.skimPosition.clone().addScaledVector(this.skimForward, path.forward * along).addScaledVector(this.skimRight, path.side * along).addScaledVector(this.ringNormal, skimJson.pose.height * (fall - 1))
     const quaternion = new THREE.Quaternion().setFromAxisAngle(this.ringNormal, THREE.MathUtils.degToRad(path.yawDeg) * u).multiply(this.skimQuaternion)
     quaternion.multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), THREE.MathUtils.degToRad(path.pitchDeg) * u))
     return { position, quaternion, vfov: skimJson.pose.vfov }
@@ -131,17 +137,27 @@ export class SaturnPlan extends StopPlan {
     return 0
   }
 
+  // Where the lens is in the frame of the globe at any time from the hold to the end of the rise: one path.
+  flight(time: number): Pose {
+    const d = this.seg.dive!
+    const r = this.seg.rise
+    if (time < d.start) return this.hold(time - this.seg.hold.start)
+    if (time < d.end) return this.join(this.hold(time - this.seg.hold.start), this.skimAt(time), this.diveX((time - d.start) / (d.end - d.start)), skim.diveBow)
+    if (time < r.start) return this.skimAt(time)
+    return this.join(this.skimAt(time), this.after(time), this.riseX((time - r.start) / (r.end - r.start)), skim.riseBow)
+  }
+
   override dive(time: number): OrbitShot {
     const seg = this.seg.dive!
     const x = this.diveX((time - seg.start) / (seg.end - seg.start))
-    const pose = this.join(this.hold(time - this.seg.hold.start), this.skimAt(time), x, skim.diveBow)
+    const pose = this.flight(time)
     return x < skim.diveSwitch ? { pose, view: 'orbit' } : { pose: this.local(pose), view: 'terrain' }
   }
 
   override rise(time: number): OrbitShot {
     const seg = this.seg.rise
     const x = this.riseX((time - seg.start) / (seg.end - seg.start))
-    const pose = this.join(this.skimAt(time), this.after(time), x, skim.riseBow)
+    const pose = this.flight(time)
     return x < skim.riseSwitch ? { pose: this.local(pose), view: 'terrain' } : { pose, view: 'orbit' }
   }
 

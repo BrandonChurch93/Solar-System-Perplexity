@@ -1,5 +1,5 @@
 {
-  "source": "the ice of the ring sheet that can be seen piece by piece: sizes in planet radii, angles in degrees. Read by ice.ts. Wakes, grain and stones lie on rows in radius; a row turns rigidly at the orbital rate of its radius, so every piece rides its own orbit and the rows shear against each other. Every piece is filtered by the size of the pixel and fades out where it gets smaller than a pixel, so the pieces merge into the sheet with distance.",
+  "source": "the ice that is part of the ring sheet itself: sizes in planet radii, angles in degrees. Read by ice.ts. Wakes and grain lie on rows in radius; a row turns rigidly at the orbital rate of its radius, so every piece rides its own orbit and the rows shear against each other. Every piece is filtered by the size of the pixel and fades out where it gets smaller than a pixel. The blocks that can be seen one by one are in blocks.json.",
   "orbit": {
     "note": "the radius of the orbit that keeps pace with the globe's spin (the spin itself is spinDegPerSecond in plan.ts); the other orbits follow from it by Kepler's third law",
     "syncRadius": 1.86
@@ -9,43 +9,7 @@
   "tau": 0.5,
   "glintWhite": 0.5,
   "weakest": 0.4,
-  "note": "tau: the share of a wake's tone that also moves the optical depth. glintWhite: how far the gloss of a stone is white rather than the colour of the ice. weakest: the tone of the faintest wake over the tone of the strongest.",
-  "stones": {
-    "note": "balls of ice lit by the Sun. Per class: radial size of a cell; how many times longer the cell is along the orbit; the share of cells that hold a stone where the sheet is dense; the stone's radius in cells, smallest and largest; the height of the level it floats on above the sheet (0: it rests on the sheet, half out of it); the share of stones that are turned to mirror the Sun and how much white light they add all over, in units of gloss; depth: how much of the light and shade of a ball the stone shows (0: it is as bright as the sheet all over); throws: 1 if the class throws shadows on the sheet; reach: how many radii the centre keeps from the walls of its cell; block: 1 if the stones of the class are blocks with twelve faces rather than balls. Resting classes lie closely: a stone is looked for in the cell of the point, in the next cell toward the lens and, if the class throws shadows, in the next cell toward the Sun, step cells away. viewFloor and sunFloor: the smallest sine of the angle between the plane and the ray to the lens and to the Sun that a stone's outline and shadow are drawn for (flatter rays are drawn as if at the floor, which bounds how far both reach on the plane). presence: the optical depth of the sheet at which about two thirds of the stones are there (their share goes with the square of the depth where the sheet is thinner, so a gap holds none). ambient and direct: a stone's light over the light of the sheet, in its own shade and where it faces the Sun. glossPower and gloss: the Sun's mirror image on the ice. tone: how far a stone's own brightness varies. shadow: how much of the sheet's light a stone's shadow takes. white: how far a stone is clean ice of its own (colour ice, brightness lum in the units of the ring model) rather than ice of the sheet under it. rim and rimPower: ice against the light glows at its edge, this many times the light of the sheet and this sharply toward the edge. clear: a level shows while the lens is this many times higher than it, fading in between the two. faces: the distance of a block's faces from its centre over its radius, nearest and farthest (no more than 0.79, where all corners still lie inside the radius). tumble: how many times a block turns about its own axis while the globe turns once, at most. edge: a block's edge is soft over this many filter widths of ice along the ray. glow and glowDepth: thin ice lets the light through, this many times the light of the sheet where the ray crosses no ice, falling to a third or so where it crosses glowDepth radii of the block. faceTone: how far the faces of a block differ in brightness.",
-    "cell": [0.0024, 0.0048, 0.0096, 0.012, 0.012, 0.024, 0.024, 0.048],
-    "aspect": [1, 1, 1, 1.4, 1.4, 1.4, 1.4, 1.4],
-    "share": [0.06, 0.12, 0.06, 0.25, 0.25, 0.2, 0.16, 0.1],
-    "size": [[0.2, 0.36], [0.1, 0.22], [0.06, 0.16], [0.03, 0.08], [0.03, 0.08], [0.015, 0.04], [0.015, 0.04], [0.008, 0.02]],
-    "height": [0, 0, 0, 0.004, 0.012, 0.03, 0.07, 0.14],
-    "glintShare": [0.01, 0.1, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15],
-    "glint": [1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5],
-    "reach": [1.05, 1.2, 1.2, 2.9, 2.9, 2.9, 2.9, 2.9],
-    "viewFloor": 0.4,
-    "sunFloor": 0.5,
-    "presence": 0.3,
-    "ambient": 0.85,
-    "direct": 1.2,
-    "glossPower": 24,
-    "gloss": 1.0,
-    "tone": 0.5,
-    "shadow": 0.5,
-    "lum": 0.5,
-    "clear": [1.1, 1.4],
-    "depth": [0.7, 1, 1, 1, 1, 1, 1, 1],
-    "throws": [0, 1, 1, 0, 0, 0, 0, 0],
-    "step": 0.9,
-    "white": [0.0, 0.2, 0.3, 0.3, 0.3, 0.4, 0.5, 0.5],
-    "rim": 1.6,
-    "rimPower": 2,
-    "ice": [0.93, 0.97, 1.0],
-    "block": [0, 1, 1, 1, 1, 1, 1, 1],
-    "faces": [0.45, 0.79],
-    "tumble": 14,
-    "edge": 1.0,
-    "glow": 0.4,
-    "glowDepth": 0.35,
-    "faceTone": 0.5
-  },
+  "note": "tau: the share of a wake's tone that also moves the optical depth. glintWhite: how far a spark of the sand is white rather than the colour of the ice. weakest: the tone of the faintest wake over the tone of the strongest. filter and fade: the half width of the filter of a wake's edge in pixels, and the size in pixels under which a wake is gone and over which it is whole.",
   "wakes": {
     "note": "long soft patches of the sheet, darker or brighter, that ride the orbit: they show that the plane turns. Each class in two sets of rows, the second half a row out from the first. Per class: radial size of a cell; how many times longer the cell is along the orbit; the pitch of the patch's long axis to the orbit; the share of cells that hold a patch; the patch's radial half size in cells, smallest and largest; how soft its edge is (0 a hard disc, 1 a soft blob); how far a dark patch and a bright patch move the logarithm of the brightness. Wakes show only near the sheet (not in the hold).",
     "cell": [0.012, 0.006],
@@ -68,7 +32,7 @@
     "tone": [1, 0.7, 0.8]
   },
   "grain": {
-    "note": "the sand of the sheet. It has grains of many sizes, from finest by doublings; a size is a pair, across and along the orbit, and each size is a field of smooth noise that lies in the sheet, every row of cells on its own orbit. Seen at a slant a round grain would be a dash, so what a layer shows at a point is the sand whose grains are its number of pixels across and along the orbit there, blended between the sizes next to that; where the sheet is so far that the coarsest sand is finer than that, the sand merges into the sheet. Per layer: pixels; dense and thin: how far it moves the logarithm of the brightness in the dense and in the thin rings; sparks: 1 if its brightest grains are white sparks. hard: a grain's edge takes the share 1 minus twice this of the way to the next grain (0: the smoothest noise). tau: the share of the brightness that also moves the optical depth. far: the share of the sand's strength that is left in the hold (the sand is seen by the logarithm of the camera's height, as the light is). spark: how strong the sparks are in the dense and in the thin rings, each in the hold and in the skim (in units of the stones' gloss), from the first value of the noise to the second.",
+    "note": "the sand of the sheet. It has grains of many sizes, from finest by doublings; a size is a pair, across and along the orbit, and each size is a field of smooth noise that lies in the sheet, every row of cells on its own orbit. Seen at a slant a round grain would be a dash, so what a layer shows at a point is the sand whose grains are its number of pixels across and along the orbit there, blended between the sizes next to that; where the sheet is so far that the coarsest sand is finer than that, the sand merges into the sheet. Per layer: pixels; dense and thin: how far it moves the logarithm of the brightness in the dense and in the thin rings; sparks: 1 if its brightest grains are white sparks. hard: a grain's edge takes the share 1 minus twice this of the way to the next grain (0: the smoothest noise). tau: the share of the brightness that also moves the optical depth. far: the share of the sand's strength that is left in the hold (the sand is seen by the logarithm of the camera's height, as the light is). spark: how strong the sparks are in the dense and in the thin rings, each in the hold and in the skim (in units of the stones' gloss), from the first value of the noise to the second. spark.gain: the brightness of a spark. sweep: the share of the way the pixel's point slides over the ice during one take by which the grain and the ringlets are filtered (1: the true blur of the shutter).",
     "finest": 0.0002,
     "doublings": 7,
     "layers": [
@@ -90,9 +54,11 @@
       "dense": [0.0, 0.0],
       "thin": [0.6, 0.6],
       "from": 0.97,
-      "to": 1.0
+      "to": 1.0,
+      "gain": 1.0
     },
     "hard": 0.2,
-    "far": 0.5
+    "far": 0.5,
+    "sweep": 1.0
   }
 }

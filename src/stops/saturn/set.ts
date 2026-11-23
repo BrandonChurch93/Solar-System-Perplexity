@@ -1,7 +1,9 @@
 import * as THREE from 'three'
 import { FarPoint } from '../../bodies/farpoint'
+import { config } from '../../config'
 import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { smooth } from '../../director/rig'
+import { Blocks, type Eye } from './blocks'
 import { ringField } from './field'
 import { Globe, Shell } from './globe'
 import { iceField } from './ice'
@@ -9,7 +11,9 @@ import * as look from './look'
 import { plan } from './plan'
 import { Sheet } from './sheet'
 import { shotMatrix } from './shot'
+import blocksJson from './blocks.json'
 import holdLight from './hold-light.json'
+import iceJson from './ice.json'
 import lightJson from './light.json'
 import sheetJson from './sheet.json'
 import skimJson from './skim.json'
@@ -44,6 +48,18 @@ export const createSet: SetFactory = async (ctx) => {
   tilt.add(globe.mesh, shell.mesh, sheet.group)
   shell.mesh.renderOrder = 2.5
 
+  // the lens through the skim in the frame of the rings: the blocks are chosen by what it can see
+  const terrain = plan.seg.terrain
+  const eyes: Eye[] = []
+  for (let f = terrain.firstFrame + blocksJson.fade.frames[0]!; f < terrain.firstFrame + terrain.frames + blocksJson.fade.frames[1]!; f++) {
+    const time = (f + config.shutterFraction / 2) / config.fps
+    const pose = plan.flight(time)
+    eyes.push({ position: pose.position.clone().applyQuaternion(toTilt), quaternion: toTilt.clone().multiply(pose.quaternion), turns: plan.spin(time) / (2 * Math.PI) })
+  }
+  const skimTan = Math.tan(THREE.MathUtils.degToRad(skimJson.pose.vfov) / 2)
+  const blocks = new Blocks(sheet.uniforms, eyes, Math.floor(terrain.frames / 2) - blocksJson.fade.frames[0]!, ctx.format.height / 2 / skimTan, [(skimTan * ctx.format.width) / ctx.format.height, skimTan], iceJson.orbit.syncRadius, plan.p.spinDegPerSecond)
+  tilt.add(blocks.group)
+
   const streak = new Streak(look.streak)
   world.add(streak.mesh)
 
@@ -77,6 +93,7 @@ export const createSet: SetFactory = async (ctx) => {
   const light = new THREE.Vector3()
   const turn = new THREE.Quaternion()
   const moon = new THREE.Vector3()
+  const moved = new THREE.Vector3()
   const tune = skimJson.light
   const tintDense = new THREE.Vector3().fromArray(tune.tint.near.dense)
   const tintThin = new THREE.Vector3().fromArray(tune.tint.near.thin)
@@ -147,12 +164,18 @@ export const createSet: SetFactory = async (ctx) => {
       ;(gu.uDusk!.value as THREE.Vector4).set(tune.dusk.from, tune.dusk.to, THREE.MathUtils.lerp(tune.dusk.amount[0]!, tune.dusk.amount[1]!, close), THREE.MathUtils.lerp(tune.dusk.night[0]!, tune.dusk.night[1]!, close))
 
       ice.set(plan.spin(state.time), close)
+      // one take of the frame: how far the lens moves and the orbits turn while its shutter is open
+      const take = config.shutterFraction / config.fps / Math.max(view.samples, 1)
+      moved.copy(plan.flight(state.time + take / 2).position).sub(plan.flight(state.time - take / 2).position).applyQuaternion(toTilt)
+      ice.move.set(moved.x, moved.y, moved.z, (plan.spin(state.time + take / 2) - plan.spin(state.time - take / 2)) / (2 * Math.PI)).multiplyScalar(close)
+      blocks.set(view.format.height / 2 / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2), close > 0)
       const ru = sheet.uniforms
       ;(ru.uCamL!.value as THREE.Vector3).copy(camL)
       ;(ru.uSunL!.value as THREE.Vector3).copy(sunL)
       ;(ru.uShade!.value as THREE.Vector4).z = THREE.MathUtils.lerp(sheetJson.gain[0]!, sheetJson.gain[1]!, close) * THREE.MathUtils.lerp(tune.rings[0]!, tune.rings[1]!, close)
       ru.uSat!.value = THREE.MathUtils.lerp(tune.ringSaturation[0]!, tune.ringSaturation[1]!, close)
       field.set(close)
+      sheet.set(close)
       ;(ru.uFlatten!.value as THREE.Vector4).set(tune.flatten.pivot, THREE.MathUtils.lerp(tune.flatten.power[0]!, tune.flatten.power[1]!, close), tune.flatten.width, tune.flatten.reach)
       ;(ru.uTintDense!.value as THREE.Vector3).fromArray(tune.tint.far.dense).lerp(tintDense, close)
       ;(ru.uTintThin!.value as THREE.Vector3).fromArray(tune.tint.far.thin).lerp(tintThin, close)
@@ -188,6 +211,7 @@ export const createSet: SetFactory = async (ctx) => {
       globe.dispose()
       shell.dispose()
       sheet.dispose()
+      blocks.dispose()
       titan.dispose()
       streak.dispose()
       far.dispose()

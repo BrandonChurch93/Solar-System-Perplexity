@@ -48,7 +48,10 @@ def pose(u=0.0, over=None):
     fwd = fwd - fwd.dot(n) * n
     fwd /= np.linalg.norm(fwd)
     right = np.cross(fwd, n)
-    position = position + fwd * path['forward'] * u + right * path['side'] * u - n * path['sink'] * u
+    k = np.log(path['descent'])
+    fall = np.exp(-k * u)
+    along = u if k == 0 else (1 - fall) / (2 * np.sinh(k / 2))
+    position = position + fwd * path['forward'] * along + right * path['side'] * along + n * p['height'] * (fall - 1)
     return position, rot, p['vfov']
 
 

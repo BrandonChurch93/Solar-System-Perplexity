@@ -622,3 +622,110 @@ between them.
 When 1 and 2 are done and pushed, say so with the commit and I render every frame again."
 (Attached: saturn-view-every-12.jpg, saturn-3720-beside-approved.jpg, saturn-native-consecutive.jpg. The
 commit it rendered still had the stones bug, fixed in f3ee2fd.)
+
+11:35 to 12:45 UTC, after mail 252: pose fit, new flight, soft outer rim, true blocks
+
+Mails in this time (cores verbatim):
+- MAIL 258 (low, about 11:55): "Main moved to da69509a. New in the globe shader and the loader, all off unless
+  your stop asks (notes: assets-src/shared/GLOBE-NOTES.md): `ctx.texture(path, {srgb: false, channels: 1})`: a
+  one channel texture, a quarter of the memory. Use it for every mask and height map you load, if your set is
+  near its memory limit. `PatchSet.own?: boolean[]`: a patch level with its own light. `PatchSet.fadeMinor?:
+  boolean`: a level fades in by its fine axis on screen. MAX_PATCHES is 10. No frame of main changed. Merge
+  origin/main into your branch at your next commit. Nothing else changes for you: go on with the list of my
+  last mail to you."
+- handover_engineer (low, about 12:10, no answer needed): E3. For a stop with handover: {} the generic path
+  between the far pose and T is a steady descent or climb; height and field of view on one schedule,
+  direction and attitude on a second that leads it; level glide near the ground along the heading of the
+  close side; at T the globe camera carries the close side's own speed, turn and climb. Options per kind:
+  "The old path back: handover: { dive: { path: { turnFall: 0.3, level: false } } } (the same under rise)",
+  path.levelBy (dive 0.8, rise 0.5), path.sidestep { right, up, by } ("For a moon or a ring in the way of
+  the dive"), skyFloor: true, place { seen, maxEnlarge, enlargeSoft }. Check: npm run handover -- --stop ID
+  --tier draft. Requests for the engine: by message to handover_engineer.
+- MAIL 263 (low): "I rendered every frame of 3630 to 3809 at f76f04b4, the head of agent/saturn-code. That
+  commit holds the notebook only, so the clip shows the old slow flight and the old pose ... Push the code as
+  soon as the new flight and the pose fit hold together, and send me one line with the commit. I then render
+  all 180 frames at once and judge them. From your sheet I already see: 3630 shows the outer edge of the rings
+  as a hard line with the dark sky behind it, which Part D rules out, so fade the sheet out by function there
+  or keep that edge out of frame; and the flight now has clear forward movement, which is what the first clip
+  lacked."
+- MAIL 265 (high, 12:36): "E3 is on main. Main is at 03510ddd." For a stop that has opted in and uses the
+  generic path read assets-src/shared/HANDOVER-NOTES.md, section "E3 as built". To keep the old line:
+  `handover: { dive: { path: { turnFall: 0.3, level: false } } }` (and the same under rise), "Say so in your
+  report, with the reason". "A stop that has not opted in keeps every byte." "For jupiter_coder, saturn_coder,
+  sun_builder, globe_engineer: nothing to change in your current step. Merge main when you next push."
+
+Point 3 of mail 252, the pose at 3720 (assets-src/saturn/code/pose_fit.py):
+- The tool marks the lit limb, the edge of night and the two edges of the dark gap in the approved close
+  (references, read only) and fits azimuth, foot, height, yaw, tilt, roll at vfov 48. Result in skim.json
+  pose: azimuthDeg 4.72, foot 2.589, height 0.3955, yawDeg 22.22, tiltDeg 11.14, rollDeg -8.76. Fit: limb rms
+  7.8 px, edge of night rms 27.4 px, gap inner edge +18.0 px, outer edge -16.9 px (the old pose had the limb
+  58.9 px off). What still differs: the lean of the edge of night, and the approved gap is about 35 px
+  narrower at its core than the true gap between B and A drawn from the measured profile.
+- The approved close has ice in the bottom left corner and faint strands beyond: its rings reach further out
+  than the model's rim (2.3394). So the fitted pose stands outside the rim (foot 2.589) and the sheet needs
+  ice beyond the rim near the lens (the outer zone below).
+
+Point 1 of mail 252, the flight (plan.ts skimAt and flight(time), skim.json path, skim_map.py same law):
+- Path {forward 1.7, descent 2.2, side 0, yawDeg 0, pitchDeg 0}: an exponential law, the lens comes in and
+  down by the same ratio every frame, so the flow on screen is constant over the 180 frames while the globe
+  grows. Start foot 3.550 height 0.587; 3720 foot 2.589 height 0.396; end foot 1.978 height 0.268. Globe
+  radius on screen 351, 501, 702 px.
+- Flow in px a frame (constant): bottom left corner 17.7, left edge at y 800 11.0, bottom middle 8.0, middle
+  at y 800 2.6, bottom right 12.4, right edge at y 800 6.3. The focus of expansion lies on the middle line
+  about 490 px to the side of the centre. The rim passes the bottom middle at about skim frame 45 and the
+  bottom left corner at about 90.
+- This changes the end of the dive and the start of the rise (the skim now starts outside the rim and ends
+  over the B ring). To tell /root.
+
+The sand and the ringlets under a moving lens (ice.ts iceSweep, uIceMove; sheet.ts):
+- One take of the shutter moves the lens; the point of the sheet under a pixel slides by iceSweep (radii,
+  across and along the orbit, with the orbital turn of the ice). The grain is drawn out by that slide and is
+  fainter by the number of grains the pixel passes over (ice.json grain.sweep 1.0); the ringlet filter takes
+  the slide across the orbit into its footprint. So near sand is a soft streak that keeps its place, not a
+  crawl. set.ts scales uIceMove by nearness, so the slide is 0 in the hold.
+
+The outer rim by function (answers mail 263; sheet.ts SHEET_OUTER_GLSL, skim.json outer):
+- Beyond the model's rim the sheet thins out by function: two exponentials, depth [0.55, 0.006] with lengths
+  [0.09, 0.45] radii, ended between 3.2 and 3.9, inset 0.012, inkBy 8 (ink and thin are read at a radius
+  pulled back inside the rim so the outer zone has ringlets of the A ring's kind). The depth is times the
+  nearness of the lens: none of it in the hold (and no fragment beyond 2.5 there). The first try (depth[1]
+  0.09, lengths 0.07 and 0.5) gave a broad fog band at the far left horizon: a thin sheet is solid at a
+  grazing view, so the far veil must stay weak.
+- Seen at draft 3630: a soft shore, no hard line against the sky.
+
+Point 2 of mail 252, blocks of ice (blocks.ts, blocks.json; the old stones in the sheet shader are deleted):
+- The old stones were discs drawn inside the sheet's fragment shader: no size, no depth. Now blocks are true
+  bodies: one instanced mesh, each block a small faceted solid on its own Kepler orbit (position from its
+  radius, its start azimuth and the turn of its orbit at the time of the take), so near ones overtake far
+  ones and all of them pass the lens with parallax.
+- Three classes in blocks.json: resting (on the sheet, half sunk), low (just over it), high (floaters up to
+  0.22 radii over the sheet, with a swing). perArea [40000, 2500, 2000], sizes in radii [[0.0007, 0.012],
+  [0.0006, 0.005], [0.0004, 0.004]] with power laws [3, 3, 2.4]. 21,655 blocks; the set is made in 2.9 s.
+- Why they fade the way they do: with a power 3 law of sizes the cover by blocks wider than a pixel is the
+  same at every distance and goes with one over the camera's height. So a block fades in by its width in
+  pixels (fade.pixels [2.0, 3.6]) and by its distance in heights of the lens over the sheet (reach per
+  class), and below that the sand of the sheet stands for it: no seam.
+- Light: a resting block takes the sheet's own brightness at its radius (so it reads as a piece of the
+  sheet, not as a white dot), times the sheet's law of view and Sun, times a face term: direct by the angle
+  of the face to the Sun, a bounce from the sheet and the sky, a little light through the ice. Each block
+  throws a soft shadow on the sheet (a second instanced mesh, flat, drawn before the blocks).
+- Blocks exist only near the lens (blocks.set(focal, close > 0)): none in the hold.
+- In view at skim frames 0, 45, 90, 135, 179, resting blocks at 2, 4, 10, 20 px and more: [8149, 1039, 57,
+  0], [11456, 1965, 128, 6], [6619, 2795, 181, 17], [2715, 2338, 200, 16], [1375, 1372, 251, 21]. High
+  floaters at 2 px and more: 214, 147, 35, 17, 6. Too few floaters late in the skim: to raise.
+- Seen: drafts 3630, 3675, 3720, 3765, 3809 and the review still 3720. Blocks have lit faces and shadows.
+  At the review tier the near field carries 4 to 9 px of shutter blur at these speeds, so blocks at the
+  bottom edge are smeared and those in the middle distance are distinct. Still wrong: all blocks have the
+  same shape, floaters are dark specks against the globe, a brushed hatch at bottom left, a pale haze band
+  at the far left horizon, the ringlets under the blocks are hard and of one weight (point 5).
+- Seconds: review tier 3720, 17 samples, 105.1 s, about 6.2 s a sample.
+
+The hold, checked against head f76f04b (both at draft, 3465, same machine):
+- 262,543 pixels differ, max 135; 19,688 by 2 and more, 1,500 by 8 and more, 432 by 16 and more, 33 by 64
+  and more. The large differences are single points: head still drew the old stones in the hold as faint
+  white points (some inside the globe's shadow on the rings, which was wrong); they are gone because blocks
+  exist only near the lens. The rest is 1 level over the ring area; not separated whether that is the same
+  stones below a pixel or rounding in the reworded sand. Limb, ringlets, shadows and colour look the same at
+  native size (holdpair.png in the looks: head left, now right).
+- The sweep term of the ringlet filter changes no pixel of the hold (measured: 0 pixels differ with and
+  without it at 3465). The outer zone has depth 0 in the hold by its law (depth times nearness).
