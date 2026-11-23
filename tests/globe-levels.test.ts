@@ -7,6 +7,7 @@ import { needs } from '../src/core/caps'
 import * as look from '../src/stops/mars/look'
 
 const KEPT = '81b0189383d53555c8623467df803b233644cf143249b11aa3e3a28f5548a308'
+const OWN = '813ceb84dc79c7611030db7cc4a5a4d9213b916c218ec9ee5595bb1589deb5ec'
 
 function planetWith(levels: number, more: Partial<PatchSet> = {}, anisotropy = 16): Planet {
   const t = new THREE.Texture()
@@ -28,7 +29,7 @@ describe('the options of the patch levels', () => {
   it('keeps the shader text and the uniforms of the frozen build while no option is on', () => {
     const plain = planetWith(5)
     const names = Object.keys(plain.material.uniforms).sort()
-    for (const more of [{}, { own: [false, false, false, false, false] }, { fadeMinor: false }, { own: [false, false, false, false, false], fadeMinor: false }]) {
+    for (const more of [{}, { own: [false, false, false, false, false] }, { fadeMinor: false }, { ownGain: false }, { own: [false, false, false, false, false], fadeMinor: false }]) {
       const p = planetWith(5, more)
       expect(hash(p)).toBe(KEPT)
       expect(Object.keys(p.material.uniforms).sort()).toEqual(names)
@@ -51,6 +52,25 @@ describe('the options of the patch levels', () => {
     expect(text).not.toContain('uPatchAniso')
     expect(p.material.uniforms.uPatchOwn!.value).toEqual([0, 0, 1, 1, 0, 0])
     expect(() => planetWith(4, { own: [true] })).toThrow('own needs one entry per patch level')
+  })
+
+  it('adds the gain of the own levels only for a stop that asks for it', () => {
+    const own = [false, false, true, true]
+    const before = planetWith(4, { own })
+    expect(hash(before)).toBe(OWN)
+    expect(hash(planetWith(4, { own, ownGain: false }))).toBe(OWN)
+    expect(Object.keys(before.material.uniforms)).not.toContain('uOwnGain')
+    expect(() => before.setOwnGain([2, 2, 2])).toThrow('this planet has no own gain')
+    const p = planetWith(4, { own, ownGain: true })
+    const text = p.material.fragmentShader
+    expect(text).toContain('uniform float uPatchOwn[6];\nuniform vec3 uOwnGain;')
+    expect(text).toContain('if (own > 0.0) col = mix(col, inverseFilmic(ownSum / own * uOwnGain), own);')
+    expect(text.replace('\nuniform vec3 uOwnGain;', '').replace(' * uOwnGain', '')).toBe(before.material.fragmentShader)
+    expect((p.material.uniforms.uOwnGain!.value as THREE.Vector3).toArray()).toEqual([1, 1, 1])
+    p.setOwnGain([1.2, 1.1, 0.9])
+    expect((p.material.uniforms.uOwnGain!.value as THREE.Vector3).toArray()).toEqual([1.2, 1.1, 0.9])
+    expect(() => planetWith(4, { ownGain: true })).toThrow('ownGain needs an own level')
+    expect(() => planetWith(4, { own: [false, false, false, false], ownGain: true })).toThrow('ownGain needs an own level')
   })
 
   it('leaves the haze, the gain and the texels view of an own level as they are', () => {
