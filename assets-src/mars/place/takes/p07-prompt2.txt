@@ -1,0 +1,13 @@
+Image 1 is a square, straight down (nadir) orbital photograph of canyon land on Mars, north at the top, about 41 km across. It is an enlargement of a smaller photograph, so it is soft and lacks fine detail.
+
+Image 2 is an oblique aerial photograph taken low over the middle of that land, looking east south east. It shows what kind of land this is: flat topped mesas of dark layered rock ending in tall layered cliffs, canyons with rough dark floors of rubble and landslide lobes, gullied walls, and broad dusty plateaus.
+
+Task: redraw image 1 as one sharp nadir orbital photograph at a higher resolution, the same framing and scale, north at the top.
+
+1. Keep every landform of image 1 exactly where it is. Every mesa, cliff line, canyon floor, trough, hill and crater keeps its place, its outline, its size and its light and dark. Do not move, add or remove any large form. Laid over image 1, the result must line up with it everywhere.
+
+2. Add the fine detail an enlargement lacks: ledges, gullies, talus aprons, boulders, small dunes and small craters, evenly over the whole image, crisp to the corners.
+
+3. Every cliff is seen from straight above: a thin winding band, never a tall face. No fan, no cone, no terraces, no steps, no stripes, no long parallel or curved lines. Nothing may radiate from one point like the spokes of a wheel.
+
+Light: a low Sun in the south south east, long shadows falling toward the north north west. Colour: the brown, ochre and rust rock and the deep brown shadows of image 1, no pale or white patches. A photograph from orbit: no horizon, no sky, no haze, no clouds, no text, no border, no vignette.
