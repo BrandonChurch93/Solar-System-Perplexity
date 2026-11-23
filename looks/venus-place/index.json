@@ -1,9 +1,53 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-23T10:25:56.837Z",
+ "pushed": "2026-11-23T10:43:14.195Z",
  "head": "cff2ea81330131ba6748ad3cfadf4d1c7db8dbbb",
- "note": "venus: the close side's air dome now also on the globe side (sky difference at T 0.06 and 0.28 of 255), far haze toward the deck colours; next plates laid from the T pictures",
+ "note": "venus: air dome of the close side on the globe side (sky at T within 0.3 of 255), far haze; plates a to d laid back from the close side at each T, renders running",
  "looks": [
+  {
+   "time": "2026-11-23T10:43:13.583Z",
+   "file": "20261123104313583-note-plates-rise.jpg",
+   "source": "out/work/venus/place/t/plates-rise.jpg",
+   "kind": "note",
+   "label": "plates a to d made again from the close side at the rise T (old left, new right of each pair)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T10:43:12.993Z",
+   "file": "20261123104312993-note-plates-dive.jpg",
+   "source": "out/work/venus/place/t/plates-dive.jpg",
+   "kind": "note",
+   "label": "plates a to d made again from the close side at the dive T (old left, new right of each pair)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T10:34:27.970Z",
+   "file": "20261123103427970-frame-globe-1544.jpg",
+   "source": "out/work/venus/place/t/globe-1544.png",
+   "kind": "frame",
+   "label": "venus.rise frame 1544, draft tier, nograin/side=orbit/t=51.475/noplace view",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "frame": 1544,
+   "tier": "draft",
+   "format": "uhd",
+   "diag": "nograin/side=orbit/t=51.475/noplace",
+   "engine": "8b9f780b26a50bc3"
+  },
+  {
+   "time": "2026-11-23T10:32:57.441Z",
+   "file": "20261123103257441-frame-globe-1343.jpg",
+   "source": "out/work/venus/place/t/globe-1343.png",
+   "kind": "frame",
+   "label": "venus.dive frame 1343, draft tier, nograin/side=orbit/t=44.775/noplace view",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "frame": 1343,
+   "tier": "draft",
+   "format": "uhd",
+   "diag": "nograin/side=orbit/t=44.775/noplace",
+   "engine": "8b9f780b26a50bc3"
+  },
   {
    "time": "2026-11-23T10:25:56.274Z",
    "file": "20261123102556274-note-t-hz.jpg",
@@ -21,34 +65,6 @@
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T10:24:58.764Z",
-   "file": "20261123102458764-frame-t-1544-noplace.jpg",
-   "source": "out/work/venus/place/h3/t-1544-noplace.png",
-   "kind": "frame",
-   "label": "venus.rise frame 1544, draft tier, beauty/side=orbit/noplace view",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "frame": 1544,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty/side=orbit/noplace",
-   "engine": "8b9f780b26a50bc3"
-  },
-  {
-   "time": "2026-11-23T10:24:21.718Z",
-   "file": "20261123102421718-frame-t-1343-noplace.jpg",
-   "source": "out/work/venus/place/h3/t-1343-noplace.png",
-   "kind": "frame",
-   "label": "venus.dive frame 1343, draft tier, beauty/side=orbit/noplace view",
-   "stop": "venus",
-   "segment": "venus.dive",
-   "frame": 1343,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty/side=orbit/noplace",
-   "engine": "8b9f780b26a50bc3"
-  },
-  {
    "time": "2026-11-23T10:15:47.943Z",
    "file": "20261123101547943-note-hz-rise.jpg",
    "source": "out/work/venus/place/h1/hz-rise.jpg",
@@ -62,22 +78,6 @@
    "source": "out/work/venus/place/h1/hz-dive.jpg",
    "kind": "note",
    "label": "opt in h1 hz-dive",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T10:15:46.852Z",
-   "file": "20261123101546852-note-t-pairs.jpg",
-   "source": "out/work/venus/place/h1/t-pairs.jpg",
-   "kind": "note",
-   "label": "opt in h1 t-pairs",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T10:06:33.800Z",
-   "file": "20261123100633800-note-close-rise-1530.jpg",
-   "source": "out/work/venus/place/p9/close-rise-1530.jpg",
-   "kind": "note",
-   "label": "opt in h1 close-rise-1530",
    "stop": "venus"
   }
  ]
