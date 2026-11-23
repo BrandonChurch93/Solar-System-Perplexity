@@ -1,9 +1,33 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T12:49:21.617Z",
+ "pushed": "2026-11-23T13:18:21.871Z",
  "head": "194d20716ed85eb5d2d470ab30b1628c474908f7",
- "note": "flat plates and soft carry (local): wedge gone, small smudge left; tracing the bruise and the arms of mail 268",
+ "note": "trial of mail 268 items 1 and 2: arms in the plate files from 4697 on, stain mended, full dive and rise rendering now",
  "looks": [
+  {
+   "time": "2026-11-23T13:18:21.016Z",
+   "file": "20261123131821016-note-rise-t1.jpg",
+   "source": "out/work/nep/s6/a/rise-t1.jpg",
+   "kind": "note",
+   "label": "trial: rise 4968 to 5004 every fourth frame",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T13:17:59.649Z",
+   "file": "20261123131759649-note-crop-dive.jpg",
+   "source": "out/work/nep/s6/a/crop-dive.jpg",
+   "kind": "note",
+   "label": "trial: native crop round the eye, 4696 to 4716 every fourth frame",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T13:17:58.985Z",
+   "file": "20261123131758985-note-dive-t1.jpg",
+   "source": "out/work/nep/s6/a/dive-t1.jpg",
+   "kind": "note",
+   "label": "trial: dive 4684 to 4716 every fourth frame, arms in the plate files, dark ground mended, layer ground late",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-23T12:48:43.841Z",
    "file": "20261123124843841-note-dive-a.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/nep/s4/g/limb-g.jpg",
    "kind": "note",
    "label": "S4 rise limb native crop, 4956 close side then 4957 to 4964",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T12:20:21.906Z",
-   "file": "20261123122021906-note-dive-4756-4764.jpg",
-   "source": "out/work/nep/s4/h/dive-4756-4764.jpg",
-   "kind": "note",
-   "label": "S4 dive 4756 to 4764, T 4758",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T12:20:21.359Z",
-   "file": "20261123122021359-note-dive-4744-4755.jpg",
-   "source": "out/work/nep/s4/h/dive-4744-4755.jpg",
-   "kind": "note",
-   "label": "S4 dive 4744 to 4755",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T12:20:20.824Z",
-   "file": "20261123122020824-note-rise-4974-4989.jpg",
-   "source": "out/work/nep/s4/h/rise-4974-4989.jpg",
-   "kind": "note",
-   "label": "S4 rise 4974 to 4989, wedge 4982 to 4989 still there",
    "stop": "neptune"
   }
  ]
