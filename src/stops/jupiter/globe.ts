@@ -471,7 +471,7 @@ export class Globe {
         uPlateBoxFore: o.place.uniforms.uFore!, uPlateBoxNear: o.place.uniforms.uNear!, uPlateBoxMid: o.place.uniforms.uMid!, uPlateBoxFar: o.place.uniforms.uFar!,
         uPlateTexel: o.place.uniforms.uTexel!, uPlateJoin: o.place.uniforms.uJoin!,
         uTone: o.place.uniforms.uTone!, uToneBox: o.place.uniforms.uToneBox!, uToneLift: o.place.uniforms.uToneLift!,
-        uDetail: o.place.uniforms.uDetail!, uDetailLook: o.place.uniforms.uDetailLook!, uDetailTone: o.place.uniforms.uDetailTone!, uDetailHigh: o.place.uniforms.uDetailHigh!, uFoot: o.place.uniforms.uFoot!, uSunAz: o.place.uniforms.uSunAz!, uStorm: o.place.uniforms.uStorm!, uStormTurn: o.place.uniforms.uStormTurn!, uEddy: o.place.uniforms.uEddy!, uEddyTurn: o.place.uniforms.uEddyTurn!,
+        uDetail: o.place.uniforms.uDetail!, uDetailLook: o.place.uniforms.uDetailLook!, uDetailTone: o.place.uniforms.uDetailTone!, uDetailHigh: o.place.uniforms.uDetailHigh!, uFoot: o.place.uniforms.uFoot!, uSunAz: o.place.uniforms.uSunAz!, uStorm: o.place.uniforms.uStorm!, uStormTurn: o.place.uniforms.uStormTurn!, uEddy: o.place.uniforms.uEddy!, uEddyTurn: o.place.uniforms.uEddyTurn!, uSeam: o.place.uniforms.uSeam!,
         uPlateGrade: { value: new THREE.Vector3(1 / o.place.grade[0]!, 1 / o.place.grade[1]!, 1 / o.place.grade[2]!) },
         uPlaceN: { value: new THREE.Vector3().fromArray(o.place.n) }, uPlaceE: { value: new THREE.Vector3().fromArray(o.place.e) }, uPlaceU: { value: new THREE.Vector3().fromArray(o.place.u) },
         uPlace: { value: new THREE.Vector4(o.place.radius, o.place.fade[0]!, o.place.fade[1]!, 0) },

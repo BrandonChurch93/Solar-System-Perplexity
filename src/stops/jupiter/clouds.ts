@@ -10,17 +10,21 @@ const ABOVE_KNOTS = deck.above.gain.length
 const FLASHES = deck.life.flash.sites.length
 
 export const EDDIES = deck.life.eddies.length
+export const SEAMS = deck.life.storm.rings.length
 
 export const CALM_GLSL = /* glsl */ `
 uniform vec4 uEddy[${EDDIES}];
 uniform float uEddyTurn[${EDDIES}];
+uniform vec3 uSeam[${SEAMS}];
 vec2 calm(vec2 g, out vec2 cs) {
   vec2 o = g - uStorm.xy;
   float r2 = dot(o, o);
   cs = vec2(1.0, 0.0);
   vec2 moved = g;
   for (int i = 0; i < (uStormTurn != 0.0 && r2 < uStorm.w * uStorm.w ? 1 : 0); i++) {
-    float a = -uStormTurn * (1.0 - smoothstep(uStorm.z, uStorm.w, sqrt(r2)));
+    float r = sqrt(r2);
+    float a = -uStormTurn * (1.0 - smoothstep(uStorm.z, uStorm.w, r));
+    for (int k = 0; k < ${SEAMS}; k++) a -= uSeam[k].z * (1.0 - smoothstep(uSeam[k].x, uSeam[k].y, r));
     float h = sin(0.5 * a);
     float less = -2.0 * h * h;
     cs = vec2(1.0 + less, sin(a));
@@ -175,6 +179,8 @@ uniform vec2 uHazeForward;
 uniform vec4 uFlash[${FLASHES}];
 uniform vec4 uFlashLook;
 uniform float uFlashShare;
+uniform vec3 uFlashGlow;
+uniform vec3 uFlashCore;
 uniform vec4 uHazeSpan[2];
 uniform vec4 uHazeLight;
 uniform vec3 uHazeLit;
@@ -336,14 +342,17 @@ float hazeAt(vec2 g, int k, float foot) {
   }
   return dense;
 }
-float flashAt(vec2 g, vec3 c) {
+vec2 flashAt(vec2 g, vec3 c) {
   float s = 0.0;
+  float t = 0.0;
   for (int i = 0; i < ${FLASHES}; i++) {
     vec2 d = g - uFlash[i].xy;
-    s += uFlash[i].w * exp(-dot(d, d) * uFlash[i].z);
+    float q = dot(d, d) * uFlash[i].z;
+    s += uFlash[i].w * exp(-q);
+    t += uFlash[i].w * exp(-q * uFlashCore.x);
   }
   float lum = dot(c, vec3(0.2126, 0.7152, 0.0722));
-  return s * smoothstep(uFlashLook.x, uFlashLook.y, (c.b - c.r) / max(c.b + c.r, 1e-4)) * mix(uFlashShare, 1.0, smoothstep(uFlashLook.z, uFlashLook.w, lum));
+  return vec2(s * smoothstep(uFlashLook.x, uFlashLook.y, (c.b - c.r) / max(c.b + c.r, uFlashCore.z)) * mix(uFlashShare, 1.0, smoothstep(uFlashLook.z, uFlashLook.w, lum)), (t + uFlashCore.y * s) * sqrt(max(lum, 0.0)));
 }
 vec3 toneAt(vec2 g) {
   vec2 uv = clamp(vec2(g.x - uToneBox.x, uToneBox.y - g.y) * uToneBox.z + 0.5, uToneLift.z, 1.0 - uToneLift.z);
@@ -476,7 +485,8 @@ void main() {
       float part = knot - float(low);
       col = mix(col, col * mix(uAboveGain[low], uAboveGain[low + 1], part) + mix(uAboveAir[low], uAboveAir[low + 1], part), thin);
     }
-    col *= exp(flashAt(g, col));
+    vec2 flash = flashAt(g, col);
+    col = col * exp(flash.x) + uFlashGlow * flash.y;
     for (int i = 0; i < (uHazeLit.z > 0.0 ? 1 : 0); i++) {
       float zg = above(there);
       float shadow = 0.0;
@@ -655,6 +665,7 @@ export class CloudDeck {
       uStormTurn: { value: 0 },
       uEddy: { value: deck.life.eddies.map((e) => new THREE.Vector4(e.centre[0]!, e.centre[1]!, e.coreUnits, e.rimUnits)) },
       uEddyTurn: { value: deck.life.eddies.map(() => 0) },
+      uSeam: { value: deck.life.storm.rings.map((s) => new THREE.Vector3(s.edgeUnits[0]!, s.edgeUnits[1]!, 0)) },
       uJet: { value: new THREE.Vector4(jet.x, jet.y, -jet.y, jet.x) },
       uHazeBand: { value: hz.bands.map((b) => new THREE.Vector4(b.heightUnits, b.side, 0, b.depth)) },
       uHazeSeed: { value: hz.bands.map((b) => new THREE.Vector4(b.seed[0]!, b.seed[1]!, b.shadowDepth, 0)) },
@@ -668,6 +679,8 @@ export class CloudDeck {
       uFlash: { value: fl.sites.map((f) => new THREE.Vector4(f.at[0]!, f.at[1]!, 1 / (f.radiusUnits * f.radiusUnits), 0)) },
       uFlashLook: { value: new THREE.Vector4(fl.cold[0]!, fl.cold[1]!, fl.bright[0]!, fl.bright[1]!) },
       uFlashShare: { value: fl.surround },
+      uFlashGlow: { value: new THREE.Vector3().fromArray(fl.glow) },
+      uFlashCore: { value: new THREE.Vector3(fl.core.tight, fl.core.spill, fl.core.floor) },
       uHazeSpan: { value: hz.bands.map((b) => new THREE.Vector4(b.edgeUnits[0]!, b.edgeUnits[1]!, b.reachUnits[0]!, b.reachUnits[1]!)) },
       uHazeLight: { value: new THREE.Vector4(1 / Math.tan(THREE.MathUtils.degToRad(hz.sunElevationDeg)), 0, hz.minCosine, Math.log2(hz.lightBlurUnits / texel[2]!)) },
       uHazeLit: { value: new THREE.Vector3(hz.lit[0]!, hz.lit[1]!, 0) },

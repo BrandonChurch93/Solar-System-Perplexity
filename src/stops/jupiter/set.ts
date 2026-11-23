@@ -11,7 +11,7 @@ import { Io } from './io'
 import * as look from './look'
 import fields from './deck-fields.json'
 import place from './place.json'
-import { eddyTurn, exposed, exposure, flashNow, hazeDrift, lifted, plan, stormTurn } from './plan'
+import { eddyTurn, exposed, exposure, flashNow, hazeDrift, lifted, plan, ringTurn, stormTurn } from './plan'
 import skyJson from './sky.json'
 
 function direction(lonDeg: number, latDeg: number): THREE.Vector3 {
@@ -123,6 +123,8 @@ export const createSet: SetFactory = async (ctx) => {
       ground.material.uniforms.uStormTurn!.value = stormTurn(state.time - terrainMid)
       const eddies = ground.material.uniforms.uEddyTurn!.value as number[]
       for (let i = 0; i < eddies.length; i++) eddies[i] = eddyTurn(i, state.time - terrainMid)
+      const seams = ground.material.uniforms.uSeam!.value as THREE.Vector3[]
+      for (let i = 0; i < seams.length; i++) seams[i]!.z = ringTurn(i, state.time - terrainMid)
       if (!inOrbit) {
         ground.update(gain * exposed(state.time - terrainMid), shot.post.vignette, view)
         ;(ground.material.uniforms.uExpose!.value as THREE.Vector3).set(Math.pow(r[0]!, share - 1), Math.pow(r[1]!, share - 1), Math.pow(r[2]!, share - 1))

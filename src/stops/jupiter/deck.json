@@ -868,7 +868,7 @@
     ]
   },
   "life": {
-    "note": "What moves in the surface view while the camera flies (mail 230). Every motion is a rigid turn or a rigid drift of a function of the ground point, set by time alone; no field is dragged through a flow and no picture is scrolled. storm: the vortex turns about centre (chart units, the middle of the red disc on the near plate) as a rigid body inside coreUnits, less and less out to rimUnits, where the ground stands still. Heights, colours, the image lookup and the function detail all read the same turned ground point, so the relief turns with its colour. The turn is boundDeg times tanh(degPerSecond times seconds from the middle of the surface view over boundDeg): degPerSecond counter clockwise seen from above at the middle (frame 3150, where the turn is zero and the picture is the approved one), never more than boundDeg either way. Wind up: in the 180 frames the core turns 5.08 degrees either way, so two radii differ by at most 10.16 degrees, spread over the 3.4 units from core to rim; the largest shear of the approved shapes is 0.13 either way. The globe draws the plates of the place with the same turn, so both sides of a handover agree. eddies: small vortices of the picture turn about their own centres (chart units as stored, carried round by the storm) in the same form: rigid inside coreUnits, still at rimUnits, degPerSecond at the middle (negative is clockwise), never more than boundDeg; in the 180 frames 6.34 degrees either way, the rim four cores out, largest shear 0.14. haze: two thin rigid sheets of cloud at heightUnits over the datum (both above the relief, which stays within about 0.1), one on each side of the storm (side -1 south, 1 north of the line through the storm centre along the jet; a sheet begins between its two edgeUnits from that line and ends between its two reachUnits from the centre), drifting along the jet at unitsPerSecond (east is positive; the two go opposite ways, as the jets on the two sides of an anticyclone do). The density of a sheet is a function of its own point: banks (bankUnits, warp) made of fibres along the jet (fibreUnits, fibreOctaves, fibreShare, fibreWarp), value noise in octaves (lacunarity, octaveGain, octaveShift, warpSeed, octaveFade by the pixel footprint), cover the two thresholds, footprint the fade where a pixel is wider than the fibres. A sheet lightens what lies behind it by depth over the cosine of the view (at least minCosine) with the low passed colour of its ground (lightBlurUnits) times glow, so it takes the tone of its ground; that light is weighted by forward [g, gain] as min(gain x ((1 - g) / sqrt(1 + g x g - 2 g c))^3, 1), c being the cosine between the view ray and the direction to the Sun, so thin cloud shows where one looks toward the Sun and nearly vanishes where one looks down on it (measured: without the weight the south sheet lay as a pale mist band over the foreground at 3060 to 3135); on the deck it lays a shadow of shadowDepth where the Sun's ray (sunElevationDeg) passes through it, tinted by shadowTint, displaced by the height between sheet and ground, fading over softUnits where the ground reaches the sheet. Both count only where the ground is sunlit (lit: thresholds on the warmth of the low passed ground). flash: faint lightning inside the dark blue cloud. At each site (at in chart units as stored, radiusUnits) the cold pixels (cold: thresholds on blue against red; bright: thresholds on luminance, darker pixels take the share surround) are multiplied by exp(gain x sum of strength x u x exp(1 - u)), u being the time since an event over riseSeconds. The events [seconds from the middle, strength] were drawn once from seed and are listed, so the light is a function of time alone; a glow needs riseSeconds (5 frames) to its peak and fades over about 20, so nothing strobes; no event is alight at the middle (frame 3150) or at a handover. proof.cameraHeld: true holds the camera of the surface view at the pose of frame 3150 while time runs, for the life only sheet; false in the film.",
+    "note": "What moves in the surface view while the camera flies (mail 230). Every motion is a rigid turn or a rigid drift of a function of the ground point, set by time alone; no field is dragged through a flow and no picture is scrolled. storm: the vortex turns about centre (chart units, the middle of the red disc on the near plate) as a rigid body inside coreUnits, less and less out to rimUnits, where the ground stands still. Heights, colours, the image lookup and the function detail all read the same turned ground point, so the relief turns with its colour. The turn is boundDeg times tanh(degPerSecond times seconds from the middle of the surface view over boundDeg): degPerSecond counter clockwise seen from above at the middle (frame 3150, where the turn is zero and the picture is the approved one), never more than boundDeg either way. Wind up: in the 180 frames the core turns 5.08 degrees either way, so two radii differ by at most 10.16 degrees, spread over the 3.4 units from core to rim; the largest shear of the approved shapes is 0.13 either way. The globe draws the plates of the place with the same turn, so both sides of a handover agree. rings (mail 345): a vortex reads as turning when its parts turn at different rates, so inside the core the ground is cut into rings about the same centre that outrun one another. Each ring adds its own turn to everything inside the inner one of its two edgeUnits, falling to nothing by a smoothstep at the outer one, in the same bounded form (boundDeg times tanh(degPerSecond times seconds over boundDeg)). The rates add inward: at the middle the eye turns 10 degrees a second, the next rings 8, 6 and 4, the ground outside the last seam the 2 of the core. In the 180 frames each ring gains 5.08 degrees either way on the one outside it, the eye 20.3 on the ground outside the seams. The shear is meant to be seen and lies only inside the four seams (0.14, 0.18, 0.22 and 0.35 units wide, laid on the dark gaps between the cloud walls where there is little to stretch): at the two ends of the surface view it reaches 0.41, 0.60, 0.73 and 0.65 at the middle radius of the seams, which is past the 0.13 that mail 230 allowed for the core and is the price of the visible turn; between the seams every ring is rigid and its shapes keep their form. eddies: small vortices of the picture turn about their own centres (chart units as stored, carried round by the storm) in the same form: rigid inside coreUnits, still at rimUnits, degPerSecond at the middle (negative is clockwise), never more than boundDeg; in the 180 frames 6.34 degrees either way, the rim four cores out, largest shear 0.14. haze: two thin rigid sheets of cloud at heightUnits over the datum (both above the relief, which stays within about 0.1), one on each side of the storm (side -1 south, 1 north of the line through the storm centre along the jet; a sheet begins between its two edgeUnits from that line and ends between its two reachUnits from the centre), drifting along the jet at unitsPerSecond (east is positive; the two go opposite ways, as the jets on the two sides of an anticyclone do). The density of a sheet is a function of its own point: banks (bankUnits, warp) made of fibres along the jet (fibreUnits, fibreOctaves, fibreShare, fibreWarp), value noise in octaves (lacunarity, octaveGain, octaveShift, warpSeed, octaveFade by the pixel footprint), cover the two thresholds, footprint the fade where a pixel is wider than the fibres. A sheet lightens what lies behind it by depth over the cosine of the view (at least minCosine) with the low passed colour of its ground (lightBlurUnits) times glow, so it takes the tone of its ground; that light is weighted by forward [g, gain] as min(gain x ((1 - g) / sqrt(1 + g x g - 2 g c))^3, 1), c being the cosine between the view ray and the direction to the Sun, so thin cloud shows where one looks toward the Sun and nearly vanishes where one looks down on it (measured: without the weight the south sheet lay as a pale mist band over the foreground at 3060 to 3135); on the deck it lays a shadow of shadowDepth where the Sun's ray (sunElevationDeg) passes through it, tinted by shadowTint, displaced by the height between sheet and ground, fading over softUnits where the ground reaches the sheet. Both count only where the ground is sunlit (lit: thresholds on the warmth of the low passed ground). flash: lightning inside the dark blue cloud. At each site (at in chart units as stored, radiusUnits) an envelope e = sum of strength x u x exp(1 - u) runs, u being the time since an event over riseSeconds. Two things follow from it. The cold pixels (cold: thresholds on blue against red, the sum of the two never taken below core.floor so that the black of the plate does not switch the mask; bright: thresholds on luminance, darker pixels take the share surround) are multiplied by exp(gain x e x exp(-q)), q being the squared distance over radiusUnits squared. And light is added: glow x e x (exp(-q x core.tight) + core.spill x exp(-q)) x the square root of the luminance of the pixel, a small bright heart with a wide faint spill that keeps the forms of the cloud it lights. The events [seconds from the middle, strength] were drawn once from seed and are listed, so the light is a function of time alone; a glow needs riseSeconds (about 4 frames) to its peak and fades over about 20, so nothing strobes; no event is alight at the middle (frame 3150) or at a handover. proof.cameraHeld: true holds the camera of the surface view at the pose of frame 3150 while time runs, for the life only sheet; false in the film.",
     "storm": {
       "centre": [
         -0.25,
@@ -877,7 +877,41 @@
       "coreUnits": 1.6,
       "rimUnits": 5.0,
       "degPerSecond": 2.0,
-      "boundDeg": 8
+      "boundDeg": 8,
+      "rings": [
+        {
+          "edgeUnits": [
+            0.36,
+            0.5
+          ],
+          "degPerSecond": 2,
+          "boundDeg": 8
+        },
+        {
+          "edgeUnits": [
+            0.72,
+            0.9
+          ],
+          "degPerSecond": 2,
+          "boundDeg": 8
+        },
+        {
+          "edgeUnits": [
+            1.1,
+            1.32
+          ],
+          "degPerSecond": 2,
+          "boundDeg": 8
+        },
+        {
+          "edgeUnits": [
+            1.55,
+            1.9
+          ],
+          "degPerSecond": 2,
+          "boundDeg": 8
+        }
+      ]
     },
     "proof": {
       "cameraHeld": false
@@ -893,8 +927,8 @@
             3.7,
             1.9
           ],
-          "depth": 0.16,
-          "shadowDepth": 0.6,
+          "depth": 0.24,
+          "shadowDepth": 1.6,
           "edgeUnits": [
             1.0,
             1.8
@@ -912,8 +946,8 @@
             8.2,
             5.3
           ],
-          "depth": 0.1,
-          "shadowDepth": 0.5,
+          "depth": 0.16,
+          "shadowDepth": 1.5,
           "edgeUnits": [
             1.5,
             2.5
@@ -984,8 +1018,8 @@
     },
     "flash": {
       "seed": 11,
-      "riseSeconds": 0.18,
-      "gain": 0.6,
+      "riseSeconds": 0.12,
+      "gain": 1.1,
       "cold": [
         -0.05,
         0.15
@@ -1105,7 +1139,17 @@
             ]
           ]
         }
-      ]
+      ],
+      "glow": [
+        0.3,
+        0.42,
+        0.6
+      ],
+      "core": {
+        "tight": 8,
+        "spill": 0.2,
+        "floor": 0.02
+      }
     },
     "eddies": [
       {
