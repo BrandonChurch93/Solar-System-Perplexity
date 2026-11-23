@@ -235,9 +235,9 @@ void main() {
     float tone = clamp(stLimb(now) / stLimb(graze), 0.25, 5.0);
     float lane = (1.0 - smoothstep(uLifeGrainMore.x, uLifeGrainMore.y, inner)) * seen * (1.0 - bare) * (1.0 - spot);
     vec2 q = vec2(dot(rel, uSpotE), dot(rel, uSpotN)) / uInflow.z;
-    col *= 1.0 + uLifeStream.x * seen * lifeStream(q, px * uInflow.z, uTime);
-    col += uLifeGrainTint.rgb * (uLifeGrain.x * tone * lifeGrains(arc, lane, px * uLifeGrain.y, uTime));
-    col += uLifeDotsTint.rgb * (uLifeDots.x * tone * seen * lifeDots(q, px * uInflow.z * uLifeDots.y, uTime));
+    col *= 1.0 + uLifeCalm * uLifeStream.x * seen * lifeStream(q, px * uInflow.z, uTime);
+    col += uLifeGrainTint.rgb * (uLifeCalm * uLifeGrain.x * tone * lifeGrains(arc, lane, px * uLifeGrain.y, uTime));
+    col += uLifeDotsTint.rgb * (uLifeCalm * uLifeDots.x * tone * seen * lifeDots(q, px * uInflow.z * uLifeDots.y, uTime));
   }
   vec3 to = ST_CENTRE - uCam;
   float away = length(to);
@@ -259,7 +259,7 @@ void main() {
     vec2 hq = (vec2(dot(hp, ST_RIGHT), dot(hp, ST_FWD)) - uHazeWind.xy * uTime) * uHazeScale.xy;
     float hn = (vnoise(vec3(hq, uTime * uHazeWind.z)) + 0.5 * vnoise(vec3(hq * 2.3 + 5.1, uTime * uHazeWind.z * 1.6 + 2.7))) / 1.5;
     float thick = smoothstep(uHazeScale.z, uHazeScale.w, hn) * min(1.0 / max(now, 1e-3), uHazeLow.z);
-    float veil = (1.0 - exp(-uHazeLow.x * thick)) * (1.0 - smoothstep(uHazeSteep.x, uHazeSteep.y, now)) * (1.0 - limb);
+    float veil = (1.0 - exp(-uHazeLow.x * thick)) * (1.0 - smoothstep(uHazeSteep.x, uHazeSteep.y, now)) * (1.0 - limb) * uLifeCalm;
     col = mix(col, inverseFilmic(uHazeTint.rgb) * uHazeTint.w, veil);
   }
   for (int k = 0; k < ((vStage.z < -0.5 && gb.x > 0.0 && gb.x < 1.0 && gb.y > 0.0 && gb.y < 1.0) ? 1 : 0); k++) {

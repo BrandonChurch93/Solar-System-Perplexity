@@ -90,6 +90,7 @@ uniform vec4 uPeelGate;
 uniform vec3 uPeelTear;
 uniform vec4 uGap;` : ''}
 uniform float uSince;
+uniform float uLifeOn;
 uniform vec4 uSway;
 uniform vec4 uSwayRate;
 uniform vec4 uSwayLane;
@@ -143,7 +144,7 @@ vec2 swayed(vec2 p, float t) {
     + uSway.y * sin(uSwayRate.y * t - uSwayLane.y * arc + 0.7)
     + uSway.z * sin(uSwayRate.z * t + uSwayLane.z * arc + 4.4 * along + 1.9)
     + uSwayRate.w * sin(uSwayLane.w * t + 0.5);
-  return p + n * (apart * env * w);
+  return p + n * (apart * env * w * uLifeOn);
 }
 // The flow along the strands (mail 241). The light of a strand is carried by clumps of plasma that run from
 // one foot over the top to the other: a clump is a bright head with a tail behind it, and every lane of
@@ -328,8 +329,11 @@ void main() {
   float lifeL = onL * (coreL * rainL + footL + litL);
   // the leading strands: brighter, and with a soft body from the picture seen wide, which runs with the clumps
   float bodyL = leadL * ends * smoothstep(0.0, 0.02, abL.x * (p.y - uFeet.y) - abL.y * (p.x - uFeet.x)) * smoothstep(0.75, 1.0, arc) * smoothstep(uFlowMask.z, uFlowMask.w, wideL);
+  vec3 plain = lin;
   lin = lin * mix(1.0, mix(uLead.z, uLead.w, leadL), onL * ends) * (min(flowL, 1.0) + carried - uCore.w * onL * coreL + lifeL) + shineL * (carried * uStream.x + onL * (coreL * rainL * uRain.y + footL * uRain.y + litL * uLightMore.x)) * vec3(1.0, 0.9, 0.66)
     + wideC * (uLeadMore.x * bodyL * min(streamL, uLeadMore.y) * (1.0 + litL));
+  // the life's own light falls to nil round the moment named in life.json (calm): there the strands are the picture itself
+  lin = mix(plain, lin, uLifeOn);
   float climb = exp(-along / uBurst.z) + uBurstMore.x * exp(-(1.0 - along) / uBurst.z);
   float glow = dot(lin, vec3(0.3, 0.5, 0.2));
   for (int k = 0; k < (uCut > 0.0 ? 1 : 0); k++) lin *= clamp((glow - uCut) / (3.0 * uCut), 0.0, 1.0) * (1.0 - uTrim.z * (1.0 - smoothstep(uTrim.x, uTrim.y, arc))) * (1.0 - uTrim.z * smoothstep(uPinCut.x, uPinCut.y, vPin));
@@ -491,6 +495,7 @@ export class Loops {
         uLeadMore: { value: new THREE.Vector2(arcade.lead.body, arcade.lead.most) },
         uLight: { value: Array.from({ length: 8 }, () => new THREE.Vector4(0, 1, 0, 2)) },
         uLightMore: { value: new THREE.Vector3(arcade.lights.white, arcade.lights.lanes, 0) },
+        uLifeOn: { value: 1 },
         uRain: { value: new THREE.Vector4(arcade.rain.amount, arcade.rain.white, (2 * (1 - arcade.rain.from)) / (arcade.rain.fall * arcade.rain.fall), arcade.rain.from) },
         uRainMore: { value: new THREE.Vector4(arcade.rain.period[0]!, arcade.rain.period[1]!, arcade.rain.head, arcade.rain.tail) },
         uRainLane: { value: new THREE.Vector4(arcade.rain.lanes[0]!, arcade.rain.lanes[1]!, arcade.rain.share, arcade.rain.base) },
@@ -631,8 +636,9 @@ export class Loops {
     return arcade.feet.ground * 0.5 * (a + b) + arcade.lights.ground * lamps
   }
 
-  update(time: number, gain: number, vignette: number, aspect: number, burst: number, cut = 0, late = 0, open = 0, since = 0, live = false): void {
+  update(time: number, gain: number, vignette: number, aspect: number, burst: number, cut = 0, late = 0, open = 0, since = 0, live = false, calm = 1): void {
     const u = this.material.uniforms
+    u.uLifeOn!.value = calm
     u.uSince!.value = since
     const landed = this.landed(since)
     const foot = u.uFootLife!.value as THREE.Vector4

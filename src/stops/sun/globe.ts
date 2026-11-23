@@ -385,9 +385,9 @@ void main() {
       float tone = clamp(stLimb(now) / stLimb(graze), 0.25, 5.0);
       float lane = (1.0 - smoothstep(uLifeGrainMore.x, uLifeGrainMore.y, inner)) * seen * (1.0 - bare) * (1.0 - spot);
       vec2 q = vec2(dot(rel, uGSpotE), dot(rel, uGSpotN)) / uInflow.z;
-      close *= 1.0 + uLifeStream.x * seen * lifeStream(q, px * uInflow.z, uGTime);
-      close += uLifeGrainTint.rgb * (uLifeGrain.x * tone * lifeGrains(arc, lane, px * uLifeGrain.y, uGTime));
-      close += uLifeDotsTint.rgb * (uLifeDots.x * tone * seen * lifeDots(q, px * uInflow.z * uLifeDots.y, uGTime));
+      close *= 1.0 + uLifeCalm * uLifeStream.x * seen * lifeStream(q, px * uInflow.z, uGTime);
+      close += uLifeGrainTint.rgb * (uLifeCalm * uLifeGrain.x * tone * lifeGrains(arc, lane, px * uLifeGrain.y, uGTime));
+      close += uLifeDotsTint.rgb * (uLifeCalm * uLifeDots.x * tone * seen * lifeDots(q, px * uInflow.z * uLifeDots.y, uGTime));
     }
     vec3 to = ST_CENTRE - uEye;
     float away = length(to);

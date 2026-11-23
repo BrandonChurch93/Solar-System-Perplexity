@@ -8,7 +8,7 @@ import data from './life.json'
  */
 export interface LifeMaps { cellsPlate: THREE.Texture; swellPlate: THREE.Texture; cellsApron: THREE.Texture; swellApron: THREE.Texture }
 
-export const LIFE_NAMES = ['uCellsPlate', 'uSwellPlate', 'uCellsApron', 'uSwellApron', 'uLifeFlow', 'uLifeWave', 'uLifeSwell', 'uLifeFade', 'uLifeGrain', 'uLifeGrainMore', 'uLifeGrainTint', 'uLifeDots', 'uLifeDotsTint', 'uLifeStream', 'uLifeStreamMore', 'uLifeDome', 'uLifeClose', 'uLifeKnown', 'uLifePlace', 'uLifeBoil', 'uLifeMade', 'uLifeMadeMore', 'uLifeShine', 'uLifeRun', 'uLifeStill', 'uLifeSplit', 'uLifeSplitAt', 'uLifeSplitMore', 'uLifeSplitTint', 'uLifeLift']
+export const LIFE_NAMES = ['uCellsPlate', 'uSwellPlate', 'uCellsApron', 'uSwellApron', 'uLifeFlow', 'uLifeWave', 'uLifeSwell', 'uLifeFade', 'uLifeGrain', 'uLifeGrainMore', 'uLifeGrainTint', 'uLifeDots', 'uLifeDotsTint', 'uLifeStream', 'uLifeStreamMore', 'uLifeDome', 'uLifeClose', 'uLifeKnown', 'uLifePlace', 'uLifeBoil', 'uLifeMade', 'uLifeMadeMore', 'uLifeShine', 'uLifeRun', 'uLifeStill', 'uLifeSplit', 'uLifeSplitAt', 'uLifeSplitMore', 'uLifeSplitTint', 'uLifeLift', 'uLifeCalm']
 
 export function lifeUniforms(maps: LifeMaps): Record<string, THREE.IUniform> {
   const d = data
@@ -40,7 +40,16 @@ export function lifeUniforms(maps: LifeMaps): Record<string, THREE.IUniform> {
     uLifeSplitMore: { value: new THREE.Vector4(d.split.width, d.split.range, d.split.pull, d.split.wander) },
     uLifeSplitTint: { value: new THREE.Vector4(d.split.tint[0]!, d.split.tint[1]!, d.split.tint[2]!, d.split.shade) },
     uLifeLift: { value: d.flow.lift },
+    uLifeCalm: { value: 1 },
   }
+}
+
+/** The share of the life's own light at this time (0 at the moment named in life.json, 1 away from it); it is set on the given uniforms and returned. */
+export function lifeCalm(uniforms: Record<string, THREE.IUniform>, time: number): number {
+  const x = Math.min(Math.abs(time - data.calm.at) / data.calm.ease, 1)
+  const calm = x * x * (3 - 2 * x)
+  uniforms.uLifeCalm!.value = calm
+  return calm
 }
 
 /** The frame's height, so that the life fades at the same size in the picture at any format. */
@@ -80,6 +89,9 @@ uniform vec4 uLifeSplitAt;
 uniform vec4 uLifeSplitMore;
 uniform vec4 uLifeSplitTint;
 uniform float uLifeLift;
+// the share of the life's own light: 1 everywhere but round the moment named in life.json (calm), where it falls
+// to nil, so that the frame there is the picture itself
+uniform float uLifeCalm;
 // How much of the life a lookup with this footprint shows: all of it while a texel of the picture is
 // large in the frame, none where the cells have become too small to carry it without shimmer.
 float lifeSeen(vec2 dx, vec2 dy, vec2 size) {
@@ -229,7 +241,7 @@ vec3 alive(sampler2D map, sampler2D cellMap, sampler2D swellMap, vec2 g, vec2 uv
     shown = (g1 * (w1 * b1) + g2 * (w2 * b2)) * max(vec3(1.0) + ((f1 - 1.0) * w1 + (f2 - 1.0) * w2) * keep, vec3(0.0)) * (1.0 + uLifeLift * off * apart);
   }
   vec3 lin = inverseFilmic(grade(shown, 0.0));
-  float body = run * smoothstep(0.0, uLifePlace.y, inner);
+  float body = run * smoothstep(0.0, uLifePlace.y, inner) * uLifeCalm;
   for (int k = 0; k < (body > 0.0 ? 1 : 0); k++) {
     float slide = deep * uLifeMade.w + time * uLifeMade.y;
     float f1 = smoothstep(uLifeMadeMore.w, 2.0 * uLifeMadeMore.w, 2.0 * unit / uLifeMade.z);
@@ -251,7 +263,7 @@ vec3 alive(sampler2D map, sampler2D cellMap, sampler2D swellMap, vec2 g, vec2 uv
     float wake = smoothstep(0.5 * uLifeBoil.y, 2.5 * uLifeBoil.y, x) * (1.0 - smoothstep(1.0 - 2.5 * uLifeBoil.x, 1.0 - uLifeBoil.x, x));
     lin *= exp2(body * (uLifeWave.x * (strong * peak - uLifeBoil.z * wake) + 2.0 * uLifeMade.x * made + uLifeShine.z * shine));
   }
-  float live = seen * (1.0 - spot) * known;
+  float live = seen * (1.0 - spot) * known * uLifeCalm;
   for (int k = 0; k < (live > 0.0 ? 1 : 0); k++) {
     // the cell's own slow cycle of height: it domes and sinks, lit from one side like the picture, and its rim
     // cools as it domes

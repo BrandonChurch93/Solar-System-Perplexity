@@ -13,7 +13,7 @@ import * as look from './look'
 import { opening, plan } from './plan'
 import { Prominences } from './prominence'
 import { SkyCard } from './skycard'
-import { lifeFormat } from './life'
+import { lifeCalm, lifeFormat } from './life'
 import { stage } from './stage'
 
 export const createSet: SetFactory = async (ctx) => {
@@ -122,17 +122,18 @@ export const createSet: SetFactory = async (ctx) => {
         ground.show(placing, 0, 0)
         const since = state.time - plan.seg.terrain.start
         const open = opening.on && kind === 'terrain' ? 1 - share(since, look.opening.fade) : 0
+        const calm = lifeCalm(ground.material.uniforms, t)
         const feet = loops.pulse(since)
         const surge = loops.surge(since, open)
         const erupt = loops.erupt(since, open)
-        ground.update(eye, t, gain, vignette, aspect, fringe.lod(view.camera.fov, view.format.height), 0, open, since, look.opening.feet.ground * open * 0.5 * (feet[0] + feet[1]) + loops.lit(since), look.opening.surge.ground * surge[3], look.opening.surge.kick * surge[2], look.opening.erupt.flash.ground * erupt[2], look.opening.erupt.flash.veil * erupt[2])
+        ground.update(eye, t, gain, vignette, aspect, fringe.lod(view.camera.fov, view.format.height), 0, open, since, look.opening.feet.ground * open * 0.5 * (feet[0] + feet[1]) + calm * loops.lit(since), look.opening.surge.ground * surge[3], look.opening.surge.kick * surge[2], look.opening.erupt.flash.ground * erupt[2], look.opening.erupt.flash.veil * erupt[2])
         lifeFormat(ground.material.uniforms, view.format.height)
         ground.material.uniforms.uFieldFine!.value.x = rising ? above(by.field) : 0
         fringe.update(eye, t, gain, vignette, aspect, view.camera.fov, view.format.height, 1 - above(by.fringe))
         const strands = 1 - above(by.loops)
         loops.mesh.visible = strands > 0
         loops.trim(above(by.strands))
-        loops.update(t, gain * strands, vignette, aspect, 0, place.onGlobe.loopsCut * above(by.strands), 0, open, since, opening.on && kind === 'terrain')
+        loops.update(t, gain * strands, vignette, aspect, 0, place.onGlobe.loopsCut * above(by.strands), 0, open, since, opening.on && kind === 'terrain', calm)
         if (!inOrbit) return
       }
       const elapsed = state.time - plan.holdMid
