@@ -452,7 +452,8 @@ describe('the two sides of a stop that hands over', () => {
           const time = (f + config.shutterFraction / 2) / fps
           const globe = film.shotAt(f, time, 'orbit')
           const w = placeWeight(s, time)
-          expect(globe.skyShare).toBe(skyWeight(s, time))
+          // A stop may give the share itself through the hook of the plan (skyShare by height, not by the clock): then its low share is what the film shows.
+          expect(globe.skyShare).toBe(p.skyShare(s, time)?.low ?? skyWeight(s, time))
           expect(skyTurnWeight(s, time)).toBeGreaterThanOrEqual(0)
           // A stop that asked for limbSky keeps the horizon of the picture for as long as the sky of the close view has a share.
           const horizon = h.limbSky ? Math.max(w, globe.skyShare!) : 0
