@@ -29,6 +29,7 @@ ap.add_argument('--old', default='out/work/place/old')
 ap.add_argument('--assets', default='public/assets/mars')
 ap.add_argument('--work', default='out/work/place/bake')
 ap.add_argument('--levels', default='src/stops/mars/levels.json')
+ap.add_argument('--toned', default='', help='WIDTH,FILE: only write the toned old land of that width as a look plate (16 bit) and stop')
 ap.add_argument('--no-write', action='store_true', help='keep public/assets and levels.json as they are, write only the work pictures')
 a = ap.parse_args()
 cfg = json.load(open(a.config))
@@ -122,24 +123,32 @@ def save(texel, name, size):
     cv2.imwrite(os.path.join(a.work, name[:-4] + '.png'), np.round(np.clip(texel, 0, 1) * 255).astype(np.uint8))
 
 
+if a.toned:
+    w, path = a.toned.split(',')
+    cv2.imwrite(path, np.round(np.clip(geom.texel_of(bent(toned(old_scene(float(w)) * light, float(w)))), 0, 1) * 65535).astype(np.uint16))
+    raise SystemExit(0)
+
 plates = bk['plates']
 looks = []
 for p in plates:
     looks.append(read_look(p['look']) if p['look'] else bent(toned(old_scene(p['widthDeg']) * light, p['widthDeg'])))
     print('plate %g deg read' % p['widthDeg'], flush=True)
-lit = bk['lit']
-S_old = old_scene(lit['widthDeg'])
-L_lit = S_old * light
+lits = bk['lit']
+S_old = [old_scene(l['widthDeg']) for l in lits]
+L_lit = [S * light for S in S_old]
 for i in range(len(plates)):
-    parent, parent_deg = (looks[i + 1], plates[i + 1]['widthDeg']) if i + 1 < len(plates) else (L_lit, lit['widthDeg'])
+    parent, parent_deg = (looks[i + 1], plates[i + 1]['widthDeg']) if i + 1 < len(plates) else (L_lit[0], lits[0]['widthDeg'])
     looks[i] = nest(looks[i], plates[i]['widthDeg'], parent, parent_deg)
     save(geom.texel_of(looks[i]), plates[i]['file'], plates[i]['size'])
     print('plate %g deg nested into %g and written' % (plates[i]['widthDeg'], parent_deg), flush=True)
     looks[i] = None
-S_new = L_lit / light
-save(geom.texel_of(S_new), lit['file'], lit['size'])
-delta, deg = S_new - S_old, lit['widthDeg']
-del S_new, S_old, L_lit
+for i in range(len(lits)):
+    if i + 1 < len(lits):
+        L_lit[i] = nest(L_lit[i], lits[i]['widthDeg'], L_lit[i + 1], lits[i + 1]['widthDeg'])
+    save(geom.texel_of(L_lit[i] / light), lits[i]['file'], lits[i]['size'])
+    print('lit level %g deg written' % lits[i]['widthDeg'], flush=True)
+delta, deg = L_lit[-1] / light - S_old[-1], lits[-1]['widthDeg']
+del S_old, L_lit
 for d in bk['delta']:
     S = geom.scene_of(read8(old_file(d['file'])))
     if S.shape[0] != N:
@@ -155,7 +164,7 @@ for d in bk['delta']:
     delta, deg = T - S, d['widthDeg']
 if not a.no_write:
     ladder = [{'file': d['file'], 'widthDeg': d['widthDeg']} for d in reversed(bk['delta'])]
-    ladder.append({'file': lit['file'], 'widthDeg': lit['widthDeg']})
+    ladder += [{'file': l['file'], 'widthDeg': l['widthDeg']} for l in reversed(lits)]
     ladder += [{'file': p['file'], 'widthDeg': p['widthDeg'], 'own': True} for p in reversed(plates)]
     out = {'levels': ladder, 'fadeMinor': bk['fadeMinor'], 'oneChannel': bk['oneChannel']}
     text = '{\n  "levels": [\n' + ',\n'.join('    ' + json.dumps(l) for l in ladder) + '\n  ],\n  "fadeMinor": %s,\n  "oneChannel": %s\n}\n' % (json.dumps(bk['fadeMinor']), json.dumps(bk['oneChannel']))

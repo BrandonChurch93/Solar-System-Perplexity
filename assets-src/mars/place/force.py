@@ -178,8 +178,17 @@ del acc, dm, mm, need
 # picture may end on the outline of what the twin sees
 far = cv2.distanceTransform((m < 0.5).astype(np.uint8), cv2.DIST_L2, 5) / size * a.width_deg
 fall = (1 - geom.smoothstep(0.0, fc['spreadDeg'], far)) * fc['spreadShare']
-Dout = cv2.GaussianBlur(spread(Dp, m), (0, 0), fc['spreadBlurPx'])
-plate = np.clip(R + (Dp * (m * fc['share'])[..., None]) + Dout * ((1 - m) * fall)[..., None], 0, 1)
+plate = np.clip(R + Dp * (m * fc['share'])[..., None], 0, 1)
+# (a gain on the broad tone, not a sum: the take is often lit where the picture's near ground is dark, and a sum
+# leaves the land beside the fan brighter than the fan)
+sig = fc['toneBlur'] * size
+Ps, Rsc = geom.scene_of(plate), geom.scene_of(R)
+tone = cv2.GaussianBlur(Ps * m[..., None], (0, 0), sig) / np.maximum(cv2.GaussianBlur(m, (0, 0), sig), 1e-3)[..., None]
+tone = cv2.GaussianBlur(spread(tone, (cv2.GaussianBlur(m, (0, 0), sig) > 0.5).astype(np.float32)), (0, 0), fc['spreadBlurPx'])
+gain = np.clip((tone + 2e-3) / (cv2.GaussianBlur(Rsc, (0, 0), sig) + 2e-3), fc['toneLeast'], fc['toneMost'])
+out = np.clip(geom.texel_of(Rsc * (1 + (gain - 1) * fall[..., None])), 0, 1)
+plate = plate * m[..., None] + out * (1 - m)[..., None]
+del Ps, Rsc, tone, gain, out
 report('held to the picture', plate)
 direct = m * (1 - geom.smoothstep(fc['directFrom'], fc['directTo'], stretch))
 plate = plate * (1 - direct[..., None]) + L[..., :3] * direct[..., None]
