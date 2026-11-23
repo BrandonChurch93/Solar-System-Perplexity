@@ -1,9 +1,61 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-23T11:29:02.503Z",
+ "pushed": "2026-11-23T11:53:12.673Z",
  "head": "cff2ea81330131ba6748ad3cfadf4d1c7db8dbbb",
- "note": "MAIL 247 items 1 to 3 in work: air dome on the globe side, the Sun's own light kept at its direction; one Sun in dive and rise stills",
+ "note": "MAIL 247 items 1 to 4 on draft stills: one Sun, no gap at the limb, rise turn spread (limb leaves at 1566), T of the rise in 1542; plates still combed",
  "looks": [
+  {
+   "time": "2026-11-23T11:53:12.064Z",
+   "file": "20261123115312064-note-s3-c.jpg",
+   "source": "../../../../tmp/v/s3-c.jpg",
+   "kind": "note",
+   "label": "dive: draft stills 1310 1314 1318 1322, the painted Sun enters at the top",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T11:53:11.476Z",
+   "file": "20261123115311476-note-s3-b.jpg",
+   "source": "../../../../tmp/v/s3-b.jpg",
+   "kind": "note",
+   "label": "rise, new shape: draft stills 1555 1558 1561 1564 1567 1570 (plates still combed, item 5)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T11:53:10.891Z",
+   "file": "20261123115310891-note-s3-a.jpg",
+   "source": "../../../../tmp/v/s3-a.jpg",
+   "kind": "note",
+   "label": "rise, new shape and T in 1542: draft stills 1541 1542 1543 1546 1549 1552",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T11:52:36.046Z",
+   "file": "20261123115236046-frame-f-1322.jpg",
+   "source": "out/work/venus/place/s3/f-1322.png",
+   "kind": "frame",
+   "label": "venus.dive frame 1322, draft tier",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "frame": 1322,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8b9f780b26a50bc3"
+  },
+  {
+   "time": "2026-11-23T11:50:04.910Z",
+   "file": "20261123115004910-frame-f-1570.jpg",
+   "source": "out/work/venus/place/s3/f-1570.png",
+   "kind": "frame",
+   "label": "venus.rise frame 1570, draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "frame": 1570,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8b9f780b26a50bc3"
+  },
   {
    "time": "2026-11-23T11:29:01.937Z",
    "file": "20261123112901937-note-s1-d.jpg",
@@ -26,58 +78,6 @@
    "source": "../../../../tmp/v/s1-b.jpg",
    "kind": "note",
    "label": "dive 1332 1338 draft, whole frame and native crop: one Sun above the limb, no dark line at the limb, no green spot",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T11:28:30.436Z",
-   "file": "20261123112830436-frame-f-1560.jpg",
-   "source": "out/work/venus/place/s1/f-1560.png",
-   "kind": "frame",
-   "label": "venus.rise frame 1560, draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "frame": 1560,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "8b9f780b26a50bc3"
-  },
-  {
-   "time": "2026-11-23T11:23:46.106Z",
-   "file": "20261123112346106-frame-f-1343.jpg",
-   "source": "out/work/venus/place/s1/f-1343.png",
-   "kind": "frame",
-   "label": "venus.dive frame 1343, draft tier",
-   "stop": "venus",
-   "segment": "venus.dive",
-   "frame": 1343,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "8b9f780b26a50bc3"
-  },
-  {
-   "time": "2026-11-23T11:22:21.784Z",
-   "file": "20261123112221784-note-s1-a.jpg",
-   "source": "../../../../tmp/v/s1-a.jpg",
-   "kind": "note",
-   "label": "dive 1316 1320 1326 draft: one Sun, the painted bloom, comes in at the top; no hard dot",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T11:00:51.782Z",
-   "file": "20261123110051782-note-rise-4.jpg",
-   "source": "out/work/venus/place/h6/rise-4.jpg",
-   "kind": "note",
-   "label": "h6 rise 1550 1552 1554 1556 larger",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T11:00:51.269Z",
-   "file": "20261123110051269-note-dive-a.jpg",
-   "source": "out/work/venus/place/h6/dive-a.jpg",
-   "kind": "note",
-   "label": "h6 dive 1331 to 1342, draft, T plates of all five levels",
    "stop": "venus"
   }
  ]
