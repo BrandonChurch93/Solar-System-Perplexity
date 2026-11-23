@@ -11,7 +11,7 @@ import { Io } from './io'
 import * as look from './look'
 import fields from './deck-fields.json'
 import place from './place.json'
-import { exposure, lifted, plan } from './plan'
+import { eddyTurn, exposed, exposure, flashNow, hazeDrift, lifted, plan, ringTurn, stormTurn } from './plan'
 import skyJson from './sky.json'
 
 function direction(lonDeg: number, latDeg: number): THREE.Vector3 {
@@ -85,7 +85,7 @@ export const createSet: SetFactory = async (ctx) => {
   const ramp = (time: number): number => (time < terrainMid ? smooth((time - dive.start) / (land.start - dive.start)) : 1 - smooth((time - land.end) / (rise.end - land.end)))
   const ratio = (time: number): number[] => {
     const kind = time < terrainMid ? 'dive' : 'rise'
-    const flown = exposure(kind === 'dive' ? land.start - terrainMid : land.end - terrainMid)
+    const flown = exposure(kind === 'dive' ? dive.start - terrainMid : rise.end - terrainMid)
     return place.exposure.ratio[kind].map((v) => v * flown)
   }
   const holdTurn = plan.hold(plan.holdMid - plan.seg.hold.start).quaternion
@@ -120,10 +120,21 @@ export const createSet: SetFactory = async (ctx) => {
       const gain = 1 / shot.post.exposure
       const share = ramp(state.time)
       const r = ratio(state.time)
+      ground.material.uniforms.uStormTurn!.value = stormTurn(state.time - terrainMid)
+      const eddies = ground.material.uniforms.uEddyTurn!.value as number[]
+      for (let i = 0; i < eddies.length; i++) eddies[i] = eddyTurn(i, state.time - terrainMid)
+      const seams = ground.material.uniforms.uSeam!.value as THREE.Vector3[]
+      for (let i = 0; i < seams.length; i++) seams[i]!.z = ringTurn(i, state.time - terrainMid)
       if (!inOrbit) {
-        ground.update(gain * exposure(state.time - terrainMid), shot.post.vignette, view)
+        ground.update(gain * exposed(state.time - terrainMid), shot.post.vignette, view)
         ;(ground.material.uniforms.uExpose!.value as THREE.Vector3).set(Math.pow(r[0]!, share - 1), Math.pow(r[1]!, share - 1), Math.pow(r[2]!, share - 1))
-        ground.material.uniforms.uAirLift!.value = state.time < terrainMid ? lifted('dive', land.start - state.time) : lifted('rise', state.time - land.end)
+        const lift = state.time < terrainMid ? lifted('dive', land.start - state.time) : lifted('rise', state.time - land.end)
+        ground.material.uniforms.uAirLift!.value = lift
+        ;(ground.material.uniforms.uHazeLit!.value as THREE.Vector3).z = 1 - lift
+        const bands = ground.material.uniforms.uHazeBand!.value as THREE.Vector4[]
+        for (let b = 0; b < bands.length; b++) bands[b]!.z = hazeDrift(b, state.time - terrainMid)
+        const flashes = ground.material.uniforms.uFlash!.value as THREE.Vector4[]
+        for (let i = 0; i < flashes.length; i++) flashes[i]!.w = flashNow(i, state.time - terrainMid)
         return
       }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
