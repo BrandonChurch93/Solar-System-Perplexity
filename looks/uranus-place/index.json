@@ -1,9 +1,63 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-23T15:54:16.305Z",
- "head": "5ce54bf766a76a5ec88a0a773f53add693ad4e09",
- "note": "ring move version 3: the hoops of the arch open into the true rings, no strand fades in over dark sky; proofs next",
+ "pushed": "2026-11-23T16:05:47.290Z",
+ "head": "69478bbbb0eaadbebc11d91edbe7ea98d1e5ba17",
+ "note": "rise 4380 to 4454 every frame on 69478bbb: one ring system, proof chain running",
  "looks": [
+  {
+   "time": "2026-11-23T16:05:46.002Z",
+   "file": "20261123160546002-note-e-hand.jpg",
+   "source": "../../../../tmp/e-hand.jpg",
+   "kind": "note",
+   "label": "rise 4428 to 4443, the fan narrows and passes to the far rings, tree 69478bbb, draft",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T16:05:44.699Z",
+   "file": "20261123160544699-note-e-open.jpg",
+   "source": "../../../../tmp/e-open.jpg",
+   "kind": "note",
+   "label": "rise 4400 to 4411 upper right, the hoops open into the rings, tree 69478bbb, draft",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T16:05:43.709Z",
+   "file": "20261123160543709-note-e-full-2.jpg",
+   "source": "../../../../tmp/e-full-2.jpg",
+   "kind": "note",
+   "label": "rise every frame part 3 of 3, tree 69478bbb (ring move 3 on main 5cdb3750), draft",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T16:05:42.839Z",
+   "file": "20261123160542839-note-e-full-1.jpg",
+   "source": "../../../../tmp/e-full-1.jpg",
+   "kind": "note",
+   "label": "rise every frame part 2 of 3, tree 69478bbb (ring move 3 on main 5cdb3750), draft",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T16:05:41.580Z",
+   "file": "20261123160541580-note-e-full-0.jpg",
+   "source": "../../../../tmp/e-full-0.jpg",
+   "kind": "note",
+   "label": "rise every frame part 1 of 3, tree 69478bbb (ring move 3 on main 5cdb3750), draft",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T16:03:44.456Z",
+   "file": "20261123160344456-frame-f04445.jpg",
+   "source": "out/work/seq/4380-4454/f04445.png",
+   "kind": "frame",
+   "label": "uranus.rise frame 4445, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4445,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "743c10b0a56aaca7"
+  },
   {
    "time": "2026-11-23T15:54:15.741Z",
    "file": "20261123155415741-note-cq-0.jpg",
@@ -18,60 +72,6 @@
    "source": "../../../../tmp/dl-1.jpg",
    "kind": "note",
    "label": "Rise 4406 to 4417, left foot of the arch, ring move version 3, draft tier, main 5eba2289, not committed",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T15:54:14.638Z",
-   "file": "20261123155414638-note-dq-1.jpg",
-   "source": "../../../../tmp/dq-1.jpg",
-   "kind": "note",
-   "label": "Rise 4406 to 4417, upper right of the frame, ring move version 3, draft tier, main 5eba2289, not committed. The hoops open into the fan, nothing fades in over dark sky",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T15:54:14.073Z",
-   "file": "20261123155414073-note-dq-0.jpg",
-   "source": "../../../../tmp/dq-0.jpg",
-   "kind": "note",
-   "label": "Rise 4394 to 4405, upper right of the frame, ring move version 3 (every strand of the true rings starts on a bright hoop of the arch and moves out to its true radius, as bright as it is far from its hoop), draft tier, main 5eba2289, not committed",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T15:52:59.139Z",
-   "file": "20261123155259139-frame-f04434.jpg",
-   "source": "out/work/seq/4393-4437/f04434.png",
-   "kind": "frame",
-   "label": "uranus.rise frame 4434, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4434,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "3c1375ab69256384"
-  },
-  {
-   "time": "2026-11-23T15:28:46.716Z",
-   "file": "20261123152846716-note-bq-4.jpg",
-   "source": "../../../../tmp/bq-4.jpg",
-   "kind": "note",
-   "label": "Rise crops of the upper right sky, ring move version 1, draft tier, main 4357cbb0. Fault to fix in version 2: fine strands of the true rings fade in as a fan wider than the arch",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T15:28:46.137Z",
-   "file": "20261123152846137-note-br-2.jpg",
-   "source": "../../../../tmp/br-2.jpg",
-   "kind": "note",
-   "label": "Rise 4415 to 4434, ring move version 1, draft tier, main 4357cbb0, not committed. One system by position, rings pass behind the globe, swap 4431 to 4438 not seen",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T15:28:45.554Z",
-   "file": "20261123152845554-note-br-1.jpg",
-   "source": "../../../../tmp/br-1.jpg",
-   "kind": "note",
-   "label": "Rise 4395 to 4414, ring move version 1 (arch and true rings share one pose that turns and grows), draft tier, main 4357cbb0, not committed. Wrong: bright hoops of the arch sweep to the top right and dim 4407 to 4411 while a fan of faint fine lines fades in across the upper right sky 4406 to 4412",
    "stop": "uranus"
   }
  ]
