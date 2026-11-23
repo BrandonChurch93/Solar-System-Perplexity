@@ -3,7 +3,7 @@ import { DIAG_GLSL, diagUniform, gradUniform } from '../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../post/chain'
 import { implicitUniform } from '../core/texel'
 import { EQUIRECT_GLSL } from '../space/sky'
-import { HAZE_GLSL, hazeUniforms, type HazeParams } from './haze'
+import { hazeGlsl, hazeUniforms, setHazeGlow, type HazeParams } from './haze'
 
 export interface PlanetLight {
   wrap: number
@@ -96,7 +96,7 @@ export function patchSlots(levels: number): number {
 
 const patchSamplers = (slots: number): string => Array.from({ length: slots }, (_, i) => 'uniform sampler2D uPatch' + i + ';').join('\n')
 
-export interface PatchShader { slots: number; own: boolean; minor: boolean }
+export interface PatchShader { slots: number; own: boolean; minor: boolean; glow: boolean }
 
 const patchRead = (i: number): string => `textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb`
 
@@ -178,7 +178,7 @@ out vec4 outColor;
 ${EQUIRECT_GLSL}
 ${INVERSE_FILMIC_GLSL}
 ${DIAG_GLSL}
-${HAZE_GLSL}
+${hazeGlsl(o.glow)}
 vec3 spinY(vec3 d, float a) {
   float c = cos(a), s = sin(a);
   return vec3(c * d.x - s * d.z, d.y, s * d.x + c * d.z);
@@ -322,7 +322,7 @@ export class Planet {
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
       vertexShader: VERT,
-      fragmentShader: frag({ slots, own, minor }),
+      fragmentShader: frag({ slots, own, minor, glow: o.haze.glow === true }),
       uniforms: {
         ...hazeUniforms(o.haze),
         uGrazingShape: { value: new THREE.Vector4(g?.depth ?? 0, g?.width ?? 1, g?.duskWidth ?? 1, g?.power ?? 1) },
@@ -369,6 +369,10 @@ export class Planet {
     u.uWeight!.value = weight
     this.mesh.updateWorldMatrix(true, false)
     this.bodyToWorld.setFromMatrix4(this.m4.extractRotation(this.mesh.matrixWorld))
+  }
+
+  setGlow(direction: THREE.Vector3, colour: [number, number, number], power: number): void {
+    setHazeGlow(this.material.uniforms, direction, colour, power)
   }
 
   dispose(): void {

@@ -2,13 +2,14 @@
 
 Notebook of the globe engineer (brief 243). Folders: `src/bodies/`, `src/core/sets.ts`, `tests/globe-*.test.ts`, this file. Branch `agent/engine-globe`, started from `412d2d09`.
 
-Three options, all off by default. A stop that turns none of them on gets the shader text of the starting commit (sha256 `81b01893...` held by `tests/patches.test.ts`) and the same texture uploads.
+Four options, all off by default. A stop that turns none of them on gets the shader text of the starting commit (sha256 `81b01893...` held by `tests/patches.test.ts`) and the same texture uploads.
 
 | option | where | a stop turns it on with |
 | --- | --- | --- |
 | own light per patch level | `PatchSet.own` in `src/bodies/planet.ts` | `own: [false, false, true, ...]`, one entry per level, beside `widthsDeg` |
 | level fade by the fine axis | `PatchSet.fadeMinor` in `src/bodies/planet.ts` | `fadeMinor: true` |
 | one channel texture | `ctx.texture` in `src/core/sets.ts` | `ctx.texture(path, { srgb: false, channels: 1 })` |
+| haze glow about a direction of the stop | `HazeParams.glow` in `src/bodies/haze.ts` | `glow: true` in the haze params, then `planet.setGlow(direction, colour, power)` and `shell.setGlow(...)` each frame |
 
 Only the Mars set uses `src/bodies/planet.ts` today. The other stops have their own globe shaders and are not touched.
 
@@ -114,6 +115,24 @@ Type: `SetContext.texture` takes `TextureOptions` from `src/core/types.ts` (owne
 
 Not built. The Mars builder measured that it would save 18 MB, not a level.
 
+## 5. Haze glow about a direction of the stop (`glow`)
+
+Asked by the Mars builder: the place picture has its glow on one side of the frame, and the haze had only the lobe about the sun (`hazeForward`, power 6), so no stop value could put light on one side.
+
+With `glow: true` in a `HazeParams` the haze text gets three uniforms and one more term inside `hazeLight`:
+
+```
+hazeLight = ((day + twilight) * hazeForward(dir) + night + uHazeGlow * pow(max(dot(dir, uHazeGlowDir), 0.0), uHazeGlowPower)) * uHazeStrength
+```
+
+`dir` is the view direction in world axes (the camera is the origin of the world in this engine). The term is not scaled by day or twilight; the stop fades the colour itself. It is multiplied by `uHazeStrength` and, like the rest of the haze light, by `1 - exp(-tau)` on the ground (`src/bodies/planet.ts`) and in the shell (`HazeShell`).
+
+How a stop uses it: put `glow: true` into the haze params of the planet (`look.haze`) and of each shell that should carry it, then each frame call `planet.setGlow(direction, colour, power)` and `shell.setGlow(direction, colour, power)`. `direction` is a world vector (normalised by the setter), `colour` is scene light `[r, g, b]`, `power` must be above 0. The colour starts at 0, so a stop that sets the option and never calls the setter draws the frames of today (with a different shader text). A setter on a haze without the option throws `this haze has no glow`.
+
+Off: `hazeGlsl(false)` is the constant `HAZE_GLSL`, which Venus, Jupiter, Saturn and Neptune include as before; its sha256 (`8e0c217f...`), the shell's text (`692d6d8b...`) and the planet's text (`81b01893...`) are held by `tests/globe-haze.test.ts`. No uniform is added when off.
+
+Measured in `tests/globe-gl.test.ts` (camera 3 radii out, glow direction 26.6 degrees off the view axis, haze depth 0.5): colour 0 and a direction behind the camera give the pixels of the build without the option, exactly; the added light has the channel ratios of the colour (1, 0.5, 0.25 to 1e-3), doubles with the colour, rises toward the glow direction, and the ratio between power 12 and power 6 at each pixel is the cosine to the sixth (to 1e-3).
+
 ## Proof with the options off
 
 Draft stills `out/work/stills/f%05d-16x9-draft-full.png`, sha256, frames 360 (sun.hold), 615 (mercury.hold), 717 (mercury.dive), 1185 (venus.hold), 1857 (earth.dive), 2325 (mars.hold), 2427 (mars.dive), 2997 (jupiter.dive), 3465 (saturn.hold), 4035 (uranus.hold), 4707 (neptune.dive). The references were rendered at `412d2d09` before any change. The runs are named in the log below.
@@ -123,3 +142,4 @@ Draft stills `out/work/stills/f%05d-16x9-draft-full.png`, sha256, frames 360 (su
 - Tasks 1, 2 and 3 (code and tests). `npx vitest run`: 64 files, 135 tests green, of them `tests/globe-levels.test.ts` (6, shader text per option set) and `tests/globe-gl.test.ts` (5, in the harness browser with its flags). Options off: the 11 draft stills are byte equal to the references (run with the planet shader change only, then again with every change in). Not yet shown: a film frame with an option on.
 - Task 2 on pictures: Mars 2454 `side=orbit/noplace` before and after, texels shares, three consecutive frames (section 2). The Mars set in the repository is unchanged; the flag was set only in a scratch worktree.
 - Merged main d690e42a (only `kit/PROGRESS.md` differs from the starting commit).
+- Haze glow (section 5), asked by the Mars builder. `npx vitest run`: 66 files, 140 tests green (`tests/globe-haze.test.ts` 4, one more in `tests/globe-gl.test.ts`). Options off: the 11 draft stills are byte equal to the references of `412d2d09` again. Not yet shown: a film frame with the glow on.
