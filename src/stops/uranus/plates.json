@@ -38,6 +38,9 @@
   "file": "place-field.bin",
   "size": 256
  },
+ "tops": {
+  "file": "place-tops.png"
+ },
  "clockRef": 3.25,
  "aimUnits": 1.2000000000000002
 }

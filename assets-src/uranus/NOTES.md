@@ -1255,3 +1255,74 @@ What is wrong, with frames:
 
 When 1 and 2 are done and pushed, say so with the commit and I render both moves again, at the review tier with the shutter open."
 Attachments (kept at `/home/user/.perplexity/attachments/5c32fabb45c64e468e46bb48d035bfa9/`): uranus-dive-every-6.jpg, uranus-dive-4155-4169.jpg, uranus-dive-native-centre.jpg, uranus-rise-every-5.jpg, uranus-rise-4385-4399.jpg.
+
+### MAIL 258 from /root (about 11:53 UTC, low, to every stop builder), word for word
+"Main moved to da69509a. New in the globe shader and the loader, all off unless your stop asks (notes: assets-src/shared/GLOBE-NOTES.md):
+- `ctx.texture(path, {srgb: false, channels: 1})`: a one channel texture, a quarter of the memory. Use it for every mask and height map you load, if your set is near its memory limit.
+- `PatchSet.own?: boolean[]`: a patch level with its own light (a plate that already carries the light of the close view is not lit a second time).
+- `PatchSet.fadeMinor?: boolean`: a level fades in by its fine axis on screen, so a level seen at a grazing angle does not come in as a hard strip.
+MAX_PATCHES is 10.
+No frame of main changed (115 draft frames with the same bytes). Merge origin/main into your branch at your next commit. Nothing else changes for you: go on with the list of my last mail to you."
+
+### Mail from /root/handover_engineer (12:10 UTC, low, to every stop builder), word for word
+"From handover_engineer, for every stop builder (no answer needed). E3 of the handover engine is pushed on agent/engine-handover at 0d14d1c. It is NOT on main yet: /root proves it first and tells you when it lands. It changes the globe side cameras of every stop that opted in, so know it before you tune a dive or a rise against the old path.
+
+What changes for a stop with handover: {} in its plan
+- The generic path between the far pose (the hold's last pose in a dive, the travel's first in a rise) and T is now a steady descent or climb. Height and field of view run on one schedule, direction and attitude on a second that leads it, so the levelling out is spread over the move and not packed into the last frames.
+- Level glide: near the ground the camera flies straight along the heading of your close side in an upright plane, so the horizon is level whenever it is a line in the frame and the place picture is seen from the twin's own side. A far pose within 2 degrees of the zenith of the place keeps the old form.
+- At T the globe camera carries the close side's own speed, turn and climb (as before: C1 at T). T, the place window, the sky carry and the picture itself are unchanged.
+- Your twin, your T frames and everything after T in a dive and before T in a rise: unchanged.
+
+Per stop, per kind, all optional
+- The old path back: handover: { dive: { path: { turnFall: 0.3, level: false } } } (the same under rise).
+- path.levelBy (dive 0.8, rise 0.5): the share of the turn by which the picture stands upright. Smaller means upright earlier.
+- path.sidestep: { right, up, by }: moves the far part of the path aside, in radii in the far camera's frame, complete by the share "by" of the way to T. For a moon or a ring in the way of the dive. The first frame and its speed stay those of the hold.
+- skyFloor: true (under dive or rise): fades a carried terrain sky plate out below the twin's horizon. Ask for it if your terrain sky plate is real sky only above its horizon and you see streaks or a mirror above the limb as the globe camera climbs. Off unless you ask.
+- place: { seen, maxEnlarge, enlargeSoft } beside valid: where the place picture may be drawn. maxEnlarge cuts the picture where it is enlarged more than that many times (generic 3); lower it if far walls or cliffs of your picture turn into long strokes as the camera climbs.
+
+How to check your stop on it: merge agent/engine-handover into a scratch branch (or wait for main), then npm run handover -- --stop ID --tier draft. The report now judges level and colour steps on the body only and names the fastest frame of the descent against the mean.
+
+Requests for the engine: by message to me, as before."
+- To do when E3 lands on main: find out whether the plan's own dive and rise poses (`plan.divePose`, `plan.risePose`, knots in `src/stops/uranus/path.json`) are still the ones used, then run the handover report again.
+- 12:20 checked: my plan has its own `divePose` and `risePose` (the knots of `path.json`), which the film reads in place of the generic path, so E3 should not move my globe side camera. To prove with the handover report once E3 is on main.
+
+### 11:27 to 12:20, MAIL 249 items 1 to 3 (tree on main da69509a, merge 0d93d0c6)
+- 11:32 review tier judged frames of 54f4ffc6 (`out/work/u/judged/review-4137.png`, `review-4436.png`, beside the kept stills in `/tmp/judged-r.jpg`, on the looks branch). They differ from the kept stills by design: the dive and the rise fly new paths.
+- Sky turn fix (the two Suns of 11:08), in `plan.ts` (`skyTurnShare`): the star field turns from the first dive frame to T minus the sky frames (done at 4162), and on the rise from T plus the sky frames (4416) to the end. Measured with `out/work/u/s4/suns.ts` and `skyrate.ts`: the engine's Sun and the Sun of the terrain sky picture are 7 px apart at 4170 (59 before), a constant offset that is in the picture itself; the stars cross the frame at up to 3.80 deg a frame (4134; 3.47 before).
+- Item 3, the darkening from 4134 to 4152. Two causes, both measured:
+  - True night. The light direction of the globe is `[-0.54361, 0.79538, 0.26806]` in the stop frame (`plan.lightDir`). At the up point of the place the Sun stands 9.5 deg under the horizon at 4110 and 7.3 deg under at T (the globe turns), 20 deg to the right of the view direction of T; n.sun at the up point is -0.165 to -0.127 (`out/work/u/h/sun.ts`). The hold camera stands on the day side: the point under the camera has n.sun 0.259 at 4110, 0.007 at 4131 (the camera is over the terminator), -0.118 at 4137, -0.238 at 4152 (13.8 deg into the night), -0.178 at T. So the frame goes from the day side over the terminator into the night between 4131 and 4152, and at the end the camera looks back toward the day from the night side.
+  - A level darker than its parent. Near the place the ground took the deck's light table at every view angle. That table is measured from the close picture, where steep views are the dark near ground: green 0.005 straight down, 0.013 at mu 0.68, 0.039 at 0.5, 0.11 at 0.4, 0.175 at 0.3, 0.43 at 0.2, 1.0 at 0.1. The globe's far light on the night side is (0.003, 0.069, 0.099): 12 times brighter than the table for a steep view. Fix: the deck light is used only where the view is grazing (`look.place.steep` [0.7, 0.9] on the view cosine; `uSteep` in `globe.ts`). The close view at T reaches a view cosine of 0.68 at most, so the picture at T is unchanged.
+  - What stays: the ground at view cosines 0.5 to 0.7 is the close picture's dark near ground. As the camera levels out (4158 to 4170) the middle of the frame passes over it before the bright band under the limb comes up. Centre of the frame, median display level, commit 54f4ffc6 against now: 4131 83 and 86, 4137 63 and 69, 4146 50 and 53, 4152 36 and 41, 4158 24 and 27, 4164 24 and 25, 4170 71 and 72.
+- Item 2, the sand. Cause: the repaint octaves of the plates were let in from a wavelength of 2.6 texels, and the noise tiles carry content two octaves finer, so plates 1 to 3 held grain at the pixel scale. Fix in `layback.py`: an octave is present only where its wavelength is 6 to 10 texels or more (`detail.texels`), its luma gain is capped (`detail.cap`), amplitude 0.22. Bake e (11:51): plates 1 and 4 carry no repaint detail (rms 0.0, 0.0002), plates 2 and 3 0.07 and 0.059; the files are about half the size (3.6, 4.0, 3.2, 2.4 MB). Seen at 4152 at two times size, commit 54f4ffc6 beside now and now without film grain (`/tmp/grain-cmp.jpg`, on the looks branch): the sand is gone, the swirl keeps its forms.
+- Item 1, something to fly toward. The place is in the night, so the plates alone cannot hold contrast. Added: high cloud tops that catch the Sun past the terminator.
+  - First build (stills a to c, dropped): tops as a threshold in the shader on the plate's luma times a gain map, with a second map of the mean cover for far views. Seen in stills c: white blobs with hard outlines and dark hairlines (the gain map was marbled by a noise threshold), sand at the edges (a threshold on a filtered texel aliases), and the far and near forms came from two maps.
+  - Second build (kept, stills d): ONE map, `place-tops.png`, one channel, 2048 px in full and 1024 in web, in the square of plate 1, with mips and the anisotropic filter like every plate, read with explicit gradients. It is the share of high tops in the texel. Baked by `tops_of` and `tops_map` in `layback.py` (numbers under `tops` in `assets-src/uranus/place/plates.json`): the luma of plate 1 blurred by 5 texels, times a smooth gain, through a soft threshold (1.25 to 3.0 on a luma with median 1.0), then the area mean. The gain is 1 in the fan the close picture sees and 0.8 round it, plus 0.6 at the bright streak of the close picture (2.6 units ahead of the up point), plus three smooth arcs round the storm (the widest ahead, on the Sun side, 7 to 8 units out), zero beyond 12 units. So the forms of the tops are the plate's own bright fibres: the bank is where the plate is bright, and the gain only says where the air is high.
+  - Shader (`globe.ts`): `col += uTopWhite * (wP * tops * smoothstep(uTops.x, uTops.y, ndl))`, before the mix with the deck light. `look.place.tops = { sun: [-0.2, 0.2], white: [2.4, 2.2, 1.95] }`. The bank ahead of the storm stands at n.sun about -0.04 (lit at 0.37), the streak at -0.11 (0.13), and everything more than about 4 units behind the up point is dark. Tops are drawn only with the plates (dive and rise), so the hold, the terrain and the travel do not change.
+  - The plates and the tops come in by height from the start of the dive: `look.place.plates` [1.5, 4.5] R (was [1.5, 3]): weight 0.02 at 4119, 0.1 at 4122, 0.28 at 4125, 0.57 at 4128, 0.87 at 4131, 1 from 4134. The hold cannot show them (its frames are kept), so they come in while the globe grows from 300 px to the frame.
+  - Seen in stills d (`/tmp/h-d.jpg`, native crops `/tmp/d-native.jpg`, `/tmp/d-low.jpg`, all on the looks branch 12:18): a pale patch at the terminator at 4125, a cloud bank over a dark swirl at 4131 and 4137, the bank with the streak under it filling the middle of the frame 4146 to 4158, soft edges and no sand at native size. At 4164 the bank lies flat under the limb and dims, at 4170 it is part of the bright band under the limb and only the streak is left in the dark ground.
+  - Why the bank dims: where the view is grazing and the camera is low, the ground takes the deck light and the tops are not added (weight `relit` 0.12 at 4152, 0.35 at 4158, 0.61 at 4164, 0.84 at 4170, 0.98 at 4176). The close picture has no such bank, and it may not change. A table of where a cloud can stand and leave the frame before the view on it is grazing (`out/work/u/h/fate.ts`) shows only the ground behind the up point does, and that ground is dark. So the bank stands ahead, where at T the bright band under the limb is.
+- Memory: `place-tops.png` takes 5.6 MB in full with its mips (one channel, `ctx.texture(path, { srgb: false, channels: 1 })` of main da69509a) and replaces nothing. Patch levels in use: 2 of the globe's own and 4 plates, as before. No more than six.
+
+### MAIL 265 from /root (12:36 UTC, high, to every builder), word for word
+"MAIL 265 from the Builder (/root), 12:36 UTC. E3 is on main.
+
+Main is at 03510ddd. It holds the handover engine of agent/engine-handover 0d14d1cf: the steady descent in the generic path, its mirror for the rise, the sky floor, the sidestep option. Proven by me before it was taken: 105 of 105 draft frames outside the Mars dive and rise keep their bytes, 2325 and 2580 at the final tier equal the kept stills, four review tier frames equal main, 155 tests green.
+
+What it means for a stop that has opted in and uses the generic path (read `assets-src/shared/HANDOVER-NOTES.md`, section "E3 as built"):
+1. Your dive and rise fly another line after the merge. Height falls by a near constant ratio per frame, the camera comes down a line of sight to the place and levels into the glide of your close view. The low end of the path is the close pose at T carried on with its own speed and spin over `coastFrames`.
+2. If the new line does not fit your stop yet, keep the old one for now with `handover: { dive: { path: { turnFall: 0.3, level: false } } }` (and the same under `rise`). Say so in your report, with the reason.
+3. New options, off unless you ask: `path.sidestep { right, up, by }` to pass a moon or a ring, `skyFloor` for a carried sky plate that has no true sky under its horizon, `path.levelBy`.
+4. A stop that has not opted in keeps every byte.
+
+Do now, in this order: finish the step you are in, merge origin/main, build, run the tests, render your dive and your rise at the draft tier and look at every frame, push, and report the commit with what is still wrong. Do not wait for an answer.
+
+For mars_place_builder: (Mars only, not copied here.)
+
+For handover_engineer: go on with E4 and your M3. (Not copied here.)
+
+For jupiter_coder, saturn_coder, sun_builder, globe_engineer: nothing to change in your current step. Merge main when you next push."
+
+### 12:20 to 12:37, proof chain 4 (tree 0d93d0c6 plus the tops work, main da69509a)
+- Chain 4 rendered the dive at every third frame, 4110 to 4182, at the draft tier (`out/work/u/dive/h-N.png`). Stopped at 12:36 on MAIL 265: the proof is run again on the tree with main 03510ddd, and these frames serve as the byte reference for the question whether E3 moves my camera.
+- A still of the close view in a fresh process takes 110 s at the draft tier (18 s for a globe frame), so whole moves are rendered with `npm run seq` in one session from now on.
+- Seen in the dive frames 4110 to 4176 (`/tmp/dive-h-part1.jpg`, `part2.jpg`): the pale patch appears at 4125, is a cloud bank over the swirl from 4131, fills the middle of the frame 4146 to 4158, lies flat and dims 4161 to 4167, and from 4170 only the streak is left in the dark ground under the bright limb, with the Sun and the rings above. No sand, no pop. The bank dimming 4161 to 4167 is still in view.

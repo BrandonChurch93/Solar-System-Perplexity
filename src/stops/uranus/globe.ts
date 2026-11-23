@@ -56,6 +56,7 @@ const PLATE_LEVELS = Array.from({ length: PLATE_COUNT }, (_, i) => `    {
       for (int j = 0; j < (w > 0.0 ? 1 : 0); j++) {
         vec3 s = textureGrad(uPlate${i}, q + 0.5, px * uPlateScale[${i}], py * uPlateScale[${i}]).rgb;
         aP = mix(aP, s * s * uPlace.w, ${i === 0 ? '1.0' : 'w'});
+        ${i === 0 ? 'tops = textureGrad(uPlaceTops, q + 0.5, px * uPlateScale[0], py * uPlateScale[0]).r;' : ''}
       }
       ${i === 0 ? 'field = textureLod(uPlaceField, q + 0.5, 0.0); wP = w * field.a;' : ''}
       texP = mix(texP, pgd * uPlateScale[${i}] * uPlateSize[${i}], step(0.5, w));
@@ -69,7 +70,11 @@ ${PLATE_SAMPLERS}
 uniform float uPlateScale[${PLATE_COUNT}];
 uniform float uPlateSize[${PLATE_COUNT}];
 uniform vec4 uPlace;
+uniform vec2 uSteep;
+uniform vec2 uTops;
+uniform vec3 uTopWhite;
 uniform sampler2D uPlaceField;
+uniform sampler2D uPlaceTops;
 uniform vec3 uPlaceEye;
 uniform float uPlaceRef;
 uniform float uCloudTime;
@@ -200,6 +205,7 @@ ${PATCH_LEVELS}
   vec3 aP = vec3(0.0);
   vec4 field = vec4(1.0, 1.0, 1.0, 0.0);
   float wP = 0.0;
+  float tops = 0.0;
   float texP = 0.0;
   for (int k = 0; k < (pn > 0.5 && uPlace.y > 0.0 ? 1 : 0); k++) {
 ${PLATE_LEVELS}
@@ -211,7 +217,8 @@ ${PLATE_LEVELS}
   vec3 aEff = mix(parentAlbedo / field.rgb, aP, wP);
   vec3 pD = uPlaceRot * spinY(d0, uSpin);
   vec3 dvD = normalize(pD - uPlaceEye);
-  vec3 lD = deckLight(dot(pD, -dvD), atan(dot(dvD, uDeckR0), dot(dvD, uDeckF0)));
+  float muD = dot(pD, -dvD);
+  vec3 lD = deckLight(muD, atan(dot(dvD, uDeckR0), dot(dvD, uDeckF0)));
   vec2 cloud = equirectGrad(uCloud, dc, uGrad).rg * (1.0 - wP);
   cloud.r = clamp(cloud.r * (1.0 + uCloudFine * (dot(albedo, vec3(1.0)) / max(dot(wide, vec3(1.0)), 1e-3) - 1.0)), 0.0, 1.0);
   vec2 fq = vec2(dot(d, uFaceE), dot(d, uFaceU)) * sqrt(2.0 / max(1.0 + dot(d, uFaceN), 0.05));
@@ -237,7 +244,8 @@ ${PLATE_LEVELS}
   vec2 rg = vec2(dFdx(ru), dFdy(ru));
   for (int k = 0; k < (uRingShade.x > 0.0 && along > 0.0 && ru > 0.0 && ru < 1.0 ? 1 : 0); k++) col *= 1.0 - uRingShade.x * lit * textureGrad(uRingProfile, vec2(ru, 0.5), vec2(rg.x, 0.0), vec2(rg.y, 0.0)).r;
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
-  col = mix(col * uNear, aEff * lD, uPlace.x);
+  col += uTopWhite * (wP * tops * smoothstep(uTops.x, uTops.y, ndl));
+  col = mix(col * uNear, aEff * lD, uPlace.x * (1.0 - smoothstep(uSteep.x, uSteep.y, muD)));
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.15, 0.45, 0.9), vec2(bandTurn, cloudTurn) * 4.0, length(vView));
 }`
@@ -268,6 +276,9 @@ export interface PlaceOptions {
   field: THREE.Texture
   clockRef: number
   aMax: number
+  tops: THREE.Texture
+  steep: [number, number]
+  topLight: { sun: [number, number]; white: [number, number, number] }
   feather: number
   deck: { centre: number[]; radius: number; f0: number[]; r0: number[]; flow: [number, number, number, number]; flowAngle: number; light: THREE.Texture; lightSize: number[]; psiMax: number }
 }
@@ -312,7 +323,7 @@ export class Globe {
         ...Object.fromEntries(pl.textures.map((t, i) => ['uPlate' + i, { value: t }])),
         uPlateScale: { value: pl.halfTans.map((t) => 1 / (2 * t)) },
         uPlateSize: { value: pl.textures.map((t) => (t.image as unknown as { width: number }).width) },
-        uPlace: { value: new THREE.Vector4(0, 0, pl.feather, pl.aMax) }, uPlaceField: { value: pl.field }, uPlaceRef: { value: pl.clockRef }, uPlaceEye: { value: new THREE.Vector3(0, 1, 0) }, uCloudTime: { value: 0 },
+        uPlace: { value: new THREE.Vector4(0, 0, pl.feather, pl.aMax) }, uSteep: { value: new THREE.Vector2().fromArray(pl.steep) }, uTops: { value: new THREE.Vector2().fromArray(pl.topLight.sun) }, uTopWhite: { value: new THREE.Vector3().fromArray(pl.topLight.white) }, uPlaceField: { value: pl.field }, uPlaceTops: { value: pl.tops }, uPlaceRef: { value: pl.clockRef }, uPlaceEye: { value: new THREE.Vector3(0, 1, 0) }, uCloudTime: { value: 0 },
         uPlaceRot: { value: new THREE.Matrix3().setFromMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(pl.rot)) },
         uPlaceN: { value: v3(pl.frame.n) }, uPlaceE: { value: v3(pl.frame.e) }, uPlaceU: { value: v3(pl.frame.u) },
         uDeckCentre: { value: v3(pl.deck.centre) }, uDeckRadius: { value: pl.deck.radius }, uDeckF0: { value: v3(pl.deck.f0) }, uDeckR0: { value: v3(pl.deck.r0) },

@@ -1,7 +1,7 @@
 import * as THREE from 'three'
-import { config } from '../../config'
+import { config, type Segment } from '../../config'
 import type { CoverHorizon, Pose, ViewKind } from '../../core/types'
-import { sideAt } from '../../director/handover'
+import { handoverOf, sideAt } from '../../director/handover'
 import { StopPlan, type Fit, type MoveParams, type OrbitShot } from '../../director/moves'
 import { forward, lookAt, mix, ramp, smooth } from '../../director/rig'
 import deck from './deck.json'
@@ -125,6 +125,14 @@ export class UranusPlan extends StopPlan {
 
   twin(local: Pose, time: number): Pose {
     return this.seat(local, time)
+  }
+
+  skyTurnShare(seg: Segment, time: number): number | null {
+    if (seg.kind !== 'dive' && seg.kind !== 'rise') return null
+    const h = handoverOf(this.id, seg.kind)
+    if (!h) return super.skyTurnShare(seg, time)
+    if (seg.kind === 'dive') return smooth(ramp(seg.start, (h.firstFrame - h.skyFrames) / config.fps, time))
+    return 1 - smooth(ramp((h.lastFrame + 1 + h.skyFrames) / config.fps, seg.end, time))
   }
 
   unseat(pose: Pose, time: number): Pose {

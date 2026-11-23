@@ -185,6 +185,21 @@ Input made once for several assets: `out/work/u/hero-2x.png`, the approved hero 
 - Why take 1 was kept: all nine tiles hold their input's forms in place (shift under 0.03 px), the joins cannot be found in the mosaic, the grain is gone and the wisps are crisp at half size, which is how 4137 sees them.
 - Changes in `patches.py` that go with it: `GEN` is the new file; the wrap albedo under the patches is low passed by 1.6 wrap pixels (`SOFT`), because the wrap's own pixel grain was carried into every patch; the two coarsest procedural octaves are off and the third is at 0.25 (`PROC`), since the generated detail now covers their scales; the procedural wisps start at the fourth octave; a level now fades in while its parent still has 2.6 to 1.6 texels per pixel (`FADE`, was 1.5 to 1.02), so the wrap is never shown at its own pixel scale inside the patch square.
 
+## place-1.jpg to place-4.jpg, place-field.bin, place-tops.png
+
+- Output: `public/assets/uranus/<set>/place-1.jpg` to `place-4.jpg` (4096 px square in `full`, 2048 px in `web`, albedo coded as `sqrt(A / aMax)`), `place-field.bin` (256 x 256 x 4 float), `place-tops.png` (one channel, 2048 px in `full`, 1024 px in `web`), the table `src/stops/uranus/plates.json`, and `patch-1.jpg`, `patch-2.jpg` written again with the plate's forms under the mask (`src/stops/uranus/patches.json` keeps two levels).
+- Tool: `python3 assets-src/uranus/place/layback.py 4096 0 --write` (about 8 minutes; the raw lay backs are cached in `out/work/u/place/laid-N-4096.npz`, and `--reuse --write` bakes from them in about 4 minutes; `--reuse --write --tops` writes only `place-tops.png`, about 10 seconds). Every number is in `assets-src/uranus/place/plates.json`. No generated image. Never run it beside a render (memory).
+- Inputs: the deck's own files and tables (`deck-color.jpg`, `deck-near.jpg`, `deck-far.jpg`, `src/stops/uranus/deck.json`, `deck-near.json`), `wrap-color.jpg`, `patch-1.jpg` to `patch-4.jpg` of commit cf300549, `assets-src/uranus/dive/spot.json`.
+- What it does:
+  - Lays the ground of the close view back onto the globe: four nested gnomonic plates centred 1 unit ahead of the deck's up point (1 unit is 0.015133 R), half tangent 0.28 halved per level, holding the albedo the deck shader shades, sampled through pyramids at the level the plate texel needs.
+  - Makes the place a round storm (`storm`): the fan the close picture sees is kept, the ring round it is filled from the same picture in polar form (5 ring bands, each turned by its own angle, mirrored at the fan's sides), with a core of 2.6 to 4.2 units kept as the deck shades it.
+  - Repaint by code (`detail`): band limited streak noise along the arcs of the storm, an octave only where its wavelength is at least 6 to 10 texels of the plate (so no plate holds grain at the pixel scale) and under the pixel footprint of the handover cameras (so the close view never shows it), luma gain capped.
+  - Each plate's middle is replaced by the next finer plate brought down, so a level low passed equals its parent.
+  - `place-field.bin`: rgb is the colour match (low pass of the globe's albedo at the place over low pass of plate 1, 2 degrees), a is a soft irregular round mask, 6 to 9 degrees from the plate centre. The globe shader draws `mix(globe, plate * match, mask)`.
+  - `place-tops.png` (`tops`): the share of high, sunlit cloud tops in a texel, in the square of plate 1. The luma of plate 1, blurred by 5 texels, times a smooth gain map, through the soft threshold `luma` (1.25 to 3.0), then the area mean to 2048 px. The gain (512 px) is 1 in the fan the close picture sees and `fill` 0.8 round it, plus `streak` (0.6, a gaussian of 1.6 units at the bright streak of the close picture), plus the `arcs` (angle from and to in degrees from the view direction of T, radius from and to in units, width, gain; each a gaussian across, tapered at its ends, times a low noise between 0.55 and 1), and falls to zero between 9.5 and 12 units from the up point. The forms are the plate's own bright fibres; the gain only says where the air is high. The shader adds `white * tops * smoothstep(sun)` of `look.place.tops` on the globe side of the dive and the rise.
+- Takes of the tops (code only): 1 (a threshold in the shader on the plate luma times a marbled gain, with a second map of the mean cover for far views) rejected: white blobs with hard outlines and dark hairlines, sand at the edges; 2 kept: one filtered map, smooth gain.
+- Checks: `out/work/u/place/laid-sheet.jpg` (the four plates, and each under the globe's far light), `out/work/u/place/tops.png` (gain and tops, the middle half of the plate), the top down sheet (`--diag beauty/noplace` with `show.down`), `npm run measure -- --stop uranus --only G13`.
+
 ## Files
 
 Every file the set loads, in both sets (`<set>` is `full` or `web`), with the section above that makes it.
@@ -206,8 +221,12 @@ Every file the set loads, in both sets (`<set>` is `full` or `web`), with the se
 - `public/assets/uranus/<set>/miranda-height.bin`: section "miranda-color.jpg, miranda-height.bin, ariel-color.jpg, ariel-height.bin"
 - `public/assets/uranus/<set>/patch-1.jpg`: section "patch-1.jpg to patch-4.jpg"
 - `public/assets/uranus/<set>/patch-2.jpg`: section "patch-1.jpg to patch-4.jpg"
-- `public/assets/uranus/<set>/patch-3.jpg`: section "patch-1.jpg to patch-4.jpg"
-- `public/assets/uranus/<set>/patch-4.jpg`: section "patch-1.jpg to patch-4.jpg"
+- `public/assets/uranus/<set>/place-1.jpg`: section "place-1.jpg to place-4.jpg, place-field.bin, place-tops.png"
+- `public/assets/uranus/<set>/place-2.jpg`: section "place-1.jpg to place-4.jpg, place-field.bin, place-tops.png"
+- `public/assets/uranus/<set>/place-3.jpg`: section "place-1.jpg to place-4.jpg, place-field.bin, place-tops.png"
+- `public/assets/uranus/<set>/place-4.jpg`: section "place-1.jpg to place-4.jpg, place-field.bin, place-tops.png"
+- `public/assets/uranus/<set>/place-field.bin`: section "place-1.jpg to place-4.jpg, place-field.bin, place-tops.png"
+- `public/assets/uranus/<set>/place-tops.png`: section "place-1.jpg to place-4.jpg, place-field.bin, place-tops.png"
 - `public/assets/uranus/<set>/rings.bin`: section "rings.bin"
 - `public/assets/uranus/<set>/shade.bin`: section "wrap-color.jpg, wrap-cloud.png, light.bin, shade.bin"
 - `public/assets/uranus/<set>/sky-hold.webp`: section "sky-hold.webp, veil.webp"

@@ -53,7 +53,7 @@ export const createSet: SetFactory = async (ctx) => {
   for (const level of platesJson.levels) plateTextures.push(await ctx.texture(base + level.file, { srgb: false, anisotropy: 16 }))
   const globeTurn = new THREE.Quaternion().fromArray(fit.globe.quaternion)
   const place = {
-    textures: plateTextures, halfTans: platesJson.levels.map((l) => l.halfTan), frame: platesJson, rot: plan.terrainFrame.clone().invert().multiply(globeTurn), field: await ctx.dataTexture(base + platesJson.field.file, platesJson.field.size, platesJson.field.size, 4), clockRef: platesJson.clockRef, aMax: platesJson.aMax, feather: platesJson.feather,
+    textures: plateTextures, halfTans: platesJson.levels.map((l) => l.halfTan), frame: platesJson, rot: plan.terrainFrame.clone().invert().multiply(globeTurn), field: await ctx.dataTexture(base + platesJson.field.file, platesJson.field.size, platesJson.field.size, 4), clockRef: platesJson.clockRef, aMax: platesJson.aMax, tops: await ctx.texture(base + platesJson.tops.file, { srgb: false, channels: 1, anisotropy: 16 }), steep: look.place.steep, topLight: look.place.tops, feather: platesJson.feather,
     deck: { centre: deckJson.centre, radius: deckJson.radius, f0: deckJson.f0, r0: deckJson.r0, flow: look.deck.flow, flowAngle: deckJson.flowAngle, light: deckLight, lightSize: deckJson.lightSize, psiMax: deckJson.psiMax },
   }
   const globe = new Globe({ map, cloud, light, shade, patches, face, place, ...look.globe })

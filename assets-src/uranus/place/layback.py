@@ -36,6 +36,7 @@ RATE = FRAME['bandRate']
 REF = PLATES['clockRef']
 PIXEL = 2 * np.tan(np.radians(DECK['vfovDeg']) / 2) / PLATES['masterRows']
 DET = PLATES['detail']
+LUMA = np.array([0.2126, 0.7152, 0.0722], np.float32)
 STORM = PLATES['storm']
 
 
@@ -348,7 +349,7 @@ def streaks(along, across, texel, base, blur):
     bend = DET['bend'] * lam0 * sample(noise_tile(base + 1, 3.0), along / (lam0 * 30.0) * 128.0 + 5.0, across / (lam0 * 8.0) * 128.0 + 9.0)
     for o in range(DET['octaves']):
         lam = lam0 * 0.5 ** o
-        w = float(smoothstep(1.8, 2.6, lam / texel))
+        w = float(smoothstep(DET['texels'][0], DET['texels'][1], lam / texel))
         if w <= 0:
             continue
         gate = w * smoothstep(DET['gate'][0], DET['gate'][1], blur / lam)
@@ -393,7 +394,63 @@ def repaint(a, seen, half, size, pyr):
     d = d_arc + (d_f - d_arc) * flow
     wisp = w_arc + (w_f - w_arc) * flow
     out = a * np.exp(d + DET['wisp'] * wisp)[..., None] * (1 + (np.array(DET['wispTint'], np.float32) - 1) * np.clip(wisp, 0, 1)[..., None])
+    lum = out @ LUMA
+    cap = DET['cap'][0] + np.maximum(a @ LUMA - DET['cap'][1], 0) * 8.0
+    over = np.maximum(lum - cap, 0)
+    out *= ((lum - over * (1 - DET['cap'][2])) / np.maximum(lum, 1e-4))[..., None]
     return np.clip(out, 0, DECK['aMax']), d, keep
+
+
+def save_tops(tops):
+    img = Image.fromarray(tops)
+    img.save(PUB + 'place-tops.png', optimize=True)
+    img.resize((tops.shape[1] // 2, tops.shape[0] // 2), Image.LANCZOS).save(WEB + 'place-tops.png', optimize=True)
+
+
+def tops_map(gain, one):
+    t = PLATES['tops']
+    size = one.shape[0]
+    big = cv2.resize(gain, (size, size), interpolation=cv2.INTER_CUBIC)
+    luma = cv2.GaussianBlur(one @ LUMA, (0, 0), t['soften'])
+    cover = smoothstep(t['luma'][0], t['luma'][1], luma * big).astype(np.float32)
+    n = t['size']
+    out = (np.clip(cv2.resize(cover, (n, n), interpolation=cv2.INTER_AREA), 0, 1) * 255 + 0.5).astype(np.uint8)
+    q = n // 4
+    v = cv2.resize(out[q:n - q, q:n - q], (1024, 1024), interpolation=cv2.INTER_AREA)
+    q = gain.shape[0] // 4
+    g = (np.clip(cv2.resize(gain[q:-q, q:-q], (1024, 1024), interpolation=cv2.INTER_LINEAR) / 3.0, 0, 1) * 255 + 0.5).astype(np.uint8)
+    Image.fromarray(np.concatenate([g, v], 1)).save(WORK + 'tops.png')
+    c = size // 2
+    h = size // 8
+    Image.fromarray((np.clip(cover[c - h:c + h, c - h:c + h], 0, 1) * 255 + 0.5).astype(np.uint8)).save(WORK + 'tops-centre.png')
+    print('tops cover mean', round(float(cover.mean()), 4), 'max', round(float(cover.max()), 3), flush=True)
+    return out
+
+
+def tops_of(keep):
+    t = PLATES['tops']
+    n = t['gainSize']
+    gx, gy = grid(PLATES['halfTan'], n, 0, n)
+    th, r = polar_of(dirs(gx, gy))
+    th = th.astype(np.float32)
+    r = r.astype(np.float32)
+    x = r * np.sin(th)
+    y = r * np.cos(th)
+    low = sample(noise_tile(t['seed'], 3.0), x / t['noiseUnits'] * 128.0 + 3.0, y / t['noiseUnits'] * 128.0 + 9.0)
+    part = t['part'][0] + (t['part'][1] - t['part'][0]) * smoothstep(-1.0, 1.0, low)
+    m = np.zeros(th.shape, np.float32)
+    deg = np.degrees(th)
+    for a0, a1, r0, r1, width, gain in t['arcs']:
+        for turn in (-1, 0, 1):
+            u = (deg + 360.0 * turn - a0) / (a1 - a0)
+            rc = r0 * (r1 / r0) ** np.clip(u, 0, 1)
+            d = (r - rc) / width
+            ends = smoothstep(0, t['taper'], u) * smoothstep(1, 1 - t['taper'], u)
+            m = np.maximum(m, gain * np.exp(-0.5 * d * d) * ends)
+    sa, sr, rad, sg = t['streak']
+    d = np.hypot(x - sr * np.sin(np.radians(sa)), y - sr * np.cos(np.radians(sa))) / rad
+    k = cv2.GaussianBlur(cv2.resize(keep, (n, n), interpolation=cv2.INTER_AREA), (0, 0), t['keepSoft'])
+    return ((t['fill'] + (1 - t['fill']) * k + sg * np.exp(-0.5 * d * d) + m * part) * smoothstep(t['reach'][1], t['reach'][0], r)).astype(np.float32)
 
 
 class Globe:
@@ -453,6 +510,16 @@ def main():
     size = int(args[0]) if len(args) > 0 else PLATES['size']
     ss = int(args[1]) if len(args) > 1 else 2
     write = '--write' in sys.argv
+    if '--tops' in sys.argv:
+        z = np.load(WORK + 'laid-1-%d.npz' % size)
+        gx, gy = grid(PLATES['halfTan'], size, 0, size)
+        th, r = polar_of(dirs(gx, gy))
+        keep, core = keep_of(z['seen'], th.astype(np.float32), r.astype(np.float32))
+        one = (np.asarray(Image.open(PUB + 'place-1.jpg').convert('RGB')).astype(np.float32) / 255) ** 2 * DECK['aMax']
+        tops = tops_map(tops_of(keep), one)
+        if write:
+            save_tops(tops)
+        return
     src = Source()
     globe = Globe()
     half0 = PLATES['halfTan']
@@ -469,6 +536,8 @@ def main():
             np.savez(cache, a=a, seen=seen)
         fixed, d, keep = repaint(a, seen, half, size, pyr)
         levels.append(fixed)
+        if i == 0:
+            gain = tops_of(keep)
         print('level', i + 1, 'half tan', half, 'texel units', round(2 * half / size * R, 5), 'mean albedo', fixed.reshape(-1, 3).mean(0).round(3).tolist(), 'seen share', round(float((seen > 0.5).mean()), 3), 'detail rms', round(float(d.std()), 4), flush=True)
         del a, seen, d
 
@@ -479,6 +548,7 @@ def main():
         small = cv2.resize(levels[i], (size // 2, size // 2), interpolation=cv2.INTER_AREA)
         levels[i - 1][lo:lo + size // 2, lo:lo + size // 2] += (small - levels[i - 1][lo:lo + size // 2, lo:lo + size // 2]) * inner
 
+    tops = tops_map(gain, levels[0])
     fs = PLATES['fieldSize']
     gx, gy = grid(half0, fs, 0, fs)
     b = globe.albedo(globe.band(dirs(gx, gy)), len(globe.levels))
@@ -516,6 +586,7 @@ def main():
         img.resize((size // 2, size // 2), Image.LANCZOS).save(WEB + 'place-%d.jpg' % (i + 1), quality=92, subsampling=0)
     field[::-1].tofile(PUB + 'place-field.bin')
     field[::-1].tofile(WEB + 'place-field.bin')
+    save_tops(tops)
 
     kept = []
     for k in range(PLATES['patchKeep']):
@@ -553,7 +624,7 @@ def main():
     json.dump({
         'n': N0.tolist(), 'e': E0.tolist(), 'u': U0.tolist(),
         'levels': [{'file': 'place-%d.jpg' % (i + 1), 'halfTan': half0 / 2 ** i} for i in range(len(levels))],
-        'aMax': DECK['aMax'], 'feather': PLATES['feather'], 'field': {'file': 'place-field.bin', 'size': fs}, 'clockRef': REF, 'aimUnits': PLATES['aimUnits'] - PLATES['aheadUnits'],
+        'aMax': DECK['aMax'], 'feather': PLATES['feather'], 'field': {'file': 'place-field.bin', 'size': fs}, 'tops': {'file': 'place-tops.png'}, 'clockRef': REF, 'aimUnits': PLATES['aimUnits'] - PLATES['aheadUnits'],
     }, open('src/stops/uranus/plates.json', 'w'), indent=1)
 
 
