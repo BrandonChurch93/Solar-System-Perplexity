@@ -1,9 +1,25 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-23T23:07:40.562Z",
+ "pushed": "2026-11-23T23:08:18.182Z",
  "head": "eb50bcbdd17bcc9fe760439c5d6f5984346697d5",
- "note": "check",
+ "note": "Step 0 (wide ring v on main with the capped shutter): every frame of dive and rise at draft; handover report pass both moves; G13 0 of 495 over 0.02 (worst 1561 1.18%); 37 of 37 kept frames same bytes; still wrong: wedge 1296 to 1298, golden band 1557 to 1565, pale cells 1549 to 1553, ring towers come in by height",
  "looks": [
+  {
+   "time": "2026-11-23T23:08:17.007Z",
+   "file": "20261123230817007-note-rise-all.jpg",
+   "source": "out/work/venus/place/s0/rise-all.jpg",
+   "kind": "note",
+   "label": "step 0 (wide ring v), rise 1530 to 1604, every frame, draft, ten to a row",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T23:08:15.884Z",
+   "file": "20261123230815884-note-dive-all.jpg",
+   "source": "out/work/venus/place/s0/dive-all.jpg",
+   "kind": "note",
+   "label": "step 0 (wide ring v), dive 1260 to 1349, every frame, draft, ten to a row",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-23T23:01:51.245Z",
    "file": "20261123230151245-job-frame-01185.jpg",
@@ -62,22 +78,6 @@
    "source": "out/work/venus/place/s0/r4.jpg",
    "kind": "note",
    "label": "step 0 (wide ring v), rise 1578 to 1589, every frame, draft",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T22:59:45.925Z",
-   "file": "20261123225945925-note-r3.jpg",
-   "source": "out/work/venus/place/s0/r3.jpg",
-   "kind": "note",
-   "label": "step 0 (wide ring v), rise 1566 to 1577, every frame, draft",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T22:59:45.021Z",
-   "file": "20261123225945021-note-r2.jpg",
-   "source": "out/work/venus/place/s0/r2.jpg",
-   "kind": "note",
-   "label": "step 0 (wide ring v), rise 1554 to 1565, every frame, draft",
    "stop": "venus"
   }
  ]
