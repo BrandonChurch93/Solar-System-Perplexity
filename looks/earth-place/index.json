@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-23T17:14:02.844Z",
+ "pushed": "2026-11-23T17:50:21.354Z",
  "head": "cdaaa89328e887996fbeb2f85cd815d6331d6213",
- "note": "glint trial 6 (light taken off per pixel, clouds kept) and the low plate angle trial for the level step of the rise",
+ "note": "glint cure and veil split: rise level step 4.84 into 2124 (limit 6), near T frames unchanged; MAIL 307 received, starting on it",
  "looks": [
+  {
+   "time": "2026-11-23T17:50:20.746Z",
+   "file": "20261123175020746-note-look-1755-v3-d.jpg",
+   "source": "out/work/earth/place/look-1755-v3-d.jpg",
+   "kind": "note",
+   "label": "dive 1866 to 1900, old against glint cure plus veil (draft)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T17:50:20.166Z",
+   "file": "20261123175020166-note-look-1755-v3-b.jpg",
+   "source": "out/work/earth/place/look-1755-v3-b.jpg",
+   "kind": "note",
+   "label": "rise 2130 to 2144, old against glint cure plus veil (draft)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T17:50:19.364Z",
+   "file": "20261123175019364-note-look-1755-v3-a.jpg",
+   "source": "out/work/earth/place/look-1755-v3-a.jpg",
+   "kind": "note",
+   "label": "rise 2118 to 2128, old against glint cure plus veil (draft)",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-23T17:14:02.207Z",
    "file": "20261123171402207-note-look-1718-low-35-55-b.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/earth/place/look-1718-glint6-dive-a.jpg",
    "kind": "note",
    "label": "glint trial 6, dive 1860 to 1876, old left, new right: the cream patch is gone, clouds and reef kept",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T16:55:25.139Z",
-   "file": "20261123165525139-note-look-1657-glint5-native.jpg",
-   "source": "out/work/earth/place/look-1657-glint5-native.jpg",
-   "kind": "note",
-   "label": "glint trial 5, native crops 1872 1876 1880 1884, before left: clouds over the glint go with it and a red brown tail stays: both wrong, next take keeps clouds and takes only the light",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T16:55:24.248Z",
-   "file": "20261123165524248-note-look-1657-glint5-dive2.jpg",
-   "source": "out/work/earth/place/look-1657-glint5-dive2.jpg",
-   "kind": "note",
-   "label": "glint trial 5, draft 1880 1884 1888 1892, before left: the glint comes in as the camera turns into its direction (45 to 15 degrees)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T16:55:22.970Z",
-   "file": "20261123165522970-note-look-1657-glint5-dive.jpg",
-   "source": "out/work/earth/place/look-1657-glint5-dive.jpg",
-   "kind": "note",
-   "label": "glint trial 5, draft 1860 1866 1872 1876, before left: the globe shows the plate without its glint while the camera is 45 degrees or more off the close camera's direction; cream patch gone; a red brown spot is left at 1872 and 1876, being cured",
    "stop": "earth"
   }
  ]
