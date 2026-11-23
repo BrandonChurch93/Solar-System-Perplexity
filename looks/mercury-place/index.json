@@ -1,9 +1,41 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T11:55:59.212Z",
- "head": "ba28cb3a9ccd7e8a8e895a3a7d45d363e4f5a0d7",
- "note": "rise rendered for the first time with its own plates; top down dive sheet; wrong: dark band at the horizon 992 to 1000, far part of the place soft seen from above",
+ "pushed": "2026-11-23T12:14:57.110Z",
+ "head": "b6bd73037752f5000f0aa3dd22320e5b44aadb86",
+ "note": "M2 state: S2 top down sheet with far fill, rise plates without hole, horizon band diagnosis; commit b6bd7303",
  "looks": [
+  {
+   "time": "2026-11-23T12:14:56.499Z",
+   "file": "20261123121456499-note-B34r2-view.jpg",
+   "source": "out/work/mercury/place/tmp/B34r2-view.jpg",
+   "kind": "note",
+   "label": "Rise plates levels 3 and 4 after the hole fix",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T12:14:55.969Z",
+   "file": "20261123121455969-note-r7-996-band.jpg",
+   "source": "out/work/mercury/place/tmp/r7-996-band.jpg",
+   "kind": "note",
+   "label": "Rise 996 at the horizon: film frame, globe alone, place picture, picture weight. The band is the gap between the two horizons",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T12:14:55.441Z",
+   "file": "20261123121455441-note-td3-743r.jpg",
+   "source": "out/work/mercury/place/tmp/td3-743r.jpg",
+   "kind": "note",
+   "label": "S2 sheet frame 743, right half at full size: streaks and grain in the stretched far part",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T12:14:54.743Z",
+   "file": "20261123121454743-note-td3.jpg",
+   "source": "out/work/mercury/place/tmp/td3.jpg",
+   "kind": "note",
+   "label": "S2 proof: top down dive, 12 frames 690 to 743, globe side alone, with the far fill",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-23T11:55:58.607Z",
    "file": "20261123115558607-note-r7-rise-T.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/mercury/place/tmp/r7-b.jpg",
    "kind": "note",
    "label": "rise first render, draft 960 to 994, T at 990 (rise plates made by code from the rise view): 989 990 991 one picture",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T11:55:56.441Z",
-   "file": "20261123115556441-note-r6-c.jpg",
-   "source": "out/work/mercury/place/tmp/r6-c.jpg",
-   "kind": "note",
-   "label": "dive r6 draft 736 to 744: wrong: strip at the left edge at 740 to 743, second line at the horizon at 740 and 742",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T11:55:55.892Z",
-   "file": "20261123115555892-note-r6-b.jpg",
-   "source": "out/work/mercury/place/tmp/r6-b.jpg",
-   "kind": "note",
-   "label": "dive r6 draft 724 to 734",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T11:55:55.313Z",
-   "file": "20261123115555313-note-r6-a.jpg",
-   "source": "out/work/mercury/place/tmp/r6-a.jpg",
-   "kind": "note",
-   "label": "dive r6 draft 700 to 720 with the second band (dusk behind the place, pieces to 9 deg)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T11:55:54.443Z",
-   "file": "20261123115554443-note-td2.jpg",
-   "source": "out/work/mercury/place/tmp/td2.jpg",
-   "kind": "note",
-   "label": "S2 proof, draft: top down dive sheet 690 to 743, globe side alone, place picture off (before the far fill): wrong: right third soft at 725 to 743 (far part of the place, stretched by the laying back)",
    "stop": "mercury"
   }
  ]
