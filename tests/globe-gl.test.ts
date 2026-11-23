@@ -77,8 +77,9 @@ function levels(o) {
     map, mapWidth: o.mapWidth, height, heightWidth: 2048, segments: o.segments,
     light: { wrap: 0.2, power: 1, gain: 1, night: [0, 0, 0], sun: [0.2, 0.15, 0.1], relief: 0, reliefNear: 0, limb: 0 },
     haze: { scaleHeight: 0.01, depth: o.glow ? 0.5 : 0, day: [0, 0, 0], twilight: [0, 0, 0], strength: o.glow ? 1.5 : 0, extinction: 1, forward: 0, top: 1, ...(o.glow && o.glow.power ? { glow: true } : {}) },
-    patches: { textures, widthsDeg: o.levels.map((l) => l.widthDeg), spot: new THREE.Vector3(0, 0, 1), feather: o.feather, fade: [1, 2], nearDeg: 0, ...(o.own ? { own: o.own } : {}), ...(o.fadeMinor ? { fadeMinor: true } : {}) },
+    patches: { textures, widthsDeg: o.levels.map((l) => l.widthDeg), spot: new THREE.Vector3(0, 0, 1), feather: o.feather, fade: [1, 2], nearDeg: 0, ...(o.own ? { own: o.own } : {}), ...(o.ownGain ? { ownGain: true } : {}), ...(o.fadeMinor ? { fadeMinor: true } : {}) },
   })
+  if (o.ownGain) planet.setOwnGain(o.ownGain)
   const cam = new THREE.PerspectiveCamera(o.vfov, o.width / o.height, o.near, 10)
   cam.position.fromArray(o.position)
   cam.up.fromArray(o.up)
@@ -148,7 +149,7 @@ const maskValue = (x: number, y: number): number => (x * 37 + y * 91 + ((x * y) 
 
 interface MaskRead { bytes: number; format: number; colorSpace: string; levels: number[][]; between: number[]; small: number[] }
 interface LevelDef { rgb: [number, number, number]; size: number; widthDeg: number }
-interface LevelShot { map: [number, number, number]; mapWidth: number; anisotropy: number; levels: LevelDef[]; feather: number; own?: boolean[]; fadeMinor?: boolean; glow?: { direction?: number[]; colour?: [number, number, number]; power?: number }; vfov: number; width: number; height: number; near: number; position: number[]; up: number[]; target: number[]; diag: number; segments: number }
+interface LevelShot { map: [number, number, number]; mapWidth: number; anisotropy: number; levels: LevelDef[]; feather: number; own?: boolean[]; ownGain?: [number, number, number]; fadeMinor?: boolean; glow?: { direction?: number[]; colour?: [number, number, number]; power?: number }; vfov: number; width: number; height: number; near: number; position: number[]; up: number[]; target: number[]; diag: number; segments: number }
 
 const filmicInverse = (v: number): number => {
   const y = Math.min(Math.max(v, 0), 0.985)
@@ -267,6 +268,27 @@ describe.skipIf(!have)('the globe options in a WebGL2 browser', () => {
     }
     expect(inside).toBeGreaterThan(3)
     expect(feather).toBeGreaterThan(1)
+    expect(outside).toBeGreaterThan(3)
+  }, 120000)
+
+  it('multiplies the own levels by the gain of the stop before they become scene values', async () => {
+    const shoot = async (more: Partial<LevelShot>): Promise<number[][]> => row((await call<{ pixels: number[] }>('levels', { ...top, own: [false, true], ...more })).pixels, top, 64)
+    const plain = await shoot({})
+    expect(await shoot({ ownGain: [1, 1, 1] })).toEqual(plain)
+    const dark: LevelDef = { rgb: [77, 64, 102], size: 8, widthDeg: 30 }
+    const bright: LevelDef = { rgb: [154, 64, 51], size: 8, widthDeg: 30 }
+    const gained = await shoot({ levels: [top.levels[0]!, dark], ownGain: [2, 1, 0.5] })
+    const baked = await shoot({ levels: [top.levels[0]!, bright] })
+    const scene = bright.rgb.map((b) => filmicInverse(b / 255))
+    for (let c = 0; c < 3; c++) expect(gained[64]![c]).toBeCloseTo(scene[c]!, 5)
+    for (let x = 0; x < 128; x++) for (let c = 0; c < 3; c++) expect(gained[x]![c]!).toBeCloseTo(baked[x]![c]!, 5)
+    const lit = row((await call<{ pixels: number[] }>('levels', { ...top, levels: [top.levels[0]!] })).pixels, top, 64)
+    let outside = 0
+    for (let x = 0; x < 128; x++) {
+      if (lit[x]![0] === 0 || lit[x]![0] !== plain[x]![0] || lit[x]![1] !== plain[x]![1] || lit[x]![2] !== plain[x]![2]) continue
+      outside++
+      expect(gained[x]).toEqual(lit[x])
+    }
     expect(outside).toBeGreaterThan(3)
   }, 120000)
 

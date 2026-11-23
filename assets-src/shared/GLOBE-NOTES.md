@@ -2,11 +2,12 @@
 
 Notebook of the globe engineer (brief 243). Folders: `src/bodies/`, `src/core/sets.ts`, `tests/globe-*.test.ts`, this file. Branch `agent/engine-globe`, started from `412d2d09`.
 
-Four options, all off by default. A stop that turns none of them on gets the shader text of the starting commit (sha256 `81b01893...` held by `tests/patches.test.ts`) and the same texture uploads.
+Five options, all off by default. A stop that turns none of them on gets the shader text of the starting commit (sha256 `81b01893...` held by `tests/patches.test.ts`) and the same texture uploads.
 
 | option | where | a stop turns it on with |
 | --- | --- | --- |
 | own light per patch level | `PatchSet.own` in `src/bodies/planet.ts` | `own: [false, false, true, ...]`, one entry per level, beside `widthsDeg` |
+| gain of the own levels | `PatchSet.ownGain` in `src/bodies/planet.ts` | `ownGain: true` beside `own`, then `planet.setOwnGain([r, g, b])` each frame |
 | level fade by the fine axis | `PatchSet.fadeMinor` in `src/bodies/planet.ts` | `fadeMinor: true` |
 | one channel texture | `ctx.texture` in `src/core/sets.ts` | `ctx.texture(path, { srgb: false, channels: 1 })` |
 | haze glow about a direction of the stop | `HazeParams.glow` in `src/bodies/haze.ts` | `glow: true` in the haze params, then `planet.setGlow(direction, colour, power)` and `shell.setGlow(...)` each frame |
@@ -154,6 +155,22 @@ Off: `hazeGlsl(false)` is the constant `HAZE_GLSL`, which Venus, Jupiter, Saturn
 
 Measured in `tests/globe-gl.test.ts` (camera 3 radii out, glow direction 26.6 degrees off the view axis, haze depth 0.5): colour 0 and a direction behind the camera give the pixels of the build without the option, exactly; the added light has the channel ratios of the colour (1, 0.5, 0.25 to 1e-3), doubles with the colour, rises toward the glow direction, and the ratio between power 12 and power 6 at each pixel is the cosine to the sixth (to 1e-3).
 
+## 6. Gain of the own levels (`ownGain`)
+
+Asked by the Mars builder: the lit levels change with height (descent tint) and the close view at the rise is brighter than at the dive, and a baked plate cannot follow either. With `ownGain: true` in the patch set the last line of section 1 reads
+
+```
+if own > 0: col = mix(col, inverseFilmic(ownSum / own * uOwnGain), own)
+```
+
+The gain multiplies the look values of the own levels (the texel after its sRGB decode, linear) before they become scene values. A gain of 2 is one stop: it doubles the linear value of the plate, which is about 1.37 times its 8 bit level. It starts at 1 1 1. The stop sets it each frame with `planet.setOwnGain([r, g, b])`; the numbers and their curve by height live in the stop's params. `inverseFilmic` clamps its input at 0.985, so a gain cannot push a texel past the white of the film. Pixels with no own share (`own` is 0) do not read the gain.
+
+Off: a set with own levels and no `ownGain` keeps the text it had (sha256 `813ceb84...`, held by `tests/globe-levels.test.ts`), with no uniform added; a set with no option keeps `81b01893...`. `ownGain: true` without an own level throws `ownGain needs an own level`; `setOwnGain` on a planet without the option throws `this planet has no own gain`.
+
+Measured in `tests/globe-gl.test.ts` (128 pixel row through an own level of 30 degrees over a lit level): gain 1 1 1 gives the pixels of the build without the option, exactly; a linear texel 77 64 102 with gain 2 1 0.5 gives the pixels of the linear texel 154 64 51 without gain to 1e-5 over the whole row, feather included; the pixels the own level does not reach are exactly those of the lit level alone.
+
+On a picture (scratch worktree with the plates of `agent/mars-place` 41d7784, never committed): Mars 2448 `beauty/side=orbit/noplace`, draft. With `ownGain: true` and no call of the setter the still has the bytes of the still without the option (sha256 `e22bb9c4...`). With 1.5 1.5 1.5 on every frame 97.6 percent of the ground pixels change, mean 82.7 60.2 48.5 to 94.1 66.6 53.7 of 255 (the haze over the ground is not gained); with 1.0 1.25 1.5 the mean goes from 83.5 60.6 48.8 to 83.5 64.1 54.1. Look `pair-gain-f2448`.
+
 ## Proof with the options off
 
 Draft stills `out/work/stills/f%05d-16x9-draft-full.png`, sha256, frames 360 (sun.hold), 615 (mercury.hold), 717 (mercury.dive), 1185 (venus.hold), 1857 (earth.dive), 2325 (mars.hold), 2427 (mars.dive), 2997 (jupiter.dive), 3465 (saturn.hold), 4035 (uranus.hold), 4707 (neptune.dive). The references were rendered at `412d2d09` before any change. The runs are named in the log below.
@@ -167,3 +184,4 @@ Draft stills `out/work/stills/f%05d-16x9-draft-full.png`, sha256, frames 360 (su
 - Glow on a picture (scratch worktree, never committed): Mars 2454 and 2448, `beauty/side=orbit/noplace`, draft, `glow: true` on `look.haze` and `look.shellHaze`, direction on the horizon 40 degrees right of the view axis, colour 1.0 0.55 0.35, power 12. Mean change of the frame by third of its width, in 8 bit levels (r g b), frame 2454: left 0.0 0.0 0.0, middle 3.5 2.7 2.0, right 28.9 23.6 17.9; frame 2448: left 0, middle 3.6 2.8 2.1, right 30.3 24.7 18.9. With the scratch edit removed the still of 2454 has the sha256 it had before the glow existed (29a3ada1...).
 - MAIL 255 item 2: fadeMinor off and on with the real plates of `agent/mars-place` 41d7784 at Mars 2448 and 2704 (section 2, last part). Nothing of the Mars stop was changed in this branch. Merged main 03510ddd.
 - Options off after the merge of main 03510ddd: the 11 draft stills at f6dcf002 are byte equal to the same frames rendered at main 03510ddd. Main itself differs from the references of `412d2d09` at frame 2427 only (the Mars dive of the handover engine). `npx vitest run`: 76 files, 160 tests green.
+- Gain of the own levels (section 6), asked by the Mars builder. `npx vitest run`: 76 files, 162 tests green (one more in `tests/globe-levels.test.ts`, one more in `tests/globe-gl.test.ts`). Options off: the 11 draft stills are byte equal to the same frames of main 03510ddd.
