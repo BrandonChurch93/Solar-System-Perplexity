@@ -1,9 +1,25 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-23T22:19:36.585Z",
- "head": "884cdaeb601f9d6f9606f53ec8b0e8f09521c36b",
- "note": "77a180cd plus an uncommitted trial: broad haze by the slant of the view, not by a fixed angle; dive 1868 to 1912 and rise 2100 to 2146 every second frame; ground still flat, place picture still on",
+ "pushed": "2026-11-23T22:47:14.597Z",
+ "head": "599855b2311e6701c929ddf90a2b02befe399124",
+ "note": "step 1 trial: the close view's ground as an object on the globe, place picture off, drafts 1872 to 1918 and 2101 to 2130; borders and the far field still open",
  "looks": [
+  {
+   "time": "2026-11-23T22:47:13.976Z",
+   "file": "20261123224713976-note-o5-rise.jpg",
+   "source": "../../../../tmp/gl/pw/o5-rise.jpg",
+   "kind": "note",
+   "label": "step 1 trial, rise 2101 to 2130, place picture off: the close view's own ground and towers stand on the globe",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T22:47:13.178Z",
+   "file": "20261123224713178-note-o5-dive.jpg",
+   "source": "../../../../tmp/gl/pw/o5-dive.jpg",
+   "kind": "note",
+   "label": "step 1 trial, dive 1872 to 1918, place picture off: the close view's own ground and towers stand on the globe",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-23T22:19:35.992Z",
    "file": "20261123221935992-note-s1-rise-b.jpg",
@@ -59,25 +75,6 @@
    "first": 1913,
    "last": 1919,
    "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T21:46:37.589Z",
-   "file": "20261123214637589-compare-earth-dive-under.jpg",
-   "source": "out/work/handover/earth-dive-under.png",
-   "kind": "compare",
-   "label": "earth dive, the globe side at T (frame 1919) with the place picture, alone, and their difference times 4",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1919,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T21:45:38.535Z",
-   "file": "20261123214538535-note-v1-rbig-b.jpg",
-   "source": "../../../../tmp/gl/pw/v1-rbig-b.jpg",
-   "kind": "note",
-   "label": "earth rise, tree of 21:25 (draft) b",
-   "stop": "earth"
   }
  ]
 }
