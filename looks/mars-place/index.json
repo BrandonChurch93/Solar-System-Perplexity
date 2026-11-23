@@ -1,9 +1,33 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-23T10:52:43.907Z",
- "head": "5b200dfcf5879dc08efeebcb1bad1788a44667de",
- "note": "rise picture dumped; first look space composite before the repaint",
+ "pushed": "2026-11-23T11:07:47.266Z",
+ "head": "49f49f9335979c9cd300dc921cb8433f0eb63877",
+ "note": "first repaint take of the 3.25 deg plate, held to the picture from the twin",
  "looks": [
+  {
+   "time": "2026-11-23T11:07:46.690Z",
+   "file": "20261123110746690-note-p3-t1-plate.jpg",
+   "source": "out/work/place/view/p3-t1-plate.jpg",
+   "kind": "note",
+   "label": "work: the held plate from above, middle part: the fan shows again where the repaint was toned away from the picture, next take is led by this",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T11:07:46.046Z",
+   "file": "20261123110746046-note-p3-t1-twin.jpg",
+   "source": "out/work/place/view/p3-t1-twin.jpg",
+   "kind": "note",
+   "label": "work: take 1 held to the picture, drawn from the dive twin (top) against the picture's land with the haze out (bottom), 3.25 deg plate alone",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T11:07:45.252Z",
+   "file": "20261123110745252-note-p3-take1.jpg",
+   "source": "out/work/place/view/p3-take1.jpg",
+   "kind": "note",
+   "label": "work: 3.25 deg plate, lead (old land toned to the picture, lay back in the wedge) and repaint take 1, top down",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-23T10:52:43.288Z",
    "file": "20261123105243288-note-design0.jpg",
@@ -42,36 +66,6 @@
    "source": "out/work/place/view/check-rough2.jpg",
    "kind": "note",
    "label": "M1 check picture, frame 2454 draft: globe side with the place picture off and rough plates baked as albedo for the globe's light (left), close side (middle), difference x 4 (right). Ground differs by 19.1 of 255 on average: the globe side is softer, redder, its shadows are lifted by haze and its highlights cannot be reached",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T10:31:48.125Z",
-   "file": "20261123103148125-frame-g2-beauty.jpg",
-   "source": "out/work/place/cal/g2-beauty.png",
-   "kind": "frame",
-   "label": "mars.dive frame 2454, draft tier, beauty/side=orbit/noplace view",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2454,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty/side=orbit/noplace",
-   "engine": "8b9f780b26a50bc3"
-  },
-  {
-   "time": "2026-11-23T10:22:58.451Z",
-   "file": "20261123102258451-note-cal1.jpg",
-   "source": "out/work/place/view/cal1.jpg",
-   "kind": "note",
-   "label": "frame 2454 at draft: globe side with the place picture off and the rough plates (left) beside the close side (right). Same mesa in the same place; the globe side is too dark and too red, its haze floor is above the picture's shadows",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T10:22:57.901Z",
-   "file": "20261123102257901-note-topdown-rough1.jpg",
-   "source": "out/work/place/view/topdown-rough1.jpg",
-   "kind": "note",
-   "label": "simulated top down dive sheet with the first rough plates (laid back picture over the old ground, no repaint, no match): the wedge is a dark cut out, far too dark for the land around it",
    "stop": "mars"
   }
  ]
