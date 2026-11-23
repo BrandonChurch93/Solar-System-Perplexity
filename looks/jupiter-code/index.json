@@ -1,68 +1,48 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-23T19:33:45.758Z",
+ "pushed": "2026-11-23T19:55:55.052Z",
  "head": "65b032164e914da50df2f939268854ee29a4469a",
- "note": "Jupiter surface view: flight eased after the middle so the pale collar is not enlarged, exposure as a table; haze trial 5 judged too foggy in the foreground, redo in progress; level 3120 to 3225 now 59.1 to 66.5 before the fit",
+ "note": "Jupiter surface view with life: storm turns, two eddies turn, two haze sheets drift with shadows, faint lightning. Draft. Level 58.0 at 3120 to 66.1 at 3225, exposure fit comes next.",
  "looks": [
   {
-   "time": "2026-11-23T19:33:45.170Z",
-   "file": "20261123193345170-note-e1-l1-3150-far.jpg",
-   "source": "../work/f/e1-l1-3150-far.jpg",
+   "time": "2026-11-23T19:55:54.332Z",
+   "file": "20261123195554332-note-g1-3239.jpg",
+   "source": "../work/f/g1-3239.jpg",
    "kind": "note",
-   "label": "3150 far field: with haze (top) and without (bottom)",
+   "label": "3239 with life and eased flight, draft",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T19:33:44.593Z",
-   "file": "20261123193344593-note-e1-3150-sw.jpg",
-   "source": "../work/f/e1-3150-sw.jpg",
+   "time": "2026-11-23T19:55:53.756Z",
+   "file": "20261123195553756-note-h6-life-sheet.jpg",
+   "source": "../work/f/h6-life-sheet.jpg",
    "kind": "note",
-   "label": "3150 lower left with haze trial 5: the veil fogs the dark foreground, to be redone",
+   "label": "life only, camera held at the pose of 3150, every 15th frame, earlier settings",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T19:33:43.914Z",
-   "file": "20261123193343914-note-e1-3239.jpg",
-   "source": "../work/f/e1-3239.jpg",
+   "time": "2026-11-23T19:55:53.211Z",
+   "file": "20261123195553211-note-g1-flash-x2.jpg",
+   "source": "../work/f/g1-flash-x2.jpg",
    "kind": "note",
-   "label": "3239 with eased flight: the wash lower left is smaller, a soft pale zone remains at the left middle (draft, not final)",
+   "label": "lightning: 3150, 3156, 3160, 3166 at twice size, the lower glow swells and fades",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T19:33:43.330Z",
-   "file": "20261123193343330-note-e1-sheet-a.jpg",
-   "source": "../work/f/e1-sheet-a.jpg",
+   "time": "2026-11-23T19:55:52.647Z",
+   "file": "20261123195552647-note-g1-3150.jpg",
+   "source": "../work/f/g1-3150.jpg",
    "kind": "note",
-   "label": "surface view with eased flight and haze trial 5, draft, 3120 to 3240 (not final)",
+   "label": "3150 with life, draft",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T19:30:08.590Z",
-   "file": "20261123193008590-frame-f03255.jpg",
-   "source": "out/work/jupiter/frames/e1/f03255.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3255, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3255,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e85c8d53a860dafc"
-  },
-  {
-   "time": "2026-11-23T19:29:21.026Z",
-   "file": "20261123192921026-frame-f03180.jpg",
-   "source": "out/work/jupiter/frames/e1/f03180.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3180, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3180,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e85c8d53a860dafc"
+   "time": "2026-11-23T19:55:52.043Z",
+   "file": "20261123195552043-note-g1-sheet.jpg",
+   "source": "../work/f/g1-sheet.jpg",
+   "kind": "note",
+   "label": "film 3060 to 3239 with life (storm turn, two eddies, haze sheets, lightning), eased flight, draft, exposure not yet fitted",
+   "stop": "jupiter"
   }
  ]
 }
