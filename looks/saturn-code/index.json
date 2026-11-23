@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T16:32:45.664Z",
- "head": "d4015b736cd5730b85dfa25af760e8aca642cd20",
- "note": "mail 298 point 1: the hold is drawn by the kept build's set again, byte equal drafts 3390 3465 3539; the dive goes over to the ring model by takes",
+ "pushed": "2026-11-23T17:03:47.551Z",
+ "head": "6c584f490741c0859e97c04a4e518aa28596ab60",
+ "note": "mail 302: measuring both scenes alone in the dive window before the cure; the model takes the kept profile next",
  "looks": [
+  {
+   "time": "2026-11-23T17:03:46.933Z",
+   "file": "20261123170346933-note-sheet87.jpg",
+   "source": "../../../../tmp/v/q1/sheet87.png",
+   "kind": "note",
+   "label": "3587: kept with close 0 alone, old model alone, difference (before the cure)"
+  },
+  {
+   "time": "2026-11-23T17:03:46.263Z",
+   "file": "20261123170346263-note-sheet_3577.jpg",
+   "source": "../../../../tmp/v/q0/sheet_3577.png",
+   "kind": "note",
+   "label": "3577 state c605678: kept alone, model alone, difference (mail 302 point 3, before the cure)"
+  },
   {
    "time": "2026-11-23T16:32:44.854Z",
    "file": "20261123163244854-note-b_3465.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/v/t8/b.png",
    "kind": "note",
    "label": "3690, 3750, 3780, 3809 draft"
-  },
-  {
-   "time": "2026-11-23T15:42:15.933Z",
-   "file": "20261123154215933-note-a.jpg",
-   "source": "../../../../tmp/v/t8/a.png",
-   "kind": "note",
-   "label": "3630 and 3660 draft: the plane past the rim goes on in ringlets and ends in the dark"
-  },
-  {
-   "time": "2026-11-23T15:42:14.722Z",
-   "file": "20261123154214722-note-three_mid.jpg",
-   "source": "../../../../tmp/v/t7r/three_mid.png",
-   "kind": "note",
-   "label": "3719, 3720, 3721 at the review tier, middle at native size: three frames in a row"
   }
  ]
 }
