@@ -1,83 +1,71 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-23T23:08:18.182Z",
- "head": "eb50bcbdd17bcc9fe760439c5d6f5984346697d5",
- "note": "Step 0 (wide ring v on main with the capped shutter): every frame of dive and rise at draft; handover report pass both moves; G13 0 of 495 over 0.02 (worst 1561 1.18%); 37 of 37 kept frames same bytes; still wrong: wedge 1296 to 1298, golden band 1557 to 1565, pale cells 1549 to 1553, ring towers come in by height",
+ "pushed": "2026-11-23T23:34:39.510Z",
+ "head": "9f96846fe0d8ed62207b3dccef7a638799b4af92",
+ "note": "Venus step 2 in work: nothing by the clock, place picture off, the surface view's own ground on the globe side at the handover; pace table of the film as is",
  "looks": [
   {
-   "time": "2026-11-23T23:08:17.007Z",
-   "file": "20261123230817007-note-rise-all.jpg",
-   "source": "out/work/venus/place/s0/rise-all.jpg",
+   "time": "2026-11-23T23:34:34.838Z",
+   "file": "20261123233434838-note-s3-d2.jpg",
+   "source": "../../../../tmp/v/s3-d2.jpg",
    "kind": "note",
-   "label": "step 0 (wide ring v), rise 1530 to 1604, every frame, draft, ten to a row",
+   "label": "dive 1338 to 1341 with the ground on the globe side: brown band at the lower edge at 1338 and 1339 (near edge of the ground, being fixed)",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T23:08:15.884Z",
-   "file": "20261123230815884-note-dive-all.jpg",
-   "source": "out/work/venus/place/s0/dive-all.jpg",
+   "time": "2026-11-23T23:34:34.303Z",
+   "file": "20261123233434303-note-s3-r.jpg",
+   "source": "../../../../tmp/v/s3-r.jpg",
    "kind": "note",
-   "label": "step 0 (wide ring v), dive 1260 to 1349, every frame, draft, ten to a row",
+   "label": "rise 1545 to 1550 with the ground on the globe side: the ground gives way to the plates by height, darker at 1547 to 1549 (fault, being fixed)",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T23:01:51.245Z",
-   "file": "20261123230151245-job-frame-01185.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "venus.hold frame 1185, final tier, nograin view, from the running measure job",
-   "stop": "venus",
-   "segment": "venus.hold",
-   "frame": 1185,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-23T23:00:47.761Z",
-   "file": "20261123230047761-frame-f01605.jpg",
-   "source": "out/work/venus/place/same/s0/f01605.png",
-   "kind": "frame",
-   "label": "venus.travel frame 1605, draft tier",
-   "stop": "venus",
-   "segment": "venus.travel",
-   "frame": 1605,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "9614bd9287a4f3ac"
-  },
-  {
-   "time": "2026-11-23T22:59:49.120Z",
-   "file": "20261123225949120-note-leave.jpg",
-   "source": "out/work/venus/place/s0/leave.jpg",
+   "time": "2026-11-23T23:34:33.760Z",
+   "file": "20261123233433760-note-s3-pair-r.jpg",
+   "source": "../../../../tmp/v/s3-pair-r.jpg",
    "kind": "note",
-   "label": "1603, 1604 (new) and 1605 (main); below 1259 (main), 1260, 1597",
+   "label": "1542 and 1543: top row place picture off (swap), bottom row with the surface view's own ground drawn on the globe side",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T22:59:48.207Z",
-   "file": "20261123225948207-note-r6.jpg",
-   "source": "out/work/venus/place/s0/r6.jpg",
+   "time": "2026-11-23T23:34:33.201Z",
+   "file": "20261123233433201-note-s3-pair.jpg",
+   "source": "../../../../tmp/v/s3-pair.jpg",
    "kind": "note",
-   "label": "step 0 (wide ring v), rise 1602 to 1604, every frame, draft",
+   "label": "1342 and 1343: top row place picture off (swap), bottom row with the surface view's own ground drawn on the globe side",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T22:59:47.565Z",
-   "file": "20261123225947565-note-r5.jpg",
-   "source": "out/work/venus/place/s0/r5.jpg",
+   "time": "2026-11-23T23:34:32.671Z",
+   "file": "20261123233432671-note-r1545.jpg",
+   "source": "../../../../tmp/v/s2s/r1545.jpg",
    "kind": "note",
-   "label": "step 0 (wide ring v), rise 1590 to 1601, every frame, draft",
+   "label": "step 2 draft, place picture off: rise 1545 to 1559",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T22:59:46.697Z",
-   "file": "20261123225946697-note-r4.jpg",
-   "source": "out/work/venus/place/s0/r4.jpg",
+   "time": "2026-11-23T23:34:32.140Z",
+   "file": "20261123233432140-note-r1530.jpg",
+   "source": "../../../../tmp/v/s2s/r1530.jpg",
    "kind": "note",
-   "label": "step 0 (wide ring v), rise 1578 to 1589, every frame, draft",
+   "label": "step 2 draft, place picture off: rise 1530 to 1544, the swap shows from 1542 to 1543",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T23:34:31.600Z",
+   "file": "20261123233431600-note-d1335.jpg",
+   "source": "../../../../tmp/v/s2s/d1335.jpg",
+   "kind": "note",
+   "label": "step 2 draft, place picture off: dive 1335 to 1349, the swap shows from 1342 to 1343",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T23:34:31.062Z",
+   "file": "20261123233431062-note-d1320.jpg",
+   "source": "../../../../tmp/v/s2s/d1320.jpg",
+   "kind": "note",
+   "label": "step 2 draft, nothing by the clock, place picture off: dive 1320 to 1334",
    "stop": "venus"
   }
  ]
