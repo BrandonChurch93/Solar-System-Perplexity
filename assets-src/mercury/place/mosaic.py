@@ -84,11 +84,12 @@ def valid(d, border=160):
 
 
 class Place:
-    def __init__(self, kind, folder=None, feather=120):
+    def __init__(self, kind, folder=None, feather=120, border=160):
         cams = json.loads((WORK / 'tiles/cameras.json').read_text())[kind]
         self.position = np.array(cams['position'])
         self.vfov = cams['vfovDeg']
         self.feather = feather
+        self.border = border
         self.tiles = []
         folder = Path(folder or WORK / 'tiles' / kind)
         for t in cams['tiles']:
@@ -121,7 +122,7 @@ class Place:
             total += wt
         rgb = acc / np.maximum(total, 1e-6)[..., None]
         ifov = math.radians(self.vfov) / self.tiles[0][1].shape[0]
-        return rgb, np.minimum(total, 1) * valid(d), np.where(front, 1 / np.maximum(cos, 1e-6), np.inf).astype(np.float32), (slant * ifov).astype(np.float32)
+        return rgb, np.minimum(total, 1) * valid(d, self.border), np.where(front, 1 / np.maximum(cos, 1e-6), np.inf).astype(np.float32), (slant * ifov).astype(np.float32)
 
     def level(self, off, width_deg, size, box=None, ss=1):
         x0, y0, x1, y1 = box or (0, 0, size, size)

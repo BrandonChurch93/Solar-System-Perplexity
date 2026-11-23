@@ -13,7 +13,7 @@ import * as look from './look'
 import { opening, plan } from './plan'
 import { Prominences } from './prominence'
 import { SkyCard } from './skycard'
-import { lifeCalm, lifeFormat } from './life'
+import { lifeCalm, lifeCalmAt, lifeFormat } from './life'
 import { stage } from './stage'
 
 export const createSet: SetFactory = async (ctx) => {
@@ -53,7 +53,7 @@ export const createSet: SetFactory = async (ctx) => {
   const far = new FarPoint()
   orbit.add(far.points)
 
-  if (opening.on) ground.land(look.opening.surge.reach, look.opening.surge.veil)
+  if (opening.on) ground.land(look.opening.surge.reach, look.opening.surge.veil, look.opening.surge.most)
   if (opening.on) ground.flash(look.opening.erupt.flash.span)
   const fringe = new Fringe(plate, await ctx.texture(base + look.files.haze, { srgb: true, anisotropy: 1 }), look.fringe)
   const loops = new Loops(await ctx.texture(base + look.files.loops, { srgb: true, anisotropy: 8 }), grade, (data, size) => ctx.floatTexture(data, size, size, true), look.loops, opening.on ? look.opening : undefined)
@@ -132,14 +132,14 @@ export const createSet: SetFactory = async (ctx) => {
         const feet = loops.pulse(since)
         const surge = loops.surge(since, open)
         const erupt = loops.erupt(since, open)
-        ground.update(eye, t, gain, vignette, aspect, fringe.lod(view.camera.fov, view.format.height), 0, open, since, look.opening.feet.ground * open * 0.5 * (feet[0] + feet[1]) + calm * loops.lit(since), look.opening.surge.ground * surge[3], look.opening.surge.kick * surge[2], look.opening.erupt.flash.ground * erupt[2], look.opening.erupt.flash.veil * erupt[2])
+        ground.update(eye, t, gain, vignette, aspect, fringe.lod(view.camera.fov, view.format.height), 0, open, since, look.opening.feet.ground * open * 0.5 * (feet[0] + feet[1]) + calm * loops.lit(since), look.opening.surge.ground * surge[3], look.opening.surge.kick * surge[2], look.opening.erupt.flash.ground * erupt[2] + loops.shell(since, open), look.opening.erupt.flash.veil * erupt[2], look.opening.feet.ground * open * 0.5 * (feet[0] + feet[1]))
         lifeFormat(ground.material.uniforms, view.format.height)
         ground.material.uniforms.uFieldFine!.value.x = rising ? above(by.field) : 0
         fringe.update(eye, t, gain, vignette, aspect, view.camera.fov, view.format.height, 1 - above(by.fringe))
         const strands = 1 - above(by.loops)
         loops.mesh.visible = strands > 0
         loops.trim(above(by.strands))
-        loops.update(t, gain * strands, vignette, aspect, 0, place.onGlobe.loopsCut * above(by.strands), 0, open, since, opening.on && kind === 'terrain', calm)
+        loops.update(t, gain * strands, vignette, aspect, 0, place.onGlobe.loopsCut * above(by.strands), 0, open, since, opening.on && kind === 'terrain', calm, lifeCalmAt)
         if (!inOrbit) return
       }
       const elapsed = state.time - plan.holdMid
