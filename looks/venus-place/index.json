@@ -1,9 +1,25 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-23T21:08:44.978Z",
+ "pushed": "2026-11-23T21:24:36.621Z",
  "head": "2828642a70136a96efbc499eb2f3790c2680e485",
- "note": "wide ring v is painted on window by window at the scale of the plate; first pass dropped for straight lines and copies, second pass in work",
+ "note": "wide ring v in work: windows painted on from w with a layout sketch, 13 laid; nothing rendered with it yet",
  "looks": [
+  {
+   "time": "2026-11-23T21:24:36.028Z",
+   "file": "20261123212436028-note-vs-w3-0.jpg",
+   "source": "../../../../tmp/v/vs-w3-0.jpg",
+   "kind": "note",
+   "label": "wide ring v: four takes of wave 3 at 760 px each (11, 12, 14 laid; 13 holds the same forms twice and is not laid)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T21:24:35.452Z",
+   "file": "20261123212435452-note-plate-2132.jpg",
+   "source": "../../../../tmp/v/plate-2132.jpg",
+   "kind": "note",
+   "label": "wide ring v in work at 21:32: the plate (90 deg, 8192 px) painted on from w window by window, 13 windows laid, black is still empty",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-23T21:08:44.401Z",
    "file": "20261123210844401-note-plate.jpg",
@@ -57,22 +73,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "e85c8d53a860dafc"
-  },
-  {
-   "time": "2026-11-23T20:16:48.685Z",
-   "file": "20261123201648685-note-rise-1590.jpg",
-   "source": "../../../../tmp/v/s5/rise-1590.jpg",
-   "kind": "note",
-   "label": "2828642a draft: rise 1590 to 1601, every frame",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T20:16:48.122Z",
-   "file": "20261123201648122-note-full-1287.jpg",
-   "source": "../../../../tmp/v/full-1287.jpg",
-   "kind": "note",
-   "label": "2828642a draft: 1287 whole frame, the place as a dark field (still wrong)",
-   "stop": "venus"
   }
  ]
 }
