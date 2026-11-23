@@ -1,64 +1,64 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-23T22:55:42.068Z",
- "head": "8d6521e67d05db217b78bef6b346c85c9c2c6b05",
- "note": "Plan E measure pushed (8d6521e): pace.ts mirrors npm run smooth to the third decimal; all nine stops red today; next the one move",
+ "pushed": "2026-11-23T23:42:26.996Z",
+ "head": "8462caf2bf5176fe10ab78ac2ce3033d053d1ac2",
+ "note": "plan E: the one move coded and tested, Mars dive and rise drawn on it at the draft tier; committing next",
  "looks": [
   {
-   "time": "2026-11-23T22:55:41.409Z",
-   "file": "20261123225541409-note-pace-before.jpg",
-   "source": "../../../../tmp/hz/pace-before.png",
+   "time": "2026-11-23T23:42:26.330Z",
+   "file": "20261123234226330-note-pace-e.jpg",
+   "source": "../../../../tmp/hz/pace-e.png",
    "kind": "note",
-   "label": "Plan E, before: the pace of every dive and rise on main f0c67f1 (fall, turn, speed over the mean, half frames); all 17 red"
+   "label": "E move: rate of fall, turn and picture speed of the nine stops forced onto the one move (own cross check, not the judge)"
   },
   {
-   "time": "2026-11-23T22:23:34.378Z",
-   "file": "20261123222334378-note-c-depth-zoom.jpg",
-   "source": "../../../../tmp/hz/c-depth-zoom.png",
+   "time": "2026-11-23T23:42:25.739Z",
+   "file": "20261123234225739-note-rise-sheet-4.jpg",
+   "source": "../../../../tmp/e7/rise-sheet-4.png",
    "kind": "note",
-   "label": "limbSky on Mars rise 2699, left of frame at five times size: off, plain lap (dark dashes on the limb), depth aware lap (clean)"
+   "label": "E move, Mars rise on the one eye, draft tier, sheet 4 of 0 to 5 (frames 2668 to 2747); patch of other ground lower right from 2691 is the place picture"
   },
   {
-   "time": "2026-11-23T22:08:19.110Z",
-   "file": "20261123220819110-note-c-lap-zoom.jpg",
-   "source": "../../../../tmp/hz/c-lap-zoom.png",
+   "time": "2026-11-23T23:42:25.039Z",
+   "file": "20261123234225039-note-rise-sheet-3.jpg",
+   "source": "../../../../tmp/e7/rise-sheet-3.png",
    "kind": "note",
-   "label": "Mars rise 2697, 2699, 2701, 2703 at twice size: left with the lap, right without (second version): the bright 1 px line is gone, a darker 1 to 2 px line is in its place where the globe's ground lies in the lap"
+   "label": "E move, Mars rise on the one eye, draft tier, sheet 3 of 0 to 5 (frames 2668 to 2747); patch of other ground lower right from 2691 is the place picture"
   },
   {
-   "time": "2026-11-23T22:08:18.437Z",
-   "file": "20261123220818437-note-c-rise-off-L1b.jpg",
-   "source": "../../../../tmp/hz/c-rise-off-L1b.png",
+   "time": "2026-11-23T23:42:24.446Z",
+   "file": "20261123234224446-note-rise-sheet-2.jpg",
+   "source": "../../../../tmp/e7/rise-sheet-2.png",
    "kind": "note",
-   "label": "Mars rise 2694 to 2701, the same crops with the horizon off (as on main): the globe's hard bright limb comes in from 2695"
+   "label": "E move, Mars rise on the one eye, draft tier, sheet 2 of 0 to 5 (frames 2668 to 2747); patch of other ground lower right from 2691 is the place picture"
   },
   {
-   "time": "2026-11-23T22:08:17.412Z",
-   "file": "20261123220817412-note-c-rise-lap-L1.jpg",
-   "source": "../../../../tmp/hz/c-rise-lap-L1.png",
+   "time": "2026-11-23T23:42:23.849Z",
+   "file": "20261123234223849-note-rise-sheet-1.jpg",
+   "source": "../../../../tmp/e7/rise-sheet-1.png",
    "kind": "note",
-   "label": "Mars rise 2694 to 2701, left 720 px at full size, draft: horizon on the sky's clock with the lap of the ball (limbLap 0.0001). Bright limb line of the second version gone; a thin darker line is left on the limb from 2697"
+   "label": "E move, Mars rise on the one eye, draft tier, sheet 1 of 0 to 5 (frames 2668 to 2747); patch of other ground lower right from 2691 is the place picture"
   },
   {
-   "time": "2026-11-23T21:44:35.606Z",
-   "file": "20261123214435606-note-s-dive-off-b.jpg",
-   "source": "../../../../tmp/hz/s-dive-off-b.png",
+   "time": "2026-11-23T23:42:23.255Z",
+   "file": "20261123234223255-note-rise-sheet-0.jpg",
+   "source": "../../../../tmp/e7/rise-sheet-0.png",
    "kind": "note",
-   "label": "Mars dive 2442 to 2449, limbSky off (as main)"
+   "label": "E move, Mars rise on the one eye, draft tier, sheet 0 of 0 to 5 (frames 2668 to 2747); patch of other ground lower right from 2691 is the place picture"
   },
   {
-   "time": "2026-11-23T21:44:34.836Z",
-   "file": "20261123214434836-note-s-dive-on2-b.jpg",
-   "source": "../../../../tmp/hz/s-dive-on2-b.png",
+   "time": "2026-11-23T23:42:22.639Z",
+   "file": "20261123234222639-note-dive-T.jpg",
+   "source": "../../../../tmp/e7/dive-T.png",
    "kind": "note",
-   "label": "limbSky second version, Mars dive 2442 to 2449, on"
+   "label": "E move, Mars dive round T (2475, 2476): light wedge lower left 2470 to 2477 is the edge of the place picture (draft)"
   },
   {
-   "time": "2026-11-23T21:44:33.810Z",
-   "file": "20261123214433810-note-c-rise-on2-L1.jpg",
-   "source": "../../../../tmp/hz/c-rise-on2-L1.png",
+   "time": "2026-11-23T23:42:22.000Z",
+   "file": "20261123234222000-note-dive-moon.jpg",
+   "source": "../../../../tmp/e7/dive-moon.png",
    "kind": "note",
-   "label": "limbSky second version (sky alone, c148dd1), Mars rise 2694 to 2701, left 720 px at full size: the stripe is gone, a 1 px bright line of the globe's limb is left (the mesh of the globe lies up to 2 px inside the sphere the pass computes)"
+   "label": "E move, Mars dive 2406 to 2411: Phobos leaves by the right edge with the sidestep to the left (draft)"
   }
  ]
 }
