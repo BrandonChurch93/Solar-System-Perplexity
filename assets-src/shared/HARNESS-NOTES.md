@@ -314,6 +314,8 @@ Frames on main bab673f with the flag: sun.rise 216 to 227; mercury 733 to 744 an
 
 Checks: pyflakes clean, tsc clean, vitest 26 files 175 tests passed, build ok. Not run: `pack --plan` (my sandbox has 2.7 GB free and `requireDisk` wants 3), no pack, no render.
 
+State at 18:40 UTC on 2026-11-23: MAIL 305 (cc980678) and MAIL 323 (a14827fc, head be4e4b97) sent with DONE; the ticks are off since 00:40 UTC; three timer jobs (WAKE 5, WAKE 5, WAKE 8) done. A question of `saturn_coder` on G13 answered by mail from the code only (the measure counts the red byte of the texels view; the Sun's ground is the precedent for function detail, switched at half weight; acceptance is the Builder's word). My sandbox has 2.4 GB free, `requireDisk` wants 3, so `pack` and `pack --plan` do not start here; `worker` (5.2 GB) is the first thing to remove if a pack must run here.
+
 ## Not covered
 
 - No run at the final or review tier, so the cost model (4.3 s per sample, a fast frame four times a slow one) is not checked against a real worker; `--sample-seconds` moves it.
