@@ -6,7 +6,7 @@ import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import { EQUIRECT_GLSL } from '../../space/sky'
 
 export const KNOTS = 33
-export const MAX_LEVELS = 6
+export const MAX_LEVELS = 8
 
 export interface CloudParams {
   height: number
@@ -61,6 +61,7 @@ export interface PatchSet {
   spot: THREE.Vector3
   feather: number
   fade: [number, number]
+  flatDeg?: [number, number]
 }
 
 export interface NeptuneOptions {
@@ -126,6 +127,7 @@ uniform vec2 uPatchFade;
 uniform vec3 uSpotN;
 uniform vec3 uSpotE;
 uniform vec3 uSpotU;
+uniform vec3 uPlace;
 uniform float uMapWidth;
 uniform float uGrad;
 uniform float uCode;
@@ -314,6 +316,8 @@ void main() {
   float texelsShadow;
   vec3 dd = deckDir(p);
   vec3 dcl = cloudDir(pc);
+  float placed = uPlace.z * smoothstep(uPlace.y, uPlace.x, dot(dd, uSpotN));
+  for (int k = 0; k < (placed > 0.0 ? 1 : 0); k++) dcl = cloudDir(normalize(mix(pc, p, placed)));
   vec4 deckTexel = layerAt(dd, 1.0, texels);
   float reach = uCloudHeight / max(ndl, uShadow.z);
   vec3 dsa = cloudDir(normalize(p + sunL * reach));
@@ -377,7 +381,7 @@ void main() {
     albedo *= mix(1.0, pow(own, uEndBoost.x), uEnd.x - dark);
     alpha = mix(alpha, min(alpha * uEndBoost.y, 1.0), uEnd.x);
   }
-  vec3 deck = albedo * knot(uDeck, ndd) * shade * (1.0 - uShadow.x * shadow * lit * (1.0 - min(alpha, 1.0)));
+  vec3 deck = albedo * knot(uDeck, ndd) * shade * (1.0 - uShadow.x * (1.0 - placed) * shadow * lit * (1.0 - min(alpha, 1.0)));
   float ndlc = dot(normalize(uBodyToWorld * pc), uSunW) + uEnd.x * uEndCresc.x;
   vec3 col = mix(deck, knot(uCloud, ndlc), alpha * smoothstep(-0.09, -0.03, ndlc)) * uTint;
   for (int k = 0; k < (uNear.x > 0.0 ? 1 : 0); k++) {
@@ -475,6 +479,7 @@ export class NeptunePlanet {
         uPatchCount: { value: p?.textures.length ?? 0 },
         uFeather: { value: p?.feather ?? 0.12 }, uPatchFade: { value: new THREE.Vector2(p?.fade[0] ?? 1.1, p?.fade[1] ?? 1.7) },
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
+        uPlace: { value: new THREE.Vector3(Math.cos(THREE.MathUtils.degToRad(p?.flatDeg?.[0] ?? 0)), Math.cos(THREE.MathUtils.degToRad(p?.flatDeg?.[1] ?? 1)), 0) },
         uSpin: { value: 0 }, uStream: { value: 0 }, uShear: { value: new THREE.Vector2(o.clouds.shear, o.clouds.shearBands) },
         uStormAxis: { value: o.storm.axis.clone().normalize() }, uStormRadius: { value: THREE.MathUtils.degToRad(o.storm.radiusDeg) }, uStormAngle: { value: 0 },
         uCloudHeight: { value: o.clouds.height }, uCloudSoft: { value: o.clouds.soft }, uShadow: { value: new THREE.Vector3(o.clouds.shadow, o.clouds.shadowSoft, 0.12) },

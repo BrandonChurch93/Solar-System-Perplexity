@@ -5,6 +5,7 @@ import { StopPlan, type Fit, type MoveParams, type OrbitShot } from '../../direc
 import { drift } from '../../director/rig'
 import close from './close.json'
 import fit from './fit.json'
+import place from './place.json'
 
 export const params: MoveParams = {
   hold: { orbitDeg: 7, axis: [-0.25, 1, 0], push: -0.035 },
@@ -33,6 +34,7 @@ export const params: MoveParams = {
 
 const veil: { air: [number, number]; sea: [number, number]; clear: number; full: number } = { air: [1.005, 1.03], sea: [1.002, 1.012], clear: 0.15, full: 0.93 }
 const deck = new THREE.Vector3().fromArray(close.nadir).multiplyScalar(close.radius + 1)
+const onGlobe = new THREE.Quaternion().fromArray(place.toWorld)
 const rim: [number, number][] = [[-1, -1], [0, -1], [1, -1], [-1, 0], [1, 0], [-1, 1], [0, 1], [1, 1]]
 const hides = 0.4
 const closed = 0.98
@@ -130,6 +132,11 @@ class NeptunePlan extends StopPlan {
     const w = smooth((time - s.start - steady[kind]) / (at - s.start - steady[kind])) * (1 - smooth((time - at) / (s.end - steady[kind] - at)))
     if (w <= 0) return pose
     return { ...pose, quaternion: pose.quaternion.clone().multiply(new THREE.Quaternion().slerp(drift(at).invert(), w)) }
+  }
+
+  twin(local: Pose, time: number): Pose {
+    const q = this.turn(time).multiply(onGlobe)
+    return { position: local.position.clone().sub(deck).divideScalar(close.radius).applyQuaternion(q), quaternion: q.clone().multiply(local.quaternion), vfov: local.vfov }
   }
 
   override hold(tRel: number): Pose {

@@ -21,17 +21,31 @@
    "widthDeg": 26
   },
   {
-   "file": "patch-16.webp",
+   "file": "plate-16.webp",
    "widthDeg": 16
   },
   {
-   "file": "patch-10.webp",
+   "file": "plate-10.webp",
    "widthDeg": 10
+  },
+  {
+   "file": "plate-6.webp",
+   "widthDeg": 6
+  },
+  {
+   "file": "plate-3.5.webp",
+   "widthDeg": 3.5
   }
  ],
  "feather": 0.12,
  "fade": [
   1.1,
   1.6
- ]
+ ],
+ "place": {
+  "flatDeg": [
+   9,
+   14
+  ]
+ }
 }
