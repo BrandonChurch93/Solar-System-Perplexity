@@ -1,66 +1,64 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T15:18:12.139Z",
- "head": "0111bf2f4932c240a0813ab03d37860b86c5b19e",
- "note": "mail 287: grains few and darker, ringlets past the rim instead of the wash, night side grey, crisp wide ringlets near the lens; still tuning",
+ "pushed": "2026-11-23T15:42:20.196Z",
+ "head": "569bef703bc72ec8c07f4a9cf85eb4c71dcc078f",
+ "note": "mail 287: grains as single bodies, ringlets near the lens, rings past the rim, grey night side; merged main 0eae595",
  "looks": [
   {
-   "time": "2026-11-23T15:18:10.814Z",
-   "file": "20261123151810814-note-s3809.jpg",
-   "source": "../../../../tmp/v/t2/s3809.png",
+   "time": "2026-11-23T15:42:19.120Z",
+   "file": "20261123154219120-note-spot.jpg",
+   "source": "../../../../tmp/v/t8/spot.png",
    "kind": "note",
-   "label": "3809 draft: no gravel, single bodies"
+   "label": "3630 and 3660: the globe seen through the Cassini division has a sawtooth edge (still wrong)"
   },
   {
-   "time": "2026-11-23T15:18:09.883Z",
-   "file": "20261123151809883-note-ul_3660.jpg",
-   "source": "../../../../tmp/v/t2/ul_3660.png",
+   "time": "2026-11-23T15:42:18.008Z",
+   "file": "20261123154218008-note-c.jpg",
+   "source": "../../../../tmp/v/t8/c.png",
    "kind": "note",
-   "label": "3660 draft upper left at native size: no wash past the rim"
+   "label": "3567, 3600, 3830, 3866 draft"
   },
   {
-   "time": "2026-11-23T15:18:08.812Z",
-   "file": "20261123151808812-note-s3630.jpg",
-   "source": "../../../../tmp/v/t4/s3630.png",
+   "time": "2026-11-23T15:42:16.820Z",
+   "file": "20261123154216820-note-b.jpg",
+   "source": "../../../../tmp/v/t8/b.png",
    "kind": "note",
-   "label": "3630 draft: the ice past the rim in ringlets that end in the dark, night side grey, 15:17"
+   "label": "3690, 3750, 3780, 3809 draft"
   },
   {
-   "time": "2026-11-23T15:18:07.947Z",
-   "file": "20261123151807947-note-ll2.jpg",
-   "source": "../../../../tmp/v/t3r/ll2.png",
+   "time": "2026-11-23T15:42:15.933Z",
+   "file": "20261123154215933-note-a.jpg",
+   "source": "../../../../tmp/v/t8/a.png",
    "kind": "note",
-   "label": "3720 review tier lower left at native size, approved on top, 15:16"
+   "label": "3630 and 3660 draft: the plane past the rim goes on in ringlets and ends in the dark"
   },
   {
-   "time": "2026-11-23T15:18:06.795Z",
-   "file": "20261123151806795-note-pair_3720.jpg",
-   "source": "../../../../tmp/v/t3r/pair_3720.png",
+   "time": "2026-11-23T15:42:14.722Z",
+   "file": "20261123154214722-note-three_mid.jpg",
+   "source": "../../../../tmp/v/t7r/three_mid.png",
    "kind": "note",
-   "label": "3720 review tier beside the approved image (top approved): fewer grains, ringlets to the bottom edge, 15:16"
+   "label": "3719, 3720, 3721 at the review tier, middle at native size: three frames in a row"
   },
   {
-   "time": "2026-11-23T14:50:28.341Z",
-   "file": "20261123145028341-note-sheet.jpg",
-   "source": "../../../../tmp/v/e15g/sheet.jpg",
+   "time": "2026-11-23T15:42:13.622Z",
+   "file": "20261123154213622-note-three_ll.jpg",
+   "source": "../../../../tmp/v/t7r/three_ll.png",
    "kind": "note",
-   "label": "skim every 15th frame 3630 to 3809, draft, grains (before the hatch fix)"
+   "label": "3719, 3720, 3721 at the review tier, lower left at native size: three frames in a row"
   },
   {
-   "time": "2026-11-23T14:50:27.767Z",
-   "file": "20261123145027767-note-saturn-rise-draft-after.jpg",
-   "source": "../rt/out/work/handover/saturn-rise-draft-after.png",
+   "time": "2026-11-23T15:42:12.381Z",
+   "file": "20261123154212381-note-mid2.jpg",
+   "source": "../../../../tmp/v/t7r/mid2.png",
    "kind": "note",
-   "label": "handover sheet, rise after T (3861 to 3872), draft",
-   "stop": "saturn"
+   "label": "3720 middle at native size, approved on top"
   },
   {
-   "time": "2026-11-23T14:50:27.059Z",
-   "file": "20261123145027059-note-saturn-rise-draft-before.jpg",
-   "source": "../rt/out/work/handover/saturn-rise-draft-before.png",
+   "time": "2026-11-23T15:42:11.134Z",
+   "file": "20261123154211134-note-ll2.jpg",
+   "source": "../../../../tmp/v/t7r/ll2.png",
    "kind": "note",
-   "label": "handover sheet, rise before T (3848 to 3859), draft",
-   "stop": "saturn"
+   "label": "3720 lower left at native size, approved on top"
   }
  ]
 }
