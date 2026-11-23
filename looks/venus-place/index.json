@@ -1,84 +1,114 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-23T12:22:40.879Z",
- "head": "6326371c6cc14caf97cfdb8045a0a463eba97dec",
- "note": "item 5: state before, and a failed first try of a deck by code",
+ "pushed": "2026-11-23T12:58:53.696Z",
+ "head": "a887167c365784db72a483642372954c2b14c714",
+ "note": "after the E3 merge: no Venus frame changed; the faults of mail 266 as they stand; two failed tries for the ring",
  "looks": [
   {
-   "time": "2026-11-23T12:22:40.189Z",
-   "file": "20261123122240189-note-a-view.jpg",
-   "source": "out/work/venus/place/cl/a-view.jpg",
-   "kind": "note",
-   "label": "BAD: first tries of a cloud deck by code (level a): reads as rock veins, not cloud tops. Not used",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T12:22:39.501Z",
-   "file": "20261123122239501-note-plates-3x3.jpg",
-   "source": "../../../../tmp/v/plates-3x3.jpg",
-   "kind": "note",
-   "label": "plates w a b from above: base, dive T, rise T. Pale smooth fan and combed streaks are what item 5 names",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T12:22:38.909Z",
-   "file": "20261123122238909-note-s4-b.jpg",
-   "source": "../../../../tmp/v/s4-b.jpg",
-   "kind": "note",
-   "label": "dive 1306, rise 1573 1579 1585 draft, as pushed: before item 5",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T12:22:38.318Z",
-   "file": "20261123122238318-note-s4-a.jpg",
-   "source": "../../../../tmp/v/s4-a.jpg",
-   "kind": "note",
-   "label": "dive 1284 1290 1296 1302 draft, as pushed at 6326371c: before item 5",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T12:20:58.247Z",
-   "file": "20261123122058247-frame-f-1585.jpg",
-   "source": "out/work/venus/place/s4/f-1585.png",
+   "time": "2026-11-23T12:58:30.251Z",
+   "file": "20261123125830251-frame-n4-1586.jpg",
+   "source": "out/work/venus/place/same/n4-1586.png",
    "kind": "frame",
-   "label": "venus.rise frame 1585, draft tier",
+   "label": "venus.rise frame 1586, draft tier",
    "stop": "venus",
    "segment": "venus.rise",
-   "frame": 1585,
+   "frame": 1586,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "c049c4c0efb85c12"
+   "engine": "6f5cd496b40446f2"
   },
   {
-   "time": "2026-11-23T12:18:58.393Z",
-   "file": "20261123121858393-frame-f-1306.jpg",
-   "source": "out/work/venus/place/s4/f-1306.png",
+   "time": "2026-11-23T12:57:51.755Z",
+   "file": "20261123125751755-frame-n4-1287.jpg",
+   "source": "out/work/venus/place/same/n4-1287.png",
    "kind": "frame",
-   "label": "venus.dive frame 1306, draft tier",
+   "label": "venus.dive frame 1287, draft tier",
    "stop": "venus",
    "segment": "venus.dive",
-   "frame": 1306,
+   "frame": 1287,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "c049c4c0efb85c12"
+   "engine": "6f5cd496b40446f2"
   },
   {
-   "time": "2026-11-23T12:05:51.529Z",
-   "file": "20261123120551529-note-judged4.jpg",
-   "source": "../../../../tmp/v/judged4.jpg",
-   "kind": "note",
-   "label": "judged frames 1185 1287 1440 1586 on 6326371c (left) beside the kept stills (right)",
-   "stop": "venus"
+   "time": "2026-11-23T12:57:13.332Z",
+   "file": "20261123125713332-frame-n4-1605.jpg",
+   "source": "out/work/venus/place/same/n4-1605.png",
+   "kind": "frame",
+   "label": "venus.travel frame 1605, draft tier",
+   "stop": "venus",
+   "segment": "venus.travel",
+   "frame": 1605,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "6f5cd496b40446f2"
   },
   {
-   "time": "2026-11-23T12:05:50.847Z",
-   "file": "20261123120550847-note-h7-limb.jpg",
-   "source": "../../../../tmp/v/h7-limb.jpg",
-   "kind": "note",
-   "label": "rise limb at twice the size: 1542 (T, close side) 1543 1545 1547 1549 1551 1553 1554",
-   "stop": "venus"
+   "time": "2026-11-23T12:55:45.071Z",
+   "file": "20261123125545071-frame-n4-1440.jpg",
+   "source": "out/work/venus/place/same/n4-1440.png",
+   "kind": "frame",
+   "label": "venus.terrain frame 1440, draft tier",
+   "stop": "venus",
+   "segment": "venus.terrain",
+   "frame": 1440,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "6f5cd496b40446f2"
+  },
+  {
+   "time": "2026-11-23T12:55:08.433Z",
+   "file": "20261123125508433-frame-n4-1185.jpg",
+   "source": "out/work/venus/place/same/n4-1185.png",
+   "kind": "frame",
+   "label": "venus.hold frame 1185, draft tier",
+   "stop": "venus",
+   "segment": "venus.hold",
+   "frame": 1185,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "6f5cd496b40446f2"
+  },
+  {
+   "time": "2026-11-23T12:54:01.422Z",
+   "file": "20261123125401422-sheet-venus-rise-draft-after.jpg",
+   "source": "out/work/handover/venus-rise-draft-after.png",
+   "kind": "sheet",
+   "label": "venus rise, every frame 1543 to 1554 (after T, frame 1542), draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "first": 1543,
+   "last": 1554,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T12:53:59.671Z",
+   "file": "20261123125359671-sheet-venus-rise-draft-across.jpg",
+   "source": "out/work/handover/venus-rise-draft-across.png",
+   "kind": "sheet",
+   "label": "venus rise, every frame 1536 to 1547 (across T, frame 1542), draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "first": 1536,
+   "last": 1547,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T12:53:57.904Z",
+   "file": "20261123125357904-sheet-venus-rise-draft-before.jpg",
+   "source": "out/work/handover/venus-rise-draft-before.png",
+   "kind": "sheet",
+   "label": "venus rise, every frame 1530 to 1541 (before T, frame 1542), draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "first": 1530,
+   "last": 1541,
+   "tier": "draft"
   }
  ]
 }
