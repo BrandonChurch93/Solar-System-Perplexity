@@ -2482,3 +2482,27 @@ MAIL 350 from the Builder (/root), 22:16 UTC.
 YOUR STOP. His words: "Neptun in and out of the planetary review, I assume the last planet is Pluto? If so, it surface views a bit weird while going down from the planetary view to surface it just kind of appears all of a sudden, and it doesn't look great." The last stop is yours, so this is Neptune: the surface view is "a bit weird", and on the way down it "just kind of appears all of a sudden". What the note asks of Neptune: (1) the fall is one move into a deep atmosphere: the haze and the cloud are volumes the camera enters (density by height, lit by the same far Sun), the deck and the storm show through them by depth, and nothing is faded in by frame number. Your cures in work (air dim by height, `dive.rampIn` 0.38) are in the right direction only if nothing in them is keyed to the clock; a ramp in frames is what he sees. (2) The surface view itself, plan G 3: look at it against the note and say plainly whether any part of it is a picture that is pushed, bent or displaced. If it is, it is rebuilt from functions as Jupiter's and Saturn's were: a cloud deck with height, cirrus above it casting shadow on the deck, wind shear that moves the cloud by a field, the storm as a structure with depth. Cost per frame is free. Your READY of about 23:10: name it only if it serves the note; otherwise send looks.
 
 By 22:50 UTC, one short mail, while you work: (a) which parts of the surface view are a picture that is moved, which frames; (b) what is drawn on the globe side under 0.05 radii in the dive and the rise, where it is flat, what comes in by time (frames and knob), and the frames and heights of your two changes of view; (c) what you build for F and G, in order, with the hour of the first looks; (d) anything that depends on whole frames. Looks every 30 minutes as before.
+
+## 22:14 to 22:22 VM. After MAIL 350: the note read, the build before it stopped, the answer sent
+
+- Read on main 1ce31371: the section "Second review note of 2026-11-23" of `kit/PROGRESS.md` (plans E to I, limits, order) and Brandon's words under d147. For this stop: "it surface views a bit weird while going down from the planetary view to surface it just kind of appears all of a sudden, and it doesn't look great".
+- Chain G (proof of e2baa50e) killed at 22:18 VM after the 90 draft frames of the dive, before any verdict line: no round is spent on a build made before the note, and it blocked the merge. Main 1ce31371 merged as cb5001c5.
+- MEASURED (`out/work/nep/sunclose.ts`): the stop's light (`plan.lightDir`) in the frame of the close scene at 4860 is 0.771 0.423 -0.476 (right, up, ahead), 23.1 degrees over the horizon at the storm, 20.0 over the nadir; 21.7 degrees at 4758, 24.2 at 4956 (the globe spins).
+- Read `closeup.ts` against the note. The surface view is a picture that is moved, in every frame it is drawn:
+  - deck: the approved close image and its outpainted canvas, thrown from the fitted camera onto a smooth sphere, twisted about the storm (`deckSource`, 2.0 degrees a second);
+  - cirrus: a cut out of the same image over a height picture (slab 0.3 units up, 0.04 thick, 10 steps), pushed along the band with a shear (`cloudSource`, 0.08 units a second);
+  - the shadow is a baked picture that rides with the cirrus; no relief on the deck, no depth in the storm.
+- By the clock in my stop: `lay.dive`, `lay.rise` (share of the segment), `sky.turnFrame` (a step at a frame), `ring.solid.rise`. In the engine: place picture, close sky, the sky carry.
+- Sent to `/root` at 22:22 VM by `date -u`, high priority: (a) to (d) of MAIL 350 (the mail itself says "written 22:24 VM", which was my guess and 2 minutes late; the clock is the truth). Promised: first looks of 4860 from functions by 00:15 UTC; first looks of the dive with the place picture off by 02:00 UTC.
+- How Jupiter's code deck was built (read `assets-src/jupiter/RECIPE.md`): stored plates and height maps, the image as a colour field that stands still on real relief, detail made by functions below a cut. So stored fields that stand still are inside the rule; a picture that slides, twists or rides a height picture is not.
+
+### Plan of the rebuild (G, then F)
+
+1. `deep.ts`: one scene from functions in the frame of the close scene (unit: the close unit, planet radius 41.806).
+   - wind: turn about the band axis by latitude, plus the storm's turn about its own axis falling with distance; functions are read at the carried point, with detail made again per octave.
+   - deck: radius plus a height function (rolls drawn out along the wind, a bowl at the storm with arms), marched as relief; colour by functions (band palette, storm dark, collar light), lit by the far Sun with its own shadow.
+   - cirrus: a density in a shell above the deck (streamers by latitude and length from a JSON, torn by warped noise), marched; light march toward the Sun; the same density gives the shadow on the deck.
+   - haze: density falling with height, single scattering from the far Sun, the planet's shadow; through it the deck and the storm show by depth, and it draws the limb line.
+   - sky: the film's sky behind it.
+2. The same class laid on the globe (in place of the laid `Closeup`), weights by distance and height.
+3. Retire `lay.dive`, `lay.rise`, `sky.turnFrame`, `ring.solid.rise`; ask the engine for place picture and close sky off per stop.
