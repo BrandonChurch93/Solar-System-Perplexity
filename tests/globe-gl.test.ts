@@ -76,17 +76,23 @@ function levels(o) {
   const planet = new Planet({
     map, mapWidth: o.mapWidth, height, heightWidth: 2048, segments: o.segments,
     light: { wrap: 0.2, power: 1, gain: 1, night: [0, 0, 0], sun: [0.2, 0.15, 0.1], relief: 0, reliefNear: 0, limb: 0 },
-    haze: { scaleHeight: 0.01, depth: 0, day: [0, 0, 0], twilight: [0, 0, 0], strength: 0, extinction: 1, forward: 0, top: 1 },
+    haze: { scaleHeight: 0.01, depth: o.glow ? 0.5 : 0, day: [0, 0, 0], twilight: [0, 0, 0], strength: o.glow ? 1.5 : 0, extinction: 1, forward: 0, top: 1, ...(o.glow && o.glow.power ? { glow: true } : {}) },
     patches: { textures, widthsDeg: o.levels.map((l) => l.widthDeg), spot: new THREE.Vector3(0, 0, 1), feather: o.feather, fade: [1, 2], nearDeg: 0, ...(o.own ? { own: o.own } : {}), ...(o.fadeMinor ? { fadeMinor: true } : {}) },
   })
   const cam = new THREE.PerspectiveCamera(o.vfov, o.width / o.height, o.near, 10)
   cam.position.fromArray(o.position)
   cam.up.fromArray(o.up)
   cam.lookAt(new THREE.Vector3().fromArray(o.target))
+  const from = cam.position.clone()
+  if (o.glow) {
+    planet.mesh.position.copy(from).negate()
+    cam.position.set(0, 0, 0)
+    if (o.glow.power) planet.setGlow(new THREE.Vector3().fromArray(o.glow.direction), o.glow.colour, o.glow.power)
+  }
   cam.updateMatrixWorld(true)
   const world = new THREE.Scene()
   world.add(planet.mesh)
-  planet.update(cam.position, new THREE.Vector3(0.3, 0.2, 1).normalize(), 0, 1, 1)
+  planet.update(from, new THREE.Vector3(0.3, 0.2, 1).normalize(), 0, 1, 1)
   const target = new THREE.WebGLRenderTarget(o.width, o.height, { type: THREE.FloatType })
   diagUniform.value = o.diag
   renderer.setRenderTarget(target)
@@ -142,7 +148,7 @@ const maskValue = (x: number, y: number): number => (x * 37 + y * 91 + ((x * y) 
 
 interface MaskRead { bytes: number; format: number; colorSpace: string; levels: number[][]; between: number[]; small: number[] }
 interface LevelDef { rgb: [number, number, number]; size: number; widthDeg: number }
-interface LevelShot { map: [number, number, number]; mapWidth: number; anisotropy: number; levels: LevelDef[]; feather: number; own?: boolean[]; fadeMinor?: boolean; vfov: number; width: number; height: number; near: number; position: number[]; up: number[]; target: number[]; diag: number; segments: number }
+interface LevelShot { map: [number, number, number]; mapWidth: number; anisotropy: number; levels: LevelDef[]; feather: number; own?: boolean[]; fadeMinor?: boolean; glow?: { direction?: number[]; colour?: [number, number, number]; power?: number }; vfov: number; width: number; height: number; near: number; position: number[]; up: number[]; target: number[]; diag: number; segments: number }
 
 const filmicInverse = (v: number): number => {
   const y = Math.min(Math.max(v, 0), 0.985)
@@ -273,6 +279,39 @@ describe.skipIf(!have)('the globe options in a WebGL2 browser', () => {
     const scene = stack.levels[0]!.rgb.map((b) => filmicInverse(b / 255))
     const ring = mixed.findIndex((p, x) => x > 64 && Math.abs(p[0]! - scene[0]!) < 1e-5)
     expect(ring).toBeGreaterThan(64)
+  }, 120000)
+
+  it('adds a haze glow about a direction of the stop, in step with its colour and its power', async () => {
+    const shot = { ...top, levels: [top.levels[0]!] }
+    const g = [0.5, 0, -1].map((v) => v / Math.hypot(0.5, 1))
+    const colour: [number, number, number] = [1, 0.5, 0.25]
+    const shoot = async (glow: LevelShot['glow']): Promise<number[][]> => row((await call<{ pixels: number[] }>('levels', { ...shot, glow })).pixels, shot, 64)
+    const plain = await shoot({})
+    const dark = await shoot({ direction: g, colour: [0, 0, 0], power: 12 })
+    const p12 = await shoot({ direction: g, colour, power: 12 })
+    const p6 = await shoot({ direction: g, colour, power: 6 })
+    const twice = await shoot({ direction: g, colour: [2, 1, 0.5], power: 12 })
+    const behind = await shoot({ direction: [0, 0, 1], colour, power: 12 })
+    expect(dark).toEqual(plain)
+    expect(behind).toEqual(plain)
+    const t = Math.tan((shot.vfov * Math.PI) / 360)
+    let seen = 0
+    let last = 0
+    for (let x = 40; x < 100; x++) {
+      const sx = ((x + 0.5) / shot.width * 2 - 1) * t
+      const sy = ((64 + 0.5) / shot.height * 2 - 1) * t
+      const cos = (sx * g[0]! - g[2]!) / Math.hypot(sx, sy, 1)
+      const add = [0, 1, 2].map((c) => p12[x]![c]! - plain[x]![c]!)
+      if (plain[x]![0] === 0) continue
+      expect(add[0]!).toBeGreaterThan(last)
+      last = add[0]!
+      expect(add[1]! / add[0]!).toBeCloseTo(0.5, 3)
+      expect(add[2]! / add[0]!).toBeCloseTo(0.25, 3)
+      expect((twice[x]![0]! - plain[x]![0]!) / add[0]!).toBeCloseTo(2, 3)
+      expect(add[0]! / (p6[x]![0]! - plain[x]![0]!) / Math.pow(cos, 6)).toBeCloseTo(1, 3)
+      seen++
+    }
+    expect(seen).toBeGreaterThan(30)
   }, 120000)
 
   const h = 0.005
