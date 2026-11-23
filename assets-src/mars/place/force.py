@@ -191,11 +191,23 @@ broad = cv2.GaussianBlur(cv2.resize(Dp * m[..., None], (size // q, size // q), i
 # beyond the hold the broad tone is a gain on the take, kept between broadLeast and broadMost: as a sum the picture's
 # bright hazy far ground turned the take grey white, and from above the place stood pale in the land round it
 Rb = cv2.GaussianBlur(cv2.resize(R, (size // q, size // q), interpolation=cv2.INTER_AREA), (0, 0), sig)
-broad = np.clip((Rb + broad) / np.maximum(Rb, 0.02), fc['broadLeast'], fc['broadMost']).astype(np.float32)
-broad = cv2.resize(broad, (size, size), interpolation=cv2.INTER_LINEAR)
+# the gain is limited in its lightness only; the hue of the broad tone goes to the picture's by broadHue (a take
+# matched to the red of the globe stood as red ground under the tan far land of the picture). The fine drawing of the
+# take is kept there by broadDetail (the power on its ratio to its own broad tone) and its fine colour by broadColour:
+# seen along the ground from the twin, bright red veins ran through the far wall of the picture as it came in.
+lumt = lambda v: v @ np.array([0.0722, 0.7152, 0.2126], np.float32)
+want = np.maximum(Rb + broad, 0.0)
+gl = np.clip((lumt(want) + 1e-3) / (lumt(Rb) + 1e-3), fc['broadLeast'], fc['broadMost'])
+hue = want / (lumt(want)[..., None] + 1e-3)
+hue = hue * fc['broadHue'] + Rb / (lumt(Rb)[..., None] + 1e-3) * (1 - fc['broadHue'])
+want = cv2.resize((hue * (lumt(Rb) * gl)[..., None]).astype(np.float32), (size, size), interpolation=cv2.INTER_LINEAR)
+Rbf = np.maximum(cv2.resize(Rb, (size, size), interpolation=cv2.INTER_LINEAR), 0.02)
+fine = np.maximum(R, 0.0) / Rbf
+finel = (lumt(np.maximum(R, 0.0)) / lumt(Rbf))[..., None]
+fine = np.power(np.maximum(finel + (fine - finel) * fc['broadColour'], 1e-3), fc['broadDetail'])
 held = (R + Dp) * near[..., None]
-held += R * broad * (1 - near)[..., None]
-del broad, ms, Rb
+held += want * fine * (1 - near)[..., None]
+del want, fine, finel, Rbf, hue, gl, broad, ms, Rb
 k = (m * fc['share'])[..., None]
 plate = np.clip(R * (1 - k) + held * k, 0, 1)
 del held, k
@@ -205,8 +217,29 @@ sig = fc['toneBlur'] * size
 Ps, Rsc = geom.scene_of(plate), geom.scene_of(R)
 tone = cv2.GaussianBlur(Ps * m[..., None], (0, 0), sig) / np.maximum(cv2.GaussianBlur(m, (0, 0), sig), 1e-3)[..., None]
 tone = cv2.GaussianBlur(spread(tone, (cv2.GaussianBlur(m, (0, 0), sig) > 0.5).astype(np.float32)), (0, 0), fc['spreadBlurPx'])
-gain = np.clip((tone + 2e-3) / (cv2.GaussianBlur(Rsc, (0, 0), sig) + 2e-3), fc['toneLeast'], fc['toneMost'])
-out = np.clip(geom.texel_of(Rsc * (1 + (gain - 1) * fall[..., None])), 0, 1)
+# round the twin's foot the tone is that of the held near ground of the picture, not of the whole edge of the fan
+# (on a wide plate the dark near ground is a small part of that edge, and the plate stayed lit round a dark plate
+# nested in it: a soft dark mound). It fades to the edge's tone over nearDeg from the held ground.
+src = m * near
+bs = cv2.GaussianBlur(src, (0, 0), sig)
+if (bs > 0.5).any() and fc['nearDeg'] > 0:
+    tn = cv2.GaussianBlur(Ps * src[..., None], (0, 0), sig) / np.maximum(bs, 1e-3)[..., None]
+    tn = cv2.GaussianBlur(spread(tn, (bs > 0.5).astype(np.float32)), (0, 0), fc['spreadBlurPx'])
+    vn = 1 - geom.smoothstep(0.0, fc['nearDeg'], cv2.distanceTransform((src < 0.5).astype(np.uint8), cv2.DIST_L2, 5) / size * a.width_deg)
+    tone = tone + (tn - tone) * vn[..., None]
+    del tn, vn
+del src, bs
+Rlow = cv2.GaussianBlur(Rsc, (0, 0), sig)
+gain = np.clip((tone + 2e-3) / (Rlow + 2e-3), fc['toneLeast'], fc['toneMost'])
+gain = 1 + (gain - 1) * fall[..., None]
+# where the gain darkens, the shaded ground takes more of it than the lit ground (the power of the gain is the ratio
+# of the ground to its own broad tone to the power of minus toneShade): the dark comes in as longer shadows along the
+# forms of the land, not as a soft dark cloud over it
+lums = lambda v: v @ np.array([0.0722, 0.7152, 0.2126], np.float32)
+rel = np.clip(lums(Rsc) / (lums(Rlow) + 1e-3), 0.25, 4.0)[..., None]
+gain = np.where(gain < 1, np.power(np.maximum(gain, 1e-3), np.power(rel, -fc['toneShade'])), gain)
+out = np.clip(geom.texel_of(Rsc * gain), 0, 1)
+del Rlow, rel
 plate = plate * m[..., None] + out * (1 - m)[..., None]
 del Ps, Rsc, tone, gain, out
 report('held to the picture', plate)
