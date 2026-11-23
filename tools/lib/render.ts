@@ -3,8 +3,9 @@ import { execFileSync } from 'node:child_process'
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import type { Config, Segment } from '../../src/config'
+import { judgedWindow } from '../../src/director/handover'
 import { coverWindow, setsForFrame } from '../../src/director/timeline'
-import '../../src/director/plans' // each plan sets its stop's cover window
+import '../../src/director/plans' // each plan sets its stop's cover window or its handover
 import { openCapture, renderPngFresh, type Session } from './browser'
 import { DIST, ROOT, WORK, ensureBuild, formatId, machineId, readRecord, recordMatches, requireDisk, writeRecord, type OutputRecord } from './common'
 
@@ -59,13 +60,25 @@ export function sheetFrames(cfg: Config, segment: Segment, cover: boolean): Fram
   const limit = cfg.raw.critics.contactSheetFrames
   let frames: number[]
   if (cover) {
-    const window = coverWindow(segment)
-    if (window === null) throw new Error(segment.id + ' does not have a cover window')
+    const window = judgedWindow(segment)
+    if (window === null) throw new Error(segment.id + ' has neither a cover window nor a handover')
     const count = Math.min(window.lastFrame - window.firstFrame + 1, limit)
     const first = Math.max(window.firstFrame, Math.min(window.lastFrame - count + 1, window.centerFrame - Math.floor((count - 1) / 2)))
     frames = Array.from({ length: count }, (_, i) => first + i)
   } else frames = spread(segment.firstFrame, segment.endFrame - 1, limit)
   return frames.map((frame) => ({ frame, label: String(frame) }))
+}
+
+export function detailFrames(segments: Segment[], noCover: boolean): number[] {
+  const frames: number[] = []
+  for (const s of segments) {
+    const cw = s.kind === 'dive' || s.kind === 'rise' ? coverWindow(s) : null
+    for (let f = s.firstFrame; f < s.endFrame; f++) {
+      if (cw && !noCover && f >= cw.firstFrame && f <= cw.lastFrame) continue
+      frames.push(f)
+    }
+  }
+  return frames
 }
 
 export function filmSheets(cfg: Config, blind = false): FrameSpec[][] {
