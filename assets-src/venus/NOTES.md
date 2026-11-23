@@ -2094,3 +2094,33 @@ READY venus 8b65c470 sent to /root at 16:37 UTC with the measures of the entry a
 - `npm run build` on 8b65c470: exit 0 (built in 2.74 s), dist linked again (441 links).
 
 Close to a limit: the level step into frame 1280 is 5.9 of 6. That is the frame where the dusk gain starts and the plates come in; to bring down with the next change of the place.
+
+### State 17:30, the orange red tints of the place cured by code (item 3 of the list sent with 8b65c470)
+
+No new mail from /root since mail 295. Standing order: work on the own list, name a commit when a cure is rendered and proven.
+
+Cause, measured:
+
+- No plate holds the red: in display values the red over green of plate a at its 99th percentile is 1.37. The red came from two steps of the drawing.
+- First, the plates are drawn dimmer than they are held (`uPlaceDusk`, the dusk of the globe side). The dimming acted on the light, the display value taken back through the film curve. The light of a highlight that the curve pressed has far more colour than the picture shows: display 235, 190, 130 is light 1.14, 0.37, 0.15. Dimmed, that turned the lit sides of the towers orange red.
+- Second, the tone map (`place3-tone-<kind>.bin`) raised each channel to the power and multiplied it by the factor on its own: red and green speckles in the pale fan, red towers beside it.
+
+Cure, by code, no new take:
+
+- `globe.ts`: `uPlaceDusk` is a vec4. By its share `.w` the colour is that of the display value at the luminance of the light, applied right after the light is read. The power of the tone map acts on the luminance (`toneLum`), and of the plate's own colour the share `1 - tone.colour` is kept inside `tone.edge` (`uToneColour`).
+- `set.ts`: `.w = clamp(dusk.hue * (1 - luminance of placeDusk), 0, 1)`, so at the handover, where the plates are not dimmed, they show as they are.
+- `plates.json`: `tone.colour` 0.8, `dusk.hue` 1.0 with a note each. `assets.ts` reads them.
+- `tlay.py tone` made again for both kinds with the same formula (power 0.631 to 2.604, factor dive 0.048 to 238.955, rise 0.046 to 238.955), the four bins under `public/assets/venus/{full,web}/` written again. `RECIPE.md` tells both steps.
+
+Measured on nine test frames at draft, share of the frame with red over 1.7 times green and red over 90, before and after: 1282 0.41 to 0.22 percent, 1287 0.48 to 0.17, 1292 0.43 to 0.12, 1298 0.24 to 0.08, 1304 0.05 to 0.03, 1568 0.01 to 0.00, 1574 0.20 to 0.00, 1580 0.38 to 0.06, 1586 0.30 to 0.11. What is left in 1287 lies on the globe's own lit cloud, not on the place. Tried and dropped: the power on the luminance alone (no change), `tone.colour` 0.8 alone (1287 0.43), `dusk.hue` 2.0 (about the same as 1.0).
+
+Both moves rendered again at draft on this tree (1260 to 1349, 1530 to 1604), sha256 of every frame against the frames of 8b65c470:
+
+- Changed: 1265 to 1337 and 1545 to 1596 (125 frames). Same bytes: 1260 to 1264, 1338 to 1349, 1530 to 1544, 1597 to 1604 (40 frames), so both joins to the kept chunks, both T frames and the frames about them, and the end of the rise are the frames of 8b65c470.
+- Mean colour, 1287: the field of the place 34.0, 29.9, 18.9 (red over green 1.14, green over blue 1.58), the globe's own dark side at the right 31.8, 28.7, 18.6 (1.11, 1.54), the globe's lit cloud at the left 125, 96, 55 (1.30). 1586: the field of the place 27.8, 24.9, 15.9 (1.12, 1.57), the ridges at the left 38.9, 34.6, 23.1 (1.12, 1.50), the globe's dark side below 24.5, 22.3, 14.0 (1.09, 1.60). So the place now has the colour of the globe's dark side within 0.03 in red over green.
+
+Looked at, every frame of the fifteen sheets `out/work/venus/place/r10/dive-0..7.jpg`, `rise-0..6.jpg` and 1287, 1586 at 1440 px. Seen:
+
+- The orange red is gone from the place in both moves. The lit sides of the towers are warm brown and gold.
+- Still wrong, as before: the place is a dark olive brown field beside the cream gold globe in 1281 to 1303 and 1570 to 1589, with a soft smeared band between them at the left of the place in 1284 to 1303; a pale grey blue patch comes up in 1300 to 1307 and fades in 1566 to 1574; a smooth golden band along the limb in 1560 to 1565 with orange patches at its right; crisp grey ridges of level w at the left in 1574 to 1586, now olive grey and not white; pale blobs at the left in 1560 to 1565; the Sun comes in at the top of the frame over 1313 to 1319.
+- Frames that may not change, draft, on this tree (`same/n12/` against `same/main/`): 37 of 37 byte equal.

@@ -33,7 +33,7 @@ export interface GlobePlace {
   // The look of the place from above (plates.json, tone): the light of the plates, not below floor, raised to the power of the tone map
   // times its factor, less so the nearer the line of sight is to the one of the camera at T. widthDeg: the width of the map; cos: the
   // cosines between which that nearness goes from 0 to 1; power: the curve of that ramp.
-  tone: { widthDeg: number; cos: [number, number]; power: number; floor: number }
+  tone: { widthDeg: number; cos: [number, number]; power: number; floor: number; colour: number; edge: [number, number] }
 }
 
 export interface GlobeFlow {
@@ -141,8 +141,9 @@ uniform sampler2D uPlaceTone;
 uniform vec3 uToneEye;
 uniform vec4 uToneLook;
 uniform vec2 uTonePower;
+uniform vec3 uToneColour;
 uniform vec4 uDusk;
-uniform vec3 uPlaceDusk;
+uniform vec4 uPlaceDusk;
 uniform vec3 uAirDeck[10];
 uniform vec3 uAirFwd;
 uniform vec3 uAirRight;
@@ -420,12 +421,23 @@ ${PLACE_GLSL}
       // From above the place has the tones of the globe about it. The tones of the close view (the far deck pale under its haze, the near
       // towers dark against the Sun) belong to the line of sight of the close view: they come in as the line of sight nears the one of T.
       vec3 light = inverseFilmic(laid / cover);
+      // Drawn dimmer than they are held, the bright parts of the plates would turn red: in scene light a highlight that the film curve
+      // pressed has far more colour than it shows. So by the share uPlaceDusk.w the colour is that of the display value, at the luminance
+      // of the light. At the handover the share is 0 and the plates show as they are.
+      vec3 shown = laid / cover;
+      light = mix(light, shown * (dot(light, vec3(0.2126, 0.7152, 0.0722)) / max(dot(shown, vec3(0.2126, 0.7152, 0.0722)), 1e-5)), uPlaceDusk.w);
       float same = pow(clamp((dot(normalize(spinY(uCamObj, uSpin) - dp), normalize(uToneEye - dp)) - uToneLook.z) / (uToneLook.w - uToneLook.z), 0.0, 1.0), uTonePower.x) * uToneLook.y;
       for (int t = 0; t < (same < 1.0 ? 1 : 0); t++) {
         vec4 tone = textureGrad(uPlaceTone, pg * uToneLook.x + 0.5, pgx * uToneLook.x * uGrad, pgy * uToneLook.x * uGrad);
-        light = mix(tone.rgb * pow(max(light, vec3(uTonePower.y)), vec3(tone.a)), light, same);
+        // The power acts on the luminance. Of the colour of the plate only a share is kept (uToneColour.x is the share that goes to the colour
+        // of the globe about it, which the factor holds; none past the edge of the map): a power and a factor per channel turned the warm light
+        // of the towers red beside the pale haze.
+        vec2 tu = pg * uToneLook.x * 2.0;
+        float toneLum = max(dot(light, vec3(0.2126, 0.7152, 0.0722)), uTonePower.y);
+        float hueKeep = 1.0 - uToneColour.x * (1.0 - smoothstep(uToneColour.y, uToneColour.z, max(abs(tu.x), abs(tu.y))));
+        light = mix(tone.rgb * pow(toneLum, tone.a) * pow(max(light, vec3(uTonePower.y * 0.01)) / toneLum, vec3(hueKeep)), light, same);
       }
-      col = mix(col, light * uPlaceDusk, cover * uPlaceOn);
+      col = mix(col, light * uPlaceDusk.xyz, cover * uPlaceOn);
       texels = mix(texels, placeTexels, uPlaceOn);
     }
   }
@@ -503,8 +515,9 @@ export class Globe {
         uPlaceTone: { value: o.map }, uToneEye: { value: new THREE.Vector3(0, 0, 5) },
         uToneLook: { value: new THREE.Vector4(1 / (2 * Math.tan(THREE.MathUtils.degToRad(o.place.tone.widthDeg) / 2)), 1, o.place.tone.cos[0], o.place.tone.cos[1]) },
         uTonePower: { value: new THREE.Vector2(o.place.tone.power, o.place.tone.floor) },
+        uToneColour: { value: new THREE.Vector3(o.place.tone.colour, o.place.tone.edge[0], o.place.tone.edge[1]) },
         uAirDeck: { value: o.air.deck }, uAirFwd: { value: new THREE.Vector3(0, 0, -1) }, uAirRight: { value: new THREE.Vector3(1, 0, 0) }, uAirHaze: { value: new THREE.Vector4(0, 0.05, 1, THREE.MathUtils.degToRad(o.air.deckSpanDeg)) },
-        uDusk: { value: new THREE.Vector4(1, 1, 1, 1) }, uPlaceDusk: { value: new THREE.Vector3(1, 1, 1) },
+        uDusk: { value: new THREE.Vector4(1, 1, 1, 1) }, uPlaceDusk: { value: new THREE.Vector4(1, 1, 1, 0) },
         uMapWidth: { value: o.mapWidth },
         uSpin: { value: 0 }, uGain: { value: 1 }, uCarry: { value: new THREE.Vector4(1, 1, 1, 1) }, uCarryTint: { value: new THREE.Vector3(1, 1, 1) }, uCarryOn: { value: 0 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
         uCurve: { value: o.curve.map((c) => new THREE.Vector3(c[0], c[1], c[2])) },

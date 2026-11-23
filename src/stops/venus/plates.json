@@ -56,13 +56,14 @@
     "look": [0.06, 6, 9]
   },
   "tone": {
-    "note": "The look of the place from above (assets-src/venus/place/tlay.py tone, files place3-tone-<kind>.bin: size by size texels of four floats over the extent of level a, rows from south to north). The plates hold the tones of the close view at T: the far deck pale under its haze, the near towers dark against the Sun. Seen from above those tones are a pale fan over a dark hollow. So from above the light of the plates (the display value taken back through the film curve, not below floor) is raised to a power and multiplied by a factor per channel: the map holds the factor in its first three values and the power in the fourth. They take the mean of the logarithm of the light about every point (at sigmaDeg) to that of the globe's own look there (build.py base), and the spread of its forms smaller than fineDeg to contrast (the spread measured in the ring of towers of level a), the power within power; eased to no change between edge (shares of the half width of the map). They are used in full where the line of sight at a ground point is far from the line of sight of the camera at T, and not at all where the cosine between the two is above cos[1] (cos[0]: where they are in full, curve: the power of the ramp between); and only above the heights (radii, eased in the logarithm: no change below the lower one). At T the plates show as they are.",
+    "note": "The look of the place from above (assets-src/venus/place/tlay.py tone, files place3-tone-<kind>.bin: size by size texels of four floats over the extent of level a, rows from south to north). The plates hold the tones of the close view at T: the far deck pale under its haze, the near towers dark against the Sun. Seen from above those tones are a pale fan over a dark hollow. So from above the light of the plates (the display value taken back through the film curve) is changed in contrast and in level: its luminance (not below floor) is raised to a power and multiplied by a factor per channel, and of its own colour the share 1 - colour is kept (the rest is the colour of the globe's own look there, which the factor carries): the map holds the factor in its first three values and the power in the fourth. They take the mean of the logarithm of the light about every point (at sigmaDeg) to that of the globe's own look there (build.py base), and the spread of its forms smaller than fineDeg to contrast (the spread measured in the ring of towers of level a), the power within power; eased to no change between edge (shares of the half width of the map). They are used in full where the line of sight at a ground point is far from the line of sight of the camera at T, and not at all where the cosine between the two is above cos[1] (cos[0]: where they are in full, curve: the power of the ramp between); and only above the heights (radii, eased in the logarithm: no change below the lower one). At T the plates show as they are.",
     "files": {"dive": "place3-tone-dive.bin", "rise": "place3-tone-rise.bin"},
     "size": 256,
     "widthDeg": 24.0,
     "sigmaDeg": 1.0,
     "fineDeg": 0.35,
     "floor": 0.002,
+    "colour": 0.8,
     "contrast": 0.4,
     "power": [0.4, 3.0],
     "edge": [0.72, 0.92],
@@ -74,6 +75,8 @@
   "dusk": {
     "note": "The exposure of the globe side on the way to the place: the globe is drawn gain times brighter and turned by tint at the place, against the hold (the plates hold the light of the close image, which is exposed for dusk). Gain and tint rise in the logarithm over these shares of the dive and fall over these shares of the rise. The plates are drawn at the same exposure and with the same share of the tint, so they are dim like the dusk about them when they come in and keep the colour of the globe about them at every exposure.",
     "gain": 4.5,
+    "hue": 1.0,
+    "hueNote": "Drawn dimmer than they are held, the plates take their colour from their display value and not from their light, by hue times the share by which they are dimmer: the light of a highlight that the film curve pressed has far more colour than the picture shows, and dimmed it turned the lit sides of the towers red. At the handover the plates are not dimmed and show as they are.",
     "limbHeights": [0.5, 1.6],
     "limbNote": "The glow of the limb is a fit of the hold picture seen from far away. It is not raised by the gain, and in the dive and the rise it goes out between these two heights (radii, eased in the logarithm): below the lower one the horizon is made by the haze of the globe alone, so the fit does not lie on the cloud tops as a wide band with a red and a green edge.",
     "dive": [

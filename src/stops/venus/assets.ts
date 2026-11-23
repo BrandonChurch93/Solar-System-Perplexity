@@ -37,14 +37,14 @@ export const place = {
   }) as { tag: string; file: string; widthDeg: number; dive: string; rise: string }[],
   rim: platesJson.rim,
   forms: platesJson.forms.look as [number, number, number],
-  tone: { dive: platesJson.tone.files.dive, rise: platesJson.tone.files.rise, size: platesJson.tone.size, widthDeg: platesJson.tone.widthDeg, cos: platesJson.tone.cos as [number, number], power: platesJson.tone.curve, floor: platesJson.tone.floor, heights: platesJson.tone.heights as [number, number] },
+  tone: { dive: platesJson.tone.files.dive, rise: platesJson.tone.files.rise, size: platesJson.tone.size, widthDeg: platesJson.tone.widthDeg, cos: platesJson.tone.cos as [number, number], power: platesJson.tone.curve, floor: platesJson.tone.floor, colour: platesJson.tone.colour, edge: platesJson.tone.edge as [number, number], heights: platesJson.tone.heights as [number, number] },
   air: { heights: platesJson.air.heights as [number, number], sunHeights: platesJson.air.sun.heights as [number, number], haze: platesJson.air.haze },
   centre: [0, 1, 2].map((i) => under[i]! * Math.cos(ahead) + heading[i]! * Math.sin(ahead)) as [number, number, number],
   feather: platesJson.feather,
   fade: platesJson.fade as [number, number],
   heading: heading as [number, number, number],
   show: { heights: platesJson.show.heights as [number, number] },
-  dusk: { gain: platesJson.dusk.gain, limbHeights: platesJson.dusk.limbHeights as [number, number], tint: platesJson.dusk.tint as [number, number, number], dive: platesJson.dusk.dive as [number, number], rise: platesJson.dusk.rise as [number, number] },
+  dusk: { gain: platesJson.dusk.gain, hue: platesJson.dusk.hue, limbHeights: platesJson.dusk.limbHeights as [number, number], tint: platesJson.dusk.tint as [number, number, number], dive: platesJson.dusk.dive as [number, number], rise: platesJson.dusk.rise as [number, number] },
 }
 
 const TINTS: [number, number, number][] = [[0.85, 0.3, 0.25], [0.3, 0.75, 0.35], [0.9, 0.75, 0.2], [0.4, 0.5, 0.9]]

@@ -258,7 +258,10 @@ export const createSet: SetFactory = async (ctx) => {
       ;(gu.uDusk!.value as THREE.Vector4).set(duskGain * Math.pow(place.dusk.tint[0], pl.dusk), duskGain * Math.pow(place.dusk.tint[1], pl.dusk), duskGain * Math.pow(place.dusk.tint[2], pl.dusk), duskGain / place.dusk.gain)
       // The plates hold the light of the place at the full gain and the full tint (the tone map takes them to the globe's look drawn so),
       // so they are drawn with the share of both that the globe has now: the place and the globe about it keep one colour at every exposure.
-      ;(gu.uPlaceDusk!.value as THREE.Vector3).set(Math.pow(place.dusk.tint[0], pl.dusk - 1), Math.pow(place.dusk.tint[1], pl.dusk - 1), Math.pow(place.dusk.tint[2], pl.dusk - 1)).multiplyScalar(duskGain / place.dusk.gain)
+      // The fourth value: how far the colour of the plates is taken from their display value and not from their light (dusk.hue times
+      // the share by which they are drawn dimmer than they are held), so a dimmed highlight does not turn red.
+      const placeDusk = place.dusk.tint.map((t) => Math.pow(t, pl.dusk - 1) * duskGain / place.dusk.gain) as [number, number, number]
+      ;(gu.uPlaceDusk!.value as THREE.Vector4).set(placeDusk[0], placeDusk[1], placeDusk[2], Math.min(Math.max(place.dusk.hue * (1 - (0.2126 * placeDusk[0] + 0.7152 * placeDusk[1] + 0.0722 * placeDusk[2])), 0), 1))
       ;(gu.uHoldLook!.value as THREE.Vector4).x = ending ? 0 : look.hold.weight
       ;(gu.uSwirl!.value as THREE.Vector4).w = state.time > terrainMid ? THREE.MathUtils.degToRad(look.swirl.deg) : 0
       gu.uWeaveLit!.value = state.time > terrainMid ? look.weave.rise.lit : look.weave.lit

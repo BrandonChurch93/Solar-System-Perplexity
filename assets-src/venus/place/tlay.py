@@ -246,8 +246,13 @@ def tone(kind, plate=None):
     r = (np.arange(work, dtype=np.float32) + 0.5) / work * 2 - 1
     off = lay.smooth(tn['edge'][0], tn['edge'][1], np.maximum(np.abs(r)[:, None], np.abs(r)[None, :]))
     power = 1 + (power - 1) * (1 - off)
-    factor = (mg - power[..., None] * mp) * (1 - off)[..., None]  # its logarithm
-    top = np.exp(factor + power[..., None] * p)
+    # The power acts on the luminance, and of the colour of the plate only a share is kept (as the globe shader does): a power and a
+    # factor per channel turned warm light red beside the pale haze.
+    ly = np.log(np.maximum(np.exp(p) @ luma, floor))
+    mly = cv2.GaussianBlur(ly, (0, 0), sigma)
+    own = (1 - tn['colour'] * (1 - off))[..., None]  # the share of the plate's own colour that is kept
+    factor = (mg - (power * mly)[..., None] - own * (mp - mly[..., None])) * (1 - off)[..., None]  # its logarithm
+    top = np.exp(factor + (power * ly)[..., None] + own * (p - ly[..., None]))
     size = tn['size']
     m = np.dstack([np.exp(cv2.resize(factor, (size, size), interpolation=cv2.INTER_AREA))[..., ::-1], cv2.resize(power, (size, size), interpolation=cv2.INTER_AREA)]).astype(np.float32)
     return m, top, np.exp(p), spread
