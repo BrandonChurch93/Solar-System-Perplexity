@@ -1,9 +1,17 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-23T11:35:43.491Z",
+ "pushed": "2026-11-23T12:04:00.986Z",
  "head": "cc583ada8bf5d4ee08a2112c6741835b193d14dd",
- "note": "G13 round: model of soft share per frame agrees with the measure; the full set is at 1391 of 1400 MB, so the four levels are being re-planned (centres and widths) instead of adding levels",
+ "note": "Earth place: five windowed levels and the low look in, bare globe at 1915 beside the close side; sky, deck, dots and glint of mails 254 and 259 in work",
  "looks": [
+  {
+   "time": "2026-11-23T12:04:00.242Z",
+   "file": "20261123120400242-note-bare-globe-12h.jpg",
+   "source": "out/work/earth/place/proof/bare-globe-12h.jpg",
+   "kind": "note",
+   "label": "Bare globe side (place picture off) at 1884, 1895, 1900, 1907, 1915 with the windowed levels and the low look; last panel is the close side at 1915",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-23T11:35:42.712Z",
    "file": "20261123113542712-note-tex-1884-soft.jpg",
@@ -64,14 +72,6 @@
    "source": "out/work/handover/earth-dive-sides.png",
    "kind": "note",
    "label": "M2 dive, both sides at T and their difference",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T11:10:53.541Z",
-   "file": "20261123111053541-note-earth-rise-draft-across.jpg",
-   "source": "out/work/handover/earth-rise-draft-across.png",
-   "kind": "note",
-   "label": "M2 rise across T, draft (q9)",
    "stop": "earth"
   }
  ]
