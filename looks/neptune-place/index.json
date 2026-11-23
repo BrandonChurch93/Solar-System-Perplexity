@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T11:34:56.224Z",
+ "pushed": "2026-11-23T12:02:02.468Z",
  "head": "e912b46b0396a473f927d85afba3a1ad3e215800",
- "note": "MAIL 248 items 1 and 2: film frames 4953 to 4976 with the S4 code; limb still changes over 4958 to 4962",
+ "note": "MAIL 248 item 1: limb band one law through T, third try; sides at T mean 0.064 p99 1",
  "looks": [
+  {
+   "time": "2026-11-23T12:02:01.892Z",
+   "file": "20261123120201892-note-limb-d.jpg",
+   "source": "out/work/nep/s4/f/limb-d.jpg",
+   "kind": "note",
+   "label": "rise limb, second try (dropped): band goes thin between 4959 and 4960",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T12:02:01.148Z",
+   "file": "20261123120201148-note-limb-g.jpg",
+   "source": "out/work/nep/s4/g/limb-g.jpg",
+   "kind": "note",
+   "label": "rise 4956 to 4964 limb at native size: the rows under the limb are drawn as the handover camera saw them (third try)",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-23T11:34:54.990Z",
    "file": "20261123113454990-note-red.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/nep/s4/c/dive-b.jpg",
    "kind": "note",
    "label": "neptune dive 4728 to 4752, then both T frames (4758, 4956) from the globe side, draft",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T11:13:41.154Z",
-   "file": "20261123111341154-note-dive-a.jpg",
-   "source": "out/work/nep/s4/c/dive-a.jpg",
-   "kind": "note",
-   "label": "neptune dive 4680 to 4720, globe side alone, draft; FAULT a reddish streak below the eye at 4696 to 4712",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T11:13:40.618Z",
-   "file": "20261123111340618-note-rise-b.jpg",
-   "source": "out/work/nep/s4/c/rise-b.jpg",
-   "kind": "note",
-   "label": "neptune rise 4990 to 5024, globe side alone, draft: rings enter by the camera's turn; FAULT a dull purple smear south east of the eye at 4990 to 5002",
    "stop": "neptune"
   }
  ]
