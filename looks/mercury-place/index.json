@@ -1,84 +1,87 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T13:30:49.645Z",
+ "pushed": "2026-11-23T14:33:39.142Z",
  "head": "08c4bb478ad8a0510556da7b05c150bdf9bbe358",
- "note": "mail 267 item 1: the band between globe picture and place rebuilt by code as a crater field with cast shadows, plates only, frames follow when the measure of 08c4bb47 ends",
+ "note": "crater ground by code in dive and rise, glow leaves with the Sun, far field of the rise picture cut; open: straight picture edge 738 to 743, commas at the limb",
  "looks": [
   {
-   "time": "2026-11-23T13:30:48.746Z",
-   "file": "20261123133048746-note-B3-view.jpg",
-   "source": "out/work/mercury/place/repaint/B3-view.jpg",
+   "time": "2026-11-23T14:33:38.320Z",
+   "file": "20261123143338320-note-edge-740.jpg",
+   "source": "out/work/mercury/place/tmp/edge-740.jpg",
    "kind": "note",
-   "label": "level 3 whole plate with the crater field, the place in the middle",
+   "label": "open fault: straight left edge of the place picture at 740 and 742, before (left) and now (right)",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-23T13:30:47.922Z",
-   "file": "20261123133047922-note-B2-crop.jpg",
-   "source": "out/work/mercury/place/tmp/B2-crop.jpg",
+   "time": "2026-11-23T14:33:37.413Z",
+   "file": "20261123143337413-note-e2.jpg",
+   "source": "out/work/mercury/place/tmp/e2.jpg",
    "kind": "note",
-   "label": "level 2 with the crater field around the place, full size crop, the take starts at the right edge",
+   "label": "rise 992 to 1002 with the far field of the picture cut at 1.2 times",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-23T13:30:46.803Z",
-   "file": "20261123133046803-note-B4-crop.jpg",
-   "source": "out/work/mercury/place/tmp/B4-crop.jpg",
+   "time": "2026-11-23T14:33:36.741Z",
+   "file": "20261123143336741-note-c3-glow.jpg",
+   "source": "out/work/mercury/place/tmp/c3-glow.jpg",
    "kind": "note",
-   "label": "level 4 band by code: crater field with cast shadows beside the place (right), full size crop, not yet in a frame",
+   "label": "rise 993 to 1004 top of frame: the glow leaves with the Sun",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-23T13:29:06.851Z",
-   "file": "20261123132906851-job-frame-00758.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "mercury.dive frame 758, draft tier, texels view, from the running measure job",
+   "time": "2026-11-23T14:33:35.384Z",
+   "file": "20261123143335384-note-c3-rise-a.jpg",
+   "source": "out/work/mercury/place/tmp/c3-rise-a.jpg",
+   "kind": "note",
+   "label": "rise 999 1001 1003 1005 with the crater ground, draft, before the rise far field cut",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T14:33:34.234Z",
+   "file": "20261123143334234-note-c3-dive-a.jpg",
+   "source": "out/work/mercury/place/tmp/c3-dive-a.jpg",
+   "kind": "note",
+   "label": "dive 720 724 728 732 with the crater ground by code, draft",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T14:32:40.984Z",
+   "file": "20261123143240984-compare-mercury-dive-sides.jpg",
+   "source": "out/work/handover/mercury-dive-sides.png",
+   "kind": "compare",
+   "label": "mercury dive, both sides at T (frame 744) and their difference times 8",
    "stop": "mercury",
    "segment": "mercury.dive",
-   "frame": 758,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
+   "frame": 744,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T13:19:06.111Z",
-   "file": "20261123131906111-job-frame-00540.jpg",
+   "time": "2026-11-23T13:53:14.645Z",
+   "file": "20261123135314645-job-frame-01016.jpg",
    "source": "memory",
    "kind": "job",
-   "label": "mercury.hold frame 540, draft tier, texels view, from the running measure job",
+   "label": "mercury.rise frame 1016, final tier, nograin view, from the running measure job",
    "stop": "mercury",
-   "segment": "mercury.hold",
-   "frame": 540,
-   "tier": "draft",
+   "segment": "mercury.rise",
+   "frame": 1016,
+   "tier": "final",
    "format": "16x9",
-   "diag": "texels",
+   "diag": "nograin",
    "job": "measure"
   },
   {
-   "time": "2026-11-23T13:02:07.801Z",
-   "file": "20261123130207801-note-pat.jpg",
-   "source": "out/work/mercury/place/tmp/pat.jpg",
-   "kind": "note",
-   "label": "test pattern: red level 1, green level 2 with grid, blue level 3, white level 4; the fault sits in levels 3 and 4 around the place and in level 1 at the limb",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T13:02:06.439Z",
-   "file": "20261123130206439-note-c1-bl.jpg",
-   "source": "out/work/mercury/place/tmp/c1-bl.jpg",
-   "kind": "note",
-   "label": "c1 full size, bottom left quarters of 724 728 732 1004: flat blobs, combed streaks, dashes (the quilt band over the calmed take)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T13:02:05.255Z",
-   "file": "20261123130205255-note-c1-six.jpg",
-   "source": "out/work/mercury/place/tmp/c1-six.jpg",
-   "kind": "note",
-   "label": "c1 draft 716 720 724 728 732 1004: the ground left and below the place is the fault of mail 267 item 1",
-   "stop": "mercury"
+   "time": "2026-11-23T13:39:37.724Z",
+   "file": "20261123133937724-job-frame-00615.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "mercury.hold frame 615, final tier, nograin view, from the running measure job",
+   "stop": "mercury",
+   "segment": "mercury.hold",
+   "frame": 615,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
   }
  ]
 }
