@@ -1,97 +1,84 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-23T22:14:12.785Z",
- "head": "2828642a70136a96efbc499eb2f3790c2680e485",
- "note": "wide ring v on consecutive frames at native size, both moves, before the merge of main 1ce31371",
+ "pushed": "2026-11-23T23:07:29.760Z",
+ "head": "eb50bcbdd17bcc9fe760439c5d6f5984346697d5",
+ "note": "Step 0 (wide ring v on main 1ce31371 with the capped shutter): every frame of dive and rise at draft; handover report pass both moves; G13 0 of 495 over 0.02 (worst 1561 1.18%); 37 of 37 kept frames same bytes; still wrong: wedge 1296 to 1298, golden band 1557 to 1565, pale cells 1549 to 1553, ring towers fade in by height",
  "looks": [
   {
-   "time": "2026-11-23T22:14:12.197Z",
-   "file": "20261123221412197-note-t-out.jpg",
-   "source": "../../../../tmp/v/t-out.jpg",
-   "kind": "note",
-   "label": "rise 1585 to 1596 native crop, wide ring leaving by height (dirty tree)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T22:14:11.618Z",
-   "file": "20261123221411618-note-t-in.jpg",
-   "source": "../../../../tmp/v/t-in.jpg",
-   "kind": "note",
-   "label": "dive 1272 to 1283 native crop, wide ring easing in by height (dirty tree)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T22:12:39.294Z",
-   "file": "20261123221239294-frame-f01272.jpg",
-   "source": "out/work/venus/place/v4/f01272.png",
-   "kind": "frame",
-   "label": "venus.dive frame 1272, draft tier",
+   "time": "2026-11-23T23:01:51.245Z",
+   "file": "20261123230151245-job-frame-01185.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "venus.hold frame 1185, final tier, nograin view, from the running measure job",
    "stop": "venus",
-   "segment": "venus.dive",
-   "frame": 1272,
+   "segment": "venus.hold",
+   "frame": 1185,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-23T23:00:47.761Z",
+   "file": "20261123230047761-frame-f01605.jpg",
+   "source": "out/work/venus/place/same/s0/f01605.png",
+   "kind": "frame",
+   "label": "venus.travel frame 1605, draft tier",
+   "stop": "venus",
+   "segment": "venus.travel",
+   "frame": 1605,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "e85c8d53a860dafc"
+   "engine": "9614bd9287a4f3ac"
   },
   {
-   "time": "2026-11-23T22:09:16.053Z",
-   "file": "20261123220916053-sheet-venus-rise-top.jpg",
-   "source": "out/work/handover/venus-rise-top.png",
-   "kind": "sheet",
-   "label": "venus rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 1542), place picture off, draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1542,
-   "last": 1604,
-   "tier": "draft"
+   "time": "2026-11-23T22:59:49.120Z",
+   "file": "20261123225949120-note-leave.jpg",
+   "source": "out/work/venus/place/s0/leave.jpg",
+   "kind": "note",
+   "label": "1603, 1604 (new) and 1605 (main); below 1259 (main), 1260, 1597",
+   "stop": "venus"
   },
   {
-   "time": "2026-11-23T22:08:32.987Z",
-   "file": "20261123220832987-sheet-venus-rise-draft-after.jpg",
-   "source": "out/work/handover/venus-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "venus rise, every frame 1543 to 1554 (after T, frame 1542), draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1543,
-   "last": 1554,
-   "tier": "draft"
+   "time": "2026-11-23T22:59:48.207Z",
+   "file": "20261123225948207-note-r6.jpg",
+   "source": "out/work/venus/place/s0/r6.jpg",
+   "kind": "note",
+   "label": "step 0 (wide ring v), rise 1602 to 1604, every frame, draft",
+   "stop": "venus"
   },
   {
-   "time": "2026-11-23T22:08:31.229Z",
-   "file": "20261123220831229-sheet-venus-rise-draft-before.jpg",
-   "source": "out/work/handover/venus-rise-draft-before.png",
-   "kind": "sheet",
-   "label": "venus rise, every frame 1530 to 1541 (before T, frame 1542), draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1530,
-   "last": 1541,
-   "tier": "draft"
+   "time": "2026-11-23T22:59:47.565Z",
+   "file": "20261123225947565-note-r5.jpg",
+   "source": "out/work/venus/place/s0/r5.jpg",
+   "kind": "note",
+   "label": "step 0 (wide ring v), rise 1590 to 1601, every frame, draft",
+   "stop": "venus"
   },
   {
-   "time": "2026-11-23T22:08:29.477Z",
-   "file": "20261123220829477-sheet-venus-rise-draft-across.jpg",
-   "source": "out/work/handover/venus-rise-draft-across.png",
-   "kind": "sheet",
-   "label": "venus rise, every frame 1536 to 1547 (across T, frame 1542), draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1536,
-   "last": 1547,
-   "tier": "draft"
+   "time": "2026-11-23T22:59:46.697Z",
+   "file": "20261123225946697-note-r4.jpg",
+   "source": "out/work/venus/place/s0/r4.jpg",
+   "kind": "note",
+   "label": "step 0 (wide ring v), rise 1578 to 1589, every frame, draft",
+   "stop": "venus"
   },
   {
-   "time": "2026-11-23T22:03:31.054Z",
-   "file": "20261123220331054-compare-venus-rise-under.jpg",
-   "source": "out/work/handover/venus-rise-under.png",
-   "kind": "compare",
-   "label": "venus rise, the globe side at T (frame 1542) with the place picture, alone, and their difference times 4",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "frame": 1542,
-   "tier": "draft"
+   "time": "2026-11-23T22:59:45.925Z",
+   "file": "20261123225945925-note-r3.jpg",
+   "source": "out/work/venus/place/s0/r3.jpg",
+   "kind": "note",
+   "label": "step 0 (wide ring v), rise 1566 to 1577, every frame, draft",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T22:59:45.021Z",
+   "file": "20261123225945021-note-r2.jpg",
+   "source": "out/work/venus/place/s0/r2.jpg",
+   "kind": "note",
+   "label": "step 0 (wide ring v), rise 1554 to 1565, every frame, draft",
+   "stop": "venus"
   }
  ]
 }
