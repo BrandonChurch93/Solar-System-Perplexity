@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-23T18:40:46.574Z",
+ "pushed": "2026-11-23T19:09:35.241Z",
  "head": "cdaaa89328e887996fbeb2f85cd815d6331d6213",
- "note": "shutter trial stills at 6, 8, 10 px for 1857 and 2156; field density trial",
+ "note": "shutter trial part 2 crops, field density trial",
  "looks": [
+  {
+   "time": "2026-11-23T19:09:28.749Z",
+   "file": "20261123190928749-note-field-density-look.jpg",
+   "source": "out/work/earth/place/field-density-look.jpg",
+   "kind": "note",
+   "label": "field density over the hold map, trial",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T19:09:28.176Z",
+   "file": "20261123190928176-note-c2133-1.jpg",
+   "source": "../../../../tmp/gl/trial/c2133-1.jpg",
+   "kind": "note",
+   "label": "shutter trial 2133 limit 6 above, 10 below",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T19:09:27.440Z",
+   "file": "20261123190927440-note-c2133-0.jpg",
+   "source": "../../../../tmp/gl/trial/c2133-0.jpg",
+   "kind": "note",
+   "label": "shutter trial 2133 limit 6 above, 10 below",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-23T18:40:45.245Z",
    "file": "20261123184045245-note-dens4.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/gl/sideR.jpg",
    "kind": "note",
    "label": "1882 to 1894 right side native: land and bank fade under cloud",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T18:21:20.502Z",
-   "file": "20261123182120502-note-sideL.jpg",
-   "source": "../../../../tmp/gl/sideL.jpg",
-   "kind": "note",
-   "label": "1882 to 1894 left side native: land fades under haze",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T18:21:19.323Z",
-   "file": "20261123182119323-note-d79-1.jpg",
-   "source": "../../../../tmp/gl/d79-1.jpg",
-   "kind": "note",
-   "label": "1878 to 1900 draft, coasts fade under the lay back",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T18:21:18.194Z",
-   "file": "20261123182118194-note-limb-1857.jpg",
-   "source": "../../../../tmp/gl/limb-1857.jpg",
-   "kind": "note",
-   "label": "1857 limb native crop, limit 6 and 8",
    "stop": "earth"
   }
  ]
