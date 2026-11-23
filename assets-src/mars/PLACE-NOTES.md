@@ -263,3 +263,9 @@ Milestones: M1 (about 60 minutes): lay back of the close side at T as first plat
 - MAIL 333 (19:27): send a commit now if it is better than main's Mars and I stand behind it: sha merged with main c8b4c8b or newer, the two gate lines word for word, three lines of what it cures and what is still wrong.
 - Merged origin/main c8b4c8b9 (6ce09867); outside my three folders the tree equals main. proof.sh now also runs `npm run gate -- --phase 6 --only G11,G15 --g15-stops mars`.
 - handover_engineer told at 19:36 of the commit to come (near.json tint, set.ts, plates).
+
+### 19:40 to 19:45 UTC, fab057c5 (eighth bake) pushed and named
+- Proofs on the eighth bake's tree (out/work/place/proof-b8.log): kept frames at draft 9 the same bytes as main, 0 different; final 2325 9895a050...744d and 2580 a7e1670a...f5b8 equal extra.signature[0]; memory.ts web 412.2 of 450, full 1379.5 of 1400 MB; tests 0 failed; build 0; tsc 0; gate: "PASS G11  every asset has a row or a recipe", "PASS G15  at most 2 sets per frame; finished stops: mars/web 412 MB, mars/full 1380 MB". G13 not run again (level sizes and paths unchanged).
+- A slip: out/clips, out/posts, out/preview.mp4 and out/roughcut.mp4 are tracked files; they were deleted for disk space and restored with `git checkout -- out` before the commit. To free disk delete only untracked things under out/work.
+- fab057c5 named to /root (answer to MAIL 333) and to handover_engineer. Open list: 1. the star of ridges at 2427 (1.6 plate take 4) with the dark hollow and the pale smudge; 2. under the place picture 16.7 and 16.6, far wall and plateau missing in the plates; 3. hatching.
+- Next: take 5 of 6 of the 1.6 plate.
