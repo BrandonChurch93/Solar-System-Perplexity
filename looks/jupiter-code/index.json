@@ -1,47 +1,79 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-23T19:55:55.052Z",
+ "pushed": "2026-11-23T20:24:58.202Z",
  "head": "65b032164e914da50df2f939268854ee29a4469a",
- "note": "Jupiter surface view with life: storm turns, two eddies turn, two haze sheets drift with shadows, faint lightning. Draft. Level 58.0 at 3120 to 66.1 at 3225, exposure fit comes next.",
+ "note": "Surface view with life, not yet committed: storm and two eddies turn, two haze sheets with shadows, lightning, exposure fitted so the level holds 60.5 to 59.1 from 3060 to 3239. Haze reworked after the south sheet read as mist at 3090. Still wrong: thin hairlines lower left 3195 to 3239, cause being looked for.",
  "looks": [
   {
-   "time": "2026-11-23T19:55:54.332Z",
-   "file": "20261123195554332-note-g1-3239.jpg",
-   "source": "../work/f/g1-3239.jpg",
+   "time": "2026-11-23T20:24:52.203Z",
+   "file": "20261123202452203-note-r1-3210-corner.jpg",
+   "source": "../work/f/r1-3210-corner.png",
    "kind": "note",
-   "label": "3239 with life and eased flight, draft",
+   "label": "3210 review tier, lower left corner x3: thin pale hairlines across the cumulus (still wrong)",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T19:55:53.756Z",
-   "file": "20261123195553756-note-h6-life-sheet.jpg",
-   "source": "../work/f/h6-life-sheet.jpg",
+   "time": "2026-11-23T20:24:51.597Z",
+   "file": "20261123202451597-note-g4-3225-sw.jpg",
+   "source": "../work/f/g4-3225-sw.jpg",
    "kind": "note",
-   "label": "life only, camera held at the pose of 3150, every 15th frame, earlier settings",
+   "label": "3225 lower left at full size, haze as it stands",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T19:55:53.211Z",
-   "file": "20261123195553211-note-g1-flash-x2.jpg",
-   "source": "../work/f/g1-flash-x2.jpg",
+   "time": "2026-11-23T20:24:50.982Z",
+   "file": "20261123202450982-note-g4-3150-sw.jpg",
+   "source": "../work/f/g4-3150-sw.jpg",
    "kind": "note",
-   "label": "lightning: 3150, 3156, 3160, 3166 at twice size, the lower glow swells and fades",
+   "label": "3150 lower left at full size, haze as it stands",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T19:55:52.647Z",
-   "file": "20261123195552647-note-g1-3150.jpg",
-   "source": "../work/f/g1-3150.jpg",
+   "time": "2026-11-23T20:24:50.406Z",
+   "file": "20261123202450406-note-g4-3090-bottom.jpg",
+   "source": "../work/f/g4-3090-bottom.jpg",
    "kind": "note",
-   "label": "3150 with life, draft",
+   "label": "3090 bottom band, south sheet at 0.2 units with shadows",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T19:55:52.043Z",
-   "file": "20261123195552043-note-g1-sheet.jpg",
-   "source": "../work/f/g1-sheet.jpg",
+   "time": "2026-11-23T20:24:49.807Z",
+   "file": "20261123202449807-note-g3-3090-bottom.jpg",
+   "source": "../work/f/g3-3090-bottom.jpg",
    "kind": "note",
-   "label": "film 3060 to 3239 with life (storm turn, two eddies, haze sheets, lightning), eased flight, draft, exposure not yet fitted",
+   "label": "3090 bottom band with the forward weight on the veil",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T20:24:49.195Z",
+   "file": "20261123202449195-note-g2-3090-bottom.jpg",
+   "source": "../work/f/g2-3090-bottom.jpg",
+   "kind": "note",
+   "label": "3090 bottom band before: the south haze sheet reads as mist",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T20:24:48.578Z",
+   "file": "20261123202448578-note-h7-life-sheet.jpg",
+   "source": "../work/f/h7-life-sheet.jpg",
+   "kind": "note",
+   "label": "life only: camera held at the pose of 3150, time running, every 15th frame (draft)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T20:24:47.957Z",
+   "file": "20261123202447957-note-g2-3225.jpg",
+   "source": "../work/f/g2-3225.jpg",
+   "kind": "note",
+   "label": "3225 draft with life and the fitted exposure",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T20:24:47.299Z",
+   "file": "20261123202447299-note-g2-sheet.jpg",
+   "source": "../work/f/g2-sheet.jpg",
+   "kind": "note",
+   "label": "film with life, exposure fitted, every 15th frame 3060 to 3239 (draft)",
    "stop": "jupiter"
   }
  ]
