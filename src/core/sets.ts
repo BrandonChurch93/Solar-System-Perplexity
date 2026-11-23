@@ -125,13 +125,16 @@ export class SetLoader {
       assets,
       format: this.getFormat(),
       url: (path) => base + path,
-      texture: async (path, options: TextureOptions = {}) => {
+      texture: async (path, options: TextureOptions & { channels?: 1 } = {}) => {
+        const one = options.channels === 1
+        if (one && options.srgb !== false) throw new Error('a one channel texture needs srgb: false: ' + path)
         const res = await fetch(base + path)
         if (!res.ok) throw new Error('asset missing: ' + path)
         const blob = await res.blob()
         const bitmap = await createImageBitmap(blob, { imageOrientation: options.flipY === false ? 'none' : 'flipY', premultiplyAlpha: 'none', colorSpaceConversion: 'none' })
         const tex = new THREE.Texture(bitmap as unknown as HTMLImageElement)
         tex.flipY = false
+        if (one) tex.format = THREE.RedFormat
         tex.colorSpace = options.srgb === false ? THREE.NoColorSpace : THREE.SRGBColorSpace
         const mips = options.mips !== false
         tex.generateMipmaps = mips
@@ -143,7 +146,7 @@ export class SetLoader {
         tex.needsUpdate = true
         this.renderer.initTexture(tex)
         const size = { width: bitmap.width, height: bitmap.height }
-        bytes += size.width * size.height * 4 * (mips ? 4 / 3 : 1)
+        bytes += size.width * size.height * (one ? 1 : 4) * (mips ? 4 / 3 : 1)
         bitmap.close()
         tex.image = size as unknown as HTMLImageElement
         textures.push(tex)
