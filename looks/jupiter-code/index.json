@@ -1,9 +1,51 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-23T12:33:10.790Z",
+ "pushed": "2026-11-23T13:02:30.538Z",
  "head": "b3bf167d187ac76f0ea65bd4ccb2d40660a2306f",
- "note": "item 2 of mail 251: near ground from the 2 x core, slower flight end, rounded tops; now a coherent fill for ground the image never saw",
+ "note": "v20: near deck of 3200 to 3239 after the carry fill and the 2 x core; one mirrored chip behind a tower left",
  "looks": [
+  {
+   "time": "2026-11-23T13:02:29.898Z",
+   "file": "20261123130229898-note-v20-curl-track.jpg",
+   "source": "../work/f/v20-curl-track.png",
+   "kind": "note",
+   "label": "v20 draft, the tower at 3195, 3210, 3225, 3236 enlarged 3 times: mirrored crest highlight in the hidden zone behind it, being fixed"
+  },
+  {
+   "time": "2026-11-23T13:02:29.303Z",
+   "file": "20261123130229303-note-v20-3236-ll-b.jpg",
+   "source": "../work/f/v20-3236-ll-b.png",
+   "kind": "note",
+   "label": "v20 draft 3236 native crop (x 700 to 1600, y 480 to 1080): a small bright chip behind the tower near (850, 720) is still wrong"
+  },
+  {
+   "time": "2026-11-23T13:02:28.700Z",
+   "file": "20261123130228700-note-v20-3236-ll-a.jpg",
+   "source": "../work/f/v20-3236-ll-a.png",
+   "kind": "note",
+   "label": "v20 draft 3236 native crop lower left (x 0 to 900, y 480 to 1080): no rows of dashes, hidden zones filled by the carry fill"
+  },
+  {
+   "time": "2026-11-23T13:02:28.069Z",
+   "file": "20261123130228069-note-v20-sheet15.jpg",
+   "source": "../work/f/v20-sheet15.jpg",
+   "kind": "note",
+   "label": "v20 draft, every 15th frame 3060 to 3239, wide canvas in every frame, 2 x core, slower end of the flight"
+  },
+  {
+   "time": "2026-11-23T12:59:45.653Z",
+   "file": "20261123125945653-frame-f03200.jpg",
+   "source": "out/work/jupiter/frames/v20/f03200.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3200, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3200,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "c049c4c0efb85c12"
+  },
   {
    "time": "2026-11-23T12:33:10.140Z",
    "file": "20261123123310140-note-chart-tower.jpg",
@@ -24,48 +66,6 @@
    "source": "../work/f/v17-3210-ll.png",
    "kind": "note",
    "label": "3210 lower left at native size, draft tier, same build"
-  },
-  {
-   "time": "2026-11-23T12:33:08.418Z",
-   "file": "20261123123308418-note-v17-3239-ll.jpg",
-   "source": "../work/f/v17-3239-ll.png",
-   "kind": "note",
-   "label": "3239 lower left at native size, draft tier: chart from the 2 x core, slower end of the flight, function detail as rounded tops"
-  },
-  {
-   "time": "2026-11-23T12:26:19.348Z",
-   "file": "20261123122619348-frame-f03239.jpg",
-   "source": "out/work/jupiter/frames/v17/f03239.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3239, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3239,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "c049c4c0efb85c12"
-  },
-  {
-   "time": "2026-11-23T12:12:46.317Z",
-   "file": "20261123121246317-note-v15r-3236-ll.jpg",
-   "source": "../work/f/v15r-3236-ll.jpg",
-   "kind": "note",
-   "label": "v15 review tier 3236, lower left native: dashes gone, ground still soft"
-  },
-  {
-   "time": "2026-11-23T12:12:45.765Z",
-   "file": "20261123121245765-note-v15b-consecutive.jpg",
-   "source": "../work/f/v15b-consecutive.jpg",
-   "kind": "note",
-   "label": "v15b: consecutive frames, draft tier"
-  },
-  {
-   "time": "2026-11-23T12:12:45.186Z",
-   "file": "20261123121245186-note-v15b-12.jpg",
-   "source": "../work/f/v15b-12.jpg",
-   "kind": "note",
-   "label": "v15b: 12 frames 3060 to 3239, draft tier, wide canvas in every frame"
   }
  ]
 }
