@@ -1,0 +1,548 @@
+{
+ "chunks": [
+  {
+   "text": "[Sun Surface]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers and deep sub bass",
+    "instrumental only",
+    "great production quality",
+    "wide cinematic sound",
+    "soft opening",
+    "starts at once with low strings and a warm synth pad",
+    "gentle shimmering texture",
+    "low energy"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "loud",
+    "drums",
+    "fade in"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Sun Rise]",
+   "duration_ms": 3000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers and deep sub bass",
+    "instrumental only",
+    "gentle swell",
+    "strings rising over a soft riser",
+    "growing"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Sun Revealed]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers and deep sub bass",
+    "instrumental only",
+    "warm noble theme enters",
+    "horns, strings and soft sub bass",
+    "moderate level",
+    "calm and majestic",
+    "medium energy"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Travel To Mercury]",
+   "duration_ms": 3000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers and deep sub bass",
+    "instrumental only",
+    "crescendo",
+    "rising strings with a brightening arpeggio",
+    "drum roll",
+    "building tension",
+    "getting louder"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Mercury Arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers and deep sub bass",
+    "instrumental only",
+    "loud and powerful",
+    "high energy",
+    "full orchestra and synth bass hit on the first beat",
+    "bright celesta and a glinting synth arpeggio over strong strings",
+    "broad main theme, sustained",
+    "big and majestic"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "sparse"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Mercury Surface Then Build]",
+   "duration_ms": 11000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers and deep sub bass",
+    "instrumental only",
+    "starts soft and gentle with a thin texture",
+    "only soft piano notes over a glassy synth pad",
+    "low energy for the first half",
+    "then a crescendo with rising strings and a synth riser",
+    "drum roll at the end",
+    "getting louder into the next section"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Venus Arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers and deep sub bass",
+    "instrumental only",
+    "loud and powerful",
+    "high energy",
+    "full orchestra and synth bass hit on the first beat",
+    "lush strings with thick warm synth pads, rich and full",
+    "broad main theme, sustained",
+    "big and majestic"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "sparse"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Venus Surface Then Build]",
+   "duration_ms": 11000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers and deep sub bass",
+    "instrumental only",
+    "starts soft and gentle with a thin texture",
+    "only soft muted strings over a warm drone",
+    "low energy for the first half",
+    "then a crescendo with rising strings and a synth riser",
+    "drum roll at the end",
+    "getting louder into the next section"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Earth Arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers and deep sub bass",
+    "instrumental only",
+    "loud and powerful",
+    "high energy",
+    "full orchestra and synth bass hit on the first beat",
+    "warm soaring string melody over a synth pulse, noble horns",
+    "broad main theme, sustained",
+    "big and majestic"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "sparse"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Earth Surface Then Build]",
+   "duration_ms": 11000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers and deep sub bass",
+    "instrumental only",
+    "starts soft and gentle with a thin texture",
+    "only soft solo cello and felt piano over a warm pad",
+    "low energy for the first half",
+    "then a crescendo with rising strings and a synth riser",
+    "drum roll at the end",
+    "getting louder into the next section"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Mars Arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers and deep sub bass",
+    "instrumental only",
+    "loud and powerful",
+    "high energy",
+    "full orchestra and synth bass hit on the first beat",
+    "bold brass over a driving synth bass, pounding cinematic drums",
+    "broad main theme, sustained",
+    "big and majestic"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "sparse"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Mars Surface Then Build]",
+   "duration_ms": 11000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers and deep sub bass",
+    "instrumental only",
+    "starts soft and gentle with a thin texture",
+    "only soft low string ostinato with a light sub pulse",
+    "low energy for the first half",
+    "then a crescendo with rising strings and a synth riser",
+    "drum roll at the end",
+    "getting louder into the next section"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Jupiter Arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers and deep sub bass",
+    "instrumental only",
+    "loud and powerful",
+    "high energy",
+    "full orchestra and synth bass hit on the first beat",
+    "massive low brass with huge sub bass, giant drum hits",
+    "broad main theme, sustained",
+    "big and majestic"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "sparse"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Jupiter Surface Then Build]",
+   "duration_ms": 11000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers and deep sub bass",
+    "instrumental only",
+    "starts soft and gentle with a thin texture",
+    "only soft deep drone of basses and sub, slow textures",
+    "low energy for the first half",
+    "then a crescendo with rising strings and a synth riser",
+    "drum roll at the end",
+    "getting louder into the next section"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Saturn Arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers and deep sub bass",
+    "instrumental only",
+    "loud and powerful",
+    "high energy",
+    "full orchestra and synth bass hit on the first beat",
+    "grand sweeping strings with a shimmering arpeggiator, harp and bells",
+    "broad main theme, sustained",
+    "big and majestic"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "sparse"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Saturn Surface Then Build]",
+   "duration_ms": 11000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers and deep sub bass",
+    "instrumental only",
+    "starts soft and gentle with a thin texture",
+    "only soft glassy string harmonics and bell synth",
+    "low energy for the first half",
+    "then a crescendo with rising strings and a synth riser",
+    "drum roll at the end",
+    "getting louder into the next section"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Uranus Arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers and deep sub bass",
+    "instrumental only",
+    "loud and powerful",
+    "high energy",
+    "full orchestra and synth bass hit on the first beat",
+    "icy shimmering strings and bright synth textures over powerful brass",
+    "broad main theme, sustained",
+    "big and majestic"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "sparse"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Uranus Surface Then Build]",
+   "duration_ms": 11000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers and deep sub bass",
+    "instrumental only",
+    "starts soft and gentle with a thin texture",
+    "only soft thin pad and a solo clarinet",
+    "low energy for the first half",
+    "then a crescendo with rising strings and a synth riser",
+    "drum roll at the end",
+    "getting louder into the next section"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Neptune Arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers and deep sub bass",
+    "instrumental only",
+    "loud and powerful",
+    "high energy",
+    "full orchestra and synth bass hit on the first beat",
+    "dark thundering brass with heavy bass synth waves and drums",
+    "broad main theme, sustained",
+    "big and majestic"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "sparse"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Neptune Surface Then Build]",
+   "duration_ms": 12500,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers and deep sub bass",
+    "instrumental only",
+    "starts soft and gentle with a thin texture",
+    "only soft low drone and a solo horn",
+    "low energy for the first half",
+    "then the biggest build of the piece",
+    "full orchestra and synths rising",
+    "drum rolls, risers and cymbal swell",
+    "getting louder and louder"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Looking Back, Final Climax]",
+   "duration_ms": 12000,
+   "positive_styles": [
+    "60 BPM",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers and deep sub bass",
+    "instrumental only",
+    "D major",
+    "the loudest moment of the whole piece",
+    "very high energy",
+    "full orchestra and synths fortissimo",
+    "triumphant main theme",
+    "towering brass, soaring strings, deep sub bass, crashing cymbals",
+    "sustained at full power to the very end"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "soft",
+    "sparse",
+    "fade out"
+   ],
+   "context_adherence": "low"
+  }
+ ]
+}
