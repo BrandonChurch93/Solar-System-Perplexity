@@ -1,64 +1,64 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-23T20:10:11.884Z",
- "head": "f7f0b7cb2afed9456b89b5af2607530982ce32f3",
- "note": "floor 0.5 on the Mars rise at T beside floor 0.25 and the cap alone; tone split on the eighth bake rendering",
+ "pushed": "2026-11-23T20:34:29.576Z",
+ "head": "79de0c3f1bffddd73032be51cfc775cd67cbd163",
+ "note": "tone split on the eighth Mars bake: four variants across the rise and the dive; the far field of picture and globe differ in kind, not in tone",
  "looks": [
   {
-   "time": "2026-11-23T20:10:10.989Z",
-   "file": "20261123201010989-note-floor50-rimR.jpg",
-   "source": "../../../../tmp/e6/floor50-rimR.png",
+   "time": "2026-11-23T20:34:28.962Z",
+   "file": "20261123203428962-note-diff-2693.jpg",
+   "source": "../../../../tmp/tone/diff-2693.png",
    "kind": "note",
-   "label": "same nine frames, right rim at full size (x 1400 to 1920, y 330 to 690)"
+   "label": "Mars 2693: with the picture, the globe alone, difference gain 4"
   },
   {
-   "time": "2026-11-23T20:10:09.573Z",
-   "file": "20261123201009573-note-floor50-mid.jpg",
-   "source": "../../../../tmp/e6/floor50-mid.png",
+   "time": "2026-11-23T20:34:28.376Z",
+   "file": "20261123203428376-note-crop-2695-bl.jpg",
+   "source": "../../../../tmp/tone/crop-2695-bl.png",
    "kind": "note",
-   "label": "same nine frames, middle at full size (x 700 to 1220, y 380 to 740): the cliff face softens at floor 0.5"
+   "label": "Mars 2695 full size, lower left"
   },
   {
-   "time": "2026-11-23T20:10:08.543Z",
-   "file": "20261123201008543-note-floor50-rimBL.jpg",
-   "source": "../../../../tmp/e6/floor50-rimBL.png",
+   "time": "2026-11-23T20:34:27.806Z",
+   "file": "20261123203427806-note-crop-2695-br.jpg",
+   "source": "../../../../tmp/tone/crop-2695-br.png",
    "kind": "note",
-   "label": "same nine frames, bottom left rim at full size (x 0 to 520, y 700 to 1060): streak about 20 px at floor 0.25, about 40 px at floor 0.5, no copies"
+   "label": "Mars 2695 full size, lower right: the knobs of the globe beside the plates are in the globe alone too"
   },
   {
-   "time": "2026-11-23T20:10:07.266Z",
-   "file": "20261123201007266-note-floor50-whole.jpg",
-   "source": "../../../../tmp/e6/floor50-whole.png",
+   "time": "2026-11-23T20:34:27.215Z",
+   "file": "20261123203427215-note-crop-2695-tr.jpg",
+   "source": "../../../../tmp/tone/crop-2695-tr.png",
    "kind": "note",
-   "label": "Mars rise 2691, 2692 (T), 2693 at review, whole frames: cap 6 alone, cap 14 with floor 0.25, cap 14 with floor 0.5"
+   "label": "Mars 2695 full size, upper right: off, shares 1, shares 2, the globe alone"
   },
   {
-   "time": "2026-11-23T19:57:42.913Z",
-   "file": "20261123195742913-note-floor-rise-5.jpg",
-   "source": "../../../../tmp/e6/floor-rise-5.png",
+   "time": "2026-11-23T20:34:26.639Z",
+   "file": "20261123203426639-note-crop-2695-top.jpg",
+   "source": "../../../../tmp/tone/crop-2695-top.png",
    "kind": "note",
-   "label": "Mars rise with floor 0.25, review tier: 2690, 2691, 2692 (T), 2693, 2694, 2705"
+   "label": "Mars 2695 full size, upper left: off, shares 1, shares 2, the globe alone. The far field is two different pictures"
   },
   {
-   "time": "2026-11-23T19:57:42.067Z",
-   "file": "20261123195742067-note-floor-rise-2693-bl.jpg",
-   "source": "../../../../tmp/e6/floor-rise-2693-bl.png",
+   "time": "2026-11-23T20:34:25.853Z",
+   "file": "20261123203425853-note-sheet-glob-dive.jpg",
+   "source": "../../../../tmp/tone/sheet-glob-dive.png",
    "kind": "note",
-   "label": "Mars rise 2693 (globe side) bottom left at full size: cap 6 alone against floor 0.25; the strokes of the place picture soften"
+   "label": "Mars dive 2442 to 2453, eighth bake, draft, the globe alone (no place picture)"
   },
   {
-   "time": "2026-11-23T19:57:40.987Z",
-   "file": "20261123195740987-note-floor-rise-2693-br.jpg",
-   "source": "../../../../tmp/e6/floor-rise-2693-br.png",
+   "time": "2026-11-23T20:34:25.209Z",
+   "file": "20261123203425209-note-sheet-s2-dive.jpg",
+   "source": "../../../../tmp/tone/sheet-s2-dive.png",
    "kind": "note",
-   "label": "Mars rise 2693 (globe side) bottom right at full size: cap 6 alone against floor 0.25; the red at the edge is the globe beside the place picture"
+   "label": "Mars dive 2442 to 2453, eighth bake, draft, tone split shares 2"
   },
   {
-   "time": "2026-11-23T19:52:08.282Z",
-   "file": "20261123195208282-note-floor-rise-br.jpg",
-   "source": "../../../../tmp/e6/floor-rise-br.png",
+   "time": "2026-11-23T20:34:24.572Z",
+   "file": "20261123203424572-note-sheet-s1-dive.jpg",
+   "source": "../../../../tmp/tone/sheet-s1-dive.png",
    "kind": "note",
-   "label": "Mars rise 2691, 2692, 2693 with floor 0.25, bottom right at full size: the globe's red at the edge of the place picture in 2693"
+   "label": "Mars dive 2442 to 2453, eighth bake, draft, tone split shares 1"
   }
  ]
 }
