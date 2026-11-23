@@ -65,7 +65,11 @@ def share(seconds, n=240):
 
 
 if __name__ == '__main__':
-    frames = [int(a) for a in sys.argv[1:]] or [3060, 3075, 3090, 3105, 3120, 3135, 3150, 3195, 3239]
+    for a in sys.argv[1:]:
+        if a.startswith('--') and '=' in a:
+            key, val = a[2:].split('=')
+            FL[key] = float(val)
+    frames = [int(a) for a in sys.argv[1:] if not a.startswith('--')] or [3060, 3075, 3090, 3105, 3120, 3135, 3150, 3195, 3239]
     for fr in frames:
         seconds = (fr - 3060) / FPS + SHUTTER / (2 * FPS) - FL['seconds'] / 2 - SHUTTER / (2 * FPS)
         along, back, part, top, span = share(seconds)

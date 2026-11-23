@@ -46,6 +46,17 @@ def canvas_display():
     return wide[..., ::-1] / 255
 
 
+def core_display():
+    c = geom.DECK['tool']['canvas']['core']
+    k = c['scale']
+    core = cv2.imread(os.path.join(ROOT, c['file']), cv2.IMREAD_COLOR).astype(np.float32)[..., ::-1] / 255
+    assert core.shape[1] == geom.W0 * k and core.shape[0] == geom.H0 * k
+    img = canvas_display()[geom.OY:geom.OY + geom.H0, geom.OX:geom.OX + geom.W0]
+    up = cv2.resize(np.ascontiguousarray(img), (geom.W0 * k, geom.H0 * k), interpolation=cv2.INTER_CUBIC)
+    core = core + cv2.GaussianBlur(up - core, (0, 0), c['lockPx'])
+    return np.clip(core, 0, 1)
+
+
 def approved_scene():
     return inverse_filmic(srgb_to_linear(canvas_display().astype(np.float64))).astype(np.float32)
 
