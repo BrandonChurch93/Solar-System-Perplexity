@@ -5,9 +5,10 @@ Every file under `public/assets/uranus/full/` has a twin under `public/assets/ur
 Input made once for several assets: `out/work/u/hero-2x.png`, the approved hero at twice its size.
 - Tool: `python3 tools/ml/upscale.py --in references/approved/uranus-hero.png --out out/work/u/hero-2x.png --width 5632` (the repo's upscaler, see `tools/ml/MODELS.md`). No prompt.
 
-## wrap-color.jpg, wrap-cloud.png, light.bin, shade.bin
+## wrap-color.jpg, wrap-cloud.png, wrap-shadow.png, light.bin, shade.bin
 
-- Output: `wrap-color.jpg` (8192 x 4096 full, 4096 x 2048 web), `wrap-cloud.png` (cloud alpha in red, cloud shadow in green, same sizes), `wrap-shadow.png` (the green channel of `wrap-cloud.png` as one grey channel, bit for bit, written by `python3 assets-src/uranus/place/pack.py shadow`; the globe loads both as one channel textures, which saves 89.5 MB), `light.bin` (513 x 128 x 4 float: light by sun cosine and view cosine), `shade.bin` (512 x 256 x 4 float: world-fixed light map).
+- Output: `public/assets/uranus/<set>/wrap-color.jpg` (8192 x 4096 full, 4096 x 2048 web), `public/assets/uranus/<set>/wrap-cloud.png` (cloud alpha in red, cloud shadow in green, same sizes), `public/assets/uranus/<set>/light.bin` (513 x 128 x 4 float: light by sun cosine and view cosine), `public/assets/uranus/<set>/shade.bin` (512 x 256 x 4 float: world-fixed light map).
+- Output: `public/assets/uranus/<set>/wrap-shadow.png` (8192 x 4096 full, 4096 x 2048 web, one grey channel). Source: the green channel of `public/assets/uranus/<set>/wrap-cloud.png` of the same set, bit for bit. Tool: `python3 assets-src/uranus/place/pack.py shadow` (PIL only, writes both sets, about 20 seconds). No prompt, no generation, no takes: the one run is kept. Why: the globe loads the cloud and its shadow as two textures of one channel each, which saves 89.5 MB of the set's memory. Check: `python3 -c "from PIL import Image; import numpy as np; a=np.asarray(Image.open('public/assets/uranus/full/wrap-cloud.png'))[...,1]; b=np.asarray(Image.open('public/assets/uranus/full/wrap-shadow.png')); print(int((a ^ b).max()))"` prints 0.
 - Tool: numpy, OpenCV and SciPy only, no model. Run in this order:
   `python3 assets-src/uranus/wrap/stage_a.py`, `stage_a2.py`, `stage_b.py`, `stage_c.py`, `stage_d.py`, `stage_e.py`, `stage_f.py`, `stage_g.py`.
 - Inputs: `out/work/u/hero-2x.png`, `references/approved/uranus-hero.png`.
@@ -154,7 +155,8 @@ Input made once for several assets: `out/work/u/hero-2x.png`, the approved hero 
 
 ## patch-1.jpg to patch-4.jpg
 
-- Output: `public/assets/uranus/<set>/patch-1.jpg` to `patch-4.jpg`, 4096 px square in `full`, 2048 px in `web`, and the table `src/stops/uranus/patches.json`.
+- Output: `public/assets/uranus/<set>/patch-1.jpg` and `public/assets/uranus/<set>/patch-2.jpg` (4096 px square in `full`, 2048 px in `web`), `public/assets/uranus/<set>/patch-3.jpg` (3008 px in `full`, 1504 px in `web`) and the table `src/stops/uranus/patches.json`. `patch-4.jpg` is written by the tool but not shipped.
+- `public/assets/uranus/<set>/patch-3.jpg` as shipped. Source: the `public/assets/uranus/full/patch-3.jpg` that `patches.py` wrote (4096 px, read from git at the commit `patchCommit` of `assets-src/uranus/place/plates.json`, cf300549), with the same generated take as the other patches (asset `dive-detail`, below, take 1 of 6 kept). Tool: `python3 assets-src/uranus/place/pack.py patch` (PIL, Lanczos, no chroma subsampling, JPEG quality 93 for `full` and 92 for `web`; the size 3008 is `patchFine` in the same table; `web` is half of it, made from the same 4096 px source). No prompt, no new generation, no takes: the one run is kept. Why: the memory limit of the set; the plates of the place cover the middle of this patch, so only its rim is seen.
 - Shipped since 2026-11-23: `patch-1.jpg` and `patch-2.jpg` exactly as `patches.py` wrote them (the hold reads them, so their bytes are the bytes of main), and `patch-3.jpg` brought down to 3008 px (1504 px in `web`) by `python3 assets-src/uranus/place/pack.py patch` from the file of commit cf300549 (`patchFine` in `assets-src/uranus/place/plates.json`). `patch-4.jpg` is not shipped: the plates of the place cover its ground. Seven levels in all on the way down: the wrap, three patches, plates 2 to 4 (plate 1 lies under plate 2 and shows only in the rim of the mask).
 - Tool: `npx tsx assets-src/uranus/dive/spot.ts` (writes `assets-src/uranus/dive/spot.json`: the patch centre `spot` in the frame of the wrap, set by `CENTRE_DEG` [34, -24.5] as longitude and latitude; the engine's ground spot as `ground`, the heading, the unit of the terrain view), then `python3 assets-src/uranus/dive/patches.py` (`preview` as first argument writes only centre crops to `out/work/u/dive/`).
 - Inputs: `out/work/u/wrap/wrap-albedo-f.npy` (the float albedo of the wrap, written by `wrap/stage_c.py` and softened in its small dots by `wrap/stage_f.py`), `assets-src/uranus/dive/spot.json`, and the generated cloud detail `out/work/u/gen/dive-take1-2x.png` (asset `dive-detail`, below).
@@ -188,9 +190,9 @@ Input made once for several assets: `out/work/u/hero-2x.png`, the approved hero 
 
 ## place-1.png, place-2.jpg to place-4.jpg, place-field.bin
 
-- Output: `public/assets/uranus/<set>/place-2.jpg` to `place-4.jpg` (4096 px square in `full`, 2048 px in `web`, albedo coded as `sqrt(A / aMax)`), `place-1.png` (2048 px in `full`, 1024 px in `web`, `wideSize`: the widest plate in the same code in rgb and the cloud tops in alpha, lossless), `place-field.bin` (256 x 256 x 4 float) and the table `src/stops/uranus/plates.json`. The patches are not written by this tool any more: the repaint of `patch-1.jpg` and `patch-2.jpg` under the mask changed one pixel of the judged hold frame 4035 at the final tier, so it is gone.
+- Output: `public/assets/uranus/<set>/place-2.jpg`, `public/assets/uranus/<set>/place-3.jpg` and `public/assets/uranus/<set>/place-4.jpg` (4096 px square in `full`, 2048 px in `web`, albedo coded as `sqrt(A / aMax)`), `public/assets/uranus/<set>/place-1.png` (2048 px in `full`, 1024 px in `web`, `wideSize`: the widest plate in the same code in rgb and the cloud tops in alpha, lossless), `public/assets/uranus/<set>/place-field.bin` (256 x 256 x 4 float) and the table `src/stops/uranus/plates.json`. The patches are not written by this tool any more: the repaint of `patch-1.jpg` and `patch-2.jpg` under the mask changed one pixel of the judged hold frame 4035 at the final tier, so it is gone.
 - Tool: `python3 assets-src/uranus/place/layback.py 4096 0 --write` (about 8 minutes; the raw lay backs are cached in `out/work/u/place/laid-N-4096.npz`, and `--reuse --write` bakes from them in about 4 minutes; `--reuse --write --tops` writes only the alpha of `place-1.png` again from `out/work/u/place/place-1.png`, about 10 seconds). It packs plate 1 through `pack.plate` of `assets-src/uranus/place/pack.py`. Every number is in `assets-src/uranus/place/plates.json`. No generated image. Never run it beside a render (memory).
-- The `place-1.png` of 2026-11-23 13:56 UTC was packed by `python3 assets-src/uranus/place/pack.py plate` from the `place-1.jpg` (4096 px) and the `place-tops.png` (2048 px) of commit b0c9e2b0, not baked again: the same forms at half the size, for the memory limit (the set was 1512.5 MB of 1400).
+- `public/assets/uranus/<set>/place-1.png` as shipped (2026-11-23 13:56 UTC). Source: plate 1 and its tops map as `layback.py` baked them, no generated image, code only (takes of the tops: 2, take 2 kept, see below). It was packed by `python3 assets-src/uranus/place/pack.py plate` from the `place-1.jpg` (4096 px) and the `place-tops.png` (2048 px) of commit b0c9e2b0, not baked again: the same forms at half the size, for the memory limit (the set was 1512.5 MB of 1400).
 - Inputs: the deck's own files and tables (`deck-color.jpg`, `deck-near.jpg`, `deck-far.jpg`, `src/stops/uranus/deck.json`, `deck-near.json`), `wrap-color.jpg`, `patch-1.jpg` to `patch-4.jpg` of commit cf300549, `assets-src/uranus/dive/spot.json`.
 - What it does:
   - Lays the ground of the close view back onto the globe: four nested gnomonic plates centred 1 unit ahead of the deck's up point (1 unit is 0.015133 R), half tangent 0.28 halved per level, holding the albedo the deck shader shades, sampled through pyramids at the level the plate texel needs.
@@ -218,21 +220,22 @@ Every file the set loads, in both sets (`<set>` is `full` or `web`), with the se
 - `public/assets/uranus/<set>/deck-rings.bin`: section "deck-rings.bin"
 - `public/assets/uranus/<set>/face.jpg`: section "face.jpg"
 - `public/assets/uranus/<set>/halo.bin`: section "halo.bin"
-- `public/assets/uranus/<set>/light.bin`: section "wrap-color.jpg, wrap-cloud.png, light.bin, shade.bin"
+- `public/assets/uranus/<set>/light.bin`: section "wrap-color.jpg, wrap-cloud.png, wrap-shadow.png, light.bin, shade.bin"
 - `public/assets/uranus/<set>/miranda-color.jpg`: section "miranda-color.jpg, miranda-height.bin, ariel-color.jpg, ariel-height.bin"
 - `public/assets/uranus/<set>/miranda-height.bin`: section "miranda-color.jpg, miranda-height.bin, ariel-color.jpg, ariel-height.bin"
 - `public/assets/uranus/<set>/patch-1.jpg`: section "patch-1.jpg to patch-4.jpg"
 - `public/assets/uranus/<set>/patch-2.jpg`: section "patch-1.jpg to patch-4.jpg"
-- `public/assets/uranus/<set>/place-1.jpg`: section "place-1.jpg to place-4.jpg, place-field.bin, place-tops.png"
-- `public/assets/uranus/<set>/place-2.jpg`: section "place-1.jpg to place-4.jpg, place-field.bin, place-tops.png"
-- `public/assets/uranus/<set>/place-3.jpg`: section "place-1.jpg to place-4.jpg, place-field.bin, place-tops.png"
-- `public/assets/uranus/<set>/place-4.jpg`: section "place-1.jpg to place-4.jpg, place-field.bin, place-tops.png"
-- `public/assets/uranus/<set>/place-field.bin`: section "place-1.jpg to place-4.jpg, place-field.bin, place-tops.png"
-- `public/assets/uranus/<set>/place-tops.png`: section "place-1.jpg to place-4.jpg, place-field.bin, place-tops.png"
+- `public/assets/uranus/<set>/patch-3.jpg`: section "patch-1.jpg to patch-4.jpg"
+- `public/assets/uranus/<set>/place-1.png`: section "place-1.png, place-2.jpg to place-4.jpg, place-field.bin"
+- `public/assets/uranus/<set>/place-2.jpg`: section "place-1.png, place-2.jpg to place-4.jpg, place-field.bin"
+- `public/assets/uranus/<set>/place-3.jpg`: section "place-1.png, place-2.jpg to place-4.jpg, place-field.bin"
+- `public/assets/uranus/<set>/place-4.jpg`: section "place-1.png, place-2.jpg to place-4.jpg, place-field.bin"
+- `public/assets/uranus/<set>/place-field.bin`: section "place-1.png, place-2.jpg to place-4.jpg, place-field.bin"
 - `public/assets/uranus/<set>/rings.bin`: section "rings.bin"
-- `public/assets/uranus/<set>/shade.bin`: section "wrap-color.jpg, wrap-cloud.png, light.bin, shade.bin"
+- `public/assets/uranus/<set>/shade.bin`: section "wrap-color.jpg, wrap-cloud.png, wrap-shadow.png, light.bin, shade.bin"
 - `public/assets/uranus/<set>/sky-hold.webp`: section "sky-hold.webp, veil.webp"
 - `public/assets/uranus/<set>/sky-terrain.webp`: section "sky-terrain.webp"
 - `public/assets/uranus/<set>/veil.webp`: section "sky-hold.webp, veil.webp"
-- `public/assets/uranus/<set>/wrap-cloud.png`: section "wrap-color.jpg, wrap-cloud.png, light.bin, shade.bin"
-- `public/assets/uranus/<set>/wrap-color.jpg`: section "wrap-color.jpg, wrap-cloud.png, light.bin, shade.bin"
+- `public/assets/uranus/<set>/wrap-cloud.png`: section "wrap-color.jpg, wrap-cloud.png, wrap-shadow.png, light.bin, shade.bin"
+- `public/assets/uranus/<set>/wrap-color.jpg`: section "wrap-color.jpg, wrap-cloud.png, wrap-shadow.png, light.bin, shade.bin"
+- `public/assets/uranus/<set>/wrap-shadow.png`: section "wrap-color.jpg, wrap-cloud.png, wrap-shadow.png, light.bin, shade.bin"
