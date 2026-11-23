@@ -1,0 +1,9 @@
+{
+  "about": "The levels of the patch pyramid from index `from` on are plates of the place. Inside `deg` (inner, outer, degrees from the spot) they carry their own light: the ground as the close view shows it at the handover, laid back and repainted by assets-src/mercury/place, before the lift and knee of the carry. There the plate holds that picture divided by `gain`.",
+  "from": 1,
+  "deg": [
+    10,
+    15
+  ],
+  "gain": 0.5
+}
