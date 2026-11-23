@@ -1766,3 +1766,71 @@ small orange specks; not flat. Shading toward the limb is still missing before 3
   engine sha and the span of each machine.
 - Disk: 3.2 GB free at 22:05 (renders refuse under 3). Old picture folders in /tmp/v removed (kept: kept, hold,
   r12, r17 to r21, g13, the scripts); 4.9 GB free after.
+
+## 22:10 to 22:32 UTC: main 1ce3137 merged, the second review note, the answer to mail 350, mail 362
+
+Mail 350 (22:19): E6 is on main 1ce3137125360e48c107dce6a95a431b815b4a15. Brandon's second review note
+(kit/PROGRESS.md "Second review note of 2026-11-23", decision d147) in the Builder's words: E one pace through
+each move, no dent at the change of view. F one scene through the change of view, nothing comes in by time
+(blends only by distance, height or angle), the close view drawn on the globe from the height where it first
+shows, relief real where it can be seen, the place picture retired. G no surface view is a picture that is
+pushed, bent or rippled. H he captures the film himself at 3840 by 2160 and 60 frames a second, frame by frame,
+so every motion must hold between frames (nothing snaps to a whole frame, no state from frame to frame) and the
+cost of drawing a frame is no limit. The timetable of 22:00 and 22:45 is void; no round is spent on a build made
+before the note; three rounds per stop for it. For Saturn: the ring plane, the deck and the shadow of the rings
+on the globe are the same functions from the hold to the surface view and back, the rings are particles and gaps
+with depth near the lens, the deck is cloud with height, nothing fades by frame number, and the pace is one
+move. Plan E limits: the change of rate a film frame at most 0.08 of the move's mean; after its peak the rate
+never climbs again by more than 0.03, before it never falls by more than 0.03; the same at both seams.
+`npm run smooth -- --stop saturn` and `npm run capture` are not on main yet. A round starts when a commit is
+named, the take check is clean and the smooth report is green.
+
+Mail 362 (22:30): model.ts `take = shutterFraction / fps / samples` is the film's shutter and not the drawn
+frame's, twice too long at rate 2. travel_builder gives a helper with its first commit (about 23:45 UTC): the
+drawn frame's shutter in seconds, on the view or the shot, the same bytes at rate 1. Use it as soon as it is on
+main and say so in a report.
+
+Done in this span:
+- Merge c1be190 (`git fetch --depth 40 origin main; git merge FETCH_HEAD`), nothing outside the three folders
+  differs from main.
+- The step of 3832 measured on main's E6 (review, one process, 24 samples, the pictures of c984dd4): shutter
+  0.7586 at 3831, 0.6395 at 3832 (motion 18.5 then 21.9 px). Lower left quarter fine contrast 0.075, 0.084,
+  0.083, 0.083 for 3831 to 3834; mean R 0.687, 0.678, 0.673, 0.668. In the box of the Builder's clip the means
+  slide evenly (0.694, 0.684, 0.673, 0.664, 0.657 for 3828 to 3836). What the eye takes for a jump there is the
+  sheet's near light (handover.kept.reach 0.6 to 1.3 radii a pixel) leaving the frame: the nearest ring point
+  in frame is 0.558 at 3826, 0.601 at 3828, 0.648 at 3830, 0.699 at 3832, 0.754 at 3834, 0.948 at 3840, 1.107
+  at 3844, 1.297 at 3848 (0.671 at 3720, 0.447 at 3814). That is open item 7, a tone that slides.
+- The model alone at the hold (temp switch, draft): against the approved hero plain 12.316, blurred 5.915 (the
+  kept set at draft 5.547 and 2.158); the model against the kept set 9.608 at 3465, 9.969 at 3539. The hero's
+  ring layout is not a rigid plane round the globe (the true rings are larger in frame). The kept set morphs
+  its layout by pose from 3562 to 3588 (heroRange 0.6 to 1.6).
+- The pace as it is (out/scratch/pace.ts), change of rate a frame over the mean: 0.100 at 3549 in the dive and
+  0.164 at 3875 in the rise by distance to the deck; 0.136 at 3550 and 0.113 at 3820 by height. The rise by
+  distance to the deck runs backward (to -0.24 of the mean) until about 3822, peak 2.33 at 3863; dive peak
+  1.221 at 3557.
+- The by time list (what the note forbids): (i) set.ts shares the kept set and the model by time (0.534 to 0.578
+  of the dive); (ii) model.ts `farW` (handover.kept.far 0.578 to 0.978 of the dive); (iii) the kept set's
+  streak fade and uSolid by 0.6 s after the hold's end; (iv) the sky patches by skyFrames; (v) the sky gain
+  skim.skyNear by diveShare and riseShare; (vi) `take` from the film's shutter.
+
+The answer to mail 350 went at 22:30 (high): (a) the surface view has no pushed picture; two rigid pictures
+remain (the 8192 globe map with its zonal drift look.globe.drift 0.2 degrees a second, his word asked for; the
+sky patch). (b) Nothing under 0.05 radii is modelled as a body; the deck and the sheet far from the lens are
+flat. (c) The plan, in order, hours on the Builder's clock:
+1. (looks 23:25) nothing by time: (i) to (vi) above onto distance, height or pose; the pace of both moves under
+   the limits of plan E.
+2. (23:55) one look of the rings: the near light takes the far look's tone, only ringlets, sand and grains
+   resolve by the footprint of the pixel. Numbers of 3720 before and after.
+3. (00:50) the deck with height: a cloud top height field from the band functions, marched in the globe's
+   shader on the ellipsoid, with the Sun's shadow at the terminator, from the distance where it moves a pixel;
+   one lighting of the globe near and far.
+4. (01:50) one set: the kept set's hold layout by pose into the model's field, the kept shaders go. Asked
+   whether to keep the kept set and spend the time on 2 and 3.
+5. depth in the sheet near the lens (gaps with walls, soft thickness), after 3; grains `largest` to an angle,
+   point size at 2160.
+(d) Whole frame items named: `take` (film shutter), the samples count, skyFrames.
+
+Open list (numbering kept): 1 globe near the lens (function in; limb shading and pale flat lit face open).
+2 brake at the end of the rise. 3 moon pop 3586 to 3590. 4 stars through the shaded rings. 5 wedge with sawtooth
+edge through the Cassini division 3630 to 3690. 6 fit at 3720. 7 ring tone slides with height 3840 to 3864 and
+by distance 3826 to 3848. 8 draft and review differ in the rise (take must use the engine's shutter).
