@@ -1,9 +1,31 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-23T16:37:21.914Z",
+ "pushed": "2026-11-23T17:10:20.351Z",
  "head": "46ba063ef015d4d02814cfe012dcaa94725c97c7",
- "note": "16:40 new 0.7 and 1.6 takes in the look of the picture (cure for the flecks round the picture); G13 of the new rise path running, bake after it",
+ "note": "17:10 sixth bake running (0.7 take 3, 1.6 take 4, match floor); G13 of the new rise path passed (worst 0.0190 at 2719)",
  "looks": [
+  {
+   "time": "2026-11-23T17:10:19.262Z",
+   "file": "20261123171019262-note-p0.7-twin.jpg",
+   "source": "out/work/place/plate/p0.7-twin.jpg",
+   "kind": "note",
+   "label": "0.7 deg plate with take 3 seen from the twin (above) over the place picture (below), force.py's own view, before the bake",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T16:41:29.055Z",
+   "file": "20261123164129055-job-frame-02618.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "mars.terrain frame 2618, draft tier, texels view, from the running measure job",
+   "stop": "mars",
+   "segment": "mars.terrain",
+   "frame": 2618,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-23T16:37:20.893Z",
    "file": "20261123163720893-note-p16-take4-vs-lead.jpg",
@@ -75,28 +97,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "e85c8d53a860dafc"
-  },
-  {
-   "time": "2026-11-23T16:18:08.993Z",
-   "file": "20261123161808993-frame-f02782-draft.jpg",
-   "source": "out/work/samebytes/r5/f02782-draft.png",
-   "kind": "frame",
-   "label": "mars.travel frame 2782, draft tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "frame": 2782,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e85c8d53a860dafc"
-  },
-  {
-   "time": "2026-11-23T16:17:32.535Z",
-   "file": "20261123161732535-note-cmp-2446-n-r.jpg",
-   "source": "out/work/place/view/cmp-2446-n-r.jpg",
-   "kind": "note",
-   "label": "frame 2446 draft: 08ae5f44 (left) against the fifth bake with edgeIn (right), whole frame and the middle at full size: the new plates show light flecks through the shadowed mesa, worse there",
-   "stop": "mars"
   }
  ]
 }
