@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { afterAll, describe, expect, it } from 'vitest'
 import * as THREE from 'three'
 import { config, type Segment } from '../src/config'
 import { seenShare } from '../src/core/motion'
@@ -7,13 +7,13 @@ import { FilmDirector } from '../src/director/film'
 import { StopPlan, type Fit, type MoveParams } from '../src/director/moves'
 import { plans } from '../src/director/plans'
 import { coverWindow } from '../src/director/timeline'
-import { params } from '../src/stops/mars/plan'
-import fit from '../src/stops/mars/fit.json'
+import { coveredFit as fit, coveredParams, restorePlans } from './lib/covered'
 import { coverReaches } from '../src/terrain/cover'
 
 const seg = (stop: string, kind: string): Segment => config.segments.find((s) => s.stop === stop && s.kind === kind)!
 const at = (d: FilmDirector, f: number): Shot => d.shotAt(Math.floor(f), f / config.fps)
 const withMars = (plan: StopPlan): FilmDirector => new FilmDirector(plans.map((p) => (p.id === 'mars' ? plan : p)))
+const params = coveredParams()
 const bare = (): MoveParams => {
   const p: MoveParams = { ...params, light: { ...params.light } }
   delete p.skyTurnEase
@@ -21,6 +21,8 @@ const bare = (): MoveParams => {
   return p
 }
 const base = new StopPlan('mars', fit as Fit, bare())
+
+afterAll(() => restorePlans())
 const plain = withMars(base)
 const moves = ['dive', 'rise'] as const
 const apart = (a: THREE.Quaternion, b: THREE.Quaternion): number => {

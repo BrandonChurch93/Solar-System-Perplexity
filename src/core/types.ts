@@ -41,6 +41,23 @@ export interface CoverRush { focus: [number, number]; phase: number; billow: [nu
 export interface CoverShell { centre: [number, number, number]; inner: number; outer: number }
 export interface CoverState { amount: number; color: [number, number, number]; low?: [number, number, number]; horizon?: CoverHorizon; flow?: [number, number]; top?: number; rush?: CoverRush; shell?: CoverShell; hides?: number; hidden?: number }
 
+export interface PlaceState {
+  stop: string
+  kind: 'dive' | 'rise'
+  weight: number
+  frame: number
+  time: number
+  live: boolean
+  twin: Pose
+  centre: THREE.Vector3
+  radius: number
+  scale?: number
+  margin?: number
+  matte?: 'pair' | 'alpha'
+  valid?: [number, number, number, number]
+  lens?: number
+}
+
 export interface Shot {
   frame: number
   time: number
@@ -62,6 +79,8 @@ export interface Shot {
   cover: CoverState
   dust: number
   farLight?: number
+  place?: PlaceState
+  skyShare?: number
 }
 
 export interface TextureOptions { srgb?: boolean; mips?: boolean; repeat?: boolean; mirror?: boolean; anisotropy?: number; flipY?: boolean; linear?: boolean }
@@ -76,7 +95,7 @@ export interface SetContext {
   floatTexture(data: Float32Array, width: number, height: number, repeat?: boolean): THREE.DataTexture
 }
 
-export interface RenderView { camera: THREE.PerspectiveCamera; diag: string; format: FormatDef; sample: number; samples: number; cameraPosition: THREE.Vector3; farLight?: number }
+export interface RenderView { camera: THREE.PerspectiveCamera; diag: string; format: FormatDef; sample: number; samples: number; cameraPosition: THREE.Vector3; farLight?: number; place?: boolean; placeScale?: number }
 
 export interface SkyPatch {
   view: ViewKind
@@ -95,6 +114,7 @@ export interface StopSet {
   id: string
   world: THREE.Object3D
   near?: THREE.Object3D
+  over?: THREE.Object3D
   sky?: SkyPatch[]
   update(state: SetState, shot: Shot, view: RenderView): void
   dispose(): void
