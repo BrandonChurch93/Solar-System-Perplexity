@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T10:34:28.202Z",
+ "pushed": "2026-11-23T10:34:51.081Z",
  "head": "1c4e948a77b3e36067ef7d7e12c0e76fb1c866b1",
- "note": "S4 first render: cover gone, T agrees, dive Sun between 694 and 720 broken, plates third pass in work",
+ "note": "S4 first render: cover gone, T agrees, dive Sun 694 to 720 broken, plates third pass in work",
  "looks": [
+  {
+   "time": "2026-11-23T10:34:50.499Z",
+   "file": "20261123103450499-note-r2-b.jpg",
+   "source": "tmp/r2-b.jpg",
+   "kind": "note",
+   "label": "dive r2 draft, 736 to 780, old plates: T frames 743 744 745 agree, pale slabs are the old plates",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T10:34:49.586Z",
+   "file": "20261123103449586-note-r2-a.jpg",
+   "source": "tmp/r2-a.jpg",
+   "kind": "note",
+   "label": "dive r2 draft, 615 to 732, cover removed: Sun crop of the orbit sky patch bare at 702 and 708 (broken, being fixed)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-23T10:34:27.100Z",
    "file": "20261123103427100-note-L2-lead-view.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/mercury/place/repaint/L4-whole-b.jpg",
    "kind": "note",
    "label": "S2 level 4 (9.5 deg) take a1: lead left, repaint right; lower left tile invented craters, retaken as a2",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T09:43:33.075Z",
-   "file": "20261123094333075-note-L3-whole-b.jpg",
-   "source": "out/work/mercury/place/repaint/L3-whole-b.jpg",
-   "kind": "note",
-   "label": "S2 level 3 (19 deg) take a1 with the night side kept from the lead: lead left, repaint right",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T09:20:58.550Z",
-   "file": "20261123092058550-note-L2-crop-a4.jpg",
-   "source": "out/work/mercury/place/repaint/L2-crop-a4.jpg",
-   "kind": "note",
-   "label": "level 2 take a4 built, 1:1 crop at the place",
    "stop": "mercury"
   }
  ]
