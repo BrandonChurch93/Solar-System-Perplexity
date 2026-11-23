@@ -110,6 +110,10 @@ void main() {
 
 const SAMPLERS = Array.from({ length: MAX_LEVELS }, (_, i) => 'uniform sampler2D uPatch' + i + ';').join('\n')
 
+// The texel count of the texels view (diag only, no colour depends on it). A level of the globe's own pyramid counts where its weight is
+// at least a half. A shown plate counts by what is drawn of it, its weight times its alpha, summed from the deepest plate up: the plate at
+// which half of the pixel is reached sets the count. Until 23 Nov 15:50 a shown plate counted by its weight alone, also where its alpha had
+// ended (the corners of the widest plate's square), so the view called ground sharp that only the globe's own levels drew.
 const weights = (shownFrom: number): string => Array.from({ length: MAX_LEVELS }, (_, i) => i < shownFrom ? `    if (uPatchCount > ${i}.5) {
       vec2 q = g * uPatchScale[${i}];
       w${i} = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent));
@@ -119,7 +123,7 @@ const weights = (shownFrom: number): string => Array.from({ length: MAX_LEVELS }
       vec2 q = (g - uPatchOff[${i}]) * uPatchScale[${i}];
       w${i} = shown * front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y)))${i === shownFrom ? '' : ' * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent))'};
       parent = gd * uPatchScale[${i}] * uPatchSize[${i}];
-      texels = mix(texels, parent, step(0.5, w${i}));
+      t${i} = parent;
     }`).join('\n')
 
 const fetches = (shownFrom: number): string => Array.from({ length: MAX_LEVELS }, (_, n) => MAX_LEVELS - 1 - n).map((i) => i < shownFrom ? `  float k${i} = w${i} * rest;
@@ -128,7 +132,9 @@ const fetches = (shownFrom: number): string => Array.from({ length: MAX_LEVELS }
   for (int k = 0; k < (k${i} > 0.0 ? 1 : 0); k++) {
     vec4 plate = textureGrad(uPatch${i}, (g - uPatchOff[${i}]) * uPatchScale[${i}] + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]);
     gShown += vec4(plate.rgb, 1.0) * (k${i} * plate.a);
-  }`).join('\n')
+  }
+  texels = mix(texels, t${i}, step(0.5, gShown.a) * (1.0 - counted));
+  counted = max(counted, step(0.5, gShown.a));`).join('\n')
 
 const frag = (shownFrom: number): string => /* glsl */ `
 precision highp float;
@@ -300,9 +306,10 @@ vec4 layerAt(vec3 dd, float soft, float shown, out float texels) {
   gy *= uGrad * soft;
   float front = step(0.3, dn);
   float parent = texels;
-${Array.from({ length: MAX_LEVELS }, (_, i) => '  float w' + i + ' = 0.0;').join('\n')}
+${Array.from({ length: MAX_LEVELS }, (_, i) => '  float w' + i + ' = 0.0;\n  float t' + i + ' = 0.0;').join('\n')}
 ${weights(shownFrom)}
   float rest = 1.0;
+  float counted = 0.0;
   vec4 c = vec4(0.0);
   gShown = vec4(0.0);
   gToneUv = (g - uPatchOff[${Math.min(shownFrom, MAX_LEVELS - 1)}]) * uPatchScale[${Math.min(shownFrom, MAX_LEVELS - 1)}] + 0.5;

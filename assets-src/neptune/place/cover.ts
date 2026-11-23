@@ -1,6 +1,8 @@
 // Where the plates have to lie: the texel count of the globe's patch chain per frame, by code, no render.
-// npx tsx assets-src/neptune/place/cover.ts dive|rise [--from F --to F] [--set "4:16:1.5,-2.5:3520;3:26:0,0:3392"] [--step 12] [--map]
-// It follows planet.ts (layerAt and weights): gnomonic coordinates about the spot, a level counts where its weight is at least a half.
+// npx tsx assets-src/neptune/place/cover.ts dive|rise [--from F --to F] [--set "4:16:0,-1.5:3520;3:26:0,0:3392"] [--ring 12,14.5] [--step 12] [--map FRAME] [--all]
+// It follows planet.ts (layerAt, weights, fetches): gnomonic coordinates about the spot. A level of the globe's own pyramid counts where its
+// weight is at least a half. A shown plate counts by what is drawn of it: its weight times its alpha (the ring of patches.json place.ringDeg,
+// degrees from the spot, which every deeper plate has from its parent), deepest first; the plate at which half of the pixel is reached sets the count.
 // The close layer of the globe side is not in it, so near T the share here is an upper bound. Compare with the texels view before trusting a number.
 import * as THREE from 'three'
 import { config } from '../../../src/config'
@@ -20,7 +22,7 @@ const fps = config.fps
 const from = Number(opt('from') ?? seg.firstFrame)
 const to = Number(opt('to') ?? seg.endFrame - 1)
 const step = Number(opt('step') ?? 12)
-const ring = opt('alpha') !== undefined ? Number(opt('alpha') || 11.25) : 0
+const ring = (opt('ring') ? opt('ring')!.split(',').map(Number) : (patches.place as { ringDeg?: number[] }).ringDeg ?? [10, 12.5]) as [number, number]
 const W = 1920
 const H = 1080
 const MAP = 8192
@@ -95,6 +97,9 @@ function frame(f: number): { counted: number; soft: number; rows: string[]; unde
       let parent = texels
       let finest = -1
       const front = g[2] >= 0.3 ? 1 : 0
+      const alpha = 1 - smooth(ring[0], ring[1], THREE.MathUtils.radToDeg(Math.atan(Math.hypot(g[0], g[1]))))
+      const ws: number[] = []
+      const ts: number[] = []
       for (let i = 0; i < levels.length; i++) {
         const l = levels[i]!
         const scale = 1 / (2 * Math.tan(rad(l.widthDeg) / 2))
@@ -103,11 +108,16 @@ function frame(f: number): { counted: number; soft: number; rows: string[]; unde
         const qy = (g[1] - (shownLevel ? Math.tan(rad(l.off[1])) : 0)) * scale
         const inside = 1 - smooth(0.5 - feather, 0.5, Math.max(Math.abs(qx), Math.abs(qy)))
         const gate = i === shownFrom ? 1 : 1 - smooth(fade[0], fade[1], parent)
-        // --alpha: a shown plate counts only where it is drawn at more than half, inside the ring where its alpha ends (shown.py RING, 10 to 12.5 degrees from the spot).
-        const drawn = shownLevel && ring ? (THREE.MathUtils.radToDeg(Math.atan(Math.hypot(g[0], g[1]))) < ring ? 1 : 0) : 1
-        const w = (shownLevel ? shown : 1) * front * inside * gate * drawn
+        const w = (shownLevel ? shown : 1) * front * inside * gate
         parent = gd * scale * l.texels
-        if (w >= 0.5) { texels = parent; finest = i }
+        ws.push(w)
+        ts.push(parent)
+        if (!shownLevel && w >= 0.5) { texels = parent; finest = i }
+      }
+      let drawn = 0
+      for (let i = levels.length - 1; i >= shownFrom; i--) {
+        drawn += ws[i]! * (1 - drawn) * alpha
+        if (drawn >= 0.5) { texels = ts[i]!; finest = i; break }
       }
       const isSoft = texels < config.raw.detail.minTexelsPerPixel
       if (isSoft) {
