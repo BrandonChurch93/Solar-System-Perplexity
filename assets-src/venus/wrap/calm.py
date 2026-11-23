@@ -133,5 +133,5 @@ for key in ('full', 'web'):
     out = wrap(key)
     if key == 'full':
         cv2.imwrite(WORK + '/wrap/calm-view.jpg', cv2.resize(out, (2048, 1024), interpolation=cv2.INTER_AREA))
-    for tag, deg in (('a', 90.0), ('b', 53.13010235), ('c', 28.07248694), ('d', 14.25003270)):
+    for tag, deg in (('a', 90.0), ('b', 53.13010235)):  # levels c and d are no files of the film any more
         patch(tag, deg, key)

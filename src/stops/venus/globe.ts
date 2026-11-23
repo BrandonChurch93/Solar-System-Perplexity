@@ -3,12 +3,13 @@ import { HAZE_GLSL, hazeUniforms, type HazeParams } from '../../bodies/haze'
 import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { EQUIRECT_GLSL } from '../../space/sky'
-import { wrap } from './assets'
+import { place as placeDef, wrap } from './assets'
 import holdJson from './hold.json'
 import { HOLD_RIM_GLSL, LIMB, LIMB_GLSL, type HoldRim } from './rim'
 
-// Sixteen samplers is all a browser has to give a fragment shader: six of the globe, these four, five place plates and the tone map of the place.
-export const MAX_PATCHES = 4
+// Sixteen samplers is all a browser has to give a fragment shader: six of the globe, these two, five place plates and the tone map of the place.
+// Two are left.
+export const MAX_PATCHES = 2
 export const MAX_CELLS = 16
 
 export interface GlobePatches {
@@ -20,6 +21,7 @@ export interface GlobePatches {
 }
 
 export const PLACE_LEVELS = 5
+if (placeDef.levels.length !== PLACE_LEVELS) throw new Error('the globe shader is written for ' + PLACE_LEVELS + ' levels of the place')
 
 export interface GlobePlace {
   textures: THREE.Texture[]
@@ -105,11 +107,27 @@ const PATCH_LEVELS = Array.from({ length: MAX_PATCHES }, (_, i) => `    if (uPat
 
 const PLACE_SAMPLERS = Array.from({ length: PLACE_LEVELS }, (_, i) => 'uniform sampler2D uPlace' + i + ';').join('\n')
 
+// A level with colourOf holds its light alone, as a share of the light of the plate of the level colourOf at the same ground point
+// (plates.json, lightNote): the film shows that plate times the channel. That plate was sampled just before where it shows; where
+// it does not, it is sampled here.
+const COLOUR_GIVERS = [...new Set(placeDef.levels.map((l) => l.colourOf).filter((j) => j >= 0))]
+const PLACE_COLOURS = COLOUR_GIVERS.map((j) => `    vec3 hue${j} = vec3(0.0);\n    float got${j} = 0.0;`).join('\n')
+const placeSample = (i: number): string => `textureGrad(uPlace${i}, pg * uPlaceScale[${i}] + 0.5, pgx * uPlaceScale[${i}] * uGrad, pgy * uPlaceScale[${i}] * uGrad)`
+const placeColour = (i: number): string => {
+  const j = placeDef.levels[i]?.colourOf ?? -1
+  if (j < 0) return `vec3 c = ${placeSample(i)}.rgb;${COLOUR_GIVERS.includes(i) ? `\n        hue${i} = c;\n        got${i} = 1.0;` : ''}`
+  return `for (int m = 0; m < (got${j} < 0.5 ? 1 : 0); m++) {
+          hue${j} = ${placeSample(j)}.rgb;
+          got${j} = 1.0;
+        }
+        vec3 c = (hue${j} + 1e-4) * (${placeSample(i)}.r * ${placeDef.levels[i]!.most.toFixed(4)});`
+}
+
 const PLACE_GLSL = Array.from({ length: PLACE_LEVELS }, (_, i) => `    {
       vec2 q = pg * uPlaceScale[${i}];
       float w = ${i > 0 ? 'smoothstep(0.5, 0.5 - uPlaceLook.x, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPlaceLook.y, uPlaceLook.z, parentPlace))' : 'smoothstep(0.5, 0.5 - uPlaceLook.w, length(q) + uPlaceForms.x * clamp(0.5 + dot(textureLod(uPlace0, q + 0.5, uPlaceForms.y).rgb, vec3(0.2126, 0.7152, 0.0722)) / max(dot(textureLod(uPlace0, q + 0.5, uPlaceForms.z).rgb, vec3(0.2126, 0.7152, 0.0722)), 1e-3) - 1.0, 0.0, 1.0))'};
       for (int k = 0; k < (w > 0.0 ? 1 : 0); k++) {
-        vec3 c = textureGrad(uPlace${i}, q + 0.5, pgx * uPlaceScale[${i}] * uGrad, pgy * uPlaceScale[${i}] * uGrad).rgb;
+        ${placeColour(i)}
         laid = laid * (1.0 - w) + c * w;
         cover = cover * (1.0 - w) + w;
         placeTexels = mix(placeTexels, pgd * uPlaceScale[${i}] * uPlaceSize[${i}], w);
@@ -246,6 +264,7 @@ void stretch(vec2 jx, vec2 jy, vec2 along, out vec2 major, out vec2 minor) {
   major = (jx * mh.x + jy * mh.y) * clamp(len, 1.0, 24.0);
   minor = jy * mh.x - jx * mh.y;
 }
+
 vec3 curveAt(float ndl) {
   float x = clamp(ndl * 0.5 + 0.5, 0.0, 1.0) * 32.0;
   int i = int(min(floor(x), 31.0));
@@ -416,6 +435,7 @@ ${TAP_LEVELS}
     float cover = 0.0;
     float parentPlace = 0.0;
     float placeTexels = texels;
+${PLACE_COLOURS}
 ${PLACE_GLSL}
     for (int k = 0; k < (cover > 0.0 ? 1 : 0); k++) {
       // From above the place has the tones of the globe about it. The tones of the close view (the far deck pale under its haze, the near

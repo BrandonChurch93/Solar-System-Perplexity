@@ -189,7 +189,9 @@ Since Phase 6 `air.py` writes the star layer to `assets-src/venus/sky/uncorrecte
 
 ## Dive patches
 
-### public/assets/venus/{full,web}/patch-a.jpg, patch-b.jpg, patch-c.jpg, patch-d.jpg (4096 x 4096 and 2048 x 2048)
+### public/assets/venus/{full,web}/patch-a.jpg, patch-b.jpg (4096 x 4096 and 2048 x 2048)
+
+Since mail 324 (memory, gate G15) only the two widest levels are files of the film. Levels c and d are made as described below and stay nested in the centre of level b (`patch.py export` nests all four and writes a and b); `patch-c.jpg` and `patch-d.jpg` left `public/`. They showed only in the lower left corner of frames 1291 to 1307, about the old spot, where the camera does not go: at 1296 2.5 percent of the frame differs without them, by 1.2 display values in the mean and 18 at most; G13 holds on those frames (at most 0.15 percent soft).
 
 Four gnomonic levels about the dive spot (`assets-src/venus/patches/spot.json`, body lon 25.4909, lat 50.3727, written by `npx tsx assets-src/venus/patches/spot.ts`), widths 90, 53.13010235, 28.07248694 and 14.25003270 deg (half-tangent 1, 0.5, 0.25, 0.125: each level is exactly twice the scale of its parent). North up. Same albedo encoding as the wrap (24 * v * v). Designed with the predictor before anything was rendered: `npx tsx assets-src/venus/patches/predict.ts --levels "90,53.13,28.07,14.25" --kinds dive,rise --every 3` gives 0 soft pixels at 1920 x 1080 on every frame outside the covers (the same tool gives 0 on the Mars dive and rise).
 
@@ -256,7 +258,9 @@ The join between wrap and levels is checked in rendered frames, not only in the 
 
 ## Cover veil
 
-### public/assets/venus/{full,web}/veil-clouds.jpg (2048 x 2048 and 1024 x 1024)
+### veil-clouds.jpg (2048 x 2048 and 1024 x 1024), no file of the film any more
+
+Since mail 324 the file is not in `public/` and not loaded: the film has no cover, the veil is never drawn (`plan.veilAmount` is 0 and `plan.release` is 1 on every frame of both moves), and its 22 MB counted against the memory limit of gate G15. What follows is the record of how the file was made; the tool reads `patch-d.jpg`, which left `public/` too, so it does not run as it stands.
 
 What it is: the cloud texture of the stop's own cover (`src/stops/venus/veil.ts`), a tile of cloud deck that repeats without a seam. The veil draws it on four sheets below the camera, each 2.5 times finer than the one above; the shapes of the sheets (holes, streaks along the pull back) are drawn by the shader, the tile gives them their cloud colour and their edges.
 
@@ -269,7 +273,9 @@ What it is: the cloud texture of the stop's own cover (`src/stops/venus/veil.ts`
 
 ## Place plates
 
-### public/assets/venus/{full,web}/place3-w.jpg, place3-a.jpg, place3-b.jpg, place3-c.jpg, place3-d.jpg (4096 x 4096 and 2048 x 2048), src/stops/venus/place.json, src/stops/venus/plates.json
+### The five plates before the handovers (work files `out/work/venus/place/<tag>/plate-4096.png`), src/stops/venus/place.json, src/stops/venus/plates.json
+
+These plates are no files of the film: the film reads the plates of the next section, which are made from them for each handover. Until mail 324 they also lay in `public/` (`place3-w.jpg` to `place3-d.jpg`); they are taken out, because gate G11 wants every file there in the list at the end of this recipe and nothing loads them.
 
 The place of the dive is the cloud field of the approved close image, laid back onto the globe (mail 214, `cut/HANDOVER.md` Part B). Five nested plates about one centre, widths 40, 24, 12.13, 6.08 and 3.4 deg of arc (w, a, b, c, d), north at the top; every value is in `src/stops/venus/plates.json`. Work files live in `out/work/venus/place/` (not committed).
 
@@ -323,7 +329,11 @@ What the takes taught: the composition model paints cloud forms only where the g
 
 ## Place plates at the two handovers
 
-### public/assets/venus/{full,web}/place3-w-dive.jpg, place3-a-dive.jpg, place3-b-dive.jpg, place3-c-dive.jpg, place3-d-dive.jpg and the same five with -rise (4096 x 4096 and 2048 x 2048)
+### public/assets/venus/{full,web}/place3-w-dive.jpg, place3-a-light-dive.jpg, place3-b-light-dive.jpg, place3-c-dive.jpg, place3-d-light-dive.jpg and the same five with -rise (4096 x 4096 and 2048 x 2048)
+
+Levels w and c are plates with their colour. Levels a, b and d hold their light alone, in one channel (`colour` and `most` in `plates.json`, `lightNote`), and take their colour from the plate named in `colour` (w for a and b, c for d), which covers them. The channel is the light of the level (luminance, weights 0.2126, 0.7152, 0.0722) over the light of that plate at the same ground point, read from the file of that plate as the film reads it; it is not a display value, `most` (4, 6, 4) lies at 255, JPEG quality 98. The globe shader shows that plate times the channel. Reason: gate G15 allows 1400 MB for the full set and 450 MB for the web set, a plate with colour counts 89.5 MB at 4096 and one channel 22.4 MB; with ten plates with colour, four patches and the veil picture the set counted 1903 and 483 MB.
+
+What is given up: the colour of a, b and d is held at 1 in 1.7, 3.4 and 1.8 of the size of their forms; the forms themselves keep their full size. `python3 assets-src/venus/place/tlay.py split KIND` measures the picture put together from the files of the full set against the full plate (the work file), in 8 bit display values, at the size of the plate and reduced 4 and 16 times. At the size of the plate, mean difference and the value 99 percent of the pixels stay within in their worst channel: dive a 0.84 and 6.3, b 1.00 and 7.6, d 0.61 and 4.3; rise a 0.84 and 6.4, b 1.01 and 8.1, d 0.63 and 4.9. Reduced 16 times: dive a 0.44 and 5.9, b 0.69 and 8.1, d 0.32 and 4.2; rise a 0.44 and 5.9, b 0.71 and 8.2, d 0.34 and 4.7. The share of texels at the top of the channel is under 0.011 percent in every file. A first form of the channel held the luminance as a display value; drawn far smaller than held (a level is drawn until the level above it has 6 to 9 texels to a pixel) it lost the light of the small bright tops, because such a channel is filtered in display values: reduced 16 times 1.1 to 1.2 in the mean and 15 to 19 for the 99 percent (measured on b and a of the dive), so it was not taken.
 
 No image generation. The plates of the section above hold the close image laid back from the twin of the terrain view's judged frame. At the T of a handover the close side stands elsewhere and its layers have shifted, so each handover gets its own set of the five levels, made from the close side as the film draws it at T. The globe side shows the dive set before the terrain view and the rise set after it (`place.levels` in `src/stops/venus/assets.ts`, fields `dive` and `rise`). Every value is in `src/stops/venus/plates.json` (`atT`). Work files live in `out/work/venus/place/t/` (not committed).
 
@@ -333,9 +343,9 @@ No image generation. The plates of the section above hold the close image laid b
    - globe side without the place picture and with the plates of the section above: set `atT.tags` in `plates.json` to `[]` for this draw only, then `npm run -s still -- --frame FRAME --tier draft --format uhd --diag "nograin/side=orbit/t=SECONDS/noplace" --out out/work/venus/place/t/globe-FRAME.png`, then put `atT.tags` back.
 3. `python3 assets-src/venus/place/tlay.py calib KIND d` (run in `assets-src/venus/place/`; KIND is dive or rise) lays the globe draw back through the camera of step 1 and measures how far the plate d it shows lies from the plate file. The result goes to `atT.shiftDeg` (dive [0.00006, 0.0044], rise [0.00075, 0.00518] deg east and north; with it the left over is under 0.2 plate pixels). The cause of this shift is not found.
 4. `python3 assets-src/venus/place/tlay.py make KIND` writes `out/work/venus/place/t/<kind>-<tag>.png` for the five levels: where the camera at T sees the ground steeply enough (`trustSinElevation`) the laid back close draw replaces the plate; over the rest of the ground in the frame (`coverSinElevation`) the plate keeps its forms and takes the tones of the draw at the scale `toneSigma`; outside the frame the plate stays. Tones go through the globe's own shading: the globe draw of step 2, laid back the same way, says how a plate value shows.
-5. `python3 assets-src/venus/place/tlay.py export KIND` writes the ten files of that handover (JPEG quality 92, 4:4:4).
+5. `python3 assets-src/venus/place/tlay.py export KIND` writes the ten files of that handover (five per set; with colour: JPEG quality 92, 4:4:4; light alone: one channel, quality 98, written after the file of its colour level, which it is measured against).
 6. `python3 assets-src/venus/place/tlay.py tone KIND` writes the tone map of that handover (next section).
-7. After any change of a path shape or of a T in `src/stops/venus/move.json`, or of a plate of the section above, steps 1 to 6 run again for that handover. The plates of the section above are not loaded by the film (every level has its set for the dive and for the rise); they stay in `public/` because step 2 draws the globe with them.
+7. After any change of a path shape or of a T in `src/stops/venus/move.json`, or of a plate of the section above, steps 1 to 6 run again for that handover. The plates of the section above are not loaded by the film (every level has its set for the dive and for the rise) and do not lie in `public/`. For the globe draw of step 2 `python3 assets-src/venus/place/build.py export` writes them there under the names of `plates.json` (`place3-w.jpg`, `place3-a-light.jpg`, `place3-b-light.jpg`, `place3-c.jpg`, `place3-d-light.jpg`); take them out again after that draw, before any commit.
 
 ## The look of the place from above
 
@@ -373,10 +383,9 @@ Every file below exists in both sets (`full` and `web`); the section that makes 
 - `public/assets/venus/<set>/relief-Al-color.jpg`, `public/assets/venus/<set>/relief-Al-dist.bin`, `public/assets/venus/<set>/relief-Ar-color.jpg`, `public/assets/venus/<set>/relief-Ar-dist.bin`: Terrain view, `apron.py`.
 - `public/assets/venus/<set>/relief-air.png`: Terrain view, `air.sh` and `air.py`.
 - `public/assets/venus/<set>/sky-terrain.webp`: Terrain view, `air.py` then `sky/stars.py build terrain`.
-- `public/assets/venus/<set>/patch-a.jpg`, `public/assets/venus/<set>/patch-b.jpg`, `public/assets/venus/<set>/patch-c.jpg`, `public/assets/venus/<set>/patch-d.jpg`: Dive patches, `patch.py export`.
-- `public/assets/venus/<set>/veil-clouds.jpg`: Cover veil, `veil/tile.py`.
-- `public/assets/venus/<set>/place3-w.jpg`, `public/assets/venus/<set>/place3-a.jpg`, `public/assets/venus/<set>/place3-b.jpg`, `public/assets/venus/<set>/place3-c.jpg`, `public/assets/venus/<set>/place3-d.jpg`: Place plates, `place/lay.py`, then `place/build.py` (guide, comp, ringguide, ring, plate, export). Not loaded by the film; inputs of the two draws at T.
-- `public/assets/venus/<set>/place3-<tag>-dive.jpg` and `public/assets/venus/<set>/place3-<tag>-rise.jpg` for the tags w, a, b, c, d: Place plates at the two handovers, `place/tcam.ts`, the two draws at T, `place/tlay.py` (calib, make, export).
+- `public/assets/venus/<set>/patch-a.jpg`, `public/assets/venus/<set>/patch-b.jpg`: Dive patches, `patch.py export`.
+- `public/assets/venus/<set>/place3-w-dive.jpg`, `public/assets/venus/<set>/place3-w-rise.jpg`, `public/assets/venus/<set>/place3-c-dive.jpg`, `public/assets/venus/<set>/place3-c-rise.jpg`: Place plates at the two handovers, levels with their colour, `place/tcam.ts`, the two draws at T, `place/tlay.py` (calib, make, export).
+- `public/assets/venus/<set>/place3-a-light-dive.jpg`, `public/assets/venus/<set>/place3-a-light-rise.jpg`, `public/assets/venus/<set>/place3-b-light-dive.jpg`, `public/assets/venus/<set>/place3-b-light-rise.jpg`, `public/assets/venus/<set>/place3-d-light-dive.jpg`, `public/assets/venus/<set>/place3-d-light-rise.jpg`: Place plates at the two handovers, levels that hold their light alone, the same steps.
 - `public/assets/venus/<set>/place3-tone-dive.bin`, `public/assets/venus/<set>/place3-tone-rise.bin`: The look of the place from above, `place/tlay.py tone`.
 - `public/assets/venus/<set>/relief-air-sun.png`, `public/assets/venus/<set>/relief-air-limb.png`: Air of the place on the globe side, `place/airsun.py`.
 

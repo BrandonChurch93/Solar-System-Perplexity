@@ -10,7 +10,8 @@ Order: the deepest level first (d, c, b, a, w), because every parent carries its
   python3 assets-src/venus/place/build.py plate TAG         <tag>/plate-raw.png from the tile takes kept (build.takes in plates.json), its child nested in;
                                                             it also writes the final <child>/plate-4096.png, matched to this level at its edge
   python3 assets-src/venus/place/build.py plates            all plates, deepest first
-  python3 assets-src/venus/place/build.py export            public/assets/venus/{full,web}/place-<tag>.jpg
+  python3 assets-src/venus/place/build.py export            the plates into public/assets/venus/{full,web}/ under the names of plates.json, for the
+                                                            draw of the globe at T only (tlay.py); they are no files of the film and are taken out after it
 
 Work files live in out/work/venus/place/. The steps and the prompts are in assets-src/venus/RECIPE.md, section "Place plates".
 """
@@ -389,12 +390,17 @@ def plate(tag):
 
 
 def export():
-    q = [cv2.IMWRITE_JPEG_QUALITY, 92, cv2.IMWRITE_JPEG_SAMPLING_FACTOR, cv2.IMWRITE_JPEG_SAMPLING_FACTOR_444]
+    """The plates as they stand before the handovers, into public: only for the draw of the globe at T that tlay.py starts from
+    (RECIPE.md, "Place plates at the two handovers", step 2). They are no files of the film: take them out again after that draw."""
     for level in LEVELS:
         img = cv2.imread(str(WORK / level['tag'] / 'plate-4096.png'), cv2.IMREAD_COLOR)
         for kind, size in (('full', SIZE), ('web', SIZE // 2)):
             out = img if size == SIZE else cv2.resize(img, (size, size), interpolation=cv2.INTER_AREA)
-            cv2.imwrite(str(ROOT / 'public/assets/venus' / kind / level['file']), out, q)
+            colour = None
+            if 'colour' in level:
+                giver = ROOT / 'public/assets/venus' / kind / LEVELS[TAGS.index(level['colour'])]['file']
+                colour = (cv2.imread(str(giver), cv2.IMREAD_COLOR), lay.colour_share(LEVELS, level['tag']), level['most'])
+            lay.write_plate(ROOT / 'public/assets/venus' / kind / level['file'], out, colour)
         print('exported', level['file'])
 
 

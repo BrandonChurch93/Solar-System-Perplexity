@@ -84,9 +84,11 @@ export const createSet: SetFactory = async (ctx) => {
   const placeTextures: THREE.Texture[] = []
   const placeRise: THREE.Texture[] = []
   for (const level of place.levels) {
-    const dive = await ctx.texture(base + level.dive, { srgb: true, anisotropy: 16 })
+    // A level that holds its light alone is one channel of display values; the globe shader takes them back to light itself.
+    const kind = level.colourOf < 0 ? { srgb: true, anisotropy: 16 } : { srgb: false, channels: 1 as const, anisotropy: 16 }
+    const dive = await ctx.texture(base + level.dive, kind)
     placeTextures.push(dive)
-    placeRise.push(level.rise === level.dive ? dive : await ctx.texture(base + level.rise, { srgb: true, anisotropy: 16 }))
+    placeRise.push(level.rise === level.dive ? dive : await ctx.texture(base + level.rise, kind))
   }
   const toneDive = await ctx.dataTexture(base + place.tone.dive, place.tone.size, place.tone.size, 4)
   const toneRise = await ctx.dataTexture(base + place.tone.rise, place.tone.size, place.tone.size, 4)
@@ -145,8 +147,9 @@ export const createSet: SetFactory = async (ctx) => {
     return eye
   }
   const carry = { ...ground.carry!, soft: look.veil.sunSoft, tint: look.veil.sunTint }
-  const clouds = await ctx.texture(base + look.veil.file, { srgb: true, anisotropy: 1, repeat: true })
-  const veil = new Veil(look.veil, clouds, carry, diagUniform)
+  // The cover veil is never drawn any more (plan.veilAmount is 0 and plan.release is 1 on every frame of both moves), so its cloud
+  // picture is not loaded: the sheet keeps a texture it never shows.
+  const veil = new Veil(look.veil, map, carry, diagUniform)
   const sunTerrain = new THREE.Vector3(look.veil.sun[0], look.veil.sun[1], -1).normalize()
   const swaps = { dive: swapOf('dive', sunTerrain, carry.fwd, carry.right), rise: swapOf('rise', sunTerrain, carry.fwd, carry.right) }
   ;(globe.material.uniforms.uCarry!.value as THREE.Vector4).set(look.veil.grade.keep, look.veil.grade.gamma, look.veil.grade.pivot, look.veil.grade.gain)

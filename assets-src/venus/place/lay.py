@@ -50,6 +50,56 @@ def grid(n, e, u, width_deg, size):
     return d / np.linalg.norm(d, axis=-1, keepdims=True)
 
 
+LUMA = np.array([0.0722, 0.7152, 0.2126], np.float32)  # blue, green, red
+
+
+def to_light(v):
+    """Display value (0 to 1, sRGB curve) to light."""
+    return np.where(v <= 0.04045, v / 12.92, ((v + 0.055) / 1.055) ** 2.4).astype(np.float32)
+
+
+def to_value(x):
+    x = np.clip(x, 0, 1)
+    return np.where(x <= 0.0031308, x * 12.92, 1.055 * x ** (1 / 2.4) - 0.055).astype(np.float32)
+
+
+def under(parent, share):
+    """The light of the plate that gives the colour, at the ground points of the texels of a plate that covers the central
+    `share` of its width (both square, the same size), read as the film reads it (bilinear)."""
+    size = parent.shape[0]
+    at = ((((np.arange(size) + 0.5) / size - 0.5) * share + 0.5) * size - 0.5).astype(np.float32)
+    k = to_light(parent.astype(np.float32) / 255)
+    return cv2.remap(k, np.repeat(at[None, :], size, 0), np.repeat(at[:, None], size, 1), cv2.INTER_LINEAR) + 1e-4
+
+
+def light_only(img, parent, share, most):
+    """A plate (8 bit, blue green red) as one channel (plates.json, lightNote): its light over the light of the plate that gives
+    its colour at the same ground point, not a display value, `most` at 255. So the film gets the plate back as the colour plate
+    times this channel, and both are filtered in light."""
+    y = to_light(img.astype(np.float32) / 255) @ LUMA
+    return np.clip(y / (under(parent, share) @ LUMA) / most * 255 + 0.5, 0, 255).astype(np.uint8)
+
+
+def put_together(light, parent, share, most):
+    """What the film shows of a level that holds its light alone: the colour plate times the channel (light, 0 to 1)."""
+    return under(parent, share) * (light.astype(np.float32) / 255 * most)[..., None]
+
+
+def write_plate(path, img, colour=None):
+    """A plate file of the film: with its colour (JPEG quality 92, 4:4:4) or, with colour = (the plate that gives its colour as
+    the film reads it, the share of that plate's width it covers, most), its light alone (one channel, quality 98)."""
+    if colour:
+        cv2.imwrite(str(path), light_only(img, *colour), [cv2.IMWRITE_JPEG_QUALITY, 98])
+    else:
+        cv2.imwrite(str(path), img, [cv2.IMWRITE_JPEG_QUALITY, 92, cv2.IMWRITE_JPEG_SAMPLING_FACTOR, cv2.IMWRITE_JPEG_SAMPLING_FACTOR_444])
+
+
+def colour_share(levels, tag):
+    """The share of the width of its colour plate that the plate of this level covers (both are gnomonic about one centre)."""
+    by = {l['tag']: l for l in levels}
+    return float(np.tan(np.radians(by[tag]['widthDeg']) / 2) / np.tan(np.radians(by[by[tag]['colour']]['widthDeg']) / 2))
+
+
 def smooth(a, b, x):
     t = np.clip((x - a) / (b - a), 0, 1)
     return t * t * (3 - 2 * t)

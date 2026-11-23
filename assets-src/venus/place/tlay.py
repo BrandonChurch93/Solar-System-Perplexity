@@ -19,7 +19,9 @@ python3 assets-src/venus/place/tlay.py check KIND TAG      the globe's draw laid
 python3 assets-src/venus/place/tlay.py make KIND [TAG ...]  out/work/venus/place/t/<kind>-<tag>.png from the plates of build.py
 python3 assets-src/venus/place/tlay.py lock KIND SUFFIX [TAG ...]  the same plates, tones locked again with t/globe-<frame><suffix>.png
 python3 assets-src/venus/place/tlay.py tone KIND             public/assets/venus/{full,web}/place-tone-<kind>.bin, the look of the place from above (plates.json, tone)
-python3 assets-src/venus/place/tlay.py export KIND [TAG ...]  public/assets/venus/{full,web}/place-<tag>-<kind>.jpg
+python3 assets-src/venus/place/tlay.py export KIND [TAG ...]  public/assets/venus/{full,web}/place3-<tag>-<kind>.jpg, or place3-<tag>-light-<kind>.jpg
+                                                              for a level that holds its light alone (plates.json, lightNote)
+python3 assets-src/venus/place/tlay.py split KIND [TAG ...]   measures such a level put together with the colour of its parent against its full plate
 """
 import json
 import sys
@@ -274,13 +276,38 @@ def tone_out(kind):
 
 
 def export(kind, tag):
-    q = [cv2.IMWRITE_JPEG_QUALITY, 92, cv2.IMWRITE_JPEG_SAMPLING_FACTOR, cv2.IMWRITE_JPEG_SAMPLING_FACTOR_444]
+    """A level with `colour` in plates.json is written as its light alone (one channel) against the file of its colour level,
+    which must have been written before it (the levels are exported widest first); the others with their colour."""
     img = cv2.imread(str(T / f'{kind}-{tag}.png'), cv2.IMREAD_COLOR)
-    name = LEVELS[tag]['file'].replace('.jpg', f'-{kind}.jpg')
+    level = LEVELS[tag]
+    name = level['file'].replace('.jpg', f'-{kind}.jpg')
     for folder, size in (('full', SIZE), ('web', SIZE // 2)):
         out = img if size == SIZE else cv2.resize(img, (size, size), interpolation=cv2.INTER_AREA)
-        cv2.imwrite(str(ROOT / 'public/assets/venus' / folder / name), out, q)
-    print('exported', name)
+        colour = None
+        if 'colour' in level:
+            giver = ROOT / 'public/assets/venus' / folder / LEVELS[level['colour']]['file'].replace('.jpg', f'-{kind}.jpg')
+            colour = (cv2.imread(str(giver), cv2.IMREAD_COLOR), lay.colour_share(SPEC['levels'], tag), level['most'])
+        lay.write_plate(ROOT / 'public/assets/venus' / folder / name, out, colour)
+    print('exported', name, 'light alone' if 'colour' in level else 'with its colour')
+
+
+def split(kind, tag):
+    """How far the picture put together in the film (the files of the full set: the light of this level times the plate of its
+    `colour` level at the same ground point) is from the full plate of this level, in 8 bit display values: at the size of the
+    plate and reduced 4 and 16 times (both sides reduced in light, as the film filters them)."""
+    level = LEVELS[tag]
+    folder = ROOT / 'public/assets/venus/full'
+    share = lay.colour_share(SPEC['levels'], tag)
+    truth = lay.to_light(read(T / f'{kind}-{tag}.png'))
+    light = cv2.imread(str(folder / level['file'].replace('.jpg', f'-{kind}.jpg')), cv2.IMREAD_GRAYSCALE)
+    k = lay.under(cv2.imread(str(folder / LEVELS[level['colour']]['file'].replace('.jpg', f'-{kind}.jpg')), cv2.IMREAD_COLOR), share)
+    v = light.astype(np.float32) / 255 * level['most']
+    print(kind, tag, 'colour from', level['colour'], '1 in', round(1 / share, 2), 'share of texels at the most', round(float((light == 255).mean()), 6))
+    for m in (1, 4, 16):
+        small = (lambda a: a) if m == 1 else (lambda a: cv2.resize(a, (SIZE // m, SIZE // m), interpolation=cv2.INTER_AREA))
+        e = (lay.to_value(small(k) * small(v)[..., None]) - lay.to_value(small(truth))) * 255
+        worst = np.abs(e).max(2)
+        print('  reduced', m, 'mean', round(float(np.abs(e).mean()), 2), 'signed', round(float(e.mean()), 2), '99 percent within', round(float(np.percentile(worst, 99)), 1), '99.9 percent within', round(float(np.percentile(worst, 99.9)), 1), 'most', round(float(worst.max())))
 
 
 if __name__ == '__main__':
@@ -303,3 +330,6 @@ if __name__ == '__main__':
             lock(kind, suffix, tag)
         elif cmd == 'export':
             export(kind, tag)
+        elif cmd == 'split':
+            if 'colour' in LEVELS[tag]:
+                split(kind, tag)

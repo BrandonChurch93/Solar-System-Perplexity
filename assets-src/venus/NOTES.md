@@ -2211,3 +2211,54 @@ Item 1 (the place field dark mud in 1287 and 1586), by code only:
 Proofs on this tree: frames that may not change, draft, 37 of 37 byte equal; final tier 1185 and 1440 the kept stills (sha256 0539...cedd and b24b...25c3); G5 PASS (1185 coverage 0.316, 1287 0.907, 1440 0.685, 1586 0.887, invalid 0), G17 PASS (1185 median 0.959 p25 0.844; 1440 median 0.936 p25 0.804); build exit 0. NOT run on this tree: G13 on every frame and the handover harness. I stopped the chain at 18:44 when mail 324 came, because the cure of G15 changes the plates and every proof has to run again on that tree. This commit is not named to the Builder.
 
 The wide ring (mail 316, item 2), state when mail 324 came: `assets-src/venus/place/ringtex.ts` (texels per pixel on circles about the plate centre), `wide.py` and `wide.json` (the guide of the outpainting take), prompt `ringV`. One outpainting take made (take 1 of 6 of the ring of level v, `out/work/venus/place/v/ring-take-1.png`): a good cloud field, but its towers are about twice the size of the towers of level w and a soft halo lies round the rim of the centre in places. Not kept. The ring waits for the cure of G15: a plate of 8192 px with four channels and mips is 358 MB of the 1400 the full set may use.
+
+### MAIL 326 from the Builder (/root), 18:53 UTC, word for word
+
+"Mail 326 from the Builder (/root), 18:53 UTC. To every builder. Three things, then carry on.
+
+1. Main is fdf97b84de6f3e33e10a906f8f82e2c81fe9b32a. New on it: the engine's fromDive files (no frame of any stop changed: 115 of 115 draft frames equal, proven) and the harness with --place-window on every pack command. Merge it into your branch before your next commit (git fetch --depth 1 origin main; git merge FETCH_HEAD; never rebase, never force).
+
+2. New rule, from now on, before you name any commit to me as READY: on your own tree run
+   npm run gate -- --phase 6 --only G11,G15 --g15-stops &lt;your stop&gt;
+and put the two lines that start with PASS or FAIL into your mail, word for word. A commit without two PASS lines is not READY. Reason: a commit went through a twelve machine check today and then failed G15 (memory: web 483 of 450 MB, full 1903 of 1400 MB) and G11 (plates named by a pattern in RECIPE.md). The limits live in config/showcase.json; read them there. A red gate is fixed in your folder; it is never a reason to shrink what the picture shows without telling me what was given up.
+
+3. The capped shutter (E6) is NOT on main yet. It is on agent/engine-handover 1a777a3b746d40351878e1258f4f13be20edeeb3 (handover.maxBlurPx 6, handover.blurEaseFrames 12). I am rendering trial clips of three dives at 6 and at 14 now and set the number once, on moving pictures. Do not copy engine files into your folder and do not set your own shutter until I write that E6 is on main. Until then keep working on the faults you already have; the place picture, the flow across T and the far field do not depend on the number.
+
+No answer needed unless one of the three stops you."
+
+(Main fdf97b84 was merged at 18:48 as 05a70f35, before this mail came.)
+
+## MAIL 331 (19:18 UTC, from the Builder, word for word)
+
+Mail 331 from the Builder (/root), 19:18 UTC, to venus_builder. One fact from the engine that belongs to your open list of mail 324 (the smear and the dark field at 1284 to 1325 and 1570 to 1591): the path part of the handover tool exits 1 on Venus. Dive frame 1312 runs at 10.06 times the mean rate of the dive, rise frame 1561 at 4.63 times. The limit is handover.maxRateOverMean in config/showcase.json (read it there); your stop has not opted in to the rate limit of the engine (E3), the others have. A frame at ten times the mean rate is a smear at any shutter, so this is a cause, not a symptom: opt in, bring both paths under the limit, and send the path lines of npm run handover -- --stop venus --tier draft with your next READY, beside the two gate lines of mail 326 (G11, G15). Order of your work stays: G15 and G11 green first, then the path, then the place field.
+
+## State 19:27: the two red gates of mail 324 cured (memory and recipe)
+
+What the gate counted before: web 483 MB of 450, full 1903 MB of 1400 (mail 324). Now, on this tree, `npm run gate -- --phase 6 --only G11,G15 --g15-stops venus`:
+
+- `PASS G11  every asset has a row or a recipe`
+- `PASS G15  at most 2 sets per frame; finished stops: venus/web 332 MB, venus/full 1299 MB`
+
+How the memory came down (full set, MB as the gate counts: width x height x channels x 4/3):
+
+- Dive patches c and d left the set (2 x 89.5). Only a and b are files of the film now (`MAX_PATCHES` 2). Given up: the lower left corner of frames 1291 to 1307, about the old spot. Measured on a test build against the frames before, 32 draft frames: 30 equal by bytes, 1296 differs in 2.46 percent of its pixels (x 0 to 417, y 547 to 1079, mean 1.21, most 18), 1302 in 182 pixels (most 6). G13 on 1286 to 1312 at most 0.0015 (1294).
+- The veil picture is not loaded and not in `public/` (22.4). The veil is never drawn: `plan.veilAmount` 0 and `plan.release` 1 on 700 samples of both moves. The veil code is still there and reads the globe map as a texture it never shows; taking the code out is a later step.
+- Levels a, b and d of the place hold their light alone in one channel, for the dive and for the rise (6 x 89.5 became 6 x 22.4); w and c keep their colour and give it to a and b (w) and to d (c). No new sampler: 7 fixed, 2 patches, 5 plates, 14 of 16.
+- The five plates before the handovers (`place3-w.jpg` to `place3-d.jpg`) were never loaded; they left `public/` (`build.py export` writes them there for the draw of the globe at T only).
+
+The channel, two forms tried:
+
+1. The luminance of the level as a display value, the colour plate scaled to it. Against the frames before (draft): 1320 mean 0.71, most 124, 1.1 percent of the pixels over 8, 0.26 percent over 20, signed luminance -0.3 to -0.5 in the mid tones; 1560 the same size. Seen at four times: the small white tops were dimmer. Cause: a level is drawn until the level above it has 6 to 9 texels to a pixel, so it is often drawn 10 to 20 times smaller than held, and a channel of display values is filtered in display values, which loses the light of small bright things. Not taken.
+2. The light of the level over the light of its colour plate at the same ground point, linear, `most` (4, 6, 4 for a, b, d) at 255, JPEG quality 98; the film shows the colour plate times the channel. Drawn far smaller than held the channel goes to its mean and the picture to the colour plate, which is filtered in light as before. Simulated on the plates of the dive, both forms against the full plate, reduced 16 times: form 1 mean 1.14 (b), 1.21 (a), 0.65 (d), form 2 0.59, 0.36, 0.23; at the size of the plate form 2 is not worse than form 1 (b 0.71 against 0.84, a 0.47 against 0.72, d 0.39 against 0.52). Taken.
+
+Form 2 in the film against the frames before the cure (item 1 tree, draft, 16 frames): 1185, 1440, 1287, 1343, 1349, 1530, 1542, 1586 equal by bytes. The others, mean difference, most, share of pixels over 8 and over 20: 1300 0.05, 22, 0.007 percent, none; 1310 0.77, 144, 1.57 percent, 0.28 percent; 1320 0.63, 95, 0.76 percent, 0.09 percent; 1330 0.42, 99, 0.58 percent, 0.05 percent; 1338 0.13, 37, 0.03 percent, 0.001 percent; 1550 0.31, 61, 0.21 percent, 0.01 percent; 1560 0.66, 147, 0.74 percent, 0.08 percent; 1568 0.79, 123, 1.73 percent, 0.29 percent. Signed luminance -0.26 at most (1310), bright pixels (over 180) +0.31 at most (1568). The differences sit on the lit tops of the towers. At three times, old beside new (1310, x 1095 to 1335, y 751 to 901), I could not name a difference.
+
+`tlay.py split` (the files of the full set put together against the full plate, 8 bit display values; mean, 99 percent within): at the size of the plate dive a 0.84 and 6.3, b 1.00 and 7.6, d 0.61 and 4.3; rise a 0.84 and 6.4, b 1.01 and 8.1, d 0.63 and 4.9. Reduced 16 times dive a 0.44 and 5.9, b 0.69 and 8.1, d 0.32 and 4.2; rise a 0.44 and 5.9, b 0.71 and 8.2, d 0.34 and 4.7.
+
+What is given up, in one place: the patches c and d; the colour of a, b, d at 1 in 1.7, 3.4, 1.8 of the size of their forms; the veil picture. What is not given up: the size of the forms of any level, the texels per pixel (G13 spot run on this tree, 1286 to 1312 and 1556 to 1566: worst 1561 0.0118, as before).
+
+The recipe names every file under `public/assets/venus/` by its full path in "File list" (G11).
+
+Checks on this tree: tsc 0, vitest 180 of 180, lint 0. Not yet run on it: both moves frame by frame, G13 on all 495 frames, G5, G17, the 37 kept frames, the harness. They come before READY.
+
+Mail 331 (rate): the numbers there (dive 1312 at 10.06 times the mean rate, 1271 at 0.11, rise 1561 at 4.63) are in the engine notebook (`assets-src/shared/HANDOVER-NOTES.md` on agent/engine-handover, line 291) as measured on the engine tree, where Venus is the Venus of main: the old stop without `handover` in its params, with the surge under the cover. This branch has `handover` in `move.json` since the handover milestone and flies its own steady path (`plan.ts`, `between`). The report of this branch at 18:09 said: dive fastest frame 1323 at 1.206 times the mean rate, 1277 (one fifth) at 1.19 of the mean; rise fastest frame 1593 at 1.19. Run again on this tree now.

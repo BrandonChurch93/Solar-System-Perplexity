@@ -14,12 +14,12 @@ export const wrap = {
   bolt: { lon: wrapJson.bolt.lon, lat: wrapJson.bolt.lat, widthDeg: wrapJson.bolt.widthDeg },
 }
 
+// Two levels. The two deeper ones (28 and 14 deg about the old spot) left the set for the memory limit of gate G15: they showed in
+// the lower left corner of frames 1291 to 1307 only, where the camera does not go, and G13 holds without them.
 export const patches = {
   levels: [
     { file: 'patch-a.jpg', widthDeg: 90 },
     { file: 'patch-b.jpg', widthDeg: 53.13010235 },
-    { file: 'patch-c.jpg', widthDeg: 28.07248694 },
-    { file: 'patch-d.jpg', widthDeg: 14.2500327 },
   ] as { file: string; widthDeg: number }[],
   feather: 0.12,
   fade: [1.02, 1.5] as [number, number],
@@ -31,10 +31,15 @@ const heading = placeJson.place.heading
 
 export const place = {
   // The levels made again for each handover (assets-src/venus/place/tlay.py) have one picture for the dive and one for the rise.
-  levels: platesJson.levels.map((l) => {
+  // colourOf: the index of the level whose plate gives the colour of a level that holds its light alone (plates.json, lightNote), or -1.
+  // most: the light of such a level over the light of that plate at the top of its channel.
+  levels: (platesJson.levels as { tag: string; file: string; widthDeg: number; colour?: string; most?: number }[]).map((l) => {
     const twice = platesJson.atT.tags.includes(l.tag)
-    return { ...l, dive: twice ? l.file.replace('.jpg', '-dive.jpg') : l.file, rise: twice ? l.file.replace('.jpg', '-rise.jpg') : l.file }
-  }) as { tag: string; file: string; widthDeg: number; dive: string; rise: string }[],
+    const colourOf = l.colour ? platesJson.levels.findIndex((x) => x.tag === l.colour) : -1
+    if (l.colour && (colourOf < 0 || 'colour' in platesJson.levels[colourOf]!)) throw new Error('plates.json: level ' + l.tag + ' needs a level with its own colour')
+    if (l.colour && (l.most ?? 0) <= 0) throw new Error('plates.json: level ' + l.tag + ' needs most')
+    return { tag: l.tag, file: l.file, widthDeg: l.widthDeg, colourOf, most: l.most ?? 1, dive: twice ? l.file.replace('.jpg', '-dive.jpg') : l.file, rise: twice ? l.file.replace('.jpg', '-rise.jpg') : l.file }
+  }),
   rim: platesJson.rim,
   forms: platesJson.forms.look as [number, number, number],
   tone: { dive: platesJson.tone.files.dive, rise: platesJson.tone.files.rise, size: platesJson.tone.size, widthDeg: platesJson.tone.widthDeg, cos: platesJson.tone.cos as [number, number], power: platesJson.tone.curve, floor: platesJson.tone.floor, colour: platesJson.tone.colour, edge: platesJson.tone.edge as [number, number], heights: platesJson.tone.heights as [number, number] },
