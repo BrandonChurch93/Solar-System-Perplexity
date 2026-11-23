@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T14:42:05.771Z",
- "head": "a42801fb416417cbc56b265fc89ab845c6b297e0",
- "note": "a42801fb: handover sheets at draft, six verdicts pass; kept frames 0 px after merge of main f8bc034e",
+ "pushed": "2026-11-23T15:02:14.951Z",
+ "head": "63dd08bc4ce206c3c85e4ee27fe25845ce4231bb",
+ "note": "63dd08bc READY sent: alphaOne, full set 1380 MB, kept frames same bytes; next the land matte for the four sided patch 738 to 743",
  "looks": [
+  {
+   "time": "2026-11-23T15:02:14.350Z",
+   "file": "20261123150214350-note-plates43.jpg",
+   "source": "out/work/mercury/place/tmp/plates43.jpg",
+   "kind": "note",
+   "label": "63dd08bc plates of level 4 (left) and 3 (right): place picture laid in the crater field; its straight edges are the open point",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T15:02:13.708Z",
+   "file": "20261123150213708-note-alpha-edge.jpg",
+   "source": "out/work/mercury/place/tmp/alpha-edge.jpg",
+   "kind": "note",
+   "label": "63dd08bc terrain 800 and 940 at the edge of the relief alpha (one channel), draft, 1 to 1",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-23T14:41:55.253Z",
    "file": "20261123144155253-note-ho-rise-draft-after.jpg",
@@ -58,29 +74,6 @@
    "segment": "mercury.rise",
    "first": 984,
    "last": 995,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T14:36:37.269Z",
-   "file": "20261123143637269-sheet-mercury-rise-draft-before.jpg",
-   "source": "out/work/handover/mercury-rise-draft-before.png",
-   "kind": "sheet",
-   "label": "mercury rise, every frame 978 to 989 (before T, frame 990), draft tier",
-   "stop": "mercury",
-   "segment": "mercury.rise",
-   "first": 978,
-   "last": 989,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T14:34:41.638Z",
-   "file": "20261123143441638-compare-mercury-rise-sides.jpg",
-   "source": "out/work/handover/mercury-rise-sides.png",
-   "kind": "compare",
-   "label": "mercury rise, both sides at T (frame 990) and their difference times 8",
-   "stop": "mercury",
-   "segment": "mercury.rise",
-   "frame": 990,
    "tier": "draft"
   }
  ]
