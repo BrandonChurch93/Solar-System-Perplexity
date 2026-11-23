@@ -1291,3 +1291,109 @@ MAIL 302 WORK (16:50 to 17:45): THE MODEL'S COARSE FIELD IS THE KEPT RING PICTUR
   flatten.band 0.002 with bands 0.35 was tried and thrown out: the B ring loses its lines.
 - The draft tier does not show the ladder in the skim (one take sweeps the whole shutter); judge the skim's
   lines at the review tier (3720 review: 93 s here).
+
+## 18:03 to 19:30 UTC: mails 311, 315, 318, 321, one look from far to near, the globe's fine bands
+
+Mails, in short (the words are the Builder's):
+- 311: the engine caps the shutter in dives and rises (part E6, at most 6 px of motion). Do not slow or bend
+  the path for less blur, build no blur cure. Look at 3567 and 3866 at draft at native size, list what shows.
+  Nothing to merge until E6 is on main.
+- 315 (check jobs on c605678, handover PASS): 1 the moon fades away 3586 to 3589, "A moon may leave the frame,
+  it may not fade". 2 from 3600 to 3620 the rings turn from warm beige to grey white with harder lanes, the
+  globe turns paler and its dark side grows: "The rings and the globe must have one look from far to near:
+  whatever the near view needs has to come from getting nearer (detail that resolves), not from a tone that
+  slides." 3 show 3621 to 3640.
+- 318 (measures on c605678): G5 PASS, G17 PASS (3465 median 1.055, 3720 median 0.806, p25 0.384), G15 PASS,
+  G13 FAIL: 3820 4.57 percent soft, 3810 4.10. Cure the cause and prove it on every frame of dive and rise.
+- 321: approach 3621 to 3640 accepted. Tone slide: the cure by distance per pixel is right, prove it on 3590
+  to 3630 every fifth frame beside f06bc5c. G13: do not buy it with a slower flight; the globe near the lens
+  gets its fine band structure from functions under the 8192 map, fading in by distance to the lens; ask
+  harness_builder how the texels view counts function detail. Moon: ring light on the night limb, only if the
+  hold and the judged frames do not change; else leave it and say so. READY by 19:30.
+
+What was found:
+- The moon (Titan) does not fade by any weight: it is occulted by the dark night limb of the globe (touches
+  at 3586, half at 3588, sliver at 3589, gone at 3590). Against black the limb cannot be seen, so it reads as a
+  fade. Left as it is in this pass: lighting the night limb changes the judged frames 3567, 3720 and 3866.
+- G13: the soft pixels were the globe's map (8192 by 4096, the workspace limit) at the right frame edge, 0.92
+  to 1.00 texels a pixel while the lens is 0.974 radii from the cloud tops (3816). Texels views of the old
+  state: 3800 0.00, 3810 4.10, 3815 6.18, 3820 4.57, 3830 0.00 percent soft.
+- The tone slide 3600 to 3628 was the far weight by time: M's far look gave way to its own light on a clock.
+
+What was done:
+1. One look from far to near, by distance per pixel. sheet.ts: the far weight of a pixel is
+   max(uRfFar, smoothstep(uRfReach.x, uRfReach.y, log(length(ray)))): a pixel of the sheet has M's own light
+   only as far as it is near the lens (skim.json handover.kept.reach [0.6, 1.3] radii). field.ts: uRfFarGlobe,
+   uRfReach, far(weight, onGlobe). The globe keeps the hold's look in the whole surface view: skim.json
+   light.globeNear 0 (model.ts closeGlobe = close * globeNear drives the globe's gain, the sharpening, the
+   night blur, the halo, the dusk and its grey). Proof sheet: /tmp/v/r8/proof2_*.png (new above, f06bc5c
+   below, 3590 to 3630 every fifth frame): the new state keeps beige rings and the hold's globe in all nine,
+   f06bc5c turns grey white with a hard dark side from 3605 on.
+2. The ice past the rim grows out of the rim (skim.json outer.grow), so the approach 3621 to 3640 has no
+   plain zone that pops in. Accepted by the Builder in mail 321.
+3. The globe's fine bands from functions (globe.ts bandNoise, bandFine; skim.json globeFine). Streaks along
+   the bands: value noise over cells of latitude and longitude, 8 octaves that halve from a cell of 0.0056
+   rad, 6 times longer along the band, each octave bent by the one before, on the logarithm of the cloud
+   colour (first octave 0.09, 0.88 per octave, the blue 1.3 times so that a dark streak is warmer). It is
+   whole where the surface is nearer to the lens than 1.3 radii and absent beyond 2.0 (by the logarithm of the
+   distance of the pixel's surface point to the lens), and the uniform that opens it is set only while the lens
+   is nearer to the cloud tops than 2.0 radii (after about 3690), so the hold and the dive keep their bytes.
+   An octave is drawn by the width of its cell in pixels: absent up to 0.25 px, whole from 0.75 px; the cells
+   a pixel come from the same rates of longitude and latitude that place the noise.
+   Where the structure is whole the sharpening of the map's own texels (showcase look.fine) steps back
+   (globeFine.calm 1): at one texel a pixel it sharpened the grid of the map into a mosaic of tiles.
+4. What the texels view counts (asked of harness_builder, answers of 18:37 and 18:44): the tool reads only
+   what the material reports, red = clamp(texels * 0.5), soft under 1.0. Jupiter's deck reports texture
+   densities only. The Sun (ground.ts line 166, globe.ts 291 to 294) counts its finer function level where
+   it is drawn at more than half weight. His rules for a true count: one number a pixel for what carries the
+   picture; the same coordinate, frequency and weight as the picture, no constant for the view only; the
+   finest octave that is really drawn at half its amplitude or more, not the finest in the list; counted only
+   where it is there; the counted flag stays 1; show a native crop of the nograin view at 3810 and 3820
+   before and after with one sharpness number. The globe now reports max(map texels, cells a pixel of the
+   finest octave drawn at half strength or more) and that second term only where the structure is whole
+   (weight 1). By the weights that octave has between 1 and 2 cells a pixel.
+
+What was measured (draft tier unless said, this workspace):
+- Texels views with the functions: 3804, 3809, 3812, 3815, 3820, 3825, 3828: soft share 0.000 percent in all
+  seven, least 1.051, 1.020, 1.004, 1.004, 1.004, 1.082, 1.145 texels a pixel (before: 3810 4.10, 3815 6.18,
+  3820 4.57 percent). G13 on every frame of dive, skim and rise is the Builder's job on his machines.
+- The fine octave in the picture: nograin view, box x 1220 to 1920, y 180 to 880 on the globe, the band energy
+  that G17 uses (difference of Gaussians 0.6 and 2.0 px, mean square): 3810 3.99e-05 with the functions off
+  and 4.65e-05 with them, 3820 3.86e-05 and 4.43e-05. With the functions off the energy is the map's grid
+  sharpened into tiles; with them it is streaks along the bands (/tmp/v/r12/fine_3810.png, fine_3820.png).
+- G17 by tools/measure/g17.py on 3720, nograin, review tier here: median 0.902, 25th percentile 0.346, 62
+  tiles (the Builder measured 0.806 and 0.384 on c605678; rule: median at least 0.8).
+- Hold drafts 3390, 3465, 3539 byte equal to main's kept build. 3630 byte equal with and without the globe's
+  functions. The model alone at 3590 byte equal to f06bc5c's, so the three pairs of mail 302 stand: 3588 mean
+  0.063 of 255, 3590 0.059, 3592 0.059, 99th percentile 1.0, max 65, 62, 66; 0.04 percent of the pixels over 8
+  (two slivers at the globe's limb); no ringlet differs.
+- tsc clean, vitest 180 of 180 after the merge of main fdf97b8.
+
+Habits learned in this pass:
+- A measure that reads what the material reports must report from the same coordinates and weights as the
+  picture: no constant for the view only, the finest octave that is drawn at half strength or more, counted
+  only where it is whole. With an octave filter that is absent up to 0.25 px of cell width and whole from 0.75
+  px that octave has between 1 and 2 cells a pixel.
+- At one texel a pixel a sharpening of the map sharpens the map's grid: let it step back where functions
+  carry the fine structure.
+- New rule of mail 326: before a commit is named READY run
+  npm run gate -- --phase 6 --only G11,G15 --g15-stops saturn and quote its two lines.
+
+Still wrong after this pass, worst first:
+1. The moon is occulted by the black night limb in four frames (3586 to 3590) and reads as a pop.
+2. Near the lens the broad bands of the globe lose some contrast where the map's sharpening steps back
+   (3780 to 3830); the cure is to sharpen from a blurred level of the map there, not to switch it off.
+3. Stars show through the shaded rings inside the globe's shadow (3567, 3866 and the hold: the kept picture).
+4. Dark bodies of ice in front of the globe near the lens (3750 to 3809) read as rocks, not ice.
+5. K's own tone change 3562 to 3588 (main's kept shader), limb slivers in the pairs.
+6. The rise as a pull back and its jolt 3816 to 3828 (mail 302 point 8, round 2); moon at 3870 to 3872.
+7. Wedge with a sawtooth edge through the Cassini division 3630 to 3690; terminator 3630 to 3660.
+8. Fit to the approved close at 3720: the globe is now the hold's (softer terminator, warmer) and the far
+   rings are the hold's beige, the approved close is paler and icier.
+
+The commit of this pass: 9ed4ef4 (the work), 8d42701 (merge of main fdf97b8: the engine's fromDive files and
+the harness; nothing outside the three folders differs from main; drafts 3465, 3567, 3720 and 3866 byte equal
+before and after the merge), then the notebook. The gate of mail 326 on this tree:
+PASS G11  every asset has a row or a recipe
+PASS G15  at most 2 sets per frame; finished stops: saturn/web 281 MB, saturn/full 774 MB
+Not done in this pass: the capped shutter (E6) is not on main; nothing of it is in this folder.
