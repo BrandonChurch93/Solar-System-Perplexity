@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T08:20:39.757Z",
- "head": "8ca952371fffb1292d49219725cf3260ec89cca3",
- "note": "S2: close side tiles from T laid back; old levels are another terrain, plates tool next",
+ "pushed": "2026-11-23T08:38:26.465Z",
+ "head": "2afc5d610bc6c1b88e739adb593448e95c68ea8c",
+ "note": "S2 first pass plates and repaint leads, nothing installed yet, style gap between place and old ground is open",
  "looks": [
+  {
+   "time": "2026-11-23T08:38:25.342Z",
+   "file": "20261123083825342-note-lead-sheet.jpg",
+   "source": "out/work/mercury/place/repaint/lead-sheet.jpg",
+   "kind": "note",
+   "label": "S2 repaint leads, rough: level 3, level 4 (left side too dark, a scale error being fixed), style crop (wrong crop, shows flare and sky)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T08:38:22.437Z",
+   "file": "20261123083822437-note-sheet-v1.jpg",
+   "source": "out/work/mercury/place/plates/dive/sheet-v1.jpg",
+   "kind": "note",
+   "label": "S2 first pass plates by code, levels 2 to 4, not installed: the place wedge sits dark grey and photoreal inside the pale old terrain, so the surroundings need a repaint",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-23T08:20:36.698Z",
    "file": "20261123082036698-note-cmp-l4.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/mercury/place/close-sheet.jpg",
    "kind": "note",
    "label": "close side 744 to 780 with the glare cover off, draft (study for T)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T07:13:14.255Z",
-   "file": "20261123071314255-note-hold615-spot4x.jpg",
-   "source": "out/work/mercury/place/hold615-spot4x.jpg",
-   "kind": "note",
-   "label": "S2 study: the spot in the kept hold still at 4x (the ring crater right of the mark is the place the dive goes to)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T06:55:17.870Z",
-   "file": "20261123065517870-note-m1-plate.jpg",
-   "source": "out/work/mercury/place/m1-plate.jpg",
-   "kind": "note",
-   "label": "M1 first laid back plate (rough): the approved close image laid through the twin onto the sphere, its stretch, and the same beside patch-4 as shipped",
    "stop": "mercury"
   }
  ]
