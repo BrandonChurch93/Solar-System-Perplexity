@@ -2007,3 +2007,76 @@ venus_builder: 7907a57a under check since 15:32 (builder/take-venus 48008c32). O
 Answered about 15:38: the eighth (order made: 1 the composition take of 07:57, 2 q2, 3 r1, 4 q3, 5 t1, 6 t2, 7 t3, 8 t4; baked: t4). So 7907a57a may not be taken as it is. To do, in this order: pick the best of t1 and t2 (the two outpainting takes among the first six; files `out/work/venus/place/gen/a-r3-t1-grey.png`, `a-r3-t2-zoom.png`), build plate a with it, its tiles (a tiles: 3 takes used, 3 left), plate w around it, T plates, new file names, render both moves, prove a to d on a merge of main 0eae595, name the commit.
 
 Found at 15:36, before this mail, and to go into the same commit: the plates are drawn redder than the globe about them while the dusk share is under 1 (measured at draft, plates on over plates off, centre of the frame, display values: 1287 red 1.14, green 0.93, blue 0.69; 1586 1.00, 0.84, 0.64). Cause: the tone map takes the plates to the globe's look at the full dusk gain and tint, and the shader then scales them by the gain alone (`uDusk.w`), not by the tint. Cure: the plates take the gain and the tint of the globe at every share.
+
+### MAIL 295 from the Builder (16:04 UTC), the first two parts and the Venus paragraph word for word
+
+"MAIL 295 from the Builder to all stop builders and the engineer, 16:04 UTC. Read the first two parts and your own paragraph.
+
+MAIN is c9bc056. On it since mail 293: Uranus (25f2dc3a) and the Sun (c2524de5) at 15:45 UTC, Neptune (d39658df) and Earth (a29f6f87) at 15:55 UTC. With Mercury that is five stops with no cover. Merge main before your next named commit. Nothing outside your three folders, as before.
+
+ROUNDS. Batch one started at 15:56 UTC on that state: round 37 Mercury, 38 Uranus, 39 Neptune, 40 Earth, each round 1 of 3 for the note. Their frames render on 28 machines now. Fresh critics then judge the kept frames beside the approved images, the surfaces at native size, and the motion on sheets of the hold, the dive, the surface view and the rise plus a sheet of consecutive frames across each handover. G13 is counted on every frame of the dive and the rise. Each list of issues reaches its builder when the round closes, at about 18:15 UTC. Round 2 of a stop runs on the commit its builder names after that list. Until the list comes, work on your own list and name a commit when a cure is rendered and proven.
+Batch two (the Sun, Mars, Venus, Jupiter, Saturn) starts at about 17:15 UTC with every stop that is on main by then; a stop that lands later starts with the next gate run, about 40 minutes after. A check of a named commit takes about 25 minutes on twelve machines, so name it by 16:45 UTC to be in batch two."
+
+"venus_builder: 7907a57a is not taken, because take 8 of the ring is baked in it. Name the commit with one of the first six baked and the frames it touches rendered, by 16:45 UTC for batch two."
+
+The other paragraphs are for the other builders and the engineer.
+
+### State 16:08, the ring of level a from the fifth take, level w new about it (work for mails 293 and 295)
+
+Done since 15:38, in this order:
+
+- Ring of level a: take 1 of the last set (`out/work/venus/place/gen/a-r3-t1-grey.png`, the fifth picture made for the composition of a in this phase) is the kept take now. Take 2 of that set (the sixth) enlarged the child by far and is not usable. Takes 3 and 4 of that set (the seventh and the eighth picture) are out of the film.
+- Measured on the takes 1 and 4 of that set alike: the take holds the child 1.2 percent larger than its true square (the child plate fits the take at the scale 0.9883 to 0.9885 on both axes; 1036 px for 1024 in the 2048 guide). `build.ring.takeChild` holds that width, `build.py ring` sets the take back to the true square. The plate of 7907a57a was made without this.
+- Level a tiles, take 4 (four calls, one per tile): faithful to their inputs. a tiles in this phase: 4 used, 2 left.
+- Found on the new plate a at native size: straight lines along the border of the square of b (the lower side from its middle to its right end, a piece of the upper side), crisp ripples inside, smooth haze outside. Cause: the guide of that take showed the child up to the border of its square in places (its noise matte was cut by the square), and the take painted another cloud beyond. Cure by code, no take: `build.py heal` (values `build.ring.heal`): where the step of the tone across the border is several times the step beside it (a cloud form gives about 1; the stretches found: left 1.5, right 5.6, top 6.3, bottom 20.7 percent of the side), the picture outside the border is mirrored inward over a band of noisy depth, in the part of the square where the child shows the parent's picture anyway. A first try that looked at the tone and the detail on both sides healed half of the border and left mirrored towers in view; it is not kept. Looked at the eight border strips at native size after the cure: no straight line, no mirrored form that I can name.
+- The guide matte is now closed at the border of the child square (`build.ring.matte.close`), so a new guide cannot show the child up to the border.
+- Level w about the new plate a: `build.py ringguide w` (closed matte), one outpainting take (w ring take 3, prompt `ringW` written new: the deck with separate towers of the new plate a; the wording of the takes 1 and 2 is kept as `ringWFirst`). Measured: it holds the child at the scale 1.0001 and 0.9999 and 0.09 px from its place (correlation of the forms in the middle 0.924). Four tile takes (w tiles take 6; the call of the top left tile failed in transit without a picture and was made again). w ring: 3 used, 3 left. w tiles: 6 used, none left in this phase.
+- The pictures of the old w ring takes 1 and 2 were painted about the plate a that held take 8 of the ring of a. They are not in the film any more: the ring of w is take 3.
+- New file names for every plate, T plate and tone map: `place3-<tag>.jpg`, `place3-<tag>-dive.jpg`, `place3-<tag>-rise.jpg`, `place3-tone-<kind>.bin`. c and d have the same picture as before at the base (their T plates were made again with the others).
+- T pipeline again for both handovers: calib dive [0.00006, 0.0044] with 0.01 and -0.03 px left over, rise [0.00075, 0.00518] with -0.16 and -0.04 px left over (unchanged values), make, tone, export.
+- The tint cure of 15:36 is in (`globe.ts` `uPlaceDusk`, `set.ts`).
+- Commit f8d16de7 (local), then merge 6d3d78f3 of origin/main c9bc056 (no conflict). Renders and proofs follow on the merge.
+
+### State 16:40, proofs on the merge for the commit named after mail 295
+
+Merge 6d3d78f3 of main c9bc056 pushed at 16:21; then main moved to 3974ce7 (only `kit/PROGRESS.md`), merged as 717cc46b. The diff of the branch against origin/main holds nothing outside the three Venus folders. No file of the Venus folders or of the engine changed between 6d3d78f3 and 717cc46b, so the renders of 6d3d78f3 stand for it.
+
+Rendered on 6d3d78f3 at draft: dive 1260 to 1349 and rise 1530 to 1604, every frame (`out/work/seq/`), sheets `out/work/venus/place/r9/dive-0.jpg` to `dive-7.jpg` and `rise-0.jpg` to `rise-6.jpg` (12 consecutive frames each). I looked at every frame of every sheet, and at 1287 and 1586 at 1440 px.
+
+What the sheets show:
+
+- Dive 1260 to 1283: the globe grows, the place comes in from about 1276 as cloud forms, no dark dot popping in; orange red speckles 1281 to 1283.
+- 1284 to 1307: a dark brown field of tower clusters with orange lit tops and long shadows beside the cream gold cloud of the globe at the left, a soft smeared band between the two at the left 1284 to 1303; orange red tints 1284 to 1295; smooth streaks at the right limb 1284 to 1295; tones change in view 1300 to 1307 (a pale grey blue patch comes up in the middle 1303 to 1307).
+- 1308 to 1349: one place into the terrain view, no cover; the Sun comes over the limb 1316 to 1319; a pale blurred band at the right 1320 to 1322.
+- Rise 1530 to 1553: continuous out of the terrain view, no cover; a paler grey pebbled deck at lower left 1545 to 1553.
+- 1554 to 1565: a golden band along the limb 1562 to 1565, pale blobs at the left 1560 to 1565.
+- 1566 to 1577: a pale blue white patch in the upper middle 1566 to 1570 that is gone by 1574 (tones change in view), soft smeared patches at lower left 1566 to 1573, orange tints on towers at the right 1570 to 1577, grey white crisp ridges at the left edge 1574 to 1577.
+- 1578 to 1589: a dark brown field with orange red tints on towers, grey white crisp ridges at the left 1578 to 1586, the cream globe with its swirl at the upper right.
+- 1590 to 1604: the globe shrinks; its lower left is dark brown, the swirl bright at the upper right. 1604 beside the kept 1605 of the travel: the same globe, no dark dot that the globe of 1605 does not have.
+
+Measured:
+
+- Kept frames, draft, 37 frames (`/tmp/v/keepframes.txt`: hold 1110 to 1259, terrain 1350 to 1529, travel 1605), `same/n11/` against the stills of main (`same/main/`): 37 of 37 byte equal (`cmp`).
+- Joins, draft, mean absolute step of the frame against the one before (0 to 255): 1259 to 1260 4.28 (1260 to 1261 4.41); 1349 to 1350 3.18 (1348 to 1349 3.03); 1529 to 1530 4.71 (1530 to 1531 4.72); 1601 to 1605 in steps 5.43, 4.14, 2.42, 1.49.
+- `npx tsc --noEmit` exit 0; `npx vitest run` 170 passed in 25 files (on 6d3d78f3 with the notes open).
+- `npm run build` ran at 16:06 on 6d3d78f3; every render above used that build.
+- G13, every frame, draft, `npm run measure -- --stop venus --only G13 --every 1` (858 s, on 6d3d78f3): PASS, 0 of 495 frames over 0.02 soft. Worst: rise 1561 1.18 percent, 1560 1.06, 1562 0.96; dive worst 1294 0.15 percent; hold and terrain 0. Mean texels per pixel at least 1.753. Copy of the report: `out/work/venus/place/r9/g13.json`.
+- Not measured yet when this entry was written: G5 and G17 at the final tier, the final tier bytes of 1185 and 1440, the handover report of the harness. They run next, one after the other; their results go into the next entry.
+
+Takes in this phase (kit/06, six per asset): ring of level a 8 pictures made, two over six; baked now is the fifth in the order made (`gen/a-r3-t1-grey.png`); the seventh and the eighth are not in the film, and no picture painted about them is: the old ring takes 1 and 2 of w were painted about a plate that held the eighth, they are replaced by ring take 3 of w. Look reference of the ring of a: 1. Tiles of a: 4 used, take 4 kept, 2 left. Ring of w: 3 used, take 3 kept, 3 left. Tiles of w: 6 used, take 6 kept, none left. b, c, d: no new take.
+
+Frames changed since the last render of the stop by /root: 1260 to 1343 and 1542 to 1604 (every frame on which a plate shows). 1344 to 1349 and 1530 to 1541 show the terrain view alone and were rendered again with the moves.
+
+What is still wrong, by frame:
+
+1. Tones change in view: dive 1300 to 1307 (a pale grey blue patch comes up in the middle), rise 1566 to 1574 (a pale blue white patch fades out).
+2. Rise 1562 to 1565: a smooth golden band along the limb; pale blobs at the left 1560 to 1565.
+3. Dive 1281 to 1303 and rise 1570 to 1589 (judged 1287 and 1586): the place is a dark brown field with orange red tints on its towers beside the cream gold cloud of the globe; a soft smeared band lies between the two (1284 to 1303 at the left, 1566 to 1573 at lower left). Still two kinds of cloud where both are in view.
+4. Rise 1574 to 1586: grey white crisp ridges at the left edge (level w on the dusk side).
+5. A paler grey pebbled deck at lower left 1545 to 1553; a pale blurred band at the right 1320 to 1322.
+6. Dive 1284 to 1295: smooth streaks at the right limb.
+7. The Sun comes over the limb only 1316 to 1319; `limbReachDeg` and `edgeIn` are not tried yet.
+8. Review tier not proven on this commit; `atT.shiftDeg` is fitted, not explained.
+9. Below about 0.07 radii the two deepest plates read as a stretched painting from straight above (1320 to 1343, 1542 to 1562).
+10. The tint of the plates against the globe was not measured again after the cure (before it, 1287 red 1.14, green 0.93, blue 0.69 at the centre).
+11. The tiles of w have no take left in this phase.
