@@ -1,0 +1,13 @@
+Image 1 is a square, straight down (nadir) orbital photograph of canyon land on Mars, north at the top, about 70 km across. It is incomplete. Three parts are given. First, a sharp square in the middle: dark mesa and canyon land, already finished. Second, a wedge shaped part that opens from the middle toward the right edge: measured ground with correct light and dark areas (a dark shadowed band, warm lit rock, a bright dusty plateau top at the lower right), but smeared into streaks that radiate from the middle and blurred toward the right. Third, a narrow band along the outer rim of the image: complete but blurred. Between them lies a flat grey area where the photograph is missing.
+
+Image 2 is an oblique aerial photograph of the land in the wedge, taken from the middle of the map looking toward its right edge (east south east). It shows what this land is: in the foreground a flat topped mesa of dark layered rock ending in a tall layered cliff; beyond it a canyon with a rough dark floor of rubble and landslide lobes; left of the canyon a sunlit layered wall under a plateau; right of the canyon a tall wall in deep shadow under a broad plateau with a bright dusty top.
+
+Task: complete image 1 into one seamless nadir orbital photograph, the same framing and scale, north at the top.
+
+1. Fill the grey area with land that continues the middle square and the wedge outward: dark mesa tops of layered rock cut by gullies and side canyons, cliffs, spurs, talus aprons, in the same dark brown and rust colours, the same contrast and the same direction of light as the middle square. Cliff lines, canyon floors and rock surfaces must run across the outline of the square and across the straight edges of the wedge without a break, so that nobody can tell where they ended. Toward the outer rim let the land join the brighter features of the rim band along natural boundaries such as cliff edges and slopes. No grey and no straight line may remain.
+
+2. Inside the wedge keep the brightness and colour of every area as it is, each light and dark area in its place, but draw it as sharp land seen from straight above: replace streaks and blur with layered cliff bands, gullied canyon walls, spurs, talus aprons, landslide lobes, rubble floors and wind scoured plateau surfaces. Do not darken, dull or flatten it.
+
+3. Keep the middle square exactly as it is. In the rim band keep every feature where it is, drawn sharp.
+
+Fine detail everywhere. Muted dark brown, rust and ochre rock, deep brown shadows. A photograph from orbit: no horizon, no sky, no haze, no clouds, no text, no border, no vignette.
