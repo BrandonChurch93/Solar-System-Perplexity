@@ -3,7 +3,7 @@ import type { ViewKind } from '../core/types'
 import { coverFrames, coverWindow, handoverChanges, handoverParams } from './timeline'
 
 export interface HandoverTimes { at: number; dissolveFrames: number; placeFrames: number }
-export interface PlaceOptions { scale?: number; margin?: number; matte?: 'pair' | 'alpha'; valid?: [number, number, number, number]; lens?: number; seen?: number; maxEnlarge?: number; enlargeSoft?: number }
+export interface PlaceOptions { scale?: number; margin?: number; matte?: 'pair' | 'alpha'; valid?: [number, number, number, number]; lens?: number; seen?: number; maxEnlarge?: number; enlargeSoft?: number; limbReachDeg?: number; limbHoldDeg?: [number, number]; edgeIn?: [number, number, number, number] }
 export interface Sidestep { right: number; up: number; by: number }
 export interface PathOptions { rise?: number; fall?: number; turnRise?: number; turnFall?: number; level?: boolean; levelBy?: number; sidestep?: Sidestep }
 export interface HandoverSide extends Partial<HandoverTimes> { skyFrames?: number; live?: boolean; picture?: boolean; place?: PlaceOptions; path?: PathOptions; skyFloor?: boolean }
@@ -17,6 +17,7 @@ const EDGE = 1e-6
 const known = new Map<string, Handover | null>()
 let knownAt = -1
 let forced: ViewKind | null = null
+let above = false
 
 function smooth(t: number): number {
   const x = Math.min(Math.max(t, 0), 1)
@@ -44,6 +45,9 @@ export function handoverOf(stop: string, kind: 'dive' | 'rise'): Handover | null
     if (placeFirstFrame < seg.firstFrame || placeLastFrame > seg.endFrame - 1) throw new Error('the handover of ' + seg.id + ' does not fit inside its segment')
     const lim = own[kind]?.place
     if (lim && ((lim.seen !== undefined && !(lim.seen > 0 && lim.seen <= 1)) || (lim.maxEnlarge !== undefined && !(lim.maxEnlarge > 1)) || (lim.enlargeSoft !== undefined && !(lim.enlargeSoft > 0 && lim.enlargeSoft < 1)))) throw new Error('the place of ' + seg.id + ' needs seen above 0 and at most 1, maxEnlarge above 1 and enlargeSoft between 0 and 1')
+    if (lim && lim.limbReachDeg !== undefined && !(lim.limbReachDeg >= 0 && lim.limbReachDeg < 90)) throw new Error('the place of ' + seg.id + ' needs limbReachDeg of 0 or more and under 90')
+    if (lim && lim.limbHoldDeg !== undefined && !(Array.isArray(lim.limbHoldDeg) && lim.limbHoldDeg.length === 2 && lim.limbHoldDeg[0] >= 0 && lim.limbHoldDeg[1] > lim.limbHoldDeg[0] && lim.limbHoldDeg[1] < 90)) throw new Error('the place of ' + seg.id + ' needs limbHoldDeg as two angles, the first 0 or more, the second larger and under 90')
+    if (lim && lim.edgeIn !== undefined && !(Array.isArray(lim.edgeIn) && lim.edgeIn.length === 4 && lim.edgeIn.every((x) => x >= 0 && x <= 1))) throw new Error('the place of ' + seg.id + ' needs edgeIn as four shares from 0 to 1: left, right, bottom, top')
     out = { time: ((firstFrame + lastFrame) / 2 + config.shutterFraction / 2) / config.fps, firstFrame, lastFrame, placeFirstFrame, placeLastFrame, skyFrames: t.skyFrames, live: own[kind]?.live === true, picture: own[kind]?.picture !== false, place: own[kind]?.place ?? {}, skyFloor: own[kind]?.skyFloor === true }
   }
   known.set(key, out)
@@ -115,6 +119,16 @@ export function skyTurnWeight(seg: Segment, time: number): number {
 
 export function forceSide(view: ViewKind | null): void {
   forced = view
+}
+
+// The top down view of the harness (E4, the check of S2): the globe camera of a dive or a rise is put straight above the place, at the height and
+// with the field it has on the film's path. Like forceSide it is for the harness only and must not be reachable from the film path.
+export function forceTop(on: boolean): void {
+  above = on
+}
+
+export function topForced(): boolean {
+  return above
 }
 
 export function handoverFrame(h: Handover): number {

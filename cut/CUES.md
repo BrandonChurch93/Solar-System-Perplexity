@@ -14,11 +14,11 @@ The film runs 03:00.000, 5400 frames at 30 frames per second, with no sound. Tim
 | `sun.hold` | start of hold | 00:09.000 | 00:00:09:00 | 270 | Music lands on the first frame and carries the hold. Plasma: a low roar, further off. |
 | `sun.travel` | start of travel | 00:15.000 | 00:00:15:00 | 450 | Music builds from the first frame toward the next hold. |
 | `mercury.hold` | start of hold | 00:18.000 | 00:00:18:00 | 540 | Music lands on the first frame and carries the hold. |
-| `mercury.dive` | start of dive | 00:23.000 | 00:00:23:00 | 690 | The rush of the dive: a rising rush of air from the first frame that peaks at the cover center. |
-| `mercury.dive` | center of the cover | 00:24.800 | 00:00:24:24 | 744 | The peak of the rush. The cover runs from frame 736 to 751 and the view changes under it. |
+| `mercury.dive` | start of dive | 00:23.000 | 00:00:23:00 | 690 | The rush of the dive: a rising rush of air from the first frame that peaks at the handover. |
+| `mercury.dive` | the handover | 00:24.808 | 00:00:24:24 | 744 | The peak of the rush. The view changes in frame 744 with no cover: the place stays in view. |
 | `mercury.terrain` | start of terrain | 00:26.000 | 00:00:26:00 | 780 | The hush: music drops to a quiet bed on the first frame, under a soft air tone. |
-| `mercury.rise` | start of rise | 00:32.000 | 00:00:32:00 | 960 | A shorter rush that peaks at the cover center and opens out after it. |
-| `mercury.rise` | center of the cover | 00:33.000 | 00:00:33:00 | 990 | The peak of the rush. The cover runs from frame 982 to 997 and the view changes under it. |
+| `mercury.rise` | start of rise | 00:32.000 | 00:00:32:00 | 960 | A shorter rush that peaks at the handover and opens out after it. |
+| `mercury.rise` | the handover | 00:33.008 | 00:00:33:00 | 990 | The peak of the rush. The view changes in frame 990 with no cover: the place stays in view. |
 | `mercury.travel` | start of travel | 00:34.500 | 00:00:34:15 | 1035 | Music builds from the first frame toward the next hold. |
 | `venus.hold` | start of hold | 00:37.000 | 00:00:37:00 | 1110 | Music lands on the first frame and carries the hold. |
 | `venus.dive` | start of dive | 00:42.000 | 00:00:42:00 | 1260 | The rush of the dive: a rising rush of air from the first frame that peaks at the cover center. |
@@ -79,8 +79,8 @@ The film runs 03:00.000, 5400 frames at 30 frames per second, with no sound. Tim
 - Music builds through every travel, from its first frame to the first frame of the next hold: 00:15.000 to 00:18.000, 00:34.500 to 00:37.000, 00:53.500 to 00:56.000, 01:12.500 to 01:15.000, 01:31.500 to 01:34.000, 01:50.500 to 01:53.000, 02:09.500 to 02:12.000, 02:28.500 to 02:31.000.
 - Music lands on the first frame of every hold: 00:09.000 sun, 00:18.000 mercury, 00:37.000 venus, 00:56.000 earth, 01:15.000 mars, 01:34.000 jupiter, 01:53.000 saturn, 02:12.000 uranus, 02:31.000 neptune.
 - Music drops to a quiet bed for every terrain view, the hush: 00:00.000 to 00:06.000, 00:26.000 to 00:32.000, 00:45.000 to 00:51.000, 01:04.000 to 01:10.000, 01:23.000 to 01:29.000, 01:42.000 to 01:48.000, 02:01.000 to 02:07.000, 02:20.000 to 02:26.000, 02:39.000 to 02:45.000.
-- A rush of air peaks at the center of every cover: 00:07.200, 00:24.800, 00:33.000, 00:43.800, 00:52.000, 01:02.800, 01:11.000, 01:40.800, 01:49.000, 01:59.800, 02:08.000, 02:18.800, 02:27.000, 02:38.100, 02:46.000.
-- A rush of air peaks at every handover: 01:21.808, 01:29.508.
+- A rush of air peaks at the center of every cover: 00:07.200, 00:43.800, 00:52.000, 01:02.800, 01:11.000, 01:40.800, 01:49.000, 01:59.800, 02:08.000, 02:18.800, 02:27.000, 02:38.100, 02:46.000.
+- A rush of air peaks at every handover: 00:24.808, 00:33.008, 01:21.808, 01:29.508.
 - The ending: music lands for the last time at 02:51.500, the start of the lookback, and fades with the picture from 02:57.500 to silence at 03:00.000.
 
 ## The clips
@@ -96,10 +96,10 @@ A clip is cut from the same frames as the film. Its cues are the film's cues cou
 | `sun` | | end of the clip | 00:15.000 | 450 | 00:15.000 |
 | `mercury` | `mercury.hold` | start of hold | 00:00.000 | 0 | 00:18.000 |
 | `mercury` | `mercury.dive` | start of dive | 00:05.000 | 150 | 00:23.000 |
-| `mercury` | `mercury.dive` | center of the cover | 00:06.800 | 204 | 00:24.800 |
+| `mercury` | `mercury.dive` | the handover | 00:06.808 | 204 | 00:24.808 |
 | `mercury` | `mercury.terrain` | start of terrain | 00:08.000 | 240 | 00:26.000 |
 | `mercury` | `mercury.rise` | start of rise | 00:14.000 | 420 | 00:32.000 |
-| `mercury` | `mercury.rise` | center of the cover | 00:15.000 | 450 | 00:33.000 |
+| `mercury` | `mercury.rise` | the handover | 00:15.008 | 450 | 00:33.008 |
 | `mercury` | | end of the clip | 00:16.500 | 495 | 00:34.500 |
 | `venus` | `venus.hold` | start of hold | 00:00.000 | 0 | 00:37.000 |
 | `venus` | `venus.dive` | start of dive | 00:05.000 | 150 | 00:42.000 |
@@ -189,10 +189,10 @@ The clip's cues inside each post, after the cut:
 | `sun` | `sun.hold` | start of hold | 00:13.567 | 407 |
 | `mercury` | `mercury.hold` | start of hold | 00:04.767 | 143 |
 | `mercury` | `mercury.dive` | start of dive | 00:09.767 | 293 |
-| `mercury` | `mercury.dive` | center of the cover | 00:11.567 | 347 |
+| `mercury` | `mercury.dive` | the handover | 00:11.575 | 347 |
 | `mercury` | `mercury.terrain` | start of terrain | 00:12.767 | 383 |
 | `mercury` | `mercury.rise` | start of rise | 00:18.767 | 563 |
-| `mercury` | `mercury.rise` | center of the cover | 00:19.767 | 593 |
+| `mercury` | `mercury.rise` | the handover | 00:19.775 | 593 |
 | `venus` | `venus.hold` | start of hold | 00:04.667 | 140 |
 | `venus` | `venus.dive` | start of dive | 00:09.667 | 290 |
 | `venus` | `venus.dive` | center of the cover | 00:11.467 | 344 |
