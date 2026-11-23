@@ -2,7 +2,7 @@ import { config } from '../config'
 import type { Engine } from '../core/engine'
 import type { ViewKind } from '../core/types'
 import type { FilmDirector, LiveControl } from './film'
-import { clipRange, segmentAtFrame, setsForFrame } from './timeline'
+import { clipRange } from './timeline'
 
 export interface Range { first: number; last: number }
 
@@ -28,10 +28,18 @@ export function runAutopilot(engine: Engine, range: Range): void {
   let origin = -1
   let shown = -1
   let busy = false
-  let asked = ''
+  let primed = false
   const next = (ts: number): void => {
     requestAnimationFrame(next)
     if (busy) return
+    if (!primed) {
+      busy = true
+      void engine.warm.run(engine, range.first, 'draft', range.last, true).then(() => {
+        primed = true
+        busy = false
+      })
+      return
+    }
     if (origin < 0) origin = ts
     let frame = range.first + Math.floor(((ts - origin) / 1000) * config.fps)
     if (frame > range.last) frame = range.last
@@ -47,16 +55,7 @@ export function runAutopilot(engine: Engine, range: Range): void {
       })
       return
     }
-    const segment = segmentAtFrame(frame)
-    const at = config.stopIds.indexOf(segment.stop)
-    if (segment.kind !== 'travel' && at >= 0 && at + 1 < config.stopIds.length && segment.endFrame <= range.last) {
-      const want = [segment.stop, config.stopIds[at + 1]!]
-      const key = want.join('|')
-      if (asked !== key && setsForFrame(frame).length === 1) {
-        asked = key
-        void engine.prefetch(want)
-      }
-    }
+    engine.ahead(frame, 'draft', range.last)
     busy = true
     void engine.renderFrame(frame, 'draft').then(() => {
       shown = frame
@@ -68,6 +67,7 @@ export function runAutopilot(engine: Engine, range: Range): void {
     if (shown >= range.last) {
       origin = -1
       shown = -1
+      primed = false
     }
   }
   window.addEventListener('pointerdown', restart)
@@ -113,7 +113,10 @@ export function runLive(engine: Engine, director: FilmDirector, loading: Loading
     const mine = ++token
     ready = false
     loading.show(true)
-    const job = state.kind === 'frame' ? engine.prepare(state.frame) : engine.prepare(0).then(() => engine.prefetch([control.stop]))
+    const job = state.kind === 'frame' ? engine.prepare(state.frame) : engine.prepare(0).then(() => engine.prefetch([control.stop])).then(() => {
+      const at = clipRange(control.stop).firstFrame
+      return engine.warm.run(engine, at, 'draft', at, true).then(() => undefined)
+    })
     void job.then(() => {
       if (mine !== token) return
       ready = true
