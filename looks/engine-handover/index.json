@@ -1,9 +1,51 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-23T15:18:18.367Z",
+ "pushed": "2026-11-23T15:43:43.065Z",
  "head": "60c083ea13812fb1bff47e8d5eae470833905927",
- "note": "edgeIn on Mars: the picture comes in from the place outward, tried at draft on the plates of mars_place_builder",
+ "note": "Mars rise leaves from the eye of the dive twin (new option fromDive, scratch tree): the handover is seamless at the draft tier, one colour step after T still fails",
  "looks": [
+  {
+   "time": "2026-11-23T15:43:35.642Z",
+   "file": "20261123154335642-note-fd1-2733-2740.jpg",
+   "source": "out/work/edgein/fd1-2733-2740.png",
+   "kind": "note",
+   "label": "Mars rise with fromDive (draft): frames 2733 to 2740, body colour step 8.32 into 2737 fails the limit of 8"
+  },
+  {
+   "time": "2026-11-23T15:43:34.844Z",
+   "file": "20261123154334844-note-fd1-2720-2731.jpg",
+   "source": "out/work/edgein/fd1-2720-2731.png",
+   "kind": "note",
+   "label": "Mars rise with fromDive (draft): frames 2720 to 2731, the plates in the globe: pale star with a dark dot"
+  },
+  {
+   "time": "2026-11-23T15:43:33.955Z",
+   "file": "20261123154333955-note-fd1-2708-2719.jpg",
+   "source": "out/work/edgein/fd1-2708-2719.png",
+   "kind": "note",
+   "label": "Mars rise with fromDive (draft): frames 2708 to 2719, the plates alone: dark middle and the fan north of it"
+  },
+  {
+   "time": "2026-11-23T15:43:33.261Z",
+   "file": "20261123154333261-note-fd1-2705-2708.jpg",
+   "source": "out/work/edgein/fd1-2705-2708.png",
+   "kind": "note",
+   "label": "Mars rise with fromDive (draft): frames 2705 to 2708, the picture leaves, the plates take over"
+  },
+  {
+   "time": "2026-11-23T15:43:32.539Z",
+   "file": "20261123154332539-note-fd1-2701-2704.jpg",
+   "source": "out/work/edgein/fd1-2701-2704.png",
+   "kind": "note",
+   "label": "Mars rise with fromDive (draft): frames 2701 to 2704, place picture weights 0.82 to 0.47"
+  },
+  {
+   "time": "2026-11-23T15:43:31.829Z",
+   "file": "20261123154331829-note-fd1-2697-2700.jpg",
+   "source": "out/work/edgein/fd1-2697-2700.png",
+   "kind": "note",
+   "label": "Mars rise with fromDive (draft, scratch): frames 2697 to 2700, T at 2698, the eye of the dive twin"
+  },
   {
    "time": "2026-11-23T15:18:17.239Z",
    "file": "20261123151817239-note-l4-rise-2697-2712.jpg",
@@ -17,71 +59,6 @@
    "source": "out/work/edgein/2696-left.png",
    "kind": "note",
    "label": "Mars rise 2696, left 1100 px: the stripes of the globe show through the cliff of the picture, with and without edgeIn (not cured by it)"
-  },
-  {
-   "time": "2026-11-23T15:18:14.738Z",
-   "file": "20261123151814738-note-cmp-rise-a.jpg",
-   "source": "out/work/edgein/cmp-rise-a.png",
-   "kind": "note",
-   "label": "Mars rise 2700, 2704, 2708 on the plates of 2bd6dd29: as it was (left) and with edgeIn (right)"
-  },
-  {
-   "time": "2026-11-23T15:18:13.673Z",
-   "file": "20261123151813673-note-2449-right.jpg",
-   "source": "out/work/edgein/2449-right.png",
-   "kind": "note",
-   "label": "Mars 2449, right 1100 px at 0.75: as it was, and with edgeIn"
-  },
-  {
-   "time": "2026-11-23T15:18:12.284Z",
-   "file": "20261123151812284-note-dive-a.jpg",
-   "source": "out/work/edgein/dive-a.png",
-   "kind": "note",
-   "label": "Mars dive 2444 to 2451 on the plates of 2bd6dd29, as it was (rows 1 and 3) and with edgeIn 0.4,0.4,0.4,0.25 (rows 2 and 4): the straight right side and the pale wedge are gone"
-  },
-  {
-   "time": "2026-11-23T14:44:22.758Z",
-   "file": "20261123144422758-sheet-mars.rise-cover-preview-draft.jpg",
-   "source": "out/work/sheets/mars.rise-cover-preview-draft.png",
-   "kind": "sheet",
-   "label": "Contact sheet mars.rise, draft tier",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "first": 2680,
-   "last": 2691,
-   "tier": "draft",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "c5fbc65c8302b556"
-  },
-  {
-   "time": "2026-11-23T14:44:03.501Z",
-   "file": "20261123144403501-frame-f02680-draft.jpg",
-   "source": "out/work/sheets/.frames-dHYt5G/f02680-draft.png",
-   "kind": "frame",
-   "label": "mars.rise frame 2680, draft tier",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "frame": 2680,
-   "tier": "draft",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "c5fbc65c8302b556"
-  },
-  {
-   "time": "2026-11-23T14:43:35.358Z",
-   "file": "20261123144335358-sheet-earth.dive-cover-preview-draft.jpg",
-   "source": "out/work/sheets/earth.dive-cover-preview-draft.png",
-   "kind": "sheet",
-   "label": "Contact sheet earth.dive, draft tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "first": 1879,
-   "last": 1890,
-   "tier": "draft",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "c5fbc65c8302b556"
   }
  ]
 }
