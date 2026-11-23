@@ -109,6 +109,11 @@ export class Belt {
   private readonly v = new THREE.Vector3()
   private readonly first: number
   private readonly end: number
+  private from = Infinity
+
+  keep(from: number): void {
+    this.from = from
+  }
 
   constructor() {
     const s = beltSegment()
@@ -131,7 +136,7 @@ export class Belt {
 
   async prepare(frame: number, assets: string, renderer: THREE.WebGLRenderer): Promise<void> {
     if (!this.inside(frame)) {
-      if (this.store && !this.loading) this.free()
+      if (this.store && !this.loading && !(frame >= this.from && frame < this.end)) this.free()
       return
     }
     if (this.store && this.storeAssets === assets) return
