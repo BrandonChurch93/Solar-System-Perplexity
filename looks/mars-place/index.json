@@ -1,9 +1,57 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-23T23:16:32.511Z",
+ "pushed": "2026-11-23T23:59:02.038Z",
  "head": "632d744175eea966ca502244f425afeafe2e8096",
- "note": "heights second run (shaded, five levels); colour at true places is in the bake now running",
+ "note": "heights v2 (canyon carried west with wander and gullies, far fan) and colour laid at true height with the canyon painted by code; faults seen: canyon reads as a black strait, curtain walls at the seen border, straight lines of the seen rectangle, light band with a straight edge at the top of 2427",
  "looks": [
+  {
+   "time": "2026-11-23T23:59:01.447Z",
+   "file": "20261123235901447-note-v1-sheet.jpg",
+   "source": "out/work/place/see/v1-sheet.jpg",
+   "kind": "note",
+   "label": "tool stills, old curve, place picture off: dive 2427 2436 2442 2448 2454 (left pair) and the rise frames of the same heights (right pair); country alone and with the close view laid over; heights v2 with the canyon colour by code",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T23:52:58.801Z",
+   "file": "20261123235258801-note-c4-shade.jpg",
+   "source": "out/work/place/country2/c4-shade.jpg",
+   "kind": "note",
+   "label": "height pyramid v2, five levels shaded by the film Sun, seen ground outlined",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T23:52:57.766Z",
+   "file": "20261123235257766-note-paint-0.3.jpg",
+   "source": "out/work/place/country/paint-0.3.jpg",
+   "kind": "note",
+   "label": "plate 0.3 deg before and after the canyon colour painted by code from the measured table (heights v2)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T23:52:56.688Z",
+   "file": "20261123235256688-note-paint-0.7.jpg",
+   "source": "out/work/place/country/paint-0.7.jpg",
+   "kind": "note",
+   "label": "plate 0.7 deg before and after the canyon colour painted by code from the measured table (heights v2)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T23:52:55.542Z",
+   "file": "20261123235255542-note-paint-1.6.jpg",
+   "source": "out/work/place/country/paint-1.6.jpg",
+   "kind": "note",
+   "label": "plate 1.6 deg before and after the canyon colour painted by code from the measured table (heights v2)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T23:52:54.110Z",
+   "file": "20261123235254110-note-paint-3.8.jpg",
+   "source": "out/work/place/country/paint-3.8.jpg",
+   "kind": "note",
+   "label": "plate 3.8 deg before and after the canyon colour painted by code from the measured table (heights v2)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-23T23:16:31.001Z",
    "file": "20261123231631001-note-c3-shade.jpg",
@@ -18,54 +66,6 @@
    "source": "out/work/place/see/t2442.png",
    "kind": "note",
    "label": "tool still, frame 2442 old curve: the height pyramid drawn as real ground through the film camera, colour still the old flat plates",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T22:53:32.913Z",
-   "file": "20261123225332913-note-grid6.jpg",
-   "source": "out/work/place/country/grid6.jpg",
-   "kind": "note",
-   "label": "the globe's own map at the spot on a half degree grid: the trough the canyon is carried on along",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T22:53:32.366Z",
-   "file": "20261123225332366-note-c-near.jpg",
-   "source": "out/work/place/country/c-near.jpg",
-   "kind": "note",
-   "label": "heights of the country, plates 0.7 and 0.3: plate beside the shaded heights",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T22:53:31.807Z",
-   "file": "20261123225331807-note-c-all.jpg",
-   "source": "out/work/place/country/c-all.jpg",
-   "kind": "note",
-   "label": "heights of the country, plates 8.5, 3.8, 1.6: plate beside the shaded heights (first bake c49c7dd5)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T22:32:29.878Z",
-   "file": "20261123223229878-note-see.jpg",
-   "source": "out/work/place/depth/see.jpg",
-   "kind": "note",
-   "label": "Tried and dropped: the pinned depth model on the plates from above (middle) reads a tilted plane, not heights; right the true mesh heights",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T22:32:29.294Z",
-   "file": "20261123223229294-note-c-all.jpg",
-   "source": "out/work/place/height/c-all.jpg",
-   "kind": "note",
-   "label": "Heights of the country by code, 0.7 degrees (top) and 1.6 degrees (bottom): left the plate as painted, right the heights as shaded relief. In the fan at the right the heights are the close view's own meshes (picture only, margins left out); everywhere else they are read from the light in the plate (slope along the Sun, gain fitted on the seen ground) on a base hung between the mesh borders",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T22:27:51.074Z",
-   "file": "20261123222751074-note-f-all.jpg",
-   "source": "out/work/place/height/f-all.jpg",
-   "kind": "note",
-   "label": "Heights of the place as shaded relief from above, 0.7 and 1.6 degrees: grey is what the meshes give, blue tint is made by code (holes hung as a membrane, then lowered under the sight of the picture's eye; the wide blue outside the fan is not built yet)",
    "stop": "mars"
   }
  ]
