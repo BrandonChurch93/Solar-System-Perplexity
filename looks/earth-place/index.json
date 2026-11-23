@@ -1,9 +1,41 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-23T19:09:35.241Z",
+ "pushed": "2026-11-23T19:22:54.543Z",
  "head": "cdaaa89328e887996fbeb2f85cd815d6331d6213",
- "note": "shutter trial part 2 crops, field density trial",
+ "note": "new field density and a climb with swing and bank, drafts; top edge of the field at 1857 is a line (canvas rim), to cure",
  "looks": [
+  {
+   "time": "2026-11-23T19:22:53.794Z",
+   "file": "20261123192253794-note-look-1930-1857-native.jpg",
+   "source": "out/work/earth/place/look-1930-1857-native.jpg",
+   "kind": "note",
+   "label": "earth look-1930-1857-native draft, trial tree",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T19:22:53.220Z",
+   "file": "20261123192253220-note-look-1930-dive-field.jpg",
+   "source": "out/work/earth/place/look-1930-dive-field.jpg",
+   "kind": "note",
+   "label": "earth look-1930-dive-field draft, trial tree",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T19:22:52.598Z",
+   "file": "20261123192252598-note-look-1930-climb-b.jpg",
+   "source": "out/work/earth/place/look-1930-climb-b.jpg",
+   "kind": "note",
+   "label": "earth look-1930-climb-b draft, trial tree",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T19:22:51.943Z",
+   "file": "20261123192251943-note-look-1930-climb-a.jpg",
+   "source": "out/work/earth/place/look-1930-climb-a.jpg",
+   "kind": "note",
+   "label": "earth look-1930-climb-a draft, trial tree",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-23T19:09:28.749Z",
    "file": "20261123190928749-note-field-density-look.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/gl/dens4.jpg",
    "kind": "note",
    "label": "trial of a new field density over the hold's map: outline no longer the sector, still too solid",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T18:40:44.146Z",
-   "file": "20261123184044146-note-c2156-1.jpg",
-   "source": "../../../../tmp/gl/trial/c2156-1.jpg",
-   "kind": "note",
-   "label": "2156 final tier, shutter limit 6, 8, 10 px, limb and Moon, native",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T18:40:42.913Z",
-   "file": "20261123184042913-note-c1857-1.jpg",
-   "source": "../../../../tmp/gl/trial/c1857-1.jpg",
-   "kind": "note",
-   "label": "1857 final tier, shutter limit 6, 8, 10 px, upper right, native",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T18:40:41.729Z",
-   "file": "20261123184041729-note-c1857-0.jpg",
-   "source": "../../../../tmp/gl/trial/c1857-0.jpg",
-   "kind": "note",
-   "label": "1857 final tier, shutter limit 6, 8, 10 px, field, native",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T18:21:21.553Z",
-   "file": "20261123182121553-note-sideR.jpg",
-   "source": "../../../../tmp/gl/sideR.jpg",
-   "kind": "note",
-   "label": "1882 to 1894 right side native: land and bank fade under cloud",
    "stop": "earth"
   }
  ]
