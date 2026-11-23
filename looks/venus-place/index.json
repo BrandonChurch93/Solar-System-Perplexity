@@ -1,9 +1,39 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-23T20:16:49.253Z",
+ "pushed": "2026-11-23T20:41:20.761Z",
  "head": "2828642a70136a96efbc499eb2f3790c2680e485",
- "note": "2828642a READY: gates green, G13 0 of 495, G5 G17 pass, 37 kept frames equal, harness pass with every part; place field still a dark field 1280 to 1300 and 1566 to 1591",
+ "note": "try: the place takes tone and colour from the globe as drawn in the frame; wide ring being laid by code",
  "looks": [
+  {
+   "time": "2026-11-23T20:41:20.040Z",
+   "file": "20261123204120040-note-live1-rise2.jpg",
+   "source": "../../../../tmp/v/live1-rise2.jpg",
+   "kind": "note",
+   "label": "1586 and 1591 draft, left before, right the try (hue share still 1.0, red flecks)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T20:41:19.346Z",
+   "file": "20261123204119346-note-live1-1287.jpg",
+   "source": "../../../../tmp/v/live1-1287.jpg",
+   "kind": "note",
+   "label": "1287 draft, try: place tone and colour from the globe as drawn (top left before, right after, bottom left globe alone)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T20:32:40.554Z",
+   "file": "20261123203240554-frame-f01272.jpg",
+   "source": "out/work/venus/place/live1/f01272.png",
+   "kind": "frame",
+   "label": "venus.dive frame 1272, draft tier",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "frame": 1272,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e85c8d53a860dafc"
+  },
   {
    "time": "2026-11-23T20:16:48.685Z",
    "file": "20261123201648685-note-rise-1590.jpg",
@@ -49,44 +79,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "e85c8d53a860dafc"
-  },
-  {
-   "time": "2026-11-23T20:13:14.329Z",
-   "file": "20261123201314329-frame-f01185.jpg",
-   "source": "out/work/venus/place/same/m17/f01185.png",
-   "kind": "frame",
-   "label": "venus.hold frame 1185, draft tier",
-   "stop": "venus",
-   "segment": "venus.hold",
-   "frame": 1185,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e85c8d53a860dafc"
-  },
-  {
-   "time": "2026-11-23T20:10:48.886Z",
-   "file": "20261123201048886-sheet-venus-rise-top.jpg",
-   "source": "out/work/handover/venus-rise-top.png",
-   "kind": "sheet",
-   "label": "venus rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 1542), place picture off, draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1542,
-   "last": 1604,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T20:10:08.155Z",
-   "file": "20261123201008155-sheet-venus-rise-draft-after.jpg",
-   "source": "out/work/handover/venus-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "venus rise, every frame 1543 to 1554 (after T, frame 1542), draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1543,
-   "last": 1554,
-   "tier": "draft"
   }
  ]
 }
