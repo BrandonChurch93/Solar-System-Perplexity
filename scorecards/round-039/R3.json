@@ -1,0 +1,120 @@
+{
+ "critic": "R3",
+ "score": 4,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 4,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-05.png",
+      "where": "storm eye at centre (crops A, Q in image-06/07)",
+      "what": "the eye has stray electric-blue pixels and specks that look like compression or shader noise, and the white cloud fragments inside the eye have hard, cut-out edges",
+      "fix": "remove the saturated blue speckle, re-render the eye with real cloud detail, and blend the inner cloud fragments into the vortex"
+     },
+     {
+      "severity": "severe",
+      "file": "image-05.png",
+      "where": "lower right clouds (crops V, W, E in image-06/08)",
+      "what": "clouds break into blocky square patches; you can see the tile or texture blocks at native size",
+      "fix": "raise the cloud texture resolution or filtering so the cloud edges are continuous rather than made of square blocks"
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "whole frame, especially the cloud bands (crops C, G, L, R, M)",
+      "what": "a heavy radial or zoom blur smears everything into streaks; the cloud edges turn into comb-like smears and nothing is sharp anywhere, so the frame looks like a stretched low-res texture rather than a real close-up",
+      "fix": "cut back the zoom blur a lot, keep a sharp focal area around the eye, and add true high-frequency cloud detail"
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "upper right limb and sky (crops M, N in image-07)",
+      "what": "the stars and sky at the limb are a warm, grainy smudge that does not match the starfield in image-01, and the limb line is soft",
+      "fix": "use the same crisp starfield and a clean atmospheric falloff at the limb"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "dark lower left, rings and night side (crops T, D, O in image-03/04)",
+      "what": "a faint square grid or tile pattern and slight banding show in the near-black gradient",
+      "fix": "add dither or noise to the dark gradient and remove the tile seams in the background layer"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "rings (crops I, X, U)",
+      "what": "the rings are thin, ghostly streaks that look painted on rather than solid, and they fade out unevenly",
+      "fix": "give the rings a consistent structure and opacity, and make them cast or take shadow from the planet"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "moon at upper left (crop J)",
+      "what": "the moon's surface is smooth and slightly airbrushed, with little crater detail and a weak terminator",
+      "fix": "add higher-resolution surface detail and a sharper day-night boundary"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 4,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-13.png",
+      "where": "left, central, and terminator globe regions (crops image-14.png A, B, H; image-15.png J, O, P, Q)",
+      "what": "most of the planet cloud deck is heavily smeared and directionally blurred into soft, airbrushed streaks with linear comb-like stepping near the terminator, leaving only a small patch near the upper-right vortex sharp",
+      "fix": "use a uniformly sharp high-resolution spherical cloud map across the full globe without directional blur or stretched streaks"
+     },
+     {
+      "severity": "severe",
+      "file": "image-13.png",
+      "where": "ring system on right half and dark lower-right limb intersection (crops image-14.png C, E, F, I; image-15.png M, Q, R; image-16.png V)",
+      "what": "at native size the rings break into short, straight parallel brushstrokes that cut across the curved ring plane rather than following concentric orbital arcs, and fade out in a fuzzy gap near the dark planet limb",
+      "fix": "generate ring striations and particle density along true elliptical orbital coordinates and occult them cleanly against a crisp planet silhouette"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "opaque blue and shadowed cloud deck across the planet surface (crops image-10.png A, D, E; image-11.png N, O, P, R; image-12.png S, U)",
+      "what": "stray pinpoint white star-like dots are scattered directly on top of the opaque cloud deck and dark storm bands where background stars cannot appear",
+      "fix": "mask the starfield strictly outside the opaque planet disc and remove stray white pixel specks from the cloud layer"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "sunlit upper-left/upper-right limb and shadowed right limb (crops image-14.png A, G; image-15.png J, K, L, Q)",
+      "what": "a thin bright cyan rim line separates from a soft outer halo, terminates abruptly partway down the dark right limb, and has undimmed pinpoint stars sitting directly on the bright atmospheric edge",
+      "fix": "replace the doubled rim-and-halo edge with a smooth atmospheric scattering falloff that tapers naturally into the nightside and attenuates stars behind dense limb haze"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "lower-right foreground end of the white cloud band (crops image-10.png E; image-12.png U)",
+      "what": "the near-camera cloud wisps become soft and smeared compared with the crisp mid-ground cloud tops",
+      "fix": "maintain crisp high-frequency cloud filament detail through the lower-right foreground or use physically consistent depth-of-field across the entire near plane"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "bright atmospheric limb band and sky above right limb (crops image-10.png C; image-11.png J, K)",
+      "what": "several pinpoint stars shine unattenuated inside the bright lower atmospheric haze band and the brightest star in tile C/K shows a slightly smudged asymmetric blob",
+      "fix": "attenuate background stars proportionally to atmospheric optical depth near the horizon and render bright star point-spread functions cleanly"
+     }
+    ]
+   }
+  }
+ ]
+}

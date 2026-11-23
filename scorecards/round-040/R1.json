@@ -1,0 +1,35 @@
+{
+ "critic": "R1",
+ "score": 9,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "night side near the right limb, below the main aurora (crops E and I, around x 1000-1070, y 360-660)",
+   "what": "the small green aurora flecks on the night side and at the lower right limb are fainter and partly missing compared with -a",
+   "fix": "bring back the low-latitude aurora patches at the -a intensity and position along the night-side limb"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "upper right aurora curtain and red fringe (crop C)",
+   "what": "the red upper fringe above the green curtain is slightly weaker and the green curtain a touch less saturated",
+   "fix": "raise the red fringe glow and green saturation slightly to match -a"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "planet disc, mostly cloud and coastline texture (crops A, G)",
+   "what": "slightly crisper and more contrasty micro-texture than -a, reading as mild extra sharpening",
+   "fix": "ease the local contrast or sharpening a little so cloud edges match the softer -a rendering"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "sunglint and lower half of the ocean (crops A, F, G)",
+   "what": "a very slight lift in brightness and fine-grain texture over the ocean, with the sunglint a hair less smooth than -a",
+   "fix": "pull the midtones down slightly and soften the grain in the glint to match -a"
+  }
+ ]
+}
