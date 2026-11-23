@@ -1,4 +1,6 @@
 import apronJson from './aprons.json'
+import placeJson from './place.json'
+import platesJson from './plates.json'
 import reliefJson from './relief.json'
 import type { CloudReliefDef } from './relief'
 import wrapJson from './wrap.json'
@@ -23,6 +25,28 @@ export const patches = {
   fade: [1.02, 1.5] as [number, number],
 }
 
+const ahead = (platesJson.aheadDeg * Math.PI) / 180
+const under = placeJson.place.under.direction
+const heading = placeJson.place.heading
+
+export const place = {
+  // The levels made again for each handover (assets-src/venus/place/tlay.py) have one picture for the dive and one for the rise.
+  levels: platesJson.levels.map((l) => {
+    const twice = platesJson.atT.tags.includes(l.tag)
+    return { ...l, dive: twice ? l.file.replace('.jpg', '-dive.jpg') : l.file, rise: twice ? l.file.replace('.jpg', '-rise.jpg') : l.file }
+  }) as { tag: string; file: string; widthDeg: number; dive: string; rise: string }[],
+  rim: platesJson.rim,
+  forms: platesJson.forms.look as [number, number, number],
+  tone: { dive: platesJson.tone.files.dive, rise: platesJson.tone.files.rise, size: platesJson.tone.size, widthDeg: platesJson.tone.widthDeg, cos: platesJson.tone.cos as [number, number], power: platesJson.tone.curve, floor: platesJson.tone.floor, heights: platesJson.tone.heights as [number, number] },
+  air: { heights: platesJson.air.heights as [number, number], sunHeights: platesJson.air.sun.heights as [number, number], haze: platesJson.air.haze },
+  centre: [0, 1, 2].map((i) => under[i]! * Math.cos(ahead) + heading[i]! * Math.sin(ahead)) as [number, number, number],
+  feather: platesJson.feather,
+  fade: platesJson.fade as [number, number],
+  heading: heading as [number, number, number],
+  show: { heights: platesJson.show.heights as [number, number] },
+  dusk: { gain: platesJson.dusk.gain, limbHeights: platesJson.dusk.limbHeights as [number, number], tint: platesJson.dusk.tint as [number, number, number], dive: platesJson.dusk.dive as [number, number], rise: platesJson.dusk.rise as [number, number] },
+}
+
 const TINTS: [number, number, number][] = [[0.85, 0.3, 0.25], [0.3, 0.75, 0.35], [0.9, 0.75, 0.2], [0.4, 0.5, 0.9]]
 
 function reliefDef(key: 'full' | 'web'): CloudReliefDef {
@@ -43,6 +67,7 @@ function reliefDef(key: 'full' | 'web'): CloudReliefDef {
     masks: 'relief-masks.png',
     maskBox: box(reliefJson.masks.box),
     air: 'relief-air.png',
+    airSun: { file: platesJson.air.sun.file, limbFile: platesJson.air.sun.limbFile, atDeg: platesJson.air.sun.atDeg as [number, number], boxDeg: platesJson.air.sun.boxDeg as [number, number, number] },
   }
 }
 
