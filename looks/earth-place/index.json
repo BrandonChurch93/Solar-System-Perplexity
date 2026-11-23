@@ -1,9 +1,65 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-23T13:49:58.133Z",
- "head": "4b9faf39035ec151b2f43d5bfdb4d3f276d42ca2",
- "note": "handover run on the tree after levels-17: six verdicts pass at draft, side difference at T mean 0.101 and 0.103; glint patch far up and plate outline in the straight down view still wrong",
+ "pushed": "2026-11-23T14:19:16.588Z",
+ "head": "3c7515304eb340655854d66a42b3a0da3b9b9f9a",
+ "note": "Earth place 3c751530: every draft frame of dive and rise looked at; G13 fix for 2118 (low plate as a window) in proof",
  "looks": [
+  {
+   "time": "2026-11-23T14:19:15.769Z",
+   "file": "20261123141915769-note-s-2137-2148.jpg",
+   "source": "out/work/earth/place/all/sheets/s-2137-2148.jpg",
+   "kind": "note",
+   "label": "draft, every frame 2137-2148, commit 3c751530",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T14:19:15.070Z",
+   "file": "20261123141915070-note-s-2125-2136.jpg",
+   "source": "out/work/earth/place/all/sheets/s-2125-2136.jpg",
+   "kind": "note",
+   "label": "draft, every frame 2125-2136, commit 3c751530",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T14:19:14.463Z",
+   "file": "20261123141914463-note-s-2113-2124.jpg",
+   "source": "out/work/earth/place/all/sheets/s-2113-2124.jpg",
+   "kind": "note",
+   "label": "draft, every frame 2113-2124, commit 3c751530",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T14:19:13.819Z",
+   "file": "20261123141913819-note-s-1890-1901.jpg",
+   "source": "out/work/earth/place/all/sheets/s-1890-1901.jpg",
+   "kind": "note",
+   "label": "draft, every frame 1890-1901, commit 3c751530",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T14:19:13.187Z",
+   "file": "20261123141913187-note-s-1878-1889.jpg",
+   "source": "out/work/earth/place/all/sheets/s-1878-1889.jpg",
+   "kind": "note",
+   "label": "draft, every frame 1878-1889, commit 3c751530",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T14:19:12.388Z",
+   "file": "20261123141912388-note-s-1866-1877.jpg",
+   "source": "out/work/earth/place/all/sheets/s-1866-1877.jpg",
+   "kind": "note",
+   "label": "draft, every frame 1866-1877, commit 3c751530",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T14:19:11.720Z",
+   "file": "20261123141911720-note-s-1854-1865.jpg",
+   "source": "out/work/earth/place/all/sheets/s-1854-1865.jpg",
+   "kind": "note",
+   "label": "draft, every frame 1854-1865, commit 3c751530",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-23T13:49:56.925Z",
    "file": "20261123134956925-note-dive-down-sheet.jpg",
@@ -11,74 +67,6 @@
    "kind": "note",
    "label": "dive seen straight down, 12 frames: cream glint patch 1858 to 1889 and plate outline still wrong",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T13:49:55.565Z",
-   "file": "20261123134955565-note-rise-sky.jpg",
-   "source": "out/work/earth/place/tmp/hv/rise-sky.jpg",
-   "kind": "note",
-   "label": "rise sky rows 0 to 150, frames 2100 to 2112, native",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T13:49:54.693Z",
-   "file": "20261123134954693-note-rise-full-2108.jpg",
-   "source": "out/work/earth/place/tmp/hv/rise-full-2108.jpg",
-   "kind": "note",
-   "label": "rise 2108 to 2111 draft",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T13:49:53.564Z",
-   "file": "20261123134953564-note-rise-full-2100.jpg",
-   "source": "out/work/earth/place/tmp/hv/rise-full-2100.jpg",
-   "kind": "note",
-   "label": "rise 2100 to 2103 draft",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T13:49:52.382Z",
-   "file": "20261123134952382-note-dive-full-1915.jpg",
-   "source": "out/work/earth/place/tmp/hv/dive-full-1915.jpg",
-   "kind": "note",
-   "label": "dive 1915 to 1918 draft",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T13:49:51.324Z",
-   "file": "20261123134951324-note-dive-full-1907.jpg",
-   "source": "out/work/earth/place/tmp/hv/dive-full-1907.jpg",
-   "kind": "note",
-   "label": "dive 1907 to 1910 draft, place window, tree after levels-17",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T13:48:12.540Z",
-   "file": "20261123134812540-job-frame-01680.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "earth.hold frame 1680, draft tier, texels view, from the running measure job",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1680,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-23T13:47:39.515Z",
-   "file": "20261123134739515-frame-f02156.jpg",
-   "source": "out/work/earth/place/proof/f02156.png",
-   "kind": "frame",
-   "label": "earth.rise frame 2156, review tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2156,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6f5cd496b40446f2"
   }
  ]
 }
