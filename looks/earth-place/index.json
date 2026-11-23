@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-23T19:22:54.543Z",
+ "pushed": "2026-11-23T19:50:00.863Z",
  "head": "cdaaa89328e887996fbeb2f85cd815d6331d6213",
- "note": "new field density and a climb with swing and bank, drafts; top edge of the field at 1857 is a line (canvas rim), to cure",
+ "note": "earth: new field edge and sizes at 1857, limb band out, climb with bank; dome at 1878 to 1890 still seen",
  "looks": [
+  {
+   "time": "2026-11-23T19:50:00.107Z",
+   "file": "20261123195000107-note-s2-2136.jpg",
+   "source": "../../../../tmp/gl/f1/s2-2136.jpg",
+   "kind": "note",
+   "label": "rise 2136 to 2175 every third frame, climb with its own heading and bank, draft",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T19:49:59.520Z",
+   "file": "20261123194959520-note-s2-1866.jpg",
+   "source": "../../../../tmp/gl/f1/s2-1866.jpg",
+   "kind": "note",
+   "label": "dive 1866 to 1888 every second frame, draft",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T19:49:58.739Z",
+   "file": "20261123194958739-note-1857-f2-full.jpg",
+   "source": "../../../../tmp/gl/f1/1857-f2-full.jpg",
+   "kind": "note",
+   "label": "1857 draft, field of three body sizes ending by thinning, night limb without the green band",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-23T19:22:53.794Z",
    "file": "20261123192253794-note-look-1930-1857-native.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/earth/place/field-density-look.jpg",
    "kind": "note",
    "label": "field density over the hold map, trial",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T19:09:28.176Z",
-   "file": "20261123190928176-note-c2133-1.jpg",
-   "source": "../../../../tmp/gl/trial/c2133-1.jpg",
-   "kind": "note",
-   "label": "shutter trial 2133 limit 6 above, 10 below",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T19:09:27.440Z",
-   "file": "20261123190927440-note-c2133-0.jpg",
-   "source": "../../../../tmp/gl/trial/c2133-0.jpg",
-   "kind": "note",
-   "label": "shutter trial 2133 limit 6 above, 10 below",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T18:40:45.245Z",
-   "file": "20261123184045245-note-dens4.jpg",
-   "source": "../../../../tmp/gl/dens4.jpg",
-   "kind": "note",
-   "label": "trial of a new field density over the hold's map: outline no longer the sector, still too solid",
    "stop": "earth"
   }
  ]
