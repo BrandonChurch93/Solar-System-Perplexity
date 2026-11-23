@@ -33,7 +33,7 @@ const REQUIRED = [
   'formats.master', 'formats.preview', 'formats.uhd', 'platform.maxWidth', 'platform.maxHeight', 'platform.maxFps', 'platform.maxBitrateMbps', 'platform.loopsAtOrUnderSeconds',
   'export.container', 'export.videoCodec', 'export.bitrateMbps', 'export.warmUpFrames', 'export.proofSeconds', 'export.memoryTestSeconds', 'export.files.master', 'export.files.uhd', 'export.files.clip', 'export.files.preview',
   'previewFilm.bitrateMbps', 'tiers.draft', 'tiers.review', 'tiers.final', 'motion.fastKinds', 'motion.maxStepPx', 'motion.probeGrid', 'motion.bodyReach', 'motion.minBodyPx', 'motion.terrainGround', 'motion.softFromPx', 'motion.softToPx', 'assetSets.web', 'assetSets.full', 'sets.maxLoaded', 'lookLockStop', 'buildOrderAfterLookLock',
-  'stops', 'segments', 'cover.seconds', 'cover.diveCenterFraction', 'cover.riseCenterFraction', 'judged.fractions', 'detail.minTexelsPerPixel', 'detail.maxSoftPixelFraction', 'detail.minSharpnessRatio', 'detail.minBodyCoverage',
+  'stops', 'segments', 'cover.seconds', 'cover.diveCenterFraction', 'cover.riseCenterFraction', 'handover.dive.at', 'handover.dive.dissolveFrames', 'handover.dive.placeFrames', 'handover.rise.at', 'handover.rise.dissolveFrames', 'handover.rise.placeFrames', 'judged.fractions', 'detail.minTexelsPerPixel', 'detail.maxSoftPixelFraction', 'detail.minSharpnessRatio', 'detail.minBodyCoverage',
   'assets.maxTakesPerAsset', 'quality.passScore', 'critics.maxImageLongEdgePx', 'critics.contactSheetFrames', 'critics.phonePreviewWidthPx', 'critics.maxFilesPerMessage',
   'sandbox.chunkBudgetMinutes', 'sandbox.maxFramesOnDisk', 'sandbox.minFreeDiskGb', 'sandbox.maxRenderProcesses',
   'status.maxGapMinutes', 'status.minGapMinutes', 'status.maxPictures', 'status.inlineMaxTries',
@@ -118,6 +118,12 @@ export function buildConfig(input: unknown, approvedExists?: (path: string) => b
   if (m.probeGrid.length !== 2 || m.probeGrid.some((n) => !isWhole(n) || n < 2)) fail('motion.probeGrid needs two whole numbers of at least 2')
   if (!(m.bodyReach >= 1) || !(m.minBodyPx >= 0) || !(m.terrainGround > 0)) fail('motion.bodyReach must be at least 1, motion.minBodyPx at least 0 and motion.terrainGround above 0')
   if (!(m.softFromPx >= 0) || !(m.softToPx > m.softFromPx)) fail('motion.softToPx must be above motion.softFromPx, and that at least 0')
+  for (const kind of ['dive', 'rise'] as const) {
+    const h = r.handover[kind]
+    if (!(h.at > 0 && h.at < 1)) fail('handover.' + kind + '.at must lie between 0 and 1')
+    if (!isWhole(h.dissolveFrames) || !(h.dissolveFrames >= 1)) fail('handover.' + kind + '.dissolveFrames must be a whole number of at least 1')
+    if (!isWhole(h.placeFrames) || !(h.placeFrames >= 0)) fail('handover.' + kind + '.placeFrames must be a whole number, 0 or more')
+  }
   return {
     raw: r,
     name: r.name,

@@ -3,9 +3,10 @@ import { mkdirSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { ROOT, WORK, args, ensureBuild, loadConfig, machineId, requireDisk } from './lib/common'
 import { decodePng, openSource } from './lib/frames'
+import { detailFrames } from './lib/render'
 import { countTexels } from './measure/texels'
-import { coverWindow, judgedFrames, stopSegments } from '../src/director/timeline'
-import '../src/director/plans' // each plan sets its stop's cover window
+import { judgedFrames, stopSegments } from '../src/director/timeline'
+import '../src/director/plans' // each plan sets its stop's cover window or its handover
 
 const cfg = loadConfig()
 const a = args()
@@ -40,14 +41,7 @@ const out: Record<string, unknown> = {
 const lines: string[] = []
 
 if (only.includes('G13')) {
-  const frames: number[] = []
-  for (const s of segs) {
-    const cw = s.kind === 'dive' || s.kind === 'rise' ? coverWindow(s) : null
-    for (let f = s.firstFrame; f < s.endFrame; f++) {
-      if (cw && !noCover && f >= cw.firstFrame && f <= cw.lastFrame) continue
-      frames.push(f)
-    }
-  }
+  const frames = detailFrames(segs, noCover)
   const picked = frames.filter((_, i) => i % every === 0)
   await src.setDiagnostic('texels')
   const results: { frame: number; segment: string; counted: number; soft: number; fraction: number; meanTexels: number; pass: boolean }[] = []
