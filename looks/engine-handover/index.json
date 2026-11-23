@@ -1,9 +1,30 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-23T21:23:10.052Z",
- "head": "9f850d9afd9a95f195e5f34b36cf402b63c303cd",
- "note": "limbSky: the horizon of the place picture on the clock of the sky, Mars rise off and on at draft on the ninth bake; first try, a stripe under the limb still to cure",
+ "pushed": "2026-11-23T21:44:36.391Z",
+ "head": "cbb31e6d291dd2318e1857f0038b27a23705efd8",
+ "note": "limbSky second version on Mars (ninth bake): sky alone takes the horizon weight; a 1 px limb line is left, next a lap under the limb; shutter test fixed for MAIL 349",
  "looks": [
+  {
+   "time": "2026-11-23T21:44:35.606Z",
+   "file": "20261123214435606-note-s-dive-off-b.jpg",
+   "source": "../../../../tmp/hz/s-dive-off-b.png",
+   "kind": "note",
+   "label": "Mars dive 2442 to 2449, limbSky off (as main)"
+  },
+  {
+   "time": "2026-11-23T21:44:34.836Z",
+   "file": "20261123214434836-note-s-dive-on2-b.jpg",
+   "source": "../../../../tmp/hz/s-dive-on2-b.png",
+   "kind": "note",
+   "label": "limbSky second version, Mars dive 2442 to 2449, on"
+  },
+  {
+   "time": "2026-11-23T21:44:33.810Z",
+   "file": "20261123214433810-note-c-rise-on2-L1.jpg",
+   "source": "../../../../tmp/hz/c-rise-on2-L1.png",
+   "kind": "note",
+   "label": "limbSky second version (sky alone, c148dd1), Mars rise 2694 to 2701, left 720 px at full size: the stripe is gone, a 1 px bright line of the globe's limb is left (the mesh of the globe lies up to 2 px inside the sphere the pass computes)"
+  },
   {
    "time": "2026-11-23T21:23:09.379Z",
    "file": "20261123212309379-note-c-rise-on-L2.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/hz/merc-in4.png",
    "kind": "note",
    "label": "Mercury 740 and 738 lower left at full size, main's Mercury: film (no edgeIn), film with in=0.4,0.4,0.4,0.25, globe alone: the straight sides go with the feather, the pale band left is the globe's own"
-  },
-  {
-   "time": "2026-11-23T20:57:33.319Z",
-   "file": "20261123205733319-note-merc-740-crop.jpg",
-   "source": "../../../../tmp/hz/merc-740-crop.png",
-   "kind": "note",
-   "label": "Mercury 740 lower left at full size: film (hard four sided pale slab) beside globe alone (no slab)"
-  },
-  {
-   "time": "2026-11-23T20:57:32.574Z",
-   "file": "20261123205732574-note-merc-off.jpg",
-   "source": "../../../../tmp/hz/merc-off.png",
-   "kind": "note",
-   "label": "Mercury dive 738 to 741 on main's Mercury: film beside globe alone"
-  },
-  {
-   "time": "2026-11-23T20:57:31.840Z",
-   "file": "20261123205731840-note-b-2447.jpg",
-   "source": "../../../../tmp/hz/b-2447.png",
-   "kind": "note",
-   "label": "Mars dive 2445, 2447, 2449: film edgeIn 0.4, film 0.8, globe alone"
   }
  ]
 }
