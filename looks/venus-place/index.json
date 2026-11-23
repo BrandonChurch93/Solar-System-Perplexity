@@ -1,9 +1,33 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-23T07:56:59.990Z",
- "head": "ad59ffc0df8fbe7c8574b0923da3f01475befb4c",
- "note": "S2: four full plates in work, d and c done, b and a led by the globe's own cloud forms",
+ "pushed": "2026-11-23T08:15:48.001Z",
+ "head": "746fa898381b915151925f4a5df3ea942264957f",
+ "note": "S2 four plates laid, top down sheet and steady dive on the globe side; seam at the edge of plate c still to fix",
  "looks": [
+  {
+   "time": "2026-11-23T08:15:47.412Z",
+   "file": "20261123081547412-note-p3-top-c.jpg",
+   "source": "out/work/venus/place/p3-top-c.jpg",
+   "kind": "note",
+   "label": "top down 1324 to 1349 larger",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T08:15:46.862Z",
+   "file": "20261123081546862-note-p3-dive-sheet.jpg",
+   "source": "out/work/venus/place/p3-dive-sheet.jpg",
+   "kind": "note",
+   "label": "S3 the steady dive on the globe side alone, draft, every 8th frame. Known: a dark soft band with a straight edge left of the place at 1316 and 1324 (edge of plate c)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T08:15:46.232Z",
+   "file": "20261123081546232-note-p3-top-sheet.jpg",
+   "source": "out/work/venus/place/p3-top-sheet.jpg",
+   "kind": "note",
+   "label": "S2 top down dive sheet, globe side alone, draft, 12 frames 1260 to 1349, four nested plates a to d",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-23T07:56:59.389Z",
    "file": "20261123075659389-note-guide-view.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/venus/place/p2/sheet-dive.jpg",
    "kind": "note",
    "label": "S3 dive path, globe side, every 8th frame, draft, with an exposure ramp to dusk on the globe (gain 6): the ground about the place is now seen; plates still the rough fan of M1 with hard edges, sky and Sun not yet brought to the close side",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T07:28:02.598Z",
-   "file": "20261123072802598-note-sheet-dive.jpg",
-   "source": "out/work/venus/place/p1/sheet-dive.jpg",
-   "kind": "note",
-   "label": "S3 first try: new dive path on the globe side, every 8th frame 1260 to 1348, draft, no blur; plates still the rough laid back fan (hard edges, raw globe around it)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T07:14:58.673Z",
-   "file": "20261123071458673-note-m1-check3-split.jpg",
-   "source": "out/work/venus/place/m1-check3-split.jpg",
-   "kind": "note",
-   "label": "S1 check, one frame: left half close side, right half globe side, same camera",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T07:14:57.122Z",
-   "file": "20261123071457122-note-m1-check3-close-over-globe.jpg",
-   "source": "out/work/venus/place/m1-check3-close-over-globe.jpg",
-   "kind": "note",
-   "label": "S1 check, same camera at frame 1349 pose of 1440: close side above, globe side with the laid back plates below (exact sphere hit)",
    "stop": "venus"
   }
  ]
