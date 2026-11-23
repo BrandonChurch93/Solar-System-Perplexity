@@ -176,6 +176,38 @@ Measured (09:10 UTC, `plates/globe.py`, a numpy copy of the globe's lookups):
 
 `plates/prep.py NAME` makes the canvas of a plate for the repaint: the level above (for the mid plate the globe's own albedo with the flow frozen) enlarged, and inside the wedge the laid back close image divided by the grade field, blurred to what the image truly resolved there. It stores the blur map (plate pixels) so the join step knows what is finished.
 
+## Plates made (09:30 to 10:20 UTC)
+
+Tools in `assets-src/jupiter/plates/`: `place.py` (S1, writes `place.json`), `globe.py` (numpy copy of the globe's lookups), `prep.py NAME` (canvas for a repaint; also `NAME_bare_in.png` for a plate without a parent; `globeSoftenPx` blurs the globe's albedo first), `join.py NAME TAKE [keep]` (phase align, canvas above `lock` x tie, the take's detail below, finished parts kept; `keep` writes `gen/NAME-plate.npy/.png`), `nest.py` (near plate inside 6.5 units of the vortex, feathered to 9.2 into the mid; mid = near downsampled inside, the bare mid plate outside; fore unchanged), `prompts.json`. Generator files under `out/work/jupiter/gen/` (not in git).
+
+- Plate set in `deck.json` `plates`: fore centre (0, -1.875), 8.448 x 4.752 units, 2816 x 1584 px (0.003 units a pixel); near centre (0, 0), 20.48 units, 2048 px; mid 61.44 units, 2048 px; far 184.32 units, 2048 px. 1 unit is about 215 km.
+- Grade is one colour: plates = close image over the grade (the globe's exposure and hue). The surface view multiplies it back as one exposure by time alone (Mail 229 condition 5). The image's far tone is haze: flattened in the plates from 5 to 11 units of ground distance from the close camera.
+- Takes this round: near 2 of 6 (take 1 rejected: hard wedge edge and the globe's exposure in its canvas; take 2 kept). Mid 4 of 6 (`mid_first_t1` funnel five times too large; `mid_t1` with the near plate laid in: storm 2.5 times too large, bands replaced by cream; `mid_t3` bare canvas: layout kept, band correlation 0.822, but it kept the globe's stipple grain; `mid_t4` softened bare canvas, prompt `mid_bare2`: shift 0.07 and -0.05 px, band correlation 0.847, detail 5.67 to 10.72, kept). Fore 1 of 6 (`fore_t1`: shift 0.11 and -0.07 px, band correlation 0.988, kept).
+- Lesson: the generator keeps the layout only when no small storm sits in a soft surround. So the mid repaint is led by the canvas without the storm and the near plate is laid in afterwards by code, radially, so no square shows.
+- The globe's own albedo at the place is a stippled grain at 0.03 units a pixel (patch-near has 0.047 units a texel; patches: wide 100 degrees 5120 px, mid 61.58 degrees 4096 px, near 33.18 degrees 4096 px, centre lon -12 lat -10; the place lies 1.9 degrees inside the west edge of patch-near).
+- Heights: the depth tool on the top down plate does not agree with the image heights (correlation 0.04 to 0.08 after a high pass). So: image heights inside the fan (trust), depth tool high pass (0.8 units, gain 1) outside in the near map, the mid map image heights only, relief fades 6 to 10 units from the fit eye, no far height map.
+- `deck/bake.py` writes `plate-{fore,near,mid,far}.png` (RGBA, sRGB of the filmic curve of plate x grade, alpha = roughness from the plate's own band energy), `deck-{near,mid}-height.bin`, `deck-fields.json` (`chart`, `heightRange`, `grade`, `maps`, `plates`; keeps `view` and `limb`). `deck/view.py` lays the image onto the heights (the view matched chart `deck-view-color.png`).
+- Gate facts: G13 is measured at the draft tier (1 sample), soft when the texel count is under `detail.minTexelsPerPixel` 1.0, pass when soft over counted is at most 0.02. `GRAD_FLOOR` 0.5: the sample footprint shrinks at most by 2. `config.handover` defaults: dive at 0.6, rise at 0.4, dissolve 1, place 12, sky 24 frames, maxEnlarge 3, place scale 2.
+- Globe facts: `uPatchFade` 1.02 to 1.5, `MAX_PATCHES` 6 with 3 used, the wisp scrolls by `uWispT`, veil and pall are covers.
+
+## The plate deck in the shader (v6, 10:20 to 10:45 UTC)
+
+`clouds.ts` now: march on two height maps; colour = mix(plates, image field, trust); plates are four nested levels with ground fixed weights and a narrow join (`look.join`); every lookup with `textureGrad` and the footprint of the pixel on the tangent plane of the hit (normal from the height maps, ray steps from `dFdx(vDir)`), anisotropy 16 (`EXT_texture_filter_anisotropic` is in the Workspace record). Function detail: billow octaves embossed along the Sun's azimuth, cells from `detail.w` x the footprint up to `detail.z` x the source's texel, up to `foot.z` taps along the long axis of the footprint. No live light on the plates.
+
+Measured and seen:
+- First try (no footprint filtering, detail gain 1, cells of 0.6 px): stipple grain everywhere, mean abs diff to the approved image 6.63. With the footprint filtering and gain 0.1: 4.56 at the draft tier (M1 mark 4.58). A draft frame takes about 3 s after a boot of about 20 s.
+- `tools/repeat.ts --frames A,B,C --sessions 1 --runs 1 --keep DIR` renders several frames in one page (it has no help flag: a wrong flag starts a full run).
+- Plates only (`look.trust[2]` = 1 takes the image field away): 3150 and 3239 hold as pictures by themselves. So the plates are registered and carry the composition.
+- 3060 is BAD: the level flight (0.3 units a second, 0.9 units behind the fit pose at 3060, height 1) shows ground the image never saw: a strip in front of the image's near edge (36 percent of the frame height) and wedges at both sides. There the fore plate holds the repaint's bright cumulus banks, pale and soft, beside the image's dark foreground: the fan of the image stands in the frame as a dark quadrilateral.
+- Geometry of what a pose can see: the ground footprint of a pose stays inside the footprint of the fit pose only if the camera is ahead of the fit pose's image plane and above its bottom plane. Every pose behind the fit pose shows margins at the sides; below the bottom plane (z < 1.376 x for x back) also at the bottom. So the first half of the flight always shows margins; they must be small and good.
+
+Plan (10:45 UTC):
+1. Flight: a slow, slightly descending approach (about 0.3 units back and 0.35 up at 3060, margins about a tenth of the frame), through the fit pose at 3150, then faster forward (about 1 unit ahead at 3239). Numbers in `deck.json` `flight`.
+2. Haze by view angle: a fitted table T, S (transmittance and added light per channel) over the grazing angle of the ray and its azimuth from the Sun, from pairs (plates only render, approved image) at the fit pose. Applied to the plates only. From above it is the identity, so it serves the dive too.
+3. Margin tone: near the fan's apex the plates outside the wedge take the image's tone carried out from the border (baked in `bake.py`), so the margins are as dark as the image's foreground.
+4. Function detail: tune on magnified ground. G13 count for it: the function's finest cell.
+5. Then the M2 proofs.
+
 ## Next (08:40 UTC)
 
 1. Report M1 (way B: the image at its truly resolved scale in a view matched chart on true relief, trust that depends on the view so it is never shown stretched; way A, functions alone, was far too poor).
