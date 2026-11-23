@@ -1,9 +1,60 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T13:54:40.549Z",
- "head": "4e9bdc0291ebf903876a62f973b59547aaaab89a",
- "note": "13:58 ground take h6: flow map plus splits, 8.87 raw 4.04 blurred held camera (old 2.72 and 1.05)",
+ "pushed": "2026-11-23T14:09:34.245Z",
+ "head": "2aedc0e7b6708ea2a4411a68e6adbabe12b1ba22",
+ "note": "14:10 sun 2aedc0e7: ground stream with splits, finer field level in the rise",
  "looks": [
+  {
+   "time": "2026-11-23T14:09:33.542Z",
+   "file": "20261123140933542-note-r6-a.jpg",
+   "source": "out/work/sun/pl/r6-a.jpg",
+   "kind": "note",
+   "label": "sun 2aedc0e7 rise, draft, frames 204 to 219 across T (216): field tiles with their finer level, G13 0 soft on 201 to 222 every 3rd",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T14:09:32.543Z",
+   "file": "20261123140932543-note-h7-split.jpg",
+   "source": "out/work/sun/life/h7-split.jpg",
+   "kind": "note",
+   "label": "sun ground, camera held, frames 90 to 175 every 5th, x 780 y 790: the big dome splits from 110, the bright dome above it from 150",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T14:09:31.413Z",
+   "file": "20261123140931413-note-h7-ten.jpg",
+   "source": "out/work/sun/life/h7-ten.jpg",
+   "kind": "note",
+   "label": "sun ground, camera held, one crop every 10th frame 0 to 170 (take h7: as 2aedc0e7 but the level lift at 0.045, not 0.11)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T14:09:30.339Z",
+   "file": "20261123140930339-note-h8-six-b.jpg",
+   "source": "out/work/sun/life/h8-six-b.jpg",
+   "kind": "note",
+   "label": "sun 2aedc0e7, camera held, six frames 90 to 95 at native size, x 150 y 780",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T14:09:29.329Z",
+   "file": "20261123140929329-note-h8-six-a.jpg",
+   "source": "out/work/sun/life/h8-six-a.jpg",
+   "kind": "note",
+   "label": "sun 2aedc0e7, camera held at 90, six frames 90 to 95 at native size, x 700 y 700; ground 8.97 raw 4.07 blurred",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T14:09:12.345Z",
+   "file": "20261123140912345-compare-sun-rise-sides.jpg",
+   "source": "out/work/handover/sun-rise-sides.png",
+   "kind": "compare",
+   "label": "sun rise, both sides at T (frame 216) and their difference times 8",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 216,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-23T13:54:39.965Z",
    "file": "20261123135439965-note-h6-split.jpg",
@@ -18,54 +69,6 @@
    "source": "out/work/sun/life/h6-six-b.jpg",
    "kind": "note",
    "label": "sun ground h6, six frames 90 to 95 at native size, x 150 y 780",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T13:54:38.847Z",
-   "file": "20261123135438847-note-h6-six-a.jpg",
-   "source": "out/work/sun/life/h6-six-a.jpg",
-   "kind": "note",
-   "label": "sun ground h6, six frames 90 to 95 at native size, x 700 y 700",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T13:54:38.244Z",
-   "file": "20261123135438244-note-h6-ten.jpg",
-   "source": "out/work/sun/life/h6-ten.jpg",
-   "kind": "note",
-   "label": "sun ground h6, camera held at 90, one crop every 10th frame 0 to 170 (x 700, y 700): cells work, a big cell splits from 105 on, raw 8.87 blurred 4.04 over frames 90 to 101",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T13:32:45.530Z",
-   "file": "20261123133245530-note-h5-zoom.jpg",
-   "source": "out/work/sun/life/h5-zoom.png",
-   "kind": "note",
-   "label": "sun ground h5 at twice native: frames 90, 93, 95 near the lens and the penumbra at 93",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T13:32:44.924Z",
-   "file": "20261123133244924-note-h5-heat.jpg",
-   "source": "out/work/sun/life/h5-heat.jpg",
-   "kind": "note",
-   "label": "sun ground h5: mean change per frame by place, frames 90 to 95, ground box y 620 to 1080",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T13:32:44.284Z",
-   "file": "20261123133244284-note-h5-d5.jpg",
-   "source": "out/work/sun/life/h5-d5.jpg",
-   "kind": "note",
-   "label": "sun ground h5: difference of frames 90 and 95 (top) and 93 and 98, times 5",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T13:32:43.628Z",
-   "file": "20261123133243628-note-h5-near.jpg",
-   "source": "out/work/sun/life/h5-near.jpg",
-   "kind": "note",
-   "label": "sun ground h5, camera held at 90: frames 90 (top) and 95, flow map on the fine texture, raw 8.37 blurred 3.79 over frames 90 to 110",
    "stop": "sun"
   }
  ]
