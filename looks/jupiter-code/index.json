@@ -1,67 +1,31 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-23T23:11:29.476Z",
+ "pushed": "2026-11-23T23:24:53.809Z",
  "head": "505d1ea911cb3c7e747de1f57d4a98b6718c691b",
- "note": "step 2 (one scene) first frames: deck program in the globe's group by height, no place picture, T at the seam; not committed yet",
+ "note": "step 2 (one scene) in work, draft frames, not committed: deck program drawn in the globe view, place picture off, every weight by camera height; plates on the globe now sit on the deck's relief",
  "looks": [
   {
-   "time": "2026-11-23T23:11:28.900Z",
-   "file": "20261123231128900-note-p1a-3024.jpg",
-   "source": "../work/f/p1a-3024.jpg",
+   "time": "2026-11-23T23:24:53.214Z",
+   "file": "20261123232453214-note-p2a-3020-crop.jpg",
+   "source": "../work/f/p2a-3020-crop.jpg",
    "kind": "note",
-   "label": "p1a draft 3024: deck's program weight 0.95, drawn by the globe's group",
+   "label": "step 2 in work (draft): 3020 at full size, the eye in the blend of globe plates and deck, no double edge now",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T23:11:28.346Z",
-   "file": "20261123231128346-note-p1a-3020.jpg",
-   "source": "../work/f/p1a-3020.jpg",
+   "time": "2026-11-23T23:24:52.640Z",
+   "file": "20261123232452640-note-p2a-rise.jpg",
+   "source": "../work/f/p2a-rise.jpg",
    "kind": "note",
-   "label": "p1a draft 3020: blend by height between the globe's plates and the deck's program (weight 0.36)",
+   "label": "step 2 in work (draft): 3030, 3060, rise 3270 to 3296",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T23:11:27.497Z",
-   "file": "20261123231127497-note-p1a.jpg",
-   "source": "../work/f/p1a.jpg",
+   "time": "2026-11-23T23:24:51.940Z",
+   "file": "20261123232451940-note-p2a-dive.jpg",
+   "source": "../work/f/p2a-dive.jpg",
    "kind": "note",
-   "label": "p1a draft: step 2 first frames, the deck's own program drawn in the globe's group by camera height, T at the seam (3059). 3020 to 3060",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T23:10:31.048Z",
-   "file": "20261123231031048-frame-f03060.jpg",
-   "source": "out/work/jupiter/frames/p1a/f03060.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3060, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3060,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "94288983d3b2cf97"
-  },
-  {
-   "time": "2026-11-23T23:09:44.658Z",
-   "file": "20261123230944658-frame-f03050.jpg",
-   "source": "out/work/jupiter/frames/p1a/f03050.png",
-   "kind": "frame",
-   "label": "jupiter.dive frame 3050, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 3050,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "94288983d3b2cf97"
-  },
-  {
-   "time": "2026-11-23T22:50:09.119Z",
-   "file": "20261123225009119-note-k1-3296.jpg",
-   "source": "../work/f/k1-3296.jpg",
-   "kind": "note",
-   "label": "knots out, draft, judged 3296 (height 0.768 radii)",
+   "label": "step 2 in work (draft, not committed): the deck's own program on the globe, weights by height, relief under the plates; dive 2997 to 3026",
    "stop": "jupiter"
   }
  ]
