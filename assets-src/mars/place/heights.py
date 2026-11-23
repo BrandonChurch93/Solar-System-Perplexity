@@ -28,6 +28,7 @@ ap.add_argument('--jump', type=float, default=1.06, help='a cell whose corners d
 ap.add_argument('--most', type=int, default=512, help='the most a cell is split along one side')
 ap.add_argument('--frame', type=int, default=-1, help='instead of the plate: the meshes seen by the film camera of this dive or rise frame (geometry.json), 1920 by 1080; nearest wins')
 ap.add_argument('--horizon', type=float, default=0.93, help='cells farther than this share of the horizon distance are haze on the sky, left out')
+ap.add_argument('--picture-only', action='store_true', help='leave out the margins round the picture (painted on, drawn out from its border): only ground the approved picture itself shows')
 ap.add_argument('--out', required=True)
 a = ap.parse_args()
 
@@ -93,6 +94,11 @@ for name in R['drawOrder']:
     hi = np.maximum.reduce(c)
     ok = (hi / lo < a.jump) & (np.minimum.reduce(corners(alpha)) > 0.5) & (np.minimum.reduce(corners(dn)) > 0.2)
     ok &= hi < a.horizon * R['camera']['horizonDistance']
+    if a.picture_only:
+        px = b['x'] + fx * b['w']
+        py = b['y'] + fy * b['h']
+        inpic = ((px >= 0) & (px <= W))[None, :] & ((py >= 0) & (py <= H))[:, None]
+        ok &= np.minimum.reduce(corners(inpic.astype(np.float32))) > 0.5
     # what a nearer layer covers in the picture the eye never saw in this one: its distances there are made up
     for other in R['drawOrder'][R['drawOrder'].index(name) + 1:]:
         if other not in covers:
