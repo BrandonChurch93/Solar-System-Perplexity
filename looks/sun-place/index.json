@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T12:19:35.804Z",
+ "pushed": "2026-11-23T12:35:52.698Z",
  "head": "4e9bdc0291ebf903876a62f973b59547aaaab89a",
- "note": "mail 260 point 1, in progress: cell maps now carry the place in the cell; fronts and streaks by function; still weak (1.6 against 1.1), next the fine detail inside cells is made new by function",
+ "note": "ground take g5: label free fronts; seam between plate and apron found in the motion, not yet fixed; number 2.68 raw, 1.74 blurred against 2.7 and 1.05",
  "looks": [
+  {
+   "time": "2026-11-23T12:35:52.134Z",
+   "file": "20261123123552134-note-g5-d5.jpg",
+   "source": "out/work/sun/life/g5-d5.jpg",
+   "kind": "note",
+   "label": "12:37 take g5: frame 90 and four times the difference to frame 95. Rings follow the cells of the picture. Wrong: a straight line at y 930 where plate and apron meet, their depth maps differ there",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T12:35:51.575Z",
+   "file": "20261123123551575-note-g5-near.jpg",
+   "source": "out/work/sun/life/g5-near.jpg",
+   "kind": "note",
+   "label": "12:37 ground take g5, held camera frame 90 (top) against 4e9bdc02 (bottom): fronts and made texture now run on the distance from the lanes, no cell labels",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-23T12:19:35.255Z",
    "file": "20261123121935255-note-g2-diff10.jpg",
@@ -51,34 +67,6 @@
    "kind": "note",
    "label": "frozen camera, frames 36 and 42: the gap between arcade and thrown arc, before (hard dark band) and with the thrown strands taken out by half only",
    "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T11:42:21.854Z",
-   "file": "20261123114221854-job-frame-00000.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "sun.terrain frame 0, final tier, nograin view, from the running measure job",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 0,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-23T11:38:52.100Z",
-   "file": "20261123113852100-frame-f360.jpg",
-   "source": "out/work/sun/chk/f360.png",
-   "kind": "frame",
-   "label": "sun.hold frame 360, final tier",
-   "stop": "sun",
-   "segment": "sun.hold",
-   "frame": 360,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "8b9f780b26a50bc3"
   }
  ]
 }
