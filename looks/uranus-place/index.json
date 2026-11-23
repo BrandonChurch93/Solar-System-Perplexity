@@ -1,71 +1,89 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-23T19:23:00.459Z",
- "head": "06034e1621b088c54d0e237c67ede0d852bc1ddb",
- "note": "mail 320 items 1, 2, 7: sky trial, picture only in the frame of T, 4035 limb beside the approved hero, limb dashes; scratch tree on main 8eba73e9",
+ "pushed": "2026-11-23T19:40:55.414Z",
+ "head": "8dbd9cc6ef4a4d63d4f24ae0b1fe064d21ac045c",
+ "note": "mail 320: sky turn and Sun in the dive, two picture frames in the rise, ring ends of 4290 beside the approved close image; chain F runs on main c8b4c8b9",
  "looks": [
+  {
+   "time": "2026-11-23T19:40:54.045Z",
+   "file": "20261123194054045-note-ring-right.jpg",
+   "source": "../../../../tmp/ring-right.png",
+   "kind": "note",
+   "label": "4290 right end of the rings, 2 times: approved close image (left) and the film (right)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T19:40:52.889Z",
+   "file": "20261123194052889-note-ring-left.jpg",
+   "source": "../../../../tmp/ring-left.png",
+   "kind": "note",
+   "label": "4290 left end of the rings, 2 times: approved close image (left of the red bar) and the film (right)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T19:40:51.854Z",
+   "file": "20261123194051854-note-t10-place2.jpg",
+   "source": "../../../../tmp/t10-place2.jpg",
+   "kind": "note",
+   "label": "rise 4392 and 4393, levels times 3: picture on two frames (left), no picture (middle), difference times 8 (right): no side of the picture in frame",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T19:40:50.748Z",
+   "file": "20261123194050748-note-t10-turn.jpg",
+   "source": "../../../../tmp/t10-turn.jpg",
+   "kind": "note",
+   "label": "dive 4150 to 4166 every second frame, levels times 2.5: sky turn ends at 4158, the Sun of the close view enters at 4164 in its place (tree: main c8b4c8b9 plus the trial)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T19:40:24.662Z",
+   "file": "20261123194024662-frame-f04388.jpg",
+   "source": "out/work/seq/4380-4454/f04388.png",
+   "kind": "frame",
+   "label": "uranus.rise frame 4388, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4388,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e85c8d53a860dafc"
+  },
+  {
+   "time": "2026-11-23T19:39:01.089Z",
+   "file": "20261123193901089-frame-final-4290.jpg",
+   "source": "out/work/u/base/final-4290.png",
+   "kind": "frame",
+   "label": "uranus.terrain frame 4290, final tier",
+   "stop": "uranus",
+   "segment": "uranus.terrain",
+   "frame": 4290,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e85c8d53a860dafc"
+  },
+  {
+   "time": "2026-11-23T19:37:25.918Z",
+   "file": "20261123193725918-frame-final-4035.jpg",
+   "source": "out/work/u/base/final-4035.png",
+   "kind": "frame",
+   "label": "uranus.hold frame 4035, final tier",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e85c8d53a860dafc"
+  },
   {
    "time": "2026-11-23T19:22:51.609Z",
    "file": "20261123192251609-note-limb-dots2.jpg",
    "source": "../../../../tmp/limb-dots2.png",
    "kind": "note",
    "label": "uranus dive 4170 limb times 5: dotted black line along the limb (below, in every tree since 11:39) and with the glow reaching 0.003 rad under the limb (above)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T19:22:51.036Z",
-   "file": "20261123192251036-note-t8-swap-rise-l.jpg",
-   "source": "../../../../tmp/t8-swap-rise-l.png",
-   "kind": "note",
-   "label": "uranus rise swap at native size, trial: 4391 (close view) left, 4392 (globe alone) right; the globe alone lacks the grain and has level streaks in the far band",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T19:22:50.446Z",
-   "file": "20261123192250446-note-limb-4035.jpg",
-   "source": "../../../../tmp/limb-4035.png",
-   "kind": "note",
-   "label": "uranus hold 4035 right limb at native size: approved hero left, film right (kept final still); warm spill at (1346, 560)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T19:22:49.874Z",
-   "file": "20261123192249874-note-t8-rise.jpg",
-   "source": "../../../../tmp/t8-rise.jpg",
-   "kind": "note",
-   "label": "uranus rise 4391 to 4427, tree 06034e16 beside the sky trial: the Sun keeps its size until it leaves the frame at 4409",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T19:22:49.273Z",
-   "file": "20261123192249273-note-t8-dive.jpg",
-   "source": "../../../../tmp/t8-dive.jpg",
-   "kind": "note",
-   "label": "uranus dive 4152 to 4186, tree 06034e16 (main 8eba73e9) beside the sky trial: the close view's sky patch whole from 4152, picture only in the frame of T",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T18:51:39.958Z",
-   "file": "20261123185139958-note-sky-dive.jpg",
-   "source": "../../../../tmp/sky-dive.jpg",
-   "kind": "note",
-   "label": "Issues 12 and 13: the sky of the dive on tree 06034e16 (main 8eba73e9, draft): black above the limb 4158 to 4166, a tiny Sun from 4168 that grows to the flare by 4186, stars from 4172, Milky Way from 4178. Not cured yet",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T18:51:39.257Z",
-   "file": "20261123185139257-note-foot-three.jpg",
-   "source": "../../../../tmp/foot-three.jpg",
-   "kind": "note",
-   "label": "Issue 2: 4179, 4181, 4183 (tree 06034e16, main 8eba73e9, draft). Columns: the frame, the globe alone, the difference times 6, the mask of the place picture as rendered. The picture is darker than the globe in the middle ground, so its left and bottom sides show",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T18:51:38.542Z",
-   "file": "20261123185138542-note-foot-dive.jpg",
-   "source": "../../../../tmp/foot-dive.jpg",
-   "kind": "note",
-   "label": "Issue 2 of round 38, the drawing asked for: dive 4170 to 4190 (tree 06034e16, main 8eba73e9, draft) with the footprint of the place picture laid over. Red: side of the picture. Yellow: inside it the picture is whole. The footprint does not cover the frame on 4174 to 4185, every frame where the picture has weight; 4186 is covered",
    "stop": "uranus"
   }
  ]
