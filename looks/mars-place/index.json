@@ -1,0 +1,86 @@
+{
+ "folder": "mars-place",
+ "pushed": "2026-11-23T10:22:59.046Z",
+ "head": "2de491ad7507317225afa8e69e5454036e23a433",
+ "note": "brief 238: first lay back of the Mars place picture onto plates, rough, light not matched yet",
+ "looks": [
+  {
+   "time": "2026-11-23T10:22:58.451Z",
+   "file": "20261123102258451-note-cal1.jpg",
+   "source": "out/work/place/view/cal1.jpg",
+   "kind": "note",
+   "label": "frame 2454 at draft: globe side with the place picture off and the rough plates (left) beside the close side (right). Same mesa in the same place; the globe side is too dark and too red, its haze floor is above the picture's shadows",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T10:22:57.901Z",
+   "file": "20261123102257901-note-topdown-rough1.jpg",
+   "source": "out/work/place/view/topdown-rough1.jpg",
+   "kind": "note",
+   "label": "simulated top down dive sheet with the first rough plates (laid back picture over the old ground, no repaint, no match): the wedge is a dark cut out, far too dark for the land around it",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T10:22:57.369Z",
+   "file": "20261123102257369-note-topdown-main.jpg",
+   "source": "out/work/place/view/topdown-main.jpg",
+   "kind": "note",
+   "label": "simulated top down dive sheet of main: wrap and the five levels, no place plates",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T10:22:56.845Z",
+   "file": "20261123102256845-note-lay3.jpg",
+   "source": "out/work/place/view/lay3.jpg",
+   "kind": "note",
+   "label": "the place picture laid back onto a 3 degree gnomonic plate about the spot (north up); lines are stretch 2, 4, 8, 16",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T10:22:56.198Z",
+   "file": "20261123102256198-note-dive-image.jpg",
+   "source": "out/work/place/view/dive-image.jpg",
+   "kind": "note",
+   "label": "the place picture of the dive at T (frame 2454) from the engine dump, 4496 x 2668, shown small",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T10:22:07.414Z",
+   "file": "20261123102207414-frame-g1-beauty.jpg",
+   "source": "out/work/place/cal/g1-beauty.png",
+   "kind": "frame",
+   "label": "mars.dive frame 2454, draft tier, beauty/side=orbit/noplace view",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2454,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty/side=orbit/noplace",
+   "engine": "8b9f780b26a50bc3"
+  },
+  {
+   "time": "2026-11-23T10:06:05.822Z",
+   "file": "20261123100605822-sheet-mars-rise-draft-after.jpg",
+   "source": "out/work/handover/mars-rise-draft-after.png",
+   "kind": "sheet",
+   "label": "mars rise, every frame 2701 to 2712 (after T, frame 2700), draft tier",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "first": 2701,
+   "last": 2712,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T10:06:04.101Z",
+   "file": "20261123100604101-sheet-mars-rise-draft-across.jpg",
+   "source": "out/work/handover/mars-rise-draft-across.png",
+   "kind": "sheet",
+   "label": "mars rise, every frame 2694 to 2705 (across T, frame 2700), draft tier",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "first": 2694,
+   "last": 2705,
+   "tier": "draft"
+  }
+ ]
+}
