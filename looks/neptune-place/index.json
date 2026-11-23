@@ -1,9 +1,41 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T20:27:53.684Z",
- "head": "488113e897506b4a508c1712072eb4c497be1b9a",
- "note": "batch A proved on kept frames (0 px differ), one Sun 4680 to 4709; item 3 blocks are hard cirrus bits of the globe's patch alpha",
+ "pushed": "2026-11-23T20:47:14.729Z",
+ "head": "0285df9b02cf6bab490443c1082a32a6680de7dd",
+ "note": "batch A merged with main locally (not named), all 165 move frames viewed at draft, proof chain runs; ring far arc fade still open",
  "looks": [
+  {
+   "time": "2026-11-23T20:47:13.367Z",
+   "file": "20261123204713367-note-ring5006-low-ba.jpg",
+   "source": "../../../../tmp/ring5006-low-ba.png",
+   "kind": "note",
+   "label": "5006 ring lower right, before and after",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T20:47:12.076Z",
+   "file": "20261123204712076-note-ring5006-up-ba.jpg",
+   "source": "../../../../tmp/ring5006-up-ba.png",
+   "kind": "note",
+   "label": "5006 ring top, before and after: strokes follow the circles; FAULT still: the far arc fades before the limb",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T20:47:10.830Z",
+   "file": "20261123204710830-note-A-rise4.jpg",
+   "source": "../../../../tmp/A-rise4.jpg",
+   "kind": "note",
+   "label": "batch A draft rise, late frames, the place shrinks to a fleck",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T20:47:09.400Z",
+   "file": "20261123204709400-note-A-dive3.jpg",
+   "source": "../../../../tmp/A-dive3.jpg",
+   "kind": "note",
+   "label": "batch A draft 4712 to 4727, the place grows in on the globe",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-23T20:27:52.268Z",
    "file": "20261123202752268-note-p40-dashes.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/A-dive2.jpg",
    "kind": "note",
    "label": "batch A draft 4696 to 4711",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T20:27:47.366Z",
-   "file": "20261123202747366-note-A-dive1.jpg",
-   "source": "../../../../tmp/A-dive1.jpg",
-   "kind": "note",
-   "label": "batch A draft 4680 to 4695, one Sun",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T20:12:43.483Z",
-   "file": "20261123201243483-note-h5006-ringtop.jpg",
-   "source": "../../../../tmp/h5006-ringtop.png",
-   "kind": "note",
-   "label": "neptune rise 5006 ring strokes follow the circles (draft, lifted below)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T20:12:42.827Z",
-   "file": "20261123201242827-note-l-corner.jpg",
-   "source": "../../../../tmp/l-corner.png",
-   "kind": "note",
-   "label": "neptune dive corner 4720 to 4734, sky step at 4723",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T20:12:42.169Z",
-   "file": "20261123201242169-note-i-sun.jpg",
-   "source": "../../../../tmp/i-sun.png",
-   "kind": "note",
-   "label": "neptune dive 4688 to 4710 one star with its flare, sky turn held",
    "stop": "neptune"
   }
  ]
