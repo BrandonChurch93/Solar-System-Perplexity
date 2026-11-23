@@ -838,7 +838,8 @@ MAIL 276 POINTS 1 AND 2, WHAT WAS WRONG AND WHAT IS THERE NOW (14:30 UTC)
 Diagnosis, each proven by switching the part off in the render tree and looking at 3720:
 - The planks, dashes and box ends were the wakes of ice.ts (ringlets cut along the orbit). Deleted.
 - The grey rocks with shadows on a surface were the blocks (blocks.ts, blocks.json). Deleted.
-- The hatch like woven cloth was the sand of ice.ts in the skim: fine points drawn out along the motion of
+- (At the draft tier only; the hatch the Builder saw at the review tier has a second cause, see THE HATCH
+  AT THE REVIEW TIER below.) A hatch like woven cloth was the sand of ice.ts in the skim: fine points drawn out along the motion of
   the lens, crossing the ringlets at an angle, two line systems. The sand now has strength times (1 minus
   near), so it is the hold's sand only (the hold keeps its bytes: 3465 at the draft tier has 0 differing
   pixels against f9007f0) and the skim has none.
@@ -864,3 +865,69 @@ What is there now: grains.ts and grains.json. One system of grains on three leve
 - Per take the CPU lists the grains in view (about 310k at 3720, 420k at 3780, 100 to 190 ms), sorted far to
   near, drawn as points with an analytic smear over the shutter.
 - Costs: a draft still is 12.6 to 13.8 s with grains and 12.1 to 12.4 s without (fixed costs included).
+
+Commits: a7d092b (grains in place of blocks and wakes), 50b7312 (merge of origin/main 53a4d57). On the
+merge: tsc green, vitest 162 of 162, npm run build green (checked in a clean worktree of the commit).
+
+THE DIVE AND THE RISE AS ONE SCENE (14:35 UTC)
+
+- plan.ts: handover opted in (params.handover, picture false: no place picture, the place is the scene
+  itself). flight(time) is the one path from the hold to the end of the rise. divePose and risePose give the
+  same lens for both views (the close view is the flight in the frame of the skim, twin() turns it back),
+  coverAmount() is 0, place() is a point of the ring plane ahead of the lens of the skim (the ground of this
+  stop is the ring plane, so Saturn flies its own path, not the engine's generic line to a point of the
+  sphere). patchWeight is gone; set.ts gives the sky pictures weight look.patchShow and the engine fades them
+  over skyFrames.
+- The dive's descent law (diveReach): the distance of the lens to the globe's surface falls by a steady factor
+  a frame. The rate comes up from the hold's own over the first share (skim.json handover.dive.rise 0.2) and
+  comes to the skim's own over the last share (fall 0.25). First try was a trapeze on the share of the way
+  between the hold pose and the skim pose of the same time; that failed E3 (frame 3610 at 2.66 times the mean
+  rate, frame 3550 at 0.29 of the mean) because the skim pose itself moves under it. With the law on the
+  distance: fastest frame 3596 at 1.211 times the mean, frame 3550 at 0.698 of the mean, flow gap at T
+  0.004 px a frame (T is frame 3589).
+- The rise keeps the trapeze on the share of the way (rise 0.25, fall 0.2): flow gap at T 0.046 px a frame
+  (T is frame 3860), fastest frame 3870 at 1.391 times the mean. The rise path changed against the kept
+  build, so the judged frame 3866 changes.
+- Every look of the scene (gains, tints, haze, grains) is a function of the lens height over the plane
+  (close in set.ts), so it is one function of time through T on both sides.
+
+MAIL 284 (14:39 UTC, from the Builder, verbatim core)
+
+"your trees differ from main in the globe engine files (src/bodies/haze.ts, src/bodies/planet.ts,
+src/core/sets.ts, tests/globe-gl.test.ts, tests/globe-levels.test.ts, assets-src/shared/GLOBE-NOTES.md) and
+lack tests/globe-haze.test.ts, which main has since 13:40 UTC (3d61ec53). A READY commit must build and pass
+on a merge of newest main (mail 275 point d). Before your READY line: git fetch origin main, git merge
+origin/main (merge, never rebase, main's version of every file outside your folders), npm run build, npm
+test, and draft hashes of your kept frames again. Tell me in one line if a frame changes with the merge.
+Your READY times stand (mail 279)."
+
+HANDOVER RUN ON THE MERGED TREE PLUS THE HANDOVER STEP (14:37 to 14:44 UTC)
+
+npm run handover -- --stop saturn --tier draft --only sides,flow,path,sheets: every line passes.
+- Dive: T is frame 3589 (place window 3577 to 3589). Side difference at T: mean 0, 99.9th percentile 0, max
+  1 display level. Flow gap 0.004 px a frame. Fastest frame 3596 at 1.211 times the mean rate, frame 3550 at
+  0.698 of the mean, place at most 0.406 of the half frame from the middle.
+- Rise: T is frame 3860 (window 3860 to 3872). Side difference pass, flow gap pass (0.046 px), fastest frame
+  3870 at 1.391 times the mean.
+- All six sheets looked at, every frame: no frame where the scene changes. The moon goes behind the dark
+  limb of the globe over 3583 to 3591 (dive) and comes out over the top limb at 3870 (rise); both are true
+  occlusion by the globe, the same on both sides of T. The sky pictures come in over 3868 to 3872 at the
+  lower right. The rim of the rings goes from the soft rim of the skim to the edge of the hold over about
+  3860 to 3870 (close 0.72 to 0.007).
+- Seen and not yet solved: in the rise the moon passes the limb fast (about 20 to 30 px a frame against the
+  limb at 3870 to 3872), which is the parallax of the fast last part of the rise.
+
+THE HATCH AT THE REVIEW TIER (14:40 to 14:50 UTC): NOT THE SAND, THE RINGLETS
+
+The draft frame is smooth, the review frame (17 takes) shows ropes on every steep ringlet at the lower left
+(3720, x 0 to 320, y 620 to 860), a beat of 4 px along the line. Read from the pixels: a dark line one pixel
+wide at a slope of one column in four rows is 161 where it sits on a pixel and 168, 170 where it sits
+between two. Cause: in the skim an octave of ringlets was drawn in full from 0.675 px wide (near.footprints
+0.45 times the footprint 0.75 px at many takes) and its edges and thin lines were 0.9 px wide. Ringlets
+under one pixel cannot be drawn, they beat with the pixel grid; a line under about 1.8 px reads as beads on
+a steep slope under the box of the takes. The draft tier hid it because one take widens the footprint by
+the sweep of the whole shutter.
+Fix (numbers only, the hold keeps its values at close 0): ringfine.json near.footprints 0.45 to 1.34 (no
+ringlet under one pixel, in full from two) and a new near.filter 1.2 (edges and lines 1.8 px wide at many
+takes) blended from filter 0.6 by close in field.ts set().
+Review tier costs 5.6 s a take at 3720 with grains (17 takes, 95 s).

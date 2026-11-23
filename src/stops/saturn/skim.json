@@ -59,5 +59,23 @@
     "end": [3.2, 3.9],
     "inset": 0.012,
     "inkBy": 8
+  },
+  "handover": {
+    "note": "the dive and the rise: one flight through one world, no picture is swapped and no cover is drawn. at: the share of the dive or the rise at which the engine changes from the view in the frame of the globe to the view in the frame of the skim (both show the same world from the same lens); skyFrames: over how many frames the picture of the sky of the hold gives way to that of the skim before that, and that of the skim to the open sky after it in the rise. dive.rise and dive.fall: the distance of the lens to the globe's surface falls by a steady factor a frame through the middle of the dive; over the first share (rise) that rate comes up from the hold's own, over the last share (fall) it comes to the skim's own, so neither end has a step in speed. rise.rise and rise.fall: the shares of the rise over which the way out is taken up from the skim's own motion and comes to the motion after the rise, the middle is steady. place.ahead: the place the tool watches is the point of the ring plane this far ahead of the foot of the lens at the middle of the skim.",
+    "dive": {
+      "at": 0.55,
+      "skyFrames": 30,
+      "rise": 0.2,
+      "fall": 0.25
+    },
+    "rise": {
+      "at": 0.667,
+      "skyFrames": 20,
+      "rise": 0.25,
+      "fall": 0.2
+    },
+    "place": {
+      "ahead": 1.0
+    }
   }
 }

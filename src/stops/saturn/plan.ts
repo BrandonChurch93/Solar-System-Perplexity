@@ -1,8 +1,8 @@
 import * as THREE from 'three'
 import { config } from '../../config'
 import type { Pose, ViewKind } from '../../core/types'
-import { StopPlan, type Fit, type MoveParams, type OrbitShot } from '../../director/moves'
-import { drift, mix, ramp, smooth, smoother } from '../../director/rig'
+import { StopPlan, trapeze, type Fit, type MoveParams } from '../../director/moves'
+import { drift, mix, ramp, smooth } from '../../director/rig'
 import fit from './fit.json'
 import skimJson from './skim.json'
 
@@ -20,9 +20,13 @@ export const params: MoveParams = {
   moonDegPerSecond: 0.3,
   tint: [0.92, 0.82, 0.6],
   skyAim: { orbit: [-14, 153, -7.3] },
+  handover: {
+    dive: { at: skimJson.handover.dive.at, skyFrames: skimJson.handover.dive.skyFrames, picture: false },
+    rise: { at: skimJson.handover.rise.at, skyFrames: skimJson.handover.rise.skyFrames, picture: false },
+  },
 }
 
-export const skim = { diveBow: 0, diveSwitch: 0.5, riseSwitch: 0.47, riseBow: 0, riseEnd: 0.96, divePower: 1.5, risePower: 1.5, skyNear: 0.35, seatIn: 0.8 }
+export const skim = { skyNear: 0.35, seatIn: 0.8 }
 
 export class SaturnPlan extends StopPlan {
   readonly ringNormal: THREE.Vector3
@@ -80,22 +84,36 @@ export class SaturnPlan extends StopPlan {
     return { position: pose.position.clone().sub(this.spot).applyQuaternion(this.toTerrain), quaternion: this.toTerrain.clone().multiply(pose.quaternion), vfov: pose.vfov }
   }
 
-  private join(a: Pose, b: Pose, x: number, bow: number): Pose {
+  // The pose the share w of the way from a to b, both in the frame of the globe. On that way the foot on the
+  // plane goes straight from one to the other while the height over the plane changes by the same factor for
+  // the same step, and the picture of the globe (where it stands in the view, how it leans, how large it is)
+  // goes from one to the other with it. How far along that way the lens is, is set so that its distance to the
+  // globe's surface changes by the same factor for the same step of w: a steady share of w a frame is a steady
+  // descent or climb.
+  private join(a: Pose, b: Pose, w: number, reach?: number): Pose {
+    if (w <= 0) return a
+    if (w >= 1) return b
     const n = this.ringNormal
-    const w = smoother(x)
     const ha = a.position.dot(n)
     const hb = b.position.dot(n)
     const fa = a.position.clone().addScaledVector(n, -ha)
     const fb = b.position.clone().addScaledVector(n, -hb)
-    const h = ha > 1e-4 && hb > 1e-4 ? ha * Math.pow(hb / ha, w) : mix(ha, hb, w)
-    const chord = fb.clone().sub(fa)
-    const side = new THREE.Vector3().crossVectors(n, chord)
-    const s = Math.sin(Math.PI * w)
-    const position = fa.lerp(fb, w).addScaledVector(side, bow * s * s).addScaledVector(n, h)
+    const at = (v: number): THREE.Vector3 => fa.clone().lerp(fb, v).addScaledVector(n, ha > 1e-4 && hb > 1e-4 ? ha * Math.pow(hb / ha, v) : mix(ha, hb, v))
+    const da = Math.max(a.position.length() - 1, 1e-6)
+    const db = Math.max(b.position.length() - 1, 1e-6)
+    const want = reach === undefined ? da * Math.pow(db / da, w) : Math.min(Math.max(reach, Math.min(da, db)), Math.max(da, db))
+    let lo = 0
+    let hi = 1
+    for (let i = 0; i < 48; i++) {
+      const mid = (lo + hi) / 2
+      if ((at(mid).length() - 1 - want) * (db - da) < 0) lo = mid
+      else hi = mid
+    }
+    const v = db === da ? w : (lo + hi) / 2
     const ka = this.framing(a)
     const kb = this.framing(b)
     const turn = Math.atan2(Math.sin(kb[2] - ka[2]), Math.cos(kb[2] - ka[2]))
-    return this.framed(position, mix(ka[0], kb[0], w), mix(ka[1], kb[1], w), ka[2] + turn * w, ka[3] * Math.pow(kb[3] / ka[3], w))
+    return this.framed(at(v), mix(ka[0], kb[0], v), mix(ka[1], kb[1], v), ka[2] + turn * v, ka[3] * Math.pow(kb[3] / ka[3], v))
   }
 
   private framing(pose: Pose): [number, number, number, number] {
@@ -121,18 +139,63 @@ export class SaturnPlan extends StopPlan {
     return { position, quaternion: new THREE.Quaternion().setFromRotationMatrix(world.multiply(cam.transpose())), vfov: THREE.MathUtils.radToDeg(2 * Math.atan(tan)) }
   }
 
-  private diveX(u: number): number {
-    return Math.pow(Math.min(Math.max(u, 0), 1), skim.divePower)
+  // The distance of the lens to the globe's surface at a time of the dive. Its rate (the factor a frame)
+  // goes from the hold's own rate up to a steady rate over the first share of the dive (rise), keeps it, and
+  // comes to the skim's own rate over the last share (fall): a steady descent that meets the hold and the
+  // skim without a step in speed.
+  private diveLaw: { l0: number; l1: number; s0: number; s1: number; p: number } | null = null
+
+  private diveReach(time: number): number {
+    const seg = this.seg.dive!
+    const d = skimJson.handover.dive
+    const dur = seg.end - seg.start
+    if (!this.diveLaw) {
+      const reach = (pose: Pose): number => Math.log(Math.max(pose.position.length() - 1, 1e-6))
+      const e = 0.5 / config.fps
+      const h = this.seg.hold.start
+      const l0 = reach(this.hold(seg.start - h))
+      const l1 = reach(this.skimAt(seg.end))
+      const s0 = ((reach(this.hold(seg.start + e - h)) - reach(this.hold(seg.start - e - h))) / (2 * e)) * dur
+      const s1 = ((reach(this.skimAt(seg.end + e)) - reach(this.skimAt(seg.end - e))) / (2 * e)) * dur
+      this.diveLaw = { l0, l1, s0, s1, p: (l1 - l0 - 0.5 * d.rise * s0 - 0.5 * d.fall * s1) / (1 - 0.5 * d.rise - 0.5 * d.fall) }
+    }
+    const { l0, l1, s0, s1, p } = this.diveLaw
+    const u = Math.min(Math.max((time - seg.start) / dur, 0), 1)
+    const area = (y: number): number => y * y * y - 0.5 * y * y * y * y
+    let done: number
+    if (u <= d.rise) done = s0 * u + (p - s0) * d.rise * area(d.rise > 0 ? u / d.rise : 1)
+    else if (u <= 1 - d.fall) done = 0.5 * d.rise * (s0 + p) + p * (u - d.rise)
+    else done = l1 - l0 - s1 * (1 - u) - (p - s1) * d.fall * area((1 - u) / d.fall)
+    return Math.exp(l0 + done)
   }
 
-  private riseX(u: number): number {
-    return 1 - Math.pow(1 - Math.min(Math.max(u / skim.riseEnd, 0), 1), skim.risePower)
+  // How much of the dive is done at a time (0 in the hold, 1 in the skim), and how much of the rise: a ramp
+  // up, a steady middle, a ramp down, so the speed of the skim and of the way out is met without a step.
+  private diveShare(time: number): number {
+    const seg = this.seg.dive!
+    const d = skimJson.handover.dive
+    return trapeze((time - seg.start) / (seg.end - seg.start), d.rise, d.fall)
+  }
+
+  private riseShare(time: number): number {
+    const seg = this.seg.rise
+    const d = skimJson.handover.rise
+    return trapeze((time - seg.start) / (seg.end - seg.start), d.rise, d.fall)
+  }
+
+  // how near the skim the lens is at a time: 0 in the hold and after the rise, 1 in the skim
+  private nearness(time: number): number {
+    const d = this.seg.dive!
+    const r = this.seg.rise
+    if (time < d.start || time >= r.end) return 0
+    return time < d.end ? this.diveShare(time) : time < r.start ? 1 : 1 - this.riseShare(time)
   }
 
   override terrain(tRel: number): Pose {
     return this.local(this.skimAt(this.seg.terrain.start + tRel))
   }
 
+  // No cover is drawn at this stop: the dive and the rise are one flight through one world.
   override coverAmount(): number {
     return 0
   }
@@ -142,31 +205,36 @@ export class SaturnPlan extends StopPlan {
     const d = this.seg.dive!
     const r = this.seg.rise
     if (time < d.start) return this.hold(time - this.seg.hold.start)
-    if (time < d.end) return this.join(this.hold(time - this.seg.hold.start), this.skimAt(time), this.diveX((time - d.start) / (d.end - d.start)), skim.diveBow)
+    if (time < d.end) return this.join(this.hold(time - this.seg.hold.start), this.skimAt(time), this.diveShare(time), this.diveReach(time))
     if (time < r.start) return this.skimAt(time)
-    return this.join(this.skimAt(time), this.after(time), this.riseX((time - r.start) / (r.end - r.start)), skim.riseBow)
+    return this.join(this.skimAt(time), this.after(time), this.riseShare(time))
   }
 
-  override dive(time: number): OrbitShot {
-    const seg = this.seg.dive!
-    const x = this.diveX((time - seg.start) / (seg.end - seg.start))
+  // The two views of the handover show the same world from the same lens: the close view is the flight seen in
+  // the frame of the skim, and its twin in the frame of the globe is the flight itself.
+  override divePose(time: number, view: ViewKind): Pose {
     const pose = this.flight(time)
-    return x < skim.diveSwitch ? { pose, view: 'orbit' } : { pose: this.local(pose), view: 'terrain' }
+    return view === 'terrain' ? this.local(pose) : pose
   }
 
-  override rise(time: number): OrbitShot {
-    const seg = this.seg.rise
-    const x = this.riseX((time - seg.start) / (seg.end - seg.start))
+  override risePose(time: number, view: ViewKind): Pose {
     const pose = this.flight(time)
-    return x < skim.riseSwitch ? { pose: this.local(pose), view: 'terrain' } : { pose, view: 'orbit' }
+    return view === 'terrain' ? this.local(pose) : pose
+  }
+
+  override twin(local: Pose, _time: number): Pose {
+    return { position: local.position.clone().applyQuaternion(this.terrainFrame).add(this.spot), quaternion: this.terrainFrame.clone().multiply(local.quaternion), vfov: local.vfov }
+  }
+
+  // The place the dive goes to and the rise leaves: a point of the ring plane ahead of the lens of the skim.
+  // The ground of this stop is the plane of the rings, not the sphere.
+  override place(_kind: 'dive' | 'rise', _time: number): THREE.Vector3 {
+    const foot = this.skimPosition.clone().addScaledVector(this.ringNormal, -this.skimPosition.dot(this.ringNormal))
+    return foot.addScaledVector(this.skimForward, skimJson.handover.place.ahead)
   }
 
   override skyGain(time: number): number {
-    const d = this.seg.dive!
-    const r = this.seg.rise
-    if (time < d.start || time >= r.end) return 1
-    const near = time < d.end ? smooth(this.diveX((time - d.start) / (d.end - d.start))) : time < r.start ? 1 : 1 - smooth(this.riseX((time - r.start) / (r.end - r.start)))
-    return mix(1, skim.skyNear, near)
+    return mix(1, skim.skyNear, smooth(this.nearness(time)))
   }
 
   seat(time: number): THREE.Quaternion {
@@ -179,20 +247,9 @@ export class SaturnPlan extends StopPlan {
     const fractions = config.raw.judged.fractions as Record<string, number>
     const at = (s: typeof h): THREE.Quaternion => drift((s.firstFrame + Math.floor((fractions[s.kind] ?? 0.5) * s.frames + 1e-9)) / config.fps)
     if (time < d.start) return out.slerp(at(h), smooth(ramp(h.start, mix(h.start, this.holdMid, skim.seatIn), time)))
-    if (time < d.end) return at(h).slerp(at(t), smooth(this.diveX((time - d.start) / (d.end - d.start))))
+    if (time < d.end) return at(h).slerp(at(t), smooth(this.diveShare(time)))
     if (time < r.start) return at(t)
-    return at(t).slerp(out, smooth(this.riseX((time - r.start) / (r.end - r.start))))
-  }
-
-  patchWeight(time: number, view: ViewKind): number {
-    const d = this.seg.dive!
-    const r = this.seg.rise
-    if (time >= d.start && time < d.end) {
-      const x = this.diveX((time - d.start) / (d.end - d.start))
-      return view === 'orbit' ? 1 - smooth(ramp(0, skim.diveSwitch - 0.05, x)) : smooth(ramp(skim.diveSwitch + 0.05, 1, x))
-    }
-    if (time >= r.start && time < r.end && view === 'terrain') return 1 - smooth(ramp(0, skim.riseSwitch - 0.05, this.riseX((time - r.start) / (r.end - r.start))))
-    return 1
+    return at(t).slerp(out, smooth(this.riseShare(time)))
   }
 }
 
