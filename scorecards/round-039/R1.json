@@ -1,0 +1,56 @@
+{
+ "critic": "R1",
+ "score": 8,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-02-b.png",
+   "where": "hold crop B and H at the upper-left shadow limb, and crops E, G and I down the right limb",
+   "what": "The atmospheric rim is more outlined than the target. On the shadow side a narrow blue stripe borders a cutout-like dark edge; down the bright right side a smooth, dark inner band separates the surface from the blue rim.",
+   "fix": "Feather the blue rim into the sky on the left and blend the dark inner band into the lit cloud deck on the right, retaining the target's peak brightness and more gradual falloff."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "hold crops D and I, foreground rings over the lower-left nightside and in the lower-right sky",
+   "what": "The foreground strands are sharper and more parallel than the target, especially where they cross the dark disk; the target breaks them up into faint, uneven wisps.",
+   "fix": "Reduce strand contrast and continuity, vary the opacity along each arc, and soften the bands where they pass over the nightside."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "hold frame, upper-right sun",
+   "what": "A tiny dark notch interrupts the bright source core; the target has a clean white center.",
+   "fix": "Fill the notch into the white core without increasing the flare's size or overall brightness."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "hold frame, upper-left moon",
+   "what": "The illuminated disk reads rounder and slightly squatter, with a softer mottled transition instead of the target's more irregular, cratered terminator and deep lower-left shade.",
+   "fix": "Bring the silhouette and terminator closer to the target and restore crisp, localized crater relief where the warm cap meets the cooler light."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "terrain crops A and G, central storm eye and the inner turn of its left shoulder",
+   "what": "Extra bright-blue filaments fill the inner eye, making the core look mottled and the boundary less distinct than the target's broad, smooth dark center.",
+   "fix": "Suppress the high-frequency texture and slightly deepen the center, keeping most of the spiral texture on the eye's outer wall."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "terrain crops A, D, E and H, foreground cloud crest and its shadow",
+   "what": "The cloud curls and trailing filaments are softer, with less fine separation between the sunlit crest, its wisps and the blue-black shadows.",
+   "fix": "Restore local microcontrast and fine wisps on the crests and tails while holding the shadow floor and the overall light direction."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "terrain crops C and F, fine star field and diagonal galactic dust above the horizon",
+   "what": "The faintest stars and small dusty knots are less crisp than in the target, though their alignment is unchanged.",
+   "fix": "Recover faint point definition and dust texture without lifting the black sky or adding stars."
+  }
+ ]
+}
