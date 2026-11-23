@@ -1,71 +1,67 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-23T22:50:19.618Z",
- "head": "092b0f4250b4a6831dbe13d354eb371ada5a7a1c",
- "note": "22:53 UTC. Step 1 of the second note (one pace), my part: the knots of my own pacing are out of plan.ts (place.pace, paced, onPath). Draft render k1, not committed yet at the time of this push. Measured with my pace tool: dive peak rate 1.33 of the mean at 3009, largest step 0.179 at 2976 (the engine's own start), up again after the peak 0.416 at 3043 (my close path, goes when the engine's one move is in); rise peak 1.33 at 3284, largest step 0.211 at 3311 (engine's end), down before the peak 0.485 at 3273. Still wrong and seen here: the texture of the ground changes between 3293 and 3294 lower left (plates fade out by units per pixel), a soft brown band at the bottom 3006 to 3018 and 3274 to 3282, the Milky Way crosses the top right corner 3281 to 3288, change of view at 3024 and 3270 unchanged. Next: one scene (the deck's program on the globe, place picture off).",
+ "pushed": "2026-11-23T23:11:29.476Z",
+ "head": "505d1ea911cb3c7e747de1f57d4a98b6718c691b",
+ "note": "step 2 (one scene) first frames: deck program in the globe's group by height, no place picture, T at the seam; not committed yet",
  "looks": [
+  {
+   "time": "2026-11-23T23:11:28.900Z",
+   "file": "20261123231128900-note-p1a-3024.jpg",
+   "source": "../work/f/p1a-3024.jpg",
+   "kind": "note",
+   "label": "p1a draft 3024: deck's program weight 0.95, drawn by the globe's group",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T23:11:28.346Z",
+   "file": "20261123231128346-note-p1a-3020.jpg",
+   "source": "../work/f/p1a-3020.jpg",
+   "kind": "note",
+   "label": "p1a draft 3020: blend by height between the globe's plates and the deck's program (weight 0.36)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T23:11:27.497Z",
+   "file": "20261123231127497-note-p1a.jpg",
+   "source": "../work/f/p1a.jpg",
+   "kind": "note",
+   "label": "p1a draft: step 2 first frames, the deck's own program drawn in the globe's group by camera height, T at the seam (3059). 3020 to 3060",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T23:10:31.048Z",
+   "file": "20261123231031048-frame-f03060.jpg",
+   "source": "out/work/jupiter/frames/p1a/f03060.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3060, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3060,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "94288983d3b2cf97"
+  },
+  {
+   "time": "2026-11-23T23:09:44.658Z",
+   "file": "20261123230944658-frame-f03050.jpg",
+   "source": "out/work/jupiter/frames/p1a/f03050.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 3050, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 3050,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "94288983d3b2cf97"
+  },
   {
    "time": "2026-11-23T22:50:09.119Z",
    "file": "20261123225009119-note-k1-3296.jpg",
    "source": "../work/f/k1-3296.jpg",
    "kind": "note",
    "label": "knots out, draft, judged 3296 (height 0.768 radii)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T22:50:08.569Z",
-   "file": "20261123225008569-note-k1-2997.jpg",
-   "source": "../work/f/k1-2997.jpg",
-   "kind": "note",
-   "label": "knots out, draft, judged 2997 (height 0.389 radii)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T22:50:08.029Z",
-   "file": "20261123225008029-note-k1-rise3.jpg",
-   "source": "../work/f/k1-rise3.jpg",
-   "kind": "note",
-   "label": "knots out, draft, k1-rise3: every second frame of the far dive or every frame of the rise",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T22:50:07.501Z",
-   "file": "20261123225007501-note-k1-rise2.jpg",
-   "source": "../work/f/k1-rise2.jpg",
-   "kind": "note",
-   "label": "knots out, draft, k1-rise2: every second frame of the far dive or every frame of the rise",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T22:50:06.967Z",
-   "file": "20261123225006967-note-k1-rise1.jpg",
-   "source": "../work/f/k1-rise1.jpg",
-   "kind": "note",
-   "label": "knots out, draft, k1-rise1: every second frame of the far dive or every frame of the rise",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T22:50:06.425Z",
-   "file": "20261123225006425-note-k1-dive3.jpg",
-   "source": "../work/f/k1-dive3.jpg",
-   "kind": "note",
-   "label": "knots out, draft, k1-dive3: every second frame of the far dive or every frame of the rise",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T22:50:05.894Z",
-   "file": "20261123225005894-note-k1-dive2.jpg",
-   "source": "../work/f/k1-dive2.jpg",
-   "kind": "note",
-   "label": "knots out, draft, k1-dive2: every second frame of the far dive or every frame of the rise",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T22:50:05.350Z",
-   "file": "20261123225005350-note-k1-dive1.jpg",
-   "source": "../work/f/k1-dive1.jpg",
-   "kind": "note",
-   "label": "knots out, draft, k1-dive1: every second frame of the far dive or every frame of the rise",
    "stop": "jupiter"
   }
  ]
