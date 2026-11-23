@@ -241,10 +241,10 @@ def still_tier(s):
 
 def tiers(s, tool):
     t = s.get('tier')
+    if tool == 'pack':
+        return ' --place-window' + (' --tier %s --motion-tier %s' % (t, t) if t else '')
     if not t:
         return ''
-    if tool == 'pack':
-        return ' --tier %s --motion-tier %s' % (t, t)
     return ' --tier %s' % t + (' --every %d' % s['every'] if tool == 'measure' and s.get('every') else '')
 
 

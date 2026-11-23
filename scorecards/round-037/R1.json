@@ -1,0 +1,21 @@
+{
+ "critic": "R1",
+ "score": 9,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "tiles D, E, and H (lower-left cratered plains, central crater floor, and lower-center ridges of pair-03-b.png)",
+   "what": "fine regolith pebbles, tiny pit craters, and shadowed ridge slopes are slightly softer and smoother than in -a",
+   "fix": "retain higher-frequency micro-crater and regolith sharpness across the lower foreground and central crater floor to match -a"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "tile D (lower-left dark limb and adjacent starfield of pair-01-b.png)",
+   "what": "deepest shadows along the night-side limb are slightly crushed into black and faint nearby stars show slight blocky quantization compared to the smoother dark gradient in -a",
+   "fix": "lift the near-black night-limb shadow floor slightly to preserve limb separation and smooth quantization around faint background stars"
+  }
+ ]
+}
