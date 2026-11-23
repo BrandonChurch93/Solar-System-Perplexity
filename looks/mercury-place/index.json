@@ -1,8 +1,8 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T15:22:29.513Z",
+ "pushed": "2026-11-23T15:22:44.410Z",
  "head": "6618cfc5cde62cd65b1b7cef8fb21821b8043c47",
- "note": "four sided patch 738 to 743: band tone matched by code, edge found to be the picture border; next the engine option edgeIn when on main",
+ "note": "four sided patch 738 to 743: band tone matched by code, edge found to be the picture border",
  "looks": [
   {
    "time": "2026-11-23T15:22:28.955Z",
