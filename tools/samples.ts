@@ -10,7 +10,7 @@ import { args } from './lib/common'
 import { planOf, samplesOf, samplesOfSpan, stressSpan } from './lib/samples'
 
 // The one place that answers "samples of frame N at tier T" for the tools: the same rule the engine applies when it renders the frame.
-// --tier T --frames a,b | --range a-b : one line per frame (count, shutter motion before and after the cover factor, share of the soft gradient scale). --out file : JSON of every frame of the film for every tier (- for the standard output). --report : frames whose count rises, by kind. --stress [ids] : JSON of the summed samples of each stress window.
+// --tier T --frames a,b | --range a-b : one line per frame (count, motion across the full shutter, motion in view across the shutter that is open, share of the soft gradient scale, and the share of the shutter where it is capped). --out file : JSON of every frame of the film for every tier (- for the standard output). --report : frames whose count rises, by kind. --stress [ids] : JSON of the summed samples of each stress window.
 
 const a = args()
 const director = new FilmDirector(plans)
@@ -66,6 +66,6 @@ if (a.out) {
   const frames = a.range ? all.slice(Number(a.range.split('-')[0]), Number(a.range.split('-')[1]) + 1) : (a.frames ?? a.frame ?? '').split(',').filter((x) => x !== '').map(Number)
   for (const tier of tiers) for (const f of frames) {
     const p = planOf(f, tier)
-    console.log(tier + ' ' + f + ' ' + p.samples + ' motion ' + p.raw.toFixed(1) + ' px, in view ' + p.seen.toFixed(1) + ' px, soft ' + p.soft.toFixed(2))
+    console.log(tier + ' ' + f + ' ' + p.samples + ' motion ' + p.raw.toFixed(1) + ' px, in view ' + p.seen.toFixed(1) + ' px, soft ' + p.soft.toFixed(2) + (p.shutter < 1 ? ', shutter ' + p.shutter.toFixed(4) + ' of the full one' : ''))
   }
 }

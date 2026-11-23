@@ -12,15 +12,27 @@ export function sampleCount(tier: string, kind: SegmentKind): number {
   return config.fastKinds.includes(kind) ? t.fastSamplesPerFrame : t.samplesPerFrame
 }
 
-export function samplesFor(count: number): Sample[] {
+// shutter is the share of the film's shutter a frame keeps (E6, the capped shutter of a dive or a rise): the samples are spread over that share
+// around the middle of the full shutter, so the middle of the frame stays where it is. At 1 the times are the expression they always were.
+export function samplesFor(count: number, shutter = 1): Sample[] {
   const out: Sample[] = []
   for (let i = 0; i < count; i++) {
     const jx = count === 1 ? 0 : ((0.5 + A1 * (i + 1)) % 1) - 0.5
     const jy = count === 1 ? 0 : ((0.5 + A2 * (i + 1)) % 1) - 0.5
-    const timeOffset = ((i + 0.5) / count) * config.shutterFraction
+    const timeOffset = shutter === 1 ? ((i + 0.5) / count) * config.shutterFraction : shutterOffset((i + 0.5) / count, shutter)
     out.push({ jitterX: jx, jitterY: jy, timeOffset, weight: 1 / count })
   }
   return out
+}
+
+// The time inside a frame, in frames, of the position 0 to 1 inside a shutter that keeps the given share of the film's shutter around its middle.
+export function shutterOffset(position: number, shutter: number): number {
+  return (0.5 + (position - 0.5) * shutter) * config.shutterFraction
+}
+
+// The way back: the position 0 to 1 inside the shortened shutter of a time inside a frame, in frames.
+export function shutterPosition(offset: number, shutter: number): number {
+  return shutter === 1 ? offset / config.shutterFraction : 0.5 + (offset / config.shutterFraction - 0.5) / shutter
 }
 
 export function shutterMid(): number {
