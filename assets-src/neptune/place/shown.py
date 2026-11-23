@@ -61,6 +61,14 @@ def seen_deck(level, size=SIZE):
     return r['deck'][..., :3].astype(np.float32), dist, r['under'].astype(np.float32), r['stretch'].astype(np.float32)
 
 
+def fit(im, width):
+    """An RGBA picture at another width, each channel on its own: the colour under a clear alpha is kept, so no dark
+    seam is filtered in where a plate ends."""
+    if im.size[0] == width:
+        return im
+    return Image.merge('RGBA', [band.resize((width, width), Image.LANCZOS) for band in im.split()])
+
+
 def save(rgba, name, level=None, report=None, zone=None):
     """Writes the plate; with a level, with its coarse light taken out and its dark ground mended (stored). The small
     picture returned is the plate as painted."""
@@ -69,8 +77,9 @@ def save(rgba, name, level=None, report=None, zone=None):
         rgba = np.dstack([stored(rgba[..., :3], level, zone, report), rgba[..., 3]])
     out = (np.clip(rgba, 0, 1) * 255 + 0.5).astype(np.uint8)
     im = Image.fromarray(out, 'RGBA')
-    im.save(os.path.join(OUT, 'full', name), quality=92, method=4, exact=True)
-    im.resize((SIZE // 2, SIZE // 2), Image.LANCZOS).save(os.path.join(OUT, 'web', name), quality=88, method=4, exact=True)
+    width = SIZE if level is None else int(level.get('texels', SIZE))
+    fit(im, width).save(os.path.join(OUT, 'full', name), quality=92, method=4, exact=True)
+    fit(im, width // 2).save(os.path.join(OUT, 'web', name), quality=88, method=4, exact=True)
     a = shown[..., 3:4].astype(np.float32) / 255
     comp = (shown[..., :3] * a + np.array([40, 0, 40]) * (1 - a)).astype(np.uint8)
     return cv2.resize(comp, (700, 700), interpolation=cv2.INTER_AREA)
@@ -311,7 +320,9 @@ def lit(rgb, level):
 def painted(level):
     """A plate read back from the assets, with the close view's light in (RGBA): as painted, but for the mended dark
     ground."""
-    file = np.asarray(Image.open(os.path.join(OUT, 'full', level['file'])).convert('RGBA'), np.float32) / 255
+    stored_file = Image.open(os.path.join(OUT, 'full', level['file'])).convert('RGBA')
+    stored_file = fit(stored_file, SIZE)
+    file = np.asarray(stored_file, np.float32) / 255
     return np.dstack([lit(file[..., :3], level), file[..., 3]]).astype(np.float32)
 
 
