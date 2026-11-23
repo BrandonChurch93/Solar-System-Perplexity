@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T09:44:01.087Z",
- "head": "2afc5d610bc6c1b88e739adb593448e95c68ea8c",
- "note": "S2 repaint levels 3 and 4 built, plates v2 installed locally, first frames with the new path rendering",
+ "pushed": "2026-11-23T10:05:25.126Z",
+ "head": "1c4e948a77b3e36067ef7d7e12c0e76fb1c866b1",
+ "note": "plates second pass: place fan visible against old ground, two Suns at 736, both being fixed",
  "looks": [
+  {
+   "time": "2026-11-23T10:05:24.540Z",
+   "file": "20261123100524540-note-r1-736-743-745.jpg",
+   "source": "out/work/mercury/place/tmp/r1-736-743-745.jpg",
+   "kind": "note",
+   "label": "first dive render before E2: 736 two Suns, 743 globe side, 745 close side; pale slabs low in 743 are the ground outside the place",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T10:05:23.477Z",
+   "file": "20261123100523477-note-L3-view.jpg",
+   "source": "out/work/mercury/place/repaint/L3-view.jpg",
+   "kind": "note",
+   "label": "level 3 plate top down, take a2, tight mask: the place sits in the old ground as a sharp grey fan between white rims and night, wrong, being relit around the place",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-23T09:43:45.497Z",
    "file": "20261123094345497-note-L4-crop0-b.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/mercury/place/repaint/L2-mid-a4.jpg",
    "kind": "note",
    "label": "level 2 take a4: lead (left) and built plate (right), middle half: sky no longer leaks into the place, outline gone",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T09:12:55.445Z",
-   "file": "20261123091255445-note-L2-crop.jpg",
-   "source": "out/work/mercury/place/repaint/L2-crop.jpg",
-   "kind": "note",
-   "label": "level 2 take a3 built, 1:1 crop at the place: outline and invented craters, not good enough",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T09:12:52.033Z",
-   "file": "20261123091252033-note-L2-sheet-a3.jpg",
-   "source": "out/work/mercury/place/repaint/L2-sheet-a3.jpg",
-   "kind": "note",
-   "label": "level 2 take a3: lead, built, raw centre take",
    "stop": "mercury"
   }
  ]
