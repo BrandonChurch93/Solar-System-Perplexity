@@ -1,8 +1,8 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-23T19:41:37.936Z",
+ "pushed": "2026-11-23T19:41:47.602Z",
  "head": "c3199d33a442ae351ec087ba6d74288279c6e6e4",
- "note": "Floor on the shutter share (handover.minShutter) built and pushed with two trial branches; rendering Mars 2440 and the rise at T with floor 0.25",
+ "note": "Floor on the shutter share built and pushed with two trial branches; rendering Mars 2440 and the rise at T with floor 0.25",
  "looks": [
   {
    "time": "2026-11-23T19:41:36.820Z",
