@@ -1,9 +1,41 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T12:35:52.698Z",
+ "pushed": "2026-11-23T12:55:15.391Z",
  "head": "4e9bdc0291ebf903876a62f973b59547aaaab89a",
- "note": "ground take g5: label free fronts; seam between plate and apron found in the motion, not yet fixed; number 2.68 raw, 1.74 blurred against 2.7 and 1.05",
+ "note": "ground takes g9 and g10: light made by function, plate still; next the flow map of mail 272",
  "looks": [
+  {
+   "time": "2026-11-23T12:55:14.741Z",
+   "file": "20261123125514741-note-g10-pen.jpg",
+   "source": "out/work/sun/life/g10-pen.jpg",
+   "kind": "note",
+   "label": "12:55 take g10, penumbra frames 90, 91, 92 and six times the difference 90 to 91: dashes with square ends, to be made soft grains (mail 272)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T12:55:14.212Z",
+   "file": "20261123125514212-note-g9-q1.jpg",
+   "source": "out/work/sun/life/g9-q1.jpg",
+   "kind": "note",
+   "label": "12:55 take g9 (a little weaker than g10), frames 0, 10, 20, 30 at native size, x 700 y 700: the cells stay, their light changes",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T12:55:13.688Z",
+   "file": "20261123125513688-note-g10-six-a.jpg",
+   "source": "out/work/sun/life/g10-six-a.jpg",
+   "kind": "note",
+   "label": "12:55 take g10, six frames 90 to 95 at native size, x 700 y 700",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T12:55:13.129Z",
+   "file": "20261123125513129-note-g10-near.jpg",
+   "source": "out/work/sun/life/g10-near.jpg",
+   "kind": "note",
+   "label": "12:55 ground take g10, held camera frame 90 (top) against 4e9bdc02 (bottom). Fronts and knots of light made by function on the distance from the lanes; the plate itself still stands. Ground number 4.33 raw, 3.15 blurred (4e9bdc02: 2.72 and 1.05)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-23T12:35:52.134Z",
    "file": "20261123123552134-note-g5-d5.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/sun/life/g3-ten.jpg",
    "kind": "note",
    "label": "ground, camera held, every 10th frame 0 to 170 (same crop): work in progress after mail 260, not yet a boil",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T12:19:34.149Z",
-   "file": "20261123121934149-note-g3-six-a.jpg",
-   "source": "out/work/sun/life/g3-six-a.jpg",
-   "kind": "note",
-   "label": "ground, camera held, six consecutive frames 90 to 95 at native size (x 700, y 700): fronts and streaks now made by function on a true place in the cell; still far too weak, change per frame 1.6 against 1.1 (blurred 1.5 px), the plate's own fixed highlights rule the picture",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T11:58:24.427Z",
-   "file": "20261123115824427-note-y1-gap.jpg",
-   "source": "out/work/sun/life/y1-gap.jpg",
-   "kind": "note",
-   "label": "frozen camera, the gap as it was at 4e9bdc02 (thrown strands taken out of the arcade by 0.9)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T11:58:18.869Z",
-   "file": "20261123115818869-note-g1-ground4.jpg",
-   "source": "out/work/sun/life/g1-ground4.jpg",
-   "kind": "note",
-   "label": "ground, frozen camera, first try of the boiling cells: hardly any gain (change per frame 0.96 to 1.11), cause found in the cell maps, being rebuilt",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T11:58:18.270Z",
-   "file": "20261123115818270-note-g1-gap.jpg",
-   "source": "out/work/sun/life/g1-gap.jpg",
-   "kind": "note",
-   "label": "frozen camera, frames 36 and 42: the gap between arcade and thrown arc, before (hard dark band) and with the thrown strands taken out by half only",
    "stop": "sun"
   }
  ]
