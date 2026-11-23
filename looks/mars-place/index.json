@@ -1,9 +1,33 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-23T19:41:03.113Z",
+ "pushed": "2026-11-23T19:57:02.236Z",
  "head": "701a958ecbec2222096d20bdbe28ff5aed8e7fbc",
- "note": "fab057c5 named: eighth bake sheets; next take 5 of the 1.6 plate against the star at 2427",
+ "note": "new takes of the 1.6 and 0.7 plates against the star at 2427; ninth bake is running",
  "looks": [
+  {
+   "time": "2026-11-23T19:57:01.586Z",
+   "file": "20261123195701586-note-p16-take5-forced.jpg",
+   "source": "out/work/place/view/p16-take5-forced.jpg",
+   "kind": "note",
+   "label": "1.6 plate: eighth bake, take 5 nested, take 5 held to the picture",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T19:57:00.955Z",
+   "file": "20261123195700955-note-take-p07-4.jpg",
+   "source": "out/work/place/view/take-p07-4.jpg",
+   "kind": "note",
+   "label": "0.7 plate, take 4 of 6: left the lead (middle of the new 1.6 plate, lay back streaks), right the take",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T19:57:00.183Z",
+   "file": "20261123195700183-note-take-p16-5.jpg",
+   "source": "out/work/place/view/take-p16-5.jpg",
+   "kind": "note",
+   "label": "1.6 plate, take 5 of 6: left the lead (the forced plate of the eighth bake), right the take: a maze of mesas, nothing points to the middle",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-23T19:41:02.413Z",
    "file": "20261123194102413-note-p16-now.jpg",
@@ -52,48 +76,6 @@
    "segment": "mars.hold",
    "frame": 2325,
    "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e85c8d53a860dafc"
-  },
-  {
-   "time": "2026-11-23T19:32:43.781Z",
-   "file": "20261123193243781-frame-f02212-draft.jpg",
-   "source": "out/work/samebytes/b8/f02212-draft.png",
-   "kind": "frame",
-   "label": "earth.travel frame 2212, draft tier",
-   "stop": "earth",
-   "segment": "earth.travel",
-   "frame": 2212,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e85c8d53a860dafc"
-  },
-  {
-   "time": "2026-11-23T19:31:28.562Z",
-   "file": "20261123193128562-frame-y2446.jpg",
-   "source": "out/work/place/view/y2446.png",
-   "kind": "frame",
-   "label": "mars.dive frame 2446, draft tier",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2446,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "45f909e84c1a1464"
-  },
-  {
-   "time": "2026-11-23T19:27:17.830Z",
-   "file": "20261123192717830-frame-x2722.jpg",
-   "source": "out/work/place/view/x2722.png",
-   "kind": "frame",
-   "label": "mars.rise frame 2722, draft tier",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "frame": 2722,
-   "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
    "engine": "e85c8d53a860dafc"
