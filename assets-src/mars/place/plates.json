@@ -163,14 +163,14 @@
   "formPx": 28,
   "smoothPx": 2.5,
   "formShare": 0.38,
-  "rampIn": 0.3,
-  "cut": 0.45,
+  "rampIn": 0.5,
+  "cut": 0.78,
   "soft": 0.035,
   "tFrom": 0.25,
   "tTo": 0.55,
-  "airFrom": 0.05,
-  "airTo": 0.8,
-  "endFrom": 0.8,
-  "endTo": 0.95
+  "airFrom": 0.45,
+  "airTo": 0.97,
+  "endFrom": 0.9,
+  "endTo": 1.0
  }
 }

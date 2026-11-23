@@ -53,14 +53,14 @@ export const createSet: SetFactory = async (ctx) => {
   for (const level of patches.levels) patchTextures.push(await ctx.texture(base + level.file, { srgb: true, anisotropy: 16 }))
 
   const planet = new Planet({
-    map, mapWidth: (map.image as unknown as { width: number }).width, height: wrapHeight, heightWidth: sizes.height[0], light: look.light, haze: look.haze, grazing: look.grazing,
+    map, mapWidth: (map.image as unknown as { width: number }).width, height: wrapHeight, heightWidth: sizes.height[0], light: look.light, haze: { ...look.haze, glow: true }, grazing: look.grazing,
     patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: patches.fade, nearDeg: patches.nearDeg,
       ...(patches.levels.some((l) => l.own) ? { own: patches.levels.map((l) => l.own === true), ownGain: true } : {}), ...(patches.fadeMinor ? { fadeMinor: true } : {}) },
     storm: { mask: stormMask, axis: direction(wrap.storm.lon, wrap.storm.lat), radius: THREE.MathUtils.degToRad(wrap.storm.radiusDeg) },
   })
   planet.mesh.quaternion.fromArray(fit.globe.quaternion)
   planet.mesh.scale.fromArray(fit.globe.scale)
-  const shell = new HazeShell(look.shellHaze, diagUniform)
+  const shell = new HazeShell({ ...look.shellHaze, glow: true }, diagUniform)
   const halo = new HazeShell(look.haloHaze, diagUniform)
   halo.mesh.renderOrder = 4
   const glint = new HazeShell(look.glintHaze, diagUniform)
@@ -141,10 +141,14 @@ export const createSet: SetFactory = async (ctx) => {
     sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, mips: false, anisotropy: 1 }), aim: new THREE.Quaternion().fromArray(skyFrame.patches.mars[view as ViewKind]), tan: [t * 16 / 9, t], gain: def.gain, add: def.add, ring: def.ring as [number, number, number, number], edge: def.margin / wide, unfold: def.unfold as [number, number] })
   }
 
+  // the land matte of the dive's place picture: 1 keeps the picture, its edge follows forms of the land (assets-src/mars/place/matte.py)
+  const placeMatte = { dive: await ctx.texture(base + 'place-matte-dive.png', { srgb: false, channels: 1 }) }
+
   return {
     id: plan.id,
     world,
     sky,
+    placeMatte,
     update: (state, shot, view) => {
       const inOrbit = state.view === 'orbit'
       orbit.visible = inOrbit && state.weight > 0
