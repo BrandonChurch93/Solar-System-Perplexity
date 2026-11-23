@@ -5,15 +5,15 @@ import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { diagUniform } from '../../diagnostics/diag'
 import { smooth } from '../../director/rig'
 import { patches } from './assets'
-import { Deck, type DeckMeta, type DeckTiers } from './deck'
+import { CloudDeck } from './clouds'
+import type { DeckMeta } from './deck'
 import { Globe } from './globe'
 import { Io } from './io'
-import { Pall, PallSea, pallUniforms } from './pall'
+import { Pall } from './pall'
 import * as look from './look'
 import { plan } from './plan'
 import reliefJson from './relief.json'
 import skyJson from './sky.json'
-import tiersJson from './tiers.json'
 
 function direction(lonDeg: number, latDeg: number): THREE.Vector3 {
   const lon = THREE.MathUtils.degToRad(lonDeg)
@@ -62,24 +62,16 @@ export const createSet: SetFactory = async (ctx) => {
   const far = new FarPoint()
   orbit.add(far.points)
 
-  const seaUniforms = pallUniforms(look.deck.pall.shell)
-  const ground = await Deck.load(ctx, base, reliefJson as DeckMeta, look.deck, tiersJson as DeckTiers, wispMap, seaUniforms)
-  terrain.add(ground.group)
-  const sea = new PallSea(seaUniforms)
-  terrain.add(sea.mesh)
+  const ground = await CloudDeck.load(ctx, base)
+  terrain.add(ground.mesh)
 
   const orbitShell = plan.p.coverShell ?? [1, 1.015]
   const nadir = (reliefJson as DeckMeta).nadir
   const seaRadius = (reliefJson as DeckMeta).radius
   const pall = new Pall(plan, look.deck.pall, { centre: [nadir[0]! * (seaRadius + 1), nadir[1]! * (seaRadius + 1), nadir[2]! * (seaRadius + 1)], radius: seaRadius, orbitShell })
   const riseMid = (plan.seg.rise.start + plan.seg.rise.end) / 2
-  const diveCover = plan.coverCenter(plan.seg.dive!)
   const riseCover = plan.coverCenter(plan.seg.rise)
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
-  const seaCentre = new THREE.Vector3().fromArray(nadir).multiplyScalar(seaRadius + 1)
-  const above = (p: THREE.Vector3) => p.distanceTo(seaCentre) - seaRadius
-  const floor = [above(plan.terrain(0).position), above(plan.terrain(plan.seg.terrain.end - plan.seg.terrain.start).position)]
-  const ceiling = [above(plan.dive(diveCover).pose.position), above(plan.rise(riseCover - 1e-6).pose.position)]
   const holdTurn = plan.hold(plan.holdMid - plan.seg.hold.start).quaternion
   const glowHome = new THREE.Vector3().fromArray(look.glowDir).normalize().applyQuaternion(holdTurn)
   const moonHome = new THREE.Vector3().fromArray(look.moonSun).normalize()
@@ -111,15 +103,7 @@ export const createSet: SetFactory = async (ctx) => {
       terrain.visible = !inOrbit
       const gain = 1 / shot.post.exposure
       if (!inOrbit) {
-        const h = look.deck.haze
-        const seg = state.segment
-        const high = above(seg.kind === 'dive' ? plan.dive(state.time).pose.position : seg.kind === 'rise' ? plan.rise(state.time).pose.position : plan.terrain(state.time - plan.seg.terrain.start).position)
-        const fall = THREE.MathUtils.clamp((high - floor[0]) / (ceiling[0] - floor[0]), 0, 1)
-        const climb = THREE.MathUtils.clamp((high - floor[1]) / (ceiling[1] - floor[1]), 0, 1)
-        ground.update(state.time - terrainMid, gain, shot.post.vignette, view, seg.kind === 'dive' ? h.clear[0] * Math.pow(fall, h.clear[1]) : seg.kind === 'rise' ? h.gather[0] * Math.pow(climb, h.gather[1]) : 0)
-        pall.apply(seaUniforms, state.segment, state.time, 'terrain', view.camera.fov, view.format.width / view.format.height)
-        sea.material.uniforms.uGain!.value = gain
-        sea.mesh.visible = (seaUniforms.uPall!.value as THREE.Vector4).x > 0
+        ground.update(gain, shot.post.vignette, view)
         return
       }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'

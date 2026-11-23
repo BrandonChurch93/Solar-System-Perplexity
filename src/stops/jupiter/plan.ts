@@ -4,7 +4,10 @@ import type { Pose } from '../../core/types'
 import { StopPlan, type Fit, type MoveParams, type OrbitShot } from '../../director/moves'
 import { lookAt, mix, ramp, smooth, smoother } from '../../director/rig'
 import { coverWindow } from '../../director/timeline'
+import deck from './deck.json'
+import fields from './deck-fields.json'
 import fit from './fit.json'
+import relief from './relief.json'
 
 export const climbOut = { lead: 1.4, tail: 0.5, level: -4, fast: [0.24, 0.2, 3] as [number, number, number], settle: 2.9, turn: 0.75, lens: 2 }
 export const glide = { bankDeg: 7, lead: 0.8, arc: 1.0, swingDeg: 20 }
@@ -37,6 +40,24 @@ export const params: MoveParams = {
 }
 
 const Z = new THREE.Vector3(0, 0, 1)
+
+const up0 = new THREE.Vector3().fromArray(relief.nadir).negate()
+const centre = up0.clone().multiplyScalar(-(relief.radius + 1))
+const ahead0 = new THREE.Vector3().fromArray(fields.chart.ey).addScaledVector(up0, -new THREE.Vector3().fromArray(fields.chart.ey).dot(up0)).normalize()
+const left0 = new THREE.Vector3().crossVectors(up0, ahead0)
+
+export function flight(seconds: number, vfov: number): Pose {
+  const f = deck.flight
+  const turn = THREE.MathUtils.degToRad(f.turnDegPerSecond) * seconds
+  const rate = THREE.MathUtils.degToRad(f.turnDegPerSecond)
+  const along = Math.abs(rate) > 1e-9 ? f.unitsPerSecond * Math.sin(turn) / rate : f.unitsPerSecond * seconds
+  const aside = Math.abs(rate) > 1e-9 ? f.unitsPerSecond * (1 - Math.cos(turn)) / rate : 0
+  const high = relief.radius + 1
+  const up = up0.clone().multiplyScalar(high).addScaledVector(ahead0, along).addScaledVector(left0, aside).normalize()
+  const position = centre.clone().addScaledVector(up, high)
+  const quaternion = new THREE.Quaternion().setFromUnitVectors(up0, up).multiply(new THREE.Quaternion().setFromAxisAngle(up0, turn))
+  return { position, quaternion, vfov }
+}
 const Y = new THREE.Vector3(0, 1, 0)
 
 export class JupiterPlan extends StopPlan {
@@ -77,16 +98,8 @@ export class JupiterPlan extends StopPlan {
   }
 
   override terrain(tRel: number): Pose {
-    const pose = super.terrain(tRel)
-    const u = pose.position.z / -this.p.terrain.forward
-    pose.position.x += glide.arc * u * u
-    const t = this.p.terrain
-    const tilt = THREE.MathUtils.degToRad((t.horizonDeg ?? 0) + (t.dipDeg ?? 0))
-    const axis = new THREE.Vector3(0, Math.cos(tilt), Math.sin(tilt)).applyAxisAngle(Z, -THREE.MathUtils.degToRad(t.rollDeg ?? 0))
-    pose.quaternion.premultiply(new THREE.Quaternion().setFromAxisAngle(axis, THREE.MathUtils.degToRad(glide.swingDeg) * Math.max(u, 0) ** 2))
-    const time = tRel + this.seg.terrain.start
-    pose.quaternion.multiply(new THREE.Quaternion().setFromAxisAngle(Z, THREE.MathUtils.degToRad(this.lean(time) + this.bank(time))))
-    return pose
+    const dur = this.seg.terrain.end - this.seg.terrain.start
+    return flight(tRel - dur / 2 - config.shutterFraction / (2 * config.fps), this.p.terrain.vfov)
   }
 
   private sized(time: number): number {
