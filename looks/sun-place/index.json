@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T08:43:12.478Z",
- "head": "df56a11e24cac54aa0d812857a52a75c0c331463",
- "note": "dense rise sheets across T and the globe side alone sheet; measured no step at T; G13 fails on frames 208 to 215 (field tiles enlarged at the frame bottom, up to 5.8 percent soft), fix in work",
+ "pushed": "2026-11-23T09:13:42.266Z",
+ "head": "181401cc490fb42f272621cd6691e84b47407af0",
+ "note": "review tier frames through T (215 to 218); first pass of the cell map for the life of the close view",
  "looks": [
+  {
+   "time": "2026-11-23T09:13:41.056Z",
+   "file": "20261123091341056-note-chk-b.jpg",
+   "source": "out/work/sun/life/chk-b.jpg",
+   "kind": "note",
+   "label": "mail 228, tool: the cells found in the plate (first pass, edges still too straight in places)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T09:13:39.988Z",
+   "file": "20261123091339988-note-rv-216-217-crop.jpg",
+   "source": "out/work/sun/pl/rv-216-217-crop.jpg",
+   "kind": "note",
+   "label": "rise 216 and 217 at the review tier, middle of the frame at full size",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T09:13:38.563Z",
+   "file": "20261123091338563-note-rv-sheet.jpg",
+   "source": "out/work/sun/pl/rv-sheet.jpg",
+   "kind": "note",
+   "label": "rise 215 to 218 at the review tier, T is in 216",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-23T08:43:11.877Z",
    "file": "20261123084311877-note-so-a.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/sun/pl/r4c.jpg",
    "kind": "note",
    "label": "rise draft full size: 216 (T), 228, 234, 240, spot and loops from above",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T08:29:59.764Z",
-   "file": "20261123082959764-note-r4-a.jpg",
-   "source": "out/work/sun/pl/r4-a.jpg",
-   "kind": "note",
-   "label": "rise draft, frames 204 to 246, new move, colour speckle cured, loop spike half cured",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T08:11:33.664Z",
-   "file": "20261123081133664-note-r1-b.jpg",
-   "source": "out/work/sun/pl/r1-b.jpg",
-   "kind": "note",
-   "label": "rise on the new path, every 6th frame 228 to 269, draft",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T08:11:32.532Z",
-   "file": "20261123081132532-note-r1-a.jpg",
-   "source": "out/work/sun/pl/r1-a.jpg",
-   "kind": "note",
-   "label": "rise on the new path, every 6th frame 180 to 222, draft, T in 216",
    "stop": "sun"
   }
  ]
