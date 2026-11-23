@@ -1,9 +1,25 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-23T10:34:26.353Z",
- "head": "0c93e07df254bc71c4cb7157098091560f78174f",
- "note": "brief 238 M1: rough plates on the globe, check picture at 2454, simulated top down sheet; light and softness measured",
+ "pushed": "2026-11-23T10:52:43.907Z",
+ "head": "5b200dfcf5879dc08efeebcb1bad1788a44667de",
+ "note": "rise picture dumped; first look space composite before the repaint",
  "looks": [
+  {
+   "time": "2026-11-23T10:52:43.288Z",
+   "file": "20261123105243288-note-design0.jpg",
+   "source": "out/work/place/view/design0.jpg",
+   "kind": "note",
+   "label": "work: old land in look space (top) and with the dive lay back in the wedge (bottom) at 13, 6.5, 3.25 deg, before any repaint",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T10:52:42.539Z",
+   "file": "20261123105242539-note-pictures.jpg",
+   "source": "out/work/place/view/pictures.jpg",
+   "kind": "note",
+   "label": "place pictures at T as the engine draws them: dive (top), rise (bottom)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-23T10:33:38.588Z",
    "file": "20261123103338588-note-topdown-rough2.jpg",
@@ -56,22 +72,6 @@
    "source": "out/work/place/view/topdown-rough1.jpg",
    "kind": "note",
    "label": "simulated top down dive sheet with the first rough plates (laid back picture over the old ground, no repaint, no match): the wedge is a dark cut out, far too dark for the land around it",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T10:22:57.369Z",
-   "file": "20261123102257369-note-topdown-main.jpg",
-   "source": "out/work/place/view/topdown-main.jpg",
-   "kind": "note",
-   "label": "simulated top down dive sheet of main: wrap and the five levels, no place plates",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T10:22:56.845Z",
-   "file": "20261123102256845-note-lay3.jpg",
-   "source": "out/work/place/view/lay3.jpg",
-   "kind": "note",
-   "label": "the place picture laid back onto a 3 degree gnomonic plate about the spot (north up); lines are stretch 2, 4, 8, 16",
    "stop": "mars"
   }
  ]
