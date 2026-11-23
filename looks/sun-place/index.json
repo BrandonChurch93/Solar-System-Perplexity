@@ -1,9 +1,45 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T15:10:56.943Z",
- "head": "c90dd570d85977fe1385403b0c6ec5b8477424c3",
- "note": "sun: G5 and G17 green on c90dd570, 360 final is the kept still, G13 running; rise after T on consecutive frames",
+ "pushed": "2026-11-23T15:39:01.327Z",
+ "head": "c2524de5bd9440329d7d2c096f151342019c649d",
+ "note": "sun: READY c2524de5 sent 15:18; trial for the handover: side difference at T 9.35 to 0.81 (limit 0.5), not committed yet",
  "looks": [
+  {
+   "time": "2026-11-23T15:39:00.612Z",
+   "file": "20261123153900612-note-sides-before-after.jpg",
+   "source": "out/work/sun/life/sides-before-after.jpg",
+   "kind": "note",
+   "label": "sun, the two sides at T (frame 216, draft), difference times 8: left before (mean 9.35, plate and apron 2 px apart), right trial with the place read on the ball by one arithmetic on both sides (mean 0.81, shifts under 0.03 px; the patches top left and right are the low haze the globe side lacks)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T15:35:39.891Z",
+   "file": "20261123153539891-frame-same-orbit.jpg",
+   "source": "out/work/sun/life/sides/same-orbit.png",
+   "kind": "frame",
+   "label": "sun.rise frame 216, draft tier, beauty/side=orbit/t=7.208333 view",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 216,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty/side=orbit/t=7.208333",
+   "engine": "3c1375ab69256384"
+  },
+  {
+   "time": "2026-11-23T15:15:31.051Z",
+   "file": "20261123151531051-frame-f360-final-m.jpg",
+   "source": "out/work/sun/life/f360-final-m.png",
+   "kind": "frame",
+   "label": "sun.hold frame 360, final tier",
+   "stop": "sun",
+   "segment": "sun.hold",
+   "frame": 360,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "3c1375ab69256384"
+  },
   {
    "time": "2026-11-23T15:10:55.330Z",
    "file": "20261123151055330-note-rise-after-217-228.jpg",
@@ -27,20 +63,6 @@
    "job": "measure"
   },
   {
-   "time": "2026-11-23T15:02:48.405Z",
-   "file": "20261123150248405-frame-f360-final.jpg",
-   "source": "out/work/sun/life/f360-final.png",
-   "kind": "frame",
-   "label": "sun.hold frame 360, final tier",
-   "stop": "sun",
-   "segment": "sun.hold",
-   "frame": 360,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "ee77572156dd9714"
-  },
-  {
    "time": "2026-11-23T14:53:55.929Z",
    "file": "20261123145355929-note-sides-crops.jpg",
    "source": "out/work/sun/life/sides-crops.png",
@@ -62,22 +84,6 @@
    "source": "out/work/sun/life/c3-ground.jpg",
    "kind": "note",
    "label": "sun c90dd570, film camera, frames 85 to 96 at native size, near ground x 700 y 760",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T14:53:52.907Z",
-   "file": "20261123145352907-note-c3-leftleg.jpg",
-   "source": "out/work/sun/life/c3-leftleg.jpg",
-   "kind": "note",
-   "label": "sun c90dd570, film camera, frames 85 to 96 at native size, left leg x 560 y 230: the life's own light rests at 90",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T14:53:51.743Z",
-   "file": "20261123145351743-note-c4-90-four.jpg",
-   "source": "out/work/sun/life/c4-90-four.jpg",
-   "kind": "note",
-   "label": "sun frame 90, draft, film camera: approved image, kept still, 2aedc0e7, c90dd570 (difference to approved after blur 8 px: 2.73, 6.50, 2.96)",
    "stop": "sun"
   }
  ]
