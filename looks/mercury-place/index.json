@@ -1,9 +1,33 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T12:32:17.858Z",
- "head": "b6bd73037752f5000f0aa3dd22320e5b44aadb86",
- "note": "far wash on the globe side: gap tone matched within 0.04, second horizon and comb remain; consecutive frames rendering",
+ "pushed": "2026-11-23T13:02:09.294Z",
+ "head": "852f49ecc4e7813300eebe097bfa4609bd8d9417",
+ "note": "mail 267 item 1 diagnosed: the band around the place (quilt over calmed take) is the smear; cure in work: repaint of the band by generation, one level under the other",
  "looks": [
+  {
+   "time": "2026-11-23T13:02:07.801Z",
+   "file": "20261123130207801-note-pat.jpg",
+   "source": "out/work/mercury/place/tmp/pat.jpg",
+   "kind": "note",
+   "label": "test pattern: red level 1, green level 2 with grid, blue level 3, white level 4; the fault sits in levels 3 and 4 around the place and in level 1 at the limb",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T13:02:06.439Z",
+   "file": "20261123130206439-note-c1-bl.jpg",
+   "source": "out/work/mercury/place/tmp/c1-bl.jpg",
+   "kind": "note",
+   "label": "c1 full size, bottom left quarters of 724 728 732 1004: flat blobs, combed streaks, dashes (the quilt band over the calmed take)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T13:02:05.255Z",
+   "file": "20261123130205255-note-c1-six.jpg",
+   "source": "out/work/mercury/place/tmp/c1-six.jpg",
+   "kind": "note",
+   "label": "c1 draft 716 720 724 728 732 1004: the ground left and below the place is the fault of mail 267 item 1",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-23T12:32:00.626Z",
    "file": "20261123123200626-note-w4-zoom.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/mercury/place/tmp/r7-996-band.jpg",
    "kind": "note",
    "label": "Rise 996 at the horizon: film frame, globe alone, place picture, picture weight. The band is the gap between the two horizons",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T12:14:55.441Z",
-   "file": "20261123121455441-note-td3-743r.jpg",
-   "source": "out/work/mercury/place/tmp/td3-743r.jpg",
-   "kind": "note",
-   "label": "S2 sheet frame 743, right half at full size: streaks and grain in the stretched far part",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T12:14:54.743Z",
-   "file": "20261123121454743-note-td3.jpg",
-   "source": "out/work/mercury/place/tmp/td3.jpg",
-   "kind": "note",
-   "label": "S2 proof: top down dive, 12 frames 690 to 743, globe side alone, with the far fill",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T11:55:58.607Z",
-   "file": "20261123115558607-note-r7-rise-T.jpg",
-   "source": "out/work/mercury/place/tmp/r7-rise-T.jpg",
-   "kind": "note",
-   "label": "rise 989 990 991 994 996 998 larger",
    "stop": "mercury"
   }
  ]
