@@ -1,9 +1,41 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T10:34:59.943Z",
- "head": "1c4e948a77b3e36067ef7d7e12c0e76fb1c866b1",
- "note": "S4 first render: cover gone, T agrees, dive Sun 694 to 720 broken, plates third pass in work",
+ "pushed": "2026-11-23T10:59:46.040Z",
+ "head": "ba28cb3a9ccd7e8a8e895a3a7d45d363e4f5a0d7",
+ "note": "dive Sun fixed (sets behind the limb as the Sun), plates: edge tone matched, style gap at the fan edge open",
  "looks": [
+  {
+   "time": "2026-11-23T10:59:45.478Z",
+   "file": "20261123105945478-note-L4-lead-view.jpg",
+   "source": "out/work/mercury/place/repaint/L4-lead-view.jpg",
+   "kind": "note",
+   "label": "level 4 lead (9.5 deg): place right, old relief left, the style gap that the repaint has to close",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T10:59:44.936Z",
+   "file": "20261123105944936-note-L3-edge-cmp.jpg",
+   "source": "out/work/mercury/place/tmp/L3-edge-cmp.jpg",
+   "kind": "note",
+   "label": "level 3 at the place, 6.4 deg: left take a4 with a blurred ring (soft, rejected), right take a3 with the new edge tone (sharp, straight edge of the fan still readable)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T10:59:44.375Z",
+   "file": "20261123105944375-note-r3-b.jpg",
+   "source": "out/work/mercury/place/tmp/r3-b.jpg",
+   "kind": "note",
+   "label": "dive r3 draft 708 to 724: the Sun sets behind the limb by 716 (old plates still installed)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T10:59:43.508Z",
+   "file": "20261123105943508-note-r3-a.jpg",
+   "source": "out/work/mercury/place/tmp/r3-a.jpg",
+   "kind": "note",
+   "label": "dive r3 draft 689 to 706: no ride, the Sun plate stays on the sky's Sun, hold frame 689 0 px",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-23T10:34:50.499Z",
    "file": "20261123103450499-note-r2-b.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/mercury/place/tmp/r1-736-743-745.jpg",
    "kind": "note",
    "label": "first dive render before E2: 736 two Suns, 743 globe side, 745 close side; pale slabs low in 743 are the ground outside the place",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T10:05:23.477Z",
-   "file": "20261123100523477-note-L3-view.jpg",
-   "source": "out/work/mercury/place/repaint/L3-view.jpg",
-   "kind": "note",
-   "label": "level 3 plate top down, take a2, tight mask: the place sits in the old ground as a sharp grey fan between white rims and night, wrong, being relit around the place",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T09:43:45.497Z",
-   "file": "20261123094345497-note-L4-crop0-b.jpg",
-   "source": "out/work/mercury/place/repaint/L4-crop0-b.jpg",
-   "kind": "note",
-   "label": "S2 level 4 at full size, repainted ground west of the place",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T09:43:41.159Z",
-   "file": "20261123094341159-note-L4-bl-c.jpg",
-   "source": "out/work/mercury/place/repaint/L4-bl-c.jpg",
-   "kind": "note",
-   "label": "S2 level 4 lower left quarter with take a2: lead left, repaint right",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T09:43:37.451Z",
-   "file": "20261123094337451-note-L4-whole-b.jpg",
-   "source": "out/work/mercury/place/repaint/L4-whole-b.jpg",
-   "kind": "note",
-   "label": "S2 level 4 (9.5 deg) take a1: lead left, repaint right; lower left tile invented craters, retaken as a2",
    "stop": "mercury"
   }
  ]
