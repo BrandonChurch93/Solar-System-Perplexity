@@ -268,7 +268,7 @@ export const createSet: SetFactory = async (ctx) => {
       const hide = arriving ? 1 - smoother(ramp(look.hide.fade[0]!, look.hide.fade[1]!, state.u)) : rising || leaving ? 1 : 0
       const beneath = arriving ? Math.pow(shot.sets.find((s) => s.id === state.segment.stop)?.weight ?? 0, look.hide.power) : 0
       const lift = arriving ? (Math.max(smooth(ramp(0.25, 0.8, look.hide.gone)) - shown, 0) * (1 - beneath)) / Math.max(shown, 1e-4) : 0
-      sunPlate.update(sunAim.copy(state.rotation).multiply(holdCam).premultiply(diving || rising ? sunTurn : sunTurn.identity()), gain * shown * look.sun.gain * breath * plate, shot.post.vignette, aspect, shrink, surface, still, hide, hide * (1 - beneath), look.hide.rate, hide * lift)
+      sunPlate.update(sunAim.copy(state.rotation).multiply(holdCam).premultiply(diving || rising ? sunTurn : sunTurn.identity()), gain * shown * look.sun.gain * breath * plate * (shot.sun.far ? 0 : 1), shot.post.vignette, aspect, shrink, surface, still, hide, hide * (1 - beneath), look.hide.rate, hide * lift)
       const then = leaving && view.samples > 1 && shown > 0 ? film.shotAt(shot.frame, state.time - config.shutterFraction / (view.samples * config.fps)) : null
       sunPlate.smear(view.camera.quaternion, tanHalf, then ? then.camera.quaternion : null, then ? Math.tan(THREE.MathUtils.degToRad(then.camera.vfov) / 2) : tanHalf, then ? sunWas.copy(then.sets.find((s) => s.id === plan.id)?.rotation ?? state.rotation).multiply(holdCam) : sunAim, view.format.height, look.leaveStep, look.leaveSoft)
       let limbLeft = 1

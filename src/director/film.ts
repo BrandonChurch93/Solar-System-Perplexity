@@ -13,6 +13,8 @@ import world from './world.json'
 import { aimAt, type SkyAims } from '../space/aim'
 import { TravelShape, inFrame } from '../space/travel/path'
 import { discShare, openSky } from '../space/travel/open'
+import { globeShare } from '../space/farsun/share'
+import sunFit from '../stops/sun/fit.json'
 
 const NO_TURN = new THREE.Quaternion()
 
@@ -58,6 +60,7 @@ const riseLift = (id: string): number => (OPEN.riseLift as Record<string, number
 const DUST_LOOK = config.raw.travel.dust
 const OPEN_TAPS = 8
 const SUN_COLOR = new THREE.Color(1, 0.9, 0.72)
+const SUN_BODY = new THREE.Quaternion().fromArray(sunFit.globe.quaternion)
 
 export interface LiveControl { stop: string; view: ViewKind; yaw: number; pitch: number; zoom: number; time: number }
 
@@ -514,9 +517,9 @@ export class FilmDirector implements Director {
     return { radius: THREE.MathUtils.degToRad(l.sunRadiusDeg), glare: l.sunGlare, exposure: l.exposure, sky: l.skyExposure }
   }
 
-  private leaveWeight(index: number, u: number): number {
+  private leaveWeight(index: number, u: number, position: THREE.Vector3): number {
     const hand = this.sunHand[index] ?? 0
-    return index === 0 ? 1 - smooth(ramp(this.sunSwapSpan[0], this.sunSwapSpan[1], u)) : u < Math.max(this.clear[index + 1]!, hand > SUN_HAND.span[0] ? hand : 0) ? 1 : 0
+    return index === 0 ? (u < SUN_LEAVE && globeShare(position.distanceTo(this.frames[0]!.origin)) > 0 ? 1 : 0) : u < Math.max(this.clear[index + 1]!, hand > SUN_HAND.span[0] ? hand : 0) ? 1 : 0
   }
 
   private bright(index: number, at: number): number {
@@ -534,7 +537,7 @@ export class FilmDirector implements Director {
     const radius = mix(this.sunFor(index).radius, this.sunFor(index + 1).radius, smooth(ramp(0.25, 0.8, u)))
     const sun = discShare(this.sunWorld.clone().applyQuaternion(inv), Math.sin(Math.min(radius, 1.5)), pose.vfov, aspect)
     const glow = index === 0 ? smooth(ramp(SUN_GLOW_FROM, this.sunSwapSpan[1], u)) : 1
-    return Math.min(this.leaveWeight(index, u) * body(index) + body(index + 1) + glow * sun, 1)
+    return Math.min(this.leaveWeight(index, u, pose.position) * body(index) + body(index + 1) + glow * sun, 1)
   }
 
   private sunSeen(index: number, time: number): number {
@@ -693,7 +696,7 @@ export class FilmDirector implements Director {
       light.sky = mix(light.sky, OPEN.openExposure, open)
       if (index > 0) light.sky *= 1 - SUN_DIM.level * smooth(this.sunSeen(index, time)) * (1 - smoother(ramp(SUN_DIM.back[0], SUN_DIM.back[1], u)))
       skyStars = open
-      const leaveWeight = this.leaveWeight(index, u)
+      const leaveWeight = this.leaveWeight(index, u, position)
       if (index === 0) sunWeight = smooth(ramp(SUN_GLOW_FROM, this.sunSwapSpan[1], u))
       const arriving = state(index + 1, 'orbit')
       if (index > 0 && this.shapes[index]!.look.pin[1] > 0) farLight = Math.pow(smooth(ramp(this.lit[index]!, this.lit[index]! + FAR_LIGHT.frames / ((segment.end - segment.start) * config.fps), u)), FAR_LIGHT.power)
@@ -865,6 +868,8 @@ export class FilmDirector implements Director {
     post.exposure = light.exposure
     post.flare = flare
     const sun: SunState = { dir: this.sunWorld.clone(), color: SUN_COLOR, intensity: 3, angularRadius: light.radius, glare: light.glare * sunWeight }
+    const first = this.plans[0]!
+    if (index > 0 || segment.kind === 'travel') sun.far = { centre: index === 0 && u < SUN_LEAVE ? this.frames[0]!.origin.clone().sub(pose.position) : undefined, share: index === 0 ? (u < SUN_LEAVE ? 1 - globeShare(pose.position.distanceTo(this.frames[0]!.origin)) : 1) : sunWeight, body: this.frames[0]!.rotation.clone().multiply(SUN_BODY), spin: first.spin(time), holdTime: time - first.holdMid, time, exposure: light.exposure, vfov: pose.vfov }
     const out: Shot = { frame, time, segment, u, camera: pose, skyQuaternion: skyCarry ? skyCarry.multiply(pose.quaternion) : pose.quaternion.clone(), skyExposure: light.sky, skyGlow, skyTurn, skyStars, skyPatch, skyLook, near, far, sun, sets, post, cover, dust, farLight }
     if (skyShare !== undefined) out.skyShare = skyShare
     if (skyShareHigh !== undefined) out.skyShareHigh = skyShareHigh
