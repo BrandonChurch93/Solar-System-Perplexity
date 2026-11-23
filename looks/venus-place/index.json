@@ -1,9 +1,69 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-23T12:05:52.116Z",
+ "pushed": "2026-11-23T12:22:40.879Z",
  "head": "6326371c6cc14caf97cfdb8045a0a463eba97dec",
- "note": "6326371c: harness passes; every frame about both T; limb crops; judged frames beside kept stills",
+ "note": "item 5: state before, and a failed first try of a deck by code",
  "looks": [
+  {
+   "time": "2026-11-23T12:22:40.189Z",
+   "file": "20261123122240189-note-a-view.jpg",
+   "source": "out/work/venus/place/cl/a-view.jpg",
+   "kind": "note",
+   "label": "BAD: first tries of a cloud deck by code (level a): reads as rock veins, not cloud tops. Not used",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T12:22:39.501Z",
+   "file": "20261123122239501-note-plates-3x3.jpg",
+   "source": "../../../../tmp/v/plates-3x3.jpg",
+   "kind": "note",
+   "label": "plates w a b from above: base, dive T, rise T. Pale smooth fan and combed streaks are what item 5 names",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T12:22:38.909Z",
+   "file": "20261123122238909-note-s4-b.jpg",
+   "source": "../../../../tmp/v/s4-b.jpg",
+   "kind": "note",
+   "label": "dive 1306, rise 1573 1579 1585 draft, as pushed: before item 5",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T12:22:38.318Z",
+   "file": "20261123122238318-note-s4-a.jpg",
+   "source": "../../../../tmp/v/s4-a.jpg",
+   "kind": "note",
+   "label": "dive 1284 1290 1296 1302 draft, as pushed at 6326371c: before item 5",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T12:20:58.247Z",
+   "file": "20261123122058247-frame-f-1585.jpg",
+   "source": "out/work/venus/place/s4/f-1585.png",
+   "kind": "frame",
+   "label": "venus.rise frame 1585, draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "frame": 1585,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "c049c4c0efb85c12"
+  },
+  {
+   "time": "2026-11-23T12:18:58.393Z",
+   "file": "20261123121858393-frame-f-1306.jpg",
+   "source": "out/work/venus/place/s4/f-1306.png",
+   "kind": "frame",
+   "label": "venus.dive frame 1306, draft tier",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "frame": 1306,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "c049c4c0efb85c12"
+  },
   {
    "time": "2026-11-23T12:05:51.529Z",
    "file": "20261123120551529-note-judged4.jpg",
@@ -18,54 +78,6 @@
    "source": "../../../../tmp/v/h7-limb.jpg",
    "kind": "note",
    "label": "rise limb at twice the size: 1542 (T, close side) 1543 1545 1547 1549 1551 1553 1554",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T12:05:50.304Z",
-   "file": "20261123120550304-note-hz-rise.jpg",
-   "source": "out/work/venus/place/h7/hz-rise.jpg",
-   "kind": "note",
-   "label": "rise 1539 to 1554, horizon at full size",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T12:05:49.771Z",
-   "file": "20261123120549771-note-rise-b.jpg",
-   "source": "out/work/venus/place/h7/rise-b.jpg",
-   "kind": "note",
-   "label": "rise 1543 to 1554, every frame, draft",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T12:05:49.232Z",
-   "file": "20261123120549232-note-rise-a.jpg",
-   "source": "out/work/venus/place/h7/rise-a.jpg",
-   "kind": "note",
-   "label": "rise 1531 to 1542 (T), every frame, draft",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T12:05:48.652Z",
-   "file": "20261123120548652-note-hz-dive.jpg",
-   "source": "out/work/venus/place/h7/hz-dive.jpg",
-   "kind": "note",
-   "label": "dive 1331 to 1346, horizon at full size",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T12:05:48.111Z",
-   "file": "20261123120548111-note-dive-b.jpg",
-   "source": "out/work/venus/place/h7/dive-b.jpg",
-   "kind": "note",
-   "label": "dive 1343 (T) to 1349, every frame, draft",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T12:05:47.541Z",
-   "file": "20261123120547541-note-dive-a.jpg",
-   "source": "out/work/venus/place/h7/dive-a.jpg",
-   "kind": "note",
-   "label": "dive 1331 to 1342, every frame, draft, commit 6326371c",
    "stop": "venus"
   }
  ]
