@@ -1,57 +1,62 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-23T14:04:46.747Z",
- "head": "7f507d9dae943fb3658092e6c348365fbe7c7c1d",
- "note": "E4 draft at 7f507d9 with the limb hold, on main's old globe; waiting for the Mars plate ladder to judge the colour step into 2449",
+ "pushed": "2026-11-23T14:24:01.463Z",
+ "head": "770b1694019e3f5ed7143871c989709d1db098fe",
+ "note": "M3 proof running: same bytes of the stops that did not opt in, then gate, then the review tier sheets across T first (128 samples a frame before T)",
  "looks": [
   {
-   "time": "2026-11-23T14:04:42.092Z",
-   "file": "20261123140442092-note-mars-dive-top.jpg",
-   "source": "out/work/handover/mars-dive-top.png",
-   "kind": "note",
-   "label": "Mars dive from straight above, place picture off, 7f507d9 on main's old globe: soft from 2439",
-   "stop": "mars"
+   "time": "2026-11-23T14:23:58.911Z",
+   "file": "20261123142358911-frame-f00000-draft.jpg",
+   "source": "out/work/samebytes/m3c/f00000-draft.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 0, draft tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 0,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "c5fbc65c8302b556"
   },
   {
-   "time": "2026-11-23T14:04:41.478Z",
-   "file": "20261123140441478-note-dive-limb-L-b.jpg",
-   "source": "out/work/e4/d3/dive-limb-L-b.png",
-   "kind": "note",
-   "label": "Mars dive 2449 to 2454 limb rows left half at full size: the globe's own hard limb fades under the picture's soft horizon"
+   "time": "2026-11-23T14:13:32.248Z",
+   "file": "20261123141332248-sheet-mars-dive-draft-after.jpg",
+   "source": "out/work/handover/mars-dive-draft-after.png",
+   "kind": "sheet",
+   "label": "mars dive, every frame 2455 to 2466 (after T, frame 2454), draft tier",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "first": 2455,
+   "last": 2466,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T14:04:40.724Z",
-   "file": "20261123140440724-note-dive-limb-R-b.jpg",
-   "source": "out/work/e4/d3/dive-limb-R-b.png",
-   "kind": "note",
-   "label": "Mars dive 2449 to 2454 limb rows right half at full size with the limb hold: no dark line"
+   "time": "2026-11-23T14:13:30.355Z",
+   "file": "20261123141330355-sheet-mars-dive-draft-across.jpg",
+   "source": "out/work/handover/mars-dive-draft-across.png",
+   "kind": "sheet",
+   "label": "mars dive, every frame 2448 to 2459 (across T, frame 2454), draft tier",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "first": 2448,
+   "last": 2459,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T14:04:40.028Z",
-   "file": "20261123140440028-note-rise-2692-2711.jpg",
-   "source": "out/work/e4/d3/rise-2692-2711.png",
-   "kind": "note",
-   "label": "Mars rise 2692 to 2711 at 7f507d9, old globe: the patch shrinks and fades by 2705"
-  },
-  {
-   "time": "2026-11-23T14:04:39.369Z",
-   "file": "20261123140439369-note-mars-rise-draft-after.jpg",
-   "source": "out/work/handover/mars-rise-draft-after.png",
-   "kind": "note",
-   "label": "E4 draft at 7f507d9, Mars rise 2686 to 2697 on main's old globe: six sided patch from 2693 (plates not merged)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T14:04:38.705Z",
-   "file": "20261123140438705-note-mars-dive-draft-before.jpg",
+   "time": "2026-11-23T14:13:28.458Z",
+   "file": "20261123141328458-sheet-mars-dive-draft-before.jpg",
    "source": "out/work/handover/mars-dive-draft-before.png",
-   "kind": "note",
-   "label": "E4 draft at 7f507d9, Mars dive 2442 to 2453 on main's old globe: the picture comes in over plain ground (plates not merged)",
-   "stop": "mars"
+   "kind": "sheet",
+   "label": "mars dive, every frame 2442 to 2453 (before T, frame 2454), draft tier",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "first": 2442,
+   "last": 2453,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T14:01:55.192Z",
-   "file": "20261123140155192-sheet-mars-rise-top.jpg",
+   "time": "2026-11-23T14:12:35.666Z",
+   "file": "20261123141235666-sheet-mars-rise-top.jpg",
    "source": "out/work/handover/mars-rise-top.png",
    "kind": "sheet",
    "label": "mars rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 2685), place picture off, draft tier",
@@ -62,8 +67,8 @@
    "tier": "draft"
   },
   {
-   "time": "2026-11-23T14:01:32.809Z",
-   "file": "20261123140132809-sheet-mars-rise-draft-after.jpg",
+   "time": "2026-11-23T14:12:33.886Z",
+   "file": "20261123141233886-sheet-mars-rise-draft-after.jpg",
    "source": "out/work/handover/mars-rise-draft-after.png",
    "kind": "sheet",
    "label": "mars rise, every frame 2686 to 2697 (after T, frame 2685), draft tier",
@@ -71,6 +76,30 @@
    "segment": "mars.rise",
    "first": 2686,
    "last": 2697,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T14:12:32.043Z",
+   "file": "20261123141232043-sheet-mars-rise-draft-across.jpg",
+   "source": "out/work/handover/mars-rise-draft-across.png",
+   "kind": "sheet",
+   "label": "mars rise, every frame 2679 to 2690 (across T, frame 2685), draft tier",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "first": 2679,
+   "last": 2690,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T14:12:30.208Z",
+   "file": "20261123141230208-sheet-mars-rise-draft-before.jpg",
+   "source": "out/work/handover/mars-rise-draft-before.png",
+   "kind": "sheet",
+   "label": "mars rise, every frame 2673 to 2684 (before T, frame 2685), draft tier",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "first": 2673,
+   "last": 2684,
    "tier": "draft"
   }
  ]
