@@ -80,19 +80,30 @@ describe('the samples of a shutter that keeps a share of the film\'s shutter', (
 
 describe('the share of the shutter a frame keeps', () => {
   it('is all of it in every hold, terrain, travel and the ending, and in the dives and rises of a stop that does not hand over', () => {
+    // The segments this is about: every one that is not a dive or a rise that hands over. Where every stop hands over none of them is a
+    // dive or a rise, and the rest of the film is still held to the whole shutter.
+    const rest = config.segments.filter((s) => !moving.includes(s))
+    const left = plans.filter((p) => !p.handsOver && p.seg.rise).map((p) => p.id).sort()
     const kinds = new Set<string>()
     const covered = new Set<string>()
+    let seen = 0
     for (let f = 0; f < config.frameCount; f++) {
       if (hands(f)) continue
       const s = segmentAtFrame(f)
+      seen++
       kinds.add(s.kind)
       if (s.kind === 'dive' || s.kind === 'rise') covered.add(s.stop)
       expect(shutterScale(film, f)).toBe(1)
       expect(blurAllowed(film, f)).toBe(Infinity)
     }
-    for (const s of config.segments) expect(kinds.has(s.kind)).toBe(true)
-    expect([...covered].sort()).toEqual(plans.filter((p) => !p.handsOver && p.seg.rise).map((p) => p.id).sort())
-    expect(covered.size).toBeGreaterThan(0)
+    // Every frame outside a handover was looked at, and so was every kind of segment that has such frames.
+    expect(seen).toBeGreaterThan(0)
+    expect(seen).toBe(rest.reduce((a, s) => a + s.endFrame - s.firstFrame, 0))
+    expect([...kinds].sort()).toEqual([...new Set<string>(rest.map((s) => s.kind))].sort())
+    for (const s of config.segments) if (s.kind !== 'dive' && s.kind !== 'rise') expect(kinds.has(s.kind)).toBe(true)
+    // The dives and rises among them are those of the stops that do not hand over: all of those stops, and none where no such stop is left.
+    expect([...covered].sort()).toEqual(left)
+    expect(kinds.has('dive') || kinds.has('rise')).toBe(left.length > 0)
   })
   it('leaves the plan of every such frame the formula it was', () => {
     for (let f = 0; f < config.frameCount; f += 5) {
