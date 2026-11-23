@@ -1,71 +1,83 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-23T08:15:48.001Z",
+ "pushed": "2026-11-23T08:37:50.196Z",
  "head": "746fa898381b915151925f4a5df3ea942264957f",
- "note": "S2 four plates laid, top down sheet and steady dive on the globe side; seam at the edge of plate c still to fix",
+ "note": "M2 proofs in work: final plates, top down sheet, dense dive; fringe near the limb at 1296 to 1310 still open",
  "looks": [
+  {
+   "time": "2026-11-23T08:37:49.550Z",
+   "file": "20261123083749550-note-p5-twin-cmp.jpg",
+   "source": "out/work/venus/place/p5-twin-cmp.jpg",
+   "kind": "note",
+   "label": "venus place M2 frame 1349: globe side left, close picture right",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T08:37:48.961Z",
+   "file": "20261123083748961-note-p5-dense-1308.jpg",
+   "source": "out/work/venus/place/p5-dense-1308.jpg",
+   "kind": "note",
+   "label": "venus place M2 dive consecutive 1308 to 1331, globe side",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T08:37:48.371Z",
+   "file": "20261123083748371-note-p5-dense-1284.jpg",
+   "source": "out/work/venus/place/p5-dense-1284.jpg",
+   "kind": "note",
+   "label": "venus place M2 dive consecutive 1284 to 1307, globe side",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T08:37:47.805Z",
+   "file": "20261123083747805-note-m2-dive-sheet.jpg",
+   "source": "out/work/venus/place/m2-dive-sheet.jpg",
+   "kind": "note",
+   "label": "venus place M2 dive 12 frames on the steady path, globe side alone",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T08:37:47.179Z",
+   "file": "20261123083747179-note-m2-top-sheet.jpg",
+   "source": "out/work/venus/place/m2-top-sheet.jpg",
+   "kind": "note",
+   "label": "venus place M2 top down dive 12 frames, globe side alone, final plates",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T08:29:23.283Z",
+   "file": "20261123082923283-frame-m2-1440.jpg",
+   "source": "out/work/venus/place/same/m2-1440.png",
+   "kind": "frame",
+   "label": "venus.terrain frame 1440, draft tier",
+   "stop": "venus",
+   "segment": "venus.terrain",
+   "frame": 1440,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "2d9dda353bfd7b6d"
+  },
+  {
+   "time": "2026-11-23T08:28:15.829Z",
+   "file": "20261123082815829-frame-m2-1185.jpg",
+   "source": "out/work/venus/place/same/m2-1185.png",
+   "kind": "frame",
+   "label": "venus.hold frame 1185, draft tier",
+   "stop": "venus",
+   "segment": "venus.hold",
+   "frame": 1185,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "2d9dda353bfd7b6d"
+  },
   {
    "time": "2026-11-23T08:15:47.412Z",
    "file": "20261123081547412-note-p3-top-c.jpg",
    "source": "out/work/venus/place/p3-top-c.jpg",
    "kind": "note",
    "label": "top down 1324 to 1349 larger",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T08:15:46.862Z",
-   "file": "20261123081546862-note-p3-dive-sheet.jpg",
-   "source": "out/work/venus/place/p3-dive-sheet.jpg",
-   "kind": "note",
-   "label": "S3 the steady dive on the globe side alone, draft, every 8th frame. Known: a dark soft band with a straight edge left of the place at 1316 and 1324 (edge of plate c)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T08:15:46.232Z",
-   "file": "20261123081546232-note-p3-top-sheet.jpg",
-   "source": "out/work/venus/place/p3-top-sheet.jpg",
-   "kind": "note",
-   "label": "S2 top down dive sheet, globe side alone, draft, 12 frames 1260 to 1349, four nested plates a to d",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T07:56:59.389Z",
-   "file": "20261123075659389-note-guide-view.jpg",
-   "source": "out/work/venus/place/a/guide-view.jpg",
-   "kind": "note",
-   "label": "place plate a (24 deg), guide: globe's own look with the place in its centre",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T07:56:58.854Z",
-   "file": "20261123075658854-note-comp2-view.jpg",
-   "source": "out/work/venus/place/b/comp2-view.jpg",
-   "kind": "note",
-   "label": "place plate b (12.1 deg), composition led by the globe's own forms, tiles in work",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T07:56:58.307Z",
-   "file": "20261123075658307-note-plate-view.jpg",
-   "source": "out/work/venus/place/c/plate-view.jpg",
-   "kind": "note",
-   "label": "place plate c (6.1 deg), full plate",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T07:56:57.504Z",
-   "file": "20261123075657504-note-plate2-view.jpg",
-   "source": "out/work/venus/place/d/plate2-view.jpg",
-   "kind": "note",
-   "label": "place plate d (3.4 deg), full plate: fan laid back, dark deck behind the camera painted",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T07:38:32.628Z",
-   "file": "20261123073832628-note-sheet-dive.jpg",
-   "source": "out/work/venus/place/p2/sheet-dive.jpg",
-   "kind": "note",
-   "label": "S3 dive path, globe side, every 8th frame, draft, with an exposure ramp to dusk on the globe (gain 6): the ground about the place is now seen; plates still the rough fan of M1 with hard edges, sky and Sun not yet brought to the close side",
    "stop": "venus"
   }
  ]
