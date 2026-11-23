@@ -89,7 +89,7 @@ export class Plan extends StopPlan {
     return { position: a.origin.clone().addScaledVector(low.position.clone().applyQuaternion(a.frame), 1 / closeRadius), quaternion: a.frame.clone().multiply(low.quaternion), vfov: low.vfov }
   }
 
-  private above(kind: 'dive' | 'rise', time: number): Pose {
+  private aloft(kind: 'dive' | 'rise', time: number): Pose {
     const pose = kind === 'dive' ? this.hold(time - this.seg.hold.start) : this.after(time)
     const g = this.drawn(time).invert()
     return { position: pose.position.clone().applyQuaternion(g), quaternion: g.multiply(pose.quaternion), vfov: pose.vfov }
@@ -118,17 +118,17 @@ export class Plan extends StopPlan {
     const sin = Math.sqrt(Math.max(1 - d.w * d.w, 0))
     const turn = sin > 1e-12 ? new THREE.Vector3(d.x, d.y, d.z).multiplyScalar((2 * Math.atan2(sin, d.w)) / sin / (2 * e)) : new THREE.Vector3()
     const rateNear = (height(after) - height(before)) / (2 * e)
-    const rateFar = (height(this.above(kind, far + e)) - height(this.above(kind, far - e))) / (2 * e)
+    const rateFar = (height(this.aloft(kind, far + e)) - height(this.aloft(kind, far - e))) / (2 * e)
     const easeNear = w.easeNear / fps
     const easeFar = w.easeFar / fps
     const span = Math.abs(near - far)
-    const rise = kind === 'dive' ? height(pose) - height(this.above(kind, far)) : height(this.above(kind, far)) - height(pose)
+    const rise = kind === 'dive' ? height(pose) - height(this.aloft(kind, far)) : height(this.aloft(kind, far)) - height(pose)
     const first = kind === 'dive' ? rateFar : rateNear
     const last = kind === 'dive' ? rateNear : rateFar
     const eases: [number, number] = kind === 'dive' ? [easeFar, easeNear] : [easeNear, easeFar]
     const level = (rise - (first * eases[0]) / 2 - (last * eases[1]) / 2) / (span - eases[0] / 2 - eases[1] / 2)
     return (this.legs[kind] = {
-      lo: Math.min(near, far), hi: Math.max(near, far), from: kind === 'dive' ? height(this.above(kind, far)) : height(pose), rates: [first, level, last], eases, near, span, place, pose,
+      lo: Math.min(near, far), hi: Math.max(near, far), from: kind === 'dive' ? height(this.aloft(kind, far)) : height(pose), rates: [first, level, last], eases, near, span, place, pose,
       out: out(pose), seen: seen(pose), outRate: out(after).sub(out(before)).divideScalar(2 * e), seenRate: seen(after).sub(seen(before)).divideScalar(2 * e), turn,
     })
   }
@@ -148,7 +148,7 @@ export class Plan extends StopPlan {
     const l = this.leg(kind)
     const w = this.way[kind]
     const t = Math.min(Math.max(time, l.lo), l.hi)
-    const high = this.above(kind, t)
+    const high = this.aloft(kind, t)
     const log = this.heightAt(l, t)
     const ends = [this.heightAt(l, kind === 'dive' ? l.lo : l.hi), this.heightAt(l, l.near)]
     const k = glide((log - ends[0]!) / (ends[1]! - ends[0]!), w.blend[0], w.blend[1])
