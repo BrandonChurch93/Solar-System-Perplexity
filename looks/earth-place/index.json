@@ -1,9 +1,49 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-23T16:55:26.562Z",
+ "pushed": "2026-11-23T17:14:02.844Z",
  "head": "cdaaa89328e887996fbeb2f85cd815d6331d6213",
- "note": "16:57 glint trial 5: plate without its glint by view angle; patch gone at 1860 to 1876; clouds over the glint and a red tail still wrong",
+ "note": "glint trial 6 (light taken off per pixel, clouds kept) and the low plate angle trial for the level step of the rise",
  "looks": [
+  {
+   "time": "2026-11-23T17:14:02.207Z",
+   "file": "20261123171402207-note-look-1718-low-35-55-b.jpg",
+   "source": "out/work/earth/place/look-1718-low-35-55-b.jpg",
+   "kind": "note",
+   "label": "rise 2128 to 2134, low plate angle 35 left, 55 right: the pale film with an outline over the cloud field, a fault",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T17:14:01.580Z",
+   "file": "20261123171401580-note-look-1718-low-35-55-a.jpg",
+   "source": "out/work/earth/place/look-1718-low-35-55-a.jpg",
+   "kind": "note",
+   "label": "rise 2120 to 2126, low plate angle 35 left (level step 8.15 into 2124), 55 right (5.05): the pale film stays longer and shows its outline, not taken yet",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T17:14:00.975Z",
+   "file": "20261123171400975-note-look-1718-glint6-native.jpg",
+   "source": "out/work/earth/place/look-1718-glint6-native.jpg",
+   "kind": "note",
+   "label": "glint trial 6, native crops 1872 1876 1880, old left, new right",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T17:14:00.376Z",
+   "file": "20261123171400376-note-look-1718-glint6-dive-b.jpg",
+   "source": "out/work/earth/place/look-1718-glint6-dive-b.jpg",
+   "kind": "note",
+   "label": "glint trial 6, dive 1880 to 1892, old left, new right: the glint comes in by view angle",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T17:13:59.628Z",
+   "file": "20261123171359628-note-look-1718-glint6-dive-a.jpg",
+   "source": "out/work/earth/place/look-1718-glint6-dive-a.jpg",
+   "kind": "note",
+   "label": "glint trial 6, dive 1860 to 1876, old left, new right: the cream patch is gone, clouds and reef kept",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-23T16:55:25.139Z",
    "file": "20261123165525139-note-look-1657-glint5-native.jpg",
@@ -27,50 +67,6 @@
    "kind": "note",
    "label": "glint trial 5, draft 1860 1866 1872 1876, before left: the globe shows the plate without its glint while the camera is 45 degrees or more off the close camera's direction; cream patch gone; a red brown spot is left at 1872 and 1876, being cured",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T16:35:33.090Z",
-   "file": "20261123163533090-note-look-1640-glint-trial2.jpg",
-   "source": "out/work/earth/place/look-1640-glint-trial2.jpg",
-   "kind": "note",
-   "label": "glint trial 2, native crops 1866 1872 1880 2130, before left: the sea's change added as light: almost no change (mean 0.04 to 0.10 of 255), not a cure",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T16:35:32.300Z",
-   "file": "20261123163532300-note-look-1640-glint-trial3.jpg",
-   "source": "out/work/earth/place/look-1640-glint-trial3.jpg",
-   "kind": "note",
-   "label": "glint trial 3, native crops 1872 to 1884, before left: glint seen only from near the close camera's direction, the water clipped to one sea value: a dark flat hole with a white core, rejected",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T16:15:58.950Z",
-   "file": "20261123161558950-note-look-1617-rise-level.jpg",
-   "source": "out/work/earth/place/look-1617-rise-level.jpg",
-   "kind": "note",
-   "label": "rise 2116 to 2131 on a29f6f87: the level step the full handover tool fails (7.5 into 2124): pale place gives way to the saturated hold in 8 frames",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T16:15:58.121Z",
-   "file": "20261123161558121-note-look-1617-glint-trial.jpg",
-   "source": "out/work/earth/place/look-1617-glint-trial.jpg",
-   "kind": "note",
-   "label": "glint trial 1, native crops 1872 1880 1884 2130, before left, trial right: no rust inside the ellipse, but the cream turns mint; not taken yet",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T16:05:21.621Z",
-   "file": "20261123160521621-sheet-earth-rise-top.jpg",
-   "source": "out/work/handover/earth-rise-top.png",
-   "kind": "sheet",
-   "label": "earth rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 2100), place picture off, draft tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "first": 2100,
-   "last": 2174,
-   "tier": "draft"
   }
  ]
 }
