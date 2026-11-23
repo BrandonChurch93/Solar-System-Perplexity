@@ -1,20 +1,28 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-23T19:06:25.143Z",
+ "pushed": "2026-11-23T19:37:18.405Z",
  "head": "05a70f35fbe27a064149eac0755331eb589f1f65",
- "note": "memory cure: patches c and d leave the set; 2.5 percent of 1296 changes by 1.2 levels in the mean, G13 holds on 1286 to 1312",
+ "note": "Gate G11 and G15 PASS on my tree (web 332 MB, full 1299 MB): memory cure by light alone plates for a, b, d, patches c and d out; 1310 before and after; harness running",
  "looks": [
   {
-   "time": "2026-11-23T19:06:24.512Z",
-   "file": "20261123190624512-note-pc-1296.jpg",
-   "source": "../../../../tmp/v/pc-1296.png",
+   "time": "2026-11-23T19:37:17.413Z",
+   "file": "20261123193717413-note-m3-diff-1310.jpg",
+   "source": "../../../../tmp/v/m3-diff-1310.png",
    "kind": "note",
-   "label": "1296 x 0 to 457, y 507 to 1080: with patches c and d, without them, difference times 8 (memory cure, mail 324)",
+   "label": "1310 difference of the memory cure against the frame before, times 8",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T19:01:52.227Z",
-   "file": "20261123190152227-job-frame-01286.jpg",
+   "time": "2026-11-23T19:37:16.668Z",
+   "file": "20261123193716668-note-m3-zoom-1310.jpg",
+   "source": "../../../../tmp/v/m3-zoom-1310.png",
+   "kind": "note",
+   "label": "1310 x 1095 to 1335, y 751 to 901 at three times: left before the memory cure, right with levels a, b, d as light alone (colour from w and c)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T19:25:16.212Z",
+   "file": "20261123192516212-job-frame-01286.jpg",
    "source": "memory",
    "kind": "job",
    "label": "venus.dive frame 1286, draft tier, texels view, from the running g13f job",
@@ -27,32 +35,40 @@
    "job": "g13f"
   },
   {
-   "time": "2026-11-23T18:59:19.805Z",
-   "file": "20261123185919805-frame-f01560.jpg",
-   "source": "out/work/venus/place/m1/f01560.png",
+   "time": "2026-11-23T19:20:02.435Z",
+   "file": "20261123192002435-frame-f01550.jpg",
+   "source": "out/work/venus/place/m3/f01550.png",
    "kind": "frame",
-   "label": "venus.rise frame 1560, draft tier",
+   "label": "venus.rise frame 1550, draft tier",
    "stop": "venus",
    "segment": "venus.rise",
-   "frame": 1560,
+   "frame": 1550,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
    "engine": "e85c8d53a860dafc"
   },
   {
-   "time": "2026-11-23T18:57:55.491Z",
-   "file": "20261123185755491-frame-f01332.jpg",
-   "source": "out/work/venus/place/m1/f01332.png",
+   "time": "2026-11-23T19:19:11.067Z",
+   "file": "20261123191911067-frame-f01287.jpg",
+   "source": "out/work/venus/place/m3/f01287.png",
    "kind": "frame",
-   "label": "venus.dive frame 1332, draft tier",
+   "label": "venus.dive frame 1287, draft tier",
    "stop": "venus",
    "segment": "venus.dive",
-   "frame": 1332,
+   "frame": 1287,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
    "engine": "e85c8d53a860dafc"
+  },
+  {
+   "time": "2026-11-23T19:06:24.512Z",
+   "file": "20261123190624512-note-pc-1296.jpg",
+   "source": "../../../../tmp/v/pc-1296.png",
+   "kind": "note",
+   "label": "1296 x 0 to 457, y 507 to 1080: with patches c and d, without them, difference times 8 (memory cure, mail 324)",
+   "stop": "venus"
   },
   {
    "time": "2026-11-23T18:44:04.818Z",
@@ -74,22 +90,6 @@
    "source": "out/work/venus/place/v/ring-take-1-view.jpg",
    "kind": "note",
    "label": "venus wide ring (90 deg plate about the place), outpainting take 1 of 6: towers twice the size of level w and a soft halo at the rim of the centre, not kept",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T18:41:11.319Z",
-   "file": "20261123184111319-note-rise-4.jpg",
-   "source": "out/work/venus/place/r11/rise-4.jpg",
-   "kind": "note",
-   "label": "venus rise sheet 4 draft, same tree",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T18:41:10.314Z",
-   "file": "20261123184110314-note-dive-2.jpg",
-   "source": "out/work/venus/place/r11/dive-2.jpg",
-   "kind": "note",
-   "label": "venus dive 1284 to 1295 draft, exposure ramp earlier and tone contrast 0.55 (item 1 of mail 316), not committed yet",
    "stop": "venus"
   }
  ]
