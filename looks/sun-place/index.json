@@ -1,9 +1,61 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T11:37:46.568Z",
- "head": "2509dba21dd75477de085867164f3a0b640ed4ec",
- "note": "mail 250: event retimed so 60 and 90 sit in the approved shape, arcade lights up after the release, leading strands; three judged frames beside the approved image",
+ "pushed": "2026-11-23T11:58:25.017Z",
+ "head": "4e9bdc0291ebf903876a62f973b59547aaaab89a",
+ "note": "mail 253 point 2: gap between arcade and thrown arc filled (before and after); ground boiling first try is weak, cell maps being rebuilt",
  "looks": [
+  {
+   "time": "2026-11-23T11:58:24.427Z",
+   "file": "20261123115824427-note-y1-gap.jpg",
+   "source": "out/work/sun/life/y1-gap.jpg",
+   "kind": "note",
+   "label": "frozen camera, the gap as it was at 4e9bdc02 (thrown strands taken out of the arcade by 0.9)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T11:58:18.869Z",
+   "file": "20261123115818869-note-g1-ground4.jpg",
+   "source": "out/work/sun/life/g1-ground4.jpg",
+   "kind": "note",
+   "label": "ground, frozen camera, first try of the boiling cells: hardly any gain (change per frame 0.96 to 1.11), cause found in the cell maps, being rebuilt",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T11:58:18.270Z",
+   "file": "20261123115818270-note-g1-gap.jpg",
+   "source": "out/work/sun/life/g1-gap.jpg",
+   "kind": "note",
+   "label": "frozen camera, frames 36 and 42: the gap between arcade and thrown arc, before (hard dark band) and with the thrown strands taken out by half only",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T11:42:21.854Z",
+   "file": "20261123114221854-job-frame-00000.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "sun.terrain frame 0, final tier, nograin view, from the running measure job",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 0,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-23T11:38:52.100Z",
+   "file": "20261123113852100-frame-f360.jpg",
+   "source": "out/work/sun/chk/f360.png",
+   "kind": "frame",
+   "label": "sun.hold frame 360, final tier",
+   "stop": "sun",
+   "segment": "sun.hold",
+   "frame": 360,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8b9f780b26a50bc3"
+  },
   {
    "time": "2026-11-23T11:37:45.976Z",
    "file": "20261123113745976-note-y1-late3.jpg",
@@ -26,46 +78,6 @@
    "source": "out/work/sun/life/y1-event.jpg",
    "kind": "note",
    "label": "Camera frozen at the pose of 90, every 6th frame 0 to 66 (one take before the last lead values): foot, surge, flash, thrown arc out and back by 54",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T11:37:44.280Z",
-   "file": "20261123113744280-note-n4-six-top.jpg",
-   "source": "out/work/sun/life/n4-six-top.jpg",
-   "kind": "note",
-   "label": "Six consecutive frames 90 to 95 at native size, loop top, film camera, draft tier",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T11:37:43.726Z",
-   "file": "20261123113743726-note-n4-approved-loops.jpg",
-   "source": "out/work/sun/life/n4-approved-loops.jpg",
-   "kind": "note",
-   "label": "Mail 250 points 3 and 4: the loops at native size, approved beside frames 60 and 90. Leading strands brighter with a soft body, the others at 0.7. Loop mean level at 90: 79.6 against 76.2 approved; top of the loop 67.9 against 67.8",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T11:37:42.908Z",
-   "file": "20261123113742908-note-n4-approved4.jpg",
-   "source": "out/work/sun/life/n4-approved4.jpg",
-   "kind": "note",
-   "label": "Mail 250 point 3: approved close image beside frames 0, 60, 90 (film camera, draft tier), after the retime: surge up by 18, thrown arc open from 36 and down by about 55, arcade back in its rest shape by 57",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T11:21:30.608Z",
-   "file": "20261123112130608-note-stripes-ba.jpg",
-   "source": "out/work/sun/life/stripes-ba.png",
-   "kind": "note",
-   "label": "FAULT found and cured: the old wave on the penumbra fibres drew stripes two pixels wide at one sample a pixel (frames 10 to 80 and 100 to 170, also in the committed state); removed, the fibres carry clumps now",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T11:21:29.930Z",
-   "file": "20261123112129930-note-x5-event.jpg",
-   "source": "out/work/sun/life/x5-event.jpg",
-   "kind": "note",
-   "label": "the event, camera frozen, every 6th frame 0 to 114: foot at 6, surge at the top by 18, flash at 21 to 24, arc thrown beyond the loop top from 30, opens from 62, falls back along the legs",
    "stop": "sun"
   }
  ]
