@@ -1,9 +1,57 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-23T13:09:16.834Z",
+ "pushed": "2026-11-23T13:28:14.142Z",
  "head": "4b9faf39035ec151b2f43d5bfdb4d3f276d42ca2",
- "note": "earth: cloud field as bodies with cast shadows over every level, far zone of the plate gives way to the hold; pink flanks at the top corners still in these, fix in the render now",
+ "note": "earth: pink flanks gone (tone only on coloured sea), wedge blobs wiped, dot pattern off the hazy land; still wrong: cream glint patch, hold clouds at the lower left as soft blobs, band under the horizon soft at the left",
  "looks": [
+  {
+   "time": "2026-11-23T13:28:13.454Z",
+   "file": "20261123132813454-note-c-a.jpg",
+   "source": "out/work/earth/place/m3/c-a.jpg",
+   "kind": "note",
+   "label": "13:27 native crops: 2124 right, 2129 right, 2113 top right; 2129 top, 1900 top, 2113 top left (band under the horizon still soft at the left)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T13:28:12.778Z",
+   "file": "20261123132812778-note-p-2129.jpg",
+   "source": "out/work/earth/place/m3/p-2129.jpg",
+   "kind": "note",
+   "label": "13:27 earth 2129 draft: far cloud as bodies with shadows, no pink flanks, wedge blobs wiped, dots off the land",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T13:28:12.193Z",
+   "file": "20261123132812193-note-p-2124.jpg",
+   "source": "out/work/earth/place/m3/p-2124.jpg",
+   "kind": "note",
+   "label": "13:27 earth 2124 draft: far cloud as bodies with shadows, no pink flanks, wedge blobs wiped, dots off the land",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T13:28:11.573Z",
+   "file": "20261123132811573-note-p-2113.jpg",
+   "source": "out/work/earth/place/m3/p-2113.jpg",
+   "kind": "note",
+   "label": "13:27 earth 2113 draft: far cloud as bodies with shadows, no pink flanks, wedge blobs wiped, dots off the land",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T13:28:10.915Z",
+   "file": "20261123132810915-note-p-1900.jpg",
+   "source": "out/work/earth/place/m3/p-1900.jpg",
+   "kind": "note",
+   "label": "13:27 earth 1900 draft: far cloud as bodies with shadows, no pink flanks, wedge blobs wiped, dots off the land",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T13:28:09.553Z",
+   "file": "20261123132809553-note-p-1876.jpg",
+   "source": "out/work/earth/place/m3/p-1876.jpg",
+   "kind": "note",
+   "label": "13:27 earth 1876 draft: far cloud as bodies with shadows, no pink flanks, wedge blobs wiped, dots off the land",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-23T13:08:13.285Z",
    "file": "20261123130813285-note-p-2129.jpg",
@@ -18,60 +66,6 @@
    "source": "out/work/earth/place/m3/p-2124.jpg",
    "kind": "note",
    "label": "earth 2124 draft, cloud field as bodies, before the grey gate of the tone",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T13:08:11.834Z",
-   "file": "20261123130811834-note-p-1907.jpg",
-   "source": "out/work/earth/place/m3/p-1907.jpg",
-   "kind": "note",
-   "label": "earth 1907 draft, cloud field as bodies, before the grey gate of the tone",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T13:02:23.683Z",
-   "file": "20261123130223683-frame-t-1866.jpg",
-   "source": "out/work/earth/place/m3/t-1866.png",
-   "kind": "frame",
-   "label": "earth.dive frame 1866, draft tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1866,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6f5cd496b40446f2"
-  },
-  {
-   "time": "2026-11-23T12:51:58.471Z",
-   "file": "20261123125158471-note-lv24.jpg",
-   "source": "out/work/earth/place/tmp/lv24.jpg",
-   "kind": "note",
-   "label": "12:52 level 24 degrees with the field laid over the hold and the plate; field reads too dense and too grey, dots on dark land remain",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T12:51:57.761Z",
-   "file": "20261123125157761-note-f12-look.jpg",
-   "source": "out/work/earth/place/f12-look.jpg",
-   "kind": "note",
-   "label": "12:52 plate with the cloud field as bodies (left) and the low plate (right), top down, 12 degrees",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T12:35:48.258Z",
-   "file": "20261123123548258-note-field-laid-12h50.jpg",
-   "source": "out/work/earth/place/proof/field-laid-12h50.jpg",
-   "kind": "note",
-   "label": "12:50 the new far cloud laid out top down on a test ground (24 degrees, left) and a part of it at native size (right): bodies with lit sides and cast shadows, the field ends in bodies; not in the globe yet",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T12:27:43.493Z",
-   "file": "20261123122743493-note-field-takes-12h30.jpg",
-   "source": "out/work/earth/place/proof/field-takes-12h30.jpg",
-   "kind": "note",
-   "label": "12:30 new far cloud: two of four generated takes (top), their cut bodies with shadows on a test ground (lower left); the sky of the rise 2100 to 2118 with the Sun leaving by the turn (lower right)",
    "stop": "earth"
   }
  ]
