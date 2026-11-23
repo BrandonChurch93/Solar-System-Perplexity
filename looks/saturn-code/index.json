@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T08:46:28.006Z",
- "head": "1f7e9c17cfb8bb4618dc0ba127b5295ab131dd57",
- "note": "ladder four: contrast by scale now measured against both approved images; next thin signed lines in place of hard plateaus, then grain anchored in the plane",
+ "pushed": "2026-11-23T09:14:10.382Z",
+ "head": "747239c3f31a605973e98434b323e0e17c7cb488",
+ "note": "ice near the camera: grains in the sheet on Kepler rows, first pass, raised ice with parallax next",
  "looks": [
+  {
+   "time": "2026-11-23T09:14:09.798Z",
+   "file": "20261123091409798-note-look_ice1_nearleft.jpg",
+   "source": "../../../../tmp/v/look_ice1_nearleft.png",
+   "kind": "note",
+   "label": "near left at 2x, approved beside the film: grain in the sheet, first pass"
+  },
+  {
+   "time": "2026-11-23T09:14:09.118Z",
+   "file": "20261123091409118-note-look_3720_ice1.jpg",
+   "source": "../../../../tmp/v/look_3720_ice1.png",
+   "kind": "note",
+   "label": "3720 draft, first grains of ice in the sheet (too soft, too sparse yet)"
+  },
   {
    "time": "2026-11-23T08:46:27.445Z",
    "file": "20261123084627445-note-pair_mid.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/v/hold3.jpg",
    "kind": "note",
    "label": "hold 3465: approved hero, kept build on main, code scene now (red shadow edge and pale A ring are faults to mend)"
-  },
-  {
-   "time": "2026-11-23T08:18:43.169Z",
-   "file": "20261123081843169-note-v2_pair_nearleft.jpg",
-   "source": "../../../../tmp/v/v2_pair_nearleft.png",
-   "kind": "note",
-   "label": "native crop near left: approved left, film right (ladder second version)"
-  },
-  {
-   "time": "2026-11-23T08:18:42.441Z",
-   "file": "20261123081842441-note-ng_3720.jpg",
-   "source": "../../../../tmp/v/ng_3720.png",
-   "kind": "note",
-   "label": "3720 draft, ringlet ladder second version (too striped and too colourful near, too smooth mid; being reworked)"
   }
  ]
 }
