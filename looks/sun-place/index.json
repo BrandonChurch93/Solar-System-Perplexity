@@ -1,9 +1,31 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T07:23:22.207Z",
+ "pushed": "2026-11-23T07:54:47.240Z",
  "head": "43292488840a6cf245478002103dceaf6570819b",
- "note": "M1: camera solved, first plate on the globe, hold 360 and terrain 90 equal the kept stills; plate still a brown square, no levels between",
+ "note": "S2: the close ground function ported onto the globe, twin of frame 90 against the judged frame",
  "looks": [
+  {
+   "time": "2026-11-23T07:54:45.649Z",
+   "file": "20261123075445649-note-t90-crop.jpg",
+   "source": "out/work/sun/pl/t90-crop.jpg",
+   "kind": "note",
+   "label": "globe side at the twin of frame 90 (left) beside judged frame 90 (right): the globe now draws the close ground function itself; limb zone, fringe, loops and sky not yet matched",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T07:46:51.650Z",
+   "file": "20261123074651650-frame-f00192.jpg",
+   "source": "out/work/seq/192-193/f00192.png",
+   "kind": "frame",
+   "label": "sun.rise frame 192, draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 192,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "247ebad7e038ce06"
+  },
   {
    "time": "2026-11-23T07:23:21.606Z",
    "file": "20261123072321606-note-dive-a.jpg",
@@ -49,20 +71,6 @@
    "engine": "247ebad7e038ce06"
   },
   {
-   "time": "2026-11-23T07:11:47.503Z",
-   "file": "20261123071147503-frame-f00180.jpg",
-   "source": "out/work/seq/180-193/f00180.png",
-   "kind": "frame",
-   "label": "sun.rise frame 180, draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "frame": 180,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "247ebad7e038ce06"
-  },
-  {
    "time": "2026-11-23T06:55:37.118Z",
    "file": "20261123065537118-note-lay-view.jpg",
    "source": "out/work/sun/pl/lay-view.jpg",
@@ -77,20 +85,6 @@
    "kind": "note",
    "label": "S1 first check: globe from solved camera over close f90 (no plates yet)",
    "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T00:53:16.120Z",
-   "file": "20261123005316120-job-frame-03014.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "jupiter.dive frame 3014, final tier, from the running film job",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 3014,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "job": "film"
   }
  ]
 }
