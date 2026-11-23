@@ -1,9 +1,41 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T09:28:21.702Z",
+ "pushed": "2026-11-23T09:48:34.366Z",
  "head": "181401cc490fb42f272621cd6691e84b47407af0",
- "note": "228 before sheets and number: frozen camera mean abs change n to n+1 ground 1.94 loops 7.19 (90 on: ground 1.6 loops 1.9); first cell flow pass, penumbra wrong",
+ "note": "mail 228: ground v2 (made, not dragged) and loops life, frozen 90 to 96, before and after",
  "looks": [
+  {
+   "time": "2026-11-23T09:48:33.221Z",
+   "file": "20261123094833221-note-a5-ba.jpg",
+   "source": "out/work/sun/life/a5-ba.jpg",
+   "kind": "note",
+   "label": "mail 228 loops at frame 102, before and after",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T09:48:32.080Z",
+   "file": "20261123094832080-note-a6-diff.jpg",
+   "source": "out/work/sun/life/a6-diff.jpg",
+   "kind": "note",
+   "label": "mail 228 what changes, frozen: |91-90| x6 (left), |96-90| x2 (right)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T09:48:31.130Z",
+   "file": "20261123094831130-note-a6-spot.jpg",
+   "source": "out/work/sun/life/a6-spot.jpg",
+   "kind": "note",
+   "label": "mail 228 spot and loops, frozen pose 90: before 90 (top left), after 90, 93, 96. Beads on strand cores, penumbra beads on fixed fibres",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T09:48:30.295Z",
+   "file": "20261123094830295-note-a6-gran.jpg",
+   "source": "out/work/sun/life/a6-gran.jpg",
+   "kind": "note",
+   "label": "mail 228 ground v2, frozen pose 90: before 90 (top left), after 90, 93, 96. Cell cycle, dome, closing cells, flow cut to 0.35",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-23T09:28:04.871Z",
    "file": "20261123092804871-note-a1-crop90.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/sun/life/before/frozen6.jpg",
    "kind": "note",
    "label": "228 before: camera frozen at pose of frame 90, every 6th frame",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T09:28:02.375Z",
-   "file": "20261123092802375-note-every10.jpg",
-   "source": "out/work/sun/life/before/every10.jpg",
-   "kind": "note",
-   "label": "228 before: every 10th frame 0 to 170, draft, build 181401cc",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T09:13:41.056Z",
-   "file": "20261123091341056-note-chk-b.jpg",
-   "source": "out/work/sun/life/chk-b.jpg",
-   "kind": "note",
-   "label": "mail 228, tool: the cells found in the plate (first pass, edges still too straight in places)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T09:13:39.988Z",
-   "file": "20261123091339988-note-rv-216-217-crop.jpg",
-   "source": "out/work/sun/pl/rv-216-217-crop.jpg",
-   "kind": "note",
-   "label": "rise 216 and 217 at the review tier, middle of the frame at full size",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T09:13:38.563Z",
-   "file": "20261123091338563-note-rv-sheet.jpg",
-   "source": "out/work/sun/pl/rv-sheet.jpg",
-   "kind": "note",
-   "label": "rise 215 to 218 at the review tier, T is in 216",
    "stop": "sun"
   }
  ]
