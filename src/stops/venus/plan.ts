@@ -85,12 +85,13 @@ class VenusPlan extends StopPlan {
     return [side < 0 ? b : a, { tilt: (b.tilt - a.tilt) / dt, gap: (b.gap - a.gap) / dt }]
   }
 
-  twin(time: number, close: Pose): Pose {
+  // The similarity from the close scene onto the unit sphere of the globe: the engine's handover calls it as twin(closePose, time).
+  twin(close: Pose, time: number): Pose {
     const rot = this.turn(time).multiply(this.terrainFrame)
     return { position: close.position.clone().sub(deck.centre).divideScalar(deck.radius).applyQuaternion(rot), quaternion: rot.clone().multiply(close.quaternion), vfov: close.vfov }
   }
 
-  untwin(time: number, globe: Pose): Pose {
+  untwin(globe: Pose, time: number): Pose {
     const back = this.turn(time).multiply(this.terrainFrame).invert()
     return { position: globe.position.clone().applyQuaternion(back).multiplyScalar(deck.radius).add(deck.centre), quaternion: back.clone().multiply(globe.quaternion), vfov: globe.vfov }
   }
@@ -109,16 +110,16 @@ class VenusPlan extends StopPlan {
   override divePose(time: number, view: 'orbit' | 'terrain'): Pose {
     if (!this.steady) return super.divePose(time, view)
     const seg = this.seg.dive!
-    const globe = between(this.hold(time - this.seg.hold.start), this.twin(time, this.terrain(time - this.seg.terrain.start)), this.anchor(time), (time - seg.start) / (seg.end - seg.start), move.dive)
-    return view === 'orbit' ? globe : this.untwin(time, globe)
+    const globe = between(this.hold(time - this.seg.hold.start), this.twin(this.terrain(time - this.seg.terrain.start), time), this.anchor(time), (time - seg.start) / (seg.end - seg.start), move.dive)
+    return view === 'orbit' ? globe : this.untwin(globe, time)
   }
 
   // The rise as one move from the close view to the travel that follows.
   override risePose(time: number, view: 'orbit' | 'terrain'): Pose {
     if (!this.steady) return super.risePose(time, view)
     const seg = this.seg.rise
-    const globe = between(this.twin(time, this.terrain(time - this.seg.terrain.start)), this.after(time), this.anchor(time), (time - seg.start) / (seg.end - seg.start), move.rise)
-    return view === 'orbit' ? globe : this.untwin(time, globe)
+    const globe = between(this.twin(this.terrain(time - this.seg.terrain.start), time), this.after(time), this.anchor(time), (time - seg.start) / (seg.end - seg.start), move.rise)
+    return view === 'orbit' ? globe : this.untwin(globe, time)
   }
 
   // The plates and the exposure of the globe side: on is the weight of the plates, dusk the share (0 to 1,
@@ -136,7 +137,7 @@ class VenusPlan extends StopPlan {
   // The height of the steady dive at a time, whatever the film's path is.
   private steadyHeight(time: number): number {
     const seg = this.seg.dive!
-    return between(this.hold(time - this.seg.hold.start), this.twin(time, this.terrain(time - this.seg.terrain.start)), this.anchor(time), (time - seg.start) / (seg.end - seg.start), move.dive).position.length() - 1
+    return between(this.hold(time - this.seg.hold.start), this.twin(this.terrain(time - this.seg.terrain.start), time), this.anchor(time), (time - seg.start) / (seg.end - seg.start), move.dive).position.length() - 1
   }
 
   above(time: number, height: number, vfov: number): Pose {
@@ -159,7 +160,7 @@ class VenusPlan extends StopPlan {
       }
       if (pr.path) return { pose: this.divePose(time, pr.side), view: pr.side }
       const close = this.terrain(pr.tRel ?? time - this.seg.terrain.start)
-      return pr.side === 'terrain' ? { pose: close, view: 'terrain' } : { pose: this.twin(time, close), view: 'orbit' }
+      return pr.side === 'terrain' ? { pose: close, view: 'terrain' } : { pose: this.twin(close, time), view: 'orbit' }
     }
     const shot = super.dive(time)
     if (this.handsOver) return shot

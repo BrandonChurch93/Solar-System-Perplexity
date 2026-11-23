@@ -26,7 +26,7 @@ const rows = (kind: 'dive' | 'rise'): Row[] => {
   let before: { h: number; q: THREE.Quaternion } | null = null
   for (let f = seg.firstFrame - 1; f <= seg.endFrame; f++) {
     const time = t(f)
-    const p = f < seg.firstFrame ? (kind === 'dive' ? plan.hold(time - plan.seg.hold.start) : plan.twin(time, plan.terrain(time - plan.seg.terrain.start))) : f >= seg.endFrame ? (kind === 'dive' ? plan.twin(time, plan.terrain(time - plan.seg.terrain.start)) : plan.after(time)) : kind === 'dive' ? plan.divePose(time, 'orbit') : plan.risePose(time, 'orbit')
+    const p = f < seg.firstFrame ? (kind === 'dive' ? plan.hold(time - plan.seg.hold.start) : plan.twin(plan.terrain(time - plan.seg.terrain.start), time)) : f >= seg.endFrame ? (kind === 'dive' ? plan.twin(plan.terrain(time - plan.seg.terrain.start), time) : plan.after(time)) : kind === 'dive' ? plan.divePose(time, 'orbit') : plan.risePose(time, 'orbit')
     const back = globe.clone().invert().multiply(plan.turn(time).invert())
     const pos = p.position.clone().applyQuaternion(back)
     const fwd = new THREE.Vector3(0, 0, -1).applyQuaternion(p.quaternion).applyQuaternion(back)
@@ -42,7 +42,7 @@ const rows = (kind: 'dive' | 'rise'): Row[] => {
     const toCentre = Math.acos(THREE.MathUtils.clamp(fwd.dot(n.clone().negate()), -1, 1))
     const limb = Math.tan(Math.asin(1 / (1 + h)) - toCentre) / th
     const close = f >= seg.firstFrame && f < seg.endFrame ? (kind === 'dive' ? plan.divePose(time, 'terrain') : plan.risePose(time, 'terrain')) : null
-    const closeGap = close ? plan.twin(time, close).position.distanceTo(p.position) : 0
+    const closeGap = close ? plan.twin(close, time).position.distanceTo(p.position) : 0
     out.push({ frame: f, h, ratio: before ? h / before.h : 1, ahead: deg(Math.atan2(n.dot(head), n.dot(under))), right: deg(Math.asin(n.dot(right))), pitch: deg(Math.asin(fwd.dot(n))), roll: deg(Math.atan2(up.clone().cross(lvl).dot(fwd), up.dot(lvl))), vfov: p.vfov, sx: 0.5 + (d.x / -d.z / th / (16 / 9)) * 0.5, sy: 0.5 - (d.y / -d.z / th) * 0.5, range: d.length(), turnDeg, limb, closeGap })
     before = { h, q: p.quaternion.clone() }
   }
