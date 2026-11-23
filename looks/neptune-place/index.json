@@ -1,0 +1,108 @@
+{
+ "folder": "neptune-place",
+ "pushed": "2026-11-23T07:01:37.184Z",
+ "head": "0bea475b707996cdf71663096f87598b7f1fda2c",
+ "note": "S1: twin solved (place.json), horizon on horizon; first laybacks; plates not yet on the globe",
+ "looks": [
+  {
+   "time": "2026-11-23T07:01:33.989Z",
+   "file": "20261123070133989-note-lay-10.jpg",
+   "source": "out/work/nep/place/lay-10.jpg",
+   "kind": "note",
+   "label": "First layback of the close side onto the globe, 10 deg plate, north up, heading -30: left the picture, right green where sharp and red where stretched",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T07:01:30.860Z",
+   "file": "20261123070130860-note-twin-pair0.jpg",
+   "source": "out/work/nep/place/twin-pair0.jpg",
+   "kind": "note",
+   "label": "S1 first check, before any plate: globe side from the twin (top, frame 4769 forced to the twin of 4860) over the close side at 4860. Horizon sits on horizon; the ground is still the old level 10",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T06:59:02.855Z",
+   "file": "20261123065902855-frame-twin-close.jpg",
+   "source": "out/work/nep/place/twin-close.png",
+   "kind": "frame",
+   "label": "neptune.terrain frame 4860, draft tier",
+   "stop": "neptune",
+   "segment": "neptune.terrain",
+   "frame": 4860,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "247ebad7e038ce06"
+  },
+  {
+   "time": "2026-11-23T06:57:33.788Z",
+   "file": "20261123065733788-frame-twin-globe.jpg",
+   "source": "out/work/nep/place/twin-globe.png",
+   "kind": "frame",
+   "label": "neptune.dive frame 4769, draft tier",
+   "stop": "neptune",
+   "segment": "neptune.dive",
+   "frame": 4769,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "247ebad7e038ce06"
+  },
+  {
+   "time": "2026-11-23T00:31:39.747Z",
+   "file": "20261123003139747-job-frame-04981.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "neptune.rise frame 4981, final tier, from the running film job",
+   "stop": "neptune",
+   "segment": "neptune.rise",
+   "frame": 4981,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "job": "film"
+  },
+  {
+   "time": "2026-11-22T23:56:25.998Z",
+   "file": "20261122235625998-job-frame-04876.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "neptune.terrain frame 4876, final tier, from the running film job",
+   "stop": "neptune",
+   "segment": "neptune.terrain",
+   "frame": 4876,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "job": "film"
+  },
+  {
+   "time": "2026-11-22T23:40:50.627Z",
+   "file": "20261122234050627-job-frame-04442.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.rise frame 4442, final tier, from the running film job",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4442,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "job": "film"
+  },
+  {
+   "time": "2026-11-22T23:19:06.166Z",
+   "file": "20261122231906166-job-frame-04199.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.dive frame 4199, final tier, from the running film job",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4199,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "job": "film"
+  }
+ ]
+}
