@@ -160,16 +160,16 @@ Measured in `tests/globe-gl.test.ts` (camera 3 radii out, glow direction 26.6 de
 Asked by the Mars builder: the lit levels change with height (descent tint) and the close view at the rise is brighter than at the dive, and a baked plate cannot follow either. With `ownGain: true` in the patch set the last line of section 1 reads
 
 ```
-if own > 0: col = mix(col, inverseFilmic(ownSum / own * uOwnGain), own)
+if own > 0: col = mix(col, inverseFilmic(ownSum / own) * uOwnGain, own)
 ```
 
-The gain multiplies the look values of the own levels (the texel after its sRGB decode, linear) before they become scene values. A gain of 2 is one stop: it doubles the linear value of the plate, which is about 1.37 times its 8 bit level. It starts at 1 1 1. The stop sets it each frame with `planet.setOwnGain([r, g, b])`; the numbers and their curve by height live in the stop's params. `inverseFilmic` clamps its input at 0.985, so a gain cannot push a texel past the white of the film. Pixels with no own share (`own` is 0) do not read the gain.
+The gain multiplies the scene value of the own levels, after `inverseFilmic`, as a straight factor, the way `uTint` multiplies the lit levels (`lin * shade * uTint`). So an own level with gain g and the lit level under it with tint g move together, and a factor the stop sets is the factor the ground gets. It starts at 1 1 1. The stop sets it each frame with `planet.setOwnGain([r, g, b])`; the numbers and their curve by height live in the stop's params. Pixels with no own share (`own` is 0) do not read the gain.
+
+First form, on main from 3d61ec53 and replaced here: `inverseFilmic(ownSum / own * uOwnGain)`, the gain on the texel before the curve. The Mars builder found it wrong in use: the curve is steep, so 1.5 on a look of 0.3 gave 0.58 where 0.45 was wanted, and an own level only agreed with the lit level under it at gain 1. No stop on main sets `ownGain` (checked at main fdf97b84), so the change of form moves no frame of main; it moves the frames of a branch that sets a gain other than 1.
 
 Off: a set with own levels and no `ownGain` keeps the text it had (sha256 `813ceb84...`, held by `tests/globe-levels.test.ts`), with no uniform added; a set with no option keeps `81b01893...`. `ownGain: true` without an own level throws `ownGain needs an own level`; `setOwnGain` on a planet without the option throws `this planet has no own gain`.
 
-Measured in `tests/globe-gl.test.ts` (128 pixel row through an own level of 30 degrees over a lit level): gain 1 1 1 gives the pixels of the build without the option, exactly; a linear texel 77 64 102 with gain 2 1 0.5 gives the pixels of the linear texel 154 64 51 without gain to 1e-5 over the whole row, feather included; the pixels the own level does not reach are exactly those of the lit level alone.
-
-On a picture (scratch worktree with the plates of `agent/mars-place` 41d7784, never committed): Mars 2448 `beauty/side=orbit/noplace`, draft. With `ownGain: true` and no call of the setter the still has the bytes of the still without the option (sha256 `e22bb9c4...`). With 1.5 1.5 1.5 on every frame 97.6 percent of the ground pixels change, mean 82.7 60.2 48.5 to 94.1 66.6 53.7 of 255 (the haze over the ground is not gained); with 1.0 1.25 1.5 the mean goes from 83.5 60.6 48.8 to 83.5 64.1 54.1. Look `pair-gain-f2448`.
+Measured in `tests/globe-gl.test.ts` (128 pixel row through an own level of 30 degrees over a lit level): gain 1 1 1 gives the pixels of the build without the option, exactly; with gain 2 1 0.5 the centre pixel is the scene value of the texel times the gain to 1e-5; the channel with gain 1 keeps its values exactly; across the feather the other two channels move by `w * scene * (gain - 1)` to 1e-4 with `w` the weight read from the channel with gain 1; the pixels the own level does not reach are exactly those of the lit level alone.
 
 ## Proof with the options off
 
@@ -185,3 +185,4 @@ Draft stills `out/work/stills/f%05d-16x9-draft-full.png`, sha256, frames 360 (su
 - MAIL 255 item 2: fadeMinor off and on with the real plates of `agent/mars-place` 41d7784 at Mars 2448 and 2704 (section 2, last part). Nothing of the Mars stop was changed in this branch. Merged main 03510ddd.
 - Options off after the merge of main 03510ddd: the 11 draft stills at f6dcf002 are byte equal to the same frames rendered at main 03510ddd. Main itself differs from the references of `412d2d09` at frame 2427 only (the Mars dive of the handover engine). `npx vitest run`: 76 files, 160 tests green.
 - Gain of the own levels (section 6), asked by the Mars builder. `npx vitest run`: 76 files, 162 tests green (one more in `tests/globe-levels.test.ts`, one more in `tests/globe-gl.test.ts`). Options off: the 11 draft stills are byte equal to the same frames of main 03510ddd.
+- Gain of the own levels moved from the texel to the scene value (section 6), asked by the Mars builder. `npx vitest run`: 82 files, 180 tests green. Options off: the 11 draft stills are byte equal to the same frames of main fdf97b84. On `agent/mars-place` 8b7c9a40 with this planet shader in a scratch worktree (`beauty/side=orbit/noplace`, draft): frame 2448, where that stop's gain is 1, keeps its bytes (sha256 `1e19db65...`); frame 2426 changes on 810912 of 2073600 pixels, by at most 4 of 255, mean 106.82 69.34 53.78 to 107.27 69.80 54.18.
