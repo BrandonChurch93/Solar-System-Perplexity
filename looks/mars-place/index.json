@@ -1,9 +1,41 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-23T22:32:30.447Z",
- "head": "f08fa7cf5e50a4b72f670e365aa6524ed6045c25",
- "note": "plan F: country heights by code from the plate's light, joined to the mesh heights",
+ "pushed": "2026-11-23T22:53:34.003Z",
+ "head": "632d744175eea966ca502244f425afeafe2e8096",
+ "note": "first bake of the heights c49c7dd5: pyramid beside plates, map grid, tool still 2442 with old colour",
  "looks": [
+  {
+   "time": "2026-11-23T22:53:33.443Z",
+   "file": "20261123225333443-note-t2442.jpg",
+   "source": "out/work/place/see/t2442.png",
+   "kind": "note",
+   "label": "tool still, frame 2442 old curve: the height pyramid drawn as real ground through the film camera, colour still the old flat plates",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T22:53:32.913Z",
+   "file": "20261123225332913-note-grid6.jpg",
+   "source": "out/work/place/country/grid6.jpg",
+   "kind": "note",
+   "label": "the globe's own map at the spot on a half degree grid: the trough the canyon is carried on along",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T22:53:32.366Z",
+   "file": "20261123225332366-note-c-near.jpg",
+   "source": "out/work/place/country/c-near.jpg",
+   "kind": "note",
+   "label": "heights of the country, plates 0.7 and 0.3: plate beside the shaded heights",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T22:53:31.807Z",
+   "file": "20261123225331807-note-c-all.jpg",
+   "source": "out/work/place/country/c-all.jpg",
+   "kind": "note",
+   "label": "heights of the country, plates 8.5, 3.8, 1.6: plate beside the shaded heights (first bake c49c7dd5)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-23T22:32:29.878Z",
    "file": "20261123223229878-note-see.jpg",
@@ -35,47 +67,6 @@
    "kind": "note",
    "label": "The place from straight above at 0.3, 0.7, 1.6, 3.8 degrees: top heights rasterised from the meshes (white 0 km plateau, dark canyon to 7 km deep, blue never seen by the picture's eye), bottom the picture's colour at its true place",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T22:25:52.184Z",
-   "file": "20261123222552184-note-cam-high.jpg",
-   "source": "out/work/place/height/cam-high.jpg",
-   "kind": "note",
-   "label": "The same meshes from higher up, native 700 px crops of 2416, 2420, 2424, 2427: the far field is a pale fan of streaks, only the canyon at its point is ground",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T22:25:51.626Z",
-   "file": "20261123222551626-note-cam-all.jpg",
-   "source": "out/work/place/height/cam-all.jpg",
-   "kind": "note",
-   "label": "The close view's own meshes (no aprons, no globe, blue is nothing) drawn in their place on the globe and seen by the dive camera of 2430, 2436, 2442, 2448, 2454: real relief from 0.031 radii down",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T22:15:02.100Z",
-   "file": "20261123221502100-compare-mars-dive-under.jpg",
-   "source": "out/work/handover/mars-dive-under.png",
-   "kind": "compare",
-   "label": "mars dive, the globe side at T (frame 2454) with the place picture, alone, and their difference times 4",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2454,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T22:10:11.877Z",
-   "file": "20261123221011877-job-frame-02537.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "mars.terrain frame 2537, draft tier, texels view, from the running measure job",
-   "stop": "mars",
-   "segment": "mars.terrain",
-   "frame": 2537,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
   }
  ]
 }
