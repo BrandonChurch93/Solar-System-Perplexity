@@ -1,9 +1,23 @@
 {
  "folder": "belt",
- "pushed": "2026-11-24T15:07:02.745Z",
+ "pushed": "2026-11-24T15:21:14.553Z",
  "head": "c0a7f5ef8ffc52f7117af5080565727274309e15",
- "note": "far Sun tries at 615: veil cut outside 1.1 R, loop gold and denser, limb and tufts still open",
+ "note": "far Sun tries at 615: crisper limb, rope loop, leaning streamer in work",
  "looks": [
+  {
+   "time": "2026-11-24T15:21:13.617Z",
+   "file": "20261124152113617-note-v_loop_n24.jpg",
+   "source": "../../../../tmp/farsun/v_loop_n24.jpg",
+   "kind": "note",
+   "label": "far Sun 615 loop region 2x, approved left, try n24 right; the orange dot is in Mercury's sky card, not the far Sun"
+  },
+  {
+   "time": "2026-11-24T15:21:12.667Z",
+   "file": "20261124152112667-note-v_box_n24.jpg",
+   "source": "../../../../tmp/farsun/v_box_n24.jpg",
+   "kind": "note",
+   "label": "far Sun 615 draft try n24, approved left, mine right, blurred mean 4.34, not named: limb crisper, loop as a twisted rope in gold"
+  },
   {
    "time": "2026-11-24T15:07:01.071Z",
    "file": "20261124150701071-note-v_loop_n19.jpg",
@@ -48,22 +62,6 @@
    "source": "../../../../tmp/farsun/out/farsun-615-strands-12-draft.jpg",
    "kind": "note",
    "label": "far Sun frame 615 draft, strands native: approved, d263ad28, c0a7f5ef",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T14:39:55.064Z",
-   "file": "20261124143955064-note-farsun-495-before-after-12.jpg",
-   "source": "../../../../tmp/farsun/out/farsun-495-before-after-12.jpg",
-   "kind": "note",
-   "label": "far Sun frame 495 draft native: d263ad28 left, c0a7f5ef right",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T14:39:53.949Z",
-   "file": "20261124143953949-note-farsun-713-12-corner.jpg",
-   "source": "../../../../tmp/farsun/out/farsun-713-12-corner.jpg",
-   "kind": "note",
-   "label": "far Sun c0a7f5ef frame 713 draft, corner native",
    "stop": "sun"
   }
  ]
