@@ -345,3 +345,12 @@ Round 34 build: main 89ced51b, engine 096721f26986d35a. Round 35 takes only take
   - In angles or in texels of the map: the Sun's disc, core and corona, the band's detail layer and dust (noise in the sky's direction), the fixed levels (`textureLod(uSky, uv, 1.0)`, `uCrowd.y`, `log2(textureSize) - c`). The galaxies are in the sky map alone, no term of their own.
   - No picture: `STAR_CULL_PAD_PX` 4, a margin of the cull in buffer pixels beyond the sprite.
   - Not mine: the post grain (`src/post/chain.ts`) is a hash of the buffer pixel and the frame.
+
+### MAIL 545 and RULE d193 (Nov 24, 06:18 to 06:40 UTC): the sky's pixel factor comes from `src/core/frame.ts`
+
+- MAIL 467 is on main inside the engine take f6ce51a5 (the Builder squashed it; fb501fc4 itself is not an ancestor of main). Main merged into the branch (5e977372); the tree of the merge is main's tree.
+- The owed swap (MAIL 513: a commit of its own once the helper is on main; MAIL 520 named the helper and the rule): the five writes `uPixel = height / 1080` in `Sky.render` and the half sprite of the cull in `orderStars` now read `bufferFrame()`. No number of mine is left that divides by 1080; the 540 of `perRad` and `uSunHalf` are half the master's height, pixels of the 1080 line picture by design.
+- Why `bufferFrame()` and not the shared `frameUniform` object: it is what the globe and the far point read, and it is right if the sky is ever drawn inside a place picture pass (there the engine sets the pass scale). Today the sky is drawn only by `Sky.render` on the frame's own buffer, after `setPass(1)`, so both are the format height over the master's, the same division with the same bits as before.
+- A caller of `Sky.render` outside the engine (`tests/skylift-gl.test.ts`) draws at 1080 lines with the factor at its start value 1. A caller at another height calls `setFrame(height, master)` first.
+- Not mine and still its own `height / 1080`: `src/space/dust.ts` line 182.
+- Proof, sha256 of the draft PNG on the merge of main f6ce51a5 before and after the swap: 16 by 9 frames 495, 1072, 2325, 3874, 4436, 5085, 5235 equal; uhd frames 1072 and 4436 equal. No frame of the film changes its bytes in either format.
