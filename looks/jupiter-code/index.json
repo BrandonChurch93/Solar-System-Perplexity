@@ -1,49 +1,59 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T02:34:30.093Z",
- "head": "f2375d2eed681be8fb2580464477ade7c4720a01",
- "note": "02:36 UTC. Cure of the hold's beat committed and pushed (57d663b99, head 77ccb4e22 on main f2375d2ee); reported. HEAD in this record is a local proof tree (the cure picked alone onto main), its draft, final and capture renders are running. Next: the grain cure of the hold sky (MAIL 448).",
+ "pushed": "2026-11-24T02:58:46.083Z",
+ "head": "77ccb4e224937362825f920e5bbf8477373b27c8",
+ "note": "Pictures of the scratch proof a7b14ec18 (main f2375d2ee plus the pick of 57d663b99), not of the branch head: drafts 2980 and 2990 old sky file against new. Last picture: dry run for MAIL 448, nothing committed.",
  "looks": [
   {
-   "time": "2026-11-24T02:34:28.702Z",
-   "file": "20261124023428702-note-hold-curve-cure.jpg",
-   "source": "../work/m427/hold-curve-cure.png",
+   "time": "2026-11-24T02:58:45.528Z",
+   "file": "20261124025845528-note-dry-web-diff-x16-small.jpg",
+   "source": "../work/g448/dry-web-diff-x16-small.jpg",
    "kind": "note",
-   "label": "MAIL 427, the hold at capture rate 2: change between capture frames before the cure and with the committed cure 57d663b99",
+   "label": "MAIL 448 dry run only: what taking the grain out would change in the web hold sky file, 16 times, grey is no change (not committed)",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-24T02:34:12.947Z",
-   "file": "20261124023412947-frame-f03059.jpg",
-   "source": "out/work/jupiter/frames/cmo/f03059.png",
+   "time": "2026-11-24T02:58:44.988Z",
+   "file": "20261124025844988-note-pick2990-left.jpg",
+   "source": "../work/m427/pick2990-left.jpg",
+   "kind": "note",
+   "label": "draft 2990, main against main plus the pick, left strip at full size",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T02:58:44.463Z",
+   "file": "20261124025844463-note-pick2980-topright.jpg",
+   "source": "../work/m427/pick2980-topright.jpg",
+   "kind": "note",
+   "label": "draft 2980, main against main plus the pick, top right at full size",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T02:58:43.912Z",
+   "file": "20261124025843912-note-pick2980-topleft.jpg",
+   "source": "../work/m427/pick2980-topleft.jpg",
+   "kind": "note",
+   "label": "draft 2980, main against main plus the pick of the sky cure, top left at full size",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T02:52:18.300Z",
+   "file": "20261124025218300-frame-f02997.jpg",
+   "source": "out/work/jupiter/frames/cmnf/f02997.png",
    "kind": "frame",
-   "label": "jupiter.dive frame 3059, draft tier",
+   "label": "jupiter.dive frame 2997, final tier",
    "stop": "jupiter",
    "segment": "jupiter.dive",
-   "frame": 3059,
-   "tier": "draft",
+   "frame": 2997,
+   "tier": "final",
    "format": "16x9",
    "diag": "beauty",
    "engine": "3cf61f9941bc58c9"
   },
   {
-   "time": "2026-11-24T02:32:40.047Z",
-   "file": "20261124023240047-frame-f02789.jpg",
-   "source": "out/work/jupiter/frames/cmo/f02789.png",
-   "kind": "frame",
-   "label": "mars.travel frame 2789, draft tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "frame": 2789,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "3cf61f9941bc58c9"
-  },
-  {
-   "time": "2026-11-24T02:18:38.325Z",
-   "file": "20261124021838325-frame-f02895.jpg",
-   "source": "out/work/jupiter/frames/m2f/f02895.png",
+   "time": "2026-11-24T02:49:24.746Z",
+   "file": "20261124024924746-frame-f02895.jpg",
+   "source": "out/work/jupiter/frames/cmnf/f02895.png",
    "kind": "frame",
    "label": "jupiter.hold frame 2895, final tier",
    "stop": "jupiter",
@@ -55,42 +65,32 @@
    "engine": "3cf61f9941bc58c9"
   },
   {
-   "time": "2026-11-24T02:12:12.898Z",
-   "file": "20261124021212898-frame-f03240.jpg",
-   "source": "out/work/jupiter/frames/m2d/f03240.png",
+   "time": "2026-11-24T02:48:07.151Z",
+   "file": "20261124024807151-frame-f03315.jpg",
+   "source": "out/work/jupiter/frames/cmn/f03315.png",
    "kind": "frame",
-   "label": "jupiter.rise frame 3240, draft tier",
+   "label": "jupiter.travel frame 3315, draft tier",
    "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3240,
+   "segment": "jupiter.travel",
+   "frame": 3315,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
    "engine": "3cf61f9941bc58c9"
   },
   {
-   "time": "2026-11-24T02:06:59.374Z",
-   "file": "20261124020659374-note-final2997-old-q97-left.jpg",
-   "source": "../work/m427/final2997-old-q97-left.jpg",
-   "kind": "note",
-   "label": "final 2997, left strip x 0 to 300: on main, with the cure, difference times 12 (only stars in the corners change)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T02:06:58.837Z",
-   "file": "20261124020658837-note-final2895-old-q97-3x.jpg",
-   "source": "../work/m427/final2895-old-q97-3x.jpg",
-   "kind": "note",
-   "label": "final 2895 at 3 times size, two places in the sky: on main (left), with the cure (right)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T02:06:58.298Z",
-   "file": "20261124020658298-note-final2895-old-q97.jpg",
-   "source": "../work/m427/final2895-old-q97.jpg",
-   "kind": "note",
-   "label": "final 2895, sky right of the planet: on main (left), with the cure as committed (right)",
-   "stop": "jupiter"
+   "time": "2026-11-24T02:45:46.506Z",
+   "file": "20261124024546506-frame-f02789.jpg",
+   "source": "out/work/jupiter/frames/cmn/f02789.png",
+   "kind": "frame",
+   "label": "mars.travel frame 2789, draft tier",
+   "stop": "mars",
+   "segment": "mars.travel",
+   "frame": 2789,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "3cf61f9941bc58c9"
   }
  ]
 }
