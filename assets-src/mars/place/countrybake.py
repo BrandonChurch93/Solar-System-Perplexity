@@ -35,7 +35,7 @@ for level in C['levels']:
     levels.append({'height': 'country-%s.bin' % name, 'seen': 'country-%s-seen.png' % name, 'widthDeg': W, 'size': SIZES, 'low': low, 'high': high})
     print('%s: %g deg, %.2f to %.2f km, low %.5f high %.5f radii' % (name, W, h.min() * 3389.5, h.max() * 3389.5, low, high))
 doc = {
-    'note': 'The heights of the country round the place, coarse to fine (assets-src/mars/place/country.py, countrybake.py). Square gnomonic plates about patches.spot, north up, the frame of the colour plates of the same width. height: raw little endian uint16, row major, row 0 at the north edge; radii over the unit sphere = low + v / 65535 * (high - low). In a band of edgeShare of its width at its border each level is the next coarser one; the outermost is 0 on its edge. seen: 255 where the height is the close view\'s own mesh as it is.',
+    'note': 'The heights of the country round the place, coarse to fine (assets-src/mars/place/country.py, countrybake.py). Square gnomonic plates about patches.spot, north up, the frame of the colour plates of the same width. height: raw little endian uint16, row major, row 0 at the north edge; radii over the unit sphere = low + v / 65535 * (high - low). In a band of edgeShare of its width at its border each level is the next coarser one; the outermost is 0 on its edge. seen: 255 where the ground is the close view\'s own mesh; its heights are as they are except that no slope is steeper than slopeMost (plates.json, country), so that no two neighbours of a level differ by more than slopeMost texel widths.',
     'edgeShare': C['edgeShare'],
     'levels': levels,
 }

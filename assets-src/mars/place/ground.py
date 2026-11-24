@@ -98,6 +98,46 @@ def lower_under_sight(height, made, dirs, eye, step_km=0.05, passes=200, clear=1
     return out, low, count, left
 
 
+def _under(h, step, axis):
+    """The highest function under h along one axis whose neighbours differ by at most step."""
+    n = h.shape[axis]
+    shape = [1, 1]
+    shape[axis] = n
+    ramp = (np.arange(n, dtype=np.float32) * step).reshape(shape)
+    a = np.minimum.accumulate(h - ramp, axis=axis) + ramp
+    b = np.flip(np.minimum.accumulate(np.flip(h + ramp, axis=axis), axis=axis), axis=axis) - ramp
+    return np.minimum(a, b)
+
+
+def _under_diagonal(h, step, flip):
+    n, m = h.shape
+    x = h[:, ::-1] if flip else h
+    sk = np.full((n, m + n), np.inf, np.float32)
+    ii = np.arange(n)[:, None]
+    jj = np.arange(m)[None, :]
+    sk[ii, jj + ii] = x
+    sk = _under(sk, step, 0)
+    out = sk[ii, jj + ii]
+    return out[:, ::-1] if flip else out
+
+
+def cone_under(h, step):
+    """The highest function under h that no cone of the slope step per texel pierces from above (eight directions:
+    rows, columns and both diagonals, each exact in one pass since the four are laid one into the other)."""
+    out = _under(_under(h.astype(np.float32), step, 0), step, 1)
+    d = step * np.float32(np.sqrt(2))
+    return _under_diagonal(_under_diagonal(out, d, False), d, True)
+
+
+def hold_slope(h, step):
+    """Heights whose slope is nowhere more than step per texel: the mean of the highest such ground under h and the
+    lowest such ground over it. Ground that is under the limit already is left as it is; a wall becomes a slope of
+    the limit centred on the wall."""
+    low = cone_under(h, step)
+    high = -cone_under(-h, step)
+    return (0.5 * (low + high)).astype(np.float32)
+
+
 def light(img):
     g = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY).astype(np.float32) / 255
     return np.log(np.maximum(g, 0.02))
@@ -140,12 +180,31 @@ def shaded(height, deg, bearing_deg=175.0, up=0.38):
     return np.clip(grey * shade, 0, 1)
 
 
-def trough(x, y, axis, floor_km, half_floor, wall, fall_from, fall_to):
+def lattice_noise(u, v, seed, shape=(1024, 64)):
+    """Smooth noise from a fixed table of numbers (seeded, so the same at every level and every run): -1 to 1 at
+    table coordinates u, v, wrapped."""
+    table = np.random.RandomState(seed).rand(*shape).astype(np.float32) * 2 - 1
+    u0 = np.floor(u).astype(np.int64)
+    v0 = np.floor(v).astype(np.int64)
+    fu = (u - u0).astype(np.float32)
+    fv = (v - v0).astype(np.float32)
+    fu = fu * fu * (3 - 2 * fu)
+    fv = fv * fv * (3 - 2 * fv)
+    a0, a1 = u0 % shape[0], (u0 + 1) % shape[0]
+    b0, b1 = v0 % shape[1], (v0 + 1) % shape[1]
+    return (table[a0, b0] * (1 - fu) + table[a1, b0] * fu) * (1 - fv) + (table[a0, b1] * (1 - fu) + table[a1, b1] * fu) * fv
+
+
+def trough(x, y, axis, floor_km, half_floor, wall, fall_from, fall_to, wander=None, gullies=None):
     """A canyon along a line of points (degrees east and north of the spot): height in km (negative) at x, y.
-    Flat floor, sloped walls; the depth falls off with the length along the line."""
+    Flat floor, sloped walls; the depth falls off with the length along the line. wander: the two rims run in and
+    out along the length by sums of sines of fixed lengths and phases (one set a side), and the floor rises and
+    falls a little, so the canyon is not a tube; gullies: spurs and gullies on the walls. All of it a function of the
+    place alone."""
     best = np.full(x.shape, np.inf, np.float32)
-    along = np.zeros(x.shape, np.float32)
+    side = np.zeros(x.shape, np.float32)
     run = 0.0
+    parts = []
     for (ax, ay), (bx, by) in zip(axis[:-1], axis[1:]):
         dx, dy = bx - ax, by - ay
         ln = float(np.hypot(dx, dy))
@@ -153,10 +212,43 @@ def trough(x, y, axis, floor_km, half_floor, wall, fall_from, fall_to):
         dist = np.hypot(x - ax - t * dx, y - ay - t * dy)
         nearer = dist < best
         best = np.where(nearer, dist, best)
-        along = np.where(nearer, run + t * ln, along)
+        side = np.where(nearer, np.sign((x - ax) * dy - (y - ay) * dx), side)
+        parts.append((dist, run + t * ln))
         run += ln
+    # the length along the line: where two pieces are equally near (inside a bend) it is their mean, so it has no jump
+    soft = max(0.15 * wall, 1e-6)
+    wsum = np.zeros(x.shape, np.float32)
+    along = np.zeros(x.shape, np.float32)
+    for dist, al in parts:
+        wgt = np.exp(-np.minimum((dist - best) / soft, 30)).astype(np.float32)
+        wsum += wgt
+        along += wgt * al
+    along /= wsum
+    del parts
     s = np.clip((along - fall_from) / (fall_to - fall_from), 0, 1)
     depth = floor_km * (1 - s * s * (3 - 2 * s))
+    if wander:
+        def waves(phases):
+            out = np.zeros(x.shape, np.float32)
+            for ln, share, ph in zip(wander['lengthsDeg'], wander['shares'], phases):
+                out += share * np.sin(2 * np.pi * along / ln + ph)
+            return out
+        wide = np.exp(wander['amount'] * np.where(side > 0, waves(wander['phaseNorth']), waves(wander['phaseSouth'])))
+        # near the axis both sides meet: the width there is the mean of the two, so the floor has no seam
+        mean = np.exp(wander['amount'] * 0.5 * (waves(wander['phaseNorth']) + waves(wander['phaseSouth'])))
+        k = np.clip(best / max(half_floor, 1e-6), 0, 1)
+        wide = mean * (1 - k) + wide * k
+        best = best / wide
+        depth = depth * (1 + wander['floor'] * waves(wander['phaseFloor']))
+    if gullies:
+        # spurs and gullies: the walls stand out and back by a noise that is long across the canyon and short along
+        # it, octave by octave, in the canyon's own coordinates (length along the line, distance from it by side)
+        across = side * best
+        g = np.zeros(x.shape, np.float32)
+        for o, share in enumerate(gullies['shares']):
+            k = 2.0 ** o
+            g += share * lattice_noise(along / gullies['alongDeg'] * k + 17.3 * o, across / gullies['acrossDeg'] * k + 5.1 * o, gullies['seed'] + o)
+        best = np.maximum(best + gullies['shiftDeg'] * g * np.clip(best / max(half_floor, 1e-6), 0, 1), 0)
     u = np.clip((best - half_floor) / wall, 0, 1)
     return (depth * (1 - u * u * (3 - 2 * u))).astype(np.float32)
 

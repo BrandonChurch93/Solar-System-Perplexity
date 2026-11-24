@@ -23,7 +23,8 @@ ap.add_argument('--set', default='full')
 ap.add_argument('--colour', default='', help='folder with colour plates named as in levels.json, instead of the set')
 ap.add_argument('--geometry', default='out/work/place/geometry.json')
 ap.add_argument('--scale', type=float, default=1.0, help='frame size as a share of 1920 by 1080')
-ap.add_argument('--steps', type=int, default=160)
+ap.add_argument('--steps', type=int, default=320)
+ap.add_argument('--far', type=float, default=0.003, help='least step along a ray as a share of the distance from the eye')
 ap.add_argument('--flat', action='store_true', help='heights off: the plates on the smooth sphere, as before')
 ap.add_argument('--relief', default='')
 ap.add_argument('--sink', type=float, default=0.05)
@@ -124,8 +125,8 @@ for k in range(a.steps):
     found[sel[under]] = True
     go = sel[~under]
     prev[go] = t[go]
-    # a step of 0.35 of the height over the ground, never less than a thousandth of it at grazing rays
-    t[go] += np.maximum(g[~under] * 0.35, 2e-7)
+    # a step of 0.35 of the height over the ground; along grazing rays never less than a share of the way gone
+    t[go] += np.maximum(g[~under] * 0.35, np.maximum(a.far * t[go], 2e-7))
     gone = np.linalg.norm(o + d[go] * t[go][:, None], axis=1) > max(top, np.linalg.norm(o)) + 1e-9
     alive[go[gone]] = False
 # halve between the last point above and the first below

@@ -67,7 +67,7 @@ for level in C['levels']:
     K = C['canyon']
     xd = np.degrees((2 * c - 1) * geom.half_tan(W))
     xg, yg = np.broadcast_to(xd[None, :], (N, N)), np.broadcast_to(-xd[:, None], (N, N))
-    prior = ground.trough(xg, yg, K['axis'], K['floorKm'], K['halfFloorDeg'], K['wallDeg'], K['fallFromDeg'], K['fallToDeg']) / ground.KM
+    prior = ground.trough(xg, yg, K['axis'], K['floorKm'], K['halfFloorDeg'], K['wallDeg'], K['fallFromDeg'], K['fallToDeg'], K.get('wander'), K.get('gullies')) / ground.KM
     if coarse is None:
         up = prior
     else:
@@ -101,7 +101,14 @@ for level in C['levels']:
         del st, stack
     exact = seen & (foot <= F['fromDeg'])
     far = cv2.distanceTransform((~seen).astype(np.uint8), cv2.DIST_L2, 5) * deg
-    known = seen | (far > C['zeroShare'] * W)
+    # the mesh has its say on the made ground out to zeroShare of the width, by a line that wanders (seeded noise),
+    # so that the fall from the seen ground's own level to the country's is a long gentle one with no straight foot
+    Z = C.get('zeroWander')
+    zn = 1.0
+    if Z:
+        zc = Z['cellShare'] * W
+        zn = 1 + Z['amount'] * (2 * ground.lattice_noise((xg + 80) / zc, (yg + 80) / zc, Z['seed'], (256, 256)) - 1)
+    known = seen | (far > C['zeroShare'] * W * zn)
     diff = ground.membrane(np.where(seen, true - base, 0), known)
     pic = cv2.resize(cv2.imread(level['picture']), (N, N), interpolation=cv2.INTER_AREA)
     rel = ground.relief_from_light(ground.light(pic), deg, C['sunBearingDeg'], broad, hold=C['hold'])
@@ -112,6 +119,8 @@ for level in C['levels']:
     tb, _ = ground.octaves(filled, broad / deg / 2)
     rb, _ = ground.octaves(rel, broad / deg / 2)
     rel = np.zeros_like(rel)
+    rel_far = np.zeros_like(rel)
+    rel_near = np.zeros_like(rel)
     table = []
     out_far = smooth(far / min(C['roughFarDeg'], 0.25 * W))
     for (sg, tband), (_, rband) in zip(tb, rb):
@@ -128,10 +137,45 @@ for level in C['levels']:
         f = float(np.clip(f, C['rough'][0], C['rough'][1]))
         table.append('%.3g deg x%.2f' % (wave, f))
         rel += rband * (f + (C['roughFar'] - f) * out_far)
-    made = rel / ground.KM * smooth(far / (C['joinShare'] * W)) * (1 - wb)
-    height = np.where(seen, true, base + diff + made).astype(np.float32)
+        rel_far += rband * C['roughFar']
+        rel_near += rband * f
+    # the far ground the eye saw only along its rays takes the relief of the plate as the made ground beside it
+    # does, growing in beyond far.fromDeg: no flat fan with straight sides stands in the country. The made ground
+    # starts at the border of the seen ground with the relief the seen side has there, so the border is no crease
+    in_far = smooth((foot - F['fromDeg']) / C['roughFarDeg'])
+    rel_in = rel_far * in_far
+    # the border of the picture's field is a straight line on the ground: the relief of the made ground runs on
+    # across it and dies away inside along a line that wanders (border: share of the width, cells of a seeded noise)
+    B = C.get('border')
+    keep = np.ones((N, N), np.float32)
+    outside = ~seen
+    if B:
+        flood = (~seen).astype(np.uint8)
+        mask = np.zeros((N + 2, N + 2), np.uint8)
+        cv2.floodFill(flood, mask, (0, 0), 2)
+        outside = flood == 2
+        inward = cv2.distanceTransform((~outside).astype(np.uint8), cv2.DIST_L2, 5) * deg
+        cellw = B['cellShare'] * W
+        wn = 0.65 * ground.lattice_noise((xg + 50) / cellw, (yg + 50) / cellw, B['seed'], (256, 256)) + 0.35 * ground.lattice_noise((xg + 50) / cellw * 2.7, (yg + 50) / cellw * 2.7, B['seed'] + 1, (256, 256))
+        reach = min(B['share'] * W, B['mostDeg']) * np.clip(0.55 + 0.6 * wn, 0.08, 1.0)
+        keep = smooth(inward / reach)
+    join = np.where(outside, 1.0, smooth(far / (C['joinShare'] * W)))
+    made = (rel_in + (rel - rel_in) * join) / ground.KM * (1 - wb)
+    height = np.where(seen, true + (rel_in + (rel_near - rel_in) * (1 - keep)) / ground.KM * (1 - wb), base + diff + made).astype(np.float32)
+    exact = exact & (keep > 0.999)
     dirs = geom.patch_dirs(W, N)
     height, low, passes, left = ground.lower_under_sight(height, ~seen, dirs, eye, min(C['stepKm'], 1.2 * np.radians(deg) * ground.KM), passes=800, clear=C['clear'])
+    # no slope steeper than slopeMost: a wall of the close view's mesh, a tear of it or the foot of lowered ground is
+    # a step from one texel to the next, which a mesh of one vertex a texel draws as a curtain. The limit is a
+    # slope of the ground, the same at every level, so the levels still agree where one hands on to the next
+    before = float(max(np.abs(np.diff(height, axis=0)).max(), np.abs(np.diff(height, axis=1)).max()) / np.radians(deg))
+    held_ = ground.hold_slope(height, C['slopeMost'] * np.radians(deg))
+    moved = np.abs(held_ - height) * ground.KM
+    height = held_
+    after = float(max(np.abs(np.diff(height, axis=0)).max(), np.abs(np.diff(height, axis=1)).max()) / np.radians(deg))
+    idx = np.nonzero(~seen)
+    left = float(eye.sees(dirs[idx] * (1 + height[idx])[:, None], C['clear']).mean())
+    slope_line = 'largest step between neighbours %.1f texel widths before the slope was held, %.2f after; moved more than 5 m on %.4f of the plate (seen ground %.4f), most %.0f m' % (before, after, float((moved > 0.005).mean()), float((moved > 0.005)[seen].mean()) if seen.any() else 0.0, moved.max() * 1000)
     np.save(pre + '-height.npy', height.astype(np.float32))
     cv2.imwrite(pre + '-seen.png', (exact * 255).astype(np.uint8))
     # the fit of the gain on the seen ground: the picture at its true place against the mesh heights, same band
@@ -156,5 +200,6 @@ for level in C['levels']:
     mk = (made * ground.KM)[~seen]
     print('%g deg, %d px (%.0f m a texel): seen %.4f of the plate; made relief rms %.3f km (%.2f to %.2f); lowered under the eye\'s sight %.4f of the plate in %d passes, still in sight %.5f of the made ground; fit of the gain on the seen ground %.1f km per unit, correlation %.3f; height %.2f to %.2f km' % (
         W, N, deg * np.pi / 180 * ground.KM * 1000, seen.mean(), float(np.sqrt((mk ** 2).mean())), mk.min(), mk.max(), low.mean(), passes, left, fit, corr, height.min() * ground.KM, height.max() * ground.KM), flush=True)
+    print('   ' + slope_line, flush=True)
     print('   roughness of the mesh plateau against the relief read from the light, by wave: ' + ', '.join(table), flush=True)
     coarse, coarse_w = height, W

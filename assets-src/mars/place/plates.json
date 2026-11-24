@@ -195,7 +195,7 @@
   "endTo": 1.0
  },
  "country": {
-  "note": "country.py: the heights of the country round the place, one plate per level of the globe's ladder, coarse to fine. size: texels along a side. picture: the plate as painted, whose light the made heights are read from. sunBearingDeg: where the light in the plates comes from, clockwise from north (fitted: 170 to 190). gainKm: km of height per unit of log brightness times degree (fitted on the seen ground: 76.4 on the 1.6 plate, 82.1 on 0.7). broadShare: waves longer than this share of the plate width are left to the coarser level. hold: how hard waves across the Sun are held down. joinShare: over this share of the width the made relief comes in beside seen ground. edgeShare: over this share of the width at its border a level is the coarser level itself (the outermost: the smooth sphere). zeroShare: farther than this share of the width from seen ground the mesh has no say. stepKm, clear: made ground is lowered by stepKm a pass until it is clear (times the distance) behind what the picture's eye saw. broadMostDeg: the longest wave read from the light at any level (in a plate of 8.5 degrees the broad tone is colour of the land, not slope; with 0.15 of the width the made relief had an rms of 2.7 km and heights of -16 to +12 km). plateauKm: seen ground above this is the plateau, whose roughness the made ground takes, octave by octave (rough: least and most of the factor on the relief read from the light). canyon: the canyon carried on beyond what the close view saw, along the pale trough of the globe's own map (wrap-color) west of the spot, read off a grid of half degrees: axis in degrees east and north of the spot, from the fan's south west edge outward; floorKm its depth where it leaves the seen ground (the mesh floor is -6.3 to -7.0 km there), halfFloorDeg and wallDeg its cross section as measured on the mesh canyon (0.3 degrees rim to rim), fallFromDeg to fallToDeg the length along the axis over which the depth falls off to nothing. far: beyond fromDeg from the foot of the picture's eye the mesh heights are smoothed with a radius of perDeg times the distance beyond it (seen from above the far field of the close view is ridged along the eye's rays: a small error of distance along a ray is a long streak on the ground); the seen mask ends at fromDeg. roughFar, roughFarDeg: beside seen ground the made relief has the mesh plateau's roughness; over roughFarDeg (at most a quarter of the plate) it rises to roughFar of what the light reads with the fitted gain. The step of the lowering is never more than 1.2 texels of the level (steps of 50 m stood as terraces in the 0.3 plate).",
+  "note": "country.py: the heights of the country round the place, one plate per level of the globe's ladder, coarse to fine. size: texels along a side. picture: the plate as painted, whose light the made heights are read from. sunBearingDeg: where the light in the plates comes from, clockwise from north (fitted: 170 to 190). gainKm: km of height per unit of log brightness times degree (fitted on the seen ground: 76.4 on the 1.6 plate, 82.1 on 0.7). broadShare: waves longer than this share of the plate width are left to the coarser level. hold: how hard waves across the Sun are held down. joinShare: over this share of the width the made relief comes in beside seen ground. edgeShare: over this share of the width at its border a level is the coarser level itself (the outermost: the smooth sphere). zeroShare: farther than this share of the width from seen ground the mesh has no say. stepKm, clear: made ground is lowered by stepKm a pass until it is clear (times the distance) behind what the picture's eye saw. broadMostDeg: the longest wave read from the light at any level (in a plate of 8.5 degrees the broad tone is colour of the land, not slope; with 0.15 of the width the made relief had an rms of 2.7 km and heights of -16 to +12 km). plateauKm: seen ground above this is the plateau, whose roughness the made ground takes, octave by octave (rough: least and most of the factor on the relief read from the light). canyon: the canyon carried on beyond what the close view saw, along the pale trough of the globe's own map (wrap-color) west of the spot, read off a grid of half degrees: axis in degrees east and north of the spot, from the fan's south west edge outward; floorKm its depth where it leaves the seen ground (the mesh floor is -6.3 to -7.0 km there), halfFloorDeg and wallDeg its cross section as measured on the mesh canyon (0.3 degrees rim to rim), fallFromDeg to fallToDeg the length along the axis over which the depth falls off to nothing. far: beyond fromDeg from the foot of the picture's eye the mesh heights are smoothed with a radius of perDeg times the distance beyond it (seen from above the far field of the close view is ridged along the eye's rays: a small error of distance along a ray is a long streak on the ground); the seen mask ends at fromDeg. roughFar, roughFarDeg: beside seen ground the made relief has the mesh plateau's roughness; over roughFarDeg (at most a quarter of the plate) it rises to roughFar of what the light reads with the fitted gain. The step of the lowering is never more than 1.2 texels of the level (steps of 50 m stood as terraces in the 0.3 plate). slopeMost: no slope of the heights is steeper than this (height over distance on the ground; ground.hold_slope): the mean of the highest ground under the heights and the lowest over them that keep the limit, so ground under the limit stays as it is and a wall becomes a slope centred on the wall; asked for by the cap of the globe, which draws a step between two texels as a curtain (steps of up to 87 texel widths stood in the first bake). zeroShare was 0.06 until the cap showed a dark foot along the straight north edge of the seen ground (the fall to the country's level took 0.042 degrees at the 0.7 plate); zeroWander: the distance wanders by amount about it, in cells of cellShare of the width.",
   "size": 2048,
   "levels": [
    {
@@ -225,7 +225,7 @@
   "hold": 0.35,
   "joinShare": 0.0125,
   "edgeShare": 0.12,
-  "zeroShare": 0.06,
+  "zeroShare": 0.2,
   "stepKm": 0.05,
   "clear": 1.01,
   "broadMostDeg": 0.25,
@@ -234,7 +234,88 @@
    0.0,
    1.0
   ],
+  "paint": {
+   "note": "paint.py: the colour of the carried on canyon, by code. tableDeg: the plate whose seen ground (laid back at true places) gives the table of colour over height and the cosine to the Sun; bins: heights by cosines; heightKm: range of the table; least: texels a bin needs; stretchMost: seen ground stretched more than this is left out of the table; slopeBlur: blur of the heights before the slope is taken, in texels of the table's plate (2048 a side); sunUp: height of the Sun over the ground as the third part of its direction; fromKm, toKm: depth of the canyon function over which the paint comes in; edgeDeg: soft edge against ground the picture saw; grainDeg, grain, grainMost: the fine drawing of the plate kept on the paint (blur, power, clamp).",
+   "tableDeg": 0.7,
+   "bins": [
+    16,
+    8
+   ],
+   "heightKm": [
+    -7.5,
+    0.5
+   ],
+   "least": 200,
+   "stretchMost": 4,
+   "slopeBlur": 3,
+   "sunUp": 0.38,
+   "fromKm": 0.15,
+   "toKm": 1.0,
+   "edgeDeg": 0.004,
+   "grainDeg": 0.01,
+   "grain": 0.7,
+   "grainMost": 1.8
+  },
+  "border": {
+   "note": "the straight border of the picture's field on the ground: the made relief runs on across it and dies away inside over `share` of the plate width (at most mostDeg) times a seeded noise of cells of `cellShare` of the width; the seen mask ends where it starts",
+   "share": 0.05,
+   "mostDeg": 0.06,
+   "cellShare": 0.035,
+   "seed": 23
+  },
   "canyon": {
+   "gullies": {
+    "note": "spurs and gullies on the walls of the carried on canyon: the walls stand out and back by shiftDeg times a noise from a seeded table, short along the canyon (alongDeg a cell) and long across it (acrossDeg), three octaves with these shares",
+    "seed": 11,
+    "alongDeg": 0.045,
+    "acrossDeg": 0.2,
+    "shares": [
+     0.55,
+     0.3,
+     0.15
+    ],
+    "shiftDeg": 0.03
+   },
+   "wander": {
+    "note": "the rims of the carried on canyon run in and out (width times e to the amount times a sum of sines along the length, one set of phases a side) and its floor rises and falls by the share `floor`",
+    "amount": 0.34,
+    "lengthsDeg": [
+     0.61,
+     0.33,
+     0.17,
+     0.09,
+     0.047
+    ],
+    "shares": [
+     0.55,
+     0.3,
+     0.12,
+     0.05,
+     0.02
+    ],
+    "phaseNorth": [
+     0.3,
+     2.1,
+     4.4,
+     1.2,
+     5.0
+    ],
+    "phaseSouth": [
+     3.9,
+     0.7,
+     2.6,
+     5.3,
+     1.9
+    ],
+    "phaseFloor": [
+     1.1,
+     4.0,
+     0.2,
+     3.3,
+     2.4
+    ],
+    "floor": 0.1
+   },
    "axis": [
     [
      0.2,
@@ -272,6 +353,12 @@
    "perDeg": 0.15
   },
   "roughFar": 0.5,
-  "roughFarDeg": 0.5
+  "roughFarDeg": 0.5,
+  "zeroWander": {
+   "amount": 0.5,
+   "cellShare": 0.08,
+   "seed": 31
+  },
+  "slopeMost": 2.0
  }
 }
