@@ -1,9 +1,49 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T07:28:42.984Z",
+ "pushed": "2026-11-24T07:39:36.230Z",
  "head": "3a80ff40b8a33d6c31147071fcbbb467fabee6b2",
- "note": "new path with the engine's bend: path part green, first frames of both moves; all frames rendering",
+ "note": "new path with the engine's bend: rise T frames 2090 to 2104 every frame, samples of dive and rise; limb line colour change at 2100 against 2101 still there",
  "looks": [
+  {
+   "time": "2026-11-24T07:39:35.331Z",
+   "file": "20261124073935331-note-sample-rise2.jpg",
+   "source": "../../../../tmp/gl/s7/sample-rise2.jpg",
+   "kind": "note",
+   "label": "new path, rise samples 2105 to 2174",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T07:39:34.443Z",
+   "file": "20261124073934443-note-sample-dive2.jpg",
+   "source": "../../../../tmp/gl/s7/sample-dive2.jpg",
+   "kind": "note",
+   "label": "new path, dive samples 1830 to 1919",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T07:39:33.163Z",
+   "file": "20261124073933163-note-tcrop-rise-mid.jpg",
+   "source": "../../../../tmp/gl/s7/tcrop-rise-mid.jpg",
+   "kind": "note",
+   "label": "new path, rise T: ground band 2097 to 2104 with differences times 4",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T07:39:31.718Z",
+   "file": "20261124073931718-note-tcrop-rise-top.jpg",
+   "source": "../../../../tmp/gl/s7/tcrop-rise-top.jpg",
+   "kind": "note",
+   "label": "new path, rise T: top of frame 2092 to 2102 with differences times 4 (limb line changes colour at 2100 against 2101)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T07:39:30.598Z",
+   "file": "20261124073930598-note-T-rise.jpg",
+   "source": "../../../../tmp/gl/s7/T-rise.jpg",
+   "kind": "note",
+   "label": "new path, rise T: every frame 2090 to 2104, draft",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T07:28:41.811Z",
    "file": "20261124072841811-note-n2130.jpg",
@@ -26,46 +66,6 @@
    "source": "../../../../tmp/gl/s7/sample-rise.jpg",
    "kind": "note",
    "label": "new path with the engine's bend, rise every tenth frame 2100 to 2170, draft, tree 3a80ff40 plus plan.ts and place.json not yet committed",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T07:12:02.389Z",
-   "file": "20261124071202389-note-half-land.jpg",
-   "source": "../../../../tmp/gl/s6/half-land.jpg",
-   "kind": "note",
-   "label": "landing of the dive at half frames 1910 to 1921 + 1/2, draft, from the full smooth run of 6c75f48f: the change of view is into 1919",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T06:56:37.752Z",
-   "file": "20261124065637752-note-half-dive.jpg",
-   "source": "../../../../tmp/gl/s5/half-dive.jpg",
-   "kind": "note",
-   "label": "dive 1876 to 1891 at half frames, draft, from the full smooth run of 6c75f48f",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T06:39:26.265Z",
-   "file": "20261124063926265-note-path-curves.jpg",
-   "source": "../../../../tmp/gl/s5/path-curves.png",
-   "kind": "note",
-   "label": "Earth path judge, three curves at whole frames: top the head 6c75f48f (turn and speed red), bottom a scratch trial of one share for the attitude (not in the tree, not rendered)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T06:14:15.069Z",
-   "file": "20261124061415069-note-T-rise-top.jpg",
-   "source": "../../../../tmp/gl/s5/T-rise-top.jpg",
-   "kind": "note",
-   "label": "rise about T, top two fifths at full size beside the difference times 4: a line along the limb at 2100 against 2101",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T06:14:14.436Z",
-   "file": "20261124061414436-note-T-dive-top.jpg",
-   "source": "../../../../tmp/gl/s5/T-dive-top.jpg",
-   "kind": "note",
-   "label": "dive about T, top two fifths at full size beside the difference times 4: a line along the limb at 1918 against 1919",
    "stop": "earth"
   }
  ]
