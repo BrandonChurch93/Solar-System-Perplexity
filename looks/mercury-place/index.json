@@ -1,78 +1,72 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T09:24:21.784Z",
- "head": "27f1ba3eb30576e89f64aebb80dd252ffc09bcbd",
- "note": "one ground in the disc from the hold on: plate 1 rebuilt from plate 2, tool pair 1.09 to 0.25; dive render running",
+ "pushed": "2026-11-24T10:00:10.991Z",
+ "head": "30e7b24424f4feae6f1f02561e6d90d2cd93a2de",
+ "note": "second commit: one ground measured (dive worst 0.55, 615 a patch against the approved image), so hold off and 615 is main's bytes; sheets of dive and rise",
  "looks": [
   {
-   "time": "2026-11-24T09:24:20.755Z",
-   "file": "20261124092420755-note-gl-rise.jpg",
-   "source": "../../../../tmp/m/gl-rise.jpg",
+   "time": "2026-11-24T10:00:10.251Z",
+   "file": "20261124100010251-note-615-approved.jpg",
+   "source": "../../../../tmp/m/615-approved.jpg",
    "kind": "note",
-   "label": "globe-levels panel, rise pair 1 to 2r 0.54 over, the place's own night edge",
+   "label": "615 final with the disc held (not the named state) beside the approved image: a bright rough spot on the terminator. So the hold is left as approved",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-24T09:24:19.734Z",
-   "file": "20261124092419734-note-gl-dive.jpg",
-   "source": "../../../../tmp/m/gl-dive.jpg",
+   "time": "2026-11-24T09:49:33.983Z",
+   "file": "20261124094933983-note-e1-e.jpg",
+   "source": "../../../../tmp/m/e1-e.jpg",
    "kind": "note",
-   "label": "globe-levels panel, dive pyramid, pair 1 to 2 now 0.25",
+   "label": "dive 720 to 725 + 1/2 at the worst pattern number of the dive (0.55 at 723): the globe's relief under the limb, outside the disc",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-24T09:24:19.087Z",
-   "file": "20261124092419087-note-d1-615c.jpg",
-   "source": "../../../../tmp/m/d1-615c.jpg",
+   "time": "2026-11-24T09:49:32.781Z",
+   "file": "20261124094932781-note-end-1034-1035.jpg",
+   "source": "../../../../tmp/m/end-1034-1035.jpg",
    "kind": "note",
-   "label": "hold 615 disc, named head left, plate 1 held in the disc right (earlier plate state)",
+   "label": "end of the rise 1034 (left) and first frame of the leaving 1035 (right), draft: the same disc",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-24T09:24:17.825Z",
-   "file": "20261124092417825-note-plate1-final.jpg",
-   "source": "../../../../tmp/m/plate1-final.jpg",
+   "time": "2026-11-24T09:49:32.149Z",
+   "file": "20261124094932149-note-t540-second.jpg",
+   "source": "../../../../tmp/m/t540-second.jpg",
    "kind": "note",
-   "label": "plate 1 of the place, named head left, one ground right",
+   "label": "MAIL 540 sheet, rise 967 to 981 every frame, draft, T 977, second commit",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-24T08:52:12.430Z",
-   "file": "20261124085212430-note-plate1-pair.jpg",
-   "source": "../../../../tmp/m/plate1-pair.jpg",
+   "time": "2026-11-24T09:49:31.476Z",
+   "file": "20261124094931476-note-615-pair.jpg",
+   "source": "../../../../tmp/m/615-pair.jpg",
    "kind": "note",
-   "label": "plate 1 about the spot: old (left), new (right) with the place's coarse crater field inside 15.5 to 17.5 degrees, in the map's tones (MAIL 587 point 3, first way)",
+   "label": "615 final at 1.25 times: reference left, second commit right. The disc reads as a patch here (harder gold rims, a dark bay at the terminator): named red",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-24T08:52:11.886Z",
-   "file": "20261124085211886-note-top-pair.jpg",
-   "source": "../../../../tmp/m/top-pair.jpg",
+   "time": "2026-11-24T09:49:30.565Z",
+   "file": "20261124094930565-note-615-three.jpg",
+   "source": "../../../../tmp/m/615-three.jpg",
    "kind": "note",
-   "label": "under the limb, trial c2: a long presence of the set shows its bright patch from 740 instead of 748, so it is dropped",
+   "label": "615 final: kept still, first named commit (main's reference bytes), second commit; whole frame above, the disc below",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-24T08:52:11.326Z",
-   "file": "20261124085211326-note-717-pair.jpg",
-   "source": "../../../../tmp/m/717-pair.jpg",
+   "time": "2026-11-24T09:43:56.782Z",
+   "file": "20261124094356782-note-e2-d.jpg",
+   "source": "../../../../tmp/m/e2-d.jpg",
    "kind": "note",
-   "label": "717: named head (left) against trial c1 (right): a slow even exchange leaves a grey lit bulge on the night side, so it is dropped",
+   "label": "rise 1016 to 1034 every frame, draft, second commit",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-24T08:08:08.006Z",
-   "file": "20261124080808006-job-frame-00540.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "mercury.hold frame 540, draft tier, texels view, from the running measure job",
-   "stop": "mercury",
-   "segment": "mercury.hold",
-   "frame": 540,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
+   "time": "2026-11-24T09:43:55.733Z",
+   "file": "20261124094355733-note-e2-c-ref.jpg",
+   "source": "../../../../tmp/m/e2-c-ref.jpg",
+   "kind": "note",
+   "label": "rise 996 to 1015 every frame, draft, first named commit 27f1ba3e",
+   "stop": "mercury"
   }
  ]
 }
