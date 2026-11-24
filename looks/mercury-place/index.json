@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T18:26:12.573Z",
+ "pushed": "2026-11-24T18:54:56.863Z",
  "head": "befb5f47996cb9ff4b6ffb6df289ed9cc2b1fe80",
- "note": "rise 962 to 970: display dissolve measured 0.34 and 0.25 in two steps at 967; shell under the set pops a limb strip at 961, being rebuilt",
+ "note": "961: no pop with the cut carried by the globe (4951 pixels by 1 code); open ground beside the set mapped, a whole globe stays under the near field",
  "looks": [
+  {
+   "time": "2026-11-24T18:54:56.064Z",
+   "file": "20261124185456064-note-gap2-970-976-762.jpg",
+   "source": "../../../../tmp/m/gap2-970-976-762.jpg",
+   "kind": "note",
+   "label": "same at 970, 976, 762: below the handover only the limb strip beyond the set's ridge is open (and the near edge at 762)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T18:54:55.414Z",
+   "file": "20261124185455414-note-gap2-982-983-756-757-758-759.jpg",
+   "source": "../../../../tmp/m/gap2-982-983-756-757-758-759.jpg",
+   "kind": "note",
+   "label": "set over the whole globe, set alone, difference at 982, 983, 756 to 759: the set's near and side edges are in the frame there, the globe under it must stay whole",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T18:25:58.584Z",
    "file": "20261124182558584-note-w961-crop.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/m/e14-760-780.jpg",
    "kind": "note",
    "label": "e14: dive 760 to 780 with the new shown law, measure 0.25 at most",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T17:22:10.320Z",
-   "file": "20261124172210320-note-s967-01-native.jpg",
-   "source": "../../../../tmp/m/s967-01-native.jpg",
-   "kind": "note",
-   "label": "s967: frame 967 at shown 0 (set's far ground) over shown 1 (shell): two pictures of the far ground",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T17:22:09.517Z",
-   "file": "20261124172209517-note-e13-962-977-crop.jpg",
-   "source": "../../../../tmp/m/e13-962-977-crop.jpg",
-   "kind": "note",
-   "label": "e13: rise 962 to 977 under the limb with the new shown law (log height, power 2.2): even change, measure 0.63 at 967",
    "stop": "mercury"
   }
  ]
