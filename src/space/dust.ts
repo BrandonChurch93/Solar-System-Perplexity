@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { config } from '../config'
+import { captureRate, shutterSpan, spanMid } from '../core/clock'
 import { stream } from '../core/random'
 import type { RenderView, Shot } from '../core/types'
 import { Flow, FLOW, type FlowDirector } from './travel/flow'
@@ -168,13 +169,13 @@ export class Dust {
     }
     const u = this.material.uniforms
     const seg = shot.segment
-    const frame = Math.min(Math.max(shot.frame, seg.firstFrame), seg.endFrame - 1)
+    const frame = Math.min(Math.max(shot.frame, seg.firstFrame), seg.endFrame - 1 / captureRate())
     const live = !FLOW.kinds.includes(seg.kind)
-    const mid = live ? shot : director.shotAt(frame, (frame + 0.5 * config.shutterFraction) / config.fps)
+    const mid = live ? shot : director.shotAt(frame, (frame + spanMid()) / config.fps)
     const rot = u.uRot!.value as THREE.Matrix3
     rot.setFromMatrix4(this.m4.makeRotationFromQuaternion(this.inverse.copy(mid.camera.quaternion).invert()))
     this.flow!.at(seg, frame, 0, u.uFlow0!.value as THREE.Vector3)
-    this.flow!.at(seg, frame, Math.round(config.shutterFraction * FLOW.stepsPerFrame), u.uFlow1!.value as THREE.Vector3)
+    this.flow!.at(seg, frame, shutterSpan() * FLOW.stepsPerFrame, u.uFlow1!.value as THREE.Vector3)
     ;(u.uSun!.value as THREE.Vector3).copy(shot.sun.dir)
     const height = target.height
     ;(u.uView!.value as THREE.Vector2).set(target.width, height)
