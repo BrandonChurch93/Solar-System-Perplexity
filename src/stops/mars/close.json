@@ -1,6 +1,17 @@
 {
   "note": "The close view's own ground in the globe's scene (plan F, MAIL 578). In a dive and a rise the close view's meshes (src/terrain/relief.ts over relief.json) stand on the globe at their true place through the plan's twin frame, with their own light, haze and air, and are drawn by the globe side's eye in the same frame as the globe. presence: how much of them is there by the height of the eye over the unit sphere (radii, log scale): nothing above high, all of them from low down. The band lies where the close ground, a fan built for the close view's eye, fills the frame of the globe side (dive from about 2472, rise to about 2686); above it the place is the globe's own ground (cap.json, country.json). No time is read. The globe's own air (shell, halo, glint) leaves by the same share, so that at the change of view both sides draw the one scene.",
-  "presence": { "high": 0.0034, "low": 0.0019 },
+  "presence": {
+    "high": 0.0034,
+    "low": 0.0019
+  },
   "skyNote": "The share of the close view's sky (its stars, floor, glow and exposure) on the globe side, by the same height of the eye and the same rule: none above high, all from low down (plan.ts skyShare). It takes the place of the engine's count of 24 frames to the change of view (dive 2453 to 2476, rise 2682 to 2705), which it shortens: 0.01 radii is the eye between frames 2457 and 2458 of the dive and between 2696 and 2697 of the rise, so the sky comes over 2458 to 2473 and leaves over 2686 to 2696.",
-  "sky": { "high": 0.01, "low": 0.0019 }
+  "sky": {
+    "high": 0.01,
+    "low": 0.0019
+  },
+  "turnNote": "turn: who turns the body. The planet's and the cap's programs turn a direction by the cos and sin the graphics card gives for the spin, and those two are not of length 1 together: the cap stood 0.00015 radii under its place at the dive's change of view and 0.00020 at the rise's, and the globe's picture slid with it. So the body's turn is put into the planet's mesh on the CPU and the programs are handed a spin of 0, by the height of the eye over the unit sphere (radii, log scale): above high the card turns the body as before (the hold, the arrival and the leaving keep their bytes), from low down the mesh carries all of the turn; between them the turn is shared, mesh and card together giving the one whole turn. No time is read.",
+  "turn": {
+    "high": 2.0,
+    "low": 0.5
+  }
 }

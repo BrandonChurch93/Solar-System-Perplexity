@@ -1,0 +1,70 @@
+"""One picture through the levels of the made ground of the place (land-*.jpg): each level is made from the level under it.
+
+The levels are squares about one spot on one tangent plane (widthDeg of levels.json), so a finer level covers the middle of
+the coarser one. From the finest pair up: the finer level's rim goes over to the coarser level's picture (the outer `--rim`
+of its half width, smooth), and the coarser level's middle is the finer level reduced to its scale. After it the two show
+the same picture wherever both are drawn, and the eye sees no other ground when the globe goes from one to the next.
+Judged with assets-src/shared/globe-levels.py.
+
+  python3 assets-src/mars/place/pyramid.py --dir public/assets/mars/full --out out/work/place/pyr/full
+
+Reads --dir, writes the changed levels to --out with the quantisation tables and the chroma sampling of the files read.
+"""
+import argparse
+import json
+import math
+import os
+
+import cv2
+import numpy as np
+from PIL import Image, JpegImagePlugin
+
+Image.MAX_IMAGE_PIXELS = None
+ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+
+
+def half(width):
+    return math.tan(math.radians(width) / 2)
+
+
+def smooth(x):
+    x = np.clip(x, 0, 1)
+    return x * x * (3 - 2 * x)
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument('--dir', required=True)
+    ap.add_argument('--out', required=True)
+    ap.add_argument('--json', default=os.path.join(ROOT, 'src', 'stops', 'mars', 'levels.json'))
+    ap.add_argument('--rim', type=float, default=0.1)
+    args = ap.parse_args()
+    levels = [l for l in json.load(open(args.json))['levels'] if l.get('own')]
+    os.makedirs(args.out, exist_ok=True)
+    files = [Image.open(os.path.join(args.dir, l['file'])) for l in levels]
+    keep = [(dict(f.quantization), JpegImagePlugin.get_sampling(f)) for f in files]
+    pics = [np.asarray(f.convert('RGB')).astype(np.float32) for f in files]
+    for i in range(len(levels) - 2, -1, -1):
+        parent, child = pics[i], pics[i + 1]
+        n, c = parent.shape[0], child.shape[0]
+        m = int(round(n * half(levels[i + 1]['widthDeg']) / half(levels[i]['widthDeg'])))
+        if (m - n) % 2:
+            m += 1
+        x0 = (n - m) // 2
+        under = cv2.resize(parent[x0:x0 + m, x0:x0 + m], (c, c), interpolation=cv2.INTER_CUBIC)
+        at = (np.arange(c, dtype=np.float32) + 0.5) / c
+        edge = np.minimum(at, 1 - at) * 2 / args.rim
+        w = smooth(np.minimum(edge[:, None], edge[None, :]))[:, :, None]
+        child = under + (child - under) * w
+        pics[i + 1] = child
+        parent = parent.copy()
+        parent[x0:x0 + m, x0:x0 + m] = cv2.resize(child, (m, m), interpolation=cv2.INTER_AREA)
+        pics[i] = parent
+        print('%s into %s: %d of %d texels across, rim %.2f' % (levels[i + 1]['file'], levels[i]['file'], m, n, args.rim))
+    for l, p, (q, s) in zip(levels, pics, keep):
+        Image.fromarray(np.clip(p + 0.5, 0, 255).astype(np.uint8)).save(os.path.join(args.out, l['file']), 'JPEG', qtables=q, subsampling=s)
+        print(l['file'], os.path.getsize(os.path.join(args.out, l['file'])))
+
+
+if __name__ == '__main__':
+    main()

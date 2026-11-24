@@ -68,7 +68,8 @@ export const createSet: SetFactory = async (ctx) => {
       ...(patches.levels.some((l) => l.own) ? { own: patches.levels.map((l) => l.own === true), ownGain: true } : {}), ...(patches.fadeMinor ? { fadeMinor: true } : {}) },
     storm: { mask: stormMask, axis: direction(wrap.storm.lon, wrap.storm.lat), radius: THREE.MathUtils.degToRad(wrap.storm.radiusDeg) },
   })
-  planet.mesh.quaternion.fromArray(fit.globe.quaternion)
+  const globeFit = new THREE.Quaternion().fromArray(fit.globe.quaternion)
+  planet.mesh.quaternion.copy(globeFit)
   planet.mesh.scale.fromArray(fit.globe.scale)
   const shell = new HazeShell({ ...look.shellHaze, glow: true }, diagUniform)
   const halo = new HazeShell(look.haloHaze, diagUniform)
@@ -122,6 +123,7 @@ export const createSet: SetFactory = async (ctx) => {
     if (closeAir) (closeAir.material as THREE.Material).depthTest = on
   }
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
+  let eyeScaled = false
 
   const tintLow = new THREE.Vector3().fromArray(look.descent.tint)
   const hazeLow = new THREE.Vector3().fromArray(look.descent.hazeDay)
@@ -184,6 +186,15 @@ export const createSet: SetFactory = async (ctx) => {
       orbit.visible = inOrbit && state.weight > 0
       terrain.visible = !inOrbit
       const gain = 1 / shot.post.exposure
+      // The relief builds its shader for a scaled group the first time it is updated under a scale (src/terrain/relief.ts, the eye of the
+      // valley mist). Asked for on the first update of the set, so that it is built with the others and every frame, alone or in a run,
+      // is drawn by the one shader. The scale is put back at once; each branch below sets its own.
+      if (!eyeScaled) {
+        eyeScaled = true
+        terrain.scale.setScalar(2)
+        ground.update(0, gain, shot.post.vignette, view)
+        terrain.scale.setScalar(1)
+      }
       if (!inOrbit) {
         terrain.position.set(0, 0, 0)
         terrain.quaternion.identity()
@@ -257,7 +268,16 @@ export const createSet: SetFactory = async (ctx) => {
         for (let c = 0; c < 3; c++) ownGain[c] = (a.gain[c]! + (b.gain[c]! - a.gain[c]!) * k) * (1 + n.ownGain.tintFollow * ((1 + (d.tint[c]! - 1) * low) / d.tint[c]! - 1)) * ((1 + (n.tint[c]! - 1) * near) / n.tint[c]!)
       }
       if (hasOwn) planet.setOwnGain(ownGain)
-      planet.update(camera, light, plan.spin(state.time), gain, state.weight)
+      // The body's turn goes into the mesh, in double precision, and the planet is handed what is left of the spin, by the eye's height
+      // (close.json turn). The planet's and the cap's programs turn by the cos and sin the graphics card gives them, and those are not of
+      // length 1 together: at the dive's change of view the cap stood 0.00015 radii under its place, at the rise's 0.00020, against the
+      // close view's own ground in the same frame (PLACE-NOTES, 24 November 10:40). Above turn.high the card turns the body as before.
+      const tj = closeJson.turn
+      const onMesh = 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-5)) - Math.log(tj.low)) / (Math.log(tj.high) - Math.log(tj.low)))
+      const spin = plan.spin(state.time)
+      if (onMesh > 0) planet.mesh.quaternion.setFromAxisAngle(plan.axis, spin * onMesh).multiply(globeFit)
+      else planet.mesh.quaternion.copy(globeFit)
+      planet.update(camera, light, spin * (1 - onMesh), gain, state.weight)
       pu.uVignette!.value = shot.post.vignette * (1 - low)
       pu.uAspect!.value = view.format.width / view.format.height
       ;(shell.material.uniforms.uCam!.value as THREE.Vector3).copy(camera)
