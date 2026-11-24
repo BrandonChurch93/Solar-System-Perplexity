@@ -1,9 +1,28 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T13:59:23.711Z",
+ "pushed": "2026-11-24T14:20:28.588Z",
  "head": "1154099e249a95910f3ec137c6b7886323e15c71",
- "note": "14:02 head 1154099e (config only on the merge of main 2bc36ce6): the cells touch. Frame 60 draft: share by band 0.1 .. 0.9 : 0.165 0.231 0.178 0.128 0.092 0.066 0.044 0.036 0.027 / dark (under 0.15) 0.195 | body (0.15 to 0.55) 0.630 | pale (0.65 to 0.85) 0.080 | white (over 0.85) 0.030 / brightest 15 percent: half width 4.3 px, 5530 shapes | fine detail 0.0702 | mean 0.340. Distance 0.041. 247 and 270 keep their bytes. The proof chain runs (tests, warm, handover, pictures, judged, G13, run 61 to 68, path, seam, gate, build, final tier). Red by eye: more gold and less orange than the approved, crisper and more threaded than its soft bulbs; at 229 the field of cells reads finer than the map round it.",
+ "note": "14:21 MAIL 683 in (the material at 60 costs the round): the proof chain on 1154099e is stopped at frame 202 of the handover (tests 485 passed in 49 files, warm walk exit 0 with 0 frames that did work, both done). Frame 60 draft of 1154099e: share by band 0.1 .. 0.9 : 0.165 0.231 0.178 0.128 0.092 0.066 0.044 0.036 0.027 / dark (under 0.15) 0.195 | body (0.15 to 0.55) 0.630 | pale (0.65 to 0.85) 0.080 | white (over 0.85) 0.030 / brightest 15 percent: half width 4.3 px, 5530 shapes | fine detail 0.0702 | mean 0.340. Red: fine detail 0.0702 against the approved 0.0373 and 5530 bright shapes against 1153 (hairline threads, reads as brushed metal), white 0.030 against 0.010. Trials on the threads, the dome's foot, the spread of sizes and the penumbra start now.",
  "looks": [
+  {
+   "time": "2026-11-24T14:20:27.952Z",
+   "file": "20261124142027952-note-z1-rise-a.jpg",
+   "source": "../../../../tmp/z1-rise-a.jpg",
+   "kind": "note",
+   "label": "head 1154099e: every frame 180 to 201 of the rise, draft (the chain was stopped at 202 for MAIL 683)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T14:10:14.200Z",
+   "file": "20261124141014200-compare-sun-rise-sides.jpg",
+   "source": "out/work/handover/sun-rise-sides.png",
+   "kind": "compare",
+   "label": "sun rise, both sides at T (frame 216) and their difference times 8",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 216,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-24T13:59:22.356Z",
    "file": "20261124135922356-note-z1b-ball.jpg",
@@ -50,22 +69,6 @@
    "source": "../../../../tmp/m16-ball.jpg",
    "kind": "note",
    "label": "head 413128b0 on main 2bc36ce6: the rise at 197, 205, 213, 221, 229, 237, draft",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T13:16:34.324Z",
-   "file": "20261124131634324-note-t15-60-half.jpg",
-   "source": "../../../../tmp/t15-60-half.jpg",
-   "kind": "note",
-   "label": "frame 60 whole at half size: approved left, 884ff04d draft right",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T13:16:33.508Z",
-   "file": "20261124131633508-note-pair-t15.jpg",
-   "source": "../../../../tmp/pair-t15.jpg",
-   "kind": "note",
-   "label": "frame 60 draft, one to one: approved left, 884ff04d right",
    "stop": "sun"
   }
  ]
