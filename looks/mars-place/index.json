@@ -1,9 +1,33 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T10:59:30.252Z",
+ "pushed": "2026-11-24T11:13:03.421Z",
  "head": "aac984cc9dfffd0b71d7b3fd5a0fc95a2ef9e2ee",
- "note": "proof 48 running: cap in place, dissolve 2467 to 2472 is one mesa; plain round it still two grounds",
+ "note": "proof 49: dive 10 before T to 4 after; plates made from the level under them",
  "looks": [
+  {
+   "time": "2026-11-24T11:13:02.278Z",
+   "file": "20261124111302278-note-pyr-plates.jpg",
+   "source": "out/work/place/see/pyr-plates.png",
+   "kind": "note",
+   "label": "The land plates 0.7, 1.6, 3.8, 8.5 degrees: above as committed, below made from the level under them (pyramid.py); pattern between neighbours 0.69, 0.59, 0.98 before, 0.00 after",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T11:13:01.181Z",
+   "file": "20261124111301181-note-Q-dive-b.jpg",
+   "source": "out/work/place/see/Q-dive-b.png",
+   "kind": "note",
+   "label": "Proof 49, dive 2473 to 2481 (4 before T to 4 after, T 2477), draft: pale wedge lower left and dark corner lower right at 2473 to 2475 (the fan's borders), none at 2476; no jump from 2476 to 2477; close side clean",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T11:13:00.133Z",
+   "file": "20261124111300133-note-Q-dive-a.jpg",
+   "source": "out/work/place/see/Q-dive-a.png",
+   "kind": "note",
+   "label": "Proof 49, dive 2467 to 2472 (10 to 5 before T), draft: the turn on the mesh by height, hazeDepth 0.25, plates made from the level under them. One mesa in one place through the dissolve by height; the plain round it changes from the cap's to the fan's; fan borders lower left and right",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T10:59:29.122Z",
    "file": "20261124105929122-note-P-dive-a.jpg",
@@ -46,33 +70,6 @@
    "segment": "mars.rise",
    "frame": 2681,
    "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T10:08:44.296Z",
-   "file": "20261124100844296-compare-mars-dive-sides.jpg",
-   "source": "out/work/handover/mars-dive-sides.png",
-   "kind": "compare",
-   "label": "mars dive, both sides at T (frame 2477) and their difference times 8",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2477,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T09:39:26.091Z",
-   "file": "20261124093926091-note-K-d.jpg",
-   "source": "out/work/place/see/K-d.jpg",
-   "kind": "note",
-   "label": "sky by height, rise 2687 2689 2690 2692 2693 2698, draft: dissolve by height, fan borders at 2687",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T09:39:25.147Z",
-   "file": "20261124093925147-note-K-c.jpg",
-   "source": "out/work/place/see/K-c.jpg",
-   "kind": "note",
-   "label": "sky by height, 2474 2476 2477 (T dive) and 2681 2682 2686 (T rise), draft",
-   "stop": "mars"
   }
  ]
 }
