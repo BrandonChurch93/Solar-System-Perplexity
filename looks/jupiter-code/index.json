@@ -1,9 +1,49 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T22:27:49.320Z",
+ "pushed": "2026-11-24T22:55:08.501Z",
  "head": "5f3565032784c723e137d07da505bb17e1ec4adf",
- "note": "22:29 UTC, named state 5f35650 (code of e297620): the close view 3150 beside the approved image first, then the whole rise 3246 to 3334 every frame at draft and the dive's limb strip. The tool's rise report is red (pattern 1.16 from 3253 in the lower left, pop 1.36 from 3283); my own dive reading is red (pattern 0.74 at the limb strip).",
+ "note": "round 2, second commit in work: place moved onto the hero's own oval at Sun 33.1 degrees; hold pair unfinished",
  "looks": [
+  {
+   "time": "2026-11-24T22:55:07.753Z",
+   "file": "20261124225507753-note-pair-3150-x1.jpg",
+   "source": "../work/r6/pair-3150-x1.jpg",
+   "kind": "note",
+   "label": "UNFINISHED 3150 at the new place: approved image left, draft right",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T22:55:07.062Z",
+   "file": "20261124225507062-note-pair-2895-x1-crop.jpg",
+   "source": "../work/r6/pair-2895-x1-crop.jpg",
+   "kind": "note",
+   "label": "UNFINISHED hold 2895 at 2 to 1 round the new place: kept still left, place written into the hero right (reads as a dark blob, not yet an oval storm)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T22:55:06.152Z",
+   "file": "20261124225506152-note-po-pair-a.jpg",
+   "source": "../work/r6/po-pair-a.jpg",
+   "kind": "note",
+   "label": "rise 3250 to 3256: named state beside the plates alone, the lower left smear is the plates' own paint",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T22:55:05.018Z",
+   "file": "20261124225505018-note-oval-zoom.jpg",
+   "source": "../work/r6/oval-zoom.jpg",
+   "kind": "note",
+   "label": "survey: the hero's pale spiral oval east of the red storm, Sun 33.1 degrees, the new place",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T22:55:03.832Z",
+   "file": "20261124225503832-note-survey.jpg",
+   "source": "../work/r6/survey.jpg",
+   "kind": "note",
+   "label": "survey: Sun height over the hero map, ring of 32 degrees",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-24T22:27:47.067Z",
    "file": "20261124222747067-note-pair-3150-r2.jpg",
@@ -154,46 +194,6 @@
    "source": "../work/r5/s-rise-a.jpg",
    "kind": "note",
    "label": "round 2 rise on the merged tree with the pull back, 3236 to 3245 every frame at half size (run in progress, 3246 on follows)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T21:57:38.516Z",
-   "file": "20261124215738516-note-t3220.jpg",
-   "source": "../work/r5/t3220.jpg",
-   "kind": "note",
-   "label": "3220 on the merged tree at draft (surface view near its end)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T21:57:37.364Z",
-   "file": "20261124215737364-note-patzoom-3022h.jpg",
-   "source": "../work/r5/patzoom-3022h.jpg",
-   "kind": "note",
-   "label": "3022 + 1/2 against 3030 + 1/2 carried back, limb strip x 1300 to 1800, y 200 to 640 (top the two frames, middle their fine pattern, bottom the number and the judged area)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T21:57:36.214Z",
-   "file": "20261124215736214-note-patmaps.jpg",
-   "source": "../work/r5/patmaps.jpg",
-   "kind": "note",
-   "label": "my own pattern reading with the smooth tool's judge (rows 3004 + 1/2, 3015, 3034; left: where the number is over 0.45 in red, middle the frame, right the frame 8 later). Largest 0.74 at 3022 + 1/2, all in the strip at the limb: red, limit 0.45",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T21:57:35.062Z",
-   "file": "20261124215735062-note-s-limb-dive.jpg",
-   "source": "../work/r5/s-limb-dive.jpg",
-   "kind": "note",
-   "label": "RED: limb of the dive at full size, 3018 to 3032. The rim changes by height: cream band to about 3022, blue rim from about 3026, the sky's dark veil 3028 to 3032; far ground at the limb is stretched streaks",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T21:57:33.934Z",
-   "file": "20261124215733934-note-s-dive-3033.jpg",
-   "source": "../work/r5/s-dive-3033.jpg",
-   "kind": "note",
-   "label": "round 2 dive 3032 + 1/2 to 3035 at full size, where round 46 had its largest pattern number",
    "stop": "jupiter"
   }
  ]
