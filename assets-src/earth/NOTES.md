@@ -3672,3 +3672,56 @@ My own pictures measure of this tree's rise, draft, 2096 to 2140 (pics.py, /tmp/
 
 Looks pushed 10:37 (six sheets of this tree).
 Texel walk (p5.sh) started 10:36: 2.1 s a frame in the hold; first lines: textures 48, buffers 13, programs 8, vertex arrays 8, framebuffers 19, renderbuffers 1 at frame 1690; heap 369.5 MB; sets 1394 MB (earth only); graphics process 1959 MB, page 476 MB, all 2961 MB.
+
+### MAIL 637 from /root (10:45 UTC), word for word
+
+MAIL 637 from the Builder (/root), 10:45 UTC. Receipt of your second NAMED ade4386b7fbb87b0d435b157c8b7c9ba67ff63b8.
+1. Proof tree cef819ac47028a4b00247a8f4703691fd3ececfb on builder/proof-et2: main 1c3da4b2 with your three folders (48 files differ inside them, none outside; earth stays on handover.ownPath).
+2. Queued on the machines behind about 110 jobs: et2 01 to 10 (the 115 engine drafts against main), 11 (finals 1755 and 2010 against the reference), 12 (handover report), 15 (G11, G15, tsc, tests); ez2 01 to 08 (the pictures of the dive and of the rise in four parts each, joined here); eq2 03 (path, place, parity) and 04 (warm list and counts). The measure over the 495 frames is not queued: it dies cumulatively on Earth (check eg1) and waits for a restart on a fresh page, asked of harness_builder today. Until then G13 of Earth is UNKNOWN and is written so; your 59 frames with flat counts and 3.2 GB are STATED.
+3. What reads the time, under the ruling given to Jupiter and Uranus (MAILS 634, 635), which holds for every stop: plan F is about what appears, fades or blends (shares, covers, weights, looks, lights, levels, limbs); none of those may read the time. A motion (spin, flow, drift, orbit) may, if an eased rate has no step at either end, is never used to hide an exchange of pictures, and stays named in every NAMED. So: (b) the sky's turn by the clock is motion and stands, named. (a) look.away of the dive (the time since the hold's end, frames 1830 to 1855) and (c) the night lights by the pace are a look and a light by time: both are reds and are cured in the third commit by nearness, height or angle, as your own notes plan for (a).
+4. The pair of the plate and the low look (1.27 by your level check) will show as the pattern red of the pictures; its cure (one source) is the first item of the third commit. A change at the judged 2010 is allowed only where the frame stays as close to the approved image as it is now, shown before and after beside the approved image in NAMED.
+5. Due: your third commit within 90 minutes of my report on this one. The report goes out when the parts are back, with the md and the panels of every red. The third goes into Earth's round as it stands.
+No answer needed.
+
+### 10:40 to 11:02 UTC, the memory question: the order of the measure tool, a short run of that order, answer part 1 sent
+
+Read in `tools/measure.ts` (my tree, main 09d64d78): the job makes two passes on one page. (1) G13: `setDiagnostic('texels')`, every frame of `detailFrames` (495 for Earth, no cover window) at draft with a PNG, a line "G13 n/495 frames" every 10th frame. (2) G5 and G17 on the same page: `setDiagnostic('nograin')`, the judged frames 1755, 1857, 2010, 2156 at `a.tier ?? 'final'`, with `sanity()` (a Float32Array of the whole target read back) and a PNG for the hold and the terrain frame. In the texel pass 2156 is the 477th frame; "490 of 495" is the last line that pass prints. So the death "at frame 2156" reported in MAIL 627 fits the fourth final of pass 2, not the texel pass. I have not seen the job's log.
+
+The first try of the texel walk (p5.sh, mem.ts) was stopped by me at frame 1785 (n 106) to add that second pass: its 106 lines are in /tmp/gl/s8/mem-texels-first-try.log (textures 48, buffers 13, programs 8 at every frame, heap 368.9 to 373.6 MB, all processes 2961 to 2972 MB).
+
+Tool: `out/work/earth/place/tmp/mem2.ts TIER OUT VIEW TAIL frames...` (TAIL is a list like `1755p,1857,2010p,2156`: after the frames, on the same page, nograin and final, sanity, PNG where the frame ends in p). A sampler (/tmp/gl/s8/sampler.sh) writes every 2 s the resident memory of the browser's processes and the machine's MemAvailable to /tmp/gl/s8/sampler.log.
+
+Short run of that order (state "walk-short 0 11:00:01", log /tmp/gl/s8/mem-short.log): 21 texel frames at draft (1680 to 2155 every 25th, 2174), then the four finals. No crash, exit 0. As printed by memsum2.py:
+- "tex first 47 least 47 at 1680 most 50 at 1755 last 50"
+- "buf first 13 least 13 at 1680 most 46 at 2156 last 46"
+- "prog first 8 least 8 at 1680 most 15 at 2156 last 15"
+- "vao first 8 least 8 at 1680 most 16 at 2156 last 16"
+- "fb first 18 least 18 at 1680 most 19 at 1705 last 19"
+- "heap first 372.5 least 293.1 at 2156 most 378.3 at 1730 last 293.1"
+- "sets first 1394 ... last 1394", "lost first 0 ... last 0"
+- "gpu first 1921 least 1921 at 1680 most 2293 at 2156 last 2293", "ren first 509 least 416 at 1857 most 517 at 1705 last 451", "rss first 2956 least 2956 at 1680 most 3274 at 2156 last 3274"
+- "change at frame 1705 (n 2): textures 48 buffers 13 programs 8 vertex arrays 8 framebuffers 19"
+- "change at frame 1880 (n 9): textures 48 buffers 30 programs 10 vertex arrays 11 framebuffers 19"
+- "change at frame 1755 (n 22): textures 50 buffers 34 programs 12 vertex arrays 13 framebuffers 19" (first final)
+- "change at frame 2156 (n 25): textures 50 buffers 46 programs 15 vertex arrays 16 framebuffers 19" (last final)
+- "tail frame 1755 final: invalid 0 coverage 0.329", 47.4 s; "tail frame 1857 final: invalid 0 coverage 0.779", 340.1 s; "tail frame 2010 final: invalid 0 coverage 0.780", 217.9 s; "tail frame 2156 final: invalid 0 coverage 0.612", 341.4 s.
+Sampler: most of all processes 3276 MB at 10:58:48 (graphics process 2302, page 443), least available on the machine while only the browser worked 4337 MB at 10:56:16 (a reading of 3120 MB at 10:59:29 is my own python reading two 4096 px pictures, not the browser).
+
+Answer part 1 sent to /root 11:02 UTC (high), with the reading of the tool's order, the short run's numbers, and that the full order (495 texel frames, then the four finals, one page) runs since 11:00 and ends about 12:20; the full beauty walk is put after the third commit unless /root says otherwise.
+
+### 10:50 to 11:00 UTC, what reads the time (MAIL 637 item 3), numbers before any change
+
+`out/work/earth/place/tmp/laws.ts FRAMES` prints, with no render, for each frame at its middle sample: height, `near` (the ratio set.ts uses), `plan.pace`, `away` as it is and as the nearness law of the rise gives it, the lights' factor.
+- `away` now, dive (by the clock): 0.0003 at 1830, 0.2463 at 1838, 0.5878 at 1844, 0.8903 at 1850, 1.0000 at 1856. By the rise's nearness law (`look.back` 1.03 to 1.35): 0 to 1836, 0.0119 at 1838, 0.4922 at 1844, 0.9982 at 1848, 1 from 1850. In the hold `near` is 0.9639 (1680) to 0.9998 (1829), so the law gives 0 at every hold frame. Judged 1857: 1 by both. Rise: already this law (0.9478 at 2160, 0.2337 at 2164, 0 from 2168).
+- lights, the factor by the pace: dive 1.0000 to 1844, 0.9207 at 1850, 0.7123 at 1856, 0.6421 at 1858, least 0.5385 at 1862, 0.6722 at 1870, 0.8420 at 1890, 1.0000 from 1900 (there `1 - low` is 0 anyway). Rise 0.9723 at 2120, 0.6465 at 2128, 0.3520 at 2140, least 0.2243 at 2146, 0.3964 at 2152, 0.6100 at 2156, 0.8478 at 2160, 1.0000 from 2166. Heights: 1857 about 1.40, 2156 1.8869.
+- `uFree` of the air (`leaving ? 1 : away`) is a latch: it follows `away` to the rise's change of view, where `away` is 1, and stays 1 after it. Nothing steps and nothing fades by it; the hold before and the travel after have different night rims at the same height by it. To be named.
+
+### 11:00 UTC, the far zone: the two approved pictures show two different grounds (measured on the files)
+
+`q12-lay.png` is the close picture laid back on the ground (plate raster, 12 degrees, 4096 px), `place-12.jpg` the plate of this tree, whose far zone is the hold's own ground. By rings about the point under the close camera, inside the lay back's cover (printed by a scratch script on `farin.reach`):
+- 4 to 5 degrees: lay back mean (BGR) [144, 127, 96], its grey from 63 (10th) to 201 (90th); plate [86, 70, 41], 27 to 147; share brighter than 170 in every channel: lay back 0.14, plate 0.06.
+- 6 to 7 degrees: lay back [178, 166, 143], 105 to 217; plate [116, 99, 64], 41 to 176; bright share 0.38 against 0.10.
+- 7 to 8 degrees: lay back [190, 181, 164], 128 to 216; plate [88, 80, 47], 33 to 140; 0.50 against 0.03.
+- 8 to 9 degrees: lay back [204, 196, 183], 144 to 228; plate [89, 86, 57], 27 to 179; 0.70 against 0.10.
+- 9 to 10 degrees: lay back [221, 216, 207], 196 to 234; plate [92, 84, 57], 30 to 183; 0.96 against 0.11.
+So past 6 degrees the close picture shows a cloud deck where the hold's ground shows sea and Cuba with a tenth of cloud. This is the pair that the level check calls 1.27.
