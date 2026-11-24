@@ -1,9 +1,53 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T06:30:31.386Z",
- "head": "589fd9aa521bb3644012e939b9a125a2242bf6ef",
- "note": "main f6ce51a merged with the sky look as 589fd9a; path green with the eye line; T sheet; pictures and parity running",
+ "pushed": "2026-11-24T06:52:27.190Z",
+ "head": "c8ca94eb4d524367af5303b2c09d93239482bb79",
+ "note": "main b0b8788 merged as c8ca94e; rise pictures on 589fd9a: two red lines (travel onset pops, stars through the shaded ring); dive pictures running, finals next",
  "looks": [
+  {
+   "time": "2026-11-24T06:52:25.887Z",
+   "file": "20261124065225887-note-saturn-rise-pops.jpg",
+   "source": "../../../../tmp/v/r36/saturn-rise-pops.png",
+   "kind": "note",
+   "label": "589fd9a, the judge's panel of the rise: the four largest pops are 3892 to 3896, the travel leaving its rest; inside the rise the largest is 1.21 at 3875",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-24T06:52:25.088Z",
+   "file": "20261124065225088-note-saturn-rise-changes.jpg",
+   "source": "../../../../tmp/v/r36/saturn-rise-changes.png",
+   "kind": "note",
+   "label": "589fd9a, the judge's panel of the rise: pattern 0.50 at 3859 lies on the shaded ring at the bottom right where the star cloud shows through it (two layers that move apart); 0.45 at 3808 at the right frame edge",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-24T06:52:24.188Z",
+   "file": "20261124065224188-note-rise_e.jpg",
+   "source": "../../../../tmp/v/r36/rise_e.png",
+   "kind": "note",
+   "label": "589fd9a draft: every second frame 3866 to 3884, the end of the rise"
+  },
+  {
+   "time": "2026-11-24T06:52:23.345Z",
+   "file": "20261124065223345-note-rise_c.jpg",
+   "source": "../../../../tmp/v/r36/rise_c.png",
+   "kind": "note",
+   "label": "589fd9a draft: every second frame 3842 to 3864 of the rise, across T 3852"
+  },
+  {
+   "time": "2026-11-24T06:52:22.123Z",
+   "file": "20261124065222123-note-rise_b.jpg",
+   "source": "../../../../tmp/v/r36/rise_b.png",
+   "kind": "note",
+   "label": "589fd9a draft: every second frame 3814 to 3840 of the rise"
+  },
+  {
+   "time": "2026-11-24T06:52:20.327Z",
+   "file": "20261124065220327-note-rise_a.jpg",
+   "source": "../../../../tmp/v/r36/rise_a.png",
+   "kind": "note",
+   "label": "589fd9a draft: every frame 3798 to 3812, the end of the bend and the first frames of the rise"
+  },
   {
    "time": "2026-11-24T06:30:30.576Z",
    "file": "20261124063030576-note-dive_sky_pairs.jpg",
@@ -17,48 +61,6 @@
    "source": "../../../../tmp/v/r35/sky3720_four.png",
    "kind": "note",
    "label": "sky of 3720 (0 to 1000 by 0 to 300): approved, head before, look stars 8 cap 0.5, look stars 5.5 cap 0.9 (taken)"
-  },
-  {
-   "time": "2026-11-24T06:30:29.115Z",
-   "file": "20261124063029115-note-t_crops.jpg",
-   "source": "../../../../tmp/v/r36/t_crops.png",
-   "kind": "note",
-   "label": "589fd9a: 3850 to 3853 at full size, the left half under the sky, across T 3852"
-  },
-  {
-   "time": "2026-11-24T06:30:28.125Z",
-   "file": "20261124063028125-note-tsheet_sheet.jpg",
-   "source": "../../../../tmp/v/r36/tsheet_sheet.png",
-   "kind": "note",
-   "label": "589fd9a (main f6ce51a merged, the sky look named): every frame 3842 to 3856 at draft, the change of view T is 3852: no border of the set, no far edge of the plane, no jump at T (frame to frame mean difference 14.27, 14.44, 14.54, 14.69 across it)"
-  },
-  {
-   "time": "2026-11-24T06:14:39.483Z",
-   "file": "20261124061439483-note-limb_specks.jpg",
-   "source": "../../../../tmp/v/r34/limb_specks.png",
-   "kind": "note",
-   "label": "top limb 3568 to 3576 at six times, draft: single dark pixels along the limb from 3570"
-  },
-  {
-   "time": "2026-11-24T06:14:38.873Z",
-   "file": "20261124061438873-note-sky3720_stack.jpg",
-   "source": "../../../../tmp/v/r35/sky3720_stack.png",
-   "kind": "note",
-   "label": "sky of 3720, top left 1000 by 330: approved, head, trial with the sky look named to the engine (not committed)"
-  },
-  {
-   "time": "2026-11-24T06:14:38.342Z",
-   "file": "20261124061438342-note-pm2_3581.jpg",
-   "source": "../../../../tmp/v/r34/pm2_3581.png",
-   "kind": "note",
-   "label": "dive 3581: pattern change to 3589 on the body: the red is the border of the globe's shadow on the ring at the bottom edge of the frame"
-  },
-  {
-   "time": "2026-11-24T06:14:37.783Z",
-   "file": "20261124061437783-note-patdet_3561.jpg",
-   "source": "../../../../tmp/v/r34/patdet_3561.png",
-   "kind": "note",
-   "label": "dive 3561 to 3569 at the pole, the judge's own steps: 3561, 3569 carried back (the limb is warped by the flow), detail of each, pattern change, contrast of each"
   }
  ]
 }
