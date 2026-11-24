@@ -1,9 +1,36 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-24T13:44:35.969Z",
- "head": "80033a732012e484fa7fecd4b44bb5c3a03d7a95",
- "note": "Limb glow laid on the ground: the report's pattern measure on windows reads none over 0.45 from 1262 to 1319 (base 0.83 at 1284); left are 1320, 1542 to 1546 and 1575. Trial, not a commit",
+ "pushed": "2026-11-24T14:07:51.135Z",
+ "head": "7c1dfe17b970546eebab68476ae47fca1c0126aa",
+ "note": "Chain W running on the merge with main 2bc36ce6: dive 1260 to 1291 with the limb glow held on the ground",
  "looks": [
+  {
+   "time": "2026-11-24T14:07:50.031Z",
+   "file": "20261124140750031-note-s1276.jpg",
+   "source": "../../../../tmp/v/hwp/s1276.jpg",
+   "kind": "note",
+   "label": "Same run, 1276 to 1291: speckled patch lower left from 1286 still there",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T14:07:48.977Z",
+   "file": "20261124140748977-note-s1260.jpg",
+   "source": "../../../../tmp/v/hwp/s1260.jpg",
+   "kind": "note",
+   "label": "Chain W on merge 7c1dfe17 with the limb glow laid on the ground, not committed: draft frames 1260 to 1275 of the handover run",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T14:01:39.811Z",
+   "file": "20261124140139811-compare-venus-dive-sides.jpg",
+   "source": "out/work/handover/venus-dive-sides.png",
+   "kind": "compare",
+   "label": "venus dive, both sides at T (frame 1343) and their difference times 8",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "frame": 1343,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-24T13:44:34.084Z",
    "file": "20261124134434084-note-h3-a.jpg",
@@ -42,30 +69,6 @@
    "source": "../../../../tmp/v/limbfull.jpg",
    "kind": "note",
    "label": "venus experiment, refused: the glow of the limb kept whole down to height 0.12, frames 1288 to 1328 (wide band on the limb; pattern 0.5 to 1.0 through 1277 to 1304)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T12:31:35.925Z",
-   "file": "20261124123135925-note-venus-dive-changes-V.jpg",
-   "source": "../../../../tmp/v/venus-dive-changes-V.png",
-   "kind": "note",
-   "label": "venus dive changes panel on 80033a73",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T12:31:35.297Z",
-   "file": "20261124123135297-note-pairs.jpg",
-   "source": "../../../../tmp/v/abx/X-limb0/pairs/pairs.jpg",
-   "kind": "note",
-   "label": "venus pairs with the glow of the limb off, dive and rise (experiment, not a commit)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T12:05:26.833Z",
-   "file": "20261124120526833-note-s1276.jpg",
-   "source": "../../../../tmp/v/hv/s1276.jpg",
-   "kind": "note",
-   "label": "dive 1276 to 1291, chain V frames, state x5",
    "stop": "venus"
   }
  ]
