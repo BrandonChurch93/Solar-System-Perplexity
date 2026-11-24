@@ -224,6 +224,8 @@
       ],
       "close": 0,
       "view": 0.43,
+      "seam": 2,
+      "seamNote": "the thin line outside the outer edge (the look's arc) is drawn at a footprint of at most this many times the footprint of the true radius of the plane, and only inside the span of the profile. At the reach of the profile the hero's shape ends, so the bent radius jumps there and the frame to frame measure of the footprint was huge on the pixel pairs that lie across that jump: the arc then read the coarsest level of the profile and drew a line of dashes there that moved with the pixel grid from frame to frame. Elsewhere the footprint is as before",
       "alone": "",
       "aloneNote": "for the proof of the handing over only: kept or model draws that scene alone in every take from the hold's end on; empty in the film"
     },

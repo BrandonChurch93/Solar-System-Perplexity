@@ -6,6 +6,13 @@ const SPOKES = ice.spokes.at.length
 const SAND = ice.sand.layers.length
 export const GRAIN_LEVELS = grains.levels.name.length
 
+// The limits of the look that are written in pixels are angles: shares of the height of the frame, written as
+// pixels of a frame grains.json frame pixels high. This is the factor that makes them pixels of a frame of the
+// given height, so a frame of any size shows the same grains at the same places.
+export function pixelScale(height: number): number {
+  return height / grains.frame
+}
+
 // The 32 bit mix that the shaders use (ringPcg in field.ts), for the numbers a grain has of its own.
 export function pcg(v: number): number {
   const s = (Math.imul(v, 747796405) + 2891336453) >>> 0
@@ -196,7 +203,7 @@ float grainTaken(float cells, float d) {
   return cells * sum * uGrainFit.z;
 }`
 
-export interface Ice { uniforms: Record<string, THREE.IUniform>; move: THREE.Vector4; levels: GrainLevel[]; set(spinRadians: number, near: number, focal: number): void }
+export interface Ice { uniforms: Record<string, THREE.IUniform>; move: THREE.Vector4; levels: GrainLevel[]; set(spinRadians: number, near: number, focal: number, height: number): void }
 
 export function iceField(): Ice {
   const k = ice.spokes
@@ -211,18 +218,19 @@ export function iceField(): Ice {
   const sand = g.layers.map(() => new THREE.Vector4())
   const grainLevel = levels.map((level, i) => new THREE.Vector4(l.counted[i]! > 0.5 ? level.depth : 0, level.ref, l.pixels[i]![0], l.pixels[i]![1]))
   const grainFit = new THREE.Vector4(grains.share, total, 0, 0)
-  const set = (spinRadians: number, near: number, focal: number): void => {
+  const set = (spinRadians: number, near: number, focal: number, height: number): void => {
+    const scale = pixelScale(height)
     orbit.x = spinRadians / (2 * Math.PI)
     orbit.z = near
     // the sand has its strength in the hold and none near the sheet
     const far = 1 - near
     sandFit.w = far
     sandSpark.set(g.spark.dense * far, g.spark.thin * far, g.spark.from, g.spark.to)
-    g.layers.forEach((layer, i) => sand[i]!.set(layer.pixels, layer.dense * g.far * far, layer.thin * g.far * far, layer.sparks))
-    levels.forEach((level, i) => (grainLevel[i]!.y = level.ref * focal))
+    g.layers.forEach((layer, i) => sand[i]!.set(layer.pixels * scale, layer.dense * g.far * far, layer.thin * g.far * far, layer.sparks))
+    levels.forEach((level, i) => grainLevel[i]!.set(grainLevel[i]!.x, level.ref * focal, l.pixels[i]![0]! * scale, l.pixels[i]![1]! * scale))
     grainFit.z = near
   }
-  set(0, 0, 1000)
+  set(0, 0, 1000, grains.frame)
   return {
     uniforms: {
       uIceOrbit: { value: orbit },
@@ -243,7 +251,7 @@ export function iceField(): Ice {
     levels,
     // the turn of the orbit that keeps pace with the globe, in full circles since the middle of the hold; how
     // near the lens is to the sheet (0 in the hold, 1 in the skim): the sand shows far from it, the spokes
-    // and the grains near it; and the focal length of the view in pixels
+    // and the grains near it; the focal length of the view in pixels and the height of the frame in pixels
     set,
   }
 }

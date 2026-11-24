@@ -8,6 +8,7 @@ import * as look from './look'
 import { plan } from './plan'
 import { layoutUniforms, profileUniforms } from './profile'
 import { Rings } from './rings'
+import { pixelScale } from '../ice'
 import { shotMatrix, shotUniforms } from '../shot'
 import apronJson from '../apron.json'
 import bloomJson from '../bloom.json'
@@ -200,15 +201,17 @@ export const createKept: SetFactory = async (ctx) => {
       const gain = 1 / shot.post.exposure
       const elapsed = state.time - plan.holdMid
       const aspect = view.format.width / view.format.height
+      // what the look holds in pixels is an angle: pixels of a frame grains.json frame pixels high
+      const foot = pixelScale(view.format.height)
 
       const gu = globe.material.uniforms
       const su = shell.material.uniforms
       ;(gu.uCam!.value as THREE.Vector3).copy(camS)
-      gu.uEdgePx!.value = THREE.MathUtils.lerp(look.globe.edgePx, look.skimLimb[0], skimW.value)
+      gu.uEdgePx!.value = THREE.MathUtils.lerp(look.globe.edgePx, look.skimLimb[0], skimW.value) * foot
       gu.uEdgeLin!.value = look.skimLimb[1] * skimW.value
       gu.uLimbW!.value = poseW.value * look.limbShow
-      ;(gu.uFine!.value as THREE.Vector4).w = (1 - poseW.value) * (1 - close.value)
-      gu.uNightBlur!.value = look.globe.nightBlurFar + (look.globe.nightBlur - look.globe.nightBlurFar) * close.value
+      ;(gu.uFine!.value as THREE.Vector4).set(look.globe.fine[0]! * foot, look.globe.fine[1]!, look.globe.fine[2]!, (1 - poseW.value) * (1 - close.value))
+      gu.uNightBlur!.value = (look.globe.nightBlurFar + (look.globe.nightBlur - look.globe.nightBlurFar) * close.value) * foot
       su.uLimbW!.value = gu.uLimbW!.value
       gu.uInflate!.value = gu.uLimbW!.value > 0 ? look.globe.limbInflate : 1
       ;(gu.uSunW!.value as THREE.Vector3).copy(sunS)
@@ -226,6 +229,8 @@ export const createKept: SetFactory = async (ctx) => {
       ;(su.uSunL!.value as THREE.Vector3).copy(sunL)
       su.uGain!.value = gain * state.weight
       const ru = rings.uniforms
+      ;(ru.uFoot!.value as THREE.Vector3).set(foot, foot * polarJson.sets.full[0]! / polarSize[0], foot * innerJson.sets.full[0]! / innerSize[0])
+      ru.uSeam!.value = window.seam
       ;(ru.uCamL!.value as THREE.Vector3).copy(camL)
       rings.cull(camL, close.value)
       ;(ru.uSunL!.value as THREE.Vector3).copy(sunL)
@@ -285,6 +290,7 @@ export const createKept: SetFactory = async (ctx) => {
       ;(tu.uAxis!.value as THREE.Vector3).copy(plan.axis)
       ;(tu.uToBody!.value as THREE.Matrix3).setFromMatrix4(toBody.makeRotationFromQuaternion(bodyBack.copy(total).invert()))
       tu.uGain!.value = gain * state.weight
+      tu.uEdgePx!.value = look.titan.edgePx * foot
 
       const distance = centre.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)

@@ -2539,3 +2539,158 @@ Measured (drafts against a359a4b, files /tmp/v/r28/a_FRAME.png; finals /tmp/v/r2
   judge is corrected before a set is searched for Saturn. "Until then do not tune the path to the report's
   speed lines."
 - After the take: 60 frames a second clips of the dive and the rise are rendered and shown.
+
+## 2026-11-24, 02:32 to 02:50 VM: ruling (a) and the sky cure pushed (3e9ee2f), main 3efc31d merged (6426068)
+
+- ae772cb (work), 3e9ee2f (merge of main f2375d2), reported to the Builder 02:47 VM with five pictures. Checks
+  on 3e9ee2f: tsc exit 0; vitest 36 files, 286 tests; smooth path green ("VERDICT: green. No number is over its
+  limit."); handover path "saturn.dive every frame: pass", "saturn.rise every frame: pass"; "PASS G11  every
+  asset has a row or a recipe", "PASS G15  at most 2 sets per frame; finished stops: saturn/web 274 MB,
+  saturn/full 747 MB". Net size of the three folders against main f2375d2: minus 2.105 MB (74.716 against
+  76.821, decimal MB as the Builder counts).
+- Frames outside my segments change with ruling (a), because the kept set draws the globe there too (drafts,
+  a359a4b in /home/user/workspace/mainref against the working tree): 3360 globe only (largest 12), 3380 globe
+  (largest 43) and the sky inside the footprint of the hold's picture (largest 16, the cure), 3890 and 3900
+  globe only (largest 102, 91). a359a4b equals main 4f2127a byte for byte at those four frames. Said in the
+  report (looks: "ruling a and sky cure: a359a4b against now").
+- 3716 to 3725 at draft, the globe at full size: storms and spots ride with the map, nothing slides against it;
+  the slide of the streaks is under 0.12 px a frame there (0.2 degrees a second on a globe of about 1000 px).
+- sky_builder asked three things (mail 467 of the Builder: the dip of the engine's sky on the rise and the sky
+  look at 3720); answered 02:36 VM: sky_e1, sky_e2 are draft frames 3867 to 3884 of a359a4b, the level per
+  frame (shot.skyStars) is one function of the height in my plan, the measure that dipped is the mean luma of
+  the sky inside the eroded sky mask, the reference at 3720 is the approved close (the sky both share, the box
+  x 0 to 900, y 0 to 330, the top left 960 by 540). It sends the exact lines for the stop's look of the sky.
+- NOTE 482: main is 3efc31d: Saturn's folders are a359a4b there, and npm run smooth has all parts (path,
+  pictures, place, parity, counts). A READY for a round carries its last lines whole. The merge of 3efc31d had
+  two conflicts (globe.ts, this notebook), because main took a359a4b as a copy and not as a merge; resolved with
+  my side, after checking that main's three folders equal a359a4b and that my folders equal 3e9ee2f after it.
+- parity (tools/smooth.ts): the same film frame at uhd scaled down by 2 against the master, draft tier, at
+  shares 0.25, 0.5, 0.75 of the dive and of the rise and 0.5 of the surface view; limits in config smooth.parity
+  (maxMean 12, maxCoarse 3.2, maxBlockLevel 12, maxLevel 2.2). It is the judge of ruling (d).
+
+## 2026-11-24, 02:40 VM on: ruling (d) with mail 385
+
+Built in the working tree on 6426068:
+- grains.ts: every grain is a square of two triangles that faces the lens (InstancedBufferGeometry: four
+  corners, index 0 1 2, 2 1 3; per instance aPlace and aGrain; Mesh, DoubleSide, renderOrder 7), at the depth of
+  the middle of the grain. No point is drawn any more, so nothing in the picture depends on the card's limit of
+  the point size; grains.json largestPoint is gone. The square is 2 radius + way + 3 px wide with no upper
+  limit; the triangles are clipped by the frame, so the trick that drew a point from the edge of the frame is
+  gone too. The pixel inside the grain is a smooth varying (vAt, pixels from the middle); every flat varying
+  has the same value at all four corners, so no rule about the first or last corner of a triangle is in it.
+- The limits of the look written in pixels are shares of the height of the frame: grains.json frame (1080);
+  ice.ts pixelScale(height) = height / frame; levels.pixels (uGrainLevel zw, and the reach on the CPU),
+  levels.largest (uGrainLook xy), lobes.pixels (uGrainShape2 xy) are multiplied by it for each frame. Left in
+  pixels because they are the pixel itself: the 3 px pad of the square, the half pixel soft edge of a ball, the
+  footprint of the pixel on the sheet.
+- Counts of grains by frame at the master (out/scratch/count.ts): 3640 104, 3680 473, 3720 711, 3760 2445,
+  3780 18444, 3800 40272, 3820 32245, 3840 201. So four corners a grain cost nothing that matters.
+
+## 2026-11-24, 02:52 VM: MAIL 483 (the Builder's machines on a359a4b as it stands on main, proof aac2e8dd)
+
+A. Measure: "PASS G13 saturn: 0 of 495 frames over 0.02 soft. PASS G5 (3465, 3567, 3720, 3866 invalid 0). FAIL
+G17 saturn: 3465 median 1.055 p25 0.919 over 71 tiles; 3720 median 0.685 p25 0.325 over 62 tiles." "A red
+measure is a severe issue in the round, so 3720's fine detail belongs on your list with a plan: say which tiles
+lose (the near ring, the globe's bands, the far ring) and what would carry the approved image's detail there."
+B. The whole smooth report: VERDICT red, 6 numbers.
+1. Path green on the dive and on the rise, whole frames and rate 2 (largest step 0.066).
+2. Pictures, dive: level step 0.02, pop 1.09: green. Change in place 20.7 from 3594 + 1/2 (limit 20, 9 frames
+over it, first 3593, most at pixel 1844, 980). Provisional, not in force; the judged number will be the pattern
+number. "Look at saturn-dive-changes.png all the same and tell me what it is."
+3. Pictures, rise: pop 1.43 from 3895 + 1/2 to the next, limit 1.2, 8 frames over it, first 3815 + 1/2. "what
+is left without the motion sits on the outer rim of the rings and along the ringlets: the rim sparkles from
+frame to frame. 3892 to 3896 lie in the leg after your rise, but the picture there is your globe and rings as
+the kept set draws them, and the first frame over the limit is 3815 + 1/2, inside your rise. This one is in
+force." Change in place 29.0 from 3824 (28 frames over it, first 3821, most at pixel 1300, 904: the globe's
+lower edge where it meets the ring; provisional).
+4. Parity: mean at one 8th of the size 3.703 at 3563 (limit 3.2); one block minus 22.068 at 3720 (limit 12;
+3563 minus 13.567, 3720 minus 22.068, 3829 minus 14.956); whole frame level minus 2.184 at 3563 (limit 2.2).
+"at 3563 and 3585, where the rings are far, the whole lit ring differs along its ringlets, and the 4K picture
+is the smoother and paler one. So the ring's radial pattern is not filtered by its footprint in the same way at
+both sizes (the master shows more contrast than the 4K picture scaled down). Brandon captures at 4K, so what is
+judged must be what the 4K picture shows. Your (d) cures the points; find the cause for the ringlets as well
+(the footprint in pixels, a fixed mip bias, a sample count per pixel, or noise in pixel units) and name the
+file. If it lies in the engine's ring and not in your folder, say so and I pass it to its owner."
+5. Counts: not measured, main has no counter yet. Not mine.
+C. 3e9ee2f8 received, (a) reads right; the frames outside my segments are allowed to change by it. "I hold its
+proof until (d) is in, so that one proof covers both and the parity part can be read on the same commit: send me
+ONE head merged with main (now 7e7fb89, same tree as 3efc31d but for kit/PROGRESS.md) with (a), the sky cure and
+(d), with npm run smooth -- --stop saturn run whole on your side (every part; the counts part will stay
+unmeasured until the profiler's take, say so) and its red lines listed. If (d) takes longer than 90 minutes,
+tell me and I prove 3e9ee2f8 alone."
+D. "For the round: a commit is named for the round when A, B.3 and B.4 are green or carry your plain word that
+they are not, with the plan. The base stays a base."
+Attachments in /home/user/.perplexity/attachments/69fc139468fb430699c3af6cbe96894b/ (smooth-saturn-aac2e8dd.md
+and .json, saturn-dive-pops.png, saturn-dive-changes.png, saturn-rise-pops.png, saturn-rise-changes.png,
+saturn-parity.png, measure-saturn-aac2e8dd.json, sat3-13-tail.txt). Clock: (d) is due by about 04:20 VM.
+
+## 03:16 VM: (d) measured, the parity of the ringlets cured, the dashed line outside the rim found and cured
+
+State: working tree on 6426068 (local merge of main 3efc31d on the pushed 3e9ee2f), nothing of this committed
+yet. Main is now 274f4c9 (NOTE 491), to be merged before the commit.
+
+NOTE 491 (03:16 UTC, to every stop builder), changes NOTE 482: "do not wait for your own whole npm run smooth
+before you name a commit. Name it as soon as, on your own tree merged with newest main, the path part is green
+or its red lines are listed, the handover report passes with the place picture off, and G13, G5, G17, G11 and
+G15 are read. The whole smooth report then runs on my machines ... On your own renderer run only the kinds and
+parts you are changing (--only pictures --kind dive and the like)." A whole smooth run here would take about
+2.6 hours (228 + 198 draft frames at rate 2 and 14 parity stills), so it is not run here.
+
+(d) as built (mail 374 d and mail 385): every grain of every level is a square of two triangles, instanced
+(grains.ts Grains.mesh); no gl.POINTS is left in src/stops/saturn. The limits of a grain in pixels are angles:
+pixelScale(height) = height / grains.frame (grains.json frame 1080). grains.json largestPoint is 0 and stays
+as a key because tests/capture-tool.test.ts reads it. Measured at 3800, master, points against squares: 21139
+pixels differ, largest 27 levels, mean 0.00637. Counts drawn at master: 3720 711, 3780 18444, 3800 40272,
+3820 32245. Parity at 3800 (uhd scaled down against master; mean, level, coarse, worst block): points 11.120,
+-7.471, 8.047, -46.281; squares 2.388, -0.735, 0.980, -6.267.
+
+Cause of the ringlet parity (mail 483 B.4): src/stops/saturn/kept/rings.ts, the weight of the hero's polar
+ring map and inner ring map against the profile function. It was measured in texels of the map per pixel of
+the drawn format (look.polarDensity [1.0, 1.3]), so at 3840 by 2160 the map gave way to the function at twice
+the distance and the far ring was the smoother, paler function there while the master still showed the map.
+The same pixel units sat in the sparkle (show by major axis over cell), the glint offset, the grain cells of
+the kept ring, the globe's edge width, fine detail and night blur, the moon's edge width, the model's globe
+and moon, and the sand layers of ice.ts. Cure: one scale "foot" = format height / grains.frame carried to all
+of them (uniform uFoot in kept/rings.ts: x foot, y and z foot times texels of the full set per loaded texel
+for the two maps, so the web set and the full set agree as well). At 1080 the bytes do not change (cmp equal
+at 3465, 3563, 3720, 3829, draft).
+Parity before (with (d) only), then after the cure, by my tool /tmp/v/parity.py (same maths as
+tools/img/smooth.py; it gives the Builder's 3563 row): mean, level, coarse, worst block, detail:
+  3465: 5.655 -1.636 2.992 -11.798 1.027  then  1.702 -0.638 0.738 -3.871 1.094
+  3563: 6.423 -2.192 3.709 -13.572 1.047  then  2.104 -1.120 1.196 -4.338 1.133
+  3585: 4.771 -2.012 2.783 -10.599 1.047  then  2.219 -1.188 1.384 -8.289 1.208
+  3720: 2.680 -0.933 1.132 -5.462 0.894   then  2.645 -0.982 1.100 -6.295 0.900
+  3829: 2.726 -0.753 1.109 -6.984 0.969   then  2.706 -0.823 1.093 -7.846 0.971
+Limits: mean 12, coarse 3.2, block 12, level 2.2. 3608, 3848, 3866 not rendered here.
+What is left is the engine's, not in my folder: the glow beside the bright limb reaches half as far in
+pixels of the master at uhd (src/post/chain.ts: the bloom pyramid has a fixed count of halvings from the
+drawn size; 3829, row 540, x 860 to 956: master 25.9 to 144.5, uhd 19.4 to 143.7), the stars of the engine's
+sky (src/space/sky.ts, blocks minus 2 to minus 4 at 3563) and the film grain (detail ratio over 1).
+
+The dashed line (mail 483 B.3, the rim that sparkles): a line of tan dashes, level about 40, one pixel wide,
+outside the faint F ring line along the lower left of the ring, in the kept set's picture: in the hold (3465),
+in the dive (3563) and after the rise (3891 to 3896), at both sizes. Test: with look.arc's gain at 0 the dashes
+go; with sparkle 0 or the polar map off they stay. Cause: src/stops/saturn/kept/rings.ts, the arc term (the
+thin line outside the outer edge, drawn from the profile's F ring through look.arc). Its footprint was the
+frame to frame derivative of the bent radius rq, and rq jumps at the reach of the profile (r 2.5), because the
+hero's shape is taken off only inside the reach. On the pixel pairs that lie across that jump the derivative
+was huge, the arc read the coarsest levels of the profile (whose last texels hold the mean of the outer ring)
+and drew a dash; which pixels draw it depends on how the jump falls on the 2 by 2 pixel blocks, so the dashes
+move from frame to frame: sparkle. Cure in my folder: the arc's footprint is at most skim.json
+handover.kept.seam (2) times the footprint of the true radius of the plane, and the arc draws only inside the
+span of the profile. Measured at draft, master, before against after: 3563 4211 pixels differ (258 by more
+than 20 levels), 3465 5391 (338), all on that one arc; nothing else in either frame changes
+(/tmp/v/r29/seam_crops.png, seam_diffs_small.png).
+
+G17 at 3720 by tiles (12 by 8, final still of 3e9ee2f, median 0.691, p25 0.326, gate asks median 0.8):
+  near ring left of the division (columns 0 to 2, rows 4 to 7, and 2,3): 13 tiles, all under 0.45, median 0.13
+  inner border of the division and the B ring's edge: 7 tiles under 0.8, median 0.41
+  far ring across the globe's lower edge (6,3 6,4 7,4 8,4): 4 tiles, median 0.43
+  right edge of row 5 (9,5 10,5 11,5: 0.44, 0.04, 0.02): the approved shows ring there, the film the globe's
+  night side: a difference of layout, not of detail
+  sky: 6 of 10 kept tiles under 0.8 (0.18 to 0.78): stars of the engine's sky, sky_builder's look for the stop
+With the 13 near tiles at 1 the median would be 1.0 (p25 0.645). The approved has there hairline dark gaps,
+a speckle of sand and a mix of grey, pink and tan at 3 to 12 px; the film has soft pale bands. Picture:
+/tmp/v/r29/g17_tiles_3720.png, g17_left_3720.png. The plan: step 2 (ringlets, sand and grains resolving by
+footprint) with the function's fine octaves as narrow dark gaps in the A ring and the sand as a speckle that
+is in the picture at 3 to 12 px, and the same crispness for the far ring across the globe.
