@@ -1,9 +1,17 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T13:49:42.547Z",
- "head": "c2d46ba56f2436c39d4f9c7ca1e9089fe07ac162",
- "note": "13:49 UTC trial: far look is the globe's map under the globe's grade, the place by one law of height; reds named",
+ "pushed": "2026-11-24T14:14:09.105Z",
+ "head": "b8a38cbe7be49c70b1e86c1f6851cf002068941f",
+ "note": "trial committed f4e94e04: far look of the scene is the globe's map. RED: rise by my proxy 1.31 at 4964 (head 0.98), 1.06 at 4972 (0.41), 0.59 at 4980 (1.51), 0.47 at 4988 (1.15); the map's band comes in lilac over the dark near deck; cyan dab by the limb at 4860; no tool number yet",
  "looks": [
+  {
+   "time": "2026-11-24T14:14:08.318Z",
+   "file": "20261124141408318-note-look-f5.jpg",
+   "source": "out/work/nep/weave/look-f5.jpg",
+   "kind": "note",
+   "label": "4860 trial beside the approved (G17 median 1.331, lower quarter 0.772, preview draft, 25.2 s a frame); the rise 4964 to 5004, head's scene over trial; the changes of view 4757 to 4770 and 4949 to 4950",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T13:49:21.328Z",
    "file": "20261124134921328-note-look-f4.jpg",
@@ -58,14 +66,6 @@
    "source": "out/work/nep/weave/look-dive-pairs.jpg",
    "kind": "note",
    "label": "Dive, my head 10f6b0bf, pairs 8 frames apart (4708, 4712, 4716, 4720, 4723, 4727, 4740): earlier frame, later one carried back on the sphere, pattern change (white is 1). Pattern by the report's function: 0.44, 0.69, 0.71, 1.15, 1.18, 0.96, 0.54 against 0.45. Preview draft, 1.4 s a frame above 0.9 radii, 9 to 14 s with the scene.",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T11:48:54.950Z",
-   "file": "20261124114854950-note-look-1149.jpg",
-   "source": "out/work/nep/cost/look-1149.jpg",
-   "kind": "note",
-   "label": "4860 beside the approved, 16 by 9 draft, work in progress: far field veil rebuilt (white torn arc, blue thin haze inside it), limb blue by the angle of view, limb glow at 0.58. G17 0.934 and 0.545. 95 s the frame alone.",
    "stop": "neptune"
   }
  ]
