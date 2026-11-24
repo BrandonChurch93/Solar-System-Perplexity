@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T21:07:49.575Z",
- "head": "290448a5de4742df6fb551dc46652f3e34e8a588",
- "note": "round 2 list items 1 and 2 at 3720: the tree the proofs run on now (3465 keeps its bytes)",
+ "pushed": "2026-11-24T21:22:29.957Z",
+ "head": "38591789c340058ad8cc55ca9d84ae3550aa9336",
+ "note": "proof job on the round 2 tree runs (G17 at 3720 median 1.013, at 3465 1.054); globe and foot beside the approved, what is still wrong there",
  "looks": [
+  {
+   "time": "2026-11-24T21:22:29.021Z",
+   "file": "20261124212229021-note-c_foot1_r54.jpg",
+   "source": "../../../../tmp/v/t18/c_foot1_r54.png",
+   "kind": "note",
+   "label": "3720 final on the proof tree at native size, the foot, approved left: the film's foot band is a soft brown shade where the approved has a dark grey band with a crisp upper edge, and the dust inside the rim is grain where the approved has streaks"
+  },
+  {
+   "time": "2026-11-24T21:22:28.207Z",
+   "file": "20261124212228207-note-c_globe_r54.jpg",
+   "source": "../../../../tmp/v/t18/c_globe_r54.png",
+   "kind": "note",
+   "label": "3720 final on the proof tree, globe, approved left: the film's belts are more orange, its top band is cream where the approved is grey blue (item 3, not cured)"
+  },
   {
    "time": "2026-11-24T21:07:48.586Z",
    "file": "20261124210748586-note-c_ll_r54.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/v/t18/c_foot2_in9.png",
    "kind": "note",
    "label": "crop of the foot of the globe at 3720, 1.5 times, approved left: no sky between ring and globe; the band on the globe is too tall and too hard here, softened in the next take"
-  },
-  {
-   "time": "2026-11-24T20:45:12.124Z",
-   "file": "20261124204512124-note-pair_in9.jpg",
-   "source": "../../../../tmp/v/t18/pair_in9.png",
-   "kind": "note",
-   "label": "3720 beside the approved image (left), full frame: new pose, bright inner ring matter to the planet, dust band in front of the globe's foot (this take: band too hard, softened after), ring tone by radius, fine grains, no moonlets"
-  },
-  {
-   "time": "2026-11-24T20:19:19.656Z",
-   "file": "20261124201919656-note-c_foot2_in4.jpg",
-   "source": "../../../../tmp/v/t18/c_foot2_in4.png",
-   "kind": "note",
-   "label": "crop of the foot of the globe at 3720, 1.5 times (approved left): dust runs into the planet, no sky between ring and globe"
   }
  ]
 }
