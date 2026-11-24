@@ -1,9 +1,85 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T16:59:05.287Z",
+ "pushed": "2026-11-24T17:25:01.754Z",
  "head": "e2d28f3861d586e04dd33196480b9d3cb430bd40",
- "note": "the merge of main ed003c70: the sky of the dive stands elsewhere, hold and surface keep their picture",
+ "note": "17:25 UTC: sky that stands still (working tree, not committed): 2895 final same bytes, 3150 final differs by rounding (71712 px by 1 level, 56 by more, at most 7), dive draft frames; rise frames are rendering",
  "looks": [
+  {
+   "time": "2026-11-24T17:24:41.392Z",
+   "file": "20261124172441392-note-pat-Rb.jpg",
+   "source": "../work/ff/pat-Rb.jpg",
+   "kind": "note",
+   "label": "rise base on the merge, rows 3247 to 3252 by the pattern measure: 0.48, 0.64, 0.53, 0.51",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T17:24:40.700Z",
+   "file": "20261124172440700-note-DdDs-sky-lift.jpg",
+   "source": "../work/sky/DdDs-sky-lift.png",
+   "kind": "note",
+   "label": "3033 and 3045 upper right quarter, level times 3, left the dive's report frames kept at 11:20 UTC (tree a90e29f), right the working tree: a dark band without stars over the limb with a straight end, in both",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T17:24:39.936Z",
+   "file": "20261124172439936-note-bS-3150.jpg",
+   "source": "out/work/jupiter/final/bS-3150.png",
+   "kind": "note",
+   "label": "3150 final, working tree with the sky that stands still: 71712 pixels differ from the merge by 1 level, 56 by more, at most 7; mean abs to the approved image 7.0307 in both",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T17:24:39.230Z",
+   "file": "20261124172439230-note-Ds-b.jpg",
+   "source": "../work/sky/Ds-b.jpg",
+   "kind": "note",
+   "label": "dive 3025 to 3061 draft, working tree with the sky that stands still",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T17:24:38.584Z",
+   "file": "20261124172438584-note-Dn-a.jpg",
+   "source": "../work/sky/Dn-a.jpg",
+   "kind": "note",
+   "label": "dive 2987 to 3013 draft on the merge e2d28f3, the sky as round 46 sees it (sweep 143.6 degrees)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T17:24:37.784Z",
+   "file": "20261124172437784-note-Ds-a.jpg",
+   "source": "../work/sky/Ds-a.jpg",
+   "kind": "note",
+   "label": "dive 2987 to 3021 draft, working tree: no terrain aim and the surface frame is the globe's, the sky stands still",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T17:15:40.913Z",
+   "file": "20261124171540913-frame-bS-2895.jpg",
+   "source": "out/work/jupiter/final/bS-2895.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2895, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
+  {
+   "time": "2026-11-24T17:14:41.603Z",
+   "file": "20261124171441603-frame-bS-3150.jpg",
+   "source": "out/work/jupiter/final/bS-3150.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3150, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
   {
    "time": "2026-11-24T16:59:04.703Z",
    "file": "20261124165904703-note-dn-right.jpg",
@@ -49,20 +125,6 @@
    "engine": "1db409b8ada90e29"
   },
   {
-   "time": "2026-11-24T16:40:18.617Z",
-   "file": "20261124164018617-frame-bW-2895.jpg",
-   "source": "out/work/jupiter/final/bW-2895.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2895, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "97c721d03c19099d"
-  },
-  {
    "time": "2026-11-24T16:36:45.637Z",
    "file": "20261124163645637-note-m12-sky.jpg",
    "source": "../work/t/m12-sky.png",
@@ -77,20 +139,6 @@
    "kind": "note",
    "label": "Draft frames 2990, 3000, 3010, 3280 before (left) and after (middle) the merge of main ed003c70, difference times 8 (right): my folders are the same, the bytes are not",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T16:34:45.243Z",
-   "file": "20261124163445243-frame-bN-3150.jpg",
-   "source": "out/work/jupiter/final/bN-3150.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3150, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
   },
   {
    "time": "2026-11-24T16:12:19.024Z",
@@ -170,54 +218,6 @@
    "source": "../work/ff/pat-v10.jpg",
    "kind": "note",
    "label": "STUDY the same with the plates alone on a flat relief: 0.49 0.48 0.48; so the relief is not the cause there",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T15:55:45.790Z",
-   "file": "20261124155545790-note-pat-v9.jpg",
-   "source": "../work/ff/pat-v9.jpg",
-   "kind": "note",
-   "label": "STUDY rise rows 3251 to 3253 with the plates alone and no air: 0.46 0.45 0.52, the most at the top left horizon; so the air is not the cause there",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T15:42:01.418Z",
-   "file": "20261124154201418-note-rm-a.jpg",
-   "source": "../work/ff/rm-a.jpg",
-   "kind": "note",
-   "label": "rise 3247, 3251, 3255, 3259 on the named bytes: dusk and dark aprons give way to the pale ring and the day",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T15:42:00.806Z",
-   "file": "20261124154200806-note-wide-view-vs-plates.jpg",
-   "source": "../work/ff/wide-view-vs-plates.jpg",
-   "kind": "note",
-   "label": "the wide canvas (left) and the plates through the air tables from the fit camera (right, plates at low size); yellow the approved frame",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T15:42:00.176Z",
-   "file": "20261124154200176-note-v7-vs-rm.jpg",
-   "source": "../work/ff/v7-vs-rm.jpg",
-   "kind": "note",
-   "label": "rise 3255 and 3259: top the named bytes, bottom the rim off (the canvas dusk fan ends in a straight line)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T15:41:59.501Z",
-   "file": "20261124154159501-note-pat-v7.jpg",
-   "source": "../work/ff/pat-v7.jpg",
-   "kind": "note",
-   "label": "rise 3251 to 3255 with the rim off: 0.96 to 1.26, the canvas edge shows at the right limb",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T15:41:58.823Z",
-   "file": "20261124154158823-note-pat-ideal-vs-Rm-6523.jpg",
-   "source": "../work/ff/pat-ideal-vs-Rm-6523.jpg",
-   "kind": "note",
-   "label": "rise 3261 + 1/2: top a rigid sequence (one picture carried by the sphere), bottom the film; the measure reads 0.70 and 0.69",
    "stop": "jupiter"
   }
  ]
