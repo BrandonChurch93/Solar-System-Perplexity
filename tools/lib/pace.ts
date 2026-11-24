@@ -3,8 +3,8 @@ import { captureRate, setCapture, shutterAsked } from '../../src/core/clock'
 import type { FilmDirector } from '../../src/director/film'
 import type { StopPlan } from '../../src/director/moves'
 import { paceLimits } from '../../src/director/pace'
-import { MIN_POINTS, curves, ringPlane, sampleWindow, type Kind } from '../smooth/camera'
-import { judgeCurve, type CurveResult } from '../smooth/path'
+import { MIN_POINTS, SEAM_REACH, curves, eyeCurves, ringPlane, sampleSeam, sampleWindow, type Kind } from '../smooth/camera'
+import { judgeCurve, judgeSeam, type CurveResult, type SeamResult } from '../smooth/path'
 
 // The plan check of a move: the three curves the harness judges a dive or a rise by (the path part of npm run smooth), read on the film's
 // own camera with the judge's own functions, so a test can hold a plan to the limits and the search of a law (tools/law.ts) cannot find a
@@ -46,6 +46,26 @@ export function paceOf(film: FilmDirector, plan: StopPlan, kind: PaceKind, rate 
     for (const [key, name, unit, floor] of units()) out[key] = judgeCurve(name, unit, c[key], w.k0, rate, w.own, S.path, floor, key === 'speed' ? { values: c.ring, min: MIN_POINTS } : null)
     const faults = (Object.keys(out) as CurveName[]).flatMap((key) => out[key].faults.map((f) => plan.id + ' ' + kind + ': ' + f.text))
     return { stop: plan.id, kind, rate, firstFrame: w.firstFrame, k0: w.k0, curves: out, ok: faults.length === 0, faults }
+  } finally {
+    setCapture(before.rate, before.shutter)
+  }
+}
+
+// The eye at the seam with the surface view (the end of a dive, the start of a rise) as the path part judges it: the way of the eye over
+// its own height above the ground, over the same number of the surface view itself, SEAM_REACH film frames to each side, read at the rate
+// of the harness. lowest is what is judged (against limit: smooth.path.minEye where none is given), inMove the lowest inside the move
+// itself, fault what the judge would name. A plan that is inside the limits of its three curves and stops its eye at the seam is not a
+// green plan: tools/law.ts scores this with the curves and tools/seam.ts shows it beside its own reading.
+export type PaceEye = SeamResult & { seam: number; own: number | null; limit: number | null }
+
+export function eyeOf(film: FilmDirector, plan: StopPlan, kind: PaceKind, rate = paceLimits().rate, limit: number | null = config.raw.smooth.path.minEye ?? null): PaceEye | null {
+  const before = { rate: captureRate(), shutter: shutterAsked() }
+  try {
+    const w = sampleSeam(config, film, plan, kind, rate)
+    if (!w) return null
+    const c = eyeCurves(w, plan, ringPlane(plan))
+    const move = kind === 'dive' ? { first: w.k0, end: w.seam * rate } : { first: w.seam * rate + 1, end: (w.seam + SEAM_REACH) * rate }
+    return { seam: w.seam, own: c.own, limit, ...judgeSeam(c.speed, c.along, w.k0, rate, limit, move) }
   } finally {
     setCapture(before.rate, before.shutter)
   }
