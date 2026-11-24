@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T16:12:03.359Z",
+ "pushed": "2026-11-24T16:33:43.207Z",
  "head": "f7ab197acd05bea7317f6e576894f818484ae09a",
- "note": "bank try 8 (ends inside the plate where the lay back is whole): 1755 final pair and dive crops; not yet proved",
+ "note": "bank try 8: every frame of the dive 1830 to 1892 and the rise 2124 to 2174 rendered and looked at (draft); proof renders running",
  "looks": [
+  {
+   "time": "2026-11-24T16:33:42.170Z",
+   "file": "20261124163342170-note-sheet-d3.jpg",
+   "source": "../../../../tmp/gl/s11/a1/sheet-d3.jpg",
+   "kind": "note",
+   "label": "bank try 8 draft, dive 1870 to 1892 every frame",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T16:33:41.405Z",
+   "file": "20261124163341405-note-y2.jpg",
+   "source": "../../../../tmp/gl/s11/a1/y2.jpg",
+   "kind": "note",
+   "label": "bank try 8 draft, rise 2132 to 2137 consecutive: the bank comes out from under the lay back",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T16:33:40.465Z",
+   "file": "20261124163340465-note-z2.jpg",
+   "source": "../../../../tmp/gl/s11/a1/z2.jpg",
+   "kind": "note",
+   "label": "bank try 8 draft, dive 1876 to 1881 consecutive: the white mass greys into the deck, grey bands at its lower edge",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T16:12:02.663Z",
    "file": "20261124161202663-note-pairs-1.jpg",
@@ -74,30 +98,6 @@
    "source": "../../../../tmp/gl/s11/d3/pairs-0.jpg",
    "kind": "note",
    "label": "bank try 3, standing puffs marched, draft 1870 1878 1882: reads as white blocks, dropped",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T15:23:16.472Z",
-   "file": "20261124152316472-note-hold-pair.jpg",
-   "source": "../../../../tmp/gl/s11/hold-pair.png",
-   "kind": "note",
-   "label": "bank first try at the hold 1755: kept final | draft with the bank, zone times 3",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T15:23:15.664Z",
-   "file": "20261124152315664-note-dive-pairs-a.jpg",
-   "source": "../../../../tmp/gl/s11/dive-pairs-a.jpg",
-   "kind": "note",
-   "label": "bank first try, draft: 1870 1880 1886, before | with the bank",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T14:59:38.379Z",
-   "file": "20261124145938379-note-pmap-base.jpg",
-   "source": "../../../../tmp/gl/s10/pmap-base.jpg",
-   "kind": "note",
-   "label": "dive middle on f7ab197a, rate 2 pictures 1884 1887 1890 1892: frame, frame 8 later carried back, pattern map (red). The red sits in the far zone, upper left: the plate's puff field over Yucatan gives way to the deck of the close picture. Highest 1.12 at 1890. This is what the bank is built for; nothing built yet.",
    "stop": "earth"
   }
  ]
