@@ -1,20 +1,31 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T02:07:36.319Z",
- "head": "c6bbaf6be2a2b9365830f4673441748fa0205660",
- "note": "dive side difference traced: the spin's cos and sin in the globe shader are 1e-4 off on this renderer; cure is to pass them from the plan",
+ "pushed": "2026-11-24T02:28:54.022Z",
+ "head": "b6d8018ff527f1162294afca34518b437417317a",
+ "note": "760 corner before and after the shell runs the globe's spin: same craters moved 0.68 px, sides at T now pass on dive and rise",
  "looks": [
   {
-   "time": "2026-11-24T02:07:25.972Z",
-   "file": "20261124020725972-note-sides760b.jpg",
-   "source": "out/work/mercury/place/tmp/sides760b.png",
+   "time": "2026-11-24T02:26:16.863Z",
+   "file": "20261124022616863-note-s7-760-crop.jpg",
+   "source": "out/work/mercury/place/tmp/s7-760-crop.png",
    "kind": "note",
-   "label": "mercury dive, both sides at T (760), lower left corner, and their difference times 8: globe is 0.5 texel of level 4 off the shell; cause found, the renderer's cos in the globe's spin is 1e-4 off",
+   "label": "760 lower left corner, twice the size: before, after the shell runs the globe's spin (same craters, moved 0.68 px), difference times 4",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-24T01:47:03.097Z",
-   "file": "20261124014703097-compare-mercury-dive-sides.jpg",
+   "time": "2026-11-24T02:16:26.518Z",
+   "file": "20261124021626518-compare-mercury-rise-sides.jpg",
+   "source": "out/work/handover/mercury-rise-sides.png",
+   "kind": "compare",
+   "label": "mercury rise, both sides at T (frame 977) and their difference times 8",
+   "stop": "mercury",
+   "segment": "mercury.rise",
+   "frame": 977,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T02:15:37.548Z",
+   "file": "20261124021537548-compare-mercury-dive-sides.jpg",
    "source": "out/work/handover/mercury-dive-sides.png",
    "kind": "compare",
    "label": "mercury dive, both sides at T (frame 760) and their difference times 8",
@@ -24,15 +35,12 @@
    "tier": "draft"
   },
   {
-   "time": "2026-11-24T01:35:38.336Z",
-   "file": "20261124013538336-compare-mercury-rise-sides.jpg",
-   "source": "out/work/handover/mercury-rise-sides.png",
-   "kind": "compare",
-   "label": "mercury rise, both sides at T (frame 977) and their difference times 8",
-   "stop": "mercury",
-   "segment": "mercury.rise",
-   "frame": 977,
-   "tier": "draft"
+   "time": "2026-11-24T02:07:25.972Z",
+   "file": "20261124020725972-note-sides760b.jpg",
+   "source": "out/work/mercury/place/tmp/sides760b.png",
+   "kind": "note",
+   "label": "mercury dive, both sides at T (760), lower left corner, and their difference times 8: globe is 0.5 texel of level 4 off the shell; cause found, the renderer's cos in the globe's spin is 1e-4 off",
+   "stop": "mercury"
   },
   {
    "time": "2026-11-24T01:35:15.221Z",
@@ -81,14 +89,6 @@
    "first": 754,
    "last": 765,
    "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T01:20:16.065Z",
-   "file": "20261124012016065-note-r1.jpg",
-   "source": "out/work/mercury/place/f5/r1.jpg",
-   "kind": "note",
-   "label": "c6bbaf6b rise 975 to 986, T at 977",
-   "stop": "mercury"
   }
  ]
 }
