@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T23:24:02.165Z",
+ "pushed": "2026-11-24T23:40:14.092Z",
  "head": "38591789c340058ad8cc55ca9d84ae3550aa9336",
- "note": "rise red by 0.01 (0.46 against 0.45, the dust inside the inner rim leaving in the climb), dive green 0.33; the dust's table by height is set again from the measure, next a trial of a darker inner zone at 3720",
+ "note": "dark inner zone at 3720 in the tree; d253 measured at 3567 and 3612: ring levels by the real pixel differ between 1920 and 3840, cure in work (frame factor on every width in pixels), then the whole proof",
  "looks": [
+  {
+   "time": "2026-11-24T23:40:13.482Z",
+   "file": "20261124234013482-note-d3612_all.jpg",
+   "source": "../../../../tmp/v/t21/d3612_all.png",
+   "kind": "note",
+   "label": "d253, 3612 at 1920 and the difference to 3840 halved, times 8, before the frame factor on the ring levels: ringlets differ by up to 13 of 255 over 16 px"
+  },
+  {
+   "time": "2026-11-24T23:40:12.879Z",
+   "file": "20261124234012879-note-dk1_foot1.jpg",
+   "source": "../../../../tmp/v/t21/dk1_foot1.png",
+   "kind": "note",
+   "label": "3720 the foot at 1 to 1, approved left: the dark dust closes the foot; still grainy where the approved has ringlets, the band on the globe's foot still broad"
+  },
+  {
+   "time": "2026-11-24T23:40:12.162Z",
+   "file": "20261124234012162-note-dk1_whole.jpg",
+   "source": "../../../../tmp/v/t21/dk1_whole.png",
+   "kind": "note",
+   "label": "3720 beside the approved (left), draft, no grain: the dust inside the inner rim dark (inner.light 0.3 and 0.12 where it was 0.9 and 0.7), half size"
+  },
   {
    "time": "2026-11-24T23:24:01.430Z",
    "file": "20261124232401430-note-final_3720.jpg",
@@ -39,28 +60,6 @@
    "source": "../../../../tmp/v/t20/foot4.png",
    "kind": "note",
    "label": "the globe's foot at native size, 3828.5, 3832.5, 3836.5, 3840.5 (first cure): the dust band on the globe thins too fast in the climb"
-  },
-  {
-   "time": "2026-11-24T22:32:38.154Z",
-   "file": "20261124223238154-note-saturn-rise-k7640-7690-changes.jpg",
-   "source": "../../../../tmp/v/t20/saturn-rise-k7640-7690-changes.png",
-   "kind": "note",
-   "label": "rise slice 3820 to 3845 after the first cure: first episode 0.70 to 0.29, second still RED 0.67 at 3832.5 at the globe's foot (the foot dust band on the globe by the grade's share); second cure renders now",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-24T22:32:37.516Z",
-   "file": "20261124223237516-note-rise_pair.jpg",
-   "source": "../../../../tmp/v/t20/rise_pair.png",
-   "kind": "note",
-   "label": "rise 3822.5 (top) and 3830.5 (bottom): left the red tree r54, right the dust inside the rim on its slower law by height (slice on main 7026711); the plate no longer swaps in 8 frames"
-  },
-  {
-   "time": "2026-11-24T22:07:47.060Z",
-   "file": "20261124220747060-note-rise6.jpg",
-   "source": "../../../../tmp/v/t18/rise6.png",
-   "kind": "note",
-   "label": "rise 3810 to 3850 every 8: the dust plate at the foot leaves between 3826 and 3834 (cause 2), cure in work"
   }
  ]
 }
