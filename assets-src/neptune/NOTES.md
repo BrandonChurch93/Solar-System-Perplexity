@@ -5104,3 +5104,133 @@ All numbers of pairs are MY PROXIES at preview draft (pairs 8 film frames apart,
 7. On the merge 45ffa593: tsc clean; tests 485 of 485 in 379 s (49 files; the test of tests/globe-cap.test.ts did not run
    over its time, the whole run passed); G11 pass; net of my folders 76.747 MB against 82.639 on main. NOT run: parity, G15,
    the report's pictures.
+
+## 16:05 to 17:15 UTC: point 4 of MAIL 688. What the grade of the fall draws; 4860 alone was not 4860 in order (cause found, own commit); the grade as one text (own commit); what draws the specks; the rise's red at 4988 is the globe's own; main merged, tests
+
+All numbers below: MY proxies and my own pixel counts at preview draft, not the report.
+
+1. CORRECTION of the section before this one, point 4, and of the message of commit 5a14d56d. I wrote there that the 4860 of
+   q3 differs from the 4860 of 14:50 in its far field (172 levels at most) and named a cause without a control (uFarSun).
+   That cause is WRONG. The control is back: see point 3. The G17 numbers given there (1.381, 0.741) and the comparison with
+   the named commit were taken on a 4860 drawn alone; drawn in order it reads 1.382, 0.741 (the same to the third digit).
+2. CONTROL, the grade off (`globe.fall.power` 1, 1, 1; frames 4720, 4860, 4988, 4707, dir nofall, 16:12): without the grade
+   the dim cloud of the night side is white (4988, 4707), the white bands have no lilac (4720), and the map's bright streaks
+   in the vortex are a pale azure. With it: orange specks, lilac fringes, electric cyan streaks. So the grade of the fall
+   draws the warm specks and the lilac: under the pivot (0.17, 0.37, 0.68) it raises each channel to its own power (2.6, 3.1,
+   3.7), and a dim white has its red over the pivot's red share and its green and blue under theirs, so the red is left and
+   the others go down. That is the answer to "find what draws them" (MAIL 688, point 4).
+3. 4860 ALONE AGAINST 4860 IN ORDER. Found at 16:22: the 4860 of q3 (drawn first in its process) differs from the 4860 of
+   two other renders (drawn after frames of the dive) in rows 69 to 253 of 540: 1.3 percent of the pixels over 8 levels,
+   172 at most, a thin line of the map's bands by the limb. Test (16:24): 4860 alone and 4860 after 4861, same tree: the
+   same bytes (sha256 begins bc11f394). 4860 after 4605, 4707, 4720, same tree: other bytes (676d3910). So not the first
+   frame of a process, but whether a frame from orbit was drawn before.
+   CAUSE: the scene reads the globe's map by the globe's own uniforms (MAP_UNIFORMS). One of them, uLine (the frame's
+   measure, bufferFrame, by which the plate levels come in), was set only in the branch of set.ts that draws from orbit. In
+   the ground view it kept what the last orbit frame left, or its start value 1 if none was drawn: right at 16 by 9 (1),
+   wrong at the preview (one half) and at the 4K capture (2).
+   FIX: one line, the ground view sets uLine itself. PROOF (16:29): with it 4860 alone has the bytes 676d3910 of 4860 in
+   order. Commit 4d3df934 "Neptune: the ground view sets the frame's measure for the map itself" (set.ts alone).
+   The film drawn in order had the right value. What it would have cost: any capture in parts, the tools that draw one
+   frame, and the parity of 4860 (1920 against 3840) wherever the 4K frame is drawn without an orbit frame before it.
+   The fault came in with the first fix (b8a38cbe, the scene reads the map); it is not on main.
+   Checked beside it: the other uniforms of the map are constants, or set in both branches (uSpin, uStream, uStormAngle,
+   uHold.x, uCirrus, uClump, uCirrusPx, uShadow.y, uEnd.x). Left and named: uCloud (the cloud's curve of light) is rewritten
+   by the ending of the stop; a ground frame drawn after a frame of the ending in one process would read it. The film never
+   does that (the ending comes after the ground) and my tools draw in film order.
+4. THE GRADE AS ONE TEXT (planet.ts, FALL_GLSL, `fallGrade`), used by the globe and by the far look of the scene (deep.ts).
+   Trials, each 4605 to the byte (9ef19839):
+   g1: all three channels by the level of the green. Rejected: the deck's blue fell (blue mean minus 7 levels at 4707).
+   g2: red and green by the level, blue the larger of that and its own channel. By eye good on white; but it raised the red
+   of every blue (the band at 4720, box 620 to 700 by 40 to 90: red 47.4 to 54.5), a periwinkle cast. Rejected.
+   g3 (KEPT): the level of a colour is its green over the pivot's; red is the SMALLER of its own channel's value and the
+   colour times what the grade does at that level, blue the LARGER. A colour bluer than the line (red under, blue over: the
+   deck) is exactly what it was. By numbers against q3: 4707 mean 0.06 levels (max 32), 4712 0.24, 4716 0.55, 4720 0.55,
+   4724 0.34, 4740 0.07, 4972 0.03, 4988 0.23, 4996 0.06. Band box at 4720: red 47.2 (q3 47.4). Night side at 4988 (box 20
+   to 200 by 300 to 420), brightest fifth: q3 8.7, 9.7, 16.4; g3 6.7, 9.7, 17.0.
+   SEEN (g3-crops.jpg, q3, g3, no grade): the specks of the night side at 4988 and 4707 are white, the cloud by the limb at
+   4988 is grey blue, the bands at 4720 have no lilac, the deck and the band are the blue they were.
+   g4, g5: a weight that lets the red of a cyan follow the level. At 0.8 to 1.0 it changed nothing (the cyan streaks are
+   bluer than the line), at 1.3 to 1.8 the streaks paled a little and the band at 4707 went periwinkle. Rejected, removed.
+5. THE FAR LOOK AT A HEIGHT. Before: the far look was graded at the full strength and the end of the scene's shader took the
+   rest back channel by channel. With a grade that is not channel by channel that would leave the far look off the globe's
+   picture between 0.9 and 0.25 radii (by my sums 9 levels of blue on a mid white at 0.52 radii). Now: the far look is graded
+   at the strength the globe has at this height (the full powers times uFallPower, the most blue of this height through
+   `lay`), and what the end of the shader will do is undone beforehand. By my sums the far look then leaves the shader as the
+   globe's own colour to 0.9 levels at most. The old form was off by up to 4.9 levels of blue on the deep deck (the most-blue
+   knee was applied at full strength); that is gone too: at 4720 the band box reads blue 177.1 (q3 174.6).
+6. THE CYAN, named, not cured: the map has thin bright azure streaks (in the vortex by the comma, 4716 to 4738; one in the
+   band at 4740; a thin line in the far band at 4860). They stand over the pivot, so the grade leaves them while it takes the
+   vortex round them down to navy: they read as electric cyan against it. In the control without the grade they are pale
+   azure on mid blue. The cyan DAB and the hard white patch of 4860 named in MAIL 688 are gone with the move.
+7. THE LILAC AT 4740 AND 4972 (MAIL 688): after the move the map's band lies on the scene's pale plain there; the streaks
+   read pale blue (brightest 30 percent of the box 760 to 900 by 250 to 360 at 4740: 84, 125, 179). A few violet specks are
+   left at the upper left of that box.
+8. Looks pushed 16:27 UTC (686137ff, 8 looks): 4860 in order beside alone beside the approved; the grade trial with its
+   control.
+9. THE LIMB ON THE RIGHT, 4740 to 4748 (MAIL 688). Looked at 4732 to 4754 every second frame (q3-limb-right.jpg): the map's
+   white band by the right limb sets under the horizon between 4736 and 4744, as the eye sinks from 0.116 to 0.063 radii and
+   the horizon comes in from 26 to 20 degrees. CONTROL (dir b1, `globe.border` 60, 80, so the scene has no border on the
+   globe): the same picture at 4740 to 4752 (mean difference 0.10 to 0.14 levels). So the scene's border (16 to 26 degrees)
+   does not draw it; it is the geometry of a band going under the horizon. The border stays as it is (without it 4716 to 4732
+   moved by 0.8 to 1.7 levels in the mean). My flow proxy there: 4740 0.34, 4744 0.29, 4748 0.30 (limit 0.45).
+10. THE STATE WITH THE GRADE, 59 frames in film order (dir g3d, 16:48 to 16:56, 437 s, 7.4 s a preview draft frame). 4605 has
+   its bytes (9ef19839). 4860 has the bytes of the trial g3 (de9f1f50). MY proxies, limit 0.45, pairs 8 frames apart:
+   dive by flows 4716 0.34, 4720 0.06, 4724 0.14; by poses 4688 0.27, 4696 0.65 RED (the hump at the limb), 4704 0.28, 4712
+   0.22. Rise by flows 4976 0.32, 4980 0.26, 4984 0.30, 4988 0.54 RED; by poses 4984 0.53 RED, 4988 0.48 RED, 4992 0.37, 4996
+   0.27. (By flows 4992 reads 0.67 and 4996 0.80, with the flows agreeing on 0.67 and 0.54 of the body only: over 0.3 radii
+   the picture turns too fast for the flows and I read the poses there. I name both.)
+   The grade did not change these numbers (before it: 4988 0.55 by flows, 0.49 by poses).
+11. WHAT IS RED IN THE RISE AT 4984 TO 4988, by two controls. The hot place is the dim lower left of the globe (60, 788 and
+   448, 840 of 1920), where the fields of small cloud stand.
+   Control sp1 (`globe.height` 0.05, 0.03: the scene is not drawn at these heights, the globe alone): by poses 4984 0.67,
+   4988 0.48, 4992 0.37. The same number at 4988 and the same place.
+   Control nf2 (the same and the grade of the fall off): 4984 0.58, 4988 0.46, 4992 0.16.
+   So the red at 4988 is NOT the exchange of the place and NOT the grade. It is the globe's own picture: fields of small
+   cloud of the map (the cloud layer of the plates) in dim light, which the eye sees 2.2 times nearer 8 frames earlier
+   (0.749 to 0.343 radii). From 0.749 they are soft wisps, from 0.343 dots. The opacity of that layer is nearly two valued
+   (move.json, cirrus) and is read with a footprint of 2 px under 1.5 radii, so a field of puffs resolves into hard bits as
+   the eye nears. Named, not cured. With the scene on, 4984 reads less (0.53 for 0.67) because the place covers part of it.
+12. WHAT DRAWS THE SPECKS OF THE NIGHT SIDE AT 4988 AND 4996 (MAIL 688, "find what draws them"). Three controls, all back:
+   (a) without the grade (point 2) they are white on a dim blue deck, so the grade made them orange: cured by the grade's
+   new form (point 4), they are white now. (b) With the scene off (sp1) the same specks stand at the same places at 4984 to
+   5000 (sp1-vs-g3d.jpg, levels times 4): the globe's own map draws them, not the scene, and the far look of the scene
+   shows the same ones. (c) Globe alone without the grade (nf2-specks.jpg): they are fields of small puffs of the map's
+   cloud layer on the dim side of the globe; that side is not night, the deck there is a dim blue. The grade takes the deck
+   under them to black (a power under the pivot) and leaves the cloud, which stands over the pivot: white specks on black.
+   The largest, a tall bright bit at 645, 410 of 960 at 4988, reads as a hard white rectangle.
+   Not cured: the white specks. What would cure them in kind, not tried: the cloud of the dim side going down with the deck
+   under it as the grade grows (a law of the light and of the grade's strength, none at the hold). It would touch the dim
+   edge of the far field of 4860 and the clouds of 4707, so it wants a pair of both before it is kept.
+13. EVERY FRAME LOOKED AT (sheets g3d-dive-a, g3d-dive-b, g3d-rise-0, g3d-rise-a, g3d-rise-b):
+   Dive 4716 to 4732 every frame, and 4736: one planet, one storm (the white bar and the spiral under it) growing evenly;
+   the ridge of pale cumulus along the first streamer comes in from 4719 and grows with the place, by the height; no patch
+   comes or goes between two frames. Left: a small bright cyan dash above the bar from 4725 (the map's azure streak, point
+   6); pale lavender in the thin white streaks at the upper left at 4728 to 4731 (thin white over navy); in the sky at the
+   upper right a group of warm stars at 4722 and 4723 (the sky, not mine).
+   Rise 4976 to 5004 every frame: the storm and its ridge go away evenly, the ridge is faint by 4990. The specks of the dim
+   side travel with the globe from 4984 to 5000 and thin out to faint wisps by 5002. The rings come in at the right from
+   4993. At 5004 a pale body at the right edge (Triton).
+14. COMMITS, in order, one cause each. 4d3df934: the ground view sets the frame's measure for the map itself (point 3).
+   8bcb6a8c: the grade of the fall is one text and keeps the hue of a colour off its line (points 4 and 5; planet.ts,
+   deep.ts, set.ts, and the two texts of deep.json that describe it, changed as text). The shader of the globe has another
+   text now (fragsame.ts would print DIFFERENT for planet.ts: meant), the hold keeps its bytes by the render (4605,
+   9ef19839) and not by construction any more.
+   1b1a3930: merge of origin/main 1896a516 (take batch 3 and the status of the rounds). The merge touches no file of my
+   three folders.
+15. TESTS ON THE MERGE 1b1a3930 (npx vitest run, alone, 17:06:54 to 17:13:32, 398 s): 53 files, 554 tests, 551 pass, 3 FAIL.
+   The three are in tests/weights.test.ts (tests 5, 6 and 8 of 9), all with one message: "no dive of the film leaves a sky
+   over 24 frames and a picture over 12 to the engine any more: these tests need a span made in memory". CONTROL: the same
+   file run on origin/main 1896a516 alone, in a worktree: the same three fail with the same message. So the red is on main
+   since take batch 3 and not of this branch; the file is not mine and I did not touch it. tests/globe-cap.test.ts, "brings
+   a colour level in by the texels of its parent": 4291 ms, under its 5 s. After the run the reporter itself fell over while
+   printing the failures (Map.groupBy is not a function, node v20.20.2), so the summary lines are missing from the log; I
+   counted files and tests from the log's own lines (/tmp/vitest-1b1a.log) and read the three failures with the tap
+   reporter.
+16. LOOKS pushed 16:49 UTC (cbc1e2cc, 8 looks: 4860 in three, the grade trial with its control, the limb sheet with its
+   control) and 17:06 UTC (0fefacd9, 8 looks: 4860 beside the approved and the named, G17 1.382 / 0.741; rise 4984 to 4992;
+   the specks with the scene off; the globe alone without the grade; the red pair of 4988; dive 4716 to 4724).
+17. OWED STILL, on the next named commit: the parity, G15, G11 and the net MB on this state; the hump 4693 to 4700 at the limb
+   (my proxy 0.65 at 4696, 0.17 with 40 px more margin inside the limb: the later frame's limb carried back onto the ground,
+   measured 12:30 to 12:56, not cured); the sheet of the last 24 frames of the dive against the named b8a38cbe; the 4860 pair
+   that names what moved in the far field (eighths of the frame from the top, now against named, both in order: mean 0.27,
+   15.04, 20.51, 7.59, 1.56, 0.03, 0.01, 0.00; largest 5, 202, 195, 167, 31, 5, 1, 1: the lower half is the same picture).
