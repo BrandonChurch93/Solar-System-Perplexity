@@ -1,9 +1,17 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T18:38:03.898Z",
+ "pushed": "2026-11-24T19:05:03.714Z",
  "head": "404a7f06c4439436a06972a472e15098457ef42d",
- "note": "sun 60 round 2, still wrong: reads as scored bread rolls, strokes too even, creases not dark and soft enough. q1 sun-near: bands 0.113 0.199 0.241 0.166 0.110 0.070 0.038 0.025 0.010; dark 0.140 body 0.716 pale 0.063 white 0.011; half width 4.4 px, 3220 shapes, fine detail 0.0568, mean 0.343; distance 0.122. Correction to the note of 11afa6db: the band line given for k1 was wrong, measured 0.116 0.190 0.196 0.162 0.123 0.075 0.048 0.038 0.025",
+ "note": "sun 60 round 2 at one to one, still wrong: tops spotted like stains, fans too neat, lanes too crisp. w2 sun-near: bands 0.224 0.235 0.178 0.117 0.083 0.058 0.034 0.028 0.017; dark 0.250 body 0.614 pale 0.061 white 0.017; half width 4.7 px, 2413 shapes, fine detail 0.0537, mean 0.307; distance 0.063",
  "looks": [
+  {
+   "time": "2026-11-24T19:04:57.183Z",
+   "file": "20261124190457183-note-pw.jpg",
+   "source": "../../../../tmp/rd/pw.jpg",
+   "kind": "note",
+   "label": "sun 60 draft at one to one, round 2 trials w1 w2 w3 (uncommitted) beside the approved: cells as wide as the approved's, round corners, low relief so every lane shows, darker mottled tops, the light in fans of strokes at the pits",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T18:38:03.257Z",
    "file": "20261124183803257-note-zq.jpg",
@@ -71,16 +79,6 @@
    "first": 210,
    "last": 221,
    "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T17:04:24.456Z",
-   "file": "20261124170424456-compare-sun-rise-step-in-place.jpg",
-   "source": "out/work/handover/sun-rise-step-in-place.png",
-   "kind": "compare",
-   "label": "sun rise, the largest step of the level in place (2.36): frame 238, frame 239, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "frame": 239
   }
  ]
 }
