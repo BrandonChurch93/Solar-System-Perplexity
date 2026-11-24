@@ -653,8 +653,10 @@ describe('the land matte of a place picture', () => {
       expect(source.split(reader).length).toBe(2)
       expect(source.indexOf(reader)).toBeGreaterThan(source.indexOf(cut))
     }
+    // A stop built here that draws a place picture in both moves, so the test holds whatever the stops of the film switch on.
+    const drawing = filmWith(coveredPlan({ handover: { dive: {}, rise: {} } }))
     const hd = handoverOf('mars', 'dive')!
-    const shot = film.shotAt(hd.firstFrame, hd.time, 'orbit')
+    const shot = drawing.shotAt(hd.firstFrame, hd.time, 'orbit')
     const layout = placeLayout(master, shot.place!, 8192)
     const texture = new THREE.Texture()
     const matte = new THREE.Texture()
@@ -668,6 +670,7 @@ describe('the land matte of a place picture', () => {
     pass.render(r, target, pic, shot.place!, shot.camera, cam, 'beauty', 0, master.width / master.height, 1, undefined, matte)
     pass.render(r, target, pic, shot.place!, shot.camera, cam, 'texels', 0, master.width / master.height, 1, undefined, null)
     expect(drawn).toEqual([[0, texture], [1, matte], [0, texture]])
+    restorePlans()
   })
 })
 
@@ -842,9 +845,11 @@ describe('the broad tone of the picture lent by the globe near its sides', () =>
   it('runs the tone passes only for a picture whose tone stays back, and never at T', () => {
     const pass = new Place()
     const inner = pass as unknown as { lay: { material: THREE.ShaderMaterial }; split: { material: THREE.ShaderMaterial } | null; blur: { material: THREE.ShaderMaterial } | null }
+    // A stop built here that draws a place picture, as in the test of the land matte.
+    const drawing = filmWith(coveredPlan({ handover: { dive: {}, rise: {} } }))
     const hd = handoverOf('mars', 'dive')!
     const before = (hd.placeFirstFrame + hd.firstFrame) / 2
-    const shot = film.shotAt(Math.floor(before), (Math.floor(before) + config.shutterFraction / 2) / fps, 'orbit')
+    const shot = drawing.shotAt(Math.floor(before), (Math.floor(before) + config.shutterFraction / 2) / fps, 'orbit')
     expect(shot.place!.weight).toBeGreaterThan(0)
     expect(shot.place!.weight).toBeLessThan(1)
     const layoutOf = placeLayout(master, shot.place!, 8192)
@@ -902,6 +907,7 @@ describe('the broad tone of the picture lent by the globe near its sides', () =>
     pass.render(r, target, pic, on, shot.camera, cam, 'texels', 0, aspect, 1)
     expect(drawn.map((d) => d.pass)).toEqual(['plain', 'plain'])
     pass.dispose()
+    restorePlans()
   })
 })
 
