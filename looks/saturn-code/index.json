@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T23:54:13.668Z",
- "head": "0a965c8dddf9e40a466c683a0ee48acd8c5f88ef",
- "note": "step 1: sky way A (hold's sky leaves by distance from the hold's path, skim sky is the film's field through air by height), rise pace under the smooth limits, dive sequence rendering",
+ "pushed": "2026-11-24T00:14:39.313Z",
+ "head": "a85665e75ec098e1ff5318336fbfcbafe7cb11a1",
+ "note": "step 1 of mail 374 with mail 387: rise draft sequence with one sky and the air by height; dive with the new air is rendering",
  "looks": [
+  {
+   "time": "2026-11-24T00:14:34.095Z",
+   "file": "20261124001434095-note-dive_c2.jpg",
+   "source": "../../../../tmp/v/r24/dive_c2.png",
+   "kind": "note",
+   "label": "dive full size crops around the change of view 3589, old air (0.6 to 1.8): the new air is rendering"
+  },
+  {
+   "time": "2026-11-24T00:14:33.226Z",
+   "file": "20261124001433226-note-rise_c1.jpg",
+   "source": "../../../../tmp/v/r24/rise_c1.png",
+   "kind": "note",
+   "label": "rise 3840 to 3845 full size crops at the ring step of mail 348 point 1"
+  },
+  {
+   "time": "2026-11-24T00:14:31.829Z",
+   "file": "20261124001431829-note-rise_a.jpg",
+   "source": "../../../../tmp/v/r24/rise_a.png",
+   "kind": "note",
+   "label": "rise 3806 to 3886 draft, every second frame, step 1: one sky, the air by height (heights 0.6 to 2.2, power 0.5), pace try 2"
+  },
   {
    "time": "2026-11-23T23:54:12.944Z",
    "file": "20261123235412944-note-d_3720.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/v/r23/three_3720.png",
    "kind": "note",
    "label": "3720: approved close, the film now, the far look of the rings everywhere (study for step 2)"
-  },
-  {
-   "time": "2026-11-23T23:08:49.398Z",
-   "file": "20261123230849398-note-nosky_sheet.jpg",
-   "source": "../../../../tmp/v/r23/nosky_sheet.png",
-   "kind": "note",
-   "label": "sky test, not a build: left the film now (hold 3465, skim 3720), right the same frames with both sky patches off, the film's own star field"
-  },
-  {
-   "time": "2026-11-23T22:47:38.993Z",
-   "file": "20261123224738993-note-far_3720.jpg",
-   "source": "../../../../tmp/v/r23/far_3720.png",
-   "kind": "note",
-   "label": "3720 draft with the near light pool switched off: the far look of the rings carried to the skim (study for step 2, one look of the ring per pixel)"
-  },
-  {
-   "time": "2026-11-23T22:24:37.291Z",
-   "file": "20261123222437291-note-att_crop.jpg",
-   "source": "../../../../tmp/v/r22/att_crop.png",
-   "kind": "note",
-   "label": "lower left at clip scale: above machines 3828 to 3836 every second, below mine on E6 3831 to 3834"
   }
  ]
 }
