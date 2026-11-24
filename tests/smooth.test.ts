@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { config } from '../src/config'
+import { captureRate, setCapture, spanMid } from '../src/core/clock'
 import { shutterMid } from '../src/core/sampler'
 import { FilmDirector } from '../src/director/film'
 import { sideAt } from '../src/director/handover'
@@ -104,6 +105,59 @@ describe('the curve of a move, judged', () => {
   })
 })
 
+describe('a curve that is a mean over points', () => {
+  const far = [1, 1, 1, 1, 1, 1, 4, 4]
+  const rows = (n: number, lost: (i: number) => number[]): (number | null)[][] => Array.from({ length: n }, (_, i) => far.map((v, j) => (lost(i).includes(j) ? null : v * (1 + 0.5 * Math.sin((Math.PI * (i + 0.5)) / n)))))
+  const plain = (values: (number | null)[][]): (number | null)[] => values.map((row) => {
+    const got = row.filter((v): v is number => v !== null)
+    return got.length >= 4 ? got.reduce((a, b) => a + b, 0) / got.length : null
+  })
+
+  it('does not step when the count of its points changes', () => {
+    const values = rows(100, (i) => (i >= 60 ? [6, 7] : i >= 50 ? [7] : []))
+    const raw = plain(values)
+    const loose = judgeCurve('speed', 'px', raw, 0, 1, { first: 0, end: 100 }, limits)
+    expect(rules(loose)).toContain('step')
+    expect([50, 60]).toContain(loose.worstStep!.frame)
+    const r = judgeCurve('speed', 'px', raw, 0, 1, { first: 0, end: 100 }, limits, 0, { values, min: 4 })
+    expect(r.faults).toEqual([])
+    expect(r.worstStep!.value).toBeLessThan(0.03)
+    expect(r.points).toMatchObject({ of: 8, min: 4, fewest: 6, notMeasured: 0 })
+    expect(r.points!.counts[49]).toBe(8)
+    expect(r.points!.counts[60]).toBe(6)
+    const tight = judgeCurve('speed', 'px', raw, 0, 1, { first: 0, end: 100 }, { ...limits, maxStep: 0 }, 0, { values, min: 4 }).faults.find((f) => f.rule === 'step' && f.first! <= 55 && f.last! >= 55)!
+    expect(tight.text).toContain('(over ' + tight.points + ' points)')
+    expect(tight.points).toBeLessThan(8)
+  })
+
+  it('compares a rebound over the points that have ground in all of its frames', () => {
+    const values = rows(100, (i) => (i >= 70 && i < 80 ? [0, 1, 2] : []))
+    const raw = plain(values)
+    const loose = judgeCurve('speed', 'px', raw, 0, 1, { first: 0, end: 100 }, { ...limits, maxStep: 9 })
+    expect(loose.faults.length).toBeGreaterThan(0)
+    const r = judgeCurve('speed', 'px', raw, 0, 1, { first: 0, end: 100 }, { ...limits, maxStep: 9 }, 0, { values, min: 4 })
+    expect(r.faults).toEqual([])
+    expect(r.peak!.frame).toBe(49)
+    expect(r.peak!.points).toBe(5)
+    const dent = rows(100, () => [])
+    for (let i = 70; i < 74; i++) dent[i] = dent[i]!.map((v) => v! * 0.7)
+    const real = judgeCurve('speed', 'px', plain(dent), 0, 1, { first: 0, end: 100 }, { ...limits, maxStep: 9 }, 0, { values: dent, min: 4 })
+    expect(rules(real)).toEqual(['climbAfterPeak'])
+    expect(real.climbAfterPeak.points).toBe(8)
+    expect(real.climbAfterPeak.frame).toBe(74)
+  })
+
+  it('says not measured, which is red, where fewer than four points are left', () => {
+    const values = rows(100, (i) => (i >= 40 && i < 43 ? [0, 1, 2, 3, 4] : []))
+    const r = judgeCurve('speed', 'px', plain(values), 0, 1, { first: 0, end: 100 }, limits, 0, { values, min: 4 })
+    expect(rules(r)).toEqual(['points'])
+    expect(r.points!.notMeasured).toBe(4)
+    expect(r.faults[0]!.first).toBe(40)
+    expect(r.faults[0]!.last).toBe(43)
+    expect(r.faults[0]!.text).toContain('NOT MEASURED')
+  })
+})
+
 describe('the camera of a move, sampled', () => {
   const film = new FilmDirector(plans)
   const plan = plans.find((p) => p.id === 'mars')!
@@ -126,6 +180,24 @@ describe('the camera of a move, sampled', () => {
       expect(s.side).toBe(side)
       expect(s.pose.position.distanceTo(own.position)).toBeLessThan(1e-6 * (1 + own.position.length()))
     }
+  })
+
+  it('asks the camera at the half frame at rate 2, at the middle of the shorter shutter', () => {
+    const w = sampleWindow(config, film, plan, 'dive', 2, S.reachFrames)!
+    expect(captureRate()).toBe(2)
+    expect(spanMid()).toBeCloseTo(shutterMid() / 2, 12)
+    for (const k of [2 * w.seg.firstFrame + 7, 2 * w.seg.firstFrame + 81, 2 * w.seg.endFrame - 3]) {
+      const s = w.samples[k - w.k0]!
+      const time = (k / 2 + shutterMid() / 2) / config.fps
+      expect(s.k).toBe(k)
+      expect(s.frame).toBe((k - 1) / 2)
+      expect(s.time).toBeCloseTo(time, 12)
+      const side = sideAt(w.seg, time)
+      const own = side === 'orbit' ? plan.eye('dive', time, 'orbit') : plan.twin(plan.eye('dive', time, 'terrain'), time)
+      expect(s.side).toBe(side)
+      expect(s.pose.position.distanceTo(own.position)).toBeLessThan(1e-6 * (1 + own.position.length()))
+    }
+    setCapture(1)
   })
 
   it('counts the curves per film frame at every rate', () => {
