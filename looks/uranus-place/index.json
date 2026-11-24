@@ -1,22 +1,122 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-24T06:02:22.501Z",
- "head": "145020cd09eaac15c98ec90552b562cf9df683ff",
- "note": "head 145020cd on main 3060b725: handover pass on both moves with the bend; rise 4380 to 4454 (10 before T to 4 after: sheets 4380 and 4392, larger 4388 to 4395), dive 4158 to 4181, 4290 final beside the kept still",
+ "pushed": "2026-11-24T06:27:50.444Z",
+ "head": "4c9dcbbb3220a7fa372cfb12c15c183c69d4b1b5",
+ "note": "06:30 UTC, head 4c9dcbbb on main f6ce51a5: surface view 4284 to 4379 at draft with the bend (from 145020cd, main 3060b725); proofs of the merged tree are rendering",
  "looks": [
   {
-   "time": "2026-11-24T06:02:20.539Z",
-   "file": "20261124060220539-frame-f04308.jpg",
-   "source": "out/work/seq/4284-4379/f04308.png",
-   "kind": "frame",
-   "label": "uranus.terrain frame 4308, draft tier",
+   "time": "2026-11-24T06:19:27.725Z",
+   "file": "20261124061927725-job-frame-04110.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.dive frame 4110, draft tier, texels view, from the running g13 job",
    "stop": "uranus",
-   "segment": "uranus.terrain",
-   "frame": 4308,
+   "segment": "uranus.dive",
+   "frame": 4110,
    "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "g13"
+  },
+  {
+   "time": "2026-11-24T06:12:41.266Z",
+   "file": "20261124061241266-frame-head-4035.jpg",
+   "source": "out/work/u/one/head-4035.png",
+   "kind": "frame",
+   "label": "uranus.hold frame 4035, final tier",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "final",
    "format": "16x9",
    "diag": "beauty",
    "engine": "7122c119266e5aee"
+  },
+  {
+   "time": "2026-11-24T06:11:48.571Z",
+   "file": "20261124061148571-frame-head-4290.jpg",
+   "source": "out/work/u/one/head-4290.png",
+   "kind": "frame",
+   "label": "uranus.terrain frame 4290, final tier",
+   "stop": "uranus",
+   "segment": "uranus.terrain",
+   "frame": 4290,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7122c119266e5aee"
+  },
+  {
+   "time": "2026-11-24T06:10:44.236Z",
+   "file": "20261124061044236-note-bq-low.jpg",
+   "source": "../../../../tmp/bq-low.png",
+   "kind": "note",
+   "label": "head 145020cd, draft, lower left quarter at full size: 4340, 4350, 4360, 4370, 4379 and 4385 (the curl of cloud that comes in from below as the eye pulls back)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T06:10:43.016Z",
+   "file": "20261124061043016-note-bq-4368.jpg",
+   "source": "../../../../tmp/bq-4368.png",
+   "kind": "note",
+   "label": "head 145020cd on main 3060b725, draft, surface view frames from 4368 (12 a sheet; the bend runs 4294 to 4379)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T06:10:41.954Z",
+   "file": "20261124061041954-note-bq-4356.jpg",
+   "source": "../../../../tmp/bq-4356.png",
+   "kind": "note",
+   "label": "head 145020cd on main 3060b725, draft, surface view frames from 4356 (12 a sheet; the bend runs 4294 to 4379)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T06:10:40.810Z",
+   "file": "20261124061040810-note-bq-4344.jpg",
+   "source": "../../../../tmp/bq-4344.png",
+   "kind": "note",
+   "label": "head 145020cd on main 3060b725, draft, surface view frames from 4344 (12 a sheet; the bend runs 4294 to 4379)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T06:10:39.668Z",
+   "file": "20261124061039668-note-bq-4332.jpg",
+   "source": "../../../../tmp/bq-4332.png",
+   "kind": "note",
+   "label": "head 145020cd on main 3060b725, draft, surface view frames from 4332 (12 a sheet; the bend runs 4294 to 4379)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T06:10:38.281Z",
+   "file": "20261124061038281-note-bq-4320.jpg",
+   "source": "../../../../tmp/bq-4320.png",
+   "kind": "note",
+   "label": "head 145020cd on main 3060b725, draft, surface view frames from 4320 (12 a sheet; the bend runs 4294 to 4379)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T06:10:36.987Z",
+   "file": "20261124061036987-note-bq-4308.jpg",
+   "source": "../../../../tmp/bq-4308.png",
+   "kind": "note",
+   "label": "head 145020cd on main 3060b725, draft, surface view frames from 4308 (12 a sheet; the bend runs 4294 to 4379)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T06:10:36.025Z",
+   "file": "20261124061036025-note-bq-4296.jpg",
+   "source": "../../../../tmp/bq-4296.png",
+   "kind": "note",
+   "label": "head 145020cd on main 3060b725, draft, surface view frames from 4296 (12 a sheet; the bend runs 4294 to 4379)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T06:10:34.828Z",
+   "file": "20261124061034828-note-bq-4284.jpg",
+   "source": "../../../../tmp/bq-4284.png",
+   "kind": "note",
+   "label": "head 145020cd on main 3060b725, draft, surface view frames from 4284 (12 a sheet; the bend runs 4294 to 4379)",
+   "stop": "uranus"
   },
   {
    "time": "2026-11-24T06:01:51.585Z",
@@ -192,107 +292,6 @@
    "first": 4174,
    "last": 4185,
    "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T05:49:14.182Z",
-   "file": "20261124054914182-sheet-uranus-dive-draft-across.jpg",
-   "source": "out/work/handover/uranus-dive-draft-across.png",
-   "kind": "sheet",
-   "label": "uranus dive, every frame 4180 to 4191 (across T, frame 4186), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "first": 4180,
-   "last": 4191,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T05:39:06.294Z",
-   "file": "20261124053906294-compare-uranus-dive-sides.jpg",
-   "source": "out/work/handover/uranus-dive-sides.png",
-   "kind": "compare",
-   "label": "uranus dive, both sides at T (frame 4186) and their difference times 8",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4186,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T05:38:55.995Z",
-   "file": "20261124053855995-note-skya-crop.jpg",
-   "source": "../../../../tmp/skya-crop.png",
-   "kind": "note",
-   "label": "4290 final, right end of the horizon times two: kept still, one place, one place with the sky made again without grain",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T05:38:54.809Z",
-   "file": "20261124053854809-note-pair-4290.jpg",
-   "source": "../../../../tmp/pair-4290.png",
-   "kind": "note",
-   "label": "4290 final: the kept still (left) and head 145020cd (right): one place at the horizon and the terrain sky without grain",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T05:21:37.904Z",
-   "file": "20261124052137904-note-sr-4410.jpg",
-   "source": "../../../../tmp/sr-4410.png",
-   "kind": "note",
-   "label": "one place c320c4af on main 85f27df2, draft, frames from 4410 (12 a sheet)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T05:21:35.883Z",
-   "file": "20261124052135883-note-sr-4398.jpg",
-   "source": "../../../../tmp/sr-4398.png",
-   "kind": "note",
-   "label": "one place c320c4af on main 85f27df2, draft, frames from 4398 (12 a sheet)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T05:21:34.327Z",
-   "file": "20261124052134327-note-sr-4386.jpg",
-   "source": "../../../../tmp/sr-4386.png",
-   "kind": "note",
-   "label": "one place c320c4af on main 85f27df2, draft, frames from 4386 (12 a sheet)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T05:21:32.439Z",
-   "file": "20261124052132439-note-sd-4182.jpg",
-   "source": "../../../../tmp/sd-4182.png",
-   "kind": "note",
-   "label": "one place c320c4af on main 85f27df2, draft, frames from 4182 (12 a sheet)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T05:21:30.799Z",
-   "file": "20261124052130799-note-sd-4170.jpg",
-   "source": "../../../../tmp/sd-4170.png",
-   "kind": "note",
-   "label": "one place c320c4af on main 85f27df2, draft, frames from 4170 (12 a sheet)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T05:21:29.370Z",
-   "file": "20261124052129370-note-sd-4158.jpg",
-   "source": "../../../../tmp/sd-4158.png",
-   "kind": "note",
-   "label": "one place c320c4af on main 85f27df2, draft, frames from 4158 (12 a sheet)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T05:20:13.761Z",
-   "file": "20261124052013761-frame-final-4035.jpg",
-   "source": "out/work/u/one/final-4035.png",
-   "kind": "frame",
-   "label": "uranus.hold frame 4035, final tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7122c119266e5aee"
   }
  ]
 }
