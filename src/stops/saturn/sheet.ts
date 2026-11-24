@@ -3,6 +3,7 @@ import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import azimuth from './azimuth.json'
 import { RING_FIELD_GLSL, type RingField } from './field'
+import { ICE_GRADE_GLSL, gradeUniforms } from './grade'
 import { ICE_GLSL, type Ice } from './ice'
 import * as keptLook from './kept/look'
 import { HASH_GLSL } from './kept/rings'
@@ -140,6 +141,7 @@ uniform vec4 uKSheetGlow;
 uniform vec4 uKSheetFit;
 uniform vec4 uKMottle;
 uniform float uKFillet;
+${ICE_GRADE_GLSL}
 float keptAzRow(int i, vec4 h) {
   return uKAzGain[i * 5] + uKAzGain[i * 5 + 1] * h.x + uKAzGain[i * 5 + 2] * h.y + uKAzGain[i * 5 + 3] * h.z + uKAzGain[i * 5 + 4] * h.w;
 }
@@ -170,6 +172,8 @@ vec4 keptSheet(float r, float phi, float x, float texels, float mu, float along,
   float tu = (phi + uKMottle.z * pow(max(r, 1.0) / 1.86, -1.5) * uKMottle.w) / 6.283185307;
   float inB = smoothstep(1.5, 1.6, r) * (1.0 - smoothstep(1.88, 1.95, r));
   c *= 1.0 - uKMottle.x * inB * smoothstep(0.55, 0.9, vnoise(vec2(tu * 36.0, r * 3.0), 36)) + uKMottle.y * (vnoise(vec2(tu * 640.0, r * 70.0), 640) - 0.5);
+  // the grade of the rings by the height of the lens (grade.ts); nothing of it runs at the heights of the hold
+  for (int j = 0; j < (uGrade.x > 0.0 ? 1 : 0); j++) c = iceGrade(c, r);
   float lit = along > 0.0 ? 1.0 : smoothstep(uKPenumbra.x - mw, uKPenumbra.y + mw + uKPenumbra.z * max(-along, 0.0) + uKPenumbraFar.y * max(-along - uKPenumbraFar.x, 0.0), miss);
   float over = fore ? smoothstep(-0.05, 0.0, od) * smoothstep(uKEdge.x, uKEdge.x + uKOver.x, r) * lit : 0.0;
   float keep = max(smoothstep(uKSheetFit.x, uKSheetFit.y, r), 1.0 - smoothstep(1.0 - bw, 1.0 + bw, bb));
@@ -330,7 +334,10 @@ void main() {
     alpha = 1.0 - exp(-left / mu * mix(uViewFit.w, 1.0, behind));
     vec3 under = mix(uFloor, vec3(1.0), lit) * uShade.z;
     // the sheet and the white sparks of its brightest grains
-    col = lum * (seen * law) * under * (tone + mix(tone, vec3(1.0), uIceOrbit.w) * (sand.y * uIceFit.y));
+    col = lum * (seen * law) * (tone + mix(tone, vec3(1.0), uIceOrbit.w) * (sand.y * uIceFit.y));
+    // the brightest ice under the ceiling of the grade, as in the far look (grade.ts)
+    for (int j = 0; j < (uGrade.x > 0.0 ? 1 : 0); j++) col = iceHeld(col);
+    col *= under;
   }
   // the far look gives way to the model's own light where the lens has closed in
   col = mix(col, farLook.rgb, wfar);
@@ -388,6 +395,7 @@ export class Sheet {
   private readonly farPenumbra = new THREE.Vector3().fromArray(keptLook.rings.penumbra)
   private readonly farSolid = new THREE.Vector2(0, keptLook.rings.shadeSolid[0])
   private readonly farMottle = new THREE.Vector4(keptLook.rings.spokes, keptLook.rings.clumps, 0, 0)
+  private readonly farGrade = gradeUniforms()
 
   constructor(field: RingField, ice: Ice, polar: number) {
     const kl = keptLook.rings
@@ -434,6 +442,7 @@ export class Sheet {
       uKSheetGlow: { value: new THREE.Vector4().fromArray(kl.sheetGlow) },
       uKSheetFit: { value: new THREE.Vector4(kl.sheetFit[0], kl.sheetFit[1], kl.wedgeIn[0], kl.wedgeIn[1]) },
       uKMottle: { value: this.farMottle },
+      ...this.farGrade,
       uKFillet: { value: kl.fillet[3] },
     }
     for (const pass of [0, 1]) {
@@ -468,13 +477,14 @@ export class Sheet {
   // the field's, field.ts). shadow: the axis of the globe's shadow the kept set draws, soft: how far the
   // shadow's edge is the soft one of the dive, solid: how far the shaded sheet has become solid, spin: the rate
   // of the orbits (radians a second), time: seconds from the middle of the hold
-  far(shadow: THREE.Vector3, soft: number, solid: number, spin: number, time: number): void {
+  far(shadow: THREE.Vector3, soft: number, solid: number, spin: number, time: number, grade: number): void {
     const kl = keptLook.rings
     this.farShadow.copy(shadow)
     this.farPenumbra.set(THREE.MathUtils.lerp(kl.penumbra[0], kl.penumbraAway[0], soft), THREE.MathUtils.lerp(kl.penumbra[1], kl.penumbraAway[1], soft), THREE.MathUtils.lerp(kl.penumbra[2], kl.penumbraAway[2], soft))
     this.farSolid.x = solid
     this.farMottle.z = spin
     this.farMottle.w = time
+    this.farGrade.uGrade.value.x = grade
   }
 
   dispose(): void {

@@ -4490,3 +4490,64 @@ flat top under the ceiling is the kept picture's near white ringlets, taken back
 gain alone moves the median (g 0.85: 0.717 against 0.715) and leaves the top (p90 0.875 against 0.835, p10
 0.522 against 0.556); only a power under 1 above the median narrows it, and that costs G17 (sim14).
 Looks pushed: 16:32 (5524cb35).
+
+## 2026-11-24, 17:00 to 17:40 VM: the base of main ed003c7, instruments on T7e, the plan of T8
+
+CORRECTION of the entry before: the grains' share is NOT the reason the A ring sinks toward the lens. Measured
+with instrument renders at 3720 (final tier, no film grain, in /tmp/v/t17): the near light alone with
+grains.json share 0 over the near light alone as it stands is 1.00 within 0.01 at every radius and row. The
+grains conserve the light.
+
+THE BASE. Main ed003c7 (take batch 3) is merged as 501914c, main 0e805c4 as 184a7fd (only tests/weights.test.ts,
+kit/PROGRESS.md and round 41's scorecards differ from ed003c7: no engine file, so no picture changes with it).
+On the engine of ed003c7 the SAME trees give other bytes than on the engine of 66de92e: 3465 differs by one
+level in 5614 pixels (sky and globe, none on the rings), 3720 by one level in 1390 pixels (sky, upper left).
+Bisected with one render each: not the far Sun's shader line (old line on the new base: the new sha), not
+src/core/warm.json (old list: the new sha), not config/showcase.json (the file of 66de92e on the new base: the
+new sha 4077873a). What is left is the code of the other stops or of the shared sky that came with the take.
+Every "equal in bytes" from here on is said against a base. New reference hashes on the engine of ed003c7,
+final tier: named tree 3465 4077873a1a2005c40bed0e9f225e2ebbe3cf153ee06f75b93a2c3a4735002f0f, named tree 3720
+9c261b0378a1f7bad298acb29d25d670c32f18c933a07b6789c0c6777fe47792, T7e 3465 4077873a (equal to the named tree:
+the hold keeps its bytes), T7e 3720 69afd1692b40b7f18959e06d865a251c51e456191945c6c86371e197a393bea6. The
+references of 3866 and 3567 on the new base are not made yet.
+
+TESTS. The full vitest on the merge 501914c with T7e: all files pass but tests/weights.test.ts (3 of 9 failed:
+"no dive of the film leaves a sky over 24 frames and a picture over 12 to the engine any more"). That is the
+red machine check of main after take batch 3 (status 246); main cured it in 57695be (the span is made in
+memory). Merged with 0e805c4; the full run on 184a7fd with T7e: 53 files, 554 tests, all pass (382 s).
+
+THE BUILDER'S OWN WORDS ON 3720 OF ROUND 44 (status 248, 17:16 UTC, kit/PROGRESS.md): "on Saturn's surface view
+the globe sits larger and further right, its night side is not dark and the near rings have lost their fine
+dark grain"; "Saturn's surface view is the weakest of the four". Measured on the globe at 3720 (T7e, equal to
+the named tree there): the night side is 18, 18, 15 to 31, 24, 15 of 255 where the approved has 10, 12, 11, and
+the terminator falls from 200 to 40 over 300 px where the approved falls from 190 to 25 over 180 px. The dusk
+of the globe (skim.json light.dusk, globe.ts uDusk) is switched off since "one look from far to near"
+(light.globeNear 0). New item 18: the night side at 3720, to be cured by the lens's height like the grade.
+
+INSTRUMENTS ON T7e AT 3720 (the far look alone, the near light alone; nearfar.py; the mix of the two by the
+far share of each pixel gives the render back: mean difference 0.0009, 0.09 percent of ring pixels over 2
+levels, sim16.py):
+- near over far in light, dense ring: 0.88 to 0.97 at rows 560 to 720, 0.76 to 0.92 at rows 800 to 880, 0.77
+  to 0.88 at rows 960 to 1080. The far look is the brighter one.
+- thin zones (r 2.06, 2.10, 2.14, 2.18, 2.22, 2.26): 1.13, 1.04, 1.23, 1.01, 0.94, 0.84 at rows 560 to 640 and
+  0.91, 0.89, 1.13, 0.97, 0.92, 0.85 at rows 1020 to 1080.
+- the phase knot of 150 degrees (thin 0.4) raised to 1.0: the near light of the thin zones 1.28 to 1.57 times
+  brighter at rows 560 to 640 and 1.00 to 1.10 at rows 1020 to 1080. So that knot holds the far rows down; it
+  is not what darkens the rows near the lens.
+- the view power of the thin zones (sheet.json view.thin 2) set to 0: 0.77 to 0.81 at rows 560 to 640, 1.29
+  to 1.53 at rows 1020 to 1080. So the view power is what lets the near light fall toward the lens.
+- the cosine of the view in the A ring by rows 560, 640, 720, 800, 880, 960, 1020: 0.284, 0.336, 0.389, 0.442,
+  0.493, 0.535, 0.568 (the model's reference is 0.4, the kept look's 0.43). The far look's opacity grows with
+  0.43 over the cosine, so it stops falling from row 800 down; the near light goes on falling.
+
+PLAN OF T8, predicted from the instruments (sim16a.py, sim16b.py; A and B ring by rows 640 to 800, 800 to 950,
+950 to 1080; approved A 0.430 0.438 0.437, B 0.704 0.695 0.662; T7e A 0.424 0.412 0.379, B 0.747 0.730 0.689):
+1. dense ring: the far look times 0.78 before the ceiling and the near light of the dense ring times 0.92 (the
+   near tint): B 0.709 0.698 0.659, near over far 1.03 1.08 1.03 1.00 (rows 560), 0.90 0.98 1.00 1.02 (rows
+   800), G17 1.04 (T7e 0.877: the ceiling squeezes less).
+2. thin zones: both looks times (cosine of the view over 0.4) to the power 0.8 where the view is steeper than
+   0.4, by the share of the grade: A 0.425 0.442 0.441, near over far as before. An angle and a height, no
+   distance.
+3. item 18, the dusk of the globe by the lens's height.
+All of it by the share of the grade (the lens's height), in both scenes alike; share 0 keeps the bytes.
+Looks pushed: 17:01 (4f2375e1), 17:29 (a2bdd921).

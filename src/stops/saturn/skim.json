@@ -70,6 +70,20 @@
       1,
       0.9
     ],
+    "grade": {
+      "note": "the grade of the rings by the height of the lens over the ring plane: none of it at the upper height of the air of the stop (sky.heights) and above, where every height of the hold lies, all of it at the lower and under, where the whole skim lies, between them by the logarithm of the height, eased at both ends; in the kept set and in the model alike, and nothing of it follows the clock or the distance from the lens. The far look of the rings is the tone of the picture of the hold and the near light of the model is fitted to the approved close image; the grade takes the far look to the tone of the near light: outward of the dense ring (between the two radii of zone, planet radii, the ramp lies in the division) the ice darker than pivot sinks by the power toe of its light over pivot, and the ice loses a share of its colour, grey[0] in the dense ring and grey[1] in the thin zones. In the far look and in the near light alike the brightest ice is held under ceiling (the light over the root of one plus the square of the light over the ceiling) with its colour kept",
+      "pivot": 0.6,
+      "toe": 0.5,
+      "zone": [
+        1.94,
+        2.063
+      ],
+      "ceiling": 1.0,
+      "grey": [
+        0.2,
+        0.55
+      ]
+    },
     "tint": {
       "far": {
         "dense": [
