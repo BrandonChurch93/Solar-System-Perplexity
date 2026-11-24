@@ -1,9 +1,59 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T10:48:21.896Z",
- "head": "28316e2cc0ec2363d76d9e1a042db599d6b1e096",
- "note": "PRE 68b4561: the judge's rise pictures over the whole window, pattern green (0.35 at 3871), pop red only at the travel's take off 3891 to 3896; parity and the dive's pictures run now",
+ "pushed": "2026-11-24T11:12:27.860Z",
+ "head": "ef514cec912a1e4e4cf15d2e2883d31876c0b676",
+ "note": "PRE 68b4561: the dive's pictures read green here (pattern 0.41 at 3565, pop 1.04); trying the rise's end with speed on the carry of main 717b862",
  "looks": [
+  {
+   "time": "2026-11-24T11:12:27.085Z",
+   "file": "20261124111227085-note-saturn-dive-changes.jpg",
+   "source": "../../../../tmp/v/r44/saturn-dive-changes.png",
+   "kind": "note",
+   "label": "PRE 68b4561 dive, the judge's changes panel: verdict green, pattern 0.41 at 3565 at the pole (limit 0.45)",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-24T11:12:25.965Z",
+   "file": "20261124111225965-note-shade.jpg",
+   "source": "../../../../tmp/v/r44/sheets/shade.png",
+   "kind": "note",
+   "label": "PRE 68b4561 item 15, lower right at full size 3538 to 3556: stars come up in the gap, open"
+  },
+  {
+   "time": "2026-11-24T11:12:24.938Z",
+   "file": "20261124111224938-note-bend.jpg",
+   "source": "../../../../tmp/v/r44/sheets/bend.png",
+   "kind": "note",
+   "label": "PRE 68b4561 owed sheet, every second frame 3562 to 3588"
+  },
+  {
+   "time": "2026-11-24T11:12:24.134Z",
+   "file": "20261124111224134-note-dive_d.jpg",
+   "source": "../../../../tmp/v/r44/sheets/dive_d.png",
+   "kind": "note",
+   "label": "PRE 68b4561 dive into the skim 3624 to 3640"
+  },
+  {
+   "time": "2026-11-24T11:12:23.134Z",
+   "file": "20261124111223134-note-dive_c.jpg",
+   "source": "../../../../tmp/v/r44/sheets/dive_c.png",
+   "kind": "note",
+   "label": "PRE 68b4561 dive 3592 to 3622"
+  },
+  {
+   "time": "2026-11-24T11:12:21.733Z",
+   "file": "20261124111221733-note-dive_b.jpg",
+   "source": "../../../../tmp/v/r44/sheets/dive_b.png",
+   "kind": "note",
+   "label": "PRE 68b4561 dive 3560 to 3590"
+  },
+  {
+   "time": "2026-11-24T11:12:20.769Z",
+   "file": "20261124111220769-note-dive_a.jpg",
+   "source": "../../../../tmp/v/r44/sheets/dive_a.png",
+   "kind": "note",
+   "label": "PRE 68b4561 dive, every second film frame 3528 to 3558 (judge's own frames, draft)"
+  },
   {
    "time": "2026-11-24T10:48:15.098Z",
    "file": "20261124104815098-note-saturn-rise-changes.jpg",
@@ -11,55 +61,6 @@
    "kind": "note",
    "label": "68b4561 the judge's changes panel of the rise: pattern green, largest 0.35 at 3871 (limit 0.45)",
    "stop": "saturn"
-  },
-  {
-   "time": "2026-11-24T10:48:14.066Z",
-   "file": "20261124104814066-note-rise_d.jpg",
-   "source": "../../../../tmp/v/r44/rise_d.png",
-   "kind": "note",
-   "label": "68b4561 the rest after the rise and the travel's take off, 3885 to 3895 + 1/2"
-  },
-  {
-   "time": "2026-11-24T10:48:12.938Z",
-   "file": "20261124104812938-note-rise_c.jpg",
-   "source": "../../../../tmp/v/r44/rise_c.png",
-   "kind": "note",
-   "label": "68b4561 rise 3844 to 3884 every fourth frame"
-  },
-  {
-   "time": "2026-11-24T10:48:12.029Z",
-   "file": "20261124104812029-note-rise_b.jpg",
-   "source": "../../../../tmp/v/r44/rise_b.png",
-   "kind": "note",
-   "label": "68b4561 rise 3816 to 3840 every fourth frame, the far ring comes out behind the night limb at 3819"
-  },
-  {
-   "time": "2026-11-24T10:48:10.783Z",
-   "file": "20261124104810783-note-rise_a.jpg",
-   "source": "../../../../tmp/v/r44/rise_a.png",
-   "kind": "note",
-   "label": "68b4561 the judge's own rise frames 3798 to 3813 every third film frame"
-  },
-  {
-   "time": "2026-11-24T10:24:06.595Z",
-   "file": "20261124102406595-note-final_3720.jpg",
-   "source": "../../../../tmp/v/r44/final_3720.png",
-   "kind": "note",
-   "label": "3720 at the final tier, commit 68b4561 (the pose at the middle of the shutter is the pose it was)"
-  },
-  {
-   "time": "2026-11-24T10:24:05.299Z",
-   "file": "20261124102405299-note-3720_beside_approved_small.jpg",
-   "source": "../../../../tmp/v/r44/3720_beside_approved_small.png",
-   "kind": "note",
-   "label": "3720 final on the merged head 68b4561 beside the approved: G17 median 0.945 p25 0.477 (PASS), was 0.683"
-  },
-  {
-   "time": "2026-11-24T10:02:45.774Z",
-   "file": "20261124100245774-note-g17_pair_lowleft.jpg",
-   "source": "../../../../tmp/v/r42/g17_pair_lowleft.png",
-   "kind": "note",
-   "label": "lower left of 3720 at full size: film as named, film on the new flight, approved"
   }
  ]
 }
