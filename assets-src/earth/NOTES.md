@@ -3791,3 +3791,23 @@ Y, design so far (nothing built, nothing measured on frames):
 - Standing sheets (arcs about the point under the close camera, textured by projection from the fitted eye, so that the fitted eye sees the close picture exactly) would close to a deck only at the close camera's angle. From higher up they cover tan(grazing at T) / tan(grazing now) of the band. ESTIMATE, not measured: 12 to 26 percent at 1890, 31 to 53 percent at 1898. So the exchange of the ground under them would still show in the very frames that are red (1882 to 1897).
 - A sheet 0.001 radii high is under a pixel at the hold. Sheets in the surface view too would move frames 1920 to 2099 by parallax (estimate up to 5 px), which I may not do.
 - Judgement: Y is not whole by the due time next to items 3 and 4 and the two laws. The third commit is named with Z and the red with this cause, unless time is left after the proof.
+
+11:37 to 11:45 UTC, still no render slot (texel walk at frame 2027 at 11:41, counts flat: textures 48, buffers 30, programs 10, vertex arrays 11, framebuffers 19).
+
+- Looks pushed 11:36 (the far band 1880 to 1902 as it stands, the named red).
+- Engine by height, read again in `/tmp/gl/eng/tree/src/director/handover.ts` lines 137 to 229: `skyWeight` and `placeWeight` are a smooth step of the logarithm of the eye's height between the span's far end and T. Earth's `skyWeights` (`set.ts` line 108) calls the engine's `skyWeight(seg, time)` and divides it out, so the product stays Earth's own share by height whichever law the engine has, as long as the engine's share lies strictly between 0 and 1 inside the moves. With `skyFrames` 120 and a dive of 90 frames the engine's far end is the start of the dive and its base is 0.25, so the share runs from smooth(0.25) up to 1 at T: inside (0, 1). The four other readers of the engine's share (sky glow, sky near the ground, sky floor, horizon of a place picture) are not set on Earth. So I expect no pixel of mine to change with the engine's files. NOT MEASURED yet.
+- `picture: false` goes into both sides of `path.handover` as a trial (scratch file `/tmp/gl/s9/place.json`, the same `json.dumps` form; the round trip of the file is byte equal).
+- Overlay and restore of the engine's 33 files (all but `assets-src/shared/globe-levels.py`, which lies untracked in my tree and is never staged): `/tmp/gl/s9/overlay.sh`, `/tmp/gl/s9/restore.sh`.
+- The finals of 1857 and 2156 of the second named tree do not exist as files (the walk's tail renders them but keeps no picture). A waiter (`/tmp/gl/s9/w8.sh`) renders both right after the walk, before any edit, as the left halves of the two pair pictures MAIL 648 asks for.
+
+Y, the cover of standing sheets, computed (`ROWS=... npx tsx out/work/earth/place/tmp/cover.ts FRAMES`; no render). Sheets that stand on arcs about the point under the close camera and just close to a deck at the close camera's own angle cover, of the ground between them, the share tan(grazing angle of the close camera's ray) times the cosine between the two rays' ground tracks over tan(grazing angle of the eye's ray). At the centre column of the close picture, for ground at 10.8, 9.3, 7.9, 6.7 and 5.5 degrees of arc (grazing 3.7, 5.9, 8.5, 11.3, 14.8 degrees):
+- 1755 (hold, height 3.37): 0.021, 0.030, 0.038, 0.045, 0.052
+- 1857 (1.397): 0.035, 0.050, 0.065, 0.079, 0.095
+- 1870 (0.4995): 0.069, 0.100, 0.129, 0.156, 0.187
+- 1880 (0.2204): 0.124, 0.174, 0.217, 0.257, 0.299
+- 1888 (0.1145): 0.214, 0.285, 0.342, 0.391, 0.440
+- 1896 (0.0624): 0.399, 0.490, 0.554, 0.603, 0.650
+- 1904 (0.0408): 0.699, 0.771, 0.816, 0.848, 0.879
+- 1908 (0.0355): 0.876, 0.915, 0.938, 0.956, 0.976
+- 1912 on: 1.000
+What this says: (1) from the hold such sheets cover 2 to 5 percent of the far zone, so 1755 would change by a few display values at most, over 123 by 130 px; (2) the deck would come in over 1870 to 1912, 42 frames, by the angle for real, against 1882 to 1897 today; the largest change of the cover over 8 frames is about 0.34 (1900 to 1908, at 10.8 degrees); (3) the cover is whole from 1912, 7 frames before T, so the seam would see one picture. What it does not say: how arcs of sheets read while they are half closed (a blind of white lines over the sea is the risk; puffs with broken edges are the answer and need frames), and what the machines' pattern reads on it. Nothing of this is built.
