@@ -250,13 +250,13 @@
   "coarse": 0.03
  },
  "light": {
-  "lane": 0.005,
+  "lane": 0.004,
   "middleWide": 0.25,
   "young": 0.25,
   "old": 0.65,
-  "dark": 0.14,
-  "top": 0.47,
-  "spread": 0.45,
+  "dark": 0.16,
+  "top": 0.375,
+  "spread": 0.7,
   "middle": 0,
   "limb": 0.85,
   "shade": [
@@ -303,19 +303,19 @@
    "amount": 0.5
   },
   "rim": {
-   "amount": 0.7,
-   "at": 0.3,
-   "wide": 3,
-   "few": -1,
-   "far": 0.15
+   "amount": 0.4,
+   "at": 0.9,
+   "wide": 0.05,
+   "few": 0.25,
+   "far": 0
   },
   "thread": 0,
   "flank": [
-   0.35,
-   0.9
+   0.5,
+   0.3
   ],
   "steep": [
-   0.8,
+   1.0,
    0.45,
    0.95
   ],
@@ -340,10 +340,10 @@
    "below": 0.12
   },
   "glass": {
-   "amount": 0,
-   "from": 0.55,
-   "to": 0.93,
-   "grown": 0.4
+   "amount": 0.4,
+   "from": 0.25,
+   "to": 0.85,
+   "grown": 0.3
   },
   "streak": 0,
   "threadIn": [
@@ -351,7 +351,7 @@
    0.9
   ],
   "points": {
-   "amount": 0.5,
+   "amount": 1.0,
    "within": 0.003,
    "few": 0.8,
    "scale": 22
@@ -365,7 +365,7 @@
    "scale": 5,
    "low": 0.85,
    "edge": 0,
-   "hot": 1.35
+   "hot": 1.5
   },
   "flankFar": [
    0.15,
@@ -419,11 +419,11 @@
     0.6
    ],
    "from": [
-    0.5,
-    0.75
+    0.2,
+    0.55
    ],
    "lane": 0.3,
-   "amount": 0.3,
+   "amount": 0.36,
    "flow": [
     3,
     1.2
@@ -434,7 +434,7 @@
    ]
   },
   "pit": {
-   "amount": 0.85,
+   "amount": 0.5,
    "from": 0.02,
    "to": 0.07
   }
