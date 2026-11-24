@@ -1,9 +1,49 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T06:48:02.649Z",
- "head": "af4337a066f1a00d0f035a280bea822e06d90e05",
- "note": "06:50 UTC: head af4337a (cure A, merged on main b0b8788): build, tests 427 of 427, path and seam green; the dive's pictures part is rendering, then the rise's, parity and the finals. Not cured: the set's border at 3252 to 3262.",
+ "pushed": "2026-11-24T07:05:00.166Z",
+ "head": "6c69ed497f7bb9ce97cde498a2ad785c2fee13dd",
+ "note": "Dive on the head that is being measured (src of 76017a8), draft, every frame I have so far. Seen: 2997 to 3005 the plates come in by height; 3006 to 3026 the ground reads as painted relief, and at 3023 to 3026 the near plate ends at the left in a soft straight border against a grey speckled field (a set's border, named in my list); 3032 to 3040 hold as film frames. Correction to the push of 06:48: the look labelled frames near the seam 3240 holds 3252, 3254, 3256, 3258, and the next one 3259 to 3262. T sheets of dive and rise follow when their frames exist.",
  "looks": [
+  {
+   "time": "2026-11-24T07:04:59.023Z",
+   "file": "20261124070459023-note-dive-d.jpg",
+   "source": "../work/named/sheets/dive-d.jpg",
+   "kind": "note",
+   "label": "dive 3032 to 3040 every frame, draft",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T07:04:57.830Z",
+   "file": "20261124070457830-note-dive-3023-full.jpg",
+   "source": "../work/named/sheets/dive-3023-full.jpg",
+   "kind": "note",
+   "label": "dive 3023 at full size, left part: the near plate's soft straight border against the speckled field",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T07:04:56.679Z",
+   "file": "20261124070456679-note-dive-c.jpg",
+   "source": "../work/named/sheets/dive-c.jpg",
+   "kind": "note",
+   "label": "dive 3023 to 3031 every frame, draft",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T07:04:55.410Z",
+   "file": "20261124070455410-note-dive-b.jpg",
+   "source": "../work/named/sheets/dive-b.jpg",
+   "kind": "note",
+   "label": "dive 3006 to 3022 every second frame, draft",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T07:04:54.445Z",
+   "file": "20261124070454445-note-dive-a.jpg",
+   "source": "../work/named/sheets/dive-a.jpg",
+   "kind": "note",
+   "label": "dive 2970 to 3009, draft, this head",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-24T06:48:01.522Z",
    "file": "20261124064801522-note-A-big2.jpg",
@@ -26,52 +66,6 @@
    "source": "../work/seam/A-surf.jpg",
    "kind": "note",
    "label": "draft, cure A (0d0be40): the surface view after the judged frame, every ninth frame 3159 to 3237; the push bends through the right into the pull back, the storm stays upper left; mean level falls from 58 to 47, no step",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T06:45:47.329Z",
-   "file": "20261124064547329-frame-f03060.jpg",
-   "source": "out/work/jupiter/frames/D0/f03060.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3060, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3060,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "5a18fcdc5a929484"
-  },
-  {
-   "time": "2026-11-24T06:29:29.474Z",
-   "file": "20261124062929474-note-jupiter-rise-pops.jpg",
-   "source": "../work/seam/jupiter-rise-pops.jpg",
-   "kind": "note",
-   "label": "pictures part of 68780bf, rise: the four largest pops; at 3313 what is left is the star field",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T06:29:28.278Z",
-   "file": "20261124062928278-note-jupiter-rise-changes.jpg",
-   "source": "../work/seam/jupiter-rise-changes.jpg",
-   "kind": "note",
-   "label": "pictures part of 68780bf, rise: the pattern panel (white is 1)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T06:29:27.099Z",
-   "file": "20261124062927099-note-A-rise-b.jpg",
-   "source": "../work/seam/A-rise-b.jpg",
-   "kind": "note",
-   "label": "draft, trial A: rise 3250 to 3261, every frame; the bank enters bottom left at 3251, the set is seen as an island from 3254",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T06:29:25.932Z",
-   "file": "20261124062925932-note-A-rise-a.jpg",
-   "source": "../work/seam/A-rise-a.jpg",
-   "kind": "note",
-   "label": "draft, trial A (bend through the right): rise 3239 to 3250, every frame",
    "stop": "jupiter"
   }
  ]
