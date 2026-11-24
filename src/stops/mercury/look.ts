@@ -59,9 +59,11 @@ export const carry = { gain: 1, lift: 1.12, knee: 2.9, grey: 0.85, tint: [1.102,
 
 export const close = { meet: true, shift: [0.09, 0.0] as [number, number], frames: [24, 22] as [number, number], height: [0.06, 0.3] as [number, number], far: [7, 10] as [number, number], feather: [0.22, 0.12] as [number, number], haze: { amount: 1, level: { dive: 1, rise: 1.7 }, height: [2.4, 7] as [number, number], cut: [8, 13] as [number, number], calm: [0.3, 0.62] as [number, number], calmHeight: [2.4, 3.6] as [number, number], wash: { amount: 1, cap: 2.5, height: [2.4, 7] as [number, number] } }, lift: { cap: [-0.35, 0.35] as [number, number], knee: { dive: [0.16, 3] as [number, number], rise: [0.3, 1.2] as [number, number] }, height: [14, 40] as [number, number] }, wide: { feather: [[2.4, 0.02], [3.4, 0.06], [4.6, 0.14]] as [number, number][], over: [0.42, 0.02] as [number, number], drop: [9, 12] as [number, number], margin: 0.001, blur: [48, 3] as [number, number], soft: 4, cap: { over: 1.3, span: 0.03125, height: [2.3, 2.7] as [number, number], reach: [6, 8.5] as [number, number] }, far: [[2.4, 23], [3.4, 15], [4.3, 11.5], [5.9, 9.5], [10.4, 8], [16, 6]] as [number, number][] } }
 
-export const under = { sink: 0.283, span: 0.45, height: [2.3, 5] as [number, number] }
+export const under = { span: 0.45, height: [2.9, 6.5] as [number, number] }
 export const fine = { shift: [0.37, 0.61] as [number, number], edge: [0.03, 0.03] as [number, number], blur: [16, 48] as [number, number], shade: [0.05, 0.22, 0.3] as [number, number, number] }
 export const far = { color: [0.289, 0.26, 0.225] as [number, number, number], under: { dive: [0.05, 0.125] as [number, number], rise: [0.1, 0.155] as [number, number] }, sunFallDeg: 14, flat: 1, sunReach: 0.6, sunLevel: 2.6, lit: [0.0, 0.15] as [number, number], height: [0.05, 0.2] as [number, number], relief: [0.08, 0.5] as [number, number] }
+export const sky = { height: [0.042, 0.3] as [number, number] }
+export const border = { deg: [3, 4.5] as [number, number] }
 export const mend = { lon: 16.36, lat: -5.94, reach: 0.03, from: 1.8 }
 
 export const flight = { travel: 1.2, gather: 1, swoop: 0.3, rest: [744, 990] as [number, number], knee: 30, lift: { at: 990, frames: 34, height: 0.7, forward: 0.1, power: 8 }, bend: { from: 876, join: 12, endDeg: 140, skew: 1.7, steps: 64, until: 1014 } }

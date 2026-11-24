@@ -1,11 +1,13 @@
 import * as THREE from 'three'
-import { config } from '../../config'
-import { mix, slerpDir } from '../../director/rig'
+import { config, type Segment } from '../../config'
+import type { SkyShares } from '../../director/handover'
+import { mix, ramp, slerpDir } from '../../director/rig'
 import type { Pose, ViewKind } from '../../core/types'
 import { StopPlan, type Fit, type MoveParams } from '../../director/moves'
 import { anchor, closeAhead, closeRadius, closeUp, type Anchor } from './close'
 import fit from './fit.json'
-import { close, flight, path, spinRest } from './look'
+import skyTurn from './skyturn.json'
+import { close, flight, path, sky, spinRest } from './look'
 
 const shareOf = (kind: 'dive' | 'rise'): number => {
   const seg = config.segments.find((x) => x.stop === 'mercury' && x.kind === kind)!
@@ -21,7 +23,7 @@ export const params: MoveParams = {
   travel: { turnDeg: 78, side: 1 },
   arrive: { swingDeg: 0, axis: [0, 1, 0], offset: [0.5, -0.1] },
   light: { exposure: 1, skyExposure: 0.25, sunRadiusDeg: 9.2, sunGlare: 0.012, flare: 1 },
-  handover: { dive: { at: shareOf('dive'), picture: false, place: { valid: [0.004, 0.004, 0.0045, 0.125], seen: 1, maxEnlarge: 3, enlargeSoft: 0.95, edgeIn: [0.4, 0.4, 0.4, 0.25] } }, rise: { at: shareOf('rise'), picture: false, place: { valid: [0.03, 0.03, 0.05, 0.125], seen: 1, maxEnlarge: 1.2, enlargeSoft: 0.4, edgeIn: [0.4, 0.4, 0.4, 0.25] } } },
+  handover: { dive: { at: shareOf('dive'), picture: false, skyFrames: 0, place: { valid: [0.004, 0.004, 0.0045, 0.125], seen: 1, maxEnlarge: 3, enlargeSoft: 0.95, edgeIn: [0.4, 0.4, 0.4, 0.25] } }, rise: { at: shareOf('rise'), picture: false, skyFrames: 0, place: { valid: [0.03, 0.03, 0.05, 0.125], seen: 1, maxEnlarge: 1.2, enlargeSoft: 0.4, edgeIn: [0.4, 0.4, 0.4, 0.25] } } },
   cover: [1, 0.95, 0.86],
   coverEdge: [4, 4],
   coverHides: 0,
@@ -149,6 +151,25 @@ export class Plan extends StopPlan {
 
   override terrain(tRel: number): Pose {
     return this.low(tRel + this.seg.terrain.start)
+  }
+
+  override skyShare(seg: Segment, time: number): SkyShares | null {
+    if (seg.stop !== this.id || (seg.kind !== 'dive' && seg.kind !== 'rise')) return null
+    return { low: 1 - smoother(ramp(Math.log(sky.height[0]), Math.log(sky.height[1]), Math.log(this.path(seg.kind, time).position.length() - 1))) }
+  }
+
+  override skyCarryShare(seg: Segment, time: number): number | null {
+    if (seg.stop !== this.id || (seg.kind !== 'dive' && seg.kind !== 'rise')) return null
+    const c = skyTurn[seg.kind]
+    const s = c.shares
+    const k = Math.min(Math.max((Math.log(this.path(seg.kind, time).position.length() - 1) - c.from) / (c.to - c.from), 0), 1) * (s.length - 1)
+    const i = Math.min(Math.floor(k), s.length - 2)
+    const f = k - i
+    const p0 = s[Math.max(i - 1, 0)]!
+    const p1 = s[i]!
+    const p2 = s[i + 1]!
+    const p3 = s[Math.min(i + 2, s.length - 1)]!
+    return Math.min(Math.max(0.5 * (2 * p1 + (p2 - p0) * f + (2 * p0 - 5 * p1 + 4 * p2 - p3) * f * f + (3 * p1 - p0 - 3 * p2 + p3) * f * f * f), 0), 1)
   }
 
   override twin(local: Pose, time: number): Pose {

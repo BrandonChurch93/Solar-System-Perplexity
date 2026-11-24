@@ -46,6 +46,20 @@ async function heights(ctx: SetContext, path: string, width: number, height: num
   return out
 }
 
+const BORDER_HEAD = 'out vec4 outColor;'
+const BORDER_CUT = 'if (alpha < 0.004) discard;'
+const BORDER_UNIFORMS = '\nuniform vec4 uBorder;\nuniform vec3 uBorderCentre;\nuniform vec3 uBorderUp;'
+const BORDER_GLSL = /* glsl */ `{
+    vec3 bo = vEye - uBorderCentre;
+    vec3 br = normalize(vLocal - vEye);
+    float bb = dot(bo, br);
+    float bd = bb * bb - dot(bo, bo) + uBorder.w * uBorder.w;
+    vec3 bn = normalize(bo + br * (-bb - sqrt(max(bd, 0.0))));
+    float ba = mix(4.0, acos(clamp(dot(bn, uBorderUp), -1.0, 1.0)), step(0.0, bd) * step(bb, 0.0));
+    alpha *= 1.0 - uBorder.z * smoothstep(uBorder.x, uBorder.y, ba);
+  }
+  `
+
 export const createSet: SetFactory = async (ctx) => {
   const key = ctx.assets === 'full' ? 'full' : 'web'
   const base = 'mercury/' + ctx.assets + '/'
@@ -120,6 +134,7 @@ export const createSet: SetFactory = async (ctx) => {
   const rimSun = new THREE.Vector3()
   const kick = new THREE.Vector3()
   const sunTurn = new THREE.Quaternion()
+  const lensAxis = new THREE.Vector3()
   const toCamera = new THREE.Quaternion()
   const plateBack = new THREE.Quaternion()
   const limbRay = new THREE.Vector3()
@@ -144,6 +159,29 @@ export const createSet: SetFactory = async (ctx) => {
   world.add(near)
   ground.presence(1)
   under.presence(1)
+  const border = { value: new THREE.Vector4(THREE.MathUtils.degToRad(look.border.deg[0]), THREE.MathUtils.degToRad(look.border.deg[1]), 0, closeRadius) }
+  const airShare = { value: 1 }
+  for (const r of [ground, under]) {
+    r.group.traverse((o) => {
+      const m = (o as THREE.Mesh).material as THREE.ShaderMaterial | undefined
+      if (m?.uniforms?.uVeil && m.uniforms.uPresence) m.uniforms.uPresence = airShare
+    })
+  }
+  near.updateMatrixWorld(true)
+  const toNear = near.matrixWorld.clone().invert()
+  for (const r of [ground, under]) {
+    r.group.traverse((o) => {
+      const m = (o as THREE.Mesh).material as THREE.ShaderMaterial | undefined
+      if (!m?.uniforms?.uHasAlpha) return
+      if (m.fragmentShader.split(BORDER_HEAD).length !== 2 || m.fragmentShader.split(BORDER_CUT).length !== 2) throw new Error('the relief shader has no single place for the border of the place')
+      const local = new THREE.Matrix4().multiplyMatrices(toNear, o.matrixWorld).invert()
+      m.fragmentShader = m.fragmentShader.replace(BORDER_HEAD, BORDER_HEAD + BORDER_UNIFORMS).replace(BORDER_CUT, BORDER_GLSL + BORDER_CUT)
+      m.uniforms.uBorder = border
+      m.uniforms.uBorderCentre = { value: nearUp.clone().multiplyScalar(-(closeRadius + 1)).applyMatrix4(local) }
+      m.uniforms.uBorderUp = { value: nearUp.clone().transformDirection(local) }
+      m.needsUpdate = true
+    })
+  }
   const maps = (group: THREE.Group, name: string): THREE.Texture | undefined => {
     let found: THREE.Texture | undefined
     group.traverse((o) => {
@@ -200,11 +238,11 @@ export const createSet: SetFactory = async (ctx) => {
   shell.mesh.renderOrder = -3
   const floor = Math.max(plan.low(plan.seg.terrain.start).position.dot(nearUp), plan.low(plan.seg.terrain.end).position.dot(nearUp))
   const toLow = new THREE.Quaternion()
-  const paint = (g: Globe, time: number, diving: boolean, rising: boolean, sunk: number, distance: number, offAxis: number, sun: THREE.Vector3, glow: THREE.Vector3, far: THREE.Vector3, line: THREE.Vector3, spun: number, gain: number, weight: number, rim: number, vignette: number, aspect: number): void => {
+  const paint = (g: Globe, time: number, diving: boolean, rising: boolean, distance: number, offAxis: number, sun: THREE.Vector3, glow: THREE.Vector3, far: THREE.Vector3, line: THREE.Vector3, spun: number, gain: number, weight: number, rim: number, vignette: number, aspect: number): void => {
     g.plates(plateLevels, rising ? risePlates : divePlates, rising)
     const close = 0
     const grade = diving ? by(look.carry.dive, time) : rising ? 1 - by(look.carry.rise, time) : 0
-    g.near(close, sunk / closeRadius)
+    g.near(close, 0)
     const high = (distance - 1) * closeRadius
     const capped = 0
     const way = rising ? 'rise' : 'dive'
@@ -238,8 +276,10 @@ export const createSet: SetFactory = async (ctx) => {
       const mine = state.segment.stop === plan.id
       const shows = !inOrbit ? 1 : mine && (kind === 'dive' || kind === 'rise') ? 1 - THREE.MathUtils.smoothstep(Math.log(1 + plan.low(state.time).position.dot(nearUp)), Math.log(look.under.height[0]), Math.log(look.under.height[1])) : 0
       near.visible = shows > 0
+      border.value.z = inOrbit ? 1 : 0
       ground.presence(shows)
       under.presence(shows)
+      airShare.value = inOrbit ? 0 : 1
       if (inOrbit && shows > 0) {
         const turn = plan.drawn(state.time)
         near.position.copy(plan.anchor.origin).applyQuaternion(turn)
@@ -265,9 +305,11 @@ export const createSet: SetFactory = async (ctx) => {
         under.update(state.time - terrainMid, gain, shot.post.vignette, view)
         const halo = !mine || (kind !== 'dive' && kind !== 'rise') ? 1 : smoother(ramp(haloEnds[kind][0]!, haloEnds[kind][1]!, lifted(state.time)))
         limb.update(low.gain * shot.skyGlow * shot.skyExposure * halo, shot.post.vignette, aspect)
-        rim.update(gain, shot.post.vignette, aspect)
         const shown = on && (kind === 'dive' || kind === 'rise') ? THREE.MathUtils.smoothstep(plan.low(state.time).position.dot(nearUp), floor, floor + look.under.span) : 0
+        rim.update(gain * (1 - shown), shot.post.vignette, aspect)
+        airShare.value = 1 - shown
         shell.mesh.visible = shown > 0
+        border.value.z = shown
         if (shown > 0) {
           const high = film.shotAt(shot.frame, state.time, 'orbit')
           const above = high.sets.find((s) => s.id === plan.id)!
@@ -281,9 +323,10 @@ export const createSet: SetFactory = async (ctx) => {
           const offAxis = THREE.MathUtils.radToDeg(sunShown.angleTo(forward.set(0, 0, -1).applyQuaternion(eye.quaternion)))
           kick.fromArray(look.light.line.dir).applyQuaternion(above.rotation)
           for (const v of [light, sunShown, glareSun, kick]) v.applyQuaternion(toLow)
+          shell.lens(lensAxis.set(0, 0, 1).applyQuaternion(toLow))
           const spun = spin(state.time)
           shell.mesh.quaternion.copy(shellBase).multiply(shellTurn.setFromAxisAngle(bodyAxis, -spun))
-          paint(shell, state.time, diving, !diving, look.under.sink, distance, offAxis, light, sunShown, glareSun, kick, spun, gain, state.weight, Math.min(holdRadius * distance * tanHalf * 2, 1), shot.post.vignette, aspect)
+          paint(shell, state.time, diving, !diving, distance, offAxis, light, sunShown, glareSun, kick, spun, gain, state.weight, Math.min(holdRadius * distance * tanHalf * 2, 1), shot.post.vignette, aspect)
           shell.show(shown)
           shell.smear(view.camera, null, null, 0, 0, 0, view.samples)
         }
@@ -316,9 +359,9 @@ export const createSet: SetFactory = async (ctx) => {
       if (shows > 0) {
         ground.update(state.time - terrainMid, gain, shot.post.vignette, view)
         under.update(state.time - terrainMid, gain, shot.post.vignette, view)
-        rim.update(gain * shows, shot.post.vignette, aspect)
+        rim.update(0, shot.post.vignette, aspect)
       }
-      paint(globe, state.time, diving, rising, look.under.sink * shows, distance, offAxis, light, rimSun, glareSun, kick.fromArray(look.light.line.dir).applyQuaternion(state.rotation), spin(state.time), gain, state.weight, Math.min(holdRadius / Math.max(radiusPx / view.format.height, 1e-6), 1), shot.post.vignette, aspect)
+      paint(globe, state.time, diving, rising, distance, offAxis, light, rimSun, glareSun, kick.fromArray(look.light.line.dir).applyQuaternion(state.rotation), spin(state.time), gain, state.weight, Math.min(holdRadius / Math.max(radiusPx / view.format.height, 1e-6), 1), shot.post.vignette, aspect)
       globe.mesh.visible = radiusPx > 0.6 && state.weight > 0
       const open = view.shutterSeconds ?? config.shutterFraction / config.fps
       const fast = view.samples > 1 && (diving || rising)

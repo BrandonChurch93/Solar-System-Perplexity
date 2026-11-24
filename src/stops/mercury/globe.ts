@@ -223,6 +223,7 @@ uniform vec2 uWash;
 uniform vec4 uFar;
 uniform vec4 uFarSun;
 uniform vec3 uFarDir;
+uniform vec3 uFarAxis;
 uniform vec3 uFarColor;
 uniform vec2 uFarLit;
 uniform vec2 uFarRelief;
@@ -492,7 +493,7 @@ ${FINE}
   wash *= min(1.0, uWash.y / max(wash.r, max(wash.g, wash.b)));
   col *= mix(vec3(1.0), wash, uWash.x);
   float fs = exp(-acos(clamp(dot(ray, uFarDir), -1.0, 1.0)) / uFarSun.x);
-  float inLimb = (asin(min(1.0 / length(oc), 1.0)) - asin(min(s / length(oc), 1.0))) / max(ray.z * ray.z, 1e-4);
+  float inLimb = (asin(min(1.0 / length(oc), 1.0)) - asin(min(s / length(oc), 1.0))) / max(dot(ray, uFarAxis) * dot(ray, uFarAxis), 1e-4);
   float fw = uFar.x * uFarSun.z * (1.0 - smoothstep(uFar.y, uFar.z, inLimb / (1.0 + uFar.w * fs))) * smoothstep(uFarLit.x, uFarLit.y, ndl0);
   col = mix(col, uFarColor * (1.0 + uFarSun.w * fs) * pow(max(dot(col, vec3(0.2126, 0.7152, 0.0722)), 1e-4) / uFarRelief.x, uFarRelief.y), fw);
 ${CLOSE_DRAWS}
@@ -574,7 +575,7 @@ export class Globe {
         uCarry: { value: new THREE.Vector3(1, 0, 0) }, uPlace: { value: new THREE.Vector4(1, 0, Math.tan(THREE.MathUtils.degToRad(p?.place?.ownDeg[0] ?? 1)), Math.tan(THREE.MathUtils.degToRad(p?.place?.ownDeg[1] ?? 2))) }, uPlaceFrom: { value: p?.place?.from ?? MAX_PATCHES }, uPlaceFade: { value: new THREE.Vector3(p?.place?.fade?.[0] ?? 1, p?.place?.fade?.[1] ?? 2, p?.place?.fade ? 1 : 0) }, uPlaceEarly: { value: 0 }, uPlaceHold: { value: new THREE.Vector3(p?.place?.hold ? Math.tan(THREE.MathUtils.degToRad(p.place.hold[0])) : 1, p?.place?.hold ? Math.tan(THREE.MathUtils.degToRad(p.place.hold[1])) : 2, p?.place?.hold ? 1 : 0) }, uPlaceLight: { value: new THREE.Vector3(p?.place?.light?.[0] ?? 1e6, p?.place?.light?.[1] ?? 2e6, p?.place?.light?.[2] ?? 1) }, uShoulder: { value: new THREE.Vector2(l.shoulder.from, 0) },
         uClose: { value: o.map }, uCloseCam: { value: new THREE.Matrix3() }, uCloseUp: { value: new THREE.Vector3(0, 1, 0) }, uCloseLens: { value: new THREE.Vector4(1, 1, 0, 0) }, uCloseBox: { value: new THREE.Vector4(0, 0, 1, 1) }, uCloseFade: { value: new THREE.Vector4(1, 2, 0.1, 0) }, uCloseSize: { value: new THREE.Vector2(1, 1) }, uCloseW: { value: 0 },
         uWide: { value: o.map }, uWideAlpha: { value: o.map }, uWideCam: { value: new THREE.Matrix3() }, uWideEye: { value: new THREE.Vector3(0, 2, 0) }, uWideLens: { value: new THREE.Vector3(1, 0, 0) }, uWideBox: { value: new THREE.Vector4(0, 0, 1, 1) }, uWideOver: { value: new THREE.Vector2(0, 0) }, uWideDrop: { value: new THREE.Vector4(0, 1, 2, 1e6) }, uWideDown: { value: new THREE.Vector3(0, -1, 0) }, uWideHold: { value: new THREE.Vector3(1e6, 0, 1) }, uWideCap: { value: new THREE.Vector4(0, 1, 2, 1) }, uWideLow: { value: 0.03 }, uWideFade: { value: new THREE.Vector4(0.1, 1, 2, 0.5) }, uWideSize: { value: new THREE.Vector2(1, 1) }, uSink: { value: 0 },
-        uFar: { value: new THREE.Vector4(0, 0, 1, 1) }, uFarSun: { value: new THREE.Vector4(0, 1, 1, 1) }, uFarDir: { value: new THREE.Vector3(0, 0, 1) }, uFarColor: { value: new THREE.Vector3(1, 1, 1) }, uFarLit: { value: new THREE.Vector2(0, 1) }, uFarRelief: { value: new THREE.Vector2(1, 0) }, uNightPlain: { value: new THREE.Vector3(0, -1, 0) },
+        uFar: { value: new THREE.Vector4(0, 0, 1, 1) }, uFarSun: { value: new THREE.Vector4(0, 1, 1, 1) }, uFarAxis: { value: new THREE.Vector3(0, 0, 1) }, uFarDir: { value: new THREE.Vector3(0, 0, 1) }, uFarColor: { value: new THREE.Vector3(1, 1, 1) }, uFarLit: { value: new THREE.Vector2(0, 1) }, uFarRelief: { value: new THREE.Vector2(1, 0) }, uNightPlain: { value: new THREE.Vector3(0, -1, 0) },
         uHazeSun: { value: new THREE.Vector3(0, 0, 1) }, uHazeGain: { value: Array.from({ length: 17 }, () => new THREE.Vector3(1, 1, 1)) }, uHazeSpan: { value: new THREE.Vector4(0, 1, 0, 1) }, uHazeCut: { value: new THREE.Vector3(0, 1, 0) }, uHazeCalm: { value: new THREE.Vector3(0, 1, 0) }, uWash: { value: new THREE.Vector2(0, 1) }, uLift: { value: new THREE.Vector2(-0.85, 1.6) }, uKnee: { value: new THREE.Vector2(1, 0) },
         uPrev: { value: new THREE.Matrix4() }, uSmear: { value: 0 }, uJitter: { value: new THREE.Vector3() }, uPlain: { value: new THREE.Vector3(1, 1, 1) }, uDiag: diagUniform, uGrad: gradUniform,
       },
@@ -679,6 +680,10 @@ export class Globe {
     ;(u.uFarColor!.value as THREE.Vector3).fromArray(o.color)
     ;(u.uFarLit!.value as THREE.Vector2).fromArray(o.lit)
     ;(u.uFarRelief!.value as THREE.Vector2).fromArray(o.relief)
+  }
+
+  lens(axis: THREE.Vector3): void {
+    ;(this.material.uniforms.uFarAxis!.value as THREE.Vector3).copy(axis)
   }
 
   wash(amount: number, cap: number): void {

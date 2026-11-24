@@ -2481,3 +2481,92 @@ What it means for me: do not rewrite the two lines of `src/stops/mercury/set.ts`
 4. The place in the hold (3b): only with a plate that holds the look at 615 against `references/approved/mercury-hero.png`; the bar is the side by side at the size of the frame.
 5. The rise pair 2 to 3r (0.70): one picture for 3r and 4r, or a smaller level 2 of the rise, inside G15 (1400 MB, now 1386).
 6. Before naming: `PRE <sha> pictures` to /root (MAIL 545), since the whole smooth takes about 60 minutes here.
+
+## 10:14 UTC: the suite on the named tree
+
+`npm test` on HEAD c02be35a (the named 400c5c91 plus notes, `hold` null): 48 files, 443 of 443 passed. Point 3e of the second NAMED mail is closed here (and by the Builder's own check me2, MAIL 633).
+
+## 10:18 UTC: MAIL 633 (receipt of the second NAMED, rulings), verbatim
+
+"MAIL 633 from the Builder (/root) to mercury_builder. Receipt of NAMED 400c5c91e549460480aa6b61f883607103460ae5 (your second), 10:06 UTC.
+
+Verified: the sha is the head of agent/mercury-place on the remote; mercury is on handover.ownPath in its config. Proof tree: 0a2c596d86793a00e65fe6248308f852bda5be2e on builder/proof-me2 (main da59c441 with your three folders, 18 files). On the machines: the stop check me2 (finals 615 and 870, the measure, the handover report, gate, tsc and the suite, so your point 3e is covered), the pictures as 8 slices (my1, 4 for the dive and 4 for the rise), the path with the place and the parity, the warm list and the counts (mk2). They stand behind the engine check of the travel's carry in the queue; I send the joined report with its panels when it is whole, and your third commit is due 90 minutes after that mail.
+
+Rulings on your points:
+3b, the hold: right as you did it. A disc that reads as a patch at 615 is worse than a red number, and 615 stays main's bytes. Your cure (the place's coarse field as a relief source of the globe, lit by the globe's own law) is the right kind: one ground, one light. If it does not hold the look, the hold stays and the number stands.
+3a, the strip under the limb: this is the one that counts, since it is what a viewer sees as two grounds. The set's far ground carrying the map's relief field beyond the disc goes first in the third commit, before 3b.
+5, plate 2 to 3r at 0.70 on the files: not a red of the picture as long as that pair is never exchanged in time, which is what your uPlaceEarly does; the rise's own pattern number decides it. G15 is not raised for it: 75 MB over is cured in the files (3r and 4r in one picture, or a smaller level) or left.
+6, the sky by the clock: third commit, as you say (skyShare from the eye's height, skyFrames 0).
+The pattern measure itself is being tested for soundness by harness_builder (a null test, the contrast floor, the border, the limb band; your 1.568 at 744 + 1/2 is one of its cases). Until it reports, treat a red at the place as real and a red that sits only in the limb band or at the frame's border as open.
+Main is c2c4913392fcf3f934e4fadedd61b32573d51010 (the relief fix cd8355dd and the slice tool are in it). Merge it before the third commit."
+
+What it sets: the THIRD COMMIT IS DUE 90 MINUTES AFTER THE BUILDER'S JOINED REPORT MAIL (not yet here at 10:18). Order of work: 3a (the strip under the limb) first, then 3b; the sky by height with it; the rise pair is decided by the rise's own pattern number. A red only in the limb band or at the frame's border is open until harness_builder reports on the measure.
+
+## 10:16 UTC: the sky by height (in work, not yet committed)
+
+`plan.ts`: `skyShare(seg, time)` gives `{ low }` as 1 less a smoother of the logarithm of `this.eyeHeight(time)` between `look.sky.height` (0.042 and 0.3 radii), for the dive and the rise alike; `skyFrames: 0` on both sides of `handover`. Heights (frame + 1/4): dive 733 0.300, 736 0.218, 748 0.074, 756 0.043, 760 0.035; rise 977 0.039, 978 0.042, 990 0.118, 997 0.276, 1002 0.531. So the dive's close sky comes in from 733 (was 736) and is whole at 757 (was 760); the rise's leaves from 978 (as before) and is gone at 998 (was 1002). Scratch: `npx tsx out/work/mercury/place/sky/h.ts` prints height, the engine's sky weight and the sky's turn by frame.
+The sky's TURN (`skyTurnWeight`, the carry of the stars) is still the engine's smoother of time over the whole globe side (690 to 759, 978 to 1034); the engine's by time and position over the dive 0 at 690, 0.64 at 730, 0.86 at 740, 1 at 760. Not yet decided whether my plan gives `skyCarryShare` by height (it moves the stars and the Sun's place in 717 and 1016).
+
+### Third commit, work log from 10:33 (strip under the limb, sky by height)
+
+- Diagnosis by rate 2 drafts 739 to 758 (looks pushed 10:42): `v0` the second named state, pattern 1.57 at 744 (pairs 740 to 749 red); `v1` far look off, set on: 1.38 at 746 + 1/2 (the set's stretched far ground covers the band from 748 on); `v3` far look with relief exponent 1, set on: 1.54; `v2` set off, far look on: the band is pale, the map's craters paled; `v4` set off, far look off: the map's own craters stay under the limb the whole way, one ground. So two things each take the map's ground out of the band: the set's far ground past its horizon, and the far look.
+- BUILT, border of the set on the ground (`set.ts`, `look.border.deg` [9.5, 11.5]): the two reliefs of the set (ground, under) get three uniforms and seven lines in their fragment shader at build time, before the first compile (the strings `out vec4 outColor;` and `if (alpha < 0.004) discard;` must each be there once, else the build throws). Per pixel: the ray from the relief's own eye (`vEye`) through the point meets the planet's sphere (centre and radius of the close view, in the relief's local frame); the angle of that ground point from the place's spot, seen from the planet's centre, takes the relief's alpha out from 9.5 to 11.5 degrees; a ray that misses the sphere is out. Amount 1 in the globe view, the shell's own share (`shown`, by height over the floor) in the surface view, so 0 in the terrain segment: 870 keeps its bytes (to prove). No time is read.
+- `w1` (border, 739 to 779, rate 2 draft): 750 to 771 pattern 0.07 to 0.11, through T (760) with no jump; every frame 754 to 779 looked at (`/tmp/m/w1-b.jpg`, `w1-c.jpg`): one ground under the limb, no border of the set to be seen. 740 to 749 still 1.61: that is the far look alone (the set comes in at 746 and is cut at the border).
+- The pattern measure is a local correlation of detail carried along the optical flow over 8 frames, where both frames have contrast over the floor (`tools/img/smooth.py` pattern): gain does not count, a pattern that is replaced or carried wrong does.
+- Sky turn by height: `assets-src/mercury/sky/turn.ts KNOTS OUT` samples the engine's course of the sky's turn (`skyTurnWeight`) at 97 heights even in the logarithm of the eye's height and writes `src/stops/mercury/skyturn.json`; `plan.skyCarryShare` reads it by the eye's height (Catmull Rom between the knots). Against the course by the clock: dive worst 0.00012, rise worst 0.00051, never a step back. So the sky, stars and the Sun's place stay where they were to a fraction of a pixel and nothing of the sky reads the time in my dive or rise.
+
+## 11:44 UTC: MAIL 651 (REPORT on the second named commit, starts the 90 minutes), verbatim
+
+"MAIL 651 from the Builder (/root), 11:44 UTC. REPORT on your second named commit 400c5c91e549460480aa6b61f883607103460ae5 (proof tree 0a2c596d). Everything below is MEASURED on the render machines unless it says otherwise. This report starts your 90 minutes: your third and last named commit is due by 13:15 UTC, as a NAMED mail with the full sha. The third goes into its round as it stands, with every red measure a severe issue of that round.
+
+GREEN
+- Take check: 105 of 115 engine drafts equal main's bytes, the other 10 lie inside your dive and rise. Judged finals 615 and 870 keep the reference's bytes. Gate pass. G5 pass. G13: 0 of 495 frames soft. G17: 1.21 (hold) and 0.927 (surface view).
+- Path, place and parity: green.
+- Counts and warm list (back at 11:41): green. Your warm frames equal main's list inside your span, so your take needs no change there.
+
+RED: one number in each move, the pattern of the picture (limit 0.45; 0 is the same pattern, 1 an unrelated one).
+- Dive: 1.57 from frame 744 + 1/2 to 8 film frames later, most at pixel 956, 120. 33 capture frames are over the limit, from 722 to 749. Level step 0.13 and pop 1.12 are green.
+- Rise: 1.39 from frame 982 + 1/2, most at pixel 644, 164. 64 capture frames are over, from 977 to 1015. Level step 0.31 and pop 1.13 are green.
+- Both maxima lie in the top sixth of the frame, in the band under the horizon. A value over 1 there reads as one picture of the far ground replaced by another while the camera moves, which is what plan F forbids: whatever blends does so by distance, height or angle, and it must be the same ground on both sides.
+- Your second commit did not move these numbers. The same measure on main's Mercury before it (under the far Sun's proof) read 1.56 at 744 (47 frames over, from 712 + 1/2) and 1.46 at 983 (70 over, from 977 + 1/2). So the cause is older than your second commit and it is not the far Sun.
+
+WANTED in the third commit
+1. The cause, named in one line each for the dive and for the rise: which two pictures of the far ground meet in that band, and by what they are exchanged (height, distance, angle, or still the clock). Fix it at the cause. Do not blur or dim the band to get under the number.
+2. Proof before you name: the changes panels of the slices that hold 722 to 749 and 977 to 1015 (npm run smooth -- --stop mercury --kind dive --only pictures --part 2/4 and 3/4; --kind rise --part 2/4 and 3/4), with the pattern under 0.45 in every row, or the number you reach and why it stops there.
+3. 615 and 870 keep their bytes. Path, place, parity, G13 and the counts stay green.
+4. Merge main before you name (main has moved: Venus's third, Neptune's third, the warm list). The far Sun's piece is in proof now and will bring its wiring into src/stops/mercury/set.ts. If it is on main before you name, I mail you and you merge it. If you name first, I merge the wiring at your take three way and you check the result.
+
+Attached: the two joined reports, the four changes panels of the red parts, two pops panels, and the counts report."
+
+What it sets: THE THIRD NAMED COMMIT IS DUE BY 13:15 UTC. Attachments in `/home/user/.perplexity/attachments/9a66d14456874406aae45acc4dc2dd43/` (mercury-dive.md, mercury-rise.md, four changes panels, two pops panels, mercury.md).
+
+## Third commit, work log 11:14 to 12:25 UTC (the band under the horizon)
+
+All renders are rate 2 drafts at the master format, measured with `out/work/mercury/place/pat/pat2.py` (the pictures measure of `tools/img/smooth.py`, pattern limit 0.45); the second named state reads 1.57 at 744 + 1/2 there, as on the Builder's machines.
+
+THE CAUSE, found by taking the picture apart at 752 + 1/2 (sheets `x1-x0`, `y-layers` in looks):
+- Dive: in the band under the horizon two pictures of the place's far ground meet. One is the globe's ring of the place (plates 2 to 4: from about 2 degrees out a crater field made by `craters.py` on the set's coarse tones). The other is the set's own far ground (the wide relief `under`, a picture painted for an eye 1 unit over the ground, with its low light as a pale glow, seen stretched from above). They were exchanged by the set's presence, a law of the eye's height (`look.under.height`, 746 to 758 in the second named state; by the clock on main before it). So the exchange was by height, but it was not the same ground on both sides.
+- Rise: the same two pictures in the other order, by the same law of height (977 to 989).
+- Not the cause, each tested alone: the rim plate, the air of the reliefs, the sunk limb of the globe (`look.under.sink`).
+
+WHAT WAS TRIED (dive, worst pattern and where it sits):
+- `w1` border of the set on the ground at 9.5 to 11.5 degrees: 1.61 at 744; 750 to 771 0.07 to 0.11.
+- `x1` plus a law by angle (the set's ground shows where the eye's grazing angle is within a ratio q of the picture's own, q from 5.5 to 1.5): 1.56 at 744, red 741 to 748 + 1/2.
+- `x2` the same with the globe's limb not sunk: 1.67. `x3` q from 3.3: 1.69. `x4` q from 2.2: 1.49. The camera of the dive looks over the place at a slant, much as the picture's own eye does, so the law by angle lets the far ground in early; it does not separate the two pictures.
+- `x0` the globe alone (set off): 0.54 to 0.66 at 739 to 741, at most 0.3 from 741 + 1/2 to 749.
+- `x5` and `z1` (limb not sunk): border at 3 to 4.5 degrees, no law by angle: 0.92 at 747 (739 to 751 over the limit, 0.54 to 0.92), 0.17 to 0.28 from 752 to 763.
+
+WHAT IS BUILT (third commit):
+- `look.border.deg` [3, 4.5]: the set's two reliefs end on the ground at 3 to 4.5 degrees from the spot (angle at the planet's centre, read per pixel where the ray from the eye meets the planet's sphere; uniforms `uBorder`, `uBorderCentre`, `uBorderUp` patched into the relief layers' fragment shader in `set.ts`, before the first compile). Inside it the plates' middle is the set's own picture laid flat, so both sides carry one picture. Past it the far ground is the globe's own ring, in the globe view all the way down to T.
+- In the surface view the shell (the globe drawn from the low camera) carries that same ground on; the border's amount, the rim plate and the air of the reliefs follow `1 - shown`, where `shown` is the shell's share by the eye's height over the floor (`look.under.span` 0.45 units, frames about 765 to 779 and 960 to 973). So the set's own far ground comes in only there, by height, where the far ground is a narrow band under the horizon. At the floor (780 to 959) the set is whole and the border is off: 870 keeps its bytes.
+- `look.under.height` [2.9, 6.5] (the set's presence by the eye's height over the sphere, in units of the set). `look.under.sink` is REMOVED (the globe's limb is the true limb; sunk by 0.46 percent of the radius it moved while the set came in: dive with the sink `z2` 1.06 at 745 + 1/2 and 0.6 at 752 to 753, without it `z1` 0.92 at 747 and at most 0.28 from 752).
+- The sky by height: `plan.skyShare` (low share from the eye's height between `look.sky.height`), `skyFrames: 0` on both sides, `plan.skyCarryShare` from `skyturn.json` (the engine's course of the sky's turn, kept as a curve over the logarithm of the eye's height, made by `assets-src/mercury/sky/turn.ts`).
+- Main 4885e4ab merged (e3a28761).
+
+WHAT STAYS RED AND WHY IT STOPS THERE:
+- Dive 739 to 751, pattern up to 0.92 at 747 (was 1.57): it sits in a thin band right at the limb, along its whole length (panel `chg-x5`). The frames show one ground there (sheet `z1-band`: the globe's crater field from 742 to 754, paling with the far look). With the set off the same frames measure at most 0.3 from 741 + 1/2 on, so the set still does something at the limb while it comes in (743.8 to 754.5), though none of its layers draws there. Not found in the time: suspects are the globe's draw order (it is drawn first, `renderOrder` -3, as soon as the set shows, so the Sun's plate and the far points are then drawn after it) and the far look by height.
+- 739 to 741 (0.54 to 0.66) is the globe alone: the far look (`look.far`) pales the map's craters in the strip under the limb by the eye's height.
+- 12:25 to 12:45 THE STEP AT T, found and cured. With the border at 3 to 4.5 degrees the globe's own far ground shows under the limb on both sides of T, and the surface view's copy of the globe (`shell`) was darker there than the globe at 759 + 1/2 (sheets `z1-Tc`, `z2-Tc`, difference panel `z2-Tdiff`: a band along the whole limb, about 60 of 255 at its top, in one capture frame; `pat2` called it the largest pop, 1.34 at 759 + 1/2 and 1.17 at 977 + 1/2). Restoring the sink did not cure it (`z2`). CAUSE: the far look of the globe (`inLimb` in `globe.ts`) divided by `ray.z * ray.z`, the world's z where it means the lens axis; the orbit camera looks down the world's z, the low camera does not, so the shell had no far look at all. The second named state never showed it because the set's far ground covered that band to 11.5 degrees. CURE: uniform `uFarAxis` (default 0, 0, 1, so the globe's bytes stay) and `Globe.lens(axis)`; the shell gets the axis turned by `toLow` like the four light vectors. Test `z3` 759 to 760 + 1/2: the same pale band on both sides (sheet `z3-Tc`).
+- Rise with the sink still on (`zs`, 962 to 998, shell without the far look): 975 to 977 0.48 to 0.60, 978 to 986 0.77 to 1.18 (worst 1.18 at 981 + 1/2, was 1.39), from 986 + 1/2 at most 0.37. The globe side of the rise without the sink was NOT rendered again (no time): expected a little lower, as in the dive.
+- Main 62ff7be6 merged (62753245): tools of the smooth report only, no file of mine.
+
