@@ -7,6 +7,7 @@ import { drift, lookAt } from '../../director/rig'
 import close from './close.json'
 import fit from './fit.json'
 import move from './move.json'
+import { placeTurn } from './band'
 import place from './place.json'
 
 export const params: MoveParams = {
@@ -27,7 +28,8 @@ export const params: MoveParams = {
 }
 
 const deck = new THREE.Vector3().fromArray(close.nadir).multiplyScalar(close.radius + 1)
-const onGlobe = new THREE.Quaternion().fromArray(place.toWorld)
+// The scene's frame on the globe: where the fit put it (place.json), turned to where the place stands (move.json, place; band.ts).
+const onGlobe = new THREE.Quaternion().fromArray(place.toWorld).multiply(placeTurn)
 const offGlobe = onGlobe.clone().invert()
 const eye = new THREE.Vector3().fromArray(place.storm.atSpinZero).normalize()
 const eyeEast = new THREE.Vector3(0, 1, 0).cross(eye).normalize()

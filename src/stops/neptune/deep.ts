@@ -1,9 +1,9 @@
 import * as THREE from 'three'
 import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import fit from './close.json'
-import frame from './closeup.json'
 import look from './deep.json'
 import patches from './patches.json'
+import { ground, placeTurn } from './band'
 import { MAP_DECL, MAP_UNIFORMS, mapGlsl } from './planet'
 
 // The surface view of Neptune as one scene made by functions: a cloud deck with height (rolls, the storm as a bowl with walls and arms),
@@ -36,6 +36,7 @@ uniform vec3 uE0;
 uniform vec3 uE1;
 uniform vec3 uAxis;
 uniform vec3 uSun;
+uniform vec3 uFarSun;
 uniform float uTime;
 uniform float uPix;
 uniform float uGrad;
@@ -586,8 +587,8 @@ void main() {
   vec3 farLook = vec3(0.0);
   {
     vec3 pb = uToBody * farUp;
-    vec3 sunB = uToBody * uSun;
-    float ndlFar = dot(farUp, uSun);
+    vec3 sunB = uToBody * uFarSun;
+    float ndlFar = dot(farUp, uFarSun);
     float tx;
     vec3 dd = deckDir(pb);
     vec3 dcl = cloudDir(uToBody * sheetUp);
@@ -616,7 +617,7 @@ void main() {
       mapCloud *= keep;
       mapShadow = min(mapShadow * keep * deepen, 1.0);
     }
-    float ndlSheet = dot(sheetUp, uSun);
+    float ndlSheet = dot(sheetUp, uFarSun);
     vec3 deckFar = mapDeck * knot(uGDeck, ndlFar) * (1.0 - uGShadow.x * mapShadow * smoothstep(0.0, 0.2, ndlFar) * (1.0 - min(mapCloud, 1.0)));
     farLook = mix(uFarTone * pow(max(deckFar * uGTint, vec3(0.0)), uFarPower), uFarCloud * knot(uGCloud, ndlSheet) * uGTint, mapCloud * smoothstep(-0.09, -0.03, ndlSheet));
     // The globe's own grade of the fall at its full strength (planet.ts, the same lines; deep.json, globe.fall), on the colour as the
@@ -933,14 +934,6 @@ void main() {
   outColor = diagOut(vec4(col, alpha) * (uShow * inside), texels, deckHit || cloudClear < 0.5 ? 1.0 : 0.0, layer, vec2(0.0), min(tSeen, 4000.0));
 }`
 
-function unproject(px: number, py: number, radius: number, centre: THREE.Vector3): THREE.Vector3 {
-  const ty = Math.tan(THREE.MathUtils.degToRad(fit.vfovDeg) / 2)
-  const d = new THREE.Vector3(((px / frame.image[0]!) * 2 - 1) * ty * (frame.image[0]! / frame.image[1]!), (1 - (py / frame.image[1]!) * 2) * ty, -1).normalize()
-  const b = d.dot(centre)
-  const t = b - Math.sqrt(Math.max(b * b - (centre.lengthSq() - radius * radius), 0))
-  return d.multiplyScalar(t).sub(centre)
-}
-
 const v4 = (a: number, b: number, c: number, d: number): THREE.Vector4 => new THREE.Vector4(a, b, c, d)
 const v3 = (a: number[]): THREE.Vector3 => new THREE.Vector3(a[0], a[1], a[2])
 // The veil's fall with height: its power, and the weight that keeps the whole depth straight down (the mean of x to the power is
@@ -959,13 +952,11 @@ export class Deep {
   // map: the globe's own uniforms (planet.ts), read here by the same objects.
   constructor(readonly laid: boolean, map: Record<string, THREE.IUniform>) {
     const radius = fit.radius
-    this.up = new THREE.Vector3().fromArray(fit.nadir).negate()
-    this.centre = new THREE.Vector3().fromArray(fit.nadir).multiplyScalar(radius + 1)
-    const a = unproject(frame.band[0]!, frame.band[1]!, radius, this.centre)
-    const c = unproject(frame.band[2]!, frame.band[3]!, radius, this.centre)
-    const axis = new THREE.Vector3().crossVectors(a, c).normalize()
-    const e0 = this.up.clone().addScaledVector(axis, -this.up.dot(axis)).normalize()
-    const e1 = new THREE.Vector3().crossVectors(axis, e0)
+    this.up = ground.up.clone()
+    this.centre = ground.centre.clone()
+    const axis = ground.axis.clone()
+    const e0 = ground.e0.clone()
+    const e1 = ground.e1.clone()
     const s = look.storm
     const d = look.deck
     const ci = look.cirrus
@@ -996,7 +987,7 @@ export class Deep {
       blendDstAlpha: THREE.OneMinusSrcAlphaFactor,
       uniforms: {
         uCentre: { value: this.centre }, uCam: { value: new THREE.Vector3() }, uRadius: { value: radius },
-        uE0: { value: e0 }, uE1: { value: e1 }, uAxis: { value: axis }, uSun: { value: new THREE.Vector3(0, 1, 0) },
+        uE0: { value: e0 }, uE1: { value: e1 }, uAxis: { value: axis }, uSun: { value: new THREE.Vector3(0, 1, 0) }, uFarSun: { value: new THREE.Vector3(0, 1, 0) },
         uTime: { value: 0 }, uPix: { value: 0.0005 }, uGrad: gradUniform, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uShow: { value: 1 }, uFallPivot: { value: new THREE.Vector3().fromArray(look.globe.fall.pivot) }, uFallPower: { value: new THREE.Vector3(1, 1, 1) }, uPlaceUp: { value: this.up.clone() }, uGridShow: { value: look.globe.grid },
         uCap: { value: v4(Math.cos(THREE.MathUtils.degToRad(look.globe.border[0]!)), Math.cos(THREE.MathUtils.degToRad(look.globe.border[1]!)), laid ? 1 : 0, 0) },
         uStorm: { value: v4(s.at[0]!, s.at[1]!, s.eye, s.reach) },
@@ -1064,14 +1055,17 @@ export class Deep {
     }
   }
 
-  // camera: the eye in the frame of the close scene. sun: the direction to the Sun in that frame. time: seconds from the middle of the
+  // camera: the eye in the frame of the close scene. sun: the direction to the globe's Sun in that frame (the far look takes it as it
+  // is; the scene's own things keep the Sun they were made in, which is this one turned back by the turn of the place, band.ts).
+  // time: seconds from the middle of the
   // surface view. pixel: the angle one pixel of the frame covers, in radians.
   // body: the turn from this scene's frame to the globe's own (the body the map lies on).
   update(camera: THREE.Vector3, sun: THREE.Vector3, time: number, pixel: number, gain: number, vignette: number, aspect: number, body: THREE.Quaternion): void {
     const u = this.material.uniforms
     ;(u.uToBody!.value as THREE.Matrix3).setFromMatrix4(this.turned.makeRotationFromQuaternion(body))
     ;(u.uCam!.value as THREE.Vector3).copy(camera)
-    ;(u.uSun!.value as THREE.Vector3).copy(sun).normalize()
+    ;(u.uFarSun!.value as THREE.Vector3).copy(sun).normalize()
+    ;(u.uSun!.value as THREE.Vector3).copy(sun).normalize().applyQuaternion(placeTurn)
     u.uTime!.value = time
     u.uPix!.value = pixel
     u.uGain!.value = gain
