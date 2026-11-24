@@ -1,9 +1,41 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T07:58:25.667Z",
- "head": "3a80ff40b8a33d6c31147071fcbbb467fabee6b2",
- "note": "new path: T frames of dive and rise every frame, dive 1866 to 1924, rise 2090 to 2145, bent surface frames; known: plate oval with a border, limb line colour at T, sky picture changes beside the limb",
+ "pushed": "2026-11-24T08:12:50.662Z",
+ "head": "571f42dcbd079279ac3afd3b3efb3b6cabd441a6",
+ "note": "head 571f42dc: path, seam, parity green, gate PASS, final 1755 equal bytes; sky crops show stars coming up in the frame 2129 to 2137; rise 2145 to 2174 every frame; judged 1857 and 2156 at draft",
  "looks": [
+  {
+   "time": "2026-11-24T08:02:43.586Z",
+   "file": "20261124080243586-note-judged.jpg",
+   "source": "../../../../tmp/gl/s7/judged.jpg",
+   "kind": "note",
+   "label": "new path, judged 1857 and 2156 at draft (new frames)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T08:02:42.861Z",
+   "file": "20261124080242861-note-rise-e.jpg",
+   "source": "../../../../tmp/gl/s7/rise-e.jpg",
+   "kind": "note",
+   "label": "new path, rise every frame 2145 to 2174, draft",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T08:02:42.140Z",
+   "file": "20261124080242140-note-sky-dive.jpg",
+   "source": "../../../../tmp/gl/s7/sky-dive.jpg",
+   "kind": "note",
+   "label": "new path, dive: upper left corner every second frame 1866 to 1888 (stars thin out in the frame)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T08:02:41.163Z",
+   "file": "20261124080241163-note-sky-rise.jpg",
+   "source": "../../../../tmp/gl/s7/sky-rise.jpg",
+   "kind": "note",
+   "label": "new path, rise: upper left corner every frame 2124 to 2141 (stars and the star band come up in the frame, by the eye's height)",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T07:58:25.028Z",
    "file": "20261124075825028-note-bend-a.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/gl/s7/dive-b.jpg",
    "kind": "note",
    "label": "new path, dive every frame 1878 to 1889, draft (plate as a hazier darker oval round the glint)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T07:58:22.637Z",
-   "file": "20261124075822637-note-dive-a.jpg",
-   "source": "../../../../tmp/gl/s7/dive-a.jpg",
-   "kind": "note",
-   "label": "new path, dive every frame 1866 to 1879 (and 1860, 1865), draft",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T07:46:37.886Z",
-   "file": "20261124074637886-note-rise-c.jpg",
-   "source": "../../../../tmp/gl/s7/rise-c.jpg",
-   "kind": "note",
-   "label": "new path, rise 2118 to 2123 large",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T07:46:36.973Z",
-   "file": "20261124074636973-note-rise-b.jpg",
-   "source": "../../../../tmp/gl/s7/rise-b.jpg",
-   "kind": "note",
-   "label": "new path, rise every frame 2121 to 2135 and 2140, draft (plate as a hazier oval from 2121, sky picture changes beside the limb 2129 to 2133)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T07:46:35.675Z",
-   "file": "20261124074635675-note-rise-a.jpg",
-   "source": "../../../../tmp/gl/s7/rise-a.jpg",
-   "kind": "note",
-   "label": "new path, rise every frame 2105 to 2120, draft",
    "stop": "earth"
   }
  ]
