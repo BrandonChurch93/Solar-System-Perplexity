@@ -1,71 +1,82 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T22:32:15.812Z",
- "head": "79ade56611076a9e7916cd518409a37651d88994",
- "note": "blur law: final tier of the named frames as they are (2702, 3024); the law's tests green in its own tree; presenceEdge for Mars being tested",
+ "pushed": "2026-11-24T23:02:10.908Z",
+ "head": "e789b0c94d6e4fc6000c0fa5e2d88c7e1387f563",
+ "note": "blur law: the named frames as they are at the final tier beside their drafts; first reading sent; candidates (whole shutter, soft opening) render",
  "looks": [
   {
-   "time": "2026-11-24T22:31:59.980Z",
-   "file": "20261124223159980-note-3024-b.jpg",
-   "source": "../../../../tmp/law/v/3024-b.jpg",
+   "time": "2026-11-24T23:02:09.525Z",
+   "file": "20261124230209525-note-ju-drafts2.jpg",
+   "source": "../../../../tmp/law/v/ju-drafts2.jpg",
    "kind": "note",
-   "label": "3024 final as it is, middle and lower right at full size"
+   "label": "Jupiter drafts 3017, 3019 to 3023 (one sample each): is a double edge in one sample"
   },
   {
-   "time": "2026-11-24T22:31:58.804Z",
-   "file": "20261124223158804-note-3024-a.jpg",
-   "source": "../../../../tmp/law/v/3024-a.jpg",
+   "time": "2026-11-24T23:02:08.731Z",
+   "file": "20261124230208731-note-jupiter-3024-ll.jpg",
+   "source": "../../../../tmp/law/r1/jupiter-3024-ll.jpg",
    "kind": "note",
-   "label": "3024 final as it is, upper right and upper left at full size"
+   "label": "Jupiter 3024 lower left quarter at full size: final as it is (71 samples) beside the draft (one sample)",
+   "stop": "jupiter"
   },
   {
-   "time": "2026-11-24T22:31:57.505Z",
-   "file": "20261124223157505-note-3024-whole.jpg",
-   "source": "../../../../tmp/law/v/3024-whole.jpg",
+   "time": "2026-11-24T23:02:07.575Z",
+   "file": "20261124230207575-note-jupiter-3003-ul.jpg",
+   "source": "../../../../tmp/law/r1/jupiter-3003-ul.jpg",
    "kind": "note",
-   "label": "3024 final tier as it is (71 samples, 42.5 px in view at the shutter floor 0.5)"
+   "label": "Jupiter 3003 upper left quarter at full size: final as it is (64 samples) beside the draft (one sample)",
+   "stop": "jupiter"
   },
   {
-   "time": "2026-11-24T22:31:56.632Z",
-   "file": "20261124223156632-note-2702-mid.jpg",
-   "source": "../../../../tmp/law/v/2702-mid.jpg",
-   "kind": "note",
-   "label": "2702 final as it is against draft, middle at full size"
-  },
-  {
-   "time": "2026-11-24T22:31:55.516Z",
-   "file": "20261124223155516-note-2702-lr.jpg",
-   "source": "../../../../tmp/law/v/2702-lr.jpg",
-   "kind": "note",
-   "label": "2702 final as it is against draft, lower right at full size"
-  },
-  {
-   "time": "2026-11-24T22:31:54.314Z",
-   "file": "20261124223154314-note-2702-ll.jpg",
-   "source": "../../../../tmp/law/v/2702-ll.jpg",
-   "kind": "note",
-   "label": "2702 final as it is against draft, lower left at full size"
-  },
-  {
-   "time": "2026-11-24T22:31:53.237Z",
-   "file": "20261124223153237-note-2702-whole.jpg",
-   "source": "../../../../tmp/law/v/2702-whole.jpg",
-   "kind": "note",
-   "label": "2702 final tier as it is (151 samples, 90.1 px in view at the shutter floor 0.5), beside its draft"
-  },
-  {
-   "time": "2026-11-24T22:28:56.253Z",
-   "file": "20261124222856253-frame-f03024.jpg",
-   "source": "out/work/blur/before/f03024.png",
+   "time": "2026-11-24T23:00:16.404Z",
+   "file": "20261124230016404-frame-f03270.jpg",
+   "source": "out/work/blur/draft/f03270.png",
    "kind": "frame",
-   "label": "jupiter.dive frame 3024, final tier",
+   "label": "jupiter.rise frame 3270, draft tier",
    "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 3024,
-   "tier": "final",
+   "segment": "jupiter.rise",
+   "frame": 3270,
+   "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
    "engine": "03b89560bc9f479b"
+  },
+  {
+   "time": "2026-11-24T22:59:23.753Z",
+   "file": "20261124225923753-frame-f03023.jpg",
+   "source": "out/work/blur/draft/f03023.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 3023, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 3023,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "03b89560bc9f479b"
+  },
+  {
+   "time": "2026-11-24T22:55:38.325Z",
+   "file": "20261124225538325-note-mars-2702-ll.jpg",
+   "source": "../../../../tmp/law/r1/mars-2702-ll.jpg",
+   "kind": "note",
+   "label": "Mars 2702 lower left quarter at full size: final as it is (151 samples) beside the draft (one sample)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T22:55:36.987Z",
+   "file": "20261124225536987-note-mars-2436-lr.jpg",
+   "source": "../../../../tmp/law/r1/mars-2436-lr.jpg",
+   "kind": "note",
+   "label": "Mars 2436 lower right quarter at full size: final as it is beside the draft (one sample)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T22:55:35.652Z",
+   "file": "20261124225535652-note-2436-whole.jpg",
+   "source": "../../../../tmp/law/v/2436-whole.jpg",
+   "kind": "note",
+   "label": "Mars 2436 final tier as it is (67 samples), whole frame"
   }
  ]
 }
