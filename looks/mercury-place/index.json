@@ -1,9 +1,23 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T07:52:26.215Z",
- "head": "63606a7016430b1bbe32ab2226cb9b765f23b7f8",
- "note": "whole smooth on d5db35dc: path green with the eye line, pop green, parity green, counts 0 in dive, rise, travel; pattern red dive 1.57 and rise 1.41 (panels)",
+ "pushed": "2026-11-24T08:24:18.611Z",
+ "head": "27f1ba3eb30576e89f64aebb80dd252ffc09bcbd",
+ "note": "named 27f1ba3e; whole tests on the merge 443 of 443; cure of the pattern red started: first place plate comes in over 34 frames, rise gets a 38 deg plate of its own",
  "looks": [
+  {
+   "time": "2026-11-24T08:08:08.006Z",
+   "file": "20261124080808006-job-frame-00540.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "mercury.hold frame 540, draft tier, texels view, from the running measure job",
+   "stop": "mercury",
+   "segment": "mercury.hold",
+   "frame": 540,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-24T07:52:24.403Z",
    "file": "20261124075224403-note-rise-changes.jpg",
@@ -58,14 +72,6 @@
    "source": "out/work/mercury/place/pat/m1.jpg",
    "kind": "note",
    "label": "the same for 692, 706, 713, 723: a spot on the night side, then the disc of the place where plate 1 and plate 2 come in",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T07:06:36.396Z",
-   "file": "20261124070636396-note-m2.jpg",
-   "source": "out/work/mercury/place/pat/m2.jpg",
-   "kind": "note",
-   "label": "pattern red in the dive, where: frame, frame 8 later carried back, difference, pattern change (white is 1) for 734, 738, 742, 747: all of it in the strip under the limb, where the gold rimmed far ground turns pale and the surface set comes in (747 to 759)",
    "stop": "mercury"
   }
  ]
