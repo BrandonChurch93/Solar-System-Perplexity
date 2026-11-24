@@ -1,9 +1,17 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T07:28:39.715Z",
+ "pushed": "2026-11-24T07:53:14.490Z",
  "head": "fd95089a27ad1e2a7aa296b36cff561b3de9f77a",
- "note": "T27 preview draft, 69.8 s: storm eye the approved size, collar still ringed; ridge cloud 22.6 pct (approved 23.1) but smoke not fibres; deck boxes within 20 of approved except below storm",
+ "note": "07:53 cost round (MAIL 573): before timings taken on fd95089a (draft 4860 52.7 s, dive 4745 29.6 s, rise 4985 14.1 s; final 16 samples running); empty-room skipping, early noise stop and tap bounds written, measured next",
  "looks": [
+  {
+   "time": "2026-11-24T07:53:13.175Z",
+   "file": "20261124075313175-note-d-before.jpg",
+   "source": "../../../../tmp/d-before.jpg",
+   "kind": "note",
+   "label": "4860 of fd95089a beside the approved image, the before of the cost round: preview draft 52.7 s a frame after the first (72.0 s with compile), G17 median 1.308 p25 0.821",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T07:28:39.096Z",
    "file": "20261124072839096-note-d-T27.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/par-own.jpg",
    "kind": "note",
    "label": "Parity early, commit 5be84b7f: 16 by 9 | uhd scaled down | difference times 8, frames 4605, 4703, 4725, 4748 (the tool's own measure on the tool's frames): 4725 coarse 0.879, block 4.893 (main 4.994, 27.740); 4748 coarse 1.168, block 5.819",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T05:42:41.415Z",
-   "file": "20261124054241415-note-limb-4860.jpg",
-   "source": "../../../../tmp/limb-4860.jpg",
-   "kind": "note",
-   "label": "4860 limb and storm, twice size: approved image, mine (16 by 9 draft, tree of the named commit), kept still. Mine: limb 5 to 9 rows of 540 too high, band white and straight where the approved is light blue and broken, no blue line over it, storm a clean disc, ridge a few heaps",
    "stop": "neptune"
   }
  ]
