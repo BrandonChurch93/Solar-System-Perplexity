@@ -1,72 +1,90 @@
 {
  "folder": "venus",
- "pushed": "2026-11-24T17:44:30.636Z",
+ "pushed": "2026-11-24T18:08:36.357Z",
  "head": "ad1d6a92ff1ce256f6e9392ddf6e80ac8445be36",
- "note": "MAIL 707: C cured (flash law), B haze mu 0.12 kept, frame of T trial not kept, proofs start on merge of main 9e15c6a4",
+ "note": "proofs on the merge: handover pass on both, path green, gate pass, 1440 equal, 1185 differs by at most 2 of 255 in 1275 px; vitest and smooth pictures running",
  "looks": [
   {
-   "time": "2026-11-24T17:44:30.029Z",
-   "file": "20261124174430029-note-t1-left.jpg",
-   "source": "../../../../tmp/v/c/t1-left.jpg",
+   "time": "2026-11-24T18:08:35.312Z",
+   "file": "20261124180835312-note-s1324.jpg",
+   "source": "../../../../tmp/v/hx0/s1324.jpg",
    "kind": "note",
-   "label": "B rise 1545 1547 1550 left border: trial of stored tones only inside the frame of T (right), not kept: tufts stay, flat tan wedge comes",
+   "label": "handover sheet dive 1324 to 1339, draft, same tree",
    "stop": "venus"
   },
   {
-   "time": "2026-11-24T17:44:29.459Z",
-   "file": "20261124174429459-note-b-haze-1550.jpg",
-   "source": "../../../../tmp/v/c/b-haze-1550.jpg",
+   "time": "2026-11-24T18:08:34.059Z",
+   "file": "20261124180834059-note-s1530.jpg",
+   "source": "../../../../tmp/v/hx/s1530.jpg",
    "kind": "note",
-   "label": "B rise 1550 draft crop: mu 0.06, 0.12, 0.2 (a darker patch of the ground stays under the Sun)",
+   "label": "handover sheet rise 1530 to 1545, draft, same tree",
    "stop": "venus"
   },
   {
-   "time": "2026-11-24T17:44:28.829Z",
-   "file": "20261124174428829-note-b-haze-1547.jpg",
-   "source": "../../../../tmp/v/c/b-haze-1547.jpg",
+   "time": "2026-11-24T18:08:32.372Z",
+   "file": "20261124180832372-note-s1546.jpg",
+   "source": "../../../../tmp/v/hx/s1546.jpg",
    "kind": "note",
-   "label": "B rise 1547 draft: haze mu 0.06 above, 0.12 below (second rim gone)",
+   "label": "handover sheet rise 1546 to 1561, draft, on the merge of main 9e15c6a4 with haze mu 0.12 and the new flash law",
    "stop": "venus"
   },
   {
-   "time": "2026-11-24T17:44:28.244Z",
-   "file": "20261124174428244-note-f1185-diff.jpg",
-   "source": "../../../../tmp/v/c/f1185-diff.jpg",
-   "kind": "note",
-   "label": "C final 1185: kept still, new still, difference times 8 (1275 px differ, largest 2 of 255)",
-   "stop": "venus"
+   "time": "2026-11-24T18:01:06.710Z",
+   "file": "20261124180106710-sheet-venus-rise-top.jpg",
+   "source": "out/work/handover/venus-rise-top.png",
+   "kind": "sheet",
+   "label": "venus rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 1539), place picture off, draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "first": 1539,
+   "last": 1604,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-24T17:44:27.455Z",
-   "file": "20261124174427455-note-flash-new.jpg",
-   "source": "../../../../tmp/v/c/flash-new.jpg",
-   "kind": "note",
-   "label": "C hold 1124 1191 1232 draft, new flash law: eased rise 0.4 s, stand 0.6 s, fall 1.1 s",
-   "stop": "venus"
+   "time": "2026-11-24T18:00:10.313Z",
+   "file": "20261124180010313-sheet-venus-rise-draft-after.jpg",
+   "source": "out/work/handover/venus-rise-draft-after.png",
+   "kind": "sheet",
+   "label": "venus rise, every frame 1540 to 1551 (after T, frame 1539), draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "first": 1540,
+   "last": 1551,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-24T17:20:46.369Z",
-   "file": "20261124172046369-note-c1304-fd.jpg",
-   "source": "../../../../tmp/v/a/c1304-fd.jpg",
-   "kind": "note",
-   "label": "MAIL 707 A measure: frame 1304, left shutter closed, right final tier (64 samples, 37.4 px open by the engine's plan)",
-   "stop": "venus"
+   "time": "2026-11-24T18:00:08.397Z",
+   "file": "20261124180008397-sheet-venus-rise-draft-before.jpg",
+   "source": "out/work/handover/venus-rise-draft-before.png",
+   "kind": "sheet",
+   "label": "venus rise, every frame 1530 to 1538 (before T, frame 1539), draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "first": 1530,
+   "last": 1538,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-24T17:20:45.183Z",
-   "file": "20261124172045183-note-c1287-fd.jpg",
-   "source": "../../../../tmp/v/a/c1287-fd.jpg",
-   "kind": "note",
-   "label": "MAIL 707 A measure: frame 1287, left one sample at the middle of the frame (shutter closed), right the final tier (64 samples, 18.3 px open by the engine's plan). The blocks and combed streaks are in the open shutter only",
-   "stop": "venus"
+   "time": "2026-11-24T18:00:06.888Z",
+   "file": "20261124180006888-sheet-venus-rise-draft-across.jpg",
+   "source": "out/work/handover/venus-rise-draft-across.png",
+   "kind": "sheet",
+   "label": "venus rise, every frame 1533 to 1544 (across T, frame 1539), draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "first": 1533,
+   "last": 1544,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-24T16:59:40.415Z",
-   "file": "20261124165940415-note-det-1322.jpg",
-   "source": "../../../../tmp/v/det-1322.jpg",
-   "kind": "note",
-   "label": "Trial, air under the horizon off: 1322 against the frame 8 later carried back, and the detail the measure reads in each. Red outline: pattern over 0.45, at the far end of the cloud shadow",
-   "stop": "venus"
+   "time": "2026-11-24T18:00:05.188Z",
+   "file": "20261124180005188-compare-venus-rise-step-in-place.jpg",
+   "source": "out/work/handover/venus-rise-step-in-place.png",
+   "kind": "compare",
+   "label": "venus rise, the largest step of the level in place (4.27): frame 1572, frame 1573, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "frame": 1573
   }
  ]
 }
