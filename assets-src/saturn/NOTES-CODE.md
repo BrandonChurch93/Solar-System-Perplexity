@@ -3791,3 +3791,27 @@ is in the picture at 3 to 12 px, and the same crispness for the far ring across 
     0.211 at 3811 + 1/2; the place moves to the right frame edge at 3817 (0.155, 0.153, 0.183 at [1888 to 1896,
     532 to 552]): the entry of the far ring beside the night limb is at about 3817 on this flight. Numbers
     past 3818 need the whole window.
+- PRE MAILED 10:30 UTC: PRE 68b45619c9b8a49e33e17639a44504a39e29e2a7 (text /tmp/v/mail/pre3_sent.md; three
+  pictures: /tmp/v/r44/3720_beside_approved.png, /tmp/v/r42/g17_pair_lowleft.png,
+  /tmp/v/r43/edge_new_3810_3826.png). Proven on the sha before the mail (all in /tmp/v/r44):
+  - measure, as printed: "PASS G5 saturn: 3465 hold invalid 0 coverage 0.514; 3567 dive invalid 0 coverage
+    0.600; 3720 terrain invalid 0 coverage 0.725; 3866 rise invalid 0 coverage 0.384" and "PASS G17 saturn:
+    3465 median 1.054 p25 0.918 over 71 tiles; 3720 median 0.945 p25 0.477 over 62 tiles". The measure's own
+    nograin final of 3720 is to the byte the one rendered in rt for d = 28 (sha256 250bab4c).
+  - finals: 3465 sha256 f4b3a39598b5e761fa1c45c9c3cf19836a621e6aa70a95453c64bbb654a2a963 (equal to the byte);
+    3720 sha256 33bb2086f66838b044eb2cb0fbba49ae51dd2f35fe6486186b885c1e466617b7 (was 408729eb, changes on
+    purpose). Pose at 3720.25 equal to the old one to 8.9e-16 (pose3720.ts on the head against the old file).
+  - gate: "PASS G11  every asset has a row or a recipe" and "PASS G15  at most 2 sets per frame; finished
+    stops: saturn/web 274 MB, saturn/full 747 MB". tsc exit 0. vitest exit 0 (455 tests, 48 files).
+  - net size against main da59c441: plus 0.028 MB at 68b4561, plus 0.031 at the head b5d773a.
+  - NOT in the PRE, still running at 10:30: rise pictures, parity, dive pictures, head sample. Handover check
+    not started (run after the job: job_w.sh 68b4561 /tmp/v/r44 "handover keepframes").
+- THE ENTRY OF THE FAR RING ON THE NEW FLIGHT (looked at /tmp/v/r43/edge_new_3810_3826.png, the right 420 px
+  of 3810, 3813, 3815, 3817, 3819, 3821, 3823, 3826): from 3810 the sky comes in at the top right beside the
+  dark limb; the lit ring comes out from behind the limb at 3819 at the frame edge, y about 660 to 720, and
+  widens. The judge's pattern at such a place (read in tools/img/smooth.py pattern()): frame i has the thin
+  bright sliver, its band pass halo reaches about 80 px into the dark globe; the later frame carried back has
+  the globe's own night side there; the correlation falls to 0 in the halo; the number is the 99th
+  percentile over the judged pixels, so it turns on whether the halo is more than 1 percent of them. At 3817
+  the judged share is 0.27 of the frame (0.62 at 3802), so 1 percent is a smaller patch than on the old
+  flight: this place may read worse. The judge's whole rise window decides.
