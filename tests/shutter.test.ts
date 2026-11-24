@@ -8,6 +8,9 @@ import { dissolveWeight, forceSide, handoverOf, shutterThreshold, sideAt } from 
 import { plans } from '../src/director/plans'
 import { segmentAtFrame } from '../src/director/timeline'
 
+// The tests that make the plan of every frame of every dive and rise take seconds, more beside the tests of the other files.
+const LONG = 60000
+
 // E6, the capped shutter of a dive or a rise that hands over (decision d129).
 const fps = config.fps
 const film = new FilmDirector(plans)
@@ -82,7 +85,7 @@ describe('the samples of a shutter that keeps a share of the film\'s shutter', (
       expect([one!.jitterX, one!.jitterY, one!.weight]).toEqual([0, 0, 1])
     }
     for (const s of moving) for (let f = s.firstFrame; f < s.endFrame; f++) expect(framePlan(film, f, 'draft').samples).toBe(1)
-  })
+  }, LONG)
 })
 
 describe('the share of the shutter a frame keeps', () => {
@@ -318,7 +321,7 @@ describe('the floor of the share (handover.minShutter)', () => {
     } finally {
       numbers.minShutter = 0
     }
-  })
+  }, LONG)
   it('lets the sample count follow the blur that results, one sample for every step of motion.maxStepPx, within the most the tier may take', () => {
     try {
       for (const floor of floors) {
@@ -347,7 +350,7 @@ describe('the floor of the share (handover.minShutter)', () => {
     } finally {
       numbers.minShutter = 0
     }
-  })
+  }, LONG)
   it('keeps the pattern of the sides in the frame that swaps them', () => {
     try {
       for (const floor of floors) {
@@ -427,7 +430,7 @@ describe('the cap switched off (handover.maxBlurPx 0)', () => {
       expect(handing).toBe(moving.reduce((a, s) => a + s.endFrame - s.firstFrame, 0))
       expect(split).toBeGreaterThan(0)
     })
-  })
+  }, LONG)
   it('leaves the samples of every frame the old ones: their times inside the frame, and in a frame that swaps sides the side of each', () => {
     off(() => {
       const counts = new Set<number>()
@@ -457,5 +460,5 @@ describe('the cap switched off (handover.maxBlurPx 0)', () => {
       }
       expect(swapped).toBeGreaterThan(0)
     })
-  })
+  }, LONG)
 })
