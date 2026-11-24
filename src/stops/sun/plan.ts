@@ -1,8 +1,9 @@
 import * as THREE from 'three'
-import { config } from '../../config'
+import { config, type Segment } from '../../config'
 import type { Pose, ViewKind } from '../../core/types'
 import { StopPlan, type Fit, type MoveParams } from '../../director/moves'
-import { handoverOf } from '../../director/handover'
+import { handoverOf, type HandoverSide, type SkyShares } from '../../director/handover'
+import { Bend } from '../../director/bend'
 import { coverFrames } from '../../director/timeline'
 import { lookAt, mix, slerpDir, smooth } from '../../director/rig'
 import fit from './fit.json'
@@ -18,7 +19,7 @@ export const params: MoveParams = {
   travel: { turnDeg: 26, side: 1 },
   light: { exposure: 1, skyExposure: 0.45, sunRadiusDeg: 5, sunGlare: 1, flare: 0.35 },
   cover: [2.8, 1.05, 0.28],
-  handover: { rise: { at: place.rise.at, dissolveFrames: place.rise.dissolveFrames, placeFrames: place.rise.placeFrames, picture: place.rise.picture } },
+  handover: { rise: { at: place.rise.at, dissolveFrames: place.rise.dissolveFrames, placeFrames: place.rise.placeFrames, skyFrames: place.rise.skyFrames, picture: place.rise.picture, pace: place.rise.law.pace as HandoverSide['pace'], turn: place.rise.law.turn as HandoverSide['turn'], liftPower: place.rise.law.liftPower } },
   spinDegPerSecond: 3.4,
   moonDegPerSecond: 0,
   tint: [1, 0.8, 0.4],
@@ -28,6 +29,8 @@ export const params: MoveParams = {
 export const climb = { ease: { over: 1.3, speed: 0.095 } }
 
 export const opening = { on: true, level: 0.9, until: 2 }
+
+const spotOnStage = stage.onGround(stage.spot[0], stage.spot[1])
 
 export class SunPlan extends StopPlan {
   readonly toGlobe: THREE.Quaternion
@@ -132,7 +135,8 @@ export class SunPlan extends StopPlan {
     return speed * (t - lead) + (1 - speed) * 2 * tail * x * x * x * (1 - x / 2)
   }
 
-  override terrain(tRel: number): Pose {
+  // The surface view without its bend: the glide on its own clock (the opening push and the eased climb).
+  private pushIn(tRel: number): Pose {
     const dur = this.seg.terrain.end - this.seg.terrain.start
     const pivot = config.shutterFraction / (2 * config.fps * dur)
     const g = this.p.terrain.gather ?? 0
@@ -140,6 +144,41 @@ export class SunPlan extends StopPlan {
     const c = u + pivot + g * pivot * pivot
     const lin = g === 0 ? c : (-1 + Math.sqrt(Math.max(1 + 4 * g * c, 0))) / (2 * g)
     return super.terrain((lin + 0.5) * dur)
+  }
+
+  // The bend of the surface view into its rise (ruling d196), the engine's own (src/director/bend.ts): from place.bend.from
+  // seconds on the eye leaves the glide, keeps the share of its height it flies a second and turns its way through
+  // place.bend.acrossDeg by place.bend.turnDeg, so it leaves the surface view the way the rise carries on. It begins at the
+  // glide's own place and velocity, so frames before it keep their camera.
+  private turned: Bend | null = null
+  private curve(): Bend {
+    if (!this.turned) {
+      const from = place.bend.from
+      const dur = this.seg.terrain.end - this.seg.terrain.start
+      const h = 1 / (config.fps * 64)
+      const position = this.pushIn(from).position
+      const velocity = this.pushIn(from + h).position.sub(this.pushIn(from - h).position).multiplyScalar(1 / (2 * h))
+      const ground = this.closeGround(position, this.seg.terrain.start + from)
+      const carry = config.raw.handover.carry as { stepsPerFrame: number }
+      this.turned = new Bend(
+        { time: from, span: dur - from, position, velocity, up: ground.up, height: ground.height, step: 1 / (config.fps * carry.stepsPerFrame) },
+        { acrossDeg: [place.bend.acrossDeg[0]!, place.bend.acrossDeg[1]!], turnDeg: place.bend.turnDeg },
+      )
+    }
+    return this.turned
+  }
+
+  override terrain(tRel: number): Pose {
+    const pose = this.pushIn(tRel)
+    if (tRel > place.bend.from) {
+      // the lens keeps the spot where the glide alone would have it in the picture (place.bend.hold of the way): the
+      // bend is a crane's, it does not let the place run through the frame
+      const to = spotOnStage.clone().sub(pose.position).normalize()
+      pose.position.copy(this.curve().position(tRel))
+      const now = spotOnStage.clone().sub(pose.position).normalize()
+      pose.quaternion.premultiply(new THREE.Quaternion().slerp(new THREE.Quaternion().setFromUnitVectors(to, now), place.bend.hold))
+    }
+    return pose
   }
 
   override twin(local: Pose, time: number): Pose {
@@ -153,6 +192,14 @@ export class SunPlan extends StopPlan {
 
   carry(time: number): THREE.Quaternion {
     return this.turn(time).multiply(this.turn(this.anchorTime).invert())
+  }
+
+  // PLAN F: the share of the close view's sky on the globe side of the rise is read from the height of the lens, by
+  // the same heights as the sky of the set (place.json onGlobe.heights.sky), and not from the clock (skyFrames is 0)
+  override skyShare(seg: Segment, time: number): SkyShares | null {
+    if (seg.kind !== 'rise') return null
+    const [from, to] = place.onGlobe.heights.sky as [number, number]
+    return { low: 1 - THREE.MathUtils.smoothstep(Math.log(Math.max(this.eyeHeight(time), 1e-4)), Math.log(from), Math.log(to)) }
   }
 }
 

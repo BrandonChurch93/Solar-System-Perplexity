@@ -2,14 +2,17 @@ import { afterAll, afterEach, describe, expect, it } from 'vitest'
 import { config, type Segment } from '../src/config'
 import { applyProbe, parseProbe, probeString } from '../src/diagnostics/probe'
 import { FilmDirector } from '../src/director/film'
-import { eyeHeightAt, eyeHeights, type Handover, handoverOf, placeWeight, skyWeight } from '../src/director/handover'
-import type { StopPlan } from '../src/director/moves'
+import { eyeHeightAt, eyeHeights, type Handover, type HandoverSide, handoverOf, placeWeight, type SkyShares, skyWeight } from '../src/director/handover'
+import { StopPlan } from '../src/director/moves'
 import { plans } from '../src/director/plans'
-import { coveredPlan, filmWith, restorePlans } from './lib/covered'
+import { COVERED, coveredFit, coveredParams, coveredPlan, filmWith, restorePlans } from './lib/covered'
 
 // The engine's own two weights of a dive and a rise (the share of the close view's sky on the globe side, the weight of the place picture)
 // read the height of the eye and never the clock. The clock's laws, as they stood, are written out here: the two ends of each span must
 // still be theirs.
+// A stop may take its sky into its own hands, give it another span or none, and draw no place picture, at any time: plan F wants the film
+// without a place picture, and it may come to leave no sky to the engine either. So no test here asks the film for a span of any kind.
+// Every law is tried on each span of the film it speaks of, which may be none, and on spans made in memory, which are always there.
 const fps = config.fps
 const smooth = (t: number): number => {
   const x = Math.min(Math.max(t, 0), 1)
@@ -51,25 +54,53 @@ for (const plan of plans) {
 }
 const high = (s: Span, time: number): number => s.plan.eyeShot(s.kind, time, 'orbit').pose.position.length() - 1
 const beforeT = (s: Span, time: number): boolean => (s.kind === 'dive' ? time < s.full : time >= s.full)
-// A plan made in memory (tried) has its handover in force in the place of a stop's own. The film is asked with every stop's own in
-// force again.
+const framesOf = (s: Span): number[] => {
+  const out: number[] = []
+  for (let f = s.seg.firstFrame; f < s.seg.endFrame; f++) out.push(f)
+  return out
+}
+// A sky span that the segment ends inside: its far end is the end of the segment.
+const cutShort = (s: Span): boolean => Math.abs(s.farSky - s.full) * fps < s.h.skyFrames - 1e-6
+// A plan made in memory has its handover in force in the place of a stop's own. The film is asked with every stop's own in force again.
 let made = false
 const theFilm = (): FilmDirector => {
   if (made) restorePlans()
   made = false
   return new FilmDirector(plans)
 }
-// The span the laws are tried on with eyes made up here: a dive that leaves both weights to the engine, with the sky over 24 frames and
-// the picture over 12 before T (the numbers the made up heights are written for). It is made in memory and is no span of the film: the
-// plan the tests keep for themselves (lib/covered.ts: the engine's own class on a fit and parameters that no stop can change) with a
-// handover written here, in force from here to the next theFilm(). A stop may take its sky or its picture into its own hands or give
-// its sky another span at any time, as Venus did, and these laws are tried all the same.
-const tried = (): Span => {
+// The spans the laws are tried on whatever the film holds. Each is made in memory and is no span of the film: the plan the tests keep
+// for themselves (lib/covered.ts: the engine's own class on a fit and parameters that no stop can change) with a handover written here,
+// in force from here to the next span made or the next theFilm(). So a span made here is used before the next is made.
+const both = ['dive', 'rise'] as const
+type Kind = (typeof both)[number]
+const madeSpan = (plan: StopPlan, kind: Kind, what: string, holds: (s: Span) => boolean): Span => {
   made = true
-  const s = spanOf(coveredPlan({ handover: { dive: { skyFrames: 24, placeFrames: 12, picture: true } } }), 'dive')
-  if (!s || s.own || !s.h.picture || s.h.skyFrames !== 24 || s.h.firstFrame - s.h.placeFirstFrame !== 12) throw new Error('the span made in memory does not leave a sky over 24 frames and a picture over 12 before T to the engine')
+  const s = spanOf(plan, kind)
+  if (!s || !holds(s)) throw new Error('the ' + kind + ' made in memory is not ' + what)
   return s
 }
+const sideOf = (kind: Kind, side: HandoverSide): { handover: { dive?: HandoverSide; rise?: HandoverSide } } => ({ handover: kind === 'dive' ? { dive: side } : { rise: side } })
+const placeFrames = (s: Span): number => (s.kind === 'dive' ? s.h.firstFrame - s.h.placeFirstFrame : s.h.placeLastFrame - s.h.lastFrame)
+// Both weights left to the engine: the sky over 24 frames and the picture over 12 on the far side of T (the numbers the made up heights
+// of the dive are written for).
+const whole = (kind: Kind): Span =>
+  madeSpan(coveredPlan(sideOf(kind, { skyFrames: 24, placeFrames: 12, picture: true })), kind, 'a span that leaves a sky over 24 frames and a picture over 12 on the far side of T to the engine', (s) => !s.own && s.h.picture && s.h.skyFrames === 24 && placeFrames(s) === 12 && !cutShort(s))
+const tried = (): Span => whole('dive')
+// The same with a sky span as long as the whole segment, so that the segment ends inside it.
+const cut = (kind: Kind): Span => {
+  const seg = config.segments.find((x) => x.stop === COVERED && x.kind === kind)!
+  return madeSpan(coveredPlan(sideOf(kind, { skyFrames: seg.endFrame - seg.firstFrame, placeFrames: 12, picture: true })), kind, 'a span of the sky that its segment cuts short', (s) => !s.own && s.h.picture && cutShort(s))
+}
+// No span of the sky, and no picture.
+const noSky = (kind: Kind): Span => madeSpan(coveredPlan(sideOf(kind, { skyFrames: 0, placeFrames: 12, picture: true })), kind, 'without a span of the sky', (s) => !s.own && !(s.h.skyFrames > 0))
+const noPicture = (kind: Kind): Span => madeSpan(coveredPlan(sideOf(kind, { skyFrames: 24, placeFrames: 12, picture: false })), kind, 'without a picture', (s) => !s.own && !s.h.picture)
+// A plan that gives a share of its own, as a stop may: the share of its segment that has run, so that no two frames have one number.
+class OwnSky extends StopPlan {
+  override skyShare(seg: Segment, time: number): SkyShares | null {
+    return { low: (time - seg.start) / (seg.end - seg.start) }
+  }
+}
+const owner = (kind: Kind): Span => madeSpan(new OwnSky(COVERED, coveredFit, { ...coveredParams(), ...sideOf(kind, { skyFrames: 24, placeFrames: 12, picture: false }) }), kind, 'a span with a share of its own', (s) => s.own && !s.h.picture)
 
 describe('the weights of a dive and a rise by the height of the eye', () => {
   afterEach(() => {
@@ -78,18 +109,18 @@ describe('the weights of a dive and a rise by the height of the eye', () => {
   })
   afterAll(() => applyProbe(null))
 
-  it('cover every stop of the film that leaves its sky or its picture to the engine', () => {
-    const sky = spans.filter((s) => !s.own && s.h.skyFrames > 0).map((s) => s.seg.id)
-    const picture = spans.filter((s) => s.h.picture).map((s) => s.seg.id)
-    expect(sky.length).toBeGreaterThan(0)
-    expect(picture.length).toBeGreaterThan(0)
-    for (const id of picture) expect(sky).toContain(id)
+  it('are both the engine\'s wherever a span draws a place picture: in the film, where none is as it should be, and in memory', () => {
+    const law = (s: Span): void => {
+      expect(s.h.picture).toBe(true)
+      expect(s.own).toBe(false)
+      expect(s.h.skyFrames).toBeGreaterThan(0)
+    }
+    for (const s of spans) if (s.h.picture) law(s)
+    for (const make of [whole, cut]) for (const kind of both) law(make(kind))
   })
 
   it('give the sky what the clock gave at both ends of its span, and between them a smooth step of the logarithm of the height', () => {
-    theFilm()
-    for (const s of spans) {
-      if (s.own || !(s.h.skyFrames > 0)) continue
+    const law = (s: Span): void => {
       expect(skyWeight(s.seg, s.farSky)).toBe(clockSky(s.seg, s.h, s.farSky))
       expect(skyWeight(s.seg, s.full)).toBeCloseTo(1, 12)
       const far = Math.log(high(s, s.farSky))
@@ -97,7 +128,7 @@ describe('the weights of a dive and a rise by the height of the eye', () => {
       expect(near).toBeLessThan(far)
       const base = clockSky(s.seg, s.h, s.farSky) > 0 ? (s.kind === 'dive' ? (s.farSky - s.full) / (s.h.skyFrames / fps) + 1 : 1 - (s.farSky - s.full) / (s.h.skyFrames / fps)) : 0
       let last = s.kind === 'dive' ? 0 : 1
-      for (let f = s.seg.firstFrame; f < s.seg.endFrame; f++) {
+      for (const f of framesOf(s)) {
         for (const o of [0, 0.25, 0.5]) {
           const time = (f + o) / fps
           const w = skyWeight(s.seg, time)
@@ -107,39 +138,51 @@ describe('the weights of a dive and a rise by the height of the eye', () => {
             // outside the span the weight is the clock's: nothing of the close view's sky
             if (s.kind === 'dive' ? time < s.farSky : time > s.farSky) expect(w).toBe(0)
           }
-          // the eye of every stop of the film goes one way, and so does the weight
+          // the eye of every span here goes one way, and so does the weight
           if (s.kind === 'dive') expect(w).toBeGreaterThanOrEqual(last)
           else expect(w).toBeLessThanOrEqual(last)
           last = w
         }
       }
     }
+    theFilm()
+    for (const s of spans) if (!s.own && s.h.skyFrames > 0) law(s)
+    for (const make of [whole, cut]) {
+      for (const kind of both) {
+        const s = make(kind)
+        filmWith(s.plan)
+        law(s)
+      }
+    }
   })
 
   it('begin a span that its segment cuts short at the weight the clock had there', () => {
-    theFilm()
-    const cut = spans.filter((s) => !s.own && s.h.skyFrames > 0 && Math.abs(s.farSky - s.full) * fps < s.h.skyFrames - 1e-6)
-    expect(cut.map((s) => s.seg.id)).toEqual(['earth.dive', 'earth.rise'])
-    for (const s of cut) {
+    const law = (s: Span): void => {
       const end = s.kind === 'dive' ? s.seg.start : s.seg.end
       expect(s.farSky).toBe(end)
       const w = skyWeight(s.seg, end)
       expect(w).toBe(clockSky(s.seg, s.h, end))
-      expect(w).toBeGreaterThan(0.1)
-      expect(w).toBeLessThan(0.5)
+      // a part of the close view's sky, not none of it and not all
+      expect(w).toBeGreaterThan(0)
+      expect(w).toBeLessThan(1)
+    }
+    theFilm()
+    for (const s of spans) if (!s.own && s.h.skyFrames > 0 && cutShort(s)) law(s)
+    for (const kind of both) {
+      const s = cut(kind)
+      filmWith(s.plan)
+      law(s)
     }
   })
 
   it('give the place picture nothing at the far end of its window, all of it at T, and a smooth step of the logarithm of the height between', () => {
-    theFilm()
-    for (const s of spans) {
-      if (!s.h.picture) continue
+    const law = (s: Span): void => {
       const far = Math.log(high(s, s.farPlace))
       const near = Math.log(high(s, s.full))
       expect(near).toBeLessThan(far)
       expect(placeWeight(s.seg, s.farPlace)).toBe(0)
       expect(clockPlace(s.seg, s.h, s.kind === 'dive' ? s.farPlace : s.farPlace - 1e-9)).toBeLessThan(1e-6)
-      for (let f = s.seg.firstFrame; f < s.seg.endFrame; f++) {
+      for (const f of framesOf(s)) {
         for (const o of [0, 0.25, 0.5]) {
           const time = (f + o) / fps
           const w = placeWeight(s.seg, time)
@@ -154,6 +197,13 @@ describe('the weights of a dive and a rise by the height of the eye', () => {
           }
         }
       }
+    }
+    theFilm()
+    for (const s of spans) if (s.h.picture) law(s)
+    for (const kind of both) {
+      const s = whole(kind)
+      filmWith(s.plan)
+      law(s)
     }
   })
 
@@ -183,12 +233,12 @@ describe('the weights of a dive and a rise by the height of the eye', () => {
 
   it('ask an eye for the two ends of a span once and for the height of the sample every time, unless the caller gives it', () => {
     const s = tried()
-    const made = (base: number, asked: number[]) => (_stop: string, _kind: 'dive' | 'rise', time: number): number => {
+    const eyeFrom = (base: number, asked: number[]) => (_stop: string, _kind: 'dive' | 'rise', time: number): number => {
       asked.push(time)
       return base + (s.full - time) * 0.1
     }
     const asked: number[] = []
-    const eye = made(0.02, asked)
+    const eye = eyeFrom(0.02, asked)
     eyeHeights(eye)
     const far = s.full - s.h.skyFrames / fps
     const times = [3, 7, 11].map((k) => s.full - (k + 0.5) / fps)
@@ -210,7 +260,7 @@ describe('the weights of a dive and a rise by the height of the eye', () => {
     expect(picture.map((w) => w > 0)).toEqual(times.map((t) => t >= from))
     // another eye is asked for its own ends, and the first keeps the ones it gave
     const other: number[] = []
-    eyeHeights(made(0.03, other))
+    eyeHeights(eyeFrom(0.03, other))
     expect(skyWeight(s.seg, times[0]!)).not.toBe(first[0])
     expect(other).toEqual([far, s.full, times[0]])
     asked.length = 0
@@ -218,10 +268,8 @@ describe('the weights of a dive and a rise by the height of the eye', () => {
     expect(skyWeight(s.seg, times[0]!)).toBe(first[0])
     expect(asked).toEqual([times[0]])
     // the film asks once for both weights of a sample, and its shot holds what the weights give when asked alone
-    const film = theFilm()
-    for (const sp of spans) {
-      if (sp.own) continue
-      for (let f = sp.seg.firstFrame; f < sp.seg.endFrame; f++) {
+    const law = (film: FilmDirector, sp: Span): void => {
+      for (const f of framesOf(sp)) {
         if (!beforeT(sp, mid(f))) continue
         const shot = film.shotAt(f, mid(f), 'orbit')
         expect(shot.skyShare).toBe(skyWeight(sp.seg, mid(f)))
@@ -230,25 +278,53 @@ describe('the weights of a dive and a rise by the height of the eye', () => {
         else expect(shot.place === undefined || shot.place.weight === 0).toBe(true)
       }
     }
+    const film = theFilm()
+    for (const sp of spans) if (!sp.own) law(film, sp)
+    for (const make of [whole, cut]) {
+      for (const kind of both) {
+        const sp = make(kind)
+        law(filmWith(sp.plan), sp)
+      }
+    }
   })
 
   it('do not ask for a height where the stop has no span, no picture or a share of its own', () => {
-    eyeHeights(() => {
+    const never = (): number => {
       throw new Error('asked for a height')
-    })
-    const noSpan = spans.filter((s) => !(s.h.skyFrames > 0))
-    expect(noSpan.length).toBeGreaterThan(0)
-    for (const s of noSpan) for (let f = s.seg.firstFrame; f < s.seg.endFrame; f++) expect(skyWeight(s.seg, mid(f))).toBe(clockSky(s.seg, s.h, mid(f)))
-    const noPicture = spans.filter((s) => !s.h.picture)
-    expect(noPicture.length).toBeGreaterThan(0)
-    for (const s of noPicture) for (let f = s.seg.firstFrame; f < s.seg.endFrame; f++) expect(placeWeight(s.seg, mid(f))).toBe(0)
-    const asked = spans.find((s) => !s.own && s.h.skyFrames > 0)!
-    expect(() => skyWeight(asked.seg, (asked.full + asked.farSky) / 2)).toThrow(/asked for a height/)
+    }
+    const skyByTheClock = (s: Span): void => {
+      for (const f of framesOf(s)) expect(skyWeight(s.seg, mid(f))).toBe(clockSky(s.seg, s.h, mid(f)))
+    }
+    const nothingOfAPicture = (s: Span): void => {
+      for (const f of framesOf(s)) expect(placeWeight(s.seg, mid(f))).toBe(0)
+    }
+    // where the engine has a span, the eye is asked: the eye that refuses is heard
+    const heard = (s: Span): void => {
+      expect(() => skyWeight(s.seg, (s.full + s.farSky) / 2)).toThrow(/asked for a height/)
+      if (s.h.picture) expect(() => placeWeight(s.seg, (s.full + s.farPlace) / 2)).toThrow(/asked for a height/)
+    }
     // a stop with a share of its own is drawn with it, and with nothing of the engine's
+    const drawnWithItsOwn = (film: FilmDirector, s: Span): void => {
+      for (const f of framesOf(s)) {
+        const shot = film.shotAt(f, mid(f), 'orbit')
+        expect(shot.skyShare).toBe(s.plan.skyShare(s.seg, mid(f))!.low)
+        if (!s.h.picture) expect(shot.place === undefined || shot.place.weight === 0).toBe(true)
+      }
+    }
+    eyeHeights(never)
+    for (const s of spans) if (!(s.h.skyFrames > 0)) skyByTheClock(s)
+    for (const s of spans) if (!s.h.picture) nothingOfAPicture(s)
+    for (const s of spans) if (!s.own && s.h.skyFrames > 0) heard(s)
     const film = theFilm()
-    const owners = spans.filter((s) => s.own)
-    expect(owners.length).toBeGreaterThan(0)
-    for (const s of owners) for (let f = s.seg.firstFrame; f < s.seg.endFrame; f++) expect(film.shotAt(f, mid(f), 'orbit').skyShare).toBe(s.plan.skyShare(s.seg, mid(f))!.low)
+    for (const s of spans) if (s.own) drawnWithItsOwn(film, s)
+    for (const kind of both) {
+      eyeHeights(never)
+      skyByTheClock(noSky(kind))
+      nothingOfAPicture(noPicture(kind))
+      heard(whole(kind))
+      const s = owner(kind)
+      drawnWithItsOwn(filmWith(s.plan), s)
+    }
   })
 
   it('refuse a span without a film to ask and one over which the eye does not come down', () => {
@@ -272,10 +348,8 @@ describe('the weights of a dive and a rise by the height of the eye', () => {
     expect(parseProbe('beauty/nosky').noSky).toBe(true)
     for (const text of ['beauty/nosky', 'beauty/side=orbit/nosky', 'beauty/noplace/nosky']) expect(probeString(parseProbe(text))).toBe(text)
     for (const bad of ['beauty/nosky=on', 'beauty/nosky=1', 'beauty/nosky=']) expect(() => parseProbe(bad)).toThrow()
-    const film = theFilm()
-    for (const s of spans) {
-      const frames: number[] = []
-      for (let f = s.seg.firstFrame; f < s.seg.endFrame; f++) frames.push(f)
+    const law = (film: FilmDirector, s: Span): void => {
+      const frames = framesOf(s)
       const shares = (): (number | undefined)[] => frames.map((f) => film.shotAt(f, mid(f), 'orbit').skyShare)
       const highs = (): (number | undefined)[] => frames.map((f) => film.shotAt(f, mid(f), 'orbit').skyShareHigh)
       const plain = shares()
@@ -287,6 +361,15 @@ describe('the weights of a dive and a rise by the height of the eye', () => {
       applyProbe(null)
       expect(shares()).toEqual(plain)
       expect(highs()).toEqual(plainHigh)
+    }
+    const film = theFilm()
+    for (const s of spans) law(film, s)
+    // in memory: a span that leaves its sky to the engine and one with a share of its own
+    for (const make of [whole, owner]) {
+      for (const kind of both) {
+        const s = make(kind)
+        law(filmWith(s.plan), s)
+      }
     }
   })
 })

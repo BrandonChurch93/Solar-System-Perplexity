@@ -125,5 +125,55 @@ def install(kind):
             print('installed', key, f.name, f.stat().st_size)
 
 
+def first(kind):
+    own = json.loads((M.ROOT / 'src/stops/mercury/own.json').read_text())
+    f = SPEC['first']
+    size = SPEC['size']
+    two = next(lv['widthDeg'] for lv in SPEC['levels'] if lv['n'] == 2)
+    old = np.asarray(Image.open(OLD / 'full-patch-1.jpg').convert('RGB'))
+    a = old.astype(np.float32) / 255
+    place = np.asarray(Image.open(PUBLIC / 'full/patch-2.jpg').convert('RGB')).astype(np.float32) / 255
+    n = int(round(size * M.half(two) / M.half(f['widthDeg'])))
+    small = cv2.resize(place, (n, n), interpolation=cv2.INTER_AREA)
+    gx, gy = M.grid((0, 0), f['widthDeg'], size)
+    b = np.clip(cv2.remap(small, ((gx / (2 * M.half(two)) + 0.5) * n - 0.5).astype(np.float32), ((0.5 - gy / (2 * M.half(two))) * n - 0.5).astype(np.float32), cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE), 0, 1)
+    sigma = math.radians(f['sigmaDeg']) / (2 * M.half(f['widthDeg'])) * size
+    soft = lambda x: cv2.GaussianBlur(x, (0, 0), sigma)
+    r = np.hypot(gx, gy)
+    inner, outer = (math.tan(math.radians(v)) for v in own['deg'])
+    fine = cv2.GaussianBlur(b.mean(axis=2), (0, 0), f['edgeDeg'] / f['sigmaDeg'] * sigma)
+    mid = (f['lit'][0] + f['lit'][1]) / 2
+    at = (np.abs(fine - mid) < (f['lit'][1] - f['lit'][0]) / 4) & (r < inner * f['inside'])
+    pts = np.stack([gx[at], gy[at]], axis=1)
+    c = pts.mean(axis=0)
+    v = np.linalg.svd(pts - c, full_matrices=False)[2][0]
+    nrm = np.array([-v[1], v[0]])
+    lit = (fine > f['lit'][1]) & (r < inner * f['inside'])
+    if ((np.stack([gx[lit], gy[lit]], axis=1) - c) @ nrm).mean() < 0:
+        nrm = -nrm
+    line = step(-math.radians(f['edgeDeg']), math.radians(f['edgeDeg']), (gx - c[0]) * nrm[0] + (gy - c[1]) * nrm[1])
+    ring = step(inner * f['inside'] * f['inside'], inner * f['inside'], r)
+    day = (step(f['lit'][0], f['lit'][1], fine) * (1 - ring) + line * ring).astype(np.float32)[..., None]
+    under = soft(b * day) / np.maximum(soft(day)[..., None], 1e-3)
+    calm = soft(a)
+    near = lambda x: cv2.GaussianBlur(x, (0, 0), f['edgeDeg'] / f['sigmaDeg'] * sigma)
+    rim = lambda x: cv2.GaussianBlur(x, (0, 0), f['rimDeg'] / f['sigmaDeg'] * sigma).mean(axis=2)
+    q = np.clip(rim(b) / np.maximum(rim(a), 1e-3), 0, 1)[..., None]
+    night = np.clip((f['night'] + (1 - f['night']) * q) * (calm + q * (a - calm)) + (1 - q) * f['faint'] * (b - near(b)), 0, 1)
+    new = np.clip(day * calm * np.clip(b / np.maximum(under, f['floor']), 0, f['top']) + (1 - day) * night, 0, 1)
+    m = (1 - step(math.tan(math.radians(own['hold'][0])), math.tan(math.radians(own['hold'][1])), r))[..., None].astype(np.float32)
+    print('the place\'s own night edge: through', np.round(np.degrees(np.arctan(c)), 2), 'degrees east and north of the spot, lit side toward', np.round(nrm, 3), 'points', len(pts))
+    m[m < 1 / 512] = 0
+    full = np.where(m > 0, ((a * (1 - m) + new * m) * 255 + 0.5).astype(np.uint8), old)
+    web = np.asarray(Image.open(OLD / 'web-patch-1.jpg').convert('RGB'))
+    half = np.asarray(Image.fromarray(full).resize((size // 2, size // 2), Image.LANCZOS))
+    web = np.where(cv2.resize(m[..., 0], (size // 2, size // 2), interpolation=cv2.INTER_AREA)[..., None] > 0, half, web)
+    for key, pic in (('full', full), ('web', web)):
+        (OUT / 'first' / key).mkdir(parents=True, exist_ok=True)
+        Image.fromarray(pic).save(OUT / 'first' / key / 'patch-1.jpg', quality=SPEC['quality'], subsampling=0)
+        (PUBLIC / key / 'patch-1.jpg').write_bytes((OUT / 'first' / key / 'patch-1.jpg').read_bytes())
+        print('installed', key, 'patch-1.jpg', (PUBLIC / key / 'patch-1.jpg').stat().st_size, 'share of the plate that is the place', round(float((m > 0).mean()), 4), 'blur', round(sigma, 1), 'texels')
+
+
 if __name__ == '__main__':
-    {'lay': lay_all, 'plate': plate, 'install': install}[sys.argv[1]](sys.argv[2])
+    {'lay': lay_all, 'plate': plate, 'install': install, 'first': first}[sys.argv[1]](sys.argv[2])
