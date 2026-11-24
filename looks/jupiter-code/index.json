@@ -1,9 +1,41 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T14:46:34.212Z",
+ "pushed": "2026-11-24T15:09:05.548Z",
  "head": "5ee7c154fc9382d890f41a831388b9ea6b99ba74",
- "note": "14:46 UTC. Ruling 3, reading before building. The plates alone still change in place under the rising eye, and the far field differs between canvas and plates in light as well as in pattern. First far field candidate is a fault and is shown as one.",
+ "note": "ruling 3 study: where the far field changes and why; nothing built yet",
  "looks": [
+  {
+   "time": "2026-11-24T15:09:04.519Z",
+   "file": "20261124150904519-note-near-plate-rings.jpg",
+   "source": "../work/ff/near-plate-rings.jpg",
+   "kind": "note",
+   "label": "study near plate from above: nest rings yellow, the core's fan green, the wide canvas' fan magenta",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T15:09:03.853Z",
+   "file": "20261124150903853-note-cand-b-above.jpg",
+   "source": "../work/ff/cand-b-above.jpg",
+   "kind": "note",
+   "label": "REJECTED far field candidate b from above, left the bare mid plate, right with the view's band: washed",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T15:09:03.280Z",
+   "file": "20261124150903280-note-g-tl.jpg",
+   "source": "../work/ff/g-tl.jpg",
+   "kind": "note",
+   "label": "FAULT rise 3251.5 against 3259.5 carried by the ground, top left: the view's cream rows, then the plate's brown belt",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T15:09:02.377Z",
+   "file": "20261124150902377-note-g-rh.jpg",
+   "source": "../work/ff/g-rh.jpg",
+   "kind": "note",
+   "label": "FAULT rise 3251.5 against 3259.5 carried by the ground, right far field: the view's dusk, then the plate's white zone in day",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-24T14:46:33.603Z",
    "file": "20261124144633603-note-cand-a-right.jpg",
@@ -199,38 +231,6 @@
    "format": "16x9",
    "diag": "texels",
    "job": "measure"
-  },
-  {
-   "time": "2026-11-24T12:54:46.077Z",
-   "file": "20261124125446077-note-pat-new-rise-limb-4.jpg",
-   "source": "../work/named3/pat-new-rise-limb-4.jpg",
-   "kind": "note",
-   "label": "a90e29f rise limb rows read with main's new pattern measure (border cure) by my port: 0.56, 0.59, 0.58, 0.48; still over 0.45",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T12:54:44.955Z",
-   "file": "20261124125444955-note-pat-old-dive.jpg",
-   "source": "../work/named3/pat-old-dive.jpg",
-   "kind": "note",
-   "label": "a90e29f dive, my port of the pattern measure on six red rows: frame, later frame carried back, pattern change; the cells sit at the border of the judged area",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T12:54:43.702Z",
-   "file": "20261124125443702-note-jupiter-dive-changes.jpg",
-   "source": "out/work/logs/bF/jupiter-dive-changes.png",
-   "kind": "note",
-   "label": "a90e29f dive, the pictures report's changes panel: RED pattern 0.73 from 3019 + 1/2, 48 rows over 0.45, at the limb at the right end and where the limb leaves at the top left",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T12:54:42.634Z",
-   "file": "20261124125442634-note-dive-3043-3054.jpg",
-   "source": "../work/named3/sheets/dive-3043-3054.jpg",
-   "kind": "note",
-   "label": "a90e29f dive, whole frames 3043 to 3054 at draft",
-   "stop": "jupiter"
   }
  ]
 }
