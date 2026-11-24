@@ -1,9 +1,17 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T11:45:32.905Z",
- "head": "91d62470b26f63decf5f17ae69ee1cf6716bc4ee",
- "note": "91d6247: rise pictures green on the whole window, the pop at the travel's take off 1.06 against 1.59; G17, gate, finals, parity running",
+ "pushed": "2026-11-24T12:14:17.313Z",
+ "head": "16bee4df732b8a823445b8963bd303c09a86932b",
+ "note": "third NAMED in the making on 91d6247: parity green, finals 3465 and 3720 equal to the byte to the PRE, final 3866 rendering for the picture beside the kept still",
  "looks": [
+  {
+   "time": "2026-11-24T12:14:16.147Z",
+   "file": "20261124121416147-note-saturn-parity.jpg",
+   "source": "../../../../tmp/v/r45/saturn-parity.png",
+   "kind": "note",
+   "label": "parity panel of 91d6247: the same film frames at uhd scaled down against 16x9, green (mean 2.785 at 3720, block level -6.563 at 3866)",
+   "stop": "saturn"
+  },
   {
    "time": "2026-11-24T11:45:31.909Z",
    "file": "20261124114531909-note-saturn-rise-changes.jpg",
@@ -54,13 +62,6 @@
    "source": "../../../../tmp/v/r45/sheets/rise_a.png",
    "kind": "note",
    "label": "91d6247 rise 3798 to 3813, every film frame"
-  },
-  {
-   "time": "2026-11-24T11:27:42.652Z",
-   "file": "20261124112742652-note-ct_seam_a.jpg",
-   "source": "../../../../tmp/v/ct_seam_a.png",
-   "kind": "note",
-   "label": "first trial of the carry, 3880 to 3896 every second frame (before the sky's lift was made a smooth step of the height)"
   }
  ]
 }
