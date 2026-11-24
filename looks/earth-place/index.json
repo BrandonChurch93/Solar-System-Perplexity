@@ -1,9 +1,57 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T04:33:26.486Z",
- "head": "f17274e705de4b7f527945333d364d3d8b559305",
- "note": "step 4: field matte rule cures the grey sheets on the takes, assets rebuilding; rise level step measured, a wider angle tested and not taken",
+ "pushed": "2026-11-24T04:52:56.755Z",
+ "head": "3c6faf8f25ecd0726d3e54db503d76d39eeeb425",
+ "note": "s4c: step 4 with the trim rule and the frame factor by the helper, every frame of dive 1885 to 1904 and rise 2115 to 2143; rise level step still over the limit",
  "looks": [
+  {
+   "time": "2026-11-24T04:52:56.177Z",
+   "file": "20261124045256177-note-judged.jpg",
+   "source": "../../../../tmp/gl/s5/judged.jpg",
+   "kind": "note",
+   "label": "s4c draft 1755 1857 2010 2156",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T04:52:55.588Z",
+   "file": "20261124045255588-note-rise-c.jpg",
+   "source": "../../../../tmp/gl/s5/rise-c.jpg",
+   "kind": "note",
+   "label": "s4c draft 2133 to 2143 and 1866 to 1882",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T04:52:55.028Z",
+   "file": "20261124045255028-note-rise-b.jpg",
+   "source": "../../../../tmp/gl/s5/rise-b.jpg",
+   "kind": "note",
+   "label": "s4c draft 2124 to 2132, the ground gives way to the darker plate",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T04:52:54.440Z",
+   "file": "20261124045254440-note-rise-a.jpg",
+   "source": "../../../../tmp/gl/s5/rise-a.jpg",
+   "kind": "note",
+   "label": "s4c draft 2115 to 2123",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T04:52:53.882Z",
+   "file": "20261124045253882-note-dive-b.jpg",
+   "source": "../../../../tmp/gl/s5/dive-b.jpg",
+   "kind": "note",
+   "label": "s4c draft 1895 to 1904",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T04:52:53.307Z",
+   "file": "20261124045253307-note-dive-a.jpg",
+   "source": "../../../../tmp/gl/s5/dive-a.jpg",
+   "kind": "note",
+   "label": "s4c draft 1885 to 1894, trim rule and frame factor by the helper",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T04:33:25.722Z",
    "file": "20261124043325722-note-x45-sheet.jpg",
@@ -18,54 +66,6 @@
    "source": "../../../../tmp/gl/s4/rise-step.jpg",
    "kind": "note",
    "label": "rise 2119 to 2131 before the new field (s4b): the close look gives way by angle over these frames, body level steps over 6 a frame at 2122 to 2125",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T04:33:24.558Z",
-   "file": "20261124043324558-note-where17-1889.jpg",
-   "source": "../../../../tmp/gl/s4/where17-1889.jpg",
-   "kind": "note",
-   "label": "step 4, the field at the two grey sheets of frame 1889 after the rule (deck17), remnants at the lower right of the left tile",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T04:33:23.619Z",
-   "file": "20261124043323619-note-hem5.jpg",
-   "source": "../../../../tmp/gl/s4/hem5.jpg",
-   "kind": "note",
-   "label": "step 4, field matte rule on the four takes: take, matte before, matte after (pale sea and thin cell deck go, cores keep a rim)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T04:07:03.463Z",
-   "file": "20261124040703463-note-sheet-s4b-rise.jpg",
-   "source": "../../../../tmp/gl/s4/sheet-s4b-rise.jpg",
-   "kind": "note",
-   "label": "step 4 second pass, rise frames 2117 to 2156 and the judged 1755, 2010 (both byte equal to f17274e7), draft",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T04:07:02.888Z",
-   "file": "20261124040702888-note-sheet-s4b-dive.jpg",
-   "source": "../../../../tmp/gl/s4/sheet-s4b-dive.jpg",
-   "kind": "note",
-   "label": "step 4 second pass, dive frames 1857 to 1904, draft",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T04:07:02.306Z",
-   "file": "20261124040702306-note-abb-1878.jpg",
-   "source": "../../../../tmp/gl/s4/abb-1878.jpg",
-   "kind": "note",
-   "label": "step 4, 1878 at full size, draft: before (f17274e7) and after: the drawn sea floor and the map's own cloud give way to calm sea and the field's bodies; the flat grey sheet beside the white cloud is still wrong",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T03:45:54.578Z",
-   "file": "20261124034554578-note-field13-near.jpg",
-   "source": "../../../../tmp/gl/s4/field13-near.jpg",
-   "kind": "note",
-   "label": "step 4: the ring field beside the close view (cover red) with the shadow share rule and without veil bodies",
    "stop": "earth"
   }
  ]
