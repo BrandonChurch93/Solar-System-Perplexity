@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T13:22:03.365Z",
- "head": "ada81e33f7d07b8a5fa40786bfb78a5deb140a1d",
- "note": "after NAMED: rise 977 to 986 of the named state measured, 1.18 at 981.5; from 981.5 the red sits lower left at the place, not at the limb",
+ "pushed": "2026-11-24T13:51:45.721Z",
+ "head": "befb5f47996cb9ff4b6ffb6df289ed9cc2b1fe80",
+ "note": "ruling 4: dive red 739 to 748 is my own globe's limb band (same rows with the set off, 1.00 at 746.5); testing the far look",
  "looks": [
+  {
+   "time": "2026-11-24T13:51:44.998Z",
+   "file": "20261124135144998-note-crop-d0-limb.jpg",
+   "source": "out/work/mercury/place/crop-d0-limb.png",
+   "kind": "note",
+   "label": "d0-limb: limb band at 745, 747, 749, 751, 753, 755, the set off: streaks and craters turn into a smooth pale ground",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T13:51:44.006Z",
+   "file": "20261124135144006-note-chg-d0.jpg",
+   "source": "out/work/mercury/place/chg-d0.png",
+   "kind": "note",
+   "label": "d0-chg: the set switched off, dive 741 to 750 against 8 frames later (frame, grey, level change, pattern change): the change is the limb band of my own globe",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T13:22:01.210Z",
    "file": "20261124132201210-note-chg-zu-full.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/m/z4-T.jpg",
    "kind": "note",
    "label": "NAMED state, dive 756 to 764 every frame (750 to 755 are in the z1 sheet, same state on the globe side)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T12:53:44.886Z",
-   "file": "20261124125344886-note-z4-Tc.jpg",
-   "source": "../../../../tmp/m/z4-Tc.jpg",
-   "kind": "note",
-   "label": "NAMED state, limb crops 758 to 766 across T (760): one pale band under the limb on both sides, no line, no dark strip",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T12:46:42.452Z",
-   "file": "20261124124642452-note-z3-Tc.jpg",
-   "source": "../../../../tmp/m/z3-Tc.jpg",
-   "kind": "note",
-   "label": "759, 759.5 (globe) and 760, 760.5 (surface view) after the cure: the far look of the globe now reads the lens axis, same pale band on both sides",
    "stop": "mercury"
   }
  ]
