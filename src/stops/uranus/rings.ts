@@ -46,6 +46,16 @@ void main() {
   gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
 }`
 
+const MOVE_VERT = VERT.replace('out vec3 vLocal;', 'out vec3 vLocal;\nuniform vec3 uAxis;\nuniform vec3 uFrom;\nuniform vec3 uTo;\nuniform vec3 uGather;').replace('vAmp = aAmp;', '').replace('vLocal = position;', `vec3 mid = position - normalize(cross(aTan, uAxis)) * aS;
+  float r = length(mid);
+  float low = uTo.x + (r - uFrom.x) * (uTo.y - uTo.x) / (uFrom.y - uFrom.x);
+  float high = uTo.y + (r - uFrom.y) * (uTo.z - uTo.y) / (uFrom.z - uFrom.y);
+  float host = mix(mix(uTo.x, uTo.y, step(0.5 * (uFrom.x + uFrom.y), r)), uTo.z, step(0.5 * (uFrom.y + uFrom.z), r));
+  float to = mix(mix(low, high, step(uFrom.y, r)), host, uGather.y);
+  vAmp = aAmp * mix(1.0, smoothstep(0.0, uGather.z, (1.0 - uGather.x) * (abs(r - to) + uGather.z)), uGather.y);
+  vec3 moved = position + mid * (uGather.x * (to - r) / max(r, 1e-6));
+  vLocal = moved;`).replace('vec4(position, 1.0)', 'vec4(moved, 1.0)')
+
 const FRAG = /* glsl */ `
 precision highp float;
 uniform float uSigma;
@@ -297,13 +307,14 @@ export class Rings {
   private readonly centre = new THREE.Vector3()
   private readonly level: number
 
-  constructor(geometry: THREE.BufferGeometry, look: RingLook, holdCamera: THREE.Vector3, far = false, sky = false) {
+  constructor(geometry: THREE.BufferGeometry, look: RingLook, holdCamera: THREE.Vector3, far = false, sky = false, move = false) {
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
-      vertexShader: VERT,
+      vertexShader: move ? MOVE_VERT : VERT,
       fragmentShader: sky ? SKY_FRAG : FRAG,
       uniforms: {
         uBall: { value: new THREE.Vector4(0, 0, 0, 1) }, uOnSky: { value: new THREE.Vector2(0, 1) },
+        uAxis: { value: new THREE.Vector3(0, 0, 1) }, uFrom: { value: new THREE.Vector3(1, 2, 3) }, uTo: { value: new THREE.Vector3(1, 2, 3) }, uGather: { value: new THREE.Vector3(0, 0, 1) },
         uSigma: { value: look.sigma }, uColor: { value: new THREE.Vector3().fromArray(look.color) },
         uSunL: { value: new THREE.Vector3(1, 0, 0) }, uCamL: { value: new THREE.Vector3(0, 0, 5) }, uHoldCamL: { value: holdCamera.clone() },
         uGlint: { value: new THREE.Vector2().fromArray(look.glint) }, uForward: { value: new THREE.Vector2().fromArray(look.forward) }, uBack: { value: new THREE.Vector2().fromArray(look.back) },
@@ -345,6 +356,14 @@ export class Rings {
     const c = this.centre.copy(centre).applyMatrix4(this.inverse)
     ;(u.uBall!.value as THREE.Vector4).set(c.x, c.y, c.z, radius / this.mesh.matrixWorld.getMaxScaleOnAxis())
     ;(u.uOnSky!.value as THREE.Vector2).fromArray(range)
+  }
+
+  gather(axis: THREE.Vector3, from: [number, number, number], to: [number, number, number], unit: number, amount: number, onto: boolean, show: number): void {
+    const u = this.material.uniforms
+    ;(u.uAxis!.value as THREE.Vector3).copy(axis)
+    ;(u.uFrom!.value as THREE.Vector3).fromArray(from)
+    ;(u.uTo!.value as THREE.Vector3).fromArray(to).multiplyScalar(unit)
+    ;(u.uGather!.value as THREE.Vector3).set(amount, onto ? 1 : 0, show)
   }
 
   dispose(): void {
