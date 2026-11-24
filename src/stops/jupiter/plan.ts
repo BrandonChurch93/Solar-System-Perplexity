@@ -231,6 +231,15 @@ export function exposed(seconds: number): number {
   return exposure(deck.life.proof.cameraHeld ? 0 : seconds)
 }
 
+export function heightTable(knots: number[][]): (height: number) => number {
+  const p = paceOf(knots.map((k) => [Math.log(k[0]!), k[1]!]), 0)
+  const n = p.film.length
+  return (height) => {
+    const x = Math.log(Math.max(height, 1e-9))
+    return x <= p.film[0]! ? p.path[0]! : x >= p.film[n - 1]! ? p.path[n - 1]! : along(p, x)
+  }
+}
+
 export class JupiterPlan extends StopPlan {
   override spin(time: number): number {
     const dive = this.seg.dive!

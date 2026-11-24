@@ -12,7 +12,7 @@ import * as look from './look'
 import fields from './deck-fields.json'
 import { bufferFrame } from '../../core/frame'
 import place from './place.json'
-import { chartAxes, chartEye, closeHeight, eddyTurn, exposed, exposure, flashNow, hazeDrift, low, lowEven, plan, ringTurn, stormTurn } from './plan'
+import { chartAxes, chartEye, closeHeight, eddyTurn, exposed, exposure, flashNow, hazeDrift, heightTable, low, lowEven, plan, ringTurn, stormTurn } from './plan'
 import proof from './proof.json'
 import skyJson from './sky.json'
 
@@ -91,6 +91,7 @@ export const createSet: SetFactory = async (ctx) => {
     const flown = exposure(kind === 'dive' ? dive.start - terrainMid : rise.end - terrainMid)
     return place.exposure.ratio[kind].map((v) => v * flown)
   }
+  const stopped = { dive: heightTable(place.scene.expose.dive), rise: heightTable(place.scene.expose.rise) }
   const holdTurn = plan.hold(plan.holdMid - plan.seg.hold.start).quaternion
   const glowHome = new THREE.Vector3().fromArray(look.glowDir).normalize().applyQuaternion(holdTurn)
   const moonHome = new THREE.Vector3().fromArray(look.moonSun).normalize()
@@ -124,10 +125,11 @@ export const createSet: SetFactory = async (ctx) => {
       const inOrbit = state.view === 'orbit'
       orbit.visible = inOrbit && state.weight > 0
       terrain.visible = !inOrbit
-      const gain = 1 / shot.post.exposure
       back.copy(state.rotation).invert()
       eye.copy(world.position).negate().applyQuaternion(back)
       const height = inOrbit ? eye.length() - 1 : closeHeight(eye)
+      const move = state.segment.stop !== plan.id ? '' : state.segment.kind === 'dive' ? 'dive' : state.segment.kind === 'rise' ? 'rise' : ''
+      const gain = (move ? stopped[move](height) : 1) / shot.post.exposure
       const scene = place.scene
       const share = lowEven(height, scene.grade, scene.gradeRound)
       const r = ratio(state.time)
@@ -169,9 +171,6 @@ export const createSet: SetFactory = async (ctx) => {
       const local = flowTime(state.time)
       const gu = globe.material.uniforms
       ;(gu.uPlace!.value as THREE.Vector4).w = own ? low(height, scene.ground) : 0
-      const bare = own ? (1 - low(height, scene.limbTable.from)) * low(height, state.segment.kind === 'dive' ? scene.limbTable.to.dive : scene.limbTable.to.rise) : 0
-      gu.uLimbAmount!.value = 1 - (1 - scene.limbTable.least) * bare
-      ;(gu.uLimbDark!.value as THREE.Vector3).set(scene.limbTable.dark.depth * bare, 1 / scene.limbTable.dark.edge, scene.limbTable.dark.power)
       ;(gu.uGrade!.value as THREE.Vector3).set(Math.pow(r[0]!, share), Math.pow(r[1]!, share), Math.pow(r[2]!, share))
       gu.uFlowT!.value = THREE.MathUtils.degToRad(look.flow.bandDegPerSecond) * local
       gu.uSwirlT!.value = THREE.MathUtils.degToRad(look.flow.swirlDegPerSecond) * local
