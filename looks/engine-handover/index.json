@@ -1,9 +1,17 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T11:30:57.339Z",
- "head": "8fd084dc09b9ff9fdb646df916db8967daa85298",
- "note": "MAIL 602: the pull back (design B) measured on every stop's path; chart of the rest line by speed; the warm check of Mars's piece with a scratch pull back is running",
+ "pushed": "2026-11-24T11:59:01.259Z",
+ "head": "c45ed6654c8a416750672e03cc2c2d7b392cdea8",
+ "note": "MAIL 602: the pull back takes an optional third number from, so the surface view and T stay to the bit; chart of the price on Mars; chain running on main 36970ce3 merged",
  "looks": [
+  {
+   "time": "2026-11-24T11:59:00.063Z",
+   "file": "20261124115900063-note-price-mars.jpg",
+   "source": "out/work/h602/price-mars.png",
+   "kind": "note",
+   "label": "MAIL 602, the pull back with the optional from: height of the eye of the Mars rise against the plain rise (percent) and how far the far end stands back; before from the rise is to the bit",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T11:30:17.227Z",
    "file": "20261124113017227-note-rest-line-by-speed.jpg",
@@ -67,14 +75,6 @@
    "kind": "note",
    "label": "MAIL 602 scratch: Mars, the seam from the rise into the travel with pace.out of the one move and the travel carry laid: speed of the edge, way of the centre, growth of the radius (px a film frame, rate 2)",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T10:32:13.037Z",
-   "file": "20261124103213037-note-earth-crop-right.jpg",
-   "source": "out/work/h611/earth-crop-right.png",
-   "kind": "note",
-   "label": "same frames, top band right half at full size",
-   "stop": "earth"
   }
  ]
 }
