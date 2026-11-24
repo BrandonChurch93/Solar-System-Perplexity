@@ -1,84 +1,95 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-24T07:47:39.058Z",
- "head": "416ae4ea4234b2a8557ff493d0643091e66df84e",
- "note": "Venus: ground border fixed in space, release inside the frame of T only, far ground flat on the deck: dive pattern 1.27 to 0.63 in the window, not yet proven",
+ "pushed": "2026-11-24T08:24:46.485Z",
+ "head": "a70fd5c02578d41ee9ca8796f330fd5c2e134bbd",
+ "note": "second commit a70fd5c0: border fixed in space, release only outside the frame of T, far ground flat; handover pass, smooth pictures running",
  "looks": [
   {
-   "time": "2026-11-24T07:47:38.428Z",
-   "file": "20261124074738428-note-s2-changes.jpg",
-   "source": "../../../../tmp/v/p1/s2-changes.jpg",
+   "time": "2026-11-24T08:24:45.158Z",
+   "file": "20261124082445158-note-s1546.jpg",
+   "source": "../../../../tmp/v/hs/s1546.jpg",
    "kind": "note",
-   "label": "Venus dive: change of the pattern in the window 1316 to 1340 with the far ground flat: most 0.63 at 1320 (was 1.27 at 1326 on the named commit), 10 half frames over 0.45 (was 34)",
+   "label": "second commit a70fd5c0, rise 1546 to 1561",
    "stop": "venus"
   },
   {
-   "time": "2026-11-24T07:47:37.810Z",
-   "file": "20261124074737810-note-s2-a.jpg",
-   "source": "../../../../tmp/v/p1/s2-a.jpg",
+   "time": "2026-11-24T08:24:44.358Z",
+   "file": "20261124082444358-note-s1324.jpg",
+   "source": "../../../../tmp/v/hs/s1324.jpg",
    "kind": "note",
-   "label": "Venus dive 1320 and 1324: left the ground with a fixed border and the frame of T, right the same with the far ground laid flat on the deck (work in progress, a straight edge at the right side of the frame of T is being cured)",
+   "label": "second commit a70fd5c0, dive 1324 to 1339, ground inside the frame of T from the first height",
    "stop": "venus"
   },
   {
-   "time": "2026-11-24T07:22:12.485Z",
-   "file": "20261124072212485-note-band.jpg",
-   "source": "../../../../tmp/v/p1/band.png",
-   "kind": "note",
-   "label": "where the frame sees the ground against its outline (red near the outline, blue and pink the aprons): T of the dive, 1334, 1326, 1318; T of the rise, 1547, 1553, 1559",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T07:22:11.876Z",
-   "file": "20261124072211876-note-pairs.jpg",
-   "source": "../../../../tmp/v/p1/pairs.jpg",
-   "kind": "note",
-   "label": "dive 1320 and 1328, 1326 and 1334, 1332 and 1340 as named: the ground spreads over the flat plates by height (pattern 1.27)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T06:55:29.378Z",
-   "file": "20261124065529378-note-q1334.jpg",
-   "source": "../../../../tmp/v/p1/q1334.jpg",
-   "kind": "note",
-   "label": "1334, the same four views. Under the ground's border the plates show the picture of T laid flat, set off against the ground by parallax",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T06:55:28.596Z",
-   "file": "20261124065528596-note-q1326.jpg",
-   "source": "../../../../tmp/v/p1/q1326.jpg",
-   "kind": "note",
-   "label": "1326 on the named head: globe side, layers view (ground darker yellow, aprons red and green, towers blue), surface side forced from the same eye, their difference times 3. The ground on the globe side covers less than the surface side's ground",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T06:32:13.216Z",
-   "file": "20261124063213216-frame-f01542.jpg",
-   "source": "out/work/venus/place/same/i1/f01542.png",
-   "kind": "frame",
-   "label": "venus.rise frame 1542, draft tier",
+   "time": "2026-11-24T08:13:01.433Z",
+   "file": "20261124081301433-sheet-venus-rise-top.jpg",
+   "source": "out/work/handover/venus-rise-top.png",
+   "kind": "sheet",
+   "label": "venus rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 1539), place picture off, draft tier",
    "stop": "venus",
    "segment": "venus.rise",
-   "frame": 1542,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e840cb2d5bf404e5"
+   "first": 1539,
+   "last": 1604,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-24T06:31:23.711Z",
-   "file": "20261124063123711-frame-f01605.jpg",
-   "source": "out/work/venus/place/same/i1/f01605.png",
-   "kind": "frame",
-   "label": "venus.travel frame 1605, draft tier",
+   "time": "2026-11-24T08:12:08.088Z",
+   "file": "20261124081208088-sheet-venus-rise-draft-after.jpg",
+   "source": "out/work/handover/venus-rise-draft-after.png",
+   "kind": "sheet",
+   "label": "venus rise, every frame 1540 to 1551 (after T, frame 1539), draft tier",
    "stop": "venus",
-   "segment": "venus.travel",
-   "frame": 1605,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e840cb2d5bf404e5"
+   "segment": "venus.rise",
+   "first": 1540,
+   "last": 1551,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T08:12:06.298Z",
+   "file": "20261124081206298-sheet-venus-rise-draft-before.jpg",
+   "source": "out/work/handover/venus-rise-draft-before.png",
+   "kind": "sheet",
+   "label": "venus rise, every frame 1530 to 1538 (before T, frame 1539), draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "first": 1530,
+   "last": 1538,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T08:12:04.804Z",
+   "file": "20261124081204804-sheet-venus-rise-draft-across.jpg",
+   "source": "out/work/handover/venus-rise-draft-across.png",
+   "kind": "sheet",
+   "label": "venus rise, every frame 1533 to 1544 (across T, frame 1539), draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "first": 1533,
+   "last": 1544,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T08:06:30.479Z",
+   "file": "20261124080630479-compare-venus-rise-sides.jpg",
+   "source": "out/work/handover/venus-rise-sides.png",
+   "kind": "compare",
+   "label": "venus rise, both sides at T (frame 1539) and their difference times 8",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "frame": 1539,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T08:06:16.144Z",
+   "file": "20261124080616144-sheet-venus-dive-top.jpg",
+   "source": "out/work/handover/venus-dive-top.png",
+   "kind": "sheet",
+   "label": "venus dive, the globe side alone from straight above the place, 12 frames from the far end to T (frame 1343), place picture off, draft tier",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "first": 1260,
+   "last": 1343,
+   "tier": "draft"
   }
  ]
 }
