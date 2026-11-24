@@ -1,9 +1,49 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T19:59:07.985Z",
- "head": "374e8ec03c529ff31ffe52e9d0b532b1e235e9d1",
- "note": "T far zone at native size: haze even, but deck against map still reads as two pictures of one ground (bad, item 1 stands)",
+ "pushed": "2026-11-24T21:13:16.706Z",
+ "head": "99dc436282d24e5827819aa7b72ccb5a1f4b19e1",
+ "note": "bad: a cloud cut on a straight line 2128 to 2138, cause the near sea zone's east edge (mine, in all named commits); zone-look.jpg of 20:57 has the outline in the wrong place, zone-look2 is right; T committed 99dc4362, all checks green",
  "looks": [
+  {
+   "time": "2026-11-24T21:13:15.944Z",
+   "file": "20261124211315944-note-t1-cut-follow.jpg",
+   "source": "../../../../tmp/gl/s16/t1-cut-follow.jpg",
+   "kind": "note",
+   "label": "T (99dc4362) 2134 to 2149 every third, right half: the cut cloud seen to about 2138",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T21:13:15.118Z",
+   "file": "20261124211315118-note-zone-look2.jpg",
+   "source": "../../../../tmp/gl/s16/zone-look2.jpg",
+   "kind": "note",
+   "label": "plate with the near sea zone's edge in red, laid right this time: its east edge runs through the cut cloud (the cause)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T20:57:32.695Z",
+   "file": "20261124205732695-note-zone-look.jpg",
+   "source": "../../../../tmp/gl/s16/zone-look.jpg",
+   "kind": "note",
+   "label": "plate with the near sea zone's edge in red: the cut line lies inside the zone, cause open",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T20:57:31.925Z",
+   "file": "20261124205731925-note-t1-2131-lr2x.jpg",
+   "source": "../../../../tmp/gl/s15/t1-2131-lr2x.jpg",
+   "kind": "note",
+   "label": "worktree T: 2131 lower right at twice the size, the cut cloud",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T20:57:30.682Z",
+   "file": "20261124205730682-note-t1-border.jpg",
+   "source": "../../../../tmp/gl/s15/t1-border.jpg",
+   "kind": "note",
+   "label": "worktree T: lower right border native 2125 to 2132, a cloud cut on a straight line (bad, old, in the plate file)",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T19:59:06.703Z",
    "file": "20261124195906703-note-t1-dive-far.jpg",
@@ -58,46 +98,6 @@
    "source": "../../../../tmp/gl/s15/t1-dive-a.jpg",
    "kind": "note",
    "label": "trial T (haze on a share of its own by height), draft, not committed: t1-dive-a",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T19:46:36.208Z",
-   "file": "20261124194636208-note-t1-rise-c.jpg",
-   "source": "../../../../tmp/gl/s15/t1-rise-c.jpg",
-   "kind": "note",
-   "label": "trial T (haze on a share of its own by height), draft, not committed: t1-rise-c",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T19:46:35.618Z",
-   "file": "20261124194635618-note-t1-rise-b.jpg",
-   "source": "../../../../tmp/gl/s15/t1-rise-b.jpg",
-   "kind": "note",
-   "label": "trial T (haze on a share of its own by height), draft, not committed: t1-rise-b",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T19:46:35.006Z",
-   "file": "20261124194635006-note-t1-rise-a.jpg",
-   "source": "../../../../tmp/gl/s15/t1-rise-a.jpg",
-   "kind": "note",
-   "label": "trial T (haze on a share of its own by height), draft, not committed: t1-rise-a",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T19:16:51.355Z",
-   "file": "20261124191651355-note-v2-dive-centre.jpg",
-   "source": "../../../../tmp/gl/s14/v2-dive-centre.jpg",
-   "kind": "note",
-   "label": "trial v2 dive centre native crops 1866 to 1888",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T19:16:50.265Z",
-   "file": "20261124191650265-note-v3-rise-c.jpg",
-   "source": "../../../../tmp/gl/s14/v3-rise-c.jpg",
-   "kind": "note",
-   "label": "trial v3 rise 2136 to 2150 every frame, draft, not committed",
    "stop": "earth"
   }
  ]
