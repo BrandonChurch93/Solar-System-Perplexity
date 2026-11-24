@@ -346,6 +346,14 @@ The fault: the colour levels of a globe come in by the texels of the parent a pi
 
 Measured (`tests/globe-frame.test.ts`, 5 tests in node; `tests/globe-cap.test.ts`, one more in the harness browser): a level whose parent has 1.3 texels a row at 96 rows shows 0.73 of the finer level in the middle; at 192 rows with the factor 2 the same within 0.02, without the factor 1.0; at 48 rows with the factor 0.5 the same within 0.03, without it 0.0.
 
+## 10. Check of a plate pyramid: does a level show its parent's picture (`globe-levels.py`, MAIL 584)
+
+The smooth report judges the pattern that changes in place (a frame against the frame 8 later carried back, both reduced to their detail between 8 and 40 px, limit 0.45). A level that comes in adds to that number whatever it does not share with its parent in that band. `assets-src/shared/globe-levels.py` reads it from the files alone, in seconds, with the report's own function (`pattern` of `tools/img/smooth.py`) and the report's numbers from the config: each level against the part of its parent that it covers, both reduced to the state in which the level comes in (a parent texel 0.8 px of the frame, `--texel`).
+
+`python3 assets-src/shared/globe-levels.py --dir public/assets/ID/full --json src/stops/ID/FILE.json [--key levels] [--suffix -dive] [--pairs 0-1,1-3] [--panel out.png]`, or the levels by hand: `--level FILE:WIDTHDEG[:EASTDEG,NORTHDEG]` twice or more. One line a pair; the exit code is 1 when a pair is over the limit. The panel shows parent, child and the judged pattern (white is 1). A pair is a test only when both files are the same kind of picture (colour with colour).
+
+Measured on main b0035c5c: Mars's eight levels 0.06, 0.00, 0.06, 0.00, 0.00, 0.00, 0.00; Uranus's three patches 0.00, 0.00. Controls on Mars's patch-42 and patch-19: the child's width given as 21 in place of 19 degrees 1.51; the child moved 0.3 degrees east 1.08; an unrelated child (place-0p3) 1.41.
+
 ## Proof with the options off
 
 Draft stills `out/work/stills/f%05d-16x9-draft-full.png`, sha256, frames 360 (sun.hold), 615 (mercury.hold), 717 (mercury.dive), 1185 (venus.hold), 1857 (earth.dive), 2325 (mars.hold), 2427 (mars.dive), 2997 (jupiter.dive), 3465 (saturn.hold), 4035 (uranus.hold), 4707 (neptune.dive). The references were rendered at `412d2d09` before any change. The runs are named in the log below.
