@@ -1,9 +1,17 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T04:52:56.755Z",
- "head": "3c6faf8f25ecd0726d3e54db503d76d39eeeb425",
- "note": "s4c: step 4 with the trim rule and the frame factor by the helper, every frame of dive 1885 to 1904 and rise 2115 to 2143; rise level step still over the limit",
+ "pushed": "2026-11-24T05:22:08.046Z",
+ "head": "8fd64de4d08fe1eb71eef3f2a4fdc0702a93236d",
+ "note": "rise level step cure in work: ground haze by the plate's slant law; frames 2110 to 2121 of the test render",
  "looks": [
+  {
+   "time": "2026-11-24T05:22:06.959Z",
+   "file": "20261124052206959-note-h1-a.jpg",
+   "source": "../../../../tmp/gl/s5/h1-a.jpg",
+   "kind": "note",
+   "label": "rise 2110 to 2121, draft, new: the ground's haze thins by the plate's slant law, path with straight ramps (work in progress, not committed)",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T04:52:56.177Z",
    "file": "20261124045256177-note-judged.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/gl/s4/x45-sheet.jpg",
    "kind": "note",
    "label": "test only, not taken: low look angle 45 to 10 degrees instead of 35 to 10; level step 5.94 but the ground shows as a dark oval at 2130 to 2133",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T04:33:25.115Z",
-   "file": "20261124043325115-note-rise-step.jpg",
-   "source": "../../../../tmp/gl/s4/rise-step.jpg",
-   "kind": "note",
-   "label": "rise 2119 to 2131 before the new field (s4b): the close look gives way by angle over these frames, body level steps over 6 a frame at 2122 to 2125",
    "stop": "earth"
   }
  ]
