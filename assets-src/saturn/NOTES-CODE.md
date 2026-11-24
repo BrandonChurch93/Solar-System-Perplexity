@@ -4225,3 +4225,86 @@ is in the picture at 3 to 12 px, and the same crispness for the far ring across 
     to the power on the ringlets. It is a tone that comes by height (mail 315 wanted distance; plan F allows
     height): to be judged on consecutive frames of the dive before it is offered.
   - The code is in the working tree only (model.ts, sheet.ts, skim.json), not committed.
+
+## 2026-11-24, 13:40 to 14:55 VM: item 17, the trials T2 to T7d (working tree only, nothing pushed to the branch)
+
+State: NAMED 2d54c492 stands (mail 662: no fourth commit, mail only for reds of my own runs). Local head 41cac1f
+on the merge 66de92e (mail 670), not pushed. r49: the finals of 3465 and 3720 keep the named bytes on the merge.
+
+CORRECTION to the entry above: the line "in the light before the film's curve: 2.55 against 1.27" has wrong
+values (sim.py read the picture as the film's curve alone; the film is toSrgb(filmic(light x exposure x
+vignette)), so a picture value is decoded from sRGB first). By /tmp/v/t17/fit.py (right transfer; the box x 0 to
+1100, y 560 to 1080, quantile bands of the light): the band 90 to 95 is 1.05 in the named frame against 0.54 in
+the approved, 95 to 98 1.73 against 0.71, 80 to 90 0.57 against 0.41; the bands 40 to 70 are equal within 8
+percent; 5 to 30 are 0.063 to 0.12 against 0.049 to 0.099. sim.py is not to be used.
+
+The measures (all at 3720, final tier, against references/approved/saturn-close.jpg; tools in /tmp/v/t17):
+- pal.py, the box x 0 to 960, y 380 to 1080, lit pixels: mean, p10, p50, p90, p95, p99 of the luminance and
+  the share of white pixels. Approved 0.511, 0.242, 0.505, 0.777, 0.827, 0.912, 0.0003. Named 0.563, 0.287,
+  0.568, 0.837, 0.910, 0.977, 0.0083.
+- rows.py, the left half by rows of 60 px from 480 down. Approved 0.499, 0.577, 0.593, 0.581, 0.560, 0.533,
+  0.500, 0.467, 0.440, 0.434. Named 0.582, 0.605, 0.639, 0.650, 0.628, 0.589, 0.541, 0.487, 0.450, 0.419.
+- patch.py, three patches (the approved's composition differs a little, so the boxes differ): the A ring far
+  (approved x 0 to 200, y 600 to 900; frame x 0 to 250, y 700 to 900): approved 0.438 (sd 0.147, red over
+  green 1.075 to 1.085), named 0.543 (0.091, 1.13). The B ring (approved x 800 to 1100, y 600 to 750; frame x
+  700 to 1000, y 650 to 800): approved 0.702 (sd 0.089, darkest tenth 0.536, brightest tenth 0.846, red over
+  green 1.154 down to 1.086), named 0.760 (0.136, 0.510, 0.965, 1.187 down to 1.022: its top is white). The
+  near ring (x 0 to 500, y 950 to 1080 in both): approved 0.462 (sd 0.142), named 0.452 (0.125).
+
+The trials before T7 (all dropped):
+- T2: the plan of the entry above with the wrong transfer. Bad still (the ceiling far too high).
+- T3, T4: the far look in sheet.ts only, share by the height over 0.6 to 0.93 (the far look's own window): the
+  thin zones (ringThin of the model's map) times 0.75, their ringlets raised by a power 0.8, a ceiling 0.75 on
+  the light, grey 0.25 dense and 0.45 thin. Still at 3720: 0.542, p50 0.537, p90 0.803, p95 0.850, p99 0.912,
+  white 0.0014. MOTION BAD: the whole change comes in the 21 frames 3606 to 3627 in a view that hardly moves
+  (4.8 percent of it a frame, 7.4 in the rise); on the sheet the A ring is seen to darken (look "T4 slide",
+  pushed 14:17 and labelled bad).
+- T5, T6: the same law by the distance from the lens (1.0 to 1.5, then 1.0 to 2.0 planet radii). No change in
+  the dive's wide view, but mail 374 (c) rules exactly this out ("by a grade of the whole frame by the lens's
+  height (the stop's air), not by distance from the lens"): a tone by distance is a tone that slides through
+  the frame as the lens moves on (the old item 7). T5's diff is kept at /tmp/v/t17/t5.diff only as a record.
+- A law by the phase angle was looked at and set aside: Sun, ring point, lens is 74 to 123 degrees in the hold
+  and 142 at 3720 (out/scratch/phase.ts, phasemax.ts), but it would darken the left of the ring in the dive.
+
+WHERE THE DIFFERENCE REALLY LIES (two instrument renders of 3720 at the final tier, the mix by distance
+switched off through handover.kept.reach, which is back at [0.6, 1.3]):
+- the model's near light alone (reach [50, 100]): the A ring far 0.437 (the approved 0.438) with red over green
+  1.07 to 1.08 (the approved 1.075 to 1.085); the near ring 0.417 (0.462); the B ring 0.761 with a white top
+  (0.980, red over green 1.003) against 0.702.
+- the far look alone (reach [0.01, 0.02]) is the tone of the hold's picture: its A ring is far brighter than the
+  near light's (the named mix reads 0.543 in the A patch), its B ring 0.76 with a white top.
+- So in the named frame the far tone and the near light are not one look in the A ring, and both have the B
+  ring's top in the white. The near light of the A ring is already the approved's. That is why a curve on every
+  ring pixel alike (T7b) put the lowest rows too dark (0.414, 0.370, 0.340 against 0.467, 0.440, 0.434).
+
+T7d, THE CURE AS IT STANDS IN THE WORKING TREE (new file src/stops/saturn/grade.ts; sheet.ts, model.ts,
+kept/rings.ts, kept/set.ts, skim.json light.grade):
+- Driver: the height of the lens over the ring plane alone, share = 1 - smooth(log(height / 0.6) / log(2.2 /
+  0.6)), the two heights of the air of the stop (skim.json sky.heights), absolute value of the height. Every
+  height of the hold (2.228 to 2.414), of the approach (2.379 at 3380 and above) and of the way out (2.29 at
+  3866, 2.77 at 3880) lies above 2.2: share 0 there, and the calls sit in guard loops, so those frames keep
+  their bytes. Every height of the surface view (0.587 at 3630, 0.350 at 3760, 0.490 at 3808) lies under 0.6:
+  share 1 through the whole skim, nothing changes during it. Between: 0.005 at 3567, 0.015 at 3570, 0.054 at
+  3576, 0.24 at 3588, 0.55 at 3600, 0.63 at 3602.5, 0.74 at 3606.5, 0.86 at 3612, 0.98 at 3620, 1 from 3627;
+  rise 1 to 3819, 0.76 at 3832, 0.61 at 3836, 0.44 at 3840, 0.09 at 3852, 0.007 at 3860, 0 from 3863.5. The
+  fastest pace is 2.8 percent of the grade a frame in the dive (3600 to 3606) and 4.0 in the rise (3836 to
+  3840). The air of the stop itself (plan.lowAt, the root of this share) was tried on paper and not used: its
+  root starts with a kink (1.5 percent a frame from the first frame under 2.2).
+- The same GLSL in the kept set's ring shader (on col after the hero picture's inner map, radius rq) and in the
+  model's far look (keptSheet, on c after the mottle, radius r), so the two scenes hold one tone through the
+  handover: outward of the dense ring (a ramp over the radii 1.94 to 2.063, rings.json warpHero, it lies in the
+  division) the ice darker than the pivot 0.6 sinks by the power 0.4 of its light over the pivot; the light is
+  held under the ceiling 0.75 (c / sqrt(1 + (l / 0.75)^2)), its colour kept; the ice loses a share of its
+  colour, 0.2 in the dense ring and 0.55 in the thin zones.
+- The model's near light gets only the ceiling (iceHeld), on the lit ice before the globe's shadow.
+- 3720 final with it (sha 566235ab...): pal 0.522, 0.280, 0.511, 0.785, 0.831, 0.864, white 0.0001 (approved
+  0.511, 0.242, 0.505, 0.777, 0.827, 0.912, 0.0003). Rows 0.545, 0.565, 0.595, 0.600, 0.575, 0.537, 0.493,
+  0.444, 0.415, 0.395. A ring far 0.454 (sd 0.104), red over green 1.08. B ring 0.713 (sd 0.109), darkest
+  tenth 0.495, brightest 0.859, red over green 1.158 down to 1.062. Near ring 0.417 (sd 0.118).
+- Still wrong in the still: the lowest three rows are 0.02 to 0.04 darker than the approved (the near light as
+  it was, minus 0.006 from the ceiling); the brightest hundredth is 0.864 against 0.912 (the ceiling cuts the
+  tail); the A ring's contrast is 0.104 against 0.147; the row 480 to 540 is 0.545 against 0.499.
+- Pictures: /tmp/v/t17/t7d_three.png (approved, named, trial), t7d_left.png, t7d_right.png.
+- NOT YET DONE at this line: the motion on consecutive frames (draft list d7: 3556 to 3632 and 3808 to 3868),
+  the proofs (3465 and 3866 byte equal to the named finals, 3567 beside the kept still, G17 at 3720, the dive's
+  and the rise's pictures, the handover's parts, G13, smooth, vitest on the merge).
