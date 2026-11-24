@@ -7,9 +7,9 @@ import { shutterMid } from '../src/core/sampler'
 import { FilmDirector } from '../src/director/film'
 import { sideAt } from '../src/director/handover'
 import { plans } from '../src/director/plans'
-import { SEAM_OWN, SEAM_REACH, curves, eyeCurves, landingCurves, planeHit, ringPlane, sampleLanding, sampleSeam, sampleWindow, seen, type SeamWindow } from '../tools/smooth/camera'
+import { SEAM_OWN, SEAM_REACH, curves, eyeCurves, landingCurves, planeHit, ringPlane, sampleLanding, sampleLeave, sampleSeam, sampleWindow, seen, type SeamWindow } from '../tools/smooth/camera'
 import { missing, partOwn, popSpan, sliceName, sliceNeed } from '../tools/smooth/slice'
-import { judgeCurve, judgeLanding, judgeSeam, longestGap, parityFrames, position, shown, table } from '../tools/smooth/path'
+import { judgeCurve, judgeLanding, judgeLeave, judgeSeam, longestGap, parityFrames, position, shown, table } from '../tools/smooth/path'
 
 const limits = { maxStep: 0.08, maxRebound: 0.03, seamFrames: 2 }
 const bell = (n: number, edge = 0): number[] => Array.from({ length: n }, (_, i) => edge + 1 - Math.cos((2 * Math.PI * (i + 0.5)) / n))
@@ -539,5 +539,53 @@ describe('one move in slices', () => {
     expect(missing([{ first: 0, end: 57 }, { first: 114, end: 171 }], total)).toEqual([{ first: 57, end: 114 }, { first: 171, end: 228 }])
     expect(missing([{ first: 0, end: 120 }, { first: 100, end: 228 }], total)).toEqual([])
     expect(missing([], 3)).toEqual([{ first: 0, end: 3 }])
+  })
+})
+
+describe('the picture between a rise and the travel that leaves the stop', () => {
+  const flight = (low: number): number[] => Array.from({ length: 49 }, (_, i) => low + (40 - low) * Math.abs(i - 24) / 24 + (i > 24 ? (i - 24) * 2 : 0))
+
+  it('reads the lowest speed over the slower of the two ends of the window', () => {
+    const r = judgeLeave([null, ...flight(20)], 99, 2, null)
+    expect(r.first).toEqual({ value: 40, k: 100 })
+    expect(r.last).toEqual({ value: 88, k: 148 })
+    expect(r.lowest).toEqual({ value: 20, k: 124 })
+    expect(r.over).toBeCloseTo(0.5, 12)
+    expect(r.fault).toBeNull()
+  })
+
+  it('shows a rest and does not judge it while there is no limit, and names it once there is one', () => {
+    const speed = [null, ...flight(0.25)]
+    expect(judgeLeave(speed, 99, 2, null).over).toBeCloseTo(0.00625, 12)
+    expect(judgeLeave(speed, 99, 2, null).fault).toBeNull()
+    const f = judgeLeave(speed, 99, 2, 0.3).fault!
+    expect(f.rule).toBe('rest')
+    expect(f.frame).toBe(62)
+    expect(f.text).toBe('rest: the picture comes to rest between the rise and the travel: the fastest point of the body\'s edge moves 0.25 px a film frame at frame 62, 0.006 of the slower end of the window, limit 0.3')
+    expect(judgeLeave([null, ...flight(20)], 99, 2, 0.3).fault).toBeNull()
+  })
+
+  it('is not measured where the path gives no speed', () => {
+    const r = judgeLeave([null, null, null], 0, 2, 0.3)
+    expect(r.over).toBeNull()
+    expect(r.fault).toBeNull()
+  })
+
+  it('is sampled at the seven seams from a rise into a travel: not at the first stop, whose travel follows its hold, and not at the last', () => {
+    const film = new FilmDirector(plans)
+    const reach = config.raw.smooth.reachFrames
+    const seams: string[] = []
+    for (const plan of plans) {
+      const w = sampleLeave(config, film, plan, 2, reach)
+      if (!w) continue
+      seams.push(plan.id)
+      expect(w.seam).toBe(w.rise.endFrame)
+      expect(w.travel.firstFrame).toBe(w.seam)
+      expect(w.samples[0]!.k).toBe((w.seam - reach) * 2 - 1)
+      expect(w.samples[w.samples.length - 1]!.k).toBe((w.seam + reach) * 2 - 1)
+      expect(w.samples.filter((s) => s.k >= w.seam * 2).every((s) => s.segment === w.travel.id)).toBe(true)
+      expect(w.samples.filter((s) => s.k < w.seam * 2).every((s) => s.segment === w.rise.id)).toBe(true)
+    }
+    expect(seams).toEqual(plans.slice(1, -1).map((p) => p.id))
   })
 })
