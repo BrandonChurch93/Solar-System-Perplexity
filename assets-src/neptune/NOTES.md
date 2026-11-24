@@ -4572,3 +4572,68 @@ NOT MEASURED ON THIS COMMIT, named:
 SECONDS A DRAFT FRAME on my VM (4 cores), preview: 4860 22.0 to 23.6 (0b9017c0 22.0), 4745 14.4 (14.0), 4985 7.5 (8.1), 5006 2.6, 4707 1.4; 16 by 9: 4860 81.7 (80.6), 4605 23.3. The cost stands as accepted (MAIL 579).
 
 CHECKS on 835c9574: tsc clean; vitest alone 398 of 398; G11 PASS, G15 PASS; no asset changed. Net size of my three folders 82.64 MB against main's 94.35 MB, 11.71 MB less.
+
+## MAIL 642 from the Builder (/root), 10:45 UTC, high priority, word for word (it reached me at about 10:46 while the tool's parity ran)
+
+MAIL 642 from the Builder (/root), 10:45 UTC. Receipt of your third and last NAMED 835c95748f334d50706822e92ba43767ce577a41.
+1. Proof tree 5fb447136bc0ba8740e62292891113fe1e0473c1 on builder/proof-ne4 (main 1c3da4b2 with your three folders, 41 files differ inside them; neptune off handover.ownPath as you asked). Your branch head has moved to 810c58a7 since; only the named commit is taken.
+2. On the machines since 10:39 UTC, at the front of the queue: ne4 13 (measure), 12 (handover), 11 (finals 4605 and 4860), 15 (gate), 01 to 10 (engine drafts); nz2 01 to 16 (the pictures of the dive and of the rise in 8 parts each, all 16 running now); nt4 03 (path, place, parity) and 04 (counts). The checks of the second commit that still ran long (ne3 12 and 13, nt3 04) are withdrawn; its last picture slices are left to finish and are not joined.
+3. What happens next: when ne4 shows every draft outside Neptune equal to main and the gate passes, the commit is taken onto main and Neptune's round starts with it as it stands. Every red of the report and every red you name (the two level pairs over 0.45, G13 at the change of view if the measure still reads it, your list of what is still wrong at 4860) goes into the round as a severe issue beside the critics' findings.
+4. You name no fourth commit. Keep working on the cures for the round's fix, in this order: the place plates out of the stop (your own cure of the two red pairs), then 4860 against the approved image (rows 20 to 45 below the limb, the eye's width and its floor, the torn white bands of the far field, the second streamer's shadow), then the lower quarter of G17. Push to your branch as you go and send looks; the round's fix list comes to you with the critics' words.
+No answer needed.
+
+## 10:37 to 10:47 UTC: the tool's parity on 835c9574, started as a measure of my own after the mail
+
+- Looks pushed 10:37 (both changes of view). Notebook commit 810c58a7 pushed 10:37.
+- npm run smooth -- --stop neptune --only parity started 10:37:54 on the tree of 810c58a7 (src equal to 835c9574), log
+  out/work/nep/par3.log. Its 16 by 9 frames were done by about 10:43; the uhd frames run.
+- Work order from MAIL 642, in this order: (1) the place plates out of the stop, (2) 4860 against the approved image (rows 20
+  to 45 below the limb, the eye's width and floor, the torn white bands of the far field, the second streamer's shadow), (3)
+  the lower quarter of G17. No fourth named commit; push to the branch and send looks.
+
+## 10:59 UTC: the tool's parity on the named commit's src is green
+
+- npm run smooth -- --stop neptune --only parity, 10:37:54 to 10:59:05, exit 0, on 810c58a7 (src and assets equal to the named
+  835c9574): "VERDICT: green. No number is over its limit." Copy out/work/nep/next/smooth-parity-third.md and .png; both
+  halves of the panel looked at (faint outlines of edges, nothing coarse).
+  "Largest mean difference: 1.818 at frame 4860 (neptune.terrain), limit 12."
+  "Largest mean difference at one 8th of the size ...: 1.012 at frame 4860 (neptune.terrain), limit 3.2."
+  "Largest level difference of one block (a grid of 16 by 9): 3.784 at frame 4860 (neptune.terrain), limit 12."
+  "Largest level difference of the whole frame: 0.625 at frame 4860 (neptune.terrain), limit 2.2."
+  By frame, mean, coarse, block, level: 4605 1.204 0.329 -1.686 -0.238; 4703 1.217 0.368 -1.634 -0.269; 4725 1.537 0.689
+  2.905 0.376; 4748 1.685 0.816 3.349 0.338; 4860 1.818 1.012 3.784 0.625; 4969 1.604 0.779 3.099 0.197; 4988 1.353 0.509
+  1.530 -0.008; 5006 1.457 0.566 -2.790 -0.494.
+  Seconds a rendered draft frame in this run: 16 by 9 34.06, uhd 120.83 (first commit: 70.5 and 253).
+- The stand-in of 10:31 (preview against 16 by 9 at 4860: 2.273, 1.361, 4.624, 0.719) was of the same kind and a little
+  higher than the tool's own; so that pair is a fair early reading of the parity at a quarter of the cost.
+- Not mailed: MAIL 520 (NAMED, a blocker or an answer asked for only) and MAIL 642 (no answer needed); the Builder's machine
+  nt4 03 measures the same on the proof tree. It goes into the looks.
+- Seen in the panel, a look point for the round: 4703 is the globe's own map (white cirrus streaks round a dark storm), 4725
+  and 4748 are the scene on the globe (a clean pinwheel with a pale collar). Between them the storm changes its kind by
+  height. Not measured further yet.
+- READ in RECIPE.md while preparing the plates' cure: patch-26.webp, patch-16.webp and patch-10.webp (full 10.6 MB, web
+  4.3 MB) are loaded by no code since the shown plates took their place. To check and take out after the plates.
+
+## 11:00 to 11:10 UTC: the five shown plates out of the stop (MAIL 642, point 4, first cure)
+
+- What: place-26, 16, 10, 6 and 3.5 deleted from public/assets/neptune/full and web (full 4.68 MB, web 1.29 MB);
+  patches.json keeps the globe's three levels (patch-96, 64, 40), place.shownFrom 3 is now their count, so the shader takes
+  no shown level (uPatchCount 3). Texts of patches.json fitted (featherHow, place.how). The entries as they stood are kept in
+  assets-src/neptune/place/plates-out.json for shown.py bake. RECIPE.md: the section of the plates says first that they are
+  out and why, and stays as the record. No code file changed.
+- PROOF, preview draft, before (HEAD 810c58a7, plates in) against after (plates out), cmp of the files:
+  4605, 4700, 4707, 4725, 4745, 4757, 4758, 4860, 4970, 4985, 5006: ALL ELEVEN EQUAL TO THE BIT.
+  A slip on the way, caught by the control: my first comparison took 4745 and 4985 from the folder fin, which holds an
+  earlier work state (4745 before the near drop, 4985 before the third star law), and said DIFFERS. Against p7's 4745 and
+  against fresh frames of the HEAD state with the plates put back (out/work/nep/plates/before) both are equal to the bit.
+- Cost, MEASURED: the first frame of a run (compile and load, 4707): before 20.9, 20.4, 20.5 s; after 16.9, 17.4, 16.6 s.
+  The whole run of one frame: before 31.5 and 31.2 s; after 28.1 and 27.4 s (the first after run, 33.1 s, carried the
+  rebuild). Later frames unchanged (4860 21.9 s, 4757 19.6, 4758 19.8, 4985 7.4, 5006 2.6).
+- G15 line: "finished stops: neptune/web 263 MB, neptune/full 1043 MB" (before: 350 and 1393). 350 MB less texture memory in
+  the full set.
+- Level check (out/work/globe-levels.py on patch-96, 64, 40): 0.00 and 0.03 against 0.45. No pair of the stop is over.
+- tsc clean; vitest alone 398 of 398; G11 PASS.
+- STILL DEAD WEIGHT, READ, not taken out in this step: place-tone.webp and the eight close-* maps are loaded (set.ts) and
+  drawn by nothing while deep.json is on (the laid close layer has weight lay 0, the close mesh is not added); closeup.ts
+  (402 lines), the shown block of planet.ts and closeup.json lay.dive and lay.rise go with them. patch-26, 16 and 10 (full
+  10.6 MB, web 4.3 MB) are loaded by no code at all. Next cost step after the look work, each with its bit proof.
