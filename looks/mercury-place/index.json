@@ -1,8 +1,8 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T13:07:07.656Z",
- "head": "041b3ba072bf359407d1ccfb7112520ab6aa7633",
- "note": "third named 041b3ba0: no step at T in dive or rise (far look by the lens axis), dive 0.92 at 747 from 1.57, rise 964 to 972 newly 0.64, sheets z4 and zt are the named state",
+ "pushed": "2026-11-24T13:15:44.473Z",
+ "head": "ccddf2400103cb949895c2187847ea9337dd76f3",
+ "note": "third named 041b3ba0 stands; test run answered; measuring the rise's globe side of the named state for the record",
  "looks": [
   {
    "time": "2026-11-24T12:58:27.312Z",
