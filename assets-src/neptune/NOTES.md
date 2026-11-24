@@ -4637,3 +4637,113 @@ No answer needed.
   drawn by nothing while deep.json is on (the laid close layer has weight lay 0, the close mesh is not added); closeup.ts
   (402 lines), the shown block of planet.ts and closeup.json lay.dive and lay.rise go with them. patch-26, 16 and 10 (full
   10.6 MB, web 4.3 MB) are loaded by no code at all. Next cost step after the look work, each with its bit proof.
+
+## 11:10 to 11:57 UTC: the far field and the limb of 4860, the series W and X (NOT committed, work files only)
+
+Work files, not in git: `out/work/nep/cost/deep.X.ts` (code), `deep.X1.json` to `deep.X7.json`, `deep.W*.json` before them.
+The committed deep.ts and deep.json were restored at 12:02 before the merge of main.
+
+- Code against the committed deep.ts: the veil laid out by an arc (uVeilEdge: u and v of the top, fall to the sides, a
+  parabola v = 3.1 - 0.108 (u + 1.9)^2), veilAt gives (cover, white sheet share), a thin haze inside the arc with its own blue
+  light and a west floor (uVeilThinLight), torn by the same noise, veilLight = mix(thin light, sheet light, share), and uLimb
+  (haze.limb): deck and veil times pow(left, 1 - smoothstep(0, to, cosine of the view to the vertical at the deck)). Out:
+  uVeilOval, uVeilSouth, uFanBand. tsc not run on it.
+- MEASURED, far field of 4860 at the preview, mean absolute luma difference to the approved (all / rows 30 over to 15 under
+  the limb / rows 15 to 150 under): committed 31.7 / 38.2 / 29.6; W3 21.1 / 20.3 / 21.3; W4 (haze.share 0.145) 20.4 / 13.4 /
+  22.8; X1 (limb) 20.0 / 11.3 / 23.0; X3 15.9 / 10.3 / 17.7; X4 (smooth sheet, best tones) 15.1 / 8.9 / 17.1; X5 19.0 / 9.2 /
+  22.2; X6 19.2 / 8.9 / 22.6. Torn patches raise this number, so it is no guide for tears.
+- G17 at 16 by 9 draft (median / p25): committed 0.934 / 0.549; X4 0.929 / 0.531; X5 and X6 0.934 / 0.545; X7 0.998 / 0.723
+  with tiles of 3.5 to 5.6 in rows 1 to 3 (too much detail there; its picture not looked at yet).
+- FOUND: the camera of 4860 stands 1 unit over the deck. Cosine of the view to the vertical at the deck, by rows of 2816
+  under the limb: 6 rows 0.029, 12 0.041, 20 0.053, 45 0.08, 100 0.12, 300 0.22. The glow over the limb was 1.7 to 1.9 times
+  too bright in linear light with the right fall; haze.share 0.145 (was 0.25) cures it, the near boxes barely move. The
+  approved image goes blue in the last 12 to 20 rows before the limb: a ramp by angle, not a Chapman tail. The limb's v runs
+  from 4.8 (west) to 6.9 (east), so a north end in v is no rule for the limb. The gaps of the far band are light blue (the
+  pale deck), not lavender: the thin haze needs blue light. A veil of five sizes with equal weights goes soft; edges are as
+  soft as the blob at contrast 6; a thinner sheet did not sharpen them. The deck keeps 3 to 4 of its 12 octaves in the far
+  field, so the far deck has no fine detail, and the approved image has grain of 1 to 3 px everywhere.
+- STILL WRONG at 4860 in X6, by eye beside the approved: the white band is soft blobs against crisp ragged bands; the zone
+  inside the arc is flat light blue (approved: darker, streaky, most in the west); a navy blob and a lavender plume at u -6
+  to -3.5, v 2 to 3; the storm is a small pinwheel of three arms with a pale collar (approved: an eye of about 0.9 by 0.5 at
+  (-1.5, 0.9), fine whirl streaks to radius 1 to 1.5, no collar); the second streamer stands in lumps with grey cores, its
+  shadow short and soft (approved: one long bright ridge widening east, a long dark sharp shadow at u -1.0 to -0.05, v 1.4
+  to 1.6).
+- NOT CHECKED for this work: the dive from above and the rise with the new haze share and limb (they change every scene
+  frame), 4605, 4707 and 5006 against the kept frames, parity, tsc, vitest, G11, G15, the how texts.
+- Looks pushed 11:49 (a04551f3): X5 at 16 by 9 beside the approved.
+
+## MAIL 654 from the Builder (/root), 11:57 UTC, high priority, word for word
+
+"MAIL 654 from the Builder (/root) to neptune_builder. Your third and last named commit 835c9574 is on main: 36970ce3be9aa82d1a8a9b0163fe48e8e529f0f3 (11:45 UTC, 42 files equal the proof 5fb44713, build 0, 465 tests, G11 and G15 pass, neptune off handover.ownPath). Merge main. Round 42 is yours and starts on main within the hour with fresh critics; the red measures below go into it as severe issues. Its fixes are yours: start on them now, on your branch, and keep them as separate commits per cause.
+
+Joined smooth report of the proof, MEASURED on the machines (the two joined files and three panels are attached):
+- path, place, parity: green.
+- dive, pictures: RED, pattern 1.12 from 4723 to 8 film frames later (66 capture frames over 0.45, from 4693 + 1/2 through 4729). Level step 0.55, pop 1.07, both under their limits. The panel of 4723 shows what it is: the storm of the globe (a dark oval under a white streak) is another picture than the one 8 frames later (a small spiral eye with other cloud). That is the exchange Brandon named: the place appears.
+- rise, pictures: RED, pattern 1.47 from 4980 + 1/2 (58 capture frames over, from 4973 + 1/2 through 5002), and pop 1.29 from 5036 to the next (8 capture frames over 1.2, from 5032 + 1/2). The pop sits in the last 8 film frames of the window, where the judge's median is one sided; that end of the measure is ruled a fault and is being cured by its owner, so read the pop as not yet proven either way. The pattern is real.
+- judged finals: 4605 equals the reference bytes; 4860 is your new scene and is judged in the round.
+- counts and your warm list: the walk is still on its machine (slow through the surface view from code); the list goes into main when it is back.
+
+The cause to work on, not the number: from the height where the storm is first seen as a shape, the globe must show the same clouds as the deck from code, drawn by the same functions, so that 8 frames apart the pattern is the same pattern seen closer. Tell me in one line what you take first and by when you can name a first fix for the round."
+
+Attached: neptune-dive.md, neptune-rise.md, neptune-dive-p4of8-changes.png, neptune-rise-p4of8-changes.png, neptune-rise-p8of8-pops.png.
+
+## 11:57 to 12:12 UTC: the report read, main merged, my one line
+
+- READ in neptune-dive.md (proof 5fb44713, rate 2, draft, 35.14 s a frame): the pattern from a frame to 8 film frames later
+  (limit 0.45) has three humps by start frame: 4693 + 1/2 to 4700 + 1/2 (peak 0.75 at 4696 to 4697), 4704 + 1/2 to 4713 (peak
+  0.92 at 4708 + 1/2), 4716 to 4728 + 1/2 (peak 1.11 to 1.12 at 4722 + 1/2 and 4723). From 4729 + 1/2 on 0.15 to 0.28; the
+  hold 0.02 to 0.18; the surface view beside it 0.05. Largest change in place 103.2 at 4722 + 1/2.
+- READ in tools/img/smooth.py: the pattern is 1 less the correlation of the two pictures' detail between 8 and 40 px (at a
+  quarter of 1920: sigmas 2 and 10), over a window of 40 px, both at 480 px wide, the later frame carried back along the
+  chain of optical flows; its 99th percentile on the body where both have detail over 1 level.
+- Heights (place/heights.ts, at the frame's time): 4692 1.888, 4696 1.694, 4700 1.445, 4704 1.173, 4708 0.913, 4712 0.690,
+  4716 0.516, 4720 0.385, 4724 0.288, 4728 0.215, 4732 0.161, 4734 0.139, 4740 0.090, 4748 0.050, 4760 0.026.
+- So the first hump (later frames 4701 + 1/2 to 4708 + 1/2, heights 1.34 to 0.88) lies ABOVE the height where the scene from
+  code first shows (0.9 radii). It is not the scene. Candidates read in set.ts, not yet told apart by a measure: the hold's
+  dressing leaving by the angle from the hold (home: the hold layer, the cirrus amount, the flow), the grade of the fall
+  (from 1.9 radii), the cirrus's pixel term, diving.from and to. The place plates are not it: they were loaded and never
+  drawn, and the pyramid's own pairs are 0.00 and 0.03.
+- Main merged at 12:05: `git fetch --deepen 60 origin main` (the clone is shallow, the merge base was cut off again), merge
+  of 4885e4ab as 10f6b0bf. Conflicts: the ten plate files and patches.json (mine stay: the plates are out), NOTES.md (mine),
+  config/showcase.json (main's: ownPath without venus). The tree differs from main only by my two commits after 835c9574.
+  tsc clean. Pushed.
+- Tool for the pair measure, in my folder: `assets-src/neptune/check/weave.ts` (the camera at the unit sphere as the report
+  takes it, with the turn of the ground) and `weave.py` (the later frame carried back on the sphere, no flow, then the
+  report's own pattern function with the config's numbers, both frames at 480 px wide). Two frames a pair instead of
+  seventeen.
+- My line to the Builder, 12:10, word for word: "neptune_builder, answer to MAIL 654 (12:10 UTC), one line: I take the dive's exchange first (the rise is the same cause backward): my head is measured pair by pair right now with the report's own pattern function, to split the three humps (4693 to 4700, 4704 to 4713, 4716 to 4728) by cause, since the first hump lies above 0.9 radii where the scene from code is not yet drawn; then the globe shows the deck from code from the first height of the dive with the map's large layout under it, so that only detail under 8 px comes in by height; a first fix is named by 15:00 UTC. Main 4885e4ab is merged on agent/neptune-place as 10f6b0bf (conflicts only in my own later commits and config/showcase.json, which is main's)."
+
+## 12:12 to 12:30 UTC: the head measured pair by pair, the map and the scene laid side by side
+
+- MEASURED on head 10f6b0bf with weave.py (preview draft, frames in out/work/nep/weave/head/, a frame against the frame 8
+  later, by start frame): 4680 0.07, 4684 0.11, 4688 0.27, 4692 0.46, 4696 0.60, 4700 0.26, 4704 0.70, 4708 0.44, 4712 0.69,
+  4716 0.71, 4720 1.15, 4723 1.18, 4724 1.12, 4727 0.96, 4728 0.85, 4732 0.22, 4736 0.34, 4740 0.54. The report on the
+  proof: 0.75 at 4696, 0.92 at 4708 + 1/2, 1.12 at 4723. My proxy follows the report's three humps and its peak, so it
+  serves to rank trials; it is not the tool and I state no green from it.
+- SEEN in the panels (head-N.jpg): at 4696 and at 4704 the 99th percentile comes from small spots at the limb (top and right
+  edge) and from the dark lower left corner, not from the storm. From 4712 to 4728 it is the whole storm area: the map's
+  cirrus leaves and the scene's streamers and eye come in.
+- Cost: 1.4 s a preview draft frame above 0.9 radii, 9 to 14 s with the scene.
+- Scales: close.json radius 41.806 units a planet radius (1 unit 1.37 degrees). At the hold about 17 px a degree, so the
+  code's eye (0.9 by 0.5 units) is about 20 px there. There is no height in the dive where the scene's own objects are
+  under the 8 px band, and the map has detail in the band at every height. So nothing but agreement of the two patterns
+  cures the exchange; no choice of the height of the blend does.
+- Map alone (deep.MP.json: height [0.00001, 0.000001]), scene alone (deep.SC.json: height [100, 50]) and scene with its grid
+  rendered at 4700, 4708, 4716, 4723, 4731, 4740 and laid on the ground in the scene's own coordinates (u along the band, v
+  across; out/work/nep/weave/maplay.py, panel /tmp/ml-all.jpg, work files):
+  MAP: dark oval u -6 to 7, v 0 to 5; the white hook a crescent from (-4, 3.5) by (-3, 1.5) to (-1.5, 0.6); the bow along
+  v 6 to 7 from u -10 to 12; a white band at v -1 to 0.3, u -8 to 1, brightest at u -2 to 0; more streaks west and at v -2.
+  SCENE: eye at (-1.5, 1), at the hook's lower end; dark zone u -6 to 6, v 1 to 4; main streamer along v -0.3, u -4 to 0.5,
+  inside the map's white band; a white veil sheet at u 3 to 8, v 5.5 to 6.5, near the bow; the deck pale and flat with hard
+  edged dark bands when seen from above.
+  APPROVED 4860 on the ground: apex about (-1, -1), u -7.5 to 0, v -1 to 7; its far white bands at (-3 to -1, 2 to 3.1),
+  close to the map's hook.
+- READ: the large layout agrees (the ruling at line 2646 was built). What differs is everything between 8 and 40 px: the
+  hook and the bow are in the map and not in the scene, the eye and the streamer's heaps are in the scene and not in the
+  map, and the two decks have different lumps. From above the map is the better picture; the scene is built for the 4860
+  camera.
+- The fork, not yet put to the Builder: the same pattern in both needs either the scene to take the map's clouds where it
+  is seen from afar (keeps the ruling: 4605 and the hold keep their bytes), or the hold's map to take the code's clouds
+  (breaks that). I take the first.
+- The engine has no switch that draws the globe alone through the surface view (grep of src/director for the word of the
+  mail at line 2525 found none; plan.ts line 23 has handover.dive and handover.rise only).
