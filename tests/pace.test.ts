@@ -8,6 +8,9 @@ import { eyeOf, paceOf } from '../tools/lib/pace'
 import { MIN_POINTS, SEAM_REACH, curves, eyeCurves, ringPlane, sampleSeam, sampleWindow } from '../tools/smooth/camera'
 import { judgeCurve, judgeSeam } from '../tools/smooth/path'
 
+// The tests that make the plan of every frame of every dive and rise take seconds, more beside the tests of the other files.
+const LONG = 60000
+
 // Plan E, the measure. The bell is the one rate curve of a dive and a rise; paceOf is the plan check: the judge's own functions
 // (npm run smooth, the path part) on the film's own camera.
 
@@ -226,7 +229,7 @@ describe('the plan check of a move', () => {
       }
     }
     expect(moves).toBe(34)
-  })
+  }, LONG)
 
   it('reads the eye at the seam with the surface view as the judge does: its curves, its lowest on both sides and inside the move, and what is named', () => {
     const min: number | null = config.raw.smooth.path.minEye ?? null

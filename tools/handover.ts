@@ -8,7 +8,7 @@ import { addLook } from './lib/looks'
 import { image, json, padFrame } from './lib/render'
 import type { Segment } from '../src/config'
 import { blurAllowed, framePlan, rawMotion, shutterScale } from '../src/core/motion'
-import { shutterMid, shutterOffset } from '../src/core/sampler'
+import { samplesFor, shutterMid, shutterOffset } from '../src/core/sampler'
 import type { Pose, ViewKind } from '../src/core/types'
 import { FilmDirector } from '../src/director/film'
 import { handoverFrame, handoverOf, sideAt } from '../src/director/handover'
@@ -125,6 +125,15 @@ class Line {
 
   pose(time: number, side: ViewKind): Pose {
     return plan.eye(this.kind, time, side)
+  }
+
+  // What the frame of T holds at a tier: the open shutter of that frame straddles T, and each of its samples is drawn by the side that owns
+  // its time. The draft tier draws one sample, so the judge at draft never sees the two sides in one frame; the report says what the
+  // frame holds where it does.
+  mix(tier: string): { samples: number; close: number; globe: number } {
+    const p = framePlan(film, this.frameT, tier)
+    const close = samplesFor(p.samples, p.shutter).filter((s) => sideAt(this.seg, (this.frameT + s.timeOffset) / fps) === 'terrain').length
+    return { samples: p.samples, close, globe: p.samples - close }
   }
 
   // The camera of either side as a camera at the unit sphere: the globe side as it is, the close side through the twin.
@@ -494,7 +503,10 @@ try {
   for (const kind of kinds) {
     const line = new Line(kind)
     const out: Record<string, unknown> = { optedIn: line.opted, frameT: line.frameT, timeT: round(line.timeT, 6), window: line.window }
-    md.push('## ' + line.seg.id, '', (line.opted ? 'Handover in frame ' + line.frameT + ' (T = ' + round(line.timeT, 5) + ' s), place window frames ' + line.window[0] + ' to ' + line.window[1] : 'Not opted in: the sides swap under a cover in frame ' + line.frameT + ' (cover frames ' + line.window[0] + ' to ' + line.window[1] + ')') + '.', '')
+    const mixed = line.opted ? { final: line.mix('final'), review: line.mix('review'), draft: line.mix('draft') } : null
+    if (mixed) out.samplesAtT = mixed
+    const held = (m: { samples: number; close: number; globe: number }): string => m.close + ' of ' + m.samples + ' samples by the close side and ' + m.globe + ' by the globe side'
+    md.push('## ' + line.seg.id, '', (line.opted ? 'Handover in frame ' + line.frameT + ' (T = ' + round(line.timeT, 5) + ' s), place window frames ' + line.window[0] + ' to ' + line.window[1] + '. Frame ' + line.frameT + ' holds both sides, each sample drawn by the side that owns its time: at the final tier ' + held(mixed!.final) + ', at the review tier ' + held(mixed!.review) + ', at the draft tier ' + held(mixed!.draft) + ' (the measures below are taken at draft and do not see the two in one frame)' : 'Not opted in: the sides swap under a cover in frame ' + line.frameT + ' (cover frames ' + line.window[0] + ' to ' + line.window[1] + ')') + '.', '')
     const verdicts: [string, Verdict][] = []
     const warnings: [string, Verdict][] = []
     if (only.includes('sides')) {

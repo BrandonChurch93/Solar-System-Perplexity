@@ -18,6 +18,7 @@ import { SkyCard } from './skycard'
 import { lifeCalm, lifeCalmAt, lifeFormat } from './life'
 import { formatUniform, setFormat } from './format'
 import { stage } from './stage'
+import { farSun, globeShare } from '../../space/farsun/farsun'
 
 export const createSet: SetFactory = async (ctx) => {
   const base = 'sun/' + ctx.assets + '/'
@@ -55,6 +56,9 @@ export const createSet: SetFactory = async (ctx) => {
 
   const far = new FarPoint()
   orbit.add(far.points)
+  farSun.wear({ map, grade, mapWidth: (map.image as unknown as { width: number }).width, limb: look.globe.limb, rim: look.globe.rim, boil: look.globe.boil, hot: look.globe.hot, pulse: look.globe.pulse, cell: look.globe.cell })
+  world.add(farSun.mesh)
+  const farBody = new THREE.Quaternion()
 
   if (opening.on) ground.land(look.opening.surge.reach, look.opening.surge.veil, look.opening.surge.most)
   if (opening.on) ground.flash(look.opening.erupt.flash.span)
@@ -96,6 +100,7 @@ export const createSet: SetFactory = async (ctx) => {
     update: (state, shot, view) => {
       const inOrbit = state.view === 'orbit'
       const kind = state.segment.kind
+      farSun.mesh.visible = false
       const rising = kind === 'rise'
       const placing = inOrbit && rising
       orbit.visible = inOrbit && state.weight > 0
@@ -123,7 +128,7 @@ export const createSet: SetFactory = async (ctx) => {
       const height = Math.max(inOrbit ? world.position.length() - 1 : eye.distanceTo(stage.centre) / stage.radius - 1, 1e-4)
       const above = (r: number[]): number => (rising ? THREE.MathUtils.smoothstep(Math.log(height), Math.log(r[0]!), Math.log(r[1]!)) : inOrbit ? 1 : 0)
       const skyIn = above(by.sky)
-      const shown = !inOrbit ? 0 : kind === 'travel' ? 1 - THREE.MathUtils.smoothstep(state.u, look.skyFade[0], look.skyFade[1]) : skyIn
+      const shown = !inOrbit ? 0 : kind === 'travel' ? Math.min(1 - THREE.MathUtils.smoothstep(state.u, look.skyFade[0], look.skyFade[1]), globeShare(world.position.length())) : skyIn
       backdrop.update(shown, gain, vignette, aspect)
       backdropTerrain.update(terrain.visible ? 1 - skyIn : 0, gain, vignette, aspect)
       if (terrain.visible) {
@@ -162,7 +167,8 @@ export const createSet: SetFactory = async (ctx) => {
       // first and leaves the depth to the ground (the ground covers all of the ball that can be seen from there)
       globe.material.depthWrite = !(placing && above(by.surface) < 1)
       const glow = above(by.corona)
-      const leaving = kind === 'travel'
+      const away = kind === 'travel' && inOrbit ? globeShare(world.position.length()) : 1
+      const leaving = false
       const going = leaving ? even(state.u, look.leave.over) : 0
       const open = Math.pow(look.leave.open, going)
       const flat = leaving ? even(state.u, look.leave.wash) : 0
@@ -227,9 +233,9 @@ export const createSet: SetFactory = async (ctx) => {
         unfit.identity()
       }
       globe.update(elapsed, spin, gain, state.weight, vignette, aspect, undefined, undefined, open, wash.set(look.leave.pale[0] * level, look.leave.pale[1] * level, look.leave.pale[2] * level, going > 0 ? Math.max(flat, 1e-6) : 0), look.leave.shade)
-      corona.update(world.position, unfit, state.rotation, elapsed, gain * Math.pow(look.leave.corona, going), vignette, aspect, look.corona, glow * state.weight, look.corona.edge * (1 - tucked) + look.leave.edge * fitted, look.leave.veil * going, look.leave.ceil * plateEnd * gain * (0.2126 * look.leave.pale[0] + 0.7152 * look.leave.pale[1] + 0.0722 * look.leave.pale[2]), pale.set(look.leave.hue[0], look.leave.hue[1], look.leave.hue[2], going), tucked >= 1, look.leave.soft)
+      corona.update(world.position, unfit, state.rotation, elapsed, gain * Math.pow(look.leave.corona, going), vignette, aspect, look.corona, glow * state.weight * away, look.corona.edge * (1 - tucked) + look.leave.edge * fitted, look.leave.veil * going, look.leave.ceil * plateEnd * gain * (0.2126 * look.leave.pale[0] + 0.7152 * look.leave.pale[1] + 0.0722 * look.leave.pale[2]), pale.set(look.leave.hue[0], look.leave.hue[1], look.leave.hue[2], going), tucked >= 1, look.leave.soft)
       globe.limb(world.position, unfit, corona.toSet)
-      prominences.update(elapsed, spin, gain * open, vignette, aspect, glow * state.weight, burn.set(burnt, look.leave.burn.wide, look.leave.burn.level, look.leave.burn.cover), hot)
+      prominences.update(elapsed, spin, gain * open, vignette, aspect, glow * state.weight * away, burn.set(burnt, look.leave.burn.wide, look.leave.burn.level, look.leave.burn.cover), hot)
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
       // (the size on screen that the far Sun is drawn from is counted in 1080ths of the frame height, by the same
@@ -239,8 +245,15 @@ export const createSet: SetFactory = async (ctx) => {
       corona.mesh.visible = visible
       prominences.mesh.visible = visible
       far.update(radiusPx, view, plan.p.tint, gain)
+      farSun.mesh.visible = orbit.visible && visible && away < 1 && kind === 'travel'
+      if (farSun.mesh.visible) {
+        farSun.material.depthTest = false
+        farSun.set({ camera: view.camera, centre: world.position, body: farBody.copy(world.quaternion).multiply(fitTurn), spin, time: state.time, holdTime: elapsed, exposure: shot.post.exposure, burn: shot.sun.far?.burn ?? 0, vignette, aspect, height: view.format.height }, 1 - away, 0)
+      }
     },
     dispose: () => {
+      farSun.wear(null)
+      farSun.mesh.removeFromParent()
       globe.dispose()
       corona.dispose()
       prominences.dispose()

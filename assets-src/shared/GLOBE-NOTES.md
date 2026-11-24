@@ -354,6 +354,77 @@ The smooth report judges the pattern that changes in place (a frame against the 
 
 Measured on main b0035c5c: Mars's eight levels 0.06, 0.00, 0.06, 0.00, 0.00, 0.00, 0.00; Uranus's three patches 0.00, 0.00. Controls on Mars's patch-42 and patch-19: the child's width given as 21 in place of 19 degrees 1.51; the child moved 0.3 degrees east 1.08; an unrelated child (place-0p3) 1.41.
 
+### The named trees (MAIL 591 item 2)
+
+99th percentile of each level against its parent, limit 0.45, the files of each stop's proof tree:
+
+- Mars b83618ec (patch-wide 96, patch-42, patch-19, land-8p5, land-3p8, land-1p6, land-0p7, land-0p3): 0.06, 0.00, 1.19 OVER (patch-19 under land-8p5: a bright mound with a crater where the child shows the dark plain with the canyon), 0.09, 0.69 OVER (in the outer tenth of land-1p6), 0.59 OVER, 0.98 OVER.
+- Mercury 9b5f55cd (patch-1 76, patch-2 38, patch-3 19, patch-4 9.5; the rise's patch-3r, patch-4r): dive 1.09 OVER, 0.02, 0.02; rise patch-2 to patch-3r 0.70 OVER, patch-3r to patch-4r 0.01.
+- Uranus 9a369939: patches 0.00, 0.00; place plates 0.00, 0.01, 0.00.
+- Venus 3b52b0eb, pairs of one kind only: colour w to c 0.01 (dive), 0.02 (rise); light a to b 0.20, 0.13; light b to d 1.12, 1.10 OVER (the two have different colour partners, and 13 to 19 percent of the crop is judged: read with care).
+- Not run: Saturn, Jupiter, Earth, Neptune, the Sun.
+
+A pair over the limit says that the two files do not show one picture. It does not say that the film is red there: see the next part.
+
+### What is red in Mars's dive at 2449 (MAIL 591 item 1)
+
+The smooth report of Mars's named tree is red in the dive: the pattern changes in place by 1.27 from frame 2449 (limit 0.45). Measured with the report's own tool (pictures part, rate 2, body mask, draft) on b83618ec, cut to the capture frames 2449 to 2465.5, so 18 starts 2449 to 2457.5, each against the frame 8 film frames later. The parts were switched in a scratch tree by a query word in Mars's set (never committed). Largest of the 18 starts, and how many are over:
+
+| run | what is drawn | largest | over |
+| --- | --- | --- | --- |
+| a | one texture: no levels, rim, grazing terms, air, cap, storm, relief shading, vignette, moon | 0.32 | 0 |
+| d | a plus the plate levels | 0.25 | 0 |
+| f | a plus the levels plus the relief cap | 0.25 | 0 |
+| i | the film with the air alone off | 0.25 | 0 |
+| b | a plus rim, grazing terms and air | 0.57 | 5 |
+| h | a plus the levels plus rim, grazing terms and air | 1.46 | 12 |
+| e | the film without the relief cap | 1.46 | 14 |
+| c | the film as it is (the globe alone gives the same 34 frames, byte for byte) | 1.27 | 18 |
+
+One part of the air off at a time in run h: shells (shell, halo, glint) off 1.46; grazing terms off 1.46; rim (`uLimb`) off 1.46; ground haze of the globe off (`uHazeTau` 0) 0.24, green. Run h with main's three numbers of `near.json` in place of the head's (hazeDay 0.25 for 0.4, hazeDepth 0.8 for 0.6, hazeScaleHeight 0.15 for 0.6) 1.45, 18 over. The film itself with main's three numbers: 1.34 at 2453, 18 over.
+
+- No frame of the span shows a limb: the globe fills the frame (eye 0.032 down to 0.010 radii). The worst 1 percent of run c is one clump of far ground at the top edge of the frame (0.05 to 0.07 of the height from the top), seen 66 to 80 degrees off straight down.
+- At the five starts looked at (runs a, b, d and twice c) the worst 1 percent lies where the picture has little detail and at the border of the judged area: contrast there 1.2 to 2.0 display values against the measure's floor of 1 (median of the judged 2.6 to 8.7), 84 to 100 percent of it within 10 px (of 270) of the border. In run c the judged pixels with a contrast over 3 (45 percent of them) read 0.07 at 2449 and 0.14 at 2453; in run b the same cut reads 0.45.
+- The line: the ground haze in the fragment of `planet.ts`, `col = col * exp(-tau * uExtinction) + hazeLight(n, dir) * (1.0 - exp(-tau))`, with the depth `uHazeTau` that Mars's set drives by height. With it off the film is green; the head's three air numbers are not the cause.
+- Main's Mars (b0035c5c, the old place) on the same pair reads 0.12 (whole frames, no mask; the named tree read the same way 1.05). Its dive looks at ground with strong detail up to the top of the frame; the head's dive (plan.ts headingDeg -245 for -105, new plates) looks across a plain with little detail, which the haze takes down to a contrast of 1 to 2 display values as the eye sinks.
+- Not decided here: whether that is a fault of the picture or of the floor and the border of the measure. The measure is harness_builder's.
+
+## 11. The turn of the body: cosine and sine from the page (`exactSpin`)
+
+Found by mars_place_builder: the ground of the cap lay lower than its heights say, by one amount per move (dive T 0.000150 radii, rise T 0.000205). The cause: the vertex program of the cap turned its ground by `cos(uSpin)` and `sin(uSpin)` of the renderer, and on the film's renderer (ANGLE on SwiftShader) those two are not a cosine and a sine of one angle. Measured in the harness browser, vertex and fragment programs alike, c * c + s * s - 1 and c and s against `Math.cos` and `Math.sin`:
+
+| spin (rad) | c * c + s * s - 1 | c - cos | s - sin |
+| --- | --- | --- | --- |
+| 0 | 0 | 0 | 0 |
+| 0.02 | -1.0e-4 | -4.9e-5 | -2e-6 |
+| 0.079 (Mars dive T) | -2.92e-4 | -1.43e-4 | -1.0e-5 |
+| 0.187 (Mars rise T) | -3.78e-4 | -1.86e-4 | -2.2e-5 |
+| 0.5 | -2.6e-5 | -1.0e-5 | -6e-6 |
+| 1.0 | 4.1e-5 | 1.0e-5 | 1.8e-5 |
+| 3.5 | -2.02e-4 | 1.00e-4 | 2.2e-5 |
+| 5.0 | -2.96e-4 | -2.6e-5 | 1.47e-4 |
+
+(one step of the reading is 2e-6.) Half of the second column is the amount the cap's sphere was too small: 1.46e-4 at 0.079 and 1.89e-4 at 0.187.
+
+Two changes:
+
+- The cap, always: `Planet.update` sets `uSpinTurn` (cos and sin of the spin from `Math`) and the vertex program of the cap turns its ground by it. No stop on main draws a cap, so no frame on main moves; a stop with a cap gets its ground on the sphere.
+- The colours, only for a stop that sets `exactSpin: true` in the options of `Planet`: the fragment text of the globe and of the cap takes `uSpinTurn` in place of `cos(uSpin)` and `sin(uSpin)` (one line shorter, no `uSpin`). Without the option the text is the old text to the byte.
+
+Why a stop with a place wants `exactSpin`: the fragment turns the direction of a pixel by the renderer's pair, so east and depth are scaled by the pair's length and the north component is not. The base map reads its latitude from the north component alone and does not move; the plate levels, the centres, the storm and the cut of the cap read the direction as it is, and slide north or south by about half the second column times sin times cos of the latitude, and east by the pair's angle error. This changes with the spin, so with time.
+
+Measured (`tests/globe-cap.test.ts`, a green square 0.02 degrees wide on a flat cap, eye 0.001 radii straight above the true spot, 96 rows of 40 degrees; the square is 46 px wide when the ground lies on the sphere):
+
+| spin | cap before, width | cap now, width | colours of the renderer, spot at 45 north, centre off by | the same at the equator | `exactSpin`, both |
+| --- | --- | --- | --- | --- | --- |
+| 0 | 46 | 46 | 0 | 0 | 0, width 46 |
+| 0.079 | 40 | 45 | 9.5 px north to south | 0.5 px east to west | 0, width 46 |
+| 0.187 | 38 | 45 | 12.5 px | 1.5 px | 0, width 46 |
+
+(40 of 46 px at eye 0.001 is a ground 1.5e-4 too low, 38 is 2.1e-4: the builder's numbers.) Without `exactSpin` the heights of a cap (turned exactly) and its colours (turned by the renderer) do not lie on each other: at Mars's latitude and spin about 2e-5 to 4e-5 radii, which at an eye of 0.0017 radii is more than 1 percent of the height.
+
+`exactSpin` moves bytes of every frame of the stop that sets it (the colours shift by the amounts above, far under a pixel from orbit). The other way to the same end, inside a stop: the turn in the mesh's quaternion and a spin of 0 handed to `update`; at spin 0 the renderer's pair is exact. `src/bodies/globe.ts` and `src/bodies/standin.ts` still turn by the renderer's pair (far views); not changed.
+
 ## Proof with the options off
 
 Draft stills `out/work/stills/f%05d-16x9-draft-full.png`, sha256, frames 360 (sun.hold), 615 (mercury.hold), 717 (mercury.dive), 1185 (venus.hold), 1857 (earth.dive), 2325 (mars.hold), 2427 (mars.dive), 2997 (jupiter.dive), 3465 (saturn.hold), 4035 (uranus.hold), 4707 (neptune.dive). The references were rendered at `412d2d09` before any change. The runs are named in the log below.
@@ -393,3 +464,5 @@ Draft stills `out/work/stills/f%05d-16x9-draft-full.png`, sha256, frames 360 (su
   - 2783 travel: 1.919, 20.9, 32.65, -2.806 to 1.918, 20.9, 32.65, -2.806; level -0.98, fine detail 1.755. The difference picture shows the stars (`src/space`, not this folder) and faintly the moon's fine detail. The largest pixel fell from 210 to 169.
   - The seven frames between as in the entry above, to the digit.
   The largest numbers before: mean 2.014 and block 3.250 at the hold; after: mean 1.918, coarse mean 1.024, block -2.806, level -0.980, all at 2783.
+- MAIL 591: the named-tree table of `globe-levels.py` and what is red in Mars's dive at 2449 (section 10, two new parts). Runs a to o and j on b83618ec in a scratch tree, the judge's own tool; nothing of it is in the repository's code.
+- Merged main 1c3da4b2 (6ecaad26). The turn of the body (section 11): the cap's vertex program turns by `uSpinTurn` from the page, and `exactSpin` gives the same pair to the fragment of the globe and of the cap. `npx vitest run`: 461 tests green, two new in `tests/globe-cap.test.ts` (one of text, one in the harness browser; the browser test fails on the old vertex program with widths 40 and 38 for 46). Options off: the 11 draft stills of the proof list, rendered at 6ecaad26 and at this tree, are byte equal, 11 of 11. Not rendered: a film frame with a cap (no stop on main draws one), and a frame with `exactSpin` on.
