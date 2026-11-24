@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T03:45:55.811Z",
+ "pushed": "2026-11-24T04:07:04.070Z",
  "head": "f17274e705de4b7f527945333d364d3d8b559305",
- "note": "step 4 first pass on frames: sea floor relief gone outside the close view, ring field on; veil bodies being removed, frames rendering",
+ "note": "step 4 second pass on 34 frames: calm sea and ring field outside the close view; flat grey sheets beside some white clouds traced to pale sea in the takes, cure in work",
  "looks": [
+  {
+   "time": "2026-11-24T04:07:03.463Z",
+   "file": "20261124040703463-note-sheet-s4b-rise.jpg",
+   "source": "../../../../tmp/gl/s4/sheet-s4b-rise.jpg",
+   "kind": "note",
+   "label": "step 4 second pass, rise frames 2117 to 2156 and the judged 1755, 2010 (both byte equal to f17274e7), draft",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T04:07:02.888Z",
+   "file": "20261124040702888-note-sheet-s4b-dive.jpg",
+   "source": "../../../../tmp/gl/s4/sheet-s4b-dive.jpg",
+   "kind": "note",
+   "label": "step 4 second pass, dive frames 1857 to 1904, draft",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T04:07:02.306Z",
+   "file": "20261124040702306-note-abb-1878.jpg",
+   "source": "../../../../tmp/gl/s4/abb-1878.jpg",
+   "kind": "note",
+   "label": "step 4, 1878 at full size, draft: before (f17274e7) and after: the drawn sea floor and the map's own cloud give way to calm sea and the field's bodies; the flat grey sheet beside the white cloud is still wrong",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T03:45:54.578Z",
    "file": "20261124034554578-note-field13-near.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/gl/s4/c-1889-left.jpg",
    "kind": "note",
    "label": "step 4 before: 1889 left border at full size (f17274e7)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T03:22:45.603Z",
-   "file": "20261124032245603-note-tile4-crop.jpg",
-   "source": "../../../../tmp/gl/s4/tile4-crop.jpg",
-   "kind": "note",
-   "label": "step 4 study: one take (top left), sparse keep with the old shadow rule (top right), first own shadow rule (bottom left), labels and matte (bottom right)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T03:22:44.641Z",
-   "file": "20261124032244641-note-field11-near.jpg",
-   "source": "../../../../tmp/gl/s4/field11-near.jpg",
-   "kind": "note",
-   "label": "step 4 study: the ring field beside the close view (cover red); shadows still stand without their clouds, not taken",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T02:59:11.722Z",
-   "file": "20261124025911722-note-pieces.jpg",
-   "source": "../../../../tmp/gl/s4/pieces.jpg",
-   "kind": "note",
-   "label": "step 4 study: the ground near the nadir outside the close view: lay back with the repaint, with the hold's level, the hold's level alone, the plate today",
    "stop": "earth"
   }
  ]
