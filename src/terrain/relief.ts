@@ -257,6 +257,66 @@ export function withPresence(source: string, lit: string): string {
   return source.replace(HEAD, HEAD + '\nuniform float uPresence;').replace(lit, lit + ' * uPresence')
 }
 
+// The relief with an edge (Relief.presenceEdge): the same shaders with their premultiplied output times a share that follows the place in
+// the WHOLE source picture, the layers' boxes taken together: 0 at a side of that picture and beyond it, where a layer's apron lies (the
+// apron is the picture's last texels drawn out), and 1 one feather inside the side, smooth between. Every layer reads the same coordinate
+// (vImage, the place in the whole picture, not in its own box), so all layers end along one line on the ground. The air reads it where the
+// ray of its pixel meets the sphere of the relief's farthest distance about the picture's eye, which is where its haze band belongs, so
+// the band ends with the ground under it. Built when a relief asks for the first time; a relief that never asks keeps the shaders above
+// to the letter.
+const IMAGE_IN = 'in vec2 vImage;'
+const THIN = 'if (alpha < 0.004) discard;'
+const AIR_DIR_IN = 'in vec3 vDir;'
+const AIR_DIR_OUT = 'out vec3 vDir;'
+const AIR_DIR = 'vDir = position;'
+
+export const EDGE_GLSL = /* glsl */ `
+uniform vec4 uEdgeSide;
+uniform vec4 uEdgeOver;
+float edgeSide(float inside, float over) {
+  return over > 0.0 ? smoothstep(0.0, 1.0, inside * over) : 1.0;
+}
+float edgeShare(vec2 im) {
+  return edgeSide(im.x - uEdgeSide.x, uEdgeOver.x) * edgeSide(uEdgeSide.y - im.x, uEdgeOver.y) * edgeSide(uEdgeSide.z - im.y, uEdgeOver.z) * edgeSide(im.y - uEdgeSide.w, uEdgeOver.w);
+}`
+
+export const EDGE_AIR_GLSL = /* glsl */ `
+uniform vec3 uEdgeFar;
+in vec3 vEdgeEye;
+vec2 edgeAirImage(vec3 d) {
+  float b = dot(vEdgeEye, d);
+  float c = dot(vEdgeEye, vEdgeEye) - uEdgeFar.x * uEdgeFar.x;
+  vec3 p = vEdgeEye + d * (sqrt(max(b * b - c, 0.0)) - b);
+  float ahead = -p.z;
+  if (ahead <= 1e-6 * uEdgeFar.x) return vec2(p.x < 0.0 ? -1e6 : 1e6, p.y < 0.0 ? 1e6 : -1e6);
+  return vec2(p.x / ahead * uEdgeFar.y, -p.y / ahead * uEdgeFar.z) * 0.5 + 0.5;
+}`
+
+export function withEdge(source: string, lit: string): string {
+  const air = lit === AIR_LIT
+  const head = air ? AIR_DIR_IN : IMAGE_IN
+  if (source.split(head).length !== 2 || source.split(lit).length !== 2 || (!air && source.split(THIN).length !== 2) || source.includes('uEdgeSide')) throw new Error('the relief shader has no single place for an edge')
+  if (air) return source.replace(head, head + EDGE_GLSL + EDGE_AIR_GLSL).replace(lit, lit + ' * edgeShare(edgeAirImage(d))')
+  return source.replace(head, head + EDGE_GLSL).replace(THIN, 'if (alpha < 0.004 || edgeShare(vImage) <= 0.0) discard;').replace(lit, lit + ' * edgeShare(vImage)')
+}
+
+// The lens in the air's own frame, for the edge: the air is drawn about the lens, so its vertex shader has no use for the place of the
+// lens until an edge asks where a ray meets the relief's far distance. The same line as the layers' eye, with the scale of the group.
+export function withEdgeEye(source: string): string {
+  if (source.split(AIR_DIR_OUT).length !== 2 || source.split(AIR_DIR).length !== 2 || source.includes('vEdgeEye')) throw new Error('the relief shader has no single place for the eye of its edge')
+  return source.replace(AIR_DIR_OUT, AIR_DIR_OUT + '\nout vec3 vEdgeEye;\nuniform float uEyeScale;').replace(AIR_DIR, AIR_DIR + '\n  vEdgeEye = -transpose(mat3(modelViewMatrix)) * modelViewMatrix[3].xyz * uEyeScale;')
+}
+
+// The share of the edge at a place of the whole picture, as the shader reads it (for the shield and for tests).
+export function edgeShareAt(ix: number, iy: number, side: readonly number[], over: readonly number[]): number {
+  const one = (inside: number, k: number): number => {
+    if (!(k > 0)) return 1
+    const t = Math.min(Math.max(inside * k, 0), 1)
+    return t * t * (3 - 2 * t)
+  }
+  return one(ix - side[0]!, over[0]!) * one(side[1]! - ix, over[1]!) * one(side[2]! - iy, over[2]!) * one(iy - side[3]!, over[3]!)
+}
+
 // The eye of the layers under a scaled group. The layers take the eye out of the model view matrix as if the group had no scale; under a
 // scale s that is s squared times the eye, so the valley mist is seen from near the picture's own eye and not from the camera. A set that
 // stands the relief in another scene with a scale (the close view's ground in the globe's scene, through the twin) gets the same line
@@ -294,6 +354,9 @@ interface Grid {
   solid: Uint8Array
   box: Int16Array
   kept: number
+  // With an edge (Relief.presenceEdge): 1 for a cell of the layer's own box whose four corners have the whole share. Null without one.
+  inside: Uint8Array | null
+  image: Float32Array
 }
 
 interface Layer { mesh: THREE.Mesh; material: THREE.ShaderMaterial; grid: Grid }
@@ -320,6 +383,11 @@ export class Relief {
   private fades = false
   private readonly eyeScale = { value: 1 }
   private scaled = false
+  private edged = false
+  private readonly edgeSide = { value: new THREE.Vector4(0, 1, 1, 0) }
+  private readonly edgeOver = { value: new THREE.Vector4(0, 0, 0, 0) }
+  private readonly edgeFar = { value: new THREE.Vector3(1, 1, 1) }
+  private far = 0
 
   private constructor(def: ReliefDef, motion: ReliefMotion) {
     this.def = def
@@ -421,7 +489,7 @@ export class Relief {
               if (one > 1 || zero > 1) {
                 const need = Math.max(reachNeeded(ax, ay, bx, by, cx, cy, g.du, g.dv), reachNeeded(dx, dy, cx, cy, bx, by, g.du, g.dv))
                 if (zero >= need) continue
-                if (one >= need) solid = 1
+                if (one >= need && (!g.inside || g.inside[base])) solid = 1
               }
             }
             x0 = Math.min(tc, Math.max(0, Math.floor(minX / tile)))
@@ -526,6 +594,62 @@ export class Relief {
       }
     }
     this.share.value = share
+  }
+
+  // Where the relief ends: a feather at each side of the whole source picture, [left, right, bottom, top] in pixels of that picture (the
+  // units of the layers' boxes), 0 for a side that does not fade. The sides are those of the layers' boxes taken together, margins and
+  // all. The premultiplied output of every layer and of the air is times a share by the place in the picture: 0 at the side and beyond
+  // it (so no apron of that side is drawn), 1 one feather inside, smooth between; the same for every layer, so they end along one line
+  // on the ground, and the air ends with the far ground under its haze. A share by place, never by the clock. It goes with a presence
+  // (the two shares multiply). Off until a set calls it: a relief that never does keeps its shaders to the letter and draws as before.
+  // The first call gives the materials the shader with the edge, which is a new program: call it once where the set is built. Inside
+  // the feather the relief is no shield, so what lies behind it there is drawn; one feather inside it is the shield it was.
+  presenceEdge(feather: readonly [number, number, number, number]): void {
+    if (feather.length !== 4 || !feather.every((f) => f >= 0 && Number.isFinite(f))) throw new Error('the edge of a relief is four feathers of 0 or more pixels (left, right, bottom, top), not ' + JSON.stringify(feather))
+    const [W, H] = this.def.imageSize
+    const boxes = this.def.layers.map((l) => l.box)
+    const x0 = Math.min(...boxes.map((b) => b[0]))
+    const x1 = Math.max(...boxes.map((b) => b[0] + b[2]))
+    const y0 = Math.min(...boxes.map((b) => b[1]))
+    const y1 = Math.max(...boxes.map((b) => b[1] + b[3]))
+    this.edgeSide.value.set(x0 / W, x1 / W, y1 / H, y0 / H)
+    this.edgeOver.value.set(feather[0] > 0 ? W / feather[0] : 0, feather[1] > 0 ? W / feather[1] : 0, feather[2] > 0 ? H / feather[2] : 0, feather[3] > 0 ? H / feather[3] : 0)
+    if (!this.edged) {
+      this.edged = true
+      const th = Math.tan(rad(this.def.vfovDeg) / 2)
+      this.edgeFar.value.set(this.far, 1 / (th * W / H), 1 / th)
+      for (const l of this.layers) {
+        l.material.fragmentShader = withEdge(l.material.fragmentShader, LIT)
+        l.material.uniforms.uEdgeSide = this.edgeSide
+        l.material.uniforms.uEdgeOver = this.edgeOver
+        l.material.needsUpdate = true
+      }
+      if (this.air) {
+        const m = this.air.material
+        m.fragmentShader = withEdge(m.fragmentShader, AIR_LIT)
+        m.vertexShader = withEdgeEye(m.vertexShader)
+        m.uniforms.uEdgeSide = this.edgeSide
+        m.uniforms.uEdgeOver = this.edgeOver
+        m.uniforms.uEdgeFar = this.edgeFar
+        m.uniforms.uEyeScale = this.eyeScale
+        m.needsUpdate = true
+      }
+    }
+    const side = this.edgeSide.value.toArray()
+    const over = this.edgeOver.value.toArray()
+    for (const l of this.layers) {
+      const g = l.grid
+      const inside = g.inside ?? new Uint8Array(g.nx * g.ny)
+      for (let cj = 0; cj < g.ny; cj++) {
+        for (let bi = 0; bi < g.nx; bi++) {
+          const a = cj * g.cols + bi + g.left
+          let whole = 1
+          for (const n of [a, a + 1, a + g.cols, a + g.cols + 1]) if (edgeShareAt(g.image[n * 2]!, g.image[n * 2 + 1]!, side, over) < 1) whole = 0
+          inside[cj * g.nx + bi] = whole
+        }
+      }
+      g.inside = inside
+    }
   }
 
   static async load(ctx: SetContext, base: string, def: ReliefDef, motion: ReliefMotion): Promise<Relief> {
@@ -650,6 +774,7 @@ export class Relief {
           const iy = (y0 + fy * bh) / H
           const dir = new THREE.Vector3((2 * ix - 1) * th * aspect, (1 - 2 * iy) * th, -1).normalize()
           const dd = distance(fx, fy)
+          if (fx >= 0 && fx <= 1 && fy <= 1 && dd > r.far) r.far = dd
           position[n * 3] = dir.x * dd
           position[n * 3 + 1] = dir.y * dd
           position[n * 3 + 2] = dir.z * dd
@@ -731,7 +856,7 @@ export class Relief {
       const cellCount = (cols - 1) * (rows - 1)
       r.layers.push({ mesh, material, grid: {
         cols, rows, left: nl, nx, ny, position, index, alpha, one: new Uint8Array(0), zero: new Uint8Array(0), du: 1, dv: 1, full: geo, lean: part(), probe, veil,
-        sx: new Float64Array(cols * rows), sy: new Float64Array(cols * rows), cells: new Uint32Array(cellCount), solid: new Uint8Array(cellCount), box: new Int16Array(cellCount * 4), kept: 0,
+        sx: new Float64Array(cols * rows), sy: new Float64Array(cols * rows), cells: new Uint32Array(cellCount), solid: new Uint8Array(cellCount), box: new Int16Array(cellCount * 4), kept: 0, inside: null, image,
       } })
     }
     return r
