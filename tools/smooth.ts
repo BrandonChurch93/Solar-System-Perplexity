@@ -1,6 +1,7 @@
 import { execFileSync } from 'node:child_process'
 import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
+import { pathToFileURL } from 'node:url'
 import { DIST, ROOT, WORK, args, ensureBuild, formatId, loadConfig, machineId, requireDisk } from './lib/common'
 import { openCapture, renderPng, type Session } from './lib/browser'
 import { computeHashes, type Hashes } from './lib/hashes'
@@ -76,7 +77,9 @@ import { LANDING_FLOOR, LANDING_LATE, LANDING_SHOWN, changeNote, judgeCurve, jud
 //           --carry reads the pattern a second way beside it, which judges nothing: each pair carried by the camera's own map (tools/img/carry.py),
 //           then the flow on the carried pair, the reading after both; its numbers stand in columns and keys of their own (patternMap).
 //           The depth is made from the pose (the stop's globe, its rings); --carry-from FOLDER takes it from the range pictures of the render
-//           and their pose records there (kNNNNNN-rR-TIER-range.png and .pose.json; a row is read when both its frames have them).
+//           and their pose records there (kNNNNNN-rR-TIER-range.png and .pose.json; a row is read when both its frames have them);
+//           --carry-range draws those range pictures itself, for the frames its rows pair (the view "range" of the build on a page of its own, opened with that view;
+//           the records by tools/smooth/pose.ts of that build, written beside the pictures) and refuses on a tree that has neither.
 // Everything is written to out/work/smooth/<stop>.json and .md (<stop>-<kind> when --kind is given). Exit 1 when a number is over its limit in config smooth, or when a part that was
 // asked for could not be measured. --calibrate writes every number and exits 0: the run that sets the limits.
 
@@ -112,7 +115,18 @@ if (landing && only.some((p) => p !== 'path')) {
 }
 const calibrate = a.calibrate === 'true'
 const mapFrom = a['carry-from'] ?? null
-const byMap = a.carry === 'true' || mapFrom !== null
+const mapRange = a['carry-range'] === 'true'
+if (mapRange && mapFrom !== null) {
+  console.error('smooth: --carry-range draws the range pictures of this build, --carry-from takes them from a folder: one of the two')
+  process.exit(2)
+}
+const RECORDS = join(ROOT, 'tools', 'smooth', 'pose.ts')
+const VIEWS = join(ROOT, 'src', 'diagnostics', 'diag.ts')
+if (mapRange && (!existsSync(RECORDS) || !existsSync(VIEWS) || !readFileSync(VIEWS, 'utf8').includes('RANGE_LOW'))) {
+  console.error('smooth: --carry-range needs a build that draws the view "range" and has tools/smooth/pose.ts; this tree has ' + (existsSync(RECORDS) ? 'no such view' : 'no such file'))
+  process.exit(2)
+}
+const byMap = a.carry === 'true' || mapFrom !== null || mapRange
 const mapMax = a['carry-limit'] === undefined ? null : Number(a['carry-limit'])
 const dir = join(WORK, 'smooth')
 const partOf = a.part === undefined || piece ? null : /^(\d+)\/(\d+)$/.exec(a.part)
@@ -260,6 +274,7 @@ let hashes: Hashes | null = null
 let session: Session | null = null
 let sessionFormat = ''
 let view = ''
+let sessionView = 'beauty'
 let pageRate = 1
 let rendered = 0
 let renderSeconds = 0
@@ -276,10 +291,12 @@ async function drop(): Promise<void> {
   view = ''
 }
 
-async function open(fmt: string): Promise<Session> {
+async function open(fmt: string, own = 'beauty'): Promise<Session> {
   hashes ??= ensureBuild()
-  const s = await openCapture({ dist: DIST, format: fmt, assets: 'full', diag: 'beauty', query: rate > 1 ? '&rate=' + rate : '' })
+  const s = await openCapture({ dist: DIST, format: fmt, assets: 'full', diag: own, query: rate > 1 ? '&rate=' + rate : '' })
   sessionFormat = fmt
+  sessionView = own
+  view = own === 'beauty' ? '' : own
   const known = await s.page.evaluate(() => (window as unknown as { showcase: { info(): { rate?: number } } }).showcase.info().rate)
   pageRate = known === rate ? rate : 1
   return s
@@ -288,8 +305,9 @@ async function open(fmt: string): Promise<Session> {
 // A frame of the film at the capture rate of the page: k counts capture frames. At rate 1 the file and its stamp are the handover report's.
 async function still(k: number, tier: string, diag: string, fmt = format): Promise<string> {
   hashes ??= ensureBuild()
-  if (session && sessionFormat !== fmt) await drop()
-  session ??= await open(fmt)
+  const own = diag === 'range' ? diag : 'beauty'
+  if (session && (sessionFormat !== fmt || sessionView !== own)) await drop()
+  session ??= await open(fmt, own)
   const tag = (diag === 'beauty' ? '' : '-' + diag.replace(/[^A-Za-z0-9.]+/g, '_')) + (fmt === format ? '' : '-' + fmt)
   const frameDir = pageRate === 1 && fmt === format ? join(WORK, 'handover', stop!, 'frames') : join(dir, stop!, 'frames')
   mkdirSync(frameDir, { recursive: true })
@@ -299,7 +317,7 @@ async function still(k: number, tier: string, diag: string, fmt = format): Promi
   if (existsSync(file) && existsSync(note) && readFileSync(note, 'utf8') === stamp) return file
   for (let attempt = 1; ; attempt++) {
     try {
-      session ??= await open(fmt)
+      session ??= await open(fmt, own)
       if (view !== diag) {
         await session.page.evaluate((v) => (window as unknown as { showcase: { setDiagnostic(v: string): void } }).showcase.setDiagnostic(v), diag)
         view = diag
@@ -395,6 +413,36 @@ function rangeOf(k: number, r: number, tier: string, pose: { p: number[]; q: num
   return { depth: name + '-range.png', sky: rec.sky.q, range: rec.range, bodies: rec.bodies }
 }
 
+interface PoseRecord { sky: { q: number[] }; range: unknown; bodies: unknown[] }
+type Recorder = (k: number, r: number) => PoseRecord
+
+async function recorder(): Promise<Recorder> {
+  const made = (await import(pathToFileURL(RECORDS).href)) as { poseRecord(film: FilmDirector, plan: unknown, k: number, rate: number, fps: number, size: { width: number; height: number }): PoseRecord }
+  const size = cfg.formats[format]!
+  return (k, r) => made.poseRecord(film, plan, k, r, cfg.fps, { width: size.width, height: size.height })
+}
+
+async function rangesOf(ks: number[], from: number, to: number, r: number, tier: string, kind: Kind): Promise<(Ranged | null)[]> {
+  const record = await recorder()
+  const out: (Ranged | null)[] = []
+  const t0 = Date.now()
+  const want = ks.filter((k) => k >= from && k <= to).length
+  let drawn = 0
+  for (const k of ks) {
+    if (k < from || k > to) {
+      out.push(null)
+      continue
+    }
+    const depth = await still(k, tier, 'range')
+    const rec = record(k, r)
+    writeFileSync(depth.replace(/-range\.png$/, '.pose.json'), JSON.stringify(rec))
+    out.push({ depth, sky: rec.sky.q, range: rec.range, bodies: rec.bodies })
+    if (++drawn % 20 === 0) console.log(stop + ' ' + kind + ': ' + drawn + ' of ' + want + ' range pictures, ' + Math.round((Date.now() - t0) / 1000) + ' s')
+  }
+  await drop()
+  return out
+}
+
 function mapLines(p: PictureKind): string[] {
   const read = p.rows.filter((row) => row.patternMap !== undefined && row.patternMap !== null)
   if (read.length === 0) return ['The pattern by the camera\'s own map, read beside (it judges nothing): no row has a reading.']
@@ -440,7 +488,7 @@ async function picturesOf(kind: Kind): Promise<PictureKind | null> {
     if (paths.length % 20 === 0) console.log(stop + ' ' + kind + ': ' + paths.length + ' of ' + ks.length + ' ' + tier + ' frames, ' + Math.round((Date.now() - t0) / 1000) + ' s')
   }
   const flat = ks.map((k) => poseOf(k, r))
-  const ranged = mapFrom ? ks.map((k, i) => rangeOf(k, r, tier, flat[i]!)) : null
+  const ranged = mapRange ? await rangesOf(ks, k0 + own.first, k0 + own.end - 1 + CHANGE.frames * r, r, tier, kind) : mapFrom ? ks.map((k, i) => rangeOf(k, r, tier, flat[i]!)) : null
   const poses = flat.map((pose, i) => (ranged?.[i] ? { ...pose, sky: ranged[i]!.sky, range: ranged[i]!.range, bodies: ranged[i]!.bodies } : pose))
   const depths = ranged ? ranged.map((x) => x?.depth ?? null) : null
   const n = measure<PictureNumbers>({ op: 'pictures', paths, poses, ...(depths ? { depths } : {}), scale: P.flowScale, window: P.popWindow * r, floor: P.popFloor, grid: P.grid, changeFrames: CHANGE.frames * r, changeBlur: CHANGE.blurPx, patternPx: PATTERN.px, patternFloor: PATTERN.floor, ...(byMap ? { carry: true } : {}), first: lo, total, own: [own.first, own.end], lead: context[0] * r, tail: context[1] * r })
