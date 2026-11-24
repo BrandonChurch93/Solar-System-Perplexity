@@ -1,9 +1,17 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T03:56:38.940Z",
- "head": "f0532ddcee36b3aee8b9ad491bcc4c79ca96d488",
- "note": "turned place, first plates from above; main trough paint wrong (pale slab), in work; engine stills follow",
+ "pushed": "2026-11-24T04:11:41.453Z",
+ "head": "b68de107a21b8ace77881328432852d0b9366c8a",
+ "note": "turned place on main's cap, picture off: join with the main trough at 2439, 2452, 2700, 2713; faults: pale tongue of the side canyon floor into the trough, dotted border line of the cap at 2713, worm grain, pale close patch",
  "looks": [
+  {
+   "time": "2026-11-24T04:11:40.644Z",
+   "file": "20261124041140644-note-k-sheet.jpg",
+   "source": "out/work/place/see/k-sheet.jpg",
+   "kind": "note",
+   "label": "engine draft 2439, 2452, 2700, 2713: turned place (140), cap of main, place picture off",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T03:56:37.990Z",
    "file": "20261124035637990-note-k-plates.jpg",
@@ -64,14 +72,6 @@
    "source": "out/work/place/see/i-sheet.jpg",
    "kind": "note",
    "label": "ENGINE with the cap (scratch tree, relit plates, heights v7): 2439 2452 2471 2700 2713 lit by the close image's Sun; last tile: 2452 lit by the globe's Sun (wrong walls)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T02:04:13.927Z",
-   "file": "20261124020413927-note-f52452-lit.jpg",
-   "source": "out/work/place/see/f52452-lit.png",
-   "kind": "note",
-   "label": "2452 as the cap lights the relit country (preview, not the engine)",
    "stop": "mars"
   }
  ]
