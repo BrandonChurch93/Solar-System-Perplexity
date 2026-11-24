@@ -98,7 +98,9 @@ uniform float uLifeCalm;
 // How much of the life a lookup with this footprint shows: all of it while a texel of the picture is
 // large in the frame, none where the cells have become too small to carry it without shimmer.
 float lifeSeen(vec2 dx, vec2 dy, vec2 size) {
-  float foot = max(length(dx * size), length(dy * size)) / uGrad / uLifeFade.z;
+  // (texels a 1080th of the frame height: a pixel of a larger format covers fewer texels, so the count a pixel is
+  // multiplied by the format's height over 1080, uLifeFade.z)
+  float foot = max(length(dx * size), length(dy * size)) / uGrad * uLifeFade.z;
   return 1.0 - smoothstep(uLifeFade.x, uLifeFade.y, foot);
 }
 // One picture of the ground, alive.

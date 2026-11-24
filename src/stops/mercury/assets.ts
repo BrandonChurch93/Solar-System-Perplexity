@@ -20,7 +20,7 @@ export const patches = {
   lean: 1,
   fade: [1.02, 1.95] as [number, number],
   nearDeg: 12,
-  place: { from: ownJson.from, ownDeg: ownJson.deg as [number, number], gain: ownJson.gain },
+  place: { from: ownJson.from, ownDeg: ownJson.deg as [number, number], gain: ownJson.gain, light: ownJson.light as [number, number, number], hold: (ownJson.hold ?? undefined) as [number, number] | undefined },
 }
 
 function reliefDef(key: 'full' | 'web'): ReliefDef {
