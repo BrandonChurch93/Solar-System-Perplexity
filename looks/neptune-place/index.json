@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T06:38:34.348Z",
+ "pushed": "2026-11-24T07:08:05.706Z",
  "head": "fd95089a27ad1e2a7aa296b36cff561b3de9f77a",
- "note": "06:38 T17 preview draft of 4860: limb glow halved and bluer, far deck pale by a veil that thins upward; fault found in it: stepped thin lines near the limb (deck relief cuts the veil's lowest layer), cure next",
+ "note": "T23 4860 beside the approved image, own G17 at draft median 0.964 p25 0.615 over 75 tiles, 236 s the frame; ridge now torn heaps with fibres on both sides and a shadow, but too broken and too thin against the approved band; storm, deck and second streamer not yet touched",
  "looks": [
+  {
+   "time": "2026-11-24T07:08:05.116Z",
+   "file": "20261124070805116-note-ridge-T23.jpg",
+   "source": "../../../../tmp/ridge-T23.jpg",
+   "kind": "note",
+   "label": "the ridge of T23 (top) against the approved one, same crop",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T07:08:04.532Z",
+   "file": "20261124070804532-note-q-T23.jpg",
+   "source": "../../../../tmp/q-T23.jpg",
+   "kind": "note",
+   "label": "4860 16 by 9 draft T23 (top) over the approved image; work tree, not committed",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T06:38:27.258Z",
    "file": "20261124063827258-note-look-T17-limb.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/pair-4860-draft.jpg",
    "kind": "note",
    "label": "4860 on this tree (16 by 9, draft tier) beside the kept still and the approved image; G17 median 1.002, p25 0.789, 75 tiles",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T05:29:55.838Z",
-   "file": "20261124052955838-note-t-sides.jpg",
-   "source": "../../../../tmp/t-sides.jpg",
-   "kind": "note",
-   "label": "The two sides at the change of view, same frame: dive 4757, 4758, rise 4955, 4956 (globe side, close side, difference x4)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T05:19:44.235Z",
-   "file": "20261124051944235-note-s-R1-5022.jpg",
-   "source": "../../../../tmp/s-R1-5022.jpg",
-   "kind": "note",
-   "label": "R1 rise on the one move, every frame from 5022, preview draft",
    "stop": "neptune"
   }
  ]
