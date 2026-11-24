@@ -1,9 +1,17 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T06:39:27.022Z",
+ "pushed": "2026-11-24T06:56:39.294Z",
  "head": "6c75f48fb312931c651aff99d28ed4e6cea6fb24",
- "note": "06:42 full smooth runs on 6c75f48f (merged main f6ce51a5); path curves of the head beside a scratch trial that has turn green",
+ "note": "full smooth of 6c75f48f still rendering (dive 160 of 228 at 06:54); half frame sheet of the swap: white map clouds on the left coast stay brighter than the plate field to 1883, pale streak of the glint from 1884",
  "looks": [
+  {
+   "time": "2026-11-24T06:56:37.752Z",
+   "file": "20261124065637752-note-half-dive.jpg",
+   "source": "../../../../tmp/gl/s5/half-dive.jpg",
+   "kind": "note",
+   "label": "dive 1876 to 1891 at half frames, draft, from the full smooth run of 6c75f48f",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T06:39:26.265Z",
    "file": "20261124063926265-note-path-curves.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/gl/s5/d-1904.jpg",
    "kind": "note",
    "label": "dive from 1904, draft, a6c484d6, every frame",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T06:14:11.191Z",
-   "file": "20261124061411191-note-d-1896.jpg",
-   "source": "../../../../tmp/gl/s5/d-1896.jpg",
-   "kind": "note",
-   "label": "dive from 1896, draft, a6c484d6, every frame",
    "stop": "earth"
   }
  ]
