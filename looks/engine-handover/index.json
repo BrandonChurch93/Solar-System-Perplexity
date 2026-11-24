@@ -1,70 +1,74 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T19:02:27.977Z",
+ "pushed": "2026-11-24T19:27:08.448Z",
  "head": "7da2c8a3736f7ff81a866b7aa4fd4b6fa16a8bff",
- "note": "mars third read: dive passes at 4.85 in place, rise red 7.43 into 2689 (both grounds); uranus renders; the cure of the pattern measure on the rig",
+ "note": "the cure of the pattern measure read on the rig (150 cases) and on real frames of mars and saturn; mars third: a second exchange in the dive at 2437 to 2441; uranus read next",
  "looks": [
   {
-   "time": "2026-11-24T19:02:26.832Z",
-   "file": "20261124190226832-note-mars3-dive-step-body.jpg",
-   "source": "out/work/handover/mars3-dive-step-body.png",
+   "time": "2026-11-24T19:27:07.809Z",
+   "file": "20261124192707809-note-way2-mars3-rise-2719.jpg",
+   "source": "out/work/cure/way2-mars3-rise-2719.jpg",
    "kind": "note",
-   "label": "mars third dive, largest step 3.32 body, 4.85 in place into 2469",
+   "label": "the cure on real frames, mars rise pair 2719 and 2727: main 0.601 at the dust swirl, the cure 0.192",
    "stop": "mars"
   },
   {
-   "time": "2026-11-24T19:02:25.839Z",
-   "file": "20261124190225839-note-mars3-rise-step-body.jpg",
-   "source": "out/work/handover/mars3-rise-step-body.png",
+   "time": "2026-11-24T19:27:07.224Z",
+   "file": "20261124192707224-note-way-mars3-2447.jpg",
+   "source": "out/work/cure/way-mars3-2447.jpg",
    "kind": "note",
-   "label": "mars third rise, largest step of the body mean 5.81 into 2694",
+   "label": "the cure on real frames, mars dive pair 2447 and 2455: it reads 0.791 at the top right where its way is off the camera's map by 20 quarter px and more",
    "stop": "mars"
   },
   {
-   "time": "2026-11-24T19:02:24.874Z",
-   "file": "20261124190224874-note-mars3-rise-step-in-place.jpg",
-   "source": "out/work/handover/mars3-rise-step-in-place.png",
+   "time": "2026-11-24T19:27:06.655Z",
+   "file": "20261124192706655-note-mars3-dive-2401.jpg",
+   "source": "out/work/cure/mars3-dive-2401.jpg",
    "kind": "note",
-   "label": "mars third rise, largest step in place 7.43 into 2689, both grounds",
+   "label": "the cure on real frames, mars dive pair 2401 and 2409: its reading from the nearer end judges only the moon in front of the disc, 1.069 on 5 percent of the frame",
    "stop": "mars"
   },
   {
-   "time": "2026-11-24T19:02:23.613Z",
-   "file": "20261124190223613-note-rise-2690.jpg",
-   "source": "out/work/inplace/mars3/rise-2690.jpg",
+   "time": "2026-11-24T19:27:06.063Z",
+   "file": "20261124192706063-note-way-mars3-2435.jpg",
+   "source": "out/work/cure/way-mars3-2435.jpg",
    "kind": "note",
-   "label": "mars third rise 2690 to 2698, the globe alone"
+   "label": "the cure of the pattern measure on real frames, mars dive pair 2435 and 2443: the nearer frame, the farther carried by the cure and by the camera's own map, the pattern change of each, and how far the way of the cure lies off the camera",
+   "stop": "mars"
   },
   {
-   "time": "2026-11-24T19:02:22.237Z",
-   "file": "20261124190222237-note-rise-T.jpg",
-   "source": "out/work/inplace/mars3/rise-T.jpg",
+   "time": "2026-11-24T19:27:05.465Z",
+   "file": "20261124192705465-note-rise-2697.jpg",
+   "source": "out/work/inplace/mars3/rise-2697.jpg",
    "kind": "note",
-   "label": "mars third rise across T 2681, drafts"
+   "label": "mars third rise 2697 to 2708, drafts: the far relief comes back over the plain from 2703"
   },
   {
-   "time": "2026-11-24T19:02:21.200Z",
-   "file": "20261124190221200-note-dive-T-top.jpg",
-   "source": "out/work/inplace/mars3/dive-T-top.jpg",
+   "time": "2026-11-24T19:27:04.681Z",
+   "file": "20261124192704681-note-dive-2433.jpg",
+   "source": "out/work/inplace/mars3/dive-2433.jpg",
    "kind": "note",
-   "label": "mars third dive across T, the horizon band at full size"
+   "label": "mars third dive 2433 to 2444, drafts: the relief around the canyon dissolves into the plain over 2437 to 2441"
   },
   {
-   "time": "2026-11-24T19:02:20.139Z",
-   "file": "20261124190220139-note-dive-T.jpg",
-   "source": "out/work/inplace/mars3/dive-T.jpg",
-   "kind": "note",
-   "label": "mars third on main, dive across T 2477, drafts"
-  },
-  {
-   "time": "2026-11-24T18:59:39.619Z",
-   "file": "20261124185939619-compare-mars3-rise-step-in-place.jpg",
-   "source": "out/work/handover/mars3-rise-step-in-place.png",
+   "time": "2026-11-24T19:24:51.179Z",
+   "file": "20261124192451179-compare-uranus-rise-step-in-place.jpg",
+   "source": "out/work/handover/uranus-rise-step-in-place.png",
    "kind": "compare",
-   "label": "mars rise, the largest step of the level in place (7.43): frame 2688, frame 2689, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "frame": 2689
+   "label": "uranus rise, the largest step of the level in place (1.25): frame 4402, frame 4403, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4403
+  },
+  {
+   "time": "2026-11-24T19:13:55.045Z",
+   "file": "20261124191355045-compare-uranus-dive-step-in-place.jpg",
+   "source": "out/work/handover/uranus-dive-step-in-place.png",
+   "kind": "compare",
+   "label": "uranus dive, the largest step of the level in place (2.85): frame 4173, frame 4174, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4174
   }
  ]
 }
