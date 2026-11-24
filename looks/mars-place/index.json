@@ -1,71 +1,77 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T22:51:53.132Z",
+ "pushed": "2026-11-24T23:09:48.965Z",
  "head": "7253f5fd7c980a2736f425d68448070c5bb24c7f",
- "note": "7253f5fd native crops at draft; trials for the east border and one ground, none committed",
+ "note": "trial s1: laid ground kept where the eye sees the close ground squarely; sides with the globe's ground alone 12.47 to 11.15 dive, 14.58 to 12.94 rise; not committed",
  "looks": [
+  {
+   "time": "2026-11-24T23:09:48.362Z",
+   "file": "20261124230948362-note-s1-plates.jpg",
+   "source": "out/work/place/see/s1-plates.jpg",
+   "kind": "note",
+   "label": "plates 0.7, 1.6, 3.8 degrees: committed, trial s1, facing of the close ground",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T23:09:47.783Z",
+   "file": "20261124230947783-note-s1-above.jpg",
+   "source": "out/work/place/see/s1-above.jpg",
+   "kind": "note",
+   "label": "2440 native crop and 2460: committed against trial s1",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T23:09:47.220Z",
+   "file": "20261124230947220-note-s1-band.jpg",
+   "source": "out/work/place/see/s1-band.jpg",
+   "kind": "note",
+   "label": "2468, 2472, 2686 draft: committed against trial s1 (laid ground kept on faces the eye sees squarely)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T23:09:46.458Z",
+   "file": "20261124230946458-note-far2681-s1.jpg",
+   "source": "out/work/place/see/far2681-s1.jpg",
+   "kind": "note",
+   "label": "far half at T 2681: close side, globe's ground alone as committed, globe's ground alone with trial s1",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T23:09:45.828Z",
+   "file": "20261124230945828-note-sidesH.jpg",
+   "source": "out/work/place/see/sidesH.jpg",
+   "kind": "note",
+   "label": "close side at T against the globe's ground alone at T, 7253f5fd, dive and rise",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T23:05:55.047Z",
+   "file": "20261124230555047-compare-mars-rise-sides.jpg",
+   "source": "out/work/handover/mars-rise-sides.png",
+   "kind": "compare",
+   "label": "mars rise, both sides at T (frame 2681) and their difference times 8",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "frame": 2681,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T23:05:23.388Z",
+   "file": "20261124230523388-compare-mars-dive-sides.jpg",
+   "source": "out/work/handover/mars-dive-sides.png",
+   "kind": "compare",
+   "label": "mars dive, both sides at T (frame 2477) and their difference times 8",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2477,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-24T22:51:52.567Z",
    "file": "20261124225152567-note-a1-dive.jpg",
    "source": "out/work/place/see/a1-dive.jpg",
    "kind": "note",
    "label": "trial, not committed: the same alpha leaves a hole on the close side at 2477 and 2681",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T22:51:51.963Z",
-   "file": "20261124225151963-note-a1-rise.jpg",
-   "source": "out/work/place/see/a1-rise.jpg",
-   "kind": "note",
-   "label": "trial, not committed: east aprons ended by alpha, rise 2683 to 2688 (before above, after below)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T22:51:51.437Z",
-   "file": "20261124225151437-note-e1x.jpg",
-   "source": "out/work/place/see/e1x.jpg",
-   "kind": "note",
-   "label": "trial, not committed: the close set present at every height is a fan from above (2420 to 2466, 2696, 2704)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T22:51:50.894Z",
-   "file": "20261124225150894-note-HR2686-top.jpg",
-   "source": "out/work/place/see/HR2686-top.jpg",
-   "kind": "note",
-   "label": "7253f5fd 2686, upper half: globe side alone above, close set alone below: two far worlds, two horizons",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T22:51:50.340Z",
-   "file": "20261124225150340-note-n51-crops.jpg",
-   "source": "out/work/place/see/n51-crops.jpg",
-   "kind": "note",
-   "label": "7253f5fd draft, the place at native size at 2420, 2440, 2460, 2480, 2700, 2720, 2740",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T22:09:05.092Z",
-   "file": "20261124220905092-note-t51.jpg",
-   "source": "out/work/place/see/t51.jpg",
-   "kind": "note",
-   "label": "texel pictures 2447, 2470, 2687, 2704, 2720",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T22:09:04.476Z",
-   "file": "20261124220904476-note-bd-R.jpg",
-   "source": "out/work/place/see/bd-R.jpg",
-   "kind": "note",
-   "label": "close set alone at 2684, 2686, 2689: its east border",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T22:09:03.906Z",
-   "file": "20261124220903906-note-bd-H.jpg",
-   "source": "out/work/place/see/bd-H.jpg",
-   "kind": "note",
-   "label": "globe side alone at 2684, 2686, 2689",
    "stop": "mars"
   }
  ]
