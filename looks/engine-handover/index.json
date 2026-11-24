@@ -1,9 +1,16 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T07:40:48.877Z",
- "head": "0869e6c1593a4fcb19a3288f0a0edc2a988baa24",
- "note": "Service: every builder's head read through the judge's path part by overlay (eight green, Earth red on its own path, green on the one move); tools commit 0869e6c1 named",
+ "pushed": "2026-11-24T07:59:02.737Z",
+ "head": "d9d989baba1b5ae5140fc450264cf61a519a2b48",
+ "note": "service: every builder's head read through the judge's path part (Sun 12328793 and Uranus a7c2c078 moved and stay green; Earth 6c75f48f red on its own path)",
  "looks": [
+  {
+   "time": "2026-11-24T07:59:02.050Z",
+   "file": "20261124075902050-note-path-nine-heads-0758.jpg",
+   "source": "out/work/looks-extra/path-nine-heads-0758.png",
+   "kind": "note",
+   "label": "every builder's head through the judge's path part at 07:58 UTC, one row a stop: Earth's own path red in both moves, the eight others green"
+  },
   {
    "time": "2026-11-24T07:40:40.170Z",
    "file": "20261124074040170-note-path-earth-own-and-onemove.jpg",
@@ -55,14 +62,6 @@
    "source": "../../../../tmp/bend/mars-7.png",
    "kind": "note",
    "label": "Mars's own tree dd1ddb9c, draft, frames 2667 to 2675: its bend through the seam at 2670, no frame stands out",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T05:34:05.343Z",
-   "file": "20261124053405343-note-mars-8.jpg",
-   "source": "../../../../tmp/bend/mars-8.png",
-   "kind": "note",
-   "label": "Mars's own tree dd1ddb9c, draft, rise frames 2676 to 2684: the pale wedge enters at 2683",
    "stop": "mars"
   }
  ]
