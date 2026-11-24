@@ -104,6 +104,10 @@ export const createSet: SetFactory = async (ctx) => {
   const deepView = new Deep()
   terrain.add(deepLook.on ? deepView.mesh : closeup.mesh)
   const deepSun = new THREE.Vector3()
+  const deepLaid = new Deep(true)
+  const fallGlobePower = new THREE.Vector3(1, 1, 1)
+  const fallScenePower = new THREE.Vector3(1, 1, 1)
+  if (deepLook.on) orbit.add(deepLaid.mesh)
   const laid = new Closeup({ ...closeMaps, tone: toneMap }, true)
   orbit.add(laid.mesh)
   const laySeat = new THREE.Vector3()
@@ -175,7 +179,8 @@ export const createSet: SetFactory = async (ctx) => {
       const deep = smooth((look.diving.from - high) / (look.diving.from - look.diving.to))
       const line = 1 - smooth((look.lineFade[0] - high) / (look.lineFade[0] - look.lineFade[1]))
       const kind = state.segment.kind
-      const lay = ending ? 0 : kind === 'dive' ? smooth((state.u - closeLook.lay.dive[0]!) / (closeLook.lay.dive[1]! - closeLook.lay.dive[0]!)) : kind === 'rise' ? 1 - smooth((state.u - closeLook.lay.rise[0]!) / (closeLook.lay.rise[1]! - closeLook.lay.rise[0]!)) : kind === 'terrain' ? 1 : 0
+      const show = deepLook.on && !ending ? 1 - smooth(Math.log(Math.max(high, 1e-6) / deepLook.globe.height[1]!) / Math.log(deepLook.globe.height[0]! / deepLook.globe.height[1]!)) : 0
+      const lay = ending || deepLook.on ? 0 : kind === 'dive' ? smooth((state.u - closeLook.lay.dive[0]!) / (closeLook.lay.dive[1]! - closeLook.lay.dive[0]!)) : kind === 'rise' ? 1 - smooth((state.u - closeLook.lay.rise[0]!) / (closeLook.lay.rise[1]! - closeLook.lay.rise[0]!)) : kind === 'terrain' ? 1 : 0
       const settle = ending ? 0 : 1 - smooth((high - closeLook.lay.settle[1]!) / (closeLook.lay.settle[0]! - closeLook.lay.settle[1]!))
       const limb = ending ? 0 : 1 - smooth(Math.log(Math.max(high, 1e-6) / closeLook.lay.glow[1]!) / Math.log(closeLook.lay.glow[0]! / closeLook.lay.glow[1]!))
       const layEdge = closeLook.lay.edge[1]! + (closeLook.lay.edge[0]! - closeLook.lay.edge[1]!) * smooth(Math.log(Math.max(high, 1e-6) / closeLook.lay.edgeHeight[1]!) / Math.log(closeLook.lay.edgeHeight[0]! / closeLook.lay.edgeHeight[1]!))
@@ -189,9 +194,21 @@ export const createSet: SetFactory = async (ctx) => {
         layOut.copy(pu.uSpotN!.value as THREE.Vector3).applyAxisAngle(spinAxis, spin).applyQuaternion(layTurn)
         laid.toned(layEast, layNorth, layOut, (pu.uPatchOff!.value as THREE.Vector2[])[patches.place.shownFrom]!, (pu.uPatchScale!.value as number[])[patches.place.shownFrom]!, patches.place.tone.stops * (1 - closeLight))
       }
+      const fall = deepLook.on && !ending ? 1 - smooth(Math.log(Math.max(high, 1e-6) / deepLook.globe.fall.height[1]!) / Math.log(deepLook.globe.fall.height[0]! / deepLook.globe.fall.height[1]!)) : 0
+      for (let c = 0; c < 3; c++) {
+        const p = deepLook.globe.fall.power[c]!
+        fallGlobePower.setComponent(c, 1 + fall * (p - 1))
+        fallScenePower.setComponent(c, (1 + fall * (p - 1)) / p)
+      }
+      ;(pu.uFallPivot!.value as THREE.Vector3).fromArray(deepLook.globe.fall.pivot)
+      ;(pu.uFallPower!.value as THREE.Vector3).copy(fallGlobePower)
+      if (show > 0) {
+        laySeat.copy(camera).applyQuaternion(layBack.copy(state.rotation).invert())
+        deepLaid.update(deepLaid.lay(laySeat, plan.laid(state.time), show, fallScenePower), deepSun.copy(plan.lightDir).applyQuaternion(layBack.copy(plan.laid(state.time)).invert()), state.time - terrainMid, 2 * Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) / view.format.height, gain * state.weight, lens, view.format.width / view.format.height)
+      }
       const thin = ending ? 1 : smooth(Math.sqrt(high * (high + 2)) / look.airThin.reach)
       const moving = kind === 'dive' || kind === 'rise' ? 1 - smooth((high - move.near.height[0]!) / (move.near.height[1]! - move.near.height[0]!)) : 0
-      air.update(camera, light, state.rotation, home, line, gain * state.weight, near, grade.air, 1 - deep, thin, 1 - limb, moving, move.rim, smooth((high - move.rim.dimHeight[0]!) / (move.rim.dimHeight[1]! - move.rim.dimHeight[0]!)))
+      air.update(camera, light, state.rotation, home, line, gain * state.weight, near, grade.air, 1 - deep, thin, (1 - limb) * (1 - show), moving, move.rim, smooth((high - move.rim.dimHeight[0]!) / (move.rim.dimHeight[1]! - move.rim.dimHeight[0]!)))
       pu.uAirGround!.value = 1 - limb
       const distant = ending ? 0 : 1 - smooth(Math.log(Math.max(high, 1e-6) / closeLook.lay.distant.height[1]!) / Math.log(closeLook.lay.distant.height[0]! / closeLook.lay.distant.height[1]!))
       ;(pu.uDistantAir!.value as THREE.Vector4).set(closeLook.lay.distant.air[0]!, closeLook.lay.distant.air[1]!, closeLook.lay.distant.air[2]!, closeLook.lay.distant.veil)
@@ -199,7 +216,8 @@ export const createSet: SetFactory = async (ctx) => {
       pu.uFlow!.value = look.flow.amount * (1 - home * (1 - deep)) * (1 - end * (1 - endLook.limb.flow))
       ;(pu.uCirrus!.value as THREE.Vector4).set(look.cirrus.amount * (1 - home) * (1 - end), look.cirrus.bend, look.cirrus.shadow, look.cirrus.floor)
       ;(pu.uClump!.value as THREE.Vector3).fromArray(look.cirrus.clump)
-      pu.uCirrusPx!.value = kind === 'dive' || kind === 'rise' ? move.cirrus.px * (1 - smooth((high - move.cirrus.height[0]!) / (move.cirrus.height[1]! - move.cirrus.height[0]!))) : 0
+      pu.uCirrusPx!.value = kind === 'dive' || kind === 'rise' ? move.cirrus.px * (view.format.height / 1080) * (1 - smooth((high - move.cirrus.height[0]!) / (move.cirrus.height[1]! - move.cirrus.height[0]!))) : 0
+      ;(pu.uShadow!.value as THREE.Vector3).y = look.clouds.shadowSoft * (view.format.height / 1080)
       ;(pu.uRimDir!.value as THREE.Vector3).copy(rimAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize()
       ;(pu.uCutDir!.value as THREE.Vector3).copy(cutAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize()
       ;(pu.uCut!.value as THREE.Vector4).w = home
@@ -251,7 +269,8 @@ export const createSet: SetFactory = async (ctx) => {
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
       const visible = radiusPx > 0.6
-      planet.mesh.visible = visible
+      planet.mesh.visible = visible && show < 1
+      deepLaid.mesh.visible = visible && show > 0
       air.mesh.visible = visible
       triton.mesh.visible = visible
       ring.mesh.visible = visible
@@ -267,6 +286,7 @@ export const createSet: SetFactory = async (ctx) => {
       far.dispose()
       closeup.dispose()
       deepView.dispose()
+      deepLaid.dispose()
       laid.dispose()
     },
   }

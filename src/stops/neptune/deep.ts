@@ -37,6 +37,12 @@ uniform float uGrad;
 uniform float uGain;
 uniform float uVignette;
 uniform float uAspect;
+uniform float uShow;
+uniform vec3 uFallPivot;
+uniform vec3 uFallPower;
+uniform vec4 uCap;
+uniform vec3 uPlaceUp;
+uniform float uGridShow;
 uniform vec4 uStorm;
 uniform vec4 uBowl;
 uniform vec4 uArms;
@@ -68,6 +74,7 @@ uniform vec4 uCirrusDeep;
 uniform vec4 uBand;
 uniform vec4 uWisp;
 uniform vec4 uNear;
+uniform vec4 uZoneEnd;
 uniform vec4 uDeckFine;
 uniform vec4 uHazeLow;
 uniform vec4 uHazeHigh;
@@ -78,6 +85,7 @@ uniform vec4 uLight;
 uniform vec3 uSkyLight;
 uniform vec3 uCloudLight;
 uniform vec4 uLightMake;
+uniform vec2 uThrough;
 in vec3 vPos;
 in vec3 vClip;
 out vec4 outColor;
@@ -457,10 +465,11 @@ void main() {
     float lit;
     float airSun = uHazeLow.x / uHazeLow.y * toSun(q, uHazeLow.y, lit) + uHazeHigh.x / uHazeHigh.y * toSun(q, uHazeHigh.y, lit);
     vec3 sunHere = vec3(uLight.x * exp(-airSun) * lit);
-    float bright = clamp((uDeckTone.y - uNear.z * (1.0 - smoothstep(uNear.x, uNear.y, g.y)) + uBand.z * smoothstep(uBand.x, uBand.y, g.y) + uDeckTone.x * p0.x + uWisp.w * (wisp - uDeckFine.y) * smoothstep(uDeckFine.z, uDeckFine.w, p0.x) + uCollar.z * (smoothstep(uBowl.z, uBowl.z * 1.25, p0.w / uStorm.z) * (1.0 - smoothstep(uCollar.x, uCollar.y, p0.w))) + uArmMake.y * p0.y) * (1.0 - uDeckTone.z * p0.z), 0.0, 1.0);
+    float bright = clamp((uDeckTone.y - uNear.z * (1.0 - smoothstep(uNear.x, uNear.y, g.y)) * smoothstep(uZoneEnd.x, uZoneEnd.y, g.y) + uBand.z * smoothstep(uBand.x, uBand.y, g.y) * (1.0 - smoothstep(uZoneEnd.z, uZoneEnd.w, g.y)) + uDeckTone.x * p0.x + uWisp.w * (wisp - uDeckFine.y) * smoothstep(uDeckFine.z, uDeckFine.w, p0.x) + uCollar.z * (smoothstep(uBowl.z, uBowl.z * 1.25, p0.w / uStorm.z) * (1.0 - smoothstep(uCollar.x, uCollar.y, p0.w))) + uArmMake.y * p0.y) * (1.0 - uDeckTone.z * p0.z), 0.0, 1.0);
     vec3 albedo = bright < 0.5 ? mix(uNight, uBlue, bright * 2.0) : mix(uBlue, uPale, bright * 2.0 - 1.0);
     float hollow = clamp(1.0 + 2.5 * min(h0, 0.0), 0.3, 1.0);
-    deckLight = albedo * (sunHere * ndl * shade * exp(-uCirrusBody.x * veil) + uSkyLight * (0.5 + 0.5 * dot(nrm, up)) * hollow);
+    float under = uCirrusBody.x * veil;
+    deckLight = albedo * (sunHere * ndl * shade * (exp(-under) + uThrough.x * exp(-uThrough.y * under)) / (1.0 + uThrough.x) + uSkyLight * (0.5 + 0.5 * dot(nrm, up)) * hollow);
   }
 
   // The cirrus: a march through its shell, each step lit by taps toward the Sun.
@@ -569,6 +578,18 @@ void main() {
   vec3 col = airBefore + clearCloud * cloud + cloudClear * (airAfter + clearDeck * deckLight);
   float seen = deckHit ? 1.0 : 1.0 - cloudClear * dot(clearDeck, vec3(0.3333));
   float alpha = clamp(seen, 0.0, 1.0);
+  // On the globe the scene ends at a border on the ground: by the angle from the place of what the ray meets (or passes nearest).
+  vec3 met = normalize(deckHit ? oc + rd * tDeck : oc + rd * max(-b, 0.0));
+  float inside = uCap.z > 0.0 ? smoothstep(uCap.y, uCap.x, dot(met, uPlaceUp)) : 1.0;
+  // A tool, off in the film (deep.json, globe.grid): the scene's own coordinates drawn on the deck, a line each unit, a strong one each five.
+  if (uGridShow > 0.0 && deckHit) {
+    vec3 gg = bandOf(oc + rd * tDeck);
+    vec2 cell = abs(fract(gg.xy + 0.5) - 0.5) / max(fwidth(gg.xy), 1e-5);
+    vec2 five = abs(fract(gg.xy / 5.0 + 0.5) - 0.5) * 5.0 / max(fwidth(gg.xy), 1e-5);
+    col = mix(col, vec3(1.0, 0.2, 0.1), 0.6 * (1.0 - smoothstep(0.5, 1.5, min(cell.x, cell.y))));
+    col = mix(col, vec3(1.0, 1.0, 0.1), 1.0 - smoothstep(1.0, 2.5, min(five.x, five.y)));
+    if (abs(gg.x) < 0.1 && abs(gg.y) < 0.1) col = vec3(0.0, 1.0, 0.0);
+  }
 
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col = col * uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
@@ -576,7 +597,12 @@ void main() {
   float made = cloudClear < 0.5 ? cloudFinest : deckFinest;
   float texels = deckHit || cloudClear < 0.5 ? 4.0 * tSeen * uPix / max(made, 1e-6) : 0.0;
   vec3 layer = mix(vec3(0.95, 0.95, 0.9), deckHit ? vec3(0.1, 0.3, 0.85) : vec3(0.05, 0.1, 0.3), cloudClear);
-  outColor = diagOut(vec4(col, alpha), texels, deckHit || cloudClear < 0.5 ? 1.0 : 0.0, layer, vec2(0.0), min(tSeen, 4000.0));
+  // The grade of the fall (deep.json, globe.fall): none where the power is 1, so the hold keeps its bytes.
+  if (any(notEqual(uFallPower, vec3(1.0)))) {
+    vec3 fallX = max(col, vec3(0.0)) / uFallPivot;
+    col = mix(pow(fallX, uFallPower), fallX, smoothstep(0.6, 1.2, fallX)) * uFallPivot;
+  }
+  outColor = diagOut(vec4(col, alpha) * (uShow * inside), texels, deckHit || cloudClear < 0.5 ? 1.0 : 0.0, layer, vec2(0.0), min(tSeen, 4000.0));
 }`
 
 function unproject(px: number, py: number, radius: number, centre: THREE.Vector3): THREE.Vector3 {
@@ -595,6 +621,8 @@ export class Deep {
   readonly material: THREE.ShaderMaterial
   readonly centre: THREE.Vector3
   readonly up: THREE.Vector3
+  private readonly seat = new THREE.Vector3()
+  private readonly back = new THREE.Quaternion()
 
   constructor(readonly laid = false) {
     const radius = fit.radius
@@ -615,9 +643,10 @@ export class Deep {
       glslVersion: THREE.GLSL3,
       vertexShader: VERT,
       fragmentShader: FRAG,
-      side: laid ? THREE.FrontSide : THREE.BackSide,
+      side: THREE.BackSide,
       transparent: true,
       depthWrite: false,
+      depthTest: !laid,
       blending: THREE.CustomBlending,
       blendEquation: THREE.AddEquation,
       blendSrc: THREE.OneFactor,
@@ -627,7 +656,8 @@ export class Deep {
       uniforms: {
         uCentre: { value: this.centre }, uCam: { value: new THREE.Vector3() }, uRadius: { value: radius },
         uE0: { value: e0 }, uE1: { value: e1 }, uAxis: { value: axis }, uSun: { value: new THREE.Vector3(0, 1, 0) },
-        uTime: { value: 0 }, uPix: { value: 0.0005 }, uGrad: gradUniform, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
+        uTime: { value: 0 }, uPix: { value: 0.0005 }, uGrad: gradUniform, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uShow: { value: 1 }, uFallPivot: { value: new THREE.Vector3().fromArray(look.globe.fall.pivot) }, uFallPower: { value: new THREE.Vector3(1, 1, 1) }, uPlaceUp: { value: this.up.clone() }, uGridShow: { value: look.globe.grid },
+        uCap: { value: v4(Math.cos(THREE.MathUtils.degToRad(look.globe.border[0]!)), Math.cos(THREE.MathUtils.degToRad(look.globe.border[1]!)), laid ? 1 : 0, 0) },
         uStorm: { value: v4(s.at[0]!, s.at[1]!, s.eye, s.reach) },
         uBowl: { value: v4(s.depth, s.wall[0]!, s.wall[1]!, 0) },
         uArms: { value: v4(s.arms.count, s.arms.pitch, s.arms.height, s.arms.core) },
@@ -656,6 +686,7 @@ export class Deep {
         uCirrusStep: { value: v4(look.steps.cirrusShare, look.steps.lightStep, look.steps.light, ci.floor) },
         uBand: { value: v4(d.band[0]!, d.band[1]!, d.band[2]!, 0) },
         uNear: { value: v4(d.near[0]!, d.near[1]!, d.near[2]!, 0) },
+        uZoneEnd: { value: v4(d.near[3]!, d.near[4]!, d.band[3]!, d.band[4]!) },
         uWisp: { value: v4(d.wisp.from, d.wisp.power, d.wisp.gain, d.wisp.light) },
         uDeckFine: { value: v4(d.limit, d.wisp.mean, d.wisp.where[0]!, d.wisp.where[1]!) },
         uHazeLow: { value: v4(h.low.depth, h.low.scale, 0, 0) }, uHazeHigh: { value: v4(h.high.depth, h.high.scale, 0, 0) },
@@ -663,7 +694,7 @@ export class Deep {
         uHazeMake: { value: v4(h.forward[0]!, h.forward[1]!, h.top, h.share) },
         uLight: { value: v4(l.sun, l.forward[0]!, l.forward[1]!, l.wrap) },
         uSkyLight: { value: v3(l.sky) }, uCloudLight: { value: v3(l.cloud) },
-        uLightMake: { value: v4(look.steps.deck, look.steps.shade, look.steps.cast, l.shadow) },
+        uLightMake: { value: v4(look.steps.deck, look.steps.shade, look.steps.cast, l.shadow) }, uThrough: { value: new THREE.Vector2(l.through[0], l.through[1]) },
         uDiag: diagUniform,
       },
     })
@@ -688,6 +719,15 @@ export class Deep {
     u.uGain!.value = gain
     u.uVignette!.value = vignette
     u.uAspect!.value = aspect
+  }
+
+  // On the globe (the laid scene only): turn is the turn from the close scene to the stop's frame, camera the eye in the stop's frame
+  // in radii, show how much of the scene is drawn (a function of the eye's height, never of time), power the grade of the fall at this height (under the pivot of deep.json globe.fall a channel is drawn as pivot times (colour over pivot) to the power). Returns the eye in the close scene.
+  lay(camera: THREE.Vector3, turn: THREE.Quaternion, show: number, power: THREE.Vector3): THREE.Vector3 {
+    this.mesh.quaternion.copy(turn)
+    this.material.uniforms.uShow!.value = show
+    ;(this.material.uniforms.uFallPower!.value as THREE.Vector3).copy(power)
+    return this.seat.copy(camera).applyQuaternion(this.back.copy(turn).invert()).multiplyScalar(fit.radius).add(this.centre)
   }
 
   dispose(): void {

@@ -178,6 +178,8 @@ uniform vec3 uCloud[${KNOTS}];
 uniform float uExtinction;
 uniform mat3 uBodyToWorld;
 uniform float uVignette;
+uniform vec3 uFallPivot;
+uniform vec3 uFallPower;
 uniform float uAspect;
 uniform vec3 uRim;
 uniform vec3 uRimShape;
@@ -498,6 +500,11 @@ void main() {
     col = max(col + uEnd.x * uEndStruct.w * uWeight * (endHash(gl_FragCoord.xy) - 0.5), vec3(0.0));
   }
   float moved = uStream + stormTurn(spinY(p, uSpin)) * 4.0;
+  // The grade of the fall (deep.json, globe.fall): none where the power is 1, so the hold keeps its bytes.
+  if (any(notEqual(uFallPower, vec3(1.0)))) {
+    vec3 fallX = max(col, vec3(0.0)) / uFallPivot;
+    col = mix(pow(fallX, uFallPower), fallX, smoothstep(0.6, 1.2, fallX)) * uFallPivot;
+  }
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, mix(vec3(0.1, 0.3, 0.9), vec3(0.95, 0.95, 0.9), min(alpha, 1.0)), vec2(moved * 8.0 * min(alpha, 1.0), shadow), length(vView));
 }`
 
@@ -549,7 +556,7 @@ export class NeptunePlanet {
         uSpin: { value: 0 }, uStream: { value: 0 }, uShear: { value: new THREE.Vector2(o.clouds.shear, o.clouds.shearBands) },
         uStormAxis: { value: o.storm.axis.clone().normalize() }, uStormRadius: { value: THREE.MathUtils.degToRad(o.storm.radiusDeg) }, uStormAngle: { value: 0 },
         uCloudHeight: { value: o.clouds.height }, uCloudSoft: { value: o.clouds.soft }, uShadow: { value: new THREE.Vector3(o.clouds.shadow, o.clouds.shadowSoft, 0.12) },
-        uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
+        uGain: { value: 1 }, uWeight: { value: 1 }, uFallPivot: { value: new THREE.Vector3(1, 1, 1) }, uFallPower: { value: new THREE.Vector3(1, 1, 1) }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
         uDeck: { value: knots(o.deck) }, uCloud: { value: knots(o.cloud) },
         uExtinction: { value: o.air.extinction },
         uRim: { value: new THREE.Vector3().fromArray(l.rim) }, uRimShape: { value: new THREE.Vector3(l.rimWidth, l.rimFrom, l.rimTo) }, uRimDir: { value: new THREE.Vector3(1, 0, 0) },
