@@ -1,9 +1,69 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-23T23:48:06.885Z",
+ "pushed": "2026-11-24T00:07:10.352Z",
  "head": "1d5f6b61d07cf99d1981b7022af3eb7a2ddf883c",
- "note": "step 1 READY 1d5f6b61 sent (G13, G5, G17, gate, report green; frames outside the two moves same as main). Step 2 scratch: rise T also one picture with the place picture off (0.003); white tops still arrive by height at 4400 to 4408",
+ "note": "step 2 (not committed yet) on 1d5f6b61, main 1f0ff294: every dive frame 4110 to 4199 looked at, picture off, no step seen at 4186; rise renders now",
  "looks": [
+  {
+   "time": "2026-11-24T00:07:09.011Z",
+   "file": "20261124000709011-note-s2d-4182.jpg",
+   "source": "../../../../tmp/s2d-4182.png",
+   "kind": "note",
+   "label": "step 2 worktree on 1d5f6b61, main 1f0ff294: dive frames from 4182, 12 in a row, picture off, cover drawn on the globe by height",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T00:07:07.867Z",
+   "file": "20261124000707867-note-s2d-4170.jpg",
+   "source": "../../../../tmp/s2d-4170.png",
+   "kind": "note",
+   "label": "step 2 worktree on 1d5f6b61, main 1f0ff294: dive frames from 4170, 12 in a row, picture off, cover drawn on the globe by height",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T00:07:06.685Z",
+   "file": "20261124000706685-note-s2d-4158.jpg",
+   "source": "../../../../tmp/s2d-4158.png",
+   "kind": "note",
+   "label": "step 2 worktree on 1d5f6b61, main 1f0ff294: dive frames from 4158, 12 in a row, picture off, cover drawn on the globe by height",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T00:07:05.542Z",
+   "file": "20261124000705542-note-s2d-4134.jpg",
+   "source": "../../../../tmp/s2d-4134.png",
+   "kind": "note",
+   "label": "step 2 worktree on 1d5f6b61, main 1f0ff294: dive frames from 4134, 12 in a row, picture off, cover drawn on the globe by height",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T00:06:17.596Z",
+   "file": "20261124000617596-frame-f04399.jpg",
+   "source": "out/work/seq/4380-4454/f04399.png",
+   "kind": "frame",
+   "label": "uranus.rise frame 4399, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4399,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "94288983d3b2cf97"
+  },
+  {
+   "time": "2026-11-24T00:02:40.261Z",
+   "file": "20261124000240261-frame-f04196.jpg",
+   "source": "out/work/seq/4110-4199/f04196.png",
+   "kind": "frame",
+   "label": "uranus.dive frame 4196, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4196,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "94288983d3b2cf97"
+  },
   {
    "time": "2026-11-23T23:48:06.178Z",
    "file": "20261123234806178-note-c2-rise-a.jpg",
@@ -19,78 +79,6 @@
    "kind": "note",
    "label": "step 2 scratch (step 1 5b24c132 plus step 2, main 6965ded8) rise 4390, place picture off: globe side with the deck drawn on it, close side, difference times 8 about grey. Mean 0.003, p99 0, largest 4 (step 1: 2.55 and 18.7)",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T23:41:47.394Z",
-   "file": "20261123234147394-frame-final-4290.jpg",
-   "source": "out/work/u/base/final-4290.png",
-   "kind": "frame",
-   "label": "uranus.terrain frame 4290, final tier",
-   "stop": "uranus",
-   "segment": "uranus.terrain",
-   "frame": 4290,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "9614bd9287a4f3ac"
-  },
-  {
-   "time": "2026-11-23T23:39:27.695Z",
-   "file": "20261123233927695-frame-final-4035.jpg",
-   "source": "out/work/u/base/final-4035.png",
-   "kind": "frame",
-   "label": "uranus.hold frame 4035, final tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "9614bd9287a4f3ac"
-  },
-  {
-   "time": "2026-11-23T23:22:33.502Z",
-   "file": "20261123232233502-note-c1-4170-4176.jpg",
-   "source": "../../../../tmp/c1-4170-4176.png",
-   "kind": "note",
-   "label": "step 2 scratch, frames 4170 and 4176: left the deck drawn on the globe by height (full below 0.04 radii, none above 0.12), right step 1 (globe alone, older path)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T23:22:32.277Z",
-   "file": "20261123232232277-note-c2-T4186.jpg",
-   "source": "../../../../tmp/c2-T4186.png",
-   "kind": "note",
-   "label": "step 2 scratch (on 5b24c132, main 6965ded8) dive T 4186, place picture off: globe side with the deck drawn on it, close side, difference times 8 about grey. Mean 0.003, p99 0 (step 1: 1.16 and 15.3)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T23:15:09.230Z",
-   "file": "20261123231509230-frame-f04469.jpg",
-   "source": "out/work/seq/4455-4484/f04469.png",
-   "kind": "frame",
-   "label": "uranus.travel frame 4469, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.travel",
-   "frame": 4469,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "9614bd9287a4f3ac"
-  },
-  {
-   "time": "2026-11-23T23:07:19.725Z",
-   "file": "20261123230719725-frame-f03951.jpg",
-   "source": "out/work/seq/3930-4109/f03951.png",
-   "kind": "frame",
-   "label": "saturn.travel frame 3951, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.travel",
-   "frame": 3951,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "9614bd9287a4f3ac"
   }
  ]
 }
