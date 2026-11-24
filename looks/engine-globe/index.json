@@ -1,9 +1,51 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-23T23:31:38.941Z",
- "head": "09342ed6f9f1aae1f1978718aaf19b3a0f601534",
- "note": "Relief cap, first Mars pictures (scratch wiring of mars/set.ts, not on any branch): geometry holds, no crack at the levels seen; the streaks on the walls are the plate colour pulled down one texel cliffs of the height data",
+ "pushed": "2026-11-24T00:06:33.969Z",
+ "head": "e28f9c95b956237526207510dd67897bbfbd8285",
+ "note": "Relief cap on Mars in the film's own view, three consecutive frames; a fault found and cured (noise where triangles fell far under a pixel); the curtain walls are steps of the height bake, sent to mars_place_builder",
  "looks": [
+  {
+   "time": "2026-11-24T00:06:32.772Z",
+   "file": "20261124000632772-note-capI-f2409.jpg",
+   "source": "out/work/t2/capI-f2409.png",
+   "kind": "note",
+   "label": "Mars f2409 the film's own view with the relief cap (fine 1), draft"
+  },
+  {
+   "time": "2026-11-24T00:06:31.924Z",
+   "file": "20261124000631924-note-noise-2400.jpg",
+   "source": "out/work/t2/noise-2400.png",
+   "kind": "note",
+   "label": "Mars f2400, flat cap forced on, 200 px at the place enlarged 3 times: left every grid drawn (noise from triangles far under a pixel), middle grids by pixel footprint (fine 1), right no cap"
+  },
+  {
+   "time": "2026-11-24T00:06:31.014Z",
+   "file": "20261124000631014-note-tri-2447-2449.jpg",
+   "source": "out/work/t2/tri-2447-2449.png",
+   "kind": "note",
+   "label": "Mars f2447, 2448, 2449 the film's own view with the relief cap, draft, half size"
+  },
+  {
+   "time": "2026-11-24T00:06:30.094Z",
+   "file": "20261124000630094-note-capI-f2448.jpg",
+   "source": "out/work/t2/capI-f2448.png",
+   "kind": "note",
+   "label": "Mars f2448 the film's own view (Relief in front, relief cap behind), draft, cap on the first heights, scratch wiring"
+  },
+  {
+   "time": "2026-11-24T00:06:17.017Z",
+   "file": "20261124000617017-still-f00360-16x9-draft-full.jpg",
+   "source": "out/work/stills/f00360-16x9-draft-full.png",
+   "kind": "still",
+   "label": "sun.hold frame 360, draft tier",
+   "stop": "sun",
+   "segment": "sun.hold",
+   "frame": 360,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "b9c0a9c3f8b9aab8"
+  },
   {
    "time": "2026-11-23T23:31:38.068Z",
    "file": "20261123233138068-note-capA-f2448.jpg",
@@ -192,55 +234,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "ad31090af7985df5"
-  },
-  {
-   "time": "2026-11-23T23:13:03.186Z",
-   "file": "20261123231303186-still-f00615-16x9-draft-full.jpg",
-   "source": "out/work/stills/f00615-16x9-draft-full.png",
-   "kind": "still",
-   "label": "mercury.hold frame 615, draft tier",
-   "stop": "mercury",
-   "segment": "mercury.hold",
-   "frame": 615,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "ad2ef74f2a3a130d"
-  },
-  {
-   "time": "2026-11-23T23:12:12.122Z",
-   "file": "20261123231212122-still-f00360-16x9-draft-full.jpg",
-   "source": "out/work/stills/f00360-16x9-draft-full.png",
-   "kind": "still",
-   "label": "sun.hold frame 360, draft tier",
-   "stop": "sun",
-   "segment": "sun.hold",
-   "frame": 360,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "ad2ef74f2a3a130d"
-  },
-  {
-   "time": "2026-11-23T19:10:47.024Z",
-   "file": "20261123191047024-note-pair-scenegain-f2426.jpg",
-   "source": "out/work/t2/pair-scenegain-f2426.png",
-   "kind": "note",
-   "label": "ownGain on the scene value against main's form, Mars 2426 on agent/mars-place 8b7c9a40: at most 4 of 255"
-  },
-  {
-   "time": "2026-11-23T13:20:50.137Z",
-   "file": "20261123132050137-note-pair-gain-f2448.jpg",
-   "source": "out/work/t2/pair-gain-f2448.png",
-   "kind": "note",
-   "label": "ownGain on the real Mars plates at 2448: 1 1 1 (same bytes as without), 1.5 1.5 1.5 and 1.0 1.25 1.5, scratch values"
-  },
-  {
-   "time": "2026-11-23T12:59:51.647Z",
-   "file": "20261123125951647-note-stripM-2448-steps.jpg",
-   "source": "out/work/t2/stripM-2448-steps.png",
-   "kind": "note",
-   "label": "fadeMinor off and on, Mars 2448, three steps of a tenth of a frame at 1 to 1, 1 sample, grain off; no sparkle seen"
   }
  ]
 }
