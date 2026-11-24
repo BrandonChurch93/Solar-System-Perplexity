@@ -47,7 +47,16 @@ export const createSet: SetFactory = async (ctx) => {
     world,
     sky: model.sky,
     update: (state, shot, view) => {
-      const height = Math.max(plan.flight(state.time).position.dot(plan.ringNormal), 1e-6)
+      // the height of the lens over the ring plane, from the pose the engine gave the set for this take (not from
+      // a clock of the stop): the same number the model and the air read below
+      const inOrbit = state.view === 'orbit'
+      if (inOrbit) centre.set(0, 0, 0)
+      else centre.copy(terrainOffset)
+      centre.applyQuaternion(world.quaternion).add(world.position)
+      total.copy(world.quaternion)
+      if (!inOrbit) total.multiply(toTerrain)
+      toRing.copy(total).multiply(tilt).invert()
+      const height = Math.max(eye.copy(centre).negate().applyQuaternion(toRing).y, 1e-6)
       const share = state.time < dive.start ? 0 : state.time >= dive.end ? 1 : 1 - smooth((Math.log(height) - logLo) / (logHi - logLo))
       const count = Math.max(view.samples, 1)
       const stride = window.strides.find((s) => gcd(s, count) === 1) ?? 1
@@ -62,7 +71,6 @@ export const createSet: SetFactory = async (ctx) => {
       idle.world.visible = false
       drawn.update(state, shot, view)
       // the lens and the Sun in the frame of the rings, as the scene that was just drawn stands
-      const inOrbit = state.view === 'orbit'
       if (inOrbit) centre.set(0, 0, 0)
       else centre.copy(terrainOffset)
       centre.applyQuaternion(drawn.world.quaternion).add(drawn.world.position)

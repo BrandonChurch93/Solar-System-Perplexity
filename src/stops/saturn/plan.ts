@@ -32,29 +32,43 @@ export const skim = { seatIn: 0.8 }
 
 // One pace through a move. The rate of a quantity goes from its rate before the move (from) up to one largest
 // value and down to its rate after the move (to). On the way up and on the way down it changes by a steady
-// amount a frame, and its three turns (at the start, at the top, at the end) are rounded over the share round
-// of the move each (the top over twice that), so the change of the rate a frame is as small as the length of
-// the move allows and has no step. round is one share for all three turns or three shares, for the start, the
-// top and the end. peak is the share of the move at which the rate is turned at the top; total is the way done
-// over the whole move. at(u) is the way done at the share u of the move and rate(u) its rate, both for a unit
-// of u.
+// amount a frame and its turns are rounded, so the change of the rate a frame is as small as the length of
+// the move allows and has no step. peak is one share of the move or two. One share: the rate turns at the top
+// there, and its three turns (at the start, at the top, at the end) are rounded over the share round of the
+// move each (the top over twice that); round is one share for all three or three shares. Two shares: the rate
+// is level between them (up, level, down), and round is one share or four, for the turn at the start, the
+// turn into the level (it ends at the first share), the turn out of it (it begins at the second) and the turn
+// at the end. total is the way done over the whole move. at(u) is the way done at the share u of the move and
+// rate(u) its rate, both for a unit of u.
 export class Pace {
   private readonly x: number[]
+  private readonly p: number[]
+  private readonly q: number[]
   private readonly up: number
   private readonly down: number
-  private static readonly P = [0, 1, 1, 0, 0, 0]
-  private static readonly Q = [0, 0, 0, 1, 1, 0]
 
-  constructor(private readonly from: number, to: number, total: number, peak: number, round: number | number[]) {
-    if (typeof round === 'number') {
-      const r = Math.min(round, peak / 2, (1 - peak) / 2)
-      this.x = [0, r, peak - r, peak + r, 1 - r, 1]
+  constructor(private readonly from: number, to: number, total: number, peak: number | number[], round: number | number[]) {
+    if (typeof peak === 'number') {
+      this.p = [0, 1, 1, 0, 0, 0]
+      this.q = [0, 0, 0, 1, 1, 0]
+      if (typeof round === 'number') {
+        const r = Math.min(round, peak / 2, (1 - peak) / 2)
+        this.x = [0, r, peak - r, peak + r, 1 - r, 1]
+      } else {
+        const top = Math.min(round[1]!, peak / 2, (1 - peak) / 2)
+        this.x = [0, Math.min(round[0]!, peak - top), peak - top, peak + top, 1 - Math.min(round[2]!, 1 - peak - top), 1]
+      }
     } else {
-      const top = Math.min(round[1]!, peak / 2, (1 - peak) / 2)
-      this.x = [0, Math.min(round[0]!, peak - top), peak - top, peak + top, 1 - Math.min(round[2]!, 1 - peak - top), 1]
+      const [a, b] = peak as [number, number]
+      const r = typeof round === 'number' ? [round, round, round, round] : round
+      const into = Math.min(r[1]!, a)
+      const out = Math.min(r[2]!, 1 - b)
+      this.p = [0, 1, 1, 0, 0, 0, 0, 0]
+      this.q = [0, 0, 0, 0, 0, 1, 1, 0]
+      this.x = [0, Math.min(r[0]!, a - into), a - into, a, b, b + out, 1 - Math.min(r[3]!, 1 - b - out), 1]
     }
-    const [p1, p2] = this.sum(Pace.P, 1)
-    const [q1, q2] = this.sum(Pace.Q, 1)
+    const [p1, p2] = this.sum(this.p, 1)
+    const [q1, q2] = this.sum(this.q, 1)
     const det = q1 * p2 - p1 * q2
     this.up = (q1 * (total - from) - q2 * (to - from)) / det
     this.down = (p1 * (total - from) - p2 * (to - from)) / det
@@ -78,16 +92,16 @@ export class Pace {
 
   at(u: number): number {
     const k = Math.min(Math.max(u, 0), 1)
-    return this.from * k + this.up * this.sum(Pace.P, k)[1] - this.down * this.sum(Pace.Q, k)[1]
+    return this.from * k + this.up * this.sum(this.p, k)[1] - this.down * this.sum(this.q, k)[1]
   }
 
   rate(u: number): number {
     const k = Math.min(Math.max(u, 0), 1)
-    return this.from + this.up * this.sum(Pace.P, k)[0] - this.down * this.sum(Pace.Q, k)[0]
+    return this.from + this.up * this.sum(this.p, k)[0] - this.down * this.sum(this.q, k)[0]
   }
 }
 
-interface PaceOf { peak: number; round: number | number[] }
+interface PaceOf { peak: number | number[]; round: number | number[] }
 interface Paces { reach: PaceOf; climb: PaceOf; round: PaceOf; view: PaceOf }
 interface Law { e1: THREE.Vector3; e2: THREE.Vector3; reach0: number; reach: Pace; climb0: number; climb: Pace; round0: number; round: Pace; view: Pace }
 
@@ -292,18 +306,25 @@ export class SaturnPlan extends StopPlan {
 
   // The stars of the flight: the engine brings them in through the rise, from its change of view to the end of
   // the rise, and reads how far by a time. That time is given here by the height of the lens over the ring plane
-  // and not by the clock: the share of the way between the two heights of skim.json sky.lift, to the power
-  // sky.lift.power, laid on the engine's span of time. So the stars of the flight come out as the lens climbs.
+  // and not by the clock. liftAt is their level as a function of the height alone: a smooth step of
+  // 1 - (1 - share)^power, share the way between the two heights of skim.json sky.lift. The lens climbs ever
+  // slower toward the end of the rise (the height left goes with the square of the time left), so with the
+  // power one half the level runs evenly over the frames of the climb. The lower height lies over every height
+  // of the hold and of the dive (skyProof), so it is one function of the height on both sides of the skim: none
+  // of them at any height the lens has on the way down.
   liftAt(height: number): number {
     const k = skimJson.sky.lift
-    return Math.pow(ramp(k.heights[0]!, k.heights[1]!, Math.abs(height)), k.power)
+    return smooth(1 - Math.pow(1 - ramp(k.heights[0]!, k.heights[1]!, Math.abs(height)), k.power))
   }
 
+  // The engine runs its own course on the time it is given (a smooth step of the share of its span, then
+  // 1 - (1 - x)^2). Both are undone here, so the level it shows is liftAt of the height.
   override skyLiftAt(seg: Segment, time: number): number | null {
     if (seg.kind !== 'rise') return null
     const change = handoverOf(this.id, 'rise')
     if (!change) return null
-    return mix(change.time, seg.end, this.liftAt(this.flight(time).position.dot(this.ringNormal)))
+    const x = 1 - Math.sqrt(1 - this.liftAt(this.flight(time).position.dot(this.ringNormal)))
+    return mix(change.time, seg.end, 0.5 - Math.sin(Math.asin(1 - 2 * x) / 3))
   }
 
   private holdPath: THREE.Vector3[] | null = null
@@ -374,12 +395,14 @@ export class SaturnPlan extends StopPlan {
     let rise = Infinity
     for (let t = this.seg.rise.start; t <= this.seg.rise.end + 1e-9; t += step) rise = Math.min(rise, this.heroDistance(t))
     if (!(rise - k.slack >= k.reach)) throw new Error(this.id + ': the rise comes to ' + rise.toFixed(4) + ' from the path of the hold, sky.hero.reach is ' + k.reach)
-    // the stars of the flight come in by the height of the lens: none at the engine's change of view in the rise,
-    // all of them at the end of the rise, and the lens never comes down between the two heights
+    // the stars of the flight come in by the height of the lens, one function of the height on the way down and
+    // on the way up: none at any height of the hold or of the dive, none at the engine's change of view in the
+    // rise, all of them at the end of the rise, and the lens never comes down between the two heights
     const up = handoverOf(this.id, 'rise')
     if (!up) throw new Error(this.id + ': no handover in the rise')
     const high = (t: number): number => Math.abs(this.flight(t).position.dot(this.ringNormal))
     const r = this.seg.rise
+    for (let t = this.seg.hold.start; t <= d.end + 1e-9; t += step) if (this.liftAt(high(t)) !== 0) throw new Error(this.id + ': the hold or the dive is flown at ' + high(t).toFixed(4) + ' over the ring plane at ' + (t * config.fps).toFixed(2) + ', inside sky.lift.heights ' + skimJson.sky.lift.heights)
     if (this.liftAt(high(up.time)) !== 0) throw new Error(this.id + ': at the change of view of the rise the lens is ' + high(up.time).toFixed(4) + ' over the ring plane, sky.lift.heights ' + skimJson.sky.lift.heights)
     if (this.liftAt(high(r.end)) !== 1) throw new Error(this.id + ': at the end of the rise the lens is ' + high(r.end).toFixed(4) + ' over the ring plane, sky.lift.heights ' + skimJson.sky.lift.heights)
     let top = 0
