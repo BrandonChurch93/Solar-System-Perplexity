@@ -13,12 +13,12 @@ describe('the slide of a travel', () => {
   })
 
   it('ends its pass at 1 for every stop', () => {
-    for (const { look } of looks) expect(passCurve(look.passPower, look.passKnee, look.passLead, look.passRound)(1)).toBeCloseTo(1, 12)
+    for (const { look } of looks) expect(passCurve(look.passPower, look.passKnee, look.passLead, look.passRound, look.passStart)(1)).toBeCloseTo(1, 12)
   })
 
   it('starts with no speed, no acceleration and no jerk', () => {
     for (const { id, look } of looks) {
-      const f = passCurve(look.passPower, look.passKnee, look.passLead, look.passRound)
+      const f = passCurve(look.passPower, look.passKnee, look.passLead, look.passRound, look.passStart)
       const h = 1e-3
       expect(f(0), id).toBe(0)
       expect(f(h) / h, id).toBeLessThan(1e-8)
@@ -29,7 +29,7 @@ describe('the slide of a travel', () => {
 
   it('never slows and has no step in its acceleration', () => {
     for (const { id, look } of looks) {
-      const f = passCurve(look.passPower, look.passKnee, look.passLead, look.passRound)
+      const f = passCurve(look.passPower, look.passKnee, look.passLead, look.passRound, look.passStart)
       const h = 1 / 400
       const acc: number[] = []
       for (let i = 1; i < 800; i++) acc.push((f((i + 1) * h) - 2 * f(i * h) + f((i - 1) * h)) / (h * h))
@@ -39,6 +39,36 @@ describe('the slide of a travel', () => {
         if (i > 0) expect(Math.abs(acc[i]! - acc[i - 1]!), id + ' at ' + i).toBeLessThan(0.03 * most)
       }
     }
+  })
+  it('spreads its start over the given span and keeps the old curve to the bit from the end of the span on', () => {
+    const was = passCurve(3, 0.6, 0.6, 0.2)
+    expect(passCurve(3, 0.6, 0.6, 0.2, [0, 0])(0.37)).toBe(was(0.37))
+    expect(passCurve(3, 1, 0, 0, [0.07, 1])(0.37)).toBe(passCurve(3, 1, 0, 0)(0.37))
+    expect(passCurve(3, 0.6, 0.6, 0.2, [0.07, 0.6])(0.37)).toBe(was(0.37))
+    for (const span of [[0.07, 1], [0, 1], [0.1, 0.9]] as [number, number][]) {
+      const now = passCurve(3, 0.6, 0.6, 0.2, span)
+      const [a, b] = span
+      const h = 1 / 2000
+      for (const t of [b, b + 0.01, 1, 1.3, 2]) expect(now(t), 'at ' + t).toBe(was(t))
+      for (const t of [0, a / 2, a]) expect(now(t), 'at ' + t).toBe(0)
+      expect(Math.abs(now(b - h) - (was(b) - (was(b + h) - was(b))))).toBeLessThan(1e-7)
+      const bend = (f: (t: number) => number, i: number) => (f((i + 1) * h) - 2 * f(i * h) + f((i - 1) * h)) / (h * h)
+      let most = 0
+      let old = 0
+      for (let i = 1; i < 2400; i++) {
+        most = Math.max(most, bend(now, i))
+        old = Math.max(old, bend(was, i))
+      }
+      expect(most).toBeLessThan(0.82 * old)
+      for (let i = 1; i < 2400; i++) {
+        expect(bend(now, i), 'at ' + i).toBeGreaterThan(-1e-6)
+        if (i > 1) expect(Math.abs(bend(now, i) - bend(now, i - 1)), 'at ' + i).toBeLessThan(0.01 * most)
+      }
+    }
+  })
+
+  it('has the spread start on Uranus alone', () => {
+    for (const { id, look } of looks) expect(look.passStart[1] > look.passStart[0], id).toBe(id === 'uranus')
   })
 })
 
