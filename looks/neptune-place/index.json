@@ -1,9 +1,17 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T14:14:19.335Z",
+ "pushed": "2026-11-24T14:37:21.969Z",
  "head": "b8a38cbe7be49c70b1e86c1f6851cf002068941f",
- "note": "trial committed f4e94e04: far look of the scene is the globe's map. RED: rise by my proxy 1.31 at 4964 (head 0.98), 1.06 at 4972 (0.41), 0.59 at 4980 (1.51), 0.47 at 4988 (1.15); the map's band comes in lilac over the dark near deck; cyan dab by the limb at 4860; no tool number yet",
+ "note": "RED named: the scene is the map's storm with the tones reversed across the first streamer; opposites exchange at any speed. Next: the place moved 2.3 units across the band so dark lies on dark and white on white, as a trial of one number first. Parity of b8a38cbe is rendering.",
  "looks": [
+  {
+   "time": "2026-11-24T14:37:20.605Z",
+   "file": "20261124143720605-note-look-fork.jpg",
+   "source": "out/work/nep/weave/look-fork.jpg",
+   "kind": "note",
+   "label": "Why the exchange stands after f4e94e04, seen from above: left top the globe's map at 4704, left bottom the scene from code at 4748, both laid on the same ground (a line a unit, the first streamer on the yellow line). They are opposite in tone on both sides of that line: the map has its dark vortex north of it and a white band south of it, the scene a pale plain with a small eye north and its dark near deck south. Right: 4860 beside the approved, G17 at preview draft 1.331 / 0.772, 25.2 s a draft frame.",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T14:14:08.318Z",
    "file": "20261124141408318-note-look-f5.jpg",
@@ -58,14 +66,6 @@
    "source": "out/work/nep/cost/look-1149.jpg",
    "kind": "note",
    "label": "4860 beside the approved image, the same pair as at 11:49: the far field work X5 (parked in work files, not committed, while the dive's exchange of MAIL 654 comes first). G17 at 16 by 9 draft: X5 0.934 / 0.545, committed head 0.934 / 0.549. 34 s a draft frame at 16 by 9 over the stop, 4860 alone 96 s.",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T12:15:39.045Z",
-   "file": "20261124121539045-note-look-dive-pairs.jpg",
-   "source": "out/work/nep/weave/look-dive-pairs.jpg",
-   "kind": "note",
-   "label": "Dive, my head 10f6b0bf, pairs 8 frames apart (4708, 4712, 4716, 4720, 4723, 4727, 4740): earlier frame, later one carried back on the sphere, pattern change (white is 1). Pattern by the report's function: 0.44, 0.69, 0.71, 1.15, 1.18, 0.96, 0.54 against 0.45. Preview draft, 1.4 s a frame above 0.9 radii, 9 to 14 s with the scene.",
    "stop": "neptune"
   }
  ]
