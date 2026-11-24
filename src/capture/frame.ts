@@ -1,5 +1,6 @@
 import { config } from '../config'
 import { captureFrames, captureRate, captureShutterDegrees, setCapture, shutterAsked } from '../core/clock'
+import type { Counts } from '../core/counts'
 import type { Engine, Sanity } from '../core/engine'
 
 declare const __ENGINE_HASH__: string
@@ -20,6 +21,8 @@ export interface Showcase {
   png(): Promise<string>
   sanity(): Sanity
   samples(): number
+  counts(): Counts
+  ahead(frame: number, tier: string, all?: boolean): Promise<number>
   memory(): { textureBytes: number; peakBytes: number; skyBytes: number; loaded: string[]; perSet: Record<string, number> }
 }
 
@@ -49,6 +52,8 @@ export function installShowcase(engine: Engine, ready: Promise<void>, tier: stri
     },
     sanity: () => engine.sanity(),
     samples: () => engine.samples,
+    counts: () => engine.counter.take(),
+    ahead: (frame, t, all = false) => engine.warm.run(engine, frame, t, config.frameCount - 1, all),
     memory: () => {
       const perSet: Record<string, number> = {}
       for (const id of engine.sets.loadedIds()) perSet[id] = engine.sets.bytesOf(id)

@@ -13,7 +13,7 @@ import * as look from './look'
 import { Moon } from './moons'
 import patchJson from './patches.json'
 import platesJson from './plates.json'
-import { plan } from './plan'
+import { below, plan } from './plan'
 import { newRingMove, ringMove } from './ringmove'
 import { fullLines, hairLines, parseLines, ringGeometry, ringProfile, Rings, strandLines } from './rings'
 import skyJson from './sky.json'
@@ -140,7 +140,8 @@ export const createSet: SetFactory = async (ctx) => {
   const glow = new Glow(deckHalo, 2000 / deckJson.radius)
   glow.material.uniforms.uUnder!.value = look.place.under
   const over = new THREE.Group()
-  over.add(glow.mesh, lowArcs.mesh, riseArcs.mesh, riseRings.mesh)
+  over.add(deck.cover, glow.mesh, lowArcs.mesh, riseArcs.mesh, riseRings.mesh)
+  const coverEye = new THREE.Vector3()
   const origin = new THREE.Vector3()
   const ball = new THREE.Vector3()
   const seated = new THREE.Quaternion()
@@ -156,7 +157,7 @@ export const createSet: SetFactory = async (ctx) => {
     world.updateMatrix()
     eye.set(0, 0, 0).applyMatrix4(inverse.copy(world.matrix).invert())
   }
-  const reach = (span: [number, number], altitude: number): number => 1 - smooth(ramp(Math.log(span[0]), Math.log(span[1]), Math.log(Math.max(altitude, 1e-4))))
+  const reach = below
   const fixed = (time: number): void => {
     skyTurn.copy(frameInverse).multiply(turn.copy(plan.turn(time)).invert()).multiply(turnMid).multiply(plan.terrainFrame)
   }
@@ -178,7 +179,7 @@ export const createSet: SetFactory = async (ctx) => {
   for (const [view, def] of Object.entries(skyJson)) {
     const wide = 1 + 2 * def.margin
     const t = Math.tan(THREE.MathUtils.degToRad(def.vfovDeg) / 2) * wide
-    sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, mips: false, anisotropy: 1 }), aim: new THREE.Quaternion(), tan: [t * 16 / 9, t], gain: def.gain, add: def.add, ring: def.ring as [number, number, number, number], edge: def.margin / wide, weight: (time, v) => plan.patchWeight(time, v) })
+    sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, mips: false, anisotropy: 1 }), aim: new THREE.Quaternion(), tan: [t * 16 / 9, t], gain: def.gain, add: def.add, ring: def.ring as [number, number, number, number], edge: def.margin / wide })
   }
 
   return {
@@ -197,6 +198,7 @@ export const createSet: SetFactory = async (ctx) => {
         const seg = shot.segment
         const moving = seg.stop === plan.id && (seg.kind === 'dive' || seg.kind === 'rise')
         ground(state.time, shot.sun.dir, gain, moving ? reach(look.place.sky, eye.distanceTo(deckCentre) / deckJson.radius - 1) : 1, shot.post.vignette, aspect, shot.post.bloomStrength, view.place === true, view.place === true && view.camera.view ? [view.camera.view.fullWidth / view.camera.view.width, view.camera.view.fullHeight / view.camera.view.height] : [1, 1])
+        deck.spread(0, look.place.deck.border)
         lowArcs.mesh.visible = false
         riseArcs.mesh.visible = false
         riseRings.mesh.visible = false
@@ -237,6 +239,14 @@ export const createSet: SetFactory = async (ctx) => {
       glow.turn(seated)
       glow.update(eye, origin, 1, gain * state.weight * sky, shot.post.vignette, aspect)
       glow.mesh.visible = sky > 0 && look.show.sky
+      const spread = low && look.show.deck ? reach(look.place.deck.span, altitude) : 0
+      if (spread > 0) {
+        deck.update(coverEye.copy(eye).applyQuaternion(turn.copy(seated).invert()).multiplyScalar(deckJson.radius).add(deckCentre), state.time - terrainMid, gain * state.weight, shot.post.vignette, aspect, 1, shot.post.bloomStrength)
+        deck.cover.position.copy(deckCentre).multiplyScalar(-1 / deckJson.radius).applyQuaternion(seated)
+        deck.cover.quaternion.copy(seated)
+        deck.cover.scale.setScalar(1 / deckJson.radius)
+      }
+      deck.spread(spread, look.place.deck.border)
       fixed(state.time)
       lowArcs.mesh.position.copy(arcCentre).applyQuaternion(skyTurn).sub(deckCentre).divideScalar(deckJson.radius).applyQuaternion(seated)
       lowArcs.mesh.quaternion.copy(seated).multiply(skyTurn)
@@ -247,16 +257,16 @@ export const createSet: SetFactory = async (ctx) => {
       const arched = low ? (rising ? 1 - smooth(ramp(look.place.ringMove.arch[0], look.place.ringMove.arch[1], open)) : reach(look.place.arcs.dive, altitude)) : 0
       world.getWorldPosition(ball)
       if (moving) {
-        const spread = smooth(ramp(look.place.ringMove.spread[0], look.place.ringMove.spread[1], open))
+        const fan = smooth(ramp(look.place.ringMove.spread[0], look.place.ringMove.spread[1], open))
         ringMove(moved, open, arch, ringNormal, ringRatio, eye)
         riseArcs.mesh.position.copy(moved.centre)
         riseArcs.mesh.quaternion.copy(moved.archTurn)
         riseArcs.mesh.scale.setScalar(moved.archSize)
-        riseArcs.gather(arch.normal, hoops.arch, hoops.rings, 1 / ringUnit, spread, false, look.place.ringMove.show)
+        riseArcs.gather(arch.normal, hoops.arch, hoops.rings, 1 / ringUnit, fan, false, look.place.ringMove.show)
         riseRings.mesh.position.copy(moved.centre)
         riseRings.mesh.quaternion.copy(moved.turn)
         riseRings.mesh.scale.setScalar(moved.size)
-        riseRings.gather(ringNormal, hoops.rings, hoops.arch, ringUnit, 1 - spread, true, look.place.ringMove.show)
+        riseRings.gather(ringNormal, hoops.rings, hoops.arch, ringUnit, 1 - fan, true, look.place.ringMove.show)
         riseArcs.update(shot.sun.dir, gain * state.weight * arched)
         riseArcs.against(ball, 1, look.place.onSky)
       }
@@ -274,7 +284,7 @@ export const createSet: SetFactory = async (ctx) => {
       riseRings.against(ball, 1, look.place.onSky)
       riseRings.mesh.visible = mid > 0 && visible && look.show.rings
       globe.shadeRings(left ? look.rings.shade[0] : 0, farRings.mesh, farRings.sunLocal)
-      const veiled = kind === 'travel' ? (mine ? 0 : THREE.MathUtils.smoothstep(shot.u, 0.2, 0.8)) : mine && kind === 'hold' ? 1 : mine && kind === 'dive' ? 1 - smooth(ramp(look.veil.dive[0], look.veil.dive[1], shot.u)) : 0
+      const veiled = kind === 'travel' ? (mine ? 0 : THREE.MathUtils.smoothstep(shot.u, 0.2, 0.8)) : mine && kind === 'hold' ? 1 : mine && kind === 'dive' ? 1 - reach(look.veil.dive, altitude) : 0
       veil.update(gain * state.weight * veiled * shot.skyGlow, shot.post.vignette, aspect)
       turn.setFromAxisAngle(ringNormal, THREE.MathUtils.degToRad(plan.p.moonDegPerSecond) * elapsed)
       shape.updateWorldMatrix(true, false)

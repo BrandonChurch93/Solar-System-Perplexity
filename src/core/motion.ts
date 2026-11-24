@@ -4,7 +4,7 @@ import { forcedWord, handoverOf, type Handover } from '../director/handover'
 import { handoverChanges, segmentAtFrame } from '../director/timeline'
 import { clockStamp, shutterSpan, spanMid, wholeFrame } from './clock'
 import { sampleCount, shutterOffset } from './sampler'
-import type { SetState, Shot, ViewKind } from './types'
+import type { NearBody, SetState, Shot, ViewKind } from './types'
 
 export interface ShotSource { shotAt(frame: number, time: number, side?: ViewKind): Shot }
 
@@ -75,6 +75,71 @@ export function rawMotion(open: Shot, mid: Shot, close: Shot, probe?: MotionProb
   return most
 }
 
+// A point given in the frame of a set (without the turn of its surface) as a shot sees it, in px of the master from the middle of the frame.
+function seenPoint(shot: Shot, state: SetState, local: THREE.Vector3, half: number): THREE.Vector2 | null {
+  const v = local.clone().applyQuaternion(state.rotation).add(state.origin).sub(shot.camera.position).applyQuaternion(shot.camera.quaternion.clone().invert())
+  if (v.z > -1e-9) return null
+  const k = half / Math.tan((shot.camera.vfov * RAD) / 2) / -v.z
+  return new THREE.Vector2(v.x * k, v.y * k)
+}
+
+// Whether the sphere that holds a near body reaches into the frame of a shot: the angle between the direction to its centre and the nearest
+// direction of the frame is no larger than the angle the sphere fills.
+function bodyInFrame(shot: Shot, state: SetState, body: NearBody, aspect: number): boolean {
+  const v = body.centre.clone().applyQuaternion(state.rotation).add(state.origin).sub(shot.camera.position).applyQuaternion(shot.camera.quaternion.clone().invert())
+  const distance = v.length()
+  if (distance <= body.radius) return true
+  const ty = Math.tan((shot.camera.vfov * RAD) / 2)
+  const tx = ty * aspect
+  let x: number
+  let y: number
+  if (v.z < -1e-9) {
+    x = Math.min(Math.max(v.x / -v.z, -tx), tx)
+    y = Math.min(Math.max(v.y / -v.z, -ty), ty)
+  } else {
+    const m = Math.max(Math.abs(v.x) / tx, Math.abs(v.y) / ty)
+    if (!(m > 0)) return false
+    x = v.x / m
+    y = v.y / m
+  }
+  const nearest = new THREE.Vector3(x, y, -1).normalize()
+  return Math.acos(Math.min(Math.max(nearest.dot(v) / distance, -1), 1)) <= Math.asin(body.radius / distance)
+}
+
+// The motion in px of the master, between the opening and the closing of a shutter, of the fastest near body a stop names (SetState.near)
+// that is in the frame at the opening, the middle or the closing: the longest way of its centre and of four points of its rim, the radius to
+// the right, to the left, up and down as the camera of the middle sees it. A moon that passes close to the camera crosses the picture ten
+// times as fast as the planet behind it, which is all rawMotion measures, so the count of such a frame was too small and the moon was drawn
+// as separate copies. A point that leaves the half space in front of the camera inside the shutter runs out of the picture: it counts as
+// the diagonal of the master. 0 where no body is named or none of them is in the frame, and then nothing changes.
+export function nearMotion(open: Shot, mid: Shot, close: Shot): number {
+  const master = config.formats[config.formatKeys.master]!
+  const half = master.height / 2
+  const aspect = master.width / master.height
+  let most = 0
+  mid.sets.forEach((s, i) => {
+    const a = open.sets[i]
+    const b = close.sets[i]
+    if (!s.near || s.weight <= 0 || !a || !b || a.id !== s.id || b.id !== s.id) return
+    s.near.forEach((body, j) => {
+      const first = a.near?.[j]
+      const last = b.near?.[j]
+      if (!first || !last) return
+      if (!bodyInFrame(open, a, first, aspect) && !bodyInFrame(mid, s, body, aspect) && !bodyInFrame(close, b, last, aspect)) return
+      const axes = s.rotation.clone().invert().multiply(mid.camera.quaternion)
+      const right = new THREE.Vector3(1, 0, 0).applyQuaternion(axes).multiplyScalar(body.radius)
+      const up = new THREE.Vector3(0, 1, 0).applyQuaternion(axes).multiplyScalar(body.radius)
+      for (const offset of [CENTRE, right, right.clone().negate(), up, up.clone().negate()]) {
+        const pa = seenPoint(open, a, first.centre.clone().add(offset), half)
+        const pb = seenPoint(close, b, last.centre.clone().add(offset), half)
+        if (pa && pb) most = Math.max(most, pa.distanceTo(pb))
+        else if (pa || pb) most = Math.max(most, Math.hypot(master.width, master.height))
+      }
+    })
+  })
+  return most
+}
+
 export function seenShare(mid: Shot): number {
   return Math.max(1 - (mid.cover.hidden ?? mid.cover.amount * (mid.cover.hides ?? 1)), 0)
 }
@@ -96,7 +161,9 @@ export function samplesNeeded(base: number, cap: number, motion: number): number
 
 // shutter is the share of the film's shutter the frame keeps (E6): 1 everywhere but in the capped frames of a dive or a rise that hands over.
 // raw stays the motion across the full shutter; seen is the motion across the shutter that is open, and the sample count follows it.
-export interface FramePlan { samples: number; raw: number; seen: number; soft: number; split: boolean; shutter: number }
+// near is there only in a frame with a named near body in it: that body's motion across the shutter that is open (nearMotion). The count
+// follows the larger of seen and near, up to the tier's maxSamplesPerFrame. The cap of the shutter does not read it.
+export interface FramePlan { samples: number; raw: number; seen: number; soft: number; split: boolean; shutter: number; near?: number }
 
 const SIDES: ViewKind[] = ['orbit', 'terrain']
 // How often the share of the shutter is corrected by the measure across the shortened shutter (shutterScale). After two the motion left is the
@@ -109,6 +176,17 @@ function motionOver(source: ShotSource, frame: number, split: boolean, from: num
   const at = (offset: number, side?: ViewKind): Shot => source.shotAt(frame, (frame + offset) / config.fps, side)
   if (split) return Math.max(...SIDES.map((side) => rawMotion(at(from, side), at(spanMid(), side), at(to, side))))
   return rawMotion(at(from), at(spanMid()), at(to))
+}
+
+// The motion of the named near bodies of one frame between two times inside it, measured like the frame's own motion: on the frame's side, and
+// inside the dissolve window on both. The shots of the two ends are only asked for where a set of the middle names a body.
+function nearOver(source: ShotSource, frame: number, split: boolean, from: number, to: number): number {
+  const at = (offset: number, side?: ViewKind): Shot => source.shotAt(frame, (frame + offset) / config.fps, side)
+  const one = (side?: ViewKind): number => {
+    const mid = at(spanMid(), side)
+    return mid.sets.some((s) => s.near) ? nearMotion(at(from, side), mid, at(to, side)) : 0
+  }
+  return split ? Math.max(...SIDES.map((side) => one(side))) : one()
 }
 
 // E6, the capped shutter (decision d129). One steady move of a factor of a hundred in ninety frames changes scale by 6 to 14 percent a frame, so
@@ -226,12 +304,15 @@ export function framePlan(source: ShotSource, frame: number, tier: string): Fram
     const shutter = shutterScale(source, frame)
     const left = shutter === 1 ? raw : motionOver(source, frame, split, shutterOffset(0, shutter), shutterOffset(1, shutter))
     const seen = split ? left : left * seenShare(at(spanMid()))
-    return { samples: cap <= base ? base : samplesNeeded(base, cap, seen), raw, seen, soft: 0, split, shutter }
+    const body = nearOver(source, frame, split, shutterOffset(0, shutter), shutterOffset(1, shutter))
+    const near = split || !(body > 0) ? body : body * seenShare(at(spanMid()))
+    return { samples: cap <= base ? base : samplesNeeded(base, cap, Math.max(seen, near)), raw, seen, soft: 0, split, shutter, ...(near > 0 ? { near } : {}) }
   }
   const mid = at(spanMid())
   const raw = rawMotion(at(0), mid, at(shutterSpan()))
   const seen = raw * seenShare(mid)
-  return { samples: cap <= base ? base : samplesNeeded(base, cap, seen), raw, seen, soft: softness(raw), split: false, shutter: 1 }
+  const near = nearOver(source, frame, false, 0, shutterSpan()) * seenShare(mid)
+  return { samples: cap <= base ? base : samplesNeeded(base, cap, Math.max(seen, near)), raw, seen, soft: softness(raw), split: false, shutter: 1, ...(near > 0 ? { near } : {}) }
 }
 
 export function frameSamples(source: ShotSource, frame: number, tier: string): number {

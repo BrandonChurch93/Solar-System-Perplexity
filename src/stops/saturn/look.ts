@@ -1,7 +1,6 @@
 import type { HazeParams } from '../../bodies/haze'
 import fitted from './curve.json'
 import type { GlobeLook } from './globe'
-import type { StreakLook } from './streak'
 import type { TitanLook } from './titan'
 
 export const globe: GlobeLook = {
@@ -73,21 +72,6 @@ export const titan: TitanLook = {
   mottle: [0.14, 3.2],
   home: [8.191769, 4.235077, -17.74795],
   size: 0.9766,
-}
-
-export const streak: StreakLook = {
-  gain: 1,
-  fade: 0.6,
-  upper: [0.785, 0.8505, 0.0058],
-  lower: [0.885, 0.8915, 0.0032],
-  smudge: [0.821, 0.8415, 0.009],
-  halo: [0.87, 0.868, 0.024],
-  left: [0.008, 0.0105, 0.011],
-  mid: [0.0012, 0.004, 0.0065],
-  right: [0.03, 0.0245, 0.019],
-  second: [0.007, 0.0078, 0.0085],
-  blue: [0.0005, 0.0075, 0.021],
-  wash: [0, 0.0028, 0.006],
 }
 
 export const limbShow = 1

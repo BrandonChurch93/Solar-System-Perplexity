@@ -38,10 +38,6 @@
       1,
       0.9
     ],
-    "heroRange": [
-      0.6,
-      1.6
-    ],
     "tint": {
       "far": {
         "dense": [
@@ -151,26 +147,73 @@
     }
   },
   "handover": {
-    "note": "the dive and the rise: one flight through one world, no picture is swapped and no cover is drawn. at: the share of the dive or the rise at which the engine changes from the view in the frame of the globe to the view in the frame of the skim (both show the same world from the same lens); skyFrames: over how many frames the picture of the sky of the hold gives way to that of the skim before that, and that of the skim to the open sky after it in the rise. dive.rise and dive.fall: the distance of the lens to the globe's surface falls by a steady factor a frame through the middle of the dive; over the first share (rise) that rate comes up from the hold's own, over the last share (fall) it comes to the skim's own, so neither end has a step in speed. rise.rise and rise.fall: the shares of the rise over which the way out is taken up from the skim's own motion and comes to the motion after the rise, the middle is steady. place.ahead: the place the tool watches is the point of the ring plane this far ahead of the foot of the lens at the middle of the skim.",
+    "note": "the dive and the rise: one flight through one world, no picture is swapped and no cover is drawn. at: the share of the dive or the rise at which the engine changes from the view in the frame of the globe to the view in the frame of the skim (both show the same world from the same lens); The sky does not follow that change nor any clock (sky below). Each move (the dive, the rise) is one move in four measures, each with one pace (plan.ts Pace): the rate of the measure goes from its rate in the motion before the move up to one largest value and down to its rate in the motion after it, by a steady change a frame on both sides; peak is the share of the move at which the rate turns at the top, or two shares between which the rate stays level at its largest value (a level top), and round the share of the move over which each of its turns is rounded: one share for all turns, or one for each turn in order (three with one peak: the start, the top, the end; four with a level top: the start, the two ends of the level, the end). reach: the distance of the lens to the globe's surface (its logarithm). climb: the height over the ring plane (its logarithm); in the rise it turns before the reach, so the lens lifts off the plane before it draws back. round: the angle of the foot of the lens round the globe. view: the turn of the camera from the one motion's to the other's, and the field of view with it. place.ahead: the place the tool watches is the point of the ring plane this far ahead of the foot of the lens at the middle of the skim.",
     "dive": {
       "at": 0.55,
-      "skyFrames": 30,
-      "rise": 0.2,
-      "fall": 0.25
+      "reach": {
+        "peak": [
+          0.248,
+          0.655
+        ],
+        "round": [
+          0.03,
+          0.086,
+          0.177,
+          0.03
+        ]
+      },
+      "climb": {
+        "peak": [
+          0.679,
+          0.746
+        ],
+        "round": [
+          0.088,
+          0.161,
+          0.163,
+          0.154
+        ]
+      },
+      "round": {
+        "peak": [
+          0.549,
+          0.664
+        ],
+        "round": [
+          0.071,
+          0.211,
+          0.126,
+          0.03
+        ]
+      },
+      "view": {
+        "peak": [
+          0.428,
+          0.448
+        ],
+        "round": [
+          0.087,
+          0.155,
+          0.105,
+          0.063
+        ]
+      }
     },
     "kept": {
-      "note": "the approach and the hold are drawn by the set of the kept build (kept/), the skim by the ring model. In the dive the kept set first lets its picture of the hold go over to its plain radial profile (its own weights, by the lens's distance from the hero pose). Then, between the shares from and to of the dive, the picture goes from the kept set to the model: every take of a frame draws one of the two whole scenes from the same lens, the share of takes of the model rises by a smooth step, and the takes of each scene are spread over the open shutter by stride (a take is the model's when its number times stride, modulo the count, plus one half, over the count, is under the share; strides lists the candidates, the first without a common factor with the count is used). Before from every take is the kept set, after to every take is the model. Through that window the model draws the sheet with the far look: the kept set's own formula on the kept profile (sheet.ts), so the two scenes are one picture there. far: between these two shares of the dive the far look gives way to the model's own light and the lens's closeness begins to count (0 before, in full after). close: how much of its own closeness the kept set keeps in the dive (0: it stays the far picture). view: the cosine of the view to the normal at which the kept profile's opacity is the sheet's own (as in kept/rings.ts).",
-      "from": 0.534,
-      "to": 0.578,
+      "note": "the approach and the hold are drawn by the set of the kept build (kept/), the skim, the rise and the way out by the ring model. In the dive the kept set first lets its picture of the hold go over to its plain radial profile (its own weights, by the lens's distance from the hero pose). Then the picture goes from the kept set to the model by the height of the lens over the ring plane and by nothing else: between the two heights of heights (planet radii, by the logarithm) every take of a frame draws one of the two whole scenes from the same lens, the share of takes of the model rises by a smooth step from 0 at the upper height to 1 at the lower, and the takes of each scene are spread over the open shutter by stride (a take is the model's when its number times stride, modulo the count, plus one half, over the count, is under the share; strides lists the candidates, the first without a common factor with the count is used). Above the upper height every take is the kept set, under the lower every take is the model, at any rate of capture. The upper height lies under the height at which the kept set's layout has become the plain profile (hero distance 1.6, height about 1.05). Through those heights the model draws the sheet with the far look: the kept set's own formula on the kept profile (sheet.ts), so the two scenes are one picture there. far: between these two heights of the lens over the ring plane (by the logarithm) the far look gives way to the model's own light and the lens's closeness begins to count (the far look alone above the upper, the model's light in full under the lower), the same way down and up. close: how much of its own closeness the kept set keeps (0: it stays the far picture). view: the cosine of the view to the normal at which the kept profile's opacity is the sheet's own (as in kept/rings.ts).",
+      "heights": [
+        0.93,
+        1.03
+      ],
       "far": [
-        0.578,
-        0.978
+        0.6,
+        0.93
       ],
       "reach": [
         0.6,
         1.3
       ],
-      "reachNote": "one look from far to near: after the window the sheet keeps the far look wherever it lies farther from the lens than the second distance (planet radii) and has the light of the model, with the ringlets, the sand and the grains it adds, nearer than the first, by the logarithm of the distance between; in the dive no part of the rings comes nearer than the second, so nothing of the rings changes with time alone there",
+      "reachNote": "one look from far to near: under the far heights the sheet keeps the far look wherever it lies farther from the lens than the second distance (planet radii) and has the light of the model, with the ringlets, the sand and the grains it adds, nearer than the first, by the logarithm of the distance between",
       "strides": [
         5,
         7,
@@ -182,28 +225,61 @@
       "close": 0,
       "view": 0.43,
       "alone": "",
-      "aloneNote": "for the proof of the window only: kept or model draws that scene alone in every take from the hold's end on; empty in the film"
+      "aloneNote": "for the proof of the handing over only: kept or model draws that scene alone in every take from the hold's end on; empty in the film"
     },
     "rise": {
       "at": 0.667,
-      "skyFrames": 20,
-      "rise": 0.25,
-      "fall": 0.2
+      "reach": {
+        "peak": [
+          0.364,
+          0.691
+        ],
+        "round": [
+          0.03,
+          0.075,
+          0.04,
+          0.03
+        ]
+      },
+      "climb": {
+        "peak": 0.267,
+        "round": [
+          0.036,
+          0.093,
+          0.03
+        ]
+      },
+      "round": {
+        "peak": 0.562,
+        "round": [
+          0.24,
+          0.09,
+          0.118
+        ]
+      },
+      "view": {
+        "peak": 0.438,
+        "round": [
+          0.095,
+          0.091,
+          0.03
+        ]
+      }
     },
     "place": {
       "ahead": 1.0
     }
   },
   "globeFine": {
-    "note": "the fine structure of the globe's bands near the lens, from functions under the texels of the 8192 map (globe.ts bandFine): streaks along the bands, value noise over cells of latitude and longitude in octaves that halve. reach: the structure is whole where the surface is nearer to the lens than the first distance and absent beyond the second (planet radii, by the logarithm), so the hold and the dive do not have it. cell: the cell of latitude of the first octave in radians; stretch: how many times longer a cell is along the band than across; octaves: how many; amount: the strength of the first octave on the logarithm of the cloud colour, fall: the factor on it per octave; bend: by how many cells an octave is shifted across the band by the octave before it; pixels: the width of a cell in pixels (one over the cells that a pixel step crosses) up to which an octave is absent and from which it is whole, so the finest octave at half strength or more has between one and two cells a pixel; tint: the strength per colour, the blue more so that a dark streak is warmer; calm: by this share the sharpening of the map's own texels (showcase look.fine) steps back where the structure is whole, since at this nearness it would sharpen the grid of the map; seed. The texels view counts, only where the structure is whole, the cells a pixel of the finest octave that is drawn at half strength or more, from the same coordinates and weights as the picture.",
+    "note": "the fine structure of the globe's bands near the lens, from functions under the texels of the 8192 map (globe.ts bandFine): streaks along the bands, value noise over cells of latitude and longitude in octaves that halve. reach: the structure is whole where the surface is nearer to the lens than the first distance and absent beyond the second (planet radii, by the logarithm), so the hold and the dive do not have it. cell: the cell of latitude of the first octave in radians; stretch: how many times longer a cell is along the band than across; octaves: how many; amount: the strength of the first octave on the logarithm of the cloud colour, fall: the factor on it per octave; bend: by how many cells an octave is shifted across the band by the octave before it; pixels: the width of a cell in pixels (one over the cells that a pixel step crosses) up to which an octave is absent and from which it is whole, so the finest octave at half strength or more has between one and two cells a pixel; tint: the strength per colour, the blue more so that a dark streak is warmer; zone: some belts are more streaked than others, the strength runs between the first and the second value with a value of its own per cell of latitude of the third value (radians); relief: toward the terminator the low sun sets the relief of the cloud tops off more strongly, the strength grows by the first value where the cosine of the Sun's angle is at or under the second and not at all from the third on; wide: the sharpening of the map's small features (showcase look.fine) sets them off against a neighbourhood of so many pixels in the far view; near the lens that neighbourhood is never fewer than this many texels of the map, so the features of the map keep their contrast when a texel grows to a pixel and the globe has no brighter tone where it is nearest; seed. The texels view counts, only where the structure is whole, the cells a pixel of the finest octave that is drawn at half strength or more, from the same coordinates and weights as the picture.",
     "reach": [
       1.3,
-      2.0
+      1.75
     ],
     "cell": 0.0056,
-    "stretch": 6,
+    "stretch": 14,
     "octaves": 8,
-    "amount": 0.09,
+    "amount": 0.14,
     "fall": 0.88,
     "bend": 0.6,
     "pixels": [
@@ -215,7 +291,60 @@
       1.1,
       1.3
     ],
-    "calm": 1.0,
+    "zone": [
+      0.4,
+      1.6,
+      0.03
+    ],
+    "relief": [
+      1.5,
+      -0.1,
+      0.45
+    ],
+    "wide": 20,
     "seed": 4127
+  },
+  "sky": {
+    "note": "one sky for the stop: the film's own star field, in the far view and in the skim alike, and nothing of it follows the clock. hero: the picture of the sky of the hold belongs to the path the lens flies in the hold; it shows in full on that path and leaves with the distance of the lens from it (planet radii, to the nearest point of the path): none of it is left from the distance reach on, and between it falls by a smooth step of the distance over reach to the power power, which spreads the fall evenly over the first part of the dive; slack is the distance under which the lens counts as on the path and chords the number of chords the path is measured with. So it is gone before the engine changes the view and never comes back in the rise (plan.ts skyProof stops the build if a path breaks that). heights: the two heights of the lens over the ring plane (planet radii, by the logarithm, the lower is the skim) between which the air of the stop comes in, the same way down and up, and power the power on its course between them (under 1: it comes in early below the upper height, so the stars the picture of the hold uncovers are dimmed as they show, and settles at the lower; the upper height lies under every height of the hold, plan.ts skyProof stops the build if it does not): near is the share of the exposure of the stars that is left at the lower height (extinction), lift: the stars of the flight (the many faint stars of the film's open sky, which the engine brings in through the rise after its change of view) come in by the height of the lens over the ring plane and not by the clock: their level is a smooth step of 1 - (1 - share)^lift.power, share the way between the two heights of lift.heights (planet radii); the lens climbs ever slower toward the end of the rise, so with the power one half the level runs evenly over the frames of the climb (plan.ts skyLiftAt undoes the engine's own course so that this is the level shown); the lower height lies over every height at which the hold and the dive are flown, so it is one function of the height going down and coming up (none of them at any height of the hold or of the dive, none at the same heights in the rise), and over the height of the lens at the engine's change of view in the rise; the upper lies under its height at the end of the rise (plan.ts skyProof stops the build if not). glow the faint light of the fine dust over the plane that lies under the stars there (veil.ts): color in linear light at the exposure of the stop, plane how much brighter it is along the ring plane than high over it, fall the sine of the angle over the plane at which that gain has fallen to 1 over e. halo: the light of the lit globe thrown forward by that dust, a wide soft glow round the lit limb: color at the limb, fallDeg the angle from the limb at which it has fallen to 1 over e, lit the two cosines of the angle between the nearest limb and the Sun between which it comes in (none at the dark limb).",
+    "hero": {
+      "reach": 1.2,
+      "power": 0.75,
+      "slack": 0.0001,
+      "chords": 300
+    },
+    "heights": [
+      0.6,
+      2.2
+    ],
+    "power": 0.5,
+    "near": 0.17,
+    "lift": {
+      "heights": [
+        2.42,
+        2.9377
+      ],
+      "power": 0.5
+    },
+    "glow": {
+      "color": [
+        0.0022,
+        0.0035,
+        0.0055
+      ],
+      "plane": 0.8,
+      "fall": 0.15,
+      "halo": {
+        "color": [
+          0.008,
+          0.0076,
+          0.0062
+        ],
+        "fallDeg": 13,
+        "lit": [
+          -0.2,
+          0.4
+        ]
+      }
+    }
   }
 }
