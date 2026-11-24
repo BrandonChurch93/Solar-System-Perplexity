@@ -55,27 +55,73 @@ export function project(p: Pose, point: THREE.Vector3, width: number, height: nu
 }
 
 export function sphereHit(p: Pose, px: number, py: number, width: number, height: number): THREE.Vector3 | null {
-  const k = height / 2 / Math.tan((p.vfov * RAD) / 2)
-  const ray = new THREE.Vector3((px - width / 2) / k, (height / 2 - py) / k, -1).normalize().applyQuaternion(p.quaternion)
-  const along = -p.position.dot(ray)
+  const dir = ray(p, px, py, width, height)
+  const along = -p.position.dot(dir)
   const disc = along * along - p.position.lengthSq() + 1
   if (disc <= 0) return null
   const t = along - Math.sqrt(disc)
-  return t > 0 ? p.position.clone().addScaledVector(ray, t) : null
+  return t > 0 ? p.position.clone().addScaledVector(dir, t) : null
+}
+
+// The ground of a stop whose place lies on its rings: the plane through the origin with this normal, between the two radii, where the globe
+// (the unit sphere) does not stand in front of it. centre is the place itself, a point of that plane.
+export interface Plane { normal: THREE.Vector3; inner: number; outer: number; centre: THREE.Vector3 }
+
+const ray = (p: Pose, px: number, py: number, width: number, height: number): THREE.Vector3 => {
+  const k = height / 2 / Math.tan((p.vfov * RAD) / 2)
+  return new THREE.Vector3((px - width / 2) / k, (height / 2 - py) / k, -1).normalize().applyQuaternion(p.quaternion)
+}
+
+// Whether the camera sees a point: the unit sphere does not stand between the two.
+export function seen(p: Pose, point: THREE.Vector3): boolean {
+  const to = point.clone().sub(p.position)
+  const far = to.length()
+  if (far < 1e-12) return true
+  const dir = to.multiplyScalar(1 / far)
+  const along = -p.position.dot(dir)
+  const disc = along * along - p.position.lengthSq() + 1
+  if (disc <= 0) return true
+  const t = along - Math.sqrt(disc)
+  return !(t > 0 && t < far - 1e-9)
+}
+
+const onPlane = (g: Plane, point: THREE.Vector3): boolean => {
+  const r = point.length()
+  return r >= g.inner && r <= g.outer
+}
+
+export function planeHit(p: Pose, px: number, py: number, width: number, height: number, g: Plane): THREE.Vector3 | null {
+  const dir = ray(p, px, py, width, height)
+  const down = dir.dot(g.normal)
+  if (Math.abs(down) < 1e-12) return null
+  const t = -p.position.dot(g.normal) / down
+  if (!(t > 0)) return null
+  const point = p.position.clone().addScaledVector(dir, t)
+  return onPlane(g, point) && seen(p, point) ? point : null
+}
+
+// The ground of a plan whose place lies on its rings, null for a place on the body.
+export function ringPlane(plan: StopPlan): Plane | null {
+  const rings = plan.fit.rings
+  const point = (plan as unknown as { placePoint?: () => THREE.Vector3 }).placePoint
+  if (plan.p.spot.on !== 'rings' || !rings || !point) return null
+  return { normal: new THREE.Vector3(...rings.normal).normalize(), inner: rings.inner, outer: rings.outer, centre: point.call(plan) }
 }
 
 export interface Curves { fall: (number | null)[]; turn: (number | null)[]; speed: (number | null)[]; ring: ((number | null)[] | null)[] }
 
 export type Ring = 'picture' | 'ground'
 
-export const MIN_POINTS = 4
+export const MIN_POINTS = 5
 
 // What changed from capture frame k - 1 to k, counted per film frame: the fall of the height (its logarithm, a climb in a rise), the turn of the
 // camera in degrees, and how far ground points on a ring round the place move in the picture, in pixels. ring holds what every point of the ring
 // gave, null where it has no ground under it; speed is their mean where at least MIN_POINTS have one.
+// A point has ground only where it lies on what the camera sees of the place's own surface: the unit sphere of the stop, or the plane of its
+// rings (ground) where the place lies on the rings.
 // The ring: 'picture' is a circle of ringPx in the picture round the place, each point the ground under that pixel (a point over the sky has
 // none). 'ground' is a circle on the ground round the same spot, as wide as ringPx at its distance: every point lies on the ground.
-export function curves(w: Window, plan: StopPlan, width: number, height: number, ringPx: number, form: Ring = 'picture', ringPoints = 8): Curves {
+export function curves(w: Window, plan: StopPlan, width: number, height: number, ringPx: number, form: Ring = 'picture', ringPoints = 8, ground: Plane | null = null): Curves {
   const sign = w.kind === 'dive' ? 1 : -1
   const out: Curves = { fall: [], turn: [], speed: [], ring: [] }
   w.samples.forEach((s, i) => {
@@ -89,7 +135,8 @@ export function curves(w: Window, plan: StopPlan, width: number, height: number,
     }
     out.fall.push(prev.height > 0 && s.height > 0 ? sign * Math.log(prev.height / s.height) * w.rate : null)
     out.turn.push((prev.pose.quaternion.angleTo(s.pose.quaternion) / RAD) * w.rate)
-    const spot = project(s.pose, plan.place(w.kind, s.time), width, height)
+    const place = ground ? ground.centre : plan.place(w.kind, s.time)
+    const spot = project(s.pose, place, width, height)
     if (!spot.front) {
       out.speed.push(null)
       out.ring.push(null)
@@ -98,14 +145,15 @@ export function curves(w: Window, plan: StopPlan, width: number, height: number,
     const cx = Math.min(Math.max(spot.x, ringPx), width - ringPx)
     const cy = Math.min(Math.max(spot.y, ringPx), height - ringPx)
     const carry = plan.turn(s.time).invert().premultiply(plan.turn(prev.time))
-    const moved = (ground: THREE.Vector3, x: number, y: number): number | null => {
-      const before = project(prev.pose, ground.clone().applyQuaternion(carry), width, height)
+    const moved = (point: THREE.Vector3, x: number, y: number): number | null => {
+      const before = project(prev.pose, point.clone().applyQuaternion(carry), width, height)
       return before.front ? Math.hypot(x - before.x, y - before.y) * w.rate : null
     }
+    const hit = (x: number, y: number): THREE.Vector3 | null => (ground ? planeHit(s.pose, x, y, width, height, ground) : sphereHit(s.pose, x, y, width, height))
     const points: (number | null)[] = []
     if (form === 'ground') {
-      const centre = sphereHit(s.pose, cx, cy, width, height) ?? plan.place(w.kind, s.time).clone().normalize()
-      const up = centre.clone().normalize()
+      const centre = hit(cx, cy) ?? (ground ? place.clone() : place.clone().normalize())
+      const up = ground ? ground.normal.clone() : centre.clone().normalize()
       const right = new THREE.Vector3(1, 0, 0).applyQuaternion(s.pose.quaternion)
       const e1 = right.addScaledVector(up, -right.dot(up))
       if (e1.lengthSq() < 1e-12) e1.set(0, 1, 0).applyQuaternion(s.pose.quaternion).addScaledVector(up, -new THREE.Vector3(0, 1, 0).applyQuaternion(s.pose.quaternion).dot(up))
@@ -115,17 +163,18 @@ export function curves(w: Window, plan: StopPlan, width: number, height: number,
       const radius = Math.min((ringPx / focal) * centre.distanceTo(s.pose.position), 0.5)
       for (let j = 0; j < ringPoints; j++) {
         const a = (j / ringPoints) * 2 * Math.PI
-        const ground = centre.clone().addScaledVector(e1, Math.cos(a) * radius).addScaledVector(e2, Math.sin(a) * radius).normalize()
-        const now = project(s.pose, ground, width, height)
-        points.push(now.front ? moved(ground, now.x, now.y) : null)
+        const point = centre.clone().addScaledVector(e1, Math.cos(a) * radius).addScaledVector(e2, Math.sin(a) * radius)
+        if (!ground) point.normalize()
+        const now = project(s.pose, point, width, height)
+        points.push(now.front && seen(s.pose, point) && (!ground || onPlane(ground, point)) ? moved(point, now.x, now.y) : null)
       }
     } else {
       for (let j = 0; j < ringPoints; j++) {
         const a = (j / ringPoints) * 2 * Math.PI
         const x = cx + Math.cos(a) * ringPx
         const y = cy + Math.sin(a) * ringPx
-        const ground = sphereHit(s.pose, x, y, width, height)
-        points.push(ground ? moved(ground, x, y) : null)
+        const point = hit(x, y)
+        points.push(point ? moved(point, x, y) : null)
       }
     }
     const got = points.filter((v): v is number => v !== null)

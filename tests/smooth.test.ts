@@ -1,11 +1,13 @@
+import * as THREE from 'three'
 import { describe, expect, it } from 'vitest'
 import { config } from '../src/config'
 import { captureRate, setCapture, spanMid } from '../src/core/clock'
+import type { Pose } from '../src/core/types'
 import { shutterMid } from '../src/core/sampler'
 import { FilmDirector } from '../src/director/film'
 import { sideAt } from '../src/director/handover'
 import { plans } from '../src/director/plans'
-import { curves, sampleWindow } from '../tools/smooth/camera'
+import { curves, planeHit, ringPlane, sampleWindow, seen } from '../tools/smooth/camera'
 import { judgeCurve, longestGap, position, shown, table } from '../tools/smooth/path'
 
 const limits = { maxStep: 0.08, maxRebound: 0.03, seamFrames: 2 }
@@ -147,14 +149,61 @@ describe('a curve that is a mean over points', () => {
     expect(real.climbAfterPeak.frame).toBe(74)
   })
 
-  it('says not measured, which is red, where fewer than four points are left', () => {
-    const values = rows(100, (i) => (i >= 40 && i < 43 ? [0, 1, 2, 3, 4] : []))
-    const r = judgeCurve('speed', 'px', plain(values), 0, 1, { first: 0, end: 100 }, limits, 0, { values, min: 4 })
-    expect(rules(r)).toEqual(['points'])
-    expect(r.points!.notMeasured).toBe(4)
-    expect(r.faults[0]!.first).toBe(40)
-    expect(r.faults[0]!.last).toBe(43)
-    expect(r.faults[0]!.text).toContain('NOT MEASURED')
+  it('shows and does not judge a row with fewer than five points, and counts those rows', () => {
+    const values = rows(100, (i) => (i >= 40 && i < 43 ? [0, 1, 2, 3] : []))
+    const r = judgeCurve('speed', 'px', plain(values), 0, 1, { first: 0, end: 100 }, limits, 0, { values, min: 5 })
+    expect(r.faults).toEqual([])
+    expect(r.points).toMatchObject({ min: 5, fewest: 4, notMeasured: 4, first: 40, last: 43 })
+    expect(r.step[41]).toBeNull()
+    const five = rows(100, (i) => (i >= 40 && i < 43 ? [0, 1, 2] : []))
+    const kept = judgeCurve('speed', 'px', plain(five), 0, 1, { first: 0, end: 100 }, limits, 0, { values: five, min: 5 })
+    expect(kept.points).toMatchObject({ fewest: 5, notMeasured: 0, first: null, last: null })
+    const none = rows(100, () => [0, 1, 2, 3])
+    expect(rules(judgeCurve('speed', 'px', none.map(() => null), 0, 1, { first: 0, end: 100 }, limits, 0, { values: none, min: 5 }))).toEqual(['mean'])
+  })
+})
+
+describe('the ground of a place on the rings', () => {
+  const g = { normal: new THREE.Vector3(0, 1, 0), inner: 1.2, outer: 2.3, centre: new THREE.Vector3(1.8, 0, 0) }
+  const look = (from: THREE.Vector3, to: THREE.Vector3): Pose => ({ position: from, quaternion: new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().lookAt(from, to, new THREE.Vector3(0, 1, 0))), vfov: 30 })
+
+  it('is the plane of the rings between their radii', () => {
+    const p = look(new THREE.Vector3(1.8, 0.5, 1.5), g.centre)
+    const hit = planeHit(p, 960, 540, 1920, 1080, g)!
+    expect(hit.distanceTo(g.centre)).toBeLessThan(1e-9)
+    const beyond = look(new THREE.Vector3(1.8, 0.5, 1.5), new THREE.Vector3(3, 0, 0))
+    expect(planeHit(beyond, 960, 540, 1920, 1080, g)).toBeNull()
+    const gap = look(new THREE.Vector3(1.8, 0.5, 1.5), new THREE.Vector3(1.1, 0, 0))
+    expect(planeHit(gap, 960, 540, 1920, 1080, g)).toBeNull()
+    expect(planeHit(look(new THREE.Vector3(1.8, 0.5, 1.5), new THREE.Vector3(1.8, 3, 1.5)), 960, 540, 1920, 1080, g)).toBeNull()
+  })
+
+  it('is not seen behind the globe', () => {
+    const p = look(new THREE.Vector3(3, 0.4, 0), new THREE.Vector3(-1.8, 0, 0))
+    expect(planeHit(p, 960, 540, 1920, 1080, g)).toBeNull()
+    expect(seen(p, new THREE.Vector3(-1.8, 0, 0))).toBe(false)
+    expect(seen(p, new THREE.Vector3(1.8, 0, 0))).toBe(true)
+    expect(seen(p, new THREE.Vector3(0, 0, 1.8))).toBe(true)
+  })
+
+  it('carries the speed of Saturn, whose place lies on its rings, and of no other stop', () => {
+    const film = new FilmDirector(plans)
+    const S = config.raw.smooth
+    const master = config.formats[config.formatKeys.master]!
+    for (const q of plans) expect(ringPlane(q) !== null).toBe(q.id === 'saturn')
+    const saturn = plans.find((q) => q.id === 'saturn')!
+    const ground = ringPlane(saturn)!
+    expect(Math.abs(ground.centre.dot(ground.normal))).toBeLessThan(1e-6)
+    expect(ground.centre.length()).toBeGreaterThan(ground.inner)
+    expect(ground.centre.length()).toBeLessThan(ground.outer)
+    for (const kind of ['dive', 'rise'] as const) {
+      const w = sampleWindow(config, film, saturn, kind, 1, S.reachFrames)!
+      const c = curves(w, saturn, master.width, master.height, S.path.ringPx, 'picture', 8, ground)
+      const last = kind === 'dive' ? w.own.end - 1 - w.k0 : w.own.first - w.k0
+      expect(c.ring[last]!.filter((v) => v !== null).length).toBeGreaterThanOrEqual(5)
+      expect(c.speed[last]).toBeGreaterThan(0)
+    }
+    setCapture(1)
   })
 })
 

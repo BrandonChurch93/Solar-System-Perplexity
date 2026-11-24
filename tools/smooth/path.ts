@@ -6,12 +6,12 @@ export interface Span { first: number; end: number }
 
 export interface CurveLimits { maxStep: number; maxRebound: number; seamFrames: number }
 
-export interface Fault { curve: string; rule: 'step' | 'halfStep' | 'climbAfterPeak' | 'fallBeforePeak' | 'mean' | 'points'; k: number; frame: number; value: number; limit: number; first?: number; last?: number; count?: number; points?: number; text: string }
+export interface Fault { curve: string; rule: 'step' | 'halfStep' | 'climbAfterPeak' | 'fallBeforePeak' | 'mean'; k: number; frame: number; value: number; limit: number; first?: number; last?: number; count?: number; points?: number; text: string }
 
 // A curve that is a mean over points (the speed of the picture: ground points on a ring round the place). values[i] holds what every point gave
 // at capture frame k0 + i, null where a point has no ground under it. A step and a rebound compare the mean over one fixed set of points, the
-// points that have a value in every frame they compare, so the curve never steps because the count of its points changed. Fewer than min points
-// is not measured.
+// points that have a value in every frame they compare, so the curve never steps because the count of its points changed. A step over fewer
+// than min points is shown and not judged; points counts those steps.
 export interface Members { values: ((number | null)[] | null)[]; min: number }
 
 export interface Mark { k: number; frame: number; value: number; points?: number }
@@ -34,7 +34,7 @@ export interface CurveResult {
   climbAfterPeak: Mark
   fallBeforePeak: Mark
   missing: number
-  points: { of: number; min: number; fewest: number; counts: number[]; notMeasured: number } | null
+  points: { of: number; min: number; fewest: number; counts: number[]; notMeasured: number; first: number | null; last: number | null } | null
   faults: Fault[]
 }
 
@@ -207,11 +207,7 @@ export function judgeCurve(name: string, unit: string, raw: (number | null)[], k
     })
     let fewest = Infinity
     for (let k = own.first; k < own.end; k++) fewest = Math.min(fewest, counts[k - k0] ?? 0)
-    points = { of: Math.max(0, ...members.values.map((v) => v?.length ?? 0)), min: members.min, fewest: Number.isFinite(fewest) ? fewest : 0, counts, notMeasured: lost.length }
-    if (lost.length > 0) {
-      const k = lost[0]!
-      faults.push({ curve: name, rule: 'points', k, frame: frameOf(k), value: lost.length, limit: 0, first: k, last: lost[lost.length - 1]!, count: lost.length, points: shared[k + ':' + rate] ?? 0, text: name + ': NOT MEASURED in ' + lost.length + ' steps from frame ' + position(k, rate) + ' to ' + position(lost[lost.length - 1]!, rate) + ': fewer than ' + members.min + ' of the ' + points.of + ' points have ground under them in both frames of the step' })
-    }
+    points = { of: Math.max(0, ...members.values.map((v) => v?.length ?? 0)), min: members.min, fewest: Number.isFinite(fewest) ? fewest : 0, counts, notMeasured: lost.length, first: lost.length ? lost[0]! : null, last: lost.length ? lost[lost.length - 1]! : null }
   }
   return { name, unit, rate, mean, floor, floored, over, step, halfStep, peak, worstStep, worstHalfStep, worstBeyond, seams, climbAfterPeak: climb, fallBeforePeak: fall, missing, points, faults }
 }

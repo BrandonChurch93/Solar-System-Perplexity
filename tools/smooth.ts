@@ -10,7 +10,7 @@ import { handoverFrame, handoverOf } from '../src/director/handover'
 import { setCapture, spanMid } from '../src/core/clock'
 import type { Pose } from '../src/core/types'
 import { plans } from '../src/director/plans'
-import { MIN_POINTS, carriedCamera, curves, sampleWindow, sphereHit, type Kind, type Ring } from './smooth/camera'
+import { MIN_POINTS, carriedCamera, curves, ringPlane, sampleWindow, sphereHit, type Kind, type Plane, type Ring } from './smooth/camera'
 import { judgeCurve, longestGap, position, shown, table, type CurveResult, type Fault, type Row } from './smooth/path'
 
 // The measures of a smooth dive and rise (kit/PROGRESS.md, second review note of 2026-11-23, plan I). One stop.
@@ -19,7 +19,9 @@ import { judgeCurve, longestGap, position, shown, table, type CurveResult, type 
 //           camera and the speed of the picture at the place, each over the mean of the move. Judged: the change over one film frame, the same
 //           across both seams, and one rise and one fall (smooth.path). The speed is a mean over ground points on a ring round the place:
 //           every step and every rebound compares the mean over the points that have ground in every frame it compares, and their count
-//           stands beside the number; fewer than 4 is not measured, which is red. --ring ground tries the ring laid on the ground.
+//           stands beside the number; a row with fewer than 5 of the 8 is shown and not judged, and the report says how many rows that was.
+//           A point counts only on what the camera sees of the place's own surface (the plane of the rings where the place lies on the
+//           rings). --ring ground tries the ring laid on the ground.
 // pictures  from draft frames, every frame of the dive and of the rise and smooth.reachFrames film frames into each neighbour (capture frames once
 //           the page knows a rate, whole film frames until then): the step of the frame's level against the line through its two neighbours,
 //           and the pop score: what is left of the difference between a frame and the next once the motion between them is taken out, over the
@@ -86,6 +88,7 @@ mkdirSync(dir, { recursive: true })
 
 const plan = plans.find((p) => p.id === stop)!
 const film = new FilmDirector(plans)
+const ringGround: Plane | null = ringPlane(plan)
 
 interface PartResult { measured: boolean; pass: boolean; why: string[]; note?: string }
 
@@ -108,7 +111,7 @@ function pathOf(kind: Kind): PathKind | null {
     if (!w) return null
     if (r === 1) whole = w
     else fine = w
-    const c = curves(w, plan, master.width, master.height, S.path.ringPx, ring)
+    const c = curves(w, plan, master.width, master.height, S.path.ringPx, ring, 8, ringGround)
     runs.push({ rate: r, curves: UNITS.map(([key, name, unit, floor]) => judgeCurve(name, unit, c[key], w.k0, r, w.own, S.path, floor, key === 'speed' ? { values: c.ring, min: MIN_POINTS } : null)) })
   }
   const w = whole!
@@ -634,7 +637,14 @@ function pathText(kind: Kind, p: PathKind | null): string[] {
     }
   }
   const dots = p.runs[0]!.curves.find((c) => c.points)?.points
-  if (dots) lines.push('', 'The speed is a mean over ' + dots.of + ' ground points on a ring round the place (' + (ring === 'ground' ? 'a circle on the ground, as wide as ' + L.ringPx + ' px at its distance' : 'a circle of ' + L.ringPx + ' px in the picture, a point over the sky has no ground') + '). Each step and each fall or climb compares the mean over the points that have ground in every frame it compares: "over N" is their count. Fewer than ' + dots.min + ' is not measured, which is red. Fewest points in a frame of the move: ' + p.runs.map((r) => (r.rate === 1 ? 'whole frames ' : 'rate ' + r.rate + ' ') + (r.curves.find((c) => c.points)?.points?.fewest ?? '')).join(', ') + '.')
+  if (dots) {
+    const surface = ringGround ? 'the plane of the rings between their two radii, where the globe does not hide it' : 'the sphere of the body'
+    lines.push('', 'The speed is a mean over ' + dots.of + ' ground points on a ring round the place (' + (ring === 'ground' ? 'a circle on the ground, as wide as ' + L.ringPx + ' px at its distance' : 'a circle of ' + L.ringPx + ' px in the picture') + '). A point counts only where it lies on what the camera sees of the place\'s own surface: ' + surface + '. Each step and each fall or climb compares the mean over the points that count in every frame it compares: "over N" is their count. A row with fewer than ' + dots.min + ' of the ' + dots.of + ' is shown and not judged. Fewest points in a frame of the move: ' + p.runs.map((r) => (r.rate === 1 ? 'whole frames ' : 'rate ' + r.rate + ' ') + (r.curves.find((c) => c.points)?.points?.fewest ?? '')).join(', ') + '.')
+    lines.push('', 'Rows of the speed shown and not judged: ' + p.runs.map((r) => {
+      const d = r.curves.find((c) => c.points)!.points!
+      return (r.rate === 1 ? 'whole frames ' : 'rate ' + r.rate + ' ') + d.notMeasured + (d.notMeasured ? ' (frames ' + position(d.first!, r.rate) + ' to ' + position(d.last!, r.rate) + ')' : '')
+    }).join(', ') + '.')
+  }
   lines.push('', 'Limits: step ' + L.maxStep + ' of the mean over one film frame, from ' + L.seamFrames + ' film frames before the segment to ' + L.seamFrames + ' after it; fall before the largest value and climb after it ' + L.maxRebound + ' of the mean, inside the segment. Steps further into the neighbours are shown and not judged.', '')
   if (p.faults.length) lines.push(...p.faults.map((f) => '- RED ' + f.text), '')
   else lines.push('No number of the path is over its limit.', '')
