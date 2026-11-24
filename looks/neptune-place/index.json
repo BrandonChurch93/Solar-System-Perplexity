@@ -1,9 +1,33 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T03:42:54.084Z",
- "head": "b57b7c2d8fee95bea61acab2fcd97e380aed0159",
- "note": "4860 T11 over the approved image; the dive 4708 to 4731 every frame, the rest renders",
+ "pushed": "2026-11-24T04:06:45.977Z",
+ "head": "105da414c7ad3810f0b153d925ccd89ab64604d0",
+ "note": "the dive with T11, every frame 4732 to 4767; proof a of NOTE 501 holds (five master draft hashes equal with the factor in)",
  "looks": [
+  {
+   "time": "2026-11-24T04:06:45.369Z",
+   "file": "20261124040645369-note-s-V1-4756.jpg",
+   "source": "../../../../tmp/s-V1-4756.jpg",
+   "kind": "note",
+   "label": "the dive V1, every frame 4756 to 4767: into the surface view's pose, nothing jumps",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T04:06:44.776Z",
+   "file": "20261124040644776-note-s-V1-4744.jpg",
+   "source": "../../../../tmp/s-V1-4744.jpg",
+   "kind": "note",
+   "label": "the dive V1, every frame 4744 to 4755",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T04:06:44.177Z",
+   "file": "20261124040644177-note-s-V1-4732.jpg",
+   "source": "../../../../tmp/s-V1-4732.jpg",
+   "kind": "note",
+   "label": "the dive V1 (T11 on merged main), every frame 4732 to 4743: the scene alone on the globe; from this height the veil reads as a grey slab with a straight edge and a stepped west end",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T03:42:52.863Z",
    "file": "20261124034252863-note-s-V1-4720.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/d1-pair.jpg",
    "kind": "note",
    "label": "4860 draft T8 (below) under the approved image (above), work tree on 85312d1b",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T03:07:20.958Z",
-   "file": "20261124030720958-note-q-T5.jpg",
-   "source": "../../../../tmp/q-T5.jpg",
-   "kind": "note",
-   "label": "4860 draft T5 (above, not committed) over the approved image, after mail 484: the ridge a chain of heaps with fibres (ridge pixels median 162 against 153, share of the box 15.3 against 14.6 percent), storm with a graded rim and a black blue floor, limb haze narrower with streaks in it, second streamer thin and long, low haze cut to a third so the near deck is darker. Still wrong: heaps too chunky and white, shadow beside the ridge faint, rings round the storm too many",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T02:43:49.348Z",
-   "file": "20261124024349348-note-d-N13.jpg",
-   "source": "../../../../tmp/d-N13.jpg",
-   "kind": "note",
-   "label": "4860 draft N13 (left, not committed) beside the approved image: veil at the limb, one ridge of heaps, storm with a soft ragged rim and dark blue floor, deck streaks reduced and none in the near field, second streamer broken. Still wrong: the ridge is a white rope without grey flanks or translucent fringe, far field without bands",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T02:24:34.112Z",
-   "file": "20261124022434112-note-s-r2-5014.jpg",
-   "source": "../../../../tmp/s-r2-5014.jpg",
-   "kind": "note",
-   "label": "the rise on 85312d1b, every frame 5014 to 5024: the globe alone, the pose of the travel",
    "stop": "neptune"
   }
  ]
