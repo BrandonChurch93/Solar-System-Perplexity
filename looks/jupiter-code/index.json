@@ -1,9 +1,81 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T04:02:49.672Z",
- "head": "86fd73cfb2fec7f93cc45ce5b5e3eee96138e8e0",
- "note": "04:07 UTC. Tree: main 6884e808 plus the pick of the even sky plus the MAIL 448 files, not committed yet (HEAD printed here is the pick). The note of the push before says 03:57, it was 03:39. Final 2895 against the kept still: body under 0.97 radii 2187 pixels differ, none by more than one level; dark sky mean +0.68, largest 7; limb 0.995 to 1.03 radii mean +0.54, largest 9 at single pixels (the sky shows through the air). Grain correlation of the judged frame at draft: dark sky -0.004, blocks -0.016 to +0.013 (was -0.160). Next: the named commit of MAIL 508 on the branch.",
+ "pushed": "2026-11-24T04:18:23.219Z",
+ "head": "ce476684c411fe4f5aa62099d40d4ce2d9020240",
+ "note": "04:19 UTC. Jupiter on the engine's one move (plan E), draft, place picture off in both moves. Uncommitted tree on ce476684c (448). Path judge: dive green, rise red 4 (rate 0.087 against 0.08 at 3245). Known wrong: plates embossed 3015 to 3020 and 3270, cloud banks 3030 to 3038.",
  "looks": [
+  {
+   "time": "2026-11-24T04:18:22.086Z",
+   "file": "20261124041822086-note-e0-rise.jpg",
+   "source": "../work/e/sheets/e0-rise.jpg",
+   "kind": "note",
+   "label": "plan E, rise on the engine's one move, draft, frames 3240 to 3315 (uncommitted tree: E on ce476684c)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T04:18:21.330Z",
+   "file": "20261124041821330-note-e0-dive.jpg",
+   "source": "../work/e/sheets/e0-dive.jpg",
+   "kind": "note",
+   "label": "plan E, dive on the engine's one move, draft, frames 2975 to 3059 (uncommitted tree: E on ce476684c)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T04:18:06.697Z",
+   "file": "20261124041806697-frame-f02820.jpg",
+   "source": "out/work/jupiter/frames/f1/f02820.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2820, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2820,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "b9bf88688faef876"
+  },
+  {
+   "time": "2026-11-24T04:14:38.438Z",
+   "file": "20261124041438438-frame-f03315.jpg",
+   "source": "out/work/jupiter/frames/e0/f03315.png",
+   "kind": "frame",
+   "label": "jupiter.travel frame 3315, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.travel",
+   "frame": 3315,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "b9bf88688faef876"
+  },
+  {
+   "time": "2026-11-24T04:13:44.129Z",
+   "file": "20261124041344129-frame-f03259.jpg",
+   "source": "out/work/jupiter/frames/e0/f03259.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3259, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3259,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "b9bf88688faef876"
+  },
+  {
+   "time": "2026-11-24T04:11:50.770Z",
+   "file": "20261124041150770-frame-f03055.jpg",
+   "source": "out/work/jupiter/frames/e0/f03055.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 3055, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 3055,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "b9bf88688faef876"
+  },
   {
    "time": "2026-11-24T04:02:49.102Z",
    "file": "20261124040249102-note-limb-bottom.jpg",
@@ -19,78 +91,6 @@
    "kind": "note",
    "label": "2895 final, new minus kept, smoothed over 4 px, 80 times, grey is no change: sky up 0.7 of a level, 0.4 in the crescent on the lit side, body equal",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T04:02:47.971Z",
-   "file": "20261124040247971-note-pair2895-sky-right-x4.jpg",
-   "source": "../work/g448/out/pair2895-sky-right-x4.jpg",
-   "kind": "note",
-   "label": "2895 final, sky right of the planet at 4 times the level, kept left, new right",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T04:02:47.203Z",
-   "file": "20261124040247203-note-pair2895-whole.jpg",
-   "source": "../work/g448/out/pair2895-whole.jpg",
-   "kind": "note",
-   "label": "2895 final, kept still left, with the hold sky made from the glow without grain right (MAIL 448)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T03:57:08.994Z",
-   "file": "20261124035708994-frame-f02895.jpg",
-   "source": "out/work/jupiter/frames/b448f/f02895.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2895, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "271bbb7ec3525e53"
-  },
-  {
-   "time": "2026-11-24T03:53:26.508Z",
-   "file": "20261124035326508-frame-f03277.jpg",
-   "source": "out/work/jupiter/frames/b448/f03277.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3277, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3277,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "271bbb7ec3525e53"
-  },
-  {
-   "time": "2026-11-24T03:50:49.349Z",
-   "file": "20261124035049349-frame-f03059.jpg",
-   "source": "out/work/jupiter/frames/b448/f03059.png",
-   "kind": "frame",
-   "label": "jupiter.dive frame 3059, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 3059,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "271bbb7ec3525e53"
-  },
-  {
-   "time": "2026-11-24T03:47:15.956Z",
-   "file": "20261124034715956-frame-f02789.jpg",
-   "source": "out/work/jupiter/frames/b448/f02789.png",
-   "kind": "frame",
-   "label": "mars.travel frame 2789, draft tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "frame": 2789,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "271bbb7ec3525e53"
   }
  ]
 }
