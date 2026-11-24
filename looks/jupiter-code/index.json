@@ -1,9 +1,33 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T18:57:31.485Z",
- "head": "25cacafff31c0267fa245dd60376f13ac9cd9cf1",
- "note": "18:57 UTC: rise of the head as the base; what 3150 reads from the plates, tested before the plates are rebuilt",
+ "pushed": "2026-11-24T19:22:37.780Z",
+ "head": "2c088fa97c35f5c7ea1893b997c7b34caa6ede4d",
+ "note": "19:24 ruling 1 and 3: the near plate rebuilt on the globe's own picture, first take; nothing committed yet under src or public (a render runs)",
  "looks": [
+  {
+   "time": "2026-11-24T19:22:36.059Z",
+   "file": "20261124192236059-note-near-plate-r2t1.jpg",
+   "source": "../work/r3/near-plate-r2t1.jpg",
+   "kind": "note",
+   "label": "19:20 take 1 joined to the guide (the guide above 1 unit, the take below): the pair test with the globe reads 0.21 (limit 0.45, the shipped plate 1.10)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T19:22:34.707Z",
+   "file": "20261124192234707-note-near-r2-t1.jpg",
+   "source": "../work/r3/near-r2-t1.jpg",
+   "kind": "note",
+   "label": "19:18 near take 1 of round 2 on that guide (not yet kept: big billows, a straight ridge at the fan's left edge)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T19:22:33.094Z",
+   "file": "20261124192233094-note-near-in-2.jpg",
+   "source": "../work/r3/near-in-2.jpg",
+   "kind": "note",
+   "label": "19:14 new guide of the near plate: the globe's own picture above 1 unit, the view's detail in the fan, nothing cleared",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-24T18:57:30.928Z",
    "file": "20261124185730928-note-diff-D-3150.jpg",
@@ -194,30 +218,6 @@
    "source": "../work/sky/Rt-sky1.png",
    "kind": "note",
    "label": "rise, sky windows at full size, working tree: stars are points, the field moves only as the camera turns",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T17:38:19.009Z",
-   "file": "20261124173819009-note-Rt-a.jpg",
-   "source": "../work/sky/Rt-a.jpg",
-   "kind": "note",
-   "label": "rise 3280 to 3299, every frame, draft tier, working tree with the sky that stands still (no terrain aim, the rise's turn to the next sky hidden between 0.095 and 0.39 radii)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T17:24:41.392Z",
-   "file": "20261124172441392-note-pat-Rb.jpg",
-   "source": "../work/ff/pat-Rb.jpg",
-   "kind": "note",
-   "label": "rise base on the merge, rows 3247 to 3252 by the pattern measure: 0.48, 0.64, 0.53, 0.51",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T17:24:40.700Z",
-   "file": "20261124172440700-note-DdDs-sky-lift.jpg",
-   "source": "../work/sky/DdDs-sky-lift.png",
-   "kind": "note",
-   "label": "3033 and 3045 upper right quarter, level times 3, left the dive's report frames kept at 11:20 UTC (tree a90e29f), right the working tree: a dark band without stars over the limb with a straight end, in both",
    "stop": "jupiter"
   }
  ]
