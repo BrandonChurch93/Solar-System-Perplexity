@@ -18,7 +18,10 @@ export interface PathOptions { rise?: number; fall?: number; turnRise?: number; 
 // flank over which its slope comes in and goes out. turn: flanks of the same kind for the eye's direction from the place and the camera's
 // uprightness, where they are to run on a bell of their own. liftPower: the height runs with the lift of that direction to this power
 // (StopPlan.eyeLaw). A stop that sets none of the three takes the film's for that side (handover.dive, handover.rise of the config).
-export interface HandoverSide extends Partial<HandoverTimes> { skyFrames?: number; live?: boolean; picture?: boolean; place?: PlaceOptions; path?: PathOptions; pace?: { rise?: number; fall?: number; corner?: number }; turn?: { rise?: number; fall?: number; corner?: number }; liftPower?: number; skyFloor?: boolean }
+// corners (of pace and of turn, the stop's alone): two corners for a flank in place of the one, [foot, top]: the share of the flank over
+// which its slope comes in at the end of the move and the share over which it goes out at the plateau. A long foot at the far end lets
+// the rate die away slowly where the picture runs fast for the same rate; a flank that is not named keeps corner at both ends.
+export interface HandoverSide extends Partial<HandoverTimes> { skyFrames?: number; live?: boolean; picture?: boolean; place?: PlaceOptions; path?: PathOptions; pace?: { rise?: number; fall?: number; corner?: number; corners?: { rise?: [number, number]; fall?: [number, number] } }; turn?: { rise?: number; fall?: number; corner?: number; corners?: { rise?: [number, number]; fall?: [number, number] } }; liftPower?: number; skyFloor?: boolean }
 export interface HandoverParams { dive?: HandoverSide; rise?: HandoverSide }
 // The shares of the two sky layers on the globe side of a dive or rise that hands over: low for the sky of the close view, high for the sky
 // of the globe view. Both from 0 to 1. A stop may give its own through StopPlan.skyShare; without a high the globe view's sky keeps the
