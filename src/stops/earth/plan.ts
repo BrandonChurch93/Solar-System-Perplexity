@@ -2,14 +2,14 @@ import * as THREE from 'three'
 import { config } from '../../config'
 import type { Pose, ViewKind } from '../../core/types'
 import { handoverOf, sideAt } from '../../director/handover'
-import { forward, lookAt, mix, ramp, slerpDir, smooth, smoother } from '../../director/rig'
+import { forward, lookAt, mix, ramp, slerpDir, smooth } from '../../director/rig'
 import { StopPlan, type Fit, type MoveParams, type OrbitShot } from '../../director/moves'
 import fit from './fit.json'
 import placeJson from './place.json'
 import { side, twin } from './place'
 
-export interface Leg { ease: number[]; round: number[]; over: number[]; aim: number[]; turn: number[]; swing?: { deg: number; headingDeg: number; at: number[] }; bank?: { deg: number; at: number[] } }
-export interface Path { handover: NonNullable<MoveParams['handover']>; dive: Leg; rise: Leg; rewind: number }
+export interface Leg { ease: number[]; round: number[]; hold: number; bank?: { deg: number } }
+export interface Path { handover: NonNullable<MoveParams['handover']>; dive: Leg; rise: Leg; bend: { frames: number; acrossDeg: number[]; turnDeg: number }; rewind: number }
 
 export const path: Path = placeJson.path
 
@@ -17,7 +17,7 @@ export const params: MoveParams = {
   hold: { orbitDeg: 0, axis: [0.1, 1, 0], push: -0.035 },
   spot: { x: 0.52, y: 0.46 },
   dive: { headingDeg: 52.25, altitude: 0.030751, back: 0.06, ahead: 0.12, bow: 0.2, rollDeg: 5 },
-  terrain: { vfov: 45, gather: 0.4, forward: 0.44, rise: 0.237, side: 0.3, yawDeg: 0, pitchDeg: 0, entryHeight: 0, entryBack: 0, entryPitchDeg: 0, exitHeight: 0, exitForward: 0, exitPitchDeg: 0, horizonDeg: 14.3175, dipDeg: 14.0305, rollDeg: -2.0044 },
+  terrain: { vfov: 45, gather: 0.4, forward: 0.44, rise: 0.237, side: 0.3, yawDeg: 0, pitchDeg: 0, entryHeight: 0, entryBack: 0, entryPitchDeg: 0, exitHeight: 0, exitForward: 0, exitPitchDeg: 0, horizonDeg: 14.3175, dipDeg: 14.0305, rollDeg: -2.0044, bend: { frames: path.bend.frames, acrossDeg: [path.bend.acrossDeg[0]!, path.bend.acrossDeg[1]!], turnDeg: path.bend.turnDeg } },
   rise: { azimuthDeg: 0, elevationDeg: 0, distance: 4.56, offset: [0, 0], driftSpeed: 0.5, rollDeg: 0 },
   travel: { turnDeg: 93, side: 1, turnEnd: 0.42 },
   arrive: { swingDeg: 20, axis: [0.15, 1, 0], from: 0.2, offset: [0.4, 0.3] },
@@ -31,6 +31,8 @@ export const params: MoveParams = {
 }
 
 interface Law { frames: number; total: number; at: (x: number) => number; rate: (x: number) => number }
+
+const STEPS = 64
 
 function shape(u: number, c: number): number {
   const x = Math.min(Math.max(u, 0), 1)
@@ -128,6 +130,30 @@ export class Plan extends StopPlan {
     return made
   }
 
+  private attitude(from: THREE.Quaternion, to: THREE.Quaternion, k: number, bankDeg: number): THREE.Quaternion {
+    if (bankDeg === 0) return from.clone().slerp(to, k)
+    const rel = from.clone().invert().multiply(to)
+    if (rel.w < 0) rel.set(-rel.x, -rel.y, -rel.z, -rel.w)
+    const theta = 2 * Math.acos(Math.min(rel.w, 1))
+    const sine = Math.sqrt(Math.max(1 - rel.w * rel.w, 0))
+    const about = sine > 1e-9 ? rel.z / sine : 0
+    const bank = THREE.MathUtils.degToRad(bankDeg)
+    const rate = (u: number): number => {
+      const roll = bank * Math.PI * Math.sin(2 * Math.PI * u)
+      return Math.sqrt(Math.max(theta * theta + roll * roll + 2 * theta * roll * about, 1e-12))
+    }
+    const length = (u: number): number => {
+      const h = u / STEPS
+      let sum = 0
+      for (let i = 0; i < STEPS; i++) sum += ((rate(i * h) + 4 * rate((i + 0.5) * h) + rate((i + 1) * h)) * h) / 6
+      return sum
+    }
+    const total = length(1)
+    let u = k
+    for (let i = 0; i < 12; i++) u = Math.min(Math.max(u - (length(u) - k * total) / rate(u), 0), 1)
+    return from.clone().slerp(to, u).multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), bank * Math.sin(Math.PI * u) ** 2))
+  }
+
   private fly(kind: 'dive' | 'rise', time: number): Pose {
     const leg = this.way[kind]
     const l = this.lawOf(kind)
@@ -141,24 +167,12 @@ export class Plan extends StopPlan {
     const b = anchor.position.dot(axis)
     const place = anchor.position.clone().addScaledVector(axis, -b - Math.sqrt(Math.max(b * b - anchor.position.lengthSq() + 1, 0)))
     const height = (anchor.position.length() - 1) * Math.exp(lift)
-    const over = slerpDir(anchor.position.clone().normalize(), far.position.clone().normalize(), smoother(ramp(leg.over[0]!, leg.over[1]!, k)))
-    const sw = leg.swing
-    if (sw) {
-      const n = place.clone().normalize()
-      const go = axis.clone().addScaledVector(n, -axis.dot(n)).normalize().applyAxisAngle(n, -THREE.MathUtils.degToRad(sw.headingDeg))
-      const share = (at: number): number => 1 / (1 + Math.exp(-l.total * (at - sw.at[1]!)))
-      const out = (Math.max(share(k) - share(sw.at[0]!), 0) / (1 - share(sw.at[0]!))) * smoother(ramp(sw.at[0]!, sw.at[1]!, k)) * (1 - smoother(ramp(sw.at[2]!, 1, x / l.frames)))
-      const carry = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3().crossVectors(n, go).normalize(), THREE.MathUtils.degToRad(sw.deg) * out)
-      over.applyQuaternion(carry)
-      place.applyQuaternion(carry)
-    }
-    const position = over.multiplyScalar(1 + height)
-    const target = position.clone().add(slerpDir(place.sub(position).normalize(), forward(far.quaternion), smoother(ramp(leg.aim[0]!, leg.aim[1]!, k))))
-    const up = slerpDir(new THREE.Vector3(0, 1, 0).applyQuaternion(anchor.quaternion), new THREE.Vector3(0, 1, 0).applyQuaternion(far.quaternion), smoother(ramp(leg.turn[0]!, leg.turn[1]!, k)))
-    const quaternion = lookAt(position, target, up)
-    const bk = leg.bank
-    if (bk) quaternion.multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), THREE.MathUtils.degToRad(bk.deg) * smoother(ramp(bk.at[0]!, bk.at[1]!, x / l.frames)) * (1 - smoother(ramp(bk.at[1]!, bk.at[2]!, x / l.frames)))))
-    return { position, quaternion, vfov: mix(anchor.vfov, far.vfov, smoother(k)) }
+    const quaternion = this.attitude(anchor.quaternion, far.quaternion, k, leg.bank?.deg ?? 0)
+    const seen = place.clone().sub(far.position).normalize().applyQuaternion(far.quaternion.clone().invert())
+    const ray = slerpDir(new THREE.Vector3(0, 0, -1), seen, Math.pow(k, leg.hold)).applyQuaternion(quaternion)
+    const along = place.dot(ray)
+    const position = place.clone().addScaledVector(ray, -along - Math.sqrt(along * along + height * (2 + height)))
+    return { position, quaternion, vfov: mix(anchor.vfov, far.vfov, k) }
   }
 
   private route(kind: 'dive' | 'rise', time: number): Pose {
