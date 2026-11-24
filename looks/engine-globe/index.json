@@ -1,9 +1,25 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-24T17:06:37.675Z",
- "head": "226eec4e620c9fc552014dc069ca05b7f1211491",
- "note": "TASK 697: Jupiter's rise 3261 + 1/2 reads 0.69 before and 0.11 after the patch, the judged share 0.8896 both times. Mercury's dive 746 + 1/2 stays 1.02: the reading lies in a band along the limb, where the far ground of the first frame (bright arcs) is not the ground the last frame shows there.",
+ "pushed": "2026-11-24T17:14:13.615Z",
+ "head": "eb2975a63357c7d6b5c253f77fb205f28f158b13",
+ "note": "TASK 697 commit eb2975a6. Dives stay red and are in the picture: all of the reading lies within 130 px (Neptune) and 205 px (Mercury) of the limb, in the band that rides with the limb while the ground passes under it.",
  "looks": [
+  {
+   "time": "2026-11-24T17:14:11.979Z",
+   "file": "20261124171411979-note-ne4696-both.jpg",
+   "source": "../m697/ne4696-both.png",
+   "kind": "note",
+   "label": "Neptune dive 4696 and 4704, the two frames of the row",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T17:14:10.754Z",
+   "file": "20261124171410754-note-pair-ne4696.jpg",
+   "source": "../m697/pair-ne4696.png",
+   "kind": "note",
+   "label": "Neptune dive 4696 round pixel 628, 136, twice enlarged: first frame, the frame 8 film frames later carried back at full size, the pattern (white is 1). 0.72 before and after the patch. A rigid sequence through the same poses reads 0.16 to 0.20",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T17:06:36.135Z",
    "file": "20261124170636135-note-panel-ju3261-after.jpg",
@@ -51,22 +67,6 @@
    "kind": "note",
    "label": "TASK 697: Jupiter rise 3261 + 1/2, the official change panel before (0.69) and after (0.10) the trial correction of the pattern measure",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T11:13:54.603Z",
-   "file": "20261124111354603-note-ms1-levels.jpg",
-   "source": "../../../../tmp/ms1-levels.png",
-   "kind": "note",
-   "label": "globe-levels.py on the Mars plates of b83618ec: pairs over 0.45",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T11:13:54.055Z",
-   "file": "20261124111354055-note-m591-m-0.jpg",
-   "source": "../../../../tmp/m591-m-0.png",
-   "kind": "note",
-   "label": "run m start 2449: the same panel with the ground haze off",
-   "stop": "mars"
   }
  ]
 }
