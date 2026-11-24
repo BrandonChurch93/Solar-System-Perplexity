@@ -1,57 +1,51 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-24T13:44:55.445Z",
- "head": "cb7efafc8535fcd3e48c177047c78c56deb47937",
- "note": "13:46 UTC. Third NAMED cb7efafc pushed 13:44 on main 2bc36ce6 (engine take merged). On the engine tree: finals 4035, 4290, 4137, 4436 keep their bytes; tests 49 files 485 pass; gate, parity, path green. Still red: pattern in the middle of both moves (dive 1.30 at 4165, rise 1.45 at 4401), dive pop 1.71 at 4144 + 1/2. Rise pop 1.17, under 1.2.",
+ "pushed": "2026-11-24T14:30:22.345Z",
+ "head": "c4d2507f91714cbdcb28b1c0757d64912f52b4ef",
+ "note": "tops cure in work on main 2bc36ce6: white tops as a light of the ground by view angle, same code in globe and surface view; drafts 4168 and 4404, uncommitted",
  "looks": [
   {
-   "time": "2026-11-24T13:44:54.495Z",
-   "file": "20261124134454495-note-pattern-rows.jpg",
-   "source": "../../../../tmp/tm/pattern-rows.png",
+   "time": "2026-11-24T14:30:21.626Z",
+   "file": "20261124143021626-note-k1-4199-cmp.jpg",
+   "source": "../../../../tmp/k1-4199-cmp.png",
    "kind": "note",
-   "label": "Uranus third NAMED cb7efafc (main 2bc36ce6): pattern rows of the dive and the rise against the machines' rows of the second NAMED (MAIL 666). Grey: machines on b5874a22. Blue: this commit by the judge before main 62ff7be6. Red: this commit by the judge on main. Solid rate 2 (dive 4134 to 4191, rise 4380 to 4412), dotted whole frames at rate 1. Limit 0.45.",
+   "label": "4199 draft, rejected first form (term taken off the ground): dark holes, main 2bc36ce6",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-24T13:37:01.553Z",
-   "file": "20261124133701553-frame-f4436.jpg",
-   "source": "out/work/u/n4/f4436.png",
-   "kind": "frame",
-   "label": "uranus.rise frame 4436, final tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4436,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "bfe554c9c4ef0dd5"
+   "time": "2026-11-24T14:30:20.923Z",
+   "file": "20261124143020923-note-k2-4404-cmp.jpg",
+   "source": "../../../../tmp/k2-4404-cmp.png",
+   "kind": "note",
+   "label": "4404 draft, before left, tops as a light of the ground right, main 2bc36ce6, uncommitted",
+   "stop": "uranus"
   },
   {
-   "time": "2026-11-24T13:32:52.954Z",
-   "file": "20261124133252954-frame-f4137.jpg",
-   "source": "out/work/u/n4/f4137.png",
+   "time": "2026-11-24T14:30:20.188Z",
+   "file": "20261124143020188-note-k2-4168-cmp.jpg",
+   "source": "../../../../tmp/k2-4168-cmp.png",
+   "kind": "note",
+   "label": "4168 draft, before (cb7efafc) left, tops as a light of the ground right, main 2bc36ce6, uncommitted",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T14:30:19.389Z",
+   "file": "20261124143019389-frame-d4150.jpg",
+   "source": "out/work/u/k2/d4150.png",
    "kind": "frame",
-   "label": "uranus.dive frame 4137, final tier",
+   "label": "uranus.dive frame 4150, draft tier",
    "stop": "uranus",
    "segment": "uranus.dive",
-   "frame": 4137,
-   "tier": "final",
+   "frame": 4150,
+   "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
    "engine": "bfe554c9c4ef0dd5"
   },
   {
-   "time": "2026-11-24T13:23:41.315Z",
-   "file": "20261124132341315-note-pattern-rows.jpg",
-   "source": "../../../../tmp/tm/pattern-rows.png",
-   "kind": "note",
-   "label": "Uranus third commit, pattern rows of the dive and the rise against the machines' rows of the second NAMED (MAIL 666). Grey: machines on b5874a22. Blue: this commit by the judge before main 62ff7be6. Red: this commit by the judge on main. Solid rate 2, dotted whole frames at rate 1. Drafts of 0ac434b6 and 1527ad8d; rise 4412 + 1/2 to 4420 drawn on the engine tree 9cb93f98 (main c8888d57). Limit 0.45.",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T13:20:09.136Z",
-   "file": "20261124132009136-frame-f4290.jpg",
-   "source": "out/work/u/n4/f4290.png",
+   "time": "2026-11-24T14:29:46.551Z",
+   "file": "20261124142946551-frame-f4290.jpg",
+   "source": "out/work/u/k2/f4290.png",
    "kind": "frame",
    "label": "uranus.terrain frame 4290, final tier",
    "stop": "uranus",
@@ -61,6 +55,36 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "bfe554c9c4ef0dd5"
+  },
+  {
+   "time": "2026-11-24T14:27:07.554Z",
+   "file": "20261124142707554-frame-d4404.jpg",
+   "source": "out/work/u/k2/d4404.png",
+   "kind": "frame",
+   "label": "uranus.rise frame 4404, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4404,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "bfe554c9c4ef0dd5"
+  },
+  {
+   "time": "2026-11-24T13:44:54.495Z",
+   "file": "20261124134454495-note-pattern-rows.jpg",
+   "source": "../../../../tmp/tm/pattern-rows.png",
+   "kind": "note",
+   "label": "Uranus third NAMED cb7efafc (main 2bc36ce6): pattern rows of the dive and the rise against the machines' rows of the second NAMED (MAIL 666). Grey: machines on b5874a22. Blue: this commit by the judge before main 62ff7be6. Red: this commit by the judge on main. Solid rate 2 (dive 4134 to 4191, rise 4380 to 4412), dotted whole frames at rate 1. Limit 0.45.",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T13:23:41.315Z",
+   "file": "20261124132341315-note-pattern-rows.jpg",
+   "source": "../../../../tmp/tm/pattern-rows.png",
+   "kind": "note",
+   "label": "Uranus third commit, pattern rows of the dive and the rise against the machines' rows of the second NAMED (MAIL 666). Grey: machines on b5874a22. Blue: this commit by the judge before main 62ff7be6. Red: this commit by the judge on main. Solid rate 2, dotted whole frames at rate 1. Drafts of 0ac434b6 and 1527ad8d; rise 4412 + 1/2 to 4420 drawn on the engine tree 9cb93f98 (main c8888d57). Limit 0.45.",
+   "stop": "uranus"
   },
   {
    "time": "2026-11-24T13:18:18.209Z",
@@ -289,33 +313,6 @@
    "segment": "uranus.dive",
    "first": 4180,
    "last": 4191,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T11:16:28.895Z",
-   "file": "20261124111628895-note-pair3.jpg",
-   "source": "../../../../tmp/tm/pair3.jpg",
-   "kind": "note",
-   "label": "first sheet, replaced by the next one: pattern pairs on 0ac434b6: row 1 rise 4404 against 4412 as shipped, row 2 the tops off on the smooth law with the plates of b5874a22, row 3 dive 4158 against 4166; columns: frame, later frame carried by the flows, by the true cameras, pattern by the flows, by the cameras (main c2c49133)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T11:16:27.944Z",
-   "file": "20261124111627944-note-rise-law.jpg",
-   "source": "../../../../tmp/tm/rise-law.jpg",
-   "kind": "note",
-   "label": "rise 4400 4404 4408 4412 drafts: top b5874a22, bottom 0ac434b6 (smooth law, bands on the plates); the white tops arrive in both (main c2c49133)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T11:12:46.666Z",
-   "file": "20261124111246666-compare-uranus-dive-sides.jpg",
-   "source": "out/work/handover/uranus-dive-sides.png",
-   "kind": "compare",
-   "label": "uranus dive, both sides at T (frame 4186) and their difference times 8",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4186,
    "tier": "draft"
   }
  ]
