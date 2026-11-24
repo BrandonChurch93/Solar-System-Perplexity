@@ -1,9 +1,84 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T05:20:00.625Z",
+ "pushed": "2026-11-24T06:07:23.094Z",
  "head": "dd1ddb9cd881f1b397a4c596b76f58d93a699881",
- "note": "05:22 pushed dd1ddb9c: turn 140, cap relief, picture off, bend; G15 1399.4 MB, tests 398, path green, seam 1.025",
+ "note": "T on 2681 and 2477, haze trials v0 to v2 at the change of view, 2580 stars only; bake 36 of the fore ground tone under trial",
  "looks": [
+  {
+   "time": "2026-11-24T05:43:28.066Z",
+   "file": "20261124054328066-note-d2580.jpg",
+   "source": "out/work/place/tmp/d2580.jpg",
+   "kind": "note",
+   "label": "2580 final against the kept still: top the difference times 8 (rows 0 to 300), middle mine, bottom the kept still. Only the engine's fine stars differ; the ground is equal to the byte",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T05:26:07.077Z",
+   "file": "20261124052607077-compare-mars-dive-sides.jpg",
+   "source": "out/work/handover/mars-dive-sides.png",
+   "kind": "compare",
+   "label": "mars dive, both sides at T (frame 2475) and their difference times 8",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2475,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T05:24:26.883Z",
+   "file": "20261124052426883-frame-final-2580.jpg",
+   "source": "out/work/place/view/final-2580.jpg",
+   "kind": "frame",
+   "label": "mars.terrain frame 2580, final tier",
+   "stop": "mars",
+   "segment": "mars.terrain",
+   "frame": 2580,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7122c119266e5aee"
+  },
+  {
+   "time": "2026-11-24T05:23:29.315Z",
+   "file": "20261124052329315-frame-final-2325.jpg",
+   "source": "out/work/place/view/final-2325.jpg",
+   "kind": "frame",
+   "label": "mars.hold frame 2325, final tier",
+   "stop": "mars",
+   "segment": "mars.hold",
+   "frame": 2325,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7122c119266e5aee"
+  },
+  {
+   "time": "2026-11-24T05:22:38.372Z",
+   "file": "20261124052238372-frame-f02782-draft.jpg",
+   "source": "out/work/samebytes/n1/f02782-draft.png",
+   "kind": "frame",
+   "label": "mars.travel frame 2782, draft tier",
+   "stop": "mars",
+   "segment": "mars.travel",
+   "frame": 2782,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7122c119266e5aee"
+  },
+  {
+   "time": "2026-11-24T05:21:45.551Z",
+   "file": "20261124052145551-frame-f02212-draft.jpg",
+   "source": "out/work/samebytes/n1/f02212-draft.png",
+   "kind": "frame",
+   "label": "earth.travel frame 2212, draft tier",
+   "stop": "earth",
+   "segment": "earth.travel",
+   "frame": 2212,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7122c119266e5aee"
+  },
   {
    "time": "2026-11-24T05:19:59.816Z",
    "file": "20261124051959816-note-b-sheet.jpg",
@@ -18,60 +93,6 @@
    "source": "out/work/place/see/q-sheet.jpg",
    "kind": "note",
    "label": "rise 2704, 2708, 2712 with the cap reach at 17 degrees, no dotted border; lower right: 2708 at full size",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T04:43:14.478Z",
-   "file": "20261124044314478-note-m-sheet.jpg",
-   "source": "out/work/place/see/m-sheet.jpg",
-   "kind": "note",
-   "label": "engine draft stills after the tongue cure, picture off, rise on its own law: 2439, 2452, 2471, 2700, 2706",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T04:11:40.644Z",
-   "file": "20261124041140644-note-k-sheet.jpg",
-   "source": "out/work/place/see/k-sheet.jpg",
-   "kind": "note",
-   "label": "engine draft 2439, 2452, 2700, 2713: turned place (140), cap of main, place picture off",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T03:56:37.990Z",
-   "file": "20261124035637990-note-k-plates.jpg",
-   "source": "out/work/place/see/k-plates.jpg",
-   "kind": "note",
-   "label": "turned place, first plates as stored (own light, relit for the globe's Sun, cast shadow baked): land-8p5 and land-3p8 from above, north up. FAULTS seen: the main trough is painted as a pale slab with straight round ends; canyon walls slate black",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T03:27:02.294Z",
-   "file": "20261124032702294-note-trough.jpg",
-   "source": "out/work/place/tmp/trough.jpg",
-   "kind": "note",
-   "label": "heights v9 from above, the 8.5 level under the globe's Sun: mouth of the side canyon in the main trough (left) and the trough farther east (right); no colour, no cast shadow",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T03:26:18.523Z",
-   "file": "20261124032618523-frame-dive-image-2576-1588.jpg",
-   "source": "out/work/place/dump/dive-image-2576-1588.png",
-   "kind": "frame",
-   "label": "mars.dive frame 2475, draft tier, ungraded/side=orbit/dump=2576,1588,image view",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2475,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "ungraded/side=orbit/dump=2576,1588,image",
-   "engine": "ecddc3acd1a4e52c"
-  },
-  {
-   "time": "2026-11-24T03:02:15.701Z",
-   "file": "20261124030215701-note-crops-v9.jpg",
-   "source": "out/work/place/see/crops-v9.jpg",
-   "kind": "note",
-   "label": "heights v9 of the turned place (heading 245.9) from straight above, lit by the globe's Sun at the middle of the surface view, no cast shadow yet: 8.5, 3.8, 1.6, 0.7 degrees",
    "stop": "mars"
   }
  ]
