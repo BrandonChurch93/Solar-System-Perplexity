@@ -611,5 +611,103 @@
     "floor": 0.0
    }
   }
+ },
+ "aprons": {
+  "note": "apronheights.py: the margins and the aprons of the close view's meshes (relief.json apron) in the country's heights. limitDeg: out to this far from the place's middle (the mesh heights are taken as they are out to country.far.fromDeg). joinDeg, joinTexels: the made ground beside apron ground goes over to it through a membrane over this many degrees, at least this many texels of the level.",
+  "limitDeg": 0.7,
+  "joinDeg": 0.6,
+  "joinTexels": 6
+ },
+ "skirt": {
+  "note": "skirt.py: the made country beyond the close ground's footprint. insideDeg: the border is taken this far inside the laid footprint. openDeg: laid ground too narrow to hold a disc of this radius is not counted (blades). mirror: shares of the mirror at the nearest border point that are tried, first that falls on laid ground wins, else the border's own texel. holdDeg, reachDeg: the laid ground runs on to a line holdDeg + reachDeg x (1 + wander x field) from the border and ends over the last share soft of that way. toneDeg: the made country carries the broad tone of the laid ground at the border, which leaves over this far. wander: share by which the distances wander with the field. field: [cells across the 8.5 degree plate, weight] of the fixed field on the ground; seed. toneBlurDeg: the breadth the tone is measured over (laid texels only). gain: least and most of the tone's gain.",
+  "insideDeg": 0.003,
+  "mirror": [],
+  "holdDeg": 0.0,
+  "reachDeg": 0.006,
+  "toneDeg": 0.3,
+  "wander": 0.9,
+  "field": [
+   [
+    24,
+    0.5
+   ],
+   [
+    64,
+    0.3
+   ],
+   [
+    192,
+    0.2
+   ]
+  ],
+  "seed": 238,
+  "toneBlurDeg": 0.03,
+  "gain": [
+   0.2,
+   5.0
+  ],
+  "openDeg": 0.016,
+  "soft": 1.0
+ },
+ "tone": {
+  "note": "platetone.py: the laid ground's brightness (scene value, Rec 709 weights) above knee goes to knee x (value / knee) ^ power. The made country's plain has a median near 0.06 to 0.075 and its brightest dunes 0.11.",
+  "knee": 0.09,
+  "power": 0.3
+ },
+ "under": {
+  "note": "landunder.py: the land levels take the forms of the map (patch-19) outside the place. keepDeg, fullDeg: the weight by the distance from the spot; broadTexels, fineTexels: the band of forms taken, in texels of the map; share: of the map forms; gain: bounds of the factor; plateauDeg, depthKm, besideDeg: the made canyon and the trough keep their own picture (ground lower than depthKm under the highest ground within plateauDeg, widened by besideDeg); aboveDeg: the lit levels above take the forms of the place out to here (fading from the first to the second)",
+  "keepDeg": 0.35,
+  "fullDeg": 0.8,
+  "broadTexels": 60,
+  "fineTexels": 1.0,
+  "share": 1.0,
+  "gain": [
+   0.4,
+   2.5
+  ],
+  "plateauDeg": 0.6,
+  "depthKm": [
+   1.0,
+   2.5
+  ],
+  "besideDeg": 0.04,
+  "aboveDeg": [
+   2.4,
+   2.8
+  ]
+ },
+ "reach": {
+  "note": "countrytake.py: the lay of the close ground holds within fromDeg of the spot and is gone beyond toDeg (degrees on the ground), the border wandering by wanderDeg along a fixed field of the ground (field: [size in degrees, share])",
+  "fromDeg": 0.26,
+  "toDeg": 0.42,
+  "wanderDeg": 0.07,
+  "field": [
+   [
+    0.25,
+    0.6
+   ],
+   [
+    0.08,
+    0.4
+   ]
+  ],
+  "seed": 702
+ },
+ "takes": {
+  "note": "countrytake.py: the country round the close ground from takes seen from straight above. levels: width in degrees to the take (assets-src/mars/place/takes, enlarged two times where the name ends in -x2). softDeg, inside: the laid ground is kept from where its mask, blurred by softDeg, is over inside. toneDeg: breadth over which the take follows the tone of the laid ground; toneFull: share of laid ground within that breadth from which the tone holds in full; gain: least and most.",
+  "levels": {
+   "0.3": "r03-take1-x2.png",
+   "0.7": "r07-take1-x2.png",
+   "1.6": "r16-take1-x2.png",
+   "3.8": "r38-take1-x2.png"
+  },
+  "softDeg": 0.004,
+  "inside": 0.5,
+  "toneDeg": 0.03,
+  "toneFull": 0.3,
+  "gain": [
+   0.5,
+   2.0
+  ]
  }
 }

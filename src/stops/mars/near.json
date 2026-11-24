@@ -87,5 +87,16 @@
       }
     ],
     "tintFollow": 1.0
+  },
+  "grazing": {
+    "note": "The far ground's veil of the close view on the globe side, by the angle of the sight line to the ground (the planet's veil at a grazing sight line, src/bodies/planet.ts: path = exp(-(mu / width) ^ power), the ground gives way to the colour fill by 1 - exp(-depth x near x path); mu is the cosine between the sight line and the vertical of the ground it meets). The close view's picture has its far ground in a pale haze that the globe's air by height cannot give without veiling the near ground too; with this veil the made ground of the place (the land plates) holds the ground itself and not the haze, so from above the far ground is ground. Used only below descent.low of look.ts, where the hold's own veil is out.",
+    "depth": 1.5,
+    "width": 0.08,
+    "power": 1.5,
+    "fill": [
+      0.3,
+      0.23,
+      0.17
+    ]
   }
 }
