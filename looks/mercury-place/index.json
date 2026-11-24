@@ -1,9 +1,33 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T22:23:25.063Z",
+ "pushed": "2026-11-24T22:45:04.332Z",
  "head": "15d489e9e70ff9fb2c598d02ba7fb0288f6d799e",
- "note": "dive against the build b0b87889: pairs 710 to 732, the place at 717 differs",
+ "note": "main's 717 against b0; b0's exchange back in the round 2 state; the dot of MAIL 782",
  "looks": [
+  {
+   "time": "2026-11-24T22:45:03.109Z",
+   "file": "20261124224503109-note-h615-dot.jpg",
+   "source": "out/work/mercury/place/sheets/h615-dot.jpg",
+   "kind": "note",
+   "label": "615 draft, 4 times, under the far Sun's loop: the card's orange remnant before (left), out after reach.py (right)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T22:45:02.342Z",
+   "file": "20261124224502342-note-b0-a1.jpg",
+   "source": "out/work/mercury/place/sheets/b0-a1.jpg",
+   "kind": "note",
+   "label": "717, 721 + 1/2, 726, 730 + 1/2, 735: b0b87889 on top, the round 2 state below (b0's plate 1 and exchange back, far Sun of the film): the same ground",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T22:45:01.312Z",
+   "file": "20261124224501312-note-b0-main-717.jpg",
+   "source": "out/work/mercury/place/sheets/b0-main-717.jpg",
+   "kind": "note",
+   "label": "717 draft: build b0b87889 on top, main 7346c598 below: the soft pale disc in the crisp map is on main",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T22:23:24.449Z",
    "file": "20261124222324449-note-b0-pair-e.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/mercury/place/sheets/t2-a.jpg",
    "kind": "note",
    "label": "rise about T (976 + 1/2) with the true far Sun, draft, merged build with the pull back, frames 966 + 1/2 to 973 + 1/2",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T21:35:55.637Z",
-   "file": "20261124213555637-note-t1-b.jpg",
-   "source": "out/work/mercury/place/sheets/t1-b.jpg",
-   "kind": "note",
-   "label": "dive about T with the true far Sun, draft, frames 756 + 1/2 to 763 + 1/2",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T21:35:54.896Z",
-   "file": "20261124213554896-note-t1-a.jpg",
-   "source": "out/work/mercury/place/sheets/t1-a.jpg",
-   "kind": "note",
-   "label": "dive about T (759 + 1/2) with the true far Sun, draft, frames 749 + 1/2 to 756 + 1/2 (build before the merge of main b890fee7)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T21:06:19.130Z",
-   "file": "20261124210619130-note-d19-crop.jpg",
-   "source": "../../../../tmp/m/d19-crop.jpg",
-   "kind": "note",
-   "label": "dive 719 to 731, all levels, the same crop",
    "stop": "mercury"
   }
  ]
