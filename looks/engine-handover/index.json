@@ -1,9 +1,45 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T01:35:08.548Z",
- "head": "dddef0553db532f1616f28970e5ddf7ab538ccce",
- "note": "The rise's law pushed as 2658ca7 (Mars green), the one air as dddef05; next the carried speed at the ground end of the one move",
+ "pushed": "2026-11-24T02:02:07.976Z",
+ "head": "916737f6f58bd4e057d4f2954c4543e71d8fc46a",
+ "note": "the carry of the surface view's motion (05e307e): Mars dive and rise seams at draft, both handover reports pass",
  "looks": [
+  {
+   "time": "2026-11-24T01:55:44.597Z",
+   "file": "20261124015544597-compare-carry-dive-dive-sides.jpg",
+   "source": "out/work/handover/carry-dive-dive-sides.png",
+   "kind": "compare",
+   "label": "mars dive, both sides at T (frame 2475) and their difference times 8",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2475,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T01:54:47.908Z",
+   "file": "20261124015447908-compare-carry-rise-rise-sides.jpg",
+   "source": "out/work/handover/carry-rise-rise-sides.png",
+   "kind": "compare",
+   "label": "mars rise, both sides at T (frame 2687) and their difference times 8",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "frame": 2687,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T01:54:37.872Z",
+   "file": "20261124015437872-note-carry-rise.jpg",
+   "source": "../view/carry-rise.png",
+   "kind": "note",
+   "label": "carry by the share (power 2), Mars surface view into the rise: 2668 to 2690, draft"
+  },
+  {
+   "time": "2026-11-24T01:54:36.694Z",
+   "file": "20261124015436694-note-carry-dive.jpg",
+   "source": "../view/carry-dive.png",
+   "kind": "note",
+   "label": "carry by the share (power 2), Mars dive into the surface view: 2486 to 2490 and 2480, draft"
+  },
   {
    "time": "2026-11-24T01:35:07.863Z",
    "file": "20261124013507863-note-sheet-oldnew.jpg",
@@ -32,39 +68,6 @@
    "source": "../../../../tmp/law/sheet-3.png",
    "kind": "note",
    "label": "Mars rise on the new law (eye's direction on its own bell, lift in the height), draft, frames 2716 to 2731"
-  },
-  {
-   "time": "2026-11-24T01:13:39.176Z",
-   "file": "20261124011339176-note-sheet-2.jpg",
-   "source": "../../../../tmp/law/sheet-2.png",
-   "kind": "note",
-   "label": "Mars rise on the new law (eye's direction on its own bell, lift in the height), draft, frames 2700 to 2715"
-  },
-  {
-   "time": "2026-11-24T01:13:38.540Z",
-   "file": "20261124011338540-note-sheet-1.jpg",
-   "source": "../../../../tmp/law/sheet-1.png",
-   "kind": "note",
-   "label": "Mars rise on the new law (eye's direction on its own bell, lift in the height), draft, frames 2684 to 2699"
-  },
-  {
-   "time": "2026-11-24T01:13:37.896Z",
-   "file": "20261124011337896-note-sheet-0.jpg",
-   "source": "../../../../tmp/law/sheet-0.png",
-   "kind": "note",
-   "label": "Mars rise on the new law (eye's direction on its own bell, lift in the height), draft, frames 2668 to 2683"
-  },
-  {
-   "time": "2026-11-24T01:12:56.960Z",
-   "file": "20261124011256960-sheet-law-mars-rise-draft-after.jpg",
-   "source": "out/work/handover/law-mars-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "mars rise, every frame 2688 to 2699 (after T, frame 2687), draft tier",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "first": 2688,
-   "last": 2699,
-   "tier": "draft"
   }
  ]
 }
