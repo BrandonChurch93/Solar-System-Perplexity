@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T06:14:29.026Z",
+ "pushed": "2026-11-24T06:38:34.348Z",
  "head": "fd95089a27ad1e2a7aa296b36cff561b3de9f77a",
- "note": "head fd95089a: the tool's parity green on all eight frames (4725 coarse 0.879, block 4.893); path green; the NAMED mail follows",
+ "note": "06:38 T17 preview draft of 4860: limb glow halved and bluer, far deck pale by a veil that thins upward; fault found in it: stepped thin lines near the limb (deck relief cuts the veil's lowest layer), cure next",
  "looks": [
+  {
+   "time": "2026-11-24T06:38:27.258Z",
+   "file": "20261124063827258-note-look-T17-limb.jpg",
+   "source": "../../../../tmp/look-T17-limb.jpg",
+   "kind": "note",
+   "label": "4860 T17 limb at 3 times (above) against approved (below): thin stepped lines are a fault found, the deck relief cuts the veil's lowest layer",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T06:38:26.694Z",
+   "file": "20261124063826694-note-look-T17-pair.jpg",
+   "source": "../../../../tmp/look-T17-pair.jpg",
+   "kind": "note",
+   "label": "4860 preview draft T17 (above) beside the approved image (below): limb band work, veil thins upward",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T06:14:28.401Z",
    "file": "20261124061428401-note-par-tool.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/s-R1-5022.jpg",
    "kind": "note",
    "label": "R1 rise on the one move, every frame from 5022, preview draft",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T05:19:43.083Z",
-   "file": "20261124051943083-note-s-R1-5010.jpg",
-   "source": "../../../../tmp/s-R1-5010.jpg",
-   "kind": "note",
-   "label": "R1 rise on the one move, every frame from 5010, preview draft",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T05:19:42.021Z",
-   "file": "20261124051942021-note-s-R1-4998.jpg",
-   "source": "../../../../tmp/s-R1-4998.jpg",
-   "kind": "note",
-   "label": "R1 rise on the one move, every frame from 4998, preview draft",
    "stop": "neptune"
   }
  ]
