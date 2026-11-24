@@ -1,77 +1,71 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T15:59:43.535Z",
- "head": "a5b15421d272cc21b4edfb8977a28a7ab5424436",
- "note": "a5b15421 proof: handover pass, pictures green (pop 1.18 at 244, limit 1.2; pattern 0.27 at 192), path green, G11 and G15 pass, 360 final keeps c279687d; final tier 60, 0, 90 render now. Frame 60 draft: dark 0.190, body 0.663, pale 0.062, white 0.022; half width 4.6 px, 4439 shapes, fine detail 0.0595, mean 0.334; distance 0.062",
+ "pushed": "2026-11-24T16:18:39.057Z",
+ "head": "dd1d6159f0db488e563b8f39ac078d734f8ddc40",
+ "note": "NAMED dd1d6159 (code a5b15421): final tier 0, 60, 90 beside the approved; 360 final keeps c279687d. Frame 60 final: dark 0.179, body 0.663, pale 0.073, white 0.019; brightest 15 percent half width 4.8 px, 2860 shapes, fine detail 0.0567, mean 0.341; distance 0.067. Still plates between crisp cracks, paler and more yellow than the approved",
  "looks": [
+  {
+   "time": "2026-11-24T16:18:38.441Z",
+   "file": "20261124161838441-note-f18-00090-whole.jpg",
+   "source": "../../../../tmp/f18-00090-whole.jpg",
+   "kind": "note",
+   "label": "a5b15421 final tier, frame 90 whole at half size, left approved, right mine",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T16:18:37.893Z",
+   "file": "20261124161837893-note-f18-90-a.jpg",
+   "source": "../../../../tmp/f18-90-a.jpg",
+   "kind": "note",
+   "label": "a5b15421 final tier, frame 90 at one to one (crop 560 600 800 440), left approved, right mine",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T16:18:37.287Z",
+   "file": "20261124161837287-note-f18-00000-whole.jpg",
+   "source": "../../../../tmp/f18-00000-whole.jpg",
+   "kind": "note",
+   "label": "a5b15421 final tier, frame 0 whole at half size, left approved, right mine",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T16:18:36.702Z",
+   "file": "20261124161836702-note-f18-0-a.jpg",
+   "source": "../../../../tmp/f18-0-a.jpg",
+   "kind": "note",
+   "label": "a5b15421 final tier, frame 0 at one to one (crop 560 600 800 440), left approved, right mine",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T16:18:36.118Z",
+   "file": "20261124161836118-note-f18-60-whole.jpg",
+   "source": "../../../../tmp/f18-60-whole.jpg",
+   "kind": "note",
+   "label": "a5b15421 final tier, frame 60 whole at half size, left approved, right mine",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T16:18:35.392Z",
+   "file": "20261124161835392-note-f18-60-b.jpg",
+   "source": "../../../../tmp/f18-60-b.jpg",
+   "kind": "note",
+   "label": "a5b15421 final tier, frame 60, the spot at one to one (crop 700 440 800 350), left approved, right mine",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T16:18:34.785Z",
+   "file": "20261124161834785-note-f18-60-a.jpg",
+   "source": "../../../../tmp/f18-60-a.jpg",
+   "kind": "note",
+   "label": "a5b15421 final tier, frame 60 at one to one (crop 560 600 800 440), left approved, right mine",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T15:59:42.315Z",
    "file": "20261124155942315-note-run18.jpg",
    "source": "../../../../tmp/run18.jpg",
    "kind": "note",
    "label": "a5b15421 draft, 60 to 68 consecutive, crop 700 760 480 270 at one to one: each cell keeps its shape and its fibres from frame to frame, no pop seen",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T15:47:34.324Z",
-   "file": "20261124154734324-job-frame-00231.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "sun.rise frame 231, draft tier, texels view, from the running g13 job",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "frame": 231,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "g13"
-  },
-  {
-   "time": "2026-11-24T15:39:35.324Z",
-   "file": "20261124153935324-note-r18-h.jpg",
-   "source": "../../../../tmp/r18-h.jpg",
-   "kind": "note",
-   "label": "a5b15421 rise, draft, every frame 258 to 269 (the handover tool's frames)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T15:39:34.141Z",
-   "file": "20261124153934141-note-r18-g.jpg",
-   "source": "../../../../tmp/r18-g.jpg",
-   "kind": "note",
-   "label": "a5b15421 rise, draft, every frame 246 to 257 (the handover tool's frames)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T15:39:32.733Z",
-   "file": "20261124153932733-note-r18-f.jpg",
-   "source": "../../../../tmp/r18-f.jpg",
-   "kind": "note",
-   "label": "a5b15421 rise, draft, every frame 234 to 245 (the handover tool's frames)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T15:39:31.515Z",
-   "file": "20261124153931515-note-r18-e.jpg",
-   "source": "../../../../tmp/r18-e.jpg",
-   "kind": "note",
-   "label": "a5b15421 rise, draft, every frame 226 to 233 (the handover tool's frames)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T15:39:30.355Z",
-   "file": "20261124153930355-note-r18-d.jpg",
-   "source": "../../../../tmp/r18-d.jpg",
-   "kind": "note",
-   "label": "a5b15421 rise, draft, every frame 214 to 225 (the handover tool's frames)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T15:39:29.266Z",
-   "file": "20261124153929266-note-r18-c.jpg",
-   "source": "../../../../tmp/r18-c.jpg",
-   "kind": "note",
-   "label": "a5b15421 rise, draft, every frame 202 to 213 (the handover tool's frames)",
    "stop": "sun"
   }
  ]
