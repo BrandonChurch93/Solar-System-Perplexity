@@ -1,5 +1,5 @@
 import { execFileSync } from 'node:child_process'
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { DIST, ROOT, WORK, args, ensureBuild, formatId, loadConfig, machineId, requireDisk } from './lib/common'
 import { openCapture, renderPng, type Session } from './lib/browser'
@@ -10,8 +10,9 @@ import { handoverFrame, handoverOf } from '../src/director/handover'
 import { setCapture, spanMid } from '../src/core/clock'
 import type { Pose } from '../src/core/types'
 import { plans } from '../src/director/plans'
-import { LANDING_FROM, MIN_POINTS, SEAM_OWN, SEAM_REACH, carriedCamera, curves, eyeCurves, landingCurves, ringPlane, sampleLanding, sampleSeam, sampleWindow, sphereHit, type Kind, type Plane, type Ring } from './smooth/camera'
-import { LANDING_FLOOR, LANDING_LATE, LANDING_SHOWN, judgeCurve, judgeLanding, judgeSeam, longestGap, parityFrames, position, shown, table, type CurveResult, type Fault, type LandingResult, type Row, type SeamResult } from './smooth/path'
+import { LANDING_FROM, MIN_POINTS, SEAM_OWN, SEAM_REACH, carriedCamera, curves, eyeCurves, landingCurves, ringPlane, sampleLanding, sampleLeave, sampleSeam, sampleWindow, sphereHit, type Kind, type Plane, type Ring } from './smooth/camera'
+import { missing, partOwn, sliceName, sliceNeed, type Span } from './smooth/slice'
+import { LANDING_FLOOR, LANDING_LATE, LANDING_SHOWN, changeNote, judgeCurve, judgeLanding, judgeLeave, judgeSeam, longestGap, parityFrames, peakRows, position, shown, table, type CurveResult, type Fault, type LandingResult, type LeaveResult, type Row, type SeamResult } from './smooth/path'
 
 // The measures of a smooth dive and rise (kit/PROGRESS.md, second review note of 2026-11-23, plan I). One stop.
 //   npm run smooth -- --stop ID [--kind dive|rise|landing] [--only path,pictures,place,parity,counts] [--rate N] [--calibrate] [--ring picture|ground]
@@ -24,7 +25,10 @@ import { LANDING_FLOOR, LANDING_LATE, LANDING_SHOWN, judgeCurve, judgeLanding, j
 //           rings). --ring ground tries the ring laid on the ground. At the seam with the surface view (the end of a dive, the start of a
 //           rise): the way of the eye over its own height above the ground as the stop's twin holds it, over the same number of the surface view
 //           itself, 16 film frames to each side at the capture rate. Judged: its lowest value (smooth.path.minEye); its largest step and the
-//           part along the surface view's own direction of motion are shown.
+//           part along the surface view's own direction of motion are shown. At the seam from a rise into the travel that leaves the stop
+//           (smooth.reachFrames film frames to each side, at the capture rate): the lowest speed of the fastest point of the body's edge over
+//           the smaller of that speed at the two ends of the window; near 0 the picture comes to rest between the rise and the travel.
+//           Judged against smooth.path.minLeave once the config has it; shown until then.
 // pictures  from draft frames, every frame of the dive and of the rise and smooth.reachFrames film frames into each neighbour (capture frames once
 //           the page knows a rate, whole film frames until then): the step of the frame's level against the line through its two neighbours,
 //           and the pop score: what is left of the difference between a frame and the next once the motion between them is taken out, over the
@@ -50,6 +54,12 @@ import { LANDING_FLOOR, LANDING_LATE, LANDING_SHOWN, judgeCurve, judgeLanding, j
 //           format smooth.counts.format; before each one the warm start runs as the live player calls it (showcase.ahead(frame, tier, all), all
 //           true at the first) and its work counts for that picture. Judged: every picture of a dive, a rise and a travel against smooth.counts
 //           (zero). NOT MEASURED while the page has no counter.
+//           One move in slices, for several machines: --kind dive|rise --only pictures --part I/N (or --frames A-B, capture frames, both
+//           included) renders the frames the slice owns and the overlap their numbers need (the neighbours, the frames of the pop's median,
+//           the frame smooth.pictures.changeFrames film frames later), measures them on the indices of the whole window and writes
+//           <stop>-<kind>-pIofN.md, .json and its own panels. --kind dive|rise --only pictures --join [FOLDER] reads every such .json of the
+//           move in the folder (out/work/smooth by default), renders nothing and writes <stop>-<kind>.md and .json as the whole run does,
+//           judged by the limits the parts carry; it names the frames no part owns and exits 2 then.
 // Everything is written to out/work/smooth/<stop>.json and .md (<stop>-<kind> when --kind is given). Exit 1 when a number is over its limit in config smooth, or when a part that was
 // asked for could not be measured. --calibrate writes every number and exits 0: the run that sets the limits.
 
@@ -60,7 +70,6 @@ if (!stop || !cfg.stopIds.includes(stop)) {
   console.error('smooth: --stop must be one of ' + cfg.stopIds.join(', '))
   process.exit(2)
 }
-const S = cfg.raw.smooth
 const PARTS = ['path', 'pictures', 'place', 'parity', 'counts']
 const landing = a.kind === 'landing'
 const only = a.only ? a.only.split(',') : landing ? ['path'] : PARTS
@@ -79,20 +88,36 @@ if (landing && only.some((p) => p !== 'path')) {
   console.error('smooth: --kind landing has the path part only')
   process.exit(2)
 }
-const rate = a.rate ? Number(a.rate) : S.rate
+const calibrate = a.calibrate === 'true'
+const dir = join(WORK, 'smooth')
+const partOf = a.part === undefined ? null : /^(\d+)\/(\d+)$/.exec(a.part)
+const framesOf = a.frames === undefined ? null : /^(\d+)-(\d+)$/.exec(a.frames)
+const sliced = a.part !== undefined || a.frames !== undefined
+const joining = a.join !== undefined
+if (sliced || joining) {
+  const one = kinds.length === 1 && a.kind !== undefined && only.length === 1 && only[0] === 'pictures'
+  const part = partOf ? [Number(partOf[1]), Number(partOf[2])] : null
+  const span = framesOf ? [Number(framesOf[1]), Number(framesOf[2])] : null
+  if (!one || (sliced && joining) || (a.part !== undefined && a.frames !== undefined) || (a.part !== undefined && (!part || part[0]! < 1 || part[0]! > part[1]!)) || (a.frames !== undefined && (!span || span[0]! > span[1]!))) {
+    console.error('smooth: a slice is --kind dive|rise --only pictures with --part I/N or --frames A-B (capture frames, both included); the join is --kind dive|rise --only pictures --join [FOLDER]')
+    process.exit(2)
+  }
+}
+const joined = joining ? readParts(a.join === 'true' ? dir : a.join!) : null
+const S = joined ? joined.limits : cfg.raw.smooth
+const rate = joined ? joined.rate : a.rate ? Number(a.rate) : cfg.raw.smooth.rate
 if (!Number.isInteger(rate) || rate < 1) {
   console.error('smooth: --rate is a whole number of at least 1')
   process.exit(2)
 }
-const calibrate = a.calibrate === 'true'
 const ring = (a.ring ?? 'picture') as Ring
 if (ring !== 'picture' && ring !== 'ground') {
   console.error('smooth: --ring is picture or ground')
   process.exit(2)
 }
 const master = cfg.formats[cfg.formatKeys.master]!
-const dir = join(WORK, 'smooth')
-const stem = stop + (a.kind ? '-' + a.kind : '')
+const sliceTag = partOf ? sliceName(Number(partOf[1]), Number(partOf[2]), 0, 0) : framesOf ? sliceName(null, null, Number(framesOf[1]), Number(framesOf[2])) : ''
+const stem = stop + (a.kind ? '-' + a.kind : '') + (sliceTag ? '-' + sliceTag : '')
 mkdirSync(dir, { recursive: true })
 
 const plan = plans.find((p) => p.id === stop)!
@@ -102,7 +127,9 @@ const ringGround: Plane | null = ringPlane(plan)
 interface PartResult { measured: boolean; pass: boolean; why: string[]; note?: string }
 
 interface PathRun { rate: number; curves: CurveResult[] }
-interface PathKind { segment: string; firstFrame: number; endFrame: number; frameT: number | null; window: [number, number]; runs: PathRun[]; rows: Row[]; sides: string[]; heights: (number | null)[]; faults: Fault[]; eye: (SeamResult & { seam: number; own: number | null }) | null }
+interface PathKind { segment: string; firstFrame: number; endFrame: number; frameT: number | null; window: [number, number]; runs: PathRun[]; rows: Row[]; sides: string[]; heights: (number | null)[]; faults: Fault[]; eye: (SeamResult & { seam: number; own: number | null }) | null; leave?: LeaveResult & { seam: number; into: string; reach: number } }
+
+const MIN_LEAVE: number | null = (S.path as { minLeave?: number | null }).minLeave ?? null
 
 const UNITS: ['fall' | 'turn' | 'speed', string, string, number | null][] = [
   ['fall', 'rate', 'log of the height a film frame', null],
@@ -127,6 +154,8 @@ function pathOf(kind: Kind): PathKind | null {
   const sw = sampleSeam(cfg, film, plan, kind, rate)
   const ec = sw ? eyeCurves(sw, plan, ringGround) : null
   const eye = sw && ec ? { seam: sw.seam, own: ec.own, ...judgeSeam(ec.speed, ec.along, sw.k0, rate, S.path.minEye ?? null, kind === 'dive' ? { first: sw.k0, end: sw.seam * rate } : { first: sw.seam * rate + 1, end: (sw.seam + SEAM_REACH) * rate }) } : null
+  const lw = kind === 'rise' ? sampleLeave(cfg, film, plan, rate, S.reachFrames) : null
+  const leave = lw ? { seam: lw.seam, into: lw.travel.id, reach: S.reachFrames, ...judgeLeave(landingCurves(lw, master.width, master.height).limb, lw.k0, rate, MIN_LEAVE) } : null
   const h = handoverOf(stop!, kind)
   const at = (f: number): number => f - w.k0
   const frames = Array.from({ length: w.frames }, (_, i) => w.firstFrame + i)
@@ -137,8 +166,9 @@ function pathOf(kind: Kind): PathKind | null {
     rows: table(shifted, fine ? runs[1]!.curves : null, w.firstFrame, w.frames, fine ? fine.k0 : 0, fine ? fine.rate : 1),
     sides: frames.map((f) => w.samples[at(f)]!.segment.split('.')[1] + ' ' + w.samples[at(f)]!.side),
     heights: frames.map((f) => Number(w.samples[at(f)]!.height.toExponential(4))),
-    faults: [...runs.flatMap((r) => r.curves.flatMap((c) => c.faults.map((x) => ({ ...x, text: (r.rate === 1 ? 'whole frames, ' : 'rate ' + r.rate + ', ') + x.text })))), ...(eye?.fault ? [eye.fault] : [])],
+    faults: [...runs.flatMap((r) => r.curves.flatMap((c) => c.faults.map((x) => ({ ...x, text: (r.rate === 1 ? 'whole frames, ' : 'rate ' + r.rate + ', ') + x.text })))), ...(eye?.fault ? [eye.fault] : []), ...(leave?.fault ? [leave.fault] : [])],
     eye,
+    ...(leave ? { leave } : {}),
   }
 }
 
@@ -263,39 +293,26 @@ async function still(k: number, tier: string, diag: string, fmt = format): Promi
 interface PictureNumbers { level: number[]; levelStep: (number | null)[]; residual: (number | null)[]; base: (number | null)[]; popAll: (number | null)[]; popCarried: (number | null)[]; pop: (number | null)[]; motionPx: (number | null)[]; unsure: (number | null)[]; popBlock: (number | null)[]; popBlockAt: ([number, number] | null)[]; grid: [number, number]; change: (number | null)[]; changeTop: (number | null)[]; changeAt: ([number, number] | null)[]; changeShare: (number | null)[]; pattern: (number | null)[]; patternAt: ([number, number] | null)[]; patternShare: (number | null)[] }
 interface PictureRow { k: number; frame: number; level: number; levelStep: number | null; residual: number | null; base: number | null; popAll: number | null; popCarried: number | null; pop: number | null; motionPx: number | null; unsure: number | null; popBlock: number | null; popBlockAt: [number, number] | null; change: number | null; changeTop: number | null; changeAt: [number, number] | null; changeShare: number | null; pattern: number | null; patternAt: [number, number] | null; patternShare: number | null }
 interface Most { k: number; frame: number; value: number }
-interface PictureKind { segment: string; firstFrame: number; endFrame: number; window: [number, number]; rate: number; frames: number; rows: PictureRow[]; levelStep: Most | null; pop: Most | null; popBlock: (Most & { at: [number, number] | null }) | null; change: (Most & { at: [number, number] | null }) | null; pattern: (Most & { at: [number, number] | null }) | null; changeFrames: number; silent: { frames: number; first: number; last: number; body: number } | null; ground: { value: number; pattern: number | null; first: number; last: number } | null; panel: string | null; changePanel: string | null; why: string[] }
+interface PictureKind { segment: string; firstFrame: number; endFrame: number; window: [number, number]; rate: number; frames: number; rows: PictureRow[]; levelStep: Most | null; pop: Most | null; popBlock: (Most & { at: [number, number] | null }) | null; change: (Most & { at: [number, number] | null }) | null; pattern: (Most & { at: [number, number] | null }) | null; changeFrames: number; silent: { frames: number; first: number; last: number; body: number } | null; ground: { value: number; pattern: number | null; first: number; last: number } | null; panel: string | null; changePanel: string | null; why: string[]; lead?: string[]; tail?: string[] }
+interface SliceInfo { name: string; part: number | null; of: number | null; total: number; own: [number, number]; need: [number, number]; pops: number[]; changes: number[] }
+let slice: SliceInfo | null = null
 
 const CHANGE = { frames: (S.pictures as { changeFrames?: number }).changeFrames ?? 8, blurPx: (S.pictures as { changeBlurPx?: number }).changeBlurPx ?? 20, max: (S.pictures as { maxChange?: number | null }).maxChange ?? null, rings: (S.pictures as { ringBodies?: string[] }).ringBodies ?? [] }
 const PATTERN = { px: (S.pictures as { patternPx?: number }).patternPx ?? 40, floor: (S.pictures as { patternFloor?: number }).patternFloor ?? 1, max: (S.pictures as { maxPattern?: number | null }).maxPattern ?? null }
 
-function poseOf(k: number, r: number): { p: number[]; q: number[]; vfov: number; rings?: { normal: number[]; inner: number; outer: number } } {
+function poseOf(k: number, r: number): { p: number[]; q: number[]; vfov: number; rings?: { normal: number[]; inner: number; outer: number }; globe?: { quaternion: number[]; scale: number[] } } {
   const pose = carriedCamera(film, plan, stop!, k / r, (k / r + spanMid()) / cfg.fps).pose
   const rings = CHANGE.rings.includes(stop!) ? plan.fit.rings : null
-  return { p: pose.position.toArray(), q: pose.quaternion.toArray(), vfov: pose.vfov, ...(rings && rings.outer > rings.inner ? { rings } : {}) }
+  // a globe that the stop draws flattened (fit.globe.scale) is the body as it is drawn, not the unit sphere round it
+  const globe = plan.fit.globe?.scale?.some((s) => s !== 1) ? { quaternion: plan.fit.globe.quaternion, scale: plan.fit.globe.scale } : null
+  return { p: pose.position.toArray(), q: pose.quaternion.toArray(), vfov: pose.vfov, ...(rings && rings.outer > rings.inner ? { rings } : {}), ...(globe ? { globe } : {}) }
 }
 
-async function picturesOf(kind: Kind): Promise<PictureKind | null> {
-  const seg = cfg.segments.find((s) => s.stop === stop && s.kind === kind)
-  if (!seg) return null
+interface Sums { levelStep: Most | null; pop: Most | null; block: Most | null; change: Most | null; pattern: Most | null; why: string[]; top: PictureRow[]; peaks: PictureRow[]; silent: PictureKind['silent']; ground: PictureKind['ground'] }
+
+// What is read off the rows of a window, the same for a whole run, a slice and the join: total counts the capture frames of the whole window.
+function sumsOf(kind: Kind, seg: { firstFrame: number; endFrame: number }, first: number, r: number, total: number, rows: PictureRow[]): Sums {
   const P = S.pictures
-  const tier = P.tier
-  const first = Math.max(seg.firstFrame - S.reachFrames, 0)
-  const end = Math.min(seg.endFrame + S.reachFrames, cfg.frameCount)
-  hashes ??= ensureBuild()
-  if (session && sessionFormat !== format) await drop()
-  session ??= await open(format)
-  const r = pageRate
-  setCapture(r)
-  const ks = Array.from({ length: (end - first) * r }, (_, i) => first * r + i)
-  const paths: string[] = []
-  const t0 = Date.now()
-  for (const k of ks) {
-    paths.push(await still(k, tier, 'beauty'))
-    if (paths.length % 20 === 0) console.log(stop + ' ' + kind + ': ' + paths.length + ' of ' + ks.length + ' ' + tier + ' frames, ' + Math.round((Date.now() - t0) / 1000) + ' s')
-  }
-  const poses = ks.map((k) => poseOf(k, r))
-  const n = measure<PictureNumbers>({ op: 'pictures', paths, poses, scale: P.flowScale, window: P.popWindow * r, floor: P.popFloor, grid: P.grid, changeFrames: CHANGE.frames * r, changeBlur: CHANGE.blurPx, patternPx: PATTERN.px, patternFloor: PATTERN.floor })
-  const rows: PictureRow[] = ks.map((k, i) => ({ k, frame: Math.floor(k / r), level: n.level[i]!, levelStep: n.levelStep[i] ?? null, residual: n.residual[i] ?? null, base: n.base[i] ?? null, popAll: n.popAll[i] ?? null, popCarried: n.popCarried[i] ?? null, pop: n.pop[i] ?? null, motionPx: n.motionPx[i] ?? null, unsure: n.unsure[i] ?? null, popBlock: n.popBlock[i] ?? null, popBlockAt: n.popBlockAt[i] ?? null, change: n.change[i] ?? null, changeTop: n.changeTop[i] ?? null, changeAt: n.changeAt[i] ?? null, changeShare: n.changeShare[i] ?? null, pattern: n.pattern[i] ?? null, patternAt: n.patternAt[i] ?? null, patternShare: n.patternShare[i] ?? null }))
   const most = (key: 'levelStep' | 'pop' | 'popBlock' | 'change' | 'pattern'): Most | null => {
     let out: Most | null = null
     for (const row of rows) {
@@ -324,35 +341,154 @@ async function picturesOf(kind: Kind): Promise<PictureKind | null> {
   over('change', CHANGE.max, (row) => 'the picture changes in place by ' + shown(row.change!, 1, CHANGE.max) + ' from frame ' + position(row.k, r) + ' to ' + CHANGE.frames + ' film frames later')
   over('pattern', PATTERN.max, (row) => 'the pattern of the picture changes in place by ' + shown(row.pattern!, 2, PATTERN.max) + ' from frame ' + position(row.k, r) + ' to ' + CHANGE.frames + ' film frames later')
   const top = rows.filter((row) => row.pop !== null).sort((x, y) => y.pop! - x.pop!).slice(0, 4).sort((x, y) => x.k - y.k)
-  let panel: string | null = null
-  if (top.length > 0) {
-    panel = join(dir, stop + '-' + kind + '-pops.png')
-    measure({ op: 'panel', output: panel, scale: P.flowScale, gain: 8, limit: cfg.raw.critics.maxImageLongEdgePx, pairs: top.map((row) => ({ a: paths[row.k - ks[0]!]!, b: paths[row.k - ks[0]! + 1]!, label: stop + ' ' + kind + ' frame ' + position(row.k, r) + ' and the next, and what is left without the motion times 8: pop ' + row.pop!.toFixed(2) + ', left ' + row.residual!.toFixed(2) + ' against ' + row.base!.toFixed(2) })) })
-  }
-  const peaks: PictureRow[] = []
-  const apart = (row: PictureRow): boolean => peaks.every((q) => Math.abs(q.k - row.k) >= CHANGE.frames * r)
-  for (const row of rows.filter((x) => x.pattern !== null).sort((x, y) => y.pattern! - x.pattern!)) if (peaks.length < 2 && apart(row)) peaks.push(row)
-  for (const row of rows.filter((x) => x.change !== null).sort((x, y) => y.change! - x.change!)) if (peaks.length < 4 && apart(row)) peaks.push(row)
-  peaks.sort((x, y) => x.k - y.k)
-  let changePanel: string | null = null
-  if (peaks.length > 0) {
-    changePanel = join(dir, stop + '-' + kind + '-changes.png')
-    measure({ op: 'changes', output: changePanel, scale: P.flowScale, gain: 6, changeBlur: CHANGE.blurPx, patternPx: PATTERN.px, patternFloor: PATTERN.floor, limit: cfg.raw.critics.maxImageLongEdgePx, chains: peaks.map((row) => {
-      const i = row.k - ks[0]!
-      const last = i + CHANGE.frames * r
-      return { paths: paths.slice(i, last + 1), poses: [poses[i]!, poses[last]!], label: stop + ' ' + kind + ' frame ' + position(row.k, r) + ', frame ' + position(row.k + CHANGE.frames * r, r) + ' carried back to it, their smoothed difference times 6, the change of their pattern (white is 1): change ' + row.change!.toFixed(1) + ', pattern ' + (row.pattern === null ? 'not measured' : row.pattern.toFixed(2)) }
-    }) })
-  }
+  const peaks = peakRows(rows, CHANGE.frames * r)
   const reach = CHANGE.frames * r
-  const gap = longestGap(rows.slice(0, Math.max(rows.length - reach, 0)).map((row) => row.pattern !== null))
+  const gap = longestGap(rows.filter((row) => row.k - first * r < total - reach).map((row) => row.pattern !== null))
   const silent: PictureKind['silent'] = gap ? { frames: (gap.last - gap.first + 1) / r, first: rows[gap.first]!.k, last: rows[gap.last]!.k, body: Math.max(...rows.slice(gap.first, gap.last + 1).map((row) => row.changeShare ?? 0)) } : null
   const beside = rows.filter((row) => row.change !== null && (kind === 'dive' ? row.k >= seg.endFrame * r : row.k + reach < seg.firstFrame * r))
   const woven = beside.filter((row) => row.pattern !== null).map((row) => row.pattern!)
   const ground = beside.length > 0 ? { value: Math.max(...beside.map((row) => row.change!)), pattern: woven.length > 0 ? Math.max(...woven) : null, first: beside[0]!.k, last: beside.at(-1)!.k + reach } : null
-  return { segment: seg.id, firstFrame: seg.firstFrame, endFrame: seg.endFrame, window: [first, end - 1], rate: r, frames: ks.length, rows, levelStep, pop, ground, popBlock: block ? { ...block, at: rows.find((row) => row.k === block.k)!.popBlockAt } : null, change: change ? { ...change, at: rows.find((row) => row.k === change.k)!.changeAt } : null, pattern: pattern ? { ...pattern, at: rows.find((row) => row.k === pattern.k)!.patternAt } : null, changeFrames: CHANGE.frames, silent, panel, changePanel, why }
+  return { levelStep, pop, block, change, pattern, why, top, peaks, silent, ground }
 }
 
-async function picturesPart(): Promise<PartResult & { kinds: Record<string, PictureKind | null>; tier: string; rate: number; secondsAFrame: number | null }> {
+function kindOf(seg: { id: string; firstFrame: number; endFrame: number }, first: number, end: number, r: number, total: number, rows: PictureRow[], sums: Sums, panel: string | null, changePanel: string | null, more: { lead?: string[]; tail?: string[] }): PictureKind {
+  const { levelStep, pop, block, change, pattern, silent, ground, why } = sums
+  return { segment: seg.id, firstFrame: seg.firstFrame, endFrame: seg.endFrame, window: [first, end - 1], rate: r, frames: total, rows, levelStep, pop, ground, popBlock: block ? { ...block, at: rows.find((row) => row.k === block.k)!.popBlockAt } : null, change: change ? { ...change, at: rows.find((row) => row.k === change.k)!.changeAt } : null, pattern: pattern ? { ...pattern, at: rows.find((row) => row.k === pattern.k)!.patternAt } : null, changeFrames: CHANGE.frames, silent, panel, changePanel, why, ...more }
+}
+
+async function picturesOf(kind: Kind): Promise<PictureKind | null> {
+  const seg = cfg.segments.find((s) => s.stop === stop && s.kind === kind)
+  if (!seg) return null
+  const P = S.pictures
+  const tier = P.tier
+  const first = Math.max(seg.firstFrame - S.reachFrames, 0)
+  const end = Math.min(seg.endFrame + S.reachFrames, cfg.frameCount)
+  hashes ??= ensureBuild()
+  if (session && sessionFormat !== format) await drop()
+  session ??= await open(format)
+  const r = pageRate
+  setCapture(r)
+  const total = (end - first) * r
+  const k0 = first * r
+  const own: Span = partOf ? partOwn(Number(partOf[1]), Number(partOf[2]), total) : framesOf ? { first: Number(framesOf[1]) - k0, end: Number(framesOf[2]) + 1 - k0 } : { first: 0, end: total }
+  if (own.first < 0 || own.end > total || own.end <= own.first) {
+    console.error('smooth: the window of the ' + kind + ' of ' + stop + ' has the capture frames ' + k0 + ' to ' + (k0 + total - 1) + (partOf ? ': too few for that many parts' : ''))
+    await drop()
+    process.exit(2)
+  }
+  const [lo, hi] = sliced ? sliceNeed(own, total, P.popWindow * r, CHANGE.frames * r) : [0, total - 1]
+  const ks = Array.from({ length: hi - lo + 1 }, (_, i) => k0 + lo + i)
+  const paths: string[] = []
+  const t0 = Date.now()
+  for (const k of ks) {
+    paths.push(await still(k, tier, 'beauty'))
+    if (paths.length % 20 === 0) console.log(stop + ' ' + kind + ': ' + paths.length + ' of ' + ks.length + ' ' + tier + ' frames, ' + Math.round((Date.now() - t0) / 1000) + ' s')
+  }
+  const poses = ks.map((k) => poseOf(k, r))
+  const n = measure<PictureNumbers>({ op: 'pictures', paths, poses, scale: P.flowScale, window: P.popWindow * r, floor: P.popFloor, grid: P.grid, changeFrames: CHANGE.frames * r, changeBlur: CHANGE.blurPx, patternPx: PATTERN.px, patternFloor: PATTERN.floor, ...(sliced ? { first: lo, total, own: [own.first, own.end] } : {}) })
+  const rows: PictureRow[] = ks.map((k, i) => ({ k, frame: Math.floor(k / r), level: n.level[i]!, levelStep: n.levelStep[i] ?? null, residual: n.residual[i] ?? null, base: n.base[i] ?? null, popAll: n.popAll[i] ?? null, popCarried: n.popCarried[i] ?? null, pop: n.pop[i] ?? null, motionPx: n.motionPx[i] ?? null, unsure: n.unsure[i] ?? null, popBlock: n.popBlock[i] ?? null, popBlockAt: n.popBlockAt[i] ?? null, change: n.change[i] ?? null, changeTop: n.changeTop[i] ?? null, changeAt: n.changeAt[i] ?? null, changeShare: n.changeShare[i] ?? null, pattern: n.pattern[i] ?? null, patternAt: n.patternAt[i] ?? null, patternShare: n.patternShare[i] ?? null })).filter((row) => row.k - k0 >= own.first && row.k - k0 < own.end)
+  const sums = sumsOf(kind, seg, first, r, total, rows)
+  let panel: string | null = null
+  if (sums.top.length > 0) {
+    panel = join(dir, stop + '-' + kind + (sliceTag ? '-' + sliceTag : '') + '-pops.png')
+    measure({ op: 'panel', output: panel, scale: P.flowScale, gain: 8, limit: cfg.raw.critics.maxImageLongEdgePx, pairs: sums.top.map((row) => ({ a: paths[row.k - ks[0]!]!, b: paths[row.k - ks[0]! + 1]!, label: stop + ' ' + kind + ' frame ' + position(row.k, r) + ' and the next, and what is left without the motion times 8: pop ' + row.pop!.toFixed(2) + ', left ' + row.residual!.toFixed(2) + ' against ' + row.base!.toFixed(2) })) })
+  }
+  let changePanel: string | null = null
+  if (sums.peaks.length > 0) {
+    changePanel = join(dir, stop + '-' + kind + (sliceTag ? '-' + sliceTag : '') + '-changes.png')
+    measure({ op: 'changes', output: changePanel, scale: P.flowScale, gain: 6, changeBlur: CHANGE.blurPx, patternPx: PATTERN.px, patternFloor: PATTERN.floor, limit: cfg.raw.critics.maxImageLongEdgePx, chains: sums.peaks.map((row) => {
+      const i = row.k - ks[0]!
+      const last = i + CHANGE.frames * r
+      return { paths: paths.slice(i, last + 1), poses: [poses[i]!, poses[last]!], label: stop + ' ' + kind + ' frame ' + position(row.k, r) + ', frame ' + position(row.k + CHANGE.frames * r, r) + ' carried back to it, their smoothed difference times 6, the change of their pattern (white is 1): ' + changeNote(row) }
+    }) })
+  }
+  const lead = sliced ? [(partOf ? 'Part ' + Number(partOf[1]) + ' of ' + Number(partOf[2]) : 'A slice') + ' of the move: the frames ' + position(k0 + own.first, r) + ' to ' + position(k0 + own.end - 1, r) + ' (capture frames ' + (k0 + own.first) + ' to ' + (k0 + own.end - 1) + '), ' + rows.length + ' of the ' + total + ' of the window, measured with the frames ' + position(k0 + lo, r) + ' to ' + position(k0 + hi, r) + ' round them. Every row is the row of the whole run. The largest values, the lines in red and the verdict here are of these frames alone: the report of the move is the join of all its parts (--join).'] : undefined
+  if (sliced) slice = { name: sliceTag, part: partOf ? Number(partOf[1]) : null, of: partOf ? Number(partOf[2]) : null, total, own: [k0 + own.first, k0 + own.end - 1], need: [k0 + lo, k0 + hi], pops: sums.top.map((row) => row.k), changes: sums.peaks.map((row) => row.k) }
+  return kindOf(seg, first, end, r, total, rows, sums, panel, changePanel, lead ? { lead } : {})
+}
+
+type PicturesPart = PartResult & { kinds: Record<string, PictureKind | null>; tier: string; rate: number; secondsAFrame: number | null }
+
+interface PartFile { name: string; machine: string; slice: SliceInfo & { rendered: number; seconds: number }; kind: PictureKind }
+interface Joined { folder: string; files: PartFile[]; limits: typeof cfg.raw.smooth; rate: number; commit: string; engineHash: string | null; stopHash: string | null; machine: string; tier: string; note?: string }
+
+// The parts of one move as the slices wrote them. They are one run only if they agree in everything that sets a number.
+function readParts(folder: string): Joined {
+  const kind = a.kind!
+  const fail = (text: string): never => {
+    console.error('smooth: ' + text)
+    process.exit(2)
+  }
+  const names = existsSync(folder) ? readdirSync(folder).filter((f) => new RegExp('^' + stop + '-' + kind + '-(p\\d+of\\d+|k\\d+-\\d+)\\.json$').test(f)).sort((x, y) => x.localeCompare(y, 'en', { numeric: true })) : []
+  if (names.length === 0) fail('no part of the ' + kind + ' of ' + stop + ' in ' + folder + ' (' + stop + '-' + kind + '-pIofN.json)')
+  const read = names.map((name) => ({ name, j: JSON.parse(readFileSync(join(folder, name), 'utf8')) as { stop: string; commit: string; engineHash: string | null; stopHash: string | null; machine: string; rate: number; kinds: string[]; only: string[]; limits: typeof cfg.raw.smooth; slice?: PartFile['slice']; parts: { pictures?: PicturesPart } } }))
+  const facts = (x: (typeof read)[number]): [string, unknown][] => {
+    const p = x.j.parts.pictures
+    const k = p?.kinds[kind]
+    if (x.j.stop !== stop || !x.j.slice || !p || !p.measured || !k || x.j.kinds.join() !== kind || x.j.only.join() !== 'pictures') fail(x.name + ' is not a slice of the pictures of the ' + kind + ' of ' + stop)
+    return [['commit', x.j.commit], ['engine hash', x.j.engineHash], ['stop hash', x.j.stopHash], ['capture rate', x.j.rate], ['limits', x.j.limits], ['tier', p!.tier], ['rate of the page', p!.rate], ['segment', [k!.segment, k!.firstFrame, k!.endFrame]], ['window', k!.window], ['frames of the window', x.j.slice!.total], ['note', p!.note ?? null]]
+  }
+  const first = facts(read[0]!)
+  for (const x of read.slice(1)) {
+    facts(x).forEach(([what, value], i) => {
+      const mine = JSON.stringify(value)
+      const theirs = JSON.stringify(first[i]![1])
+      if (mine !== theirs) fail(x.name + ' and ' + read[0]!.name + ' differ in the ' + what + (mine.length + theirs.length < 200 ? ' (' + mine + ' against ' + theirs + ')' : '') + ': the parts of one move are made at one commit')
+    })
+  }
+  const f = read[0]!.j
+  const p = f.parts.pictures!
+  const files = read.map((x) => ({ name: x.name.slice(0, -'.json'.length), machine: x.j.machine, slice: x.j.slice!, kind: x.j.parts.pictures!.kinds[kind]! }))
+  return { folder, files, limits: f.limits, rate: f.rate, commit: f.commit, engineHash: f.engineHash, stopHash: f.stopHash, machine: [...new Set(files.map((x) => x.machine))].join(', '), tier: p.tier, ...(p.note ? { note: p.note } : {}) }
+}
+
+// The report of the whole move from its parts: every row as its part wrote it, everything else read off the rows as the whole run reads it.
+function joinPart(j: Joined): PicturesPart {
+  const kind = kinds[0]!
+  const base = j.files[0]!.kind
+  const r = base.rate
+  const first = base.window[0]
+  const total = j.files[0]!.slice.total
+  const k0 = first * r
+  const seen = new Map<number, { row: PictureRow; name: string }>()
+  for (const x of j.files) {
+    for (const row of x.kind.rows) {
+      const had = seen.get(row.k)
+      if (!had) seen.set(row.k, { row, name: x.name })
+      else if (JSON.stringify(had.row) !== JSON.stringify(row)) {
+        console.error('smooth: ' + had.name + ' and ' + x.name + ' both own frame ' + position(row.k, r) + ' and give it other numbers')
+        process.exit(2)
+      }
+    }
+  }
+  const rows = [...seen.values()].map((x) => x.row).sort((x, y) => x.k - y.k)
+  const seconds = j.files.reduce((sum, x) => sum + x.slice.seconds, 0)
+  const drawn = j.files.reduce((sum, x) => sum + x.slice.rendered, 0)
+  const rest = { tier: j.tier, rate: r, secondsAFrame: drawn > 0 ? Number((seconds / drawn).toFixed(2)) : null, ...(j.note ? { note: j.note } : {}) }
+  const gaps = missing(rows.map((row) => ({ first: row.k - k0, end: row.k - k0 + 1 })), total)
+  if (gaps.length > 0) {
+    const ofs = new Set(j.files.map((x) => x.slice.of))
+    const of = ofs.size === 1 ? j.files[0]!.slice.of : null
+    const why = gaps.map((g) => {
+      const lost = of === null ? [] : Array.from({ length: of }, (_, i) => i + 1).filter((part) => !j.files.some((x) => x.slice.part === part) && partOwn(part, of, total).first < g.end && partOwn(part, of, total).end > g.first)
+      return kind + ': not measured, the frames ' + position(k0 + g.first, r) + ' to ' + position(k0 + g.end - 1, r) + ' (capture frames ' + (k0 + g.first) + ' to ' + (k0 + g.end - 1) + ') are in no part' + (lost.length > 0 ? ': part ' + lost.join(', ') + ' of ' + of + ' is missing' : '')
+    })
+    return { measured: false, pass: false, why, kinds: { [kind]: null }, ...rest }
+  }
+  const sums = sumsOf(kind, base, first, r, total, rows)
+  const where = (k: number, key: 'pops' | 'changes'): string => {
+    const x = j.files.find((y) => y.slice[key].includes(k))
+    return 'frame ' + position(k, r) + ' in ' + (x ? x.name + '-' + key + '.png' : 'no panel (a slice --frames ' + k + '-' + k + ' draws it)')
+  }
+  const tail = [
+    ...(sums.top.length > 0 ? ['The four largest pops, each with the next frame and what is left without the motion, are in the panels of the parts: ' + sums.top.map((row) => where(row.k, 'pops')).join(', ') + '.'] : []),
+    ...(sums.peaks.length > 0 ? ['The two largest changes of the pattern and the largest changes in place, each with the later frame carried back, the difference and the change of the pattern, are in the panels of the parts: ' + sums.peaks.map((row) => where(row.k, 'changes')).join(', ') + '.'] : []),
+  ]
+  const out = kindOf({ id: base.segment, firstFrame: base.firstFrame, endFrame: base.endFrame }, first, base.window[1] + 1, r, total, rows, sums, null, null, { tail })
+  return { measured: true, pass: sums.why.length === 0, why: sums.why.map((w) => kind + ': ' + w), kinds: { [kind]: out }, ...rest }
+}
+
+async function picturesPart(): Promise<PicturesPart> {
   const out: Record<string, PictureKind | null> = {}
   const why: string[] = []
   for (const kind of kinds) {
@@ -369,6 +505,7 @@ function picturesText(kind: Kind, p: PictureKind | null): string[] {
   const P = S.pictures
   const lim = (v: number | null): string => (v === null ? 'no limit yet, not judged' : 'limit ' + v)
   const lines = ['### ' + kind + ' (' + p.segment + ', frames ' + p.firstFrame + ' to ' + (p.endFrame - 1) + ', window ' + p.window[0] + ' to ' + p.window[1] + ', ' + p.frames + ' ' + P.tier + ' frames at rate ' + p.rate + ')', '']
+  if (p.lead) lines.push(...p.lead, '')
   if (p.levelStep) lines.push('Largest level step: ' + shown(p.levelStep.value, 2, P.maxLevelStep) + ' at frame ' + position(p.levelStep.k, p.rate) + ' (display values 0 to 255, the frame against the middle of its two neighbours), ' + lim(P.maxLevelStep) + '.')
   if (p.pop) lines.push('Largest pop score: ' + shown(p.pop.value, 2, P.maxPop) + ' from frame ' + position(p.pop.k, p.rate) + ' to the next, ' + lim(P.maxPop) + '.')
   if (p.popBlock) lines.push('Largest pop score of one block (a grid of ' + P.grid.join(' by ') + '): ' + shown(p.popBlock.value, 2, P.maxPopBlock) + ' from frame ' + position(p.popBlock.k, p.rate) + ' to the next' + (p.popBlock.at ? ', block column ' + p.popBlock.at[0] + ' row ' + p.popBlock.at[1] + ' from the top left' : '') + ', ' + (P.maxPopBlock === null ? 'shown, not judged' : 'limit ' + P.maxPopBlock) + '.')
@@ -378,6 +515,7 @@ function picturesText(kind: Kind, p: PictureKind | null): string[] {
   lines.push(p.silent ? 'Longest run without a measured pattern: ' + (Number.isInteger(p.silent.frames) ? p.silent.frames : p.silent.frames.toFixed(1)) + ' film frames, frames ' + position(p.silent.first, p.rate) + ' to ' + position(p.silent.last, p.rate) + ', each against the frame ' + p.changeFrames + ' film frames later (too little of the picture has detail in both, or too little of the body is carried; the judged body held at most ' + p.silent.body.toFixed(2) + ' of the picture there), shown, not judged. A new pattern can come in unseen where such a run is ' + 2 * p.changeFrames + ' film frames or longer.' : 'The pattern is measured in every row.')
   if (p.panel) lines.push('The four largest pops, each with the next frame and what is left without the motion: ' + p.panel.slice(ROOT.length + 1))
   if (p.changePanel) lines.push('The two largest changes of the pattern and the largest changes in place, each with the later frame carried back, the difference and the change of the pattern: ' + p.changePanel.slice(ROOT.length + 1))
+  if (p.tail) lines.push(...p.tail)
   lines.push('')
   if (p.why.length) lines.push(...p.why.map((w) => '- RED ' + w), '')
   lines.push('| frame | level | level step | motion px | left | median round it | pop, every pixel | pop, carried only | pop | not carried | pop of one block | block | change in place | its largest | judged | pattern | judged |', '|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|')
@@ -704,6 +842,11 @@ function pathText(kind: Kind, p: PathKind | null): string[] {
     const min: number | null = L.minEye ?? null
     lines.push('The eye against the near ground at the seam with the surface view (film frame ' + e.seam + ', ' + SEAM_REACH + ' film frames to each side, read at rate ' + e.rate + '): the way of the eye over its own height above the ground, per film frame, over the same number of the surface view itself (' + (e.own === null ? 'not measured' : Number(e.own.toPrecision(3)) + ' of its height a film frame, the mean of its ' + (kind === 'dive' ? 'first ' : 'last ') + SEAM_OWN + ' film frames') + '). A step is named by the frame it ends on; `tools/seam.ts` names it by the frame it starts on. Lowest ' + at(e.lowest, min) + ', ' + (min === null ? 'no limit yet, not judged' : 'limit ' + min) + '; inside the ' + kind + ' itself ' + at(e.inMove) + '. Largest step from one capture frame to the next ' + at(e.step) + ', shown. The part along the surface view\'s own direction of motion: ' + (e.lowest ? shown(e.along[e.lowest.k - e.k0]!, 2) + ' at the lowest, ' : '') + 'lowest ' + at(e.back) + ', shown; under 0 the eye goes back.', '')
   }
+  if (p.leave) {
+    const v = p.leave
+    const at = (x: { value: number; k: number } | null): string => (x ? x.value.toFixed(2) + ' at frame ' + position(x.k, v.rate) : 'not measured')
+    lines.push('Rest between the rise and the travel (the seam into ' + v.into + ' at film frame ' + v.seam + ', ' + v.reach + ' film frames to each side, read at rate ' + v.rate + '): a rise and the travel after it are one flight, through the seam the speed of the picture falls once and rises once and never comes to rest. The fastest point of the body\'s edge, px a film frame (the way of its centre and the growth of its radius, from the path alone): lowest ' + at(v.lowest) + ', against ' + at(v.first) + ' and ' + at(v.last) + ' at the ends of the window. The lowest is ' + (v.over === null ? 'not measured' : shown(v.over, 3, MIN_LEAVE)) + ' of the slower end, ' + (MIN_LEAVE === null ? 'no limit yet, shown and not judged' : 'limit ' + MIN_LEAVE) + '. Near 0 the picture comes to rest between the rise and the travel.', '')
+  }
   if (p.faults.length) lines.push(...p.faults.map((f) => '- RED ' + f.text), '')
   else lines.push('No number of the path is over its limit.', '')
   const fine = p.runs.length > 1
@@ -773,7 +916,8 @@ function commit(): string {
 async function main(): Promise<void> {
   const parts: Record<string, PartResult> = {}
   if (only.includes('path')) parts.path = pathPart()
-  if (only.includes('pictures')) {
+  if (only.includes('pictures') && joined) parts.pictures = joinPart(joined)
+  else if (only.includes('pictures')) {
     requireDisk(cfg)
     try {
       parts.pictures = await picturesPart()
@@ -807,7 +951,8 @@ async function main(): Promise<void> {
   }
   const why = Object.values(parts).flatMap((p) => p.why)
   const pass = why.length === 0
-  const out = { stop, commit: commit(), engineHash: hashes?.engine ?? null, stopHash: hashes?.stops[stop!] ?? null, machine: machineId(), rate, calibrate, kinds, only, limits: S, pass, why, parts }
+  const made = joined ? { commit: joined.commit, engineHash: joined.engineHash, stopHash: joined.stopHash, machine: joined.machine } : { commit: commit(), engineHash: hashes?.engine ?? null, stopHash: hashes?.stops[stop!] ?? null, machine: machineId() }
+  const out = { stop, ...made, rate, calibrate, kinds, only, limits: S, pass, why, parts, ...(slice ? { slice: { ...slice, rendered, seconds: Number(renderSeconds.toFixed(2)) } } : {}), ...(joined ? { joined: joined.files.map((x) => ({ file: x.name, machine: x.machine, ...x.slice })) } : {}) }
   json(join(dir, stem + '.json'), out)
   const lines = ['# smooth: ' + stop, '', 'Commit ' + out.commit + '. Capture rate ' + rate + '. Parts: ' + only.join(', ') + '.' + (calibrate ? ' A calibration run: every number is written, the exit code is 0.' : ''), '']
   lines.push(pass ? 'VERDICT: green. No number is over its limit.' : 'VERDICT: red. ' + why.length + ' number' + (why.length === 1 ? '' : 's') + ' over the limit or not measured.', '')
@@ -822,7 +967,8 @@ async function main(): Promise<void> {
     if (name === 'path' && landing) lines.push(...landingText(((p as ReturnType<typeof pathPart>).kinds.landing ?? null) as LandingKind | null))
     if (name === 'pictures') {
       const pp = p as Awaited<ReturnType<typeof picturesPart>>
-      lines.push('Tier ' + pp.tier + ', rate ' + pp.rate + (pp.secondsAFrame === null ? ', every frame was already rendered' : ', ' + pp.secondsAFrame + ' s a rendered frame on ' + machineId()) + '.', '')
+      lines.push('Tier ' + pp.tier + ', rate ' + pp.rate + (pp.secondsAFrame === null ? ', every frame was already rendered' : ', ' + pp.secondsAFrame + ' s a rendered frame on ' + made.machine) + '.', '')
+      if (joined) lines.push('Joined from ' + joined.files.length + ' part' + (joined.files.length === 1 ? '' : 's') + ', nothing is rendered here: ' + joined.files.map((x) => x.name + ' (capture frames ' + x.slice.own[0] + ' to ' + x.slice.own[1] + ', ' + x.machine + ')').join(', ') + '.', '')
       for (const kind of kinds) lines.push(...picturesText(kind, pp.kinds[kind] ?? null))
     }
     if (name === 'counts') lines.push(...countsText(p as Awaited<ReturnType<typeof countsPart>>))
@@ -833,7 +979,7 @@ async function main(): Promise<void> {
   console.log('smooth ' + stop + ': ' + (pass ? 'green' : 'red, ' + why.length + ' over the limit or not measured') + '. ' + join('out/work/smooth', stem + '.md'))
   for (const w of why.slice(0, 12)) console.log('  ' + w)
   if (why.length > 12) console.log('  and ' + (why.length - 12) + ' more, see the report')
-  process.exit(pass || calibrate ? 0 : 1)
+  process.exit(joined && !parts.pictures!.measured ? 2 : pass || calibrate ? 0 : 1)
 }
 
 void main()
