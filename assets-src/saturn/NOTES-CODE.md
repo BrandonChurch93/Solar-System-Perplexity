@@ -4177,3 +4177,51 @@ is in the picture at 3 to 12 px, and the same crispness for the far ring across 
     handover, the hold and the travel keep their bytes); numbers in skim.json. To be tried and measured here.
 - OWED PROOFS STARTED 13:14 (/tmp/v/r48, the worktree at f057cf9): the review tier frames 3581 to 3597 and 3844
   to 3860 (every frame across both handovers), then 3567 at the final tier for the pair with the kept still.
+
+## 13:14 to 13:30 UTC: main took the engine pieces (MAIL 670), merged here and not pushed; item 17 gets a trial
+
+- MAIL 670 (13:25, to every builder, no answer needed): main is c8888d579e98130bd2d7c54e34d83f450fb1a164 (the
+  engine take, 31 files: the far Sun from code, the shares by height in the handover, the globe's cap cure;
+  2bc36ce6 on top of it is a status). Standing: merge origin main at the next commit, run the tests on the
+  merge, name commits only on top of it. A commit named before the take is taken as it is (my three folders).
+  Rounds 41 and 42 start on this main; no stop is taken onto main between their start and their pack. One
+  shared test (tests/globe-cap.test.ts, "brings a colour level in by the texels of its parent") ran over its 5
+  second limit on a loaded machine: if seen, run that file alone, report both results, do not touch the test.
+- MERGED HERE, LOCAL ONLY (MAIL 662: no fourth commit): 66de92e "Merge main 2bc36ce into agent/saturn-code"
+  on 8598286 (notebook) on 5dadc06 on the remote head 22aa54e. No file outside my three folders differs from
+  main 2bc36ce; my trees are the named ones (src/stops/saturn 7f13c953, public/assets/saturn 75fa372a). Against
+  the Builder's proof tree 26f5ed3 (builder/proof-sa3) the merge differs only in this notebook,
+  assets-src/shared/HARNESS-NOTES.md, kit/PROGRESS.md and tests/weights.test.ts: in src, tools and config it is
+  the tree the machines run. tsc on it: no output.
+- REVIEW TIER ACROSS THE DIVE'S HANDOVER, every frame 3586 to 3591 (the worktree at f057cf9, 16 samples, 72 to
+  94 s a frame; /tmp/v/r48/rev): the mean level of the whole frame goes 70.81, 70.05, 69.28, 68.53, 67.80,
+  67.10 (steps -0.76, -0.77, -0.75, -0.73, -0.70), the mean change between two frames 10.29, 10.15, 10.03,
+  9.91, 9.81: no step at T (3589). Looked at as a sheet: one picture. The rise's frames 3849 to 3855 and 3567
+  at the final tier follow in the same job.
+- LOOKS pushed 13:26 (688f5f8f, 8 looks): that sheet and the pair of trial t1. Next by 13:56.
+- ITEM 17, WHERE THE DIFFERENCE LIES (tool /tmp/v/t17/rows.py: the left half by rows of 60 px, lit pixels):
+  the approved's mean luminance by row from 480 down is 0.499, 0.577, 0.593, 0.581, 0.560, 0.533, 0.500,
+  0.467, 0.440, 0.434; the named frame's 0.582, 0.605, 0.639, 0.650, 0.628, 0.589, 0.541, 0.487, 0.450, 0.419.
+  So the bottom rows, where the model's own light shows, are right, and the rows 600 to 840, where the far
+  look shows, are 8 to 12 percent too bright. The 95th percentile of those rows is 0.93 to 0.95 against the
+  approved's 0.83 to 0.87 (in the light before the film's curve: 2.55 against 1.27, a factor of two), the
+  darkest 15 percent have red over green 1.12 to 1.14 against 1.02 to 1.10, and the contrast under 5 px is
+  0.097 in every row against 0.12 to 0.14.
+  - Why no law by angle or by distance can do it: the cosine of the view to the plane's normal is 0.287 to 0.67
+    over the ring in the hold (out/scratch/mu.ts) and 0.28 to 0.58 in the rows 700 to 1080 of 3720, the same
+    angles; only the rows above 700 lie under the hold's range. The nearest ring point in frame is 3.55 away in
+    the hold, 1.87 at 3601 and 0.67 at 3720, but the far rows of 3720 are 3 to 5 away, as far as the hold's.
+    A weight that is the union of both leaves a band of the hold's tone between a toned far part and a toned
+    near part in the frames around 3616 (weight 0.08 at cosine 0.26 against 0.71 and 0.46 beside it).
+  - So the trial is by the height of the lens: skim.json handover.kept.skim, heights 0.6 to 0.93 (the far
+    look's own window; all of the terrain 3630 to 3809 lies under 0.6, so the tone holds still through the
+    surface view and comes and goes in the last 21 frames of the dive and the first 21 of the rise). On the
+    far look in sheet.ts keptSheet only, in a guard loop, so nothing runs where the kept set draws: the
+    ringlets stand out more from their zone (a power on the profile at the pixel over the profile 24 times
+    wider), each colour is held under a ceiling (c g / (1 + c g / ceiling)), and the thinnest ice loses a
+    share of its colour. Predicted on the named final by the film's curve and its inverse
+    (/tmp/v/t17/sim.py; gain 0.94, ceiling 3.4, grey 0.7 under 0.12 to 0.32): mean 0.515, percentiles 10, 50,
+    90, 99: 0.280, 0.512, 0.765, 0.905 (the approved 0.511; 0.242, 0.505, 0.777, 0.912). The darks are left
+    to the power on the ringlets. It is a tone that comes by height (mail 315 wanted distance; plan F allows
+    height): to be judged on consecutive frames of the dive before it is offered.
+  - The code is in the working tree only (model.ts, sheet.ts, skim.json), not committed.
