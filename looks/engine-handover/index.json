@@ -1,9 +1,51 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T20:53:02.206Z",
- "head": "1924a104ed41def8574811c54b4d92ccb7e3febd",
- "note": "MAIL 727 point 2 answered (the camera's own map as the way of the pattern reader); now MAIL 739, the dim of the sky in a travel reads the Sun's place and no clock; whole run in progress",
+ "pushed": "2026-11-24T21:19:55.400Z",
+ "head": "79ade56611076a9e7916cd518409a37651d88994",
+ "note": "item 739 proven on drafts (only 4501 to 4529 move); next the blur law of mail 727 point 3",
  "looks": [
+  {
+   "time": "2026-11-24T21:19:54.815Z",
+   "file": "20261124211954815-note-dim-sheet-2.jpg",
+   "source": "out/work/dim-sheet-2.jpg",
+   "kind": "note",
+   "label": "item 739: 4517 and 4512 before beside after, the upper right at full size (the Sun comes in; the sky's level 0.480 to 0.588 at 4517)"
+  },
+  {
+   "time": "2026-11-24T21:19:54.231Z",
+   "file": "20261124211954231-note-dim-sheet-1.jpg",
+   "source": "out/work/dim-sheet-1.jpg",
+   "kind": "note",
+   "label": "item 739, the dim of the sky by the Sun's place alone: uranus.travel 4503, 4509, 4515, 4517, 4521, 4527 at the draft tier, before (1924a104) beside after (79ade566)"
+  },
+  {
+   "time": "2026-11-24T21:18:46.040Z",
+   "file": "20261124211846040-frame-f01057.jpg",
+   "source": "out/work/dim-after/f01057.png",
+   "kind": "frame",
+   "label": "mercury.travel frame 1057, draft tier",
+   "stop": "mercury",
+   "segment": "mercury.travel",
+   "frame": 1057,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "03b89560bc9f479b"
+  },
+  {
+   "time": "2026-11-24T21:17:06.862Z",
+   "file": "20261124211706862-frame-f04523.jpg",
+   "source": "out/work/seq/4498-4530/f04523.png",
+   "kind": "frame",
+   "label": "uranus.travel frame 4523, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.travel",
+   "frame": 4523,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "03b89560bc9f479b"
+  },
   {
    "time": "2026-11-24T20:53:01.196Z",
    "file": "20261124205301196-note-way2-mars3-dive-2460.jpg",
@@ -34,36 +76,6 @@
    "source": "out/work/cure/way2-ju3-rise-3288.jpg",
    "kind": "note",
    "label": "Jupiter rise pair 3288, 3296 read three ways: a moon before the disc, the camera's map alone reads it as ground"
-  },
-  {
-   "time": "2026-11-24T20:52:57.634Z",
-   "file": "20261124205257634-note-way2-ju3-rise-3283.jpg",
-   "source": "out/work/cure/way2-ju3-rise-3283.jpg",
-   "kind": "note",
-   "label": "Jupiter rise pair 3283, 3291 read three ways: main's carried picture is soft, the camera's map 0.381"
-  },
-  {
-   "time": "2026-11-24T20:52:56.360Z",
-   "file": "20261124205256360-note-see-ju3-rise-3251.jpg",
-   "source": "out/work/cure/see-ju3-rise-3251.jpg",
-   "kind": "note",
-   "label": "Jupiter rise 3251: what the readers see at the far limb"
-  },
-  {
-   "time": "2026-11-24T20:52:55.011Z",
-   "file": "20261124205255011-note-back2-uranus-4180-detail.jpg",
-   "source": "out/work/cure/back2-uranus-4180-detail.jpg",
-   "kind": "note",
-   "label": "Uranus dive 4180 and 4188 at full size by the camera's own map",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T20:52:53.736Z",
-   "file": "20261124205253736-note-uranus-dive-T-b.jpg",
-   "source": "out/work/cure/uranus-dive-T-b.jpg",
-   "kind": "note",
-   "label": "Uranus dive across the handover 4185 to 4190, consecutive drafts",
-   "stop": "uranus"
   }
  ]
 }
