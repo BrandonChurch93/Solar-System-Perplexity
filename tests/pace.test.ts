@@ -1,11 +1,15 @@
-import { describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it } from 'vitest'
 import { config } from '../src/config'
+import { captureRate, setCapture, shutterAsked } from '../src/core/clock'
 import { FilmDirector } from '../src/director/film'
-import { bellPeak, bellRate, bellShare, bellStep, checkFlanks, flank, flankArea, flankAreaOf, flankOf, flankWhole, paceLimits, paceOf, type Flanks } from '../src/director/pace'
+import { bellPeak, bellRate, bellShare, bellStep, checkFlanks, flank, flankArea, flankAreaOf, flankOf, flankWhole, paceLimits, type Flanks } from '../src/director/pace'
 import { plans } from '../src/director/plans'
+import { paceOf } from '../tools/lib/pace'
+import { MIN_POINTS, curves, ringPlane, sampleWindow } from '../tools/smooth/camera'
+import { judgeCurve } from '../tools/smooth/path'
 
-// Plan E, the measure. The bell is the one rate curve of a dive and a rise; paceOf is the plan check that mirrors the harness's judge
-// (npm run smooth) on the film's own camera.
+// Plan E, the measure. The bell is the one rate curve of a dive and a rise; paceOf is the plan check: the judge's own functions
+// (npm run smooth, the path part) on the film's own camera.
 
 const SHAPES: Flanks[] = [
   { rise: 0.4, fall: 0.4, corner: 0.2 },
@@ -183,6 +187,74 @@ describe('the bell with two corners a flank', () => {
 describe('the plan check of a move', () => {
   const film = new FilmDirector(plans)
   const limits = paceLimits()
+  const names = ['fall', 'turn', 'speed'] as const
+
+  // The judge's sampling leaves the capture rate it was asked for; a test that calls it puts the film's own back.
+  afterEach(() => setCapture(1))
+
+  // The path part of npm run smooth as tools/smooth.ts calls it (pathOf): the window of the move at one rate, the curves on a ring of 8
+  // points in the picture, on the plane of the rings where the place lies on them, each curve judged, the speed on its points.
+  const judged = (plan: (typeof plans)[number], kind: 'dive' | 'rise', rate: number): Record<(typeof names)[number], ReturnType<typeof judgeCurve>> | null => {
+    const S = config.raw.smooth
+    const master = config.formats[config.formatKeys.master]!
+    const w = sampleWindow(config, film, plan, kind, rate, S.reachFrames)
+    if (!w) return null
+    const c = curves(w, plan, master.width, master.height, S.path.ringPx, 'picture', 8, ringPlane(plan))
+    return {
+      fall: judgeCurve('rate', 'log of the height a film frame', c.fall, w.k0, rate, w.own, S.path, null, null),
+      turn: judgeCurve('turn', 'degrees a film frame', c.turn, w.k0, rate, w.own, S.path, S.path.floors.turnDeg, null),
+      speed: judgeCurve('speed', 'px a film frame at the place', c.speed, w.k0, rate, w.own, S.path, S.path.floors.speedPx, { values: c.ring, min: MIN_POINTS }),
+    }
+  }
+
+  it('is the judge itself: for every dive and rise of the film, at whole frames and at the rate of the harness, the curves and what is named are those of npm run smooth', () => {
+    let moves = 0
+    for (const plan of plans) {
+      for (const kind of ['dive', 'rise'] as const) {
+        for (const rate of [1, limits.rate]) {
+          const pace = paceOf(film, plan, kind, rate)
+          const j = judged(plan, kind, rate)
+          if (!j) {
+            expect(pace).toBeNull()
+            continue
+          }
+          moves++
+          for (const name of names) expect(pace!.curves[name], plan.id + ' ' + kind + ' ' + name + ' at rate ' + rate).toEqual(j[name])
+          expect(pace!.faults).toEqual(names.flatMap((name) => j[name].faults.map((f) => plan.id + ' ' + kind + ': ' + f.text)))
+          expect(pace!.ok).toBe(names.every((name) => j[name].faults.length === 0))
+        }
+      }
+    }
+    expect(moves).toBe(34)
+  })
+
+  it('compares the speed of the picture on one fixed set of ring points: the judge has every point of the ring, and needs five that have ground', () => {
+    for (const plan of plans) {
+      for (const kind of ['dive', 'rise'] as const) {
+        const pace = paceOf(film, plan, kind)
+        if (!pace) continue
+        expect(pace.curves.speed.points, plan.id + ' ' + kind).not.toBeNull()
+        expect(pace.curves.speed.points!.of).toBe(8)
+        expect(pace.curves.speed.points!.min).toBe(MIN_POINTS)
+        expect(pace.curves.fall.points).toBeNull()
+        expect(pace.curves.turn.points).toBeNull()
+      }
+    }
+  })
+
+  it('leaves the capture rate and the shutter as it found them', () => {
+    const mars = plans.find((p) => p.id === 'mars')!
+    setCapture(1)
+    paceOf(film, mars, 'dive', 2)
+    expect(captureRate()).toBe(1)
+    expect(shutterAsked()).toBeNull()
+    setCapture(4, 90)
+    paceOf(film, mars, 'dive', 2)
+    expect(captureRate()).toBe(4)
+    expect(shutterAsked()).toBe(90)
+    paceOf(film, plans[0]!, 'dive', 2)
+    expect(captureRate()).toBe(4)
+  })
 
   it('reads the fall, the turn and the speed of every dive and rise of the film at whole and half frames', () => {
     let moves = 0
@@ -209,7 +281,8 @@ describe('the plan check of a move', () => {
         const fall = pace!.curves.fall
         const first = seg.firstFrame * pace!.rate + 1
         const end = seg.endFrame * pace!.rate
-        const k0 = Math.max(pace!.firstFrame * pace!.rate - 1, 0)
+        const k0 = pace!.k0
+        expect(k0).toBe(Math.max(pace!.firstFrame * pace!.rate - 1, 0))
         let sum = 0
         for (let k = first; k < end; k++) sum += fall.over[k - k0]! * fall.mean
         expect(sum / (end - first)).toBeCloseTo(fall.mean, 9)
