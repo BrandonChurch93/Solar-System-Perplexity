@@ -1,9 +1,41 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T14:11:46.073Z",
+ "pushed": "2026-11-24T14:35:13.979Z",
  "head": "befb5f47996cb9ff4b6ffb6df289ed9cc2b1fe80",
- "note": "dive: the red at 739 to 748 is my far look (off: 0.10 to 0.23 over 739 to 779); testing the rise the same way",
+ "note": "rise with the far look off: 964 to 972 at 0.46, second pair 1.17 is the set seen from a turning direction against plates laid from one",
  "looks": [
+  {
+   "time": "2026-11-24T14:35:13.275Z",
+   "file": "20261124143513275-note-e3-ul.jpg",
+   "source": "out/work/mercury/place/e3-ul.jpg",
+   "kind": "note",
+   "label": "rise 962 to 970 far look off, upper left under the limb",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T14:35:12.703Z",
+   "file": "20261124143512703-note-dv2-979.jpg",
+   "source": "out/work/mercury/place/dv2-979.jpg",
+   "kind": "note",
+   "label": "rise 979: where the set differs from the plates, rings 1 2 3 4.5 6 degrees round the set's origin",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T14:35:12.162Z",
+   "file": "20261124143512162-note-e34-979-ll.jpg",
+   "source": "out/work/mercury/place/e34-979-ll.jpg",
+   "kind": "note",
+   "label": "rise 979 lower left: the set (left) against the plates alone (right), same craters, two looks",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T14:35:11.541Z",
+   "file": "20261124143511541-note-e3-chg.jpg",
+   "source": "out/work/mercury/place/e3-chg.png",
+   "kind": "note",
+   "label": "rise 980 to 985 far look off: change panels, the red sits lower left",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T14:11:44.954Z",
    "file": "20261124141144954-note-e2-T3.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/mercury/place/e2-whole.jpg",
    "kind": "note",
    "label": "e2-whole: TEST, far look off on globe and shell, dive 752 to 779 whole frames (scratch frames, the far Sun's disc left out): one ground under the limb, pattern at most 0.23 over 739 to 779",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T13:51:44.998Z",
-   "file": "20261124135144998-note-crop-d0-limb.jpg",
-   "source": "out/work/mercury/place/crop-d0-limb.png",
-   "kind": "note",
-   "label": "d0-limb: limb band at 745, 747, 749, 751, 753, 755, the set off: streaks and craters turn into a smooth pale ground",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T13:51:44.006Z",
-   "file": "20261124135144006-note-chg-d0.jpg",
-   "source": "out/work/mercury/place/chg-d0.png",
-   "kind": "note",
-   "label": "d0-chg: the set switched off, dive 741 to 750 against 8 frames later (frame, grey, level change, pattern change): the change is the limb band of my own globe",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T13:22:01.210Z",
-   "file": "20261124132201210-note-chg-zu-full.jpg",
-   "source": "../../../../tmp/m/chg-zu-full.jpg",
-   "kind": "note",
-   "label": "NAMED state, rise change panels 980, 982, 984: the pattern change sits at the limb at 980 and in the lower left of the frame from 982",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T13:22:00.616Z",
-   "file": "20261124132200616-note-zu-T.jpg",
-   "source": "../../../../tmp/m/zu-T.jpg",
-   "kind": "note",
-   "label": "NAMED state, rise 977 to 992 every frame (globe side): one ground, pale band under the limb, new craters come in at the lower left",
    "stop": "mercury"
   }
  ]
