@@ -3,7 +3,7 @@ import { execFileSync } from 'node:child_process'
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import type { Config, Segment } from '../../src/config'
-import { handoverOf, judgedWindow } from '../../src/director/handover'
+import { handoverFrame, handoverOf, judgedWindow } from '../../src/director/handover'
 import { coverWindow, setsForFrame } from '../../src/director/timeline'
 import '../../src/director/plans' // each plan sets its stop's cover window or its handover
 import { openCapture, renderPngFresh, type Session } from './browser'
@@ -61,10 +61,15 @@ export function sheetFrames(cfg: Config, segment: Segment, cover: boolean, place
   let frames: number[]
   const h = cover && placeWindow && (segment.kind === 'dive' || segment.kind === 'rise') ? handoverOf(segment.stop, segment.kind) : null
   if (h) {
-    // the run is centred on the place window; a spare half frame goes to the end where the sides change, the last frame of a dive, the first of a rise
-    const count = Math.min(segment.endFrame - segment.firstFrame, limit)
-    const start = (h.placeFirstFrame + h.placeLastFrame - (count - 1)) / 2
-    const first = Math.max(segment.firstFrame, Math.min(segment.endFrame - count, segment.kind === 'dive' ? Math.ceil(start) : Math.floor(start)))
+    // T is a frame of the close view in both moves: the view changes into T in a dive and out of it in a rise. The run may leave the segment.
+    const count = Math.min(cfg.frameCount, limit)
+    const change = handoverFrame(h) + (segment.kind === 'dive' ? 0 : 1)
+    let first = change - Math.floor(count / 2)
+    if (h.picture) {
+      const start = (h.placeFirstFrame + h.placeLastFrame - (count - 1)) / 2
+      first = Math.max(change - count + 1, Math.min(change - 1, segment.kind === 'dive' ? Math.ceil(start) : Math.floor(start)))
+    }
+    first = Math.max(0, Math.min(cfg.frameCount - count, first))
     frames = Array.from({ length: count }, (_, i) => first + i)
   } else if (cover) {
     const window = judgedWindow(segment)

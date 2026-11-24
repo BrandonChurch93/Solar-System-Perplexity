@@ -5,7 +5,9 @@ import { shutterMid } from '../../src/core/sampler'
 import type { FilmDirector } from '../../src/director/film'
 import { handoverOf } from '../../src/director/handover'
 import type { StopPlan } from '../../src/director/moves'
-import { SEAM_OWN, SEAM_REACH, carriedCamera, ringPlane } from '../smooth/camera'
+import * as travelPath from '../../src/space/travel/path'
+import { SEAM_OWN, SEAM_REACH, carriedCamera, landingCurves, project, ringPlane, sampleLeave } from '../smooth/camera'
+import { judgeLeave } from '../smooth/path'
 
 // The seam between a surface view and its dive or its rise, read on the eye itself (ruling d196), for tools/seam.ts and its test.
 // The eye is the film's own camera as a camera at the unit sphere of the stop, read as the judge reads it (tools/smooth/camera.ts,
@@ -118,5 +120,127 @@ export function seamOf(film: FilmDirector, plan: StopPlan, kind: SeamKind, opts:
     }
   } finally {
     setCapture(was.rate, was.shutter)
+  }
+}
+
+// THE FAR END OF A RISE that a travel follows (MAIL 602: a rise and the travel after it are one flight; through the seam the speed of
+// the picture falls once and rises once and never comes to rest), read twice.
+// As the travel reads it (the carry of src/space/travel, FilmDirector.carryOf): p0 the place the travel starts on (exitPose at the end
+// of the rise), p1 and p2 the rise's own eye one and two steps before its end, in the globe view by name. From the three: the eye's
+// velocity at the end (a one sided difference), its excess over the drift's own velocity, and its acceleration. An excess under the
+// carry's threshold is a rise that comes to rest on its drift, and the travel carries nothing. The step and the threshold are the
+// travel's own (CARRY of src/space/travel/path.ts); a tree that does not have them yet is read with the two numbers its builder gave,
+// and the read says so.
+// As the judge reads the picture (the rest line of npm run smooth: sampleLeave, landingCurves, judgeLeave of tools/smooth, on the
+// film's own camera at the capture rate): the fastest point of the body's edge in pixels a film frame, its lowest and its two ends.
+// And the way of the body's centre in the picture through the same window: where it is slowest, how far its way turns from the first
+// step to the last, and the sharpest turn from one capture frame to the next between two steps that both have speed (AT_SPEED and
+// more), with the speed of the slower of the two: a centre that turns while it stands is no bend, one that turns while it flies is.
+// A stop that asks for a pull back states a speed (handover.rise.pullBack of its params). The read compares the excess the travel
+// reads with it: apart by more than REACHED of the stated speed, the rise of that stop does not follow the far end the engine moves
+// through its last moments (a path of its own that glides onto exitPose(time) and not onto after(time), or one whose law reads the far
+// end only for its place), and the option does nothing or only a part there.
+export const CARRY_AGREED = { from: 0.02, step: 1 / 600 }
+export const AT_SPEED = 1
+export const REACHED = 0.02
+
+export interface FarEndRead {
+  stop: string
+  // The film frame of the seam into the travel.
+  seam: number
+  oneMove: boolean
+  // The step of the reading in seconds, the threshold in radii a second, and whether they are the travel's own of this tree.
+  step: number
+  from: number
+  carryKnown: boolean
+  // Radii between the rise's own last pose and the pose the travel starts on, and the height of that pose.
+  gap: number
+  height: number
+  // Radii a second: the eye at the end, the drift's own, the eye's excess over the drift, and the angle of that excess to the drift's
+  // line in degrees (null where there is no excess to speak of).
+  speed: number
+  drift: number
+  excess: number
+  offLine: number | null
+  // The acceleration at the end in radii a second squared: along the eye's way (under 0 it brakes, over 0 it speeds up) and across it.
+  along: number
+  across: number
+  // The camera at the end: its turn in degrees a second and the change of its angle of view in degrees a second.
+  turn: number
+  vfov: number
+  // Whether the travel carries the excess (at or over the threshold).
+  carried: boolean
+  // The speed the stop's pull back states (null without one), and whether the excess read is that speed (within REACHED of it).
+  asked: number | null
+  reached: boolean | null
+  // The picture: the judge's rest line, positions as capture frames over the rate.
+  rest: { rate: number; reach: number; lowest: { value: number; f: number } | null; first: { value: number; f: number } | null; last: { value: number; f: number } | null; over: number | null }
+  // The body's centre in the picture, px a film frame and degrees.
+  centre: { slowest: { value: number; f: number }; turned: number | null; sharpest: { value: number; f: number; speed: number } | null } | null
+}
+
+export function farEndOf(film: FilmDirector, plan: StopPlan, opts: { rate?: number; reach?: number } = {}): FarEndRead | null {
+  const { rise, travel } = plan.seg
+  if (!rise || !travel || plan.riseIntoHold || Math.abs(travel.start - rise.end) > 1e-9) return null
+  const rate = Math.max(1, Math.round(opts.rate ?? config.raw.smooth.rate ?? 2))
+  const reach = opts.reach ?? config.raw.smooth.reachFrames
+  const deg = THREE.MathUtils.radToDeg
+  const own = (travelPath as unknown as { CARRY?: { from: number; step: number } }).CARRY
+  const carry = own ?? CARRY_AGREED
+  const h = carry.step
+  const end = rise.end
+  const eye = (time: number) => plan.eyeShot('rise', time, 'orbit').pose
+  const p0 = plan.exitPose(end).position
+  const p1 = eye(end - h).position
+  const p2 = eye(end - 2 * h).position
+  const v = p0.clone().multiplyScalar(3).addScaledVector(p1, -4).add(p2).multiplyScalar(1 / (2 * h))
+  const drift = plan.exitPose(end + h).position.sub(p0).multiplyScalar(1 / h)
+  const w = v.clone().sub(drift)
+  const a = p0.clone().addScaledVector(p1, -2).add(p2).multiplyScalar(1 / (h * h))
+  const along = v.length() > 1e-12 ? a.dot(v) / v.length() : 0
+  const asked = plan.p.handover?.rise?.pullBack?.speed ?? null
+  const last = eye(end - 1e-9)
+  const before = eye(end - h)
+  const master = config.formats[config.formatKeys.master]!
+  const lw = sampleLeave(config, film, plan, rate, reach)
+  if (!lw) return null
+  const curves = landingCurves(lw, master.width, master.height)
+  const j = judgeLeave(curves.limb, lw.k0, rate, null)
+  const named = (x: { value: number; k: number } | null): { value: number; f: number } | null => (x ? { value: x.value, f: x.k / rate } : null)
+  // the body's centre: its steps in the picture, each named by the capture frame it ends on
+  const zero = new THREE.Vector3()
+  const steps: { f: number; size: number; way: number }[] = []
+  for (let i = 1; i < lw.samples.length; i++) {
+    const from = project(lw.samples[i - 1]!.pose, zero, master.width, master.height)
+    const to = project(lw.samples[i]!.pose, zero, master.width, master.height)
+    if (!from.front || !to.front || lw.samples[i]!.k !== lw.samples[i - 1]!.k + 1) continue
+    steps.push({ f: lw.samples[i]!.k / rate, size: Math.hypot(to.x - from.x, to.y - from.y) * rate, way: deg(Math.atan2(to.y - from.y, to.x - from.x)) })
+  }
+  const between = (x: number, y: number): number => Math.abs(((y - x + 540) % 360) - 180)
+  let centre: FarEndRead['centre'] = null
+  if (steps.length > 0) {
+    let slowest = steps[0]!
+    for (const s of steps) if (s.size < slowest.size) slowest = s
+    let sharpest: { value: number; f: number; speed: number } | null = null
+    for (let i = 1; i < steps.length; i++) {
+      const x = steps[i - 1]!
+      const y = steps[i]!
+      if (x.size < AT_SPEED || y.size < AT_SPEED) continue
+      const turn = between(x.way, y.way)
+      if (!sharpest || turn > sharpest.value) sharpest = { value: turn, f: y.f, speed: Math.min(x.size, y.size) }
+    }
+    const ends = [steps[0]!, steps[steps.length - 1]!]
+    centre = { slowest: { value: slowest.size, f: slowest.f }, turned: ends[0]!.size > 1e-9 && ends[1]!.size > 1e-9 ? between(ends[0]!.way, ends[1]!.way) : null, sharpest }
+  }
+  return {
+    stop: plan.id, seam: rise.endFrame, oneMove: plan.engineMove, step: h, from: carry.from, carryKnown: own !== undefined,
+    gap: last.position.distanceTo(p0), height: p0.length() - 1,
+    speed: v.length(), drift: drift.length(), excess: w.length(), offLine: w.length() > 1e-6 && drift.length() > 1e-12 ? deg(w.angleTo(drift)) : null,
+    along, across: a.clone().addScaledVector(v, v.lengthSq() > 1e-24 ? -a.dot(v) / v.lengthSq() : 0).length(),
+    turn: deg(before.quaternion.angleTo(last.quaternion)) / h, vfov: (last.vfov - before.vfov) / h,
+    carried: w.length() >= carry.from,
+    asked, reached: asked === null ? null : Math.abs(w.length() - asked) <= REACHED * asked,
+    rest: { rate, reach, lowest: named(j.lowest), first: named(j.first), last: named(j.last), over: j.over },
+    centre,
   }
 }

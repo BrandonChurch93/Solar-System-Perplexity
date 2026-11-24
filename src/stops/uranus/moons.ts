@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { frameUniform } from '../../core/frame'
 import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { EQUIRECT_GLSL } from '../../space/sky'
@@ -11,6 +12,7 @@ uniform sampler2D uHeight;
 uniform float uMapWidth;
 uniform float uGrad;
 uniform float uStep;
+uniform float uFrame;
 uniform float uBump;
 uniform float uWrap;
 uniform float uSeeliger;
@@ -49,7 +51,7 @@ void main() {
   float el = length(east);
   east = el > 1e-4 ? east / el : vec3(1.0, 0.0, 0.0);
   vec3 north = cross(d, east);
-  float e = max(uStep, 1.5 * max(length(dFdx(d)), length(dFdy(d))));
+  float e = max(uStep, 1.5 * uFrame * max(length(dFdx(d)), length(dFdy(d))));
   float hE = heightAt(normalize(d + east * e)) - heightAt(normalize(d - east * e));
   float hN = heightAt(normalize(d + north * e)) - heightAt(normalize(d - north * e));
   vec3 slope = uBodyToWorld * ((east * hE + north * hN) / (2.0 * e));
@@ -109,7 +111,7 @@ export class Moon {
         uStep: { value: (2 * Math.PI) / o.heightWidth }, uBump: { value: o.bump }, uWrap: { value: o.wrap }, uSeeliger: { value: o.seeliger }, uKnee: { value: new THREE.Vector2().fromArray(o.knee) }, uRim: { value: new THREE.Vector2().fromArray(o.rim) }, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
         uSunW: { value: new THREE.Vector3(1, 0, 0) }, uSun: { value: new THREE.Vector3().fromArray(o.sun) }, uAmbient: { value: new THREE.Vector3().fromArray(o.ambient) },
         uBounce: { value: new THREE.Vector3().fromArray(o.bounce) }, uBounceW: { value: new THREE.Vector3(0, 0, 1) }, uBodyToWorld: { value: this.bodyToWorld }, uPlanetInv: { value: new THREE.Matrix4() }, uAir: { value: new THREE.Vector2().fromArray(o.air) }, uShine: { value: 1 },
-        uDiag: diagUniform, uGrad: gradUniform,
+        uDiag: diagUniform, uGrad: gradUniform, uFrame: frameUniform,
       },
     })
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1, 96, 48), this.material)

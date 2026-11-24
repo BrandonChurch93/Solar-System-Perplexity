@@ -1,0 +1,56 @@
+{
+ "critic": "R1",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-04-b.png",
+   "where": "ring arch at left limb (tile B) and right arch (tiles C, F, H)",
+   "what": "on the left (tile B), the inner ring arcs cut off abruptly in mid-air above the atmospheric limb glow; across the right arch (tiles C, F, H), the bright outer and main rings have 1-px stair-step aliasing and stark pure-white clipping instead of the smooth anti-aliased curves and subtle warm chromatic edge tint in -a",
+   "fix": "extend the ring arcs smoothly down into and behind the planet limb haze without a gap on the left, supersample or anti-alias the ring curves, and restore the subtle warm dispersion tint and softer highlight roll-off on the outer ring"
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "left and center planet horizon limb glow (also pair-04-b.png tiles A, B, I)",
+   "what": "the cyan atmospheric glow above the horizon is narrower and dimmer than in -a, with a subtle darker stepped band tracing the planet's geometric rim underneath the haze",
+   "fix": "increase the intensity and vertical falloff height of the cyan atmospheric glow along the left-to-center horizon and smooth out the dark step seam at the planet rim"
+  },
+  {
+   "severity": "major",
+   "file": "pair-02-b.png",
+   "where": "upper-left moon (tile B) and upper-right moon (tiles C, I)",
+   "what": "both moons appear as un-antialiased cutouts with jagged 1-px stair-stepped sunlit limbs, abrupt hard-cut terminators (with a jagged notch on the right moon), flat uniform shadow sides, and smoother sunlit shading with less crater relief than in -a",
+   "fix": "anti-alias both moon silhouettes by ~1 px, soften the terminator falloff into twilight, add warmer-to-cooler sunlit limb shading, and restore fine crater detail across the sunlit and twilight zones"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "right equatorial dark limb at 3 o'clock",
+   "what": "a stray bright warm orange-white glow pokes out right against the razor-sharp dark edge of the planet where -a has only dark muted galactic dust",
+   "fix": "mask out or remove the stray bright warm hotspot bleeding past the right equatorial limb and soften the dark-side planet edge"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "sun flare above right horizon (also pair-04-b.png tiles C, F)",
+   "what": "the sun is rendered as a smooth circular bloom plus soft horizontal bar, losing the crisp vertical spike and fine radial starburst needles present in -a while slightly lifting nearby sky blacks",
+   "fix": "add the subtle vertical spike and fine radial starburst rays to the sun flare and tighten the outer halo falloff so surrounding sky blacks match -a"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "sunlit left planet limb (tiles B, D, G) and dark lower-right limb (tile E)",
+   "what": "the planet disc edge has slight 1-px stair-step aliasing along both the bright sunlit rim and dark lower-right limb, and a bright star sits un-occluded directly on the dark limb edge in tile E",
+   "fix": "anti-alias the planet disc mask by ~1 px around the full circumference and cleanly occlude background stars intersecting the dark limb"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "lower-left dark cloud deck (tile D) and foreground cloud wisps",
+   "what": "deep shadow blacks in the lower-left foreground are slightly lifted and flatter than in -a, with slightly softer micro-contrast on the faint wispy clouds",
+   "fix": "deepen black levels slightly in the lower-left shadow region and restore fine micro-contrast in the foreground cloud filaments"
+  }
+ ]
+}

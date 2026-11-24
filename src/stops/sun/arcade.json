@@ -1,4 +1,5 @@
 {
+  "flash": {"ground": 0.2, "gain": 1.0},
   "sway": {"amount": [0.006, 0.004, 0.0025], "rate": [1.6, 2.3, 3.1], "lanes": [9, 17, 40], "breath": [0.004, 0.9], "shape": 0.8},
   "ring": {"hits": [[0.62, 0.009], [1.52, 0.012], [2.42, 0.004]], "rise": 0.12, "period": 0.9, "fade": 1.9, "end": [3.5, 4.1], "behind": 4.2, "lanes": 8, "round": 0.18},
   "lead": {"lanes": 40, "share": 0.22, "faint": 0.7, "bright": 1.75, "body": 0.6, "most": 2.5},
