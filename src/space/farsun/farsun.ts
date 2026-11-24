@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { gradUniform } from '../../diagnostics/diag'
+import { bufferFrame } from '../../core/frame'
 import { FARSUN_FRAG, FARSUN_VERT, MAX_KNOTS, MAX_LOBES, MAX_LOOPS } from './shader'
 import look from './look.json'
 import { FACE } from './face'
@@ -127,7 +128,7 @@ export class FarSun {
       blending: THREE.CustomBlending, blendEquation: THREE.AddEquation, blendSrc: THREE.OneFactor, blendDst: THREE.OneMinusSrcAlphaFactor, blendSrcAlpha: THREE.ZeroFactor, blendDstAlpha: THREE.OneFactor,
       uniforms: {
         uDepth: { value: 0 }, uProj: { value: new THREE.Vector4(1, 1, 0, 0) }, uCam: { value: new THREE.Matrix3() }, uBody: { value: new THREE.Matrix3() }, uCentre: { value: new THREE.Vector3(0, 0, -10) },
-        uSpin: { value: 0 }, uTime: { value: 0 }, uHoldTime: { value: 0 }, uWear: { value: 0 }, uOpacity: { value: 1 }, uGain: { value: 1 }, uLens: { value: new THREE.Vector2(0, 16 / 9) }, uPixel: { value: 0.001 }, uGrad: gradUniform,
+        uSpin: { value: 0 }, uTime: { value: 0 }, uHoldTime: { value: 0 }, uWear: { value: 0 }, uOpacity: { value: 1 }, uGain: { value: 1 }, uLens: { value: new THREE.Vector2(0, 16 / 9) }, uPixel: { value: 0.001 }, uGrad: gradUniform, uMaster: { value: 1 },
         uMap: { value: null }, uGrade: { value: null }, uMapOn: { value: 0 }, uMapWidth: { value: 8192 },
         uHoldLimb: { value: new THREE.Vector2(1, 0) }, uHoldRim: { value: new THREE.Vector3() }, uHoldRimShape: { value: new THREE.Vector2(0.09, 2) }, uHoldRimBy: { value: new THREE.Vector4(0, 0, 0, 0) },
         uBoil: { value: new THREE.Vector4(0, 1, 0.01, 0) }, uQuiet: { value: new THREE.Vector2(0, 1) }, uHot: { value: new THREE.Vector3(1, 2, 0) }, uPulse: { value: new THREE.Vector4(0, 1, 0, 1) }, uCell: { value: new THREE.Vector4(0, 1, 1, 0) },
@@ -190,7 +191,9 @@ export class FarSun {
     u.uOpacity!.value = opacity
     u.uGain!.value = 1 / view.exposure
     ;(u.uLens!.value as THREE.Vector2).set(view.vignette, view.aspect)
-    u.uPixel!.value = 2 / (p[5]! * view.height)
+    const master = bufferFrame()
+    u.uMaster!.value = master
+    u.uPixel!.value = (2 * master) / (p[5]! * view.height)
     const far = 1 - wearShare(distance)
     const burnt = Math.pow(look.burn.gain, Math.min(Math.max(view.burn, 0), 1))
     u.uBright!.value = (look.body.bright[0]! + (look.body.bright[1]! - look.body.bright[0]!) * far) * burnt

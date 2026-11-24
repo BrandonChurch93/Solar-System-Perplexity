@@ -33,10 +33,11 @@ the angle toward the camera), `span` (the angle between its feet), `turn` (the t
 `height` and `width` in solar radii and `lean` in radians. The places are read off the approved hero
 (`references/approved/sun-hero.png`): the large systems stand at about 205, 30, -28 and 150 degrees.
 `spinAt` is the body's turn at the moment those places are read (the middle of the handover, frame 474).
-The last loop is read off the approved Mercury image (`references/approved/mercury-hero.png`): the low
-curl at the bottom left. A loop may carry `gain` (its own strength, 1 if absent) and `burn` (the power of
-the exposure it takes, `prominence.burn` if absent). The last loop is faint (`gain` 0.08) and takes nearly
-the whole exposure, so it is all but absent at the handover and the exposure reveals it; the loops of the
+The last loops are read off the approved Mercury image (`references/approved/mercury-hero.png`): the low
+ragged curl at the bottom left, a wide arch and a short strand hanging in it. `ragged` on a loop is how far
+its line wobbles off the arc at full exposure (none at burn 0). A loop may carry `gain` (its own strength, 1 if absent) and `burn` (the power of
+the exposure it takes, `prominence.burn` if absent). The last loops are faint (`gain` 0.04) and take more than
+the whole exposure, so they are all but absent at the handover and the exposure reveals them; the loops of the
 Sun stop take a small negative power, so beside the burnt disc they sink into the glow as they do in a
 camera that exposes for the ground. With the exposure the loops also grow thinner (`prominence.thin`, the
 share of their width left at full exposure), break along their length (`prominence.broken`) and go pale
@@ -83,9 +84,18 @@ ceiling by `limb[0] * burn * exp(-limb[1] * (1 - x))`, x the distance from the c
 measured on the approved Mercury image, where the limb is not darker than the face (blue 241 at 0.97 radii
 against 228 to 233 further in): the warmth of that limb sits in the gas just outside it. It is zero at
 burn 0, so the limb law is whole at the handover.
-`knot` is the hot knot of the active region at the left limb as the lens sees it: a round light about the
-place `at` on the sphere (`width` in disc radii, `gain` by the exposure, zero at burn 0), which takes the
-face under it to white and adds `colour` outside the body. It fades as its place goes behind the limb.
+`knot` is the white hot knots of the active regions as the lens sees them, `at` a list of up to three. Each is
+a light about the place `at` on the sphere (`width` in disc radii, `gain` by the exposure, zero at burn 0;
+`edge` is the power of its fall, 1 a Gaussian, more than 1 a flatter core with a harder edge), which takes
+the face under it to white and adds `colour` outside the body. It fades as its place goes behind the limb.
+`rays` is the burst of straight rays from the knot: the gas is marched in `knot.steps` steps inside a sphere
+of `radius` radii round the knot's place in the body's frame, and a point is lit by the direction from the
+knot to it, where a value noise of that direction is high (`fine` rays across a radian, `sharp` their
+thinness, a second finer set at half the strength). The rays fall off with the distance over `reach`, which
+a slower noise of the direction varies from about a third to one and two thirds, so they are uneven in
+length and in brightness; `cone` keeps them to a cone about the outward normal (0 is none), and they fade to
+nothing at the sphere's edge. Their `gain` goes with the exposure and is zero at burn 0. They are in the
+body's frame, so they turn with the body and have depth round it; nothing of them is a picture.
 `body.bright` is the body's own gain at the near and the far end of the wear.
 `desat` is the range of luminance over which a gas colour loses its hue toward white, as a film does when
 every layer is full, in the measure of the burn (none at burn 0, so the loops keep the hold's red at the
@@ -116,6 +126,8 @@ which a noise of the foot varies from about a third to one and two thirds, so th
 length) that spread with height (`strand.fan`; `strand.fine` their count across a radian, `strand.sharp`
 their thinness): each point of a strand is read at the foot it comes from, nearer the middle of the lobe.
 `knot` on a lobe is a smooth low glow at its foot: strength, width in degrees and height scale in radii.
+A lobe with a negative `gain` thins the flames about its place (under the curl at the bottom, where the
+approved image is dark between the strands).
 The second angle of a lobe is the place of the limb in the hold's view at Mercury (about -4 degrees at the
 left, +9 at the bottom), so the lobe stands on the limb there.
 
@@ -126,6 +138,15 @@ the 1920 by 1080 frame. The number is the mean absolute difference of the two pi
 after a blur of 12 px: at most 4.0 in the box, at most 5 on the face (inside 0.9 radii) and on the limb (0.9
 to 1.0), at most 8 in each zone of gas (1.0 to 1.1, 1.1 to 1.3, 1.3 to 1.6, beyond 1.6). The plain number is
 reported and not ruled. The box does not move.
+
+## Nothing by the pixel
+
+The body, the gas, the knots, the rays, the glare and the halo are measured in angles and in disc radii.
+Three things are counted by the pixel, and all three take the master's pixel through `bufferFrame()` of
+`src/core/frame.ts`, so the 4K picture is the 16 by 9 picture and no byte moves at 16 by 9: the cover of the
+disc's edge and the softness of the limb's last pixel (`uPixel`, the angle of one master pixel at the
+body's distance), the fade of each grain octave and the level of the face map as a grain falls under the
+pixel (the same `uPixel`), and the footprint of the hold's map (`dFdx`, `dFdy` times `uMaster`).
 
 ## wiring/
 

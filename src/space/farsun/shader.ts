@@ -29,6 +29,7 @@ uniform float uGain;
 uniform vec2 uLens;
 uniform float uPixel;
 uniform float uGrad;
+uniform float uMaster;
 uniform sampler2D uMap;
 uniform float uMapOn;
 uniform float uMapWidth;
@@ -271,8 +272,8 @@ void main() {
     vec3 d = spinY(p, uSpin);
     vec2 uv = mapUv(d);
     float alt = fract(uv.x + 0.5) - 0.5;
-    vec2 dx = vec2(abs(dFdx(uv.x)) < abs(dFdx(alt)) ? dFdx(uv.x) : dFdx(alt), dFdx(uv.y)) * uGrad;
-    vec2 dy = vec2(abs(dFdy(uv.x)) < abs(dFdy(alt)) ? dFdy(uv.x) : dFdy(alt), dFdy(uv.y)) * uGrad;
+    vec2 dx = vec2(abs(dFdx(uv.x)) < abs(dFdx(alt)) ? dFdx(uv.x) : dFdx(alt), dFdx(uv.y)) * (uGrad * uMaster);
+    vec2 dy = vec2(abs(dFdy(uv.x)) < abs(dFdy(alt)) ? dFdy(uv.x) : dFdy(alt), dFdy(uv.y)) * (uGrad * uMaster);
     vec3 body = vec3(0.0);
     for (int j = 0; j < (uWear > 0.0 && uMapOn > 0.0 ? 1 : 0); j++) {
       vec3 hold = holdLook(d, mu, dx, dy);
