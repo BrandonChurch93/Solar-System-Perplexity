@@ -30,7 +30,7 @@ export interface GroundLook {
   plain: [number, number]
 }
 
-export interface GroundOnGlobe { angleDeg: number[]; farDeg: number[]; rim: number[]; veil: { map: THREE.Texture; slant: { power: number; reach: number; least: number }; plane: THREE.Matrix3; fromDeg: number[] } }
+export interface GroundOnGlobe { farDeg: number[]; rim: number[]; veil: { map: THREE.Texture; plane: THREE.Matrix3; fromDeg: number[] } }
 
 function unpack(buffer: ArrayBuffer, size: number, file: string): Float32Array {
   const count = new Uint32Array(buffer, 0, 1)[0]!
@@ -122,7 +122,6 @@ uniform vec4 uShow;
 uniform vec4 uReach;
 uniform vec4 uCanvas;
 uniform sampler2D uVeil;
-uniform vec3 uVeilSlant;
 uniform mat3 uVeilPlane;
 uniform vec2 uVeilFrom;
 in vec2 vImage;
@@ -147,7 +146,7 @@ vec4 thin(vec4 c) {
   vec3 up = normalize(at - uSea.xyz);
   vec3 q = uVeilPlane * up;
   vec3 haze = textureLod(uVeil, q.xy / max(q.z, 0.05) + 0.5, 0.0).rgb;
-  float less = (1.0 - slantSeen(uVeilSlant, dot(normalize(-at), up), dot(normalize(uEye - at), up))) * (1.0 - smoothstep(uVeilFrom.x, uVeilFrom.y, dot(up, normalize(-uSea.xyz))));
+  float less = (1.0 - uShow.z) * (1.0 - smoothstep(uVeilFrom.x, uVeilFrom.y, dot(up, normalize(-uSea.xyz))));
   return vec4(fromCode(clamp(toCode(c.rgb / c.a) - less * haze, 0.0, 1.0)) * c.a, c.a);
 }
 float shown() {
@@ -155,10 +154,9 @@ float shown() {
   vec3 up = vLocal - uSea.xyz;
   if (dot(up, uEye - vLocal) <= 0.0) return 0.0;
   float arc = dot(normalize(up), normalize(-uSea.xyz));
-  float off = dot(normalize(uEye - vLocal), normalize(-vLocal));
   vec2 q = (vImage - uCanvas.xy) / uCanvas.zw;
   float rim = smoothstep(0.0, uReach.z, min(q.x, 1.0 - q.x)) * smoothstep(0.0, uReach.w, 1.0 - q.y);
-  return uShow.y * smoothstep(uShow.z, uShow.w, off) * smoothstep(uReach.x, uReach.y, arc) * rim;
+  return uShow.y * smoothstep(uReach.x, uReach.y, arc) * rim;
 }
 vec3 masks() {
   vec2 mq = (vImage - uMaskBox.xy) / uMaskBox.zw;
@@ -359,8 +357,8 @@ export class Ground {
           uDrift: { value: new THREE.Vector2() }, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uOwnLens: { value: 0 }, uFrame: { value: new THREE.Vector4(1, 1, 0, 0) },
           uLayer: { value: new THREE.Vector3().fromArray(tint) }, uDiag: diagUniform, uGrad: gradUniform, uFine: fineUniform, uPerLine: frameUniform, uBias: biasUniform,
           uEye: { value: new THREE.Vector3() }, uSea: { value: new THREE.Vector4(centre.x, centre.y, centre.z, def.radius) }, uLock: { value: new THREE.Vector2().fromArray(look.lock) },
-          uShow: { value: new THREE.Vector4(0, 0, cos(globe.angleDeg[0]!), cos(globe.angleDeg[1]!)) }, uReach: { value: new THREE.Vector4(cos(globe.farDeg[1]!), cos(globe.farDeg[0]!), globe.rim[0]!, globe.rim[1]!) }, uCanvas: { value: new THREE.Vector4().fromArray(def.ground.box) },
-          uVeil: { value: globe.veil.map }, uVeilSlant: { value: new THREE.Vector3(globe.veil.slant.power, globe.veil.slant.reach, globe.veil.slant.least) }, uVeilPlane: { value: globe.veil.plane }, uVeilFrom: { value: new THREE.Vector2(cos(globe.veil.fromDeg[1]!), cos(globe.veil.fromDeg[0]!)) }, ...extra,
+          uShow: { value: new THREE.Vector4(0, 0, 1, 0) }, uReach: { value: new THREE.Vector4(cos(globe.farDeg[1]!), cos(globe.farDeg[0]!), globe.rim[0]!, globe.rim[1]!) }, uCanvas: { value: new THREE.Vector4().fromArray(def.ground.box) },
+          uVeil: { value: globe.veil.map }, uVeilPlane: { value: globe.veil.plane }, uVeilFrom: { value: new THREE.Vector2(cos(globe.veil.fromDeg[1]!), cos(globe.veil.fromDeg[0]!)) }, ...extra,
         },
         transparent: true,
         blending: THREE.CustomBlending,
@@ -457,7 +455,7 @@ export class Ground {
     return r
   }
 
-  update(dt: number, gain: number, vignette: number, bloom: number, view: RenderView, eye: THREE.Vector3, sun: THREE.Vector3, under: number, onGlobe: number | null): void {
+  update(dt: number, gain: number, vignette: number, bloom: number, view: RenderView, eye: THREE.Vector3, sun: THREE.Vector3, under: number, onGlobe: number | null, air = 1): void {
     const k = this.look
     const part = view.camera.view
     const cut = under > 0 && part !== null && part.enabled
@@ -466,6 +464,7 @@ export class Ground {
       const show = u.uShow!.value as THREE.Vector4
       show.x = onGlobe === null ? 0 : 1
       show.y = onGlobe ?? 0
+      show.z = air
       const globe = onGlobe !== null
       const m = l.material
       l.mesh.renderOrder = l.order[globe ? 1 : 0]

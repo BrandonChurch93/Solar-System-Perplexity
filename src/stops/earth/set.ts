@@ -40,6 +40,16 @@ export const createSet: SetFactory = async (ctx) => {
   const glintLight = await ctx.texture(base + plates.glint.calm.light, { srgb: false, mips: false })
   const glintSea = await ctx.texture(base + plates.glint.calm.sea, { srgb: false, mips: false })
   const glintOf = (pl: typeof plates) => ({ at: [pl.glint.centre[0]! / pl.size - 0.5, 0.5 - pl.glint.centre[1]! / pl.size], win: pl.size / pl.glint.calm.window, feather: pl.glint.calm.feather, seenDeg: pl.glint.seenDeg, cloud: pl.glint.calm.cloud, warm: pl.glint.calm.warm, glow: pl.glint.calm.glow, floor: pl.glint.calm.floor, light: glintLight, sea: glintSea })
+  const lowShare = (h: number): number => 1 / (1 + Math.pow(h / plates.low.mid, plates.low.power))
+  const lowEnds = [lowShare(plates.low.height[0]!), lowShare(plates.low.height[1]!)]
+  const lowWeight = (h: number): number => (lowShare(Math.min(Math.max(h, plates.low.height[1]!), plates.low.height[0]!)) - lowEnds[0]!) / (lowEnds[1]! - lowEnds[0]!)
+  const lowHaze = plates.low.veil
+  const airRoot = (h: number): number => Math.sqrt(Math.log(h / lowHaze.root))
+  const airSpan = (airRoot(lowHaze.height[0]!) - airRoot(lowHaze.height[1]!)) / (1 + 2 * lowHaze.ease)
+  const airWeight = (h: number): number => {
+    const u = (airRoot(Math.min(Math.max(h, lowHaze.height[1]!), lowHaze.height[0]!)) - airRoot(lowHaze.height[1]!)) / airSpan - lowHaze.ease
+    return Math.max(0, 1 - (u < lowHaze.ease ? (u + lowHaze.ease) ** 2 / (4 * lowHaze.ease) : u <= 1 - lowHaze.ease ? u : 1 - (1 - u + lowHaze.ease) ** 2 / (4 * lowHaze.ease)))
+  }
   const lowPlate = await ctx.texture(base + plates.low.file, { srgb: true, anisotropy: 16 })
   const lowVeil = new THREE.DataTexture(new Uint16Array(await ctx.buffer(base + plates.low.veil.file)), plates.low.veil.size, plates.low.veil.size, THREE.RGBAFormat, THREE.HalfFloatType)
   lowVeil.minFilter = THREE.LinearFilter
@@ -53,7 +63,7 @@ export const createSet: SetFactory = async (ctx) => {
   const globe = new Globe({
     map, mapWidth: (map.image as unknown as { width: number }).width, cloud, emissive, far: farMap, farCloud, look: look.globe,
     sunHold: plan.lightDir.clone().applyQuaternion(new THREE.Quaternion().fromArray(fit.globe.quaternion).invert()),
-    patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), windows: patches.levels.map((l) => (l.raster && l.size && l.offset ? { raster: l.raster, size: l.size, offset: l.offset } : undefined)), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: patches.fade, place: { centre: direction(plates.centre.lon, plates.centre.lat), from: patches.placeFrom, tone, toneDeg: plates.tone.widthDeg, toneCloud: plates.tone.cloud, toneGrey: plates.tone.grey, glint: glintOf(plates), earlyDeg: plates.earlyDeg, gain: plates.gain, day: plates.day, low: { map: lowPlate, eye: direction(placeJson.globe.lon, placeJson.globe.lat).multiplyScalar(1 + placeJson.height), angleDeg: plates.low.angleDeg, fromDeg: plates.low.fromDeg, window: plates.low.window, feather: plates.low.feather, veil: { map: lowVeil, slant: plates.low.veil.slant, times: plates.low.veil.times, feather: plates.low.veil.feather } } } },
+    patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), windows: patches.levels.map((l) => (l.raster && l.size && l.offset ? { raster: l.raster, size: l.size, offset: l.offset } : undefined)), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: patches.fade, place: { centre: direction(plates.centre.lon, plates.centre.lat), from: patches.placeFrom, tone, toneDeg: plates.tone.widthDeg, toneCloud: plates.tone.cloud, toneGrey: plates.tone.grey, glint: glintOf(plates), earlyDeg: plates.earlyDeg, gain: plates.gain, day: plates.day, low: { map: lowPlate, eye: direction(placeJson.globe.lon, placeJson.globe.lat).multiplyScalar(1 + placeJson.height), fromDeg: plates.low.fromDeg, window: plates.low.window, feather: plates.low.feather, veil: { map: lowVeil, times: plates.low.veil.times, feather: plates.low.veil.feather } } } },
   })
   globe.mesh.quaternion.fromArray(fit.globe.quaternion)
   globe.mesh.scale.fromArray(fit.globe.scale)
@@ -95,7 +105,7 @@ export const createSet: SetFactory = async (ctx) => {
   plateEast.applyQuaternion(toGround).multiplyScalar(veilScale)
   plateNorth.applyQuaternion(toGround).multiplyScalar(veilScale)
   const veilPlane = new THREE.Matrix3().set(plateEast.x, plateEast.y, plateEast.z, plateNorth.x, plateNorth.y, plateNorth.z, plateAt.x, plateAt.y, plateAt.z)
-  const ground = await Ground.load(ctx, base, reliefJson as GroundDef, look.ground, { angleDeg: plates.low.angleDeg, farDeg: placeJson.onGlobe.farDeg, rim: placeJson.onGlobe.rim, veil: { map: lowVeil, slant: plates.low.veil.slant, plane: veilPlane, fromDeg: plates.low.fromDeg } })
+  const ground = await Ground.load(ctx, base, reliefJson as GroundDef, look.ground, { farDeg: placeJson.onGlobe.farDeg, rim: placeJson.onGlobe.rim, veil: { map: lowVeil, plane: veilPlane, fromDeg: plates.low.fromDeg } })
   terrain.add(ground.group)
   const onGlobe = new THREE.Group()
   onGlobe.scale.setScalar(1 / placeRadius)
@@ -187,14 +197,16 @@ export const createSet: SetFactory = async (ctx) => {
       gu.uUnborn!.value = 1 - born
       gu.uLights!.value = lights * (1 - low)
       gu.uNear!.value = low
-      const lowLook = ending ? 0 : smooth(Math.log(plates.low.height[0]! / Math.max(camera.length() - 1, 1e-4)) / Math.log(plates.low.height[0]! / plates.low.height[1]!))
+      const lowLook = ending ? 0 : lowWeight(camera.length() - 1)
+      const lowAir = ending ? 0 : airWeight(camera.length() - 1)
       gu.uLowLook!.value = lowLook
+      gu.uLowAir!.value = lowAir
       if (ground.group.parent !== onGlobe) onGlobe.add(ground.group)
       ground.group.visible = lowLook > 0
       onGlobe.quaternion.copy(plan.turn(state.time)).multiply(placeFrame).multiply(fromLocal).normalize()
       onGlobe.position.copy(placeCentre).applyQuaternion(onGlobe.quaternion).multiplyScalar(-1 / placeRadius)
       toPlace.copy(onGlobe.quaternion).invert()
-      if (lowLook > 0) ground.update(Math.min(Math.max(state.time, plan.seg.terrain.start), plan.seg.terrain.end) - terrainMid, gain, shot.post.vignette, shot.post.bloomStrength, view, eyePlace.copy(eye).applyQuaternion(toPlace).multiplyScalar(placeRadius).add(placeCentre), sunPlace.copy(plan.lightDir).applyQuaternion(toPlace), 0, lowLook)
+      if (lowLook > 0) ground.update(Math.min(Math.max(state.time, plan.seg.terrain.start), plan.seg.terrain.end) - terrainMid, gain, shot.post.vignette, shot.post.bloomStrength, view, eyePlace.copy(eye).applyQuaternion(toPlace).multiplyScalar(placeRadius).add(placeCentre), sunPlace.copy(plan.lightDir).applyQuaternion(toPlace), 0, lowLook, lowAir)
       const turned = plan.spin(state.time)
       eyeBody.copy(eye).applyQuaternion(untilt)
       ;(gu.uEyeBody!.value as THREE.Vector3).set(Math.cos(turned) * eyeBody.x - Math.sin(turned) * eyeBody.z, eyeBody.y, Math.sin(turned) * eyeBody.x + Math.cos(turned) * eyeBody.z)
