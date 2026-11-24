@@ -1,9 +1,16 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T14:14:18.689Z",
- "head": "f3b505a90d06dc1f8f05526572c37efeb41a1d30",
- "note": "MAIL 682: the body step read in place beside the mean of the body; Jupiter's rise at preview size as a check of the size (not a stand in: single frames differ by up to 1.3 levels); the table of every stop at full size starts now",
+ "pushed": "2026-11-24T14:31:46.631Z",
+ "head": "fe074825d069c4a941e60c42455615a7d6effe48",
+ "note": "MAIL 682: rendering the drafts of every stop's dive and rise at full size to read the body step both ways (mean of the body, in place); Jupiter's third first",
  "looks": [
+  {
+   "time": "2026-11-24T14:31:44.927Z",
+   "file": "20261124143144927-note-ju3-dive-so-far.jpg",
+   "source": "out/work/inplace/sheets/ju3-dive-so-far.png",
+   "kind": "note",
+   "label": "MAIL 682, the table of every stop: Jupiter's third (proof tree 062c4d01) laid over my tree, drafts of its dive at full size, every sixth frame so far"
+  },
   {
    "time": "2026-11-24T14:10:24.298Z",
    "file": "20261124141024298-compare-pv-jupiter-rise-step-in-place.jpg",
@@ -62,14 +69,6 @@
    "source": "out/work/inplace/panels/jupiter-rise-3288.png",
    "kind": "note",
    "label": "jupiter rise (main's), the step in place, prototype: frame 3287, frame 3288, the ground that is new in it in magenta, and the change on the ground both show times 8",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T13:04:26.649Z",
-   "file": "20261124130426649-note-jupiter-rise-3281.jpg",
-   "source": "out/work/inplace/panels/jupiter-rise-3281.png",
-   "kind": "note",
-   "label": "jupiter rise (main's), the step in place, prototype: frame 3280, frame 3281, the ground that is new in it in magenta, and the change on the ground both show times 8",
    "stop": "jupiter"
   }
  ]
