@@ -190,7 +190,7 @@
   },
   "swallow": [
    1.7,
-   2
+   8
   ]
  },
  "spot": {
@@ -444,7 +444,13 @@
    "power": 0.5,
    "most": 1.2,
    "texels": 2,
-   "note": "the wide light and dark of the globe own map under the cells, at the place on the ball where the globe shows it (the ground is the globe own ground, near and far): amount is the share of it the ground takes, level the light of the map that leaves the ground as it is, power how the map light is read, most the most it adds, texels the least width of a sample in texels of the map; far is the same four where a pixel holds the map as the globe shows it, band the texels of the map to a pixel (in 1080ths of the frame height) between which the near reading gives way to the far one",
+   "note": "the light and dark of the globe own map under the cells, at the place on the ball where the globe shows it (the ground is the globe own ground). Two parts. cell: each cell takes the map light at its own middle over the map mean round it (region, texels of the map wide), by one law at every height and distance: share is how far the sample is drawn from the point to the middle of its cell (1: each cell one light), power how it is read, least and most its bounds. The region part, that mean: amount is the share of it the ground takes, level the light of the map that leaves the ground as it is, power how it is read, most the most it adds, where a pixel is small on the ground; far is the same four where a pixel holds the map as the globe shows it, band the texels of the map to a pixel (in 1080ths of the frame height) between which the one gives way to the other. texels: the least width of a sample in texels of the map",
+   "cell": {
+    "share": 1.0,
+    "least": 0.62,
+    "most": 1.6,
+    "power": 0.75
+   },
    "far": {
     "amount": 1.0,
     "level": 0.21,
@@ -453,8 +459,9 @@
    },
    "band": [
     0.2,
-    0.55
-   ]
+    0.5
+   ],
+   "region": 48
   }
  },
  "jets": {
