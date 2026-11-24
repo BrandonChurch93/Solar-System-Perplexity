@@ -1,8 +1,8 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T06:26:54.411Z",
+ "pushed": "2026-11-24T06:27:04.968Z",
  "head": "bd3ddf81d7b646fe21135729e9c6314283607142",
- "note": "merged main f6ce51a5; the relief's presence (mercury_builder's ask) proven byte equal, off by default; proving it again on the new main",
+ "note": "merged main f6ce51a5; the relief's presence (mercury_builder's ask) byte equal on Mercury and Mars, off by default; proving it again on the new main",
  "looks": [
   {
    "time": "2026-11-24T06:26:53.641Z",
