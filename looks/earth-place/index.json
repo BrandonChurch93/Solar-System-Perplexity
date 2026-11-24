@@ -1,9 +1,41 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T08:12:50.662Z",
+ "pushed": "2026-11-24T08:30:07.187Z",
  "head": "571f42dcbd079279ac3afd3b3efb3b6cabd441a6",
- "note": "head 571f42dc: path, seam, parity green, gate PASS, final 1755 equal bytes; sky crops show stars coming up in the frame 2129 to 2137; rise 2145 to 2174 every frame; judged 1857 and 2156 at draft",
+ "note": "earth 571f42dc named: dive 1830 to 1865 and bend 2062 to 2089 every frame at draft, final 2010 against the kept still",
  "looks": [
+  {
+   "time": "2026-11-24T08:30:06.580Z",
+   "file": "20261124083006580-note-pair2010.jpg",
+   "source": "../../../../tmp/gl/s7/pair2010.jpg",
+   "kind": "note",
+   "label": "earth 571f42dc pair2010 draft",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T08:30:06.017Z",
+   "file": "20261124083006017-note-bend-b.jpg",
+   "source": "../../../../tmp/gl/s7/bend-b.jpg",
+   "kind": "note",
+   "label": "earth 571f42dc bend-b draft",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T08:30:05.407Z",
+   "file": "20261124083005407-note-dive-0b.jpg",
+   "source": "../../../../tmp/gl/s7/dive-0b.jpg",
+   "kind": "note",
+   "label": "earth 571f42dc dive-0b draft",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T08:30:04.611Z",
+   "file": "20261124083004611-note-dive-0a.jpg",
+   "source": "../../../../tmp/gl/s7/dive-0a.jpg",
+   "kind": "note",
+   "label": "earth 571f42dc dive-0a draft",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T08:02:43.586Z",
    "file": "20261124080243586-note-judged.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/gl/s7/sky-rise.jpg",
    "kind": "note",
    "label": "new path, rise: upper left corner every frame 2124 to 2141 (stars and the star band come up in the frame, by the eye's height)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T07:58:25.028Z",
-   "file": "20261124075825028-note-bend-a.jpg",
-   "source": "../../../../tmp/gl/s7/bend-a.jpg",
-   "kind": "note",
-   "label": "surface view with the engine's bend: odd frames 2063 to 2089, 2090, 2095, draft",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T07:58:24.434Z",
-   "file": "20261124075824434-note-rise-d.jpg",
-   "source": "../../../../tmp/gl/s7/rise-d.jpg",
-   "kind": "note",
-   "label": "new path, rise every frame 2133 to 2145, then 2150 2155 2160, draft",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T07:58:23.842Z",
-   "file": "20261124075823842-note-dive-c.jpg",
-   "source": "../../../../tmp/gl/s7/dive-c.jpg",
-   "kind": "note",
-   "label": "new path, dive every frame 1890 to 1909, draft",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T07:58:23.236Z",
-   "file": "20261124075823236-note-dive-b.jpg",
-   "source": "../../../../tmp/gl/s7/dive-b.jpg",
-   "kind": "note",
-   "label": "new path, dive every frame 1878 to 1889, draft (plate as a hazier darker oval round the glint)",
    "stop": "earth"
   }
  ]
