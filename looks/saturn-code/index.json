@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T05:01:47.404Z",
- "head": "b5cf72a92260c38b4a4196005f01f92b3fcce915",
- "note": "one frame slit along a spoke of the ring mesh at 3820 cured (sheet as one triangle), frame factor from core; next the bend of the skim into the rise (mail 526)",
+ "pushed": "2026-11-24T05:28:21.795Z",
+ "head": "e3df591ce360c5cb373f3fcfafe5d221ef260ae5",
+ "note": "the skim bends into the rise (ruling d196): track across, pull back, the rise's paces set again; the proofs of e3df591 are rendering",
  "looks": [
+  {
+   "time": "2026-11-24T05:28:21.002Z",
+   "file": "20261124052821002-note-f03810.jpg",
+   "source": "../../../../tmp/v/r33/b2/f03810.png",
+   "kind": "note",
+   "label": "3810 draft, the last frame of the skim with the bend: the eye pulls back and lifts, the lens as at 3720"
+  },
+  {
+   "time": "2026-11-24T05:28:20.367Z",
+   "file": "20261124052820367-note-b2_b.jpg",
+   "source": "../../../../tmp/v/r33/b2_b.jpg",
+   "kind": "note",
+   "label": "the bend of the skim, draft, every sixth frame 3770 to 3810: the track turns into the pull back the rise takes over"
+  },
+  {
+   "time": "2026-11-24T05:28:19.719Z",
+   "file": "20261124052819719-note-b2_a.jpg",
+   "source": "../../../../tmp/v/r33/b2_a.jpg",
+   "kind": "note",
+   "label": "the bend of the skim, draft, every sixth frame 3722 to 3764: the push turns into a track across to the right"
+  },
   {
    "time": "2026-11-24T05:01:46.844Z",
    "file": "20261124050146844-note-diff_7639.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/v/r29/rim_pair_3895.png",
    "kind": "note",
    "label": "3895 and 3896 at the final tier, the rim at the lower right, four times: stars through the soft outer edge"
-  },
-  {
-   "time": "2026-11-24T04:07:50.066Z",
-   "file": "20261124040750066-note-parity_official_9467fee.jpg",
-   "source": "../../../../tmp/v/r29/parity_official_9467fee.png",
-   "kind": "note",
-   "label": "parity of 9467fee by the tool: seven frames, 16 by 9 against uhd, green"
-  },
-  {
-   "time": "2026-11-24T03:45:22.212Z",
-   "file": "20261124034522212-note-pop3815_crops.jpg",
-   "source": "../../../../tmp/v/r29/pop3815_crops.png",
-   "kind": "note",
-   "label": "lower left at 3814 to 3817: the ringlets soften as the lens speeds up"
-  },
-  {
-   "time": "2026-11-24T03:45:21.569Z",
-   "file": "20261124034521569-note-pop3815_sheet.jpg",
-   "source": "../../../../tmp/v/r29/pop3815_sheet.png",
-   "kind": "note",
-   "label": "frame 3815 and what is left of the pairs 3814, 3815, 3816 after the motion is taken out"
   }
  ]
 }
