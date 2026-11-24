@@ -10,7 +10,7 @@ import { handoverFrame, handoverOf } from '../src/director/handover'
 import { setCapture, spanMid } from '../src/core/clock'
 import type { Pose } from '../src/core/types'
 import { plans } from '../src/director/plans'
-import { LANDING_FROM, MIN_POINTS, SEAM_OWN, SEAM_REACH, carriedCamera, curves, eyeCurves, landingCurves, ringPlane, sampleLanding, sampleLeave, sampleSeam, sampleWindow, sphereHit, type Kind, type Plane, type Ring } from './smooth/camera'
+import { LANDING_FROM, MIN_POINTS, SEAM_OWN, SEAM_REACH, afterRise, carriedCamera, curves, eyeCurves, landingCurves, ringPlane, sampleLanding, sampleLeave, sampleSeam, sampleWindow, sphereHit, type Kind, type Plane, type Ring } from './smooth/camera'
 import { IN_PLACE } from './lib/steps'
 import { apart, shownRows } from './smooth/maps'
 import { placeReadings } from './smooth/place'
@@ -29,9 +29,10 @@ import { LANDING_FLOOR, LANDING_LATE, LANDING_SHOWN, changeNote, judgeCurve, jud
 //           rings). --ring ground tries the ring laid on the ground. At the seam with the surface view (the end of a dive, the start of a
 //           rise): the way of the eye over its own height above the ground as the stop's twin holds it, over the same number of the surface view
 //           itself, 16 film frames to each side at the capture rate. Judged: its lowest value (smooth.path.minEye); its largest step and the
-//           part along the surface view's own direction of motion are shown. At the seam from a rise into the travel that leaves the stop
+//           part along the surface view's own direction of motion are shown. At the seam from a rise into the move that follows it (the travel that
+//           leaves the stop, the retreat after the last stop's rise)
 //           (smooth.reachFrames film frames to each side, at the capture rate): the lowest speed of the fastest point of the body's edge over
-//           the smaller of that speed at the two ends of the window; near 0 the picture comes to rest between the rise and the travel.
+//           the smaller of that speed at the two ends of the window; near 0 the picture comes to rest between the rise and that move.
 //           Judged against smooth.path.minLeave: a reading under it is red in the path part.
 // pictures  from draft frames, every frame of the dive and of the rise and smooth.reachFrames film frames into each neighbour (capture frames once
 //           the page knows a rate, whole film frames until then): the step of the frame's level against the line through its two neighbours,
@@ -154,7 +155,7 @@ const ringGround: Plane | null = ringPlane(plan)
 interface PartResult { measured: boolean; pass: boolean; why: string[]; note?: string }
 
 interface PathRun { rate: number; curves: CurveResult[] }
-interface PathKind { segment: string; firstFrame: number; endFrame: number; frameT: number | null; window: [number, number]; runs: PathRun[]; rows: Row[]; sides: string[]; heights: (number | null)[]; faults: Fault[]; eye: (SeamResult & { seam: number; own: number | null }) | null; leave?: LeaveResult & { seam: number; into: string; reach: number } }
+interface PathKind { segment: string; firstFrame: number; endFrame: number; frameT: number | null; window: [number, number]; runs: PathRun[]; rows: Row[]; sides: string[]; heights: (number | null)[]; faults: Fault[]; eye: (SeamResult & { seam: number; own: number | null }) | null; leave?: LeaveResult & { seam: number; into: string; after?: string; reach: number }; noLeave?: string | null }
 
 const MIN_LEAVE: number | null = joined ? (S.path as { minLeave?: number | null }).minLeave ?? null : minLeaveOf(cfg.raw.smooth.path)
 
@@ -182,7 +183,7 @@ function pathOf(kind: Kind): PathKind | null {
   const ec = sw ? eyeCurves(sw, plan, ringGround) : null
   const eye = sw && ec ? { seam: sw.seam, own: ec.own, ...judgeSeam(ec.speed, ec.along, sw.k0, rate, S.path.minEye ?? null, kind === 'dive' ? { first: sw.k0, end: sw.seam * rate } : { first: sw.seam * rate + 1, end: (sw.seam + SEAM_REACH) * rate }) } : null
   const lw = kind === 'rise' ? sampleLeave(cfg, film, plan, rate, S.reachFrames) : null
-  const leave = lw ? { seam: lw.seam, into: lw.travel.id, reach: S.reachFrames, ...judgeLeave(landingCurves(lw, master.width, master.height).limb, lw.k0, rate, MIN_LEAVE) } : null
+  const leave = lw ? { seam: lw.seam, into: lw.next.id, after: lw.next.kind, reach: S.reachFrames, ...judgeLeave(landingCurves(lw, master.width, master.height).limb, lw.k0, rate, MIN_LEAVE, lw.next.kind) } : null
   const h = handoverOf(stop!, kind)
   const at = (f: number): number => f - w.k0
   const frames = Array.from({ length: w.frames }, (_, i) => w.firstFrame + i)
@@ -195,7 +196,7 @@ function pathOf(kind: Kind): PathKind | null {
     heights: frames.map((f) => Number(w.samples[at(f)]!.height.toExponential(4))),
     faults: [...runs.flatMap((r) => r.curves.flatMap((c) => c.faults.map((x) => ({ ...x, text: (r.rate === 1 ? 'whole frames, ' : 'rate ' + r.rate + ', ') + x.text })))), ...(eye?.fault ? [eye.fault] : []), ...(leave?.fault ? [leave.fault] : [])],
     eye,
-    ...(leave ? { leave } : {}),
+    ...(leave ? { leave } : kind === 'rise' ? { noLeave: afterRise(cfg, stop!)?.next?.id ?? null } : {}),
   }
 }
 
@@ -1033,7 +1034,9 @@ function pathText(kind: Kind, p: PathKind | null): string[] {
   if (p.leave) {
     const v = p.leave
     const at = (x: { value: number; k: number } | null): string => (x ? x.value.toFixed(2) + ' at frame ' + position(x.k, v.rate) : 'not measured')
-    lines.push('Rest between the rise and the travel (the seam into ' + v.into + ' at film frame ' + v.seam + ', ' + v.reach + ' film frames to each side, read at rate ' + v.rate + '): a rise and the travel after it are one flight, through the seam the speed of the picture falls once and rises once and never comes to rest. The fastest point of the body\'s edge, px a film frame (the way of its centre and the growth of its radius, from the path alone): lowest ' + at(v.lowest) + ', against ' + at(v.first) + ' and ' + at(v.last) + ' at the ends of the window. The lowest is ' + (v.over === null ? 'not measured' : shown(v.over, 3, MIN_LEAVE)) + ' of the slower end, ' + (MIN_LEAVE === null ? 'no limit yet, shown and not judged' : 'limit ' + MIN_LEAVE) + '. Near 0 the picture comes to rest between the rise and the travel.', '')
+    lines.push('Rest between the rise and the ' + (v.after ?? 'travel') + ' (the seam into ' + v.into + ' at film frame ' + v.seam + ', ' + v.reach + ' film frames to each side, read at rate ' + v.rate + '): a rise and the ' + (v.after ?? 'travel') + ' after it are one flight, through the seam the speed of the picture falls once and rises once and never comes to rest. The fastest point of the body\'s edge, px a film frame (the way of its centre and the growth of its radius, from the path alone): lowest ' + at(v.lowest) + ', against ' + at(v.first) + ' and ' + at(v.last) + ' at the ends of the window. The lowest is ' + (v.over === null ? 'not measured' : shown(v.over, 3, MIN_LEAVE)) + ' of the slower end, ' + (MIN_LEAVE === null ? 'no limit yet, shown and not judged' : 'limit ' + MIN_LEAVE) + '. Near 0 the picture comes to rest between the rise and the ' + (v.after ?? 'travel') + '.', '')
+} else if (p.noLeave !== undefined) {
+    lines.push('Rest after the rise: not read. ' + (p.noLeave === null ? 'No move follows the rise.' : 'The rise ends in ' + p.noLeave + ', where the picture is to come to rest; the rule of one flight holds between a rise and a move.'), '')
   }
   if (p.faults.length) lines.push(...p.faults.map((f) => '- RED ' + f.text), '')
   else lines.push('No number of the path is over its limit.', '')
