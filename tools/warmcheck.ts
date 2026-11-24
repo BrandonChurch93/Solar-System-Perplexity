@@ -109,7 +109,7 @@ async function stills(label: string): Promise<never> {
     drawn += r.drawn
     const same = other[key] === r.hash
     if (!same) differ++
-    console.log('frame ' + f + ' ' + r.hash.slice(0, 16) + ' after ' + r.drawn + ' warm draws: ' + (other[key] === undefined ? 'not in ' + label : same ? 'same' : 'DIFFERENT'))
+    console.log('frame ' + f + ' ' + segmentAtFrame(f).id + ' ' + r.hash.slice(0, 16) + ' after ' + r.drawn + ' warm draws, ' + drawn + ' on this page: ' + (other[key] === undefined ? 'not in ' + label : same ? 'same' : 'DIFFERENT'))
   }
   await s.close()
   console.log(frames.length + ' stills after ' + drawn + ' warm draws, ' + differ + ' not the same bytes as ' + label)
