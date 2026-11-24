@@ -1,9 +1,33 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T17:38:53.622Z",
- "head": "46e6a5606c9d9e80d335737a691ae27c49933b41",
- "note": "Neptune read (dive and rise pass both ways); table of mail 682 being written; rig sent to globe_engineer",
+ "pushed": "2026-11-24T18:03:19.763Z",
+ "head": "caf22249f564c52db5536fb0fa9c9bbf9f0430dc",
+ "note": "mail 717: the take of the reading in place is one commit made beside the render, its chain runs when Saturn's drafts are read; Saturn's dive drafts so far",
  "looks": [
+  {
+   "time": "2026-11-24T18:03:18.759Z",
+   "file": "20261124180318759-note-dive-b.jpg",
+   "source": "out/work/inplace/saturn/dive-b.jpg",
+   "kind": "note",
+   "label": "saturn dive, draft, every fourth frame 3594 to 3629 on the merged tree"
+  },
+  {
+   "time": "2026-11-24T18:03:17.526Z",
+   "file": "20261124180317526-note-dive-a.jpg",
+   "source": "out/work/inplace/saturn/dive-a.jpg",
+   "kind": "note",
+   "label": "saturn dive, draft, every sixth frame 3540 to 3594 on the merged tree (the campaign for the rest of mail 682)"
+  },
+  {
+   "time": "2026-11-24T18:00:26.918Z",
+   "file": "20261124180026918-compare-saturn-dive-step-in-place.jpg",
+   "source": "out/work/handover/saturn-dive-step-in-place.png",
+   "kind": "compare",
+   "label": "saturn dive, the largest step of the level in place (0.27): frame 3605, frame 3606, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "saturn",
+   "segment": "saturn.dive",
+   "frame": 3606
+  },
   {
    "time": "2026-11-24T17:38:53.010Z",
    "file": "20261124173853010-note-neptune-rise-step-body.jpg",
@@ -44,29 +68,6 @@
    "source": "out/work/inplace/looks/pattern-rig-z3-s32.png",
    "kind": "note",
    "label": "PLANTED, a rig, not the film: the same rise, the whole exchange of all detail under 32 px. As on main 1.11, with the widths times the enlargement 0.44 (limit 0.45)"
-  },
-  {
-   "time": "2026-11-24T17:23:54.839Z",
-   "file": "20261124172354839-note-pattern-rig-z3-s16.jpg",
-   "source": "out/work/inplace/looks/pattern-rig-z3-s16.png",
-   "kind": "note",
-   "label": "PLANTED, a rig, not the film: a rigid rise by 3 over one window of the judge. Top one picture, bottom the whole exchange of all detail under 16 px. The judge's pattern as on main reads the bottom row 0.83; with the widths times the enlargement 0.09 (limit 0.45)"
-  },
-  {
-   "time": "2026-11-24T17:08:27.846Z",
-   "file": "20261124170827846-note-neptune-rise-first.jpg",
-   "source": "out/work/inplace/looks/neptune-rise-first.jpg",
-   "kind": "note",
-   "label": "Neptune rise, first frames 4950 to 4960 as they render (drafts, old tree), for the table of mail 682",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T17:08:25.971Z",
-   "file": "20261124170825971-note-neptune-dive-4712-4740.jpg",
-   "source": "out/work/inplace/looks/neptune-dive-4712-4740.jpg",
-   "kind": "note",
-   "label": "Neptune dive 4712 to 4740, drafts on my tree as it was before the merge: the globe's deep blue turns to the place's paler blue between 4716 and 4728 (the report's steps come when the rise is in)",
-   "stop": "neptune"
   }
  ]
 }
