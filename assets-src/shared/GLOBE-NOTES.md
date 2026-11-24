@@ -241,13 +241,16 @@ What it draws:
 
 - Grids by pixel footprint (`fine`, default 1): a grid is drawn only while the cells of its parent are larger than `fine` pixels (of `pixel`, an angle) at the nearest ground the eye can see in it; the finest grid drawn is drawn whole. The eye's height less the highest `high` of the levels and the distance of its foot from the grid's square decide, nothing else. `fine: 0` draws every grid always. Why: triangles far under a pixel give wrong screen derivatives in the fragment text (the renderer snaps vertices to a sixteenth of a pixel), seen on Mars as a noisy square over the finest levels from 2.4 radii down to about 0.1. With `fine: 1` the cells of the finest grid drawn lie between about 0.45 and 1 pixel of the 1080 row format, twice that at 2160 rows; `fine: 0.5` halves them.
 
-Off: a planet without `cap` keeps its text (`81b01893...`, own `813ceb84...`), has no child mesh and no uniform with `Cap` in its name.
+- Light of its own heights (`light: { relief, own }`, two numbers of the stop, also `cap.setLight(relief, own)` per frame; MAIL 431 item 3). The vertex shader takes the normal of the height pyramid at the vertex: central differences of the same read that places the vertex, over half the larger of pixel footprint and cell to each side, with the tangents of the gnomonic direction written out (no differences of positions). It goes to the fragment text as a varying. `relief` (1 is the true normal) adds the difference between that normal and the ball's to the normal the lit levels are shaded with: same Sun, wrap, curve and night as the ball. `own` multiplies the colour of the own levels by 1 + lift, the lift the same law gives that normal against the ball's (limits -0.85 and 1.6 as for the wrap relief), for plates that carry painted light. The relief normal comes in with the relief (the heights are multiplied by the share of the band and the border), and is the ball's where the heights are level. Without `light` the cap has no such varying, no uniform and four height reads a vertex fewer. No cast shadow.
+- Haze to its own surface (always with the cap, no number): the height of the vertex goes to the fragment text, and the haze depth is measured along the view ray from the eye to the point at that height over the datum, not to the ball. Three cases: the eye looks up at the point; the ray descends at both ends (at height 0 this is the ground formula of the ball); the ray passes its lowest point between the two. The density at the point is exp(-height / scale height), not held at the datum's, so ground under the datum has more air over it.
 
-Not there yet: no normal from the heights (the light is the globe's; own levels stay as painted), no cast shadow, the haze depth is measured to the sphere, no march in the fragment shader.
+Off: a planet without `cap` keeps its text (`81b01893...`, own `813ceb84...`), has no child mesh and no uniform with `Cap` in its name. The text of the sphere of a planet with a cap is the text it had before these two; only the cap's own text differs.
+
+Not there yet: no cast shadow (advice to a stop: multiply it into the colour plates it bakes from the same heights and Sun; a shadow plate would cost a sampler of the 16 and 5.6 MB a level), no march in the fragment shader.
 
 Other owners: `src/core/caps.ts` needs `MAX_VERTEX_TEXTURE_IMAGE_UNITS: 10` and `MAX_COMBINED_TEXTURE_IMAGE_UNITS: 26` (on agent/engine-handover 051a2226). `SetContext` in `src/core/types.ts` is not changed: `heightTexture` is a function beside the loader and finds the set's counter through the context, also through a copy of it (`{ ...ctx }`).
 
-Measured on the synthetic height (`tests/globe-cap.test.ts`, 8 tests in node and 6 in the harness browser, pictures of 96 to 192 pixels, float target):
+Measured on the synthetic height (`tests/globe-cap.test.ts`, 10 tests in node and 8 in the harness browser, pictures of 96 to 192 pixels, float target):
 
 - Every height 0, eye above the spot: no pixel differs from the globe without a cap by more than 1e-6. Eye 0.02 radii up looking along the ground: under 1 percent of the values differ by more than 1e-4.
 - Eye above the band: the picture equals the picture of a globe without the option value for value, the triangle count is the sphere's, and the set's bytes rise by exactly the heights with their mips.
@@ -255,6 +258,8 @@ Measured on the synthetic height (`tests/globe-cap.test.ts`, 8 tests in node and
 - A trough 0.04 radii deep: the far ground moves down by more than 3 rows and every pixel the sphere covered is still covered (the sphere does not close the trough, the cap leaves no hole).
 - Rim: a bump inside the border seen from four sides at 0.01 radii, with and without a skirt of 20 degrees: every pixel the sphere covered is covered.
 - Pixel as an angle: a ridge one texel wide has its crest at the same share of the picture height at 96 and at 192 rows (within one row of 96); with a pixel 400 times wider it stands less than 0.6 as tall.
+- Light: a mesa 0.01 radii tall seen from above, Sun 45 degrees up in the east. Without `light` no pixel of the row through it differs from the level ground. With the strength of its kind at 1 (own levels: `own`; lit levels: `relief`) the east wall is brighter than without by more than 10 percent, the west wall darker by more than 20 percent, the level ground and the mesa's top within 1 percent; with only the other strength at 1 every pixel of the row is within 1 percent of the picture without `light`.
+- Haze: a globe with haze (scale height 0.01, depth 0.4) seen from above. Every height 0: no value differs from the globe without a cap by more than 2e-5. A pit 0.02 radii deep is more than 1.5 times as bright in the haze as the datum beside it, a mesa 0.02 tall less than half as bright, the datum itself within 1 percent.
 
 ### Measured on Mars (plan of `agent/mars-place` 632d7441, first bake c49c7dd5, set wired in a scratch worktree only)
 
@@ -275,6 +280,29 @@ Eye path of the dive: hold 2.49 to 2.4208 radii (frame 2400), 1.92 at 2406, 1.28
 - Gap at the view change (frame 2454.25, 0.00172 radii), 3840 by 2160, same measure as above, each level where it is the finest, all the ground in frame: `cells` = `size`: largest 3.1 / 3.6 / 3.9 / 1.9 / 0.8 px, 99.9th percentile 0.44 / 1.34 / 1.21 / 0.71 / 0.32, share of the cells over half a pixel 0.08 / 0.39 / 1.2 / 0.36 / 0.014 percent. `cells` = 2 `size`: largest 0.78 / 0.91 / 0.98 / 0.46 / 0.20 px, 99.99th percentile 0.35 / 0.58 / 0.47 / 0.25 / 0.13, share over half a pixel 0.001 / 0.015 / 0.007 / 0 / 0 percent. The measure falls with the square of the cells, so 3 `size` (6144, a multiple of 64) would give 0.43 px at most; not rendered.
 - Draft stills of the film's own view 2409, 2430, 2447, 2448, 2449 (`cells` 2048, `fine` 1): the curtain walls and streaks of the first bake are gone. 2447 to 2448 and 2448 to 2449 differ by a mean of 10.6 and 10.9 of 255 over the frame (first bake 12.2 and 12.2; the eye moves), no pop seen in the three. Time 38 s, 44 s, 68 s, 67 s, 66 s; without the cap 20 s, 21 s, 36 s (2409, 2430, 2448).
 - One still at 3840 by 2160, frame 2448, one sample (`--format uhd --tier draft`), `fine` 0.5: `cells` 4096 takes 234 s, `cells` 2048 takes 108 s. Between the two 6.6 percent of the pixels differ, 0.008 percent by more than 8 of 255, 0.0007 percent by more than 32, largest 55. Read one to one, the rims, the mesa and the horizon show no facet in either. Not a final: one sample, no shutter.
+
+### The swap of sphere for cap in the film's terms (MAIL 431 item 2)
+
+Review tier, capture rate 2, 1920 by 1080, 16 samples a frame, heights of f95c3606, `cells` 2048, `fine` 1, pictures k = 2 times the film frame. The band's top (2.4 radii, frame 2401.8) lies between k 4803 and k 4804: 4803 is the last picture of the sphere alone, 4804 the first with the cap. Mean absolute change of the picture into each k, of 255:
+
+| into k | 4800 | 4801 | 4802 | 4803 | 4804 (swap) | 4805 | 4806 | 4807 | 4808 |
+|---|---|---|---|---|---|---|---|---|---|
+| with the cap | 3.482 | 4.216 | 5.800 | 7.401 | 8.918 | 10.338 | 11.515 | 11.921 | 11.539 |
+| without (`nocap`) | | | | 7.401 | 8.924 | 10.343 | 11.522 | | |
+
+- 4802 and 4803 are byte equal with and without the cap (the cap is built and not drawn).
+- The picture with the cap against the picture without it: k 4804 mean 0.031, largest 15, 6.7 percent of pixels differ, 0.05 percent by more than 2, none by more than 8; k 4805 mean 0.032, largest 20; k 4806 mean 0.036, largest 25.
+- The swap is 0.35 percent of the change the film makes in that step (0.031 of 8.92). The step into 4804 is 1.8 percent over the mean of its four neighbours (8.918 against 8.764) and 0.5 percent over the mean of the two beside it (8.870), with or without the cap. Under a tenth: it stays, no finer sphere built.
+- With the light and the haze of the cap's own surface in (`light: 1, 1`), k 4804 differs from the same picture before them on 0.06 percent of pixels, by 1 of 255.
+- Time of a review picture: 25 s before the swap, 84 s after it, 182 s with `light`.
+
+### Light and haze of the cap on Mars (heights of f95c3606, plates that still carry painted light, draft, scratch wiring)
+
+- Haze to the own surface, no light option, against the same frame before: 2448 mean 8.86 of 255, brighter by 8.6, 29 percent of pixels by more than 8, largest 66 (the canyon floor lies down to 0.0022 radii under the datum); 2430 mean 0.67.
+- `light: { relief: 1, own: 0 }` on top: 2448 changes on 0.01 percent of pixels, 2430 on 0.3 percent, 2409 on 1.5 percent (largest 72): the close levels of this stop are own levels.
+- `light: { relief: 1, own: 1 }` on top: 2448 mean 1.17, 16.6 percent of pixels by more than 2, 3.6 percent by more than 8, largest 86; 2430 mean 1.65, 9.1 percent by more than 8. 2447 to 2448 and 2448 to 2449 differ by a mean of 7.9 and 8.5 (before 10.6 and 10.9). Read one to one at 2448 no facet and no noise is seen on the walls.
+- Cost, draft still: 2430 44 s without `light`, 77 s with; 2448 68 s and 113 s (36 s without a cap).
+- The strengths are the stop's. With plates without painted light the levels would be lit levels (`own: false`) and `relief` 1 alone lights them.
 
 Not closed: by the measure the gap is under one pixel with `cells` = 2 `size` and under half a pixel only with 3 `size`; no march in the fragment text. The sink is not driven on Mars (numbers of handover_engineer). No picture at the final tier from here. Seen in the pictures and not the cap's: a thin straight crest north of the close ground (the bake, named by its builder), plates softer than the first set.
 
@@ -297,3 +325,4 @@ Draft stills `out/work/stills/f%05d-16x9-draft-full.png`, sha256, frames 360 (su
 - Merge of main 304f1c68 (e28f9c95): the same 14 draft frames with the options off are byte equal to main 72816fc but frame 717, which main itself changed (Mercury); 717 at e28f9c95 equals 717 rendered at main 304f1c68 (`93a380d7...`). `npx tsc --noEmit` clean, `npx vitest run` 244 green.
 - Merge of main 65fb91d (e8283808, the capture rate): the same 14 draft frames with the options off are byte equal to the 14 of e28f9c95. `npx tsc --noEmit` clean, `npx vitest run` 256 green (33 files), `vite build` clean (run by the still tool).
 - Cap on Mars's heights baked again (section 8, last part): drafts 2409 to 2449, one still at 3840 by 2160, the gap measured again.
+- Merge of main 94be42ed and 4d7175f6 (69ac8b40, plan E's one move). Swap of sphere for cap measured in the film's terms: it stays (section 8). Light of the cap's own heights (`light`) and haze to its own surface (MAIL 431 item 3). Proof with the options off on the merge with these changes in the tree: the 14 draft frames; 13 are byte equal to the 14 of e8283808, frame 2427 (changed by main's plan E) is byte equal to 2427 rendered at main 4d7175f6 (`4d85b04d...`). `npx tsc --noEmit` clean, `npx vitest run` 291 passed, 0 failed, 1 todo of main's (37 files), `vite build` clean (run by the still tool).

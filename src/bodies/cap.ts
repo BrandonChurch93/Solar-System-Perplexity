@@ -19,6 +19,7 @@ export interface CapOptions {
   fade?: [number, number]
   reachDeg?: number
   fine?: number
+  light?: { relief: number; own: number }
 }
 
 export const CAP_PATCHES = 64
@@ -140,7 +141,7 @@ const levelRead = (j: number, mask: boolean): string => `  {
     }
   }`
 
-export const capVert = (masks: boolean[], grids: number): string => /* glsl */ `
+export const capVert = (masks: boolean[], grids: number, normal = false): string => /* glsl */ `
 in vec3 aCell;
 ${masks.map((m, j) => 'uniform highp usampler2D uCapH' + j + ';' + (m ? '\nuniform sampler2D uCapM' + j + ';' : '')).join('\n')}
 uniform float uCapScale[${masks.length}];
@@ -167,6 +168,8 @@ out vec3 vWorldN;
 out vec3 vPos;
 out vec3 vView;
 out vec3 vClip;
+out float vCapH;${normal ? `
+out vec3 vCapN;` : ''}
 float capTexel(highp usampler2D t, ivec2 p, int lod) {
   return float(texelFetch(t, clamp(p, ivec2(0), textureSize(t, lod) - 1), lod).r);
 }
@@ -203,6 +206,15 @@ void main() {
   vec3 local = vec3(c * dm.x + s * dm.z, dm.y, c * dm.z - s * dm.x);
   float foot = uCapPixel * length((modelMatrix * vec4(local, 1.0)).xyz);
   float h = capHeight(g, foot, cell);
+  vCapH = h;${normal ? `
+  float e = 0.5 * max(foot, cell);
+  float hx = (capHeight(g + vec2(e, 0.0), foot, cell) - capHeight(g - vec2(e, 0.0), foot, cell)) / (2.0 * e);
+  float hy = (capHeight(g + vec2(0.0, e), foot, cell) - capHeight(g - vec2(0.0, e), foot, cell)) / (2.0 * e);
+  float il = 1.0 / length(uSpotN + uSpotE * g.x + uSpotU * g.y);
+  vec3 tx = (uSpotE - dm * dot(dm, uSpotE)) * il;
+  vec3 ty = (uSpotU - dm * dot(dm, uSpotU)) * il;
+  vec3 nm = normalize(cross(tx * (1.0 + h) + dm * hx, ty * (1.0 + h) + dm * hy));
+  vCapN = normalize(mat3(modelMatrix) * vec3(c * nm.x + s * nm.z, nm.y, c * nm.z - s * nm.x));` : ''}
   vLocal = local;
   vWorldN = normalize(mat3(modelMatrix) * local);
   vec4 wp = modelMatrix * vec4(local * (1.0 + h), 1.0);
@@ -268,7 +280,7 @@ export class ReliefCap {
     geometry.setAttribute('aCell', this.cells)
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
-      vertexShader: capVert(masks, scales.length),
+      vertexShader: capVert(masks, scales.length, o.light !== undefined),
       fragmentShader,
       uniforms: {
         ...shared,
@@ -289,6 +301,7 @@ export class ReliefCap {
         uCapFoot: { value: new THREE.Vector2() },
         uCapPixel: { value: o.pixel },
         uCapOn: { value: 0 },
+        ...(o.light ? { uCapLight: { value: new THREE.Vector2(o.light.relief, o.light.own) } } : {}),
       },
     })
     this.mesh = new THREE.Mesh(geometry, this.material)
@@ -335,6 +348,12 @@ export class ReliefCap {
   setSink(depth: number, radius: number): void {
     if (!(radius > 0)) throw new Error('the sink of a cap needs a radius above 0')
     ;(this.material.uniforms.uCapSink!.value as THREE.Vector2).set(depth, radius)
+  }
+
+  setLight(relief: number, own: number): void {
+    const u = this.material.uniforms.uCapLight
+    if (!u) throw new Error('this cap has no light of its own: set light in its options')
+    ;(u.value as THREE.Vector2).set(relief, own)
   }
 
   setPixel(radians: number): void {

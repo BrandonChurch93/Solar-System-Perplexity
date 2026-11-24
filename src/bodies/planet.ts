@@ -100,7 +100,7 @@ export function patchSlots(levels: number): number {
 
 const patchSamplers = (slots: number): string => Array.from({ length: slots }, (_, i) => 'uniform sampler2D uPatch' + i + ';').join('\n')
 
-export interface PatchShader { slots: number; own: boolean; gain: boolean; minor: boolean; glow: boolean; cut?: boolean }
+export interface PatchShader { slots: number; own: boolean; gain: boolean; minor: boolean; glow: boolean; cut?: boolean; cap?: boolean; capLight?: boolean }
 
 const patchRead = (i: number): string => `textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb`
 
@@ -179,12 +179,26 @@ in vec3 vClip;
 in vec3 vLocal;
 in vec3 vWorldN;
 in vec3 vPos;
-in vec3 vView;
+in vec3 vView;${o.cap ? `
+in float vCapH;` : ''}${o.capLight ? `
+in vec3 vCapN;
+uniform vec2 uCapLight;` : ''}
 out vec4 outColor;
 ${EQUIRECT_GLSL}
 ${INVERSE_FILMIC_GLSL}
 ${DIAG_GLSL}
-${hazeGlsl(o.glow)}
+${hazeGlsl(o.glow)}${o.cap ? `
+float capDepth(vec3 dir, vec3 up, float hp) {
+  float r = length(uCam);
+  float ca = dot(dir, uCam / r);
+  float cb = dot(dir, up);
+  float da = hazeDensity(r - 1.0, uHazeH);
+  float db = exp(-hp / uHazeH);
+  if (ca >= 0.0) return max(uHazeTau * (da * hazeCh(ca, uHazeH) - db * hazeCh(cb, uHazeH)), 0.0);
+  if (cb <= 0.0) return max(uHazeTau * (db * hazeCh(-cb, uHazeH) - da * hazeCh(-ca, uHazeH)), 0.0);
+  float rt = r * sqrt(max(1.0 - ca * ca, 0.0));
+  return max(uHazeTau * (2.0 * hazeDensity(rt - 1.0, uHazeH) * hazeCh(0.0, uHazeH) - da * hazeCh(-ca, uHazeH) - db * hazeCh(cb, uHazeH)), 0.0);
+}` : ''}
 vec3 spinY(vec3 d, float a) {
   float c = cos(a), s = sin(a);
   return vec3(c * d.x - s * d.z, d.y, s * d.x + c * d.z);
@@ -257,7 +271,9 @@ ${patchLevels(o)}
   vec3 slope = (east * hE + north * hN) / (2.0 * e);
   vec3 slopeW = uBodyToWorld * spinY(slope, -uSpin);
   float strength = mix(uRelief, uReliefNear, near) * (1.0 - detail);
-  vec3 np = normalize(n - slopeW * strength);
+  vec3 np = normalize(n - slopeW * strength);${o.capLight ? `
+  vec3 nc = normalize(vCapN) - n;
+  np = normalize(np + nc * uCapLight.x);` : ''}
   float ndl = dot(np, uSunW);
   float lift = clamp((ndl - ndl0) / max(ndl0 + uWrap, 0.06), -0.85, 1.6);
   vec3 shade = max(curveAt(ndl0) - uNight, vec3(0.0)) * (1.0 + lift) * mix(1.0, pow(mu, 0.35), uLimb) + uNight;
@@ -268,9 +284,10 @@ ${patchLevels(o)}
     lin *= mix(1.0, 2.0 / (1.0 + l / uNightFlat.x), dark);
   }
   vec3 col = lin * shade * uTint;${o.own ? `
-  if (own > 0.0) col = mix(col, inverseFilmic(ownSum / own)${o.gain ? ' * uOwnGain' : ''}, own);` : ''}
+  if (own > 0.0) col = mix(col, inverseFilmic(ownSum / own)${o.gain ? ' * uOwnGain' : ''}${o.capLight ? ' * (1.0 + clamp((dot(normalize(n + nc * uCapLight.y), uSunW) - ndl0) / max(ndl0 + uWrap, 0.06), -0.85, 1.6))' : ''}, own);` : ''}${o.cap ? `
+  float tau = capDepth(dir, n, vCapH);` : `
   vec3 at;
-  float tau = hazeDepth(dir, true, at);
+  float tau = hazeDepth(dir, true, at);`}
   col = col * exp(-tau * uExtinction) + hazeLight(n, dir) * (1.0 - exp(-tau));
   if (uGrazingShape.x > 0.0) {
     float width = mix(uGrazingShape.z, uGrazingShape.y, grazingDay);
@@ -378,7 +395,7 @@ export class Planet {
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1, seg, seg / 2), this.material)
     if (o.cap) {
       const { uCapCut: _, ...shared } = this.material.uniforms
-      this.cap = new ReliefCap(planetFrag(text), shared, o.cap)
+      this.cap = new ReliefCap(planetFrag({ ...text, cap: true, ...(o.cap.light ? { capLight: true } : {}) }), shared, o.cap)
       this.mesh.add(this.cap.mesh)
     }
   }
