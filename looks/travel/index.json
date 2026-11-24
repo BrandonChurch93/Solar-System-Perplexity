@@ -1,9 +1,17 @@
 {
  "folder": "travel",
- "pushed": "2026-11-24T02:49:13.075Z",
- "head": "8bd92b7915437125007679b05e9df59a5094b0c7",
- "note": "Uranus leg start: one hump of acceleration, peak 27.17 to 20.41 px a frame per frame",
+ "pushed": "2026-11-24T05:08:02.248Z",
+ "head": "99f89438ec8a38818a6a16ee305dda0ee4e74d7f",
+ "note": "sun.travel's start: one quintic pull from the first frame (head e84472d7), before and after",
  "looks": [
+  {
+   "time": "2026-11-24T05:08:01.596Z",
+   "file": "20261124050801596-note-sun-start-sheet.jpg",
+   "source": "../../../../tmp/sun-start-sheet.jpg",
+   "kind": "note",
+   "label": "sun.travel start, main left and the quintic pull right, film frames 450 460 470 478 488, draft preview rate 2",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T02:49:01.222Z",
    "file": "20261124024901222-note-uranus-start-sheet.jpg",
@@ -55,13 +63,6 @@
    "kind": "note",
    "label": "Mars leaves, film 2745 to 2775 at rate 2, draft, before the cure (main 65fb91d)",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T23:19:36.957Z",
-   "file": "20261123231936957-note-seam-slide-sheet.jpg",
-   "source": "out/work/travel/seam-slide-sheet.png",
-   "kind": "note",
-   "label": "travel seams eea6c795 draft: 2325 2580 2726 2748 2754 2760 2766 2800 2812 2818 5030 5060"
   }
  ]
 }
