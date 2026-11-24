@@ -11,7 +11,8 @@ import { sideAt } from '../src/director/handover'
 import { plans } from '../src/director/plans'
 import { SEAM_OWN, SEAM_REACH, curves, eyeCurves, landingCurves, planeHit, ringPlane, sampleLanding, sampleLeave, sampleSeam, sampleWindow, seen, type SeamWindow } from '../tools/smooth/camera'
 import { missing, partOwn, popContext, popSpan, sliceName, sliceNeed } from '../tools/smooth/slice'
-import { changeNote, judgeCurve, judgeLanding, judgeLeave, judgeSeam, longestGap, parityFrames, peakRows, position, shown, table } from '../tools/smooth/path'
+import { buildFault, differ, gather, gatherFaults, pieceStem, roleOf, runFacts, type Given } from '../tools/smooth/whole'
+import { changeNote, judgeCurve, judgeLanding, judgeLeave, judgeSeam, longestGap, minLeaveOf, parityFrames, peakRows, position, shown, table } from '../tools/smooth/path'
 
 const limits = { maxStep: 0.08, maxRebound: 0.03, seamFrames: 2 }
 const bell = (n: number, edge = 0): number[] => Array.from({ length: n }, (_, i) => edge + 1 - Math.cos((2 * Math.PI * (i + 0.5)) / n))
@@ -722,6 +723,59 @@ describe('the picture between a rise and the travel that leaves the stop', () =>
     expect(r.fault).toBeNull()
   })
 
+  it('takes the limit from smooth.path.minLeave of the config, 0.07 by the ruling, and refuses a config without it', () => {
+    expect(config.raw.smooth.path.minLeave).toBe(0.07)
+    expect(minLeaveOf(config.raw.smooth.path)).toBe(0.07)
+    expect(minLeaveOf({ minLeave: 0.5 })).toBe(0.5)
+    for (const bad of [undefined, null, 0, 1, -0.07, 7, NaN, Infinity, '0.07', [0.07]]) expect(() => minLeaveOf({ minLeave: bad })).toThrow('smooth.path.minLeave in config/showcase.json needs a number over 0 and under 1')
+    expect(() => minLeaveOf({})).toThrow('it is undefined')
+    expect(() => minLeaveOf({ minLeave: '0.07' })).toThrow('it is "0.07"')
+  })
+
+  it('rules the seven seams as measured on the plans of the ruling: five come to rest, Earth and Saturn do not', () => {
+    const min = minLeaveOf(config.raw.smooth.path)
+    const reach = config.raw.smooth.reachFrames
+    const measured: [string, number, number, number, number, number, number, boolean][] = [
+      ['mercury', 1035, 0.30, 1037, 24.21, 97.87, 0.012, true],
+      ['venus', 1605, 0.25, 1605.5, 14.59, 92.90, 0.017, true],
+      ['earth', 2175, 1.80, 2176, 18.70, 102.85, 0.096, false],
+      ['mars', 2745, 0.36, 2745.5, 42.89, 65.78, 0.008, true],
+      ['jupiter', 3315, 0.36, 3315.5, 14.68, 43.78, 0.024, true],
+      ['saturn', 3885, 3.36, 3889, 8.96, 34.77, 0.375, false],
+      ['uranus', 4455, 0.16, 4457, 31.64, 121.49, 0.005, true],
+    ]
+    const red: string[] = []
+    for (const [stop, seam, low, at, first, last, over, rests] of measured) {
+      const k0 = (seam - reach) * 2 - 1
+      const n = reach * 4
+      const dip = at * 2 - k0
+      const speed = [null, ...Array.from({ length: n }, (_, j) => {
+        const i = j + 1
+        return i <= dip ? first + (low - first) * (i - 1) / (dip - 1) : low + (last - low) * (i - dip) / (n - dip)
+      })]
+      const r = judgeLeave(speed, k0, 2, min)
+      expect(r.first).toEqual({ value: first, k: (seam - reach) * 2 })
+      expect(r.last!.k).toBe((seam + reach) * 2 - 1)
+      expect(r.lowest!.k).toBe(at * 2)
+      expect(r.over).toBeCloseTo(low / first, 12)
+      expect(Math.abs(r.over! - over)).toBeLessThan(0.001)
+      expect(r.fault !== null).toBe(rests)
+      if (r.fault) {
+        red.push(stop + ' ' + r.fault.frame)
+        expect(r.fault.value).toBe(r.over)
+        expect(r.fault.limit).toBe(0.07)
+        expect(r.fault.rule).toBe('rest')
+        expect(r.fault.text).toContain('at frame ' + position(at * 2, 2) + ', ')
+        expect(r.fault.text).toContain('limit 0.07')
+      }
+    }
+    expect(red).toEqual(['mercury 1037', 'venus 1605', 'mars 2745', 'jupiter 3315', 'uranus 4457'])
+    const mercury = judgeLeave([null, 24.21, 0.3, 97.87], 2070, 2, min).fault!
+    expect(mercury.text).toBe('rest: the picture comes to rest between the rise and the travel: the fastest point of the body\'s edge moves 0.30 px a film frame at frame 1036, ' + shown(0.3 / 24.21, 3, min) + ' of the slower end of the window, limit 0.07')
+    expect(judgeLeave([null, 100, 7, 100], 0, 2, min).fault).toBeNull()
+    expect(judgeLeave([null, 100, 6.9, 100], 0, 2, min).fault).not.toBeNull()
+  })
+
   it('is sampled at the seven seams from a rise into a travel: not at the first stop, whose travel follows its hold, and not at the last', () => {
     const film = new FilmDirector(plans)
     const reach = config.raw.smooth.reachFrames
@@ -738,5 +792,128 @@ describe('the picture between a rise and the travel that leaves the stop', () =>
       expect(w.samples.filter((s) => s.k < w.seam * 2).every((s) => s.segment === w.rise.id)).toBe(true)
     }
     expect(seams).toEqual(plans.slice(1, -1).map((p) => p.id))
+  })
+})
+
+describe('the report of a stop from the files of several machines', () => {
+  const run = { stop: 'venus', commit: 'abc', engineHash: 'e1', stopHash: 's1', machine: 'm1', rate: 2, limits: { rate: 2, pictures: { maxPattern: 0.45 } } }
+  const held = (only: string[], over: object = {}): object => ({ ...run, kinds: ['dive', 'rise'], only, parts: Object.fromEntries(only.map((p) => [p, { measured: true, pass: true, why: [], n: p.length }])), ...over })
+  const slice = (kind: string, over: object = {}): object => ({ ...run, kinds: [kind], only: ['pictures'], slice: { name: 'p1of2' }, parts: { pictures: { measured: true } }, ...over })
+  const moves = ['dive', 'rise']
+  const asSent: Given[] = [
+    { file: 'a/venus.json', j: held(['path', 'place', 'parity']) },
+    { file: 'b/venus.json', j: held(['counts'], { machine: 'm2' }) },
+    { file: 'c/venus-dive-p2of2.json', j: slice('dive') },
+    { file: 'c/venus-dive-p1of2.json', j: slice('dive') },
+    { file: 'c/venus-rise-p1of1.json', j: slice('rise') },
+  ]
+
+  it('names a part file by the stop, the move and the parts', () => {
+    expect(pieceStem('venus', null, ['counts'])).toBe('venus-part-counts')
+    expect(pieceStem('venus', null, ['path', 'place', 'parity'])).toBe('venus-part-path-place-parity')
+    expect(pieceStem('venus', 'rise', ['place'])).toBe('venus-rise-part-place')
+  })
+
+  it('takes a file by what it holds, not by its name', () => {
+    expect(roleOf('venus', held(['path', 'place', 'parity']))).toEqual({ is: 'parts', holds: ['path', 'place', 'parity'], kind: null })
+    expect(roleOf('venus', held(['counts']))).toEqual({ is: 'parts', holds: ['counts'], kind: null })
+    expect(roleOf('venus', held(['place'], { kinds: ['rise'] }))).toEqual({ is: 'parts', holds: ['place'], kind: 'rise' })
+    expect(roleOf('venus', slice('dive'))).toEqual({ is: 'slice', kind: 'dive' })
+  })
+
+  it('leaves alone what is no part of the report: another stop, a whole or joined report, the landing, one move of the path', () => {
+    const why = (j: unknown): string => {
+      const r = roleOf('venus', j)
+      return r.is === 'other' ? r.why : 'TAKEN'
+    }
+    expect(why(null)).toBe('not a report')
+    expect(why([1])).toBe('not a report')
+    expect(why(held(['counts'], { stop: 'mars' }))).toBe('not a report of venus')
+    expect(why(held(['path', 'pictures', 'place', 'parity', 'counts']))).toBe('a report with the pictures of one run')
+    expect(why(held(['path', 'place', 'parity', 'counts'], { joined: [] }))).toBe('a joined report')
+    expect(why({ ...(slice('dive') as object), joined: [] })).toBe('a joined report')
+    expect(why(held(['path'], { kinds: [] }))).toBe('the landing')
+    expect(why(held(['path', 'place'], { kinds: ['dive'] }))).toContain('one move alone')
+    expect(why(held(['counts'], { parts: {} }))).toBe('not a report')
+    expect(why(held(['counts', 'sound']))).toBe('not a report')
+    expect(why(slice('dive', { only: ['place'] }))).toContain('a slice of something else')
+  })
+
+  it('gathers the files as the machines send them back, two of them with the same name', () => {
+    const g = gather('venus', asSent)
+    expect(g.slices.dive!.map((x) => x.file)).toEqual(['c/venus-dive-p1of2.json', 'c/venus-dive-p2of2.json'])
+    expect(g.slices.rise!.map((x) => x.file)).toEqual(['c/venus-rise-p1of1.json'])
+    expect(Object.fromEntries(Object.entries(g.holders).map(([k, v]) => [k, v.map((h) => h.file)]))).toEqual({ path: ['a/venus.json'], place: ['a/venus.json'], parity: ['a/venus.json'], counts: ['b/venus.json'] })
+    expect(gatherFaults('venus', g, moves)).toEqual([])
+    expect(g.ignored).toEqual([])
+  })
+
+  it('sorts the slices by their number and notes what it does not take', () => {
+    const g = gather('venus', [...asSent, { file: 'c/venus-dive-p10of12.json', j: slice('dive') }, { file: 'c/venus-dive-p9of12.json', j: slice('dive') }, { file: 'c/venus.json', j: held(['path', 'pictures', 'place', 'parity', 'counts']) }, { file: 'c/mars.json', j: held(['counts'], { stop: 'mars' }) }, { file: 'c/broken.json', j: null }])
+    expect(g.slices.dive!.map((x) => x.file)).toEqual(['c/venus-dive-p1of2.json', 'c/venus-dive-p2of2.json', 'c/venus-dive-p9of12.json', 'c/venus-dive-p10of12.json'])
+    expect(g.ignored).toEqual([{ file: 'c/venus.json', why: 'a report with the pictures of one run' }])
+  })
+
+  it('names every part that is missing, with the command that writes it', () => {
+    const faults = gatherFaults('venus', gather('venus', [asSent[1]!, asSent[2]!]), moves)
+    expect(faults).toEqual([
+      'missing: the path (npm run smooth -- --stop venus --part path, or a run with --only that holds it)',
+      'missing: the place (npm run smooth -- --stop venus --part place, or a run with --only that holds it)',
+      'missing: the parity (npm run smooth -- --stop venus --part parity, or a run with --only that holds it)',
+      'missing: the pictures of the rise (npm run smooth -- --stop venus --kind rise --only pictures --part I/N)',
+    ])
+    expect(gatherFaults('venus', gather('venus', []), moves)).toHaveLength(6)
+  })
+
+  it('asks for no pictures of a move the stop does not have', () => {
+    const g = gather('sun', [{ file: 'sun.json', j: held(['path', 'place', 'parity', 'counts'], { stop: 'sun' }) }, { file: 'sun-rise-p1of1.json', j: slice('rise', { stop: 'sun' }) }])
+    expect(gatherFaults('sun', g, ['rise'])).toEqual([])
+    const byMove = gather('sun', [{ file: 'sun.json', j: held(['path', 'parity', 'counts'], { stop: 'sun' }) }, { file: 'sun-rise-part-place.json', j: held(['place'], { stop: 'sun', kinds: ['rise'] }) }, { file: 'sun-rise-p1of1.json', j: slice('rise', { stop: 'sun' }) }])
+    expect(gatherFaults('sun', byMove, ['rise'])).toEqual([])
+  })
+
+  it('takes the place from one file a move, and names the move that is missing', () => {
+    const rest: Given[] = [{ file: 'a.json', j: held(['path', 'parity', 'counts']) }, ...asSent.slice(2)]
+    const dive = { file: 'venus-dive-part-place.json', j: held(['place'], { kinds: ['dive'] }) }
+    const rise = { file: 'venus-rise-part-place.json', j: held(['place'], { kinds: ['rise'] }) }
+    expect(gatherFaults('venus', gather('venus', [...rest, dive, rise]), moves)).toEqual([])
+    expect(gatherFaults('venus', gather('venus', [...rest, dive]), moves)).toEqual(['missing: the place of the rise (npm run smooth -- --stop venus --part place --kind rise)'])
+    expect(gatherFaults('venus', gather('venus', [...asSent, dive]), moves)).toEqual(['twice: the place is in a/venus.json, venus-dive-part-place.json with other numbers or from another run'])
+  })
+
+  it('takes once what two files hold alike from one run of one machine, and refuses a part there twice in any other way', () => {
+    const copy = gather('venus', [...asSent, { file: 'tar/venus.json', j: held(['path', 'place', 'parity']) }])
+    expect(gatherFaults('venus', copy, moves)).toEqual([])
+    expect(copy.same).toEqual(['the path of tar/venus.json is the path of a/venus.json once more: taken once', 'the place of tar/venus.json is the place of a/venus.json once more: taken once', 'the parity of tar/venus.json is the parity of a/venus.json once more: taken once'])
+    const other = (over: object): string[] => gatherFaults('venus', gather('venus', [...asSent, { file: 'z.json', j: held(['counts'], over) }]), moves)
+    expect(other({ machine: 'm2' })).toEqual([])
+    expect(other({ machine: 'm3' })).toEqual(['twice: the counts is in b/venus.json, z.json with other numbers or from another run'])
+    expect(other({ machine: 'm2', commit: 'abd' })).toHaveLength(1)
+    expect(other({ machine: 'm2', parts: { counts: { measured: true, pass: false, why: ['x'] } } })).toHaveLength(1)
+  })
+
+  it('finds the first fact in which two files are not one run', () => {
+    const a = runFacts(run)
+    const elsewhere = { ...run, machine: 'another' }
+    expect(differ(a, runFacts(elsewhere))).toBeNull()
+    expect(differ(runFacts({ ...run, commit: 'abd' }), a)).toBe('commit ("abd" against "abc")')
+    expect(differ(runFacts({ ...run, engineHash: 'e2' }), a)).toBe('engine hash ("e2" against "e1")')
+    expect(differ(runFacts({ ...run, engineHash: null }), a)).toBe('engine hash (null against "e1")')
+    expect(differ(runFacts({ ...run, stopHash: 's2' }), a)).toBe('stop hash ("s2" against "s1")')
+    expect(differ(runFacts({ ...run, rate: 1 }), a)).toBe('capture rate (1 against 2)')
+    expect(differ(runFacts({ ...run, limits: { rate: 2, pictures: { maxPattern: 0.5 } } }), a)).toContain('limits')
+  })
+
+  it('refuses files of another build than the tree that joins them, and takes a named commit', () => {
+    const parts = runFacts(run)
+    expect(buildFault(parts, runFacts(run))).toBe('')
+    expect(buildFault(parts, runFacts({ ...run, commit: 'fff' }))).toBe('the parts and this tree differ in the commit ("abc" against "fff"): join at that commit, or name it with --commit abc')
+    expect(buildFault(parts, runFacts({ ...run, commit: 'fff' }), 'abc')).toBe('')
+    expect(buildFault(parts, runFacts({ ...run, commit: 'fff' }), 'abd')).toBe('the parts are of commit abc, --commit names abd')
+    expect(buildFault(parts, runFacts({ ...run, commit: 'fff', engineHash: 'e2' }), 'abc')).toContain('differ in the engine hash')
+    expect(buildFault(parts, runFacts({ ...run, stopHash: 's2' }))).toContain('differ in the stop hash')
+    expect(buildFault(parts, runFacts({ ...run, rate: 1 }))).toContain('differ in the capture rate')
+    expect(buildFault(parts, runFacts({ ...run, limits: { rate: 2, pictures: { maxPattern: 0.5 } } }))).toContain('differ in the limits')
+    expect(buildFault(runFacts({ ...run, commit: 'abc with changes that are not committed' }), runFacts(run))).toContain('differ in the commit')
   })
 })
