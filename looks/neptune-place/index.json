@@ -1,9 +1,17 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T05:42:42.908Z",
- "head": "5f6fcd959c3bbedec88cd4ab42e39417a50beead",
- "note": "4860 limb measured against the approved image: the faults of MAIL 484 stand, numbers in the notebook; parity of the tool is rendering its uhd frames",
+ "pushed": "2026-11-24T06:00:42.612Z",
+ "head": "5be84b7fb28985ac839b03dfee915c21cf74a0b8",
+ "note": "5be84b7f pushed: the dive and the rise on the one move; parity green on the four pairs so far, four uhd frames still render",
  "looks": [
+  {
+   "time": "2026-11-24T06:00:41.273Z",
+   "file": "20261124060041273-note-par-own.jpg",
+   "source": "../../../../tmp/par-own.jpg",
+   "kind": "note",
+   "label": "Parity early, commit 5be84b7f: 16 by 9 | uhd scaled down | difference times 8, frames 4605, 4703, 4725, 4748 (the tool's own measure on the tool's frames): 4725 coarse 0.879, block 4.893 (main 4.994, 27.740); 4748 coarse 1.168, block 5.819",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T05:42:41.415Z",
    "file": "20261124054241415-note-limb-4860.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/s-R1-4986.jpg",
    "kind": "note",
    "label": "R1 rise on the one move, every frame from 4986, preview draft",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T05:14:30.775Z",
-   "file": "20261124051430775-note-s-R1-4974.jpg",
-   "source": "../../../../tmp/s-R1-4974.jpg",
-   "kind": "note",
-   "label": "R1 rise on the one move, every frame from 4974, preview draft (T 4956)",
    "stop": "neptune"
   }
  ]
