@@ -1,9 +1,41 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T18:50:39.526Z",
+ "pushed": "2026-11-24T19:24:02.415Z",
  "head": "024eaa6dd045f918b610a6c0276af3515b5c82b9",
- "note": "test states only, no commit: what stands in the corners of dive and rise measured (the plates' skirt, not the aprons); next the skirt without the long run on",
+ "note": "b4 film frames and b5 plates; measuring which apron cells the surface view needs",
  "looks": [
+  {
+   "time": "2026-11-24T19:24:01.412Z",
+   "file": "20261124192401412-note-b5-plates.jpg",
+   "source": "out/work/place/see/b5-plates.jpg",
+   "kind": "note",
+   "label": "b5 plates, new skirt toned from the laid ground, not rendered yet",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T19:24:00.569Z",
+   "file": "20261124192400569-note-lr-b4.jpg",
+   "source": "out/work/place/see/lr-b4.jpg",
+   "kind": "note",
+   "label": "b4 lower right corner: near black canyon floor behind a hump",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T19:23:59.951Z",
+   "file": "20261124192359951-note-ll-b4.jpg",
+   "source": "out/work/place/see/ll-b4.jpg",
+   "kind": "note",
+   "label": "b4 lower left corner 2468 to 2476: straight apron edge with fringe",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T19:23:58.845Z",
+   "file": "20261124192358845-note-b4-film.jpg",
+   "source": "out/work/place/see/b4-film.jpg",
+   "kind": "note",
+   "label": "series b4 film frames 2456 to 2696, short skirt: stripes gone, corners still wrong",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T18:50:38.899Z",
    "file": "20261124185038899-note-zero-view.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/place/see/b3-above.jpg",
    "kind": "note",
    "label": "test, not committed: from above, committed (ref) against toned lay b3; striped fans round the place are the skirt's run on",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T18:32:12.789Z",
-   "file": "20261124183212789-note-b3-plates.jpg",
-   "source": "out/work/place/see/b3-plates.jpg",
-   "kind": "note",
-   "label": "land plates 0p3 to 8p5: lay 2 above, toned lay without mirror skirt below (test, not committed)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T18:32:11.714Z",
-   "file": "20261124183211714-note-ref-b2b.jpg",
-   "source": "out/work/place/see/ref-b2b.jpg",
-   "kind": "note",
-   "label": "from above at 2456, 2468, 2696: committed state above, lay 2 test below (lay 2 worse from above)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T18:00:08.387Z",
-   "file": "20261124180008387-note-b2-R3.jpg",
-   "source": "out/work/place/see/b2-R3.jpg",
-   "kind": "note",
-   "label": "close ground alone at 2468 2471 2687 2690 with L0's apron and L0's picture hidden behind L1: no pale block (test plates)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T18:00:07.832Z",
-   "file": "20261124180007832-note-b2-V.jpg",
-   "source": "out/work/place/see/b2-V.jpg",
-   "kind": "note",
-   "label": "every picture of the close ground tinted at 2471 and 2690: the pale block at the lower left is L0's own picture (pale red) behind L1",
    "stop": "mars"
   }
  ]
