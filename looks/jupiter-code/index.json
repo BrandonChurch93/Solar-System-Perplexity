@@ -1,43 +1,13 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T08:28:20.562Z",
+ "pushed": "2026-11-24T08:43:05.016Z",
  "head": "258a0a4289d35c1060b75633458503e0876fac43",
- "note": "after NAMED dfd3c01: the pale patch at 3296 is the shared sky's cloud; next cures: the rise's turn (pop), the limb at the sky's entry (level step), the look from above (pattern), the set's border",
+ "note": "08:43 UTC: finals of 3296 and 2997 on the named bytes, the plates' borders drawn on 3270 (the warm island is the near plate's repaint inside the nest), the far ground under the limb at 3250 to 3258 (cause of the pattern red). A trial with three cures (even log mix of the air, limb table by height, new rise law) is rendering.",
  "looks": [
   {
-   "time": "2026-11-24T08:28:19.484Z",
-   "file": "20261124082819484-note-rise-sky-x6-crop.jpg",
-   "source": "../work/named/sheets/rise-sky-x6-crop.jpg",
-   "kind": "note",
-   "label": "judged 3296 draft, crop under the globe at display times 6: soft on all sides, blue, part of the sky's band",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T08:28:18.540Z",
-   "file": "20261124082818540-note-rise-sky-x4.jpg",
-   "source": "../work/named/sheets/rise-sky-x4.jpg",
-   "kind": "note",
-   "label": "rise 3288 to 3302, the sky under the globe at display times 4: the pale patch at judged 3296 is a cloud of the shared sky, it moves with the stars; not a patch of this stop",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T08:20:12.035Z",
-   "file": "20261124082012035-job-frame-02895.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "jupiter.hold frame 2895, final tier, nograin view, from the running measure job",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-24T08:18:38.728Z",
-   "file": "20261124081838728-frame-f02787.jpg",
-   "source": "out/work/jupiter/frames/D1/f02787.png",
+   "time": "2026-11-24T08:39:00.599Z",
+   "file": "20261124083900599-frame-f02787.jpg",
+   "source": "out/work/jupiter/frames/M1/f02787.png",
    "kind": "frame",
    "label": "mars.travel frame 2787, draft tier",
    "stop": "mars",
@@ -46,45 +16,81 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
+   "engine": "05fc48a851c30441"
+  },
+  {
+   "time": "2026-11-24T08:37:50.068Z",
+   "file": "20261124083750068-note-limb-a.jpg",
+   "source": "../work/map/limb-a.jpg",
+   "kind": "note",
+   "label": "rise 3248 to 3262, right edge under the limb at full size (lower rows lifted times 6): the far ground goes from dark blue to cream within 3250 to 3258, the pattern red",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T08:37:49.437Z",
+   "file": "20261124083749437-note-o-3270.jpg",
+   "source": "../work/map/o-3270.jpg",
+   "kind": "note",
+   "label": "rise 3270 with the borders of the plates drawn in: the island is the near plate's own repaint inside the nest (orange, 7.4 to 9 units); outside it the globe's own picture enlarged",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T08:37:48.852Z",
+   "file": "20261124083748852-note-final-2997.jpg",
+   "source": "../work/named/sheets/final-2997.jpg",
+   "kind": "note",
+   "label": "judged 2997 (dive) at the final tier, named head dfd3c01: the left limb is pale",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T08:37:48.103Z",
+   "file": "20261124083748103-note-final-3296.jpg",
+   "source": "../work/named/sheets/final-3296.jpg",
+   "kind": "note",
+   "label": "judged 3296 (rise) at the final tier, named head dfd3c01",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T08:37:01.031Z",
+   "file": "20261124083701031-frame-bE-2997.jpg",
+   "source": "out/work/jupiter/final/bE-2997.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 2997, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 2997,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
    "engine": "5a18fcdc5a929484"
   },
   {
-   "time": "2026-11-24T08:17:08.419Z",
-   "file": "20261124081708419-job-frame-03265.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "jupiter.rise frame 3265, draft tier, texels view, from the running measure job",
+   "time": "2026-11-24T08:33:05.056Z",
+   "file": "20261124083305056-frame-bE-3296.jpg",
+   "source": "out/work/jupiter/final/bE-3296.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3296, final tier",
    "stop": "jupiter",
    "segment": "jupiter.rise",
-   "frame": 3265,
-   "tier": "draft",
+   "frame": 3296,
+   "tier": "final",
    "format": "16x9",
-   "diag": "texels",
+   "diag": "beauty",
+   "engine": "5a18fcdc5a929484"
+  },
+  {
+   "time": "2026-11-24T08:30:33.201Z",
+   "file": "20261124083033201-job-frame-03296.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "jupiter.rise frame 3296, final tier, nograin view, from the running measure job",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3296,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
    "job": "measure"
-  },
-  {
-   "time": "2026-11-24T08:07:26.641Z",
-   "file": "20261124080726641-note-rise-changes.jpg",
-   "source": "../work/named/sheets/rise-changes.jpg",
-   "kind": "note",
-   "label": "pictures part, rise, head 6c69ed4: the largest changes of the pattern; 0.71 from 3250 at the far ground under the limb (limit 0.45), 0.65 from 3261 + 1/2 at a pale puff",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T08:07:25.882Z",
-   "file": "20261124080725882-note-rise-pops.jpg",
-   "source": "../work/named/sheets/rise-pops.jpg",
-   "kind": "note",
-   "label": "pictures part, rise, head 6c69ed4: the four largest pops; the red one at 3313 (1.22, limit 1.2) lies in the star field",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T08:05:08.815Z",
-   "file": "20261124080508815-note-rise-g.jpg",
-   "source": "../work/named/sheets/rise-g.jpg",
-   "kind": "note",
-   "label": "rise 3304 to 3315 at draft, head 6c69ed4: the end of the pull back",
-   "stop": "jupiter"
   }
  ]
 }
