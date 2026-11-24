@@ -1,0 +1,19 @@
+Image 1 is a square, straight down (nadir) orbital photograph of canyon land on Mars in low evening light, north at the top, about 41 km across. Its right third is right and must stay as it is: the dark shadowed ground right of the middle, the lit orange cliff with its pale puff of dust, the sunlit pale mesa along the right edge and the pale ground in the lower right corner. The high ground along the top and the high ground along the bottom are right too and stay.
+
+Across the left and the middle of image 1 a great canyon runs from the left edge to the middle, 18 km from rim to rim and 7 km deep. In image 1 it is only a rough sketch: a paler smeared band below its north rim (that is its north wall, which faces the Sun), a dark band above its south rim (its south wall, in shadow), a dim floor between them and a few dark smeared streaks. The sketch is right about where the rims, the walls and the floor are, and wrong about what they look like.
+
+Image 2 is an oblique aerial photograph taken low over the same land, looking east south east. It shows what the walls of this canyon are made of: cliffs of layered rock in horizontal bands, spurs and buttresses, gullies, talus aprons at the foot, rubble on the floor.
+
+Task: redraw image 1 as one seamless nadir orbital photograph with the same framing, the same scale and north at the top.
+
+1. The right third, the high ground along the top and the high ground along the bottom stay as they are, every light and dark patch where it is.
+
+2. The canyon keeps its place, its width and its course: the north rim and the south rim stay where the sketch has them, the floor stays between them. Draw it as a real canyon seen from straight above. The north wall is sunlit: stepped cliffs of layered rock, the strata as thin bands of rust, tan and brown that follow the wall along its length, cut by spurs and gullies that run down the wall from the rim to the floor, with talus aprons at the foot. The south wall is in shadow: the same cliffs, spurs and gullies in dark brown, the ground in them still to be made out. The floor is dim: rubble, low hummocks, a few landslide tongues from the walls. The rims are irregular, with alcoves and spurs, never a straight line.
+
+3. The canyon runs into the dark ground right of the middle without a seam, a step or an edge: it is the same canyon, one piece of land under one light.
+
+4. No smear, no blur, no streaks, no flat cells, no bright outlines, no etched look. No pure black: the darkest shadow still shows ground. No mist, no cloud, no smoke, no water.
+
+5. No fan, no pleats, no long parallel lines, nothing that radiates from one point. No round pits, no fields of craters.
+
+Light: a low Sun in the south south east, soft long shadows falling toward the north north west, the same everywhere. A photograph from orbit: no horizon, no sky, no text, no border, no vignette.

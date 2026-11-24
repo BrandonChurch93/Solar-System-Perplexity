@@ -55,7 +55,22 @@ if L.shape[0] != size:
 # seen: the fan the twin sees, its edge also feathered on the ground (plate px; near the twin the picture's own edge
 # feather is a hair line). m: where the picture leads (seen and clear enough air). far: seen through thick haze.
 seen = geom.picture_edge(cam, lay, a.width_deg, size, lead['edgeShare'])
-seen = seen * geom.smoothstep(0.0, fc['edgePx'], cv2.distanceTransform((seen > 0.02).astype(np.uint8), cv2.DIST_L2, 5))
+# The fan ends on straight lines (the edge of the picture's field). So its edge is drawn back from them by up to
+# edgeWander of the plate width, far where the take is bright at that scale and not at all where it is dark: the
+# edge then runs along forms of the land. (The picture's field is wider than the frame at T by about that much.)
+lumw = np.array([0.0722, 0.7152, 0.2126], np.float32)
+inner = cv2.distanceTransform((seen > 0.02).astype(np.uint8), cv2.DIST_L2, 5)
+wander = fc['edgeWander'] * size
+if wander > 0:
+    q = 4
+    ls = cv2.resize(R @ lumw, (size // q, size // q), interpolation=cv2.INTER_AREA)
+    band = cv2.GaussianBlur(ls, (0, 0), wander / q * 0.25) - cv2.GaussianBlur(ls, (0, 0), wander / q * 1.5)
+    lo_, hi_ = np.percentile(band, [10, 90])
+    band = np.clip((band - lo_) / max(hi_ - lo_, 1e-6), 0, 1)
+    inner = inner - wander * cv2.resize(band, (size, size), interpolation=cv2.INTER_LINEAR)
+    del ls, band
+seen = seen * geom.smoothstep(0.0, fc['edgePx'], inner)
+del inner
 m = seen * geom.smoothstep(lead['tFrom'], lead['tTo'], t)
 far = np.clip(seen - m, 0, 1)
 
@@ -237,14 +252,50 @@ gain = 1 + (gain - 1) * fall[..., None]
 # forms of the land, not as a soft dark cloud over it
 lums = lambda v: v @ np.array([0.0722, 0.7152, 0.2126], np.float32)
 rel = np.clip(lums(Rsc) / (lums(Rlow) + 1e-3), 0.25, 4.0)[..., None]
-gain = np.where(gain < 1, np.power(np.maximum(gain, 1e-3), np.power(rel, -fc['toneShade'])), gain)
-out = np.clip(geom.texel_of(Rsc * gain), 0, 1)
-del Rlow, rel
-plate = plate * m[..., None] + out * (1 - m)[..., None]
-del Ps, Rsc, tone, gain, out
-report('held to the picture', plate)
+# near the fan (grainFromDeg to grainToDeg from it) the ground outside takes the grain of the fan's own ground: the
+# shade weight falls away there and the fine light and dark of the take (its ratio to its own tone over grainBlur of
+# the plate width) is brought to the strength it has in the fan at the nearest edge, never below grainLeast of its
+# own. Without it the smooth ground of the picture ended on ground with bright crests on black.
+gw = (1 - geom.smoothstep(fc['grainFromDeg'], fc['grainToDeg'], far)) * (1 - m) if fc['grainToDeg'] > 0 else np.zeros_like(m)
+gain = np.where(gain < 1, np.power(np.maximum(gain, 1e-3), np.power(rel, -fc['toneShade'] * (1 - gw[..., None]))), gain)
+outs = Rsc * gain
+del Rlow, rel, gain, tone, Rsc
 direct = m * (1 - geom.smoothstep(fc['directFrom'], fc['directTo'], stretch)) * near
+fan = plate * (1 - direct[..., None]) + L[..., :3] * direct[..., None]
+if gw.max() > 0:
+    q = 4
+    sg = fc['grainBlur'] * size / q
+    eps = 2e-3
+    small = lambda v: cv2.resize(v, (size // q, size // q), interpolation=cv2.INTER_AREA)
+    big = lambda v: cv2.resize(v, (size, size), interpolation=cv2.INTER_LINEAR)
+    ms = small(m)
+    bm = np.maximum(cv2.GaussianBlur(ms, (0, 0), sg), 1e-3)
+    lf = np.log(lums(geom.scene_of(fan)) + eps)
+    df = lf - big(cv2.GaussianBlur(small(lf) * ms, (0, 0), sg) / bm)
+    ef = cv2.GaussianBlur(small(df * df) * ms, (0, 0), sg * 2) / np.maximum(cv2.GaussianBlur(ms, (0, 0), sg * 2), 1e-3)
+    ef = spread(np.repeat(ef[..., None], 3, axis=2), (cv2.GaussianBlur(ms, (0, 0), sg * 2) > 0.5).astype(np.float32))[..., 0]
+    ef = np.sqrt(np.maximum(cv2.GaussianBlur(ef, (0, 0), sg), 0))
+    lo = np.log(lums(outs) + eps)
+    base = big(cv2.GaussianBlur(small(lo), (0, 0), sg))
+    do = lo - base
+    eo = np.sqrt(np.maximum(cv2.GaussianBlur(small(do * do), (0, 0), sg * 2), 1e-8))
+    s = big(np.clip(ef / eo, fc['grainLeast'], 1.0))
+    s = 1 + (s - 1) * gw
+    new = np.exp(base + do * s) - eps
+    # the broad tone stays what it was (the mean of a damped logarithm is darker)
+    was = np.maximum(big(cv2.GaussianBlur(small(lums(outs)), (0, 0), sg)), 1e-4)
+    now = np.maximum(big(cv2.GaussianBlur(small(np.maximum(new, 0)), (0, 0), sg)), 1e-4)
+    new = np.maximum(new, 0) * (1 + (was / now - 1) * gw)
+    outs = outs * (new / np.maximum(lums(outs), 1e-5))[..., None]
+    print('grain: the fan has %.3f of the fine contrast of the ground outside it (median where the hold is over a half)' % np.median(big(ef / eo)[gw > 0.5]))
+    del lf, df, ef, lo, base, do, eo, s, new, was, now
+out = np.clip(geom.texel_of(outs), 0, 1)
+del outs, gw
+plate = plate * m[..., None] + out * (1 - m)[..., None]
+del Ps, out
+report('held to the picture', plate)
 plate = plate * (1 - direct[..., None]) + L[..., :3] * direct[..., None]
+del fan
 report('with the sharp lay back', plate)
 print('lay back leads on %.4f of the plate, is used as it is on %.4f' % ((m > 0.5).mean(), (direct > 0.5).mean()))
 cv2.imwrite(a.out + '.png', np.round(plate * 65535).astype(np.uint16))
