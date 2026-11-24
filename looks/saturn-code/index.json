@@ -1,9 +1,16 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T19:22:57.665Z",
+ "pushed": "2026-11-24T19:49:56.821Z",
  "head": "bc97f0c337218f40b3a0f8b3f0c54a426627d036",
- "note": "round 44 list read: solving the pose of 3720 again against the approved close, then the dark inner ring and the fine grain field",
+ "note": "round 44 list, step 1: the pose of the close view solved again (limb within 15 px, horizon within 5 px of the approved); next the dark inner ring into the globe and the fine grains",
  "looks": [
+  {
+   "time": "2026-11-24T19:49:55.994Z",
+   "file": "20261124194955994-note-pair_pg.jpg",
+   "source": "../../../../tmp/v/t17/pair_pg.png",
+   "kind": "note",
+   "label": "3720 with the new pose (g) beside the approved close (left approved, right film, no grain, final tier): the globe and the left horizon lie on the approved now; the hole, the foot band, the colours and the grains are still to do"
+  },
   {
    "time": "2026-11-24T19:22:46.726Z",
    "file": "20261124192246726-note-look_3720_t10_pair.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/v/t17/z_t9c.png",
    "kind": "note",
    "label": "3720 near rings at three times, approved left, trial T9c right: item 19, the film's ringlets are drawn out by the shutter and lack the fine dark grooves and the grain of the sheet"
-  },
-  {
-   "time": "2026-11-24T18:13:41.615Z",
-   "file": "20261124181341615-note-w9c_ur.jpg",
-   "source": "../../../../tmp/v/t17/w9c_ur.png",
-   "kind": "note",
-   "label": "3720 globe, approved left, trial T9c right: item 18, the night side is dark now and the terminator narrower; the limb halo is still orange and wide (item 20)"
   }
  ]
 }
