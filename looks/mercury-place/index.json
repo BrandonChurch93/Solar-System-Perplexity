@@ -1,9 +1,41 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T08:52:12.999Z",
+ "pushed": "2026-11-24T09:24:21.784Z",
  "head": "27f1ba3eb30576e89f64aebb80dd252ffc09bcbd",
- "note": "one ground: plate 1 now carries the place's coarse field in the disc; trials c1 to c3 of the slow exchange dropped",
+ "note": "one ground in the disc from the hold on: plate 1 rebuilt from plate 2, tool pair 1.09 to 0.25; dive render running",
  "looks": [
+  {
+   "time": "2026-11-24T09:24:20.755Z",
+   "file": "20261124092420755-note-gl-rise.jpg",
+   "source": "../../../../tmp/m/gl-rise.jpg",
+   "kind": "note",
+   "label": "globe-levels panel, rise pair 1 to 2r 0.54 over, the place's own night edge",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T09:24:19.734Z",
+   "file": "20261124092419734-note-gl-dive.jpg",
+   "source": "../../../../tmp/m/gl-dive.jpg",
+   "kind": "note",
+   "label": "globe-levels panel, dive pyramid, pair 1 to 2 now 0.25",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T09:24:19.087Z",
+   "file": "20261124092419087-note-d1-615c.jpg",
+   "source": "../../../../tmp/m/d1-615c.jpg",
+   "kind": "note",
+   "label": "hold 615 disc, named head left, plate 1 held in the disc right (earlier plate state)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T09:24:17.825Z",
+   "file": "20261124092417825-note-plate1-final.jpg",
+   "source": "../../../../tmp/m/plate1-final.jpg",
+   "kind": "note",
+   "label": "plate 1 of the place, named head left, one ground right",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T08:52:12.430Z",
    "file": "20261124085212430-note-plate1-pair.jpg",
@@ -41,38 +73,6 @@
    "format": "16x9",
    "diag": "texels",
    "job": "measure"
-  },
-  {
-   "time": "2026-11-24T07:52:24.403Z",
-   "file": "20261124075224403-note-rise-changes.jpg",
-   "source": "out/work/mercury/place/sm/w/rise-changes.jpg",
-   "kind": "note",
-   "label": "the whole report on d5db35dc, rise with the bend: pattern 1.41 at 982 + 1/2 (limb strip), 1.00 at 1001 + 1/2 (the disc)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T07:52:23.011Z",
-   "file": "20261124075223011-note-dive-changes.jpg",
-   "source": "out/work/mercury/place/sm/w/dive-changes.jpg",
-   "kind": "note",
-   "label": "the whole report on d5db35dc, dive: pattern 1.21 at 717 (the disc), 1.57 at 744 + 1/2 (the strip under the limb)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T07:27:14.485Z",
-   "file": "20261124072714485-note-see.jpg",
-   "source": "out/work/mercury/place/pat/p2r/see.jpg",
-   "kind": "note",
-   "label": "plate 2 with the rise's place laid in its middle (work for the cure, not in the tree yet)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T07:27:12.976Z",
-   "file": "20261124072712976-note-r1.jpg",
-   "source": "out/work/mercury/place/pat/r1.jpg",
-   "kind": "note",
-   "label": "pattern red in the rise, where: 983, 988, 993, 1001 each against the frame 8 later (frame, later frame carried back, difference, pattern change): the limb strip, the ring round the place, then the whole disc",
-   "stop": "mercury"
   }
  ]
 }
