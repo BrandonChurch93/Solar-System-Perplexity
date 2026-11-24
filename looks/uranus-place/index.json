@@ -1,9 +1,67 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-24T19:25:41.174Z",
- "head": "efaa5f82798b2bb564e6b2728c53adb713a3db71",
- "note": "rise sheets at efaa5f82 before the round 45 cure (main 6a45d894); round 45 list received, causes being measured",
+ "pushed": "2026-11-24T20:03:52.738Z",
+ "head": "3c0f8d1f0c316c07aea77e0055bba39824811051",
+ "note": "round 45 work: new rise in the hold's pose with a leave, first drafts; dive light cause",
  "looks": [
+  {
+   "time": "2026-11-24T20:03:52.129Z",
+   "file": "20261124200352129-note-ns-cmp.jpg",
+   "source": "../../../../tmp/tf/ns-cmp.jpg",
+   "kind": "note",
+   "label": "dive 4118 to 4134 on main 7d52b3e0 merged: diveSoft 0 against the handover frames, the cause of the terminator's lift",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T20:03:51.299Z",
+   "file": "20261124200351299-note-ra-1.jpg",
+   "source": "../../../../tmp/tf/ra-1.jpg",
+   "kind": "note",
+   "label": "rise trial on main 7d52b3e0 merged: exit in the hold's pose, bend off, leave built in; drafts 4380 to 4456 step 8, last tile the hold's last frame 4110",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T20:03:34.972Z",
+   "file": "20261124200334972-frame-f4448.jpg",
+   "source": "out/work/u/r45/ra/f4448.png",
+   "kind": "frame",
+   "label": "uranus.rise frame 4448, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4448,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
+  {
+   "time": "2026-11-24T19:58:00.487Z",
+   "file": "20261124195800487-frame-f4466.jpg",
+   "source": "out/work/u/r45/ra/f4466.png",
+   "kind": "frame",
+   "label": "uranus.travel frame 4466, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.travel",
+   "frame": 4466,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
+  {
+   "time": "2026-11-24T19:30:03.677Z",
+   "file": "20261124193003677-frame-ns-4134.jpg",
+   "source": "out/work/u/r45/ns-4134.png",
+   "kind": "frame",
+   "label": "uranus.dive frame 4134, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4134,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
   {
    "time": "2026-11-24T19:25:40.425Z",
    "file": "20261124192540425-note-r45-R4-sheet-05.jpg",
@@ -61,34 +119,6 @@
    "stop": "uranus"
   },
   {
-   "time": "2026-11-24T19:22:19.421Z",
-   "file": "20261124192219421-frame-f4436.jpg",
-   "source": "out/work/u/f1/f4436.png",
-   "kind": "frame",
-   "label": "uranus.rise frame 4436, final tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4436,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
-  },
-  {
-   "time": "2026-11-24T19:18:23.338Z",
-   "file": "20261124191823338-frame-f4137.jpg",
-   "source": "out/work/u/f1/f4137.png",
-   "kind": "frame",
-   "label": "uranus.dive frame 4137, final tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4137,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
-  },
-  {
    "time": "2026-11-24T19:10:47.246Z",
    "file": "20261124191047246-frame-d3950.jpg",
    "source": "out/work/u/f1/d3950.png",
@@ -97,20 +127,6 @@
    "stop": "saturn",
    "segment": "saturn.travel",
    "frame": 3950,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
-  },
-  {
-   "time": "2026-11-24T19:10:07.378Z",
-   "file": "20261124191007378-frame-d4495.jpg",
-   "source": "out/work/u/f1/d4495.png",
-   "kind": "frame",
-   "label": "uranus.travel frame 4495, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.travel",
-   "frame": 4495,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
@@ -287,30 +303,6 @@
    "stop": "uranus",
    "segment": "uranus.rise",
    "frame": 4403
-  },
-  {
-   "time": "2026-11-24T18:17:22.035Z",
-   "file": "20261124181722035-sheet-uranus-dive-top.jpg",
-   "source": "out/work/handover/uranus-dive-top.png",
-   "kind": "sheet",
-   "label": "uranus dive, the globe side alone from straight above the place, 12 frames from the far end to T (frame 4186), place picture off, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "first": 4110,
-   "last": 4186,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T18:16:31.260Z",
-   "file": "20261124181631260-sheet-uranus-dive-draft-after.jpg",
-   "source": "out/work/handover/uranus-dive-draft-after.png",
-   "kind": "sheet",
-   "label": "uranus dive, every frame 4187 to 4198 (after T, frame 4186), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "first": 4187,
-   "last": 4198,
-   "tier": "draft"
   }
  ]
 }
