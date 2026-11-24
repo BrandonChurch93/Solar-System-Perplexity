@@ -12,7 +12,7 @@ import type { Pose } from '../src/core/types'
 import { plans } from '../src/director/plans'
 import { LANDING_FROM, MIN_POINTS, SEAM_OWN, SEAM_REACH, carriedCamera, curves, eyeCurves, landingCurves, ringPlane, sampleLanding, sampleLeave, sampleSeam, sampleWindow, sphereHit, type Kind, type Plane, type Ring } from './smooth/camera'
 import { missing, partOwn, sliceName, sliceNeed, type Span } from './smooth/slice'
-import { LANDING_FLOOR, LANDING_LATE, LANDING_SHOWN, judgeCurve, judgeLanding, judgeLeave, judgeSeam, longestGap, parityFrames, position, shown, table, type CurveResult, type Fault, type LandingResult, type LeaveResult, type Row, type SeamResult } from './smooth/path'
+import { LANDING_FLOOR, LANDING_LATE, LANDING_SHOWN, changeNote, judgeCurve, judgeLanding, judgeLeave, judgeSeam, longestGap, parityFrames, peakRows, position, shown, table, type CurveResult, type Fault, type LandingResult, type LeaveResult, type Row, type SeamResult } from './smooth/path'
 
 // The measures of a smooth dive and rise (kit/PROGRESS.md, second review note of 2026-11-23, plan I). One stop.
 //   npm run smooth -- --stop ID [--kind dive|rise|landing] [--only path,pictures,place,parity,counts] [--rate N] [--calibrate] [--ring picture|ground]
@@ -339,11 +339,7 @@ function sumsOf(kind: Kind, seg: { firstFrame: number; endFrame: number }, first
   over('change', CHANGE.max, (row) => 'the picture changes in place by ' + shown(row.change!, 1, CHANGE.max) + ' from frame ' + position(row.k, r) + ' to ' + CHANGE.frames + ' film frames later')
   over('pattern', PATTERN.max, (row) => 'the pattern of the picture changes in place by ' + shown(row.pattern!, 2, PATTERN.max) + ' from frame ' + position(row.k, r) + ' to ' + CHANGE.frames + ' film frames later')
   const top = rows.filter((row) => row.pop !== null).sort((x, y) => y.pop! - x.pop!).slice(0, 4).sort((x, y) => x.k - y.k)
-  const peaks: PictureRow[] = []
-  const apart = (row: PictureRow): boolean => peaks.every((q) => Math.abs(q.k - row.k) >= CHANGE.frames * r)
-  for (const row of rows.filter((x) => x.pattern !== null).sort((x, y) => y.pattern! - x.pattern!)) if (peaks.length < 2 && apart(row)) peaks.push(row)
-  for (const row of rows.filter((x) => x.change !== null).sort((x, y) => y.change! - x.change!)) if (peaks.length < 4 && apart(row)) peaks.push(row)
-  peaks.sort((x, y) => x.k - y.k)
+  const peaks = peakRows(rows, CHANGE.frames * r)
   const reach = CHANGE.frames * r
   const gap = longestGap(rows.filter((row) => row.k - first * r < total - reach).map((row) => row.pattern !== null))
   const silent: PictureKind['silent'] = gap ? { frames: (gap.last - gap.first + 1) / r, first: rows[gap.first]!.k, last: rows[gap.last]!.k, body: Math.max(...rows.slice(gap.first, gap.last + 1).map((row) => row.changeShare ?? 0)) } : null
@@ -401,7 +397,7 @@ async function picturesOf(kind: Kind): Promise<PictureKind | null> {
     measure({ op: 'changes', output: changePanel, scale: P.flowScale, gain: 6, changeBlur: CHANGE.blurPx, patternPx: PATTERN.px, patternFloor: PATTERN.floor, limit: cfg.raw.critics.maxImageLongEdgePx, chains: sums.peaks.map((row) => {
       const i = row.k - ks[0]!
       const last = i + CHANGE.frames * r
-      return { paths: paths.slice(i, last + 1), poses: [poses[i]!, poses[last]!], label: stop + ' ' + kind + ' frame ' + position(row.k, r) + ', frame ' + position(row.k + CHANGE.frames * r, r) + ' carried back to it, their smoothed difference times 6, the change of their pattern (white is 1): change ' + row.change!.toFixed(1) + ', pattern ' + (row.pattern === null ? 'not measured' : row.pattern.toFixed(2)) }
+      return { paths: paths.slice(i, last + 1), poses: [poses[i]!, poses[last]!], label: stop + ' ' + kind + ' frame ' + position(row.k, r) + ', frame ' + position(row.k + CHANGE.frames * r, r) + ' carried back to it, their smoothed difference times 6, the change of their pattern (white is 1): ' + changeNote(row) }
     }) })
   }
   const lead = sliced ? [(partOf ? 'Part ' + Number(partOf[1]) + ' of ' + Number(partOf[2]) : 'A slice') + ' of the move: the frames ' + position(k0 + own.first, r) + ' to ' + position(k0 + own.end - 1, r) + ' (capture frames ' + (k0 + own.first) + ' to ' + (k0 + own.end - 1) + '), ' + rows.length + ' of the ' + total + ' of the window, measured with the frames ' + position(k0 + lo, r) + ' to ' + position(k0 + hi, r) + ' round them. Every row is the row of the whole run. The largest values, the lines in red and the verdict here are of these frames alone: the report of the move is the join of all its parts (--join).'] : undefined

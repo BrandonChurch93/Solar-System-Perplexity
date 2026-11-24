@@ -9,7 +9,7 @@ import { sideAt } from '../src/director/handover'
 import { plans } from '../src/director/plans'
 import { SEAM_OWN, SEAM_REACH, curves, eyeCurves, landingCurves, planeHit, ringPlane, sampleLanding, sampleLeave, sampleSeam, sampleWindow, seen, type SeamWindow } from '../tools/smooth/camera'
 import { missing, partOwn, popSpan, sliceName, sliceNeed } from '../tools/smooth/slice'
-import { judgeCurve, judgeLanding, judgeLeave, judgeSeam, longestGap, parityFrames, position, shown, table } from '../tools/smooth/path'
+import { changeNote, judgeCurve, judgeLanding, judgeLeave, judgeSeam, longestGap, parityFrames, peakRows, position, shown, table } from '../tools/smooth/path'
 
 const limits = { maxStep: 0.08, maxRebound: 0.03, seamFrames: 2 }
 const bell = (n: number, edge = 0): number[] => Array.from({ length: n }, (_, i) => edge + 1 - Math.cos((2 * Math.PI * (i + 0.5)) / n))
@@ -396,6 +396,25 @@ describe('the longest run of rows without a value', () => {
   it('is the first of the longest runs', () => {
     expect(longestGap([true, false, true, false, false, true, false, false])).toEqual({ first: 3, last: 4 })
     expect(longestGap([false, false, false])).toEqual({ first: 0, last: 2 })
+  })
+})
+
+describe('the rows of the panel of changes', () => {
+  const row = (k: number, change: number | null, pattern: number | null): { k: number; change: number | null; pattern: number | null } => ({ k, change, pattern })
+
+  it('takes a row with a pattern and no change in place, and writes its label', () => {
+    const rows = [row(100, null, 0.31), row(101, null, 0.3), row(140, null, 0.52), row(180, null, null), row(200, 2.4, null)]
+    const peaks = peakRows(rows, 16)
+    expect(peaks.map((x) => x.k)).toEqual([100, 140, 200])
+    expect(peaks.map(changeNote)).toEqual(['change not measured, pattern 0.31', 'change not measured, pattern 0.52', 'change 2.4, pattern not measured'])
+  })
+
+  it('picks the two largest patterns, then the largest changes up to four rows, none within the reach of another, in the order of the film', () => {
+    const rows = [row(0, 1, 0.1), row(10, 9, 0.2), row(20, 3, 0.9), row(30, 4, 0.8), row(40, 8, 0.7), row(60, 7, null), row(80, 2, 0.05), row(100, 6, 0.01)]
+    expect(peakRows(rows, 16).map((x) => x.k)).toEqual([20, 40, 60, 100])
+    expect(peakRows(rows, 1).map((x) => x.k)).toEqual([10, 20, 30, 40])
+    expect(changeNote(rows[1]!)).toBe('change 9.0, pattern 0.20')
+    expect(peakRows([row(5, null, null)], 16)).toEqual([])
   })
 })
 
