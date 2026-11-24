@@ -558,6 +558,37 @@ More rows, read with the first patch (the cure was not run on them):
 - A dive is read twice and its number is the larger. Where main's reading of the first frame stands, the band printed is that of main's window at that place (8 px times the shrink there), and the reading on the nearer frame is not printed beside it.
 - The second reading leaves out the ground that is not enlarged by 1.19 in the nearer frame; there the pair is read as on main.
 
+## 13. The range picture and the pose record (MAIL 741, MAIL 744): what the camera's map of the pattern reader reads
+
+For a pair of capture frames of a dive or a rise the reader first carries one picture onto the other by the camera's own map, and lets the flow find only what is left. The map needs, for each pixel, how far the surface is, and for each frame where the camera stands and how the body is turned. Both come from here.
+
+**The view.** `diag=range`, a raw view like `depth` (code 6 in `src/diagnostics/diag.ts`, handover_engineer's file; the change is one entry of the list, two constants, one branch of `diagOut` and the reader `rangeOf`). Asked like a beauty frame of the capture page: the same grid, one sample at the pixel's middle (`src/core/jitter.ts`) and the middle of the shutter, no blur, bloom, tone map or grain. The old view `depth` is not changed (one grey channel, `log2(1 + range) / 14`, one level is 3.9 percent of the range, too coarse to carry a pixel).
+
+**The packing.** 24 bits in 8 bit colour, no extension: `n = 1 + floor(16777214 * clamp((log2(d) - RANGE_LOW) / RANGE_OCTAVES, 0, 1))`, `R = n >> 16`, `G = (n >> 8) & 255`, `B = n & 255`, alpha 255. `RANGE_LOW = -20`, `RANGE_OCTAVES = 32`: from 2^-20 to 2^12, one step is 1.3 millionths of the range. `n = 0` (black) is no surface: the sky and all that discards in a raw view (rims, veils, limbs, glare, the Sun's plate). `d` is the range along the pixel's ray from the lens (`length(vView)`), not z.
+
+**The units.** A layer hands its range in its own units. The globe hands radii of the body. A layer of the close view hands the close view's units, also where it is drawn on the globe side: Jupiter's cloud layer at 3261 (view `orbit`) reads 332 times the sphere's range, sphere over picture median 0.0030107, the plan's twin scale 0.0030101. So the record names the units a layer may use, `[1, close]` with `close = plan.twinFrame(time).scale` (`[1]` where the twin has none: Saturn), and `points` of `tools/img/range.py` takes for each pixel the one that puts the point nearest the body's surface. The two lie 60 to 970 times apart by stop (close: sun 0.08088, mercury 0.016218, venus 0.018407, earth 0.030751, mars 0.0010305, jupiter 0.0030101, uranus 0.015133, neptune 0.023924). The pick is a guess where a layer stands far off the surface; the cure at the root is that every close layer hands radii (MAIL 752: one token a stop, patches to the Builder, after this commit).
+
+**The record.** `poseRecord(film, plan, k, rate, fps, size)` in `tools/smooth/pose.ts` (harness_builder's folder, written here for it to lift; no page and no engine change, it calls `carriedCamera` and `plan.turn`). Per capture frame: `k`, `rate`, `time` (middle of the shutter), `view`; `camera` `p`, `q`, `vfov`, `width`, `height` in the frame of the stop's set, radius 1, the close view through the plan's twin, so both sides of the change of view stand in one frame; `sky.q`, the film camera's quaternion in the film's frame; `range` `low`, `octaves`, `units`; `bodies`, one entry: `id`, `place`, `turn` (`plan.turn(time)`), `scale` and `axes` (the globe's fit, an oblate body).
+
+**The rule.** A point X of frame i stands in frame j at `place_j + turn_j (turn_i^-1 (X - place_i))`. `tools/img/range.py`, pure functions with the picture and the record as inputs: `ranges` (the picture to ranges), `rays`, `points` (the point of each pixel in the pose frame and the unit taken), `carried` (the pixel place and the range in the other frame), `sky` (the same for what has no range, by the rotation alone), `read`.
+
+**How a tool asks.** `openCapture({ dist, format, assets, diag: 'range' })` and a render of the capture frame at the draft tier, the same call as for the beauty; `npm run still -- --frame F --tier draft --diag range` for a film frame.
+
+**Measured** (tree 1924a104 plus the view, draft, 1920 by 1080, rate 2, no flow; the check script carries the second picture onto the first by `carried` and reads the mean absolute level difference on the pixels that land on the same surface, range there within 1 percent):
+
+| pair (capture frames) | surface of the frame | same surface there | way median, p99 px | as it is | carried | unit 1, close |
+| --- | --- | --- | --- | --- | --- | --- |
+| Jupiter 6522 to 6523 | 0.924 | 0.921 | 23.5, 89.7 | 17.43 | 2.37 | 0.000, 0.924 |
+| Jupiter 6522 to 6538 | 0.924 | 0.911 | 303, 718 | 50.18 | 14.08 | 0.000, 0.924 |
+| Uranus 8794 to 8795 | 0.585 | 0.584 | 16.1, 69.1 | 3.08 | 1.53 | 0.585, 0.000 |
+| Uranus 8794 to 8810 | 0.585 | 0.584 | 234, 701 | 19.92 | 15.90 | 0.585, 0.000 |
+| Uranus 8810 to 8826 | 0.635 | 0.635 | 250, 718 | 27.06 | 25.28 | 0.635, 0.000 |
+
+- Uranus's range picture is the sphere's: sphere over picture p1 0.999827, median 1.00001, p99 1.00602 at 8794. What is left there after the carry is not a way on the screen: white clouds that come in by a weight at their place, and the level of the air near the limb, which changes with the height (0.031 radii at 8794, 0.181 at 8826).
+- Made body (a flattened body that turns, in `tests/globe-range.test.ts`): the point is found within 1.2e-6 radii, the place in the other frame within 2.3e-5 px.
+
+**Not measured.** What Saturn's ring sheet, Uranus's deck, Mercury's globe and Neptune's layers hand as units. Whether the close view's own sky is fixed to the frame of `sky.q`. A layer that comes in by a weight is in a raw view only from one half on, and parallax relief hands the range of its mesh (stated by handover_engineer).
+
 ## Proof with the options off
 
 Draft stills `out/work/stills/f%05d-16x9-draft-full.png`, sha256, frames 360 (sun.hold), 615 (mercury.hold), 717 (mercury.dive), 1185 (venus.hold), 1857 (earth.dive), 2325 (mars.hold), 2427 (mars.dive), 2997 (jupiter.dive), 3465 (saturn.hold), 4035 (uranus.hold), 4707 (neptune.dive). The references were rendered at `412d2d09` before any change. The runs are named in the log below.
