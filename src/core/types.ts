@@ -34,6 +34,9 @@ export interface SetState {
   u: number
   weight: number
   view: ViewKind
+  // The height of the camera above the unit sphere of this body, in radii. One number for both views of a stop: the close view's camera is
+  // measured through the twin. What follows the height (air, haze, the reach of the close ground) reads it here and not from the clock.
+  height: number
   ground?: number
   // The turn of the body's surface at this time, in the set's own frame. Given on the globe side of a dive and a rise of a stop that opted in,
   // where the camera follows the turning place: raw motion then tracks points that turn with the body.
@@ -66,8 +69,17 @@ export interface PlaceState {
   enlargeSoft?: number
   limbReachDeg?: number
   limbHoldDeg?: [number, number]
+  // With a horizon (below): the share of the radius by which the ground of the globe may lie under its sphere at the limb, the sag of its
+  // mesh (negative: over it, a mesh that stands outside its sphere). A ray that passes the centre further out than the radius less this
+  // share is taken for sky. Absent: the film's (handover.place.limbLap).
+  limbLap?: number
   edgeIn?: [number, number, number, number]
   toneIn?: [number, number, number, number]
+  // The weight of the picture's horizon, that is of its sky (the haze over the limb with the stars behind it), when the stop asked for
+  // limbSky: the share of the close view's sky on the globe side, never under the weight of the picture, whatever the picture's sides say.
+  // Absent: the horizon comes and goes with the picture, by its weight and its sides. A stop's globe may read it to bring its own limb to
+  // the picture's at T.
+  horizon?: number
 }
 
 export interface Shot {
