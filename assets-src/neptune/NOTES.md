@@ -4296,3 +4296,66 @@ WHAT FOLLOWS (inferred, not proven on your machines): nothing hangs, the jobs ar
 - At 3840 by 2160 a draft frame of the surface view is then about 4 minutes on a software renderer (inferred from the same ratio; 4860 took about 18 minutes there before the cost cut). By your sentence in MAIL 605 that is a bug of the stop; MAIL 579 ruling 1 accepted the cost and forbade a cut that costs picture. I do not cut cost unless you rule it; order of the third commit as I hold it: path (MAIL 609), then the look of 4860 (MAIL 579).
 
 MAIL 609 is read. The path was green on my tree (main c797cdc8) and I have not yet run it on the newer main: that is my next step, no render needed.
+
+## 09:18 to 09:20 UTC: MAIL 609's 22 reds reproduced: the proof tree has "neptune" on handover.ownPath
+
+- Newest main fetched with depth 1 (81d568a7), laid out with git archive into out/work/nep/wt (src, tools, config, tests;
+  node_modules, references, public and the rest linked to my tree), src/stops/neptune of my head over it.
+- With "neptune" off handover.ownPath: npx tsx tools/smooth.ts --stop neptune --only path: "smooth neptune: green".
+- With the word on (main's config as it stands): VERDICT red, 22 numbers, the same lines and numbers as the report attached
+  to MAIL 609 (dive rate 0.096 at 4759, turn 0.099 at 4755, speed 0.081 at 4696, 0.122 at 4760, climbs again 0.379; rise rate
+  0.172 and turn 0.232 at 4956, speed 0.131 at 4955, 0.095 at 5014, falls 0.045; the rate 2 lines likewise).
+- git show of builder/proof-ne2 (d69fdb28, fetched with depth 1): config/showcase.json lists "neptune" on ownPath; its
+  message "Proof tree: main b0035c5 with the three folders of neptune from 0b9017c0"; git diff --stat against 0b9017c0 on
+  src/stops/neptune is empty. builder/proof-ne1 (0cc88b08): the word is off, message "... and neptune off handover.ownPath".
+  My 0b9017c0 has the word off in its own config.
+- So the proof tree of the second commit flies the stop's old own path (move.json dive and rise), not the one move.
+
+## My blocker mail to the Builder (/root), 09:20 UTC (VM clock), high priority, word for word
+
+BLOCKER on MAIL 609 from neptune_builder, 09:20 UTC: the proof tree d69fdb28 flies the wrong path. MEASURED, no render:
+- `git show d69fdb28:config/showcase.json`: handover.ownPath still lists "neptune" (its message: "Proof tree: main b0035c5 with the three folders of neptune from 0b9017c0"). proof-ne1 0cc88b08 had the word off ("... and neptune off handover.ownPath"), and my 0b9017c0 has it off in its own config/showcase.json. src/stops/neptune of d69fdb28 equals 0b9017c0.
+- Newest main 81d568a7 plus src/stops/neptune of 0b9017c0, `npx tsx tools/smooth.ts --stop neptune --only path`:
+  with "neptune" on ownPath: VERDICT red, 22 numbers, line for line the numbers of MAIL 609 (dive rate 0.096 at 4759, turn 0.099 at 4755, speed 0.122 at 4760 and climbs again 0.379; rise rate 0.172 and turn 0.232 at 4956, speed falls 0.045).
+  with the word off (that one edit, nothing else): "smooth neptune: green".
+So the 22 reds are the stop's old own path (move.json dive and rise blocks), which the stop does not fly since fd95089a: the one move with handover_engineer's keys (move.json block "one") is one law, no step at T. My fault in part: my second NAMED mail said "no config" (meant: none against fd95089a) and did not repeat that the ownPath word must go with the tree.
+ASKED: build the proof tree of 0b9017c0 with "neptune" off handover.ownPath, as for ne1. Every part now out on d69fdb28 (pictures, handover report, measure, drafts of the dive and the rise) renders the old path and says nothing about the commit. The parity frames of dive and rise in the attached file are on that path too.
+Until you rule otherwise I do not change the path in the third commit: it is green on 81d568a7 as it stands. (c) of MAIL 605 still renders, time follows.
+
+## MAIL 612 from the Builder (/root), about 09:20 UTC, high priority, word for word
+
+MAIL 612 from the Builder (/root) to neptune_builder. On your answer to MAIL 605.
+1. I take back one sentence of MAIL 605: "A frame that takes minutes is a bug of the stop however it looks." Brandon's words allow the cost ("this doesn't have to be super performance. It just has to have all the frames there", "you can make an expensive 3JS budget"), he captures frame by frame on a machine with a graphics card, and MAIL 579 ruling 1 stands: no cut that costs picture. What you measured is kept: nothing hangs, about 20 s a frame at preview and 66 s at the master format with one sample, 16 to 72 samples at the review tier.
+2. Cost that buys no picture goes where you find it, with the proof beside it: the same frame before and after, equal to the byte or to within one level, and the seconds. Nothing more is asked on cost.
+3. The checks are mine to make fit: the handover report and the measure of your second commit keep running at their tiers (hours, as you reckon), and when harness_builder names its slice tool (due 10:45 UTC) I split your long parts over machines. Until then your machine checks come late; your own lines from your own tree count as STATED and I say so wherever I pass them on.
+4. Your order for the third commit is right: the path first (MAIL 609; run the smooth report's path part on your head merged with today's main and send its red lines if any remain), then the look of 4860. The 90 minutes still start when the last picture part of the second commit is with you; on your numbers that will not be before about 11:00 UTC. If your third is ready earlier, name it earlier: I cut its tree at once and the checks of the second are withdrawn.
+
+## MAIL 613 from the Builder (/root), about 09:20 UTC, high priority, to the nine stop builders, word for word
+
+MAIL 613 from the Builder (/root) to the nine stop builders (one text to all). What still runs by the clock in the engine's defaults, and what you owe on it. It moves no due time.
+
+MEASURED by handover_engineer on main 2cf0b0b7 with the film's own functions over every frame of every dive and rise: the cover is 0 everywhere, so it is not a cause. Two weights are a smooth of TIME, not of place:
+- the default sky weight: where a stop gives no sky share of its own, the close view's sky patches are drawn in the globe's view over `skyFrames` (24) frames up to T in a dive and after T in a rise;
+- the default place weight: where `picture` is on, the place picture fades over the ground over `placeFrames` (12) frames.
+Spans on main: Mercury dive sky 736 to 759 (T 760), rise sky 978 to 1001 (T 977). Venus dive sky 1319 to 1342 and picture 1331 to 1342 (T 1343), rise picture 1543 to 1554 and sky 1543 to 1566 (T 1542). Mars dive sky 2451 to 2474 and picture 2463 to 2474 (T 2475), rise picture 2688 to 2699 and sky 2688 to 2711 (T 2687). Saturn: none. Uranus: none of the default (its own plan functions). The Sun, Earth, Jupiter and Neptune use the default sky as well; their spans follow from their own T in the same way.
+Against the red pattern ranges of the first named commits: Mercury 744 + 1/2 and 982 + 1/2, Venus 1326 and 1543 + 1/2, Mars 2449 and 2694 lie inside these spans. The first red frames of Mercury (712 + 1/2), Mars (2433, 2674) and Uranus (4388) lie before any such weight moves: those are the globe's own draw. NOT KNOWN yet: how much of each number is the sky's fade, the picture's fade and the globe's own draw; handover_engineer runs that test now and you get its table.
+
+RULED (plan F: "No element of a dive or a rise appears, fades or changes with the clock. Whatever blends does so by distance, height or angle"):
+1. The engine's two defaults are being changed to read the eye's height in place of the time (handover_engineer, proven on the machines before it goes onto main). It stays a fade between two skies.
+2. So each of you still owes, in your next named commit or named red in it with its cure: one sky and one haze on both sides of your change of view, by height, so that `skyFrames` can be 0; and no place picture where its plates are not the globe's own ground. The hooks are on main: `handover.KIND.picture: false`, `skyFrames: 0`, your plan's sky share by `plan.eyeHeight(time)`, `Relief.presence(share)` by height, `plan.air(height)`.
+3. In NAMED, one line: which of these your stop sets, and the frames in which anything of yours still reads the time inside a dive or a rise (none is the answer asked for; drift of clouds, plasma or rings in their own time is not meant).
+
+## 09:20 to 09:22 UTC: the path on today's main 2008483c
+
+- Main fetched again with depth 1: 2008483c ("Status 225 ..."). Laid out as before with src/stops/neptune of 0b9017c0 (git
+  archive) and the word off: "smooth neptune: green", "VERDICT: green. No number is over its limit." Report copied to
+  out/work/nep/m609/green-2008.md (the one on 81d568a7: green-81d5.md).
+- Its rows. Dive, whole frames: rate step 0.059 at 4760, turn 0.060 at 4712, speed 0.060 over 8 at 4692, climb after 0.013;
+  rate 2: 0.059, 0.061, 0.061, climb after 0.012; largest speed at 4713. Rise, whole frames: rate 0.066 at 5023, turn 0.064
+  at 4957, speed 0.068 over 5 at 5022, fall before 0.018; rate 2: 0.066, 0.066, 0.069, fall before 0.021.
+
+## My answer to MAIL 612 item 4, 09:22 UTC (VM clock), high priority, word for word
+
+ANSWER to MAIL 612 item 4 from neptune_builder, 09:22 UTC. MEASURED: today's main 2008483c plus src/stops/neptune of 0b9017c0, with "neptune" off handover.ownPath (the one config edit of fd95089a, see my blocker mail of 09:20: the proof tree d69fdb28 still has the word on, which is where the 22 reds of MAIL 609 come from), `npx tsx tools/smooth.ts --stop neptune --only path`: "smooth neptune: green", "VERDICT: green. No number is over its limit." No red line remains.
+Largest numbers of that report: dive step of rate 0.059 (4760), turn 0.060 (4712), speed 0.060 (4692), at rate 2 0.059, 0.061, 0.061; speed climbs again 0.013 (limit 0.03); one hump (largest 4713). Rise step of rate 0.066 (5023), turn 0.064 (4957), speed 0.068 over 5 (5022), at rate 2 0.066, 0.066, 0.069; speed falls before its largest value 0.018 and 0.021 (limit 0.03).
+So the path needs no change in the third commit and I go on with the look of 4860. The third NAMED mail will say in its first lines that the tree needs the ownPath word off. MAILS 612 and 613 are read.
