@@ -2419,3 +2419,1619 @@ A ring in both tables at the same radius).
   tint, haze: { nine fields }, shell: { ... } }, { height: lower, haze: { depth: 1.8 } }, ...], highest first;
   the highest knot from today's numbers of the hold (hazeAir(look.haze)), so the hold keeps its bytes. Not on
   main yet (agent/engine-globe abf28ac5, agent/engine-handover dddef05). Do not wire before the Builder says.
+
+## 2026-11-24, 01:45 to 02:00 VM: try 3 named (a359a4b), main 2dfaf06 merged (21915d7), the report
+
+- Merge 21915d7 of main 2dfaf06 (kit/PROGRESS.md only: decisions d165 to d168 and the jobs line), then commit
+  a359a4b7677331c3c6d08df3cd7146a92e13b3f6 "Saturn: try 3 of the pace, a level top; the flight's stars by one
+  function of the height", pushed to agent/saturn-code. Every check of the section above was run again on the
+  commit and gave the same lines (logs /tmp/v/r27/c_tsc, c_vitest, c_smooth, c_handover, c_gate).
+- Decisions read on main: d165 smooth's picture limits are maxPop 1.2 and a change in place of at most 20
+  (Saturn's two moves read under it; the tool still owes "Saturn's rings count as the body"); handover_engineer
+  is ordered to make the engine's star lift one function of the height on both sides for every stop, so the
+  hook plan.skyLiftAt may become the engine's; d168 sky_builder's table lists Saturn's hold patch as carrying
+  grain.
+- Size against main (mail 450): my three folders are 71.355 MiB at a359a4b against 73.262 MiB on main, minus
+  1.91 MiB (sky-terrain.webp went out with step 1).
+- Report mailed to /root (high, five pictures): the commit, the four commands (npm run measure -- --stop
+  saturn; npm run handover -- --stop saturn --tier draft --only sides,flow,path,sheets; npm run gate -- --phase
+  6 --only G11,G15 --g15-stops saturn; npm run smooth -- --stop saturn --only path), the lines of both judges,
+  the answers to items 2 to 5 of mail 439, what was not run on the VM, and the open list with a new point 9
+  (the engine's sky is not monotone in the lift: its mean falls by 1.9 between a lift of 0.27 and 0.44, frames
+  3874 and 3875).
+- Open list as mailed, numbering kept: 1 globe near the lens; 2 end of the rise (one fall from the level top
+  3862 to 3884, to judge on a review clip); 3 moon (cut by the globe's limb 3596 to 3600 at draft, no pop seen,
+  not checked at review); 4 stars through the shaded rings; 5 sawtooth wedge through the Cassini division 3630
+  to 3690; 6 fit at 3720; 7 ring tone slides with height 3840 to 3864; 8 draft and review differ in the rise; 9
+  the engine's sky dip at 3874, 3875.
+
+## 2026-11-24, 02:00 VM on: ruling (a) of mail 374, the map rigid on the globe
+
+What the ruling asks: "The globe's map stays rigid on its ellipsoid: take the slide of the bands by latitude
+(look.globe.drift) off the map and put motion on the function streaks only."
+
+As built (working tree on a359a4b):
+- src/stops/saturn/globe.ts (the model's globe): the map is read at spinY(p, uSpin), one turn of the whole body;
+  the slide by latitude, uDrift times zonal(lat), is added to the longitude of bandFine only (the fine streaks
+  from functions, drawn near the lens). The flow view of the diagnostics gives 0 for the globe's map.
+- src/stops/saturn/kept/globe.ts, kept/look.ts, kept/set.ts (the kept set of the hold and the far view): zonal
+  and uDrift are gone; the map is read at spinY(p, uSpin). The kept set draws no function streaks, so nothing
+  slides in it.
+- look.globe.drift (0.2 degrees a second at the fastest latitudes) stays in src/stops/saturn/look.ts as the
+  speed of the streaks.
+- The slide was counted from the middle of the hold (elapsed = time - plan.holdMid), so 3465 keeps its bytes;
+  every other frame of the stop that shows the globe changes by the slide that is no longer there (at most 0.2
+  degrees a second times the seconds from 3465: 0.5 degrees at 3390 and 3539, 1.7 degrees at 3720, 2.8 degrees
+  at 3884).
+
+Measured (drafts against a359a4b, files /tmp/v/r28/a_FRAME.png; finals /tmp/v/r28/af_3720.png and
+/tmp/v/r27/final_3720.png):
+- 3465 does not keep its bytes to the last level: 4795 pixels of the globe change by 1 level at draft (the order
+  of the sums in the shader); at final 0.5 percent of the pixels of body, rings and moon by 1 level, none by
+  more.
+- 3390: 237277 pixels, largest 33, 1351 over 8 levels. 3539: 260977, largest 40, 1362 over 8. 3567: 281088,
+  largest 43. 3720: 544208, largest 88, 53324 over 8, mean difference 1.08. 3866: 333287, largest 103, 26703
+  over 8. Same character everywhere; the storms sit a few pixels along their bands.
+- 3720 at final against the approved close (herocmp, g17grid): plain 34.812, blurred 27.846, G17 median 0.691,
+  25th percentile 0.326, 62 tiles; before (a359a4b) 34.811, 27.845, 0.690, 0.326. No loss.
+  The same on the draft stills: 33.984, 27.101, G17 0.575, 0.275; before 33.983, 27.100, 0.575, 0.275 (these are
+  the numbers of way A in the section of step 1: they were draft stills; final stills read 0.83 higher plain
+  and 0.12 higher in the G17 median, with the same tool).
+- Pictures: /tmp/v/r28/cmp_3720_globe.png (globe crop, before over after), /tmp/v/r28/cmp_3720_close.png
+  (approved, before, after), both in the looks.
+- Not looked at yet on consecutive frames: the streaks sliding over the rigid map near the lens (0.2 degrees a
+  second is about 0.1 px a frame at the middle of the globe in the skim).
+
+## 2026-11-24, 02:10 to 02:35 VM: the sky picture of the hold without the grain of its glow input (mail 448)
+
+- The fault: public/assets/saturn/<set>/sky-hold.webp is the hero minus the film's own glow; the glow input of
+  the first build was a still of 3465 with the grain on, so the picture carried the negative of that frame's
+  grain. Measured on the kept picture: -0.106 against the grain pattern of 3465 in the hero's own sky, 0.00
+  against 3464, 3465.5, 3466.
+- The inputs of the first build (the fill take, halo-only.png, the round 2 file) are on no machine and not in
+  git. So the picture cannot be built again from nothing; assets-src/saturn/sky/glow.py builds again only what
+  the glow enters. Inputs rendered here: 3465 at final with orbit.gain 0 in src/stops/saturn/sky.json, once as
+  it is (/tmp/v/r28/glow_grain.png: this is the first input again, it gives the kept file back exactly on 0.90
+  of the far dark sky and within 1 level on 0.987) and once with --diag nograin (/tmp/v/r28/glow_nograin.png).
+- Three versions, the third is kept:
+  1. new = kept + own share x (second run - first run). Film: 3465 dark sky +0.006 (kept -0.083).
+  2. the same, and in the calm far sky (where the first run gives the kept picture back on the mean of a 41 px
+     box within half a level) the second run as it is, so stars at the limit of the split carry no grain.
+     Same film number; the files get smaller.
+  3. the same, and the mean of the change over a Gaussian of 16 px is taken out again (weighted by the sky's
+     own share), so the level of the kept picture stays. Versions 1 and 2 had a level difference of 0.24 to
+     0.36 of a level rms at 6 px in the far sky and -0.14, -0.09, -0.09 near the body; version 3 has 0.12 and
+     -0.04.
+- Numbers of version 3. Files: full 2157496 bytes (was 2258846), web 713644 (was 739504): 127210 bytes less.
+  Picture against the grain of 3465 in the hero's own sky 0.001, level 16.24 (16.26). Film, draft, --diag
+  nograin, sky_builder's graincorr.py: 3464 dark sky -0.001, whole -0.000, blocks -0.011 to +0.011; 3465
+  +0.006, +0.001, -0.012 to +0.009; 3466 -0.001, -0.000, -0.008 to +0.011. The kept picture at 3465: -0.083,
+  -0.016, -0.076 to +0.006. By region at 3465 (/tmp/v/r28/corrmap.py): calm far sky -0.002 (kept -0.150), own
+  sky where the first run does not give the kept picture back +0.030 (kept -0.188), mixed +0.054 (kept
+  -0.109), no share of the picture +0.003 (the same in both). So near the body the cure takes out a little
+  more than the kept picture carried: my glow of today is not the first glow there.
+- 3465 at final against the kept still (/tmp/v/r28/holdcmp.py, kept_final_3465.png is main's build): far dark
+  sky changed 0.856 of the pixels, mean -0.022, -0.020, -0.040, mean difference 0.839, 99.9th percentile 5,
+  largest 21, 20 pixels over 8 levels; own sky nearer the body mean -0.04, 0.902 changed, largest 12; body,
+  rings and moon 0.0045 changed, all by 1 level (ruling (a)). Against the approved hero: plain 5.526, blurred
+  2.239; the kept still 5.502, 2.234.
+- The 20 pixels over 8 levels are faint points at the limit of the star split (peaks of about 20 of 255 in
+  blue) that fell on the other side of it. Stars over 40 levels in the far dark sky of the picture: hero
+  4890, kept 5100, new 4950.
+- Left in: faint bands along the body where the film's glow crosses the hero's sky in one colour (the cut at
+  black, which the grain had lifted): 99th percentile of the difference blurred over 6 px 0.42 of a level near
+  the body, 0.38 in the far sky.
+- RECIPE.md: two lines added to the sky-hold section (the glow input is taken with --diag nograin; checks).
+
+## 2026-11-24, 02:28 VM: mail 466
+
+- a359a4b7: the byte proof is whole and clean (115 drafts, 11 differ, all inside Saturn's segments; 3465 at
+  final is the kept still; G11, G15 pass; tsc clean; vitest 37 files 302). The dive's handover report: sides
+  at T 0, flow gap 0.016 px, pose gap 0. Measures and smooth still out. The take onto main runs as a base; no
+  round starts on it.
+- Point 3 accepted (the patch leaves by distance from the hold's path, the lift is one function of height).
+  Points 4 and 6 (the sky at 3720: orange clusters left, near black right, where the approved image has an
+  even field of faint blue white stars) are cured through the stop's look of the engine's sky with
+  sky_builder, not with a pasted patch. Not mine to touch.
+- Owed, in this order: ruling (a) with the sky-hold cure, then (d), then steps 2, 3 and 5.
+- handover_engineer's finding: on Saturn the place is on the rings and the eye never comes nearer than 3.3
+  radii over the body, so the path measure's ground points lie on the body's sphere, not on the ring plane; the
+  judge is corrected before a set is searched for Saturn. "Until then do not tune the path to the report's
+  speed lines."
+- After the take: 60 frames a second clips of the dive and the rise are rendered and shown.
+
+## 2026-11-24, 02:32 to 02:50 VM: ruling (a) and the sky cure pushed (3e9ee2f), main 3efc31d merged (6426068)
+
+- ae772cb (work), 3e9ee2f (merge of main f2375d2), reported to the Builder 02:47 VM with five pictures. Checks
+  on 3e9ee2f: tsc exit 0; vitest 36 files, 286 tests; smooth path green ("VERDICT: green. No number is over its
+  limit."); handover path "saturn.dive every frame: pass", "saturn.rise every frame: pass"; "PASS G11  every
+  asset has a row or a recipe", "PASS G15  at most 2 sets per frame; finished stops: saturn/web 274 MB,
+  saturn/full 747 MB". Net size of the three folders against main f2375d2: minus 2.105 MB (74.716 against
+  76.821, decimal MB as the Builder counts).
+- Frames outside my segments change with ruling (a), because the kept set draws the globe there too (drafts,
+  a359a4b in /home/user/workspace/mainref against the working tree): 3360 globe only (largest 12), 3380 globe
+  (largest 43) and the sky inside the footprint of the hold's picture (largest 16, the cure), 3890 and 3900
+  globe only (largest 102, 91). a359a4b equals main 4f2127a byte for byte at those four frames. Said in the
+  report (looks: "ruling a and sky cure: a359a4b against now").
+- 3716 to 3725 at draft, the globe at full size: storms and spots ride with the map, nothing slides against it;
+  the slide of the streaks is under 0.12 px a frame there (0.2 degrees a second on a globe of about 1000 px).
+- sky_builder asked three things (mail 467 of the Builder: the dip of the engine's sky on the rise and the sky
+  look at 3720); answered 02:36 VM: sky_e1, sky_e2 are draft frames 3867 to 3884 of a359a4b, the level per
+  frame (shot.skyStars) is one function of the height in my plan, the measure that dipped is the mean luma of
+  the sky inside the eroded sky mask, the reference at 3720 is the approved close (the sky both share, the box
+  x 0 to 900, y 0 to 330, the top left 960 by 540). It sends the exact lines for the stop's look of the sky.
+- NOTE 482: main is 3efc31d: Saturn's folders are a359a4b there, and npm run smooth has all parts (path,
+  pictures, place, parity, counts). A READY for a round carries its last lines whole. The merge of 3efc31d had
+  two conflicts (globe.ts, this notebook), because main took a359a4b as a copy and not as a merge; resolved with
+  my side, after checking that main's three folders equal a359a4b and that my folders equal 3e9ee2f after it.
+- parity (tools/smooth.ts): the same film frame at uhd scaled down by 2 against the master, draft tier, at
+  shares 0.25, 0.5, 0.75 of the dive and of the rise and 0.5 of the surface view; limits in config smooth.parity
+  (maxMean 12, maxCoarse 3.2, maxBlockLevel 12, maxLevel 2.2). It is the judge of ruling (d).
+
+## 2026-11-24, 02:40 VM on: ruling (d) with mail 385
+
+Built in the working tree on 6426068:
+- grains.ts: every grain is a square of two triangles that faces the lens (InstancedBufferGeometry: four
+  corners, index 0 1 2, 2 1 3; per instance aPlace and aGrain; Mesh, DoubleSide, renderOrder 7), at the depth of
+  the middle of the grain. No point is drawn any more, so nothing in the picture depends on the card's limit of
+  the point size; grains.json largestPoint is gone. The square is 2 radius + way + 3 px wide with no upper
+  limit; the triangles are clipped by the frame, so the trick that drew a point from the edge of the frame is
+  gone too. The pixel inside the grain is a smooth varying (vAt, pixels from the middle); every flat varying
+  has the same value at all four corners, so no rule about the first or last corner of a triangle is in it.
+- The limits of the look written in pixels are shares of the height of the frame: grains.json frame (1080);
+  ice.ts pixelScale(height) = height / frame; levels.pixels (uGrainLevel zw, and the reach on the CPU),
+  levels.largest (uGrainLook xy), lobes.pixels (uGrainShape2 xy) are multiplied by it for each frame. Left in
+  pixels because they are the pixel itself: the 3 px pad of the square, the half pixel soft edge of a ball, the
+  footprint of the pixel on the sheet.
+- Counts of grains by frame at the master (out/scratch/count.ts): 3640 104, 3680 473, 3720 711, 3760 2445,
+  3780 18444, 3800 40272, 3820 32245, 3840 201. So four corners a grain cost nothing that matters.
+
+## 2026-11-24, 02:52 VM: MAIL 483 (the Builder's machines on a359a4b as it stands on main, proof aac2e8dd)
+
+A. Measure: "PASS G13 saturn: 0 of 495 frames over 0.02 soft. PASS G5 (3465, 3567, 3720, 3866 invalid 0). FAIL
+G17 saturn: 3465 median 1.055 p25 0.919 over 71 tiles; 3720 median 0.685 p25 0.325 over 62 tiles." "A red
+measure is a severe issue in the round, so 3720's fine detail belongs on your list with a plan: say which tiles
+lose (the near ring, the globe's bands, the far ring) and what would carry the approved image's detail there."
+B. The whole smooth report: VERDICT red, 6 numbers.
+1. Path green on the dive and on the rise, whole frames and rate 2 (largest step 0.066).
+2. Pictures, dive: level step 0.02, pop 1.09: green. Change in place 20.7 from 3594 + 1/2 (limit 20, 9 frames
+over it, first 3593, most at pixel 1844, 980). Provisional, not in force; the judged number will be the pattern
+number. "Look at saturn-dive-changes.png all the same and tell me what it is."
+3. Pictures, rise: pop 1.43 from 3895 + 1/2 to the next, limit 1.2, 8 frames over it, first 3815 + 1/2. "what
+is left without the motion sits on the outer rim of the rings and along the ringlets: the rim sparkles from
+frame to frame. 3892 to 3896 lie in the leg after your rise, but the picture there is your globe and rings as
+the kept set draws them, and the first frame over the limit is 3815 + 1/2, inside your rise. This one is in
+force." Change in place 29.0 from 3824 (28 frames over it, first 3821, most at pixel 1300, 904: the globe's
+lower edge where it meets the ring; provisional).
+4. Parity: mean at one 8th of the size 3.703 at 3563 (limit 3.2); one block minus 22.068 at 3720 (limit 12;
+3563 minus 13.567, 3720 minus 22.068, 3829 minus 14.956); whole frame level minus 2.184 at 3563 (limit 2.2).
+"at 3563 and 3585, where the rings are far, the whole lit ring differs along its ringlets, and the 4K picture
+is the smoother and paler one. So the ring's radial pattern is not filtered by its footprint in the same way at
+both sizes (the master shows more contrast than the 4K picture scaled down). Brandon captures at 4K, so what is
+judged must be what the 4K picture shows. Your (d) cures the points; find the cause for the ringlets as well
+(the footprint in pixels, a fixed mip bias, a sample count per pixel, or noise in pixel units) and name the
+file. If it lies in the engine's ring and not in your folder, say so and I pass it to its owner."
+5. Counts: not measured, main has no counter yet. Not mine.
+C. 3e9ee2f8 received, (a) reads right; the frames outside my segments are allowed to change by it. "I hold its
+proof until (d) is in, so that one proof covers both and the parity part can be read on the same commit: send me
+ONE head merged with main (now 7e7fb89, same tree as 3efc31d but for kit/PROGRESS.md) with (a), the sky cure and
+(d), with npm run smooth -- --stop saturn run whole on your side (every part; the counts part will stay
+unmeasured until the profiler's take, say so) and its red lines listed. If (d) takes longer than 90 minutes,
+tell me and I prove 3e9ee2f8 alone."
+D. "For the round: a commit is named for the round when A, B.3 and B.4 are green or carry your plain word that
+they are not, with the plan. The base stays a base."
+Attachments in /home/user/.perplexity/attachments/69fc139468fb430699c3af6cbe96894b/ (smooth-saturn-aac2e8dd.md
+and .json, saturn-dive-pops.png, saturn-dive-changes.png, saturn-rise-pops.png, saturn-rise-changes.png,
+saturn-parity.png, measure-saturn-aac2e8dd.json, sat3-13-tail.txt). Clock: (d) is due by about 04:20 VM.
+
+## 03:16 VM: (d) measured, the parity of the ringlets cured, the dashed line outside the rim found and cured
+
+State: working tree on 6426068 (local merge of main 3efc31d on the pushed 3e9ee2f), nothing of this committed
+yet. Main is now 274f4c9 (NOTE 491), to be merged before the commit.
+
+NOTE 491 (03:16 UTC, to every stop builder), changes NOTE 482: "do not wait for your own whole npm run smooth
+before you name a commit. Name it as soon as, on your own tree merged with newest main, the path part is green
+or its red lines are listed, the handover report passes with the place picture off, and G13, G5, G17, G11 and
+G15 are read. The whole smooth report then runs on my machines ... On your own renderer run only the kinds and
+parts you are changing (--only pictures --kind dive and the like)." A whole smooth run here would take about
+2.6 hours (228 + 198 draft frames at rate 2 and 14 parity stills), so it is not run here.
+
+(d) as built (mail 374 d and mail 385): every grain of every level is a square of two triangles, instanced
+(grains.ts Grains.mesh); no gl.POINTS is left in src/stops/saturn. The limits of a grain in pixels are angles:
+pixelScale(height) = height / grains.frame (grains.json frame 1080). grains.json largestPoint is 0 and stays
+as a key because tests/capture-tool.test.ts reads it. Measured at 3800, master, points against squares: 21139
+pixels differ, largest 27 levels, mean 0.00637. Counts drawn at master: 3720 711, 3780 18444, 3800 40272,
+3820 32245. Parity at 3800 (uhd scaled down against master; mean, level, coarse, worst block): points 11.120,
+-7.471, 8.047, -46.281; squares 2.388, -0.735, 0.980, -6.267.
+
+Cause of the ringlet parity (mail 483 B.4): src/stops/saturn/kept/rings.ts, the weight of the hero's polar
+ring map and inner ring map against the profile function. It was measured in texels of the map per pixel of
+the drawn format (look.polarDensity [1.0, 1.3]), so at 3840 by 2160 the map gave way to the function at twice
+the distance and the far ring was the smoother, paler function there while the master still showed the map.
+The same pixel units sat in the sparkle (show by major axis over cell), the glint offset, the grain cells of
+the kept ring, the globe's edge width, fine detail and night blur, the moon's edge width, the model's globe
+and moon, and the sand layers of ice.ts. Cure: one scale "foot" = format height / grains.frame carried to all
+of them (uniform uFoot in kept/rings.ts: x foot, y and z foot times texels of the full set per loaded texel
+for the two maps, so the web set and the full set agree as well). At 1080 the bytes do not change (cmp equal
+at 3465, 3563, 3720, 3829, draft).
+Parity before (with (d) only), then after the cure, by my tool /tmp/v/parity.py (same maths as
+tools/img/smooth.py; it gives the Builder's 3563 row): mean, level, coarse, worst block, detail:
+  3465: 5.655 -1.636 2.992 -11.798 1.027  then  1.702 -0.638 0.738 -3.871 1.094
+  3563: 6.423 -2.192 3.709 -13.572 1.047  then  2.104 -1.120 1.196 -4.338 1.133
+  3585: 4.771 -2.012 2.783 -10.599 1.047  then  2.219 -1.188 1.384 -8.289 1.208
+  3720: 2.680 -0.933 1.132 -5.462 0.894   then  2.645 -0.982 1.100 -6.295 0.900
+  3829: 2.726 -0.753 1.109 -6.984 0.969   then  2.706 -0.823 1.093 -7.846 0.971
+Limits: mean 12, coarse 3.2, block 12, level 2.2. 3608, 3848, 3866 not rendered here.
+What is left is the engine's, not in my folder: the glow beside the bright limb reaches half as far in
+pixels of the master at uhd (src/post/chain.ts: the bloom pyramid has a fixed count of halvings from the
+drawn size; 3829, row 540, x 860 to 956: master 25.9 to 144.5, uhd 19.4 to 143.7), the stars of the engine's
+sky (src/space/sky.ts, blocks minus 2 to minus 4 at 3563) and the film grain (detail ratio over 1).
+
+The dashed line (mail 483 B.3, the rim that sparkles): a line of tan dashes, level about 40, one pixel wide,
+outside the faint F ring line along the lower left of the ring, in the kept set's picture: in the hold (3465),
+in the dive (3563) and after the rise (3891 to 3896), at both sizes. Test: with look.arc's gain at 0 the dashes
+go; with sparkle 0 or the polar map off they stay. Cause: src/stops/saturn/kept/rings.ts, the arc term (the
+thin line outside the outer edge, drawn from the profile's F ring through look.arc). Its footprint was the
+frame to frame derivative of the bent radius rq, and rq jumps at the reach of the profile (r 2.5), because the
+hero's shape is taken off only inside the reach. On the pixel pairs that lie across that jump the derivative
+was huge, the arc read the coarsest levels of the profile (whose last texels hold the mean of the outer ring)
+and drew a dash; which pixels draw it depends on how the jump falls on the 2 by 2 pixel blocks, so the dashes
+move from frame to frame: sparkle. Cure in my folder: the arc's footprint is at most skim.json
+handover.kept.seam (2) times the footprint of the true radius of the plane, and the arc draws only inside the
+span of the profile. Measured at draft, master, before against after: 3563 4211 pixels differ (258 by more
+than 20 levels), 3465 5391 (338), all on that one arc; nothing else in either frame changes
+(/tmp/v/r29/seam_crops.png, seam_diffs_small.png).
+
+G17 at 3720 by tiles (12 by 8, final still of 3e9ee2f, median 0.691, p25 0.326, gate asks median 0.8):
+  near ring left of the division (columns 0 to 2, rows 4 to 7, and 2,3): 13 tiles, all under 0.45, median 0.13
+  inner border of the division and the B ring's edge: 7 tiles under 0.8, median 0.41
+  far ring across the globe's lower edge (6,3 6,4 7,4 8,4): 4 tiles, median 0.43
+  right edge of row 5 (9,5 10,5 11,5: 0.44, 0.04, 0.02): the approved shows ring there, the film the globe's
+  night side: a difference of layout, not of detail
+  sky: 6 of 10 kept tiles under 0.8 (0.18 to 0.78): stars of the engine's sky, sky_builder's look for the stop
+With the 13 near tiles at 1 the median would be 1.0 (p25 0.645). The approved has there hairline dark gaps,
+a speckle of sand and a mix of grey, pink and tan at 3 to 12 px; the film has soft pale bands. Picture:
+/tmp/v/r29/g17_tiles_3720.png, g17_left_3720.png. The plan: step 2 (ringlets, sand and grains resolving by
+footprint) with the function's fine octaves as narrow dark gaps in the A ring and the sand as a speckle that
+is in the picture at 3 to 12 px, and the same crispness for the far ring across the globe.
+
+## 03:30 VM: head 010d5ee pushed ((a), sky cure, (d), parity cure, dashed line cure, merge of main b2ebc62)
+
+- Commit 081c441 holds (d) (mail 374 d, mail 385), the footprint scale (parity) and the seam cure of the arc.
+  Merge 010d5eece98181c153aca730c208705b8759fc69 of main b2ebc62 (the engine's one air d179, the retreat's light
+  law d178, counters and warm start d176, d177): no conflict, nothing of main's touches my folders. Pushed.
+- On the merge: tsc exit 0; vitest 39 files, 322 tests pass; handover --only path: "saturn.dive every frame:
+  pass", "saturn.rise every frame: pass"; smooth --only path: "VERDICT: green. No number is over its limit."
+- Size (decimal MB, git ls-tree -r -l, my three folders): head 74.734 (179 files), main b2ebc62 74.821 (178
+  files): net minus 0.087 MB.
+- The hold at final with the seam cure (/tmp/v/r29/sf_3465.png) against the final of 3e9ee2f
+  (/tmp/v/r28/v3_final_3465.png): 2768 pixels differ, largest 10 levels, 613 by more than 2, all in the box
+  2,482 to 767,1079 (the arc of the dashes). Against the approved hero: plain 5.525, blurred 2.239 (3e9ee2f
+  5.526, 2.239; the kept still 5.502, 2.234).
+- The frames after the rise (3894, 3895, 3896 at draft) are byte equal before and after all of this, and they
+  are drawn by the model (no arc term): so the dashed line was never in the rows 3891 + 1/2 to 3896 of the
+  pop measure. It was in the hold and in the dive up to the change of scene.
+- The path table of the smooth report shows what those rows are: my rise ends at 3884 at speed 0.031 of the
+  mean, the travel leg stands almost still from 3885 to 3888 (0.009, 0.006) and then picks up from 3889:
+  0.026, 0.071, 0.165, 0.329, 0.588, 0.963, 1.472, 2.126 at 3896 (steps 0.094 to 0.654, starred, in the
+  neighbour and not judged). The measure of 3888 has 0.42 left with 0.11 px of motion, of 3895 + 1/2 1.55 with
+  7.1 px; the pop is that over the median of 8 frames to either side (0.93), which spans the standstill.
+  What is left sits on the stars beside the rim and the limb (the measured motion follows the body there, the
+  stars move otherwise) and in lines along the ringlets. My own pair 3895 to 3896 (whole frame, draft): left
+  1.869, carried 1.276, motion 14.1 px.
+- The tool still floors a fractional frame number (3895.5 gives 3895's bytes), so half frames need seq.
+
+## 03:32 to 03:50 VM: main 6884e80 merged (7825f77), note 501, why 3720 loses fine detail, the pop at 3815
+
+- Job M: the pair 3895, 3896 at final: left 1.969, carried 1.323, motion 13.92 px (draft 1.869, 1.276,
+  14.10): the same at both tiers, so the end rows are not a matter of the draft tier.
+- Drafts 3813 to 3818, what is left of each pair after the motion is taken out (my tool, a quarter size):
+  3813 3.356, 3814 3.424, 3815 3.766, 3816 3.586, 3817 3.269, motion 4.87, 5.25, 6.36, 7.81, 8.77 px. By
+  blocks (16 by 9) it sits in the near sheet at lower left (7 to 12 levels) and patchy on the globe's streaks
+  at upper right (1 to 4.4). Full size crops of the lower left (/tmp/v/r29/pop3815_crops.png): nothing comes
+  in or snaps, the ringlets soften from 3814 to 3817 as the lens picks up speed (the slide of the lens during
+  one take filters them, ice.json sweep 1). The lens: flat move a frame 6.2e-3 radii at 3809, 3.0e-3 at 3814,
+  3.7e-3 at 3816, 9.1e-3 at 3820; the height turns from falling 1.2e-3 a frame to rising 3.7e-3 at 3816.
+  So the pop at 3815 + 1/2 is the corner of my own pace at the start of the rise, the same place as the red
+  speed line below (3814 to 3816). Its cure is the pace, not a picture.
+- Main moved to 6884e80 (the globe's options d180, the corners of the pace and the law tool d181, the judge
+  of the smooth report renewed d182, the retreat's turn d183). Merged: 7825f77, no conflict. On the merge: tsc
+  exit 0; vitest 41 files, 370 tests pass; handover --only path: "saturn.dive every frame: pass",
+  "saturn.rise every frame: pass". smooth --only path with the renewed judge (the speed is now a mean over 8
+  ground points round the place, on the ring plane where the globe does not hide it, as mail 466 said it would
+  be corrected): "smooth saturn: red, 11 over the limit or not measured":
+  dive, whole frames: speed changes by 0.089 of the mean (over 6 points) in 5 steps from 3618 to 3622, most at
+  3621, limit 0.08; climbs again by 0.045 after its largest value (3589), up to 3629, limit 0.03. Rate 2: 0.089
+  in 10 steps from 3617 + 1/2 to 3622; climbs again by 0.051 up to 3629 + 1/2.
+  rise, whole frames: 0.085 in 2 steps from 3815 to 3816; 0.099 in 14 steps from 3870 to 3883, most at 3877;
+  falls by 0.090 before its largest value (3864), lowest at 3834. Rate 2: 0.086 in 5 steps from 3814 to 3816;
+  0.085 in 2 steps at 3862 to 3862 + 1/2; 0.100 in 29 steps from 3869 + 1/2 to 3883 + 1/2; falls by 0.100,
+  lowest at 3836 + 1/2. Rate and turn are inside their limits in both moves. On b2ebc62 with the old judge the
+  same path was green. Mail 466 held the path back until the judge was corrected; it now is, so these lines
+  are mine: the pace of my own path (plan.ts Pace, skim.json) at four corners.
+- NOTE 501 (03:38 UTC, to every stop builder): the same film frame at uhd is not the same picture as at 16 by
+  9 because fades read texels a pixel of the format. Ruling: the measure is an angle (a 1080th of the frame
+  height); one factor, buffer height over 1080, into every density that a fade reads and into nothing that
+  only picks a mip. The same for every number counted in pixels that can be seen. Proof by the builder: (a)
+  hashes of the own draft frames at 16 by 9 equal before and after; (b) npm run smooth -- --stop ID --only
+  parity (seven frames; limits mean 12, coarse mean 3.2, one block 12, frame level 2.2). saturn_coder: check
+  the place code for the same kind of term and say what was found.
+  What I found: 081c441 already carries the factor (ice.ts pixelScale, format height over grains.json frame)
+  through the kept set and the model: the weights of the polar and inner ring maps (the cause of mail 483
+  B.4), sparkle, glint, grain cells, edge widths of globe and moon, fine detail and night blur of the globe,
+  sand layers, grain limits. One term was left: ringfine.json near.wide (a ringlet from 2.5 to 7.5 footprints
+  wide on screen is drawn stronger, from 12 to 36 it loses hue and its bright side), counted in pixels of the
+  format. Cure: the pixel part of that footprint is the pixel of the look's frame (field.ts uRfFoot,
+  ringLookPixel; sheet.ts and grains.ts pass it as fpl); the part from the slide of the lens during a take is
+  the same in every format and stays. Checked: 3720 and 3829 at 1080 draft byte equal before and after; 3829
+  at uhd changes in 120792 pixels, largest 11; parity of 3829 (mean, level, coarse, block) 2.706 -0.823 1.093
+  -7.846 before, 2.700 -0.819 1.089 -7.846 after; 3720 at uhd does not change at all (see the next point).
+  Terms that stay by pixel because they are the band limit of the format (an octave is drawn where it is
+  wider than a pixel and counts by its mean where it is not): the ladder's seen, the edge and line filters
+  (area true), the sand's size pick, the globe's band octaves (skim.json globeFine.pixels).
+  Left in the parity panels after that: one arc of blocks where the uhd picture is darker by 2 to 6 levels
+  (the worst block is 7,4 at 3720 and at 3829), along the bright limb and the ring edge: reads as the glow of
+  the engine's bloom (a fixed count of halvings, so half as wide at uhd). Not found in my folder.
+- Why 3720 loses its fine detail (G17, mail 483 A), measured on the path (out/scratch/slide.ts): in the skim
+  the lens flies along its own view, and the view is within 22 degrees of the radius: at 3720 it moves 9.2e-3
+  radii a frame along the plane, 8.5e-3 of that straight across the ringlets (foot radius 3.55 at 3630, 2.59
+  at 3720, 1.98 at 3809), and sinks 1.7e-3. With the film's shutter of half a frame every point of the sheet
+  slides 4.3e-3 radii across the ringlets while the shutter is open, in every take set. At the bottom edge a
+  pixel is about 1e-3 radii, mid frame 7e-3: so every ringlet from 1.3 to about 6 px wide in the lower third
+  is smeared by the shutter (4.6 px of blur at the bottom edge, 0.6 px mid frame). That is why the uhd draft
+  of 3720 did not change with near.wide: no octave of the ladder under 0.006 radii is drawn at all there (the
+  draft filters with the whole slide, the final tier adds its 16 takes to the same smear). The approved close
+  is a still: hairlines of 2 to 6 px all over the lower left. G17's band is 3 to 12 px, so the near tiles
+  lose by the shutter first, whatever the model holds. Not yet measured: the same final still with the shutter
+  closed (the engine has no switch for a still; it would need config.shutterFraction in a scratch tree).
+
+## 03:50 to 04:20 VM: NOTE 504, the head 9467fee, the gate, the parity, mail 483 B.2 by calculation
+
+- NOTE 504 (03:51 UTC): the factor is not to be taken from view.format in a pass that draws a place picture
+  (that pass has its own buffer); code that multiplies its density by uFine needs the format's factor alone.
+  The shared helper is src/core/frame.ts (frameUniform, setPass, bufferFrame), in proof on agent/engine-globe,
+  not on main yet. Ruling: use the helper; a cure already written with its own uniform stays and swaps its
+  source when the Builder says the helper is on main (no byte changes then, no new proof beyond the hashes).
+  Saturn has no place picture (plan F), so only that last sentence matters here: my factor is
+  pixelScale(view.format.height) (ice.ts), to be swapped to the helper on the Builder's word.
+- Main moved to 4fb3788 (Mercury's base, d184). Merged: 9467fee9857f4fdcfdf1d1e63b8f990694e6bf21, no
+  conflict, pushed 03:50. On the merge: tsc exit 0; vitest 41 files, 370 tests pass; handover --only path:
+  "saturn.dive every frame: pass", "saturn.rise every frame: pass"; smooth --only path: the same 11 red speed
+  lines as on 7825f77, word for word (the section above).
+- The gate on 9467fee (worktree mainref): "PASS G11  every asset has a row or a recipe", "PASS G15  at most 2
+  sets per frame; finished stops: saturn/web 274 MB, saturn/full 747 MB".
+- npm run smooth -- --stop saturn --only parity on 9467fee (seven frames, draft, 16 by 9 against uhd):
+  "smooth saturn: green". Largest mean difference 3.024 at 3866 (limit 12); at one 8th of the size 1.767 at
+  3866 (limit 3.2); one block -9.127 at 3866, block 5,2 (limit 12); whole frame -1.685 at 3866 (limit 2.2).
+  The rows (mean, level, coarse mean, block level, block): 3563 2.090 -1.107 1.185 -4.265 7,1; 3585 2.217
+  -1.195 1.384 -8.382 6,2; 3608 2.226 -0.881 1.017 -5.723 7,4; 3720 2.663 -1.100 1.178 -6.286 7,4; 3829 2.709
+  -0.835 1.097 -7.847 7,4; 3848 2.444 -1.080 1.177 -7.657 5,5; 3866 3.024 -1.685 1.767 -9.127 5,2. Picture:
+  /tmp/v/r29/parity_official_9467fee.png. What is left in the panels: the stars (finer at uhd), fine lines
+  along the ringlets, a glow along the limb and the ring edge.
+- Size of my three folders at 9467fee: 74.744 MB in 179 files, main 74.821 MB in 178 files: net minus 0.077
+  MB (git ls-tree -r -l over src/stops/saturn, assets-src/saturn, public/assets/saturn).
+- The smear of the shutter at 3720, measured on the path (out/scratch/smear.ts; vfov 48, shutter 0.5),
+  replaces the estimate in the section above (4.6 px at the bottom edge, 0.6 px mid frame). How far a point
+  of the sheet slides across the ringlets while the shutter is open, in pixels of the 1080 frame: at x 240:
+  7.6 at the bottom edge, 5.2 at y 900, 3.8 at y 760, 2.9 at y 640; at x 960: 3.7, 1.9, 0.9, 0.3; at x 1680:
+  2.1 at the bottom, 0.3 at y 760. 3660 and 3780 are nearly the same. So the lower left third, where the
+  approved close holds its hairlines of 2 to 6 px and where G17 loses 13 tiles, is smeared by 3 to 8 px.
+- Mail 483 B.2, by calculation on the path (out/scratch/b2.ts), not yet looked at on my own carried frames:
+  Dive, pixel (1844, 980) at 3594 + 1/2: the ring plane at radius 1.954 (the outer edge of the B ring at the
+  Cassini division), 3.17 radii from the lens. From 3594 + 1/2 to 3602 + 1/2 the lens sinks from height 1.218
+  to 0.981, the share of takes of the model goes from 0 to 0.464, the far look at that point stays 1.000 (it
+  lies farther than handover.kept.reach 1.3) and close stays 0. So it is NOT the near light coming in (what I
+  first thought). What changes there in those frames: the kept set's layout goes from the hero's to the plain
+  profile by pose (done at height about 1.05), and from height 1.03 the kept set gives way to the model. The
+  next row of the judge's sheet (3602 + 1/2 to 3610 + 1/2, change 20.1): height 0.981 to 0.789, share of the
+  model 0.464 to 1, far look by height 1 to 0.685, close 0 to 0.266; at the pixel (radius 2.027, the outer
+  border of the division, 2.69 radii away) the far look by distance stays 1.000. Both rows sit on the borders
+  of the Cassini division: an edge between bright and dark that lies at a slightly different place in the two
+  tables shows as a change in place. That is mail 439 point 5, my step 2 (the same radius in both tables).
+  Rise, pixel (1300, 904) at 3824: the ring plane at radius 1.296 (the C ring), 0.83 radii from the lens, with
+  the globe behind it at 1.19. From 3824 to 3832 the lens climbs from height 0.343 to 0.532; close stays 1,
+  closeGlobe is 0 (light.globeNear is 0, so the globe's settings do not slide: my first reading was wrong);
+  the far look at that ring point goes from 0.381 to 0.861 as its distance grows from 0.830 to 1.084 radii
+  (handover.kept.reach 0.6 to 1.3). So this one is the near light of the sheet giving way to the far look by
+  distance, on the thin inner ring in front of the globe: a tone that slides through the frame. Step 2 as
+  ruled in mail 374 (one look of the ring per pixel, the near light in the mean equal to the far tone).
+
+## 04:08 to 04:50 VM: mails 508 and 511, main merged twice, 3720 with the shutter closed, the pace cured
+
+- MAIL 508 (03:58 UTC, the timetable): the first NAMED commit is due by 07:00 UTC, one commit on my branch on
+  top of the newest origin/main that can be merged (7a6f888 or later); its mail starts with the word NAMED and
+  the full sha. With no NAMED mail at the hour the newest head that builds and passes its tests is taken as it
+  stands, so push whole states. NAMED means the build I would show a critic today: (a) dive and rise each one
+  move by my own path with my own lines of npm run smooth -- --stop saturn --only path; (b) nothing by the
+  clock, the place picture off in both moves; (c) note 501, nothing by the pixel; (d) the judged hold and
+  surface view at the final tier beside the kept stills, equal bytes or the pair with one line on what changed
+  and why; (e) the net size of my three folders against main. The mail carries, in this order: my smooth lines
+  (path, pictures, parity), the frames that change outside my dive and rise, my list of what is still wrong,
+  worst first. Reds do not hold the mail back; a hidden red costs a round. After NAMED the Builder cuts the
+  proof tree and runs the take check and the whole report (about 45 minutes); red means a second commit within
+  90 minutes. ONE commit or ONE head in earlier mails means the named commit.
+- MAIL 511: main at f5a51b3 (d187): the judge reads a rebound over ring points as a valley on one set of points
+  (my rise then read fall 0.127 over 5 points at whole frames, 0.136 at rate 2); parity gets two more rows a
+  stop (the hold at its middle, the leg that leaves the stop at its middle), same four limits; src/core/frame.ts
+  is not on main yet, keep my own factor until the Builder writes that it is, then swap in a commit with
+  nothing else; G17 at 3720 stays the open measure, the NAMED mail with the cause by tiles is the place.
+- globe_engineer (04:16): the frame factor is on agent/engine-globe dace4ba6, not on main: frameUniform (format
+  height over the master's) and bufferFrame() for a place picture; do not take the factor from view.format in
+  a place picture. Saturn draws no place picture, so only the swap of the source is left, on the Builder's word.
+- Main merged twice, no conflict: 26677ed (the timetable, d186) as ceafef8 and f5a51b3 (d187) as a4dec17.
+- Job Q on 9467fee (worktree): "PASS G5 saturn: 3465 hold invalid 0 coverage 0.514; 3567 dive invalid 0
+  coverage 0.525; 3720 terrain invalid 0 coverage 0.725; 3866 rise invalid 0 coverage 0.428"; "FAIL G17 saturn:
+  3465 median 1.055 p25 0.919 over 71 tiles; 3720 median 0.685 p25 0.325 over 62 tiles"; "PASS G13 saturn: 0 of
+  83 frames over 0.02 soft (every 6th frame); worst frame 3390 0.00%, frame 3396 0.00%, frame 3402 0.00%".
+- 3720 with the shutter closed (job R, scratch tree only, config film.shutterDegrees 1.8 in place of 180, never
+  committed): final tier, no grain, 16 takes, 108.9 s. tools/measure/g17.py against the approved close: median
+  1.131, p25 0.541 over 62 tiles; the measure's own final of the same commit with the film's shutter: median
+  0.685, p25 0.325. So the fine detail of the model is there and passes; what G17 loses at 3720 is the smear of
+  the film's shutter at the pace of the skim (the table of the section before: 3 to 8 px across the ringlets in
+  the lower left third). The worst tiles left with the shutter closed: 11,5 (0.014) and 10,5 (0.041) at the
+  right edge (layout: the approved has ring there, mine the globe's shadow side), 5,1 (0.162), 8,4 (0.172),
+  7,4 (0.194). Picture in the looks: /tmp/v/r30/shutter_3720.png (film shutter, closed shutter, approved; the
+  lower left quarter of each at full size). Mail 311 forbids slowing or bending the path against blur and a
+  blur cure of my own, so this needs the Builder's ruling (judge G17 on a still with the shutter closed, or
+  take the red as the price of the film's shutter).
+- The pace against the renewed judge (f5a51b3). My scratch judge (out/scratch/sm.ts) reads the tool's numbers
+  to three places. The search (out/scratch/opt7.ts: a soft largest value over every step near the limit, both
+  rebounds and the handover's rate rule, minimised by a diagonal evolution strategy; about 35 paths a second):
+  - Dive: green as found before the merge: largest step 0.066 (rate), 0.067 (turn, speed) of the mean, climb
+    after the top 0.006; cost 0.832 of the limits.
+  - Rise with the change of view at 3860 (rise.at 0.667): no path of this family under 1.016. Why: the
+    handover's rate rule (no frame over 2 times the mean rate from the change of view to the last frame) makes
+    the rate stay at its top until 3860 and fall inside 24 frames; the speed of the picture at the place falls
+    with it (1.22 times the rate's slope, because the lens also narrows its field from 48 to 30 degrees while
+    it still turns: at 3862 the turn alone moves the picture 15.8 px a frame, the lens's own move 14.0), and
+    the way up cannot be steeper than 0.08 either. All three sit on their limits at once.
+  - The change of view is a number of mine (skim.json handover.rise.at; the engine's own default is 0.4). With
+    rise.at 0.56 (the change at 3852 + 1/4) the rate may begin to fall at 3855: cost 0.933. Rate: step 0.072,
+    top 1.746 of the mean from 3842 to 3855; turn: step 0.070, top 1.86 at 3842; speed: step 0.074 (0.075 at
+    rate 2), tops 1.289 at 3829 and 1.553 at 3859, not measured 3838 to 3853 (under 5 ring points); no fall
+    before a top and no climb after one; the handover's rule: fastest frame 1.84 times the mean (limit 2).
+  - Where the place is: below the frame for most of the rise (spot y 1184 at 3808, 1474 at 3832, 1092 at 3862,
+    852 at 3884), so the judge's ring sits at the bottom edge of the picture (out/scratch/spot.ts).
+  - In skim.json now: dive reach peak [0.262, 0.688] round [0.03, 0.112, 0.189, 0.073]; climb [0.663, 0.663],
+    [0.089, 0.085, 0.215, 0.084]; round [0.539, 0.645], [0.06, 0.332, 0.234, 0.03]; view [0.432, 0.444], [0.069,
+    0.191, 0.053, 0.03]. Rise at 0.56: reach [0.424, 0.592], [0.038, 0.073, 0.048, 0.058]; climb 0.244, [0.03,
+    0.118, 0.03]; round 0.495, [0.397, 0.104, 0.03]; view 0.411, [0.031, 0.092, 0.03].
+  - On the working tree (a4dec17 plus these numbers): tsc exit 0; vitest 41 files, 374 tests pass; handover
+    --only path: "saturn.dive every frame: pass", "saturn.rise every frame: pass"; smooth --only path: "smooth
+    saturn: green".
+
+## 04:25 to 04:35 VM: what the moved change of view does to the picture, the pace committed, main d38353f merged
+
+- Job S (scratch tree, draft tier, frames 3848 to 3862, the same paces, rise.at 0.56 against 0.667): 3848 to
+  3852, 3861 and 3862 are the same bytes; 3853 to 3860 differ in 1266 to 2340 pixels of the frame, at most 14
+  levels, mean 0.0002 to 0.0005 levels: single scattered pixels, stars at the upper left and the edge of the
+  ring and of the globe at the lower right (12 pixels of 5 levels or more at 3855, 21 at 3860). So the engine's
+  two views draw the same picture and where the change sits is free. Frames in /tmp/v/r30/at056 and at667.
+- Commit 8d471c2 (the paces and rise.at in skim.json, this notebook). Then main d38353f merged without a
+  conflict as 23cb30efa0f10f2aa37dc75452290f81d923f85a (Jupiter's hold sky d188, travel d189: every leg lands
+  and starts in one move, in src/space/travel/path.ts and src/director/film.ts; nothing of mine).
+- On 23cb30e: tsc exit 0; vitest 41 files, 380 tests pass; handover --only path: "saturn.dive every frame:
+  pass", "saturn.rise every frame: pass"; smooth --only path: "smooth saturn: green", "VERDICT: green. No
+  number is over its limit." Pushed to agent/saturn-code at 04:30.
+- The path lines as they print (out/work/smooth/saturn.md). Dive, whole frames: rate largest 1.166 at 3573,
+  step 0.065 at 3549; turn 1.805 at 3580, step 0.066 at 3562, fall before 0.005; speed 1.611 at 3593, step
+  0.066 over 6 at 3618, climb after 0.004 over 6. Rate 2: rate 1.168, step 0.066 at 3546 + 1/2; turn 1.815,
+  step 0.067 at 3562, fall 0.006; speed 1.618, step 0.067 over 6 at 3618, climb 0.006 over 6. Fewest points 6.
+  Rise, whole frames: rate 1.746 at 3846, step 0.072 at 3817; turn 1.862 at 3842, step 0.070 at 3833; speed
+  1.553 at 3859, step 0.074 over 8 at 3877. Rate 2: rate 1.759, step 0.072 at 3816 + 1/2; turn 1.875, step
+  0.070 at 3833 + 1/2; speed 1.554, step 0.075 over 8 at 3877. No fall, no climb. Rows of the speed shown and
+  not judged: whole frames 17 (3838 to 3854), rate 2 34 (3837 + 1/2 to 3854); fewest points 4.
+- Beyond my seam, shown and not judged: the speed steps 0.852 at 3896 (0.980 at 3896 + 1/2) of my rise's mean:
+  the leg to Uranus picking up speed from 3889 on (travel, not my folder; mail 387: do not shape the rise
+  against it).
+- Job T started 04:31 in the worktree on 23cb30e (pictures of the rise first) and was stopped at 04:42: my
+  sheet of its rise frames showed a fault that had to be cured before any report (next section). Its rise
+  frames stay in the worktree (out/work/smooth/saturn/frames, k = film frame times 2); no pictures report.
+
+## 04:38 to 05:05 VM: a one frame slit along a spoke of the sheet's mesh, the sheet as one triangle; mails 520 and 526
+
+- MAIL 520 (04:40): main 8fb9ba9b and later; a named commit sits on it. d193: src/core/frame.ts (frameUniform,
+  bufferFrame) is the one measure of buffer pixels in a master pixel: use it, not a factor of my own. d194:
+  smooth builds before it opens a page; run parity again on the head. Main a19dc7a merged without a conflict
+  as 4d8b904 (d191 the sky's dim starts every leg at nothing, d192 stars by height on other stops' rises).
+- FOUND on my own sheet of the rise frames of job T (capture rate 2, draft): at capture frame k007640 (film
+  3820) a thin dark slit runs from (0, 551) to about (805, 582), 5 px wide at the left edge and 1 px at x 700,
+  and the sky shows through the ring sheet in it. Only in that frame (not at 3819 + 1/2, not at 3820 + 1/2,
+  not in the film rate still of 3820). /tmp/v/flash2.py finds it (2865 pixels dark here and bright in both
+  neighbours) and nothing else in the rise.
+- MEASURED (out/scratch/slit2.ts): in the frame of the rings the slit is one spoke: azimuth 146.11 +/- 0.04
+  degrees, radius 1.37 to 1.87 and on past the frame. The sheet's mesh had 720 segments, an edge every half
+  degree: it is the shared edge at 146.0. The lens is at height 0.302 there and the outer end of that edge lies
+  behind the plane of the lens. So the cause: the software rasteriser cuts every triangle on its own where it
+  passes behind the lens, the two cut copies of a shared edge need not meet, and the long slivers of the mesh
+  (half a degree wide, 2.7 radii long) open a wedge. It can strike any frame with the lens near the plane, at
+  any rate and format.
+- CURE (sheet.ts): the sheet is no mesh. Each of its two passes is one triangle over the whole picture
+  (gl_Position from the corner alone, nothing to clip), and the point of the plane under a pixel is where the
+  ray through that pixel meets the plane: the vertex shader gives the ray in the frame of the rings (the
+  inverse of the model view matrix, the projection matrix for the lens) and the lens there; the fragment
+  shader has depth = -eye.y / ray.y and q = eye.xz + ray.xz * depth, in place of the varying vLocal.xz. A ray
+  that does not meet the plane, or meets it past 1e6 radii, gets a point far outside the ice. The bounds of the
+  ice (the inner end of the model, the end of the ice past the rim) are a uniform (uBounds) where they were the
+  rim of the mesh. sheet.json segments is gone with the mesh. The error of q by this way is the float's error
+  of the ray over the angle of a pixel: about 0.0003 px at the master, 0.0005 px in the 4K capture, the same
+  at every distance.
+- PROOF, rate 2, draft, k007639 to k007641, the same tree with the mesh and with the triangle: the slit is
+  gone at k007640 (flash2: 10 pixels of grain where it counted 2865). The other two frames differ from the
+  mesh's in 345141 and 360016 pixels by a mean of 0.19 levels, 15 and 24 pixels by more than 8, largest 11 and
+  16. The difference picture is the sand's cross hatch: the mesh's long slivers carried q a little wrong (a
+  few hundredths of a pixel), so the pattern sits a shade off. Film rate, draft, triangle against mesh (the
+  mesh on 23cb30e): 3465 the same bytes (the kept set draws there); 3660 mean 0.151, 14 pixels over 8, largest
+  25; 3720 mean 0.225, 32 pixels over 8, largest 70; 3829 mean 0.150, 5 over 8; 3866 mean 0.105, none over 8,
+  largest 6. The pixels over 8 at 3720 lie on hard ring edges near the lens (the stair of an edge moved by one
+  pixel at a few steps, the draft tier has one sample a pixel) and on grains. Nothing that the eye sees.
+  Frames in /tmp/v/r32 (base, full, pre, mesh; slit_cure_7640.png in the looks).
+- The kept set's rings (kept/rings.ts) are a mesh too (small triangles, shared edges) and draw while the lens
+  is high in the dive. Not changed. The detector runs over every dive frame of the next pictures run.
+- The frame factor: pixelScale(height) of ice.ts and grains.json frame are gone; ice.ts, grains.ts, model.ts
+  and kept/set.ts take bufferFrame() of src/core/frame.ts. A commit with nothing else. tsc exit 0, vitest 42
+  files, 398 tests pass on the tree with both changes.
+- MAIL 526 (04:52, d196): across each seam with the surface view the eye's speed over its own height never
+  dips and never turns back; cured in the surface view's own path; the camera of the judged surface frame
+  (3720) stays to the byte, the bend lives after it; a new line of smooth reads it (due 05:40). A stop that
+  needs the bend may name by 08:30 if it says so before 07:00.
+- MEASURED (out/scratch/seam.ts, rate 2, the eye's speed over its height against the last capture frame
+  before the seam, over the ring plane and over the globe's surface): dive to skim at 3630: lowest 0.998 and
+  0.998, the direction does not turn: clean. Skim to rise at 3810: lowest 0.616 and 0.630 at 3814 + 1/2, the
+  eye's direction turns up to 13.8 degrees per half frame from 3812 to 3817. The skim pushes straight at the
+  globe (velocity -8.5, -3.5, -1.7 thousandths of a radius a frame along e1, e2 and the normal at 3720) and
+  the way out lies back along nearly the same line (foot 5.9, height 2.94), so the rise turned the eye round
+  in its first eight frames. Mailed at 04:59 with the ask for the later time.
+- PLAN of the bend: skimAt keeps its path to the byte up to just past 3720 (the take of 3720 ends at u =
+  shutter over 2 * 180). From there the direction of the eye's velocity turns at a steady pace from the push
+  through a track across to the pull back toward the way out, and its speed stays the same share of its height
+  over the plane, so the height levels and then climbs. The rise takes that motion at 3810 and only speeds it
+  up; its paces are set again by the path judge.
+
+## 05:05 to 05:30 VM: the bend of the skim into the rise (ruling d196), built and tuned
+
+- MAIL 529 (05:08): the 4K baseline of saturn on main 8fb9ba9b is red on parity: coarse mean 3.703 at 3563
+  (limit 3.2), block level -22.068 at 3720 (limit 12, 3 frames over), whole frame level -3.168 at 3923 (the
+  sky's, sky_builder's cure is on the machines). The rows are now 3465, 3563, 3585, 3608, 3720, 3829, 3848,
+  3866, 3923. My head has to be green on it on my own tree: run it on the named head.
+- MAIL 530 (05:10): main 5014624 (tools/seam.ts, two tests mended); merged as 387ba2c. The later time (NAMED
+  by 08:30) is given. The tool: npx tsx tools/seam.ts --stop saturn [--kind rise] [--rows] [--before N]
+  [--rate N]; its height is the distance to the unit sphere.
+- sky_builder (05:18): the lines for the look of my sky at 3720 are on agent/flightsky fb501fc (not on main):
+  in set.ts update, every time: nameSkyLook(plan.id, { look: 0, even: 1, stars: 8, cap: 0.5 }, weight) from
+  '../../space/sky'; weight 1 where my sky is the frame's sky, 0 where the flight's has taken over; stars
+  toward 5 or 6. Not in the named commit (it is not on main). After NAMED.
+- THE BEND (plan.ts skimAt, skimStraight, skimBend, bendStep; skim.json path.bend). The skim is the straight
+  way up to the share 0.0111 from its middle (two frames past 3720; the take of 3720 ends at 0.0014), so the
+  camera of 3720 and of every frame before it is the same to the byte. From there to the share 0.489 the
+  direction of the eye's velocity turns: its heading over the plane by turnDeg toward the right of the lens
+  (where the globe is), its angle to the plane from the descent (10.7 degrees down) up to liftDeg 30. The
+  speed stays the same share of the height over the plane all the way (4.2626 per unit of u, 0.02368 a
+  frame), so the lens never rests. The lens does not turn in the skim. The way has no closed form: a table of
+  256 steps of the fourth order rule, a place between two steps is one such step from the one before.
+- WHY RIGHT: the track to the right moves the globe left in the picture, the pull back moves it left too
+  (it stands right of the middle), and the rise then turns the lens right, so the globe goes right to left
+  in one sweep: 1445 px at 3718, 1481 at 3742 (the push), 1331 at 3784, 1292 at 3808, 1263 at 3820, 973 at
+  3850, 692 at 3886. A turn to the left would send it right and back.
+- turnDeg: 210 aims the end at the way out but its last frames track left of the lens, and the globe drifts
+  8 px back to the right from 3796 to 3814 before the sweep (measured, out/scratch/scr.ts). 190 keeps the
+  drift to the left at every frame. 190 it is; the rise curves the rest.
+- MEASURED on the bend (out/scratch/meas.ts): 3720 reach 1.6212, height 0.3959, foot 2.5911 (as before);
+  lowest height 0.3498 at 3760; nearest foot 2.278 at 3770; 3810 reach 1.5788, height 0.5013, foot 2.5296,
+  azimuth 6.44 degrees, velocity (10.05, 2.17, 5.94) thousandths of a radius a frame along (e1, e2, normal).
+- THE SKY'S PROOF caught the first try (plan.ts skyProof stops the build): the bend ends 0.26 radii to the
+  side of the old end, toward the path of the hold, and the rise with its old paces passed that path at
+  1.0525 (sky.hero.reach is 1.2: a share of the hero's sky would have come back near 3861). The path of the
+  hold runs from (5.087, 1.001, 2.228) at 3390 to (4.673, 1.529, 2.413) at 3540 in (e1, e2, normal); the way
+  out is (5.905, -0.225, 2.939). The paces of the rise are now found with that distance as a wall
+  (out/scratch/opt7.ts): nearest 1.258 at 3861 + 1/4.
+- THE PACES OF THE RISE (skim.json handover.rise; at 0.56 as before): reach [0.369, 0.534], rounds [0.481,
+  0.481, 0.125, 0.031]; climb [0.239, 0.256], [0.412, 0.421, 0.049, 0.56]; round [0.281, 0.291], [0.382,
+  0.092, 0.136, 0.537]; view [0.432, 0.572], [0.03, 0.089, 0.053, 0.174]. A round longer than the room
+  before its turn is cut to that room by Pace (so the first turn of reach and climb has no round of its own:
+  the rate starts to grow at once and its growth falls off toward the level).
+- MEASURED, npm run smooth -- --stop saturn --only path: green. Dive lines as on 23cb30e (rate 1.166 at 3573,
+  step 0.065; turn 1.805, 0.066; speed 1.611, 0.066 over 6 at 3618; rate 2: 0.066, 0.067, 0.067). Rise, whole
+  frames: rate mean 0.01708, largest 1.399 at 3847, step 0.068 at 3812, seam in 0.051; turn 1.772 at 3853,
+  step 0.075 at 3871; speed mean 14.36 px a film frame, 1.502 at 3829, step 0.075 over 8 at 3883, seam in
+  0.056. Rate 2: steps 0.069, 0.075, 0.077; seam in 0.061, 0.003, 0.068. Rows of the speed not judged: 3842
+  to 3858 (the place has under 5 ground points; 23cb30e had 3838 to 3854). The speed mean of the kept rise
+  was 13.96, so the pace of the picture is the same.
+- MEASURED, npx tsx tools/seam.ts --stop saturn --rate 2 --before 88: dive "lowest 0.999 at 3629 + 1/2 | never
+  against the surface view's way"; rise "the surface view flies 0.00749 of its height a film frame | lowest
+  1.079 at 3810 | never against the surface view's way | surface view, largest step a film frame 0.008 at
+  3809 + 1/2". Before the bend (b5cf72a, my scratch): 0.616 at 3814 + 1/2; the Builder's table on main: 0.543
+  at 3813 + 1/2. Across the bend the eye's speed over its height runs from 0.00578 (3718) to 0.00741 (3810)
+  without a dip; its part along the way at the seam passes 0 at 3766 at 0.87 of the seam's speed (a bend at
+  speed, not a rest).
+- npm run handover -- --stop saturn --tier draft --only path: "saturn.dive every frame: pass", "saturn.rise
+  every frame: pass". tsc exit 0. vitest 42 files, 398 tests pass.
+- SEEN (draft, film rate, every sixth frame 3722 to 3810, /tmp/v/r33/b2): the track and the pull back read
+  as one arc; the globe grows to 585 px radius at 3766 and is cut by the top edge from 3740 to 3790; at 3810
+  the far side of the rings shows as a short lit piece at the right edge beyond the globe's dark limb.
+- STILL OPEN on the bend: the rise starts to speed up at once at 3810 (the eye's speed over its height
+  doubles in 5 frames, as the kept rise did in 9). If it reads as a kick on the frames, the cure is to let
+  the speed share grow over the last second of the bend, so the rise has less to add.
+- The last three seconds of the skim no longer push forward: they track across and pull back (ruling d196).
+  This stands against "clear forward movement through all 180 frames" of the first brief: named in the mail.
+
+### 05:28 to 05:40 UTC: e3df591 pushed, MAIL 534, the proofs of the bend are rendering
+
+- PUSHED: e3df591ce360c5cb373f3fcfafe5d221ef260ae5 on agent/saturn-code (the bend and the rise's paces), on
+  387ba2c (merge of main 5014624). Looks pushed 05:28 (the two bend sheets and 3810).
+- MAIL 534 (05:27, d198, main 3060b72: only kit/PROGRESS.md against 5014624): smooth.path.minEye is 0.87. At
+  the end of each dive and the start of each rise, over 16 film frames either side of the seam at rate 2, the
+  way of the eye over its own height above the ground never falls under 0.87 of the surface view's own (the
+  mean of its 2 film frames next to the seam). Judged in the path part of npm run smooth (harness_builder's
+  07148aa6, on the machines, not on main yet; until then npx tsx tools/seam.ts --rate 2 gives the same number
+  inside the move). Saturn rise on main 0.536 at 3814 (the judge takes the height above the ring plane
+  there). The window reaches 16 film frames into the surface view: a bend that buys the seam by slowing the
+  eye later in the surface view is red by the same line. So a gain of the speed share over the last 16 frames
+  of the bend may be 1 over 0.87 at most (1.149): the cure named in the entry before this one ("let the speed
+  share grow over the last second of the bend") can add no more than that; a larger gain has to be spread
+  over the whole bend (1.149 every 16 frames is 2.15 over 88 frames). Red by this line at the named commit is
+  a severe issue of its round. Time to name: 08:30 UTC for Saturn.
+- THE LONG JOB (/tmp/v/job_z.sh SHA OUT, detached, log /tmp/v/r34/job.log) runs in the worktree mainref on
+  e3df591 from 05:28: smooth pictures rise, parity, pictures dive, path, the gate, measure G5 and G17, the
+  two final stills, G13 every sixth frame, the handover (sides, flow, path). Reports are copied to /tmp/v/r34
+  after every step. A draft frame at rate 2 takes about 4 s.
+- SEEN while it renders (rate 2, 3800 to 3812, /tmp/v/r34/seam_a.jpg and edge_a.jpg): the far ring's lit
+  piece beyond the dark limb comes in at the right edge of the frame from 3806 + 1/2 and grows as the eye
+  pulls back; it comes in by the edge, not by a blend.
+- NET SIZE of the three folders against main at e3df591 (git ls-tree -r -l): assets-src/saturn plus 0.072
+  MB, public/assets/saturn minus 0.127 MB, src/stops/saturn plus 0.013 MB: net minus 0.042 MB.
+
+### 05:40 to 05:55 UTC: the rise's pictures on e3df591, parity on my tree, mails 538 and 540, the sky look
+
+- MAIL 538 (05:34, no answer needed): a 4K check of main's stops with the sky's star cure. Saturn on main:
+  coarse 3.226 at 3563 and block -22.068 at 3720; its travel level at 3923 is cured (-0.024 from -3.168).
+  "These are main's stops, not your trees. If your tree already cures yours, say so in the NAMED mail with
+  the number." Main gets 156ed6f9, fb501fc4, 797d3361 and 07148aa6 within the hour if the check is clean;
+  the new main sha comes by mail.
+- MAIL 540 (05:42): the engine's bend is handover_engineer's 3aa0a862 on agent/engine-handover, off by
+  default, on main about 06:45 if clean. I do not need it (my path is my own, handover.ownPath). The risk
+  for every stop that bends: after the bend render every frame from 10 before T to 4 after at the draft
+  tier, put the sheet in the looks and say in the NAMED mail what is in them (the set's border, the far edge
+  of the ground, a jump at T). The same at the dive's end for a stop that changes its landing (mine did
+  not). Judged frames keep their camera to the byte.
+- handover_engineer (05:42 and 05:47): main's rise dents to 0.54, the cure is the bend in my path; 3720 must
+  not change; a warning from Mars: once the eye no longer stops, the whole early rise is further along at
+  every frame, so look at the last close frames before the change of view and at the two sides at T. On my
+  tree T is 3852 (main: 3860).
+- THE T SHEET (looks: "the rise with the bend, draft, every frame 3842 to 3856"): no border of a set, no far
+  edge of the plane, no jump at 3852. Frame to frame mean difference 11.70, 11.75, 11.78, 11.79 across T.
+- THE EYE LINE on my tree (out/scratch/eye.ts, the judge's rule with the height over the ring plane, rate 2,
+  16 film frames either side): rise own 0.02368, lowest 1.000 at 3794; dive lowest 1.000 at 3639 + 1/2.
+- SMOOTH PICTURES RISE on e3df591 (198 draft frames; /tmp/v/r34/smooth_pic_rise.md and the two pictures):
+  "smooth saturn: red, 2 over the limit or not measured."
+  "rise: pop score 1.63 from frame 3895 + 1/2 to the next, limit 1.2 (12 frames over it, first 3874)"
+  "rise: the pattern of the picture changes in place by 0.55 from frame 3859 to 8 film frames later, limit
+  0.45 (6 frames over it, first 3808)"
+  Largest level step 0.09 at 3865 + 1/2 (limit 1.3). Largest change in place 26.3 from 3868 + 1/2 at pixel
+  1196, 728 (shown, not judged). Ground beside: change 10.5, pattern 0.16.
+  Pops over 1.2: 3874 1.21 and 3875 1.22 (the engine's sky dip, sky_builder's fb501fc is its cure), then
+  3891 1.27, 3891 + 1/2 1.38, 3892 1.40, 3892 + 1/2 1.27, 3893 1.21, 3894 1.34, 3894 + 1/2 1.38, 3895 1.40,
+  3895 + 1/2 1.63, 3896 1.59: all in saturn.travel after my rise.
+  Pattern over 0.45, six frames: 3808 0.48 (largest at pixel 1916, 664: the far ring's lit piece coming in
+  at the right frame edge; one pair, the neighbours are 0.21 and 0.14); 3858, 3858 + 1/2, 3859, 3859 + 1/2
+  0.50 to 0.55 (largest at pixels 1240 to 1316, 1056 to 1076) and 3863 0.451 (1224, 1020). Looked at in a
+  crop at twice the size (looks: "rise 3859 to 3867 every second frame, crop at the globe's lower right"):
+  the place is the thin inner ring (C ring) right of the globe's lower limb, inside the globe's shadow. The
+  ring itself is dark there, so the detail in that place is the film's star field and its bright band seen
+  through the ring, and it slides against the ring as the eye rises: two true layers, one seen through the
+  other. The judge carries the ring's place back along the flow and finds another piece of sky behind it.
+  Nothing is replaced in place there by a blend. Named in the mail, not cured: a cure would be to hide the
+  sky behind a ring that lets light through, which is false.
+- PARITY on e3df591 (/tmp/v/r34/smooth_parity.md): "smooth saturn: red, 1 over the limit or not measured."
+  "parity: level difference of the whole frame -3.168 at frame 3923 (saturn.travel), limit 2.2 (2 frames
+  over it)". Rows (mean, level, coarse, block): 3465 1.690, -0.632, 0.732, -3.883; 3563 2.097, -1.120, 1.196,
+  -4.718; 3585 2.220, -1.178, 1.386, -8.081; 3608 2.179, -0.866, 0.996, -5.626; 3720 2.651, -1.100, 1.176,
+  -6.282; 3829 2.473, -1.062, 1.153, -7.101; 3848 3.161, -2.026, 2.096, -9.624; 3866 4.129, -3.000, 3.060,
+  -10.025 (block 13,7); 3923 3.841, -3.168, 3.171, -11.687. So my tree cures main's two (3563 coarse 1.196
+  against 3.226, 3720 block -6.282 against -22.068). The second frame over the limit is 3866, in my rise:
+  level -3.000 (it was -1.685 on 23cb30e). Its worst block is the lower right, the open sky with the bright
+  band; with the bend the rise is further along at 3866, so more of the frame is the engine's open sky,
+  whose stars are dimmer at 4K (the same cause as 3923, which sky_builder's star cure brings to -0.024).
+  To be measured again on the merge with main once fb501fc is on it.
+- THE SKY LOOK (sky_builder's fb501fc, not on main yet): nameSkyLook(id, { look, band, map, stars, even,
+  cap }, weight), read and forgotten every picture. The star gain is 1 + (stars - 1) * weight; even takes
+  the crowding of the stars into the bright band out by the weight; cap is a ceiling on a star's level, mixed
+  in by the weight. With weight = plan.lowAt(height) and the look as sky_builder gave it (look 0, even 1,
+  stars 8, cap 0.5) the level of a faint star, gain times the air's share of the exposure (skyGain, 0.17 at
+  the skim), would be 1 at the heights of the hold, 2.6 half way and 1.36 at the skim: a swell on the way
+  down and on the way up. Prepared in the scratch tree rt (repo at e3df591 with fb501fc's three engine
+  files laid over it): plan.starsAt(low) names the gain that lets that level run straight in low from 1 to
+  stars * near, and set.ts names { ...sky.look, stars: plan.starsAt(low) } with the weight low. Not rendered
+  yet. Decision at about 06:30 by a trial at draft (3720's sky box against the approved image: mean 7.7,
+  10.8, 15.4, p99 29.3, share over 40 0.0049; the dive from 3596 and the rise to 3840 for a swell; parity).
+  If it is not clean by then, the NAMED commit goes without it and it is the first thing after.
+
+### 05:55 to 06:05 UTC: what the two red picture lines of the rise are made of (read from saturn-rise.json)
+
+- d199 on main c65e474 (only kit/PROGRESS.md against 5014624): a red smooth report breaks the pass bar of its
+  round, each RED line is one severe issue of the stop in the scorecard, in the report's own words. So the
+  red lines are to be cured where the cure is mine and true, and named with their cause where it is not.
+- THE POP LINE, rows of the report (residual, the window's base, motion in px per half frame):
+  3856 2.21, 2.21, 11.4; 3864 2.51, 2.42, 8.5; 3870 2.49, 2.51, 5.7; 3872 2.73, 2.42, 4.9; 3874 2.89, 2.32, 4.6;
+  3875 2.86, 2.32, 3.8; 3877 2.48, 2.32, 3.2; 3880 1.60, 1.61, 1.66; 3882 0.96, 0.95, 0.71; 3884 0.46, 0.94,
+  0.16; 3886 0.42, 0.94, 0.12; 3888 0.42, 0.94, 0.11; 3889 0.56, 0.93, 0.26; 3890 0.81, 0.93, 0.63; 3891 1.07,
+  0.81, 1.27; 3892 1.33, 0.81, 2.32; 3893 1.45, 0.81, 3.80; 3894 1.39, 0.81, 4.38; 3895 1.37, 0.81, 6.57;
+  3895 + 1/2 1.55, 0.81, 7.12; 3896 1.47, 0.81, 7.86.
+  Two things. (1) 3873 to 3875 (1.21, 1.22): the leftover rises while the motion falls. It is the engine's
+  sky changing its band from the stop's look to the flight's between a lift of 0.27 and 0.44 (the entry
+  "Sky level in the rise" above: the sky's mean falls by 1.9 while it does). sky_builder's fb501fc changes
+  3867 to 3884; measured again on the merge. (2) 3891 to 3896, in saturn.travel: the picture is at rest from
+  3884 to 3888 (0.11 to 0.16 px per half frame; my rise lands there over 28 frames, 11.4 px at 3856 to 0.16
+  at 3884) and the travel leg then takes it from 0.26 px at 3889 to 7.86 px at 3896. The leftover goes with
+  it from 0.42 at rest to 1.47; at the same motion it is lower there than in my rise (1.47 at 7.86 px at
+  3896 against 1.79 at 7.87 px at 3820 and 2.26 at 7.9 px at 3866). The score is over the limit because the
+  window's median still holds the rest. What is left sits on the ring's outer rim where it crosses the dense
+  star field (stars covered and uncovered as the rim passes them), along the ringlets, and on the star field
+  seen through the thin inner ring (looks: "smooth pictures rise on e3df591"). The onset of the travel leg
+  is not mine (mail 387: do not shape the rise against the travel's step); named in the mail with these
+  numbers.
+- THE PATTERN LINE at 3858 to 3863, looked at again with the judge's own picture at three times the size
+  and the frames at eight times the gain: the band of changed pattern runs along the right border of the
+  bright star cloud that shows through the thin inner ring in the globe's shadow, strongest at the bottom
+  edge (1240 to 1320, 1000 to 1075). The shadowed ring beside it is 11.6, 15.8, 20.2 with ringlets of 2
+  levels and holds no stars (the B ring lets none through); the ring lets light through by its optical
+  depth over the cosine of the view (sheet.ts, alpha = 1 - exp(-tau / mu)), which is right. The judge's
+  window is 40 px wide, so the cloud sliding behind the ring (two true layers) fills it. Not a blend.
+- COUNTS: the page has a counter now (src/capture/frame.ts), but the warm list (src/core/warm.json, the
+  engine's, "made again at the freeze", d177) holds frames up to 2203 only, none of Saturn's. The counts
+  part of the smooth report is not run here (1140 pictures) and is not mine to cure; said in the mail.
+- CORRECTION of the pattern line's cause, by the judge's own code run on the frames of the report
+  (/tmp/v/patmap.py: tools/img/smooth.py change and pattern over the chain of 17 half frames, without the
+  body mask; looks: "the judge's pattern change 3859 to 3867 laid over 3859" and "3808 to 3816 laid over
+  3808"). 3859: the pixels over 0.45 on the body are one patch at 1180 to 1310, 1020 to 1080: the star
+  cloud seen through the thin inner ring where it meets the bottom edge of the frame; the same cloud higher
+  up, seen through the same ring, reads under 0.3. From 3863 the near lit ring comes into the frame at that
+  edge. 3808: one patch at 1840 to 1919, 564 to 687, at the right edge of the frame on the night limb,
+  where the far ring's lit piece comes in from 3806 + 1/2. So both are places next to a frame edge where a
+  lit ring enters within the 8 frames, not a look replaced in place; the sliding of the cloud behind the
+  ring alone (the paragraph above) does not reach the limit. Named in the mail with the two pictures.
+
+### 06:05 to 06:22 UTC: the dive's pattern line, the sky look, MAIL 545, the merge of main f6ce51a
+
+- DIVE PICTURES on e3df591 (/tmp/v/r34/saturn-dive.md, .json, the two panels): "dive: the pattern of the
+  picture changes in place by 0.53 from frame 3561 to 8 film frames later, limit 0.45 (18 frames over it,
+  first 3560)". Level step 0.02 at 3562, pop 1.09 at 3563 (green), change in place 23.6 from 3594 at 1804,
+  680 (shown, not judged), ground beside: change 6.4, pattern 0.04. By frame: 0.18 at 3548, 0.38 at 3558,
+  0.475 at 3560, 0.529 at 3561, 0.45 at 3568, 0.29 at 3572, all at 1124 to 1148, 228 to 268; then one frame
+  of 0.508 at 3581 at 1704, 992 (0.376 at 3582, 0.21 at 3580).
+- THE JUDGE JUDGES THE BODY ONLY (tools/img/smooth.py body: the unit sphere and the rings of the pose, less
+  20 px). My earlier maps (/tmp/v/patmap.py) had no body mask. /tmp/v/patmap2.py takes the poses
+  (out/scratch/poses.ts K..., the judge's carriedCamera) and gives the judge's numbers: 3561: p99 0.529 at
+  1124, 236 (the judge's own); 3859: 0.545 at 1240, 1076, patch 1240 to 1335, 1000 to 1079; 3808: 0.48 at
+  1916, 664, patch 1820 to 1919, 568 to 767. So the two causes named for the rise stand with the mask.
+- CAUSE OF 3560 to 3568 (the globe's north pole under the top limb): the flow, not the globe. The film's
+  dense star field lies right behind the top limb there and moves against the globe (the sky turns with the
+  lens, the globe comes nearer; the hold's sky picture is leaving by distance, 0.68 of it at 3560, 0.38 at
+  3568, and uncovers that field). Over the chain of 16 half frames the flow carries the limb's bright rim
+  into the judged body over the dark pole (looks: "dive 3561 to 3569 at the pole, the judge's own steps":
+  the carried limb is warped). PROOF (/tmp/v/patmask.py): the same measure with the flow taken on the body
+  alone (sky set to zero in the pictures the flow sees, the pattern taken on the true pictures): p99 0.201
+  (as judged 0.529), pole box p99 0.32 (as judged 1.09). The pose weight of the kept set (the hero's light)
+  is still 1.000 up to 3565 (out/scratch/posew.ts: farthest in the hold 0.3505, heroRange 0.6 to 1.6: it
+  falls from 3566 to 3598), and the air comes in from 3562 (low 0.024 at 3564), so no look of the globe is
+  replaced in those frames; the eye's latitude falls 1.3 degrees in the 8 frames (4.5 percent of
+  foreshortening at the pole).
+- CAUSE OF 3581 (one frame): the tip of the lit wedge where the border of the globe's shadow crosses the
+  ring, at the bottom edge of the frame (patch 1692 to 1767, 932 to 1079). With the flow on the body alone
+  the whole body's p99 is 0.147 (as judged 0.485) but the patch keeps 0.66: there the kept set's own look
+  of the shade gives way by the pose weight (0.6 at 3581, 0.2 at 3589: the hero's baked light to the
+  computed shadow) while the tip leaves the frame. Small and real; in the list.
+- SEEN ON THE WAY: (1) single dark pixels along the globe's top limb from 3570 to 3576 at draft (looks:
+  "top limb 3568 to 3576 at six times"); to be looked at on the final tier. (2) The stars seen through the
+  ring gap under the wedge change between 3588 + 1/2 and 3589 (the engine's change of view) on e3df591;
+  looked at again on the merged head.
+- TRIAL Q (fb501fc's sky files and my sky look over e3df591, /tmp/v/r35): parity green on every row: 3465
+  mean 1.690 level -0.632 coarse 0.732 block -3.883; 3563 1.736, -0.589, 0.694, -4.391; 3585 1.663, -0.385,
+  0.629, -3.311; 3608 1.990, -0.526, 0.684, -4.578; 3720 2.558, -0.959, 1.043, -4.631; 3829 2.132, -0.544,
+  0.663, -4.517; 3848 2.017, -0.463, 0.598, -4.618; 3866 2.252, -0.534, 0.710, -4.279; 3923 1.560, -0.026,
+  0.235, 0.498. Sky box of the trial's dive frames (0 to 700, 0 to 300, mean red): 16.5 at 3596, 12.2,
+  9.6, 8.5, 8.3 at 3628, 8.3 at 3660, 8.4 at 3720: falls all the way, no swell (head: 16.0 to 7.7).
+- THE SKY LOOK IS IN (sky_builder's request, main holds fb501fc now). Sky of 3720, box 0 to 700 by 0 to
+  300, display values: approved mean 7.0, 10.2, 14.7, median 6, 9, 13, p99 36, p99.9 98; head before mean
+  7.8, 11.0, 15.2, median 6, 10, 14, p99 33, p99.9 125 (warm clusters at the left, the right half bare);
+  look stars 8 cap 0.5: 8.4, 12.4, 17.0, median 7, 11, 16, p99 42, p99.9 65 (an even dust, no bright star);
+  look stars 5.5 cap 0.9: 8.0, 12.0, 16.7, median 7, 11, 16, p99 41, p99.9 80: an even field with bright
+  and faint stars, the nearest of the three to the approved (looks: "sky of 3720 ... four"). Taken: skim.json
+  sky.look { look 0, even 1, stars 5.5, cap 0.9 }, weight low (the air's own course by height), the gain on
+  the way by plan.starsAt. Still off: the floor is 1, 2, 3 values over the approved (the even field's many
+  faint stars); the veil's colour could take that up, not before the named commit.
+- MAIL 545 (06:18): main is f6ce51a55b2fe2816cb80df8a68fd2b3584bec94 (sky swap fb501fc4, quintic pull at
+  sun.travel, the eye line with smooth.path.minEye 0.87, the warm list, the engine's bend off by default,
+  tools/round.py with the smooth judging: each RED line is one severe issue). Coming about 06:45: the sample
+  offsets less their own mean (c2aaa84d: draft pictures do not change, every review and final picture moves
+  0.09 px left and 0.035 px up, so no final equals a kept still to the byte; each builder gets its two
+  judged frames as PNG on the new pattern to compare with) and a plan check (tools only). NAMED by 08:30
+  for a stop that bends. Offer: PRE, the full sha and parts for a render machine (about 140 minutes whole).
+- MERGED f6ce51a as b99e8b6 (no conflict, nothing of main in my folders). The engine's StopPlan has a
+  private bend() now, so my plan's private field bend is ownBend (the only change the merge needed).
+
+### 06:27 to 06:34 UTC: the merged head 589fd9a, the first proofs
+
+- PUSHED 589fd9aa521bb3644012e939b9a125a2242bf6ef (merge of main f6ce51a plus the sky look). tsc clean,
+  vitest 44 files 418 tests, build ok. Job V runs on it in the worktree (/tmp/v/r36): path, T sheet, parity,
+  pictures rise, pictures dive, head sample, handover, G13, main sample.
+- PATH: "VERDICT: green. No number is over its limit." Dive eye line: "Lowest 1.00 at frame 3634, limit 0.87;
+  inside the dive itself 1.00 at frame 3630. Largest step from one capture frame to the next 0.02 at frame
+  3620, shown." Rise eye line: "Lowest 1.00 at frame 3794, limit 0.87; inside the rise itself 1.07 at frame
+  3810 + 1/2. Largest step from one capture frame to the next 0.10 at frame 3811, shown." Largest steps:
+  dive rate 0.066, turn 0.067, speed 0.067 over 6; rise rate 0.069 at 3811 + 1/2, turn 0.075 at 3871 + 1/2,
+  speed 0.077 over 8 at 3882 + 1/2, seam in 0.068 (limit 0.08). T: dive 3589, rise 3852.
+- SEAM TOOL (npx tsx tools/seam.ts --stop saturn): dive "lowest 0.999 at 3629 + 1/2 | never against the
+  surface view's way"; rise "lowest 1.079 at 3810 | never against the surface view's way".
+- PARITY: "VERDICT: green." 3465 mean 1.690 level -0.632 coarse 0.732 block -3.883; 3563 1.736, -0.589,
+  0.694, -4.391; 3585 1.649, -0.386, 0.630, -3.356; 3608 1.979, -0.527, 0.685, -4.578; 3720 2.557, -0.960,
+  1.044, -4.631; 3829 2.118, -0.546, 0.664, -4.517; 3848 2.015, -0.463, 0.597, -4.618; 3866 2.252, -0.534,
+  0.710, -4.279; 3923 1.560, -0.026, 0.235, 0.498. Main's 4K reds (MAIL 538: coarse 3.226 at 3563, block
+  -22.068 at 3720) are 0.694 and -4.631 here.
+- T SHEET (MAIL 540): every frame 3842 to 3856 at draft, T is 3852 (looks: "589fd9a ... every frame 3842 to
+  3856", and 3850 to 3853 at full size). In them: no border of the set, no far edge of the plane, no jump
+  at T. Mean difference from frame to frame 14.27 (3850 to 3851), 14.44, 14.54 (3852 to 3853), 14.69; it
+  grows by 0.1 to 0.4 a frame from 12.15 at 3842 to 14.91 at 3855, with no step. Level 64.73 to 65.02.
+- CAMERA AGAINST MAIN, TO THE BIT (out/scratch/samecam.ts: plan.flight of the head against plan.flight of a
+  copy of origin/main's folder, every eighth of a film frame 3390 to 3885): the same everywhere but 3540 +
+  1/8 to 3629 + 7/8 (the dive, my own path) and 3722 + 1/4 to 3884 + 7/8 (the bend after the judged frame
+  and the rise). 3720 and 3465: every number of position, turn and lens equal.
+- NET SIZE (/tmp/v/netsize.sh, git ls-tree of the head against origin/main): assets-src/saturn plus 0.091
+  MB, public/assets/saturn minus 0.127 MB, src/stops/saturn plus 0.015 MB: net minus 0.022 MB.
+- COUNTS are not run here: src/core/warm.json on main ends at frame 3012, the piece of this stop is the
+  Builder's at the take (d197). What the counter counts (src/core/counts.ts): linkProgram, texture
+  uploads, createBuffer, createFramebuffer, createRenderbuffer, createVertexArray. The grains write their
+  two instance buffers in place every frame (update ranges, no new buffer); no texture is uploaded per frame
+  by the skim.
+
+### 06:37 to 06:55 UTC: MAIL 546, main b0b8788 merged (c8ca94e), the rise's pictures on 589fd9a
+
+- MAIL 546 (06:37): main is b0b87889e1af276ed3b9543373ac1346744925dc: the centred sample pattern (c2aaa84d:
+  draft pictures the same to the byte, review and final pictures move as a whole 0.09 px left and 0.035 px
+  up, so no final equals a kept still to the byte) and the plan check in tools/lib/pace.ts (191dded2).
+  Attached: my two judged frames as PNG, made on main's engine with the new pattern and nothing of my stop
+  changed (/tmp/v/ref): 3465 sha256 21f107a66c0cb0318b1d070d25e6f605cf7c603a97b9c217c2c551381ac3a42a, 3720
+  sha256 6c4e4e1061c931ac7b0cbd246ef89b6e3d5339b964f88e28c2f0774dcd8b0679 (main's picture of today, not the
+  kept still and not my head's). "Where your stop leaves a judged frame alone, your final must give these
+  bytes." "Where you change a judged frame on purpose, say so in the NAMED mail as before." NAMED by 08:30.
+- MERGED as c8ca94eb4d524367af5303b2c09d93239482bb79 (no conflict, nothing in my folders imports
+  director/pace). tsc exit 0, build exit 0, vitest without the three tests that open a browser (skylift-gl,
+  globe-gl, globe-cap): 42 files, 394 tests pass. Pushed 06:39. The three go with job W when the renderer
+  is free. Before it, 9eb7c84 (merge of the status commit e3320e5) and b006082 (notebook).
+- JOB PLAN: job V (589fd9a) is stopped after its dive pictures; job W (/tmp/v/job_w.sh, /tmp/v/r37) runs on
+  c8ca94e: finals 3465 and 3720 with their sha256, path, parity, gate, G5 and G17, the whole vitest, the
+  draft sample of the head and of main b0b8788, handover, G13. The draft frames of 589fd9a stay for the
+  hash proof (the T sheet frames 3842 and 3852 are in the new sample).
+- 3465 AND 3720 CHANGE ON PURPOSE against main (main holds a359a4b's Saturn): 3465 by the sky picture of the
+  hold without the baked grain (mail 448) and ruling (a) (the map rigid on the globe, 0.0045 of the body's
+  pixels by 1 level); 3720 by the sky look. The pairs go into the mail with those lines.
+- RISE PICTURES on 589fd9a (/tmp/v/r36/saturn-rise.md): "VERDICT: red. 2 numbers over the limit or not
+  measured." "RED pop score 1.63 from frame 3895 + 1/2 to the next, limit 1.2 (11 frames over it, first
+  3875)"; "RED the pattern of the picture changes in place by 0.50 from frame 3859 to 8 film frames later,
+  limit 0.45 (5 frames over it, first 3858 + 1/2)". Largest level step 0.06 at 3849 (limit 1.3). Change in
+  place 26.0 from 3868 + 1/2 at 1196, 728, shown. Ground beside it: change 11.3, pattern 0.16.
+  - The pops over the limit: 3875 (1.21, one capture frame) and 3891 to 3896 (1.26 to 1.63, ten capture
+    frames): the travel leaving its rest (what is left 0.43 in the rest 3884 to 3888, 1.5 once it moves,
+    over a median of 0.81); MAIL 387 keeps my rise from being shaped against it. The judge's panel shows the
+    four largest, all 3892 to 3896: what is left lies along the ring edges and where stars show through the
+    outer ring.
+  - 3871 to 3876 (1.09 to 1.21): what is left has a hump there (2.45 at 3870, 2.86 at 3874, 2.34 at 3877 +
+    1/2) while the motion falls evenly (5.7 to 2.9 px). By blocks (/tmp/v/popmap.py, my own flow): the bottom
+    strip x 720 to 1080 (blocks 6,8 to 8,8, plus 8 to 14 over their own median of 8): the bright near ring
+    slides out over the bottom frame edge and the division comes in there from 3874 (looks: crops 3870 to
+    3877). Nothing snaps or comes in by a blend.
+  - The pattern over the limit: 3858 + 1/2 (0.48), 3859 (0.50), 3859 + 1/2 (0.48), 3863 (0.49), 3863 + 1/2
+    (0.454); 3808 is 0.448 now. The judge's panel of 3859: the white lies on the shaded ring at the bottom
+    right (x about 1240 to 1490, y 940 to 1079), where the star cloud of the film's sky shows through the
+    ring inside the globe's shadow: two layers that move apart (the ring and the sky behind it), so the
+    pattern in place changes. Item 4 of the list (stars through the shaded rings).
+- FOUND ON THE WAY (out/scratch/posew.ts 3810 3886): the lens passes the hero pose at 1.444 radii at 3858, so
+  the pose weight of the kept set (heroRange 0.6 to 1.6) comes back to 0.065 from 3852 to 3866 (0.009,
+  0.032, 0.054, 0.065, 0.061, 0.045, 0.023, 0.005 on the even frames) and leaves again. The sky's proof
+  keeps the hero's sky out (reach 1.2, nearest 1.258) but the look's range is wider. A blend by distance
+  that comes and goes: to be measured (a frame with the weight held at 0 against the head) and closed, by a
+  far end of the range under 1.44 or by the same wall for the look as for the sky. In the list.
+- 06:55 UTC: the chain is /tmp/v/chain2.sh now (log /tmp/v/r37.log): after the dive pictures of job V it
+  renders 3854 and 3859 at draft in the scratch tree twice (/tmp/v/r38/a with heroRange as kept, /tmp/v/r38/b
+  with the far end at 1.4, so the pose weight stays 0 through the rise) to measure what the returning pose
+  weight puts into the picture, then job W on c8ca94e as planned. The scratch tree holds a copy of the head;
+  nothing of the test is in the repo.
+
+### 06:55 to 07:10 UTC: the dive's pictures on 589fd9a, the pose weight closed, main bae3d4d
+
+- DIVE PICTURES on 589fd9a (/tmp/v/r36/saturn-dive.md, done 07:06): "VERDICT: red. 1 number over the limit or
+  not measured." "RED the pattern of the picture changes in place by 0.56 from frame 3580 to 8 film frames
+  later, limit 0.45 (20 frames over it, first 3560)". Largest level step 0.02 at 3562 + 1/2 (limit 1.3),
+  largest pop 1.09 at 3563 (limit 1.2). Change in place 24.0 from 3594 at 1804, 680, shown, not judged.
+  The 20 capture frames over the limit:
+  - 3560 to 3567 + 1/2 (16 frames, 0.454 to 0.532) at 1120 to 1136, 232 to 260: the top limb at the pole. The
+    pose weight is 1 until 3565 (posew.ts), so nothing of the hold's look changes there; the film's star cloud
+    slides in behind the limb while the hold's sky leaves by distance. Earlier measure with my copy of the
+    judge's functions: with the flow of the body alone the pattern reads p99 0.201 against 0.529.
+  - 3580, 3580 + 1/2, 3581 (0.556, 0.498, 0.523) at 1700 to 1724, 1004 to 1060: the tip of the globe's shadow
+    on the ring at the bottom right corner. Cause found in the kept look: the border of the shadow goes from
+    penumbra [0.978, 0.994, 0.006] to penumbraAway [0.95, 1.02, 0.03] with 1 less the pose weight
+    (kept/set.ts soft), and the pose weight falls 0.648 to 0.245 from 3580 to 3588 (distance to the hero pose
+    1.000 to 1.277): the border widens in place, most at the tip (the third number grows along the shadow).
+    A blend by distance, yet a change in place. Cure to try after NAMED: one border for the kept set through
+    the whole dive (the model takes the picture at 3597 to 3603).
+  - 3587 + 1/2 (0.459) at 1268, 828: not looked at yet (the shadow's border on the ring near the globe; the
+    comb along the border that I saw at 3587 to 3590 lies there).
+- THE RETURNING POSE WEIGHT IS CLOSED, MEASURED: frames 3854 and 3859 at draft in the scratch tree are equal
+  to the byte with heroRange [0.6, 1.6] (weight 0.032, 0.065) and with [0.6, 1.4] (weight 0): /tmp/v/r38/a
+  and b, stop hashes 47699bc6 and e9e49ffd. The kept set is not drawn after the dive (set.ts: alone 'model'
+  from the end of the hold's share on), so its pose weight shows nowhere in the rise. Off the list.
+- So the rise's pattern red (3858 + 1/2 to 3863 + 1/2 at 1240 to 1331, 1008 to 1079 by my copy of the judge's
+  map, /tmp/v/r36/pat3859.png) is the model's own: the star cloud shows through the inner ring where the
+  globe's shadow lies on it, and the stars slide against the ring. Cure to try after NAMED: how much of the
+  sky the model lets through the shaded inner ring.
+- DARK SINGLE PIXELS just inside the top limb at the pole, draft, 3570 to 3577 (/tmp/v/r36/dive_limb.png and
+  limb_px.png): 3 to 7 pixels a frame, 25 to 40 percent under their neighbours, other pixels in each frame.
+  The kept set draws there; my change to kept/globe.ts is only the drift taken out. 3573 and 3576 are in the
+  sample of job W for the head and for main, to see if main has them.
+- MAIN is bae3d4d at 06:58 (kit/PROGRESS.md only, status 218 and d202, d203). d202: "a stop's round starts on
+  a named commit whose take check is clean and whose smooth report is green, a third named commit goes into
+  its round as it stands". d203: Venus named with its pictures red (pattern 1.27 and 1.37). Four engine
+  pieces were named 06:40 to 06:49 (Relief.presence off by default; the sky's pixel factor from
+  src/core/frame.ts; two more) and wait for a take: main may move again before I name. I merge the newest
+  main right before the NAMED mail and say which proof ran on which tree.
+- JOB W runs on c8ca94e since 07:07:43 (/tmp/v/r37.log). Looks pushed 07:09.
+
+### 07:10 to 07:17 UTC: the two judged finals against the Builder's PNGs, path and parity on c8ca94e
+
+- MAIN is 09d64d7 at 07:10 (b0b8788 plus kit/PROGRESS.md only). My pushed head 3af4dfc is on c8ca94e (merge of
+  b0b8788); take check 0 files outside my three folders; net size -0.013 MB.
+- FINAL 3465 on c8ca94e: sha256 f4b3a39598b5e761fa1c45c9c3cf19836a621e6aa70a95453c64bbb654a2a963 against the
+  Builder's 21f107a6 (MAIL 546). Changed on purpose. 32.2 percent of the pixels differ, 10.4 percent by more
+  than 1 level, 0.08 percent by more than 4, one pixel by more than 16 (1880, 265). Mean difference 0.325 of
+  255, blurred 0.033. Lit body and rings (33 percent of the frame): 0.61 percent of the pixels, all by 1
+  level, mean level equal 163.331 (the map rigid on the globe, ruling (a)). The rest is the sky: the hold's
+  sky picture without the baked grain (mail 448), sky mean 14.000 against 14.001.
+  Pair /tmp/v/r37/pair_3465.jpg.
+- FINAL 3720 on c8ca94e: sha256 408729eb246dbe02ee7ee02ee0a52d004671faad01f005fdea018cac09bed0d5 against the
+  Builder's 6c4e4e10. Changed on purpose in two places. 66.5 percent of the pixels differ, 12.3 percent by
+  more than 4 levels, 0.8 percent by more than 16; mean 1.306, blurred 0.392.
+  - sky upper left (0 to 700, 0 to 300): mean 11.36 to 12.26, blurred green +0.96, blue +1.52, 14.3 percent
+    over 4 levels: the sky look sky_builder asked for (the warm star cloud gives way to an even field).
+  - globe (1100 to 1800, 200 to 700): mean level equal 139.54, blurred 0.00, 42.5 percent of the pixels over
+    4 levels: detail displaced, main's map still drifts by latitude, mine is rigid on the globe (ruling (a)).
+  - near ring plane (0 to 1920, 760 to 1080): mean difference 0.56, 0.2 percent over 4, level equal 136.10.
+  Pair /tmp/v/r37/pair_3720.jpg, difference times 8 /tmp/v/r37/diff_3720_x8.png. The camera at 3720 is
+  main's to the bit (samecam.ts).
+- PATH on c8ca94e (/tmp/v/r37/smooth_path.md): "VERDICT: green. No number is over its limit." Dive: "Lowest
+  1.00 at frame 3634, limit 0.87; inside the dive itself 1.00 at frame 3630. Largest step from one capture
+  frame to the next 0.02 at frame 3620, shown." Rise: "Lowest 1.00 at frame 3794, limit 0.87; inside the rise
+  itself 1.07 at frame 3810 + 1/2. Largest step from one capture frame to the next 0.10 at frame 3811, shown."
+- PARITY on c8ca94e (/tmp/v/r37/smooth_parity.md, done 07:15): "VERDICT: green. No number is over its limit."
+  Largest mean 2.557 at 3720 (limit 12), coarse 1.044 at 3720 (limit 3.2), block -4.631 at 3720 (limit 12),
+  level -0.960 at 3720 (limit 2.2). The nine rows are the same numbers as on 589fd9a. Main's 4K reds (MAIL
+  538: coarse 3.226 at 3563, block -22.068 at 3720) read 0.694 and -4.631 here.
+- THE DIVE'S TWO LATE PATTERN PLACES by my copy of the judge's map (/tmp/v/r36/pat_dive_two.png):
+  - 3580: a strip along the border of the globe's shadow on the far ring, 1680 to 1779, 936 to 1079 (6112
+    pixels over 0.45, largest 0.686 at 1724, 1060): the border of the shadow widening with the pose weight.
+  - 3587 + 1/2: a half disc on the dark globe just above the near edge of the ring, 1224 to 1331, 780 to 839
+    (4368 pixels, largest 0.714 at 1268, 828). Not explained yet.
+
+### 07:17 to 07:38 UTC: causes of the three pattern reds, the merge of main 8b2c538, the job on the merged head
+
+- GATE on c8ca94e (/tmp/v/r37/gate.log): "PASS G11  every asset has a row or a recipe" and "PASS G15  at most 2
+  sets per frame; finished stops: saturn/web 274 MB, saturn/full 747 MB".
+- MEASURE on c8ca94e (/tmp/v/r37/measure.log): "PASS G5 saturn: 3465 hold invalid 0 coverage 0.514; 3567 dive
+  invalid 0 coverage 0.514; 3720 terrain invalid 0 coverage 0.725; 3866 rise invalid 0 coverage 0.372" and
+  "FAIL G17 saturn: 3465 median 1.054 p25 0.918 over 71 tiles; 3720 median 0.683 p25 0.325 over 62 tiles".
+  The sky look did not move G17 at 3720 (0.685 before it).
+- VITEST on c8ca94e: exit 0, 45 files, 427 tests, the three browser tests with them (they pass when no other
+  render runs beside them).
+- SEAM TOOL on b6df4ba (npx tsx tools/seam.ts --stop saturn): dive "seam 3630 (its own path): the surface view
+  flies 0.00535 of its height a film frame | lowest 0.999 at 3629 + 1/2 | never against the surface view's way
+  | surface view, largest step a film frame 0.001 at 3632 + 1/2 | change of view at 3589"; rise "seam 3810 (its
+  own path): the surface view flies 0.00749 of its height a film frame | lowest 1.079 at 3810 | never against
+  the surface view's way | surface view, largest step a film frame 0.008 at 3809 + 1/2 | change of view at 3852".
+- THE THREE PATTERN REDS HAVE ONE KIND OF CAUSE, MEASURED by my copy of the judge's map and the courses from
+  the path (out/scratch/skydump.ts, /tmp/v/r38/skydump.json): each is a blend by distance or height (plan F
+  holds) whose course is a smooth step, which runs 1.5 times its mean rate in its middle, so 8 film frames
+  there carry too much of it.
+  - Dive 3560 to 3567 + 1/2 (16 capture frames, 0.454 to 0.532), top limb at the pole (1120 to 1136, 232 to
+    260): the hold's sky picture leaves by distance from the hold's path (skim.json sky.hero reach 1.2, power
+    0.75). 0.297 of it goes in the 8 frames from 3560; a straight course (same power) computes 0.203.
+    Hero sky 1.0 at 3540, 0.68 at 3560, 0.383 at 3568, 0 from 3586.
+  - Dive 3580, 3580 + 1/2, 3581 (0.556, 0.498, 0.523), the strip 1680 to 1779, 936 to 1079 at the far tip of
+    the globe's shadow on the ring, and 3587 + 1/2 (0.459), the half disc 1224 to 1331, 780 to 839 where the
+    shadow's border meets the ring's inner edge before the dark globe: the shadow's border goes from penumbra
+    [0.978, 0.994, 0.006] to penumbraAway [0.95, 1.02, 0.03] with 1 less the pose weight (kept/set.ts soft;
+    pose weight 0.648 to 0.245 from 3580 to 3588). penumbraAway is a relic of the kept build; the model's own
+    near shadow is sheet.json shadow.soft [0.006, 0.012], reach [1.25, 1.1, 1]. Cure to test: one border.
+  - Rise 3858 + 1/2 to 3860, 3863, 3863 + 1/2 at 1240 to 1331, 1008 to 1079: the sky seen in the gap between
+    the globe and the inner ring. The stars of the flight come in by height (skim.json sky.lift heights [2.42,
+    2.9377], power 0.5, smooth step; lift 0 at 3853, 1 at 3884): 0.42 of them in the 8 frames at 3860 + 1/2;
+    straight with power 0.4 computes 0.282. (My earlier guess, the star cloud through the shaded ring, is
+    withdrawn: the place is open sky.)
+  - The other course of the same kind: low (air and sky look, heights [0.6, 2.2], power 0.5) falls 1 to 0 from
+    3816 to 3850 in the rise and rises from 3563 in the dive. No red lies on it.
+- THE SCRATCH TREE /home/user/workspace/rt holds the three cures, tsc 0, NOT rendered yet: kept/look.ts
+  penumbraAway equal to penumbra; plan.ts liftAt mix(level, smooth(level), k.round) and heroSky with the same
+  mix; skim.json sky.hero.round 0, sky.lift.power 0.4, sky.lift.round 0. They go into the second named commit
+  only after the whole pictures runs of both moves, parity and path on them.
+- ITEM 9 (the engine's sky dip in the rise) IS NOT SEEN ANY MORE, MEASURED on 589fd9a's rate 2 frames: the
+  sky mean in 1300 to 1900, 0 to 300 rises every frame from 7.36 (3848) to 18.95 (3884), largest step 0.60 at
+  3862.
+- MAIL 572 (07:29): main is 8b2c538 with take C (Relief.presence in src/terrain/relief.ts, the sky's pixel
+  factor swap in src/space/sky.ts, two tests, notes). The Builder measured 115 of 115 drafts and 18 of 18
+  judged finals of main equal with it. Take D (tools and tests only) is announced. "A commit on an older main
+  is taken as long as it touches only your three folders; say which main it stands on." NAMED is due 08:30.
+- THE MERGE OF 8b2c538 IS MADE BY PLUMBING, because main is fetched with --depth 1 only and git merge then
+  refuses ("refusing to merge unrelated histories"; the parent be1de182 is not in my store). It is a true
+  merge here because main's change since b0b8788 touches no file in my three folders (git diff --name-only
+  b0b8788 origin/main). Recipe: a scratch index (GIT_INDEX_FILE), git read-tree MAIN, then for each of my three
+  folders git rm -r -q -f --cached DIR and git read-tree --prefix=DIR/ HEAD:DIR, git write-tree, then git
+  commit-tree TREE -p HEAD -p MAIN, then git merge --ff-only. Checked: 0 files of the tree differ from main
+  outside my folders, 0 files differ from my head inside them, 21 files differ from main in all.
+- MERGED HEAD 086fcbd5900866df54b30c2dba87d4a0686fdb8e (parents b6df4ba and 8b2c538), pushed 07:34: tsc 0,
+  build 0. Net size against main: assets-src/saturn +0.106 MB, public/assets/saturn -0.127 MB,
+  src/stops/saturn +0.015 MB, net -0.006 MB.
+- JOB W was stopped after its two samples (head c8ca94e and main b0b8788, /tmp/v/r37/head and main); the
+  job on the merged head runs from /tmp/v/chain3.sh, log /tmp/v/r39.log, outputs /tmp/v/r39: finals, path,
+  parity, gate, sample, vitest, handover, G13.
+
+### 07:38 to 08:00 UTC: proofs on the merged head, the first NAMED mail, what the second commit shall cure
+
+- FIRST NAMED COMMIT: 2ab7243b7cb5e5e5f741ae6a763952e15a1f5b22 (the notebook commit on the merge 086fcbd of main
+  8b2c538). The NAMED mail went to /root at 07:57 UTC, high, with 10 pictures. Its text is /tmp/v/mail/named.md.
+  The Builder's report on it starts a clock: the second named commit is due within 90 minutes of that report
+  (MAIL 508); the third goes into its round as it stands.
+- MAIL 575 (07:45): main is aaea819b3ec05f04742fdb6f55ccb032327aed47, take D, tools only. "Nothing under src,
+  config, public or package.json changed, so no hash moves and no picture changes; no merge is needed for a
+  named commit". My head stands on 8b2c538 and the mail says so.
+- PROOFS ON 2ab7243 (worktree /home/user/workspace/mainref, outputs /tmp/v/r39):
+  - tsc 0, build 0, vitest exit 0 (47 files, 437 tests).
+  - Take check: 21 files differ from main 8b2c538, 0 outside my three folders.
+  - Net size against main: assets-src/saturn +0.106 MB, public/assets/saturn -0.127 MB, src/stops/saturn
+    +0.015 MB, net -0.006 MB.
+  - Finals: 3465 sha256 f4b3a39598b5e761fa1c45c9c3cf19836a621e6aa70a95453c64bbb654a2a963, 3720 sha256
+    408729eb246dbe02ee7ee02ee0a52d004671faad01f005fdea018cac09bed0d5, both equal to those of c8ca94e, both
+    changed on purpose against the Builder's PNGs of MAIL 546 (pairs /tmp/v/r37/pair_3465.jpg, pair_3720.jpg).
+  - Path: "VERDICT: green. No number is over its limit." The report is the one of c8ca94e line for line.
+  - Parity: "VERDICT: green. No number is over its limit." Largest mean 2.557, coarse 1.044, block -4.631,
+    level -0.960, all at 3720; 3563 coarse 0.694 (main's 4K reds of MAIL 538 were 3.226 and -22.068).
+  - Gate: "PASS G11  every asset has a row or a recipe" and "PASS G15  at most 2 sets per frame; finished
+    stops: saturn/web 274 MB, saturn/full 747 MB".
+  - Handover (draft, sides, flow, path): "saturn.dive side difference at T: pass", "saturn.dive flow gap at T:
+    pass", "saturn.dive every frame: pass", "saturn.rise side difference at T: pass", "saturn.rise flow gap at
+    T: pass", "saturn.rise every frame: pass". Side difference at T in both moves: mean 0, max 1.
+  - G13 (every 6th frame, 08:00): "PASS G13 saturn: 0 of 83 frames over 0.02 soft (every 6th frame); worst
+    frame 3390 0.00%, frame 3396 0.00%, frame 3402 0.00%".
+  - 26 draft frames equal to the byte to those of c8ca94e. Stop hash 47699bc6d1834c03 (the hash of the pictures
+    runs on 589fd9a), engine hash 12ba5366b28777b2.
+  - The pictures of both moves were NOT run again on this head; they stand on 589fd9a with the same stop hash.
+- SAMPLE OF MY HEAD AGAINST MAIN (draft, /tmp/v/r37/head and /tmp/v/r37/main, 26 frames): equal bytes at 3330,
+  3922, 3950, 3959, 3960; 3350 0.01 percent of the pixels; 3370 14 percent; 3389 to 3539 32 to 37 percent, mean
+  0.46 to 0.54 of 255; 3630 to 3720 63 to 66 percent, mean 1.67 to 1.98; 3780 and 3809 are the bend (mean 66.8
+  and 89.9); 3885 to 3900 15 to 20 percent, on the globe (the rigid map) with a faint lattice on the rings
+  (/tmp/v/r39/s3885_head_main_diff.jpg).
+- FORWARD SHARE of the lens' way along its own view (out/scratch/fwd.ts): 1.000 from 3630 to 3729, 0.947 at
+  3740, 0.655 at 3750, 0.153 at 3760, -0.397 at 3770, -0.815 at 3780, -0.974 at 3790, -0.933 at 3808. Height
+  0.581 at 3632, 0.395 at 3720, 0.350 at 3760, 0.4925 at 3808. Speed 9.345e-3 radii a frame at 3720. So the
+  last 70 frames of the surface view do not fly forward: that is the bend d196 asks for, and it is against
+  the brief's "clear forward movement and depth through all 180 frames". Mailed as item 11 for a ruling.
+- DARK SINGLE PIXELS inside the top limb at the pole (draft 3570 to 3577, 3 to 7 a frame): main's 3573 and
+  3576 have them too (/tmp/v/r37/limb_head_main.png). So they come from the kept set, not from my model.
+  Item 14.
+- COURSES OF THE TWO SKY BLENDS, computed from the path (out/scratch/skydump.ts, /tmp/v/r38/skydump.json), the
+  largest share that goes inside 8 film frames:
+  - hero sky (dive): now 0.297 at 3560; straight course, same power 0.75: 0.203 at 3556 + 1/2.
+  - lift (rise), frames 3859 to 3867 and 3863 to 3871: now 0.415 and 0.402; straight with power 0.5: 0.301 and
+    0.276 (largest 0.324 at the start, end rate 0.031 a frame); power 0.45: 0.285 and 0.268; power 0.4: 0.266
+    and 0.258 (end rate 0.047 a frame, a harder stop at 3884).
+- THE OPEN LIST AS MAILED, worst first, old numbers kept: 10 the three pattern reds; 6 G17 at 3720 (the film's
+  shutter at the skim's pace, needs a ruling); 12 pop 1.21 at 3875 (the near ring leaving over the bottom
+  edge, x 720 to 1080); 11 the last 70 frames of the surface view do not fly forward; 1 the globe near the
+  lens 3808 to 3836; 4 stars through the shaded C ring; 2 the near rest at 3884; 13 the rise picks up its
+  speed inside one frame at 3810; 14 dark limb pixels; 5 sawtooth wedge 3630 to 3690; 7 ring tone slides 3840
+  to 3864; 3 the moon cut by the limb 3596 to 3600. 8 and 9 are closed.
+- PLAN FOR THE SECOND NAMED COMMIT (all in the scratch tree /home/user/workspace/rt, tsc 0, not rendered):
+  1. One shadow border: kept/look.ts penumbraAway = penumbra [0.978, 0.994, 0.006]. Check the 3720 draft
+     bytes against /tmp/v/r39/head/f03720.png (the globe's shadow border is out of frame there).
+  2. Hero sky course straight: plan.ts heroSky mix(gone, smooth(gone), k.round), skim.json sky.hero.round 0.
+  3. Lift course straight: plan.ts liftAt mix(level, smooth(level), k.round), sky.lift.round 0, power 0.5 or
+     0.45.
+  Test first with film shutter stills in rt (/tmp/v/job_y.sh DIR FRAMES, half frames allowed) and my copy of
+  the judge's pattern map (/tmp/v/patmap3.py K0 K1 /tmp/v/r38/poses.json OUT, run in mainref, K = 2 x frame).
+  Then copy into the repo, commit locally, run job W with "keepframes dive rise path parity finals gate
+  vitest", check the two finals (3465 must stay f4b3a395..., 3720 must stay 408729eb... unless a cure moves
+  them on purpose), merge the newest main by the plumbing recipe, push whole.
+
+## 24 Nov, 08:00 to 08:50 UTC: after the first NAMED mail, the Builder's report, the second commit
+
+- NAMED 2ab7243b7cb5e5e5f741ae6a763952e15a1f5b22 was mailed at 07:57 (notebook commit 08fae29 on top).
+- MAIL 577 (08:26), the Builder's report on it: drafts, finals, gate, handover, path, parity as I stated. RED:
+  dive pattern 0.56 at 3580 (20 over, first 3560; 0.53 at 3561, "the top of the globe" and "the outer ring edge
+  at the lower right"), rise pop 1.63 at 3895 + 1/2 (11 over, first 3875) and rise pattern 0.50 at 3859 (5
+  over). Wanted: "the ring's fine structure filtered to the pixel at every scale of the rise and of the travel
+  after it", and the two places of the dive "cured or explained with pictures". SECOND COMMIT DUE 09:56 UTC,
+  answer with NAMED and the full sha.
+  RULING 1: d196 stands (the bend after 3720; depth must read in every frame; the camera of 3720 to the byte).
+  So item 11 is ruled: it stays as it is.
+  RULING 2: G17 at 3720 is read with the film's shutter, limit 0.8 stays. "The cure is in the flight: the pose
+  at the middle of 3720's shutter stays, the way the camera travels through it may change, so that it crosses
+  fewer ringlets a frame at 3720". Red means a severe issue in the round. This lifts MAIL 311 for this one
+  purpose (a bent path is allowed, the pace is not: MAIL 298 and plan E still hold).
+- TOOLS FOR THE JUDGE'S OWN NUMBERS (all in /tmp/v, scratch, K = 2 x frame):
+  - rt/out/scratch/rate2.ts and /tmp/v/job_r2.sh TREE DIR SPANS: capture frames at rate 2, named like the
+    judge's (k%06d-r2-draft.png).
+  - /tmp/v/patscan2.py DIR K0 K1 POSES POLAR (cwd mainref): the judge's own pictures() on those frames; POLAR 1
+    is the judge's body (unit sphere), 0.902 the globe as it is drawn. It gives the judge's numbers to the
+    digit on the named commit's frames. Pops are exact from 16 capture frames after K0, and for the last
+    frames of a move's window when K1 is the window's last frame (the judge moves the window inward there).
+  - /tmp/v/leftreg.py POSES K... -- DIR...: what is left without the motion, split by globe, rings, sky near
+    the body, sky beyond.
+- WHAT THE REDS ARE, MEASURED (this corrects two causes of the first NAMED mail):
+  1. Dive, pole, 3560 to 3567 + 1/2 (16 capture frames): NOT the course of the hero sky. The straight course
+     gave 0.539 at 3561 against 0.532. The judge's body (tools/img/smooth.py body()) is the unit sphere; my
+     globe is drawn flattened (fit.json globe.scale [1, 0.902, 1], as in main). At the pole the unit sphere
+     reaches up to 55 px beyond the drawn limb (3561, column 1440), the margin is 20 px, so a strip of sky up to
+     35 px high is judged as body, and in it the stars change (the hold's sky leaves, the flight's stars come
+     in, both by where the lens is). Same frames, same function, only the body flattened by 0.902 along the
+     ring normal: largest 0.288 at 3562 + 1/2, none over. tools/smooth.ts poseOf hands body() the rings and not
+     the globe's scale, so this is not curable in my folders. Picture /tmp/v/r40/mask_pole_3561.png.
+  2. Dive, 3580, 3580 + 1/2, 3581, 3587 + 1/2: the shadow's border widening away from the hero pose, as said.
+     Cured by one border (kept/look.ts penumbraAway = penumbra): 0.556, 0.498, 0.523, 0.459 become 0.216,
+     0.313, 0.197, 0.371.
+  3. Rise pattern, 3858 + 1/2 to 3863 + 1/2: NOT the course of the lift. It is the star cloud seen through
+     the shaded C ring: the shade grew solid only between radius 1.2458 and 1.5. With the shade solid from the
+     ring's inner edge (new sheet.json shadow.solid [1.2458, 1.27], used by the kept set and by the far look
+     alike) the largest pattern of the rise is 0.238 at 3871, none over; the lift's course is untouched.
+  4. Rise pop. 3875 reads 1.194 with the cure of 3 (was 1.21). 3891 to 3896 is the travel leg taking off
+     after its standstill (3885 to 3888): what is left without the motion goes 0.42 (the film's grain, also on
+     the empty sky) to 1.54 inside 8 film frames and the median of the judge's window (3880 + 1/2 to 3896 + 1/2)
+     stays at 0.82. Main's own frames (8b2c538, same window, same function) read 1.43 at 3895 + 1/2 with 5
+     frames over 1.2: red on main too. The ring profile is filtered already (mip chain at 1.2 px of the pixel's
+     radial footprint, kept/look.ts lodBias); twice that width takes the left over at 3895 + 1/2 from 1.519 to
+     1.443, no clumps and no spokes change nothing (1.519, 1.523). Split at 3895 + 1/2: rings 0.47, sky within 8
+     quarter pixels of the body 0.23, sky beyond 0.18, globe 0.12. For 1.2 the part that comes with the motion
+     would have to fall to an eighth. So no filter of mine cures it; it needs a ruling or a gentler take off.
+- TEST A (kept): one border and shadow.solid. Dive, judge's body: 16 over, all at the pole (0.528 at 3561);
+  elsewhere the largest is 0.395 at 3592 + 1/2 (frames 3552 to 3607 measured). Flattened body: largest 0.387
+  at 3587 + 1/2, none over. Rise (3852 to 3896 + 1/2 measured): pattern 0.238, pops as in 4. The hold's draft
+  frame 3535 is equal to the byte to the named commit's (the shade is solid only in the dive: uSolid.x is 0
+  in the hold; the border is the hero's at the hero pose).
+- DROPPED: the straight hero sky course and the straight lift course of the plan above (no effect on the
+  measure, and the lift's straight course made a level step of 0.10 at 3853 + 1/2).
+- git push failed with "could not read Username" between 08:21 and 08:26 (three looks pushes), then worked
+  again without any change on my side.
+
+## 24 Nov, 08:50 to 09:50 UTC: proofs of the second commit, MAILS 596, 598 and 613, the plan for the flight (G17)
+
+- SECOND COMMIT: 1e4bfd4e46d236e0032fc1f045cc954c58511d41 (test A: one border for the globe's shadow, the
+  shaded sheet solid from its inner edge; kept/look.ts, kept/rings.ts, sheet.ts, sheet.json). The camera is
+  untouched. Proofs in /tmp/v/r41, all on that sha (job_w.sh and job_x.sh in the mainref worktree):
+  - path green (the numbers of 2ab7243: dive lowest 1.00 at 3634, rise 1.00 at 3794; steps 0.066, 0.067,
+    0.075, 0.077).
+  - parity green: mean 2.557, coarse 1.044, block -4.631, level -0.960, all at 3720 (the numbers of 2ab7243).
+  - finals equal to the byte to 2ab7243's: 3465 f4b3a39598b5e761fa1c45c9c3cf19836a621e6aa70a95453c64bbb654a2a963,
+    3720 408729eb246dbe02ee7ee02ee0a52d004671faad01f005fdea018cac09bed0d5.
+  - gate: "PASS G11  every asset has a row or a recipe", "PASS G15  at most 2 sets per frame; finished stops:
+    saturn/web 274 MB, saturn/full 747 MB". tsc 0, build 0, vitest exit 0, 437 tests in 47 files.
+  - G17 by the measure's own tools/measure/g17.py on nograin finals of this head (npm run still, tier final,
+    diag nograin): 3720 median 0.683, p25 0.325 over 62 tiles (worst [11,5] 0.0095, [10,5] 0.038, [0,6] 0.052,
+    [0,5] 0.058, [1,7] 0.062); 3465 median 1.054, p25 0.918 over 71 tiles. The numbers of the machines on 2ab7243.
+  - 26 draft frames against 2ab7243's (/tmp/v/r39/head): equal to the byte 3330 to 3539 (approach, hold),
+    3720, 3922 to 3960. Changed: dive 3573 (3.0 percent of the pixels), 3576; surface view 3630 (1.4 percent,
+    x 1407 to 1919), 3660 (0.66), 3780 (12 px by 1 level), 3809 (0.53): the shaded far ring right of the globe
+    is solid now where the sky showed through it; rise 3842, 3852, 3859 (2.0 to 2.7); way out 3885, 3890
+    (4.0), 3900 (2.7): the shade of the ring solid with one crisp border, the star cloud no longer shows
+    through it. Pairs /tmp/v/r41/pair_*.png (in the looks).
+- THE JUDGE'S OWN RISE PICTURES ON 1e4bfd4 (npm run smooth, pictures, rise; 198 frames, 15 minutes):
+  red, 2 numbers. "RED pop score 1.59 from frame 3895 + 1/2 to the next, limit 1.2 (11 frames over it, first
+  3891)": all 11 are 3891 to 3896, the travel's take off; inside the rise the largest is 1.19 (3873 + 1/2 to
+  3875). "RED the pattern of the picture changes in place by 0.55 from frame 3807 + 1/2 to 8 film frames later,
+  limit 0.45": NEW, one capture frame (3807 reads 0.34, 3808 0.30), most at pixel 1872, 608. On 2ab7243 the
+  same place read 0.41 and 0.448 (3807 + 1/2, 3808), so it stood 0.002 under the limit and I never saw it: MY
+  SCAN OF TEST A BEGAN AT 3852 AND THE JUDGE'S WINDOW BEGINS AT 3798. Lesson: scan the judge's whole window
+  (dive 3528 to 3641 + 1/2, rise 3798 to 3896 + 1/2), not the frames of the old reds.
+  What is there (/tmp/v/r41/rise3807_edge.png): at 3807 the lit far ring beyond the globe's shadow comes into
+  the frame at the right edge (x 1915, y 540 to 565), in the last frames of the bend, and grows to 80 px by
+  3815 + 1/2; between it and the globe's dark limb lies the shaded ring, solid and without detail in this
+  commit, with a crisp border. My copy of the judge's map (/tmp/v/patmap3.py 7615 7631, the same 0.55 at
+  1872, 608) shows the patch over the limit: x 1816 to 1919, y 548 to 755, 13072 px, on the night side of the
+  globe round the place where the ring comes out from behind the limb (/tmp/v/r41/patmap_3807h.png). Reading,
+  not proven by a variant: the night side has no detail of its own, so within the 40 px of the measure the
+  pattern there is that of the growing ring, and the crisp border of this commit lets the ring come out
+  brighter than the wide border of 2ab7243 did. The old red at 3859 reads 0.11 (3858 to 3863 +
+  1/2: 0.11 to 0.17): cured by the judge's own run. Largest pattern elsewhere 0.30 at 3815 + 1/2.
+- THE JUDGE'S OWN DIVE PICTURES ON 1e4bfd4: still running when this block was written (228 frames); their
+  lines go into the NAMED mail and into the next block.
+- The judge's body mask is the unit sphere less a margin of 20 px at its edge (cv2.erode, tools/img/smooth.py
+  line 105). On a globe flattened to 0.902 that margin does not keep it inside the limb at the pole.
+- MAIL 596 (09:05): a level check for plate pyramids (assets-src/shared/globe-levels.py on main 81d568a7);
+  asked: run it on every pyramid the dive and the rise show and put its lines into the NAMED mail. MEASURED in
+  the code: Saturn's globe has no pyramid. One wrap (wrap-color.jpg, 8192 by 4096) is the only picture of the
+  globe in every frame, in the kept set and in the model alike; the close patch (close-globe.jpg) is loaded
+  by the kept set and its weight is uClose, which is 0 at every frame (skim.json handover.kept.close 0,
+  kept/globe.ts pw). The rings are a radial profile (function and table), no plates. So there is no pair to
+  judge; said so in NAMED.
+- MAIL 598 (09:05): on 2ab7243 G5 passes, G13 passes on all 495 frames, G17 fails at 3720 (median 0.683, p25
+  0.325 over 62 tiles); warm list and counts green. Asked in the second NAMED: 3720 beside the approved image
+  with the G17 lines by my own run, and the reds of the dive and the rise as they stand.
+- MAIL 613 (09:22): the engine's default sky weight (skyFrames 24) and place weight (placeFrames 12) run by the
+  clock; "Saturn: none". Owed in NAMED, one line: which hooks the stop sets and the frames in which anything
+  of mine still reads the time in a dive or a rise. Mine: plan.ts handover dive and rise both picture false
+  and skyFrames 0; the hold's sky leaves by the distance of the lens from the hold's path (plan.heroSky), the
+  flight's stars come in by height (plan.skyLiftAt), the sky gain and the glow by height (plan.lowAt), the
+  kept set gives way to the model by height, the shade turns solid by the distance to the globe. Frames that
+  read the time: none (the orbits of the ring and the grains run in their own time).
+- 09:34 the named sha was pushed alone (MAIL 621: one sandbox lost its GitHub login; push while it works, a
+  bundle attached to the mail if it does not: git bundle create NAME.bundle origin/main..HEAD).
+- THE SHADE BETWEEN HOLD AND DIVE (item 15, new on the list): uSolid.x = smooth(dove / 0.116) with dove = how
+  much nearer to the globe the lens is than at the end of the hold. The lens is 5.476 radii from the centre at
+  3540 and 5.360 at about 3552, so the shaded ring turns solid over 3540 to 3552. It did so before this commit
+  from radius 1.5 on; now from the inner edge on, so the C ring's shade joins. Looked at once
+  (/tmp/v/r41/shade_3538_3556.png, every second frame, x 1300 to 1920, y 520 to 1000): through 3546 the shade
+  is the hold's dark wedge with its faint streak and no edge at the ring's inner end; from 3548 to 3556 the
+  stars in the gap between globe and ring come up and the inner edge of the shaded ring shows. So stars come
+  in there by distance; open, not judged frame by frame at full size yet.
+- G17 BY TILE (/tmp/v/g17map.py APPROVED FILM: the measure's own g17.py, the ratio of every kept tile). On
+  the nograin final of 3720: 27 of the 62 tiles are at or over 0.8, the median needs 31 or 32. Rows top to
+  bottom, columns left to right:
+    row 0:  .     .     .     .     .     .     .     .    0.55  0.48   .     .
+    row 1:  .     .     .    0.42   .    0.27  0.59  0.79   .     .     .     .
+    row 2:  .    2.20  2.80  3.29   .     .    0.76   .     .     .     .     .
+    row 3: 1.01  1.03  0.37  0.97  1.28  2.74  0.69   .     .     .     .     .
+    row 4: 0.13  0.43  0.25  0.67  1.20  0.90  0.66  0.19  0.16   .     .     .
+    row 5: 0.06  0.12  0.68  0.32  0.64  1.40  1.95  1.76  1.22  0.43  0.04  0.01
+    row 6: 0.05  0.07  0.31  1.14  0.34  0.57  1.04  1.95  3.03  2.80  2.73  1.70
+    row 7: 0.20  0.06  0.07  0.41  1.43  0.89  0.36  0.75  1.35  2.40  2.53  3.26
+  The right end of row 5 is layout (the approved has lit ring there, the true world has the globe's shadow on
+  the ring); the left ends of rows 4 to 7 are the near ring under the shutter.
+- THE FLIGHT FOR G17 (ruling 2 of MAIL 577), PLAN AND FIRST NUMBERS (scratch tree rt, nothing committed):
+  - out/scratch/ringway.ts FROM TO STEP: the way of the lens over the ring plane by frame (foot, height,
+    speed, the part across the ringlets, the heading off the inward radial and off the view axis).
+  - Now: at 3720 the lens goes 9.205e-3 radii a frame over the plane, 8.521e-3 of it across the ringlets (the
+    heading is the view axis, 22.2 degrees off the inward radial).
+  - The straight skim can head left of its view axis with numbers alone: path.forward 1.7 cos d, path.side
+    -1.7 sin d keeps the speed. d = 28 degrees: heading 50.2 degrees off the radial, across 5.889e-3 (0.69 of
+    now). The pose at 3720 stays; the start of the skim (3630) moves to foot 3.331 (3.550 now).
+  - The bend after 3720 stays a turn to the RIGHT (path.bend.turnDeg 190 + d = 218): the heading swings back
+    through the view axis and on as now, the end of the skim is where it is now (3810: foot 2.515, height
+    0.5028, heading 171.7 off inward; now 2.532, 0.5028, 174.5). A turn to the left (turnDeg -130) was tried on
+    paper: the globe would drift right through the whole skim and swing back in the rise. Dropped.
+  - Globe centre in the picture with d = 28: 1143 px at 3630, 1448 at 3720, 1535 at 3750, 1353 at 3810 (now
+    1303, 1449, 1481 at 3740, 1290).
+  - The paces of the dive must be found again (the tool's path is red with the old ones): opt7.ts dive 400 1
+    gives hard 0.831 (the old dive stands at 0.832): reach [0.353, 0.802] rounds [0.03, 0.287, 0.112, 0.118];
+    climb [0.737, 0.791], [0.032, 0.275, 0.315, 0.048]; round [0.558, 0.733], [0.068, 0.305, 0.148, 0.061]; view
+    [0.492, 0.527], [0.191, 0.093, 0.085, 0.033] (/tmp/v/r42/opt_dive_d28.log). The rise: not searched yet.
+  - NEXT: G17 by render for d = 28, 34 (final nograin 3720, then g17map.py), choose d, search the paces of
+    both moves, then every proof again over the judge's whole windows (the judged dive frame 3567 and every
+    frame of the skim but 3720's pose change), and the place 3807 at the right edge with it.
+- SECOND NAMED MAILED 09:45 UTC (due 09:56): NAMED 1e4bfd4e46d236e0032fc1f045cc954c58511d41, the text is
+  /tmp/v/mail/named2_sent.md, ten pictures attached (3720 beside approved, gapA_dive, gapA_rise, mask_pole_3561,
+  pole_frames, rise3807_edge, patmap_3807h, pair_3630, pair_3885, shade_3538_3556). Looks pushed 09:45:53.
+- THE JUDGE'S DIVE PICTURES ON 1e4bfd4 (/tmp/v/r41/saturn-dive.md, done 09:42:40, window 3528 to 3641, 228 draft
+  frames at rate 2): "VERDICT: red. 1 number over the limit or not measured." and "RED the pattern of the
+  picture changes in place by 0.53 from frame 3561 to 8 film frames later, limit 0.45 (16 frames over it,
+  first 3560)". Largest pop 1.09 at 3563, largest level step 0.02 at 3562 + 1/2.
+  - The red of 3580 is cured by the judge too: 0.22 at 3580, 0.31 at 3580 + 1/2, 0.20 at 3581, 0.37 at 3587 +
+    1/2 (were 0.556, 0.498, 0.523, 0.459).
+  - The pole stands: over from 3560 to 3567 + 1/2. The pattern number climbs evenly from 0.03 at 3540 to 0.44
+    at 3559 + 1/2, then 0.48 to 0.53 to 0.47, and falls from 0.44 at 3568 and 3568 + 1/2 (0.42 at 3569, 0.38 at
+    3569 + 1/2). The judge's own change picture shows it at the top of the globe only (the strip of sky judged
+    as body, see the pole block above).
+  - THIN MARGINS, named in the mail: 0.44 at 3559 + 1/2 and at 3568 (the same strip), and 0.40 at 3592 + 1/2
+    (3591 0.29, 3591 + 1/2 0.33, 3592 0.37, 3593 0.30: the judge's picture of 3593 shows it at the outer ring
+    edge at the lower right, the place of the old red of 3580). My own scan with the flattened body had 0.387
+    at 3587 + 1/2 as its largest; the judge's body reads 0.40 at 3592 + 1/2.
+  - Nothing new in 3528 to 3551 (0.00 to 0.23, climbing with the hold's sky share) nor in 3608 to 3641.
+- CHECKED AGAIN before the mail: main 8b2c538's own frames 3889 to 3896 by the judge's function
+  (patscan2.py on /tmp/v/r40/smooth_main): pop 1.21 at 3891 + 1/2, 1.24 at 3892, 1.24 at 3895, 1.43 at 3895 +
+  1/2, 1.40 at 3896: 5 over 1.2 in the travel's take off, so that red is on main without my stop's change.
+- NEXT (the order): the flight for G17 in rt (render d = 28 and 34 at final nograin 3720, g17map.py, choose),
+  the paces of the rise, then the judge's WHOLE windows on it (dive 3528 to 3641 + 1/2, rise 3798 to 3896 +
+  1/2) with the 3807 place at the right edge, path, parity, gate, tests; mail PRE with its sha (MAIL 545).
+- THE FLIGHT FOR G17, MEASURED AND COMMITTED LOCALLY (10:01 UTC): d07e2b453fc32afdab00ff3ec3b084e232ff452f on
+  4f21127 (only src/stops/saturn/skim.json differs from the second NAMED 1e4bfd4 besides the notebook).
+  - G17 by render in rt (final nograin 3720, the film's shutter, /tmp/v/job_g.sh D, tile maps by g17map.py):
+    d = 0: median 0.683, p25 0.325, 27 of 62 tiles at or over 0.8; d = 28: median 0.945, p25 0.477, 35 tiles;
+    d = 40: median 1.095, p25 0.566, 36 tiles. The tiles that stay under 0.8 at d = 28 lie on the globe and on
+    the far horizon (0.79, 0.75, 0.67, 0.65, 0.59, 0.56, 0.48, 0.42, 0.27) and do not move with the angle.
+  - CHOSEN d = 28: the larger forward part of the motion (the brief wants clear forward movement) with a margin
+    of 0.145 over the limit. path.forward 1.501, path.side -0.7981, path.bend.turnDeg 218.
+  - The pose at 3720.25 (the middle of the shutter of 3720) is equal to the old one to 8.9e-16 (pose3720.ts in
+    rt against repo before the copy); 3720.0 and 3720.5 differ by 1.06e-3, as they must: the way through it is
+    another. The DRAFT still of 3720 is taken at 3720.0 and so differs (560270 px, largest 113, mean 1.13); the
+    FINAL 3720 changes on purpose (less smear across the ringlets). Say both in the mail.
+  - Paces of the dive: as in the block above. Paces of the rise: HI=0.6 npx tsx out/scratch/opt7.ts rise 500 2
+    (log /tmp/v/r42/opt_rise_d28b.log, hard 0.984; with the default HI 0.4 it stayed red at 1.006): reach peak
+    [0.347, 0.54] rounds [0.534, 0.515, 0.085, 0.031]; climb [0.261, 0.261], [0.592, 0.557, 0.03, 0.6]; round
+    [0.298, 0.404], [0.321, 0.183, 0.103, 0.436]; view [0.417, 0.468], [0.03, 0.068, 0.117, 0.223].
+  - Path proof (rt and again in mainref on d07e2b4, /tmp/v/r43/smooth_path.md): "VERDICT: green. No number is
+    over its limit." Dive steps: rate 0.066 at 3545, turn 0.062 at 3576, speed 0.058 over 8 at 3574. Rise: rate
+    0.074 at 3811 + 1/2, turn 0.071 at 3868, speed 0.079 over 8 at 3883 (limit 0.08, THIN), seam in 0.071.
+    Seams: dive lowest 1.00 at 3631 + 1/2 (limit 0.87); rise lowest 1.00 at 3794, inside the rise 1.07 at 3810
+    + 1/2, largest step from one capture frame to the next 0.10 at 3811.
+  - Way of the lens (ringway.ts 3630 3810 15): 3630 foot 3.331, h 0.5866, across 1.094e-2; 3720 foot 2.589, h
+    0.3955, across 5.889e-3 (was 8.521e-3), heading 50.2 degrees off inward, 28 off the view; 3750 foot 2.390;
+    lowest h 0.3519 at 3765; 3780 foot 2.276; 3795 foot 2.375, h 0.4235; 3810 foot 2.515, h 0.5028.
+  - Draft sheets of it looked at: /tmp/v/r42/d28_sheet.png (3567 to 3866), d28b_sheet_a.png (3716 to 3726
+    consecutive), d28b_sheet_b.png (every second 3728 to 3760): sound at sheet size, no jump. The lower left of
+    the final 3720 at full size beside the approved (/tmp/v/r42/g17_pair_lowleft.png): the ringlets are crisp
+    lines now where the named commit smears them.
+  - Looks pushed 10:03 (5 new). RUNNING since 10:01: /tmp/v/job_w.sh d07e2b4 /tmp/v/r43 "path rise dive g17
+    parity gate vitest finals head" (log /tmp/v/r43w.log).
+  - STILL TO DO ON IT: read the judge's rise and dive reports over the WHOLE windows; the entry of the far ring
+    beside the night limb at the right frame edge (3807 + 1/2 on the old flight, about 3812 to 3820 on this
+    one); then mail PRE (or the third NAMED when the report on 1e4bfd4 names a due time).
+- MAIL 624 (10:05 UTC), receipt of the second NAMED 1e4bfd4. Proof tree c546f20f on builder/proof-sn2 (main
+  cd8355dd with my folders). The verdict mail comes when its handover, measure and gate parts are in; my 90
+  minutes for the THIRD commit run from that mail. Ruled:
+  1. Dive pattern 0.53 at 3561 (body mask): a bug of the judge, with harness_builder (MAIL 623). "Send
+     harness_builder your patch for body() directly. Do not spend your third commit on this number until its
+     answer is in." DONE 10:10: /tmp/v/patch/body.patch (poseOf hands fit.globe when its scale is not 1, 1, 1;
+     body() takes ray and camera into the globe's frame over its scale; old lines unchanged with no globe)
+     mailed to /root/harness_builder with mask_pole_3561.png. Checked: applies on main da59c441; 0 px differ
+     from main's body with no globe named and 0 px from my scan's flattened body with it, on 12 poses.
+  2. Rise pop 1.59 at 3895 + 1/2: the rest between rise and travel; the travel's carry (5d54f36c on
+     agent/travel-carry) is in its engine check; once on main "a rise may end with speed and the travel takes
+     it over". The Builder sends the sha and assets-src/travel/NOTES.md. "Until then: nothing to do on it."
+  3. Rise pattern 0.55 at 3807 + 1/2: "yours. Say what changes there."
+  G17: the flight that heads 28 degrees left is ALLOWED as the cure of a red measure: "send the PRE with 3720
+  at the final tier beside the approved close image and the G17 number. It must stay one flight (dive, surface
+  view, rise) and the seam lines must stay green."
+  "main is now da59c441 (the relief fix cd8355dd and the slice tool). Merge it."
+- DONE 10:07: cff62ce (note of the bend reworded: the way ends on the heading it ended on; at 3810 the new
+  way stands 0.12 radii from the old), then MERGE of main da59c441: head
+  68b45619c9b8a49e33e17639a44504a39e29e2a7, pushed. 21 files differ from that main, all in my folders. The
+  merge brings src/terrain/relief.ts (my stop does not import it), tools (smooth.py: slices only, the whole
+  window run is the same function), tests. The proof job on d07e2b4 was stopped at 57 rise frames (kept in
+  /tmp/v/r43/rise_part) and started again on the merged head: /tmp/v/job_w.sh 68b4561 /tmp/v/r44 "path g17
+  finals gate vitest rise parity dive head" (log /tmp/v/r44w.log).
+  - Path on 68b4561: "VERDICT: green. No number is over its limit." (/tmp/v/r44/smooth_path.md), the same
+    numbers as in rt. THIN: rise speed step 0.079 over 8 at 3883 at rate 2 (0.078 at whole frames), limit 0.08.
+  - Partial scan of the new flight's rise (patscan2.py on /tmp/v/r43/rise_part, k 7596 to 7652, the judge's
+    body, poses /tmp/v/r43/poses_all.json = new flight, all k 7056 to 7800): 3798 to 3818 largest pattern
+    0.211 at 3811 + 1/2; the place moves to the right frame edge at 3817 (0.155, 0.153, 0.183 at [1888 to 1896,
+    532 to 552]): the entry of the far ring beside the night limb is at about 3817 on this flight. Numbers
+    past 3818 need the whole window.
+- PRE MAILED 10:30 UTC: PRE 68b45619c9b8a49e33e17639a44504a39e29e2a7 (text /tmp/v/mail/pre3_sent.md; three
+  pictures: /tmp/v/r44/3720_beside_approved.png, /tmp/v/r42/g17_pair_lowleft.png,
+  /tmp/v/r43/edge_new_3810_3826.png). Proven on the sha before the mail (all in /tmp/v/r44):
+  - measure, as printed: "PASS G5 saturn: 3465 hold invalid 0 coverage 0.514; 3567 dive invalid 0 coverage
+    0.600; 3720 terrain invalid 0 coverage 0.725; 3866 rise invalid 0 coverage 0.384" and "PASS G17 saturn:
+    3465 median 1.054 p25 0.918 over 71 tiles; 3720 median 0.945 p25 0.477 over 62 tiles". The measure's own
+    nograin final of 3720 is to the byte the one rendered in rt for d = 28 (sha256 250bab4c).
+  - finals: 3465 sha256 f4b3a39598b5e761fa1c45c9c3cf19836a621e6aa70a95453c64bbb654a2a963 (equal to the byte);
+    3720 sha256 33bb2086f66838b044eb2cb0fbba49ae51dd2f35fe6486186b885c1e466617b7 (was 408729eb, changes on
+    purpose). Pose at 3720.25 equal to the old one to 8.9e-16 (pose3720.ts on the head against the old file).
+  - gate: "PASS G11  every asset has a row or a recipe" and "PASS G15  at most 2 sets per frame; finished
+    stops: saturn/web 274 MB, saturn/full 747 MB". tsc exit 0. vitest exit 0 (455 tests, 48 files).
+  - net size against main da59c441: plus 0.028 MB at 68b4561, plus 0.031 at the head b5d773a.
+  - NOT in the PRE, still running at 10:30: rise pictures, parity, dive pictures, head sample. Handover check
+    not started (run after the job: job_w.sh 68b4561 /tmp/v/r44 "handover keepframes").
+- THE ENTRY OF THE FAR RING ON THE NEW FLIGHT (looked at /tmp/v/r43/edge_new_3810_3826.png, the right 420 px
+  of 3810, 3813, 3815, 3817, 3819, 3821, 3823, 3826): from 3810 the sky comes in at the top right beside the
+  dark limb; the lit ring comes out from behind the limb at 3819 at the frame edge, y about 660 to 720, and
+  widens. The judge's pattern at such a place (read in tools/img/smooth.py pattern()): frame i has the thin
+  bright sliver, its band pass halo reaches about 80 px into the dark globe; the later frame carried back has
+  the globe's own night side there; the correlation falls to 0 in the halo; the number is the 99th
+  percentile over the judged pixels, so it turns on whether the halo is more than 1 percent of them. At 3817
+  the judged share is 0.27 of the frame (0.62 at 3802), so 1 percent is a smaller patch than on the old
+  flight: this place may read worse. The judge's whole rise window decides.
+
+### 10:30 to 10:50 UTC: the rise's pictures on the PRE, MAIL 638, a correction
+
+- HANDOVER PATH on 68b4561 (10:33, /tmp/v/r44/handover_path.log): "saturn.dive every frame: pass",
+  "saturn.rise every frame: pass". The handover's picture parts (sides, flow) are not run yet.
+- RISE PICTURES on 68b4561, the judge's whole window 3798 to 3896 + 1/2 (/tmp/v/r44/saturn-rise.md):
+  "VERDICT: red. 1 number over the limit or not measured." "RED pop score 1.59 from frame 3895 + 1/2 to the
+  next, limit 1.2 (11 frames over it, first 3891)": the travel's take off after its rest (ruled in MAIL 624:
+  nothing to do until the carry is on main). Inside the rise the largest pop is 1.17 at 3873 and 3873 + 1/2.
+  "Largest change of the pattern alone: 0.35 from frame 3871 to 8 film frames later, most at pixel 1304, 792
+  ..., limit 0.45." GREEN: the old red of 3807 + 1/2 (0.55) is gone on this flight; the entry of the far ring
+  reads 0.21 at 3818 + 1/2. Largest level step 0.05 at 3896 (limit 1.3). Change in place 30.1 from 3868,
+  shown. Ground beside it: change 11.8, pattern 0.16.
+  - Looked at: rise_a (3798 to 3813), rise_b (3816 to 3840), rise_c (3844 to 3884), rise_d (3885 to 3895 +
+    1/2), 3828 and 3866 at full size, the judge's changes panel. Nothing new: the ring comes out behind the
+    night limb at 3819, the moon rises over the limb at 3836, 3866 is rich; the rest 3885 to 3888 and the
+    take off stand as before. Looks pushed 10:48.
+- MAIL 638 (10:45 UTC). PRE 68b4561 received: proof tree e79f126d1e68587958f48228b26c239c8d6dc141 on
+  builder/proof-sn3 (main 1c3da4b2 with my three folders, 21 files differ inside them, none outside), queued
+  behind about 110 jobs (sn3 01 to 10 engine drafts, 11 finals, 12 handover, 13 measure, 15 gate; ss3 01 dive
+  pictures, 02 rise, 03 path place parity, 04 warm list and counts). "If your NAMED differs from the PRE by
+  notes only, give the tree hashes of src/stops/saturn and public/assets/saturn of both in NAMED and the PRE's
+  results stand for it; nothing runs twice." My 3720_beside_approved.png goes to the critics as it is.
+  The machines on 1e4bfd4 (proof c546f20f): 102 of 115 drafts keep main's bytes, 11 differ inside dive,
+  surface view and rise, 2 outside (3352, 3465); finals 3465 and 3720 differ from the reference finals; G13
+  pass (0 of 495 frames over 0.02 soft), G5 pass, G17 FAIL 0.683; G11, G15 pass, tsc 0, 449 tests; smooth
+  path, place, parity green; dive pictures red (pattern 0.53 at 3561, 16 capture frames over, first 3560);
+  rise pictures red (pop 1.59 at 3895 + 1/2, pattern 0.55 at 3807 + 1/2).
+  "DUE: your third NAMED 20 minutes after the PRE's numbers reach you, and at 13:00 UTC at the latest with
+  whatever is back by then. It goes into Saturn's round as it stands." "No answer needed."
+- CORRECTION MAILED 10:47 (low priority): MAIL 638 read my PRE's "3465: equal to the byte" as against the
+  reference PNG of MAIL 546. It was against my own commit 1e4bfd4. 3465 at final is sha256 f4b3a395 on
+  2ab7243, 1e4bfd4 and 68b4561; the reference is 21f107a6; measured again now: 32.2 percent of the pixels
+  differ, 10.3 percent by more than 1 level, 0.08 percent by more than 4, largest 22, mean 0.325 of 255
+  (0.77 on the dark sky, 0.09 on the lit parts): the hold's sky without the baked grain (mail 448) and the
+  map rigid on the globe (ruling (a)), as named in the first NAMED, item (d). LESSON: say against WHAT a
+  frame is equal, every time.
+- MAIN IS 1c3da4b2 now (not asked to merge; read only): 02249f1 adds the REST LINE to the path part of the
+  smooth report (tools/smooth/path.ts judgeLeave, camera.ts sampleLeave): at the seam from a rise into its
+  travel, reachFrames film frames to each side, the lowest speed of the fastest point of the body's edge
+  (px a film frame, from the path alone) over the smaller of that speed at the two ends of the window;
+  "Judged against smooth.path.minLeave once the config has it; shown until then." kit/PROGRESS.md d211 (11):
+  "A rise and the travel after it are one flight: through the seam the speed falls once and rises once and
+  never comes to rest." The travel's carry is proven, its take is next; then a limit for the rest line.
+  For my rise that is items 2 and 12: it ends near rest at 3884 by its own pace. Nothing to do until the
+  Builder sends the carry's sha (MAIL 624).
+
+### 10:50 to 11:30 UTC: the PRE proven whole here, the carry on main, a rise that ends with speed
+
+- THE PRE 68b4561 IS PROVEN WHOLE HERE (job done 11:11, all in /tmp/v/r44) but for the handover's picture
+  parts:
+  - parity (smooth_parity.md): "VERDICT: green. No number is over its limit." mean 2.785 at 3720 (limit 12),
+    coarse 1.257 at 3720 (3.2), block level -6.722 at 3848 (12), level -1.125 at 3720 (2.2).
+  - dive pictures (saturn-dive.md, the judge's whole window): "VERDICT: green. No number is over its limit."
+    "Largest level step: 0.01 at frame 3576 ..., limit 1.3." "Largest pop score: 1.04 from frame 3578 to the
+    next, limit 1.2." "Largest change of the pattern alone: 0.41 from frame 3565 to 8 film frames later, most
+    at pixel 1100, 180 ..., limit 0.45." (at the pole, the judge's round body; thin). Change in place 15.7
+    from 3606 + 1/2, shown. Sheets dive_a to dive_d, bend.png (the owed sheet 3562 to 3588), shade.png (item
+    15) and the changes panel looked at: continuous; the moon goes behind the limb at about 3610 to 3614.
+  - head sample against 1e4bfd4 (/tmp/v/r41/head): 3330, 3350, 3370, 3389, 3390, 3420, 3465, 3510, 3539,
+    3885, 3890, 3900, 3922, 3950, 3959, 3960 equal to the byte; 3573, 3576, 3630, 3660, 3720, 3780, 3809,
+    3842, 3852, 3859 differ (inside the dive, the surface view and the rise).
+- MAIN IS bdd47cf NOW, MERGED 11:21 (5863ae0). 5420365 on it is the take of the travel's carry
+  (travel_builder 5d54f36c), status 229: "the carry is on main". The interface (assets-src/travel/NOTES.md):
+  place as today on riseEnd; a stated speed above the drift along the rise's own line; the rise may end in the
+  middle of its brake (the travel carries the acceleration on); it does not speed up at the end nor switch
+  its law in the last 1/300 s; turn of the sky and vfov at rest as today; eyeShot('rise', t, 'orbit') valid
+  to the end. film.ts carryOf(i): one sided velocity at the rise's end minus the exit's drift, and the
+  acceleration, h = 1/600 s; under 0.02 radii a second no carry; the carried speed decays over 0.4 s.
+  kit d216: smooth.path.minLeave is set once the seven rest lines are read from this main.
+- THE RISE ENDS WITH SPEED NOW (items 2 and 12, MAIL 624 ruling 2). Tried in the scratch tree ct first.
+  - plan.ts law(..., gain): the end rate of the three measures of the place (reach, climb, round) is the way
+    out's own rate times gain; rising() gives 1 + handover.rise.carry / driftSpeed. The place at the end is
+    the same; the turn of the camera and the field of view arrive at rest as before. The dive is untouched
+    (gain 1).
+  - skim.json handover.rise.carry 2.2 (planet radii a second over the drift) and the four paces of the rise
+    fitted again (out/scratch/opt7.ts with the rest line and the brake at the end among its aims): reach peak
+    [0.438, 0.605] round [0.391, 0.375, 0.232, 0]; climb [0.331, 0.331] / [0.343, 0.362, 0.076, 0.397]; round
+    [0.4, 0.405] / [0.237, 0.183, 0.131, 0.4]; view [0.421, 0.423] / [0.03, 0.039, 0.105, 0.255].
+  - skim.json sky.lift.power 0.5 to 1. With the old power the level of the sky (the flight's stars by the
+    height) ran evenly over the frames only because the lens came to rest; with speed left at the end it
+    stopped with a slope at 3885: the judge read a level step 0.21 at 3885 on the first trial (limit 1.3) and
+    the level of the right part of the frame rose by 0.7 a frame up to 3885 and was flat after. With the
+    power 1 the level is a smooth step of the height itself: the same part now rises by 0.65, 0.54, 0.35,
+    0.10, 0.00 a frame from 3882 to 3886.
+  - MEASURED in the repo on the merge (path, 11:25): "VERDICT: green. No number is over its limit." Rest
+    line: "lowest 3.36 at frame 3889, against 8.96 at frame 3873 and 34.77 at frame 3896 + 1/2 at the ends of
+    the window. The lowest is 0.375 of the slower end, no limit yet, shown and not judged." (the PRE: 0.026.)
+    Steps at rate 2: rate 0.046 at 3815 + 1/2, turn 0.073 at 3838 + 1/2, speed 0.070 over 8 at 3839 + 1/2
+    (limit 0.08; the PRE: 0.074, 0.071, 0.079). Seam at 3810: "Lowest 1.00 at frame 3794, limit 0.87; inside
+    the rise itself 1.01 at frame 3810 + 1/2. Largest step from one capture frame to the next 0.05 at frame
+    3815, shown."
+  - The speed of the lens through the seam (out/scratch/seamout.ts, radii a second): 2.337 at 3882, 2.319 at
+    3883, 2.299 at 3884, 2.277 at 3885, 2.264 at 3885 + 1/2, 2.244 at 3886, 2.159 at 3887; its change
+    -0.54, -0.56, -0.61, -0.65, -0.78, -1.23, -3.06 radii a second squared: it brakes through the end and does
+    not speed up there (the first trial sped up by 0.74 at 3885: the reach pace runs in the logarithm of the
+    distance; the fit now has the brake at the end among its aims).
+  - A slice of the judge's pictures across the seam on the trial (capture frames 7770 to 7793, the paces of
+    the first trial with the power 1): "VERDICT: green", "Largest pop score: 1.07 from frame 3895 + 1/2 to
+    the next, limit 1.2." (the PRE: 1.59, red), "Largest level step: 0.02 at frame 3892 + 1/2", pattern 0.13
+    at 3888. Sheet /tmp/v/ct_seam_b.png (3877 to 3896 + 1/2, every third capture frame) looked at: the globe
+    draws back through the seam at one pace, nothing rests, nothing jumps. The whole window with the final
+    paces is in the proof of the commit.
+  - tsc clean; tests/pass.test.ts, smooth.test.ts, onemove.test.ts pass on the merge with it (85 tests).
+  - WHAT CHANGES against the PRE: the frames of the rise (3810 to 3884, new paces; 3866 is a judged frame and
+    changes on purpose) and the frames of the travel after it from 3885 on while the carried speed decays
+    (0.4 s) and as far as the engine's slide of the leaving body is solved anew. The hold, the dive and the
+    surface view keep the PRE's code and numbers.
+  - FALLBACK: the PRE 68b45619c9b8a49e33e17639a44504a39e29e2a7 stays nameable as it is.
+
+### 11:27 to 11:55 UTC: 91d6247 pushed and in proof, PRE 2 mailed
+
+- COMMIT 91d62470b26f63decf5f17ae69ee1cf6716bc4ee (11:26, pushed): the rise ends with speed, on the merge of
+  main bdd47cf (5863ae0). Trees: src/stops/saturn 7f13c95306f08c785073d108e624e595858a9a22 (the PRE:
+  eeacefbcf0098b624009de980c4621033f21a26e), public/assets/saturn 75fa372a9187c0eb07c296a431b846aeb3962279
+  (equal to the PRE's).
+- WHAT THE ENGINE READS from the rise (out/scratch/carryread.ts, film.ts carryOf): speed 2.2000 radii a
+  second, 0.0001 degree from riseOut; rate 0.9735 radii a second squared, of it -0.6597 along riseOut (a
+  brake), span 0.4 s, drift 0.08. The brake is 0.12 of the speed over the span; the engine's own test allows
+  up to 7.5.
+- THE SPEED OF THE LENS over the whole rise (seamout.ts, radii a second): 0.34 at 3806, 0.36 at 3810, 0.86
+  at 3822, 1.46 at 3834, 1.84 at 3846, 2.15 at 3858, 2.36 at 3866, 2.42 at 3874 (its largest), 2.34 at 3882,
+  2.24 at 3886, 1.47 at 3890 (the travel's own dip while the carried speed decays), 5.75 at 3898. It rises
+  once and falls once inside the rise. The globe's radius in the picture falls in every frame: 524 px at
+  3806, 392 at 3866, 305 at 3886, 285 at 3898.
+- PROOF OF 91d6247 (/tmp/v/r45, job started 11:27):
+  - path: "VERDICT: green. No number is over its limit." (numbers as in the block before.)
+  - handover path: "saturn.dive every frame: pass", "saturn.rise every frame: pass".
+  - rise pictures, the judge's whole window 3798 to 3896 + 1/2 (saturn-rise.md, 11:43): "VERDICT: green. No
+    number is over its limit." "Largest level step: 0.05 at frame 3875 + 1/2 ..., limit 1.3." "Largest pop
+    score: 1.15 from frame 3872 + 1/2 to the next, limit 1.2." "Largest change in place: 21.9 from frame 3873
+    to 8 film frames later, most at pixel 1232, 692 ..., shown, not judged." "Largest change of the pattern
+    alone: 0.25 from frame 3821 + 1/2 to 8 film frames later, most at pixel 1220, 852 ..., limit 0.45."
+    From 3885 on the largest pop is 1.06 at 3895 + 1/2 (the PRE: 1.59, red, 11 frames over); the pop falls
+    to 0.74 at 3891 where the picture is slowest and is back at 1.0 by 3895. Pops over 1.1: 1.11 at 3836,
+    1.10 to 1.15 at 3870 + 1/2 to 3874 (the PRE had 1.12 to 1.17 at the same frames with the other course
+    of the stars: the panel shows the faint stars of the flight and the ring's fine lines at the fastest
+    part of the rise). Pattern over 0.2 only at 3818 + 1/2 to 3832 + 1/2 (0.20 to 0.25: the far ring
+    coming out behind the night limb, low on the globe).
+  - Looked at: rise_a (3798 to 3813), rise_b (3816 to 3840), rise_c (3844 to 3877), rise_d (3878 to 3896),
+    3866 at full size, the pops and the changes panels, the right edge 3817 to 3828 at full size (the far
+    ring comes out behind the night limb at 3820 and widens, cut by the limb, no fade), the moon 3842 to
+    3850 at full size by half frames (it rises over the limb from 3844 + 1/2 to 3848, cut by the limb, no
+    fade). The seam: the globe draws back through 3885 at one pace, nothing rests, nothing jumps.
+  - measure (11:54): "PASS G5 saturn: 3465 hold invalid 0 coverage 0.514; 3567 dive invalid 0 coverage
+    0.600; 3720 terrain invalid 0 coverage 0.725; 3866 rise invalid 0 coverage 0.464" and "PASS G17 saturn:
+    3465 median 1.054 p25 0.918 over 71 tiles; 3720 median 0.945 p25 0.477 over 62 tiles".
+- PRE 2 MAILED 11:46 (high): 91d6247 replaces 68b4561 for the third NAMED; NAMED promised when the rest is
+  back, 12:40 UTC at the latest; if a red shows that I cannot cure, I name 68b4561 and say so.
+- MAIN moved twice since the merge: 5cfbbf1 (status 230, Venus's warm list: kit/PROGRESS.md and
+  src/core/warm.json) and 36970ce (Neptune's third named commit). Status 230: "Saturn's third by 13:00."
+  I merge the newest main for the NAMED; my two picture trees stay those of 91d6247.
+- MAIL 656 (about 12:01 UTC), word for word: "PRE 2 read: 91d62470b26f63decf5f17ae69ee1cf6716bc4ee replaces
+  68b45619. The 13 jobs of the old PRE that were still waiting are withdrawn; no machine is spent on its rise
+  from here. Your third and last NAMED by 12:40 UTC as you wrote; it goes into its round as it stands. Because
+  the judged frame 3866 changes on purpose, show it beside the kept still in the NAMED (d186) and state the
+  hold 3465 and the surface view 3720 as bytes against your last proof. Ruled today on the judge (MAIL 653):
+  body() takes the globe's own scale, as your patch has it, so sky is no longer judged as the body at 3561;
+  the limit stays."
+- PROOF OF 91d6247, the rest (/tmp/v/r45):
+  - gate (11:54): "PASS G11  every asset has a row or a recipe" and "PASS G15  at most 2 sets per frame;
+    finished stops: saturn/web 274 MB, saturn/full 747 MB".
+  - vitest (12:00): exit 0, 465 tests in 48 files.
+  - finals: 3465 sha256 f4b3a39598b5e761fa1c45c9c3cf19836a621e6aa70a95453c64bbb654a2a963, equal to the byte
+    to the PRE 68b4561 and to 1e4bfd4 and 2ab7243 (not to the reference 21f107a6: 32.2 percent of the pixels
+    differ, largest 22, mean 0.325 of 255, as before). 3720 sha256
+    33bb2086f66838b044eb2cb0fbba49ae51dd2f35fe6486186b885c1e466617b7, equal to the byte to the PRE 68b4561
+    (1e4bfd4 had 408729eb; the reference 6c4e4e10 is the kept picture). 3866 sha256
+    29ee4549b5020a02ac1095156b3b41cfad8cb39baae968ca8df5d3424b757add, 214 s, 64 shutter samples (3465 and
+    3720 take 16: the lens is fast at 3866).
+  - parity (12:07): "VERDICT: green. No number is over its limit." Mean 2.785 at 3720 (limit 12), coarse
+    1.257 at 3720 (limit 3.2), block level -6.563 at 3866 (limit 12; the PRE: -6.722 at 3848), level -1.125
+    at 3720 (limit 2.2).
+  - head sample, 26 draft frames against the PRE's sample by bytes (12:10). Equal: 3330, 3350, 3370, 3389,
+    3390, 3420, 3465, 3510, 3539, 3573, 3576, 3630, 3660, 3720, 3780, 3809, 3960. Differ: 3842, 3852, 3859
+    (the rise, on purpose) and the travel 3885 (39.0 percent of the pixels, mean 3.47 of 255), 3890 (49.0
+    percent, mean 14.97), 3900 (31.0 percent, mean 6.73), 3922 (0.12 percent, largest 6), 3950 (0.06
+    percent, largest 7), 3959 (0.01 percent, largest 1). Why the travel differs to its end: carried() in
+    src/director/film.ts adds speed x span x carryWay(s) and rate x span squared x carryBend(s) to the
+    leaving pose, so the pose the travel leaves from stays carried on after the span and the travel takes
+    the difference out towards its end; 3960 is equal again. At 3885 also my sky.lift.power.
+  - 3866 at the final tier beside the kept still (3866_beside_kept.png), looked at whole and at full size in
+    three crops. The globe is nearer and larger than in the kept still (radius 392 px here) and
+    sharp; the far ring at the right, the globe's shadow on the ring, the moon over the limb and the sky are
+    crisp. The near ring at the lower left is drawn out along the flight by the film's shutter: its fine
+    lines stay lines, the grain between them is gone, and the nearest band in the corner is soft. The kept
+    still has the whole ring crisp there (its lens was slower at 3866). This is the price of one flight
+    through the seam: the fastest part of the rise is now 3874 (2.42 radii a second) and 3866 sits near it.
+    No blur cure of my own (MAIL 311). Open as item 16 of the list.
+- MERGED main 4885e4a (status 231 and d218, its progress file only) as 16bee4d. Trees of the head:
+  src/stops/saturn 7f13c95306f08c785073d108e624e595858a9a22, public/assets/saturn
+  75fa372a9187c0eb07c296a431b846aeb3962279, both equal to 91d6247's. No file outside my folders differs
+  from main. tsc exit 0 on 16bee4d. Path on 16bee4d: "VERDICT: green. No number is over its limit.", equal
+  from line 5 on to the report of 91d6247.
+- NOT RUN on 91d6247 before the NAMED: G13, the picture parts of the handover tool (sides, flow), the dive
+  pictures. The dive's code and numbers are the PRE's, where the dive pictures were green (level 0.01 at
+  3576, pop 1.04 at 3578, pattern 0.41 at 3565, limit 0.45), and the sample frames 3573 and 3576 are byte
+  equal. They run after the mail.
+- THE OPEN LIST FOR THE THIRD NAMED, worst first, old numbers kept, 16 is new:
+  16 the judged frame 3866: the near ring at the lower left is drawn out by the film's shutter (64 samples),
+     the kept still is crisp there; the price of one flight through the seam, no blur cure of my own.
+  10 pattern: dive 0.41 at 3565 at the pole (limit 0.45, thin; measured on the PRE, the dive is unchanged);
+     rise 0.25 at 3821 + 1/2 (the far ring coming out behind the night limb).
+  6  G17 at 3720: PASS 0.945 here (p25 0.477, 62 tiles), the machines have not read it yet.
+  12 pops at the end of the rise and at the travel's take off: 1.15 at 3872 + 1/2 inside the rise (limit
+     1.2, thin: faint stars of the flight and the ring's fine lines at the fastest part), 1.06 at 3895 + 1/2
+     after it (was 1.59, red).
+  2  the rest between the rise and the travel: the rest line reads 0.375 of the slower end (was 0.026), the
+     lowest 3.36 px at 3889, now inside the travel while the carried speed decays; no limit yet.
+  thin steps of the rise at rate 2 (limit 0.08): turn 0.073 at 3838 + 1/2, speed 0.070 over 8 at 3839 + 1/2.
+  11 the last 70 frames of the surface view bend and do not fly straight on (ruled, d196, stays).
+  15 the shade between the hold and the dive 3546 to 3556.
+  13 the onset of the rise at 3810 (largest step of the eye from one capture frame to the next 0.05 at 3815,
+     was 0.10 at 3811).
+  1  the globe near the lens 3808 to 3836.
+  14 dark limb pixels 3570 to 3577.
+  5  the sawtooth wedge through the Cassini division 3630 to 3690.
+  7  the ring's tone slides with the height 3840 to 3864.
+  3  the moon cut by the limb about 3610 to 3614 (it leaves, it does not fade).
+  4, 8 and 9 are closed.

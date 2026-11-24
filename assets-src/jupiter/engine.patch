@@ -1,0 +1,13 @@
+diff --git a/tests/place.test.ts b/tests/place.test.ts
+index 44467f91b..358c9baba 100644
+--- a/tests/place.test.ts
++++ b/tests/place.test.ts
+@@ -452,7 +452,7 @@ describe('the two sides of a stop that hands over', () => {
+           const time = (f + config.shutterFraction / 2) / fps
+           const globe = film.shotAt(f, time, 'orbit')
+           const w = placeWeight(s, time)
+-          expect(globe.skyShare).toBe(skyWeight(s, time))
++          expect(globe.skyShare).toBe(p.skyShare(s, time)?.low ?? skyWeight(s, time))
+           expect(skyTurnWeight(s, time)).toBeGreaterThanOrEqual(0)
+           if (w > 0 && h.picture) {
+             inside++

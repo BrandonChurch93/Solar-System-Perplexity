@@ -35,6 +35,12 @@ export interface AirLine {
   crest: { width: number; density: number; glow: number; share: number; light: [number, number, number]; aim: [number, number, number]; edge: [number, number]; bulge: [number, number]; lift: number; fall: [number, number]; gap: number; head: [number, number, number, number]; headEdge: [number, number]; spread: number }
 }
 
+export interface AirMoves {
+  line: number[]
+  layers: number[][]
+  dim: number
+}
+
 export interface AirParams {
   layers: AirLayer[]
   line: AirLine
@@ -73,6 +79,7 @@ uniform vec4 uCrestHead;
 uniform vec3 uCrestHeadEdge;
 uniform vec2 uAirForward;
 uniform vec4 uAirNear;
+uniform float uAirDim;
 vec3 airLight(vec3 day, vec3 twilight, vec3 night, vec2 edge, vec3 sun, vec3 at, float fwd) {
   float s = smoothstep(edge.x, edge.y, dot(at, sun));
   float ndl = dot(at, uSunW);
@@ -132,6 +139,9 @@ precision highp float;
 in vec3 vPos;
 uniform float uGain;
 uniform int uDiag;
+uniform vec3 uRingN;
+uniform vec3 uRingC;
+uniform vec2 uRingRange;
 out vec4 outColor;
 ${AIR_GLSL}
 void main() {
@@ -140,10 +150,18 @@ void main() {
   float b = -dot(uCam, dir);
   bool hidden = uDiag >= 2 || (b > 0.0 && r * r - b * b < 0.99);
   vec3 col = vec3(0.0);
+  float behind = 0.0;
   for (int k = 0; k < (hidden ? 0 : 1); k++) {
-    col = air(dir, false).rgb * uGain;
+    vec4 lit = air(dir, false);
+    col = lit.rgb * uGain;
+    for (int j = 0; j < (uAirDim > 0.0 ? 1 : 0); j++) {
+      behind = 1.0 - exp(-uAirDim * lit.a);
+      float tr = dot(uRingC - uCam, uRingN) / dot(dir, uRingN);
+      float rr = length(uCam + dir * tr - uRingC);
+      behind *= 1.0 - step(0.0, tr) * step(tr, b) * smoothstep(uRingRange.x, uRingRange.x + 0.03, rr) * (1.0 - smoothstep(uRingRange.y - 0.03, uRingRange.y, rr));
+    }
   }
-  outColor = vec4(col, 0.0);
+  outColor = vec4(col, behind);
   if (hidden) discard;
 }`
 
@@ -183,6 +201,7 @@ export function airUniforms(p: AirParams): Record<string, THREE.IUniform> {
     uCrestEdge: { value: new THREE.Vector4(p.line.crest.edge[0], p.line.crest.edge[1], p.line.crest.bulge[0], p.line.crest.bulge[1]) },
     uAirForward: { value: new THREE.Vector2(p.forward, p.forwardPower) },
     uAirNear: { value: new THREE.Vector4(p.near[0], p.near[1], p.near[2], 0) },
+    uAirDim: { value: 0 },
   }
 }
 
@@ -200,10 +219,14 @@ export class Air {
       glslVersion: THREE.GLSL3,
       vertexShader: VERT,
       fragmentShader: FRAG,
-      uniforms: { ...airUniforms(params), uGain: { value: 1 }, uDiag: diag },
+      uniforms: { ...airUniforms(params), uGain: { value: 1 }, uDiag: diag, uRingN: { value: new THREE.Vector3(0, 1, 0) }, uRingC: { value: new THREE.Vector3() }, uRingRange: { value: new THREE.Vector2(-2, -1) } },
       side: THREE.BackSide,
-      blending: THREE.AdditiveBlending,
-      premultipliedAlpha: true,
+      blending: THREE.CustomBlending,
+      blendEquation: THREE.AddEquation,
+      blendSrc: THREE.OneFactor,
+      blendDst: THREE.OneMinusSrcAlphaFactor,
+      blendSrcAlpha: THREE.ZeroFactor,
+      blendDstAlpha: THREE.OneFactor,
       transparent: true,
       depthWrite: false,
     })
@@ -218,7 +241,14 @@ export class Air {
     this.users.push(uniforms)
   }
 
-  update(camera: THREE.Vector3, light: THREE.Vector3, rotation: THREE.Quaternion, home: number, line: number, gain: number, near = 0, tint?: number[], seat = 1, thin = 1, amount = 1): void {
+  ring(normal: THREE.Vector3, centre: THREE.Vector3, inner: number, outer: number): void {
+    const u = this.material.uniforms
+    ;(u.uRingN!.value as THREE.Vector3).copy(normal)
+    ;(u.uRingC!.value as THREE.Vector3).copy(centre)
+    ;(u.uRingRange!.value as THREE.Vector2).set(inner, outer)
+  }
+
+  update(camera: THREE.Vector3, light: THREE.Vector3, rotation: THREE.Quaternion, home: number, line: number, gain: number, near = 0, tint?: number[], seat = 1, thin = 1, amount = 1, moving = 0, moves?: AirMoves, dimming = 1): void {
     this.thin = thin
     for (const u of this.users) {
       const hue = u.uAirNear!.value as THREE.Vector4
@@ -234,13 +264,16 @@ export class Air {
       for (let i = 0; i < AIR_LAYERS; i++) {
         const l = this.params.layers[i]!
         shapes[i]!.x = l.scaleHeight * thin
-        shapes[i]!.z = l.away[0] + (l.dayFrom - l.away[0]) * home
-        shapes[i]!.w = l.away[1] + (l.dayTo - l.away[1]) * home
-        days[i]!.fromArray(l.day).multiplyScalar(l.away[2] + (1 - l.away[2]) * home)
+        const away = moves && moving > 0 ? l.away.map((v, k) => v + (moves.layers[i]![k]! - v) * moving) : l.away
+        shapes[i]!.z = away[0]! + (l.dayFrom - away[0]!) * home
+        shapes[i]!.w = away[1]! + (l.dayTo - away[1]!) * home
+        days[i]!.fromArray(l.day).multiplyScalar(away[2]! + (1 - away[2]!) * home)
       }
       const ln = this.params.line
-      ;(u.uLineEdge!.value as THREE.Vector2).set(ln.away[0] + (ln.dayFrom - ln.away[0]) * home, ln.away[1] + (ln.dayTo - ln.away[1]) * home)
-      ;(u.uLineDay!.value as THREE.Vector3).fromArray(ln.day).multiplyScalar(ln.away[2] + (1 - ln.away[2]) * home)
+      const away = moves && moving > 0 ? ln.away.map((v, k) => v + (moves.line[k]! - v) * moving) : ln.away
+      ;(u.uLineEdge!.value as THREE.Vector2).set(away[0]! + (ln.dayFrom - away[0]!) * home, away[1]! + (ln.dayTo - away[1]!) * home)
+      ;(u.uLineDay!.value as THREE.Vector3).fromArray(ln.day).multiplyScalar(away[2]! + (1 - away[2]!) * home)
+      u.uAirDim!.value = moves ? moves.dim * moving * (1 - home) * dimming : 0
       ;(u.uLineShape!.value as THREE.Vector4).w = line
       ;(u.uLineTail!.value as THREE.Vector3).fromArray(ln.tail).multiplyScalar(home)
       ;(u.uLineFade!.value as THREE.Vector3).z = ln.fade[2] * home

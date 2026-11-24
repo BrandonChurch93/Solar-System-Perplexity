@@ -13,7 +13,6 @@ export interface GlobeLook {
   ringShadowHero: number
   ringSoft: [number, number]
   ringSlant: number
-  drift: number
   nightFloor: number
   hazeShadow: number
   rim: [number, number, number, number]
@@ -70,7 +69,6 @@ uniform sampler2D uMap;
 uniform float uMapWidth;
 uniform float uGrad;
 uniform float uSpin;
-uniform float uDrift;
 uniform vec3 uSunL;
 uniform float uPolar;
 uniform vec3 uCurve[33];
@@ -148,9 +146,6 @@ vec3 tableAt(sampler2D uTable, float ndl, float lat) {
   vec2 f = q - vec2(i);
   return mix(mix(texelFetch(uTable, i, 0).rgb, texelFetch(uTable, i + ivec2(1, 0), 0).rgb, f.x), mix(texelFetch(uTable, i + ivec2(0, 1), 0).rgb, texelFetch(uTable, i + ivec2(1, 1), 0).rgb, f.x), f.y);
 }
-float zonal(float lat) {
-  return 0.55 * sin(lat * 7.0 + 0.4) + 0.3 * sin(lat * 17.0 + 1.9) + 0.15 * sin(lat * 31.0 + 0.6);
-}
 void main() {
   vec3 dirS = normalize(vLocal - uCam);
   float along = -dot(uCam, dirS);
@@ -161,8 +156,8 @@ void main() {
   float mu = clamp(dot(nL, -dirL), 0.0, 1.0);
   float ndl = dot(nL, uLightL) - (1.0 - uClose) * uTerm.x * smoothstep(uTerm.y, uTerm.z, p.y);
   float lat = asin(clamp(p.y, -1.0, 1.0));
-  float drift = uDrift * zonal(lat);
-  vec3 d = spinY(p, uSpin + drift);
+  // the map is rigid on the globe and turns with it as one body
+  vec3 d = spinY(p, uSpin);
   vec3 albedo = inverseFilmic(equirectGrad(uMap, d, uGrad).rgb);
   vec3 soft = inverseFilmic(equirectGrad(uMap, d, uNightBlur).rgb);
   float texels = diagTexelsDir(p, uMapWidth);
@@ -213,7 +208,7 @@ void main() {
   }
   float dl = uLimbW > 0.0 ? limbAt((uCam + dirS * along) / max(rt, 1e-4), uPolar, uSunL) : 0.0;
   float cover = uDiag >= 2 ? 1.0 : clamp((1.0 + dl - rt) / (uEdgePx * length(vec2(dFdx(rt), dFdy(rt)))), 0.0, 1.0);
-  outColor = diagOut(vec4(col * cover * mix(cover, 1.0, uEdgeLin), cover), texels, 1.0, layer, vec2(drift * 8.0, 0.0), length(vView));
+  outColor = diagOut(vec4(col * cover * mix(cover, 1.0, uEdgeLin), cover), texels, 1.0, layer, vec2(0.0), length(vView));
   if (uLimbW > 0.0 && rt >= 1.0 + dl) discard;
 }`
 
@@ -232,7 +227,7 @@ export class Globe {
       uniforms: {
         ...hazeUniforms(haze), ...profile,
         uMap: { value: map }, uTable: { value: table }, uTableC: { value: patch.table }, uNightFloor: { value: look.nightFloor }, uMapWidth: { value: mapWidth }, uGrad: gradUniform, uDiag: diagUniform,
-        uSpin: { value: 0 }, uDrift: { value: 0 }, uSunL: { value: new THREE.Vector3(1, 0, 0) }, uPolar: { value: polar },
+        uSpin: { value: 0 }, uSunL: { value: new THREE.Vector3(1, 0, 0) }, uPolar: { value: polar },
         uCurve: { value: curveUniform(look.curve) }, uCurveC: { value: curveUniform(look.closeCurve) }, uLightL: { value: new THREE.Vector3(1, 0, 0) }, uLimb: { value: new THREE.Vector2().fromArray(look.limb) },
         uGain: { value: 1 }, uWeight: { value: 1 }, uTint: { value: new THREE.Vector3(1, 1, 1) }, uExtinction: { value: haze.extinction },
         uRingShadow: { value: look.ringShadow }, uRingSoft: { value: new THREE.Vector3(look.ringSoft[0], look.ringSoft[1], look.ringSlant) },

@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest'
 import { config } from '../src/config'
 import { FilmDirector } from '../src/director/film'
 import { plans } from '../src/director/plans'
-import { inFrame, landing, outsideFrame, passCurve, TRAVEL, TravelShape, travelLook } from '../src/space/travel/path'
+import { CARRY, carryBend, carryWay, inFrame, landing, outsideFrame, passCurve, TRAVEL, TravelShape, travelLook } from '../src/space/travel/path'
 
 const looks = ['base', ...Object.keys(TRAVEL)].map((id) => ({ id, look: travelLook(id) }))
 
@@ -238,4 +238,93 @@ describe('the way out of the hold of the Sun', () => {
     for (let p = leg.firstFrame; p < leg.firstFrame + 0.45 * leg.frames; p += 0.25) expect(place(p + 0.25).length(), 'frame ' + p).toBeGreaterThanOrEqual(place(p).length() - 1e-5 * far)
     expect(place(leg.firstFrame + 0.43 * leg.frames).length() / far).toBeCloseTo(6.2546 / 4.5741, 3)
   })
+})
+
+describe('the carry of a rise into its travel', () => {
+  const legs = plans.map((p, i) => ({ p, i })).filter(({ p, i }) => i > 0 && p.seg.travel)
+  const standIn = (id: string, speed: number, brake: number): typeof plans =>
+    plans.map((p) => {
+      if (p.id !== id) return p
+      const q = Object.create(p) as typeof p
+      const end = p.seg.rise.end
+      q.eyeShot = (kind, time, forced) => {
+        if (kind !== 'rise' || time < end - 0.05 || time >= end) return p.eyeShot(kind, time, forced)
+        const pose = p.exitPose(time)
+        const t = time - end
+        pose.position.addScaledVector(p.riseOut, speed * t + (brake * t * t) / 2)
+        return { pose, view: 'orbit' }
+      }
+      return q
+    })
+  const camera = (film: FilmDirector, time: number): THREE.Vector3 => film.shotAt(Math.floor(time * config.fps + 1e-9), time).camera.position.clone()
+
+  it('starts with the whole speed and the whole rate, with no kink, and is at rest at its end', () => {
+    const h = 1e-3
+    expect(carryWay(0)).toBe(0)
+    expect(carryWay(h) / h).toBeCloseTo(1, 8)
+    expect(Math.abs(carryWay(3e-4) - 3 * carryWay(2e-4) + 3 * carryWay(1e-4)) / 1e-12).toBeLessThan(2e-2)
+    expect((carryWay(2 * h) - 2 * carryWay(h)) / (h * h)).toBeCloseTo(0, 4)
+    expect(carryWay(1)).toBeCloseTo(0.5, 12)
+    expect((carryWay(1) - carryWay(1 - h)) / h).toBeLessThan(1e-8)
+    expect(carryWay(1.7)).toBe(carryWay(1))
+    expect(carryBend(0)).toBe(0)
+    expect(carryBend(h) / h).toBeLessThan(1e-3)
+    expect((carryBend(2 * h) - 2 * carryBend(h)) / (h * h)).toBeCloseTo(1, 1)
+    expect(carryBend(1)).toBeCloseTo(0.05, 12)
+    expect((carryBend(1) - carryBend(1 - h)) / h).toBeLessThan(1e-8)
+    expect(carryBend(1.7)).toBe(carryBend(1))
+  })
+
+  it('falls once and never turns back while the brake it takes over is at most 7.5 times the speed over the time', () => {
+    const d = 1e-4
+    for (const brake of [0, 1, 4, 7.5]) {
+      let last = Infinity
+      for (let s = 0; s < 1; s += 0.01) {
+        const speed = (carryWay(s + d) - carryWay(s)) / d - (brake * (carryBend(s + d) - carryBend(s))) / d
+        expect(speed, 'brake ' + brake + ' at ' + s.toFixed(2)).toBeGreaterThan(-1e-6)
+        expect(speed, 'brake ' + brake + ' at ' + s.toFixed(2)).toBeLessThan(last + 1e-6)
+        last = speed
+      }
+    }
+  })
+
+  it('is off on a leg whose rise ends at the drift of its exit, and on where it ends faster', () => {
+    const film = new FilmDirector(plans)
+    const carries = (film as unknown as { carryOf(i: number): unknown }).carryOf.bind(film)
+    for (const { p, i } of legs) {
+      const end = p.seg.rise.end
+      const h = CARRY.step
+      const at = (t: number): THREE.Vector3 => p.eyeShot('rise', t, 'orbit').pose.position
+      const p0 = p.exitPose(end).position
+      const excess = p0.clone().multiplyScalar(3).addScaledVector(at(end - h), -4).add(at(end - 2 * h)).multiplyScalar(1 / (2 * h)).sub(p.exitPose(end + h).position.sub(p0).multiplyScalar(1 / h)).length()
+      expect(Math.abs(excess - CARRY.from), p.id + ' stands too near the edge to be told').toBeGreaterThan(CARRY.from / 2)
+      expect(carries(i) === null, p.id).toBe(excess < CARRY.from)
+    }
+  })
+
+  for (const id of ['venus', 'mars', 'saturn']) {
+    it('takes over the speed and the brake of a rise of ' + id + ' that ends in the middle of its brake, and moves no world and no landing', () => {
+      const p = plans.find((x) => x.id === id)!
+      const [speed, brake] = [4, -8]
+      const real = new FilmDirector(plans)
+      const film = new FilmDirector(standIn(id, speed, brake))
+      const end = p.seg.rise.end
+      const far = p.exitPose(end).position.length()
+      expect(camera(film, end).distanceTo(camera(real, end)) / far).toBeLessThan(1e-12)
+      const h = 2e-3
+      const before = camera(film, end).multiplyScalar(3).addScaledVector(camera(film, end - h), -4).add(camera(film, end - 2 * h)).multiplyScalar(1 / (2 * h))
+      const after = camera(film, end).multiplyScalar(-3).addScaledVector(camera(film, end + h), 4).sub(camera(film, end + 2 * h)).multiplyScalar(1 / (2 * h))
+      expect(before.length()).toBeCloseTo(speed + p.p.rise.driftSpeed, 3)
+      expect(after.distanceTo(before) / before.length(), 'speed').toBeLessThan(2e-3)
+      const bent = camera(film, end).addScaledVector(camera(film, end - h), -2).add(camera(film, end - 2 * h)).multiplyScalar(1 / (h * h))
+      const bends = camera(film, end).addScaledVector(camera(film, end + h), -2).add(camera(film, end + 2 * h)).multiplyScalar(1 / (h * h))
+      expect(bent.length()).toBeCloseTo(-brake, 2)
+      expect(bends.distanceTo(bent) / bent.length(), 'brake').toBeLessThan(5e-2)
+      const seg = p.seg.travel!
+      const land = seg.start + travelLook(id).land * (seg.end - seg.start)
+      const next = real.frames[plans.indexOf(p) + 1]!.origin
+      for (let t = land; t < seg.end; t += 0.05) expect(camera(film, t).distanceTo(camera(real, t)) / camera(real, t).distanceTo(next), 'at ' + t.toFixed(2)).toBeLessThan(1e-6)
+      expect(film.frames.map((f) => [...f.origin.toArray(), ...f.rotation.toArray()])).toEqual(real.frames.map((f) => [...f.origin.toArray(), ...f.rotation.toArray()]))
+    })
+  }
 })
