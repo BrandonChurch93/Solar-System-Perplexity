@@ -1,9 +1,61 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T09:16:18.937Z",
+ "pushed": "2026-11-24T09:26:42.369Z",
  "head": "ba2d0b13e64d53d19587c3331b39e8a83dba6f5c",
- "note": "Second candidate ba2d0b1 on the branch (rise law without the pop, limb without the level step, look from above mixed in the logarithm); its proofs are running. Pattern of the rise not cured, body level of the rise still falls over 6 a frame 3285 to 3292.",
+ "note": "09:27 UTC. Second candidate ba2d0b1: parity green, final 3150 equal to main's, final 2895 beside the kept still (the sky of MAIL 448). The level check of MAIL 596: one pair over, far plate to mid plate 0.85, the place's storm. The rise's pictures part is rendering.",
  "looks": [
+  {
+   "time": "2026-11-24T09:26:41.639Z",
+   "file": "20261124092641639-note-levels-rest.jpg",
+   "source": "../work/levels/levels-rest.png",
+   "kind": "note",
+   "label": "Level check of MAIL 596. Top row: the globe's own lookups on the far plate's ground against the far plate, 0.07. Bottom row: near plate against the middle of the fore plate, 0.36",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T09:26:41.060Z",
+   "file": "20261124092641060-note-plates-x3.jpg",
+   "source": "../work/levels/plates-x3.png",
+   "kind": "note",
+   "label": "Level check of MAIL 596. Top row: far plate, mid plate reduced to it, their difference: 0.85, OVER (the globe's own oval against the close image's storm). Bottom row: mid plate to near plate, 0.05",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T09:26:40.489Z",
+   "file": "20261124092640489-note-bN-2895-pair.jpg",
+   "source": "../work/g448/bN-2895-pair.jpg",
+   "kind": "note",
+   "label": "2895 at final: the kept still, this head ba2d0b1, difference times 24 (crop of the lower right). The change is the hold sky without the grain that was baked into it, MAIL 448",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T09:26:09.056Z",
+   "file": "20261124092609056-frame-bN-3150.jpg",
+   "source": "out/work/jupiter/final/bN-3150.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3150, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "5a18fcdc5a929484"
+  },
+  {
+   "time": "2026-11-24T09:22:47.898Z",
+   "file": "20261124092247898-frame-bN-2895.jpg",
+   "source": "out/work/jupiter/final/bN-2895.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2895, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "5a18fcdc5a929484"
+  },
   {
    "time": "2026-11-24T09:16:18.262Z",
    "file": "20261124091618262-note-e1-a.jpg",
@@ -26,52 +78,6 @@
    "source": "../work/map/t2-limb-b.jpg",
    "kind": "note",
    "label": "Second candidate, limb at full size 3286 to 3292: the hold's rim comes back by 2.3 radii",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T09:16:15.480Z",
-   "file": "20261124091615480-note-t2-limb-a.jpg",
-   "source": "../work/map/t2-limb-a.jpg",
-   "kind": "note",
-   "label": "Second candidate, limb at full size 3282 to 3285: warm darkened limb, thin pale line of the shells outside it",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T09:16:14.699Z",
-   "file": "20261124091614699-note-t2-a.jpg",
-   "source": "../work/map/t2-a.jpg",
-   "kind": "note",
-   "label": "Rise 3280 to 3292 at draft on the second candidate ba2d0b1: limb darkened where the hold's limb table is off, level step 1.20 at 3281 + 1/2 (was 1.95)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T09:16:13.423Z",
-   "file": "20261124091613423-note-t1-limb.jpg",
-   "source": "../work/map/t1-limb.jpg",
-   "kind": "note",
-   "label": "Rise 3278 to 3284, named bytes beside trial T1 (limb table off near the globe): the white band at the limb is gone",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T08:39:00.599Z",
-   "file": "20261124083900599-frame-f02787.jpg",
-   "source": "out/work/jupiter/frames/M1/f02787.png",
-   "kind": "frame",
-   "label": "mars.travel frame 2787, draft tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "frame": 2787,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "05fc48a851c30441"
-  },
-  {
-   "time": "2026-11-24T08:37:50.068Z",
-   "file": "20261124083750068-note-limb-a.jpg",
-   "source": "../work/map/limb-a.jpg",
-   "kind": "note",
-   "label": "rise 3248 to 3262, right edge under the limb at full size (lower rows lifted times 6): the far ground goes from dark blue to cream within 3250 to 3258, the pattern red",
    "stop": "jupiter"
   }
  ]
