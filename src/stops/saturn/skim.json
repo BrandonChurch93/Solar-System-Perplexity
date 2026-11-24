@@ -11,17 +11,17 @@
     "vfov": 48
   },
   "path": {
-    "note": "travel over the whole skim: forward is the length of the way along the view axis on the plane that the straight skim has over its whole time; descent is the height at the start over the height at the end. The height falls by the same share in every frame and the speed over the plane goes with the height, so the sheet passes under the lens at the same number of pixels a frame, all the way to the bend (bend, below), where the direction of the way turns and the rule of the speed stays; side is the travel sideways, yawDeg and pitchDeg the turn of the camera over the skim.",
-    "forward": 1.7,
+    "note": "travel over the whole skim: forward is the length of the way along the view axis on the plane that the straight skim has over its whole time; descent is the height at the start over the height at the end. The height falls by the same share in every frame and the speed over the plane goes with the height, so the sheet passes under the lens at the same number of pixels a frame, all the way to the bend (bend, below), where the direction of the way turns and the rule of the speed stays; side is the travel sideways, yawDeg and pitchDeg the turn of the camera over the skim. The straight skim heads 28 degrees to the left of its view axis (forward 1.7 cos 28, side minus 1.7 sin 28: the same length of way as before, so the same speed): at the judged frame the lens then runs more along the ringlets than across them (5.889e-3 radii a frame across in place of 8.521e-3), and the smear of the film's shutter lies along the lines (ruling 2 of mail 577). The pose at the middle of the judged frame's shutter is the pose it was.",
+    "forward": 1.501,
     "descent": 2.2,
-    "side": 0,
+    "side": -0.7981,
     "yawDeg": 0,
     "pitchDeg": 0,
     "bend": {
-      "note": "the end of the skim (ruling d196): the way of the lens bends from the push at the globe into a track across the plane and on into the pull back, so the rise takes its motion and the lens never stops and turns back. from and to: the shares of the skim, from its middle, between which the direction turns (the judged frame is the middle, its take ends at 0.0014; 0.0111 is two frames past it, 0.489 two frames before the end of the skim). turnDeg: the turn of the heading over the plane toward the right of the lens, where the globe is. liftDeg: the angle of the way to the plane at the end (it starts at the descent of the skim, 10.7 degrees down). turn and lift: the pace of each (plan.ts Pace: the shares of the bend between which its rate is level, and the shares over which its turns are rounded). steps: the steps the way is summed in. All the way the speed of the lens is the same share of its height over the plane as in the straight skim.",
+      "note": "the end of the skim (ruling d196): the way of the lens bends from the push at the globe into a track across the plane and on into the pull back, so the rise takes its motion and the lens never stops and turns back. from and to: the shares of the skim, from its middle, between which the direction turns (the judged frame is the middle, its take ends at 0.0014; 0.0111 is two frames past it, 0.489 two frames before the end of the skim). turnDeg: the turn of the heading over the plane toward the right of the lens, where the globe is (190 and the 28 degrees the skim heads left of its view axis, so the way ends where it ended). liftDeg: the angle of the way to the plane at the end (it starts at the descent of the skim, 10.7 degrees down). turn and lift: the pace of each (plan.ts Pace: the shares of the bend between which its rate is level, and the shares over which its turns are rounded). steps: the steps the way is summed in. All the way the speed of the lens is the same share of its height over the plane as in the straight skim.",
       "from": 0.0111,
       "to": 0.489,
-      "turnDeg": 190,
+      "turnDeg": 218,
       "liftDeg": 30,
       "turn": {
         "peak": [
@@ -184,50 +184,50 @@
       "at": 0.55,
       "reach": {
         "peak": [
-          0.262,
-          0.688
+          0.353,
+          0.802
         ],
         "round": [
           0.03,
+          0.287,
           0.112,
-          0.189,
-          0.073
+          0.118
         ]
       },
       "climb": {
         "peak": [
-          0.663,
-          0.663
+          0.737,
+          0.791
         ],
         "round": [
-          0.089,
-          0.085,
-          0.215,
-          0.084
+          0.032,
+          0.275,
+          0.315,
+          0.048
         ]
       },
       "round": {
         "peak": [
-          0.539,
-          0.645
+          0.558,
+          0.733
         ],
         "round": [
-          0.06,
-          0.332,
-          0.234,
-          0.03
+          0.068,
+          0.305,
+          0.148,
+          0.061
         ]
       },
       "view": {
         "peak": [
-          0.432,
-          0.444
+          0.492,
+          0.527
         ],
         "round": [
-          0.069,
           0.191,
-          0.053,
-          0.03
+          0.093,
+          0.085,
+          0.033
         ]
       }
     },
@@ -265,50 +265,50 @@
       "at": 0.56,
       "reach": {
         "peak": [
-          0.369,
-          0.534
+          0.347,
+          0.54
         ],
         "round": [
-          0.481,
-          0.481,
-          0.125,
+          0.534,
+          0.515,
+          0.085,
           0.031
         ]
       },
       "climb": {
         "peak": [
-          0.239,
-          0.256
+          0.261,
+          0.261
         ],
         "round": [
-          0.412,
-          0.421,
-          0.049,
-          0.56
+          0.592,
+          0.557,
+          0.03,
+          0.6
         ]
       },
       "round": {
         "peak": [
-          0.281,
-          0.291
+          0.298,
+          0.404
         ],
         "round": [
-          0.382,
-          0.092,
-          0.136,
-          0.537
+          0.321,
+          0.183,
+          0.103,
+          0.436
         ]
       },
       "view": {
         "peak": [
-          0.432,
-          0.572
+          0.417,
+          0.468
         ],
         "round": [
           0.03,
-          0.089,
-          0.053,
-          0.174
+          0.068,
+          0.117,
+          0.223
         ]
       }
     },
