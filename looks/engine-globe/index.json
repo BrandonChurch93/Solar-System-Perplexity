@@ -1,9 +1,25 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-24T17:54:42.830Z",
+ "pushed": "2026-11-24T18:05:45.425Z",
  "head": "eb2975a63357c7d6b5c253f77fb205f28f158b13",
- "note": "MAIL 710: first reading of real frames with the cure that keeps the band (finer picture of the farther frame, way set right by a smoothed flow). Jupiter rise 3261 + 1/2 goes from 0.69 to 0.27. Work in progress, not yet named.",
+ "note": "MAIL 710, the cure that keeps the band: two real rises with the map as a picture. Not final: the band stated is being changed from the middle one to the widest",
  "looks": [
+  {
+   "time": "2026-11-24T18:05:44.278Z",
+   "file": "20261124180544278-note-six-ju3261.jpg",
+   "source": "../m710/six-ju3261.png",
+   "kind": "note",
+   "label": "Jupiter rise 3261 + 1/2 read as on main 0.690, with the cure 0.272; last column the map",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T18:05:43.019Z",
+   "file": "20261124180543019-note-six-ve1543.jpg",
+   "source": "../m710/six-ve1543.png",
+   "kind": "note",
+   "label": "Venus rise 1543 read as on main, with the cure, and on the later frame; last column the map",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T17:54:40.489Z",
    "file": "20261124175440489-note-six-ju3261.jpg",
@@ -51,22 +67,6 @@
    "kind": "note",
    "label": "Neptune dive 4696 and 4704, the two frames of the row",
    "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T17:14:10.754Z",
-   "file": "20261124171410754-note-pair-ne4696.jpg",
-   "source": "../m697/pair-ne4696.png",
-   "kind": "note",
-   "label": "Neptune dive 4696 round pixel 628, 136, twice enlarged: first frame, the frame 8 film frames later carried back at full size, the pattern (white is 1). 0.72 before and after the patch. A rigid sequence through the same poses reads 0.16 to 0.20",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T17:06:36.135Z",
-   "file": "20261124170636135-note-panel-ju3261-after.jpg",
-   "source": "../m697/panel-ju3261-after.png",
-   "kind": "note",
-   "label": "Jupiter rise 3261 + 1/2, change panel after the patch (root of the area, nearest half step): 0.11",
-   "stop": "jupiter"
   }
  ]
 }
