@@ -1,9 +1,129 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-24T20:39:42.243Z",
+ "pushed": "2026-11-24T21:06:43.879Z",
  "head": "3c0f8d1f0c316c07aea77e0055bba39824811051",
- "note": "round 45 step 1: the rise, every frame 4380 to 4454 at draft, main 7d52b3e0 merged; one climb ending in the hold's pose",
+ "note": "round 45 step 1: judged finals 4137 and 4436 before and now, 4035 difference at the storm, 4290 same bytes; main 7d52b3e0 merged",
  "looks": [
+  {
+   "time": "2026-11-24T21:06:42.676Z",
+   "file": "20261124210642676-note-f4035-diff.jpg",
+   "source": "../../../../tmp/tf/f4035-diff.png",
+   "kind": "note",
+   "label": "hold 4035 final: before, now, difference times 16 at the storm: 1428 pixels, largest 10 of 255, from the straight surface flight read by the tops' law; 4290 final has the same bytes as before (fedf8634); main 7d52b3e0 merged, tree 3c0f8d1f plus uncommitted round 2 work",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T21:06:41.582Z",
+   "file": "20261124210641582-note-fin-4436-ba.jpg",
+   "source": "../../../../tmp/tf/fin-4436-ba.jpg",
+   "kind": "note",
+   "label": "judged rise frame 4436, final tier, before and now (the rise ends in the hold's pose); main 7d52b3e0 merged, tree 3c0f8d1f plus uncommitted round 2 work",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T21:06:40.666Z",
+   "file": "20261124210640666-note-fin-4137-ba.jpg",
+   "source": "../../../../tmp/tf/fin-4137-ba.jpg",
+   "kind": "note",
+   "label": "judged dive frame 4137, final tier, before and now (light of the hold kept through the dive, diveSoft 0); main 7d52b3e0 merged, tree 3c0f8d1f plus uncommitted round 2 work",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T21:05:32.093Z",
+   "file": "20261124210532093-frame-f4290.jpg",
+   "source": "out/work/u/r45/fin/f4290.png",
+   "kind": "frame",
+   "label": "uranus.terrain frame 4290, final tier",
+   "stop": "uranus",
+   "segment": "uranus.terrain",
+   "frame": 4290,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
+  {
+   "time": "2026-11-24T21:03:15.738Z",
+   "file": "20261124210315738-frame-f4035.jpg",
+   "source": "out/work/u/r45/fin/f4035.png",
+   "kind": "frame",
+   "label": "uranus.hold frame 4035, final tier",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
+  {
+   "time": "2026-11-24T21:02:13.037Z",
+   "file": "20261124210213037-frame-f4436.jpg",
+   "source": "out/work/u/r45/fin/f4436.png",
+   "kind": "frame",
+   "label": "uranus.rise frame 4436, final tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4436,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
+  {
+   "time": "2026-11-24T20:58:50.080Z",
+   "file": "20261124205850080-frame-f4137.jpg",
+   "source": "out/work/u/r45/fin/f4137.png",
+   "kind": "frame",
+   "label": "uranus.dive frame 4137, final tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4137,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
+  {
+   "time": "2026-11-24T20:51:06.038Z",
+   "file": "20261124205106038-job-frame-04385.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.rise frame 4385, draft tier, texels view, from the running g13 job",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4385,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "g13"
+  },
+  {
+   "time": "2026-11-24T20:41:02.132Z",
+   "file": "20261124204102132-job-frame-04110.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.dive frame 4110, draft tier, texels view, from the running g13 job",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4110,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "g13"
+  },
+  {
+   "time": "2026-11-24T20:40:31.720Z",
+   "file": "20261124204031720-sheet-uranus-rise-top.jpg",
+   "source": "out/work/handover/uranus-rise-top.png",
+   "kind": "sheet",
+   "label": "uranus rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 4391), place picture off, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "first": 4391,
+   "last": 4454,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-24T20:39:40.694Z",
    "file": "20261124203940694-note-r-big2.jpg",
@@ -201,98 +321,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "1db409b8ada90e29"
-  },
-  {
-   "time": "2026-11-24T20:04:05.966Z",
-   "file": "20261124200405966-frame-f4454.jpg",
-   "source": "out/work/u/r45/ra/f4454.png",
-   "kind": "frame",
-   "label": "uranus.rise frame 4454, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4454,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
-  },
-  {
-   "time": "2026-11-24T20:03:52.129Z",
-   "file": "20261124200352129-note-ns-cmp.jpg",
-   "source": "../../../../tmp/tf/ns-cmp.jpg",
-   "kind": "note",
-   "label": "dive 4118 to 4134 on main 7d52b3e0 merged: diveSoft 0 against the handover frames, the cause of the terminator's lift",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T20:03:51.299Z",
-   "file": "20261124200351299-note-ra-1.jpg",
-   "source": "../../../../tmp/tf/ra-1.jpg",
-   "kind": "note",
-   "label": "rise trial on main 7d52b3e0 merged: exit in the hold's pose, bend off, leave built in; drafts 4380 to 4456 step 8, last tile the hold's last frame 4110",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T19:30:03.677Z",
-   "file": "20261124193003677-frame-ns-4134.jpg",
-   "source": "out/work/u/r45/ns-4134.png",
-   "kind": "frame",
-   "label": "uranus.dive frame 4134, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4134,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
-  },
-  {
-   "time": "2026-11-24T19:25:40.425Z",
-   "file": "20261124192540425-note-r45-R4-sheet-05.jpg",
-   "source": "../../.perplexity/attachments/457c81ffd007411cbd8fcd6323fa157f/r45-R4-sheet-05.png",
-   "kind": "note",
-   "label": "round 45 critic sheet of the rise (main 57695be)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T19:25:39.810Z",
-   "file": "20261124192539810-note-sr-c.jpg",
-   "source": "../../../../tmp/tf/sr-c.jpg",
-   "kind": "note",
-   "label": "rise at efaa5f82 before the round 45 work, sheet sr-c (hr: 4380 to 4424, sr: 4425 to 4454), main 6a45d894",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T19:25:39.154Z",
-   "file": "20261124192539154-note-sr-b.jpg",
-   "source": "../../../../tmp/tf/sr-b.jpg",
-   "kind": "note",
-   "label": "rise at efaa5f82 before the round 45 work, sheet sr-b (hr: 4380 to 4424, sr: 4425 to 4454), main 6a45d894",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T19:25:38.526Z",
-   "file": "20261124192538526-note-sr-a.jpg",
-   "source": "../../../../tmp/tf/sr-a.jpg",
-   "kind": "note",
-   "label": "rise at efaa5f82 before the round 45 work, sheet sr-a (hr: 4380 to 4424, sr: 4425 to 4454), main 6a45d894",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T19:25:37.854Z",
-   "file": "20261124192537854-note-hr-c.jpg",
-   "source": "../../../../tmp/tf/hr-c.jpg",
-   "kind": "note",
-   "label": "rise at efaa5f82 before the round 45 work, sheet hr-c (hr: 4380 to 4424, sr: 4425 to 4454), main 6a45d894",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T19:25:37.260Z",
-   "file": "20261124192537260-note-hr-b.jpg",
-   "source": "../../../../tmp/tf/hr-b.jpg",
-   "kind": "note",
-   "label": "rise at efaa5f82 before the round 45 work, sheet hr-b (hr: 4380 to 4424, sr: 4425 to 4454), main 6a45d894",
-   "stop": "uranus"
   }
  ]
 }
