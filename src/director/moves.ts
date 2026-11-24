@@ -609,6 +609,8 @@ export class StopPlan {
   // where it has one, else handover.pace for both bells and 0 for the power: one share and the height alone, the move as it was.
   // Flanks too short for the segment are refused here, where the number is read: the steepest slope of a bell may not pass the step the
   // harness allows from one film frame to the next (smooth.path.maxStep).
+  // A stop may give a flank of either bell two corners in place of the one (pace.corners, turn.corners; Flanks in pace.ts). The film's
+  // law has none, and a bell without them is computed as before.
   eyeLaw(kind: 'dive' | 'rise'): { pace: Flanks; turn: Flanks; liftPower: number } {
     const seg = kind === 'dive' ? this.seg.dive : this.seg.rise
     if (!seg) throw new Error(this.id + ' has no ' + kind)
@@ -622,12 +624,13 @@ export class StopPlan {
       const checked = (flanks: Flanks, what: string): Flanks => {
         checkFlanks(flanks, 'the ' + kind + ' of ' + this.id)
         const step = bellStep(flanks, seg.frames)
-        if (step > limit) throw new Error('the ' + kind + ' of ' + this.id + ': with flanks of ' + flanks.rise + ' and ' + flanks.fall + ' and a corner of ' + flanks.corner + ' the ' + what + ' changes by ' + step.toFixed(4) + ' of its mean from one film frame to the next, the limit is ' + limit)
+        if (step > limit) throw new Error('the ' + kind + ' of ' + this.id + ': with flanks of ' + flanks.rise + ' and ' + flanks.fall + ' and a corner of ' + flanks.corner + (flanks.corners ? ' and corners of ' + JSON.stringify(flanks.corners) : '') + ' the ' + what + ' changes by ' + step.toFixed(4) + ' of its mean from one film frame to the next, the limit is ' + limit)
         return flanks
       }
-      const pace = checked({ rise: own?.pace?.rise ?? base.rise, fall: own?.pace?.fall ?? base.fall, corner: own?.pace?.corner ?? base.corner }, 'rate')
+      const two = (c: Flanks['corners']): { corners?: Flanks['corners'] } => (c ? { corners: c } : {})
+      const pace = checked({ rise: own?.pace?.rise ?? base.rise, fall: own?.pace?.fall ?? base.fall, corner: own?.pace?.corner ?? base.corner, ...two(own?.pace?.corners) }, 'rate')
       const from = film.turn ?? pace
-      const turn = own?.turn || film.turn ? checked({ rise: own?.turn?.rise ?? from.rise, fall: own?.turn?.fall ?? from.fall, corner: own?.turn?.corner ?? from.corner }, 'turn') : pace
+      const turn = own?.turn || film.turn ? checked({ rise: own?.turn?.rise ?? from.rise, fall: own?.turn?.fall ?? from.fall, corner: own?.turn?.corner ?? from.corner, ...two(own?.turn?.corners) }, 'turn') : pace
       const liftPower = own?.liftPower ?? film.liftPower ?? 0
       if (!(liftPower >= 0 && liftPower <= 2)) throw new Error('the ' + kind + ' of ' + this.id + ': liftPower must lie between 0 and 2')
       hit = { key, law: { pace, turn, liftPower } }
