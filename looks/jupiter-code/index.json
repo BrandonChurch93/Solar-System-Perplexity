@@ -1,9 +1,49 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T07:44:53.910Z",
+ "pushed": "2026-11-24T08:01:19.153Z",
  "head": "6c69ed497f7bb9ce97cde498a2ad785c2fee13dd",
- "note": "07:45 UTC head 6c69ed4: parity green, final 3150 equals the bytes of MAIL 546, final 2895 pair, rise every frame 3230 to 3244 with the change of view at full size; the rise's pictures part is rendering",
+ "note": "Rise 3245 to 3275 at draft on head 6c69ed4 (the commit to be named): the set's border in the rise, good and bad as they are",
  "looks": [
+  {
+   "time": "2026-11-24T08:00:44.699Z",
+   "file": "20261124080044699-note-rise-d.jpg",
+   "source": "../work/named/sheets/rise-d.jpg",
+   "kind": "note",
+   "label": "rise 3268 to 3275 at draft, head 6c69ed4: the far set is a patch of its own colour inside the globe's bands, its left border against a grey speckled field (3268 to 3270)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T07:58:22.671Z",
+   "file": "20261124075822671-note-rise-c-big.jpg",
+   "source": "../work/named/sheets/rise-c-big.jpg",
+   "kind": "note",
+   "label": "rise 3264 and 3266 whole at 1390 px: the far plate's floor ends against a grey speckled field at the left edge (3266)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T07:58:21.475Z",
+   "file": "20261124075821475-note-rise-c.jpg",
+   "source": "../work/named/sheets/rise-c.jpg",
+   "kind": "note",
+   "label": "rise 3260 to 3267 at draft, head 6c69ed4: the place stands as an island on the smooth pale far ground, a blue black wedge of shadow right of the storm, a grey speckled field enters at the left edge from 3266",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T07:55:09.859Z",
+   "file": "20261124075509859-note-rise-b-low-1.jpg",
+   "source": "../work/named/sheets/rise-b-low-1.jpg",
+   "kind": "note",
+   "label": "rise 3257 and 3259, bottom left at full size: the near set's bank of cumulus ends over a smooth floor with little detail (the set's border, MAIL 540)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T07:55:08.632Z",
+   "file": "20261124075508632-note-rise-b.jpg",
+   "source": "../work/named/sheets/rise-b.jpg",
+   "kind": "note",
+   "label": "rise 3245 to 3259 at draft, head 6c69ed4: the left brightens from 3251, cloud banks enter bottom left",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-24T07:44:38.515Z",
    "file": "20261124074438515-note-rise-T-seam-top.jpg",
@@ -27,58 +67,6 @@
    "kind": "note",
    "label": "rise, every frame 3239 to 3244 at draft, head 6c69ed4; the view changes at 3240",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T07:44:34.739Z",
-   "file": "20261124074434739-note-rise-T-a.jpg",
-   "source": "../work/named/sheets/rise-T-a.jpg",
-   "kind": "note",
-   "label": "rise, every frame 3230 to 3238 at draft, head 6c69ed4 (MAIL 540: 10 before T to 4 after)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T07:36:00.450Z",
-   "file": "20261124073600450-frame-bE-3150.jpg",
-   "source": "out/work/jupiter/final/bE-3150.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3150, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "5a18fcdc5a929484"
-  },
-  {
-   "time": "2026-11-24T07:33:56.391Z",
-   "file": "20261124073356391-note-parity.jpg",
-   "source": "../work/named/sheets/parity.jpg",
-   "kind": "note",
-   "label": "parity of head 6c69ed4, green: 16x9, uhd scaled down by 2, difference times 8. Largest block minus 7.497 at 3038 (main minus 22.681); the bright arcs are the limb's line",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T07:33:55.143Z",
-   "file": "20261124073355143-note-pair-2895.jpg",
-   "source": "../work/named/sheets/pair-2895.jpg",
-   "kind": "note",
-   "label": "2895 final at full size, x 1180 to 1870: left the PNG of MAIL 546 (main), right head 6c69ed4. The sky is the cured hold sky of MAIL 448: dark sky mean plus 0.683, largest 7; body under 0.97 radii no pixel over one level",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T07:32:38.872Z",
-   "file": "20261124073238872-frame-bE-2895.jpg",
-   "source": "out/work/jupiter/final/bE-2895.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2895, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "5a18fcdc5a929484"
   }
  ]
 }
