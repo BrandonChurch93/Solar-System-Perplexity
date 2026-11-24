@@ -29,7 +29,7 @@ export interface MoveParams {
   rise: { azimuthDeg: number; elevationDeg: number; distance: number; offset: [number, number]; driftSpeed: number; rollDeg: number; ahead?: number; hug?: number; tilt?: number; settle?: number; level?: boolean; pan?: number; gentle?: boolean; from?: number }
   travel: { turnDeg: number; side: number; turnEnd?: number; start?: number }
   arrive?: { swingDeg: number; axis: [number, number, number]; power?: number; from?: number; offset?: [number, number] }
-  light: { exposure: number; skyExposure: number; terrainSkyGlow?: number; skyLow?: [number, number, number]; skyLiftFrom?: number; sunRadiusDeg: number; sunGlare: number; flare: number; sunDir?: [number, number, number]; glareCarry?: { dive?: number; rise?: number } }
+  light: { exposure: number; skyExposure: number; terrainSkyGlow?: number; skyLow?: [number, number, number]; skyLift?: { heights?: [number, number]; power?: number }; sunRadiusDeg: number; sunGlare: number; flare: number; sunDir?: [number, number, number]; glareCarry?: { dive?: number; rise?: number } }
   cover: [number, number, number]
   coverLow?: [number, number, number]
   coverTerrain?: [number, number, number]
@@ -160,6 +160,7 @@ export class StopPlan {
   private readonly paces: { key: string; law: { pace: Flanks; turn: Flanks; liftPower: number } }[] = []
   private readonly swings: { key: string; angle: number }[] = []
   private airs: { from: AirKnot[]; knots: AirKnot[] } | null = null
+  private lifts: { from: number; to: number; power: number } | null = null
 
   constructor(id: string, fit: Fit, p: MoveParams) {
     this.id = id
@@ -587,6 +588,44 @@ export class StopPlan {
     return high(this.riseIntoHold || time < terrain.start ? this.hold(time - this.seg.hold.start) : this.exitPose(time))
   }
 
+  // The lift of the stars of the open flight over this stop at a height of the lens over its body, in radii (SetState.height): 0 the
+  // stop's own sky, 1 the sky of the open flight. It takes a height and nothing else, so it is the same on both sides of a change of view,
+  // at every pace and at every fraction of a frame: a smooth step of the logarithm of the height between two heights, lifted to
+  // 1 - (1 - step)^power. A power above 1 brings the stars early, one under 1 late; at one half or less the lift meets the upper height
+  // with a corner, which shows unless the lens stands still there. The stop names the two heights and the power under light.skyLift of
+  // its params. Without heights they are the highest height of its surface view and the lowest of its hold: nothing lifts over the
+  // surface view, and the stars stand whole where the hold flies. Without a power it is handover.skyLift.power of the config.
+  // The film scales the lift by the level of the sky the segment ends in (FilmDirector.shotAt): the open flight's after a rise, the
+  // stop's own in a hold and a dive, where nothing lifts.
+  skyLift(height: number): number {
+    const k = this.liftSpan()
+    return 1 - Math.pow(1 - smooth(ramp(k.from, k.to, Math.log(Math.max(height, 1e-12)))), k.power)
+  }
+
+  // The two heights of skyLift, as logarithms, and its power: read once, at the first height asked for. The upper height may not lie
+  // over the height the rise ends at, else the stars would step where the open flight takes over.
+  private liftSpan(): { from: number; to: number; power: number } {
+    if (this.lifts) return this.lifts
+    const own = this.p.light.skyLift
+    const power = own?.power ?? config.raw.handover.skyLift.power
+    const { hold, terrain, rise } = this.seg
+    const over = (seg: Segment, pick: (a: number, b: number) => number, first: number): number => {
+      const n = Math.max(1, Math.round((seg.end - seg.start) * config.fps))
+      let out = first
+      for (let i = 0; i <= n; i++) out = pick(out, this.eyeHeight(Math.min(seg.start + ((seg.end - seg.start) * i) / n, seg.end - 1e-9)))
+      return out
+    }
+    const [from, to] = own?.heights ?? [over(terrain, Math.max, -Infinity), over(hold, Math.min, Infinity)]
+    const whose = own?.heights ? '' : ', the highest of its surface view and the lowest of its hold: the stop names heights of its own under light.skyLift'
+    if (!(from > 0) || !(to > from)) throw new Error(this.id + ': the heights of the star lift must be two heights over the body, in radii, the first above 0 and the second above the first (they are ' + from + ' and ' + to + whose + ')')
+    if (!(power > 0)) throw new Error(this.id + ': the power of the star lift must be above 0 (it is ' + power + ')')
+    // the rise ends in the globe view, whatever side the harness has forced
+    const end = this.eyeShot('rise', rise.end - 1e-9, 'orbit').pose.position.length() - 1
+    if (end < to * (1 - 1e-6)) throw new Error(this.id + ': the upper height of the star lift (' + to + whose + ') lies over the height the rise ends at (' + end + '), so the stars would step where the open flight takes over')
+    this.lifts = { from: Math.log(from), to: Math.log(to), power }
+    return this.lifts
+  }
+
   // The close view's pose of a camera at the globe: the twin undone. The twin of the engine is a turn, a scale and a shift, and so are
   // those of the stops as far as they are measured here, so three poses through the twin give them back. A stop whose twin is anything
   // else gives the plan an untwin of its own.
@@ -801,7 +840,9 @@ export class StopPlan {
     return null
   }
 
-  // The time the star lift of a rise is read at, in seconds of the film. Null: the time of the shot.
+  // The star lift of a rise by the clock, as it was before skyLift: a time, in seconds of the film, the old course from the change of view
+  // to the end of the rise is read at, in the globe view alone. Null: the lift is skyLift of the height of the lens, in both views. Kept
+  // for the stops that still give a time; a stop moves to the heights of light.skyLift and drops its own.
   skyLiftAt(_seg: Segment, _time: number): number | null {
     return null
   }
