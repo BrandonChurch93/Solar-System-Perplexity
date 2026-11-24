@@ -1,9 +1,52 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T09:27:16.600Z",
+ "pushed": "2026-11-24T09:39:27.264Z",
  "head": "0642b538e6211be58f963d2ae2a8272dcac5f9a3",
- "note": "plan F: side difference at T 0.057 and 0.072 (was 17.9 and 19.5); the close ground comes in by height over 2464 to 2472 and leaves over 2687 to 2693",
+ "note": "second commit state B: sky of the close view by eye height, dive and rise through the band, draft",
  "looks": [
+  {
+   "time": "2026-11-24T09:39:26.091Z",
+   "file": "20261124093926091-note-K-d.jpg",
+   "source": "out/work/place/see/K-d.jpg",
+   "kind": "note",
+   "label": "sky by height, rise 2687 2689 2690 2692 2693 2698, draft: dissolve by height, fan borders at 2687",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T09:39:25.147Z",
+   "file": "20261124093925147-note-K-c.jpg",
+   "source": "out/work/place/see/K-c.jpg",
+   "kind": "note",
+   "label": "sky by height, 2474 2476 2477 (T dive) and 2681 2682 2686 (T rise), draft",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T09:39:24.017Z",
+   "file": "20261124093924017-note-K-b.jpg",
+   "source": "out/work/place/see/K-b.jpg",
+   "kind": "note",
+   "label": "sky by height, dive 2468 to 2473, draft: dissolve by height, fan border right, pale wedge lower left",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T09:39:22.826Z",
+   "file": "20261124093922826-note-K-a.jpg",
+   "source": "out/work/place/see/K-a.jpg",
+   "kind": "note",
+   "label": "sky by height, dive 2456 2462 2465 2467, draft",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T09:27:24.832Z",
+   "file": "20261124092724832-compare-mars-rise-sides.jpg",
+   "source": "out/work/handover/mars-rise-sides.png",
+   "kind": "compare",
+   "label": "mars rise, both sides at T (frame 2681) and their difference times 8",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "frame": 2681,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-24T09:26:52.104Z",
    "file": "20261124092652104-compare-mars-dive-sides.jpg",
@@ -29,49 +72,6 @@
    "source": "out/work/place/see/F-band-rise.jpg",
    "kind": "note",
    "label": "plan F, rise 2688, 2691, 2694, 2697 draft: the close ground leaving by height (share 0.92, 0.35, 0, 0)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T09:25:44.400Z",
-   "file": "20261124092544400-note-F-band-dive.jpg",
-   "source": "out/work/place/see/F-band-dive.jpg",
-   "kind": "note",
-   "label": "plan F, dive 2460, 2463, 2466 draft: the close ground coming in by height (share 0, 0.1, 0.35); last tile 2467 before the order cure, with the dark strip at the limb that the cure took out",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T09:09:05.169Z",
-   "file": "20261124090905169-compare-mars-rise-sides.jpg",
-   "source": "out/work/handover/mars-rise-sides.png",
-   "kind": "compare",
-   "label": "mars rise, both sides at T (frame 2681) and their difference times 8",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "frame": 2681,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T09:08:14.915Z",
-   "file": "20261124090814915-note-F-rise-b.jpg",
-   "source": "out/work/place/see/F-rise-b.jpg",
-   "kind": "note",
-   "label": "plan F, rise 2679 to 2685 draft, every frame: 2681 close side, 2682 on the globe side with the close view's own ground",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T09:08:14.082Z",
-   "file": "20261124090814082-note-F-rise-a.jpg",
-   "source": "out/work/place/see/F-rise-a.jpg",
-   "kind": "note",
-   "label": "plan F, rise 2671 to 2678 draft, every frame (close side)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T09:08:13.112Z",
-   "file": "20261124090813112-note-F-dive-b.jpg",
-   "source": "out/work/place/see/F-dive-b.jpg",
-   "kind": "note",
-   "label": "plan F, dive 2475 to 2481 draft, every frame: 2476 is the globe side with the close view's own ground, 2477 the close side",
    "stop": "mars"
   }
  ]
