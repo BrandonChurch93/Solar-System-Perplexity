@@ -4,6 +4,7 @@
  "halfTan": 0.28,
  "halfTans": [0.28, 0.14, 0.07, 0.048125],
  "levels": 4,
+ "law": { "rows": 10, "columns": 2, "source": "b5874a22954aeaebbe80136cb33b083d30a1f261" },
  "feather": 0.06,
  "size": 4096,
  "supersample": [1, 1, 2, 2],

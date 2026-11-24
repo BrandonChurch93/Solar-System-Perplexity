@@ -1,0 +1,85 @@
+{
+ "critic": "R3",
+ "score": 5,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-05.png",
+      "where": "lower-left disk and bottom terrain; native in image-08 crops S, T and U, and image-06 crop D",
+      "what": "the surface is raked into parallel combed streaks and fine detail is gone at native size",
+      "fix": "remove the directional stretch and rebuild those areas with isotropic grain"
+     },
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "crops A, G and H, and image-07 crops O and P, across the mid disk and shadowed terrain",
+      "what": "the same near-horizontal smear continues through the lit face and ridges; stars and the limb stay sharp, so it is surface stretch, not camera blur",
+      "fix": "drop the anisotropic filter on the planet shader and restore native micro-detail"
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "crop A, central chevron of the globe",
+      "what": "cloud strands run in parallel hair-like strokes and read as painted",
+      "fix": "break the strands into overlapping turbulent scales"
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "crop I, nightside storm",
+      "what": "the magenta discharges sit flat on the cloud tops with a hard local glow",
+      "fix": "scatter the light into the cloud volume and soften the cores"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-15.png",
+      "where": "Crops K and L, upper globe and storm eye",
+      "what": "Bright cloud detail stretches into long ribbons near the top and compresses into smooth concentric bands around the eye. The fine texture follows the same warp as the large forms.",
+      "fix": "Lay out the storm and upper cloud field in sphere space, then add independent small-scale cloud breakup so fine detail does not inherit the same stretch."
+     },
+     {
+      "severity": "major",
+      "file": "image-14.png",
+      "where": "Crops A, D and F, mid-globe and shadowed lower hemisphere",
+      "what": "Crisp, granular ridges at mid-globe give way to broad directional smears in the surrounding dark surface. The loss of detail affects whole swaths, not just the foreshortened edge.",
+      "fix": "Restore multiscale texture in the shadowed surface, and blend it continuously into the sharper central detail without simply lifting the shadows."
+     },
+     {
+      "severity": "minor",
+      "file": "image-16.png",
+      "where": "Crops U and V, lower and lower-right limb",
+      "what": "A narrow orange inner trace sits inside a much softer brown outer halo, giving the lower-right limb a doubled, layered look.",
+      "fix": "Blend the inner trace with the outer atmospheric falloff and taper its brightness more gradually into the shadowed limb."
+     },
+     {
+      "severity": "minor",
+      "file": "image-12.png",
+      "where": "Crops V, W and X, lower foreground cloud banks",
+      "what": "The shadowed cloud interiors lose their fine structure and run into parallel diagonal streaks, while the nearby sunlit rims resolve much more sharply.",
+      "fix": "Add subtle, low-contrast billow structure inside the foreground shadows and break up the streaks without sharpening the haze."
+     }
+    ]
+   }
+  }
+ ]
+}

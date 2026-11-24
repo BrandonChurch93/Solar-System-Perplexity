@@ -1,0 +1,120 @@
+{
+ "critic": "R3",
+ "score": 4,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-05.png",
+      "where": "lower right and right edge of the terrain view (crops E, H, I, R, S, W, X)",
+      "what": "the canyon walls and ridges are smeared into diagonal streaks with no real detail; it looks like stretched texture or a directional smear filter, not believable depth of field or motion blur, and it covers about a third of the frame",
+      "fix": "render the near canyon walls with real high-resolution displacement and texture, then add depth of field that falls off with distance instead of a directional smear"
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "bottom foreground strip (crops T, U, V)",
+      "what": "the nearest ground is a flat, featureless orange wash with faint streaks; the area closest to the camera has the least detail, which gives away a low-resolution texture",
+      "fix": "add detail to the near ground (small craters, rocks, dust ripples) or frame the shot so soft foreground is clearly intentional bokeh"
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "upper half, haze and cloud over the plateau (crops B, C, J, K, L, M)",
+      "what": "the haze is a soft, airbrushed smudge; the bright wavy channel lines show through it as glowing ribbons that read like painted strokes, and the surface under the haze has no texture",
+      "fix": "give the dust layer real volume and structure, keep some surface detail visible through it, and tone down the glow on the channel lines"
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "left middle, the pit craters (crops D, G, P)",
+      "what": "the craters are smooth, rounded dents with soft glowing rims, like pressed plastic; the surrounding plain is smooth and airbrushed",
+      "fix": "add sharp rims, ejecta, small craters and grain to the crater and plain texture"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "Phobos in the lower centre (crops G, Q, V)",
+      "what": "the moon is noticeably sharper and more contrasty than the planet behind it and reads a bit like a pasted cutout; its dark side merges into the dark side of Mars",
+      "fix": "match grain and sharpness between the moon and the planet, and add a faint rim light or reflected light so the moon separates from the planet"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "large dust spiral in the upper centre and the outer edge of the disk (crops A, B, K)",
+      "what": "the spiral storm is soft and painterly next to the crisp canyon detail, and near the edge the surface goes pale and slightly washed out",
+      "fix": "add finer cloud structure to the storm and keep some surface contrast under the limb haze"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "dark side and right limb (crops C, E, M, R, W)",
+      "what": "the dark side has a faint blotchy, low-contrast texture and the rim against space is a smooth vector-like curve without any atmospheric scatter on the night side",
+      "fix": "smooth out the noise on the dark side and add a very faint scattering glow along the night-side limb"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 4,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-13.png",
+      "where": "lower hemisphere and lower-right polar ice cap (crops image-14.png D-E, image-15.png P-Q, image-16.png S-V)",
+      "what": "severe UV pole pinching and radial texture stretching smear craters, dark albedo markings, and the polar cap into blurry radial streaks with blocky stair-stepped pixels on the ice cap",
+      "fix": "reproject the planetary color and elevation maps using cube-sphere or pole-free spherical coordinates and supply higher-resolution southern hemisphere and polar cap textures"
+     },
+     {
+      "severity": "severe",
+      "file": "image-13.png",
+      "where": "middle-left Valles Marineris canyon transition (crops image-15.png K, N, O and image-14.png B, D)",
+      "what": "a sharp localized canyon patch terminates abruptly along a boundary where relief collapses into ruler-straight diagonal clamped-edge streaks next to much softer low-resolution globe texture",
+      "fix": "remove the clamped local patch border and use continuous, uniform-resolution global displacement and albedo maps across the entire visible hemisphere"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "central spiral dust storm and eastern globe plains (crops image-14.png A, I and image-15.png P)",
+      "what": "the spiral cloud system and adjacent orange surface are soft, blurry, and painted flat onto the sphere with no fine filament detail, elevation parallax, or cloud shadow",
+      "fix": "render the cyclone as a separate high-resolution volumetric or elevated cloud layer that casts a subtle shadow onto a crisp underlying surface texture"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "right-hand Milky Way starfield (crops image-14.png C, E, F, G, H, image-15.png L, Q, image-16.png V)",
+      "what": "the Milky Way background is an upscaled, color-noisy bitmap full of soft blob stars and magenta-blue blotches with sharp 1-2 px white point stars composited on top",
+      "fix": "replace the background plate with a clean native-resolution starfield and galactic dust render so all stars share consistent sharp point-spread profiles without chroma noise"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "upper and right lit planetary limb (crops image-14.png B, C, I and image-15.png J, K)",
+      "what": "a hard bright rim line traces the geometric sphere edge inside a separate outer cyan glow band, creating a doubled edge along the limb",
+      "fix": "blend the surface horizon and atmospheric scattering continuously across the limb so optical depth softens the geometric edge without a separate inner rim highlight"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "lower-left near foreground cliff face (crops image-11.png N and image-12.png S)",
+      "what": "the dark foreground rock strata in the lower-left corner are noticeably soft and blurry at native scale compared with the crisp adjacent canyon wall",
+      "fix": "maintain deep hyperfocal sharpness across the near plane and match foreground rock texture and displacement density to the mid-ground cliff faces"
+     }
+    ]
+   }
+  }
+ ]
+}

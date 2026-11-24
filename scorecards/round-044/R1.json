@@ -1,0 +1,84 @@
+{
+ "critic": "R1",
+ "score": 5,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "pair-03-b.png",
+   "where": "globe, whole frame composition",
+   "what": "Saturn is bigger, sits lower and further right, and runs off the right edge. In -a the lit globe ends in a sharp terminator near x≈1250, with black night side and sky to its right",
+   "fix": "scale the globe down and move it up and left to match -a: top of limb near y≈55, lit edge ending near x≈1250, with dark night side and sky filling the right edge"
+  },
+  {
+   "severity": "severe",
+   "file": "pair-03-b.png",
+   "where": "inner rings meeting the globe (crops A, F)",
+   "what": "-b shows a black, star-filled gap between the inner ring and the globe. In -a, dark C-ring material runs into the planet, and the ring plane casts a shadow band across the lower globe (crop A)",
+   "fix": "fill the inner gap with the dark inner-ring sweep from -a and restore the ring shadow band across the lower globe"
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "ring plane (crops D, E, F, G)",
+   "what": "-b adds bright moonlets and boulders sitting on the rings. -a has none",
+   "fix": "remove the embedded moonlets so the ring surface is only continuous ringlets"
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "ring color and grade (crops D, E, G, I)",
+   "what": "-b's rings are warm cream-gold with stronger contrast. -a's are cooler and more neutral, with grey, lilac and pink ringlets and a matte, finely grained surface",
+   "fix": "cool and desaturate the rings toward neutral grey-beige with pink and lilac streaks, and lower the ringlet contrast"
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "globe surface color (crop C)",
+   "what": "-b's bands are more orange and saturated, with busy turbulent swirls. -a is paler cream, with a bluish-grey band near the top limb and calmer bands with a few oval storms",
+   "fix": "desaturate toward pale cream, add back the cool grey-blue high-latitude band, and calm the swirl detail"
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "terminator and night side (crops E, I)",
+   "what": "-b has a broad, soft brown gradient into the shadow. -a has a tighter terminator that falls to near-black, with deep blacks above the rings at right",
+   "fix": "tighten the terminator falloff and crush the night side to near-black"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "upper left limb glow",
+   "what": "the orange halo at the limb is stronger and more saturated than the soft warm rim in -a",
+   "fix": "lower the intensity and saturation of the limb glow"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "left ring horizon and sky (crops B, H)",
+   "what": "-b's outer ring edge is higher and more sharply curved, and the faint outer-ring haze line along the horizon is weaker. Its starfield is denser and dustier than -a's sparser one",
+   "fix": "flatten and lower the left ring horizon to y≈290, restore the faint outer haze line, and thin the starfield"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "outer A ring, lower left (crops D, I)",
+   "what": "small dark specks show on the outer ring, and the fine sparkle grain on the ring surface is a little weaker than in -a",
+   "fix": "remove the dark specks and restore the fine glitter grain"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "night side of the globe and ring shadow (crop E)",
+   "what": "the globe's dark limb below the shadow reads a little brighter, so the shadowed rings and globe separate less than in -a's deep blacks",
+   "fix": "darken the night-side limb and the shadow on the rings toward -a's black level"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "sky, upper left Milky Way",
+   "what": "the Milky Way haze is slightly fainter than in -a",
+   "fix": "bring the diffuse Milky Way glow up a little"
+  }
+ ]
+}

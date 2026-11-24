@@ -6,6 +6,7 @@ import { DIST, ROOT, WORK, args, ensureBuild, formatId, loadConfig, machineId, r
 import { openCapture, renderPng, type Session } from './lib/browser'
 import { addLook } from './lib/looks'
 import { image, json, padFrame } from './lib/render'
+import { IN_PLACE, frameSteps } from './lib/steps'
 import type { Segment } from '../src/config'
 import { blurAllowed, framePlan, rawMotion, shutterScale } from '../src/core/motion'
 import { samplesFor, shutterMid, shutterOffset } from '../src/core/sampler'
@@ -22,6 +23,11 @@ import { coverFrames } from '../src/director/timeline'
 //   --parts across,before,after picks the sheets (all three when not given; the one across T is made first)
 //   The frames part (and --only path, the same without pictures) also reports the capped shutter of E6: per frame the share of the film's shutter
 //   that is open, the motion left across it (centre, edge, most) and the motion to the next frame; judged: no frame keeps more than it may.
+//   The frames part reads the step between two frames two ways: on the mean of the body, and in place, on the ground both frames show
+//   (tools/img/handover.py, op inPlace): a frame that opens on a darker side of the body moves the mean, not the look of any ground. Both are
+//   held to the same limits (handover.limits.levelStep, colourStep) and the report says what each would rule.
+//   The step in place is the judged one (tools/lib/steps.ts, IN_PLACE.judged, is the standing choice; decision d238): the mean of the body
+//   judges only the frames that share too little ground with the frame before to be read in place. --in-place asks for that by hand.
 //   --gate-under makes the line "under the place picture" part of the verdict and of the exit code. Without it the line is judged against its
 //   limit and printed as a warning: it says how far a stop's plates are from its picture, and no stop is held up by it.
 // Everything is written to out/work/handover/. Exit 1 when a judged number of the verdict is over its limit in config.handover.limits.
@@ -41,6 +47,7 @@ if (!Object.hasOwn(cfg.tiers, sheetTier)) throw new Error('unknown tier ' + shee
 const only = a.only ? a.only.split(',') : ['sides', 'under', 'flow', 'frames', 'sheets', 'top']
 const sheetParts = a.parts ? a.parts.split(',') : null
 const gateUnder = a['gate-under'] === 'true'
+const judgeInPlace = a['in-place'] === 'true' || IN_PLACE.judged
 const name = a.name ?? stop
 const dist = a.dist ? resolve(a.dist) : DIST
 const other = Boolean(a.dist)
@@ -50,6 +57,10 @@ const format = formatId(cfg, a.format)
 const master = cfg.formats[cfg.formatKeys.master]!
 const fps = cfg.fps
 const L = cfg.raw.handover.limits
+// The reading in place (tools/lib/steps.ts): its two numbers come from handover.limits where the config names them, else from the tool.
+const inPlaceOf = L as typeof L & { inPlaceScale?: number; inPlaceShare?: number }
+const inPlaceScale = inPlaceOf.inPlaceScale ?? IN_PLACE.scale
+const inPlaceShare = inPlaceOf.inPlaceShare ?? IN_PLACE.share
 const maxRate = cfg.raw.handover.maxRateOverMean
 const dir = join(WORK, 'handover')
 const frameDir = join(dir, name, 'frames')
@@ -298,7 +309,12 @@ interface FrameRow {
   frame: number; side: ViewKind; height: number; ratio: number | null; rate: number | null; place: [number, number] | null; motionCentre: number | null; motionEdge: number | null; motionMost: number
   shutter: number; allowed: number | null; blurCentre: number | null; blurEdge: number | null; blurMost: number; stepMost: number | null; samples: number; atFloor?: true
   level?: number; colour?: number[]; bodyShare?: number; bodyLevel?: number; bodyColour?: number[]; flatShare?: number; contrast?: number
+  inPlace?: InPlace
 }
+// The change of a frame against the frame before it on the ground both show (tools/img/handover.py, in_place): seen is the share of the body's
+// pixels whose ground the frame before shows too, level and colour the mean change on them, fresh and kept the level of the new ground and of
+// the ground seen in both.
+interface InPlace { seen: number; level: number; colour: number[]; rms: number; fresh: number; kept: number }
 interface ImageNumbers { level: number; colour: number[]; bodyShare: number; bodyLevel: number; bodyColour: number[]; flatShare: number; contrast: number }
 
 interface Seam { with: string; own: number; other: number; ownBefore: number; ownAfter: number; otherBlur: number }
@@ -306,8 +322,11 @@ interface BlurNumbers { maxBlurPx: number; easeFrames: number; minShutter: numbe
 
 async function frames(line: Line, withImages: boolean): Promise<{ rows: FrameRow[]; judged: Record<string, unknown>; blur: BlurNumbers | null } & Verdict> {
   const seg = line.seg
+  let inPlacePaths: string[] = []
+  let inPlacePoses: object[] = []
   const rows: FrameRow[] = []
   const bodies: number[][][] = []
+  const poses: { position: number[]; quaternion: number[]; vfov: number; turn: number[] }[] = []
   const [cols, gridRows] = cfg.motion.probeGrid as [number, number]
   const h = line.opted ? handoverOf(stop!, line.kind) : null
   const full: number[] = []
@@ -352,6 +371,7 @@ async function frames(line: Line, withImages: boolean): Promise<{ rows: FrameRow
       samples: framePlan(film, f, 'review').samples, ...(atFloor ? { atFloor: true as const } : {}),
     })
     bodies.push(bodyGrid(cam))
+    poses.push({ position: cam.position.toArray(), quaternion: cam.quaternion.toArray(), vfov: cam.vfov, turn: plan.turn(mid).toArray() })
   }
   // E6, judged: no frame keeps more blur than it may. Outside the ease frames that is handover.maxBlurPx; in them the ramp to the seam's motion.
   // A frame at the floor keeps the motion across that share of the shutter, whatever the cap.
@@ -409,6 +429,14 @@ async function frames(line: Line, withImages: boolean): Promise<{ rows: FrameRow
       const n = numbers[i]!
       Object.assign(r, { level: round(n.level, 2), colour: n.colour.map((v) => round(v, 2)), bodyShare: round(n.bodyShare, 3), bodyLevel: round(n.bodyLevel, 2), bodyColour: n.bodyColour.map((v) => round(v, 2)), flatShare: round(n.flatShare, 3), contrast: round(n.contrast, 2) })
     })
+    // The same frames laid over each other by the ground they show (the two cameras and the turn of the body between them).
+    const laid = measure<(InPlace | null)[]>({ op: 'inPlace', paths, poses, scale: inPlaceScale })
+    rows.forEach((r, i) => {
+      const n = laid[i]
+      if (n) r.inPlace = { seen: round(n.seen, 3), level: round(n.level, 2), colour: n.colour.map((v) => round(v, 2)), rms: round(n.rms, 2), fresh: round(n.fresh, 1), kept: round(n.kept, 1) }
+    })
+    inPlacePaths = paths
+    inPlacePoses = poses
   }
   // The rate limits of E3, on the far part of the line: from the first frame to T in a dive, from T to the last frame in a rise.
   const dive = line.kind === 'dive'
@@ -444,30 +472,27 @@ async function frames(line: Line, withImages: boolean): Promise<{ rows: FrameRow
   if (dive && off.by > L.placeMiddle) why.push('the place leaves the middle of the frame: frame ' + off.frame + ' has it at ' + round(off.by, 2) + ' of the half frame, limit ' + L.placeMiddle)
   const judged: Record<string, unknown> = { meanRate: round(mean, 5), meanRatio: round(Math.exp(-mean * sign), 5), worstRate: { frame: worst.frame, overMean: round(worst.over, 3) }, early: { frame: fifth, overMean: round(early / mean, 3) }, placeOff: { frame: off.frame, share: round(off.by, 3), from, to } }
   if (withImages) {
-    // Steps are judged on the body alone (the blocks the body covers in both frames' own grids), so a globe that grows into a black sky or leaves it is not read as a cut. The whole frame steps are reported beside them.
-    let level = { frame: -1, step: 0 }
-    let colour = { frame: -1, step: 0 }
-    let whole = { frame: -1, step: 0 }
-    let wholeColour = { frame: -1, step: 0 }
-    let flat = { frame: -1, share: 0 }
-    rows.forEach((r, i) => {
-      if (r.flatShare! > flat.share) flat = { frame: r.frame, share: r.flatShare! }
-      const p = rows[i - 1]
-      if (!p) return
-      const wl = Math.abs(r.level! - p.level!)
-      const wc = Math.max(...r.colour!.map((v, k) => Math.abs(v - p.colour![k]!)))
-      if (wl > whole.step) whole = { frame: r.frame, step: wl }
-      if (wc > wholeColour.step) wholeColour = { frame: r.frame, step: wc }
-      if (Math.min(r.bodyShare!, p.bodyShare!) < L.bodyShare) return
-      const dl = Math.abs(r.bodyLevel! - p.bodyLevel!)
-      const dc = Math.max(...r.bodyColour!.map((v, k) => Math.abs(v - p.bodyColour![k]!)))
-      if (dl > level.step) level = { frame: r.frame, step: dl }
-      if (dc > colour.step) colour = { frame: r.frame, step: dc }
-    })
-    if (level.step > L.levelStep) why.push('the mean level of the body steps by ' + round(level.step, 2) + ' into frame ' + level.frame + ', limit ' + L.levelStep)
-    if (colour.step > L.colourStep) why.push('the mean colour of the body steps by ' + round(colour.step, 2) + ' into frame ' + colour.frame + ', limit ' + L.colourStep)
-    if (flat.share > L.flatShare) why.push('frame ' + flat.frame + ' has ' + round(flat.share * 100, 1) + ' percent of the body flat, limit ' + round(L.flatShare * 100, 1))
+    // The steps between two frames (tools/lib/steps.ts). Read on the mean of the body alone (the blocks the body covers in both frames' own
+    // grids), so a globe that grows into a black sky or leaves it is not read as a cut; the whole frame steps are reported beside them. Read
+    // beside them, held to the same limits, and judged where IN_PLACE.judged or --in-place says so: the same step in place, on the ground
+    // both frames show (FrameRow.inPlace).
+    const found = frameSteps(rows.map((r) => ({ frame: r.frame, level: r.level!, colour: r.colour!, bodyShare: r.bodyShare!, bodyLevel: r.bodyLevel!, bodyColour: r.bodyColour!, flatShare: r.flatShare!, ...(r.inPlace ? { inPlace: r.inPlace } : {}) })), { bodyShare: L.bodyShare, levelStep: L.levelStep, colourStep: L.colourStep, flatShare: L.flatShare, inPlaceShare, inPlace: judgeInPlace })
+    why.push(...found.why)
+    const { level, colour, whole, wholeColour, flat } = found
+    const { level: seenLevel, colour: seenColour, least, unread, unreadLevel, unreadColour, judged: inPlaceJudged } = found.inPlace
     Object.assign(judged, { levelStep: { frame: level.frame, step: round(level.step, 2) }, colourStep: { frame: colour.frame, step: round(colour.step, 2) }, frameLevelStep: { frame: whole.frame, step: round(whole.step, 2) }, frameColourStep: { frame: wholeColour.frame, step: round(wholeColour.step, 2) }, flat: { frame: flat.frame, share: round(flat.share, 3) } })
+    const panels: string[] = []
+    const pair = async (frame: number, tag: string, what: string): Promise<void> => {
+      const i = rows.findIndex((r) => r.frame === frame)
+      if (i < 1) return
+      const file = join(dir, name + '-' + line.kind + '-step-' + tag + '.png')
+      measure<unknown>({ op: 'inPlace', paths: [inPlacePaths[i - 1], inPlacePaths[i]], poses: [inPlacePoses[i - 1], inPlacePoses[i]], scale: inPlaceScale, panels: [{ index: 1, file, gain: L.differenceGain, limit: cfg.raw.critics.maxImageLongEdgePx, names: ['frame ' + (frame - 1), 'frame ' + frame] }] })
+      addLook({ file }, { kind: 'compare', label: stop + ' ' + line.kind + ', ' + what + ': frame ' + (frame - 1) + ', frame ' + frame + ', the ground that is new in it, and the change on the ground both show times ' + L.differenceGain, stop: stop!, segment: line.seg.id, frame })
+      panels.push(file)
+    }
+    await pair(level.frame, 'body', 'the largest step of the mean level of the body (' + round(level.step, 2) + ')')
+    if (seenLevel.frame !== level.frame) await pair(seenLevel.frame, 'in-place', 'the largest step of the level in place (' + round(seenLevel.step, 2) + ')')
+    Object.assign(judged, { inPlace: { judged: inPlaceJudged, levelStep: { frame: seenLevel.frame, step: round(seenLevel.step, 2) }, colourStep: { frame: seenColour.frame, step: round(seenColour.step, 2) }, leastSeen: { frame: least.frame, share: round(least.share, 3) }, unread, unreadLevelStep: { frame: unreadLevel.frame, step: round(unreadLevel.step, 2) }, unreadColourStep: { frame: unreadColour.frame, step: round(unreadColour.step, 2) }, share: inPlaceShare, scale: inPlaceScale, fails: found.fails, panels } })
   }
   return { rows, judged, blur, pass: why.length === 0, why }
 }
@@ -538,9 +563,14 @@ try {
       out.judged = f.judged
       out.blur = f.blur
       verdicts.push(['every frame', f])
-      const j = f.judged as { meanRate: number; meanRatio: number; worstRate: { frame: number; overMean: number }; early: { frame: number; overMean: number }; placeOff: { frame: number; share: number }; levelStep?: { frame: number; step: number }; colourStep?: { frame: number; step: number }; frameLevelStep?: { frame: number; step: number }; frameColourStep?: { frame: number; step: number }; flat?: { frame: number; share: number } }
+      const j = f.judged as { meanRate: number; meanRatio: number; worstRate: { frame: number; overMean: number }; early: { frame: number; overMean: number }; placeOff: { frame: number; share: number }; levelStep?: { frame: number; step: number }; colourStep?: { frame: number; step: number }; frameLevelStep?: { frame: number; step: number }; frameColourStep?: { frame: number; step: number }; flat?: { frame: number; share: number }; inPlace?: { judged: boolean; levelStep: { frame: number; step: number }; colourStep: { frame: number; step: number }; leastSeen: { frame: number; share: number }; unread: number; unreadLevelStep: { frame: number; step: number }; unreadColourStep: { frame: number; step: number }; share: number; fails: { body: string[]; inPlace: string[] }; panels: string[] } }
       md.push('Height: mean ratio per frame ' + j.meanRatio + ' on the way ' + (kind === 'dive' ? 'to' : 'from') + ' T; fastest frame ' + j.worstRate.frame + ' at ' + j.worstRate.overMean + ' times the mean rate; frame ' + j.early.frame + ' (one fifth of the way) at ' + j.early.overMean + ' of the mean. The place is at most ' + j.placeOff.share + ' of the half frame from the middle (frame ' + j.placeOff.frame + ').')
       if (j.levelStep && j.colourStep && j.flat) md.push('Largest step between two frames, on the body: mean level ' + j.levelStep.step + ' (into frame ' + j.levelStep.frame + '), mean colour ' + j.colourStep.step + ' (into frame ' + j.colourStep.frame + '). On the whole frame, not judged: level ' + j.frameLevelStep!.step + ' (into frame ' + j.frameLevelStep!.frame + '), colour ' + j.frameColourStep!.step + ' (into frame ' + j.frameColourStep!.frame + '). Largest flat share of the body ' + round(j.flat.share * 100, 1) + ' percent (frame ' + j.flat.frame + ').')
+      if (j.inPlace) {
+        const p = j.inPlace
+        const ruling = (lines: string[]): string => (lines.length === 0 ? 'pass' : 'fail (' + lines.join('; ') + ')')
+        md.push('The same step in place, on the ground both frames show (' + (p.judged ? 'judged, with the same limits; the mean of the body judges only the frames that cannot be read in place and would on its own ' + ruling(p.fails.body) : 'shown, not judged; judged with the same limits it would ' + ruling(p.fails.inPlace)) + '): level ' + p.levelStep.step + ' (into frame ' + p.levelStep.frame + '), colour ' + p.colourStep.step + ' (into frame ' + p.colourStep.frame + '). The frame before shows at least ' + p.leastSeen.share + ' of a frame\'s body (frame ' + p.leastSeen.frame + '); ' + (p.unread === 0 ? 'every frame is read in place.' : p.unread + ' frames show less than ' + p.share + ' of it and are not read in place (on the mean of the body they step by at most ' + p.unreadLevelStep.step + ' in level, into frame ' + p.unreadLevelStep.frame + ', and ' + p.unreadColourStep.step + ' in colour, into frame ' + p.unreadColourStep.frame + ').') + (p.panels.length > 0 ? ' Pictures: ' + p.panels.join(', ') + '.' : ''))
+      }
       const b = f.blur
       if (b) {
         if (!(b.maxBlurPx > 0)) md.push('Shutter (E6): no cap (handover.maxBlurPx 0). Every frame keeps the film\'s full shutter, as before the cap: ' + b.capped + ' of ' + f.rows.length + ' frames run with a shortened shutter. Motion across the shutter at the point that moves most: up to ' + b.mostBefore.px + ' px (frame ' + b.mostBefore.frame + ').')
@@ -551,8 +581,8 @@ try {
         md.push('Seams, motion across the shutter in px: ' + b.seams.map((x) => 'frame ' + x.own + ' ' + x.ownBefore + ' with the full shutter and ' + x.ownAfter + ' now, beside it frame ' + x.other + ' of ' + x.with + ' ' + x.otherBlur).join('; ') + '. Largest change from one frame to the next, the frames beside the segment included: ' + b.stepBefore.px + ' px with the full shutter (into frame ' + b.stepBefore.frame + '), ' + b.stepAfter.px + ' px now (into frame ' + b.stepAfter.frame + ').')
         md.push('Motion from frame to frame against the blur: at the fastest frame (' + b.fastest.frame + ') the point that moves most goes ' + b.fastest.pxAFrame + ' px to the next frame and keeps ' + b.fastest.blur + ' px of blur. The table has both for every frame (blur most, px a frame).')
       }
-      md.push('', '| frame | side | height | ratio | place x, y | motion centre | motion edge | shutter | blur centre | blur edge | blur most | px a frame | samples at review | level | colour | body share | body level | body colour | flat |', '| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |')
-      for (const r of f.rows) md.push('| ' + [r.frame + (r.frame === line.frameT ? ' T' : ''), r.side === 'orbit' ? 'globe' : 'close', r.height, r.ratio ?? '', r.place ? r.place.join(', ') : 'behind', r.motionCentre ?? '', r.motionEdge ?? '', r.shutter, r.blurCentre ?? '', r.blurEdge ?? '', r.blurMost, r.stepMost ?? '', r.samples, r.level ?? '', r.colour ? r.colour.join(' ') : '', r.bodyShare ?? '', r.bodyLevel ?? '', r.bodyColour ? r.bodyColour.join(' ') : '', r.flatShare ?? ''].join(' | ') + ' |')
+      md.push('', '| frame | side | height | ratio | place x, y | motion centre | motion edge | shutter | blur centre | blur edge | blur most | px a frame | samples at review | level | colour | body share | body level | body colour | flat | seen in both | level in place | colour in place | new ground level | kept ground level |', '| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |')
+      for (const r of f.rows) md.push('| ' + [r.frame + (r.frame === line.frameT ? ' T' : ''), r.side === 'orbit' ? 'globe' : 'close', r.height, r.ratio ?? '', r.place ? r.place.join(', ') : 'behind', r.motionCentre ?? '', r.motionEdge ?? '', r.shutter, r.blurCentre ?? '', r.blurEdge ?? '', r.blurMost, r.stepMost ?? '', r.samples, r.level ?? '', r.colour ? r.colour.join(' ') : '', r.bodyShare ?? '', r.bodyLevel ?? '', r.bodyColour ? r.bodyColour.join(' ') : '', r.flatShare ?? '', r.inPlace?.seen ?? '', r.inPlace?.level ?? '', r.inPlace ? r.inPlace.colour.join(' ') : '', r.inPlace?.fresh ?? '', r.inPlace?.kept ?? ''].join(' | ') + ' |')
       md.push('')
     }
     if (only.includes('sheets')) {
