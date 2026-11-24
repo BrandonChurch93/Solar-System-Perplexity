@@ -1,65 +1,66 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T11:27:52.303Z",
+ "pushed": "2026-11-24T11:45:32.905Z",
  "head": "91d62470b26f63decf5f17ae69ee1cf6716bc4ee",
- "note": "91d6247 pushed: the rise ends with speed and the travel carries it on; rest line 0.375 against 0.026, path green; whole proof running",
+ "note": "91d6247: rise pictures green on the whole window, the pop at the travel's take off 1.06 against 1.59; G17, gate, finals, parity running",
  "looks": [
+  {
+   "time": "2026-11-24T11:45:31.909Z",
+   "file": "20261124114531909-note-saturn-rise-changes.jpg",
+   "source": "../../../../tmp/v/r45/saturn-rise-changes.png",
+   "kind": "note",
+   "label": "91d6247 rise, the judge's changes panel: pattern 0.25 at 3821 and a half (limit 0.45)",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-24T11:45:31.021Z",
+   "file": "20261124114531021-note-saturn-rise-pops.jpg",
+   "source": "../../../../tmp/v/r45/saturn-rise-pops.png",
+   "kind": "note",
+   "label": "91d6247 rise, the judge's pops panel: verdict green, largest pop 1.15 at 3872 and a half; from 3885 on 1.06 (was 1.59)",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-24T11:45:29.666Z",
+   "file": "20261124114529666-note-3866_draft.jpg",
+   "source": "../../../../tmp/v/r45/3866_draft.png",
+   "kind": "note",
+   "label": "91d6247 judged frame 3866 at draft (changes on purpose: new paces of the rise)"
+  },
+  {
+   "time": "2026-11-24T11:45:28.417Z",
+   "file": "20261124114528417-note-rise_d.jpg",
+   "source": "../../../../tmp/v/r45/sheets/rise_d.png",
+   "kind": "note",
+   "label": "91d6247 the seam into the travel 3878 to 3896: the rise ends with speed, nothing rests"
+  },
+  {
+   "time": "2026-11-24T11:45:27.426Z",
+   "file": "20261124114527426-note-rise_c.jpg",
+   "source": "../../../../tmp/v/r45/sheets/rise_c.png",
+   "kind": "note",
+   "label": "91d6247 rise 3844 to 3877, every third capture step"
+  },
+  {
+   "time": "2026-11-24T11:45:26.543Z",
+   "file": "20261124114526543-note-rise_b.jpg",
+   "source": "../../../../tmp/v/r45/sheets/rise_b.png",
+   "kind": "note",
+   "label": "91d6247 rise 3816 to 3840, every second frame"
+  },
+  {
+   "time": "2026-11-24T11:45:25.235Z",
+   "file": "20261124114525235-note-rise_a.jpg",
+   "source": "../../../../tmp/v/r45/sheets/rise_a.png",
+   "kind": "note",
+   "label": "91d6247 rise 3798 to 3813, every film frame"
+  },
   {
    "time": "2026-11-24T11:27:42.652Z",
    "file": "20261124112742652-note-ct_seam_a.jpg",
    "source": "../../../../tmp/v/ct_seam_a.png",
    "kind": "note",
    "label": "first trial of the carry, 3880 to 3896 every second frame (before the sky's lift was made a smooth step of the height)"
-  },
-  {
-   "time": "2026-11-24T11:27:41.521Z",
-   "file": "20261124112741521-note-ct_seam_b.jpg",
-   "source": "../../../../tmp/v/ct_seam_b.png",
-   "kind": "note",
-   "label": "trial of the carry: the seam from the rise into the travel, 3877 to 3896 and a half, every third capture frame; the globe draws back at one pace, no rest"
-  },
-  {
-   "time": "2026-11-24T11:12:27.085Z",
-   "file": "20261124111227085-note-saturn-dive-changes.jpg",
-   "source": "../../../../tmp/v/r44/saturn-dive-changes.png",
-   "kind": "note",
-   "label": "PRE 68b4561 dive, the judge's changes panel: verdict green, pattern 0.41 at 3565 at the pole (limit 0.45)",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-24T11:12:25.965Z",
-   "file": "20261124111225965-note-shade.jpg",
-   "source": "../../../../tmp/v/r44/sheets/shade.png",
-   "kind": "note",
-   "label": "PRE 68b4561 item 15, lower right at full size 3538 to 3556: stars come up in the gap, open"
-  },
-  {
-   "time": "2026-11-24T11:12:24.938Z",
-   "file": "20261124111224938-note-bend.jpg",
-   "source": "../../../../tmp/v/r44/sheets/bend.png",
-   "kind": "note",
-   "label": "PRE 68b4561 owed sheet, every second frame 3562 to 3588"
-  },
-  {
-   "time": "2026-11-24T11:12:24.134Z",
-   "file": "20261124111224134-note-dive_d.jpg",
-   "source": "../../../../tmp/v/r44/sheets/dive_d.png",
-   "kind": "note",
-   "label": "PRE 68b4561 dive into the skim 3624 to 3640"
-  },
-  {
-   "time": "2026-11-24T11:12:23.134Z",
-   "file": "20261124111223134-note-dive_c.jpg",
-   "source": "../../../../tmp/v/r44/sheets/dive_c.png",
-   "kind": "note",
-   "label": "PRE 68b4561 dive 3592 to 3622"
-  },
-  {
-   "time": "2026-11-24T11:12:21.733Z",
-   "file": "20261124111221733-note-dive_b.jpg",
-   "source": "../../../../tmp/v/r44/sheets/dive_b.png",
-   "kind": "note",
-   "label": "PRE 68b4561 dive 3560 to 3590"
   }
  ]
 }
