@@ -1,9 +1,16 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T11:15:41.290Z",
+ "pushed": "2026-11-24T11:30:18.069Z",
  "head": "8fd084dc09b9ff9fdb646df916db8967daa85298",
- "note": "MAIL 602: the far end of the rise not at rest (pull back along the exit line), scratch drafts on Mars through the seam into the travel",
+ "note": "MAIL 602: the pull back (design B) measured on every stop's path; chart of the rest line by speed; the warm check of Mars's piece with a scratch pull back is running",
  "looks": [
+  {
+   "time": "2026-11-24T11:30:17.227Z",
+   "file": "20261124113017227-note-rest-line-by-speed.jpg",
+   "source": "out/work/h602/rest-line-by-speed.png",
+   "kind": "note",
+   "label": "MAIL 602 pull back, Mars seam 2745: the limb's fastest point and the centre, px a film frame, today against 1.2, 1.77 and 3.2 radii a second (from the path, carry laid)"
+  },
   {
    "time": "2026-11-24T11:15:31.614Z",
    "file": "20261124111531614-note-b32-limb-low.jpg",
@@ -67,14 +74,6 @@
    "source": "out/work/h611/earth-crop-right.png",
    "kind": "note",
    "label": "same frames, top band right half at full size",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T10:32:11.982Z",
-   "file": "20261124103211982-note-earth-crop-left.jpg",
-   "source": "out/work/h611/earth-crop-left.png",
-   "kind": "note",
-   "label": "same frames, top band left half at full size: the far ground goes from land under cloud (globe) to white haze (place picture) in 1908 to 1910, a doubled limb line in 1909 and 1910",
    "stop": "earth"
   }
  ]
