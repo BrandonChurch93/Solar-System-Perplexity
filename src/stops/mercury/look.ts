@@ -22,11 +22,12 @@ export const light: GlobeLight = {
   nightSoft: [-0.3, -0.12, 0.25, 24],
   dusk: { from: 1, range: [-0.12, 0, 0.15, 0.35] },
   edge: 1.2,
-  rim: { color: [0.0169, 0.0144, 0.0113], width: 0.01, wide: 0.035, wideGain: 2.7, nearGain: 3.3, nearTint: [1.08, 0.84, 0.76], lobe: [0.9, 0.9, 0.03], toLight: 0.45, after: 0.2 },
+  rim: { color: [0.0169, 0.0144, 0.0113], width: 0.01, wide: 0.035, wideGain: 2.7, nearGain: 3.3, nearTint: [1.08, 0.84, 0.76], lobe: [0.9, 0.9, 0.03], toLight: 0.45, after: 0.2, fade: [-46, -30] },
   line: { dir: [0.8175, -0.5743, -0.0432], gain: 1.7, width: [0.001, 0.0092], side: [0.75, 0.95], sun: [0, 0.2, 0.55, 1], dip: 0.22, dipWidth: [0.0164, 0.045], dipSun: [0.3, 0.7], dipTight: [0.8, 0.95, 0.35] },
   glareGate: [0.7, 0.8, 0.06],
   glareLens: [28.8, 36],
   nightAfter: 1,
+  nightPlain: { height: [2.2, 3.4], range: [-0.06, 0.04] },
   shoulder: { from: 0.6, strength: 0.4, frames: [4, 14] },
 }
 
@@ -50,7 +51,7 @@ export const sunSurface: SunSurface = { grain: [0.07, 0.3], cells: 53, coarse: 0
 export const streakCore: LensCore = { row: -0.0393, sigma: 0.0177, rise: [0.94, 1.03], join: [0.84, 0.93], pivot: 0.958, tail: 1.27, power: 3, warm: [1.06, 0.99, 0.86], peak: [0.744, 0.5615] }
 
 export const glare: GlareLook = {
-  peak: 1, fall: { dive: 8, rise: 7 }, span: { dive: 24, rise: 22 }, height: 1.5, keep: [0.165, 0.22], color: [1, 0.84, 0.6],
+  peak: 1, fall: { dive: 8, rise: 7 }, span: { dive: 44, rise: 44 }, height: 1.5, keep: [0.165, 0.22], color: [1, 0.84, 0.6],
   halo: [0.45, 0.25], core: [0.2, 8], rays: [0.5, 0.5], bar: [0.7, 0.014, 0.3], turn: 0.9,
   terrainSun: [745 / 2816, -40 / 1584],
   leave: { radius: 0.9, gain: 0.7, from: [0.16, 0.45] },
@@ -59,7 +60,10 @@ export const carry = { gain: 1, lift: 1.12, knee: 2.9, grey: 0.85, tint: [1.102,
 
 export const close = { meet: true, shift: [0.09, 0.0] as [number, number], frames: [24, 22] as [number, number], height: [0.06, 0.3] as [number, number], far: [7, 10] as [number, number], feather: [0.22, 0.12] as [number, number], haze: { amount: 1, level: { dive: 1, rise: 1.7 }, height: [2.4, 7] as [number, number], cut: [8, 13] as [number, number], calm: [0.3, 0.62] as [number, number], calmHeight: [2.4, 3.6] as [number, number], wash: { amount: 1, cap: 2.5, height: [2.4, 7] as [number, number] } }, lift: { cap: [-0.35, 0.35] as [number, number], knee: { dive: [0.16, 3] as [number, number], rise: [0.3, 1.2] as [number, number] }, height: [14, 40] as [number, number] }, wide: { feather: [[2.4, 0.02], [3.4, 0.06], [4.6, 0.14]] as [number, number][], over: [0.42, 0.02] as [number, number], drop: [9, 12] as [number, number], margin: 0.001, blur: [48, 3] as [number, number], soft: 4, cap: { over: 1.3, span: 0.03125, height: [2.3, 2.7] as [number, number], reach: [6, 8.5] as [number, number] }, far: [[2.4, 23], [3.4, 15], [4.3, 11.5], [5.9, 9.5], [10.4, 8], [16, 6]] as [number, number][] } }
 
-export const far = { color: [0.214, 0.2, 0.18] as [number, number, number], mu: { dive: [0.14, 0.26] as [number, number], rise: [0.22, 0.42] as [number, number] }, sunFallDeg: 14, flat: 0.6, sunReach: 0.6, sunLevel: 4, lit: [0.0, 0.15] as [number, number], height: [0.05, 0.2] as [number, number] }
+export const matte = { rows: 405, band: [0.014, 0.04] as [number, number], frames: 2 }
+export const halo = { dive: [0, 33] as [number, number], rise: [-30, 0] as [number, number] }
+export const limb = { sink: { dive: 0.081, rise: 0.163 }, frames: { dive: 8, rise: 12 } }
+export const far = { color: [0.289, 0.26, 0.225] as [number, number, number], under: { dive: [0.05, 0.125] as [number, number], rise: [0.1, 0.155] as [number, number] }, sunFallDeg: 14, flat: 1, sunReach: 0.6, sunLevel: 2.6, lit: [0.0, 0.15] as [number, number], height: [0.05, 0.2] as [number, number], relief: [0.08, 0.5] as [number, number] }
 export const mend = { lon: 16.36, lat: -5.94, reach: 0.03, from: 1.8 }
 
 export const flight = {
@@ -74,6 +78,6 @@ export const edge = 10.1
 export const relief = { mistSpeed: 0, dustSpeed: 0, dustDir: [1, 0] as [number, number], mesh: 640 }
 
 export const path = {
-  dive: { easeFar: 14, easeNear: 12, blend: [0.15, 0.25] as [number, number], settle: 4 },
-  rise: { easeFar: 14, easeNear: 10, blend: [0.15, 0.25] as [number, number], settle: 4 },
+  dive: { easeFar: 18, easeNear: 12, blend: [0, 0.25] as [number, number], settle: 4 },
+  rise: { easeFar: 22, easeNear: 10, blend: [0, 0.25] as [number, number], settle: 4 },
 }
