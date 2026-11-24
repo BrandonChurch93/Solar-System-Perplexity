@@ -1,9 +1,57 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T13:43:25.029Z",
+ "pushed": "2026-11-24T14:28:22.343Z",
  "head": "b8c0def04b45940b252ab06e35b40a4a8796b913",
- "note": "diagnosis of the exchange between plates and close ground, before the plate cure",
+ "note": "exchange 1 cure in work: plates laid from the close ground, pattern between the two grounds falls, from above still a patch",
  "looks": [
+  {
+   "time": "2026-11-24T14:28:21.720Z",
+   "file": "20261124142821720-note-pc.jpg",
+   "source": "out/work/place/see/pc.jpg",
+   "kind": "note",
+   "label": "picture camera coordinates over the close ground",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T14:28:21.063Z",
+   "file": "20261124142821063-note-fan3.jpg",
+   "source": "out/work/place/see/fan3.jpg",
+   "kind": "note",
+   "label": "test it3 plates 1.6, 3.8, 8.5 with the picture's frame, box and apron lines on the ground",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T14:28:20.380Z",
+   "file": "20261124142820380-note-it2-dive.jpg",
+   "source": "out/work/place/see/it2-dive.jpg",
+   "kind": "note",
+   "label": "test it2 from above: patch with a bright streak on its north border",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T14:28:19.718Z",
+   "file": "20261124142819718-note-it1-dive.jpg",
+   "source": "out/work/place/see/it1-dive.jpg",
+   "kind": "note",
+   "label": "test it1 from above, dive 2440 to 2462 and rise 2694: the lay reads as a patch",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T14:28:18.861Z",
+   "file": "20261124142818861-note-it2-HR.jpg",
+   "source": "out/work/place/see/it2-HR.jpg",
+   "kind": "note",
+   "label": "test it2: the same after the second pass",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T14:28:18.020Z",
+   "file": "20261124142818020-note-it1-HR.jpg",
+   "source": "out/work/place/see/it1-HR.jpg",
+   "kind": "note",
+   "label": "test it1: globe ground alone against close ground alone after the first lay, 2466 2470 2686",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T13:43:24.375Z",
    "file": "20261124134324375-note-lay-vs-plate.jpg",
@@ -18,60 +66,6 @@
    "source": "out/work/place/see/pat-pairs.jpg",
    "kind": "note",
    "label": "pattern measure between globe ground alone and close ground alone at 2466, 2470, 2686, 2476",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T13:43:23.135Z",
-   "file": "20261124134323135-note-pair-2462.jpg",
-   "source": "out/work/place/see/pair-2462.jpg",
-   "kind": "note",
-   "label": "dive 2462: the close ground alone from higher up smears, so the cure is in the plates",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T13:43:22.072Z",
-   "file": "20261124134322072-note-pair-2466.jpg",
-   "source": "out/work/place/see/pair-2466.jpg",
-   "kind": "note",
-   "label": "exchange 1 at dive 2466: globe ground alone (left) against close ground alone (right), same camera",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T11:23:23.263Z",
-   "file": "20261124112323263-compare-mars-rise-sides.jpg",
-   "source": "out/work/handover/mars-rise-sides.png",
-   "kind": "compare",
-   "label": "mars rise, both sides at T (frame 2681) and their difference times 8",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "frame": 2681,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T11:22:51.760Z",
-   "file": "20261124112251760-compare-mars-dive-sides.jpg",
-   "source": "out/work/handover/mars-dive-sides.png",
-   "kind": "compare",
-   "label": "mars dive, both sides at T (frame 2477) and their difference times 8",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2477,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T11:22:37.309Z",
-   "file": "20261124112237309-note-Q-texels.jpg",
-   "source": "out/work/place/see/Q-texels.png",
-   "kind": "note",
-   "label": "Proof 49, G13 answer: 2687 and 2720, picture left, texels view right, draft. Green alone is under 1 texel a pixel: at 2687 the globe's own ground outside the close ground's border, lower right (soft 6.28 percent); at 2720 the globe's wrap outside the patches, lower left and right (soft 5.68 percent)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T11:20:28.554Z",
-   "file": "20261124112028554-note-Q-cap-rise.jpg",
-   "source": "out/work/place/see/Q-cap-rise.png",
-   "kind": "note",
-   "label": "Proof 49, rise 2692, 2694, 2698, 2702, 2706, 2712, 2720, draft: the place and its canyon stay one picture while they shrink (plates made from the level under them); pale bar in the canyon's shade at 2692 and 2694; the place reads as a small canyon in a plain",
    "stop": "mars"
   }
  ]
