@@ -1,9 +1,49 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T00:58:22.682Z",
- "head": "4e530d52a55b87d8aa0143962ad21c4bafdde7f9",
- "note": "c29: cells as tall bulbs lit by height, streaks, warm lanes; answers MAIL 428 point 1 in part; unfinished",
+ "pushed": "2026-11-24T01:20:03.883Z",
+ "head": "13249a5c8c86f5bd17c8d935b819ab58b1249c6d",
+ "note": "c31 and c34 frame 60 at final tier, one to one beside the approved image; unfinished",
  "looks": [
+  {
+   "time": "2026-11-24T01:20:02.524Z",
+   "file": "20261124012002524-note-c34final-whole-pair.jpg",
+   "source": "out/work/sun/convect/c34final-whole-pair.jpg",
+   "kind": "note",
+   "label": "c34 frame 60 FINAL tier whole, approved left, mine right: far field not yet a fine bright grain (in work), mine paler and browner",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T01:20:01.413Z",
+   "file": "20261124012001413-note-c34final-spot-1to1.jpg",
+   "source": "out/work/sun/convect/c34final-spot-1to1.jpg",
+   "kind": "note",
+   "label": "c34 frame 60 FINAL tier, the spot one to one, approved left, mine right: umbra black, fibres uneven with bright heads; my penumbra too small and too dull, the cells stand too high round it",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T01:20:00.332Z",
+   "file": "20261124012000332-note-c34final-near-1to1.jpg",
+   "source": "out/work/sun/convect/c34final-near-1to1.jpg",
+   "kind": "note",
+   "label": "c34 frame 60 at the FINAL tier, near ground one to one, approved left, mine right (after MAIL 444, uncommitted, unfinished): brightness from the cell's age and its flow, mottled, flow lines curl, no spokes; lanes thin and dark; mine still matt and creamy where the approved is dark glass with bright rims. G17 1.44, lower quarter 1.13; blur 40 px ground 0.063; quantiles 0.239 0.374 0.552 (approved 0.218 0.368 0.562); 311 s for the frame",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T01:09:03.056Z",
+   "file": "20261124010903056-note-c31final-spot-1to1.jpg",
+   "source": "out/work/sun/convect/c31final-spot-1to1.jpg",
+   "kind": "note",
+   "label": "c31 frame 60 FINAL tier, the spot one to one, approved left, mine right: my fibres too thick and smooth, shards at their outer ends, umbra dark red (the veil), not black",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T01:09:02.495Z",
+   "file": "20261124010902495-note-c31final-near-1to1.jpg",
+   "source": "out/work/sun/convect/c31final-near-1to1.jpg",
+   "kind": "note",
+   "label": "c31 frame 60 at the FINAL tier, near ground one to one, approved left, mine right (commit 13249a5c local, unfinished): mine reads as pleated satin tents, the approved as dark glass bubbles with bright rims; G17 1.47, lower quarter 1.23; blur 40 px ground 0.053; quantiles 0.260 0.382 0.543 (approved 0.218 0.368 0.562); 308 s for the frame",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T00:58:22.123Z",
    "file": "20261124005822123-note-c29b-four.jpg",
@@ -26,46 +66,6 @@
    "source": "out/work/sun/convect/c29-near-pair.jpg",
    "kind": "note",
    "label": "c29 frame 60 near ground, approved left, mine right (draft tier, unfinished): bulbs with height, streaks, warm lanes. G17 1.17, lower quarter 0.98; quantiles 0.245 0.358 0.506 (approved 0.218 0.368 0.562); blur 40 px ground 0.054",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T00:35:16.936Z",
-   "file": "20261124003516936-note-c17-rise.jpg",
-   "source": "out/work/sun/convect/c17-rise.jpg",
-   "kind": "note",
-   "label": "rise, globe side, frames 222 247 262: the same ground from functions lies on the globe and gives way to the globe's face by the eye's height (1 to 3 radii); the place picture is retired",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T00:35:16.379Z",
-   "file": "20261124003516379-note-h16-evo.jpg",
-   "source": "out/work/sun/convect/h16-evo.jpg",
-   "kind": "note",
-   "label": "the same crop at frames 0 24 48 72 96 120, camera held (life 14 to 22 s)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T00:35:15.822Z",
-   "file": "20261124003515822-note-h16-row-60.jpg",
-   "source": "out/work/sun/convect/h16-row-60.jpg",
-   "kind": "note",
-   "label": "the same row on consecutive frames 60 to 66, camera held: edges move 1 to 3 px a frame, no snap",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T00:35:15.291Z",
-   "file": "20261124003515291-note-h16-row.jpg",
-   "source": "out/work/sun/convect/h16-row.jpg",
-   "kind": "note",
-   "label": "one row of pixels (y 900) against time, camera held, frames 0 to 120 every sixth: wedges that open are cells born and spreading, wedges that close are cells swallowed",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T00:35:14.738Z",
-   "file": "20261124003514738-note-h16-six.jpg",
-   "source": "out/work/sun/convect/h16-six.jpg",
-   "kind": "note",
-   "label": "camera held, six consecutive frames 60 to 65 at native size (state h16: one step before c18, flatter tops)",
    "stop": "sun"
   }
  ]
