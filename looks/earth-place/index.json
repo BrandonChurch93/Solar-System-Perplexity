@@ -1,9 +1,25 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T08:30:15.106Z",
- "head": "571f42dcbd079279ac3afd3b3efb3b6cabd441a6",
- "note": "earth 571f42dc named: dive 1830 to 1865 and bend 2062 to 2089 every frame at draft, final 2010 against the kept still",
+ "pushed": "2026-11-24T08:51:36.986Z",
+ "head": "e3bf5894927d289b35f6bf1deb45f3173f41c93e",
+ "note": "second commit started: the exchange of plate and lay back measured and mapped, cure in work",
  "looks": [
+  {
+   "time": "2026-11-24T08:51:36.035Z",
+   "file": "20261124085136035-note-pl-low-700.jpg",
+   "source": "../../../../tmp/gl/s7/pl-low-700.jpg",
+   "kind": "note",
+   "label": "plate repaint (left) against lay back (right, window not placed exactly): the far part that is exchanged",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T08:51:34.925Z",
+   "file": "20261124085134925-note-pmap-dive.jpg",
+   "source": "../../../../tmp/gl/s7/pmap-dive.jpg",
+   "kind": "note",
+   "label": "named tree 571f42dc: pattern change in place, dive 1884 1890 1896 against 8 later (draft, own estimate)",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T08:30:06.580Z",
    "file": "20261124083006580-note-pair2010.jpg",
@@ -82,22 +98,6 @@
    "source": "../../../../tmp/gl/s7/rise-d.jpg",
    "kind": "note",
    "label": "new path, rise every frame 2133 to 2145, then 2150 2155 2160, draft",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T07:58:23.842Z",
-   "file": "20261124075823842-note-dive-c.jpg",
-   "source": "../../../../tmp/gl/s7/dive-c.jpg",
-   "kind": "note",
-   "label": "new path, dive every frame 1890 to 1909, draft",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T07:58:23.236Z",
-   "file": "20261124075823236-note-dive-b.jpg",
-   "source": "../../../../tmp/gl/s7/dive-b.jpg",
-   "kind": "note",
-   "label": "new path, dive every frame 1878 to 1889, draft (plate as a hazier darker oval round the glint)",
    "stop": "earth"
   }
  ]
