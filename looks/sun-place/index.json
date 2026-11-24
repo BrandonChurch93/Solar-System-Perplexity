@@ -1,71 +1,71 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T00:11:14.587Z",
+ "pushed": "2026-11-24T00:35:17.675Z",
  "head": "4a26272392321afecc04a808669f537d98c747a3",
- "note": "Sun ground from functions, unfinished: held camera motion sheets; frame 60 G17 1.00 lower quarter 0.74 (limit 0.8), blur 40 px difference ground 0.057 whole 0.042",
+ "note": "Sun ground from functions, unfinished: frame 60 beside approved (G17 1.01 / 0.78, blur 0.055 / 0.040), held camera six frames and row against time, globe side of the rise",
  "looks": [
+  {
+   "time": "2026-11-24T00:35:16.936Z",
+   "file": "20261124003516936-note-c17-rise.jpg",
+   "source": "out/work/sun/convect/c17-rise.jpg",
+   "kind": "note",
+   "label": "rise, globe side, frames 222 247 262: the same ground from functions lies on the globe and gives way to the globe's face by the eye's height (1 to 3 radii); the place picture is retired",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T00:35:16.379Z",
+   "file": "20261124003516379-note-h16-evo.jpg",
+   "source": "out/work/sun/convect/h16-evo.jpg",
+   "kind": "note",
+   "label": "the same crop at frames 0 24 48 72 96 120, camera held (life 14 to 22 s)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T00:35:15.822Z",
+   "file": "20261124003515822-note-h16-row-60.jpg",
+   "source": "out/work/sun/convect/h16-row-60.jpg",
+   "kind": "note",
+   "label": "the same row on consecutive frames 60 to 66, camera held: edges move 1 to 3 px a frame, no snap",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T00:35:15.291Z",
+   "file": "20261124003515291-note-h16-row.jpg",
+   "source": "out/work/sun/convect/h16-row.jpg",
+   "kind": "note",
+   "label": "one row of pixels (y 900) against time, camera held, frames 0 to 120 every sixth: wedges that open are cells born and spreading, wedges that close are cells swallowed",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T00:35:14.738Z",
+   "file": "20261124003514738-note-h16-six.jpg",
+   "source": "out/work/sun/convect/h16-six.jpg",
+   "kind": "note",
+   "label": "camera held, six consecutive frames 60 to 65 at native size (state h16: one step before c18, flatter tops)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T00:35:14.187Z",
+   "file": "20261124003514187-note-c18-near-pair.jpg",
+   "source": "out/work/sun/convect/c18-near-pair.jpg",
+   "kind": "note",
+   "label": "frame 60 near field at native size beside the approved image (c18)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T00:35:13.606Z",
+   "file": "20261124003513606-note-c18-whole-pair.jpg",
+   "source": "out/work/sun/convect/c18-whole-pair.jpg",
+   "kind": "note",
+   "label": "frame 60 draft beside the approved image, ground from functions (c18): G17 1.01 lower quarter 0.78, blur 40 px difference ground 0.055 whole 0.040 (unfinished)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T00:11:13.361Z",
    "file": "20261124001113361-note-h12-evo.jpg",
    "source": "out/work/sun/convect/h12-evo.jpg",
    "kind": "note",
    "label": "same crop at frames 0 24 48 72 90 108, camera held: cells are born, spread, split and are swallowed (too fast, life doubled since)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T00:11:12.323Z",
-   "file": "20261124001112323-note-h12-row.jpg",
-   "source": "out/work/sun/convect/h12-row.jpg",
-   "kind": "note",
-   "label": "one row of pixels (y 900) against time, camera held, frames 0 to 108 every sixth (unfinished)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T00:11:11.048Z",
-   "file": "20261124001111048-note-h12-six.jpg",
-   "source": "out/work/sun/convect/h12-six.jpg",
-   "kind": "note",
-   "label": "ground from functions, camera held: six consecutive frames 60 to 65 at native size (unfinished)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T23:46:46.188Z",
-   "file": "20261123234646188-note-c7-bulbs-frame60-whole.jpg",
-   "source": "../../../../tmp/c7-bulbs-frame60-whole.jpg",
-   "kind": "note",
-   "label": "frame 60 whole, approved left, bulbs right (unfinished)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T23:46:45.614Z",
-   "file": "20261123234645614-note-c7-bulbs-frame60-near.jpg",
-   "source": "../../../../tmp/c7-bulbs-frame60-near.jpg",
-   "kind": "note",
-   "label": "frame 60 near ground, approved left, bulbs right (unfinished)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T23:24:52.228Z",
-   "file": "20261123232452228-note-b2-evo.jpg",
-   "source": "out/work/sun/convect/b2-evo.jpg",
-   "kind": "note",
-   "label": "G 1, 23:25, unfinished. One box of the screen at frames 0, 30, 60, 90, 120, 150, 168 (the film's camera moves in).",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T23:24:51.647Z",
-   "file": "20261123232451647-note-b2-limb.jpg",
-   "source": "out/work/sun/convect/b2-limb.jpg",
-   "kind": "note",
-   "label": "G 1, 23:25, unfinished. The limb at frame 60, twice native size: jets as geometry, the horizon is the outline of the cells. Stair steps on far cells are the draft's one sample a pixel and the mesh; not yet checked at review tier.",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T23:24:51.062Z",
-   "file": "20261123232451062-note-b2-strip-60-68.jpg",
-   "source": "out/work/sun/convect/b2-strip-60-68.jpg",
-   "kind": "note",
-   "label": "G 1, 23:25, unfinished. Nine consecutive frames, 60 to 68, one box of the near ground at native size (draft, one sample a pixel).",
    "stop": "sun"
   }
  ]
