@@ -1,9 +1,33 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-24T08:53:12.901Z",
- "head": "b754378d0bcbc29cf08fda8419310b3da9f30541",
- "note": "b754378d on main b0035c5c: memo commit merged, 443 tests green; pattern red work begins, the white tops are the first suspect",
+ "pushed": "2026-11-24T09:34:21.799Z",
+ "head": "b0ff729f1a4b2723fc090317a824e1ea709b0f20",
+ "note": "sky cure of the dive under way (main 2008483c merged): baseline sheet, E23 band, E4 flat light pattern 0.44",
  "looks": [
+  {
+   "time": "2026-11-24T09:34:20.881Z",
+   "file": "20261124093420881-note-band-e23.jpg",
+   "source": "../../../../tmp/band-e23.png",
+   "kind": "note",
+   "label": "experiment E23 on b754378d (main b0035c5c), 4402.5 against 4410.5 carried back: the pattern lies in the band under the limb",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T09:34:20.084Z",
+   "file": "20261124093420084-note-pat-e4.jpg",
+   "source": "../../../../tmp/pat-e4.png",
+   "kind": "note",
+   "label": "experiment E4 on b754378d (main b0035c5c): light of the place flat in the view angle, tops and cover off: pattern 0.44 at 4402.5 where the stop has 1.15 with the angle term",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T09:34:18.857Z",
+   "file": "20261124093418857-note-dbase-a.jpg",
+   "source": "../../../../tmp/dbase-a.png",
+   "kind": "note",
+   "label": "dive 4134 to 4145 before the sky cure, b754378d on main b0035c5c: the galaxy core enters left at 4140.5 while the two skies are exchanged",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-24T08:53:12.117Z",
    "file": "20261124085312117-note-close4.jpg",
@@ -287,41 +311,6 @@
    "segment": "uranus.dive",
    "first": 4187,
    "last": 4198,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T07:00:14.079Z",
-   "file": "20261124070014079-sheet-uranus-dive-draft-before.jpg",
-   "source": "out/work/handover/uranus-dive-draft-before.png",
-   "kind": "sheet",
-   "label": "uranus dive, every frame 4174 to 4185 (before T, frame 4186), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "first": 4174,
-   "last": 4185,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T07:00:12.266Z",
-   "file": "20261124070012266-sheet-uranus-dive-draft-across.jpg",
-   "source": "out/work/handover/uranus-dive-draft-across.png",
-   "kind": "sheet",
-   "label": "uranus dive, every frame 4180 to 4191 (across T, frame 4186), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "first": 4180,
-   "last": 4191,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T06:49:59.740Z",
-   "file": "20261124064959740-compare-uranus-dive-sides.jpg",
-   "source": "out/work/handover/uranus-dive-sides.png",
-   "kind": "compare",
-   "label": "uranus dive, both sides at T (frame 4186) and their difference times 8",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4186,
    "tier": "draft"
   }
  ]
