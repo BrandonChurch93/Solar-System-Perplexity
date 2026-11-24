@@ -1,11 +1,12 @@
 import { config } from '../config'
+import { captureFrames, captureRate, captureShutterDegrees, setCapture, shutterAsked } from '../core/clock'
 import type { Engine, Sanity } from '../core/engine'
 
 declare const __ENGINE_HASH__: string
 declare const __STOP_HASHES__: Record<string, string>
 declare const __VERSIONS__: Record<string, string>
 
-export interface ShowcaseInfo { frameCount: number; fps: number; format: string; tier: string; assets: string; engineHash: string; stopHashes: Record<string, string>; versions: Record<string, string> }
+export interface ShowcaseInfo { frameCount: number; fps: number; rate: number; captureFrames: number; captureFps: number; shutterDegrees: number; format: string; tier: string; assets: string; engineHash: string; stopHashes: Record<string, string>; versions: Record<string, string> }
 
 export interface Showcase {
   ready: Promise<void>
@@ -13,6 +14,8 @@ export interface Showcase {
   setFormat(id: string): Promise<void>
   setAssets(id: string): Promise<void>
   setDiagnostic(view: string): void
+  setRate(rate: number): void
+  setShutter(degrees: number | null): void
   renderFrame(frameIndex: number, tier: string): Promise<void>
   png(): Promise<string>
   sanity(): Sanity
@@ -24,15 +27,17 @@ export function installShowcase(engine: Engine, ready: Promise<void>, tier: stri
   let lastTier = tier
   const api: Showcase = {
     ready,
-    info: () => ({ frameCount: config.frameCount, fps: config.fps, format: engine.format.id, tier: lastTier, assets: engine.assets, engineHash: __ENGINE_HASH__, stopHashes: __STOP_HASHES__, versions: __VERSIONS__ }),
+    info: () => ({ frameCount: config.frameCount, fps: config.fps, rate: captureRate(), captureFrames: captureFrames(), captureFps: config.fps * captureRate(), shutterDegrees: captureShutterDegrees(), format: engine.format.id, tier: lastTier, assets: engine.assets, engineHash: __ENGINE_HASH__, stopHashes: __STOP_HASHES__, versions: __VERSIONS__ }),
     setFormat: async (id) => engine.setFormat(id),
     setAssets: async (id) => engine.setAssets(id),
     setDiagnostic: (view) => {
       engine.diag = view
     },
+    setRate: (rate) => setCapture(rate, shutterAsked()),
+    setShutter: (degrees) => setCapture(captureRate(), degrees),
     renderFrame: async (frameIndex, t) => {
       lastTier = t
-      await engine.renderFrame(frameIndex, t)
+      await engine.renderFrame(Math.floor(frameIndex) / captureRate(), t)
     },
     png: async () => {
       const blob = await new Promise<Blob>((resolve, reject) => engine.canvas.toBlob((b) => (b ? resolve(b) : reject(new Error('no blob'))), 'image/png'))
