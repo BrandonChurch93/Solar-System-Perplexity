@@ -1,9 +1,53 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T16:12:21.605Z",
- "head": "b41cdd1ddb4dfb49dbedd9a6c641fd0b7c8b7dd9",
- "note": "16:15 UTC ruling 3: studies before the build (wide canvas laid back on near and fore, the base rise frames); nothing under src or public changed",
+ "pushed": "2026-11-24T16:36:46.375Z",
+ "head": "77a100c6e636a98f334e03c8c5cedc83da20f3c0",
+ "note": "16:38 UTC: main ed003c70 merged by hand; draft frames and the finals of 2895 and 3150 changed bytes on the merge with my folders untouched; the cause is being read now",
  "looks": [
+  {
+   "time": "2026-11-24T16:36:45.637Z",
+   "file": "20261124163645637-note-m12-sky.jpg",
+   "source": "../work/t/m12-sky.png",
+   "kind": "note",
+   "label": "Frame 2990 draft, sky right of the globe at full size: before the merge (left) and after it (right)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T16:36:44.950Z",
+   "file": "20261124163644950-note-m12.jpg",
+   "source": "../work/t/m12.jpg",
+   "kind": "note",
+   "label": "Draft frames 2990, 3000, 3010, 3280 before (left) and after (middle) the merge of main ed003c70, difference times 8 (right): my folders are the same, the bytes are not",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T16:34:45.243Z",
+   "file": "20261124163445243-frame-bN-3150.jpg",
+   "source": "out/work/jupiter/final/bN-3150.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3150, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
+  {
+   "time": "2026-11-24T16:31:21.049Z",
+   "file": "20261124163121049-frame-bN-2895.jpg",
+   "source": "out/work/jupiter/final/bN-2895.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2895, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
   {
    "time": "2026-11-24T16:12:19.024Z",
    "file": "20261124161219024-note-near-chain.jpg",
@@ -162,38 +206,6 @@
    "source": "../work/ff/pat-v5.jpg",
    "kind": "note",
    "label": "STUDY rise rows 3251 to 3255 with the plates alone (no approved view drawn): the pattern port reads 0.45 0.46 0.52 0.49 0.45, limit 0.45; frame, frame 8 later carried back, pattern map",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T15:09:04.519Z",
-   "file": "20261124150904519-note-near-plate-rings.jpg",
-   "source": "../work/ff/near-plate-rings.jpg",
-   "kind": "note",
-   "label": "study near plate from above: nest rings yellow, the core's fan green, the wide canvas' fan magenta",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T15:09:03.853Z",
-   "file": "20261124150903853-note-cand-b-above.jpg",
-   "source": "../work/ff/cand-b-above.jpg",
-   "kind": "note",
-   "label": "REJECTED far field candidate b from above, left the bare mid plate, right with the view's band: washed",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T15:09:03.280Z",
-   "file": "20261124150903280-note-g-tl.jpg",
-   "source": "../work/ff/g-tl.jpg",
-   "kind": "note",
-   "label": "FAULT rise 3251.5 against 3259.5 carried by the ground, top left: the view's cream rows, then the plate's brown belt",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T15:09:02.377Z",
-   "file": "20261124150902377-note-g-rh.jpg",
-   "source": "../work/ff/g-rh.jpg",
-   "kind": "note",
-   "label": "FAULT rise 3251.5 against 3259.5 carried by the ground, right far field: the view's dusk, then the plate's white zone in day",
    "stop": "jupiter"
   }
  ]
