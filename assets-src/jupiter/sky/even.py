@@ -18,7 +18,8 @@ def tap(f, factor):
 
 
 def main(source, target, factor, quality):
-    lin = linear(np.asarray(Image.open(source).convert('RGB')).astype(np.float64))
+    levels = np.load(source) if source.endswith('.npy') else np.asarray(Image.open(source).convert('RGB'))
+    lin = linear(levels.astype(np.float64))
     h, w, _ = lin.shape
     gain = tap(np.fft.fftfreq(h)[:, None], factor) * tap(np.fft.rfftfreq(w)[None, :], factor)
     out = []

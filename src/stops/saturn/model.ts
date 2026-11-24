@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { FarPoint } from '../../bodies/farpoint'
 import { config } from '../../config'
+import { bufferFrame } from '../../core/frame'
 import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { smooth } from '../../director/rig'
 import { ringField } from './field'
@@ -52,7 +53,7 @@ export const createModel: SetFactory = async (ctx) => {
 
   // the ice near the lens, grain by grain
   const grains = new Grains(sheet.uniforms, ice, iceJson.orbit.syncRadius)
-  tilt.add(grains.points)
+  tilt.add(grains.mesh)
 
   const moonFit = fit.moons![0]!
   const titan = new Titan(moonFit.radius * look.titan.size, look.titan)
@@ -149,13 +150,16 @@ export const createModel: SetFactory = async (ctx) => {
       const globeGain = gain * THREE.MathUtils.lerp(tune.globe[0]!, tune.globe[1]!, closeGlobe)
       const elapsed = state.time - plan.holdMid
       const aspect = view.format.width / view.format.height
+      // what the look holds in pixels is an angle: pixels of the master, times the film's own factor
+      const foot = bufferFrame()
 
       const gu = globe.material.uniforms
       const su = shell.material.uniforms
       ;(gu.uCam!.value as THREE.Vector3).copy(camS)
       gu.uLimbW!.value = poseW.value * look.limbShow
-      ;(gu.uFine!.value as THREE.Vector4).w = (1 - poseW.value) * (1 - closeGlobe)
-      gu.uNightBlur!.value = look.globe.nightBlurFar + (look.globe.nightBlur - look.globe.nightBlurFar) * closeGlobe
+      ;(gu.uFine!.value as THREE.Vector4).set(look.globe.fine[0]! * foot, look.globe.fine[1]!, look.globe.fine[2]!, (1 - poseW.value) * (1 - closeGlobe))
+      gu.uNightBlur!.value = (look.globe.nightBlurFar + (look.globe.nightBlur - look.globe.nightBlurFar) * closeGlobe) * foot
+      gu.uEdgePx!.value = look.globe.edgePx * foot
       su.uLimbW!.value = gu.uLimbW!.value
       gu.uInflate!.value = gu.uLimbW!.value > 0 ? look.globe.limbInflate : 1
       // the fine structure of the bands from functions is drawn only when the lens is near enough for any of it
@@ -199,7 +203,7 @@ export const createModel: SetFactory = async (ctx) => {
       ;(ru.uSunL!.value as THREE.Vector3).copy(sunL)
       ;(ru.uShade!.value as THREE.Vector4).z = THREE.MathUtils.lerp(sheetJson.gain[0]!, sheetJson.gain[1]!, close) * THREE.MathUtils.lerp(tune.rings[0]!, tune.rings[1]!, close)
       ru.uSat!.value = THREE.MathUtils.lerp(tune.ringSaturation[0]!, tune.ringSaturation[1]!, close)
-      field.set(close)
+      field.set(close, foot)
       field.far(farW, Math.max(farW, 1 - closeGlobe))
       sheet.set(close)
       sheet.far(shadowL.copy(sunL).applyQuaternion(shadowTurn).normalize(), 1 - poseW.value, 1, spinRate, elapsed)
@@ -221,6 +225,7 @@ export const createModel: SetFactory = async (ctx) => {
       ;(tu.uAxis!.value as THREE.Vector3).copy(plan.axis)
       ;(tu.uToBody!.value as THREE.Matrix3).setFromMatrix4(toBody.makeRotationFromQuaternion(bodyBack.copy(total).invert()))
       tu.uGain!.value = gain * state.weight
+      tu.uEdgePx!.value = look.titan.edgePx * foot
 
       const distance = centre.length()
       const radiusPx = (1 / Math.max(distance, 1)) / half * (view.format.height / 2)
