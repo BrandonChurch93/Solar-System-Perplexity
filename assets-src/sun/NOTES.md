@@ -2459,3 +2459,11 @@ Full text on disk outside the repo: /home/user/workspace/MAIL-228.md. Read it wh
 - The first try of the draft frames on the merge died in its build ("Error: Command failed: npx vite build --logLevel warn", signal SIGTERM); run again alone it drew all five. Cause: a shell of mine ended while the build ran.
 - Not run on the merge: handover, pictures, warm, seam, G13, final tier (all measured on a5b15421 on main 2bc36ce6 with that main's tools).
 - Lesson: read `git ls-remote origin main` before the last chain, not after it.
+
+## The third named, then main 57695be8 merged (16:36 to 17:26 UTC)
+
+- 16:36: NAMED 1f74d5c9 sent to /root (on main ed003c70, a status on top of 4752aa1e, merged), with seven pictures of 0, 60 and 90 at the final tier beside the approved image. Looks 155b1264 and f4ddf7ac. A short note on the three red of `tests/weights.test.ts` went to /root/handover_engineer at 16:37 (no change asked in my name).
+- The new main's tools on 1f74d5c9 (16:36 to 17:16, draft): handover "Verdict: pass (side difference at T, flow gap at T, every frame)." with the same numbers as on a5b15421 (side difference mean 0.039, 99.9th 9, max 200, 508 pixels over 16; flow gap mean 0.136, largest 0.439; largest step level 2.87 and colour 3.04 into 217; new line, shown and not judged: the same step in place, level 2.36 and colour 2.9 into 239). Pictures, rate 1: green; level step 0.38 at 229, pop 1.18 from 244, pattern 0.27 from 192; new lines, shown and not judged: pop of one block 6.61 from 243, change in place 55.1 from 211. Seam GREEN. Warm 0 to 2 at rate 2: "0 frames of a dive, surface view, rise or travel did work, 2.7 minutes", peak 2177 MB of textures.
+- The handover run took 28 minutes for 90 draft frames here (about 19 s a frame).
+- 17:06: main 57695be8 ("the weights test makes its span in memory"). Merged by merge (d5eed860), no conflict; outside my three folders the head differs from main in the one line of `config/showcase.json`. On the merge: tests 554 passed in 53 files, exit 0 (402.12 s); tsc 0 errors; build passes; gate G11 and G15 pass; path green (rate 0.066 at 240 + 1/2, turn 0.064 at 213 + 1/2, speed 0.074 over 8 at 259); draft 60 3900842616b1a371, 247 c22922926c09eb0d, 270 equal `out/work/sun/j9`.
+- Main 1896a516 (17:01, a status with the scorecards of round 41) lies under 57695be8 and came in with it.
