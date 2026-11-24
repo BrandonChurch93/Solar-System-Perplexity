@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T01:20:03.883Z",
+ "pushed": "2026-11-24T01:32:01.481Z",
  "head": "13249a5c8c86f5bd17c8d935b819ab58b1249c6d",
- "note": "c31 and c34 frame 60 at final tier, one to one beside the approved image; unfinished",
+ "note": "c38 draft pairs and the rise; a fault at 238 named; unfinished",
  "looks": [
+  {
+   "time": "2026-11-24T01:32:00.888Z",
+   "file": "20261124013200888-note-c38-four.jpg",
+   "source": "out/work/sun/convect/c38-four.jpg",
+   "kind": "note",
+   "label": "c38 frames 60, 222 (top), 238, 247 (bottom), draft. FAULT found at 238: a hard edged disc with a flat orange ring round it (the far part of my ground drawn where it should not be) and the far cells under a pixel are noise; both in work before the full draft",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T01:32:00.305Z",
+   "file": "20261124013200305-note-c38-whole-pair.jpg",
+   "source": "out/work/sun/convect/c38-whole-pair.jpg",
+   "kind": "note",
+   "label": "c38 frame 60 whole (draft), approved left, mine right: cells now shrink with the distance, limb warmer; still cream pebbles where the approved is dark glass with bright rims",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T01:31:59.715Z",
+   "file": "20261124013159715-note-c38-near-pair.jpg",
+   "source": "out/work/sun/convect/c38-near-pair.jpg",
+   "kind": "note",
+   "label": "c38 frame 60 near ground (draft), approved left, mine right, uncommitted, unfinished: brightness by age and flow, lanes thin and dark, more sizes. G17 1.20, lower quarter 1.03; blur 40 px ground 0.051; quantiles 0.243 0.381 0.545 (approved 0.218 0.368 0.562)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T01:20:02.524Z",
    "file": "20261124012002524-note-c34final-whole-pair.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/sun/convect/c31final-near-1to1.jpg",
    "kind": "note",
    "label": "c31 frame 60 at the FINAL tier, near ground one to one, approved left, mine right (commit 13249a5c local, unfinished): mine reads as pleated satin tents, the approved as dark glass bubbles with bright rims; G17 1.47, lower quarter 1.23; blur 40 px ground 0.053; quantiles 0.260 0.382 0.543 (approved 0.218 0.368 0.562); 308 s for the frame",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T00:58:22.123Z",
-   "file": "20261124005822123-note-c29b-four.jpg",
-   "source": "out/work/sun/convect/c29b-four.jpg",
-   "kind": "note",
-   "label": "c29 frames 0, 90 (top), 222, 247 (bottom), draft, unfinished: same ground on both sides of the rise; 247 still two patterns over each other",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T00:58:21.576Z",
-   "file": "20261124005821576-note-c29-whole-pair.jpg",
-   "source": "out/work/sun/convect/c29-whole-pair.jpg",
-   "kind": "note",
-   "label": "c29 frame 60 whole, approved left, mine right (draft, unfinished): mine more orange, far field not yet a fine bright grain, penumbra too even, umbra not black",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T00:56:14.696Z",
-   "file": "20261124005614696-note-c29-near-pair.jpg",
-   "source": "out/work/sun/convect/c29-near-pair.jpg",
-   "kind": "note",
-   "label": "c29 frame 60 near ground, approved left, mine right (draft tier, unfinished): bulbs with height, streaks, warm lanes. G17 1.17, lower quarter 0.98; quantiles 0.245 0.358 0.506 (approved 0.218 0.368 0.562); blur 40 px ground 0.054",
    "stop": "sun"
   }
  ]
