@@ -3488,3 +3488,29 @@ On the tree of the second commit (one ground in the files, the strip, the wide s
 A first try of the final still at 09:37 refused ("refusing to start: 2.2 GB free, need 3"); old frame sets of the work folder were deleted (c1, the pictures of k1 and kb1, five small sets), 4.6 GB free after it.
 
 Not rendered before this commit: the rise with one ground and the wide sky, the dive above 1870 with the wide sky, parity, the final of 2010. They run now and their lines follow in the next section.
+
+## 09:41 to 09:50 UTC: commit ebd4f703 pushed, its frames looked at, one ground taken back
+
+09:41. Committed and pushed ebd4f7034cd53736c49988f30dfa01c98abb0fa5 (one ground in the files, the strip, the wide sky heights). Not named.
+
+Then the first frames of that tree from above and of its rise (draft, `out/work/earth/place/og`: 1832, 1840, 1848, 1856, 1857, 1864, 1872, 1880, 1888, 1896, 1904, 2104, 2112, 2120, 2128, 2136, 2144, 2152, 2156, 2160, 2168, 2174), each beside the named tree's frame (`n1`), and all of them looked at as pairs:
+
+- Against the named tree (largest channel difference, mean over the frame, 99th percentile, and the fullest cell of a 16 by 9 grid): 1832 0.00; 1840 0.02; 1848 0.27 (cell row 4 col 7 mean 3.1); 1856 1.17 (17.4); 1857 1.32, 99th 16 (18.9); 1864 2.49 (32.4); 1872 4.45 (42.8); 1880 2.11 (43.7); 1888 1.02 (20.0); 1896 0.27; 1904 0.05; 2104 0.00; 2112 0.06; 2120 0.47; 2128 2.56 (20.6); 2136 2.52 (31.9); 2144 2.85 (37.1); 2152 0.82 (22.1); 2156 0.31 (9.4); 2160 0.08; 2168 0.00; 2174 0.00.
+- What it is: from above, the far part of the plate now shows the lay back less its haze: a dark, brown and grey mottled patch over Cuba and the sea between Yucatan and Cuba, with streaks. It is there from about 1848 to 1880 and from 2128 to 2156, and it is plain in both judged frames of the moves (1857: Cuba is gone under it; 2156: a darker patch). The named tree shows the map there. So the cure in the files cures the pair of the level check and spoils the picture from above, in two judged frames. In trial b1 I had looked only at frames below height 1.4 (1870 and later), where the patch is smaller and already known; the plate comes in from height 3.2. That was my miss.
+- Decision at 09:45: one ground is taken back. A cure is proved on the frames, and this one fails on them. The pair of the plate and the low look stays over the limit and is named red with its cure.
+
+The cure that pair needs (third commit): the far zone must be one ground that reads right from above and at the slant. The lay back cannot be that ground as it is: seen from above it is the close picture's far cloud deck stretched over hundreds of kilometres. So the far zone has to be painted as ground (top down, in the tone and shapes of the lay back, with the coasts of the map kept), and the close view's far field has to show that same ground, so that plate, low look and close view are one picture; the veil is then only a law of light by distance. That is picture work on the far zone with takes through the media skill, not a change of numbers.
+
+State of the tree after taking it back (09:46 to 09:49):
+
+- `globe.ts`, `set.ts`, `levels.py`, `place-12.jpg`, `place-5.jpg`, `place-12-low.jpg`, `patch-48.jpg`, `patch-96.jpg` of both sets: the files of 571f42dc again (`git checkout 571f42dc -- ...`).
+- `mend.json strip.lowDeg` stays 0.006. `levels.py` (the version of 571f42dc) run again, 09:45 to 09:48, log `out/work/earth/place/levels19.log`: against 571f42dc only `patch-24.jpg` differs, in both sets (full 6005477 to 5885996 bytes, web 1978559 to 1939725); every other file it writes came out with the bytes of 571f42dc.
+- `place.json`: the file of 571f42dc with `sky.low` 0.034, 3.3 and its how sentence.
+- `RECIPE.md`: the file of 571f42dc plus the row of the strip and the row of the level check.
+- Level check on this tree (`levelcheck.py full`, `web`): full 96 to 48 0.37, 48 to 24 0.06 (was 0.54 OVER), place-12 to place-5 0.00, place-12 to place-12-low 1.27 OVER, 24 to the plate across the planes 0.07; web 0.11, 0.05, 0.00, 1.24 OVER, 0.03.
+
+The wide sky on the frames of `og` (the sky is the same in this tree), top left 640 by 330 px at full size beside the named tree, looked at for 1857, 1864, 2128, 2136: at 1857 and 1864 the stars stand in both, a little dimmer with the wide sky; at 2128 the named tree has the close view's plain blue sky and no star, the wide sky has the stars at part strength; at 2136 both have the stars. 1832, 2168 and 2174 keep the bytes of the named tree. At 1840, 48 pixels differ by more than 20: points of the star field that take a warm tint from the close view's sky picture at its first share.
+
+## 09:49 to 09:58 UTC: the gate of the tree with one ground taken back
+
+Built 09:49. `npx tsc --noEmit`: no output. `npx vitest run`, alone, 09:49 to 09:55: "Test Files  45 passed (45)", "Tests  427 passed (427)", 370 s. Gate: "PASS G11  every asset has a row or a recipe", "PASS G15  at most 2 sets per frame; finished stops: earth/web 354 MB, earth/full 1394 MB". Path: "VERDICT: green. No number is over its limit." Seam tool: dive lowest 0.987 at 1919, rise lowest 1.000 at 2100. Final still of 1755 (68.2 s, 16 samples): sha256 ab7cfd53903f36457e433cdd4d37258ca4d385209b64559ee608e97404642c35, the kept still byte for byte.

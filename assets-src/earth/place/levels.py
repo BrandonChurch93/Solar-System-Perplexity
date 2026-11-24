@@ -397,27 +397,17 @@ def main():
         raise SystemExit('the window of the low plate must lie on the plate raster')
     if float((cover[..., 0] * footprint_px(size, whole, FEATHER) * (1 - footprint_px(size, lwin, lw['feather']))).max()) > 0.02:
         raise SystemExit('the lay back reaches past the window of the low plate')
+    save(lw['file'], (f12 * (1 - cover) + (lay12 + detail) * cover)[int(lwin.y0):int(lwin.y0) + lwin.n, int(lwin.x0):int(lwin.x0) + lwin.n], lw['size'])
     vl = lw['veil']
-    apart = (lay12 + detail - f12) * cover
-    haze, share = veil(apart, cover[..., 0], vl, MEND['veil'], deg, from_nadir)
+    haze, share = veil((lay12 + detail - f12) * cover, cover[..., 0], vl, MEND['veil'], deg, from_nadir)
     for s in ('full', 'web'):
         (PUBLIC / s / vl['file']).write_bytes(np.concatenate([haze[..., ::-1] / 255, share[..., None]], axis=2)[::-1].astype(np.float16).tobytes())
-    k = vl['size'] // vl['times']
-    o, z, m = (vl['size'] - k) // 2, size // k, 2
-    kept_ = np.concatenate([haze / 255, share[..., None]], axis=2).astype(np.float16).astype(np.float32)[o - m:o + k + m, o - m:o + k + m]
-    up = cv2.resize(kept_, ((k + 2 * m) * z, (k + 2 * m) * z), interpolation=cv2.INTER_LINEAR)[m * z:m * z + size, m * z:m * z + size]
-    gate = (1 - step(np.cos(np.radians(lw['fromDeg'][1])), np.cos(np.radians(lw['fromDeg'][0])), np.cos(np.radians(from_nadir(P, deg, size))))) * footprint_px(size, lwin, lw['feather'])
-    laid = (apart - up[..., :3] * 255 * up[..., 3:]) * gate[..., None]
-    one = f12 + laid
-    far = gate > 0.5
-    print('one ground: the plate takes the lay back less its haze past', lw['fromDeg'], 'degrees, share of the plate', round(float(far.mean()), 4), 'mean change there (BGR)', np.round(laid[far].mean(axis=0), 1), 'share of it under 0 by channel', np.round((one[far] < 0).mean(axis=0), 4), 'over 255', np.round((one[far] > 255).mean(axis=0), 4), 'mean lost under 0', np.round(np.minimum(one[far], 0).mean(axis=0), 2), flush=True)
-    del apart, kept_, up, gate, one, far
     cv2.imwrite(str(WORK / 'veil-look.png'), np.clip(128 + haze / 2, 0, 255).astype(np.uint8))
     print('veil of the low plate', vl['size'], 'px,', vl['times'], 'plates wide, sigma', vl['sigmaDeg'], 'degrees, from', round(float(haze.min()), 1), 'to', round(float(haze.max()), 1), 'mean (BGR)', np.round(haze.reshape(-1, 3).mean(axis=0), 1), 'at the corners', np.round(haze[[0, 0, -1, -1], [0, -1, 0, -1]].mean(axis=1), 1), flush=True)
     del haze, share
-    cv2.imwrite(str(WORK / 'f12-look.jpg'), cv2.resize(np.clip(np.hstack([f12, f12 + laid]), 0, 255).astype(np.uint8), (2048, 1024), interpolation=cv2.INTER_AREA), [cv2.IMWRITE_JPEG_QUALITY, 90])
+    cv2.imwrite(str(WORK / 'f12-look.jpg'), cv2.resize(np.clip(np.hstack([f12, f12 * (1 - cover) + (lay12 + detail) * cover]), 0, 255).astype(np.uint8), (2048, 1024), interpolation=cv2.INTER_AREA), [cv2.IMWRITE_JPEG_QUALITY, 90])
     cv2.imwrite(str(WORK / 'f12-native.jpg'), np.clip(np.hstack([f12[1850:2350, 2800:3500], f12[2950:3450, 1450:2150], f12[504:1004, 2298:2998]]), 0, 255).astype(np.uint8), [cv2.IMWRITE_JPEG_QUALITY, 90])
-    print('lay back done, share', round(float(cover.mean()), 4), 'field cover on the plate', round(float(a.mean()), 4), 'detail rms', round(float(np.sqrt((detail ** 2).mean())), 2), flush=True)
+    print('low plate done, lay back share', round(float(cover.mean()), 4), 'field cover on the plate', round(float(a.mean()), 4), 'detail rms', round(float(np.sqrt((detail ** 2).mean())), 2), flush=True)
     del cover, detail, c, a, s
     fine = MEND['fine']
     for level in PLATES['levels'][1:]:
@@ -428,7 +418,7 @@ def main():
         per = dw.raster / dw.deg
         apart = cv2.GaussianBlur(np.abs(up - base).max(axis=2), (0, 0), fine['sigmaDeg'] * per)
         m = (1 - step(fine['apart'][0], fine['apart'][1], apart)) * step(0.5, 1.0, cv2.GaussianBlur((inside > 0.99).astype(np.float32), (0, 0), fine['edgeDeg'] * per)) * step(fine['sharp'][0], fine['sharp'][1], sharp)
-        save(level['file'], field_on(up + (lay - base) * m[..., None], fl, dw, white) + rep(laid, whole, dw, signed=True)[0])
+        save(level['file'], field_on(up + (lay - base) * m[..., None], fl, dw, white))
         print('fine level', level['file'], dw.n, 'px, share with the detail of the lay back', round(float(m.mean()), 4), 'detail rms', round(float(np.sqrt((((lay - base) * m[..., None]) ** 2).mean())), 2), flush=True)
         del up, base, lay, inside, sharp, apart, m
     del lay12
@@ -469,10 +459,9 @@ def main():
         hold = hold * (1 - w) + inner * w
         if d == 48:
             laid48 = hold
-        part = cut(laid, whole, dw)[0] if c is P else rep(laid, whole, dw, signed=True)[0]
-        save(level['file'], field_on(hold, fl, dw, white) + part * w)
+        save(level['file'], field_on(hold, fl, dw, white))
         print('level', level['file'], n, 'px done, footprint share', round(float(w.mean()), 4), flush=True)
-        del inner, w, part
+        del inner, w
     del raw, fl
     tone = PLATES['tone']
     wide, n = tone['widthDeg'], tone['size']
