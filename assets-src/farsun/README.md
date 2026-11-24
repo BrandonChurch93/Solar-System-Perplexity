@@ -84,7 +84,7 @@ ceiling by `limb[0] * burn * exp(-limb[1] * (1 - x))`, x the distance from the c
 measured on the approved Mercury image, where the limb is not darker than the face (blue 241 at 0.97 radii
 against 228 to 233 further in): the warmth of that limb sits in the gas just outside it. It is zero at
 burn 0, so the limb law is whole at the handover.
-`knot` is the white hot knots of the active regions as the lens sees them, `at` a list of up to twelve. Each is
+`knot` is the white hot knots of the active regions as the lens sees them, `at` a list of up to fourteen. Each is
 a light about the place `at` on the sphere (`width` in disc radii, `gain` by the exposure, zero at burn 0;
 `edge` is the power of its fall, 1 a Gaussian, more than 1 a flatter core with a harder edge), which takes
 the face under it to white and adds `colour` outside the body. It fades as its place goes behind the limb.
@@ -94,6 +94,10 @@ placed by position angle and radius read off the approved Mercury image (blue ch
 approved in sectors of ten degrees): a negative `gain` leaves a patch creamier than the burnt face round
 it, a positive one takes it nearer white. They move with the body, go with the exposure and are zero at
 burn 0, so no patch shows at the handover or in the Sun stop's own views.
+The knot of the left limb is three lights along the limb (four degrees apart, so the white zone runs along
+the limb and is not a round bloom) with a wide weak patch on the face behind them; only the middle one
+carries rays. `knot.clump` gathers the rays into uneven groups and bends them: strength of the grouping,
+the scale of the groups against `fine`, and the bend of a ray's direction with its distance from the knot.
 `burn.white` is the colour the burnt face rolls off to, and `glare.colour` the lens light round the body;
 both were read off the same image (the face keeps blue near 0.9 of red, the glare is paler than the gas).
 `rays` is the burst of straight rays from the knot: the gas is marched in `knot.steps` steps inside a sphere
@@ -134,10 +138,22 @@ which a noise of the foot varies from about a third to one and two thirds, so th
 length) that spread with height (`strand.fan`; `strand.fine` their count across a radian, `strand.sharp`
 their thinness): each point of a strand is read at the foot it comes from, nearer the middle of the lobe.
 `knot` on a lobe is a smooth low glow at its foot: strength, width in degrees and height scale in radii.
+There are up to eight lobes; two of them carry only such a glow, wide and low, about position angles 138
+and 195 of the hold's view. A negative `tall` keeps a lobe's flames short.
 A lobe with a negative `gain` thins the flames about its place (under the curl at the bottom, where the
 approved image is dark between the strands).
 The second angle of a lobe is the place of the limb in the hold's view at Mercury (about -4 degrees at the
 left, +9 at the bottom), so the lobe stands on the limb there.
+
+## Where it is drawn
+
+`disc` is the radius of the Sun's disc in the lens, in master pixels of the 1920 by 1080 frame (an angle
+times the lens, never a count of device pixels), from which the far Sun stands in for the sky's own Sun:
+none below `disc[0]`, whole from `disc[1]`. It is 80 to 130: the Sun of the travel from the Sun and of
+Mercury is 151 and more, the Sun of every later stop 63 and less, so from Venus on the sky draws its own
+Sun and those frames keep main's bytes. The change falls in the travel from Mercury while the Sun is
+behind the lens (82 to 95 degrees off its axis). With `disc` at 5 to 9 the far Sun would also be drawn
+at the stops from Venus to Uranus.
 
 ## The rule at frame 615
 

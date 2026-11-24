@@ -3,8 +3,8 @@ import { GRADE_GLSL } from '../../stops/sun/grade'
 import { NOISE_GLSL } from '../../terrain/relief'
 
 export const MAX_LOOPS = 16
-export const MAX_LOBES = 6
-export const MAX_KNOTS = 12
+export const MAX_LOBES = 8
+export const MAX_KNOTS = 14
 
 export const FARSUN_VERT = /* glsl */ `
 uniform float uDepth;
@@ -102,6 +102,7 @@ uniform vec4 uKnot[${MAX_KNOTS}];
 uniform vec4 uKnotBy[${MAX_KNOTS}];
 uniform vec4 uKnotRay[${MAX_KNOTS}];
 uniform vec4 uKnotLight;
+uniform vec3 uKnotClump;
 uniform vec2 uKnotOut[${MAX_KNOTS}];
 uniform vec4 uCoronaRim;
 uniform float uChromoBurn;
@@ -412,7 +413,9 @@ void main() {
       float dist = length(from);
       vec3 dir = from / max(dist, 1e-4);
       vec3 sdir = spinY(dir, uSpin);
+      sdir += (vec3(vnoise(sdir * 7.0 + dist * 3.0 + 1.0), vnoise(sdir * 7.0 + dist * 3.0 + 4.0), vnoise(sdir * 7.0 + dist * 3.0 + 7.0)) - 0.5) * (dist * uKnotClump.z);
       float ray = pow(vnoise(sdir * by.x), by.y) + 0.5 * pow(vnoise(sdir * (by.x * 2.3) + 2.0), by.y);
+      ray *= mix(1.0, 2.2 * smoothstep(0.35, 0.65, vnoise(sdir * (by.x * uKnotClump.y) + 5.0)), uKnotClump.x);
       float reach = by.z * (0.35 + 1.3 * vnoise(sdir * (by.x * 0.31) + 11.0));
       sum += ray * exp(-dist / max(reach, 1e-3)) * smoothstep(by.w - 0.3, by.w + 0.2, dot(dir, knotAt)) * smoothstep(uKnotBy[n].w, 0.6 * uKnotBy[n].w, dist) * step(1.0, length(q));
     }
