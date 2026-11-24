@@ -1,9 +1,52 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T07:33:55.159Z",
- "head": "ccf6df7162acf1cc68cccf791c70cca1842b94e1",
- "note": "head ccf6df71 = b3572b5f merged with main 8b2c538f. Frame 60 final tier, sun-near: share by band 0.173 0.187 0.156 0.131 0.108 0.080 0.058 0.050 0.023 | dark 0.206 body 0.583 pale 0.108 white 0.023 | half width 6.1 px, 2113 shapes; distance 0.061. G17 median 1.335, lower quarter 1.121. Blur 40 px: ground 0.0521, whole 0.0348. Hold 360 final equals the kept bytes (c279687d). Pair of frame 60 beside the kept still added; the cells still read as polished stones",
+ "pushed": "2026-11-24T08:01:53.290Z",
+ "head": "123287935619046b16ace6fd331b221083dd77e9",
+ "note": "A jump at T found by the handover tool and cured: the surface view's sky now rides with its ground on the globe's side (one line in set.ts). Side difference at T mean 0.015, 99th percentile 1, pass (before: the tool's difference picture at gain 8 had mean 19.07, sky rows 40.7). Frame 60 unchanged (draft bytes equal): sun-near at the final tier share by band 0.173 0.187 0.156 0.131 0.108 0.080 0.058 0.050 0.023 | dark 0.206 body 0.583 pale 0.108 white 0.023 | half width 6.1 px, 2113 shapes; distance 0.061. G17 median 1.335, lower quarter 1.121. Blur 40 px ground 0.0521, whole 0.0348",
  "looks": [
+  {
+   "time": "2026-11-24T08:01:52.156Z",
+   "file": "20261124080152156-note-T-after.jpg",
+   "source": "../../../../tmp/T-after.jpg",
+   "kind": "note",
+   "label": "draft, every frame 214 to 219 after the cure of the sky at T (T at 216)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T08:01:51.271Z",
+   "file": "20261124080151271-note-sun-rise-sides-after.jpg",
+   "source": "../../../../tmp/sun-rise-sides-after.jpg",
+   "kind": "note",
+   "label": "sun rise, both sides at T and their difference times 8, after the cure: side difference at T mean 0.015, 99th percentile 1, pass",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T08:01:50.419Z",
+   "file": "20261124080150419-note-sun-rise-sides.jpg",
+   "source": "../../../../tmp/sun-rise-sides.jpg",
+   "kind": "note",
+   "label": "sun rise, both sides at T and their difference times 8, BEFORE the cure (b3572b5f): the sky differs, the ground does not",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T08:01:49.468Z",
+   "file": "20261124080149468-note-T-sky.jpg",
+   "source": "../../../../tmp/T-sky.jpg",
+   "kind": "note",
+   "label": "the sky at T, one to one, levels times 2 (x 1100, y 40, 700 by 300): above frames 216 and 217 before the cure, below after. Before: the sky steps about 47 px from 216 to 217 against about 20 px a frame beside it (the surface view's sky did not ride with the ground on the globe's side). After: about 20 px",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T07:57:15.448Z",
+   "file": "20261124075715448-compare-sun-rise-sides.jpg",
+   "source": "out/work/handover/sun-rise-sides.png",
+   "kind": "compare",
+   "label": "sun rise, both sides at T (frame 216) and their difference times 8",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 216,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-24T07:33:53.252Z",
    "file": "20261124073353252-note-pair60-final.jpg",
@@ -26,46 +69,6 @@
    "source": "../../../../tmp/e1-s5.jpg",
    "kind": "note",
    "label": "frames 112, 128, 144, 160 (the bend of the surface view), 190, 198 (the rise before T), draft",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T07:17:39.843Z",
-   "file": "20261124071739843-note-e1-T.jpg",
-   "source": "../../../../tmp/e1-T.jpg",
-   "kind": "note",
-   "label": "frame 216 (close view, top) above 217 (globe, bottom), draft, rows 340 to 762 of 844 at 1500 wide",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T07:17:38.289Z",
-   "file": "20261124071738289-note-e1-s4.jpg",
-   "source": "../../../../tmp/e1-s4.jpg",
-   "kind": "note",
-   "label": "MAIL 540: frames 206 to 220 draft, every frame, T at 216 to 217, on the one move with the engine's bend (b3572b5f): no border of the set, the far edge is the ball's limb, no jump at T (mean change 21.33, 21.13, 21.77 at 216, 217, 218)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T07:08:20.160Z",
-   "file": "20261124070820160-note-e1-s3.jpg",
-   "source": "../../../../tmp/e1-s3.jpg",
-   "kind": "note",
-   "label": "frames 176 to 184 draft, every frame: the seam 180 on the engine's bend and the one move",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T07:08:19.242Z",
-   "file": "20261124070819242-note-pair-L7.jpg",
-   "source": "../../../../tmp/pair-L7.jpg",
-   "kind": "note",
-   "label": "frame 60 draft, one to one, approved left, mine right (x 600 y 600, 750 by 480): look only after MAIL 547, ring toward the border, darker crown, stronger threads",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T05:54:35.949Z",
-   "file": "20261124055435949-note-par225.jpg",
-   "source": "../../../../tmp/par225.jpg",
-   "kind": "note",
-   "label": "parity red at 225: film, uhd scaled down, difference times 4 (mean 13.09, limit 12; the ring where a cell is 2 to 8 px)",
    "stop": "sun"
   }
  ]
