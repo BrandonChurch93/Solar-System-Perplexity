@@ -5458,3 +5458,30 @@ The pattern numbers are MY proxies (weave.py by poses, chain.py by the flows of 
    ground, 5.4 degrees in those 8 frames (the horizon stands 67.3 degrees from the point under the eye at 1.59 radii and
    61.9 at 1.13), not a second picture of a place. NOT CURED: a cure in the picture would be another limb between 1.6 and
    1.1 radii than the hold's, and 4707 is judged with that limb. Named as a red I know, with this proof.
+
+## MAIL 733 from /root, read 20:19 UTC 24 Nov (high priority), word for word
+
+MAIL 733 from the Builder (/root), 20:17 UTC, 2026-11-24. State of your stop.
+1. Round 42 (your round 1 of 3 of the second note, on main 2bc36ce6) is still open: 9 tiles of its sheets and the whole smooth report are on the machines; the critics start when they are in. You get the list as soon as the round closes.
+2. The proof np42-02 of your commit 32a8d00 is green on everything but two count lines of the smooth report (plan H 3, limit 0): the dive makes 1 program and 10 buffers in 2 of its 180 pictures, first at frame 4708; the rise makes 3 programs and 15 buffers in 1 picture at frame 4950. engine_profiler measured the first on its own tree: at 4708 it is the sphere of 257 by 129 points of the laid deep (src/stops/neptune/deep.ts line 952, SphereGeometry(radius + h.top, 256, 128)), first shown at 4708. Ruling (d197): you do not write src/core/warm.json; I put 4708 and 4950 into main's warm list at your take. What I ask of you: say in one line each what is made at 4708 beside that sphere and what the 3 programs and 15 buffers of 4950 are, and whether anything of it is made anew later (a thing made in every frame cannot be warmed and must be made once and kept).
+3. Coming with take batch 4 (on main within about an hour): a new line of the smooth report, smooth.path.minLeave 0.07: a rise must leave the surface view at a speed of at least 0.07 of the move's mean. Six of seven rises measured are red on it. Yours is not measured yet; measure it with npm run smooth -- --stop neptune --only path once the batch is on main and use the engine's handover.rise.pullBack if it is red.
+Go on with your round 2 work meanwhile; your looks every 30 minutes as before.
+
+## 20:10 to 20:24 UTC: main 07693d93 merged (fd6ba678), tests on the merge, main moved again
+
+1. Main 07693d93 (20:01 UTC) against the last merge holds only kit/PROGRESS.md and the scorecards of rounds 43 to 46, no
+   code and nothing of my folders. Merged by a merge commit: fd6ba678b3ddcf3e960997e692c60ea6843325d7 (20:13 UTC).
+2. TESTS ON THE MERGE, alone on the VM (20:13:47 to 20:20:26, /tmp/vitest-fd6b.log): 53 files, 554 of 554 pass. The
+   globe-cap test "brings a colour level in by the texels of its parent" took 4014 ms (under its 5 s).
+3. Read on main's kit/PROGRESS.md what concerns this stop. d238 (7): the handover report's reading in place becomes the
+   judged one with take batch 4 and `handover.limits.levelStep` goes from 6 to 5; my present state reads 1.97 into 4709
+   in the dive and 3.61 into 5001 in the rise (preview drafts, my VM), under 5. d239 (8): a draft picture of this stop's
+   rise takes about 80 s on the machines and a review picture near the change of view 49 to 53 minutes; the Builder set
+   six machines on it and asked nothing of me. d243 (5): the cure of the pattern reader (780020f6) is taken for rises
+   after batch 4, dives keep main's reader until its cures for reds made by a moon or a limb are in. That is the kind of
+   red my proof of 20:09 names at 4696.
+4. At 20:20 the fetch showed main at c6d87bc9 (20:15:57 UTC; against 07693d93 only kit/PROGRESS.md). It is merged with
+   the next commit, and again when take batch 4 is on main (MAIL 733 point 3).
+5. MAIL 733 (above) asks an answer: what is made at 4708 beside the sphere of the laid deep, what the 3 programs and 15
+   buffers of 4950 are, and whether anything is made anew later. Measured next, with the tool's own counter
+   (tools/lib/makers.ts), on the present state.
