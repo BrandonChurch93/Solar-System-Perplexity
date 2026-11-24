@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T12:15:58.752Z",
- "head": "10f6b0bfdd7828f7514cf85b7656f109f7f2d6ec",
- "note": "MAIL 654: main merged (10f6b0bf); the dive's exchange measured pair by pair on my head, three humps",
+ "pushed": "2026-11-24T12:45:14.953Z",
+ "head": "b88c4cbfcd8b688cf8b641beb2e8b5d55b62d981",
+ "note": "12:45 dive humps split: limb line (judge sees the horizon move) and the scene's hard edged deck in the dark corner; storm exchange next: the map's cirrus into the scene by the globe's own function",
  "looks": [
+  {
+   "time": "2026-11-24T12:45:14.343Z",
+   "file": "20261124124514343-note-look-1149.jpg",
+   "source": "out/work/nep/cost/look-1149.jpg",
+   "kind": "note",
+   "label": "4860 beside the approved image, unchanged since 11:49: 16 by 9 draft, G17 median 0.934, 25th percentile 0.549, 34 s a draft frame. Not touched in this half hour; the work is on the dive's exchange (MAIL 654).",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T12:45:13.635Z",
+   "file": "20261124124513635-note-look-humps.jpg",
+   "source": "out/work/nep/weave/look-humps.jpg",
+   "kind": "note",
+   "label": "Dive, the two smaller humps of the pattern measure split by cause (draft, 1.4 s a frame above 0.9 radii, 9 to 14 s with the scene). Left pair: 4696 and 4704 carried back, at the limb: the 0.76 of the report sits on the later frame's limb line, with 40 px more margin inside the limb my pair measure falls from 0.60 to 0.25. Right: the dark corner of 4712 times 8: the scene's deck comes in as a hard edged blue patch over the map's night side, that is the hump at 4704 to 4713. Both named, neither cured yet.",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T12:15:49.397Z",
    "file": "20261124121549397-note-look-1149.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/rise-a.jpg",
    "kind": "note",
    "label": "Named commit 835c9574, the rise from the change of view: 4956 to 4971. 4956 to 4957 7.94, then 8.35, 8.76",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T10:37:32.208Z",
-   "file": "20261124103732208-note-seam-dive.jpg",
-   "source": "../../../../tmp/seam-dive.jpg",
-   "kind": "note",
-   "label": "Named commit 835c9574, the dive's change of view: 4755 to 4760 left to right, top to bottom (4757 to 4758 is the change). Mean differences of neighbours 8.60, 8.36, 8.12, 7.81, 7.60. About 20 s a draft frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T10:28:19.963Z",
-   "file": "20261124102819963-note-st-all.jpg",
-   "source": "../../../../tmp/st-all.jpg",
-   "kind": "note",
-   "label": "Rise 4996 to 5024 with the third star law (by the eye's angle, not the clock): stars, ring and moon steady, no way back",
    "stop": "neptune"
   }
  ]
