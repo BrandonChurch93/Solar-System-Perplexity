@@ -1,0 +1,3 @@
+# Far Sun wiring for mercury_builder (src/stops/mercury/set.ts).
+# The plate's gain is 0 while the far Sun stands in the sky (shot.sun.far set). The body draws itself in
+#   the sky pass, so the set calls nothing.
