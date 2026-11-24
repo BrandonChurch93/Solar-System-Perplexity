@@ -1,9 +1,37 @@
 {
  "folder": "belt",
- "pushed": "2026-11-24T22:25:34.100Z",
- "head": "261f6dffe99b5c2b7474839b678105ecb5321d32",
- "note": "far Sun 261f6dff on main 70267111, NAMED",
+ "pushed": "2026-11-24T23:23:14.008Z",
+ "head": "12b9c5efde6198895ccc83d0c47c56ee7c48ab35",
+ "note": "far Sun 12b9c5ef: hair few, long, curled; draft tier",
  "looks": [
+  {
+   "time": "2026-11-24T23:23:13.194Z",
+   "file": "20261124232313194-note-Acmp_0.jpg",
+   "source": "../../../../tmp/farsun/out/Acmp_0.jpg",
+   "kind": "note",
+   "label": "far Sun 12b9c5ef Acmp_0"
+  },
+  {
+   "time": "2026-11-24T23:23:12.220Z",
+   "file": "20261124232312220-note-hv_A.jpg",
+   "source": "../../../../tmp/farsun/out/hv_A.jpg",
+   "kind": "note",
+   "label": "far Sun 12b9c5ef hv_A"
+  },
+  {
+   "time": "2026-11-24T23:23:11.471Z",
+   "file": "20261124232311471-note-pair615-full-A.jpg",
+   "source": "../../../../tmp/farsun/out/pair615-full-A.jpg",
+   "kind": "note",
+   "label": "far Sun 12b9c5ef pair615-full-A"
+  },
+  {
+   "time": "2026-11-24T23:23:10.368Z",
+   "file": "20261124232310368-note-pair615-box-A.jpg",
+   "source": "../../../../tmp/farsun/out/pair615-box-A.jpg",
+   "kind": "note",
+   "label": "far Sun 12b9c5ef pair615-box-A"
+  },
   {
    "time": "2026-11-24T22:25:32.894Z",
    "file": "20261124222532894-note-oval_zoom.jpg",
@@ -31,34 +59,6 @@
    "source": "../../../../tmp/farsun/out/pair615-box-final.jpg",
    "kind": "note",
    "label": "615 box, approved left, far Sun 261f6dff right, final tier"
-  },
-  {
-   "time": "2026-11-24T21:48:03.682Z",
-   "file": "20261124214803682-note-L2a.jpg",
-   "source": "../../../../tmp/farsun/out/L2a.jpg",
-   "kind": "note",
-   "label": "the look now, whole frames 520, 580, 720, 1027: one body, no wedge, no oval"
-  },
-  {
-   "time": "2026-11-24T21:48:01.623Z",
-   "file": "20261124214801623-note-pair615-box-draft.jpg",
-   "source": "../../../../tmp/farsun/out/pair615-box-draft.jpg",
-   "kind": "note",
-   "label": "615 box, draft tier: approved left, the look now right (firmer limb, mottle to the limb; blur 4.40)"
-  },
-  {
-   "time": "2026-11-24T21:18:20.244Z",
-   "file": "20261124211820244-note-fc_u2.jpg",
-   "source": "../../../../tmp/farsun/out/fc_u2.jpg",
-   "kind": "note",
-   "label": "615 face: approved left, try right; lower row the same with the contrast stretched (work in progress)"
-  },
-  {
-   "time": "2026-11-24T21:18:18.172Z",
-   "file": "20261124211818172-note-oval_t5.jpg",
-   "source": "../../../../tmp/farsun/out/oval_t5.jpg",
-   "kind": "note",
-   "label": "1027 (top) and 1040 (bottom): a3df7524 left, now right; the white oval is gone"
   }
  ]
 }
