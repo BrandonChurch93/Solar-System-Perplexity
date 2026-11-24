@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { gradUniform } from '../../diagnostics/diag'
-import { FARSUN_FRAG, FARSUN_VERT, MAX_LOOPS } from './shader'
+import { FARSUN_FRAG, FARSUN_VERT, MAX_LOBES, MAX_LOOPS } from './shader'
 import look from './look.json'
 import { FACE } from './face'
 import { loopsOff, wearShare } from './share'
@@ -98,10 +98,22 @@ export class FarSun {
       up[i]!.copy(spun(upward))
       shape[i]!.set(halfChord, l.height, l.width, i * 1.37)
     })
-    const la = rad(look.fringe.lobe.at[0]!)
-    const ld = rad(look.fringe.lobe.at[1]!)
-    const lc = new THREE.Vector3(Math.cos(la) * Math.cos(ld), Math.sin(la) * Math.cos(ld), Math.sin(ld)).applyAxisAngle(new THREE.Vector3(0, 1, 0), -look.spinAt)
-    const lobe = new THREE.Vector4(lc.x, lc.y, lc.z, 1 / (rad(look.fringe.lobe.width) * rad(look.fringe.lobe.width)))
+    const lobes = Array.from({ length: MAX_LOBES }, () => new THREE.Vector4(0, 0, 1, 1))
+    const lobesBy = Array.from({ length: MAX_LOBES }, () => new THREE.Vector4(0, 0, 1, 0))
+    const knots = Array.from({ length: MAX_LOBES }, () => new THREE.Vector3(0, 1, 1))
+    look.fringe.lobes.slice(0, MAX_LOBES).forEach((l, i) => {
+      const la = rad(l.at[0]!)
+      const ld = rad(l.at[1]!)
+      const lc = new THREE.Vector3(Math.cos(la) * Math.cos(ld), Math.sin(la) * Math.cos(ld), Math.sin(ld)).applyAxisAngle(new THREE.Vector3(0, 1, 0), -look.spinAt)
+      lobes[i]!.set(lc.x, lc.y, lc.z, 1 / (rad(l.width) * rad(l.width)))
+      lobesBy[i]!.set(l.gain, l.tall, l.reach, l.strands)
+      const k = (l as { knot?: number[] }).knot
+      if (k) knots[i]!.set(k[0]!, 1 / (rad(k[1]!) * rad(k[1]!)), k[2]!)
+    })
+    const ka = rad(look.knot.at[0]!)
+    const kd = rad(look.knot.at[1]!)
+    const kc = new THREE.Vector3(Math.cos(ka) * Math.cos(kd), Math.sin(ka) * Math.cos(kd), Math.sin(kd)).applyAxisAngle(new THREE.Vector3(0, 1, 0), -look.spinAt)
+    const loopGain = Array.from({ length: MAX_LOOPS }, (_, i) => (look.loops[i] as { gain?: number } | undefined)?.gain ?? 1)
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3, vertexShader: FARSUN_VERT, fragmentShader: FARSUN_FRAG, depthTest: false, depthWrite: false, transparent: true,
       blending: THREE.CustomBlending, blendEquation: THREE.AddEquation, blendSrc: THREE.OneFactor, blendDst: THREE.OneMinusSrcAlphaFactor, blendSrcAlpha: THREE.ZeroFactor, blendDstAlpha: THREE.OneFactor,
@@ -118,7 +130,7 @@ export class FarSun {
         uChromo: { value: new THREE.Vector4(look.chromosphere.height, look.chromosphere.gain, 0, 0) }, uChromoColour: { value: new THREE.Vector3().fromArray(look.chromosphere.colour) }, uSpicules: { value: new THREE.Vector2().fromArray(look.chromosphere.spicules) },
         uCorona: { value: new THREE.Vector4(look.corona.steps, look.corona.gain, look.corona.scale[0]!, look.corona.scale[1]!) }, uCoronaRays: { value: new THREE.Vector3(look.corona.rays[0]!, look.corona.rays[1]!, look.corona.far) },
         uCoronaFront: { value: look.corona.front }, uBurn: { value: new THREE.Vector4(1, 0, look.burn.fall, 0) }, uIrrColour: { value: new THREE.Vector3().fromArray(look.burn.colour) }, uHide: { value: new THREE.Vector2().fromArray(look.burn.hide) }, uWhite: { value: new THREE.Vector3(look.body.ceiling, look.body.ceiling, look.body.ceiling) }, uDesat: { value: new THREE.Vector3(look.burn.desat[0]!, look.burn.desat[1]!, 0) }, uHalo: { value: new THREE.Vector2(0, look.burn.tightFall) }, uHaloColour: { value: new THREE.Vector3().fromArray(look.burn.tightColour) },
-        uFringe: { value: new THREE.Vector4(look.fringe.steps, look.fringe.top, look.fringe.gain, 0) }, uFringeShape: { value: new THREE.Vector4(look.fringe.height[0]!, look.fringe.height[1]!, look.fringe.scale, look.fringe.lean) }, uFringeColour: { value: new THREE.Vector3().fromArray(look.fringe.colour) }, uFringeLobe: { value: lobe }, uFringeLobeBy: { value: new THREE.Vector3(look.fringe.lobe.gain, look.fringe.lobe.tall, look.fringe.lobe.reach) }, uHaloEdge: { value: look.burn.edge }, uChromoBurn: { value: look.chromosphere.burn }, uFringeFan: { value: new THREE.Vector4(look.fringe.lobe.fan, look.fringe.lobe.fine, look.fringe.lobe.sharp, look.fringe.lobe.strands) }, uGlareInside: { value: look.glare.inside }, uCoronaNear: { value: new THREE.Vector3().fromArray(look.corona.near) }, uCoronaWide: { value: new THREE.Vector3().fromArray(look.corona.wide) },
+        uFringe: { value: new THREE.Vector4(look.fringe.steps, look.fringe.top, look.fringe.gain, 0) }, uFringeShape: { value: new THREE.Vector4(look.fringe.height[0]!, look.fringe.height[1]!, look.fringe.scale, look.fringe.lean) }, uFringeColour: { value: new THREE.Vector3().fromArray(look.fringe.colour) }, uFringeLobe: { value: lobes }, uFringeLobeBy: { value: lobesBy }, uLoopGain: { value: loopGain }, uHaloEdge: { value: look.burn.edge }, uKeep: { value: new THREE.Vector4(0, 0, 0, look.burn.keep.top) }, uLimbGlow: { value: new THREE.Vector2(0, look.burn.limb[1]!) }, uHeatFloor: { value: look.spots.floor[0]! }, uPlage: { value: new THREE.Vector2(look.plage.gain, look.plage.scale) }, uLoopLook: { value: new THREE.Vector3(1, 0, 0) }, uPromPale: { value: new THREE.Vector3().fromArray(look.prominence.pale) }, uFringeKnot: { value: knots }, uKnot: { value: new THREE.Vector4(kc.x, kc.y, kc.z, 1 / (look.knot.width * look.knot.width)) }, uKnotLight: { value: new THREE.Vector4(look.knot.colour[0]!, look.knot.colour[1]!, look.knot.colour[2]!, 0) }, uCoronaRim: { value: new THREE.Vector4(look.corona.rim[0]!, look.corona.rim[1]!, look.corona.rim[2]!, look.corona.rimTop) }, uChromoBurn: { value: look.chromosphere.burn }, uFringeFan: { value: new THREE.Vector3(look.fringe.strand.fan, look.fringe.strand.fine, look.fringe.strand.sharp) }, uGlareInside: { value: look.glare.inside }, uCoronaNear: { value: new THREE.Vector3().fromArray(look.corona.near) }, uCoronaWide: { value: new THREE.Vector3().fromArray(look.corona.wide) },
         uProm: { value: new THREE.Vector4(look.prominence.steps, look.prominence.shell, look.prominence.gain, look.prominence.flow) }, uPromColour: { value: new THREE.Vector3().fromArray(look.prominence.colour) }, uPromHot: { value: new THREE.Vector3().fromArray(look.prominence.hot) },
         uLoopMid: { value: mid }, uLoopAlong: { value: along }, uLoopUp: { value: up }, uLoopShape: { value: shape }, uLoops: { value: Math.min(look.loops.length, MAX_LOOPS) },
         uGlare: { value: new THREE.Vector4(0, 0, look.glare.tight, look.glare.wide) }, uGlareColour: { value: new THREE.Vector3().fromArray(look.glare.colour) }, uParts: { value: PARTS.all },
@@ -177,6 +189,17 @@ export class FarSun {
     ;(u.uBurn!.value as THREE.Vector4).set(Math.pow(burnt, look.burn.gas), (look.burn.glow * (burnt - 1)) / (look.burn.gain - 1), look.burn.fall, Math.min(Math.max(view.burn, 0) * 2, 1) * far)
     const burn = Math.min(Math.max(view.burn, 0), 1)
     ;(u.uDesat!.value as THREE.Vector3).z = burn
+    const keep = look.burn.keep.gain * burn
+    u.uHeatFloor!.value = look.spots.floor[0]! + (look.spots.floor[1]! - look.spots.floor[0]!) * burn
+    const gains = u.uLoopGain!.value as number[]
+    look.loops.slice(0, MAX_LOOPS).forEach((l, i) => {
+      const by = l as { gain?: number; burn?: number }
+      gains[i] = (by.gain ?? 1) * Math.pow(burnt, by.burn ?? look.prominence.burn)
+    })
+    ;(u.uLoopLook!.value as THREE.Vector3).set(1 - (1 - look.prominence.thin) * burn, look.prominence.broken * burn, look.prominence.paleBy * burn)
+    ;(u.uKnotLight!.value as THREE.Vector4).w = (look.knot.gain * (burnt - 1)) / (look.burn.gain - 1)
+    ;(u.uLimbGlow!.value as THREE.Vector2).x = look.burn.limb[0]! * burn
+    ;(u.uKeep!.value as THREE.Vector4).set(keep * look.burn.keep.tint[0]!, keep * look.burn.keep.tint[1]!, keep * look.burn.keep.tint[2]!, look.burn.keep.top)
     ;(u.uFringe!.value as THREE.Vector4).z = look.fringe.gain * far
     ;(u.uWhite!.value as THREE.Vector3).set(look.body.ceiling + (look.burn.white[0]! - look.body.ceiling) * burn, look.body.ceiling + (look.burn.white[1]! - look.body.ceiling) * burn, look.body.ceiling + (look.burn.white[2]! - look.body.ceiling) * burn)
     ;(u.uHalo!.value as THREE.Vector2).x = (look.burn.tight * (burnt - 1)) / (look.burn.gain - 1)

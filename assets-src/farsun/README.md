@@ -33,10 +33,15 @@ the angle toward the camera), `span` (the angle between its feet), `turn` (the t
 `height` and `width` in solar radii and `lean` in radians. The places are read off the approved hero
 (`references/approved/sun-hero.png`): the large systems stand at about 205, 30, -28 and 150 degrees.
 `spinAt` is the body's turn at the moment those places are read (the middle of the handover, frame 474).
-The last four loops are read off the approved Mercury image (`references/approved/mercury-hero.png`): the
-flames of the active region at the left limb and the low loop at the bottom left. They stand behind the limb
-of the Sun stop's view (their second angle is negative by more than their height can clear, so the body
-hides them up to the handover) and the body's own turn brings them over the limb on the way to Mercury.
+The last loop is read off the approved Mercury image (`references/approved/mercury-hero.png`): the low
+curl at the bottom left. A loop may carry `gain` (its own strength, 1 if absent) and `burn` (the power of
+the exposure it takes, `prominence.burn` if absent). The last loop is faint (`gain` 0.08) and takes nearly
+the whole exposure, so it is all but absent at the handover and the exposure reveals it; the loops of the
+Sun stop take a small negative power, so beside the burnt disc they sink into the glow as they do in a
+camera that exposes for the ground. With the exposure the loops also grow thinner (`prominence.thin`, the
+share of their width left at full exposure), break along their length (`prominence.broken`) and go pale
+(`prominence.pale`, by `prominence.paleBy`): thin pale wisps in the glow, not red arches. All three are zero
+at burn 0, so the loops at the handover are the hold's. They are marched in `prominence.steps` steps.
 
 ## The handover (look.json, `handover`, `wear`)
 
@@ -64,17 +69,32 @@ and zero at burn 0.
 
 `tight`, `tightFall` and `tightColour` are a second, narrow term of the same light,
 `tight * exp(-tightFall * x)`; it is zero at burn 0 like the first. Both are light outside the body only:
-they are weighted by one minus the body's cover of the pixel (and by `edge`), so they never lie over the
-limb and the limb law is seen to the edge. `white` is the ceiling of the shoulder. The shoulder is
-`white * x / (x + white)` for each colour apart: it presses the contrast of the surface evenly and never
-clips it, so at full exposure the red is full, the green nearly, and the blue still carries the whole
-surface. That is the soft warm mottle of the burnt face, and the limb, darker by the limb law, stays warm.
+they are weighted by one minus the body's cover of the pixel (and by `edge`). `white` is the ceiling of the
+shoulder. The shoulder is `white * x / (x + white)` for each colour apart: it presses the contrast of the
+surface evenly and never clips it, so at full exposure the red is full, the green nearly, and the blue
+still carries the surface. `keep` gives back an even share of the surface's own contrast after the
+shoulder: the shouldered colour is multiplied by `(detail / top)` to the power `gain * burn * tint`, where
+detail is the surface's heat before the colour. That is the soft mottle of the burnt face in all three
+colours, not in the blue alone. `spots.floor` is the low end of the heat at burn 0 and at burn 1: the
+exposure lifts the darkest places, so no spot reads through the burn while the mottle stays. `plage` is a
+wide soft brightening of the far look's face (`gain`, and `scale` its size on the sphere).
+`limb` is the light of the lens over the last part of the disc: the shouldered colour goes toward the
+ceiling by `limb[0] * burn * exp(-limb[1] * (1 - x))`, x the distance from the centre in disc radii. It is
+measured on the approved Mercury image, where the limb is not darker than the face (blue 241 at 0.97 radii
+against 228 to 233 further in): the warmth of that limb sits in the gas just outside it. It is zero at
+burn 0, so the limb law is whole at the handover.
+`knot` is the hot knot of the active region at the left limb as the lens sees it: a round light about the
+place `at` on the sphere (`width` in disc radii, `gain` by the exposure, zero at burn 0), which takes the
+face under it to white and adds `colour` outside the body. It fades as its place goes behind the limb.
 `body.bright` is the body's own gain at the near and the far end of the wear.
 `desat` is the range of luminance over which a gas colour loses its hue toward white, as a film does when
 every layer is full, in the measure of the burn (none at burn 0, so the loops keep the hold's red at the
 handover): it is one function for the chromosphere, the loops and the fringe. The face does not take it.
 `chromosphere.burn` is the power of the gas exposure the chromosphere takes, under 1 so the thin shell does
 not draw a white line round the burnt limb. The corona does not take the exposure: it stays at times 1.
+`corona.rim` is the colour of the lowest corona, up to `corona.rimTop` radii over the surface, where it
+goes over to `corona.near`: the deep orange of the hold's globe just outside its limb (0.80, 0.28, 0.10
+linear at 1.00 to 1.01 radii in the proof at frame 472).
 `hide` is the range, in disc radii from the centre, over which the pass covers what is drawn behind it once
 the burn passes one half: nothing behind a burnt Sun is seen through its light.
 
@@ -88,11 +108,16 @@ lean with height (`lean`), fall off with the height over `height` (low and high 
 over the upper half of the shell.
 It takes the same exposure as the loops, and it belongs to the far look: its strength goes with one minus
 the wear, like the body's own white heat, so it is absent at the start of the handover (the proof at frame
-472) and whole from `wear[1]` on. `lobe` is one place on the sphere (`at` as for the loops, `width` in
+472) and whole from `wear[1]` on. `lobes` are places on the sphere (`at` as for the loops, `width` in
 degrees) where the flames are `gain` times stronger and `tall` times taller: the active region at the left
-limb of the approved Mercury image. From it stand thin strands (`strands` their strength, `fine` their
-count across a radian, `sharp` their thinness, `reach` their height scale in radii) that spread with height
-(`fan`): each point of a strand is read at the foot it comes from, nearer the middle of the region.
+limb of the approved Mercury image (its two sides, its middle and its long faint rays) and the short fan at
+the bottom. From a lobe stand thin strands (`strands` their strength, `reach` their height scale in radii,
+which a noise of the foot varies from about a third to one and two thirds, so the rays are uneven in
+length) that spread with height (`strand.fan`; `strand.fine` their count across a radian, `strand.sharp`
+their thinness): each point of a strand is read at the foot it comes from, nearer the middle of the lobe.
+`knot` on a lobe is a smooth low glow at its foot: strength, width in degrees and height scale in radii.
+The second angle of a lobe is the place of the limb in the hold's view at Mercury (about -4 degrees at the
+left, +9 at the bottom), so the lobe stands on the limb there.
 
 ## The rule at frame 615
 
