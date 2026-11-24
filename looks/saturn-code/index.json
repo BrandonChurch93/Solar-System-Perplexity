@@ -1,9 +1,37 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T14:16:58.935Z",
+ "pushed": "2026-11-24T14:39:36.602Z",
  "head": "41cac1f4db60e27b5f7ba958dac5ec055882cf16",
- "note": "item 17 (the ring at 3720 against the approved): local trials, not committed; the tone by height slid in the dive, so it now comes by distance from the lens",
+ "note": "item 17, local trials only, nothing named: a grade of the ring's light by the height of the lens (the air of the stop), the same curve in the kept set and in the model. T7b fits the tone of the approved close in the mean, its lowest rows are too dark. Motion sheets follow",
  "looks": [
+  {
+   "time": "2026-11-24T14:39:35.949Z",
+   "file": "20261124143935949-note-t7b_left.jpg",
+   "source": "../../../../tmp/v/t17/t7b_left.png",
+   "kind": "note",
+   "label": "item 17 trial T7b at 3720 final, lower left at full size: approved close on top, the named frame in the middle, the trial below"
+  },
+  {
+   "time": "2026-11-24T14:39:35.224Z",
+   "file": "20261124143935224-note-t7b_three.jpg",
+   "source": "../../../../tmp/v/t17/t7b_three.png",
+   "kind": "note",
+   "label": "item 17 trial T7b at 3720 final: approved close on top, the named frame in the middle, the trial below. One tone curve on the lit ice of the rings, far look and near light alike, its share the air of the stop by the height of the lens. Lower half of the frame: mean 0.507 (approved 0.511, named 0.563), p95 0.831 (0.827, 0.910), white share 0.0001 (0.0003, 0.0083). Still wrong: the lowest rows are darker than the approved"
+  },
+  {
+   "time": "2026-11-24T14:34:57.836Z",
+   "file": "20261124143457836-note-d5_sheet_r.jpg",
+   "source": "../../../../tmp/v/t17/d5_sheet_r.png",
+   "kind": "note",
+   "label": "item 17 trial T5 (dropped, its driver was the distance from the lens, mail 374 rules the height): rise 3808 to 3838 every third frame, draft tier"
+  },
+  {
+   "time": "2026-11-24T14:34:56.984Z",
+   "file": "20261124143456984-note-t7a_three.jpg",
+   "source": "../../../../tmp/v/t17/t7a_three.png",
+   "kind": "note",
+   "label": "item 17 trial T7a at 3720 final: approved close on top, the named frame in the middle, the trial below. One tone curve on the lit ice by the height of the lens, in the far look only so far: the near ring at the lower left is not graded yet"
+  },
   {
    "time": "2026-11-24T14:16:58.129Z",
    "file": "20261124141658129-note-t5_three.jpg",
@@ -31,34 +59,6 @@
    "source": "../../../../tmp/v/t17/t4_three.png",
    "kind": "note",
    "label": "item 17 trial 4 at 3720 final, rows 380 to 1080: approved close image (top), named (middle), trial (bottom): thin zones darker with more ringlet contrast, a ceiling on the brightest ice, less colour; right as a still, but its share came by the height of the lens"
-  },
-  {
-   "time": "2026-11-24T13:52:33.995Z",
-   "file": "20261124135233995-note-t2_three.jpg",
-   "source": "../../../../tmp/v/t17/t2_three.png",
-   "kind": "note",
-   "label": "item 17, trial 2 at 3720, crop x 300 to 1260, y 480 to 900: approved close image (top), named (middle), trial (bottom). Trial 2 is wrong: the ceiling sat too high and the ringlets went white and streaky; kept as a bad one"
-  },
-  {
-   "time": "2026-11-24T13:52:33.335Z",
-   "file": "20261124135233335-note-rev_rise_whole.jpg",
-   "source": "../../../../tmp/v/r48/rev_rise_whole.png",
-   "kind": "note",
-   "label": "named trees, review tier, frames 3849 to 3855 whole: across the rise's handover at T 3852, level steps -0.14 to -0.47, no jump; the near ring at the left is drawn out by the shutter (item 16)"
-  },
-  {
-   "time": "2026-11-24T13:52:32.501Z",
-   "file": "20261124135232501-note-3567_beside_kept_final.jpg",
-   "source": "../../../../tmp/v/r48/3567_beside_kept_final.png",
-   "kind": "note",
-   "label": "named trees, frame 3567 at the final tier beside the kept still: the ring and the globe alike, the sky's warm field brighter here, the ring larger (the one flight)"
-  },
-  {
-   "time": "2026-11-24T13:26:30.100Z",
-   "file": "20261124132630100-note-pair_t1.jpg",
-   "source": "../../../../tmp/v/t17/pair_t1.png",
-   "kind": "note",
-   "label": "item 17 trial t1 at 3720 final, lower left: the gain of the model's own light 0.85 to 0.77 changes the mean by one hundredth; the far look carries the frame"
   }
  ]
 }
