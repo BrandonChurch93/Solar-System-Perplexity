@@ -1,9 +1,24 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T22:58:51.391Z",
+ "pushed": "2026-11-24T23:24:02.165Z",
  "head": "38591789c340058ad8cc55ca9d84ae3550aa9336",
- "note": "r55: rise still red by 0.01 (pattern 0.46 at 3816 + 1/2, the dust inside the inner rim leaving by height); dive part running; working on a law by the view angle in place of the height",
+ "note": "rise red by 0.01 (0.46 against 0.45, the dust inside the inner rim leaving in the climb), dive green 0.33; the dust's table by height is set again from the measure, next a trial of a darker inner zone at 3720",
  "looks": [
+  {
+   "time": "2026-11-24T23:24:01.430Z",
+   "file": "20261124232401430-note-final_3720.jpg",
+   "source": "../../../../tmp/v/r55/final_3720.png",
+   "kind": "note",
+   "label": "3720 at the final tier, tree of 22:32 on main 7026711, sha ee1aec39, same bytes as the frame of 21:02; the inner zone is still pale where the approved is dark"
+  },
+  {
+   "time": "2026-11-24T23:24:00.817Z",
+   "file": "20261124232400817-note-saturn-dive-changes.jpg",
+   "source": "../../../../tmp/v/r55/saturn-dive-changes.png",
+   "kind": "note",
+   "label": "report sheet of the dive on main 7026711 plus the tree of 22:32: green, pattern 0.33 at 3576",
+   "stop": "saturn"
+  },
   {
    "time": "2026-11-24T22:58:50.158Z",
    "file": "20261124225850158-note-r55_rise_changes.jpg",
@@ -46,21 +61,6 @@
    "source": "../../../../tmp/v/t18/rise6.png",
    "kind": "note",
    "label": "rise 3810 to 3850 every 8: the dust plate at the foot leaves between 3826 and 3834 (cause 2), cure in work"
-  },
-  {
-   "time": "2026-11-24T22:07:46.442Z",
-   "file": "20261124220746442-note-ep1d.jpg",
-   "source": "../../../../tmp/v/t18/ep1d.png",
-   "kind": "note",
-   "label": "cause 1 of the dive red: C ring over the globe 3588 to 3598 at twice native size, tone table by radius comes in by height too fast"
-  },
-  {
-   "time": "2026-11-24T22:07:45.841Z",
-   "file": "20261124220745841-note-saturn-rise-changes.jpg",
-   "source": "../../../../tmp/v/r54/saturn-rise-changes.png",
-   "kind": "note",
-   "label": "r54 rise changes sheet: RED pattern 0.70 from 3822.5 (limit 0.45), the dust plate and the tone table swap by height in the fast climb; cure in work",
-   "stop": "saturn"
   }
  ]
 }
