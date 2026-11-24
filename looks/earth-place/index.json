@@ -1,9 +1,47 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T02:12:46.697Z",
+ "pushed": "2026-11-24T02:34:14.029Z",
  "head": "3a6b18447c9e495e006c1f7210ec2df4fe2085dc",
- "note": "step 3 pushed (3a6b1844, not ready); trial of the rim rule cures the pale line at the corner tower; finer mesh rendering",
+ "note": "pale line cured by rim rule and mesh 1280, checks running; limb changes in one frame at both seams (measured); step 4 border study",
  "looks": [
+  {
+   "time": "2026-11-24T02:34:12.766Z",
+   "file": "20261124023412766-note-border-2121.jpg",
+   "source": "../../../../tmp/gl/s3/border-2121.jpg",
+   "kind": "note",
+   "label": "2121 border of the place against the map: detail ends, step 4 next",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T02:34:11.609Z",
+   "file": "20261124023411609-note-limb-zoom.jpg",
+   "source": "../../../../tmp/gl/s3/limb-zoom.jpg",
+   "kind": "note",
+   "label": "limb at 8 times: 1918 and 2101 globe side hard, 1919 and 2100 soft band; half level moves 6.35 and 6.53 px in one frame",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T02:34:10.567Z",
+   "file": "20261124023410567-note-e3-corner-run.jpg",
+   "source": "../../../../tmp/gl/s3/e3-corner-run.jpg",
+   "kind": "note",
+   "label": "corner tower 2097 to 2102 with the rim rule and mesh 1280: no pale line",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T02:26:46.638Z",
+   "file": "20261124022646638-job-frame-01830.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "earth.dive frame 1830, draft tier, texels view, from the running g13 job",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1830,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "g13"
+  },
   {
    "time": "2026-11-24T02:12:45.844Z",
    "file": "20261124021245844-note-e2-corner2.jpg",
@@ -39,51 +77,6 @@
    "first": 1907,
    "last": 1918,
    "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T01:38:42.266Z",
-   "file": "20261124013842266-sheet-earth-dive-draft-across.jpg",
-   "source": "out/work/handover/earth-dive-draft-across.png",
-   "kind": "sheet",
-   "label": "earth dive, every frame 1913 to 1919 (across T, frame 1919), draft tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "first": 1913,
-   "last": 1919,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T01:37:15.626Z",
-   "file": "20261124013715626-compare-earth-dive-under.jpg",
-   "source": "out/work/handover/earth-dive-under.png",
-   "kind": "compare",
-   "label": "earth dive, the globe side at T (frame 1919) with the place picture, alone, and their difference times 4",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1919,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T01:25:36.565Z",
-   "file": "20261124012536565-job-frame-01914.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "earth.dive frame 1914, draft tier, texels view, from the running g13 job",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1914,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "g13"
-  },
-  {
-   "time": "2026-11-24T01:19:33.833Z",
-   "file": "20261124011933833-note-pair-2010.jpg",
-   "source": "../../../../tmp/gl/s3/pair-2010.jpg",
-   "kind": "note",
-   "label": "step 3: 2010 against step 1 with three marks, whole frame mean 0.003, largest 2 code values",
-   "stop": "earth"
   }
  ]
 }
