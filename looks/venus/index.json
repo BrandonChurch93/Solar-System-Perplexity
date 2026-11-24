@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-24T19:37:26.143Z",
+ "pushed": "2026-11-24T19:49:04.923Z",
  "head": "8b7994375d9917b14ff91634a36c266dc1d1c35c",
- "note": "dive pop cured by air.haze.heights 0.4, pattern moved (0.49, 7 over); 3.4 measured worse; mu 0.10 in trial",
+ "note": "pop of the dive cured on a slice (1.31 to 1.18), pattern 0.47 one frame over; whole proof chain running",
  "looks": [
+  {
+   "time": "2026-11-24T19:49:04.239Z",
+   "file": "20261124194904239-note-dive-changes-C.jpg",
+   "source": "../../../../tmp/v/c/dive-changes-C.jpg",
+   "kind": "note",
+   "label": "dive, mu 0.10 and heights to 0.4, slice 1300 to 1323: changes panel; pop 1.18 (limit 1.2), pattern 0.47 at 1311 (limit 0.45, 1 frame over)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T19:49:03.620Z",
+   "file": "20261124194903620-note-hz3-1550.jpg",
+   "source": "../../../../tmp/v/c/hz3-1550.jpg",
+   "kind": "note",
+   "label": "1550 rise, the second rim: top mu 0.06, middle mu 0.12 (named commit), bottom mu 0.10 with the air's own heights 0.035 to 0.4 (in work)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T19:37:25.507Z",
    "file": "20261124193725507-note-hazeH34-dive.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/c/dive-pops-X.jpg",
    "kind": "note",
    "label": "dive smooth pictures on the named commit 8b799437: new red, pop 1.31 at 1318 + 1/2, 9 over (1316 to 1320); what is left shows a grey band along the limb: the air on the line of sight at mu 0.12 coming in by height",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T18:36:32.001Z",
-   "file": "20261124183632001-note-rise-changes-X.jpg",
-   "source": "../../../../tmp/v/c/rise-changes-X.jpg",
-   "kind": "note",
-   "label": "rise smooth pictures on the commit of MAIL 707: pattern 0.76 at 1608 + 1/2, 20 over, first 1542; 1547 + 1/2 reads 0.61 (0.45 before the haze change); pop 1.28 at 1610 + 1/2, same picture (left 1.04), median of the new tool 0.81 against 0.83",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T18:08:35.312Z",
-   "file": "20261124180835312-note-s1324.jpg",
-   "source": "../../../../tmp/v/hx0/s1324.jpg",
-   "kind": "note",
-   "label": "handover sheet dive 1324 to 1339, draft, same tree",
    "stop": "venus"
   }
  ]
