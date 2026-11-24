@@ -1,9 +1,25 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T07:59:02.737Z",
+ "pushed": "2026-11-24T08:17:58.583Z",
  "head": "d9d989baba1b5ae5140fc450264cf61a519a2b48",
- "note": "service: every builder's head read through the judge's path part (Sun 12328793 and Uranus a7c2c078 moved and stay green; Earth 6c75f48f red on its own path)",
+ "note": "service: Mars's head read on pictures at its T (the stop's own ground and air differ, the engine's sky numbers are one through T); main 3ac64c78 comes next",
  "looks": [
+  {
+   "time": "2026-11-24T08:17:57.983Z",
+   "file": "20261124081757983-note-mars-head-b9c472dc-T-dive-sky-full-size.jpg",
+   "source": "out/work/looks-extra/mars-head-b9c472dc-T-dive-sky-full-size.png",
+   "kind": "note",
+   "label": "the same frames 2475 to 2478, the sky at full size: at T the stars fall (pixels over the median plus 25 in the top 110 rows: 4283 to 1232) and the sky takes a cool lift (mean 16,16,11 to 20,23,24): the close view's air dome (veil 0.55, cool glow), which the globe side does not draw; the plate, exposure and glow the engine hands over are equal at T",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T08:17:57.305Z",
+   "file": "20261124081757305-note-mars-head-b9c472dc-T-dive-2474-2479.jpg",
+   "source": "out/work/looks-extra/mars-head-b9c472dc-T-dive-2474-2479.png",
+   "kind": "note",
+   "label": "Mars's head b9c472dc laid over this tree (stop folder and assets equal by tree hash), draft tier, frames 2474 to 2479 of the dive: T is 2477, the ground and the sky change in one frame",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T07:59:02.050Z",
    "file": "20261124075902050-note-path-nine-heads-0758.jpg",
@@ -48,21 +64,6 @@
    "source": "../../../../tmp/bend/shelf-1.png",
    "kind": "note",
    "label": "main's Mars rise, draft, 2707 to 2715 one by one: the detailed patch shrinks inside the soft globe"
-  },
-  {
-   "time": "2026-11-24T05:38:22.868Z",
-   "file": "20261124053822868-note-shelf-three.jpg",
-   "source": "../../../../tmp/bend/shelf-three.png",
-   "kind": "note",
-   "label": "MAIL 518, the shelf: main's Mars rise, draft, 2702, 2712, 2720: fine plates fill the frame at 2702, by 2712 they are a patch inside the softer globe (their border in the frame from 2709), the limb enters at 2720"
-  },
-  {
-   "time": "2026-11-24T05:34:05.967Z",
-   "file": "20261124053405967-note-mars-7.jpg",
-   "source": "../../../../tmp/bend/mars-7.png",
-   "kind": "note",
-   "label": "Mars's own tree dd1ddb9c, draft, frames 2667 to 2675: its bend through the seam at 2670, no frame stands out",
-   "stop": "mars"
   }
  ]
 }
