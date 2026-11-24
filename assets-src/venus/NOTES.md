@@ -2479,3 +2479,704 @@ Tree: eb50bcbd plus the smear of the globe tied to `view.shutter` (set.ts). Run 
 - Frames changed against 2828642a (JPEG copies, mean difference of the frame; the floor of the comparison is 1.6 to 1.8): 1271 to 1335 and 1546 to 1596 above the floor, most 14.5 at 1310 and 17.6 at 1567. Every frame of both moves may differ in bytes by the capped shutter of main.
 
 Every frame viewed (sheets of 12 at 640 px, `out/work/venus/place/s0/`): 1260 to 1275 the globe; ring towers 1276 to 1283; dark olive field lower right 1284 to 1300; pale soft wedge lower middle 1296 to 1299; the Sun's glow enters at the top 1313 to 1319; 1320 to 1349 no swap seen at 1343; 1530 to 1544 the surface view; pale cells at the lower left 1545 to 1553; golden band on the limb 1554 to 1565; olive field 1566 to 1577; ring towers 1578 to 1589; the globe 1590 to 1604; 1603, 1604 and main's 1605 run on without a step seen at 640 px.
+
+## State 23:25: step 0 named READY (9f96846f), MAIL 386, step 2 (nothing by the clock) started. Read this first after a compaction
+
+Clock: the VM runs about three minutes behind the Builder's. Times here are the VM's unless a mail is quoted.
+
+### Step 0 READY, sent 23:17
+
+Commit 9f96846fe0d8ed62207b3dccef7a638799b4af92 (887a6f09 merged with main 2ab2691d), pushed to `agent/venus-place`. On the merged tree: tsc 0, vitest 224 of 224, build 0, "PASS G11  every asset has a row or a recipe", "PASS G15  at most 2 sets per frame; finished stops: venus/web 352 MB, venus/full 1386 MB", final 1185 and 1440 the kept sha256, smooth red (28 over the limit, the path is not touched by step 0). On 887a6f09's tree before the merge (the merge changed no file of the engine or of Venus): handover report pass with every part on both moves, G13 0 of 495 over 2 percent (worst 1561 1.18), G5 and G17 pass, 37 of 37 kept frames byte equal.
+
+Per item of the 18:11 list, from 1287 and 1586 at native size (`/tmp/v/n0/`) and every frame at 640 px: 2 better (towers and shadows run on to the limb; flat dark shadow slabs with hard edges at x 1220 to 1500, y 450 to 900), 3 better (diagonal streaks remain at x 0 to 150, y 700 to 1080 of 1586), 4 better, not cured (cells end against a smooth lit band of the limb about 250 px wide, x 1500 to 1760 of 1586), 8 cured at 1304, 1310, 1557, 1566, 1574 and less at 1318; 1, 5, 6, 7, 9, 10 left.
+
+### MAIL 386 from the Builder (/root), received between 23:17 and 23:20 on the VM clock, word for word
+
+"MAIL 386 from the Builder (/root). READY Venus step 0 (9f96846f) received. (1) Take limit: your count stands. Each window is one generated asset with its own row in the recipe, as with the tiles of the other plates; no window is over 4 of 6, and the ring as one picture has used 3 of its 6. No rebuild. (2) Proof: tree builder/take-venus-9f96 8cefcf2a (main 9be101a plus your three folders), twelve jobs and a measure at every frame are queued behind the capture rate proof, which holds 24 machines now; I take it when clean and tell you. It is a base, not a round candidate, while your smooth report is red. (3) Go on as you planned: step 2 (nothing by the clock) now, the pace on the engine's one move when it is on main, your dive shape kept as a fallback. Keep your list of what is still wrong in each report, it is used. No answer needed."
+
+So: the ring as one picture has 3 takes left, each window what is left of its six.
+
+### Step 2, what runs on the clock today and what it becomes
+
+Heights of the film's camera over the cloud tops, radii (`out/work/venus/place/hts.ts`): hold 3.60 (1110) to 3.461 (1259); dive 1260 3.460, 1264 3.41, 1267 3.18, 1269 2.90, 1275 1.92, 1280 1.33, 1287 0.794, 1294 0.475, 1305 0.211, 1315 0.100, 1319 0.0747, 1331 0.0315, 1341 0.0213, 1343 0.0208, 1349 0.0204; rise 1530 0.0165, 1542 0.0184, 1545 0.0208, 1554 0.0419, 1562 0.0947, 1567 0.159, 1586 1.147, 1596 3.24, 1597 3.53, 1604 4.398; travel 1605 4.401.
+
+| What | On the clock before | By height now |
+| --- | --- | --- |
+| Dusk exposure and tint of the globe | shares 0.1 to 0.5 of the dive (1269 to 1305), 0.5 to 0.9 of the rise (1567 to 1597) | `plates.json dusk.heights` [0.2, 3.2], one curve for both moves |
+| The look of the hold going out (lightning, far limb, hold rim) | first half second of the dive (1260 to 1275) | `plates.json leave.heights` [1.9, 3.4]; stays out after the surface view |
+| Engine: the surface view's sky on the globe side | 24 frames before and after T (1319 to 1342, 1543 to 1566) | `plan.skyShare`, `plates.json sky.low` [0.0212, 0.1] |
+| Engine: the turn of the sky to the surface view's frame | the whole move to T | `plan.skyCarryShare`, `sky.carry` [0.0212, 3.4] |
+| Engine: the stars opening in the rise | T to the end of the rise | `plan.skyLiftAt`, from `sky.lift` 0.0212 to the height the rise ends at |
+| Engine: the place picture | 12 frames before and after T (1331 to 1342, 1543 to 1554) | off: `move.json handover.dive.picture` and `rise.picture` false |
+
+Not blends, left on the clock: the drift of the clouds, the spin of the body, the flashes of the lightning (events of the scene), and the switch of the plates and of the globe's weave between the dive and the rise, which happens while the surface view fills the frame. Dead under the handover and still in the code: the cover (`phase`, `veilAmount`, `drop`, `release`, `skyGain`, `coverAmount`, the banked path of `dive`); `coverWindow` gives null for a stop that hands over, so none of it draws. To be deleted in a cleanup once the path is the engine's.
+
+Left on the clock on the surface side until step 4: `hazeSpeed` and `swayPerSecond` (the two pushes of the picture).
+
+### Step 2, found with the place picture off (23:27): a swap that can be seen at T
+
+Render `out/work/venus/place/s2` (all 165 frames of dive and rise at draft, by height, picture off). 1343 to 1349 and 1530 to 1542 are the bytes of step 0. From 1342 to 1343 and from 1542 to 1543 the scene changes in view: the far deck under the horizon (paler and smooth on the surface side), the lower left corner (pale pebbled patch of the plates against the big rounded tower top of the surface view), the right edge. Globe side without the picture against the surface side at T (dive): mean 2.86 of 255, limit 0.5; band y 360 to 540 by sixths 5 to 9, right eighth 7 to 12. So the place picture was hiding a difference between the plates and the surface view that is there with or without it; taking it out alone moves the fault from a 12 frame blend to one frame.
+
+Decision: the globe side at T has to be the surface view's own scene, not a picture of it. `relief.ts` draws the meshes of the surface view and its air under the horizon on the globe side too ("the ground on the globe side", `globeGround`, `updateGround`): same geometry, same textures, a second program whose eye is given, hung in the globe's scene by the similarity of the plan (group turned by the twin's turn, scale 1 / radius, deck centre on the globe's centre). Depth on its own logarithmic scale in the near half of the buffer, so the layers hide one another and the globe's sphere, which runs through the towers, cuts none of them. The dome's part under the horizon is drawn where the globe wrote depth (`globeUnder`, depth test greater). Share by the height of the camera (`plates.json ground.heights`), never by time.
+
+Measured at draft (`s3`, heights [0.0213, 0.03]): frame difference 1341/1342 5.78, 1342/1343 5.28, 1343/1344 4.54; rise 1541/1542 6.97, 1542/1543 7.31, 1543/1544 7.45 (with the picture off and no ground the step at T was the swap). 1343 on and 1530 to 1542 the bytes of `s2`.
+
+Faults of `s3`, both mine: (a) 1547 to 1549 darker than both ends by up to 6.7 levels: the air under the horizon at part weight lay under meshes at part weight, so its dark floor showed through (M w + P (1 - w)^2 + D w (1 - w)). Cure: the air under the horizon only from the horizon down to `ground.bandDeg` (the far deck fades into it; nearer by the meshes cover it). (b) a brown band at the lower edge at 1338 and 1339: from above the height of T the lower edge of the ground's picture comes into the frame. Cure: the ground thins out to the plates over `ground.foot.share` of its picture's height, none at the height of T (so the globe side at T stays the surface side), the whole share by `foot.over` times that height.
+
+What this does not cure: between the two heights of `ground.heights` the picture is a blend, by height, of the surface view's ground and the plates, which are two pictures of the place that agree in the large forms and not in the small. That only becomes one scene when the plates near the place are made from the surface view's own ground (step 3).
+
+### Mail from handover_engineer, 23:47 VM (word for word)
+
+"handover_engineer: plan E, the move, is on agent/engine-handover at 6d260fb (E commit 667cae5), reported to /root, not on main yet. As promised: `at` 0.927 and 0.124 keep your height at T, the flanks are handover.pace {rise 0.4, fall 0.4, corner 0.2} (rise = the flank at the far end, fall = at the surface, for both kinds; your own under handover.dive.pace / handover.rise.pace). `state.height` and `plan.eyeHeight(time)` are in. Venus is still named in handover.ownPath; `--diag onemove` draws you on E. Do not leave ownPath yet: forced onto E your fall and turn pass, but the speed of the picture at the place is over (dive 0.081 of the mean; in the rise it falls 0.245 before its peak). That is the geometry of the low end, mine to cure, next commit. I tell you when it holds and whether `at` moved (I expect not: the height stays on the bell). No answer needed."
+
+So: Venus stays in `handover.ownPath` until handover_engineer says E holds at the low end.
+
+### Step 2 as built (23:53 VM): place picture off, the ground of the surface view on the globe side, the air split made exact at T
+
+What changed after `s3`:
+
+- The air under the horizon on the globe side (`globeUnder`) reads the whole air picture and takes nothing from the Sun's own picture (as the surface side does under the horizon), and gives way to the plates between `ground.bandDeg` [0.4, 1.2] degrees under the horizon. The dark dip at 1547 to 1549 is gone: mean level 1545 to 1550 now 63.6, 63.4, 63.8, 64.6, 65.2, 66.0.
+- The lower edge of the ground: its lowest layer (L0 of `relief.json`, which runs 1584 px below the picture) thins out to the plates over `ground.foot.share` 0.05 of the layer's height, none at the height of T, the whole share from 1.12 times that height. The brown band at 1338 and 1339 is gone.
+- `ground.heights` [0.0213, 0.028]. Tried [0.045, 0.06] (`s4`): above about 0.03 radii on the dive (1332 and earlier) and above about 0.025 on the rise (1549 and later) the sides and the lower edge of the ground stand in the frame as edges (a wing from the upper right at 1326, a dark slab from the left at 1549 to 1553). The meshes are one view's relief; they hold near the pose of T and not from above. So the ground cannot be the place from higher up; that is step 3 (plates and relief made from the surface view's own ground, so the plates are the same scene).
+- Found with the picture off and the ground in: the globe side stood up to 18 of 255 over the surface side in a band of 2 degrees over the limb, 30 degrees to each side of the Sun (x 960 to 1920, about 35 px high). Cause: `airsun.py` took the rest as the air picture less the light the Sun's picture was cut from, but between the Sun and the limb the Sun's picture holds the light above the Sun turned half round, so the halo was counted twice there. The place picture covered it at T. Cure: the rest is the air picture less the Sun's picture as the dome reads it back at T. `relief-air-limb.png` is new (both sets), `relief-air-sun.png` the same bytes. The script's own check: mean 0.031, 99th percentile 0.41, largest 12.0 (before 0.346, 10.54, 27.7).
+
+Measured, draft, the globe side forced at T against the surface side at T (`npm run still -- --diag beauty/side=orbit/t=...`), place picture off:
+
+| | mean | 99th percentile | 99.9th | share over 4 |
+| --- | --- | --- | --- | --- |
+| dive, 1343, before the ground (step 0 plates alone) | 2.86 | | | |
+| dive, 1343, ground in, old air split | 0.178 | 8 | 21 | 1.29% |
+| dive, 1343, as built | 0.050 | 1 | 5 | 0.11% |
+| rise, 1542, ground in, old air split | 0.190 | 8 | 22 | 1.37% |
+| rise, 1542, as built | 0.061 | 1 | 6 | 0.12% |
+
+What is left of the difference at T: one line of pixels along the limb (globe side up to 21 brighter, x 0 to 900), the lowest row of the frame at the lower left (the surface side shows its floor colour in row 1079, x 0 to about 120: the surface view's own blemish), a spot of about 30 px at x 1440, y 368 (where the Sun's picture is brighter than the air picture, clipped), one level of rounding in the right half of the sky.
+
+Frame to frame mean difference across both handovers (`s5`): dive 1330 to 1343 falls evenly 11.14, 10.66, 10.22, 9.73, 9.04, 8.43, 8.05, 7.76, 7.43, 6.99, 6.37, 5.78, 5.28; rise 1542 to 1552 climbs evenly 7.31, 7.45, 7.76, 8.00, 8.20, 9.04, 10.49, 10.96, 11.78, 12.68.
+
+Still wrong in step 2 (seen on the sheets): between 0.028 and 0.0213 radii (dive 1333 to 1340, rise 1546 to 1549) the picture is a blend by height of the plates and the surface view's ground. They agree in the large forms (the tower group, the shafts, the limb) and not in the small: on the dive the pale pebbled field at the lower right and lower left turns into dark towers, on the rise pale cells come in at the lower left and along the lower edge.
+
+### Mail from globe_engineer, 00:07 VM (24 Nov), word for word
+
+"From globe_engineer. The commit you asked for: agent/engine-globe e28f9c95 (merged with main 304f1c68; the Builder takes it onto main as files after its proof). For Venus's own material: (1) Air: `import { setHazeAir } from '../../bodies/air'` and per frame `if (shot.air) setHazeAir(material.uniforms, shot.air.haze)`; it writes uHazeH, uHazeTau, uHazeDay, uHazeTwilight, uHazeNight, uHazeEdge, uHazeStrength, uHazeForward and uExtinction where the material has them, and changes no text. `shot.air` itself comes with handover_engineer's type (not on its branch yet). (2) Cap: `new ReliefCap(yourFragmentText, yourUniforms, { levels, border, from, cells, pixel, fine? })` from src/bodies/cap.ts gives `cap.mesh` (add it as a child of your globe mesh) with its own vertex text that hands your fragment text vLocal (the direction straight under the point, not displaced), vWorldN, vPos, vView, vClip; it needs your uniforms uSpotN, uSpotE, uSpotU (the plate frame about the place, as Planet makes them from `patches.spot`) and uSpin. Per frame: `cap.setPixel(shot.pixel)`, then `const on = cap.update(height, foot)` with height = eye above the unit sphere in radii and foot = the eye's direction in the plate frame, (d.E / d.N, d.U / d.N) as in Planet.update (six lines to copy), and your sphere's text gets `uniform float uCapCut;` plus as last line `if (uCapCut > 0.0 && dn > 0.3 && max(abs(dot(d, uSpotE)), abs(dot(d, uSpotU))) < uCapCut * dn) discard;` with uCapCut = on ? cap.cut : 0. Heights: `heightTexture(ctx, new Uint16Array(await ctx.buffer(path)), size)` from src/core/sets.ts, square gnomonic plates about the spot, north up, raw uint16, radii = low + v / 65535 * (high - low). Two cautions measured on Mars: your line that intersects the eye ray with the unit sphere must use the fragment's own radius on the cap (or the haze is measured to the sphere), and neighbours in a height level must not step by many texel widths or the step stands as a curtain. Details: sections 7 and 8 of assets-src/shared/GLOBE-NOTES.md. Pictures of Mars with it: looks, folder engine-globe."
+
+What it means here: `src/bodies/cap.ts` and `src/bodies/air.ts` are not on main yet, and a commit of mine is checked as main plus my three folders, so the cap can go into the Venus globe only after the Builder has taken e28f9c95 onto main. Until then step 3 is the part that needs no engine code: the plates under the ground made from the ground itself (`place/fcam.ts`, `place/flay.py`).
+
+### Step 3, first part, design (00:05 VM): the plates under the ground made from the ground
+
+The fault left by step 2: between 0.028 and 0.0213 radii the plates give way to the surface view's ground by height, and outside the frame of T the plates hold what the takes painted (pale pebbled cells) where the ground holds dark towers. At T itself the plates are no longer seen (the ground covers them), so they need not be the picture of T any more; they must be the picture of the ground at the heights where the two are blended.
+
+- `place/fcam.ts`: the film's globe side camera at the height where the ground has half its weight (the middle of `ground.heights` in the logarithm, 0.024421 radii): dive time 44.54104 s (in frame 1336), rise time 51.59565 s (in frame 1547). Written to `out/work/venus/place/fcam.json`. By height, so it can be run again when the path changes (plan E).
+- `place/flay.py`: as `tlay.py` at T, from that camera: the close side drawn there (`nograin/side=terrain/t=...`, uhd, draft) laid back onto every level; replaces the plate where the camera looks at the ground steeply enough and the layers of the surface view lie (relief.json and aprons.json boxes through the close image's camera, less a margin and less the foot); tones through the globe draw from the same camera with the ground off (`ground.heights` set to [1e-9, 2e-9] for that draw only). Starts from the plates of the film as committed and writes the same twenty files (five levels, two handovers, two sets); same sizes, so G15 does not move.
+- Needs `ground.lay` in plates.json: edge, margin, trustSinElevation, coverSinElevation, soft.
+- To measure: the globe draw with the ground off against the close draw at that camera, before and after; the blend frames 1333 to 1341 and 1545 to 1550 on sheets.
+
+### MAIL 412 (arrived 00:14 VM, 24 Nov), from `/root`, high priority, word for word
+
+"MAIL 412 from the Builder (/root). Venus 9f96846f is on main (101954b) as the base for your round, not as its candidate. Proof, measured on my machines: 115 of 115 draft frames, changed only inside your dive and rise (1287, 1297, 1301, 1316, 1327, 1543, 1547, 1562, 1573, 1586); finals 1185 and 1440 keep the kept stills' bytes; measure green (G13 0 of 495 frames over 0.02, worst 1.18 percent at 1561; G5 and G17 pass); take check clean (17 files, build 0, 224 of 224 tests, G11 and G15 PASS).
+Do not merge main yet: the capture rate, the travel's seam cure and plan E's one move go onto main next and I tell every builder in one mail when to merge (merge, never rebase). Then Venus goes onto the engine's one move as you proposed, and your named commit after that, with a clean take check and its smooth report, opens the round.
+Until then: work down your own list of what is still wrong in the dive and the rise with the place picture off (send me the list with frames in your next report so I hold the round to it), and keep looks coming on your looks branch."
+
+What it changes: no merge of main until the Builder's one mail to every builder. The commit that opens the round is the one named after Venus is on the engine's one move. Until then: commit and push whole steps on `agent/venus-place`, report each with the list of what is still wrong (frames), looks every 30 minutes.
+
+### Step 2, correction to "Step 2 as built" (00:20 VM, 24 Nov): the air split change is withdrawn
+
+On the handover sheets of the first proof run a dark blotch with coloured specks stood just over the limb under the Sun at 1317 to 1326. Cause: my change of `airsun.py` (the rest file made exact at T as air picture less Sun picture). The exact rest has a hole where the Sun stood at T; once the Sun has left the limb (the Sun keeps its direction, the limb sinks) the hole shows. The proof run was stopped at G13 and nothing of it is quoted as proof.
+
+What stands now:
+- `relief-air-limb.png` (full and web) and `airsun.py` are the committed bytes of step 0 again. `RECIPE.md` is unchanged against step 0.
+- The exactness at T is made in the dome shader of the globe side instead (`relief.ts`): `uWhole` is the close side's own air picture, `uExact` goes from 1 at T to 0 at `air.sun.exactHeights` (0.0213 to 0.028 radii, by height). Where it is 1 the rest is the whole air picture less the Sun's part read from the limb as it stands now, so the sum is the close side's dome. Above, the smooth rest file takes over.
+- First form of this (no further limit) gave sides at T: dive mean 0.017, rise 0.027 (of 255), but coloured specks under the Sun at 1545 and 1547 (in the Sun's core both files stand at the top of their range, the difference is rounding). Cure: `air.sun.exactBelow` [0.8, 0.95], the exact rest only where both pictures are held below that display value. Measured after it, draft, globe side forced at T against the surface side at T: dive mean 0.026, p99 1, p99.9 8, largest 111, 0.19 percent of the pixels over 4; rise mean 0.036, p99 1, p99.9 8, largest 102, 0.19 percent over 4. Limits of the handover report: mean 0.5, p99 4.
+- Seen on crops about the Sun, step 0 beside now (1320, 1326, 1333 to 1342, 1543 to 1558): the blotch at 1320 and 1326 is gone, no specks at 1545 and 1547.
+- New on the list of what is still wrong, seen on the same crops: at 1333 to 1336 the far edge of the ground on the globe side is a stair of one pixel against the limb band (the dome that is drawn through the ground is cut by the depth of the ground's mesh, a hard edge, while the ground itself fades), and a straight faint line runs up from the lower right at 1335 and 1336 (the edge of a mesh layer in the blend). Both belong to the blend by height that step 3 replaces.
+
+### MAIL 417 from the Builder (00:21 VM, 24 Nov), word for word
+
+"MAIL 417 from the Builder (/root) to every builder: main is at 65fb91d and now holds the capture rate (plan H: the page takes a capture rate, a frame may be a half frame, the shutter and the dust follow it). Taken from travel_builder's proven tree: at rate 1 every picture keeps its bytes (115 of 115 drafts, the judged finals equal the kept stills). Merge origin main into your branch at your next commit (merge, never rebase; fetch with --depth 1 as always). Nothing in your own folder changes by it. With it the pictures part of npm run smooth can run at the capture rate once the harness lands. Plan E's one move and the seam cure of the travels are NOT on main yet; each gets its own line from me. No answer needed."
+
+What it changes: main is merged into `agent/venus-place` before the step 2 commit and the step 2 proofs run on the merged tree. Plan E still waits for its own line.
+
+### Step 2, the tree that is proven (main 65fb91d8 merged, 00:22 VM, 24 Nov): what I saw on every frame
+
+Merge: `git fetch --depth 30 origin main` (depth 1 gave "refusing to merge unrelated histories", the base 2ab2691d was 10 commits down), `git merge origin/main`, no conflict, nothing in the Venus folders changed by it, tsc exit 0.
+
+Handover run at draft on the merged tree (`/tmp/v/venus-h7.md`), place picture off: dive side difference at T mean 0.026, 99th percentile 1, 99.9th 8, max 111, 0.19 percent over 4, 479 pixels over 16; flow gap mean 0.101 px a frame, largest 0.286; fastest frame 1323 at 1.206 of the mean rate; largest step on the body level 4.15 into 1280. Rise side difference mean 0.036, 99th percentile 1, 99.9th 8, max 102, 0.191 percent over 4, 1025 pixels over 16; flow gap mean 0.092, largest 0.236; fastest frame 1593 at 1.19; largest step on the body level 4.47 into 1596. Six of six parts pass.
+
+All 165 frames on nine sheets of twenty at 384 px (`/tmp/v/h7s/`), every sheet looked at:
+
+- 1260 to 1319 and 1557 to 1604: as step 0 (the leftovers of step 0 stand: olive field, ring towers, pale wedge, golden band, the Sun's glow coming in at 1313 to 1319).
+- 1320 to 1332: the plates alone, flat olive light, an orange band along the limb, the dark tower group in the middle.
+- 1333 to 1340: the ground of the surface view comes in by height. No frame where the scene swaps, but the light of the scene changes in these eight frames: the lower third goes from olive to near black with gold shafts, the limb from an orange band to a pale lit deck. The towers stand where the plates hold their flat picture; the small forms at the lower left and right differ.
+- 1341 to 1343: one picture on both sides of T.
+- 1542 to 1545: one picture on both sides of T.
+- 1546 to 1550: the reverse in four frames (the rise passes 0.0213 to 0.028 radii in four frames): the lower third lightens, pale pebbled cells come in at the lower left at 1548 and 1549, the pale deck at the limb turns to the orange band.
+- 1550 to 1556: the plates alone: the dark tower group as an island in pale olive ground.
+- Stair of one pixel on the far edge of the ground at 1333 to 1336 (draft has one sample a frame and no jitter; to be looked at on the review tier before it is called a fault of the picture).
+
+So the list for step 3 starts with the light and the small forms of the plates under the ground: the plates must hold the ground's own picture where the ground gives way to them.
+
+### MAIL 437 from the Builder (01:03 VM, 24 Nov), word for word
+
+"MAIL 437 from the Builder (/root) to every builder. Main is at 94be42ed77bf4468a83f30aee634185d27b29e88 and now holds, in this order: the capture rate (65fb91d), Venus 9f96846f, the travels' seam cure v1, Uranus step 1 (1d5f6b61) and plan E's one move (engine 6d260fb8). Only Mars is on the one move; every other stop opts in with its own commit. Merge origin main into your branch at your next commit (merge, never rebase), run your tests on the merge, and name commits only on top of it from now on. The draft reference of main changed only for Mars's ten frames 2427, 2444, 2448, 2455, 2459, 2690, 2694, 2701, 2705 and 2726; every other frame of the film keeps its bytes. If you were waiting for plan E to be on main, this is the word. No answer is needed."
+
+What it changes: main 94be42ed is merged before the step 2 commit, tests run on the merge. Plan E is on main, so the move of Venus onto the engine's one move is the step after step 2 (handover_engineer wrote at 23:47 that the picture speed at the low end is over on the one move for Venus and that the cure is its own; to be measured on the merge and asked).
+
+### Step 2, proofs (01:10 VM, 24 Nov)
+
+Full chain on the tree of step 2 with main 65fb91d8 merged (`/tmp/v/proofs2.sh`):
+- tsc exit 0; build exit 0.
+- Handover at draft: six of six parts pass (numbers in the section above).
+- Kept frames (37 frames of the hold, the terrain, 1250, 1259, 1605 and others, draft) against the same frames of main: 37 of 37 the same bytes.
+- "PASS G13 venus: 0 of 495 frames over 0.02 soft; worst frame 1561 1.18%, frame 1560 1.06%, frame 1562 0.96%"
+- "PASS G5 venus: 1185 hold invalid 0 coverage 0.316; 1287 dive invalid 0 coverage 0.907; 1440 terrain invalid 0 coverage 0.685; 1586 rise invalid 0 coverage 0.887"
+- "PASS G17 venus: 1185 median 0.959 p25 0.844 over 77 tiles; 1440 median 0.936 p25 0.804 over 76 tiles"
+- "PASS G11  every asset has a row or a recipe", "PASS G15  at most 2 sets per frame; finished stops: venus/web 352 MB, venus/full 1386 MB"
+- Finals 1185 and 1440: sha256 053990438b0003a689f1035b00c7265fa2c192a1b09143fb453fad9ac222cedd and b24b5ce3fdd445c7ddcd1154f1d9f3e43168fa3e1cd62219c3bceabce75825c3, the kept stills' bytes.
+- vitest: one test of 224 failed, `tests/place.test.ts` line 455, which took the sky share of every stop as the engine's schedule by the clock. Main 94be42ed has the line changed to the plan's own share where a plan gives one, so nothing to ask for.
+- smooth, path: red (the own path of Venus; plan E is the cure).
+
+Then main 79199f35 merged (it holds 94be42ed: the travels' seam cure, Uranus step 1, plan E's one move; `handover.ownPath` still names venus) and on that tree (`/tmp/v/proofs3.sh`):
+- tsc exit 0; vitest 268 of 268 passed in 35 files, 1 todo; build exit 0; G11 and G15 PASS with the same two lines.
+- 28 draft frames (1185, 1259, 1260, 1261, 1272, 1287, 1305, 1320, 1326, 1333, 1336, 1339, 1342, 1343, 1349, 1440, 1530, 1542, 1543, 1546, 1548, 1550, 1561, 1586, 1596, 1603, 1604, 1605) against the tree the chain ran on: 27 the same bytes. 1605 differs (mean 0.0106 of 255, largest 13, 1.9 percent of the pixels). Checked with my changes stashed: main 79199f35 itself draws 1605 with the same bytes as my tree, so the change is main's (the travels' seam cure), not Venus's.
+- smooth, path: red, 20 lines; the last lines are in the report.
+
+Frames changed against step 0 (9f96846f), draft, byte for byte over all 165: 1260 to 1342 and 1543 to 1604 changed; 1343 to 1349 and 1530 to 1542 the same bytes. 1260 differs by one level in 1.3 percent of its pixels, 1604 by mean 0.107 (largest 36, 8 percent of the pixels); the step 1259 to 1260 is 4.2758 (step 0: 4.2757) and 1604 to 1605 is 1.44 (step 0: 1.49), mean of 255 with the grain. Between 1262 and 1275 and between 1597 and 1603 the stars and the Milky Way stand elsewhere than in step 0 (up to mean 5 of 255): the turn of the sky and the opening of the stars follow the height of the camera now and not the clock.
+
+### Step 2 sent (01:14 VM): aea720d4b99cfe7220d54f4fb937a405787af679 on `agent/venus-place`, with the list of what is still wrong
+
+### MAIL 445 from the Builder (01:14 VM, 24 Nov), word for word
+
+"MAIL 445 from the Builder (/root) to venus_builder. Step 2 aea720d4 received, not a candidate, agreed. Rulings:
+1. Order (a) then (b) stands: onto the one move first, measure smooth, then step 3 on that path. The low end's picture speed: ask handover_engineer once; if its answer is not in within 30 minutes, cure it in your own pace values (src/stops/venus only) and say so.
+2. 1605: yes, that is main's own change (the travels' seam cure, d162, moves the first frames of each travel leg). The reference on my side was renewed after it; nothing for you to do.
+3. Your list is the right list. Items 1 and 2 are what Brandon sees ("the camera zooms in on a flat part of the planet, and then the actual landscape comes in"), so step 3 carries the weight: the plates under the ground made from the ground itself, then real relief, so that 1320 to 1340 is one place getting nearer. The Sun's core specks at T: cure them by drawing the Sun's core from one function on both sides, not by a mask.
+4. When (a) is in: name the commit, with the smooth lines, the handover lines and the list of frames whose bytes change. I prove it on my machines and take it; step 3 follows on its own commit.
+5. Looks: one sheet of 1320 to 1339 after (a) by 02:15, then step 3 sheets as they come."
+
+What it changes: (a) Venus onto the engine's one move is the next commit, named, with smooth, handover and changed frames. The Sun's core: one function on both sides instead of the value limit `air.sun.exactBelow`. Looks: a sheet of 1320 to 1339 after (a) by 02:15 Builder clock (02:12 VM).
+
+### Venus onto the engine's one move (plan E), started 01:14 VM
+
+- Main 11c4350e merged (2241c43f; only kit/PROGRESS.md came in, plan E was already in the tree with 79199f35).
+- The opt in, as HANDOVER-NOTES "E as built" says: "venus" deleted from `handover.ownPath` in config/showcase.json (the one shared edit that is the builder's), `move.json` `handover.dive.at` 0.927 and `handover.rise.at` 0.124 (handover_engineer's values, T at 1343 and 1539), `plan.ts` reads `this.eyeHeight(time)` and `this.eye('rise', seg.end, 'orbit')` (the private `heightAt` is gone, `untwin` is an override now), `set.ts` reads `plan.eye(kind, time, 'orbit')` and `plan.eyeShot(kind, time)` where it read `divePose`, `risePose`, `dive`, `rise`. The move of the stop's own (`divePose`, `risePose`, `path.ts`, `move.json` dive and rise) stays in the code as the fallback (MAIL 386); it is flown only with "venus" in `ownPath`. The probe tools (check.ts, path.ts, pace.ts, ringtex.ts) draw that fallback only.
+- The judge on E as it stands (`npm run smooth -- --stop venus --only path`, 01:16): red, 8 lines, all the speed of the picture: dive 0.080 at 1269 (rate 2: 0.081 at 1268 + 1/2); rise 0.082 at 1555 to 1556, 0.115 at 1589 to 1601 (most 1599), and it falls 0.238 (rate 2: 0.245) before its largest value (1578), lowest at 1538. Rate and turn green on both.
+- Heights on E (radii): dive 1287 1.359, 1305 0.259, 1315 0.100, 1325 0.0432, 1331 0.0302, 1335 0.0254, 1341 0.0216, 1343 (T) 0.0210, 1349 0.0204; rise 1530 0.0165, 1539 (T) 0.0182, 1542 0.0205, 1545 0.0242, 1547 0.0277, 1550 0.0354, 1562 0.138, 1586 2.27.
+- Dive cured in my own value: `handover.dive.pace {rise 0.45, fall 0.4, corner 0.2}` (the far flank 0.45 of the segment instead of 0.4): the judge has no line for the dive. Heights then: 1287 1.499, 1305 0.289, 1315 0.108, 1325 0.0446, 1331 0.0307, 1335 0.0256, 1341 0.0217, 1343 0.0210.
+- Rise: a grid of flanks (far 0.45 to 0.6, surface 0.3 to 0.4, corner 0.1 and 0.2; corner 0 is refused by the engine) leaves all three faults: the fall before the peak stays 0.19 to 0.24, the steps 0.082 to 0.12. Cause as far as I can read the engine: the low end is the surface view's seam pose carried on by tanh over `handover.coastFrames` (8), so its picture speed (0.46 of the mean at 1530, 2.8 px a film frame) dies within eight frames while the bell's rate needs 30 frames to come up, and at the low end the picture speed per rate of height is small (0.1 to 0.5 of what it is high up). Not reachable with at, pace, sidestep or level. Asked handover_engineer once (01:16 VM, as MAIL 445 rules; its answer is awaited until 01:50 VM).
+- 01:19 VM: `npm run handover -- --stop venus --tier draft` runs on E with the dive pace (log /tmp/v/he.log, sheets to /tmp/v/hes/). No edits under src or public until it ends. Step 0 frames (place/h0) and place/v/win deleted for disk (5.1 GB free).
+
+### MAIL 450 from the Builder (01:23 VM, 24 Nov), low priority, word for word
+
+"MAIL 450 from the Builder (/root) to every builder with assets. Size, a machine check (G12): main's tracked tree is 2961 MB of 3000 (1e9 bytes per GB), so 39 MB are left for the whole film. From now on: (1) every asset that comes in is paid for by one that goes out in the same commit (superseded plates, takes and leads first; nothing under references/ is touched); (2) every READY mail says the net MB of your folders against main; (3) growth needs my word before the commit, with the number. No answer is needed to this mail."
+
+What it means here: a plate written again under its own name costs only the difference in bytes; a new file needs one that goes out. Every READY carries the net MB of `src/stops/venus`, `assets-src/venus`, `public/assets/venus` against main.
+
+### Mail from handover_engineer (01:26 VM, 24 Nov), word for word
+
+"handover_engineer to venus_builder, answer to your question of 01:19 (in before 01:50).
+
+DIVE: yes, a cure is in my tree. Commit 2658ca7 on agent/engine-handover (pushed; on top of main 11c4350; not on main yet, /root decides) gives each side three values a stop may name in its own handover params: handover.KIND.pace, handover.KIND.turn (a bell of its own for the eye's direction, same three numbers as pace) and handover.KIND.liftPower. Measured with the harness's judge in my tree, Venus as on main 11c4350 forced onto E, with
+"dive": {"pace": {"rise": 0.58, "fall": 0.41, "corner": 0.05}, "turn": {"rise": 0.54, "fall": 0.46, "corner": 0.05}, "liftPower": 0.64}
+dive whole frames: rate 0.059 (1348), turn 0.059 (1346), speed 0.059 (1264); rate 2: 0.059, 0.059, 0.059 and 0.030 a half frame; climbs after the largest value at most 0.010. No red number in the dive.
+
+RISE: no, I have no cure for it. Cure it in your own values as /root ruled. What I measured, so you do not search where I did:
+- With the film's new rise law of 2658ca7 (pace 0.42 / 0.49 / 0.05, turn 0.38 / 0.59 / 0.05, liftPower 0.72) your rise reads rate 0.073, turn 0.072 green; speed 0.107 in 1594 to 1604 (most at 1603) and it falls 0.268 before its largest value (1578), lowest at 1538. So when that commit reaches main your rise numbers on E change from the ones you sent. To keep the rise you measured, name in your rise both "pace" and "turn" as {"rise": 0.4, "fall": 0.4, "corner": 0.2} and "liftPower": 0: that is the old pose to the last bit (tested).
+- The low end: your surface view moves the picture at 0.46 of the rise's mean at the seam (2.8 px a frame at 1524 to 1530). The engine's coast lets that die in about 8 frames while the bell has hardly begun: speed 0.46 at 1530, 0.19 at 1538, then it climbs. A longer coast does not cure it: handover.coastFrames 16 gives a fall of 0.189, 28 gives 0.138, and the far end gets worse (0.110, 0.116). So I do not build a coast per stop for this. What cures it is on your side: let the surface view's own motion ease down before 1530 to about what the rise starts with (about 1.1 px a frame), or give the rise's first frames more picture speed (path.sidestep, path.level).
+- The far end: the speed has to come down from 1.9 of the mean at 1578 to nothing at 1604, 26 frames, which is 0.073 a frame on a straight line, so there is no room for a rounded top. The direction is an earlier peak of the speed (a longer far flank "rise" of pace and of turn). My search over the three values found no green setting for your rise; its best (pace 0.45 / 0.54 / 0.19, turn 0.52 / 0.26 / 0.05, liftPower 0.1: rate 0.071, turn 0.089, speed 0.089, fall 0.029) is red on the turn and the engine refuses that turn bell (it steps 0.0885).
+
+`at` 0.927 and 0.124 stand; the path of E does not read `at`. No answer needed."
+
+What it means here: the dive is green on main's E today with my `pace.rise` 0.45; its three values (pace, turn, liftPower) come with 2658ca7 and are not read on main yet. The rise has no green setting on E, by its own search as well as mine. The surface view's own motion is not mine to ease (MAIL 214: the terrain segment does not change) without the Builder's word.
+
+### Mail from sky_builder (01:36 VM, 24 Nov, low priority), word for word
+
+"From sky_builder, for your notebook, no action (ruling of MAIL 448 of the Builder: every sky patch was measured for baked post grain of its judged frame). Venus: neither patch has it. sky-hold.webp -0.002 at 1185, -0.001 at 1185.5; sky-terrain.webp +0.001 at 1440, 0.000 at 1440.5. Rule for any later rebuild: a film render that goes into a sky patch as glow input is rendered with --diag nograin (or smoothed, as your hold recipe does), and the recipe says so."
+
+### Venus on the one move: the draft run and what I saw (01:38 VM, 24 Nov)
+
+- `npm run handover -- --stop venus --tier draft` on E (01:19 to 01:32): "venus.dive side difference at T: pass", "flow gap at T: pass", "every frame: pass"; "venus.rise side difference at T: pass", "flow gap at T: pass", "every frame: pass". Dive: handover in frame 1343, side difference mean 0.048, 99th percentile 1, flow gap mean 0.121 px a frame, largest 0.345; fastest frame 1301 at 1.61 times the mean rate; largest step on the body 3.8 levels into 1290; 54 of 90 frames at the floor of the shutter, longest blur 50.16 px at 1315 (200.9 px a frame there). Rise: handover in frame 1539, side difference mean 0.036, flow gap mean 0.099, largest 0.326; fastest frame 1575 at 1.473 times the mean rate. Report copy /tmp/v/venus-he.md.
+- All 165 frames looked at on nine sheets of twenty at 313 px a frame (/tmp/v/hes/, on the looks branch since 01:33). What I can say at that size: the dive and the rise read as one move each, the globe grows and shrinks with no stop; the Sun comes over the limb at 1316 to 1319 and leaves the frame at 1553 to 1555; the dark tower group stands in the pale olive plates from 1300 to 1332 and from 1549 to 1570 (item 2 of the list); the pale pieces at the lower left go out over 1330 to 1334 and the surround comes in over 1546 to 1549 (item 1). Frames 1300 to 1316 and 1556 to 1566 are soft at draft (blur of 42 to 50 px kept under the floor of the shutter; draft takes few samples). Not judged at native size yet: that is done on the frames of step 3.
+- Further grid for the rise (01:34): `path.level` false and `path.sidestep` of half a radius to each side and up or down move the fall before the peak by 0.02 at most (0.217 to 0.260); flanks with a corner of 0.3 or 0.5 are refused by the engine (the rate would step 0.087) or are worse (0.4, 0.4, 0.3: 0.126 and 0.254). So no value a stop may set on main's E cures the rise's speed of the picture. The dive has no line.
+- `move.json` now names for both moves `pace`, and also `turn` and `liftPower` of engine commit 2658ca7 (not on main, not read today): turn equal to pace and liftPower 0 keep today's pose when that commit lands, as its engineer states (I cannot measure that on main). tsc 0, the judge reads the same six lines.
+- Proofs of (a) started 01:38 (/tmp/v/proofsE.sh, log /tmp/v/proofsE.log): tsc, kept frames against step 2 and against main's own 1604 to 1610, the 28 frames of step 2 on the own path, the frames of the 01:19 handover run, G13 on every frame, G5 and G17, vitest, build, gate G11 and G15, smooth, finals 1185 and 1440. No edits under src or public until it ends.
+
+### Mail from globe_engineer (01:45 VM, 24 Nov, low priority), word for word
+
+"globe_engineer to the stop builders, the air of the globe (plan F). One note, no answer needed.
+The three lines a stop adds in its update, when it wants its limb, tint and haze to follow the height of the lens and not the clock or the view:
+  if (shot.air) {
+    planet.setAir(shot.air)                              // writes uLimb, uTint and the ground haze, each only if the air holds it
+    if (shot.air.shell) shell.setAir(shot.air.shell)     // a HazeShell
+  }
+A stop with a material of its own that includes the haze text (hazeUniforms): if (shot.air?.haze) setHazeAir(material.uniforms, shot.air.haze), from src/bodies/air.ts.
+And it takes out its own lines that change limb, tint or haze by view, segment or time.
+The knots are the stop's params: air: [{ height, limb, tint, haze: { all nine fields }, shell: { ... } }, { height: lower, haze: { depth: 1.8 } }, ...], highest first, a lower knot names only what differs. Make the highest knot from today's numbers of the hold (hazeAir(look.haze) gives the nine fields with the shader's defaults): at and above its height the engine hands that knot through untouched, so the hold keeps its bytes. No air in the params: shot.air is absent and nothing is written.
+Where it is: the setters are on agent/engine-globe abf28ac5 (src/bodies/air.ts, planet.setAir, HazeShell.setAir); shot.air, Air and AirKnot are on agent/engine-handover dddef05 (src/core/types.ts, src/core/air.ts). NEITHER IS ON MAIN YET. Do not wire it before the Builder says both are; this note is so the three lines are ready. No shader text changes and no uniform is added by it: a stop that does not call the setters keeps every byte."
+
+What it means here: nothing is wired until the Builder says both are on main. It is the engine's way to do what step 4 needs (air as one curve over height); Venus's own lines that change haze by the clock (`hazeSpeed`, `swayRad`) come out in step 4 whichever way.
+
+### The Sun's core from one read on both sides (design, 01:44 VM, applied after the proofs of (a))
+
+MAIL 445.3: "The Sun's core specks at T: cure them by drawing the Sun's core from one function on both sides, not by a mask." Step 2 took the rest near T as the whole air picture less the Sun's part and masked that difference out where either file stood near the top of its range (`exactBelow`). The mask goes. In its place a window by the angle from the Sun (`air.sun.exactCoreDeg`, whole inside 4 degrees, gone at 8) inside which nothing is taken as a difference of two near clip values: the rest stays the smooth rest and the Sun's light is the whole air picture read through the limb as it stood at T, less the smooth rest there. That is the close side's own read of its Sun (the whole picture by direction against the limb of the camera), so the core is one picture read one way on both sides. With one window on both parts the sum at T is the air picture itself at every weight of the window. The script is /tmp/v/suncore.py; the surface view's shader is not touched, so 1440 keeps its bytes (to be shown by sha). An analytic Sun in both shaders would change 1440; that belongs to step 4 if the Builder wants it.
+
+### The rise's picture speed on the one move: what a second tree showed (01:46 to 01:52 VM, 24 Nov)
+
+Measured with the judge alone (`npm run smooth -- --stop venus --only path`, no picture drawn) in a copy of the tree under /tmp/v/t2 while the proofs of (a) rendered, so nothing under src changed during the proofs.
+
+- Why the speed of the picture does not follow the rate on Venus's rise: per frame, speed over rate (each as a share of its own mean) is 0.47 at 1545, 0.73 at 1560, 1.24 at 1578, 1.55 at 1590 and 1.69 at 1600. The rate is a clean trapezoid (steps of 0.069 up to 1554, flat 1.64 from 1560 to 1575, steps of 0.068 down from 1582), the speed is that trapezoid times a factor that grows 3.5 times from the low end to the far end. So the far flank of the speed is 1.7 times as steep as the rate's (0.115) and its top corner on the low side adds the rate's climb to the factor's climb (0.082 at 1555 to 1556).
+- The low end: the surface view moves the picture at 0.41 (1518) to 0.46 (1530) of the rise's mean, growing (the bend of its drift). The one move lets that die while its bell starts: 0.46 at 1530, 0.22 at 1538, 0.38 at 1545, 0.45 at 1548.
+- `path.sidestep` far larger than before (right -4, -2, -1, 1, 2, 4 radii with `by` 0.5 and 1; up -3, -1.5, 1.5, 3): the fall before the peak stays between 0.136 and 0.329 and the turn goes red from 2 radii on (steps 0.083 to 0.160). No cure.
+- A test that is NOT in the tree and needs the Builder's word, because it changes frames of the terrain segment after 1440: the surface view's drift eased down over its last frames. Over 60 frames to 0.3 of its speed and held for the last 15 frames (so from 1455 on), the line "falls by ... before its largest value" is gone; over 45 frames to 0.4, held 15, it reads 0.044. What it really does: the slowing happens inside the surface view, before the judge's window, spread over two seconds; the picture still slows before the rise, only gently.
+- With that ease the two step lines stay (0.085 at 1555 to 1557, 0.115 at 1589 to 1601), and no flanks cure both: far 0.6, surface 0.4, corner 0.05 clears the far end and reads 0.126 at 1559; 0.5 and 0.4 with 0.1 reads 0.105 at 1558 and 0.091 at 1601; nine more settings between 0.45 and 0.6 (far), 0.4 and 0.5 (surface), 0.05 to 0.3 (corner) read 0.101 to 0.121 and 0.086 to 0.119, two are refused by the engine.
+- What a cure would need, from these numbers: a pace whose corners are not all alike (a short straight low flank, a long round shoulder to an early top, a far flank no steeper than 0.047 a frame), or a path whose direction from the place turns later than its height grows (what `turn` and `liftPower` of 2658ca7 do; its engineer found no green setting for this rise with them). Neither is a value a stop may set on main's one move today.
+
+### Proofs of (a), first run (01:38 to 02:07 VM): G13 red on the one move's straight line, and the cure
+
+What the first proof run measured on the tree without a sidestep:
+- tsc 0; vitest 35 files, 268 tests passed, 1 todo; build 0; "PASS G11  every asset has a row or a recipe"; "PASS G15  at most 2 sets per frame; finished stops: venus/web 352 MB, venus/full 1386 MB".
+- "PASS G5 venus: 1185 hold invalid 0 coverage 0.316; 1287 dive invalid 0 coverage 0.685; 1440 terrain invalid 0 coverage 0.685; 1586 rise invalid 0 coverage 0.500"; "PASS G17 venus: 1185 median 0.959 p25 0.844 over 77 tiles; 1440 median 0.936 p25 0.804 over 76 tiles".
+- Finals 1185 and 1440: sha256 053990438b0003a689f1035b00c7265fa2c192a1b09143fb453fad9ac222cedd and b24b5ce3fdd445c7ddcd1154f1d9f3e43168fa3e1cd62219c3bceabce75825c3, the kept stills' bytes.
+- "FAIL G13 venus: 7 of 495 frames over 0.02 soft; worst frame 1315 5.22%, frame 1314 4.90%, frame 1316 4.13%". The seven: 1303 (2.14), 1306 (2.69), 1307 (2.07), 1313 (2.71), 1314, 1315, 1316. Hold, terrain and rise: no frame over (largest outside the dive 0.07 percent at 1562).
+- Where (texel view of 1306 and 1315, /tmp/v/tx/soft.jpg): the lower left corner of the picture, the ground nearest the camera, outside the straight border of a plate (outside level w at 1306, outside level a at 1315). On the straight line of the one move the camera comes in low from the side: at 1315 it stands about 12 degrees of arc from the place at 0.108 radii. The plates were laid for the own path, which came down nearer over the place.
+
+The cure, in a value a stop may set on the one move: `handover.dive.path.sidestep` {right 2, up -2, by 1} (radii in the picture of the far end, grown in over the whole dive).
+- Tried on 1306 and 1315 (soft share): none 0.0269 and 0.0522; up 1.5: 0.0276, 0.0711 (and the turn steps 0.081 at 1343); up -1.5: 0.0029, 0.0309; right 1.5: 0.0081, 0.0230; right -1.5: 0.0336, 0.0762 (and the speed climbs 0.034 after its peak); right 1.5 with up -1.5 on the seven frames: 0.0151 at most (1315).
+- Chosen right 2, up -2: frames 1294 to 1328, every one, 0.0065 at most (1315); the judge has no line for the dive.
+- Seen on nine frames beside the straight line (/tmp/v/step.jpg): the globe stays nearer the middle of the picture and the limb stands more level from 1306 to 1326; the same place, the same handover picture at 1343.
+- What it changes: every frame of the dive. Nothing else (to be shown by bytes in the second proof run, started 02:23: handover run, kept frames, the texel view of all 90 dive frames counted by G13's rule, G5, vitest, build, gate, smooth, finals).
+- G13 by the gate's own tool on all 495 frames takes 15 minutes of the one render process. The second run measures the 90 dive frames in the same view with the same rule (/tmp/v/count13.py); hold, terrain and rise were measured by the tool in the first run and their frames are shown to keep their bytes.
+
+### MAIL 472 from the Builder (arrived about 02:30 VM, 24 Nov), high priority, word for word
+
+"MAIL 472 from the Builder (/root), my word on the two things you named.
+1. The sidestep for G13 in the dive (handover.dive.path.sidestep {right 2, up -2, by 1}): accepted as a value a stop may set; it changes the dive only.
+2. The rise's low end: yes to (1). The surface view's drift is eased down over its last 75 frames (1455 to 1529), 1440 keeps its bytes. A camera that comes to rest before it lifts reads true, and it is the rule handover_engineer gives for every seam: the surface view is still at that end, or leaves along the move's way. Hold it to the path limits across the seam (no step over 0.08, no rebound over 0.03).
+3. The two step lines (1555 to 1556, 1589 to 1601): the rise stays on the one move, not on a path of your own. I asked handover_engineer for a pace with two corner values per side as a per stop option whose default is today's bytes, if it cures them; it answers first whether it does. Its new carry (the eye leaves each seam at the surface view's velocity, no count of frames) is in proof now and changes the low end too; measure your set again when it is on main (I mail you).
+4. Name (a) with the rise red and say so, as you propose; it is proven as a base, and no round starts on it. Then step 3."
+
+What follows: (a) is named as it stands in the second proof run. The ease of the surface view's drift (1455 to 1529) is its own change after (a), with its own proof (1440 by bytes, the terrain frames it moves named, the judge's lines across 1529 to 1530).
+
+### Mail from handover_engineer (02:39 VM, 24 Nov, high priority), word for word, and my answer
+
+"handover_engineer to venus_builder: /root passed me your ask for a pace with unlike corners (its MAIL 463 point 7: the rise stays on the one move; I give the pace two corner values per side as a per stop option whose default is today's bytes, IF that is what cures 1555 to 1556 and 1589 to 1601; I owe /root one line on whether it does, before building). To test it against your stop and not against mine I need, in one mail: (1) the commit or branch your rise was measured on (your pushed head aea720d4 still names Venus in handover.ownPath and flies its own risePose); (2) the handover params you set for the rise on the one move (pace, turn, liftPower, anything else in move.json) and whether the surface view's last frames changed; (3) the three red lines of the judge as it printed them (curve, value, frame, rate). What I measured myself on my head ee0c72ff, Venus's rise forced onto the one move with the film's own law (pace 0.42 / 0.49 / 0.05, turn 0.38 / 0.59 / 0.05, liftPower 0.72) and your surface view of aea720d4's parent on main: speed falls 0.120 of the mean before its peak, lowest at 1541 (the surface view sinks and drifts toward its place while the rise leaves it), and steps 0.117 at 1603 (the far end: the place sits far from the middle of the frame while the turn's bell ends). Your frames differ from mine, so your set does; send it and I test the two corners on it today."
+
+Answered at 02:40: the tree (main 11c4350e, "venus" out of ownPath, sha to follow when pushed), the whole handover block of move.json, the six judge lines of (a) and the four that stay with the slowed drift, and what I measured about the cause (speed over rate grows 3.5 times through the rise; far 0.6, surface 0.4, corner 0.05 clears the far end and reads 0.126 at 1559).
+
+### The surface view comes down before the rise (MAIL 472 item 2), measured in the second tree (02:38 VM)
+
+`move.json` settle {frames, to}: over the last `frames` film frames of the terrain segment the camera's own time runs at the pace 1 - (1 - to) * smoothstep, then stays at `to` (plan.ts, `settled`, a function of the time alone). Path judge, rise, pace 0.4, 0.4, 0.2, frames 75:
+- to 0.2: no "falls" line; steps 0.085 at 1556 and 0.115 at 1599 stay.
+- to 0.3: no "falls" line; the same two steps. Chosen: the largest of the tried values that is green on that rule.
+- to 0.35: falls 0.033 (limit 0.03). to 0.4: 0.044. to 0.5: 0.065. Without the ease: 0.238.
+The judge's window for the rise starts at frame 1518, so it sees the last twelve frames of the surface view. Not in the commit of (a); applied after it (/tmp/v/settle.py).
+
+### NOTE 482 from the Builder (02:43 VM, 24 Nov, low priority), word for word
+
+"NOTE 482 from the Builder (/root), to every builder. No answer needed. Main is 3efc31d. Since f2375d2e it gained: Saturn's stop folders (a359a4b7, as a base) and the smooth harness with the capture tool (files under tools/ and tests/, the smooth block of config/showcase.json, one line of package.json, README.md, assets-src/shared/HARNESS-NOTES.md and harness-cal/). Nothing under src/ outside src/stops/saturn changed, so no frame of yours moves by the merge. What it means for you: after you merge main, npm run smooth -- --stop <id> runs every part (the path, the pictures, the place, the parity of the 4K picture against the master, the counts after the warm start), and a READY that is meant for a round carries its last lines whole, not the path alone. The limits are logged under d174 in kit/PROGRESS.md. The judged test for a dissolve will be the pattern number (0.45) with the harness's next commit; the plain change is printed beside it. Next onto main, in this order, as their proofs come back whole: the frame counters with the warm start, the travel legs' light law and landing, the engine's air with the carry of the surface view's motion, the globe's options."
+
+My tree stands on main 11c4350e, which is older than f2375d2e: the merge of 3efc31da also brings aaff4635 (the rise's law, engine-handover 2658ca76), which reads `turn` and `liftPower`. My pins in move.json (turn equal to pace, liftPower 0) were set for that; whether the frames keep their bytes is measured after the merge.
+
+### Proofs of (a), second run, with the sidestep (02:23 to 02:55 VM), on main 11c4350e
+
+- tsc 0; vitest 35 files, 268 passed, 1 todo; build 0.
+- "PASS G11  every asset has a row or a recipe"; "PASS G15  at most 2 sets per frame; finished stops: venus/web 352 MB, venus/full 1386 MB".
+- "PASS G5 venus: 1185 hold invalid 0 coverage 0.316; 1287 dive invalid 0 coverage 0.668; 1440 terrain invalid 0 coverage 0.685; 1586 rise invalid 0 coverage 0.500".
+- G13, dive, the texel view of all 90 frames counted by G13's rule (counted when green over 0.5, soft when the red byte is under 127.5): "0 of 90 frames over 0.02 soft; worst frame 1315 0.65%, frame 1316 0.47%, frame 1314 0.31%". Hold, terrain and rise were measured by the gate's own tool in the first run (no frame over) and keep their bytes.
+- Bytes: all 90 dive frames differ from the run without the step; all 75 rise frames are equal to it; the kept frames (hold 17, terrain 19, 1605, 1606, 1610) are equal, 39 of 39; against step 2 (aea720d4) 36 of 37 are equal and 1605 differs (main's own change, MAIL 445.2).
+- Finals 1185 and 1440: sha256 053990438b0003a689f1035b00c7265fa2c192a1b09143fb453fad9ac222cedd and b24b5ce3fdd445c7ddcd1154f1d9f3e43168fa3e1cd62219c3bceabce75825c3, the kept stills' bytes.
+- Handover report, draft (`npm run handover -- --stop venus --tier draft`, exit 0):
+  - dive: "Verdict: pass (side difference at T, flow gap at T, every frame)." T in frame 1343. "Side difference at T (display values 0 to 255): mean 0.031, median 0, 99th percentile 1, 99.9th 10, max 111; 0.437 percent of pixels over 1, 0.242 percent over 4, 879 pixels over 16." "Flow gap at T over 97 ground points (step 0.0625 of a frame): the ground moves 7.199 px a frame just before T and 7.09 px just after; gap mean 0.11 px a frame, largest 0.303 px." "Height: mean ratio per frame 0.94037 on the way to T; fastest frame 1308 at 1.615 times the mean rate; frame 1277 (one fifth of the way) at 0.629 of the mean. The place is at most 0.316 of the half frame from the middle (frame 1277)." Longest blur 37.76 px (frame 1309); it was 50.16 px (1315) on the straight line.
+  - rise: "Verdict: pass (side difference at T, flow gap at T, every frame)." T in frame 1539. "Side difference at T (display values 0 to 255): mean 0.036, median 0, 99th percentile 1, 99.9th 9, max 109; 0.373 percent of pixels over 1, 0.201 percent over 4, 1006 pixels over 16." "Flow gap at T over 98 ground points (step 0.0625 of a frame): the ground moves 6.9 px a frame just before T and 6.98 px just after; gap mean 0.099 px a frame, largest 0.326 px." "Height: mean ratio per frame 1.08809 on the way from T; fastest frame 1575 at 1.473 times the mean rate; frame 1591 (one fifth of the way) at 0.696 of the mean. The place is at most 0.295 of the half frame from the middle (frame 1591)." Longest blur 33.37 px (frame 1559).
+- Path judge (`npm run smooth -- --stop venus --only path`), exit 1: "smooth venus: red, 6 over the limit or not measured. out/work/smooth/venus.md"; the six lines are the rise's speed, as before the step (0.082 at 1555 to 1556, 0.115 at 1589 to 1601, falls 0.238 before 1578, lowest 1538; the same three at rate 2: 0.082, 0.116, 0.245). No line for the dive.
+- Seen, every frame of the dive on five sheets (/tmp/v/hes2) and 1326 to 1343 at half size: one descent, the globe slides up and left out of the frame, the limb levels, the Sun enters at 1313 to 1320. Still wrong and seen: 1300 to 1316 soft under the shutter floor; 1320 to 1332 the plates read flat with the dark tower group painted on; from 1333 to 1340 the ground of the surface view comes in over them by height and the near cloud forms change (step 3).
+
+After these proofs main moved to 3efc31da. (a) is committed on this tree, then main is merged and the merge is measured again (tsc, tests, build, gate, judge, a sample of 27 frames by bytes against this run, finals).
+
+### Mail from handover_engineer (02:58 VM, 24 Nov, high priority), word for word: a pace with two corners per flank
+
+"handover_engineer to venus_builder: the two corners are built, commit 000b43ae on agent/engine-handover (on main 3efc31d merged; files src/director/pace.ts, moves.ts, handover.ts, tests/pace.test.ts, tests/onemove.test.ts). It is an option of the stop alone and changes no byte where it is not named (shots of all 5400 frames and 10800 half frames equal the head before). /root takes it to main after its proof; until then merge my branch into a scratch copy to try it, not into your pushed branch.
+HOW: in handover.rise (or dive) of your move.json, pace and turn each may carry "corners": {"rise": [foot, top], "fall": [foot, top]}. "rise" is the far flank (the hold's end of a dive, the travel's end of a rise), "fall" the flank at the surface view. foot is the share of the flank over which its slope comes in at the end of the move, top the share over which it goes out at the plateau; each above 0, the two at most 1 together. A flank you do not name keeps "corner" at both ends. A long foot at the far end is your long soft corner; a short foot at the near flank your short one.
+THE SET I found on my head (main 3efc31d plus the carry), your rise forced onto the one move with your block (T 0.124, liftPower 0) and the surface view as it is on main, WITHOUT your slowed drift of MAIL 472:
+"rise": {"at": 0.124, "picture": false, "pace": {"rise": 0.55, "fall": 0.4, "corner": 0.2, "corners": {"rise": [0.6, 0.1], "fall": [0.05, 0.2]}}, "turn": {"rise": 0.475, "fall": 0.5, "corner": 0.2, "corners": {"rise": [0.05, 0.1], "fall": [0.3, 0.05]}}, "liftPower": 0}
+The harness's path part prints no step line for the rise with it at either rate (before: 0.082 at 1555 to 1556, 0.123 at 1589 to 1601). It is THIN: at rate 2 the rate reads 0.0795 and the speed 0.0791 against 0.08, and "falls by 0.040 before its largest value, lowest at 1541" stays on my tree, which your slowed surface view is to cure. So do not take the set as it is: search again on your own tree after the slowed drift is in. Corners on the pace alone do not do it (0.091 at 1593); the far end is mostly the turn's bell ending (at 1590 the place slides 8.5 px a frame across the picture, the zoom gives 4.7), so the turn needs its corners as well.
+What would give real margin and is yours to weigh: the place stands at x 957 in the surface view and at 642 where the travel takes over, so the rise must slide it 315 px while it also ends its zoom. If the rise's far pose held the place nearer the middle (rise.offset), the far end would have less to stop.
+A search tool you can run on your own tree follows in a commit of mine within the half hour (tools/, the engine's own measure, about 15 ms a set); I mail you the line to call."
+
+What follows: nothing for (a). The corners are not on main; the search runs in the second tree once the slowed drift is in and the tool has come. The rise's far pose is the travel's first pose ("your rise must end in the pose, the speed and the look that travel starts with today"), so rise.offset is not mine to move without the Builder's word.
+
+### Mail from handover_engineer (03:01 VM, 24 Nov, low priority), word for word: the search tool
+
+"handover_engineer to venus_builder: the search tool is 04cba9e1 on agent/engine-handover (tools/law.ts, one file, on top of the corners commit 000b43ae). On your own tree, with the slowed surface view in:
+npx tsx tools/law.ts --stop venus --kind rise --corners --tries 4000 --seed 7
+It flies your rise on the one move (also while Venus is in ownPath), starts from the law your move.json has, tries the flanks, the corner, liftPower and the two corners a flank of both bells, and prints each better set with the worst step of rate, turn and speed and the worst fall or climb round a peak; the last lines are the block to put under handover.rise. --rebound 0 leaves the rebound out of the score (while your surface view still makes it), --start '{"pace":{...},"turn":{...},"liftPower":0}' starts from a set of your choice (for example mine of the last mail), --seed N takes another sequence (try three or four, the best differ), --rate 2 searches at half frames (slower, stricter). About 15 ms a set, a minute for 4000. It is the engine's own measure, not the judge: confirm with npm run smooth -- --stop venus --only path.
+One caution from my run: the search presses all three curves against the limit, so take a set only if it leaves you margin (I would want 0.075 or less at rate 2), else it turns red with the next change of your surface view."
+
+### (a) on main 7e7fb893: the merge measured again (02:55 to 03:01 VM)
+
+Commit 29398ac9 is (a) on main 11c4350e; 5017aa40 merges main 7e7fb893 (which holds the rise's law, 2658ca76, that reads `turn` and `liftPower`). On the merge:
+- tsc 0; vitest 37 files, 302 passed; build 0.
+- "PASS G11  every asset has a row or a recipe"; "PASS G15  at most 2 sets per frame; finished stops: venus/web 352 MB, venus/full 1386 MB".
+- A sample of 27 frames at draft against the proven tree by sha256 (dive 1262, 1275, 1287, 1300, 1310, 1320, 1330, 1338, 1343, 1347; rise 1530, 1534, 1539, 1545, 1555, 1570, 1586, 1600, 1604; hold 1185, 1259; terrain 1350, 1440, 1529; travel 1605, 1606, 1610): equal 27 of 27. So the pins hold (turn equal to pace, liftPower 0) and the handover report, G13 and G5 of the proven tree stand for the merge.
+- Finals 1185 and 1440: the kept stills' bytes again (0539... and b24b...).
+- Path judge, exit 1, word for word:
+  "smooth venus: red, 6 over the limit or not measured. out/work/smooth/venus.md"
+  "rise: whole frames, speed: changes by 0.082 of the mean (over 8 points) over one film frame in 2 steps from frame 1555 to 1556, most at 1556, limit 0.08"
+  "rise: whole frames, speed: changes by 0.115 of the mean (over 8 points) over one film frame in 13 steps from frame 1589 to 1601, most at 1599, limit 0.08"
+  "rise: whole frames, speed: falls by 0.238 of the mean (over 8 points) before its largest value (frame 1578), lowest at frame 1538, limit 0.03"
+  "rise: rate 2, speed: changes by 0.082 of the mean (over 8 points) over one film frame in 4 steps from frame 1555 to 1556 + 1/2, most at 1555 + 1/2, limit 0.08"
+  "rise: rate 2, speed: changes by 0.116 of the mean (over 8 points) over one film frame in 26 steps from frame 1589 to 1601 + 1/2, most at 1599, limit 0.08"
+  "rise: rate 2, speed: falls by 0.245 of the mean (over 8 points) before its largest value (frame 1578 + 1/2), lowest at frame 1538, limit 0.03"
+- Net size of the three Venus folders: origin/main 162.075 MB, this tree 162.17 MB: 0.09 MB more, text alone (this notebook and the two tools fcam.ts and flay.py); no asset came in or went out.
+
+### (a) named: READY for b4a3c081 sent (about 03:02 VM, 24 Nov)
+
+`agent/venus-place` head `b4a3c0818616e8767a64a61d783481d0dda48881` (merge of main 956edb21; the work commit is 29398ac9) was named to `/root` as (a), with the rise red and said so: gate lines, the G13 story (gate tool before the sidestep 7 dive frames red; my own counter on the 90 dive frames after it 0 over, worst 1315 at 0.65 percent), G5, G17, finals sha, handover verdicts and path lines, the six smooth lines of the rise, the changed frames, net size (text alone) and the list of what is still wrong. The sha went to handover_engineer too.
+
+### MAIL 494 from the Builder (03:16 VM, 24 Nov), high priority, word for word
+
+"MAIL 494 from the Builder, 03:16 UTC. (1) b4a3c081 is in proof on my machines as ven6 (proof tree 90e64b58 = main ec821d1 with your three folders and the config line; 15 jobs: 115 draft hashes, the finals 1185 and 1440, the handover report, the measure with the gate's own G13 on all 495 frames, the whole smooth, gate and tests). You do not run G13 again. Taken as a base if clean. (2) Text is not paid for, only assets. (3) harness_builder's pattern number on your dive on main reads 0.82 at 1332 + 1/2 against a limit of 0.45, 17 rows over from 1271 + 1/2, in two humps: 1271 to 1273 up to 0.67 and 1329 to 1335 up to 0.82. The second is your item 1 and is cured by step 3. Look at the first: say what changes the ground's pattern in place at 1271 to 1273 and put it on your list. (4) Order agreed: the settle, the Sun's core, then step 3 on one commit. handover_engineer's corners come onto main in the next batch; I tell you when. NOTE 491 applies to your next named commit."
+
+What it changes: no G13 run of mine for (a). A new item for the list: the pattern number's first hump at 1271 to 1273 (to be looked at: what changes the picture in place there). The corners are wired only after the Builder's word.
+
+### NOTE 491 from the Builder (03:16 VM, 24 Nov), high priority, word for word
+
+"NOTE 491 from the Builder to every stop builder, 03:16 UTC. Main is 274f4c9: the frame counters and the warm start (d177: showcase.counts, npm run warm) and the retreat's light law (d178). The Air follows within minutes. One change to NOTE 482, to save your renderer hours: do not wait for your own whole npm run smooth before you name a commit. Name it as soon as, on your own tree merged with newest main, the path part is green or its red lines are listed, the handover report passes with the place picture off, and G13, G5, G17, G11 and G15 are read. The whole smooth report then runs on my machines as one of the 15 jobs of the stop check, at the same time as the others, and I send you its md, json and panels as attachments when it is back. On your own renderer run only the kinds and parts you are changing (--only pictures --kind dive and the like). Everything else in NOTE 482 stands."
+
+### After (a): the settle, the Sun's core, and step 3 begun (03:02 to 03:20 VM, 24 Nov)
+
+One commit is to carry all three (MAIL 494 item 4).
+
+The settle (MAIL 472 item 2): `plan.ts` `settled(tRel, span)` warps the surface view's own time over its last `settle.frames` frames so its drift comes down to `settle.to` of its speed; `move.json` `"settle": { "frames": 75, "to": 0.3 }`. Measured in the second tree with the old judge: with 75 frames and 0.2 or 0.3 no "falls" line is left; the two step lines (0.085 at 1555 to 1557, 0.115 at 1589 to 1601) stay; to 0.35 falls 0.033, to 0.4 0.044, to 0.5 0.065.
+
+The Sun's core (MAIL 445 item 3): `relief.ts` `sunCore` (a window by the angle from the Sun, `air.sun.exactCoreDeg` [4, 8] degrees, closed under the limb of T over `exactUnderDeg` 0.5). Inside it nothing is taken as a difference of the two files: the rest is the smooth rest and the Sun's light is the whole air picture read through the limb of T less that rest, the read the surface view makes. `exactBelow` (the mask) is gone. Seen on crops of 1332 to 1347 and 1541 to 1552 at draft: one smooth core and glow on every crop, no coloured specks. At 1335 a faint stepped line on the limb under the Sun, to be checked at its own size. Sides at T, globe side forced against surface side: dive 1343 mean 0.036, 99.9th 9, largest 111, 955 px over 16, near the Sun largest 7; rise 1539 mean 0.041, 99.9th 5, largest 114, 946 px over 16, near the Sun largest 13.
+
+Step 3, what the first two tries showed (draft, no grain, every third frame of 1300 to 1343):
+- The ground forced on from high up (no weight by truth): its middle (the tower group with its shafts) holds as relief from about 1315 to 1338; its far deck is a fan of streaks, its lower edge and right edge are straight lines.
+- Try 1: `ground.heights` [0.15, 0.3] and a weight by the smaller scale of the close picture against the frame, measured on each face (screen derivatives), full from 0.75 and none under 0.5. The streaks are gone. Wrong: a comb along the far edge (the measure steps from face to face of the mesh), the right apron stands as a pale fin, the lower left is a dark slab with a straight lower edge, and the plates beside the ground have another tone (olive and pale against dark with gold).
+- Try 2 (in work): the measure worked out from the two eyes and the point for a face in the deck (no step from face to face), a face turned to the close camera above the deck (towers), the measure on the face kept only to leave out the skins behind towers (`ground.skin`), and a border toward the outline of the layers that follows the picture's own cloud forms (`ground.matte`, in place of `ground.foot`).
+- Then the plates: the tones of the ground carried on to the plates around it (and under it), from a draw of the film itself at a middle height, so the place has one tone from 1300 on.
+
+The corners for the rise (handover_engineer's 000b43ae and search tool 04cba9e1), searched in a scratch tree made of main, those two commits and my settle and Sun's core (nothing of it on my branch): seeds 7, 1 and 2 give sets that read 0.0798, 0.0791 and 0.0792 at rate 2 against the limit 0.08 (whole frames 0.0790, 0.0786, 0.0794); seed 3 ends at 0.0858. No set with the margin handover_engineer asks for (0.075 or less). The worst steps stand at 1533 to 1535 (the rate, the first frames after the seam) and at 1565 or 1592 (the picture speed).
+
+A disk incident at about 03:04: a fetch of `agent/engine-handover` for the scratch tree brought a pack of 1.26 GB and left under 3 GB free; the pack was removed by hand after the scratch tree was built, 5.0 GB free since. That branch is not fetched again.
+
+## NOTE 501 from the Builder, 03:38 UTC (word for word)
+
+NOTE 501 to every stop builder and globe_engineer, from the Builder, 03:38 UTC. A fault of the whole film, found by the first whole smooth report from the machines (Mercury, job 14): the same film frame at uhd is not the same picture as at 16 by 9 (one block differs by 45.8 levels at 713, limit 12).
+CAUSE, found by mercury_builder: every globe brings its plate levels and its fine levels in by the texels of the parent a pixel of the format (uPatchFade 1.1 to 1.7 against gd * scale * size, gd from dFdx and dFdy). At uhd a pixel is half as large, so every level comes in at twice the height; at preview at half the height; in the live player it depends on the window. Brandon captures at uhd, so he gets another film than the one we judge. The term is in src/bodies/planet.ts (globe_engineer) and in the own globe code of mercury, venus, earth, jupiter, uranus, neptune and the Sun (src/stops/<stop>/globe.ts or planet.ts).
+RULING (plan F: whatever blends does so by distance, height or angle): the measure is texels of the parent a 1080th of the frame height, an angle, not a pixel. In practice one factor, the height of the drawing buffer in pixels over 1080 (1 at 16 by 9, 2 at uhd, 0.5 at preview), multiplied into the density that a fade reads (parent, texels, fine, thin, cap, whatever your code calls it) and into nothing that only picks a mip for sampling.
+PROOF, both by you before you name the commit: (a) at 16 by 9 the factor is 1 and every byte stays: the hashes of your own draft frames before and after are equal. (b) at uhd the picture becomes the 16 by 9 picture, only finer: npm run smooth -- --stop ID --only parity on your tree (seven frames), limits mean 12, coarse mean 3.2, one block 12, frame level 2.2.
+THE SAME RULE holds for every other number in your stop that is counted in pixels and can be seen: the width of a feather, the radius of a glow, a threshold of a size on screen, a point size. If your parity is still red with the factor in, the panel names the block: find the term.
+WHO: each stop builder, in the commit you name next (mercury_builder has it in work). globe_engineer: src/bodies/planet.ts and anything else under src/bodies and src/core that reads a density a pixel, as one commit on newest main (6884e80 or later), then ask me for the engine proof and say which stops draw with the shared code. saturn_coder and mars_place_builder: check your place code for the same kind of term and say what you found.
+A red parity is a severe item in a stop's round.
+
+## NOTE 504 from the Builder, 03:51 UTC (word for word)
+
+NOTE 504 to every stop builder, from the Builder, 03:51 UTC. On NOTE 501 (the factor), two things from globe_engineer that save you a wrong factor:
+1. Do NOT take the factor from view.format in the pass that draws a place picture. There view.format is the layout's, larger by the picture's scale (2 at 16 by 9), so view.format.height over 1080 is 2 at 16 by 9 in that pass and your place picture's bytes change. And the edge limit (handover.place.maxEdge 4800) gives the uhd picture the scale 1, so a pixel of the uhd place picture is a pixel of the master's place picture: there the right factor at uhd is 1, not 2, for code that does not already multiply by uFine. Code that multiplies its density by uFine (the terrain shaders) needs the format's factor alone.
+2. The shared helper, in proof now and on main as soon as it is clean (agent/engine-globe, globe_engineer names the commit): src/core/frame.ts with frameUniform (the format's height over the master's, set by the engine in applySize, usable as a uniform), setPass (the engine sets it while a place picture is drawn) and bufferFrame() (the two multiplied, for code that reads a density a pixel of the buffer and knows nothing of uFine).
+RULING: use the helper, not a factor of your own. If your cure is already written with your own uniform (uranus_builder: seen.ts), keep working with it and swap its source to the helper when I tell you it is on main; that swap changes no byte and needs no new proof beyond the hashes. If you have not started, fetch globe_engineer's commit when it names it and write against the helper. Stops with no place picture left (plan F) have only case 1's last sentence to mind.
+
+## MAIL 508 from the Builder (/root), to every stop builder, 03:58 UTC, word for word
+
+A timetable, so the rounds with critics can start. Clock: 03:58 UTC now (read yours with date -u; some VMs run minutes ahead).
+
+Why: 22 hours after Brandon's first note no stop has a named commit with a green smooth report, so no critic has seen the new work. The kit's rule: no single item may hold up the film, and each stop has three rounds for this note. The second note's rule: a stop's round starts on a named commit with a clean take check and a green smooth report; a stop whose third named commit is still red goes into its round with the red measures as severe issues.
+
+1. Your FIRST NAMED COMMIT is due by 07:00 UTC (the Sun: 08:00 UTC, because its ground is new from nothing). One commit on your branch, on top of the newest origin/main you can merge (7a6f888 or later). Its mail starts with the word NAMED and the full sha.
+2. If no NAMED mail is here at the hour, the newest head of your branch that builds and passes its tests is taken as your first named commit as it stands. So push whole states, not halves.
+3. What NAMED means: this is the build you would show a critic today. At the least: (a) dive and rise are each one move (plan E), by the engine's pace or by your own path with your own lines of npm run smooth -- --stop ID --only path; (b) nothing comes in by the clock, the place picture is off in both moves (plan F); (c) NOTE 501: nothing comes in by the pixel (the shared helper src/core/frame.ts goes onto main as soon as its proof is back, about 05:15 UTC; if you need the factor earlier, use the frame height over 1080 in your own files and move to the helper after); (d) the judged hold and surface view at the final tier beside the kept stills: equal bytes, or the pair as a picture with one line saying what changed and why; (e) the net size of your three folders against main.
+4. The NAMED mail also carries, in this order and short: your own smooth lines (path, pictures, parity: green or the red lines as they print), the frames that change outside your dive and rise, and your own list of what is still wrong, worst first. Reds do not hold the mail back. A red that you know and name costs nothing; one you hide costs a round.
+5. After NAMED: I cut the proof tree, my machines run the take check and the whole report (about 45 minutes). Green: the take goes onto main and your round starts at once with fresh critics. Red: you get the report and name your second commit within 90 minutes of it; the third goes into its round as it is.
+6. While your commit is on the machines you go on with your own list. Work for after the first round is not lost: a round ends with fixes.
+7. Everything already ruled stands (the orders in my earlier mails to you, the size rule, one owner per folder, looks pushed at least every 30 minutes). Where an earlier mail said ONE commit or ONE head, that commit or head is your named commit.
+
+No answer is needed to this mail. Send NAMED when you have it.
+
+## MAIL 509 from the Builder (/root), about 04:00 UTC, word for word
+
+Your b4a3c081 on my machines (ven6, proof tree 90e64b58 = main ec821d1 with your three folders and the config line). MEASURED:
+1. Drafts: 115 frames, the ten that differ from main lie in your dive and rise (1287, 1297, 1301, 1316, 1327, 1543, 1547, 1562, 1573, 1586); nothing else moves. Finals 1185 and 1440 are the kept stills byte for byte.
+2. Measures: G13 PASS, 0 of 495 frames over, worst 1315 at 0.65 percent; G5 PASS; G17 PASS (1185 median 0.959, 1440 median 0.936).
+3. Handover report of the dive (attached, with its pictures): sides at T mean 0.031, flow gap mean 0.11 px a frame, pose gap 0. Largest step on the body: level 3.27 into frame 1290 (the limit of the smooth report's place part is 3.2) and colour 3.9 into 1291 (limit 4.0). Look at 1289 to 1291: something on the body steps there.
+4. The whole smooth report (job 14) is not back yet; it follows as soon as it is.
+
+Not taken as a base, and why: the proof tree was cut before the engine's air with the carry went onto main (handover.carry, the surface view carries its own speed into the move). Since Venus now rides the engine's one move, its dive and rise on today's main are not the frames I proved. So your NAMED commit (MAIL 508, due 07:00 UTC) is the one that is checked and taken: merge the newest origin/main first, read your dive and rise again with the carry, and say in the NAMED mail what the carry changed for you (the hump at 1271 to 1273 and the settle at 1455 to 1529 are the places to look).
+
+## State 04:08 (24 Nov, VM clock): step 3 with the tone law, parity factor, main 26677ed9 merged, proofs running. Read this first after a compaction
+
+Due: the first NAMED commit by 07:00 UTC (MAIL 508). Its mail starts with the word NAMED and the full sha. Head: merge commit cfc12a20 (origin main 26677ed9 into the branch, local, not pushed) with the working tree of the one commit on top (settle, Sun's core, step 3, parity factor). Proof chain: /tmp/v/proofsF.sh, log /tmp/v/proofsF.log (ends with "exit N"). No edits under src or public while it runs.
+
+THE HEIGHTS OF THE FILM'S FRAMES. out/work/venus/place/hts.ts reads the stop's own path (plan.divePose, the fallback), which the film does not fly: the film flies the engine's one move (plan.eyeShot). Every height by frame written in this notebook before this entry for the dive and rise since step 2 is of the fallback path and is wrong for the film. The film's heights (radii over the cloud tops, out/work/venus/place/hts2.ts, main 26677ed9 with the carry): dive 1264 3.44, 1270 3.23, 1271 3.17, 1273 3.01, 1278 2.52, 1284 1.85, 1287 1.52, 1290 1.21, 1293 0.94, 1296 0.71, 1300 0.48, 1304 0.33, 1308 0.22, 1311 0.163, 1314 0.121, 1317 0.090, 1320 0.068, 1323 0.053, 1326 0.042, 1329 0.035, 1332 0.0295, 1335 0.0258, 1338 0.0233, 1342 0.0213, the surface side from 1343. Rise: globe side from 1540 (0.0195), 1545 0.025, 1550 0.0365, 1555 0.060, 1560 0.110, 1565 0.204, 1568 0.295, 1570 0.378, 1573 0.548, 1575 0.70, 1577 0.90, 1580 1.28, 1586 2.28, 1592 3.39, 1604 4.398.
+
+STEP 3 AS IT STANDS (one commit with the settle and the Sun's core):
+- The ground of the surface view (its meshes: aprons Al and Ar, ground L0, towers L1) hangs in the globe's scene and is drawn where it is true from the eye: alpha = weight by height (ground.heights) times deck (closeScale, uTrue) times skin (uSkin) times border (closeInside and the matte by the picture's own forms, uMatte). Tries 1 and 2 (a dark slab with a hard lower edge, a comb on the far edge, a fin on the right) were cured by measuring the deck share from the two eyes and the point and by the border on three planes through the close camera.
+- Try 3 (ground.heights [0.15, 0.3], own tones): 1320 to 1340 reads as one storm complex getting nearer, towers standing as relief. Wrong: the ground came in with tones of its own (pale patch behind the towers, dark towers) over plates in the globe's tone.
+- The plates' law (globe.ts, same): from above the plates give their forms alone over the globe's own colour (under); their stored tones show only near the line of sight of T. So a change of the plate files' broad tone does little from above (not run). Measured before the tone law (flay.py differ, broad tone of the plates against the ground where the ground is drawn, of 255, mean): dive 44.85, 26.79, 9.83 at the three draw heights; rise 34.28, 23.87, 13.25.
+- P1 (the plates take their stored tones where the ground is near): a blue black hole and a white patch on the globe at 1300 to 1320. Dropped.
+- THE TONE LAW FOR THE GROUND (relief.ts TONE_GLSL, set.ts groundTone, plates.json ground.tone): the ground follows the plates' law. The share of its stored tones is the plates' own (cosine between the line of sight and the one of T, tone.cos and tone.curve; the height, tone.heights; the air, the sines of the elevations). Seen from elsewhere it gives its forms alone (its light over its own light at a coarse level of the picture of the surface view, ground.tone.broad 0.05 image widths; for the towers the coarse picture of the ground they stand on) over the globe's colour at the place, ground.tone.under, which follows dusk's exposure by height. under was measured: frames drawn without the ground (ground.heights [0.0001, 0.0002]) against frames with it, mean display colour where the two differ (/tmp/v/undercal2.py), the colour scaled by the ratio to the power 2.2 until the ratio is near 1: dive [0.069, 0.052, 0.031] (ratio at 1296 0.995 1.017 1.042, at 1300 0.983 1.061 1.179 before the last small step), rise [0.079, 0.06, 0.036] (ratios before the last step 1.08 to 1.22 at 1567 to 1573).
+- ground.heights is now [0.3, 0.9]: the ground comes in at 1293 to 1305 of the dive and goes out at 1568 to 1577 of the rise, while the place is small in the frame. With the tone law the pale patch no longer shows at 1296 to 1304; the stored tones come in by the law over 1304 to 1320.
+- Sheets: /tmp/v/g3-sheet.jpg (try 3), g4 (P1), g5 (heights [0.3, 0.9], own tones), g6 (tone law, first guess of under), g7-sheet.jpg (measured under, beside frames without the ground), g8r-sheet.jpg (rise, beside frames without the ground).
+
+PARITY (NOTE 501, 504). Terms of the stop that read a density a pixel: globe.ts, the fade of the plate levels (uPatchFade against parent) and of the place levels (uPlaceLook.yz against parentPlace). Both now read the density times uFrame, the height of the frame over the master's (set.ts frameScale; own uniform until src/core/frame.ts is on main, then frameUniform, no byte changes). The texel view of G13 and the gradients that pick a mip are untouched. set.ts: the smear of the globe starts by pixels a 1080th of the frame height (px / scale against look.motion.from), not by pixels. Left as they are, counted in pixels of the drawn frame: the limb's edge (rim.ts LIMB.edgePx 2) and the veil's edge (look.ts edgePx 1.5), both the width of an edge's antialiasing. relief.ts: the deck measure and the skins are in frame heights, not pixels. ground.matte.level 5 and the broad level are levels of the texture (the matte's is a fixed level, so it is twice as coarse on the web set).
+
+THE HUMP 1271 TO 1273 (MAIL 494.3), heights 3.17 to 3.01: three things change the picture in place there: the look of the hold goes out (leave.heights [1.9, 3.4]: detail layer, rim, lightning, far limb), the plates come in (show.heights [0.8, 3.4]) and dusk's exposure starts at 3.2 radii (dusk.heights [0.2, 3.2], frame 1270 and a half). Not yet taken apart by measure.
+
+MAIL 509.3, 1289 to 1291 (heights 1.31 to 1.12): the body's mean level falls 3.3 a frame from 1289 on. To be looked at on consecutive frames.
+
+CORNERS (handover_engineer's tool, tools/law.ts, scratch tree /tmp/v/t3, before the merge): with the settle (75 frames, to 0.3) seeds 7, 1, 2, 4 give 0.0798, 0.0791, 0.0792, 0.0791 at rate 2 (limit 0.08), seed 3 0.0858. Nothing at 0.075 or less; nothing wired.
+
+## MAIL 512 from the Builder (/root), about 04:12 UTC, word for word
+
+The whole smooth report of your b4a3c081 is back (ven6-14, proof tree 90e64b58, 47 min), attached with its panels. READ IT WITH TWO CAVEATS: the tree is main ec821d1 plus your folders, so (a) it is judged by the OLD block (the "changes in place, limit 20" lines are not judged any more: on main that number is shown only and the pattern number with limit 0.45 judges in its place), and (b) it is without the carry, which is on main now and changes how your rise leaves the ground.
+RED as measured there:
+1. Path, rise: speed step 0.115 of the mean over one film frame, 13 steps from 1589 to 1601, most at 1599 (0.116 at rate 2); step 0.082 at 1555 to 1556; speed falls by 0.238 (0.245 at rate 2) before its largest value at 1578, lowest at 1538. The fall is the start out of the surface view: the carry on main is made for exactly that, read it again there. The steps at 1589 to 1601 are the end of your rise into the travel leg.
+2. Pictures, rise: pop score 1.57 from frame 1546 to the next, 9 frames over 1.2, first at 1544 + 1/2. Dive: no pop over the limit, level step inside.
+3. Counts: venus.dive makes 2 programs and 5 buffers in ONE picture at frame 1343 (your T: something is built at the handover instead of in the warm start); venus.travel makes 3 programs, 2 texture uploads and 15 buffers at 1632 + 1/2 (that one is the leg's, I pass it to travel_builder and engine_profiler).
+Path of the dive, place and parity: no red line.
+For your NAMED commit: merge the newest origin/main, run `npm run smooth -- --stop venus` whole once and send its verdict line and every RED line word for word. A program built at T is a severe fault of plan H (frames must all be there): cure it before you name.
+
+## Mail from /root/globe_engineer, about 04:15 UTC, word for word
+
+globe_engineer, one line on NOTE 501 and 504: the frame factor is on agent/engine-globe dace4ba6 (on main 26677ed9), named to the Builder for the engine proof and not on main yet. src/core/frame.ts exports frameUniform (the format's height over the master's: 1 at 16 by 9, 2 at uhd, 0.5 at preview; the engine sets it, use it as a uniform uFrame: frameUniform and multiply the density a fade reads), and bufferFrame() (the same times the scale of a place picture against the master's, set by the engine while a place picture is drawn: use it for a density a pixel of the buffer in code that does not already multiply by uFine, since the uhd place picture has the master's pixels). Do not take the factor from view.format: in a place picture it is larger by the picture's scale. FarPoint is cured in the same commit, so do nothing for it.
+
+## State 04:30 (after MAIL 512)
+
+- Chain F was stopped after its handover step (04:21). Its report on the merged tree, working tree as of 04:05: dive and rise "every frame: pass", "flow gap at T: pass", but "venus.dive side difference at T: FAIL mean side difference 1.054 over 0.5; 99th percentile of the side difference 30 over 4" and "venus.rise side difference at T: FAIL mean side difference 5.409 over 0.5; 99th percentile of the side difference 86 over 4". Seen in the frames: 1539 (surface side) to 1540 (globe side) the towers and their shadows turn soft. Cause: step 3 cut the ground on the globe side by true and skin at every height, also at T, where the surface view draws every part of its picture; in the rise the eye at T has drifted far from the camera the picture was stored from, so most of the ground was left to the plates.
+- Cure (plates.json ground.release [1.0, 3.0], set.ts): true and skin are multiplied by a share that is 1 above 3 times the height of T and 0 at T, eased in the logarithm of the height. Measured after it (handover, only sides): dive mean 0.026, 99th percentile 1; rise mean 0.027, 99th percentile 1; both pass. What it costs: between 1 and 3 times the height of T (dive about 1321 to 1343, rise 1540 to about 1555) the ground reaches into the parts it had left to the plates, by height. To be looked at on the new sheets.
+- MAIL 512 item 3 (2 programs and 5 buffers at 1343): the surface view's two programs (its air dome and its layers) and the five vertex arrays of its meshes were made in the first picture that shows the surface view, since src/core/warm.json (shared, made for main's Venus) lists 1299, 1331 and 1543 and none of them is on the surface side. Cure in my folder, no list needed (relief.ts dryable, set.ts): on the globe side of the stop's own hold, dive and rise the surface view's meshes are drawn dry (a scissor of no size set and taken back around the one draw: the program is linked, the vertex array made, no pixel touched), and so are the globe side's air dome, ground layers and the air under the horizon while their weight is 0. So everything is made in the first frame of the hold that is drawn. Proofs asked of chain G: npm run warm -- --first 1110 --last 1604, the counts part of the whole smooth, and the finals 1185 and 1440 against the kept stills.
+- Body level in the dive (MAIL 509: "Look at 1289 to 1291"): the handover table of chain F has the body level 100.18 at 1287, 99.23, 95.75, 92.43, 88.99, 86.45, 84.55 at 1293 and 77.4 at 1298: largest step 3.48 into 1289, colour 4.11 into 1291. In the frames the bright day side limb at the upper left leaves the frame over 1288 to 1291, and dusk.limbHeights [0.5, 1.6] takes the limb light out from 1286 to 1300. Not cured, on the list.
+- Corners search on the merged tree, five seeds, rate 2: best steps 0.990 of the limits (seed 2: rate 0.0789, turn 0.0738, speed 0.0792; seed 4: 0.0791, 0.0792, 0.0791). No set with the margin handover_engineer asked for (0.075), nothing wired.
+- Chain G started 04:27:29 on the tree with both cures: vitest, build, warm, handover draft, sheets (/tmp/v/hg), finals, G13 views, keep frames (same/g1 against same/e3), smooth whole, G5, G17, gate.
+
+## State 04:40 (second merge, corners wired, chain G restarted)
+
+- Second merge: origin main d38353f6 (d190) merged into the branch, local commit 4b84585c (parents cfc12a20 and d38353f6, trailer present), not pushed yet. It brought d187 (parity reads the hold and the leaving leg), d188, d189 (travel: every leg lands and starts in one move) and tool changes (tools/smooth.ts, tools/smooth/path.ts, tools/warmcheck.ts). Path lines on this merge before the corners: four red rise lines as before (0.087 at 1554 to 1557; 0.118 whole and 0.120 at rate 2 at 1589 to 1601).
+- Corners wired (move.json handover.rise, seed 2 of the search with tools/law.ts): pace rise 0.45, fall 0.5, corner 0.3, corners fall [0.35, 0.05], rise [0.05, 0.2]; turn rise 0.525, fall 0.375, corner 0.05, corners fall [0.05, 0.05], rise [0.5, 0.15]; liftPower 1.125. The old file is /tmp/v/move-before-corners.json. Measured: npm run -s smooth -- --stop venus --only path prints "smooth venus: green." The search's numbers for this set: steps at whole frames 0.992 of the limits; at rate 2 0.990 (rate 0.0789, turn 0.0738, speed 0.0792 at 1565 and a half), rebound 0.39 of its limit. The margin is thinner than the 0.075 handover_engineer asked for; say so in the NAMED mail.
+- With the corners the rise heights by frame (hts2.ts): 1540 0.0220, 1546 0.0335, 1555 0.0819, 1565 0.2717, 1570 0.51, 1575 0.91, 1580 1.51, 1586 2.41, 1590 3.05, 1600 4.26, 1604 4.397.
+- Chain G restarted 04:29:45 on this tree (script /tmp/v/proofsG.sh, log /tmp/v/proofsG.log): vitest 41 files, 380 tests passed; build exit 0; then warm, handover draft, sheets, finals, G13 views, keep frames, smooth whole, G5, G17, gate.
+
+## MAIL 520 from the Builder (/root), 04:40 UTC, word for word
+
+MAIL 520 from the Builder (/root), 04:40 UTC, one mail to every builder and engineer: WHAT IS ON MAIN NOW.
+
+Main is 8fb9ba9b7818f9d5c42fd90d6f882bee61531451. A named commit must sit on it: merge main into your branch (never rebase, fetch with --depth 1). Since e7fc53a2 main took:
+
+- d187: the parity part of `npm run smooth` has rows for the hold and for the leaving leg; a rebound is read as a valley.
+- d188: Jupiter's hold sky laid finer (Jupiter's own files).
+- d189: the travel's landing and the start of four legs (`src/space/travel/path.ts`). The shot moves in 1086 to 1109, 1656 to 1679, 2226 to 2249, 2796 to 2819, 3366 to 3389, 3936 to 3959 and 4506 to 4529 (the last frames before each hold) and in 1035 to 1058, 1605 to 1625, 3315 to 3338 and 4455 to 4471 (the first frames after four rises). Your hold, dive and rise keep their camera; your arrival and your leaving leg have new pictures. MEASURED by me on main with main's tool: the body's edge meets the hold with a step of 0.040 to 0.046 of the landing's mean (limit 0.08) at all eight arrivals.
+- d191: the sky's dim starts every leg at nothing (handover).
+- d192: the stars come in by height on the rises of Mercury 961 to 1034, Venus 1543 to 1604, Earth 2101 to 2174, Jupiter 3247 to 3314 and Neptune 4950 to 5024 (`handover.skyLift.power` in the config). Those frames have new pictures wherever stars show.
+- d193: `src/core/frame.ts`, one measure of how many buffer pixels a 16 by 9 master pixel holds: `frameUniform` (uFrame) for shaders, `bufferFrame()` for code. RULE for every stop: whatever your shader counts in pixels (fwidth, gl_FragCoord, a texel footprint, the fade between two levels, a line or point width, a grain) is scaled by it, so that it is the same angle at 16 by 9 and in the 4K capture. At 16 by 9 it is 1 and no byte moves. Inside the pass that draws a place picture it is 1 by design. sun_builder: swap your own source in `src/stops/sun/format.ts` to it in your named commit.
+- d194: `npm run smooth` builds before it opens a page. A parity table made before this may have judged an old dist. Run parity again on your head before you name it.
+
+WHAT TO DO: merge main 8fb9ba9b, build, run your take check and `npm run smooth -- --stop ID` (every kind), then name your commit in a mail that starts with NAMED and the full sha, as d186 says. The 07:00 UTC point stands: from then on, without a NAMED mail, your newest head that builds and passes the tests counts as named.
+
+STILL OPEN ON MAIN, so that nobody hunts for them or mends them inside a stop: (1) the stars are measured in buffer pixels, sky_builder's cure is due 05:30 UTC; until then the parity of every travel row carries the star field, which is not yours. (2) The place picture is drawn at scale 1 at 4K where 16 by 9 has 2 (handover_engineer). (3) Mars's rise at 60 pictures a second has a dent at film frames 2670 to 2674 and a shelf at 2702 to 2722 (MAIL 518). (4) Things are still made inside the film at 1064, 1632 and 1343 (engine_profiler's list).
+
+No answer is needed to this mail. Mail me only: NAMED, a blocker, or an answer I asked for.
+
+## State 04:45 (third merge, helper swapped in, chain G restarted again)
+
+- Chain G of 04:29 got as far as the warm tool on the tree before this merge: "frames 1110..1604 at 1 pictures a film frame, preview, tier draft, the capture path, warm start: 0 frames of a dive, surface view, rise or travel did work, 8.8 minutes" and "at most 2 sets loaded at a frame, peak 2779 MB of textures". So the dry draw cure holds there (1343 made nothing). Stopped at 04:39 for MAIL 520.
+- Third merge: origin main 8fb9ba9b merged, local commit 63f62b97 (parents 4b84585c and 8fb9ba9b, trailer present), not pushed yet. A fetch with depth 1 gave "refusing to merge unrelated histories"; a fetch with depth 30 merged.
+- Helper swapped in (NOTE 504, MAIL 520 d193): globe.ts uFrame is frameUniform of src/core/frame.ts; set.ts frameScale is bufferFrame(). No uniform of my own is left. tsc 0. Path on this tree: "smooth venus: green."
+- Chain G restarted 04:40:55 on this tree (same script, same logs).
+- The parts of the rise that the merge changes by itself: stars by height 1543 to 1604 (d192) and the leaving leg 1605 to 1625 (d189).
+
+## MAIL 526 from the Builder (/root), 04:52 UTC, word for word
+
+MAIL 526 from the Builder (/root), 04:52 UTC, one mail to every stop builder and to handover_engineer: THE SEAM WITH THE SURFACE VIEW. A ruling (d196).
+
+FOUND on Mars's rise at 60 pictures a second. MEASURED by me on the pictures: the change from picture to picture falls from 5.3 to 2.7 within three capture frames after the seam (film frame 2670) and is at 8.8 four later. The cause, measured by handover_engineer on the path (STATED): the eye's own speed over its own height falls to 0.33 of the surface view's at 2671 + 1/2 and is at 2.2 five capture frames later. The surface view pushes toward its place; the rise pulls back along the line from the place to the eye; so the eye stops and turns back. The path part of `npm run smooth` is green over it, because it reads the picture's speed round the place and not the eye against the near ground. This is a "moment of lag" at the change of view, and it is in the film, not in the player.
+
+THE RULE. Plan E says a dive and a rise meet "the surface view's own move with the same speed and direction". That holds for the frames after the seam as well as at it: across each seam with the surface view the eye's speed over its own height never dips and never turns back. A new line in the path part of `npm run smooth` will read it at all 17 seams (harness_builder, due 05:40 UTC). Its limit is set from a calibration on main and logged before any round uses it.
+
+WHERE IT IS CURED: in the surface view's own path, which is yours. Not in the engine's law: handover_engineer searched the law four times, and every cure there turns the lens more than the turn limit allows in the frames a rise has. STATED by handover_engineer, a scratch on Mars with the surface view's velocity at the seam turned: pulling back up its own line, the rise's lowest speed is 1.05 and it never turns back; across its lens 0.95 and 1.02; 45 degrees off 0.53; pushing at its place 0.33. A dive arrives down the surface view's way (0.98 and more on the one move).
+
+So a surface view is one flight that takes the dive's motion at its first frame and hands the rise its motion at its last. Where yours pushes in, it bends over its last seconds from the push into a track across and on into the pull back, without losing speed (no rest: a rest is a dent of its own) and with the lens turning inside the turn limits. Where yours already pulls back or tracks across at its end, show it with the new line and change nothing.
+
+WHAT MUST NOT CHANGE: the picture of the judged surface frame. On a finished stop its camera stays to the byte (Sun 0, 60 and 90, Mars 2580, Jupiter 3150, Saturn 3720); on the others the composition of the approved close image at the judged frame stands. The bend lives after the judged frame. On Mars, whose surface view Brandon approved in motion, nothing before frame 2610 changes.
+
+WHO, by handover_engineer's numbers (the eye's lowest speed over the surface view's own, on your own path today unless it says forced): Mars 0.33 (rise), Uranus 0.46 at 4382 (rise), Earth 0.64 at 2116 (rise) and 0.69 at 1905 (dive), Venus 0.78 (dive), Mercury 0.83 at 961 (rise), Sun 0.92 (0.38 forced onto the one move), Jupiter 0.76 forced (its view is nearly still at the seam), Neptune 0.98, Saturn not measured. On Mars the bend goes into mars_place_builder's commit; handover_engineer gives it the numbers.
+
+TIME. The 07:00 UTC point of d186 stands for everything else. A stop that needs this bend may have until 08:30 UTC for its NAMED mail if it tells me so in one line before 07:00 with what is done and what is left. I mail the sha of the new line as soon as it is on main; until then the engineer's scratch is the guide.
+
+No answer is needed unless you ask for the later time or see a reason the rule cannot hold on your stop; then say which frame and why.
+
+## Mail from /root/handover_engineer, 05:04 UTC, word for word (answer to my question on the 0.78)
+
+handover_engineer to venus_builder, 05:04 UTC, on your question. The 0.78 is MAIN's Venus (its own path, main 4840d0f9), not your tree. Formula: the camera the film draws (carried() of src/director/pace.ts: the close view through the twin, the globe as it stands) in the ground's own frame, the length of its way from one capture frame to the next at rate 2 (times at the shutter's middle) a film frame, over its height above the unit sphere; "the surface view's own" is the mean of that over the view's 2 film frames at the seam. Main's dive: 0.02480 at 1341, 0.01331 at 1343, 0.00617 at 1345, 0.00436 at 1346, 0.00377 at 1347 (0.791 of the view's 0.00477), 0.00408 at 1348, 0.00460 at 1349, 0.00473 at 1349.5, view 0.00475 at 1350: an undershoot of the last 4 frames before the seam, never against the view's way. Main's rise: 0.994, no dent. So if your tree's dive falls without a dip into 0.6951 and the view goes on at 0.6956, the undershoot is gone on your tree; your rise's 0.959 at 1532 is a dip of 4 percent, your call against the rule's word "never dips" (the harness line will rule, harness_builder, due 05:40). The tool is committed (f2a9ec57 on agent/engine-handover, on main when /root takes it; one file, runs by path on any tree): npx tsx tools/seam.ts --stop venus --rows [--before N] [--rate N]. Note for your own script: speeds 0.69 and 0.74 of the height a frame are far from main's 0.0048 and 0.0112, so we count in different units (yours a second?); the ratios are what the rule reads.
+
+## The seam on my tree, 05:03 (MAIL 526)
+
+- My own script (out/work/venus/place/seam.ts) counts a second and in the stop's frame, not the ground's, so its numbers are not the rule's. Dropped as a measure.
+- handover_engineer's tool (tools/seam.ts of f2a9ec57, taken as one file through the API, run from an untracked copy and removed again; the branch was not fetched) on my tree (main 8fb9ba9b merged, settle 75 to 0.3, corners wired), word for word:
+  "venus dive, seam 1350 (the one move): the surface view flies 0.00477 of its height a film frame | lowest 0.997 at 1349 + 1/2 | never against the surface view's way | surface view, largest step a film frame 0.004 at 1352 + 1/2 | change of view at 1343"
+  "venus rise, seam 1530 (the one move): the surface view flies 0.00300 of its height a film frame | lowest 0.990 at 1530 | goes against the surface view's way from 1533 + 1/2 with 6.548 | surface view, largest step a film frame 0.004 at 1528 | change of view at 1539"
+  Read: no dent at either seam on this tree (0.997 and 0.990); the rise turns from the push into the pull back at 6.5 times the surface view's speed, which the tool's own text calls a bend at speed, not a stop. Rows: /tmp/v/seam-rows.txt. The harness line (due 05:40) rules.
+
+## Chain G on main 8fb9ba9b, as it comes in (from 05:05)
+
+- vitest: 42 files, 398 tests passed. build exit 0.
+- warm tool on this tree, word for word: "frames 1110..1604 at 1 pictures a film frame, preview, tier draft, the capture path, warm start: 0 frames of a dive, surface view, rise or travel did work, 8.8 minutes" and "at most 2 sets loaded at a frame, peak 2779 MB of textures". The dry draws hold: nothing is made at 1343.
+- handover draft: "venus.dive side difference at T: pass", "venus.dive flow gap at T: pass", "venus.dive every frame: pass", "venus.rise side difference at T: pass", "venus.rise flow gap at T: pass", "venus.rise every frame: pass". Table: largest step on the body, mean level 3.48 into 1289, mean colour 4.11 into 1291 (as on chain F).
+- Every frame of the dive (1260 to 1349) and of the rise (1530 to 1604) looked at on the sheets /tmp/v/hg2 (dive) and /tmp/v/hg (rise), 16 frames a sheet, and crops at full size of 1341 to 1344, 1539 to 1542 and 1287 to 1292.
+  Dive: one globe getting nearer; from 1304 the storm complex of the place stands in the middle and grows into the surface view; T (1342 to 1343) cannot be named on the sheet; at full size the far limb is a crisp bright line on the globe side (1342) and a soft glow on the surface side (1343), the towers and their shadows keep their forms.
+  Still seen in the dive: the speckled patch at the lower left 1284 to 1292 (ring towers); soft frames about 1300 to 1312; the Sun's glow comes in over the limb 1313 to 1319; 1287 to 1292 the bright day side at the left leaves the frame while its limb light goes out (the level step of MAIL 509).
+  Rise: 1530 to 1545 one place, T (1539 to 1540) cannot be named on the sheet; at full size the towers and shadows keep their forms, the limb turns from a soft glow (1539) to a crisp line (1540), and from 1541 dark streaks stand in the haze band right and left of the Sun above the limb (they grow to 1545). 1546 to 1561 the place goes away under the camera, the shadow slabs of the towers at the right 1554 to 1561. 1562 to 1577 the ground of the surface view is a dark patch in the middle that shrinks and is gone by about 1572, the plates' forms stand around it (pale wedge at the left). 1578 to 1604 the globe leaves, no change that I can name on the sheet; with the corners the globe ends left of the middle at 1604.
+- Looks pushed 05:04 (46ed506b): dive sheets 1292 to 1349 and the handover's own sheets of the rise.
+
+## MAIL 529 from the Builder (/root), 05:08 UTC, word for word
+
+MAIL 529 from the Builder (/root), 05:08 UTC, to venus_builder: the 4K baseline of venus on main 8fb9ba9b (job pa1, the parity part of `npm run smooth`: the 4K picture scaled down against the 16 by 9 one), MEASURED on a machine. VERDICT: green. No number is over its limit.
+The largest numbers: mean difference: 2.323 at frame 1586 (venus.rise), limit 12. mean difference at one 8th of the size: 1.005 at frame 1643 (venus.travel), limit 3.2. level difference of one block (a grid of 16 by 9): -3.829 at frame 1568 (venus.rise), limit 12. level difference of the whole frame: -0.987 at frame 1643 (venus.travel), limit 2.2.
+Attached: the table and the picture. This is main, not your tree: it shows where the film on main differs at 4K from 16 by 9 today. Your named commit must be green on this part on your own tree (MAIL 520). A red in a travel row is the sky's (stars and dither measured in buffer pixels): sky_builder's cure 156ed6f9 is on the machines now and comes to main when proven, so do not chase those. A red on the body in a dive or a rise is the place picture or the set, which is yours. No answer needed.
+(Attachments: /home/user/.perplexity/attachments/3fea03c185e24b23901703564f37d70d/venus.md and venus-parity.png)
+
+## MAIL 530 from the Builder (/root), 05:10 UTC, word for word
+
+MAIL 530 from the Builder (/root), 05:10 UTC, one mail to the nine stop builders, globe_engineer and harness_builder. Main is 5014624 (4 files more than 8fb9ba9b, none of src, public or config: no picture changes, a named commit on 8fb9ba9b or later still stands).
+
+1. The guide of MAIL 526 is a tool on main now (handover_engineer's): `npx tsx tools/seam.ts [--stop ID] [--kind dive|rise] [--rows] [--before N] [--rate N]`. It reads the camera the film draws, takes two seconds, and prints one line a seam: the surface view's own speed over its height, the lowest of the move's 16 frames at the seam over that, and where the eye first goes against the surface view's way and how fast it is there. Use it on your own tree before and after your bend. The line in `npm run smooth` with its limit follows from harness_builder.
+
+2. The table, MEASURED by me with it on main at rate 2 (lowest over the surface view's own). Dents: Mars rise 0.351 at 2671 + 1/2, Uranus rise 0.435 at 4382, Saturn rise 0.543 at 3813 + 1/2, Venus dive 0.791 at 1347, Mercury rise 0.821 at 961 + 1/2, Sun rise 0.917 at 181 + 1/2, Jupiter rise 0.966 at 3240. No dent: Earth dive 0.980 and rise 1.004, Venus rise 0.994, Mars dive 0.997, Saturn dive 0.999, Neptune dive 1.001 and rise 1.080, Uranus dive 1.004, Mercury dive 1.014, Jupiter dive 1.044.
+
+3. Set right: the two Earth numbers in MAIL 526 (0.64 and 0.69) are withdrawn. They came from a scratch that read the close view's eye and not the drawn camera. Earth needs no bend. Neptune needs none.
+
+4. Two tests that named Mars's values of today are mended in the same commit, so a tree that switches its place picture off is not red by them (tests/onemove.test.ts, tests/place.test.ts). If you carry your own patch of those tests, drop it and take main's.
+
+5. The later time (NAMED by 08:30 UTC) is given to Saturn, Jupiter and Uranus, who asked. For the others 07:00 UTC stands unless you ask in one line.
+
+(Read: no merge of 5014624 is needed for the NAMED commit; my tree's seam lines are 0.997 and 0.990, see "The seam on my tree".)
+- finals: 1185 sha256 053990438b0003a689f1035b00c7265fa2c192a1b09143fb453fad9ac222cedd and 1440 sha256 b24b5ce3fdd445c7ddcd1154f1d9f3e43168fa3e1cd62219c3bceabce75825c3: both equal to the kept stills, byte for byte.
+- G13 by the texel view (same rule): dive "0 of 90 frames over 0.02 soft; worst frame 1315 0.75%, frame 1316 0.63%, frame 1314 0.32%"; rise "0 of 75 frames over 0.02 soft; worst frame 1559 0.04%, frame 1604 0.00%, frame 1603 0.00%".
+- keep frames (draft, same/g1 against same/e3 of before the merges): 29 of 39 equal. Differ: 1460, 1470, 1480, 1490, 1500, 1510, 1520, 1529 (the settle, as meant) and 1606, 1610 (the leaving leg). Hold 1110 to 1259 and surface view 1350 to 1450: equal bytes, so the helper swap and the dry draws move no byte there (NOTE 501 proof a).
+- Whose is the change at 1606 and 1610: the film's camera with and without the corners (out/work/venus/place/leg.ts, on the tree and on a copy with the old move.json) differs at 1596 to 1604 only; from 1606 on the two are equal to the last digit printed. So the leaving leg changes by main alone (d189, d191, d192), not by my rise.
+- 1604 against 1605, 1606, 1610 (sheet /tmp/v/hg/c1604.jpg): one globe, means 32.285, 32.26, 32.238, 32.12 of 255; nothing I can name.
+- Whole frame level step 3.54 into 1570 of the rise (not judged): the dark sky coming into the frame at the right as the globe shrinks (right 200 columns 64, 48, 31, 21 at 1568 to 1571).
+- Looks pushed 05:20 (488e0dc8): every frame of the rise and the four frames round 1604.
+- smooth whole started 05:19:28.
+
+## MAIL 534 from the Builder (/root), 05:27 UTC, word for word
+
+MAIL 534 from the Builder (/root), 05:27 UTC, to the nine stop builders and handover_engineer: THE EYE LINE HAS ITS LIMIT (d198, in kit/PROGRESS.md on main 3060b72). `smooth.path.minEye` is 0.87: at the end of each dive and the start of each rise, over 16 film frames either side of the seam at rate 2, the way of the eye over its own height above the ground never falls under 0.87 of the surface view's own (the mean of its 2 film frames next to the seam). It is judged in the path part of `npm run smooth` (harness_builder's 07148aa6, on the machines now with two other commits; main's sha follows when it is taken; until then `npx tsx tools/seam.ts --rate 2` on main gives the same number inside the move to three places). Read on main 5014624, lowest of the whole window. RED: Mars rise 0.351 at 2672, Uranus rise 0.435 at 4382 + 1/2, Saturn rise 0.536 at 3814 (the judge takes the height above the ring plane there), Venus dive 0.791 at 1347 + 1/2, Mercury rise 0.821 at 962. GREEN: Mercury dive 0.912 (at 795 + 1/2, inside the surface view), Sun rise 0.917, Venus rise 0.933 (at 1514), Earth rise 0.951 (at 2084), Jupiter rise 0.966, Earth dive 0.980, the other six 0.995 to 1.000. Mind the window: it reaches 16 film frames into the surface view, so a bend that buys the seam by slowing the eye later in the surface view is red by the same line. A stop that is red by this line at its named commit goes into its round with it as a severe issue. Nothing else changes: judged frames keep their camera to the byte; the time to name is 07:00 UTC, or 08:30 UTC for a stop that needs the bend (so far Saturn, Jupiter, Uranus, Earth, Sun; Mars, Venus and Mercury may take it too: say so in one line). No answer needed otherwise.
+
+## The eye line on my tree, 05:28 (MAIL 534, d198, limit 0.87)
+
+- Tool of main 5014624 (tools/seam.ts, run as an untracked copy and removed), `--stop venus --rate 2 --before 16 --rows`, rows in /tmp/v/seam-rows3.txt.
+- Dive, seam 1350: the surface view flies 0.00477 of its height a film frame; lowest 0.997 at 1349 + 1/2; inside the surface view 1350 to 1365 + 1/2 the number goes 0.997 up to 1.066, never under. Green against 0.87.
+- Rise, seam 1530: the surface view flies 0.00300 of its height a film frame (the settle); 1514 to 1529 + 1/2 inside the surface view goes 1.232 down to 1.000; lowest 0.990 at 1530; then up (1.071 at 1530 + 1/2, 5.456 at 1533). Green against 0.87.
+- The tool also prints for the rise "goes against the surface view's way from 1533 + 1/2 with 6.548": the part of the eye's way along the surface view's own drift falls from 0.983 (1530) through 0 (1533) and is against it after, while the whole speed never falls. The limit of d198 is on the whole speed. Named in the NAMED mail as read, not bent.
+- No bend needed on my tree; 07:00 stands. The harness's own line (07148aa6) is read when it is on main.
+- Looks pushed 05:28 (d00c733b): the top of the frame round T in both moves at full size (the streaks in the haze band beside the Sun are there on both sides of T in both moves: 1336 to 1342 and 1543 on).
+
+## MAIL 538 from the Builder (/root), 05:34 UTC, word for word
+
+MAIL 538 from the Builder (/root), 05:34 UTC, to the nine stop builders. No answer needed. The 4K against 16 by 9 check of the film on main's stops with the sky's cure for the stars at 4K under it (sky_builder's 156ed6f9, check pa2; it goes onto main within the hour together with fb501fc4, 797d3361 and 07148aa6 if the check nx1 is clean; I mail the new main sha then):
+GREEN: Sun, Venus, Mars, Uranus (Uranus level -0.349, it was 2.78; the cause was the stars, not the stop).
+RED on the stop's own frames, each for its builder to cure in its named commit: Mercury block 45.839 at 713 (dive). Earth block -21.957 at 1853 (dive; coarse is 3.054 now, under 3.2). Jupiter block -22.681 at 3038 (dive). Saturn coarse 3.226 at 3563 and block -22.068 at 3720 (its travel level at 3923 is cured, -0.024 from -3.168). Neptune coarse 4.994 and block 27.740 at 4725 (dive).
+These are main's stops, not your trees. If your tree already cures yours, say so in the NAMED mail with the number; your stop check measures it again in any case.
+Reminder of the deadline: NAMED with the full sha by 07:00 UTC, or by 08:30 UTC for a stop that needs the bend and has said so.
+
+(Read: Venus on main is green at 4K; my tree's parity is read by the smooth run of chain G.)
+
+## MAIL 540 from the Builder (/root), 05:42 UTC, word for word
+
+MAIL 540 from the Builder (/root), 05:42 UTC, to the nine stop builders. THE BEND IS NAMED: handover_engineer's 3aa0a862a73995f136c2f85d0074152d4859531f on agent/engine-handover (main 3060b725 merged): src/director/bend.ts, MoveParams.terrain.bend = { frames, acrossDeg, turnDeg } in src/director/moves.ts, plan.closeGround, plan.eyeFirstWay, an advice line in tools/seam.ts, tests/bend.test.ts. Off by default: a stop that names none flies its path to the bit. It is on the machines now (check bn1) and comes onto main about 06:45 UTC if clean. If you need it, merge that commit now; the bytes on main will be the same. Your stop check is built on main, so do not carry any other engine file.
+ONE RISK FOR EVERY STOP THAT BENDS (found by handover_engineer on Mars's own bend): curing the dent moves the whole early rise forward in time, so the last frames of the close view before the change of view (T) are new pictures. On Mars the border of the close set came into the frame five frames before T and the change of view became a cut between two pictures that differ. So after you bend: render every frame from 10 before T to 4 after at the draft tier, put the sheet in your looks, and say in the NAMED mail what is in them (the set's border, the far edge of the ground, a jump at T). A rise that is green on the path and shows its set's edge is not done.
+The same holds at the dive's end for a stop that changes its landing.
+Judged frames keep their camera to the byte, as ruled in d196.
+
+## Mail from /root/handover_engineer, 05:44 UTC, word for word
+
+handover_engineer, 05:44 UTC, for MAIL 534 (the eye line, red on Venus's dive: 0.791 at 1347 + 1/2). Read on main 3060b725 with `npx tsx tools/seam.ts --stop venus --kind dive --rate 2 --before 16 --rows` (your own tree may differ, run it there).
+YOUR LINE: at its start the surface view flies 0.00477 of its height a film frame, 13 degrees below the level (height 2.04e-2 radii). The dive, film frames before the seam 1350, as [azimuth from your view's level way, 90 = to its right; elevation], angle from the view's way, speed over the view's own: -24 [62, -45] 61 deg 21.4 | -16 [47, -37] 48 deg 17.6 | -8 [50, -38] 50 deg 4.52 | -6 [51, -39] 52 deg 2.33 | -4 [40, -38] 43 deg 1.07 | -3 [23, -31] 28 deg 0.82 | -2 [9, -21] 12 deg 0.81 | -1 [2, -15] 3 deg 0.91 | -0 [0, -13] 0 deg 0.99. So the dive comes in 50 degrees to one side of the view's way and 25 degrees steeper, brakes all the way down to the view's speed while still on that line (1.07 at 4 frames out), and only then turns the 43 degrees onto the view's way: in the turn the eye is slower than the view (0.81). It never goes against the view's way.
+THE CURE, either end, both yours: (a) in the dive's own path, finish the turn onto the view's way while the eye is still fast (by 6 frames out it has 2.3 times the view's speed), so the last frames only brake; or (b) in the surface view's own path, let its first 30 to 60 frames begin on the dive's line ([50, -38] from the way it has now) and bend onto its own way, keeping the share of its height it flies a frame, the lens on its own turn. With (b) mind that the view may not be slower in its first 16 frames than at the seam (same line, same window) and that your judged frame keeps its camera to the bit.
+TWO WAYS TO BUILD A BEND: your own code, as Mars did for its rise (agent/mars-place, src/stops/mars/plan.ts, class MarsPlan, 30 lines); or the engine's class `Bend` with `plan.closeGround(position, time)` (src/director/bend.ts on agent/engine-handover 3aa0a862, off by default, on main when /root takes it; it runs forward in time, so for a dive give it the view's first pose with the velocity reversed and ask it at mirrored times).
+Your rise reads 0.994 by my tool inside the move (/root's window has 0.933 at 1514, inside the surface view: that one is the view slowing before the seam).
+IF YOU LEAVE handover.ownPath for the engine's one move, the dive set found on 3bd9895 (check with the judge before you trust it): pace 0.6 / 0.4 / 0.05, turn 0.525 / 0.475 / 0.05, liftPower 0.25. No answer needed.
+
+## Mail from /root/handover_engineer, 05:47 UTC, word for word
+
+handover_engineer, 05:47 UTC, the rest of Venus's numbers on main 3060b725 (seam tool, rate 2), to go with my mail of 05:44. DIVE, seam 1350: lowest 0.791 at 1347, never against the surface view's way; the view changes at 1343, so the close frames inside the dive are 1343 to 1349: those are THE FRAMES TO LOOK AT once the dive is cured (the eye will stand elsewhere in each of them), with 1342 against 1343. RISE, seam 1530: lowest 0.994 at 1532 + 1/2 inside the move, against the view's way from 1541 at 5.7 times the view's speed (a turn at speed, no stop); the view changes at 1542; close frames 1530 to 1542. No answer needed.
+
+(Read, 05:42 by my clock: these three are main's Venus, which still flies its own path. My tree left handover.ownPath for the engine's one move long ago; on it the same tool reads dive lowest 0.997 at 1349 + 1/2 and rise lowest 0.990 at 1530 over 16 film frames either side, see "The eye line on my tree". So no bend, no merge of agent/engine-handover (never fetched), 07:00 stands. The frames 1343 to 1349 with 1342 against 1343 and 1530 to 1542 were looked at on the sheets and crops of chain G.)
+
+## Chain G, its end, and chain H (05:49)
+
+- The whole smooth run of chain G rendered its 228 dive and 198 rise pictures and then stopped before the place part: "refusing to start: 2.6 GB free, need 3" (exit 2, no report written). G5 and G17 refused the same way. The gate ran: "PASS G11  every asset has a row or a recipe" and "PASS G15  at most 2 sets per frame; finished stops: venus/web 352 MB, venus/full 1386 MB".
+- Freed old frame folders of mine under /tmp/v and out/work/venus/place (same/s2, s6): 3.3 GB free. Nothing under src, public or assets-src touched.
+- Chain H started 05:49:34 on the same tree (/tmp/v/proofsH.sh, log /tmp/v/proofsH.log): the whole smooth run again (its pictures carry stamps of the tree, so the 426 are taken as they are), then G5 and G17.
+
+## The whole smooth run on the tree to be named (chain H, 05:49 to 06:14), word for word
+
+Run: `npm run -s smooth -- --stop venus` on the working tree on 63f62b97 (main 8fb9ba9b merged). Report out/work/smooth/venus.md, copies /tmp/v/venus-smoothH.md and .json. Its last lines:
+
+```
+smooth venus: red, 4 over the limit or not measured. out/work/smooth/venus.md
+  dive: the pattern of the picture changes in place by 1.27 from frame 1326 to 8 film frames later, limit 0.45 (63 frames over it, first 1269 + 1/2)
+  rise: pop score 1.25 from frame 1610 + 1/2 to the next, limit 1.2 (3 frames over it, first 1610 + 1/2)
+  rise: the pattern of the picture changes in place by 1.37 from frame 1543 + 1/2 to 8 film frames later, limit 0.45 (64 frames over it, first 1538)
+  counts: venus.travel makes 3 programs, 2 texture uploads and 15 buffers in 1 of its 150 pictures, first at frame 1632 + 1/2, most at frame 1632 + 1/2 (3, 2, 15), limit 0, 0, 0 a picture
+```
+
+- Path: green, dive and rise, whole frames and rate 2. Thin places: dive speed step 0.080 over 8 at 1269 (rate 2; 0.079 at whole frames), rise rate step 0.079 at 1535 + 1/2, rise speed step 0.079 at 1565 + 1/2.
+- Pictures, dive: level step 0.37 at 1316 (limit 1.3), pop 1.15 at 1316 (limit 1.2), pattern RED. Rows over 0.45: 1269 + 1/2 to 1270 + 1/2 (0.47), 1277 + 1/2 to 1293 (0.83 at 1284, at the upper left of the body: the bright limb side), 1318 + 1/2 to 1335 (1.27 at 1326, most at pixel 344, 736: the lower left, where the ground takes the place of the plates' forms).
+- Pictures, rise: level step 0.34 at 1564 + 1/2, pop RED 1.25 at 1610 + 1/2 (1610 + 1/2, 1612 + 1/2, 1613 + 1/2: three frames of the leaving leg, which moved by main alone; inside 1530 to 1604 the largest pop is 1.17 at 1539 + 1/2), pattern RED. Rows over 0.45: 1538 to 1550 + 1/2 (1.37 at 1543 + 1/2, most at pixel 0, 876: the lower left), 1552 + 1/2 to 1559 (0.65), 1568 + 1/2 to 1580 (0.81 at 1575, at the limb).
+- Place: nothing to read, the place picture is off in both moves ("place window -1 to -1").
+- Parity: green. "Largest mean difference: 1.892 at frame 1586 (venus.rise), limit 12." "Largest mean difference at one 8th of the size ...: 1.023 at frame 1586 (venus.rise), limit 3.2." "Largest level difference of one block (a grid of 16 by 9): -4.338 at frame 1568 (venus.rise), limit 12." "Largest level difference of the whole frame: -0.987 at frame 1643 (venus.travel), limit 2.2."
+- Counts: venus.dive 180 pictures, 0 with work; venus.terrain 360, 0; venus.rise 150, 0; venus.hold 1 (the warm start at 1110: 18 programs, 128 uploads, 92 buffers, not judged); venus.travel 1 at 1632 + 1/2 (3, 2, 15), the leg's, named on main's open list (MAIL 520).
+- What this says about step 3 as it stands: the pattern number is worse than main's (0.82 at 1332 + 1/2, 17 rows over, MAIL 494). The ground drawn on the globe is another picture than the plates under it, and with the release it takes their place over more of the frame (1319 to 1335 in the dive, 1538 to 1550 in the rise). The number reads exactly the fault that is item 1 of my list. The cure is the plates made from the ground itself, not a softer blend.
+
+## MAIL 545 from the Builder (/root), 06:18 UTC, word for word
+
+MAIL 545 from the Builder (/root), 06:18 UTC, to every builder. Main is f6ce51a55b2fe2816cb80df8a68fd2b3584bec94. Merge it by merge (never rebase, never force) before you name a commit.
+ON MAIN NOW, proven together on the render machines (115 drafts: the 80 outside the sky's lift ranges and 450 to 539 are main's bytes; 18 judged finals: 14 the kept stills, 60, 2895, 3150 and 3720 main's own):
+1. The sky's new swap (fb501fc4): the band follows the lift, the stars lead. Frames where 0 < skyStars < 1 changed bytes. At 60 pictures a second Saturn's rise lost its dip in brightness near 3875.
+2. One quintic pull at the start of sun.travel (797d3361): every frame 450 to 539 changed bytes.
+3. The smooth report's eye line (07148aa6) with `smooth.path.minEye` 0.87 in the config. Red on main as it stands: Mars rise 0.351 at 2672, Uranus rise 0.435, Saturn rise 0.536, Venus dive 0.791, Mercury rise 0.821.
+4. The warm list (73b3f046). No stop writes `src/core/warm.json` (d197); I replace your piece at your take.
+5. The bend (3aa0a862), off by default: `MoveParams.terrain.bend = { frames, acrossDeg, turnDeg }`, `plan.closeGround`, `plan.eyeFirstWay`; read `assets-src/shared/HANDOVER-NOTES.md`. After bending, render every frame from 10 before T to 4 after at draft, put the sheet in your looks and say in the NAMED mail what is in them (MAIL 540).
+6. `tools/round.py` with the smooth judging (100143fb): a round's pass bar now needs a green smooth report; each RED line is one severe issue of your stop.
+COMING in the next take, about 06:45 UTC, I mail again when it is on main:
+a. The sample offsets less their own mean (c2aaa84d). Draft pictures do not change. Every review and final picture moves as a whole by 0.09 px to the left and 0.035 px up (MEASURED on 14 judged finals), so from then on no final equals a kept still to the byte. With that mail each stop builder gets its two judged frames as PNG made on the new pattern: compare to those.
+b. The plan check of a move on the judge's own functions (191dded2), tools only. Seen through it, the one move with the film's law at rate 2 is green for sun rise, mercury both, earth dive, mars both, jupiter dive, and red for venus both, earth rise, jupiter rise, saturn both, uranus both, neptune both; handover_engineer searches sets for those and sends one only to a builder that leaves ownPath or asks.
+DEADLINES, unchanged: NAMED and the full sha by 07:00 UTC, or by 08:30 UTC if you need the bend. A commit named late is taken as it stands at the deadline (the newest head that builds and passes the tests).
+OFFER: a render machine makes the full smooth report of any head in about 140 minutes, or one part of it sooner. Mail PRE, the full sha and the parts you want (path, pictures, parity, counts). It does not count against your three named commits.
+No answer needed.
+
+## State 06:33: the named head (read this first after a compaction)
+
+- 3e1fa361 (pushed 06:21): the whole working tree of chains G and H as one commit on 63f62b97 (main 8fb9ba9b). Every number of chains G and H is of this tree.
+- e1e71f10: merge of origin main f6ce51a5 (MAIL 545) into it, trailer present. The merge was clean; outside my three folders the tree differs from main by the one line of config/showcase.json (venus off handover.ownPath).
+- On e1e71f10: tsc 0; build 0; `npm run -s smooth -- --stop venus --only path` prints "smooth venus: green." with the new eye line: dive "Lowest 1.00 at frame 1350, limit 0.87; inside the dive itself 1.00 at frame 1350", rise "Lowest 0.99 at frame 1530 + 1/2, limit 0.87; inside the rise itself 0.99 at frame 1530 + 1/2" (report copy /tmp/v/venus-pathI.md).
+- Tests on e1e71f10: 43 of 44 files passed; tests/skylift-gl.test.ts (main's new sky test, in a browser) had not ended after 5 and a half minutes on this VM and was stopped. Not a file of mine.
+- Draft frames on e1e71f10 against the frames of 3e1fa361 (out/work/venus/place/same/i1 against same/g1 and against the handover frames): the 42 kept frames of the hold, the surface view and 1604 to 1610 are equal byte for byte; of 13 dive and rise frames (1262, 1287, 1320, 1335, 1342, 1343, 1349, 1532, 1539, 1542, 1560, 1586, 1604) 11 are equal and 1542 and 1560 differ, in the sky only: 1542 has 1251 pixels off by 1 level in rows 0 to 401, 1560 has 16329 pixels (largest 32) in the upper right, x 1180 to 1919, y 0 to 358; no pixel differs below row 402. That is main's sky swap (fb501fc4: frames where the stars are part way in).
+- G5 and G17 were not run (the disk refused them in chain G; chain H's were stopped for the merge).
+- Disk: 3 GB are needed to start a render. Freed: out/work/smooth/venus/frames (the 426 pictures of the whole run, their stamps were void after the merge), same/e3, same/s2, s6, old /tmp/v folders. The new reference frames are same/g1 (3e1fa361) and same/i1 (e1e71f10).
+- Warm tool on e1e71f10 started 06:32 (/tmp/v/warmI.log).
+- NAMED mail text: /tmp/v/named.md.
+
+## MAIL 546 from the Builder (/root), 06:37 UTC, word for word
+
+MAIL 546 from the Builder (/root), 06:37 UTC, to every builder. Main is b0b87889e1af276ed3b9543373ac1346744925dc. Merge it by merge (never rebase, never force) before you name a commit. A commit named on the main of MAIL 545 is still taken, I stack it, but its final hashes will not be the ones the machines get.
+ON MAIN NOW, on top of MAIL 545:
+1. The centred sample pattern (c2aaa84d): the sample offsets of the review and final tiers less their own mean. Draft pictures are unchanged to the byte (115 of 115, MEASURED). Review and final pictures move as a whole by 0.09 px to the left and 0.035 px up and nothing else (MEASURED on 18 judged finals; against main's own PNG the mean difference is 0.43 to 0.90 of 255 and the mean brightness is equal). So no final equals a kept still to the byte any more, and "the kept bytes" is no longer a test of a judged frame. The kept stills are taken again at each stop's round.
+2. The plan check of a move now lives in tools/lib/pace.ts, on the judge's own functions (191dded2). src/director/pace.ts keeps the bell and the limits only. tools/law.ts and tools/seam.ts read the new file. If a test or a tool of yours imports the plan check from src/director/pace.ts, change the import (grep for director/pace) or tsc fails after the merge.
+The two pieces together run on the machines now as one more check (drafts against main's 115, finals against the 18 new ones); I mail at once if it finds a difference.
+Deadlines unchanged: NAMED and the full sha by 07:00 UTC, or by 08:30 UTC with the bend. No answer needed.
+FOR YOU: attached are your two judged frames as PNG (hold 1185 and surface view 1440, 16 by 9, final tier), made on the machines on main's engine with the new pattern and nothing of your stop changed. Where your stop leaves a judged frame alone, your final must give these bytes: 1185 sha256 8f4644325128c93f6cef870fbc0cdbea961773dceeb63bfe204dd56cbcc9f5b8, 1440 sha256 a1ec9a62ad3533837cf408559de2a217994ceb5341e0e3ce7eb6a40a84a38818. Where you change a judged frame on purpose, say so in the NAMED mail as before.
+(Attachments: /home/user/.perplexity/attachments/5821eaa3e171408595a9ae089826c5ee/f01185-16x9-final-full.png and f01440-16x9-final-full.png.)
+
+## State 06:42: second merge for naming
+
+- Warm tool on ec362b2f (the tree of e1e71f10): "frames 1110..1604 at 1 pictures a film frame, preview, tier draft, the capture path, warm start: 0 frames of a dive, surface view, rise or travel did work, 9.0 minutes" and "at most 2 sets loaded at a frame, peak 2779 MB of textures".
+- ec362b2f pushed 06:33 (the notes on e1e71f10). Then MAIL 546: origin main b0b87889 merged, local commit b2a20746 (trailer present, clean merge, outside my folders only the one config line differs from main). tsc 0, build 0. Running: the path part, the two judged finals against the two sha256 of the mail, the tests without tests/skylift-gl.test.ts.
+
+## State 06:45: NAMED (read this first after a compaction)
+
+- On b2a20746 (main b0b87889 merged): tsc 0; build 0; tests without tests/skylift-gl.test.ts 44 files, 423 tests passed (that one file is main's sky test in a browser, it did not end in 5 and a half minutes on this VM on the head before); path "smooth venus: green." with the eye line dive "Lowest 1.00 at frame 1350, limit 0.87", rise "Lowest 0.99 at frame 1530 + 1/2, limit 0.87"; judged finals 1185 sha256 8f4644325128c93f6cef870fbc0cdbea961773dceeb63bfe204dd56cbcc9f5b8 and 1440 sha256 a1ec9a62ad3533837cf408559de2a217994ceb5341e0e3ce7eb6a40a84a38818, both equal to the two of MAIL 546.
+- Not run on this head: the pictures, parity and counts parts of the smooth report, the handover report, the texel views, the gate, the warm tool (all on 3e1fa361; the warm tool and 57 draft frames also on ec362b2f). G5 and G17 not run at all.
+- The named commit is this one (the notes on b2a20746). The NAMED mail's text is /tmp/v/named.md.
+- Next: item 1 of the list, the plates made from the ground itself. First measure what the release alone costs: `npm run smooth -- --stop venus --only pictures --kind dive` with ground.release off, on a scratch value, before any picture work.

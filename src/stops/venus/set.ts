@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { config } from '../../config'
+import { bufferFrame } from '../../core/frame'
 import { FarPoint } from '../../bodies/farpoint'
 import type { Pose, SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { diagUniform } from '../../diagnostics/diag'
@@ -8,7 +9,7 @@ import { smooth } from '../../director/rig'
 import { patches, place, relief as reliefDefs, wrap } from './assets'
 import { Globe } from './globe'
 import * as look from './look'
-import { deck, plan, veil as timing } from './plan'
+import { below, deck, plan, veil as timing } from './plan'
 import { CloudRelief } from './relief'
 import { HoldRim, LIMB, Rim, limbFrame } from './rim'
 import skyJson from './sky.json'
@@ -47,7 +48,7 @@ function swapOf(kind: 'dive' | 'rise', sunTerrain: THREE.Vector3, fwd: THREE.Vec
   const at = plan.coverCenter(kind === 'dive' ? plan.seg.dive! : plan.seg.rise)
   const tiny = 1e-6
   const dt = timing[kind].span / config.fps
-  const shot = (t: number): Pose => (kind === 'dive' ? plan.dive(t) : plan.rise(t)).pose
+  const shot = (t: number): Pose => plan.eyeShot(kind, t).pose
   const o = shot(kind === 'dive' ? at - tiny : at)
   const g = shot(kind === 'dive' ? at : at - tiny)
   const o2 = shot(kind === 'dive' ? at - tiny - dt : at + dt)
@@ -118,7 +119,7 @@ export const createSet: SetFactory = async (ctx) => {
   orbit.add(globe.mesh, rim.mesh, far.points)
 
   terrain.add(ground.group)
-  orbit.add(ground.globeDome)
+  orbit.add(ground.globeDome, ground.globeGround)
   const airTurn = new THREE.Quaternion()
   const airBack = new THREE.Quaternion()
   const hazeTurn = new THREE.Quaternion()
@@ -129,7 +130,7 @@ export const createSet: SetFactory = async (ctx) => {
     const time = handoverOf(plan.id, kind)?.time ?? (kind === 'dive' ? plan.seg.dive!.end : plan.seg.rise.start)
     const hit = eyesAtT[kind]
     if (hit && hit.time === time) return hit.eye
-    const pose = kind === 'dive' ? plan.divePose(time, 'orbit') : plan.risePose(time, 'orbit')
+    const pose = plan.eye(kind, time, 'orbit')
     const eye = pose.position.clone().applyQuaternion(plan.turn(time).multiply(plan.terrainFrame).invert()).multiplyScalar(deck.radius)
     eyesAtT[kind] = { time, eye }
     return eye
@@ -140,7 +141,7 @@ export const createSet: SetFactory = async (ctx) => {
     const time = handoverOf(plan.id, kind)?.time ?? (kind === 'dive' ? plan.seg.dive!.end : plan.seg.rise.start)
     const hit = bodyEyes[kind]
     if (hit && hit.time === time) return hit.eye
-    const pose = kind === 'dive' ? plan.divePose(time, 'orbit') : plan.risePose(time, 'orbit')
+    const pose = plan.eye(kind, time, 'orbit')
     const eye = pose.position.clone().applyQuaternion(plan.turn(time).multiply(globeTurn).invert())
     bodyEyes[kind] = { time, eye }
     return eye
@@ -190,8 +191,12 @@ export const createSet: SetFactory = async (ctx) => {
     sky,
     update: (state, shot, view) => {
       const inOrbit = state.view === 'orbit'
+      // On the globe side of the stop's own hold, dive and rise the surface view is drawn dry, and so is what the globe side shows later:
+      // every program and buffer of the stop is made in the hold, none in a move (relief.ts, dryable).
+      const own = state.segment.stop === plan.id && state.segment.kind !== 'travel'
       orbit.visible = inOrbit && state.weight > 0
-      terrain.visible = !inOrbit
+      terrain.visible = !inOrbit || own
+      ground.dry(inOrbit)
       const gain = 1 / shot.post.exposure
       const kind = state.segment.kind
       const covering = state.segment.stop === plan.id && (kind === 'dive' || kind === 'rise')
@@ -227,9 +232,13 @@ export const createSet: SetFactory = async (ctx) => {
       const flowing = state.time > terrainMid ? Math.min(Math.max(state.time - riseAt, look.drift.from), look.drift.to) : elapsed
       const d = look.descent
       const low = ending ? 0 : 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-4)) - Math.log(d.low)) / (Math.log(d.high) - Math.log(d.low)))
-      const left = ending ? 0 : smooth((state.time - plan.seg.dive!.start) / look.leave.seconds)
+      // The look of the hold goes out by the height of the camera in the dive (plates.json, leave); after the surface view it stays out.
+      const left = ending ? 0 : state.time > terrainMid ? 1 : below(camera.length() - 1, place.leave.heights, smooth)
       for (let i = 0; i < amps.length; i++) amps[i] = ending ? 0 : look.flash(look.cells[i]!, state.time) * (1 - left)
       const gu = globe.material.uniforms
+      // What is counted in pixels of the buffer is scaled by the engine's measure of the frame (src/core/frame.ts): buffer pixels a
+      // master pixel. The globe's fades read it as uFrame (frameUniform).
+      const frameScale = bufferFrame()
       ;(gu.uTint!.value as THREE.Vector3).set(1, 1, 1).lerp(tintLow, low)
       // The air of the place on the globe side: the close side's own dome, seen from the globe camera, in below the heights of plates.json.
       const ah = place.air.heights
@@ -238,7 +247,20 @@ export const createSet: SetFactory = async (ctx) => {
       const sunOn = covering ? 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-4)) - Math.log(sh[0])) / (Math.log(sh[1]) - Math.log(sh[0]))) : 0
       airTurn.copy(plan.turn(state.time)).multiply(plan.terrainFrame)
       airEye.copy(localP).applyQuaternion(airBack.copy(airTurn).invert()).multiplyScalar(deck.radius)
-      ground.updateGlobe(airEye, eyeAtT(state.time > terrainMid ? 'rise' : 'dive'), airTurn, airOn * state.weight, sunOn * state.weight, gain, shot.post.vignette, view, shot.sun.dir)
+      ground.updateGlobe(airEye, eyeAtT(state.time > terrainMid ? 'rise' : 'dive'), airTurn, airOn * state.weight, sunOn * state.weight, covering ? below(camera.length() - 1, place.air.exactHeights) : 0, gain, shot.post.vignette, view, shot.sun.dir, own)
+      // The ground of the close side itself, in below the heights of plates.json (ground): at the handover the globe side is the close side's scene.
+      const heightT = eyeAtT(state.time > terrainMid ? 'rise' : 'dive').length() / deck.radius - 1
+      // The tones of the ground by the law of the plates (plates.json, tone): the share of its stored tones by the height of the camera, and
+      // the globe's colour at the place (ground.tone.under, as it stands at the near end of dusk.heights) at the exposure of this height.
+      const groundPl = plan.placeLook(state.segment, camera.length() - 1)
+      const groundHeight = Math.log(Math.max(camera.length() - 1, 1e-4))
+      const toneShare = 1 - smooth((groundHeight - Math.log(place.tone.heights[0])) / (Math.log(place.tone.heights[1]) - Math.log(place.tone.heights[0])))
+      const underAt = place.ground.tone.under[state.time > terrainMid ? 'rise' : 'dive']
+      const groundTone = { look: [place.tone.air, toneShare, place.tone.cos[0], place.tone.cos[1]] as [number, number, number, number], power: place.tone.power, broad: place.ground.tone.broad, most: place.tone.live.most, contrast: place.tone.live.contrast, colour: place.tone.live.colour, under: underAt.map((v, i) => v * Math.pow(place.dusk.gain * place.dusk.tint[i]!, groundPl.dusk - 1)) as [number, number, number] }
+      // true and skin hold in full above the heights of ground.release and are let go at T, where the globe side is the surface view.
+      const held = Math.max(1 - below((camera.length() - 1) / heightT, place.ground.release), 1e-6)
+      const share = { weight: covering ? below(camera.length() - 1, place.ground.heights) * state.weight : 0, under: covering ? below(camera.length() - 1, place.ground.bandHeights) * state.weight : 0, band: place.ground.band, true: [place.ground.true[0] * held, place.ground.true[1] * held] as [number, number], skin: [place.ground.skin[0] * held, place.ground.skin[1] * held] as [number, number], tall: place.ground.tall, matte: [place.ground.matte.width * (1 - below((camera.length() - 1) / heightT, place.ground.matte.over)), place.ground.matte.forms, place.ground.matte.level, place.ground.matte.scale] as [number, number, number, number], tone: groundTone }
+      ground.updateGround(share, state.time - terrainMid, airEye, eyeAtT(state.time > terrainMid ? 'rise' : 'dive'), airTurn, deck.centre, gain, shot.post.vignette, view, shot.sun.dir, own)
       const vignette = shot.post.vignette * (1 - low * (1 - airOn))
       hazeTurn.copy(state.rotation).multiply(airTurn)
       ;(gu.uAirFwd!.value as THREE.Vector3).copy(ground.deck!.fwd).applyQuaternion(hazeTurn)
@@ -246,7 +268,7 @@ export const createSet: SetFactory = async (ctx) => {
       const hz = place.air.haze
       ;(gu.uAirHaze!.value as THREE.Vector4).set(hz.most * airOn, hz.mu, hz.gain, THREE.MathUtils.degToRad(look.relief.air.deckSpanDeg))
       gu.uCarryOn!.value = 1 - released
-      const pl = plan.placeLook(state.segment, state.time)
+      const pl = plan.placeLook(state.segment, camera.length() - 1)
       const duskGain = Math.pow(place.dusk.gain, pl.dusk)
       // The weight of the place grows with nearness, from the first frame of the dive on, and is gone in the rise before the travel.
       const height = Math.log(Math.max(camera.length() - 1, 1e-4))
@@ -275,7 +297,7 @@ export const createSet: SetFactory = async (ctx) => {
         airRight.copy(sw.right).applyQuaternion(localBack)
         const high = Math.max(localP.length() - 1, 1e-6)
         const low = sw.height * Math.pow(high / sw.height, timing.slow)
-        const after = Math.max((kind === 'dive' ? plan.dive(state.time + config.shutterFraction / config.fps) : plan.rise(state.time + config.shutterFraction / config.fps)).pose.position.length() - 1, 1e-6)
+        const after = Math.max(plan.eyeShot(kind === 'dive' ? 'dive' : 'rise', state.time + config.shutterFraction / config.fps).pose.position.length() - 1, 1e-6)
         eye.copy(localP).normalize().multiplyScalar(1 + low)
         const air = Math.pow(1 - released, look.veil.sunFade)
         veil.update(view.camera, view.format.width, view.format.height, centre, eye, Math.min(Math.abs(Math.log(after / high)) / timing.rush, 1), Math.asin(1 / (1 + low)) / Math.asin(1 / (1 + high)), localQ, thick, released, sw, sunCam, air, airFwd, airRight, gain, gain * look.relief.air.gain * (1 + look.veil.sunLift * air), vignette, 0)
@@ -296,12 +318,12 @@ export const createSet: SetFactory = async (ctx) => {
       if (view.samples > 1 && state.segment.stop === plan.id && (kind === 'dive' || kind === 'rise') && thick < look.motion.hidden) {
         // One sample's share of the shutter that is open: the engine may keep only a share of the film's shutter in a dive or a rise (E6, view.shutter).
         const dt = config.shutterFraction * (view.shutter ?? 1) / (view.samples * config.fps)
-        const a = kind === 'dive' ? plan.dive(state.time) : plan.rise(state.time)
-        const b = kind === 'dive' ? plan.dive(state.time + dt) : plan.rise(state.time + dt)
+        const a = plan.eyeShot(kind, state.time)
+        const b = plan.eyeShot(kind, state.time + dt)
         if (a.view === 'orbit' && b.view === 'orbit') {
           const px = slide(a.pose, b.pose, view.format.width, view.format.height)
-          if (px > look.motion.from) taps = Math.min(Math.ceil(px / look.motion.step), look.motion.most)
-          const scale = view.format.height / config.formats[config.formatKeys.master]!.height
+          const scale = frameScale
+          if (px / scale > look.motion.from) taps = Math.min(Math.ceil(px / look.motion.step), look.motion.most)
           smear = 1 + Math.min(Math.max((px * view.samples / scale - look.motion.smear.from) * look.motion.smear.share, 0), look.motion.smear.most) * scale
           if (taps > 0) {
             turnBack.copy(a.pose.quaternion).invert()
