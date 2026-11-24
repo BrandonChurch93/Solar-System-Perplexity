@@ -1,9 +1,45 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T10:01:00.441Z",
- "head": "7721387287d09bce6c62acc640d437aff04e368b",
- "note": "second named commit 7721387 (ba2d0b1 bytes): every frame of the rise 3230 to 3314 at draft, the report's changes panel, pattern maps, level check panels, 2895 beside the kept still. Rise: level step 1.20 and pop 1.12 green, pattern 0.75 red (far ground under the horizon 3247 to 3262, limb 3281 to 3287, one spot 3273). Not good yet: the set shows as an island 3254 to 3284, the wedge shadow, the pale globe mid rise.",
+ "pushed": "2026-11-24T10:23:57.403Z",
+ "head": "7c5262ec8b1ef32a451415ab43df3e7d918a25f6",
+ "note": "Second NAMED mail is out (7721387). Pattern panel of the rise on that head: the red sits along the horizon band and in the corners, the storm itself holds. Working on the third commit: exposure by height for the body level, the limb given back evenly.",
  "looks": [
+  {
+   "time": "2026-11-24T10:23:55.965Z",
+   "file": "20261124102355965-note-pat-g1.jpg",
+   "source": "../work/named2/pat-g1.jpg",
+   "kind": "note",
+   "label": "second named head, rise 3247 to 3270: frame, detail, pattern change of pairs 8 frames apart (white is over 0.45)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T10:16:57.433Z",
+   "file": "20261124101657433-job-frame-03260.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "jupiter.rise frame 3260, draft tier, texels view, from the running measure job",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3260,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-24T10:06:54.649Z",
+   "file": "20261124100654649-job-frame-02820.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "jupiter.hold frame 2820, draft tier, texels view, from the running measure job",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2820,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-24T09:59:57.823Z",
    "file": "20261124095957823-note-pat-rise.jpg",
@@ -19,20 +55,6 @@
    "kind": "note",
    "label": "ba2d0b1 the report's changes panel of the rise: pattern 0.75 at 3250 + 1/2 (far ground under the horizon), 0.66 at 3283 (the limb)",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T09:57:40.691Z",
-   "file": "20261124095740691-job-frame-02895.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "jupiter.hold frame 2895, final tier, nograin view, from the running measure job",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
   },
   {
    "time": "2026-11-24T09:55:45.712Z",
@@ -197,22 +219,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "5a18fcdc5a929484"
-  },
-  {
-   "time": "2026-11-24T09:16:18.262Z",
-   "file": "20261124091618262-note-e1-a.jpg",
-   "source": "../work/map/e1-a.jpg",
-   "kind": "note",
-   "label": "Experiment, not kept: the exchange of the approved view for the plates stretched over more height (right column) shows the view's canvas as a dark wedge with a straight edge at 3256 and 3260; a slower exchange is no cure",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T09:16:17.320Z",
-   "file": "20261124091617320-note-t1-pat-b.jpg",
-   "source": "../work/map/t1-pat-b.jpg",
-   "kind": "note",
-   "label": "NOT cured: pattern of the rise on trial T1, 3250 to 3258 0.70 and 3252 to 3260 0.72 (limit 0.45); white in the third column is where the pattern changes in place: the limb strip and the frame's corners, where the approved view gives way to the plates",
-   "stop": "jupiter"
   }
  ]
 }
