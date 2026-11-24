@@ -1,9 +1,25 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T00:56:47.831Z",
- "head": "e0d310b168f1c805af8dc1dd25e56f03f911548f",
- "note": "step 3: c2 held the towers' tone at 2118 but showed single white pixels for one frame (far cap lit, one pixel wide past the near rim); cure in trial: far cap opacity by the body's own depth, light by its normal to the scene Sun",
+ "pushed": "2026-11-24T01:04:45.832Z",
+ "head": "52a96ba2115a00a7972e15242b109c3f54720c12",
+ "note": "step 3 trial: far cap by body depth, white patches at 2099 gone, towers keep their tone at 2118; final frames rendering",
  "looks": [
+  {
+   "time": "2026-11-24T01:04:26.379Z",
+   "file": "20261124010426379-note-d3-2118.jpg",
+   "source": "../../../../tmp/gl/s3/d3-2118.jpg",
+   "kind": "note",
+   "label": "step 3 trial, frame 2118 x5: step 1 above (glint shows through the towers), two trials below",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T01:04:25.756Z",
+   "file": "20261124010425756-note-d3-2099.jpg",
+   "source": "../../../../tmp/gl/s3/d3-2099.jpg",
+   "kind": "note",
+   "label": "step 3 trial, frame 2099 corner x4: step 1 above, far cap lit (white patches, dropped) middle, far cap by body depth below",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T00:56:46.830Z",
    "file": "20261124005646830-note-c3-follow-rise.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/gl/s3/shadow-dir.jpg",
    "kind": "note",
    "label": "approved close image: painted shadow direction found at each tower foot (green) against the direction the scene Sun casts at 2010 (red)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T00:05:28.540Z",
-   "file": "20261124000528540-note-b5-rise.jpg",
-   "source": "../../../../tmp/gl/pw/b5-rise.jpg",
-   "kind": "note",
-   "label": "step 3 trial b5, not committed: rise frames 2099 2106 2118, top row step 1 (46fe41ce), bottom row bodies with the close world laid under the globe front to back",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T23:45:06.094Z",
-   "file": "20261123234506094-note-b2-z2118e.jpg",
-   "source": "../../../../tmp/gl/pw/b2-z2118e.jpg",
-   "kind": "note",
-   "label": "step 3 zoom of frame 2118: top step 1 (46fe41ce), middle trial b1 (dark line on a rim, bright lines in a tower), bottom trial b2 (lines gone, tower too dark while the place fades in: both faults open)",
    "stop": "earth"
   }
  ]
