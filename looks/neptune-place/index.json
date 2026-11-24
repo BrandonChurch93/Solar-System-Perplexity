@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T09:00:05.655Z",
- "head": "1a0ad24dc9d0e27f0d973c462c1554e5c9a4d2cd",
- "note": "third commit in work: deck as cloud, storm without ruled rings, veil that thins upward; 4860 over approved, G17 1.411 / 1.041, 42 s a draft frame",
+ "pushed": "2026-11-24T09:21:53.701Z",
+ "head": "87af1f5550bf73bbd02878c44f6abca7e0a4e587",
+ "note": "09:22 m5: per octave pitch ends the ruled rings, mottled deck; eye still flat and too dark; path green on main 2008483c with ownPath word off",
  "looks": [
+  {
+   "time": "2026-11-24T09:21:52.327Z",
+   "file": "20261124092152327-note-z-m5.jpg",
+   "source": "../../../../tmp/z-m5.jpg",
+   "kind": "note",
+   "label": "Neptune 4860 work state m5, storm (above) and limb (below) at twice size, preview draft",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T09:21:51.058Z",
+   "file": "20261124092151058-note-q-m5.jpg",
+   "source": "../../../../tmp/q-m5.jpg",
+   "kind": "note",
+   "label": "Neptune 4860 work state m5 (above) beside the approved image (below), preview draft, 42 s the frame with compile, about 22 s without. G17 at preview median 1.405, p25 0.934. Storm now an eye with a pale collar and mottled cloud; still wrong: eye floor too dark and flat (18 46 87 against 37 71 110), thin ruled lines at its rim, hard dark shadow bits right of the storm",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T09:00:05.078Z",
    "file": "20261124090005078-note-z-m2.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/d-T27.jpg",
    "kind": "note",
    "label": "T27 preview draft 4860 (left) beside the approved image: eye size right, rings too even, ridge too smooth",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T07:08:05.116Z",
-   "file": "20261124070805116-note-ridge-T23.jpg",
-   "source": "../../../../tmp/ridge-T23.jpg",
-   "kind": "note",
-   "label": "the ridge of T23 (top) against the approved one, same crop",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T07:08:04.532Z",
-   "file": "20261124070804532-note-q-T23.jpg",
-   "source": "../../../../tmp/q-T23.jpg",
-   "kind": "note",
-   "label": "4860 16 by 9 draft T23 (top) over the approved image; work tree, not committed",
    "stop": "neptune"
   }
  ]
