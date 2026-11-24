@@ -1,9 +1,25 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-24T16:10:37.419Z",
+ "pushed": "2026-11-24T16:37:58.040Z",
  "head": "61f2fba5fb4a8583507f7b697b2ec483428f0ba9",
- "note": "far zone trial on the dive: wedge edge softer, 12 capture frames over the pattern limit down to 8, not committed",
+ "note": "trials on the far zone: step of tone at the frame of T carried round (dive 12 to 8 frames over), air under the horizon laid on the ground (dropped, rise worse); next the band retired",
  "looks": [
+  {
+   "time": "2026-11-24T16:37:57.387Z",
+   "file": "20261124163757387-note-band-vs-far.jpg",
+   "source": "../../../../tmp/v/band-vs-far.jpg",
+   "kind": "note",
+   "label": "Trial, not kept: the air under the horizon laid on the ground for the eye of T (right) against the far zone cure alone (left), dive 1320 to 1332. Dive 4 capture frames over the limit, rise 14: worse in the rise, dropped",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T16:37:56.525Z",
+   "file": "20261124163756525-note-over-far.jpg",
+   "source": "../../../../tmp/v/over-far.jpg",
+   "kind": "note",
+   "label": "Trial, dive 1322 and 1325: where the pattern is over its limit (red outline). Top as committed, below with the far zone cure: the upper right goes, the left edge and the upper left under the limb stay",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T16:10:36.792Z",
    "file": "20261124161036792-note-far-vs-w-2.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/abx/W/w1566/changes.jpg",
    "kind": "note",
    "label": "Commit 97c902c4, rise pattern panels 1566 and 1575 of the measure of main 2bc36ce6",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T15:19:32.328Z",
-   "file": "20261124151932328-note-rise1575-W.jpg",
-   "source": "../../../../tmp/v/rise1575-W.jpg",
-   "kind": "note",
-   "label": "Commit 97c902c4, rise 1573 to 1583, the lower middle of the frame carried along: the plates' cloud cells give way to the globe's own map there, the place of the 0.65",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T14:55:16.029Z",
-   "file": "20261124145516029-note-chg-rise-W.jpg",
-   "source": "../../../../tmp/v/chg-rise-W.jpg",
-   "kind": "note",
-   "label": "H3 on the merge, rise pattern panel of the new measure",
    "stop": "venus"
   }
  ]
