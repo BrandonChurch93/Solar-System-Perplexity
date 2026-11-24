@@ -96,6 +96,22 @@ The mottle of `keep` is laid on after that light, so the limb's white does not w
 grows toward the limb by one plus `limb[2]` times one minus the cosine of the angle from the centre (the
 bright network of the surface reads stronger toward the limb): MEASURED on the approved Mercury image the
 fine contrast of the face is as high at 0.9 to 0.97 radii as at the centre.
+`keep.floor` is the least heat the mottle reads, so the darkest grains of the surface do not come back as
+spots when the mottle is stronger (`spots.floor` at burn 1 is raised with it). `keep.coarse` adds a wide
+soft pattern to the heat the mottle reads: its strength, its cells across a radian of the sphere, and the
+share of a second set 2.3 times finer. It is a value noise of the place on the sphere, fixed to the body,
+and it fades where a cell is smaller than a pixel (by the angle a pixel spans, never by a count of
+pixels). `keep.soft` widens the angle over which the surface's grain is read, by one plus `soft` times
+the burn: the burnt face gives its finest grain to the light in the lens and keeps the mottle. All three
+go with the burn and are nothing at burn 0. MEASURED on the approved Mercury image the contrast of the
+face lies as much in the wide bands (5 to 30 px at frame 615) as in the fine ones; the look before this
+one had too little in the wide bands and the face read as washed white. The tint of `keep` now puts most
+of the mottle in the blue and the green, where the approved image has it (cream against white), and the
+ceiling `white` is higher in the green and the blue so the limb can go as white as the approved one.
+The mottle is not laid over the white of a knot: it fades out between 0.6 and 1 of the knot's light.
+`tight` is 1.0 where it was 2.6 and `tightColour` has less blue: the narrow light just outside the limb
+was too white (MEASURED 6 to 12 levels too much blue from 1.0 to 1.09 radii), which made the limb read
+soft. With less of it the body ends at a limb and the gas outside it is gold.
 `knot` is the white hot knots of the active regions as the lens sees them, `at` a list (its length is the shader's bound). Each is
 a light about the place `at` on the sphere (`width` in disc radii, `gain` by the exposure, zero at burn 0;
 `edge` is the power of its fall, 1 a Gaussian, more than 1 a flatter core with a harder edge), which takes
@@ -109,7 +125,16 @@ and no narrower than 0.08 radii, so it stays mottle and is no spot): a negative 
 it, a positive one takes it nearer white. They move with the body, go with the exposure and are zero at
 burn 0, so no patch shows at the handover or in the Sun stop's own views.
 The knot of the left limb is three lights along the limb (four degrees apart, so the white zone runs along
-the limb and is not a round bloom) with a wide weak patch on the face behind them. The middle one carries
+the limb and is not a round bloom) with a wide weak patch on the face behind them.
+`limb` on a knot (a cosine and a power) says the knot is a light of the limb: its light is whole while the
+cosine between the outward normal at its place and the direction to the camera is under `limb[0]`, and
+falls by `limb[0]` over that cosine, to the power `limb[1]`, as the body turns the place toward the
+camera. A thin bright layer seen along the surface is a long path of light and seen from above a short
+one. The four lights of the left limb carry it (0.2 and 3). Without it they stood on the face as a soft
+white oval once the body had turned 47 degrees from the hold's view (frames 1022 to 1047, where the Sun
+comes back into the frame): a knot with no `limb` is unchanged and costs nothing (a loop of count 0).
+The patches of positive gain on the face are at 0.7 of their fitted strength, so the mottle stands
+through them. The middle one carries
 the tuft (short rays kept to a narrow cone), the one at 193 a few long thin streamers of low gain and a long
 `reach`, so the light between the body and Mercury is strands with dark between them and less of it is the
 even light of the lens (`glare.wide` 0.6; `glare.end` cuts the wide term further out, it is divided by
@@ -201,7 +226,10 @@ gain, its count as a share of `fine`, and its height as a multiple of the fine s
 is the hair of the whole sphere (strength and height scale in radii), so every limb the camera can see
 carries it; a lobe adds its own by `hair` (strength and height scale). A lobe with a negative strength
 thins the hair about its place by that share (under the loop, where the approved image is dark between
-the strands). The hair takes the fringe's
+the strands). The strands are fewer and thicker than in the look before (`fine` 45 where it was 70) and
+bend more (`curl` 1.0), and the two lobes at the bottom of the hold's view carry taller hair and a few
+strands of the fringe with a longer `reach`, where the approved image has tongues of flame; their smooth
+low glow is halved to make room for them. The hair takes the fringe's
 colour, exposure and share of the far look, so it is absent at the handover and in the Sun stop's own
 views.
 
@@ -239,23 +267,47 @@ to 1.0), at most 8 in each zone of gas (1.0 to 1.1, 1.1 to 1.3, 1.3 to 1.6, beyo
 reported and not ruled. The box does not move.
 
 MEASURED at the draft tier with `PIL` `GaussianBlur(12)` on both pictures at 1920 by 1080, mean of the
-absolute difference over the three channels: this look gives 4.07 in the box (the looks before it 4.13,
-4.42 and 4.57), face 2.0, limb 2.8, gas 5.2, 7.6, 4.8 and 4.5. Every zone is inside its bound. The box is
-over its 4.0: the rule stands and this look does not meet it yet. What is left, by the cells of the
-difference: the light from 1.2 to 1.3 radii about position angles 80 to 110 (the approved image has
-tongues of flame with body there, this look a low smooth glow, 17 to 21 levels too dark), the place under
-the loop's inner foot at 1.1 radii (21 levels too much blue), the gas from 1.3 to 1.6 radii between
-position angles 130 and 170 (11 levels too little blue) and the reach of the glare at the upper left.
+absolute difference over the three channels: this look gives 4.40 in the box (the looks before it 4.07,
+4.13, 4.42 and 4.57), face 3.0, limb 3.3, gas 5.0, 7.6, 4.7 and 4.5. Every zone is inside its bound. The
+box is over its 4.0: the rule stands and this look does not meet it. The look before had 4.07 with a face
+of 2.0, and its face was washed white beside the approved image: the number went up by 0.33 because the
+face now carries mottle, and mottle that does not lie grain for grain where the approved image has its
+own does not cancel under a blur of 12 px (the face adds 1.01 of the 4.40 levels where it added 0.68 of
+the 4.07). The picture beside the approved image has the last word, so the mottle stays. What is left
+outside the face, by the cells of the difference: the light from 1.2 to 1.3 radii about position angles
+80 to 110 (the approved image has tongues of flame with body there, this look thinner hair, 13 to 16
+levels too dark where it was 17 to 21), the gas from 1.3 to 1.6 radii between position angles 130 and 170
+(11 levels too little blue), the bloom of the left limb at 1.3 radii (8 to 10 levels too much red and
+green) and the reach of the glare at the upper left.
 
-MEASURED, the fine contrast of the face (the standard deviation of the picture minus its blur of 6 px,
-in levels, inside the box) at 0 to 0.5, 0.5 to 0.8, 0.8 to 0.9 and 0.9 to 0.97 radii: the approved image
-2.17, 2.10, 2.36 and 2.31; this look 2.03, 2.17, 2.21 and 1.66; the look before it 1.96, 1.86, 1.66 and
-1.20. MEASURED, the colour of the loop's strands (the brightest 3 percent of the place of the loop) and
-of the ground under them: the approved image 234, 211, 166 on 193, 163, 116; this look 220, 194, 142 on 178, 151, 109; the
-look before it 231, 206, 141 on 179, 151, 104.
+MEASURED, the contrast of the face by band (the standard deviation of the luminance, in levels, of the
+picture split into bands of 0 to 2, 2 to 5, 5 to 12 and 12 to 30 px), at 0 to 0.5, 0.5 to 0.8, 0.8 to 0.9
+and 0.9 to 0.97 radii:
 
-MEASURED at the final tier as well (one picture, 557 s with nothing else running): 4.07 in the box, face
-2.0, limb 2.8, gas 5.2, 7.6, 4.8 and 4.5; the plain number is 7.33 (7.26 at the draft tier).
+| radii | approved | this look | the look before |
+|-------|----------|-----------|-----------------|
+| 0 to 0.5 | 1.23, 1.23, 1.46, 1.77 | 1.26, 1.39, 1.45, 1.35 | 1.23, 1.17, 1.14, 1.35 |
+| 0.5 to 0.8 | 1.23, 1.17, 1.20, 1.43 | 1.26, 1.30, 1.43, 1.35 | 1.42, 1.14, 1.10, 1.23 |
+| 0.8 to 0.9 | 1.46, 1.23, 1.16, 1.40 | 1.17, 1.09, 1.23, 1.42 | 1.58, 1.09, 1.02, 1.37 |
+| 0.9 to 0.97 | 1.45, 1.18, 1.60, 3.96 | 1.09, 1.06, 1.30, 3.12 | 1.34, 0.77, 0.88, 2.71 |
+
+The face is still short of the approved image in the widest band at the centre and in every band from 0.9
+radii to the limb. Where it is over the approved image's it is over by at most 0.23 levels (the band of 5 to 12 px at 0.5
+to 0.8 radii).
+
+MEASURED, the limb between position angles 110 and 150 (mean colour at a radius, draft tier): at 0.976
+radii the approved image 252, 252, 244, this look 253, 250, 238, the look before 252, 248, 236; at 1.011
+radii 249, 240, 211 against 248, 238, 211 (before 251, 244, 227); at 1.029 radii 244, 229, 192 against
+242, 229, 195 (before 246, 236, 213); at 1.064 radii 234, 211, 167 against 231, 212, 171 (before 235, 219,
+184). The step from the face to the gas is now the approved image's within 4 levels, where the look
+before was up to 21 levels too white just outside the limb.
+
+MEASURED, the colour of the loop's strands (the brightest 3 percent of the place of the loop) and of the
+ground under them: the approved image 234, 211, 166 on 193, 163, 116; this look 221, 194, 143 on 178, 151,
+108, as the look before.
+
+MEASURED at the final tier as well (one picture, 587 s with nothing else running): 4.40 in the box, face
+3.0, limb 3.3, gas 5.0, 7.6, 4.7 and 4.5; the plain number is 7.76 (7.69 at the draft tier).
 
 ## The cost
 
@@ -268,9 +320,10 @@ seconds of the next two):
 | d263ad28 | 106.9 | 85.4, 86.1 |
 | c0a7f5ef | 116.0 | 94.8, 94.1 |
 | 6f6f1229 | 60.7 | 41.4, 41.0 |
-| this look | 55.0 | 35.1, 34.5 |
+| a3df7524 | 55.0 | 35.1, 34.5 |
+| this look | 57.0 | 35.7, 35.4 |
 
-The page's load and the link are the first minus the next: about 20 s in all four. The gain is in the
+The page's load and the link are the first minus the next: about 20 s in all five. The face of this look reads a second pattern on the sphere and the knots of the limb one more term: 0.6 to 0.9 s a picture. The gain is in the
 march: a lobe's strands are computed only where its weight is not zero, a knot's march is skipped where
 the ray misses its sphere, the fringe where its share is zero, a loop with no gain at all. The strands of
 the fringe walk only the lobes that have strands, by a list of their numbers (`uStrandLobe`, the cut of

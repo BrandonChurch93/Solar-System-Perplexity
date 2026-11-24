@@ -108,6 +108,9 @@ uniform vec3 uLoopSheath[${MAX_LOOPS}];
 uniform float uHaloEdge;
 uniform vec4 uKeep;
 uniform vec3 uLimbGlow;
+uniform float uKeepFloor;
+uniform vec3 uKeepCoarse;
+uniform float uKeepSoft;
 uniform float uHeatFloor;
 uniform vec2 uPlage;
 uniform vec3 uLoopLook;
@@ -121,6 +124,7 @@ uniform vec4 uKnotRay[${MAX_KNOTS}];
 uniform vec4 uKnotLight;
 uniform vec3 uKnotClump;
 uniform vec2 uKnotOut[${MAX_KNOTS}];
+uniform vec2 uKnotLimb[${MAX_KNOTS}];
 uniform vec4 uCoronaRim;
 uniform float uChromoBurn;
 uniform int uParts;
@@ -292,6 +296,7 @@ void main() {
     vec3 knotAt = spinY(uKnot[n].xyz, -uSpin);
     float knotOff = acos(clamp(dot(normalize(knotAt - ro), rd), -1.0, 1.0)) / discAngle;
     float knotHere = uKnotBy[n].x * exp(-pow(knotOff * knotOff * uKnot[n].w, uKnotBy[n].y)) * smoothstep(-0.2, 0.05, dot(knotAt, ro) - 1.0);
+    for (int m = 0; m < (uKnotLimb[n].y > 0.0 ? 1 : 0); m++) knotHere *= pow(min(uKnotLimb[n].x / max(dot(knotAt, normalize(ro - knotAt)), 1e-4), 1.0), uKnotLimb[n].y);
     knotLight += knotHere * uKnotOut[n].y;
     knotOut += knotHere * uKnotOut[n].x;
   }
@@ -315,10 +320,14 @@ void main() {
     for (int j = 0; j < (uWear < 1.0 || uMapOn <= 0.0 ? 1 : 0); j++) {
       float share = uMapOn > 0.0 ? 1.0 - uWear : 1.0;
       float detail;
-      vec3 lit = shoulder(whiteLook(d, mu, pixel / max(mu, 0.2), detail) * (uBright * dim));
+      vec3 lit = shoulder(whiteLook(d, mu, pixel * uKeepSoft / max(mu, 0.2), detail) * (uBright * dim));
       lit = mix(lit, uWhite, uLimbGlow.x * exp(-(1.0 - min(x, 1.0)) * uLimbGlow.y));
-      lit = min(lit * pow(vec3(detail / uKeep.w), uKeep.xyz * (1.0 + uLimbGlow.z * (1.0 - mu))), uWhite);
-      vec3 patched = mix(lit, vec3(0.995), min(knotLight, 1.0));
+      float coarse = 1.0;
+      for (int w = 0; w < (uKeepCoarse.x > 0.0 ? 1 : 0); w++) coarse += uKeepCoarse.x * (vnoise(d * uKeepCoarse.y) + uKeepCoarse.z * vnoise(d * (uKeepCoarse.y * 2.3) + 3.0) - 0.5 - 0.5 * uKeepCoarse.z) * (1.0 - smoothstep(0.12, 0.4, pixel / max(mu, 0.2) * uKeepCoarse.y));
+      vec3 mottle = pow(vec3(max(detail, uKeepFloor) * coarse / uKeep.w), uKeep.xyz * (1.0 + uLimbGlow.z * (1.0 - mu)));
+      float glint = clamp(knotLight, 0.0, 1.0);
+      vec3 patched = min(mix(lit, vec3(0.995), glint) * mix(mottle, vec3(1.0), smoothstep(0.6, 1.0, glint)), mix(uWhite, vec3(0.995), glint));
+      lit = min(lit * mottle, uWhite);
       for (int w = 0; w < (knotLight < 0.0 && uKnotShade.y > 0.0 ? 1 : 0); w++) {
         vec3 less = (vec3(0.995) - lit) * -knotLight;
         patched = lit - mix(less, vec3(dot(less, vec3(0.3, 0.6, 0.1))), uKnotShade.x) * uKnotShade.y;
