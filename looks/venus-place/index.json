@@ -1,9 +1,17 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-24T10:14:04.300Z",
- "head": "6d9643ee2a79511fefcc57418d9e56030a24520e",
- "note": "third commit state proved: handover passes, finals equal, pattern rise 1.15, dive 0.83 (not moved by the laying); panels show what changes in place",
+ "pushed": "2026-11-24T10:22:42.577Z",
+ "head": "8d8eba9eb74fe286fa236347479c5250217d88ae",
+ "note": "third named commit 8d8eba9e; test sheet of the rise without the release (not committed)",
  "looks": [
+  {
+   "time": "2026-11-24T10:22:41.961Z",
+   "file": "20261124102241961-note-x3sheet.jpg",
+   "source": "../../../../tmp/v/x3sheet.jpg",
+   "kind": "note",
+   "label": "test only, not committed: rise 1548, 1552, 1556, 1560 with nothing let go by height inside the frame of T; pattern at most 0.52 in place of 1.15, but the frame of T shows as a pale patch with a dark slab at its right edge",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T10:07:47.299Z",
    "file": "20261124100747299-note-s1562.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/v/pat1/rise/changes.png",
    "kind": "note",
    "label": "same frames, pattern over one film frame: quiet to 1545, 0.30 at 1546 + 1/2 at the limb, 0.38 at 1548 lower left, quiet from 1550",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T09:53:13.785Z",
-   "file": "20261124095313785-note-venus-rise-changes-U.jpg",
-   "source": "../../../../tmp/v/venus-rise-changes-U.png",
-   "kind": "note",
-   "label": "third commit state, smooth rise panel: pattern 1.15 from 1543 + 1/2 (second commit 1.16), 56 frames over, one blob at pixel 260, 748",
    "stop": "venus"
   }
  ]
