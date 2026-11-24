@@ -5638,3 +5638,46 @@ not a control.
 
 What it settles: point 3 of MAIL 733 is closed for me (no pull back, the line is the harness builder's item). Owed still: the
 path tool run once on the merge of batch 4, and its result stated with the naming.
+
+## 20:59 to 21:33 UTC: the three judged frames at review tier; every frame of the dive looked at; batch 4 merged, tests and the path tool on the merge
+
+1. REVIEW TIER, 16 by 9, in film order, one process (dir rev, 20:59:24 to 21:25:50): 4707 454 s (29 samples), 4860 341 s (4
+   samples), 5006 781 s (45 samples). Looked at, each at full frame:
+   4707: the storm with its white cloud, the blur of the fall on it as it should be, the dim side goes to black with white
+   specks of small cloud at the lower left (named). Nothing broken.
+   4860 beside the approved image (look-rev-4860.jpg): the picture stands (the eye of the storm, the cumulus streamer across
+   the lower left, the band of white cloud at the right, the horizon, the stars). G17 on this frame (my script on the
+   gate's own functions): median 1.164, p25 0.694 (the preview draft reads 1.382 / 0.741; the floor of the gate is 0.8).
+   5006: the globe with the storm, the rings, Triton coming in at the right edge. Nothing to name.
+2. EVERY FRAME OF THE DIVE on the present state (dir h0d, the handover report's own frames of 19:16 to 19:30; sheets
+   ev-dive-4680, 4692, 4704, 4733): 4680 to 4715 and 4733 to 4745 looked at, frame by frame (4716 to 4732 at 16:56, 4746
+   to 4769 at 19:45). One globe, one storm, growing evenly; the deck goes from azure to navy between 4700 and 4715 by the
+   height; Triton goes behind the limb at 4695 to 4698; the Sun leaves the frame at 4706; from 4733 the ridge of cumulus
+   along the first streamer, the spiral eye and the white bands sink evenly with the horizon. No patch comes or goes
+   between two frames. Named as before: white specks on the dim side 4704 to 4715.
+3. MAIN MERGED: 651b9adbc3da46581bd2625e1e3258fd9161e4fb is the merge of origin/main b890fee7 (take batch 4 as 95262836,
+   status 259 and 260) into 55e2ce77 (notebook). The merge touches no file of my three folders.
+4. TESTS ON THE MERGE (npx vitest run, alone, tap reporter, 21:26:16 to 21:32:38, /tmp/vitest-651b.log): 56 files, 600
+   tests, 600 pass, none failed, none skipped. tests/globe-cap.test.ts, "brings a colour level in by the texels of its
+   parent": 3613 ms, under its 5 s.
+5. THE PATH TOOL ON THE MERGE (npm run -s smooth -- --stop neptune --only path, 21:33 UTC, copy path-651b.md): "VERDICT:
+   green. No number is over its limit." The eye at the seams: dive 1.00 at 4785 + 1/2, rise 0.94 at 4950 + 1/2 (limit
+   0.87). NO line "Rest between the rise and the travel" for Neptune, as read ahead at 20:57 (the rise goes into
+   ending.retreat). So MAIL 733 point 3 is measured as it asks: not red, because not judged; with a retreat counted 0.148
+   (my change in a copy, 20:57).
+6. LOOKS pushed 21:15 UTC (289e562a, 8 looks): 4860 at review tier beside the approved image; the dive 4704 to 4715.
+
+## 21:33 to 21:44 UTC: the merge of batch 4 keeps the bytes of my frames; every frame of the rise looked at
+
+1. BYTES ON THE MERGE 651b9adb against the state before it (preview drafts, 44 frames in film order, dir m4, 558 s):
+   4605 a2b1f371, 4707 4bf4779c, 4716 a5fc7266, 4860 e79b0602: each the same bytes as before the merge (dirs h0, h0d). So
+   take batch 4 does not move Neptune's frames, and the readings of the handover report and of the parity taken on
+   5c671343 are of the same pictures. (4996 against dir g3d differs in 784 pixels of 518400, 16 of them by 3 levels or
+   more, the largest 15: g3d was drawn before the merge of main 1896a516, whose Mars code moved the film's world by a
+   rounding; named at 17:15 to 17:50.)
+2. EVERY FRAME OF THE RISE: 4950 to 4975 and 5005 to 5017 on the merge (sheets ev-rise-4950, 4962, 4974, 5005), 4976 to 5004
+   (16:56, dir g3d) and 5018 to 5045 (20:50, dir end). The surface view goes away evenly, the streamer of cumulus
+   shrinks with it and stays one line, the horizon rises into the frame; from 5005 the globe with the storm, the rings
+   and Triton. No patch comes or goes between two frames. Named as before: the cumulus of the streamer is cream beside the
+   blue white of the map's bands (the scene's own cloud, as in the approved image); the map's cyan streak in the far band
+   at 4962 to 4975.
