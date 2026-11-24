@@ -1,9 +1,32 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T09:10:16.811Z",
+ "pushed": "2026-11-24T09:27:36.895Z",
  "head": "1e4bfd4e46d236e0032fc1f045cc954c58511d41",
- "note": "second commit proofs: path and parity green, finals equal to the byte, rise pictures running; pairs against the first named commit",
+ "note": "second commit 1e4bfd4 proofs: rise pictures by the judge (3859 cured, new red 0.55 at 3807 + 1/2 where the lit far ring enters at the right edge, pop 1.59 in the travel's take off), G17 3720 median 0.683; dive pictures running",
  "looks": [
+  {
+   "time": "2026-11-24T09:27:36.114Z",
+   "file": "20261124092736114-note-saturn-rise-changes.jpg",
+   "source": "../../../../tmp/v/r41/saturn-rise-changes.png",
+   "kind": "note",
+   "label": "second commit 1e4bfd4, the judge's own rise changes: pattern 0.55 at 3807 + 1/2 at the right edge (new red), 3859 now 0.11",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-24T09:27:34.918Z",
+   "file": "20261124092734918-note-saturn-rise-pops.jpg",
+   "source": "../../../../tmp/v/r41/saturn-rise-pops.png",
+   "kind": "note",
+   "label": "second commit 1e4bfd4, the judge's own rise pops: 3892 to 3896 in the travel's take off, pop 1.59 at 3895 + 1/2",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-24T09:27:33.731Z",
+   "file": "20261124092733731-note-rise3807_edge.jpg",
+   "source": "../../../../tmp/v/r41/rise3807_edge.png",
+   "kind": "note",
+   "label": "second commit 1e4bfd4, rise: frames 3806, 3807, 3807 + 1/2, 3808, 3809, 3811, 3813, 3815 + 1/2 at the right edge (x 1560 to 1920, y 440 to 780, twice size): the lit far ring comes into the frame at 3807, where the judge reads pattern 0.55"
+  },
   {
    "time": "2026-11-24T09:10:15.844Z",
    "file": "20261124091015844-note-3720_beside_approved_small.jpg",
@@ -38,27 +61,6 @@
    "source": "../../../../tmp/v/r40/pop3895_crop.png",
    "kind": "note",
    "label": "3895 and 3895 + 1/2 crop: the take off after the rise, where the pop reads over the limit (red on main too)"
-  },
-  {
-   "time": "2026-11-24T08:51:32.007Z",
-   "file": "20261124085132007-note-mask_pole_3561.jpg",
-   "source": "../../../../tmp/v/r40/mask_pole_3561.png",
-   "kind": "note",
-   "label": "3561: red is where the judge's unit sphere reaches beyond the drawn, flattened globe (sky judged as body)"
-  },
-  {
-   "time": "2026-11-24T08:51:31.078Z",
-   "file": "20261124085131078-note-pole_frames.jpg",
-   "source": "../../../../tmp/v/r40/pole_frames.png",
-   "kind": "note",
-   "label": "dive 3556 3561 3565 3569 pole crops: the sky strip the judge counts as body beside the flattened globe"
-  },
-  {
-   "time": "2026-11-24T08:51:30.131Z",
-   "file": "20261124085130131-note-gapA_dive.jpg",
-   "source": "../../../../tmp/v/r40/gapA_dive.png",
-   "kind": "note",
-   "label": "dive 3580 3586 3592 3598 at draft: named commit above, one border for the globe shadow below"
   }
  ]
 }
