@@ -37,11 +37,25 @@ const s = place.solved.toSurface as number[][]
 const toSurface = new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().set(s[0]![0]!, s[0]![1]!, s[0]![2]!, 0, s[1]![0]!, s[1]![1]!, s[1]![2]!, 0, s[2]![0]!, s[2]![1]!, s[2]![2]!, 0, 0, 0, 0, 1))
 const toGlobe = new THREE.Quaternion().fromArray(fit.globe.quaternion).multiply(toSurface)
 
+function hermite(x: number, from: number, to: number, slopeFrom: number, slopeTo: number): number {
+  const x2 = x * x
+  const x3 = x2 * x
+  return (2 * x3 - 3 * x2 + 1) * from + (x3 - 2 * x2 + x) * slopeFrom + (-2 * x3 + 3 * x2) * to + (x3 - x2) * slopeTo
+}
+
+function eased(seconds: number): number {
+  const e = deck.flight.ease
+  const end = deck.flight.seconds / 2
+  if (seconds <= 0 || seconds >= end + e.backSeconds) return 0
+  if (seconds <= end) return hermite(seconds / end, 0, e.units, 0, e.unitsPerSecond * end)
+  return hermite((seconds - end) / e.backSeconds, e.units, 0, e.unitsPerSecond * e.backSeconds, 0)
+}
+
 export function flight(seconds: number, vfov: number, back = 0, lift = 0): Pose {
   const f = deck.flight
   const gain = f.endUnitsPerSecond - f.startUnitsPerSecond
   const run = (u: number): number => f.seconds * (f.startUnitsPerSecond * u + gain * Math.pow(Math.max(u, 0), f.power + 1) / (f.power + 1))
-  const along = run(seconds / f.seconds + 0.5) - run(0.5)
+  const along = run(seconds / f.seconds + 0.5) - run(0.5) - eased(seconds)
   const behind = Math.max(-along, 0) / run(0.5)
   const high = relief.radius + 1 + f.startAbove * Math.pow(behind, f.sinkPower) + lift
   const up = up0.clone().multiplyScalar(relief.radius + 1).addScaledVector(ahead0, along - back).normalize()
@@ -50,15 +64,36 @@ export function flight(seconds: number, vfov: number, back = 0, lift = 0): Pose 
   return { position, quaternion, vfov }
 }
 
-export function exposure(seconds: number): number {
-  const f = deck.flight
-  return Math.pow(2, f.exposureStops * smooth((seconds / f.seconds + 0.5 - f.exposureFrom) / (1 - f.exposureFrom)))
+export function stormTurn(seconds: number): number {
+  const s = deck.life.storm
+  const bound = THREE.MathUtils.degToRad(s.boundDeg)
+  return bound * Math.tanh(THREE.MathUtils.degToRad(s.degPerSecond) * (seconds - config.shutterFraction / (2 * config.fps)) / bound)
 }
 
-function hermite(x: number, from: number, to: number, slopeFrom: number, slopeTo: number): number {
-  const x2 = x * x
-  const x3 = x2 * x
-  return (2 * x3 - 3 * x2 + 1) * from + (x3 - 2 * x2 + x) * slopeFrom + (-2 * x3 + 3 * x2) * to + (x3 - x2) * slopeTo
+export function eddyTurn(eddy: number, seconds: number): number {
+  const e = deck.life.eddies[eddy]!
+  const bound = THREE.MathUtils.degToRad(e.boundDeg)
+  return bound * Math.tanh(THREE.MathUtils.degToRad(e.degPerSecond) * (seconds - config.shutterFraction / (2 * config.fps)) / bound)
+}
+
+export function ringTurn(ring: number, seconds: number): number {
+  const r = deck.life.storm.rings[ring]!
+  const bound = THREE.MathUtils.degToRad(r.boundDeg)
+  return bound * Math.tanh(THREE.MathUtils.degToRad(r.degPerSecond) * (seconds - config.shutterFraction / (2 * config.fps)) / bound)
+}
+
+export function hazeDrift(band: number, seconds: number): number {
+  return deck.life.haze.bands[band]!.unitsPerSecond * (seconds - config.shutterFraction / (2 * config.fps))
+}
+
+export function flashNow(site: number, seconds: number): number {
+  const f = deck.life.flash
+  let sum = 0
+  for (const [at, strength] of f.sites[site]!.events as number[][]) {
+    const u = (seconds - config.shutterFraction / (2 * config.fps) - at!) / f.riseSeconds
+    if (u > 0) sum += strength! * u * Math.exp(1 - u)
+  }
+  return f.gain * sum
 }
 
 interface Pace { film: number[]; path: number[]; slope: number[] }
@@ -101,6 +136,16 @@ export function paced(kind: 'dive' | 'rise', seconds: number): number {
 }
 
 const lifts = { dive: paceOf(deck.air.lift.dive, 0), rise: paceOf(deck.air.lift.rise, 0) }
+const stops = paceOf(deck.flight.exposureStops, 0)
+
+export function exposure(seconds: number): number {
+  const n = stops.film.length
+  return Math.pow(2, seconds <= stops.film[0]! ? stops.path[0]! : seconds >= stops.film[n - 1]! ? stops.path[n - 1]! : along(stops, seconds))
+}
+
+export function exposed(seconds: number): number {
+  return exposure(deck.life.proof.cameraHeld ? 0 : seconds)
+}
 
 export function lifted(kind: 'dive' | 'rise', out: number): number {
   const p = lifts[kind]
@@ -131,7 +176,7 @@ export class JupiterPlan extends StopPlan {
 
   override terrain(tRel: number): Pose {
     const dur = this.seg.terrain.end - this.seg.terrain.start
-    return flight(tRel - dur / 2 - config.shutterFraction / (2 * config.fps), this.p.terrain.vfov)
+    return flight(deck.life.proof.cameraHeld ? 0 : tRel - dur / 2 - config.shutterFraction / (2 * config.fps), this.p.terrain.vfov)
   }
 
   private close(kind: 'dive' | 'rise', time: number): Pose {
@@ -139,6 +184,8 @@ export class JupiterPlan extends StopPlan {
     const dur = land.end - land.start
     const k = place.approach[kind]
     const out = kind === 'dive' ? land.start - time : time - land.end
+    const h = handoverOf(this.id, 'rise')
+    if (h && land.end + deck.flight.ease.backSeconds > h.time + 1e-9) throw new Error('jupiter: flight.ease.backSeconds reaches past the handover of the rise')
     const at = (t: number, more: number): Pose => flight(t - land.start - dur / 2 - config.shutterFraction / (2 * config.fps), this.p.terrain.vfov, k.back * more, k.height * more)
     if (out <= 0) return at(time, 0)
     const pose = at(time, Math.pow(out / k.seconds, k.power))
