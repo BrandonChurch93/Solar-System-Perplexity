@@ -44,7 +44,6 @@ uniform vec3 uLimbU;
 uniform vec3 uLimbV;
 uniform vec3 uColour;
 uniform float uBright;
-uniform float uCeiling;
 uniform vec3 uHeat;
 uniform vec3 uGrainScale;
 uniform vec3 uGrainDepth;
@@ -74,6 +73,14 @@ uniform vec2 uFaceSize;
 uniform float uGlareInside;
 uniform vec4 uBurn;
 uniform vec3 uIrrColour;
+uniform vec2 uHide;
+uniform vec3 uWhite;
+uniform vec2 uDesat;
+uniform vec2 uHalo;
+uniform vec3 uHaloColour;
+uniform vec4 uFringe;
+uniform vec4 uFringeShape;
+uniform vec3 uFringeColour;
 uniform int uParts;
 in vec2 vNdc;
 out vec4 outColor;
@@ -165,8 +172,12 @@ vec3 whiteLook(vec3 d, float mu, float pixel) {
   vec3 limb = vec3(1.0) - uLimbU - uLimbV + uLimbU * mu + uLimbV * mu * mu;
   return uColour * pow(vec3(heat), uHeat) * limb + uColour * face * mix(limb, vec3(1.0), 0.5);
 }
+vec3 burnWhite(vec3 x) {
+  float l = dot(x, vec3(0.2126, 0.7152, 0.0722));
+  return mix(x, vec3(l), smoothstep(uDesat.x, uDesat.y, l));
+}
 vec3 shoulder(vec3 x) {
-  return uCeiling * (vec3(1.0) - exp(-x / uCeiling));
+  return uWhite * (vec3(1.0) - exp(-x / uWhite));
 }
 float loopGas(vec3 q, int i, float soft, out float heat) {
   vec3 mid = uLoopMid[i];
@@ -240,7 +251,7 @@ void main() {
     }
     for (int j = 0; j < (uWear < 1.0 || uMapOn <= 0.0 ? 1 : 0); j++) {
       float share = uMapOn > 0.0 ? 1.0 - uWear : 1.0;
-      body += share * inverseFilmic(shoulder(whiteLook(d, mu, pixel / max(mu, 0.2)) * (uBright * dim)));
+      body += share * inverseFilmic(shoulder(burnWhite(whiteLook(d, mu, pixel / max(mu, 0.2)) * (uBright * dim))));
     }
     col = body * cover;
     alpha = cover;
@@ -255,7 +266,7 @@ void main() {
     float path = (sqrt(max(top * top - near2, 0.0)) - sqrt(max(1.0 - near2, 0.0))) * through * ahead;
     vec3 tangent = spinY(normalize(ro + rd * (-b)), uSpin);
     float spic = 1.0 + uSpicules.y * (vnoise(tangent * uSpicules.x + vec3(0.0, uTime * 0.6, 0.0)) - 0.5) * 2.0;
-    gas += uChromoColour * (uBurn.x * uChromo.y * path / max(uChromo.x, 1e-4) * 0.05 * max(spic, 0.0));
+    gas += burnWhite(uChromoColour * (uBurn.x * uChromo.y * path / max(uChromo.x, 1e-4) * 0.05 * max(spic, 0.0)));
     int steps = int(uCorona.x);
     float dt = (end - t0) / float(steps);
     vec3 sum = vec3(0.0);
@@ -298,18 +309,38 @@ void main() {
           sum += g;
           warm += heat;
         }
-        gas += mix(uPromColour, uPromHot, smoothstep(1.5, 5.0, warm * dt * 60.0)) * (sum * dt * uProm.z * uBurn.x);
+        gas += burnWhite(mix(uPromColour, uPromHot, smoothstep(1.5, 5.0, warm * dt * 60.0)) * (sum * dt * uProm.z * uBurn.x));
       }
     }
+  }
+  for (int k = 0; k < (miss < uFringe.y && cover < 0.5 && (uParts & 4) != 0 ? 1 : 0); k++) {
+    float halfChord = sqrt(max(uFringe.y * uFringe.y - near2, 0.0));
+    float s0 = max(-b - halfChord, 0.0);
+    float s1 = -b + halfChord;
+    int steps = int(uFringe.x);
+    float dt = max(s1 - s0, 0.0) / float(steps);
+    float sum = 0.0;
+    for (int i = 0; i < steps; i++) {
+      vec3 q = ro + rd * (s0 + (float(i) + 0.5) * dt);
+      float r = length(q);
+      vec3 sd = spinY(q / r, uSpin);
+      float up = max(r - 1.0, 0.0);
+      float tall = mix(uFringeShape.x, uFringeShape.y, pow(vnoise(sd * 6.0 + 5.0), 2.0));
+      vec3 bent = sd + (vec3(vnoise(sd * 9.0 + 1.0), vnoise(sd * 9.0 + 4.0), vnoise(sd * 9.0 + 7.0)) - 0.5) * (up * uFringeShape.w);
+      float spike = 40.0 * pow(vnoise(bent * uFringeShape.z), 8.0) + 24.0 * pow(vnoise(bent * (uFringeShape.z * 2.7) + 3.0), 8.0);
+      sum += exp(-up / tall) * spike * step(1.0, r);
+    }
+    gas += burnWhite(uFringeColour * (sum * dt * uFringe.z * uBurn.x));
   }
   gas *= dim;
   col += gas;
   alpha = max(alpha, 1.0 - exp(-dot(gas, vec3(0.3, 0.5, 0.2)) * 0.5));
+  alpha = max(alpha, uBurn.w * (1.0 - smoothstep(uHide.x, uHide.y, x)) * ahead);
   for (int k = 0; k < ((uParts & 8) != 0 ? 1 : 0); k++) {
     float o = max(x, 1.0) - 1.0;
     float inside = 1.0 - smoothstep(0.6, 1.0, x);
     float glow = uGlare.x * (exp(-o * uGlare.z) + uGlare.w / (1.0 + o * o * 1.5)) * (1.0 - uGlareInside * inside) * ahead;
-    col += (uGlareColour * glow + uIrrColour * (uBurn.y * exp(-o * o * uBurn.z * uBurn.z) * (1.0 - uGlareInside * inside) * ahead)) * ((1.0 - uWear) * dim);
+    col += (uGlareColour * glow + (uIrrColour * (uBurn.y * exp(-o * o * uBurn.z * uBurn.z)) + uHaloColour * (uHalo.x * exp(-o * uHalo.y))) * ((1.0 - uGlareInside * inside) * ahead)) * ((1.0 - uWear) * dim);
   }
   col *= lens * uOpacity;
   outColor = vec4(col, alpha * uOpacity);

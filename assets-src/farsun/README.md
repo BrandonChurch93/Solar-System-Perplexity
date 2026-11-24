@@ -53,6 +53,33 @@ prominences take. `glow`, `fall` and `colour` are the light of the burnt disc in
 halo `glow * exp(-(fall * x)^2)` with x the distance from the limb in disc radii, grown with the exposure
 and zero at burn 0.
 
+`tight`, `tightFall` and `tightColour` are a second, narrow term of the same light,
+`tight * exp(-tightFall * x)`, which carries the white over the limb so the edge of the body does not show
+at burn 1; it is zero at burn 0 like the first. `white` is the ceiling of the shoulder at burn 1 (the
+ceiling at burn 0 is `body.ceiling`): the burnt face clips to this near white and not to the hold's orange.
+`desat` is the range of luminance, before the shoulder, over which a colour loses its hue toward white, as a
+film does when every layer is full: it is one function for the face, the chromosphere, the loops and the
+fringe, so a loop that is as bright as the face burns to the same pale gold. The limb law still holds under
+it, which leaves the cream at the limb. The corona does not take the exposure: it stays at times 1.
+`hide` is the range, in disc radii from the centre, over which the pass covers what is drawn behind it once
+the burn passes one half: nothing behind a burnt Sun is seen through its light.
+
+## The fringe (look.json, `fringe`)
+
+A dim layer of fine flames all round the limb, part of the same body: it is marched in the body's frame
+between the surface and `top` radii, its flames stand where a value noise of the direction on the sphere is
+high (`scale`), lean with height (`lean`) and fall off with the height over `height` (low and high places).
+It takes the same exposure as the loops. At burn 0 it is under the visible floor: the proof at frame 472
+is drawn with it in.
+
+## The rule at frame 615
+
+Frame 615 is judged against `references/approved/mercury-hero.png` in the box x 1240 to 1920, y 0 to 700 of
+the 1920 by 1080 frame. The number is the mean absolute difference of the two pictures in levels of 255
+after a blur of 12 px: at most 4.0 in the box, at most 5 on the face (inside 0.9 radii) and on the limb (0.9
+to 1.0), at most 8 in each zone of gas (1.0 to 1.1, 1.1 to 1.3, 1.3 to 1.6, beyond 1.6). The plain number is
+reported and not ruled. The box does not move.
+
 ## wiring/
 
 The lines the far Sun needs in files that belong to other owners, one patch per owner, made by
