@@ -7,6 +7,8 @@
 #        sees it only along the ground). Then for every plate from 3.8 deg down: its base (the plate above, cropped,
 #        with the take nested), held to the picture. The takes of 3.8 deg and under (c38, c16, c07, c03) draw the
 #        canyon that country.py carries on; the colour by code (paint.py) is not laid on the plates any more.
+#        They were painted for the frame bearing of plates.json (country.frame) and are turned about the spot by
+#        the turn of the place (nestbase.py --turn); the 8.5 take is the globe's own map and is not turned.
 # painted: the plates of the old takes with the canyon painted by code (paint.py), out/work/place/plate/painted-W.png:
 #        what the leads of the canyon takes were made from (RECIPE.md), not part of the pyramid.
 #        The enlarged takes (-x2.png) are remade from the take beside them where they are missing.
@@ -22,6 +24,8 @@ painted() {
   python3 $P/paint.py --width-deg $1 --plate $W/plate/p$1.png --lay $W/lay/dive-land --out $W/plate/painted-$1.png
 }
 export PYTHONPATH=$P
+# the takes of 3.8 degrees and under were made for the frame bearing of plates.json: they are turned with the place
+TURN=$(python3 -c "import geom; print('%.4f' % geom.turn_deg())")
 for step in "$@"; do
   case $step in
     lay)
@@ -36,13 +40,13 @@ for step in "$@"; do
       done
       python3 $P/bake.py --toned 8.5,$W/plate/toned-8.5.png
       python3 $P/nestbase.py --above $W/plate/toned-8.5.png,8.5 --width-deg 8.5 --below $T/p85-take1-x2.png,8.5 --out $W/plate/p8.5.png
-      python3 $P/nestbase.py --above $W/plate/p8.5.png,8.5 --width-deg 3.8 --below $T/c38-take1-x2.png,3.8 --out $W/plate/base-3.8.png
+      python3 $P/nestbase.py --above $W/plate/p8.5.png,8.5 --width-deg 3.8 --below $T/c38-take1-x2.png,3.8 --turn $TURN --out $W/plate/base-3.8.png
       held 3.8
-      python3 $P/nestbase.py --above $W/plate/p3.8.png,3.8 --width-deg 1.6 --below $T/c16-take1-x2.png,1.6 --out $W/plate/base-1.6.png
+      python3 $P/nestbase.py --above $W/plate/p3.8.png,3.8 --width-deg 1.6 --below $T/c16-take1-x2.png,1.6 --turn $TURN --out $W/plate/base-1.6.png
       held 1.6
-      python3 $P/nestbase.py --above $W/plate/p1.6.png,1.6 --width-deg 0.7 --below $T/c07-take1-x2.png,0.7 --out $W/plate/base-0.7.png
+      python3 $P/nestbase.py --above $W/plate/p1.6.png,1.6 --width-deg 0.7 --below $T/c07-take1-x2.png,0.7 --turn $TURN --out $W/plate/base-0.7.png
       held 0.7
-      python3 $P/nestbase.py --above $W/plate/p0.7.png,0.7 --width-deg 0.3 --below $T/c03-take1-x2.png,0.3 --out $W/plate/base-0.3.png
+      python3 $P/nestbase.py --above $W/plate/p0.7.png,0.7 --width-deg 0.3 --below $T/c03-take1-x2.png,0.3 --turn $TURN --out $W/plate/base-0.3.png
       held 0.3 ;;
     painted)
       for w in 3.8 1.6 0.7 0.3; do painted $w; done ;;

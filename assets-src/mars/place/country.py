@@ -36,6 +36,9 @@ N = C['size']
 only = [float(x) for x in a.only.split(',')] if a.only else None
 os.makedirs(a.out, exist_ok=True)
 eye = ground.Eye()
+# the light painted in the plates: given for the frame bearing, it turns with the place as the takes do
+plate_sun = geom.plate_sun_bearing(C)
+print('heading %.2f, turn %.2f, light of the plates from %.1f' % (geom.heading_bearing(), geom.turn_deg(C), plate_sun), flush=True)
 here = os.path.dirname(os.path.abspath(__file__))
 
 
@@ -52,7 +55,7 @@ for level in C['levels']:
     pre = '%s/c%g' % (a.out, W)
     deg = W / N
     if only is not None and W not in only and os.path.exists(pre + '-height.npy'):
-        coarse, coarse_w = np.load(pre + '-height.npy'), W
+        coarse, coarse_w = np.load(pre + ('-plain.npy' if os.path.exists(pre + '-plain.npy') else '-height.npy')), W
         continue
     q = '%s/q%g' % (a.out, W)
     if not os.path.exists(q + '-height.npy'):
@@ -67,7 +70,26 @@ for level in C['levels']:
     K = C['canyon']
     xd = np.degrees((2 * c - 1) * geom.half_tan(W))
     xg, yg = np.broadcast_to(xd[None, :], (N, N)), np.broadcast_to(-xd[:, None], (N, N))
-    prior = ground.trough(xg, yg, K['axis'], K['floorKm'], K['halfFloorDeg'], K['wallDeg'], K['fallFromDeg'], K['fallToDeg'], K.get('wander'), K.get('gullies')) / ground.KM
+    # the lines turn with the place (the plan's heading); the main trough of the globe's map lies where the map has it
+    behind, ahead, main = ground.country_troughs(C, xg, yg)
+    prior = behind / ground.KM
+    # the canyon the close view looks along runs on beyond the far end of its meshes too (canyon.east): without it
+    # the made ground closes the canyon there in a round pit
+    if ahead is not None:
+        E = K['east']
+        prior_east = ahead / ground.KM
+        prior = np.minimum(prior, prior_east)
+        # the meshes themselves close the canyon far out (their far ground is level from about 0.85 degrees): from
+        # takeFromDeg to takeToDeg from the eye's foot the mesh is lowered to the carried on canyon where that is deeper
+        # (done after the far heights are calmed, below, so that the canyon keeps its walls where the eye's rays ran
+        # over it far out; the main trough is taken the same way)
+        take = smooth((np.hypot(xg, yg) - E['takeFromDeg']) / (E['takeToDeg'] - E['takeFromDeg']))
+        cut = prior_east if main is None else np.minimum(prior_east, main / ground.KM)
+    else:
+        take = cut = None
+    if main is not None:
+        prior = np.minimum(prior, main / ground.KM)
+    del behind, ahead, main
     if coarse is None:
         up = prior
     else:
@@ -99,6 +121,9 @@ for level in C['levels']:
         calm = st[lo_, ii, jj] * (1 - fr) + st[hi_, ii, jj] * fr
         true = np.where(seen, calm, np.nan).astype(np.float32)
         del st, stack
+    if take is not None:
+        true = np.where(seen, true + take * np.minimum(cut - true, 0), true).astype(np.float32)
+    del take, cut
     exact = seen & (foot <= F['fromDeg'])
     far = cv2.distanceTransform((~seen).astype(np.uint8), cv2.DIST_L2, 5) * deg
     # the mesh has its say on the made ground out to zeroShare of the width, by a line that wanders (seeded noise),
@@ -110,9 +135,18 @@ for level in C['levels']:
         zn = 1 + Z['amount'] * (2 * ground.lattice_noise((xg + 80) / zc, (yg + 80) / zc, Z['seed'], (256, 256)) - 1)
     known = seen | (far > C['zeroShare'] * W * zn)
     diff = ground.membrane(np.where(seen, true - base, 0), known)
-    pic = cv2.resize(cv2.imread(level['picture']), (N, N), interpolation=cv2.INTER_AREA)
-    rel = ground.relief_from_light(ground.light(pic), deg, C['sunBearingDeg'], broad, hold=C['hold'])
-    rel = rel * C['gainKm']
+    # the first round after the place has moved has no plates yet (bake.py needs these heights): no relief is read
+    # then, and the round after it reads it
+    raw = cv2.imread(level['picture'])
+    if raw is None:
+        print('   no plate %s yet: no relief read from its light this round' % level['picture'], flush=True)
+        pic = np.full((N, N, 3), 128, np.uint8)
+        rel = np.zeros((N, N), np.float32)
+    else:
+        pic = cv2.resize(raw, (N, N), interpolation=cv2.INTER_AREA)
+        rel = ground.relief_from_light(ground.light(pic), deg, plate_sun, broad, hold=C['hold'])
+        rel = rel * C['gainKm']
+    del raw
     # the made ground takes the roughness of the mesh plateau beside it, octave by octave
     filled = ground.membrane(np.where(seen, true, 0), seen) * ground.KM
     plateau = exact & (true * ground.KM > C['plateauKm'])
@@ -135,9 +169,18 @@ for level in C['levels']:
         else:
             f = 1.0
         f = float(np.clip(f, C['rough'][0], C['rough'][1]))
+        # the plateau is nearly flat: no octave of the relief read from the plate stands steeper than reliefSlope
+        # (rms height over the wavelength, times two pi), whatever the plate's streaks say
+        if 'reliefSlope' in C:
+            rms = float(np.sqrt((rband[~seen] ** 2).mean()))
+            most = C['reliefSlope'] * np.radians(wave) * ground.KM / (2 * np.pi)
+            f = min(f, most / max(rms, 1e-9))
+            cap_far = min(C['roughFar'], most / max(rms, 1e-9))
+        else:
+            cap_far = C['roughFar']
         table.append('%.3g deg x%.2f' % (wave, f))
-        rel += rband * (f + (C['roughFar'] - f) * out_far)
-        rel_far += rband * C['roughFar']
+        rel += rband * (f + (cap_far - f) * out_far)
+        rel_far += rband * cap_far
         rel_near += rband * f
     # the far ground the eye saw only along its rays takes the relief of the plate as the made ground beside it
     # does, growing in beyond far.fromDeg: no flat fan with straight sides stands in the country. The made ground
@@ -164,7 +207,10 @@ for level in C['levels']:
     height = np.where(seen, true + (rel_in + (rel_near - rel_in) * (1 - keep)) / ground.KM * (1 - wb), base + diff + made).astype(np.float32)
     exact = exact & (keep > 0.999)
     dirs = geom.patch_dirs(W, N)
-    height, low, passes, left = ground.lower_under_sight(height, ~seen, dirs, eye, min(C['stepKm'], 1.2 * np.radians(deg) * ground.KM), passes=800, clear=C['clear'])
+    # ground the close view's mesh leaves open inside its own ground (an island: mist, a tear) is filled by the
+    # membrane from the ground round it and is not lowered: it is not ground the eye proved empty
+    free = outside if C.get('islandsFilled') else ~seen
+    height, low, passes, left = ground.lower_under_sight(height, free, dirs, eye, min(C['stepKm'], 1.2 * np.radians(deg) * ground.KM), passes=800, clear=C['clear'])
     # no slope steeper than slopeMost: a wall of the close view's mesh, a tear of it or the foot of lowered ground is
     # a step from one texel to the next, which a mesh of one vertex a texel draws as a curtain. The limit is a
     # slope of the ground, the same at every level, so the levels still agree where one hands on to the next
@@ -176,6 +222,40 @@ for level in C['levels']:
     idx = np.nonzero(~seen)
     left = float(eye.sees(dirs[idx] * (1 + height[idx])[:, None], C['clear']).mean())
     slope_line = 'largest step between neighbours %.1f texel widths before the slope was held, %.2f after; moved more than 5 m on %.4f of the plate (seen ground %.4f), most %.0f m' % (before, after, float((moved > 0.005).mean()), float((moved > 0.005)[seen].mean()) if seen.any() else 0.0, moved.max() * 1000)
+    # the craters of the plateau (ground.craters): laid on last, so the levels are tied to each other by the ground
+    # without them (cW-plain.npy) and each level holds the craters its texels can draw; in the border band a level
+    # holds the craters of the coarser one, as it holds its heights there
+    plain = height
+    n_craters = 0
+    if 'craters' in C:
+        R = C['craters']
+        kmdeg = np.radians(1.0) * ground.KM
+        ring = np.linspace(0, 2 * np.pi, 9)[:-1]
+
+        def stands(cx, cy, r_deg):
+            px = np.concatenate([cx[:, None], cx[:, None] + np.cos(ring)[None, :] * (r_deg * R['clear'])[:, None]], axis=1).astype(np.float32)
+            py = np.concatenate([cy[:, None], cy[:, None] + np.sin(ring)[None, :] * (r_deg * R['clear'])[:, None]], axis=1).astype(np.float32)
+            deep = ground.country_deep(C, px, py)
+            ok = (deep > R['canyonKm']).all(axis=1)
+            # not on or beside ground the close view saw (the mask of the outermost level, a little wider)
+            t8 = geom.half_tan(seen_far_w)
+            n8 = seen_far.shape[0]
+            jx = np.clip(((np.tan(np.radians(px)) / t8 + 1) / 2 * n8).astype(np.int64), 0, n8 - 1)
+            iy = np.clip(((1 - (np.tan(np.radians(py)) / t8 + 1) / 2) * n8).astype(np.int64), 0, n8 - 1)
+            return ok & ~seen_far[iy, jx].any(axis=1)
+
+        wfar = C['levels'][0]['widthDeg']
+        seen_far_w = wfar
+        sf = np.isfinite(np.load('%s/q%g-height.npy' % (a.out, wfar))).astype(np.uint8)
+        seen_far = cv2.dilate(sf, np.ones((2 * R['seenTexels'] + 1,) * 2, np.uint8)) > 0
+        cr, n_craters = ground.craters(xg, yg, R, R['texels'] * deg * kmdeg, stands)
+        if coarse_w is not None:
+            cr_c, _ = ground.craters(xg, yg, R, R['texels'] * coarse_w / N * kmdeg, stands)
+            cr = cr * (1 - wb) + cr_c * wb
+        else:
+            cr = cr * (1 - wb)
+        height = (plain + np.where(seen, 0, cr) / ground.KM).astype(np.float32)
+    np.save(pre + '-plain.npy', plain.astype(np.float32))
     np.save(pre + '-height.npy', height.astype(np.float32))
     cv2.imwrite(pre + '-seen.png', (exact * 255).astype(np.uint8))
     # the fit of the gain on the seen ground: the picture at its true place against the mesh heights, same band
@@ -186,13 +266,13 @@ for level in C['levels']:
         Lt = ground.light(col)
         Lt = np.where(seen, Lt, Lt[seen].mean())
         Lt = np.where(seen, Lt, cv2.GaussianBlur(Lt, (0, 0), 6))
-        rt = ground.relief_from_light(Lt, deg, C['sunBearingDeg'], broad, hold=C['hold'])
+        rt = ground.relief_from_light(Lt, deg, plate_sun, broad, hold=C['hold'])
         th = height * ground.KM
         th = th - cv2.GaussianBlur(th, (0, 0), broad / deg / 2)
         x, y = rt[inner], th[inner]
         fit = float((x * y).sum() / max((x * x).sum(), 1e-12))
         corr = float(np.corrcoef(x, y)[0, 1])
-    look = np.dstack([ground.shaded(height, deg, C['sunBearingDeg'])] * 3)
+    look = np.dstack([ground.shaded(height, deg, plate_sun)] * 3)
     look[~seen] *= np.array([1.0, 0.9, 0.8])
     s = 1024
     side = np.hstack([cv2.resize(pic, (s, s), interpolation=cv2.INTER_AREA), cv2.resize(np.round(look * 255).astype(np.uint8), (s, s), interpolation=cv2.INTER_AREA)])
@@ -202,4 +282,5 @@ for level in C['levels']:
         W, N, deg * np.pi / 180 * ground.KM * 1000, seen.mean(), float(np.sqrt((mk ** 2).mean())), mk.min(), mk.max(), low.mean(), passes, left, fit, corr, height.min() * ground.KM, height.max() * ground.KM), flush=True)
     print('   ' + slope_line, flush=True)
     print('   roughness of the mesh plateau against the relief read from the light, by wave: ' + ', '.join(table), flush=True)
-    coarse, coarse_w = height, W
+    print('   craters laid on this level: %d' % n_craters, flush=True)
+    coarse, coarse_w = plain, W

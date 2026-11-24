@@ -113,31 +113,31 @@
    {
     "widthDeg": 0.3,
     "look": "out/work/place/plate/p0.3.png",
-    "file": "canyon-0p3.jpg",
-    "size": 3277
+    "file": "land-0p3.jpg",
+    "size": 2176
    },
    {
     "widthDeg": 0.7,
     "look": "out/work/place/plate/p0.7.png",
-    "file": "canyon-0p7.jpg",
+    "file": "land-0p7.jpg",
     "size": 3277
    },
    {
     "widthDeg": 1.6,
     "look": "out/work/place/plate/p1.6.png",
-    "file": "canyon-1p6.jpg",
+    "file": "land-1p6.jpg",
     "size": 3686
    },
    {
     "widthDeg": 3.8,
     "look": "out/work/place/plate/p3.8.png",
-    "file": "canyon-3p8.jpg",
+    "file": "land-3p8.jpg",
     "size": 4096
    },
    {
     "widthDeg": 8.5,
     "look": "out/work/place/plate/p8.5.png",
-    "file": "place-8p5.jpg",
+    "file": "land-8p5.jpg",
     "size": 3686
    }
   ],
@@ -174,7 +174,7 @@
   "matchMost": 2.0,
   "lookKnee": 0.14,
   "lookMost": 0.3,
-  "ladderNote": "Eight levels: 96, 42, 19 lit (4096 px); 8.5 (3686), 3.8 (4096), 1.6 (3686), 0.7 (3277), 0.3 (3277) with their own light. Chosen with predict.py --minor on the paths of E3 (main 03510ddd): dive worst 0.0082, rise worst about 0.016 of ground pixels under 1.0 texels. The 8.5 level at 3686 px reads the same as at 4096 and frees 17 MB: the full set then stands near 1376 MB of 1400. Smaller 42 or 19 levels fail in the rise (0.042 at 2724, 0.035 at 2720). Nine levels with every density doubled would need 53 MB more than the set may use."
+  "ladderNote": "Eight levels: 96, 42, 19 lit (4096 px); 8.5 (3686), 3.8 (4096), 1.6 (3686), 0.7 (3277), 0.3 (2176; it was 3277 until the cap's heights were counted in the set's memory, G15) with their own light. Chosen with predict.py --minor on the paths of E3 (main 03510ddd): dive worst 0.0082, rise worst about 0.016 of ground pixels under 1.0 texels. The 8.5 level at 3686 px reads the same as at 4096 and frees 17 MB: the full set then stands near 1376 MB of 1400. Smaller 42 or 19 levels fail in the rise (0.042 at 2724, 0.035 at 2720). Nine levels with every density doubled would need 53 MB more than the set may use."
  },
  "size": 4096,
  "jpegQuality": 94,
@@ -195,28 +195,32 @@
   "endTo": 1.0
  },
  "country": {
-  "note": "country.py: the heights of the country round the place, one plate per level of the globe's ladder, coarse to fine. size: texels along a side. picture: the plate as painted, whose light the made heights are read from. sunBearingDeg: where the light in the plates comes from, clockwise from north (fitted: 170 to 190). gainKm: km of height per unit of log brightness times degree (fitted on the seen ground: 76.4 on the 1.6 plate, 82.1 on 0.7). broadShare: waves longer than this share of the plate width are left to the coarser level. hold: how hard waves across the Sun are held down. joinShare: over this share of the width the made relief comes in beside seen ground. edgeShare: over this share of the width at its border a level is the coarser level itself (the outermost: the smooth sphere). zeroShare: farther than this share of the width from seen ground the mesh has no say. stepKm, clear: made ground is lowered by stepKm a pass until it is clear (times the distance) behind what the picture's eye saw. broadMostDeg: the longest wave read from the light at any level (in a plate of 8.5 degrees the broad tone is colour of the land, not slope; with 0.15 of the width the made relief had an rms of 2.7 km and heights of -16 to +12 km). plateauKm: seen ground above this is the plateau, whose roughness the made ground takes, octave by octave (rough: least and most of the factor on the relief read from the light). canyon: the canyon carried on beyond what the close view saw, along the pale trough of the globe's own map (wrap-color) west of the spot, read off a grid of half degrees: axis in degrees east and north of the spot, from the fan's south west edge outward; floorKm its depth where it leaves the seen ground (the mesh floor is -6.3 to -7.0 km there), halfFloorDeg and wallDeg its cross section as measured on the mesh canyon (0.3 degrees rim to rim), fallFromDeg to fallToDeg the length along the axis over which the depth falls off to nothing. far: beyond fromDeg from the foot of the picture's eye the mesh heights are smoothed with a radius of perDeg times the distance beyond it (seen from above the far field of the close view is ridged along the eye's rays: a small error of distance along a ray is a long streak on the ground); the seen mask ends at fromDeg. roughFar, roughFarDeg: beside seen ground the made relief has the mesh plateau's roughness; over roughFarDeg (at most a quarter of the plate) it rises to roughFar of what the light reads with the fitted gain. The step of the lowering is never more than 1.2 texels of the level (steps of 50 m stood as terraces in the 0.3 plate). slopeMost: no slope of the heights is steeper than this (height over distance on the ground; ground.hold_slope): the mean of the highest ground under the heights and the lowest over them that keep the limit, so ground under the limit stays as it is and a wall becomes a slope centred on the wall; asked for by the cap of the globe, which draws a step between two texels as a curtain (steps of up to 87 texel widths stood in the first bake). zeroShare was 0.06 until the cap showed a dark foot along the straight north edge of the seen ground (the fall to the country's level took 0.042 degrees at the 0.7 plate); zeroWander: the distance wanders by amount about it, in cells of cellShare of the width.",
+  "note": "country.py: the heights of the country round the place, one plate per level of the globe's ladder, coarse to fine. size: texels along a side. picture: the plate as painted, whose light the made heights are read from. sunBearingDeg: where the light in the plates comes from, clockwise from north (fitted: 170 to 190). gainKm: km of height per unit of log brightness times degree (fitted on the seen ground: 76.4 on the 1.6 plate, 82.1 on 0.7). broadShare: waves longer than this share of the plate width are left to the coarser level. hold: how hard waves across the Sun are held down. joinShare: over this share of the width the made relief comes in beside seen ground. edgeShare: over this share of the width at its border a level is the coarser level itself (the outermost: the smooth sphere). zeroShare: farther than this share of the width from seen ground the mesh has no say. stepKm, clear: made ground is lowered by stepKm a pass until it is clear (times the distance) behind what the picture's eye saw. broadMostDeg: the longest wave read from the light at any level (in a plate of 8.5 degrees the broad tone is colour of the land, not slope; with 0.15 of the width the made relief had an rms of 2.7 km and heights of -16 to +12 km). plateauKm: seen ground above this is the plateau, whose roughness the made ground takes, octave by octave (rough: least and most of the factor on the relief read from the light). canyon: the canyon carried on beyond what the close view saw, along the pale trough of the globe's own map (wrap-color) west of the spot, read off a grid of half degrees: axis in degrees east and north of the spot, from the fan's south west edge outward; floorKm its depth where it leaves the seen ground (the mesh floor is -6.3 to -7.0 km there), halfFloorDeg and wallDeg its cross section as measured on the mesh canyon (0.3 degrees rim to rim), fallFromDeg to fallToDeg the length along the axis over which the depth falls off to nothing. far: beyond fromDeg from the foot of the picture's eye the mesh heights are smoothed with a radius of perDeg times the distance beyond it (seen from above the far field of the close view is ridged along the eye's rays: a small error of distance along a ray is a long streak on the ground); the seen mask ends at fromDeg. roughFar, roughFarDeg: beside seen ground the made relief has the mesh plateau's roughness; over roughFarDeg (at most a quarter of the plate) it rises to roughFar of what the light reads with the fitted gain. The step of the lowering is never more than 1.2 texels of the level (steps of 50 m stood as terraces in the 0.3 plate). slopeMost: no slope of the heights is steeper than this (height over distance on the ground; ground.hold_slope): the mean of the highest ground under the heights and the lowest over them that keep the limit, so ground under the limit stays as it is and a wall becomes a slope centred on the wall; asked for by the cap of the globe, which draws a step between two texels as a curtain (steps of up to 87 texel widths stood in the first bake). zeroShare was 0.06 until the cap showed a dark foot along the straight north edge of the seen ground (the fall to the country's level took 0.042 degrees at the 0.7 plate); zeroWander: the distance wanders by amount about it, in cells of cellShare of the width. reliefSlope: the plateau is nearly flat (MAIL 449): no octave of the relief read from a plate's light is kept steeper than this (rms height times two pi over the wavelength); before it the made relief had an rms of 0.20 km at 3.8 degrees and read as dunes kilometres long. islandsFilled: ground the close view's mesh leaves open inside its own ground is filled by the membrane and not lowered under the eye's sight (it stood as a round pit at the head of the canyon). The pictures of the levels are the plates as bake.py lays them out (its work folder, lossless, before relight.py takes the slope light out of them): the set's own files no longer hold the painted light the relief is read from.",
+  "frame": {
+   "note": "The bearing of the place on the globe is one number, the plan's heading (src/stops/mars/plan.ts dive.headingDeg, read through geometry.json; MAIL 461 and 478: the place is turned about its vertical until the light of the approved close image falls on the globe's Sun). bearingDeg: the heading (degrees clockwise from north at the spot) for which the lines of this block marked as turning with the place (canyon.axis, canyon.east.axis, sunBearingDeg) and the takes of the four finer levels were made. The tools turn them by the difference (geom.turn_deg). Lines given on the globe's map (axisMap, trough) do not turn.",
+   "bearingDeg": 105.936
+  },
   "size": 2048,
   "levels": [
    {
     "widthDeg": 8.5,
-    "picture": "public/assets/mars/full/place-8p5.jpg"
+    "picture": "out/work/place/bake/land-8p5.png"
    },
    {
     "widthDeg": 3.8,
-    "picture": "public/assets/mars/full/canyon-3p8.jpg"
+    "picture": "out/work/place/bake/land-3p8.png"
    },
    {
     "widthDeg": 1.6,
-    "picture": "assets-src/mars/place/takes/p16-take6.png"
+    "picture": "out/work/place/bake/land-1p6.png"
    },
    {
     "widthDeg": 0.7,
-    "picture": "assets-src/mars/place/takes/p07-take5.png"
+    "picture": "out/work/place/bake/land-0p7.png"
    },
    {
     "widthDeg": 0.3,
-    "picture": "assets-src/mars/place/takes/p03-take1.png"
+    "picture": "out/work/place/bake/land-0p3.png"
    }
   ],
   "sunBearingDeg": 175,
@@ -264,6 +268,62 @@
    "seed": 23
   },
   "canyon": {
+   "east": {
+    "note": "the canyon carried on east of the far end of the close view's meshes, the same function as the west one on its own line, laid along the canyon of the meshes (measured on the 3.8 level: deeper than 3.5 km from 0.05 to 0.23 degrees south at 0.5 east, from 0.11 to 0.32 south at 0.7 east; floor -5.2 to -5.9 km). The meshes close the canyon themselves far out: their floor is -4.2 km at 0.8 east and their ground is level (-0.3 km) at 0.9 east, which stood as a round pit with a round shadow. From takeFromDeg to takeToDeg from the eye's foot the mesh is lowered to this canyon where it is deeper. The depth dies away along the line from fallFromDeg to fallToDeg. Since the turn (MAIL 478) it keeps its depth to its mouth in the main trough (fallFromDeg and fallToDeg lie beyond its length).",
+    "axis": [
+     [
+      0.3,
+      -0.16
+     ],
+     [
+      0.55,
+      -0.14
+     ],
+     [
+      0.7,
+      -0.21
+     ],
+     [
+      0.85,
+      -0.25
+     ],
+     [
+      1.1,
+      -0.3
+     ],
+     [
+      1.6,
+      -0.4
+     ]
+    ],
+    "floorKm": -5.6,
+    "fallFromDeg": 9.0,
+    "fallToDeg": 10.0,
+    "takeFromDeg": 0.7,
+    "takeToDeg": 0.85,
+    "axisMap": [
+     [
+      -1.8,
+      -1.15
+     ],
+     [
+      -2.0,
+      -1.65
+     ],
+     [
+      -2.1,
+      -2.15
+     ],
+     [
+      -2.15,
+      -2.6
+     ],
+     [
+      -2.15,
+      -2.95
+     ]
+    ]
+   },
    "gullies": {
     "note": "spurs and gullies on the walls of the carried on canyon: the walls stand out and back by shiftDeg times a noise from a seeded table, short along the canyon (alongDeg a cell) and long across it (acrossDeg), three octaves with these shares",
     "seed": 11,
@@ -346,7 +406,8 @@
    "halfFloorDeg": 0.06,
    "wallDeg": 0.1,
    "fallFromDeg": 0.35,
-   "fallToDeg": 2.4
+   "fallToDeg": 2.4,
+   "note": "The carried on canyon. axis: behind the camera of the close view (it was west of the spot at the frame bearing), points in degrees east and north for the frame bearing, turned with the place. east: ahead of the camera, beyond the far end of the close view's meshes; its axis turns with the place as far as the finer takes show it (1.65 degrees) and is carried on by axisMap, points on the globe's map, into the main trough of the map, so that the image's canyon is a side canyon of the map's trough (MAIL 478)."
   },
   "far": {
    "fromDeg": 0.7,
@@ -358,6 +419,76 @@
    "amount": 0.5,
    "cellShare": 0.08,
    "seed": 31
+  },
+  "reliefSlope": 0.01,
+  "islandsFilled": true,
+  "light": {
+   "note": "relight.py (MAIL 449: the country is lit by the scene's Sun from its own heights, the plates become colour without slope light). The cap of the globe multiplies an own level by 1 + lift, lift = clamp((n.s - up) / max(up + wrap, 0.06), -0.85, 1.6) with n the normal of the heights, s the Sun, up = the Sun's height over level ground; wrap must equal light.wrap of src/stops/mars/look.ts. Made ground: the colour of the plate is split, in the log of scene values, into the colour of the region (the mean of the open made ground about a texel, regionDeg wide, at most regionShare of the plate), the middle waves and the fine grain (under fineTexels). The middle waves hold the plate's painted light: they stay by `keep` on level open ground, go to nothing where the heights stand steep (|lift| over steep) and in cast shadow, and never leave the region's colour by more than `darkest` down or `brightest` up (log units; a soft limit, tanh, since a hard one stood as two flat tones with sharp edges in the f4 stills), so no dark blot of a take stands as a pit. The hue of the middle waves (what is left of them without their luminance) stays by `hue`, at most hueMost. About the place the region's colour is `plateau`, the colour over 1 + lift of the level open plateau the close view saw (measured by this tool on the 1.6 and 3.8 levels: 0.134, 0.066, 0.043; the takes' own plateau stood at 0.57 of it on the 8.5, 3.8 and 1.6 levels and at 0.25 on 0.7), inside matchFromDeg of the spot, going over to the plate's own by matchToDeg: the made plateau and the seen one are one ground. The grain stays by `grain`, no further than grainMost (log units) from the region's colour and by the open share only (the grain of black paint is noise: it goes out between grainDarkTo and grainDarkFrom log units under the region's colour). Then the cast shadow of the heights is multiplied in: 1 in the open, `fill` (red, green, blue, scene values) in full shadow, with the half shade of a Sun sunSizeDeg wide, looked for over shadowKm toward the Sun in `steps` steps. In cast shadow the light is the sky's and has no slope toward the Sun, but the cap multiplies by 1 + lift there too: the fill is divided by 1 + lift of the heights (blurred by shadowLiftTexels, never under shadowLiftLeast), else ground that faces away from the Sun in shadow is darkened twice (measured in the f4 stills: canyon shadow at 0.105, 0.189, 0.257 of the plateau at 2452 against a fill of 0.196, 0.271, 0.355). fill is measured in references/approved/mars-close.jpg: shadowed wall over lit north wall 0.224, 0.318, 0.414; shadowed floor over lit north wall 0.168, 0.224, 0.295; the mean of the two. Ground the close view saw: the plate keeps the picture's own light and shadows and is divided by 1 + lift of its own heights, so that the cap's light gives the picture back. Since MAIL 461 the Sun of this step is the scene's own: the globe's Sun at the spot at the moment sunMoment of geometry.json (surface: the middle of the surface view, bearing 309.7, 22.4 degrees up), not the plates' painted light. troughKm: where the main trough of the map is this deep (km) the plate keeps the map's own paint as it is (no match to the plateau's colour, no rock colour, no flattening of its middle waves); only the cast shadow is laid on.",
+   "wrap": 0.2,
+   "fill": [
+    0.196,
+    0.271,
+    0.355
+   ],
+   "sunSizeDeg": 0.35,
+   "shadowKm": 30,
+   "steps": 64,
+   "regionDeg": 0.4,
+   "regionShare": 0.2,
+   "fineTexels": 3,
+   "keep": 0.35,
+   "steep": 0.5,
+   "darkest": 0.3,
+   "brightest": 0.4,
+   "grain": 1.0,
+   "grainMost": 0.25,
+   "grainDarkFrom": 1.6,
+   "grainDarkTo": 0.8,
+   "hue": 0.3,
+   "hueMost": 0.2,
+   "plateau": [
+    0.134,
+    0.066,
+    0.043
+   ],
+   "matchFromDeg": 0.8,
+   "matchToDeg": 2.5,
+   "shadowLiftTexels": 2,
+   "shadowLiftLeast": 0.33,
+   "rock": {
+    "note": "the made canyon is rock and not the plateau's sand: under fromKm the colour of made ground goes over to rock, full at toKm (heights of the country in km). wall: the lit north wall of the approved close image (0.1135, 0.0747, 0.0593, scene values) over 1 + lift of a wall of 45 degrees facing the Sun (lift 1.0). floor: its shadowed floor near the eye (0.0190, 0.0168, 0.0175) over the fill. Level ground down there is floor, steep ground wall. strata: the wall's layers, a seeded noise over the height (bandsKm thick, with these shares, log units) that wanders with the place by wanderKm over cells of wanderDeg.",
+    "fromKm": -0.25,
+    "toKm": -0.7,
+    "wall": [
+     0.0568,
+     0.0374,
+     0.0297
+    ],
+    "floor": [
+     0.097,
+     0.062,
+     0.049
+    ],
+    "strata": 0.22,
+    "bandsKm": [
+     0.45,
+     0.16
+    ],
+    "shares": [
+     0.65,
+     0.35
+    ],
+    "wanderKm": 0.2,
+    "wanderDeg": 0.04,
+    "seed": 41
+   },
+   "sunMoment": "surface",
+   "troughKm": 1.0
+  },
+  "preview": {
+   "note": "seecountry.py --shade, the preview OUT-lit.png only (no asset is made from it): the colour of the plates is multiplied in scene values by fill + (1 - fill) times the cosine to the Sun over that of level ground (at most `most`), zero in cast shadow.",
+   "fill": 0.25,
+   "most": 1.6
   },
   "slopeMost": 2.0,
   "reach": {
@@ -382,6 +513,93 @@
    "low": 0.55,
    "high": 1.9,
    "blurDeg": 0.002
+  },
+  "craters": {
+   "note": "ground.craters: impact craters of the made plateau, by code, a function of the place alone (seeded list over a square of fieldDeg about the spot). perSquareDeg: craters of 1 km and more to a square degree; diameters from smallestKm to largestKm by a power law (the number larger than D falls as D to the minus power); depth, rim: bowl depth and rim height as shares of the diameter for a fresh crater, both less by up to `worn` with the crater's age (seeded); reach: the apron ends at this many radii; texels: a level holds the craters at least this many of its texels across; clear: a crater stands only if a ring of this many radii lies outside the canyon (canyon function above canyonKm) and off the ground the close view saw (mask of the outermost level widened by seenTexels). Why: the made plateau was wavy streaked relief read from the takes' light; the real plateau is nearly flat with craters and faint ridges (MAIL 449 item 3).",
+   "seed": 57,
+   "fieldDeg": 8.6,
+   "perSquareDeg": 4.0,
+   "smallestKm": 0.4,
+   "largestKm": 7.0,
+   "power": 1.8,
+   "depth": 0.11,
+   "rim": 0.028,
+   "worn": 0.75,
+   "reach": 2.2,
+   "texels": 5,
+   "clear": 1.6,
+   "canyonKm": -0.12,
+   "seenTexels": 3
+  },
+  "trough": {
+   "note": "The main trough of the globe's map south of the place, made real in the heights so that the side canyon opens into ground that is as deep as it is. Points in degrees east and north on the map (they do not turn). Measured on the 8.5 degree plate (the map's own ground at true places): north rim 1.95 degrees south at 1.7 west, 2.2 south at 1.7 east; black floor 2.7 to 3.4 south from 4 west to 1 east, 3.0 to 3.65 south at 3 east. The walls are long slopes (0.7 degrees for 5.6 km, about 7.5 degrees) without spurs of their own: the spurs are the map's paint, which the trough keeps (country.light.troughKm), so no wall is drawn twice. The level's border band takes the heights to zero toward the plate's border, as for all made ground.",
+   "axis": [
+    [
+     -4.6,
+     -3.0
+    ],
+    [
+     -3.0,
+     -3.0
+    ],
+    [
+     -1.5,
+     -3.05
+    ],
+    [
+     0.0,
+     -3.06
+    ],
+    [
+     1.5,
+     -3.1
+    ],
+    [
+     3.0,
+     -3.3
+    ],
+    [
+     4.6,
+     -3.4
+    ]
+   ],
+   "floorKm": -5.6,
+   "halfFloorDeg": 0.35,
+   "wallDeg": 0.7,
+   "wander": {
+    "amount": 0.08,
+    "lengthsDeg": [
+     2.9,
+     1.3,
+     0.61,
+     0.29
+    ],
+    "shares": [
+     0.5,
+     0.28,
+     0.15,
+     0.07
+    ],
+    "phaseNorth": [
+     1.3,
+     0.4,
+     3.1,
+     5.2
+    ],
+    "phaseSouth": [
+     4.2,
+     2.2,
+     0.9,
+     3.7
+    ],
+    "phaseFloor": [
+     2.5,
+     5.1,
+     1.7,
+     0.3
+    ],
+    "floor": 0.0
+   }
   }
  }
 }

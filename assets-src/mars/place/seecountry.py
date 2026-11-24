@@ -7,7 +7,13 @@ Colour: the plates are read at the undisplaced direction of the ground point, fi
 --relief FILE: a picture of the close view's meshes from the same camera with FILE-depth.npy beside it
 (heights.py --frame N --out FILE); the meshes are laid over the country where they are nearer than the country
 lowered by --sink km on the ground the seen mask names.
-Written: OUT.png (country alone) and, with --relief, OUT-both.png.
+--shade: also OUT-shade.png, the heights alone in grey, lit by the Sun of the scene at the spot (plates.json: country.light.sunMoment,
+the globe's own Sun) with the shadows they cast; no colour plate is read for it. It shows what the relief is, apart
+from what the colour says; and OUT-lit.png, a preview of the colour plates under that light (plates.json: country.preview).
+--law: OUT-lit.png by the law of the globe cap instead (colour times 1 + lift of the heights' normal), for the plates of
+relight.py (--colour FOLDER), which carry their cast shadow and no slope light.
+Written: OUT.png (country alone), OUT-depth.npy, OUT-where.npy (per pixel, the ground point in degrees east and north
+of the spot on the plates' plane) and, with --relief, OUT-both.png.
 """
 import argparse
 import json
@@ -28,6 +34,10 @@ ap.add_argument('--far', type=float, default=0.003, help='least step along a ray
 ap.add_argument('--flat', action='store_true', help='heights off: the plates on the smooth sphere, as before')
 ap.add_argument('--relief', default='')
 ap.add_argument('--sink', type=float, default=0.05)
+ap.add_argument('--shade', action='store_true')
+ap.add_argument('--plates', default='assets-src/mars/place/plates.json')
+ap.add_argument('--shadow-km', type=float, default=30.0, help='how far toward the Sun a shadow is looked for')
+ap.add_argument('--law', action='store_true', help='with --shade: OUT-lit.png is the colour times 1 + lift of the heights, the law of the globe cap for own levels (plates.json: country.light.wrap); for plates of relight.py, which carry their cast shadow')
 ap.add_argument('--out', required=True)
 a = ap.parse_args()
 
@@ -161,7 +171,48 @@ frame = np.round(np.clip(img.reshape(h, w, 3), 0, 255)).astype(np.uint8)
 if not cv2.imwrite(a.out + '.png', np.ascontiguousarray(frame)):
     raise SystemExit('could not write ' + a.out)
 np.save(a.out + '-depth.npy', depth.reshape(h, w).astype(np.float32))
+where = np.full((len(t), 2), np.nan, np.float32)
+where[sel, 0], where[sel, 1] = np.degrees(np.arctan(x)), np.degrees(np.arctan(y))
+np.save(a.out + '-where.npy', where.reshape(h, w, 2))
 print('frame %d (%s, height %.5f radii): ground on %.4f of the frame' % (a.frame, pose['side'], pose['height'], found.mean()))
+
+if a.shade:
+    P = json.load(open(a.plates))['country']
+    sun = geom.scene_sun(P['light']['sunMoment'])
+    flat_len = np.hypot(sun[0], sun[1])
+    ang = float(np.arccos(np.clip(d[0] @ d[1], -1, 1)))
+    finest = 2 * geom.half_tan(heights[-1][0]) / heights[-1][1].shape[0]
+    e = np.maximum(t[sel] * ang, finest)
+
+    def hat(xx, yy):
+        hh = lookup(heights, xx, yy, 2 * edge)
+        m = np.maximum(np.abs(xx), np.abs(yy)) / geom.half_tan(heights[0][0])
+        return np.where(m < 1, hh, 0)
+
+    h0 = hat(x, y)
+    hx = (hat(x + e, y) - hat(x - e, y)) / (2 * e)
+    hy = (hat(x, y + e) - hat(x, y - e)) / (2 * e)
+    nl = np.sqrt(hx * hx + hy * hy + 1)
+    lam = np.clip((-hx * sun[0] - hy * sun[1] + sun[2]) / nl, 0, 1)
+    open_ = np.ones(len(sel), np.float32)
+    for u in np.geomspace(2 * finest, a.shadow_km / KM, 48):
+        uu = np.maximum(u, 2 * e)
+        ray = h0 + uu * sun[2] / flat_len
+        over = hat(x + sun[0] / flat_len * uu, y + sun[1] / flat_len * uu) - ray
+        open_ = np.minimum(open_, np.clip(1 - over / (uu * 0.04), 0, 1))
+    grey = np.zeros(len(t), np.float32)
+    grey[sel] = 255 * np.clip(0.10 + 0.9 * lam * open_ / sun[2] * 0.55, 0, 1)
+    cv2.imwrite(a.out + '-shade.png', np.round(grey.reshape(h, w)).astype(np.uint8))
+    # a preview only: the colour plates with this light laid on them (their own painted light is still in them)
+    pv = P['preview']
+    gain = pv['fill'] + (1 - pv['fill']) * np.minimum(lam * open_ / sun[2], pv['most'])
+    if a.law:
+        ndl = (-hx * sun[0] - hy * sun[1] + sun[2]) / nl
+        gain = 1 + np.clip((ndl - sun[2]) / max(sun[2] + P['light']['wrap'], 0.06), -0.85, 1.6)
+    lit = np.zeros((len(t), 3), np.float32)
+    lit[sel] = geom.texel_of(geom.scene_of(col[:, ::-1] / 255) * gain[:, None])[:, ::-1] * 255
+    cv2.imwrite(a.out + '-lit.png', np.round(np.clip(lit.reshape(h, w, 3), 0, 255)).astype(np.uint8))
+    print('   shade: in cast shadow %.3f of the ground, facing away from the Sun %.3f' % (float((open_ < 0.5).mean()), float((lam <= 0).mean())))
 
 if a.relief:
     rel = cv2.imread(a.relief + '.png')

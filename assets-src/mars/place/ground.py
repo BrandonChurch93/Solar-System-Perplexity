@@ -8,8 +8,9 @@ import geom
 KM = 3389.5
 
 
-def membrane(values, known):
-    """Push and pull through a pyramid: the known values stay, the rest takes the smooth mean of what is known round it."""
+def membrane(values, known, relax=(33, 17, 9, 5, 3), turns=30):
+    """Push and pull through a pyramid, then relaxed: the known values stay, the rest takes the smooth mean of what
+    is known round it and meets the known ground at its border without a step."""
     v = [np.where(known, values, 0).astype(np.float32)]
     w = [known.astype(np.float32)]
     while min(v[-1].shape) > 1:
@@ -21,7 +22,14 @@ def membrane(values, known):
         up = cv2.GaussianBlur(up, (0, 0), 1.0)
         wk = np.clip(w[k] * 4, 0, 1)
         out = up * (1 - wk) + (v[k] / np.maximum(w[k], 1e-6)) * wk
-    return np.where(known, values, out)
+    out = np.where(known, values, out).astype(np.float32)
+    # the pyramid gives the smooth mean, which misses the known border by what the known ground does in its last
+    # texels (a step along the border). Relaxed with the known values held, wide kernels first, the fill meets
+    # the known ground at its border and is smooth from there on
+    for k in relax:
+        for _ in range(turns):
+            out = np.where(known, values, cv2.blur(out, (k, k))).astype(np.float32)
+    return out
 
 
 class Eye:
@@ -264,3 +272,74 @@ def octaves(x, most_px):
         prev = nxt
         s *= 2
     return bands, prev
+
+
+def craters(x, y, C, least_km, keep):
+    """Impact craters of the plateau, a function of the place alone: height in km at x, y (degrees east and north of
+    the spot). C: the block country.craters of plates.json; least_km: craters smaller across than this are left
+    out (a level draws those its texels can hold); keep(cx, cy, r_deg): which craters stand (not in the canyon,
+    not on ground the close view saw). The list comes from a seeded table, so it is the same at every level."""
+    rs = np.random.RandomState(C['seed'])
+    half = C['fieldDeg'] / 2
+    n = int(round(C['perSquareDeg'] * C['fieldDeg'] ** 2 * (1.0 / C['smallestKm']) ** C['power']))
+    cx = (rs.rand(n) * 2 - 1) * half
+    cy = (rs.rand(n) * 2 - 1) * half
+    # diameters by a power law: the number larger than D falls as D to the minus power
+    dk = C['smallestKm'] * (1 - rs.rand(n) * (1 - (C['smallestKm'] / C['largestKm']) ** C['power'])) ** (-1.0 / C['power'])
+    age = rs.rand(n)
+    out = np.zeros(x.shape, np.float32)
+    x0, y0 = float(x[0, 0]), float(y[0, 0])
+    dxd = float(x[0, 1] - x[0, 0])
+    dyd = float(y[1, 0] - y[0, 0])
+    N = x.shape[0]
+    kmdeg = np.radians(1.0) * KM
+    stand = keep(cx, cy, dk / 2 / kmdeg)
+    count = 0
+    for i in np.nonzero(stand & (dk >= least_km))[0]:
+        r_deg = dk[i] / 2 / kmdeg
+        reach = r_deg * C['reach']
+        j0, j1 = int(np.floor((cx[i] - reach - x0) / dxd)), int(np.ceil((cx[i] + reach - x0) / dxd)) + 1
+        a, b = (cy[i] + reach - y0) / dyd, (cy[i] - reach - y0) / dyd
+        i0, i1 = int(np.floor(min(a, b))), int(np.ceil(max(a, b))) + 1
+        j0, j1, i0, i1 = max(j0, 0), min(j1, N), max(i0, 0), min(i1, N)
+        if j0 >= j1 or i0 >= i1:
+            continue
+        r = np.hypot(x[i0:i1, j0:j1] - cx[i], y[i0:i1, j0:j1] - cy[i]) / r_deg
+        # old craters are shallow and their rims worn: depth and rim by the crater's age (0 fresh, 1 worn)
+        worn = 1 - C['worn'] * age[i]
+        depth = C['depth'] * dk[i] * worn
+        rim = C['rim'] * dk[i] * worn
+        bowl = (depth + rim) * r * r - depth
+        apron = rim * np.maximum(r, 1.0) ** -3.0 * np.clip((C['reach'] - r) / (C['reach'] - 1), 0, 1)
+        out[i0:i1, j0:j1] += np.where(r < 1, bowl, apron).astype(np.float32)
+        count += 1
+    return out, count
+
+
+def country_troughs(C, x, y):
+    """The made deep ground of the country at x, y (degrees east and north of the spot), km (negative), as three
+    fields: the carried on canyon behind the close view's camera, the one ahead of it (None without canyon.east) and
+    the main trough of the globe's map (None without `trough`). The lines of the canyon turn with the place
+    (geom.canyon_lines); the trough is given on the map."""
+    import geom
+    K = C['canyon']
+    behind_line, ahead_line = geom.canyon_lines(C)
+    behind = trough(x, y, behind_line, K['floorKm'], K['halfFloorDeg'], K['wallDeg'], K['fallFromDeg'], K['fallToDeg'], K.get('wander'), K.get('gullies'))
+    ahead = None
+    if ahead_line is not None:
+        E = K['east']
+        ahead = trough(x, y, ahead_line, E['floorKm'], K['halfFloorDeg'], K['wallDeg'], E['fallFromDeg'], E['fallToDeg'], K.get('wander'), K.get('gullies'))
+    main = None
+    if 'trough' in C:
+        M = C['trough']
+        main = trough(x, y, M['axis'], M['floorKm'], M['halfFloorDeg'], M['wallDeg'], 1e6, 2e6, M.get('wander'), M.get('gullies'))
+    return behind, ahead, main
+
+
+def country_deep(C, x, y):
+    """The deepest of the made deep grounds (ground.country_troughs), km."""
+    out = None
+    for f in country_troughs(C, x, y):
+        if f is not None:
+            out = f if out is None else np.minimum(out, f)
+    return out

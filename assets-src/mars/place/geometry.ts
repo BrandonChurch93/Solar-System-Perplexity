@@ -10,7 +10,8 @@ import type { Pose } from '../../../src/core/types'
 
 // Writes the cameras of the Mars dive and rise in the body frame (the frame of the wrap map and the patches),
 // the twin at both handovers, the layout of the place picture and the frame of the close view on the globe
-// (terrain: a point of the close view times scale, turned by rotation, plus origin is its place in the body frame). Read by the Python tools in this folder.
+// (terrain: a point of the close view times scale, turned by rotation, plus origin is its place in the body frame) and the
+// scene's Sun in the body frame. Read by the Python tools in this folder.
 //   npx tsx assets-src/mars/place/geometry.ts [out.json]
 
 const out = resolve(process.argv[2] ?? 'out/work/place/geometry.json')
@@ -50,6 +51,11 @@ for (const f of [hold.firstFrame, Math.floor((hold.firstFrame + hold.endFrame) /
   still.push({ frame: f, ...body(plan.hold(mid - hold.start), mid) })
 }
 result.hold = still
+// the scene's Sun in the body frame (the globe turns under it): at the middle of the hold, at both handovers and at the
+// middle of the surface view, by which the cast shadows of the country are baked (relight.py)
+const terrain = plan.seg.terrain
+const sunAt = (name: string, time: number): unknown => ({ name, time, body: plan.lightDir.clone().applyQuaternion(toBody(time)).toArray() })
+result.sun = [sunAt('hold', (hold.start + hold.end) / 2), sunAt('dive', handoverOf('mars', 'dive')!.time), sunAt('surface', (terrain.start + terrain.end) / 2), sunAt('rise', handoverOf('mars', 'rise')!.time)]
 mkdirSync(dirname(out), { recursive: true })
 writeFileSync(out, JSON.stringify(result, null, 1))
 console.log('wrote ' + out)

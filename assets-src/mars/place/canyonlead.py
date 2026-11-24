@@ -37,16 +37,14 @@ saw = cv2.resize(np.isfinite(np.load('%s/q%g-height.npy' % (a.country, W))).asty
 c = (np.arange(N) + 0.5) / N
 xd = np.degrees((2 * c - 1) * geom.half_tan(W))
 xg, yg = np.broadcast_to(xd[None, :], (N, N)), np.broadcast_to(-xd[:, None], (N, N))
-prior = ground.trough(xg, yg, K['axis'], K['floorKm'], K['halfFloorDeg'], K['wallDeg'], K['fallFromDeg'], K['fallToDeg'], K.get('wander'), K.get('gullies'))
+prior = ground.country_deep(C, xg, yg)
 weight = smooth((-prior - P['fromKm']) / (P['toKm'] - P['fromKm'])) * smooth((0.5 - saw) * 2)
 if a.nested > 0:
     inside = np.maximum(np.abs(xg), np.abs(yg)) / (np.degrees(geom.half_tan(a.nested)))
     weight = weight * smooth((inside - 0.9) / 0.1)
 deg = W / N
 hs = cv2.GaussianBlur(h, (0, 0), max(L['blurDeg'] / deg, 0.6))
-b = np.radians(C['sunBearingDeg'])
-s = np.array([np.sin(b), np.cos(b), P['sunUp']])
-s /= np.linalg.norm(s)
+s = geom.scene_sun(C['light']['sunMoment'])
 gy, gx = np.gradient(hs, np.radians(deg))
 nrm = np.dstack([-gx, gy, np.ones_like(gx)])
 nrm /= np.linalg.norm(nrm, axis=2, keepdims=True)
