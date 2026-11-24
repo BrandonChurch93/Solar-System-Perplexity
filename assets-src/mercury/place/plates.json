@@ -174,6 +174,21 @@
    2.2
   ],
   "matchFadeDeg": 3.0,
+  "apron": {
+   "rise": {
+    "tone": [
+     0.128,
+     0.165,
+     0.208
+    ],
+    "fadeDeg": [
+     2.0,
+     4.5
+    ],
+    "floorPct": 2,
+    "soft": 0.3
+   }
+  },
   "spill": {
    "fadeDeg": [
     0.3,
@@ -246,6 +261,22 @@
     ],
     "deg": 0.4,
     "softDeg": 0.2
+   },
+   "fan": {
+    "rise": {
+     "stepDeg": 15,
+     "softDeg": 40,
+     "shiftDeg": 1.5,
+     "blendPx": 6,
+     "least": [
+      0.2,
+      0.8
+     ],
+     "leastSum": 1e-30,
+     "reachDeg": 1.0,
+     "featherDeg": 0.08,
+     "edgePx": 6
+    }
    }
   }
  },

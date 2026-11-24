@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { frameUniform } from '../../core/frame'
 import type { Pose } from '../../core/types'
 import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
@@ -100,9 +101,9 @@ const PATCH_LEVELS = Array.from({ length: MAX_PATCHES }, (_, i) => `    if (uPat
       albedo = mix(albedo, tx, tw);
       own = mix(own, tx, step(uPlaceFrom, ${i}.25) * mix(tw, 1.0, first));
       placed = mix(placed, tw, first);
-      parent = gd * uPatchScale[${i}] * uPatchSize[${i}];
-      thin = gl * uPatchScale[${i}] * uPatchSize[${i}];
-      texels = mix(texels, parent, step(0.5, w));
+      parent = gd * uPatchScale[${i}] * uPatchSize[${i}] * uFrame;
+      thin = gl * uPatchScale[${i}] * uPatchSize[${i}] * uFrame;
+      texels = mix(texels, gd * uPatchScale[${i}] * uPatchSize[${i}], step(0.5, w));
       near = max(near, w * uPatchNear[${i}]);
     }`).join('\n')
 
@@ -129,8 +130,8 @@ const FINE = Array.from({ length: FINE_LEVELS }, (_, i) => `    {
       for (int k = 0; k < (wf > 0.0 && uSmear <= 0.0 ? 1 : 0); k++) fv = textureGrad(uFineMap, fu, gx * fb, gy * fb).r * uFine.y;
       for (int k = 0; k < (wf > 0.0 && uSmear > 0.0 ? 1 : 0); k++) fv = streak(uFineMap, fu, sx * fb, sy * fb, along, lat).r * uFine.y;
       fine *= mix(1.0, fv, wf);
-      parent = fd;
-      thin = fl;
+      parent = fd * uFrame;
+      thin = fl * uFrame;
       texels = mix(texels, fd, step(0.5, wf));
     }`).join('\n')
 
@@ -246,6 +247,7 @@ uniform vec3 uCenter;
 uniform vec3 uSunW;
 uniform float uVignette;
 uniform float uAspect;
+uniform float uFrame;
 uniform mat4 uPrev;
 uniform float uSmear;
 uniform vec3 uJitter;
@@ -411,8 +413,8 @@ void main() {
     gx *= uGrad;
     gy *= uGrad;
     float front = step(0.3, dn);
-    float parent = texels;
-    float thin = texels;
+    float parent = texels * uFrame;
+    float thin = texels * uFrame;
     float mend = 1.0 - smoothstep(0.55 * uMend.z, uMend.z, length(g - uMend.xy));
 ${PATCH_LEVELS}
 ${FINE}
@@ -548,7 +550,7 @@ export class Globe {
         uFeather: { value: p?.feather ?? 0.12 }, uPatchLean: { value: p?.lean ?? 0 }, uPatchFade: { value: new THREE.Vector2(p?.fade[0] ?? 1.1, p?.fade[1] ?? 1.7) }, uMend: { value: new THREE.Vector4(1000, 1000, 1, 0) },
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
         uMapWidth: { value: o.mapWidth }, uHeightStep: { value: (2 * Math.PI) / o.heightWidth },
-        uSpin: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uShow: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
+        uSpin: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uShow: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uFrame: frameUniform, uTint: { value: new THREE.Vector3(1, 1, 1) },
         uWrap: { value: l.wrap }, uCurve: { value: l.curve.map((k) => new THREE.Vector3(k[0], k[1], k[2])) }, uLimb: { value: l.limb.map((k) => new THREE.Vector3(k[0], k[1], k[2])) }, uLimbTo: { value: l.limbTo }, uNight: { value: new THREE.Vector3().fromArray(l.night) }, uNightDim: { value: 1 },
         uRelief: { value: new THREE.Vector4(l.relief, l.reliefNear, l.reliefDay, 0) }, uNightFlat: { value: new THREE.Vector4(l.nightFlat, l.nightDetail, l.nightVeil, l.nightVeilFrom) }, uNightSoft: { value: new THREE.Vector4(l.nightSoft[0], l.nightSoft[1], l.nightSoft[2], l.nightSoft[3]) }, uDusk: { value: new THREE.Vector4().fromArray(l.dusk.range) }, uDuskFrom: { value: l.dusk.from }, uReliefRange: { value: new THREE.Vector2().fromArray(l.reliefRange) }, uSil: { value: new THREE.Vector3(0, l.silhouette.floor, l.silhouette.taps) }, uSilWide: { value: new THREE.Vector2().fromArray(l.silhouette.wide) },
         uEdge: { value: l.edge },
