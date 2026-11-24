@@ -1,9 +1,52 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T05:28:21.795Z",
+ "pushed": "2026-11-24T05:49:17.982Z",
  "head": "e3df591ce360c5cb373f3fcfafe5d221ef260ae5",
- "note": "the skim bends into the rise (ruling d196): track across, pull back, the rise's paces set again; the proofs of e3df591 are rendering",
+ "note": "bend of the skim into the rise proven at draft: T sheet 3842 to 3856, rise pictures red twice (pattern at 3808 frame edge and 3859 sky through the thin inner ring; pops in the engine's sky dip and the travel), parity on my tree",
  "looks": [
+  {
+   "time": "2026-11-24T05:49:13.195Z",
+   "file": "20261124054913195-note-saturn-rise-changes.jpg",
+   "source": "../../../../tmp/v/r34/saturn-rise-changes.png",
+   "kind": "note",
+   "label": "smooth pictures rise on e3df591: the changes picture (pattern red at 3808 right frame edge, 3859 lower right)",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-24T05:49:11.653Z",
+   "file": "20261124054911653-note-cring_zoom.jpg",
+   "source": "../../../../tmp/v/r34/cring_zoom.png",
+   "kind": "note",
+   "label": "rise 3859 to 3867 every second frame, crop at the globe's lower right at 2 times: the sky seen through the thin inner ring in the globe's shadow slides against the ring (the judge's pattern red 0.55)"
+  },
+  {
+   "time": "2026-11-24T05:43:19.859Z",
+   "file": "20261124054319859-note-rise_c.jpg",
+   "source": "../../../../tmp/v/r34/rise_c.jpg",
+   "kind": "note",
+   "label": "the rise after the bend, draft, every frame 3854 to 3872"
+  },
+  {
+   "time": "2026-11-24T05:43:19.155Z",
+   "file": "20261124054319155-note-rise_b.jpg",
+   "source": "../../../../tmp/v/r34/rise_b.jpg",
+   "kind": "note",
+   "label": "the rise after the bend, draft, every frame 3830 to 3853"
+  },
+  {
+   "time": "2026-11-24T05:43:18.501Z",
+   "file": "20261124054318501-note-rise_a.jpg",
+   "source": "../../../../tmp/v/r34/rise_a.jpg",
+   "kind": "note",
+   "label": "the rise after the bend, draft, every frame 3806 to 3829: the pull back of the skim runs on into the lift"
+  },
+  {
+   "time": "2026-11-24T05:43:17.757Z",
+   "file": "20261124054317757-note-T_sheet.jpg",
+   "source": "../../../../tmp/v/r34/T_sheet.jpg",
+   "kind": "note",
+   "label": "the rise with the bend, draft, every frame 3842 to 3856 (the engine changes the view at 3852): no border of a set, no jump at 3852 (frame to frame mean difference 11.70, 11.75, 11.78, 11.79 across it)"
+  },
   {
    "time": "2026-11-24T05:28:21.002Z",
    "file": "20261124052821002-note-f03810.jpg",
@@ -17,48 +60,6 @@
    "source": "../../../../tmp/v/r33/b2_b.jpg",
    "kind": "note",
    "label": "the bend of the skim, draft, every sixth frame 3770 to 3810: the track turns into the pull back the rise takes over"
-  },
-  {
-   "time": "2026-11-24T05:28:19.719Z",
-   "file": "20261124052819719-note-b2_a.jpg",
-   "source": "../../../../tmp/v/r33/b2_a.jpg",
-   "kind": "note",
-   "label": "the bend of the skim, draft, every sixth frame 3722 to 3764: the push turns into a track across to the right"
-  },
-  {
-   "time": "2026-11-24T05:01:46.844Z",
-   "file": "20261124050146844-note-diff_7639.jpg",
-   "source": "../../../../tmp/v/r32/diff_7639.png",
-   "kind": "note",
-   "label": "capture frame 3819 + 1/2: the sheet as one triangle against the mesh, difference times 24 (mean 0.19 levels, the sand a shade off)"
-  },
-  {
-   "time": "2026-11-24T05:01:46.278Z",
-   "file": "20261124050146278-note-slit_cure_7640.jpg",
-   "source": "../../../../tmp/v/r32/slit_cure_7640.png",
-   "kind": "note",
-   "label": "capture frame 3820 at rate 2, draft: above the sheet as a mesh with the one frame slit of sky along a spoke, below the sheet as one triangle over the picture"
-  },
-  {
-   "time": "2026-11-24T04:32:37.961Z",
-   "file": "20261124043237961-note-job_s_3856.jpg",
-   "source": "../../../../tmp/v/r31/job_s_3856.png",
-   "kind": "note",
-   "label": "3856 draft with the change of view of the rise at 3852 and at 3860, and their difference times 16: the same picture (largest 5 levels in 1382 pixels)"
-  },
-  {
-   "time": "2026-11-24T04:18:54.729Z",
-   "file": "20261124041854729-note-shutter_3720.jpg",
-   "source": "../../../../tmp/v/r30/shutter_3720.png",
-   "kind": "note",
-   "label": "3720 final no grain: film shutter 180 deg (G17 median 0.685) beside shutter 1.8 deg in a scratch tree (median 1.131) beside the approved close"
-  },
-  {
-   "time": "2026-11-24T04:07:51.238Z",
-   "file": "20261124040751238-note-rim_pair_3895.jpg",
-   "source": "../../../../tmp/v/r29/rim_pair_3895.png",
-   "kind": "note",
-   "label": "3895 and 3896 at the final tier, the rim at the lower right, four times: stars through the soft outer edge"
   }
  ]
 }
