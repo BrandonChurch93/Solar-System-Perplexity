@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T17:22:11.630Z",
+ "pushed": "2026-11-24T17:37:52.047Z",
  "head": "befb5f47996cb9ff4b6ffb6df289ed9cc2b1fe80",
- "note": "shown law by log height: seen change even over 962 to 975, but the measure reads 0.63 at 967: two pictures of the far ground under the limb, cause being worked in the files",
+ "note": "MAIL 713 looked: the orange mark under the far Sun's loop at 615 is the sky card's remnant (same as MAIL 692), round 2; rise limb band: cause in the mix found (shell share is shown squared under a stack of set layers), being rebuilt",
  "looks": [
+  {
+   "time": "2026-11-24T17:37:51.447Z",
+   "file": "20261124173751447-note-s976-far.jpg",
+   "source": "../../../../tmp/m/s976-far.jpg",
+   "kind": "note",
+   "label": "s976: 976 set alone against shell; 980 and 990 from above with the border off: the set's far ground cannot be the globe's ground",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T17:37:50.780Z",
+   "file": "20261124173750780-note-m713b.jpg",
+   "source": "../../../../tmp/m/m713b.jpg",
+   "kind": "note",
+   "label": "MAIL 713: 615 at 1594,810 (top) and 1696,535 (bottom): frame with far Sun, frame with far Sun off (scratch), sky card at gain 4. The orange mark under the loop is the card's remnant (MAIL 692)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T17:22:10.954Z",
    "file": "20261124172210954-note-e14-760-780.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/mercury/place/e9-996-1018.jpg",
    "kind": "note",
    "label": "the same frames with the place's plates off: the map alone, one ground, at most 0.40 in the measure",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T16:45:46.955Z",
-   "file": "20261124164546955-note-e8-996-1018.jpg",
-   "source": "out/work/mercury/place/e8-996-1018.jpg",
-   "kind": "note",
-   "label": "RED, rise 996 to 1018 every second frame: the place's ground gives way to the globe's map (0.93 at 1009); scratch draft",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T16:45:45.587Z",
-   "file": "20261124164545587-note-e8-swap.jpg",
-   "source": "out/work/mercury/place/e8-swap.jpg",
-   "kind": "note",
-   "label": "RED, rise 968, 969, 969 + 1/2, 970, 970 + 1/2, 971 under the limb: the set's bright far ground and its glow give way to the shell's grey ground within two frames (the cause of the red at 962 to 969); scratch draft without the far Sun's disc",
    "stop": "mercury"
   }
  ]
