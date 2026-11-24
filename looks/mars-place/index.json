@@ -1,9 +1,25 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T08:42:12.220Z",
+ "pushed": "2026-11-24T08:50:44.425Z",
  "head": "85cadf1c78e27d682ad14c323c54398c8343f551",
- "note": "plan F in the set: the close view's meshes drawn in the globe's scene through the twin, 2476 beside 2477",
+ "note": "plan F: the close view's own ground on the globe side by height; test bands R and S show where the fan fills the frame",
  "looks": [
+  {
+   "time": "2026-11-24T08:50:43.836Z",
+   "file": "20261124085043836-note-S1.jpg",
+   "source": "out/work/place/see/S1.jpg",
+   "kind": "note",
+   "label": "plan F test, rise 2682 to 2691 with the close ground all there: it fills the frame to about 2685",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T08:50:43.204Z",
+   "file": "20261124085043204-note-R1.jpg",
+   "source": "out/work/place/see/R1.jpg",
+   "kind": "note",
+   "label": "plan F test: close ground all there from 2440 to 2476 on the globe side (a test band, not committed): the fan and its borders from above",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T08:41:23.998Z",
    "file": "20261124084123998-note-Q1.jpg",
@@ -56,22 +72,6 @@
    "source": "out/work/place/see/H-rise-1.jpg",
    "kind": "note",
    "label": "second commit in proof: every frame 10 before T to 4 after, draft, H-rise-1",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T08:17:53.427Z",
-   "file": "20261124081753427-note-H-dive-2.jpg",
-   "source": "out/work/place/see/H-dive-2.jpg",
-   "kind": "note",
-   "label": "second commit in proof: every frame 10 before T to 4 after, draft, H-dive-2",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T08:17:52.740Z",
-   "file": "20261124081752740-note-H-dive-1.jpg",
-   "source": "out/work/place/see/H-dive-1.jpg",
-   "kind": "note",
-   "label": "second commit in proof: every frame 10 before T to 4 after, draft, H-dive-1",
    "stop": "mars"
   }
  ]
