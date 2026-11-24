@@ -412,6 +412,7 @@ uniform vec4 uCvLineIn;
 uniform vec4 uCvLineFlow;
 uniform vec4 uCvHole;
 uniform vec2 uCvLineClose;
+uniform vec2 uCvFoot;
 uniform vec4 uCvMesh;
 uniform float uCvKeep;
 in vec2 vG;
@@ -541,7 +542,12 @@ void main() {
   // it takes and one sample a pixel draws no grain of it: uCvFlat.z pixels)
   float laneW = mix(uCvAbove.z, uCvHeat.x, lowView);
   float laneE = max(laneW, uCvFlat.z * footC);
-  float body = (1.0 - laneW / laneE * exp(-e / laneE)) * mix(uCvSteep.x, 1.0, smoothstep(0.0, lowFoot, cap));
+  // (the dark foot and the pit are a small part of a cell: where a cell is only a few pixels wide they are under a
+  // pixel, and one sample a pixel draws a grain of them that differs from one format to the next. They give way
+  // between uCvFoot.x and uCvFoot.y cells a pixel, by the root of what the pixel covers both ways, so the near and
+  // the middle ground keep them whole)
+  float footed = 1.0 - smoothstep(uCvFoot.x * L, uCvFoot.y * L, footC);
+  float body = (1.0 - laneW / laneE * exp(-e / laneE)) * mix(mix(1.0, uCvSteep.x, footed), 1.0, smoothstep(0.0, lowFoot, cap));
   float young = 1.0 - smoothstep(0.0, 0.45, own.x);
   float spreadNow = uCvTone.z * mix(uCvAboveMore.x, 1.0, lowView);
   float top = uCvTone.y * mix(uCvAboveMore.z, 1.0, lowView) * (1.0 - spreadNow + 2.0 * spreadNow * own.y) * mix(mix(uCvAbove.w, 1.0, cap), 1.0, lowView) * (1.0 + uCvHeat.z * young - uCvHeat.w * old);
@@ -595,8 +601,9 @@ void main() {
     float cut = smoothstep(uCvLineMore.z, uCvLineMore.w, vnoise(vec3(leaves * uCvLineFlow.z + 3.0, way * uCvLineFlow.x - t * uCvLineFlow.y + own.y * 7.0)));
     lum += uCvLineIn.w * line * cut * smoothstep(uCvLineIn.x, uCvLineIn.y, way) * mix(uCvLineIn.z, 1.0, 1.0 - laneW / laneE * exp(-e / laneE)) * lowView * fine * (1.0 - spot.x);
   }
-  // the pits: where lanes meet the ground is black in a round place, nowhere else
-  lum *= 1.0 - uCvHole.x * (1.0 - smoothstep(uCvHole.y, uCvHole.z, length(vec2(e / L, near.y)))) * (1.0 - spot.x);
+  // the pits: where lanes meet the ground is black in a round place, nowhere else (in the low view and where a pixel
+  // holds the cell; from above and far off the lanes alone are dark)
+  lum *= 1.0 - uCvHole.x * (1.0 - smoothstep(uCvHole.y, uCvHole.z, length(vec2(e / L, near.y)))) * (1.0 - spot.x) * lowView * footed;
   lum = mix(uCvFar.z * (1.0 + uCvFarMore.x * mottle), lum, mix(uCvFar.w, 1.0, fine));
 
   // the sunspot: fibres with bodies, grains that run toward the umbra along them, a bright head where each ends
@@ -624,7 +631,15 @@ void main() {
   // seen along itself: the line is where the skin is seen edge on, by the power uCvRim.z, beyond uCvRim.y of the
   // way to the lane; uCvHole.w is the span of the turn away from the eye over which it comes in. With no such
   // span it is a ring at uCvRim.y of the way, uCvRim.z wide, all round)
-  float rim = (uCvHole.w > 0.0 ? pow(1.0 - mu, uCvRim.z) * smoothstep(uCvRim.y - 0.2, uCvRim.y, way) : exp(-pow((way - uCvRim.y) / uCvRim.z, 2.0))) * smoothstep(uCvRim.w, uCvRim.w + 0.3, vnoise(vec3(g / L * 5.0, t * 0.2 + own.y * 9.0))) * (1.0 - spot.x) * (uCvHole.w > 0.0 ? smoothstep(0.0, uCvHole.w, muFlat - mu) : 1.0);
+  // (the line is the mean of that power over what the pixel covers of the turn, not its value at the pixel's one
+  // sample: where the skin turns edge on within less than a pixel a sample would hit the line or miss it, a grain
+  // that differs from one format to the next and crawls as the eye moves. The mean is the same light in any format)
+  float turn = 1.0 - mu;
+  float turnW = 0.5 * max(fwidth(mu), 1e-4);
+  float turnHi = min(turn + turnW, 1.0);
+  float turnLo = max(turn - turnW, 0.0);
+  float edgeOn = (pow(turnHi, uCvRim.z + 1.0) - pow(turnLo, uCvRim.z + 1.0)) / ((uCvRim.z + 1.0) * max(turnHi - turnLo, 1e-4));
+  float rim = (uCvHole.w > 0.0 ? edgeOn * smoothstep(uCvRim.y - 0.2, uCvRim.y, way) : exp(-pow((way - uCvRim.y) / uCvRim.z, 2.0))) * smoothstep(uCvRim.w, uCvRim.w + 0.3, vnoise(vec3(g / L * 5.0, t * 0.2 + own.y * 9.0))) * (1.0 - spot.x) * (uCvHole.w > 0.0 ? smoothstep(0.0, uCvHole.w, muFlat - mu) : 1.0);
   // the gloss of the bulbs: a sheen where the surface lies between the eye and the far light
   vec3 lightDir = normalize(ST_RIGHT * uCvSheen.x + ST_FWD * uCvSheen.y - ST_DOWN * uCvSheen.z);
   float sheen = pow(max(dot(normal, normalize(toEye + lightDir)), 0.0), uCvGloss.x);
@@ -793,6 +808,7 @@ export class Surface {
         uCvLineFlow: { value: new THREE.Vector4(l.line.flow[0]!, l.line.flow[1]!, l.line.bunch[0]!, l.line.glow[1]!) },
         uCvHole: { value: new THREE.Vector4(l.pit.amount, l.pit.from, l.pit.to, l.rim.far) },
         uCvLineClose: { value: new THREE.Vector2(l.line.close[0]!, l.line.close[1]!) },
+        uCvFoot: { value: new THREE.Vector2(l.far.foot[0]!, l.far.foot[1]!) },
       },
     })
     // Rings round the point under the stage's camera. Their spacing follows what a pixel covers on the ground from the
