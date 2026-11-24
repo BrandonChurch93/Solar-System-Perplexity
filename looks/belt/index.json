@@ -1,9 +1,23 @@
 {
  "folder": "belt",
- "pushed": "2026-11-24T15:21:14.553Z",
+ "pushed": "2026-11-24T15:33:05.698Z",
  "head": "c0a7f5ef8ffc52f7117af5080565727274309e15",
- "note": "far Sun tries at 615: crisper limb, rope loop, leaning streamer in work",
+ "note": "far Sun tries at 615: streamer leans as the approved one, loop as twisted ropes; face mottle hue in work",
  "looks": [
+  {
+   "time": "2026-11-24T15:33:04.858Z",
+   "file": "20261124153304858-note-v_tuft_n33.jpg",
+   "source": "../../../../tmp/farsun/v_tuft_n33.jpg",
+   "kind": "note",
+   "label": "far Sun 615 lower limb 3x with position angles, approved left, try n33 right"
+  },
+  {
+   "time": "2026-11-24T15:33:03.939Z",
+   "file": "20261124153303939-note-v_box_n33.jpg",
+   "source": "../../../../tmp/farsun/v_box_n33.jpg",
+   "kind": "note",
+   "label": "far Sun 615 draft try n33, approved left, mine right, blurred mean 4.58, not named: leaning streamer at the lower limb, rope loop, crisper limb"
+  },
   {
    "time": "2026-11-24T15:21:13.617Z",
    "file": "20261124152113617-note-v_loop_n24.jpg",
@@ -46,22 +60,6 @@
    "source": "../../../../tmp/farsun/out/farsun-615-box-12-final.jpg",
    "kind": "note",
    "label": "far Sun frame 615 final tier, box native: approved left, c0a7f5ef right, blur 12 measure 4.42",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T14:39:56.736Z",
-   "file": "20261124143956736-note-farsun-615-limb-12-draft.jpg",
-   "source": "../../../../tmp/farsun/out/farsun-615-limb-12-draft.jpg",
-   "kind": "note",
-   "label": "far Sun frame 615 draft, loop native: approved, d263ad28, c0a7f5ef",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T14:39:55.833Z",
-   "file": "20261124143955833-note-farsun-615-strands-12-draft.jpg",
-   "source": "../../../../tmp/farsun/out/farsun-615-strands-12-draft.jpg",
-   "kind": "note",
-   "label": "far Sun frame 615 draft, strands native: approved, d263ad28, c0a7f5ef",
    "stop": "sun"
   }
  ]
