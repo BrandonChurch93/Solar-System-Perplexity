@@ -7,6 +7,7 @@ import { APRON_GLSL } from './apron'
 import fieldData from './field.json'
 import { GRADE_GLSL } from './grade'
 import { LIFE_GLSL, LIFE_NAMES } from './life'
+import { formatUniform } from './format'
 import { STAGE_GLSL } from './stage'
 import terrain from './terrain.json'
 
@@ -79,7 +80,7 @@ const PATCH_LEVELS = Array.from({ length: MAX_PATCHES }, (_, i) => `    if (uPat
       vec2 q = g * uPatchScale[${i}];
       float w = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent));
       if (w > 0.0) albedo = mix(albedo, textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb, w);
-      parent = gd * uPatchScale[${i}] * uPatchSize[${i}];
+      parent = gd * uFormat * uPatchScale[${i}] * uPatchSize[${i}];
       texels = mix(texels, parent, step(0.5, w));
     }`).join('\n')
 
@@ -97,6 +98,7 @@ uniform vec3 uSpotE;
 uniform vec3 uSpotU;
 uniform float uMapWidth;
 uniform float uGrad;
+uniform float uFormat;
 uniform float uSpin;
 uniform float uGain;
 uniform float uWeight;
@@ -233,7 +235,8 @@ vec3 surface(vec3 d, vec3 d0, out float texels) {
     gx *= uGrad;
     gy *= uGrad;
     float front = step(0.3, dn);
-    float parent = texels;
+    // (a level comes in by the texels of its parent a 1080th of the frame height, not a pixel of the format)
+    float parent = texels * uFormat;
 ${PATCH_LEVELS}
   }
   return albedo;
@@ -303,7 +306,7 @@ void main() {
   vec2 dxB = dFdx(uvB) * uGrad;
   vec2 dyB = dFdy(uvB) * uGrad;
   float texF = diagTexels(uvF * uFieldSize.y);
-  float finer = uFieldFine.x * (1.0 - smoothstep(uFieldFine.y, uFieldFine.z, texF));
+  float finer = uFieldFine.x * (1.0 - smoothstep(uFieldFine.y, uFieldFine.z, texF * uFormat));
   float texP = diagTexels(uvP * uSize);
   float texB = diagTexels(uvB * uApronSize);
   vec3 ddx = dFdx(d);
@@ -495,7 +498,7 @@ export class SunGlobe {
         uPlaceFade: { value: new THREE.Vector2(o.place?.fade[0] ?? 1.1, o.place?.fade[1] ?? 1.7) },
         uPlaceOn: { value: 0 }, uTidy: { value: 0 }, uBare: { value: 0 }, uSpotKeep: { value: new THREE.Vector3(o.place?.spotKeep[0] ?? 1, o.place?.spotKeep[1] ?? 2, 0) }, uLowLod: { value: o.place?.lowLod ?? 3 },
         ...shared,
-        uDiag: diagUniform, uGrad: gradUniform,
+        uDiag: diagUniform, uGrad: gradUniform, uFormat: formatUniform,
       },
     })
     const seg = o.segments ?? 320
