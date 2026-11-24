@@ -848,14 +848,22 @@ export class FilmDirector implements Director {
         near = Math.min(Math.max(0.02 * d, p.handsOver ? Math.min(0.0004, 0.2 * d) : 0.0004), 1)
         const low = p.p.light.skyLow
         if (low && segment.kind !== 'hold') light = { ...light, sky: light.sky * (skyShare === undefined ? mix(low[2], 1, smooth(ramp(low[0], low[1], d))) : mix(mix(low[2], 1, smooth(ramp(low[0], low[1], d))), 1, skyShare)) }
-        const lift = segment.kind === 'rise' && index > 0 ? riseLift(p.id) : 0
-        if (lift > 0) {
+      }
+      // The stars of the open flight over the stop. lifted is the level of the sky the segment ends in: the open flight's after a rise
+      // (travel.sky.riseLift of the stop), the stop's own in a hold, a dive and a surface view, where nothing lifts. Under it the lift is
+      // one function of the height of the lens (StopPlan.skyLift), the same in both views, and the exposure of the sky goes with it to
+      // the open flight's. A stop that still gives a time (skyLiftAt) keeps the course by the clock in its globe view, as it was.
+      const lifted = segment.kind === 'rise' && index > 0 ? riseLift(p.id) : 0
+      if (lifted > 0) {
+        const liftAt = p.skyLiftAt(segment, time)
+        if (liftAt === null) {
+          skyStars = lifted * p.skyLift(this.heightOver(s, pose))
+          light = { ...light, sky: mix(light.sky, OPEN.openExposure, skyStars) }
+        } else if (view === 'orbit') {
+          if (!Number.isFinite(liftAt)) throw new Error(p.id + ': skyLiftAt must give a time')
           const w = coverWindow(segment)
-          const from = p.p.light.skyLiftFrom
-          const liftAt = p.skyLiftAt(segment, time)
-          if (liftAt !== null && !Number.isFinite(liftAt)) throw new Error(p.id + ': skyLiftAt must give a time')
-          const x = smooth(ramp(w ? (from === undefined ? w.lastFrame + 1 : mix(w.centerFrame, w.lastFrame + 1, from)) / config.fps : hand ? hand.time : segment.start, segment.end, liftAt ?? time))
-          skyStars = lift * (1 - (1 - x) * (1 - x))
+          const x = smooth(ramp(w ? (w.lastFrame + 1) / config.fps : hand ? hand.time : segment.start, segment.end, liftAt))
+          skyStars = lifted * (1 - (1 - x) * (1 - x))
           light = { ...light, sky: mix(light.sky, OPEN.openExposure, skyStars) }
         }
       }
