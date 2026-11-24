@@ -1,9 +1,41 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T00:14:41.747Z",
- "head": "31c1000cfe2b04b770c89f71cf8008a163098243",
- "note": "step 2 g3: dive 4690 to 4769 with the function scene on the globe by height and a grade by height, unfinished",
+ "pushed": "2026-11-24T00:37:10.703Z",
+ "head": "9087f00859214c58f7f9a2f747bfa89da4a4a4b4",
+ "note": "9087f008 step 2 committed: scene on the globe by height; g5 g7 sky.own true, g8 shows the star step at T with sky.own false (test line asked of engineer)",
  "looks": [
+  {
+   "time": "2026-11-24T00:37:10.106Z",
+   "file": "20261124003710106-note-v-g8.jpg",
+   "source": "../../../../tmp/v-g8.jpg",
+   "kind": "note",
+   "label": "neptune at T with the engine's sky share (sky.own false, as committed 9087f008): stars step 4757 to 4758 and 4956 to 4957",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T00:37:09.579Z",
+   "file": "20261124003709579-note-d-N1.jpg",
+   "source": "../../../../tmp/d-N1.jpg",
+   "kind": "note",
+   "label": "neptune 4860 beside approved, shadow 48 taps (preview draft)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T00:37:08.895Z",
+   "file": "20261124003708895-note-v-g7.jpg",
+   "source": "../../../../tmp/v-g7.jpg",
+   "kind": "note",
+   "label": "neptune hold 4605 4679 4680, 4707, rise 4950 to 5024, sky.own true (preview draft)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T00:37:08.316Z",
+   "file": "20261124003708316-note-v-g5.jpg",
+   "source": "../../../../tmp/v-g5.jpg",
+   "kind": "note",
+   "label": "neptune dive 4716 to 4769, scene on the globe by height, sky.own true (preview draft)",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T00:14:41.012Z",
    "file": "20261124001441012-note-v-g3.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/m-r0.jpg",
    "kind": "note",
    "label": "deep.ts frames 4859 to 4862 preview draft, crop at twice the size, storm and far streamer (state r, 23:34 VM)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T23:48:10.415Z",
-   "file": "20261123234810415-note-c-M7.jpg",
-   "source": "../../../../tmp/c-M7.jpg",
-   "kind": "note",
-   "label": "FIRST LOOK deep.ts: crop of 4860 at master draft, full size (left) beside approved (right)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T23:48:09.847Z",
-   "file": "20261123234809847-note-s-M7.jpg",
-   "source": "../../../../tmp/s-M7.jpg",
-   "kind": "note",
-   "label": "FIRST LOOK deep.ts (commit 5bdf69cd, deep.json on true): frame 4860 at master draft (left) beside the approved close image (right), 23:45 VM; own G17 reading (nograin) median 0.929; 95 s a master draft frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T23:39:54.393Z",
-   "file": "20261123233954393-note-c-M6.jpg",
-   "source": "../../../../tmp/c-M6.jpg",
-   "kind": "note",
-   "label": "deep.ts, crop of 4860 at master draft, full size (left) beside approved (right): cirrus still too even, no grey sides",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T23:39:53.792Z",
-   "file": "20261123233953792-note-s-M6.jpg",
-   "source": "../../../../tmp/s-M6.jpg",
-   "kind": "note",
-   "label": "deep.ts from functions, frame 4860 at master draft (left) beside the approved close image (right), 23:39 VM; own G17 reading median 0.913; 85 s a master draft frame; unfinished",
    "stop": "neptune"
   }
  ]
