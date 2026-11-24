@@ -1,9 +1,17 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T21:07:50.254Z",
+ "pushed": "2026-11-24T21:23:45.494Z",
  "head": "a90cde4e750ca64209656ffde452326269ff2a4e",
- "note": "Two trials that take the material of frame 60 apart (draft, uncommitted, on a23218ee). yt1, flowers off: one sheet of touching bulbs with soft lanes and mottled olive tops, no seams, but no bright fans and too dark. yt2, flowers alone: the fans fill whole cells and are cut by narrow dark seams where two pits are equally near; that is what read as plates and leaves. Next: fans short and local to their pit, fading wide instead of meeting in a seam. sun-near frame 60 of yt1: share by band 0.257 0.253 0.181 0.118 0.071 0.042 0.025 0.016 0.003 | dark 0.289 body 0.624 pale 0.041 white 0.004 | brightest 15 percent half width 8.7 px, 1754 shapes, fine detail 0.0381, mean 0.273; distance 0.113. Running now: proof of the cure of MAIL 734 item 1 on the merge with main 73809f4b (a90cde4e, local): tests, gate, path, warm 190 to 247 at rate 2.",
+ "note": "21:23 UTC. Proof of the cure for MAIL 734 runs on a90cde4e (a23218ee merged with main 73809f4b; not pushed yet): tests 600 of 600, tsc 0, build, gate G11 G15 pass, path green. Warm 190 to 247 at rate 2 is at 211 + 1/2: 44 pictures, none made a program, texture or buffer (before the cure 193 + 1/2 on made vertex arrays). Frame 60 of this head, sun-near: share by band 0.165 0.215 0.193 0.151 0.104 0.063 0.035 0.027 0.020 | dark 0.190 body 0.663 pale 0.062 white 0.022 | half width 4.6 px, 4439 shapes, fine detail 0.0595, mean 0.334, distance 0.062. The material work (trial yr1, looks 3dc9b388 and 6a40bcea) waits out of the tree until the proof ends.",
  "looks": [
+  {
+   "time": "2026-11-24T21:23:44.274Z",
+   "file": "20261124212344274-note-pair60-head.jpg",
+   "source": "../../../../tmp/v/pair60-head.jpg",
+   "kind": "note",
+   "label": "frame 60 draft of the head being proven (a90cde4e: the cure of the rise's buffers on main 73809f4b, material as 404a7f06), one to one: approved close image left, ours right",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T21:07:49.514Z",
    "file": "20261124210749514-note-z3yt2.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/l5/pair60.jpg",
    "kind": "note",
    "label": "frame 60 draft, trial yr1 (uncommitted) on a23218ee, one to one: approved close image left, ours right",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T20:54:29.430Z",
-   "file": "20261124205429430-note-pair0.jpg",
-   "source": "../../../../tmp/l5/pair0.jpg",
-   "kind": "note",
-   "label": "frame 0 draft, trial yr1 (uncommitted) on a23218ee, one to one: approved close image left, ours right",
    "stop": "sun"
   }
  ]
