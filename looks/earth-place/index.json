@@ -1,9 +1,17 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T06:14:15.767Z",
- "head": "a6c484d64dc4c3176dc10fd6ebf48b089e07e209",
- "note": "a6c484d6: dive 1830 to 1919 every frame and both sheets about T; the place is a darker shield on the map at 1878 to 1886; at T only the limb steps",
+ "pushed": "2026-11-24T06:39:27.022Z",
+ "head": "6c75f48fb312931c651aff99d28ed4e6cea6fb24",
+ "note": "06:42 full smooth runs on 6c75f48f (merged main f6ce51a5); path curves of the head beside a scratch trial that has turn green",
  "looks": [
+  {
+   "time": "2026-11-24T06:39:26.265Z",
+   "file": "20261124063926265-note-path-curves.jpg",
+   "source": "../../../../tmp/gl/s5/path-curves.png",
+   "kind": "note",
+   "label": "Earth path judge, three curves at whole frames: top the head 6c75f48f (turn and speed red), bottom a scratch trial of one share for the attitude (not in the tree, not rendered)",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T06:14:15.069Z",
    "file": "20261124061415069-note-T-rise-top.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/gl/s5/d-1896.jpg",
    "kind": "note",
    "label": "dive from 1896, draft, a6c484d6, every frame",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T06:14:10.533Z",
-   "file": "20261124061410533-note-d-1890.jpg",
-   "source": "../../../../tmp/gl/s5/d-1890.jpg",
-   "kind": "note",
-   "label": "dive from 1890, draft, a6c484d6, every frame",
    "stop": "earth"
   }
  ]
