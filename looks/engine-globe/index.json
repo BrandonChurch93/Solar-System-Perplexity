@@ -1,9 +1,17 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-24T17:26:58.322Z",
+ "pushed": "2026-11-24T17:54:42.830Z",
  "head": "eb2975a63357c7d6b5c253f77fb205f28f158b13",
- "note": "Task 697: Mars dive 2466 stays red with the patch (1.294 to 1.290). The measure is right there: the globe ground is exchanged for the close set over the whole frame in 8 film frames. Bad picture, shown as a finding.",
+ "note": "MAIL 710: first reading of real frames with the cure that keeps the band (finer picture of the farther frame, way set right by a smoothed flow). Jupiter rise 3261 + 1/2 goes from 0.69 to 0.27. Work in progress, not yet named.",
  "looks": [
+  {
+   "time": "2026-11-24T17:54:40.489Z",
+   "file": "20261124175440489-note-six-ju3261.jpg",
+   "source": "../m710/six-ju3261.png",
+   "kind": "note",
+   "label": "MAIL 710, the cure that keeps the band, Jupiter rise 3261 + 1/2 on proof-ju3: as on main 0.69; later frame carried from its finer picture and the way set right by one more flow 0.27; a small red spot stays at the bottom edge",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-24T17:26:57.161Z",
    "file": "20261124172657161-note-panel-ma2466-after.jpg",
@@ -58,14 +66,6 @@
    "source": "../m697/panel-ju3261-after.png",
    "kind": "note",
    "label": "Jupiter rise 3261 + 1/2, change panel after the patch (root of the area, nearest half step): 0.11",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T17:06:34.837Z",
-   "file": "20261124170634837-note-panel-ju3261-before.jpg",
-   "source": "../m697/panel-ju3261-before.png",
-   "kind": "note",
-   "label": "Jupiter rise 3261 + 1/2, change panel before the patch: 0.69",
    "stop": "jupiter"
   }
  ]
