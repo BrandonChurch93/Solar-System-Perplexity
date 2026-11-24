@@ -1,9 +1,41 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T17:45:39.558Z",
+ "pushed": "2026-11-24T18:32:13.883Z",
  "head": "024eaa6dd045f918b610a6c0276af3515b5c82b9",
- "note": "series B test, not committed: close ground laid on the globe plates in two passes plus a skirt outside the footprint; one place 2468 to 2474 and 2684 to 2690, far plateau too bright from above",
+ "note": "test state: toned lay of the close ground on the plates, no commit; compared from above against the committed look",
  "looks": [
+  {
+   "time": "2026-11-24T18:32:12.789Z",
+   "file": "20261124183212789-note-b3-plates.jpg",
+   "source": "out/work/place/see/b3-plates.jpg",
+   "kind": "note",
+   "label": "land plates 0p3 to 8p5: lay 2 above, toned lay without mirror skirt below (test, not committed)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T18:32:11.714Z",
+   "file": "20261124183211714-note-ref-b2b.jpg",
+   "source": "out/work/place/see/ref-b2b.jpg",
+   "kind": "note",
+   "label": "from above at 2456, 2468, 2696: committed state above, lay 2 test below (lay 2 worse from above)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T18:00:08.387Z",
+   "file": "20261124180008387-note-b2-R3.jpg",
+   "source": "out/work/place/see/b2-R3.jpg",
+   "kind": "note",
+   "label": "close ground alone at 2468 2471 2687 2690 with L0's apron and L0's picture hidden behind L1: no pale block (test plates)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T18:00:07.832Z",
+   "file": "20261124180007832-note-b2-V.jpg",
+   "source": "out/work/place/see/b2-V.jpg",
+   "kind": "note",
+   "label": "every picture of the close ground tinted at 2471 and 2690: the pale block at the lower left is L0's own picture (pale red) behind L1",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T17:45:34.806Z",
    "file": "20261124174534806-note-b2-film.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/place/see/b0-R.jpg",
    "kind": "note",
    "label": "close ground alone with the L0 apron hidden behind L1",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T17:45:30.865Z",
-   "file": "20261124174530865-note-b0-H.jpg",
-   "source": "out/work/place/see/b0-H.jpg",
-   "kind": "note",
-   "label": "globe ground alone at the committed plates with new heights and veil, series B base",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T16:52:30.089Z",
-   "file": "20261124165230089-note-wedge-hide.jpg",
-   "source": "out/work/place/see/wedge-hide.jpg",
-   "kind": "note",
-   "label": "L0 apron hidden behind L1 (margin 160), close ground alone",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T16:52:29.468Z",
-   "file": "20261124165229468-note-veil1.jpg",
-   "source": "out/work/place/see/veil1.jpg",
-   "kind": "note",
-   "label": "grazing veil sweep at 2470 (work, plates aq2)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T16:52:28.924Z",
-   "file": "20261124165228924-note-cls-rise.jpg",
-   "source": "out/work/place/see/cls-rise.jpg",
-   "kind": "note",
-   "label": "survey class pictures rise 2675 to 2690 and dive 2476: black beyond the aprons is the globe's own ground",
    "stop": "mars"
   }
  ]
