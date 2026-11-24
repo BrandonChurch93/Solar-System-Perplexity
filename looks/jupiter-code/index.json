@@ -1,9 +1,57 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T08:43:05.016Z",
- "head": "258a0a4289d35c1060b75633458503e0876fac43",
- "note": "08:43 UTC: finals of 3296 and 2997 on the named bytes, the plates' borders drawn on 3270 (the warm island is the near plate's repaint inside the nest), the far ground under the limb at 3250 to 3258 (cause of the pattern red). A trial with three cures (even log mix of the air, limb table by height, new rise law) is rendering.",
+ "pushed": "2026-11-24T09:16:18.937Z",
+ "head": "ba2d0b13e64d53d19587c3331b39e8a83dba6f5c",
+ "note": "Second candidate ba2d0b1 on the branch (rise law without the pop, limb without the level step, look from above mixed in the logarithm); its proofs are running. Pattern of the rise not cured, body level of the rise still falls over 6 a frame 3285 to 3292.",
  "looks": [
+  {
+   "time": "2026-11-24T09:16:18.262Z",
+   "file": "20261124091618262-note-e1-a.jpg",
+   "source": "../work/map/e1-a.jpg",
+   "kind": "note",
+   "label": "Experiment, not kept: the exchange of the approved view for the plates stretched over more height (right column) shows the view's canvas as a dark wedge with a straight edge at 3256 and 3260; a slower exchange is no cure",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T09:16:17.320Z",
+   "file": "20261124091617320-note-t1-pat-b.jpg",
+   "source": "../work/map/t1-pat-b.jpg",
+   "kind": "note",
+   "label": "NOT cured: pattern of the rise on trial T1, 3250 to 3258 0.70 and 3252 to 3260 0.72 (limit 0.45); white in the third column is where the pattern changes in place: the limb strip and the frame's corners, where the approved view gives way to the plates",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T09:16:16.373Z",
+   "file": "20261124091616373-note-t2-limb-b.jpg",
+   "source": "../work/map/t2-limb-b.jpg",
+   "kind": "note",
+   "label": "Second candidate, limb at full size 3286 to 3292: the hold's rim comes back by 2.3 radii",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T09:16:15.480Z",
+   "file": "20261124091615480-note-t2-limb-a.jpg",
+   "source": "../work/map/t2-limb-a.jpg",
+   "kind": "note",
+   "label": "Second candidate, limb at full size 3282 to 3285: warm darkened limb, thin pale line of the shells outside it",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T09:16:14.699Z",
+   "file": "20261124091614699-note-t2-a.jpg",
+   "source": "../work/map/t2-a.jpg",
+   "kind": "note",
+   "label": "Rise 3280 to 3292 at draft on the second candidate ba2d0b1: limb darkened where the hold's limb table is off, level step 1.20 at 3281 + 1/2 (was 1.95)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T09:16:13.423Z",
+   "file": "20261124091613423-note-t1-limb.jpg",
+   "source": "../work/map/t1-limb.jpg",
+   "kind": "note",
+   "label": "Rise 3278 to 3284, named bytes beside trial T1 (limb table off near the globe): the white band at the limb is gone",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-24T08:39:00.599Z",
    "file": "20261124083900599-frame-f02787.jpg",
@@ -25,72 +73,6 @@
    "kind": "note",
    "label": "rise 3248 to 3262, right edge under the limb at full size (lower rows lifted times 6): the far ground goes from dark blue to cream within 3250 to 3258, the pattern red",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T08:37:49.437Z",
-   "file": "20261124083749437-note-o-3270.jpg",
-   "source": "../work/map/o-3270.jpg",
-   "kind": "note",
-   "label": "rise 3270 with the borders of the plates drawn in: the island is the near plate's own repaint inside the nest (orange, 7.4 to 9 units); outside it the globe's own picture enlarged",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T08:37:48.852Z",
-   "file": "20261124083748852-note-final-2997.jpg",
-   "source": "../work/named/sheets/final-2997.jpg",
-   "kind": "note",
-   "label": "judged 2997 (dive) at the final tier, named head dfd3c01: the left limb is pale",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T08:37:48.103Z",
-   "file": "20261124083748103-note-final-3296.jpg",
-   "source": "../work/named/sheets/final-3296.jpg",
-   "kind": "note",
-   "label": "judged 3296 (rise) at the final tier, named head dfd3c01",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T08:37:01.031Z",
-   "file": "20261124083701031-frame-bE-2997.jpg",
-   "source": "out/work/jupiter/final/bE-2997.png",
-   "kind": "frame",
-   "label": "jupiter.dive frame 2997, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 2997,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "5a18fcdc5a929484"
-  },
-  {
-   "time": "2026-11-24T08:33:05.056Z",
-   "file": "20261124083305056-frame-bE-3296.jpg",
-   "source": "out/work/jupiter/final/bE-3296.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3296, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3296,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "5a18fcdc5a929484"
-  },
-  {
-   "time": "2026-11-24T08:30:33.201Z",
-   "file": "20261124083033201-job-frame-03296.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "jupiter.rise frame 3296, final tier, nograin view, from the running measure job",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3296,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
   }
  ]
 }
