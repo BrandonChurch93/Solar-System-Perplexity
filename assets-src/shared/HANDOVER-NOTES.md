@@ -1064,6 +1064,79 @@ THE CURE OF THE PATTERN MEASURE, all that was measured (globe_engineer's `agent/
 - LESSON AGAIN: I wrote 19:42 into a mail at 19:38 and gave a range for seven rows from two of them. Look at the clock, and measure every row a line speaks of before it goes out.
 - Looks pushed 19:02 and 19:27 (the labels that begin "the cure", the Mars sheets, the step pictures of Uranus).
 
+### 19:45 to 20:10 UTC. THE RED PATTERN LINES OF THE RISES READ THREE WAYS (main, the cure, the camera's own map); two statements of mine were WRONG and are corrected by mail
+
+- Pushed 19:44: 3801689a (merge of main 876ce2f7 on the notebook commit b4b65e28; scorecards and kit/PROGRESS.md only, no code). Looks pushed 19:50.
+- News of main 876ce2f7 (d240 to d242): round 44 (Saturn, motion report green), 45 (Uranus, red on 3 lines; critics: rise 4393 to 4414 the horizon tilts, the Sun leaps, the light on the ground changes within about 7 frames; 4427 to 4454 the camera rolls about 90 degrees) and 46 (Jupiter, red on 2 lines: dive pattern 0.73 from 3033 + 1/2, rise 0.69 from 3261 + 1/2; critics: the place changes its look 3010 to 3043 and 3253 to 3280, cloud puffs and a second limb fade in place 3048 to 3053 and 3244 to 3251; cause named: exposure by height and weights by height between two programs) are closed. Mars's motion report is red on 5 lines (pop 1.80 at 2469, 2.12 at 2688). Uranus is in `handover.ownPath` (its dive and rise are its own path, not the engine's one move), so the tilt and the roll are its builder's.
+- TOOLS (scratch, `/tmp/law/cure/`): `camrun.sh NAME POSES KIND FROM TO` (way2.py on every pair I, I + 8, one line a pair into `cam-NAME-KIND.txt`; env `ANY_SIDE=1` lets a pair reach over T); `back2.py NAME POSES I N OUT X0,Y0,X1,Y1 [READ]` (the pair at FULL SIZE and in colour, no flow and no judge: the frame read on, the other frame carried onto it by the camera's own map, the other frame as it is). The camera's map is a clean witness only where the ground lies still on the sphere: a moon in front of the disc (Jupiter 3286 to 3298: it reads 1.03 to 1.44 at the moon), cloud layers with height (Uranus from 4406: 0.84 to 1.67 while the flow follows the clouds) and relief (Mars's canyon) make it read high. "The camera's map reads low where main reads high" proves the measure made main's number; "it reads high" proves nothing alone: look at the frames.
+- JUPITER'S RISE (round 46: "pattern 0.69 from 3261 + 1/2, 52 frames over, first 3247"; my drafts, one capture a film frame, `cam-ju3-rise.txt`). Main over 0.45 in 18 rows: 3248 to 3257, 3259, 3261, 3282 to 3287.
+  - 3261 (main's largest, 0.686): THE MEASURE made it. The cure 0.233, the camera's map 0.242; main's carried picture is smeared at the bottom middle (`way2-ju3-rise-3261.jpg`).
+  - 3282 to 3287 (main 0.516 to 0.570): THE MEASURE made it. Main's carried picture is enlarged 2.0 to 2.5 times from the quarter scale and soft, its pattern change is a haze over the whole body; the cure 0.260 to 0.333; the camera's map 0.443, 0.381, 0.322, 0.430 in 3282 to 3285 (void in 3286, 3287: the moon). I name nothing there.
+  - 3259 (0.490 | the cure 0.343 | the camera 0.609 at the cloud towers): not settled.
+  - 3248 to 3257: THE PICTURE made it. At the far limb (full size, consecutive drafts, `ju3-limb-a.jpg`, `ju3-limb-b.jpg`): one blue limb and dark ground to 3249; a violet second limb comes in from 3250; a pale streaked cloud deck comes in from 3253 beside the warm cloud towers and is white by 3256. With the camera's map at full size (`back2-ju3-a.jpg`, `back2-ju3-b.jpg`, all seven pairs 3249 to 3255 with their eighth frame): the same towers at the same place in both frames, dark ground beside them in the earlier frame, the pale deck in the later.
+  - SO MY STATEMENT "B: a limb strip in Jupiter's rise, three rows by the strip alone are false" WAS WRONG. The cure's reading on 3 percent of the frame along the far limb (0.667, 0.989, 1.117, 0.892, 0.976, 1.305, 0.895 from 3249 to 3255) reads a true change; main reads the same rows red at 0.46 to 0.585. I had looked at the carried picture ("torn") and not at the two frames at full size.
+- URANUS (round 45: dive "pattern 1.32 from 4165, 103 frames over, first 4115 + 1/2", rise "1.45 from 4401, 53 frames over, first 4394 + 1/2, UNKNOWN"; `real-uranus-{rise,dive}.txt`, `cam-uranus-rise.txt`, `cam-uranus-dive.txt`).
+  - Rise, rows over 0.45: main 24 | the cure 26; largest 1.286 from 4401 | 1.511 from 4402; red to green 4392 (0.510 | 0.437), green to red 4396, 4415, 4417. The camera's map reads 1.25 to 1.45 in 4397 to 4405 at the white clouds that come up in place (pair 4399, 4407 LOOKED AT: faint wisps in the nearer frame, white clouds in the farther carried by the camera). So the red at the peak is the picture's by all three ways. BUT the way of the cure lies off the camera's map by a median of 22.4 to 26.4 quarter px in 4397 to 4402 and 10.8 to 14.8 in 4403 to 4405 (the flow is lost on the smooth deck; main carries by the same flow), so the numbers of both measures in those rows are not readings of the ground.
+  - Dive, rows over 0.45: main 40 | the cure 52; rows 4128 to 4160 equal to the third digit; green to red 12.
+    - 4114, 4115 (main 0.325, 0.405 | the cure 0.707, 0.800 on 5 and 9 percent of the frame): TRUE. A white storm cloud fades in place on the globe (full size, consecutive drafts, `uranus-dive-4115-spot.jpg`, `uranus-dive-4112-spot.jpg`): nothing at 4115, a first hint at 4116, the curl at 4117, clear at 4118, white by 4122, a dark vortex around it from 4123. I NAME 4117 to 4122. My rows mail of 19:35 said "Uranus nothing named": WRONG for the dive, I had not looked at 4110 to 4130 at full size.
+    - 4178 to 4187 (main 0.17 to 0.45 on 21 to 23 percent | the cure 0.96 to 1.36 on 5 to 16 percent): pairs that reach over T (4186). At 4180 the way of the cure lies off the camera's map by 12.0 quarter px in the median and 46 at its place, its carried picture shows a swirl that no frame has, the camera's map reads 0.492; on the consecutive frames 4179 to 4190 I name nothing (the same wisps, the ground brightens, fine streaks on the place side; `uranus-dive-T-a.jpg`, `-b.jpg`, `back2-uranus-4180-detail.jpg`). The lost way (C) on a second stop.
+- MARS'S MOON STANDS: pair 2401, 2409 looked at again (`see-mars3-dive-2401.jpg`): the reading from the nearer end judges Phobos alone, its carried picture is torn.
+
+### 20:03 to 20:25 UTC. SECOND CORRECTION SENT; URANUS'S STORM IS THE PLATES' WEIGHT; MAIL 727 (the red unit test on take batch 4)
+
+- 20:03 SENT to /root (high): the second correction of the verdict on the cure, with the two UNKNOWN rise lines read three ways
+  (main, the cure, the camera's own map). Content as in the entry above. /root's answer is MAIL 727 point 2 (below).
+- URANUS'S STORM CELL (R4's issue 13 of round 45), read in the stop's code and assets, nothing changed there:
+  - `plated = below(look.place.plates.dive [3.2, 4.55], altitude)` (src/stops/uranus/set.ts 231, look.ts 124). By frame of the
+    dive: 4114 0.0004, 4115 0.005, 4116 0.019, 4117 0.046, 4118 0.092, 4119 0.16, 4120 0.25, 4122 0.51, 4124 0.82, 4126 1.0
+    (altitude 4.53 to 3.22 radii, the globe 370 to 470 px in radius). That is frame for frame what I saw the white curl do.
+  - The vortex and its white tops are in place-1.png alone; wrap-color.jpg and patch-1 to 3 show bands at that place
+    (`out/work/cure/uranus-layers-at-spot.jpg`, LOOKED AT). So it is a blend by height between two pictures that differ.
+  - The rise: `plates.rise [1.5, 4.5]` takes the same weight 1 to 0 from 4432 to 4443.
+  - Other weights by height of that stop, by frame (my table, from the poses of my drafts): dive: skyPicture 4140 to 4158, sky
+    4147 to 4160, light.up 4145 to 4170, light.down 4158 to 4174, the white tops fade OUT 4153 to 4186 (0.75 at 4163, 0.15 at
+    4177), the deck's cover comes in 4174 to 4185. Rise: the deck's cover goes 4394 to 4403, the white tops come in 4393 to 4420
+    (0.1 at 4399, 0.5 at 4407), light.down 4404 to 4416, light.up 4406 to 4425, sky 4414 to 4425.
+  - So the red peak of the rise (4397 to 4405) is the deck's cover leaving and the white tops coming in by height; the dive's red
+    from 4163 to 4177 lies where the white tops fade out and the light changes by height.
+  - Sheet of the dive at half size, 4156 to 4178 every second frame: `out/work/cure/uranus-dive-4156-4178-full.jpg` (LOOKED AT:
+    the white clouds are bright to 4164, dim by 4166, faint by 4170 while the camera sinks toward the horizon).
+  - NOT YET MAILED to uranus_builder (MAIL 727 came first). Mail it low with the two sheets.
+- MAIL 727 (/root, 20:12 by its clock), three points:
+  1. URGENT: the red unit test on the tip of take batch 4, b51550ff (branch agent/harness-b4): one commit on top that touches
+     tests/weights.test.ts only, pushed as the NEW branch agent/engine-handover-b4 (plain push); then tsc, the whole vitest, the
+     engine hash (must be 13d9cc752b1d9c4e), and the answer "DONE 727".
+  2. Ruling on the cure 780020f6: not in batch 4; after it, taken for rises only, with a switch by move; dives keep main's reader
+     until the cure no longer loses its way on smooth ground (C) and no longer reads a moon in front of the disc (B). TO DO after
+     the test: ONE mail to globe_engineer and /root: can the pattern reader take its way from the camera's map wherever the ground
+     is the body's own surface and keep the flow only for what moves on it (a moon, a ring, a cloud that drifts), what that costs,
+     what it cannot read. NO CODE before /root rules.
+  3. THE BLUR LAW (after 1 and 2): a law that gives one smooth blur at every speed of a dive and a rise: the samples a frame needs
+     for the blur it has, the blur along the motion inside a sample where the kit asks for it, what the floor
+     (handover.minShutter 0.5) and the cap (handover.maxBlurPx 14) should then be, the cost per stop in render time. Proof as full
+     size crops before and after at the final tier of: Venus 1311 (38.14 px), 1564 (32.08 px); Uranus 4137, 4436; Jupiter 2994
+     to 3010 and 3280 to 3294 (razor sharp at speed), 3019 to 3035 and 3260 to 3274 (separate copies of edges); Mars 2427 (canyon
+     walls smeared into diagonal streaks), 2432 to 2440, 2697 to 2710 (radial streaks like a comb). Also: Jupiter's leave 3280 to
+     3314 on the engine's path snaps from the close view to the whole globe (R4 round 46); Mars's rise ends rolled about a quarter
+     turn against its approach with the lit limb on the other side (R4 round 43, 2724 to 2744 against 2400 to 2416): say for each
+     whether the path law or the stop's plan makes it.
+- MAIL 727 point 1, DONE as commit 1924a104ed41def8574811c54b4d92ccb7e3febd on b51550ff (local branch agent/engine-handover-b4):
+  - MEASURED on the tip: the red line was :85, expect(picture.length).toBeGreaterThan(0). No span of the film draws a picture.
+    earth.dive and earth.rise still leave their sky to the engine (skyFrames 120, cut short by their segments); 13 spans give a
+    share of their own; saturn's two have no span of the sky. handover.ownPath there: mercury, earth, saturn, uranus.
+  - The file now: every law is a function tried on the film's spans it speaks of (may be none) and on spans made in memory:
+    whole(kind) (sky 24, picture 12), cut(kind) (sky span as long as the segment), noSky(kind), noPicture(kind), owner(kind) (a
+    class OwnSky extends StopPlan with a skyShare). tried() is whole('dive'). A made span is used before the next is made (the
+    handover in force is the last made plan's).
+  - Counted by a print that is not in the commit (film | made): 1: 0 | 4; 2: 2 | 4; 3: 2 | 2; 4: 0 | 2; 5: made dive only; 6: 4
+    (earth, saturn) | 4; 7: no span 11 | 2, no picture 17 | 2, heard 2 | 2, own share 13 | 2; 8: made dive only; 9: 17 | 4.
+  - Proof that the made spans bite: placeWeight of a dive times 0.99 (not committed) turns tests 4 and 5 red.
+  - 20:20 the whole run on 1924a104 ended (`/tmp/law/all-727.json`): tsc exit 0, vitest 597 of 597 passed in 195 files, engine hash
+    13d9cc752b1d9c4e. Pushed 20:20 as the NEW branch agent/engine-handover-b4 (plain push). The spans counted again by a script on
+    that tip (17 spans, 13 with a share of their own, 4 without: earth and saturn, 2 with a sky left to the engine: earth, both cut
+    short, 0 with a picture, 11 without a sky span). 20:21 SENT to /root (high): "DONE 727" with the sha, the counts, the hash and
+    the table of bodies.
+
 ## E as built (23:45), the engine's one move
 
 - Switches: `handover.ownPath` (my config block): the stops that keep the path of their own class. Today all but mars. A builder takes its name off in its own commit. `--diag onemove` (probe.ts, `forceOneMove`) draws any stop on E without touching the config; the scene word carries `|onemove` so the caches do not mix.
@@ -1207,19 +1280,20 @@ MAIL 351 (22:19 by /root's clock, 22:14 by mine), the work from here. In its wor
 
 ## Next
 
-(rewritten 19:45 UTC, 24 Nov)
+(rewritten 20:25 UTC, 24 Nov)
 
-NOW, in this order (hours in UTC by this VM's clock; /root's clock reads about 3 min more):
-1. NOTHING RENDERS. The campaign of MAIL 717 (6) is done and mailed: Saturn 18:19, Mars's third and Uranus 19:35. Do NOT render Mercury, the Sun or Earth's third: machines make their reports at the batch tip (d239: batch 4 is one batch with my 2f1028ee).
-2. THE VERDICT ON THE CURE IS SENT (19:38, a correction 19:41). Wait for /root's ruling; nothing of the cure on my branch (MAIL 709 c). If a new head of the cure is named: `git fetch origin agent/engine-globe`, `git show FETCH_HEAD:tools/img/smooth.py > /tmp/law/cure/smooth.py`, the rig again (`/tmp/law/cure/batch.sh LIST`, about 10 s a case, 150 cases, then `python3 /tmp/law/cure/table.py`), the real frames again (`bash /tmp/law/cure/realrun.sh /tmp/law/cure/reallist3.txt` and the lists before it; the frames of mars3, saturn, uranus and the rises of ju3 and earth are kept), and look for the three: A the lenience (0.74 of the known map), B the 2 percent share (Mars's dive 2400 to 2402, Jupiter's rise 3250 to 3252), C the lost way (Mars's dive 2441 to 2451, rise 2698; `way2.py`).
-3. OPEN WITH /root, no answer yet: Mars's dive passes at 4.85 in place although 2468 to 2470 can be named (the limit judges single steps); the exchange of relief and plain on Mars (dive 2437 to 2441, rise 2707 to 2711; mars_place_builder has the sheets).
-4. harness_builder may ask about the op `inPlace` (MAIL 717, 7: the place part of the judge stays on the old reading until it has shown both on whole stops) and about the rest line: answer by mail.
-5. At the next commit: `git fetch origin main`, merge if it moved (`git merge --no-ff -F MSGFILE FETCH_HEAD`, the trailer, never rebase; make sure FETCH_HEAD is main's and not the globe branch's), the chain if code moved, push. Not while a render runs from the repo tree.
-6. THE PULL BACK is in take batch 4 (caf22249's five files). A builder that asks gets: the option (`handover.rise.pullBack: { speed, over, from? }` in its own params), the far end lines of `npx tsx tools/seam.ts --stop ID --kind rise`, and for a value not yet in its plan `npx tsx out/work/tmp/farend.ts STOP '{"pullBack":{"speed":S,"over":O}}' rows centre` (scratch). /root gives it to the five red stops as an item once batch 4 is on main.
-7. Looks at least every 30 minutes of working time (last 19:27). Notebook with every push.
-8. Mail /root only NAMED, a blocker or an answer it asked for (MAIL 520). `date -u` before a time goes into a mail.
-9. Later, only on /root's word: a third number of the report (the step of the rms in place, or the ground under the eye; MAIL 717, 4: not now); the one move on the plane of the rings (Saturn); per stop switch `handover.oneMove`; one measure of the shutter for both sides; F "globe". MAIL 520 (2), the place picture at 4K: do not cure (MAIL 539).
-10. Disk: 4.8 GB free at 19:35 (a render refuses under 3). `df` before every start. Kept frames: `out/work/handover/{mars3,uranus,saturn}/frames` (dives and rises), the rises of ju3 and earth. When room is needed: uranus's and saturn's dive frames first (read and looked at), then `out/work/h602/c60`, `c60p`, `d19`.
+NOW, in this order (hours in UTC by this VM's clock; /root's clock reads about 5 min more):
+1. MAIL 727 point 1 is DONE and mailed (20:21): branch agent/engine-handover-b4, commit 1924a104 (tests/weights.test.ts only, on b51550ff). Nothing more there unless /root asks. That branch is not my working branch: work goes on on agent/engine-handover.
+2. LOW MAIL to uranus_builder with `out/work/cure/uranus-dive-4115-spot.jpg` and `out/work/cure/uranus-layers-at-spot.jpg`: the storm cell of R4's issue 13 is the plates' weight (the facts are in the entry "20:03 to 20:25").
+3. MAIL 727 point 2: ONE mail to globe_engineer and /root, NO CODE: can the pattern reader take its way from the camera's map wherever the ground is the body's own surface and keep the flow only for what moves on it, what it costs, what it cannot read. My answer as planned: yes, as a prior: carry by the camera's map (the ray to the body's surface with the body's turn, the sky by rotation alone), then let the flow find only what is left, so that on smooth ground the way stays the camera's (cures C) and a moon, a ring or a drifting cloud is followed by what is left. Cost: one pose per judged frame (no render: the director gives position, quaternion, vfov, turn), one remap per pair, the flow as now. Cannot read: bodies that are not the unit sphere (oblate Saturn and Jupiter; Uranus's shape blends to a sphere during the dive), relief (Mars's canyon) and cloud layers with height (Uranus's white tops, 5 to 8 quarter px off) other than through what the flow finds, the Sun, anything in front of the disc, overlays fixed to the screen (flare, bloom); and it needs a matte or the flow's disagreement to know what is the body's own surface. Measure first with `camrun.sh` on Saturn and Mars if it costs little; say only what is measured.
+4. MAIL 727 point 3, THE BLUR LAW. Today: `handover.maxBlurPx` 14 (the cap), `handover.minShutter` 0.5 (the floor, applied after the cap), `handover.blurEaseFrames` 12, `motion.maxStepPx` 0.6 (samples = ceil(motion / 0.6) up to `tiers[tier].maxSamplesPerFrame`: review 128, final 256), the motion measured on `motion.probeGrid` 17 x 9 (`rawMotion` in src/core/motion.ts). Steps: (a) `npx tsx tools/samples.ts --tier final --range A-B` for the frames named in the mail: motion, seen, shutter, count; (b) render the named frames at the final tier as they are (before), look at full size crops: are the copies the samples' step (count too low for the real motion at that place, the grid misses near relief), the two sides of the handover not lying on each other, or the shutter too short for the step to the next frame (sharp at speed); (c) the law: the samples a frame needs for the blur it has at the place where it is largest, blur along the motion inside a sample where the kit asks, the floor and the cap, cost per stop; (d) proof crops before and after at the final tier; engine commits on my branch, each named with its proof plan, off by default for stops that did not ask. Also answer: Jupiter's leave 3280 to 3314 snaps from the close view to the whole globe; Mars's rise ends rolled a quarter turn against its approach (2724 to 2744 against 2400 to 2416): the path law or the stop's plan.
+5. Looks at least every 30 minutes of working time (last 19:50, the cure's sheets still to add). Notebook with every push.
+6. At the next commit: `git fetch origin main`, merge if it moved (`git merge --no-ff -F MSGFILE FETCH_HEAD`, the trailer, never rebase).
+7. Mail /root only NAMED, a blocker or an answer it asked for (MAIL 520). `date -u` before a time goes into a mail.
+8. Open with /root, no answer yet: Mars's dive passes at 4.85 in place although 2468 to 2470 can be named; the exchange of relief and plain on Mars (dive 2437 to 2441, rise 2707 to 2711).
+9. harness_builder may ask about the op `inPlace` (MAIL 717, 7): answer by mail.
+10. Later, only on /root's word: the cure for rises with a switch by move (after batch 4); a third number of the report; the one move on the plane of the rings (Saturn); per stop switch `handover.oneMove`; F "globe".
+11. Disk: 4.8 GB free at 20:15 (a render refuses under 3). `df` before every start. Kept frames: `out/work/handover/{mars3,uranus,saturn}/frames` (dives and rises), the rises of ju3 and earth. When room is needed: uranus's and saturn's dive frames first, then `out/work/h602/c60`, `c60p`, `d19`.
 
 Standing:
 - The tone split stays off. `follow` stays unnamed (`stash@{0}`). /root renders the final tier frames itself. limbSky stays off and goes when F's one air lands.
