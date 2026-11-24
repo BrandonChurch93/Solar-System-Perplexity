@@ -15,6 +15,8 @@ export interface TravelLook {
   passBy: number
   passPower: number
   passKnee: number
+  passLead: number
+  passRound: number
   follow: number
   cruise: number
   early: number
@@ -29,7 +31,7 @@ export interface TravelLook {
   steady: [number, number]
 }
 
-const BASE: TravelLook = { pan: [2, 2], panSpan: [0, 0.97], lead: [0, 1], roll: [2, 2], rollSpan: [0, 0.97], bowDeg: 0, grow: [2, 3], swing: [0.1, 1], offset: [0.1, 1], settle: 0.5, clearDeg: 2, passBy: 0.3, passPower: 2, passKnee: 1, follow: 0, cruise: 0.3, early: 0.06, point: 0, growRun: [0, 0, 0], pin: [0, 0], pinEase: [2, 2], turnRun: [0, 0], window: 0, patchEnd: 0, pinFrames: 8, steady: [0, 0] }
+const BASE: TravelLook = { pan: [2, 2], panSpan: [0, 0.97], lead: [0, 1], roll: [2, 2], rollSpan: [0, 0.97], bowDeg: 0, grow: [2, 3], swing: [0.1, 1], offset: [0.1, 1], settle: 0.5, clearDeg: 2, passBy: 0.3, passPower: 2, passKnee: 1, passLead: 0.5, passRound: 0.2, follow: 0, cruise: 0.3, early: 0.06, point: 0, growRun: [0, 0, 0], pin: [0, 0], pinEase: [2, 2], turnRun: [0, 0], window: 0, patchEnd: 0, pinFrames: 8, steady: [0, 0] }
 
 export const TRAVEL: Record<string, Partial<TravelLook>> = {
   sun: { panSpan: [0, 1], rollSpan: [0, 1], cruise: 0, window: 41, patchEnd: 0.7 },
@@ -39,7 +41,7 @@ export const TRAVEL: Record<string, Partial<TravelLook>> = {
   mars: { growRun: [0.3, 0.2, 0.3], point: 0.0015, early: 0.1, pin: [0, 1], pinEase: [2, 9], turnRun: [0.36, 0.36], panSpan: [0, 1], window: 33 },
   jupiter: { growRun: [0.3, 0.2, 0.3], point: 0.0015, early: 0.1, passBy: 0.32, passPower: 3, passKnee: 0.6, follow: 1, pin: [0, 1], pinEase: [2, 9], turnRun: [0.36, 0.4], panSpan: [0, 1], window: 49, pinFrames: 2, steady: [60, 200] },
   saturn: { growRun: [0.26, 0.2, 0.3], point: 0.0015, early: 0.1, passBy: 0.42, passPower: 3, pin: [0, 1], pinEase: [2, 9], turnRun: [0.36, 0.36], panSpan: [0, 1], window: 30, pinFrames: 4 },
-  uranus: { growRun: [0.3935, 0.2, 0.3], point: 0.0015, early: 0.1083, passBy: 0.228, passPower: 3, passKnee: 0.6, pin: [0, 1], pinEase: [2, 9], turnRun: [0.35, 0.36], panSpan: [0, 1], window: 47, steady: [60, 200] },
+  uranus: { growRun: [0.3935, 0.2, 0.3], point: 0.0015, early: 0.1083, passBy: 0.228, passPower: 3, passKnee: 0.6, passLead: 0.6, pin: [0, 1], pinEase: [2, 9], turnRun: [0.35, 0.36], panSpan: [0, 1], window: 47, steady: [60, 200] },
 }
 
 export function travelLook(id: string): TravelLook {
@@ -98,6 +100,59 @@ export function slowEase(lead: number, tail: number): (t: number) => number {
   }
 }
 
+type Poly = number[]
+const polyMul = (a: Poly, b: Poly): Poly => {
+  const out = new Array<number>(a.length + b.length - 1).fill(0)
+  a.forEach((x, i) => b.forEach((y, j) => (out[i + j]! += x * y)))
+  return out
+}
+const polyAt = (a: Poly, x: number): number => {
+  let s = 0
+  for (let i = a.length - 1; i >= 0; i--) s = s * x + a[i]!
+  return s
+}
+const polyOf = (a: Poly, scale: number, shift: number): Poly => {
+  let out: Poly = [0]
+  for (let i = a.length - 1; i >= 0; i--) {
+    out = polyMul(out, [shift, scale])
+    out[0]! += a[i]!
+  }
+  return out
+}
+const polySum = (a: Poly, first: number): Poly => [first, ...a.map((c, i) => c / (i + 1))]
+const STEP: Poly = [0, 0, 3, -2]
+const SOFT: Poly = [0, 0, 0, 10, -15, 6]
+
+export function passCurve(power: number, knee: number, lead: number, round: number): (t: number) => number {
+  const p = Math.max(2, Math.round(power))
+  const half = knee < 1 ? Math.min(round, knee) : 0
+  const cuts = [0, ...(lead > 0 ? [lead] : []), ...(knee < 1 ? [knee - half, knee + half] : [])].sort((a, b) => a - b).filter((c, i, all) => i === 0 || c > all[i - 1]!)
+  const pieces: { from: number; place: Poly; speed: Poly }[] = []
+  let speed = 0
+  let place = 0
+  cuts.forEach((from, i) => {
+    const mid = i + 1 < cuts.length ? (from + cuts[i + 1]!) / 2 : from + 1
+    const up: Poly = lead > 0 && mid < lead ? polyOf(SOFT, 1 / lead, from / lead) : [1]
+    const down: Poly = knee >= 1 || mid < knee - half ? [1] : mid > knee + half ? [0] : polyOf(STEP, -1 / (2 * half), (knee + half - from) / (2 * half))
+    let push: Poly = [p * (p - 1)]
+    for (let k = 2; k < p; k++) push = polyMul(push, [from, 1])
+    const v = polySum(polyMul(polyMul(push, up), down), speed)
+    const x = polySum(v, place)
+    pieces.push({ from, place: x, speed: v })
+    if (i + 1 < cuts.length) {
+      speed = polyAt(v, cuts[i + 1]! - from)
+      place = polyAt(x, cuts[i + 1]! - from)
+    }
+  })
+  const raw = (t: number): number => {
+    let at = pieces[0]!
+    for (const piece of pieces) if (t >= piece.from) at = piece
+    return polyAt(at.place, t - at.from)
+  }
+  const whole = raw(1)
+  return (t) => raw(Math.max(t, 0)) / whole
+}
+
 const span = (r: [number, number], t: number): number => Math.min(Math.max((t - r[0]) / (r[1] - r[0]), 0), 1)
 
 export class TravelShape {
@@ -109,6 +164,7 @@ export class TravelShape {
   private readonly settleEase = betaEase(2, 2)
   private readonly leadEase = betaEase(2, 2)
   private readonly pinEase: (t: number) => number
+  private readonly passRun: (t: number) => number
 
   from = 0
   until = 0
@@ -123,6 +179,7 @@ export class TravelShape {
     const beta = betaEase(this.look.grow[0], this.look.grow[1])
     const ease = runEase(run[1], run[2])
     this.growEase = run[1] > 0 ? (x) => ease(span([run[0], 1], x)) : beta
+    this.passRun = passCurve(this.look.passPower, this.look.passKnee, this.look.passLead, this.look.passRound)
   }
 
   pan(u: number): number {
@@ -136,12 +193,7 @@ export class TravelShape {
   }
 
   pass(u: number): number {
-    const t = Math.max(u, 0) / this.look.passBy
-    const p = this.look.passPower
-    const k = this.look.passKnee
-    if (k >= 1) return Math.pow(t, p)
-    const run = (v: number) => (v <= k ? Math.pow(v, p) : Math.pow(k, p) + p * Math.pow(k, p - 1) * (v - k))
-    return run(t) / run(1)
+    return this.passRun(Math.max(u, 0) / this.look.passBy)
   }
 
   grow(x: number): number {
