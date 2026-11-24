@@ -1,9 +1,49 @@
 {
  "folder": "venus",
- "pushed": "2026-11-24T17:20:47.782Z",
- "head": "61f2fba5fb4a8583507f7b697b2ec483428f0ba9",
- "note": "MAIL 707 A measured: 1287 and 1304 closed shutter against final tier; streaks and blocks only with the shutter open",
+ "pushed": "2026-11-24T17:44:30.636Z",
+ "head": "ad1d6a92ff1ce256f6e9392ddf6e80ac8445be36",
+ "note": "MAIL 707: C cured (flash law), B haze mu 0.12 kept, frame of T trial not kept, proofs start on merge of main 9e15c6a4",
  "looks": [
+  {
+   "time": "2026-11-24T17:44:30.029Z",
+   "file": "20261124174430029-note-t1-left.jpg",
+   "source": "../../../../tmp/v/c/t1-left.jpg",
+   "kind": "note",
+   "label": "B rise 1545 1547 1550 left border: trial of stored tones only inside the frame of T (right), not kept: tufts stay, flat tan wedge comes",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T17:44:29.459Z",
+   "file": "20261124174429459-note-b-haze-1550.jpg",
+   "source": "../../../../tmp/v/c/b-haze-1550.jpg",
+   "kind": "note",
+   "label": "B rise 1550 draft crop: mu 0.06, 0.12, 0.2 (a darker patch of the ground stays under the Sun)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T17:44:28.829Z",
+   "file": "20261124174428829-note-b-haze-1547.jpg",
+   "source": "../../../../tmp/v/c/b-haze-1547.jpg",
+   "kind": "note",
+   "label": "B rise 1547 draft: haze mu 0.06 above, 0.12 below (second rim gone)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T17:44:28.244Z",
+   "file": "20261124174428244-note-f1185-diff.jpg",
+   "source": "../../../../tmp/v/c/f1185-diff.jpg",
+   "kind": "note",
+   "label": "C final 1185: kept still, new still, difference times 8 (1275 px differ, largest 2 of 255)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T17:44:27.455Z",
+   "file": "20261124174427455-note-flash-new.jpg",
+   "source": "../../../../tmp/v/c/flash-new.jpg",
+   "kind": "note",
+   "label": "C hold 1124 1191 1232 draft, new flash law: eased rise 0.4 s, stand 0.6 s, fall 1.1 s",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T17:20:46.369Z",
    "file": "20261124172046369-note-c1304-fd.jpg",
@@ -26,46 +66,6 @@
    "source": "../../../../tmp/v/det-1322.jpg",
    "kind": "note",
    "label": "Trial, air under the horizon off: 1322 against the frame 8 later carried back, and the detail the measure reads in each. Red outline: pattern over 0.45, at the far end of the cloud shadow",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T16:59:39.839Z",
-   "file": "20261124165939839-note-a0a9.jpg",
-   "source": "../../../../tmp/v/a0a9.jpg",
-   "kind": "note",
-   "label": "Trial, dive 1322 and 1330, upper right: the look from above alone (left), the film with the air under the horizon off (middle), the stored plates alone (right). The far deck goes from dark with a strong shadow to pale with a weak one",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T16:37:57.387Z",
-   "file": "20261124163757387-note-band-vs-far.jpg",
-   "source": "../../../../tmp/v/band-vs-far.jpg",
-   "kind": "note",
-   "label": "Trial, not kept: the air under the horizon laid on the ground for the eye of T (right) against the far zone cure alone (left), dive 1320 to 1332. Dive 4 capture frames over the limit, rise 14: worse in the rise, dropped",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T16:37:56.525Z",
-   "file": "20261124163756525-note-over-far.jpg",
-   "source": "../../../../tmp/v/over-far.jpg",
-   "kind": "note",
-   "label": "Trial, dive 1322 and 1325: where the pattern is over its limit (red outline). Top as committed, below with the far zone cure: the upper right goes, the left edge and the upper left under the limb stay",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T16:10:36.792Z",
-   "file": "20261124161036792-note-far-vs-w-2.jpg",
-   "source": "../../../../tmp/v/far-vs-w-2.jpg",
-   "kind": "note",
-   "label": "Trial of the far zone cure, 1330 and 1334: left as committed, right with the step of light carried round",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T16:10:36.187Z",
-   "file": "20261124161036187-note-far-vs-w-1.jpg",
-   "source": "../../../../tmp/v/far-vs-w-1.jpg",
-   "kind": "note",
-   "label": "Trial of the far zone cure, 1322 and 1326: left as committed, right with the step of light carried round",
    "stop": "venus"
   }
  ]
