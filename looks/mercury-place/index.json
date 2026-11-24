@@ -1,71 +1,71 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T23:07:44.291Z",
+ "pushed": "2026-11-24T23:29:12.798Z",
  "head": "15d489e9e70ff9fb2c598d02ba7fb0288f6d799e",
- "note": "b0 by the real pixel (3840 capture shows the web timing), round 2 tree by the frame factor: one picture at both sizes",
+ "note": "round 2 state with the true far Sun: dive 736 to 783 every frame, the sheet about T",
  "looks": [
+  {
+   "time": "2026-11-24T23:29:11.536Z",
+   "file": "20261124232911536-note-a1-d3.jpg",
+   "source": "out/work/mercury/place/sheets/a1-d3.jpg",
+   "kind": "note",
+   "label": "round 2 state, dive 772 to 783, every frame, draft, true far Sun",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T23:29:10.421Z",
+   "file": "20261124232910421-note-a1-d2.jpg",
+   "source": "out/work/mercury/place/sheets/a1-d2.jpg",
+   "kind": "note",
+   "label": "round 2 state, dive 760 to 771, every frame, draft, true far Sun",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T23:29:09.451Z",
+   "file": "20261124232909451-note-a1-d1.jpg",
+   "source": "out/work/mercury/place/sheets/a1-d1.jpg",
+   "kind": "note",
+   "label": "round 2 state, dive 748 to 759, every frame, draft, true far Sun",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T23:29:08.784Z",
+   "file": "20261124232908784-note-a1-d0.jpg",
+   "source": "out/work/mercury/place/sheets/a1-d0.jpg",
+   "kind": "note",
+   "label": "round 2 state, dive 736 to 747, every frame, draft, true far Sun",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T23:29:07.732Z",
+   "file": "20261124232907732-note-a1-T-hz.jpg",
+   "source": "out/work/mercury/place/sheets/a1-T-hz.jpg",
+   "kind": "note",
+   "label": "round 2 state, T: horizon and sky at 758 + 1/2, 759 + 1/2, 760 + 1/2, native size",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T23:29:06.760Z",
+   "file": "20261124232906760-note-a1-T-ll.jpg",
+   "source": "out/work/mercury/place/sheets/a1-T-ll.jpg",
+   "kind": "note",
+   "label": "round 2 state, T: lower left ground at 758 + 1/2, 759 + 1/2, 760 + 1/2",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T23:29:05.394Z",
+   "file": "20261124232905394-note-a1-T-dive.jpg",
+   "source": "out/work/mercury/place/sheets/a1-T-dive.jpg",
+   "kind": "note",
+   "label": "round 2 state, dive about T (759 + 1/2): 749 + 1/2 to 763 + 1/2, draft, true far Sun",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T23:07:30.167Z",
    "file": "20261124230730167-note-b0-web-full.jpg",
    "source": "out/work/mercury/place/sheets/b0-web-full.jpg",
    "kind": "note",
    "label": "b0 dive 699 to 729: web set on top, full set below",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T23:07:28.860Z",
-   "file": "20261124230728860-note-par-615c.jpg",
-   "source": "out/work/mercury/place/sheets/par-615c.jpg",
-   "kind": "note",
-   "label": "615 at 1 to 1: b0 on top (3840 scaled, 1920), round 2 tree below",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T23:07:27.617Z",
-   "file": "20261124230727617-note-par-a1-615.jpg",
-   "source": "out/work/mercury/place/sheets/par-a1-615.jpg",
-   "kind": "note",
-   "label": "format parity par-a1-615: 3840 scaled beside 1920, full set, draft",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T23:07:26.459Z",
-   "file": "20261124230726459-note-par-b0-615.jpg",
-   "source": "out/work/mercury/place/sheets/par-b0-615.jpg",
-   "kind": "note",
-   "label": "format parity par-b0-615: 3840 scaled beside 1920, full set, draft",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T23:07:25.251Z",
-   "file": "20261124230725251-note-par-a1-717.jpg",
-   "source": "out/work/mercury/place/sheets/par-a1-717.jpg",
-   "kind": "note",
-   "label": "format parity par-a1-717: 3840 scaled beside 1920, full set, draft",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T23:07:24.094Z",
-   "file": "20261124230724094-note-par-b0-717.jpg",
-   "source": "out/work/mercury/place/sheets/par-b0-717.jpg",
-   "kind": "note",
-   "label": "format parity par-b0-717: 3840 scaled beside 1920, full set, draft",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T22:45:03.109Z",
-   "file": "20261124224503109-note-h615-dot.jpg",
-   "source": "out/work/mercury/place/sheets/h615-dot.jpg",
-   "kind": "note",
-   "label": "615 draft, 4 times, under the far Sun's loop: the card's orange remnant before (left), out after reach.py (right)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T22:45:02.342Z",
-   "file": "20261124224502342-note-b0-a1.jpg",
-   "source": "out/work/mercury/place/sheets/b0-a1.jpg",
-   "kind": "note",
-   "label": "717, 721 + 1/2, 726, 730 + 1/2, 735: b0b87889 on top, the round 2 state below (b0's plate 1 and exchange back, far Sun of the film): the same ground",
    "stop": "mercury"
   }
  ]
