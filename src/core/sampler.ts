@@ -1,11 +1,8 @@
 import { config, type SegmentKind } from '../config'
 import { captureRate, shutterSpan } from './clock'
+import { jitterOffsets } from './jitter'
 
 export interface Sample { jitterX: number; jitterY: number; timeOffset: number; weight: number }
-
-const G = 1.32471795724474602596
-const A1 = 1 / G
-const A2 = 1 / (G * G)
 
 export function sampleCount(tier: string, kind: SegmentKind): number {
   const t = config.tiers[tier]
@@ -17,9 +14,10 @@ export function sampleCount(tier: string, kind: SegmentKind): number {
 // around the middle of the full shutter, so the middle of the frame stays where it is. At 1 the times are the expression they always were.
 export function samplesFor(count: number, shutter = 1): Sample[] {
   const out: Sample[] = []
+  const at = jitterOffsets(count)
   for (let i = 0; i < count; i++) {
-    const jx = count === 1 ? 0 : ((0.5 + A1 * (i + 1)) % 1) - 0.5
-    const jy = count === 1 ? 0 : ((0.5 + A2 * (i + 1)) % 1) - 0.5
+    const jx = at[2 * i]!
+    const jy = at[2 * i + 1]!
     const timeOffset = shutter === 1 ? ((i + 0.5) / count) * shutterSpan() : shutterOffset((i + 0.5) / count, shutter)
     out.push({ jitterX: jx, jitterY: jy, timeOffset, weight: 1 / count })
   }
