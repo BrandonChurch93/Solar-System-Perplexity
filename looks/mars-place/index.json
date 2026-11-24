@@ -1,9 +1,31 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T11:22:38.488Z",
- "head": "aac984cc9dfffd0b71d7b3fd5a0fc95a2ef9e2ee",
- "note": "Proof 49 of the third commit: cap sheets of dive and rise, the rise and 2412 sheets, the texels answer for G13",
+ "pushed": "2026-11-24T11:31:27.279Z",
+ "head": "770a9b777d3499770dc458994c2ee24c501d0213",
+ "note": "Third commit 770a9b77 pushed and NAMED sent: turn by height, plates made from the level under them, thinner ground haze; dissolve between two looks and G13 still red",
  "looks": [
+  {
+   "time": "2026-11-24T11:23:23.263Z",
+   "file": "20261124112323263-compare-mars-rise-sides.jpg",
+   "source": "out/work/handover/mars-rise-sides.png",
+   "kind": "compare",
+   "label": "mars rise, both sides at T (frame 2681) and their difference times 8",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "frame": 2681,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T11:22:51.760Z",
+   "file": "20261124112251760-compare-mars-dive-sides.jpg",
+   "source": "out/work/handover/mars-dive-sides.png",
+   "kind": "compare",
+   "label": "mars dive, both sides at T (frame 2477) and their difference times 8",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2477,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-24T11:22:37.309Z",
    "file": "20261124112237309-note-Q-texels.jpg",
@@ -50,22 +72,6 @@
    "source": "out/work/place/see/Q-rise-b.png",
    "kind": "note",
    "label": "Proof 49, rise 2680 to 2685 (T 2681 to 4 after), draft: no jump from 2681 to 2682; dark corner lower right at 2684 and 2685 (the fan's border)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T11:16:09.597Z",
-   "file": "20261124111609597-note-Q-rise-a.jpg",
-   "source": "out/work/place/see/Q-rise-a.png",
-   "kind": "note",
-   "label": "Proof 49, rise 2671 to 2679 (10 to 2 before T), draft, close side: no border, no far edge",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T11:13:02.278Z",
-   "file": "20261124111302278-note-pyr-plates.jpg",
-   "source": "out/work/place/see/pyr-plates.png",
-   "kind": "note",
-   "label": "The land plates 0.7, 1.6, 3.8, 8.5 degrees: above as committed, below made from the level under them (pyramid.py); pattern between neighbours 0.69, 0.59, 0.98 before, 0.00 after",
    "stop": "mars"
   }
  ]
