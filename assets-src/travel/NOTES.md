@@ -1028,3 +1028,12 @@ State when this came: agent/travel-pin = 32a0d67, 8319d7e (pinned earth, pinEase
 - Pictures before and after (draft, preview, rate 2, capture 896 to 982, `/tmp/sun-before`, `/tmp/sun-after`, `/tmp/dd.sh`): largest rise of the change 0.52 before, 0.39 after; largest fall 0.19 before, 0.06 after; defect B at 478 does not show in the picture's mean change, only in the ring speed. Look pushed (agent/travel-looks 5221e7d8).
 - OPEN with me after this: only the Builder's 60 pictures a second proofs of the stops' named commits (arrival and departure of each), as he sends them. Keep the slot free.
 - Not ordered, noted: dust.ts uses `uPixel = height / 1080`, which is the frame factor's own value at 16 by 9; check against `frameUniform` only if a format that is not 16 by 9 is asked.
+
+## 06:18 to 06:30 UTC: MAIL 545, the start of sun.travel is ON MAIN
+
+- MAIL 545 (to every builder, no answer needed): main f6ce51a5. On main: the one quintic pull at the start of sun.travel (797d3361; every frame 450 to 539 changed bytes), the sky's new swap, the smooth report's eye line (`smooth.path.minEye` 0.87), the warm list (no stop writes `src/core/warm.json`), the bend (off by default), `tools/round.py` with the smooth judging.
+- Coming about 06:45: the sample offsets less their own mean (c2aaa84d): every review and final picture moves as a whole by 0.09 px left and 0.035 px up; this also removes the 0.053 px set off at a hold's first picture that I named in the answer to MAIL 527. And the plan check of a move (tools only).
+- Deadlines: NAMED by 07:00 UTC (08:30 with the bend). A late commit is taken as the newest head that builds and passes. OFFER: mail PRE, the full sha and the parts for a full smooth report on a render machine (about 140 minutes).
+- uranus_builder (low, no answer): Uranus's rings and veil come in by the lens's distance (agent/uranus-place 6e5cb48f, not on main); frames 3942 to 3969 change, nothing of the travel's camera or sky.
+- Polish merged with main f6ce51a5: against main only this notebook and the probes of `assets-src/travel/` (text, 359 lines; src, tests, tools, public, config, kit are main's to the byte). Build 0, vitest 418 in 44, tsc 0, shaderaudit 23.
+- NOTHING of mine is open and nothing of mine is off main. No NAMED mail is owed: every law I changed is on main. Next: only what the Builder sends (60 pictures a second proofs of the stops' named commits).
