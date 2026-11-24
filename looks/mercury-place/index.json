@@ -1,9 +1,33 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T16:18:22.617Z",
+ "pushed": "2026-11-24T16:45:49.040Z",
  "head": "befb5f47996cb9ff4b6ffb6df289ed9cc2b1fe80",
- "note": "far look out of the code (dive limb band); rise: plates relaid, base beyond the wedge under test (old rise plate against dive plate)",
+ "note": "rise: the two reds that are left, seen: the swap under the limb at 969 to 971 and the place against the map at 996 to 1015",
  "looks": [
+  {
+   "time": "2026-11-24T16:45:48.038Z",
+   "file": "20261124164548038-note-e9-996-1018.jpg",
+   "source": "out/work/mercury/place/e9-996-1018.jpg",
+   "kind": "note",
+   "label": "the same frames with the place's plates off: the map alone, one ground, at most 0.40 in the measure",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T16:45:46.955Z",
+   "file": "20261124164546955-note-e8-996-1018.jpg",
+   "source": "out/work/mercury/place/e8-996-1018.jpg",
+   "kind": "note",
+   "label": "RED, rise 996 to 1018 every second frame: the place's ground gives way to the globe's map (0.93 at 1009); scratch draft",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T16:45:45.587Z",
+   "file": "20261124164545587-note-e8-swap.jpg",
+   "source": "out/work/mercury/place/e8-swap.jpg",
+   "kind": "note",
+   "label": "RED, rise 968, 969, 969 + 1/2, 970, 970 + 1/2, 971 under the limb: the set's bright far ground and its glow give way to the shell's grey ground within two frames (the cause of the red at 962 to 969); scratch draft without the far Sun's disc",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T16:18:21.515Z",
    "file": "20261124161821515-note-lvv-23r.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/mercury/place/e6-986-991.jpg",
    "kind": "note",
    "label": "rise 988 to 993.5 every half frame, new rise plates, scratch draft without the far Sun's disc",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T15:48:44.478Z",
-   "file": "20261124154844478-note-ab6-990.jpg",
-   "source": "out/work/mercury/place/ab6-990.jpg",
-   "kind": "note",
-   "label": "rise 990, new rise plates: set on (left) against plates alone (right), the same ground now",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T15:30:06.149Z",
-   "file": "20261124153006149-note-tiles-rise.jpg",
-   "source": "out/work/mercury/place/tiles-rise.jpg",
-   "kind": "note",
-   "label": "rise: 14 tiles of the pure set from the lay eye 990.25 (draft, far Sun's disc left out); scratch",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T15:30:05.556Z",
-   "file": "20261124153005556-note-set-lay-vs-plates-rise.jpg",
-   "source": "out/work/mercury/place/set-lay-vs-plates-rise.jpg",
-   "kind": "note",
-   "label": "rise, lay eye 990.25: the pure set laid on the sphere (left) against the installed rise plates (right), rings 1, 3, 4.5, 6 degrees; scratch, not proof",
    "stop": "mercury"
   }
  ]
