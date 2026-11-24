@@ -8,7 +8,7 @@ import fit from './fit.json'
 import placeJson from './place.json'
 import { side, twin } from './place'
 
-export interface Leg { ease: number[]; round: number[]; hold: number; bank?: { deg: number } }
+export interface Leg { ease: number[]; round: number[]; hold: number; bank?: { deg: number }; land?: number }
 export interface Path { handover: NonNullable<MoveParams['handover']>; dive: Leg; rise: Leg; bend: { frames: number; acrossDeg: number[]; turnDeg: number }; rewind: number }
 
 export const path: Path = placeJson.path
@@ -154,6 +154,13 @@ export class Plan extends StopPlan {
     return from.clone().slerp(to, u).multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), bank * Math.sin(Math.PI * u) ** 2))
   }
 
+  private landed(leg: Leg, l: Law, x: number): number {
+    const k = l.at(x) / l.total
+    if (!leg.land) return k
+    const u = ramp(l.frames - leg.land, l.frames, x)
+    return k + (l.rate(l.frames) / l.total) * leg.land * u * u * (1 - u)
+  }
+
   private fly(kind: 'dive' | 'rise', time: number): Pose {
     const leg = this.way[kind]
     const l = this.lawOf(kind)
@@ -161,7 +168,7 @@ export class Plan extends StopPlan {
     const anchor = this.twin(this.low(time), time)
     const lift = l.at(x)
     if (lift <= 0) return anchor
-    const k = lift / l.total
+    const k = this.landed(leg, l, x)
     const far = this.far(kind, time)
     const axis = forward(anchor.quaternion)
     const b = anchor.position.dot(axis)
