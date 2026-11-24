@@ -1,9 +1,73 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-24T09:41:51.933Z",
- "head": "b0ff729f1a4b2723fc090317a824e1ea709b0f20",
- "note": "b0ff729f on main 2008483c: the dive's sky after the cure, every frame 4138 to 4164; pop by my run 1.69 at 4144.5, 7 capture frames over 1.2 (was 1.70, 10); still red",
+ "pushed": "2026-11-24T10:18:33.656Z",
+ "head": "b5874a22954aeaebbe80136cb33b083d30a1f261",
+ "note": "NAMED b5874a22 on main c2c49133: the dive's sky after the cure 4138 to 4164, judged 4137 final, the band and the flat light run of the pattern",
  "looks": [
+  {
+   "time": "2026-11-24T10:17:53.549Z",
+   "file": "20261124101753549-frame-m4137.jpg",
+   "source": "out/work/u/n2/m4137.png",
+   "kind": "frame",
+   "label": "uranus.dive frame 4137, final tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4137,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "11cbfd6007ec43db"
+  },
+  {
+   "time": "2026-11-24T10:07:24.326Z",
+   "file": "20261124100724326-frame-m4035.jpg",
+   "source": "out/work/u/n2/m4035.png",
+   "kind": "frame",
+   "label": "uranus.hold frame 4035, final tier",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "11cbfd6007ec43db"
+  },
+  {
+   "time": "2026-11-24T10:06:34.091Z",
+   "file": "20261124100634091-note-f4137-new.jpg",
+   "source": "../../../../tmp/f4137-new.png",
+   "kind": "note",
+   "label": "judged 4137, final, b0ff729f on main 2008483c (same picture on the named commit): sky at the new turn, camera unchanged; sha256 of the 1920 final d4b4357c",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T09:52:59.507Z",
+   "file": "20261124095259507-frame-f4436.jpg",
+   "source": "out/work/u/n2/f4436.png",
+   "kind": "frame",
+   "label": "uranus.rise frame 4436, final tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4436,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "12ba5366b28777b2"
+  },
+  {
+   "time": "2026-11-24T09:45:59.263Z",
+   "file": "20261124094559263-frame-f4290.jpg",
+   "source": "out/work/u/n2/f4290.png",
+   "kind": "frame",
+   "label": "uranus.terrain frame 4290, final tier",
+   "stop": "uranus",
+   "segment": "uranus.terrain",
+   "frame": 4290,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "12ba5366b28777b2"
+  },
   {
    "time": "2026-11-24T09:41:40.790Z",
    "file": "20261124094140790-note-a2-c.jpg",
@@ -67,48 +131,6 @@
    "kind": "note",
    "label": "53152d5f code on main b0035c5c: rise drafts 4388 4392 4396 4400 4404 4408 4412 4420, white tops arrive 4404 to 4412",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T08:38:08.867Z",
-   "file": "20261124083808867-frame-m-4436-final.jpg",
-   "source": "out/work/u/memo/m-4436-final.png",
-   "kind": "frame",
-   "label": "uranus.rise frame 4436, final tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4436,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "12ba5366b28777b2"
-  },
-  {
-   "time": "2026-11-24T08:32:49.820Z",
-   "file": "20261124083249820-frame-m-4186.jpg",
-   "source": "out/work/u/memo/m-4186.png",
-   "kind": "frame",
-   "label": "uranus.dive frame 4186, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4186,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "12ba5366b28777b2"
-  },
-  {
-   "time": "2026-11-24T07:48:03.758Z",
-   "file": "20261124074803758-frame-e-4035.jpg",
-   "source": "out/work/u/one/e-4035.png",
-   "kind": "frame",
-   "label": "uranus.hold frame 4035, final tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "12ba5366b28777b2"
   },
   {
    "time": "2026-11-24T07:39:16.451Z",
@@ -175,20 +197,6 @@
    "kind": "note",
    "label": "4290 final: main b0b87889 (left) against 53152d5f (right), whole and full size at the horizon. Changed on purpose: the horizon line of the one place and the sky patch without grain",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T07:12:09.332Z",
-   "file": "20261124071209332-frame-d-4290.jpg",
-   "source": "out/work/u/one/d-4290.png",
-   "kind": "frame",
-   "label": "uranus.terrain frame 4290, final tier",
-   "stop": "uranus",
-   "segment": "uranus.terrain",
-   "frame": 4290,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "05fc48a851c30441"
   },
   {
    "time": "2026-11-24T07:11:21.784Z",
@@ -288,18 +296,6 @@
    "segment": "uranus.rise",
    "first": 4380,
    "last": 4390,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T07:09:06.263Z",
-   "file": "20261124070906263-sheet-uranus-rise-draft-across.jpg",
-   "source": "out/work/handover/uranus-rise-draft-across.png",
-   "kind": "sheet",
-   "label": "uranus rise, every frame 4385 to 4396 (across T, frame 4391), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "first": 4385,
-   "last": 4396,
    "tier": "draft"
   }
  ]
