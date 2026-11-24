@@ -1,9 +1,49 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T16:20:17.904Z",
- "head": "b8c0def04b45940b252ab06e35b40a4a8796b913",
- "note": "test state, not committed: harness slice of the rise with the second lay; pop 1.34, pattern still 0.83 to 1.19; from above the lay is a picture in a pit",
+ "pushed": "2026-11-24T16:52:30.644Z",
+ "head": "024eaa6dd045f918b610a6c0276af3515b5c82b9",
+ "note": "wedges measured: edges of the close ground's aprons; survey of every half frame; no commit",
  "looks": [
+  {
+   "time": "2026-11-24T16:52:30.089Z",
+   "file": "20261124165230089-note-wedge-hide.jpg",
+   "source": "out/work/place/see/wedge-hide.jpg",
+   "kind": "note",
+   "label": "L0 apron hidden behind L1 (margin 160), close ground alone",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T16:52:29.468Z",
+   "file": "20261124165229468-note-veil1.jpg",
+   "source": "out/work/place/see/veil1.jpg",
+   "kind": "note",
+   "label": "grazing veil sweep at 2470 (work, plates aq2)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T16:52:28.924Z",
+   "file": "20261124165228924-note-cls-rise.jpg",
+   "source": "out/work/place/see/cls-rise.jpg",
+   "kind": "note",
+   "label": "survey class pictures rise 2675 to 2690 and dive 2476: black beyond the aprons is the globe's own ground",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T16:52:28.225Z",
+   "file": "20261124165228225-note-cls2473.jpg",
+   "source": "out/work/place/see/cls2473.jpg",
+   "kind": "note",
+   "label": "survey projector class picture at 2473 against the tinted render",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T16:52:27.472Z",
+   "file": "20261124165227472-note-wedge-tint.jpg",
+   "source": "out/work/place/see/wedge-tint.jpg",
+   "kind": "note",
+   "label": "wedges: apron atlases tinted (L0 magenta, L1 green, L2 blue), close ground alone 2470 2473 2475 2686 2688",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T16:20:16.990Z",
    "file": "20261124162016990-note-mars-rise-k5360-5392-changes.jpg",
@@ -26,46 +66,6 @@
    "source": "out/work/place/see/aq2-plates.jpg",
    "kind": "note",
    "label": "test aq2 plates from straight above, 0.3 0.7 1.6 3.8 8.5 deg",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T15:53:20.966Z",
-   "file": "20261124155320966-note-air2.jpg",
-   "source": "out/work/place/see/air2.jpg",
-   "kind": "note",
-   "label": "air sweep 2 at 2470: more ground haze veils the near ground too (not taken)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T15:53:20.297Z",
-   "file": "20261124155320297-note-aq2-above.jpg",
-   "source": "out/work/place/see/aq2-above.jpg",
-   "kind": "note",
-   "label": "test aq2 as the film draws it from above, 2450 2456 2462: the lay is a pale fan on the orange plain (still wrong)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T15:53:19.661Z",
-   "file": "20261124155319661-note-aq2-HR.jpg",
-   "source": "out/work/place/see/aq2-HR.jpg",
-   "kind": "note",
-   "label": "test aq2 (second pass of the lay): globe ground alone, close ground alone, pattern (flat top mask), 2466 2470 2686",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T15:33:50.604Z",
-   "file": "20261124153350604-note-aq1-horizon.jpg",
-   "source": "out/work/place/see/aq1-horizon.jpg",
-   "kind": "note",
-   "label": "horizon band H over R at 2466 2470 2686",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T15:33:49.986Z",
-   "file": "20261124153349986-note-air1.jpg",
-   "source": "out/work/place/see/air1.jpg",
-   "kind": "note",
-   "label": "air sweep at 2470: thicker ground haze drowns the canyon (not taken)",
    "stop": "mars"
   }
  ]
