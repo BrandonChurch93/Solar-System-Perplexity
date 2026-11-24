@@ -1,0 +1,6 @@
+{
+ "note": "The bend of the surface view's last frames (d196, MAIL 526 of /root): the view pushes down its lens toward its place, the rise pulls back up the line from that place to the eye, so the eye stopped and turned back in the rise's first frames. From fromFrame on the eye's velocity turns by turnDeg, at the speed the view has anyway, from the push toward `across` (a direction of the close view's own frame: x right, y up across the lens) and beyond 90 degrees on into the pull back; the lens keeps its own slow turn. Frames before fromFrame keep their camera to the bit. The turn is eased at both ends (no step of the turn rate at fromFrame or at the seam). Read by src/stops/mars/plan.ts.",
+ "fromFrame": 2611,
+ "turnDeg": 105,
+ "across": [1, 0, 0]
+}

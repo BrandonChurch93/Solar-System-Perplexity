@@ -21,6 +21,7 @@ ap.add_argument('--match-blur', type=float, default=0.06, help='blur of the tone
 ap.add_argument('--match-reach', type=float, default=0.5, help='how far inside the rim the tone match fades out')
 ap.add_argument('--match-floor', type=float, default=-1, help='the tone match never falls under this share inside the nested square (default: nest.matchFloor of plates.json for this width, else 0)')
 ap.add_argument('--config', default='assets-src/mars/place/plates.json')
+ap.add_argument('--turn', type=float, default=0.0, help='the plate below is turned clockwise about its centre by this many degrees (geom.turn_deg: its take was made for another bearing of the place); it is then laid in over its inscribed circle')
 ap.add_argument('--out', required=True)
 a = ap.parse_args()
 floor = a.match_floor
@@ -48,13 +49,23 @@ if a.below:
     ramp = np.clip((np.minimum(np.arange(c), c - 1 - np.arange(c)) + 0.5) / f, 0, 1)
     ramp = ramp * ramp * (3 - 2 * ramp)
     k = np.minimum(ramp[:, None], ramp[None, :])[..., None].astype(np.float32)
+    rim = np.minimum(np.arange(c), c - 1 - np.arange(c)) + 0.5
+    rim = np.minimum(rim[:, None], rim[None, :])
+    if a.turn:
+        # a turned take covers its inscribed circle only: turned about the centre (clockwise on a map with north up),
+        # feathered and tone matched by the distance from that circle's rim
+        B = cv2.warpAffine(B, cv2.getRotationMatrix2D(((c - 1) / 2, (c - 1) / 2), -a.turn, 1.0), (c, c), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REFLECT)
+        ax = np.arange(c) - (c - 1) / 2
+        rim = c / 2 - np.hypot(ax[None, :], ax[:, None])
+        kk = np.clip(rim / f, 0, 1)
+        k = (kk * kk * (3 - 2 * kk))[..., None].astype(np.float32)
     o = (n - c) // 2
     under = out[o:o + c, o:o + c]
     s = a.match_blur * c
     gain = np.clip((cv2.GaussianBlur(under, (0, 0), s) + 1e-4) / (cv2.GaussianBlur(B, (0, 0), s) + 1e-4), 0.5, 2.0)
-    reach = np.clip((np.minimum(np.arange(c), c - 1 - np.arange(c)) + 0.5) / (a.match_reach * c), 0, 1)
+    reach = np.clip(rim / (a.match_reach * c), 0, 1)
     reach = reach * reach * (3 - 2 * reach)
-    m = np.maximum(1 - np.minimum(reach[:, None], reach[None, :]), floor)[..., None].astype(np.float32)
+    m = np.maximum(1 - reach, floor)[..., None].astype(np.float32)
     B = B * (1 + (gain - 1) * m)
     out[o:o + c, o:o + c] = under * (1 - k) + B * k
 cv2.imwrite(a.out, np.round(np.clip(out, 0, 1) * 65535).astype(np.uint16))

@@ -59,6 +59,12 @@ Made by the Builder after the agent's delivery. The mesh and its map are right, 
 - Use: `src/bodies/moonbody.ts` mixes the baked color in by the mask. The baked color is display color, so it goes through the inverse tone curve and the lens vignette is cancelled for it, like the relief. Outside the mask the moon is lit by the shader as before, which is what shows as it tumbles.
 - Check: the hold frame's Phobos crop beside the hero's (`out/work/phobos/lit-check.png` for the silhouette, a side by side crop at 1920 for the picture). The lit face, the grooves and the Stickney rim now match the hero. The outline that the first mask left along the silhouette is gone after the mask was grown.
 
+## The lit side goes by angle (brief 238, plan E)
+
+- The baked lit side is the hero's light as one eye saw it. On plan E's dive the eye flies round the moon (22 degrees from the hold's eye at frame 2408, 39 at 2411) and the band of filled colour past the hold's limb showed as a pale streaked flank.
+- `src/stops/mars/set.ts` sets the moon's `uLitOn` to `1 - smooth((a - fromDeg) / (toDeg - fromDeg))`, where a is the angle at the moon between the eye and the eye of the hold's middle, in the moon's own frame (its tumble counts). Values: `src/stops/mars/phobos.json`, block lit (12 and 24 degrees). No clock is read.
+- Tool: `npx tsx assets-src/mars/phobos/angle.ts [firstFrame endFrame]` prints the angle and the eye's distance for every frame that shows Mars from orbit. Measured: 0.03 degrees at 2325, 10.31 at 2399, so the hold keeps the baked side in full.
+
 ## Ledger rows
 
 | File | What it is | Source URL | License | Credit line | Date fetched |
