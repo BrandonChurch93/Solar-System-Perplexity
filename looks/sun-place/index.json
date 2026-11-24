@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T21:23:45.494Z",
- "head": "a90cde4e750ca64209656ffde452326269ff2a4e",
- "note": "21:23 UTC. Proof of the cure for MAIL 734 runs on a90cde4e (a23218ee merged with main 73809f4b; not pushed yet): tests 600 of 600, tsc 0, build, gate G11 G15 pass, path green. Warm 190 to 247 at rate 2 is at 211 + 1/2: 44 pictures, none made a program, texture or buffer (before the cure 193 + 1/2 on made vertex arrays). Frame 60 of this head, sun-near: share by band 0.165 0.215 0.193 0.151 0.104 0.063 0.035 0.027 0.020 | dark 0.190 body 0.663 pale 0.062 white 0.022 | half width 4.6 px, 4439 shapes, fine detail 0.0595, mean 0.334, distance 0.062. The material work (trial yr1, looks 3dc9b388 and 6a40bcea) waits out of the tree until the proof ends.",
+ "pushed": "2026-11-24T21:48:27.565Z",
+ "head": "faeea78babada5abc9cc9468d4cc7a473b6253ab",
+ "note": "21:50 UTC. The cure of MAIL 734 is pushed and proven (faeea78b on main b890fee7, PRE mailed): warm 190 to 247 at rate 2, 115 pictures, none made anything; judged bytes kept. Material, uncommitted trials of frame 60: yu2 has the depth of the approved (dark valleys, bulbs) but reads as brushed metal, the threads meet in each cell's middle where the approved's meet in the pits; yu1 is paving stones. Neither stands. yu2 sun-near: share by band 0.294 0.228 0.150 0.097 0.062 0.039 0.026 0.024 0.024 | dark 0.347 body 0.537 pale 0.050 white 0.027 | half width 6.0 px, 3454 shapes, fine detail 0.0576, mean 0.275, distance 0.153. Next: the dark foot kept, the fans short, soft and rooted in the pits.",
  "looks": [
+  {
+   "time": "2026-11-24T21:48:26.980Z",
+   "file": "20261124214826980-note-yu1-p1.jpg",
+   "source": "../../../../tmp/v/yu1-p1.jpg",
+   "kind": "note",
+   "label": "frame 60 draft, trial yu1 (uncommitted: flowers nearly off by my own setting, mottled tops), one to one: approved left, ours right",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T21:48:26.426Z",
+   "file": "20261124214826426-note-yu2-p1.jpg",
+   "source": "../../../../tmp/v/yu2-p1.jpg",
+   "kind": "note",
+   "label": "frame 60 draft, trial yu2 (uncommitted: flowers off, a dark foot under every bulb, strong threads from the middle), one to one: approved left, ours right",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T21:23:44.274Z",
    "file": "20261124212344274-note-pair60-head.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/l5/f217.jpg",
    "kind": "note",
    "label": "frame 217 draft, trial yr1 (uncommitted) on a23218ee",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T20:54:30.749Z",
-   "file": "20261124205430749-note-pair90.jpg",
-   "source": "../../../../tmp/l5/pair90.jpg",
-   "kind": "note",
-   "label": "frame 90 draft, trial yr1 (uncommitted) on a23218ee, one to one: approved close image left, ours right",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T20:54:30.143Z",
-   "file": "20261124205430143-note-pair60.jpg",
-   "source": "../../../../tmp/l5/pair60.jpg",
-   "kind": "note",
-   "label": "frame 60 draft, trial yr1 (uncommitted) on a23218ee, one to one: approved close image left, ours right",
    "stop": "sun"
   }
  ]
