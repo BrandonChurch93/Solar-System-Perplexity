@@ -4,6 +4,7 @@ import { NOISE_GLSL } from '../../terrain/relief'
 
 export const MAX_LOOPS = 16
 export const MAX_LOBES = 6
+export const MAX_KNOTS = 3
 
 export const FARSUN_VERT = /* glsl */ `
 uniform float uDepth;
@@ -85,7 +86,9 @@ uniform vec3 uFringeColour;
 uniform vec4 uFringeLobe[${MAX_LOBES}];
 uniform vec4 uFringeLobeBy[${MAX_LOBES}];
 uniform vec3 uFringeFan;
+uniform vec3 uFringeCurl;
 uniform float uLoopGain[${MAX_LOOPS}];
+uniform float uLoopRagged[${MAX_LOOPS}];
 uniform float uHaloEdge;
 uniform vec4 uKeep;
 uniform vec2 uLimbGlow;
@@ -94,7 +97,9 @@ uniform vec2 uPlage;
 uniform vec3 uLoopLook;
 uniform vec3 uPromPale;
 uniform vec3 uFringeKnot[${MAX_LOBES}];
-uniform vec4 uKnot;
+uniform vec4 uKnot[${MAX_KNOTS}];
+uniform vec4 uKnotBy[${MAX_KNOTS}];
+uniform vec4 uKnotRay[${MAX_KNOTS}];
 uniform vec4 uKnotLight;
 uniform vec4 uCoronaRim;
 uniform float uChromoBurn;
@@ -218,6 +223,7 @@ float loopGas(vec3 q, int i, float soft, out float heat) {
     float e = length(pe);
     float along2 = atan(pe.x, pe.y);
     float wob = vnoise(vec3(along2 * 2.3 + shape.w, fs * 4.1, uTime * 0.05)) - 0.5;
+    wob += uLoopRagged[i] * (2.0 * wob + 0.8 * (vnoise(vec3(along2 * 9.0 + shape.w * 1.7, fs * 2.3, 3.1)) - 0.5));
     float ring = (e - 1.0 - 0.16 * wob) * e / max(length(vec2(xs / (a * a), y / (h * h))), 1e-4);
     float lean = z - shape.x * 0.5 * (vhash(vec3(fs, shape.w, 2.9)) - 0.5) * cos(along2) - 0.04 * (vnoise(vec3(along2 * 3.1, shape.w, fs * 1.9)) - 0.5);
     float thin = shape.z * uLoopLook.x;
@@ -253,9 +259,12 @@ void main() {
   float vig = mix(1.0, 1.0 / pow(1.0 + dot(lq, lq) * 0.9, 2.0), uLens.x);
   float lens = uGain / vig;
   float dim = mix(vig, 1.0, uWear);
-  vec3 knotAt = spinY(uKnot.xyz, -uSpin);
-  float knotOff = acos(clamp(dot(normalize(knotAt - ro), rd), -1.0, 1.0)) / discAngle;
-  float knotLight = uKnotLight.w * exp(-knotOff * knotOff * uKnot.w) * smoothstep(-0.2, 0.05, dot(knotAt, ro) - 1.0);
+  float knotLight = 0.0;
+  for (int n = 0; n < ${MAX_KNOTS}; n++) {
+    vec3 knotAt = spinY(uKnot[n].xyz, -uSpin);
+    float knotOff = acos(clamp(dot(normalize(knotAt - ro), rd), -1.0, 1.0)) / discAngle;
+    knotLight += uKnotBy[n].x * exp(-pow(knotOff * knotOff * uKnot[n].w, uKnotBy[n].y)) * smoothstep(-0.2, 0.05, dot(knotAt, ro) - 1.0);
+  }
   for (int k = 0; k < (cover > 0.0 && (uParts & 1) != 0 ? 1 : 0); k++) {
     vec3 p = normalize(ro + rd * hit);
     float mu = clamp(dot(p, -rd), 0.0, 1.0);
@@ -360,13 +369,14 @@ void main() {
       float high = 1.0;
       float strands = 0.0;
       float knot = 0.0;
+      vec3 wisp = sd + (vec3(vnoise(sd * uFringeCurl.y + up * uFringeCurl.z + 1.0), vnoise(sd * uFringeCurl.y + up * uFringeCurl.z + 4.0), vnoise(sd * uFringeCurl.y + up * uFringeCurl.z + 7.0)) - 0.5) * (up * uFringeCurl.x);
       for (int k = 0; k < ${MAX_LOBES}; k++) {
         vec4 lobe = uFringeLobe[k];
         vec4 by = uFringeLobeBy[k];
         float here = exp(-(1.0 - dot(sd, lobe.xyz)) * lobe.w);
         more += by.x * here;
         high += by.y * here;
-        vec3 foot = normalize(sd - (sd - lobe.xyz) * min(up * uFringeFan.x, 0.8));
+        vec3 foot = normalize(wisp - (wisp - lobe.xyz) * min(up * uFringeFan.x, 0.8));
         float strand = pow(vnoise(foot * uFringeFan.y), uFringeFan.z) + 0.5 * pow(vnoise(foot * (uFringeFan.y * 2.3) + 2.0), uFringeFan.z);
         float reach = by.z * (0.35 + 1.3 * vnoise(foot * (uFringeFan.y * 0.31) + 11.0));
         strands += by.w * exp(-(1.0 - dot(foot, lobe.xyz)) * lobe.w) * strand * exp(-up / max(reach, 1e-3));
@@ -378,6 +388,30 @@ void main() {
       sum += (exp(-up / tall) * spike * more + strands + knot) * (fade * step(1.0, r));
     }
     gas += burnWhite(uFringeColour * (sum * dt * uFringe.z * uBurn.x));
+  }
+  for (int n = 0; n < (cover < 0.5 && (uParts & 4) != 0 ? ${MAX_KNOTS} : 0); n++) {
+    if (uKnotBy[n].z <= 0.0) continue;
+    vec3 knotAt = spinY(uKnot[n].xyz, -uSpin);
+    float tk = dot(knotAt - ro, rd);
+    vec3 nearK = ro + rd * tk - knotAt;
+    float halfK = sqrt(max(uKnotBy[n].w * uKnotBy[n].w - dot(nearK, nearK), 0.0));
+    int steps = int(uKnotLight.w);
+    float dt = 2.0 * halfK / float(steps);
+    vec3 cell = floor(spinY(normalize(ro + rd * (-b)), uSpin) * 2048.0);
+    float offset = fract(sin(dot(cell, vec3(12.9898, 78.233, 37.719))) * 43758.5453);
+    vec4 by = uKnotRay[n];
+    float sum = 0.0;
+    for (int i = 0; i < steps; i++) {
+      vec3 q = ro + rd * (tk - halfK + (float(i) + offset) * dt);
+      vec3 from = q - knotAt;
+      float dist = length(from);
+      vec3 dir = from / max(dist, 1e-4);
+      vec3 sdir = spinY(dir, uSpin);
+      float ray = pow(vnoise(sdir * by.x), by.y) + 0.5 * pow(vnoise(sdir * (by.x * 2.3) + 2.0), by.y);
+      float reach = by.z * (0.35 + 1.3 * vnoise(sdir * (by.x * 0.31) + 11.0));
+      sum += ray * exp(-dist / max(reach, 1e-3)) * smoothstep(by.w - 0.3, by.w + 0.2, dot(dir, knotAt)) * smoothstep(uKnotBy[n].w, 0.6 * uKnotBy[n].w, dist) * step(1.0, length(q));
+    }
+    gas += burnWhite(uKnotLight.rgb * (sum * dt * uKnotBy[n].z)) * smoothstep(-0.2, 0.05, dot(knotAt, ro) - 1.0);
   }
   gas *= dim;
   col += gas;
