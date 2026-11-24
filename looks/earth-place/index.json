@@ -1,9 +1,17 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T12:12:19.403Z",
- "head": "268def8c6fa551f6ae327c296003b1591f7957cc",
- "note": "12:13 texel walk flat, tail of finals running",
+ "pushed": "2026-11-24T12:47:34.621Z",
+ "head": "dbdf9911fefccf503c36b6b061732cec14e72fe4",
+ "note": "12:48 third commit patch on frames: T frames byte equal at draft rate 1; limb colour trials running; texel walk and four finals on one page flat",
  "looks": [
+  {
+   "time": "2026-11-24T12:47:33.890Z",
+   "file": "20261124124733890-note-zoom-v.jpg",
+   "source": "../../../../tmp/gl/s9/zoom-v.jpg",
+   "kind": "note",
+   "label": "limb at the dive's T, draft, enlarged 4 times: today's globe side 1918, trial rim colour 0.65 (k3), trial with the line halved (k4), surface side 1920; the globe side keeps a hard edge, trials go on",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T12:11:54.879Z",
    "file": "20261124121154879-note-r2-limb-zoom.jpg",
@@ -90,14 +98,6 @@
    "source": "../../../../tmp/gl/s8/rise-r2-c.jpg",
    "kind": "note",
    "label": "rise 2127 to 2135 this tree",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T10:37:16.315Z",
-   "file": "20261124103716315-note-rise-r2-b.jpg",
-   "source": "../../../../tmp/gl/s8/rise-r2-b.jpg",
-   "kind": "note",
-   "label": "rise 2118 to 2126 this tree",
    "stop": "earth"
   }
  ]
