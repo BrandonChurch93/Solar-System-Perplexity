@@ -226,10 +226,13 @@ gain, its count as a share of `fine`, and its height as a multiple of the fine s
 is the hair of the whole sphere (strength and height scale in radii), so every limb the camera can see
 carries it; a lobe adds its own by `hair` (strength and height scale). A lobe with a negative strength
 thins the hair about its place by that share (under the loop, where the approved image is dark between
-the strands). The strands are fewer and thicker than in the look before (`fine` 45 where it was 70) and
-bend more (`curl` 1.0), and the two lobes at the bottom of the hold's view carry taller hair and a few
-strands of the fringe with a longer `reach`, where the approved image has tongues of flame; their smooth
-low glow is halved to make room for them. The hair takes the fringe's
+the strands). The strands are few, long and curled (`fine` 27 where it was 45 and 70 before that, `curl`
+2.0 over a scale of 5, the height scale of `all` 0.075 where it was 0.06, the lobes at the lower left of
+the hold's view 0.09 and 0.10): MEASURED beside the approved image its flames at the lower left are
+fewer, longer and more curled than the hair of the look before. The two lobes at the bottom of the hold's
+view carry taller hair and a few strands of the fringe with a longer `reach`, where the approved image
+has tongues of flame; their smooth low glow is halved to make room for them. The lobe that thins the hair
+under the loop is wider (10 degrees, 0.95 of the hair), so the taller hair does not stand in the loop. The hair takes the fringe's
 colour, exposure and share of the far look, so it is absent at the handover and in the Sun stop's own
 views.
 
@@ -267,12 +270,12 @@ to 1.0), at most 8 in each zone of gas (1.0 to 1.1, 1.1 to 1.3, 1.3 to 1.6, beyo
 reported and not ruled. The box does not move.
 
 MEASURED at the draft tier with `PIL` `GaussianBlur(12)` on both pictures at 1920 by 1080, mean of the
-absolute difference over the three channels: this look gives 4.40 in the box (the looks before it 4.07,
-4.13, 4.42 and 4.57), face 3.0, limb 3.3, gas 5.0, 7.6, 4.7 and 4.5. Every zone is inside its bound. The
-box is over its 4.0: the rule stands and this look does not meet it. The look before had 4.07 with a face
-of 2.0, and its face was washed white beside the approved image: the number went up by 0.33 because the
-face now carries mottle, and mottle that does not lie grain for grain where the approved image has its
-own does not cancel under a blur of 12 px (the face adds 1.01 of the 4.40 levels where it added 0.68 of
+absolute difference over the three channels: this look gives 4.39 in the box (the looks before it 4.40,
+4.07, 4.13, 4.42 and 4.57), face 3.0, limb 3.3, gas 4.8, 7.6, 4.7 and 4.5. Every zone is inside its bound.
+The box is over its 4.0: the rule stands and this look does not meet it. The look of a3df7524 had 4.07
+with a face of 2.0, and its face was washed white beside the approved image: the number went up by 0.33
+because the face now carries mottle, and mottle that does not lie grain for grain where the approved
+image has its own does not cancel under a blur of 12 px (the face adds 1.01 of the 4.40 levels where it added 0.68 of
 the 4.07). The picture beside the approved image has the last word, so the mottle stays. What is left
 outside the face, by the cells of the difference: the light from 1.2 to 1.3 radii about position angles
 80 to 110 (the approved image has tongues of flame with body there, this look thinner hair, 13 to 16
@@ -284,19 +287,19 @@ MEASURED, the contrast of the face by band (the standard deviation of the lumina
 picture split into bands of 0 to 2, 2 to 5, 5 to 12 and 12 to 30 px), at 0 to 0.5, 0.5 to 0.8, 0.8 to 0.9
 and 0.9 to 0.97 radii:
 
-| radii | approved | this look | the look before |
+| radii | approved | this look | a3df7524 |
 |-------|----------|-----------|-----------------|
-| 0 to 0.5 | 1.23, 1.23, 1.46, 1.77 | 1.26, 1.39, 1.45, 1.35 | 1.23, 1.17, 1.14, 1.35 |
-| 0.5 to 0.8 | 1.23, 1.17, 1.20, 1.43 | 1.26, 1.30, 1.43, 1.35 | 1.42, 1.14, 1.10, 1.23 |
-| 0.8 to 0.9 | 1.46, 1.23, 1.16, 1.40 | 1.17, 1.09, 1.23, 1.42 | 1.58, 1.09, 1.02, 1.37 |
-| 0.9 to 0.97 | 1.45, 1.18, 1.60, 3.96 | 1.09, 1.06, 1.30, 3.12 | 1.34, 0.77, 0.88, 2.71 |
+| 0 to 0.5 | 1.23, 1.23, 1.46, 1.77 | 1.24, 1.39, 1.46, 1.36 | 1.23, 1.17, 1.14, 1.35 |
+| 0.5 to 0.8 | 1.23, 1.17, 1.20, 1.43 | 1.26, 1.34, 1.48, 1.39 | 1.42, 1.14, 1.10, 1.23 |
+| 0.8 to 0.9 | 1.46, 1.23, 1.16, 1.40 | 1.18, 1.15, 1.30, 1.46 | 1.58, 1.09, 1.02, 1.37 |
+| 0.9 to 0.97 | 1.45, 1.18, 1.60, 3.96 | 1.12, 1.15, 1.41, 3.21 | 1.34, 0.77, 0.88, 2.71 |
 
 The face is still short of the approved image in the widest band at the centre and in every band from 0.9
-radii to the limb. Where it is over the approved image's it is over by at most 0.23 levels (the band of 5 to 12 px at 0.5
-to 0.8 radii).
+radii to the limb. Where it is over the approved image's it is over by at most 0.28 levels (the band of 5 to 12 px at 0.5
+to 0.8 radii). The mottle grows toward the limb by `limb[2]` 1.6 where it was 1.2.
 
 MEASURED, the limb between position angles 110 and 150 (mean colour at a radius, draft tier): at 0.976
-radii the approved image 252, 252, 244, this look 253, 250, 238, the look before 252, 248, 236; at 1.011
+radii the approved image 252, 252, 244, this look 253, 250, 238, a3df7524 252, 248, 236; at 1.011
 radii 249, 240, 211 against 248, 238, 211 (before 251, 244, 227); at 1.029 radii 244, 229, 192 against
 242, 229, 195 (before 246, 236, 213); at 1.064 radii 234, 211, 167 against 231, 212, 171 (before 235, 219,
 184). The step from the face to the gas is now the approved image's within 4 levels, where the look
@@ -306,8 +309,9 @@ MEASURED, the colour of the loop's strands (the brightest 3 percent of the place
 ground under them: the approved image 234, 211, 166 on 193, 163, 116; this look 221, 194, 143 on 178, 151,
 108, as the look before.
 
-MEASURED at the final tier as well (one picture, 587 s with nothing else running): 4.40 in the box, face
-3.0, limb 3.3, gas 5.0, 7.6, 4.7 and 4.5; the plain number is 7.76 (7.69 at the draft tier).
+MEASURED at the final tier on the look before this one (261f6dff, one picture, 587 s with nothing else
+running): 4.40 in the box as at its draft tier, face 3.0, limb 3.3, gas 5.0, 7.6, 4.7 and 4.5; the plain
+number 7.76 (7.69 at the draft tier). This look is measured at the draft tier only (plain 7.71).
 
 ## The cost
 
@@ -321,9 +325,9 @@ seconds of the next two):
 | c0a7f5ef | 116.0 | 94.8, 94.1 |
 | 6f6f1229 | 60.7 | 41.4, 41.0 |
 | a3df7524 | 55.0 | 35.1, 34.5 |
-| this look | 57.0 | 35.7, 35.4 |
+| 261f6dff | 57.0 | 35.7, 35.4 |
 
-The page's load and the link are the first minus the next: about 20 s in all five. The face of this look reads a second pattern on the sphere and the knots of the limb one more term: 0.6 to 0.9 s a picture. The gain is in the
+The page's load and the link are the first minus the next: about 20 s in all five. The look after 261f6dff changes values only and is not timed again alone (35 to 36 s a picture in a batch). The face of this look reads a second pattern on the sphere and the knots of the limb one more term: 0.6 to 0.9 s a picture. The gain is in the
 march: a lobe's strands are computed only where its weight is not zero, a knot's march is skipped where
 the ray misses its sphere, the fringe where its share is zero, a loop with no gain at all. The strands of
 the fringe walk only the lobes that have strands, by a list of their numbers (`uStrandLobe`, the cut of
