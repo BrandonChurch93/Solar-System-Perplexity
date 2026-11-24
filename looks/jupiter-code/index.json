@@ -1,9 +1,17 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T18:19:24.874Z",
+ "pushed": "2026-11-24T18:30:53.993Z",
  "head": "f8df0291a2bb00cfd1a334312d5a9d576bbb253c",
- "note": "18:21 UTC. Exposure by height is out, the four judged frames keep their bytes. Rise and dive pictures of that head render now. Next: new near and mid plates for rulings 3 and 1.",
+ "note": "18:46 UTC. Trial on paper for rulings 1 and 3: the plates keep the globe's oval at coarse scale and take the surface view's detail; no take spent yet. Rise pictures of the head still render.",
  "looks": [
+  {
+   "time": "2026-11-24T18:30:52.500Z",
+   "file": "20261124183052500-note-cand-near.jpg",
+   "source": "../work/r3/cand-near.jpg",
+   "kind": "note",
+   "label": "rulings 1 and 3, trial on paper: near plate as the globe's own picture above 0.6, 1 and 2 units of scale with the surface view's detail below it; last: the view laid back as it is. Globe to mid plate reads 0.08, 0.17, 0.38 (shipped 1.10, limit 0.45)",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-24T18:19:23.779Z",
    "file": "20261124181923779-note-Rm-above.jpg",
@@ -210,14 +218,6 @@
    "source": "../work/sky/Ds-a.jpg",
    "kind": "note",
    "label": "dive 2987 to 3021 draft, working tree: no terrain aim and the surface frame is the globe's, the sky stands still",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T16:59:04.703Z",
-   "file": "20261124165904703-note-dn-right.jpg",
-   "source": "../work/t/dn-right.jpg",
-   "kind": "note",
-   "label": "dive 2987 to 3001, right 480 px lifted: merge of main top, old world bottom",
    "stop": "jupiter"
   }
  ]
