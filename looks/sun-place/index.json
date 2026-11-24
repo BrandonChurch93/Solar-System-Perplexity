@@ -1,9 +1,41 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T07:08:21.250Z",
- "head": "eb28ae16c8387463e4555a18e400f8c1eb236b9e",
- "note": "MAIL 547 look only (frame 60 draft: bands 0.190 0.185 0.156 0.130 0.106 0.077 0.053 0.045 0.025; dark 0.221 body 0.578 pale 0.097 white 0.026; half width 6.0 px, 3378 shapes; distance 0.059; G17 median 1.19; blur 40 px ground 0.0546) and the seam on the engine's bend with the one move, path part green",
+ "pushed": "2026-11-24T07:17:44.444Z",
+ "head": "b3572b5f96d7fab0806e3a865d7ed3fe0d39893b",
+ "note": "b3572b5f: the rise on the one move, the surface view on the engine's bend, path part green; MAIL 540's sheet 206 to 220: no border, limb is the far edge, no jump at T after the corona and the far sky were set to come in above T's height. Look as in 640c4c59 (frame 60 draft: bands 0.190 0.185 0.156 0.130 0.106 0.077 0.053 0.045 0.025; dark 0.221 body 0.578 pale 0.097 white 0.026; half width 6.0 px, 3378 shapes; G17 median 1.19; blur 40 px ground 0.0546)",
  "looks": [
+  {
+   "time": "2026-11-24T07:17:42.885Z",
+   "file": "20261124071742885-note-e1-s6.jpg",
+   "source": "../../../../tmp/e1-s6.jpg",
+   "kind": "note",
+   "label": "frames 224, 228, 232, 240, 247, 258, 269 draft: the rise after T on the one move",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T07:17:41.136Z",
+   "file": "20261124071741136-note-e1-s5.jpg",
+   "source": "../../../../tmp/e1-s5.jpg",
+   "kind": "note",
+   "label": "frames 112, 128, 144, 160 (the bend of the surface view), 190, 198 (the rise before T), draft",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T07:17:39.843Z",
+   "file": "20261124071739843-note-e1-T.jpg",
+   "source": "../../../../tmp/e1-T.jpg",
+   "kind": "note",
+   "label": "frame 216 (close view, top) above 217 (globe, bottom), draft, rows 340 to 762 of 844 at 1500 wide",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T07:17:38.289Z",
+   "file": "20261124071738289-note-e1-s4.jpg",
+   "source": "../../../../tmp/e1-s4.jpg",
+   "kind": "note",
+   "label": "MAIL 540: frames 206 to 220 draft, every frame, T at 216 to 217, on the one move with the engine's bend (b3572b5f): no border of the set, the far edge is the ball's limb, no jump at T (mean change 21.33, 21.13, 21.77 at 216, 217, 218)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T07:08:20.160Z",
    "file": "20261124070820160-note-e1-s3.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/b1-sheet.jpg",
    "kind": "note",
    "label": "rise with the bend, draft, frames 120 to 247 (head d0ee5fc2)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T05:19:01.535Z",
-   "file": "20261124051901535-note-r23-near11.jpg",
-   "source": "out/work/sun/convect/r23-near11.jpg",
-   "kind": "note",
-   "label": "frame 60 near ground at one to one, review tier, approved left, mine right (trial r23, the state that is committed next)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T05:04:39.226Z",
-   "file": "20261124050439226-note-d20-near11.jpg",
-   "source": "out/work/sun/convect/d20-near11.jpg",
-   "kind": "note",
-   "label": "frame 60 near ground at one to one, approved left, mine right (draft, uncommitted trial d20)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T04:50:45.712Z",
-   "file": "20261124045045712-note-d12-near-pair.jpg",
-   "source": "out/work/sun/convect/d12-near-pair.jpg",
-   "kind": "note",
-   "label": "f60 draft, near ground pair, approved left, mine right (trial d12, uncommitted)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T04:50:45.179Z",
-   "file": "20261124045045179-note-d12-near11.jpg",
-   "source": "out/work/sun/convect/d12-near11.jpg",
-   "kind": "note",
-   "label": "f60 draft, the sun-near box at one to one, approved left, mine right (trial d12, uncommitted): bulbs with a graded flank and threads up the flank; still wrong: threads too even and white, cells pointed, creases thinner than approved",
    "stop": "sun"
   }
  ]
