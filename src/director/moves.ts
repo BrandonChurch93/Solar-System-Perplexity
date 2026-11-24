@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { config, type Segment } from '../config'
-import type { CoverHorizon, NearBody, Pose, ViewKind } from '../core/types'
+import { airAt } from '../core/air'
+import type { Air, AirKnot, CoverHorizon, NearBody, Pose, ViewKind } from '../core/types'
 import { handoverOf, oneMoveForced, sideAt, type HandoverParams, type Sidestep, type SkyShares } from './handover'
 import { bellShare, bellStep, checkFlanks, paceLimits, type Flanks } from './pace'
 import { coverFrames, coverWindow, setCoverWindow, setHandover, withoutHandover, type CoverTimings } from './timeline'
@@ -39,6 +40,8 @@ export interface MoveParams {
   coverHides?: number
   coverWindow?: CoverTimings
   handover?: HandoverParams
+  // PLAN F, the one air of the stop: knots from the highest down (AirKnot in src/core/types.ts). Absent: the stop has no air of this kind.
+  air?: AirKnot[]
   skyTurnEase?: { dive?: boolean; rise?: boolean }
   coverShell?: [number, number]
   coverSea?: { centre: [number, number, number]; radius: number; edge: [number, number] }
@@ -64,6 +67,7 @@ export interface TwinFrame { rotation: THREE.Quaternion; origin: THREE.Vector3; 
 interface Target { key: string; centre: THREE.Vector3; ahead: THREE.Vector3 }
 interface Coast { key: string; position: THREE.Vector3; velocity: THREE.Vector3; quaternion: THREE.Quaternion; spin: THREE.Vector3; vfov: number }
 interface Lean { key: string; front: boolean }
+interface Reach { key: string; start: number; step: number; reach: number[]; weight: number[] }
 
 const Y = new THREE.Vector3(0, 1, 0)
 const SURGE_STEPS = 2048
@@ -152,8 +156,10 @@ export class StopPlan {
   private readonly targets: Target[] = []
   private readonly coasts: Coast[] = []
   private readonly leans: Lean[] = []
+  private readonly reaches: Reach[] = []
   private readonly paces: { key: string; law: { pace: Flanks; turn: Flanks; liftPower: number } }[] = []
   private readonly swings: { key: string; angle: number }[] = []
+  private airs: { from: AirKnot[]; knots: AirKnot[] } | null = null
 
   constructor(id: string, fit: Fit, p: MoveParams) {
     this.id = id
@@ -544,6 +550,28 @@ export class StopPlan {
     return { pose: this.eye(kind, time, view), view }
   }
 
+  // PLAN F, the one air of this stop at a height of the lens over its body, in radii (SetState.height); null for a stop without knots.
+  // It takes a height and nothing else, so it is the same in the dive and in the rise and on both sides of a change of view. What the
+  // highest knot leaves out of exposure, sky, sunRadius and glare is the stop's light (light.exposure, light.skyExposure,
+  // light.sunRadiusDeg, light.sunGlare), and stars left out is 1, the flight's stars as they are. A stop's class gives other knots through
+  // airKnots; it cannot replace this.
+  air(height: number): Air | null {
+    const from = this.airKnots()
+    if (!from) return null
+    if (!Array.isArray(from) || from.length === 0) throw new Error(this.id + ': an air needs at least one knot')
+    if (this.airs?.from !== from) {
+      const l = this.p.light
+      this.airs = { from, knots: [{ exposure: l.exposure, sky: l.skyExposure, stars: 1, sunRadius: l.sunRadiusDeg, glare: l.sunGlare, ...from[0]! }, ...from.slice(1)] }
+    }
+    return airAt(this.airs.knots, height, this.id)
+  }
+
+  // The knots of this stop's air, from the highest down, or null: the stop's params by default. A class that builds them from values of
+  // its own gives the same array at every call. It gets no time: the air is a function of the height alone.
+  protected airKnots(): AirKnot[] | null {
+    return this.p.air ?? null
+  }
+
   // The height of the eye above the unit sphere of the body, in radii, at a time of this stop's hold, dive, surface view or rise. On the
   // one move it is one number for both views; on a path of the stop's own it is the height of the view the film draws.
   eyeHeight(time: number): number {
@@ -581,6 +609,8 @@ export class StopPlan {
   // where it has one, else handover.pace for both bells and 0 for the power: one share and the height alone, the move as it was.
   // Flanks too short for the segment are refused here, where the number is read: the steepest slope of a bell may not pass the step the
   // harness allows from one film frame to the next (smooth.path.maxStep).
+  // A stop may give a flank of either bell two corners in place of the one (pace.corners, turn.corners; Flanks in pace.ts). The film's
+  // law has none, and a bell without them is computed as before.
   eyeLaw(kind: 'dive' | 'rise'): { pace: Flanks; turn: Flanks; liftPower: number } {
     const seg = kind === 'dive' ? this.seg.dive : this.seg.rise
     if (!seg) throw new Error(this.id + ' has no ' + kind)
@@ -594,12 +624,13 @@ export class StopPlan {
       const checked = (flanks: Flanks, what: string): Flanks => {
         checkFlanks(flanks, 'the ' + kind + ' of ' + this.id)
         const step = bellStep(flanks, seg.frames)
-        if (step > limit) throw new Error('the ' + kind + ' of ' + this.id + ': with flanks of ' + flanks.rise + ' and ' + flanks.fall + ' and a corner of ' + flanks.corner + ' the ' + what + ' changes by ' + step.toFixed(4) + ' of its mean from one film frame to the next, the limit is ' + limit)
+        if (step > limit) throw new Error('the ' + kind + ' of ' + this.id + ': with flanks of ' + flanks.rise + ' and ' + flanks.fall + ' and a corner of ' + flanks.corner + (flanks.corners ? ' and corners of ' + JSON.stringify(flanks.corners) : '') + ' the ' + what + ' changes by ' + step.toFixed(4) + ' of its mean from one film frame to the next, the limit is ' + limit)
         return flanks
       }
-      const pace = checked({ rise: own?.pace?.rise ?? base.rise, fall: own?.pace?.fall ?? base.fall, corner: own?.pace?.corner ?? base.corner }, 'rate')
+      const two = (c: Flanks['corners']): { corners?: Flanks['corners'] } => (c ? { corners: c } : {})
+      const pace = checked({ rise: own?.pace?.rise ?? base.rise, fall: own?.pace?.fall ?? base.fall, corner: own?.pace?.corner ?? base.corner, ...two(own?.pace?.corners) }, 'rate')
       const from = film.turn ?? pace
-      const turn = own?.turn || film.turn ? checked({ rise: own?.turn?.rise ?? from.rise, fall: own?.turn?.fall ?? from.fall, corner: own?.turn?.corner ?? from.corner }, 'turn') : pace
+      const turn = own?.turn || film.turn ? checked({ rise: own?.turn?.rise ?? from.rise, fall: own?.turn?.fall ?? from.fall, corner: own?.turn?.corner ?? from.corner, ...two(own?.turn?.corners) }, 'turn') : pace
       const liftPower = own?.liftPower ?? film.liftPower ?? 0
       if (!(liftPower >= 0 && liftPower <= 2)) throw new Error('the ' + kind + ' of ' + this.id + ': liftPower must lie between 0 and 2')
       hit = { key, law: { pace, turn, liftPower } }
@@ -645,12 +676,47 @@ export class StopPlan {
     return hit
   }
 
+  // How far the near end of the one move is carried on beyond the seam, in seconds of the surface view's own motion at the seam.
+  // It is no count of frames: the surface view's motion goes out of the near end as the move itself goes on. Its carried part is the
+  // share of the move that is still to do (1 at the seam, 0 at the far end) raised to handover.carry.power, and the reach is the sum of
+  // that from the seam. So the eye leaves the seam at the surface view's own velocity and spin, keeps that drift under the move for as long
+  // as the move is slow, and the drift is gone where the move is fast. A fixed span of frames let the drift die before the move had picked
+  // up, and the speed of the picture fell before it rose (the rise of Earth forced onto the one move: 0.18 of the mean with 8 frames,
+  // 0.07 with this). The sum is taken handover.carry.stepsPerFrame times a film frame; between those times the reach is a cubic through
+  // the sums with the carried part as its slope, so it holds at any fraction of a frame.
+  private eyeReach(kind: 'dive' | 'rise', time: number): number {
+    const seg = kind === 'dive' ? this.seg.dive : this.seg.rise
+    if (!seg) throw new Error(this.id + ' has no ' + kind)
+    const carry = config.raw.handover.carry as { power: number; stepsPerFrame: number }
+    const pace = this.eyeLaw(kind).pace
+    const key = kind + '|' + JSON.stringify([pace, carry, seg.start, seg.end])
+    let hit = this.reaches.find((r) => r.key === key)
+    if (!hit) {
+      const dive = kind === 'dive'
+      const n = Math.max(Math.round(seg.frames * carry.stepsPerFrame), 2)
+      const step = (seg.end - seg.start) / n
+      const weight: number[] = []
+      for (let i = 0; i <= n; i++) weight.push(Math.pow(bellShare(dive ? i / n : 1 - i / n, pace), carry.power))
+      const reach: number[] = new Array<number>(n + 1).fill(0)
+      if (dive) for (let i = n - 1; i >= 0; i--) reach[i] = reach[i + 1]! - ((weight[i]! + weight[i + 1]!) / 2) * step
+      else for (let i = 1; i <= n; i++) reach[i] = reach[i - 1]! + ((weight[i - 1]! + weight[i]!) / 2) * step
+      hit = { key, start: seg.start, step, reach, weight }
+      if (this.reaches.length > 8) this.reaches.length = 0
+      this.reaches.push(hit)
+    }
+    const u = Math.min(Math.max((time - hit.start) / hit.step, 0), hit.reach.length - 1)
+    const i = Math.min(Math.floor(u), hit.reach.length - 2)
+    const s = u - i
+    const s2 = s * s
+    const s3 = s2 * s
+    return (2 * s3 - 3 * s2 + 1) * hit.reach[i]! + (s3 - 2 * s2 + s) * hit.weight[i]! * hit.step + (-2 * s3 + 3 * s2) * hit.reach[i + 1]! + (s3 - s2) * hit.weight[i + 1]! * hit.step
+  }
+
   // The near end of the one move: the surface view's pose at the seam carried on beyond the seam at the velocity and the spin it has there,
-  // no farther than handover.coastFrames of that motion, so the end the glide lands on is already moving as the surface view will.
+  // as far as eyeReach says, so the end the glide lands on is already moving as the surface view will.
   private eyeCoast(kind: 'dive' | 'rise', time: number): Pose {
     const c = this.eyeSeam(kind)
-    const span = config.raw.handover.coastFrames / config.fps
-    const reach = span > 0 ? span * Math.tanh((time - this.eyeSeamTime(kind)) / span) : 0
+    const reach = this.eyeReach(kind, time)
     const rate = c.spin.length()
     const turn = rate > 1e-12 ? new THREE.Quaternion().setFromAxisAngle(c.spin.clone().multiplyScalar(1 / rate), rate * reach) : new THREE.Quaternion()
     return { position: c.position.clone().addScaledVector(c.velocity, reach), quaternion: c.quaternion.clone().multiply(turn), vfov: c.vfov }
