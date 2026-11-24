@@ -10,7 +10,7 @@ export interface GlobePatches {
   spot: THREE.Vector3
   feather: number
   fade: [number, number]
-  place?: { centre: THREE.Vector3; from: number; tone: THREE.Texture; toneDeg: number; toneCloud: number[]; toneGrey: number[]; glint?: { at: number[]; win: number; feather: number; seenDeg: number[]; cloud: number[]; warm: number[]; glow: number[]; floor: number; light: THREE.Texture; sea: THREE.Texture }; earlyDeg: number; gain: number[]; day: number[]; low?: { map: THREE.Texture; eye: THREE.Vector3; angleDeg: number[]; fromDeg: number[]; window: { raster: number; size: number; offset: number[] }; feather: number; veil?: { map: THREE.Texture; slant: { power: number; reach: number; least: number }; times: number; feather: number } } }
+  place?: { centre: THREE.Vector3; from: number; tone: THREE.Texture; toneDeg: number; toneCloud: number[]; toneGrey: number[]; glint?: { at: number[]; win: number; feather: number; seenDeg: number[]; cloud: number[]; warm: number[]; glow: number[]; floor: number; light: THREE.Texture; sea: THREE.Texture }; earlyDeg: number; gain: number[]; day: number[]; low?: { eye: THREE.Vector3; fromDeg: number[]; window: { raster: number; size: number; offset: number[] }; feather: number; veil?: { map: THREE.Texture; slant: { power: number; reach: number; least: number }; times: number; feather: number } } }
 }
 
 export interface GlobeLook {
@@ -108,16 +108,13 @@ uniform vec3 uPlaceN;
 uniform vec3 uPlaceE;
 uniform vec3 uPlaceU;
 uniform sampler2D uTone;
-uniform sampler2D uLowPlate;
 uniform vec3 uTwinEye;
 uniform vec3 uEyeBody;
-uniform vec2 uLowAngle;
 uniform sampler2D uLowVeil;
 uniform vec3 uLowVeilSlant;
 uniform vec2 uLowVeilWin;
 uniform vec2 uLowFrom;
 uniform float uLowLook;
-uniform float uLowSize;
 uniform vec4 uLowWin;
 uniform vec4 uGlint;
 uniform vec2 uGlintSeen;
@@ -310,23 +307,14 @@ ${PATCH_LEVELS}
       vec2 lq = (qp - uLowWin.xy) * uLowWin.z;
       float lowHere = inside * smoothstep(0.5, 0.5 - uLowWin.w, max(abs(lq.x), abs(lq.y)));
       float lowOn = uLowLook * (1.0 - smoothstep(uLowFrom.x, uLowFrom.y, dot(d, normalize(uTwinEye))));
-      float there = lowHere * lowOn;
-      float off = dot(normalize(uEyeBody - d), normalize(uTwinEye - d));
-      float near = smoothstep(uLowAngle.x, uLowAngle.y, off);
-      float same = there * near;
-      for (int j = 0; j < (same > 0.0 ? 1 : 0); j++) {
-        vec3 lay = mix(albedo, textureGrad(uLowPlate, lq + 0.5, hx * uPlaceScale * uLowWin.z, hy * uPlaceScale * uLowWin.z).rgb, there);
-        albedo = near < 1.0 ? fromCode(mix(toCode(albedo), toCode(lay), near)) : lay;
-      }
       vec2 veilAt = qp * uLowVeilWin.x;
       float veilOn = uLowLook * frontH * smoothstep(0.5, 0.5 - uLowVeilWin.y, max(abs(veilAt.x), abs(veilAt.y)));
       for (int j = 0; j < (veilOn > 0.0 ? 1 : 0); j++) {
         vec4 haze = textureLod(uLowVeil, veilAt + 0.5, 0.0);
         float veilSeen = slantSeen(uLowVeilSlant, dot(normalize(uTwinEye - d), d), dot(normalize(uEyeBody - d), d));
         float veilOwn = lowHere * haze.a;
-        albedo = fromCode(clamp(toCode(albedo) + (veilOn * veilSeen * (1.0 - veilOwn) + lowOn * (veilSeen - near) * veilOwn) * haze.rgb, 0.0, 1.0));
+        albedo = fromCode(clamp(toCode(albedo) + (veilOn * (1.0 - veilOwn) + lowOn * veilOwn) * veilSeen * haze.rgb, 0.0, 1.0));
       }
-      texels = mix(texels, hd * uPlaceScale * uLowWin.z * uLowSize, step(0.5, same));
     }
     for (int k = 0; k < (uNear + uPlaceIn > 0.0 ? 1 : 0); k++) {
       vec4 tone = texture(uTone, h * uToneScale + 0.5);
@@ -468,7 +456,7 @@ export class Globe {
         uFeather: { value: p?.feather ?? 0.12 }, uPatchFade: { value: new THREE.Vector2(p?.fade[0] ?? 1.1, p?.fade[1] ?? 1.7) }, uPerLine: { value: 1 },
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
         uPatchPlace: { value: levels.map((i) => (i >= from ? 1 : 0)) }, uPlaceN: { value: centre }, uPlaceE: { value: centreEast }, uPlaceU: { value: centreNorth },
-        uTone: { value: p?.place?.tone ?? null }, uLowPlate: { value: p?.place?.low?.map ?? null }, uTwinEye: { value: p?.place?.low?.eye.clone() ?? new THREE.Vector3(0, 0, 2) }, uEyeBody: { value: new THREE.Vector3(0, 0, 4) }, uLowAngle: { value: new THREE.Vector2(Math.cos(rad(p?.place?.low?.angleDeg[0] ?? 35)), Math.cos(rad(p?.place?.low?.angleDeg[1] ?? 10))) }, uLowVeil: { value: p?.place?.low?.veil?.map ?? null }, uLowVeilSlant: { value: new THREE.Vector3(p?.place?.low?.veil?.slant.power ?? 1, p?.place?.low?.veil?.slant.reach ?? 1, p?.place?.low?.veil?.slant.least ?? 0.02) }, uLowVeilWin: { value: new THREE.Vector2(1 / (p?.place?.low?.veil?.times ?? 1), p?.place?.low?.veil?.feather ?? 0.01) }, uLowFrom: { value: new THREE.Vector2(Math.cos(rad(p?.place?.low?.fromDeg[1] ?? 5)), Math.cos(rad(p?.place?.low?.fromDeg[0] ?? 4))) }, uLowLook: { value: 0 }, uLowSize: { value: (p?.place?.low?.map.image as unknown as { width: number } | undefined)?.width ?? 1 }, uLowWin: { value: p?.place?.low ? new THREE.Vector4(p.place.low.window.offset[0]! / p.place.low.window.raster, p.place.low.window.offset[1]! / p.place.low.window.raster, p.place.low.window.raster / p.place.low.window.size, p.place.low.feather) : new THREE.Vector4(0, 0, 1, 0.01) }, uToneScale: { value: p?.place ? 1 / (2 * Math.tan(THREE.MathUtils.degToRad(p.place.toneDeg) / 2)) : 1 }, uNear: { value: 0 }, uPlaceScale: { value: from < MAX_PATCHES ? plane(from) : 1 }, uPlaceIn: { value: 0 }, uEarlyScale: { value: p?.place && from < MAX_PATCHES ? Math.tan(rad((p.widthsDeg[from] ?? p.place.earlyDeg) / 2)) / Math.tan(rad(p.place.earlyDeg / 2)) : 1 }, uToneCloud: { value: new THREE.Vector2().fromArray(p?.place?.toneCloud ?? [1, 2]) }, uToneGrey: { value: new THREE.Vector2().fromArray(p?.place?.toneGrey ?? [-2, -1]) }, uGlint: { value: new THREE.Vector4(p?.place?.glint?.at[0] ?? 0, p?.place?.glint?.at[1] ?? 0, p?.place?.glint?.win ?? 1, p?.place?.glint?.feather ?? 0.04) }, uGlintSeen: { value: p?.place?.glint ? new THREE.Vector2(Math.cos(rad(p.place.glint.seenDeg[0]!)), Math.cos(rad(p.place.glint.seenDeg[1]!))) : new THREE.Vector2(-3, -2) }, uGlintCloud: { value: new THREE.Vector4().fromArray([...(p?.place?.glint?.cloud ?? [254, 255]), ...(p?.place?.glint?.warm ?? [0, 1])]).multiplyScalar(1 / 255) }, uGlintGlow: { value: new THREE.Vector3(p?.place?.glint?.glow[0] ?? 0, p?.place?.glint?.glow[1] ?? 1, (p?.place?.glint?.floor ?? 1) / 255) }, uGlintLight: { value: p?.place?.glint?.light ?? null }, uGlintSea: { value: p?.place?.glint?.sea ?? null }, uPlaceGain: { value: new THREE.Vector3().fromArray(p?.place?.gain ?? [1, 1, 1]) }, uPlaceDay: { value: new THREE.Vector2().fromArray(p?.place?.day ?? [0, 1]) },
+        uTone: { value: p?.place?.tone ?? null }, uTwinEye: { value: p?.place?.low?.eye.clone() ?? new THREE.Vector3(0, 0, 2) }, uEyeBody: { value: new THREE.Vector3(0, 0, 4) }, uLowVeil: { value: p?.place?.low?.veil?.map ?? null }, uLowVeilSlant: { value: new THREE.Vector3(p?.place?.low?.veil?.slant.power ?? 1, p?.place?.low?.veil?.slant.reach ?? 1, p?.place?.low?.veil?.slant.least ?? 0.02) }, uLowVeilWin: { value: new THREE.Vector2(1 / (p?.place?.low?.veil?.times ?? 1), p?.place?.low?.veil?.feather ?? 0.01) }, uLowFrom: { value: new THREE.Vector2(Math.cos(rad(p?.place?.low?.fromDeg[1] ?? 5)), Math.cos(rad(p?.place?.low?.fromDeg[0] ?? 4))) }, uLowLook: { value: 0 }, uLowWin: { value: p?.place?.low ? new THREE.Vector4(p.place.low.window.offset[0]! / p.place.low.window.raster, p.place.low.window.offset[1]! / p.place.low.window.raster, p.place.low.window.raster / p.place.low.window.size, p.place.low.feather) : new THREE.Vector4(0, 0, 1, 0.01) }, uToneScale: { value: p?.place ? 1 / (2 * Math.tan(THREE.MathUtils.degToRad(p.place.toneDeg) / 2)) : 1 }, uNear: { value: 0 }, uPlaceScale: { value: from < MAX_PATCHES ? plane(from) : 1 }, uPlaceIn: { value: 0 }, uEarlyScale: { value: p?.place && from < MAX_PATCHES ? Math.tan(rad((p.widthsDeg[from] ?? p.place.earlyDeg) / 2)) / Math.tan(rad(p.place.earlyDeg / 2)) : 1 }, uToneCloud: { value: new THREE.Vector2().fromArray(p?.place?.toneCloud ?? [1, 2]) }, uToneGrey: { value: new THREE.Vector2().fromArray(p?.place?.toneGrey ?? [-2, -1]) }, uGlint: { value: new THREE.Vector4(p?.place?.glint?.at[0] ?? 0, p?.place?.glint?.at[1] ?? 0, p?.place?.glint?.win ?? 1, p?.place?.glint?.feather ?? 0.04) }, uGlintSeen: { value: p?.place?.glint ? new THREE.Vector2(Math.cos(rad(p.place.glint.seenDeg[0]!)), Math.cos(rad(p.place.glint.seenDeg[1]!))) : new THREE.Vector2(-3, -2) }, uGlintCloud: { value: new THREE.Vector4().fromArray([...(p?.place?.glint?.cloud ?? [254, 255]), ...(p?.place?.glint?.warm ?? [0, 1])]).multiplyScalar(1 / 255) }, uGlintGlow: { value: new THREE.Vector3(p?.place?.glint?.glow[0] ?? 0, p?.place?.glint?.glow[1] ?? 1, (p?.place?.glint?.floor ?? 1) / 255) }, uGlintLight: { value: p?.place?.glint?.light ?? null }, uGlintSea: { value: p?.place?.glint?.sea ?? null }, uPlaceGain: { value: new THREE.Vector3().fromArray(p?.place?.gain ?? [1, 1, 1]) }, uPlaceDay: { value: new THREE.Vector2().fromArray(p?.place?.day ?? [0, 1]) },
         uMapWidth: { value: o.mapWidth },
         uSpin: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
         uCurve: { value: l.curve.map((c) => new THREE.Vector3(c[0], c[1], c[2])) },

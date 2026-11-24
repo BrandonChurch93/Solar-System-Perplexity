@@ -3295,3 +3295,196 @@ Draft frames of 571f42dc that were missing, rendered 08:23 to 08:29 (out/work/ea
 Level step as the pictures part of smooth takes it (the frame against the middle of its two neighbours, grey mean, display values), on these draft frames at whole film frames, my own run of the formula and not the tool's: dive, largest 0.71 at 1863 (levels 86.15, 87.94, 88.32), then 0.42 at 1873; bend and rise, largest 0.53 at 2134, then 0.41 at 2136. The tool's limit is 1.3. In the NAMED mail I gave the change from one frame to the next (largest -2.92 into 2157), which is a different number: that one is the slope of the level, this one its bend. The tool's own pictures part (pop and pattern too, at rate 2) is still not run on this head.
 
 Looks pushed 08:30 (9a9b30cf), with dive-0a, dive-0b, bend-b and the 2010 pair.
+
+## MAIL 583 from the Builder (/root), 08:42 UTC, word for word
+
+MAIL 583 from the Builder (/root) to earth_builder. Your named commit 571f42dcbd079279ac3afd3b3efb3b6cabd441a6 is on the machines as proof tree 8a62463d (builder/proof-et1).
+
+MEASURED so far: path, place and parity green (eu1-03); judged finals 1755 equal to the reference (ab7cfd53) and 2010 c3956984, as you stated. Still out: the pictures of dive and rise (eu1-01, eu1-02), the handover report, the measure, the gate and the counts. The 90 minutes of d186 run from the last part of that report.
+
+Rulings on your mail:
+1. Do not wait for the report. Your own list is the work of your second commit, and every point on it would be named by a critic: the plate that reads as laid on the map (1876 to 1893, 2121 to 2136), the stars that come up in 2129 to 2137, the bright green island at the right border, the limb line that changes colour for one frame at T (1918/1919, 2100/2101), the glint as a pale streak. Start now.
+2. The engine's one move: take it into the second commit if it is green on path in both moves and no judged frame moves by it; say in NAMED that you did, and I take the line of handover.ownPath with it. If it costs you the picture anywhere, stay on your own path, which is green.
+3. A warning from the first reports of the other stops: every one of them is red on one number, the pattern that changes in place (limit 0.45, measured 0.5 to 1.6), where a level of the ground or of the clouds is exchanged for another while the camera comes down. Your plate "laid on the map" is that fault. Whatever a finer level adds must be finer than what the coarser one already shows, and the coarse pattern must stay; nothing is exchanged in place, by time or by distance.
+One line back that you have this.
+
+ANSWER sent 08:43, one line: I have it; the second commit is started on my own list with the pattern that is exchanged in place first, the one move only if it is green on path in both moves and costs no picture, and I do not wait for the report.
+
+## 08:31 to 08:58 UTC: the named tree measured for the pattern that changes in place
+
+Sky trial 08:31 to 08:41 (out/work/earth/place/n2, sheets skycmp-a, b, c): `sky.low [0.034, 3.3]` in place of `[0.12, 0.5]`. In the rise the stars are first seen between 2120 and 2126 in place of 2129 and grow more slowly, to about 2144. A gain, not a cure. Taken back for the moment; the bounds are: the hold needs low[1] at most 3.36, the rise at T needs low[0] at least 0.0337.
+
+The tool's pictures function (tools/img/smooth.py, op pictures) on my whole draft frames of 571f42dc at rate 1, no body mask (my own run, an estimate): dive level step 0.70 at 1863, pop 1.20 at 1891, pattern 0.93 at 1890 and over 0.45 at 1837 to 1848 and 1882 to 1899; rise level step 0.54 at 2134, pop 1.13 at 2119, pattern 1.05 at 2126 and over 0.45 at 2107 to 2133 and 2135. The early part of the dive (1837 to 1848) lies at the right limb beside the aurora, where the far side map comes in by the hold's away ramp; it is not the place.
+
+The same function with the tool's own poses and body mask, at rate 2, on the named tree, window 1878 to 1908 (out/work/earth/place/tmp/pics2.ts, 62 draft frames, 08:42 to 08:58), as printed:
+- levelStep 1879: 0.16 | 1885 + 1/2: 0.15 | 1891 + 1/2: 0.13 (limit 1.3)
+- pop 1892: 1.09 | 1891 + 1/2: 1.09 | 1892 + 1/2: 1.08 (limit 1.2, none over)
+- pattern 1890: 1.06 | 1889 + 1/2: 1.05 | 1889: 1.02 | 1890 + 1/2: 0.99 (limit 0.45)
+- pattern over 0.45: every half frame from 1882 to 1897. By frame: 1878 0.42, 1880 0.39, 1882 0.50, 1884 0.77, 1886 0.86, 1888 0.95, 1890 1.06, 1892 0.76, 1894 0.70, 1896 0.63, 1897 0.56, 1898 0.36, 1900 0.12.
+- where: the far field behind the place, from left of the middle (580, 240 of 1920 by 1080) to the right top (1516, 60 at 1893 to 1895).
+So the named tree is red on this number in the dive, as MAIL 583 warns. The rise window was not run (stopped to start the cure); my estimate above says 1.05 at 2126.
+
+What is exchanged (pattern maps pmap-dive, plate against lay back in the looks): in the far field the map's land, sea and small clouds seen from above give way within about 8 film frames to the close picture's hazy cloud deck: the detail by the angle gate (35 to 10 degrees) and the height gate (0.6 to 0.25), the haze by the slant law. The near part does not change (plate and lay back are one picture there).
+
+## MAIL 596 from the Builder (/root), about 09:03 UTC, word for word
+
+MAIL 596 from the Builder (/root) to the nine stop builders. A check tool for the pattern number is on main 81d568a7 (globe_engineer's NAMED f65859e1): `assets-src/shared/globe-levels.py`. It lays one level of a plate pyramid against the part of its parent that it covers, both at the state in which the level comes in (a parent texel 0.8 px of the frame), and judges the pair with the smooth report's own `pattern` function and the config's numbers. Seconds, no render. Merge main, or copy that one file to the same path in your tree, then:
+python3 assets-src/shared/globe-levels.py --dir public/assets/ID/full --json src/stops/ID/FILE.json [--key levels] [--suffix=-dive] [--pairs 0-1,1-3] [--panel out.png]
+or with the levels by hand: --level FILE:WIDTHDEG[:EASTDEG,NORTHDEG] twice or more (a plate given by the tangent of its half width: WIDTHDEG = 2 atan of it). One line a pair, OVER and exit 1 above smooth.pictures.maxPattern. It reads files, not the shader: a pair is a test only when both files are the same kind of picture (colour with colour, light with light), and it knows nothing of what a stop does with a level by height.
+
+MEASURED by me on main's Mars (the old plates): 0.06, 0.00, 0.06, 0.00, 0.00, 0.00, 0.00 in 3.5 s, as its author states. MEASURED by globe_engineer on the proof trees of the first named commits (not checked by me), 99th percentile against 0.45:
+- Mars b83618ec: patch-19 to land-8p5 1.19 OVER, land-3p8 to land-1p6 0.69 OVER, land-1p6 to land-0p7 0.59 OVER, land-0p7 to land-0p3 0.98 OVER; the other three pairs 0.00 to 0.09. In the panel of the first pair the parent shows a bright mound with a crater where the child shows a dark plain with the canyon crack.
+- Mercury 9b5f55cd: patch-1 to patch-2 1.09 OVER (dive), patch-2 to patch-3r 0.70 OVER (rise), the others 0.01 to 0.02.
+- Uranus 9a369939: every pair 0.00 to 0.01. Its red is not in the plates.
+- Venus 3b52b0eb: colour 0.01 and 0.02; light a to b 0.20 and 0.13; light b to d 1.12 and 1.10 OVER, with a caution (the two light plates may not be the same quantity).
+- Not run: Saturn, Jupiter, Earth, Neptune, the Sun.
+
+RULED. Where a pair is over, two levels show two different pictures of the same ground, the red pattern number of that move is true, and no exchange by height, however slow, cures it (plan F: one place). The cure is in the files: a level is made from the level under it, or both from one source, so that reduced to its parent's scale it is its parent. Where every pair is clean and the move is still red, the cause is in what the shader adds by height or angle (a second look mixed in, a function layer, a light term), and the same rule holds there: one ground, one law of light, borders set on the ground. No limit moves.
+
+Asked of each of you: run it now on every pyramid your dive and rise show (both sets where they differ) and put its lines into your next NAMED mail. A pair over the limit is named there as red, with its cure. This changes no due time.
+
+## MAIL 601 from the Builder (/root), about 09:05 UTC, word for word
+
+MAIL 601 from the Builder (/root) to earth_builder. First picture part on your named 571f42dc (proof tree 8a62463d), MEASURED on the machines (eu1-02, the rise). The dive pictures, the handover report, the measure and the counts are still out; your 90 minutes start when the last picture part is with you.
+RED on two lines:
+- a pop of 1.204 from 2088 to the next (limit 1.2);
+- the pattern of the picture changes in place by 0.95 from 2118 to 8 film frames later (limit 0.45, 53 capture frames over, first 2108 + 1/2).
+Green so far: path, place and parity (eu1-03), the gate (tsc 0, 443 tests, G11 and G15).
+MAIL 596 (the level check) has not been run on Earth by anyone: run it on both pyramids now, it takes seconds, and start on whatever pair is over without waiting for the other parts.
+Attached: the rise's report and its two panels.
+
+## MAIL 606 from the Builder (/root), about 09:07 UTC, word for word
+
+MAIL 606 from the Builder (/root) to earth_builder. Second picture part on your named 571f42dc (proof tree 8a62463d), MEASURED on the machines (eu1-01, the dive). RED on two lines:
+- a pop of 1.21 from 1918 + 1/2 to the next (limit 1.2), which is the capture frame before your change of view at 1919;
+- the pattern of the picture changes in place by 1.06 from 1890 to 8 film frames later (limit 0.45, 31 capture frames over, first 1882).
+With MAIL 601 both picture parts are with you, so by d186 your second commit is due by 10:37 UTC. The handover report, the measure and the counts are still out and come without moving that time. In NAMED: the level check lines of MAIL 596 for both pyramids, your own smooth lines, 1755 and 2010 beside the kept stills, your own list of what is wrong.
+Attached: the dive's report and its two panels.
+
+## MAIL 613 from the Builder (/root), about 09:20 UTC, word for word
+
+MAIL 613 from the Builder (/root) to the nine stop builders (one text to all). What still runs by the clock in the engine's defaults, and what you owe on it. It moves no due time.
+
+MEASURED by handover_engineer on main 2cf0b0b7 with the film's own functions over every frame of every dive and rise: the cover is 0 everywhere, so it is not a cause. Two weights are a smooth of TIME, not of place:
+- the default sky weight: where a stop gives no sky share of its own, the close view's sky patches are drawn in the globe's view over `skyFrames` (24) frames up to T in a dive and after T in a rise;
+- the default place weight: where `picture` is on, the place picture fades over the ground over `placeFrames` (12) frames.
+Spans on main: Mercury dive sky 736 to 759 (T 760), rise sky 978 to 1001 (T 977). Venus dive sky 1319 to 1342 and picture 1331 to 1342 (T 1343), rise picture 1543 to 1554 and sky 1543 to 1566 (T 1542). Mars dive sky 2451 to 2474 and picture 2463 to 2474 (T 2475), rise picture 2688 to 2699 and sky 2688 to 2711 (T 2687). Saturn: none. Uranus: none of the default (its own plan functions). The Sun, Earth, Jupiter and Neptune use the default sky as well; their spans follow from their own T in the same way.
+Against the red pattern ranges of the first named commits: Mercury 744 + 1/2 and 982 + 1/2, Venus 1326 and 1543 + 1/2, Mars 2449 and 2694 lie inside these spans. The first red frames of Mercury (712 + 1/2), Mars (2433, 2674) and Uranus (4388) lie before any such weight moves: those are the globe's own draw. NOT KNOWN yet: how much of each number is the sky's fade, the picture's fade and the globe's own draw; handover_engineer runs that test now and you get its table.
+
+RULED (plan F: "No element of a dive or a rise appears, fades or changes with the clock. Whatever blends does so by distance, height or angle"):
+1. The engine's two defaults are being changed to read the eye's height in place of the time (handover_engineer, proven on the machines before it goes onto main). It stays a fade between two skies.
+2. So each of you still owes, in your next named commit or named red in it with its cure: one sky and one haze on both sides of your change of view, by height, so that `skyFrames` can be 0; and no place picture where its plates are not the globe's own ground. The hooks are on main: `handover.KIND.picture: false`, `skyFrames: 0`, your plan's sky share by `plan.eyeHeight(time)`, `Relief.presence(share)` by height, `plan.air(height)`.
+3. In NAMED, one line: which of these your stop sets, and the frames in which anything of yours still reads the time inside a dive or a rise (none is the answer asked for; drift of clouds, plasma or rings in their own time is not meant).
+
+## 09:05 to 09:35 UTC: the level check of MAIL 596, one ground in the files, and what is still exchanged
+
+The tool: `assets-src/shared/globe-levels.py` of main 81d568a7, copied to the same path (not staged, it is not in my folders). My levels are windows of a raster and lie on two planes, so I call it through `python3 assets-src/earth/place/levelcheck.py full|web`: it turns each level's window into the tool's `--level FILE:WIDTHDEG:EASTDEG,NORTHDEG`, and for the pair across the two planes it carries `place-12.jpg` onto the plane about the spot first.
+
+The named tree 571f42dc, lines as printed (full set):
+
+under, the plane about the spot: full
+- patch-96.jpg -> patch-48.jpg: 1642 texels of the parent across, child 4096, grid 328, judged 1.00 of it, median 0.01, 99th percentile 0.37 (limit 0.45), 100 percent of the worst 1 percent in the outer tenth
+- patch-48.jpg -> patch-24.jpg: 1955 texels of the parent across, child 4096, grid 391, judged 1.00 of it, median 0.00, 99th percentile 0.54 (limit 0.45) OVER, 100 percent of the worst 1 percent in the outer tenth
+place, the plane about the centre: full
+- place-12.jpg -> place-5.jpg: 1792 texels of the parent across, child 2688, grid 358, judged 0.98 of it, median 0.00, 99th percentile 0.00 (limit 0.45), 23 percent of the worst 1 percent in the outer tenth
+plate against the low look (place-12 -> place-12-low): full
+- place-12.jpg -> place-12-low.jpg: 3456 texels of the parent across, child 2048, grid 691, judged 0.76 of it, median 0.04, 99th percentile 1.27 (limit 0.45) OVER, 7 percent of the worst 1 percent in the outer tenth
+last level under against the first place level, carried onto the plane about the spot (inside the file: 0.992): full
+- public/assets/earth/full/patch-24.jpg -> place-12 carried onto the plane about the spot: 2015 texels of the parent across, child 4096, grid 403, judged 1.00 of it, median 0.00, 99th percentile 0.07 (limit 0.45), 100 percent of the worst 1 percent in the outer tenth
+
+Web set of the named tree:
+
+under, the plane about the spot: web
+- patch-96.jpg -> patch-48.jpg: 821 texels of the parent across, child 2048, grid 164, judged 1.00 of it, median 0.01, 99th percentile 0.11 (limit 0.45), 31 percent of the worst 1 percent in the outer tenth
+- patch-48.jpg -> patch-24.jpg: 978 texels of the parent across, child 2048, grid 196, judged 1.00 of it, median 0.00, 99th percentile 0.13 (limit 0.45), 100 percent of the worst 1 percent in the outer tenth
+place, the plane about the centre: web
+- place-12.jpg -> place-5.jpg: 896 texels of the parent across, child 1344, grid 179, judged 1.00 of it, median 0.00, 99th percentile 0.00 (limit 0.45), 100 percent of the worst 1 percent in the outer tenth
+plate against the low look (place-12 -> place-12-low): web
+- place-12.jpg -> place-12-low.jpg: 1728 texels of the parent across, child 1024, grid 346, judged 0.78 of it, median 0.07, 99th percentile 1.24 (limit 0.45) OVER, 0 percent of the worst 1 percent in the outer tenth
+last level under against the first place level, carried onto the plane about the spot (inside the file: 0.992): web
+- public/assets/earth/web/patch-24.jpg -> place-12 carried onto the plane about the spot: 1007 texels of the parent across, child 2048, grid 201, judged 1.00 of it, median 0.00, 99th percentile 0.03 (limit 0.45), 100 percent of the worst 1 percent in the outer tenth
+
+Two pairs over on the full set. (1) `patch-48.jpg` to `patch-24.jpg`, 0.54, all of the worst 1 percent in the outer tenth: the strip of `patch-24.jpg` past the hold's level, which took all its detail under 0.4 degrees from the ring take. (2) The plate against the low look (`place-12.jpg` to `place-12-low.jpg`), 1.27 (web 1.24): two pictures of the same ground, exchanged by angle and height in the shader. This is the pair MAIL 596 rules on.
+
+Cures in the files (`levels.py`, `mend.json`, `place.json`, `globe.ts`, `set.ts`):
+
+1. One ground. `place-12-low.jpg` is gone. `levels.py` lays the lay back less its haze into the plate itself, past `plates.low.fromDeg` degrees from the point under the close camera and inside `plates.low.window`, read exactly as the globe read the low look from above (the veil's texels as half floats, enlarged the way the shader samples them, the same gate in cosines), and lays the same difference into the fine level and into the levels 24, 48 and 96 through the plate's footprint. The shader no longer mixes a second picture by angle and height: the block of `globe.ts` keeps only the veil, added by the slant law, with the height gate of the plate itself (`plates.low.height` 3.2 to 1.4, the heights of `look.ts descent.place`). The uniforms `uLowPlate`, `uLowAngle`, `uLowSize` are gone. Printed by `levels.py`: `one ground: the plate takes the lay back less its haze past [4.2, 5.0] degrees, share of the plate 0.4408 mean change there (BGR) [ 0.1 -0.  -0.1] share of it under 0 by channel [0.0002 0.0008 0.0572] over 255 [0.     0.0001 0.0003] mean lost under 0 [-0.   -0.01 -0.97]`. So in 5.7 percent of the far part the red channel would fall under 0 and stands at 0; there the close view is redder than the lay back was (mean 1.0 code values over the far part).
+2. The strip of `patch-24.jpg`: `mend.json strip.lowDeg` 0.4 to 0.006, so the strip is level 48 enlarged and the ring take adds only what is finer than a texel of level 48.
+
+After the cures, lines as printed (full set):
+
+under, the plane about the spot: full
+- patch-96.jpg -> patch-48.jpg: 1642 texels of the parent across, child 4096, grid 328, judged 1.00 of it, median 0.01, 99th percentile 0.37 (limit 0.45), 100 percent of the worst 1 percent in the outer tenth
+- patch-48.jpg -> patch-24.jpg: 1955 texels of the parent across, child 4096, grid 391, judged 1.00 of it, median 0.00, 99th percentile 0.06 (limit 0.45), 70 percent of the worst 1 percent in the outer tenth
+place, the plane about the centre: full
+- place-12.jpg -> place-5.jpg: 1792 texels of the parent across, child 2688, grid 358, judged 0.98 of it, median 0.00, 99th percentile 0.00 (limit 0.45), 23 percent of the worst 1 percent in the outer tenth
+no low look: the plate holds the lay back itself: full
+last level under against the first place level, carried onto the plane about the spot (inside the file: 0.992): full
+- public/assets/earth/full/patch-24.jpg -> place-12 carried onto the plane about the spot: 2015 texels of the parent across, child 4096, grid 403, judged 1.00 of it, median 0.00, 99th percentile 0.07 (limit 0.45), 100 percent of the worst 1 percent in the outer tenth
+
+Web set:
+
+under, the plane about the spot: web
+- patch-96.jpg -> patch-48.jpg: 821 texels of the parent across, child 2048, grid 164, judged 1.00 of it, median 0.01, 99th percentile 0.11 (limit 0.45), 31 percent of the worst 1 percent in the outer tenth
+- patch-48.jpg -> patch-24.jpg: 978 texels of the parent across, child 2048, grid 196, judged 1.00 of it, median 0.00, 99th percentile 0.05 (limit 0.45), 29 percent of the worst 1 percent in the outer tenth
+place, the plane about the centre: web
+- place-12.jpg -> place-5.jpg: 896 texels of the parent across, child 1344, grid 179, judged 1.00 of it, median 0.00, 99th percentile 0.00 (limit 0.45), 100 percent of the worst 1 percent in the outer tenth
+no low look: the plate holds the lay back itself: web
+last level under against the first place level, carried onto the plane about the spot (inside the file: 0.992): web
+- public/assets/earth/web/patch-24.jpg -> place-12 carried onto the plane about the spot: 1007 texels of the parent across, child 2048, grid 201, judged 1.00 of it, median 0.00, 99th percentile 0.03 (limit 0.45), 100 percent of the worst 1 percent in the outer tenth
+
+Every pair is under the limit on both sets. `place-tone.bin`, `place-12-low-veil.bin` and the two glint files came out of `levels.py` with the bytes they had (git shows no change).
+
+What the frames say (draft tier, whole frames, the tool's function through `/tmp/gl/s7/pics.py`, pairs 8 frames apart):
+
+- Trial b1 (the low look on at every angle below height 1.4, which is the same picture as one ground in the files; frames 1878 to 1898 at rate 2, the whole frames judged): pattern 0.92 at 1890, 0.85 at 1889, 0.82 at 1887, 0.81 at 1888, 0.81 at 1886, 0.79 at 1885, 0.70 at 1884, 0.57 at 1883; over 0.45 from 1883 to 1890 (1890 is the last frame of this run that has its partner). The named tree gave 1.06 at 1890. So the exchange of the detail by angle was the smaller part of the red number.
+- The file version against trial b1 (frames 1870 and 1890): mean difference 0.43 and 0.42 display values, 99th percentile 13 and 9.
+- Trial vA (the close view's ground on the globe from the height at which the plate comes in, at every angle): from above (1864, 1870, 1876) the ground is a dark blob with a blue shadow wedge over the place. Not taken; the ground keeps its angle gate (`onGlobe.angleDeg` 35 to 10, `onGlobe.height` 0.6 to 0.25, now its own keys). Its pattern on every second frame (pairs 8 frames apart, motion chained over 4 steps, so only a rough number): 0.28 at 1882, 0.38 at 1884, 0.72 at 1886, 0.71 at 1888, 0.53 at 1890, against trial b1 by the same rough measure 0.42, 0.70, 0.84, 0.96, 0.53. So the ground's angle gate is one part of what is left and not the whole.
+- Where the rest sits: at the top of the body, in the far field under the limb. What changes there from 1884 to 1906 is the veil, which comes by the slant law. NOT MEASURED apart from the ground, but read from the recipe: the veil is the lay back less the repaint blurred over 0.4 degrees, so it is not only a haze. It carries every difference between the two pictures that is broader than 0.4 degrees (the repaint shows land, coast and sea where the close picture shows a cloud deck), and in the far field, seen flat, those sizes fall into the 8 to 40 px the tool judges. So the far zone is still two pictures of the same ground at its broad scales, exchanged by slant.
+
+The cure that follows from MAIL 596 and is NOT in this commit: the far zone of the plate must be the lay back at every scale, and the veil only a law of light (a function of the distance from the point under the close camera, smooth). Then from above the far zone shows the close picture's cloud deck itself, stretched, with the straight edges of the close picture's frame on the ground; that needs picture work on the far zone (its edges set on the ground in the deck's own shapes, the stretch marks) before it can be shown from above. It is the first point of the third commit.
+
+Also in this commit: `sky.low` 0.12, 0.5 to 0.034, 3.3 (the sky trial of 08:30: the stars of the hold's sky come and go over nearly the whole move in place of 2129 to 2137).
+
+## MAIL 621 (about 09:35 UTC), word for word
+
+MAIL 621 from the Builder (/root) to every builder with a commit due. One sandbox (travel_builder's) lost its GitHub login between 09:12 and 09:28 UTC: fetch still works, push ends with "could not read Username". It may happen to yours.
+1. Test now, it costs seconds and changes nothing: git push --dry-run origin HEAD:refs/heads/YOUR-BRANCH. If it fails for the login, tell me in one line.
+2. If it fails, now or later: do not look for another credential and do not wait. Send me the commit as a bundle: git bundle create NAME.bundle origin/main..HEAD (or the range from the last commit of yours that is on the remote), attached to your NAMED mail, with the full sha and the branch it belongs on. I verify the bundle, push the commit unchanged to that branch and answer with the ls-remote line. The time of your mail counts as the time of the NAMED.
+3. Looks branches: the same way, or attach the pictures themselves (10 files a message).
+
+## MAIL 622 (about 09:37 UTC), word for word
+
+MAIL 622 from the Builder (/root) to earth_builder. One more finding on 571f42dc (proof tree 8a62463d), MEASURED on the machines, which my report in MAIL 606 left out: the judged surface frame 2010 is not main's frame. Its draft differs from main's draft and its final differs from main's final (1755 is equal at both tiers; the nine drafts inside your dive and rise differ as they must; nothing else in the film differs).
+1. Say in one line what changed 2010 and whether you meant it. A change of the path alone must not move the judged surface frame (d196: the surface view is one flight, and its judged frame keeps its camera). A change of the ground under it is yours to make, but it is then judged beside the approved image, so it has to be named.
+2. I have asked a machine for the final of 2010 on your tree as a picture and show it beside the approved image in the next status; you get the pair.
+3. In your second NAMED (due 10:37 UTC): the hashes of 1755 and 2010 at the final tier that you expect, and 2010 beside the kept still.
+
+09:36 UTC. Answer to MAIL 622 item 1 sent to /root (high). What changed 2010 is the ground under the camera, on purpose, by step 3 (3a6b1844 and f17274e7, the closed towers and their rim rule), not the path. Measured again on the two files I hold (kept still of MAIL 546 against the final of 571f42dc, sha c3956984): 19230 of 2073600 pixels differ, largest 5, 176 over 1, 39 over 2; in a grid of 16 by 9 no cell above row 3 or below row 8 has any, the fullest cell 15.6 percent. On a6c484d6 (before the path change) the same compare gave 19310 pixels, largest 7.
+
+MAIL 621: `git push --dry-run origin HEAD:refs/heads/agent/earth-place` at 09:34 printed "Everything up-to-date", exit 0. The login holds; no mail owed.
+
+## What of Earth still reads the time inside the dive or the rise (for MAIL 613)
+
+Read in `set.ts` on the tree of the second commit:
+
+- `handover.dive` and `handover.rise` of `place.json`: `placeFrames` 0 (no place picture: the plates are the globe's own ground), `skyFrames` 120, `dissolveFrames` 1. The sky weights are Earth's own, by the eye's height (`sky.low` 0.034 to 3.3 on a log scale); `skyWeights` divides the engine's share by time out again, so the 120 frames only keep that share off 0 and 1 inside the moves and do not shape the picture. The hooks `skyFrames: 0`, `plan.eyeHeight`, `plan.air(height)`, `Relief.presence(share)` are on a newer main than the one this commit stands on (09d64d78) and are not used yet.
+- `away` (the globe's look from the hold's to the near one, and the aurora's `uAway`, `uFree`): in the rise by nearness (`look.back` 1.03 to 1.35), in the dive by the time since the end of the hold over `look.away` 0 to 0.85 s. That is frames 1830 to 1855. RED for MAIL 613, not cured in this commit. Cure: the dive takes the law the rise has (nearness), with its own pair of values so that the frames keep their look, proved on 1830 to 1860.
+- `flow` (the drift of the clouds eases out before the hold's end and before the rise's end), `plan.clock`, `plan.spin`, the Moon: clouds and bodies in their own time, not meant by the mail.
+- `born` and `gone`: the aurora's onset in the hold and its ebb after the end of the rise; outside the two moves.
+- The ground and the veil: by height and by slant only. The plate: by height (`uPlaceIn`), the levels by texel density.
+
+## 09:31 to 09:41 UTC: the gate of the second commit
+
+On the tree of the second commit (one ground in the files, the strip, the wide sky heights), built at 09:30:
+
+- `npx tsc --noEmit`: no output.
+- `npx vitest run`, alone, 09:31 to 09:37: "Test Files  45 passed (45)", "Tests  427 passed (427)", 383 s.
+- `npm run -s gate -- --phase 6 --only G11,G15 --g15-stops earth`: "PASS G11  every asset has a row or a recipe", "PASS G15  at most 2 sets per frame; finished stops: earth/web 349 MB, earth/full 1371 MB" (the named tree: 1394 MB).
+- `npm run -s smooth -- --stop earth --only path`: "VERDICT: green. No number is over its limit."
+- `npx tsx tools/seam.ts --stop earth`: dive lowest 0.987 at 1919, rise lowest 1.000 at 2100, as on the named tree.
+- Final still of 1755 (68.2 s, 16 samples): sha256 ab7cfd53903f36457e433cdd4d37258ca4d385209b64559ee608e97404642c35, the kept still of MAIL 546 byte for byte.
+
+A first try of the final still at 09:37 refused ("refusing to start: 2.2 GB free, need 3"); old frame sets of the work folder were deleted (c1, the pictures of k1 and kb1, five small sets), 4.6 GB free after it.
+
+Not rendered before this commit: the rise with one ground and the wide sky, the dive above 1870 with the wide sky, parity, the final of 2010. They run now and their lines follow in the next section.
