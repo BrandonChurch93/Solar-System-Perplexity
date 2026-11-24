@@ -1,9 +1,17 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T17:05:58.569Z",
- "head": "8bcb6a8cf61d0598d8e606f2b0a8fd93f2ddd1a7",
- "note": "17:06 UTC, commit 8bcb6a8c (grade of the fall as one text). 4860 beside the approved: G17 1.382 / 0.741. What draws the specks of the dim side: the globe's own map (fields of small cloud); they are white now, not orange. RED by my proxy, named: rise pair 4988 to 4996 0.48 (limit 0.45), the same with the scene off, so not the exchange; hump 4696 at the limb 0.65. About 7.4 s a preview draft frame.",
+ "pushed": "2026-11-24T17:32:08.998Z",
+ "head": "b175a5d667c30338c2a37e8d767a4f2e3612cd13",
+ "note": "4860 beside approved, G17 1.382/0.741, 7.4 s a preview draft frame. KNOWN RED being traced: 4605 at preview draft has other bytes since the merge of main 1896a516 (a2b1f371, was 9ef19839; 1265 px, largest 5 levels, spread thin over the frame); my code is the same on both sides, cause not found yet (not farsun shader, not warm.json). Dusk trial for the white specks waits on it.",
  "looks": [
+  {
+   "time": "2026-11-24T17:32:08.290Z",
+   "file": "20261124173208290-note-look-h0-4860.jpg",
+   "source": "out/work/nep/weave/look-h0-4860.jpg",
+   "kind": "note",
+   "label": "4860 now (b175a5d6, on main 1896a516) beside the approved close image. G17 1.382 / 0.741",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T17:05:31.795Z",
    "file": "20261124170531795-note-g3d-dive-a.jpg",
@@ -58,14 +66,6 @@
    "source": "out/work/nep/weave/b1-limb-right.jpg",
    "kind": "note",
    "label": "The limb on the right, 4732 to 4752: rows 1 and 3 as pushed (scene's border 16 to 26 degrees), rows 2 and 4 the control without the border: the same picture, so the border does not draw it. The white band of the map by the limb sets under the horizon between 4736 and 4744 as the eye sinks from 0.116 to 0.063 radii",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T16:49:18.778Z",
-   "file": "20261124164918778-note-g3-crops.jpg",
-   "source": "out/work/nep/weave/g3-crops.jpg",
-   "kind": "note",
-   "label": "The grade of the fall as one text (trial, not committed): left as pushed, middle now, right the control without the grade. The grade drew the orange specks and the lilac (each channel raised to its own power, off the line too); now red and blue go no further from the line than the green's level carries them, the deck's blue is to the bit what it was. 4988 night side and limb cloud, 4720 bands, 4707, 4860 far band",
    "stop": "neptune"
   }
  ]
