@@ -1,9 +1,33 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-24T22:59:41.138Z",
+ "pushed": "2026-11-24T23:08:20.884Z",
  "head": "e9e2c3a72b60ef94a56fb30619383372aa28eab1",
- "note": "rise sheets of the tops law by lane only, and the 4375 corner patch at native size: it is fixed on the ground and passes out of frame, its flat look with a cut edge is open",
+ "note": "sky ruling C measured: the hold's picture never exchanges in frame (leaves at lower right by 4139 at weight 1, weight falls 4151 to 4160 out of frame); cure 2 seen beside the hero",
  "looks": [
+  {
+   "time": "2026-11-24T23:08:20.211Z",
+   "file": "20261124230820211-note-hold4.jpg",
+   "source": "../../../../tmp/y2/hold4.jpg",
+   "kind": "note",
+   "label": "half size: hero, named final 4035, draft 4035 with cure 2, draft 4454 (rise end)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T23:08:19.618Z",
+   "file": "20261124230819618-note-dive-cmp.jpg",
+   "source": "../../../../tmp/y2/dive-cmp.jpg",
+   "kind": "note",
+   "label": "dive 4139, 4142, 4145, 4148 draft: top row without the hold's picture, bottom row with it. 4142, 4145, 4148 (and 4151, 4154, 4160) are equal to the byte: the warm field left of the limb is the engine's own band, the hold's picture has left the frame at the lower right by 4139 at weight 1",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T23:08:18.999Z",
+   "file": "20261124230818999-note-veil3.jpg",
+   "source": "../../../../tmp/y2/veil3.jpg",
+   "kind": "note",
+   "label": "4035 at 1 to 1, 640 by 500 right of the planet: approved hero, named final e9e2c3a7 (hold's sky picture), draft with the hold's picture taken out (cure 2: engine's sky at star lift 0, black, the veil reads as grey smoke)",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-24T22:59:40.409Z",
    "file": "20261124225940409-note-corner.jpg",
@@ -284,30 +308,6 @@
    "source": "../../../../tmp/w2/dive-1.jpg",
    "kind": "note",
    "label": "dive 4140 to 4169 draft, named tree",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T21:58:30.588Z",
-   "file": "20261124215830588-note-rise-2.jpg",
-   "source": "../../../../tmp/w2/rise-2.jpg",
-   "kind": "note",
-   "label": "rise 4430 to 4454 draft, named tree (base 79ade566)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T21:58:29.318Z",
-   "file": "20261124215829318-note-rise-1.jpg",
-   "source": "../../../../tmp/w2/rise-1.jpg",
-   "kind": "note",
-   "label": "rise 4405 to 4429 draft, named tree (base 79ade566)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T21:58:28.124Z",
-   "file": "20261124215828124-note-rise-0.jpg",
-   "source": "../../../../tmp/w2/rise-0.jpg",
-   "kind": "note",
-   "label": "rise 4380 to 4404 draft, named tree (base 79ade566)",
    "stop": "uranus"
   }
  ]
