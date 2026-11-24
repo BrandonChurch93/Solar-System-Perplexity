@@ -771,9 +771,15 @@ export class Surface {
   /** The same ground seen from the globe's side: it is laid over the globe's own face and may be thin. */
   private readonly laid: THREE.ShaderMaterial
   private readonly ramp: THREE.DataTexture
-  private readonly pieces: { mesh: THREE.Mesh; mid: THREE.Vector3; wide: number }[] = []
+  private readonly pieces: { mesh: THREE.Mesh; mid: THREE.Vector3; wide: number; seen: boolean }[] = []
   private readonly towards = new THREE.Vector3()
   private readonly over: number
+  /** The materials every piece has been drawn with once, so that its buffer and its vertex arrays are on the card. */
+  private readonly bound = new Set<THREE.Material>()
+  private binding = false
+  private readonly frustum = new THREE.Frustum()
+  private readonly screen = new THREE.Matrix4()
+  private readonly ball = new THREE.Sphere()
 
   /** shared: the uniforms of the lights that the opening throws on the ground, kept by the old ground. map: the
    * globe's own map, toStage: the turn from the map's axes to the stage's (the globe lays the stage by it). */
@@ -936,7 +942,25 @@ export class Surface {
         const piece = new THREE.Mesh(geometry, this.material)
         piece.renderOrder = -6
         this.mesh.add(piece)
-        this.pieces.push({ mesh: piece, mid, wide })
+        const entry = { mesh: piece, mid, wide, seen: false }
+        this.pieces.push(entry)
+        // The renderer puts a geometry on the card (its buffer, and a vertex array for each program) at its first
+        // draw, and a piece is first drawn when the eye's horizon reaches it: in the rise that was a little work in
+        // nearly every frame. So the first picture a material draws binds every piece: the pieces that picture does
+        // not show (behind the horizon, or outside the picture by the renderer's own test) are drawn with no
+        // elements, which makes what the card needs and no pixel. After that no frame makes anything for the ground.
+        piece.onBeforeRender = (_renderer, _scene, camera) => {
+          if (!this.binding) return
+          this.screen.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse)
+          this.frustum.setFromProjectionMatrix(this.screen, THREE.WebGLCoordinateSystem, (camera as THREE.Camera & { reversedDepth?: boolean }).reversedDepth === true)
+          this.ball.copy(geometry.boundingSphere!).applyMatrix4(piece.matrixWorld)
+          geometry.setDrawRange(0, entry.seen && this.frustum.intersectsSphere(this.ball) ? Infinity : 0)
+        }
+        piece.onAfterRender = (_renderer, _scene, _camera, _geometry, material) => {
+          if (!this.binding) return
+          geometry.setDrawRange(0, Infinity)
+          this.bound.add(material)
+        }
       }
     }
     this.over = Math.acos(stage.radius / (stage.radius + m.relief))
@@ -949,11 +973,17 @@ export class Surface {
     this.material.uniforms.uCvKeep!.value = keep
     this.mesh.visible = keep > 0
     const material = onGlobe ? this.laid : this.material
-    for (const piece of this.pieces) piece.mesh.material = material
     const from = this.towards.copy(eye).sub(stage.centre)
     const horizon = Math.acos(Math.min(stage.radius / from.length(), 1)) + this.over
     from.normalize()
-    for (const piece of this.pieces) piece.mesh.visible = piece.mid.angleTo(from) - piece.wide < horizon
+    // a material that has not drawn yet binds every piece in its first picture (see the constructor)
+    this.binding = !this.bound.has(material)
+    for (const piece of this.pieces) {
+      piece.seen = piece.mid.angleTo(from) - piece.wide < horizon
+      piece.mesh.material = material
+      piece.mesh.visible = piece.seen || this.binding
+      piece.mesh.frustumCulled = !this.binding
+    }
   }
 
   dispose(): void {
