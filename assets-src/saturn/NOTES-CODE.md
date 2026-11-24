@@ -3703,3 +3703,27 @@ is in the picture at 3 to 12 px, and the same crispness for the far ring across 
   - NEXT: G17 by render for d = 28, 34 (final nograin 3720, then g17map.py), choose d, search the paces of
     both moves, then every proof again over the judge's whole windows (the judged dive frame 3567 and every
     frame of the skim but 3720's pose change), and the place 3807 at the right edge with it.
+- SECOND NAMED MAILED 09:45 UTC (due 09:56): NAMED 1e4bfd4e46d236e0032fc1f045cc954c58511d41, the text is
+  /tmp/v/mail/named2_sent.md, ten pictures attached (3720 beside approved, gapA_dive, gapA_rise, mask_pole_3561,
+  pole_frames, rise3807_edge, patmap_3807h, pair_3630, pair_3885, shade_3538_3556). Looks pushed 09:45:53.
+- THE JUDGE'S DIVE PICTURES ON 1e4bfd4 (/tmp/v/r41/saturn-dive.md, done 09:42:40, window 3528 to 3641, 228 draft
+  frames at rate 2): "VERDICT: red. 1 number over the limit or not measured." and "RED the pattern of the
+  picture changes in place by 0.53 from frame 3561 to 8 film frames later, limit 0.45 (16 frames over it,
+  first 3560)". Largest pop 1.09 at 3563, largest level step 0.02 at 3562 + 1/2.
+  - The red of 3580 is cured by the judge too: 0.22 at 3580, 0.31 at 3580 + 1/2, 0.20 at 3581, 0.37 at 3587 +
+    1/2 (were 0.556, 0.498, 0.523, 0.459).
+  - The pole stands: over from 3560 to 3567 + 1/2. The pattern number climbs evenly from 0.03 at 3540 to 0.44
+    at 3559 + 1/2, then 0.48 to 0.53 to 0.47, and falls from 0.44 at 3568 and 3568 + 1/2 (0.42 at 3569, 0.38 at
+    3569 + 1/2). The judge's own change picture shows it at the top of the globe only (the strip of sky judged
+    as body, see the pole block above).
+  - THIN MARGINS, named in the mail: 0.44 at 3559 + 1/2 and at 3568 (the same strip), and 0.40 at 3592 + 1/2
+    (3591 0.29, 3591 + 1/2 0.33, 3592 0.37, 3593 0.30: the judge's picture of 3593 shows it at the outer ring
+    edge at the lower right, the place of the old red of 3580). My own scan with the flattened body had 0.387
+    at 3587 + 1/2 as its largest; the judge's body reads 0.40 at 3592 + 1/2.
+  - Nothing new in 3528 to 3551 (0.00 to 0.23, climbing with the hold's sky share) nor in 3608 to 3641.
+- CHECKED AGAIN before the mail: main 8b2c538's own frames 3889 to 3896 by the judge's function
+  (patscan2.py on /tmp/v/r40/smooth_main): pop 1.21 at 3891 + 1/2, 1.24 at 3892, 1.24 at 3895, 1.43 at 3895 +
+  1/2, 1.40 at 3896: 5 over 1.2 in the travel's take off, so that red is on main without my stop's change.
+- NEXT (the order): the flight for G17 in rt (render d = 28 and 34 at final nograin 3720, g17map.py, choose),
+  the paces of the rise, then the judge's WHOLE windows on it (dive 3528 to 3641 + 1/2, rise 3798 to 3896 +
+  1/2) with the 3807 place at the right edge, path, parity, gate, tests; mail PRE with its sha (MAIL 545).
