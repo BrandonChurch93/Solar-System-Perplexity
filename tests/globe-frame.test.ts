@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest'
 import { FarPoint } from '../src/bodies/farpoint'
 import { Planet } from '../src/bodies/planet'
 import { config } from '../src/config'
-import { frameUniform, setFrame } from '../src/core/frame'
+import { bufferFrame, frameUniform, setFrame, setPass } from '../src/core/frame'
 import type { RenderView } from '../src/core/types'
 import * as look from '../src/stops/mars/look'
 
@@ -30,7 +30,10 @@ const point = (f: FarPoint): { wide: number; colour: number[] } => {
 }
 
 describe('the frame factor of the globe', () => {
-  afterEach(() => setFrame(MASTER, MASTER))
+  afterEach(() => {
+    setFrame(MASTER, MASTER)
+    setPass(1)
+  })
 
   it('is the height of the format over the height of the master: 1 at 16 by 9, 2 at uhd, 0.5 at preview', () => {
     expect(frameUniform.value).toBe(1)
@@ -39,6 +42,27 @@ describe('the frame factor of the globe', () => {
       expect(frameUniform.value).toBe(f)
     }
     expect(() => setFrame(0, MASTER)).toThrow('no height')
+  })
+
+  it('takes the scale of a place picture against the master\'s into the factor of what is drawn into it: a uhd picture of half the scale has the master\'s pixels and the master\'s fade', () => {
+    const p = planet()
+    setFrame(2160, MASTER)
+    setPass(0.5)
+    expect(bufferFrame()).toBe(1)
+    expect(frameUniform.value).toBe(2)
+    expect(fade(p)).toEqual(new THREE.Vector2(1.1, 1.7).toArray())
+    const f = new FarPoint()
+    f.update(3, view(config.formatKeys.uhd, 0.7), [0.5, 0.4, 0.3], 2)
+    const there = point(f)
+    setFrame(MASTER, MASTER)
+    setPass(1)
+    f.update(3, view(config.formatKeys.master, 0.7), [0.5, 0.4, 0.3], 2)
+    expect(point(f).wide).toBe(there.wide)
+    setFrame(2160, MASTER)
+    expect(fade(p)).toEqual([0.55, 0.85])
+    expect(() => setPass(0)).toThrow('above 0')
+    f.dispose()
+    p.dispose()
   })
 
   it('leaves the fade of the colour levels as the stop gave it at 16 by 9 and divides it by the factor elsewhere, so a level comes in at the same height in every format', () => {

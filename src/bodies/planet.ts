@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { DIAG_GLSL, diagUniform, gradUniform } from '../diagnostics/diag'
-import { frameUniform } from '../core/frame'
+import { bufferFrame } from '../core/frame'
 import { INVERSE_FILMIC_GLSL } from '../post/chain'
 import { implicitUniform } from '../core/texel'
 import { EQUIRECT_GLSL } from '../space/sky'
@@ -401,7 +401,8 @@ export class Planet {
     const u = this.material.uniforms
     ;(u.uCam!.value as THREE.Vector3).copy(camera)
     ;(u.uSunW!.value as THREE.Vector3).copy(sun)
-    ;(u.uPatchFade!.value as THREE.Vector2).set(this.fade[0] / frameUniform.value, this.fade[1] / frameUniform.value)
+    const frame = bufferFrame()
+    ;(u.uPatchFade!.value as THREE.Vector2).set(this.fade[0] / frame, this.fade[1] / frame)
     u.uSpin!.value = spin
     u.uGain!.value = gain
     u.uWeight!.value = weight

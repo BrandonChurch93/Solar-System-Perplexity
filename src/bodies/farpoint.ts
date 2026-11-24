@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import type { RenderView } from '../core/types'
 import { smooth } from '../director/rig'
-import { frameUniform } from '../core/frame'
+import { bufferFrame } from '../core/frame'
 
 const VERT = /* glsl */ `
 uniform float uSize;
@@ -44,7 +44,7 @@ export class FarPoint {
     const px = (radiusPx * 1080) / view.format.height
     const far = lit === undefined ? 1 - smooth((radiusPx - 0.0015 * view.format.height) / (0.014 * view.format.height)) : lit * Math.exp(-YOUNG.fade * Math.max(px - YOUNG.from, 0)) * (1 - smooth((px - YOUNG.gone[0]) / (YOUNG.gone[1] - YOUNG.gone[0])))
     this.material.uniforms.uHalo!.value = lit === undefined ? 0.07 : 0
-    const f = frameUniform.value
+    const f = bufferFrame()
     const core = Math.max(f, 1) ** 2
     const r = radiusPx / f
     this.material.uniforms.uWide!.value = lit === undefined ? (core > 1 ? 0.9 * core : 0) : (0.9 + YOUNG.wide * r * r) * core
