@@ -88,7 +88,8 @@ def save(rgba, name, level=None, report=None, zone=None):
 MASTERS = 'assets-src/neptune/place/masters'
 EXACT = (0.1, 0.5)
 NEAR = (5.5, 7.0)
-RING = (10.0, 12.5)
+RING = tuple(PATCHES['place']['ringDeg'])
+TAKE_EDGE = 170
 LOCK = (8.0, 11.0)
 CARRY = (3.0, 0.25)
 GROW = 0.6
@@ -131,6 +132,31 @@ def from_parent(parent_rgba, parent, level, size=SIZE):
     px = (((gx - cp[0]) / (2 * hp) + 0.5) * size - 0.5).astype(np.float32)
     py = (((cp[1] - gy) / (2 * hp) + 0.5) * size - 0.5).astype(np.float32)
     return cv2.remap(parent_rgba, px, py, cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
+
+
+def moved(pic, level, size=SIZE):
+    """A picture made for the level's square where it lay when its take was painted (takeOffsetDeg), resampled onto the
+    square as it lies now, and how much of it there is at each texel: 1 inside the old square, falling to nothing over
+    TAKE_EDGE texels toward its border."""
+    src = dict(level, offsetDeg=level['takeOffsetDeg'])
+    out = from_parent(pic, src, level, size)
+    half = np.tan(np.radians(level['widthDeg'] / 2))
+    cs, cl = centre(src), centre(level)
+    g = ((np.arange(size, dtype=np.float32) + 0.5) / size - 0.5) * 2 * half
+    gx, gy = np.meshgrid(g + cl[0], -g + cl[1])
+    px = ((gx - cs[0]) / (2 * half) + 0.5) * size - 0.5
+    py = ((cs[1] - gy) / (2 * half) + 0.5) * size - 0.5
+    inside = np.minimum(np.minimum(px, size - 1 - px), np.minimum(py, size - 1 - py))
+    return out, smoothstep(0.0, TAKE_EDGE, inside).astype(np.float32)[..., None]
+
+
+def guide(level, base, name):
+    """What the image tool starts from: the base with the laid back deck feathered in."""
+    deck, dist, under, _ = seen_deck(level, 2048)
+    w = (smoothstep(0.0, 0.5, dist) * smoothstep(NEAR[1], NEAR[0], under))[..., None]
+    g = cv2.resize(base, (2048, 2048), interpolation=cv2.INTER_AREA) * (1 - w) + deck * w
+    cv2.imwrite(os.path.join(WORK, name), (np.clip(g[..., ::-1], 0, 1) * 255 + 0.5).astype(np.uint8))
+    print(os.path.join(WORK, name))
 
 
 def settle(take, deck, exact, reach, fine):
@@ -191,9 +217,22 @@ def plate(level, parent):
         base = np.clip(base[..., :3], 0, 1)
         take = base
         if os.path.exists(take_file):
-            fine = read(take_file)
             keep = SIZE / 48
-            take = np.clip(blur(base, keep) * (fine / np.maximum(blur(fine, keep), 1e-3)) ** FINE.get(str(level['widthDeg']), 1.0), 0, 1)
+            power = FINE.get(str(level['widthDeg']), 1.0)
+
+            def band(file):
+                fine = read(file)
+                return (fine / np.maximum(blur(fine, keep), 1e-3)) ** power
+
+            ratio = band(take_file)
+            if 'takeOffsetDeg' in level:
+                # The level was moved after its take was painted. The take is laid where it was painted; the ground it
+                # does not reach has its fine band from the take painted for the square as it lies now (take-W-moved.jpg).
+                ratio, have = moved(ratio, level)
+                rest_file = os.path.join(MASTERS, 'take-%s-moved.jpg' % level['widthDeg'])
+                ratio = have * ratio + (1 - have) * band(rest_file)
+                print(level['file'], 'share of the plate with its fine band from the second take: %.4f' % float(1 - have.mean()), flush=True)
+            take = np.clip(blur(base, keep) * ratio, 0, 1)
     rgb = settle(take, deck, exact, SIZE * CARRY[0] / level['widthDeg'], SIZE * CARRY[1] / level['widthDeg'])
     return np.dstack([rgb, np.maximum(alpha, exact)]).astype(np.float32), exact, (exact > 0.5).mean()
 

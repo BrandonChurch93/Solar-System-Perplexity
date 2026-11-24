@@ -8,11 +8,11 @@ import { defaultPost } from '../post/chain'
 import { StopPlan, easeInOut, type OrbitShot } from './moves'
 import { arc, drift, forward, lookAt, lookbackLight, mix, ramp, slerpDir, smooth, smoother } from './rig'
 import { coverWindow, segmentAtFrame } from './timeline'
-import { handoverFrame, handoverOf, horizonWeight, placeWeight, shutterScales, skyTurnWeight, skyWeight, topForced } from './handover'
+import { eyeHeightAt, eyeHeights, handoverFrame, handoverOf, horizonWeight, noSkyForced, placeWeight, shutterScales, skyTurnWeight, skyWeight, topForced } from './handover'
 import skyFrame from '../space/skyframe.json'
 import world from './world.json'
 import { aimAt, type SkyAims } from '../space/aim'
-import { TravelShape, inFrame, outsideFrame } from '../space/travel/path'
+import { CARRY, TravelShape, carryBend, carryWay, inFrame, outsideFrame, travelLook } from '../space/travel/path'
 import { discShare, openSky } from '../space/travel/open'
 import { globeShare, wearShare } from '../space/farsun/share'
 import farLook from '../space/farsun/look.json'
@@ -76,6 +76,7 @@ export class FilmDirector implements Director {
   private readonly clear: number[] = [0]
   private readonly slide: number[] = []
   private readonly shapes: TravelShape[] = []
+  private readonly carries: ({ speed: THREE.Vector3; rate: THREE.Vector3; span: number } | null | undefined)[] = []
   private readonly lit: number[] = []
   private readonly sunHand: number[] = []
   private readonly small: number[] = []
@@ -86,6 +87,13 @@ export class FilmDirector implements Director {
   // E6: the share of the film's shutter a frame keeps, as this film's own shots measure it. The film that is asked for a shot hands it to the
   // handover, where a sample takes its side by its position inside the shutter that is open.
   private readonly shutterOf = (frame: number): number => shutterScale(this, frame)
+  // The height of the globe camera of a stop's dive or rise over the unit sphere of its body, in radii: what the engine's sky weight and
+  // place weight read (handover.ts, eyeHeights). It names the view, so it never comes back through the side of a sample.
+  private readonly eyeOf = (stop: string, kind: 'dive' | 'rise', time: number): number => {
+    const p = this.plans[config.stopIds.indexOf(stop)]
+    if (!p) throw new Error('no plan of this film flies ' + stop)
+    return p.eyeShot(kind, time, 'orbit').pose.position.length() - 1
+  }
   private lookbackUp = new THREE.Vector3()
   private lookbackSun = new THREE.Vector3()
   private lookbackSide = new THREE.Vector3()
@@ -95,6 +103,7 @@ export class FilmDirector implements Director {
 
   constructor(plans: StopPlan[]) {
     shutterScales(this.shutterOf)
+    eyeHeights(this.eyeOf)
     this.plans = plans
     this.frames.push({ rotation: new THREE.Quaternion(), origin: new THREE.Vector3() })
     this.approach.push(new THREE.Vector3(0, 0, -1))
@@ -337,7 +346,7 @@ export class FilmDirector implements Director {
     const seg = this.plans[i]!.seg.travel!
     const master = config.formats[config.formatKeys.master]!
     const time = seg.start + u * (seg.end - seg.start)
-    const from = this.toWorld(i, this.leaving(i, time))
+    const from = this.toWorld(i, this.carried(i, time))
     const moved = this.approach[i + 1]!.clone().multiplyScalar(slide * shape.pass(u))
     return this.leavingThings(i, time).some((t) => inFrame(from.quaternion, from.vfov, master.width / master.height, t.to.sub(moved), t.radius, shape.look.clearDeg))
   }
@@ -362,7 +371,7 @@ export class FilmDirector implements Director {
 
   leavingThings(i: number, time: number): { name: string; to: THREE.Vector3; radius: number }[] {
     const a = this.plans[i]!
-    const from = this.toWorld(i, this.leaving(i, time))
+    const from = this.toWorld(i, this.carried(i, time))
     const f = this.frames[i]!
     const at = (p: THREE.Vector3): THREE.Vector3 => p.applyQuaternion(f.rotation).add(f.origin).sub(from.position)
     const out = [{ name: a.id, to: at(new THREE.Vector3()), radius: Math.max(1, a.fit.rings?.outer ?? 0) }]
@@ -375,9 +384,32 @@ export class FilmDirector implements Director {
     return { position: p.position.clone().applyQuaternion(f.rotation).add(f.origin), quaternion: f.rotation.clone().multiply(p.quaternion), vfov: p.vfov }
   }
 
+  private carryOf(i: number): { speed: THREE.Vector3; rate: THREE.Vector3; span: number } | null {
+    const known = this.carries[i]
+    if (known !== undefined) return known
+    const p = this.plans[i]!
+    const end = p.seg.rise.end
+    const h = CARRY.step
+    const p0 = p.exitPose(end).position
+    const p1 = p.eyeShot('rise', end - h, 'orbit').pose.position
+    const p2 = p.eyeShot('rise', end - 2 * h, 'orbit').pose.position
+    const speed = p0.clone().multiplyScalar(3).addScaledVector(p1, -4).add(p2).multiplyScalar(1 / (2 * h)).sub(p.exitPose(end + h).position.sub(p0).multiplyScalar(1 / h))
+    const rate = p0.clone().addScaledVector(p1, -2).add(p2).multiplyScalar(1 / (h * h))
+    return (this.carries[i] = speed.length() < CARRY.from ? null : { speed, rate, span: travelLook(p.id).carry })
+  }
+
   private leaving(i: number, time: number): Pose {
     const p = this.plans[i]!
     return i === 0 ? p.hold(time - p.seg.hold.start) : p.exitPose(time)
+  }
+
+  private carried(i: number, time: number): Pose {
+    const pose = this.leaving(i, time)
+    const c = i > 0 ? this.carryOf(i) : null
+    if (!c) return pose
+    const s = (time - this.plans[i]!.seg.rise.end) / c.span
+    pose.position.addScaledVector(c.speed, c.span * carryWay(s)).addScaledVector(c.rate, c.span * c.span * carryBend(s))
+    return pose
   }
 
   private place(i: number): void {
@@ -461,7 +493,7 @@ export class FilmDirector implements Director {
   private travelPath(index: number, time: number): Pose {
     const seg = this.plans[index]!.seg.travel!
     const u = (time - seg.start) / (seg.end - seg.start)
-    const from = this.toWorld(index, this.leaving(index, time))
+    const from = this.toWorld(index, this.carried(index, time))
     const shape = this.shapes[index]!
     const x = ramp(this.clear[index + 1]!, 1, u)
     const to = this.toWorld(index + 1, this.approachLocal(index + 1, x, time, shape))
@@ -618,6 +650,7 @@ export class FilmDirector implements Director {
 
   shotAt(frame: number, time: number, forced?: ViewKind): Shot {
     shutterScales(this.shutterOf)
+    eyeHeights(this.eyeOf)
     const segment = segmentAtFrame(frame)
     const u = (time - segment.start) / (segment.end - segment.start)
     const post = defaultPost()
@@ -824,8 +857,11 @@ export class FilmDirector implements Director {
         const turned = carry ?? skyTurnWeight(segment, time)
         const own = p.skyShare(segment, time)
         if (own && !(own.low >= 0 && own.low <= 1 && (own.high === undefined || (own.high >= 0 && own.high <= 1)))) throw new Error(p.id + ': skyShare must give low and high from 0 to 1')
-        skyShare = own ? own.low : skyWeight(segment, time)
-        if (own && own.high !== undefined) skyShareHigh = own.high
+        // The height of the eye at this sample, asked once where a weight of the engine reads it (on the far side of T), for both.
+        const far = dive ? time < hand.firstFrame / config.fps : time >= (hand.lastFrame + 1) / config.fps
+        const eye = far && ((!own && !noSkyForced() && hand.skyFrames > 0) || hand.picture) ? eyeHeightAt(segment, time) : undefined
+        skyShare = noSkyForced() ? 0 : own ? own.low : skyWeight(segment, time, eye)
+        if (own && own.high !== undefined && !noSkyForced()) skyShareHigh = own.high
         if (hand.skyFloor && skyShare > 0) skyFloor = this.skyFloorOf(index, kind, hand.time)
         skyGlow = mix(1, p.p.light.terrainSkyGlow ?? 1, skyShare)
         const low = this.sky.turns[p.id] ?? NO_TURN
@@ -840,7 +876,7 @@ export class FilmDirector implements Director {
           const qt = f.rotation.clone().multiply(p.twin(close, tc).quaternion)
           skyCarry = new THREE.Quaternion().slerp(qc.multiply(qt.invert()), turned)
         }
-        const weight = placeWeight(segment, time)
+        const weight = placeWeight(segment, time, eye)
         const horizon = horizonWeight(hand, weight, skyShare)
         if ((weight > 0 || (horizon ?? 0) > 0) && hand.picture) {
           const tw = inSet(s, p.twin(p.closePose(kind, hand.time), time))
