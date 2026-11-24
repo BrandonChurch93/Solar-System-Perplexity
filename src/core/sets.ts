@@ -2,8 +2,20 @@ import * as THREE from 'three'
 import { config, type FormatDef } from '../config'
 import { bindImplicit } from './texel'
 import type { SetContext, SetFactory, StopSet, TextureOptions } from './types'
+import { capHeightBytes, capHeights } from '../bodies/cap'
 
 interface Loaded { set: StopSet; bytes: number; assets: string; lastUsed: number }
+
+type Keep = (tex: THREE.Texture, bytes: number) => void
+const KEEP = Symbol('keep')
+
+export function heightTexture(ctx: SetContext, data: Uint16Array, size: number): THREE.DataTexture {
+  const keep = (ctx as unknown as Record<symbol, Keep | undefined>)[KEEP]
+  if (!keep) throw new Error('heightTexture needs the context a set was made with')
+  const tex = capHeights(data, size)
+  keep(tex, capHeightBytes(size))
+  return tex
+}
 
 export class SetLoader {
   private readonly loaded = new Map<string, Loaded>()
@@ -185,6 +197,11 @@ export class SetLoader {
       bytes += data.byteLength
       textures.push(tex)
       return tex
+    }
+    ;(ctx as unknown as Record<symbol, Keep>)[KEEP] = (tex, n) => {
+      this.renderer.initTexture(tex)
+      bytes += n
+      textures.push(tex)
     }
     const set = await factory(ctx)
     bindImplicit(set.world)
