@@ -1,9 +1,17 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T12:05:50.833Z",
+ "pushed": "2026-11-24T12:31:41.782Z",
  "head": "6474733ee8d90a2500af4ed116db3d67a04955c3",
- "note": "12:06 UTC. Head 6474733e (second NAMED). Measuring for MAIL 655: pairs 181 to 213 by the tool's own job, as they are and with the life held at the time of frame 181 (frames 181 to 221 rendering, frame 181 held equals frame 181 as it is byte for byte). Frame 60 draft sun-near: share by band 0.1 .. 0.9 : 0.203 0.187 0.139 0.105 0.088 0.072 0.055 0.056 0.054 | dark (under 0.15) 0.238, body (0.15 to 0.55) 0.520, pale (0.65 to 0.85) 0.111, white (over 0.85) 0.059 | brightest 15 percent: half width 11.0 px, 2904 shapes, fine detail 0.0552, mean 0.366; distance 0.112. Red: cells read as stones, cream and white tops, pale field on the ball 225 to 237; next the cells look by the order of MAIL 657.",
+ "note": "12:32 UTC. Head 6474733e. Third commit, point 1 of MAIL 657, trial t9 in the tree (config only): one look of the cell at every height (light.view.heights out of reach), domes 0.03 with edge 0.8 and power 2, lattice 0.12, lanes 0.0035, spread 0.4, cell range 0.85 to 1.2, threads on the tops, middle darker toward a bright shoulder. Frame 60 draft sun-near: share by band 0.1 .. 0.9 : 0.134 0.259 0.208 0.143 0.094 0.059 0.034 0.021 0.015 | dark (under 0.15) 0.166, body (0.15 to 0.55) 0.703, pale (0.65 to 0.85) 0.055, white (over 0.85) 0.017 | brightest 15 percent: half width 3.2 px, 6706 shapes, fine detail 0.0664, mean 0.323; distance 0.091. Red: flatter than the approved (too little deep dark, shoulders not bright enough), caps with a regular fan read as mushrooms; the ball 216 to 237 and the pattern not yet looked at with it. MAIL 655 answered at 12:20: pairs 181 to 213 on 7f4e02c1 largest 0.317 as they are, 0.294 with the life held.",
  "looks": [
+  {
+   "time": "2026-11-24T12:31:41.214Z",
+   "file": "20261124123141214-note-pair-t9.jpg",
+   "source": "../../../../tmp/pair-t9.jpg",
+   "kind": "note",
+   "label": "trial t9 of the cells (not committed): approved beside frame 60 draft at one to one, box x 560 y 600, 800 by 440",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T12:05:49.543Z",
    "file": "20261124120549543-note-frozen-189.jpg",
@@ -66,18 +74,6 @@
    "segment": "sun.rise",
    "first": 204,
    "last": 215,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T11:37:09.730Z",
-   "file": "20261124113709730-sheet-sun-rise-draft-across.jpg",
-   "source": "out/work/handover/sun-rise-draft-across.png",
-   "kind": "sheet",
-   "label": "sun rise, every frame 210 to 221 (across T, frame 216), draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "first": 210,
-   "last": 221,
    "tier": "draft"
   }
  ]
