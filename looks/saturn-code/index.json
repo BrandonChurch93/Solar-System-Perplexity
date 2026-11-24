@@ -1,64 +1,64 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T01:30:23.358Z",
+ "pushed": "2026-11-24T01:42:06.258Z",
  "head": "b85c30e64993059df757c243964755d7ab2485b3",
- "note": "try 3 of the pace with a level top: both judges green on the VM, every frame of the dive at draft; the rise renders",
+ "note": "try 3 of the pace: rise sheets, 3720 top left at final beside the approved, dive and rise at the same height; now making the stars' lift by height evener",
  "looks": [
   {
-   "time": "2026-11-24T01:30:22.424Z",
-   "file": "20261124013022424-note-pace_rise_v.jpg",
-   "source": "../../../../tmp/v/p3/pace_rise_v.png",
+   "time": "2026-11-24T01:42:05.400Z",
+   "file": "20261124014205400-note-sky_c2.jpg",
+   "source": "../../../../tmp/v/r27/sky_c2.png",
    "kind": "note",
-   "label": "try 3: rate, turn and speed of the dive and the rise over the mean of the move, candidates beside ac0b732 (grey)"
+   "label": "sky at full size 3872 to 3877, same"
   },
   {
-   "time": "2026-11-24T01:30:21.544Z",
-   "file": "20261124013021544-note-dive_s8.jpg",
-   "source": "../../../../tmp/v/r27/dive_s8.png",
+   "time": "2026-11-24T01:42:04.417Z",
+   "file": "20261124014204417-note-sky_c1.jpg",
+   "source": "../../../../tmp/v/r27/sky_c1.png",
    "kind": "note",
-   "label": "try 3 of the pace (level top), draft, every frame of the dive 3624 to 3632"
+   "label": "sky at full size 3866 to 3871, lift [2.42, 2.92] power 1.5: stars come in at up to 0.171 a frame"
   },
   {
-   "time": "2026-11-24T01:30:20.788Z",
-   "file": "20261124013020788-note-dive_s7.jpg",
-   "source": "../../../../tmp/v/r27/dive_s7.png",
+   "time": "2026-11-24T01:42:03.352Z",
+   "file": "20261124014203352-note-rise_s7.jpg",
+   "source": "../../../../tmp/v/r27/rise_s7.png",
    "kind": "note",
-   "label": "try 3 of the pace (level top), draft, every frame of the dive 3612 to 3623"
+   "label": "try 3 rise draft 3882 to 3890"
   },
   {
-   "time": "2026-11-24T01:30:19.528Z",
-   "file": "20261124013019528-note-dive_s6.jpg",
-   "source": "../../../../tmp/v/r27/dive_s6.png",
+   "time": "2026-11-24T01:42:02.517Z",
+   "file": "20261124014202517-note-rise_s6.jpg",
+   "source": "../../../../tmp/v/r27/rise_s6.png",
    "kind": "note",
-   "label": "try 3 of the pace (level top), draft, every frame of the dive 3600 to 3611"
+   "label": "try 3 rise draft 3870 to 3881, stars lift before the evener course"
   },
   {
-   "time": "2026-11-24T01:30:18.513Z",
-   "file": "20261124013018513-note-dive_s5.jpg",
-   "source": "../../../../tmp/v/r27/dive_s5.png",
+   "time": "2026-11-24T01:42:01.282Z",
+   "file": "20261124014201282-note-rise_s5.jpg",
+   "source": "../../../../tmp/v/r27/rise_s5.png",
    "kind": "note",
-   "label": "try 3 of the pace (level top), draft, every frame of the dive 3588 to 3599"
+   "label": "try 3 rise draft 3858 to 3869"
   },
   {
-   "time": "2026-11-24T01:30:17.363Z",
-   "file": "20261124013017363-note-dive_s4.jpg",
-   "source": "../../../../tmp/v/r27/dive_s4.png",
+   "time": "2026-11-24T01:42:00.237Z",
+   "file": "20261124014200237-note-rise_s4.jpg",
+   "source": "../../../../tmp/v/r27/rise_s4.png",
    "kind": "note",
-   "label": "try 3 of the pace (level top), draft, every frame of the dive 3576 to 3587"
+   "label": "try 3 rise draft 3846 to 3857"
   },
   {
-   "time": "2026-11-24T01:30:16.405Z",
-   "file": "20261124013016405-note-dive_s3.jpg",
-   "source": "../../../../tmp/v/r27/dive_s3.png",
+   "time": "2026-11-24T01:41:59.351Z",
+   "file": "20261124014159351-note-rise_s3.jpg",
+   "source": "../../../../tmp/v/r27/rise_s3.png",
    "kind": "note",
-   "label": "try 3 of the pace (level top), draft, every frame of the dive 3564 to 3575"
+   "label": "try 3 rise draft 3834 to 3845"
   },
   {
-   "time": "2026-11-24T01:30:15.461Z",
-   "file": "20261124013015461-note-dive_s2.jpg",
-   "source": "../../../../tmp/v/r27/dive_s2.png",
+   "time": "2026-11-24T01:41:58.057Z",
+   "file": "20261124014158057-note-rise_s2.jpg",
+   "source": "../../../../tmp/v/r27/rise_s2.png",
    "kind": "note",
-   "label": "try 3 of the pace (level top), draft, every frame of the dive 3552 to 3563"
+   "label": "try 3 rise draft 3822 to 3833"
   }
  ]
 }
