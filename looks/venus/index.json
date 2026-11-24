@@ -1,9 +1,17 @@
 {
  "folder": "venus",
- "pushed": "2026-11-24T18:58:14.209Z",
+ "pushed": "2026-11-24T19:05:40.563Z",
  "head": "8b7994375d9917b14ff91634a36c266dc1d1c35c",
- "note": "MAIL 707 named 8b799437; dive pop 1.31 is a new red of mine, cure in trial: air.haze.heights",
+ "note": "dive pop cure in trial: air.haze.heights, slice 1313 to 1323 green (pop 1.17); whole proofs running",
  "looks": [
+  {
+   "time": "2026-11-24T19:05:39.900Z",
+   "file": "20261124190539900-note-hazeH-dive.jpg",
+   "source": "../../../../tmp/v/c/hazeH-dive.jpg",
+   "kind": "note",
+   "label": "cure in trial for the dive pop: air.haze.heights 0.035 to 0.4 (the air on the line of sight comes in from 1302 on, a thin rim at the limb that widens); slice 1313 to 1323 green, pop 1.17 at 1316 at the most (1.31 on the named commit)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T18:58:13.628Z",
    "file": "20261124185813628-note-dive-changes-X.jpg",
@@ -62,18 +70,6 @@
    "segment": "venus.rise",
    "first": 1539,
    "last": 1604,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T18:00:10.313Z",
-   "file": "20261124180010313-sheet-venus-rise-draft-after.jpg",
-   "source": "out/work/handover/venus-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "venus rise, every frame 1540 to 1551 (after T, frame 1539), draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1540,
-   "last": 1551,
    "tier": "draft"
   }
  ]
