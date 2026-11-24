@@ -1,71 +1,77 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T08:01:19.153Z",
- "head": "6c69ed497f7bb9ce97cde498a2ad785c2fee13dd",
- "note": "Rise 3245 to 3275 at draft on head 6c69ed4 (the commit to be named): the set's border in the rise, good and bad as they are",
+ "pushed": "2026-11-24T08:09:04.093Z",
+ "head": "dfd3c01dca5473a9d36e1195f19d9d75af9ee49a",
+ "note": "The rise on the named head dfd3c01 (bytes of 6c69ed4): every frame 3276 to 3315 at draft, judged 3296, the panels of the pictures part (red: level step 1.95, pop 1.22, pattern 0.71)",
  "looks": [
   {
-   "time": "2026-11-24T08:00:44.699Z",
-   "file": "20261124080044699-note-rise-d.jpg",
-   "source": "../work/named/sheets/rise-d.jpg",
+   "time": "2026-11-24T08:07:26.641Z",
+   "file": "20261124080726641-note-rise-changes.jpg",
+   "source": "../work/named/sheets/rise-changes.jpg",
    "kind": "note",
-   "label": "rise 3268 to 3275 at draft, head 6c69ed4: the far set is a patch of its own colour inside the globe's bands, its left border against a grey speckled field (3268 to 3270)",
+   "label": "pictures part, rise, head 6c69ed4: the largest changes of the pattern; 0.71 from 3250 at the far ground under the limb (limit 0.45), 0.65 from 3261 + 1/2 at a pale puff",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-24T07:58:22.671Z",
-   "file": "20261124075822671-note-rise-c-big.jpg",
-   "source": "../work/named/sheets/rise-c-big.jpg",
+   "time": "2026-11-24T08:07:25.882Z",
+   "file": "20261124080725882-note-rise-pops.jpg",
+   "source": "../work/named/sheets/rise-pops.jpg",
    "kind": "note",
-   "label": "rise 3264 and 3266 whole at 1390 px: the far plate's floor ends against a grey speckled field at the left edge (3266)",
+   "label": "pictures part, rise, head 6c69ed4: the four largest pops; the red one at 3313 (1.22, limit 1.2) lies in the star field",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-24T07:58:21.475Z",
-   "file": "20261124075821475-note-rise-c.jpg",
-   "source": "../work/named/sheets/rise-c.jpg",
+   "time": "2026-11-24T08:06:58.934Z",
+   "file": "20261124080658934-job-frame-02820.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "jupiter.hold frame 2820, draft tier, texels view, from the running measure job",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2820,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-24T08:05:08.815Z",
+   "file": "20261124080508815-note-rise-g.jpg",
+   "source": "../work/named/sheets/rise-g.jpg",
    "kind": "note",
-   "label": "rise 3260 to 3267 at draft, head 6c69ed4: the place stands as an island on the smooth pale far ground, a blue black wedge of shadow right of the storm, a grey speckled field enters at the left edge from 3266",
+   "label": "rise 3304 to 3315 at draft, head 6c69ed4: the end of the pull back",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-24T07:55:09.859Z",
-   "file": "20261124075509859-note-rise-b-low-1.jpg",
-   "source": "../work/named/sheets/rise-b-low-1.jpg",
+   "time": "2026-11-24T08:04:55.553Z",
+   "file": "20261124080455553-note-rise-3296-low.jpg",
+   "source": "../work/named/sheets/rise-3296-low.jpg",
    "kind": "note",
-   "label": "rise 3257 and 3259, bottom left at full size: the near set's bank of cumulus ends over a smooth floor with little detail (the set's border, MAIL 540)",
+   "label": "judged 3296 at draft, bottom at full size: a faint pale patch with a straight left edge in the sky under the globe (cause not found yet)",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-24T07:55:08.632Z",
-   "file": "20261124075508632-note-rise-b.jpg",
-   "source": "../work/named/sheets/rise-b.jpg",
+   "time": "2026-11-24T08:03:57.296Z",
+   "file": "20261124080357296-note-rise-f.jpg",
+   "source": "../work/named/sheets/rise-f.jpg",
    "kind": "note",
-   "label": "rise 3245 to 3259 at draft, head 6c69ed4: the left brightens from 3251, cloud banks enter bottom left",
+   "label": "rise 3288 to 3303 at draft, head 6c69ed4: the pull back over the globe, Io in front, the night side turns in",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-24T07:44:38.515Z",
-   "file": "20261124074438515-note-rise-T-seam-top.jpg",
-   "source": "../work/named/sheets/rise-T-seam-top.jpg",
+   "time": "2026-11-24T08:03:35.527Z",
+   "file": "20261124080335527-note-rise-3296.jpg",
+   "source": "../work/named/sheets/rise-3296.jpg",
    "kind": "note",
-   "label": "rise 3238 to 3241 at full size, x 520 to 1920, upper 520 rows: limb and sky across the change of view",
+   "label": "judged 3296 at draft, head 6c69ed4 (2.56 radii of eye height on the one move)",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-24T07:44:37.287Z",
-   "file": "20261124074437287-note-rise-T-seam-low.jpg",
-   "source": "../work/named/sheets/rise-T-seam-low.jpg",
+   "time": "2026-11-24T08:02:55.435Z",
+   "file": "20261124080255435-note-rise-e.jpg",
+   "source": "../work/named/sheets/rise-e.jpg",
    "kind": "note",
-   "label": "rise 3238 to 3241 at full size, x 0 to 1400, lower 520 rows: no jump at 3240 that I can name",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T07:44:36.100Z",
-   "file": "20261124074436100-note-rise-T-b.jpg",
-   "source": "../work/named/sheets/rise-T-b.jpg",
-   "kind": "note",
-   "label": "rise, every frame 3239 to 3244 at draft, head 6c69ed4; the view changes at 3240",
+   "label": "rise 3276 to 3287 at draft, head 6c69ed4: the set is a pale embossed patch with a black blot (the storm's shadow) on the globe to 3284; the sky enters at the left with a white limb at 3282 to 3283",
    "stop": "jupiter"
   }
  ]
