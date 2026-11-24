@@ -64,7 +64,7 @@ export const fine = { shift: [0.37, 0.61] as [number, number], edge: [0.03, 0.03
 export const far = { color: [0.289, 0.26, 0.225] as [number, number, number], under: { dive: [0.05, 0.125] as [number, number], rise: [0.1, 0.155] as [number, number] }, sunFallDeg: 14, flat: 1, sunReach: 0.6, sunLevel: 2.6, lit: [0.0, 0.15] as [number, number], height: [0.05, 0.2] as [number, number], relief: [0.08, 0.5] as [number, number] }
 export const mend = { lon: 16.36, lat: -5.94, reach: 0.03, from: 1.8 }
 
-export const flight = { travel: 1.2, gather: 1, swoop: 0.3, rest: [744, 990] as [number, number], knee: 30, lift: { at: 990, frames: 34, height: 0.7, forward: 0.1, power: 8 } }
+export const flight = { travel: 1.2, gather: 1, swoop: 0.3, rest: [744, 990] as [number, number], knee: 30, lift: { at: 990, frames: 34, height: 0.7, forward: 0.1, power: 8 }, bend: { from: 876, join: 12, endDeg: 140, skew: 1.7, steps: 64, until: 1014 } }
 
 export const edge = 10.1
 export const relief = { mistSpeed: 0, dustSpeed: 0, dustDir: [1, 0] as [number, number], mesh: 640 }
