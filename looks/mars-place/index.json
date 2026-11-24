@@ -1,9 +1,31 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T03:02:17.008Z",
+ "pushed": "2026-11-24T03:27:02.887Z",
  "head": "f0532ddcee36b3aee8b9ad491bcc4c79ca96d488",
- "note": "turned place, heights v9 from above: side canyon on 225.6 into the main trough; plates and engine stills in work",
+ "note": "turned place: side canyon meets the main trough (heights alone); close side dumped again at T 2475, plates in work",
  "looks": [
+  {
+   "time": "2026-11-24T03:27:02.294Z",
+   "file": "20261124032702294-note-trough.jpg",
+   "source": "out/work/place/tmp/trough.jpg",
+   "kind": "note",
+   "label": "heights v9 from above, the 8.5 level under the globe's Sun: mouth of the side canyon in the main trough (left) and the trough farther east (right); no colour, no cast shadow",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T03:26:18.523Z",
+   "file": "20261124032618523-frame-dive-image-2576-1588.jpg",
+   "source": "out/work/place/dump/dive-image-2576-1588.png",
+   "kind": "frame",
+   "label": "mars.dive frame 2475, draft tier, ungraded/side=orbit/dump=2576,1588,image view",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2475,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "ungraded/side=orbit/dump=2576,1588,image",
+   "engine": "ecddc3acd1a4e52c"
+  },
   {
    "time": "2026-11-24T03:02:15.701Z",
    "file": "20261124030215701-note-crops-v9.jpg",
@@ -50,22 +72,6 @@
    "source": "out/work/place/see/f5-sheet.jpg",
    "kind": "note",
    "label": "country relit by code, heights v7: plates alone, heights alone, as the cap lights it, with the close view; 2439 2452 2471 (preview by mesh, not the engine)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T01:20:00.229Z",
-   "file": "20261124012000229-note-heights-v4.jpg",
-   "source": "out/work/place/see/heights-v4.jpg",
-   "kind": "note",
-   "label": "heights v4 from above at 1.6, 0.7, 0.3 degrees (colour -7 to +1 km, white line: border of the ground the close view saw)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T01:19:59.699Z",
-   "file": "20261124011959699-note-d12471-shade.jpg",
-   "source": "out/work/place/see/d12471-shade.png",
-   "kind": "note",
-   "label": "2471 the heights v4 alone lit by the Sun: plateau, lit north wall, floor in cast shadow; a round shadow at the far end of the canyon",
    "stop": "mars"
   }
  ]
