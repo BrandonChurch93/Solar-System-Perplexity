@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T10:28:20.556Z",
- "head": "01075e03b1ffce03e1b0c36fb0e16b904c42808f",
- "note": "third commit, final state: 4860 over the approved, storm zoom, rise star sheet. 22 to 23.6 s a draft frame",
+ "pushed": "2026-11-24T10:37:33.452Z",
+ "head": "835c95748f334d50706822e92ba43767ce577a41",
+ "note": "named 835c9574: both changes of view; 4860 beside the approved is the look of 10:28 (G17 0.934 and 0.549 at 16 by 9 draft, 22 to 23.6 s a draft frame)",
  "looks": [
+  {
+   "time": "2026-11-24T10:37:32.843Z",
+   "file": "20261124103732843-note-rise-a.jpg",
+   "source": "../../../../tmp/rise-a.jpg",
+   "kind": "note",
+   "label": "Named commit 835c9574, the rise from the change of view: 4956 to 4971. 4956 to 4957 7.94, then 8.35, 8.76",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T10:37:32.208Z",
+   "file": "20261124103732208-note-seam-dive.jpg",
+   "source": "../../../../tmp/seam-dive.jpg",
+   "kind": "note",
+   "label": "Named commit 835c9574, the dive's change of view: 4755 to 4760 left to right, top to bottom (4757 to 4758 is the change). Mean differences of neighbours 8.60, 8.36, 8.12, 7.81, 7.60. About 20 s a draft frame",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T10:28:19.963Z",
    "file": "20261124102819963-note-st-all.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/z-m5.jpg",
    "kind": "note",
    "label": "Neptune 4860 work state m5, storm (above) and limb (below) at twice size, preview draft",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T09:21:51.058Z",
-   "file": "20261124092151058-note-q-m5.jpg",
-   "source": "../../../../tmp/q-m5.jpg",
-   "kind": "note",
-   "label": "Neptune 4860 work state m5 (above) beside the approved image (below), preview draft, 42 s the frame with compile, about 22 s without. G17 at preview median 1.405, p25 0.934. Storm now an eye with a pale collar and mottled cloud; still wrong: eye floor too dark and flat (18 46 87 against 37 71 110), thin ruled lines at its rim, hard dark shadow bits right of the storm",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T09:00:05.078Z",
-   "file": "20261124090005078-note-z-m2.jpg",
-   "source": "../../../../tmp/z-m2.jpg",
-   "kind": "note",
-   "label": "the same at twice the size: the storm and the limb. Known: spokes inside the eye, the band under the limb has no structure and is 20 to 40 levels too bright",
    "stop": "neptune"
   }
  ]
