@@ -1,65 +1,69 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T19:50:13.792Z",
- "head": "3801689a216bb9d57aaf031969084ce9a67f6824",
- "note": "reading the red pattern lines of the rises on real frames three ways (main, the cure, the camera's own map); jupiter's far limb 3242 to 3257 at full size; nothing renders",
+ "pushed": "2026-11-24T20:53:02.206Z",
+ "head": "1924a104ed41def8574811c54b4d92ccb7e3febd",
+ "note": "MAIL 727 point 2 answered (the camera's own map as the way of the pattern reader); now MAIL 739, the dim of the sky in a travel reads the Sun's place and no clock; whole run in progress",
  "looks": [
   {
-   "time": "2026-11-24T19:50:13.156Z",
-   "file": "20261124195013156-note-way2-mars3-dive-2451.jpg",
-   "source": "out/work/cure/way2-mars3-dive-2451.jpg",
+   "time": "2026-11-24T20:53:01.196Z",
+   "file": "20261124205301196-note-way2-mars3-dive-2460.jpg",
+   "source": "out/work/cure/way2-mars3-dive-2460.jpg",
    "kind": "note",
-   "label": "the cure on real frames, mars dive pair 2451 and 2459: where its way lies off the camera's map",
+   "label": "Mars dive pair 2460, 2468 read three ways: relief near the lens stands off the sphere, the camera's map alone reads 1.320",
    "stop": "mars"
   },
   {
-   "time": "2026-11-24T19:50:12.416Z",
-   "file": "20261124195012416-note-rise-2703-crop.jpg",
-   "source": "out/work/inplace/mars3/rise-2703-crop.jpg",
+   "time": "2026-11-24T20:53:00.084Z",
+   "file": "20261124205300084-note-back2-mars3-2405.jpg",
+   "source": "out/work/cure/back2-mars3-2405.jpg",
    "kind": "note",
-   "label": "mars third rise 2703 to 2714 at the small canyon, drafts: the dune plain dissolves into the relief of the globe over 2707 to 2711"
+   "label": "Mars dive 2405 and 2413 at full size by the camera's own map: Phobos is carried as if it were ground",
+   "stop": "mars"
   },
   {
-   "time": "2026-11-24T19:50:11.802Z",
-   "file": "20261124195011802-note-ju3-rise-3254.jpg",
-   "source": "out/work/cure/ju3-rise-3254.jpg",
+   "time": "2026-11-24T20:52:59.419Z",
+   "file": "20261124205259419-note-way2-mars3-dive-2405.jpg",
+   "source": "out/work/cure/way2-mars3-dive-2405.jpg",
    "kind": "note",
-   "label": "the cure on real frames, jupiter rise pair 3254 and 3262: its reading from the nearer end on a strip along the far limb, 3 percent of the frame"
+   "label": "Mars dive pair 2405, 2413 read three ways: Phobos before the disc, the camera's map alone reads 1.469",
+   "stop": "mars"
   },
   {
-   "time": "2026-11-24T19:50:11.201Z",
-   "file": "20261124195011201-note-way2-ju3-rise-3249.jpg",
-   "source": "out/work/cure/way2-ju3-rise-3249.jpg",
-   "kind": "note",
-   "label": "the pattern measure on real frames, jupiter rise pair 3249 and 3257: main 0.585, the cure 0.548, the camera's map 0.747, all at the far limb and the lower right"
-  },
-  {
-   "time": "2026-11-24T19:50:10.300Z",
-   "file": "20261124195010300-note-way2-ju3-rise-3288.jpg",
+   "time": "2026-11-24T20:52:58.699Z",
+   "file": "20261124205258699-note-way2-ju3-rise-3288.jpg",
    "source": "out/work/cure/way2-ju3-rise-3288.jpg",
    "kind": "note",
-   "label": "the pattern measure on real frames, jupiter rise pair 3288 and 3296: the camera's own map reads 1.385 at the moon crossing the disc, the cure follows the moon and reads 0.222"
+   "label": "Jupiter rise pair 3288, 3296 read three ways: a moon before the disc, the camera's map alone reads it as ground"
   },
   {
-   "time": "2026-11-24T19:50:09.577Z",
-   "file": "20261124195009577-note-way2-ju3-rise-3261.jpg",
-   "source": "out/work/cure/way2-ju3-rise-3261.jpg",
+   "time": "2026-11-24T20:52:57.634Z",
+   "file": "20261124205257634-note-way2-ju3-rise-3283.jpg",
+   "source": "out/work/cure/way2-ju3-rise-3283.jpg",
    "kind": "note",
-   "label": "the pattern measure on real frames, jupiter rise pair 3261 and 3269: main 0.686 where its carried picture is smeared, the cure 0.233, the camera's own map 0.242"
+   "label": "Jupiter rise pair 3283, 3291 read three ways: main's carried picture is soft, the camera's map 0.381"
   },
   {
-   "time": "2026-11-24T19:50:08.898Z",
-   "file": "20261124195008898-note-ju3-limb-b.jpg",
-   "source": "out/work/cure/ju3-limb-b.jpg",
+   "time": "2026-11-24T20:52:56.360Z",
+   "file": "20261124205256360-note-see-ju3-rise-3251.jpg",
+   "source": "out/work/cure/see-ju3-rise-3251.jpg",
    "kind": "note",
-   "label": "jupiter third rise, the far limb at full size, drafts 3250 to 3257, consecutive: a violet second limb comes in from 3250, a pale cloud deck from 3253"
+   "label": "Jupiter rise 3251: what the readers see at the far limb"
   },
   {
-   "time": "2026-11-24T19:50:08.235Z",
-   "file": "20261124195008235-note-ju3-limb-a.jpg",
-   "source": "out/work/cure/ju3-limb-a.jpg",
+   "time": "2026-11-24T20:52:55.011Z",
+   "file": "20261124205255011-note-back2-uranus-4180-detail.jpg",
+   "source": "out/work/cure/back2-uranus-4180-detail.jpg",
    "kind": "note",
-   "label": "jupiter third rise, the far limb at full size, drafts 3242 to 3249, consecutive: one blue limb, dark ground"
+   "label": "Uranus dive 4180 and 4188 at full size by the camera's own map",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T20:52:53.736Z",
+   "file": "20261124205253736-note-uranus-dive-T-b.jpg",
+   "source": "out/work/cure/uranus-dive-T-b.jpg",
+   "kind": "note",
+   "label": "Uranus dive across the handover 4185 to 4190, consecutive drafts",
+   "stop": "uranus"
   }
  ]
 }
