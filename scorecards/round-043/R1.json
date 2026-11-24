@@ -1,0 +1,56 @@
+{
+ "critic": "R1",
+ "score": 9,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png / pair-04-b.png",
+   "where": "Central valley, lower-right shelves and the shadowed face of the foreground cliff (crops A, D and E)",
+   "what": "The darker terrain is slightly lifted and warmer, most visibly in the lower-right ravines and around the central dust wisps. This compresses separation between the shaded rock and the haze.",
+   "fix": "Pull down and slightly cool the shaded lower midtones while retaining the soft, localized dust wisps and the sunlit cliff highlights."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png / pair-04-b.png",
+   "where": "Foreground cliff, diagonal scree and far crater wall (crops A, B, D, F and G)",
+   "what": "The rock strata, scree grooves and broken rim have slightly less fine texture and edge separation. The landforms, framing and light direction match.",
+   "fix": "Preserve the finest rock texture and edge detail through resampling without sharpening the atmospheric haze."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png / pair-02-b.png",
+   "where": "Bright upper-left and lower-left limb, with the blue arc above the polar cap (crops B, C, D and H)",
+   "what": "The bright left edge reads a touch crisper, with less of the target's soft blue-white transition into the sky; the thin blue glow at the top is also less even.",
+   "fix": "Restore the diffuse outer falloff around the illuminated arc and keep the upper blue rim continuous and restrained."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png / pair-02-b.png",
+   "where": "Planet surface from the polar cap and left crater rims to the central canyon and shadowed right hemisphere (crops A through F)",
+   "what": "The same features are in place, but the finest ice markings, crater-rim detail, cloud filaments and canyon striations are slightly softened, and the faint surface relief toward the terminator is less distinct.",
+   "fix": "Preserve native-scale texture across the surface, especially the canyon lips and faint right-side relief, without lifting the night side or adding halos."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png / pair-02-b.png",
+   "where": "Moon's illuminated cap and interior rim of the large right-hand crater (crop G)",
+   "what": "The moon matches in size, placement, silhouette and lighting, but its sunlit grain, smallest pits and internal crater edge are slightly softer.",
+   "fix": "Recover the finest lunar microcontrast while keeping the lower hemisphere and crater shadow dark."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png / pair-02-b.png",
+   "where": "Star fields and Milky Way on both sides of the planet (crops B, C, H and I)",
+   "what": "The broad sky pattern and dark grade match, but the smallest stars and fine galactic mottling are not quite as crisp, and a few brighter points have slightly broader halos.",
+   "fix": "Preserve the target's mix of pin-sharp faint stars and tightly confined bright star halos without boosting the background."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png / pair-04-b.png",
+   "where": "Sky and distant horizon, particularly above the right plateau (crops B, C, H and I)",
+   "what": "The warm horizon glow matches in placement and direction, but it reads a little warmer in the transition to black, and the faint stars and distant ridgelines are less finely resolved.",
+   "fix": "Match the target's slightly more neutral dark-sky falloff and retain its more discrete star points and ridge contours without hardening the horizon."
+  }
+ ]
+}
