@@ -1,9 +1,16 @@
 {
  "folder": "travel",
- "pushed": "2026-11-24T00:58:02.022Z",
- "head": "10c96f39f81f8a56013ce68dce772373367b6d0d",
- "note": "Mars leaving, 61 capture frames before and after the seam cure, and the 495 difference",
+ "pushed": "2026-11-24T01:58:35.981Z",
+ "head": "2fc7ced07cc2f20578312311860f0aa19bf36cbb",
+ "note": "Landing of the travels, draft rate 2, after 8bc144fd",
  "looks": [
+  {
+   "time": "2026-11-24T01:58:35.079Z",
+   "file": "20261124015835079-note-landing-sheet.jpg",
+   "source": "out/work/travel/landing-sheet.png",
+   "kind": "note",
+   "label": "Landing after, top Earth into Mars capture 4467 4480 4490 4499, bottom Mars into Jupiter 5614 5628 5634 5639"
+  },
   {
    "time": "2026-11-24T00:57:49.593Z",
    "file": "20261124005749593-note-f495-difference.jpg",
@@ -57,20 +64,6 @@
    "stop": "uranus",
    "segment": "uranus.dive",
    "frame": 4125,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "job": "film"
-  },
-  {
-   "time": "2026-11-23T00:55:10.865Z",
-   "file": "20261123005510865-job-frame-03382.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "jupiter.travel frame 3382, final tier, from the running film job",
-   "stop": "jupiter",
-   "segment": "jupiter.travel",
-   "frame": 3382,
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
