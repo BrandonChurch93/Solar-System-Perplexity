@@ -1,9 +1,25 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-24T15:19:34.980Z",
+ "pushed": "2026-11-24T15:46:39.173Z",
  "head": "97c902c48bfad4ddcaba05f5c34b94f2acac621f",
- "note": "97c902c4 pushed (limb glow on the ground, on main 2bc36ce6): dive red 0.57 at 1322, rise 0.51 and 0.65; now finding the cause of each by trials",
+ "note": "trials on 97c902c4: band off, haze off, show late, fine tone; the far red is the two looks of the plates meeting at the edge of the frame of T; the 0.65 of the rise is the show mix in the dark",
  "looks": [
+  {
+   "time": "2026-11-24T15:46:38.554Z",
+   "file": "20261124154638554-note-looks2-a.jpg",
+   "source": "../../../../tmp/v/looks2-a.jpg",
+   "kind": "note",
+   "label": "Trial, not committed: dive 1322, 1326, 1330 whole frames. Left from above alone, middle as committed, right as stored alone",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T15:46:37.920Z",
+   "file": "20261124154637920-note-looks2-c.jpg",
+   "source": "../../../../tmp/v/looks2-c.jpg",
+   "kind": "note",
+   "label": "Trial, not committed: dive 1322, 1326, 1330, 1334, upper right at native size. Left the plates over the globe's own colour alone, middle as committed (97c902c4), right the plates as stored alone. The straight edge of the frame of T lies on the ground as a wedge at 1330",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T15:19:33.595Z",
    "file": "20261124151933595-note-changes.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/hw/s1578.jpg",
    "kind": "note",
    "label": "Chain W: rise 1578 to 1593. The glow of the limb comes over the horizon with its ground",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T14:27:12.482Z",
-   "file": "20261124142712482-note-s1546.jpg",
-   "source": "../../../../tmp/v/hw/s1546.jpg",
-   "kind": "note",
-   "label": "Chain W: rise 1546 to 1561. Golden band at the limb 1546 to 1553, blue white patch upper right, dark slabs at right 1554 to 1561",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T14:27:11.347Z",
-   "file": "20261124142711347-note-s1308.jpg",
-   "source": "../../../../tmp/v/hw/s1308.jpg",
-   "kind": "note",
-   "label": "Chain W, not committed yet: dive 1308 to 1323. The sky and the Sun's glow come in from 1313, a pale band under the limb from 1320",
    "stop": "venus"
   }
  ]
