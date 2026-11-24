@@ -1,9 +1,49 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T10:42:25.582Z",
+ "pushed": "2026-11-24T11:17:11.652Z",
  "head": "4dbfcc25f1bed94982b4afa215683c13c7008cf8",
- "note": "third commit work: strip under the limb diagnosed (set skirt and far look), border of the set on the ground being built",
+ "note": "third commit work: border of the set on the ground by angle, stretch law; 741 to 748 still red at 1.3 to 1.6, 749 on under 0.45; test shows the set makes the pale streaks under the limb",
  "looks": [
+  {
+   "time": "2026-11-24T11:17:10.928Z",
+   "file": "20261124111710928-note-x1-x0.jpg",
+   "source": "../../../../tmp/m/x1-x0.jpg",
+   "kind": "note",
+   "label": "752.5 with the set (left) and globe alone (right), difference below",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T11:17:09.864Z",
+   "file": "20261124111709864-note-chg-w2.jpg",
+   "source": "../../../../tmp/m/chg-w2.jpg",
+   "kind": "note",
+   "label": "w2 change panel 744.5 against 752.5",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T11:17:08.647Z",
+   "file": "20261124111708647-note-band-x1.jpg",
+   "source": "../../../../tmp/m/band-x1.jpg",
+   "kind": "note",
+   "label": "x1 border plus stretch law, limb band",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T11:17:07.588Z",
+   "file": "20261124111707588-note-band-w2.jpg",
+   "source": "../../../../tmp/m/band-w2.jpg",
+   "kind": "note",
+   "label": "w2 far look off, limb band 744.5 to 756",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T11:17:06.497Z",
+   "file": "20261124111706497-note-w1-c.jpg",
+   "source": "../../../../tmp/m/w1-c.jpg",
+   "kind": "note",
+   "label": "border on the ground, dive 756 to 779, limb crops",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T10:42:24.796Z",
    "file": "20261124104224796-note-limb-v4.jpg",
@@ -26,46 +66,6 @@
    "source": "../../../../tmp/m/limb-v0.jpg",
    "kind": "note",
    "label": "third commit, strip under the limb, dive 740.5 to 756.5 step 2, second named state: set skirt covers the band from 748",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T10:05:43.320Z",
-   "file": "20261124100543320-note-e3-c.jpg",
-   "source": "../../../../tmp/m/e3-c.jpg",
-   "kind": "note",
-   "label": "NAMED STATE 400c5c91: dive 704 to 728 every frame, draft, at the place: plate 1 (made from plate 2) comes in by its own law, pattern at most 0.45",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T10:00:10.251Z",
-   "file": "20261124100010251-note-615-approved.jpg",
-   "source": "../../../../tmp/m/615-approved.jpg",
-   "kind": "note",
-   "label": "615 final with the disc held (not the named state) beside the approved image: a bright rough spot on the terminator. So the hold is left as approved",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T09:49:33.983Z",
-   "file": "20261124094933983-note-e1-e.jpg",
-   "source": "../../../../tmp/m/e1-e.jpg",
-   "kind": "note",
-   "label": "dive 720 to 725 + 1/2 at the worst pattern number of the dive (0.55 at 723): the globe's relief under the limb, outside the disc",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T09:49:32.781Z",
-   "file": "20261124094932781-note-end-1034-1035.jpg",
-   "source": "../../../../tmp/m/end-1034-1035.jpg",
-   "kind": "note",
-   "label": "end of the rise 1034 (left) and first frame of the leaving 1035 (right), draft: the same disc",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T09:49:32.149Z",
-   "file": "20261124094932149-note-t540-second.jpg",
-   "source": "../../../../tmp/m/t540-second.jpg",
-   "kind": "note",
-   "label": "MAIL 540 sheet, rise 967 to 981 every frame, draft, T 977, second commit",
    "stop": "mercury"
   }
  ]
