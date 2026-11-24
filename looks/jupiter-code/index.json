@@ -1,9 +1,93 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T17:25:01.754Z",
+ "pushed": "2026-11-24T17:38:37.610Z",
  "head": "e2d28f3861d586e04dd33196480b9d3cb430bd40",
- "note": "17:25 UTC: sky that stands still (working tree, not committed): 2895 final same bytes, 3150 final differs by rounding (71712 px by 1 level, 56 by more, at most 7), dive draft frames; rise frames are rendering",
+ "note": "17:38 UTC. Sky that stands still (MAIL 708), working tree, not committed yet: sweep of the sky between the views of 2895 and 3150 75.90 degrees (merge 143.6), dive 1.00, 1.28, 1.38, 1.48, 1.94 degrees a frame at 2990, 2996, 2998, 3000, 3010; finals 2997 and 3296 differ from the merge in the sky only (on the sphere by one level near the limb). Own red with its cause: the band without stars over the limb at 3255 to 3266 and 3029 to 3041 is the surface sky plate under its painted horizon.",
  "looks": [
+  {
+   "time": "2026-11-24T17:38:25.525Z",
+   "file": "20261124173825525-note-Rt-band4.jpg",
+   "source": "../work/sky/Rt-band4.png",
+   "kind": "note",
+   "label": "own red, cause found: 3260 and 3264 upper right, level times 4. The band without stars between the limb and the star field is the surface sky plate under its painted horizon (a star free haze fill), bared when the horizon dips with height; its straight top is the plate's horizon",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T17:38:24.315Z",
+   "file": "20261124173824315-note-c3296-pair.jpg",
+   "source": "../work/sky/c3296-pair.jpg",
+   "kind": "note",
+   "label": "3296 final tier: left the merge (69073d9d), right the working tree (f1ae6b37): the sky is the next stop's from 0.39 radii up; on the sphere 3220 of 870207 pixels differ, 3213 by one level, 2 over three levels at 3 px from the limb",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T17:38:23.215Z",
+   "file": "20261124173823215-note-c2997-pair.jpg",
+   "source": "../work/sky/c2997-pair.jpg",
+   "kind": "note",
+   "label": "2997 final tier: left the merge (8fec1528), right the working tree (2e7fd007): the sky is another part of the star field; on the sphere 16480 of 1716543 pixels differ, each by one level, none deeper than 300 px from the limb",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T17:38:22.190Z",
+   "file": "20261124173822190-note-Dt-right2.jpg",
+   "source": "../work/sky/Dt-right2.png",
+   "kind": "note",
+   "label": "dive 2994 to 2997, right quarter at full size, level times 2, working tree",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T17:38:21.126Z",
+   "file": "20261124173821126-note-Dt-left1.jpg",
+   "source": "../work/sky/Dt-left1.png",
+   "kind": "note",
+   "label": "dive 2990 to 2993, left quarter at full size, level times 2, working tree: the sky moves 1.00 to 1.2 degrees a frame, as the camera turns",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T17:38:20.158Z",
+   "file": "20261124173820158-note-Rt-sky1.jpg",
+   "source": "../work/sky/Rt-sky1.png",
+   "kind": "note",
+   "label": "rise, sky windows at full size, working tree: stars are points, the field moves only as the camera turns",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T17:38:19.009Z",
+   "file": "20261124173819009-note-Rt-a.jpg",
+   "source": "../work/sky/Rt-a.jpg",
+   "kind": "note",
+   "label": "rise 3280 to 3299, every frame, draft tier, working tree with the sky that stands still (no terrain aim, the rise's turn to the next sky hidden between 0.095 and 0.39 radii)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T17:36:22.341Z",
+   "file": "20261124173622341-frame-bT-2997.jpg",
+   "source": "out/work/jupiter/final/bT-2997.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 2997, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 2997,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
+  {
+   "time": "2026-11-24T17:32:12.243Z",
+   "file": "20261124173212243-frame-bT-3296.jpg",
+   "source": "out/work/jupiter/final/bT-3296.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3296, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3296,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
   {
    "time": "2026-11-24T17:24:41.392Z",
    "file": "20261124172441392-note-pat-Rb.jpg",
@@ -97,34 +181,6 @@
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-24T16:49:25.198Z",
-   "file": "20261124164925198-frame-bN-3296.jpg",
-   "source": "out/work/jupiter/final/bN-3296.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3296, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3296,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
-  },
-  {
-   "time": "2026-11-24T16:46:48.530Z",
-   "file": "20261124164648530-frame-bN-2997.jpg",
-   "source": "out/work/jupiter/final/bN-2997.png",
-   "kind": "frame",
-   "label": "jupiter.dive frame 2997, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 2997,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
-  },
-  {
    "time": "2026-11-24T16:36:45.637Z",
    "file": "20261124163645637-note-m12-sky.jpg",
    "source": "../work/t/m12-sky.png",
@@ -162,62 +218,6 @@
    "source": "../work/ff/wide-canvas.jpg",
    "kind": "note",
    "label": "ruling 3 study: the wide canvas (the view's source)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T16:12:17.349Z",
-   "file": "20261124161217349-note-lay-fore.jpg",
-   "source": "../work/ff/lay-fore.jpg",
-   "kind": "note",
-   "label": "ruling 3 study: the wide canvas laid back on the fore plate's extent",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T16:12:16.705Z",
-   "file": "20261124161216705-note-lay-near.jpg",
-   "source": "../work/ff/lay-near.jpg",
-   "kind": "note",
-   "label": "ruling 3 study: the wide canvas laid back on the near plate's extent (purple: not seen)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T15:55:48.559Z",
-   "file": "20261124155548559-note-mid-chain.jpg",
-   "source": "../work/ff/mid-chain.jpg",
-   "kind": "note",
-   "label": "STUDY the mid plate's chain: guide, take, plate with the near plate nested, wedge. Outside the nest ring nothing of the view is in it",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T15:55:48.022Z",
-   "file": "20261124155548022-note-near-chain.jpg",
-   "source": "../work/ff/near-chain.jpg",
-   "kind": "note",
-   "label": "STUDY the near plate's chain: guide (the core image laid back), take, plate, wedge. FAULT outside the wedge the take invented its own ground",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T15:55:47.440Z",
-   "file": "20261124155547440-note-fore-chain.jpg",
-   "source": "../work/ff/fore-chain.jpg",
-   "kind": "note",
-   "label": "STUDY the fore plate's chain: guide, take, plate, wedge of the image. FAULT the ring of white cumulus round the storm is the take's invention, not the view's",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T15:55:46.904Z",
-   "file": "20261124155546904-note-lay-mid.jpg",
-   "source": "../work/ff/lay-mid.jpg",
-   "kind": "note",
-   "label": "STUDY the wide canvas laid back on the mid plate from above; rings at 8, 11, 15, 20, 24 units from the point under the fit eye: clear inside 8, petal blobs to 11, smeared to 15, haze colours beyond",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T15:55:46.368Z",
-   "file": "20261124155546368-note-pat-v10.jpg",
-   "source": "../work/ff/pat-v10.jpg",
-   "kind": "note",
-   "label": "STUDY the same with the plates alone on a flat relief: 0.49 0.48 0.48; so the relief is not the cause there",
    "stop": "jupiter"
   }
  ]
