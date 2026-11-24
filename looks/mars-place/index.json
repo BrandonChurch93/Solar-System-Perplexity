@@ -1,9 +1,17 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T02:36:17.815Z",
- "head": "ca34efc45024a3645ced72b868e24088a28d0938",
- "note": "heights v8 on the engine (old bearing) and the map with the bearings for the turn of MAIL 461",
+ "pushed": "2026-11-24T03:02:17.008Z",
+ "head": "f0532ddcee36b3aee8b9ad491bcc4c79ca96d488",
+ "note": "turned place, heights v9 from above: side canyon on 225.6 into the main trough; plates and engine stills in work",
  "looks": [
+  {
+   "time": "2026-11-24T03:02:15.701Z",
+   "file": "20261124030215701-note-crops-v9.jpg",
+   "source": "out/work/place/see/crops-v9.jpg",
+   "kind": "note",
+   "label": "heights v9 of the turned place (heading 245.9) from straight above, lit by the globe's Sun at the middle of the surface view, no cast shadow yet: 8.5, 3.8, 1.6, 0.7 degrees",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T02:36:17.217Z",
    "file": "20261124023617217-note-map19-crops.jpg",
@@ -18,6 +26,46 @@
    "source": "out/work/place/see/j-sheet.jpg",
    "kind": "note",
    "label": "engine draft stills j (heights v8: relaxed membrane, craters, rock layers; still the close image's Sun, scratch) at 2439 2452 2471 2700 2713",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T02:22:31.756Z",
+   "file": "20261124022231756-note-i-sheet.jpg",
+   "source": "out/work/place/see/i-sheet.jpg",
+   "kind": "note",
+   "label": "ENGINE with the cap (scratch tree, relit plates, heights v7): 2439 2452 2471 2700 2713 lit by the close image's Sun; last tile: 2452 lit by the globe's Sun (wrong walls)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T02:04:13.927Z",
+   "file": "20261124020413927-note-f52452-lit.jpg",
+   "source": "out/work/place/see/f52452-lit.png",
+   "kind": "note",
+   "label": "2452 as the cap lights the relit country (preview, not the engine)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T02:04:13.130Z",
+   "file": "20261124020413130-note-f5-sheet.jpg",
+   "source": "out/work/place/see/f5-sheet.jpg",
+   "kind": "note",
+   "label": "country relit by code, heights v7: plates alone, heights alone, as the cap lights it, with the close view; 2439 2452 2471 (preview by mesh, not the engine)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T01:20:00.229Z",
+   "file": "20261124012000229-note-heights-v4.jpg",
+   "source": "out/work/place/see/heights-v4.jpg",
+   "kind": "note",
+   "label": "heights v4 from above at 1.6, 0.7, 0.3 degrees (colour -7 to +1 km, white line: border of the ground the close view saw)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T01:19:59.699Z",
+   "file": "20261124011959699-note-d12471-shade.jpg",
+   "source": "out/work/place/see/d12471-shade.png",
+   "kind": "note",
+   "label": "2471 the heights v4 alone lit by the Sun: plateau, lit north wall, floor in cast shadow; a round shadow at the far end of the canyon",
    "stop": "mars"
   }
  ]
