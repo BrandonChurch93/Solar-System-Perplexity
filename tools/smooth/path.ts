@@ -409,3 +409,16 @@ export function table(whole: Pick<CurveResult, 'name' | 'over' | 'step' | 'point
   }
   return rows
 }
+
+export interface ParityFrame { segment: string; kind: string; share: number; frame: number }
+
+export function parityFrames(segments: { id: string; stop: string; kind: string; firstFrame: number; endFrame: number }[], stop: string, at: Record<string, number[] | undefined>, kinds: string[], whole: boolean): ParityFrame[] {
+  const out: ParityFrame[] = []
+  for (const kind of ['hold', 'dive', 'terrain', 'rise', 'travel']) {
+    if (kind === 'hold' || kind === 'travel' ? !whole : kind !== 'terrain' && !kinds.includes(kind)) continue
+    const seg = segments.find((s) => s.stop === stop && s.kind === kind)
+    if (!seg) continue
+    for (const share of at[kind] ?? []) out.push({ segment: seg.id, kind, share, frame: Math.min(seg.firstFrame + Math.round(share * (seg.endFrame - seg.firstFrame)), seg.endFrame - 1) })
+  }
+  return out
+}
