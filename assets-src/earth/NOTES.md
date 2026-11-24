@@ -3641,3 +3641,34 @@ Attached files: pair2010-r2.jpg, T-dive-r2-sheet.jpg, T-rise-r2-sheet.jpg, dive-
 - Where the resident memory sits, read from `ps` during the walk at frame 2117: the graphics process 2256 MB, the page (renderer) 463 MB, the browser 174 MB. `free -m`: 7957 total, 3475 used, 4481 available.
 - The measure opens the page at the master format and renders the texel pass at draft with a PNG of every frame (`tools/measure.ts`, `tools/lib/frames.ts`); my walk tool renders the same way (master format, draft, PNG of every frame), so the texel walk repeats what died.
 - Queued behind the running walk (`/tmp/gl/s8/p5.sh`): the texel pass over 1680 to 2174 on one page (`/tmp/gl/s8/mem-texels.log`), then the beauty pass over the same frames on a fresh page (`mem-beauty.log`). The tool now also prints the sets loaded and the resident memory of the graphics process and of the page apart.
+- The sun's glow at the top border about the rise's change of view, measured after the mail (mean level of the 400 columns about the brightest column, top 110 rows, draft): 108.09 at 2094, 109.20 at 2096, 111.43 at 2100, 111.83 at 2101, 111.71 at 2102, 110.83 at 2103, 108.90 at 2104, 106.01 at 2105, 102.23 at 2106, 92.85 at 2108, 82.59 at 2110, 72.99 at 2112. It climbs to 2101 and falls from 2102 without a step. What I wrote in the mail from the small sheet (bright to 2100, dims over 2101 to 2105) was my eye on a small sheet; there is no step at T in this number. To be said in the next mail.
+- Rise of this tree against the first named tree, every frame 2106 to 2122: the difference lies in the top row of the 16 by 9 grid only (the sky), mean of the frame 0.00 at 2106 rising to 0.49 at 2122, single points up to 227 levels at 2121. Sheet 2106 to 2117 seen.
+
+### 10:32 to 10:40 UTC, the rise of the second named tree on the frames, and the first walk's memory to its end
+
+Walk r2 ended 10:36:23 (state line "walk-r2 0"): 97 frames on one page, beauty, draft, 1876 to 2174 with gaps, 1436 s in frames. Summary as printed by memsum2.py:
+- "tex first 49 least 49 at 1876 most 50 at 1877 last 50"
+- "buf first 30 least 30 at 1876 most 46 at 2160 last 46"
+- "prog first 11 least 11 at 1876 most 15 at 2160 last 15"
+- "vao first 12 least 12 at 1876 most 16 at 2160 last 16"
+- "fb first 18 least 18 at 1876 most 19 at 1877 last 19"
+- "texMade first 49 ... last 50", "bufMade first 30 ... last 46", "progMade first 11 ... last 15" (made equals alive: nothing is made and freed per frame, nothing is made and kept per frame)
+- "heap first 331.2 least 264.1 at 2101 most 338.5 at 1877 last 264.1"
+- "sets first 1394 least 1394 at 1876 most 1394 at 1876 last 1394"
+- "rss first 3178 least 3178 at 1876 most 3261 at 2168 last 3261" (all browser processes, MB)
+- "lost first 0 ... last 0"
+- "change at frame 1877 (n 2): textures 50 buffers 30 programs 11 vertex arrays 12 framebuffers 19 renderbuffers 1"
+- "change at frame 2100 (n 52): textures 50 buffers 42 programs 14 vertex arrays 15 framebuffers 19 renderbuffers 1"
+- "change at frame 2160 (n 93): textures 50 buffers 46 programs 15 vertex arrays 16 framebuffers 19 renderbuffers 1"
+The counts change three times in 97 frames (second frame, the rise's change of view, and between 2152 and 2160 where 4 buffers, 1 program and 1 vertex array come: the Moon is in the picture from 2160). Between those they stand still. This walk had gaps, so it is not the answer to MAIL 632; the full walks are.
+
+The rise frames 2118 to 2140, 2148, 2152, 2160, 2164, 2168, 2172, 2174 of this tree, every one seen (sheets /tmp/gl/s8/rise-r2-b, -c, -e, -d):
+- 2118 to 2120: the close view, horizon at the top, the glint as a pale patch in the middle with the towers and their shadows about it, Cuba right of it. The green island comes in at the right border at 2119 and grows to 2127 (own list, still there).
+- 2121 to 2132: the ground about the glint is darker and greyer than the map around it and its lower edge shows as a dark outline from 2124 to 2131: the plate reads as laid on the map (own list, still there, not cured by this commit).
+- 2133 to 2140: the plate shrinks to a pale patch; the pale streak of the glint stays to 2140; not seen at 2148.
+- 2148 to 2174: the whole body, the Moon from 2160. Nothing new seen.
+Against the first named tree (cmp.py): 2148, 2152, 2160, 2164, 2168, 2172, 2174 equal (mean 0.00, largest 0 or 1). 2118 to 2140 differ: mean 0.21 at 2118 rising to 1.59 at 2129, 0.13 at 2133, 0.74 at 2136, 0.32 at 2140. On the difference picture (/tmp/gl/s8/rise-diff-r2.jpg, 2126, 2129, 2131, 2136) the difference is the sky left of and over the limb (in this tree the band of stars is there at 2126, in the named tree the sky is still dark there), plus a short streak at the left border on the body at 2129 and 2131 (the strip of patch-24, as in the dive).
+My own pictures measure of this tree's rise, draft, 2096 to 2140 (pics.py, /tmp/gl/s8/pics-rise-r2.txt): "pattern 2114:0.73 2113:0.72 2123:0.68 2112:0.68 2111:0.67 2122:0.67 2115:0.66 2124:0.65", "pattern over 0.45: [2107 ... 2126, 2130, 2131, 2132]", "pop 2119:1.10 2120:1.10 2118:1.09", "popAll 2100:1.15", "pop over 1.2: []", "levelStep 2134:0.53". The pattern is red in the rise in this tree too.
+
+Looks pushed 10:37 (six sheets of this tree).
+Texel walk (p5.sh) started 10:36: 2.1 s a frame in the hold; first lines: textures 48, buffers 13, programs 8, vertex arrays 8, framebuffers 19, renderbuffers 1 at frame 1690; heap 369.5 MB; sets 1394 MB (earth only); graphics process 1959 MB, page 476 MB, all 2961 MB.
