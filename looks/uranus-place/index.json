@@ -1,8 +1,8 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-24T12:30:13.720Z",
- "head": "f403f27b6137d89f6ca691508ebebd1ca303ee31",
- "note": "Third commit, drawn on f403f27b (0ac434b6 merged with main 36970ce3): judged 4137 and 4436 finals beside the second NAMED's with the difference times 8; only the place changes. Pattern red stays, named",
+ "pushed": "2026-11-24T12:53:56.694Z",
+ "head": "1527ad8dec0d1fd5caff2ce4e37aadcb88b55fb1",
+ "note": "12:54 UTC, head 1527ad8d on main 738dfa3a pushed 12:47, report on the second NAMED came 12:49; drawing the seam rows of the pattern at rate 2 on this commit (dive 4172 to 4199, rise 4380 to 4400)",
  "looks": [
   {
    "time": "2026-11-24T12:17:20.710Z",
