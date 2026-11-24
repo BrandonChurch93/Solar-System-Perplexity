@@ -1,9 +1,97 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T21:35:40.208Z",
- "head": "18c4bd32b46191358b9e6b341528188ffe884d7b",
- "note": "21:36 UTC round 2 of 3: dive frames of the running smooth report (one place in one light); the rise follows with the pull back",
+ "pushed": "2026-11-24T21:57:50.422Z",
+ "head": "e29762084f3c913a9dedfd61776cede322c592fe",
+ "note": "21:58 UTC, round 2 after the first named commit e297620: the close view beside the approved image, the dive seen frame by frame with two reds I found myself (the storm's first show on the disc 2981 to 2991; the limb strip 3014 to 3035, my pattern reading 0.74), the first rise frames on the merged tree",
  "looks": [
+  {
+   "time": "2026-11-24T21:57:39.771Z",
+   "file": "20261124215739771-note-s-rise-a.jpg",
+   "source": "../work/r5/s-rise-a.jpg",
+   "kind": "note",
+   "label": "round 2 rise on the merged tree with the pull back, 3236 to 3245 every frame at half size (run in progress, 3246 on follows)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T21:57:38.516Z",
+   "file": "20261124215738516-note-t3220.jpg",
+   "source": "../work/r5/t3220.jpg",
+   "kind": "note",
+   "label": "3220 on the merged tree at draft (surface view near its end)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T21:57:37.364Z",
+   "file": "20261124215737364-note-patzoom-3022h.jpg",
+   "source": "../work/r5/patzoom-3022h.jpg",
+   "kind": "note",
+   "label": "3022 + 1/2 against 3030 + 1/2 carried back, limb strip x 1300 to 1800, y 200 to 640 (top the two frames, middle their fine pattern, bottom the number and the judged area)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T21:57:36.214Z",
+   "file": "20261124215736214-note-patmaps.jpg",
+   "source": "../work/r5/patmaps.jpg",
+   "kind": "note",
+   "label": "my own pattern reading with the smooth tool's judge (rows 3004 + 1/2, 3015, 3034; left: where the number is over 0.45 in red, middle the frame, right the frame 8 later). Largest 0.74 at 3022 + 1/2, all in the strip at the limb: red, limit 0.45",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T21:57:35.062Z",
+   "file": "20261124215735062-note-s-limb-dive.jpg",
+   "source": "../work/r5/s-limb-dive.jpg",
+   "kind": "note",
+   "label": "RED: limb of the dive at full size, 3018 to 3032. The rim changes by height: cream band to about 3022, blue rim from about 3026, the sky's dark veil 3028 to 3032; far ground at the limb is stretched streaks",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T21:57:33.934Z",
+   "file": "20261124215733934-note-s-dive-3033.jpg",
+   "source": "../work/r5/s-dive-3033.jpg",
+   "kind": "note",
+   "label": "round 2 dive 3032 + 1/2 to 3035 at full size, where round 46 had its largest pattern number",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T21:57:32.802Z",
+   "file": "20261124215732802-note-s-dive-d.jpg",
+   "source": "../work/r5/s-dive-d.jpg",
+   "kind": "note",
+   "label": "round 2 dive 3036 to 3045 every frame at half size (the run was stopped at 3045 + 1/2 to give the render slot to the rise)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T21:57:31.578Z",
+   "file": "20261124215731578-note-s-dive-c.jpg",
+   "source": "../work/r5/s-dive-c.jpg",
+   "kind": "note",
+   "label": "round 2 dive 3024 to 3035 every frame at half size (smooth run frames, before the merge): one storm, one light, no second limb",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T21:57:30.392Z",
+   "file": "20261124215730392-note-s-2983.jpg",
+   "source": "../work/r5/s-2983.jpg",
+   "kind": "note",
+   "label": "2983 whole frame (smooth run frames, before the merge): the place shows as a small dark mark left of the centre while the disc is still whole",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T21:57:29.383Z",
+   "file": "20261124215729383-note-s-storm-in.jpg",
+   "source": "../work/r5/s-storm-in.jpg",
+   "kind": "note",
+   "label": "RED found by myself: the storm's first show on the full disc. Crop at full size, 2978 to 2992: a dark blotch with rust claws about 60 px wide comes in on the pale zone by height (3.2 to 1.6 radii)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T21:57:28.294Z",
+   "file": "20261124215728294-note-pair-3150-r2.jpg",
+   "source": "../work/r5/pair-3150-r2.jpg",
+   "kind": "note",
+   "label": "3150 at final, approved image left, this commit right (same state as the named commit e297620; the far ground under the limb is flat, match 7.85 against 7.25 in round 46: a known red)",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-24T21:35:38.781Z",
    "file": "20261124213538781-note-s-dive-b.jpg",
@@ -130,94 +218,6 @@
    "source": "../work/r5/e3.jpg",
    "kind": "note",
    "label": "D1 draft rise: 3246, 3252, 3256, 3268 (tan band above the limb at 3268 is the sky plate under its horizon, being cut now)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T20:50:57.623Z",
-   "file": "20261124205057623-note-e2.jpg",
-   "source": "../work/r5/e2.jpg",
-   "kind": "note",
-   "label": "D1 draft dive: 3024, 3040, 3050, 3056 (no second limb, no band by height)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T20:50:56.988Z",
-   "file": "20261124205056988-note-e1.jpg",
-   "source": "../work/r5/e1.jpg",
-   "kind": "note",
-   "label": "D1 draft: 3060, 3150, 3239 (eye keeps its shape), 2997, 3012, 3024",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T20:50:56.303Z",
-   "file": "20261124205056303-note-pair-3150-D1.jpg",
-   "source": "../work/r5/pair-3150-D1.jpg",
-   "kind": "note",
-   "label": "3150 draft, approved image left, state D1 right (deck program in one light, plates toned at every height)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T20:32:14.926Z",
-   "file": "20261124203214926-note-c1.jpg",
-   "source": "../work/r5/c1.jpg",
-   "kind": "note",
-   "label": "r2 experiment C1: the ground drawn by the deck program alone from 3.2 radii, plates only (unfinished)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T20:32:14.316Z",
-   "file": "20261124203214316-note-d3.jpg",
-   "source": "../work/r5/d3.jpg",
-   "kind": "note",
-   "label": "r2 draft A1 rise 3276 to 3312 (unfinished: yellow wedge at 3276, half lit disc)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T20:32:13.728Z",
-   "file": "20261124203213728-note-d2.jpg",
-   "source": "../work/r5/d2.jpg",
-   "kind": "note",
-   "label": "r2 draft A1 3030 to 3268 (unfinished)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T20:32:13.131Z",
-   "file": "20261124203213131-note-d1.jpg",
-   "source": "../work/r5/d1.jpg",
-   "kind": "note",
-   "label": "r2 draft A1 dive 2975 to 3030 (unfinished: look still changes at 3018 to 3030 where the deck program takes over)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T20:32:12.565Z",
-   "file": "20261124203212565-note-pair-3150-A1.jpg",
-   "source": "../work/r5/pair-3150-A1.jpg",
-   "kind": "note",
-   "label": "r2 draft A1 3150: approved image left, frame right (one Sun at 32 degrees, no exposure by height)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T19:47:11.918Z",
-   "file": "20261124194711918-note-jupiter-rise-changes.jpg",
-   "source": "out/work/logs/bU/jupiter-rise-changes.png",
-   "kind": "note",
-   "label": "rise of head f62f610, pattern changes (red 0.67 at 3261 + 1/2)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T19:47:11.346Z",
-   "file": "20261124194711346-note-jupiter-dive-changes.jpg",
-   "source": "out/work/logs/bU/jupiter-dive-changes.png",
-   "kind": "note",
-   "label": "dive of head f62f610, pattern changes (red 0.76 at 3019 + 1/2): the two looks of the place, the cause is one Sun at 57 degrees against a view lit at about 33",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T19:47:10.650Z",
-   "file": "20261124194710650-note-look-pair-3150.jpg",
-   "source": "../work/r3/look-pair-3150.jpg",
-   "kind": "note",
-   "label": "close view: approved image (left) beside frame 3150 of head f62f610 (right); round 2 list item 1 not built yet",
    "stop": "jupiter"
   }
  ]
