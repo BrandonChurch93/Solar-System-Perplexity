@@ -1,9 +1,17 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T10:32:14.158Z",
- "head": "e221de0387f5f01b4c72a670f3ffc9dbbeebe77a",
- "note": "2(b): sky weight and place weight by the height of the eye; Earth dive 1905 to 1912 at draft, the picture now comes in over 5 frames; chain running",
+ "pushed": "2026-11-24T10:54:55.434Z",
+ "head": "8fd084dc09b9ff9fdb646df916db8967daa85298",
+ "note": "2(b) named (weights by height); now the far end of the rise (MAIL 602): pace.out measured on Mars with the carry laid, plot of the seam",
  "looks": [
+  {
+   "time": "2026-11-24T10:54:54.806Z",
+   "file": "20261124105454806-note-mars-leave-out.jpg",
+   "source": "out/work/h602/mars-leave-out.png",
+   "kind": "note",
+   "label": "MAIL 602 scratch: Mars, the seam from the rise into the travel with pace.out of the one move and the travel carry laid: speed of the edge, way of the centre, growth of the radius (px a film frame, rate 2)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T10:32:13.037Z",
    "file": "20261124103213037-note-earth-crop-right.jpg",
@@ -62,13 +70,6 @@
    "source": "../../../../tmp/law/capmarch/pred-dive.png",
    "kind": "note",
    "label": "Mars 2477: the ground predicted from the plates and bins, marched from the plan's eye, against the renders"
-  },
-  {
-   "time": "2026-11-24T09:25:01.790Z",
-   "file": "20261124092501790-note-sheet-diag.jpg",
-   "source": "../../../../tmp/law/capmarch/sheet-diag.png",
-   "kind": "note",
-   "label": "Mars 2477 globe side, cap test: beauty and texels views, the ground of the cap in large flat facets"
   }
  ]
 }
