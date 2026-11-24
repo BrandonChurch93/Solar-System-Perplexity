@@ -13,22 +13,19 @@ export async function watchMakers(page: Page): Promise<void> {
     const raw = gl as unknown as Record<string, (...x: unknown[]) => unknown>
     const made: string[] = []
     ;(window as unknown as { made: string[] }).made = made
-    const wrap = (name: string, note: (x: unknown[]) => string): void => {
+    for (const name of [...uploads!, ...objects!, 'bufferData', 'linkProgram']) {
       const was = raw[name]!.bind(gl)
       raw[name] = (...x: unknown[]) => {
-        made.push(note(x))
+        if (uploads!.includes(name)) made.push(name + ' ' + x.filter((v) => typeof v === 'number').join(' '))
+        else if (name === 'bufferData') made.push('bufferData ' + (typeof x[1] === 'number' ? x[1] : (x[1] as ArrayBufferView | null)?.byteLength ?? 0))
+        else if (name === 'linkProgram') {
+          const text = (gl.getAttachedShaders(x[0] as WebGLProgram) ?? []).map((s) => gl.getShaderSource(s) ?? '').join('\n')
+          const own = [...new Set([...text.matchAll(/\b(?:uniform|in|attribute)\s+(?:(?:highp|mediump|lowp)\s+)?\w+\s+([ua][A-Z]\w*)/g)].map((m) => m[1]!))]
+          made.push('linkProgram ' + (/#define SHADER_NAME (\S+)/.exec(text)?.[1] ?? 'unnamed') + ': ' + own.slice(0, 14).join(' ') + (own.length > 14 ? ' and ' + (own.length - 14) + ' more' : ''))
+        } else made.push(name)
         return was(...x)
       }
     }
-    for (const name of uploads!) wrap(name, (x) => name + ' ' + x.filter((v) => typeof v === 'number').join(' '))
-    for (const name of objects!) wrap(name, () => name)
-    wrap('bufferData', (x) => 'bufferData ' + (typeof x[1] === 'number' ? x[1] : (x[1] as ArrayBufferView | null)?.byteLength ?? 0))
-    wrap('linkProgram', (x) => {
-      const text = (gl.getAttachedShaders(x[0] as WebGLProgram) ?? []).map((s) => gl.getShaderSource(s) ?? '').join('\n')
-      const name = /#define SHADER_NAME (\S+)/.exec(text)?.[1] ?? 'unnamed'
-      const own = [...new Set([...text.matchAll(/\b(?:uniform|in|attribute)\s+(?:(?:highp|mediump|lowp)\s+)?\w+\s+([ua][A-Z]\w*)/g)].map((m) => m[1]!))]
-      return 'linkProgram ' + name + ': ' + own.slice(0, 14).join(' ') + (own.length > 14 ? ' and ' + (own.length - 14) + ' more' : '')
-    })
   }, [UPLOADS, OBJECTS] as const)
 }
 

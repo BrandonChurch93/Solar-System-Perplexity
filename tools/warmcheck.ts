@@ -127,8 +127,8 @@ const write = a.write === 'true'
 const rate = a.rate ? Number(a.rate) : 1
 const label = a.label ?? (cold ? 'cold' : 'warm')
 const guarded = ['dive', 'terrain', 'rise', 'travel']
-if (write && first !== 0 && !(segmentAtFrame(first).kind === 'hold' && segmentAtFrame(first).firstFrame === first)) {
-  console.error('warm: --write starts at frame 0 or at the first frame of a hold')
+if (write && first !== 0 && segmentAtFrame(first).kind !== 'hold') {
+  console.error('warm: --write starts at frame 0 or at a frame of a hold')
   process.exit(2)
 }
 const dir = join(WORK, 'warm')
