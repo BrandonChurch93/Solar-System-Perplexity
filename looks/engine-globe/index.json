@@ -1,9 +1,33 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-24T16:44:45.553Z",
- "head": "82c4701120bb988a39869222c9e760472feb43f9",
- "note": "TASK 697: made proofs of the correction of the pattern measure at shrink 4. Rigid 0.17 before, 0.01 after; whole exchange 1.37 before, 1.15 after (seed 697; 1.15 to 1.56 over seven seeds); a half dissolve at shrink 4 reads 0.37 to 0.68 over seven seeds, so it can fall under 0.45. Not final.",
+ "pushed": "2026-11-24T17:06:37.675Z",
+ "head": "226eec4e620c9fc552014dc069ca05b7f1211491",
+ "note": "TASK 697: Jupiter's rise 3261 + 1/2 reads 0.69 before and 0.11 after the patch, the judged share 0.8896 both times. Mercury's dive 746 + 1/2 stays 1.02: the reading lies in a band along the limb, where the far ground of the first frame (bright arcs) is not the ground the last frame shows there.",
  "looks": [
+  {
+   "time": "2026-11-24T17:06:36.135Z",
+   "file": "20261124170636135-note-panel-ju3261-after.jpg",
+   "source": "../m697/panel-ju3261-after.png",
+   "kind": "note",
+   "label": "Jupiter rise 3261 + 1/2, change panel after the patch (root of the area, nearest half step): 0.11",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T17:06:34.837Z",
+   "file": "20261124170634837-note-panel-ju3261-before.jpg",
+   "source": "../m697/panel-ju3261-before.png",
+   "kind": "note",
+   "label": "Jupiter rise 3261 + 1/2, change panel before the patch: 0.69",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T17:06:32.858Z",
+   "file": "20261124170632858-note-pair-me746.jpg",
+   "source": "../m697/pair-me746.png",
+   "kind": "note",
+   "label": "Mercury dive 746 + 1/2 round pixel 924, 64, twice enlarged: first frame, the frame 8 film frames later carried back along the flows at full size, the pattern (white is 1). 1.02 before the patch and after it",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T16:44:43.102Z",
    "file": "20261124164443102-note-made-rise4.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/m591-m-0.png",
    "kind": "note",
    "label": "run m start 2449: the same panel with the ground haze off",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T11:13:53.500Z",
-   "file": "20261124111353500-note-m591-c-0.jpg",
-   "source": "../../../../tmp/m591-c-0.png",
-   "kind": "note",
-   "label": "run c start 2449: where the worst 1 percent lies (far ground at the top edge)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T11:13:52.964Z",
-   "file": "20261124111352964-note-m-changes.jpg",
-   "source": "out/work/m591/m-changes.png",
-   "kind": "note",
-   "label": "run m as h with the ground haze of the globe off: 0.24 green",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T11:13:52.402Z",
-   "file": "20261124111352402-note-h-changes.jpg",
-   "source": "out/work/m591/h-changes.png",
-   "kind": "note",
-   "label": "run h one texture, levels, air, no cap: 1.46",
    "stop": "mars"
   }
  ]
