@@ -4,6 +4,7 @@ import { join } from 'node:path'
 import type { Page } from 'playwright-core'
 import { DIST, ROOT, WORK, args, ensureBuild, loadConfig, requireDisk } from './lib/common'
 import { openCapture, pageFault, type Session } from './lib/browser'
+import { makerLines, watchMakers } from './lib/makers'
 import { judgedFrames, segmentAtFrame } from '../src/director/timeline'
 
 // The warm start of the live player (kit/PROGRESS.md, second review note of 2026-11-23, plan H 3).
@@ -13,7 +14,7 @@ import { judgedFrames, segmentAtFrame } from '../src/director/timeline'
 // Exit 1, with the frames and what they made, when a frame of a dive, a surface view, a rise or a travel made a program, uploaded a texture or made
 // a buffer, or when the warm start itself did such work before one of them (after the first frame of the run). A piece starts at the first frame of a hold (or at frame 0), where the player is warm. --player takes the live page and the web assets
 // instead of the capture page. --cold leaves the warm start out and only lists. --write adds every frame outside a hold that did work to
-// src/core/warm.json and exits 0: run it, then run again without it. --reset first takes the frames first..last out of the list, for a stop that
+// src/core/warm.json as it is found and exits 0: run it, then run again without it. --reset first takes the frames first..last out of the list, for a stop that
 // was rebuilt. Every line goes to out/work/warm/<label>.jsonl.
 //   npm run warm -- --stills LABEL [--frames 100,200-210] [--format ID]
 // The proof that a warm draw changes no pixel: before each still every warm frame that is due is drawn, and the hash of the still is compared with
@@ -126,8 +127,8 @@ const write = a.write === 'true'
 const rate = a.rate ? Number(a.rate) : 1
 const label = a.label ?? (cold ? 'cold' : 'warm')
 const guarded = ['dive', 'terrain', 'rise', 'travel']
-if (write && first !== 0 && !(segmentAtFrame(first).kind === 'hold' && segmentAtFrame(first).firstFrame === first)) {
-  console.error('warm: --write starts at frame 0 or at the first frame of a hold')
+if (write && first !== 0 && segmentAtFrame(first).kind !== 'hold') {
+  console.error('warm: --write starts at frame 0 or at a frame of a hold')
   process.exit(2)
 }
 const dir = join(WORK, 'warm')
@@ -137,11 +138,13 @@ writeFileSync(file, '')
 const s = await open(first)
 const bad: string[] = []
 const found: number[] = []
+const before = listed().frames.length
 const t0 = Date.now()
 let sets = 0
 let peak = 0
 try {
   await s.page.evaluate((r) => (window as unknown as { showcase: Api }).showcase.setRate(r), rate)
+  await watchMakers(s.page)
   for (let i = first * rate; i <= last * rate; i++) {
     const f = i / rate
     const t = Date.now()
@@ -149,20 +152,29 @@ try {
       const api = (window as unknown as { showcase: Api }).showcase
       const drawn = warm ? await api.ahead(frame as number, tr as string, start as boolean) : 0
       const before = api.counts()
+      const made = (window as unknown as { made: string[] }).made
+      made.length = 0
       await api.renderFrame(index as number, tr as string)
-      return { ...api.counts(), drawn, before, sets: api.memory().loaded.length, peak: api.memory().peakBytes }
+      return { ...api.counts(), drawn, before, sets: api.memory().loaded.length, peak: api.memory().peakBytes, made: made.slice(0, 400) }
     }, [i, f, tier, !cold, i === first * rate] as const)
     await usable(s.page, f)
     sets = Math.max(sets, c.sets)
     peak = Math.max(peak, c.peak)
     const seg = segmentAtFrame(f)
     const work = c.programs + c.textures + c.buffers > 0
-    appendFileSync(file, JSON.stringify({ frame: f, segment: seg.id, programs: c.programs, textures: c.textures, buffers: c.buffers, warmed: c.drawn, ahead: c.before, sets: c.sets, ms: Date.now() - t }) + '\n')
+    appendFileSync(file, JSON.stringify({ frame: f, segment: seg.id, programs: c.programs, textures: c.textures, buffers: c.buffers, warmed: c.drawn, ahead: c.before, sets: c.sets, ms: Date.now() - t, ...(work ? { made: makerLines(c.made) } : {}) }) + '\n')
     if (work) {
       const line = 'frame ' + f + ' ' + seg.id + ': programs ' + c.programs + ', textures ' + c.textures + ', buffers ' + c.buffers
       console.log(line)
+      for (const m of makerLines(c.made)) console.log('  ' + m)
       if (guarded.includes(seg.kind)) bad.push(line)
-      if (seg.kind !== 'hold') found.push(f)
+      if (seg.kind !== 'hold') {
+        found.push(f)
+        if (write) {
+          const was = listed()
+          list(was.recipe, [...new Set([...was.frames, f])].sort((x, y) => x - y))
+        }
+      }
     }
     const early = i > first * rate && c.before.programs + c.before.textures + c.before.buffers > 0
     if (early && guarded.includes(seg.kind)) {
@@ -178,10 +190,7 @@ try {
 console.log('frames ' + first + '..' + last + ' at ' + rate + ' pictures a film frame, ' + format + ', tier ' + tier + (player ? ', the player\'s path' : ', the capture path') + (cold ? ', cold' : ', warm start') + ': ' + bad.length + ' frames of a dive, surface view, rise or travel did work, ' + ((Date.now() - t0) / 60000).toFixed(1) + ' minutes')
 console.log('at most ' + sets + ' sets loaded at a frame, peak ' + (peak / 1e6).toFixed(0) + ' MB of textures')
 if (write) {
-  const was = listed()
-  const frames = [...new Set([...was.frames, ...found])].sort((x, y) => x - y)
-  list(was.recipe, frames)
-  console.log('src/core/warm.json: ' + was.frames.length + ' frames before, ' + frames.length + ' now')
+  console.log('src/core/warm.json: ' + before + ' frames before, ' + listed().frames.length + ' now, ' + found.length + ' found by this run')
 } else if (!cold && bad.length > 0) {
   for (const line of bad) console.error('FAIL ' + line)
   process.exit(1)

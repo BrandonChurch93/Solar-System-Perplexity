@@ -132,6 +132,12 @@ def hashes():
     return {'engineHash': h['engine'], 'stopHashes': h['stops']}
 
 
+def hashes_now():
+    out = sh('npx tsx -e "import { computeHashes } from \'./tools/lib/hashes\'; console.log(\'HASHES \' + JSON.stringify(computeHashes(process.cwd())))"')
+    h = json.loads([l for l in out.split('\n') if l.startswith('HASHES ')][-1][7:])
+    return {'engineHash': h['engine'], 'stopHashes': h['stops']}
+
+
 def moved(s, h):
     out = []
     if s.get('engineHash') != h['engineHash']:
@@ -260,6 +266,161 @@ def parts_of(stop):
     return out
 
 
+SMOOTH_PARTS = ['path', 'pictures', 'place', 'parity', 'counts']
+
+
+def smooth_job(n, stop):
+    d = 'out/work/smooth/' + stop
+    name = 'r%d-%s-smooth' % (n, stop)
+    cmd = 'npm run smooth -- --stop %s --calibrate && npm run smooth -- --stop %s --kind landing --calibrate' % (stop, stop)
+    pre = 'Before the command: `rm -f %s.json %s.md %s-*.json %s-*.md %s-*.png`. ' % (d, d, d, d, d)
+    return name, cmd, pre, '%s.json %s.md %s-landing.json %s-landing.md %s-*.png' % (d, d, d, d, d)
+
+
+def smooth_hashes(s, stop):
+    return s['engineHash'], (s.get('stopHashes') or {}).get(stop, s.get('stopHash'))
+
+
+def smooth_read(f):
+    try:
+        r = json.loads(pathlib.Path(f).read_text())
+    except Exception:
+        return None
+    return r if isinstance(r, dict) else None
+
+
+def smooth_refuse(r, s, stop):
+    if r is None:
+        return 'not a report'
+    if r.get('stop') != stop:
+        return 'a report of %s' % r.get('stop')
+    eng, sth = smooth_hashes(s, stop)
+    if r.get('engineHash') != eng or r.get('stopHash') != sth:
+        return 'another build: engine %s, %s %s; the round has %s and %s' % (r.get('engineHash'), stop, r.get('stopHash'), eng, sth)
+    if sorted(r.get('only') or []) != sorted(SMOOTH_PARTS) or r.get('kinds') != ['dive', 'rise'] or r.get('rate') != (r.get('limits') or {}).get('rate'):
+        return 'not the full report: parts %s, kinds %s, rate %s' % (','.join(r.get('only') or []), ','.join(r.get('kinds') or []), r.get('rate'))
+    return ''
+
+
+def smooth_take(n, s, stops, src=None):
+    keep = rdir(n) / 'smooth'
+    keep.mkdir(exist_ok=True)
+    for stop in stops:
+        p = pathlib.Path(src) if src else WORK / 'smooth'
+        f = p / (stop + '.json') if p.is_dir() else p
+        had = ' The report placed before stays.' if (keep / (stop + '.json')).exists() else ''
+        if not f.exists() or (not p.is_dir() and len(stops) > 1 and f.name != stop + '.json'):
+            if not had:
+                print('smooth %s: no report yet' % stop)
+            continue
+        r = smooth_read(f)
+        why = smooth_refuse(r, s, stop)
+        if why:
+            print('smooth %s: REFUSED %s (%s).%s' % (stop, f, why, had))
+            continue
+        shutil.copy(f, keep / (stop + '.json'))
+        if f.with_suffix('.md').exists():
+            shutil.copy(f.with_suffix('.md'), keep / (stop + '.md'))
+        land = smooth_read(f.parent / (stop + '-landing.json'))
+        if land and land.get('stop') == stop and land.get('commit') == r.get('commit') and land.get('kinds') == []:
+            for end in ('-landing.json', '-landing.md'):
+                if (f.parent / (stop + end)).exists():
+                    shutil.copy(f.parent / (stop + end), keep / (stop + end))
+        print('smooth %s: accepted %s (%s, %d red lines, commit %s, %s)' % (stop, f, 'green' if r.get('pass') else 'RED', len(r.get('why') or []), str(r.get('commit'))[:8], r.get('machine')))
+
+
+def smooth_close(n, s, stops, sc):
+    keep = rdir(n) / 'smooth'
+    try:
+        now = hashes_now()
+    except Exception:
+        now = None
+    out = {}
+    for stop in stops:
+        eng, sth = smooth_hashes(s, stop)
+        for old in sc.glob('smooth-%s[.-]*' % stop):
+            old.unlink()
+        full = smooth_read(keep / (stop + '.json'))
+        if full is not None and smooth_refuse(full, s, stop):
+            full = None
+        land, how = None, ''
+        if now and now['engineHash'] == eng and now['stopHashes'].get(stop) == sth:
+            fresh = WORK / 'smooth' / (stop + '-landing.json')
+            if fresh.exists():
+                fresh.unlink()
+            subprocess.run('npm run -s smooth -- --stop %s --kind landing --calibrate' % stop, shell=True, cwd=ROOT, capture_output=True, text=True)
+            land = smooth_read(fresh)
+            if land:
+                how = 'measured at the close on this build'
+                for end in ('-landing.json', '-landing.md'):
+                    if (WORK / 'smooth' / (stop + end)).exists():
+                        shutil.copy(WORK / 'smooth' / (stop + end), sc / ('smooth-' + stop + end))
+        else:
+            land = smooth_read(keep / (stop + '-landing.json'))
+            if land:
+                how = 'from the job of the full report: the tree at the close is another build'
+                for end in ('-landing.json', '-landing.md'):
+                    if (keep / (stop + end)).exists():
+                        shutil.copy(keep / (stop + end), sc / ('smooth-' + stop + end))
+        if full:
+            for end in ('.json', '.md'):
+                if (keep / (stop + end)).exists():
+                    shutil.copy(keep / (stop + end), sc / ('smooth-' + stop + end))
+        red = [('smooth-%s.md' % stop, l) for l in (full or {}).get('why') or []] + [('smooth-%s-landing.md' % stop, l) for l in (land or {}).get('why') or []]
+        for name, r in (('smooth-%s.md' % stop, full), ('smooth-%s-landing.md' % stop, land)):
+            if r and not r.get('pass') and not r.get('why'):
+                red.append((name, 'the report is red and names no line'))
+        ok = bool(full and land and full.get('pass') and land.get('pass') and not red)
+        word = lambda r: 'not measured' if not r else 'green' if r.get('pass') and not r.get('why') else 'red'
+        note = []
+        if not full:
+            note.append('no full report of this build is placed')
+        else:
+            note.append('full report at %s on %s' % (str(full.get('commit'))[:8], full.get('machine')))
+        if not land:
+            note.append('no landing report: the tree at the close is another build and the job sent none' if now else 'no landing report: the hashes of the tree could not be read')
+        else:
+            note.append('landing at %s, %s' % (str(land.get('commit'))[:8], how))
+        out[stop] = {'ok': ok, 'full': word(full), 'landing': word(land), 'red': red, 'note': '; '.join(note)}
+    return out
+
+
+def smooth_md(res, bar=True):
+    cut = lambda l: l.replace('|', '/')
+    md = ['| Stop | Report | Landing | Red lines | First lines | From |\n| --- | --- | --- | --- | --- | --- |']
+    for stop, x in res.items():
+        first = '; '.join(cut(l) for f, l in x['red'][:2]) + (' (and %d more)' % (len(x['red']) - 2) if len(x['red']) > 2 else '')
+        md.append('| %s | %s | %s | %d | %s | %s |' % (stop, x['full'], x['landing'], len(x['red']), first, cut(x['note'])))
+    md.append('\nEach red line is one severe issue of its stop.%s The reports are the `smooth-*` files of this folder.' % (' A stop that is not measured does not hold its pass bar.' if bar else ''))
+    return md
+
+
+def smooth_issues(res, issues, at, make):
+    k = sum(1 for x in issues if x[at].get('severity') == 'severe')
+    issues[k:k] = [make(stop, {'severity': 'severe', 'file': f, 'what': l}) for stop, x in res.items() for f, l in x['red']]
+
+
+def smooth_state(n, res):
+    state(n, {'smoothResult': {st: {k: (len(x[k]) if k == 'red' else x[k]) for k in ('ok', 'full', 'landing', 'red')} for st, x in res.items()}})
+
+
+def smooth_print(res):
+    for st, x in res.items():
+        print('  smooth %s: report %s, landing %s, %d red lines (%s)' % (st, x['full'], x['landing'], len(x['red']), x['note']))
+
+
+def smooth_say(k, stop, i, said):
+    said[stop] = said.get(stop, 0) + 1
+    if said[stop] <= 5:
+        print('  ' + smooth_line(k, stop, i)[:230])
+    elif said[stop] == 6:
+        print('  the other smooth lines of %s are in SUMMARY.md' % stop)
+
+
+def smooth_line(k, stop, i):
+    return '%d. smooth %s, severe, %s: "%s"' % (k, stop, i['file'], str(i['what']).replace('"', "'"))
+
+
 def jobs(a):
     n = a.round
     s = state(n)
@@ -278,6 +439,10 @@ def jobs(a):
             paths.append('out/work/stills/f*-16x9-%s-full.png out/work/stills/f*-16x9-%s-full.png.json' % (still_tier(s), still_tier(s)))
         pre = 'Before the command: `rm -rf out/work/packs/.cache/%s out/work/stills/*-%s-full.png*`. ' % (r, still_tier(s))
         out.append({'name': name, 'message': 'JOB %s. Commit %s. %sCommand: `npm run pack -- --phase %d --round %d --stop %s --only %s%s`. %s' % (name, sha, pre, s['phase'], n, stop, ','.join(only), tiers(s, 'pack'), tar(name, paths))})
+    if not a.no_smooth_job:
+        name, cmd, pre, paths = smooth_job(n, stop)
+        out.append({'name': name, 'message': 'JOB %s. Commit %s. %sCommand: `%s`. %s' % (name, sha, pre, cmd, tar(name, [paths]))})
+    state(n, {'smooth': {'stops': [stop], 'job': not a.no_smooth_job}})
     (rdir(n) / 'jobs.json').write_text(json.dumps(out, indent=1))
     print(json.dumps([j['name'] for j in out]))
 
@@ -322,7 +487,10 @@ def place(a):
     s = state(n)
     stop = s['stop']
     done = receive(n, s, '*/r%d-%s-*.tar.*' % (n, stop), r'(r\d+-[a-z]+-[a-z-]+)\.tar\.(\d+)$')
-    want = ['r%d-%s-%s' % (n, stop, x) for x in ['measure'] + [p[0] for p in parts_of(stop)]]
+    if a.smooth and not s.get('smooth'):
+        s = state(n, {'smooth': {'stops': [stop], 'job': False}})
+    sm = s.get('smooth')
+    want = ['r%d-%s-%s' % (n, stop, x) for x in ['measure'] + [p[0] for p in parts_of(stop)] + (['smooth'] if sm and sm['job'] else [])]
     missing = [w for w in want if w not in done]
     print('missing: ' + (', '.join(missing) or 'none'))
     stale = []
@@ -339,6 +507,8 @@ def place(a):
         if r['engineHash'] != s['engineHash'] or (sh_ is not None and sh_ != s['stopHash']):
             stale.append(f.name)
     print('records from another build: ' + (', '.join(stale[:6]) or 'none'))
+    if sm:
+        smooth_take(n, s, sm['stops'], a.smooth)
 
 
 def pack(a):
@@ -671,6 +841,10 @@ def close(a):
     rows.insert(1, '| R2 | | %s | | | |' % ('yes' if r2pass else 'no'))
     rows.append('| R8 | | %s | | | |' % ('yes' if r8pass else 'no'))
     measures_ok = fresh and all(g.values())
+    sm = smooth_close(n, s, [stop], sc) if s.get('smooth') else {}
+    if sm:
+        measures_ok = measures_ok and sm[stop]['ok']
+        smooth_issues(sm, issues, 2, lambda st, i: ('smooth', st, i))
     holds = ok and r2pass and r8pass and measures_ok and s.get('gateGreen', False)
     seq = lambda grp: '; '.join('%s %s' % (k, ' '.join(vote(v) for v in vs)) for k, vs in sorted(grp.items()))
     fam = lambda role: ', '.join(j['model'] for j in by(role)[-1:])
@@ -684,6 +858,9 @@ def close(a):
     md.append('| Check | Result |\n| --- | --- |')
     for k in ('G5', 'G13', 'G17'):
         md.append('| %s | %s |' % (k, 'not measured' if g[k] is None else ('pass' if g[k] else 'fail') + ('' if fresh else ' (stale)')))
+    if sm:
+        md.append('\n## Smooth\n')
+        md += smooth_md(sm)
     md.append('\n## Scores\n')
     md.append('| Critic | Score | Pass | Severe | Major | Minor |\n| --- | --- | --- | --- | --- | --- |')
     md += rows
@@ -692,6 +869,9 @@ def close(a):
     md.append('R8: judged hold named correctly by %d of %d, control by %d of %d. %s.%s\n' % (j8, j8n, c8, c8n, 'Pass' if r8pass else 'Fail', ' %s.' % r8_from(came) if came else ''))
     md.append('## Issues, worst first\n')
     for k, (role, d, i) in enumerate(issues, 1):
+        if role == 'smooth':
+            md.append(smooth_line(k, d, i))
+            continue
         md.append('%d. %s, %s, %s (%s), %s: "%s" Fix named by the critic: "%s"' % (k, role, i.get('severity'), i.get('file'), what(str(i.get('file')), d), i.get('where'), str(i.get('what')).replace('"', "'"), str(i.get('fix')).replace('"', "'")))
     md.append('\n## What the jurors wrote about the judged frames\n')
     for grp in (r2j, r8j):
@@ -706,22 +886,28 @@ def close(a):
     t = {r: tally([i[2] for i in issues if i[0] == r]) for r in ('R1', 'R3', 'R4')}
     scores = {r: (cards[r].get('score') if r in cards else None) for r in ('R1', 'R3', 'R4')}
     state(n, {'scores': scores, 'R2': r2pass, 'R8': r8pass, 'holds': holds, 'tally': t, 'measures': g, 'fresh': fresh, 'closed': not missing})
+    if sm:
+        smooth_state(n, sm)
     if not missing:
         text = PROG.read_text()
-        sev = sum(x['severe'] for x in t.values())
+        sev = sum(x['severe'] for x in t.values()) + sum(len(x['red']) for x in sm.values())
         maj = sum(x['major'] for x in t.values())
         tail = ' Judged on main at %s. Measures %s. R1 %s, R2 %s, R3 %s, R4 %s, R8 %s. %d severe, %d major. %s `scorecards/%s/`.' % (s['commit'][:7], 'green' if measures_ok else 'not green', scores['R1'], 'pass' if r2pass else 'fail', scores['R3'], scores['R4'], 'pass' if r8pass else 'fail', sev, maj, ('The pass bar holds.' if holds else 'Next: ' + (a.next or 'see the summary') + ('' if (a.next or '.').endswith('.') else '.')), rid(n))
         text = set_status(put_tail(text, n, tail))
         text = set_row(text, stop, {4: scores['R1'], 5: 'pass' if r2pass else 'fail', 6: scores['R3'], 7: scores['R4'], 8: 'pass' if r8pass else 'fail'})
         PROG.write_text(text)
     print('round %d %s: R1 %s R3 %s R4 %s, R2 %s (%d/%d vs %d/%d), R8 %s (%d/%d vs %d/%d), measures %s%s, pass bar %s' % (n, stop, scores['R1'], scores['R3'], scores['R4'], 'pass' if r2pass else 'fail', ja, jn, ca, cn, 'pass' if r8pass else 'fail', j8, j8n, c8, c8n, g, '' if fresh else ' STALE', 'HOLDS' if holds else 'does not hold'))
+    smooth_print(sm)
     if came:
         print('  ' + r8_from(came))
     for grp, nm in ((r2c, 'R2 control'), (r2j, 'R2 judged'), (r8c, 'R8 control'), (r8j, 'R8 judged')):
         for k, vs in sorted(grp.items()):
             print('  %s %s: %s' % (nm, k, ' | '.join((vote(v) if nm.startswith('R2') else over.get(v[0], 'y' if named(v[2], stop) else 'n')) + ' <' + v[2][:28] + '>' for v in vs)))
+    nth = {}
     for k, (role, d, i) in enumerate(issues, 1):
-        if i.get('severity') != 'minor' or a.all:
+        if role == 'smooth':
+            smooth_say(k, d, i, nth)
+        elif i.get('severity') != 'minor' or a.all:
             print('  %d. %s %s %s [%s] %s: %s' % (k, role, i.get('severity'), i.get('file'), what(str(i.get('file')), d), str(i.get('where'))[:40], str(i.get('what'))[:150]))
 
 
@@ -891,6 +1077,10 @@ def film_jobs(a):
             for label, only in parts_of(stop):
                 if label != 'stills':
                     sheets('r%d-%s-%s' % (n, stop, label), only, sum(cost[x] for x in only), stop)
+            if not a.no_smooth_job:
+                name, scmd, spre, paths = smooth_job(n, stop)
+                out.append({'name': name, 'worker': 0, 'minutes': a.smooth_minutes, 'message': 'JOB %s. Commit %s. %sCommand: `%s`. %s' % (name, sha, spre, scmd, TAR % (name, paths, name, name))})
+        state(n, {'smooth': {'stops': named, 'job': not a.no_smooth_job}})
     load = [0.0] * a.workers
     for j in sorted(out, key=lambda j: -j['minutes']):
         w = load.index(min(load))
@@ -932,6 +1122,10 @@ def film_place(a):
         if r['engineHash'] != s['engineHash'] or any(s['stopHashes'].get(k) != v for k, v in (r.get('stopHashes') or {}).items()):
             stale.append(f.name)
     print('records from another build: ' + (', '.join(stale[:6]) or 'none'))
+    if a.smooth and not s.get('smooth') and s['mode'] == 'record':
+        s = state(n, {'smooth': {'stops': [x['id'] for x in cfg()['stops']], 'job': False}})
+    if s.get('smooth'):
+        smooth_take(n, s, s['smooth']['stops'], a.smooth)
 
 
 STOP_KINDS = ('hold', 'dive', 'terrain', 'rise')
@@ -1176,6 +1370,8 @@ def polish_close(a, n, s, c, sc, cards, asked, issues, kf, lines, jobs_, missing
             shutil.copy(m, sc / ('measures-%s.json' % st))
             how = [x for x in ('every %dth frame' % meas.get('every', 1) if meas.get('every', 1) != 1 else '', ', '.join(sorted(set('%s tier' % (meas.get(k) or {}).get('tier') for k in ('G5', 'G17') if (meas.get(k) or {}).get('tier') not in (None, 'final'))))) if x]
             measured[st] = ({k: (meas.get(k) or {}).get('pass') for k in ('G5', 'G13', 'G17')}, how)
+    sm = smooth_close(n, s, [st for st in stops if st in s['smooth']['stops']], sc) if s.get('smooth') else {}
+    smooth_issues(sm, issues, 3, lambda st, i: ('smooth', st, '', i))
     (sc / 'jurors.txt').write_text('\n'.join(lines) + '\n')
     (sc / 'agents.json').write_text(json.dumps([{k: j[k] for k in ('name', 'role', 'model', 'files')} for j in jobs_], indent=1) + '\n')
     man = {d.name: {'files': sorted(x.name for x in d.glob('*.png'))} for d in sorted((WORK / 'packs' / rid(n)).iterdir()) if d.is_dir()}
@@ -1222,6 +1418,9 @@ def polish_close(a, n, s, c, sc, cards, asked, issues, kf, lines, jobs_, missing
         md.append('\n## Measures\n')
         md.append('| Stop | G5 | G13 | G17 | How |\n| --- | --- | --- | --- | --- |')
         md += ['| %s | %s | %s |' % (st, ' | '.join('not measured' if g[k] is None else 'pass' if g[k] else 'fail' for k in ('G5', 'G13', 'G17')), ', '.join(how) or 'every frame, final tier') for st, (g, how) in measured.items()]
+    if sm:
+        md.append('\n## Smooth\n')
+        md += smooth_md(sm, False)
     md.append('\n## Scores\n')
     md.append('| Critic | Score | Pass | Severe | Major | Minor | Families |\n| --- | --- | --- | --- | --- | --- | --- |')
     for k in rows:
@@ -1247,6 +1446,9 @@ def polish_close(a, n, s, c, sc, cards, asked, issues, kf, lines, jobs_, missing
         md.append('\n%s.\n' % r8_from(came) if came else '')
     md.append('## Issues, worst first\n')
     for k, (critic, scope, folder, i) in enumerate(issues, 1):
+        if critic == 'smooth':
+            md.append(smooth_line(k, scope, i))
+            continue
         f = str(i.get('file'))
         md.append('%d. %s%s, %s, %s (%s), %s: "%s" Fix named by the critic: "%s"' % (k, critic, ' ' + scope if scope else '', i.get('severity'), f, told_of(kf.get(folder + '/' + f), f), i.get('where'), str(i.get('what')).replace('"', "'"), str(i.get('fix')).replace('"', "'")))
     if r2_film or r2 or r8:
@@ -1260,10 +1462,12 @@ def polish_close(a, n, s, c, sc, cards, asked, issues, kf, lines, jobs_, missing
     md.append(a.next or 'To be written.')
     (sc / 'SUMMARY.md').write_text(('\n'.join(md) + '\n').replace('\u2014', ',').replace('\u2013', ' to ').replace('!', '.'))
     juries = ([('R2', r2_film)] if r2_film else []) + [('R2 ' + st, x) for st, x in r2.items()]
-    sev = sum(x['tally']['severe'] for x in cards.values())
+    sev = sum(x['tally']['severe'] for x in cards.values()) + sum(len(x['red']) for x in sm.values())
     maj = sum(x['tally']['major'] for x in cards.values()) + sum(1 for nm, x in juries if not x['pass'])
     scores = ', '.join(['%s %s' % (title(k), cards[k]['shown'].split(' ')[0] if k in cards else 'no answer') for k in rows] + ['%s %s' % (nm, 'pass' if x['pass'] else 'fail') for nm, x in juries + [('R8 ' + st, x) for st, x in r8.items()]]) or 'nothing was judged'
     state(n, {'scores': {(k[0] + ('-' + k[1] if k[1] else '')): v['score'] for k, v in cards.items()}, 'R2': {nm: x['pass'] for nm, x in juries}, 'R8': {st: x['pass'] for st, x in r8.items()}, 'severe': sev, 'major': maj, 'closed': not missing})
+    if sm:
+        smooth_state(n, sm)
     if not missing:
         text = PROG.read_text()
         nxt = 'Next: ' + (a.next or 'see the summary') + ('' if (a.next or '.').endswith('.') else '.')
@@ -1272,6 +1476,7 @@ def polish_close(a, n, s, c, sc, cards, asked, issues, kf, lines, jobs_, missing
     print('round %d polish: %s; %d severe, %d major; no pass bar is computed in a polish round' % (n, scores, sev, maj))
     for st, (g, how) in measured.items():
         print('  %-8s measures %s%s' % (st, ' '.join('%s %s' % (k, 'not measured' if g[k] is None else 'pass' if g[k] else 'fail') for k in ('G5', 'G13', 'G17')), ' (' + ', '.join(how) + ')' if how else ''))
+    smooth_print(sm)
     for nm, x in juries:
         print('  %s %s (%d/%d vs %d/%d)' % (nm, 'pass' if x['pass'] else 'fail', x['judged'][0], x['judged'][1], x['control'][0], x['control'][1]))
     for st, x in r8.items():
@@ -1288,8 +1493,11 @@ def polish_close(a, n, s, c, sc, cards, asked, issues, kf, lines, jobs_, missing
         print('  votes not read from the start of the answer; check them and correct with --vote NAME=LETTER:')
         for x in loose:
             print('    %s read as %s <%s>' % x)
+    nth = {}
     for k, (critic, scope, folder, i) in enumerate(issues, 1):
-        if i.get('severity') != 'minor' or a.all:
+        if critic == 'smooth':
+            smooth_say(k, scope, i, nth)
+        elif i.get('severity') != 'minor' or a.all:
             f = str(i.get('file'))
             print('  %d. %s%s %s %s [%s] %s: %s' % (k, critic, ' ' + scope if scope else '', i.get('severity'), f, told_of(kf.get(folder + '/' + f), f), str(i.get('where'))[:40], str(i.get('what'))[:150]))
 
@@ -1382,6 +1590,8 @@ def film_close(a):
     board = {}
     came = r8_fill(r8c, stops, over, n)
     came2, r2s = r2_stops(stops, over, n)
+    sm = smooth_close(n, s, [st for st in stops if st in s['smooth']['stops']], sc) if stops and s.get('smooth') else {}
+    smooth_issues(sm, issues, 3, lambda st, i: ('smooth', st, '', i))
     for stop in stops:
         m = WORK / 'measure' / (stop + '.json')
         meas = json.loads(m.read_text()) if m.exists() else {}
@@ -1396,7 +1606,8 @@ def film_close(a):
         mine = {r: cards.get((r, stop)) for r in ('R1', 'R3', 'R4')}
         r2 = jury(own(stop), r2s)
         t = {k: sum(x['tally'][k] for x in mine.values() if x) for k in ('severe', 'major', 'minor')}
-        holds = bool(s.get('gateGreen')) and fresh and all(g.values()) and all(x and x['pass'] for x in mine.values()) and r2['pass'] and r8['pass']
+        t['severe'] += len(sm[stop]['red']) if stop in sm else 0
+        holds = bool(s.get('gateGreen')) and fresh and all(g.values()) and all(x and x['pass'] for x in mine.values()) and r2['pass'] and r8['pass'] and (not sm or (stop in sm and sm[stop]['ok']))
         board[stop] = {'measures': g, 'fresh': fresh, 'how': how, 'cards': mine, 'R2': r2, 'R8': r8, 'tally': t, 'holds': holds}
     film = {r: cards.get((r, '')) for r in ('R5', 'R6', 'R7', 'R3', 'R4')}
     film_t = {k: sum(x['tally'][k] for x in film.values() if x) + (1 if k == 'major' and not film_r2['pass'] else 0) for k in ('severe', 'major', 'minor')}
@@ -1429,6 +1640,9 @@ def film_close(a):
         if odd:
             md.append('\nMeasures not taken on every frame at the final tier: %s.' % '; '.join(odd))
         md.append('\nA stop\'s pass bar asks R1, R3 and R4 for %d with no severe or major issue open, R2 and R8 to pass, and the measures and machine checks green. It holds for %s.\n' % (bar, ', '.join(st for st in stops if board[st]['holds']) or 'no stop'))
+        if sm:
+            md.append('## Smooth\n')
+            md += smooth_md(sm) + ['']
         md.append('## Whole film\n')
     else:
         md.append('\n## Scores\n')
@@ -1455,6 +1669,9 @@ def film_close(a):
             md.append(r8_from(came) + '.\n')
     md.append('## Issues, worst first\n')
     for k, (critic, scope, folder, i) in enumerate(issues, 1):
+        if critic == 'smooth':
+            md.append(smooth_line(k, scope, i))
+            continue
         f = str(i.get('file'))
         md.append('%d. %s%s, %s, %s (%s), %s: "%s" Fix named by the critic: "%s"' % (k, critic, ' ' + scope if scope else '', i.get('severity'), f, told_of(kf.get(folder + '/' + f), f), i.get('where'), str(i.get('what')).replace('"', "'"), str(i.get('fix')).replace('"', "'")))
     md.append('\n## What the jurors wrote about the judged frames\n')
@@ -1469,6 +1686,8 @@ def film_close(a):
     sev = film_t['severe'] + sum(board[st]['tally']['severe'] for st in stops)
     maj = film_t['major'] + sum(board[st]['tally']['major'] + (0 if board[st]['R2']['pass'] else 1) for st in stops)
     state(n, {'scores': {(k[0] + ('-' + k[1] if k[1] else '')): v['score'] for k, v in cards.items()}, 'R2': film_r2['pass'], 'holds': film_holds, 'stopsHold': {st: board[st]['holds'] for st in stops}, 'severe': sev, 'major': maj, 'closed': not missing})
+    if sm:
+        smooth_state(n, sm)
     scores = ', '.join(['%s %s' % (r, cell(film[r]).split(' ')[0] if film[r] else 'no answer') for r in ('R5', 'R6', 'R7')] + ['R2 ' + ('pass' if film_r2['pass'] else 'fail')] + ['%s %s' % (r, cell(film[r]).split(' ')[0] if film[r] else 'no answer') for r in ('R3', 'R4')])
     if not missing:
         text = PROG.read_text()
@@ -1489,6 +1708,7 @@ def film_close(a):
     for st in stops:
         b = board[st]
         print('  %-8s measures %s%s R1 %s R3 %s R4 %s R2 %s (%d/%d vs %d/%d) R8 %s (%d/%d vs %d/%d) pass bar %s' % (st, ''.join('?' if b['measures'][k] is None else 'y' if b['measures'][k] else 'n' for k in ('G5', 'G13', 'G17')), '' if b['fresh'] else ' STALE', cell(b['cards']['R1']), cell(b['cards']['R3']), cell(b['cards']['R4']), 'pass' if b['R2']['pass'] else 'fail', b['R2']['judged'][0], b['R2']['judged'][1], b['R2']['control'][0], b['R2']['control'][1], 'pass' if b['R8']['pass'] else 'fail', b['R8']['judged'][0], b['R8']['judged'][1], b['R8']['control'][0], b['R8']['control'][1], 'HOLDS' if b['holds'] else 'does not hold'))
+    smooth_print(sm)
     if final:
         print(final)
     if came2:
@@ -1503,8 +1723,11 @@ def film_close(a):
         print('  votes not read from the start of the answer; check them and correct with --vote NAME=LETTER:')
         for x in loose:
             print('    %s read as %s <%s>' % x)
+    nth = {}
     for k, (critic, scope, folder, i) in enumerate(issues, 1):
-        if i.get('severity') != 'minor' or a.all:
+        if critic == 'smooth':
+            smooth_say(k, scope, i, nth)
+        elif i.get('severity') != 'minor' or a.all:
             f = str(i.get('file'))
             print('  %d. %s%s %s %s [%s] %s: %s' % (k, critic, ' ' + scope if scope else '', i.get('severity'), f, told_of(kf.get(folder + '/' + f), f), str(i.get('where'))[:40], str(i.get('what'))[:150]))
 
@@ -1531,6 +1754,9 @@ for name in STEPS:
     q.add_argument('--job-minutes', type=float, default=15)
     q.add_argument('--sample-seconds', type=float, default=4.3)
     q.add_argument('--measure-minutes', type=float, default=20)
+    q.add_argument('--smooth-minutes', type=float, default=30)
+    q.add_argument('--no-smooth-job', action='store_true')
+    q.add_argument('--smooth')
     q.add_argument('--no-mirror', action='store_true')
     q.add_argument('--allow-red', action='store_true')
     q.add_argument('--defer', action='store_true')
