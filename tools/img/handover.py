@@ -152,6 +152,151 @@ def frame(job):
     return out
 
 
+def turned(q, v):
+    """The vectors v turned by the quaternion q (x, y, z, w)."""
+    u = np.asarray(q[:3], dtype=np.float64)
+    uv = np.cross(u, v)
+    return v + 2.0 * (q[3] * uv + np.cross(u, uv))
+
+
+def back(q):
+    return [-q[0], -q[1], -q[2], q[3]]
+
+
+def small(path, scale):
+    im = Image.open(path).convert('RGB')
+    w, h = im.size
+    if scale < 1:
+        im = im.resize((max(int(round(w * scale)), 1), max(int(round(h * scale)), 1)), Image.BOX)
+    return np.asarray(im).astype(np.float64)
+
+
+def ground(pose, h, w):
+    """Where the ray through the middle of each pixel meets the unit sphere of the body: a mask and the points."""
+    ys, xs = np.mgrid[0:h, 0:w]
+    sx = (xs + 0.5) / w * 2 - 1
+    sy = 1 - (ys + 0.5) / h * 2
+    tan = np.tan(np.radians(pose['vfov']) / 2)
+    ray = np.stack([sx * tan * (w / h), sy * tan, -np.ones_like(sx)], axis=-1)
+    ray /= np.linalg.norm(ray, axis=-1, keepdims=True)
+    ray = turned(pose['quaternion'], ray)
+    eye = np.asarray(pose['position'], dtype=np.float64)
+    along = -(ray @ eye)
+    disc = along * along - eye @ eye + 1
+    met = disc > 0
+    t = along - np.sqrt(np.where(met, disc, 0))
+    met &= t > 0
+    return met, eye + ray * t[..., None]
+
+
+def onto(pose, point, h, w):
+    """The points of the unit sphere in the picture of a camera: x, y in pixels and whether the camera sees them."""
+    eye = np.asarray(pose['position'], dtype=np.float64)
+    v = turned(back(pose['quaternion']), point - eye)
+    k = h / 2 / np.tan(np.radians(pose['vfov']) / 2)
+    z = np.minimum(v[..., 2], -1e-9)
+    x = w / 2 + v[..., 0] / -z * k
+    y = h / 2 - v[..., 1] / -z * k
+    faces = np.einsum('...i,...i->...', point, eye - point) > 0
+    return x, y, (v[..., 2] < -1e-9) & faces & (x >= 0.5) & (x <= w - 0.5) & (y >= 0.5) & (y <= h - 0.5)
+
+
+def taken(im, x, y):
+    """The picture read between its pixels (pixel middles at whole numbers and a half)."""
+    h, w = im.shape[:2]
+    fx = np.clip(x - 0.5, 0, w - 1.001)
+    fy = np.clip(y - 0.5, 0, h - 1.001)
+    x0 = np.floor(fx).astype(int)
+    y0 = np.floor(fy).astype(int)
+    ax = (fx - x0)[..., None]
+    ay = (fy - y0)[..., None]
+    return (im[y0, x0] * (1 - ax) + im[y0, x0 + 1] * ax) * (1 - ay) + (im[y0 + 1, x0] * (1 - ax) + im[y0 + 1, x0 + 1] * ax) * ay
+
+
+def inner(mask):
+    """The mask without its rim: a pixel stays where its eight neighbours are in the mask too (the edge of the picture is no rim)."""
+    h, w = mask.shape
+    wide = np.pad(mask, 1, mode='edge')
+    out = np.ones_like(mask)
+    for dy in range(3):
+        for dx in range(3):
+            out &= wide[dy:dy + h, dx:dx + w]
+    return out
+
+
+def in_place(job):
+    """The change of each frame against the frame before it on the ground that both frames show.
+
+    Every frame comes with its camera at the unit sphere of the body (position, quaternion, vfov) and the turn of the body at its time. A pixel
+    of a frame is laid over the frame before by the ground it shows: its ray meets the sphere, the point is taken back by the turn of this
+    frame and forward by the turn of the frame before, and is projected into that frame. Where the frame before shows the same ground the two
+    values are compared; ground that is new in the frame (it came in at the edge of the picture or over the rim) is counted as a share and
+    left out of the change. So a frame that opens on a darker side of the body reads as new ground, not as a step of the look. The rim of
+    the body, one pixel wide in either frame, holds a part of the sky and is left out of both.
+
+    Reply, one entry a frame (null for the first): seen, the share of the body's pixels (new or seen in both) whose ground the frame before
+    shows too; level and colour, the mean change on them (signed, this frame less the one before); rms, the root mean square of the change
+    of the level; fresh, the mean level of the new ground, and kept, the mean level of the ground seen in both, in this frame."""
+    scale = job.get('scale', 0.25)
+    out = [None]
+    before = None
+    pictures = []
+    for path, pose in zip(job['paths'], job['poses']):
+        im = small(path, scale)
+        h, w = im.shape[:2]
+        met, point = ground(pose, h, w)
+        core = inner(met)
+        if before is not None:
+            was_im, was_pose, was_core = before
+            at = turned(was_pose['turn'], turned(back(pose['turn']), point))
+            x, y, sees = onto(was_pose, at, h, w)
+            whole = was_core[np.clip(np.floor(y).astype(int), 0, h - 1), np.clip(np.floor(x).astype(int), 0, w - 1)]
+            both = core & sees & whole
+            new = core & ~sees
+            m = int(both.sum())
+            n = m + int(new.sum())
+            d = (im - taken(was_im, x, y))[both]
+            luma = d @ LUMA
+            level = im @ LUMA
+            out.append({
+                'seen': m / n if n else 0.0,
+                'level': float(luma.mean()) if m else 0.0,
+                'colour': [float(v) for v in d.mean(axis=0)] if m else [0.0, 0.0, 0.0],
+                'rms': float(np.sqrt((luma ** 2).mean())) if m else 0.0,
+                'fresh': float(level[new].mean()) if n > m else 0.0,
+                'kept': float(level[both].mean()) if m else 0.0,
+            })
+            pictures.append((was_im, im, new, both, x, y))
+        else:
+            pictures.append(None)
+        before = (im, pose, core)
+    for want in job.get('panels', []):
+        i = want['index']
+        if i < 1 or i >= len(pictures) or pictures[i] is None:
+            continue
+        was_im, im, new, both, x, y = pictures[i]
+        h, w = im.shape[:2]
+        gain = want.get('gain', 8)
+        fresh = im.copy()
+        fresh[new] = fresh[new] * 0.35 + np.array([255.0, 0.0, 255.0]) * 0.65
+        laid = taken(was_im, x, y)
+        change = np.zeros_like(im)
+        change[both] = np.clip(128 + (im - laid)[both] * gain, 0, 255)
+        tiles = [(want['names'][0], was_im), (want['names'][1], im), ('new ground in magenta', fresh), ('change in place times ' + str(gain) + ' (grey: none)', change)]
+        limit = want.get('limit', 1400)
+        cell_w = (limit - 5 * 6) // 4
+        cell_h = round(cell_w * h / w)
+        label = 22
+        board = Image.new('RGB', (limit, cell_h + label + 12), (16, 16, 16))
+        draw = ImageDraw.Draw(board)
+        for j, (name, tile) in enumerate(tiles):
+            tx = 6 + j * (cell_w + 6)
+            board.paste(Image.fromarray(tile.astype(np.uint8)).resize((cell_w, cell_h), Image.LANCZOS), (tx, 6))
+            draw.text((tx + 4, cell_h + 8), name, fill=(230, 230, 230), font=font(14))
+        board.save(want['file'])
+    return out
+
+
 def flow(job):
     """Dense optical flow between two pairs of frames: before T on the globe side, after T on the close side."""
     import cv2
@@ -197,6 +342,8 @@ def main():
         reply = [frame({**job, 'path': p, 'body': b}) for p, b in zip(job['paths'], job['bodies'])]
     elif op == 'flow':
         reply = flow(job)
+    elif op == 'inPlace':
+        reply = in_place(job)
     else:
         raise SystemExit('unknown op ' + op)
     json.dump(reply, sys.stdout)

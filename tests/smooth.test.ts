@@ -1,7 +1,7 @@
 import { execFileSync } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
 import * as THREE from 'three'
-import { describe, expect, it } from 'vitest'
+import { beforeAll, describe, expect, it } from 'vitest'
 import { config } from '../src/config'
 import { captureRate, setCapture, spanMid } from '../src/core/clock'
 import type { Pose } from '../src/core/types'
@@ -10,7 +10,7 @@ import { FilmDirector } from '../src/director/film'
 import { sideAt } from '../src/director/handover'
 import { plans } from '../src/director/plans'
 import { SEAM_OWN, SEAM_REACH, curves, eyeCurves, landingCurves, planeHit, ringPlane, sampleLanding, sampleLeave, sampleSeam, sampleWindow, seen, type SeamWindow } from '../tools/smooth/camera'
-import { missing, partOwn, popSpan, sliceName, sliceNeed } from '../tools/smooth/slice'
+import { missing, partOwn, popContext, popSpan, sliceName, sliceNeed } from '../tools/smooth/slice'
 import { changeNote, judgeCurve, judgeLanding, judgeLeave, judgeSeam, longestGap, parityFrames, peakRows, position, shown, table } from '../tools/smooth/path'
 
 const limits = { maxStep: 0.08, maxRebound: 0.03, seamFrames: 2 }
@@ -406,8 +406,48 @@ interface Made {
   patterns: { judged: number; far: number; same: MadePair[]; unrelated: MadePair[]; dissolve: MadePair[]; moved: number; slope: { now: number; before: number }; slopeUnrelated: { now: number; before: number }; veil: { now: number; before: number } }
   bodies: { sphere: [number, number]; roundDiffers: number; flat: [number, number]; turned: [number, number]; outside: number; sky: number }
 }
+interface MadePops { residual: (number | null)[]; before: (number | null)[]; now: (number | null)[]; differ: string[]; apart: number; rows: number; spans: number[][] }
 let madeReply: Made | null = null
+const madeNeeds = [1, 2, 3].map((part) => {
+  const own = partOwn(part, 3, 40)
+  return [[own.first, own.end], sliceNeed(own, 40, 32, 16, 16, 16)]
+})
 const made = (): Made => (madeReply ??= JSON.parse(execFileSync('python3', [fileURLToPath(new URL('../tools/smooth/made.py', import.meta.url))], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 1 << 24 })) as Made)
+
+describe('the pop score at the two ends of a window, on a made run whose residual falls steadily with no spike', () => {
+  let p: MadePops
+  beforeAll(() => {
+    p = (JSON.parse(execFileSync('python3', [fileURLToPath(new URL('../tools/smooth/made.py', import.meta.url)), JSON.stringify(madeNeeds)], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 1 << 24 })) as { pops: MadePops }).pops
+  }, 240_000)
+
+  it('has the window of the median where the image measure has it', () => {
+    expect(p.spans.length).toBe(704)
+    for (const [i, n, window, lead, tail, lo, hi] of p.spans) expect(popSpan(i!, n!, window!, lead, tail)).toEqual([lo, hi])
+  })
+
+  it('read the first frames over the limit when the median was one sided, and reads every frame near 1 with the context drawn', () => {
+    const residual = p.residual.slice(0, 39) as number[]
+    for (let i = 1; i < residual.length; i++) expect(residual[i]!).toBeLessThan(residual[i - 1]! * 1.02)
+    expect(p.before[0]!).toBeGreaterThan(1.2)
+    expect(p.before[38]!).toBeLessThan(0.8)
+    for (const v of p.now.slice(0, 39)) {
+      expect(v!).toBeGreaterThan(0.95)
+      expect(v!).toBeLessThan(1.05)
+    }
+    expect(p.now[39]).toBeNull()
+    expect(p.before[39]).toBeNull()
+  })
+
+  it('moves the pop columns only, and no row whose window of 32 frames lay inside the judged frames before', () => {
+    expect(p.differ).toEqual(['base', 'pop', 'popAll', 'popBlock', 'popBlockAt', 'popCarried'])
+    for (let i = 16; i <= 22; i++) expect(p.now[i]).toBe(p.before[i])
+  })
+
+  it('gives in three slices the rows of the whole run, in every column', () => {
+    expect(p.rows).toBe(40)
+    expect(p.apart).toBe(0)
+  })
+})
 
 describe('the pattern measure on made pictures, a judged area with a limb, a frame edge and a hole', () => {
   it('reads the same pattern at contrast 2, 3, 5 and 10 under 0.01', () => {
@@ -612,6 +652,33 @@ describe('one move in slices', () => {
     expect(sliceNeed({ first: 220, end: 228 }, total, window, reach)).toEqual([195, 227])
     expect(sliceNeed({ first: 0, end: 4 }, total, window, reach)).toEqual([0, 33])
     expect(sliceNeed({ first: 0, end: total }, total, window, reach)).toEqual([0, total - 1])
+  })
+
+  it('has the window of the median round every frame, not moved inward, where half a window of context is drawn at each end', () => {
+    for (let i = 0; i < total; i++) expect(popSpan(i, total, window, 16, 16)).toEqual([i - 16, i + 16])
+    expect(popSpan(0, total, window, 6, 16)).toEqual([-6, 26])
+    expect(popSpan(227, total, window, 16, 0)).toEqual([195, 227])
+    expect(popContext(1878, 2100, 9000, 16)).toEqual([8, 8])
+    expect(popContext(0, 210, 9000, 16)).toEqual([0, 8])
+    expect(popContext(8790, 8997, 9000, 16)).toEqual([8, 3])
+  })
+
+  it('draws the context with the slices that own the ends of the window, and gives every slice the frames the whole run reads for its rows', () => {
+    expect(sliceNeed({ first: 0, end: total }, total, window, reach, 16, 16)).toEqual([-16, total + 15])
+    expect(sliceNeed({ first: 0, end: 57 }, total, window, reach, 16, 16)).toEqual([-16, 73])
+    expect(sliceNeed({ first: 57, end: 114 }, total, window, reach, 16, 16)).toEqual([41, 130])
+    expect(sliceNeed({ first: 171, end: 228 }, total, window, reach, 16, 16)).toEqual([155, total + 15])
+    for (const of of [1, 3, 4, 8, 40]) {
+      for (let part = 1; part <= of; part++) {
+        const own = partOwn(part, of, total)
+        const [lo, hi] = sliceNeed(own, total, window, reach, 16, 16)
+        const has = (i: number): boolean => i < -16 || i > total + 15 || (i >= lo && i <= hi)
+        for (let i = own.first; i < own.end; i++) {
+          const [a, b] = popSpan(i, total, window, 16, 16)
+          expect([i - 1, i + 1, a, b + 1, i + reach].every(has)).toBe(true)
+        }
+      }
+    }
   })
 
   it('names a part by its number and a run of frames by its capture frames', () => {
