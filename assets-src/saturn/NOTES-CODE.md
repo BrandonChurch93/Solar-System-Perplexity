@@ -4648,3 +4648,40 @@ shell), item 5 (the hard end of the sky at the inner ring edge at 3567: the far 
 rim; the hold is lifted for it by mail 729 with a before and after of 3465 in the looks; not done yet).
 
 Renders of this step (3720, final tier, no grain), in /tmp/v/t17: in1 to in8; pairs in /tmp/v/t18/pair_inN.png.
+
+## 2026-11-24, 20:41 to 21:15 UTC: steps in9, in10, r53, r54; the white grains and the snow; main moved
+
+Tests on the merge of 20:41 (290448a, main c6d87bc): vitest 554 of 554 in 185 files; the globe-cap test
+"brings a colour level in by the texels of its parent" 3932 ms.
+
+Steps after the entry of 20:36 (3720, final tier, each looked at in full beside the approved image):
+- in9: inner.light 0.9 at the rim and 0.7 by the globe (was 0.12), inner.dark 1.0 to 1.06 (was 1.07 to
+  1.16): the dust inside the rim stays bright ring matter almost to the planet, as the approved image has
+  it. inner.foot: depth 3.2 (was 4.0), heights 0.05 to 0.09 (was 0.03 to 0.055), ink 0.115 0.10 0.08.
+- in10: the same, the radial table measured again from in9.
+- r53 (proof job, started 20:45, stopped by me at 20:57): its 3720 with grains showed two faults.
+  1. White specks on the dark gap. Cause: the grains of the sand level floated up to 0.008 radii above
+     and below the plane (grains.json height, heightFar 4), so from the low lens grains of the dense ring
+     stood in front of the gap. Cure: height 0.002 and heightFar 2 for the sand level.
+  2. The near field read as snow. Cause: the grains were neither under the ceiling of the grade (iceHeld)
+     nor under the tone by radius, so each stood white on the graded sheet. Cure: grains.ts uGrainMatte,
+     col = mix(col, iceHeld(col) * iceZone(r, mu), counted), with grains.json matte 1, 0, 0 and matteGain
+     1.0, 1, 1: the sand level alone, by the grain's own share.
+- assets-src/saturn/code/ring_radial.py: a factor stays within 0.4 to 4.5, and within 0.55 to 1.8 outward
+  of radius 1.56 (the tone of the dense ring is not forced); across the gap, radii 1.92 to 2.10, the table
+  is a straight line between its two rims, so it does not paint the gap bright. The table in skim.json
+  was written by `ring_radial.py /tmp/v/t17/in10_3720.png write`.
+- Most grains in a frame: about 416000 at frame 3740 (out/scratch/count.ts), capacity 900000.
+- r54: proof job on this tree, started 21:02:27. Path part green. The finals:
+  3465 sha 4077873a1a2005c40bed0e9f225e2ebbe3cf153ee06f75b93a2c3a4735002f0f
+  3720 sha ee1aec39c955a54d5808b20638bfdd21094ac2e1b05402a210b1352a9fdd14a5
+
+Main moved at 21:10 to 8e06f69 (take batch 4). What it changes for this stop:
+- tools: the path part now judges the rest between the rise and the travel against smooth.path.minLeave
+  0.07 (this tree reads 0.373 at frame 3889); the handover judges the step between two frames in place
+  (tools/lib/steps.ts IN_PLACE.judged true) with handover.limits.levelStep 5 (was 6); the handover's run
+  of frames is centred on the change of view; the report can be joined from parts.
+- engine: src/director/moves.ts and handover.ts (the pull back of a rise, an option this stop does not
+  set), src/space/farsun (the strand loop), src/core/warm.json.
+- The proof job r54 runs on the worktree at a34beaa, whose engine is that of c6d87bc. After it the
+  worktree goes to 8e06f69 and the finals, the path, the gate and the handover run again there.

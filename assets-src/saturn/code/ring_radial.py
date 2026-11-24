@@ -5,7 +5,8 @@ src/stops/saturn/skim.json light.grade.radial holds now. Per ring of radii of th
 on the lit sheet where no globe lies on the view and where the view meets the plane steeply enough that the
 law of the low view (light.grade.low) leaves the light alone, it takes the middle value of the scene light of
 the approved image over that of the film and multiplies the table's factors by it, holds them between LOW and
-HIGH and evens them over three knots. With write it puts the new table into skim.json; without, it prints it.
+HIGH (in the dense rings between DENSE_LOW and DENSE_HIGH, across the dark gap on a straight line) and evens
+them over three knots. With write it puts the new table into skim.json; without, it prints it.
 Run it from the repo's root. No pixel of the film is made here: this only measures."""
 import sys, json
 import numpy as np
@@ -24,6 +25,12 @@ SKIM = ROOT / 'src/stops/saturn/skim.json'
 W, H = 1920, 1080
 FIRST, STEP, COUNT = 1.03, 0.02, 70
 LOW, HIGH = 0.4, 4.5
+# outward of DENSE the ice is dense and its tone is near the approved's already: the factors stay between
+# DENSE_LOW and DENSE_HIGH there; between the two radii of GAP (the dark gap and its edges, which lie at
+# other radii in the approved image than in the model) the factors run straight between their ends, so the
+# table carries the broad tone and never the place of an edge
+DENSE, DENSE_LOW, DENSE_HIGH = 1.56, 0.55, 1.8
+GAP = (1.92, 2.10)
 FEWEST = 200
 
 
@@ -80,8 +87,12 @@ def main():
         if int(m.sum()) < FEWEST or r > 2.38:
             continue
         ratio = np.median(A[m], axis=0) / np.maximum(np.median(F[m], axis=0), 1e-4)
-        gain[i] = np.clip(gain[i] * ratio, LOW, HIGH)
+        gain[i] = np.clip(gain[i] * ratio, LOW, HIGH) if r < DENSE else np.clip(gain[i] * ratio, DENSE_LOW, DENSE_HIGH)
         seen[i] = True
+    inside = np.nonzero((knots > GAP[0]) & (knots < GAP[1]))[0]
+    a, b = inside[0] - 1, inside[-1] + 1
+    for i in inside:
+        gain[i] = gain[a] + (gain[b] - gain[a]) * (knots[i] - knots[a]) / (knots[b] - knots[a])
     # a knot nothing was seen at takes the factors of the nearest knot that was seen, inward of the last seen
     idx = np.nonzero(seen)[0]
     for i in range(COUNT):
