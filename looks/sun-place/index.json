@@ -1,9 +1,49 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T02:08:59.780Z",
+ "pushed": "2026-11-24T02:30:12.484Z",
  "head": "8eeab2c9122f0dd376e609fbc058b5f6dd25231f",
- "note": "c54 uncommitted: pillows pressed together, heat of the upwelling falls off into the lane; sd1 frames arriving",
+ "note": "c61 uncommitted cells and spot; sd1 seams at 213 to 218 and their cure; sd1 236 to 242",
  "looks": [
+  {
+   "time": "2026-11-24T02:30:11.861Z",
+   "file": "20261124023011861-note-look-sd1-b236.jpg",
+   "source": "../../../../tmp/look-sd1-b236.jpg",
+   "kind": "note",
+   "label": "job sd1 (8eeab2c9) frames 236 to 242: my ground gives way to the globe's face by height; the fine cells soften over six frames",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T02:30:11.323Z",
+   "file": "20261124023011323-note-look-c61-seams.jpg",
+   "source": "../../../../tmp/look-c61-seams.jpg",
+   "kind": "note",
+   "label": "frame 215 enlarged 3 times, left sd1 (8eeab2c9), right c61 (uncommitted): the seam was the fibres' own height on a mesh whose rings are wider than a fibre; in c61 the mesh carries the funnel and the fibres' relief is in the light",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T02:30:10.787Z",
+   "file": "20261124023010787-note-look-sd1-six213.jpg",
+   "source": "../../../../tmp/look-sd1-six213.jpg",
+   "kind": "note",
+   "label": "job sd1 (8eeab2c9) frames 213 to 218 one to one at the spot: straight seams run through the penumbra left and right of the umbra, and from above the ground is paving with black cracks",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T02:30:10.250Z",
+   "file": "20261124023010250-note-look-c61-spot.jpg",
+   "source": "../../../../tmp/look-c61-spot.jpg",
+   "kind": "note",
+   "label": "c61 frame 60 draft, spot one to one: approved left, mine right. Fibres finer (240 round) and uneven; still a comb, no bright heads, fibres do not curl",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T02:30:09.687Z",
+   "file": "20261124023009687-note-look-c61-near.jpg",
+   "source": "../../../../tmp/look-c61-near.jpg",
+   "kind": "note",
+   "label": "c61 frame 60 draft, near ground one to one: approved left, mine right. Uncommitted. Smaller cells (lattice 0.11), heat falls off into the lane, whites 95 and 99 at 0.784 and 0.836 (approved 0.783 0.876), blur 40 px 0.041 ground. Still wrong: stones with dark gaps, no glass, no bright rims, far ground orange",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T02:08:59.207Z",
    "file": "20261124020859207-note-look-sd1-51.jpg",
@@ -26,46 +66,6 @@
    "source": "../../../../tmp/look-c54-near.jpg",
    "kind": "note",
    "label": "c54 frame 60 draft, near ground one to one: approved left, mine right. Uncommitted. Pillows pressed together, heat falls off into the lane, thin lanes. Still wrong: reads as loaves, no glass, cells too large and alike, penumbra a comb",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T01:44:02.886Z",
-   "file": "20261124014402886-note-c40-f00238.jpg",
-   "source": "out/work/sun/convect/c40-f00238.jpg",
-   "kind": "note",
-   "label": "frame 238 (draft) after the cure: the flat ring is gone (it was the part of my ground behind the horizon drawn over the front); far cells end in a mottle, no noise",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T01:44:01.766Z",
-   "file": "20261124014401766-note-c43-whole-pair.jpg",
-   "source": "out/work/sun/convect/c43-whole-pair.jpg",
-   "kind": "note",
-   "label": "c43 frame 60 whole (draft), approved left, mine right: cells to the limb as a grain, umbra black; limb band more orange than the approved gold",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T01:44:00.665Z",
-   "file": "20261124014400665-note-c43-near-pair.jpg",
-   "source": "out/work/sun/convect/c43-near-pair.jpg",
-   "kind": "note",
-   "label": "c43 = commit 6ac893f2, frame 60 near ground (draft), approved left, mine right, unfinished: heat by age and flow, broad hot and cool areas, broken rims. Reads as polished nuggets standing apart, too pale and too tall; the approved is low dark glass pressed together. G17 1.25, lower quarter 1.01; blur 40 px ground 0.048; quantiles 0.216 0.358 0.550 (approved 0.218 0.368 0.562)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T01:32:00.888Z",
-   "file": "20261124013200888-note-c38-four.jpg",
-   "source": "out/work/sun/convect/c38-four.jpg",
-   "kind": "note",
-   "label": "c38 frames 60, 222 (top), 238, 247 (bottom), draft. FAULT found at 238: a hard edged disc with a flat orange ring round it (the far part of my ground drawn where it should not be) and the far cells under a pixel are noise; both in work before the full draft",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T01:32:00.305Z",
-   "file": "20261124013200305-note-c38-whole-pair.jpg",
-   "source": "out/work/sun/convect/c38-whole-pair.jpg",
-   "kind": "note",
-   "label": "c38 frame 60 whole (draft), approved left, mine right: cells now shrink with the distance, limb warmer; still cream pebbles where the approved is dark glass with bright rims",
    "stop": "sun"
   }
  ]
