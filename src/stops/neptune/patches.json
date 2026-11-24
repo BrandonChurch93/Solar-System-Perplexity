@@ -42,9 +42,13 @@
    "widthDeg": 16,
    "offsetDeg": [
     0,
-    0
+    -1.5
    ],
-   "texels": 3520
+   "texels": 3520,
+   "takeOffsetDeg": [
+    0,
+    0
+   ]
   },
   {
    "file": "place-10.webp",
@@ -75,12 +79,14 @@
   }
  ],
  "feather": 0.12,
+ "featherOwn": 0.04,
+ "featherHow": "feather: share of a level's width over which its weight falls to nothing at its border, for the shown plates (they are pictures of their own and need a wide ramp). featherOwn: the same for the globe's own levels (the first three), which are the same picture as the map under them at a finer grain, so a narrow ramp shows no border. With 0.12 the outer 3.7 degrees of the widest level counted as the coarser map under it, and the rising camera saw that ground at 0.91 to 1 texel a pixel in the corner of frame 5000 (1.84 percent of the frame).",
  "fade": [
   1.1,
   1.6
  ],
  "place": {
-  "how": "Levels from shownFrom on are shown plates: top down pictures of the place in the look of the close view, with their own alpha, drawn through the inverse of the tone curve and of the near grade (assets-src/neptune/place/shown.py). They come in with the place (closeup.json lay.dive and lay.rise, shares of the segment, while the storm is small in frame). offsetDeg moves a level off the spot, degrees east and north, so the deepest plates lie where the dive and the rise look at ground the close canvas never saw. clearDeg: inside the first arc from the spot the cirrus of the levels above is cleared with the same ramp, outside the second it is untouched. plainDeg: arc from the point under the camera of place.json; inside the first a shown plate is seen as painted, without the globe's air, limb and field steps that follow the near grade (the live close layer has none of them, and near that point its border is narrow), outside the second it has them all. tone: a small map over the widest plate, the coarse light of the place against the globe as drawn, in stops (stops across the 8 bit range, written by shown.py when it bakes the widest plate). Where the place is lit it holds only what is wider than wideDeg degrees, per channel, so the plate files hold every arm of the swirl and the storm has its arms as soon as the plates are in. Where the place is darker than the globe by more than floor stops (soft over plus and minus soft) at a blur of deg degrees, the foreground of the close view, it holds that darkness less floor, the same in all channels. The plate files hold the plates divided by it, and the globe multiplies it back in by the share of the close view's light (closeup.json lay.tone and lay.lightPower). So from high up the foreground is the globe's own blue, floor stops down, and the dark of the close view grows in over it with the height. hue: stops of lift (none, full) over which a stored texel takes the colour the globe has at its brightness. mend: stops of lift over which, inside the ground the close canvas saw, the stored texel is the globe as drawn itself: canvas ground lifted that far is 8 bit values of 1 to 12 of 255, whose colour noise showed from above as a purple brown stain under the eye. red: stops by which a stored texel is redder than the globe at its brightness (log2 R/B over the globe's median: none, full) over which it takes the globe's colour too, at any lift: the canvas is tan where its cirrus was taken out, and from above, where the cirrus slab is thin, that showed as a tan fringe at the white bank. texels: the width in texels a shown plate is stored at in the full set (web: half). The bake works at 4096 and writes each file at this width. The widths are what the memory limit of the full set leaves (assetSets.full.maxSetMemoryMb, gate G15), given to the plates in the order in which the count of soft ground (G13) asked for them: texels per degree 130, 220, 333, 619, 1170.",
+  "how": "Levels from shownFrom on are shown plates: top down pictures of the place in the look of the close view, with their own alpha, drawn through the inverse of the tone curve and of the near grade (assets-src/neptune/place/shown.py). They come in with the place (closeup.json lay.dive and lay.rise, shares of the segment, while the storm is small in frame). offsetDeg moves a level off the spot, degrees east and north, so the deepest plates lie where the dive and the rise look at ground the close canvas never saw. clearDeg: inside the first arc from the spot the cirrus of the levels above is cleared with the same ramp, outside the second it is untouched. plainDeg: arc from the point under the camera of place.json; inside the first a shown plate is seen as painted, without the globe's air, limb and field steps that follow the near grade (the live close layer has none of them, and near that point its border is narrow), outside the second it has them all. tone: a small map over the widest plate, the coarse light of the place against the globe as drawn, in stops (stops across the 8 bit range, written by shown.py when it bakes the widest plate). Where the place is lit it holds only what is wider than wideDeg degrees, per channel, so the plate files hold every arm of the swirl and the storm has its arms as soon as the plates are in. Where the place is darker than the globe by more than floor stops (soft over plus and minus soft) at a blur of deg degrees, the foreground of the close view, it holds that darkness less floor, the same in all channels. The plate files hold the plates divided by it, and the globe multiplies it back in by the share of the close view's light (closeup.json lay.tone and lay.lightPower). So from high up the foreground is the globe's own blue, floor stops down, and the dark of the close view grows in over it with the height. hue: stops of lift (none, full) over which a stored texel takes the colour the globe has at its brightness. mend: stops of lift over which, inside the ground the close canvas saw, the stored texel is the globe as drawn itself: canvas ground lifted that far is 8 bit values of 1 to 12 of 255, whose colour noise showed from above as a purple brown stain under the eye. red: stops by which a stored texel is redder than the globe at its brightness (log2 R/B over the globe's median: none, full) over which it takes the globe's colour too, at any lift: the canvas is tan where its cirrus was taken out, and from above, where the cirrus slab is thin, that showed as a tan fringe at the white bank. texels: the width in texels a shown plate is stored at in the full set (web: half). The bake works at 4096 and writes each file at this width. The widths are what the memory limit of the full set leaves (assetSets.full.maxSetMemoryMb, gate G15), given to the plates in the order in which the count of soft ground (G13) asked for them: texels per degree 130, 220, 333, 619, 1170. ringDeg: the arc from the spot between which the alpha of the widest shown plate falls from one to nothing (every deeper plate has its alpha from its parent); the globe's own levels show outside it. takeOffsetDeg (on a level): where the square lay for which the level's generated picture was painted, when the level has been moved since; the bake resamples the picture onto the level's square and uses the parent plate where the picture does not reach. vivid: the inverse of the near grade multiplies the saturation of a plate by 1 over the grade's saturation, and while the grade is only partly in, that share is shown as it is; plates hold texels deeper in colour than the globe ever is, and a channel then went under 0 and was cut (electric blue specks at 4690 to 4718). So the depth of colour a plate texel will have on screen (grey minus its smallest channel, over grey; grey = 0.3 r + 0.5 g + 0.2 b; times 1 over the saturation while the grade is out, times 1 when it is in) passes a soft limit: under the first value nothing changes, above it the depth comes close to the second value and never passes it, and the grey value is kept. The values are the top of the globe's own range, measured on the hold frame 4605 (90th percentile 0.84, 99.9th 0.89).",
   "shownFrom": 3,
   "clearDeg": [
    7,
@@ -89,6 +95,14 @@
   "plainDeg": [
    4,
    7
+  ],
+  "vivid": [
+   0.78,
+   0.86
+  ],
+  "ringDeg": [
+   12,
+   14.5
   ],
   "tone": {
    "file": "place-tone.webp",
