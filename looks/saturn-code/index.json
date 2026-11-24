@@ -1,9 +1,16 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T04:08:04.650Z",
- "head": "ceafef8c126f15d1d702ba443c9491075303bb95",
- "note": "head 9467fee: parity green by the tool, G5 pass, G17 3720 red 0.685; now the four corners of my own pace against the renewed path judge",
+ "pushed": "2026-11-24T04:18:55.953Z",
+ "head": "a4dec17ce5c80a442d17947c97531d8155615ae3",
+ "note": "3720 with the shutter closed reads G17 1.131 against 0.685: the fit is lost to the film's shutter, not the model; curing the pace of the rise against the renewed path judge",
  "looks": [
+  {
+   "time": "2026-11-24T04:18:54.729Z",
+   "file": "20261124041854729-note-shutter_3720.jpg",
+   "source": "../../../../tmp/v/r30/shutter_3720.png",
+   "kind": "note",
+   "label": "3720 final no grain: film shutter 180 deg (G17 median 0.685) beside shutter 1.8 deg in a scratch tree (median 1.131) beside the approved close"
+  },
   {
    "time": "2026-11-24T04:07:51.238Z",
    "file": "20261124040751238-note-rim_pair_3895.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/v/r29/g17_left_3720.png",
    "kind": "note",
    "label": "3720 lower left, approved beside the final still"
-  },
-  {
-   "time": "2026-11-24T03:45:19.118Z",
-   "file": "20261124034519118-note-g17_tiles_3720_small.jpg",
-   "source": "../../../../tmp/v/r29/g17_tiles_3720_small.png",
-   "kind": "note",
-   "label": "G17 at 3720 by tiles, film against approved"
   }
  ]
 }
