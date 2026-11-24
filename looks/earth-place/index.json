@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T15:59:21.707Z",
+ "pushed": "2026-11-24T16:12:03.359Z",
  "head": "f7ab197acd05bea7317f6e576894f818484ae09a",
- "note": "bank try 7 (flat cover field from code, tint by angle): draft pairs, not proved, white streaks at far left 1882 to 1890 still wrong",
+ "note": "bank try 8 (ends inside the plate where the lay back is whole): 1755 final pair and dive crops; not yet proved",
  "looks": [
+  {
+   "time": "2026-11-24T16:12:02.663Z",
+   "file": "20261124161202663-note-pairs-1.jpg",
+   "source": "../../../../tmp/gl/s11/d8/pairs-1.jpg",
+   "kind": "note",
+   "label": "bank try 8 draft: 1880 1882 1884 before left, bank right",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T16:12:01.881Z",
+   "file": "20261124161201881-note-native.jpg",
+   "source": "../../../../tmp/gl/s11/d8/native.jpg",
+   "kind": "note",
+   "label": "bank try 8 draft, native crops 1866 1870 1874 1878",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T16:12:01.260Z",
+   "file": "20261124161201260-note-ctx2.jpg",
+   "source": "../../../../tmp/gl/s11/f8/ctx2.png",
+   "kind": "note",
+   "label": "bank try 8, 1755 final: kept above, new below, x2 on the Gulf; 12326 px differ, 4883 of them outside the accepted box by 1 level (bloom)",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T15:59:08.934Z",
    "file": "20261124155908934-note-pairs-1.jpg",
@@ -74,30 +98,6 @@
    "source": "../../../../tmp/gl/s10/pmap-base.jpg",
    "kind": "note",
    "label": "dive middle on f7ab197a, rate 2 pictures 1884 1887 1890 1892: frame, frame 8 later carried back, pattern map (red). The red sits in the far zone, upper left: the plate's puff field over Yucatan gives way to the deck of the close picture. Highest 1.12 at 1890. This is what the bank is built for; nothing built yet.",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T14:39:39.107Z",
-   "file": "20261124143939107-note-dive-far.jpg",
-   "source": "../../../../tmp/gl/s10/dive-far.jpg",
-   "kind": "note",
-   "label": "far zone as named (Z), dive 1876 to 1910, third tree: the ground that Y is to make one",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T14:39:37.802Z",
-   "file": "20261124143937802-note-rise-end.jpg",
-   "source": "../../../../tmp/gl/s10/rise-end.jpg",
-   "kind": "note",
-   "label": "rise end 2154 to 2176, 2180, 2190 with the turn share landing on the travel's speed (draft)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T14:11:29.866Z",
-   "file": "20261124141129866-note-T-rise-zoom.jpg",
-   "source": "../../../../tmp/gl/s9/T-rise-zoom.jpg",
-   "kind": "note",
-   "label": "rise change of view enlarged 2098 to 2103: limb soft to 2100, streaks from 2101",
    "stop": "earth"
   }
  ]
