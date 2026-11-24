@@ -1,9 +1,23 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-23T23:42:26.996Z",
- "head": "8462caf2bf5176fe10ab78ac2ce3033d053d1ac2",
- "note": "plan E: the one move coded and tested, Mars dive and rise drawn on it at the draft tier; committing next",
+ "pushed": "2026-11-24T00:05:51.298Z",
+ "head": "6d260fb8a34c0e2469f726853662dbeb4b09cb8e",
+ "note": "Phobos at the start of the Mars dive measured (shutter and colour map, not the lens); next the speed of the picture on the one move",
  "looks": [
+  {
+   "time": "2026-11-24T00:05:50.606Z",
+   "file": "20261124000550606-note-review-moon.jpg",
+   "source": "../../../../tmp/ph/review-moon.png",
+   "kind": "note",
+   "label": "Mars dive 2409 to 2411, draft beside review at full size: the shutter smears Phobos by 81, 118, 188 px; the dashes are 17 to 21 samples"
+  },
+  {
+   "time": "2026-11-24T00:05:49.909Z",
+   "file": "20261124000549909-note-left-moon.jpg",
+   "source": "../../../../tmp/ph/left-moon.png",
+   "kind": "note",
+   "label": "Mars dive 2407 to 2412 at draft, the moon at full size: the pale streaked band on the flank is the moon's colour map, seen round the moon"
+  },
   {
    "time": "2026-11-23T23:42:26.330Z",
    "file": "20261123234226330-note-pace-e.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/e7/rise-sheet-0.png",
    "kind": "note",
    "label": "E move, Mars rise on the one eye, draft tier, sheet 0 of 0 to 5 (frames 2668 to 2747); patch of other ground lower right from 2691 is the place picture"
-  },
-  {
-   "time": "2026-11-23T23:42:22.639Z",
-   "file": "20261123234222639-note-dive-T.jpg",
-   "source": "../../../../tmp/e7/dive-T.png",
-   "kind": "note",
-   "label": "E move, Mars dive round T (2475, 2476): light wedge lower left 2470 to 2477 is the edge of the place picture (draft)"
-  },
-  {
-   "time": "2026-11-23T23:42:22.000Z",
-   "file": "20261123234222000-note-dive-moon.jpg",
-   "source": "../../../../tmp/e7/dive-moon.png",
-   "kind": "note",
-   "label": "E move, Mars dive 2406 to 2411: Phobos leaves by the right edge with the sidestep to the left (draft)"
   }
  ]
 }
