@@ -3233,3 +3233,21 @@ These agree with what you stated. Also MEASURED and clean on the same tree: the 
 Attached: the two reports with their numbers and the four panels (pops and changes of each move). Main is now be1de182d6770f33ecb58a89876badfe88b7151f (take C: Relief.presence and the sky's pixel factor swap, 437 tests in 47 files); base the second commit on it.
 
 Main be1de182 merged at 07:28 as a9b7acd0 (merge, no rebase); tsc 0.
+
+## The ground comes in over the plates: what was changed for the second named commit (07:27 to 08:45)
+
+Measured cause (the four runs above): the plates alone are steady (pattern 0.25); the red came from the border of the ground moving by height (matte.over) and from true and skin being let go by height (release) over the whole ground.
+
+Changed, code and plates.json only, no asset:
+1. The frame of T (set.ts camAtT, relief.ts uAxesT, uLensT): the camera of the handover as it stands in the scene of the surface view. Inside it the globe side has to be the surface view itself, so the ground has no border there and release works there alone.
+2. The border of the ground stands still in space (matte.over is gone). Outside the frame of T nothing is let go; the ground near the camera of T gives way over a wide margin that follows its forms; the far ground outside the frame is left to the plates for good (frustum.near).
+3. The far ground lies flat on the deck (flat, relief.ts VERT_GLOBE): each vertex goes along the line of sight of T through it to the deck sphere, where the plates hold the same picture laid by tlay.py. From T nothing moves. What gives way and what takes its place are then one picture in one place. Given up: the relief of the middle distance and the far deck (sine of the elevation of the camera of T under 0.25 to 0.45) stands only in the surface view and no longer before T.
+
+Windows of the pattern number on the dive (pat.ts, frames 1316 to 1344, limit 0.45):
+| state | most | at | half frames over |
+|---|---|---|---|
+| named commit 2cf336a3 | 1.274 | 1326 | 34 |
+| 1 and 2, margin 0.08 to 0.33 | 0.997 | 1322 | 19 |
+| 1, 2 and 3 | 0.628 | 1320 | 10 |
+| the same, the whole margin 0.05 to 0.8 with forms, release fading across it | 0.889 | 1320 + 1/2 | 12 |
+The third row showed the edge of the frame of T as a straight line on the right (dark ground against the paler take outside); the fourth softened it and drew the far right ground stretched (a fan of streaks). Kept: release inside the narrow margin (0.05 to 0.3, moved by forms), the wide margin only for the near ground.

@@ -5,7 +5,7 @@ import { FarPoint } from '../../bodies/farpoint'
 import type { Pose, SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { diagUniform } from '../../diagnostics/diag'
 import { handoverOf } from '../../director/handover'
-import { smooth } from '../../director/rig'
+import { drift, smooth } from '../../director/rig'
 import { patches, place, relief as reliefDefs, wrap } from './assets'
 import { Globe } from './globe'
 import * as look from './look'
@@ -135,6 +135,19 @@ export const createSet: SetFactory = async (ctx) => {
     eyesAtT[kind] = { time, eye }
     return eye
   }
+  // The axes of that camera in the close scene (columns right, up, back) and the tangent of half its field: the frame of T, inside which
+  // the ground of the globe side is the surface view itself (relief.ts, uAxesT).
+  const camsAtT: Partial<Record<'dive' | 'rise', { time: number; axes: THREE.Matrix3; tan: number }>> = {}
+  const camAtT = (kind: 'dive' | 'rise'): { axes: THREE.Matrix3; tan: number } => {
+    const time = handoverOf(plan.id, kind)?.time ?? (kind === 'dive' ? plan.seg.dive!.end : plan.seg.rise.start)
+    const hit = camsAtT[kind]
+    if (hit && hit.time === time) return hit
+    const pose = plan.eye(kind, time, 'orbit')
+    const q = plan.turn(time).multiply(plan.terrainFrame).invert().multiply(pose.quaternion.clone().multiply(drift(time)))
+    const cam = { time, axes: new THREE.Matrix3().setFromMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(q)), tan: Math.tan(THREE.MathUtils.degToRad(pose.vfov) / 2) }
+    camsAtT[kind] = cam
+    return cam
+  }
   // The same camera in the body fixed frame of the globe, the frame of the plates of the place (as assets-src/venus/place/tcam.ts).
   const bodyEyes: Partial<Record<'dive' | 'rise', { time: number; eye: THREE.Vector3 }>> = {}
   const bodyEyeAtT = (kind: 'dive' | 'rise'): THREE.Vector3 => {
@@ -257,9 +270,10 @@ export const createSet: SetFactory = async (ctx) => {
       const toneShare = 1 - smooth((groundHeight - Math.log(place.tone.heights[0])) / (Math.log(place.tone.heights[1]) - Math.log(place.tone.heights[0])))
       const underAt = place.ground.tone.under[state.time > terrainMid ? 'rise' : 'dive']
       const groundTone = { look: [place.tone.air, toneShare, place.tone.cos[0], place.tone.cos[1]] as [number, number, number, number], power: place.tone.power, broad: place.ground.tone.broad, most: place.tone.live.most, contrast: place.tone.live.contrast, colour: place.tone.live.colour, under: underAt.map((v, i) => v * Math.pow(place.dusk.gain * place.dusk.tint[i]!, groundPl.dusk - 1)) as [number, number, number] }
-      // true and skin hold in full above the heights of ground.release and are let go at T, where the globe side is the surface view.
+      // Inside the frame of T true and skin hold in full above the heights of ground.release and are let go at T, where the globe side is
+      // the surface view. The border of the ground and its far limit outside that frame stand still (plates.json, ground.frustum).
       const held = Math.max(1 - below((camera.length() - 1) / heightT, place.ground.release), 1e-6)
-      const share = { weight: covering ? below(camera.length() - 1, place.ground.heights) * state.weight : 0, under: covering ? below(camera.length() - 1, place.ground.bandHeights) * state.weight : 0, band: place.ground.band, true: [place.ground.true[0] * held, place.ground.true[1] * held] as [number, number], skin: [place.ground.skin[0] * held, place.ground.skin[1] * held] as [number, number], tall: place.ground.tall, matte: [place.ground.matte.width * (1 - below((camera.length() - 1) / heightT, place.ground.matte.over)), place.ground.matte.forms, place.ground.matte.level, place.ground.matte.scale] as [number, number, number, number], tone: groundTone }
+      const share = { weight: covering ? below(camera.length() - 1, place.ground.heights) * state.weight : 0, under: covering ? below(camera.length() - 1, place.ground.bandHeights) * state.weight : 0, band: place.ground.band, true: place.ground.true as [number, number], skin: place.ground.skin as [number, number], tall: place.ground.tall, held, atT: camAtT(state.time > terrainMid ? 'rise' : 'dive'), frustum: [place.ground.frustum.margin[0]!, place.ground.frustum.margin[1]!, place.ground.frustum.wide] as [number, number, number], near: [place.ground.frustum.near[0]!, place.ground.frustum.near[1]!, place.ground.frustum.forms] as [number, number, number], flat: [place.ground.flat.sinElevation[0]!, place.ground.flat.sinElevation[1]!, place.ground.flat.horizon[1]!, place.ground.flat.horizon[0]!] as [number, number, number, number], matte: [place.ground.matte.width, place.ground.matte.forms, place.ground.matte.level, place.ground.matte.scale] as [number, number, number, number], tone: groundTone }
       ground.updateGround(share, state.time - terrainMid, airEye, eyeAtT(state.time > terrainMid ? 'rise' : 'dive'), airTurn, deck.centre, gain, shot.post.vignette, view, shot.sun.dir, own)
       const vignette = shot.post.vignette * (1 - low * (1 - airOn))
       hazeTurn.copy(state.rotation).multiply(airTurn)
