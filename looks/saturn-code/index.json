@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T10:03:03.589Z",
- "head": "d07e2b453fc32afdab00ff3ec3b084e232ff452f",
- "note": "new flight for G17 at 3720: the skim heads 28 degrees left of its view axis, same pose at the middle of the shutter; proofs running on d07e2b4",
+ "pushed": "2026-11-24T10:24:07.801Z",
+ "head": "b5d773a64147fde9358c7cb80160c429cad502c6",
+ "note": "the flight for G17 merged with main da59c441 (68b4561): measure prints PASS G17 0.945 at 3720, path green, 3465 equal to the byte; tests and the judge's pictures running",
  "looks": [
+  {
+   "time": "2026-11-24T10:24:06.595Z",
+   "file": "20261124102406595-note-final_3720.jpg",
+   "source": "../../../../tmp/v/r44/final_3720.png",
+   "kind": "note",
+   "label": "3720 at the final tier, commit 68b4561 (the pose at the middle of the shutter is the pose it was)"
+  },
+  {
+   "time": "2026-11-24T10:24:05.299Z",
+   "file": "20261124102405299-note-3720_beside_approved_small.jpg",
+   "source": "../../../../tmp/v/r44/3720_beside_approved_small.png",
+   "kind": "note",
+   "label": "3720 final on the merged head 68b4561 beside the approved: G17 median 0.945 p25 0.477 (PASS), was 0.683"
+  },
   {
    "time": "2026-11-24T10:02:45.774Z",
    "file": "20261124100245774-note-g17_pair_lowleft.jpg",
@@ -46,21 +60,6 @@
    "kind": "note",
    "label": "the judge's dive pops on the second named commit (largest 1.09 at 3563)",
    "stop": "saturn"
-  },
-  {
-   "time": "2026-11-24T09:45:40.153Z",
-   "file": "20261124094540153-note-saturn-dive-changes.jpg",
-   "source": "../../../../tmp/v/r41/saturn-dive-changes.png",
-   "kind": "note",
-   "label": "the judge's dive pictures on the second named commit: change maps (pattern 0.53 at 3561 at the top of the globe)",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-24T09:39:11.214Z",
-   "file": "20261124093911214-note-shade_3538_3556.jpg",
-   "source": "../../../../tmp/v/r41/shade_3538_3556.png",
-   "kind": "note",
-   "label": "item 15: the ring's shade between hold and dive, every second frame 3538 to 3556"
   }
  ]
 }
