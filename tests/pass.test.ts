@@ -240,6 +240,22 @@ describe('the way out of the hold of the Sun', () => {
   })
 })
 
+describe('the opening of the stars as the bright bodies leave the frame of a travel', () => {
+  const film = new FilmDirector(plans) as unknown as { openOf(index: number, time: number): number }
+  const legs = config.segments.filter((s) => s.kind === 'travel')
+
+  it('has no step in any leg: a quarter of the time step gives a quarter of the largest change', () => {
+    legs.forEach((seg, index) => {
+      const most = (h: number): number => {
+        let m = 0
+        for (let p = seg.firstFrame; p < seg.endFrame - h / 2; p += h) m = Math.max(m, Math.abs(film.openOf(index, (p + h) / config.fps) - film.openOf(index, p / config.fps)))
+        return m
+      }
+      expect(most(1 / 16), seg.id).toBeLessThanOrEqual(0.3 * most(1 / 4) + 1e-9)
+    })
+  }, 30000)
+})
+
 describe('the carry of a rise into its travel', () => {
   const legs = plans.map((p, i) => ({ p, i })).filter(({ p, i }) => i > 0 && p.seg.travel)
   const standIn = (id: string, speed: number, brake: number): typeof plans =>
