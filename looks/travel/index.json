@@ -1,9 +1,17 @@
 {
  "folder": "travel",
- "pushed": "2026-11-24T01:58:44.873Z",
- "head": "2fc7ced07cc2f20578312311860f0aa19bf36cbb",
- "note": "Landing of the travels, draft rate 2, after 8bc144fd",
+ "pushed": "2026-11-24T02:49:02.393Z",
+ "head": "8bd92b7915437125007679b05e9df59a5094b0c7",
+ "note": "Uranus leg start: one hump of acceleration, peak 27.17 to 20.41 px a frame per frame",
  "looks": [
+  {
+   "time": "2026-11-24T02:49:01.222Z",
+   "file": "20261124024901222-note-uranus-start-sheet.jpg",
+   "source": "out/work/travel/uranus-start-sheet.png",
+   "kind": "note",
+   "label": "uranus.travel start 4458 to 4468, before and after passStart (draft, rate 2)",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-24T01:58:35.079Z",
    "file": "20261124015835079-note-landing-sheet.jpg",
@@ -54,20 +62,6 @@
    "source": "out/work/travel/seam-slide-sheet.png",
    "kind": "note",
    "label": "travel seams eea6c795 draft: 2325 2580 2726 2748 2754 2760 2766 2800 2812 2818 5030 5060"
-  },
-  {
-   "time": "2026-11-23T01:03:51.727Z",
-   "file": "20261123010351727-job-frame-04125.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "uranus.dive frame 4125, final tier, from the running film job",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4125,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "job": "film"
   }
  ]
 }
