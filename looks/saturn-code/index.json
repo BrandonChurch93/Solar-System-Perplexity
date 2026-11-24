@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T12:14:28.431Z",
- "head": "16bee4df732b8a823445b8963bd303c09a86932b",
- "note": "third NAMED in the making on 91d6247: parity green, finals 3465 and 3720 equal to the byte to the PRE, final 3866 rendering for the picture beside the kept still",
+ "pushed": "2026-11-24T12:27:10.667Z",
+ "head": "2d54c492140ab79ed2c20004e8129ed2302647bf",
+ "note": "third NAMED 2d54c49 mailed 12:26: 3866 at the final tier beside the kept still; the dive pictures, the handover pictures and G13 run next",
  "looks": [
+  {
+   "time": "2026-11-24T12:27:09.942Z",
+   "file": "20261124122709942-note-3866_ll_beside.jpg",
+   "source": "../../../../tmp/v/r45/3866_ll_beside.png",
+   "kind": "note",
+   "label": "judged frame 3866, lower left at full size: the kept still on the left, 91d6247 at the final tier on the right (the near ring drawn out by the film's shutter)"
+  },
+  {
+   "time": "2026-11-24T12:15:51.433Z",
+   "file": "20261124121551433-note-final_3866.jpg",
+   "source": "../../../../tmp/v/r45/final_3866.png",
+   "kind": "note",
+   "label": "91d6247 judged frame 3866, final tier, 64 shutter samples"
+  },
+  {
+   "time": "2026-11-24T12:15:50.702Z",
+   "file": "20261124121550702-note-3866_beside_kept.jpg",
+   "source": "../../../../tmp/v/r45/3866_beside_kept.png",
+   "kind": "note",
+   "label": "judged frame 3866 at the final tier: the kept still on the left, 91d6247 on the right (changes on purpose: the rise ends with speed)"
+  },
   {
    "time": "2026-11-24T12:14:16.147Z",
    "file": "20261124121416147-note-saturn-parity.jpg",
@@ -41,27 +62,6 @@
    "source": "../../../../tmp/v/r45/sheets/rise_d.png",
    "kind": "note",
    "label": "91d6247 the seam into the travel 3878 to 3896: the rise ends with speed, nothing rests"
-  },
-  {
-   "time": "2026-11-24T11:45:27.426Z",
-   "file": "20261124114527426-note-rise_c.jpg",
-   "source": "../../../../tmp/v/r45/sheets/rise_c.png",
-   "kind": "note",
-   "label": "91d6247 rise 3844 to 3877, every third capture step"
-  },
-  {
-   "time": "2026-11-24T11:45:26.543Z",
-   "file": "20261124114526543-note-rise_b.jpg",
-   "source": "../../../../tmp/v/r45/sheets/rise_b.png",
-   "kind": "note",
-   "label": "91d6247 rise 3816 to 3840, every second frame"
-  },
-  {
-   "time": "2026-11-24T11:45:25.235Z",
-   "file": "20261124114525235-note-rise_a.jpg",
-   "source": "../../../../tmp/v/r45/sheets/rise_a.png",
-   "kind": "note",
-   "label": "91d6247 rise 3798 to 3813, every film frame"
   }
  ]
 }
