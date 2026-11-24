@@ -1,9 +1,57 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T19:34:59.729Z",
+ "pushed": "2026-11-24T19:45:29.716Z",
  "head": "5c6713431897c545503f5490b29c72757f052704",
- "note": "trial of an even grade by height measured both ways and not kept (it trades the dive's pattern room for the rise's step in place); state unchanged 5c671343; reds named as before (my proxies: rise 4988 0.54 by flows, hump 4696 0.65 by poses; white specks, lilac); 7.4 s a preview draft frame",
+ "note": "the sheet owed by MAIL 688 point 3: the last 24 frames of the dive, named b8a38cbe against present 5c671343, every frame, with two enlargements; state unchanged; reds named as before; low dive frames take 21 to 25 s a preview draft frame, 7.4 s on the mean of my 59",
  "looks": [
+  {
+   "time": "2026-11-24T19:45:29.083Z",
+   "file": "20261124194529083-note-look-h0-4860.jpg",
+   "source": "out/work/nep/weave/look-h0-4860.jpg",
+   "kind": "note",
+   "label": "4860 now (5c671343) beside the approved close image. G17 1.382 / 0.741",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T19:45:28.482Z",
+   "file": "20261124194528482-note-last24-low.jpg",
+   "source": "out/work/nep/weave/last24-low.jpg",
+   "kind": "note",
+   "label": "the near deck of those frames enlarged (lower left), 4746, 4758, 4769: the pale patches the map leaves over the dark deck are fewer and bluer now (named: lilac), and go out with the height on both",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T19:45:27.905Z",
+   "file": "20261124194527905-note-last24-top.jpg",
+   "source": "out/work/nep/weave/last24-top.jpg",
+   "kind": "note",
+   "label": "the far field of those frames enlarged (upper left 480 by 150 of 960), 4746, 4756, 4764, 4769: named (left) has the hard white patch and the cyan dab; present (right) has long white bands by the limb, and a turquoise streak of the map still stands in them (named, the map's own azure)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T19:45:27.306Z",
+   "file": "20261124194527306-note-last24-2.jpg",
+   "source": "out/work/nep/weave/last24-2.jpg",
+   "kind": "note",
+   "label": "the last 24 frames of the dive (MAIL 688 point 3), 4762 to 4769 every frame: left the named b8a38cbe (before the place moved), right the present 5c671343. The near picture (cloud wall, vortex, plain) is the same frame by frame; the far field by the limb is another piece of the map, 3 degrees on",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T19:45:26.712Z",
+   "file": "20261124194526712-note-last24-1.jpg",
+   "source": "out/work/nep/weave/last24-1.jpg",
+   "kind": "note",
+   "label": "the last 24 frames of the dive (MAIL 688 point 3), 4754 to 4761 every frame: left the named b8a38cbe (before the place moved), right the present 5c671343. The near picture (cloud wall, vortex, plain) is the same frame by frame; the far field by the limb is another piece of the map, 3 degrees on",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T19:45:26.095Z",
+   "file": "20261124194526095-note-last24-0.jpg",
+   "source": "out/work/nep/weave/last24-0.jpg",
+   "kind": "note",
+   "label": "the last 24 frames of the dive (MAIL 688 point 3), 4746 to 4753 every frame: left the named b8a38cbe (before the place moved), right the present 5c671343. The near picture (cloud wall, vortex, plain) is the same frame by frame; the far field by the limb is another piece of the map, 3 degrees on",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T19:34:59.152Z",
    "file": "20261124193459152-note-e3-dive-b.jpg",
@@ -18,58 +66,6 @@
    "source": "out/work/nep/weave/look-h0-4860.jpg",
    "kind": "note",
    "label": "4860 now (5c671343, unchanged) beside the approved close image. G17 1.382 / 0.741",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T19:30:35.312Z",
-   "file": "20261124193035312-compare-neptune-dive-step-in-place.jpg",
-   "source": "out/work/handover/neptune-dive-step-in-place.png",
-   "kind": "compare",
-   "label": "neptune dive, the largest step of the level in place (1.97): frame 4708, frame 4709, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "neptune",
-   "segment": "neptune.dive",
-   "frame": 4709
-  },
-  {
-   "time": "2026-11-24T19:15:13.768Z",
-   "file": "20261124191513768-note-e3-dive.jpg",
-   "source": "out/work/nep/weave/e3-dive.jpg",
-   "kind": "note",
-   "label": "dive 4696 to 4728: present (left), trial e3 (right). Handover report of the dive on e3: body 2.78 / 4.81 into 4719, in place 1.90 / 4.06 into 4720; the present state's dive is being read for the control",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T19:15:13.207Z",
-   "file": "20261124191513207-note-e3-rise.jpg",
-   "source": "out/work/nep/weave/e3-rise.jpg",
-   "kind": "note",
-   "label": "rise 4988 to 5004: present (left), trial e3 (right), the grade of the fall run so the level falls evenly with the height. Handover report at preview drafts, step in place: level 3.61 to 2.89, colour 6.57 to 5.55 (limits 6, 8); body 3.08 / 3.5",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T19:15:12.664Z",
-   "file": "20261124191512664-note-look-h0-4860.jpg",
-   "source": "out/work/nep/weave/look-h0-4860.jpg",
-   "kind": "note",
-   "label": "4860 beside the approved close image; trial e3 keeps its bytes (e79b0602) and those of 4605 (a2b1f371). G17 1.382 / 0.741",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T18:54:50.691Z",
-   "file": "20261124185450691-compare-neptune-rise-step-in-place.jpg",
-   "source": "out/work/handover/neptune-rise-step-in-place.png",
-   "kind": "compare",
-   "label": "neptune rise, the largest step of the level in place (2.89): frame 5000, frame 5001, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "neptune",
-   "segment": "neptune.rise",
-   "frame": 5001
-  },
-  {
-   "time": "2026-11-24T18:42:34.495Z",
-   "file": "20261124184234495-note-e2-dive.jpg",
-   "source": "out/work/nep/weave/e2-dive.jpg",
-   "kind": "note",
-   "label": "dive 4707 to 4724, present (left) against trial e2 (right)",
    "stop": "neptune"
   }
  ]
