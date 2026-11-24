@@ -124,6 +124,13 @@ export function buildConfig(input: unknown, approvedExists?: (path: string) => b
     if (!isWhole(h.dissolveFrames) || !(h.dissolveFrames >= 1)) fail('handover.' + kind + '.dissolveFrames must be a whole number of at least 1')
     if (!isWhole(h.placeFrames) || !(h.placeFrames >= 0)) fail('handover.' + kind + '.placeFrames must be a whole number, 0 or more')
     if (!isWhole(h.skyFrames) || !(h.skyFrames >= 0)) fail('handover.' + kind + '.skyFrames must be a whole number, 0 or more')
+    // The law of the one move for this side, where the film sets other than handover.pace and the height alone (StopPlan.eyeLaw).
+    for (const name of ['pace', 'turn'] as const) {
+      const f = (h as { pace?: { rise: number; fall: number; corner: number }; turn?: { rise: number; fall: number; corner: number } })[name]
+      if (f !== undefined && (!(f.rise > 0) || !(f.fall > 0) || !(f.rise + f.fall <= 1) || !(f.corner > 0 && f.corner <= 0.5))) fail('handover.' + kind + '.' + name + '.rise and handover.' + kind + '.' + name + '.fall must be above 0 and add up to at most 1, handover.' + kind + '.' + name + '.corner above 0 and at most 0.5')
+    }
+    const power = (h as { liftPower?: number }).liftPower
+    if (power !== undefined && !(power >= 0 && power <= 2)) fail('handover.' + kind + '.liftPower must lie between 0 and 2')
   }
   const hp = r.handover.place
   if (!isWhole(hp.scale) || !(hp.scale >= 1)) fail('handover.place.scale must be a whole number of at least 1')

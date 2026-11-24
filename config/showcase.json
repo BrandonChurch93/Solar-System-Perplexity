@@ -165,7 +165,7 @@
   },
   "handover": {
     "dive": {"at": 0.6, "dissolveFrames": 1, "placeFrames": 12, "skyFrames": 24},
-    "rise": {"at": 0.4, "dissolveFrames": 1, "placeFrames": 12, "skyFrames": 24},
+    "rise": {"at": 0.4, "dissolveFrames": 1, "placeFrames": 12, "skyFrames": 24, "pace": {"rise": 0.42, "fall": 0.49, "corner": 0.05}, "turn": {"rise": 0.38, "fall": 0.59, "corner": 0.05}, "liftPower": 0.72},
     "maxEnlarge": 3,
     "maxRateOverMean": 2,
     "coastFrames": 8,
