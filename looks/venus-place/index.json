@@ -1,9 +1,25 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-24T06:33:09.005Z",
- "head": "ec362b2fde45d476f5d9d8418e6e040c7b45694e",
- "note": "06:34 named head ec362b2f on main f6ce51a5: parity panel of the whole smooth run; the pattern reds are the two crop sheets of 06:17",
+ "pushed": "2026-11-24T06:55:29.979Z",
+ "head": "2cf336a3b54978bdb4f8cd858488a4f3aa649ed7",
+ "note": "After NAMED 2cf336a3: taking item 1 apart (ground against plates at 1326 and 1334), pattern number on a window per scratch value",
  "looks": [
+  {
+   "time": "2026-11-24T06:55:29.378Z",
+   "file": "20261124065529378-note-q1334.jpg",
+   "source": "../../../../tmp/v/p1/q1334.jpg",
+   "kind": "note",
+   "label": "1334, the same four views. Under the ground's border the plates show the picture of T laid flat, set off against the ground by parallax",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T06:55:28.596Z",
+   "file": "20261124065528596-note-q1326.jpg",
+   "source": "../../../../tmp/v/p1/q1326.jpg",
+   "kind": "note",
+   "label": "1326 on the named head: globe side, layers view (ground darker yellow, aprons red and green, towers blue), surface side forced from the same eye, their difference times 3. The ground on the globe side covers less than the surface side's ground",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T06:32:13.216Z",
    "file": "20261124063213216-frame-f01542.jpg",
@@ -75,28 +91,6 @@
    "kind": "note",
    "label": "rise 1539 to 1551, lower left at three quarters size: the pale plates come back where the dark ground was (the pattern red, 1.37 at 1543 + 1/2)",
    "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T06:16:26.251Z",
-   "file": "20261124061626251-note-c1320-ll.jpg",
-   "source": "../../../../tmp/v/hg/c1320-ll.jpg",
-   "kind": "note",
-   "label": "dive 1320 to 1335, lower left at three quarters size: the dark ground takes the place of the pale plates (the pattern red, 1.27 at 1326)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T06:15:21.101Z",
-   "file": "20261124061521101-job-frame-01185.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "venus.hold frame 1185, final tier, nograin view, from the running measure job",
-   "stop": "venus",
-   "segment": "venus.hold",
-   "frame": 1185,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
   }
  ]
 }
