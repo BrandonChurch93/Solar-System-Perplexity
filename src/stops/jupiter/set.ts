@@ -12,6 +12,7 @@ import * as look from './look'
 import fields from './deck-fields.json'
 import place from './place.json'
 import { chartAxes, chartEye, closeHeight, eddyTurn, exposed, exposure, flashNow, hazeDrift, low, lowEven, plan, ringTurn, stormTurn } from './plan'
+import proof from './proof.json'
 import skyJson from './sky.json'
 
 function direction(lonDeg: number, latDeg: number): THREE.Vector3 {
@@ -109,7 +110,7 @@ export const createSet: SetFactory = async (ctx) => {
   for (const [view, def] of Object.entries(skyJson)) {
     const wide = 1 + 2 * def.margin
     const tan = Math.tan(THREE.MathUtils.degToRad(def.vfovDeg) / 2) * wide
-    sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, anisotropy: 1, mips: (def.mips as Record<string, boolean>)[ctx.assets] }), aim: new THREE.Quaternion(), tan: [tan * 16 / 9, tan], gain: def.gain, add: def.add, ring: def.ring as [number, number, number, number], edge: def.margin / wide })
+    sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, anisotropy: 1, mips: (def.mips as Record<string, boolean>)[ctx.assets] }), aim: new THREE.Quaternion(), tan: [tan * 16 / 9, tan], gain: proof.glowAlone ? 0 : def.gain, add: def.add, ring: def.ring as [number, number, number, number], edge: def.margin / wide })
   }
 
   return {
@@ -201,9 +202,9 @@ export const createSet: SetFactory = async (ctx) => {
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
       const visible = radiusPx > 0.6
-      globe.mesh.visible = visible
+      globe.mesh.visible = visible && !proof.glowAlone
       for (const s of shells) s.mesh.visible = visible
-      io.mesh.visible = visible
+      io.mesh.visible = visible && !proof.glowAlone
       far.update(radiusPx, view, plan.p.tint, gain)
     },
     dispose: () => {
