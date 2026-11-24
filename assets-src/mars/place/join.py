@@ -1,6 +1,7 @@
 """Joins the 3 x 3 windows of a place picture dump (dump.sh) into one picture and one cover.
   python3 assets-src/mars/place/join.py out/work/place/dump dive
 """
+import os
 import sys
 import cv2
 import numpy as np
@@ -8,6 +9,9 @@ import numpy as np
 folder, kind = sys.argv[1], sys.argv[2]
 W, H = 4496, 2668
 for what in ('image', 'alpha'):
+    if not os.path.exists('%s/%s-%s-0-0.png' % (folder, kind, what)):
+        print(kind, what, 'not dumped')
+        continue
     full = np.zeros((H, W, 3), np.uint8)
     seen = np.zeros((H, W), bool)
     worst = 0
