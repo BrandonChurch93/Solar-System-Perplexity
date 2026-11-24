@@ -1,9 +1,41 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T23:26:25.372Z",
+ "pushed": "2026-11-24T23:51:04.349Z",
  "head": "e789b0c94d6e4fc6000c0fa5e2d88c7e1387f563",
- "note": "blur law: 3003 at the final tier under three shutters from one build; the pictures of mail 805 (Mars 2427 and Earth 1857 at both rates) are rendering",
+ "note": "mail 805: Mars 2427 four times at the final tier (film rate and rate 2, as it is and with the whole shutter); Earth 1857 renders",
  "looks": [
+  {
+   "time": "2026-11-24T23:51:03.625Z",
+   "file": "20261124235103625-note-mars2427-r2-whole.jpg",
+   "source": "../../../../tmp/law/m805/mars2427-r2-whole.png",
+   "kind": "note",
+   "label": "Mars 2427 (capture frame 4854) lower right quarter, final tier, rate 2 with the whole shutter of the capture frame: blur 28.8 px, 58.4 px to the next drawn frame",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T23:51:02.955Z",
+   "file": "20261124235102955-note-mars2427-r2-asis.jpg",
+   "source": "../../../../tmp/law/m805/mars2427-r2-asis.png",
+   "kind": "note",
+   "label": "Mars 2427 (capture frame 4854) lower right quarter, final tier, rate 2 as it is (floor 0.5): blur 14.4 px, 58.4 px to the next drawn frame",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T23:51:02.369Z",
+   "file": "20261124235102369-note-mars2427-r1-whole.jpg",
+   "source": "../../../../tmp/law/m805/mars2427-r1-whole.png",
+   "kind": "note",
+   "label": "Mars 2427 lower right quarter, final tier, film rate with the whole shutter: blur 58.0 px, 119.6 px to the next frame, 97 samples",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T23:51:01.676Z",
+   "file": "20261124235101676-note-mars2427-r1-asis.jpg",
+   "source": "../../../../tmp/law/m805/mars2427-r1-asis.png",
+   "kind": "note",
+   "label": "Mars 2427 lower right quarter at full size, final tier, film rate as it is (floor 0.5): blur 29.0 px, 119.6 px to the next frame",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T23:26:24.475Z",
    "file": "20261124232624475-note-3003bc-tl.jpg",
@@ -31,50 +63,6 @@
    "source": "../../../../tmp/law/v/ju-drafts2.jpg",
    "kind": "note",
    "label": "Jupiter drafts 3017, 3019 to 3023 (one sample each): is a double edge in one sample"
-  },
-  {
-   "time": "2026-11-24T23:02:08.731Z",
-   "file": "20261124230208731-note-jupiter-3024-ll.jpg",
-   "source": "../../../../tmp/law/r1/jupiter-3024-ll.jpg",
-   "kind": "note",
-   "label": "Jupiter 3024 lower left quarter at full size: final as it is (71 samples) beside the draft (one sample)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T23:02:07.575Z",
-   "file": "20261124230207575-note-jupiter-3003-ul.jpg",
-   "source": "../../../../tmp/law/r1/jupiter-3003-ul.jpg",
-   "kind": "note",
-   "label": "Jupiter 3003 upper left quarter at full size: final as it is (64 samples) beside the draft (one sample)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T23:00:16.404Z",
-   "file": "20261124230016404-frame-f03270.jpg",
-   "source": "out/work/blur/draft/f03270.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3270, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3270,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "03b89560bc9f479b"
-  },
-  {
-   "time": "2026-11-24T22:59:23.753Z",
-   "file": "20261124225923753-frame-f03023.jpg",
-   "source": "out/work/blur/draft/f03023.png",
-   "kind": "frame",
-   "label": "jupiter.dive frame 3023, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 3023,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "03b89560bc9f479b"
   }
  ]
 }
