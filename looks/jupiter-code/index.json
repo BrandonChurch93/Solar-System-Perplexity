@@ -1,9 +1,57 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T15:42:02.024Z",
- "head": "b76c6336b27bec47b4568c9bc3730082d73f61a8",
- "note": "15:44 UTC: the measure against a rigid sequence (rows 3259 + 1/2 to 3262 + 1/2 and 3273 + 1/2 read red on a picture that cannot change), the rim off trial, the wide canvas beside the plates",
+ "pushed": "2026-11-24T15:55:49.121Z",
+ "head": "632f1d3298485c99ae786f725fb68f19fa427c3e",
+ "note": "ruling 3: series 3 read (air and relief are not the cause at the top left), the plate chains looked at; nothing built yet",
  "looks": [
+  {
+   "time": "2026-11-24T15:55:48.559Z",
+   "file": "20261124155548559-note-mid-chain.jpg",
+   "source": "../work/ff/mid-chain.jpg",
+   "kind": "note",
+   "label": "STUDY the mid plate's chain: guide, take, plate with the near plate nested, wedge. Outside the nest ring nothing of the view is in it",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T15:55:48.022Z",
+   "file": "20261124155548022-note-near-chain.jpg",
+   "source": "../work/ff/near-chain.jpg",
+   "kind": "note",
+   "label": "STUDY the near plate's chain: guide (the core image laid back), take, plate, wedge. FAULT outside the wedge the take invented its own ground",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T15:55:47.440Z",
+   "file": "20261124155547440-note-fore-chain.jpg",
+   "source": "../work/ff/fore-chain.jpg",
+   "kind": "note",
+   "label": "STUDY the fore plate's chain: guide, take, plate, wedge of the image. FAULT the ring of white cumulus round the storm is the take's invention, not the view's",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T15:55:46.904Z",
+   "file": "20261124155546904-note-lay-mid.jpg",
+   "source": "../work/ff/lay-mid.jpg",
+   "kind": "note",
+   "label": "STUDY the wide canvas laid back on the mid plate from above; rings at 8, 11, 15, 20, 24 units from the point under the fit eye: clear inside 8, petal blobs to 11, smeared to 15, haze colours beyond",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T15:55:46.368Z",
+   "file": "20261124155546368-note-pat-v10.jpg",
+   "source": "../work/ff/pat-v10.jpg",
+   "kind": "note",
+   "label": "STUDY the same with the plates alone on a flat relief: 0.49 0.48 0.48; so the relief is not the cause there",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T15:55:45.790Z",
+   "file": "20261124155545790-note-pat-v9.jpg",
+   "source": "../work/ff/pat-v9.jpg",
+   "kind": "note",
+   "label": "STUDY rise rows 3251 to 3253 with the plates alone and no air: 0.46 0.45 0.52, the most at the top left horizon; so the air is not the cause there",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-24T15:42:01.418Z",
    "file": "20261124154201418-note-rm-a.jpg",
@@ -147,72 +195,6 @@
    "kind": "note",
    "label": "same pair, left far field: the view's cream cumulus at 3251 + 1/2, the plate smeared tan with other streaks at 3259 + 1/2. FAULT",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T14:22:29.421Z",
-   "file": "20261124142229421-note-g-rh.jpg",
-   "source": "../work/ff/g-rh.jpg",
-   "kind": "note",
-   "label": "same pair, right far field, carried by the ground itself: dusk with lit tops at 3251 + 1/2, the plates bright banded day at 3259 + 1/2. FAULT, the red of ruling 3",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T14:22:28.139Z",
-   "file": "20261124142228139-note-pmap-3251.jpg",
-   "source": "../work/ff/pmap-3251.jpg",
-   "kind": "note",
-   "label": "rise run P on the named bytes, 3251 + 1/2 beside 3259 + 1/2 carried back: red outline pattern change over 0.45, yellow over 0.3 (my port of the measure)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T14:08:05.314Z",
-   "file": "20261124140805314-note-riseP-first.jpg",
-   "source": "../work/ff/riseP-first.jpg",
-   "kind": "note",
-   "label": "rise, first frames of the run on the merge (3236 to 3245), base for the far field cure",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T13:57:12.474Z",
-   "file": "20261124135712474-frame-bM-2997.jpg",
-   "source": "out/work/jupiter/final/bM-2997.png",
-   "kind": "frame",
-   "label": "jupiter.dive frame 2997, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 2997,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "4f0c621e3acbf836"
-  },
-  {
-   "time": "2026-11-24T13:53:18.543Z",
-   "file": "20261124135318543-frame-bM-3296.jpg",
-   "source": "out/work/jupiter/final/bM-3296.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3296, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3296,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "4f0c621e3acbf836"
-  },
-  {
-   "time": "2026-11-24T13:49:57.674Z",
-   "file": "20261124134957674-frame-bM-3150.jpg",
-   "source": "out/work/jupiter/final/bM-3150.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3150, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "4f0c621e3acbf836"
   }
  ]
 }
