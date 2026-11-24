@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T01:42:06.258Z",
- "head": "b85c30e64993059df757c243964755d7ab2485b3",
- "note": "try 3 of the pace: rise sheets, 3720 top left at final beside the approved, dive and rise at the same height; now making the stars' lift by height evener",
+ "pushed": "2026-11-24T01:51:03.593Z",
+ "head": "a359a4b7677331c3c6d08df3cd7146a92e13b3f6",
+ "note": "try 3 named: a359a4b, both judges green on the VM; the flight's stars by one even function of the height; next ruling (a), the map rigid, with the hold sky patch made without grain",
  "looks": [
+  {
+   "time": "2026-11-24T01:49:29.913Z",
+   "file": "20261124014929913-note-sky_d1.jpg",
+   "source": "../../../../tmp/v/r27/sky_d1.png",
+   "kind": "note",
+   "label": "band at full size 3872 to 3877: the engine's sky changes its band's look with the lift (0.20 to 0.61)"
+  },
+  {
+   "time": "2026-11-24T01:49:29.328Z",
+   "file": "20261124014929328-note-sky_e2.jpg",
+   "source": "../../../../tmp/v/r27/sky_e2.png",
+   "kind": "note",
+   "label": "sky at full size, even course, 3876 to 3884"
+  },
+  {
+   "time": "2026-11-24T01:49:28.720Z",
+   "file": "20261124014928720-note-sky_e1.jpg",
+   "source": "../../../../tmp/v/r27/sky_e1.png",
+   "kind": "note",
+   "label": "sky at full size, even course, 3867 to 3875: the flight's stars by height, at most 0.0865 a frame"
+  },
   {
    "time": "2026-11-24T01:42:05.400Z",
    "file": "20261124014205400-note-sky_c2.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/v/r27/rise_s5.png",
    "kind": "note",
    "label": "try 3 rise draft 3858 to 3869"
-  },
-  {
-   "time": "2026-11-24T01:42:00.237Z",
-   "file": "20261124014200237-note-rise_s4.jpg",
-   "source": "../../../../tmp/v/r27/rise_s4.png",
-   "kind": "note",
-   "label": "try 3 rise draft 3846 to 3857"
-  },
-  {
-   "time": "2026-11-24T01:41:59.351Z",
-   "file": "20261124014159351-note-rise_s3.jpg",
-   "source": "../../../../tmp/v/r27/rise_s3.png",
-   "kind": "note",
-   "label": "try 3 rise draft 3834 to 3845"
-  },
-  {
-   "time": "2026-11-24T01:41:58.057Z",
-   "file": "20261124014158057-note-rise_s2.jpg",
-   "source": "../../../../tmp/v/r27/rise_s2.png",
-   "kind": "note",
-   "label": "try 3 rise draft 3822 to 3833"
   }
  ]
 }
