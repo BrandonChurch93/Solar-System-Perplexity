@@ -1,9 +1,32 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T08:17:58.583Z",
- "head": "d9d989baba1b5ae5140fc450264cf61a519a2b48",
- "note": "service: Mars's head read on pictures at its T (the stop's own ground and air differ, the engine's sky numbers are one through T); main 3ac64c78 comes next",
+ "pushed": "2026-11-24T08:56:54.122Z",
+ "head": "1ff567faf64bb0519151a9924e225ac7748168c8",
+ "note": "Mars at T, both sides from one eye: the globe side's ground lies 24 px lower, cause being measured; eye line of the relief under a scaled group is next",
  "looks": [
+  {
+   "time": "2026-11-24T08:56:53.500Z",
+   "file": "20261124085653500-note-mars-sides-2681-0850.jpg",
+   "source": "out/work/looks-extra/mars-sides-2681-0850.png",
+   "kind": "note",
+   "label": "Mars head b9c472dc, rise T 2681, draft: forced to the globe side (top) and to the close side (bottom), same eye",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T08:56:52.776Z",
+   "file": "20261124085652776-note-mars-sides-2477-0850.jpg",
+   "source": "out/work/looks-extra/mars-sides-2477-0850.png",
+   "kind": "note",
+   "label": "Mars head b9c472dc, dive T 2477, draft: forced to the globe side (top) and to the close side (bottom), same eye",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T08:56:52.110Z",
+   "file": "20261124085652110-note-path-nine-heads-0820.jpg",
+   "source": "out/work/looks-extra/path-nine-heads-0820.png",
+   "kind": "note",
+   "label": "path part of the judge, all nine heads at 08:20, all green"
+  },
   {
    "time": "2026-11-24T08:17:57.983Z",
    "file": "20261124081757983-note-mars-head-b9c472dc-T-dive-sky-full-size.jpg",
@@ -42,28 +65,6 @@
    "kind": "note",
    "label": "the eye across the seam of the Earth rise and the Uranus rise, forced onto the one move: the film's law, the withdrawn set, the green set, the judge's limit 0.87",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T06:26:53.641Z",
-   "file": "20261124062653641-note-sheet-mercury.jpg",
-   "source": "../../../../tmp/law/rel/sheet-mercury.png",
-   "kind": "note",
-   "label": "Mercury draft 750 753 756 759 (dive) 765 980 983 986 (rise) drawn through the relief's new presence share, byte equal to Mercury's own patch",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T06:01:39.415Z",
-   "file": "20261124060139415-note-judge-speed.jpg",
-   "source": "../../../../tmp/law/looks/judge-speed.png",
-   "kind": "note",
-   "label": "the plan check on the judge's own functions (191dded2): speed of the picture at the place over its mean at rate 2 for all 17 moves, main as it flies and every stop forced onto the one move with the film's law (a chart, no render)"
-  },
-  {
-   "time": "2026-11-24T05:38:23.503Z",
-   "file": "20261124053823503-note-shelf-1.jpg",
-   "source": "../../../../tmp/bend/shelf-1.png",
-   "kind": "note",
-   "label": "main's Mars rise, draft, 2707 to 2715 one by one: the detailed patch shrinks inside the soft globe"
   }
  ]
 }
