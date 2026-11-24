@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T23:46:46.768Z",
+ "pushed": "2026-11-24T00:11:14.587Z",
  "head": "4a26272392321afecc04a808669f537d98c747a3",
- "note": "23:48 unfinished: cells now whole bulbs (centre to lane profile, normal from the height, heat by height). Frame 60 draft: G17 median 1.01, lower quarter 0.75; blur 40 px difference ground 0.061, whole 0.047. Lanes still too wide and pale, tops too bright, spot not yet reworked",
+ "note": "Sun ground from functions, unfinished: held camera motion sheets; frame 60 G17 1.00 lower quarter 0.74 (limit 0.8), blur 40 px difference ground 0.057 whole 0.042",
  "looks": [
+  {
+   "time": "2026-11-24T00:11:13.361Z",
+   "file": "20261124001113361-note-h12-evo.jpg",
+   "source": "out/work/sun/convect/h12-evo.jpg",
+   "kind": "note",
+   "label": "same crop at frames 0 24 48 72 90 108, camera held: cells are born, spread, split and are swallowed (too fast, life doubled since)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T00:11:12.323Z",
+   "file": "20261124001112323-note-h12-row.jpg",
+   "source": "out/work/sun/convect/h12-row.jpg",
+   "kind": "note",
+   "label": "one row of pixels (y 900) against time, camera held, frames 0 to 108 every sixth (unfinished)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T00:11:11.048Z",
+   "file": "20261124001111048-note-h12-six.jpg",
+   "source": "out/work/sun/convect/h12-six.jpg",
+   "kind": "note",
+   "label": "ground from functions, camera held: six consecutive frames 60 to 65 at native size (unfinished)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-23T23:46:46.188Z",
    "file": "20261123234646188-note-c7-bulbs-frame60-whole.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/sun/convect/b2-strip-60-68.jpg",
    "kind": "note",
    "label": "G 1, 23:25, unfinished. Nine consecutive frames, 60 to 68, one box of the near ground at native size (draft, one sample a pixel).",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T23:24:50.485Z",
-   "file": "20261123232450485-note-b2-0-60-90.jpg",
-   "source": "out/work/sun/convect/b2-0-60-90.jpg",
-   "kind": "note",
-   "label": "G 1, 23:25, unfinished. The approved close image and frames 0, 60, 90 (draft). The ground is geometry from functions with relief; lumps on the cells, jets and glow at the limb are new since 23:03. Frame 60: G17 median 1.36, lower quarter 1.02; difference at a 40 pixel blur 0.060 on the ground (the old picture ground 0.028). Wrong: the cells read as rock, too angular and too bright in the middle distance; the spot is too regular and too small.",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T23:02:44.064Z",
-   "file": "20261123230244064-note-m2-168-crop.jpg",
-   "source": "out/work/sun/convect/m2-168-crop.jpg",
-   "kind": "note",
-   "label": "G 1, 23:03, unfinished. Frame 168 at native size (draft): the funnel of the spot, fibres with relief, near cells hide far ones, the horizon is the outline of the cells.",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T23:02:43.516Z",
-   "file": "20261123230243516-note-m2-evo.jpg",
-   "source": "out/work/sun/convect/m2-evo.jpg",
-   "kind": "note",
-   "label": "G 1, 23:03, unfinished. One box of the screen at frames 0, 24, 48, 72, 96, 120, 144, 168 (draft; the camera of the film moves in toward the spot).",
    "stop": "sun"
   }
  ]
