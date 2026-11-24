@@ -4,7 +4,7 @@ import { NOISE_GLSL } from '../../terrain/relief'
 
 export const MAX_LOOPS = 16
 export const MAX_LOBES = 6
-export const MAX_KNOTS = 3
+export const MAX_KNOTS = 12
 
 export const FARSUN_VERT = /* glsl */ `
 uniform float uDepth;
@@ -102,6 +102,7 @@ uniform vec4 uKnot[${MAX_KNOTS}];
 uniform vec4 uKnotBy[${MAX_KNOTS}];
 uniform vec4 uKnotRay[${MAX_KNOTS}];
 uniform vec4 uKnotLight;
+uniform vec2 uKnotOut[${MAX_KNOTS}];
 uniform vec4 uCoronaRim;
 uniform float uChromoBurn;
 uniform int uParts;
@@ -261,10 +262,13 @@ void main() {
   float lens = uGain / vig;
   float dim = mix(vig, 1.0, uWear);
   float knotLight = 0.0;
+  float knotOut = 0.0;
   for (int n = 0; n < ${MAX_KNOTS}; n++) {
     vec3 knotAt = spinY(uKnot[n].xyz, -uSpin);
     float knotOff = acos(clamp(dot(normalize(knotAt - ro), rd), -1.0, 1.0)) / discAngle;
-    knotLight += uKnotBy[n].x * exp(-pow(knotOff * knotOff * uKnot[n].w, uKnotBy[n].y)) * smoothstep(-0.2, 0.05, dot(knotAt, ro) - 1.0);
+    float knotHere = uKnotBy[n].x * exp(-pow(knotOff * knotOff * uKnot[n].w, uKnotBy[n].y)) * smoothstep(-0.2, 0.05, dot(knotAt, ro) - 1.0);
+    knotLight += knotHere * uKnotOut[n].y;
+    knotOut += knotHere * uKnotOut[n].x;
   }
   for (int k = 0; k < (cover > 0.0 && (uParts & 1) != 0 ? 1 : 0); k++) {
     vec3 p = normalize(ro + rd * hit);
@@ -422,7 +426,7 @@ void main() {
     float o = max(x, 1.0) - 1.0;
     float inside = 1.0 - smoothstep(0.6, 1.0, x);
     float glow = uGlare.x * (exp(-o * uGlare.z) + uGlare.w / (1.0 + o * o * 1.5)) * (1.0 - uGlareInside * inside) * ahead;
-    col += (uGlareColour * glow + uKnotLight.rgb * knotLight + (uIrrColour * (uBurn.y * exp(-o * o * uBurn.z * uBurn.z)) + uHaloColour * (uHalo.x * exp(-o * uHalo.y))) * ((1.0 - cover) * smoothstep(uHaloEdge, 1.0, x) * ahead)) * ((1.0 - uWear) * dim);
+    col += (uGlareColour * glow + uKnotLight.rgb * knotOut + (uIrrColour * (uBurn.y * exp(-o * o * uBurn.z * uBurn.z)) + uHaloColour * (uHalo.x * exp(-o * uHalo.y))) * ((1.0 - cover) * smoothstep(uHaloEdge, 1.0, x) * ahead)) * ((1.0 - uWear) * dim);
   }
   col *= lens * uOpacity;
   outColor = vec4(col, alpha * uOpacity);

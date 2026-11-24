@@ -84,10 +84,18 @@ ceiling by `limb[0] * burn * exp(-limb[1] * (1 - x))`, x the distance from the c
 measured on the approved Mercury image, where the limb is not darker than the face (blue 241 at 0.97 radii
 against 228 to 233 further in): the warmth of that limb sits in the gas just outside it. It is zero at
 burn 0, so the limb law is whole at the handover.
-`knot` is the white hot knots of the active regions as the lens sees them, `at` a list of up to three. Each is
+`knot` is the white hot knots of the active regions as the lens sees them, `at` a list of up to twelve. Each is
 a light about the place `at` on the sphere (`width` in disc radii, `gain` by the exposure, zero at burn 0;
 `edge` is the power of its fall, 1 a Gaussian, more than 1 a flatter core with a harder edge), which takes
 the face under it to white and adds `colour` outside the body. It fades as its place goes behind the limb.
+`out` is the share of that light the lens shows outside the body and `body` the share that whitens the
+face (both 1 when absent). The entries with `out` 0 and no rays are the burn's own unevenness on the face,
+placed by position angle and radius read off the approved Mercury image (blue channel, mine against the
+approved in sectors of ten degrees): a negative `gain` leaves a patch creamier than the burnt face round
+it, a positive one takes it nearer white. They move with the body, go with the exposure and are zero at
+burn 0, so no patch shows at the handover or in the Sun stop's own views.
+`burn.white` is the colour the burnt face rolls off to, and `glare.colour` the lens light round the body;
+both were read off the same image (the face keeps blue near 0.9 of red, the glare is paler than the gas).
 `rays` is the burst of straight rays from the knot: the gas is marched in `knot.steps` steps inside a sphere
 of `radius` radii round the knot's place in the body's frame, and a point is lit by the direction from the
 knot to it, where a value noise of that direction is high (`fine` rays across a radian, `sharp` their
