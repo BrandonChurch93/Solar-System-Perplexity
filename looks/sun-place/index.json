@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T03:22:42.293Z",
- "head": "7b1a4e5f2ad150b781e681fc9633ce503ccd2346",
- "note": "03:23 view law, emitter, no fan, pop at 20 cured, a pop of short lives found and cured; cells still pale buns beside the approved",
+ "pushed": "2026-11-24T03:53:30.643Z",
+ "head": "8965475b527771c580584a8d9527badbbc0e0648",
+ "note": "NOTE 501 factor in (16 by 9 bytes equal on 8 frames), parity red only by mean at 225 (12.81 of 12): grain of the draft in far cells",
  "looks": [
+  {
+   "time": "2026-11-24T03:53:30.076Z",
+   "file": "20261124035330076-note-par-225-far.jpg",
+   "source": "../../../../tmp/par-225-far.jpg",
+   "kind": "note",
+   "label": "frame 225 far ground at two to one: 16 by 9 draft, uhd, uhd scaled down. The 16 by 9 draft has one sample grain in cells of 3 to 5 px",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T03:53:29.457Z",
+   "file": "20261124035329457-note-sun-parity-501.jpg",
+   "source": "../../../../tmp/sun-parity-501.jpg",
+   "kind": "note",
+   "label": "NOTE 501 parity panel with the factor in, uncommitted: red only by the mean at 225 (12.81, limit 12), coarse 1.59, block 1.9, level 0.68",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T03:22:41.681Z",
    "file": "20261124032241681-note-c76-222.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/sun/convect/c72-oneone-222.jpg",
    "kind": "note",
    "label": "7b1a4e5f one to one, draft: frame 222 at the spot and below it (dark tiles with drawn bright outlines, a fault)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T02:52:12.067Z",
-   "file": "20261124025212067-note-c72-oneone-60-215.jpg",
-   "source": "out/work/sun/convect/c72-oneone-60-215.jpg",
-   "kind": "note",
-   "label": "7b1a4e5f one to one, draft: frame 60 spot (left, zigzag left of the umbra still there), frame 215 spot (right, no seam)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T02:49:21.803Z",
-   "file": "20261124024921803-note-c72-spot-pair.jpg",
-   "source": "out/work/sun/convect/c72-spot-pair.jpg",
-   "kind": "note",
-   "label": "c72 commit 7b1a4e5f frame 60 spot, approved left, mine right, draft",
    "stop": "sun"
   }
  ]
