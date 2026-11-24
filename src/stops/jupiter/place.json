@@ -1,5 +1,5 @@
 {
-  "note": "The place of the dive (cut/HANDOVER.md S1). oval: the centre of the small orange oval in the wake of the great storm, in degrees on the globe's surface with the flow at rest as frozen for the dive (measured by assets-src/jupiter/plates/place.py on the globe's own imagery). vortex: the centre of the close image's funnel in chart units (measured on the laid back image). The chart of the close view is laid on the globe so that the vortex sits on the oval and the baked Sun of the close image (deck.json light.azimuthDeg) points to the globe's Sun at the handover. freeze: the globe's band flow and the storm's swirl ease to rest from afterDiveStart seconds into the dive over easeSeconds, and the spin stops at the handover, so the place is a rigid ground while it is near. solved is written by the tool: local is the frozen flow time in seconds, toSurface the rotation from the close view's frame to the globe's surface frame (the frame of the lookups, before the spin), n e u the chart's origin and axes there, twinHeight the close camera's height in radii. approach: how the close view comes to the surface view and leaves it. At the first frame of the surface view the camera is the surface view's own camera with its own speed; before it (dive) and after its last frame (rise) the camera is that flight carried on, plus height units up and back units behind along the heading, both times the share of seconds outside the surface view raised to power, so speed and turn rate have no step. Over track seconds the camera takes up a look at the vortex that keeps it where it stands in the frame at that first or last frame. handover: the options of the engine's handover per kind (assets-src/shared/HANDOVER-NOTES.md). freeze.releaseAfterRise: seconds after the handover of the rise from which the frozen flow time is led back to the running one, reached at the end of the rise. exposure.ratio: per channel, the light of the surface view's plates over the globe's light on the same plates at the handover (measured on stills of both sides); the globe is multiplied by it to the power of a share read from the camera's height (scene.grade), the deck's own program by it to the power of the share minus 1, in the dive and in the rise alike, so the exposure is one function of the height with no step at the change of view.",
+  "note": "The place of the dive (cut/HANDOVER.md S1). oval: the centre of the small orange oval in the wake of the great storm, in degrees on the globe's surface with the flow at rest as frozen for the dive (measured by assets-src/jupiter/plates/place.py on the globe's own imagery). vortex: the centre of the close image's funnel in chart units (measured on the laid back image). The chart of the close view is laid on the globe so that the vortex sits on the oval and the baked Sun of the close image (deck.json light.azimuthDeg) points to the globe's Sun at the handover. freeze: the globe's band flow and the storm's swirl ease to rest from afterDiveStart seconds into the dive over easeSeconds, and the spin stops at the handover, so the place is a rigid ground while it is near. solved is written by the tool: local is the frozen flow time in seconds, toSurface the rotation from the close view's frame to the globe's surface frame (the frame of the lookups, before the spin), n e u the chart's origin and axes there, twinHeight the close camera's height in radii. handover: the options of the engine's handover per kind and the law of the engine's one move (assets-src/shared/HANDOVER-NOTES.md). freeze.releaseAfterRise: seconds after the handover of the rise from which the frozen flow time is led back to the running one, reached at the end of the rise. exposure.ratio: per channel, the light of the surface view's plates over the globe's light on the same plates at the handover (measured on stills of both sides); the globe is multiplied by it to the power of a share read from the camera's height (scene.grade), the deck's own program by it to the power of the share minus 1, in the dive and in the rise alike, so the exposure is one function of the height with no step at the change of view.",
   "oval": {
     "lon": -26.628,
     "lat": -5.783
@@ -19,26 +19,56 @@
       "placeFrames": 0,
       "skyFrames": 0,
       "picture": false,
-      "path": {
-        "rise": 0.4,
-        "fall": 0.4,
-        "turnRise": 0.4,
-        "turnFall": 0.4
-      }
+      "pace": {
+        "rise": 0.45,
+        "fall": 0.45,
+        "corner": 0.05
+      },
+      "turn": {
+        "rise": 0.45,
+        "fall": 0.45,
+        "corner": 0.05
+      },
+      "liftPower": 0.625
     },
     "rise": {
       "at": 0.001,
       "placeFrames": 0,
       "skyFrames": 0,
       "picture": false,
-      "path": {
-        "rise": 0.4,
+      "pace": {
+        "rise": 0.475,
+        "fall": 0.475,
+        "corner": 0.05,
+        "corners": {
+          "fall": [
+            0.4,
+            0.1
+          ],
+          "rise": [
+            0.05,
+            0.65
+          ]
+        }
+      },
+      "turn": {
+        "rise": 0.525,
         "fall": 0.4,
-        "turnRise": 0.4,
-        "turnFall": 0.4
-      }
+        "corner": 0.15,
+        "corners": {
+          "fall": [
+            0.05,
+            0.05
+          ],
+          "rise": [
+            0.55,
+            0.1
+          ]
+        }
+      },
+      "liftPower": 1.375
     },
-    "note": "The change of view sits at the seams of the surface view (frames 3059 and 3240), so the whole dive and the whole rise are drawn by the globe's group, which holds the deck's own program (scene). No place picture, no sky frames, no limb reach: nothing of the change of view runs on the film's clock. path: the flanks of the engine's glide as shares of the move, until the engine's one move (plan E) is the film's path."
+    "note": "The change of view sits at the seams of the surface view (frames 3059 and 3240), so the whole dive and the whole rise are drawn by the globe's group, which holds the deck's own program (scene). No place picture, no sky frames, no limb reach: nothing of the change of view runs on the film's clock. The camera of both moves is the engine's one move (plan E; jupiter is off handover.ownPath in config/showcase.json): one glide from the hold, or to the pose after the rise, to the surface view's own seam pose carried at its velocity. pace, turn and liftPower are that move's law for this stop (StopPlan.eyeLaw): the bell of the height, the bell of the eye's direction and the power of the lift, found with npx tsx tools/law.ts --stop jupiter --kind dive, and for the rise with --corners --tries 6000 --rounds 4. The dive is inside the limits of the path judge (worst step 0.76 of the limit); the rise is not yet (rate 0.087, turn 0.080, speed 0.088 of the mean a frame against 0.08)."
   },
   "solved": {
     "local": 2.4095937488607793,
@@ -81,22 +111,6 @@
     ],
     "radiusUnits": 331.94631945631824,
     "twinHeight": 0.003012535284734774
-  },
-  "approach": {
-    "dive": {
-      "seconds": 1.2,
-      "height": 12.5,
-      "back": 8.2,
-      "power": 2.5,
-      "track": 0.4
-    },
-    "rise": {
-      "seconds": 1.0,
-      "height": 13.0,
-      "back": 7.3,
-      "power": 2.5,
-      "track": 0.4
-    }
   },
   "exposure": {
     "ratio": {

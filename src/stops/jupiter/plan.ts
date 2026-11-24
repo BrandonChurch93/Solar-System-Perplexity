@@ -1,9 +1,9 @@
 import * as THREE from 'three'
 import { config, type Segment } from '../../config'
-import type { Pose, ViewKind } from '../../core/types'
-import { handoverOf, type HandoverParams, type SkyShares } from '../../director/handover'
+import type { Pose } from '../../core/types'
+import type { HandoverParams, SkyShares } from '../../director/handover'
 import { StopPlan, type Fit, type MoveParams } from '../../director/moves'
-import { lookAt, smooth } from '../../director/rig'
+import { smooth } from '../../director/rig'
 import deck from './deck.json'
 import fields from './deck-fields.json'
 import fit from './fit.json'
@@ -21,7 +21,7 @@ export const params: MoveParams = {
   skyAim: { terrain: [0, -21.8, 31] },
   light: { exposure: 1, skyExposure: 0.5, terrainSkyGlow: 0.35, skyLow: [0.045, 1.0, 0], sunRadiusDeg: 0.5, sunGlare: 0.75, flare: 0.18 },
   cover: [0.42, 0.34, 0.26],
-  handover: place.handover as HandoverParams,
+  handover: place.handover as unknown as HandoverParams,
   spinDegPerSecond: 1.6,
   moonDegPerSecond: 2.6,
   tint: [0.9, 0.75, 0.55],
@@ -31,8 +31,6 @@ const up0 = new THREE.Vector3().fromArray(relief.nadir).negate()
 const centre = up0.clone().multiplyScalar(-(relief.radius + 1))
 const ahead0 = new THREE.Vector3().fromArray(fields.chart.ey).addScaledVector(up0, -new THREE.Vector3().fromArray(fields.chart.ey).dot(up0)).normalize()
 const chartOrigin = new THREE.Vector3().fromArray(fields.chart.origin)
-const vortexLow = Math.sqrt(relief.radius * relief.radius - place.vortex[0]! * place.vortex[0]! - place.vortex[1]! * place.vortex[1]!) - relief.radius
-const vortex = chartOrigin.clone().addScaledVector(new THREE.Vector3().fromArray(fields.chart.ex), place.vortex[0]!).addScaledVector(new THREE.Vector3().fromArray(fields.chart.ey), place.vortex[1]!).addScaledVector(new THREE.Vector3().fromArray(fields.chart.en), vortexLow)
 const s = place.solved.toSurface as number[][]
 const toSurface = new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().set(s[0]![0]!, s[0]![1]!, s[0]![2]!, 0, s[1]![0]!, s[1]![1]!, s[1]![2]!, 0, s[2]![0]!, s[2]![1]!, s[2]![2]!, 0, 0, 0, 0, 1))
 const toGlobe = new THREE.Quaternion().fromArray(fit.globe.quaternion).multiply(toSurface)
@@ -171,8 +169,6 @@ export function exposed(seconds: number): number {
 }
 
 export class JupiterPlan extends StopPlan {
-  private readonly holds: Partial<Record<'dive' | 'rise', THREE.Quaternion>> = {}
-
   override spin(time: number): number {
     const dive = this.seg.dive!
     const land = this.seg.terrain
@@ -194,61 +190,24 @@ export class JupiterPlan extends StopPlan {
     return flight(deck.life.proof.cameraHeld ? 0 : tRel - dur / 2 - config.shutterFraction / (2 * config.fps), this.p.terrain.vfov)
   }
 
-  private close(kind: 'dive' | 'rise', time: number): Pose {
-    const land = this.seg.terrain
-    const dur = land.end - land.start
-    const k = place.approach[kind]
-    const out = kind === 'dive' ? land.start - time : time - land.end
-    const at = (t: number, more: number): Pose => flight(t - land.start - dur / 2 - config.shutterFraction / (2 * config.fps), this.p.terrain.vfov, k.back * more, k.height * more)
-    if (out <= 0) return at(time, 0)
-    const pose = at(time, Math.pow(out / k.seconds, k.power))
-    const aim = (p: Pose): THREE.Quaternion => lookAt(p.position, vortex, p.position.clone().sub(centre).normalize())
-    let hold = this.holds[kind]
-    if (!hold) {
-      const edge = at(kind === 'dive' ? land.start : land.end, 0)
-      hold = aim(edge).invert().multiply(edge.quaternion)
-      this.holds[kind] = hold
-    }
-    pose.quaternion.slerp(aim(pose).multiply(hold), smooth(out / k.track))
-    return pose
-  }
-
   override twin(local: Pose, time: number): Pose {
     const q = this.turn(time).multiply(toGlobe)
     return { position: local.position.clone().sub(centre).multiplyScalar(1 / relief.radius).applyQuaternion(q), quaternion: q.clone().multiply(local.quaternion), vfov: local.vfov }
   }
 
-  override divePose(time: number, view: ViewKind): Pose {
-    if (view === 'terrain') return this.close('dive', time)
-    const h = handoverOf(this.id, 'dive')
-    if (h && time >= h.time) return this.twin(this.close('dive', time), time)
-    return super.divePose(time, view)
-  }
-
-  override risePose(time: number, view: ViewKind): Pose {
-    if (view === 'terrain') return this.close('rise', time)
-    const h = handoverOf(this.id, 'rise')
-    if (h && time <= h.time) return super.risePose(time, view)
-    return super.risePose(time, view)
-  }
-
-  private heightAt(seg: Segment, time: number): number {
-    return (seg.kind === 'dive' ? this.divePose(time, 'orbit') : this.risePose(time, 'orbit')).position.length() - 1
-  }
-
   override skyShare(seg: Segment, time: number): SkyShares | null {
     if (seg.kind !== 'dive' && seg.kind !== 'rise') return super.skyShare(seg, time)
-    return { low: low(this.heightAt(seg, time), place.scene.sky) }
+    return { low: low(this.eyeHeight(time), place.scene.sky) }
   }
 
   override skyCarryShare(seg: Segment, time: number): number | null {
     if (seg.kind !== 'dive' && seg.kind !== 'rise') return super.skyCarryShare(seg, time)
-    return low(this.heightAt(seg, time), place.scene.skyTurn)
+    return low(this.eyeHeight(time), place.scene.skyTurn)
   }
 
   override skyTurnShare(seg: Segment, time: number): number | null {
     if (seg.kind !== 'dive' && seg.kind !== 'rise') return super.skyTurnShare(seg, time)
-    return low(this.heightAt(seg, time), place.scene.skyTurn)
+    return low(this.eyeHeight(time), place.scene.skyTurn)
   }
 }
 

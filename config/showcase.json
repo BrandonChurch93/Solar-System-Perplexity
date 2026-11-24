@@ -171,7 +171,7 @@
     "coastFrames": 8,
     "carry": {"power": 2, "stepsPerFrame": 8},
     "pace": {"rise": 0.4, "fall": 0.4, "corner": 0.2},
-    "ownPath": ["sun", "mercury", "venus", "earth", "jupiter", "saturn", "uranus", "neptune"],
+    "ownPath": ["sun", "mercury", "venus", "earth", "saturn", "uranus", "neptune"],
     "maxBlurPx": 14,
     "blurEaseFrames": 12,
     "minShutter": 0.5,
