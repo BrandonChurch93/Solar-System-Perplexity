@@ -4058,3 +4058,203 @@ MAIL 686 from the Builder (/root) to earth_builder. RULING on Y: (2). No stop, c
 - Vitest on this tree: 446 tests in 45 files pass (the four browser files left out). Build exit 0. Seam green (dive 0.987 at 1919 + 1/2, rise 1.000). Path green.
 - What reads the clock here: nothing new. `land` is a law of the leg's own frames (the share of the turn against the lift), not a picture and not a look.
 - Looks pushed 14:39 (the rise end sheet; the far zone as named).
+
+### 14:41 to 14:45 UTC, Y after the ruling (2): what was measured and read before any change, and a second question
+
+- Commit f7ab197acd05bea7317f6e576894f818484ae09a pushed 14:41 (the rise's end). Not a NAMED.
+- Running since 14:41 (`/tmp/gl/s10/go7.sh`): rate 2 pictures of the dive's middle 1876 to 1904 on this tree (dir `p6`, with the job written beside it so that the pattern can be drawn as a map by `/tmp/gl/s10/pmap.py`), then the rise's end again on the window 2148 to 2174.
+- Geometry of the far zone along the dive (`npx tsx out/work/earth/place/tmp/far.ts FRAMES`, ground on the centre column of the close picture at 5, 6.5, 8, 10, 12 degrees of arc; first number the angle between the eye's ray and the close eye's ray, second the elevation of the eye above the ground there):
+  - 1755 (eye height 3.4429): 62.8 79.4 | 65.9 77.5 | 67.4 75.6 | 68.2 73.0 | 68.3 70.5
+  - 1857 (1.3970): 54.7 69.8 | 57.2 67.5 | 58.1 65.1 | 58.3 62.0 | 57.7 58.9
+  - 1870 (0.4995): 40.1 54.9 | 41.3 51.4 | 41.3 48.1 | 40.2 43.8 | 38.7 39.8
+  - 1880 (0.2204): 27.6 42.4 | 27.6 37.9 | 26.8 33.7 | 25.1 28.9 | 23.3 24.6
+  - 1890 (0.0972): 15.1 30.1 | 14.4 24.9 | 13.4 20.6 | 12.0 16.0 | 10.7 12.2
+  - 1898 (0.0551): 7.2 22.2 | 6.6 17.1 | 6.0 13.2 | 5.2 9.3 | 4.5 6.1
+  - 1908 (0.0355): 2.9 16.8 | 2.3 12.2 | 2.0 8.8 | 1.6 5.4 | 1.4 2.7
+  - 1919 (0.0309): 2.5 15.4 | 1.9 10.9 | 1.6 7.6 | 1.2 4.4 | 1.0 1.8
+  So the hold sees the far zone almost from straight above (elevation 70 to 79 degrees), and the angle gate of the low look (35 to 10 degrees) is crossed from about 1874 to 1893.
+- Design of the bank (nothing built yet), following the Builder's thought in MAIL 648 (d): standing cloud from code. A field of cloud tops (height above the sea, from a script: noise shaped by the cover that the close picture's deck needs) lies in the far zone and past it. The globe's shader walks the ray from the ground point to the eye through the layer and asks at each step whether a top stands above the ray. From above (the hold) the tops cover a small share and the sea and Cuba show between them; at the close camera's grazing angles the same tops stand in front of each other and close to a deck. ESTIMATE from the geometry, not measured: with bodies as high as wide, a cover of 0.25 from above closes to 0.99 at 5 degrees of elevation and 0.78 at 17. The lay back and the ground object still take over by angle near the close view; what is under them by then is the closed deck, not land.
+- Found while planning, sent to /root at 14:44 as a blocker question (no stop): a bank that stands at the hold stands in every frame that shows the Gulf, also 1679 and before and 2175 and after. MAIL 215 says those chunks are not rendered again. Unless told otherwise the bank exists at every height, the frames that change outside 1680 to 2174 are named, and the arrival and the travel out have to be rendered again with the take.
+
+### MAIL 689 from the Builder (/root), received 14:46 UTC, verbatim
+
+MAIL 689 from the Builder (/root) to earth_builder. ANSWER to your question on the frames before 1680 and after 2174. No stop.
+
+RULED: do as you propose. The bank stands at every height and in every frame that shows that part of the globe: the arrival before 1680 and the travel out from 2175 as well. No cut at either end, and nothing that grows or goes by the clock or by nearness.
+
+1. The line of MAIL 215 (the hold and the travel after the rise are not rendered again) was written to keep the frozen film's frames to the byte. It is withdrawn for the bank's zone in those frames, as the line of MAIL 684 was for 1755. Outside the bank's zone it stands: a frame of the arrival or of the travel out changes inside the zone of the bank only.
+
+2. Those frames are rendered again with the take; the whole film is rendered again at the freeze in any case. Nothing for you to do about that.
+
+3. In the NAMED mail: which frames outside 1680 to 2174 change (first and last frame of each run), the count of changed pixels at the first, the middle and the last of each run, and the proof by a count that no pixel outside the bank's zone changes in them (as you did for 1755). One pair of the arrival's last frame and one of the travel's first frame, before and after, at native size on the zone.
+
+4. The rise's end on f7ab197a is noted: final 2156 unchanged, path green, STATED. It stays on your branch for round 2 with the bank.
+
+### 14:58 to 15:00 UTC, the two baselines of the chain (f7ab197a, rate 2 pictures, draft), before the bank
+
+- Rise end, the window 2148 to 2174 again, like with like against the third tree (`/tmp/gl/s10/pics-riseend2.log`): "pop 2148 + 1/2: 1.09 | 2148: 1.09 | 2151: 1.09", "pop over 1.2: " (none), "pattern over 0.45: " (none), pattern highest "2150 + 1/2: 0.38". The 1.20 that the shorter window 2154 to 2174 printed at its first frames is the window's edge, not the picture: with the same window as the third tree the reading is 1.09 as there.
+- Dive middle, 1876 to 1904 (`/tmp/gl/s10/pics-divemid.log`): "pop over 1.2: " (none), pop highest 1.08; pattern by whole frame 1876 0.42, 1880 0.45, 1882 0.51, 1883 0.65, 1884 0.77, 1885 0.85, 1886 0.87, 1887 0.89, 1888 0.95, 1889 1.04, 1890 1.12 at 772,164, 1891 1.05, 1892 0.79, 1893 0.64, 1894 0.46, 1895 0.37, 1896 0.26.
+- Pattern maps (`/tmp/gl/s10/pmap.py`, picture `/tmp/gl/s10/pmap-base.jpg`, pushed as a look 14:59): 1884 pattern 0.771 at 584,240, share of the judged pixels over 0.45 0.0401; 1887 0.892 at 484,124, 0.0901; 1890 1.118 at 772,164, 0.0768; 1892 0.788 at 796,124, 0.0499. LOOKED AT: the red lies in the upper left of the judged region, the far zone: at 1884 the frame shows the plate's field of small puffs over Yucatan there, eight frames later the smooth deck of the close picture. Nothing red at the glint or in the near zone in these four.
+
+### MAIL 691 (15:14 UTC), verbatim
+
+> MAIL 691 from the Builder (/root) to earth_builder. One question on your third commit 1f3e0bd5, no stop.
+>
+> MEASURED on the machines (check ea3, proof be36dfc5 = main 2bc36ce6 with your folder): 103 of 115 draft frames equal main's; 10 differ inside your two moves (1857, 1874, 1878, 1885, 1889, 2120, 2124, 2131, 2135, 2156); final 1755 is main's to the byte (ab7cfd53); final 2010 is your second commit's (c3956984). One frame outside your moves differs from main at the draft tier: 2212, in the travel out (2190 to 2249). It is the only frame of that travel in the list, so I do not know where the run starts and ends.
+>
+> Answer in a few lines from your own tree: (1) what in the third commit moves 2212 against main, and whether it was meant (the rise's end pose and speed carried into the travel, the globe as it is left, or something else); (2) the first and last frame of the run that differs and how much at 2212 (count of changed pixels, largest change, where in the frame); (3) whether anything of it reaches past 2249.
+>
+> A machine is rendering 2212 at the review tier on both trees for me to look at. Your third commit goes into round 1 as ruled; this only decides what the take's line says about 2212. Number your answer ANSWER 691.
+
+### 15:14 to 15:23 UTC, ANSWER 691: what moves 2212 against main
+
+- Three scratch copies of the sources (`git archive` of `src config cut tools`, the rest linked): `/tmp/gl/s11/tm` main 2bc36ce6, `/tmp/gl/s11/t3` 1f3e0bd5, `/tmp/gl/s11/t4` f7ab197a. `x/shot.mts` prints `FilmDirector.shotAt` for 2170 to 2262 (camera, sky, sun, sets, post, cover, dust, place), numbers to 12 digits (`/tmp/gl/s11/shot-tm.json`, `shot-t3.json`, `shot-t4.json`).
+- Carry reader (`out/work/earth/place/tmp/carry.ts earth`) on main: "speed before the end 0.4999 speed of the exit after it 0.5000 carry none from 0.02". On 1f3e0bd5: "speed before the end 0.5016 speed of the exit after it 0.5000 carry speed 0.0405 rate 0.1310 span 0.4 from 0.02". On f7ab197a: "speed before the end 0.5000 speed of the exit after it 0.5000 carry none from 0.02".
+- Shot values, main against 1f3e0bd5: the view turns by 0.00000 degrees at every frame from 2175; the values that differ from 2175 are the eye, `near` and the two sets' heights only (no sky value, no sun value, no post value). Eye moved (film units): 0.000336 at 2175, 0.00166 at 2176, 0.00608 at 2180, most 0.00760 at 2184, 0.00633 at 2190, 0.00156 at 2198, 0.0000487 at 2205, 9.5e-08 at 2212, 3.6e-10 at 2230, 4.5e-13 at 2247; 2248 to 2262 no value differs.
+- Shot values, main against f7ab197a: no value differs at any frame from 2175 to 2262 (in the rise 2170 to 2174 they differ, as they must).
+- Frames, draft, in the repo tree with the folders `src/stops/earth` and `public/assets/earth` of each commit laid in (`/tmp/gl/s11/go691.sh`, 15:17:06 to 15:20:53; the bank's edits were saved in `/tmp/gl/s11/bank-src` and put back after): main `/tmp/gl/s11/qm`, third commit `/tmp/gl/s11/q3`. Pixels that differ, over 1 level, over 8 levels, largest, where the largest lies:
+  - 2175: 603247, 299504, 31753, 201 at (1132, 971)
+  - 2180: 878187, 685924, 374338, 235 at (1278, 713)
+  - 2184: 832886, 659458, 378017, 235 at (1221, 527)
+  - 2190: 147352, 98031, 36614, 247 at (715, 192)
+  - 2198: 1217, 9, 0, 2 at (665, 111)
+  - 2204: 1114, 66, 0, 4. 2205: 1204, 54, 0, 3. 2206: 1103, 70, 0, 4. 2208: 1161, 71, 0, 6. 2210: 1035, 78, 0, 7.
+  - 2212: 1217, 86, 0, 6 at (1424, 30); box x 0 to 1912, y 11 to 1079
+  - 2216: 1394, 78, 0, 4. 2220: 1054, 53, 0, 3. 2230: 655, 14, 0, 3. 2240: 254, 11, 0, 3. 2246: 122, 1, 0, 2. 2247: 102, 0, 0, 1. 2248: 65, 0, 0, 1. 2249: 23, 0, 0, 1.
+  - 2250 (mars.hold): 0 pixels differ.
+- 2212, the picture of the difference (`/tmp/gl/s11/a691-2212.jpg`, looked at): 193 small groups, dots and short streaks, the largest 110 px (after a widening by one pixel), spread over the whole frame; the frame is the star field with Mars ahead, the globe has left it. Mean level at the pixels that differ 16.4 (the frame's mean 19.1). Which layer of the travel draws those dots was not checked.
+- 2248 and 2249 differ by 65 and 23 pixels of 1 level although no shot value differs to 12 digits. Not explained by a measure of mine.
+- Disk: `out/work/earth/place/p3` and `/tmp/gl/s9/n3` deleted at 15:08 (older sets), 3.7 G free after.
+- ANSWER 691 sent to /root at 15:23 UTC (high), the numbers above.
+
+### 15:23 to 15:50 UTC, the bank (Y): tries 2 to 5, all LOOKED AT on draft frames, none good enough yet
+
+Pairs before | with the bank at 1870, 1878, 1882, 1886, 1890, 1894 and the hold 1755 (kept final | draft, zone times 3). Folders /tmp/gl/s11/d2 to d5.
+
+- Try 2 (standing puffs marched in the shader, taller and larger bodies, colour toward the lay back's by the angle): at the hold a field of flecks close to the hero's in size. At 1878 the puffs read as glassy leaning shards, at 1886 and 1890 as hard white blocks at the left. Not a cloud.
+- Try 3 (the same puffs made opaque, lit by height and by the sun's side, shadow on the ground): at 1870 to 1882 a field of white blocks standing on the sea, at the hold a dense patch of white dots that ends at once. Worse. The march is dropped: a height field of puffs beside a painted map reads as built, and the cost was 24 to 32 reads of the texture per pixel of the zone. The patch of the march is kept in /tmp/gl/s11/bank-march.patch, not in the tree.
+- Try 4 (a flat bank: one cover field from code laid into the ground colour, as the map's own painted cloud is flat): blown white, no texture, hard ragged edges, a hard arc where the close picture's horizon cuts the field. Not the hero's cloud.
+- MEASURED on the hero's own cloud layer (wrap-cloud.webp, the mass off the Carolinas, lon -80 to -66, lat 28 to 38): alpha quantiles 0.5, 0.75, 0.9, 0.97 = 0.008, 0.2, 0.604, 0.894; colour by alpha 0.2 to 0.4 (0.639 0.645 0.629), 0.4 to 0.6 (0.779 0.783 0.767), 0.6 to 0.8 (0.839 0.842 0.826), 0.8 to 0.95 (0.877 0.88 0.866), over 0.95 (0.921 0.925 0.911). So the hero's cloud is grey to white by its thickness, mostly part clear, soft, with fine streaks in bands.
+- Try 5 (flat bank with those colours by thickness, body noise of 5 to 80 texels plus warped streaks, soft ramps, the field of the wanted cover smoothed on the ground, outer arc ended before the horizon): at the hold a soft grey white streaked mass between Yucatan and Cuba whose tone is close to the mass off the Carolinas in the same frame (LOOKED AT on a draft against the kept final, not yet a final). In the dive it reads as a soft high cloud. Fault: from 1882 to 1890 the bank stays sunlit white beside the lay back's dark grey blue deck, so the line of the exchange shows as white against dark.
+- Try 6 in work: the bank's colour goes to the lay back's own broad colour (the plate read 3 levels down at the same ground point) by the angle to the close eye's ray, 50 to 36 degrees, which ends where the lay back begins (35). No height in it. Mottle inside the mass, softer ramps.
+- The memory line with the bank's texture: "earth 1398" (limit 1400). The sampler count stays 16 (MAX_PATCHES 5).
+
+### 15:50 to 16:04 UTC, the bank (Y): tries 6 and 7, LOOKED AT on draft frames, a fault found by a count
+
+- Try 6 (tint by the angle 50 to 36 degrees, mottle): at the hold a thin streaked grey white bank between Yucatan and Cuba, about 70 by 67 px (x 887 to 957, y 430 to 497), close in tone to the hero's streak cloud east of Florida. 1866 and 1870 a thin streaked high cloud. 1878 to 1886 most of it goes to the lay back's colour; white streaks stay at the far left beside dark streaks; the streaks read a little like smear.
+- Try 7 (tint 60 to 36 degrees, streaks shorter, weaker, more warped; frames 1755 1679 2175 2180 1857 1866 to 1890 by 4, 2118 to 2174, /tmp/gl/s11/d7): the hold reads as a mottled white grey patch from the Yucatan channel over the west tip of Cuba (LOOKED AT, hold.png). 1866 to 1878 a white mottled bank. 1882, 1886, 1890 and 2126: a white streaked patch stays at the left end of the lay back's zone while the rest has gone to the deck (LOOKED AT at native size, left.jpg). That is a fault: white beside dark, the same line as before in another place.
+- The cause, MEASURED on the field (896 px copy, texels over 0.02): 124813 texels of the bank, of them 61195 lie where the plate's own window is not whole (outside 0.5 less the feather 0.12 of the plate's width), 18627 where the low window is not whole. The tint to the lay back's colour is multiplied by those windows, so 47.19 percent of the bank's mass could never take the deck's colour. The bank reached past the plate, where there is no lay back to become.
+- Draft frames against older draft frames differ by 1 level in a ring of about 200 px round the zone (1679: 21183 pixels differ, 16982 of them by 1, 2299 by 10 or more; 16 by 9 grid of counts kept in the log of this session). The film's own bloom (src/post/chain.ts: the scene is mixed with its blurred copy by bloomStrength, no threshold) carries any change of light past its own pixels. READ from the code, not yet measured on a final. The count outside the zone at the final 1755 has to be taken with that in mind and reported as it prints.
+- Looks pushed 15:59:25 (try 7: hold, 1857 to 1878, 1882 to 1890, with the fault named).
+- Try 8 in work (16:04): the bank ends inside the zone where the tint is whole (field.plate [0, 0.06] of the plate's width, edge wandered by the same noise as the other edges). bank.py prints: share of texels over 0 0.0652 (was 0.1572).
+
+### 16:04 to 16:13 UTC, the bank (Y): try 8, the look held for the proof; 1755 final MEASURED
+
+- Try 8: bank.py ends the bank inside the part of the plate where the lay back is whole (field.plate [0, 0.06], whole(): the smaller of the plate's own window less its feather and the low window less its feather, in plate widths), the edge wandered by the same noise as the arc. Share of texels over 0: 0.0652. The file is made again from the JSON to the same bytes (sha256 3a8fb3f9..., run twice).
+- LOOKED AT (draft, /tmp/gl/s11/d8: 1755, 1857, 1862 to 1886 by 2 or 4, 1890, 2126, 2134, 2142; whole frames in seq.jpg, native crops in native.jpg, pairs against the frames before): from 1862 to 1878 a white mottled mass between Yucatan and the west of Cuba that grows with the fall; its detail is softer and more streaked than the painted puffs beside it; at 1878 its lower edge shows grey bands. 1880 to 1884 it greys into the lay back's deck; 1886 only a trace; 1890 two pixels differ by more than 8 from the frame before the bank. No white patch stays beside the deck (the fault of try 7 is gone on these frames).
+- 1755 final with the bank (/tmp/gl/s11/f8/1755.png, sha256 18e8bf82c6898ec13b9d8d6047594fdda295eb20b01f703c772aeaae0bb78489) against the kept final (ab7cfd53...), as printed:
+  - 1755 pixels that differ 12326 inside the box x 847 to 970, y 385 to 515: 7443 outside: 4883
+  - 1755 box of all that differ: x 698 to 1177 y 226 to 714 = 480 by 489 largest 234
+  - 1755 outside the box by size of the difference 1..9, 10 and over: [4883, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  - 1755 inside the box by size 1..9, 10 and over: [5590, 460, 192, 104, 43, 31, 25, 20, 19, 959]
+  - 1755 over 1 : 1853 box x 896 to 955 y 445 to 505
+  - 1755 over 2 : 1393 box x 901 to 953 y 446 to 505
+  - 1755 over 4 : 1097 box x 905 to 953 y 446 to 505
+  - 1755 over 8 : 978 box x 907 to 952 y 447 to 505
+- So the count outside the accepted box is NOT 0: 4883 pixels, every one by 1 level, in a box of 480 by 489 px round the bank. Differences of more than 1 level lie in 60 by 61 px (x 896 to 955, y 445 to 505), all inside the accepted box. Cause as READ in src/post/chain.ts (shared, not mine): the film mixes every pixel with a blurred copy of the scene (bloomStrength, no threshold), so light added in one place moves its surroundings by a fraction of a level. A bank that adds light cannot leave the pixels round it to the byte while the film's bloom is on; with the first try's fainter bank every pixel that differed lay inside 123 by 130 px (the measure MAIL 686 accepted), so its spill did not reach a rounding step; why is not measured. To name in the NAMED mail as a red against MAIL 686 item 1.
+- LOOKED AT at the final (zone times 4 and the Gulf times 2, kept above new): a small grey white streaked patch south west of the west end of Cuba, in tone and softness close to the hero's mass east of the Lesser Antilles in the same frame; at times 4 it is a clump of white specks; its west side ends within a few pixels. Whether that passes "no dense patch that ends at once" is the critic's to say; named.
+- Looks pushed 16:12:07.
+- 16:13:07 render A1 started (draft, bank on): every frame 1830 to 1892 and 2124 to 2174, plus 1896 1904 1912 1919 2100 2108 2116.
+
+### 16:13 to 16:34 UTC, the bank (Y), try 8: every frame of the dive's and the rise's changed parts, draft, LOOKED AT
+
+- Render A1 (bank on, draft, /tmp/gl/s11/a1, 121 frames, 16:13:07 to 16:32:44): every frame 1830 to 1892 and 2124 to 2174, plus 1896 1904 1912 1919 2100 2108 2116.
+- Why the bank ends inside the plate and that is the whole of it, not a half: READ and MEASURED together. The globe shows the close image's deck in the dive only as the lay back, and the lay back exists only inside the plate (lowHere = inside times the low window). Past the plate the globe shows the hold's levels up to the change of view at 1919.25; the deck of the close image there appears only with that change of view (my item 2), not by an exchange inside the dive. So a bank past the plate would be a cloud that the globe never turns into a deck: try 7 showed exactly that as the white patch that stayed. The bank now stands where the globe will show the deck and nowhere else. A strip remains where the lay back fades over the plate's feather (0.38 to 0.5 of the plate's width from its centre) and the bank has already ended (field.plate): there the lay back's deck still comes onto sea, thinly. Named.
+- The angle between the camera's ray and the close camera's ray, by out/work/earth/place/tmp/far2.ts (a tool of this session, not in the tree) at 7 degrees of arc from the nadir, columns 120, 1408, 2700 of the close image: 1755: 68.0, 66.5, 66.6. 1857: 64.0, 57.6, 55.2. 1866: 55.6, 46.8, 44.6. 1874: 45.8, 35.9, 34.2. 1878: 40.2, 30.2, 29.0. 1882: 34.2, 24.6, 23.7. 1886: 27.9, 19.2, 18.5. 1890: 21.6, 14.1, 13.6. So the tint (60 to 36 degrees) is none at the hold over the whole bank (the least angle there is over 66) and is whole between 1874 and 1882 depending on the side.
+- Frames after the bank's part against the frames before the bank (draft against draft; n4 is the merge 2bc36ce6, e1 is f7ab197a), as printed:
+  - 1896 differ 22 box x 381 to 524 y 338 to 387 largest 1; over 1 level 0
+  - 1904 differ 1 box x 879 to 879 y 152 to 152 largest 1; over 1 level 0
+  - 1919 pixels that differ 0
+  - 2100 pixels that differ 0
+  - 2108 pixels that differ 0
+  - 2116 pixels that differ 0
+  - 2124 differ 20743 box x 249 to 1369 y 185 to 816 largest 4; over 1 level 24 box x 398 to 852 y 470 to 576 (455 by 107)
+  - 2126 differ 49829 box x 265 to 1381 y 147 to 797 largest 13; over 1 level 15777 box x 420 to 945 y 367 to 618 (526 by 252)
+  - 2154 differ 26337 box x 672 to 1223 y 212 to 738 largest 204; over 1 level 5698 box x 888 to 996 y 437 to 551 (109 by 115)
+  - 2156 differ 22892 box x 678 to 1223 y 237 to 734 largest 203; over 1 level 4678 box x 897 to 994 y 440 to 540 (98 by 101)
+  - 2160 differ 17494 box x 704 to 1218 y 194 to 748 largest 202; over 1 level 3188 box x 909 to 988 y 443 to 525 (80 by 83)
+  - 2165 differ 13598 box x 677 to 1205 y 241 to 748 largest 204; over 1 level 2278 box x 917 to 982 y 444 to 512 (66 by 69)
+  - 2170 differ 11387 box x 697 to 1198 y 219 to 757 largest 201; over 1 level 1791 box x 921 to 980 y 446 to 506 (60 by 61)
+  - 2174 differ 10877 box x 704 to 1232 y 235 to 745 largest 199; over 1 level 1662 box x 923 to 979 y 447 to 505 (57 by 59)
+- So draft frames repeat to the byte where nothing changed (1919, 2100, 2108, 2116), the bank is gone from 1896 on but for 22 pixels and 1 pixel of 1 level, and it comes back between 2116 and 2124. In the hold's pose (2154 to 2174) the zone of more than 1 level is 109 by 115 px at 2154 and 57 by 59 px at 2174; round it a ring of pixels that differ by 1 level (the film's bloom, see 16:04).
+- LOOKED AT, every frame, sheets sheet-d1 to d3 (1830 to 1892, cells 320 px) and enlarged strips z1 to z3 (1870 to 1887, cells 640 px): 1830 to 1869 a small white patch that grows with the globe, no step seen at this size. 1870 to 1877 a white mottled mass between Yucatan and the west of Cuba; its detail is softer than the painted puffs round it and partly streaked. 1877 to 1881 it greys and thins; grey bands lie along its lower edge (the lay back's broad colour showing through the bank's cover). 1882 to 1885 a pale wash left of the middle of the deck. 1886 on the deck alone. I can name no single frame where the mass turns into the deck; the turn runs over about 1877 to 1884 and is visible as a turn of colour, white to grey blue.
+- LOOKED AT, every frame, sheets sheet-r1 to r3 (2124 to 2174) and strips y1 to y3 (2126 to 2143): the mirror. 2126 to 2131 the deck alone. 2132 to 2135 a grey streaked wash comes out from under the lay back. 2136 to 2143 a white mottled mass that shrinks with the climb. 2144 to 2174 a small white patch to the hold's pose. Also seen and not the bank's: a straight vertical edge of tone right of the place at 2138 to 2141 (the plate's edge, item 4 of my list, which I had named for 2121 to 2136 only), and the glint streak below the bank to 2143.
+- Looks pushed 16:33:47 (dive 1876 to 1881, rise 2132 to 2137, dive 1870 to 1892).
+- 16:32:44 chain go8 started: A2 (38 frames outside 1680 to 2174, bank on), finals 1857, 2010, 2156, rate 2 pictures 1876 to 1904, then the bank switched off by from 1e-9 for run B (the same 38 frames and 1755 1857 1870 1880 1890 2134 2156) and a final 1755, then from back to 1000000.
+
+### 16:34 to 16:40 UTC, the chain: A2 done, the three finals refused for disk
+- A2 (bank on, draft, 38 frames outside 1680 to 2174) ended 16:36:05 after 201 s, exit 0. Memory line of every frame as printed: "venus 1386, earth 1398" (1605 to 1679), "earth 1398, mars 1380" (2175 to 2250), "mars 1380, neptune 1393" (5025 to 5399).
+- The three finals 1857, 2010, 2156 of the chain did not run: each log is one line, "refusing to start: 2.8 GB free, need 3". Not rendered, not measured. They are owed again after the chain.
+- Disk freed at 16:37 (own scratch only, nothing in the tree): /tmp/gl/s11/d7 (try 7), /tmp/gl/s9/b0, Td, n3h, n3-base, /tmp/gl/s8, /tmp/gl/s5, and the 57 rate 2 frames of out/work/earth/place/p5 (the rise's end on f7ab197a; its numbers stand above). df after: 3.5 G free.
+- LOOKED AT, A2 at small size (sheet-arr, sheet-out, sheet-end) and the zone at times 2 for 1665 1671 1677 1679 2175 2181 (zone-edges.png): the bank is in every frame of the arrival and of the travel out that shows the place, a small cluster of white specks between Yucatan and the west end of Cuba. The ending 5025 to 5399 shows Neptune; I see no Earth in those nine frames at this size (the count against B will say whether a pixel changes).
+- Looks pushed 16:39:15 (51567648).
+
+### 16:40 to 17:02 UTC, the measure of try 8, and a fault of my own found by the run with the bank off
+- Chain go8 ended 16:58:45. State lines as written: "a2 0 201s 16:36:05", "final-1857 2 1s", "final-2010 2 1s", "final-2156 2 2s" (refused for disk, see above), "divemid 0 973s 16:52:22", "b 0 293s 16:57:15", "b-final-1755 0 90s 16:58:45 ab7cfd53903f36457e433cdd4d37258ca4d385209b64559ee608e97404642c35". place.json after the chain: sha256 6089e2a1..., the same as before it.
+- MEASURED, rate 2 pictures of the dive's middle 1876 to 1904 with the bank (try 8), against the same run on f7ab197a without it (`/tmp/gl/s10/pics-divemid.log` against `/tmp/gl/s11/pics-divemid.log`). No pop over 1.2 in either (highest 1.09 with the bank at 1892, 1.08 before). Pattern, limit 0.45, per half frame:
+  - 1876: before 0.42 at 1080,72, bank 0.56 at 856,356
+  - 1876 + 1/2: before 0.43 at 1096,64, bank 0.60 at 848,348
+  - 1877: before 0.44 at 1104,64, bank 0.64 at 840,348
+  - 1877 + 1/2: before 0.44 at 1112,60, bank 0.67 at 836,344
+  - 1878: before 0.44 at 1124,64, bank 0.69 at 828,340
+  - 1878 + 1/2: before 0.44 at 128,308, bank 0.69 at 824,340
+  - 1879: before 0.44 at 120,312, bank 0.69 at 820,336
+  - 1879 + 1/2: before 0.45 at 116,308, bank 0.67 at 816,336
+  - 1880: before 0.45 at 112,304, bank 0.64 at 812,336
+  - 1880 + 1/2: before 0.44 at 112,292, bank 0.61 at 808,336
+  - 1881: before 0.42 at 176,232, bank 0.56 at 804,336
+  - 1881 + 1/2: before 0.46 at 176,232, bank 0.53 at 800,336
+  - 1882: before 0.51 at 180,232, bank 0.54 at 796,336
+  - 1882 + 1/2: before 0.58 at 580,244, bank 0.58 at 576,244
+  - 1883: before 0.65 at 584,244, bank 0.63 at 580,240
+  - 1883 + 1/2: before 0.71 at 588,240, bank 0.70 at 584,240
+  - 1884: before 0.77 at 584,240, bank 0.76 at 584,236
+  - 1884 + 1/2: before 0.81 at 588,236, bank 0.81 at 584,236
+  - 1885: before 0.85 at 584,236, bank 0.84 at 584,232
+  - 1885 + 1/2: before 0.86 at 588,232, bank 0.86 at 588,232
+  - 1886: before 0.87 at 588,232, bank 0.87 at 588,232
+  - 1886 + 1/2: before 0.87 at 592,232, bank 0.87 at 592,232
+  - 1887: before 0.89 at 484,124, bank 0.89 at 484,124
+  - 1887 + 1/2: before 0.92 at 492,124, bank 0.92 at 488,124
+  - 1888: before 0.95 at 484,128, bank 0.95 at 484,128
+  - 1888 + 1/2: before 0.97 at 508,124, bank 0.97 at 508,124
+  - 1889: before 1.04 at 504,128, bank 1.04 at 504,128
+  - 1889 + 1/2: before 1.09 at 768,168, bank 1.09 at 768,168
+  - 1890: before 1.12 at 772,164, bank 1.12 at 772,164
+  - 1890 + 1/2: before 1.10 at 776,160, bank 1.10 at 776,160
+  - 1891: before 1.05 at 784,156, bank 1.05 at 784,156
+  - 1891 + 1/2: before 1.00 at 792,148, bank 1.00 at 792,148
+  - 1892: before 0.79 at 796,124, bank 0.79 at 796,124
+  - 1892 + 1/2: before 0.74 at 800,128, bank 0.74 at 800,128
+  - 1893: before 0.64 at 1472,60, bank 0.64 at 1472,60
+  - 1893 + 1/2: before 0.52 at 1480,68, bank 0.52 at 1480,68
+  - 1894: before 0.46 at 804,136, bank 0.46 at 804,136
+  - 1894 + 1/2: before 0.43 at 88,316, bank 0.43 at 88,316
+  - 1895: before 0.37 at 92,312, bank 0.37 at 92,312
+  - 1895 + 1/2: before 0.29 at 96,312, bank 0.29 at 96,312
+  - 1896: before 0.26 at 100,308, bank 0.26 at 100,308
+  - 1896 + 1/2: before 0.25 at 104,308, bank 0.25 at 104,308
+- So the bank as built makes the pattern worse from 1876 to 1881 + 1/2 (0.42 to 0.46 before, 0.53 to 0.69 with it, the highest now where the bank lies, about 820,336) and changes nothing from 1882 + 1/2 to 1896 + 1/2 (the numbers agree to 0.02 or to the digit, 1.12 at 1890 at 772,164 in both). The bank does not cure the red it was built for. This is the measure of MAIL 686 item 5, and it speaks against try 8.
+- Pattern maps with the bank at 1878, 1880, 1884, 1887, 1890 (`/tmp/gl/s11/pmap-bank.jpg`, as printed: "1878.0: pattern 0.688 at [828, 340]", "1880.0: pattern 0.640 at [812, 336]", "1884.0: pattern 0.763 at [584, 236]", "1887.0: pattern 0.893 at [484, 124]", "1890.0: pattern 1.121 at [772, 164]"). LOOKED AT: at 1878 and 1880 the red is one blob in the middle of the lay back's zone, where the bank's white mass turns grey; at 1884 to 1890 it is a band along the upper left edge of the lay back's zone.
+- LOOKED AT, that band at twice the size for 1888 to 1895 (`/tmp/gl/s11/far-1890.jpg`, frames of the merge, x 540 to 960, y 60 to 270): a band of olive ground with yellow lit puffs dissolves into a smooth blue green band between 1888 and 1893. The deck below it and the sea and white cloud above it hold still.
+- READ from the geometry (bank.py's own functions, not rendered): on the close picture's centre column the plate's window is whole to 9 degrees of arc from the point under the close eye, 0.98 at 9.5, 0.72 at 10, 0.03 at 11; on column 700 it is 0.86 at 8, 0.41 at 8.5, 0.04 at 9. The horizon of the close picture stands near 14 degrees. So the lay back ends between 8 and 11 degrees of arc and the band that dissolves lies at its end. Which law dissolves it I do not know yet; a run with the lay back's detail off and one with the veil off are started (17:02) to see it.
+- MEASURED, the 38 frames outside 1680 to 2174, bank off (B) against bank on (A2), draft, as printed in `/tmp/gl/s11/cmp-b-a2.txt`: 1605 to 1635 "pixels that differ 0"; 1641 "differ 8 box x 965 to 990 y 507 to 518 largest 8; over 1 level 1"; 1647 differ 176, over 1 level 31 (9 by 7); 1653 differ 1263, over 1 level 135 (20 by 18); 1659 differ 3817, over 1 level 460 (32 by 33); 1665 differ 7989, over 1 level 1165 (45 by 48); 1671 differ 10386, over 1 level 1560 (55 by 56); 1677 differ 10993, over 1 level 1733 (55 by 59); 1679 "differ 11040 box x 631 to 1157 y 226 to 701 largest 208; over 1 level 1738 box x 874 to 930 y 446 to 504 (57 by 59)"; 2175 "differ 10711 box x 709 to 1240 y 194 to 747 largest 197; over 1 level 1635 box x 924 to 980 y 448 to 505 (57 by 58)"; 2181 differ 10241, over 1 level 1542 (55 by 57); 2187 differ 9111, over 1 level 1370 (53 by 55); 2193 to 2250 and all nine frames of the ending 5025 to 5399 "pixels that differ 0". Sampled every 6th frame, so the first and last changed frame of each run are known to 6 frames only: the arrival changes from between 1636 and 1641 to 1679, the travel out from 2175 to between 2187 and 2192.
+- MEASURED, bank off against the frames before the bank (`/tmp/gl/s11/cmp-n4-b.txt`): 1679, 1857, 1880, 1890, 2156, 2175 "pixels that differ 0"; the final 1755 with the bank off has the kept sha ab7cfd53. But 1870 "differ 123883 box x 1081 to 1919 y 469 to 1079 largest 6" and 2134 "differ 67811 box x 1352 to 1919 y 582 to 1079 largest 8". Followed up over every frame both sets hold (lower right part of the frame, x from 1300, y from 560): 0 pixels at 1829 to 1865, then 782 (1866), 40362, 85172, 107881, 121415 (1870), 129551, 128940, 101827, 70523, 41076, 18315, 4212, 19 (1878), 0 from 1879 to 2129, then 1, 1190, 12425, 36159, 67811 (2134), 105472, 145293, 180897, 210257 (2138, largest 34), 233484, 250573, 244453, 206009, 158169, 60703 (2144), 0 from 2145.
+- CAUSE, READ in the diff and it is mine: when I added the bank's uniforms to the long uniforms line of globe.ts I dropped the entry `uPlaceDay`. The shader still reads it, so the day gate of the place ran on an unset pair instead of plates.day [0.02, 0.12]. LOOKED AT (`/tmp/gl/s11/diff-lr.jpg`): a broad smooth difference of tone on the sea at the lower right, none on cloud. Every frame set of the bank so far (tries 1 to 8, A1, A2, B, the rate 2 pictures above) was rendered with this fault. It touches the frames 1866 to 1878 and 2130 to 2144 at the lower right, away from the bank; the judgments of the bank's own look stand, the frames themselves do not. Restored 17:01 (the diff of globe.ts against f7ab197a now takes away only the 6 of MAX_PATCHES); tsc clean. A run on the mended tree is started with the diagnosis (frames 1866 1870 1872 1876 2134 2138 2142) to prove the lower right is back to the byte.
+- Lesson kept: a run with the new thing switched off against the frames before it belongs before any look at the new thing, not after.
+
+### 17:02 to 17:12 UTC, the tree mended, and what dissolves the band at the lay back's far edge
+- MEASURED on the mended tree (run c9, bank on, draft) against the frames before the bank, lower right part (x from 1300, y from 560): "pixels that differ 0" at 1866, 1870, 1872, 1876, 2134, 2138, 2142, 1884, 1886, 1888, 1890, 1892. The fault of the dropped uniform is gone. What differs in those frames now is the bank's own part in the middle (`/tmp/gl/s11/cmp-n4-c9.txt`, for example 1870 "over 1 level 29760 box x 737 to 1032 y 287 to 516", 1890 "over 1 level 2021 box x 424 to 815 y 290 to 414", 1892 "over 1 level 20 box x 438 to 454 y 378 to 383").
+- Two runs for the diagnosis only, by a changed number in place.json that was put back after (sha of place.json after: 6089e2a1..., as before): t1 with low.angleDeg [0.02, 0.01] (the lay back's detail never comes), t2 with low.veil.slant.reach 0 (no veil). Frames 1884 to 1894 every second, draft.
+- LOOKED AT (`/tmp/gl/s11/diag-far.jpg`, the band x 540 to 960, y 60 to 270, three columns: as it is, detail off, veil off): with the detail off the band is green ground with white puffs and turquoise sea with puffs, and it holds still from 1886 to 1894. With the veil off and the detail on the ground and its puffs go between 1886 and 1892 as they do in the film. So the band is the plate under the lay back at the left of the frame, where the camera's ray comes to the close eye's ray last, and what dissolves it is the lay back's detail by angle (low.angleDeg), not the veil. The yellow of the puffs is the white of the plate's puffs through the last tenth of that exchange.
+- So the red of 1883 to 1893 is the exchange of two different pictures of one ground, by angle: green ground with puffs under, a grey blue deck with dark gaps on top. Try 8's bank lies in the sea at the middle only (cover about a half at 6 to 9 degrees of arc, none where the plate's window is not whole), so it is not under that band, and where it is it brings a third pattern of its own (noise from code) that the lay back's pattern then replaces. Both halves of the measure above follow from that.
