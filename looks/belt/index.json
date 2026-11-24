@@ -1,9 +1,44 @@
 {
  "folder": "belt",
- "pushed": "2026-11-24T16:10:07.947Z",
- "head": "c0a7f5ef8ffc52f7117af5080565727274309e15",
- "note": "far Sun tries at 615, n47 (uncommitted): streamer as rays closing on a tip, loop as twisted rope, veil cut beyond 1.1 R",
+ "pushed": "2026-11-24T17:07:23.493Z",
+ "head": "6f6f1229fc1360c2d88f28e420d4cce97ac226a2",
+ "note": "far Sun 6f6f1229 on main ed003c70: 615 at the final tier 4.13 (aim 4.0 not met), every zone in bound",
  "looks": [
+  {
+   "time": "2026-11-24T17:07:21.612Z",
+   "file": "20261124170721612-note-looks14-467-495-713-1027.jpg",
+   "source": "../../../../tmp/farsun/out/looks14-467-495-713-1027.jpg",
+   "kind": "note",
+   "label": "467, 495, 713, 1027 at draft, commit 6f6f1229"
+  },
+  {
+   "time": "2026-11-24T17:07:20.110Z",
+   "file": "20261124170720110-note-pair615-final-upperleft.jpg",
+   "source": "../../../../tmp/farsun/out/pair615-final-upperleft.jpg",
+   "kind": "note",
+   "label": "615 final tier, upper left of the box, approved left"
+  },
+  {
+   "time": "2026-11-24T17:07:18.470Z",
+   "file": "20261124170718470-note-pair615-final-limb.jpg",
+   "source": "../../../../tmp/farsun/out/pair615-final-limb.jpg",
+   "kind": "note",
+   "label": "615 final tier, limb at the left, approved left"
+  },
+  {
+   "time": "2026-11-24T17:07:16.756Z",
+   "file": "20261124170716756-note-pair615-final-loop.jpg",
+   "source": "../../../../tmp/farsun/out/pair615-final-loop.jpg",
+   "kind": "note",
+   "label": "615 final tier, loop and plume, approved left"
+  },
+  {
+   "time": "2026-11-24T17:07:15.030Z",
+   "file": "20261124170715030-note-pair615-final-box.jpg",
+   "source": "../../../../tmp/farsun/out/pair615-final-box.jpg",
+   "kind": "note",
+   "label": "615 final tier, approved left, far Sun right, the box (blur 4.13)"
+  },
   {
    "time": "2026-11-24T16:10:06.291Z",
    "file": "20261124161006291-note-v_tuft_n47.jpg",
@@ -24,41 +59,6 @@
    "source": "../../../../tmp/farsun/v_tuft_n33.jpg",
    "kind": "note",
    "label": "far Sun 615 lower limb 3x with position angles, approved left, try n33 right"
-  },
-  {
-   "time": "2026-11-24T15:33:03.939Z",
-   "file": "20261124153303939-note-v_box_n33.jpg",
-   "source": "../../../../tmp/farsun/v_box_n33.jpg",
-   "kind": "note",
-   "label": "far Sun 615 draft try n33, approved left, mine right, blurred mean 4.58, not named: leaning streamer at the lower limb, rope loop, crisper limb"
-  },
-  {
-   "time": "2026-11-24T15:21:13.617Z",
-   "file": "20261124152113617-note-v_loop_n24.jpg",
-   "source": "../../../../tmp/farsun/v_loop_n24.jpg",
-   "kind": "note",
-   "label": "far Sun 615 loop region 2x, approved left, try n24 right; the orange dot is in Mercury's sky card, not the far Sun"
-  },
-  {
-   "time": "2026-11-24T15:21:12.667Z",
-   "file": "20261124152112667-note-v_box_n24.jpg",
-   "source": "../../../../tmp/farsun/v_box_n24.jpg",
-   "kind": "note",
-   "label": "far Sun 615 draft try n24, approved left, mine right, blurred mean 4.34, not named: limb crisper, loop as a twisted rope in gold"
-  },
-  {
-   "time": "2026-11-24T15:07:01.071Z",
-   "file": "20261124150701071-note-v_loop_n19.jpg",
-   "source": "../../../../tmp/farsun/v_loop_n19.jpg",
-   "kind": "note",
-   "label": "far Sun 615 loop region 2x, approved left, try n19 right"
-  },
-  {
-   "time": "2026-11-24T15:06:59.364Z",
-   "file": "20261124150659364-note-v_box_n19.jpg",
-   "source": "../../../../tmp/farsun/v_box_n19.jpg",
-   "kind": "note",
-   "label": "far Sun 615 draft try n19, approved left, mine right, blurred mean 4.41, not named"
   }
  ]
 }
