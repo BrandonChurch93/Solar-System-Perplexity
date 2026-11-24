@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T03:45:22.836Z",
- "head": "7825f775911cce29f41c787e753ed76dc3f9d4c8",
- "note": "merged main 6884e80; found why 3720 loses fine detail (shutter blur across the ringlets) and what the pop at 3815 is; parity term of the near look in work",
+ "pushed": "2026-11-24T04:07:52.889Z",
+ "head": "ceafef8c126f15d1d702ba443c9491075303bb95",
+ "note": "head 9467fee: parity green by the tool, G5 pass, G17 3720 red 0.685; now the four corners of my own pace against the renewed path judge",
  "looks": [
+  {
+   "time": "2026-11-24T04:07:51.238Z",
+   "file": "20261124040751238-note-rim_pair_3895.jpg",
+   "source": "../../../../tmp/v/r29/rim_pair_3895.png",
+   "kind": "note",
+   "label": "3895 and 3896 at the final tier, the rim at the lower right, four times: stars through the soft outer edge"
+  },
+  {
+   "time": "2026-11-24T04:07:50.066Z",
+   "file": "20261124040750066-note-parity_official_9467fee.jpg",
+   "source": "../../../../tmp/v/r29/parity_official_9467fee.png",
+   "kind": "note",
+   "label": "parity of 9467fee by the tool: seven frames, 16 by 9 against uhd, green"
+  },
   {
    "time": "2026-11-24T03:45:22.212Z",
    "file": "20261124034522212-note-pop3815_crops.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/v/r29/g17_tiles_3720_small.png",
    "kind": "note",
    "label": "G17 at 3720 by tiles, film against approved"
-  },
-  {
-   "time": "2026-11-24T03:45:18.203Z",
-   "file": "20261124034518203-note-seam_crops.jpg",
-   "source": "../../../../tmp/v/r29/seam_crops.png",
-   "kind": "note",
-   "label": "dashed line outside the rim at 3563 and 3465, before and after the cure"
-  },
-  {
-   "time": "2026-11-24T03:11:51.657Z",
-   "file": "20261124031151657-note-par_q_3800_sheet.jpg",
-   "source": "../../../../tmp/v/r29/par_q_3800_sheet.png",
-   "kind": "note",
-   "label": "3800 parity with every grain a square: master, uhd scaled down, difference times 8"
   }
  ]
 }
