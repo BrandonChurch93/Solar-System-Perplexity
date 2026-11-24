@@ -6,8 +6,13 @@
 #   Sun, Mercury side by Mercury's size in the frame). sun.far is filled in every travel and at every stop after the Sun.
 # sky.ts: uSunFar takes the far Sun's share out of the sky's own disc term; the body is drawn at the end of
 #   the sky pass with the sky's camera, at the true centre in the Sun's frame, else at sun.dir by angular radius.
+# types.ts: FarSunState.dir is the direction the body is drawn at when it is not sun.dir.
+# film.ts: in dive and rise the body rides the stars (mercury_builder's formula): dir and body are turned by
+#   skyTurn times the inverse of the orbit turn of this stop (dive) or of the next stop (rise), and the
+#   share takes one minus shot.skyShare. sunBurn's Sun side is one minus wearShare, one law with the wear.
+# sky.ts: the far draw stands at far.dir when it is given.
 diff --git a/src/core/types.ts b/src/core/types.ts
-index b743c8d0..3537da26 100644
+index c0c09b24..0917c426 100644
 --- a/src/core/types.ts
 +++ b/src/core/types.ts
 @@ -18,7 +18,9 @@ export interface PostParams {
@@ -15,21 +20,21 @@ index b743c8d0..3537da26 100644
  }
  
 -export interface SunState { dir: THREE.Vector3; color: THREE.Color; intensity: number; angularRadius: number; glare: number }
-+export interface FarSunState { centre?: THREE.Vector3; share: number; body: THREE.Quaternion; spin: number; holdTime: number; time: number; exposure: number; vfov: number; burn: number }
++export interface FarSunState { centre?: THREE.Vector3; dir?: THREE.Vector3; share: number; body: THREE.Quaternion; spin: number; holdTime: number; time: number; exposure: number; vfov: number; burn: number }
 +
 +export interface SunState { dir: THREE.Vector3; color: THREE.Color; intensity: number; angularRadius: number; glare: number; far?: FarSunState }
  
  export type ViewKind = 'orbit' | 'terrain'
  
 diff --git a/src/director/film.ts b/src/director/film.ts
-index 9cfa31ca..39f09dbd 100644
+index 345ce0d4..06d97a73 100644
 --- a/src/director/film.ts
 +++ b/src/director/film.ts
 @@ -14,6 +14,9 @@ import world from './world.json'
  import { aimAt, type SkyAims } from '../space/aim'
  import { TravelShape, inFrame } from '../space/travel/path'
  import { discShare, openSky } from '../space/travel/open'
-+import { globeShare } from '../space/farsun/share'
++import { globeShare, wearShare } from '../space/farsun/share'
 +import farLook from '../space/farsun/look.json'
 +import sunFit from '../stops/sun/fit.json'
  
@@ -52,7 +57,7 @@ index 9cfa31ca..39f09dbd 100644
 +
 +  private sunBurn(u: number, position: THREE.Vector3): number {
 +    const split = farLook.burn.split
-+    if (u < SUN_LEAVE) return split * smooth(ramp(Math.log(farLook.handover[0]!), -Math.log(Math.sin(this.sunFor(1).radius)), Math.log(position.distanceTo(this.frames[0]!.origin))))
++    if (u < SUN_LEAVE) return split * (1 - wearShare(position.distanceTo(this.frames[0]!.origin)))
 +    if (!this.burnSpan) {
 +      const seg = this.plans[0]!.seg.travel!
 +      const at = (x: number): number => 1 / this.travelCamera(0, seg.start + (seg.end - seg.start) * x).position.distanceTo(this.frames[1]!.origin)
@@ -86,17 +91,26 @@ index 9cfa31ca..39f09dbd 100644
        if (index === 0) sunWeight = smooth(ramp(SUN_GLOW_FROM, this.sunSwapSpan[1], u))
        const arriving = state(index + 1, 'orbit')
        if (index > 0 && this.shapes[index]!.look.pin[1] > 0) farLight = Math.pow(smooth(ramp(this.lit[index]!, this.lit[index]! + FAR_LIGHT.frames / ((segment.end - segment.start) * config.fps), u)), FAR_LIGHT.power)
-@@ -866,6 +883,8 @@ export class FilmDirector implements Director {
+@@ -869,6 +886,17 @@ export class FilmDirector implements Director {
      post.exposure = light.exposure
      post.flare = flare
      const sun: SunState = { dir: this.sunWorld.clone(), color: SUN_COLOR, intensity: 3, angularRadius: light.radius, glare: light.glare * sunWeight }
 +    const first = this.plans[0]!
 +    if (index > 0 || segment.kind === 'travel') sun.far = { centre: index === 0 && u < SUN_LEAVE ? this.frames[0]!.origin.clone().sub(pose.position) : undefined, share: index === 0 ? (u < SUN_LEAVE ? 1 - globeShare(pose.position.distanceTo(this.frames[0]!.origin)) : 1) : sunWeight, body: this.frames[0]!.rotation.clone().multiply(SUN_BODY), spin: first.spin(time), holdTime: time - first.holdMid, time, exposure: light.exposure, vfov: pose.vfov, burn: index === 0 ? this.sunBurn(u, pose.position) : 1 }
++    if (sun.far && (segment.kind === 'dive' || segment.kind === 'rise')) {
++      const held = this.sky.orbits[segment.kind === 'rise' && index > 0 ? this.plans[index + 1]?.id ?? config.endingId : this.plans[index]!.id]
++      if (held) {
++        const ride = skyTurn.clone().multiply(held.clone().invert())
++        sun.far.dir = sun.dir.clone().applyQuaternion(ride)
++        sun.far.body = ride.multiply(sun.far.body)
++      }
++      sun.far.share *= 1 - (skyShare ?? 0)
++    }
      const out: Shot = { frame, time, segment, u, camera: pose, skyQuaternion: skyCarry ? skyCarry.multiply(pose.quaternion) : pose.quaternion.clone(), skyExposure: light.sky, skyGlow, skyTurn, skyStars, skyPatch, skyLook, near, far, sun, sets, post, cover, dust, farLight }
      if (skyShare !== undefined) out.skyShare = skyShare
      if (skyShareHigh !== undefined) out.skyShareHigh = skyShareHigh
 diff --git a/src/space/sky.ts b/src/space/sky.ts
-index 20c0d76c..063c023b 100644
+index 20c0d76c..03ed8cf5 100644
 --- a/src/space/sky.ts
 +++ b/src/space/sky.ts
 @@ -7,6 +7,7 @@ import { FLIGHT_SIZE, SIZE, bandField, flightField, type FlightDef, type FlightF
@@ -157,7 +171,7 @@ index 20c0d76c..063c023b 100644
      if (some) renderer.render(this.starScene, camera)
 +    const fs = sun.far
 +    if (fs && farShare > 0 && (!fs.centre || fs.share >= 1)) {
-+      const centre = fs.centre ?? this.farCentre.copy(sun.dir).multiplyScalar(1 / Math.sin(Math.min(Math.max(sun.angularRadius, 1e-5), 1.5)))
++      const centre = fs.centre ?? this.farCentre.copy(fs.dir ?? sun.dir).multiplyScalar(1 / Math.sin(Math.min(Math.max(sun.angularRadius, 1e-5), 1.5)))
 +      farSun.set({ camera, centre, body: fs.body, spin: fs.spin, time: fs.time, holdTime: fs.holdTime, exposure: fs.exposure, burn: fs.burn, vignette, aspect, height }, farShare, 0)
 +      farSun.render(renderer, target)
 +    }
