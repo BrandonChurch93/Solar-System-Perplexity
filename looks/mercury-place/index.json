@@ -1,9 +1,33 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T21:59:51.514Z",
+ "pushed": "2026-11-24T22:23:25.063Z",
  "head": "15d489e9e70ff9fb2c598d02ba7fb0288f6d799e",
- "note": "rise handover sheets with the true far Sun on the merged build; leave line green on the path (0.077, pull back 0.55 / 0.35 / 0.8); the rise's end renders now",
+ "note": "dive against the build b0b87889: pairs 710 to 732, the place at 717 differs",
  "looks": [
+  {
+   "time": "2026-11-24T22:23:24.449Z",
+   "file": "20261124222324449-note-b0-pair-e.jpg",
+   "source": "out/work/mercury/place/sheets/b0-pair-e.jpg",
+   "kind": "note",
+   "label": "dive 722 to 732 every second frame: b0b87889 on top, this tree below",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T22:23:23.854Z",
+   "file": "20261124222323854-note-b0-pair-d.jpg",
+   "source": "out/work/mercury/place/sheets/b0-pair-d.jpg",
+   "kind": "note",
+   "label": "dive 710 to 720 every second frame: b0b87889 on top, this tree below",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T22:23:23.048Z",
+   "file": "20261124222323048-note-b0-pair-717.jpg",
+   "source": "out/work/mercury/place/sheets/b0-pair-717.jpg",
+   "kind": "note",
+   "label": "dive 717, crop: build b0b87889 on top, this tree below (scratch, far Sun off)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T21:59:50.127Z",
    "file": "20261124215950127-note-t2-b.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/m/d19-crop.jpg",
    "kind": "note",
    "label": "dive 719 to 731, all levels, the same crop",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T21:06:18.534Z",
-   "file": "20261124210618534-note-x3-crop.jpg",
-   "source": "../../../../tmp/m/x3-crop.jpg",
-   "kind": "note",
-   "label": "dive 719 to 731, the map alone, crop at the worst pixel: the same craters growing",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T21:06:17.869Z",
-   "file": "20261124210617869-note-chg-x3.jpg",
-   "source": "../../../../tmp/m/chg-x3.jpg",
-   "kind": "note",
-   "label": "dive 722 against 730, the map alone (no levels): the red sits at the limb in the corner of the judged region",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T20:50:28.058Z",
-   "file": "20261124205028058-note-d722-crop.jpg",
-   "source": "../../../../tmp/m/d722-crop.jpg",
-   "kind": "note",
-   "label": "dive 719 to 731 at (1120..1620, 640..1080), far Sun off: own list red 719 + 1/2 to 723 (0.60)",
    "stop": "mercury"
   }
  ]
