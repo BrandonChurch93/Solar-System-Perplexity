@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T05:19:02.109Z",
- "head": "79cac426b6601d34e33d91d1fefdd26269c566ea",
- "note": "505 first pass, frame 60 at the review tier: share by band 0.163 0.217 0.162 0.123 0.109 0.075 0.047 0.032 0.017; dark 0.214 body 0.611 pale 0.079 white 0.021; half width 5.2 px; distance 0.043; G17 median 1.851 lower quarter 1.427; blur 40 px ground 0.0454 whole 0.0343. Still wrong: cells larger and more matte than the approved, white share 0.021 against 0.010, at the draft tier thin threads stipple (not at review)",
+ "pushed": "2026-11-24T05:54:42.422Z",
+ "head": "d0ee5fc2566b7fdd0234c879a8e6ef52c769bedc",
+ "note": "05:55 head d0ee5fc2 (505 first pass, bend): parity RED 13.091 at 225 (limit 12), cause the far ring of 2 to 8 px cells, in work; frame 60 review tier: share by band 0.163 0.217 0.162 0.123 0.109 0.075 0.047 0.032 0.017 | dark 0.214 body 0.611 pale 0.079 white 0.021 | half width 5.2 px, 2880 shapes; distance 0.043; G17 median 1.851; blur 40 px ground 0.0454 whole 0.0343; seam eye 0.994 at 180 + 1/2",
  "looks": [
+  {
+   "time": "2026-11-24T05:54:35.949Z",
+   "file": "20261124055435949-note-par225.jpg",
+   "source": "../../../../tmp/par225.jpg",
+   "kind": "note",
+   "label": "parity red at 225: film, uhd scaled down, difference times 4 (mean 13.09, limit 12; the ring where a cell is 2 to 8 px)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T05:54:34.609Z",
+   "file": "20261124055434609-note-b1-sheet.jpg",
+   "source": "../../../../tmp/b1-sheet.jpg",
+   "kind": "note",
+   "label": "rise with the bend, draft, frames 120 to 247 (head d0ee5fc2)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T05:19:01.535Z",
    "file": "20261124051901535-note-r23-near11.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/par-225-far.jpg",
    "kind": "note",
    "label": "frame 225 far ground at two to one: 16 by 9 draft, uhd, uhd scaled down. The 16 by 9 draft has one sample grain in cells of 3 to 5 px",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T03:53:29.457Z",
-   "file": "20261124035329457-note-sun-parity-501.jpg",
-   "source": "../../../../tmp/sun-parity-501.jpg",
-   "kind": "note",
-   "label": "NOTE 501 parity panel with the factor in, uncommitted: red only by the mean at 225 (12.81, limit 12), coarse 1.59, block 1.9, level 0.68",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T03:22:41.681Z",
-   "file": "20261124032241681-note-c76-222.jpg",
-   "source": "../../../../tmp/c76-222.jpg",
-   "kind": "note",
-   "label": "c76 frame 222 at one to one: granules from above, no net",
    "stop": "sun"
   }
  ]
