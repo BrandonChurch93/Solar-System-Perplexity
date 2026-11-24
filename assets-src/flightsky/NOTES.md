@@ -280,3 +280,23 @@ Round 34 build: main 89ced51b, engine 096721f26986d35a. Round 35 takes only take
 - Nothing new is offered: no take out and no plan number of mine cures a word, and the two tried (Uranus `skyLiftFrom`, `clouds.mottle`) do not. READY names the notebook commit only; every judged frame keeps its bytes against main.
 - Numbers that would slow the band's entry are not mine: the travel camera turn of venus.travel and saturn.travel and `LOOKBACK.glide` in `src/director/film.ts`, the Uranus `rise` numbers in `src/stops/uranus/plan.ts`.
 - CUT35 sent at 18:04 UTC: READY 49028c56de6410a5ef1b0b1f5e699af50a6eb14d (notebook only), four pictures (`scratch/r7/seq-venus-r34.jpg`, `seq-ending-r34.jpg`, `ur-pair-cut35.jpg`, `2212-m0-x5.jpg`). Working tree clean, no trial left in `src` or `config`.
+
+### Trace of MAIL 426 and ruling of MAIL 448 (Nov 24, 00:51 to 01:45 UTC): post grain baked into sky patches
+- Asked: at 60 frames a second the frame to frame change dips for two steps at the judged hold frame of Mercury, Mars, Saturn, Neptune, all of it in the dark sky.
+- Cause: a sky patch built as approved image minus a film render carries the negative of that render's post grain. The grain is a hash of pixel and frame number only (`src/post/chain.ts` lines 126 to 131, `uFrame = frame % 4096`), so at the judged frame the live grain half cancels against the patch, and the pattern stands fixed in the sky through hold and dive. Not the camera, not dust, not the flight sky, not a `holdMid` term. Nothing of section B is involved.
+- Proof numbers, Mars hold, draft, capture rate 2: grain against the scene without grain (`--diag nograin`) in the dark sky -0.228 at k4650, +0.010, -0.069, +0.007, +0.006 at k4648, k4649, k4651, k4652; fine noise (5 px high pass) 2.119, 1.991, 1.729, 1.950, 1.984, 2.126; dark sky step change 1.660, 1.523, 1.434, 1.630, 1.658 against 0.940, 0.912, 0.908, 0.910, 0.941 without grain. At the film rate the two steps that touch 2325 change 9 percent less (1.717, 1.689 against 1.860, 1.886).
+- The dip in the change measure needs a sky that moves per capture step; Earth's sky hardly moves, so its change stays flat though its judged frame is 9 percent quieter.
+- Tool: `assets-src/flightsky/graincorr.py FRAME NOGRAIN.png [FRAME NOGRAIN.png ...]` emulates the post grain in float32 and prints its correlation with the fine pattern of a nograin still (dark sky, whole frame, 48 blocks). A clean patch gives 0.00 with every block within 0.02. My first Neptune number was wrong (0.000) because the emulation lacked `% 4096`.
+- Table of the eighteen patches, judged frame then half a frame beside it (main 7152f39, holds of Mercury, Mars, Neptune and the judged Venus, Earth, Saturn, Uranus frames rendered at 6dcd2c62, no patch file differs between the two):
+  - sun hold 360: -0.001, +0.001 clean. sun terrain 90: 0.000, -0.002 clean.
+  - mercury hold 615: -0.124, +0.002 HAS IT. mercury terrain 870: -0.001, +0.002 clean.
+  - venus hold 1185: -0.002, -0.001 clean. venus terrain 1440: +0.001, 0.000 clean.
+  - earth hold 1755: -0.253, 0.000 HAS IT. earth terrain 2010: -0.633 (block -0.545), -0.004 HAS IT.
+  - mars hold 2325: -0.206, 0.000 HAS IT. mars terrain 2580: -0.048 (block -0.218), +0.004 HAS IT.
+  - jupiter hold 2895: -0.267, 0.000 HAS IT. jupiter terrain 3150: -0.001, 0.000 clean.
+  - saturn hold 3465: -0.111, 0.000 HAS IT. saturn terrain 3720: +0.002, -0.002 clean.
+  - uranus hold 4035: +0.008, 0.000 clean. uranus terrain 4290: -0.152 (block -0.100), -0.001 HAS IT.
+  - neptune hold 4605: -0.096 (-0.125 with the applied grain), -0.001 HAS IT. neptune terrain 4860: 0.000, 0.000 clean.
+- Ruling of MAIL 448: cured at the cause by each owner (glow input rendered with `--diag nograin`, recipe says so), in the owner's next commit that changes its hold, dive or terrain bytes anyway. Relayed with the tool to mercury_builder, earth_builder, mars_place_builder, jupiter_coder, saturn_coder, uranus_builder, neptune_builder; sun_builder and venus_builder told they are clean.
+- Helpers, untracked: `out/work/cap.ts` (one capture session, `--list k,k --diag nograin --rate 2`, writes `/tmp/cap/k<5 digits>-<diag>.png`).
+- Repo trap: `git fetch --depth 1 origin main` makes the clone shallow again and the merge then refuses ("unrelated histories"); `git fetch --unshallow origin main agent/flightsky` cures it.
