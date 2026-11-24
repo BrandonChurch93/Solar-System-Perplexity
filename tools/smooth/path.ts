@@ -439,6 +439,12 @@ export function parityFrames(segments: { id: string; stop: string; kind: string;
 
 export interface LeaveResult { rate: number; k0: number; speed: (number | null)[]; lowest: { value: number; k: number } | null; first: { value: number; k: number } | null; last: { value: number; k: number } | null; over: number | null; fault: Fault | null }
 
+export function minLeaveOf(path: { minLeave?: unknown }): number {
+  const v = path.minLeave
+  if (typeof v !== 'number' || !(v > 0 && v < 1)) throw new Error('smooth.path.minLeave in config/showcase.json needs a number over 0 and under 1, it is ' + JSON.stringify(v) + ': the lowest speed of the picture through the seam from a rise into its travel, over the slower end of the window')
+  return v
+}
+
 // The picture round the seam from a rise into its travel: the lowest speed, the speeds at the two ends of the window, and the lowest over the
 // smaller of those two. A rise and its travel are one flight: the speed falls once and rises once and does not come to rest. Judged: the
 // lowest over the slower end against min.

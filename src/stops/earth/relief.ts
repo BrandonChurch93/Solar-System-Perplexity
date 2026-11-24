@@ -1,8 +1,10 @@
 import * as THREE from 'three'
+import { frameUniform } from '../../core/frame'
 import type { RenderView, SetContext } from '../../core/types'
 import { DIAG_GLSL, biasUniform, diagUniform, fineUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { NOISE_GLSL } from '../../terrain/relief'
+import { VEIL_GLSL } from './globe'
 
 type Box = [number, number, number, number]
 
@@ -12,7 +14,7 @@ export interface GroundDef {
   nadir: [number, number, number]
   radius: number
   ground: { file: string; box: Box; top: number; fade: number; under?: number; skip?: number; horizon: number[]; horizonSpan: [number, number] }
-  towers?: { file: string; dist: string; box: Box; distSize: [number, number] }
+  towers?: { file: string; dist: string; body?: string; edge?: number[]; cut?: number; range?: number; stretch?: number; lit?: number[]; face?: number[]; thin?: number; box: Box; distSize: [number, number] }
   masks?: { file: string; box: Box }
   low?: { file: string }
 }
@@ -28,16 +30,39 @@ export interface GroundLook {
   plain: [number, number]
 }
 
+export interface GroundOnGlobe { angleDeg: number[]; farDeg: number[]; rim: number[]; veil: { map: THREE.Texture; slant: { power: number; reach: number; least: number }; plane: THREE.Matrix3; fromDeg: number[] } }
+
+function unpack(buffer: ArrayBuffer, size: number, file: string): Float32Array {
+  const count = new Uint32Array(buffer, 0, 1)[0]!
+  const runs = new Uint32Array(buffer, 4, 2 * count)
+  const values = new Float32Array(buffer, 4 + 8 * count)
+  const out = new Float32Array(size)
+  let at = 0
+  for (let i = 0; i < count; i++) {
+    const start = runs[2 * i]!
+    const length = runs[2 * i + 1]!
+    if (start + length > size || at + length > values.length) throw new Error('relief field size mismatch: ' + file)
+    out.set(values.subarray(at, at + length), start)
+    at += length
+  }
+  if (at !== values.length) throw new Error('relief field size mismatch: ' + file)
+  return out
+}
+
 const VERT = /* glsl */ `
 uniform vec3 uEye;
 uniform vec4 uSea;
 uniform vec2 uLock;
+uniform vec4 uShow;
 in vec2 aImage;
 out vec2 vImage;
 out vec2 vUv;
 out vec3 vView;
 out vec3 vClip;
 out vec3 vLocal;
+out vec3 vNormal;
+in float aHalf;
+out float vHalf;
 vec3 place(vec3 p) {
   float reach = length(p);
   vec3 d = p / reach;
@@ -55,7 +80,7 @@ vec3 place(vec3 p) {
   float turn = asin(min(uSea.w / c1, 1.0)) - asin(uSea.w / c0) + up0 - acos(along);
   vec3 side = normalize(w * along - n1);
   vec3 q = uEye + (cos(turn) * w + sin(turn) * side) * far;
-  return mix(p, q, smoothstep(uLock.x, uLock.y, lift));
+  return mix(p, q, uShow.x > 0.0 ? 0.0 : smoothstep(uLock.x, uLock.y, lift));
 }
 void main() {
   vImage = aImage;
@@ -63,6 +88,8 @@ void main() {
   vec4 mv = modelViewMatrix * vec4(place(position), 1.0);
   vView = mv.xyz;
   vLocal = position;
+  vNormal = normal;
+  vHalf = aHalf;
   gl_Position = projectionMatrix * mv;
   vClip = gl_Position.xyw;
 }`
@@ -87,16 +114,52 @@ uniform vec4 uFrame;
 uniform vec3 uLayer;
 uniform float uGrad;
 uniform float uFine;
+uniform float uPerLine;
 uniform float uBias;
+uniform vec3 uEye;
+uniform vec4 uSea;
+uniform vec4 uShow;
+uniform vec4 uReach;
+uniform vec4 uCanvas;
+uniform sampler2D uVeil;
+uniform vec3 uVeilSlant;
+uniform mat3 uVeilPlane;
+uniform vec2 uVeilFrom;
 in vec2 vImage;
 in vec2 vUv;
 in vec3 vView;
 in vec3 vClip;
 in vec3 vLocal;
+in vec3 vNormal;
+in float vHalf;
 out vec4 outColor;
 ${INVERSE_FILMIC_GLSL}
 ${DIAG_GLSL}
 ${NOISE_GLSL}
+${VEIL_GLSL}
+vec4 thin(vec4 c) {
+  if (uShow.x <= 0.0 || c.a <= 0.0) return c;
+  vec3 ray = normalize(vLocal);
+  float along = dot(ray, uSea.xyz);
+  float reach = dot(uSea.xyz, uSea.xyz) - uSea.w * uSea.w;
+  float under = along * along - reach;
+  vec3 at = ray * (under > 0.0 ? along - sqrt(under) : sqrt(reach));
+  vec3 up = normalize(at - uSea.xyz);
+  vec3 q = uVeilPlane * up;
+  vec3 haze = textureLod(uVeil, q.xy / max(q.z, 0.05) + 0.5, 0.0).rgb;
+  float less = (1.0 - slantSeen(uVeilSlant, dot(normalize(-at), up), dot(normalize(uEye - at), up))) * (1.0 - smoothstep(uVeilFrom.x, uVeilFrom.y, dot(up, normalize(-uSea.xyz))));
+  return vec4(fromCode(clamp(toCode(c.rgb / c.a) - less * haze, 0.0, 1.0)) * c.a, c.a);
+}
+float shown() {
+  if (uShow.x <= 0.0) return 1.0;
+  vec3 up = vLocal - uSea.xyz;
+  if (dot(up, uEye - vLocal) <= 0.0) return 0.0;
+  float arc = dot(normalize(up), normalize(-uSea.xyz));
+  float off = dot(normalize(uEye - vLocal), normalize(-vLocal));
+  vec2 q = (vImage - uCanvas.xy) / uCanvas.zw;
+  float rim = smoothstep(0.0, uReach.z, min(q.x, 1.0 - q.x)) * smoothstep(0.0, uReach.w, 1.0 - q.y);
+  return uShow.y * smoothstep(uShow.z, uShow.w, off) * smoothstep(uReach.x, uReach.y, arc) * rim;
+}
 vec3 masks() {
   vec2 mq = (vImage - uMaskBox.xy) / uMaskBox.zw;
   return texture(uMasks, vec2(mq.x, 1.0 - mq.y), uBias).rgb;
@@ -123,6 +186,7 @@ uniform vec2 uTop;
 uniform float uFold;
 uniform float uUnder;
 uniform vec4 uShimmer;
+uniform float uDim;
 void main() {
   float hx = (vImage.x - uHorizonSpan.x) / uHorizonSpan.y;
   float hy = uHorizon[8];
@@ -136,35 +200,73 @@ void main() {
   float fold = uFold * (1.0 - exp(-over / uFold));
   vec2 at = uv - vec2(0.0, (over + fold) / uBox.w);
   vec2 run = vec2(min(0.3 * over, 40.0) / uBox.z, 0.0);
-  vec3 texel = textureGrad(uColor, at, dFdx(vUv) * uGrad + run, dFdy(vUv) * uGrad).rgb;
-  vec3 wide = textureGrad(uColor, at, dFdx(vUv) * (uPlain.y * uFine) + run, dFdy(vUv) * (uPlain.y * uFine)).rgb;
+  vec3 texel = thin(vec4(textureGrad(uColor, at, dFdx(vUv) * uGrad + run, dFdy(vUv) * uGrad).rgb, 1.0)).rgb;
+  vec3 wide = thin(vec4(textureGrad(uColor, at, dFdx(vUv) * (uPlain.y * uFine) + run, dFdy(vUv) * (uPlain.y * uFine)).rgb, 1.0)).rgb;
   float fall = exp(min(vImage.y - uTop.x, 0.0) / uTop.y);
   vec3 col = inverseFilmic(texel) * fall;
   vec3 soft = inverseFilmic(wide) * fall;
   vec2 g = vLocal.xz * uShimmer.y;
-  float fine = 1.0 - smoothstep(0.35, 1.0, max(fwidth(g.x), fwidth(g.y)) * uFine);
+  float fine = 1.0 - smoothstep(0.35, 1.0, max(fwidth(g.x), fwidth(g.y)) * uFine * uPerLine);
   float sparkle = 0.6 * (vnoise(vec3(g, uShimmer.z + 7.3)) - vnoise(vec3(g, 7.3))) + 0.4 * (vnoise(vec3(g * 2.3 + 4.1, uShimmer.z * 1.7 + 3.1)) - vnoise(vec3(g * 2.3 + 4.1, 3.1)));
   float glint = 1.0 + uShimmer.x * m.r * fine * sparkle * 2.0;
   col = clear(col * glint * uGain * lens(), soft * glint * uGain * lens(), 1.0);
-  outColor = diagOut(vec4(col, ground), diagTexels(uv * uSize), step(0.5, ground), uLayer, shift / uImage * 60.0, length(vView));
-  if (uDiag >= 2 && ground < 0.5) discard;
+  float on = shown();
+  outColor = diagOut(vec4(col * on, ground), diagTexels(uv * uSize), step(0.5, ground * on), uLayer, shift / uImage * 60.0, length(vView));
+  if (uDim > 0.5) outColor = vec4(0.0, 0.0, 0.0, ground * on);
+  if (on <= 0.0 || (uDiag >= 2 && ground * on < 0.5)) discard;
 }`
 
 const TOWER_FRAG = /* glsl */ `
 ${HEAD}
+uniform vec2 uEdge;
+uniform vec3 uBody;
+uniform vec3 uSun;
+uniform vec4 uLit;
+uniform vec2 uFace;
+uniform float uThin;
 void main() {
   vec3 m = masks();
   vec2 shift = uDrift * m.g;
   vec2 uv = vUv - vec2(shift.x, -shift.y) / uBox.zw;
-  vec4 texel = textureGrad(uColor, uv, dFdx(vUv) * uGrad, dFdy(vUv) * uGrad);
-  vec4 wide = textureGrad(uColor, uv, dFdx(vUv) * (uPlain.y * uFine), dFdy(vUv) * (uPlain.y * uFine));
+  vec2 gx = dFdx(vUv) * uGrad;
+  vec2 gy = dFdy(vUv) * uGrad;
+  if (uBody.z > 0.0) {
+    vec2 u = gx * uSize;
+    vec2 v = gy * uSize;
+    float a = u.x * u.x + v.x * v.x;
+    float b = u.x * u.y + v.x * v.y;
+    float c = u.y * u.y + v.y * v.y;
+    float mid = 0.5 * (a + c);
+    float off = sqrt(0.25 * (a - c) * (a - c) + b * b);
+    float major = sqrt(mid + off);
+    float minor = sqrt(max(mid - off, 0.0));
+    if (major > uBody.z * minor) {
+      vec2 e = normalize(a >= c ? vec2(mid + off - c, b) : vec2(b, mid + off - a));
+      gx = e * (uBody.z * minor) / uSize;
+      gy = vec2(-e.y, e.x) * minor / uSize;
+    }
+  }
+  vec4 texel = thin(textureGrad(uColor, uv, gx, gy));
+  vec4 wide = thin(textureGrad(uColor, uv, dFdx(vUv) * (uPlain.y * uFine), dFdy(vUv) * (uPlain.y * uFine)));
+  if (uEdge.y > uEdge.x) texel *= smoothstep(uEdge.x, uEdge.y, texel.a) / max(texel.a, 1e-4) * (uThin > 0.0 ? 1.0 - exp(-vHalf / uThin) : 1.0);
+  float sun = 0.0;
+  if (uLit.a > 0.0) {
+    float len = length(vNormal);
+    float facing = len > 0.0 ? dot(vNormal, uSun) / len * (dot(vNormal, vLocal) < 0.0 ? -1.0 : 1.0) : 0.0;
+    sun = uLit.a * smoothstep(uFace.x, uFace.y, facing);
+    texel.rgb = mix(texel.rgb, uLit.rgb * texel.a, sun);
+  }
   vec3 lit = inverseFilmic(texel.rgb) * uGain * lens();
-  vec3 col = clear(lit, mix(lit, inverseFilmic(wide.rgb) * uGain * lens(), smoothstep(0.8, 1.0, wide.a)), texel.a);
-  outColor = diagOut(vec4(col, texel.a), diagTexels(uv * uSize), 1.0, uLayer, shift / uImage * 60.0, length(vView));
-  if (texel.a < 0.004 || (uDiag >= 2 && texel.a < 0.5)) discard;
+  vec3 col = clear(lit, mix(lit, inverseFilmic(wide.rgb) * uGain * lens(), smoothstep(0.8, 1.0, wide.a) * (1.0 - sun)), texel.a);
+  float on = shown();
+  outColor = diagOut(vec4(col * on, texel.a), diagTexels(uv * uSize), 1.0, uLayer, shift / uImage * 60.0, length(vView));
+  gl_FragDepth = gl_FragCoord.z * uBody.y;
+  if (texel.a * on < 0.004 || texel.a < uBody.x || (uDiag >= 2 && texel.a * on < 0.5)) discard;
 }`
 
-interface Layer { mesh: THREE.Mesh; material: THREE.ShaderMaterial }
+type Kind = 'sea' | 'dim' | 'body' | 'depth'
+interface Pass { kind: Kind; order: [number, number]; test: boolean; func: THREE.DepthModes; write: boolean }
+interface Layer { mesh: THREE.Mesh; material: THREE.ShaderMaterial; kind: Kind; order: [number, number] }
 
 export class Ground {
   readonly group = new THREE.Group()
@@ -179,10 +281,11 @@ export class Ground {
     this.blank.needsUpdate = true
   }
 
-  static async load(ctx: SetContext, base: string, def: GroundDef, look: GroundLook): Promise<Ground> {
+  static async load(ctx: SetContext, base: string, def: GroundDef, look: GroundLook, globe: GroundOnGlobe): Promise<Ground> {
     const r = new Ground(look)
     const [W, H] = def.imageSize
     const th = Math.tan(THREE.MathUtils.degToRad(def.vfovDeg) / 2)
+    const cos = (deg: number): number => Math.cos(THREE.MathUtils.degToRad(deg))
     const aspect = W / H
     const centre = new THREE.Vector3().fromArray(def.nadir).normalize().multiplyScalar(def.radius + 1)
     const tangent = Math.sqrt(centre.lengthSq() - def.radius * def.radius)
@@ -240,10 +343,11 @@ export class Ground {
       geo.setAttribute('uv', new THREE.BufferAttribute(uv, 2))
       geo.setAttribute('aImage', new THREE.BufferAttribute(image, 2))
       geo.setIndex(new THREE.BufferAttribute(index, 1))
+      geo.computeVertexNormals()
       return geo
     }
 
-    const add = (geo: THREE.BufferGeometry, color: THREE.Texture, box: Box, fragment: string, tint: [number, number, number], order: number, depth: boolean, extra: Record<string, THREE.IUniform>): void => {
+    const add = (geo: THREE.BufferGeometry, color: THREE.Texture, box: Box, fragment: string, tint: [number, number, number], pass: Pass, extra: Record<string, THREE.IUniform>): void => {
       const size = color.image as unknown as { width: number; height: number }
       const material = new THREE.ShaderMaterial({
         glslVersion: THREE.GLSL3,
@@ -253,65 +357,129 @@ export class Ground {
           uColor: { value: color }, uMasks: { value: masks }, uLow: { value: low }, uBloom: { value: 0 }, uPlain: { value: new THREE.Vector2(look.plain[0], look.plain[1]) }, uSize: { value: new THREE.Vector2(size.width, size.height) },
           uBox: { value: new THREE.Vector4().fromArray(box) }, uMaskBox: { value: new THREE.Vector4().fromArray(maskBox) }, uImage: { value: new THREE.Vector2(W, H) },
           uDrift: { value: new THREE.Vector2() }, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uOwnLens: { value: 0 }, uFrame: { value: new THREE.Vector4(1, 1, 0, 0) },
-          uLayer: { value: new THREE.Vector3().fromArray(tint) }, uDiag: diagUniform, uGrad: gradUniform, uFine: fineUniform, uBias: biasUniform,
-          uEye: { value: new THREE.Vector3() }, uSea: { value: new THREE.Vector4(centre.x, centre.y, centre.z, def.radius) }, uLock: { value: new THREE.Vector2().fromArray(look.lock) }, ...extra,
+          uLayer: { value: new THREE.Vector3().fromArray(tint) }, uDiag: diagUniform, uGrad: gradUniform, uFine: fineUniform, uPerLine: frameUniform, uBias: biasUniform,
+          uEye: { value: new THREE.Vector3() }, uSea: { value: new THREE.Vector4(centre.x, centre.y, centre.z, def.radius) }, uLock: { value: new THREE.Vector2().fromArray(look.lock) },
+          uShow: { value: new THREE.Vector4(0, 0, cos(globe.angleDeg[0]!), cos(globe.angleDeg[1]!)) }, uReach: { value: new THREE.Vector4(cos(globe.farDeg[1]!), cos(globe.farDeg[0]!), globe.rim[0]!, globe.rim[1]!) }, uCanvas: { value: new THREE.Vector4().fromArray(def.ground.box) },
+          uVeil: { value: globe.veil.map }, uVeilSlant: { value: new THREE.Vector3(globe.veil.slant.power, globe.veil.slant.reach, globe.veil.slant.least) }, uVeilPlane: { value: globe.veil.plane }, uVeilFrom: { value: new THREE.Vector2(cos(globe.veil.fromDeg[1]!), cos(globe.veil.fromDeg[0]!)) }, ...extra,
         },
         transparent: true,
         blending: THREE.CustomBlending,
-        blendSrc: THREE.OneFactor,
+        blendSrc: pass.kind === 'dim' ? THREE.ZeroFactor : THREE.OneFactor,
         blendDst: THREE.OneMinusSrcAlphaFactor,
-        blendSrcAlpha: THREE.OneFactor,
-        blendDstAlpha: THREE.OneMinusSrcAlphaFactor,
+        blendSrcAlpha: pass.kind === 'dim' ? THREE.ZeroFactor : THREE.OneFactor,
+        blendDstAlpha: pass.kind === 'dim' ? THREE.ZeroFactor : THREE.OneMinusSrcAlphaFactor,
         side: THREE.DoubleSide,
-        depthTest: depth,
-        depthWrite: depth,
+        depthTest: pass.test,
+        depthFunc: pass.func,
+        depthWrite: pass.write,
+        colorWrite: pass.kind !== 'depth',
       })
       const mesh = new THREE.Mesh(geo, material)
       mesh.frustumCulled = false
-      mesh.renderOrder = order
+      mesh.renderOrder = pass.order[0]
       r.group.add(mesh)
-      r.layers.push({ mesh, material })
+      r.layers.push({ mesh, material, kind: pass.kind, order: pass.order })
     }
 
     const g = def.ground
     const groundMap = await ctx.texture(base + g.file, { srgb: true, anisotropy: 8 })
-    add(build(g.box, g.top, g.under ?? 0, look.mesh, (_x, _y, d) => sea(d)), groundMap, g.box, GROUND_FRAG, [0.25, 0.45, 0.85], 0, true, {
-      uHorizon: { value: g.horizon.slice(0, 9) }, uHorizonSpan: { value: new THREE.Vector2().fromArray(g.horizonSpan) },
-      uTop: { value: new THREE.Vector2(g.box[1], g.fade) }, uFold: { value: look.fold }, uUnder: { value: g.box[1] + g.box[3] - (g.skip ?? 0) }, uShimmer: { value: new THREE.Vector4(look.shimmer[0], look.shimmer[1], 0, 0) },
-    })
+    const seaSheet = build(g.box, g.top, g.under ?? 0, look.mesh, (_x, _y, d) => sea(d))
+    for (const kind of ['dim', 'sea'] as const) {
+      add(seaSheet, groundMap, g.box, GROUND_FRAG, [0.25, 0.45, 0.85], { kind, order: kind === 'dim' ? [2, 2] : [2, 4.5], test: kind === 'sea', func: THREE.LessEqualDepth, write: kind === 'sea' }, {
+        uHorizon: { value: g.horizon.slice(0, 9) }, uHorizonSpan: { value: new THREE.Vector2().fromArray(g.horizonSpan) },
+        uTop: { value: new THREE.Vector2(g.box[1], g.fade) }, uFold: { value: look.fold }, uUnder: { value: g.box[1] + g.box[3] - (g.skip ?? 0) }, uShimmer: { value: new THREE.Vector4(look.shimmer[0], look.shimmer[1], 0, 0) },
+        uDim: { value: kind === 'dim' ? 1 : 0 },
+      })
+    }
 
     const t = def.towers
     if (t) {
       const map = await ctx.texture(base + t.file, { srgb: true, anisotropy: 8 })
-      const lift = new Float32Array(await ctx.buffer(base + t.dist))
       const [dw, dh] = t.distSize
-      if (lift.length !== dw * dh) throw new Error('relief distance size mismatch: ' + t.dist)
       const [x0, y0, bw, bh] = t.box
-      const sample = (x: number, y: number): number => {
+      const grid = async (file: string): Promise<Float32Array> => unpack(await ctx.buffer(base + file), dw * dh, file)
+      const least = (data: Float32Array, rx: number, ry: number) => (x: number, y: number): number => {
+        const i0 = Math.max(Math.floor(((x - rx - x0) / bw) * dw - 0.5), 0)
+        const i1 = Math.min(Math.ceil(((x + rx - x0) / bw) * dw - 0.5), dw - 1)
+        const j0 = Math.max(Math.floor(((y - ry - y0) / bh) * dh - 0.5), 0)
+        const j1 = Math.min(Math.ceil(((y + ry - y0) / bh) * dh - 0.5), dh - 1)
+        let v = Infinity
+        for (let j = j0; j <= j1; j++) for (let i = i0; i <= i1; i++) v = Math.min(v, data[j * dw + i]!)
+        return v === Infinity ? 0 : v
+      }
+      const field = (data: Float32Array) => (x: number, y: number): number => {
         const px = Math.min(Math.max(((x - x0) / bw) * dw - 0.5, 0), dw - 1)
         const py = Math.min(Math.max(((y - y0) / bh) * dh - 0.5, 0), dh - 1)
         const ix = Math.min(Math.floor(px), dw - 2)
         const iy = Math.min(Math.floor(py), dh - 2)
         const tx = px - ix
         const ty = py - iy
-        const a = lift[iy * dw + ix]!
-        const b = lift[iy * dw + ix + 1]!
-        const c = lift[(iy + 1) * dw + ix]!
-        const e = lift[(iy + 1) * dw + ix + 1]!
+        const a = data[iy * dw + ix]!
+        const b = data[iy * dw + ix + 1]!
+        const c = data[(iy + 1) * dw + ix]!
+        const e = data[(iy + 1) * dw + ix + 1]!
         return (a * (1 - tx) + b * tx) * (1 - ty) + (c * (1 - tx) + e * tx) * ty
       }
-      add(build(t.box, 0, 0, look.towerMesh, (x, y, d) => sea(d) * (1 - sample(x, y))), map, t.box, TOWER_FRAG, [0.95, 0.9, 0.8], 1, false, {})
+      const lift = field(await grid(t.dist))
+      const cells = Math.max(2, Math.round(look.towerMesh))
+      const half = t.body ? least(await grid(t.body), bw / cells, bh / Math.max(2, Math.round((cells * bh) / bw))) : (): number => 0
+      const sheet = (side: number): THREE.BufferGeometry => {
+        const deep: number[] = []
+        const geo = build(t.box, 0, 0, look.towerMesh, (x, y, d) => {
+          const h = half(x, y)
+          deep.push(h)
+          return sea(d) * Math.min((1 - lift(x, y)) * (1 + side * h), 1)
+        })
+        geo.setAttribute('aHalf', new THREE.BufferAttribute(new Float32Array(deep), 1))
+        return geo
+      }
+      const tint: [number, number, number] = [0.95, 0.9, 0.8]
+      const tone = new THREE.Color().setRGB(t.lit?.[0] ?? 0, t.lit?.[1] ?? 0, t.lit?.[2] ?? 0, THREE.SRGBColorSpace)
+      const body = (cut: number, edge: number[], far = false): Record<string, THREE.IUniform> => ({
+        uEdge: { value: new THREE.Vector2().fromArray(edge) },
+        uBody: { value: t.body ? new THREE.Vector3(cut, t.range ?? 0.5, t.stretch ?? 8) : new THREE.Vector3(0, 1, 0) },
+        uSun: { value: new THREE.Vector3(0, 1, 0) },
+        uLit: { value: new THREE.Vector4(tone.r, tone.g, tone.b, far && t.lit ? 1 : 0) },
+        uFace: { value: new THREE.Vector2().fromArray(t.face ?? [0, 1]) },
+        uThin: { value: t.thin ?? 0 },
+      })
+      const solid = t.body !== undefined
+      const front = sheet(solid ? -1 : 0)
+      if (solid) {
+        const back = sheet(1)
+        const narrow = t.edge ?? [0, 1]
+        add(front, map, t.box, TOWER_FRAG, tint, { kind: 'depth', order: [3, 3], test: true, func: THREE.LessEqualDepth, write: true }, body(t.cut ?? 0.5, [0, 0]))
+        add(back, map, t.box, TOWER_FRAG, tint, { kind: 'depth', order: [3.2, 3.2], test: true, func: THREE.LessEqualDepth, write: true }, body(t.cut ?? 0.5, narrow))
+        add(back, map, t.box, TOWER_FRAG, tint, { kind: 'body', order: [3.5, 4], test: true, func: THREE.LessEqualDepth, write: false }, body(0, narrow, true))
+      }
+      add(front, map, t.box, TOWER_FRAG, tint, { kind: 'body', order: [4, 3.5], test: solid, func: THREE.LessEqualDepth, write: false }, body(0, [0, 0]))
     }
     return r
   }
 
-  update(dt: number, gain: number, vignette: number, bloom: number, view: RenderView, eye: THREE.Vector3, under: number): void {
+  update(dt: number, gain: number, vignette: number, bloom: number, view: RenderView, eye: THREE.Vector3, sun: THREE.Vector3, under: number, onGlobe: number | null): void {
     const k = this.look
     const part = view.camera.view
     const cut = under > 0 && part !== null && part.enabled
     for (const l of this.layers) {
       const u = l.material.uniforms
+      const show = u.uShow!.value as THREE.Vector4
+      show.x = onGlobe === null ? 0 : 1
+      show.y = onGlobe ?? 0
+      const globe = onGlobe !== null
+      const m = l.material
+      l.mesh.renderOrder = l.order[globe ? 1 : 0]
+      if (l.kind === 'dim') l.mesh.visible = globe
+      if (l.kind === 'sea') {
+        m.depthTest = !globe
+        m.depthWrite = !globe
+      }
+      if (l.kind === 'sea' || l.kind === 'body') {
+        m.blendSrc = m.blendSrcAlpha = globe ? THREE.OneMinusDstAlphaFactor : THREE.OneFactor
+        m.blendDst = m.blendDstAlpha = globe ? THREE.OneFactor : THREE.OneMinusSrcAlphaFactor
+      }
       ;(u.uEye!.value as THREE.Vector3).copy(eye)
+      if (u.uSun) (u.uSun.value as THREE.Vector3).copy(sun)
       ;(u.uDrift!.value as THREE.Vector2).set(k.drift[0] * dt, k.drift[1] * dt)
       if (u.uShimmer) (u.uShimmer.value as THREE.Vector4).z = k.shimmer[2] * dt
       u.uGain!.value = gain
