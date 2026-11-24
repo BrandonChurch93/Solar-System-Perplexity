@@ -1,9 +1,41 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T02:12:37.344Z",
+ "pushed": "2026-11-24T02:30:43.169Z",
  "head": "85312d1ba89d4fbb4811dc70dc8f5b02871b7c43",
- "note": "4860 after mail 457 (draft N5, not committed) beside the approved image; the rise on 85312d1b, first sixteen frames",
+ "note": "the rise on 85312d1b, every frame 4950 to 5024 in five sheets: the layout holds; 4978 to 4990 the scene's thin streamers stand over the map's broad streaks (two forms at once, what point 1 of mail 453 cures)",
  "looks": [
+  {
+   "time": "2026-11-24T02:24:34.112Z",
+   "file": "20261124022434112-note-s-r2-5014.jpg",
+   "source": "../../../../tmp/s-r2-5014.jpg",
+   "kind": "note",
+   "label": "the rise on 85312d1b, every frame 5014 to 5024: the globe alone, the pose of the travel",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T02:24:33.544Z",
+   "file": "20261124022433544-note-s-r2-4998.jpg",
+   "source": "../../../../tmp/s-r2-4998.jpg",
+   "kind": "note",
+   "label": "the rise on 85312d1b, every frame 4998 to 5013: the globe alone",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T02:24:32.979Z",
+   "file": "20261124022432979-note-s-r2-4982.jpg",
+   "source": "../../../../tmp/s-r2-4982.jpg",
+   "kind": "note",
+   "label": "the rise on 85312d1b, every frame 4982 to 4997: 4978 to 4990 two forms at once (the scene's thin streamers over the map's broad streaks), the fault that point 1 of mail 453 cures; from 4991 the globe alone",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T02:24:32.375Z",
+   "file": "20261124022432375-note-s-r2-4966.jpg",
+   "source": "../../../../tmp/s-r2-4966.jpg",
+   "kind": "note",
+   "label": "the rise on 85312d1b, every frame 4966 to 4981: the scene holds its layout; from 4978 the globe's own map comes in under it by height",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T02:12:36.190Z",
    "file": "20261124021236190-note-s-r2-4950.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/d-L4.jpg",
    "kind": "note",
    "label": "4860 preview draft beside the approved image, commit 85312d1b: far field is now the dark oval up to its pale rim with the band of cirrus at the horizon; the bow comes in at the upper left; near and middle field as before",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T01:41:32.866Z",
-   "file": "20261124014132866-note-s-l4-4755.jpg",
-   "source": "../../../../tmp/s-l4-4755.jpg",
-   "kind": "note",
-   "label": "Dive, every frame from 4755 (sheet of 16), preview draft, commit 85312d1b: the scene's layout fitted to the map from above. One dark oval, far rim band and bow from the hold's planet down to the surface view",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T01:41:32.324Z",
-   "file": "20261124014132324-note-s-l4-4739.jpg",
-   "source": "../../../../tmp/s-l4-4739.jpg",
-   "kind": "note",
-   "label": "Dive, every frame from 4739 (sheet of 16), preview draft, commit 85312d1b: the scene's layout fitted to the map from above. One dark oval, far rim band and bow from the hold's planet down to the surface view",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T01:41:31.767Z",
-   "file": "20261124014131767-note-s-l4-4723.jpg",
-   "source": "../../../../tmp/s-l4-4723.jpg",
-   "kind": "note",
-   "label": "Dive, every frame from 4723 (sheet of 16), preview draft, commit 85312d1b: the scene's layout fitted to the map from above. One dark oval, far rim band and bow from the hold's planet down to the surface view",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T01:41:31.202Z",
-   "file": "20261124014131202-note-s-l4-4707.jpg",
-   "source": "../../../../tmp/s-l4-4707.jpg",
-   "kind": "note",
-   "label": "Dive, every frame from 4707 (sheet of 16), preview draft, commit 85312d1b: the scene's layout fitted to the map from above. One dark oval, far rim band and bow from the hold's planet down to the surface view",
    "stop": "neptune"
   }
  ]
