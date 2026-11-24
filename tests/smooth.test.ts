@@ -1,3 +1,5 @@
+import { execFileSync } from 'node:child_process'
+import { fileURLToPath } from 'node:url'
 import * as THREE from 'three'
 import { describe, expect, it } from 'vitest'
 import { config } from '../src/config'
@@ -396,6 +398,69 @@ describe('the longest run of rows without a value', () => {
   it('is the first of the longest runs', () => {
     expect(longestGap([true, false, true, false, false, true, false, false])).toEqual({ first: 3, last: 4 })
     expect(longestGap([false, false, false])).toEqual({ first: 0, last: 2 })
+  })
+})
+
+interface MadePair { contrast: number; now: number; before: number }
+interface Made {
+  patterns: { judged: number; far: number; same: MadePair[]; unrelated: MadePair[]; dissolve: MadePair[]; moved: number; slope: { now: number; before: number }; slopeUnrelated: { now: number; before: number }; veil: { now: number; before: number } }
+  bodies: { sphere: [number, number]; roundDiffers: number; flat: [number, number]; turned: [number, number]; outside: number; sky: number }
+}
+let madeReply: Made | null = null
+const made = (): Made => (madeReply ??= JSON.parse(execFileSync('python3', [fileURLToPath(new URL('../tools/smooth/made.py', import.meta.url))], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 1 << 24 })) as Made)
+
+describe('the pattern measure on made pictures, a judged area with a limb, a frame edge and a hole', () => {
+  it('reads the same pattern at contrast 2, 3, 5 and 10 under 0.01', () => {
+    const p = made().patterns
+    expect(p.judged).toBeGreaterThan(0.4)
+    expect(p.same.map((x) => x.contrast)).toEqual([2, 3, 5, 10])
+    for (const x of p.same) expect(x.now).toBeLessThan(0.01)
+  })
+
+  it('reads an unrelated pattern no lower than before the slope was taken out', () => {
+    for (const x of made().patterns.unrelated) {
+      expect(x.before).toBeGreaterThan(1.2)
+      expect(x.now).toBeGreaterThanOrEqual(x.before)
+    }
+  })
+
+  it('reads a dissolve half way no lower than before, less 0.01', () => {
+    for (const x of made().patterns.dissolve) {
+      expect(x.before).toBeGreaterThan(0.4)
+      expect(x.now).toBeGreaterThanOrEqual(x.before - 0.01)
+    }
+  })
+
+  it('moves no pixel of the map by more than 0.01 further than 160 px from every border', () => {
+    const p = made().patterns
+    expect(p.far).toBeGreaterThan(20000)
+    expect(p.moved).toBeLessThanOrEqual(0.01)
+  })
+
+  it('does not read a level that slopes in the later frame as a change of the pattern at a border', () => {
+    const p = made().patterns
+    expect(p.slope.before).toBeGreaterThan(0.45)
+    expect(p.slope.now).toBeLessThan(0.01)
+    expect(p.slopeUnrelated.now).toBeGreaterThan(1.2)
+    expect(p.veil.now).toBeLessThan(0.02)
+    expect(p.veil.now).toBeLessThanOrEqual(p.veil.before)
+  })
+})
+
+describe('the body of a globe that the stop draws flattened', () => {
+  it('is the unit sphere where the globe has the scale 1, however it is turned', () => {
+    const b = made().bodies
+    expect(b.sphere[0]).toBe(b.sphere[1])
+    expect(b.roundDiffers).toBe(0)
+  })
+
+  it('is lower by the polar scale along the axis of the globe, and no sky inside the unit sphere is the body', () => {
+    const b = made().bodies
+    expect(b.flat[0]).toBe(b.sphere[0])
+    expect(Math.abs(b.flat[1] - 0.9 * b.sphere[1])).toBeLessThanOrEqual(1)
+    expect(b.turned).toEqual([b.flat[1], b.flat[0]])
+    expect(b.outside).toBe(0)
+    expect(b.sky).toBeGreaterThan(0.08 * (Math.PI / 4) * b.sphere[0] * b.sphere[1])
   })
 })
 

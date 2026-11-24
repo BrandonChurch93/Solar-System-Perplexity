@@ -300,10 +300,12 @@ let slice: SliceInfo | null = null
 const CHANGE = { frames: (S.pictures as { changeFrames?: number }).changeFrames ?? 8, blurPx: (S.pictures as { changeBlurPx?: number }).changeBlurPx ?? 20, max: (S.pictures as { maxChange?: number | null }).maxChange ?? null, rings: (S.pictures as { ringBodies?: string[] }).ringBodies ?? [] }
 const PATTERN = { px: (S.pictures as { patternPx?: number }).patternPx ?? 40, floor: (S.pictures as { patternFloor?: number }).patternFloor ?? 1, max: (S.pictures as { maxPattern?: number | null }).maxPattern ?? null }
 
-function poseOf(k: number, r: number): { p: number[]; q: number[]; vfov: number; rings?: { normal: number[]; inner: number; outer: number } } {
+function poseOf(k: number, r: number): { p: number[]; q: number[]; vfov: number; rings?: { normal: number[]; inner: number; outer: number }; globe?: { quaternion: number[]; scale: number[] } } {
   const pose = carriedCamera(film, plan, stop!, k / r, (k / r + spanMid()) / cfg.fps).pose
   const rings = CHANGE.rings.includes(stop!) ? plan.fit.rings : null
-  return { p: pose.position.toArray(), q: pose.quaternion.toArray(), vfov: pose.vfov, ...(rings && rings.outer > rings.inner ? { rings } : {}) }
+  // a globe that the stop draws flattened (fit.globe.scale) is the body as it is drawn, not the unit sphere round it
+  const globe = plan.fit.globe?.scale?.some((s) => s !== 1) ? { quaternion: plan.fit.globe.quaternion, scale: plan.fit.globe.scale } : null
+  return { p: pose.position.toArray(), q: pose.quaternion.toArray(), vfov: pose.vfov, ...(rings && rings.outer > rings.inner ? { rings } : {}), ...(globe ? { globe } : {}) }
 }
 
 interface Sums { levelStep: Most | null; pop: Most | null; block: Most | null; change: Most | null; pattern: Most | null; why: string[]; top: PictureRow[]; peaks: PictureRow[]; silent: PictureKind['silent']; ground: PictureKind['ground'] }
