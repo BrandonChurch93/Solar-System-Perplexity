@@ -1,9 +1,25 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T21:13:16.706Z",
- "head": "99dc436282d24e5827819aa7b72ccb5a1f4b19e1",
- "note": "bad: a cloud cut on a straight line 2128 to 2138, cause the near sea zone's east edge (mine, in all named commits); zone-look.jpg of 20:57 has the outline in the wrong place, zone-look2 is right; T committed 99dc4362, all checks green",
+ "pushed": "2026-11-24T21:27:04.755Z",
+ "head": "867215d0918c11d1eb56183c056552bcb0c1b870",
+ "note": "bad: the calm zone's rim is a straight line 10 degrees long that cuts clouds, relief and shadows; cure tried in Python reads as cloud (proto-a), not built yet",
  "looks": [
+  {
+   "time": "2026-11-24T21:27:04.200Z",
+   "file": "20261124212704200-note-rim-east.jpg",
+   "source": "../../../../tmp/gl/s16/rim-east.jpg",
+   "kind": "note",
+   "label": "bad, as built now: the plate along the whole east rim at native size (three pieces, north to south): clouds, sea relief and shadows cut on one straight line",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T21:27:03.511Z",
+   "file": "20261124212703511-note-proto-a.jpg",
+   "source": "../../../../tmp/gl/s16/proto-a.jpg",
+   "kind": "note",
+   "label": "trial in Python, not built: the east rim of the calm zone at native size, before, after, weight; the cloud ends on its own lumps, no straight line",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T21:13:15.944Z",
    "file": "20261124211315944-note-t1-cut-follow.jpg",
@@ -82,22 +98,6 @@
    "source": "../../../../tmp/gl/s15/t1-rise-centre.jpg",
    "kind": "note",
    "label": "trial T (haze on a share of its own by height), draft, not committed: t1-rise-centre",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T19:46:37.425Z",
-   "file": "20261124194637425-note-t1-dive-b.jpg",
-   "source": "../../../../tmp/gl/s15/t1-dive-b.jpg",
-   "kind": "note",
-   "label": "trial T (haze on a share of its own by height), draft, not committed: t1-dive-b",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T19:46:36.800Z",
-   "file": "20261124194636800-note-t1-dive-a.jpg",
-   "source": "../../../../tmp/gl/s15/t1-dive-a.jpg",
-   "kind": "note",
-   "label": "trial T (haze on a share of its own by height), draft, not committed: t1-dive-a",
    "stop": "earth"
   }
  ]
