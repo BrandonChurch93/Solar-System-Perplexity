@@ -6,6 +6,7 @@ import { decodePng, openSource } from './lib/frames'
 import { detailFrames } from './lib/render'
 import { CARRIED, carried } from './measure/carried'
 import { countTexels } from './measure/texels'
+import { freshPage } from './measure/pages'
 import { judgedFrames, stopSegments } from '../src/director/timeline'
 import '../src/director/plans' // each plan sets its stop's cover window or its handover
 
@@ -31,7 +32,7 @@ const segs = stopSegments(stop).filter((s) => kinds.includes(s.kind))
 const dir = join(WORK, 'measure')
 const frameDir = join(dir, stop)
 mkdirSync(frameDir, { recursive: true })
-const src = await openSource({ format: master, assets })
+let src = await openSource({ format: master, assets })
 const info = await src.session.page.evaluate(() => (window as unknown as { showcase: { info(): Record<string, unknown> } }).showcase.info())
 const reportedNoCover = Array.isArray(info.noCover) ? (info.noCover as string[]) : []
 const noCover = noCoverArg.includes(stop) || reportedNoCover.includes(stop)
@@ -40,6 +41,7 @@ const out: Record<string, unknown> = {
   stop, engineHash: hashes.engine, stopHashes: hashes.stops, stopHash: hashes.stops[stop], format: master, assets, browser: src.session.browserVersion, machine: machineId(), every, noCover,
 }
 const lines: string[] = []
+let drawn = 0
 
 if (a.carried) {
   const frames = [...new Set(a.carried.split(',').flatMap((x) => {
@@ -82,6 +84,7 @@ if (only.includes('G13')) {
   let n = 0
   for (const f of picked) {
     const g = await src.render(f, g13Tier, 'png', false)
+    drawn++
     const c = countTexels(decodePng(g.data!), d.minTexelsPerPixel)
     const seg = segs.find((s) => f >= s.firstFrame && f < s.endFrame)!.id
     results.push({ frame: f, segment: seg, counted: c.counted, soft: c.soft, fraction: Number(c.fraction.toFixed(5)), meanTexels: Number(c.meanTexels.toFixed(3)), pass: c.fraction <= d.maxSoftPixelFraction })
@@ -97,6 +100,8 @@ if (only.includes('G13')) {
 
 if (only.includes('G5') || only.includes('G17')) {
   const judged = judgedFrames().filter((j) => segs.some((s) => s.id === j.segment))
+  src = await freshPage(src, drawn, () => openSource({ format: master, assets }))
+  out.finalsPage = drawn > 0 ? 'fresh, after ' + drawn + ' frames on the first' : 'first'
   await src.setDiagnostic('nograin')
   const g5: { frame: number; segment: string; kind: string; invalid: number; coverage: number; pass: boolean }[] = []
   const g17: Record<string, unknown>[] = []
