@@ -270,7 +270,7 @@ export const createSet: SetFactory = async (ctx) => {
       const aspect = view.format.width / view.format.height
       toCamera.copy(view.camera.quaternion).invert()
       if (!inOrbit) {
-        glare.update(on ? glow(state.time, first ? 0 : 1) : 0, lowSunAt(state.time, state.rotation), view.camera, gain, aspect, state.time, mine && kind === 'rise' ? 1 : 0)
+        glare.update(on ? glow(state.time, first ? 0 : 1) : 0, lowSunAt(state.time, state.rotation), view.camera, gain, aspect, state.time)
         ground.update(state.time - terrainMid, gain, shot.post.vignette, view)
         under.update(state.time - terrainMid, gain, shot.post.vignette, view)
         const halo = !mine || (kind !== 'dive' && kind !== 'rise') ? 1 : smoother(ramp(haloEnds[kind][0]!, haloEnds[kind][1]!, lifted(state.time)))
@@ -316,7 +316,7 @@ export const createSet: SetFactory = async (ctx) => {
       } else if (leaving) {
         ghosts = look.flare.after
       }
-      glare.update(diving ? glow(state.time, 0) : rising ? glow(state.time, 1) : 0, glareSun, view.camera, gain, aspect, state.time, rising ? 1 : 0)
+      glare.update(diving ? glow(state.time, 0) : rising ? glow(state.time, 1) : 0, glareSun, view.camera, gain, aspect, state.time)
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
       const lit = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0
       light.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()

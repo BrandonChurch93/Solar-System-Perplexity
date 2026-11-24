@@ -54,7 +54,6 @@ export const glare: GlareLook = {
   peak: 1, fade: { dive: [2.15, 85], rise: [2.19, 155] }, height: 1.5, top: [0.26258095108704677, 0.2649431874412129], keep: [0.165, 0.22], color: [1, 0.84, 0.6],
   halo: [0.45, 0.25], core: [0.2, 8], rays: [0.5, 0.5], bar: [0.7, 0.014, 0.3], turn: 0.9,
   terrainSun: [745 / 2816, -40 / 1584],
-  leave: { radius: 0.9, gain: 0.7, from: [0.16, 0.45] },
 }
 export const carry = { gain: 1, lift: 1.12, knee: 2.9, grey: 0.85, tint: [1.102, 0.983, 0.871] as [number, number, number], dive: [11.7, 3.03] as [number, number], rise: [2.68, 26] as [number, number] }
 
