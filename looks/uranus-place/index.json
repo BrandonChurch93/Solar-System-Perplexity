@@ -1,9 +1,75 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-24T15:24:38.179Z",
+ "pushed": "2026-11-24T15:37:14.099Z",
  "head": "c4d2507f91714cbdcb28b1c0757d64912f52b4ef",
- "note": "tops form F on main 2bc36ce6 uncommitted: surface flight keeps third NAMED bytes at 4365, 1 px by 1 level at 4350; form E dropped (whitened 4350)",
+ "note": "tops form F on main 2bc36ce6 uncommitted: final 4290 has the third NAMED bytes 2adad6e9; pattern rows render now",
  "looks": [
+  {
+   "time": "2026-11-24T15:37:13.167Z",
+   "file": "20261124153713167-note-k3b-4176.jpg",
+   "source": "../../../../tmp/k3b-4176.png",
+   "kind": "note",
+   "label": "4176 draft, third NAMED code over form F, main 2bc36ce6, uncommitted",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T15:37:12.203Z",
+   "file": "20261124153712203-note-k3b-4408.jpg",
+   "source": "../../../../tmp/k3b-4408.png",
+   "kind": "note",
+   "label": "4408 draft, third NAMED code over form F, main 2bc36ce6, uncommitted",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T15:37:10.865Z",
+   "file": "20261124153710865-note-k3b-4160.jpg",
+   "source": "../../../../tmp/k3b-4160.png",
+   "kind": "note",
+   "label": "4160 draft, third NAMED code over form F (tops white only by the view angle, none added by height), main 2bc36ce6, uncommitted",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T15:31:29.835Z",
+   "file": "20261124153129835-frame-f4290.jpg",
+   "source": "out/work/u/k3/f4290.png",
+   "kind": "frame",
+   "label": "uranus.terrain frame 4290, final tier",
+   "stop": "uranus",
+   "segment": "uranus.terrain",
+   "frame": 4290,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "bfe554c9c4ef0dd5"
+  },
+  {
+   "time": "2026-11-24T15:28:57.164Z",
+   "file": "20261124152857164-frame-d4408.jpg",
+   "source": "out/work/u/k3/d4408.png",
+   "kind": "frame",
+   "label": "uranus.rise frame 4408, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4408,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "bfe554c9c4ef0dd5"
+  },
+  {
+   "time": "2026-11-24T15:27:02.144Z",
+   "file": "20261124152702144-frame-d4199.jpg",
+   "source": "out/work/u/k3/d4199.png",
+   "kind": "frame",
+   "label": "uranus.dive frame 4199, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4199,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "bfe554c9c4ef0dd5"
+  },
   {
    "time": "2026-11-24T15:24:20.502Z",
    "file": "20261124152420502-note-k3-4168-duo.jpg",
@@ -27,48 +93,6 @@
    "kind": "note",
    "label": "4350 draft, third NAMED code against form E on main 2bc36ce6: form E whitens the surface view, dropped",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T15:24:16.667Z",
-   "file": "20261124152416667-frame-d4412.jpg",
-   "source": "out/work/u/k3/d4412.png",
-   "kind": "frame",
-   "label": "uranus.rise frame 4412, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4412,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "bfe554c9c4ef0dd5"
-  },
-  {
-   "time": "2026-11-24T15:22:32.433Z",
-   "file": "20261124152232433-frame-d4137.jpg",
-   "source": "out/work/u/k3/d4137.png",
-   "kind": "frame",
-   "label": "uranus.dive frame 4137, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4137,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "bfe554c9c4ef0dd5"
-  },
-  {
-   "time": "2026-11-24T15:19:53.329Z",
-   "file": "20261124151953329-frame-d4365.jpg",
-   "source": "out/work/u/k3/d4365.png",
-   "kind": "frame",
-   "label": "uranus.terrain frame 4365, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.terrain",
-   "frame": 4365,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "bfe554c9c4ef0dd5"
   },
   {
    "time": "2026-11-24T14:57:39.474Z",
@@ -258,42 +282,6 @@
    "segment": "uranus.rise",
    "first": 4391,
    "last": 4454,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T11:32:14.405Z",
-   "file": "20261124113214405-sheet-uranus-rise-draft-after.jpg",
-   "source": "out/work/handover/uranus-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "uranus rise, every frame 4392 to 4403 (after T, frame 4391), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "first": 4392,
-   "last": 4403,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T11:32:12.662Z",
-   "file": "20261124113212662-sheet-uranus-rise-draft-before.jpg",
-   "source": "out/work/handover/uranus-rise-draft-before.png",
-   "kind": "sheet",
-   "label": "uranus rise, every frame 4380 to 4390 (before T, frame 4391), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "first": 4380,
-   "last": 4390,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T11:32:10.958Z",
-   "file": "20261124113210958-sheet-uranus-rise-draft-across.jpg",
-   "source": "out/work/handover/uranus-rise-draft-across.png",
-   "kind": "sheet",
-   "label": "uranus rise, every frame 4385 to 4396 (across T, frame 4391), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "first": 4385,
-   "last": 4396,
    "tier": "draft"
   }
  ]
