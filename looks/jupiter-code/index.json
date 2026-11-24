@@ -1,9 +1,25 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T22:27:19.419Z",
+ "pushed": "2026-11-24T22:27:49.320Z",
  "head": "5f3565032784c723e137d07da505bb17e1ec4adf",
- "note": "22:28 UTC, named state 5f35650 (code of e297620): the whole rise 3246 to 3334 every frame at draft, the tool's rise report is red (pattern 1.16 from 3253 in the lower left, pop 1.36 from 3283). Red by my own eye: the storm as a scar on the plain zone 3266 to 3305, in the judged frame 3296 too.",
+ "note": "22:29 UTC, named state 5f35650 (code of e297620): the close view 3150 beside the approved image first, then the whole rise 3246 to 3334 every frame at draft and the dive's limb strip. The tool's rise report is red (pattern 1.16 from 3253 in the lower left, pop 1.36 from 3283); my own dive reading is red (pattern 0.74 at the limb strip).",
  "looks": [
+  {
+   "time": "2026-11-24T22:27:47.067Z",
+   "file": "20261124222747067-note-pair-3150-r2.jpg",
+   "source": "../work/r5/pair-3150-r2.jpg",
+   "kind": "note",
+   "label": "THE CLOSE VIEW 3150 at final (before the merge) beside the approved image: approved left, named state right. Mean absolute difference 7.849 (round 46: 7.254); the far ground under the limb is flat (red, mine)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T22:27:46.184Z",
+   "file": "20261124222746184-note-shadow-2895.jpg",
+   "source": "../work/r5/shadow-2895.png",
+   "kind": "note",
+   "label": "2895 at final (before the merge), Io's shadow at 3 times: round 46 left, soft edge right; no pixel outside the shadow moved by more than 2 levels",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-24T22:24:55.617Z",
    "file": "20261124222455617-note-full-3296.jpg",
@@ -178,22 +194,6 @@
    "source": "../work/r5/s-dive-3033.jpg",
    "kind": "note",
    "label": "round 2 dive 3032 + 1/2 to 3035 at full size, where round 46 had its largest pattern number",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T21:57:32.802Z",
-   "file": "20261124215732802-note-s-dive-d.jpg",
-   "source": "../work/r5/s-dive-d.jpg",
-   "kind": "note",
-   "label": "round 2 dive 3036 to 3045 every frame at half size (the run was stopped at 3045 + 1/2 to give the render slot to the rise)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T21:57:31.578Z",
-   "file": "20261124215731578-note-s-dive-c.jpg",
-   "source": "../work/r5/s-dive-c.jpg",
-   "kind": "note",
-   "label": "round 2 dive 3024 to 3035 every frame at half size (smooth run frames, before the merge): one storm, one light, no second limb",
    "stop": "jupiter"
   }
  ]
