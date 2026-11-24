@@ -69,5 +69,7 @@ export const ring = {
   mapScale: 0.25,
   degPerSecond: 0.8,
   grain: { repeat: [4, 0.25] as [number, number], fine: 4, amount: 0.8, top: 8 },
-  solid: { amount: 0.95, density: 250, ground: [0.0052, 0.0087, 0.0108] as [number, number, number], rise: [0.1, 0.35], near: [0.58, 0.82] as [number, number] },
+  // solid: the near part of the ring drawn as a body in the rise. height: the eye's height over the planet in radii from which it
+  // comes in and at which it is whole (by the height, never by the clock; the heights the old shares 0.1 and 0.35 of the rise stood at).
+  solid: { amount: 0.95, density: 250, ground: [0.0052, 0.0087, 0.0108] as [number, number, number], height: [0.031, 0.165], near: [0.58, 0.82] as [number, number] },
 }

@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { FarPoint } from '../../bodies/farpoint'
+import { bufferFrame } from '../../core/frame'
 import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { diagUniform } from '../../diagnostics/diag'
 import { handoverOf } from '../../director/handover'
@@ -132,7 +133,7 @@ export const createSet: SetFactory = async (ctx) => {
   const holdDirection = new THREE.Vector3()
   const seatAt = (kind: 'dive' | 'rise'): THREE.Vector3 => {
     const time = handoverOf(plan.id, kind)!.time
-    return (kind === 'dive' ? plan.divePose(time, 'orbit') : plan.risePose(time, 'orbit')).position.clone().applyQuaternion(plan.laid(time).invert())
+    return plan.eye(kind, time, 'orbit').position.clone().applyQuaternion(plan.laid(time).invert())
   }
   const layRef = { dive: seatAt('dive'), rise: seatAt('rise') }
 
@@ -217,11 +218,13 @@ export const createSet: SetFactory = async (ctx) => {
       pu.uFlow!.value = look.flow.amount * (1 - home * (1 - deep)) * (1 - end * (1 - endLook.limb.flow))
       ;(pu.uCirrus!.value as THREE.Vector4).set(look.cirrus.amount * (1 - home) * (1 - end), look.cirrus.bend, look.cirrus.shadow, look.cirrus.floor)
       ;(pu.uClump!.value as THREE.Vector3).fromArray(look.cirrus.clump)
-      pu.uCirrusPx!.value = kind === 'dive' || kind === 'rise' ? move.cirrus.px * (view.format.height / 1080) * (1 - smooth((high - move.cirrus.height[0]!) / (move.cirrus.height[1]! - move.cirrus.height[0]!))) : 0
-      ;(pu.uShadow!.value as THREE.Vector3).y = look.clouds.shadowSoft * (view.format.height / 1080)
+      pu.uCirrusPx!.value = kind === 'dive' || kind === 'rise' ? move.cirrus.px * bufferFrame() * (1 - smooth((high - move.cirrus.height[0]!) / (move.cirrus.height[1]! - move.cirrus.height[0]!))) : 0
+      ;(pu.uShadow!.value as THREE.Vector3).y = look.clouds.shadowSoft * bufferFrame()
       // The plate levels come in by the texels of their parent a 1080th of the frame's height (an angle), not a pixel of the format
-      // that happens to be drawn, so the film is one picture at 1920 and at 3840 wide (the Builder's note 501).
-      pu.uLine!.value = view.format.height / 1080
+      // that happens to be drawn, so the film is one picture at 1920 and at 3840 wide (the Builder's note 501). The factor is the
+      // engine's one measure (src/core/frame.ts, bufferFrame): 1 at 16 by 9, 2 at the 4K capture, one half at the preview. The soft
+      // edge of the cloud shadows, the cirrus's pixel term and the size under which the globe is a point read the same measure.
+      pu.uLine!.value = bufferFrame()
       ;(pu.uRimDir!.value as THREE.Vector3).copy(rimAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize()
       ;(pu.uCutDir!.value as THREE.Vector3).copy(cutAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize()
       ;(pu.uCut!.value as THREE.Vector4).w = home
@@ -269,10 +272,10 @@ export const createSet: SetFactory = async (ctx) => {
       ring.ending(end, camera, endLook.ring)
       ring.along(move.ring.along * moving)
       air.ring(ringLit, ringSeat.copy(ring.mesh.position).applyQuaternion(state.rotation), look.ring.inner, look.ring.outer)
-      ring.solid(rising ? smooth((state.u - look.ring.solid.rise[0]) / (look.ring.solid.rise[1] - look.ring.solid.rise[0])) : ending ? 1 - end : 0)
+      ring.solid(rising ? smooth(Math.log(Math.max(high, 1e-6) / look.ring.solid.height[0]) / Math.log(look.ring.solid.height[1] / look.ring.solid.height[0])) : ending ? 1 - end : 0)
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
-      const visible = radiusPx > 0.6 * (view.format.height / 1080)
+      const visible = radiusPx > 0.6 * bufferFrame()
       planet.mesh.visible = visible && show < 1
       deepLaid.mesh.visible = visible && show > 0
       air.mesh.visible = visible

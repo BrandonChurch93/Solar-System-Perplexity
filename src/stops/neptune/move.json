@@ -12,6 +12,11 @@
   "rampOut": 0.35,
   "arc": 2
  },
+ "one": {
+  "how": "The engine's one move flies the dive and the rise (Neptune is off handover.ownPath): one eye from the hold to the surface view and from it to the travel. What the stop sets of it, found by handover_engineer with tools/law.ts so that npm run smooth --only path is green: pace, the flanks of the bell of the rate (rise at the far end, fall at the surface view, corner how round), turn, the same for the turn of the camera, liftPower, how far the height runs with the lift of the eye's direction. rampIn, rampOut and arc above are not read on the one move.",
+  "dive": { "pace": { "rise": 0.375, "fall": 0.325, "corner": 0.05 }, "turn": { "rise": 0.45, "fall": 0.55, "corner": 0.2 }, "liftPower": 0.25 },
+  "rise": { "pace": { "rise": 0.3, "fall": 0.3, "corner": 0.05 }, "turn": { "rise": 0.475, "fall": 0.45, "corner": 0.1 }, "liftPower": 0 }
+ },
  "ring": {
   "how": "The grain of the ring in the dive and the rise. The grain is a picture of round specks on the ring plane; from near they are short strokes across the ring's circles. along: share of a full turn over which the grain is averaged along the ring's own circles, so a speck becomes a piece of an arc. The width is full below the first height of near and none from the second on, which is the grain the travel after the rise is drawn with.",
   "along": 0.02

@@ -19,7 +19,7 @@ export const params: MoveParams = {
   light: { exposure: 1, skyExposure: 0.65, sunRadiusDeg: 0.14, sunGlare: 0.6, flare: 0 },
   skyAim: { orbit: [25.78793, 56.89437, -50.63077], terrain: [180, -12, 40] },
   cover: [0.27, 0.43, 0.8],
-  handover: { dive: { at: move.dive.at, picture: false, skyFrames: 0 }, rise: { at: move.rise.at, picture: false, skyFrames: 0 } },
+  handover: { dive: { at: move.dive.at, picture: false, skyFrames: 0, ...move.one.dive }, rise: { at: move.rise.at, picture: false, skyFrames: 0, ...move.one.rise } },
   spinDegPerSecond: 1.3,
   moonDegPerSecond: 0.3,
   tint: [0.3, 0.5, 1],
@@ -147,7 +147,7 @@ class NeptunePlan extends StopPlan {
   // the Sun and the sky are in the frame; between the two heights, where the globe fills the frame but for one corner, it turns to the
   // sky of the close view (dive). The same law holds between two frames of the film and at any rate of capture.
   private skyLow(kind: 'dive' | 'rise', time: number): number {
-    const high = (kind === 'dive' ? this.divePose(time, 'orbit') : this.risePose(time, 'orbit')).position.length() - 1
+    const high = this.eye(kind, time, 'orbit').position.length() - 1
     return 1 - smooth(Math.log(Math.max(high, 1e-6) / move.sky.height[1]!) / Math.log(move.sky.height[0]! / move.sky.height[1]!))
   }
 
