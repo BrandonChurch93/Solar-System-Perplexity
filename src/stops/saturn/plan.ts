@@ -142,19 +142,97 @@ export class SaturnPlan extends StopPlan {
 
   // The skim: the height falls by the same share in every frame and the speed over the plane goes with the
   // height, so the sheet passes under the lens at a steady number of pixels a frame. u is the time from the
-  // middle of the skim over its length; along is the share of the way done since the middle.
+  // middle of the skim over its length; along is the share of the way done since the middle. From the share
+  // path.bend.from on (just past the judged frame) the way bends (skimBend) and the rule of the speed stays.
   skimAt(time: number): Pose {
     const path = skimJson.path
     const seg = this.seg.terrain
     const dur = seg.end - seg.start
     const u = (time - seg.start) / dur - 0.5 - config.shutterFraction / (2 * config.fps * dur)
+    const quaternion = new THREE.Quaternion().setFromAxisAngle(this.ringNormal, THREE.MathUtils.degToRad(path.yawDeg) * u).multiply(this.skimQuaternion)
+    quaternion.multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), THREE.MathUtils.degToRad(path.pitchDeg) * u))
+    return { position: u > path.bend.from ? this.skimBend(u) : this.skimStraight(u), quaternion, vfov: skimJson.pose.vfov }
+  }
+
+  // The straight way of the skim at the share u from its middle.
+  private skimStraight(u: number): THREE.Vector3 {
+    const path = skimJson.path
     const k = Math.log(path.descent)
     const fall = Math.exp(-k * u)
     const along = k === 0 ? u : (1 - fall) / (2 * Math.sinh(k / 2))
-    const position = this.skimPosition.clone().addScaledVector(this.skimForward, path.forward * along).addScaledVector(this.skimRight, path.side * along).addScaledVector(this.ringNormal, skimJson.pose.height * (fall - 1))
-    const quaternion = new THREE.Quaternion().setFromAxisAngle(this.ringNormal, THREE.MathUtils.degToRad(path.yawDeg) * u).multiply(this.skimQuaternion)
-    quaternion.multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), THREE.MathUtils.degToRad(path.pitchDeg) * u))
-    return { position, quaternion, vfov: skimJson.pose.vfov }
+    return this.skimPosition.clone().addScaledVector(this.skimForward, path.forward * along).addScaledVector(this.skimRight, path.side * along).addScaledVector(this.ringNormal, skimJson.pose.height * (fall - 1))
+  }
+
+  private bend: { c: number; lift0: number; ahead: THREE.Vector3; across: THREE.Vector3; start: THREE.Vector3; turn: Pace; lift: Pace; nodes: [number, number, number][] } | null = null
+
+  // The end of the skim (ruling d196). The skim pushes at the globe and the way out lies behind the lens, so
+  // the lens would have to stop and turn back where the rise begins. Instead the way of the lens bends over
+  // the last seconds of the skim: from the push into a track across the plane and on into the pull back, and
+  // the rise takes that motion and only speeds it up. The lens never rests: all the way the speed of the lens
+  // is the same share of its height over the plane as in the straight skim, in whatever direction it goes.
+  // The direction turns from the share path.bend.from to the share path.bend.to of the skim (shares from its
+  // middle, like u): its heading over the plane by turnDeg toward the right of the lens, where the globe is
+  // (the pace of bend.turn), and its angle to the plane from the descent of the skim up to liftDeg (the pace
+  // of bend.lift). Past bend.to the way is straight again. The lens looks where it looked: nothing of its
+  // turn is here. The way has no closed form (the speed goes with the height, the height with the way): it is
+  // summed once in bend.steps steps of the classic fourth order rule, and a place between two steps is one
+  // such step from the one before, so the way is one smooth function of the time and of nothing else.
+  private skimBend(u: number): THREE.Vector3 {
+    const path = skimJson.path
+    const b = path.bend
+    const span = b.to - b.from
+    const rad = THREE.MathUtils.degToRad
+    if (!this.bend) {
+      const k = Math.log(path.descent)
+      const h0 = skimJson.pose.height
+      // the velocity of the straight skim over its height: the same at every time
+      const flat = this.skimForward.clone().multiplyScalar(path.forward).addScaledVector(this.skimRight, path.side).multiplyScalar(k === 0 ? 1 / h0 : k / (2 * Math.sinh(k / 2) * h0))
+      const c = Math.hypot(flat.length(), k)
+      const ahead = flat.clone().normalize()
+      this.bend = { c, lift0: Math.asin(-k / c), ahead, across: new THREE.Vector3().crossVectors(ahead, this.ringNormal).normalize(), start: this.skimStraight(b.from), turn: new Pace(0, 0, 1, b.turn.peak, b.turn.round), lift: new Pace(0, 0, 1, b.lift.peak, b.lift.round), nodes: [] }
+      let at: [number, number, number] = [Math.log(h0) - k * b.from, 0, 0]
+      this.bend.nodes.push(at)
+      for (let i = 0; i < b.steps; i++) {
+        at = this.bendStep(at, i / b.steps, 1 / b.steps)
+        this.bend.nodes.push(at)
+      }
+    }
+    const B = this.bend
+    const s = Math.min((u - b.from) / span, 1)
+    const i = Math.min(Math.floor(s * b.steps), b.steps - 1)
+    let [logHeight, x, y] = this.bendStep(B.nodes[i]!, i / b.steps, s - i / b.steps)
+    if (u > b.to) {
+      // straight on: the height grows (or falls) by the same share in every frame, the way with it
+      const lift = B.lift0 + (rad(b.liftDeg) - B.lift0) * B.lift.at(1)
+      const heading = rad(b.turnDeg) * B.turn.at(1)
+      const grow = B.c * Math.sin(lift) * (u - b.to)
+      const way = Math.abs(grow) < 1e-9 ? B.c * Math.exp(logHeight) * Math.cos(lift) * (u - b.to) : (Math.exp(logHeight) * Math.cos(lift) * Math.expm1(grow)) / Math.sin(lift)
+      x += way * Math.cos(heading)
+      y += way * Math.sin(heading)
+      logHeight += grow
+    }
+    const height0 = B.start.dot(this.ringNormal)
+    return B.start.clone().addScaledVector(B.ahead, x).addScaledVector(B.across, y).addScaledVector(this.ringNormal, Math.exp(logHeight) - height0)
+  }
+
+  // One step of the sum of the bend: from the state at the share s of the bend (the logarithm of the height,
+  // the way ahead and the way across) over the share ds.
+  private bendStep(from: [number, number, number], s: number, ds: number): [number, number, number] {
+    const b = skimJson.path.bend
+    const B = this.bend!
+    const span = b.to - b.from
+    const rad = THREE.MathUtils.degToRad
+    const rate = (at: number, logHeight: number): [number, number, number] => {
+      const lift = B.lift0 + (rad(b.liftDeg) - B.lift0) * B.lift.at(at)
+      const heading = rad(b.turnDeg) * B.turn.at(at)
+      const flat = B.c * span * Math.exp(logHeight) * Math.cos(lift)
+      return [B.c * span * Math.sin(lift), flat * Math.cos(heading), flat * Math.sin(heading)]
+    }
+    const k1 = rate(s, from[0])
+    const k2 = rate(s + ds / 2, from[0] + (k1[0] * ds) / 2)
+    const k3 = rate(s + ds / 2, from[0] + (k2[0] * ds) / 2)
+    const k4 = rate(s + ds, from[0] + k3[0] * ds)
+    return [0, 1, 2].map((j) => from[j]! + (ds * (k1[j]! + 2 * k2[j]! + 2 * k3[j]! + k4[j]!)) / 6) as [number, number, number]
   }
 
   private local(pose: Pose): Pose {

@@ -11,12 +11,44 @@
     "vfov": 48
   },
   "path": {
-    "note": "travel over the whole skim: forward is the length of the way along the view axis on the plane; descent is the height at the start over the height at the end. The height falls by the same share in every frame and the speed over the plane goes with the height, so the sheet passes under the lens at the same number of pixels a frame all the way; side is the travel sideways, yawDeg and pitchDeg the turn of the camera over the skim.",
+    "note": "travel over the whole skim: forward is the length of the way along the view axis on the plane that the straight skim has over its whole time; descent is the height at the start over the height at the end. The height falls by the same share in every frame and the speed over the plane goes with the height, so the sheet passes under the lens at the same number of pixels a frame, all the way to the bend (bend, below), where the direction of the way turns and the rule of the speed stays; side is the travel sideways, yawDeg and pitchDeg the turn of the camera over the skim.",
     "forward": 1.7,
     "descent": 2.2,
     "side": 0,
     "yawDeg": 0,
-    "pitchDeg": 0
+    "pitchDeg": 0,
+    "bend": {
+      "note": "the end of the skim (ruling d196): the way of the lens bends from the push at the globe into a track across the plane and on into the pull back, so the rise takes its motion and the lens never stops and turns back. from and to: the shares of the skim, from its middle, between which the direction turns (the judged frame is the middle, its take ends at 0.0014; 0.0111 is two frames past it, 0.489 two frames before the end of the skim). turnDeg: the turn of the heading over the plane toward the right of the lens, where the globe is. liftDeg: the angle of the way to the plane at the end (it starts at the descent of the skim, 10.7 degrees down). turn and lift: the pace of each (plan.ts Pace: the shares of the bend between which its rate is level, and the shares over which its turns are rounded). steps: the steps the way is summed in. All the way the speed of the lens is the same share of its height over the plane as in the straight skim.",
+      "from": 0.0111,
+      "to": 0.489,
+      "turnDeg": 190,
+      "liftDeg": 30,
+      "turn": {
+        "peak": [
+          0.3,
+          0.7
+        ],
+        "round": [
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      },
+      "lift": {
+        "peak": [
+          0.5,
+          0.8
+        ],
+        "round": [
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      },
+      "steps": 256
+    }
   },
   "light": {
     "note": "exposure of the globe and of the rings and how much of its colour the ice keeps, first in the hold and then in the skim, blended by the logarithm of the camera's height between the two heights (the lower height is the skim); the strengths of the ladder of ringlets are blended the same way (ringfine.json near). tint: the factor on the colour of the dense and of the thin rings, far in the hold and near in the skim: both approved images have the thin rings brighter and less red than the model's ink, and the close has its dense rings a little darker. halo: the factor on the scale height and on the brightness of the glow outside the globe's limb. dusk: on the globe the light between these two cosines of the Sun's angle is cut down by a smooth step, by this amount, so the terminator is narrower near the sheet as in the approved close; dusk.night is the factor on the floor of light the night side keeps. dusk.grey: how far the night side is grey rather than the colour of the clouds in the last red light. flatten: the brightness of the dense rings averaged over width radii, over pivot (no further from 1 than reach times or one over reach), is raised to power: near the sheet the broad zones are evener, as in the approved close. flatten.bands: the power on the brightness of a band of the dense rings (the model averaged over band radii) over that of its zone (averaged over width), far and near, counted no further from 1 than bandReach times: near the sheet the bands stand out less from their zone, as in the approved close; ringlets narrower than a band keep their contrast.",
@@ -147,7 +179,7 @@
     }
   },
   "handover": {
-    "note": "the dive and the rise: one flight through one world, no picture is swapped and no cover is drawn. at: the share of the dive or the rise at which the engine changes from the view in the frame of the globe to the view in the frame of the skim (both show the same world from the same lens); The sky does not follow that change nor any clock (sky below). Each move (the dive, the rise) is one move in four measures, each with one pace (plan.ts Pace): the rate of the measure goes from its rate in the motion before the move up to one largest value and down to its rate in the motion after it, by a steady change a frame on both sides; peak is the share of the move at which the rate turns at the top, or two shares between which the rate stays level at its largest value (a level top), and round the share of the move over which each of its turns is rounded: one share for all turns, or one for each turn in order (three with one peak: the start, the top, the end; four with a level top: the start, the two ends of the level, the end). reach: the distance of the lens to the globe's surface (its logarithm). climb: the height over the ring plane (its logarithm); in the rise it turns before the reach, so the lens lifts off the plane before it draws back. round: the angle of the foot of the lens round the globe. view: the turn of the camera from the one motion's to the other's, and the field of view with it. place.ahead: the place the tool watches is the point of the ring plane this far ahead of the foot of the lens at the middle of the skim.",
+    "note": "the dive and the rise: one flight through one world, no picture is swapped and no cover is drawn. at: the share of the dive or the rise at which the engine changes from the view in the frame of the globe to the view in the frame of the skim (both show the same world from the same lens); The sky does not follow that change nor any clock (sky below). Each move (the dive, the rise) is one move in four measures, each with one pace (plan.ts Pace): the rate of the measure goes from its rate in the motion before the move up to one largest value and down to its rate in the motion after it, by a steady change a frame on both sides; peak is the share of the move at which the rate turns at the top, or two shares between which the rate stays level at its largest value (a level top), and round the share of the move over which each of its turns is rounded: one share for all turns, or one for each turn in order (three with one peak: the start, the top, the end; four with a level top: the start, the two ends of the level, the end). reach: the distance of the lens to the globe's surface (its logarithm). climb: the height over the ring plane (its logarithm); in the rise it turns before the reach: the lens, which draws back from the end of the skim on (path.bend), lifts off the plane first and then draws back faster. round: the angle of the foot of the lens round the globe. view: the turn of the camera from the one motion's to the other's, and the field of view with it. place.ahead: the place the tool watches is the point of the ring plane this far ahead of the foot of the lens at the middle of the skim.",
     "dive": {
       "at": 0.55,
       "reach": {
@@ -233,38 +265,50 @@
       "at": 0.56,
       "reach": {
         "peak": [
-          0.424,
-          0.592
+          0.369,
+          0.534
         ],
         "round": [
-          0.038,
-          0.073,
-          0.048,
-          0.058
+          0.481,
+          0.481,
+          0.125,
+          0.031
         ]
       },
       "climb": {
-        "peak": 0.244,
+        "peak": [
+          0.239,
+          0.256
+        ],
         "round": [
-          0.03,
-          0.118,
-          0.03
+          0.412,
+          0.421,
+          0.049,
+          0.56
         ]
       },
       "round": {
-        "peak": 0.495,
+        "peak": [
+          0.281,
+          0.291
+        ],
         "round": [
-          0.397,
-          0.104,
-          0.03
+          0.382,
+          0.092,
+          0.136,
+          0.537
         ]
       },
       "view": {
-        "peak": 0.411,
+        "peak": [
+          0.432,
+          0.572
+        ],
         "round": [
-          0.031,
-          0.092,
-          0.03
+          0.03,
+          0.089,
+          0.053,
+          0.174
         ]
       }
     },

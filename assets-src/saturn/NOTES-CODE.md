@@ -2987,3 +2987,70 @@ is in the picture at 3 to 12 px, and the same crispness for the far ring across 
   through a track across to the pull back toward the way out, and its speed stays the same share of its height
   over the plane, so the height levels and then climbs. The rise takes that motion at 3810 and only speeds it
   up; its paces are set again by the path judge.
+
+## 05:05 to 05:30 VM: the bend of the skim into the rise (ruling d196), built and tuned
+
+- MAIL 529 (05:08): the 4K baseline of saturn on main 8fb9ba9b is red on parity: coarse mean 3.703 at 3563
+  (limit 3.2), block level -22.068 at 3720 (limit 12, 3 frames over), whole frame level -3.168 at 3923 (the
+  sky's, sky_builder's cure is on the machines). The rows are now 3465, 3563, 3585, 3608, 3720, 3829, 3848,
+  3866, 3923. My head has to be green on it on my own tree: run it on the named head.
+- MAIL 530 (05:10): main 5014624 (tools/seam.ts, two tests mended); merged as 387ba2c. The later time (NAMED
+  by 08:30) is given. The tool: npx tsx tools/seam.ts --stop saturn [--kind rise] [--rows] [--before N]
+  [--rate N]; its height is the distance to the unit sphere.
+- sky_builder (05:18): the lines for the look of my sky at 3720 are on agent/flightsky fb501fc (not on main):
+  in set.ts update, every time: nameSkyLook(plan.id, { look: 0, even: 1, stars: 8, cap: 0.5 }, weight) from
+  '../../space/sky'; weight 1 where my sky is the frame's sky, 0 where the flight's has taken over; stars
+  toward 5 or 6. Not in the named commit (it is not on main). After NAMED.
+- THE BEND (plan.ts skimAt, skimStraight, skimBend, bendStep; skim.json path.bend). The skim is the straight
+  way up to the share 0.0111 from its middle (two frames past 3720; the take of 3720 ends at 0.0014), so the
+  camera of 3720 and of every frame before it is the same to the byte. From there to the share 0.489 the
+  direction of the eye's velocity turns: its heading over the plane by turnDeg toward the right of the lens
+  (where the globe is), its angle to the plane from the descent (10.7 degrees down) up to liftDeg 30. The
+  speed stays the same share of the height over the plane all the way (4.2626 per unit of u, 0.02368 a
+  frame), so the lens never rests. The lens does not turn in the skim. The way has no closed form: a table of
+  256 steps of the fourth order rule, a place between two steps is one such step from the one before.
+- WHY RIGHT: the track to the right moves the globe left in the picture, the pull back moves it left too
+  (it stands right of the middle), and the rise then turns the lens right, so the globe goes right to left
+  in one sweep: 1445 px at 3718, 1481 at 3742 (the push), 1331 at 3784, 1292 at 3808, 1263 at 3820, 973 at
+  3850, 692 at 3886. A turn to the left would send it right and back.
+- turnDeg: 210 aims the end at the way out but its last frames track left of the lens, and the globe drifts
+  8 px back to the right from 3796 to 3814 before the sweep (measured, out/scratch/scr.ts). 190 keeps the
+  drift to the left at every frame. 190 it is; the rise curves the rest.
+- MEASURED on the bend (out/scratch/meas.ts): 3720 reach 1.6212, height 0.3959, foot 2.5911 (as before);
+  lowest height 0.3498 at 3760; nearest foot 2.278 at 3770; 3810 reach 1.5788, height 0.5013, foot 2.5296,
+  azimuth 6.44 degrees, velocity (10.05, 2.17, 5.94) thousandths of a radius a frame along (e1, e2, normal).
+- THE SKY'S PROOF caught the first try (plan.ts skyProof stops the build): the bend ends 0.26 radii to the
+  side of the old end, toward the path of the hold, and the rise with its old paces passed that path at
+  1.0525 (sky.hero.reach is 1.2: a share of the hero's sky would have come back near 3861). The path of the
+  hold runs from (5.087, 1.001, 2.228) at 3390 to (4.673, 1.529, 2.413) at 3540 in (e1, e2, normal); the way
+  out is (5.905, -0.225, 2.939). The paces of the rise are now found with that distance as a wall
+  (out/scratch/opt7.ts): nearest 1.258 at 3861 + 1/4.
+- THE PACES OF THE RISE (skim.json handover.rise; at 0.56 as before): reach [0.369, 0.534], rounds [0.481,
+  0.481, 0.125, 0.031]; climb [0.239, 0.256], [0.412, 0.421, 0.049, 0.56]; round [0.281, 0.291], [0.382,
+  0.092, 0.136, 0.537]; view [0.432, 0.572], [0.03, 0.089, 0.053, 0.174]. A round longer than the room
+  before its turn is cut to that room by Pace (so the first turn of reach and climb has no round of its own:
+  the rate starts to grow at once and its growth falls off toward the level).
+- MEASURED, npm run smooth -- --stop saturn --only path: green. Dive lines as on 23cb30e (rate 1.166 at 3573,
+  step 0.065; turn 1.805, 0.066; speed 1.611, 0.066 over 6 at 3618; rate 2: 0.066, 0.067, 0.067). Rise, whole
+  frames: rate mean 0.01708, largest 1.399 at 3847, step 0.068 at 3812, seam in 0.051; turn 1.772 at 3853,
+  step 0.075 at 3871; speed mean 14.36 px a film frame, 1.502 at 3829, step 0.075 over 8 at 3883, seam in
+  0.056. Rate 2: steps 0.069, 0.075, 0.077; seam in 0.061, 0.003, 0.068. Rows of the speed not judged: 3842
+  to 3858 (the place has under 5 ground points; 23cb30e had 3838 to 3854). The speed mean of the kept rise
+  was 13.96, so the pace of the picture is the same.
+- MEASURED, npx tsx tools/seam.ts --stop saturn --rate 2 --before 88: dive "lowest 0.999 at 3629 + 1/2 | never
+  against the surface view's way"; rise "the surface view flies 0.00749 of its height a film frame | lowest
+  1.079 at 3810 | never against the surface view's way | surface view, largest step a film frame 0.008 at
+  3809 + 1/2". Before the bend (b5cf72a, my scratch): 0.616 at 3814 + 1/2; the Builder's table on main: 0.543
+  at 3813 + 1/2. Across the bend the eye's speed over its height runs from 0.00578 (3718) to 0.00741 (3810)
+  without a dip; its part along the way at the seam passes 0 at 3766 at 0.87 of the seam's speed (a bend at
+  speed, not a rest).
+- npm run handover -- --stop saturn --tier draft --only path: "saturn.dive every frame: pass", "saturn.rise
+  every frame: pass". tsc exit 0. vitest 42 files, 398 tests pass.
+- SEEN (draft, film rate, every sixth frame 3722 to 3810, /tmp/v/r33/b2): the track and the pull back read
+  as one arc; the globe grows to 585 px radius at 3766 and is cut by the top edge from 3740 to 3790; at 3810
+  the far side of the rings shows as a short lit piece at the right edge beyond the globe's dark limb.
+- STILL OPEN on the bend: the rise starts to speed up at once at 3810 (the eye's speed over its height
+  doubles in 5 frames, as the kept rise did in 9). If it reads as a kick on the frames, the cure is to let
+  the speed share grow over the last second of the bend, so the rise has less to add.
+- The last three seconds of the skim no longer push forward: they track across and pull back (ruling d196).
+  This stands against "clear forward movement through all 180 frames" of the first brief: named in the mail.
