@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T05:54:42.422Z",
- "head": "d0ee5fc2566b7fdd0234c879a8e6ef52c769bedc",
- "note": "05:55 head d0ee5fc2 (505 first pass, bend): parity RED 13.091 at 225 (limit 12), cause the far ring of 2 to 8 px cells, in work; frame 60 review tier: share by band 0.163 0.217 0.162 0.123 0.109 0.075 0.047 0.032 0.017 | dark 0.214 body 0.611 pale 0.079 white 0.021 | half width 5.2 px, 2880 shapes; distance 0.043; G17 median 1.851; blur 40 px ground 0.0454 whole 0.0343; seam eye 0.994 at 180 + 1/2",
+ "pushed": "2026-11-24T07:08:21.250Z",
+ "head": "eb28ae16c8387463e4555a18e400f8c1eb236b9e",
+ "note": "MAIL 547 look only (frame 60 draft: bands 0.190 0.185 0.156 0.130 0.106 0.077 0.053 0.045 0.025; dark 0.221 body 0.578 pale 0.097 white 0.026; half width 6.0 px, 3378 shapes; distance 0.059; G17 median 1.19; blur 40 px ground 0.0546) and the seam on the engine's bend with the one move, path part green",
  "looks": [
+  {
+   "time": "2026-11-24T07:08:20.160Z",
+   "file": "20261124070820160-note-e1-s3.jpg",
+   "source": "../../../../tmp/e1-s3.jpg",
+   "kind": "note",
+   "label": "frames 176 to 184 draft, every frame: the seam 180 on the engine's bend and the one move",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T07:08:19.242Z",
+   "file": "20261124070819242-note-pair-L7.jpg",
+   "source": "../../../../tmp/pair-L7.jpg",
+   "kind": "note",
+   "label": "frame 60 draft, one to one, approved left, mine right (x 600 y 600, 750 by 480): look only after MAIL 547, ring toward the border, darker crown, stronger threads",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T05:54:35.949Z",
    "file": "20261124055435949-note-par225.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/sun/convect/d12-near11.jpg",
    "kind": "note",
    "label": "f60 draft, the sun-near box at one to one, approved left, mine right (trial d12, uncommitted): bulbs with a graded flank and threads up the flank; still wrong: threads too even and white, cells pointed, creases thinner than approved",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T04:27:15.402Z",
-   "file": "20261124042715402-note-d2-near-pair.jpg",
-   "source": "out/work/sun/convect/d2-near-pair.jpg",
-   "kind": "note",
-   "label": "f60 draft, 505 first pass trial d2 (uncommitted): approved left, mine right. Not right yet: flat plates, crisp cracks, threads faint",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T03:53:30.076Z",
-   "file": "20261124035330076-note-par-225-far.jpg",
-   "source": "../../../../tmp/par-225-far.jpg",
-   "kind": "note",
-   "label": "frame 225 far ground at two to one: 16 by 9 draft, uhd, uhd scaled down. The 16 by 9 draft has one sample grain in cells of 3 to 5 px",
    "stop": "sun"
   }
  ]
