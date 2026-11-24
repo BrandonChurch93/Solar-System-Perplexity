@@ -1,67 +1,64 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T07:08:55.988Z",
- "head": "3af4dfcf099a0751a180fc37008e3a6eb376e1ba",
- "note": "dive pictures of the bent head: pattern red at the pole and at the shadow tip, their causes; proofs of the merged head render now",
+ "pushed": "2026-11-24T07:25:37.318Z",
+ "head": "b6df4bac8d6959b4b867bac18a86a3a8cbc1ef6f",
+ "note": "job W on the merged head: finals against the new pattern, parity green; the dive's pattern places traced",
  "looks": [
+  {
+   "time": "2026-11-24T07:25:36.237Z",
+   "file": "20261124072536237-note-dive_layout.jpg",
+   "source": "../../../../tmp/v/r36/dive_layout.png",
+   "kind": "note",
+   "label": "dive 3572 to 3628, eight frames, whole frame"
+  },
+  {
+   "time": "2026-11-24T07:25:35.294Z",
+   "file": "20261124072535294-note-dive_right.jpg",
+   "source": "../../../../tmp/v/r36/dive_right.png",
+   "kind": "note",
+   "label": "dive 3580, 3588, 3596, 3600, 3604, 3612 right of the globe: the shade on the far ring and the sky in the gap"
+  },
+  {
+   "time": "2026-11-24T07:25:34.623Z",
+   "file": "20261124072534623-note-dive_3587_x3.jpg",
+   "source": "../../../../tmp/v/r36/dive_3587_x3.png",
+   "kind": "note",
+   "label": "dive 3587 + 1/2, 3591 + 1/2, 3595 + 1/2 at 1160 to 1400, 740 to 880, times 3: the ring's inner edge before the dark globe"
+  },
+  {
+   "time": "2026-11-24T07:25:33.452Z",
+   "file": "20261124072533452-note-pat_dive_two.jpg",
+   "source": "../../../../tmp/v/r36/pat_dive_two.png",
+   "kind": "note",
+   "label": "dive: the two late places of the pattern red by my copy of the judge's map, 3587 + 1/2 (top) and 3580 (bottom)"
+  },
+  {
+   "time": "2026-11-24T07:25:32.423Z",
+   "file": "20261124072532423-note-diff_3720_x8.jpg",
+   "source": "../../../../tmp/v/r37/diff_3720_x8.png",
+   "kind": "note",
+   "label": "3720 final: difference of head against main's PNG, times 8"
+  },
+  {
+   "time": "2026-11-24T07:25:31.474Z",
+   "file": "20261124072531474-note-pair_3720.jpg",
+   "source": "../../../../tmp/v/r37/pair_3720.jpg",
+   "kind": "note",
+   "label": "surface view 3720 final: the Builder's PNG of main (left) and head c8ca94e (right)"
+  },
+  {
+   "time": "2026-11-24T07:25:30.474Z",
+   "file": "20261124072530474-note-pair_3465.jpg",
+   "source": "../../../../tmp/v/r37/pair_3465.jpg",
+   "kind": "note",
+   "label": "hold 3465 final: the Builder's PNG of main (left) and head c8ca94e (right)"
+  },
   {
    "time": "2026-11-24T07:08:49.171Z",
    "file": "20261124070849171-note-pat3859.jpg",
    "source": "../../../../tmp/v/r36/pat3859.png",
    "kind": "note",
    "label": "rise 3859 against 3867, my copy of the judge's pattern map: red is over 0.45, on the shaded inner ring at the bottom"
-  },
-  {
-   "time": "2026-11-24T07:08:47.772Z",
-   "file": "20261124070847772-note-rise_shade2.jpg",
-   "source": "../../../../tmp/v/r36/rise_shade2.png",
-   "kind": "note",
-   "label": "rise right bottom quarter 3838 to 3868 every second frame, draft: stars through the shaded inner ring"
-  },
-  {
-   "time": "2026-11-24T07:08:46.468Z",
-   "file": "20261124070846468-note-dive_tip.jpg",
-   "source": "../../../../tmp/v/r36/dive_tip.png",
-   "kind": "note",
-   "label": "dive bottom right corner 3578 to 3589, draft: the shadow tip where the pattern reads 0.56"
-  },
-  {
-   "time": "2026-11-24T07:08:45.301Z",
-   "file": "20261124070845301-note-dive_limb.jpg",
-   "source": "../../../../tmp/v/r36/dive_limb.png",
-   "kind": "note",
-   "label": "dive top limb 3570 to 3577, draft: dark single pixels just inside the limb at the pole"
-  },
-  {
-   "time": "2026-11-24T07:08:43.950Z",
-   "file": "20261124070843950-note-dive_a.jpg",
-   "source": "../../../../tmp/v/r36/dive_a.png",
-   "kind": "note",
-   "label": "dive 3536 to 3572 every fourth frame, draft, 589fd9a"
-  },
-  {
-   "time": "2026-11-24T07:08:43.030Z",
-   "file": "20261124070843030-note-saturn-dive-pops.jpg",
-   "source": "../../../../tmp/v/r36/saturn-dive-pops.png",
-   "kind": "note",
-   "label": "dive pictures on 589fd9a, the judge's panel of the four largest pops (largest 1.09 at 3563, limit 1.2)",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-24T07:08:41.733Z",
-   "file": "20261124070841733-note-saturn-dive-changes.jpg",
-   "source": "../../../../tmp/v/r36/saturn-dive-changes.png",
-   "kind": "note",
-   "label": "dive pictures on 589fd9a, the judge's panel of the changes in place: pattern 0.53 at the pole 3561, 0.56 at the shadow tip 3580 (limit 0.45)",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-24T06:52:25.887Z",
-   "file": "20261124065225887-note-saturn-rise-pops.jpg",
-   "source": "../../../../tmp/v/r36/saturn-rise-pops.png",
-   "kind": "note",
-   "label": "589fd9a, the judge's panel of the rise: the four largest pops are 3892 to 3896, the travel leaving its rest; inside the rise the largest is 1.21 at 3875",
-   "stop": "saturn"
   }
  ]
 }
