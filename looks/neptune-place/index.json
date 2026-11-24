@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T17:32:18.058Z",
- "head": "b175a5d667c30338c2a37e8d767a4f2e3612cd13",
- "note": "4860 beside approved, G17 1.382/0.741, 7.4 s a preview draft frame. KNOWN RED being traced: 4605 at preview draft has other bytes since the merge of main 1896a516 (a2b1f371, was 9ef19839; 1265 px, largest 5 levels, thin over the frame); cause not found yet (not farsun shader, not warm.json)",
+ "pushed": "2026-11-24T18:01:21.042Z",
+ "head": "5c6713431897c545503f5490b29c72757f052704",
+ "note": "4860 beside approved, G17 1.382/0.741, 7.4 s a preview draft frame. Trial for the white specks measured and not kept. 4605's other bytes since the merge traced: Mars's new path on main moves the film's world, Neptune's eye is the same to 1e-12 radii and not to the bit (0.24 percent of pixels by one level). Tests on the merge of main 9e15c6a4: 554 of 554. Running now: the handover report's step in place on the rise of the present state",
  "looks": [
+  {
+   "time": "2026-11-24T18:01:19.608Z",
+   "file": "20261124180119608-note-t1-rise.jpg",
+   "source": "out/work/nep/weave/t1-rise.jpg",
+   "kind": "note",
+   "label": "TRIAL NOT KEPT, rise 4984 to 4996: left the present state, right the cloud of the dim side going down with the light as the grade grows. Specks fainter at 4992 and 4996, the hard white bit (in light) untouched; my proxy by poses 0.53, 0.48, 0.37 becomes 0.37, 0.46, 0.46 (limit 0.45). The specks are named as the map's own small clouds",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T18:01:18.356Z",
+   "file": "20261124180118356-note-look-h0-4860.jpg",
+   "source": "out/work/nep/weave/look-h0-4860.jpg",
+   "kind": "note",
+   "label": "4860 now (5c671343 = b175a5d6 on main 9e15c6a4, picture unchanged) beside the approved close image. G17 1.382 / 0.741",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T17:32:08.290Z",
    "file": "20261124173208290-note-look-h0-4860.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/nep/weave/g3d-rise-a.jpg",
    "kind": "note",
    "label": "rise 4984 to 4992 every frame, preview draft, 8bcb6a8c. Specks on the dim side are white now (were orange). RED by my proxy, not the report: pair 4988 to 4996 pattern 0.48 by poses, 0.54 by flows (limit 0.45)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T17:05:28.691Z",
-   "file": "20261124170528691-note-look-g3-4860.jpg",
-   "source": "out/work/nep/weave/look-g3-4860.jpg",
-   "kind": "note",
-   "label": "4860 at commit 8bcb6a8c (the grade as one text): approved, named b8a38cbe, now. G17 now 1.382 / 0.741 (named 1.331 / 0.772). Near picture as named; far field moved with the place",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T16:49:19.516Z",
-   "file": "20261124164919516-note-b1-limb-right.jpg",
-   "source": "out/work/nep/weave/b1-limb-right.jpg",
-   "kind": "note",
-   "label": "The limb on the right, 4732 to 4752: rows 1 and 3 as pushed (scene's border 16 to 26 degrees), rows 2 and 4 the control without the border: the same picture, so the border does not draw it. The white band of the map by the limb sets under the horizon between 4736 and 4744 as the eye sinks from 0.116 to 0.063 radii",
    "stop": "neptune"
   }
  ]
