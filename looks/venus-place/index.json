@@ -1,9 +1,41 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-24T09:53:17.881Z",
+ "pushed": "2026-11-24T10:14:04.300Z",
  "head": "6d9643ee2a79511fefcc57418d9e56030a24520e",
- "note": "third commit state: plates laid again at T, handover passes, rise pattern 1.15 (was 1.16), dive running",
+ "note": "third commit state proved: handover passes, finals equal, pattern rise 1.15, dive 0.83 (not moved by the laying); panels show what changes in place",
  "looks": [
+  {
+   "time": "2026-11-24T10:07:47.299Z",
+   "file": "20261124100747299-note-s1562.jpg",
+   "source": "../../../../tmp/v/hu/s1562.jpg",
+   "kind": "note",
+   "label": "third commit state: draft frames 1562 to 1577",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T10:07:46.179Z",
+   "file": "20261124100746179-note-s1276.jpg",
+   "source": "../../../../tmp/v/hu/s1276.jpg",
+   "kind": "note",
+   "label": "third commit state: draft frames 1276 to 1291",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T10:07:45.176Z",
+   "file": "20261124100745176-note-changes.jpg",
+   "source": "../../../../tmp/v/pat1/dive16/changes.png",
+   "kind": "note",
+   "label": "dive, pattern over 8 frames at 1270, 1284, 1292: at 1284 the blob lies at the left edge of the lit streak field of the globe's own map, where the plates of the place come in by height",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T10:07:44.292Z",
+   "file": "20261124100744292-note-venus-dive-changes-U.jpg",
+   "source": "../../../../tmp/v/venus-dive-changes-U.png",
+   "kind": "note",
+   "label": "third commit state, smooth dive panel: pattern 0.83 from 1284 (second commit 0.83), 38 frames over; 0.78 at 1320 along the far band under the limb",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T09:53:16.601Z",
    "file": "20261124095316601-note-changes.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/v/venus-rise-changes-U.png",
    "kind": "note",
    "label": "third commit state, smooth rise panel: pattern 1.15 from 1543 + 1/2 (second commit 1.16), 56 frames over, one blob at pixel 260, 748",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T09:46:19.031Z",
-   "file": "20261124094619031-note-s1546.jpg",
-   "source": "../../../../tmp/v/hu/s1546.jpg",
-   "kind": "note",
-   "label": "third commit state, plates laid again at T: draft frames from 1546, handover tool passes",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T09:46:18.440Z",
-   "file": "20261124094618440-note-s1530.jpg",
-   "source": "../../../../tmp/v/hu/s1530.jpg",
-   "kind": "note",
-   "label": "third commit state, plates laid again at T: draft frames from 1530, handover tool passes",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T09:46:17.846Z",
-   "file": "20261124094617846-note-s1340.jpg",
-   "source": "../../../../tmp/v/hu/s1340.jpg",
-   "kind": "note",
-   "label": "third commit state, plates laid again at T: draft frames from 1340, handover tool passes",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T09:46:17.172Z",
-   "file": "20261124094617172-note-s1324.jpg",
-   "source": "../../../../tmp/v/hu/s1324.jpg",
-   "kind": "note",
-   "label": "third commit state, plates laid again at T: draft frames from 1324, handover tool passes",
    "stop": "venus"
   }
  ]
