@@ -1,9 +1,73 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T12:06:37.581Z",
- "head": "1f19ea89b419dd6b725aefb92bd362f5f456d532",
- "note": "Third state a90e29f, proofs still rendering (rise pictures, then dive). New: the rise 3278 to 3289 whole, the level check's red pair as a picture, the limb at 3283. Seen and named: the place changes from blot to oval at 3283 to 3285, the plates' island is greyer than the globe round it.",
+ "pushed": "2026-11-24T12:19:22.054Z",
+ "head": "3d70367f5a8ec40eadce74ee377b3927c2872c8c",
+ "note": "third state a90e29f: the rise's pictures report is in (red on the pattern only, 48 rows; level step 0.42, pop 1.19, body by my port 4.72 and 5.79), its own pictures, my port's pictures of the limb rows, every whole frame 3270 to 3314; the dive's report is rendering",
  "looks": [
+  {
+   "time": "2026-11-24T12:19:21.096Z",
+   "file": "20261124121921096-note-rise-3306-3314.jpg",
+   "source": "../work/named3/sheets/rise-3306-3314.jpg",
+   "kind": "note",
+   "label": "a90e29f rise, every whole frame 3306 to 3314 at draft",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T12:19:20.113Z",
+   "file": "20261124121920113-note-rise-3294-3305.jpg",
+   "source": "../work/named3/sheets/rise-3294-3305.jpg",
+   "kind": "note",
+   "label": "a90e29f rise, every whole frame 3294 to 3305 at draft (3296 is judged)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T12:19:19.054Z",
+   "file": "20261124121919054-note-rise-3282-3293.jpg",
+   "source": "../work/named3/sheets/rise-3282-3293.jpg",
+   "kind": "note",
+   "label": "a90e29f rise, every whole frame 3282 to 3293 at draft: plates give way to the globe picture (0.52 to 1.3 radii), the blot shrinks to the globe's dark oval, the exposure by height is at its least at 3281",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T12:19:17.983Z",
+   "file": "20261124121917983-note-rise-3270-3281.jpg",
+   "source": "../work/named3/sheets/rise-3270-3281.jpg",
+   "kind": "note",
+   "label": "a90e29f rise, every whole frame 3270 to 3281 at draft (from the pictures run): the plates from above, the blue black blot at the place, the plates read as paint",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T12:18:41.437Z",
+   "file": "20261124121841437-note-pat-F-rise-b.jpg",
+   "source": "../work/named3/pat-F-rise-b.jpg",
+   "kind": "note",
+   "label": "a90e29f rise, my port of the pattern measure, rows 3272 + 1/2 to 3274 + 1/2 (to 0.55): one spot at the left edge where ground enters the frame",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T12:18:40.476Z",
+   "file": "20261124121840476-note-pat-F-rise-a.jpg",
+   "source": "../work/named3/pat-F-rise-a.jpg",
+   "kind": "note",
+   "label": "a90e29f rise, my port of the pattern measure, rows 3281 + 1/2 to 3287 + 1/2 (0.47 to 0.54, 1.2 to 2.7 percent of the judged body over 0.45): the white cells sit at the limb, with one limb law by angle in every frame",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T12:18:39.614Z",
+   "file": "20261124121839614-note-F-rise-pops.jpg",
+   "source": "../work/named3/F-rise-pops.png",
+   "kind": "note",
+   "label": "a90e29f rise, the report's own picture: the four largest pops, 1.19 at 3278 against the limit 1.2 (what is left is the fine structure of the band above the storm)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T12:18:38.611Z",
+   "file": "20261124121838611-note-F-rise-changes.jpg",
+   "source": "../work/named3/F-rise-changes.png",
+   "kind": "note",
+   "label": "a90e29f rise, the report's own picture: the two largest changes of the pattern (0.76 at 3251 + 1/2 far field at the horizon, 0.66 at 3261 + 1/2) and the largest changes in place; red, 48 rows over 0.45",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-24T12:06:36.834Z",
    "file": "20261124120636834-note-limb-3283.jpg",
@@ -136,76 +200,6 @@
    "source": "../work/named3/place-rise-test.jpg",
    "kind": "note",
    "label": "the pattern measure at the place (ring): 3280 and 3281 against 8 frames later, 0.75 and 0.79 on 0.46 percent of the judged body",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T11:22:47.737Z",
-   "file": "20261124112247737-note-e3-sheet.jpg",
-   "source": "../work/t3/e3-sheet.jpg",
-   "kind": "note",
-   "label": "rise at draft, the third state: the hold's limb at every height, the camera's exposure by height (trial E3)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T11:22:46.727Z",
-   "file": "20261124112246727-note-place-rise-strip.jpg",
-   "source": "../work/named3/place-rise-strip.jpg",
-   "kind": "note",
-   "label": "rise 3281 to 3290 at the place, draft: top the state as it goes (the plates' storm gives way to the globe's oval by height 0.52 to 1.3 radii, seen 3283 to 3288), bottom the full cure (not taken)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T11:22:45.435Z",
-   "file": "20261124112245435-note-place-2895.jpg",
-   "source": "../work/named3/place-2895.jpg",
-   "kind": "note",
-   "label": "2895 at final at the place, 6 times and 2 times: approved hero, the kept still (this state keeps its bytes), the full cure of ruling 5 (not taken, MAIL 647)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T11:21:37.958Z",
-   "file": "20261124112137958-frame-bF-2895.jpg",
-   "source": "out/work/jupiter/final/bF-2895.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2895, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "5a18fcdc5a929484"
-  },
-  {
-   "time": "2026-11-24T10:49:29.264Z",
-   "file": "20261124104929264-note-place-2895-hero.jpg",
-   "source": "../work/t3/place-2895-hero.jpg",
-   "kind": "note",
-   "label": "2895 at the place (before cure C) beside the approved hero crop",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T10:49:28.347Z",
-   "file": "20261124104928347-note-view1.jpg",
-   "source": "../work/cure/view1.jpg",
-   "kind": "note",
-   "label": "cure C preview: globe wrap, mid plate, mid plate as seen from above (top row at the hold scale)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T10:49:27.030Z",
-   "file": "20261124104927030-note-e2-sheet.jpg",
-   "source": "../work/t3/e2-sheet.jpg",
-   "kind": "note",
-   "label": "trial E2 rise 3272 to 3296: limb table removed, exposure by height (level step still red 1.57, refit running)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T10:23:55.965Z",
-   "file": "20261124102355965-note-pat-g1.jpg",
-   "source": "../work/named2/pat-g1.jpg",
-   "kind": "note",
-   "label": "second named head, rise 3247 to 3270: frame, detail, pattern change of pairs 8 frames apart (white is over 0.45)",
    "stop": "jupiter"
   }
  ]
