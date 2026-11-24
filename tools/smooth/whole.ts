@@ -89,7 +89,7 @@ export function gatherFaults(stop: string, g: Gathered, moves: string[]): string
     if (whole.length > 1 || (whole.length > 0 && byKind.length > 0)) out.push('twice: the ' + piece + ' is in ' + names(have) + ' with other numbers or from another run')
     else if (have.length === 0) out.push('missing: the ' + piece + ' (' + line(stop, '--part ' + piece) + ', or a run with --only that holds it)')
     else if (whole.length === 0) {
-      for (const kind of MOVES) {
+      for (const kind of moves) {
         const mine = byKind.filter((h) => h.kind === kind)
         if (mine.length === 0) out.push('missing: the ' + piece + ' of the ' + kind + ' (' + line(stop, '--part ' + piece + ' --kind ' + kind) + ')')
         if (mine.length > 1) out.push('twice: the ' + piece + ' of the ' + kind + ' is in ' + names(mine) + ' with other numbers or from another run')

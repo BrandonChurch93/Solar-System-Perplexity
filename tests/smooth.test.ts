@@ -815,6 +815,8 @@ describe('the report of a stop from the files of several machines', () => {
   it('asks for no pictures of a move the stop does not have', () => {
     const g = gather('sun', [{ file: 'sun.json', j: held(['path', 'place', 'parity', 'counts'], { stop: 'sun' }) }, { file: 'sun-rise-p1of1.json', j: slice('rise', { stop: 'sun' }) }])
     expect(gatherFaults('sun', g, ['rise'])).toEqual([])
+    const byMove = gather('sun', [{ file: 'sun.json', j: held(['path', 'parity', 'counts'], { stop: 'sun' }) }, { file: 'sun-rise-part-place.json', j: held(['place'], { stop: 'sun', kinds: ['rise'] }) }, { file: 'sun-rise-p1of1.json', j: slice('rise', { stop: 'sun' }) }])
+    expect(gatherFaults('sun', byMove, ['rise'])).toEqual([])
   })
 
   it('takes the place from one file a move, and names the move that is missing', () => {

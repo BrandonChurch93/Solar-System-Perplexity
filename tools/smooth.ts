@@ -583,9 +583,9 @@ function joinWhole(given: string[]): Whole {
     const both: Record<string, unknown> = {}
     const red: string[] = []
     for (const kind of MOVES) {
-      const p = have.find((x) => x.kind === kind)!.j.parts![piece]!
-      both[kind] = p.kinds?.[kind] ?? null
-      red.push(...(p.why ?? []))
+      const p = have.find((x) => x.kind === kind)?.j.parts![piece]
+      both[kind] = p?.kinds?.[kind] ?? null
+      red.push(...(p?.why ?? []))
     }
     return { measured: true, pass: red.length === 0, why: red, kinds: both } as PartResult
   }
