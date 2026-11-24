@@ -7,7 +7,7 @@ import type { Hashes } from './lib/hashes'
 import { json, padFrame } from './lib/render'
 import { FilmDirector } from '../src/director/film'
 import { handoverFrame, handoverOf } from '../src/director/handover'
-import { shutterMid } from '../src/core/sampler'
+import { setCapture, spanMid } from '../src/core/clock'
 import type { Pose } from '../src/core/types'
 import { plans } from '../src/director/plans'
 import { MIN_POINTS, carriedCamera, curves, sampleWindow, sphereHit, type Kind, type Ring } from './smooth/camera'
@@ -202,7 +202,7 @@ interface PictureKind { segment: string; firstFrame: number; endFrame: number; w
 const CHANGE = { frames: (S.pictures as { changeFrames?: number }).changeFrames ?? 8, blurPx: (S.pictures as { changeBlurPx?: number }).changeBlurPx ?? 20, max: (S.pictures as { maxChange?: number | null }).maxChange ?? null }
 
 function poseOf(k: number, r: number): { p: number[]; q: number[]; vfov: number } {
-  const pose = carriedCamera(film, plan, stop!, Math.floor(k / r), (k + shutterMid()) / (cfg.fps * r)).pose
+  const pose = carriedCamera(film, plan, stop!, k / r, (k / r + spanMid()) / cfg.fps).pose
   return { p: pose.position.toArray(), q: pose.quaternion.toArray(), vfov: pose.vfov }
 }
 
@@ -217,6 +217,7 @@ async function picturesOf(kind: Kind): Promise<PictureKind | null> {
   if (session && sessionFormat !== format) await drop()
   session ??= await open(format)
   const r = pageRate
+  setCapture(r)
   const ks = Array.from({ length: (end - first) * r }, (_, i) => first * r + i)
   const paths: string[] = []
   const t0 = Date.now()
@@ -337,6 +338,7 @@ async function placeOf(kind: Kind): Promise<PlaceKind | null> {
   if (session && sessionFormat !== format) await drop()
   session ??= await open(format)
   const r = pageRate
+  setCapture(r)
   const first = Math.max(Math.min(h.placeFirstFrame, h.firstFrame) - 1, seg.firstFrame)
   const last = Math.min(Math.max(h.placeLastFrame, h.lastFrame) + 1, seg.endFrame - 1)
   const ks = Array.from({ length: (last - first + 1) * r }, (_, i) => first * r + i)
@@ -349,7 +351,7 @@ async function placeOf(kind: Kind): Promise<PlaceKind | null> {
   const bodies: number[][][] = []
   for (const k of ks) {
     paths.push(await still(k, 'draft', 'beauty/noplace'))
-    bodies.push(bodyGrid(carriedCamera(film, plan, stop!, Math.floor(k / r), (k + shutterMid()) / (cfg.fps * r)).pose))
+    bodies.push(bodyGrid(carriedCamera(film, plan, stop!, k / r, (k / r + spanMid()) / cfg.fps).pose))
   }
   const body = handoverMeasure<BodyNumbers[]>({ op: 'frames', paths, bodies, floor: L.flatFloor })
   const pic = measure<PictureNumbers>({ op: 'pictures', paths, scale: S.pictures.flowScale, window: S.pictures.popWindow * r, floor: S.pictures.popFloor, grid: S.pictures.grid })

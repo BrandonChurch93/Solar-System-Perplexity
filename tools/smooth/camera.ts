@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import type { Config, Segment } from '../../src/config'
-import { shutterMid } from '../../src/core/sampler'
+import { setCapture, spanMid } from '../../src/core/clock'
 import type { Pose, ViewKind } from '../../src/core/types'
 import type { FilmDirector } from '../../src/director/film'
 import { sideAt } from '../../src/director/handover'
@@ -37,11 +37,12 @@ export function sampleWindow(cfg: Config, film: FilmDirector, plan: StopPlan, ki
   const endFrame = Math.min(seg.endFrame + reachFrames, cfg.frameCount)
   const k0 = Math.max(firstFrame * rate - 1, 0)
   const samples: Sample[] = []
+  setCapture(rate)
   for (let k = k0; k < endFrame * rate; k++) {
-    const frame = Math.floor(k / rate)
-    const time = (k + shutterMid()) / (cfg.fps * rate)
-    const c = carriedCamera(film, plan, plan.id, frame, time)
-    samples.push({ k, frame, time, segment: c.segment, side: c.side, pose: c.pose, height: c.pose.position.length() - 1 })
+    const at = k / rate
+    const time = (at + spanMid()) / cfg.fps
+    const c = carriedCamera(film, plan, plan.id, at, time)
+    samples.push({ k, frame: Math.floor(at), time, segment: c.segment, side: c.side, pose: c.pose, height: c.pose.position.length() - 1 })
   }
   return { kind, seg, rate, k0, samples, own: { first: seg.firstFrame * rate + 1, end: seg.endFrame * rate }, firstFrame, frames: endFrame - firstFrame }
 }

@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { config } from '../src/config'
+import { captureRate, setCapture, spanMid } from '../src/core/clock'
 import { shutterMid } from '../src/core/sampler'
 import { FilmDirector } from '../src/director/film'
 import { sideAt } from '../src/director/handover'
@@ -179,6 +180,24 @@ describe('the camera of a move, sampled', () => {
       expect(s.side).toBe(side)
       expect(s.pose.position.distanceTo(own.position)).toBeLessThan(1e-6 * (1 + own.position.length()))
     }
+  })
+
+  it('asks the camera at the half frame at rate 2, at the middle of the shorter shutter', () => {
+    const w = sampleWindow(config, film, plan, 'dive', 2, S.reachFrames)!
+    expect(captureRate()).toBe(2)
+    expect(spanMid()).toBeCloseTo(shutterMid() / 2, 12)
+    for (const k of [2 * w.seg.firstFrame + 7, 2 * w.seg.firstFrame + 81, 2 * w.seg.endFrame - 3]) {
+      const s = w.samples[k - w.k0]!
+      const time = (k / 2 + shutterMid() / 2) / config.fps
+      expect(s.k).toBe(k)
+      expect(s.frame).toBe((k - 1) / 2)
+      expect(s.time).toBeCloseTo(time, 12)
+      const side = sideAt(w.seg, time)
+      const own = side === 'orbit' ? plan.divePose(time, 'orbit') : plan.twin(plan.divePose(time, 'terrain'), time)
+      expect(s.side).toBe(side)
+      expect(s.pose.position.distanceTo(own.position)).toBeLessThan(1e-6 * (1 + own.position.length()))
+    }
+    setCapture(1)
   })
 
   it('counts the curves per film frame at every rate', () => {
