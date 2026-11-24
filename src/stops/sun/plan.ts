@@ -29,6 +29,8 @@ export const climb = { ease: { over: 1.3, speed: 0.095 } }
 
 export const opening = { on: true, level: 0.9, until: 2 }
 
+const spotOnStage = stage.onGround(stage.spot[0], stage.spot[1])
+
 export class SunPlan extends StopPlan {
   readonly toGlobe: THREE.Quaternion
   readonly toStage: THREE.Quaternion
@@ -132,14 +134,37 @@ export class SunPlan extends StopPlan {
     return speed * (t - lead) + (1 - speed) * 2 * tail * x * x * x * (1 - x / 2)
   }
 
+  // The bend of the surface view before its rise (ruling d196): the glide pushes in, a part of its way goes toward
+  // the ground. From place.bend.from seconds on that part is taken out by a lift along the line from the ball's
+  // centre, and the glide runs faster by place.bend.speed, both by one share that comes in smoothly until the end
+  // of the surface view and stays whole after it (the rise coasts on along this path). So the eye flies level
+  // where the rise takes it, at no loss of speed over its height. Returned: the seconds the share has summed to.
+  private bend(tRel: number): number {
+    const from = place.bend.from
+    if (tRel <= from) return 0
+    const wide = this.seg.terrain.end - this.seg.terrain.start - from
+    const x = Math.min((tRel - from) / wide, 1)
+    return wide * x * x * x * (1 - x / 2) + Math.max(tRel - from - wide, 0)
+  }
+
   override terrain(tRel: number): Pose {
     const dur = this.seg.terrain.end - this.seg.terrain.start
     const pivot = config.shutterFraction / (2 * config.fps * dur)
     const g = this.p.terrain.gather ?? 0
-    const u = climb.ease.speed * (this.run(tRel) - this.run(dur * (0.5 + pivot)))
+    const bend = this.bend(tRel)
+    const u = climb.ease.speed * (this.run(tRel) + place.bend.speed * bend - this.run(dur * (0.5 + pivot)))
     const c = u + pivot + g * pivot * pivot
     const lin = g === 0 ? c : (-1 + Math.sqrt(Math.max(1 + 4 * g * c, 0))) / (2 * g)
-    return super.terrain((lin + 0.5) * dur)
+    const pose = super.terrain((lin + 0.5) * dur)
+    if (bend > 0) {
+      // the lens keeps the spot where the glide alone would have it in the picture (place.bend.hold of the way): the
+      // lift is a crane's, it does not let the place run through the frame
+      const to = spotOnStage.clone().sub(pose.position).normalize()
+      pose.position.addScaledVector(pose.position.clone().sub(stage.centre).normalize(), place.bend.lift * stage.radius * bend)
+      const now = spotOnStage.clone().sub(pose.position).normalize()
+      pose.quaternion.premultiply(new THREE.Quaternion().slerp(new THREE.Quaternion().setFromUnitVectors(to, now), place.bend.hold))
+    }
+    return pose
   }
 
   override twin(local: Pose, time: number): Pose {

@@ -162,5 +162,12 @@
     "steps": 2048,
     "note": "the rise is one path in the frame of the turning globe: height runs in equal ratios from the close glide (coasting to rest over coast seconds, carried with the globe) to the hold run back in time, rate eased over the first easeIn and the last easeOut of the segment; the direction from the centre turns in step with height, the camera keeps the spot by a look at it and turns from the close framing to the hold framing with the same progress, the lens too. at, dissolveFrames and placeFrames are the handover times of cut/HANDOVER.md E1: T sits where the frame is all photosphere, so no sky is in the picture when the side changes",
     "turn": 2
+  },
+  "bend": {
+    "from": 3.2,
+    "lift": 0.00358,
+    "speed": 0.065,
+    "note": "the bend of the surface view before the rise (d196): from this second of the surface view on, the eye's descent is taken out by a lift (ball radii a second at the full share) and the glide runs faster by speed (a share of its own rate); the share comes in smoothly until the surface view ends. hold: the share of the lift's shift of the spot in the picture that the lens takes out by turning with it. Frames 0 to 95 keep their camera",
+    "hold": 1
   }
 }
