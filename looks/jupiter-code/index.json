@@ -1,9 +1,25 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T03:24:03.131Z",
+ "pushed": "2026-11-24T03:39:42.794Z",
  "head": "77ccb4e224937362825f920e5bbf8477373b27c8",
- "note": "03:29 UTC, tree 77ccb4e22 plus uncommitted work on MAIL 448 (the grain baked into the hold sky). Three work pictures of the glow input, good and bad. The READY for the beat cure alone went out 03:01.",
+ "note": "03:57 UTC, tree 77ccb4e22 plus uncommitted work on MAIL 448. The tool now reads the glow inside each 8 bit step from the film render; change maps of the sky file, not film frames yet. NOTE 501 (same picture at uhd) is next in the same head.",
  "looks": [
+  {
+   "time": "2026-11-24T03:39:42.219Z",
+   "file": "20261124033942219-note-look-moved-raw-left.jpg",
+   "source": "../work/g448/run2/look-moved-raw-left.jpg",
+   "kind": "note",
+   "label": "MAIL 448 work: the same change texel by texel, left part of the file, times 30. The speckle is the baked grain going out; the margin on the left never had it",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T03:39:41.648Z",
+   "file": "20261124033941648-note-look-moved-low.jpg",
+   "source": "../work/g448/run2/look-moved-low.jpg",
+   "kind": "note",
+   "label": "MAIL 448 work: what the hold sky file changes by once the grain of the glow input is out, smoothed, mid grey is plus 0.7 of 255, black is minus 0.15. The dark crescent on the lit side is where the glow was bright enough that the grain was never cut off at black, so nothing changes there",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-24T03:23:52.723Z",
    "file": "20261124032352723-note-g448-change-low-stepless.jpg",
@@ -51,28 +67,6 @@
    "kind": "note",
    "label": "draft 2980, main against main plus the pick, top right at full size",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T02:58:43.912Z",
-   "file": "20261124025843912-note-pick2980-topleft.jpg",
-   "source": "../work/m427/pick2980-topleft.jpg",
-   "kind": "note",
-   "label": "draft 2980, main against main plus the pick of the sky cure, top left at full size",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T02:52:18.300Z",
-   "file": "20261124025218300-frame-f02997.jpg",
-   "source": "out/work/jupiter/frames/cmnf/f02997.png",
-   "kind": "frame",
-   "label": "jupiter.dive frame 2997, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 2997,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "3cf61f9941bc58c9"
   }
  ]
 }
