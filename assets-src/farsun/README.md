@@ -35,7 +35,9 @@ the angle toward the camera), `span` (the angle between its feet), `turn` (the t
 `spinAt` is the body's turn at the moment those places are read (the middle of the handover, frame 474).
 The last loops are read off the approved Mercury image (`references/approved/mercury-hero.png`): the low
 ragged curl at the bottom left, a wide arch and a short strand hanging in it. `ragged` on a loop is how far
-its line wobbles off the arc at full exposure (none at burn 0). A loop may carry `gain` (its own strength, 1 if absent) and `burn` (the power of
+its line wobbles off the arc at full exposure (none at burn 0). `sheath` on a loop gives its strands a soft body at full
+exposure (none at burn 0): its gain, its width as a multiple of the strand's, and the scale in the
+body's frame of the noise that feathers it, so the loop reads as a flame with a core and not as wire. A loop may carry `gain` (its own strength, 1 if absent) and `burn` (the power of
 the exposure it takes, `prominence.burn` if absent). The last loops are faint (`gain` 0.04) and take more than
 the whole exposure, so they are all but absent at the handover and the exposure reveals them; the loops of the
 Sun stop take a small negative power, so beside the burnt disc they sink into the glow as they do in a
@@ -90,6 +92,10 @@ ceiling by `limb[0] * burn * exp(-limb[1] * (1 - x))`, x the distance from the c
 measured on the approved Mercury image, where the limb is not darker than the face (blue 241 at 0.97 radii
 against 228 to 233 further in): the warmth of that limb sits in the gas just outside it. It is zero at
 burn 0, so the limb law is whole at the handover.
+The mottle of `keep` is laid on after that light, so the limb's white does not wash it out, and its power
+grows toward the limb by one plus `limb[2]` times one minus the cosine of the angle from the centre (the
+bright network of the surface reads stronger toward the limb): MEASURED on the approved Mercury image the
+fine contrast of the face is as high at 0.9 to 0.97 radii as at the centre.
 `knot` is the white hot knots of the active regions as the lens sees them, `at` a list (its length is the shader's bound). Each is
 a light about the place `at` on the sphere (`width` in disc radii, `gain` by the exposure, zero at burn 0;
 `edge` is the power of its fall, 1 a Gaussian, more than 1 a flatter core with a harder edge), which takes
@@ -127,12 +133,13 @@ place if absent), and `rays.from` the distance from the centre, in radii, of the
 streamer that leans one way and narrows, as the one at the bottom of the approved Mercury image does, not
 a burst that stands on the normal. The knot is still hidden by its own place going behind the limb.
 With `from` above 1 the point stands outside the body and the axis looks back at the limb: the rays then
-close on that point, a plume with a wide foot on the limb and a tip in the sky. The depth of gas along the
-eye grows with the distance from the point, and the rays are also weighted by the square of that distance
-over `from` minus 1 (no more than 1), so the plume is bright at its foot and thins to nothing before its
-tip: no hard point is drawn. The two plumes at the bottom of the approved Mercury image are such knots
-(the last two of the list): their feet, tips and lean are read off that image by position angle and
-radius. They are gas in the body's frame, marched like the other rays, and turn with the body.
+close on that point, a plume with a wide foot on the limb and a tip in the sky. No knot of this look is of
+that kind any more. The look before this one held two (the plumes at the bottom of the approved Mercury
+image), with gains of 6500 and 12000 on a cone that was all but closed: seen from the hold at Mercury they
+were a soft plume, but seen from the side (frames 520 and 580 of the dive) the gain burnt the whole cone
+to one white and it read as a flat triangle with straight edges and a point. They are taken out. The
+light they gave at the hold comes from two low glows of the fringe (`knot` on a lobe, about position
+angles 85 and 105) which are smooth from every side.
 `knot.shade` is how a patch of negative gain colours the face: the darkening is mixed toward its own
 luminance by the first number and scaled by the second ([0, 0] is the plain darkening), so the mottle of
 the burnt face is a faint warm grey in all three colours and no yellow patch.
@@ -174,30 +181,33 @@ The second angle of a lobe is the place of the limb in the hold's view at Mercur
 left, +9 at the bottom), so the lobe stands on the limb there.
 
 `way` is the side the hair leans to round the disc: the strands are bent along the limb by `way[0]` times
-the height and by `way[1]` times its square (a curl), about the layers' normal, so the tufts of the limb
+the height and by `way[1]` times its square (a curl), about the axis `hair.at`, so the tufts of the limb
 lean one way as the approved ones do. Both are angles on the sphere, zero if absent.
 
 `spike` is the strength of the two scales of the marched flames and their power (the thinness of the
 places where they stand): lower strengths leave less of a smooth haze just outside the limb.
 
-`hair` is the distinct fine strands of the limb. A march through a volume of thin strands adds many of
-them along each line of sight and the sum is a haze, so the hair is not marched: it stands on three flat
-layers fixed in the body's frame, parallel, `lay` radii apart, their normal the place `at` on the sphere
-and the middle one `lift` radii from the centre (0: it is the plane of the limb as the hold at Mercury
-sees it, with one layer a quarter of a radius in front of it and one behind). Each ray meets each layer once and reads the strands there, so a strand is one line and the
-three layers pass each other as the body turns. `thick` is the depth of gas a layer stands for, `fine`
-the count of strands across a radian, `sharp` their thinness, `fan` how far they close on the middle of
-their lobe with height (a tuft), `curl` their bend (strength by height, scale on the sphere, change with
-height). A lobe carries hair by `hair`: strength and height scale in radii. The pattern is read at the
-place in the layer, not along the line of sight, so it holds still as the body turns under the camera.
-The hair takes the fringe's colour, exposure and share of the far look, so it is absent at the handover
-and in the Sun stop's own views. It is three layers and not a volume: seen far from the layers' normal it
-would foreshorten into sheets. `see` keeps that from the eye by the angle alone, never by the time: the
-hair is whole while the view stands within `see[1]` degrees of the normal and gone beyond `see[0]`
-(45 and 26), a smoothstep of the cosine between them.
+`hair` is the distinct fine strands of the limb. It is a function of the place in three dimensions,
+fixed in the body's frame, and it is drawn by a short march of its own along the ray: `steps` equal steps
+through the shell from the surface to `top` radii above it, begun at the same body fixed offset as the
+fringe's march. No plane and no layer is in it, so every angle of the camera reads the same hair and
+nothing is taken away by the angle. A strand is a thin radial column: `fine` is the count of strands
+across a radian of the sphere, `sharp` their thinness and their sparseness together (a ray along the limb
+passes some fifty columns, so only a sparse field stays distinct and does not sum to a haze), `thick`
+the light per radius of path, `fan` how far the strands close on the middle of their lobe with height,
+`curl` their bend (strength by height, scale on the sphere, change with height), `way` their lean with
+height about the axis `at` (the tufts lean one way round the disc). `tuft` adds a coarser family: its
+gain, its count as a share of `fine`, and its height as a multiple of the fine strands' height. `all`
+is the hair of the whole sphere (strength and height scale in radii), so every limb the camera can see
+carries it; a lobe adds its own by `hair` (strength and height scale). A lobe with a negative strength
+thins the hair about its place by that share (under the loop, where the approved image is dark between
+the strands). The hair takes the fringe's
+colour, exposure and share of the far look, so it is absent at the handover and in the Sun stop's own
+views.
 
-MEASURED, the angle in degrees between the view through the Sun's centre and that normal, every 20th frame
-(the layers' place is unchanged since the look before, so the table holds for both):
+MEASURED, the angle in degrees between the view through the Sun's centre and the direction `at` (the view
+of the hold at Mercury), every 20th frame. It says how far round the body the camera has gone; nothing
+in the picture is switched or faded by it:
 
 | frame | angle | frame | angle | frame | angle | frame | angle |
 |-------|-------|-------|-------|-------|-------|-------|-------|
@@ -209,11 +219,6 @@ MEASURED, the angle in degrees between the view through the Sun's centre and tha
 | 567 | 5.4 | 727 | 12.9 | 887 | 30.8 | 1047 | 49.0 |
 | 587 | 3.2 | 747 | 25.4 | 907 | 33.1 | 1067 | 51.2 |
 | 607 | 0.9 | 767 | 25.3 | 927 | 35.4 | 1087 | 53.5 |
-
-It passes 25 degrees in two ranges with the Sun in the frame. From 746 to 761 it is 25.0 to 26.2 degrees
-(26.2 at 753 to 756, MEASURED every third frame): the hair is still whole there, `see` starts at 26. From
-978 to 1067 it is 47 to 63 degrees: `see` has taken the hair away, so no sheet is drawn, and the limb of
-those frames is the marched fringe and the rays. From 762 to 977 and at 1087 the Sun is out of the frame.
 
 ## Where it is drawn
 
@@ -234,15 +239,23 @@ to 1.0), at most 8 in each zone of gas (1.0 to 1.1, 1.1 to 1.3, 1.3 to 1.6, beyo
 reported and not ruled. The box does not move.
 
 MEASURED at the draft tier with `PIL` `GaussianBlur(12)` on both pictures at 1920 by 1080, mean of the
-absolute difference over the three channels: this look gives 4.13 in the box (the look before it 4.42, the
-one before that 4.57), face 2.1, limb 3.1, gas 5.5, 7.3, 5.0 and 4.5. Every zone is inside its bound. The
-box is over its 4.0: the rule stands and this look does not meet it yet. What is left is the form of the
-light from 1.1 to 1.3 radii (the curtain of fine strands left of the plume's foot is too thin, the gas
-from 1.3 to 1.6 is a little too warm), the fineness of the tufts of the limb and the reach of the glare
-at the upper left.
+absolute difference over the three channels: this look gives 4.07 in the box (the looks before it 4.13,
+4.42 and 4.57), face 2.0, limb 2.8, gas 5.2, 7.6, 4.8 and 4.5. Every zone is inside its bound. The box is
+over its 4.0: the rule stands and this look does not meet it yet. What is left, by the cells of the
+difference: the light from 1.2 to 1.3 radii about position angles 80 to 110 (the approved image has
+tongues of flame with body there, this look a low smooth glow, 17 to 21 levels too dark), the place under
+the loop's inner foot at 1.1 radii (21 levels too much blue), the gas from 1.3 to 1.6 radii between
+position angles 130 and 170 (11 levels too little blue) and the reach of the glare at the upper left.
 
-MEASURED at the final tier as well (one picture, 832 s on a loaded machine): 4.13 in the box, face 2.1,
-limb 3.1, gas 5.5, 7.3, 5.0 and 4.5; the plain number is 7.34 (7.28 at the draft tier).
+MEASURED, the fine contrast of the face (the standard deviation of the picture minus its blur of 6 px,
+in levels, inside the box) at 0 to 0.5, 0.5 to 0.8, 0.8 to 0.9 and 0.9 to 0.97 radii: the approved image
+2.17, 2.10, 2.36 and 2.31; this look 2.03, 2.17, 2.21 and 1.66; the look before it 1.96, 1.86, 1.66 and
+1.20. MEASURED, the colour of the loop's strands (the brightest 3 percent of the place of the loop) and
+of the ground under them: the approved image 234, 211, 166 on 193, 163, 116; this look 220, 194, 142 on 178, 151, 109; the
+look before it 231, 206, 141 on 179, 151, 104.
+
+MEASURED at the final tier as well (one picture, 557 s with nothing else running): 4.07 in the box, face
+2.0, limb 2.8, gas 5.2, 7.6, 4.8 and 4.5; the plain number is 7.33 (7.26 at the draft tier).
 
 ## The cost
 
@@ -254,11 +267,15 @@ seconds of the next two):
 |-------|-------|------|
 | d263ad28 | 106.9 | 85.4, 86.1 |
 | c0a7f5ef | 116.0 | 94.8, 94.1 |
-| this look | 60.7 | 41.4, 41.0 |
+| 6f6f1229 | 60.7 | 41.4, 41.0 |
+| this look | 55.0 | 35.1, 34.5 |
 
-The page's load and the link are the first minus the next: about 20 s in all three. The gain is in the
+The page's load and the link are the first minus the next: about 20 s in all four. The gain is in the
 march: a lobe's strands are computed only where its weight is not zero, a knot's march is skipped where
-the ray misses its sphere, the fringe where its share is zero, a loop with no gain at all. The pictures of
+the ray misses its sphere, the fringe where its share is zero, a loop with no gain at all. The strands of
+the fringe walk only the lobes that have strands, by a list of their numbers (`uStrandLobe`, the cut of
+the engine's profile, the same bytes at 615 and 470 as the look without it). The hair is now a march of
+200 steps of its own and the two cones of 256 steps are gone, which is where the rest of the gain is. The pictures of
 c0a7f5ef kept their bytes under those skips (MEASURED at 615 and 616 before the look changed).
 
 ## Nothing by the pixel

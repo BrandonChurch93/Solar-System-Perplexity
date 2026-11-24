@@ -87,23 +87,27 @@ uniform vec4 uFringeShape;
 uniform vec3 uFringeColour;
 uniform vec4 uFringeLobe[${MAX_LOBES}];
 uniform vec4 uFringeLobeBy[${MAX_LOBES}];
+uniform int uStrandLobe[${MAX_LOBES}];
+uniform int uStrandLobes;
 uniform vec3 uFringeFan;
 uniform vec3 uFringeCurl;
 uniform vec4 uFringeSheet;
 uniform vec4 uFringeHairBy;
 uniform vec3 uFringeHairCurl;
-uniform float uFringeHairLay;
+uniform vec3 uFringeHairTop;
+uniform vec2 uFringeHairAll;
+uniform vec3 uFringeHairTuft;
 uniform vec2 uFringeHair[${MAX_LOBES}];
 uniform vec3 uFringeSpike;
 uniform vec2 uFringeWay;
 uniform float uGlareEnd;
-uniform vec2 uFringeHairSee;
 uniform float uLoopGain[${MAX_LOOPS}];
 uniform float uLoopRagged[${MAX_LOOPS}];
 uniform vec3 uLoopRope[${MAX_LOOPS}];
+uniform vec3 uLoopSheath[${MAX_LOOPS}];
 uniform float uHaloEdge;
 uniform vec4 uKeep;
-uniform vec2 uLimbGlow;
+uniform vec3 uLimbGlow;
 uniform float uHeatFloor;
 uniform vec2 uPlage;
 uniform vec3 uLoopLook;
@@ -249,6 +253,12 @@ float loopGas(vec3 q, int i, float soft, out float heat) {
     float strand = 0.3 + 1.4 * vnoise(vec3(along2 * 7.0 - uTime * uProm.w * (1.0 + 0.4 * fs), float(i) * 1.7 + shape.w, fs * 2.9));
     strand *= mix(1.0, 1.8 * smoothstep(0.35, 0.65, vnoise(vec3(along2 * 2.6 + shape.w * 3.0, fs * 5.3, float(i) * 2.1))), uLoopLook.y);
     float g = exp(-dist2 / (width * width)) * strand * (thin / width) * step(0.0, y + 0.05);
+    for (int m = 0; m < (uLoopSheath[i].x > 0.0 ? 1 : 0); m++) {
+      float wide = width * uLoopSheath[i].y;
+      float flame = 0.25 + 1.5 * vnoise(q * uLoopSheath[i].z + fs * 3.7);
+      float body = uLoopSheath[i].x * exp(-dist2 / (wide * wide)) * strand * flame * flame * step(0.0, y + 0.05);
+      g += body;
+    }
     sum += g;
     heat += g * strand;
   }
@@ -306,8 +316,8 @@ void main() {
       float share = uMapOn > 0.0 ? 1.0 - uWear : 1.0;
       float detail;
       vec3 lit = shoulder(whiteLook(d, mu, pixel / max(mu, 0.2), detail) * (uBright * dim));
-      lit = min(lit * pow(vec3(detail / uKeep.w), uKeep.xyz), uWhite);
       lit = mix(lit, uWhite, uLimbGlow.x * exp(-(1.0 - min(x, 1.0)) * uLimbGlow.y));
+      lit = min(lit * pow(vec3(detail / uKeep.w), uKeep.xyz * (1.0 + uLimbGlow.z * (1.0 - mu))), uWhite);
       vec3 patched = mix(lit, vec3(0.995), min(knotLight, 1.0));
       for (int w = 0; w < (knotLight < 0.0 && uKnotShade.y > 0.0 ? 1 : 0); w++) {
         vec3 less = (vec3(0.995) - lit) * -knotLight;
@@ -402,13 +412,15 @@ void main() {
         float here = exp(-(1.0 - dot(sd, lobe.xyz)) * lobe.w);
         more += by.x * here;
         high += by.y * here;
-        for (int w = 0; w < (by.w != 0.0 ? 1 : 0); w++) {
-          vec3 foot = normalize(wisp - (wisp - lobe.xyz) * min(up * uFringeFan.x, 0.8));
-          float strand = pow(vnoise(foot * uFringeFan.y), uFringeFan.z) + 0.5 * pow(vnoise(foot * (uFringeFan.y * 2.3) + 2.0), uFringeFan.z);
-          float reach = by.z * (0.35 + 1.3 * vnoise(foot * (uFringeFan.y * 0.31) + 11.0));
-          strands += by.w * exp(-(1.0 - dot(foot, lobe.xyz)) * lobe.w) * strand * exp(-up / max(reach, 1e-3));
-        }
         knot += uFringeKnot[k].x * exp(-(1.0 - dot(sd, lobe.xyz)) * uFringeKnot[k].y - up / max(uFringeKnot[k].z, 1e-3));
+      }
+      for (int k = 0; k < uStrandLobes; k++) {
+        vec4 lobe = uFringeLobe[uStrandLobe[k]];
+        vec4 by = uFringeLobeBy[uStrandLobe[k]];
+        vec3 foot = normalize(wisp - (wisp - lobe.xyz) * min(up * uFringeFan.x, 0.8));
+        float strand = pow(vnoise(foot * uFringeFan.y), uFringeFan.z) + 0.5 * pow(vnoise(foot * (uFringeFan.y * 2.3) + 2.0), uFringeFan.z);
+        float reach = by.z * (0.35 + 1.3 * vnoise(foot * (uFringeFan.y * 0.31) + 11.0));
+        strands += by.w * exp(-(1.0 - dot(foot, lobe.xyz)) * lobe.w) * strand * exp(-up / max(reach, 1e-3));
       }
       float tall = mix(uFringeShape.x, uFringeShape.y, pow(vnoise(sd * 6.0 + 5.0), 2.0)) * high;
       vec3 bent = sd + (vec3(vnoise(sd * 9.0 + 1.0), vnoise(sd * 9.0 + 4.0), vnoise(sd * 9.0 + 7.0)) - 0.5) * (up * uFringeShape.w) + cross(uFringeSheet.xyz, sd) * (up * (uFringeWay.x + uFringeWay.y * up));
@@ -416,31 +428,47 @@ void main() {
       sum += (exp(-up / tall) * spike * more + strands + knot) * (fade * step(1.0, r));
     }
     float hair = 0.0;
-    vec3 sheetN = spinY(uFringeSheet.xyz, -uSpin);
-    float facing = dot(rd, sheetN);
-    for (int j = 0; j < (uFringeHairBy.z > 0.0 && abs(facing) > 1e-3 ? 3 : 0); j++) {
-      float ts = (uFringeSheet.w + (float(j) - 1.0) * uFringeHairLay - dot(ro, sheetN)) / facing;
-      vec3 q = ro + rd * ts;
-      float r = length(q);
-      if (ts <= 0.0 || r >= uFringe.y) continue;
-      vec3 sd = spinY(q / r, uSpin);
-      float up = max(r - 1.0, 0.0);
-      float fade = 1.0 - smoothstep(0.5 * (uFringe.y - 1.0), uFringe.y - 1.0, up);
-      vec3 level = (sd - uFringeSheet.xyz * dot(sd, uFringeSheet.xyz)) * uFringeHairCurl.y + up * uFringeHairCurl.z;
-      vec3 wisp = sd + (vec3(vnoise(level + 1.0), vnoise(level + 4.0), vnoise(level + 7.0)) - 0.5) * (up * uFringeHairCurl.x);
-      float layer = 0.0;
-      for (int n = 0; n < ${MAX_LOBES}; n++) {
-        vec2 by = uFringeHair[n];
-        if (by.x <= 0.0) continue;
-        vec4 lobe = uFringeLobe[n];
-        vec3 foot = normalize(wisp - (wisp - lobe.xyz) * min(up * uFringeHairBy.w, 0.8));
-        vec3 inSheet = foot - uFringeSheet.xyz * dot(foot, uFringeSheet.xyz);
-        vec3 cellAt = inSheet * uFringeHairBy.x + float(j) * 17.3;
-        float strand = pow(vnoise(cellAt), uFringeHairBy.y) + 0.5 * pow(vnoise(cellAt * 2.3 + 2.0), uFringeHairBy.y);
-        float reach = by.y * (0.35 + 1.3 * vnoise(inSheet * (uFringeHairBy.x * 0.31) + 11.0));
-        layer += by.x * exp(-(1.0 - dot(foot, lobe.xyz)) * lobe.w) * strand * exp(-up / max(reach, 1e-3));
+    float hairTop = 1.0 + uFringeHairTop.y;
+    for (int j = 0; j < (uFringeHairBy.z > 0.0 && near2 < hairTop * hairTop ? 1 : 0); j++) {
+      float reachHalf = sqrt(hairTop * hairTop - near2);
+      float h0 = max(-b - reachHalf, 0.0);
+      int hairSteps = int(uFringeHairTop.x);
+      float hd = max(-b + reachHalf - h0, 0.0) / float(hairSteps);
+      for (int i = 0; i < hairSteps; i++) {
+        vec3 q = ro + rd * (h0 + (float(i) + offset) * hd);
+        float r = length(q);
+        vec3 sd = spinY(q / r, uSpin);
+        float up = max(r - 1.0, 0.0);
+        float fade = (1.0 - smoothstep(0.5 * uFringeHairTop.y, uFringeHairTop.y, up)) * step(1.0, r);
+        vec3 level = sd * uFringeHairCurl.y + up * uFringeHairCurl.z;
+        vec3 wisp = sd + (vec3(vnoise(level + 1.0), vnoise(level + 4.0), vnoise(level + 7.0)) - 0.5) * (up * uFringeHairCurl.x) + cross(uFringeSheet.xyz, sd) * (up * uFringeHairTop.z);
+        float weight = uFringeHairAll.x;
+        float thin = 1.0;
+        float reachBy = uFringeHairAll.x * uFringeHairAll.y;
+        vec3 mid = wisp * uFringeHairAll.x;
+        for (int n = 0; n < ${MAX_LOBES}; n++) {
+          vec2 by = uFringeHair[n];
+          if (by.x == 0.0) continue;
+          vec4 lobe = uFringeLobe[n];
+          float w = by.x * exp(-(1.0 - dot(wisp, lobe.xyz)) * lobe.w);
+          if (by.x < 0.0) {
+            thin *= 1.0 + max(w, -1.0);
+            continue;
+          }
+          weight += w;
+          reachBy += w * by.y;
+          mid += w * lobe.xyz;
+        }
+        for (int m = 0; m < (weight * fade > 1e-4 ? 1 : 0); m++) {
+          vec3 foot = normalize(wisp - (wisp - normalize(mid)) * min(up * uFringeHairBy.w, 0.8));
+          vec3 cellAt = foot * uFringeHairBy.x;
+          float strand = pow(vnoise(cellAt), uFringeHairBy.y) + 0.5 * pow(vnoise(cellAt * 1.7 + 2.0), uFringeHairBy.y);
+          float tuft = uFringeHairTuft.x * pow(vnoise(cellAt * uFringeHairTuft.y + 5.0), uFringeHairBy.y);
+          float reach = max(reachBy / weight * (0.35 + 1.3 * vnoise(foot * (uFringeHairBy.x * 0.31) + 11.0)), 1e-3);
+          hair += thin * weight * (strand * exp(-up / reach) + tuft * exp(-up / (reach * uFringeHairTuft.z))) * fade;
+        }
       }
-      hair += layer * fade * uFringeHairBy.z / abs(facing) * smoothstep(uFringeHairSee.x, uFringeHairSee.y, abs(facing));
+      hair *= hd * uFringeHairBy.z;
     }
     gas += burnWhite(uFringeColour * ((sum * dt + hair) * uFringe.z * uBurn.x));
   }

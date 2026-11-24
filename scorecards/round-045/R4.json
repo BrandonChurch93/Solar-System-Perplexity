@@ -1,0 +1,56 @@
+{
+ "critic": "R4",
+ "score": 5,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "rise, frames 4393-4414, horizon and rings",
+   "what": "the camera lurches: in about 7 frames the horizon jumps from a flat arc to a tilted one, the sun leaps to the top edge, the ring arcs break into a different fan of lines, and the lighting on the surface changes from a dark limb to an evenly lit storm face. This reads as a jump in direction and speed, not one eased move",
+   "fix": "ease the pull out of the terrain orbit over more frames, with continuous yaw, pitch and roll curves, and keep the sun and ring geometry tied to the world so they carry through"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "rise end, frames 4427-4454, against the hold in sheet-01",
+   "what": "the planet you leave doesn't match the one you arrived at. The bands turn from near horizontal to vertical, the terminator moves from the lower right to the top, the Milky Way flips from upper left to lower right into lower left to upper right, and the rings stand up on the right. The camera rolls about 90 degrees in about 20 frames, so the flight doesn't read as a return to the same place",
+   "fix": "bring the rise back to the hold's framing and orientation, or spread any roll over the whole rise with eased in and out"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "dive, frames 4118-4134, planet lighting and sky",
+   "what": "the lighting pops. The diagonal terminator shadow lifts, the left limb suddenly gets a bright rim, and a storm cell appears in mid disk that wasn't visible in the hold. At the same time the Milky Way on the left side vanishes into black sky and then comes back on the left at 4142, so the background swings faster than the camera turn suggests",
+   "fix": "keep the sun direction fixed in world space through the dive, make the storm visible from the hold onward (or bring it in by approach and detail), and make sure the sky rotation matches the camera's angular velocity"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-04.png",
+   "where": "terrain segment, frames 4200-4379, surface and horizon",
+   "what": "there's little sense of depth. The cloud streaks and the horizon move together as one layer while the sun flare and ring arcs stay almost fixed, so the view reads as a slow pan over a painted sphere rather than flight over near ground against a distant horizon. Flow in the cloud layer is barely visible",
+   "fix": "lower the camera or add a near cloud and haze layer with stronger parallax against the limb, and give the band clouds a slow visible drift"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "hold, frames 3960-4109, disk and moons",
+   "what": "the globe shows no visible rotation over about 150 frames. The cloud spots and bands stay fixed while the two moons shift slightly, so the life in the hold is weak",
+   "fix": "add a slow, steady band and cloud drift at a believable rotation rate"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-03.png",
+   "where": "cover 4181-4192, right of the sun",
+   "what": "a faint hard horizontal streak runs out of the sun flare to the right edge of frame. It holds steady and doesn't pop, but it reads as a line artifact in the sky",
+   "fix": "soften and shorten the anamorphic streak, or fade it toward the frame edge"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-06.png",
+   "where": "cover 4385-4396, ring arcs upper left",
+   "what": "the cover is continuous with no pop, and color and exposure carry across. The thin ring lines do shift spacing slightly from frame to frame, which risks shimmer in fine lines",
+   "fix": "filter or supersample the ring line shader to keep its fine arcs stable"
+  }
+ ]
+}
