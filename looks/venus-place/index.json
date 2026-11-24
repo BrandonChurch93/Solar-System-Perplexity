@@ -1,9 +1,25 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-24T08:24:46.485Z",
- "head": "a70fd5c02578d41ee9ca8796f330fd5c2e134bbd",
- "note": "second commit a70fd5c0: border fixed in space, release only outside the frame of T, far ground flat; handover pass, smooth pictures running",
+ "pushed": "2026-11-24T09:02:58.934Z",
+ "head": "6d9643ee2a79511fefcc57418d9e56030a24520e",
+ "note": "second named commit 03a2ed58: pattern still red on both moves (rise 1.16, dive 0.83), third commit started: plates re-laid at the present T",
  "looks": [
+  {
+   "time": "2026-11-24T09:02:58.273Z",
+   "file": "20261124090258273-note-dive-changes-S.jpg",
+   "source": "../../../../tmp/v/dive-changes-S.jpg",
+   "kind": "note",
+   "label": "second named commit 03a2ed58, dive pattern changes over 8 frames, red 0.83 at 1284",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T09:02:57.568Z",
+   "file": "20261124090257568-note-rise-changes-S.jpg",
+   "source": "../../../../tmp/v/rise-changes-S.jpg",
+   "kind": "note",
+   "label": "second named commit 03a2ed58, rise pattern changes over 8 frames, red 1.16 at 1543 + 1/2",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T08:24:45.158Z",
    "file": "20261124082445158-note-s1546.jpg",
@@ -66,29 +82,6 @@
    "segment": "venus.rise",
    "first": 1533,
    "last": 1544,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T08:06:30.479Z",
-   "file": "20261124080630479-compare-venus-rise-sides.jpg",
-   "source": "out/work/handover/venus-rise-sides.png",
-   "kind": "compare",
-   "label": "venus rise, both sides at T (frame 1539) and their difference times 8",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "frame": 1539,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T08:06:16.144Z",
-   "file": "20261124080616144-sheet-venus-dive-top.jpg",
-   "source": "out/work/handover/venus-dive-top.png",
-   "kind": "sheet",
-   "label": "venus dive, the globe side alone from straight above the place, 12 frames from the far end to T (frame 1343), place picture off, draft tier",
-   "stop": "venus",
-   "segment": "venus.dive",
-   "first": 1260,
-   "last": 1343,
    "tier": "draft"
   }
  ]
