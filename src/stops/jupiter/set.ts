@@ -11,7 +11,7 @@ import { Io } from './io'
 import * as look from './look'
 import fields from './deck-fields.json'
 import place from './place.json'
-import { eddyTurn, exposed, exposure, flashNow, hazeDrift, lifted, plan, ringTurn, stormTurn } from './plan'
+import { chartAxes, chartEye, closeHeight, eddyTurn, exposed, exposure, flashNow, hazeDrift, low, lowEven, plan, ringTurn, stormTurn } from './plan'
 import skyJson from './sky.json'
 
 function direction(lonDeg: number, latDeg: number): THREE.Vector3 {
@@ -42,6 +42,7 @@ export const createSet: SetFactory = async (ctx) => {
 
   const ground = await CloudDeck.load(ctx, base)
   terrain.add(ground.mesh)
+  orbit.add(ground.layer)
 
   const globe = new Globe({
     map, mapWidth: (map.image as unknown as { width: number }).width,
@@ -50,7 +51,7 @@ export const createSet: SetFactory = async (ctx) => {
     wisp: { texture: wispMap, ...look.wisp },
     veil: look.veil,
     pallShell: plan.p.coverShell ?? [1, 1.015],
-    place: { n: place.solved.n, e: place.solved.e, u: place.solved.u, radius: place.solved.radiusUnits, fade: place.plates.fadeUnitsPerPixel, grade: fields.grade, uniforms: ground.material.uniforms },
+    place: { n: place.solved.n, e: place.solved.e, u: place.solved.u, radius: place.solved.radiusUnits, grade: fields.grade, uniforms: ground.material.uniforms },
     patches: { center: direction(patches.center.lon, patches.center.lat), textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), feather: patches.feather, fade: patches.fade },
   })
   globe.mesh.quaternion.fromArray(fit.globe.quaternion)
@@ -82,7 +83,6 @@ export const createSet: SetFactory = async (ctx) => {
     if (time >= rise.end) return free
     return place.solved.local + (free - place.solved.local) * smooth((time - release) / (rise.end - release))
   }
-  const ramp = (time: number): number => (time < terrainMid ? smooth((time - dive.start) / (land.start - dive.start)) : 1 - smooth((time - land.end) / (rise.end - land.end)))
   const ratio = (time: number): number[] => {
     const kind = time < terrainMid ? 'dive' : 'rise'
     const flown = exposure(kind === 'dive' ? dive.start - terrainMid : rise.end - terrainMid)
@@ -101,6 +101,9 @@ export const createSet: SetFactory = async (ctx) => {
   const toPlanet = new THREE.Vector3()
   const across = new THREE.Vector3()
   const up = new THREE.Vector3(0, 1, 0)
+  const eye = new THREE.Vector3()
+  const back = new THREE.Quaternion()
+  const attitude = new THREE.Quaternion()
 
   const sky: SkyPatch[] = []
   for (const [view, def] of Object.entries(skyJson)) {
@@ -118,24 +121,41 @@ export const createSet: SetFactory = async (ctx) => {
       orbit.visible = inOrbit && state.weight > 0
       terrain.visible = !inOrbit
       const gain = 1 / shot.post.exposure
-      const share = ramp(state.time)
+      back.copy(state.rotation).invert()
+      eye.copy(world.position).negate().applyQuaternion(back)
+      const height = inOrbit ? eye.length() - 1 : closeHeight(eye)
+      const scene = place.scene
+      const share = lowEven(height, scene.grade, scene.gradeRound)
       const r = ratio(state.time)
-      ground.material.uniforms.uStormTurn!.value = stormTurn(state.time - terrainMid)
-      const eddies = ground.material.uniforms.uEddyTurn!.value as number[]
+      const du = ground.material.uniforms
+      du.uStormTurn!.value = stormTurn(state.time - terrainMid)
+      const eddies = du.uEddyTurn!.value as number[]
       for (let i = 0; i < eddies.length; i++) eddies[i] = eddyTurn(i, state.time - terrainMid)
-      const seams = ground.material.uniforms.uSeam!.value as THREE.Vector3[]
+      const seams = du.uSeam!.value as THREE.Vector3[]
       for (let i = 0; i < seams.length; i++) seams[i]!.z = ringTurn(i, state.time - terrainMid)
-      if (!inOrbit) {
-        ground.update(gain * exposed(state.time - terrainMid), shot.post.vignette, view)
-        ;(ground.material.uniforms.uExpose!.value as THREE.Vector3).set(Math.pow(r[0]!, share - 1), Math.pow(r[1]!, share - 1), Math.pow(r[2]!, share - 1))
-        const lift = state.time < terrainMid ? lifted('dive', land.start - state.time) : lifted('rise', state.time - land.end)
-        ground.material.uniforms.uAirLift!.value = lift
-        ;(ground.material.uniforms.uHazeLit!.value as THREE.Vector3).z = 1 - lift
-        const bands = ground.material.uniforms.uHazeBand!.value as THREE.Vector4[]
+      const own = state.segment.stop === plan.id && (state.segment.kind === 'dive' || state.segment.kind === 'rise')
+      const deckShare = !inOrbit ? 1 : own ? low(height, scene.deck) : 0
+      const limbShare = !inOrbit ? 1 : own ? low(height, scene.limb) : 0
+      ground.layer.visible = inOrbit && deckShare > 0
+      du.uOwn!.value = inOrbit ? 1 : 0
+      ;(du.uLayer!.value as THREE.Vector3).set(deckShare, limbShare, inOrbit ? 1 : 0)
+      if (!inOrbit || own) {
+        ground.update(gain * (inOrbit ? state.weight : 1) * exposed(state.time - terrainMid), shot.post.vignette, view)
+        ;(du.uExpose!.value as THREE.Vector3).set(Math.pow(r[0]!, share - 1), Math.pow(r[1]!, share - 1), Math.pow(r[2]!, share - 1))
+        const thin = 1 - low(height, scene.air)
+        du.uAirLift!.value = thin
+        ;(du.uHazeLit!.value as THREE.Vector3).z = 1 - thin
+        const bands = du.uHazeBand!.value as THREE.Vector4[]
         for (let b = 0; b < bands.length; b++) bands[b]!.z = hazeDrift(b, state.time - terrainMid)
-        const flashes = ground.material.uniforms.uFlash!.value as THREE.Vector4[]
+        const flashes = du.uFlash!.value as THREE.Vector4[]
         for (let i = 0; i < flashes.length; i++) flashes[i]!.w = flashNow(i, state.time - terrainMid)
-        return
+      }
+      if (!inOrbit) return
+      if (own) {
+        const turned = plan.turn(state.time)
+        chartEye(turned, eye, du.uEye!.value as THREE.Vector3)
+        chartAxes(turned, attitude.copy(back).multiply(shot.camera.quaternion), du.uAxes!.value as THREE.Matrix3)
+        chartAxes(turned, back, du.uToChart!.value as THREE.Matrix3)
       }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
       const lit = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0
@@ -144,8 +164,7 @@ export const createSet: SetFactory = async (ctx) => {
       const elapsed = state.time - plan.holdMid
       const local = flowTime(state.time)
       const gu = globe.material.uniforms
-      const own = state.segment.stop === plan.id && (state.segment.kind === 'dive' || state.segment.kind === 'rise')
-      ;(gu.uPlace!.value as THREE.Vector4).w = own ? 1 : 0
+      ;(gu.uPlace!.value as THREE.Vector4).w = own ? low(height, scene.ground) : 0
       ;(gu.uGrade!.value as THREE.Vector3).set(Math.pow(r[0]!, share), Math.pow(r[1]!, share), Math.pow(r[2]!, share))
       gu.uFlowT!.value = THREE.MathUtils.degToRad(look.flow.bandDegPerSecond) * local
       gu.uSwirlT!.value = THREE.MathUtils.degToRad(look.flow.swirlDegPerSecond) * local
@@ -177,7 +196,7 @@ export const createSet: SetFactory = async (ctx) => {
         ;(su.uCam!.value as THREE.Vector3).copy(camera)
         ;(su.uSunW!.value as THREE.Vector3).copy(glowDir)
         ;(su.uCoreSun!.value as THREE.Vector3).copy(glowDir)
-        su.uGain!.value = gain * state.weight
+        su.uGain!.value = gain * state.weight * (1 - limbShare)
       }
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)

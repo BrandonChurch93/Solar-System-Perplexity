@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { config, type Segment } from '../../config'
 import type { Pose, ViewKind } from '../../core/types'
-import { handoverOf, type HandoverParams } from '../../director/handover'
+import { handoverOf, type HandoverParams, type SkyShares } from '../../director/handover'
 import { StopPlan, type Fit, type MoveParams } from '../../director/moves'
 import { lookAt, smooth } from '../../director/rig'
 import deck from './deck.json'
@@ -36,6 +36,38 @@ const vortex = chartOrigin.clone().addScaledVector(new THREE.Vector3().fromArray
 const s = place.solved.toSurface as number[][]
 const toSurface = new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().set(s[0]![0]!, s[0]![1]!, s[0]![2]!, 0, s[1]![0]!, s[1]![1]!, s[1]![2]!, 0, s[2]![0]!, s[2]![1]!, s[2]![2]!, 0, 0, 0, 0, 1))
 const toGlobe = new THREE.Quaternion().fromArray(fit.globe.quaternion).multiply(toSurface)
+
+const chartEx = new THREE.Vector3().fromArray(fields.chart.ex)
+const chartEy = new THREE.Vector3().fromArray(fields.chart.ey)
+const chartEn = new THREE.Vector3().fromArray(fields.chart.en)
+
+export function chartEye(turn: THREE.Quaternion, position: THREE.Vector3, eye: THREE.Vector3): void {
+  const p = position.clone().applyQuaternion(turn.clone().multiply(toGlobe).invert()).multiplyScalar(relief.radius).add(centre).sub(chartOrigin)
+  eye.set(p.dot(chartEx), p.dot(chartEy), p.dot(chartEn))
+}
+
+export function chartAxes(turn: THREE.Quaternion, quaternion: THREE.Quaternion, axes: THREE.Matrix3): void {
+  const q = turn.clone().multiply(toGlobe).invert().multiply(quaternion)
+  const x = new THREE.Vector3(1, 0, 0).applyQuaternion(q)
+  const y = new THREE.Vector3(0, 1, 0).applyQuaternion(q)
+  const z = new THREE.Vector3(0, 0, 1).applyQuaternion(q)
+  axes.set(x.dot(chartEx), y.dot(chartEx), z.dot(chartEx), x.dot(chartEy), y.dot(chartEy), z.dot(chartEy), x.dot(chartEn), y.dot(chartEn), z.dot(chartEn))
+}
+
+export function low(height: number, range: number[]): number {
+  return 1 - smooth(Math.log(Math.max(height, 1e-9) / range[0]!) / Math.log(range[1]! / range[0]!))
+}
+
+export function lowEven(height: number, range: number[], round: number): number {
+  const x = Math.min(Math.max(Math.log(Math.max(height, 1e-9) / range[0]!) / Math.log(range[1]! / range[0]!), 0), 1)
+  if (x < round) return 1 - x * x / (2 * round * (1 - round))
+  if (x > 1 - round) return (1 - x) * (1 - x) / (2 * round * (1 - round))
+  return 1 - (x - round / 2) / (1 - round)
+}
+
+export function closeHeight(position: THREE.Vector3): number {
+  return (position.distanceTo(centre) - relief.radius) / relief.radius
+}
 
 function hermite(x: number, from: number, to: number, slopeFrom: number, slopeTo: number): number {
   const x2 = x * x
@@ -127,7 +159,6 @@ function along(p: Pace, seconds: number): number {
   return hermite((seconds - p.film[i]!) / span, p.path[i]!, p.path[i + 1]!, span * p.slope[i]!, span * p.slope[i + 1]!)
 }
 
-const lifts = { dive: paceOf(deck.air.lift.dive, 0), rise: paceOf(deck.air.lift.rise, 0) }
 const stops = paceOf(deck.flight.exposureStops, 0)
 
 export function exposure(seconds: number): number {
@@ -137,14 +168,6 @@ export function exposure(seconds: number): number {
 
 export function exposed(seconds: number): number {
   return exposure(deck.life.proof.cameraHeld ? 0 : seconds)
-}
-
-export function lifted(kind: 'dive' | 'rise', out: number): number {
-  const p = lifts[kind]
-  const n = p.film.length
-  if (out <= p.film[0]!) return p.path[0]!
-  if (out >= p.film[n - 1]!) return p.path[n - 1]!
-  return Math.min(Math.max(along(p, out), 0), 1)
 }
 
 export class JupiterPlan extends StopPlan {
@@ -176,8 +199,6 @@ export class JupiterPlan extends StopPlan {
     const dur = land.end - land.start
     const k = place.approach[kind]
     const out = kind === 'dive' ? land.start - time : time - land.end
-    const h = handoverOf(this.id, 'rise')
-    if (h && land.end + deck.flight.ease.backSeconds > h.time + 1e-9) throw new Error('jupiter: flight.ease.backSeconds reaches past the handover of the rise')
     const at = (t: number, more: number): Pose => flight(t - land.start - dur / 2 - config.shutterFraction / (2 * config.fps), this.p.terrain.vfov, k.back * more, k.height * more)
     if (out <= 0) return at(time, 0)
     const pose = at(time, Math.pow(out / k.seconds, k.power))
@@ -211,13 +232,23 @@ export class JupiterPlan extends StopPlan {
     return super.risePose(time, view)
   }
 
+  private heightAt(seg: Segment, time: number): number {
+    return (seg.kind === 'dive' ? this.divePose(time, 'orbit') : this.risePose(time, 'orbit')).position.length() - 1
+  }
+
+  override skyShare(seg: Segment, time: number): SkyShares | null {
+    if (seg.kind !== 'dive' && seg.kind !== 'rise') return super.skyShare(seg, time)
+    return { low: low(this.heightAt(seg, time), place.scene.sky) }
+  }
+
+  override skyCarryShare(seg: Segment, time: number): number | null {
+    if (seg.kind !== 'dive' && seg.kind !== 'rise') return super.skyCarryShare(seg, time)
+    return low(this.heightAt(seg, time), place.scene.skyTurn)
+  }
+
   override skyTurnShare(seg: Segment, time: number): number | null {
-    const h = handoverOf(this.id, 'rise')
-    if (seg.kind !== 'rise' || !h) return super.skyTurnShare(seg, time)
-    const span = place.sky.turnFrames / config.fps
-    if (span <= 0) return super.skyTurnShare(seg, time)
-    const k = Math.min(Math.max(1 - (time - (h.lastFrame + 1) / config.fps) / span, 0), 1)
-    return k * k * k * (k * (k * 6 - 15) + 10)
+    if (seg.kind !== 'dive' && seg.kind !== 'rise') return super.skyTurnShare(seg, time)
+    return low(this.heightAt(seg, time), place.scene.skyTurn)
   }
 }
 
