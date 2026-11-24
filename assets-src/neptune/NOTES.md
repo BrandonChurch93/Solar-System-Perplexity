@@ -4413,3 +4413,95 @@ MAIL 621 from the Builder (/root) to every builder with a commit due. One sandbo
 - 09:34:01 UTC, MEASURED: git push --dry-run origin HEAD:refs/heads/agent/neptune-place gives "Everything up-to-date", exit 0. My
   login holds. No mail sent (it asks for a line only on failure). If a later push fails for the login: bundle from 87af1f55
   (my last commit on the remote) to the head, attached to the NAMED mail.
+
+## 09:44 UTC: MAIL 605 (c) measured, and my answer (word for word)
+
+- MEASURED: npx tsx assets-src/neptune/place/frames.ts --dir out/work/nep/m605 --frames 4758 --tier review --format master
+  --diag beauty/noplace on 0b9017c0: "out/work/nep/m605/f4758-beauty_noplace.png 1674.2s 24 samples", exit 0, 09:16:19 to
+  09:44:24. 69.8 s a sample. Beside it ran one tsc, two node scripts, git and python of seconds each.
+
+Answer to MAIL 605 (c), from /root/neptune_builder, 09:44 UTC, the one line promised. MEASURED on commit 0b9017c0, my VM (software renderer, 4 cores): frame 4758, the handover report's view beauty/noplace, review tier, master format: 1674.2 s for 24 samples, 69.8 s a sample, exit 0, started 09:16:19, ended 09:44:24 (a tsc run and two short node scripts ran beside it, seconds each). No compile of minutes in it: the same view at draft is 66.2 s a frame of one sample (4758, texels view, mail of 09:18). So the 4.9 minutes of the machine's line are about four samples of 24 on a faster machine or a cut run, not one stuck frame; the cost is the deep scene's march at master size, as MAIL 579 took it. My login holds (MAIL 621 dry run, exit 0, 09:34). Notebook on agent/neptune-place 01075e03; this line goes in with the next commit.
+
+## 09:44 to 10:02 UTC: the look of 4860, runs n1 to p7 (preview draft, one sample, about 42 s a run with compile, 23.6 s the frame after the first)
+
+Every run: out/work/nep/cost/run.sh NAME CODE JSON FRAMES; looked at with st.sh (pair over the approved, storm at three times),
+lm.sh (the right half up to the limb at three times), boxes.py, limb.py, g17.py. All MEASURED on my VM.
+
+| run | what changed against the run before | result |
+| --- | --- | --- |
+| n1 | deep.N.ts (arms' start as a value), arms.from 0.75, 1.5 | CONTROL: equal to m5 to the bit (cmp) |
+| n2 | arms.from 0.15, 1.0; arms light 0.6, count 3; dark 0.15; collar 1.0, 1.9, 0.3, 0.25 | the arms wind into the eye, no flat dark ellipse; too clean a pinwheel; floor 28 61 107 (approved 37 71 110), G17 1.285 / 0.764 |
+| n3 | arms.from 0.4, 1.3; cirrus castWave 0.06, cast 2.0 | the eye is dark with arms cut into its rim; the three hard dark bits under the second streamer are one soft shadow, the shadows under the ridge are soft; G17 1.285 / 0.617 (the lower quarter fell with the soft shadows) |
+| p3 | deep.P.ts (veil sizes as a value), sizes 3 | CONTROL: equal to n3 to the bit (cmp) |
+| p4 | veil wave 2.0, long 5, sizes 5 | broader soft bands under the limb in place of many thin ruled streaks |
+| p5 | veil share 0.98, contrast 5 | bands with dark gaps, but the band under the limb stands alone as an even bright band again: not taken |
+| p6 | veil share 0.93, contrast 4.5, long 3 | layered pale and blue bands toward the limb, no band standing alone; taken |
+| fin | p6, frames 4707, 4745, 4985, 5006 | 4707 equal to the second commit's to the bit; 5006 differs in the stars only (below); 4745: the ruled rings and the grey ruled patch of the second commit are gone, the storm is a whirl with a pale collar, BUT a new pale blotch on the dark near deck (lower left); 4985: the flat grey patch right of the dark oval is gone |
+| p7 | deck near drop 0.46 to 0.56 | 4745: the blotch is down to a few faint patches; 4860 near left 3 15 37 (approved 3 16 34), near mid 5 19 44 (7 27 52) |
+
+- Cause of the blotch, READ IN CODE and confirmed by p7: level went 0.45 to 0.55 in m4 while the near deck's drop stayed 0.46, so
+  the long lumps of the deck stood at up to 0.44 of brightness there, where they were under 0.3 before.
+- 5006 against the second commit's (preview draft): mean 3.58, 38.6 percent of the pixels differ, all of them in the sky (the
+  difference picture is black over the planet's disc, the moon and the ring's own light; /tmp/c5006.jpg looked at): the stars
+  stand 0.07 of the turn (about 8 degrees) further on, by the height law.
+- Still wrong at 4860 against the approved image, looked at: no white torn bands in the far field (mine are soft pale and blue
+  bands; the far field under the veil has no small structure, the veil is three to five sizes of long bands summed along the
+  line of sight); the eye is smaller and more of a pinwheel than the approved's wide dark oval; the near wall of the eye is one
+  clear edge; fine comb lines at the right rim of the eye at three times size; the shadow of the second streamer is shorter than
+  the approved's long band.
+- Values now: deep.FIN.json (= P7 in the committed style, 135 lines; fmt.py checks that every value is equal), deep.FIN.ts
+  (= deep.P.ts: F less the unused value, T27's veil and streamer parts, mkM, mkN, mkP).
+
+## 10:02 to 10:20 UTC: the final frames looked at; the rise's star turn, three laws
+
+- fin2 (deep.FIN, preview draft): 4730 30.7 s (with compile), 4752 16.5, 4757 19.8, 4758 19.8, 4856 to 4863 21.8 to 23.3 s each.
+  4860 of fin2 is equal to p7's to the bit. Eight frames in a row 4856 to 4863, looked at one by one (storm at twice size,
+  limb at twice size, the seven difference pictures times 8): the same picture drifting, no pattern that changes from frame
+  to frame; the seven differences look alike (stars, the ridge's edges, the rim of the eye, all from the camera's drift),
+  mean 6.07 to 6.09 levels each, the deck between them dark. 4730, 4752, 4757, 4758 looked at: the storm is a whirl with a
+  dark eye and a pale collar on both sides of the change of view; at 4730 the veil's own edge shows as a faint paler wedge
+  right of the storm (weaker than the grey ruled patch of the second commit, still there).
+- vitest beside a render: 2 of 398 failed by the 5 s limit (globe-cap, shutter). Alone, 10:12: 398 of 398. A test run beside a
+  render proves nothing; not done again.
+- 16 by 9 draft (fin16): 4605 23.3 s, sha256 begins 5ae18138 (as before); 4860 81.7 s, G17 median 0.934, lower quarter 0.549
+  (second commit 1.002 and 0.790). The lower quarter fell: the tiles of the soft shadows and of the veil hold less fine
+  contrast than the approved.
+- The rise's star turn. MEASURED by the best match of the star pattern in the upper right of consecutive preview frames
+  (out/work/nep/cost/stars.py, pixels a frame at 960 wide):
+  the clock's law (R1, the second commit): 5006 (-32,-28), 5008 (-26,-25), 5012 (-17,-18), 5016 (-8,-9), 5020 (-2,-3), 5022
+  (-1,-1), 5024 (0,0).
+  the logarithm of the height (fin3): 5004 (-30,-25), 5006 (-20,-16), 5008 (-12,-10), then 5021 (+1,+3), 5022 (+1,+2), 5023
+  (0,+1), 5024 (0,0): THE STARS GO BACK. The turn is over by about 5014 (share 0.003 at 5016) while the eye still turns
+  (0.54 degrees a frame at 5016, 0.18 at 5021), and the eye's own turn moves the stars the other way. A fault of my first
+  law, found by this measure, not by the node numbers.
+  the square of the angle done (fin4): 5006 (-47,-43), 5010 (-35,-36), 5016 (-19,-24), 5020 (-8,-11), 5023 (-2,-2), 5024
+  (-1,-1): no way back, but half as fast again as the clock's law at the judged frame.
+- READ in node (out/work/nep/m605/laws.ts): the eye turns one way through the whole rise, 95.5 degrees from frame 4957 to the
+  end, 0.48 degrees a frame at 4957, most 2.57 at 4983, 0.02 at 5024; its angle to the end direction falls in every frame.
+- Third law, in the work tree now: the share is 1 less the angle done over the whole angle, with a soft start over the first
+  0.15 of it (move.json sky.back). Node: 4972 0.9063 (clock 0.9217), 4988 0.5101 (0.5755), 5006 0.1186 (0.1325), 5016 0.0202
+  (0.0174), 5024 0; largest difference from the clock's law 0.0656, largest step 0.0276 a frame. Rendering fin5 to measure.
+- smooth --only path on the work tree (10:19): green, numbers as in the second commit (the path is not touched).
+
+## 10:20 to 10:29 UTC: the third star law measured; the checks before the third commit
+
+- fin5 (third law, preview draft, frames 4956 to 4972 and 4996 to 5024). MEASURED with stars.py, pixels a frame at 960 wide:
+  4957 to 4966 equal to the second commit's frame for frame (+8,+4 falling to -2,+11); 4968 (-13,+13), 4970 (-27,+13), 4972
+  (-44,+13) against -8, -16, -23 of the second commit: the turn speeds up sooner, evenly, 8 to 9 pixels a frame more with
+  each frame, no jump. 4997 (-45,-22), 5006 (-23,-20), 5010 (-16,-15), 5016 (-8,-9), 5020 (-4,-4), 5023 (-1,-1), 5024 (0,0):
+  NO WAY BACK; from 5016 on the same as the clock's law, at the judged frame 5006 slower than it ((-32,-28) there).
+- 5006 of fin5 against the second commit's own 5006 (out/work/nep/cost/pre/f5006.png): mean 2.933 levels, 33.56 percent of
+  pixels differ; the difference picture is black over the planet, the ring and the moon; only the stars stand elsewhere. The
+  judged frame 5006 is changed on purpose, in the stars only.
+- Sheets looked at, every frame: /tmp/st-a.jpg (5001 to 5008, upper right at full size), /tmp/st-b.jpg (5017 to 5024),
+  /tmp/st-all.jpg (4996 to 5024, whole frames): the stars, the ring and the moon stand steady from frame to frame, the planet
+  recedes evenly, nothing comes in or goes out.
+- smooth --only path, 10:24, in the laid-out tree of main 2008483c with "neptune" off handover.ownPath and this src: green,
+  the same numbers as on my tree. tsc clean in both trees.
+- 10:26 to 10:28: tsc clean (exit 0, no line); vitest alone 398 of 398 (150 suites); gate G11 and G15 pass
+  ("every asset has a row or a recipe"; "finished stops: neptune/web 350 MB, neptune/full 1393 MB").
+- Looks pushed 10:28: 4860 final state over the approved image (G17 1.286 and 0.615 at preview; 0.934 and 0.549 at 16 by 9
+  draft; 22.0 to 23.6 s a draft frame), the storm at three times size, the rise sheet 4996 to 5024.
+- NOT MEASURED on this state: the tool's parity (uhd against 16 by 9), any review tier frame, the G13 line of the texels
+  view. The diff of deep.ts adds nothing counted in pixels (READ: no new use of the buffer's size, gl_FragCoord or a
+  derivative), so the parity of the first commit's kind is expected to hold; that is a reading, not a measure.

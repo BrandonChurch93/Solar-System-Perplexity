@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { config, type Segment } from '../../config'
 import type { Pose, ViewKind } from '../../core/types'
+import { handoverOf } from '../../director/handover'
 import { StopPlan, type Fit, type MoveParams } from '../../director/moves'
 import { drift, lookAt } from '../../director/rig'
 import close from './close.json'
@@ -157,11 +158,27 @@ class NeptunePlan extends StopPlan {
     return move.sky.own && (seg.kind === 'dive' || seg.kind === 'rise') ? { low: this.skyLow(seg.kind, time) } : null
   }
 
-  override skyCarryShare(seg: Segment, time: number): number | null {
-    return seg.kind === 'dive' ? this.skyLow('dive', time) : null
+  // The carry of the sky in the rise, where the sky stays in the frame from the change of view to the travel: the stars turn back from
+  // the sky of the close view to the sky of the travel with the eye's own turn, by the angle its line of sight still has to go to the
+  // direction the rise ends on (the eye turns one way through the whole rise, about 96 degrees). Past the first share of that turn
+  // (move.json sky.back), over which it sets in softly, the stars' turn is in step with the eye's own, so the stars come to rest as
+  // the eye does and never go back the other way. Two laws tried and left (assets-src/neptune/NOTES.md, 24 Nov 10:15): by the
+  // logarithm of the height the turn was over ten frames before the eye had come to rest, and the stars went back in those frames;
+  // by the square of the angle done they ran half as fast again at the judged frame. Nothing here reads the clock.
+  private skyBack(time: number): number {
+    const ahead = (t: number): THREE.Vector3 => new THREE.Vector3(0, 0, -1).applyQuaternion(this.eye('rise', t, 'orbit').quaternion)
+    const end = ahead(this.seg.rise.end)
+    const whole = ahead((handoverOf(this.id, 'rise')!.lastFrame + 1) / config.fps).angleTo(end)
+    const done = 1 - Math.min(ahead(time).angleTo(end) / whole, 1)
+    const soft = move.sky.back
+    return 1 - (done < soft ? (done * done) / (2 * soft) : done - soft / 2) / (1 - soft / 2)
   }
 
-  // The rise keeps the engine's law for the turn until the engine turns the sky by height.
+  override skyCarryShare(seg: Segment, time: number): number | null {
+    return seg.kind === 'dive' ? this.skyLow('dive', time) : seg.kind === 'rise' ? this.skyBack(time) : null
+  }
+
+  // The turn of the rise is the carry above (the engine gives no turn of its own to a stop without skyTurnEase).
   override skyTurnShare(seg: Segment, time: number): number | null {
     return seg.kind === 'dive' ? this.skyLow('dive', time) : super.skyTurnShare(seg, time)
   }

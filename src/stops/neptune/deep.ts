@@ -49,6 +49,8 @@ uniform vec4 uArms;
 uniform vec4 uArmMake;
 uniform vec4 uSpin;
 uniform vec4 uCollar;
+uniform vec4 uArmIn;
+uniform float uVeilSizes;
 uniform vec4 uWind;
 uniform vec4 uCirrusWind;
 uniform vec4 uDeckWave;
@@ -89,8 +91,10 @@ uniform vec4 uFanBand;
 uniform vec4 uFanWest;
 uniform vec4 uFanMake;
 uniform vec2 uVeil;
+uniform vec2 uVeilFall;
 uniform vec3 uVeilLight;
 uniform float uStreamFan[${STREAMERS}];
+uniform float uStreamBend[${STREAMERS}];
 uniform vec4 uDeckFine;
 uniform vec4 uHazeLow;
 uniform vec4 uHazeHigh;
@@ -101,7 +105,7 @@ uniform vec4 uLight;
 uniform vec3 uSkyLight;
 uniform vec3 uCloudLight;
 uniform vec4 uLightMake;
-uniform vec2 uThrough;
+uniform vec3 uThrough;
 in vec3 vPos;
 in vec3 vClip;
 out vec4 outColor;
@@ -144,10 +148,13 @@ float blend(float a, float b, float f) {
   return 0.5 + (mix(a, b, f) - 0.5) * inversesqrt(f * f + (1.0 - f) * (1.0 - f));
 }
 // The fan: what the eye of the surface view sees of the deck over its frames, a wedge on the ground (deep.json, fan). 1 inside it,
-// 0 farther outside it than the border: a weight by distance on the ground, never by time or height.
+// 0 farther outside it than the border: a weight by distance on the ground, never by time or height. fanIn: how far inside the fan
+// a place lies (less than 0 outside).
+float fanIn(vec2 uv) {
+  return min(min(dot(uFanLeft.xy, uv) - uFanLeft.z, dot(uFanRight.xy, uv) - uFanRight.z), uFanFar.z - dot(uFanFar.xy, uv));
+}
 float fanOf(vec2 uv) {
-  float s = min(min(dot(uFanLeft.xy, uv) - uFanLeft.z, dot(uFanRight.xy, uv) - uFanRight.z), uFanFar.z - dot(uFanFar.xy, uv));
-  return smoothstep(-uFanFar.w, 0.0, s);
+  return smoothstep(-uFanFar.w, 0.0, fanIn(uv));
 }
 // u along the band, v across it, height over the smooth deck, of a point given from the planet's centre.
 vec3 bandOf(vec3 q) {
@@ -160,8 +167,8 @@ float wind(float v) {
   return uWind.x + uWind.y * sin(v * uWind.z + uWind.w);
 }
 // The veil: a thin sheet of ice haze over the deck inside the fan, where the approved close image has its pale far deck (deep.json,
-// fan.veil). Its density at a place, 0 to 1: it sets in across the flow, ends toward the west and lies in bands along the flow of three
-// sizes (across: uFanMake.x, each uFanMake.y times as long) that ride the wind; a size is left out before a pixel's footprint across
+// fan.veil). Its density at a place, 0 to 1: it sets in across the flow, ends toward the west and lies in bands along the flow of uVeilSizes
+// sizes (across: uFanMake.x and each next 0.41 of the one before, each uFanMake.y times as long) that ride the wind; a size is left out before a pixel's footprint across
 // the flow (least) holds a wave of it.
 float veilAt(vec2 uv, float least, float t) {
   float vt = uv.y + uFanBand.x * uv.x;
@@ -170,7 +177,7 @@ float veilAt(vec2 uv, float least, float t) {
   float sum = 0.0;
   float lam = uFanMake.x;
   float amp = 0.5;
-  for (int k = 0; k < 3; k++) {
+  for (int k = 0; k < int(uVeilSizes); k++) {
     float keep = smoothstep(least, 2.0 * least, lam);
     sum += amp * keep * (vnoise(vec3(vt / lam + 7.3 * float(k), (uv.x - wind(uv.y) * t) / (lam * uFanMake.y), 4.5 + 5.0 * float(k))) - 0.5);
     amp *= 0.62;
@@ -178,25 +185,36 @@ float veilAt(vec2 uv, float least, float t) {
   }
   return shape * mix(1.0 - uFanBand.w, 1.0, clamp(0.5 + uFanMake.z * sum, 0.0, 1.0));
 }
-// The veil's optical depth along a ray from the eye to tEnd. The sheet is cut into layers; a ray crosses each on its way down and,
-// if nothing stops it, again on its way up, and its path inside a layer is as long as the sphere makes it: short from above, long
-// along a low line of sight, so the far deck goes pale and the limb bright while the view from above stays nearly clear. b: the
-// ray's direction times the eye from the centre; rt2: the square of its nearest distance to the centre. The eye stands over the sheet.
-float veilDepth(vec3 oc, vec3 rd, float b, float rt2, float tEnd, float pix, float t) {
+// The veil's optical depth along a ray from the eye. The sheet is cut into layers; a ray crosses each on its way down and, if the
+// deck does not stop it (through), again on its way up, and its path inside a layer is as long as the sphere makes it: short from
+// above, long along a low line of sight, so the far deck goes pale and the limb bright while the view from above stays nearly
+// clear. b: the ray's direction times the eye from the centre; rt2: the square of its nearest distance to the centre. The eye
+// stands over the sheet. The sheet thins upward by a power (uVeilFall: the power and the weight that keeps the whole depth), so
+// its top is no edge at the limb. It is haze among the rolls of the deck as much as over them: a ray that ends on a roll is read
+// as far as the smooth deck, so no roll cuts its outline into the sheet (deck.relief stands up to the sheet's own height).
+float veilDepth(vec3 oc, vec3 rd, float b, float rt2, bool through, float pix, float t) {
   float sum = 0.0;
+  float span = uVeil.y - uVeil.x;
   for (int k = 0; k < int(uFanMake.w); k++) {
     float r0 = uRadius + mix(uVeil.x, uVeil.y, float(k) / uFanMake.w);
     float r1 = uRadius + mix(uVeil.x, uVeil.y, (float(k) + 1.0) / uFanMake.w);
-    float rm = 0.5 * (r0 + r1);
     float d1 = r1 * r1 - rt2;
     if (d1 <= 0.0) continue;
-    float len = sqrt(d1) - sqrt(max(r0 * r0 - rt2, 0.0));
-    float sm = sqrt(max(rm * rm - rt2, 0.0));
-    float mu = max(sm / rm, 0.02);
-    float ta = -b - sm;
-    if (ta > 0.0 && ta < tEnd) sum += len * veilAt(bandOf(oc + rd * ta).xy, 1.5 * ta * pix / mu, t);
-    float tb = -b + sm;
-    if (tb > 0.0 && tb < tEnd) sum += len * veilAt(bandOf(oc + rd * tb).xy, 1.5 * tb * pix / mu, t);
+    // The ray's part inside the layer, measured from its nearest point to the centre: from l0 to l1.
+    float l1 = sqrt(d1);
+    float l0 = sqrt(max(r0 * r0 - rt2, 0.0));
+    float lm = 0.5 * (l0 + l1);
+    // The density falls from the underside (1) to the top (0); it is read at two points of the part (the rule of two points),
+    // where the ray is there, so the sum has no step where a line of sight comes under a layer.
+    float lg = 0.288675 * (l1 - l0);
+    float ua = clamp((uRadius + uVeil.y - sqrt(rt2 + (lm - lg) * (lm - lg))) / span, 1e-4, 1.0);
+    float ub = clamp((uRadius + uVeil.y - sqrt(rt2 + (lm + lg) * (lm + lg))) / span, 1e-4, 1.0);
+    float len = uVeilFall.y * 0.5 * (pow(ua, uVeilFall.x) + pow(ub, uVeilFall.x)) * (l1 - l0);
+    float mu = max(lm / sqrt(rt2 + lm * lm), 0.02);
+    for (int way = 0; way < (through ? 2 : 1); way++) {
+      float tm = way == 0 ? -b - lm : -b + lm;
+      if (tm > 0.0) sum += len * veilAt(bandOf(oc + rd * tm).xy, 1.5 * tm * pix / mu, t);
+    }
   }
   return sum * uFanWest.w;
 }
@@ -206,35 +224,44 @@ float spin(float r) {
 }
 // One octave that rides the band's wind. The octave is cut into rows of its own size across the wind; each row rides whole at the speed
 // of its middle and neighbours are blended, so a form of that size is carried and never drawn out. z: the octave's own change with time.
-float zonal(vec2 uv, float lam, float t, float seed) {
+float zonal(vec2 uv, float lam, float st, float t, float seed) {
   float s = uDeckMake.w * lam;
   float g = uv.y / s;
   float j = floor(g);
   float f = ease(g - j);
   float z = t * uDeckMake.z / sqrt(lam) + seed;
-  vec3 a = vec3((uv.x - wind(j * s) * t) * uDeckWave.y / lam + seed + 19.7 * j, uv.y / lam, z);
-  vec3 b = vec3((uv.x - wind((j + 1.0) * s) * t) * uDeckWave.y / lam + seed + 19.7 * (j + 1.0), uv.y / lam, z);
+  vec3 a = vec3((uv.x - wind(j * s) * t) * st / lam + seed + 19.7 * j, uv.y / lam, z);
+  vec3 b = vec3((uv.x - wind((j + 1.0) * s) * t) * st / lam + seed + 19.7 * (j + 1.0), uv.y / lam, z);
   return blend(vnoise(a), vnoise(b), f);
 }
 // The same for the storm: rings of the octave's own size, each turning whole at the spin of its middle. rho is the logarithm of the
-// distance, th the angle; the pitch winds the octave into a spiral.
-float winding(float rho, float th, float lam, float t, float seed) {
+// distance, th the angle; the pitch (pt) winds the octave into a spiral. A pitch shears the octave: at pitch 3 a round lump of the
+// noise is drawn out eleven times as long as broad, at pitch 6 thirty eight times, so only the long octaves take it and the
+// short ones none (deckField), and those stay as round as their sizes along and across make them.
+float winding(float rho, float th, float lam, float al, float pt, float t, float seed) {
   float s = uDeckMake.w * lam / uSpiral.x;
   float g = rho / s;
   float j = floor(g);
   float f = ease(g - j);
-  float a0 = th + uArms.y * rho;
+  float a0 = th + pt * rho;
   float aa = a0 - spin(max(exp(j * s) - uArms.w, 0.0)) * t;
   float ab = a0 - spin(max(exp((j + 1.0) * s) - uArms.w, 0.0)) * t;
   float z = rho * uSpiral.x / lam + t * uDeckMake.z / sqrt(lam);
-  vec3 pa = vec3(cos(aa) * uSpiral.y / lam + seed + 19.7 * j, sin(aa) * uSpiral.y / lam, z);
-  vec3 pb = vec3(cos(ab) * uSpiral.y / lam + seed + 19.7 * (j + 1.0), sin(ab) * uSpiral.y / lam, z);
+  // The angle is read on a circle whose size follows the distance as the logarithm does (the core added under it), so a wave is
+  // as long round the middle as the rule says at every distance and the middle itself is a place like any other, no hub of spokes.
+  float rim = exp(rho);
+  float ring = al / lam * max(rim - uArms.w, 0.0) / rim;
+  vec3 pa = vec3(cos(aa) * ring + seed + 19.7 * j, sin(aa) * ring, z);
+  vec3 pb = vec3(cos(ab) * ring + seed + 19.7 * (j + 1.0), sin(ab) * ring, z);
   return blend(vnoise(pa), vnoise(pb), f);
 }
 // The structure of the deck at a place, round 0: its octaves from the longest wavelength down to least (an octave fades out as its
-// wavelength falls from twice least to least; least.x for the streaks along the band, least.y for those round the storm). finest: the
-// shortest wavelength that took part.
-float deckField(vec2 uv, vec2 least, float t, out float finest) {
+// wavelength falls from twice least to least; least.x, least.y: what a pixel covers across and along the band, least.z: round the
+// storm). The longest waves are bands, drawn out along the wind (uDeckWave.y); each shorter octave is drawn out less, by a power of
+// its wavelength (uDeckWave.w), until it is as long as broad: cloud in lumps between the bands, not streaks at every size. And every
+// octave is carried across the wind by the longer ones (uArmMake.w, in wavelengths of the carrying octave), so a band meanders and
+// what lies in it curls with it. finest: the shortest wavelength that took part.
+float deckField(vec2 uv, vec3 least, float t, out float finest) {
   vec2 d = uv - uStorm.xy;
   float r = length(d);
   float th = atan(d.y, d.x);
@@ -246,10 +273,16 @@ float deckField(vec2 uv, vec2 least, float t, out float finest) {
   float thin = 0.0;
   float thinAmp = 1.0;
   float lam = uDeckWave.x;
+  float carry = 0.0;
   finest = lam;
   for (int k = 0; k < int(uDeckMake.y); k++) {
-    float keepZ = smoothstep(least.x, 2.0 * least.x, lam);
-    float keepW = smoothstep(least.y, 2.0 * least.y, lam * local);
+    float draw = pow(uDeckWave.x / lam, uDeckWave.w);
+    float st = min(uDeckWave.y * draw, 1.0);
+    float al = min(uSpiral.y * draw, uSpiral.x);
+    float pt = uArms.y * (1.0 - clamp((al - uSpiral.y) / max(uSpiral.x - uSpiral.y, 1e-4), 0.0, 1.0));
+    float leastZ = max(least.x, least.y * st);
+    float keepZ = smoothstep(leastZ, 2.0 * leastZ, lam);
+    float keepW = smoothstep(least.z, 2.0 * least.z, lam * local);
     if (keepZ <= 0.0 && keepW <= 0.0) break;
     float seed = 17.3 * float(k) + 0.5;
     float z = 0.0;
@@ -257,16 +290,17 @@ float deckField(vec2 uv, vec2 least, float t, out float finest) {
     float rz = 0.0;
     float rw = 0.0;
     if (m < 0.985 && keepZ > 0.0) {
-      float n = zonal(uv, lam, t, seed);
+      float n = zonal(vec2(uv.x, uv.y + carry), lam, st, t, seed);
       z = keepZ * (n - 0.5);
       rz = keepZ * pow(1.0 - abs(2.0 * n - 1.0), uWisp.y);
     }
     if (m > 0.015 && keepW > 0.0) {
-      float n = winding(rho, th, lam, t, seed);
+      float n = winding(rho + carry / uSpiral.x, th, lam, al, pt, t, seed);
       w = keepW * (n - 0.5);
       rw = keepW * pow(1.0 - abs(2.0 * n - 1.0), uWisp.y);
     }
     sum += amp * mix(z, w, m);
+    carry += uArmMake.w * 2.0 * lam * mix(z, w, m);
     if (float(k) >= uWisp.x) {
       thin += thinAmp * mix(rz, rw, m);
       thinAmp *= uWisp.z;
@@ -280,7 +314,7 @@ float deckField(vec2 uv, vec2 least, float t, out float finest) {
 }
 // The height of the deck over the smooth sphere, and (out) the parts the colour needs: field (structure, round 0), arm (0 to 1 on an
 // arm of the storm), eye (1 on the floor of the bowl, 0 outside the wall), r (distance from the storm's middle).
-float deckHeight(vec2 uv, vec2 least, float t, out vec4 parts, out float finest) {
+float deckHeight(vec2 uv, vec3 least, float t, out vec4 parts, out float finest) {
   vec2 d = uv - uStorm.xy;
   float r = length(d);
   float x = r / uStorm.z;
@@ -290,7 +324,7 @@ float deckHeight(vec2 uv, vec2 least, float t, out vec4 parts, out float finest)
   float rho = log(r + uArms.w);
   float turn = atan(d.y, d.x) + uArms.y * rho - uSpin.x * uSpin.z * t;
   float arm = 0.5 + 0.5 * cos(uArms.x * turn + uArmMake.x * 6.2831853 * field);
-  float armShare = smoothstep(uBowl.z * 0.75, uBowl.z * 1.5, x) * exp(-(r * r) / (uStorm.w * uStorm.w));
+  float armShare = smoothstep(uArmIn.x, uArmIn.y, x) * exp(-(r * r) / (uStorm.w * uStorm.w));
   parts = vec4(field, arm * armShare, eye, r);
   return -uBowl.x * eye + uArms.z * armShare * arm + uDeckWave.z * field * (1.0 - 0.6 * eye);
 }
@@ -299,7 +333,7 @@ float deckHeight(vec2 uv, vec2 least, float t, out vec4 parts, out float finest)
 // side away from the Sun, where it trails widest, and a share of that (uCirrusFringe.y) on the side toward the Sun. crest (out): the
 // body without that trail, as narrow on the side away from the Sun as toward it: what the heaps stand in. low (out): 1 in the lower
 // part of the body, where the fibres trail (uCirrusFringe.z to w, shares of its thickness, over which they end upward).
-float cirrusBody(vec3 p, float t, out float lee, out float crest, out float low, out float away) {
+float cirrusBody(vec3 straight, vec3 bent, float t, out float lee, out float crest, out float low, out float away) {
   float best = 0.0;
   away = 1e3;
   lee = 0.0;
@@ -312,6 +346,8 @@ float cirrusBody(vec3 p, float t, out float lee, out float crest, out float low,
   for (int i = 0; i < ${STREAMERS}; i++) {
     vec4 line = uStreamLine[i];
     vec4 body = uStreamBody[i];
+    // Each streamer takes its own share of the bend: a thin far one stays a line.
+    vec3 p = mix(straight, bent, uStreamBend[i]);
     float z = (p.z - body.y) / body.z;
     float along = (p.x - ride - line.x) / (line.y - line.x);
     float ac = clamp(along, 0.0, 1.0);
@@ -334,6 +370,7 @@ float cirrusBody(vec3 p, float t, out float lee, out float crest, out float low,
     vec4 line = uStreamLine[i];
     vec4 body = uStreamBody[i];
     vec4 make = uStreamMake[i];
+    vec3 p = mix(straight, bent, uStreamBend[i]);
     float z = (p.z - body.y) / body.z;
     float along = (p.x - ride - line.x) / (line.y - line.x);
     float off = p.y - mix(line.z, line.w, along) - uStreamWide[i].z * 4.0 * along * (1.0 - along);
@@ -377,7 +414,9 @@ float cirrusFar(vec3 p, float t) {
     float dy = max(off - 2.53 * semi, -off - (2.23 * uCirrusMake.z + 0.3) * semi) * uStreamWide[i].w - 0.75 * bent;
     float dz = max(body.y - p.z, p.z - body.y - 1.05 * body.z) - 0.42 * bent;
     float dx = max(line.x + ride - p.x, p.x - ride - line.y);
-    best = min(best, max(max(dy, dz), dx));
+    // A streamer of the globe's own map has nothing inside the fan: there its room ends at the fan's border.
+    float dFan = uStreamFan[i] * (fanIn(p.xy) - 0.75 * bent) - (1.0 - uStreamFan[i]) * 1e3;
+    best = min(best, max(max(max(dy, dz), dx), dFan));
   }
   return max(best, 0.0);
 }
@@ -403,8 +442,7 @@ vec3 cirrusBend(vec3 p, float least, float t) {
 // The noise that tears the cirrus, 0 to 1: octaves in rows across the wind as on the deck (rows by rowY, the place before the bend),
 // drawn out along the sweep and upward. On the crest every octave keeps heaps between creases, so the body billows like cumulus;
 // on the side away from the Sun (lee) the finer ones are drawn out far and keep ridges, so it frays into fibres.
-float cirrusNoise(vec3 q, float rowY, float lee, float least, float t, int most, float need, out float finest, out float lack) {
-  lack = 0.0;
+float cirrusNoise(vec3 q, float rowY, float lee, float least, float t, int most, float need, out float finest) {
   float sum = 0.0;
   float amp = 1.0;
   float lam = uCirrusWave.x;
@@ -438,26 +476,21 @@ float cirrusNoise(vec3 q, float rowY, float lee, float least, float t, int most,
     amp *= uCirrusWave.w;
     lam *= 0.5;
     // What the octaves still to come can add at most (half their weights): where even that leaves the noise under what any cloud
-    // needs here, there is none, and the rest is not read. The same answer as reading them all. lack (out): how far short it is.
+    // needs here, there is none, and the rest is not read. The same answer as reading them all.
     float top = 0.5 + (sum + 0.5 * amp / (1.0 - uCirrusWave.w)) * (1.0 - uCirrusWave.w) * 2.2;
-    if (top < need - 1e-4) {
-      lack = need - top;
-      return 0.0;
-    }
+    if (top < need - 1e-4) return 0.0;
   }
   return clamp(0.5 + sum * (1.0 - uCirrusWave.w) * 2.2, 0.0, 1.0);
 }
 // cirrusInside: the density at a place the caller knows to lie in a streamer's room (cirrusFar is 0 there). away (out): how far
-// the bent place stands outside every body. lack (out): inside a body that the noise has eaten, how far the noise is short of
-// what a heap or a fibre needs there (0 where there is cloud, and where no noise could make any).
-float cirrusInside(vec3 p, float least, float t, int most, out float finest, out float away, out float lack) {
+// the bent place stands outside every body.
+float cirrusInside(vec3 p, float least, float t, int most, out float finest, out float away) {
   finest = least;
-  lack = 0.0;
   vec3 q = cirrusBend(p, least, t);
   float lee;
   float crest;
   float low;
-  float body = cirrusBody(q, t, lee, crest, low, away);
+  float body = cirrusBody(p, q, t, lee, crest, low, away);
   if (body <= 0.002) return 0.0;
   // The lowest noise at which a heap or a fibre stands here (see below): under it the place is empty whatever the noise reads.
   float needHeap = crest > 0.0 ? 1.0 - crest / (uCirrusMake.x * (1.0 - uCirrusBend.z * crest)) : 2.0;
@@ -465,21 +498,18 @@ float cirrusInside(vec3 p, float least, float t, int most, out float finest, out
   float need = min(needHeap, needFibre);
   if (need > 1.0) return 0.0;
   // Inside the crest every octave is a heap; the fibres begin where the crest ends.
-  float n = cirrusNoise(q, p.y, smoothstep(0.25, 0.7, lee), least, t, most, need > 0.0 ? need : -2.0, finest, lack);
+  float n = cirrusNoise(q, p.y, smoothstep(0.25, 0.7, lee), least, t, most, need > 0.0 ? need : -2.0, finest);
   // The crest: heaps with an outline, as tall as they are broad, so the side away from the Sun stands in its own shade.
   float heap = clamp((crest - uCirrusMake.x * (1.0 - n) * (1.0 - uCirrusBend.z * crest)) / uCirrusMake.y, 0.0, 3.0);
   // The fringe: fibres blown off the crest, thin enough to see the deck through; widest on the side away from the Sun.
   float fibre = clamp((body - uCirrusMake.x * (1.0 + uCirrusBend.w) * (1.0 - n)) / uCirrusFringe.x, 0.0, 1.0);
-  float made = max(heap * heap / 3.0, uCirrusBillow.z * fibre * smoothstep(0.0, 0.5, lee) * low);
-  lack = made > 0.0 ? 0.0 : (lack > 0.0 ? lack : max(need - n, 0.0));
-  return made;
+  return max(heap * heap / 3.0, uCirrusBillow.z * fibre * smoothstep(0.0, 0.5, lee) * low);
 }
 float cirrusDensity(vec3 p, float least, float t, int most, out float finest) {
   finest = least;
   if (cirrusFar(p, t) > 0.0) return 0.0;
   float away;
-  float lack;
-  return cirrusInside(p, least, t, most, finest, away, lack);
+  return cirrusInside(p, least, t, most, finest, away);
 }
 // Air. erfcx by the form of Ren and MacKenzie; column: the air over a point at height h along a line that leaves it at cosine mu (0 or
 // more) to the vertical, for a layer with scale height H, per unit of density at height 0.
@@ -540,7 +570,7 @@ void main() {
       vec3 q = oc + rd * td;
       vec3 g = bandOf(q);
       float steep = step(length(g.xy - uStorm.xy), uStorm.z * uBowl.z * 1.3);
-      f = g.z - deckHeight(g.xy, vec2(max(uDeckTone.w, 2.0 * td * pix)), t, parts, finest);
+      f = g.z - deckHeight(g.xy, vec3(max(uDeckTone.w, 2.0 * td * pix)), t, parts, finest);
       if (f < 0.5 * td * pix) {
         deckHit = true;
         break;
@@ -569,7 +599,7 @@ void main() {
     float mu = max(-dot(rd, up), 0.05);
     vec2 sight = normalize(vec2(dot(rd, east), dot(rd, north)) + 1e-6);
     vec2 cover = fp * sqrt(vec2(sight.x * sight.x / (mu * mu) + sight.y * sight.y, sight.y * sight.y / (mu * mu) + sight.x * sight.x));
-    vec2 fine = uDeckFine.x * vec2(max(cover.y, cover.x * uDeckWave.y), fp * sqrt(0.5 + 0.5 / (mu * mu)));
+    vec3 fine = uDeckFine.x * vec3(cover.y, cover.x, fp * sqrt(0.5 + 0.5 / (mu * mu)));
     float h0 = deckHeight(g.xy, fine, t, p0, deckFinest);
     float wisp = gWisp;
     float hE = deckHeight(g.xy + vec2(e, 0.0), fine, t, p1, f1);
@@ -585,7 +615,7 @@ void main() {
       s *= s / reach;
       vec3 qs = q + uSun * (s + 0.004);
       vec3 gs = bandOf(qs);
-      float clear = gs.z - deckHeight(gs.xy, vec2(max(uDeckTone.w, 0.5 * s)), t, p1, f1);
+      float clear = gs.z - deckHeight(gs.xy, vec3(max(uDeckTone.w, 0.5 * s)), t, p1, f1);
       shade = min(shade, clamp(0.5 + clear / (uLightMake.w * s + 0.004), 0.0, 1.0));
     }
     // The cirrus between it and the Sun.
@@ -606,8 +636,7 @@ void main() {
       float hi = mix(uShell.x, uShell.y, (float(i) + 0.5) / uLightMake.z);
       vec3 gs = bandOf(q + uSun * ((hi - g.z) / max(sunUp, 0.05)));
       float away;
-      float lack;
-      float thick = cirrusInside(gs, max(2.0 * fp, uCirrusWind.z), t, 5, f1, away, lack);
+      float thick = cirrusInside(gs, max(2.0 * fp, uCirrusWind.z), t, 5, f1, away);
       veil += thick;
       if (thick <= 0.0) i += int(uCirrusSkip.x * away / castGap);
     }
@@ -619,11 +648,11 @@ void main() {
     float liftMap = smoothstep(uVortexRim.x, uVortexRim.y, length((g.xy - uVortex.xy) * uVortex.zw) + uBand.w * p0.x) * smoothstep(uVortexRim.z, uVortexRim.w, g.y) * (1.0 - smoothstep(uZoneEnd.z, uZoneEnd.w, g.y));
     // The veil between it and the Sun takes its share of the light.
     vec3 gv = bandOf(q + uSun * ((0.5 * (uVeil.x + uVeil.y) - g.z) / max(sunUp, 0.05)));
-    sunHere *= exp(-uFanWest.z * uFanWest.w * (uVeil.y - uVeil.x) * veilAt(gv.xy, fine.x, t) / max(sunUp, 0.05));
+    sunHere *= exp(-uFanWest.z * uFanWest.w * (uVeil.y - uVeil.x) * veilAt(gv.xy, max(fine.x, fine.y * uDeckWave.y), t) / max(sunUp, 0.05));
     float bright = clamp((uDeckTone.y - uNear.z * (1.0 - smoothstep(uNear.x, uNear.y, g.y)) * smoothstep(uZoneEnd.x, uZoneEnd.y, g.y) - uWest.z * (1.0 - smoothstep(uWest.x, uWest.y, g.x)) * fanOf(g.xy) + uBand.z * liftMap + uDeckTone.x * p0.x * mix(1.0, uArmMake.z, exp(-(p0.w * p0.w) / (uStorm.w * uStorm.w))) + uWisp.w * (wisp - uDeckFine.y) * smoothstep(uDeckFine.z, uDeckFine.w, p0.x) * mix(uNear.w, 1.0, smoothstep(uNear.x, uNear.y, g.y)) * (1.0 + uFarStreak.z * smoothstep(uFarStreak.x, uFarStreak.y, g.y)) + uCollar.z * smoothstep(uBowl.z * 0.5, uBowl.z * 1.7, p0.w / uStorm.z) * (1.0 - smoothstep(uCollar.x, uCollar.y, p0.w)) * mix(1.0, min(wisp / uDeckFine.y, 3.0), uCollar.w) + uArmMake.y * p0.y) * (1.0 - uDeckTone.z * p0.z), 0.0, 1.0);
     vec3 albedo = bright < 0.5 ? mix(uNight, uBlue, bright * 2.0) : mix(uBlue, uPale, bright * 2.0 - 1.0);
     float hollow = clamp(1.0 + 2.5 * min(h0, 0.0), 0.3, 1.0);
-    float under = uCirrusBody.x * veil;
+    float under = uCirrusBody.x * uThrough.z * veil;
     deckUnder = under;
     deckLight = albedo * (sunHere * ndl * shade * (exp(-under) + uThrough.x * exp(-uThrough.y * under)) / (1.0 + uThrough.x) + uSkyLight * (0.5 + 0.5 * dot(nrm, up)) * hollow);
   }
@@ -678,8 +707,7 @@ void main() {
         g = bandOf(q);
         least = max(2.0 * tg * pix, uCirrusWind.w * len);
         float away;
-        float lack;
-        rho = cirrusInside(g, least, t, int(uCirrusBody.z), fin, away, lack);
+        rho = cirrusInside(g, least, t, int(uCirrusBody.z), fin, away);
         if (rho > 0.0) break;
         // Outside every body the next steps are empty as well: the bent place cannot reach a body sooner than its distance from it
         // times uCirrusSkip.x (the bend can fold the way, so this is a share of it and not the whole).
@@ -702,8 +730,7 @@ void main() {
         }
         float f2;
         float a2;
-        float l2;
-        float tapRho = cirrusInside(gt, max(least, uSpiral.w * ds), t, 6, f2, a2, l2);
+        float tapRho = cirrusInside(gt, max(least, uSpiral.w * ds), t, 6, f2, a2);
         toward += ds * tapRho;
         if (tapRho <= 0.0) clearTo = sm + uCirrusSkip.x * a2;
         // Deeper than this no light of the Sun comes through that the picture could show.
@@ -767,7 +794,7 @@ void main() {
   }
   // The veil over the deck inside the fan: what it lets through of the deck and what it scatters of the Sun, most toward the Sun.
   // It lies low on the deck, under the cirrus, so the shadow a streamer casts on the deck lies on it too.
-  float veilClear = exp(-veilDepth(oc, rd, b, rt2, deckHit ? tDeck : 1e8, pix, t));
+  float veilClear = exp(-veilDepth(oc, rd, b, rt2, !deckHit, pix, t));
   vec3 veilLight = uLight.x * uVeilLight * (exp(-deckUnder) + uThrough.x * exp(-uThrough.y * deckUnder)) / (1.0 + uThrough.x) * mix(1.0, (1.0 - uLight.z * uLight.z) / pow(1.0 + uLight.z * uLight.z - 2.0 * uLight.z * sunView, 1.5), uLight.y);
   vec3 airAfter = max(air - airBefore, 0.0);
   vec3 col = airBefore + clearCloud * cloud + cloudClear * (airAfter + clearDeck * (veilClear * deckLight + (1.0 - veilClear) * veilLight));
@@ -816,6 +843,9 @@ function unproject(px: number, py: number, radius: number, centre: THREE.Vector3
 
 const v4 = (a: number, b: number, c: number, d: number): THREE.Vector4 => new THREE.Vector4(a, b, c, d)
 const v3 = (a: number[]): THREE.Vector3 => new THREE.Vector3(a[0], a[1], a[2])
+// The veil's fall with height: its power, and the weight that keeps the whole depth straight down (the mean of x to the power is
+// one part in power + 1). No fall: 0 and 1.
+const veilFall = (fall: number | undefined): THREE.Vector2 => new THREE.Vector2(fall ?? 0, (fall ?? 0) + 1)
 
 export class Deep {
   readonly mesh: THREE.Mesh
@@ -870,12 +900,14 @@ export class Deep {
         uStorm: { value: v4(s.at[0]!, s.at[1]!, s.eye, s.reach) },
         uBowl: { value: v4(s.depth, s.wall[0]!, s.wall[1]!, s.ragged) },
         uArms: { value: v4(s.arms.count, s.arms.pitch, s.arms.height, s.arms.core) },
-        uArmMake: { value: v4(s.arms.warp, s.arms.light, s.rings, 0) },
+        uArmMake: { value: v4(s.arms.warp, s.arms.light, s.rings, d.curl) },
         uSpin: { value: v4(THREE.MathUtils.degToRad(s.spin.degPerSecond), s.spin.halfRadius, s.spin.pattern, 0) },
         uCollar: { value: v4(s.collar[0]!, s.collar[1]!, s.collar[2]!, s.collar[3]!) },
+        uArmIn: { value: v4(s.arms.from[0]!, s.arms.from[1]!, 0, 0) },
+        uVeilSizes: { value: fan.veil.sizes },
         uWind: { value: v4(w.deck.speed, w.deck.jet, 1 / w.deck.jetWidth, w.deck.phase) },
         uCirrusWind: { value: v4(w.cirrus.speed, w.cirrus.shear, ci.castWave, look.steps.cirrusLimit) },
-        uDeckWave: { value: v4(d.wave, d.stretch, d.relief, 0) },
+        uDeckWave: { value: v4(d.wave, d.stretch, d.relief, d.lump) },
         uDeckMake: { value: v4(d.gain, d.octaves, d.life, w.row) },
         uSpiral: { value: v4(d.spiral.across, d.spiral.along, look.steps.lightGrow, look.steps.lightLimit) },
         uNight: { value: v3(d.night) }, uBlue: { value: v3(d.blue) }, uPale: { value: v3(d.pale) },
@@ -902,8 +934,8 @@ export class Deep {
         uFanBand: { value: v4(fan.veil.tilt, fan.veil.from, fan.veil.to, fan.veil.share) },
         uFanWest: { value: v4(fan.veil.west[0]!, fan.veil.west[1]!, fan.veil.shade, fan.veil.depth / (fan.veil.height[1]! - fan.veil.height[0]!)) },
         uFanMake: { value: v4(fan.veil.wave, fan.veil.long, fan.veil.contrast, fan.veil.layers) },
-        uVeil: { value: new THREE.Vector2(fan.veil.height[0], fan.veil.height[1]) }, uVeilLight: { value: v3(fan.veil.light) },
-        uStreamFan: { value: ci.streamers.map((x) => (x.where === 'map' ? 1 : 0)) },
+        uVeil: { value: new THREE.Vector2(fan.veil.height[0], fan.veil.height[1]) }, uVeilFall: { value: veilFall(fan.veil.fall) }, uVeilLight: { value: v3(fan.veil.light) },
+        uStreamFan: { value: ci.streamers.map((x) => (x.where === 'map' ? 1 : 0)) }, uStreamBend: { value: ci.streamers.map((x) => x.bend ?? 1) },
         uNear: { value: v4(d.near[0]!, d.near[1]!, d.near[2]!, d.wisp.near) },
         uZoneEnd: { value: v4(d.near[3]!, d.near[4]!, d.band[1]!, d.band[2]!) },
         uWisp: { value: v4(d.wisp.from, d.wisp.power, d.wisp.gain, d.wisp.light) },
@@ -913,7 +945,7 @@ export class Deep {
         uHazeMake: { value: v4(h.forward[0]!, h.forward[1]!, h.top, h.share) },
         uLight: { value: v4(l.sun, l.forward[0]!, l.forward[1]!, l.wrap) },
         uSkyLight: { value: v3(l.sky) }, uCloudLight: { value: v3(l.cloud) },
-        uLightMake: { value: v4(look.steps.deck, look.steps.shade, look.steps.cast, l.shadow) }, uThrough: { value: new THREE.Vector2(l.through[0], l.through[1]) },
+        uLightMake: { value: v4(look.steps.deck, look.steps.shade, look.steps.cast, l.shadow) }, uThrough: { value: new THREE.Vector3(l.through[0], l.through[1], ci.cast ?? 1) },
         uDiag: diagUniform,
       },
     })
