@@ -3,11 +3,11 @@
     {"file": "patch-wide.jpg", "widthDeg": 96},
     {"file": "patch-42.jpg", "widthDeg": 42},
     {"file": "patch-19.jpg", "widthDeg": 19},
-    {"file": "place-8p5.jpg", "widthDeg": 8.5, "own": true},
-    {"file": "place-3p8.jpg", "widthDeg": 3.8, "own": true},
-    {"file": "place-1p6.jpg", "widthDeg": 1.6, "own": true},
-    {"file": "place-0p7.jpg", "widthDeg": 0.7, "own": true},
-    {"file": "place-0p3.jpg", "widthDeg": 0.3, "own": true}
+    {"file": "land-8p5.jpg", "widthDeg": 8.5, "own": true},
+    {"file": "land-3p8.jpg", "widthDeg": 3.8, "own": true},
+    {"file": "land-1p6.jpg", "widthDeg": 1.6, "own": true},
+    {"file": "land-0p7.jpg", "widthDeg": 0.7, "own": true},
+    {"file": "land-0p3.jpg", "widthDeg": 0.3, "own": true}
   ],
   "fadeMinor": true,
   "oneChannel": ["wrap-storm.png", "phobos-lit-mask.png", "relief-L0-alpha.png", "relief-L1-alpha.png", "relief-L2-alpha.png"]

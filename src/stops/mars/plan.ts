@@ -1,24 +1,33 @@
+import * as THREE from 'three'
+import { config } from '../../config'
+import type { Pose } from '../../core/types'
 import { StopPlan, type Fit, type MoveParams } from '../../director/moves'
-import type { HandoverSide, PathOptions, PlaceOptions } from '../../director/handover'
+import type { HandoverSide, PlaceOptions } from '../../director/handover'
 import fit from './fit.json'
 import place from './place.json'
+import phobos from './phobos.json'
+import bend from './bend.json'
 
-// A side of place.json: at, placeFrames and path belong to the handover, every other key is an option of the place picture and reaches the
+// A side of place.json: at, placeFrames, path, picture, pace, turn and liftPower belong to the handover, every other key is an option of the place picture and reaches the
 // engine as it stands, so a number set in that file can not be lost on the way.
-type SideFile = PlaceOptions & { at?: number; placeFrames?: number; path?: PathOptions }
+type SideFile = PlaceOptions & Pick<HandoverSide, 'at' | 'placeFrames' | 'path' | 'picture' | 'pace' | 'turn' | 'liftPower'>
 function side(file: unknown): HandoverSide {
-  const { at, placeFrames, path, ...picture } = file as SideFile
+  const { at, placeFrames, path, picture: on, pace, turn, liftPower, ...picture } = file as SideFile
   const out: HandoverSide = { skyFloor: true, place: picture }
   if (at !== undefined) out.at = at
   if (placeFrames !== undefined) out.placeFrames = placeFrames
   if (path !== undefined) out.path = path
+  if (on !== undefined) out.picture = on
+  if (pace !== undefined) out.pace = pace
+  if (turn !== undefined) out.turn = turn
+  if (liftPower !== undefined) out.liftPower = liftPower
   return out
 }
 
 export const params: MoveParams = {
   hold: { orbitDeg: -8, axis: [-0.15, 1, 0], push: -0.04 },
   spot: { x: 0.45, y: 0.54 },
-  dive: { headingDeg: -105, altitude: 0.032, back: 0.08, ahead: 0.16, bow: -0.2, rollDeg: -6, swoop: true, surge: { glide: 0.14, rise: 60, fall: 2, swell: [0.3, 9, 1.2] } },
+  dive: { headingDeg: -245, altitude: 0.032, back: 0.08, ahead: 0.16, bow: -0.2, rollDeg: -6, swoop: true, surge: { glide: 0.14, rise: 60, fall: 2, swell: [0.3, 9, 1.2] } },
   terrain: { vfov: 60, gather: 0.22, forward: 1.65, rise: 0.06, side: 0.3, yawDeg: -2.9, pitchDeg: 0.78, entryHeight: 0.4, entryBack: 0.5, entryPitchDeg: -6, entryYawDeg: -3, entryRollDeg: -3, horizonDeg: 18.43, dipDeg: 2.6, exitHeight: 0.8, exitForward: 0.35, exitPitchDeg: 12 },
   rise: { azimuthDeg: 34, elevationDeg: 16, distance: 4.6, offset: [-0.32, -0.08], driftSpeed: 0.08, rollDeg: 0, ahead: 0.03, hug: 1.7, settle: 5, level: true, pan: 0.3 },
   travel: { turnDeg: 86, side: -1, turnEnd: 0.52 },
@@ -35,8 +44,41 @@ export const params: MoveParams = {
   coverRush: { speed: 2.4, reach: 2.5, billow: [2.2, 0.9, 1], streak: [9, 2.2, 1.6], contrast: [0.7, 0.55] },
   spinDegPerSecond: 0.9,
   moonDegPerSecond: -1.2,
+  near: [{ centre: phobos.center as [number, number, number], radius: phobos.radius * phobos.hi }],
   tint: [0.9, 0.5, 0.3],
   handover: { dive: side(place.dive), rise: side(place.rise) },
 }
 
-export const plan = new StopPlan('mars', fit as Fit, params)
+// The surface view with the bend of its last frames (bend.json, d196): until bend.fromFrame it is the film's own surface view to the bit.
+// From there the eye keeps the speed the view has anyway and its velocity turns, eased at both ends, from the push down the lens through a
+// track across into the pull back, so that the rise, which takes the view's velocity at the seam, need not stop the eye and turn it round.
+// The lens keeps its own slow turn. The eye's place is the sum of that velocity from fromFrame, taken by Simpson's rule in a fixed count
+// of steps, so it is a function of the time alone.
+class MarsPlan extends StopPlan {
+  override terrain(tRel: number): Pose {
+    const base = super.terrain(tRel)
+    const from = bend.fromFrame / config.fps - this.seg.terrain.start
+    if (tRel <= from) return base
+    const t = this.p.terrain
+    const dur = this.seg.terrain.end - this.seg.terrain.start
+    const along = new THREE.Vector3(t.side, t.rise, -t.forward)
+    const length = along.length()
+    along.multiplyScalar(1 / length)
+    const across = new THREE.Vector3().fromArray(bend.across as [number, number, number])
+    across.addScaledVector(along, -across.dot(along)).normalize()
+    const turn = THREE.MathUtils.degToRad(bend.turnDeg)
+    const velocity = (at: number): THREE.Vector3 => {
+      const speed = (length * (1 + 2 * (t.gather ?? 0) * (at / dur - 0.5))) / dur
+      const x = Math.min((at - from) / (dur - from), 1)
+      const angle = turn * x * x * x * (x * (x * 6 - 15) + 10)
+      return along.clone().multiplyScalar(speed * Math.cos(angle)).addScaledVector(across, speed * Math.sin(angle))
+    }
+    const n = 64
+    const h = (tRel - from) / n
+    const sum = velocity(from).add(velocity(tRel))
+    for (let i = 1; i < n; i++) sum.addScaledVector(velocity(from + i * h), i % 2 ? 4 : 2)
+    return { position: super.terrain(from).position.addScaledVector(sum, h / 3), quaternion: base.quaternion, vfov: base.vfov }
+  }
+}
+
+export const plan = new MarsPlan('mars', fit as Fit, params)
