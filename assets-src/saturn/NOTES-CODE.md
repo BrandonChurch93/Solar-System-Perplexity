@@ -3411,3 +3411,64 @@ is in the picture at 3 to 12 px, and the same crispness for the far ring across 
     pixels over 0.45, largest 0.686 at 1724, 1060): the border of the shadow widening with the pose weight.
   - 3587 + 1/2: a half disc on the dark globe just above the near edge of the ring, 1224 to 1331, 780 to 839
     (4368 pixels, largest 0.714 at 1268, 828). Not explained yet.
+
+### 07:17 to 07:38 UTC: causes of the three pattern reds, the merge of main 8b2c538, the job on the merged head
+
+- GATE on c8ca94e (/tmp/v/r37/gate.log): "PASS G11  every asset has a row or a recipe" and "PASS G15  at most 2
+  sets per frame; finished stops: saturn/web 274 MB, saturn/full 747 MB".
+- MEASURE on c8ca94e (/tmp/v/r37/measure.log): "PASS G5 saturn: 3465 hold invalid 0 coverage 0.514; 3567 dive
+  invalid 0 coverage 0.514; 3720 terrain invalid 0 coverage 0.725; 3866 rise invalid 0 coverage 0.372" and
+  "FAIL G17 saturn: 3465 median 1.054 p25 0.918 over 71 tiles; 3720 median 0.683 p25 0.325 over 62 tiles".
+  The sky look did not move G17 at 3720 (0.685 before it).
+- VITEST on c8ca94e: exit 0, 45 files, 427 tests, the three browser tests with them (they pass when no other
+  render runs beside them).
+- SEAM TOOL on b6df4ba (npx tsx tools/seam.ts --stop saturn): dive "seam 3630 (its own path): the surface view
+  flies 0.00535 of its height a film frame | lowest 0.999 at 3629 + 1/2 | never against the surface view's way
+  | surface view, largest step a film frame 0.001 at 3632 + 1/2 | change of view at 3589"; rise "seam 3810 (its
+  own path): the surface view flies 0.00749 of its height a film frame | lowest 1.079 at 3810 | never against
+  the surface view's way | surface view, largest step a film frame 0.008 at 3809 + 1/2 | change of view at 3852".
+- THE THREE PATTERN REDS HAVE ONE KIND OF CAUSE, MEASURED by my copy of the judge's map and the courses from
+  the path (out/scratch/skydump.ts, /tmp/v/r38/skydump.json): each is a blend by distance or height (plan F
+  holds) whose course is a smooth step, which runs 1.5 times its mean rate in its middle, so 8 film frames
+  there carry too much of it.
+  - Dive 3560 to 3567 + 1/2 (16 capture frames, 0.454 to 0.532), top limb at the pole (1120 to 1136, 232 to
+    260): the hold's sky picture leaves by distance from the hold's path (skim.json sky.hero reach 1.2, power
+    0.75). 0.297 of it goes in the 8 frames from 3560; a straight course (same power) computes 0.203.
+    Hero sky 1.0 at 3540, 0.68 at 3560, 0.383 at 3568, 0 from 3586.
+  - Dive 3580, 3580 + 1/2, 3581 (0.556, 0.498, 0.523), the strip 1680 to 1779, 936 to 1079 at the far tip of
+    the globe's shadow on the ring, and 3587 + 1/2 (0.459), the half disc 1224 to 1331, 780 to 839 where the
+    shadow's border meets the ring's inner edge before the dark globe: the shadow's border goes from penumbra
+    [0.978, 0.994, 0.006] to penumbraAway [0.95, 1.02, 0.03] with 1 less the pose weight (kept/set.ts soft;
+    pose weight 0.648 to 0.245 from 3580 to 3588). penumbraAway is a relic of the kept build; the model's own
+    near shadow is sheet.json shadow.soft [0.006, 0.012], reach [1.25, 1.1, 1]. Cure to test: one border.
+  - Rise 3858 + 1/2 to 3860, 3863, 3863 + 1/2 at 1240 to 1331, 1008 to 1079: the sky seen in the gap between
+    the globe and the inner ring. The stars of the flight come in by height (skim.json sky.lift heights [2.42,
+    2.9377], power 0.5, smooth step; lift 0 at 3853, 1 at 3884): 0.42 of them in the 8 frames at 3860 + 1/2;
+    straight with power 0.4 computes 0.282. (My earlier guess, the star cloud through the shaded ring, is
+    withdrawn: the place is open sky.)
+  - The other course of the same kind: low (air and sky look, heights [0.6, 2.2], power 0.5) falls 1 to 0 from
+    3816 to 3850 in the rise and rises from 3563 in the dive. No red lies on it.
+- THE SCRATCH TREE /home/user/workspace/rt holds the three cures, tsc 0, NOT rendered yet: kept/look.ts
+  penumbraAway equal to penumbra; plan.ts liftAt mix(level, smooth(level), k.round) and heroSky with the same
+  mix; skim.json sky.hero.round 0, sky.lift.power 0.4, sky.lift.round 0. They go into the second named commit
+  only after the whole pictures runs of both moves, parity and path on them.
+- ITEM 9 (the engine's sky dip in the rise) IS NOT SEEN ANY MORE, MEASURED on 589fd9a's rate 2 frames: the
+  sky mean in 1300 to 1900, 0 to 300 rises every frame from 7.36 (3848) to 18.95 (3884), largest step 0.60 at
+  3862.
+- MAIL 572 (07:29): main is 8b2c538 with take C (Relief.presence in src/terrain/relief.ts, the sky's pixel
+  factor swap in src/space/sky.ts, two tests, notes). The Builder measured 115 of 115 drafts and 18 of 18
+  judged finals of main equal with it. Take D (tools and tests only) is announced. "A commit on an older main
+  is taken as long as it touches only your three folders; say which main it stands on." NAMED is due 08:30.
+- THE MERGE OF 8b2c538 IS MADE BY PLUMBING, because main is fetched with --depth 1 only and git merge then
+  refuses ("refusing to merge unrelated histories"; the parent be1de182 is not in my store). It is a true
+  merge here because main's change since b0b8788 touches no file in my three folders (git diff --name-only
+  b0b8788 origin/main). Recipe: a scratch index (GIT_INDEX_FILE), git read-tree MAIN, then for each of my three
+  folders git rm -r -q -f --cached DIR and git read-tree --prefix=DIR/ HEAD:DIR, git write-tree, then git
+  commit-tree TREE -p HEAD -p MAIN, then git merge --ff-only. Checked: 0 files of the tree differ from main
+  outside my folders, 0 files differ from my head inside them, 21 files differ from main in all.
+- MERGED HEAD 086fcbd5900866df54b30c2dba87d4a0686fdb8e (parents b6df4ba and 8b2c538), pushed 07:34: tsc 0,
+  build 0. Net size against main: assets-src/saturn +0.106 MB, public/assets/saturn -0.127 MB,
+  src/stops/saturn +0.015 MB, net -0.006 MB.
+- JOB W was stopped after its two samples (head c8ca94e and main b0b8788, /tmp/v/r37/head and main); the
+  job on the merged head runs from /tmp/v/chain3.sh, log /tmp/v/r39.log, outputs /tmp/v/r39: finals, path,
+  parity, gate, sample, vitest, handover, G13.
