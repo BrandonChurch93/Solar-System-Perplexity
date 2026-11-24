@@ -1,9 +1,17 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T17:38:03.779Z",
+ "pushed": "2026-11-24T18:04:03.419Z",
  "head": "befb5f47996cb9ff4b6ffb6df289ed9cc2b1fe80",
- "note": "MAIL 713 looked: the orange mark under the far Sun's loop at 615 is the sky card's remnant (same as MAIL 692), round 2",
+ "note": "rise 962 to 970: table of the measure between stills at 19 weights says one weight needs 24 frames, 16 there are; next: weight of the far ground by height runs on past the handover",
  "looks": [
+  {
+   "time": "2026-11-24T18:04:02.783Z",
+   "file": "20261124180402783-note-u967-weights.jpg",
+   "source": "../../../../tmp/m/u967-weights.jpg",
+   "kind": "note",
+   "label": "967 under the limb, stills at six weights of the shell over the set (measure only, no far Sun)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T17:37:51.447Z",
    "file": "20261124173751447-note-s976-far.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/m/s967.jpg",
    "kind": "note",
    "label": "s967: frame 967 with shown forced 0 to 1 in 8 steps",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T16:45:48.038Z",
-   "file": "20261124164548038-note-e9-996-1018.jpg",
-   "source": "out/work/mercury/place/e9-996-1018.jpg",
-   "kind": "note",
-   "label": "the same frames with the place's plates off: the map alone, one ground, at most 0.40 in the measure",
    "stop": "mercury"
   }
  ]
