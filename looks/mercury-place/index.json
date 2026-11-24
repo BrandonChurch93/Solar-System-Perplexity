@@ -1,9 +1,49 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T19:46:16.987Z",
+ "pushed": "2026-11-24T20:05:05.600Z",
  "head": "befb5f47996cb9ff4b6ffb6df289ed9cc2b1fe80",
- "note": "19:46 structure D measured on scratch frames: rise 958 to 990 at most 0.28, dive 742 to 773 at most 0.20 (limit 0.45), no pop at either handover; now one structure everywhere the set shows (rendering); sky card remnant mapped",
+ "note": "one structure under the planet: rise 958 to 994 pattern at most 0.28, dive 734 to 773 at most 0.35 (limit 0.45), every frame looked at; sky card cut first dry run, not kept",
  "looks": [
+  {
+   "time": "2026-11-24T20:05:04.994Z",
+   "file": "20261124200504994-note-reach-check.jpg",
+   "source": "out/work/mercury/reach-check.jpg",
+   "kind": "note",
+   "label": "sky card remnant, dry run of the cut: before and after, fill too plain, not kept",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T20:05:04.380Z",
+   "file": "20261124200504380-note-e18-b.jpg",
+   "source": "../../../../tmp/m/e18-b.jpg",
+   "kind": "note",
+   "label": "one structure, dive e18-b, far Sun off (measure only)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T20:05:03.782Z",
+   "file": "20261124200503782-note-e18-a.jpg",
+   "source": "../../../../tmp/m/e18-a.jpg",
+   "kind": "note",
+   "label": "one structure, dive e18-a, far Sun off (measure only)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T20:05:03.174Z",
+   "file": "20261124200503174-note-e17-b.jpg",
+   "source": "../../../../tmp/m/e17-b.jpg",
+   "kind": "note",
+   "label": "one structure, rise e17-b, far Sun off (measure only)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T20:05:02.526Z",
+   "file": "20261124200502526-note-e17-a.jpg",
+   "source": "../../../../tmp/m/e17-a.jpg",
+   "kind": "note",
+   "label": "one structure, rise e17-a, far Sun off (measure only)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T19:46:16.298Z",
    "file": "20261124194616298-note-card-reach.jpg",
@@ -26,46 +66,6 @@
    "source": "../../../../tmp/m/du-1964.jpg",
    "kind": "note",
    "label": "982: globe over the set (left) against the commit's one draw under (middle), difference times 6 (right): the two sets of the terrain show through each other in the ring when each is cut by itself; one structure from now on",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T19:30:56.346Z",
-   "file": "20261124193056346-note-e16-b.jpg",
-   "source": "../../../../tmp/m/e16-b.jpg",
-   "kind": "note",
-   "label": "structure D dive 762 to 781, every frame, scratch frames without the far Sun",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T19:30:55.702Z",
-   "file": "20261124193055702-note-e16-a.jpg",
-   "source": "../../../../tmp/m/e16-a.jpg",
-   "kind": "note",
-   "label": "structure D dive 742 to 761, every frame, scratch frames without the far Sun",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T19:15:06.456Z",
-   "file": "20261124191506456-note-e15-b.jpg",
-   "source": "../../../../tmp/m/e15-b.jpg",
-   "kind": "note",
-   "label": "structure D rise 980 to 998, every frame, scratch frames without the far Sun",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T19:15:05.504Z",
-   "file": "20261124191505504-note-e15-a.jpg",
-   "source": "../../../../tmp/m/e15-a.jpg",
-   "kind": "note",
-   "label": "structure D rise 960 to 979, every frame, scratch frames without the far Sun (globe over the set while the far weight is under 1, whole globe kept under the near field)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T18:54:56.064Z",
-   "file": "20261124185456064-note-gap2-970-976-762.jpg",
-   "source": "../../../../tmp/m/gap2-970-976-762.jpg",
-   "kind": "note",
-   "label": "same at 970, 976, 762: below the handover only the limb strip beyond the set's ridge is open (and the near edge at 762)",
    "stop": "mercury"
   }
  ]
