@@ -1,87 +1,84 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-24T05:04:39.152Z",
+ "pushed": "2026-11-24T05:20:31.623Z",
  "head": "63f62b9785e5ce3fe0e651e08d95a07287ea8c44",
- "note": "Dive 1292 to 1349 on the tree for the NAMED commit (main 8fb9ba9b merged): one place getting nearer, warm tool 0 frames did work",
+ "note": "Rise 1530 to 1604 every frame on the tree for the NAMED commit; finals 1185 and 1440 equal bytes to the kept stills; G13 view dive worst 0.75 percent, rise 0.04 percent",
  "looks": [
   {
-   "time": "2026-11-24T05:04:12.830Z",
-   "file": "20261124050412830-sheet-venus-rise-draft-after.jpg",
-   "source": "out/work/handover/venus-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "venus rise, every frame 1540 to 1551 (after T, frame 1539), draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1540,
-   "last": 1551,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T05:04:11.051Z",
-   "file": "20261124050411051-sheet-venus-rise-draft-before.jpg",
-   "source": "out/work/handover/venus-rise-draft-before.png",
-   "kind": "sheet",
-   "label": "venus rise, every frame 1530 to 1538 (before T, frame 1539), draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1530,
-   "last": 1538,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T05:04:09.589Z",
-   "file": "20261124050409589-sheet-venus-rise-draft-across.jpg",
-   "source": "out/work/handover/venus-rise-draft-across.png",
-   "kind": "sheet",
-   "label": "venus rise, every frame 1533 to 1544 (across T, frame 1539), draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1533,
-   "last": 1544,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T05:03:48.777Z",
-   "file": "20261124050348777-note-s1340.jpg",
-   "source": "../../../../tmp/v/hg2/s1340.jpg",
+   "time": "2026-11-24T05:20:30.674Z",
+   "file": "20261124052030674-note-c1604.jpg",
+   "source": "../../../../tmp/v/hg/c1604.jpg",
    "kind": "note",
-   "label": "dive 1340 on, main 8fb9ba9b merged, ground on the globe, release, dry draws",
+   "label": "1604, 1605, 1606, 1610: the globe leaves as one globe (leaving leg of main)",
    "stop": "venus"
   },
   {
-   "time": "2026-11-24T05:03:47.820Z",
-   "file": "20261124050347820-note-s1324.jpg",
-   "source": "../../../../tmp/v/hg2/s1324.jpg",
+   "time": "2026-11-24T05:20:29.459Z",
+   "file": "20261124052029459-note-s1594.jpg",
+   "source": "../../../../tmp/v/hg/s1594.jpg",
    "kind": "note",
-   "label": "dive 1324 on, main 8fb9ba9b merged, ground on the globe, release, dry draws",
+   "label": "rise 1594 on, main 8fb9ba9b merged, corners wired, ground on the globe",
    "stop": "venus"
   },
   {
-   "time": "2026-11-24T05:03:46.692Z",
-   "file": "20261124050346692-note-s1308.jpg",
-   "source": "../../../../tmp/v/hg2/s1308.jpg",
+   "time": "2026-11-24T05:20:28.775Z",
+   "file": "20261124052028775-note-s1578.jpg",
+   "source": "../../../../tmp/v/hg/s1578.jpg",
    "kind": "note",
-   "label": "dive 1308 on, main 8fb9ba9b merged, ground on the globe, release, dry draws",
+   "label": "rise 1578 on, main 8fb9ba9b merged, corners wired, ground on the globe",
    "stop": "venus"
   },
   {
-   "time": "2026-11-24T05:03:45.940Z",
-   "file": "20261124050345940-note-s1292.jpg",
-   "source": "../../../../tmp/v/hg2/s1292.jpg",
+   "time": "2026-11-24T05:20:27.853Z",
+   "file": "20261124052027853-note-s1562.jpg",
+   "source": "../../../../tmp/v/hg/s1562.jpg",
    "kind": "note",
-   "label": "dive 1292 on, main 8fb9ba9b merged, ground on the globe, release, dry draws",
+   "label": "rise 1562 on, main 8fb9ba9b merged, corners wired, ground on the globe",
    "stop": "venus"
   },
   {
-   "time": "2026-11-24T04:58:49.755Z",
-   "file": "20261124045849755-compare-venus-rise-sides.jpg",
-   "source": "out/work/handover/venus-rise-sides.png",
-   "kind": "compare",
-   "label": "venus rise, both sides at T (frame 1539) and their difference times 8",
+   "time": "2026-11-24T05:20:26.754Z",
+   "file": "20261124052026754-note-s1546.jpg",
+   "source": "../../../../tmp/v/hg/s1546.jpg",
+   "kind": "note",
+   "label": "rise 1546 on, main 8fb9ba9b merged, corners wired, ground on the globe",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T05:20:25.939Z",
+   "file": "20261124052025939-note-s1530.jpg",
+   "source": "../../../../tmp/v/hg/s1530.jpg",
+   "kind": "note",
+   "label": "rise 1530 on, main 8fb9ba9b merged, corners wired, ground on the globe",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T05:19:15.368Z",
+   "file": "20261124051915368-frame-f01605.jpg",
+   "source": "out/work/venus/place/same/g1/f01605.png",
+   "kind": "frame",
+   "label": "venus.travel frame 1605, draft tier",
    "stop": "venus",
-   "segment": "venus.rise",
-   "frame": 1539,
-   "tier": "draft"
+   "segment": "venus.travel",
+   "frame": 1605,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "fd4d9ed09bb2cc10"
+  },
+  {
+   "time": "2026-11-24T05:18:12.385Z",
+   "file": "20261124051812385-frame-f01350.jpg",
+   "source": "out/work/venus/place/same/g1/f01350.png",
+   "kind": "frame",
+   "label": "venus.terrain frame 1350, draft tier",
+   "stop": "venus",
+   "segment": "venus.terrain",
+   "frame": 1350,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "fd4d9ed09bb2cc10"
   }
  ]
 }
