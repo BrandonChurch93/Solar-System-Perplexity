@@ -169,6 +169,14 @@ for li, w in enumerate(widths):
     # the grain of paint far darker than its region is noise of the black: it goes out there
     gw = np.clip((mid_l + Lg['grainDarkFrom']) / (Lg['grainDarkFrom'] - Lg['grainDarkTo']), 0, 1) * (0.35 + 0.65 * open_p)
     made = np.exp(base + after[..., None] + Lg['hue'] * Lg['hueMost'] * np.tanh(hue / Lg['hueMost']) + Lg['grain'] * (Lg['grainMost'] * np.tanh(grain / Lg['grainMost']) * gw)[..., None]) * (open_p[..., None] + (1 - open_p[..., None]) * fill / np.maximum(1 + cv2.GaussianBlur(lift_p, (0, 0), Lg['shadowLiftTexels']), Lg['shadowLiftLeast'])[..., None])
+    # about the spot the made ground takes the tone of the ground the close view shows there (close: its dark fore ground,
+    # measured on the two sides of the change of view), by the distance on the ground, so both sides are one ground at T
+    if 'close' in Lg:
+        Cl = Lg['close']
+        cm = np.clip((Cl['toDeg'] - foot) / (Cl['toDeg'] - Cl['fromDeg']), 0, 1)
+        cm = cm * cm * (3 - 2 * cm)
+        made = made * (1 + (np.array(Cl['gain'], np.float32) - 1) * cm[..., None])
+        del cm
     # in the main trough the map's paint stays as it is under the cast shadow (never darker for it than the fill allows)
     shade = open_p[..., None] + (1 - open_p[..., None]) * fill
     keepw = (tw * (1 - (rockw[..., 0] if 'rock' in Lg else 0)))[..., None]

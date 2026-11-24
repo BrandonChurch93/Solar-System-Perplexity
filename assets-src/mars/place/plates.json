@@ -483,7 +483,17 @@
     "seed": 41
    },
    "sunMoment": "surface",
-   "troughKm": 1.0
+   "troughKm": 1.0,
+   "close": {
+    "note": "made ground about the spot takes the tone of the fore ground of the close view (the close view draws the ground its picture never saw, west of the spot and under the eye, as dark rock: 0.0157, 0.0096, 0.0082 in frame 2475 against 0.117, 0.044, 0.024 of the made plateau in 2474, linear picture values, a share of 0.135, 0.22, 0.34). gain: the share the made ground keeps inside fromDeg of the spot, going to 1 by toDeg (degrees on the ground).",
+    "gain": [
+     0.25,
+     0.33,
+     0.42
+    ],
+    "fromDeg": 0.14,
+    "toDeg": 0.36
+   }
   },
   "preview": {
    "note": "seecountry.py --shade, the preview OUT-lit.png only (no asset is made from it): the colour of the plates is multiplied in scene values by fill + (1 - fill) times the cosine to the Sun over that of level ground (at most `most`), zero in cast shadow.",
