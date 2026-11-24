@@ -212,6 +212,7 @@ async function drop(): Promise<void> {
 }
 
 async function open(fmt: string): Promise<Session> {
+  hashes ??= ensureBuild()
   const s = await openCapture({ dist: DIST, format: fmt, assets: 'full', diag: 'beauty', query: rate > 1 ? '&rate=' + rate : '' })
   sessionFormat = fmt
   const known = await s.page.evaluate(() => (window as unknown as { showcase: { info(): { rate?: number } } }).showcase.info().rate)

@@ -21,6 +21,7 @@ import { Belt } from '../space/belt/belt'
 import { Dust } from '../space/dust'
 import { Sky } from '../space/sky'
 import { implicitUniform } from './texel'
+import { setFrame, setPass } from './frame'
 import type { SkyAims } from '../space/aim'
 import { Cover, coverReaches } from '../terrain/cover'
 import type { Relief } from '../terrain/relief'
@@ -146,6 +147,7 @@ export class Engine {
   private applySize(): void {
     const { width, height } = this.format
     this.renderer.setSize(width, height, false)
+    setFrame(height, config.raw.formats.master.height)
     this.canvas.style.aspectRatio = width + ' / ' + height
     this.sampleTarget.dispose()
     this.accumulator.dispose()
@@ -449,7 +451,8 @@ export class Engine {
     const diag = this.probe.view
     const raw = isRaw(diag)
     const caps = r.capabilities
-    const layout = placeLayout(this.format, place, Math.min(caps.maxTextureSize, r.getContext().getParameter(r.getContext().MAX_RENDERBUFFER_SIZE) as number))
+    const edge = Math.min(caps.maxTextureSize, r.getContext().getParameter(r.getContext().MAX_RENDERBUFFER_SIZE) as number)
+    const layout = placeLayout(this.format, place, edge)
     const grad = gradUniform.value
     const key = [place.stop, place.kind, place.live ? 'live' : place.time, this.assets, this.format.id, raw ? diag : 'beauty', grad, layout.scale, layout.left, layout.right, layout.bottom, layout.top, place.matte ?? 'pair'].join('|')
     if (!place.live) {
@@ -467,6 +470,8 @@ export class Engine {
     const cam = this.place.camera
     placeCamera(cam, this.format, layout, at.camera, at.near, at.far)
     const view: RenderView = { camera: cam, diag, format: { ...this.format, width: this.format.width * layout.scale, height: this.format.height * layout.scale }, sample: 0, samples: 1, cameraPosition: at.camera.position, farLight: at.farLight, place: true, placeScale: layout.scale }
+    const master = config.formats[config.formatKeys.master]!
+    setPass(this.format.id === master.id ? 1 : layout.scale / placeLayout(master, place, edge).scale)
     for (const state of states) {
       const set = this.sets.get(state.id)!
       set.world.position.copy(state.origin).sub(at.camera.position)
@@ -489,6 +494,7 @@ export class Engine {
     r.setClearColor(0x000000, 0)
     gradUniform.value = grad
     setFine(1)
+    setPass(1)
     return picture
   }
 
