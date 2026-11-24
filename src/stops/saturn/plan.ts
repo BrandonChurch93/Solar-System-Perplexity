@@ -1,7 +1,8 @@
 import * as THREE from 'three'
-import { config } from '../../config'
+import { config, type Segment } from '../../config'
 import type { Pose, ViewKind } from '../../core/types'
-import { StopPlan, trapeze, type Fit, type MoveParams } from '../../director/moves'
+import { handoverOf } from '../../director/handover'
+import { StopPlan, type Fit, type MoveParams } from '../../director/moves'
 import { drift, lookAt, mix, ramp, smooth } from '../../director/rig'
 import fit from './fit.json'
 import skimJson from './skim.json'
@@ -21,12 +22,74 @@ export const params: MoveParams = {
   tint: [0.92, 0.82, 0.6],
   skyAim: { orbit: [-14, 153, -7.3] },
   handover: {
-    dive: { at: skimJson.handover.dive.at, skyFrames: skimJson.handover.dive.skyFrames, picture: false },
-    rise: { at: skimJson.handover.rise.at, skyFrames: skimJson.handover.rise.skyFrames, picture: false },
+    // skyFrames 0: the engine crosses no sky by the clock here (see heroSky)
+    dive: { at: skimJson.handover.dive.at, picture: false, skyFrames: 0 },
+    rise: { at: skimJson.handover.rise.at, picture: false, skyFrames: 0 },
   },
 }
 
-export const skim = { skyNear: 0.35, seatIn: 0.8 }
+export const skim = { seatIn: 0.8 }
+
+// One pace through a move. The rate of a quantity goes from its rate before the move (from) up to one largest
+// value and down to its rate after the move (to). On the way up and on the way down it changes by a steady
+// amount a frame, and its three turns (at the start, at the top, at the end) are rounded over the share round
+// of the move each (the top over twice that), so the change of the rate a frame is as small as the length of
+// the move allows and has no step. round is one share for all three turns or three shares, for the start, the
+// top and the end. peak is the share of the move at which the rate is turned at the top; total is the way done
+// over the whole move. at(u) is the way done at the share u of the move and rate(u) its rate, both for a unit
+// of u.
+export class Pace {
+  private readonly x: number[]
+  private readonly up: number
+  private readonly down: number
+  private static readonly P = [0, 1, 1, 0, 0, 0]
+  private static readonly Q = [0, 0, 0, 1, 1, 0]
+
+  constructor(private readonly from: number, to: number, total: number, peak: number, round: number | number[]) {
+    if (typeof round === 'number') {
+      const r = Math.min(round, peak / 2, (1 - peak) / 2)
+      this.x = [0, r, peak - r, peak + r, 1 - r, 1]
+    } else {
+      const top = Math.min(round[1]!, peak / 2, (1 - peak) / 2)
+      this.x = [0, Math.min(round[0]!, peak - top), peak - top, peak + top, 1 - Math.min(round[2]!, 1 - peak - top), 1]
+    }
+    const [p1, p2] = this.sum(Pace.P, 1)
+    const [q1, q2] = this.sum(Pace.Q, 1)
+    const det = q1 * p2 - p1 * q2
+    this.up = (q1 * (total - from) - q2 * (to - from)) / det
+    this.down = (p1 * (total - from) - p2 * (to - from)) / det
+  }
+
+  // the first and the second integral, from 0 to u, of the line through the values y at the nodes x
+  private sum(y: readonly number[], u: number): [number, number] {
+    let one = 0
+    let two = 0
+    for (let i = 0; i + 1 < this.x.length; i++) {
+      const x0 = this.x[i]!
+      const x1 = this.x[i + 1]!
+      if (u <= x0 || x1 <= x0) continue
+      const t = Math.min(u, x1) - x0
+      const k = (y[i + 1]! - y[i]!) / (x1 - x0)
+      two += one * t + (y[i]! * t * t) / 2 + (k * t * t * t) / 6
+      one += y[i]! * t + (k * t * t) / 2
+    }
+    return [one, two]
+  }
+
+  at(u: number): number {
+    const k = Math.min(Math.max(u, 0), 1)
+    return this.from * k + this.up * this.sum(Pace.P, k)[1] - this.down * this.sum(Pace.Q, k)[1]
+  }
+
+  rate(u: number): number {
+    const k = Math.min(Math.max(u, 0), 1)
+    return this.from + this.up * this.sum(Pace.P, k)[0] - this.down * this.sum(Pace.Q, k)[0]
+  }
+}
+
+interface PaceOf { peak: number; round: number | number[] }
+interface Paces { reach: PaceOf; climb: PaceOf; round: PaceOf; view: PaceOf }
+interface Law { e1: THREE.Vector3; e2: THREE.Vector3; reach0: number; reach: Pace; climb0: number; climb: Pace; round0: number; round: Pace; view: Pace }
 
 export class SaturnPlan extends StopPlan {
   readonly ringNormal: THREE.Vector3
@@ -84,111 +147,65 @@ export class SaturnPlan extends StopPlan {
     return { position: pose.position.clone().sub(this.spot).applyQuaternion(this.toTerrain), quaternion: this.toTerrain.clone().multiply(pose.quaternion), vfov: pose.vfov }
   }
 
-  // The pose the share w of the way from a to b, both in the frame of the globe. On that way the foot on the
-  // plane goes straight from one to the other while the height over the plane changes by the same factor for
-  // the same step, and the picture of the globe (where it stands in the view, how it leans, how large it is)
-  // goes from one to the other with it. How far along that way the lens is, is set so that its distance to the
-  // globe's surface changes by the same factor for the same step of w: a steady share of w a frame is a steady
-  // descent or climb.
-  private join(a: Pose, b: Pose, w: number, reach?: number): Pose {
-    if (w <= 0) return a
-    if (w >= 1) return b
+  // A move from one motion to another (the dive from the hold to the skim, the rise from the skim to the way
+  // out) is one move in four measures, each with one pace (Pace) from its rate in the motion before to its
+  // rate in the motion after, so the move meets both without a step in speed: the distance to the globe's
+  // surface (reach), the height over the ring plane (climb), the angle of the foot of the lens round the
+  // globe (round) and the turn of the camera with its field of view (view). The numbers of each pace are in
+  // skim.json handover.
+  private law(from: (time: number) => Pose, to: (time: number) => Pose, seg: { start: number; end: number }, d: Paces): Law {
     const n = this.ringNormal
-    const ha = a.position.dot(n)
-    const hb = b.position.dot(n)
-    const fa = a.position.clone().addScaledVector(n, -ha)
-    const fb = b.position.clone().addScaledVector(n, -hb)
-    const at = (v: number): THREE.Vector3 => fa.clone().lerp(fb, v).addScaledVector(n, ha > 1e-4 && hb > 1e-4 ? ha * Math.pow(hb / ha, v) : mix(ha, hb, v))
-    const da = Math.max(a.position.length() - 1, 1e-6)
-    const db = Math.max(b.position.length() - 1, 1e-6)
-    const want = reach === undefined ? da * Math.pow(db / da, w) : Math.min(Math.max(reach, Math.min(da, db)), Math.max(da, db))
-    let lo = 0
-    let hi = 1
-    for (let i = 0; i < 48; i++) {
-      const mid = (lo + hi) / 2
-      if ((at(mid).length() - 1 - want) * (db - da) < 0) lo = mid
-      else hi = mid
-    }
-    const v = db === da ? w : (lo + hi) / 2
-    const ka = this.framing(a)
-    const kb = this.framing(b)
-    const turn = Math.atan2(Math.sin(kb[2] - ka[2]), Math.cos(kb[2] - ka[2]))
-    return this.framed(at(v), mix(ka[0], kb[0], v), mix(ka[1], kb[1], v), ka[2] + turn * v, ka[3] * Math.pow(kb[3] / ka[3], v))
-  }
-
-  private framing(pose: Pose): [number, number, number, number] {
-    const inv = pose.quaternion.clone().invert()
-    const d = pose.position.clone().negate().normalize().applyQuaternion(inv)
-    const tan = Math.tan(THREE.MathUtils.degToRad(pose.vfov) / 2)
-    const e = this.ringNormal.clone().applyQuaternion(inv)
-    e.addScaledVector(d, -e.dot(d))
-    const px = (e.x * -d.z + d.x * e.z) / (d.z * d.z)
-    const py = (e.y * -d.z + d.y * e.z) / (d.z * d.z)
-    return [d.x / -d.z / tan, d.y / -d.z / tan, Math.atan2(py, px), 1 / (tan * pose.position.length())]
-  }
-
-  private framed(position: THREE.Vector3, sx: number, sy: number, psi: number, size: number): Pose {
-    const tan = 1 / (size * position.length())
-    const dc = new THREE.Vector3(sx * tan, sy * tan, -1).normalize()
-    const ec = new THREE.Vector3(sx * tan + 1e-3 * Math.cos(psi), sy * tan + 1e-3 * Math.sin(psi), -1).normalize()
-    ec.addScaledVector(dc, -ec.dot(dc)).normalize()
-    const dw = position.clone().negate().normalize()
-    const ew = this.ringNormal.clone().addScaledVector(dw, -this.ringNormal.dot(dw)).normalize()
-    const cam = new THREE.Matrix4().makeBasis(dc, ec, new THREE.Vector3().crossVectors(dc, ec))
-    const world = new THREE.Matrix4().makeBasis(dw, ew, new THREE.Vector3().crossVectors(dw, ew))
-    return { position, quaternion: new THREE.Quaternion().setFromRotationMatrix(world.multiply(cam.transpose())), vfov: THREE.MathUtils.radToDeg(2 * Math.atan(tan)) }
-  }
-
-  // The distance of the lens to the globe's surface at a time of the dive. Its rate (the factor a frame)
-  // goes from the hold's own rate up to a steady rate over the first share of the dive (rise), keeps it, and
-  // comes to the skim's own rate over the last share (fall): a steady descent that meets the hold and the
-  // skim without a step in speed.
-  private diveLaw: { l0: number; l1: number; s0: number; s1: number; p: number } | null = null
-
-  private diveReach(time: number): number {
-    const seg = this.seg.dive!
-    const d = skimJson.handover.dive
+    const e1 = this.skimPosition.clone().addScaledVector(n, -this.skimPosition.dot(n)).normalize()
+    const e2 = new THREE.Vector3().crossVectors(n, e1)
+    const e = 0.5 / config.fps
     const dur = seg.end - seg.start
-    if (!this.diveLaw) {
-      const reach = (pose: Pose): number => Math.log(Math.max(pose.position.length() - 1, 1e-6))
-      const e = 0.5 / config.fps
-      const h = this.seg.hold.start
-      const l0 = reach(this.hold(seg.start - h))
-      const l1 = reach(this.skimAt(seg.end))
-      const s0 = ((reach(this.hold(seg.start + e - h)) - reach(this.hold(seg.start - e - h))) / (2 * e)) * dur
-      const s1 = ((reach(this.skimAt(seg.end + e)) - reach(this.skimAt(seg.end - e))) / (2 * e)) * dur
-      this.diveLaw = { l0, l1, s0, s1, p: (l1 - l0 - 0.5 * d.rise * s0 - 0.5 * d.fall * s1) / (1 - 0.5 * d.rise - 0.5 * d.fall) }
+    const near = (v: number): number => Math.atan2(Math.sin(v), Math.cos(v))
+    const pace = (f: (p: THREE.Vector3) => number, wrap: boolean, k: PaceOf): [number, Pace] => {
+      const s0 = f(from(seg.start + e).position) - f(from(seg.start - e).position)
+      const s1 = f(to(seg.end + e).position) - f(to(seg.end - e).position)
+      const first = f(from(seg.start).position)
+      const total = f(to(seg.end).position) - first
+      return [first, new Pace(((wrap ? near(s0) : s0) / (2 * e)) * dur, ((wrap ? near(s1) : s1) / (2 * e)) * dur, wrap ? near(total) : total, k.peak, k.round)]
     }
-    const { l0, l1, s0, s1, p } = this.diveLaw
-    const u = Math.min(Math.max((time - seg.start) / dur, 0), 1)
-    const area = (y: number): number => y * y * y - 0.5 * y * y * y * y
-    let done: number
-    if (u <= d.rise) done = s0 * u + (p - s0) * d.rise * area(d.rise > 0 ? u / d.rise : 1)
-    else if (u <= 1 - d.fall) done = 0.5 * d.rise * (s0 + p) + p * (u - d.rise)
-    else done = l1 - l0 - s1 * (1 - u) - (p - s1) * d.fall * area((1 - u) / d.fall)
-    return Math.exp(l0 + done)
+    const reach = pace((p) => Math.log(Math.max(p.length() - 1, 1e-6)), false, d.reach)
+    const climb = pace((p) => Math.log(Math.max(p.dot(n), 1e-6)), false, d.climb)
+    const round = pace((p) => Math.atan2(p.dot(e2), p.dot(e1)), true, d.round)
+    return { e1, e2, reach0: reach[0], reach: reach[1], climb0: climb[0], climb: climb[1], round0: round[0], round: round[1], view: new Pace(0, 0, 1, d.view.peak, d.view.round) }
   }
 
-  // How much of the dive is done at a time (0 in the hold, 1 in the skim), and how much of the rise: a ramp
-  // up, a steady middle, a ramp down, so the speed of the skim and of the way out is met without a step.
+  // The pose at the share u of such a move; a and b are the poses of the two motions at the same time.
+  private move(law: Law, a: Pose, b: Pose, u: number): Pose {
+    if (u <= 0) return a
+    if (u >= 1) return b
+    const far = 1 + Math.exp(law.reach0 + law.reach.at(u))
+    const h = Math.exp(law.climb0 + law.climb.at(u))
+    const phi = law.round0 + law.round.at(u)
+    const foot = Math.sqrt(Math.max(far * far - h * h, 0))
+    const position = new THREE.Vector3().addScaledVector(law.e1, foot * Math.cos(phi)).addScaledVector(law.e2, foot * Math.sin(phi)).addScaledVector(this.ringNormal, h)
+    const w = law.view.at(u)
+    return { position, quaternion: a.quaternion.clone().slerp(b.quaternion, w), vfov: a.vfov * Math.pow(b.vfov / a.vfov, w) }
+  }
+
+  private diveLaw: Law | null = null
+  private riseLaw: Law | null = null
+
+  private diving(): Law {
+    return (this.diveLaw ??= this.law((t) => this.hold(t - this.seg.hold.start), (t) => this.skimAt(t), this.seg.dive!, skimJson.handover.dive))
+  }
+
+  private rising(): Law {
+    return (this.riseLaw ??= this.law((t) => this.skimAt(t), (t) => this.after(t), this.seg.rise, skimJson.handover.rise))
+  }
+
+  // How much of the turn of the dive is done at a time (0 in the hold, 1 in the skim), and of the rise.
   private diveShare(time: number): number {
     const seg = this.seg.dive!
-    const d = skimJson.handover.dive
-    return trapeze((time - seg.start) / (seg.end - seg.start), d.rise, d.fall)
+    return this.diving().view.at((time - seg.start) / (seg.end - seg.start))
   }
 
   private riseShare(time: number): number {
     const seg = this.seg.rise
-    const d = skimJson.handover.rise
-    return trapeze((time - seg.start) / (seg.end - seg.start), d.rise, d.fall)
-  }
-
-  // how near the skim the lens is at a time: 0 in the hold and after the rise, 1 in the skim
-  private nearness(time: number): number {
-    const d = this.seg.dive!
-    const r = this.seg.rise
-    if (time < d.start || time >= r.end) return 0
-    return time < d.end ? this.diveShare(time) : time < r.start ? 1 : 1 - this.riseShare(time)
+    return this.rising().view.at((time - seg.start) / (seg.end - seg.start))
   }
 
   override terrain(tRel: number): Pose {
@@ -205,40 +222,9 @@ export class SaturnPlan extends StopPlan {
     const d = this.seg.dive!
     const r = this.seg.rise
     if (time < d.start) return this.hold(time - this.seg.hold.start)
-    if (time < d.end) return this.join(this.hold(time - this.seg.hold.start), this.skimAt(time), this.diveShare(time), this.diveReach(time))
+    if (time < d.end) return this.move(this.diving(), this.hold(time - this.seg.hold.start), this.skimAt(time), (time - d.start) / (d.end - d.start))
     if (time < r.start) return this.skimAt(time)
-    return this.riseAt(time)
-  }
-
-  // The rise: the lens lifts off the plane before it draws back. The height goes from the skim's to the way
-  // out's by its own share (a steady factor a frame through the middle, skim.json handover.rise.climb), and the
-  // foot on the plane goes from one to the other by the height already won, to a power (handover.rise.back):
-  // over one the climb leads and the way back is taken where the lens is high, so the plane never stands still
-  // under the lens and the speed over the height comes up without a step. The view (where the globe stands in
-  // the picture, how it leans, the field of view) goes over by the share of handover.rise.rise and fall.
-  private riseAt(time: number): Pose {
-    const seg = this.seg.rise
-    const d = skimJson.handover.rise
-    const a = this.skimAt(time)
-    const b = this.after(time)
-    const u = (time - seg.start) / (seg.end - seg.start)
-    if (u <= 0) return a
-    if (u >= 1) return b
-    const n = this.ringNormal
-    const ha = a.position.dot(n)
-    const hb = b.position.dot(n)
-    const fa = a.position.clone().addScaledVector(n, -ha)
-    const fb = b.position.clone().addScaledVector(n, -hb)
-    const climb = trapeze(u, d.climb.rise, d.climb.fall)
-    const h = ha > 1e-4 && hb > 1e-4 ? ha * Math.pow(hb / ha, climb) : mix(ha, hb, climb)
-    const won = hb === ha ? climb : Math.min(Math.max((h - ha) / (hb - ha), 0), 1)
-    const position = fa.lerp(fb, Math.pow(won, d.back)).addScaledVector(n, h)
-    const w = this.riseShare(time)
-    const ka = this.framing(a)
-    const kb = this.framing(b)
-    const turn = Math.atan2(Math.sin(kb[2] - ka[2]), Math.cos(kb[2] - ka[2]))
-    const vfov = a.vfov * Math.pow(b.vfov / a.vfov, w)
-    return this.framed(position, mix(ka[0], kb[0], w), mix(ka[1], kb[1], w), ka[2] + turn * w, 1 / (Math.tan(THREE.MathUtils.degToRad(vfov) / 2) * position.length()))
+    return this.move(this.rising(), this.skimAt(time), this.after(time), (time - r.start) / (r.end - r.start))
   }
 
   // The two views of the handover show the same world from the same lens: the close view is the flight seen in
@@ -281,8 +267,128 @@ export class SaturnPlan extends StopPlan {
     return { position, quaternion: lookAt(position, new THREE.Vector3(0, 0, 0), heading), vfov: pose.vfov }
   }
 
+  // One sky for the stop: the film's own star field, in the view of the globe and in the close view alike. The
+  // engine's cross of two sky pictures by the clock is not used (handover skyFrames 0, and the close view has no
+  // sky picture at all): the picture of the sky of the hold has its whole share in the view of the globe and
+  // leaves by how far the lens is from the path of the hold (heroSky). It is gone by the first frame of the
+  // engine's handover, from which the engine draws no picture of the sky for the view of the globe (skyProof).
+
+  // How low the lens is over the ring plane at a height: 0 at the heights of the hold, 1 at those of the skim,
+  // by the logarithm of the height between the two heights of skim.json sky, to the power sky.power (under 1:
+  // the air comes in early below the upper height and settles at the lower). The air of the stop (the dimming
+  // of the stars and the glow under them) follows this and nothing of it follows the clock.
+  lowAt(height: number): number {
+    const [lo, hi] = skimJson.sky.heights as [number, number]
+    return Math.pow(1 - smooth(Math.log(Math.max(Math.abs(height), 1e-6) / lo) / Math.log(hi / lo)), skimJson.sky.power)
+  }
+
+  low(time: number): number {
+    return this.lowAt(this.flight(time).position.dot(this.ringNormal))
+  }
+
   override skyGain(time: number): number {
-    return mix(1, skim.skyNear, smooth(this.nearness(time)))
+    return mix(1, skimJson.sky.near, this.low(time))
+  }
+
+  // The stars of the flight: the engine brings them in through the rise, from its change of view to the end of
+  // the rise, and reads how far by a time. That time is given here by the height of the lens over the ring plane
+  // and not by the clock: the share of the way between the two heights of skim.json sky.lift, to the power
+  // sky.lift.power, laid on the engine's span of time. So the stars of the flight come out as the lens climbs.
+  liftAt(height: number): number {
+    const k = skimJson.sky.lift
+    return Math.pow(ramp(k.heights[0]!, k.heights[1]!, Math.abs(height)), k.power)
+  }
+
+  override skyLiftAt(seg: Segment, time: number): number | null {
+    if (seg.kind !== 'rise') return null
+    const change = handoverOf(this.id, 'rise')
+    if (!change) return null
+    return mix(change.time, seg.end, this.liftAt(this.flight(time).position.dot(this.ringNormal)))
+  }
+
+  private holdPath: THREE.Vector3[] | null = null
+
+  // How far a place is from the path the lens flies in the hold: the distance to the nearest point of that path
+  // (the path as a chain of chords, sky.hero.chords of them).
+  fromHold(place: THREE.Vector3): number {
+    if (!this.holdPath) {
+      const h = this.seg.hold
+      const n = skimJson.sky.hero.chords
+      this.holdPath = []
+      for (let i = 0; i <= n; i++) this.holdPath.push(this.hold(((h.end - h.start) * i) / n).position.clone())
+    }
+    const pts = this.holdPath
+    const ab = new THREE.Vector3()
+    const ap = new THREE.Vector3()
+    let best = Infinity
+    for (let i = 0; i + 1 < pts.length; i++) {
+      ab.subVectors(pts[i + 1]!, pts[i]!)
+      ap.subVectors(place, pts[i]!)
+      const k = Math.min(Math.max(ap.dot(ab) / Math.max(ab.lengthSq(), 1e-18), 0), 1)
+      best = Math.min(best, ap.addScaledVector(ab, -k).lengthSq())
+    }
+    return Math.sqrt(best)
+  }
+
+  // How far the lens is from the path of the hold at a time.
+  heroDistance(time: number): number {
+    return this.fromHold(this.flight(time).position)
+  }
+
+  // How much of the hero's own sky (the picture of the sky of the hold) shows: all of it on the path of the
+  // hold, none of it from the distance sky.hero.reach from that path on, and between the two it falls by a
+  // smooth step of the distance over the reach to the power sky.hero.power (the power under 1 spreads the fall
+  // evenly over the dive, which leaves the hold slowly and then fast). slack is the distance under which the
+  // lens counts as on the path (the chords cut the path's curve by far less). A function of where the lens is
+  // and of nothing else.
+  heroSky(time: number): number {
+    const k = skimJson.sky.hero
+    return 1 - smooth(Math.pow(Math.max(this.heroDistance(time) - k.slack, 0) / k.reach, k.power))
+  }
+
+  // The proof that the hero's sky leaves once and for good: the hold keeps it whole, the dive has lost it before
+  // the engine changes the view (after that no picture of the sky is drawn), the rise never comes near enough
+  // to bring it back, and through the dive it only ever falls. Throws if a change of the paths breaks any of it.
+  skyProof(): { hold: number; change: number; rise: number } {
+    const k = skimJson.sky.hero
+    const step = 0.25 / config.fps
+    const d = this.seg.dive!
+    const change = handoverOf(this.id, 'dive')
+    if (!change) throw new Error(this.id + ': no handover in the dive')
+    let hold = 1
+    for (let t = this.seg.hold.start; t < d.start; t += step) hold = Math.min(hold, this.heroSky(t))
+    if (hold !== 1) throw new Error(this.id + ': the hold does not keep its sky whole, least share ' + hold)
+    // and the hold is flown above the air of the stop
+    for (let t = this.seg.hold.start; t < d.start; t += step) if (this.low(t) !== 0) throw new Error(this.id + ': the hold is flown inside the air of the stop at ' + (t * config.fps).toFixed(2) + ', sky.heights ' + skimJson.sky.heights)
+    let last = 0
+    for (let t = d.start; t <= change.time; t += step) {
+      const now = this.heroDistance(t)
+      if (now < last - 1e-9 && now < k.reach + k.slack) throw new Error(this.id + ': the dive comes back towards the hold at ' + (t * config.fps).toFixed(2))
+      last = now
+    }
+    // from the first frame of the engine's handover on the engine draws no picture of the sky in the view of the
+    // globe: the hero's must be gone by then
+    const first = change.firstFrame / config.fps
+    const at = this.heroDistance(first)
+    if (this.heroSky(first) !== 0) throw new Error(this.id + ': at the first frame of the handover (' + change.firstFrame + ') the lens is ' + at.toFixed(4) + ' from the path of the hold, sky.hero.reach is ' + k.reach)
+    let rise = Infinity
+    for (let t = this.seg.rise.start; t <= this.seg.rise.end + 1e-9; t += step) rise = Math.min(rise, this.heroDistance(t))
+    if (!(rise - k.slack >= k.reach)) throw new Error(this.id + ': the rise comes to ' + rise.toFixed(4) + ' from the path of the hold, sky.hero.reach is ' + k.reach)
+    // the stars of the flight come in by the height of the lens: none at the engine's change of view in the rise,
+    // all of them at the end of the rise, and the lens never comes down between the two heights
+    const up = handoverOf(this.id, 'rise')
+    if (!up) throw new Error(this.id + ': no handover in the rise')
+    const high = (t: number): number => Math.abs(this.flight(t).position.dot(this.ringNormal))
+    const r = this.seg.rise
+    if (this.liftAt(high(up.time)) !== 0) throw new Error(this.id + ': at the change of view of the rise the lens is ' + high(up.time).toFixed(4) + ' over the ring plane, sky.lift.heights ' + skimJson.sky.lift.heights)
+    if (this.liftAt(high(r.end)) !== 1) throw new Error(this.id + ': at the end of the rise the lens is ' + high(r.end).toFixed(4) + ' over the ring plane, sky.lift.heights ' + skimJson.sky.lift.heights)
+    let top = 0
+    for (let t = up.time; t <= r.end + 1e-9; t += step) {
+      const now = this.liftAt(high(t))
+      if (now < top) throw new Error(this.id + ': the rise comes down again inside sky.lift.heights at ' + (t * config.fps).toFixed(2))
+      top = now
+    }
+    return { hold, change: at, rise }
   }
 
   seat(time: number): THREE.Quaternion {

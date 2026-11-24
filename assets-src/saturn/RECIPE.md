@@ -64,15 +64,11 @@ Every file under `public/assets/saturn/` and how it is made. All scripts run fro
 - Take kept: round 2 (reset run on the first probes, then one run on fresh probes).
 - Checks: `out/work/saturn/close-globe-check.jpg` (patch with and without the continued part), `check/pair.py close`, north up and bands in place against the approved image.
 
-## `public/assets/saturn/<set>/sky-terrain.webp` (full 3520 x 1980, web 1760 x 990, lossless)
+## Retired: the sky picture of the skim (`sky-terrain.webp`)
 
-- Tool: `python3 assets-src/saturn/sky/patch.py terrain references/approved/saturn-close.jpg out/work/saturn/sky-fill-close-take1.png none`, fill image from the workspace image tool.
-- Model for the fill: `seedream_5`, 16:9, 2816 x 1584, reference image `references/approved/saturn-close.jpg`.
-- Prompt for the fill: "Edit image 1. Remove the giant planet, the whole plane of rings in the foreground and every floating ice particle completely, and remove every trace of their glow. Fill the entire frame with the deep space seen in the upper left of the image, continued exactly: the same sparse field of fine, pinpoint, slightly colored stars, the same near-black blue background with very faint dust, the same star sizes, density, brightness and grain. Keep the stars that are visible in image 1 in the same places with the same exposure and color. No planet, no rings, no ice, no moon, no sun, no glow, no nebula colors that are not already present, no text, no border. Wide 16:9 frame."
-- What it does: as the hold patch, with the close image and the close camera (vfov 48). No glow render is subtracted (`none`); instead every sky pixel within 160 px of the body whose star-free brightness is over 1.5 times the far sky counts as glow of the limb or the ring horizon and is filled like the body, so the patch holds sky only and the limb glow comes from the film's own haze.
-- Take kept: take 1 of 1.
-- Checks: judged frame 3720, top left sky: median 7 against 7 in the approved image, the same stars in the same places; share of star pixels own sky 0.0056, filled part 0.0040.
-- Round 3 clean-up, take 1 of 1: `python3 assets-src/saturn/sky/clean.py terrain out/work/saturn/keep/sky-terrain-full-r2.webp` (the round 2 file as source, no generation). The margin outside the approved frame is rebuilt from a reflected low layer blurred with distance (no edge columns carried outward, so no pillars or streaks), and the outline of the body mask is healed from its surroundings. Inside the approved frame the sky pixels away from the body are unchanged.
+- The file is no longer shipped and nothing loads it. The skim has no sky picture: its sky is the film's own star field, dimmed by the height of the lens over the ring plane, with the glow of the air of the stop under it as a function of the direction of the ray (`src/stops/saturn/veil.ts`, numbers in `src/stops/saturn/skim.json` under `sky`).
+- The one sky picture of the stop is `sky-hold.webp` above. It shows by where the lens is (`plan.heroSky` in `src/stops/saturn/plan.ts`).
+- The recipe of the retired file is in the history of this file (`git log -- assets-src/saturn/RECIPE.md`), and `assets-src/saturn/sky/patch.py terrain` and `clean.py terrain` still build it if it is ever wanted again.
 
 ## Working input, not shipped: `out/work/saturn/shot/<set>/hero-rings.jpg` and `out/work/saturn/shot/<set>/hero-rings-mask.png` (full 5632 x 3168 from the x2 upscale, web 2816 x 1584)
 

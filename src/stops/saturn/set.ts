@@ -1,33 +1,54 @@
 import * as THREE from 'three'
 import type { SetFactory } from '../../core/types'
+import { isRaw } from '../../diagnostics/diag'
 import { smooth } from '../../director/rig'
+import fit from './fit.json'
 import { createKept } from './kept/set'
 import { createModel } from './model'
 import { plan } from './plan'
 import skimJson from './skim.json'
+import { Veil } from './veil'
 
 // One set of two scenes that are never drawn together. The approach and the hold are the set of the kept build,
-// so the hold is the kept picture. The skim, the rise and the way out are the ring model (model.ts). In a
-// window of the dive every take of a frame draws one of the two whole scenes from the same lens, and the share
-// of the model's takes rises from 0 to 1 (skim.json, handover.kept).
+// so the hold is the kept picture. The skim, the rise and the way out are the ring model (model.ts). In the dive
+// the picture goes from the one to the other by the height of the lens over the ring plane and by nothing else:
+// between the two heights of skim.json handover.kept.heights every take of a frame draws one of the two whole
+// scenes from the same lens, and the share of the model's takes rises from 0 at the upper height to 1 at the
+// lower. The kept set is not drawn again after the dive.
+//
+// The air of the stop (veil.ts: the glow of the dust over the ring plane under the stars) belongs to neither
+// scene: it is drawn under whichever of the two is drawn, from the same lens, and how much of it shows follows
+// the height of the lens over the ring plane alone (plan.lowAt), so it does not know which scene is on.
 const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b))
 
 export const createSet: SetFactory = async (ctx) => {
   const kept = await createKept(ctx)
   const model = await createModel(ctx)
   const world = new THREE.Group()
-  world.add(kept.world, model.world)
+  const veil = new Veil(skimJson.sky.glow, fit.globe.scale[1]!)
+  world.add(kept.world, model.world, veil.mesh)
+  const tilt = new THREE.Quaternion().fromArray(fit.globe.quaternion)
+  const toTerrain = plan.terrainFrame.clone().invert()
+  const terrainOffset = plan.spot.clone().negate().applyQuaternion(toTerrain)
+  const polar = fit.globe.scale[1]!
+  const centre = new THREE.Vector3()
+  const total = new THREE.Quaternion()
+  const toRing = new THREE.Quaternion()
+  const lensTurn = new THREE.Quaternion()
+  const eye = new THREE.Vector3()
+  const sun = new THREE.Vector3()
   const window = skimJson.handover.kept
   const dive = plan.seg.dive!
-  const from = dive.start + window.from * (dive.end - dive.start)
-  const to = dive.start + window.to * (dive.end - dive.start)
+  const logLo = Math.log(window.heights[0]!)
+  const logHi = Math.log(window.heights[1]!)
 
   return {
     id: plan.id,
     world,
     sky: model.sky,
     update: (state, shot, view) => {
-      const share = smooth((state.time - from) / (to - from))
+      const height = Math.max(plan.flight(state.time).position.dot(plan.ringNormal), 1e-6)
+      const share = state.time < dive.start ? 0 : state.time >= dive.end ? 1 : 1 - smooth((Math.log(height) - logLo) / (logHi - logLo))
       const count = Math.max(view.samples, 1)
       const stride = window.strides.find((s) => gcd(s, count) === 1) ?? 1
       const order = ((view.sample * stride) % count + 0.5) / count
@@ -40,10 +61,27 @@ export const createSet: SetFactory = async (ctx) => {
       world.quaternion.identity()
       idle.world.visible = false
       drawn.update(state, shot, view)
+      // the lens and the Sun in the frame of the rings, as the scene that was just drawn stands
+      const inOrbit = state.view === 'orbit'
+      if (inOrbit) centre.set(0, 0, 0)
+      else centre.copy(terrainOffset)
+      centre.applyQuaternion(drawn.world.quaternion).add(drawn.world.position)
+      total.copy(drawn.world.quaternion)
+      if (!inOrbit) total.multiply(toTerrain)
+      toRing.copy(total).multiply(tilt).invert()
+      eye.copy(centre).negate().applyQuaternion(toRing)
+      const low = plan.lowAt(eye.y)
+      const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
+      const lit = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0
+      sun.copy(plan.lightDir).applyQuaternion(total).lerp(shot.sun.dir, lit).normalize().applyQuaternion(toRing)
+      eye.y /= polar
+      sun.y /= polar
+      veil.set(lensTurn.copy(toRing).multiply(view.camera.quaternion), eye, sun.normalize(), isRaw(view.diag) || !drawn.world.visible ? 0 : low * state.weight / shot.post.exposure)
     },
     dispose: () => {
       kept.dispose()
       model.dispose()
+      veil.dispose()
     },
   }
 }
