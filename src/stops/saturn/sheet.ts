@@ -93,7 +93,7 @@ export const SHEET_AT_GLSL = /* glsl */ `
 uniform vec3 uSunL;
 uniform vec4 uFlatten;
 uniform vec3 uEven;
-void sheetAt(vec2 q, float r, float fp, out float tau, out float lum, out float thin, out vec4 ink, out vec3 tint, out vec2 wide) {
+void sheetAt(vec2 q, float r, float fp, float fpl, out float tau, out float lum, out float thin, out vec4 ink, out vec3 tint, out vec2 wide) {
   vec2 knots = ringKnots(r, fp);
   wide = ringKnots(r, uFlatten.z);
   float rc = sheetInkRadius(r);
@@ -109,7 +109,7 @@ void sheetAt(vec2 q, float r, float fp, out float tau, out float lum, out float 
   knots += vec2(more, sheetOuterLum(more));
   tau = knots.x;
   lum = knots.y;
-  ringFine(r, fp, ink.a, thin, dot(q / r, normalize(uSunL.xz)), tau, lum, tint);
+  ringFine(r, fp, fpl, ink.a, thin, dot(q / r, normalize(uSunL.xz)), tau, lum, tint);
 }`
 
 // The far look of the sheet: the sheet as the set of the kept build draws it once its picture of the hold has
@@ -130,6 +130,7 @@ uniform vec3 uKShadowL;
 uniform vec3 uKPenumbra;
 uniform vec2 uKPenumbraFar;
 uniform vec2 uKSolid;
+uniform vec2 uKShadeRamp;
 uniform vec4 uKOver;
 uniform vec4 uKStrand;
 uniform float uKSheetR[9];
@@ -174,7 +175,7 @@ vec4 keptSheet(float r, float phi, float x, float texels, float mu, float along,
   float keep = max(smoothstep(uKSheetFit.x, uKSheetFit.y, r), 1.0 - smoothstep(1.0 - bw, 1.0 + bw, bb));
   float sheet = fore ? (1.0 - smoothstep(1.0 - bw, 1.0 + bw, bb)) * lit * smoothstep(uKEdge.x - fw, uKEdge.x + fw, r) * mix(1.0, keep, smoothstep(1.0 - bw, 1.0 + bw, bb)) * (1.0 - smoothstep(uKEdge.y - 0.002, uKEdge.y + 0.002, r)) : 0.0;
   a = max(a, (1.0 - keptKnots(r, uKSheetT)) * sheet);
-  a = max(a, uKSolid.x * uKSolid.y * (1.0 - lit) * body * ramp);
+  a = max(a, uKSolid.x * uKSolid.y * (1.0 - lit) * body * smoothstep(uKShadeRamp.x, uKShadeRamp.y, r));
   vec3 wedge = uKSheetGlow.rgb * (1.0 - smoothstep(uKSheetFit.z, uKSheetFit.w, bb)) * keptKnots(r, uKWedgeG) * sheet * day;
   for (int j = 0; j < (over > 0.0 ? 1 : 0); j++) {
     float sx = (uKStrand.x + (r - uKEdge.x) * uKStrand.y - uKSpan.x) * uKSpan.y;
@@ -189,25 +190,36 @@ vec4 keptSheet(float r, float phi, float x, float texels, float mu, float along,
   return vec4(c + wedge, a);
 }`
 
+// The plane is no mesh. A mesh of the plane passes behind the lens when the lens is near it; the rasteriser
+// then cuts every triangle on its own where it meets the plane of the lens, and the cut edges of two
+// neighbours need not meet: a slit along a spoke of the mesh, one frame long, with the sky in it. So the pass
+// is one triangle over the whole picture and the point of the plane under a pixel is where the ray from the
+// lens through that pixel meets the plane (the same point the mesh gave). position: the corner in the
+// picture (-1 to 1 across and up). vRay: that ray in the frame of the rings, as long as one unit of depth;
+// vRayV: the same in the frame of the lens; vEye: the lens in the frame of the rings.
 const VERT = /* glsl */ `
-out vec3 vLocal;
-out vec3 vView;
-out vec3 vClip;
+out vec2 vNdc;
+out vec3 vRay;
+out vec3 vRayV;
+flat out vec3 vEye;
 void main() {
-  vLocal = position;
-  vec4 mv = modelViewMatrix * vec4(position, 1.0);
-  vView = mv.xyz;
-  gl_Position = projectionMatrix * mv;
-  vClip = gl_Position.xyw;
+  vNdc = position.xy;
+  vRayV = vec3((position.x + projectionMatrix[2][0]) / projectionMatrix[0][0], (position.y + projectionMatrix[2][1]) / projectionMatrix[1][1], -1.0);
+  mat4 back = inverse(modelViewMatrix);
+  vRay = mat3(back) * vRayV;
+  vEye = back[3].xyz;
+  gl_Position = vec4(position.xy, 0.0, 1.0);
 }`
 
 const FRAG = /* glsl */ `
 precision highp float;
 precision highp int;
-in vec3 vLocal;
-in vec3 vView;
-in vec3 vClip;
+in vec2 vNdc;
+in vec3 vRay;
+in vec3 vRayV;
+flat in vec3 vEye;
 uniform vec3 uCamL;
+uniform vec2 uBounds;
 uniform float uPolar;
 uniform int uPass;
 uniform float uGrad;
@@ -233,7 +245,11 @@ ${HASH_GLSL}
 ${INVERSE_FILMIC_GLSL}
 ${SHEET_FAR_GLSL}
 void main() {
-  vec2 q = vLocal.xz;
+  // where the ray through the pixel meets the plane; a ray that does not meet it, or meets it very far
+  // away, gets a point far outside the ice, so that no number here grows past what a float holds
+  bool met = vRay.y * vEye.y < 0.0;
+  float depth = met ? min(-vEye.y / vRay.y, 1e6) : 1e6;
+  vec2 q = vEye.xz + vRay.xz * depth;
   float r = length(q);
   float pixel = length(vec2(dFdx(r), dFdy(r)));
   vec2 qx = dFdx(q);
@@ -246,11 +262,12 @@ void main() {
   // during one take the pixel's point slides over the ice: the ringlets are filtered by the pixel and by that
   vec2 sweep = iceSweep(q, r, ray);
   float fp = ringFootprint(length(vec2(pixel, sweep.x * uIceFit.x)), uGrad);
+  float fpl = ringFootprint(length(vec2(ringLookPixel(pixel), sweep.x * uIceFit.x)), uGrad);
   vec3 cs = vec3(uCamL.x, uCamL.y / uPolar, uCamL.z);
   vec3 ds = vec3(ray.x, ray.y / uPolar, ray.z);
   bool front = -dot(cs, ds) > dot(ds, ds);
   // past the span of the model there is ice only when the lens is near
-  bool mine = front == (uPass == 1) && (uIceOrbit.z > 0.0 || r < uRfSpan.x + 1.0 / uRfSpan.y);
+  bool mine = met && r >= uBounds.x && r <= uBounds.y && front == (uPass == 1) && (uIceOrbit.z > 0.0 || r < uRfSpan.x + 1.0 / uRfSpan.y);
   // what the far look needs of the pixel's gradients: the globe's shadow and how the view ray passes the globe
   vec3 ks = normalize(vec3(uKShadowL.x, uKShadowL.y / uPolar, uKShadowL.z));
   float kAlong = dot(P, ks);
@@ -281,7 +298,7 @@ void main() {
     vec4 ink;
     vec3 tint;
     vec2 wide;
-    sheetAt(q, r, fp, tau, lum, thin, ink, tint, wide);
+    sheetAt(q, r, fp, fpl, tau, lum, thin, ink, tint, wide);
     float turn = atan(q.y, q.x) / 6.2831853;
     // the spokes show only near the sheet
     float spokes = 0.0;
@@ -318,10 +335,10 @@ void main() {
   // the far look gives way to the model's own light where the lens has closed in
   col = mix(col, farLook.rgb, wfar);
   alpha = mix(alpha, farLook.a, wfar);
-  vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
+  vec2 vq = vNdc * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   alpha *= uWeight;
-  outColor = diagOut(vec4(col, alpha), texels, 1.0, uLayer, vec2(0.0), length(vView));
+  outColor = diagOut(vec4(col, alpha), texels, 1.0, uLayer, vec2(0.0), length(vRayV) * depth);
   if (mine == false || (uDiag >= 2 && alpha < 0.5)) discard;
 }`
 
@@ -373,26 +390,17 @@ export class Sheet {
   private readonly farMottle = new THREE.Vector4(keptLook.rings.spokes, keptLook.rings.clumps, 0, 0)
 
   constructor(field: RingField, ice: Ice, polar: number) {
-    const seg = look.segments
     const kl = keptLook.rings
     const span = model.span as [number, number]
-    const inner = span[0]
-    const outer = Math.max(span[1], skim.outer.end[1]!) / Math.cos(Math.PI / seg)
-    const pos = new Float32Array((seg + 1) * 2 * 3)
-    const index: number[] = []
-    for (let i = 0; i <= seg; i++) {
-      const a = (i / seg) * Math.PI * 2
-      pos.set([Math.cos(a) * inner, 0, Math.sin(a) * inner], i * 6)
-      pos.set([Math.cos(a) * outer, 0, Math.sin(a) * outer], i * 6 + 3)
-    }
-    for (let i = 0; i < seg; i++) index.push(i * 2, i * 2 + 1, i * 2 + 2, i * 2 + 2, i * 2 + 1, i * 2 + 3)
+    // one triangle over the whole picture (VERT); the plane holds ice from the inner end of the model to
+    // where the ice past the rim ends
     this.geometry = new THREE.BufferGeometry()
-    this.geometry.setAttribute('position', new THREE.BufferAttribute(pos, 3))
-    this.geometry.setIndex(index)
+    this.geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array([-1, -1, 0, 3, -1, 0, -1, 3, 0]), 3))
     this.uniforms = {
       ...field.uniforms,
       ...ice.uniforms,
       uCamL: { value: new THREE.Vector3(0, 1, 3) }, uSunL: { value: new THREE.Vector3(1, 0.2, 0) }, uPolar: { value: polar },
+      uBounds: { value: new THREE.Vector2(span[0], Math.max(span[1], skim.outer.end[1]!)) },
       uGrad: gradUniform, uDiag: diagUniform, uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
       uFinest: { value: field.finest },
       uShade: { value: new THREE.Vector4(look.view.dense, look.view.thin, look.gain[0], look.unlit) },
@@ -419,7 +427,7 @@ export class Sheet {
       uKFloorTone: { value: new THREE.Vector4(kl.floorTone[0], kl.floorTone[1], kl.unlit, skim.handover.kept.view) },
       uKAzGain: { value: azimuth.coeffs.flat() }, uKAzRadii: { value: azimuth.radii },
       uKShadowL: { value: this.farShadow }, uKPenumbra: { value: this.farPenumbra }, uKPenumbraFar: { value: new THREE.Vector2().fromArray(kl.penumbraFar) },
-      uKSolid: { value: this.farSolid },
+      uKSolid: { value: this.farSolid }, uKShadeRamp: { value: new THREE.Vector2().fromArray(kl.shadeRamp) },
       uKOver: { value: new THREE.Vector4().fromArray(kl.over) },
       uKStrand: { value: new THREE.Vector4(kl.strand[0], kl.strand[1], kl.strand[2], kl.overTone[2]) },
       uKSheetR: { value: kl.sheetRadii }, uKSheetT: { value: kl.sheetThrough }, uKWedgeG: { value: kl.wedgeGain },

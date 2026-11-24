@@ -142,19 +142,97 @@ export class SaturnPlan extends StopPlan {
 
   // The skim: the height falls by the same share in every frame and the speed over the plane goes with the
   // height, so the sheet passes under the lens at a steady number of pixels a frame. u is the time from the
-  // middle of the skim over its length; along is the share of the way done since the middle.
+  // middle of the skim over its length; along is the share of the way done since the middle. From the share
+  // path.bend.from on (just past the judged frame) the way bends (skimBend) and the rule of the speed stays.
   skimAt(time: number): Pose {
     const path = skimJson.path
     const seg = this.seg.terrain
     const dur = seg.end - seg.start
     const u = (time - seg.start) / dur - 0.5 - config.shutterFraction / (2 * config.fps * dur)
+    const quaternion = new THREE.Quaternion().setFromAxisAngle(this.ringNormal, THREE.MathUtils.degToRad(path.yawDeg) * u).multiply(this.skimQuaternion)
+    quaternion.multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), THREE.MathUtils.degToRad(path.pitchDeg) * u))
+    return { position: u > path.bend.from ? this.skimBend(u) : this.skimStraight(u), quaternion, vfov: skimJson.pose.vfov }
+  }
+
+  // The straight way of the skim at the share u from its middle.
+  private skimStraight(u: number): THREE.Vector3 {
+    const path = skimJson.path
     const k = Math.log(path.descent)
     const fall = Math.exp(-k * u)
     const along = k === 0 ? u : (1 - fall) / (2 * Math.sinh(k / 2))
-    const position = this.skimPosition.clone().addScaledVector(this.skimForward, path.forward * along).addScaledVector(this.skimRight, path.side * along).addScaledVector(this.ringNormal, skimJson.pose.height * (fall - 1))
-    const quaternion = new THREE.Quaternion().setFromAxisAngle(this.ringNormal, THREE.MathUtils.degToRad(path.yawDeg) * u).multiply(this.skimQuaternion)
-    quaternion.multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), THREE.MathUtils.degToRad(path.pitchDeg) * u))
-    return { position, quaternion, vfov: skimJson.pose.vfov }
+    return this.skimPosition.clone().addScaledVector(this.skimForward, path.forward * along).addScaledVector(this.skimRight, path.side * along).addScaledVector(this.ringNormal, skimJson.pose.height * (fall - 1))
+  }
+
+  private ownBend: { c: number; lift0: number; ahead: THREE.Vector3; across: THREE.Vector3; start: THREE.Vector3; turn: Pace; lift: Pace; nodes: [number, number, number][] } | null = null
+
+  // The end of the skim (ruling d196). The skim pushes at the globe and the way out lies behind the lens, so
+  // the lens would have to stop and turn back where the rise begins. Instead the way of the lens bends over
+  // the last seconds of the skim: from the push into a track across the plane and on into the pull back, and
+  // the rise takes that motion and only speeds it up. The lens never rests: all the way the speed of the lens
+  // is the same share of its height over the plane as in the straight skim, in whatever direction it goes.
+  // The direction turns from the share path.bend.from to the share path.bend.to of the skim (shares from its
+  // middle, like u): its heading over the plane by turnDeg toward the right of the lens, where the globe is
+  // (the pace of bend.turn), and its angle to the plane from the descent of the skim up to liftDeg (the pace
+  // of bend.lift). Past bend.to the way is straight again. The lens looks where it looked: nothing of its
+  // turn is here. The way has no closed form (the speed goes with the height, the height with the way): it is
+  // summed once in bend.steps steps of the classic fourth order rule, and a place between two steps is one
+  // such step from the one before, so the way is one smooth function of the time and of nothing else.
+  private skimBend(u: number): THREE.Vector3 {
+    const path = skimJson.path
+    const b = path.bend
+    const span = b.to - b.from
+    const rad = THREE.MathUtils.degToRad
+    if (!this.ownBend) {
+      const k = Math.log(path.descent)
+      const h0 = skimJson.pose.height
+      // the velocity of the straight skim over its height: the same at every time
+      const flat = this.skimForward.clone().multiplyScalar(path.forward).addScaledVector(this.skimRight, path.side).multiplyScalar(k === 0 ? 1 / h0 : k / (2 * Math.sinh(k / 2) * h0))
+      const c = Math.hypot(flat.length(), k)
+      const ahead = flat.clone().normalize()
+      this.ownBend = { c, lift0: Math.asin(-k / c), ahead, across: new THREE.Vector3().crossVectors(ahead, this.ringNormal).normalize(), start: this.skimStraight(b.from), turn: new Pace(0, 0, 1, b.turn.peak, b.turn.round), lift: new Pace(0, 0, 1, b.lift.peak, b.lift.round), nodes: [] }
+      let at: [number, number, number] = [Math.log(h0) - k * b.from, 0, 0]
+      this.ownBend.nodes.push(at)
+      for (let i = 0; i < b.steps; i++) {
+        at = this.bendStep(at, i / b.steps, 1 / b.steps)
+        this.ownBend.nodes.push(at)
+      }
+    }
+    const B = this.ownBend
+    const s = Math.min((u - b.from) / span, 1)
+    const i = Math.min(Math.floor(s * b.steps), b.steps - 1)
+    let [logHeight, x, y] = this.bendStep(B.nodes[i]!, i / b.steps, s - i / b.steps)
+    if (u > b.to) {
+      // straight on: the height grows (or falls) by the same share in every frame, the way with it
+      const lift = B.lift0 + (rad(b.liftDeg) - B.lift0) * B.lift.at(1)
+      const heading = rad(b.turnDeg) * B.turn.at(1)
+      const grow = B.c * Math.sin(lift) * (u - b.to)
+      const way = Math.abs(grow) < 1e-9 ? B.c * Math.exp(logHeight) * Math.cos(lift) * (u - b.to) : (Math.exp(logHeight) * Math.cos(lift) * Math.expm1(grow)) / Math.sin(lift)
+      x += way * Math.cos(heading)
+      y += way * Math.sin(heading)
+      logHeight += grow
+    }
+    const height0 = B.start.dot(this.ringNormal)
+    return B.start.clone().addScaledVector(B.ahead, x).addScaledVector(B.across, y).addScaledVector(this.ringNormal, Math.exp(logHeight) - height0)
+  }
+
+  // One step of the sum of the bend: from the state at the share s of the bend (the logarithm of the height,
+  // the way ahead and the way across) over the share ds.
+  private bendStep(from: [number, number, number], s: number, ds: number): [number, number, number] {
+    const b = skimJson.path.bend
+    const B = this.ownBend!
+    const span = b.to - b.from
+    const rad = THREE.MathUtils.degToRad
+    const rate = (at: number, logHeight: number): [number, number, number] => {
+      const lift = B.lift0 + (rad(b.liftDeg) - B.lift0) * B.lift.at(at)
+      const heading = rad(b.turnDeg) * B.turn.at(at)
+      const flat = B.c * span * Math.exp(logHeight) * Math.cos(lift)
+      return [B.c * span * Math.sin(lift), flat * Math.cos(heading), flat * Math.sin(heading)]
+    }
+    const k1 = rate(s, from[0])
+    const k2 = rate(s + ds / 2, from[0] + (k1[0] * ds) / 2)
+    const k3 = rate(s + ds / 2, from[0] + (k2[0] * ds) / 2)
+    const k4 = rate(s + ds, from[0] + k3[0] * ds)
+    return [0, 1, 2].map((j) => from[j]! + (ds * (k1[j]! + 2 * k2[j]! + 2 * k3[j]! + k4[j]!)) / 6) as [number, number, number]
   }
 
   private local(pose: Pose): Pose {
@@ -166,8 +244,11 @@ export class SaturnPlan extends StopPlan {
   // rate in the motion after, so the move meets both without a step in speed: the distance to the globe's
   // surface (reach), the height over the ring plane (climb), the angle of the foot of the lens round the
   // globe (round) and the turn of the camera with its field of view (view). The numbers of each pace are in
-  // skim.json handover.
-  private law(from: (time: number) => Pose, to: (time: number) => Pose, seg: { start: number; end: number }, d: Paces): Law {
+  // skim.json handover. gain is the share of the motion after's own rate with which the three measures of the
+  // place arrive (1: at its rate; the rise arrives faster by handover.rise.carry over the drift of the way out,
+  // on that drift's own line, and the travel of the engine takes that speed over, so the picture does not come
+  // to rest between the rise and the travel). The turn of the camera and the field of view arrive at rest.
+  private law(from: (time: number) => Pose, to: (time: number) => Pose, seg: { start: number; end: number }, d: Paces, gain = 1): Law {
     const n = this.ringNormal
     const e1 = this.skimPosition.clone().addScaledVector(n, -this.skimPosition.dot(n)).normalize()
     const e2 = new THREE.Vector3().crossVectors(n, e1)
@@ -176,7 +257,7 @@ export class SaturnPlan extends StopPlan {
     const near = (v: number): number => Math.atan2(Math.sin(v), Math.cos(v))
     const pace = (f: (p: THREE.Vector3) => number, wrap: boolean, k: PaceOf): [number, Pace] => {
       const s0 = f(from(seg.start + e).position) - f(from(seg.start - e).position)
-      const s1 = f(to(seg.end + e).position) - f(to(seg.end - e).position)
+      const s1 = (f(to(seg.end + e).position) - f(to(seg.end - e).position)) * gain
       const first = f(from(seg.start).position)
       const total = f(to(seg.end).position) - first
       return [first, new Pace(((wrap ? near(s0) : s0) / (2 * e)) * dur, ((wrap ? near(s1) : s1) / (2 * e)) * dur, wrap ? near(total) : total, k.peak, k.round)]
@@ -208,7 +289,7 @@ export class SaturnPlan extends StopPlan {
   }
 
   private rising(): Law {
-    return (this.riseLaw ??= this.law((t) => this.skimAt(t), (t) => this.after(t), this.seg.rise, skimJson.handover.rise))
+    return (this.riseLaw ??= this.law((t) => this.skimAt(t), (t) => this.after(t), this.seg.rise, skimJson.handover.rise, 1 + skimJson.handover.rise.carry / this.p.rise.driftSpeed))
   }
 
   // How much of the turn of the dive is done at a time (0 in the hold, 1 in the skim), and of the rise.
@@ -304,12 +385,24 @@ export class SaturnPlan extends StopPlan {
     return mix(1, skimJson.sky.near, this.low(time))
   }
 
+  // The look of the sky of the skim (skim.json sky.look: the even field of the approved close image) is named
+  // to the engine's sky with the weight low, so it is whole at the skim and none of it is left at the heights of
+  // the hold. The engine's gain on the stars is 1 + (stars - 1) * weight and the air of the stop leaves skyGain
+  // of their exposure; with the gain of the look as it stands their product would swell between the two heights
+  // and fall back. The gain named here lets the level of a faint star on the picture run straight in low from 1
+  // at the upper height to look.stars * near at the skim: one way down, the same way up, and no swell between.
+  starsAt(low: number): number {
+    const near = skimJson.sky.near
+    return low > 0 ? 1 + (mix(1, skimJson.sky.look.stars * near, low) / mix(1, near, low) - 1) / low : 1
+  }
+
   // The stars of the flight: the engine brings them in through the rise, from its change of view to the end of
   // the rise, and reads how far by a time. That time is given here by the height of the lens over the ring plane
   // and not by the clock. liftAt is their level as a function of the height alone: a smooth step of
-  // 1 - (1 - share)^power, share the way between the two heights of skim.json sky.lift. The lens climbs ever
-  // slower toward the end of the rise (the height left goes with the square of the time left), so with the
-  // power one half the level runs evenly over the frames of the climb. The lower height lies over every height
+  // 1 - (1 - share)^power, share the way between the two heights of skim.json sky.lift. The lens leaves the
+  // rise with speed (handover.rise.carry) and climbs on through its end, so with the power 1 the level is a
+  // smooth step of the height itself and is whole, with no slope left, at the upper height: no kink of the
+  // level of the sky where the travel takes the flight over. The lower height lies over every height
   // of the hold and of the dive (skyProof), so it is one function of the height on both sides of the skim: none
   // of them at any height the lens has on the way down.
   liftAt(height: number): number {

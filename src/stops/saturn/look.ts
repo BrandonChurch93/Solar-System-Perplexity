@@ -10,6 +10,7 @@ export const globe: GlobeLook = {
   ringShadowHero: 0.25,
   ringSoft: [0.003, 0.012],
   ringSlant: 1,
+  // degrees a second the fine streaks from functions slide along their bands at the fastest latitudes; the map itself is rigid
   drift: 0.2,
   nightFloor: 0.012,
   hazeShadow: 0.8,
