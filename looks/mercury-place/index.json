@@ -1,9 +1,17 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T00:12:35.535Z",
+ "pushed": "2026-11-24T00:34:41.986Z",
  "head": "11ab125d2955dbea8df2f36ca43a5f12298b812f",
- "note": "step 2 and 4 draft: place picture off, relief meshes in the globe view by height, knobs by height; rise seam 977 to 978 steps -0.44 level (was +4.1); pale patch 985 to 989 still wrong",
+ "note": "G13 at 755 to 759: cause found (the level 4 plate magnified in the lower left corner beyond the meshes); cure in work: a finer level from a function. Pale patch of the rise traced to patch-4r.",
  "looks": [
+  {
+   "time": "2026-11-24T00:34:41.373Z",
+   "file": "20261124003441373-note-quad.jpg",
+   "source": "out/work/mercury/place/tmp/quad.jpg",
+   "kind": "note",
+   "label": "Fault traced, not cured yet: left the dive plate patch-4, right the rise plate patch-4r, same ground; the pale four sided patch in the rise plate is what shows at 985 to 989",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T00:12:34.962Z",
    "file": "20261124001234962-note-sheet-r2.jpg",
@@ -58,14 +66,6 @@
    "source": "out/work/mercury/place/s2/sheet-a.jpg",
    "kind": "note",
    "label": "11ab125d step 3: dive 756 to 767 every frame, the corner is ground, no line at the horizon",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T23:32:46.220Z",
-   "file": "20261123233246220-note-horizon6.jpg",
-   "source": "out/work/mercury/place/s1/horizon6.png",
-   "kind": "note",
-   "label": "open fault: thin second contour at the horizon 761 to 766 (old, new, orbit side)",
    "stop": "mercury"
   }
  ]
