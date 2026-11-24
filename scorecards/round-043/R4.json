@@ -1,0 +1,56 @@
+{
+ "critic": "R4",
+ "score": 4,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-03.png",
+   "where": "frames 2468-2471, horizon and canyon ridges",
+   "what": "the aerial plateau and the detailed vista share these frames; incoming ridges and the starfield fade in over the outgoing plate, and the exposure warms, so the cover is not one move",
+   "fix": "carry a single camera through the cover so horizon, exposure, and terrain stay continuous, with no second plate"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-06.png",
+   "where": "frames 2688-2690, full frame and lower right",
+   "what": "the detailed canyon is replaced by the flat aerial model in three frames, both terrains show at 2689, the horizon drops, and a black mass fills the lower right before it is gone by 2692",
+   "fix": "pull out as one move, match the vista light and horizon, and keep any foreground edge out of frame"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "frames 2724-2744, the disc",
+   "what": "the return globe is rolled about a quarter turn from the approach on sheet-02.png frames 2400-2416, and the lit limb has jumped from the upper left to the right",
+   "fix": "rise on the same heading and light so the outbound planet continues the inbound one"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "frames 2432-2440, canyon flanks and lower right",
+   "what": "the fast dive stretches terrain into streaks and parallel bands instead of a smooth blur",
+   "fix": "use shutter blur along the flight path and stop the texture from extruding"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "frames 2697-2710, foreground dunes and central ridges",
+   "what": "the rise smears the ground into radial, comb-like streaks rather than a smooth blur",
+   "fix": "replace the extruded stretch with optical blur that follows the pull-out"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "frame 2473, lower right corner",
+   "what": "a hard black polygonal wedge, an unrendered border, cuts into the frame",
+   "fix": "keep the near clip outside the picture and fill the corner with ground"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "frames 2490-2669, haze over the canyon",
+   "what": "the near ground drifts against the horizon, but the air stays frozen for the whole stay",
+   "fix": "drift the haze slowly, with no loop or pop"
+  }
+ ]
+}
