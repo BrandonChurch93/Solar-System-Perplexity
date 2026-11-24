@@ -1,8 +1,8 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T05:09:54.382Z",
- "head": "cbf0de39477b67db29416a3d4188287f235bc1d5",
- "note": "whole smooth runs on the merged tree (frame factor from the engine, kept frames 0 px); seam with the surface view measured 0.817 at 961 + 1/2, the bend is a scratch that reads 1.000, not in src yet",
+ "pushed": "2026-11-24T05:43:03.394Z",
+ "head": "7c885d343d584d08dacf6688e4bfed29e0fc604c",
+ "note": "bend in the surface view from 876: seam eye line 1.024 at the rise, 870 final bytes kept; terrain frames at draft, rise frames rendering",
  "looks": [
   {
    "time": "2026-11-24T04:43:36.183Z",
