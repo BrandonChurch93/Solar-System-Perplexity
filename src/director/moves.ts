@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { config, type Segment } from '../config'
-import type { CoverHorizon, NearBody, Pose, ViewKind } from '../core/types'
+import { airAt } from '../core/air'
+import type { Air, AirKnot, CoverHorizon, NearBody, Pose, ViewKind } from '../core/types'
 import { handoverOf, oneMoveForced, sideAt, type HandoverParams, type Sidestep, type SkyShares } from './handover'
 import { bellShare, bellStep, checkFlanks, paceLimits, type Flanks } from './pace'
 import { coverFrames, coverWindow, setCoverWindow, setHandover, withoutHandover, type CoverTimings } from './timeline'
@@ -39,6 +40,8 @@ export interface MoveParams {
   coverHides?: number
   coverWindow?: CoverTimings
   handover?: HandoverParams
+  // PLAN F, the one air of the stop: knots from the highest down (AirKnot in src/core/types.ts). Absent: the stop has no air of this kind.
+  air?: AirKnot[]
   skyTurnEase?: { dive?: boolean; rise?: boolean }
   coverShell?: [number, number]
   coverSea?: { centre: [number, number, number]; radius: number; edge: [number, number] }
@@ -154,6 +157,7 @@ export class StopPlan {
   private readonly leans: Lean[] = []
   private readonly paces: { key: string; law: { pace: Flanks; turn: Flanks; liftPower: number } }[] = []
   private readonly swings: { key: string; angle: number }[] = []
+  private airs: { from: AirKnot[]; knots: AirKnot[] } | null = null
 
   constructor(id: string, fit: Fit, p: MoveParams) {
     this.id = id
@@ -542,6 +546,28 @@ export class StopPlan {
     if (!seg) throw new Error(this.id + ' has no ' + kind)
     const view = forced ?? sideAt(seg, time)
     return { pose: this.eye(kind, time, view), view }
+  }
+
+  // PLAN F, the one air of this stop at a height of the lens over its body, in radii (SetState.height); null for a stop without knots.
+  // It takes a height and nothing else, so it is the same in the dive and in the rise and on both sides of a change of view. What the
+  // highest knot leaves out of exposure, sky, sunRadius and glare is the stop's light (light.exposure, light.skyExposure,
+  // light.sunRadiusDeg, light.sunGlare), and stars left out is 1, the flight's stars as they are. A stop's class gives other knots through
+  // airKnots; it cannot replace this.
+  air(height: number): Air | null {
+    const from = this.airKnots()
+    if (!from) return null
+    if (!Array.isArray(from) || from.length === 0) throw new Error(this.id + ': an air needs at least one knot')
+    if (this.airs?.from !== from) {
+      const l = this.p.light
+      this.airs = { from, knots: [{ exposure: l.exposure, sky: l.skyExposure, stars: 1, sunRadius: l.sunRadiusDeg, glare: l.sunGlare, ...from[0]! }, ...from.slice(1)] }
+    }
+    return airAt(this.airs.knots, height, this.id)
+  }
+
+  // The knots of this stop's air, from the highest down, or null: the stop's params by default. A class that builds them from values of
+  // its own gives the same array at every call. It gets no time: the air is a function of the height alone.
+  protected airKnots(): AirKnot[] | null {
+    return this.p.air ?? null
   }
 
   // The height of the eye above the unit sphere of the body, in radii, at a time of this stop's hold, dive, surface view or rise. On the

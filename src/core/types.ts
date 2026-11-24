@@ -87,6 +87,42 @@ export interface PlaceState {
   horizon?: number
 }
 
+// PLAN F, the one air. What lies between the lens and a body's ground, the sky behind the body and the Sun in it, as one function of the
+// height of the lens over the body (SetState.height, radii): the same at one height in a dive and in a rise, on the globe's side and on the
+// close view's, and never a function of the clock. A stop gives knots (AirKnot, highest first) in its params; src/core/air.ts mixes them
+// (airAt) and the film puts the result on the shot of every shutter sample (Shot.air). A stop that names no air gets none and nothing of
+// it is written anywhere.
+export type Rgb = [number, number, number]
+
+// The haze of a body as its globe and its shell take it (planet.setAir and haze.setAir of src/bodies).
+export interface HazeAir { depth: number; scaleHeight: number; day: Rgb; twilight: Rgb; night: Rgb; edge: [number, number]; strength: number; extinction: number; forward: number }
+
+export interface Air {
+  // The height this air stands for, in radii of the body: the height asked for between the knots, the knot's own at and beyond either end.
+  height: number
+  // How far down the knots that is, by the logarithm of the height: 0 at and above the highest knot, 1 at and below the lowest.
+  share: number
+  // The exposure of the picture and of the sky pass.
+  exposure: number
+  sky: number
+  // The weight of the flight's stars behind the body: 1 as the flight shows them, 0 where the body's own sky hides them.
+  stars: number
+  // The Sun: its angular radius in degrees and its glare.
+  sunRadius: number
+  glare: number
+  // The body's own parts, each there at every height or at none: the limb term and the tint of its globe, the haze over its ground and the
+  // haze of its shell.
+  limb?: number
+  tint?: Rgb
+  haze?: HazeAir
+  shell?: HazeAir
+}
+
+// One knot of a stop's air: a height in radii and what the air is there. A knot names what differs from the knot above it and takes the rest
+// from that knot, field by field inside haze and shell too. The highest knot names every part the stop's air has; the film fills its
+// exposure, sky, stars, sunRadius and glare from the stop's light where it leaves them out (StopPlan.air).
+export interface AirKnot { height: number; exposure?: number; sky?: number; stars?: number; sunRadius?: number; glare?: number; limb?: number; tint?: Rgb; haze?: Partial<HazeAir>; shell?: Partial<HazeAir> }
+
 export interface Shot {
   frame: number
   time: number
@@ -112,6 +148,12 @@ export interface Shot {
   skyShare?: number
   skyShareHigh?: number
   skyFloor?: SkyFloor
+  // The angle of one pixel row of the master format at the middle of the picture, in radians (the size of that row at distance 1 from the
+  // lens). The same number in every format, so a width a shader takes from it is the same share of the picture in a preview and in the film.
+  pixel: number
+  // PLAN F: the one air of the stop this shot belongs to, at the height of this shot's lens over its body. Set in the hold, the dive, the
+  // surface view and the rise of a stop that names an air; absent everywhere else.
+  air?: Air
 }
 
 export interface SkyFloor { nadir: THREE.Vector3; dip: number }
