@@ -1,9 +1,16 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T04:46:17.654Z",
- "head": "2b9c652b51c54ceb8e25bfaa7033d71843306da2",
- "note": "MAIL 518: the dent at 2670 to 2674 is in the path, a turning point: chart of the eye's speed across the seam",
+ "pushed": "2026-11-24T05:02:14.366Z",
+ "head": "aff3760a7357b74f9669c40058848630129cbfbe",
+ "note": "seam tool committed (f2a9ec57): the d196 dent table on the drawn camera; Earth has no dent, Saturn's rise measured; next Mars's bend numbers",
  "looks": [
+  {
+   "time": "2026-11-24T05:02:13.672Z",
+   "file": "20261124050213672-note-seam-all.jpg",
+   "source": "../../../../tmp/lines/seam-all.png",
+   "kind": "note",
+   "label": "d196 seam tool on main 4840d0f9: eye speed over height at all 17 seams with a surface view, drawn camera; thick lines dip below 0.95"
+  },
   {
    "time": "2026-11-24T04:46:16.989Z",
    "file": "20261124044616989-note-dent-mars.jpg",
@@ -62,14 +69,6 @@
    "kind": "note",
    "label": "star lift by height on the merged tree, Mercury rise on its new base 984 to 1026 every 6, draft",
    "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T03:54:25.304Z",
-   "file": "20261124035425304-note-ba-jupiter-full.jpg",
-   "source": "../../../../tmp/lift/ba-jupiter-full.png",
-   "kind": "note",
-   "label": "star lift by height, Jupiter rise before and after, draft",
-   "stop": "jupiter"
   }
  ]
 }
