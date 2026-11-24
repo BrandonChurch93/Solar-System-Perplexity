@@ -1,71 +1,71 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T05:40:55.848Z",
+ "pushed": "2026-11-24T05:48:39.079Z",
  "head": "fa44c6e514af62469ce0e917bf7589968e3ff39f",
- "note": "ground haze cure on frames 2116 to 2127; parity green on my tree; full render of dive and rise running",
+ "note": "rise 2100 to 2174 every frame on the tree to be named: level step 5.49 into 2122 by my measure; plate reads as a darker shield against the map at 2126 to 2133",
  "looks": [
   {
-   "time": "2026-11-24T05:40:55.163Z",
-   "file": "20261124054055163-note-parity1.jpg",
-   "source": "../../../../tmp/gl/s5/parity1.png",
+   "time": "2026-11-24T05:48:37.716Z",
+   "file": "20261124054837716-note-r-2166.jpg",
+   "source": "../../../../tmp/gl/s5/r-2166.jpg",
    "kind": "note",
-   "label": "parity on my tree: green (block -8.313 at 2156, 1853 block -1.385, main was -21.957)",
+   "label": "rise from 2166, draft, tree of the haze cure and the straight ramp law, every frame",
    "stop": "earth"
   },
   {
-   "time": "2026-11-24T05:40:54.441Z",
-   "file": "20261124054054441-note-h1-c.jpg",
-   "source": "../../../../tmp/gl/s5/h1-c.jpg",
+   "time": "2026-11-24T05:48:36.489Z",
+   "file": "20261124054836489-note-r-2156.jpg",
+   "source": "../../../../tmp/gl/s5/r-2156.jpg",
    "kind": "note",
-   "label": "rise 2122 to 2127, draft, same tree; far end of the glint turns pale blue grey from 2120, named as wrong",
+   "label": "rise from 2156, draft, tree of the haze cure and the straight ramp law, every frame",
    "stop": "earth"
   },
   {
-   "time": "2026-11-24T05:40:53.506Z",
-   "file": "20261124054053506-note-h1-b.jpg",
-   "source": "../../../../tmp/gl/s5/h1-b.jpg",
+   "time": "2026-11-24T05:48:35.439Z",
+   "file": "20261124054835439-note-r-2148.jpg",
+   "source": "../../../../tmp/gl/s5/r-2148.jpg",
    "kind": "note",
-   "label": "rise 2116 to 2121, draft, ground haze by the plate's slant law (level step 5.49 into 2122, before 7.98 into 2125)",
+   "label": "rise from 2148, draft, tree of the haze cure and the straight ramp law, every frame",
    "stop": "earth"
   },
   {
-   "time": "2026-11-24T05:22:06.959Z",
-   "file": "20261124052206959-note-h1-a.jpg",
-   "source": "../../../../tmp/gl/s5/h1-a.jpg",
+   "time": "2026-11-24T05:48:34.635Z",
+   "file": "20261124054834635-note-r-2140.jpg",
+   "source": "../../../../tmp/gl/s5/r-2140.jpg",
    "kind": "note",
-   "label": "rise 2110 to 2121, draft, new: the ground's haze thins by the plate's slant law, path with straight ramps (work in progress, not committed)",
+   "label": "rise from 2140, draft, tree of the haze cure and the straight ramp law, every frame",
    "stop": "earth"
   },
   {
-   "time": "2026-11-24T04:52:56.177Z",
-   "file": "20261124045256177-note-judged.jpg",
-   "source": "../../../../tmp/gl/s5/judged.jpg",
+   "time": "2026-11-24T05:48:33.579Z",
+   "file": "20261124054833579-note-r-2134.jpg",
+   "source": "../../../../tmp/gl/s5/r-2134.jpg",
    "kind": "note",
-   "label": "s4c draft 1755 1857 2010 2156",
+   "label": "rise from 2134, draft, tree of the haze cure and the straight ramp law, every frame",
    "stop": "earth"
   },
   {
-   "time": "2026-11-24T04:52:55.588Z",
-   "file": "20261124045255588-note-rise-c.jpg",
-   "source": "../../../../tmp/gl/s5/rise-c.jpg",
+   "time": "2026-11-24T05:48:32.567Z",
+   "file": "20261124054832567-note-r-2128.jpg",
+   "source": "../../../../tmp/gl/s5/r-2128.jpg",
    "kind": "note",
-   "label": "s4c draft 2133 to 2143 and 1866 to 1882",
+   "label": "rise from 2128, draft, tree of the haze cure and the straight ramp law, every frame",
    "stop": "earth"
   },
   {
-   "time": "2026-11-24T04:52:55.028Z",
-   "file": "20261124045255028-note-rise-b.jpg",
-   "source": "../../../../tmp/gl/s5/rise-b.jpg",
+   "time": "2026-11-24T05:48:31.359Z",
+   "file": "20261124054831359-note-r-2122.jpg",
+   "source": "../../../../tmp/gl/s5/r-2122.jpg",
    "kind": "note",
-   "label": "s4c draft 2124 to 2132, the ground gives way to the darker plate",
+   "label": "rise from 2122, draft, tree of the haze cure and the straight ramp law, every frame",
    "stop": "earth"
   },
   {
-   "time": "2026-11-24T04:52:54.440Z",
-   "file": "20261124045254440-note-rise-a.jpg",
-   "source": "../../../../tmp/gl/s5/rise-a.jpg",
+   "time": "2026-11-24T05:48:30.190Z",
+   "file": "20261124054830190-note-r-2116.jpg",
+   "source": "../../../../tmp/gl/s5/r-2116.jpg",
    "kind": "note",
-   "label": "s4c draft 2115 to 2123",
+   "label": "rise from 2116, draft, tree of the haze cure and the straight ramp law, every frame",
    "stop": "earth"
   }
  ]
