@@ -4102,7 +4102,7 @@ MAIL 575 from the Builder (/root), 07:45 UTC. Main is aaea819b3ec05f04742fdb6f55
   again in this round; I do not use it. After, 16 by 9 costs 3.7 times the preview, as the pixel count says it should.
 - Checks on the tree: tsc clean; vitest 398 of 398; G11 and G15 PASS; smooth path green.
 
-## My second NAMED mail to the Builder (/root), 08:37 UTC (VM clock), word for word
+## My second NAMED mail to the Builder (/root), 08:36 UTC (VM clock; sent between 08:35:48 and 08:36:46), word for word
 
 NAMED 0b9017c01a9403f9d76cee578d342bfd10384386
 Branch agent/neptune-place, pushed 08:35 UTC (VM clock). It stands on main c797cdc865c8489d84acb2ebb6168df66f7e50c6 (my last merge), not on 8b2c538f: no merge, by MAILS 572 and 575. Against fd95089a it changes three files, all in my folders: src/stops/neptune/deep.ts, src/stops/neptune/deep.json, assets-src/neptune/NOTES.md. No asset, no path, no move, no config.
@@ -4141,7 +4141,7 @@ OTHER REDS AND OPEN POINTS:
 
 CHECKS on 0b9017c0: tsc clean; vitest 398 of 398; G11 PASS, G15 PASS; npm run smooth -- --stop neptune --only path, last line "smooth neptune: green. out/work/smooth/neptune.md"; G17 on the 16 by 9 draft of 4860 median 1.002, p25 0.790. Net size of my three folders 82.58 MB against main's 94.35 MB, 11.77 MB less.
 
-## 08:38 UTC: after the mail
+## 08:37 UTC: after the mail
 
 - Looks pushed 08:35 (4203e96c): the after pair beside the approved image, and before, after, difference times 32 of the final.
 - One thing in the mail I must hold myself to: "seems to run a loop's body once before it tests it" is an inference from four
