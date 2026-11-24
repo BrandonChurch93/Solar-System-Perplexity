@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T18:04:17.820Z",
+ "pushed": "2026-11-24T18:25:59.252Z",
  "head": "befb5f47996cb9ff4b6ffb6df289ed9cc2b1fe80",
- "note": "rise 962 to 970: table of the measure between stills at 19 weights says one weight needs 24 frames, 16 there are; next: weight of the far ground by height runs on past the handover",
+ "note": "rise 962 to 970: display dissolve measured 0.34 and 0.25 in two steps at 967; shell under the set pops a limb strip at 961, being rebuilt",
  "looks": [
+  {
+   "time": "2026-11-24T18:25:58.584Z",
+   "file": "20261124182558584-note-w961-crop.jpg",
+   "source": "../../../../tmp/m/w961-crop.png",
+   "kind": "note",
+   "label": "961 native crops, left far weight 0, right 0.0001 with the shell whole under the set: the globe's limb stands 8 to 12 px over the set's ridge and pops in; not kept, the strip must come in by the weight",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T18:25:57.974Z",
+   "file": "20261124182557974-note-v967-weights.jpg",
+   "source": "../../../../tmp/m/v967-weights.jpg",
+   "kind": "note",
+   "label": "967 by weight, display dissolve (0, 0.25, 0.5, 0.75, 0.9, 1): even level, no coloured streaks",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T18:04:02.783Z",
    "file": "20261124180402783-note-u967-weights.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/m/e13-962-977-crop.jpg",
    "kind": "note",
    "label": "e13: rise 962 to 977 under the limb with the new shown law (log height, power 2.2): even change, measure 0.63 at 967",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T17:00:54.844Z",
-   "file": "20261124170054844-note-e12-762-774.jpg",
-   "source": "../../../../tmp/m/e12-762-774.jpg",
-   "kind": "note",
-   "label": "e12: dive 762 to 774, quick swap under the limb at 765.5 to 768",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T17:00:54.065Z",
-   "file": "20261124170054065-note-s967.jpg",
-   "source": "../../../../tmp/m/s967.jpg",
-   "kind": "note",
-   "label": "s967: frame 967 with shown forced 0 to 1 in 8 steps",
    "stop": "mercury"
   }
  ]
