@@ -92,7 +92,7 @@ export function judgeCurve(name: string, unit: string, raw: (number | null)[], k
     const close = (): void => {
       if (!open) return
       const span = open.count === 1 ? 'at frame ' + position(open.k, rate) : 'in ' + open.count + ' steps from frame ' + position(open.first, rate) + ' to ' + position(open.last, rate) + ', most at ' + position(open.k, rate)
-      faults.push({ curve: name, rule, k: open.k, frame: frameOf(open.k), value: digits(open.value), limit: limits.maxStep, first: open.first, last: open.last, count: open.count, ...(members ? { points: shared[open.k + ':' + lag] } : {}), text: name + ': changes by ' + digits(open.value, 3) + ' of the mean ' + (members ? '(over ' + shared[open.k + ':' + lag] + ' points) ' : '') + what + ' ' + span + ', limit ' + limits.maxStep })
+      faults.push({ curve: name, rule, k: open.k, frame: frameOf(open.k), value: digits(open.value), limit: limits.maxStep, first: open.first, last: open.last, count: open.count, ...(members ? { points: shared[open.k + ':' + lag] } : {}), text: name + ': changes by ' + shown(open.value, 3, limits.maxStep) + ' of the mean ' + (members ? '(over ' + shared[open.k + ':' + lag] + ' points) ' : '') + what + ' ' + span + ', limit ' + limits.maxStep })
       open = null
     }
     values.forEach((s, i) => {
@@ -182,8 +182,8 @@ export function judgeCurve(name: string, unit: string, raw: (number | null)[], k
   }
   if (peak) {
     const by = (m: Mark): string => (m.points === undefined ? '' : ' (over ' + m.points + ' points)')
-    if (fall.value > limits.maxRebound) faults.push({ curve: name, rule: 'fallBeforePeak', k: fall.k, frame: fall.frame, value: digits(fall.value), limit: limits.maxRebound, ...(members ? { points: fall.points } : {}), text: name + ': falls by ' + digits(fall.value, 3) + ' of the mean' + by(fall) + ' before its largest value (frame ' + position(peak.k, rate) + '), lowest at frame ' + position(fall.k, rate) + ', limit ' + limits.maxRebound })
-    if (climb.value > limits.maxRebound) faults.push({ curve: name, rule: 'climbAfterPeak', k: climb.k, frame: climb.frame, value: digits(climb.value), limit: limits.maxRebound, ...(members ? { points: climb.points } : {}), text: name + ': climbs again by ' + digits(climb.value, 3) + ' of the mean' + by(climb) + ' after its largest value (frame ' + position(peak.k, rate) + '), up to frame ' + position(climb.k, rate) + ', limit ' + limits.maxRebound })
+    if (fall.value > limits.maxRebound) faults.push({ curve: name, rule: 'fallBeforePeak', k: fall.k, frame: fall.frame, value: digits(fall.value), limit: limits.maxRebound, ...(members ? { points: fall.points } : {}), text: name + ': falls by ' + shown(fall.value, 3, limits.maxRebound) + ' of the mean' + by(fall) + ' before its largest value (frame ' + position(peak.k, rate) + '), lowest at frame ' + position(fall.k, rate) + ', limit ' + limits.maxRebound })
+    if (climb.value > limits.maxRebound) faults.push({ curve: name, rule: 'climbAfterPeak', k: climb.k, frame: climb.frame, value: digits(climb.value), limit: limits.maxRebound, ...(members ? { points: climb.points } : {}), text: name + ': climbs again by ' + shown(climb.value, 3, limits.maxRebound) + ' of the mean' + by(climb) + ' after its largest value (frame ' + position(peak.k, rate) + '), up to frame ' + position(climb.k, rate) + ', limit ' + limits.maxRebound })
   }
   const seamStep = (from: number, to: number): number | null => {
     let out: number | null = null
@@ -214,6 +214,29 @@ export function judgeCurve(name: string, unit: string, raw: (number | null)[], k
     }
   }
   return { name, unit, rate, mean, floor, floored, over, step, halfStep, peak, worstStep, worstHalfStep, worstBeyond, seams, climbAfterPeak: climb, fallBeforePeak: fall, missing, points, faults }
+}
+
+// A value as it is printed: with more digits where the usual ones would print it as its limit.
+export function shown(v: number, digits: number, limit: number | null = null): string {
+  let n = digits
+  let s = v.toFixed(n)
+  while (limit !== null && v !== limit && Number(s) === limit && n < digits + 6) s = v.toFixed(++n)
+  return s
+}
+
+// The longest run of rows without a value (the first of the longest ones), as indices; null where every row has one.
+export function longestGap(has: boolean[]): { first: number; last: number } | null {
+  let out: { first: number; last: number } | null = null
+  let first = -1
+  has.forEach((h, i) => {
+    if (h) {
+      first = -1
+      return
+    }
+    if (first < 0) first = i
+    if (!out || i - first > out.last - out.first) out = { first, last: i }
+  })
+  return out
 }
 
 export function position(k: number, rate: number): string {

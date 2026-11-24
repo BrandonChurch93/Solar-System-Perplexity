@@ -6,7 +6,7 @@ import { FilmDirector } from '../src/director/film'
 import { sideAt } from '../src/director/handover'
 import { plans } from '../src/director/plans'
 import { curves, sampleWindow } from '../tools/smooth/camera'
-import { judgeCurve, position, table } from '../tools/smooth/path'
+import { judgeCurve, longestGap, position, shown, table } from '../tools/smooth/path'
 
 const limits = { maxStep: 0.08, maxRebound: 0.03, seamFrames: 2 }
 const bell = (n: number, edge = 0): number[] => Array.from({ length: n }, (_, i) => edge + 1 - Math.cos((2 * Math.PI * (i + 0.5)) / n))
@@ -219,5 +219,28 @@ describe('the camera of a move, sampled', () => {
       expect(c.turn.filter((v) => v !== null).every((v) => v! >= 0)).toBe(true)
       expect(c.speed.filter((v) => v !== null).length).toBeGreaterThan(one.seg.endFrame - one.seg.firstFrame - 5)
     }
+  })
+})
+
+describe('a number as it is printed', () => {
+  it('gets more digits where the usual ones would print it as its limit', () => {
+    expect(shown(1.2002331, 2, 1.2)).toBe('1.2002')
+    expect(shown(1.196, 2, 1.2)).toBe('1.196')
+    expect(shown(1.2, 2, 1.2)).toBe('1.20')
+    expect(shown(1.31, 2, 1.2)).toBe('1.31')
+    expect(shown(20.004, 1, 20)).toBe('20.004')
+    expect(shown(0.0801, 3, 0.08)).toBe('0.0801')
+    expect(shown(1.2002331, 2, null)).toBe('1.20')
+  })
+})
+
+describe('the longest run of rows without a value', () => {
+  it('is null where every row has one', () => {
+    expect(longestGap([true, true, true])).toBeNull()
+    expect(longestGap([])).toBeNull()
+  })
+  it('is the first of the longest runs', () => {
+    expect(longestGap([true, false, true, false, false, true, false, false])).toEqual({ first: 3, last: 4 })
+    expect(longestGap([false, false, false])).toEqual({ first: 0, last: 2 })
   })
 })

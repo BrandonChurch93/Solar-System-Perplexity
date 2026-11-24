@@ -11,7 +11,7 @@ import { setCapture, spanMid } from '../src/core/clock'
 import type { Pose } from '../src/core/types'
 import { plans } from '../src/director/plans'
 import { MIN_POINTS, carriedCamera, curves, sampleWindow, sphereHit, type Kind, type Ring } from './smooth/camera'
-import { judgeCurve, position, table, type CurveResult, type Fault, type Row } from './smooth/path'
+import { judgeCurve, longestGap, position, shown, table, type CurveResult, type Fault, type Row } from './smooth/path'
 
 // The measures of a smooth dive and rise (kit/PROGRESS.md, second review note of 2026-11-23, plan I). One stop.
 //   npm run smooth -- --stop ID [--kind dive|rise] [--only path,pictures,place,parity,counts] [--rate N] [--calibrate] [--ring picture|ground]
@@ -29,7 +29,8 @@ import { judgeCurve, position, table, type CurveResult, type Fault, type Row } f
 //           the flows, the difference smoothed, its 99th percentile on the body: a look that is replaced in place within those frames.
 //           The rings of a stop named in smooth.pictures.ringBodies count as its body. The change of the pattern alone: the same two pictures
 //           reduced to their detail (local mean out, divided by the local contrast), 0 the same pattern and 1 an unrelated one, so a veil
-//           of air counts little and a new texture in full. Both numbers on the frames of the surface view beside the move stand next to
+//           of air counts little and a new texture in full. It is the judged test for a dissolve (smooth.pictures.maxPattern); the change in
+//           place is shown beside it. The longest run of frames without a measured pattern is shown: a new pattern can hide in a long one. Both numbers on the frames of the surface view beside the move stand next to
 //           them: the life of the ground itself.
 //           Frames at whole film frames are shared with npm run handover (out/work/handover/<stop>/frames), so nothing is rendered twice.
 // place     the handover with the place picture switched off (the noplace view), draft tier: both sides at T, and every frame from one before the
@@ -201,7 +202,7 @@ async function still(k: number, tier: string, diag: string, fmt = format): Promi
 interface PictureNumbers { level: number[]; levelStep: (number | null)[]; residual: (number | null)[]; base: (number | null)[]; popAll: (number | null)[]; popCarried: (number | null)[]; pop: (number | null)[]; motionPx: (number | null)[]; unsure: (number | null)[]; popBlock: (number | null)[]; popBlockAt: ([number, number] | null)[]; grid: [number, number]; change: (number | null)[]; changeTop: (number | null)[]; changeAt: ([number, number] | null)[]; changeShare: (number | null)[]; pattern: (number | null)[]; patternAt: ([number, number] | null)[]; patternShare: (number | null)[] }
 interface PictureRow { k: number; frame: number; level: number; levelStep: number | null; residual: number | null; base: number | null; popAll: number | null; popCarried: number | null; pop: number | null; motionPx: number | null; unsure: number | null; popBlock: number | null; popBlockAt: [number, number] | null; change: number | null; changeTop: number | null; changeAt: [number, number] | null; changeShare: number | null; pattern: number | null; patternAt: [number, number] | null; patternShare: number | null }
 interface Most { k: number; frame: number; value: number }
-interface PictureKind { segment: string; firstFrame: number; endFrame: number; window: [number, number]; rate: number; frames: number; rows: PictureRow[]; levelStep: Most | null; pop: Most | null; popBlock: (Most & { at: [number, number] | null }) | null; change: (Most & { at: [number, number] | null }) | null; pattern: (Most & { at: [number, number] | null }) | null; changeFrames: number; ground: { value: number; pattern: number | null; first: number; last: number } | null; panel: string | null; changePanel: string | null; why: string[] }
+interface PictureKind { segment: string; firstFrame: number; endFrame: number; window: [number, number]; rate: number; frames: number; rows: PictureRow[]; levelStep: Most | null; pop: Most | null; popBlock: (Most & { at: [number, number] | null }) | null; change: (Most & { at: [number, number] | null }) | null; pattern: (Most & { at: [number, number] | null }) | null; changeFrames: number; silent: { frames: number; first: number; last: number; body: number } | null; ground: { value: number; pattern: number | null; first: number; last: number } | null; panel: string | null; changePanel: string | null; why: string[] }
 
 const CHANGE = { frames: (S.pictures as { changeFrames?: number }).changeFrames ?? 8, blurPx: (S.pictures as { changeBlurPx?: number }).changeBlurPx ?? 20, max: (S.pictures as { maxChange?: number | null }).maxChange ?? null, rings: (S.pictures as { ringBodies?: string[] }).ringBodies ?? [] }
 const PATTERN = { px: (S.pictures as { patternPx?: number }).patternPx ?? 40, floor: (S.pictures as { patternFloor?: number }).patternFloor ?? 1, max: (S.pictures as { maxPattern?: number | null }).maxPattern ?? null }
@@ -256,11 +257,11 @@ async function picturesOf(kind: Kind): Promise<PictureKind | null> {
     const top = bad.reduce((x, y) => (y[key]! > x[key]! ? y : x))
     why.push(text(top) + ', limit ' + max + (bad.length > 1 ? ' (' + bad.length + ' frames over it, first ' + position(bad[0]!.k, r) + ')' : ''))
   }
-  over('levelStep', limit(P.maxLevelStep), (row) => 'the level of frame ' + position(row.k, r) + ' lies ' + row.levelStep!.toFixed(2) + ' off the line through its two neighbours')
-  over('pop', limit(P.maxPop), (row) => 'pop score ' + row.pop!.toFixed(2) + ' from frame ' + position(row.k, r) + ' to the next')
-  over('popBlock', limit(P.maxPopBlock), (row) => 'pop score of one block ' + row.popBlock!.toFixed(2) + ' from frame ' + position(row.k, r) + ' to the next')
-  over('change', CHANGE.max, (row) => 'the picture changes in place by ' + row.change!.toFixed(1) + ' from frame ' + position(row.k, r) + ' to ' + CHANGE.frames + ' film frames later')
-  over('pattern', PATTERN.max, (row) => 'the pattern of the picture changes in place by ' + row.pattern!.toFixed(2) + ' from frame ' + position(row.k, r) + ' to ' + CHANGE.frames + ' film frames later')
+  over('levelStep', limit(P.maxLevelStep), (row) => 'the level of frame ' + position(row.k, r) + ' lies ' + shown(row.levelStep!, 2, P.maxLevelStep) + ' off the line through its two neighbours')
+  over('pop', limit(P.maxPop), (row) => 'pop score ' + shown(row.pop!, 2, P.maxPop) + ' from frame ' + position(row.k, r) + ' to the next')
+  over('popBlock', limit(P.maxPopBlock), (row) => 'pop score of one block ' + shown(row.popBlock!, 2, P.maxPopBlock) + ' from frame ' + position(row.k, r) + ' to the next')
+  over('change', CHANGE.max, (row) => 'the picture changes in place by ' + shown(row.change!, 1, CHANGE.max) + ' from frame ' + position(row.k, r) + ' to ' + CHANGE.frames + ' film frames later')
+  over('pattern', PATTERN.max, (row) => 'the pattern of the picture changes in place by ' + shown(row.pattern!, 2, PATTERN.max) + ' from frame ' + position(row.k, r) + ' to ' + CHANGE.frames + ' film frames later')
   const top = rows.filter((row) => row.pop !== null).sort((x, y) => y.pop! - x.pop!).slice(0, 4).sort((x, y) => x.k - y.k)
   let panel: string | null = null
   if (top.length > 0) {
@@ -268,9 +269,9 @@ async function picturesOf(kind: Kind): Promise<PictureKind | null> {
     measure({ op: 'panel', output: panel, scale: P.flowScale, gain: 8, limit: cfg.raw.critics.maxImageLongEdgePx, pairs: top.map((row) => ({ a: paths[row.k - ks[0]!]!, b: paths[row.k - ks[0]! + 1]!, label: stop + ' ' + kind + ' frame ' + position(row.k, r) + ' and the next, and what is left without the motion times 8: pop ' + row.pop!.toFixed(2) + ', left ' + row.residual!.toFixed(2) + ' against ' + row.base!.toFixed(2) })) })
   }
   const peaks: PictureRow[] = []
-  for (const row of rows.filter((x) => x.change !== null).sort((x, y) => y.change! - x.change!)) {
-    if (peaks.length < 4 && peaks.every((q) => Math.abs(q.k - row.k) >= CHANGE.frames * r)) peaks.push(row)
-  }
+  const apart = (row: PictureRow): boolean => peaks.every((q) => Math.abs(q.k - row.k) >= CHANGE.frames * r)
+  for (const row of rows.filter((x) => x.pattern !== null).sort((x, y) => y.pattern! - x.pattern!)) if (peaks.length < 2 && apart(row)) peaks.push(row)
+  for (const row of rows.filter((x) => x.change !== null).sort((x, y) => y.change! - x.change!)) if (peaks.length < 4 && apart(row)) peaks.push(row)
   peaks.sort((x, y) => x.k - y.k)
   let changePanel: string | null = null
   if (peaks.length > 0) {
@@ -282,10 +283,12 @@ async function picturesOf(kind: Kind): Promise<PictureKind | null> {
     }) })
   }
   const reach = CHANGE.frames * r
+  const gap = longestGap(rows.slice(0, Math.max(rows.length - reach, 0)).map((row) => row.pattern !== null))
+  const silent: PictureKind['silent'] = gap ? { frames: (gap.last - gap.first + 1) / r, first: rows[gap.first]!.k, last: rows[gap.last]!.k, body: Math.max(...rows.slice(gap.first, gap.last + 1).map((row) => row.changeShare ?? 0)) } : null
   const beside = rows.filter((row) => row.change !== null && (kind === 'dive' ? row.k >= seg.endFrame * r : row.k + reach < seg.firstFrame * r))
   const woven = beside.filter((row) => row.pattern !== null).map((row) => row.pattern!)
   const ground = beside.length > 0 ? { value: Math.max(...beside.map((row) => row.change!)), pattern: woven.length > 0 ? Math.max(...woven) : null, first: beside[0]!.k, last: beside.at(-1)!.k + reach } : null
-  return { segment: seg.id, firstFrame: seg.firstFrame, endFrame: seg.endFrame, window: [first, end - 1], rate: r, frames: ks.length, rows, levelStep, pop, ground, popBlock: block ? { ...block, at: rows.find((row) => row.k === block.k)!.popBlockAt } : null, change: change ? { ...change, at: rows.find((row) => row.k === change.k)!.changeAt } : null, pattern: pattern ? { ...pattern, at: rows.find((row) => row.k === pattern.k)!.patternAt } : null, changeFrames: CHANGE.frames, panel, changePanel, why }
+  return { segment: seg.id, firstFrame: seg.firstFrame, endFrame: seg.endFrame, window: [first, end - 1], rate: r, frames: ks.length, rows, levelStep, pop, ground, popBlock: block ? { ...block, at: rows.find((row) => row.k === block.k)!.popBlockAt } : null, change: change ? { ...change, at: rows.find((row) => row.k === change.k)!.changeAt } : null, pattern: pattern ? { ...pattern, at: rows.find((row) => row.k === pattern.k)!.patternAt } : null, changeFrames: CHANGE.frames, silent, panel, changePanel, why }
 }
 
 async function picturesPart(): Promise<PartResult & { kinds: Record<string, PictureKind | null>; tier: string; rate: number; secondsAFrame: number | null }> {
@@ -305,18 +308,19 @@ function picturesText(kind: Kind, p: PictureKind | null): string[] {
   const P = S.pictures
   const lim = (v: number | null): string => (v === null ? 'no limit yet, not judged' : 'limit ' + v)
   const lines = ['### ' + kind + ' (' + p.segment + ', frames ' + p.firstFrame + ' to ' + (p.endFrame - 1) + ', window ' + p.window[0] + ' to ' + p.window[1] + ', ' + p.frames + ' ' + P.tier + ' frames at rate ' + p.rate + ')', '']
-  if (p.levelStep) lines.push('Largest level step: ' + p.levelStep.value.toFixed(2) + ' at frame ' + position(p.levelStep.k, p.rate) + ' (display values 0 to 255, the frame against the middle of its two neighbours), ' + lim(P.maxLevelStep) + '.')
-  if (p.pop) lines.push('Largest pop score: ' + p.pop.value.toFixed(2) + ' from frame ' + position(p.pop.k, p.rate) + ' to the next, ' + lim(P.maxPop) + '.')
-  if (p.popBlock) lines.push('Largest pop score of one block (a grid of ' + P.grid.join(' by ') + '): ' + p.popBlock.value.toFixed(2) + ' from frame ' + position(p.popBlock.k, p.rate) + ' to the next' + (p.popBlock.at ? ', block column ' + p.popBlock.at[0] + ' row ' + p.popBlock.at[1] + ' from the top left' : '') + ', ' + (P.maxPopBlock === null ? 'shown, not judged' : 'limit ' + P.maxPopBlock) + '.')
-  if (p.change) lines.push('Largest change in place: ' + p.change.value.toFixed(1) + ' from frame ' + position(p.change.k, p.rate) + ' to ' + p.changeFrames + ' film frames later' + (p.change.at ? ', most at pixel ' + p.change.at.join(', ') : '') + ' (display values 0 to 255: the later frame carried back along the motion, the difference smoothed over ' + CHANGE.blurPx + ' px, its 99th percentile on the body), ' + lim(CHANGE.max) + '.')
-  if (p.pattern) lines.push('Largest change of the pattern alone: ' + p.pattern.value.toFixed(2) + ' from frame ' + position(p.pattern.k, p.rate) + ' to ' + p.changeFrames + ' film frames later' + (p.pattern.at ? ', most at pixel ' + p.pattern.at.join(', ') : '') + ' (0 the same pattern, 1 an unrelated one: both pictures reduced to their detail between ' + PATTERN.px / 5 + ' and ' + PATTERN.px + ' px, the local mean taken out, divided by the local contrast, only where both have detail over ' + PATTERN.floor + '; its 99th percentile on the body), ' + lim(PATTERN.max) + '.')
-  if (p.ground) lines.push('The ground beside it, the same numbers on the surface view alone (frames ' + position(p.ground.first, p.rate) + ' to ' + position(p.ground.last, p.rate) + '): change ' + p.ground.value.toFixed(1) + (CHANGE.max !== null && p.ground.value > CHANGE.max ? ', over the limit by itself' : '') + (p.ground.pattern !== null ? ', pattern ' + p.ground.pattern.toFixed(2) + (PATTERN.max !== null && p.ground.pattern > PATTERN.max ? ', over the limit by itself' : '') : '') + '.')
+  if (p.levelStep) lines.push('Largest level step: ' + shown(p.levelStep.value, 2, P.maxLevelStep) + ' at frame ' + position(p.levelStep.k, p.rate) + ' (display values 0 to 255, the frame against the middle of its two neighbours), ' + lim(P.maxLevelStep) + '.')
+  if (p.pop) lines.push('Largest pop score: ' + shown(p.pop.value, 2, P.maxPop) + ' from frame ' + position(p.pop.k, p.rate) + ' to the next, ' + lim(P.maxPop) + '.')
+  if (p.popBlock) lines.push('Largest pop score of one block (a grid of ' + P.grid.join(' by ') + '): ' + shown(p.popBlock.value, 2, P.maxPopBlock) + ' from frame ' + position(p.popBlock.k, p.rate) + ' to the next' + (p.popBlock.at ? ', block column ' + p.popBlock.at[0] + ' row ' + p.popBlock.at[1] + ' from the top left' : '') + ', ' + (P.maxPopBlock === null ? 'shown, not judged' : 'limit ' + P.maxPopBlock) + '.')
+  if (p.change) lines.push('Largest change in place: ' + shown(p.change.value, 1, CHANGE.max) + ' from frame ' + position(p.change.k, p.rate) + ' to ' + p.changeFrames + ' film frames later' + (p.change.at ? ', most at pixel ' + p.change.at.join(', ') : '') + ' (display values 0 to 255: the later frame carried back along the motion, the difference smoothed over ' + CHANGE.blurPx + ' px, its 99th percentile on the body), ' + (CHANGE.max === null ? 'shown, not judged' : 'limit ' + CHANGE.max) + '.')
+  if (p.pattern) lines.push('Largest change of the pattern alone: ' + shown(p.pattern.value, 2, PATTERN.max) + ' from frame ' + position(p.pattern.k, p.rate) + ' to ' + p.changeFrames + ' film frames later' + (p.pattern.at ? ', most at pixel ' + p.pattern.at.join(', ') : '') + ' (0 the same pattern, 1 an unrelated one: both pictures reduced to their detail between ' + PATTERN.px / 5 + ' and ' + PATTERN.px + ' px, the local mean taken out, divided by the local contrast, only where both have detail over ' + PATTERN.floor + '; its 99th percentile on the body), ' + lim(PATTERN.max) + '.')
+  if (p.ground) lines.push('The ground beside it, the same numbers on the surface view alone (frames ' + position(p.ground.first, p.rate) + ' to ' + position(p.ground.last, p.rate) + '): change ' + shown(p.ground.value, 1, CHANGE.max) + (CHANGE.max !== null && p.ground.value > CHANGE.max ? ', over the limit by itself' : '') + (p.ground.pattern !== null ? ', pattern ' + shown(p.ground.pattern, 2, PATTERN.max) + (PATTERN.max !== null && p.ground.pattern > PATTERN.max ? ', over the limit by itself' : '') : '') + '.')
+  lines.push(p.silent ? 'Longest run without a measured pattern: ' + (Number.isInteger(p.silent.frames) ? p.silent.frames : p.silent.frames.toFixed(1)) + ' film frames, frames ' + position(p.silent.first, p.rate) + ' to ' + position(p.silent.last, p.rate) + ', each against the frame ' + p.changeFrames + ' film frames later (too little of the picture has detail in both, or too little of the body is carried; the judged body held at most ' + p.silent.body.toFixed(2) + ' of the picture there), shown, not judged. A new pattern can come in unseen where such a run is ' + 2 * p.changeFrames + ' film frames or longer.' : 'The pattern is measured in every row.')
   if (p.panel) lines.push('The four largest pops, each with the next frame and what is left without the motion: ' + p.panel.slice(ROOT.length + 1))
-  if (p.changePanel) lines.push('The largest changes in place, each with the later frame carried back, the difference and the change of the pattern: ' + p.changePanel.slice(ROOT.length + 1))
+  if (p.changePanel) lines.push('The two largest changes of the pattern and the largest changes in place, each with the later frame carried back, the difference and the change of the pattern: ' + p.changePanel.slice(ROOT.length + 1))
   lines.push('')
   if (p.why.length) lines.push(...p.why.map((w) => '- RED ' + w), '')
   lines.push('| frame | level | level step | motion px | left | median round it | pop, every pixel | pop, carried only | pop | not carried | pop of one block | block | change in place | its largest | judged | pattern | judged |', '|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|')
-  for (const row of p.rows) lines.push('| ' + [position(row.k, p.rate) + (row.frame === p.firstFrame && row.k % p.rate === 0 ? ' first' : row.frame === p.endFrame - 1 && row.k % p.rate === 0 ? ' last' : ''), row.level.toFixed(2), cell(row.levelStep, 2), cell(row.motionPx, 1), cell(row.residual, 2), cell(row.base, 2), cell(row.popAll, 2), cell(row.popCarried, 2), cell(row.pop, 2), cell(row.unsure, 3), cell(row.popBlock, 2), row.popBlockAt ? row.popBlockAt.join(',') : '', cell(row.change, 1), cell(row.changeTop, 1), cell(row.changeShare, 2), cell(row.pattern, 2), cell(row.patternShare, 2)].join(' | ') + ' |')
+  for (const row of p.rows) lines.push('| ' + [position(row.k, p.rate) + (row.frame === p.firstFrame && row.k % p.rate === 0 ? ' first' : row.frame === p.endFrame - 1 && row.k % p.rate === 0 ? ' last' : ''), row.level.toFixed(2), cell(row.levelStep, 2, P.maxLevelStep), cell(row.motionPx, 1), cell(row.residual, 2), cell(row.base, 2), cell(row.popAll, 2), cell(row.popCarried, 2), cell(row.pop, 2, P.maxPop), cell(row.unsure, 3), cell(row.popBlock, 2), row.popBlockAt ? row.popBlockAt.join(',') : '', cell(row.change, 1, CHANGE.max), cell(row.changeTop, 1), cell(row.changeShare, 2), cell(row.pattern, 2, PATTERN.max), cell(row.patternShare, 2)].join(' | ') + ' |')
   lines.push('')
   return lines
 }
@@ -614,7 +618,7 @@ function countsText(p: PartResult & Partial<CountsOut>): string[] {
   return lines
 }
 
-const cell = (v: number | null | undefined, digits = 3): string => (v === null || v === undefined ? '' : v.toFixed(digits))
+const cell = (v: number | null | undefined, digits = 3, limit: number | null = null): string => (v === null || v === undefined ? '' : shown(v, digits, limit))
 
 function pathText(kind: Kind, p: PathKind | null): string[] {
   if (!p) return ['### ' + kind, '', 'The stop has no ' + kind + '.', '']
