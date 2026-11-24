@@ -1,9 +1,25 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T22:34:40.195Z",
- "head": "4c9917240f046e03a8fa32042c667d479a9fb07c",
- "note": "dive 1830 to 1919 read for softness: soft from 1860, near zone loads in as an oval 1878 to 1912; cure of the level rule next",
+ "pushed": "2026-11-24T22:53:45.367Z",
+ "head": "811a508940b4e42d05de0ace894ea0e19aeaeb99",
+ "note": "level rule by sharp direction and real detail: hold counts 0 px, dive centre a little crisper 1882 to 1898",
  "looks": [
+  {
+   "time": "2026-11-24T22:53:44.408Z",
+   "file": "20261124225344408-note-sh-d1.jpg",
+   "source": "../../../../tmp/gl/s20/sh-d1.jpg",
+   "kind": "note",
+   "label": "ten dive frames with the new level rule, draft tier",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T22:53:43.295Z",
+   "file": "20261124225343295-note-cr-b.jpg",
+   "source": "../../../../tmp/gl/s20/cr-b.jpg",
+   "kind": "note",
+   "label": "dive centre 1882 1890 1898 at native size, before (left) and with the level rule by sharp direction and real detail (right), draft tier",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T22:34:38.730Z",
    "file": "20261124223438730-note-cr-draft-review-1870-side.jpg",
@@ -82,22 +98,6 @@
    "source": "../../../../tmp/gl/s18/rim-east.jpg",
    "kind": "note",
    "label": "plate raster after the near sea with the rim cure, east rim in three strips, native size: the clouds end on their own lumps, no straight cut (before: the look rim-east of 21:27)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T21:27:04.200Z",
-   "file": "20261124212704200-note-rim-east.jpg",
-   "source": "../../../../tmp/gl/s16/rim-east.jpg",
-   "kind": "note",
-   "label": "bad, as built now: the plate along the whole east rim at native size (three pieces, north to south): clouds, sea relief and shadows cut on one straight line",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T21:27:03.511Z",
-   "file": "20261124212703511-note-proto-a.jpg",
-   "source": "../../../../tmp/gl/s16/proto-a.jpg",
-   "kind": "note",
-   "label": "trial in Python, not built: the east rim of the calm zone at native size, before, after, weight; the cloud ends on its own lumps, no straight line",
    "stop": "earth"
   }
  ]
