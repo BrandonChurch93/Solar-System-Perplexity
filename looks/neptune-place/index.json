@@ -1,9 +1,35 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T18:01:21.042Z",
+ "pushed": "2026-11-24T18:28:18.150Z",
  "head": "5c6713431897c545503f5490b29c72757f052704",
- "note": "4860 beside approved, G17 1.382/0.741, 7.4 s a preview draft frame. Trial for the white specks measured and not kept. 4605's other bytes since the merge traced: Mars's new path on main moves the film's world, Neptune's eye is the same to 1e-12 radii and not to the bit (0.24 percent of pixels by one level). Tests on the merge of main 9e15c6a4: 554 of 554. Running now: the handover report's step in place on the rise of the present state",
+ "note": "4860 beside approved, G17 1.382/0.741, 7.4 s a preview draft frame. Measured with the handover report on the present state (preview drafts): rise in place level 3.61, colour 6.57 (limits 6, 8), all of it the grade of the fall between 0.9 and 1.9 radii. In trial: the grade's share run so that the picture's level falls evenly with the log of the height; first form 3.11 / 6.19 with the peak moved to 4989, second form rendering now",
  "looks": [
+  {
+   "time": "2026-11-24T18:28:17.520Z",
+   "file": "20261124182817520-note-e1-dive.jpg",
+   "source": "out/work/nep/weave/e1-dive.jpg",
+   "kind": "note",
+   "label": "TRIAL, dive 4707, 4712, 4716, 4720, 4724: left the present state, right the grade of the fall coming in evenly with the height (first form). Cause: the handover report's step in place on the rise of the present state reads level 3.61 and colour 6.57 a frame into 5001 and 5002 (limits 6 and 8): the grade took the deck's level down in a third of its way. 4605 and 4860 keep their bytes",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T18:28:16.786Z",
+   "file": "20261124182816786-note-look-h0-4860.jpg",
+   "source": "out/work/nep/weave/look-h0-4860.jpg",
+   "kind": "note",
+   "label": "4860 now (5c671343 on main 9e15c6a4; the trial below keeps its bytes) beside the approved close image. G17 1.382 / 0.741",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T18:26:00.350Z",
+   "file": "20261124182600350-compare-neptune-rise-step-in-place.jpg",
+   "source": "out/work/handover/neptune-rise-step-in-place.png",
+   "kind": "compare",
+   "label": "neptune rise, the largest step of the level in place (3.11): frame 4988, frame 4989, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "neptune",
+   "segment": "neptune.rise",
+   "frame": 4989
+  },
   {
    "time": "2026-11-24T18:01:19.608Z",
    "file": "20261124180119608-note-t1-rise.jpg",
@@ -42,30 +68,6 @@
    "source": "out/work/nep/weave/g3d-pose-4988.jpg",
    "kind": "note",
    "label": "the red pair of the rise: 4988, 4996 carried back, where the pattern differs (my proxy 0.48, limit 0.45): the dim lower left, the cloud fields seen 2.2 times nearer",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T17:05:30.608Z",
-   "file": "20261124170530608-note-nf2-specks.jpg",
-   "source": "out/work/nep/weave/nf2-specks.jpg",
-   "kind": "note",
-   "label": "control, globe alone and no grade of the fall, 4988 and 4996: the specks are the map's fields of small cloud in dim light. The grade takes the deck under them to black. The pair reads 0.46 here too, so the red at 4988 is not the exchange",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T17:05:30.051Z",
-   "file": "20261124170530051-note-sp1-vs-g3d.jpg",
-   "source": "out/work/nep/weave/sp1-vs-g3d.jpg",
-   "kind": "note",
-   "label": "what draws the specks, levels times 4, 4984 4988 4992 4996 5000: top the film, bottom a control with the scene off (globe alone). The same specks: the globe's own map draws them, not the scene",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T17:05:29.457Z",
-   "file": "20261124170529457-note-g3d-rise-a.jpg",
-   "source": "out/work/nep/weave/g3d-rise-a.jpg",
-   "kind": "note",
-   "label": "rise 4984 to 4992 every frame, preview draft, 8bcb6a8c. Specks on the dim side are white now (were orange). RED by my proxy, not the report: pair 4988 to 4996 pattern 0.48 by poses, 0.54 by flows (limit 0.45)",
    "stop": "neptune"
   }
  ]
