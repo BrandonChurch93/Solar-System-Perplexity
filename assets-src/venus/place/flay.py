@@ -57,14 +57,7 @@ def camera(kind, height):
 
 def current(kind, tag, folder='full'):
     """The plate of a level as the film shows it at that handover, display values 0 to 1."""
-    level = LEVELS[tag]
-    path = ROOT / 'public/assets/venus' / folder / level['file'].replace('.jpg', f'-{kind}.jpg')
-    if 'colour' not in level:
-        return tlay.read(path)
-    giver = ROOT / 'public/assets/venus' / folder / LEVELS[level['colour']]['file'].replace('.jpg', f'-{kind}.jpg')
-    light = cv2.imread(str(path), cv2.IMREAD_GRAYSCALE)
-    parent = cv2.imread(str(giver), cv2.IMREAD_COLOR)
-    return lay.to_value(lay.put_together(light, parent, lay.colour_share(SPEC['levels'], tag), level['most']))
+    return tlay.present(kind, tag, folder)
 
 
 def working(kind, tag):

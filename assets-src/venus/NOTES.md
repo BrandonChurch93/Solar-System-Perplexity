@@ -3309,3 +3309,146 @@ What I would put first, from your list:
 The pop at 1610 + 1/2 lies in the travel after your rise; I put it to travel_builder now. globe_engineer is making a small check that judges each plate level against its parent with the judge's own function; you get it when it is named.
 The finals 1185 and 1440 come from the machines; if either moved against the kept still I show you the pair.
 One line back.
+
+## MAIL 596 from the Builder (/root), about 09:04 UTC, word for word
+
+MAIL 596 from the Builder (/root) to the nine stop builders. A check tool for the pattern number is on main 81d568a7 (globe_engineer's NAMED f65859e1): `assets-src/shared/globe-levels.py`. It lays one level of a plate pyramid against the part of its parent that it covers, both at the state in which the level comes in (a parent texel 0.8 px of the frame), and judges the pair with the smooth report's own `pattern` function and the config's numbers. Seconds, no render. Merge main, or copy that one file to the same path in your tree, then:
+python3 assets-src/shared/globe-levels.py --dir public/assets/ID/full --json src/stops/ID/FILE.json [--key levels] [--suffix=-dive] [--pairs 0-1,1-3] [--panel out.png]
+or with the levels by hand: --level FILE:WIDTHDEG[:EASTDEG,NORTHDEG] twice or more (a plate given by the tangent of its half width: WIDTHDEG = 2 atan of it). One line a pair, OVER and exit 1 above smooth.pictures.maxPattern. It reads files, not the shader: a pair is a test only when both files are the same kind of picture (colour with colour, light with light), and it knows nothing of what a stop does with a level by height.
+
+MEASURED by me on main's Mars (the old plates): 0.06, 0.00, 0.06, 0.00, 0.00, 0.00, 0.00 in 3.5 s, as its author states. MEASURED by globe_engineer on the proof trees of the first named commits (not checked by me), 99th percentile against 0.45:
+- Mars b83618ec: patch-19 to land-8p5 1.19 OVER, land-3p8 to land-1p6 0.69 OVER, land-1p6 to land-0p7 0.59 OVER, land-0p7 to land-0p3 0.98 OVER; the other three pairs 0.00 to 0.09. In the panel of the first pair the parent shows a bright mound with a crater where the child shows a dark plain with the canyon crack.
+- Mercury 9b5f55cd: patch-1 to patch-2 1.09 OVER (dive), patch-2 to patch-3r 0.70 OVER (rise), the others 0.01 to 0.02.
+- Uranus 9a369939: every pair 0.00 to 0.01. Its red is not in the plates.
+- Venus 3b52b0eb: colour 0.01 and 0.02; light a to b 0.20 and 0.13; light b to d 1.12 and 1.10 OVER, with a caution (the two light plates may not be the same quantity).
+- Not run: Saturn, Jupiter, Earth, Neptune, the Sun.
+
+RULED. Where a pair is over, two levels show two different pictures of the same ground, the red pattern number of that move is true, and no exchange by height, however slow, cures it (plan F: one place). The cure is in the files: a level is made from the level under it, or both from one source, so that reduced to its parent's scale it is its parent. Where every pair is clean and the move is still red, the cause is in what the shader adds by height or angle (a second look mixed in, a function layer, a light term), and the same rule holds there: one ground, one law of light, borders set on the ground. No limit moves.
+
+Asked of each of you: run it now on every pyramid your dive and rise show (both sets where they differ) and put its lines into your next NAMED mail. A pair over the limit is named there as red, with its cure. This changes no due time.
+
+## MAIL 604 from the Builder (/root), about 09:08 UTC, word for word
+
+MAIL 604 from the Builder (/root) to venus_builder. First parts on your second named 03a2ed58 (proof tree 468ca182), MEASURED on the machines: the judged finals 1185 and 1440 equal main's reference byte for byte (vn2-11, the hashes you state); path, place and parity are green (vq2-03). The two picture parts, the handover report, the measure and the gate are out. Your 90 minutes for the third commit start when the last picture part is with you. On the leaving (your rise's end and the travel's opening, the lurch at 1604 to 1616 in the clip at 60 pictures a second): ruled as one flight through the seam and given to the engine (MAIL 602 to handover_engineer and travel_builder). You are told when both pieces are on main. Your third commit does not wait for it, and it does not wait for your third.
+
+## MAIL 610 from the Builder (/root), about 09:17 UTC, word for word (third commit due by 10:47 UTC)
+
+MAIL 610 from the Builder (/root) to venus_builder. REPORT on your second named 03a2ed58 (proof tree 468ca182), MEASURED on the machines. Both picture parts are in, so your 90 minutes for the third commit start now: due by 10:47 UTC. By d186 the third goes into round 41 as it stands, its red measures as severe issues.
+GREEN: the judged finals 1185 and 1440 (main's bytes); path, place and parity; the handover report in both moves (side difference at T mean 0.035 in the dive and 0.045 in the rise; largest step on the body 3.48 levels into 1289 and 2.51 into 1591, limit 6); the gate (G11, G15, tsc 0, 443 tests in 48 files; its G13 line names Mars, Mercury and Saturn stale and nothing of yours). The measure (G5, G13, G17) and the drafts are still out.
+RED, three lines:
+- dive: the pattern changes in place by 0.83 from 1284 to 8 film frames later (limit 0.45; 40 capture frames over, first 1269 + 1/2). Your first commit had 1.27.
+- rise: the pattern changes in place by 1.16 from 1543 + 1/2 (56 capture frames over, first 1540 + 1/2). First commit 1.37.
+- rise: a pop of 1.25 from 1610 + 1/2 to the next (limit 1.2; 3 over: 1610 + 1/2, 1612 + 1/2 and 1613 + 1/2 with 1.21). The same number as on your first commit. These frames lie beyond your rise's last frame (1604), in the first frames of the travel, where the picture starts from rest (motion 0.1 px a capture frame from 1604 to 1606 + 1/2, 3.3 px at 1610 + 1/2). That start is ruled as the engine's to cure (MAIL 602 to handover_engineer and travel_builder: rise and travel as one flight). NOT KNOWN whether the pop goes with it. It is not yours to cure in the third commit and nothing of yours waits for it.
+For the third: the pattern is the one number left that is yours. Give in NAMED, per move, the frame of your own largest pattern number and what changes in place there (which layer, which light, by what it is driven), with the level check lines of MAIL 596 for your pyramid and your light pairs (b to d read 1.12 and 1.10 on your first commit), and 1185 and 1440 beside the kept stills.
+Attached: both picture reports and their panels.
+
+The six attachments (both picture reports and their panels) lie in `/home/user/.perplexity/attachments/6018b2a5a8ae4e9c963e7d7b25920342/`.
+
+## MAIL 613 from the Builder (/root), about 09:20 UTC, word for word
+
+MAIL 613 from the Builder (/root) to the nine stop builders (one text to all). What still runs by the clock in the engine's defaults, and what you owe on it. It moves no due time.
+
+MEASURED by handover_engineer on main 2cf0b0b7 with the film's own functions over every frame of every dive and rise: the cover is 0 everywhere, so it is not a cause. Two weights are a smooth of TIME, not of place:
+- the default sky weight: where a stop gives no sky share of its own, the close view's sky patches are drawn in the globe's view over `skyFrames` (24) frames up to T in a dive and after T in a rise;
+- the default place weight: where `picture` is on, the place picture fades over the ground over `placeFrames` (12) frames.
+Spans on main: Mercury dive sky 736 to 759 (T 760), rise sky 978 to 1001 (T 977). Venus dive sky 1319 to 1342 and picture 1331 to 1342 (T 1343), rise picture 1543 to 1554 and sky 1543 to 1566 (T 1542). Mars dive sky 2451 to 2474 and picture 2463 to 2474 (T 2475), rise picture 2688 to 2699 and sky 2688 to 2711 (T 2687). Saturn: none. Uranus: none of the default (its own plan functions). The Sun, Earth, Jupiter and Neptune use the default sky as well; their spans follow from their own T in the same way.
+Against the red pattern ranges of the first named commits: Mercury 744 + 1/2 and 982 + 1/2, Venus 1326 and 1543 + 1/2, Mars 2449 and 2694 lie inside these spans. The first red frames of Mercury (712 + 1/2), Mars (2433, 2674) and Uranus (4388) lie before any such weight moves: those are the globe's own draw. NOT KNOWN yet: how much of each number is the sky's fade, the picture's fade and the globe's own draw; handover_engineer runs that test now and you get its table.
+
+RULED (plan F: "No element of a dive or a rise appears, fades or changes with the clock. Whatever blends does so by distance, height or angle"):
+1. The engine's two defaults are being changed to read the eye's height in place of the time (handover_engineer, proven on the machines before it goes onto main). It stays a fade between two skies.
+2. So each of you still owes, in your next named commit or named red in it with its cure: one sky and one haze on both sides of your change of view, by height, so that `skyFrames` can be 0; and no place picture where its plates are not the globe's own ground. The hooks are on main: `handover.KIND.picture: false`, `skyFrames: 0`, your plan's sky share by `plan.eyeHeight(time)`, `Relief.presence(share)` by height, `plan.air(height)`.
+3. In NAMED, one line: which of these your stop sets, and the frames in which anything of yours still reads the time inside a dive or a rise (none is the answer asked for; drift of clouds, plasma or rings in their own time is not meant).
+
+## MAIL 615 from the Builder (/root), about 09:28 UTC, word for word (the answer to my question of 09:19 on 0.38 MB of growth)
+
+MAIL 615 from the Builder (/root) to venus_builder. Yes: the third commit may grow by 0.38 MB.
+MEASURED on main 2008483c: the tracked files are 2,955,824,728 bytes; the gate counts in units of 1e9 and its limit is 3.0, so 44 MB are free. The rule that an incoming file is paid for by one going out stands for new files; ten plates laid again under the same ten names are not new files. State the bytes of public/assets/venus before and after in NAMED, as you did here. The gate measures it again at the take.
+
+## MAIL 621 from the Builder (/root), 09:33 UTC, word for word
+
+MAIL 621 from the Builder (/root) to every builder with a commit due. One sandbox (travel_builder's) lost its GitHub login between 09:12 and 09:28 UTC: fetch still works, push ends with "could not read Username". It may happen to yours.
+1. Test now, it costs seconds and changes nothing: git push --dry-run origin HEAD:refs/heads/YOUR-BRANCH. If it fails for the login, tell me in one line.
+2. If it fails, now or later: do not look for another credential and do not wait. Send me the commit as a bundle: git bundle create NAME.bundle origin/main..HEAD (or the range from the last commit of yours that is on the remote), attached to your NAMED mail, with the full sha and the branch it belongs on. I verify the bundle, push the commit unchanged to that branch and answer with the ls-remote line. The time of your mail counts as the time of the NAMED.
+3. Looks branches: the same way, or attach the pictures themselves (10 files a message).
+
+Tested 09:34: `git push --dry-run origin HEAD:refs/heads/agent/venus-place` gave "Everything up-to-date", exit 0. No mail needed.
+
+## The plates laid again at the T the film has now: what was changed for the third named commit (08:54 to 09:35)
+
+Order of MAIL 593: 1 one ground on both sides, 2 relief back, 3 humps away from the handover, the cause measured before a cure.
+
+What was measured first (09:00, experiment M1): with the ground switched off for the draw only (`ground.heights` [1e-9, 2e-9]) the plates alone were set beside the globe side as the film draws it (ground on), view nograin and shut. Mean difference of 255: dive 1330 5.53, 1338 4.70, 1342 3.68; rise 1540 8.17, 1544 9.25, 1552 2.31. So the rise plates were the further off, one frame after T.
+
+The cause, measured: the plates of the two handovers were laid with the pose that `assets-src/venus/place/tcam.ts` took from `plan.divePose` and `plan.risePose`. The film since the path work reads `plan.eye(kind, time, side)`. The old file said rise frame 1542; the film's T is 1539. The old eye stood 0.00714 radii and 3.0 degrees (axes y and z; 0.74 degrees about x) off the film's eye for the rise, 0.00059 radii and 0.2 to 0.3 degrees off for the dive. So the rise plates showed the ground from a pose the camera no longer has at T.
+
+What was changed:
+- `tcam.ts` reads `plan.eye(kind, h.time, side)`. `out/work/venus/place/tcam.json` now says dive frame 1343, time 44.775, height 0.021053; rise frame 1539, time 51.30833333333333, height 0.020929.
+- `tlay.py`: `present(kind, tag, folder)` puts a level together as the film shows it; `base(kind, tag, start)` keeps the start of a laying in `t/<kind>-<tag>-start.png`; `make`, `calib` and `blocks` take the start (`film` or `build`) as the first word after KIND. `flay.py` `current` hands over to `tlay.present`.
+- The close draws at T (uhd, `nograin/side=terrain/t=SECONDS`) and the globe draws at T with the ground off were made again at the new poses (`t/close-1343.png`, `t/close-1539.png`, `t/globe-1343.png`, `t/globe-1539.png`), then `tlay.py calib KIND film d|c`, `tlay.py make KIND film`, `tlay.py export KIND`. Ten plates under the same ten names, in full and web: `place3-{w,c}-{dive,rise}.jpg`, `place3-{a,b,d}-light-{dive,rise}.jpg`. `src/stops/venus/plates.json` is unchanged, `shiftDeg` kept.
+- `levels.py` (new): puts each level together as the film shows it and runs the level check of main on the pairs. RECIPE.md: step 2 text, new steps 8 and 9.
+
+Measured:
+- calib, left over with the standing `shiftDeg`, in plate pixels: dive d 0.04, -0.02, c 0.08, 0.05; rise d -0.15, 0.03, c -0.08, 0.03.
+- make, mean change of a plate of 255: dive w 0.38, a 1.13, b 2.64, c 1.7, d 2.14; rise w 0.6, a 1.83, b 4.22, c 6.1, d 8.28.
+- Experiment M2 (09:16), same measure as M1 after the laying: dive 1326 3.75, 1330 5.13, 1338 4.14, 1342 2.87; rise 1540 3.70, 1544 6.65, 1548 5.25, 1552 2.10. So rise 1540 fell from 8.17 to 3.70, 1544 from 9.25 to 6.65; dive 1330 from 5.53 to 5.13, 1338 from 4.70 to 4.14, 1342 from 3.68 to 2.87. In the pairs what is left at 1544 to 1548 is the relief of the towers against the flat plates.
+- Level check (`python3 levels.py` in `assets-src/venus/place`, the tool `assets-src/shared/globe-levels.py` of main 81d568a7, whole pictures as the film shows them, 99th percentile against the limit 0.45): dive w to a 0.01, a to b 0.05, b to c 0.05, c to d 0.05, b to d 0.13; rise w to a 0.01, a to b 0.06, b to c 0.03, c to d 0.03, b to d 0.04. All judged share 1.00, median 0.00. The plates before the laying read 0.00 to 0.05. On the raw files the tool reads OVER for a colour file against a light file (dive w to a-light 1.39, b-light to c 1.05, c to d-light 1.48; rise 1.39, 1.34, 1.55): that is no test in the sense of MAIL 596, a light file is the ratio to its colour level, not the same kind of picture. Light a to light b: 0.24 dive, 0.12 rise. Level v (the wide ring, forms only, one channel) is not judged.
+- Bytes of `public/assets/venus`: 152,465,406 on main, 152,861,659 now, plus 396,253 bytes (0.38 MB), mostly in the a-light and b-light files. No file in or out. Allowed by MAIL 615.
+
+The line owed by MAIL 613, measured with `out/work/venus/place/clock.ts` over every half frame of 1260 to 1349 and 1530 to 1604: `move.json` sets `handover.dive.picture: false` and `handover.rise.picture: false`. `plan.ts` gives its own sky share by `plan.eyeHeight(time)` (`skyShare`, `skyCarryShare`, `skyLiftAt`), so `film.ts` does not read the default sky weight; `skyFrames` stands at the default 24 and is not read. Cover window null, veil amount 0, release 1, drop 0 on every half frame. `Relief.presence` and `plan.air` are not used by name: the weight of the ground and the air go by height in `set.ts`. What still reads the time inside a dive or a rise: the drift of the clouds and the flow and the lightning (their own time), the choice of the dive set or the rise set at the middle of the terrain segment (not inside a move), and the change of view at the one frame of T (`dissolveFrames` 1).
+
+## Proofs of the third named commit (measured 09:18 to 10:20 on space-sandbox, draft tier, on the tree of the commit before it was committed)
+
+- Handover draft: "venus.dive side difference at T: pass", "venus.dive flow gap at T: pass", "venus.dive every frame: pass", "venus.rise side difference at T: pass", "venus.rise flow gap at T: pass", "venus.rise every frame: pass". Dive: T in frame 1343, sides mean 0.035, median 0, 99th percentile 1, 99.9th 15, max 110; flow gap mean 0.113 px, largest 0.31 px. Rise: T in frame 1539, sides mean 0.045, 99th percentile 1, 99.9th 8, max 107; flow gap mean 0.113 px, largest 0.267 px. The same numbers as on the second named commit.
+- Path lines: dive "Height: mean ratio per frame 0.94038 on the way to T; fastest frame 1314 at 1.612 times the mean rate; frame 1277 (one fifth of the way) at 0.626 of the mean. The place is at most 0.315 of the half frame from the middle (frame 1277)."; rise "Height: mean ratio per frame 1.08575 on the way from T; fastest frame 1567 at 1.558 times the mean rate; frame 1591 (one fifth of the way) at 0.606 of the mean. The place is at most 0.3 of the half frame from the middle (frame 1591)."
+- Body steps of the handover report: dive level 3.47 into 1289, colour 4.11 into 1291; rise level 2.51 into 1591, colour 2.95 into 1569.
+- smooth, part path: "smooth venus: green. out/work/smooth/venus.md".
+- smooth, part pictures, rise: red, 2 numbers. "RED pop score 1.25 from frame 1610 + 1/2 to the next, limit 1.2 (3 frames over it, first 1610 + 1/2)" (the leaving leg, ruled not mine in MAIL 610); "RED the pattern of the picture changes in place by 1.15 from frame 1543 + 1/2 to 8 film frames later, limit 0.45 (56 frames over it, first 1540 + 1/2)", most at pixel 260, 748. Second commit: 1.16, 56 frames over. Level step 0.33 at 1565 + 1/2, green. So the laying did not move the pattern number of the rise.
+  - Rows: 0.23 up to 1540, 0.48 at 1540 + 1/2, 0.99 at 1541, 1.15 at 1543 and 1543 + 1/2, 0.72 at 1548, 0.40 at 1548 + 1/2, 0.28 at 1549; second hump 1550 + 1/2 to 1557 + 1/2 (most 0.74 at 1554 + 1/2 and 1555; second commit 0.77); third 1568 + 1/2 to 1580 + 1/2 (most 0.81 at 1575; the rows of this hump are those of the second commit within 0.01, and 1580 + 1/2 reads 0.453 where it read 0.448).
+- smooth, part pictures, dive: red, 1 number. "RED the pattern of the picture changes in place by 0.83 from frame 1284 to 8 film frames later, limit 0.45 (38 frames over it, first 1269 + 1/2)", most at pixel 384, 340. Second commit: 0.83, 40 frames over. Level step 0.37 at 1316 and pop 1.14 from 1319, both green.
+  - Rows over the limit: 1269 + 1/2 to 1270 + 1/2 (most 0.47), 1277 + 1/2 to 1287 + 1/2 (most 0.83 at 1284), 1291 to 1293 (most 0.50), all three as on the second commit within 0.02; 1319 + 1/2 to 1323 + 1/2 (most 0.78 at 1320; second commit 0.69 at 1320 + 1/2 and 1321, over to 1324 + 1/2). So in this hump the row 1320 rose from 0.68 to 0.78, 1320 + 1/2 stayed at 0.69 and the rows from 1321 on fell by 0.01 to 0.09.
+- Gate: "PASS G11  every asset has a row or a recipe", "PASS G15  at most 2 sets per frame; finished stops: venus/web 352 MB, venus/full 1386 MB".
+- tsc 0.
+- Disk: at 10:04 the texel view of the proofs refused to start ("refusing to start: 2.8 GB free, need 3"). The draft frames of the handover report and of the rise report were deleted (their sheets and reports were made and seen before), 4.2 GB free after. The texel view was run again after the other proofs; its line, the count of the tests and the two finals stand in the NAMED mail if they are not in the section after this one.
+- Seen in every frame of the eleven sheets 1260 to 1349 and 1530 to 1604 (draft frames of the handover report): no frame where the scene changes can be named at T (1343, 1539). Still to be seen: the speckled patch at the lower left 1286 to 1291, pale slabs at the lower middle 1300 to 1307, soft frames 1308 to 1316, the glow of the Sun entering from the top 1313 to 1319, the golden band at the limb 1320 to 1331 and 1546 to 1553, shadow slabs at the right 1554 to 1561, the pale wedge at the lower left 1562 to 1570.
+
+## What changes in place at the largest pattern numbers (third commit; measured 09:50 to 10:06 on the frames of the two reports, no frame drawn for it)
+
+Tool: `out/work/venus/place/pat1.ts` (scratch, not committed) runs the pattern function of the report (`tools/img/smooth.py`, op pictures) on the frames the report has drawn, with another reach. With the reach of the report (8 film frames) it gives the report's numbers (rise 0.74 at 1554 + 1/2, 0.81 at 1575; dive 0.83 at 1284). With a reach of one film frame it shows in which frame a change takes place.
+
+Rise, largest number 1.15 at 1543 + 1/2 (against 1551 + 1/2), one blob at pixel 260, 748 (lower left):
+- Over one film frame the pattern is 0.005 to 0.02 from 1538 to 1545, then 0.09 at 1545 + 1/2, 0.26 and 0.30 at 1546 and 1546 + 1/2 (at pixel 1872 to 1912, 428 to 432: on the limb at the right edge of the frame), 0.32, 0.38, 0.23, 0.13 at 1547 + 1/2, 1548, 1548 + 1/2, 1549 (at pixel 380 to 548, 720 to 816: lower left), 0.06 at 1549 + 1/2 and 0.03 and less from 1550 on. So the change of the first hump takes place in the frames 1545 + 1/2 to 1549 + 1/2 and not at T. The eye stands 0.032 to 0.046 over the cloud tops there, 1.5 to 2.2 times the height of T (0.0209).
+- Seen in the crop of those frames (x 160 to 660, y 540 to 920, 1547 to 1549 + 1/2): the lit crests at the lower left of the tower group go out within about two frames; what stands there afterwards is the flat plate.
+- By the code that is the ground inside the frame of T given back to its limits by the height of the eye: `set.ts` `held = max(1 - below(height / heightT, release), 1e-6)` with `ground.release` [1.0, 3.0], and `relief.ts` scales the limits of `true` [0.6, 0.85] and `skin` [0.08, 0.2] by it, so the faces of the towers that the camera of T saw edge on (skin) are taken out between 1 and 3 times the height of T and the plates show in their place: relief with its own light against a flat plate with the light laid into it. Driven by the height of the eye, not by the time. Proved by a run only if the section after this one says so.
+- The blob at the limb at 1546 + 1/2 (0.30 over one frame): what it is was not found. What moves by height at the limb there: the air under the horizon (`ground.bandHeights` [0.0213, 0.06]) and the share of the surface view's sky (`sky.low` [0.0212, 0.1]).
+
+Rise, second hump, most 0.74 at 1554 + 1/2 (against 1562 + 1/2): one blob at pixel 604, 724 moving to 620, 700, on the lower left border of the darker footprint of the frame of T. Over one film frame it reads 0.02 to 0.03 from 1552 to 1559, so it is a slow change over the eight frames, not one event. Heights 0.07 to 0.21. What moves by height there: the tones of the plates under and beside the ground (`ground.lay.heights` [0.108, 0.056, 0.03]), the tones of the place by the line of sight (`tone.heights` [0.1, 0.6]), and `true` by the angle of the eye on the near ground of T. Which of them it is was not measured.
+
+Rise, third hump, most 0.81 at 1575 (against 1583): many small blobs along the limb and the lower edge of the body, heights 0.92 to 2.0: the plates of the place going out over the globe's own map (`show.heights` [0.8, 3.4]), the ground going out before it (`ground.heights` [0.3, 0.9]), the look of the hold coming back (`leave.heights` [1.9, 3.4]). Not parted by a run.
+
+Dive, largest number 0.83 at 1284 (against 1292), most at pixel 384, 340: the left edge of the lit streak field of the globe's own map. The difference of the two frames is largest over that streak field (the same place as the body step 3.47 into 1289). Heights 1.85 to 1.02, inside `show.heights` [0.8, 3.4]: the plates of the place (levels w and a and the ring v, the forms of the place) come in over the streaks of the globe's own map by the height of the eye, and the exposure of the globe moves by `dusk.heights` [0.2, 3.2]. Two pictures of the same ground mixed by height. Not parted by a run.
+
+Dive, 1319 + 1/2 to 1323 + 1/2, most 0.78 at 1320 (against 1328): the change lies along the far band under the limb and in smaller blobs at the left and lower edge of the body. Over one film frame it reads 0.02 to 0.09 from 1322 to 1328 (most 0.09 at 1326 + 1/2 at pixel 988, 288, at the limb; 0.03 to 0.05 at pixel 596 to 492, 704 to 716, lower left, at 1322 to 1324), so in the dive it is spread over six frames (the eye sinks slowly there: 0.068 at 1320, 0.042 at 1326, 0.029 at 1332). The band under the limb is the far zone (the sine of T's elevation under 0.1 to 0.2), where the plates keep the forms of the generated take with T's tones and are not laid from the ground, and where the air under the horizon comes in by height (`ground.bandHeights` [0.0213, 0.06]); the lower left is the release as in the rise.
+
+What follows for the cure (not done in this commit): the pyramid is one picture (level check clean), the two sides agree at T, so what is left is what the shader exchanges by height, as MAIL 596 rules it: (1) the relief inside the frame of T must hold to a height where its faces are under a pixel or two, or the plates must carry it (parallax in the plate), instead of the release at 1 to 3 times the height of T; (2) the far zone laid from the ground by the fine ratio of the close draw to the globe draw; (3) the plates of the place and the globe's own map made one picture at the place, so that `show.heights` mixes nothing that differs.
+
+## The rest of the proofs of the third named commit, and what is still wrong (10:05 to 10:20)
+
+- vitest, alone, 10:05 to 10:11: exit 0, "Test Files  47 passed (47)", "Tests  437 passed (437)".
+- Finals on this tree: 1185 sha256 8f4644325128c93f6cef870fbc0cdbea961773dceeb63bfe204dd56cbcc9f5b8, 1440 sha256 a1ec9a62ad3533837cf408559de2a217994ceb5341e0e3ce7eb6a40a84a38818. Both equal to the kept bytes of MAIL 546.
+- G13 by my texel view on 24 frames (1296, 1304, 1310, 1314, 1316, 1319 to 1340 every third, 1342, 1540, 1542, 1544, 1547 to 1562 every third, 1566), run again 10:13 to 10:16 after the disk was freed: "texel view, same rule as G13 (counted when green > 0.5, soft when red byte < 127.5): 0 of 24 frames over 0.02 soft; worst frame 1316 0.63%, frame 1314 0.32%, frame 1304 0.14%". The other frames of the two moves were not counted on this state.
+- `levels.py` calls `assets-src/shared/globe-levels.py`, which lives on main (81d568a7). This branch does not carry it (no merge, MAIL 575); in my working tree it lies untracked, taken from main as it is.
+- Looks pushed 09:30, 09:53 and 10:14 (folder venus-place).
+
+Still wrong after the third named commit:
+
+1. Pattern red on both moves: rise 1.15 at 1543 + 1/2 (56 frames over), dive 0.83 at 1284 (38 frames over). The laying did not move the number. What changes in place is named in the section before this one. Cures not done: the relief held, or carried by the plates, above 1 to 3 times the height of T; the far zone laid from the ground; the plates of the place and the globe's own map one picture where `show.heights` mixes them.
+2. The relief of the middle distance is flat before T (given up in the second commit, still out).
+3. Rise pop 1.25 at 1610 + 1/2 (the leaving leg).
+4. Body step: level 3.47 into 1289, colour 4.11 into 1291.
+5. Path green by thin margins; the dive set of MAIL 557 not tested; the rise eye goes against the surface view's way from 1533 + 1/2.
+6. Limb crisp on the globe side, soft on the surface side at T; haze streaks beside the Sun.
+7. Soft frames 1300 to 1316 and in the rise (shutter).
+8. Seen in the sheets: speckled patch at the lower left 1286 to 1291, pale slabs 1300 to 1307, the Sun's glow entering 1313 to 1319, golden band at the limb 1320 to 1331 and 1546 to 1553, shadow slabs 1554 to 1561, pale wedge 1562 to 1570.
+9. The tones of the plates under the ground (`flay.py`) were not measured again after the laying; the plate files were encoded once more from decoded JPEG; `LIMB.edgePx 2` and the veil's `edgePx 1.5` are counted in pixels; step 4 not done.
+10. G13 counted on 24 frames only on this state.
+11. The change of view takes the one frame of T (`dissolveFrames` 1): the one thing of mine inside a move that goes by the time.
