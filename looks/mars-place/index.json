@@ -1,9 +1,41 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T15:33:51.242Z",
+ "pushed": "2026-11-24T15:53:22.229Z",
  "head": "b8c0def04b45940b252ab06e35b40a4a8796b913",
- "note": "wide join of the apron heights: first lay 0.75 / 1.55 / 1.04 (99th pct of the pattern, globe ground against close ground); second pass with the secant runs",
+ "note": "second pass of the lay: with the harness's own body mask the pattern between globe ground and close ground is 0.37 at 2470 and 0.30 at 2686 (was 1.43, 1.41); from above the lay still reads as a patch",
  "looks": [
+  {
+   "time": "2026-11-24T15:53:21.629Z",
+   "file": "20261124155321629-note-aq2-plates.jpg",
+   "source": "out/work/place/see/aq2-plates.jpg",
+   "kind": "note",
+   "label": "test aq2 plates from straight above, 0.3 0.7 1.6 3.8 8.5 deg",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T15:53:20.966Z",
+   "file": "20261124155320966-note-air2.jpg",
+   "source": "out/work/place/see/air2.jpg",
+   "kind": "note",
+   "label": "air sweep 2 at 2470: more ground haze veils the near ground too (not taken)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T15:53:20.297Z",
+   "file": "20261124155320297-note-aq2-above.jpg",
+   "source": "out/work/place/see/aq2-above.jpg",
+   "kind": "note",
+   "label": "test aq2 as the film draws it from above, 2450 2456 2462: the lay is a pale fan on the orange plain (still wrong)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T15:53:19.661Z",
+   "file": "20261124155319661-note-aq2-HR.jpg",
+   "source": "out/work/place/see/aq2-HR.jpg",
+   "kind": "note",
+   "label": "test aq2 (second pass of the lay): globe ground alone, close ground alone, pattern (flat top mask), 2466 2470 2686",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T15:33:50.604Z",
    "file": "20261124153350604-note-aq1-horizon.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/place/see/aq1-HR.jpg",
    "kind": "note",
    "label": "test aq1: globe ground alone (H) against close ground alone (R) and their pattern, first lay on heights with the aprons, 2466 2470 2686",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T15:00:51.760Z",
-   "file": "20261124150051760-note-look-0.7.jpg",
-   "source": "out/work/place/ap/look-0.7.jpg",
-   "kind": "note",
-   "label": "country heights 0.7 deg with the apron ground (blue) added",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T15:00:51.176Z",
-   "file": "20261124150051176-note-T-frames.jpg",
-   "source": "out/work/place/see/T-frames.jpg",
-   "kind": "note",
-   "label": "frames about T, globe side and surface side",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T15:00:50.609Z",
-   "file": "20261124150050609-note-aprons-above.jpg",
-   "source": "out/work/place/see/aprons-above.jpg",
-   "kind": "note",
-   "label": "the close ground's aprons from above, heights (new option of heights.py)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T15:00:49.900Z",
-   "file": "20261124150049900-note-it3-dive.jpg",
-   "source": "out/work/place/see/it3-dive.jpg",
-   "kind": "note",
-   "label": "test it3 from above 2440 to 2462 and 2694 (thrown away: fan lines wrong)",
    "stop": "mars"
   }
  ]
