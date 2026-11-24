@@ -1,75 +1,88 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-24T11:22:53.777Z",
+ "pushed": "2026-11-24T11:42:49.595Z",
  "head": "e3594096c45547f3db400e9f1e08e0b3be26b01c",
- "note": "release kept on merged main, proof chain running; far zone preview without a draw",
+ "note": "pattern runs read offline: limb looks exchanged by height (hold rim, limb glow), lit field at the left limb going flat 1284 to 1292, plates giving way to the globe map 1575 to 1584; proof chain of the near ground still running",
  "looks": [
   {
-   "time": "2026-11-24T11:22:52.743Z",
-   "file": "20261124112252743-note-x5lay.jpg",
-   "source": "../../../../tmp/v/x5lay.jpg",
+   "time": "2026-11-24T11:42:48.303Z",
+   "file": "20261124114248303-note-s1562.jpg",
+   "source": "../../../../tmp/v/hv/s1562.jpg",
    "kind": "note",
-   "label": "layers view 1540 to 1552 with the kept release: the border of the ground comes into the frame from the left",
+   "label": "rise 1562 to 1577, same tree, draft",
    "stop": "venus"
   },
   {
-   "time": "2026-11-24T11:22:51.520Z",
-   "file": "20261124112251520-note-e1-sheet.jpg",
-   "source": "../../../../tmp/v/far/e1-sheet.jpg",
+   "time": "2026-11-24T11:42:47.331Z",
+   "file": "20261124114247331-note-s1276.jpg",
+   "source": "../../../../tmp/v/hv/s1276.jpg",
    "kind": "note",
-   "label": "far zone of the rise plates seen from 1546, 1550, 1556, unshaded preview: left as committed, right laid from the picture of T down to sine 0.04 to 0.08 (not drawn yet)",
+   "label": "dive 1276 to 1291, merged tree with the near ground kept whole, draft",
    "stop": "venus"
   },
   {
-   "time": "2026-11-24T11:17:38.304Z",
-   "file": "20261124111738304-compare-venus-dive-sides.jpg",
-   "source": "out/work/handover/venus-dive-sides.png",
-   "kind": "compare",
-   "label": "venus dive, both sides at T (frame 1343) and their difference times 8",
+   "time": "2026-11-24T11:42:46.392Z",
+   "file": "20261124114246392-note-crop-rise.jpg",
+   "source": "../../../../tmp/v/off/crop-rise.jpg",
+   "kind": "note",
+   "label": "rise: same view at 1570 right limb, 1575 lower middle, 1576 right limb, 1576 upper left (offline, my mask)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T11:42:45.305Z",
+   "file": "20261124114245305-note-crop-dive.jpg",
+   "source": "../../../../tmp/v/off/crop-dive.jpg",
+   "kind": "note",
+   "label": "dive: frame, frame 8 later carried back, band of both, pattern, at 1278 right limb, 1282 and 1284 upper left limb, 1292 upper right limb (offline, my mask)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T11:32:14.777Z",
+   "file": "20261124113214777-sheet-venus-rise-top.jpg",
+   "source": "out/work/handover/venus-rise-top.png",
+   "kind": "sheet",
+   "label": "venus rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 1539), place picture off, draft tier",
    "stop": "venus",
-   "segment": "venus.dive",
-   "frame": 1343,
+   "segment": "venus.rise",
+   "first": 1539,
+   "last": 1604,
    "tier": "draft"
   },
   {
-   "time": "2026-11-24T11:04:22.899Z",
-   "file": "20261124110422899-note-x5left.jpg",
-   "source": "../../../../tmp/v/x5left.jpg",
-   "kind": "note",
-   "label": "venus rise, near ground kept whole, x5left",
-   "stop": "venus"
+   "time": "2026-11-24T11:31:20.920Z",
+   "file": "20261124113120920-sheet-venus-rise-draft-after.jpg",
+   "source": "out/work/handover/venus-rise-draft-after.png",
+   "kind": "sheet",
+   "label": "venus rise, every frame 1540 to 1551 (after T, frame 1539), draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "first": 1540,
+   "last": 1551,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-24T11:04:22.315Z",
-   "file": "20261124110422315-note-x5c.jpg",
-   "source": "../../../../tmp/v/x5c.jpg",
-   "kind": "note",
-   "label": "venus rise, near ground kept whole, x5c",
-   "stop": "venus"
+   "time": "2026-11-24T11:31:19.142Z",
+   "file": "20261124113119142-sheet-venus-rise-draft-before.jpg",
+   "source": "out/work/handover/venus-rise-draft-before.png",
+   "kind": "sheet",
+   "label": "venus rise, every frame 1530 to 1538 (before T, frame 1539), draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "first": 1530,
+   "last": 1538,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-24T11:04:21.748Z",
-   "file": "20261124110421748-note-x5b.jpg",
-   "source": "../../../../tmp/v/x5b.jpg",
-   "kind": "note",
-   "label": "venus rise, near ground kept whole, x5b",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T11:04:20.954Z",
-   "file": "20261124110420954-note-x5a.jpg",
-   "source": "../../../../tmp/v/x5a.jpg",
-   "kind": "note",
-   "label": "venus rise, near ground kept whole, x5a",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T10:41:16.770Z",
-   "file": "20261124104116770-note-x4b.jpg",
-   "source": "../../../../tmp/v/x4b.jpg",
-   "kind": "note",
-   "label": "same test: rise 1552, 1556, 1568, 1572; the tower group keeps its lit crests to 1564, the pale patch of the far deck with a blue tint stands at 1552 to 1560, shadow slab right of it",
-   "stop": "venus"
+   "time": "2026-11-24T11:31:17.660Z",
+   "file": "20261124113117660-sheet-venus-rise-draft-across.jpg",
+   "source": "out/work/handover/venus-rise-draft-across.png",
+   "kind": "sheet",
+   "label": "venus rise, every frame 1533 to 1544 (across T, frame 1539), draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "first": 1533,
+   "last": 1544,
+   "tier": "draft"
   }
  ]
 }
