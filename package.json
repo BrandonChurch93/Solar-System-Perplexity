@@ -40,7 +40,8 @@
     "gauntlet": "python3 tools/gauntlet.py",
     "shots": "tsx tools/shots.ts",
     "handover": "tsx tools/handover.ts",
-    "smooth": "tsx tools/smooth.ts"
+    "smooth": "tsx tools/smooth.ts",
+    "capture": "tsx tools/capture.ts"
   },
   "dependencies": {
     "gsap": "3.15.1",
