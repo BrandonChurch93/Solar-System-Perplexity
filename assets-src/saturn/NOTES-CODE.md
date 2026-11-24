@@ -1397,3 +1397,1025 @@ before and after the merge), then the notebook. The gate of mail 326 on this tre
 PASS G11  every asset has a row or a recipe
 PASS G15  at most 2 sets per frame; finished stops: saturn/web 281 MB, saturn/full 774 MB
 Not done in this pass: the capped shutter (E6) is not on main; nothing of it is in this folder.
+
+## 19:05 to now: after the READY (a284d54), round 2: a new path for the rise
+
+READY sent 19:05 UTC on a284d54 (merge of main 1466487 on top of 9ed4ef4 and 8d42701; only kit/PROGRESS.md
+came with that merge). After it: drafts 3690, 3750, 3800, 3830 viewed, one look.
+
+The rise as it was (out/scratch/rise.ts and rise4.ts with OLD=1; ring frame forward, right, height):
+- The way out lies 3.66 radii behind, 1.46 left and 2.67 above the skim's end, so every rise is a pull back.
+- join() moved the foot and the height by one share: the foot straight, the height by a steady factor. So the
+  way back was taken while the lens was still low: speed over height 2.37 percent a frame in the skim, 2.12 at
+  3812, 0.90 at 3816 (the stall, the climb near zero), then 3.99 backward at 3820, 7.74 at 3824, 10.35 at
+  3828, 12.62 at 3848. Mean flow on the screen (16 by 9 grid of plane and globe points, pixels a frame): 5.2
+  in the skim, 2.3 at 3816, 16 at 3830 with single points at 70, then 33.2 at 3870 and from there to 0.7 at
+  3884 (largest change 3.7 px a frame per frame at 3878).
+
+The new path (plan.ts riseAt, numbers in skim.json handover.rise):
+- The height goes from the skim's to the way out's by its own share (climb.rise, climb.fall: a steady factor a
+  frame through the middle). The foot goes by the share of the height already won, to the power back. Over one
+  the lens lifts off first and draws back where it is high: the forward speed turns into the climb and only
+  then into the way back, the plane never stands still under the lens.
+- The view (the globe's place in the picture, its lean, the field of view) goes over by handover.rise.rise and
+  fall as before; the globe moves from x 1650 to x 692, that pan is most of the flow (18 px a frame).
+- Why a climb first: a plane point at the angle th under the level moves on the screen by
+  (climb over height) sin th cos th + (forward over height) sin th sin th a frame, so a climb keeps the plane
+  flowing the way the skim's forward flight did, while a way back at low height reverses it.
+- Tried by numbers (rise4.ts: step, climb rise, climb fall, back, view rise, view fall): back 1.0 stalls again
+  (forward reverses at 3816), 1.3 to 1.6 turn forward into up into back with no dip, 2.0 has higher peaks
+  (28 px mean). Longer ramps lower the change a frame and raise the plateau.
+- Taken for the first drafts: climb 0.25 and 0.3, back 1.4, view 0.3 and 0.3. Mean flow 5.2 (skim), 6.1 at
+  3815, 8.3, 12.2, 15.9, 19.0, 20.9 at 3830, then 21 to 22 up to 3857, 24.9 at 3863, 20.3 at 3869, 11.1 at
+  3875, 0.4 at 3884; largest change 1.67 px a frame per frame (was 3.71). Lens to the cloud tops: least 0.95
+  at 3818 to 3824 (was 0.97 at 3816).
+- The handover tool's rate rule for a rise (tools/handover.ts line 325): the mean rate of the distance to the
+  unit sphere from T (3860) to the last frame, and no frame of the rise over 2 times it. Old path 1.39 times
+  at 3870; the new one 1.68 times at 3864. Longer falls push this up (0.35 gives 1.82 to 1.87).
+
+Seen and measured on the new path (19:19 to 19:48 UTC, all drafts, folder /tmp/v/r15 and r17 on this VM):
+- Every frame 3808 to 3823 (sheet s5 and the near sheet at native size, cA): no stall and no jump, the ringlets
+  run on through the lift, the grain streaks lengthen with the climb. Every 4th frame to 3836, every 6th to
+  3882 (s1 to s4): one continuous lift and pull back, the globe crosses from the right to the left.
+- Texel views 3812 to 3852 every 4th frame: soft share 0.000 percent in all eleven, least 1.004 (3812 to
+  3832), then 1.067, 1.075, 1.176, 1.318, 1.498.
+- The moon rises over the globe's limb in three frames, 3856 to 3859 (cMoon): an occultation, it does not fade.
+- The brown speckled cloud at the lower right of 3858 and in the open sky at 3870 to 3882 is the Milky Way of
+  the sky, seen through the gap and the C ring where the globe's shadow lies (the kept picture has it too).
+- Still wrong on this path: the globe near the lens is soft and flat at 3808 to 3836 (cGlobe at 3824); the
+  rise ends with a brake, mean flow 24.9 px a frame at 3863 down to 0.4 at 3884, into the kept way out.
+- Frames before the rise keep their bytes against a284d54 apart from the chunks (below): 3465 and 3539 equal
+  the kept hold byte for byte, 3567 equals the draft of a284d54.
+
+The chunks as ice (grains.json levels, third value): white 0.3 to 0.75 and gain 0.5 to 1.0. Before, the large
+pieces were brown three ball bodies, dark against the globe and the C ring, and read as rocks (c_bodies,
+c_body_zoom). After, they are pale ice lit like the sheet (c_white, c_white_zoom, c_3720_chunks). Changed
+pixels, draft against draft: 3630 0.19 percent, 3720 0.32, 3780 0.42, 3800 0.24, all in the bodies and the
+glow around them (six clusters at 3800, twelve at 3720). G17 on the draft of 3720 against the approved close:
+median 0.68145 before and 0.68145 after, p25 0.28672 both (the draft with the grain; the number sent with
+the READY, 0.902, was the nograin view at the review tier).
+
+Main e13dc05 merged at 19:49 UTC (3935678; sun folders, kit/PROGRESS.md, the harness report "carried":
+tools/measure/carried.ts, tests/carried.test.ts). PROGRESS d134 names an open item for this folder: on a284d54
+the fine bands of the globe from functions are "in the picture but faint, and one bright patch behind the limb
+(frames 3804 to 3828) carries nothing at any scale". The report: npm run measure -- --stop saturn --carried
+3804,3810-3812 [--tier draft]; a tile is flagged when the texels view says sharp, it is not dark and its band
+energy (luma blurred 0.6 px minus 2.0 px, squared, mean) is under 2e-5.
+
+## 19:49 to 20:30: round 2 milestone b9b333e, then the globe near the lens
+
+Milestone b9b333e (19:57 UTC, pushed, mailed 19:59): the new rise path (plan.ts riseAt) and the chunks as pale
+ice, on top of the merge of main e13dc05. Gate lines on that tree:
+PASS G11  every asset has a row or a recipe
+PASS G15  at most 2 sets per frame; finished stops: saturn/web 281 MB, saturn/full 774 MB
+Review tier on the new rise (this VM): 3820 28 samples 133 s, 3848 40 samples 153 s, 3866 55 samples 239 s. Seen:
+the blur follows the pan, no double image; the globe at 3820 pale and flat (the fault below).
+The orange arc at 3828 near (1050, 960) is the glow of the globe's limb seen through the ring sheet.
+
+Mails, in short (the words are the Builder's):
+- 335 (20:09): a284d54 is on main as 32c488a (d135). Checked there: 115 of 115 draft reference frames, 11 differ,
+  all inside 3540 to 3884; 3465 at the final tier is the kept still byte for byte; handover report passes both
+  ways; G13 pass on 495 of 495 frames; G5 pass; G17 pass (3465 median 1.055; 3720 median 0.902, p25 0.346, worst
+  tiles [11,5] 0.0097, [10,5] 0.0376, [0,6] 0.0515, [0,5] 0.058, [1,7] 0.0615 of the approved energy: "the right
+  middle and the lower left of the terrain frame carry far less detail than the approved close"). Open for this
+  round: 1 the bright patch behind the limb, 3804 to 3828, tiles x 16 to 24, y 1 to 11 of the 32 by 18 grid,
+  "luma 0.90 and it carries nothing at any scale. It reads as a blown flat area, not as a lit globe"; 2 "The
+  globe function is faint: band energy two to three times the floor only"; 3 the moon is gone from 3589 on.
+  My own list stands. "Keep the numbering of your open list". READY needs: full sha, tsc, tests, G11, G15 web
+  and full, G13 on every frame of the dive and rise, the handover report verdict with every part.
+- 340 (20:30): main is a9ed9a0. The shutter of dives and rises (d140): handover.maxBlurPx 14 with
+  handover.minShutter 0.5, on main in about 40 minutes; the draft tier does not change. "Do not add blur,
+  softness or a cover of your own to hide a fault at the handover". Brandon's words stay the measure: "the goal
+  would be to make it seamless. Like there's actually a place on the planet that the camera's going to." The
+  place has to be in the picture early, agree with the globe around it in tone, and the camera travels to it in
+  one move.
+
+The globe near the lens (items 1 and 2 of mail 335), what was found:
+- The map is 8192 wide: about one texel a pixel at the nearest surface (lens to cloud tops 0.95 radii at 3818 to
+  3824). The kept look sets the map's small features off against a neighbourhood of look.fine[0] pixels (8); near
+  the lens 8 pixels are 8 texels, a neighbourhood too small to hold anything, and a284d54 switched that boost off
+  where the functions are whole (calm 1). So the globe near the lens had neither the map's contrast nor a strong
+  function: flat, and a few percent brighter where it was nearest (a tone wedge by distance).
+- The function itself was faint: amount 0.09 on the logarithm of the colour, cells only 6 times longer than
+  wide (short dashes, not streaks).
+
+What was done (globe.ts, skim.json globeFine):
+1. wide 20: the neighbourhood of the kept boost is, near the lens, never fewer than 20 texels of the map, so the
+   map's features keep their contrast when a texel grows to a pixel; calm is gone (the boost is whole
+   everywhere). This also removes the tone wedge.
+2. amount 0.09 to 0.14, stretch 6 to 14: long laminar streaks along the bands.
+3. zone [0.4, 1.6, 0.03]: the strength of the streaks changes from belt to belt (a value per 0.03 radians of
+   latitude), so some belts are calm and some streaked.
+4. relief [1.5, -0.1, 0.45]: toward the terminator the strength grows (up to 2.5 times where the cosine of the
+   Sun's angle is at or under -0.1, none from 0.45 on).
+The count of the texels view is unchanged: the cells a pixel of the finest octave drawn at half strength or
+more, only where the structure is whole.
+
+Measured, drafts (band energy: luma blurred 0.6 px minus 2.0 px, squared, mean over a 60 px tile; floor 2e-5):
+- Carried report (npm run measure -- --stop saturn --carried 3804,3816,3828 --tier draft), flagged tiles:
+  a284d54 and b9b333e as the Builder saw them; boost only: 3804 4, 3816 0, 3828 8; with all four changes:
+  3804 2 (31,14 and 31,15), 3816 0, 3828 4 (13,16 and 31,16, 30,17, 31,17).
+- The Builder's patch (tiles x 16 to 24, y 1 to 11): band energy least 2.8e-5 (3804), 3.6e-5 (3816), 5.9e-5
+  (3828); median 1.8e-4, 1.8e-4, 1.9e-4; before the change the bright patch inside the limb had 1.2e-5 to 2.5e-5.
+- The tiles still flagged: 31,14 to 31,17 and 30,17 are the darkest part of the dusk in the lower right corner
+  (luma 0.15 to 0.31, energy 5.6e-6 to 1.9e-5: the same relative contrast as the lit side, the measure is
+  absolute); 13,16 at 3828 is a smooth lane of the ring sheet at the bottom (energy 1.85e-5), not the globe.
+- 3720 changes with it: 12.85 percent of the pixels, all on the globe (x 825 to 1911, y 7 to 908), at most 39
+  levels (246 pixels over 30, near the terminator at x 1224 to 1460, y 416 to 619). The near half of the globe
+  was soft in a284d54 and b9b333e (the map magnified), it now carries streaks at about half strength (the lens
+  is 1.62 radii from the cloud tops at 3720, reach [1.3, 2.0]). The approved close has a smooth globe there
+  (its globe tiles carry 0.2e-5 to 8e-5, under the floor of G17, so G17 does not see the globe).
+- Lens to the nearest cloud tops by frame (out/scratch/dist.ts): 3680 2.00, 3720 1.62, 3760 1.30, 3800 1.05,
+  3810 0.99, 3820 0.95, 3830 0.99, 3840 1.17, 3850 1.62, 3860 2.56. So the streaks begin at 3680, are whole at
+  the nearest point from 3760 and are gone again at 3855.
+
+The moon (item 3), measured on drafts 3580 to 3592: Titan is 40 px wide, 20 radii behind the globe, at
+(1532, 463) at 3580, lit half toward the globe. The dive swings the lens around the globe, the far sky moves
+about 10 px a frame against the limb, and the night limb crosses the moon from 3586 (touch) to 3590 (gone).
+The night side is 5 of 255 against a sky of 8: the limb cannot be seen, 30 px below the moon it can (against the
+lit far arc of the rings). Stars set behind the limb in the same frames. Cures that were weighed: light on the
+night side (ring light) changes the bytes of the hold and the judged frames; a moon nearer or elsewhere changes
+the bytes of the hold (it moves 0.3 degrees a second there); another dive path would have to be proven again
+from the start. Left, and said so.
+
+The fit at 3720 (item 6), measured on the nograin draft against the approved close (12 by 8 tiles, g17.py):
+median 0.677, p25 0.289; worst [11,5] 0.014, [10,5] 0.036, [2,7] 0.060, [1,7] 0.060, [1,6] 0.124.
+- [10,5] and [11,5]: in the approved close the ring sheet passes in front of the globe there (its waterline
+  runs from (940, 500) to (1920, 660)); in the film the waterline is 120 to 140 px lower ((950, 620) to
+  (1920, 800)) and those tiles show the night side of the globe. A matter of the pose (height over distance).
+- The lower left ([0..3, 4..7], ratios 0.06 to 0.3): the approved close has crisp ringlets 3 to 10 px wide
+  with dark gaps between them and a fine speckle of ice on every ringlet, band energy 2.5e-3 to 6.8e-3; the
+  film has smooth lanes 10 to 40 px wide with soft edges, a few thin lines and sparse grains, 3e-4 to 1.7e-3.
+- Why: at 3720 the lens is 0.40 radii above the plane and the bottom of the frame is 0.69 radii away, so a
+  pixel there is 5e-4 radii wide and 9e-4 radii deep. The ladder of ringlets (ringfine.json) has strength only
+  from octave 6 on (0.002 radii and finer: 2 px and less at the bottom of the frame); octaves 4 and 5 (0.008
+  and 0.004 radii: 4 to 16 px there) carry no strength because at those scales the sheet is the profile of the
+  kept ring picture, which is soft there (the hero resolves about 0.0035 radii). So the near field lacks
+  contrast exactly at 3 to 16 px. near.wide adds level to octave 5 only from 2.5 footprints on.
+
+## 20:44 to 21:10: the globe at the review tier, and why the sheet at 3720 is the far look
+
+Review tier with the globe change (reach [1.3, 2.0]): 3816 and 3828 carry streaks and mottle on the globe near
+the lens, no flat area; 3828 is smeared by the true blur of the rise.
+
+The globe's reach, still open at 21:10:
+- reach [1.3, 2.0]: the patch (tiles x 16 to 24, y 1 to 11) has no tile under the floor at 3804 (least 3.11e-5),
+  but at 3720 the lower half of the globe is streaked. The approved close has a smooth globe with soft wavy bands
+  and swirls and no fine streaks.
+- reach [1.2, 1.62]: 3720 mottled, not streaked, but at 3804 two limb tiles (16,8), (16,9) fall to 1.7e-5.
+- reach [1.3, 1.75] is the next test (function weight 0.17 at the nearest globe point of 3720, 0.27 at the limb
+  end of 3804, 1.58 radii away).
+
+Item 6, the fit at 3720. The main finding: handover.kept.reach [0.6, 1.3] are distances in planet radii
+(field.ts takes their logarithms; an earlier note that read them as 1.82 to 3.67 radii was wrong). So the
+model's own light, with the ladder of ringlets, shows only where the sheet is within 1.3 radii of the lens. At
+3720 its weight is 0.91 at 0.69 radii (the bottom edge), 0.60 at 0.85, 0.27 at 1.0, 0.07 at 1.15: at least half
+only below y about 880. The rest of the frame is the far look: the kept profile, soft at 0.0035 radii, with no
+ringlet under that at all. That is why the mid field of 3720 has broad soft lanes where the approved close has
+crisp ringlets.
+
+Looks rendered to see it (drafts, render tree, values restored after):
+- far everywhere (reach [0.000001, 0.000002]), model everywhere (reach [12, 13]), the film, and the film
+  without the sweep in the ladder filter ("nosweep").
+- Region means at 3720 (R, G, B, sd of luma). x 300 to 600, y 800 to 1000: film 0.501, 0.450, 0.408, sd 0.128;
+  far 0.575, 0.503, 0.444, sd 0.135; model 0.452, 0.419, 0.388, sd 0.126; approved 0.422, 0.390, 0.366, sd 0.218.
+  x 0 to 200, y 700 to 1000: film 0.598, 0.537, 0.481, sd 0.096; far 0.655, 0.579, 0.508; model 0.495, 0.470,
+  0.437; approved 0.468, 0.435, 0.399, sd 0.146. x 1000 to 1300, y 760 to 900: film 0.805, 0.729, 0.636, sd
+  0.117; model 0.787, 0.712, 0.638, sd 0.139; approved 0.775, 0.698, 0.626, sd 0.087.
+- So the model's light is nearer to the approved in the A ring (about 20 percent darker and greyer than the far
+  look) and in the contrast of the ringlets; without the sweep the lower left gains only part of what is missing
+  (sd 0.149 against 0.128 and the approved 0.218): the blur is only part of the gap.
+
+Numbers at 3720 (out/scratch/sweep.ts): radial footprint in 1e-4 radii, distance to the lens, and the slide of
+the picture across the ringlets in footprints a frame, at x 0, 160, 320, 640, 960, 1280, 1600:
+- y 600: fp 7.3 to 73, distance 1.40 to 2.03, slide 7.9, 6.4, 4.5, 1.6, 0.4, 0.1
+- y 700: fp 5.9 to 58, distance 1.15 to 1.86, slide 10.1, 7.7, 5.5, 2.7, 1.2, 0.5, 0.3
+- y 800: fp 5.2 to 35, distance 0.98 to 1.41, slide 12.1, 9.4, 7.2, 4.1, 2.4, 1.4, 0.9
+- y 900: fp 4.5 to 22.5, distance 0.86 to 1.15, slide 14.3, 11.6, 9.3, 5.9, 3.9, 2.6, 1.9
+- y 1000: fp 3.9 to 16, distance 0.77 to 0.98, slide 17, 14.2, 11.7, 8.1, 5.7, 4.1, 3.2
+- y 1079: fp 3.5 to 12.5, distance 0.72 to 0.88
+With half a shutter the blur across the ringlets is under 2 px at y 600 from x 400, y 700 from x 500, y 800
+from x 650, y 900 from x 950, y 1000 from x 1300. The mid field and the right can carry crisp ringlets; the
+lower left cannot while the path and the shutter stand (they are the Builder's: mail 311, and d140 keeps the
+whole shutter in the terrain).
+
+Distances that bound a cure (out/scratch/pmin.ts, gmin.ts):
+- Least distance from the lens to the ring plane inside the span of the kept profile (radius up to 2.5): 3588
+  2.046, 3589 2.018, 3590 1.991, 3591 1.968, 3592 1.943, 3592.5 1.928, 3593 1.918; then 3600 1.66, 3620 1.26,
+  3640 1.01, 3660 0.87, 3680 0.80, 3700 0.73, 3720 0.67.
+- Lens to the nearest cloud tops: 3540 4.48, 3580 3.60, 3590 3.36, 3600 3.13, 3620 2.74, 3630 2.60, 3660 2.22,
+  3680 2.00, 3700 1.80, 3720 1.62 (farthest in frame 2.41), 3760 1.30, 3800 1.05, 3810 0.99, 3820 0.95, 3830
+  0.98, 3840 1.17, 3850 1.62, 3860 2.56, 3870 4.30.
+
+The design that follows from it ("detail on the far look"), coded at 21:05 and taken back at 21:21 (see below):
+- The ladder of ringlets belongs to both looks. A second reach, skim.json handover.kept.detail [1.0, 1.9]
+  (planet radii, by the logarithm of the distance; uniform uRfDetail beside uRfReach): the ladder is whole
+  nearer than the first and absent beyond the second. In the far look its factors act on the kept look's colour
+  (times the brightness factor and the tint) and on its opacity (1 - (1 - a)^factor); the model's branch takes
+  the same weight. So the tone still changes only inside 1.3 radii and the ringlets resolve from 1.9 radii in.
+- While the kept set still draws takes (to 3592.02) no part of the kept profile is nearer than 1.94 radii, so
+  the frames of the window do not change (a loop of zero trips where the weight is 0).
+- ringfine.json bunchFrom 6: the octaves before it have their whole strength everywhere (was a literal 2 in the
+  shader, which never counted because octaves under 4 are not worked out); it lets octaves 4 and 5 be given an
+  even strength.
+
+## 21:10 to 21:40 UTC: the far look ladder taken back, the globe function chosen, the step of mail 348
+
+Taken back at 21:21 (not in the commit): the "detail on the far look" edits (sheet.ts, field.ts, ringfine.json,
+skim.json handover.kept.detail). Judged on drafts and one review frame: detail reach [1.0, 1.9] left 3630
+identical to b9b333e and changed 3720 hardly; with octaves 4 and 5 raised (levels 0.22, 0.3, edge 0.1) the G17
+median at 3720 was 0.690 at the draft tier (0.682 before) and 0.978 at the review tier (17 samples, 107.9 s)
+with the 25th percentile 0.379. Small gain, unproven on the dive, so it waits. The patch is kept outside the
+repo (detail.patch, detail.skim.json in the scratch folder of this VM); the design above stands as a plan.
+
+What the fit at 3720 is made of (g17grid.py: the 12 by 8 grid of G17 ratios against the approved):
+- Draft film: median 0.682, 25th percentile 0.287; lower left tiles 0.06 to 0.3; bottom right 1.1 to 2.5.
+- The same frame without the sweep of the shutter: median 0.861, 25th percentile 0.504, lower left 0.27 to
+  1.54. So most of the lower left deficit is the blur of the picture sliding 10 to 17 px a frame across the
+  ringlets; the path and the shutter are the Builder's (mails 311, 340).
+- Right middle tiles [10,5], [11,5]: the pose (the sheet stands 120 px lower than in the approved there).
+- Colour (chroma.py): the A ring at the left is 20 percent brighter than the approved with half its contrast
+  and a third of its chroma variation; bottom right mean colour matches (0.762, 0.691, 0.606 against 0.755,
+  0.681, 0.611).
+
+The globe near the lens (skim.json globeFine, globe.ts bandFine), chosen: reach [1.3, 1.75] radii from the
+lens to the surface, cell 0.0056, stretch 14, 8 octaves, amount 0.14, fall 0.88, zone [0.4, 1.6, 0.03], relief
+[1.5, -0.1, 0.45], wide 20. Beyond 1.75 radii the function is switched off whole (uBandFine.x 0), and the lens
+is 2.60 radii from the cloud tops at 3630 and farther before it, so the hold and the dive keep their bytes.
+3720 (1.62 radii) changes: a faint mottle on the globe. Measured on drafts 3804, 3816, 3828 in the Builder's
+patch (tiles x 16 to 24, y 1 to 11 of 32 by 18): least band energy 2.73e-5, 3.61e-5, 6.17e-5, median 2.0e-4,
+none under the floor 2e-5 (reach [1.2, 1.62] left two tiles under it at 3804; reach [1.3, 2.0] streaked 3720).
+At 3832 the globe is streaked along its bands at the review tier; amount 0.11 would put limb tiles under the
+floor again.
+
+Mail 348 (21:17), the Builder's look clip of b9b333e, review tier, five machines:
+1. A step in the rings between 3832 and 3834 (cream white with bright near strips, then tan and duller, the
+   band layout shifts).
+2. The globe pale and flat 3806 to 3832, the night side comes in from 3834, bands deepen from 3842.
+3. 3854 to 3884 one true scene.
+
+What I measured on 1 (one process, this VM):
+- Drafts of every frame 3830 to 3836 on the committed rings: lower left quarter mean R 0.673, 0.667, 0.661,
+  0.656, 0.652, 0.649, 0.646; whole frame mean R 0.664, 0.664, 0.664, 0.664, 0.663, 0.661, 0.658. No step.
+- Review stills 3832 (37 samples, 191.6 s) and 3834 (35 samples, 176.3 s), each alone: lower left quarter mean
+  0.679, 0.594, 0.506 and 0.668, 0.584, 0.496; same strips, same band layout, shifted by the flight only.
+- The count of samples steps at 3832 (31 at 3831, 37 at 3832) because the motion estimate of the harness steps
+  from 18.5 to 21.9 px there: a probe of its grid starts to meet the plane. The flight itself has no step
+  (riseAt is one expression of time); the knot of the view trapeze (handover.rise.rise 0.3) is at 3832.2 and
+  is a knot of the rate, not of the view.
+- Nothing in model.ts, set.ts, field.ts or sheet.ts keeps a value from one frame to the next: every uniform is
+  set from the time and the pose each take.
+So the step does not show in one process. Suspects outside this folder: a boundary between two machines of the
+job (state or checkout), or the trial shutter. Asked the Builder which frames each machine drew.
+
+What does slide with height in the rise and is still open: everything model.ts blends by `close` (ring gain,
+saturation, tints, flatten, the ladder set, ice, grains) starts to go back at height 0.6 (frame 3830.5) and is
+done at 1.8. It is smooth (close 0.992 at 3832, 0.959 at 3834) but it is a tone that slides with height, not
+with distance (mail 315). Not changed in this commit.
+
+## 21:40 to 22:00 UTC: the commit for round 45 is named, the step of mail 348 looked for on two engines
+
+Commit: 114e2d6 (globe function, notebook), then main a9a5b9f merged in (never rebased): c984dd4, pushed 21:34.
+- Merge recipe: `git fetch --depth 1 origin main` gives "refusing to merge unrelated histories" on this shallow
+  clone; `git fetch --depth 40 origin main; git merge FETCH_HEAD` finds the base. Main holds this stop's three
+  folders as of a284d54, so the merge conflicts in my own files (plan.ts, skim.json, globe.ts, grains.json, this
+  notebook). Resolved with `git checkout 114e2d6 -- src/stops/saturn assets-src/saturn public/assets/saturn`,
+  then checked: my folders equal 114e2d6, nothing outside them differs from main. The merge brought
+  src/bodies/planet.ts and three tests, no engine change (the gentler shutter is not on main at a9a5b9f).
+- On c984dd4: tsc exit 0; vitest 27 files, 186 passed;
+  "PASS G11  every asset has a row or a recipe";
+  "PASS G15  at most 2 sets per frame; finished stops: saturn/web 281 MB, saturn/full 774 MB".
+- Bytes of drafts: 3465 and 3539 equal the kept build, 3567 equals r12, 3630 equals b9b333e; 3720 differs from
+  b9b333e (mean 0.130 of 255, 99th percentile 4, max 18: the globe function); 3832 equal before and after the
+  merge. G17 at 3720, draft: median 0.681, 25th percentile 0.287.
+- Not run here: G13 on every frame of 3540 to 3884 (47 minutes on this VM) and the handover report. Said so in
+  the mail, with the commands.
+
+Mail to the Builder, 21:47 (high): c984dd472881cb6b5832153beb9ead19ca1352ce named for the round, gate lines,
+what was not run, the measurements on items 1 and 2 of mail 348, my open list 1 to 8.
+
+The step between 3832 and 3834 (mail 348, item 1), what was tried and what it showed:
+- Review stills of the commit, each alone, plain engine: 3831 (31 samples), 3832 (37), 3834 (35). Lower left
+  quarter mean 0.692 0.607 0.520, 0.686 0.602 0.515, 0.674 0.593 0.505; ringlet contrast (sd of log luma across
+  the bands) 0.061, 0.063, 0.067. One look.
+- The trial engine with the gentler shutter (branch agent/handover-trial-floor50-14, 7d9f486: maxBlurPx 14,
+  blurEaseFrames 12, minShutter 0.5) with this stop folder, in /home/user/workspace/trial. Its shutter in the
+  rise: 0.757 at 3830, 0.759 at 3831, 0.640 at 3832, 0.654, 0.670, 0.688, 0.709, 0.732, 0.755 at 3838; capped
+  from 3817 to 3873; at its floor 0.5 from 3856 to 3868. So the shutter falls by 16 percent in one frame at
+  3832. Cause: the motion estimate of the harness (src/core/motion.ts) steps from 18.5 to 21.9 px there, when
+  one more probe of its grid meets the ground plane of the terrain view; the flight has no step.
+  Review stills on that engine, 24 samples each: 3831 lower left mean 0.687 0.602 0.516, ringlet contrast 0.075;
+  3832 mean 0.678 0.594 0.508, contrast 0.084. So with the cap 3832 is 12 percent crisper than 3831 (plain
+  engine: 3 percent), the same tone and the same band layout. A small step in crispness, in the other direction
+  than the mail describes (duller from 3834). Not the step of the mail, or a small part of it.
+- One process, draft tier: `npm run seq -- --first 3829 --last 3836 --tier draft` (68 s for 8 frames). Every
+  frame 3830 to 3836 has the same bytes as the same frame drawn alone. So nothing in the scene or the engine
+  carries over from one frame to the next at the draft tier.
+- The grains: grains.ts stops collecting at grains.json capacity (900000) and would then drop the later rows
+  and levels in one frame. Not measured in the rise yet (see below).
+
+Draft against review in the rise (open item 8): at 3832 the draft is whiter and crisper with fine cream streaks
+(lower left ringlet contrast 0.099, mean 0.661 0.580 0.498), the review still has broad tan bands (0.063, mean
+0.686 0.602 0.515). Cause: iceSweep (ice.ts) draws the grain of the sheet out by the travel of the lens during
+one take (model.ts `take`, `moved`), not by the turn of the lens, and the lens turns fast in the rise. The film
+tiers show the true blur by their takes; the draft tier shows a picture nobody will see. When the engine passes
+its shutter (`view.shutter` on the trial branches), `take` must use it; the Builder asked not to set a shutter
+here before that engine is on main.
+
+The globe at 3832, review tier (rv_globe.png, full size): streaked along its bands by the blur, mottled, a few
+small orange specks; not flat. Shading toward the limb is still missing before 3834 (open item 2).
+
+## 22:00 to 22:10 UTC: no state between frames, the grains are not cut, and a correction of my own numbers
+
+- One process, review tier: `npm run seq -- --first 3831 --last 3834 --tier review` (31, 37, 36, 35 samples, about
+  135 s a frame). 3831, 3832 and 3834 have the same bytes as the same frames drawn alone. Lower left quarter mean
+  R 0.692, 0.686, 0.680, 0.674; ringlet contrast 0.061, 0.063, 0.064, 0.067: even steps. So at both tiers the
+  picture is a function of the frame alone on this engine, and the stop has no step between 3832 and 3834.
+- Grains (out/scratch/count.ts builds Grains without a renderer and counts what one take draws): at most 52,432
+  (frame 3814) of a capacity of 900,000 over the whole flight, so the cut at the capacity never acts. In the rise:
+  16,555 at 3826, 5,300 at 3828, 617 at 3830, 256 at 3832, 234 at 3834, 145 at 3854, 0 from 3860. The sand
+  leaves the picture between 3826 and 3830 as the lens climbs from 0.34 to 0.40 radii.
+- CORRECTION. The heights I wrote down for the rise before (0.59 at 3830, 0.636 at 3832, 0.686 at 3834, and
+  "close 0.992 at 3832, 0.959 at 3834", "from frame 3830.5") were wrong. Measured from plan.flight and from the
+  director (out/scratch/h.ts, d.ts; both agree):
+
+  | frame | height over the plane | foot | lens to cloud tops | close |
+  |---|---|---|---|---|
+  | 3630 | 0.587 | 3.553 | 2.612 | 1.000 |
+  | 3720 | 0.396 | 2.591 | 1.628 | 1.000 |
+  | 3800 | 0.279 | 2.029 | 1.052 | 1.000 |
+  | 3814 | 0.264 | 1.952 | 0.974 | 1.000 |
+  | 3826 | 0.336 | 1.924 | 0.959 | 1.000 |
+  | 3832 | 0.431 | 1.958 | 1.015 | 1.000 |
+  | 3834 | 0.469 | 1.979 | 1.046 | 1.000 |
+  | 3840 | 0.607 | 2.076 | 1.183 | 1.000 |
+  | 3842 | 0.663 | 2.124 | 1.247 | 0.977 |
+  | 3848 | 0.865 | 2.327 | 1.517 | 0.741 |
+  | 3852 | 1.038 | 2.531 | 1.780 | 0.502 |
+  | 3856 | 1.248 | 2.811 | 2.133 | 0.260 |
+  | 3860 | 1.505 | 3.193 | 2.602 | 0.071 |
+  | 3864 | 1.819 | 3.710 | 3.223 | 0.000 |
+  | 3884 | 2.938 | 5.906 | 5.745 | 0.000 |
+
+  So everything model.ts blends by `close` slides between frames 3839.7 and 3864 in the rise (heights 0.6 to
+  1.8), and nothing of the rings is blended by height between 3832 and 3834. The band function of the globe
+  (reach 1.3 to 1.75 radii from the cloud tops) fades out between 3843 and 3852: where the Builder saw the bands
+  of the globe deepen (mail 348, item 2).
+- Mail to the Builder, 22:08 (high): these measurements, the shutter step of the trial engine at 3832 (in the
+  engine's measure, not in this folder), the correction, and a request for his frames 3830 to 3836 or the
+  engine sha and the span of each machine.
+- Disk: 3.2 GB free at 22:05 (renders refuse under 3). Old picture folders in /tmp/v removed (kept: kept, hold,
+  r12, r17 to r21, g13, the scripts); 4.9 GB free after.
+
+## 22:10 to 22:32 UTC: main 1ce3137 merged, the second review note, the answer to mail 350, mail 362
+
+Mail 350 (22:19): E6 is on main 1ce3137125360e48c107dce6a95a431b815b4a15. Brandon's second review note
+(kit/PROGRESS.md "Second review note of 2026-11-23", decision d147) in the Builder's words: E one pace through
+each move, no dent at the change of view. F one scene through the change of view, nothing comes in by time
+(blends only by distance, height or angle), the close view drawn on the globe from the height where it first
+shows, relief real where it can be seen, the place picture retired. G no surface view is a picture that is
+pushed, bent or rippled. H he captures the film himself at 3840 by 2160 and 60 frames a second, frame by frame,
+so every motion must hold between frames (nothing snaps to a whole frame, no state from frame to frame) and the
+cost of drawing a frame is no limit. The timetable of 22:00 and 22:45 is void; no round is spent on a build made
+before the note; three rounds per stop for it. For Saturn: the ring plane, the deck and the shadow of the rings
+on the globe are the same functions from the hold to the surface view and back, the rings are particles and gaps
+with depth near the lens, the deck is cloud with height, nothing fades by frame number, and the pace is one
+move. Plan E limits: the change of rate a film frame at most 0.08 of the move's mean; after its peak the rate
+never climbs again by more than 0.03, before it never falls by more than 0.03; the same at both seams.
+`npm run smooth -- --stop saturn` and `npm run capture` are not on main yet. A round starts when a commit is
+named, the take check is clean and the smooth report is green.
+
+Mail 362 (22:30): model.ts `take = shutterFraction / fps / samples` is the film's shutter and not the drawn
+frame's, twice too long at rate 2. travel_builder gives a helper with its first commit (about 23:45 UTC): the
+drawn frame's shutter in seconds, on the view or the shot, the same bytes at rate 1. Use it as soon as it is on
+main and say so in a report.
+
+Done in this span:
+- Merge c1be190 (`git fetch --depth 40 origin main; git merge FETCH_HEAD`), nothing outside the three folders
+  differs from main.
+- The step of 3832 measured on main's E6 (review, one process, 24 samples, the pictures of c984dd4): shutter
+  0.7586 at 3831, 0.6395 at 3832 (motion 18.5 then 21.9 px). Lower left quarter fine contrast 0.075, 0.084,
+  0.083, 0.083 for 3831 to 3834; mean R 0.687, 0.678, 0.673, 0.668. In the box of the Builder's clip the means
+  slide evenly (0.694, 0.684, 0.673, 0.664, 0.657 for 3828 to 3836). What the eye takes for a jump there is the
+  sheet's near light (handover.kept.reach 0.6 to 1.3 radii a pixel) leaving the frame: the nearest ring point
+  in frame is 0.558 at 3826, 0.601 at 3828, 0.648 at 3830, 0.699 at 3832, 0.754 at 3834, 0.948 at 3840, 1.107
+  at 3844, 1.297 at 3848 (0.671 at 3720, 0.447 at 3814). That is open item 7, a tone that slides.
+- The model alone at the hold (temp switch, draft): against the approved hero plain 12.316, blurred 5.915 (the
+  kept set at draft 5.547 and 2.158); the model against the kept set 9.608 at 3465, 9.969 at 3539. The hero's
+  ring layout is not a rigid plane round the globe (the true rings are larger in frame). The kept set morphs
+  its layout by pose from 3562 to 3588 (heroRange 0.6 to 1.6).
+- The pace as it is (out/scratch/pace.ts), change of rate a frame over the mean: 0.100 at 3549 in the dive and
+  0.164 at 3875 in the rise by distance to the deck; 0.136 at 3550 and 0.113 at 3820 by height. The rise by
+  distance to the deck runs backward (to -0.24 of the mean) until about 3822, peak 2.33 at 3863; dive peak
+  1.221 at 3557.
+- The by time list (what the note forbids): (i) set.ts shares the kept set and the model by time (0.534 to 0.578
+  of the dive); (ii) model.ts `farW` (handover.kept.far 0.578 to 0.978 of the dive); (iii) the kept set's
+  streak fade and uSolid by 0.6 s after the hold's end; (iv) the sky patches by skyFrames; (v) the sky gain
+  skim.skyNear by diveShare and riseShare; (vi) `take` from the film's shutter.
+
+The answer to mail 350 went at 22:30 (high): (a) the surface view has no pushed picture; two rigid pictures
+remain (the 8192 globe map with its zonal drift look.globe.drift 0.2 degrees a second, his word asked for; the
+sky patch). (b) Nothing under 0.05 radii is modelled as a body; the deck and the sheet far from the lens are
+flat. (c) The plan, in order, hours on the Builder's clock:
+1. (looks 23:25) nothing by time: (i) to (vi) above onto distance, height or pose; the pace of both moves under
+   the limits of plan E.
+2. (23:55) one look of the rings: the near light takes the far look's tone, only ringlets, sand and grains
+   resolve by the footprint of the pixel. Numbers of 3720 before and after.
+3. (00:50) the deck with height: a cloud top height field from the band functions, marched in the globe's
+   shader on the ellipsoid, with the Sun's shadow at the terminator, from the distance where it moves a pixel;
+   one lighting of the globe near and far.
+4. (01:50) one set: the kept set's hold layout by pose into the model's field, the kept shaders go. Asked
+   whether to keep the kept set and spend the time on 2 and 3.
+5. depth in the sheet near the lens (gaps with walls, soft thickness), after 3; grains `largest` to an angle,
+   point size at 2160.
+(d) Whole frame items named: `take` (film shutter), the samples count, skyFrames.
+
+Open list (numbering kept): 1 globe near the lens (function in; limb shading and pale flat lit face open).
+2 brake at the end of the rise. 3 moon pop 3586 to 3590. 4 stars through the shaded rings. 5 wedge with sawtooth
+edge through the Cassini division 3630 to 3690. 6 fit at 3720. 7 ring tone slides with height 3840 to 3864 and
+by distance 3826 to 3848. 8 draft and review differ in the rise (take must use the engine's shutter).
+
+## 2026-11-23, 22:32 to 23:45 VM: step 1 of the plan, nothing by time, one sky, the pace
+
+Mails in this span (the VM clock runs 5 to 7 minutes behind the Builder's stamps).
+
+Mail 374 (22:46 UTC), rulings on my answer to mails 350 and 362:
+- (a) The globe's map stays rigid on its ellipsoid: the slide of the bands by latitude (look.globe.drift) comes
+  off the map, motion goes on the function streaks only. 3720 is then judged by G17 and beside the approved
+  close, not by its bytes.
+- (c) Order 1, 2, 3, then 5; 4 dropped (the kept set stays). For 1: one sky for the stop, its stars are the
+  film's own star field, so no two star fields ever cross; what sky-terrain.webp added that is Saturn's own
+  (glow) may stay, its stars go. The pace: handover_engineer builds the engine's one move (plan E); my skim path
+  stays mine only where I show a need; the judge is `npm run smooth -- --stop saturn --only path`. For 2: one
+  look of the ring per pixel, the near light in the mean equal to the far tone, only ringlets, sand and grains
+  resolving by footprint; the fit of 3720 to the approved close by a grade of the whole frame by the lens's
+  height (the stop's air), not by distance from the lens; give 3720 beside the approved close before and after
+  with the G17 numbers. For 3: cloud tops as a height field marched on the ellipsoid, one lighting near and
+  far. For the layout that bends by pose over 3562 to 3588: a sheet of every second frame with the ring edges
+  traced.
+- (d) 4: grain limits become angles (shares of the frame height); every chunk above a set size is a quad on
+  every machine, not a point. 5: skyFrames goes with the engine's one air by height (plan F).
+- The step of the shutter at 3832 is handover_engineer's point 2, after travel_builder's fractional frames.
+- "Name a commit when 1 is whole; I prove it on the machines with the three jobs you listed plus smooth."
+
+handover_engineer (two mails): in dive and rise the film's camera is the engine's; `handover.ownPath` lists the
+stops on their own path. My need (the ground of the skim is the ring plane, plan E is about the sphere) is
+accepted, Saturn stays in `handover.ownPath`, divePose and risePose are the film's camera as today, inside the
+same limits at whole and half frames and across both seams; the speed curve is measured on the unit sphere
+round `plan.place(kind, time)`. It asks: leave the hold with the hold's own velocity and enter the travel with
+the travel's; read the eye's height from `state.height` in update() once its commit is on main, not from a
+clock of my own.
+
+Mail 377: `npm run smooth -- --stop ID --only path` is on main (f0c67f1): the rate of fall or climb, the turn
+and the speed of the picture may change by at most smooth.path.maxStep (0.08) of the move's mean from one film
+frame to the next, on whole and on half frames and across both seams; after its peak the rate never climbs
+again by more than smooth.path.maxRebound (0.03). Reports out/work/smooth/ID.md. Run it on every commit named
+and quote its last lines in READY.
+
+Mail 385: grains.json largestPoint is 1000 px of the drawn format. Rule: every size in pixels becomes a share
+of the frame height; no point sprite larger than 255 px at 3840 by 2160, anything larger is a quad (two
+triangles, instanced) with the same shading. Say which commit holds it and the largest point at uhd.
+
+Mail 387, ruling on the sky: way A (the hold keeps its own sky picture, it leaves by pose). Conditions:
+(1) the patch is a footprint on the sky; its weight falls over the part of the dive where the least of that
+footprint is still in frame, as long as the pose allows, one smooth fall, never back up; report the frames, the
+share of the frame that is sky inside the footprint at start and end, the largest change of the sky's mean
+level in one frame. (2) The skim's sky is the film's field seen through Saturn's own air: dimming as one
+function of height (extinction and the glow of the haze, the same down and up), never a second picture, never a
+gain on time; report 3720 plain and blurred against the kept still and say plainly if it loses more than a
+tenth. (3) The rise and the travel keep the film's stars; report the sky's state at the last frame (exposure,
+patch weight 0). (4) The step of 0.106 at 3887 is the travel's start, cured on travel's branch; do not shape
+the rise against it.
+
+### What was by time and what it is by now
+
+| item | was | is |
+|---|---|---|
+| kept set to model in the dive | share of takes by the clock, 0.534 to 0.578 of the dive | share of takes by the logarithm of the lens's height over the ring plane, handover.kept.heights 1.03 to 0.93 radii (set.ts) |
+| the model's far look | handover.kept.far by the clock | by the height of the lens, handover.kept.far 0.93 to 0.6 radii (model.ts farW), the same down and up |
+| the model's close light | by the clock | by the height of the lens (model.ts close) |
+| the kept set's streak fade and solid shade | 0.6 s after the hold's end | by how far the lens has come in from the hold's last distance: `dove = holdEndFar - |lens|` (kept/set.ts), over 0.116 radii (kept/look.ts shadeSolid, streak fade) |
+| the sky pictures | skyFrames, two pictures crossed by the clock | one picture (the hold's), by the lens's distance from the hero's lens (plan.ts heroSky, skim.json sky.hero 0.36 to 1.2 radii); the close view has no sky picture |
+| the sky gain | skim.skyNear by the share of the dive and of the rise | by the logarithm of the lens's height, skim.json sky.heights 1.8 to 0.6 radii (plan.ts lowAt), with the glow (veil.ts) on the same function |
+| `take` | the film's shutter | `config.shutterFraction * (view.shutter ?? 1) / fps / samples`; the helper of travel_builder goes in when it is on main |
+
+Still by time and not mine: the engine's lift of the stars in the rise's orbit view and the arriving patch's
+`smoothstep(u, 0.2, 0.8)` in the travel (both engine, both outside my folder).
+
+### The pace (plan.ts Pace, law, move)
+
+A move (the dive, the rise) is one move in four measures: reach (log of the distance to the globe's surface),
+climb (log of the height over the ring plane), round (the angle of the foot of the lens round the globe), view
+(the share of the turn and of the field of view). Each has one Pace: the rate goes from the rate of the motion
+before (the hold, the skim) to one largest value and down to the rate of the motion after (the skim, the way
+out), by a steady change a frame on both sides, with rounded turns. So the move leaves the hold with the hold's
+velocity and enters the travel with the travel's in position; the turn starts and ends with rate 0 of its
+share, so the camera turns at the rate of the motion before and after. peak and round per measure are in
+skim.json handover.dive and handover.rise; round is one share or three (start, top, end).
+
+The search: out/scratch/opt.ts (one round per measure) and opt3.ts (three rounds) walk the numbers at random
+and keep what lowers the smooth tool's own measure (out/scratch/sm.ts calls tools/smooth: the worst of step
+over 0.08 and rebound over 0.03 over both capture rates, inside my own frames); under 1 is green.
+
+Dive (one round each: reach 0.555, 0.094; climb 0.707, 0.146; round 0.557, 0.103; view 0.478, 0.05): green.
+Steps: rate 0.037, turn 0.054, speed 0.061; rebounds at most 0.006.
+
+Rise, try 1 (one round each, opt.ts): the speed of the picture at the place fell to 0.105 of the mean at 3819
+(the flow of the skim reverses into the pull back) and stepped 0.094 at 3842; cost 1.04 at best. Try 2 (three
+rounds each, opt3.ts, rounds not under 0.03 so no turn is sharper than two frames): reach peak 0.504, rounds
+0.031, 0.032, 0.1; climb 0.269, rounds 0.03, 0.151, 0.03; round 0.475, rounds 0.162, 0.03, 0.035; view 0.496,
+rounds 0.121, 0.03, 0.08. The lens lifts off the plane early (the climb turns at 0.269 of the rise) and the
+picture never slows. Smooth tool on it: rate step 0.067 (a steady 0.067 a frame up to 2.148 at 3848 and 0.066 a
+frame down), turn 0.067, speed 0.067 inside the rise, fall before the peak 0.005, no climb after it. Left red:
+speed 0.088 at 3887 on whole frames and 0.098 at rate 2, which is the start of the travel (mail 387 (4)).
+Heights of the new rise: 0.267 at 3810, 0.474 at 3830, 0.599 at 3834, 0.951 at 3842, 1.403 at 3850, 2.389 at
+3866, 2.941 at 3886; least distance to the hero's lens 1.5495.
+
+### The sky
+
+How the engine draws it (read, not changed): in the terrain view only patches with view 'terrain' draw; with
+my `skyShare` = { low 0, high 1 } the orbit patch has its own weight in the orbit view of the dive and of the
+rise; `patch.aim` is set each frame by the view; Saturn is an open stop, the star field is rigid from the hold
+through the rise; `skyGlow` only scales patches; the post grain is 0.012.
+
+Finding (mailed 23:17 VM): the film's star field alone cannot hold both judged frames. 3720 (draft, against
+the approved close, plain and blurred, G17 median and p25): kept still 5.335, 1.079, 0.995, 0.919; my frame with
+the terrain sky picture 33.669, 26.876, 0.681, 0.287; with the film's field at exposure 0.193 and no glow
+34.998, 28.099, 0.625, 0.287. In the box x 0 to 900, y 0 to 330 of 3720: approved mean 7.7, 10.8, 15.4 (p95 19,
+p99 31); with the picture 7.8, 11.1, 15.8; film field 7.5, 9.5, 11.1 (p95 20, p99 43).
+
+Way A as built (this replaces what stood here at 23:45; the hero sky function and the place of the veil changed):
+- The hold's sky picture (sky.json orbit) stays; before the hold the engine alone brings it in; from the hold
+  on its weight is `look.patchShow * plan.heroSky(time)`. heroSky is by the distance of the lens from the path
+  the lens flies in the hold (plan.ts fromHold: the nearest point of that path, measured with sky.hero.chords
+  = 300 chords; under sky.hero.slack = 0.0001 radii the lens counts as on it): 1 - smooth((d / reach) to the
+  power power), reach 1.2 radii, power 0.75 (skim.json sky.hero). On the hold's own path d is 0, so the weight
+  is exactly 1 there and the hold keeps its bytes. The first version measured from the hero's one lens (the
+  middle of the hold) with a log ramp from 0.36: it held the weight at 1 until 3545 and then fell 0.0624 in
+  one frame at 3575; by the distance from the path the fall starts with the dive and is spread evenly.
+- `plan.skyProof()` runs at build and throws if the hold's weight is not exactly 1, if the dive's distance
+  ever turns back, if the weight is not 0 at the engine's change of view, or if the rise comes within reach.
+  Its numbers now: hold 1, distance at the change of view (3589.25) 1.2127, least in the rise 1.2805 (at
+  3865.75).
+- Weight on the present dive: 0.999 at 3541.30, 0.99 at 3546.50, 0.9 at 3558.65, 0.75 at 3564.55, 0.5 at
+  3571.30, 0.25 at 3577.55, 0.1 at 3582.15, 0.01 at 3586.90, 0 at 3589.00; largest fall in one frame 0.0407
+  at 3572.
+- public/assets/saturn/full/sky-terrain.webp and web/sky-terrain.webp are deleted, sky.json has no terrain
+  entry, RECIPE.md has a "Retired" note in place of the recipe.
+- The air: `plan.lowAt(height)` = 1 - smooth(log(h / 0.6) / log(1.8 / 0.6)) (skim.json sky.heights); the
+  exposure of the stars is times mix(1, sky.near, low) (plan.skyGain; sky.near 0.17, so 0.55 * 0.17 = 0.0935
+  in the skim). veil.ts draws the light of the dust under the stars as a function of the ray: color times
+  (1 + plane * exp(-|sine of the angle over the plane| / fall)) plus a halo round the lit globe (color at the
+  limb, falling by exp(-angle from the limb / fallDeg), times how lit the nearest limb is). One full screen
+  triangle, additive, no depth, drawn first, so everything covers it.
+- The veil is owned by set.ts, not by the model: it is set each frame from the drawn scene's transform and its
+  amount is lowAt(height of the lens) times the weight of the stop over the exposure of the shot (0 in the raw
+  diagnostics or when the stop is not drawn). So it does not know which scene (kept or model) is on and does
+  not change when the takes change scene. 3720 kept its bytes when the veil moved from the model to the set.
+- The air is 0 outside my two moves: the lens is higher than 1.8 radii over the plane in the approach (49.8
+  at 3350, 11.8 at 3360, 4.6 at 3370, 2.54 at 3380), in the hold (2.228 to 2.413) and in the travel (3.0 at
+  3890, 4.3 at 3900, 9.3 at 3910), from the engine's shots (out/scratch/apprh.ts).
+- The approach and the hold keep their bytes: draft stills 3350, 3370, 3380 equal to the tree before the
+  change, 3390, 3465, 3539 equal to the kept stills (cmp). Proved again after the hero sky function changed
+  (see below).
+
+Calibration of the air on 3720 (four draft stills, against the approved close; herocmp plain and blurred):
+kept still 5.335, 1.079; my frame with the old sky picture 33.669, 26.876; the film's field with no air
+34.998, 28.099; way A now 33.983, 27.100. So way A loses 0.31 plain and 0.22 blurred against my frame with the
+picture, more than the tenth of mail 298: said plainly in the report, the Builder decides. In the sky both
+frames share (21.7 percent of the frame): kept still 2.123, 0.899; with the picture 2.069, 1.253; the film's
+field alone 7.707, 6.235; now 3.927, 2.467 (signed +0.21, +0.09, -0.34 levels). Box x 0 to 900, y 0 to 330:
+approved mean 7.7, 10.8, 15.4, p95 18.7, p99 30.0; now 8.3, 11.5, 15.7, p95 19.4, p99 28.8. What is left is
+not level but place: the film's field has a warm band of stars at the far left of the frame (+1.6 to +4.8
+levels there) where the approved has plain blue black, and the approved's stars are fewer and softer.
+
+Footprint of the hold's picture in the dive (out/scratch/foot.ts; share of the frame that is sky, share that
+is sky inside the footprint, weighted): 3540: 0.412, 0.392; 3560: 0.442, 0.385; 3568: 0.473, 0.343; 3576: 0.513,
+0.275; 3584: 0.562, 0.211; 3588: 0.584, 0.186; 3596: 0.623, 0.162 (least); 3612: 0.679, 0.183. It never leaves
+the frame; its share falls because the field of view widens (30 to 48 degrees).
+
+handover_engineer (low, about 23:50 VM): plan E is on agent/engine-handover at 6d260fb (E commit 667cae5), not
+on main yet. Saturn stays in handover.ownPath and flies its own path. New and usable on any path once it is on
+main: state.height, plan.eyeHeight(time), plan.eye(kind, time, view), plan.eyeShot(kind, time); `--diag
+onemove` draws Saturn on E. To do when it is on main: read the height from state.height in set.ts and model.ts
+(today: the drawn scene's eye in the ring frame, the same number).
+
+## 2026-11-24, 00:00 to 00:30 VM: step 1 made whole (what changed since "Way A as built" above)
+
+Mails read: 417 (main 65fb91d holds the capture rate, plan H; merge it; nothing of mine changes by it). Plan E
+and the seam cure of the travels are not on main yet.
+
+Merges (never rebased): main f0c67f1 as 0a965c8, main 304f1c6 as a85665e, main 65fb91d as 91017d9. Stale
+worktrees removed, 11 GB free.
+
+### The air starts under the hold (replaces heights 1.8 above)
+
+The first dive sequence with way A (draft, every frame looked at) was continuous, but the sky's mean level rose
+from 18.77 (3540) to 25.29 (3576) before it fell: the film's warm star band shows where the hold's picture
+leaves, and the air only began at 1.8 radii (3577). So skim.json sky.heights is now [0.6, 2.2] and sky.power
+0.5: lowAt(h) = (1 - smooth(log(h / 0.6) / log(2.2 / 0.6))) to the power 0.5. 2.2 lies under the least height of
+the hold (2.228 at 3390; skyProof now throws if low(t) is not 0 anywhere in the hold), so the stars the
+picture uncovers are dimmed as they show. Second dive sequence (3556 to 3630 new, 3540 to 3555 are the same
+bytes; out/scratch/skymask.ts and /tmp/v/skylevel.py, the sky inside an eroded mask of sky, levels of 255):
+18.77 at 3540, peak 22.92 at 3571, 16.46 at 3589, 12.11 at 3600, 9.62 at 3623; largest change in one frame
+-0.560 at 3583 (inside the footprint of the hold's picture -0.929 at 3583). Before: peak 25.29, largest change
+-0.613 at 3592, inside -0.891. Every frame of the second sequence looked at on sheets and the top of 3564,
+3574, 3584, 3592, 3606 at full size: one continuous move, the band is strong at the left from 3566 to 3590
+and dims with the height, the moon goes behind the limb 3596 to 3598. The soft blue lane next to the band is
+the film's own sky (it turns with the stars; the horizon of the ring plane, where my veil is brightest, runs
+from x 328 at the top to the right edge at y 259 in 3592, out/scratch/horizon.ts).
+3720 does not change by this (the air is whole there either way).
+
+### The engine's sky schedule is off for Saturn (replaces the skyShare override)
+
+`skyShare()` returning { low 0, high 1 } broke two tests of tests/place.test.ts (421: the shot at T must carry
+the engine's sky share 1; 455: the share must equal skyWeight). Fixed in my folder: no override; instead the
+plan gives `handover.dive.skyFrames: 0` and `handover.rise.skyFrames: 0`, so the engine's skyWeight is a step
+at its own first frame of the handover (3589 in the dive: from there the engine draws no orbit patch; up to
+there the patch has its own weight, heroSky) and there is no cross by the clock. skyProof now asks that heroSky
+is 0 at 3589.0 (distance there 1.2016, reach 1.2). The picture is the same (proved by bytes, see below).
+vitest: 31 files, 340 ok, 0 not ok (use --reporter=tap; the default reporter crashes on a failure in this workspace).
+
+### The stars of the flight come in by height in the rise (new: plan.skyLiftAt)
+
+Found while checking the sky's state at the last frame: in the rise the engine lifts the stars of the flight
+(travel.sky.riseLift 1: the 500000 flight stars, the 760000 deep stars, the flight look of the band, and the
+exposure from the stop's 0.55 to the travel's 0.45) from its change of view (3860.25) to the end of the rise by
+the clock: x = smooth(ramp(T, end, time)), lift = 1 - (1 - x) squared. On the first rise sequence that is
+visible: 3858 and 3866 have few stars at the right, 3874 and 3884 a dense field. The engine has a hook for
+it, StopPlan.skyLiftAt (the time the lift is read at). plan.skyLiftAt now gives the time by the height of the
+lens: mix(T, end, liftAt(h)), liftAt(h) = ramp(2.04, 2.92, h) to the power 1.5 (skim.json sky.lift), so the
+engine's own course runs on the share of the way between the two heights. 2.04 is over the height at the
+change of view (2.0337), 2.92 under the height at the end (2.9391); skyProof throws if the lift is not 0 at
+the change of view, not 1 at the end of the rise, or ever falls. Numbers (out/scratch/lift2.ts): largest step
+of the lift in one frame 0.12 at 3867.5 (by the clock 0.08 at 3868); lift 0.296 at 3866.25 (by the clock
+0.274), 0.75 at 3870, 1 from 3878 on (by the clock 3884), because the lens nearly stands still over the last
+frames of the rise (the travel starts from rest). By the logarithm from the hold's top (2.42 to 2.9) it
+would step 0.20 in a frame: not taken. It is a function of height in the rise only: the dive and the hold
+are drawn by the engine with no lift at all (the hold is the hero's sky), there is no hook for them.
+State at the last frame 3884 (out/scratch/turn.ts): sky exposure 0.4500, lift 1, patch weight 0 (the engine
+gives the orbit patch 0 in a rise and heroSky is 0 there), the sky turn the same quaternion from 3380 to 3900.
+
+### The shutter of the drawn frame (mail 362)
+
+main 65fb91d brings `view.shutterSeconds` (src/core/clock.ts shutterSeconds(): the full shutter of the frame
+being drawn, in seconds, at the capture rate). model.ts: take = (view.shutterSeconds ?? shutterFraction / fps)
+* (view.shutter ?? 1) / samples. plan.ts skimAt keeps `config.shutterFraction / (2 fps)`: that is where the
+middle of the skim lies in film time (the pose of the approved close at 3720.25), not a shutter.
+
+### Waiting to be done after this commit
+
+- Ruling (a), built once and taken out again so that step 1 commits alone; the patch is /tmp/v/ruling_a.patch
+  (if /tmp is gone: globe.ts map rigid `spinY(p, uSpin)` with the drift added only to the longitude of
+  bandFine and flow vec2(0.0); kept/globe.ts zonal and uDrift removed; kept/look.ts and kept/set.ts drift
+  removed; look.ts comment). Hold frames other than 3465 change bytes by it (the map slid up to 0.5 degrees,
+  about 2 px, at 3390 and 3539; 3465 has elapsed 0); 3720 is then judged by G17.
+- The traced sheet of every second frame 3562 to 3598 with the ring edges.
+- Ruling (d) and mail 385: every size in pixels in grains.json (levels.pixels, levels.largest, lobes.pixels,
+  largestPoint 1000), ice.json (the sand layer's pixels, ice.ts 212 and 221) and a sweep of sheet.json,
+  ringfine.json, skim.json becomes pixels of a frame 1080 high scaled by the drawn height (a `frame: 1080`
+  in the JSON keeps the bytes at 1920 by 1080); the largest point becomes a share of the height (0.1: 108 px
+  at 1080, 216 px at 2160, under 255). Grains are sorted far to near in 4096 log distance buckets
+  (grains.ts set()): points keep every bucket farther than the farthest bucket that holds a grain whose
+  point size (2 radius + way + 3 + 2 past, on the CPU from deep, dist, size, lens.slack and the projected
+  centre) is over the limit; all nearer grains go to a second batch of instanced quads (index order a, b, c,
+  d, a, c; the same shaders with a define: the place in the sprite from an interpolated varying in place of
+  gl_PointCoord), so the order far to near holds across both batches.
+- state.height from plan E when it is on main; then step 2, step 3, step 5.
+
+## 2026-11-24, 00:30 to 00:50 VM: proofs of step 1, the handover tool, the traced sheet
+
+### Proofs at draft on the final tree (job /tmp/v/job25.sh, pictures /tmp/v/r25)
+
+- Same bytes as before the last changes (skyFrames 0 in place of the skyShare override, the drawn frame's shutter,
+  the merge of main 65fb91d): 3465, 3390, 3539 (the kept build's drafts /tmp/v/kept), 3380, 3720, 3560, 3588, 3589,
+  3600, 3850, 3856 to 3860, 3885, 3886.
+- 3861 to 3884 differ, as meant: the stars of the flight come in by the height of the lens. Looked at every frame
+  3856 to 3886 and at the sky at full size 3860 to 3879 (rise2_a, rise2_top1, rise2_top2 in the looks): the field
+  fills evenly from 3861 to about 3872, no frame steps. The globe does not change by it (a box on the lit globe:
+  0.0001 of its pixels differ, by 1 level); the rings change only where stars show through them.
+- tsc clean; vitest 31 files, 340 ok, 0 not ok.
+- `npm run gate -- --phase 6 --only G11,G15 --g15-stops saturn`:
+  "PASS G11  every asset has a row or a recipe"
+  "PASS G15  at most 2 sets per frame; finished stops: saturn/web 274 MB, saturn/full 747 MB"
+- `npm run smooth -- --stop saturn --only path` (6 s): red by two numbers, both at 3887 (the travel's start, mail
+  387 (4)): whole frames speed 0.088, rate 2 speed 0.098. Dive: no number over its limit. Rise inside its own
+  frames: all under 0.08 (numbers in the section before).
+
+### The handover tool's older rate rule is red with the new pace (not cured, reported)
+
+`npm run handover -- --stop saturn --tier draft --only sides,flow,path` on the final tree:
+"saturn.dive side difference at T: pass", "saturn.dive flow gap at T: pass",
+"saturn.dive every frame: FAIL frame 3591 changes height at 2 times the mean rate, limit 2; frame 3550 (one fifth
+of the way) moves at 0.31 of the mean rate, at least 0.5 asked",
+"saturn.rise side difference at T: pass", "saturn.rise flow gap at T: pass",
+"saturn.rise every frame: FAIL frame 3848 changes height at 3.39 times the mean rate, limit 2".
+Side difference at T in the dive: mean 0, max 1 level; flow gap 0.02 px a frame mean, 0.025 largest.
+
+What the rule is (tools/handover.ts 404 to 424, "the rate limits of E3"): the height is the lens's distance
+from the globe's centre less 1 (the same height smooth uses); the mean is taken over the far part only (first
+frame to T in a dive, T to the last frame in a rise); no frame of the whole move may be over 2 times that mean,
+and a dive must have half of it by one fifth of the way to T. Before step 1 it passed (dive fastest 1.211 at
+3596, 0.698 at 3550; rise fastest 1.391 at 3870) and smooth was red (0.092 dive, 0.149 rise).
+
+Why the two rules pull apart: smooth wants the rate to leave the hold's own rate and to arrive at the travel's
+own rate with no step over 0.08 of the mean, so each measure of my pace goes up to one top by a steady change a
+frame and down again (a triangle with round corners). A triangle from the hold's rate (0.04 of the mean) has
+0.2 of its top at one fifth of the way and its top is 2 times the mean of the way up: 0.31 and 2.002 in the
+dive. In the rise the rate has to come down to the travel's start (ratio 1.00065 a frame at 3884), so the far
+part (3860 to 3884, 1.49 percent a frame) is the slow part and the top at 3848 (5.03 percent) is 3.39 times it;
+the near part's mean alone (height 0.98 to 3.92 in 48 frames, 2.9 percent a frame) is 1.95 times the far part's.
+The engine's own pace on agent/engine-handover (config handover.pace: rise 0.4, fall 0.4, corner 0.2, read only,
+no code taken) has the same shape, so the rule would be red there for the same reason (my reading, not run).
+What would pass both in the dive: a quicker start and a flat top (a trapezoid): the way up over about 0.2 of the
+dive, then level to T; in smooth's unit that is a step near 0.065. Not built: it is a new pace for the dive
+(all 90 frames change) and the rise cannot pass with T at 3860 unless the rate stays at its top until after T
+and falls to the travel's start within about 21 frames (step near 0.063, at the edge). Asked the Builder which
+rule holds for a path of my own.
+
+### The traced sheet: how far the kept set's ring layout is from a rigid plane, 3562 to 3598
+
+Tools: out/scratch/trace.ts FROM TO STEP OUT OFFSET (the lens of the film per frame from plan.flight and drift, the
+weight of the hero layout as kept/set.ts takes it: 1 less smooth step of the lens's distance from the hero
+pose over look.heroRange 0.6 to 1.6), /tmp/v/trace.py (projection, the globe as an ellipsoid with the polar
+scale along the ring normal, hidden test), trace2.py and trace3.py (the picture's own edges: the steepest
+change of level along 720 radial lines of the plane, per frame), trace4.py (outliers out against a running
+median), trace7.py (the table), trace6.py (the sheets). Frames: the draft dive /tmp/v/r24/keep_dive2. The lens
+model is checked by the globe's limb (the drawn limb lies on the picture's limb in 3562 and 3598) and by the
+end state (from 3598 on the picture's edges lie on the circles).
+
+What the kept set does there (read from kept/rings.ts and kept/set.ts, uClose is 0 on this branch): the hold's
+rings are the hero's layout, which is not circles on a plane round the globe: the radius the profile is read at
+is pushed by a table by azimuth and radius (polar-warp.bin, 512 by 64, least -0.072, most +0.053 radii), with
+the hero's own edge look (bright rim, arcs outside the edge) and the hero's ring pixels on the plane (weight by
+height 1.0 to 1.7). The weight of all of this (uPolarShape) is the pose weight: 1 through 3574, 0.984 at 3576,
+0.873 at 3580, 0.662 at 3584, 0.395 at 3588, 0.151 at 3592, 0.012 at 3596, 0 from 3598. (The notebook said
+3562 to 3588 before; on this tree's path it is 3575 to 3597.)
+
+Measured (px of the 1920 frame; the edges are the outer edge, the inner edge of the A ring, the outer edge of
+the B ring; gap is the distance between the picture's edge and the place where the same azimuth's edge settles
+after the bend):
+- With the hero layout whole (3560 to 3574): outer edge median 11 px, 95th percentile 23.8 px; A inner 3.6 and
+  22 px; B outer 5.5 and 13 px.
+- Half way (3586, weight 0.531): outer 5.4 and 11.0; A inner 1.7 and 12.4; B outer 2.6 and 9.2.
+- From 3597: under 0.2 px median, 1.4 px at the 95th percentile (the finder's own floor).
+- The slide of the picture's edge against the rigid plane in one frame, median over azimuths: at most 0.80 px
+  (outer edge, 3586), 0.33 px (A inner), 0.39 px (B outer); where the table is largest about 1.5 px a frame
+  (0.068 of the weight a frame times 22 px); the finder's floor is 0.04 to 0.14 px median. The picture's own
+  motion of those edges is 7 to 8 px a frame there (median), so the slide is up to one fifth of the motion.
+- Scale: 440 to 466 px to a radius at the near left of the ring, 240 to 270 at the right, 180 to 200 at the far
+  side.
+What I see on the sheets (bend_whole_1 to 3, bend_left, bend_right in the looks): in the stills the edges are
+off the circles by up to about 25 px until 3576 and on them from 3596; in the window on the near left the
+bright rim of the outer edge and the dark lane outside it go between 3582 and 3590 and the A ring's grain goes
+smooth; the Cassini gap's edges walk about 8 px onto the lines. It is a change of the ring's shape and edge look
+by pose over about 20 frames, small against the motion, and it is what note G names if one looks for it.
+A cure, if the Builder wants one: one layout for the whole stop. Either the hero's table stays on at full
+weight at every height and the model's field is read at the same pushed radius (then the plane is rigid, its
+rings are not exact circles, 3720 moves by up to 0.05 radii of ring layout), or the hold is drawn on true
+circles (then 3465 loses against the approved hero: the model alone measured 12.3 and 5.9 against 5.5 and 2.2).
+
+## 2026-11-24, 00:46 to 01:00 VM: step 1 committed (07cadd2), main 4f2127a merged (e7a9815), proofs on the merge
+
+main moved to 4f2127a while I wrote the notes (the travels' seam cure, d162: src/space/travel/path.ts passCurve,
+two lines of src/director/film.ts, tests/pass.test.ts). Step 1 is commit 07cadd2 on the merge of 65fb91d; the
+merge of 4f2127a is e7a9815. On e7a9815:
+
+- tsc clean. vitest exit 0: 32 files, 0 not ok (346 rows ok by the count that gave 340 before; the six new rows
+  are tests/pass.test.ts).
+- `npm run smooth -- --stop saturn --only path`: "smooth saturn: green. out/work/smooth/saturn.md", in the
+  report "VERDICT: green. No number is over its limit." The two reds at 3887 are gone with the travel's cure, as
+  mail 387 (4) said. Dive, whole frames: rate 0.037, turn 0.053, speed 0.060 (rate 2: 0.037, 0.054, 0.061).
+  Rise, whole frames: rate 0.067, turn 0.067, speed 0.067 (rate 2: 0.068 each); seam in 0.009, 0.002, 0.003; seam
+  out 0.007, 0.008, 0.020; fall before the peak at most 0.005, no climb after it. Largest values over the mean:
+  dive rate 1.599 at 3592, turn 1.945 at 3584, speed 1.676 at 3582; rise rate 2.148 at 3848, turn 2.110 at
+  3848, speed 1.686 at 3849. Shown and not judged: the travel's speed steps 0.169 at 3892 and 0.672 at 3896.
+- `npm run handover -- --stop saturn --tier draft --only path` (18 s, no pictures): the same two red lines as
+  before the merge (dive 3591 at 2 times, 3550 at 0.31; rise 3848 at 3.39).
+- Draft pictures on the merge (job /tmp/v/job26.sh, /tmp/v/r26): 3465, 3390, 3539, 3720, 3560, 3588, 3589, 3600,
+  3850 and every frame 3856 to 3884 keep the bytes they had before the merge. 3380, 3885 and 3886 changed by
+  the merge (the travel's cure changes the arrival's size curve and the first frames of the leg): rendered on
+  a worktree of main 4f2127a itself (/home/user/workspace/mainref), 3380, 3885 and 3888 of my tree equal main's
+  bytes. So step 1 changes no frame before 3540 and none after 3884.
+
+The handover tool's rate rule, read again (cut/HANDOVER.md E3: "rises smoothly from the hold's own rate, stays
+near constant"; plan E of the second note: "rises once and falls once"). Both can hold together with a pace
+that has a level top: up, level, down. My note above that the rise cannot pass was wrong: it can if the top is
+held through T and the fall takes the last 21 frames or so: top about 1.5 of the mean, steps about 0.07, the
+far part's mean about 0.55 of the top, so the fastest frame is about 1.8 times it. In the dive: up over about
+22 frames to about 1.23 of the mean, level to about 3605, down to the skim's 0.85: steps about 0.06, the
+fastest frame about 1.4 times the far mean, 0.5 of it at 3550. That is a third try of the pace (all frames
+of the dive and the rise move). Pace gets a level top for it (peak as two shares).
+
+## 2026-11-24, 01:00 to 01:45 VM: mails 437, 439, 450, main 94be42e merged (b85c30e), try 3 of the pace
+
+Mails since the last section:
+- 437: main 94be42ed77bf4468a83f30aee634185d27b29e88 holds plan E's one move (engine 6d260fb8); only Mars is on
+  it; merge at the next commit and name commits only on top of it. Done: merge b85c30e (my folders untouched by
+  it).
+- 439 (rulings, d165): 1 ac0b7325 is not a candidate (one judge red); try 3, the pace with a level top; name the
+  commit when both judges are green on the VM. 2 read the every frame rule again on the merge; say why the
+  one move cannot carry Saturn. 3 the stars' lift by height is accepted as a step; state the level of the
+  flight's stars in the dive at the same heights beside the rise; "If the two differ by more than you can see
+  on two frames side by side, the dive takes the same function." 4 3720 with the film's own sky stays; no sky
+  picture comes back; before any change show 3720's top left at full size beside the approved image, at final.
+  5 the hold's ring layout stays the hero's and gives way to the rigid plane by pose; what may not happen is an
+  edge look that fades: "the bright rim of the outer edge and the thin dark lane in the A ring must be in both
+  tables at the same radius, so they walk the 8 px onto the circles and never go out and come back." That is
+  step 2. 6 no machines for ac0b7325.
+- 450 (size, G12): main's tracked tree is 2961 MB of 3000. Every asset that comes in is paid for by one that
+  goes out in the same commit; every READY says the net MB of my folders against main; growth needs the
+  Builder's word first.
+- From sky_builder (copy of its mail 426 to the Builder, no action until the Builder decides): the picture
+  public/assets/saturn/{full,web}/sky-hold.webp carries the negative of the post grain of frame 3465, because
+  assets-src/saturn/sky/patch.py hold, line 154, subtracts a film frame rendered with grain and dither on. Its
+  cure if asked: render the glow input with --diag nograin and rebuild the patch (changes the bytes of every
+  frame that shows the patch). Its judgement: below sight, leave it.
+
+### Mail 439 item 2: the every frame rule on the merge, and the one move on Saturn
+
+On b85c30e with the pace of ac0b732 `npm run handover -- --stop saturn --tier draft --only path` printed the
+same two lines word for word: "saturn.dive every frame: FAIL frame 3591 changes height at 2 times the mean rate,
+limit 2; frame 3550 (one fifth of the way) moves at 0.31 of the mean rate, at least 0.5 asked" and "saturn.rise
+every frame: FAIL frame 3848 changes height at 3.39 times the mean rate, limit 2". The rule's code (tools/
+handover.ts 404 to 424) did not change with plan E; only the eye now comes from plan.eye.
+
+The engine's one move forced on Saturn (out/scratch/onemove.ts, the engine's forceOneMove, numbers only): the
+eye goes through the ring plane. Dive: least height over the plane -0.3341 radii at 3598, under the plane from
+about 3590 to 3608, back up to 0.589 at 3629. Rise: -0.2703 at 3839, under it from about 3828 to 3847. The
+one move carries the eye by its height over the globe's sphere toward the place; Saturn's place is on the ring
+plane, 1.38 radii out from the globe's surface, and the straight way by that height cuts the plane. The judge
+on it: dive rate climbs again by 0.269 after its peak, steps turn 0.200, speed 0.080; rise steps rate 0.091,
+turn 0.100, speed 0.133. So Saturn stays in handover.ownPath (the engineer's own test skips Saturn for the same
+reason).
+
+state.height (plan E) is the height of the lens over the globe's unit sphere. What follows a height in this
+stop follows the height over the ring plane (the air lies on the plane, the sheet's near light, the kept set
+giving way to the model). The model and the air already read it from the pose of the scene as drawn (camL.y).
+set.ts read it from plan.flight(time): now it reads it from the pose the engine gave the set for the take, so
+nothing of the picture asks the stop's own flight for a height.
+
+### Try 3: a pace with a level top (plan.ts Pace, peak as two shares)
+
+Pace takes peak as one share (as before, the same numbers) or two: the rate goes up, stays level between the
+two shares, and comes down; round is one share or four (start, into the level, out of it, end). The four
+measures of a move (reach, climb, round, view) each have their own.
+
+The search (out/scratch/opt4.ts to opt6.ts, pace.ts for the two judges on a candidate, e3.ts the every frame
+rule, sm.ts smooth's three curves; all read skim.json and take name=value): least largest step of the three
+curves at whole and half frames under E3 (no frame over 2 times the far mean, the dive's frame 3550 at least
+0.5 of it), with a weight on the roughness of the speed curve so that it stays one hump.
+
+The pace chosen (skim.json handover.dive and handover.rise; candidates in /tmp/v/p3: cand1, dv1, dv2, rv1, rv2;
+curves pace_dive_v.png and pace_rise_v.png in the looks):
+- Dive (dv2): reach peak [0.248, 0.655] round [0.03, 0.086, 0.177, 0.03]; climb [0.679, 0.746] round [0.088,
+  0.161, 0.163, 0.154]; round [0.549, 0.664] round [0.071, 0.211, 0.126, 0.03]; view [0.428, 0.448] round [0.087,
+  0.155, 0.105, 0.063]. The rate goes up over 3541 to 3562, is level at 1.17 of the mean to about 3599 and comes
+  down to the skim's 0.86; the turn and the speed of the picture are one hump each (speed top 1.46 at 3588).
+- Rise (rv1): reach peak [0.364, 0.691] round [0.03, 0.075, 0.04, 0.03]; climb 0.267 round [0.036, 0.093, 0.03];
+  round 0.562 round [0.24, 0.09, 0.118]; view 0.438 round [0.095, 0.091, 0.03]. The rate goes up over 3811 to
+  3837, is level at 1.52 of the mean to 3862 and comes down to the travel's start.
+- The rise cannot go much under 0.074: two flanks and a level that has to last until after T (3860), since E3
+  takes its mean over T to the last frame and no frame may be over 2 times it.
+
+Both judges on the VM, working tree on b85c30e:
+- `npm run smooth -- --stop saturn --only path`: "smooth saturn: green. out/work/smooth/saturn.md"; in the
+  report "VERDICT: green. No number is over its limit." Dive, whole frames: rate 0.066 at 3545, turn 0.066 at
+  3565, speed 0.066 at 3544 (rate 2: 0.066 each; between capture frames 0.033, 0.033, 0.034); seam in 0.008,
+  0.001, 0.002; seam out 0.004, 0.002, 0.007; fall before the top at most 0.006, no climb after it; tops 1.166
+  at 3594, 1.812 at 3581, 1.460 at 3588. Rise, whole frames: rate 0.075 at 3818, turn 0.073 at 3835, speed
+  0.074 at 3824 (rate 2: 0.075, 0.073, 0.075; between capture frames 0.038, 0.037, 0.038); seam in 0.011, 0.003,
+  0.003; seam out 0.024, 0.017, 0.022; fall before the top at most 0.003, no climb after it; tops 1.513 at 3844,
+  1.919 at 3844, 1.690 at 3848. Shown and not judged: the travel's speed steps 0.654 at 3896 (rate 2: 0.751).
+- `npm run handover -- --stop saturn --tier draft --only path`: "saturn.dive every frame: pass", "saturn.rise
+  every frame: pass". In the report: dive "fastest frame 3563 at 1.24 times the mean rate; frame 3550 (one
+  fifth of the way) at 0.631 of the mean. The place is at most 0.328 of the half frame from the middle (frame
+  3576)."; rise "fastest frame 3839 at 1.782 times the mean rate; frame 3879 (one fifth of the way) at 0.462
+  of the mean. The place is at most 0.451 of the half frame from the middle (frame 3873)." Shutter: dive no
+  frame shortened, longest blur 9.79 px (3629); rise 51 of 75 frames shortened, shortest 0.5279 (3862), none at
+  the floor, largest change of the blur from one frame to the next 1.92 px (into 3818).
+- tsc clean. vitest exit 0: 35 files ok, 0 not ok (349 rows).
+
+What moved with the pace (heights over the ring plane by frame, out/scratch/proof.ts):
+- Dive: 2.413 at 3540, 2.415 at 3543 (its top), 2.2 at 3563.05, 2.04 at 3569.38, 1.8 at 3577.27, 1.03 at 3600.72,
+  0.93 at 3604.46, 0.6 at 3625.79, 0.587 at 3630. So the kept set gives way to the model over 3600.7 to 3604.5
+  (ac0b732: about 3598 to 3601).
+- Rise: 0.267 at 3810, 0.6 at 3833.95, 0.93 at 3841.47, 1.03 at 3843.41, 1.8 at 3856.31, 2.2 at 3862.78, 2.42 at
+  3866.66, 2.92 at 3881.14, 2.939 at the end.
+- The kept set's layout weight (lens to the hero pose over look.heroRange 0.6 to 1.6): 1 through 3564, 0 from
+  3597.5, where the lens is 1.117 over the plane, above the 1.03 at which the model's first take is drawn. So
+  the bend of the layout by pose now runs over 3565 to 3597 (33 frames; 24 before).
+- The sky picture of the hold (plan.heroSky, out/scratch/hero.ts): weight 0.999 at 3541.28, 0.5 at 3565.34, 0
+  from 3586.58; largest fall in one film frame 0.0367 (from 3562.5); it never goes back up; 1.2868 from the
+  hold's path at the dive's change of view (reach 1.2), 1.2866 at the nearest in the rise.
+
+### Mail 439 item 3: one function of the height for the flight's stars
+
+The hold is flown at 2.228 (3390) to 2.413 (3540) over the ring plane and the dive tops at 2.4146 (3545). With
+sky.lift.heights [2.04, 2.92] the rise showed the flight's stars at heights where the dive and the hold show
+none: 0.08 at 2.27, 0.25 at 2.38 (the dive: 0 at every height). The dive cannot take that function without
+changing the hold (2.228 to 2.413 lies inside it). So the function moved instead: the lower height of
+sky.lift.heights is now 2.42, above every height of the hold and of the dive (skyProof stops the build if the
+hold or the dive is flown inside it). It is one function of the height on both sides: 0 at every height the
+lens has on the way down, and the same 0 at those heights on the way up; only the rise goes higher.
+
+First build of it, [2.42, 2.92] with the old course (share to the power 1.5, then the engine's own smooth step
+and 1 - (1 - x)^2): the stars came in over 3867 to 3880, the largest change of the lift in one film frame 0.171
+(into 3872; 0.123 before; 0.080 by the engine's clock). Rendered at draft and looked at at full size (looks:
+"sky at full size 3866 to 3871", "3872 to 3877"): the field of faint stars doubles from one frame to the next
+around 3871. The sky's mean inside the sky mask (/tmp/v/skylevel.py) changed by up to +2.26 in one frame (3873).
+Not kept.
+
+Second build, kept: liftAt is the level of the flight's stars itself, a smooth step of 1 - (1 - share)^power,
+share the way between sky.lift.heights [2.42, 2.9377], power 0.5; skyLiftAt undoes the engine's own course
+(x = 1 - sqrt(1 - level), share of its span = 0.5 - sin(asin(1 - 2x) / 3)) so that shot.skyStars is that level.
+Why one half: the lens climbs ever slower toward the end of the rise, the height left goes with the square of
+the time left (2.938 - height is 0.00164 times the square of the frames left to 3884.5, checked at 3867, 3875,
+3880), so the square root of the share left is the share of the time left and the level runs as a smooth step
+over the frames 3866.7 to 3884. The upper height is the height of the lens at the last frame of the rise
+(2.9377 at 3884), where it hardly climbs any more, so the level lands softly (with 2.93 it stopped at 3882 from
+0.052 a frame).
+Level by frame (out/scratch/stars.ts, shot.skyStars): 3866 0, 3867 0.0009, 3868 0.014, 3869 0.042, 3870 0.083,
+3871 0.136, 3872 0.200, 3873 0.272, 3874 0.351, 3875 0.435, 3876 0.521, 3877 0.608, 3878 0.691, 3879 0.770,
+3880 0.842, 3881 0.902, 3882 0.950, 3883 0.983, 3884 0.9999, 3884.5 and after 1. Largest change in one film
+frame 0.0865 (into 3876.5), on whole and half frames (out/scratch/lift5.ts searches the upper height and the
+power: the least it finds is 0.0840).
+The exposure of the sky by height is the same function down and up already (plan.lowAt): 0.5000 at 2.0227 in
+the dive (3570), 0.5025 at 2.0314 in the rise (3860).
+
+What the pair shows (looks: "same height 2.38 radii: dive 3552 beside rise 3866", top right at full size and
+whole frames): the two skies at the same height do not look the same, though the flight's stars are 0 in both.
+At 3552 the sky is the picture of the hold (many faint stars, its weight 0.9 there, it leaves by the distance
+of the lens from the hold's path); at 3866 it is the film's field at the stop's level, few stars and the blue
+glow of the dust, and the many faint stars come in above 2.42. So down and up differ by the hold's picture,
+which the rise never comes near (1.287 radii from the hold's path at the nearest), not by the lift. Said to the
+Builder as it is.
+
+Sky level in the rise, draft, every frame 3810 to 3890 (/tmp/v/skylevel.py, masks from out/scratch/skymask.ts;
+mean luma of the sky inside the eroded sky mask, levels of 255): 15.84 at 3810, 16.0 to 16.5 through 3836, 17.9
+at 3848, 21.65 at 3858, 25.17 at 3866, 27.89 at 3870, 30.15 at 3873, 29.25 at 3874, 28.22 at 3875, 29.08 at
+3876, 31.45 at 3878, 33.37 at 3880, 34.67 at 3882, 35.14 at 3884, 35.15 at 3885 to 3890. Largest change in one
+frame +1.228 (3877); the fall -0.898 (3874) and -1.033 (3875) is the engine's sky itself, which is not monotone
+in the lift: between a lift of 0.27 and 0.44 its band changes from the stop's look (grainy warm clusters) to
+the flight's (soft glow with dark lanes, src/space/sky.ts swap), and the mean of the sky falls by 1.9 while it
+does (looks: "band at full size 3872 to 3877"). The same fall was there with the first build (3871, 3872). It
+is the engine's, not touched. Last frames: 3882 +0.562, 3883 +0.344, 3884 +0.132, 3885 +0.005.
+
+### Mail 439 item 4: 3720's top left at final beside the approved image
+
+/tmp/v/topleft.py: the top left 960 by 540 of the final tier's 3720 at full size beside the same box of
+references/approved/saturn-close.jpg brought to the frame's size (looks: "3720 at final, top left 960 by 540").
+What it shows: in the film's frame the sky right of x 300 is nearly black with a few stars, and the far left
+(x under 250) holds the warm band of the film's field, orange clusters and a faint brown veil; the approved
+image has an even field of faint blue white stars over a dark blue sky across the whole box and no warm
+clusters. Box means: film R 48.62 G 46.37 B 44.49, luma 46.71, median 12.58; approved R 39.37 G 37.96 B 37.53,
+luma 38.23, median 12.72 (the box holds the rings below, which are brighter in the film). Nothing changed.
+
+### Mail 439 item 5
+
+Nothing of it is in this commit: it is step 2 (the bright rim of the outer edge and the thin dark lane in the
+A ring in both tables at the same radius).
+
+### Proofs at draft on the working tree (b85c30e plus this commit's changes)
+
+- Stills: 3465, 3390, 3539 equal the kept drafts byte for byte (/tmp/v/kept); 3720 equals ac0b732's draft byte
+  for byte (/tmp/v/r26). The hold and the skim do not read the pace or the lift.
+- Dive 3536 to 3632, every frame, sheets of 12 at one third (looks "try 3 dive draft"): one move, no frame at
+  which a part comes in. The moon goes behind the globe's night limb over 3596 to 3600, cut by the limb. The
+  draft tier's switch from the kept set to the model lies between 3602 and 3603 and cannot be told on the
+  sheets; the frame's mean luma runs through it without a step.
+- Rise 3806 to 3890, every frame, sheets of 12 (looks "try 3 rise draft"): one move; the moon comes out from
+  behind the globe's limb at 3849; the stars come in over 3867 to 3884 (sky crops at full size, looks "sky at
+  full size, even course"). 3885 and 3888 equal main's bytes (/tmp/v/r26/main_3885.png, main_3888.png), 3884 is
+  the same with both builds of the lift.
+- Judges on the final working tree, run again after the lift changed: smooth "smooth saturn: green.
+  out/work/smooth/saturn.md", "VERDICT: green. No number is over its limit."; handover path "saturn.dive every
+  frame: pass", "saturn.rise every frame: pass"; tsc exit 0; vitest "Test Files  35 passed (35)", "Tests  268
+  passed | 1 todo (269)", exit 0; gate "PASS G11  every asset has a row or a recipe", "PASS G15  at most 2 sets
+  per frame; finished stops: saturn/web 274 MB, saturn/full 747 MB".
+- Not run on the VM: G13 on every frame, G5, G17 (npm run measure), the handover's picture parts (sides, flow,
+  sheets), review and final tiers of the two moves. Final tier: 3720 only (item 4).
+- Size (mail 450): no asset added, removed or changed by this commit; net 0 MB against main.
+
+### Mails that came while this was built
+
+- sky_builder, follow up of the Builder's mail 448 (low): sky-hold.webp has the fault (correlation of the
+  frame's own post grain with the scene -0.111 at 3465, 0.000 at 3465.5), sky-terrain.webp is clean. Ruling
+  relayed: cure it at the cause, the glow input of every sky patch is rendered with --diag nograin (RECIPE.md
+  line 37, halo-only.png; it enters at sky/patch.py line 154) and the recipe says so; low priority, never holds
+  up a candidate; "put it into the next commit of your own that changes the bytes of your hold or dive anyway",
+  at the latest into the round candidate. With that commit send the Builder (a) 3465 at final against the kept
+  still: in the dark sky the difference must be grain only (mean and largest), body, rings and limb byte equal
+  or at most one level; (b) the correlation number again, at the level of its neighbours (0.00, every block
+  within 0.02). Tool: graincorr.py (attached to the mail, saved to /tmp/v/graincorr.py; also assets-src/
+  flightsky/ on agent/flightsky): two nograin stills N and N + 1 at draft, then python3 graincorr.py N a.png
+  N+1 b.png. Plan: it goes with ruling (a) of mail 374, the next commit, which changes the bytes of the hold
+  anyway (this commit keeps the hold's bytes so that the pace can be proven alone).
+- globe_engineer (low, no answer): the air of the globe by the height of the lens (plan F). When both
+  branches are on main and the Builder says so: in update, if (shot.air) { planet.setAir(shot.air); if
+  (shot.air.shell) shell.setAir(shot.air.shell) }; a material of its own with the haze text: if (shot.air?.haze)
+  setHazeAir(material.uniforms, shot.air.haze) from src/bodies/air.ts; the stop takes out its own lines that
+  change limb, tint or haze by view, segment or time. The knots are the stop's params: air: [{ height, limb,
+  tint, haze: { nine fields }, shell: { ... } }, { height: lower, haze: { depth: 1.8 } }, ...], highest first;
+  the highest knot from today's numbers of the hold (hazeAir(look.haze)), so the hold keeps its bytes. Not on
+  main yet (agent/engine-globe abf28ac5, agent/engine-handover dddef05). Do not wire before the Builder says.

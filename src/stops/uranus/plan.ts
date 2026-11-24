@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { config, type Segment } from '../../config'
 import type { CoverHorizon, Pose, ViewKind } from '../../core/types'
-import { handoverOf, sideAt, skyWeight } from '../../director/handover'
+import { handoverOf, sideAt, type SkyShares } from '../../director/handover'
 import { StopPlan, type Fit, type MoveParams, type OrbitShot } from '../../director/moves'
 import { forward, lookAt, mix, ramp, smooth } from '../../director/rig'
 import deck from './deck.json'
@@ -15,7 +15,7 @@ export const params: MoveParams = {
   hold: { orbitDeg: 6, axis: [0.2, 1, 0], push: -0.03 },
   spot: { x: 0.5574, y: 0.6721 },
   dive: { headingDeg: 53.784, altitude: 0.02623, back: 0.07, ahead: 0.14, bow: 0.2, rollDeg: 7, swoop: true },
-  handover: { dive: { at: path.dive.at, placeFrames: 0, skyFrames: low.patch.dive[0] + low.patch.dive[1] }, rise: { at: path.rise.at, placeFrames: 2, skyFrames: low.patch.rise[0] + low.patch.rise[1] } },
+  handover: { dive: { at: path.dive.at, placeFrames: 0, skyFrames: 0, picture: false }, rise: { at: path.rise.at, placeFrames: 0, skyFrames: 0, picture: false } },
   terrain: { vfov: 60, forward: 3.2, rise: 0.7107, side: 0.15, yawDeg: 1.5, pitchDeg: -0.5, entryHeight: 1.14, entryBack: 1.26, entryPitchDeg: 6, exitHeight: 2.4, exitForward: 1.3, exitPitchDeg: 10, horizonDeg: 2.874, dipDeg: 9.9055, rollDeg: 14.03 },
   rise: { azimuthDeg: 30, elevationDeg: -30, distance: 6.8, offset: [0.3, -0.32], driftSpeed: 0.08, rollDeg: -25, ahead: 0.03, hug: 1.7, settle: 5, level: true, pan: 0.3 },
   travel: { turnDeg: 66, side: 1 },
@@ -39,8 +39,10 @@ export const params: MoveParams = {
 
 export const move = {
   clockRise: 0.5,
-  roundDive: 1,
-  roundRise: 1,
+}
+
+export function below(span: [number, number], altitude: number): number {
+  return 1 - smooth(ramp(Math.log(span[0]), Math.log(span[1]), Math.log(Math.max(altitude, 1e-4))))
 }
 
 const X = new THREE.Vector3(1, 0, 0)
@@ -63,8 +65,16 @@ function round(p: THREE.Vector3, sphere = 0): THREE.Vector3 {
   return v.applyQuaternion(AXIS)
 }
 
+function eased(s: number, q: number): number {
+  const k = 1 / (1 - q)
+  if (s < q) return (s * s * s * k) / (6 * q)
+  if (s <= 1 - q) return (q * q * k) / 6 + ((s * s - q * q) / 2 - (q / 2) * (s - q)) * k
+  return 0.5 - (1 - s) + eased(1 - s, q)
+}
+
 function trapeze(x: number, a: number, b: number, slope: number): number {
-  const up = (v: number, w: number): number => (v * v * v) / (w * w) - (v * v * v * v) / (2 * w * w * w)
+  const q = Math.min(Math.max(path.corner, 0.01), 0.5)
+  const up = (v: number, w: number): number => (w > 0 ? w * eased(v / w, q) : 0)
   const c = 1 - b
   const area = a / 2 + (b - a) + c / 2
   const y = x - b
@@ -107,11 +117,13 @@ export class UranusPlan extends StopPlan {
     return ref + (end - ref) * ((3 - s) * y * y + (s - 2) * y * y * y)
   }
 
-  roundness(time: number): number {
-    const dive = this.seg.dive!
+  altitude(time: number): number {
     const rise = this.seg.rise!
-    if (time < rise.start) return smooth(ramp(dive.start, dive.start + move.roundDive, time))
-    return 1 - smooth(ramp(rise.end - move.roundRise, rise.end, time))
+    return this.flown(time < rise.start ? 'dive' : 'rise', time).position.length() - 1
+  }
+
+  roundness(time: number): number {
+    return below(low.round, this.altitude(time))
   }
 
   deckFrame(time: number): THREE.Quaternion {
@@ -127,26 +139,29 @@ export class UranusPlan extends StopPlan {
     return this.seat(local, time)
   }
 
-  skyTurnShare(seg: Segment, time: number): number | null {
-    if (seg.kind !== 'dive' && seg.kind !== 'rise') return null
-    const h = handoverOf(this.id, seg.kind)
-    if (!h) return super.skyTurnShare(seg, time)
-    if (seg.kind === 'dive') return smooth(ramp(seg.start, (h.firstFrame - low.patch.turn[0]) / config.fps, time))
-    return 1 - smooth(ramp((h.lastFrame + 1 + low.patch.turn[1]) / config.fps, seg.end, time))
+  private handed(seg: Segment): boolean {
+    return seg.stop === this.id && (seg.kind === 'dive' || seg.kind === 'rise') && handoverOf(this.id, seg.kind) !== null
   }
 
-  patchWeight(time: number, view: ViewKind): number {
-    const seg = time < this.seg.rise!.start ? this.seg.dive! : this.seg.rise!
-    if (time < seg.start || time >= seg.end) return 1
-    const kind = seg.kind as 'dive' | 'rise'
-    const h = handoverOf(this.id, kind)
-    const share = skyWeight(seg, time)
-    if (!h || share <= 0) return 1
-    const [hold, fade] = low.patch[kind]
-    const fps = config.fps
-    const want = kind === 'dive' ? smooth(ramp((h.firstFrame - hold - fade) / fps, (h.firstFrame - hold) / fps, time)) : 1 - smooth(ramp((h.lastFrame + 1 + hold) / fps, (h.lastFrame + 1 + hold + fade) / fps, time))
-    if (view === 'terrain') return want / share
-    return share < 1 ? (1 - want) / (1 - share) : 0
+  skyTurnShare(seg: Segment, time: number): number | null {
+    if (!this.handed(seg)) return super.skyTurnShare(seg, time)
+    return below(low.skyTurn, this.altitude(time))
+  }
+
+  skyCarryShare(seg: Segment, time: number): number | null {
+    return this.handed(seg) ? below(low.skyTurn, this.altitude(time)) : null
+  }
+
+  skyShare(seg: Segment, time: number): SkyShares | null {
+    if (!this.handed(seg)) return null
+    const share = below(low.skyPicture, this.altitude(time))
+    return seg.kind === 'dive' ? { low: share, high: 1 - share } : { low: share }
+  }
+
+  skyLiftAt(seg: Segment, time: number): number | null {
+    if (!this.handed(seg) || seg.kind !== 'rise') return null
+    const from = handoverOf(this.id, 'rise')!.time
+    return from + (seg.end - from) * ramp(Math.log(low.lift), Math.log(this.flown('rise', seg.end).position.length() - 1), Math.log(Math.max(this.altitude(time), 1e-4)))
   }
 
   unseat(pose: Pose, time: number): Pose {
@@ -183,7 +198,35 @@ export class UranusPlan extends StopPlan {
     return { position: g.n.clone().addScaledVector(f.out, -s + Math.sqrt(s * s + h * (2 + h))), quaternion: f.quaternion.multiply(p.rel), vfov: THREE.MathUtils.radToDeg(2 * Math.atan(Math.exp(p.field))) }
   }
 
-  flown(kind: 'dive' | 'rise', time: number): Pose {
+  private readonly anchors = new Map<string, THREE.Vector3>()
+
+  private sight(pose: Pose): THREE.Vector3 {
+    const eye = pose.position
+    const dir = forward(pose.quaternion)
+    const out = eye.clone().normalize()
+    const level = dir.clone().addScaledVector(out, -dir.dot(out)).normalize()
+    const b = eye.dot(dir)
+    const c = eye.lengthSq() - 1
+    const disc = b * b - c
+    const reach = Math.acos(Math.min(1 / eye.length(), 1)) * config.raw.handover.descent.targetReach
+    let arc = reach
+    if (disc > 0 && b < 0) arc = Math.min(Math.acos(Math.min(Math.max(eye.clone().addScaledVector(dir, c / (-b + Math.sqrt(disc))).normalize().dot(out), -1), 1)), reach)
+    return out.multiplyScalar(Math.cos(arc)).addScaledVector(level, Math.sin(arc))
+  }
+
+  private anchor(kind: 'dive' | 'rise', time: number): THREE.Vector3 {
+    let a = this.anchors.get(kind)
+    if (!a) {
+      const at = handoverOf(this.id, kind)!.time
+      const back = this.turn(at).invert()
+      a = this.sight(this.seat(this.terrain(at - this.seg.terrain.start), at)).applyQuaternion(back)
+      for (let i = 0; i < path.anchorSteps; i++) a = this.sight(this.led(kind, at, a.clone().applyQuaternion(this.turn(at)))).applyQuaternion(back)
+      this.anchors.set(kind, a)
+    }
+    return a.clone().applyQuaternion(this.turn(time))
+  }
+
+  private led(kind: 'dive' | 'rise', time: number, mark: THREE.Vector3): Pose {
     const seg = kind === 'dive' ? this.seg.dive! : this.seg.rise
     const x = (time - seg.start) / (seg.end - seg.start)
     const close = this.seat(this.terrain(time - this.seg.terrain.start), time)
@@ -192,9 +235,26 @@ export class UranusPlan extends StopPlan {
     if (x >= 1) return kind === 'dive' ? close : far
     const k = path[kind]
     const g = this.pivot(time, k.pivotUnits)
-    const a = this.polar(kind === 'dive' ? far : close, g)
-    const b = this.polar(kind === 'dive' ? close : far, g)
-    return this.posed({ height: mix(a.height, b.height, window(x, k.height)), sweep: mix(a.sweep, b.sweep, window(x, k.sweep)), turn: mix(a.turn, b.turn, window(x, k.turn)), rel: a.rel.slerp(b.rel, window(x, k.aim)), field: mix(a.field, b.field, window(x, k.field)) }, g)
+    const from = kind === 'dive' ? far : close
+    const to = kind === 'dive' ? close : far
+    const a = this.polar(from, g)
+    const b = this.polar(to, g)
+    const base = this.posed({ height: mix(a.height, b.height, window(x, k.height)), sweep: mix(a.sweep, b.sweep, window(x, k.sweep)), turn: mix(a.turn, b.turn, window(x, k.turn)), rel: a.rel.slerp(b.rel, window(x, k.aim)), field: mix(a.field, b.field, window(x, k.field)) }, g)
+    const seen = (p: Pose): THREE.Vector2 => {
+      const v = mark.clone().sub(p.position).applyQuaternion(p.quaternion.clone().invert())
+      const t = Math.tan(rad(p.vfov) / 2) * -v.z
+      return new THREE.Vector2(v.x / t, v.y / t)
+    }
+    const w = window(x, k.track)
+    const s = seen(from).lerp(seen(to), w).add(new THREE.Vector2().fromArray(k.bow).multiplyScalar(w * w * (1 - w)))
+    const t = Math.tan(rad(base.vfov) / 2)
+    const want = new THREE.Vector3(s.x * t, s.y * t, -1).normalize()
+    const now = mark.clone().sub(base.position).applyQuaternion(base.quaternion.clone().invert()).normalize()
+    return { position: base.position, quaternion: base.quaternion.multiply(new THREE.Quaternion().setFromUnitVectors(want, now)), vfov: base.vfov }
+  }
+
+  flown(kind: 'dive' | 'rise', time: number): Pose {
+    return this.led(kind, time, this.anchor(kind, time))
   }
 
   divePose(time: number, view: ViewKind): Pose {
