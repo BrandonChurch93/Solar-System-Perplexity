@@ -75,6 +75,9 @@ export const createSet: SetFactory = async (ctx) => {
   })
   const globe = globeOf()
   const shell = globeOf()
+  const shellBase = new THREE.Quaternion()
+  const shellTurn = new THREE.Quaternion()
+  const bodyAxis = new THREE.Vector3(0, 1, 0)
   globe.mesh.quaternion.fromArray(fit.globe.quaternion)
   const far = new FarPoint()
   const sunPlate = new SunPlate(await ctx.texture(base + sunJson.file, { srgb: true, anisotropy: 4 }), sunJson.rect as [number, number, number, number], sunJson.disc, look.sun.limb, look.sun.small, diagUniform, look.sunSurface)
@@ -172,6 +175,7 @@ export const createSet: SetFactory = async (ctx) => {
       g.wide(around, aroundAlpha, toWide.clone().multiply(toClose), nearUp.clone().multiplyScalar(closeRadius + 1).add(under.group.position).applyQuaternion(toWide), wideImage.focal, wideImage.center, wideImage.box, look.close.wide.feather[0]![1], [0, 1], 0, closeRadius, wideImage.sink, look.close.wide.drop, look.close.wide.margin, look.close.wide.blur)
     }
     shell.mesh.quaternion.copy(toClose)
+    shellBase.copy(toClose)
   }
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
   const wideFar = curve(look.close.wide.far)
@@ -287,7 +291,9 @@ export const createSet: SetFactory = async (ctx) => {
           const offAxis = THREE.MathUtils.radToDeg(sunShown.angleTo(forward.set(0, 0, -1).applyQuaternion(eye.quaternion)))
           kick.fromArray(look.light.line.dir).applyQuaternion(above.rotation)
           for (const v of [light, sunShown, glareSun, kick]) v.applyQuaternion(toLow)
-          paint(shell, state.time, diving, !diving, look.under.sink, distance, offAxis, light, sunShown, glareSun, kick, 0, gain, state.weight, Math.min(holdRadius * distance * tanHalf * 2, 1), shot.post.vignette, aspect)
+          const spun = spin(state.time)
+          shell.mesh.quaternion.copy(shellBase).multiply(shellTurn.setFromAxisAngle(bodyAxis, -spun))
+          paint(shell, state.time, diving, !diving, look.under.sink, distance, offAxis, light, sunShown, glareSun, kick, spun, gain, state.weight, Math.min(holdRadius * distance * tanHalf * 2, 1), shot.post.vignette, aspect)
           shell.show(shown)
           shell.smear(view.camera, null, null, 0, 0, 0, view.samples)
         }

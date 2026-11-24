@@ -83,3 +83,15 @@ Land matte of the place picture (no picture file, no generation): the engine's p
 The old level pictures that `plates.py plate` mixes in outside the ring: `git show 1e492e92:public/assets/mercury/full/patch-N.jpg > out/work/mercury/place/old/full-patch-N.jpg` for N 2, 3, 4.
 
 Checks: the sheets `out/work/mercury/place/repaint/L<N>-sheet-*.jpg` (lead beside result), `B<N>-view.jpg`, the top down dive sheet (`tilepatch.py on topdown`, 12 frames, `off`), the texel view of the dive (`DIAG=texels`), the dense sheets of dive and rise, the kept frames against `out/stills`.
+
+## Last step for every JPEG of the stop: squeeze.py
+
+Files, both sets: `public/assets/mercury/<set>/patch-1.jpg`, `patch-2.jpg`, `patch-3.jpg`, `patch-3r.jpg`, `patch-4.jpg`, `patch-4r.jpg`, `relief-color.jpg`, `wide-color.jpg`, `wrap-color.jpg`. No generation, no takes.
+
+What it is: the same picture in fewer bytes. `python3 assets-src/mercury/squeeze.py` writes every JPEG of both sets again with its own coefficients, entropy coded once more as a progressive file with fitted tables (`pip install mozjpeg-lossless-optimization`, version 1.3.3). No coefficient is changed, so every decoder gives the picture it gave before. The script decodes the file before and after, stops if one value differs, and writes only when the file gets smaller. A second run changes nothing.
+
+When: after any step of any recipe of this stop that writes a JPEG into `public/assets/mercury/` (`plates.py install`, `levels.py`, `resample.py`, the wrap and the relief recipes).
+
+Sizes (24 Nov): both sets together 97.388 MB before, 89.279 MB after, 8.109 MB less (full 74.646 to 68.600, web 22.742 to 20.679).
+
+Checks: the script's own line per file; 22 frames of hold, dive, terrain, rise and the frame after at draft, master, full set, and 3 frames with the web set, each the same bytes of picture as before the step (`out/work/mercury/place/tools/same.py`).
