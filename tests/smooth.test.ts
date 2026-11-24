@@ -1,12 +1,14 @@
+import * as THREE from 'three'
 import { describe, expect, it } from 'vitest'
 import { config } from '../src/config'
 import { captureRate, setCapture, spanMid } from '../src/core/clock'
+import type { Pose } from '../src/core/types'
 import { shutterMid } from '../src/core/sampler'
 import { FilmDirector } from '../src/director/film'
 import { sideAt } from '../src/director/handover'
 import { plans } from '../src/director/plans'
-import { curves, sampleWindow } from '../tools/smooth/camera'
-import { judgeCurve, position, table } from '../tools/smooth/path'
+import { curves, landingCurves, planeHit, ringPlane, sampleLanding, sampleWindow, seen } from '../tools/smooth/camera'
+import { judgeCurve, judgeLanding, longestGap, position, shown, table } from '../tools/smooth/path'
 
 const limits = { maxStep: 0.08, maxRebound: 0.03, seamFrames: 2 }
 const bell = (n: number, edge = 0): number[] => Array.from({ length: n }, (_, i) => edge + 1 - Math.cos((2 * Math.PI * (i + 0.5)) / n))
@@ -147,14 +149,61 @@ describe('a curve that is a mean over points', () => {
     expect(real.climbAfterPeak.frame).toBe(74)
   })
 
-  it('says not measured, which is red, where fewer than four points are left', () => {
-    const values = rows(100, (i) => (i >= 40 && i < 43 ? [0, 1, 2, 3, 4] : []))
-    const r = judgeCurve('speed', 'px', plain(values), 0, 1, { first: 0, end: 100 }, limits, 0, { values, min: 4 })
-    expect(rules(r)).toEqual(['points'])
-    expect(r.points!.notMeasured).toBe(4)
-    expect(r.faults[0]!.first).toBe(40)
-    expect(r.faults[0]!.last).toBe(43)
-    expect(r.faults[0]!.text).toContain('NOT MEASURED')
+  it('shows and does not judge a row with fewer than five points, and counts those rows', () => {
+    const values = rows(100, (i) => (i >= 40 && i < 43 ? [0, 1, 2, 3] : []))
+    const r = judgeCurve('speed', 'px', plain(values), 0, 1, { first: 0, end: 100 }, limits, 0, { values, min: 5 })
+    expect(r.faults).toEqual([])
+    expect(r.points).toMatchObject({ min: 5, fewest: 4, notMeasured: 4, first: 40, last: 43 })
+    expect(r.step[41]).toBeNull()
+    const five = rows(100, (i) => (i >= 40 && i < 43 ? [0, 1, 2] : []))
+    const kept = judgeCurve('speed', 'px', plain(five), 0, 1, { first: 0, end: 100 }, limits, 0, { values: five, min: 5 })
+    expect(kept.points).toMatchObject({ fewest: 5, notMeasured: 0, first: null, last: null })
+    const none = rows(100, () => [0, 1, 2, 3])
+    expect(rules(judgeCurve('speed', 'px', none.map(() => null), 0, 1, { first: 0, end: 100 }, limits, 0, { values: none, min: 5 }))).toEqual(['mean'])
+  })
+})
+
+describe('the ground of a place on the rings', () => {
+  const g = { normal: new THREE.Vector3(0, 1, 0), inner: 1.2, outer: 2.3, centre: new THREE.Vector3(1.8, 0, 0) }
+  const look = (from: THREE.Vector3, to: THREE.Vector3): Pose => ({ position: from, quaternion: new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().lookAt(from, to, new THREE.Vector3(0, 1, 0))), vfov: 30 })
+
+  it('is the plane of the rings between their radii', () => {
+    const p = look(new THREE.Vector3(1.8, 0.5, 1.5), g.centre)
+    const hit = planeHit(p, 960, 540, 1920, 1080, g)!
+    expect(hit.distanceTo(g.centre)).toBeLessThan(1e-9)
+    const beyond = look(new THREE.Vector3(1.8, 0.5, 1.5), new THREE.Vector3(3, 0, 0))
+    expect(planeHit(beyond, 960, 540, 1920, 1080, g)).toBeNull()
+    const gap = look(new THREE.Vector3(1.8, 0.5, 1.5), new THREE.Vector3(1.1, 0, 0))
+    expect(planeHit(gap, 960, 540, 1920, 1080, g)).toBeNull()
+    expect(planeHit(look(new THREE.Vector3(1.8, 0.5, 1.5), new THREE.Vector3(1.8, 3, 1.5)), 960, 540, 1920, 1080, g)).toBeNull()
+  })
+
+  it('is not seen behind the globe', () => {
+    const p = look(new THREE.Vector3(3, 0.4, 0), new THREE.Vector3(-1.8, 0, 0))
+    expect(planeHit(p, 960, 540, 1920, 1080, g)).toBeNull()
+    expect(seen(p, new THREE.Vector3(-1.8, 0, 0))).toBe(false)
+    expect(seen(p, new THREE.Vector3(1.8, 0, 0))).toBe(true)
+    expect(seen(p, new THREE.Vector3(0, 0, 1.8))).toBe(true)
+  })
+
+  it('carries the speed of Saturn, whose place lies on its rings, and of no other stop', () => {
+    const film = new FilmDirector(plans)
+    const S = config.raw.smooth
+    const master = config.formats[config.formatKeys.master]!
+    for (const q of plans) expect(ringPlane(q) !== null).toBe(q.id === 'saturn')
+    const saturn = plans.find((q) => q.id === 'saturn')!
+    const ground = ringPlane(saturn)!
+    expect(Math.abs(ground.centre.dot(ground.normal))).toBeLessThan(1e-6)
+    expect(ground.centre.length()).toBeGreaterThan(ground.inner)
+    expect(ground.centre.length()).toBeLessThan(ground.outer)
+    for (const kind of ['dive', 'rise'] as const) {
+      const w = sampleWindow(config, film, saturn, kind, 1, S.reachFrames)!
+      const c = curves(w, saturn, master.width, master.height, S.path.ringPx, 'picture', 8, ground)
+      const last = kind === 'dive' ? w.own.end - 1 - w.k0 : w.own.first - w.k0
+      expect(c.ring[last]!.filter((v) => v !== null).length).toBeGreaterThanOrEqual(5)
+      expect(c.speed[last]).toBeGreaterThan(0)
+    }
+    setCapture(1)
   })
 })
 
@@ -219,5 +268,115 @@ describe('the camera of a move, sampled', () => {
       expect(c.turn.filter((v) => v !== null).every((v) => v! >= 0)).toBe(true)
       expect(c.speed.filter((v) => v !== null).length).toBeGreaterThan(one.seg.endFrame - one.seg.firstFrame - 5)
     }
+  })
+})
+
+describe('the landing of a travel, judged', () => {
+  const hold = 2
+  const n = 24
+  const own = { first: 13, end: 12 + n }
+  const ease = (j: number): number => hold + 6 * (1 - j / n) ** 2
+  const curve = (speed: (j: number) => number): number[] => Array.from({ length: 12 + n + 14 }, (_, i) => (i < 12 ? speed(0) : i >= 12 + n ? hold : speed(i - 12)))
+  const judge = (raw: number[]): ReturnType<typeof judgeLanding> => judgeLanding('sky', 'px', raw, 0, 1, own, limits)
+
+  it('passes a brake that eases into the speed of the hold', () => {
+    const r = judge(curve(ease))
+    expect(r.faults).toEqual([])
+    expect(r.hold).toBeCloseTo(hold / r.mean, 9)
+    expect(r.peakLoss!.frame).toBe(14)
+    expect(r.hump.value).toBe(0)
+    expect(r.seam!.value).toBeLessThan(0.01)
+  })
+
+  it('names a step at the seam into the hold', () => {
+    expect(rules(judge(curve((j) => hold + 1 + 5 * (1 - j / n) ** 2)))).toContain('seam')
+  })
+
+  it('names a brake that grows into the last frames and then lets go', () => {
+    const tail = [7.13, 6.42, 4.89, 2.82, 2.35]
+    const raw = curve((j) => (j >= n - 5 ? tail[j - (n - 5)]! : 7.13 + 0.05 * (n - 5 - j)))
+    raw[12 + n] = 2.35
+    for (let i = 12 + n; i < raw.length; i++) raw[i] = 2.35
+    const r = judge(raw)
+    expect(rules(r)).toContain('lateBrake')
+    expect(rules(r)).toContain('brakeGrows')
+    expect(rules(r)).toContain('letGo')
+    expect(r.peakLoss!.frame).toBe(12 + n - 2)
+    expect(r.letGo!.frame).toBe(12 + n - 1)
+  })
+
+  it('names a climb after the speed has started to fall, and not a climb before the first fall', () => {
+    const r = judge(curve((j) => ease(j) + (j >= 8 && j < 12 ? 1 : 0)))
+    expect(rules(r)).toContain('hump')
+    expect(r.hump.frame).toBe(12 + 8)
+    const rising = judge(curve((j) => (j < 4 ? ease(4) - 0.3 * (4 - j) : ease(j))))
+    expect(rising.faults).toEqual([])
+  })
+
+  it('names a dip under the speed of the hold', () => {
+    const r = judge(curve((j) => (j >= n - 2 ? hold - 0.5 : ease(j))))
+    expect(rules(r)).toContain('dip')
+    expect(r.dip!.value).toBeCloseTo(0.5 / r.mean, 9)
+  })
+
+  it('finds a shake between capture frames at the seam', () => {
+    const fine = Array.from({ length: 2 * (12 + n + 14) }, (_, i) => (i < 24 ? ease(0) : i >= 24 + 2 * n ? hold : ease((i - 24) / 2)))
+    const span = { first: 25, end: 24 + 2 * n }
+    expect(judgeLanding('sky', 'px', fine, 0, 2, span, limits).faults).toEqual([])
+    fine[24 + 2 * n - 1] = fine[24 + 2 * n - 1]! + 0.5
+    expect(rules(judgeLanding('sky', 'px', fine, 0, 2, span, limits))).toContain('halfSeam')
+  })
+})
+
+describe('the landing of a stop, sampled', () => {
+  const film = new FilmDirector(plans)
+  const S = config.raw.smooth
+  const master = config.formats[config.formatKeys.master]!
+
+  it('is the last part of the travel that arrives at the stop, and the first stop has none', () => {
+    expect(sampleLanding(config, film, plans[0]!, 1, S.reachFrames)).toBeNull()
+    for (const plan of plans.slice(1)) {
+      const w = sampleLanding(config, film, plan, 2, S.reachFrames)!
+      const hold = config.segments.find((s) => s.stop === plan.id && s.kind === 'hold')!
+      expect(w.travel.kind).toBe('travel')
+      expect(w.travel.endFrame).toBe(hold.firstFrame)
+      expect(w.landingFrame).toBe(w.travel.firstFrame + Math.ceil(0.68 * (w.travel.endFrame - w.travel.firstFrame) - 1e-9))
+      if (w.travel.endFrame - w.travel.firstFrame === 75) expect(w.landingFrame).toBe(w.travel.firstFrame + 51)
+      expect(w.own).toEqual({ first: w.landingFrame * 2 + 1, end: hold.firstFrame * 2 })
+      expect(w.samples[0]!.k).toBe((w.landingFrame - S.reachFrames) * 2 - 1)
+      expect(w.samples[w.samples.length - 1]!.k).toBe((hold.firstFrame + S.reachFrames) * 2 - 1)
+      const c = landingCurves(w, master.width, master.height)
+      expect(c.sky.length).toBe(w.samples.length)
+      expect(c.sky[0]).toBeNull()
+      for (let k = w.own.first; k < w.own.end; k++) {
+        const i = k - w.k0
+        expect(c.sky[i]).toBeGreaterThanOrEqual(0)
+        expect(c.limb[i]).toBeCloseTo(c.centre[i]! + c.edge[i]!, 9)
+      }
+    }
+    setCapture(1)
+  })
+})
+
+describe('a number as it is printed', () => {
+  it('gets more digits where the usual ones would print it as its limit', () => {
+    expect(shown(1.2002331, 2, 1.2)).toBe('1.2002')
+    expect(shown(1.196, 2, 1.2)).toBe('1.196')
+    expect(shown(1.2, 2, 1.2)).toBe('1.20')
+    expect(shown(1.31, 2, 1.2)).toBe('1.31')
+    expect(shown(20.004, 1, 20)).toBe('20.004')
+    expect(shown(0.0801, 3, 0.08)).toBe('0.0801')
+    expect(shown(1.2002331, 2, null)).toBe('1.20')
+  })
+})
+
+describe('the longest run of rows without a value', () => {
+  it('is null where every row has one', () => {
+    expect(longestGap([true, true, true])).toBeNull()
+    expect(longestGap([])).toBeNull()
+  })
+  it('is the first of the longest runs', () => {
+    expect(longestGap([true, false, true, false, false, true, false, false])).toEqual({ first: 3, last: 4 })
+    expect(longestGap([false, false, false])).toEqual({ first: 0, last: 2 })
   })
 })
