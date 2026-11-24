@@ -1,9 +1,41 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T09:34:11.820Z",
- "head": "e3bf5894927d289b35f6bf1deb45f3173f41c93e",
- "note": "level check: two pairs over on the named tree, cured in the files (one ground, strip); pattern in the frames still red, cause in the veil; proofs running",
+ "pushed": "2026-11-24T10:09:37.138Z",
+ "head": "ade4386b7fbb87b0d435b157c8b7c9ba67ff63b8",
+ "note": "second commit ade4386b: strip cure and sky by height; one ground trial taken back; differences to named tree only in the sky",
  "looks": [
+  {
+   "time": "2026-11-24T10:09:36.312Z",
+   "file": "20261124100936312-note-sky-ab.jpg",
+   "source": "../../../../tmp/gl/s8/sky-ab.jpg",
+   "kind": "note",
+   "label": "sky of the move, named against wide sky by height",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T10:09:35.409Z",
+   "file": "20261124100935409-note-r2-diff.jpg",
+   "source": "../../../../tmp/gl/s8/r2-diff.jpg",
+   "kind": "note",
+   "label": "ade4386b against named 571f42dc, difference times 10, nine frames",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T10:09:34.450Z",
+   "file": "20261124100934450-note-pair-d.jpg",
+   "source": "../../../../tmp/gl/s8/pair-d.jpg",
+   "kind": "note",
+   "label": "named tree against one ground trial, frames from above",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T10:09:33.217Z",
+   "file": "20261124100933217-note-crop-1857.jpg",
+   "source": "../../../../tmp/gl/s8/crop-1857.jpg",
+   "kind": "note",
+   "label": "1857 named tree against the one ground trial ebd4f703 (taken back)",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T09:34:11.157Z",
    "file": "20261124093411157-note-lv-under-fullog.jpg",
@@ -66,38 +98,6 @@
    "source": "../../../../tmp/gl/s7/pair2010.jpg",
    "kind": "note",
    "label": "earth 571f42dc pair2010 draft",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T08:30:06.017Z",
-   "file": "20261124083006017-note-bend-b.jpg",
-   "source": "../../../../tmp/gl/s7/bend-b.jpg",
-   "kind": "note",
-   "label": "earth 571f42dc bend-b draft",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T08:30:05.407Z",
-   "file": "20261124083005407-note-dive-0b.jpg",
-   "source": "../../../../tmp/gl/s7/dive-0b.jpg",
-   "kind": "note",
-   "label": "earth 571f42dc dive-0b draft",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T08:30:04.611Z",
-   "file": "20261124083004611-note-dive-0a.jpg",
-   "source": "../../../../tmp/gl/s7/dive-0a.jpg",
-   "kind": "note",
-   "label": "earth 571f42dc dive-0a draft",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T08:02:43.586Z",
-   "file": "20261124080243586-note-judged.jpg",
-   "source": "../../../../tmp/gl/s7/judged.jpg",
-   "kind": "note",
-   "label": "new path, judged 1857 and 2156 at draft (new frames)",
    "stop": "earth"
   }
  ]
