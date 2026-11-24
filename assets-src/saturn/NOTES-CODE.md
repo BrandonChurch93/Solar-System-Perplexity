@@ -3249,3 +3249,37 @@ is in the picture at 3 to 12 px, and the same crispness for the far ring across 
   for a stop that bends. Offer: PRE, the full sha and parts for a render machine (about 140 minutes whole).
 - MERGED f6ce51a as b99e8b6 (no conflict, nothing of main in my folders). The engine's StopPlan has a
   private bend() now, so my plan's private field bend is ownBend (the only change the merge needed).
+
+### 06:27 to 06:34 UTC: the merged head 589fd9a, the first proofs
+
+- PUSHED 589fd9aa521bb3644012e939b9a125a2242bf6ef (merge of main f6ce51a plus the sky look). tsc clean,
+  vitest 44 files 418 tests, build ok. Job V runs on it in the worktree (/tmp/v/r36): path, T sheet, parity,
+  pictures rise, pictures dive, head sample, handover, G13, main sample.
+- PATH: "VERDICT: green. No number is over its limit." Dive eye line: "Lowest 1.00 at frame 3634, limit 0.87;
+  inside the dive itself 1.00 at frame 3630. Largest step from one capture frame to the next 0.02 at frame
+  3620, shown." Rise eye line: "Lowest 1.00 at frame 3794, limit 0.87; inside the rise itself 1.07 at frame
+  3810 + 1/2. Largest step from one capture frame to the next 0.10 at frame 3811, shown." Largest steps:
+  dive rate 0.066, turn 0.067, speed 0.067 over 6; rise rate 0.069 at 3811 + 1/2, turn 0.075 at 3871 + 1/2,
+  speed 0.077 over 8 at 3882 + 1/2, seam in 0.068 (limit 0.08). T: dive 3589, rise 3852.
+- SEAM TOOL (npx tsx tools/seam.ts --stop saturn): dive "lowest 0.999 at 3629 + 1/2 | never against the
+  surface view's way"; rise "lowest 1.079 at 3810 | never against the surface view's way".
+- PARITY: "VERDICT: green." 3465 mean 1.690 level -0.632 coarse 0.732 block -3.883; 3563 1.736, -0.589,
+  0.694, -4.391; 3585 1.649, -0.386, 0.630, -3.356; 3608 1.979, -0.527, 0.685, -4.578; 3720 2.557, -0.960,
+  1.044, -4.631; 3829 2.118, -0.546, 0.664, -4.517; 3848 2.015, -0.463, 0.597, -4.618; 3866 2.252, -0.534,
+  0.710, -4.279; 3923 1.560, -0.026, 0.235, 0.498. Main's 4K reds (MAIL 538: coarse 3.226 at 3563, block
+  -22.068 at 3720) are 0.694 and -4.631 here.
+- T SHEET (MAIL 540): every frame 3842 to 3856 at draft, T is 3852 (looks: "589fd9a ... every frame 3842 to
+  3856", and 3850 to 3853 at full size). In them: no border of the set, no far edge of the plane, no jump
+  at T. Mean difference from frame to frame 14.27 (3850 to 3851), 14.44, 14.54 (3852 to 3853), 14.69; it
+  grows by 0.1 to 0.4 a frame from 12.15 at 3842 to 14.91 at 3855, with no step. Level 64.73 to 65.02.
+- CAMERA AGAINST MAIN, TO THE BIT (out/scratch/samecam.ts: plan.flight of the head against plan.flight of a
+  copy of origin/main's folder, every eighth of a film frame 3390 to 3885): the same everywhere but 3540 +
+  1/8 to 3629 + 7/8 (the dive, my own path) and 3722 + 1/4 to 3884 + 7/8 (the bend after the judged frame
+  and the rise). 3720 and 3465: every number of position, turn and lens equal.
+- NET SIZE (/tmp/v/netsize.sh, git ls-tree of the head against origin/main): assets-src/saturn plus 0.091
+  MB, public/assets/saturn minus 0.127 MB, src/stops/saturn plus 0.015 MB: net minus 0.022 MB.
+- COUNTS are not run here: src/core/warm.json on main ends at frame 3012, the piece of this stop is the
+  Builder's at the take (d197). What the counter counts (src/core/counts.ts): linkProgram, texture
+  uploads, createBuffer, createFramebuffer, createRenderbuffer, createVertexArray. The grains write their
+  two instance buffers in place every frame (update ranges, no new buffer); no texture is uploaded per frame
+  by the skim.
