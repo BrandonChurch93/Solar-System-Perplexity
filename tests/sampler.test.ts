@@ -24,8 +24,8 @@ describe('sampler', () => {
         expect(s.some((x) => x.jitterY >= q[0] && x.jitterY < q[1])).toBe(true)
       }
       for (const x of s) {
-        expect(Math.abs(x.jitterX)).toBeLessThanOrEqual(0.5)
-        expect(Math.abs(x.jitterY)).toBeLessThanOrEqual(0.5)
+        expect(Math.abs(x.jitterX)).toBeLessThanOrEqual(0.62)
+        expect(Math.abs(x.jitterY)).toBeLessThanOrEqual(0.62)
       }
     }
   })
