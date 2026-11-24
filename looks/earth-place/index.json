@@ -1,71 +1,71 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T05:48:39.079Z",
- "head": "fa44c6e514af62469ce0e917bf7589968e3ff39f",
- "note": "rise 2100 to 2174 every frame on the tree to be named: level step 5.49 into 2122 by my measure; plate reads as a darker shield against the map at 2126 to 2133",
+ "pushed": "2026-11-24T06:14:15.767Z",
+ "head": "a6c484d64dc4c3176dc10fd6ebf48b089e07e209",
+ "note": "a6c484d6: dive 1830 to 1919 every frame and both sheets about T; the place is a darker shield on the map at 1878 to 1886; at T only the limb steps",
  "looks": [
   {
-   "time": "2026-11-24T05:48:37.716Z",
-   "file": "20261124054837716-note-r-2166.jpg",
-   "source": "../../../../tmp/gl/s5/r-2166.jpg",
+   "time": "2026-11-24T06:14:15.069Z",
+   "file": "20261124061415069-note-T-rise-top.jpg",
+   "source": "../../../../tmp/gl/s5/T-rise-top.jpg",
    "kind": "note",
-   "label": "rise from 2166, draft, tree of the haze cure and the straight ramp law, every frame",
+   "label": "rise about T, top two fifths at full size beside the difference times 4: a line along the limb at 2100 against 2101",
    "stop": "earth"
   },
   {
-   "time": "2026-11-24T05:48:36.489Z",
-   "file": "20261124054836489-note-r-2156.jpg",
-   "source": "../../../../tmp/gl/s5/r-2156.jpg",
+   "time": "2026-11-24T06:14:14.436Z",
+   "file": "20261124061414436-note-T-dive-top.jpg",
+   "source": "../../../../tmp/gl/s5/T-dive-top.jpg",
    "kind": "note",
-   "label": "rise from 2156, draft, tree of the haze cure and the straight ramp law, every frame",
+   "label": "dive about T, top two fifths at full size beside the difference times 4: a line along the limb at 1918 against 1919",
    "stop": "earth"
   },
   {
-   "time": "2026-11-24T05:48:35.439Z",
-   "file": "20261124054835439-note-r-2148.jpg",
-   "source": "../../../../tmp/gl/s5/r-2148.jpg",
+   "time": "2026-11-24T06:14:13.788Z",
+   "file": "20261124061413788-note-T-rise.jpg",
+   "source": "../../../../tmp/gl/s5/T-rise.jpg",
    "kind": "note",
-   "label": "rise from 2148, draft, tree of the haze cure and the straight ramp law, every frame",
+   "label": "rise, 10 before T to 4 after (2090 to 2104), draft, a6c484d6: the change of view is into 2101",
    "stop": "earth"
   },
   {
-   "time": "2026-11-24T05:48:34.635Z",
-   "file": "20261124054834635-note-r-2140.jpg",
-   "source": "../../../../tmp/gl/s5/r-2140.jpg",
+   "time": "2026-11-24T06:14:13.142Z",
+   "file": "20261124061413142-note-T-dive.jpg",
+   "source": "../../../../tmp/gl/s5/T-dive.jpg",
    "kind": "note",
-   "label": "rise from 2140, draft, tree of the haze cure and the straight ramp law, every frame",
+   "label": "dive, 10 before T to 4 after (1909 to 1923), draft, a6c484d6: the change of view is into 1919",
    "stop": "earth"
   },
   {
-   "time": "2026-11-24T05:48:33.579Z",
-   "file": "20261124054833579-note-r-2134.jpg",
-   "source": "../../../../tmp/gl/s5/r-2134.jpg",
+   "time": "2026-11-24T06:14:12.507Z",
+   "file": "20261124061412507-note-d-1912.jpg",
+   "source": "../../../../tmp/gl/s5/d-1912.jpg",
    "kind": "note",
-   "label": "rise from 2134, draft, tree of the haze cure and the straight ramp law, every frame",
+   "label": "dive from 1912, draft, a6c484d6, every frame",
    "stop": "earth"
   },
   {
-   "time": "2026-11-24T05:48:32.567Z",
-   "file": "20261124054832567-note-r-2128.jpg",
-   "source": "../../../../tmp/gl/s5/r-2128.jpg",
+   "time": "2026-11-24T06:14:11.857Z",
+   "file": "20261124061411857-note-d-1904.jpg",
+   "source": "../../../../tmp/gl/s5/d-1904.jpg",
    "kind": "note",
-   "label": "rise from 2128, draft, tree of the haze cure and the straight ramp law, every frame",
+   "label": "dive from 1904, draft, a6c484d6, every frame",
    "stop": "earth"
   },
   {
-   "time": "2026-11-24T05:48:31.359Z",
-   "file": "20261124054831359-note-r-2122.jpg",
-   "source": "../../../../tmp/gl/s5/r-2122.jpg",
+   "time": "2026-11-24T06:14:11.191Z",
+   "file": "20261124061411191-note-d-1896.jpg",
+   "source": "../../../../tmp/gl/s5/d-1896.jpg",
    "kind": "note",
-   "label": "rise from 2122, draft, tree of the haze cure and the straight ramp law, every frame",
+   "label": "dive from 1896, draft, a6c484d6, every frame",
    "stop": "earth"
   },
   {
-   "time": "2026-11-24T05:48:30.190Z",
-   "file": "20261124054830190-note-r-2116.jpg",
-   "source": "../../../../tmp/gl/s5/r-2116.jpg",
+   "time": "2026-11-24T06:14:10.533Z",
+   "file": "20261124061410533-note-d-1890.jpg",
+   "source": "../../../../tmp/gl/s5/d-1890.jpg",
    "kind": "note",
-   "label": "rise from 2116, draft, tree of the haze cure and the straight ramp law, every frame",
+   "label": "dive from 1890, draft, a6c484d6, every frame",
    "stop": "earth"
   }
  ]
