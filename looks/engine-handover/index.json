@@ -1,9 +1,23 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T05:34:06.624Z",
- "head": "558db828149fa63f3fc84af90852fe009eb5913a",
- "note": "the bend: an engine option proven on Mars (lowest 1.05, judge green); Mars's own tree read: its bend holds (1.025), but its close set's border shows 2683 to 2687 and the change of view at 2688 is a cut",
+ "pushed": "2026-11-24T05:42:49.553Z",
+ "head": "3aa0a862a73995f136c2f85d0074152d4859531f",
+ "note": "Mars shelf 2698 to 2726 measured on main; every stop has its seam line by mail; next the law tool onto the judge's measure",
  "looks": [
+  {
+   "time": "2026-11-24T05:38:23.503Z",
+   "file": "20261124053823503-note-shelf-1.jpg",
+   "source": "../../../../tmp/bend/shelf-1.png",
+   "kind": "note",
+   "label": "main's Mars rise, draft, 2707 to 2715 one by one: the detailed patch shrinks inside the soft globe"
+  },
+  {
+   "time": "2026-11-24T05:38:22.868Z",
+   "file": "20261124053822868-note-shelf-three.jpg",
+   "source": "../../../../tmp/bend/shelf-three.png",
+   "kind": "note",
+   "label": "MAIL 518, the shelf: main's Mars rise, draft, 2702, 2712, 2720: fine plates fill the frame at 2702, by 2712 they are a patch inside the softer globe (their border in the frame from 2709), the limb enters at 2720"
+  },
   {
    "time": "2026-11-24T05:34:05.967Z",
    "file": "20261124053405967-note-mars-7.jpg",
@@ -48,21 +62,6 @@
    "source": "../../../../tmp/bend/after-7.png",
    "kind": "note",
    "label": "the engine bend on Mars's tree of 04:37 (60 frames, track to the right, turn 170), draft, frames 2669 to 2677: the seam at 2670, no frame stands out"
-  },
-  {
-   "time": "2026-11-24T05:02:13.672Z",
-   "file": "20261124050213672-note-seam-all.jpg",
-   "source": "../../../../tmp/lines/seam-all.png",
-   "kind": "note",
-   "label": "d196 seam tool on main 4840d0f9: eye speed over height at all 17 seams with a surface view, drawn camera; thick lines dip below 0.95"
-  },
-  {
-   "time": "2026-11-24T04:46:16.989Z",
-   "file": "20261124044616989-note-dent-mars.jpg",
-   "source": "../../../../tmp/lines/dent-mars.png",
-   "kind": "note",
-   "label": "MAIL 518: the eye's speed over its height across the seam into Mars's rise, rate 2, three trees (a chart, no render)",
-   "stop": "mars"
   }
  ]
 }
