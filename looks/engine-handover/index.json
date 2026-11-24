@@ -1,9 +1,17 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T15:55:48.530Z",
- "head": "5b38b9ead6a50ef4b3ca4a80c5c7367edbd7f24d",
- "note": "MAIL 682: Mars and Venus read both ways (all four moves pass both ways; Venus in place 3.3 and 3.8, a change of the look by height the mean of the body reads smaller); Neptune rendering, four stops to go",
+ "pushed": "2026-11-24T16:11:07.532Z",
+ "head": "46e6a5606c9d9e80d335737a691ae27c49933b41",
+ "note": "MAIL 682: the table of both readings of the body step. Neptune renders (slow, 35 s a draft), Saturn next, then the one mail",
  "looks": [
+  {
+   "time": "2026-11-24T16:11:05.818Z",
+   "file": "20261124161105818-note-neptune-dive-4704-4734.jpg",
+   "source": "out/work/inplace/sheets/neptune-dive-4704-4734.png",
+   "kind": "note",
+   "label": "MAIL 682 table, neptune dive as on main, drafts 4704 to 4732 every second frame (the look of the ground changes between 4716 and 4728; both readings follow when the run ends)",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T15:53:08.963Z",
    "file": "20261124155308963-compare-venus-rise-step-in-place.jpg",
@@ -68,16 +76,6 @@
    "stop": "jupiter",
    "segment": "jupiter.rise",
    "frame": 3258
-  },
-  {
-   "time": "2026-11-24T15:16:27.125Z",
-   "file": "20261124151627125-compare-earth-rise-step-body.jpg",
-   "source": "out/work/handover/earth-rise-step-body.png",
-   "kind": "compare",
-   "label": "earth rise, the largest step of the mean level of the body (7.5): frame 2123, frame 2124, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2124
   }
  ]
 }
