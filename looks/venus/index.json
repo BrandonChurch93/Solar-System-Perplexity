@@ -1,9 +1,41 @@
 {
  "folder": "venus",
- "pushed": "2026-11-24T22:56:30.110Z",
+ "pushed": "2026-11-24T23:25:28.497Z",
  "head": "a7f38721691403c340c6edc614dfd57b3bf0cd9a",
- "note": "MAIL 788: the dive of b0b87889 beside a7f38721 at equal eye height; b0 is the better picture from 0.3 radii down (no pale band on the limb, no straight borders of T)",
+ "note": "MAIL 788: states between b0b87889, main and the named commit at dive 1308, 1317, 1335",
  "looks": [
+  {
+   "time": "2026-11-24T23:25:27.414Z",
+   "file": "20261124232527414-note-q1308.jpg",
+   "source": "../../../../tmp/v/cmp/st/q1308.jpg",
+   "kind": "note",
+   "label": "dive 1308 at 0.22 radii: b0b87889 is the crisper picture",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T23:25:26.329Z",
+   "file": "20261124232526329-note-q1335.jpg",
+   "source": "../../../../tmp/v/cmp/st/q1335.jpg",
+   "kind": "note",
+   "label": "dive 1335: b0b87889, main, 5e14f1f2, named; the frame of T shows as straight lines lower right in all but b0",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T23:25:25.600Z",
+   "file": "20261124232525600-note-four1317-top.jpg",
+   "source": "../../../../tmp/v/cmp/st/four1317-top.jpg",
+   "kind": "note",
+   "label": "dive 1317 top of frame, from the top: b0b87889, main, named a7f38721, in hand",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T23:25:24.447Z",
+   "file": "20261124232524447-note-f1317.jpg",
+   "source": "../../../../tmp/v/cmp/st/f1317.jpg",
+   "kind": "note",
+   "label": "dive 1317 in every state from main to the named commit: the pale limb band came with 28d713f6",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T22:56:29.186Z",
    "file": "20261124225629186-note-y1317-limb.jpg",
@@ -35,42 +67,6 @@
    "kind": "note",
    "label": "dive at equal eye height 0.09 and 0.07 radii, b0b87889 left, a7f38721 right",
    "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T22:33:24.528Z",
-   "file": "20261124223324528-note-base-dive-changes.jpg",
-   "source": "../../../../tmp/v/base-dive-changes.png",
-   "kind": "note",
-   "label": "venus dive of main b0b87889 (the build of 06:36 UTC), its own smooth report at rate 2: pattern 0.82 at 1332 + 1/2, 17 over; largest pop 1.11",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T22:03:11.943Z",
-   "file": "20261124220311943-note-e1585-1604.jpg",
-   "source": "../../../../tmp/v/shD/e1585-1604.jpg",
-   "kind": "note",
-   "label": "rise 1585 to 1604 with the pull back, handover run, draft",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T22:03:10.988Z",
-   "file": "20261124220310988-note-seam-XE.jpg",
-   "source": "../../../../tmp/v/shD/seam-XE.jpg",
-   "kind": "note",
-   "label": "seam 1604 1605 1612, above before, below with the pull back",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T21:55:08.061Z",
-   "file": "20261124215508061-sheet-venus-rise-top.jpg",
-   "source": "out/work/handover/venus-rise-top.png",
-   "kind": "sheet",
-   "label": "venus rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 1539), place picture off, draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1539,
-   "last": 1604,
-   "tier": "draft"
   }
  ]
 }
