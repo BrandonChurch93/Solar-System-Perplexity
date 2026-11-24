@@ -3283,3 +3283,56 @@ is in the picture at 3 to 12 px, and the same crispness for the far ring across 
   uploads, createBuffer, createFramebuffer, createRenderbuffer, createVertexArray. The grains write their
   two instance buffers in place every frame (update ranges, no new buffer); no texture is uploaded per frame
   by the skim.
+
+### 06:37 to 06:55 UTC: MAIL 546, main b0b8788 merged (c8ca94e), the rise's pictures on 589fd9a
+
+- MAIL 546 (06:37): main is b0b87889e1af276ed3b9543373ac1346744925dc: the centred sample pattern (c2aaa84d:
+  draft pictures the same to the byte, review and final pictures move as a whole 0.09 px left and 0.035 px
+  up, so no final equals a kept still to the byte) and the plan check in tools/lib/pace.ts (191dded2).
+  Attached: my two judged frames as PNG, made on main's engine with the new pattern and nothing of my stop
+  changed (/tmp/v/ref): 3465 sha256 21f107a66c0cb0318b1d070d25e6f605cf7c603a97b9c217c2c551381ac3a42a, 3720
+  sha256 6c4e4e1061c931ac7b0cbd246ef89b6e3d5339b964f88e28c2f0774dcd8b0679 (main's picture of today, not the
+  kept still and not my head's). "Where your stop leaves a judged frame alone, your final must give these
+  bytes." "Where you change a judged frame on purpose, say so in the NAMED mail as before." NAMED by 08:30.
+- MERGED as c8ca94eb4d524367af5303b2c09d93239482bb79 (no conflict, nothing in my folders imports
+  director/pace). tsc exit 0, build exit 0, vitest without the three tests that open a browser (skylift-gl,
+  globe-gl, globe-cap): 42 files, 394 tests pass. Pushed 06:39. The three go with job W when the renderer
+  is free. Before it, 9eb7c84 (merge of the status commit e3320e5) and b006082 (notebook).
+- JOB PLAN: job V (589fd9a) is stopped after its dive pictures; job W (/tmp/v/job_w.sh, /tmp/v/r37) runs on
+  c8ca94e: finals 3465 and 3720 with their sha256, path, parity, gate, G5 and G17, the whole vitest, the
+  draft sample of the head and of main b0b8788, handover, G13. The draft frames of 589fd9a stay for the
+  hash proof (the T sheet frames 3842 and 3852 are in the new sample).
+- 3465 AND 3720 CHANGE ON PURPOSE against main (main holds a359a4b's Saturn): 3465 by the sky picture of the
+  hold without the baked grain (mail 448) and ruling (a) (the map rigid on the globe, 0.0045 of the body's
+  pixels by 1 level); 3720 by the sky look. The pairs go into the mail with those lines.
+- RISE PICTURES on 589fd9a (/tmp/v/r36/saturn-rise.md): "VERDICT: red. 2 numbers over the limit or not
+  measured." "RED pop score 1.63 from frame 3895 + 1/2 to the next, limit 1.2 (11 frames over it, first
+  3875)"; "RED the pattern of the picture changes in place by 0.50 from frame 3859 to 8 film frames later,
+  limit 0.45 (5 frames over it, first 3858 + 1/2)". Largest level step 0.06 at 3849 (limit 1.3). Change in
+  place 26.0 from 3868 + 1/2 at 1196, 728, shown. Ground beside it: change 11.3, pattern 0.16.
+  - The pops over the limit: 3875 (1.21, one capture frame) and 3891 to 3896 (1.26 to 1.63, ten capture
+    frames): the travel leaving its rest (what is left 0.43 in the rest 3884 to 3888, 1.5 once it moves,
+    over a median of 0.81); MAIL 387 keeps my rise from being shaped against it. The judge's panel shows the
+    four largest, all 3892 to 3896: what is left lies along the ring edges and where stars show through the
+    outer ring.
+  - 3871 to 3876 (1.09 to 1.21): what is left has a hump there (2.45 at 3870, 2.86 at 3874, 2.34 at 3877 +
+    1/2) while the motion falls evenly (5.7 to 2.9 px). By blocks (/tmp/v/popmap.py, my own flow): the bottom
+    strip x 720 to 1080 (blocks 6,8 to 8,8, plus 8 to 14 over their own median of 8): the bright near ring
+    slides out over the bottom frame edge and the division comes in there from 3874 (looks: crops 3870 to
+    3877). Nothing snaps or comes in by a blend.
+  - The pattern over the limit: 3858 + 1/2 (0.48), 3859 (0.50), 3859 + 1/2 (0.48), 3863 (0.49), 3863 + 1/2
+    (0.454); 3808 is 0.448 now. The judge's panel of 3859: the white lies on the shaded ring at the bottom
+    right (x about 1240 to 1490, y 940 to 1079), where the star cloud of the film's sky shows through the
+    ring inside the globe's shadow: two layers that move apart (the ring and the sky behind it), so the
+    pattern in place changes. Item 4 of the list (stars through the shaded rings).
+- FOUND ON THE WAY (out/scratch/posew.ts 3810 3886): the lens passes the hero pose at 1.444 radii at 3858, so
+  the pose weight of the kept set (heroRange 0.6 to 1.6) comes back to 0.065 from 3852 to 3866 (0.009,
+  0.032, 0.054, 0.065, 0.061, 0.045, 0.023, 0.005 on the even frames) and leaves again. The sky's proof
+  keeps the hero's sky out (reach 1.2, nearest 1.258) but the look's range is wider. A blend by distance
+  that comes and goes: to be measured (a frame with the weight held at 0 against the head) and closed, by a
+  far end of the range under 1.44 or by the same wall for the look as for the sky. In the list.
+- 06:55 UTC: the chain is /tmp/v/chain2.sh now (log /tmp/v/r37.log): after the dive pictures of job V it
+  renders 3854 and 3859 at draft in the scratch tree twice (/tmp/v/r38/a with heroRange as kept, /tmp/v/r38/b
+  with the far end at 1.4, so the pose weight stays 0 through the rise) to measure what the returning pose
+  weight puts into the picture, then job W on c8ca94e as planned. The scratch tree holds a copy of the head;
+  nothing of the test is in the repo.
