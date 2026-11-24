@@ -1,71 +1,71 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T07:39:36.230Z",
+ "pushed": "2026-11-24T07:58:25.667Z",
  "head": "3a80ff40b8a33d6c31147071fcbbb467fabee6b2",
- "note": "new path with the engine's bend: rise T frames 2090 to 2104 every frame, samples of dive and rise; limb line colour change at 2100 against 2101 still there",
+ "note": "new path: T frames of dive and rise every frame, dive 1866 to 1924, rise 2090 to 2145, bent surface frames; known: plate oval with a border, limb line colour at T, sky picture changes beside the limb",
  "looks": [
   {
-   "time": "2026-11-24T07:39:35.331Z",
-   "file": "20261124073935331-note-sample-rise2.jpg",
-   "source": "../../../../tmp/gl/s7/sample-rise2.jpg",
+   "time": "2026-11-24T07:58:25.028Z",
+   "file": "20261124075825028-note-bend-a.jpg",
+   "source": "../../../../tmp/gl/s7/bend-a.jpg",
    "kind": "note",
-   "label": "new path, rise samples 2105 to 2174",
+   "label": "surface view with the engine's bend: odd frames 2063 to 2089, 2090, 2095, draft",
    "stop": "earth"
   },
   {
-   "time": "2026-11-24T07:39:34.443Z",
-   "file": "20261124073934443-note-sample-dive2.jpg",
-   "source": "../../../../tmp/gl/s7/sample-dive2.jpg",
+   "time": "2026-11-24T07:58:24.434Z",
+   "file": "20261124075824434-note-rise-d.jpg",
+   "source": "../../../../tmp/gl/s7/rise-d.jpg",
    "kind": "note",
-   "label": "new path, dive samples 1830 to 1919",
+   "label": "new path, rise every frame 2133 to 2145, then 2150 2155 2160, draft",
    "stop": "earth"
   },
   {
-   "time": "2026-11-24T07:39:33.163Z",
-   "file": "20261124073933163-note-tcrop-rise-mid.jpg",
-   "source": "../../../../tmp/gl/s7/tcrop-rise-mid.jpg",
+   "time": "2026-11-24T07:58:23.842Z",
+   "file": "20261124075823842-note-dive-c.jpg",
+   "source": "../../../../tmp/gl/s7/dive-c.jpg",
    "kind": "note",
-   "label": "new path, rise T: ground band 2097 to 2104 with differences times 4",
+   "label": "new path, dive every frame 1890 to 1909, draft",
    "stop": "earth"
   },
   {
-   "time": "2026-11-24T07:39:31.718Z",
-   "file": "20261124073931718-note-tcrop-rise-top.jpg",
-   "source": "../../../../tmp/gl/s7/tcrop-rise-top.jpg",
+   "time": "2026-11-24T07:58:23.236Z",
+   "file": "20261124075823236-note-dive-b.jpg",
+   "source": "../../../../tmp/gl/s7/dive-b.jpg",
    "kind": "note",
-   "label": "new path, rise T: top of frame 2092 to 2102 with differences times 4 (limb line changes colour at 2100 against 2101)",
+   "label": "new path, dive every frame 1878 to 1889, draft (plate as a hazier darker oval round the glint)",
    "stop": "earth"
   },
   {
-   "time": "2026-11-24T07:39:30.598Z",
-   "file": "20261124073930598-note-T-rise.jpg",
-   "source": "../../../../tmp/gl/s7/T-rise.jpg",
+   "time": "2026-11-24T07:58:22.637Z",
+   "file": "20261124075822637-note-dive-a.jpg",
+   "source": "../../../../tmp/gl/s7/dive-a.jpg",
    "kind": "note",
-   "label": "new path, rise T: every frame 2090 to 2104, draft",
+   "label": "new path, dive every frame 1866 to 1879 (and 1860, 1865), draft",
    "stop": "earth"
   },
   {
-   "time": "2026-11-24T07:28:41.811Z",
-   "file": "20261124072841811-note-n2130.jpg",
-   "source": "../../../../tmp/gl/s7/n2130.jpg",
+   "time": "2026-11-24T07:46:37.886Z",
+   "file": "20261124074637886-note-rise-c.jpg",
+   "source": "../../../../tmp/gl/s7/rise-c.jpg",
    "kind": "note",
-   "label": "new path, rise 2130, draft: the place is a darker oval with a border one can follow (known fault)",
+   "label": "new path, rise 2118 to 2123 large",
    "stop": "earth"
   },
   {
-   "time": "2026-11-24T07:28:40.420Z",
-   "file": "20261124072840420-note-sample-dive.jpg",
-   "source": "../../../../tmp/gl/s7/sample-dive.jpg",
+   "time": "2026-11-24T07:46:36.973Z",
+   "file": "20261124074636973-note-rise-b.jpg",
+   "source": "../../../../tmp/gl/s7/rise-b.jpg",
    "kind": "note",
-   "label": "new path, dive 1840 1860 1870 1880 1890 1900 1910, draft, same tree",
+   "label": "new path, rise every frame 2121 to 2135 and 2140, draft (plate as a hazier oval from 2121, sky picture changes beside the limb 2129 to 2133)",
    "stop": "earth"
   },
   {
-   "time": "2026-11-24T07:28:38.743Z",
-   "file": "20261124072838743-note-sample-rise.jpg",
-   "source": "../../../../tmp/gl/s7/sample-rise.jpg",
+   "time": "2026-11-24T07:46:35.675Z",
+   "file": "20261124074635675-note-rise-a.jpg",
+   "source": "../../../../tmp/gl/s7/rise-a.jpg",
    "kind": "note",
-   "label": "new path with the engine's bend, rise every tenth frame 2100 to 2170, draft, tree 3a80ff40 plus plan.ts and place.json not yet committed",
+   "label": "new path, rise every frame 2105 to 2120, draft",
    "stop": "earth"
   }
  ]
