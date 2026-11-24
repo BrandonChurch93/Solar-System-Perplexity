@@ -9,6 +9,7 @@ sys.path.insert(0, HERE)
 sys.path.insert(0, os.path.dirname(HERE))
 import geom
 import geo
+import pack
 
 W, H = 2816, 1584
 ML, MB, TAKE = 640, 396, 704
@@ -265,7 +266,7 @@ def main():
     dist = cv2.resize(lift[y0:y1, x0:x1], ((x1 - x0) // s, (y1 - y0) // s), interpolation=cv2.INTER_AREA).astype('<f4')
     for key in ('full', 'web'):
         os.makedirs(f'{PUB}/{key}', exist_ok=True)
-        dist.tofile(f'{PUB}/{key}/relief-lift.bin')
+        pack.write(f'{PUB}/{key}/relief-lift.bin', dist)
         cv2.imwrite(f'{PUB}/{key}/relief-masks.png', mk[..., ::-1], [cv2.IMWRITE_PNG_COMPRESSION, 9])
     Image.fromarray(full[..., ::-1]).save(f'{PUB}/full/relief-ground.webp', lossless=True, quality=70, method=4)
     Image.fromarray(web[..., ::-1]).save(f'{PUB}/web/relief-ground.webp', quality=93, method=6)

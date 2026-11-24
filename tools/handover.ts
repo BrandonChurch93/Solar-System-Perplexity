@@ -23,11 +23,11 @@ import { coverFrames } from '../src/director/timeline'
 //   --parts across,before,after picks the sheets (all three when not given; the one across T is made first)
 //   The frames part (and --only path, the same without pictures) also reports the capped shutter of E6: per frame the share of the film's shutter
 //   that is open, the motion left across it (centre, edge, most) and the motion to the next frame; judged: no frame keeps more than it may.
-//   The frames part judges the step between two frames on the mean of the body (handover.limits.levelStep, colourStep) and shows beside it the
-//   same step in place, on the ground both frames show (tools/img/handover.py, op inPlace): a frame that opens on a darker side of the body
-//   moves the mean, not the look of any ground. Both are held to the same limits and the report says what each would rule.
-//   --in-place makes the step in place the judged one for this run (tools/lib/steps.ts, IN_PLACE.judged, is the standing choice): the mean of
-//   the body then judges only the frames that share too little ground with the frame before to be read in place.
+//   The frames part reads the step between two frames two ways: on the mean of the body, and in place, on the ground both frames show
+//   (tools/img/handover.py, op inPlace): a frame that opens on a darker side of the body moves the mean, not the look of any ground. Both are
+//   held to the same limits (handover.limits.levelStep, colourStep) and the report says what each would rule.
+//   The step in place is the judged one (tools/lib/steps.ts, IN_PLACE.judged, is the standing choice; decision d238): the mean of the body
+//   judges only the frames that share too little ground with the frame before to be read in place. --in-place asks for that by hand.
 //   --gate-under makes the line "under the place picture" part of the verdict and of the exit code. Without it the line is judged against its
 //   limit and printed as a warning: it says how far a stop's plates are from its picture, and no stop is held up by it.
 // Everything is written to out/work/handover/. Exit 1 when a judged number of the verdict is over its limit in config.handover.limits.
@@ -472,10 +472,10 @@ async function frames(line: Line, withImages: boolean): Promise<{ rows: FrameRow
   if (dive && off.by > L.placeMiddle) why.push('the place leaves the middle of the frame: frame ' + off.frame + ' has it at ' + round(off.by, 2) + ' of the half frame, limit ' + L.placeMiddle)
   const judged: Record<string, unknown> = { meanRate: round(mean, 5), meanRatio: round(Math.exp(-mean * sign), 5), worstRate: { frame: worst.frame, overMean: round(worst.over, 3) }, early: { frame: fifth, overMean: round(early / mean, 3) }, placeOff: { frame: off.frame, share: round(off.by, 3), from, to } }
   if (withImages) {
-    // The steps between two frames (tools/lib/steps.ts). Judged on the mean of the body alone (the blocks the body covers in both frames' own
-    // grids), so a globe that grows into a black sky or leaves it is not read as a cut; the whole frame steps are reported beside them. Shown
-    // beside them, held to the same limits, and judged in their place with --in-place: the same step in place, on the ground both frames show
-    // (FrameRow.inPlace).
+    // The steps between two frames (tools/lib/steps.ts). Read on the mean of the body alone (the blocks the body covers in both frames' own
+    // grids), so a globe that grows into a black sky or leaves it is not read as a cut; the whole frame steps are reported beside them. Read
+    // beside them, held to the same limits, and judged where IN_PLACE.judged or --in-place says so: the same step in place, on the ground
+    // both frames show (FrameRow.inPlace).
     const found = frameSteps(rows.map((r) => ({ frame: r.frame, level: r.level!, colour: r.colour!, bodyShare: r.bodyShare!, bodyLevel: r.bodyLevel!, bodyColour: r.bodyColour!, flatShare: r.flatShare!, ...(r.inPlace ? { inPlace: r.inPlace } : {}) })), { bodyShare: L.bodyShare, levelStep: L.levelStep, colourStep: L.colourStep, flatShare: L.flatShare, inPlaceShare, inPlace: judgeInPlace })
     why.push(...found.why)
     const { level, colour, whole, wholeColour, flat } = found

@@ -13,8 +13,9 @@
 
 // The reading in place. The pictures are laid over each other at a quarter of their size and a pair is read in place where the frame before
 // shows at least half of this frame's body (handover.limits.inPlaceScale and inPlaceShare replace the two numbers where the config names
-// them). `judged` says which reading the report judges when it is not asked by --in-place: false, the mean of the body.
-export const IN_PLACE = { scale: 0.25, share: 0.5, judged: false }
+// them). `judged` says which reading the report judges: true, the step in place (decision d238). Were it false, the mean of the body would
+// judge and --in-place would ask for the step in place for one run.
+export const IN_PLACE = { scale: 0.25, share: 0.5, judged: true }
 
 export interface StepRow {
   frame: number

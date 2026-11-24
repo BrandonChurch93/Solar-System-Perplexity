@@ -6,8 +6,10 @@ import numpy as np
 from PIL import Image
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.append(str(Path(__file__).resolve().parent.parent / 'relief'))
 import geom as g
 from layback import WORK, centre, layback
+import pack
 
 FULL = g.ROOT / 'public/assets/earth/full'
 
@@ -23,7 +25,7 @@ def towers(plate_deg, size, c=None):
     box = t['box']
     rgba = np.asarray(Image.open(FULL / t['file']).convert('RGBA').resize((box[2], box[3]), Image.LANCZOS)).astype(np.float64)
     dw, dh = t['distSize']
-    lift = np.fromfile(FULL / t['dist'], dtype=np.float32).reshape(dh, dw)
+    lift = pack.unpack(FULL / t['dist'], (dh, dw))
     lift = cv2.resize(lift, (box[2], box[3]), interpolation=cv2.INTER_LINEAR)
     ys, xs = np.nonzero(rgba[..., 3] > 8)
     d = g.ray(box[0] + xs + 0.5, box[1] + ys + 0.5)
