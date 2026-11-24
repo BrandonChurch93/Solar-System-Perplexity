@@ -1,9 +1,37 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T07:25:37.318Z",
- "head": "b6df4bac8d6959b4b867bac18a86a3a8cbc1ef6f",
- "note": "job W on the merged head: finals against the new pattern, parity green; the dive's pattern places traced",
+ "pushed": "2026-11-24T07:46:38.298Z",
+ "head": "2ab7243b7cb5e5e5f741ae6a763952e15a1f5b22",
+ "note": "merged main 8b2c538 (take C); finals, path and parity on the merged head equal to the proofs before; vitest, handover, G13 running; NAMED mail next",
  "looks": [
+  {
+   "time": "2026-11-24T07:46:37.410Z",
+   "file": "20261124074637410-note-parity_2ab7243.jpg",
+   "source": "../../../../tmp/v/r39/parity_2ab7243.png",
+   "kind": "note",
+   "label": "saturn parity picture of the smooth report on head 2ab7243 (verdict green)"
+  },
+  {
+   "time": "2026-11-24T07:46:36.752Z",
+   "file": "20261124074636752-note-limb_head_main.jpg",
+   "source": "../../../../tmp/v/r37/limb_head_main.png",
+   "kind": "note",
+   "label": "saturn 3573 and 3576 draft, top limb at the pole times 4, head against main: the dark single pixels inside the limb are in main too"
+  },
+  {
+   "time": "2026-11-24T07:46:35.629Z",
+   "file": "20261124074635629-note-final_3720.jpg",
+   "source": "../../../../tmp/v/r39/final_3720.png",
+   "kind": "note",
+   "label": "saturn 3720 surface view, final tier, head 2ab7243 on main 8b2c538 (equal bytes to the final of c8ca94e)"
+  },
+  {
+   "time": "2026-11-24T07:46:34.572Z",
+   "file": "20261124074634572-note-final_3465.jpg",
+   "source": "../../../../tmp/v/r39/final_3465.png",
+   "kind": "note",
+   "label": "saturn 3465 hold, final tier, head 2ab7243 on main 8b2c538 (equal bytes to the final of c8ca94e)"
+  },
   {
    "time": "2026-11-24T07:25:36.237Z",
    "file": "20261124072536237-note-dive_layout.jpg",
@@ -31,34 +59,6 @@
    "source": "../../../../tmp/v/r36/pat_dive_two.png",
    "kind": "note",
    "label": "dive: the two late places of the pattern red by my copy of the judge's map, 3587 + 1/2 (top) and 3580 (bottom)"
-  },
-  {
-   "time": "2026-11-24T07:25:32.423Z",
-   "file": "20261124072532423-note-diff_3720_x8.jpg",
-   "source": "../../../../tmp/v/r37/diff_3720_x8.png",
-   "kind": "note",
-   "label": "3720 final: difference of head against main's PNG, times 8"
-  },
-  {
-   "time": "2026-11-24T07:25:31.474Z",
-   "file": "20261124072531474-note-pair_3720.jpg",
-   "source": "../../../../tmp/v/r37/pair_3720.jpg",
-   "kind": "note",
-   "label": "surface view 3720 final: the Builder's PNG of main (left) and head c8ca94e (right)"
-  },
-  {
-   "time": "2026-11-24T07:25:30.474Z",
-   "file": "20261124072530474-note-pair_3465.jpg",
-   "source": "../../../../tmp/v/r37/pair_3465.jpg",
-   "kind": "note",
-   "label": "hold 3465 final: the Builder's PNG of main (left) and head c8ca94e (right)"
-  },
-  {
-   "time": "2026-11-24T07:08:49.171Z",
-   "file": "20261124070849171-note-pat3859.jpg",
-   "source": "../../../../tmp/v/r36/pat3859.png",
-   "kind": "note",
-   "label": "rise 3859 against 3867, my copy of the judge's pattern map: red is over 0.45, on the shaded inner ring at the bottom"
   }
  ]
 }
