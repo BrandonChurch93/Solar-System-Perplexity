@@ -1,9 +1,33 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T07:49:40.868Z",
+ "pushed": "2026-11-24T08:01:35.088Z",
  "head": "b9c472dcb3c21b8ad6db203bd2872116352421e0",
- "note": "cure A v5: both sides one ground at T (2476 against 2477, 2682 against 2681); from above a dark wedge with straight sides, being cured",
+ "note": "cure A v6: one ground at T on both sides; from above a soft dark stain with the close view's streaks; proofs running",
  "looks": [
+  {
+   "time": "2026-11-24T08:01:34.489Z",
+   "file": "20261124080134489-note-G-crop.jpg",
+   "source": "out/work/place/see/G-crop.jpg",
+   "kind": "note",
+   "label": "cure A v6 (in proof, not yet committed): G-crop; fan border wanders, made ground takes the fan's tone",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T08:01:33.925Z",
+   "file": "20261124080133925-note-G2.jpg",
+   "source": "out/work/place/see/G2.jpg",
+   "kind": "note",
+   "label": "cure A v6 (in proof, not yet committed): G2; fan border wanders, made ground takes the fan's tone",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T08:01:33.075Z",
+   "file": "20261124080133075-note-G1.jpg",
+   "source": "out/work/place/see/G1.jpg",
+   "kind": "note",
+   "label": "cure A v6 (in proof, not yet committed): G1; fan border wanders, made ground takes the fan's tone",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T07:49:40.254Z",
    "file": "20261124074940254-note-F3.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/place/see/C2.jpg",
    "kind": "note",
    "label": "cure A v3 (not committed): C2, globe side before and after against the close side at T",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T07:33:01.499Z",
-   "file": "20261124073301499-note-C1.jpg",
-   "source": "out/work/place/see/C1.jpg",
-   "kind": "note",
-   "label": "cure A v3 (not committed): C1, globe side before and after against the close side at T",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T07:29:54.987Z",
-   "file": "20261124072954987-note-B-crop.jpg",
-   "source": "out/work/place/see/B-crop.jpg",
-   "kind": "note",
-   "label": "cure A v2 (not committed): B-crop, country holds the close view's aprons",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T07:29:54.186Z",
-   "file": "20261124072954186-note-Bw.jpg",
-   "source": "out/work/place/see/Bw.jpg",
-   "kind": "note",
-   "label": "cure A v2 (not committed): Bw, country holds the close view's aprons",
    "stop": "mars"
   }
  ]
