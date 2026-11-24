@@ -4943,3 +4943,164 @@ RED, known and named:
 NEXT, unless you rule otherwise: within MAIL 429 (4860 may move in its far field) I move the place about 2.3 units across the band (3.2 degrees), so that the scene's streamer lies on the south edge of the map's band: dark near deck on the map's dark, pale plain and streamers on the map's white band, the map's vortex the wide dark zone behind the eye. The hold keeps its aim and its bytes, the near picture of 4860 stays, the end of the dive moves 3 degrees. First as a trial of one number (the map shifted under the scene), measured by pairs, before any path moves. Then the law from 2.0 radii, then the rise. Looks pushed 14:14 (cb03fea6) and 14:37 (9624e0a0, the two pictures laid on one ground).
 
 Parity: the run was stopped by me at 14:38 (16 by 9 part drawn, 4 times format at its fourth frame, 4748, after 15 minutes). No number.
+
+## MAIL 688 from /root, read 14:40 UTC 24 Nov (high priority), word for word
+
+MAIL 688 from the Builder (/root) to neptune_builder. RECEIVED: NAMED b8a38cbe7be49c70b1e86c1f6851cf002068941f on agent/neptune-place, the first fix for the exchange, inside its time. No stop, carry on.
+
+1. Where it goes. Round 42 (Neptune, round 1 of 3 of the second note) was started at 13:10 UTC on main 2bc36ce6, which holds your third commit. Its machine checks are still running; its measures, its smooth report, the pack and the critics follow. The two red lines of the pattern (1.12 at 4723, 1.47 at 4980 + 1/2) are severe issues of that round as they stand. What you named now is your fix for round 2 of 3. Nothing of it goes onto main before round 42's answers are with you; then you name the state you have, once, with the critics' issues worked in.
+
+2. The cause and the fix are right in kind: one map beyond the place, read by the globe's own lines, and the place coming in by the eye's height alone. Keep it.
+
+3. NEXT as you propose: yes. Move the place about 2.3 units across the band so that the scene's tones lie on the map's tones (dark deck on the map's dark, pale plain and streamers on the white band, the vortex as the dark zone behind the eye). First the trial of one number, measured by pairs, then the path, then the law from 2.0 radii, then the rise. Bound by: 4605 to the byte; the near picture of 4860 stays and what moves in its far field is named with a pair beside the approved close image (MAIL 429); nothing reads the clock; the end of the dive may move the 3 degrees, shown on a sheet of the last 24 frames of the dive against the present ones.
+
+4. With it, in this order when the exchange is cured: the lilac the map's band leaves over the dark near deck (4740, 4972), the limb on the right at 4740 to 4748, the cyan dab and the hard white patch of the map in 4860, the warm specks on the night side at 4988 and 4996 (find what draws them). The grade of the fall as text in two files becomes one. The hump at 4693 to 4700 and G15 are owed with the parity on the next named commit.
+
+5. Your numbers are a proxy and are read as STATED. When you name for round 2, the machines run the report; you need not hold your own VM with the tool's whole run.
+
+## 24 Nov, 14:39 to 14:50 UTC: the trial of one number, then the place itself
+
+1. The trial (work only, never committed): the map turned under the scene about the scene's e1 by far.shift units, in the
+   scene's shader alone. Sign by the map alone at 4860: plus 2.3 puts the camera over the map's dark south and the white
+   band beyond the first streamer; minus 2.3 goes the wrong way.
+2. SEEN with the map shifted 2.3 (sheets s23-a, s23-b; committed state above, shifted below, 4732, 4740, 4748, 4860, 4972,
+   4980): no lilac band over the near deck at 4740 and 4972, the near deck is dark on dark; the map's white band lies
+   behind the first streamer across the plain of the eye; in 4860 the hard white patch above the eye and the cyan dab at
+   the upper left are gone, long white bands stand by the limb instead (nearer to the approved image's far bands).
+3. MEASURED on the trial, and why the numbers do not count: 4732 0.74, 4740 1.17 (at the limb, upper left), 4964 0.98,
+   4972 0.97. In the trial only the scene's map is shifted, the globe's is not, and between 16 and 26 degrees from the
+   place the scene gives way to the globe: at 0.076 radii the horizon stands at 21.7 degrees, inside that border, so the
+   far field showed two maps 3 degrees apart. The trial proves the tones, not the pairs. The place itself has to move.
+4. The place itself (MAIL 688 point 3: yes): band.ts (new) holds the scene's ground frame, once (deep.ts took it from its
+   own lines before), and the turn of the place, move.json place.across 2.3 units about e1. plan.ts: onGlobe is the fit's
+   toWorld times that turn, so the scene and the camera of the surface view turn as one body and the engine's one move
+   flies the eye to where the place stands. deep.ts: the scene's own things keep the Sun they were made in (the globe's
+   Sun turned back by the turn of the place), the far look is lit by the globe's own Sun (uFarSun).
+   Poses (weave.ts): 4605, 4613 and 4680 keep their position to the last digit; the point under the eye moves 0.09
+   degrees at 4688, 1.02 at 4704, 2.06 at 4716, 2.86 at 4732, 3.10 at 4748, 3.14 at 4756; heights change by under 0.6
+   percent. The rise leaves from the moved place: 3.15 at 4964, 2.67 at 4988, 1.07 at 5004.
+   The globe's shader text keeps its hashes. tsc clean.
+
+## 24 Nov, 14:50 to 15:07 UTC: the moved place measured, my proxy corrected, the path found again
+
+1. MEASURED on the moved place with my pose proxy (preview draft, pairs 8 film frames apart, limit 0.45; dir p23): 4700
+   0.21, 4708 0.37, 4716 0.28, 4724 0.56, 4732 0.83 (at 1564, 836), 4740 1.24 (at 656, 72, by the limb), 4748 1.53 (at
+   1384, 296); rise 4964 0.98, 4972 0.94, 4980 0.80, 4988 0.49, 4996 0.15. 4605 at preview draft: the same bytes (sha256
+   begins 9ef19839).
+2. SEEN (sheet p23-a: 4724, 4732, 4740, 4748, 4756, 4860): it reads as one place seen closer. The map's white band becomes
+   the pale plain with the eye, the first streamer stands on the band's south edge, the near deck is dark on dark, no lilac.
+   4860 beside the approved image (look-p23-4860.jpg): G17 median 1.382 (committed 1.331), the lower five eighths of the
+   frame differ from the committed one by 1.9 levels and less (the lower three eighths 0.09 and less), so the near picture
+   stays; the far field by the limb moved: the cyan dab and the hard white patch are gone, long white bands stand by the
+   limb at the upper left and a thin one at the right.
+3. MY PROXY WAS WRONG LOW DOWN, measured. Control: the head's scene (far look off, the old place) at 16 by 9 draft, 4740 to
+   4748: 0.59 (0.54 at preview), where the report itself gave 0.15 to 0.28 from 4729 + 1/2 on. So the proxy reads about
+   0.3 too much below 0.1 radii, at both formats. Cause: weave.py carries the later frame back on the unit sphere, and
+   what stands above the deck slides over it when the eye is low: the globe's cloud sheet at 1.004 radii (0.167 units of
+   the scene; at 10 units of distance it slides about 2 units between 4740 and 4748), the scene's streamers the same way.
+   Proof (weave.py, new env WEAVE_SHELL, the radius of the sphere to carry on): the moved place carried on the sheet reads
+   0.64, 0.57, 0.67 at 4732, 4740, 4748 where the deck gave 0.83, 1.24, 1.53; the head's scene carried on the sheet reads
+   1.03 where the deck gave 0.59. The report carries along the optical flows and follows whatever is seen.
+4. So a second proxy, the report's own way (work file out/work/nep/weave/chain.py): all nine whole film frames of a pair,
+   the report's own flows between neighbours, its change() and pattern(). 4740 to 4748 on the moved place: 0.35 (limit
+   0.45), the flows agree on 0.52 of the body. NOT the report: it flies half frames (16 flows a pair), my harness draws a
+   half frame as the whole frame before it (4740.5 has the bytes of 4740; 15 renders spent to learn that).
+   From here: the pose proxy above 0.3 radii (it met the report at 4696, 4708, 4723), the flow proxy below.
+5. THE PATH, measured with the report's own part (npm run smooth, only path, 2 s): with the place moved the dive was RED:
+   the speed of the picture at the place fell to 0.450 of its mean at 4759 and climbed again by 0.043 (limit 0.03); with
+   across 0 it is green (climb 0.013). tools/law.ts from the present law: all keys free gave a far law (lift power 1.125);
+   the turn alone (rise 0.4, fall 0.575) gave climb 0.018, steps 0.83 of the limit, and turns the line of sight by up to
+   2.3 degrees in mid dive; the fall of the pace alone, 0.275 for 0.325, gave climb 0.001, steps 0.84 of the limit, the
+   line of sight of every frame as before and the height at most an eighth more on the way (4707 0.953 for 0.926 radii,
+   4740 0.085 for 0.076, 4756 0.030 for 0.029). Taken: the pace (move.json one.dive.pace.fall 0.275). The report's path
+   part after it: green, dive and rise (dive climb 0.000 and 0.001, largest step 0.067 at 4761; rise fall before the
+   peak 0.016 and 0.019). tsc clean. Heights now: 4688 1.946, 4696 1.589, 4704 1.126, 4707 0.953, 4708 0.898, 4716
+   0.516, 4724 0.286, 4732 0.156, 4740 0.085, 4748 0.047, 4756 0.030, 4769 0.023.
+
+## 24 Nov, 15:07 to 15:33 UTC: the move committed and pushed, the law from 2.0 radii in trial
+
+All numbers of pairs here are MY PROXIES at preview draft, pairs 8 film frames apart, limit 0.45; not the report.
+
+1. The moved place with the new pace, the law as committed before (0.9 to 0.036 radii with its tail), every frame 4716 to
+   4756 (work dir q1). Flow proxy: 4716 0.19, 4724 0.33, 4732 0.40, 4740 0.36, 4748 0.27. Pose proxy above 0.3 radii:
+   4716 0.23, 4724 0.49. So the move alone brings every pair I can measure under or at the limit, where the named commit
+   had 0.39, 0.39, 0.68, 0.99 by the pose proxy (which over-reads low down, see the section before).
+2. COMMIT a9839f02 at 15:15 UTC, "Neptune: the place stands where the map's tones are the scene's tones": band.ts (new,
+   the ground and the turn of the place about its east line by move.place.across over fit.radius), move.json (place.across
+   2.3, one.dive.pace.fall 0.275), plan.ts (onGlobe is toWorld times that turn), deep.ts (the far look reads the Sun
+   unturned, the place the Sun turned with it). tsc clean, the shader's text the same but for the named lines, G11 pass,
+   the report's path part green, 4605 the bytes of before (sha256 begins 9ef19839). NOT run on it: tests, parity, G15, the
+   report's pictures. Pushed 15:30 UTC (6dd99c59..a9839f02).
+3. THE LAW FROM 2.0 RADII, first form (work dir q2, not committed): the place's own share even in the logarithm of the
+   height from 2.0 to 0.036 radii, no tail. Shader: nearAll by uFarHigh, own = nearAll times the ground's share, the
+   scene's share over the globe is the larger of uShow and own, so the place's own picture is drawn alone over the globe
+   above globe.height; set.ts lays the scene's mesh from 2.0 radii down (placed). The hold ends at 2.072 radii: 4605 the
+   same bytes.
+   Pose proxy: 4688 0.27, 4696 0.65 (the hump at the limb, 0.15 with a margin of 40 px, so not this law's), 4704 0.26,
+   4712 0.17, 4720 0.25. Flow proxy: 4716 0.29, 4720 0.06, 4724 0.13, 4728 0.13, 4732 0.19, 4736 0.30, 4740 0.46 RED,
+   4744 0.53 RED (largest at 1492, 664 of 1920: the plain right of the eye), 4748 0.32. Cost 4.2 to 8.5 s a frame at 4696
+   to 4728, 12 to 15 s at 4745: drawing the scene from 2.0 radii costs nothing I can measure.
+4. WHY the low pairs went red, found: the scene's plain right of the eye is smooth where the map's white band is torn.
+   The pattern number divides by the local contrast, so where a little of the map is left it is the whole pattern of that
+   ground, and when the last fifth of the map leaves in 12 frames (shares 0.21, 0.07, 0.01 at 4740, 4748, 4752) the pattern
+   of the plain is another one 8 frames on. What counts low down is by what factor the map's share shrinks between two
+   frames, not by how much.
+5. Laws compared by a table of the heights (x the logarithm of 2.0 over the height, to an end height of 0.026): the
+   largest step of the own share in 8 frames and the largest factor of the map's share in 8 frames, dive | rise: even:
+   0.14, without bound at the end; 1 less (1 less x) to 1.5: 0.17, 15 | 0.25, 24; to 2: 0.19, 7.6 | 0.32, 10; a pure
+   power of the height from 2.0: factor 1.9 | 2.2 but the own share is 0.52 at the judged 4707 and washes the globe's
+   storm there. TAKEN for the next trial (q3): two parts that meet with one slope. Above a knee at 0.156 radii (4732) the
+   map's share falls evenly with the logarithm of the height; below it as the height to the power 1.15; under 0.036 what
+   is left (0.05) goes evenly to none at 0.030, which stands over both changes of view (0.028, 0.027) and the surface
+   view (0.0232 to 0.0247). Map's share by it: 4688 0.99, 4696 0.93, 4704 0.83, 4707 0.78, 4712 0.69, 4716 0.60, 4720
+   0.52, 4724 0.43, 4728 0.34, 4732 0.26, 4736 0.18, 4740 0.13, 4744 0.09, 4748 0.06, 4752 0.05, 4754 0.02, 4756 0.00.
+   Rise: 4960 0.005, 4964 0.05, 4968 0.07, 4972 0.11, 4976 0.16, 4980 0.26, 4988 0.49, 4996 0.71, 5004 0.94, 5008 1.
+   deep.json far: height [2.0, 0.03], knee 0.156, tailPower 1.15, last 0.036. tsc clean, shader text check SAME.
+6. Looks pushed 15:32 UTC (de1090ca, 8 looks): the trial's dive 4696 to 4748 with its reds named, 4860 beside the approved.
+
+## 24 Nov, 15:33 to 16:05 UTC: the law in two parts measured, dive and rise; committed, main merged
+
+All numbers of pairs are MY PROXIES at preview draft (pairs 8 film frames apart, limit 0.45), not the report.
+
+1. The law in two parts (work dir q3; deep.json far: height [2.0, 0.03], knee 0.156, tailPower 1.15, last 0.036), every frame
+   4716 to 4764 and 4952 to 5012, with 4605, 4688, 4696, 4704, 4707, 4712, 4860. 672.9 s for 55 frames of the dive (12.2 s
+   a frame), 652.9 s for 62 frames with 4860 and the rise (10.5 s).
+   4605: the same bytes (sha256 begins 9ef19839).
+   DIVE, flows: 4716 0.34, 4720 0.06, 4724 0.13, 4728 0.16, 4732 0.20, 4736 0.23, 4740 0.34, 4744 0.29, 4748 0.30, 4752 0.27,
+   4756 0.26. Poses: 4688 0.27, 4696 0.65 RED (the hump at the limb; 0.17 with a margin of 40 px), 4704 0.28, 4712 0.22,
+   4716 0.51 (at 964, 788, where the flows read 0.34 at 968, 792).
+   What stands at 4716 (crop /tmp/crop-4716.jpg, q3 over q1): in the dark deck south of the place the map has a faint swirl
+   and the scene its own pale patches; between 4716 and 4724 the patches come in (own share 0.40 to 0.57). With the law of
+   a9839f02 the same spot reads later and higher by poses (4720 0.40, 4722 0.47 at 956, 816). Two pictures of low contrast
+   that differ in detail; the law only chooses where the step falls. Left as it is, said here.
+   RISE, flows: 4952 0.15, 4956 0.26, 4960 0.36, 4964 0.24, 4968 0.42, 4972 0.30, 4976 0.32, 4980 0.26, 4984 0.29, 4988
+   0.55 RED, 4992 0.66 (the flows agree on 0.67 of the body only, so the poses count there). Poses: 4984 0.64 (starts at
+   0.232 radii, under the height where the pose proxy is good), 4988 0.49 RED, 4992 0.36, 4996 0.27, 5000 0.08, 5004 0.04.
+   Before (poses, section 14:50): named commit 4964 1.31, 4972 1.06, 4980 0.59, 4988 0.47; the move alone 0.98, 0.94, 0.80,
+   0.49. So the exchange of the rise is out of 4956 to 4984, and 4988 stands as it stood.
+   WHAT STANDS AT 4988 (crop /tmp/crop-rise.jpg, gain 3): the night side at the lower left. At 4988 (0.343 radii) the dim
+   deck is navy and the map's dim cloud specks are orange; at 4996 (0.749) the deck is a brighter blue and the specks are
+   white. The grade of the fall (deep.json globe.fall, height 1.9 to 0.25 radii) goes its whole way between 4986 and 5006,
+   20 frames, where the dive has 37 for it (4688 to 4725). So this red is the warm specks and the grade, point 4 of MAIL
+   688, not the exchange.
+2. SEEN, every frame of the sheets q3-a to q3-d (4688 to 4764) and q3-r1 to q3-r4 (4954 to 5012): one place seen closer
+   and one place drawing away. The streamer and the eye stand from 4716 as fine marks in the map's storm and grow; no
+   frame where a pattern is swapped. Not cured, named: lilac on the white bands at the upper left 4716 to 4736; cyan
+   specks by the comma 4727 to 4738 and a thin cyan line in the far band 4759 to 4764 and at 4860; warm specks on the
+   night side 4707 to 4716 and 4984 to 4996, and one pale lilac patch at the lower right limb 4988 to 4993; the hump 4693
+   to 4700.
+3. 4707 (judged): mean difference 0.83 levels from a9839f02, the globe's storm as before (own share 0.22 there).
+4. 4860: G17 median 1.381, p25 0.741 (named commit 1.331, 0.772; the move at 14:50 1.382, 0.741). It is NOT the bytes of
+   the 14:50 render: rows 1 to 3 of 8 differ (mean 2.5, 1.4, 0.2 levels, 172 at most), the lower half by 6 levels at most.
+   Cause, not proved by a control: that render was made before the far look read the Sun unturned (uFarSun, in a9839f02);
+   the law gives the place its whole share at this height. Against the named commit: eighths 5 to 7 differ by 5 levels
+   at most (mean 0.09 and less), eighth 4 by 1.9 in the mean (31 at most), eighths 1 to 3 hold the far field (mean 9 to
+   24). Pair beside the approved image: look-q3-4860.jpg. What moved in the far field: the cyan dab and the hard white
+   patch at the upper left are gone; long white bands of the map stand by the limb from the left to the right of the eye,
+   which is nearer the approved image (it has a pale band by the limb); a thin cyan line is left in the far band.
+5. Looks pushed 16:00 UTC (1c73daf1): the dive, the rise, 4860 in three (approved, named, now), reds named.
+6. COMMIT 5a14d56d "Neptune: the place's own picture comes in from 2.0 radii by the eye's height alone" (deep.ts, set.ts,
+   deep.json). origin main had moved to 36a9d7ff (kit/PROGRESS.md only): merged, 45ffa593.
+7. On the merge 45ffa593: tsc clean; tests 485 of 485 in 379 s (49 files; the test of tests/globe-cap.test.ts did not run
+   over its time, the whole run passed); G11 pass; net of my folders 76.747 MB against 82.639 on main. NOT run: parity, G15,
+   the report's pictures.

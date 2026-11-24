@@ -46,7 +46,10 @@ def carry(a_pose, b_pose, shape):
     ray = rot(a_pose['q'], v)
     p = np.array(a_pose['p'], dtype=np.float64)
     near = -(ray @ p)
-    disc = near * near - p @ p + 1
+    # WEAVE_SHELL (radii, a tool for causes, not the report's number): the sphere the later frame is carried on. 1 is the deck; the
+    # globe's cloud sheet stands at 1.004, and by the limb a low eye sees it slide over the deck, which a carry on the deck reads as change.
+    shell = float(os.environ.get('WEAVE_SHELL', '1'))
+    disc = near * near - p @ p + shell * shell
     front = near - np.sqrt(np.maximum(disc, 0))
     hit = (disc > 0) & (front > 0)
     x = p + ray * front[..., None]
