@@ -1,9 +1,17 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T14:39:40.165Z",
- "head": "dc683f9cb87eeac376113d0922680e8aa45ae30c",
- "note": "rise ends on the travel's speed (carry none, path green); Y ruled as (2), bank at the hold: work starts",
+ "pushed": "2026-11-24T14:59:39.044Z",
+ "head": "f7ab197acd05bea7317f6e576894f818484ae09a",
+ "note": "baseline before the bank: pattern map of the dive middle, red in the far zone (1.12 at 1890); rise end window like with like reads pop 1.09, pattern 0.38",
  "looks": [
+  {
+   "time": "2026-11-24T14:59:38.379Z",
+   "file": "20261124145938379-note-pmap-base.jpg",
+   "source": "../../../../tmp/gl/s10/pmap-base.jpg",
+   "kind": "note",
+   "label": "dive middle on f7ab197a, rate 2 pictures 1884 1887 1890 1892: frame, frame 8 later carried back, pattern map (red). The red sits in the far zone, upper left: the plate's puff field over Yucatan gives way to the deck of the close picture. Highest 1.12 at 1890. This is what the bank is built for; nothing built yet.",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T14:39:39.107Z",
    "file": "20261124143939107-note-dive-far.jpg",
@@ -90,14 +98,6 @@
    "source": "../../../../tmp/gl/s9/pair-1857-crop.jpg",
    "kind": "note",
    "label": "1857 final before and after: night lights by nearness, mean 0.060, 3629 pixels over 8 on the night side",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T13:09:48.708Z",
-   "file": "20261124130948708-note-rise-look-b.jpg",
-   "source": "../../../../tmp/gl/s9/rise-look-b.jpg",
-   "kind": "note",
-   "label": "third tree, rise 2163 to 2174",
    "stop": "earth"
   }
  ]
