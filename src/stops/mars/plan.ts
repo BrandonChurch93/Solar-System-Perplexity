@@ -1,12 +1,13 @@
 import * as THREE from 'three'
-import { config } from '../../config'
+import { config, type Segment } from '../../config'
 import type { Pose } from '../../core/types'
 import { StopPlan, type Fit, type MoveParams } from '../../director/moves'
-import type { HandoverSide, PlaceOptions } from '../../director/handover'
+import type { HandoverSide, PlaceOptions, SkyShares } from '../../director/handover'
 import fit from './fit.json'
 import place from './place.json'
 import phobos from './phobos.json'
 import bend from './bend.json'
+import close from './close.json'
 
 // A side of place.json: at, placeFrames, path, picture, pace, turn and liftPower belong to the handover, every other key is an option of the place picture and reaches the
 // engine as it stands, so a number set in that file can not be lost on the way.
@@ -55,6 +56,17 @@ export const params: MoveParams = {
 // The lens keeps its own slow turn. The eye's place is the sum of that velocity from fromFrame, taken by Simpson's rule in a fixed count
 // of steps, so it is a function of the time alone.
 class MarsPlan extends StopPlan {
+  // The sky of the close view on the globe side of the dive and the rise comes by the height of the globe side's eye (close.json sky), not over a
+  // count of frames (MAIL 613): all of it from sky.low down, which lies above both changes of view, none of it above sky.high.
+  override skyShare(seg: Segment, time: number): SkyShares | null {
+    if (seg.stop !== this.id || (seg.kind !== 'dive' && seg.kind !== 'rise')) return null
+    const c = close.sky
+    // The globe camera by name: the share is asked on the globe side only, and eyeHeight on a path of a stop's own asks the side, which asks the film, which asks this.
+    const height = this.eyeShot(seg.kind, time, 'orbit').pose.position.length() - 1
+    const k = Math.min(Math.max((Math.log(Math.max(height, 1e-5)) - Math.log(c.low)) / (Math.log(c.high) - Math.log(c.low)), 0), 1)
+    return { low: 1 - k * k * (3 - 2 * k) }
+  }
+
   override terrain(tRel: number): Pose {
     const base = super.terrain(tRel)
     const from = bend.fromFrame / config.fps - this.seg.terrain.start
