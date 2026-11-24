@@ -1,9 +1,43 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T17:23:57.710Z",
+ "pushed": "2026-11-24T17:38:53.622Z",
  "head": "46e6a5606c9d9e80d335737a691ae27c49933b41",
- "note": "The pattern rig: a visible exchange in a rise by 3 reads 0.09 once the widths are multiplied by the enlargement (as on main 0.83); mailed to the Builder. Neptune's rise renders for the table of mail 682",
+ "note": "Neptune read (dive and rise pass both ways); table of mail 682 being written; rig sent to globe_engineer",
  "looks": [
+  {
+   "time": "2026-11-24T17:38:53.010Z",
+   "file": "20261124173853010-note-neptune-rise-step-body.jpg",
+   "source": "out/work/handover/neptune-rise-step-body.png",
+   "kind": "note",
+   "label": "Neptune rise into 4969: worst step by the mean of the body 2.35, in place 0.21: the frame opens on darker ground",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T17:38:52.346Z",
+   "file": "20261124173852346-note-neptune-rise-step-in-place.jpg",
+   "source": "out/work/handover/neptune-rise-step-in-place.png",
+   "kind": "note",
+   "label": "Neptune rise into 5001: worst step in place, level 3.83, colour 6.64 (limits 6 and 8), a wash over all the kept ground",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T17:38:51.651Z",
+   "file": "20261124173851651-note-neptune-rise-4994-5006.jpg",
+   "source": "out/work/inplace/mail/neptune-rise-4994-5006.jpg",
+   "kind": "note",
+   "label": "Neptune rise 4994 to 5006, drafts: the ground both frames show gets lighter by 3.1 to 3.8 a frame and bluer by up to 6.6 into 4998 to 5003; the mean of the body reads 0.6 to 1.7",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T17:37:28.238Z",
+   "file": "20261124173728238-compare-neptune-rise-step-in-place.jpg",
+   "source": "out/work/handover/neptune-rise-step-in-place.png",
+   "kind": "compare",
+   "label": "neptune rise, the largest step of the level in place (3.83): frame 5000, frame 5001, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "neptune",
+   "segment": "neptune.rise",
+   "frame": 5001
+  },
   {
    "time": "2026-11-24T17:23:56.355Z",
    "file": "20261124172356355-note-pattern-rig-z3-s32.jpg",
@@ -33,44 +67,6 @@
    "kind": "note",
    "label": "Neptune dive 4712 to 4740, drafts on my tree as it was before the merge: the globe's deep blue turns to the place's paler blue between 4716 and 4728 (the report's steps come when the rise is in)",
    "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T16:47:53.153Z",
-   "file": "20261124164753153-compare-neptune-dive-step-in-place.jpg",
-   "source": "out/work/handover/neptune-dive-step-in-place.png",
-   "kind": "compare",
-   "label": "neptune dive, the largest step of the level in place (2.02): frame 4707, frame 4708, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "neptune",
-   "segment": "neptune.dive",
-   "frame": 4708
-  },
-  {
-   "time": "2026-11-24T16:11:05.818Z",
-   "file": "20261124161105818-note-neptune-dive-4704-4734.jpg",
-   "source": "out/work/inplace/sheets/neptune-dive-4704-4734.png",
-   "kind": "note",
-   "label": "MAIL 682 table, neptune dive as on main, drafts 4704 to 4732 every second frame (the look of the ground changes between 4716 and 4728; both readings follow when the run ends)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T15:53:08.963Z",
-   "file": "20261124155308963-compare-venus-rise-step-in-place.jpg",
-   "source": "out/work/handover/venus-rise-step-in-place.png",
-   "kind": "compare",
-   "label": "venus rise, the largest step of the level in place (3.78): frame 1575, frame 1576, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "frame": 1576
-  },
-  {
-   "time": "2026-11-24T15:47:22.295Z",
-   "file": "20261124154722295-compare-venus-dive-step-in-place.jpg",
-   "source": "out/work/handover/venus-dive-step-in-place.png",
-   "kind": "compare",
-   "label": "venus dive, the largest step of the level in place (3.3): frame 1289, frame 1290, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "venus",
-   "segment": "venus.dive",
-   "frame": 1290
   }
  ]
 }
