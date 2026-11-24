@@ -23,8 +23,10 @@ export interface PathOptions { rise?: number; fall?: number; turnRise?: number; 
 // the rate die away slowly where the picture runs fast for the same rate; a flank that is not named keeps corner at both ends.
 // pullBack (of the rise alone, the stop's alone, for a rise that a travel follows): the rise ends on its pose without coming to rest,
 // flying `speed` radii a second above the drift along the line of the exit, picked up over its last `over` seconds
-// (StopPlan.pullBack). It belongs to the far end, so it holds on the one move and on a stop's own path alike.
-export interface HandoverSide extends Partial<HandoverTimes> { skyFrames?: number; live?: boolean; picture?: boolean; place?: PlaceOptions; path?: PathOptions; pace?: { rise?: number; fall?: number; corner?: number; corners?: { rise?: [number, number]; fall?: [number, number] } }; turn?: { rise?: number; fall?: number; corner?: number; corners?: { rise?: [number, number]; fall?: [number, number] } }; liftPower?: number; skyFloor?: boolean; pullBack?: { speed: number; over: number } }
+// (StopPlan.pullBack). It belongs to the far end, so it holds on the one move and on a stop's own path alike. With `from`, seconds
+// before the end of the rise and more than `over`, the rise is untouched, to the bit, until then; without it the far end stands back
+// from the start of the rise.
+export interface HandoverSide extends Partial<HandoverTimes> { skyFrames?: number; live?: boolean; picture?: boolean; place?: PlaceOptions; path?: PathOptions; pace?: { rise?: number; fall?: number; corner?: number; corners?: { rise?: [number, number]; fall?: [number, number] } }; turn?: { rise?: number; fall?: number; corner?: number; corners?: { rise?: [number, number]; fall?: [number, number] } }; liftPower?: number; skyFloor?: boolean; pullBack?: { speed: number; over: number; from?: number } }
 export interface HandoverParams { dive?: HandoverSide; rise?: HandoverSide }
 // The shares of the two sky layers on the globe side of a dive or rise that hands over: low for the sky of the close view, high for the sky
 // of the globe view. Both from 0 to 1. A stop may give its own through StopPlan.skyShare; without a high the globe view's sky keeps the

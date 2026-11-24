@@ -250,11 +250,17 @@ export class StopPlan {
   // smooth step (1 - 3 s^2 + 2 s^3, s the time to the end over `over`), so the far end leaves the drift without a step in its speed
   // or in its acceleration, and at the end the acceleration is 0: the eye coasts into the travel and does not speed up. Before those
   // seconds the far end stands back by speed * over / 2 and drifts as before.
+  // `from`, a third number a stop may add: seconds before the end of the rise, more than `over`. Until then the far end is the drift
+  // alone, so the rise is to the bit what it is without the option; between `from` and `over` before the end the far end goes back to
+  // its place speed * over / 2 behind the drift by a smooth step (10 u^3 - 15 u^4 + 6 u^5: no step in speed or acceleration at either
+  // end). A stop whose change of view lies before `from` keeps its surface view and its T untouched. Without `from` the far end stands
+  // back from the start of the rise.
   // Only the place moves: the far end keeps the camera's turn and angle of view of the end pose, and it moves on a line through the
   // body's centre, so the turn of the sky is at rest at the end as before and the body's centre stands still in the picture while its
   // disc goes on shrinking. Every path that glides onto after(time) gets it, the engine's one move and a stop's own alike.
   // Without the option the far end is the drift, to the bit. Refused where it cannot hold: a rise that no travel follows, a speed or a
-  // span that is not above 0, a span longer than the rise or shorter than a film frame, a far end that would stand in the body.
+  // span that is not above 0, a span longer than the rise or shorter than a film frame, a `from` longer than the rise or not a film
+  // frame longer than `over`, a far end that would stand in the body.
   pullBack(time: number): number {
     const own = this.p.handover?.rise?.pullBack
     if (!own) return 0
@@ -265,12 +271,20 @@ export class StopPlan {
       if (!(own.speed > 0) || !(own.over > 0) || !Number.isFinite(own.speed) || !Number.isFinite(own.over)) throw new Error(who + ' needs speed, in radii a second above the drift, and over, in seconds, both above 0')
       if (own.over > rise.end - rise.start + 1e-9) throw new Error(who + ': over (' + own.over + ' s) is longer than the rise (' + (rise.end - rise.start) + ' s)')
       if (own.over < 1 / config.fps - 1e-9) throw new Error(who + ': over (' + own.over + ' s) is shorter than a film frame, a jolt in the picture and a switch of the law inside the step the travel reads the speed with')
+      if (own.from !== undefined) {
+        if (!Number.isFinite(own.from) || own.from > rise.end - rise.start + 1e-9) throw new Error(who + ': from (' + own.from + ' s) is longer than the rise (' + (rise.end - rise.start) + ' s); leave it out and the far end stands back from the start')
+        if (own.from - own.over < 1 / config.fps - 1e-9) throw new Error(who + ': from (' + own.from + ' s) must be longer than over (' + own.over + ' s) by a film frame or more, the far end needs that time to go back')
+      }
       const low = this.riseEnd.position.length() - this.p.rise.driftSpeed * (rise.end - rise.start) - (own.speed * own.over) / 2 - 1
       if (!(low > 0)) throw new Error(who + ': with ' + own.speed + ' radii a second over ' + own.over + ' s the far end would stand ' + low.toFixed(3) + ' radii over the body where the rise begins; it must stay above it')
       this.backs = { from: own }
     }
     const left = rise.end - time
     if (left <= 0) return 0
+    if (left > own.over && own.from !== undefined) {
+      const u = Math.min(Math.max((own.from - left) / (own.from - own.over), 0), 1)
+      return ((own.speed * own.over) / 2) * u * u * u * (10 + u * (6 * u - 15))
+    }
     const s = Math.min(left / own.over, 1)
     return own.speed * own.over * (s - s * s * s + (s * s * s * s) / 2)
   }

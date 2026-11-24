@@ -129,6 +129,44 @@ describe('the far end of a rise that a travel follows', () => {
     }
   })
 
+  it('leaves the rise to the bit until `from` before its end, and goes back without a step in between', () => {
+    const pull = { speed: 1.77, over: 0.8, from: 1.7 }
+    const plain = coveredPlan(pulled(null))
+    const plan = coveredPlan(pulled(pull))
+    const { rise } = plan.seg
+    // the far end and the eye, to the bit, until `from` seconds before the end
+    for (let i = 0; i <= 30; i++) {
+      const time = rise.start + ((rise.end - pull.from - rise.start) * i) / 30
+      expect(plan.pullBack(time)).toBe(0)
+      const a = plan.eyeShot('rise', time, 'orbit').pose
+      const b = plain.eyeShot('rise', time, 'orbit').pose
+      expect(a.position.toArray()).toEqual(b.position.toArray())
+      expect(a.quaternion.toArray()).toEqual(b.quaternion.toArray())
+      expect(a.vfov).toBe(b.vfov)
+    }
+    // back by speed * over / 2 at `over` before the end, as without `from`, and the same last seconds
+    const whole = coveredPlan(pulled({ speed: pull.speed, over: pull.over }))
+    expect(plan.pullBack(rise.end - pull.over)).toBeCloseTo((pull.speed * pull.over) / 2, 12)
+    for (const left of [pull.over, 0.5, 0.2, 0.01]) expect(plan.pullBack(rise.end - left)).toBe(whole.pullBack(rise.end - left))
+    // it never comes back toward the drift on the way, and its speed has no step at either end of the way back
+    let last = 0
+    for (let i = 1; i <= 90; i++) {
+      const now = plan.pullBack(rise.end - pull.from + ((pull.from - pull.over) * i) / 90)
+      expect(now).toBeGreaterThan(last - 1e-12)
+      last = now
+    }
+    const rate = (time: number): number => (plan.pullBack(time + 1e-5) - plan.pullBack(time - 1e-5)) / 2e-5
+    expect(Math.abs(rate(rise.end - pull.from))).toBeLessThan(1e-6)
+    expect(Math.abs(rate(rise.end - pull.over))).toBeLessThan(1e-6)
+    // and the rise ends as it does without `from`: the same pose, the same speed read by the travel
+    const r = read(plan)
+    const w = read(whole)
+    expect(r.gap).toBeLessThan(1e-6)
+    expect(r.excess.length()).toBeCloseTo(w.excess.length(), 9)
+    expect(Math.abs(r.excess.length() - pull.speed)).toBeLessThan(2e-3)
+    expect(deg(r.turn)).toBeLessThan(0.01)
+  })
+
   it('reaches a path of a stop\'s own through after(time)', () => {
     ownPath(true)
     try {
@@ -161,6 +199,10 @@ describe('the far end of a rise that a travel follows', () => {
     bad({ speed: 1 }, /both above 0/)
     bad({ speed: 1, over: span + 0.1 }, /longer than the rise/)
     bad({ speed: 1, over: 0.5 / config.fps }, /shorter than a film frame/)
+    bad({ speed: 1, over: 1, from: span + 0.1 }, /from .* is longer than the rise/)
+    bad({ speed: 1, over: 1, from: 1 }, /must be longer than over/)
+    bad({ speed: 1, over: 1, from: 0.5 }, /must be longer than over/)
+    bad({ speed: 1, over: 1, from: Number.NaN }, /from .* is longer than the rise/)
     bad({ speed: 100, over: 1 }, /must stay above it/)
     // a rise that goes into a hold and a rise that nothing follows come to rest
     for (const plan of plans.filter((p) => p.riseIntoHold || !p.seg.travel)) {
