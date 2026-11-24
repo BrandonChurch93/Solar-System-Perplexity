@@ -50,7 +50,25 @@
   "distSize": [
    1404,
    608
-  ]
+  ],
+  "body": "relief-body.bin",
+  "cut": 0.5,
+  "range": 0.5,
+  "stretch": 8,
+  "lit": [
+   0.899,
+   0.879,
+   0.838
+  ],
+  "face": [
+   0.0,
+   1.0
+  ],
+  "edge": [
+   0.9,
+   1.0
+  ],
+  "thin": 0.008
  },
  "masks": {
   "file": "relief-masks.png",
