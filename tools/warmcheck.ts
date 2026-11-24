@@ -19,7 +19,7 @@ import { judgedFrames, segmentAtFrame } from '../src/director/timeline'
 // The proof that a warm draw changes no pixel: before each still every warm frame that is due is drawn, and the hash of the still is compared with
 // out/work/samebytes/LABEL/hashes.json (tools/samebytes.ts makes it from the same frames without the warm start). Exit 1 on any difference.
 //   npm run warm -- --self
-// The same proof in a small form, with nothing to prepare (gate G3): three frames of the first stop that has a dive, each drawn on a fresh page and
+// The same proof in a small form, with nothing to prepare (gate G3): three frames of the first stop with a dive and frames in the list, each drawn on a fresh page and
 // drawn again on another page after the warm start and after the other frames. Exit 1 on any difference.
 
 interface Counts { programs: number; textures: number; buffers: number }
@@ -63,7 +63,8 @@ async function still(page: Page, frame: number, warm: boolean, others: number[])
 }
 
 async function self(): Promise<never> {
-  const dive = cfg.segments.find((x) => x.kind === 'dive')!
+  const dives = cfg.segments.filter((x) => x.kind === 'dive')
+  const dive = dives.find((x) => listed().frames.some((f) => segmentAtFrame(f).stop === x.stop)) ?? dives[0]!
   const of = (kind: string): number => {
     const x = cfg.segments.find((y) => y.stop === dive.stop && y.kind === kind)!
     return x.firstFrame + Math.floor(x.frames / 2)
