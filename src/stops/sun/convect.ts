@@ -49,6 +49,9 @@ uniform vec4 uCvThread;
 uniform vec4 uCvWarpMore;
 uniform vec4 uCvGap;
 uniform vec4 uCvBend;
+uniform vec4 uCvPatch;
+uniform vec4 uCvTight;
+uniform vec4 uCvCurl;
 uniform vec4 uCvSpotMore;
 uniform vec4 uCvStream;
 uniform float uCvTime;
@@ -146,8 +149,13 @@ void cvDiagram(vec2 q, float t, float wrap, out float e, out vec2 ge, out vec2 r
   rel = q - s1 - uCvLane.y * vec2(cos(own.y * 40.0), sin(own.y * 40.0)) * own.z;
 }
 // The chart of the ground's cells: lattice units, and it wanders a little so no lane is straight.
+float cvTight(vec2 p) {
+  // 1 near the place, the distance over uCvTight.x to the power uCvTight.y far from it, with no edge between
+  return pow(1.0 + pow(length(p) / uCvTight.x, uCvTight.z), uCvTight.y / uCvTight.z);
+}
 vec2 cvChart(vec2 p, float t) {
-  vec2 q = p / uCvCell.x;
+  // away from the place the cells are smaller: the chart is drawn tighter with the distance on the ground
+  vec2 q = p * cvTight(p) / uCvCell.x;
   q += uCvWarp.x * (vec2(vnoise(vec3(q * uCvWarp.y, t * uCvWarp.z)), vnoise(vec3(q.yx * uCvWarp.y + 31.7, t * uCvWarp.z + 7.3))) - 0.5);
   q += uCvWarpMore.x * (vec2(vnoise(vec3(q * uCvWarpMore.y + 13.1, t * uCvWarpMore.z)), vnoise(vec3(q.yx * uCvWarpMore.y + 57.9, t * uCvWarpMore.z + 3.1))) - 0.5);
   return q;
@@ -189,9 +197,18 @@ float cvLumps(vec2 rel, float key, float t) {
   float l2 = min(sqrt(a2 * a2 + uCvGap.w), 1.0);
   return 0.65 * l1 * (2.0 - l1) + 0.35 * l2 * (2.0 - l2);
 }
-vec2 cvPetal(vec2 rel, float key, float t) {
+// Broad areas of hotter and cooler gas inside a cell, carried outward by its flow (0 to 1, 0.5 in the mean).
+float cvPatch(vec2 rel, float key, float t) {
   float r = length(rel);
   vec2 u = r > 1e-5 ? rel / r : vec2(1.0, 0.0);
+  return cvCarried(rel, r, u, key + 0.71, t, uCvPatch.w, uCvPetal.z, uCvPetal.w);
+}
+vec2 cvPetal(vec2 rel, float key, float t) {
+  // the flow lines are no spokes: the chart they are drawn in is bent by a slow field of the cell's own, so they
+  // curl and branch on their way out and meet in no point
+  vec2 bent = rel + uCvCurl.x * (vec2(vnoise(vec3(rel * uCvCurl.y, key * 13.0 + t * uCvCurl.z)), vnoise(vec3(rel.yx * uCvCurl.y + 7.7, key * 5.0 - t * uCvCurl.z))) - 0.5);
+  float r = length(bent);
+  vec2 u = r > 1e-5 ? bent / r : vec2(1.0, 0.0);
   float n3 = vnoise(vec3(u * uCvThread.x, r * uCvThread.y - t * uCvThread.z) + vec3(key * 41.0, 9.0, 0.0));
   // the threads stand in locks: a few broad strands of many fine ones, with dark gaps between the locks
   float n4 = vnoise(vec3(u * uCvThread.x * 0.4 + 5.7, r * uCvThread.y * 0.5 - t * uCvThread.z * 0.7) + vec3(key * 23.0, 3.0, 0.0));
@@ -217,7 +234,8 @@ float cvDome(vec2 p, float t, out float e, out vec2 ge, out vec2 rel, out vec3 o
   float tall = uCvDome.z * size * (0.7 + 0.6 * own.y) * mix(0.5, 1.0, own.z) + uCvDome.x;
   petal = cvPetal(rel, own.y, t);
   float old = smoothstep(0.5, 1.0, own.x);
-  return (tall + uCvPetal.x * (petal.x - 0.4)) * cap - uCvPetalMore.w * old * exp(-r2 / 0.02) * cap - uCvDome.z * uCvLane.x;
+  // a smaller cell stands lower by the same share
+  return ((tall + uCvPetal.x * (petal.x - 0.4)) * cap - uCvPetalMore.w * old * exp(-r2 / 0.02) * cap - uCvDome.z * uCvLane.x) / cvTight(p);
 }
 // The sunspot at ground point p. Returned: x how much of the place is the spot (1 inside the penumbra), y the
 // height of its funnel with the fibres on it (stage units), z the distance from its middle over the umbra's radius,
@@ -247,10 +265,14 @@ vec4 cvSpot(vec2 p, float t, out vec4 fibre) {
   vec3 own;
   cvDiagram(q, t, uCvBend.w, e, ge, rel, own);
   // every fibre is as long as it likes: its outer end lies at a place of its own, so the spot has no rim
-  float reach = outer * (1.0 - uCvSpotMore.x * fract(own.y * 7.31 + 0.37));
-  inside = 1.0 - smoothstep(reach * 0.88, reach * 1.02, r);
-  if (inside <= 0.0) return vec4(0.0, 0.0, rs, 0.0);
   float way = cvWay(length(rel), e * uCvCell.x);
+  // within the shortest reach all is spot; beyond it each fibre goes on alone as a tongue that narrows to its end
+  float reach = outer * (1.0 - uCvSpotMore.x * fract(own.y * 7.31 + 0.37));
+  float least = outer * (1.0 - uCvSpotMore.x);
+  float narrow = 1.0 - smoothstep(reach * 0.7, reach * 1.02, r);
+  float tongue = narrow * (1.0 - smoothstep(0.9 * narrow, 0.9 * narrow + 0.1, way));
+  inside = max(1.0 - smoothstep(least * 0.8, least, r), tongue);
+  if (inside <= 0.0) return vec4(0.0, 0.0, rs, 0.0);
   float umbra = 1.0 + 0.4 * uCvFibre.w * lobes;
   // every fibre ends over the umbra at a place of its own, with a round head
   float past = clamp((rs - umbra * (1.0 + uCvStream.y * (own.y - 0.5))) / uCvStream.z, 0.0, 1.0);
@@ -325,6 +347,10 @@ uniform vec4 uCvGrain;
 uniform vec4 uCvRim;
 uniform vec4 uCvFall;
 uniform vec4 uCvGlass;
+uniform vec4 uCvFlankFar;
+uniform vec4 uCvFarMore;
+uniform vec4 uCvPoints;
+uniform vec4 uCvThreadIn;
 uniform vec4 uCvUmbra;
 uniform vec4 uCvFibreLook;
 uniform vec4 uCvVeil;
@@ -363,8 +389,22 @@ void main() {
   vec4 fibre;
   vec4 spot = cvSpot(g, t, fibre);
   float L = uCvCell.x;
-  float foot = max(length(dFdx(g)), length(dFdy(g)));
-  float fine = 1.0 - smoothstep(uCvFar.x * L, uCvFar.y * L, foot);
+  float footX = length(dFdx(g));
+  float footY = length(dFdy(g));
+  float foot = max(footX, footY);
+  // what a pixel covers, in the measure of the cells where it lies (they are smaller far from the place): a cell
+  // that a pixel cannot hold is not drawn, the ground there is its mean with a mottle of wider waves, each wave
+  // drawn only where a pixel is narrower than it
+  // (the root of what a pixel covers both ways: a far cell seen flat is many pixels wide and few deep, and it is
+  // drawn while their product holds it)
+  float footM = sqrt(footX * footY);
+  float footC = footM * cvTight(g);
+  float fine = 1.0 - smoothstep(uCvFar.x * L, uCvFar.y * L, footC);
+  float mottle = 0.0;
+  for (int k = 0; k < 5; k++) {
+    float lam = L * uCvFarMore.y * exp2(float(k));
+    mottle += (1.0 - smoothstep(uCvFarMore.z * lam, uCvFarMore.w * lam, footM)) / (1.0 + float(k)) * (vnoise(vec3(g / lam + 17.3 * float(k), t * 0.05 + 3.1 * float(k))) - 0.5);
+  }
   // slope of the relief in the chart, then as a normal on the ball
   float r2 = dot(rel, rel);
   float r = sqrt(r2);
@@ -395,7 +435,7 @@ void main() {
     vec2 q0 = cvChart(g, t);
     vec2 qx = (cvChart(g + vec2(je, 0.0), t) - q0) / je;
     vec2 qy = (cvChart(g + vec2(0.0, je), t) - q0) / je;
-    slope = vec2(dot(gq, qx), dot(gq, qy));
+    slope = vec2(dot(gq, qx), dot(gq, qy)) / cvTight(g);
   }
   for (int k = 0; k < (spot.x > 0.0 ? 1 : 0); k++) {
     float eps = max(foot, 0.003);
@@ -413,6 +453,8 @@ void main() {
   vec3 eR = ST_DOWN * sin(alpha) + flatR * cos(alpha);
   vec3 eA = -ST_RIGHT * rhat.y + ST_FWD * rhat.x;
   vec3 normal = normalize(dir - eR * dot(slope, rhat) - eA * dot(slope, vec2(-rhat.y, rhat.x)));
+  // what lies behind the ball's own horizon is not seen (where the relief is real a top may stand a little past it)
+  if (dot(dir, uCam - (ST_CENTRE + dir * ST_RADIUS)) < -1.6 * (1.0 - smoothstep(uCvMesh.x, uCvMesh.y, length(g)))) discard;
   vec3 toEye = normalize(uCam - vPos);
   float mu = clamp(dot(normal, toEye), 0.0, 1.0);
   float muFlat = clamp(dot(dir, toEye), 0.0, 1.0);
@@ -420,7 +462,10 @@ void main() {
   // heat of the cells: dark lanes, a bright middle while the cell is young, a dark dip when it is old
   // the side of a bulb is seen as a tall band: it goes from the dark of the lane at its foot to the full light at
   // its shoulder by its own height, so the band is a slope of light and not a wall of one colour
-  float body = (1.0 - exp(-e / uCvHeat.x)) * mix(uCvSteep.x, 1.0, smoothstep(0.0, uCvSteep.y, cap));
+  // (seen flat, far off, a bulb shows its side alone: there the dark foot is the lowest part only, or the far ground
+  // would be all foot)
+  float lowFoot = uCvSteep.y * mix(uCvFlankFar.x, 1.0, smoothstep(uCvFlankFar.y, uCvFlankFar.z, muFlat));
+  float body = (1.0 - exp(-e / uCvHeat.x)) * mix(uCvSteep.x, 1.0, smoothstep(0.0, lowFoot, cap));
   float young = 1.0 - smoothstep(0.0, 0.45, own.x);
   float top = uCvTone.y * (1.0 - uCvTone.z + 2.0 * uCvTone.z * own.y) * (1.0 + uCvHeat.z * young - uCvHeat.w * old);
   top *= 1.0 + uCvTone.w * exp(-r2 / (uCvHeat.y * uCvHeat.y)) * (1.0 - 2.2 * old);
@@ -428,13 +473,17 @@ void main() {
   // shoulder where the skin turns down to the lane is the brightest; a young cell is still all bright
   top *= 1.0 - uCvGlass.x * smoothstep(0.1, uCvGlass.w, own.x) * (1.0 - smoothstep(uCvGlass.y, uCvGlass.z, way));
   top *= 1.0 + uCvGrain.x * 2.0 * (petal.x - 0.4) * fine;
+  // the inside of a cell is no even light: broad areas of it are hotter, others cooler, and the flow carries them
+  top *= 1.0 + uCvPatch.x * (2.0 * smoothstep(uCvPatch.y, uCvPatch.z, cvPatch(rel, own.y, t)) - 1.0) * fine;
   // the threads are seen by the dark between them: little on the top, deep on the side where the plasma runs down
   // (a thread is drawn only where a pixel is narrower than it: farther off the locks merge into their mean)
-  float threads = 1.0 - smoothstep(uCvGloss.y, uCvGloss.z, foot);
-  top *= 1.0 + mix(-uCvThread.w * (0.1 + 0.9 * way * way) * 0.45, uCvMesh.w * max(petal.y - 1.0, 0.0) - uCvThread.w * (0.1 + 0.9 * way * way) * (1.0 - min(petal.y, 1.0)), threads) * fine;
+  float threads = 1.0 - smoothstep(uCvGloss.y, uCvGloss.z, footC);
+  top *= 1.0 + mix(-uCvThread.w * (0.1 + 0.9 * way * way) * 0.45, uCvMesh.w * max(petal.y - 1.0, 0.0) * smoothstep(uCvThreadIn.x, uCvThreadIn.y, way) - uCvThread.w * (0.1 + 0.9 * way * way) * (1.0 - min(petal.y, 1.0)), threads) * fine;
   top *= 1.0 + uCvGrain.w * (vnoise(vec3(g / L * uCvGrain.y, t * uCvGrain.z + own.y * 5.0)) + 0.6 * vnoise(vec3(g / L * uCvGrain.y * 3.7 + 9.1, t * uCvGrain.z * 1.6 + own.y * 3.0)) - 0.8) * fine;
   float lum = uCvTone.x + (top - uCvTone.x) * body;
-  lum = mix(uCvFar.z, lum, mix(uCvFar.w, 1.0, fine));
+  // a few bright points stand in the lanes
+  lum += uCvPoints.x * (1.0 - smoothstep(0.0, uCvPoints.y, e)) * smoothstep(uCvPoints.z, 1.0, vnoise(vec3(g / L * uCvPoints.w, t * 0.3))) * fine;
+  lum = mix(uCvFar.z * (1.0 + uCvFarMore.x * mottle), lum, mix(uCvFar.w, 1.0, fine));
 
   // the sunspot: fibres with bodies, grains that run toward the umbra along them, a bright head where each ends
   // over the dark floor
@@ -456,7 +505,8 @@ void main() {
   lum *= mix(1.0, shade, fine * (1.0 - spot.x)) * mix(1.0, uCvShade.y + (uCvShade.z - uCvShade.y) * faced * faced * (3.0 - 2.0 * faced), fine * spot.x);
   // the light falls toward the limb: the flatter the ball itself is seen, the less of the deep hot gas shows
   lum *= 1.0 - uCvFall.x * pow(1.0 - muFlat, uCvFall.y);
-  float rim = exp(-pow((e - uCvRim.y) / uCvRim.z, 2.0)) * smoothstep(1.0, uCvRim.w, limb) * (1.0 - spot.x);
+  // the shoulder of a bulb, where its skin turns down into the lane, is a thin bright line, broken along its way
+  float rim = exp(-pow((way - uCvRim.y) / uCvRim.z, 2.0)) * smoothstep(uCvRim.w, uCvRim.w + 0.3, vnoise(vec3(g / L * 5.0, t * 0.2 + own.y * 9.0))) * (1.0 - spot.x);
   // the gloss of the bulbs: a sheen where the surface lies between the eye and the far light
   vec3 lightDir = normalize(ST_RIGHT * uCvSheen.x + ST_FWD * uCvSheen.y - ST_DOWN * uCvSheen.z);
   float sheen = pow(max(dot(normal, normalize(toEye + lightDir)), 0.0), uCvGloss.x);
@@ -468,8 +518,10 @@ void main() {
   vec3 col = inverseFilmic(grade(shown, 0.0));
   // a thin glowing layer over the ground: the longer the way through it, the more of it
   float through = 1.0 / max(muFlat, 0.02);
-  float veil = 1.0 - exp(-uCvVeil.x * (through - 1.0));
-  col = mix(col, inverseFilmic(grade(uCvVeilTint, 0.0)) * uCvVeil.y, clamp(veil, 0.0, uCvVeil.z));
+  float veil = 1.0 - exp(-uCvVeil.x * max(through - uCvVeil.w, 0.0));
+  // (it glows: its light is added to the ground's, so the far cells keep their own dark and bright under it; the
+  // spot's pit holds little of it)
+  col += inverseFilmic(grade(uCvVeilTint, 0.0)) * (uCvVeil.y * clamp(veil, 0.0, uCvVeil.z) * (1.0 - 0.85 * spot.x));
 
   vec3 here = vPos;
   vec2 gb = stImage(here);
@@ -588,12 +640,19 @@ export class Surface {
         uCvWarpMore: { value: new THREE.Vector4(c.warp.fine[0]!, c.warp.fine[1]!, c.warp.fine[2]!, c.sizes) },
         uCvGap: { value: new THREE.Vector4(c.gap.width, c.gap.scale, c.gap.vary, c.lumps.crease) },
         uCvPetalMore: { value: new THREE.Vector4(c.lumps.scale[1]!, c.lumps.turn[1]!, c.lumps.speed[1]!, c.dome.dimple) },
+        uCvThreadIn: { value: new THREE.Vector4(l.threadIn[0]!, l.threadIn[1]!, 0, 0) },
+        uCvCurl: { value: new THREE.Vector4(c.thread.curl[0]!, c.thread.curl[1]!, c.thread.curl[2]!, 0) },
+        uCvPoints: { value: new THREE.Vector4(l.points.amount, l.points.within, l.points.few, l.points.scale) },
+        uCvTight: { value: new THREE.Vector4(c.tight.from, c.tight.power, c.tight.knee, 0) },
+        uCvFarMore: { value: new THREE.Vector4(l.far.mottle, l.far.wave, l.far.band[0]!, l.far.band[1]!) },
+        uCvPatch: { value: new THREE.Vector4(l.patch.amount, l.patch.band[0]!, l.patch.band[1]!, l.patch.scale) },
+        uCvFlankFar: { value: new THREE.Vector4(l.flankFar[0]!, l.flankFar[1]!, l.flankFar[2]!, 0) },
         uCvGlass: { value: new THREE.Vector4(l.glass.amount, l.glass.from, l.glass.to, l.glass.grown) },
         uCvFall: { value: new THREE.Vector4(l.fall.amount, l.fall.power, l.deep.amount, l.deep.below) },
-        uCvRim: { value: new THREE.Vector4(l.rim.amount, l.rim.at, l.rim.wide, l.rim.facing) },
+        uCvRim: { value: new THREE.Vector4(l.rim.amount, l.rim.at, l.rim.wide, l.rim.few) },
         uCvUmbra: { value: new THREE.Vector4(s.floor, s.fibres.head, s.fibres.level, s.fibres.edge) },
         uCvFibreLook: { value: new THREE.Vector4(s.fibres.gap, s.fibres.grains, s.fibres.speed, s.fibres.cut) },
-        uCvVeil: { value: new THREE.Vector4(l.veil.amount, l.veil.level, l.veil.most, 0) },
+        uCvVeil: { value: new THREE.Vector4(l.veil.amount, l.veil.level, l.veil.most, l.veil.from) },
         uCvVeilTint: { value: new THREE.Vector3().fromArray((l.veil.tint as number[]).map(srgbToLinear)) },
         uCvFar: { value: new THREE.Vector4(l.far.from, l.far.to, l.far.level, l.far.keep) },
       },
