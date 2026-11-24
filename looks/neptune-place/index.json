@@ -1,9 +1,17 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T11:27:15.157Z",
+ "pushed": "2026-11-24T11:48:55.548Z",
  "head": "e7bbd54cf6158f171ca49f9ca39a87fa12821b9d",
- "note": "Neptune cure 2 in work, not committed: far field of 4860 rebuilt as a thin torn sheet; preview draft 22 s a frame",
+ "note": "Neptune 4860 work in progress: far field and limb against the approved, not committed",
  "looks": [
+  {
+   "time": "2026-11-24T11:48:54.950Z",
+   "file": "20261124114854950-note-look-1149.jpg",
+   "source": "out/work/nep/cost/look-1149.jpg",
+   "kind": "note",
+   "label": "4860 beside the approved, 16 by 9 draft, work in progress: far field veil rebuilt (white torn arc, blue thin haze inside it), limb blue by the angle of view, limb glow at 0.58. G17 0.934 and 0.545. 95 s the frame alone.",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T11:27:03.742Z",
    "file": "20261124112703742-note-look-1128.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/q-p7.jpg",
    "kind": "note",
    "label": "4860 final state of the third commit (top) over the approved image (bottom), preview draft. G17 median 1.286, lower quarter 0.615 at preview; 0.934 and 0.549 at 16 by 9 draft. 22.0 to 23.6 s a draft frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T09:47:27.319Z",
-   "file": "20261124094727319-note-storm-n2.jpg",
-   "source": "../../../../tmp/storm-n2.jpg",
-   "kind": "note",
-   "label": "4860 n2 storm at three times size over the approved; floor 28 61 107 against 37 71 110",
    "stop": "neptune"
   }
  ]
