@@ -1,8 +1,8 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T00:37:22.619Z",
+ "pushed": "2026-11-24T00:37:36.012Z",
  "head": "9087f00859214c58f7f9a2f747bfa89da4a4a4b4",
- "note": "check",
+ "note": "9087f008 step 2 committed: scene on the globe by height; dive and rise sheets with sky.own true; the T sheet shows the star step with sky.own false as committed (cure waits for 6d260fb on main)",
  "looks": [
   {
    "time": "2026-11-24T00:37:10.106Z",
