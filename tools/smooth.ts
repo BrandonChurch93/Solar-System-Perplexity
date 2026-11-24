@@ -10,14 +10,16 @@ import { handoverFrame, handoverOf } from '../src/director/handover'
 import { shutterMid } from '../src/core/sampler'
 import type { Pose } from '../src/core/types'
 import { plans } from '../src/director/plans'
-import { carriedCamera, curves, sampleWindow, sphereHit, type Kind } from './smooth/camera'
+import { MIN_POINTS, carriedCamera, curves, sampleWindow, sphereHit, type Kind, type Ring } from './smooth/camera'
 import { judgeCurve, position, table, type CurveResult, type Fault, type Row } from './smooth/path'
 
 // The measures of a smooth dive and rise (kit/PROGRESS.md, second review note of 2026-11-23, plan I). One stop.
-//   npm run smooth -- --stop ID [--kind dive|rise] [--only path,pictures,place,parity,counts] [--rate N] [--calibrate]
+//   npm run smooth -- --stop ID [--kind dive|rise] [--only path,pictures,place,parity,counts] [--rate N] [--calibrate] [--ring picture|ground]
 // path      from the camera path alone, at whole film frames and at the capture rate (smooth.rate): the fall or climb of the height, the turn of the
 //           camera and the speed of the picture at the place, each over the mean of the move. Judged: the change over one film frame, the same
-//           across both seams, and one rise and one fall (smooth.path).
+//           across both seams, and one rise and one fall (smooth.path). The speed is a mean over ground points on a ring round the place:
+//           every step and every rebound compares the mean over the points that have ground in every frame it compares, and their count
+//           stands beside the number; fewer than 4 is not measured, which is red. --ring ground tries the ring laid on the ground.
 // pictures  from draft frames, every frame of the dive and of the rise and smooth.reachFrames film frames into each neighbour (capture frames once
 //           the page knows a rate, whole film frames until then): the step of the frame's level against the line through its two neighbours,
 //           and the pop score: what is left of the difference between a frame and the next once the motion between them is taken out, over the
@@ -64,6 +66,11 @@ if (!Number.isInteger(rate) || rate < 1) {
   process.exit(2)
 }
 const calibrate = a.calibrate === 'true'
+const ring = (a.ring ?? 'picture') as Ring
+if (ring !== 'picture' && ring !== 'ground') {
+  console.error('smooth: --ring is picture or ground')
+  process.exit(2)
+}
 const master = cfg.formats[cfg.formatKeys.master]!
 const dir = join(WORK, 'smooth')
 const stem = stop + (a.kind ? '-' + a.kind : '')
@@ -77,7 +84,7 @@ interface PartResult { measured: boolean; pass: boolean; why: string[]; note?: s
 interface PathRun { rate: number; curves: CurveResult[] }
 interface PathKind { segment: string; firstFrame: number; endFrame: number; frameT: number | null; window: [number, number]; runs: PathRun[]; rows: Row[]; sides: string[]; heights: (number | null)[]; faults: Fault[] }
 
-const UNITS: [keyof ReturnType<typeof curves>, string, string, number | null][] = [
+const UNITS: ['fall' | 'turn' | 'speed', string, string, number | null][] = [
   ['fall', 'rate', 'log of the height a film frame', null],
   ['turn', 'turn', 'degrees a film frame', S.path.floors.turnDeg],
   ['speed', 'speed', 'px a film frame at the place', S.path.floors.speedPx],
@@ -93,8 +100,8 @@ function pathOf(kind: Kind): PathKind | null {
     if (!w) return null
     if (r === 1) whole = w
     else fine = w
-    const c = curves(w, plan, master.width, master.height, S.path.ringPx)
-    runs.push({ rate: r, curves: UNITS.map(([key, name, unit, floor]) => judgeCurve(name, unit, c[key], w.k0, r, w.own, S.path, floor)) })
+    const c = curves(w, plan, master.width, master.height, S.path.ringPx, ring)
+    runs.push({ rate: r, curves: UNITS.map(([key, name, unit, floor]) => judgeCurve(name, unit, c[key], w.k0, r, w.own, S.path, floor, key === 'speed' ? { values: c.ring, min: MIN_POINTS } : null)) })
   }
   const w = whole!
   const h = handoverOf(stop!, kind)
@@ -573,14 +580,17 @@ function pathText(kind: Kind, p: PathKind | null): string[] {
   for (const r of p.runs) {
     for (const c of r.curves) {
       const pos = (x: { k: number } | null): string => (x && x.k >= 0 ? position(x.k, r.rate) : '')
-      lines.push('| ' + [r.rate === 1 ? 'whole frames' : 'rate ' + r.rate, c.name, Number(c.mean.toPrecision(4)) + ' ' + c.unit + (c.floored ? ' (under the floor ' + c.floor + ', judged against the floor)' : ''), cell(c.peak?.value), pos(c.peak), cell(c.worstStep?.value), pos(c.worstStep), cell(c.worstHalfStep?.value), pos(c.worstHalfStep), cell(c.seams[0]!.step), cell(c.seams[1]!.step), cell(c.fallBeforePeak.value), cell(c.climbAfterPeak.value), cell(c.worstBeyond?.value) + (c.worstBeyond ? ' at ' + pos(c.worstBeyond) : '')].join(' | ') + ' |')
+      const mark = (x: { value: number; points?: number } | null): string => (x ? cell(x.value) + (x.points === undefined ? '' : ' over ' + x.points) : '')
+      lines.push('| ' + [r.rate === 1 ? 'whole frames' : 'rate ' + r.rate, c.name, Number(c.mean.toPrecision(4)) + ' ' + c.unit + (c.floored ? ' (under the floor ' + c.floor + ', judged against the floor)' : ''), cell(c.peak?.value), pos(c.peak), mark(c.worstStep), pos(c.worstStep), mark(c.worstHalfStep), pos(c.worstHalfStep), cell(c.seams[0]!.step), cell(c.seams[1]!.step), mark(c.fallBeforePeak), mark(c.climbAfterPeak), cell(c.worstBeyond?.value) + (c.worstBeyond ? ' at ' + pos(c.worstBeyond) : '')].join(' | ') + ' |')
     }
   }
+  const dots = p.runs[0]!.curves.find((c) => c.points)?.points
+  if (dots) lines.push('', 'The speed is a mean over ' + dots.of + ' ground points on a ring round the place (' + (ring === 'ground' ? 'a circle on the ground, as wide as ' + L.ringPx + ' px at its distance' : 'a circle of ' + L.ringPx + ' px in the picture, a point over the sky has no ground') + '). Each step and each fall or climb compares the mean over the points that have ground in every frame it compares: "over N" is their count. Fewer than ' + dots.min + ' is not measured, which is red. Fewest points in a frame of the move: ' + p.runs.map((r) => (r.rate === 1 ? 'whole frames ' : 'rate ' + r.rate + ' ') + (r.curves.find((c) => c.points)?.points?.fewest ?? '')).join(', ') + '.')
   lines.push('', 'Limits: step ' + L.maxStep + ' of the mean over one film frame, from ' + L.seamFrames + ' film frames before the segment to ' + L.seamFrames + ' after it; fall before the largest value and climb after it ' + L.maxRebound + ' of the mean, inside the segment. Steps further into the neighbours are shown and not judged.', '')
   if (p.faults.length) lines.push(...p.faults.map((f) => '- RED ' + f.text), '')
   else lines.push('No number of the path is over its limit.', '')
   const fine = p.runs.length > 1
-  const head = ['frame', 'segment and side', 'height', 'rate', 'step', ...(fine ? ['step at rate ' + p.runs[1]!.rate] : []), 'turn', 'step', ...(fine ? ['step at rate ' + p.runs[1]!.rate] : []), 'speed', 'step', ...(fine ? ['step at rate ' + p.runs[1]!.rate] : [])]
+  const head = ['frame', 'segment and side', 'height', 'rate', 'step', ...(fine ? ['step at rate ' + p.runs[1]!.rate] : []), 'turn', 'step', ...(fine ? ['step at rate ' + p.runs[1]!.rate] : []), 'speed', 'step', ...(fine ? ['step at rate ' + p.runs[1]!.rate] : []), ...(dots ? ['points'] : [])]
   lines.push('Every film frame of the window. rate, turn and speed are over the mean of the move; step is the change from the film frame before; a star marks a step over ' + L.maxStep + '.', '')
   lines.push('| ' + head.join(' | ') + ' |', '|' + head.map(() => '---').join('|') + '|')
   const star = (v: number | null): string => (v === null ? '' : v.toFixed(3) + (v > L.maxStep ? ' *' : ''))
@@ -589,6 +599,7 @@ function pathText(kind: Kind, p: PathKind | null): string[] {
     for (const name of ['rate', 'turn', 'speed']) {
       const v = row.values[name]!
       cells.push(cell(v.over), star(v.step), ...(fine ? [star(v.fine)] : []))
+      if (v.points !== undefined) cells.push(String(v.points))
     }
     lines.push('| ' + cells.join(' | ') + ' |')
   })
