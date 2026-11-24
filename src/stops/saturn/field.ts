@@ -216,7 +216,7 @@ void ringFine(float r, float fp, float fpl, float amp, float thin, float side, i
 float ringFootprint(float pixel, float grad) {
   return pixel * max(grad, uRfFine.z);
 }
-// the pixel of the drawn frame as a pixel of the frame the look was set on (grains.json frame): what a width
+// the pixel of the drawn frame as a pixel of the frame the look was set on (the 16 by 9 master): what a width
 // on screen that the look names in pixels is counted in, an angle and not a pixel of the format
 float ringLookPixel(float pixel) {
   return pixel * uRfFoot;
@@ -288,7 +288,7 @@ export function ringField(ctx: SetContext, profile: THREE.DataTexture, key: 'ful
   const wideFit = new THREE.Vector4(near.wide.edge, 0, near.wide.hueFrom, near.wide.hueTo)
   const mix = THREE.MathUtils.lerp
   // the strengths of the ladder for a camera this near the sheet (0 in the hold, 1 in the skim). foot: the
-  // pixels of the drawn frame in one pixel of the frame the look was set on (ice.ts pixelScale), so that the
+  // pixels of the drawn frame in one pixel of the frame the look was set on (src/core/frame.ts), so that the
   // widths on screen from which a ringlet is drawn stronger (near.wide, in footprints) are angles, the same
   // in a frame of any size
   const footU = { value: 1 }

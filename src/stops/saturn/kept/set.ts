@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { FarPoint } from '../../../bodies/farpoint'
+import { bufferFrame } from '../../../core/frame'
 import type { SetFactory } from '../../../core/types'
 import { smooth } from '../../../director/rig'
 import { Globe, Shell } from './globe'
@@ -8,7 +9,6 @@ import * as look from './look'
 import { plan } from './plan'
 import { layoutUniforms, profileUniforms } from './profile'
 import { Rings } from './rings'
-import { pixelScale } from '../ice'
 import { shotMatrix, shotUniforms } from '../shot'
 import apronJson from '../apron.json'
 import bloomJson from '../bloom.json'
@@ -201,8 +201,8 @@ export const createKept: SetFactory = async (ctx) => {
       const gain = 1 / shot.post.exposure
       const elapsed = state.time - plan.holdMid
       const aspect = view.format.width / view.format.height
-      // what the look holds in pixels is an angle: pixels of a frame grains.json frame pixels high
-      const foot = pixelScale(view.format.height)
+      // what the look holds in pixels is an angle: pixels of the master, times the film's own factor
+      const foot = bufferFrame()
 
       const gu = globe.material.uniforms
       const su = shell.material.uniforms

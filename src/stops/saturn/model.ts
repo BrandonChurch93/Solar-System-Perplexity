@@ -1,12 +1,13 @@
 import * as THREE from 'three'
 import { FarPoint } from '../../bodies/farpoint'
 import { config } from '../../config'
+import { bufferFrame } from '../../core/frame'
 import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { smooth } from '../../director/rig'
 import { ringField } from './field'
 import { Globe, Shell } from './globe'
 import { Grains, type Lens } from './grains'
-import { iceField, pixelScale } from './ice'
+import { iceField } from './ice'
 import * as look from './look'
 import { plan } from './plan'
 import { Sheet } from './sheet'
@@ -149,8 +150,8 @@ export const createModel: SetFactory = async (ctx) => {
       const globeGain = gain * THREE.MathUtils.lerp(tune.globe[0]!, tune.globe[1]!, closeGlobe)
       const elapsed = state.time - plan.holdMid
       const aspect = view.format.width / view.format.height
-      // what the look holds in pixels is an angle: pixels of a frame grains.json frame pixels high
-      const foot = pixelScale(view.format.height)
+      // what the look holds in pixels is an angle: pixels of the master, times the film's own factor
+      const foot = bufferFrame()
 
       const gu = globe.material.uniforms
       const su = shell.material.uniforms
@@ -184,7 +185,7 @@ export const createModel: SetFactory = async (ctx) => {
 
       const half = Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2)
       const focal = view.format.height / 2 / half
-      ice.set(plan.spin(state.time), close, focal, view.format.height)
+      ice.set(plan.spin(state.time), close, focal)
       // one take of the frame: how far the lens moves and the orbits turn while its shutter is open. The shutter
       // is that of the frame being drawn (view.shutterSeconds: the film's at the capture rate 1, shorter at a
       // higher capture rate) times the share of it the frame keeps in a dive or a rise (view.shutter)

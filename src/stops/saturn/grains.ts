@@ -1,7 +1,8 @@
 import * as THREE from 'three'
 import { DIAG_GLSL } from '../../diagnostics/diag'
 import { RING_FIELD_GLSL } from './field'
-import { GRAIN_LEVELS, ICE_GLSL, pcg, pixelScale, type Ice } from './ice'
+import { bufferFrame } from '../../core/frame'
+import { GRAIN_LEVELS, ICE_GLSL, pcg, type Ice } from './ice'
 import { GLOBE_SHADOW_GLSL, SHEET_AT_GLSL, SHEET_LAW_GLSL, SHEET_OUTER_GLSL, sheetDepth } from './sheet'
 import spec from './grains.json'
 import model from './ringfield.json'
@@ -347,8 +348,9 @@ export class Grains {
   // lens is to the sheet (0 in the hold: no grains).
   set(focal: number, width: number, height: number, near: number, lens: Lens): void {
     this.view.set(focal, width / 2, height / 2)
-    // the limits of the look are shares of the height of the frame (grains.json frame): in pixels of this frame
-    const scale = pixelScale(height)
+    // the limits of the look are shares of the height of the frame, written as pixels of the master: in pixels
+    // of this frame by the film's own factor
+    const scale = bufferFrame()
     const l = spec.levels
     this.looks.forEach((look, k) => look.set(l.largest[k]![0]! * scale, l.largest[k]![1]! * scale, look.z, look.w))
     this.shape.set(spec.lobes.pixels[0]! * scale, spec.lobes.pixels[1]! * scale, this.shape.z, 0)
