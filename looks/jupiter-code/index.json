@@ -1,9 +1,93 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T23:18:55.766Z",
+ "pushed": "2026-11-24T23:41:26.397Z",
  "head": "a1d978797b22b212f8a4c85e6466785bd16127a0",
- "note": "23:20 UTC: place on the hero's own oval; pairs of 2895 and 3150 at the final tier; draft sheets of the first run. Unfinished: lower left of the rise, crisp rings round the storm in the hold",
+ "note": "23:41 UTC: place on the hero's oval; leave, rise low, d253 stills; the hold pair; work on MAIL 807 (a) to (d) has begun, nothing of it in these pictures yet",
  "looks": [
+  {
+   "time": "2026-11-24T23:41:25.810Z",
+   "file": "20261124234125810-note-pair-3150-final.jpg",
+   "source": "../work/r6/pair-3150-final.jpg",
+   "kind": "note",
+   "label": "close view 3150 final beside the approved image",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T23:41:25.249Z",
+   "file": "20261124234125249-note-pair-2895-final-1to1.jpg",
+   "source": "../work/r6/pair-2895-final-1to1.png",
+   "kind": "note",
+   "label": "hold 2895 final, kept beside new, 1 to 1",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T23:41:24.657Z",
+   "file": "20261124234124657-note-pair-2895-final-6x.jpg",
+   "source": "../work/r6/pair-2895-final-6x.png",
+   "kind": "note",
+   "label": "hold 2895 final, kept beside new, 6 times",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T23:41:24.083Z",
+   "file": "20261124234124083-note-d253-3012.jpg",
+   "source": "../work/r6/d253-3012.jpg",
+   "kind": "note",
+   "label": "d253: dive frame 3012 at both sizes and in both sets",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T23:41:23.504Z",
+   "file": "20261124234123504-note-x2-riselow.jpg",
+   "source": "../work/r6/x2-riselow.jpg",
+   "kind": "note",
+   "label": "rise low 3250 to 3254.5, lower left not cured yet",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T23:41:22.854Z",
+   "file": "20261124234122854-note-x2-leave-storm-2x.jpg",
+   "source": "../work/r6/x2-leave-storm-2x.png",
+   "kind": "note",
+   "label": "leave, the storm at 2 times, 3296 to 3306, draft",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T23:41:22.296Z",
+   "file": "20261124234122296-note-x2-leave.jpg",
+   "source": "../work/r6/x2-leave.jpg",
+   "kind": "note",
+   "label": "leave 3296 to 3306 after the place moved onto the hero's oval, draft",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T23:32:05.085Z",
+   "file": "20261124233205085-frame-g3012-uhd-web.jpg",
+   "source": "out/work/jupiter/d253/g3012-uhd-web.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 3012, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 3012,
+   "tier": "draft",
+   "format": "uhd",
+   "diag": "beauty",
+   "engine": "13d9cc752b1d9c4e"
+  },
+  {
+   "time": "2026-11-24T23:26:26.605Z",
+   "file": "20261124232626605-frame-r4-2895.jpg",
+   "source": "out/work/jupiter/final/r4-2895.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2895, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "13d9cc752b1d9c4e"
+  },
   {
    "time": "2026-11-24T23:18:55.036Z",
    "file": "20261124231855036-note-pair-3150-final.jpg",
@@ -91,20 +175,6 @@
    "engine": "13d9cc752b1d9c4e"
   },
   {
-   "time": "2026-11-24T23:12:57.643Z",
-   "file": "20261124231257643-frame-r3-2895.jpg",
-   "source": "out/work/jupiter/final/r3-2895.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2895, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "13d9cc752b1d9c4e"
-  },
-  {
    "time": "2026-11-24T22:55:07.753Z",
    "file": "20261124225507753-note-pair-3150-x1.jpg",
    "source": "../work/r6/pair-3150-x1.jpg",
@@ -142,70 +212,6 @@
    "source": "../work/r6/survey.jpg",
    "kind": "note",
    "label": "survey: Sun height over the hero map, ring of 32 degrees",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T22:27:47.067Z",
-   "file": "20261124222747067-note-pair-3150-r2.jpg",
-   "source": "../work/r5/pair-3150-r2.jpg",
-   "kind": "note",
-   "label": "THE CLOSE VIEW 3150 at final (before the merge) beside the approved image: approved left, named state right. Mean absolute difference 7.849 (round 46: 7.254); the far ground under the limb is flat (red, mine)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T22:27:46.184Z",
-   "file": "20261124222746184-note-shadow-2895.jpg",
-   "source": "../work/r5/shadow-2895.png",
-   "kind": "note",
-   "label": "2895 at final (before the merge), Io's shadow at 3 times: round 46 left, soft edge right; no pixel outside the shadow moved by more than 2 levels",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T22:24:55.617Z",
-   "file": "20261124222455617-note-full-3296.jpg",
-   "source": "../work/r5/full-3296.jpg",
-   "kind": "note",
-   "label": "rise 3296 draft, whole frame, the judged frame now at 1.216 radii: the scar is in it (red, mine)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T22:24:54.886Z",
-   "file": "20261124222454886-note-full-3284.jpg",
-   "source": "../work/r5/full-3284.jpg",
-   "kind": "note",
-   "label": "rise 3284 draft, whole frame: the storm as a scar on the plain zone (red, mine)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T22:24:54.229Z",
-   "file": "20261124222454229-note-rs-ll-1.jpg",
-   "source": "../work/r5/rs-ll-1.jpg",
-   "kind": "note",
-   "label": "rise 3250 to 3257, lower left at full size: streaked ground comes in, pattern 1.16 by my own reading (red, mine)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T22:24:53.659Z",
-   "file": "20261124222453659-note-rs-leave-storm.jpg",
-   "source": "../work/r5/rs-leave-storm.jpg",
-   "kind": "note",
-   "label": "rise 3298 to 3309, the storm at twice the size: it fades in place by height (red, mine)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T22:24:52.959Z",
-   "file": "20261124222452959-note-s-rise-h.jpg",
-   "source": "../work/r5/s-rise-h.jpg",
-   "kind": "note",
-   "label": "rise and travel 3314 to 3334, every frame, draft",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T22:24:52.317Z",
-   "file": "20261124222452317-note-s-rise-g.jpg",
-   "source": "../work/r5/s-rise-g.jpg",
-   "kind": "note",
-   "label": "rise 3302 to 3313, every frame, draft, half size",
    "stop": "jupiter"
   }
  ]
