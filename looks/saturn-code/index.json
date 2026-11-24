@@ -1,64 +1,72 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T00:34:08.710Z",
+ "pushed": "2026-11-24T00:46:31.469Z",
  "head": "91017d9bbf7b480d11f12184e5b0910c8116d5eb",
- "note": "step 1 whole: nothing by the clock, one sky (way A), hero patch leaves by pose, rise star lift by height, proofs rendered, gates next",
+ "note": "step 1 whole, proofs done; five traced sheets of the ring layout over 3562 to 3598 (cyan: true circles of the rigid plane), committing next",
  "looks": [
+  {
+   "time": "2026-11-24T00:46:18.764Z",
+   "file": "20261124004618764-note-bend_right.jpg",
+   "source": "../../../../tmp/v/tr/bend_right.png",
+   "kind": "note",
+   "label": "traced ring edges at full size, right of the ring, every second frame 3576 to 3598"
+  },
+  {
+   "time": "2026-11-24T00:46:18.132Z",
+   "file": "20261124004618132-note-bend_left.jpg",
+   "source": "../../../../tmp/v/tr/bend_left.png",
+   "kind": "note",
+   "label": "traced ring edges at full size, near left of the ring, every second frame 3576 to 3598"
+  },
+  {
+   "time": "2026-11-24T00:46:17.489Z",
+   "file": "20261124004617489-note-bend_whole_3.jpg",
+   "source": "../../../../tmp/v/tr/bend_whole_3.png",
+   "kind": "note",
+   "label": "traced ring edges, every second frame, bend_whole_3: cyan lines are true circles of the rigid plane at the edges of the kept layout"
+  },
+  {
+   "time": "2026-11-24T00:46:16.864Z",
+   "file": "20261124004616864-note-bend_whole_2.jpg",
+   "source": "../../../../tmp/v/tr/bend_whole_2.png",
+   "kind": "note",
+   "label": "traced ring edges, every second frame, bend_whole_2: cyan lines are true circles of the rigid plane at the edges of the kept layout"
+  },
+  {
+   "time": "2026-11-24T00:46:16.235Z",
+   "file": "20261124004616235-note-bend_whole_1.jpg",
+   "source": "../../../../tmp/v/tr/bend_whole_1.png",
+   "kind": "note",
+   "label": "traced ring edges, every second frame, bend_whole_1: cyan lines are true circles of the rigid plane at the edges of the kept layout"
+  },
+  {
+   "time": "2026-11-24T00:39:44.306Z",
+   "file": "20261124003944306-compare-saturn-rise-sides.jpg",
+   "source": "out/work/handover/saturn-rise-sides.png",
+   "kind": "compare",
+   "label": "saturn rise, both sides at T (frame 3860) and their difference times 8",
+   "stop": "saturn",
+   "segment": "saturn.rise",
+   "frame": 3860,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T00:39:35.487Z",
+   "file": "20261124003935487-compare-saturn-dive-sides.jpg",
+   "source": "out/work/handover/saturn-dive-sides.png",
+   "kind": "compare",
+   "label": "saturn dive, both sides at T (frame 3589) and their difference times 8",
+   "stop": "saturn",
+   "segment": "saturn.dive",
+   "frame": 3589,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-24T00:34:08.033Z",
    "file": "20261124003408033-note-rise2_top2.jpg",
    "source": "../../../../tmp/v/r25/rise2_top2.png",
    "kind": "note",
    "label": "rise sky 3870 to 3879 at full size, stars arriving by height"
-  },
-  {
-   "time": "2026-11-24T00:34:07.433Z",
-   "file": "20261124003407433-note-rise2_top1.jpg",
-   "source": "../../../../tmp/v/r25/rise2_top1.png",
-   "kind": "note",
-   "label": "rise sky 3860 to 3869 at full size, stars arriving by height"
-  },
-  {
-   "time": "2026-11-24T00:34:06.862Z",
-   "file": "20261124003406862-note-rise2_a.jpg",
-   "source": "../../../../tmp/v/r25/rise2_a.png",
-   "kind": "note",
-   "label": "rise tail 3856 to 3886 every second frame, star lift by lens height in place of the clock"
-  },
-  {
-   "time": "2026-11-24T00:34:06.285Z",
-   "file": "20261124003406285-note-dive2_top2.jpg",
-   "source": "../../../../tmp/v/r24/dive2_top2.png",
-   "kind": "note",
-   "label": "dive sky at full size, second part"
-  },
-  {
-   "time": "2026-11-24T00:34:05.675Z",
-   "file": "20261124003405675-note-dive2_top.jpg",
-   "source": "../../../../tmp/v/r24/dive2_top.png",
-   "kind": "note",
-   "label": "dive sky at full size, hero patch leaving by distance from the hold path"
-  },
-  {
-   "time": "2026-11-24T00:34:04.974Z",
-   "file": "20261124003404974-note-dive2_b5.jpg",
-   "source": "../../../../tmp/v/r24/dive2_b5.png",
-   "kind": "note",
-   "label": "dive 3540 to 3630 at draft, final air by height, part 5 of 5, every frame"
-  },
-  {
-   "time": "2026-11-24T00:34:04.264Z",
-   "file": "20261124003404264-note-dive2_b4.jpg",
-   "source": "../../../../tmp/v/r24/dive2_b4.png",
-   "kind": "note",
-   "label": "dive 3540 to 3630 at draft, final air by height, part 4 of 5, every frame"
-  },
-  {
-   "time": "2026-11-24T00:34:03.536Z",
-   "file": "20261124003403536-note-dive2_b3.jpg",
-   "source": "../../../../tmp/v/r24/dive2_b3.png",
-   "kind": "note",
-   "label": "dive 3540 to 3630 at draft, final air by height, part 3 of 5, every frame"
   }
  ]
 }
