@@ -1,9 +1,71 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T12:39:15.394Z",
+ "pushed": "2026-11-24T12:54:47.243Z",
  "head": "5054d98ba26944b288d3eefe1c59512eaca96470",
- "note": "a90e29f: the fall of the body level in the rise measured in place: it is the frame opening on darker ground, not a change of look; the dive pictures part still renders",
+ "note": "a90e29f: the dive pictures report is in (red on the pattern, 48 rows, as on the second commit); dive frames and the port's maps; G5 and G17 are running",
  "looks": [
+  {
+   "time": "2026-11-24T12:54:46.077Z",
+   "file": "20261124125446077-note-pat-new-rise-limb-4.jpg",
+   "source": "../work/named3/pat-new-rise-limb-4.jpg",
+   "kind": "note",
+   "label": "a90e29f rise limb rows read with main's new pattern measure (border cure) by my port: 0.56, 0.59, 0.58, 0.48; still over 0.45",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T12:54:44.955Z",
+   "file": "20261124125444955-note-pat-old-dive.jpg",
+   "source": "../work/named3/pat-old-dive.jpg",
+   "kind": "note",
+   "label": "a90e29f dive, my port of the pattern measure on six red rows: frame, later frame carried back, pattern change; the cells sit at the border of the judged area",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T12:54:43.702Z",
+   "file": "20261124125443702-note-jupiter-dive-changes.jpg",
+   "source": "out/work/logs/bF/jupiter-dive-changes.png",
+   "kind": "note",
+   "label": "a90e29f dive, the pictures report's changes panel: RED pattern 0.73 from 3019 + 1/2, 48 rows over 0.45, at the limb at the right end and where the limb leaves at the top left",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T12:54:42.634Z",
+   "file": "20261124125442634-note-dive-3043-3054.jpg",
+   "source": "../work/named3/sheets/dive-3043-3054.jpg",
+   "kind": "note",
+   "label": "a90e29f dive, whole frames 3043 to 3054 at draft",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T12:54:41.425Z",
+   "file": "20261124125441425-note-dive-3027-3033.jpg",
+   "source": "../work/named3/sheets/dive-3027-3033.jpg",
+   "kind": "note",
+   "label": "a90e29f dive, whole frames 3027 to 3033 and 3043 at draft",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T12:54:40.085Z",
+   "file": "20261124125440085-note-dive-3015-3026.jpg",
+   "source": "../work/named3/sheets/dive-3015-3026.jpg",
+   "kind": "note",
+   "label": "a90e29f dive, whole frames 3015 to 3026 at draft (the report's own frames)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T12:53:12.858Z",
+   "file": "20261124125312858-job-frame-02895.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "jupiter.hold frame 2895, final tier, nograin view, from the running measure job",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
   {
    "time": "2026-11-24T12:39:14.179Z",
    "file": "20261124123914179-note-body-3292.jpg",
@@ -139,68 +201,6 @@
    "kind": "note",
    "label": "a90e29f dive seam 3057 to 3064 at full size, the horizon",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T11:46:41.924Z",
-   "file": "20261124114641924-note-dive-T-b.jpg",
-   "source": "../work/named3/sheets/dive-T-b.jpg",
-   "kind": "note",
-   "label": "a90e29f dive seam, every frame 3058 to 3064 at draft",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T11:46:40.659Z",
-   "file": "20261124114640659-note-dive-T-a.jpg",
-   "source": "../work/named3/sheets/dive-T-a.jpg",
-   "kind": "note",
-   "label": "a90e29f dive seam, every frame 3050 to 3057 at draft (T is 3060)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T11:46:39.610Z",
-   "file": "20261124114639610-note-rise-T-low.jpg",
-   "source": "../work/named3/sheets/rise-T-low.jpg",
-   "kind": "note",
-   "label": "a90e29f rise seam 3237 to 3244 at full size, the ground",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T11:46:38.352Z",
-   "file": "20261124114638352-note-rise-T-top.jpg",
-   "source": "../work/named3/sheets/rise-T-top.jpg",
-   "kind": "note",
-   "label": "a90e29f rise seam 3237 to 3244 at full size, the horizon",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T11:46:37.110Z",
-   "file": "20261124114637110-note-rise-T-b.jpg",
-   "source": "../work/named3/sheets/rise-T-b.jpg",
-   "kind": "note",
-   "label": "a90e29f rise seam, every frame 3238 to 3244 at draft",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T11:46:35.754Z",
-   "file": "20261124114635754-note-rise-T-a.jpg",
-   "source": "../work/named3/sheets/rise-T-a.jpg",
-   "kind": "note",
-   "label": "a90e29f rise seam, every frame 3230 to 3237 at draft (T is 3240)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T11:25:06.455Z",
-   "file": "20261124112506455-frame-bF-3150.jpg",
-   "source": "out/work/jupiter/final/bF-3150.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3150, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "5a18fcdc5a929484"
   }
  ]
 }
