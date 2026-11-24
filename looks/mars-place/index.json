@@ -1,9 +1,41 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T15:00:52.359Z",
+ "pushed": "2026-11-24T15:33:51.242Z",
  "head": "b8c0def04b45940b252ab06e35b40a4a8796b913",
- "note": "apron ground into the country's heights (test), it3 thrown away; lay runs again on the new heights",
+ "note": "wide join of the apron heights: first lay 0.75 / 1.55 / 1.04 (99th pct of the pattern, globe ground against close ground); second pass with the secant runs",
  "looks": [
+  {
+   "time": "2026-11-24T15:33:50.604Z",
+   "file": "20261124153350604-note-aq1-horizon.jpg",
+   "source": "out/work/place/see/aq1-horizon.jpg",
+   "kind": "note",
+   "label": "horizon band H over R at 2466 2470 2686",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T15:33:49.986Z",
+   "file": "20261124153349986-note-air1.jpg",
+   "source": "out/work/place/see/air1.jpg",
+   "kind": "note",
+   "label": "air sweep at 2470: thicker ground haze drowns the canyon (not taken)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T15:33:49.340Z",
+   "file": "20261124153349340-note-aq1-plates.jpg",
+   "source": "out/work/place/see/aq1-plates.jpg",
+   "kind": "note",
+   "label": "test aq1 plates from above 0.7 1.6 3.8 8.5 deg: the whole lay is a pale wedge (still wrong)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T15:33:48.585Z",
+   "file": "20261124153348585-note-aq1-HR.jpg",
+   "source": "out/work/place/see/aq1-HR.jpg",
+   "kind": "note",
+   "label": "test aq1: globe ground alone (H) against close ground alone (R) and their pattern, first lay on heights with the aprons, 2466 2470 2686",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T15:00:51.760Z",
    "file": "20261124150051760-note-look-0.7.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/place/see/it3-dive.jpg",
    "kind": "note",
    "label": "test it3 from above 2440 to 2462 and 2694 (thrown away: fan lines wrong)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T14:28:21.720Z",
-   "file": "20261124142821720-note-pc.jpg",
-   "source": "out/work/place/see/pc.jpg",
-   "kind": "note",
-   "label": "picture camera coordinates over the close ground",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T14:28:21.063Z",
-   "file": "20261124142821063-note-fan3.jpg",
-   "source": "out/work/place/see/fan3.jpg",
-   "kind": "note",
-   "label": "test it3 plates 1.6, 3.8, 8.5 with the picture's frame, box and apron lines on the ground",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T14:28:20.380Z",
-   "file": "20261124142820380-note-it2-dive.jpg",
-   "source": "out/work/place/see/it2-dive.jpg",
-   "kind": "note",
-   "label": "test it2 from above: patch with a bright streak on its north border",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T14:28:19.718Z",
-   "file": "20261124142819718-note-it1-dive.jpg",
-   "source": "out/work/place/see/it1-dive.jpg",
-   "kind": "note",
-   "label": "test it1 from above, dive 2440 to 2462 and rise 2694: the lay reads as a patch",
    "stop": "mars"
   }
  ]
