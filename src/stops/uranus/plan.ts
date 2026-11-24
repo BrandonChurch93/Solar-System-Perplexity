@@ -3,7 +3,7 @@ import { config, type Segment } from '../../config'
 import type { CoverHorizon, Pose, ViewKind } from '../../core/types'
 import { handoverOf, sideAt, type SkyShares } from '../../director/handover'
 import { StopPlan, type Fit, type MoveParams, type OrbitShot } from '../../director/moves'
-import { forward, lookAt, mix, ramp, smooth } from '../../director/rig'
+import { blendPose, forward, lookAt, mix, ramp, smooth } from '../../director/rig'
 import deck from './deck.json'
 import fit from './fit.json'
 import { haze, place as low, shape, show } from './look'
@@ -43,6 +43,13 @@ export const move = {
 
 export function below(span: [number, number], altitude: number): number {
   return 1 - smooth(ramp(Math.log(span[0]), Math.log(span[1]), Math.log(Math.max(altitude, 1e-4))))
+}
+
+export function turned(span: [number, number], soft: number, altitude: number): number {
+  const x = 1 - ramp(Math.log(span[0]), Math.log(span[1]), Math.log(Math.max(altitude, 1e-4)))
+  const end = (u: number): number => soft * (u * u * u - (u * u * u * u) / 2)
+  const p = x < soft ? end(x / soft) : x > 1 - soft ? 1 - soft - end((1 - x) / soft) : x - soft / 2
+  return Math.min(Math.max(p / (1 - soft), 0), 1)
 }
 
 const X = new THREE.Vector3(1, 0, 0)
@@ -98,7 +105,43 @@ function frame(g: Pivot, sweep: number, turn: number): { out: THREE.Vector3; qua
   return { out, quaternion: new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().makeBasis(right, up, out)) }
 }
 
+const BEND_STEPS = 64
+const POSES_KEPT = 32
+
 export class UranusPlan extends StopPlan {
+  private kept = false
+
+  terrain(tRel: number): Pose {
+    const base = super.terrain(tRel)
+    if (this.kept) return base
+    const b = path.bend
+    const dur = this.seg.terrain.end - this.seg.terrain.start
+    const u = tRel / dur - 0.5 - config.shutterFraction / (2 * config.fps * dur)
+    const from = b.heading[0]! - 0.5
+    if (u <= from) return base
+    const t = this.p.terrain
+    const line = new THREE.Vector3(t.side, t.rise, -t.forward)
+    const start = line.clone().multiplyScalar(from)
+    const speed = line.length()
+    const ahead = line.clone().normalize()
+    const across = new THREE.Vector3().crossVectors(ahead, start.clone().sub(CENTRE)).normalize().multiplyScalar(b.side)
+    const angle = (w: number): number => rad(b.turnDeg) * window(w + 0.5, b.heading)
+    const last = Math.min(u, b.heading[3]! - 0.5)
+    const h = (last - from) / BEND_STEPS
+    let c = 0
+    let s = 0
+    for (let i = 0; i <= BEND_STEPS; i++) {
+      const k = i === 0 || i === BEND_STEPS ? 1 : i % 2 === 1 ? 4 : 2
+      const a = angle(from + h * i)
+      c += k * Math.cos(a)
+      s += k * Math.sin(a)
+    }
+    const end = angle(last)
+    const over = u - last
+    const position = start.addScaledVector(ahead, speed * ((c * h) / 3 + Math.cos(end) * over)).addScaledVector(across, speed * ((s * h) / 3 + Math.sin(end) * over))
+    return { position, quaternion: base.quaternion, vfov: base.vfov }
+  }
+
   clock(time: number): number {
     const e = time - this.holdMid
     const dive = this.seg.dive!
@@ -145,17 +188,22 @@ export class UranusPlan extends StopPlan {
 
   skyTurnShare(seg: Segment, time: number): number | null {
     if (!this.handed(seg)) return super.skyTurnShare(seg, time)
-    return below(low.skyTurn, this.altitude(time))
+    return this.skyTurned(seg, time)
+  }
+
+  private skyTurned(seg: Segment, time: number): number {
+    return seg.kind === 'dive' ? turned(low.skyDive.turn, low.skyDive.soft, this.altitude(time)) : below(low.skyTurn, this.altitude(time))
   }
 
   skyCarryShare(seg: Segment, time: number): number | null {
-    return this.handed(seg) ? below(low.skyTurn, this.altitude(time)) : null
+    return this.handed(seg) ? this.skyTurned(seg, time) : null
   }
 
   skyShare(seg: Segment, time: number): SkyShares | null {
     if (!this.handed(seg)) return null
-    const share = below(low.skyPicture, this.altitude(time))
-    return seg.kind === 'dive' ? { low: share, high: 1 - share } : { low: share }
+    if (seg.kind !== 'dive') return { low: below(low.skyPicture, this.altitude(time)) }
+    const share = below(low.skyDive.picture, this.altitude(time))
+    return { low: share, high: 1 - share }
   }
 
   skyLiftAt(seg: Segment, time: number): number | null {
@@ -215,13 +263,14 @@ export class UranusPlan extends StopPlan {
   }
 
   private anchor(kind: 'dive' | 'rise', time: number): THREE.Vector3 {
-    let a = this.anchors.get(kind)
+    const key = this.kept ? kind + ' kept' : kind
+    let a = this.anchors.get(key)
     if (!a) {
       const at = handoverOf(this.id, kind)!.time
       const back = this.turn(at).invert()
       a = this.sight(this.seat(this.terrain(at - this.seg.terrain.start), at)).applyQuaternion(back)
       for (let i = 0; i < path.anchorSteps; i++) a = this.sight(this.led(kind, at, a.clone().applyQuaternion(this.turn(at)))).applyQuaternion(back)
-      this.anchors.set(kind, a)
+      this.anchors.set(key, a)
     }
     return a.clone().applyQuaternion(this.turn(time))
   }
@@ -253,8 +302,33 @@ export class UranusPlan extends StopPlan {
     return { position: base.position, quaternion: base.quaternion.multiply(new THREE.Quaternion().setFromUnitVectors(want, now)), vfov: base.vfov }
   }
 
+  private readonly poses = new Map<string, Pose>()
+
   flown(kind: 'dive' | 'rise', time: number): Pose {
-    return this.led(kind, time, this.anchor(kind, time))
+    if (this.kept) return this.joined(kind, time)
+    const key = kind + time
+    let pose = this.poses.get(key)
+    if (!pose) {
+      if (this.poses.size >= POSES_KEPT) this.poses.clear()
+      pose = this.joined(kind, time)
+      this.poses.set(key, pose)
+    }
+    return { position: pose.position.clone(), quaternion: pose.quaternion.clone(), vfov: pose.vfov }
+  }
+
+  private joined(kind: 'dive' | 'rise', time: number): Pose {
+    const k = path.bend.back
+    const x = kind === 'rise' ? (time - this.seg.rise.start) / (this.seg.rise.end - this.seg.rise.start) : 0
+    if (x <= k[0]!) return this.led(kind, time, this.anchor(kind, time))
+    this.kept = true
+    let old: Pose
+    try {
+      old = this.led(kind, time, this.anchor(kind, time))
+    } finally {
+      this.kept = false
+    }
+    if (x >= k[3]!) return old
+    return blendPose(this.led(kind, time, this.anchor(kind, time)), old, window(x, k))
   }
 
   divePose(time: number, view: ViewKind): Pose {
