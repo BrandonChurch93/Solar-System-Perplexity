@@ -153,13 +153,19 @@
     "smooth": 0.8
   },
   "flight": {
-    "note": "The flight of the surface view. seconds: its length. The camera passes the pose of the approved image at the middle. Forward speed over the ground goes from startUnitsPerSecond to endUnitsPerSecond with the power of the elapsed share. Before the middle it also comes down: startAbove units higher at the start, falling with the sinkPower of the share of the way still to go, so it stays near the bottom plane of the approved view and little ground shows that the image never saw. ease: after the middle the way is cut short, by units at the end of the surface view, where the speed is unitsPerSecond less; the cut is given back over backSeconds under the pull back of the rise, so the pose at the rise's handover is the same as without it. The reason is what the picture holds, not blur: flown the whole way, the pale collar south west of the storm comes under the camera about twice as large as the approved image holds it and reads as a soft wash; the eased flight ends before that. exposureStops: knots [seconds from the middle, stops] of the exposure of the surface view, read through a monotone curve. They are fitted to the measured mean level of the frame so that it stays level from frame 3120 to 3225 while sunlit cloud fills more of the frame. The first knot is the exposure the dive hands over with, the last the one the globe takes at the rise's handover.",
+    "note": "The flight of the surface view: one flight that takes the dive's motion at its first frame and hands the rise its motion at its last. seconds: its length. The camera passes the pose of the approved image at the middle. Up to the middle the forward speed over the ground goes from startUnitsPerSecond with the power of the elapsed share (endUnitsPerSecond is what that law would reach at the end), and the camera comes down: startAbove units higher at the start, falling with the sinkPower of the share of the way still to go, so it stays near the bottom plane of the approved view and little ground shows that the image never saw. bend: from the end of the judged middle frame's own shutter the push bends into a track across and on into a pull back up the lens's own line, which is the line the rise leaves along. The heading of the flight turns to the left from straight ahead to straight back along the lens, on a smooth step that has no turn at either end, and the climb comes in with that step raised to climbPower, so the track across stays level and the camera lifts only as it pulls back. The speed over the camera's own height rises in a straight line from what the middle frame has to endPerSecond, so it never falls. The way is summed once in steps of 1 over stepsPerSecond and read between them through a cubic with the true speeds, so it holds at any fraction of a frame; beyondSeconds is how far past the seam the table reaches, straight on. ease: units and unitsPerSecond are the old cut of the way; they act only inside the shutter of the judged middle frame, so that frame's camera stays what it was to the byte. exposureStops: knots [seconds from the middle, stops] of the exposure of the surface view, read through a monotone curve. They are fitted to the measured mean level of the frame so that it stays level while sunlit cloud fills more or less of the frame. The first knot is the exposure the dive hands over with, the last the one the globe takes at the rise's handover.",
     "seconds": 6,
     "startUnitsPerSecond": 0.12,
     "endUnitsPerSecond": 0.3,
     "power": 1,
     "startAbove": 0.32,
     "sinkPower": 2,
+    "bend": {
+      "climbPower": 2,
+      "endPerSecond": 0.3,
+      "stepsPerSecond": 96,
+      "beyondSeconds": 0.5
+    },
     "exposureStops": [
       [
         -3,
@@ -212,8 +218,7 @@
     ],
     "ease": {
       "units": 0.3,
-      "unitsPerSecond": 0.2,
-      "backSeconds": 1.0
+      "unitsPerSecond": 0.2
     }
   },
   "view": {
