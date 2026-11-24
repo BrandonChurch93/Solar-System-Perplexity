@@ -1,9 +1,25 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-23T23:45:06.720Z",
+ "pushed": "2026-11-24T00:05:29.805Z",
  "head": "46fe41ce7edd072b89a447b2402af9ed55dd5513",
- "note": "step 1 pushed as 46fe41ce; step 3 bodies in trial: two rim faults found on zooms, cure by a depth pass in work, not committed",
+ "note": "step 3 trial b5: towers keep their tone through the blend at 2118; lone dark pixels on tower rims not cured yet",
  "looks": [
+  {
+   "time": "2026-11-24T00:05:29.163Z",
+   "file": "20261124000529163-note-shadow-dir.jpg",
+   "source": "../../../../tmp/gl/s3/shadow-dir.jpg",
+   "kind": "note",
+   "label": "approved close image: painted shadow direction found at each tower foot (green) against the direction the scene Sun casts at 2010 (red)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T00:05:28.540Z",
+   "file": "20261124000528540-note-b5-rise.jpg",
+   "source": "../../../../tmp/gl/pw/b5-rise.jpg",
+   "kind": "note",
+   "label": "step 3 trial b5, not committed: rise frames 2099 2106 2118, top row step 1 (46fe41ce), bottom row bodies with the close world laid under the globe front to back",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-23T23:45:06.094Z",
    "file": "20261123234506094-note-b2-z2118e.jpg",
@@ -63,30 +79,6 @@
    "kind": "note",
    "label": "step 1 trial: every frame 1913 to 1919 on the globe side, place picture off (handover sheet, draft)",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T23:10:15.483Z",
-   "file": "20261123231015483-sheet-earth-rise-draft-after.jpg",
-   "source": "out/work/handover/earth-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "earth rise, every frame 2101 to 2112 (after T, frame 2100), draft tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "first": 2101,
-   "last": 2112,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T23:09:03.723Z",
-   "file": "20261123230903723-sheet-earth-rise-draft-across.jpg",
-   "source": "out/work/handover/earth-rise-draft-across.png",
-   "kind": "sheet",
-   "label": "earth rise, every frame 2100 to 2105 (across T, frame 2100), draft tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "first": 2100,
-   "last": 2105,
-   "tier": "draft"
   }
  ]
 }
