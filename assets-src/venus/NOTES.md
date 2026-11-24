@@ -3824,3 +3824,112 @@ So the cause is not in the stop: it is the shutter of the engine (a box of 18 to
 12. The change of view takes the one frame of T (`dissolveFrames` 1).
 13. The minors of round 41 (E), none cured: sky black 1284 to 1317; fast tilt 1550 to 1557; weak parallax 1350 to 1529; stars in the bloom of the Sun at 1440; limb band 1 px wider at 1185; the R3 minors.
 14. C: a flash comes back in its cell every 1.3 to 3.9 s at another strength each time; whether that reads as a repeat in the 5 s of the hold was not judged by a second eye. 1185 is no longer the kept still (1275 px, 2 of 255 at the most).
+
+## After the NAMED mail of MAIL 707 (18:55 UTC): the dive run, a new red of mine, its cure
+
+- Main moved to dfdc58cf170c461ccd13f1328c82b39248b78930 while the proofs ran (it differs from 9e15c6a4 in `kit/PROGRESS.md` only). Fetched with depth 1 at 18:37 and merged without touching the working tree of the stop: main's tree with the three Venus folders of 5e14f1f2 put in (a second index), `git commit-tree` with both parents, `git merge --ff-only`. Merge commit 8b7994375d9917b14ff91634a36c266dc1d1c35c (parents 5e14f1f2 and dfdc58cf), pushed, and named in the mail. Outside the three folders its tree is main's (`git diff --stat` empty). Net of the three folders: main 162.728 MB, named commit 162.806 MB (plus 0.078 MB, text only).
+- Smooth pictures, dive, on the tree of 5e14f1f2 (18:35:55 to 18:54:14 UTC, 260 draft frames), last lines: "smooth venus: red, 2 over the limit or not measured. out/work/smooth/venus-dive.md", "dive: pop score 1.31 from frame 1318 + 1/2 to the next, limit 1.2 (9 frames over it, first 1316)", "dive: the pattern of the picture changes in place by 0.46 from frame 1311 to 8 film frames later, limit 0.45 (3 frames over it, first 1311)".
+- The pattern: 0.57 at 1322 with 12 over on 97c902c4 (14:48), 0.46 at 1311 with 3 over now.
+- The pop is a new red. Against the run of 14:48 the median is the same (2.59, then 2.58); what is left without the motion rose on 1315 to 1321 (1316: 3.22 then 3.52; 1318: 3.02 then 3.41; 1318 + 1/2: 3.01 then 3.39) and the level of the frame with it (1318: 67.10 then 70.62). The largest was 1.17 before, none over. Between the two runs lie the two changes of this commit and main from 2bc36ce6 to 9e15c6a4. The rows of the rise away from the cover are the same to the last digit in both runs, and the flashes have left by height at these frames, so I take it as the cost of `air.haze.mu` 0.12 in the dive: by exclusion, not by a trial with 0.06 on this tree. In the pops panel (1317 to 1319) what is left shows a grey band along the limb and points all over the near ground.
+- The report's largest change in place (shown, not judged): 110.2 from 1314 + 1/2 now, 81.1 from 1317 before.
+- The NAMED mail went at 18:55 with all of this said, the pop named as a new red of mine.
+
+### The cure tried: the air on the line of sight by its own heights
+
+- Heights of the eye (radii over the cloud tops, `fheight.ts`): dive 1302 0.406, 1304 0.334, 1308 0.225, 1312 0.151, 1314 0.124, 1316 0.102, 1318 0.084, 1320 0.070, 1322 0.058, 1324 0.050, 1326 0.043, 1328 0.038, 1332 0.030; rise 1546 0.033, 1548 0.039, 1550 0.047, 1553 0.064, 1555 0.080, 1557 0.100, 1559 0.127, 1562 0.181, 1565 0.263, 1568 0.386.
+- So with the heights of the dome (`air.heights` 0.035 to 0.12) the air on the line of sight came in over frames 1314 to 1329 of the dive and left over 1547 to 1559 of the rise, most of it in the middle of that.
+- Change: `air.haze.heights` [0.035, 0.4] in `plates.json` (with `hazeHeightsNote`), read in `set.ts` as `hazeOn`, the same law as the dome's weight (eased in the logarithm of the height) with its own two heights. It comes in over 1302 to 1329 and leaves over 1547 to 1568. From higher up the sight grazes the cloud tops only at the limb (worked out: at 0.3 radii a cosine under 0.12 lies within 0.5 degrees of the limb, at 0.1 radii within 0.9, at 0.05 within 1.3), so it is a thin band there that widens as the eye sinks. Nothing comes in by time.
+- Measured on a slice of the dive with the report's own tool (`npm run smooth -- --stop venus --only pictures --kind dive --frames 2626-2646`, capture frames, two to a film frame: film frames 1313 to 1323; 18:58 to 19:04 UTC, 54 draft frames), against the rows of the whole run on the named commit:
+
+| frame | left without the motion, named | with the heights | pop, named | with the heights | change in place, named | with the heights |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1314 + 1/2 | 2.61 | 2.64 | 1.03 | 1.04 | 110.2 | 65.6 |
+| 1316 | 3.52 | 3.20 | 1.24 | 1.17 | 95.9 | 55.0 |
+| 1317 | 3.35 | 2.92 | 1.26 | 1.12 | 89.2 | 49.2 |
+| 1317 + 1/2 | 3.41 | 2.92 | 1.30 | 1.15 | 83.0 | 47.1 |
+| 1318 + 1/2 | 3.39 | 2.86 | 1.31 | 1.13 | 71.0 | 43.3 |
+| 1319 | 3.32 | 2.83 | 1.29 | 1.13 | 64.4 | 40.3 |
+| 1320 | 3.15 | 2.71 | 1.22 | 1.10 | 55.0 | 35.9 |
+
+  The slice is green: "smooth venus: green. out/work/smooth/venus-dive-k2626-2646.md". Largest pop 1.17 at 1316 (limit 1.2), no frame over; largest change in place 74.7 from 1313; largest pattern 0.39 at 1322. The median of the slice reads 2.46 (2.58 in the whole run). At 1316 the largest block is column 0 row 0, the upper left corner, in both runs (5.76 and 5.49, shown, not judged): that is the sky, which takes its share by height there, not the air on the ground.
+- Viewed: the slice's own frames 1305, 1308, 1312, 1316, 1320, 1324. A thin pale rim at the limb at 1305 and 1308 that widens into the pale band of 1316 to 1324; no pall over the body.
+- The margin at 1316 is thin (1.17 against 1.2).
+- The whole dive with the upper height at 0.4 (19:05 to 19:23 UTC, 260 draft frames): "smooth venus: red, 1 over the limit or not measured. out/work/smooth/venus-dive.md", "dive: the pattern of the picture changes in place by 0.49 from frame 1309 + 1/2 to 8 film frames later, limit 0.45 (7 frames over it, first 1308 + 1/2)". No pop line: the largest pop is 1.17 at 1316, none over. So the pop is cured and the pattern red has moved, three states side by side:
+
+| state | largest pop | frames over 1.2 | largest pattern | frames over 0.45 |
+| --- | --- | --- | --- | --- |
+| 97c902c4 (mu 0.06, the heights of the dome) | 1.15 at 1319 | 0 | 0.57 at 1322 | 12 (1320 + 1/2 to 1326 + 1/2) |
+| named 8b799437 (mu 0.12, the heights of the dome) | 1.31 at 1318 + 1/2 | 9 | 0.46 at 1311 to 1312 | 3 |
+| mu 0.12, upper height 0.4 | 1.17 at 1316 | 0 | 0.49 at 1309 + 1/2 and 1311 | 7 (1308 + 1/2 to 1311 + 1/2) |
+
+  In each state the pattern is over the limit on the frames whose partner 8 film frames later has taken most of the air: the detail of the far ground goes under it. In the changes panel of 1309 + 1/2 the change of level (79.2) lies over the far half of the ground the two frames share, the change of the pattern along its far edge. Worked out for the upper height 0.4: the middle of the ease lies at 0.118 radii, frame 1314 + 1/2, which is the fastest frame of the dive (the path lines: 1314 at 1.612 times the mean rate); the weight goes from 0.16 at 1309 + 1/2 to 0.62 at 1317 + 1/2.
+- So the upper height goes up to where the look of the hold has gone: `air.haze.heights` [0.035, 3.4] (the first frame of the dive stands at 3.46, the last of the rise at 4.40, `fheight.ts`; so 1260 and 1604 keep no air of this kind). Worked out: weight 0.02 at 1280, 0.08 at 1287, 0.16 at 1292, 0.38 at 1300, 0.51 at 1304, 0.68 at 1309 + 1/2, 0.86 at 1316, 0.99 at 1550, 0.95 at 1553; over the 8 frames from 1309 + 1/2 it changes by 0.22 where it changed by 0.46. The proofs that had started on 0.4 (the rise run) were stopped at 19:26.
+- Measured with the upper height at 3.4 (slice of capture frames 2600 to 2646, film frames 1300 to 1323; 19:26 to 19:34 UTC, 80 draft frames): "smooth venus: red, 1 over the limit or not measured.", "dive: the pattern of the picture changes in place by 0.54 from frame 1304 to 8 film frames later, limit 0.45 (16 frames over it, first 1302 + 1/2)". Largest pop 1.19 at 1316. Pattern by film frame, 1303 to 1312: 0.47, 0.54, 0.51, 0.41, 0.47, 0.45, 0.49, 0.52, 0.46, 0.38 (with 0.4: 0.31, 0.33, 0.36, 0.41, 0.36, 0.42, 0.48, 0.454, 0.49, 0.42; on the named commit: 0.27, 0.24, 0.23, 0.34, 0.22, 0.24, 0.20, 0.30, 0.46, 0.46). So 3.4 is worse and is not kept. What I worked out was wrong: the weight changes by only 0.22 over the 8 frames from 1309 + 1/2 and the pattern still reads 0.49 there. It is not the rate of the weight. In the changes panel of 1304 the change of the pattern lies along the far edge of the ground the two frames share: ground that stood well inside the limb at 1304 lies at the limb at 1312 (worked out: the limb is 41.4 degrees of arc from the point under the eye at 1304 and 29.7 at 1312; a point at 25 degrees has a cosine of 0.35 at 1304 and 0.09 at 1312, so this air takes 0.05 of it, then 0.48). The detail of the far ground goes under the air as the limb comes to it, and it does so within 8 frames wherever this air stands in the fast part of the dive (up to about 1312). From 1313 on the same air reads 0.22 to 0.39.
+- Viewed, upper height 3.4: frames 1292, 1296, 1300, 1304, 1308, 1312 of the slice. The orange limb of the globe at 1292 and 1296, a thin pale rim from 1300, a pale band from 1308. No pall.
+- So the two numbers pull against each other with this law: the later the air comes in, the fewer frames of the pattern (3 with the heights of the dome), and the faster it must come in before T (the pop, 1.31); the earlier, the slower (pop 1.17 at 0.4, 1.19 at 3.4) and the more frames of the pattern (7 at 0.4, 16 at 3.4).
+- Trial running (19:37): `air.haze.mu` 0.10 with the upper height 0.4, the same slice, and stills 1547, 1550, 1553 for B. The pattern is a 99th percentile on the body, so a narrower band may fall out of it; what it costs B is looked at on the stills.
+- Measured with mu 0.10 and the upper height 0.4 (the same slice, 19:39 to 19:46 UTC): "smooth venus: red, 1 over the limit or not measured.", "dive: the pattern of the picture changes in place by 0.47 from frame 1311 to 8 film frames later, limit 0.45". One capture frame over the limit (1311; 1310 + 1/2 reads 0.44, 1311 + 1/2 0.41). Largest pop 1.18 at 1317 + 1/2 (1.18 at 1316 too), none over 1.2. Largest change in place 75.6 from 1310 + 1/2. Frame 1311 reads 0.46 to 0.49 in every state with mu 0.10 or 0.12 and 0.31 with mu 0.06: in the changes panel the change of the pattern lies at the right end of the far edge of the ground the two frames share (most at pixel 1452, 344).
+- B at mu 0.10, measured on draft stills with the same tool as before (the dark band between the two rims, mean depth over the columns that show both, display values): 1547: 3.9 (0.06: 9.7; 0.12: 4.0). 1550: 5.8, 25 of 97 columns deeper than 10 (0.06: 42.7, 85 of 100; 0.12: 3.9, 18 of 98). Viewed side by side (0.06, 0.12, 0.10): at 0.10 one pale band as at 0.12, the darker patch under the Sun a little plainer than at 0.12.
+- Decision (19:48): mu 0.10 with the heights 0.035 to 0.4. It cures the pop I brought in (1.31 to 1.18), keeps the cure of the second rim nearly whole, and leaves one frame of the dive over the limit of the pattern by 0.02. I did not try 0.09: it would give up more of B for a margin of about 0.02 that I cannot hold to on another machine. The red is named, not hidden.
+- The whole proof chain runs on this state from 19:48 (`/tmp/v/proofsC.sh`): build, tsc, smooth pictures of the dive and of the rise, handover at the draft tier, smooth path, gate G11 and G15, the finals 1185 and 1440, the seam stills, vitest.
+
+### The whole dive on the state kept (19:48 to 20:07 UTC, 260 draft frames)
+
+- Last lines, word for word: "smooth venus: red, 1 over the limit or not measured. out/work/smooth/venus-dive.md", "dive: the pattern of the picture changes in place by 0.47 from frame 1311 to 8 film frames later, limit 0.45".
+- Largest pop 1.18 from 1317 + 1/2 (1.18 from 1316 too), limit 1.2, none over (named commit: 1.31, 9 over). Largest level step 0.33 at 1287 + 1/2, limit 1.3. Largest change in place (shown, not judged) 75.6 from 1310 + 1/2 (named commit: 110.2 from 1314 + 1/2). Pattern: 1311 alone over the limit (0.47); 1309 to 1310 + 1/2 read 0.41 to 0.44, 1311 + 1/2 0.41, 1322 to 1326 0.41 to 0.43.
+- Viewed: the pops panel (1316, 1316 + 1/2, 1317 + 1/2, 1319): what is left without the motion is the line of the limb, the sky in the upper left corner and the grain of the ground; no band along the limb as on the named commit. The changes panel (1292, 1303, 1311, 1325): at 1311 the smoothed difference is bright over the far part of the shared ground (the air coming over it) and the change of the pattern lies at its right end.
+
+| state of the dive | largest pop | over 1.2 | largest pattern | over 0.45 |
+| --- | --- | --- | --- | --- |
+| 97c902c4: mu 0.06, the dome's heights | 1.15 at 1319 | 0 | 0.57 at 1322 | 12 |
+| named 8b799437: mu 0.12, the dome's heights | 1.31 at 1318 + 1/2 | 9 | 0.46 at 1311 | 3 |
+| mu 0.12, heights 0.035 to 0.4 | 1.17 at 1316 | 0 | 0.49 at 1309 + 1/2 | 7 |
+| mu 0.12, heights 0.035 to 3.4 (slice 1300 to 1323) | 1.19 at 1316 | 0 | 0.54 at 1304 | 16 |
+| kept: mu 0.10, heights 0.035 to 0.4 | 1.18 at 1317 + 1/2 | 0 | 0.47 at 1311 | 1 |
+
+### The whole rise on the state kept (20:07 to 20:23 UTC, 230 draft frames)
+
+- Last lines, word for word: "smooth venus: red, 2 over the limit or not measured. out/work/smooth/venus-rise.md", "rise: pop score 1.28 from frame 1610 + 1/2 to the next, limit 1.2 (2 frames over it, first 1610 + 1/2)", "rise: the pattern of the picture changes in place by 0.76 from frame 1608 + 1/2 to 8 film frames later, limit 0.45 (19 frames over it, first 1542)".
+- The 19: 1542 to 1543 (3; 0.50, 0.50, 0.48, the same as on the named commit and as with mu 0.06), 1545 to 1547 + 1/2 (6; 0.46, 0.49, 0.51, 0.59, 0.58, 0.62), 1573 + 1/2 to 1576 + 1/2 (7, largest 0.65 at 1575, every row the same as on the named commit and as with mu 0.06), 1607 + 1/2 to 1608 + 1/2 (3, travel's frames, the same).
+- Round the cover the three states read (mu 0.06 with the dome's heights, the named commit, this state): 1545 + 1/2: 0.46, 0.47, 0.49. 1546: 0.47, 0.48, 0.51. 1546 + 1/2: 0.51, 0.51, 0.59. 1547: 0.47, 0.50, 0.58. 1547 + 1/2: 0.451, 0.61, 0.62. 1548: 0.41, 0.47, 0.446. So the air that cures the second rim costs up to 0.11 of the pattern on 1546 + 1/2 to 1547 + 1/2 against mu 0.06, and this state is 0.08 worse than the named commit on 1546 + 1/2 and 1547 and takes 1548 under the limit. Named as a cost.
+- Pop round 1553, where the air leaves by height: 1.196 at 1553 + 1/2 on the named commit, 1.10 at 1553 and 1.12 at 1555 + 1/2 now (1.04 and 0.99 with mu 0.06). The pop of 1610 + 1/2 is the same picture and the same number (the rest at the seam).
+- Largest change in place (shown, not judged): 73.9 from 1551 (88.0 on the named commit, 67.9 from 1546 + 1/2 with mu 0.06). Largest level step 0.32 at 1565 + 1/2.
+- Viewed: the changes panel (1551, 1559, 1575, 1608 + 1/2) and the pops panel (1539 + 1/2, 1610 + 1/2, 1612 + 1/2, 1613 + 1/2). At 1551 the smoothed difference is bright along the far ground under the limb (the pale band there at 1551, gone at 1559). At 1575 the change of the pattern is spread over the disc with its largest spots at the lower edge; nothing of the air stands at that height (0.9 radii).
+
+## MAIL 749 from the Builder (/root), 20:46 UTC, word for word
+
+MAIL 749 from the Builder (/root), 20:46 UTC. Your first named commit of round 2 (8b7994375d9917b14ff91634a36c266dc1d1c35c) is RED in the smooth report, so by the standing rule your next named commit is due within 90 minutes: by 22:16 UTC. The third goes into its round as it stands. All numbers MEASURED on machines, your commit carried onto the batch 4 tip b51550ff (proof tree 29ce9b600f050b68ef80469090aec3f13d95c13b, engine hash 13d9cc752b1d9c4e), draft, rate 2, and the same parts measured on b51550ff without your commit.
+
+GREEN: G5, G13 (495 of 495 frames) and G17. The take check against the batch's reference: 103 of 115 draft frames equal; 12 differ: ten inside your dive and rise, your hold 1185, and 1072 in the travel toward Venus (it draws your globe). The terrain frame 1440 is equal in the draft. Say in your NAMED mail what changed at the hold.
+
+RED, made by your commit (not on the base):
+- dive: pop score 1.31 from frame 1318 + 1/2 to the next, limit 1.2, 9 frames over it, first 1316 (rows 1315 to 1321 read 1.10 to 1.31; the base reads 1.00 to 1.14 there).
+- dive: the pattern changes in place by 0.46 from frame 1311, limit 0.45, 3 frames over it (the base reads 0.29 to 0.33 there).
+CURED by your commit: the base's dive read 0.57 at 1322 (11 frames over from 1321 + 1/2); yours reads 0.40 there.
+
+RED on your rise, better than the base and still over the limit on main's reader:
+- 0.50 at 1542 (base 1.14 at 1541 + 1/2).
+- 0.61 at 1547 + 1/2, 9 frames over it, first 1542 + 1/2 (base 1.15 at 1543, 27 frames over).
+- 0.65 at 1575, 7 frames over it, first 1573 + 1/2 (base 1.09 at 1577 + 1/2, 33 frames over, first 1570).
+For these three it is UNKNOWN whether the measure or the picture made them: main's reader carries a floor in a rise (a clean rise reads 0.12 to 0.86 on it) and a new reader is being built (the camera's own map from a depth picture, then the flow). Do not tune the picture to the number. Look at the frames named in the changes pictures (attached): if you see something come up or swap in place there, cure that and say what it was; if you see nothing, say so with the two frames.
+
+NOT YOURS, the same with and without your commit: after your rise's end, in the travel, pop 1.28 at 1610 + 1/2 and pattern 0.76 at 1608 + 1/2 (the globe's top leaves the frame there). But the leave itself is yours from now on: batch 4 brings handover.rise.pullBack and the limit smooth.path.minLeave 0.07, and your leave line reads 0.017 at 1605 + 1/2. Make your next commit on the batch tip (fetch 1924a104ed41def8574811c54b4d92ccb7e3febd, branch agent/engine-handover-b4; it lands on main as it is or with one more tools commit), use the pull back so that the line is green, and say whether the readings at 1607 to 1611 fall with it.
+
+YOUR NAMED MAIL: full sha, the smooth report's verdict as you measured it on that tip, the two dive lines and the three rise lines as they read now, the leave line, what changed at the hold. Attached: the pops and changes pictures of the red parts and two of the reports.
+
+(Attachments: venus-dive-p3of4-pops.png, venus-dive-p3of4-changes.png, venus-dive-p3of4.md, venus-rise-p1of4-changes.png, venus-rise-p2of4-pops.png, venus-rise-p2of4-changes.png, venus-rise-p3of4-pops.png, venus-rise-p3of4-changes.png, venus-rise-p3of4.md, venus-rise-p4of4-pops.png.)
+
+### Proofs on the state kept, tree of 8b799437 with the changes (19:48 to 20:52 UTC, before MAIL 749 was read)
+
+- build 0, tsc 0.
+- handover, draft: six pass lines (dive and rise: side difference at T, flow gap at T, every frame). Sides at T: dive mean 0.036, 99th percentile 1, 99.9th 14, max 113 (named commit: 0.035, 1, 12, 114); rise mean 0.047, 99th 1, 99.9th 9, max 106. Flow gap mean 0.113 px on both, largest 0.31 dive and 0.267 rise. Body step: dive level 3.14 and colour 3.92 into 1291; rise 2.93 and 3.24 into 1591. In place (shown): dive 3.42 and 4.09 into 1297; rise 4.27 and 5.08 into 1573. The path lines are the same as on the named commit.
+- smooth --only path: "smooth venus: green. out/work/smooth/venus.md". Gate: "PASS G11  every asset has a row or a recipe", "PASS G15  at most 2 sets per frame; finished stops: venus/web 352 MB, venus/full 1386 MB".
+- Finals: 1185 sha256 c950bb49efc877e3bed05db392c0044e31ce7af9e6c95f991dd6c9342f87e953 (as on the named commit), 1440 sha256 a1ec9a62ad3533837cf408559de2a217994ceb5341e0e3ce7eb6a40a84a38818 (equal to the kept still).
+- Seam: draft stills 1259, 1260, 1604, 1605, 1612 have the same bytes as on the named commit (the eye stands over 0.4 radii there, so this air has no weight).
+- Every frame of 1260 to 1349 and of 1530 to 1604 looked at (eleven sheets of 16 from the frames of the handover run).
+
+### The frames MAIL 749 asks me to look at (rise, the three red places), looked at on this state, 20:50 UTC
+
+- 1542 against 1550 (0.50): I SEE A SWAP IN PLACE. At 1542 the far deck under the horizon is the picture of T: pale, smooth, drawn in long streaks. At 1550 the same ground carries small bright cells and a cold white patch right of the middle that 1542 does not show. It is the law of plates.json (tones of the plates by the line of sight of T, `cos`, `curve`, `air`): as the eye leaves the line of sight of T the far deck gives up the tones of T and shows the forms of the plates. Not cured in this commit.
+- 1547 + 1/2 against 1555 + 1/2 (0.61, 0.62 on this state): I SEE SOMETHING COME UP. Under the right limb a dark oval with a hard edge (a dark field of the widest plate) stands at 1555 where 1547 has the pale band of the air; the air leaves by height and by angle and the oval comes out of it within 8 frames. The air is the cure of the second rim (B); the oval itself is in the plates. Not cured in this commit.
+- 1575 against 1583 (0.65): I SEE A SWAP IN PLACE. At 1575 the left half of the disc is the ground of the place (towers with their shadows, lumps); at 1583 the same ground is the globe's own map (long smooth streaks). The place's ground leaves by height between 0.9 and 1.9 radii while it still fills a third of the disc. This is what the critic of round 41 called ribbons and smooth bands (A). Cure: the widest level of the place has to be part of the globe's map at every height, so that nothing is let go. Not done in this commit.

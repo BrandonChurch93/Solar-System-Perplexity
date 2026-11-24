@@ -294,8 +294,10 @@ export const createSet: SetFactory = async (ctx) => {
       hazeTurn.copy(state.rotation).multiply(airTurn)
       ;(gu.uAirFwd!.value as THREE.Vector3).copy(ground.deck!.fwd).applyQuaternion(hazeTurn)
       ;(gu.uAirRight!.value as THREE.Vector3).copy(ground.deck!.right).applyQuaternion(hazeTurn)
+      // The air on the line of sight comes in by its own heights (plates.json, air.haze.heights), wider than the dome's.
       const hz = place.air.haze
-      ;(gu.uAirHaze!.value as THREE.Vector4).set(hz.most * airOn, hz.mu, hz.gain, THREE.MathUtils.degToRad(look.relief.air.deckSpanDeg))
+      const hazeOn = covering ? 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-4)) - Math.log(hz.heights[0]!)) / (Math.log(hz.heights[1]!) - Math.log(hz.heights[0]!))) : 0
+      ;(gu.uAirHaze!.value as THREE.Vector4).set(hz.most * hazeOn, hz.mu, hz.gain, THREE.MathUtils.degToRad(look.relief.air.deckSpanDeg))
       gu.uCarryOn!.value = 1 - released
       const pl = plan.placeLook(state.segment, camera.length() - 1)
       const duskGain = Math.pow(place.dusk.gain, pl.dusk)
