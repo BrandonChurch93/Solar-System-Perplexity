@@ -234,11 +234,15 @@ to 1.0), at most 8 in each zone of gas (1.0 to 1.1, 1.1 to 1.3, 1.3 to 1.6, beyo
 reported and not ruled. The box does not move.
 
 MEASURED at the draft tier with `PIL` `GaussianBlur(12)` on both pictures at 1920 by 1080, mean of the
-absolute difference over the three channels: this look gives 4.17 in the box (the look before it 4.42, the
-one before that 4.57), face 2.1, limb 3.1, gas 5.0, 7.7, 5.1 and 4.5. Every zone is inside its bound. The
+absolute difference over the three channels: this look gives 4.13 in the box (the look before it 4.42, the
+one before that 4.57), face 2.1, limb 3.1, gas 5.5, 7.3, 5.0 and 4.5. Every zone is inside its bound. The
 box is over its 4.0: the rule stands and this look does not meet it yet. What is left is the form of the
-light from 1.1 to 1.3 radii (the left flank of the streamer's root and a second thin tuft beside it are
-missing, the gas from 1.3 to 1.6 is a little too warm) and the reach of the glare at the upper left.
+light from 1.1 to 1.3 radii (the curtain of fine strands left of the plume's foot is too thin, the gas
+from 1.3 to 1.6 is a little too warm), the fineness of the tufts of the limb and the reach of the glare
+at the upper left.
+
+MEASURED at the final tier as well (one picture, 832 s on a loaded machine): 4.13 in the box, face 2.1,
+limb 3.1, gas 5.5, 7.3, 5.0 and 4.5; the plain number is 7.34 (7.28 at the draft tier).
 
 ## The cost
 
@@ -250,9 +254,9 @@ seconds of the next two):
 |-------|-------|------|
 | d263ad28 | 106.9 | 85.4, 86.1 |
 | c0a7f5ef | 116.0 | 94.8, 94.1 |
-| this look | 58.0 | 37.8, 37.4 |
+| this look | 60.7 | 41.4, 41.0 |
 
-The page's load and the link are the first minus the next: about 21 s in all three. The gain is in the
+The page's load and the link are the first minus the next: about 20 s in all three. The gain is in the
 march: a lobe's strands are computed only where its weight is not zero, a knot's march is skipped where
 the ray misses its sphere, the fringe where its share is zero, a loop with no gain at all. The pictures of
 c0a7f5ef kept their bytes under those skips (MEASURED at 615 and 616 before the look changed).
