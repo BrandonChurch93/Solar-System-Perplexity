@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T04:08:27.126Z",
- "head": "e345480ca8263e43c531fd91f07967f98c27df4b",
- "note": "parity green on my tree (factor rows over 1080), pale quad mended in band.py, lobe out; frames being read",
+ "pushed": "2026-11-24T04:43:36.878Z",
+ "head": "cbf0de39477b67db29416a3d4188287f235bc1d5",
+ "note": "pale quad and dark mark gone at 985 to 990, lobe out, parity green on own tree; merging main 8fb9ba9b and swapping to the shared frame factor",
  "looks": [
+  {
+   "time": "2026-11-24T04:43:36.183Z",
+   "file": "20261124044336183-note-pd-984-991.jpg",
+   "source": "out/work/mercury/place/quad/pd-984-991.jpg",
+   "kind": "note",
+   "label": "rise 984 to 991 with the mended plates",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T04:43:35.271Z",
+   "file": "20261124044335271-note-mid2-987.jpg",
+   "source": "out/work/mercury/place/quad/mid2-987.jpg",
+   "kind": "note",
+   "label": "rise 987 at full size with the mended plates: no pale quad, no dark mark",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T04:08:26.365Z",
    "file": "20261124040826365-note-mercury-parity.jpg",
@@ -51,25 +67,6 @@
    "kind": "note",
    "label": "c7248b33 frames 984 to 989, left part, every frame: the pale quad and the band's craters entering at the left (before the mend)",
    "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T02:55:27.703Z",
-   "file": "20261124025527703-note-look.jpg",
-   "source": "out/work/mercury/place/quad/look.jpg",
-   "kind": "note",
-   "label": "pale quad of the rise plate (level 4): top row the rise lay, the rise plate with the quad, the dive ground; bottom row lay weight, the rise's place, 1 over stretch. The quad lies outside the rise's place: toned dive ground where the mirrored fringe has no source, hard edge",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T02:34:41.996Z",
-   "file": "20261124023441996-compare-mercury-rise-sides.jpg",
-   "source": "out/work/handover/mercury-rise-sides.png",
-   "kind": "compare",
-   "label": "mercury rise, both sides at T (frame 977) and their difference times 8",
-   "stop": "mercury",
-   "segment": "mercury.rise",
-   "frame": 977,
-   "tier": "draft"
   }
  ]
 }
