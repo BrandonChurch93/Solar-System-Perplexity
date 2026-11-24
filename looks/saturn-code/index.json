@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T13:26:30.793Z",
- "head": "66de92e88b18a3e3932a1443632da9d772a406cc",
- "note": "named trees confirmed green on my runs; review tier across the dive handover; item 17 (palette of 3720) under trial, local only",
+ "pushed": "2026-11-24T13:52:40.410Z",
+ "head": "41cac1f4db60e27b5f7ba958dac5ec055882cf16",
+ "note": "named trees keep their bytes on the merged main (3465 and 3720 finals equal); item 17 trials at 3720: the far look's tone in the skim, by the lens' height",
  "looks": [
+  {
+   "time": "2026-11-24T13:52:33.995Z",
+   "file": "20261124135233995-note-t2_three.jpg",
+   "source": "../../../../tmp/v/t17/t2_three.png",
+   "kind": "note",
+   "label": "item 17, trial 2 at 3720, crop x 300 to 1260, y 480 to 900: approved close image (top), named (middle), trial (bottom). Trial 2 is wrong: the ceiling sat too high and the ringlets went white and streaky; kept as a bad one"
+  },
+  {
+   "time": "2026-11-24T13:52:33.335Z",
+   "file": "20261124135233335-note-rev_rise_whole.jpg",
+   "source": "../../../../tmp/v/r48/rev_rise_whole.png",
+   "kind": "note",
+   "label": "named trees, review tier, frames 3849 to 3855 whole: across the rise's handover at T 3852, level steps -0.14 to -0.47, no jump; the near ring at the left is drawn out by the shutter (item 16)"
+  },
+  {
+   "time": "2026-11-24T13:52:32.501Z",
+   "file": "20261124135232501-note-3567_beside_kept_final.jpg",
+   "source": "../../../../tmp/v/r48/3567_beside_kept_final.png",
+   "kind": "note",
+   "label": "named trees, frame 3567 at the final tier beside the kept still: the ring and the globe alike, the sky's warm field brighter here, the ring larger (the one flight)"
+  },
   {
    "time": "2026-11-24T13:26:30.100Z",
    "file": "20261124132630100-note-pair_t1.jpg",
@@ -40,27 +61,6 @@
    "source": "../../../../tmp/v/r47/dive_b.png",
    "kind": "note",
    "label": "dive 3576 to 3609 every third frame, draft, named trees: the warm field leaves again with the height"
-  },
-  {
-   "time": "2026-11-24T13:02:06.208Z",
-   "file": "20261124130206208-note-dive_a.jpg",
-   "source": "../../../../tmp/v/r47/dive_a.png",
-   "kind": "note",
-   "label": "dive 3540 to 3573 every third frame, draft, named trees: the sky at the top left turns from the hold's blue to the film's warm field (item 15)"
-  },
-  {
-   "time": "2026-11-24T13:02:05.250Z",
-   "file": "20261124130205250-note-3720_ll_pair.jpg",
-   "source": "../../../../tmp/v/r47/3720_ll_pair.png",
-   "kind": "note",
-   "label": "3720 lower left at full size: approved (left), named trees (right); item 17: highlights clip to white, dark ringlets brown where the approved has grey"
-  },
-  {
-   "time": "2026-11-24T13:02:04.091Z",
-   "file": "20261124130204091-note-3720_three.jpg",
-   "source": "../../../../tmp/v/r47/3720_three.png",
-   "kind": "note",
-   "label": "3720 final: approved close image (top), kept still (middle), named trees (bottom); list item 17, the ring reads brighter and whiter than the approved"
   }
  ]
 }
