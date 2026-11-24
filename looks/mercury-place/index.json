@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T21:35:56.269Z",
+ "pushed": "2026-11-24T21:59:51.514Z",
  "head": "15d489e9e70ff9fb2c598d02ba7fb0288f6d799e",
- "note": "dive handover sheets with the true far Sun; main b890fee7 merged; the leave line (MAIL 760): pull back being fitted on the path, first green reading 0.077",
+ "note": "rise handover sheets with the true far Sun on the merged build; leave line green on the path (0.077, pull back 0.55 / 0.35 / 0.8); the rise's end renders now",
  "looks": [
+  {
+   "time": "2026-11-24T21:59:50.127Z",
+   "file": "20261124215950127-note-t2-b.jpg",
+   "source": "out/work/mercury/place/sheets/t2-b.jpg",
+   "kind": "note",
+   "label": "rise about T with the true far Sun, draft, frames 973 + 1/2 to 980 + 1/2",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T21:59:48.620Z",
+   "file": "20261124215948620-note-t2-a.jpg",
+   "source": "out/work/mercury/place/sheets/t2-a.jpg",
+   "kind": "note",
+   "label": "rise about T (976 + 1/2) with the true far Sun, draft, merged build with the pull back, frames 966 + 1/2 to 973 + 1/2",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T21:35:55.637Z",
    "file": "20261124213555637-note-t1-b.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/m/d722-crop.jpg",
    "kind": "note",
    "label": "dive 719 to 731 at (1120..1620, 640..1080), far Sun off: own list red 719 + 1/2 to 723 (0.60)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T20:50:27.503Z",
-   "file": "20261124205027503-note-h615-mark.jpg",
-   "source": "../../../../tmp/m/h615-mark.png",
-   "kind": "note",
-   "label": "615 draft at belt_builder's mark (1695, 533), 4 times, card before and after, final form of reach.py",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T20:50:26.922Z",
-   "file": "20261124205026922-note-h615-left.jpg",
-   "source": "../../../../tmp/m/h615-left.png",
-   "kind": "note",
-   "label": "615 draft at the far Sun's left limb, card before and after reach.py: the old Sun's plumes and the orange dash are out",
    "stop": "mercury"
   }
  ]
