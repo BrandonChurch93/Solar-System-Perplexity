@@ -13,6 +13,8 @@ export interface HazeAir {
   strength: number
   extinction: number
   forward: number
+  glow?: Rgb
+  glowPower?: number
 }
 
 export interface GlobeAir {
@@ -39,4 +41,10 @@ export function setHazeAir(uniforms: Record<string, THREE.IUniform>, a: HazeAir)
   uniforms.uHazeStrength!.value = a.strength
   uniforms.uHazeForward!.value = a.forward
   if (uniforms.uExtinction) uniforms.uExtinction.value = a.extinction
+  if ((a.glow === undefined) !== (a.glowPower === undefined)) throw new Error('the glow of an air is a colour and a power, both or neither')
+  if (a.glow && uniforms.uHazeGlow) {
+    if (!(a.glowPower! > 0)) throw new Error('the glow power must be above 0')
+    ;(uniforms.uHazeGlow.value as THREE.Vector3).fromArray(a.glow)
+    uniforms.uHazeGlowPower!.value = a.glowPower
+  }
 }

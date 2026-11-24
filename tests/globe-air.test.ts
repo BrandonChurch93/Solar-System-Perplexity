@@ -98,6 +98,26 @@ describe('the air of the globe', () => {
     expect(() => setHazeAir({}, air)).toThrow('no haze')
   })
 
+  it('writes the glow of an air where the haze was made with one, leaves a glow alone the air does not name and wants colour and power together', () => {
+    const u = hazeUniforms({ ...look.haze, glow: true })
+    const dir = (u.uHazeGlowDir!.value as THREE.Vector3).toArray()
+    setHazeAir(u, low.haze!)
+    expect((u.uHazeGlow!.value as THREE.Vector3).toArray()).toEqual([0, 0, 0])
+    expect(u.uHazeGlowPower!.value).toBe(1)
+    const glow: [number, number, number] = [0.5, 0.25, 0.125]
+    setHazeAir(u, { ...low.haze!, glow, glowPower: 6 })
+    expect((u.uHazeGlow!.value as THREE.Vector3).toArray()).toEqual(glow)
+    expect(u.uHazeGlowPower!.value).toBe(6)
+    expect((u.uHazeGlowDir!.value as THREE.Vector3).toArray()).toEqual(dir)
+    setHazeAir(u, low.haze!)
+    expect((u.uHazeGlow!.value as THREE.Vector3).toArray()).toEqual(glow)
+    const plain = hazeUniforms(look.haze)
+    setHazeAir(plain, { ...low.haze!, glow, glowPower: 6 })
+    expect(plain.uHazeGlow).toBeUndefined()
+    expect(() => setHazeAir(u, { ...low.haze!, glow })).toThrow('both or neither')
+    expect(() => setHazeAir(u, { ...low.haze!, glow, glowPower: 0 })).toThrow('above 0')
+  })
+
   it('measures the air to a point by one law: it grows with the distance, is the globe\'s own depth where the point lies on the datum and stays between 0.8 and 1.6 of the integral of the density along the ray', () => {
     const H = 0.003
     const point = (ha: number, ca: number, L: number): [number, number] => {
