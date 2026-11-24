@@ -4308,3 +4308,54 @@ kept/rings.ts, kept/set.ts, skim.json light.grade):
 - NOT YET DONE at this line: the motion on consecutive frames (draft list d7: 3556 to 3632 and 3808 to 3868),
   the proofs (3465 and 3866 byte equal to the named finals, 3567 beside the kept still, G17 at 3720, the dive's
   and the rise's pictures, the handover's parts, G13, smooth, vitest on the merge).
+
+## 2026-11-24, 14:55 to 15:30 VM: T7d fails G17, the ceiling retuned (T7e), working tree only
+
+State unchanged: NAMED 2d54c492 stands, nothing pushed to the branch, the code of the trial is in the working
+tree only (backups /tmp/v/t17/t7d.diff and grade.ts.t7d for T7d).
+
+T7d, THE MOTION AT THE DRAFT TIER (list d7: every frame 3556 to 3632 and 3808 to 3868):
+- Mean level of the whole frame (0 to 255) by frame through the change of set: steps -0.75, -0.70, -0.67,
+  -0.63, -0.58, -0.53, -0.49, -0.43, -0.42, -0.39, -0.36 over 3598 to 3609; no step at 3602 to 3607. Looked at
+  every frame 3601 to 3608 at full size (crop x 0 to 760, y 440 to 1000): one picture, ringlets hold their
+  places, the A ring a little greyer in each frame.
+- The mean of the lit pixels falls 153.7 to 135.3 over the dive (the named frames 3600 to 3632 hold 148.2 to
+  149.0): that fall is the grade, 0.3 to 0.57 levels a frame, largest change of step 0.196 at 3582.
+
+T7d FAILS G17 AT 3720 (final tier, no grain, tools/measure/g17.py through /tmp/v/g17map.py): median 0.779, 30
+of 62 tiles at or over 0.8 (31 needed). The named commit on the same tool: 0.945, 35 of 62 (render
+/tmp/v/t17/namedg_3720.png, sha 250bab4c...). By tile the energy of the band is 0.65 to 0.70 of the named in
+every tile of the dense ring (the ceiling at 0.75 flattens the bright ringlets, and their edges are the band's
+energy there) and 1.2 to 1.7 in the far thin zones (the toe). So T7d is not to be offered.
+
+WHY A GAIN BY THE TONE OF THE ZONE CANNOT REPLACE THE CEILING: the white top is made of narrow ringlets whose
+light is 4 and more against 0.4 to 0.5 for their zone (the film's input in the patch x 700 to 1000, y 650 to
+800: p50 0.43, p90 1.63, p99 4.58). A gain read from a low pass of the tone leaves them white (simulated: white
+share 0.03). Only a curve on the pixel holds them, and any curve on the pixel takes band energy with it.
+
+THE SIMULATOR (/tmp/v/t17/sim2.py, sim4.py, sim5.py): from the two renders without grain (named and T7d) it
+solves, pixel by pixel, the light before the ceiling and the factor of the toe, applies another ceiling or toe
+and measures G17 and the tone. The shader's light is the film's input over 0.88 in the dense ring (0.68 to
+0.99 across the frame: exposure, vignette). It reproduces T7d to the digit and predicted T7e within 0.03 of G17
+(0.908 against 0.877 rendered). Read from it: the ceiling 0.75, 0.85, 0.95, 1.05, 1.2 gives G17 0.779, 0.819,
+0.862, 0.898, 0.941 and the brightest hundredth of the box 0.864, 0.881, 0.895, 0.906, 0.919 (approved 0.912);
+a sharper knee (power 4) keeps 0.03 to 0.05 more G17 but leaves the dense ring's body as bright as the named
+(p90 0.818 to 0.841 against 0.777); a square root shoulder or c / (1 + l / c) keeps G17 at 0.90 to 0.96 but
+lets the brightest tenth of the dense ring back to 0.93 to 0.98 (white ringlets again).
+
+T7e, THE TRIAL AS IT STANDS: skim.json light.grade toe 0.5 (was 0.4), ceiling 1.0 (was 0.75); nothing else
+changed against T7d.
+- 3720 final without grain (sha ddd15110...): G17 median 0.877, 33 of 62 tiles at or over 0.8.
+- 3720 final (sha 5f9a9ba1...), the box x 0 to 960, y 380 to 1080, mean, p10, p50, p90, p95, p99, white share:
+  T7e 0.523, 0.268, 0.504, 0.807, 0.860, 0.899, 0.0001; approved 0.511, 0.242, 0.505, 0.777, 0.827, 0.912,
+  0.0003; named 0.563, 0.287, 0.568, 0.837, 0.910, 0.977, 0.0083.
+- Rows of 60 px from 480 down, the left half: T7e 0.546, 0.567, 0.597, 0.602, 0.576, 0.536, 0.491, 0.442,
+  0.414, 0.396; approved 0.499, 0.577, 0.593, 0.581, 0.560, 0.533, 0.500, 0.467, 0.440, 0.434. The contrast
+  under 5 px by row: T7e 0.103 to 0.117, approved 0.115 to 0.139, named 0.096 to 0.100.
+- Still wrong in the still: the three lowest rows are 0.025 to 0.04 darker than the approved and their bright
+  ringlets 0.04 to 0.085 darker (the far look has a share down to 0.6 planet radii from the lens, and it is
+  toned like the near light there); the row 480 to 540 is 0.047 brighter; p90 and p95 of the box are 0.03
+  over; the bright rim of the dense ring along the division is still the brightest line of the frame; the
+  approved's pink and blue grey ringlets are not in my ring.
+- Pictures: /tmp/v/t17/t7e_three.png (approved, named, trial), t7e_left.png (approved beside the trial, the
+  left half at full size).
