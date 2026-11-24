@@ -1,9 +1,57 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T21:48:27.565Z",
+ "pushed": "2026-11-24T22:08:23.445Z",
  "head": "faeea78babada5abc9cc9468d4cc7a473b6253ab",
- "note": "21:50 UTC. The cure of MAIL 734 is pushed and proven (faeea78b on main b890fee7, PRE mailed): warm 190 to 247 at rate 2, 115 pictures, none made anything; judged bytes kept. Material, uncommitted trials of frame 60: yu2 has the depth of the approved (dark valleys, bulbs) but reads as brushed metal, the threads meet in each cell's middle where the approved's meet in the pits; yu1 is paving stones. Neither stands. yu2 sun-near: share by band 0.294 0.228 0.150 0.097 0.062 0.039 0.026 0.024 0.024 | dark 0.347 body 0.537 pale 0.050 white 0.027 | half width 6.0 px, 3454 shapes, fine detail 0.0576, mean 0.275, distance 0.153. Next: the dark foot kept, the fans short, soft and rooted in the pits.",
+ "note": "22:08 UTC after MAIL 764, trial yz1 on faeea78b, not committed: the cells take their light by the angle of sight (bright where seen into, dark at the apparent edge), lanes 0.02 wide. Still cushions of leather, not plasma; penumbra a comb; at 217 the place is a brown paved disc in the pale map. sun-near 60: bands 0.236 0.193 0.161 0.119 0.082 0.056 0.036 0.031 0.018 | dark 0.303 body 0.555 pale 0.067 white 0.019 | half width 6.9 px, 2579 shapes, fine detail 0.0497, mean 0.299 | distance 0.097",
  "looks": [
+  {
+   "time": "2026-11-24T22:08:22.848Z",
+   "file": "20261124220822848-note-yy-p1.jpg",
+   "source": "../../../../tmp/v/yy-p1.jpg",
+   "kind": "note",
+   "label": "frame 60, three trials of the law of sight angle (yy1 to yy3) beside the approved (top left), one to one",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T22:08:22.257Z",
+   "file": "20261124220822257-note-yz1-pair-60s.jpg",
+   "source": "../../../../tmp/v/yz1-pair-60s.jpg",
+   "kind": "note",
+   "label": "frame 60, the spot and the left foot, trial yz1: approved left, mine right, one to one",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T22:08:21.667Z",
+   "file": "20261124220821667-note-yz1-217-240.jpg",
+   "source": "../../../../tmp/v/yz1-217-240.jpg",
+   "kind": "note",
+   "label": "frames 217 and 240, trial yz1 (uncommitted), whole frames small",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T22:08:21.088Z",
+   "file": "20261124220821088-note-yz1-pair-90.jpg",
+   "source": "../../../../tmp/v/yz1-pair-90.jpg",
+   "kind": "note",
+   "label": "frame 90, trial yz1 (uncommitted): approved left, mine right, one to one",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T22:08:20.527Z",
+   "file": "20261124220820527-note-yz1-pair-60.jpg",
+   "source": "../../../../tmp/v/yz1-pair-60.jpg",
+   "kind": "note",
+   "label": "frame 60, trial yz1 (uncommitted): approved left, mine right, one to one",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T22:08:19.943Z",
+   "file": "20261124220819943-note-yz1-pair-0.jpg",
+   "source": "../../../../tmp/v/yz1-pair-0.jpg",
+   "kind": "note",
+   "label": "frame 0, trial yz1 (uncommitted): approved left, mine right, one to one",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T21:48:26.980Z",
    "file": "20261124214826980-note-yu1-p1.jpg",
@@ -18,54 +66,6 @@
    "source": "../../../../tmp/v/yu2-p1.jpg",
    "kind": "note",
    "label": "frame 60 draft, trial yu2 (uncommitted: flowers off, a dark foot under every bulb, strong threads from the middle), one to one: approved left, ours right",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T21:23:44.274Z",
-   "file": "20261124212344274-note-pair60-head.jpg",
-   "source": "../../../../tmp/v/pair60-head.jpg",
-   "kind": "note",
-   "label": "frame 60 draft of the head being proven (a90cde4e: the cure of the rise's buffers on main 73809f4b, material as 404a7f06), one to one: approved close image left, ours right",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T21:07:49.514Z",
-   "file": "20261124210749514-note-z3yt2.jpg",
-   "source": "../../../../tmp/rd/z3yt2.jpg",
-   "kind": "note",
-   "label": "frame 60 draft, trial yt2 (flowers alone on a plain top), 3x: approved left, ours right",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T21:07:48.830Z",
-   "file": "20261124210748830-note-z3yt1.jpg",
-   "source": "../../../../tmp/rd/z3yt1.jpg",
-   "kind": "note",
-   "label": "frame 60 draft, trial yt1 (flowers off), 3x: approved left, ours right",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T21:07:47.621Z",
-   "file": "20261124210747621-note-p1yt1.jpg",
-   "source": "../../../../tmp/rd/p1yt1.jpg",
-   "kind": "note",
-   "label": "frame 60 draft, trial yt1 (the flowers of the pits off), one to one: approved left, ours right",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T20:54:32.015Z",
-   "file": "20261124205432015-note-f240.jpg",
-   "source": "../../../../tmp/l5/f240.jpg",
-   "kind": "note",
-   "label": "frame 240 draft, trial yr1 (uncommitted) on a23218ee",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T20:54:31.369Z",
-   "file": "20261124205431369-note-f217.jpg",
-   "source": "../../../../tmp/l5/f217.jpg",
-   "kind": "note",
-   "label": "frame 217 draft, trial yr1 (uncommitted) on a23218ee",
    "stop": "sun"
   }
  ]
