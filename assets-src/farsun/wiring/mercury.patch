@@ -2,10 +2,10 @@
 # The plate's gain is 0 while the far Sun stands in the sky (shot.sun.far set). The body draws itself in
 #   the sky pass, so the set calls nothing.
 diff --git a/src/stops/mercury/set.ts b/src/stops/mercury/set.ts
-index 6884781a..64f14a9a 100644
+index 457c4068..82afb5a2 100644
 --- a/src/stops/mercury/set.ts
 +++ b/src/stops/mercury/set.ts
-@@ -268,7 +268,7 @@ export const createSet: SetFactory = async (ctx) => {
+@@ -278,7 +278,7 @@ export const createSet: SetFactory = async (ctx) => {
        const hide = arriving ? 1 - smoother(ramp(look.hide.fade[0]!, look.hide.fade[1]!, state.u)) : rising || leaving ? 1 : 0
        const beneath = arriving ? Math.pow(shot.sets.find((s) => s.id === state.segment.stop)?.weight ?? 0, look.hide.power) : 0
        const lift = arriving ? (Math.max(smooth(ramp(0.25, 0.8, look.hide.gone)) - shown, 0) * (1 - beneath)) / Math.max(shown, 1e-4) : 0

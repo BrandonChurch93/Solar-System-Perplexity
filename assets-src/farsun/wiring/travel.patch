@@ -7,7 +7,7 @@
 # sky.ts: uSunFar takes the far Sun's share out of the sky's own disc term; the body is drawn at the end of
 #   the sky pass with the sky's camera, at the true centre in the Sun's frame, else at sun.dir by angular radius.
 diff --git a/src/core/types.ts b/src/core/types.ts
-index 0c646807..f359ac2f 100644
+index b743c8d0..3537da26 100644
 --- a/src/core/types.ts
 +++ b/src/core/types.ts
 @@ -18,7 +18,9 @@ export interface PostParams {
@@ -22,10 +22,10 @@ index 0c646807..f359ac2f 100644
  export type ViewKind = 'orbit' | 'terrain'
  
 diff --git a/src/director/film.ts b/src/director/film.ts
-index 45c89104..d0782d21 100644
+index 9cfa31ca..39f09dbd 100644
 --- a/src/director/film.ts
 +++ b/src/director/film.ts
-@@ -13,6 +13,9 @@ import world from './world.json'
+@@ -14,6 +14,9 @@ import world from './world.json'
  import { aimAt, type SkyAims } from '../space/aim'
  import { TravelShape, inFrame } from '../space/travel/path'
  import { discShare, openSky } from '../space/travel/open'
@@ -35,7 +35,7 @@ index 45c89104..d0782d21 100644
  
  const NO_TURN = new THREE.Quaternion()
  
-@@ -58,6 +61,7 @@ const riseLift = (id: string): number => (OPEN.riseLift as Record<string, number
+@@ -59,6 +62,7 @@ const riseLift = (id: string): number => (OPEN.riseLift as Record<string, number
  const DUST_LOOK = config.raw.travel.dust
  const OPEN_TAPS = 8
  const SUN_COLOR = new THREE.Color(1, 0.9, 0.72)
@@ -43,7 +43,7 @@ index 45c89104..d0782d21 100644
  
  export interface LiveControl { stop: string; view: ViewKind; yaw: number; pitch: number; zoom: number; time: number }
  
-@@ -514,9 +518,22 @@ export class FilmDirector implements Director {
+@@ -515,9 +519,22 @@ export class FilmDirector implements Director {
      return { radius: THREE.MathUtils.degToRad(l.sunRadiusDeg), glare: l.sunGlare, exposure: l.exposure, sky: l.skyExposure }
    }
  
@@ -68,7 +68,7 @@ index 45c89104..d0782d21 100644
    }
  
    private bright(index: number, at: number): number {
-@@ -534,7 +551,7 @@ export class FilmDirector implements Director {
+@@ -535,7 +552,7 @@ export class FilmDirector implements Director {
      const radius = mix(this.sunFor(index).radius, this.sunFor(index + 1).radius, smooth(ramp(0.25, 0.8, u)))
      const sun = discShare(this.sunWorld.clone().applyQuaternion(inv), Math.sin(Math.min(radius, 1.5)), pose.vfov, aspect)
      const glow = index === 0 ? smooth(ramp(SUN_GLOW_FROM, this.sunSwapSpan[1], u)) : 1
@@ -77,7 +77,7 @@ index 45c89104..d0782d21 100644
    }
  
    private sunSeen(index: number, time: number): number {
-@@ -693,7 +710,7 @@ export class FilmDirector implements Director {
+@@ -694,7 +711,7 @@ export class FilmDirector implements Director {
        light.sky = mix(light.sky, OPEN.openExposure, open)
        if (index > 0) light.sky *= 1 - SUN_DIM.level * smooth(this.sunSeen(index, time)) * (1 - smoother(ramp(SUN_DIM.back[0], SUN_DIM.back[1], u)))
        skyStars = open
@@ -86,7 +86,7 @@ index 45c89104..d0782d21 100644
        if (index === 0) sunWeight = smooth(ramp(SUN_GLOW_FROM, this.sunSwapSpan[1], u))
        const arriving = state(index + 1, 'orbit')
        if (index > 0 && this.shapes[index]!.look.pin[1] > 0) farLight = Math.pow(smooth(ramp(this.lit[index]!, this.lit[index]! + FAR_LIGHT.frames / ((segment.end - segment.start) * config.fps), u)), FAR_LIGHT.power)
-@@ -865,6 +882,8 @@ export class FilmDirector implements Director {
+@@ -866,6 +883,8 @@ export class FilmDirector implements Director {
      post.exposure = light.exposure
      post.flare = flare
      const sun: SunState = { dir: this.sunWorld.clone(), color: SUN_COLOR, intensity: 3, angularRadius: light.radius, glare: light.glare * sunWeight }

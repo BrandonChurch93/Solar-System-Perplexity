@@ -1,7 +1,7 @@
 #!/bin/sh
-# Writes one patch per owner with the far Sun's lines in their files, against BASE (main where agent/farsun started).
+# Writes one patch per owner with the far Sun's lines in their files, against BASE (the commit of main last merged into agent/farsun).
 set -e
-BASE=${1:-6965ded8}
+BASE=${1:-65fb91d8}
 cd "$(git rev-parse --show-toplevel)"
 out=assets-src/farsun/wiring
 {

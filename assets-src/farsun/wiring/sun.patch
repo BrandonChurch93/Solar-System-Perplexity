@@ -4,12 +4,12 @@
 #   far Sun's pass is drawn over the globe with one minus it. The flattening knobs of `leave` are out.
 # On dispose the set takes its map back (farSun.wear(null)).
 diff --git a/src/stops/sun/set.ts b/src/stops/sun/set.ts
-index 48db7743..486b6ae1 100644
+index 0ac8dc9f..88b7f249 100644
 --- a/src/stops/sun/set.ts
 +++ b/src/stops/sun/set.ts
 @@ -15,6 +15,7 @@ import { Prominences } from './prominence'
  import { SkyCard } from './skycard'
- import { lifeCalm, lifeFormat } from './life'
+ import { lifeCalm, lifeCalmAt, lifeFormat } from './life'
  import { stage } from './stage'
 +import { farSun, globeShare } from '../../space/farsun/farsun'
  
@@ -23,7 +23,7 @@ index 48db7743..486b6ae1 100644
 +  world.add(farSun.mesh)
 +  const farBody = new THREE.Quaternion()
  
-   if (opening.on) ground.land(look.opening.surge.reach, look.opening.surge.veil)
+   if (opening.on) ground.land(look.opening.surge.reach, look.opening.surge.veil, look.opening.surge.most)
    if (opening.on) ground.flash(look.opening.erupt.flash.span)
 @@ -115,7 +119,7 @@ export const createSet: SetFactory = async (ctx) => {
        const height = Math.max(inOrbit ? world.position.length() - 1 : eye.distanceTo(stage.centre) / stage.radius - 1, 1e-4)
