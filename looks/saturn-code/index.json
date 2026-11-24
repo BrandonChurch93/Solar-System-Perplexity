@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T17:01:46.080Z",
+ "pushed": "2026-11-24T17:28:17.603Z",
  "head": "8e735db2e4e48719933c955e7dc05732ab4f8451",
- "note": "trial T7e: every proof line green (G13 0 of 83, path, parity 2.818 at 3720, gate); now the near light against the far look by instrument renders, for the next trial",
+ "note": "item 17 goes on: trial T7e final beside the approved close at full size, the base change of main ed003c7 as a picture; next the dense ring's far gain and the thin zones' view law (T8)",
  "looks": [
+  {
+   "time": "2026-11-24T17:28:08.497Z",
+   "file": "20261124172808497-note-base_diff_3465.jpg",
+   "source": "../../../../tmp/v/t17/base_diff_3465.png",
+   "kind": "note",
+   "label": "3465 named tree on main ed003c7 against the same tree on the base before: red dots are pixels one level apart (sky and globe, none on the rings)"
+  },
+  {
+   "time": "2026-11-24T17:28:07.901Z",
+   "file": "20261124172807901-note-v8_lm.jpg",
+   "source": "../../../../tmp/v/t17/v8_lm.png",
+   "kind": "note",
+   "label": "3720 lower middle at full size: approved close (left), trial T7e final (right); the B ring of the trial is lighter (0.747 against 0.704)"
+  },
+  {
+   "time": "2026-11-24T17:28:07.197Z",
+   "file": "20261124172807197-note-v8_ll.jpg",
+   "source": "../../../../tmp/v/t17/v8_ll.png",
+   "kind": "note",
+   "label": "3720 lower left at full size: approved close (left), trial T7e final on main ed003c7 (right)"
+  },
   {
    "time": "2026-11-24T17:01:45.334Z",
    "file": "20261124170145334-note-r50_dive_pops.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/v/t17/v_sim9_ll.png",
    "kind": "note",
    "label": "Saturn 3720 lower left: simulated colour pivot on trial T7e, a computed picture and not a render"
-  },
-  {
-   "time": "2026-11-24T16:11:34.230Z",
-   "file": "20261124161134230-note-v_div_farnear.jpg",
-   "source": "../../../../tmp/v/t17/v_div_farnear.png",
-   "kind": "note",
-   "label": "Saturn 3720 at the division: far look alone beside near light alone, instrument renders of trial T7"
-  },
-  {
-   "time": "2026-11-24T16:11:33.656Z",
-   "file": "20261124161133656-note-v_div.jpg",
-   "source": "../../../../tmp/v/t17/v_div.png",
-   "kind": "note",
-   "label": "Saturn 3720 final at the division: approved close beside trial T7e (ring grade by height, toe 0.5, ceiling 1.0), not on the branch"
-  },
-  {
-   "time": "2026-11-24T15:36:11.394Z",
-   "file": "20261124153611394-note-d8_rise_3838.jpg",
-   "source": "../../../../tmp/v/t17/d8_rise_3838.png",
-   "kind": "note",
-   "label": "item 17 trial T7e, rise frames 3838 and 3839 at full size, lower left"
   }
  ]
 }
