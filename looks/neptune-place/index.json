@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T19:45:29.716Z",
+ "pushed": "2026-11-24T20:09:30.975Z",
  "head": "5c6713431897c545503f5490b29c72757f052704",
- "note": "the sheet owed by MAIL 688 point 3: the last 24 frames of the dive, named b8a38cbe against present 5c671343, every frame, with two enlargements; state unchanged; reds named as before; low dive frames take 21 to 25 s a preview draft frame, 7.4 s on the mean of my 59",
+ "note": "parity green on the present state 5c671343; state unchanged since 17:48; reds named as before (my proxies: rise 4988 0.54 by flows, hump 4696 0.65 by poses at the right limb; white specks, lilac, the map's azure streak); 37 s a 16 by 9 draft frame and 125 s a uhd one in the tool's run, 7.4 s a preview draft frame",
  "looks": [
+  {
+   "time": "2026-11-24T20:09:30.373Z",
+   "file": "20261124200930373-note-look-h0-4860.jpg",
+   "source": "out/work/nep/weave/look-h0-4860.jpg",
+   "kind": "note",
+   "label": "4860 now (5c671343) beside the approved close image. G17 1.382 / 0.741",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T20:09:29.747Z",
+   "file": "20261124200929747-note-smooth-parity-5c67.jpg",
+   "source": "out/work/nep/weave/smooth-parity-5c67.jpg",
+   "kind": "note",
+   "label": "the tool's parity on 5c671343 (npm run smooth, only parity, 19:46 to 20:09 UTC): VERDICT green. Largest mean 1.776 (limit 12), coarse 0.933 (3.2), block 3.695 (12), level 0.556 (2.2), all at 4860. Frames 4605, 4703, 4725, 4748, 4860, 4969, 4988, 5006: 16 by 9, uhd scaled down by 2, difference times 8",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T19:45:29.083Z",
    "file": "20261124194529083-note-look-h0-4860.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/nep/weave/last24-0.jpg",
    "kind": "note",
    "label": "the last 24 frames of the dive (MAIL 688 point 3), 4746 to 4753 every frame: left the named b8a38cbe (before the place moved), right the present 5c671343. The near picture (cloud wall, vortex, plain) is the same frame by frame; the far field by the limb is another piece of the map, 3 degrees on",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T19:34:59.152Z",
-   "file": "20261124193459152-note-e3-dive-b.jpg",
-   "source": "out/work/nep/weave/e3-dive-b.jpg",
-   "kind": "note",
-   "label": "TRIAL NOT KEPT, dive 4708 to 4724: present (left), the grade of the fall run evenly by height (right). It lowers the rise's step in place (handover report, preview drafts: 3.61 / 6.57 to 2.89 / 5.55) and costs the dive: body 2.16 / 4.03 to 2.78 / 4.81, and my pattern proxy by flows 4712 to 4720 0.26 to 0.35, 4716 to 4724 0.34 to 0.41 (limit 0.45). The pattern at the exchange is the note; the run stays as it is",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T19:34:58.575Z",
-   "file": "20261124193458575-note-look-h0-4860.jpg",
-   "source": "out/work/nep/weave/look-h0-4860.jpg",
-   "kind": "note",
-   "label": "4860 now (5c671343, unchanged) beside the approved close image. G17 1.382 / 0.741",
    "stop": "neptune"
   }
  ]
