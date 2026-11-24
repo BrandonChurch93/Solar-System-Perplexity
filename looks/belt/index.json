@@ -1,78 +1,84 @@
 {
  "folder": "belt",
- "pushed": "2026-11-22T17:53:00.878Z",
- "head": "3eaf84ae1c8e53a43a2da06c7340fe3cba1dbcb2",
- "note": "cut 35: take out of round 34's three belt commits",
+ "pushed": "2026-11-24T14:39:58.917Z",
+ "head": "c0a7f5ef8ffc52f7117af5080565727274309e15",
+ "note": "far Sun cure c0a7f5ef at 615: 4.42 by blur 12, aim 4.0 not met",
  "looks": [
   {
-   "time": "2026-11-22T17:52:59.793Z",
-   "file": "20261122175259793-note-c35-6-final-2782-whole-takeout.jpg",
-   "source": "../send/c35-6-final-2782-whole-takeout.jpg",
+   "time": "2026-11-24T14:39:58.182Z",
+   "file": "20261124143958182-note-farsun-615-pair-12-final.jpg",
+   "source": "../../../../tmp/farsun/out/farsun-615-pair-12-final.jpg",
    "kind": "note",
-   "label": "mars.travel 2782 final with the take out",
-   "stop": "mars"
+   "label": "far Sun frame 615 final tier, whole frame half size: approved left, c0a7f5ef right",
+   "stop": "sun"
   },
   {
-   "time": "2026-11-22T17:52:59.179Z",
-   "file": "20261122175259179-note-c35-4-final-2782-shade-3x-main-left-takeout-right.jpg",
-   "source": "../send/c35-4-final-2782-shade-3x-main-left-takeout-right.jpg",
+   "time": "2026-11-24T14:39:57.471Z",
+   "file": "20261124143957471-note-farsun-615-box-12-final.jpg",
+   "source": "../../../../tmp/farsun/out/farsun-615-box-12-final.jpg",
    "kind": "note",
-   "label": "belt hero shade 2782 final 3x of 1280,170 to 1480,370: main left, take out right",
-   "stop": "mars"
+   "label": "far Sun frame 615 final tier, box native: approved left, c0a7f5ef right, blur 12 measure 4.42",
+   "stop": "sun"
   },
   {
-   "time": "2026-11-22T17:52:58.565Z",
-   "file": "20261122175258565-note-c35-3-final-2782-terminator-3x-main-left-takeout-right.jpg",
-   "source": "../send/c35-3-final-2782-terminator-3x-main-left-takeout-right.jpg",
+   "time": "2026-11-24T14:39:56.736Z",
+   "file": "20261124143956736-note-farsun-615-limb-12-draft.jpg",
+   "source": "../../../../tmp/farsun/out/farsun-615-limb-12-draft.jpg",
    "kind": "note",
-   "label": "belt hero terminator 2782 final 3x of 1200,230 to 1400,430: main left, take out right",
-   "stop": "mars"
+   "label": "far Sun frame 615 draft, loop native: approved, d263ad28, c0a7f5ef",
+   "stop": "sun"
   },
   {
-   "time": "2026-11-22T17:52:57.789Z",
-   "file": "20261122175257789-note-c35-2-final-2782-left-limb-3x-main-left-takeout-right.jpg",
-   "source": "../send/c35-2-final-2782-left-limb-3x-main-left-takeout-right.jpg",
+   "time": "2026-11-24T14:39:55.833Z",
+   "file": "20261124143955833-note-farsun-615-strands-12-draft.jpg",
+   "source": "../../../../tmp/farsun/out/farsun-615-strands-12-draft.jpg",
    "kind": "note",
-   "label": "belt hero lit limb 2782 final 3x of 1080,300 to 1280,500: main left, take out right",
-   "stop": "mars"
+   "label": "far Sun frame 615 draft, strands native: approved, d263ad28, c0a7f5ef",
+   "stop": "sun"
   },
   {
-   "time": "2026-11-22T17:52:56.143Z",
-   "file": "20261122175256143-note-c35-1-final-2782-hero-native-main-left-takeout-right.jpg",
-   "source": "../send/c35-1-final-2782-hero-native-main-left-takeout-right.jpg",
+   "time": "2026-11-24T14:39:55.064Z",
+   "file": "20261124143955064-note-farsun-495-before-after-12.jpg",
+   "source": "../../../../tmp/farsun/out/farsun-495-before-after-12.jpg",
    "kind": "note",
-   "label": "belt hero 2782 final native: main (round 34) left, take out right",
-   "stop": "mars"
+   "label": "far Sun frame 495 draft native: d263ad28 left, c0a7f5ef right",
+   "stop": "sun"
   },
   {
-   "time": "2026-11-22T17:48:43.240Z",
-   "file": "20261122174843240-frame-f02772.jpg",
-   "source": "out/work/belt/t15/md/f02772.png",
-   "kind": "frame",
-   "label": "mars.travel frame 2772, draft tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "frame": 2772,
-   "tier": "draft",
+   "time": "2026-11-24T14:39:53.949Z",
+   "file": "20261124143953949-note-farsun-713-12-corner.jpg",
+   "source": "../../../../tmp/farsun/out/farsun-713-12-corner.jpg",
+   "kind": "note",
+   "label": "far Sun c0a7f5ef frame 713 draft, corner native",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T00:51:06.142Z",
+   "file": "20261123005106142-job-frame-04455.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.travel frame 4455, final tier, from the running film job",
+   "stop": "uranus",
+   "segment": "uranus.travel",
+   "frame": 4455,
+   "tier": "final",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "096721f26986d35a"
+   "job": "film"
   },
   {
-   "time": "2026-11-22T15:30:54.540Z",
-   "file": "20261122153054540-note-c34-9-final-2782-whole-all.jpg",
-   "source": "../send/c34-9-final-2782-whole-all.jpg",
-   "kind": "note",
-   "label": "mars.travel 2782 final, all three commits",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-22T15:30:54.017Z",
-   "file": "20261122153054017-note-c34-8-final-2782-lit-3x-main-left-all-right.jpg",
-   "source": "../send/c34-8-final-2782-lit-3x-main-left-all-right.jpg",
-   "kind": "note",
-   "label": "belt hero lit face 2782 final, 3x nearest of 1120,360 to 1320,560: main left, all three commits right",
-   "stop": "mars"
+   "time": "2026-11-23T00:41:50.771Z",
+   "file": "20261123004150771-job-frame-04452.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.rise frame 4452, final tier, from the running film job",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4452,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "job": "film"
   }
  ]
 }
