@@ -1,9 +1,17 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T11:03:24.807Z",
- "head": "f86b64b4a6d6087907ab07ba8dcdaa0b26d2c1ca",
- "note": "x",
+ "pushed": "2026-11-24T11:24:35.134Z",
+ "head": "36502232977ef3004ac574c78b3ca7707129b9bc",
+ "note": "plan of the third commit: looks and lights by nearness (chart); memory walk at frame 1915 of 2174, counts flat",
  "looks": [
+  {
+   "time": "2026-11-24T11:24:34.264Z",
+   "file": "20261124112434264-note-laws.jpg",
+   "source": "../../../../tmp/gl/s9/laws.png",
+   "kind": "note",
+   "label": "third commit, computed with no render: the dive's far look and the night lights by nearness (red) against today's laws by the clock and by the pace (black dashes); judged 1857 gets dimmer night lights on purpose",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T11:03:12.690Z",
    "file": "20261124110312690-note-dive-high.jpg",
@@ -90,14 +98,6 @@
    "source": "../../../../tmp/gl/s8/r2-diff.jpg",
    "kind": "note",
    "label": "ade4386b against named 571f42dc, difference times 10, nine frames",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T10:09:34.450Z",
-   "file": "20261124100934450-note-pair-d.jpg",
-   "source": "../../../../tmp/gl/s8/pair-d.jpg",
-   "kind": "note",
-   "label": "named tree against one ground trial, frames from above",
    "stop": "earth"
   }
  ]
