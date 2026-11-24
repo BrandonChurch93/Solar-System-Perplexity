@@ -3157,3 +3157,26 @@ No answer needed.
 - Disk: 3 GB are needed to start a render. Freed: out/work/smooth/venus/frames (the 426 pictures of the whole run, their stamps were void after the merge), same/e3, same/s2, s6, old /tmp/v folders. The new reference frames are same/g1 (3e1fa361) and same/i1 (e1e71f10).
 - Warm tool on e1e71f10 started 06:32 (/tmp/v/warmI.log).
 - NAMED mail text: /tmp/v/named.md.
+
+## MAIL 546 from the Builder (/root), 06:37 UTC, word for word
+
+MAIL 546 from the Builder (/root), 06:37 UTC, to every builder. Main is b0b87889e1af276ed3b9543373ac1346744925dc. Merge it by merge (never rebase, never force) before you name a commit. A commit named on the main of MAIL 545 is still taken, I stack it, but its final hashes will not be the ones the machines get.
+ON MAIN NOW, on top of MAIL 545:
+1. The centred sample pattern (c2aaa84d): the sample offsets of the review and final tiers less their own mean. Draft pictures are unchanged to the byte (115 of 115, MEASURED). Review and final pictures move as a whole by 0.09 px to the left and 0.035 px up and nothing else (MEASURED on 18 judged finals; against main's own PNG the mean difference is 0.43 to 0.90 of 255 and the mean brightness is equal). So no final equals a kept still to the byte any more, and "the kept bytes" is no longer a test of a judged frame. The kept stills are taken again at each stop's round.
+2. The plan check of a move now lives in tools/lib/pace.ts, on the judge's own functions (191dded2). src/director/pace.ts keeps the bell and the limits only. tools/law.ts and tools/seam.ts read the new file. If a test or a tool of yours imports the plan check from src/director/pace.ts, change the import (grep for director/pace) or tsc fails after the merge.
+The two pieces together run on the machines now as one more check (drafts against main's 115, finals against the 18 new ones); I mail at once if it finds a difference.
+Deadlines unchanged: NAMED and the full sha by 07:00 UTC, or by 08:30 UTC with the bend. No answer needed.
+FOR YOU: attached are your two judged frames as PNG (hold 1185 and surface view 1440, 16 by 9, final tier), made on the machines on main's engine with the new pattern and nothing of your stop changed. Where your stop leaves a judged frame alone, your final must give these bytes: 1185 sha256 8f4644325128c93f6cef870fbc0cdbea961773dceeb63bfe204dd56cbcc9f5b8, 1440 sha256 a1ec9a62ad3533837cf408559de2a217994ceb5341e0e3ce7eb6a40a84a38818. Where you change a judged frame on purpose, say so in the NAMED mail as before.
+(Attachments: /home/user/.perplexity/attachments/5821eaa3e171408595a9ae089826c5ee/f01185-16x9-final-full.png and f01440-16x9-final-full.png.)
+
+## State 06:42: second merge for naming
+
+- Warm tool on ec362b2f (the tree of e1e71f10): "frames 1110..1604 at 1 pictures a film frame, preview, tier draft, the capture path, warm start: 0 frames of a dive, surface view, rise or travel did work, 9.0 minutes" and "at most 2 sets loaded at a frame, peak 2779 MB of textures".
+- ec362b2f pushed 06:33 (the notes on e1e71f10). Then MAIL 546: origin main b0b87889 merged, local commit b2a20746 (trailer present, clean merge, outside my folders only the one config line differs from main). tsc 0, build 0. Running: the path part, the two judged finals against the two sha256 of the mail, the tests without tests/skylift-gl.test.ts.
+
+## State 06:45: NAMED (read this first after a compaction)
+
+- On b2a20746 (main b0b87889 merged): tsc 0; build 0; tests without tests/skylift-gl.test.ts 44 files, 423 tests passed (that one file is main's sky test in a browser, it did not end in 5 and a half minutes on this VM on the head before); path "smooth venus: green." with the eye line dive "Lowest 1.00 at frame 1350, limit 0.87", rise "Lowest 0.99 at frame 1530 + 1/2, limit 0.87"; judged finals 1185 sha256 8f4644325128c93f6cef870fbc0cdbea961773dceeb63bfe204dd56cbcc9f5b8 and 1440 sha256 a1ec9a62ad3533837cf408559de2a217994ceb5341e0e3ce7eb6a40a84a38818, both equal to the two of MAIL 546.
+- Not run on this head: the pictures, parity and counts parts of the smooth report, the handover report, the texel views, the gate, the warm tool (all on 3e1fa361; the warm tool and 57 draft frames also on ec362b2f). G5 and G17 not run at all.
+- The named commit is this one (the notes on b2a20746). The NAMED mail's text is /tmp/v/named.md.
+- Next: item 1 of the list, the plates made from the ground itself. First measure what the release alone costs: `npm run smooth -- --stop venus --only pictures --kind dive` with ground.release off, on a scratch value, before any picture work.
