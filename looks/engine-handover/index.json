@@ -1,9 +1,16 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T09:33:55.739Z",
- "head": "caab1ffc276982c834ae4e244cfd71f5e54255e6",
- "note": "Mars cap test read: the globe side at T is the same ground seen from an eye 1.5e-4 radii higher (rigid fit to 2.3 px); next the pattern numbers for MAIL 611 2(a)",
+ "pushed": "2026-11-24T09:57:46.418Z",
+ "head": "62d1d1c2d0c1a9cc1bdfec9bf79e932a9a18cd6b",
+ "note": "MAIL 611 2a done: the sky fade carries none of the pattern number; now the default weights by height (2b)",
  "looks": [
+  {
+   "time": "2026-11-24T09:57:45.447Z",
+   "file": "20261124095745447-note-pairs-611-2a.jpg",
+   "source": "out/work/pat/pairs-611-2a.png",
+   "kind": "note",
+   "label": "MAIL 611 2a: the judge's pattern on three pairs as on main, with the sky weight at 0 and with the picture off (frame, later frame carried back, difference times 6, pattern change)"
+  },
   {
    "time": "2026-11-24T09:25:03.070Z",
    "file": "20261124092503070-note-crop-texels.jpg",
@@ -54,14 +61,6 @@
    "source": "out/work/looks-extra/mars-head-b9c472dc-T-dive-sky-full-size.png",
    "kind": "note",
    "label": "the same frames 2475 to 2478, the sky at full size: at T the stars fall (pixels over the median plus 25 in the top 110 rows: 4283 to 1232) and the sky takes a cool lift (mean 16,16,11 to 20,23,24): the close view's air dome (veil 0.55, cool glow), which the globe side does not draw; the plate, exposure and glow the engine hands over are equal at T",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T08:17:57.305Z",
-   "file": "20261124081757305-note-mars-head-b9c472dc-T-dive-2474-2479.jpg",
-   "source": "out/work/looks-extra/mars-head-b9c472dc-T-dive-2474-2479.png",
-   "kind": "note",
-   "label": "Mars's head b9c472dc laid over this tree (stop folder and assets equal by tree hash), draft tier, frames 2474 to 2479 of the dive: T is 2477, the ground and the sky change in one frame",
    "stop": "mars"
   }
  ]
