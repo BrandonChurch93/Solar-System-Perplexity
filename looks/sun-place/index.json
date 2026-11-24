@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T19:57:03.242Z",
+ "pushed": "2026-11-24T20:25:23.773Z",
  "head": "404a7f06c4439436a06972a472e15098457ef42d",
- "note": "round 2 item 1, uncommitted trial yl2 on head 404a7f06, frame 60 draft at one to one beside the approved: the corners of the cells are round by an exact law (fillet 0.24), the steep sides are no longer dark, each pit has a glow with fine petals on it. sun-near: share by band 0.1 .. 0.9 : 0.197 0.214 0.183 0.139 0.100 0.062 0.038 0.031 0.008 | dark (under 0.15) 0.224 | body (0.15 to 0.55) 0.636 | pale (0.65 to 0.85) 0.068 | white (over 0.85) 0.008 | brightest 15 percent: half width 8.3 px, 1994 shapes | fine detail 0.0465 | mean 0.319 | distance 0.047. Still wrong: petals too faint and the glow too even beside the approved's bright strokes, cell edges hard, a dotted bright line on far rims at the draft tier, penumbra stiff straight needles.",
+ "note": "Uncommitted trial yr1 on 404a7f06, frame 60 draft only (0, 90, 217, 240 follow in the next look). sun-near frame 60: share by band 0.181 0.184 0.180 0.150 0.108 0.074 0.047 0.036 0.010 | dark 0.210 body 0.622 pale 0.083 white 0.011 | brightest 15 percent half width 7.1 px, 1788 shapes, fine detail 0.0484, mean 0.339; distance 0.051. Still wrong: reads as separate leaves or cobbles with feathered satin, hard seams between sectors inside a cell, lanes are thin hard cracks with a dotted bright rim, no soft dark pits with bright fans as in the approved; penumbra needles unchanged. MAIL 734 item 1 (buffers in the rise) cause sent, cure in work.",
  "looks": [
+  {
+   "time": "2026-11-24T20:25:17.123Z",
+   "file": "20261124202517123-note-z3yr1.jpg",
+   "source": "../../../../tmp/rd/z3yr1.jpg",
+   "kind": "note",
+   "label": "frame 60 draft, trial yr1, 3x: approved left, ours right",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T20:25:16.517Z",
+   "file": "20261124202516517-note-p1yr1.jpg",
+   "source": "../../../../tmp/rd/p1yr1.jpg",
+   "kind": "note",
+   "label": "frame 60 draft, trial yr1, one to one: approved left, ours right",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T19:57:02.651Z",
    "file": "20261124195702651-note-p1yl2.jpg",
@@ -51,26 +67,6 @@
    "kind": "note",
    "label": "round 2 begun, frame 60 draft at two times (crop 700 760 480 270): which term draws what. d1 without the hairlines, d2 without the threads, d3 without the hot patches, d4 without the dark middle, last the approved. Seen: mine is tents (a crease toward every corner, a peak) between crisp cracks with silk lines; the approved is round bulbs, soft dark valleys, broad bright fibres up the flank from the pits, a mottled brown top",
    "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T17:27:17.196Z",
-   "file": "20261124172717196-note-p20-pops.jpg",
-   "source": "../../../../tmp/p20-pops.jpg",
-   "kind": "note",
-   "label": "404a7f06 (1f74d5c9's pictures by the new main's tool): the four largest pops, 219, 220, 243, 244; rest times 8 on the right",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T17:04:29.898Z",
-   "file": "20261124170429898-sheet-sun-rise-draft-after.jpg",
-   "source": "out/work/handover/sun-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "sun rise, every frame 217 to 228 (after T, frame 216), draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "first": 217,
-   "last": 228,
-   "tier": "draft"
   }
  ]
 }
