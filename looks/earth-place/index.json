@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T16:33:43.207Z",
+ "pushed": "2026-11-24T16:38:47.932Z",
  "head": "f7ab197acd05bea7317f6e576894f818484ae09a",
- "note": "bank try 8: every frame of the dive 1830 to 1892 and the rise 2124 to 2174 rendered and looked at (draft); proof renders running",
+ "note": "bank try 8 in the arrival and the travel out: a small white patch in every frame that shows the place; proof chain still runs",
  "looks": [
+  {
+   "time": "2026-11-24T16:38:46.451Z",
+   "file": "20261124163846451-note-sheet-out.jpg",
+   "source": "../../../../tmp/gl/s11/a2/sheet-out.jpg",
+   "kind": "note",
+   "label": "bank on, travel out 2175 to 2250 every 6th (draft)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T16:38:45.415Z",
+   "file": "20261124163845415-note-sheet-arr.jpg",
+   "source": "../../../../tmp/gl/s11/a2/sheet-arr.jpg",
+   "kind": "note",
+   "label": "bank on, arrival 1605 to 1679 every 6th (draft)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T16:38:44.412Z",
+   "file": "20261124163844412-note-zone-edges.jpg",
+   "source": "../../../../tmp/gl/s11/a2/zone-edges.png",
+   "kind": "note",
+   "label": "bank on, zone times 2: arrival 1665 1671 1677 1679, travel out 2175 2181 (draft)",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T16:33:42.170Z",
    "file": "20261124163342170-note-sheet-d3.jpg",
@@ -74,30 +98,6 @@
    "source": "../../../../tmp/gl/s11/d7/hold.png",
    "kind": "note",
    "label": "bank try 7 draft, hold 1755: kept final left, draft with bank right, x3",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T15:44:38.749Z",
-   "file": "20261124154438749-note-hold.jpg",
-   "source": "../../../../tmp/gl/s11/d4/hold.png",
-   "kind": "note",
-   "label": "bank try 4 at the hold 1755: kept final | draft, zone times 3: a white blob, not the hero's cloud",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T15:44:38.156Z",
-   "file": "20261124154438156-note-pairs-0.jpg",
-   "source": "../../../../tmp/gl/s11/d4/pairs-0.jpg",
-   "kind": "note",
-   "label": "bank try 4, flat bank from code, draft 1870 1878 1882: blown white, hard edges, not good",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T15:44:37.519Z",
-   "file": "20261124154437519-note-pairs-0.jpg",
-   "source": "../../../../tmp/gl/s11/d3/pairs-0.jpg",
-   "kind": "note",
-   "label": "bank try 3, standing puffs marched, draft 1870 1878 1882: reads as white blocks, dropped",
    "stop": "earth"
   }
  ]
