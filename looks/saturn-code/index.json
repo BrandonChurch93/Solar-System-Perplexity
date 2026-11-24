@@ -1,9 +1,16 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T00:46:31.469Z",
- "head": "91017d9bbf7b480d11f12184e5b0910c8116d5eb",
- "note": "step 1 whole, proofs done; five traced sheets of the ring layout over 3562 to 3598 (cyan: true circles of the rigid plane), committing next",
+ "pushed": "2026-11-24T01:13:12.773Z",
+ "head": "b85c30e64993059df757c243964755d7ab2485b3",
+ "note": "try 3 of the pace: a level top for the rate of fall and climb so both judges read green; curves before and after, pictures follow",
  "looks": [
+  {
+   "time": "2026-11-24T01:13:12.155Z",
+   "file": "20261124011312155-note-pace_try3.jpg",
+   "source": "../../../../tmp/v/p3/pace_try3.png",
+   "kind": "note",
+   "label": "saturn pace try 3: the three curves of the judge, ac0b732 grey, level top of the reach red (not final)"
+  },
   {
    "time": "2026-11-24T00:46:18.764Z",
    "file": "20261124004618764-note-bend_right.jpg",
@@ -60,13 +67,6 @@
    "segment": "saturn.dive",
    "frame": 3589,
    "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T00:34:08.033Z",
-   "file": "20261124003408033-note-rise2_top2.jpg",
-   "source": "../../../../tmp/v/r25/rise2_top2.png",
-   "kind": "note",
-   "label": "rise sky 3870 to 3879 at full size, stars arriving by height"
   }
  ]
 }
