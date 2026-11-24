@@ -1,9 +1,49 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T22:09:05.743Z",
+ "pushed": "2026-11-24T22:51:53.132Z",
  "head": "7253f5fd7c980a2736f425d68448070c5bb24c7f",
- "note": "7253f5fd named commit: every frame about both T, final 2726, border taken apart, texels",
+ "note": "7253f5fd native crops at draft; trials for the east border and one ground, none committed",
  "looks": [
+  {
+   "time": "2026-11-24T22:51:52.567Z",
+   "file": "20261124225152567-note-a1-dive.jpg",
+   "source": "out/work/place/see/a1-dive.jpg",
+   "kind": "note",
+   "label": "trial, not committed: the same alpha leaves a hole on the close side at 2477 and 2681",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T22:51:51.963Z",
+   "file": "20261124225151963-note-a1-rise.jpg",
+   "source": "out/work/place/see/a1-rise.jpg",
+   "kind": "note",
+   "label": "trial, not committed: east aprons ended by alpha, rise 2683 to 2688 (before above, after below)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T22:51:51.437Z",
+   "file": "20261124225151437-note-e1x.jpg",
+   "source": "out/work/place/see/e1x.jpg",
+   "kind": "note",
+   "label": "trial, not committed: the close set present at every height is a fan from above (2420 to 2466, 2696, 2704)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T22:51:50.894Z",
+   "file": "20261124225150894-note-HR2686-top.jpg",
+   "source": "out/work/place/see/HR2686-top.jpg",
+   "kind": "note",
+   "label": "7253f5fd 2686, upper half: globe side alone above, close set alone below: two far worlds, two horizons",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T22:51:50.340Z",
+   "file": "20261124225150340-note-n51-crops.jpg",
+   "source": "out/work/place/see/n51-crops.jpg",
+   "kind": "note",
+   "label": "7253f5fd draft, the place at native size at 2420, 2440, 2460, 2480, 2700, 2720, 2740",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T22:09:05.092Z",
    "file": "20261124220905092-note-t51.jpg",
@@ -26,46 +66,6 @@
    "source": "out/work/place/see/bd-H.jpg",
    "kind": "note",
    "label": "globe side alone at 2684, 2686, 2689",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T22:09:03.383Z",
-   "file": "20261124220903383-note-m51-2726-cap.jpg",
-   "source": "out/work/place/see/m51-2726-cap.jpg",
-   "kind": "note",
-   "label": "7253f5fd final 2726, crop at the cap",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T22:09:02.827Z",
-   "file": "20261124220902827-note-m51-2726-canyon.jpg",
-   "source": "out/work/place/see/m51-2726-canyon.jpg",
-   "kind": "note",
-   "label": "7253f5fd final 2726, crop at the canyon",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T22:09:02.202Z",
-   "file": "20261124220902202-note-p51-rise2.jpg",
-   "source": "out/work/place/see/p51-rise2.jpg",
-   "kind": "note",
-   "label": "7253f5fd draft, every frame 2685 to 2692 of the rise",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T22:09:01.591Z",
-   "file": "20261124220901591-note-p51-rise.jpg",
-   "source": "out/work/place/see/p51-rise.jpg",
-   "kind": "note",
-   "label": "7253f5fd draft, every frame 2671 to 2685 about T of the rise",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T22:09:00.772Z",
-   "file": "20261124220900772-note-p51-dive.jpg",
-   "source": "out/work/place/see/p51-dive.jpg",
-   "kind": "note",
-   "label": "7253f5fd draft, every frame 2467 to 2481 about T of the dive",
    "stop": "mars"
   }
  ]
