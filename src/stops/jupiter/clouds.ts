@@ -3,6 +3,7 @@ import type { RenderView, SetContext } from '../../core/types'
 import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import deck from './deck.json'
 import fields from './deck-fields.json'
+import { frameUniform } from '../../core/frame'
 import place from './place.json'
 
 const OCTAVES = 10
@@ -43,6 +44,30 @@ vec2 calm(vec2 g, out vec2 cs) {
     }
   }
   return moved;
+}
+`
+
+export const ABOVE_GLSL = /* glsl */ `float above(vec3 p) {
+  float n = dot(p, p) + 2.0 * uRadius * p.z;
+  return n / (sqrt(uRadius * uRadius + n) + uRadius);
+}
+vec3 levels(vec2 g) {
+  vec2 f = abs(g - uForeMap.xy) * (2.0 * uForeMap.z);
+  vec2 a = abs(g - uNear.xy) * (2.0 * uNear.z);
+  vec2 b = abs(g - uMid.xy) * (2.0 * uMid.z);
+  float wf = 1.0 - smoothstep(uBlend.x, uBlend.y, max(f.x, f.y));
+  float wn = (1.0 - wf) * (1.0 - smoothstep(uBlend.x, uBlend.y, max(a.x, a.y)));
+  float wm = (1.0 - wf - wn) * (1.0 - smoothstep(uBlend.x, uBlend.y, max(b.x, b.y)));
+  return vec3(wf, wn, wm);
+}
+`
+
+export const STORED_GLSL = /* glsl */ `float stored(vec2 g, vec3 w) {
+  float h = 0.0;
+  for (int k = 0; k < (w.x > 0.0 ? 1 : 0); k++) h += w.x * textureLod(uHeightFore, (g - uForeMap.xy) * uForeMap.z + 0.5, 0.0).r;
+  for (int k = 0; k < (w.y > 0.0 ? 1 : 0); k++) h += w.y * textureLod(uHeightNear, (g - uNear.xy) * uNear.z + 0.5, 0.0).r;
+  for (int k = 0; k < (w.z > 0.0 ? 1 : 0); k++) h += w.z * textureLod(uHeightMid, (g - uMid.xy) * uMid.z + 0.5, 0.0).r;
+  return uHeightRange.x * (w.x + w.y + w.z) + h * uHeightRange.y;
 }
 `
 
@@ -89,6 +114,9 @@ uniform vec3 uS;
 uniform vec3 uEx;
 uniform vec3 uEy;
 uniform vec3 uEn;
+uniform float uOwn;
+uniform vec3 uEye;
+uniform mat3 uAxes;
 out vec3 vDir;
 out vec3 vEye;
 out vec2 vNdc;
@@ -99,8 +127,8 @@ void main() {
   mat3 toLocal = transpose(mat3(modelViewMatrix));
   vec3 d = toLocal * (v.xyz / v.w);
   vec3 q = -toLocal * modelViewMatrix[3].xyz - uS;
-  vDir = vec3(dot(d, uEx), dot(d, uEy), dot(d, uEn));
-  vEye = vec3(dot(q, uEx), dot(q, uEy), dot(q, uEn));
+  vDir = uOwn > 0.5 ? uAxes * (v.xyz / v.w) : vec3(dot(d, uEx), dot(d, uEy), dot(d, uEn));
+  vEye = uOwn > 0.5 ? uEye : vec3(dot(q, uEx), dot(q, uEy), dot(q, uEn));
 }`
 
 const FRAG = /* glsl */ `
@@ -142,6 +170,7 @@ uniform vec2 uShell;
 uniform vec4 uMarch;
 uniform float uPixel;
 uniform float uGrad;
+uniform float uFrame;
 uniform vec4 uDetail;
 uniform vec4 uDetailLook;
 uniform float uDetailTone;
@@ -165,6 +194,7 @@ uniform vec4 uCalmBox;
 uniform vec2 uToneRim;
 uniform vec4 uToneRimNoise;
 uniform vec3 uExpose;
+uniform vec3 uLayer;
 uniform vec4 uStorm;
 uniform float uStormTurn;
 uniform vec4 uJet;
@@ -211,20 +241,7 @@ float vnoise(vec2 p) {
   vec2 u = f * f * (3.0 - 2.0 * f);
   return mix(mix(hash(i), hash(i + ivec2(1, 0)), u.x), mix(hash(i + ivec2(0, 1)), hash(i + ivec2(1, 1)), u.x), u.y);
 }
-float above(vec3 p) {
-  float n = dot(p, p) + 2.0 * uRadius * p.z;
-  return n / (sqrt(uRadius * uRadius + n) + uRadius);
-}
-vec3 levels(vec2 g) {
-  vec2 f = abs(g - uForeMap.xy) * (2.0 * uForeMap.z);
-  vec2 a = abs(g - uNear.xy) * (2.0 * uNear.z);
-  vec2 b = abs(g - uMid.xy) * (2.0 * uMid.z);
-  float wf = 1.0 - smoothstep(uBlend.x, uBlend.y, max(f.x, f.y));
-  float wn = (1.0 - wf) * (1.0 - smoothstep(uBlend.x, uBlend.y, max(a.x, a.y)));
-  float wm = (1.0 - wf - wn) * (1.0 - smoothstep(uBlend.x, uBlend.y, max(b.x, b.y)));
-  return vec3(wf, wn, wm);
-}
-vec3 unfilm(vec3 y) {
+${ABOVE_GLSL}vec3 unfilm(vec3 y) {
   y = min(y, vec3(0.985));
   vec3 k = 0.59 * y - 0.03;
   vec3 q = 2.43 * y - 2.51;
@@ -277,7 +294,7 @@ vec4 seenAt(vec3 p, vec3 D, vec3 n, float foot, vec2 dx, vec2 dy, out vec2 size,
     float far = max(max(texelFetch(uImageRange, clamp(low, ivec2(0), most), 0).r, texelFetch(uImageRange, clamp(low + ivec2(1, 0), ivec2(0), most), 0).r), max(texelFetch(uImageRange, clamp(low + ivec2(0, 1), ivec2(0), most), 0).r, texelFetch(uImageRange, clamp(low + ivec2(1, 1), ivec2(0), most), 0).r));
     float shown = far > 0.99998 ? 1.0 : 1.0 - smoothstep(uRangeCode.z, uRangeCode.w, range * exp2(-uRangeCode.x - far * uRangeCode.y) - 1.0);
     float own = range / (uFitWindow.x * max(abs(dot(fit, n)), 1e-3));
-    shown *= 1.0 - smoothstep(uSteep.x, uSteep.y, own * turned);
+    shown *= 1.0 - smoothstep(uSteep.x, uSteep.y, own * turned / uFrame);
     for (int j = 0; j < (shown > 0.0 ? 1 : 0); j++) {
       float open = uRangeShape.w * clamp((1.0 + own * turned) / uStretch.x, 1.0, uStretch.z);
       vec3 qx = uFitAxes * vec3(dx, -dot(n.xy, dx) / n.z);
@@ -290,16 +307,9 @@ vec4 seenAt(vec3 p, vec3 D, vec3 n, float foot, vec2 dx, vec2 dy, out vec2 size,
       c.rgb = mix(c.rgb, picture, shown);
     }
   }
-  return vec4(unfilm(c.rgb), inside ? edge * (1.0 - uTrust.z) * (1.0 - smoothstep(uTrust.x, uTrust.y, smear)) : 0.0);
+  return vec4(unfilm(c.rgb), inside ? edge * (1.0 - uTrust.z) * (1.0 - smoothstep(uTrust.x, uTrust.y, smear / uFrame)) : 0.0);
 }
-float stored(vec2 g, vec3 w) {
-  float h = 0.0;
-  for (int k = 0; k < (w.x > 0.0 ? 1 : 0); k++) h += w.x * textureLod(uHeightFore, (g - uForeMap.xy) * uForeMap.z + 0.5, 0.0).r;
-  for (int k = 0; k < (w.y > 0.0 ? 1 : 0); k++) h += w.y * textureLod(uHeightNear, (g - uNear.xy) * uNear.z + 0.5, 0.0).r;
-  for (int k = 0; k < (w.z > 0.0 ? 1 : 0); k++) h += w.z * textureLod(uHeightMid, (g - uMid.xy) * uMid.z + 0.5, 0.0).r;
-  return uHeightRange.x * (w.x + w.y + w.z) + h * uHeightRange.y;
-}
-vec4 plateAt(vec2 g, vec2 dx, vec2 dy, out float size) {
+${STORED_GLSL}vec4 plateAt(vec2 g, vec2 dx, vec2 dy, out float size) {
   vec2 f = abs(g - uFore.xy) * (2.0 * uFore.zw);
   vec2 a = abs(g - uNear.xy) * (2.0 * uNear.z);
   vec2 b = abs(g - uMid.xy) * (2.0 * uMid.z);
@@ -331,7 +341,7 @@ float layered(vec2 p, int octaves, float size) {
 float hazeAt(vec2 g, int k, float foot) {
   vec2 o = g - uStorm.xy;
   float across = dot(o, uJet.zw);
-  float w = smoothstep(uHazeSpan[k].x, uHazeSpan[k].y, uHazeBand[k].y * across) * (1.0 - smoothstep(uHazeSpan[k].z, uHazeSpan[k].w, length(o))) * (1.0 - smoothstep(uHazeFine.y, uHazeFine.z, foot / uHazeFibre.y));
+  float w = smoothstep(uHazeSpan[k].x, uHazeSpan[k].y, uHazeBand[k].y * across) * (1.0 - smoothstep(uHazeSpan[k].z, uHazeSpan[k].w, length(o))) * (1.0 - smoothstep(uHazeFine.y, uHazeFine.z, foot * uFrame / uHazeFibre.y));
   float dense = 0.0;
   for (int i = 0; i < (w > 0.0 ? 1 : 0); i++) {
     vec2 at = vec2(dot(o, uJet.xy) - uHazeBand[k].z, across);
@@ -518,6 +528,11 @@ void main() {
     texels = max(kept, on * 2.0 * span / (uGrad * 1.6 * least));
     col *= uExpose;
     alpha = 1.0;
+    for (int i = 0; i < (uLayer.z > 0.5 ? 1 : 0); i++) {
+      vec2 r = abs(there.xy - uFar.xy) * (2.0 * uFar.z);
+      alpha = uLayer.x * (1.0 - smoothstep(uJoin.x, uJoin.y, max(r.x, r.y)));
+      col *= alpha;
+    }
     tint.b = seen.a;
     tint.g = on;
   }
@@ -529,6 +544,10 @@ void main() {
     vec2 at = vec2(clamp((u - uLimbKnots.x) * uLimbKnots.y, uLimbShape.y, 1.0 - uLimbShape.y), clamp(sqrt(rise * uLimbShape.x), 0.0, 1.0) * uLimbKnots.z + uLimbKnots.w);
     for (int i = 0; i < (rise < 1.0 / uLimbShape.x ? 1 : 0); i++) col = vec3(texture(uLimb, at).r, texture(uLimb, at + vec2(0.0, 1.0 / 3.0)).r, texture(uLimb, at + vec2(0.0, 2.0 / 3.0)).r) * uExpose;
     alpha = 1.0 - smoothstep(uLimbShape.z, uLimbShape.w, rise);
+    for (int i = 0; i < (uLayer.z > 0.5 ? 1 : 0); i++) {
+      col *= uLayer.y;
+      alpha *= uLayer.y;
+    }
   }
   outColor = diagOut(vec4(col * uGain * vig, alpha), texels, 1.0, tint, vec2(0.0), t);
   if (!hit && (uDiag >= 2 || alpha + col.r + col.g + col.b <= 0.0)) discard;
@@ -547,6 +566,7 @@ async function heightMap(ctx: SetContext, path: string, size: number): Promise<T
 
 export class CloudDeck {
   readonly mesh: THREE.Mesh
+  readonly layer: THREE.Mesh
   readonly material: THREE.ShaderMaterial
 
   private constructor(uniforms: Record<string, THREE.IUniform>) {
@@ -566,6 +586,9 @@ export class CloudDeck {
     })
     this.mesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), this.material)
     this.mesh.frustumCulled = false
+    this.layer = new THREE.Mesh(this.mesh.geometry, this.material)
+    this.layer.frustumCulled = false
+    this.layer.renderOrder = 1
   }
 
   static async load(ctx: SetContext, base: string): Promise<CloudDeck> {
@@ -697,7 +720,8 @@ export class CloudDeck {
       uHazeLit: { value: new THREE.Vector3(hz.lit[0]!, hz.lit[1]!, 0) },
       uHazeGlow: { value: new THREE.Vector3().fromArray(hz.glow) },
       uHazeShade: { value: new THREE.Vector3().fromArray(hz.shadowTint) },
-      uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diagUniform, uGrad: gradUniform,
+      uOwn: { value: 0 }, uEye: { value: new THREE.Vector3() }, uAxes: { value: new THREE.Matrix3() }, uLayer: { value: new THREE.Vector3(1, 1, 0) }, uToChart: { value: new THREE.Matrix3() },
+      uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diagUniform, uGrad: gradUniform, uFrame: frameUniform,
     })
     return new CloudDeck(uniforms)
   }
