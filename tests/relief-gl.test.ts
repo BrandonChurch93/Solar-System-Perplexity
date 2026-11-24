@@ -34,8 +34,13 @@ async function shot(o) {
   }
   const relief = await Relief.load(ctx, '', o.def, o.motion)
   if (o.presence !== null) relief.presence(o.presence)
-  relief.update(0, 1, 0, { format: { width: o.width, height: o.height } })
-  const cam = new THREE.PerspectiveCamera(o.def.vfovDeg, o.width / o.height, 0.1, 100)
+  const s = o.scale ?? 1
+  const eye = o.eye ?? [0, 0, 0]
+  if (o.early) relief.update(0, 1, 0, { format: { width: o.width, height: o.height } })
+  if (s !== 1) relief.group.scale.setScalar(s)
+  if (!o.early) relief.update(0, 1, 0, { format: { width: o.width, height: o.height } })
+  const cam = new THREE.PerspectiveCamera(o.def.vfovDeg, o.width / o.height, 0.1 * s, 100 * s)
+  cam.position.set(eye[0] * s, eye[1] * s, eye[2] * s)
   cam.updateMatrixWorld(true)
   const scene = new THREE.Scene()
   if (o.drawn) scene.add(relief.group)
@@ -49,18 +54,20 @@ async function shot(o) {
   target.dispose()
   let shared = true
   let texts = 0
+  let eyes = 0
   relief.group.traverse((x) => {
     if (!x.material) return
     if (x.material.fragmentShader.includes('uPresence')) texts++
+    if (x.material.vertexShader.includes('uEyeScale')) eyes++
   })
   relief.dispose()
-  return { pixels: Array.from(out), texts, shared }
+  return { pixels: Array.from(out), texts, eyes, shared }
 }
 
 window.relief = { shot }
 `
 
-interface Shot { def: object; motion: object; files: Record<string, number[]>; dist: Record<string, number>; presence: number | null; drawn: boolean; width: number; height: number; back: [number, number, number] }
+interface Shot { def: object; motion: object; files: Record<string, number[]>; dist: Record<string, number>; presence: number | null; drawn: boolean; width: number; height: number; back: [number, number, number]; scale?: number; eye?: [number, number, number]; early?: boolean }
 
 const W = 32
 const H = 16
@@ -88,6 +95,11 @@ const base: Shot = {
 }
 const air = { pitchDeg: 0, dipDeg: 0, cool: [0.1, 0.2, 0.3], coolScaleDeg: 30, warm: [0.3, 0.2, 0.1], warmScaleDeg: 20, side: [1, 1], warmSide: [1, 1, 0, 1], starScaleDeg: 10, starCut: 0.5, veil: 0.2 }
 const aired: Shot = { ...base, def: { ...base.def, layers: [(base.def as { layers: object[] }).layers[1]!] }, motion: { ...base.motion, air } }
+// The eye of the layers under a scaled group: a valley mist whose density goes with the height alone (the cut lets all of the noise through),
+// seen from an eye off the picture's own eye.
+const valley = { top: 0.5, soft: 0.5, strength: 1, color: [0.9, 0.8, 0.7], wind: [1, 0], speed: 0, scale: 1, stretch: 1, churn: 0, mask: [0.5, 1], cut: [-1, -0.5] }
+const misted: Shot = { ...base, motion: { ...base.motion, valley }, eye: [0.8, 0.6, 1.5] }
+const SCALE = 0.001
 
 const pixel = (p: number[], x: number, y: number): number[] => p.slice((y * W + x) * 4, (y * W + x) * 4 + 4)
 const CENTRE: [number, number] = [16, 8]
@@ -100,8 +112,9 @@ describe.skipIf(!have)('the presence of a relief in a WebGL2 browser', () => {
   let page: Page
   const errors: string[] = []
   const shoot = async (o: Shot): Promise<number[]> => {
-    const out = await page.evaluate((x) => (window as unknown as { relief: { shot(o: unknown): Promise<{ pixels: number[]; texts: number }> } }).relief.shot(x), o)
+    const out = await page.evaluate((x) => (window as unknown as { relief: { shot(o: unknown): Promise<{ pixels: number[]; texts: number; eyes: number }> } }).relief.shot(x), o)
     expect(out.texts).toBe(o.presence === null ? 0 : (o.def as { layers: object[] }).layers.length + ('air' in o.motion ? 1 : 0))
+    expect(out.eyes).toBe((o.scale ?? 1) !== 1 && !o.early ? (o.def as { layers: object[] }).layers.length : 0)
     return out.pixels
   }
 
@@ -178,6 +191,25 @@ describe.skipIf(!have)('the presence of a relief in a WebGL2 browser', () => {
         expect(got[c]).toBeCloseTo(near[c]! * share + behind * (1 - ALPHA * share), 5)
       }
     }
+    expect(errors).toEqual([])
+  }, 120000)
+
+  it('under a scaled group the valley mist is seen from the camera: the picture of the group without a scale, and not the one of the old line', async () => {
+    const most = (a: number[], b: number[]): number => a.reduce((m, v, i) => Math.max(m, Math.abs(v - b[i]!)), 0)
+    const plain = await shoot(misted)
+    const clear = await shoot({ ...misted, motion: base.motion })
+    expect(most(plain, clear)).toBeGreaterThan(0.05)
+    const scaled = await shoot({ ...misted, scale: SCALE })
+    expect(most(scaled, plain)).toBeLessThan(2e-4)
+    const old = await shoot({ ...misted, scale: SCALE, early: true })
+    expect(most(old, plain)).toBeGreaterThan(0.02)
+    const far = await shoot({ ...misted, scale: SCALE, presence: 1 })
+    expect(most(far, plain)).toBeLessThan(2e-4)
+    const half = await shoot({ ...misted, scale: SCALE, presence: 0.5 })
+    const halfPlain = await shoot({ ...misted, presence: 0.5 })
+    expect(most(half, halfPlain)).toBeLessThan(2e-4)
+    const clearScaled = await shoot({ ...misted, motion: base.motion, scale: SCALE })
+    expect(most(clearScaled, clear)).toBeLessThan(2e-4)
     expect(errors).toEqual([])
   }, 120000)
 })

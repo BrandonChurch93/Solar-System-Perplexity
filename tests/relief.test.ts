@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { describe, expect, it } from 'vitest'
 import type { RenderView, SetContext } from '../src/core/types'
-import { Relief, withPresence, type ReliefAir, type ReliefDef, type ReliefMotion } from '../src/terrain/relief'
+import { Relief, withEyeScale, withPresence, type ReliefAir, type ReliefDef, type ReliefMotion } from '../src/terrain/relief'
 
 // The presence of a relief (Relief.presence): off until a set asks, then the same shader with its premultiplied output times a share,
 // and no shield under 1. The pixels are tests/relief-gl.test.ts.
@@ -135,5 +135,122 @@ describe('the presence of a relief', () => {
     expect(() => withPresence(one + ' vec4(col * alpha, alpha)', LIT)).toThrow(/no single place/)
     expect(() => withPresence(one.replace('out vec4 outColor;', ''), LIT)).toThrow(/no single place/)
     expect(() => withPresence(withPresence(one, LIT), LIT)).toThrow(/no single place/)
+  })
+})
+
+// The eye of the layers under a scaled group (Relief.update): off until a relief finds its group scaled, then the same vertex shader with
+// the eye times 1 over the square of the scale. The pixels are tests/relief-gl.test.ts.
+
+const EYE = 'vEye = -transpose(mat3(modelViewMatrix)) * modelViewMatrix[3].xyz;'
+const view = { format: { width: 1920, height: 1080 } } as unknown as RenderView
+const layersOf = (r: Relief): THREE.ShaderMaterial[] => materials(r).filter((m) => m.vertexShader.includes('vEye'))
+
+describe('the eye of a relief under a scaled group', () => {
+  it('a relief whose group is never scaled keeps its shaders to the letter, turned, moved and under a turned parent alike', async () => {
+    for (const withAir of [false, true]) {
+      const plain = materials(await Relief.load(ctx, '', def, motion(withAir)))
+      const r = await Relief.load(ctx, '', def, motion(withAir))
+      const all = materials(r)
+      const versions = all.map((m) => m.version)
+      const parent = new THREE.Group()
+      parent.add(r.group)
+      r.update(0, 1, 0, view)
+      parent.position.set(3, -2, 7)
+      parent.quaternion.setFromAxisAngle(new THREE.Vector3(1, 2, 3).normalize(), 1.1)
+      r.group.position.set(-0.4, 0.2, 5)
+      r.group.quaternion.setFromAxisAngle(new THREE.Vector3(-2, 1, 0.5).normalize(), -2.3)
+      r.update(1, 1, 0, view)
+      all.forEach((m, i) => {
+        expect(m.vertexShader).toBe(plain[i]!.vertexShader)
+        expect(m.fragmentShader).toBe(plain[i]!.fragmentShader)
+        expect(m.uniforms.uEyeScale).toBeUndefined()
+        expect(m.version).toBe(versions[i])
+      })
+      expect(layersOf(r).length).toBe(2)
+      expect(layersOf(r).every((m) => m.vertexShader.split(EYE).length === 2)).toBe(true)
+    }
+  })
+
+  it('the first update under a scale gives every layer the eye over the square of the scale, one uniform for all, and leaves the air alone', async () => {
+    const plain = materials(await Relief.load(ctx, '', def, motion(true)))
+    const r = await Relief.load(ctx, '', def, motion(true))
+    const all = materials(r)
+    const versions = all.map((m) => m.version)
+    r.group.scale.setScalar(0.001)
+    r.update(0, 1, 0, view)
+    let layers = 0
+    all.forEach((m, i) => {
+      const before = plain[i]!.vertexShader
+      expect(m.fragmentShader).toBe(plain[i]!.fragmentShader)
+      if (!before.includes('vEye')) {
+        expect(m.vertexShader).toBe(before)
+        expect(m.uniforms.uEyeScale).toBeUndefined()
+        expect(m.version).toBe(versions[i])
+        return
+      }
+      layers++
+      expect(m.vertexShader).toBe(withEyeScale(before))
+      expect(m.vertexShader.length).toBe(before.length + '\nuniform float uEyeScale;'.length + ' * uEyeScale'.length)
+      expect(m.vertexShader.includes(EYE)).toBe(false)
+      expect(m.vertexShader.includes(EYE.slice(0, -1) + ' * uEyeScale;')).toBe(true)
+      expect(m.uniforms.uEyeScale).toBe(layersOf(r)[0]!.uniforms.uEyeScale)
+      expect(m.uniforms.uEyeScale!.value / 1e6).toBeCloseTo(1, 12)
+      expect(m.version).toBe(versions[i]! + 1)
+    })
+    expect(layers).toBe(2)
+    const texts = all.map((m) => m.vertexShader)
+    const after = all.map((m) => m.version)
+    r.group.scale.setScalar(0.25)
+    r.update(0, 1, 0, view)
+    expect(layersOf(r)[0]!.uniforms.uEyeScale!.value).toBeCloseTo(16, 12)
+    r.group.scale.setScalar(1)
+    r.update(0, 1, 0, view)
+    expect(layersOf(r)[0]!.uniforms.uEyeScale!.value).toBe(1)
+    all.forEach((m, i) => {
+      expect(m.vertexShader).toBe(texts[i])
+      expect(m.version).toBe(after[i])
+    })
+  })
+
+  it('takes the scale of the whole chain above the group and is 1 to the bit where the chain has none', async () => {
+    const r = await Relief.load(ctx, '', def, motion(false))
+    const world = new THREE.Group()
+    const side = new THREE.Group()
+    world.add(side)
+    side.add(r.group)
+    world.scale.setScalar(0.5)
+    side.quaternion.setFromAxisAngle(new THREE.Vector3(0.3, 1, -0.2).normalize(), 0.7)
+    side.position.set(1, 2, 3)
+    r.group.scale.setScalar(0.1)
+    r.update(0, 1, 0, view)
+    expect(layersOf(r)[0]!.uniforms.uEyeScale!.value).toBeCloseTo(400, 9)
+    world.scale.setScalar(1)
+    r.group.scale.setScalar(1)
+    world.quaternion.setFromAxisAngle(new THREE.Vector3(-1, 0.4, 0.9).normalize(), 2.9)
+    r.update(0, 1, 0, view)
+    expect(layersOf(r)[0]!.uniforms.uEyeScale!.value).toBe(1)
+  })
+
+  it('goes with a presence: the share in the fragment shader, the scale in the vertex shader', async () => {
+    const plain = materials(await Relief.load(ctx, '', def, motion(false)))
+    const r = await Relief.load(ctx, '', def, motion(false))
+    r.presence(0.5)
+    r.group.scale.setScalar(0.002)
+    r.update(0, 1, 0, view)
+    materials(r).forEach((m, i) => {
+      expect(m.fragmentShader).toBe(withPresence(plain[i]!.fragmentShader, LIT))
+      expect(m.vertexShader).toBe(withEyeScale(plain[i]!.vertexShader))
+      expect(m.uniforms.uPresence!.value).toBe(0.5)
+      expect(m.uniforms.uEyeScale!.value / 250000).toBeCloseTo(1, 12)
+    })
+  })
+
+  it('the shader with the scale needs one place for it and refuses none or two', () => {
+    const one = 'out vec3 vEye;\nvoid main() {\n  ' + EYE + '\n}'
+    expect(withEyeScale(one)).toBe('out vec3 vEye;\nuniform float uEyeScale;\nvoid main() {\n  vEye = -transpose(mat3(modelViewMatrix)) * modelViewMatrix[3].xyz * uEyeScale;\n}')
+    expect(() => withEyeScale(one.replace(EYE, 'vEye = vec3(0.0);'))).toThrow(/no single place/)
+    expect(() => withEyeScale(one + EYE)).toThrow(/no single place/)
+    expect(() => withEyeScale(one.replace('out vec3 vEye;', ''))).toThrow(/no single place/)
+    expect(() => withEyeScale(withEyeScale(one))).toThrow(/no single place/)
   })
 })

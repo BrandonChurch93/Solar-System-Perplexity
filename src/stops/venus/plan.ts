@@ -1,6 +1,6 @@
 import { config, type Segment } from '../../config'
 import * as THREE from 'three'
-import type { HandoverParams } from '../../director/handover'
+import { handoverOf, type HandoverParams, type SkyShares } from '../../director/handover'
 import { StopPlan, type Fit, type MoveParams, type OrbitShot } from '../../director/moves'
 import { drift as cameraDrift } from '../../director/rig'
 import { coverWindow } from '../../director/timeline'
@@ -8,7 +8,7 @@ import type { CoverHorizon, Pose } from '../../core/types'
 import { place } from './assets'
 import fit from './fit.json'
 import moveJson from './move.json'
-import { between, type MoveShape } from './path'
+import { between, smoother, type MoveShape } from './path'
 import placeJson from './place.json'
 import reliefJson from './relief.json'
 
@@ -52,6 +52,18 @@ export const bank = { roll: 1288, pitch: 1302 }
 
 export const drift = { bend: -0.6 }
 
+export const settle = moveJson.settle as { frames: number; to: number }
+
+/** The surface view's own time (seconds from the start of its segment) at a time of the film: equal until `settle.frames` before
+ * the end of the segment, then its pace comes down along a smooth step to the share `settle.to` and stays there. */
+export const settled = (tRel: number, span: number): number => {
+  const d = settle.frames / config.fps
+  const x = (tRel - (span - d)) / d
+  if (x <= 0) return tRel
+  const c = Math.min(x, 1)
+  return span - d + d * (c - (1 - settle.to) * (c * c * c - 0.5 * c * c * c * c) + settle.to * Math.max(x - 1, 0))
+}
+
 const hermite = (x: number, a: number, da: number, b: number, db: number): number => {
   const t = Math.min(Math.max(x, 0), 1)
   const t2 = t * t
@@ -71,6 +83,10 @@ const anchorBody = ((): THREE.Vector3 => {
 })()
 
 const probe = (): Probe | undefined => (globalThis as { __venusProbe?: Probe }).__venusProbe
+
+// The share a blend of the globe side has at a height of the camera over the cloud tops (radii): 1 below the lower height, 0 above the
+// upper one, eased in the logarithm of the height. Every blend of the dive and the rise reads the height, none reads the clock (plan F).
+export const below = (height: number, h: [number, number], curve: (x: number) => number = ease): number => 1 - curve((Math.log(Math.max(height, 1e-4)) - Math.log(h[0])) / (Math.log(h[1]) - Math.log(h[0])))
 
 class VenusPlan extends StopPlan {
   private ends: { roll: [number, number]; pitch: [number, number]; end: [number, number, number, number] } | null = null
@@ -93,7 +109,7 @@ class VenusPlan extends StopPlan {
     return { position: close.position.clone().sub(deck.centre).divideScalar(deck.radius).applyQuaternion(rot), quaternion: rot.clone().multiply(close.quaternion), vfov: close.vfov }
   }
 
-  untwin(globe: Pose, time: number): Pose {
+  override untwin(globe: Pose, time: number): Pose {
     const back = this.turn(time).multiply(this.terrainFrame).invert()
     return { position: globe.position.clone().applyQuaternion(back).multiplyScalar(deck.radius).add(deck.centre), quaternion: back.clone().multiply(globe.quaternion), vfov: globe.vfov }
   }
@@ -102,8 +118,9 @@ class VenusPlan extends StopPlan {
     return anchorBody.clone().applyQuaternion(new THREE.Quaternion().fromArray(fit.globe.quaternion)).applyQuaternion(this.turn(time))
   }
 
-  // The one steady move is the film's dive and rise once the stop has opted in to the handover (params.handover);
-  // until then the film keeps the old path under its cover, and the check tools ask for the new one by the probe.
+  // The film's dive and rise are the engine's one move (plan E, StopPlan.eye): the stop is not named in handover.ownPath of the config.
+  // The move of this stop's own below (divePose, risePose, move.json dive and rise, path.ts) is the fallback: it is flown only when the
+  // stop is named in that list again, and the check tools of assets-src/venus/place ask for it by the probe.
   private get steady(): boolean {
     return this.handsOver || probe()?.path === true
   }
@@ -125,15 +142,34 @@ class VenusPlan extends StopPlan {
   }
 
   // The plates and the exposure of the globe side: on is the weight of the plates, dusk the share (0 to 1,
-  // in the logarithm) of the gain of plates.json. Both are 0 outside the dive and the rise of this stop.
+  // in the logarithm) of the gain of plates.json, by the height of the camera over the cloud tops. Both are 0 outside the dive and the rise of this stop.
   // on: whether the plates of the place are drawn at all; near: whether their weight follows the height of the camera (plates.json, show).
-  placeLook(seg: Segment, time: number): { on: number; near: boolean; dusk: number } {
+  placeLook(seg: Segment, height: number): { on: number; near: boolean; dusk: number } {
     const pr = probe()
     const mine = seg.stop === this.id && (seg.kind === 'dive' || seg.kind === 'rise')
-    const u = (time - seg.start) / (seg.end - seg.start)
-    const ramp = (w: [number, number]): number => ease((u - w[0]) / (w[1] - w[0]))
-    const dusk = !mine ? 0 : seg.kind === 'dive' ? ramp(place.dusk.dive) : 1 - ramp(place.dusk.rise)
-    return { on: pr?.on ?? (mine ? 1 : 0), near: pr?.on === undefined, dusk: pr?.dusk ?? dusk }
+    return { on: pr?.on ?? (mine ? 1 : 0), near: pr?.on === undefined, dusk: pr?.dusk ?? (mine ? below(height, place.dusk.heights) : 0) }
+  }
+
+  // The engine's three sky schedules of the globe side, by the height of the camera (plates.json, sky).
+  override skyShare(seg: Segment, time: number): SkyShares | null {
+    if (seg.stop !== this.id || (seg.kind !== 'dive' && seg.kind !== 'rise')) return null
+    return { low: below(this.eyeHeight(time), place.sky.low) }
+  }
+
+  override skyCarryShare(seg: Segment, time: number): number | null {
+    if (seg.stop !== this.id || (seg.kind !== 'dive' && seg.kind !== 'rise')) return null
+    return below(this.eyeHeight(time), place.sky.carry, smoother)
+  }
+
+  // The engine opens the stars of a rise over the time from the handover to the end of the rise. It is given the time that stands for the
+  // height of the camera: the share of the way, in the logarithm, from the lower height of plates.json to the height the rise ends at.
+  override skyLiftAt(seg: Segment, time: number): number | null {
+    const hand = seg.stop === this.id && seg.kind === 'rise' ? handoverOf(this.id, 'rise') : null
+    if (!hand) return null
+    const from = Math.log(place.sky.lift)
+    const to = Math.log(this.eye('rise', seg.end, 'orbit').position.length() - 1)
+    const share = Math.min(Math.max((Math.log(Math.max(this.eyeHeight(time), 1e-4)) - from) / (to - from), 0), 1)
+    return hand.time + (seg.end - hand.time) * share
   }
 
   // The height of the steady dive at a time, whatever the film's path is.
@@ -202,9 +238,13 @@ class VenusPlan extends StopPlan {
     return super.rise(time)
   }
 
+  // The surface view's drift comes down before the rise lifts off (move.json, settle): the camera's own time runs slower over the
+  // last frames of the segment. A function of the time alone; no frame before the first of those frames changes.
   override terrain(tRel: number): Pose {
-    const pose = super.terrain(tRel)
-    const u = tRel / (this.seg.terrain.end - this.seg.terrain.start) - 0.5
+    const span = this.seg.terrain.end - this.seg.terrain.start
+    const own = settled(tRel, span)
+    const pose = super.terrain(own)
+    const u = own / span - 0.5
     pose.position.x += drift.bend * u * u
     return pose
   }
