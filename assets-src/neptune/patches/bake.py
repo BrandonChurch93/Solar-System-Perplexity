@@ -92,7 +92,8 @@ def save(rgba, name, preview):
     out = (np.clip(rgba, 0, 1) * 255 + 0.5).astype(np.uint8)
     im = Image.fromarray(out, 'RGBA')
     im.save(os.path.join(gnomon.OUT, 'full', name), quality=92, method=4, exact=True)
-    im.resize((SIZE // 2, SIZE // 2), Image.LANCZOS).save(os.path.join(gnomon.OUT, 'web', name), quality=88, method=4, exact=True)
+    # the four channels are averaged as they are: Image.resize on RGBA weights the colour by the opacity and loses the deck where the opacity is 0 (see patches/web.py)
+    Image.fromarray(cv2.resize(out, (SIZE // 2, SIZE // 2), interpolation=cv2.INTER_AREA), 'RGBA').save(os.path.join(gnomon.OUT, 'web', name), quality=88, method=4, exact=True)
     comp = (gnomon.composite(np.clip(rgba, 0, 1)) * 255).astype(np.uint8)
     c0 = SIZE // 2 - 256
     row = np.concatenate([cv2.resize(comp, (512, 512), interpolation=cv2.INTER_AREA), comp[c0:c0 + 512, c0:c0 + 512], cv2.resize(out[..., :3], (512, 512), interpolation=cv2.INTER_AREA), np.repeat(cv2.resize(out[..., 3], (512, 512), interpolation=cv2.INTER_AREA)[..., None], 3, 2)], 1)
