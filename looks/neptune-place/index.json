@@ -1,9 +1,17 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T23:57:36.377Z",
+ "pushed": "2026-11-24T00:14:41.747Z",
  "head": "31c1000cfe2b04b770c89f71cf8008a163098243",
- "note": "step 2 first go: function scene on the globe by height, dive 4680 to 4769, unfinished",
+ "note": "step 2 g3: dive 4690 to 4769 with the function scene on the globe by height and a grade by height, unfinished",
  "looks": [
+  {
+   "time": "2026-11-24T00:14:41.012Z",
+   "file": "20261124001441012-note-v-g3.jpg",
+   "source": "../../../../tmp/v-g3.jpg",
+   "kind": "note",
+   "label": "STEP 2 g3: function scene on the globe by height 0.9 to 0.15 radii, one grade of the fall by height on globe and scene, border on the ground 16 to 26 degrees; plates and place picture off (preview draft, 00:12 VM; globe too blue at 4716 to 4720, in work)",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-23T23:57:35.673Z",
    "file": "20261123235735673-note-v-g1.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/s-M6.jpg",
    "kind": "note",
    "label": "deep.ts from functions, frame 4860 at master draft (left) beside the approved close image (right), 23:39 VM; own G17 reading median 0.913; 85 s a master draft frame; unfinished",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T23:14:00.001Z",
-   "file": "20261123231400001-note-c-M1.jpg",
-   "source": "../../../../tmp/c-M1.jpg",
-   "kind": "note",
-   "label": "deep.ts, crop of 4860 at master draft (left) beside approved (right): deck too soft, cirrus steps show, 57 s a master draft frame",
    "stop": "neptune"
   }
  ]
