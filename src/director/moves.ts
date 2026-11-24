@@ -67,6 +67,7 @@ export interface TwinFrame { rotation: THREE.Quaternion; origin: THREE.Vector3; 
 interface Target { key: string; centre: THREE.Vector3; ahead: THREE.Vector3 }
 interface Coast { key: string; position: THREE.Vector3; velocity: THREE.Vector3; quaternion: THREE.Quaternion; spin: THREE.Vector3; vfov: number }
 interface Lean { key: string; front: boolean }
+interface Reach { key: string; start: number; step: number; reach: number[]; weight: number[] }
 
 const Y = new THREE.Vector3(0, 1, 0)
 const SURGE_STEPS = 2048
@@ -155,6 +156,7 @@ export class StopPlan {
   private readonly targets: Target[] = []
   private readonly coasts: Coast[] = []
   private readonly leans: Lean[] = []
+  private readonly reaches: Reach[] = []
   private readonly paces: { key: string; law: { pace: Flanks; turn: Flanks; liftPower: number } }[] = []
   private readonly swings: { key: string; angle: number }[] = []
   private airs: { from: AirKnot[]; knots: AirKnot[] } | null = null
@@ -671,12 +673,47 @@ export class StopPlan {
     return hit
   }
 
+  // How far the near end of the one move is carried on beyond the seam, in seconds of the surface view's own motion at the seam.
+  // It is no count of frames: the surface view's motion goes out of the near end as the move itself goes on. Its carried part is the
+  // share of the move that is still to do (1 at the seam, 0 at the far end) raised to handover.carry.power, and the reach is the sum of
+  // that from the seam. So the eye leaves the seam at the surface view's own velocity and spin, keeps that drift under the move for as long
+  // as the move is slow, and the drift is gone where the move is fast. A fixed span of frames let the drift die before the move had picked
+  // up, and the speed of the picture fell before it rose (the rise of Earth forced onto the one move: 0.18 of the mean with 8 frames,
+  // 0.07 with this). The sum is taken handover.carry.stepsPerFrame times a film frame; between those times the reach is a cubic through
+  // the sums with the carried part as its slope, so it holds at any fraction of a frame.
+  private eyeReach(kind: 'dive' | 'rise', time: number): number {
+    const seg = kind === 'dive' ? this.seg.dive : this.seg.rise
+    if (!seg) throw new Error(this.id + ' has no ' + kind)
+    const carry = config.raw.handover.carry as { power: number; stepsPerFrame: number }
+    const pace = this.eyeLaw(kind).pace
+    const key = kind + '|' + JSON.stringify([pace, carry, seg.start, seg.end])
+    let hit = this.reaches.find((r) => r.key === key)
+    if (!hit) {
+      const dive = kind === 'dive'
+      const n = Math.max(Math.round(seg.frames * carry.stepsPerFrame), 2)
+      const step = (seg.end - seg.start) / n
+      const weight: number[] = []
+      for (let i = 0; i <= n; i++) weight.push(Math.pow(bellShare(dive ? i / n : 1 - i / n, pace), carry.power))
+      const reach: number[] = new Array<number>(n + 1).fill(0)
+      if (dive) for (let i = n - 1; i >= 0; i--) reach[i] = reach[i + 1]! - ((weight[i]! + weight[i + 1]!) / 2) * step
+      else for (let i = 1; i <= n; i++) reach[i] = reach[i - 1]! + ((weight[i - 1]! + weight[i]!) / 2) * step
+      hit = { key, start: seg.start, step, reach, weight }
+      if (this.reaches.length > 8) this.reaches.length = 0
+      this.reaches.push(hit)
+    }
+    const u = Math.min(Math.max((time - hit.start) / hit.step, 0), hit.reach.length - 1)
+    const i = Math.min(Math.floor(u), hit.reach.length - 2)
+    const s = u - i
+    const s2 = s * s
+    const s3 = s2 * s
+    return (2 * s3 - 3 * s2 + 1) * hit.reach[i]! + (s3 - 2 * s2 + s) * hit.weight[i]! * hit.step + (-2 * s3 + 3 * s2) * hit.reach[i + 1]! + (s3 - s2) * hit.weight[i + 1]! * hit.step
+  }
+
   // The near end of the one move: the surface view's pose at the seam carried on beyond the seam at the velocity and the spin it has there,
-  // no farther than handover.coastFrames of that motion, so the end the glide lands on is already moving as the surface view will.
+  // as far as eyeReach says, so the end the glide lands on is already moving as the surface view will.
   private eyeCoast(kind: 'dive' | 'rise', time: number): Pose {
     const c = this.eyeSeam(kind)
-    const span = config.raw.handover.coastFrames / config.fps
-    const reach = span > 0 ? span * Math.tanh((time - this.eyeSeamTime(kind)) / span) : 0
+    const reach = this.eyeReach(kind, time)
     const rate = c.spin.length()
     const turn = rate > 1e-12 ? new THREE.Quaternion().setFromAxisAngle(c.spin.clone().multiplyScalar(1 / rate), rate * reach) : new THREE.Quaternion()
     return { position: c.position.clone().addScaledVector(c.velocity, reach), quaternion: c.quaternion.clone().multiply(turn), vfov: c.vfov }
