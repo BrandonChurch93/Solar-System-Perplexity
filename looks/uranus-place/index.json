@@ -1,37 +1,61 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-24T04:55:14.913Z",
- "head": "6e5cb48f9f05c19ecd49f7c52a88aa94a43d8554",
- "note": "6e5cb48f on main 8fb9ba9b: parity panel after the helper swap; arrival sheets of the rings by distance",
+ "pushed": "2026-11-24T05:21:43.257Z",
+ "head": "c320c4af01701d4b7f426944d5ed8edeeaebe61c",
+ "note": "one place (local c320c4af, main 85f27df2): dive 4158 to 4193 and rise 4386 to 4421 at draft; handover pass both; next the bend of the surface view after 4290",
  "looks": [
   {
-   "time": "2026-11-24T04:55:14.228Z",
-   "file": "20261124045514228-note-arr-3952.jpg",
-   "source": "../../../../tmp/arr-3952.png",
+   "time": "2026-11-24T05:21:37.904Z",
+   "file": "20261124052137904-note-sr-4410.jpg",
+   "source": "../../../../tmp/sr-4410.png",
    "kind": "note",
-   "label": "arrival 3952 to 3963, draft, tree 73fef2c1 on main 26677ed9",
+   "label": "one place c320c4af on main 85f27df2, draft, frames from 4410 (12 a sheet)",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-24T04:55:13.574Z",
-   "file": "20261124045513574-note-arr-3940.jpg",
-   "source": "../../../../tmp/arr-3940.png",
+   "time": "2026-11-24T05:21:35.883Z",
+   "file": "20261124052135883-note-sr-4398.jpg",
+   "source": "../../../../tmp/sr-4398.png",
    "kind": "note",
-   "label": "arrival 3940 to 3951, draft, tree 73fef2c1 on main 26677ed9 (before the travel's landing of d189): the rings come by the lens's distance",
+   "label": "one place c320c4af on main 85f27df2, draft, frames from 4398 (12 a sheet)",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-24T04:55:12.814Z",
-   "file": "20261124045512814-note-a-parity.jpg",
-   "source": "../../../../tmp/a-parity.png",
+   "time": "2026-11-24T05:21:34.327Z",
+   "file": "20261124052134327-note-sr-4386.jpg",
+   "source": "../../../../tmp/sr-4386.png",
    "kind": "note",
-   "label": "parity panel of 6e5cb48f on main 8fb9ba9b (the factor from the shared helper, ring lines and moons by angle): nine frames with the hold and the leaving leg; red only at 4436 and 4493, the engine's stars (MAIL 520 open point 1)",
+   "label": "one place c320c4af on main 85f27df2, draft, frames from 4386 (12 a sheet)",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-24T04:48:46.860Z",
-   "file": "20261124044846860-frame-final-4035.jpg",
-   "source": "out/work/u/a/final-4035.png",
+   "time": "2026-11-24T05:21:32.439Z",
+   "file": "20261124052132439-note-sd-4182.jpg",
+   "source": "../../../../tmp/sd-4182.png",
+   "kind": "note",
+   "label": "one place c320c4af on main 85f27df2, draft, frames from 4182 (12 a sheet)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T05:21:30.799Z",
+   "file": "20261124052130799-note-sd-4170.jpg",
+   "source": "../../../../tmp/sd-4170.png",
+   "kind": "note",
+   "label": "one place c320c4af on main 85f27df2, draft, frames from 4170 (12 a sheet)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T05:21:29.370Z",
+   "file": "20261124052129370-note-sd-4158.jpg",
+   "source": "../../../../tmp/sd-4158.png",
+   "kind": "note",
+   "label": "one place c320c4af on main 85f27df2, draft, frames from 4158 (12 a sheet)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T05:20:13.761Z",
+   "file": "20261124052013761-frame-final-4035.jpg",
+   "source": "out/work/u/one/final-4035.png",
    "kind": "frame",
    "label": "uranus.hold frame 4035, final tier",
    "stop": "uranus",
@@ -43,9 +67,9 @@
    "engine": "7122c119266e5aee"
   },
   {
-   "time": "2026-11-24T04:47:52.272Z",
-   "file": "20261124044752272-frame-final-4290.jpg",
-   "source": "out/work/u/a/final-4290.png",
+   "time": "2026-11-24T05:19:20.663Z",
+   "file": "20261124051920663-frame-final-4290.jpg",
+   "source": "out/work/u/one/final-4290.png",
    "kind": "frame",
    "label": "uranus.terrain frame 4290, final tier",
    "stop": "uranus",
@@ -55,46 +79,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "7122c119266e5aee"
-  },
-  {
-   "time": "2026-11-24T04:38:43.795Z",
-   "file": "20261124043843795-frame-f04455.jpg",
-   "source": "out/work/seq/4455-4462/f04455.png",
-   "kind": "frame",
-   "label": "uranus.travel frame 4455, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.travel",
-   "frame": 4455,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "271bbb7ec3525e53"
-  },
-  {
-   "time": "2026-11-24T04:37:04.462Z",
-   "file": "20261124043704462-frame-f03951.jpg",
-   "source": "out/work/seq/3930-3975/f03951.png",
-   "kind": "frame",
-   "label": "saturn.travel frame 3951, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.travel",
-   "frame": 3951,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "271bbb7ec3525e53"
-  },
-  {
-   "time": "2026-11-24T04:34:53.393Z",
-   "file": "20261124043453393-sheet-uranus-rise-top.jpg",
-   "source": "out/work/handover/uranus-rise-top.png",
-   "kind": "sheet",
-   "label": "uranus rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 4391), place picture off, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "first": 4391,
-   "last": 4454,
-   "tier": "draft"
   }
  ]
 }
