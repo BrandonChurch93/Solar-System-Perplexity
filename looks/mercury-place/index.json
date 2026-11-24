@@ -1,9 +1,33 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T15:30:06.719Z",
+ "pushed": "2026-11-24T15:48:46.622Z",
  "head": "befb5f47996cb9ff4b6ffb6df289ed9cc2b1fe80",
- "note": "rise second pair: the plates' middle is mended ground, the set is a wedge; new lay of the set in work",
+ "note": "rise second pair: plates relaid from the pure set, 0.89 down to 0.28, set against plates 2.6 codes at 990",
  "looks": [
+  {
+   "time": "2026-11-24T15:48:45.994Z",
+   "file": "20261124154845994-note-dv6-990.jpg",
+   "source": "out/work/mercury/place/dv6-990.jpg",
+   "kind": "note",
+   "label": "rise 990: difference set on against set off times 4, rings 1, 2, 3, 4.5, 6 degrees round the set's origin",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T15:48:45.240Z",
+   "file": "20261124154845240-note-e6-986-991.jpg",
+   "source": "out/work/mercury/place/e6-986-991.jpg",
+   "kind": "note",
+   "label": "rise 988 to 993.5 every half frame, new rise plates, scratch draft without the far Sun's disc",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T15:48:44.478Z",
+   "file": "20261124154844478-note-ab6-990.jpg",
+   "source": "out/work/mercury/place/ab6-990.jpg",
+   "kind": "note",
+   "label": "rise 990, new rise plates: set on (left) against plates alone (right), the same ground now",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T15:30:06.149Z",
    "file": "20261124153006149-note-tiles-rise.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/mercury/place/e3-ul.jpg",
    "kind": "note",
    "label": "rise 962 to 970 far look off, upper left under the limb",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T14:35:12.703Z",
-   "file": "20261124143512703-note-dv2-979.jpg",
-   "source": "out/work/mercury/place/dv2-979.jpg",
-   "kind": "note",
-   "label": "rise 979: where the set differs from the plates, rings 1 2 3 4.5 6 degrees round the set's origin",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T14:35:12.162Z",
-   "file": "20261124143512162-note-e34-979-ll.jpg",
-   "source": "out/work/mercury/place/e34-979-ll.jpg",
-   "kind": "note",
-   "label": "rise 979 lower left: the set (left) against the plates alone (right), same craters, two looks",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T14:35:11.541Z",
-   "file": "20261124143511541-note-e3-chg.jpg",
-   "source": "out/work/mercury/place/e3-chg.png",
-   "kind": "note",
-   "label": "rise 980 to 985 far look off: change panels, the red sits lower left",
    "stop": "mercury"
   }
  ]
