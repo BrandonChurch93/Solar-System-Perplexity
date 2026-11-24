@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T07:27:15.913Z",
- "head": "d5db35dc247537a0bf755469ca9ea1607d2d05e8",
- "note": "rise pattern by frame: red 977 to 1014 (limb strip, ring round the place, the disc); smooth report in its last parts",
+ "pushed": "2026-11-24T07:52:26.215Z",
+ "head": "63606a7016430b1bbe32ab2226cb9b765f23b7f8",
+ "note": "whole smooth on d5db35dc: path green with the eye line, pop green, parity green, counts 0 in dive, rise, travel; pattern red dive 1.57 and rise 1.41 (panels)",
  "looks": [
+  {
+   "time": "2026-11-24T07:52:24.403Z",
+   "file": "20261124075224403-note-rise-changes.jpg",
+   "source": "out/work/mercury/place/sm/w/rise-changes.jpg",
+   "kind": "note",
+   "label": "the whole report on d5db35dc, rise with the bend: pattern 1.41 at 982 + 1/2 (limb strip), 1.00 at 1001 + 1/2 (the disc)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T07:52:23.011Z",
+   "file": "20261124075223011-note-dive-changes.jpg",
+   "source": "out/work/mercury/place/sm/w/dive-changes.jpg",
+   "kind": "note",
+   "label": "the whole report on d5db35dc, dive: pattern 1.21 at 717 (the disc), 1.57 at 744 + 1/2 (the strip under the limb)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T07:27:14.485Z",
    "file": "20261124072714485-note-see.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/mercury/place/pat/m2.jpg",
    "kind": "note",
    "label": "pattern red in the dive, where: frame, frame 8 later carried back, difference, pattern change (white is 1) for 734, 738, 742, 747: all of it in the strip under the limb, where the gold rimmed far ground turns pale and the surface set comes in (747 to 759)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T06:53:26.044Z",
-   "file": "20261124065326044-note-sheet.jpg",
-   "source": "out/work/mercury/place/sm/dive/sheet.jpg",
-   "kind": "note",
-   "label": "dive 713 to 746 every third frame, band tone against the globe",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T06:53:25.092Z",
-   "file": "20261124065325092-note-limbzone.jpg",
-   "source": "out/work/mercury/place/sm/limbzone.jpg",
-   "kind": "note",
-   "label": "dive 736 to 760, the strip under the limb where the pattern number is red (known, not cured)",
    "stop": "mercury"
   }
  ]
