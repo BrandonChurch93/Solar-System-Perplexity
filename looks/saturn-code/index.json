@@ -1,9 +1,46 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T21:22:29.957Z",
+ "pushed": "2026-11-24T21:46:18.533Z",
  "head": "38591789c340058ad8cc55ca9d84ae3550aa9336",
- "note": "proof job on the round 2 tree runs (G17 at 3720 median 1.013, at 3465 1.054); globe and foot beside the approved, what is still wrong there",
+ "note": "proof job r54: path, G5, G17 green; the dive's pattern line RED by the bright dust inside the rim; cure in work",
  "looks": [
+  {
+   "time": "2026-11-24T21:46:17.807Z",
+   "file": "20261124214617807-note-c_footn_r54.jpg",
+   "source": "../../../../tmp/v/t18/c_footn_r54.png",
+   "kind": "note",
+   "label": "3720 foot at native size, approved left, film right"
+  },
+  {
+   "time": "2026-11-24T21:46:17.034Z",
+   "file": "20261124214617034-note-pairfull_r54.jpg",
+   "source": "../../../../tmp/v/t18/pairfull_r54.png",
+   "kind": "note",
+   "label": "3720 final tier beside the approved image, both at full size (approved left)"
+  },
+  {
+   "time": "2026-11-24T21:46:16.331Z",
+   "file": "20261124214616331-note-dive_foot4.jpg",
+   "source": "../../../../tmp/v/t18/dive_foot4.png",
+   "kind": "note",
+   "label": "r54 dive at native size, the foot at 3589, 3597, 3606.5, 3614.5: the dust inside the inner rim fills the gap as a pale plate within 8 frames (the cause of the red)"
+  },
+  {
+   "time": "2026-11-24T21:46:15.344Z",
+   "file": "20261124214615344-note-saturn-dive-pops.jpg",
+   "source": "../../../../tmp/v/r54/saturn-dive-pops.png",
+   "kind": "note",
+   "label": "r54 dive, pops sheet: largest pop 1.07, limit 1.2",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-24T21:46:12.270Z",
+   "file": "20261124214612270-note-saturn-dive-changes.jpg",
+   "source": "../../../../tmp/v/r54/saturn-dive-changes.png",
+   "kind": "note",
+   "label": "r54 dive, changes sheet: the pattern is red, 0.54 against 0.45 at 3588 to 3593 and 3605 to 3608",
+   "stop": "saturn"
+  },
   {
    "time": "2026-11-24T21:22:29.021Z",
    "file": "20261124212229021-note-c_foot1_r54.jpg",
@@ -24,41 +61,6 @@
    "source": "../../../../tmp/v/t18/c_ll_r54.png",
    "kind": "note",
    "label": "3720 lower left at full size, approved left: outer ring with fine grains; still darker and greyer than the approved, rows of grains show at the bottom edge"
-  },
-  {
-   "time": "2026-11-24T21:07:47.531Z",
-   "file": "20261124210747531-note-c_near_r54.jpg",
-   "source": "../../../../tmp/v/t18/c_near_r54.png",
-   "kind": "note",
-   "label": "3720 near field at full size, approved left: matte finely grained ring, clean dark gap, no moonlets"
-  },
-  {
-   "time": "2026-11-24T21:07:46.293Z",
-   "file": "20261124210746293-note-c_foot2_r54.jpg",
-   "source": "../../../../tmp/v/t18/c_foot2_r54.png",
-   "kind": "note",
-   "label": "crop of the foot of the globe at 3720, 1.5 times, approved left: ring matter runs into the planet, no sky between ring and globe, soft dust band on the globe's foot"
-  },
-  {
-   "time": "2026-11-24T21:07:45.263Z",
-   "file": "20261124210745263-note-pair_r54.jpg",
-   "source": "../../../../tmp/v/t18/pair_r54.png",
-   "kind": "note",
-   "label": "3720 beside the approved image (left), full frame, final tier with grain: pose solved again, inner ring matter into the planet, dust band at the globe's foot, ring tone by radius, matte fine grains, no moonlets"
-  },
-  {
-   "time": "2026-11-24T20:45:13.567Z",
-   "file": "20261124204513567-note-c_near_in8.jpg",
-   "source": "../../../../tmp/v/t18/c_near_in8.png",
-   "kind": "note",
-   "label": "3720 near field at full size, approved left: fine grains and sand in place of moonlets; still coarser than the approved, white grains stand on the dark gap"
-  },
-  {
-   "time": "2026-11-24T20:45:12.923Z",
-   "file": "20261124204512923-note-c_foot2_in9.jpg",
-   "source": "../../../../tmp/v/t18/c_foot2_in9.png",
-   "kind": "note",
-   "label": "crop of the foot of the globe at 3720, 1.5 times, approved left: no sky between ring and globe; the band on the globe is too tall and too hard here, softened in the next take"
   }
  ]
 }
