@@ -18,6 +18,7 @@ import { newRingMove, ringMove } from './ringmove'
 import { fullLines, hairLines, parseLines, ringGeometry, ringProfile, Rings, strandLines } from './rings'
 import skyJson from './sky.json'
 import { Veil } from './veil'
+import { setSeen } from './seen'
 
 async function heights(ctx: SetContext, path: string, width: number, height: number): Promise<Float32Array> {
   const raw = new Uint16Array(await ctx.buffer(path))
@@ -192,6 +193,7 @@ export const createSet: SetFactory = async (ctx) => {
       orbit.visible = inOrbit && state.weight > 0
       const gain = 1 / shot.post.exposure
       const aspect = view.format.width / view.format.height
+      const seen = setSeen(view.format.height)
       terrain.visible = !inOrbit
       if (!inOrbit) {
         placeEye()
@@ -209,7 +211,7 @@ export const createSet: SetFactory = async (ctx) => {
       const mine = shot.segment.stop === plan.id
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
-      const visible = radiusPx > 0.6
+      const visible = radiusPx > 0.6 * seen
       const low = mine && (kind === 'dive' || kind === 'rise') && state.weight > 0
       const altitude = world.position.length() - 1
       const near = low ? reach(look.near.span, altitude) : 0
