@@ -1,9 +1,39 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T12:27:10.667Z",
- "head": "2d54c492140ab79ed2c20004e8129ed2302647bf",
- "note": "third NAMED 2d54c49 mailed 12:26: 3866 at the final tier beside the kept still; the dive pictures, the handover pictures and G13 run next",
+ "pushed": "2026-11-24T12:46:58.710Z",
+ "head": "22aa54e394207509b7631e4842ed025175b3aca1",
+ "note": "named state on the machines; own runs with the new judge: dive pictures green; re-check of list item 15 (shade and stars between hold and dive)",
  "looks": [
+  {
+   "time": "2026-11-24T12:46:57.336Z",
+   "file": "20261124124657336-note-gap_x5.jpg",
+   "source": "../../../../tmp/v/r47/gap_x5.png",
+   "kind": "note",
+   "label": "list item 15, levels times 5, 3540 to 3560 every 4th: the inner zone of the shaded sheet turns from see through to solid over 0.116 radii of approach, the gap fills with the film's stars"
+  },
+  {
+   "time": "2026-11-24T12:46:56.291Z",
+   "file": "20261124124656291-note-shade_c.jpg",
+   "source": "../../../../tmp/v/r47/shade_c.png",
+   "kind": "note",
+   "label": "list item 15 at full size, 3546 to 3549: the stars of the film's field come up in the gap between globe and ring as the hold's sky leaves by distance"
+  },
+  {
+   "time": "2026-11-24T12:46:55.337Z",
+   "file": "20261124124655337-note-saturn-dive-pops.jpg",
+   "source": "../../../../tmp/v/r47/saturn-dive-pops.png",
+   "kind": "note",
+   "label": "dive pictures, the four largest pops: 1.04 at 3578 (limit 1.2)",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-24T12:46:54.371Z",
+   "file": "20261124124654371-note-saturn-dive-changes.jpg",
+   "source": "../../../../tmp/v/r47/saturn-dive-changes.png",
+   "kind": "note",
+   "label": "dive pictures on the named trees with the new judge (main 62ff7be): green, pattern 0.21 at 3596 + 1/2 (limit 0.45), change in place 15.8 at 3606 shown",
+   "stop": "saturn"
+  },
   {
    "time": "2026-11-24T12:27:09.942Z",
    "file": "20261124122709942-note-3866_ll_beside.jpg",
@@ -32,36 +62,6 @@
    "kind": "note",
    "label": "parity panel of 91d6247: the same film frames at uhd scaled down against 16x9, green (mean 2.785 at 3720, block level -6.563 at 3866)",
    "stop": "saturn"
-  },
-  {
-   "time": "2026-11-24T11:45:31.909Z",
-   "file": "20261124114531909-note-saturn-rise-changes.jpg",
-   "source": "../../../../tmp/v/r45/saturn-rise-changes.png",
-   "kind": "note",
-   "label": "91d6247 rise, the judge's changes panel: pattern 0.25 at 3821 and a half (limit 0.45)",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-24T11:45:31.021Z",
-   "file": "20261124114531021-note-saturn-rise-pops.jpg",
-   "source": "../../../../tmp/v/r45/saturn-rise-pops.png",
-   "kind": "note",
-   "label": "91d6247 rise, the judge's pops panel: verdict green, largest pop 1.15 at 3872 and a half; from 3885 on 1.06 (was 1.59)",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-24T11:45:29.666Z",
-   "file": "20261124114529666-note-3866_draft.jpg",
-   "source": "../../../../tmp/v/r45/3866_draft.png",
-   "kind": "note",
-   "label": "91d6247 judged frame 3866 at draft (changes on purpose: new paces of the rise)"
-  },
-  {
-   "time": "2026-11-24T11:45:28.417Z",
-   "file": "20261124114528417-note-rise_d.jpg",
-   "source": "../../../../tmp/v/r45/sheets/rise_d.png",
-   "kind": "note",
-   "label": "91d6247 the seam into the travel 3878 to 3896: the rise ends with speed, nothing rests"
   }
  ]
 }
