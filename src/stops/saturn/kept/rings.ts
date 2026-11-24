@@ -41,6 +41,7 @@ export interface RingLook {
   shadeGrey: [number, number]
   innerDark: [number, number, number, number]
   shadeSolid: [number, number]
+  shadeRamp: [number, number]
   penumbraAway: [number, number, number]
   heroTone: [number, number, number]
   heroTurn: number
@@ -163,6 +164,7 @@ uniform vec3 uShadeTint;
 uniform vec2 uShadeGrey;
 uniform vec4 uInnerDark;
 uniform vec2 uSolid;
+uniform vec2 uShadeRamp;
 uniform vec3 uHeroTone;
 uniform float uVignette;
 uniform float uAspect;
@@ -197,6 +199,11 @@ uniform highp sampler2D uPolarWarp;
 uniform vec2 uPolarSpan;
 uniform vec2 uPolarSize;
 uniform vec4 uPolarFit;
+// the pixels of the drawn frame in one pixel of the frame the look was set on (x), and the texels of the full
+// set's polar map (y) and inner map (z) in one texel of the set that is loaded, times x: what the look holds
+// in pixels or in texels a pixel is an angle, the same in every format and with every set
+uniform vec3 uFoot;
+uniform float uSeam;
 uniform float uPolarW;
 uniform float uPolarShape;
 uniform vec2 uPolarOuter;
@@ -380,6 +387,7 @@ void main() {
   bool top = disc || hidden;
   gone = gone || (uPass < 0.5 ? (dist < nearest || top) : (dist >= nearest && !top));
   float fr = length(vec2(dFdx(rq), dFdy(rq)));
+  float frTrue = length(vec2(dFdx(r), dFdy(r)));
   float texels = ringTexels(fr);
   float pose = uPolarShape * (1.0 - uClose);
   float edgeCut = smoothstep(uEdge.y + uOuterFit.w, uEdge.y + uOuterFit.w + 0.002, rq);
@@ -393,7 +401,7 @@ void main() {
     float e2 = re + uPolarShape * textureLod(uPolarWarp, vec2(ua, (e1 - uPolarSpan.x) * uPolarSpan.y), 0.0).r;
     float along = smoothstep(uArcAz.x, uArcAz.y, azd) + 1.0 - smoothstep(uArcAz.z, uArcAz.w, azd);
     float rl = uArc.x + (rp - e2 - uArc.y) * uArc.z;
-    s += pose * uArc.w * along * smoothstep(uEdge.y + 0.02, uEdge.y + 0.04, rl) * profAt(ringRadius(rl), lodP * uArc.z);
+    s += pose * uArc.w * along * smoothstep(uEdge.y + 0.02, uEdge.y + 0.04, rl) * (rl < uReach ? 1.0 : 0.0) * profAt(ringRadius(rl), lodP * uArc.z * min(1.0, uSeam * frTrue / max(fr, 1e-9)));
   }
   float mu = abs(V.y);
   vec3 oc = vec3(uCamL.x, uCamL.y / uPolar, uCamL.z);
@@ -428,11 +436,11 @@ void main() {
   vec2 tang = vec2(-vLocal.z, vLocal.x) / max(r, 1e-4);
   float fa = max(abs(dot(dFdx(vLocal.xz), tang)), abs(dot(dFdy(vLocal.xz), tang)));
   float phi = atan(vLocal.z, vLocal.x);
-  vec2 lg = log2(max(vec2(fr, fa), 1e-7) * 1e4) + uGrainCell;
+  vec2 lg = log2(max(vec2(fr, fa) * uFoot.x, 1e-7) * 1e4) + uGrainCell;
   vec2 fg = fract(lg);
   vec2 cg = 1e-4 * exp2(floor(lg));
   vec4 wg = vec4((1.0 - fg.x) * (1.0 - fg.y), fg.x * (1.0 - fg.y), (1.0 - fg.x) * fg.y, fg.x * fg.y);
-  float ga = mix(uGrain.x, uGrain.y, uClose) * smoothstep(0.02, 0.1, s.a) * smoothstep(2e-6, 2e-5, fr) * (top ? 0.0 : 1.0);
+  float ga = mix(uGrain.x, uGrain.y, uClose) * smoothstep(0.02, 0.1, s.a) * smoothstep(2e-6, 2e-5, fr * uFoot.x) * (top ? 0.0 : 1.0);
   for (int k = 0; k < (ga > 0.0 && !gone ? 1 : 0); k++) {
     float gr = wg.x * grain(phi, rp, cg.y, cg.x) + wg.y * grain(phi, rp, cg.y, 2.0 * cg.x) + wg.z * grain(phi, rp, 2.0 * cg.y, cg.x) + wg.w * grain(phi, rp, 2.0 * cg.y, 2.0 * cg.x);
     mottle += ga * 2.0 * gr / length(wg);
@@ -449,7 +457,7 @@ void main() {
     vec2 pgy = vec2(azg.y, rpg.y * uPolarSpan.y);
     vec2 tx = pgx * uPolarSize;
     vec2 ty = pgy * uPolarSize;
-    float w = wP * smoothstep(uPolarFit.z, uPolarFit.w, sqrt(min(dot(tx, tx), dot(ty, ty))));
+    float w = wP * smoothstep(uPolarFit.z, uPolarFit.w, uFoot.y * sqrt(min(dot(tx, tx), dot(ty, ty))));
     vec3 pf = textureGrad(uPolarMap, vec2(pa, pr), pgx * uGrad, pgy * uGrad).rgb;
     for (int j = 0; j < (uPolarHigh.z > 0.0 ? 1 : 0); j++) pf -= uPolarHigh.z * max(pf - textureGrad(uPolarMap, vec2(pa, pr), pgx * uPolarHigh.w, pgy * uPolarHigh.w).rgb, 0.0) * smoothstep(uPolarHigh.x, uPolarHigh.y, max(pf.r, max(pf.g, pf.b)));
     vec3 pm = inverseFilmic(pf);
@@ -466,7 +474,7 @@ void main() {
     vec2 pgy = vec2(azg.y, rpg.y * uInnerSpan.y);
     vec2 tx = pgx * uInnerSize;
     vec2 ty = pgy * uInnerSize;
-    wIn = wC * smoothstep(uPolarFit.z, uPolarFit.w, sqrt(min(dot(tx, tx), dot(ty, ty))));
+    wIn = wC * smoothstep(uPolarFit.z, uPolarFit.w, uFoot.z * sqrt(min(dot(tx, tx), dot(ty, ty))));
     vec3 pf = textureGrad(uInnerMap, vec2(pa, pr), pgx * uGrad, pgy * uGrad).rgb;
     vec3 pm = inverseFilmic(pf);
     if (uGrad < 1.0 && uEven > 0.0) pm = mix(pm, evenInverse(pf, textureGrad(uInnerMap, vec2(pa, pr), pgx, pgy).rgb), uEven);
@@ -483,7 +491,7 @@ void main() {
 
   float cell = uSparkleCell;
   float det = qx.x * qy.y - qx.y * qy.x;
-  float show = 1.0 - smoothstep(0.12, 0.3, major / cell);
+  float show = 1.0 - smoothstep(0.12, 0.3, major * uFoot.x / cell);
   for (int k = 0; k < ((uAzimuth.w > 0.0 && show > 0.0 && abs(det) > 1e-16 && !gone) ? 1 : 0); k++) {
     int row = int(floor(r / cell));
     int per = max(int(floor(6.283185307 * (float(row) + 0.5))), 1);
@@ -493,7 +501,7 @@ void main() {
     for (int m = 0; m < (pick < 0.2 ? 1 : 0); m++) {
       vec2 centre = 0.25 + 0.5 * vec2(hash3(id + ivec3(0, 0, 4)), hash3(id + ivec3(0, 0, 6)));
       vec2 dq = (vec2(fract(cx), fract(r / cell)) - centre) * cell;
-      vec2 px = vec2(qy.y * dq.x - qy.x * dq.y, -qx.y * dq.x + qx.x * dq.y) / det;
+      vec2 px = vec2(qy.y * dq.x - qy.x * dq.y, -qx.y * dq.x + qx.x * dq.y) / (det * uFoot.x);
       float size = 0.4 + 0.45 * hash3(id + ivec3(0, 0, 10));
       float tw = 0.5 + 0.5 * sin(6.283185307 * hash3(id + ivec3(0, 0, 12)) + uTime * (2.0 + 5.0 * hash3(id + ivec3(0, 0, 16))));
       float glint = exp(-dot(px, px) / (size * size)) * pow(tw, 3.0) * (0.3 + 1.7 * pick / 0.2);
@@ -519,7 +527,7 @@ void main() {
   float keep = max(smoothstep(uSheetFit.x, uSheetFit.y, rs), 1.0 - smoothstep(1.0 + bulge - bw, 1.0 + bulge + bw, bb));
   float sheet = fore ? (1.0 - smoothstep(bout - bw, bout + bw, bb)) * (1.0 - uClose) * lit * smoothstep(rin - fw, rin + fw, rs) * mix(1.0, keep, smoothstep(1.0 - bw, 1.0 + bw, bb)) * (1.0 - smoothstep(uEdge.y - 0.002, uEdge.y + 0.002, rq)) : 0.0;
   alpha = max(alpha, (1.0 - through) * sheet) * thin;
-  alpha = max(alpha, uSolid.x * uSolid.y * (1.0 - lit) * (1.0 - uClose) * body * smoothstep(uFloorRamp.x, uFloorRamp.y, rq));
+  alpha = max(alpha, uSolid.x * uSolid.y * (1.0 - lit) * (1.0 - uClose) * body * smoothstep(uShadeRamp.x, uShadeRamp.y, rq));
   float day = smoothstep(-0.05, 0.25, dot(normalize(vec3(on.x, on.y / uPolar, on.z)), normalize(uSunL)));
   vec3 wedge = mix(uSheetGlow.rgb, uWedge.rgb * uPolarShape, smoothstep(uWedgeIn.x, uWedgeIn.y, bb)) * sheetAt(rs, uWedgeG) * sheet * day;
   col *= 1.0 - uSheetGlow.w * sheet * uPolarShape * (1.0 - day);
@@ -620,13 +628,13 @@ export class Rings {
       uSheetR: { value: look.sheetRadii }, uSheetT: { value: look.sheetThrough }, uWedgeG: { value: look.wedgeGain }, uWedge: { value: new THREE.Vector4().fromArray(look.wedge) }, uWedgeIn: { value: new THREE.Vector2().fromArray(look.wedgeIn) }, uSheetGlow: { value: new THREE.Vector4().fromArray(look.sheetGlow) }, uSheetFit: { value: new THREE.Vector4().fromArray(look.sheetFit) }, uShine: { value: new THREE.Vector4().fromArray(look.shine) }, uShineWide: { value: new THREE.Vector4().fromArray(look.shineWide) }, uShineBack: { value: look.shineBack }, uEven: { value: look.even }, uPolarHigh: { value: new THREE.Vector4().fromArray(look.polarHigh) }, uRimNear: { value: new THREE.Vector4().fromArray(look.rimNear) }, uRimEdge: { value: new THREE.Vector4().fromArray(look.rimEdge) }, uRimFar: { value: new THREE.Vector3().fromArray(look.rimFar) }, uRimHalo: { value: new THREE.Vector4().fromArray(look.rimHalo) }, uRimAz: { value: new THREE.Vector4().fromArray(look.rimAz) }, uFillet: { value: new THREE.Vector4().fromArray(look.fillet) },
       uCamL: { value: new THREE.Vector3(0, 1, 3) }, uSunL: { value: new THREE.Vector3(1, 0.2, 0) }, uShadowL: { value: new THREE.Vector3(1, 0.2, 0) }, uPolar: { value: polar },
       uFloorA: { value: look.floorAlpha }, uEdge: { value: new THREE.Vector2(ringsJson.inner, ringsJson.outer) },
-      uGain: { value: 1 }, uWeight: { value: 1 }, uTime: { value: 0 }, uSpinRate: { value: 0 },
+      uGain: { value: 1 }, uWeight: { value: 1 }, uTime: { value: 0 }, uSpinRate: { value: 0 }, uFoot: { value: new THREE.Vector3(1, 1, 1) }, uSeam: { value: 1e9 },
       uGrad: gradUniform, uDiag: diagUniform, uLodBias: { value: new THREE.Vector2(look.lodBias, look.lodBiasClose) },
       uShadowFloor: { value: new THREE.Vector3().fromArray(look.shadowFloor) }, uFloorHold: { value: new THREE.Vector3().fromArray(look.floorHold) }, uPenumbraFar: { value: new THREE.Vector2().fromArray(look.penumbraFar) }, uInner: { value: new THREE.Vector4().fromArray(look.inner) }, uOver: { value: new THREE.Vector4().fromArray(look.over) }, uStrand: { value: new THREE.Vector3().fromArray(look.strand) }, uOverTone: { value: new THREE.Vector4().fromArray(look.overTone) }, uShadowThin: { value: new THREE.Vector3().fromArray(look.shadowThin) }, uFloorTone: { value: new THREE.Vector2().fromArray(look.floorTone) }, uShadowLift: { value: look.shadowLift }, uPenumbra: { value: new THREE.Vector3().fromArray(look.penumbra) }, uAzGain: { value: azimuth.coeffs.flat() }, uAzRadii: { value: azimuth.radii },
       uUnlit: { value: look.unlit }, uAzimuth: { value: new THREE.Vector4(look.spokes, look.clumps, look.grain, look.sparkle) },
       uSparkleTint: { value: new THREE.Vector3().fromArray(look.sparkleTint) }, uSparkleCell: { value: look.sparkleCell },
       uCloseTone: { value: new THREE.Vector3().fromArray(look.closeTone) }, uHeroTone: { value: new THREE.Vector3().fromArray(look.heroTone) },
-      uGrainCell: { value: new THREE.Vector2().fromArray(look.grainCell) }, uFloorRamp: { value: new THREE.Vector2().fromArray(look.floorRamp) }, uGrain: { value: new THREE.Vector2(look.grainHero, look.grain) }, uVeil: { value: new THREE.Vector2().fromArray(look.veil) }, uSweep: { value: look.sweep }, uJunction: { value: look.junction }, uShadeTint: { value: new THREE.Vector3().fromArray(look.shadeTint) }, uShadeGrey: { value: new THREE.Vector2().fromArray(look.shadeGrey) }, uInnerDark: { value: new THREE.Vector4().fromArray(look.innerDark) }, uSolid: { value: new THREE.Vector2(0, look.shadeSolid[0]) }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
+      uGrainCell: { value: new THREE.Vector2().fromArray(look.grainCell) }, uFloorRamp: { value: new THREE.Vector2().fromArray(look.floorRamp) }, uGrain: { value: new THREE.Vector2(look.grainHero, look.grain) }, uVeil: { value: new THREE.Vector2().fromArray(look.veil) }, uSweep: { value: look.sweep }, uJunction: { value: look.junction }, uShadeTint: { value: new THREE.Vector3().fromArray(look.shadeTint) }, uShadeGrey: { value: new THREE.Vector2().fromArray(look.shadeGrey) }, uInnerDark: { value: new THREE.Vector4().fromArray(look.innerDark) }, uSolid: { value: new THREE.Vector2(0, look.shadeSolid[0]) }, uShadeRamp: { value: new THREE.Vector2().fromArray(look.shadeRamp) }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
     }
     for (const pass of [0, 1]) {
       const material = new THREE.ShaderMaterial({

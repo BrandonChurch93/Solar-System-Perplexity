@@ -282,8 +282,7 @@ def main():
         fine = realf * np.exp(up(corr)) * wf + synf * (1 - wf)
         enc[r0:r1] = (np.sqrt(np.clip(fine / A_MAX, 0, 1)) * 255 + 0.5).astype(np.uint8)
     img = Image.fromarray(enc[::-1])
-    img.save(PUB + 'full/deck-far.jpg', quality=93, subsampling=0)
-    img.resize(FAR['web'], Image.LANCZOS).save(PUB + 'web/deck-far.jpg', quality=92, subsampling=0)
+    img.save(WORK + 'deck-far.jpg', quality=93, subsampling=0)
     img.resize((2048, 1024), Image.LANCZOS).save(WORK + 'deck-far-view.jpg', quality=88)
 
     fl = far.mean(-1)
