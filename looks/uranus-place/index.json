@@ -1,9 +1,95 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-24T12:00:38.813Z",
- "head": "0ac434b60e99c498d3dc12c4f95e2314a0043d61",
- "note": "Third commit 0ac434b6 on main c2c49133: 4290 beside the approved image before and after, and the pattern pairs with the white tops on and off (rise, dive); the pattern red stays and is named",
+ "pushed": "2026-11-24T12:30:13.720Z",
+ "head": "f403f27b6137d89f6ca691508ebebd1ca303ee31",
+ "note": "Third commit, drawn on f403f27b (0ac434b6 merged with main 36970ce3): judged 4137 and 4436 finals beside the second NAMED's with the difference times 8; only the place changes. Pattern red stays, named",
  "looks": [
+  {
+   "time": "2026-11-24T12:17:20.710Z",
+   "file": "20261124121720710-note-f4436-three.jpg",
+   "source": "../../../../tmp/tm/f4436-three.jpg",
+   "kind": "note",
+   "label": "judged 4436 final: second NAMED b5874a22, third commit (drawn on f403f27b = 0ac434b6 merged with main 36970ce3), difference times 8: only the place changes (0.49 percent of the pixels, mean 0.013 of 255)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T12:17:09.176Z",
+   "file": "20261124121709176-frame-f4436.jpg",
+   "source": "out/work/u/n3/f4436.png",
+   "kind": "frame",
+   "label": "uranus.rise frame 4436, final tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4436,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "898f8450e3270276"
+  },
+  {
+   "time": "2026-11-24T12:13:05.205Z",
+   "file": "20261124121305205-frame-f4290.jpg",
+   "source": "out/work/u/n3m/f4290.png",
+   "kind": "frame",
+   "label": "uranus.terrain frame 4290, final tier",
+   "stop": "uranus",
+   "segment": "uranus.terrain",
+   "frame": 4290,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "898f8450e3270276"
+  },
+  {
+   "time": "2026-11-24T12:11:16.583Z",
+   "file": "20261124121116583-frame-f4035.jpg",
+   "source": "out/work/u/n3m/f4035.png",
+   "kind": "frame",
+   "label": "uranus.hold frame 4035, final tier",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "898f8450e3270276"
+  },
+  {
+   "time": "2026-11-24T12:10:59.443Z",
+   "file": "20261124121059443-note-f4137-three.jpg",
+   "source": "../../../../tmp/tm/f4137-three.jpg",
+   "kind": "note",
+   "label": "judged 4137 final: second NAMED b5874a22, third commit (drawn on f403f27b = 0ac434b6 merged with main 36970ce3), difference times 8: only the place changes (1.48 percent of the pixels, mean 0.049 of 255)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T12:10:21.070Z",
+   "file": "20261124121021070-frame-f4137.jpg",
+   "source": "out/work/u/n3/f4137.png",
+   "kind": "frame",
+   "label": "uranus.dive frame 4137, final tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4137,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "898f8450e3270276"
+  },
+  {
+   "time": "2026-11-24T12:02:00.260Z",
+   "file": "20261124120200260-job-frame-04390.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.rise frame 4390, draft tier, texels view, from the running g13 job",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4390,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "g13"
+  },
   {
    "time": "2026-11-24T11:51:54.696Z",
    "file": "20261124115154696-job-frame-04110.jpg",
@@ -27,40 +113,12 @@
    "stop": "uranus"
   },
   {
-   "time": "2026-11-24T11:46:33.273Z",
-   "file": "20261124114633273-frame-f4035.jpg",
-   "source": "out/work/u/n3/f4035.png",
-   "kind": "frame",
-   "label": "uranus.hold frame 4035, final tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "11cbfd6007ec43db"
-  },
-  {
    "time": "2026-11-24T11:42:48.407Z",
    "file": "20261124114248407-note-4290-three.jpg",
    "source": "../../../../tmp/tm/4290-three.jpg",
    "kind": "note",
    "label": "judged 4290 final: approved references/approved/uranus-close.jpg, before (b5874a22, sha256 d11470c2), after (0ac434b6, sha256 2adad6e9); against approved mean difference 2.75 before, 2.79 after of 255 (main c2c49133)",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T11:39:05.858Z",
-   "file": "20261124113905858-frame-f4290.jpg",
-   "source": "out/work/u/n3/f4290.png",
-   "kind": "frame",
-   "label": "uranus.terrain frame 4290, final tier",
-   "stop": "uranus",
-   "segment": "uranus.terrain",
-   "frame": 4290,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "11cbfd6007ec43db"
   },
   {
    "time": "2026-11-24T11:34:32.235Z",
@@ -259,52 +317,6 @@
    "kind": "note",
    "label": "surface view 4200 4290 4379 drafts: top law as pushed b5874a22, middle smooth law and rebaked plates 0ac434b6, bottom difference times 4 (main c2c49133)",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T11:11:25.074Z",
-   "file": "20261124111125074-note-tops-dive.jpg",
-   "source": "../../../../tmp/tm/tops-dive.jpg",
-   "kind": "note",
-   "label": "dive 4130 4137 4145 4152 4165: top with the white tops, bottom without (b5874a22 on main c2c49133)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T11:11:24.439Z",
-   "file": "20261124111124439-note-tops-rise.jpg",
-   "source": "../../../../tmp/tm/tops-rise.jpg",
-   "kind": "note",
-   "label": "rise 4404 4412 4420 4436: top with the white tops, bottom without (b5874a22 on main c2c49133)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T10:53:37.679Z",
-   "file": "20261124105337679-note-plates-cmp.jpg",
-   "source": "../../../../tmp/relaw/plates-cmp.jpg",
-   "kind": "note",
-   "label": "place plates 1 to 3 on b5874a22, and with the bands of the old light table laid on the ground, difference times 4",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T10:53:36.863Z",
-   "file": "20261124105336863-note-cmp-8808.jpg",
-   "source": "../../../../tmp/tm/cmp-8808.png",
-   "kind": "note",
-   "label": "pattern cause, rise 4404 against 4412 on b5874a22: rows as pushed, smooth law, tops and cover and light share off, light flat; columns 4404, 4412 carried by flows, by the camera, pattern by flows, by the camera",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T10:17:53.549Z",
-   "file": "20261124101753549-frame-m4137.jpg",
-   "source": "out/work/u/n2/m4137.png",
-   "kind": "frame",
-   "label": "uranus.dive frame 4137, final tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4137,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "11cbfd6007ec43db"
   }
  ]
 }
