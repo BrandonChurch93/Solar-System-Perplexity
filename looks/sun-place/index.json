@@ -1,9 +1,63 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T16:58:00.643Z",
- "head": "1f74d5c96f950b69c01732786b0d9eae60a2a4c2",
- "note": "1f74d5c9 named at 16:36; the new main's handover and pictures run on it now. Frame 60 draft: share by band 0.165 0.215 0.193 0.151 0.104 0.063 0.035 0.027 0.020 | dark 0.190 body 0.663 pale 0.062 white 0.022 | half width 4.6 px, 4439 shapes, fine detail 0.0595, mean 0.334",
+ "pushed": "2026-11-24T17:27:17.961Z",
+ "head": "404a7f06c4439436a06972a472e15098457ef42d",
+ "note": "NAMED 404a7f06 on main 57695be8, tests 554 passed; handover pass, pictures green (pop 1.18 at 244), seam GREEN, warm clean. Frame 60 draft: share by band 0.165 0.215 0.193 0.151 0.104 0.063 0.035 0.027 0.020 | dark 0.190 body 0.663 pale 0.062 white 0.022 | half width 4.6 px, 4439 shapes, fine detail 0.0595, mean 0.334",
  "looks": [
+  {
+   "time": "2026-11-24T17:27:17.196Z",
+   "file": "20261124172717196-note-p20-pops.jpg",
+   "source": "../../../../tmp/p20-pops.jpg",
+   "kind": "note",
+   "label": "404a7f06 (1f74d5c9's pictures by the new main's tool): the four largest pops, 219, 220, 243, 244; rest times 8 on the right",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T17:04:29.898Z",
+   "file": "20261124170429898-sheet-sun-rise-draft-after.jpg",
+   "source": "out/work/handover/sun-rise-draft-after.png",
+   "kind": "sheet",
+   "label": "sun rise, every frame 217 to 228 (after T, frame 216), draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "first": 217,
+   "last": 228,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T17:04:28.069Z",
+   "file": "20261124170428069-sheet-sun-rise-draft-before.jpg",
+   "source": "out/work/handover/sun-rise-draft-before.png",
+   "kind": "sheet",
+   "label": "sun rise, every frame 204 to 215 (before T, frame 216), draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "first": 204,
+   "last": 215,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T17:04:26.193Z",
+   "file": "20261124170426193-sheet-sun-rise-draft-across.jpg",
+   "source": "out/work/handover/sun-rise-draft-across.png",
+   "kind": "sheet",
+   "label": "sun rise, every frame 210 to 221 (across T, frame 216), draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "first": 210,
+   "last": 221,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T17:04:24.456Z",
+   "file": "20261124170424456-compare-sun-rise-step-in-place.jpg",
+   "source": "out/work/handover/sun-rise-step-in-place.png",
+   "kind": "compare",
+   "label": "sun rise, the largest step of the level in place (2.36): frame 238, frame 239, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 239
+  },
   {
    "time": "2026-11-24T16:57:59.649Z",
    "file": "20261124165759649-note-h20-sides.jpg",
@@ -11,17 +65,6 @@
    "kind": "note",
    "label": "1f74d5c9, the two sides at T by the new main's handover tool (the run is still going)",
    "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T16:37:43.189Z",
-   "file": "20261124163743189-compare-sun-rise-sides.jpg",
-   "source": "out/work/handover/sun-rise-sides.png",
-   "kind": "compare",
-   "label": "sun rise, both sides at T (frame 216) and their difference times 8",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "frame": 216,
-   "tier": "draft"
   },
   {
    "time": "2026-11-24T16:35:41.330Z",
@@ -37,38 +80,6 @@
    "source": "../../../../tmp/f18-00090-whole.jpg",
    "kind": "note",
    "label": "a5b15421 final tier, frame 90 whole at half size, left approved, right mine",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T16:18:37.893Z",
-   "file": "20261124161837893-note-f18-90-a.jpg",
-   "source": "../../../../tmp/f18-90-a.jpg",
-   "kind": "note",
-   "label": "a5b15421 final tier, frame 90 at one to one (crop 560 600 800 440), left approved, right mine",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T16:18:37.287Z",
-   "file": "20261124161837287-note-f18-00000-whole.jpg",
-   "source": "../../../../tmp/f18-00000-whole.jpg",
-   "kind": "note",
-   "label": "a5b15421 final tier, frame 0 whole at half size, left approved, right mine",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T16:18:36.702Z",
-   "file": "20261124161836702-note-f18-0-a.jpg",
-   "source": "../../../../tmp/f18-0-a.jpg",
-   "kind": "note",
-   "label": "a5b15421 final tier, frame 0 at one to one (crop 560 600 800 440), left approved, right mine",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T16:18:36.118Z",
-   "file": "20261124161836118-note-f18-60-whole.jpg",
-   "source": "../../../../tmp/f18-60-whole.jpg",
-   "kind": "note",
-   "label": "a5b15421 final tier, frame 60 whole at half size, left approved, right mine",
    "stop": "sun"
   }
  ]
