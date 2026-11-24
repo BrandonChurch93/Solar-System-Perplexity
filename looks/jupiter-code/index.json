@@ -1,79 +1,73 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T04:50:19.788Z",
- "head": "2622df4ae3e1347fceec9de2a43b4ea175f12da3",
- "note": "04:50 UTC. Tree: local merge of main 4840d0f on 2622df4 (veil cure) with the engine's frame helper swapped in, not pushed yet. Veil of MAIL 517 item 3: cause is the widest haze shell of the globe seen from near and inside; cure scales the shells by the sight line to the limb below 3.2 radii, hold keeps its bytes (2895, 2969 equal). Tick of MAIL 522 not seen at draft (capture 5632 to 5652 flat at 2.22), review tier frames rendering now.",
+ "pushed": "2026-11-24T05:23:07.040Z",
+ "head": "1cff5b2958a85943f117840cba9bbbe962777803",
+ "note": "05:26 UTC. Bend of MAIL 526, not committed yet: local merge of main 5014624 plus the bend in plan.ts and deck.json. Drafts 3150 to 3244. Measured: 3055, 3059, 3060, 3150 equal to the byte; seam tool before lowest 0.948 at 3240 and against the way from 3241 + 1/2, after lowest 1.046 and never against; mean level 59.5, 59.4, 59.3, 59.3, 59.4 across 3237 to 3242. Still wrong: rise path red 3 on the old law (search running), left edge of the late surface view soft.",
  "looks": [
   {
-   "time": "2026-11-24T04:50:19.029Z",
-   "file": "20261124045019029-note-parity1.jpg",
-   "source": "../work/par/parity1.jpg",
+   "time": "2026-11-24T05:23:06.334Z",
+   "file": "20261124052306334-note-b1-d.jpg",
+   "source": "../work/seam/b1-d.jpg",
    "kind": "note",
-   "label": "Parity 16 by 9 against 4K after the frame factor (NOTE 501), tree c00db069b: green, worst block -7.7 at 3038 (limit 12)",
+   "label": "Draft, the seam of the rise with the bend: 3237, 3239, 3240 to 3244 (rise still on the law before the new search)",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-24T04:50:18.076Z",
-   "file": "20261124045018076-note-veil-topleft-3282-3283.jpg",
-   "source": "../work/tick/veil-topleft-3282-3283.jpg",
+   "time": "2026-11-24T05:23:05.731Z",
+   "file": "20261124052305731-note-b1-c.jpg",
+   "source": "../work/seam/b1-c.jpg",
    "kind": "note",
-   "label": "Veil, top left quarter of 3282 and 3283 lifted 5 times: top before, bottom after (draft). Corner median 30 to 16 and 24 to 16, sky base 8",
+   "label": "Draft, surface view 3222 to 3239 with the bend: the pull back the rise takes over",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-24T04:50:16.967Z",
-   "file": "20261124045016967-note-veil-v1-v2-left.jpg",
-   "source": "../work/tick/veil-v1-v2-left.jpg",
+   "time": "2026-11-24T05:23:05.035Z",
+   "file": "20261124052305035-note-b1-b.jpg",
+   "source": "../work/seam/b1-b.jpg",
    "kind": "note",
-   "label": "Veil in the sky's corner on the rise (MAIL 517), frames 3279 to 3286, left 640 px lifted 4 times: top row before, bottom row with the glow keeping its angle (draft)",
+   "label": "Draft, surface view 3186 to 3219 every 3 with the bend: across and into the pull back",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-24T04:45:36.570Z",
-   "file": "20261124044536570-frame-f03296.jpg",
-   "source": "out/work/jupiter/frames/v2/f03296.png",
+   "time": "2026-11-24T05:23:04.385Z",
+   "file": "20261124052304385-note-b1-a.jpg",
+   "source": "../work/seam/b1-a.jpg",
+   "kind": "note",
+   "label": "Draft, surface view 3150 to 3183 every 3 with the bend of MAIL 526 (3150 equal to the byte, then the track turns across)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T05:22:15.417Z",
+   "file": "20261124052215417-frame-f03244.jpg",
+   "source": "out/work/jupiter/frames/b1/f03244.png",
    "kind": "frame",
-   "label": "jupiter.rise frame 3296, draft tier",
+   "label": "jupiter.rise frame 3244, draft tier",
    "stop": "jupiter",
    "segment": "jupiter.rise",
-   "frame": 3296,
+   "frame": 3244,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "eec2589fdea0f7a4"
+   "engine": "3da6c690cf58b2c3"
   },
   {
-   "time": "2026-11-24T04:44:04.907Z",
-   "file": "20261124044404907-frame-f03150.jpg",
-   "source": "out/work/jupiter/frames/v2/f03150.png",
+   "time": "2026-11-24T05:20:20.654Z",
+   "file": "20261124052020654-frame-f03239.jpg",
+   "source": "out/work/jupiter/frames/b1/f03239.png",
    "kind": "frame",
-   "label": "jupiter.terrain frame 3150, draft tier",
+   "label": "jupiter.terrain frame 3239, draft tier",
    "stop": "jupiter",
    "segment": "jupiter.terrain",
-   "frame": 3150,
+   "frame": 3239,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "eec2589fdea0f7a4"
+   "engine": "3da6c690cf58b2c3"
   },
   {
-   "time": "2026-11-24T04:43:10.538Z",
-   "file": "20261124044310538-frame-f02895.jpg",
-   "source": "out/work/jupiter/frames/v2/f02895.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2895, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "eec2589fdea0f7a4"
-  },
-  {
-   "time": "2026-11-24T04:20:06.048Z",
-   "file": "20261124042006048-frame-f03055.jpg",
-   "source": "out/work/jupiter/frames/f1/f03055.png",
+   "time": "2026-11-24T05:13:56.706Z",
+   "file": "20261124051356706-frame-f03055.jpg",
+   "source": "out/work/jupiter/frames/b1/f03055.png",
    "kind": "frame",
    "label": "jupiter.dive frame 3055, draft tier",
    "stop": "jupiter",
@@ -82,15 +76,21 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "b9bf88688faef876"
+   "engine": "3da6c690cf58b2c3"
   },
   {
-   "time": "2026-11-24T04:18:22.086Z",
-   "file": "20261124041822086-note-e0-rise.jpg",
-   "source": "../work/e/sheets/e0-rise.jpg",
-   "kind": "note",
-   "label": "plan E, rise on the engine's one move, draft, frames 3240 to 3315 (uncommitted tree: E on ce476684c)",
-   "stop": "jupiter"
+   "time": "2026-11-24T04:55:26.939Z",
+   "file": "20261124045526939-frame-f02895.jpg",
+   "source": "out/work/jupiter/frames/v3/f02895.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2895, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "3da6c690cf58b2c3"
   }
  ]
 }
