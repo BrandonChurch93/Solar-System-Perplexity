@@ -1,9 +1,17 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T06:01:49.752Z",
- "head": "e82251f40b8c26e8ca1564d9a942a5faac011085",
- "note": "MAIL 539 point 5 named as 191dded2: the plan check reads a move with the judge's own functions; now searching laws on that measure for the moves red on the one move",
+ "pushed": "2026-11-24T06:26:54.411Z",
+ "head": "bd3ddf81d7b646fe21135729e9c6314283607142",
+ "note": "merged main f6ce51a5; the relief's presence (mercury_builder's ask) proven byte equal, off by default; proving it again on the new main",
  "looks": [
+  {
+   "time": "2026-11-24T06:26:53.641Z",
+   "file": "20261124062653641-note-sheet-mercury.jpg",
+   "source": "../../../../tmp/law/rel/sheet-mercury.png",
+   "kind": "note",
+   "label": "Mercury draft 750 753 756 759 (dive) 765 980 983 986 (rise) drawn through the relief's new presence share, byte equal to Mercury's own patch",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T06:01:39.415Z",
    "file": "20261124060139415-note-judge-speed.jpg",
@@ -55,13 +63,6 @@
    "source": "../../../../tmp/bend/before-2.png",
    "kind": "note",
    "label": "the same tree without a bend, frames 2678 to 2686: the ground fills the frame to 2686 (the eye stopped at 2671)"
-  },
-  {
-   "time": "2026-11-24T05:25:17.390Z",
-   "file": "20261124052517390-note-after-8.jpg",
-   "source": "../../../../tmp/bend/after-8.png",
-   "kind": "note",
-   "label": "the same, frames 2678 to 2686: the eye no longer stops, so the rise is further along and from 2682 the border of the close set stands in the frame (pale wedge)"
   }
  ]
 }
