@@ -183,6 +183,7 @@ export const createSet: SetFactory = async (ctx) => {
           ;(pu.uClump!.value as THREE.Vector3).fromArray(look.cirrus.clump)
           pu.uCirrusPx!.value = cirrusPx(seen.length() / (deepView.centre.length() - 1) - 1)
           ;(pu.uShadow!.value as THREE.Vector3).y = look.clouds.shadowSoft * bufferFrame()
+          pu.uLine!.value = bufferFrame()
           ;(pu.uEnd!.value as THREE.Vector3).x = 0
           deepView.update(camera, deepSun.copy(plan.lightDir).applyQuaternion(plan.laid(state.time).invert()), state.time - terrainMid, 2 * Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) / view.format.height, gain, shot.post.vignette, view.format.width / view.format.height, toBody.copy(bodyBack).multiply(plan.laid(state.time)))
         }
