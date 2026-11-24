@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T15:23:17.426Z",
+ "pushed": "2026-11-24T15:44:39.396Z",
  "head": "f7ab197acd05bea7317f6e576894f818484ae09a",
- "note": "bank first try in the shader: white popcorn, too crisp and too white against the lay back's deck, not good yet",
+ "note": "bank tries 3 and 4, both bad: marched puffs read as blocks, flat bank is blown white with hard edges; next a soft toned bank",
  "looks": [
+  {
+   "time": "2026-11-24T15:44:38.749Z",
+   "file": "20261124154438749-note-hold.jpg",
+   "source": "../../../../tmp/gl/s11/d4/hold.png",
+   "kind": "note",
+   "label": "bank try 4 at the hold 1755: kept final | draft, zone times 3: a white blob, not the hero's cloud",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T15:44:38.156Z",
+   "file": "20261124154438156-note-pairs-0.jpg",
+   "source": "../../../../tmp/gl/s11/d4/pairs-0.jpg",
+   "kind": "note",
+   "label": "bank try 4, flat bank from code, draft 1870 1878 1882: blown white, hard edges, not good",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T15:44:37.519Z",
+   "file": "20261124154437519-note-pairs-0.jpg",
+   "source": "../../../../tmp/gl/s11/d3/pairs-0.jpg",
+   "kind": "note",
+   "label": "bank try 3, standing puffs marched, draft 1870 1878 1882: reads as white blocks, dropped",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T15:23:16.472Z",
    "file": "20261124152316472-note-hold-pair.jpg",
@@ -74,30 +98,6 @@
    "source": "../../../../tmp/gl/s9/T-dive-third.jpg",
    "kind": "note",
    "label": "third tree, dive T frames 1909 to 1923 (change of view between 1918 and 1919)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T13:56:38.368Z",
-   "file": "20261124135638368-note-dive-mid-b.jpg",
-   "source": "../../../../tmp/gl/s9/dive-mid-b.jpg",
-   "kind": "note",
-   "label": "merge, dive 1886 to 1910 draft: the far zone exchange (pattern red) stands, 1886 to 1897",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T13:56:37.447Z",
-   "file": "20261124135637447-note-dive-mid-a.jpg",
-   "source": "../../../../tmp/gl/s9/dive-mid-a.jpg",
-   "kind": "note",
-   "label": "merge, dive 1861 to 1885 draft",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T13:35:58.089Z",
-   "file": "20261124133558089-note-dive-look-b.jpg",
-   "source": "../../../../tmp/gl/s9/dive-look-b.jpg",
-   "kind": "note",
-   "label": "third tree, dive 1846 to 1860, look and lights by nearness",
    "stop": "earth"
   }
  ]
