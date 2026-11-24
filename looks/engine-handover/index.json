@@ -1,9 +1,16 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T01:13:41.710Z",
- "head": "0c2244edf5be6f83754ddfc7f0049ee740f3d8db",
- "note": "The rise's law for Mars (speed of the picture 0.097 to 0.074 of the mean): draft of every frame 2668 to 2747; neighbours and the dive keep their bytes",
+ "pushed": "2026-11-24T01:35:08.548Z",
+ "head": "dddef0553db532f1616f28970e5ddf7ab538ccce",
+ "note": "The rise's law pushed as 2658ca7 (Mars green), the one air as dddef05; next the carried speed at the ground end of the one move",
  "looks": [
+  {
+   "time": "2026-11-24T01:35:07.863Z",
+   "file": "20261124013507863-note-sheet-oldnew.jpg",
+   "source": "../../../../tmp/law/sheet-oldnew.png",
+   "kind": "note",
+   "label": "Mars rise, drafts 2670 2707 2744 before the law (top) and with it (bottom), commit 2658ca7"
+  },
   {
    "time": "2026-11-24T01:13:41.053Z",
    "file": "20261124011341053-note-law-mars-rise-draft-across.jpg",
@@ -57,18 +64,6 @@
    "segment": "mars.rise",
    "first": 2688,
    "last": 2699,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T01:12:22.754Z",
-   "file": "20261124011222754-sheet-law-mars-rise-draft-before.jpg",
-   "source": "out/work/handover/law-mars-rise-draft-before.png",
-   "kind": "sheet",
-   "label": "mars rise, every frame 2675 to 2686 (before T, frame 2687), draft tier",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "first": 2675,
-   "last": 2686,
    "tier": "draft"
   }
  ]
