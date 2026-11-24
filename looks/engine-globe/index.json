@@ -1,9 +1,17 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-24T18:22:39.392Z",
- "head": "86c315611dc7e248d9a596256999572823660f0d",
- "note": "MAIL 710 at 86c31561: the four real pairs of bar (6) with the two frames, the carried picture, the pattern and the map, and two crops of what stays red in Venus rise 1543",
+ "pushed": "2026-11-24T18:26:07.469Z",
+ "head": "780020f6f8d198afbf57e5b22bc760a4a7d7d7eb",
+ "note": "MAIL 710 at the named commit: the report's panel for Venus rise 1543, pattern 0.76, band 8 px",
  "looks": [
+  {
+   "time": "2026-11-24T18:26:06.833Z",
+   "file": "20261124182606833-note-venus-rise-k3086-3086-changes.jpg",
+   "source": "../try/out/work/smooth/venus-rise-k3086-3086-changes.png",
+   "kind": "note",
+   "label": "The report's own panel of the changes with the cure, Venus rise 1543: second row is the reading on the later frame",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T18:22:38.718Z",
    "file": "20261124182238718-note-six-ne4696.jpg",
@@ -59,14 +67,6 @@
    "kind": "note",
    "label": "Venus dive 1282 + 1/2 as on main 1.012, the same with the cure, read on the nearer frame 0.245; last column the map",
    "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T18:08:22.916Z",
-   "file": "20261124180822916-note-six-me746.jpg",
-   "source": "../m710/six-me746.png",
-   "kind": "note",
-   "label": "Mercury dive 746 + 1/2 as on main 1.019, the same with the cure, read on the nearer frame 0.251; last column the map",
-   "stop": "mercury"
   }
  ]
 }
