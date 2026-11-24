@@ -12,7 +12,7 @@
 #   share takes one minus shot.skyShare. sunBurn's Sun side is one minus wearShare, one law with the wear.
 # sky.ts: the far draw stands at far.dir when it is given.
 diff --git a/src/core/types.ts b/src/core/types.ts
-index c0c09b24..0917c426 100644
+index 60d65ade..67c29f4c 100644
 --- a/src/core/types.ts
 +++ b/src/core/types.ts
 @@ -18,7 +18,9 @@ export interface PostParams {
@@ -27,12 +27,12 @@ index c0c09b24..0917c426 100644
  export type ViewKind = 'orbit' | 'terrain'
  
 diff --git a/src/director/film.ts b/src/director/film.ts
-index 345ce0d4..06d97a73 100644
+index ff0a70af..cbd53f17 100644
 --- a/src/director/film.ts
 +++ b/src/director/film.ts
 @@ -14,6 +14,9 @@ import world from './world.json'
  import { aimAt, type SkyAims } from '../space/aim'
- import { TravelShape, inFrame } from '../space/travel/path'
+ import { TravelShape, inFrame, outsideFrame } from '../space/travel/path'
  import { discShare, openSky } from '../space/travel/open'
 +import { globeShare, wearShare } from '../space/farsun/share'
 +import farLook from '../space/farsun/look.json'
@@ -91,7 +91,7 @@ index 345ce0d4..06d97a73 100644
        if (index === 0) sunWeight = smooth(ramp(SUN_GLOW_FROM, this.sunSwapSpan[1], u))
        const arriving = state(index + 1, 'orbit')
        if (index > 0 && this.shapes[index]!.look.pin[1] > 0) farLight = Math.pow(smooth(ramp(this.lit[index]!, this.lit[index]! + FAR_LIGHT.frames / ((segment.end - segment.start) * config.fps), u)), FAR_LIGHT.power)
-@@ -869,6 +886,17 @@ export class FilmDirector implements Director {
+@@ -877,6 +894,17 @@ export class FilmDirector implements Director {
      post.exposure = light.exposure
      post.flare = flare
      const sun: SunState = { dir: this.sunWorld.clone(), color: SUN_COLOR, intensity: 3, angularRadius: light.radius, glare: light.glare * sunWeight }
@@ -106,14 +106,14 @@ index 345ce0d4..06d97a73 100644
 +      }
 +      sun.far.share *= 1 - (skyShare ?? 0)
 +    }
-     const out: Shot = { frame, time, segment, u, camera: pose, skyQuaternion: skyCarry ? skyCarry.multiply(pose.quaternion) : pose.quaternion.clone(), skyExposure: light.sky, skyGlow, skyTurn, skyStars, skyPatch, skyLook, near, far, sun, sets, post, cover, dust, farLight }
-     if (skyShare !== undefined) out.skyShare = skyShare
-     if (skyShareHigh !== undefined) out.skyShareHigh = skyShareHigh
+     const out: Shot = { frame, time, segment, u, camera: pose, skyQuaternion: skyCarry ? skyCarry.multiply(pose.quaternion) : pose.quaternion.clone(), skyExposure: light.sky, skyGlow, skyTurn, skyStars, skyPatch, skyLook, near, far, sun, sets, post, cover, dust, farLight, pixel: (2 * Math.tan(THREE.MathUtils.degToRad(pose.vfov) / 2)) / config.raw.formats.master.height }
+     // PLAN F, the one air: by the height of the lens over the stop's own body, in every segment the stop draws that body alone.
+     const own = index >= 0 && (segment.kind === 'hold' || segment.kind === 'dive' || segment.kind === 'terrain' || segment.kind === 'rise') ? sets.find((s) => s.id === segment.stop) : undefined
 diff --git a/src/space/sky.ts b/src/space/sky.ts
-index 20c0d76c..03ed8cf5 100644
+index 32062e23..4f3a51c0 100644
 --- a/src/space/sky.ts
 +++ b/src/space/sky.ts
-@@ -7,6 +7,7 @@ import { FLIGHT_SIZE, SIZE, bandField, flightField, type FlightDef, type FlightF
+@@ -8,6 +8,7 @@ import { FLIGHT_SIZE, SIZE, bandField, flightField, type FlightDef, type FlightF
  import { TEXEL_GLSL, implicitUniform } from '../core/texel'
  import { INVERSE_FILMIC_GLSL } from '../post/chain'
  import skyFrame from './skyframe.json'
@@ -121,15 +121,15 @@ index 20c0d76c..03ed8cf5 100644
  
  export const EQUIRECT_GLSL = /* glsl */ `
  ${TEXEL_GLSL}
-@@ -81,6 +82,7 @@ uniform vec3 uSunDir;
+@@ -82,6 +83,7 @@ uniform vec3 uSunDir;
  uniform vec3 uSunColor;
  uniform float uSunRadius;
  uniform float uSunGlare;
 +uniform float uSunFar;
  uniform vec2 uSunSmall;
+ uniform float uPixel;
  uniform vec4 uSunPoint;
- uniform float uTerrainBand;
-@@ -358,7 +360,7 @@ void main() {
+@@ -363,7 +365,7 @@ void main() {
      float mu = sqrt(max(1.0 - x * x, 0.0));
      vec3 face = mix(vec3(1.0), 2.6 * pow(vec3(mu + 0.05), vec3(0.22, 0.42, 0.8)), wide);
      corona += wide * (0.5 * exp(-(o - 1.0) * 9.0) + 0.16 * pow(o, -1.4) * exp(-(o - 1.0) * 0.3));
@@ -138,16 +138,16 @@ index 20c0d76c..03ed8cf5 100644
      for (int j = 0; j < (uSunSmall.x > 0.0 ? 1 : 0); j++) {
        float p2 = ang * ang * uSunSmall.y * uSunSmall.y;
        float tight = uSunPoint.x * exp(-p2 / uSunPoint.y) + uSunPoint.z * pow(1.0 + p2 / uSunPoint.w, -0.9);
-@@ -695,7 +697,7 @@ export class Sky {
+@@ -718,7 +720,7 @@ export class Sky {
      const st = skyFrame.stars
      this.pass = new Pass(SKY_FRAG, {
        uImplicit: implicitUniform, uSky: { value: null }, uInvProj: { value: new THREE.Matrix4() }, uRot: { value: this.rot }, uTint: { value: new THREE.Vector3().fromArray(skyFrame.grade.tint) }, uFloor: { value: new THREE.Vector3().fromArray(skyFrame.grade.floor) }, uGamma: { value: skyFrame.grade.gamma }, uBand: { value: null }, uGal: { value: galactic() }, uBandMap: { value: bandMap() }, uBandWiden: { value: 1 / skyFrame.band.widen }, uBandFadeEnd: { value: skyFrame.band.fadeEnd }, uBandGrade: { value: new THREE.Vector4(skyFrame.band.gain, skyFrame.band.gamma, skyFrame.band.regionRef, skyFrame.band.offGain) }, uBandTint: { value: new THREE.Vector4(skyFrame.band.tint[0], skyFrame.band.tint[1], skyFrame.band.tint[2], skyFrame.band.saturation) }, uFrame: { value: new THREE.Matrix3().setFromMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion())) }, uExposure: { value: 1 },
--      uSunDir: { value: new THREE.Vector3(0, 0, 1) }, uSunColor: { value: new THREE.Vector3(1, 1, 1) }, uSunRadius: { value: 0.01 }, uSunGlare: { value: 0 }, uSunSmall: { value: new THREE.Vector2() }, uSunPoint: { value: new THREE.Vector4(1, 1, 0, 1) }, uGlow: { value: 1 }, uTerrainBand: { value: skyFrame.band.terrainGain }, uBandClean: { value: new THREE.Vector3(skyFrame.band.cleanRadius, skyFrame.band.cleanKeep, skyFrame.band.cleanBlur) },
-+      uSunDir: { value: new THREE.Vector3(0, 0, 1) }, uSunColor: { value: new THREE.Vector3(1, 1, 1) }, uSunRadius: { value: 0.01 }, uSunGlare: { value: 0 }, uSunFar: { value: 0 }, uSunSmall: { value: new THREE.Vector2() }, uSunPoint: { value: new THREE.Vector4(1, 1, 0, 1) }, uGlow: { value: 1 }, uTerrainBand: { value: skyFrame.band.terrainGain }, uBandClean: { value: new THREE.Vector3(skyFrame.band.cleanRadius, skyFrame.band.cleanKeep, skyFrame.band.cleanBlur) },
+-      uSunDir: { value: new THREE.Vector3(0, 0, 1) }, uSunColor: { value: new THREE.Vector3(1, 1, 1) }, uSunRadius: { value: 0.01 }, uSunGlare: { value: 0 }, uSunSmall: { value: new THREE.Vector2() }, uPixel: { value: 1 }, uSunPoint: { value: new THREE.Vector4(1, 1, 0, 1) }, uGlow: { value: 1 }, uNamed: { value: new THREE.Vector2(1, 1) }, uTerrainBand: { value: skyFrame.band.terrainGain }, uBandClean: { value: new THREE.Vector3(skyFrame.band.cleanRadius, skyFrame.band.cleanKeep, skyFrame.band.cleanBlur) },
++      uSunDir: { value: new THREE.Vector3(0, 0, 1) }, uSunColor: { value: new THREE.Vector3(1, 1, 1) }, uSunRadius: { value: 0.01 }, uSunGlare: { value: 0 }, uSunFar: { value: 0 }, uSunSmall: { value: new THREE.Vector2() }, uPixel: { value: 1 }, uSunPoint: { value: new THREE.Vector4(1, 1, 0, 1) }, uGlow: { value: 1 }, uNamed: { value: new THREE.Vector2(1, 1) }, uTerrainBand: { value: skyFrame.band.terrainGain }, uBandClean: { value: new THREE.Vector3(skyFrame.band.cleanRadius, skyFrame.band.cleanKeep, skyFrame.band.cleanBlur) },
        uLens: { value: new THREE.Vector2(0, 16 / 9) }, uPatchA: { value: this.blank }, uPatchB: { value: this.blank }, uPatchM: { value: this.patchM }, uPatchLens: { value: this.patchLens }, uPatchRing: { value: this.patchRing }, uPatchMode: { value: this.patchMode }, uPatchFold: { value: this.patchFold },
        uBandGlow: { value: this.blank }, uFlightStrip: { value: new THREE.Vector3() }, uFlightEdge: { value: new THREE.Vector3(0, 1, 0) }, uFlightFeather: { value: new THREE.Vector4(0, 1, 1, 0) }, uFlightRough: { value: new THREE.Vector2() }, uFlightDetail: { value: new THREE.Vector4() }, uFlightLane: { value: new THREE.Vector4(1, 2, 0, 0) }, uFlightFill: { value: new THREE.Vector4() }, uFlightOctave: { value: new THREE.Vector3(2, 0.5, 0.5) }, uFlightKnee: { value: new THREE.Vector2(1, 1) }, uFlightRim: { value: new THREE.Vector4() }, uFlightWarm: { value: new THREE.Vector4() }, uFlightSpread: { value: new THREE.Vector3() }, uFlightNoise: { value: this.noise },
        uFlightMap: { value: this.blank }, uFlightGlow: { value: new THREE.Vector4() }, uFlightHaze: { value: new THREE.Vector4() }, uFlightBandWidth: { value: 1 }, uFlightOff: { value: new THREE.Vector3(1, 1, 1) }, uFlightDust: { value: new THREE.Vector3(1, 1, 1) }, uFlightLight: { value: new THREE.Vector3(1, 1, 1) }, uFlightBand: { value: new THREE.Vector4(0, 1, 0, 1) }, uFlightLook: { value: new THREE.Vector2(0, 1) }, uFlightVeil: { value: new THREE.Vector4() }, uFlightVeilWarm: { value: new THREE.Vector4() },
-@@ -1015,6 +1017,8 @@ export class Sky {
+@@ -1039,6 +1041,8 @@ export class Sky {
      this.band = band
    }
  
@@ -156,7 +156,7 @@ index 20c0d76c..03ed8cf5 100644
    render(renderer: THREE.WebGLRenderer, target: THREE.WebGLRenderTarget, camera: THREE.PerspectiveCamera, skyQuaternion: THREE.Quaternion, exposure: number, glow: number, turn: THREE.Quaternion, height: number, sun: SunState, vignette: number, aspect: number, open: Tiles | null): void {
      if (this.canvas !== renderer.domElement) {
        this.canvas = renderer.domElement
-@@ -1057,6 +1061,8 @@ export class Sky {
+@@ -1101,6 +1105,8 @@ export class Sky {
      u.uSunRadius!.value = sun.angularRadius
      u.uSunGlare!.value = sun.glare
      const perRad = 540 / Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2)
@@ -165,7 +165,7 @@ index 20c0d76c..03ed8cf5 100644
      const far = this.stripDef
      const small = far && sun.glare > 0 && sun.angularRadius * perRad < far.sun.radiusPx ? THREE.MathUtils.smoothstep(sun.glare, far.sun.glare[0]!, far.sun.glare[1]!) : 0
      ;(u.uSunSmall!.value as THREE.Vector2).set(small, perRad)
-@@ -1120,6 +1126,12 @@ export class Sky {
+@@ -1165,6 +1171,12 @@ export class Sky {
      if (this.cull && some) this.orderStars(camera, height, aspect, open)
      renderer.setRenderTarget(target)
      if (some) renderer.render(this.starScene, camera)
