@@ -8,7 +8,7 @@ import { smooth } from '../../director/rig'
 import { patches, place, relief as reliefDefs, wrap } from './assets'
 import { Globe } from './globe'
 import * as look from './look'
-import { deck, plan, veil as timing } from './plan'
+import { below, deck, plan, veil as timing } from './plan'
 import { CloudRelief } from './relief'
 import { HoldRim, LIMB, Rim, limbFrame } from './rim'
 import skyJson from './sky.json'
@@ -118,7 +118,7 @@ export const createSet: SetFactory = async (ctx) => {
   orbit.add(globe.mesh, rim.mesh, far.points)
 
   terrain.add(ground.group)
-  orbit.add(ground.globeDome)
+  orbit.add(ground.globeDome, ground.globeGround)
   const airTurn = new THREE.Quaternion()
   const airBack = new THREE.Quaternion()
   const hazeTurn = new THREE.Quaternion()
@@ -227,7 +227,8 @@ export const createSet: SetFactory = async (ctx) => {
       const flowing = state.time > terrainMid ? Math.min(Math.max(state.time - riseAt, look.drift.from), look.drift.to) : elapsed
       const d = look.descent
       const low = ending ? 0 : 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-4)) - Math.log(d.low)) / (Math.log(d.high) - Math.log(d.low)))
-      const left = ending ? 0 : smooth((state.time - plan.seg.dive!.start) / look.leave.seconds)
+      // The look of the hold goes out by the height of the camera in the dive (plates.json, leave); after the surface view it stays out.
+      const left = ending ? 0 : state.time > terrainMid ? 1 : below(camera.length() - 1, place.leave.heights, smooth)
       for (let i = 0; i < amps.length; i++) amps[i] = ending ? 0 : look.flash(look.cells[i]!, state.time) * (1 - left)
       const gu = globe.material.uniforms
       ;(gu.uTint!.value as THREE.Vector3).set(1, 1, 1).lerp(tintLow, low)
@@ -238,7 +239,11 @@ export const createSet: SetFactory = async (ctx) => {
       const sunOn = covering ? 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-4)) - Math.log(sh[0])) / (Math.log(sh[1]) - Math.log(sh[0]))) : 0
       airTurn.copy(plan.turn(state.time)).multiply(plan.terrainFrame)
       airEye.copy(localP).applyQuaternion(airBack.copy(airTurn).invert()).multiplyScalar(deck.radius)
-      ground.updateGlobe(airEye, eyeAtT(state.time > terrainMid ? 'rise' : 'dive'), airTurn, airOn * state.weight, sunOn * state.weight, gain, shot.post.vignette, view, shot.sun.dir)
+      ground.updateGlobe(airEye, eyeAtT(state.time > terrainMid ? 'rise' : 'dive'), airTurn, airOn * state.weight, sunOn * state.weight, covering ? below(camera.length() - 1, place.air.exactHeights) : 0, gain, shot.post.vignette, view, shot.sun.dir)
+      // The ground of the close side itself, in below the heights of plates.json (ground): at the handover the globe side is the close side's scene.
+      const heightT = eyeAtT(state.time > terrainMid ? 'rise' : 'dive').length() / deck.radius - 1
+      const share = { weight: covering ? below(camera.length() - 1, place.ground.heights) * state.weight : 0, foot: place.ground.foot.share * (1 - below((camera.length() - 1) / heightT, place.ground.foot.over)), band: place.ground.band }
+      ground.updateGround(share, state.time - terrainMid, airEye, eyeAtT(state.time > terrainMid ? 'rise' : 'dive'), airTurn, deck.centre, gain, shot.post.vignette, view, shot.sun.dir)
       const vignette = shot.post.vignette * (1 - low * (1 - airOn))
       hazeTurn.copy(state.rotation).multiply(airTurn)
       ;(gu.uAirFwd!.value as THREE.Vector3).copy(ground.deck!.fwd).applyQuaternion(hazeTurn)
@@ -246,7 +251,7 @@ export const createSet: SetFactory = async (ctx) => {
       const hz = place.air.haze
       ;(gu.uAirHaze!.value as THREE.Vector4).set(hz.most * airOn, hz.mu, hz.gain, THREE.MathUtils.degToRad(look.relief.air.deckSpanDeg))
       gu.uCarryOn!.value = 1 - released
-      const pl = plan.placeLook(state.segment, state.time)
+      const pl = plan.placeLook(state.segment, camera.length() - 1)
       const duskGain = Math.pow(place.dusk.gain, pl.dusk)
       // The weight of the place grows with nearness, from the first frame of the dive on, and is gone in the rise before the travel.
       const height = Math.log(Math.max(camera.length() - 1, 1e-4))

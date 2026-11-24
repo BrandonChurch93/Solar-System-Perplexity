@@ -4,5 +4,5 @@
   "dive": { "rate": [0.16, 0.3], "turn": [0.0, 1.0], "keep": [0.0, 0.7], "lens": [0.05, 0.75] },
   "rise": { "rate": [0.4, 0.16], "turn": [0.1, 1.0], "keep": [0.3, 1.0], "lens": [0.25, 0.95] },
   "handoverNote": "The handover (cut/HANDOVER.md, E1 and E2). at: the share of the segment where T lies. The dive hands over at frame 1343 and the rise at frame 1542: between them the close scene fills the frame from the camera of the steady move (before 1342 its near edge is in frame at the bottom; in the rise it comes into frame at the lower left and at the bottom from 1545 on, measured with assets-src/venus/place/fill.ts and seen on close side stills).",
-  "handover": { "dive": { "at": 0.928 }, "rise": { "at": 0.1667 } }
+  "handover": { "dive": { "at": 0.928, "picture": false }, "rise": { "at": 0.1667, "picture": false } }
 }
