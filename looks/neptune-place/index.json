@@ -1,9 +1,53 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T18:42:53.404Z",
+ "pushed": "2026-11-24T19:15:14.367Z",
  "head": "5c6713431897c545503f5490b29c72757f052704",
- "note": "trial e2, grade of the fall run evenly by height: handover report of the rise at preview drafts, step in place 3.61 / 6.57 to 3.00 / 5.72 (limits 6, 8), body 3.08 / 3.5; 4605 and 4860 keep bytes; reds named as before (rise poses 4984, 4988, hump 4696, white specks, lilac); 7.4 s a preview draft frame",
+ "note": "trial e3 (grade of the fall even by height): rise in place 3.61 / 6.57 to 2.89 / 5.55 by the handover report at preview drafts; 4605 and 4860 keep bytes; reds named as before (my proxies: rise 4988 0.49 by flows, hump 4696 0.66 by poses; white specks, lilac); 7.4 s a preview draft frame (10.2 s in the handover report's run of 90)",
  "looks": [
+  {
+   "time": "2026-11-24T19:15:13.768Z",
+   "file": "20261124191513768-note-e3-dive.jpg",
+   "source": "out/work/nep/weave/e3-dive.jpg",
+   "kind": "note",
+   "label": "dive 4696 to 4728: present (left), trial e3 (right). Handover report of the dive on e3: body 2.78 / 4.81 into 4719, in place 1.90 / 4.06 into 4720; the present state's dive is being read for the control",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T19:15:13.207Z",
+   "file": "20261124191513207-note-e3-rise.jpg",
+   "source": "out/work/nep/weave/e3-rise.jpg",
+   "kind": "note",
+   "label": "rise 4988 to 5004: present (left), trial e3 (right), the grade of the fall run so the level falls evenly with the height. Handover report at preview drafts, step in place: level 3.61 to 2.89, colour 6.57 to 5.55 (limits 6, 8); body 3.08 / 3.5",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T19:15:12.664Z",
+   "file": "20261124191512664-note-look-h0-4860.jpg",
+   "source": "out/work/nep/weave/look-h0-4860.jpg",
+   "kind": "note",
+   "label": "4860 beside the approved close image; trial e3 keeps its bytes (e79b0602) and those of 4605 (a2b1f371). G17 1.382 / 0.741",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T19:14:10.208Z",
+   "file": "20261124191410208-compare-neptune-dive-step-body.jpg",
+   "source": "out/work/handover/neptune-dive-step-body.png",
+   "kind": "compare",
+   "label": "neptune dive, the largest step of the mean level of the body (2.78): frame 4718, frame 4719, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "neptune",
+   "segment": "neptune.dive",
+   "frame": 4719
+  },
+  {
+   "time": "2026-11-24T18:54:50.691Z",
+   "file": "20261124185450691-compare-neptune-rise-step-in-place.jpg",
+   "source": "out/work/handover/neptune-rise-step-in-place.png",
+   "kind": "compare",
+   "label": "neptune rise, the largest step of the level in place (2.89): frame 5000, frame 5001, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "neptune",
+   "segment": "neptune.rise",
+   "frame": 5001
+  },
   {
    "time": "2026-11-24T18:42:34.495Z",
    "file": "20261124184234495-note-e2-dive.jpg",
@@ -26,48 +70,6 @@
    "source": "out/work/nep/weave/look-h0-4860.jpg",
    "kind": "note",
    "label": "4860 beside the approved close image, bytes unchanged by trial e2 (e79b0602), G17 1.382 / 0.741",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T18:39:32.838Z",
-   "file": "20261124183932838-compare-neptune-rise-step-in-place.jpg",
-   "source": "out/work/handover/neptune-rise-step-in-place.png",
-   "kind": "compare",
-   "label": "neptune rise, the largest step of the level in place (3): frame 5001, frame 5002, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "neptune",
-   "segment": "neptune.rise",
-   "frame": 5002
-  },
-  {
-   "time": "2026-11-24T18:28:17.520Z",
-   "file": "20261124182817520-note-e1-dive.jpg",
-   "source": "out/work/nep/weave/e1-dive.jpg",
-   "kind": "note",
-   "label": "TRIAL, dive 4707, 4712, 4716, 4720, 4724: left the present state, right the grade of the fall coming in evenly with the height (first form). Cause: the handover report's step in place on the rise of the present state reads level 3.61 and colour 6.57 a frame into 5001 and 5002 (limits 6 and 8): the grade took the deck's level down in a third of its way. 4605 and 4860 keep their bytes",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T18:28:16.786Z",
-   "file": "20261124182816786-note-look-h0-4860.jpg",
-   "source": "out/work/nep/weave/look-h0-4860.jpg",
-   "kind": "note",
-   "label": "4860 now (5c671343 on main 9e15c6a4; the trial below keeps its bytes) beside the approved close image. G17 1.382 / 0.741",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T18:01:19.608Z",
-   "file": "20261124180119608-note-t1-rise.jpg",
-   "source": "out/work/nep/weave/t1-rise.jpg",
-   "kind": "note",
-   "label": "TRIAL NOT KEPT, rise 4984 to 4996: left the present state, right the cloud of the dim side going down with the light as the grade grows. Specks fainter at 4992 and 4996, the hard white bit (in light) untouched; my proxy by poses 0.53, 0.48, 0.37 becomes 0.37, 0.46, 0.46 (limit 0.45). The specks are named as the map's own small clouds",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T18:01:18.356Z",
-   "file": "20261124180118356-note-look-h0-4860.jpg",
-   "source": "out/work/nep/weave/look-h0-4860.jpg",
-   "kind": "note",
-   "label": "4860 now (5c671343 = b175a5d6 on main 9e15c6a4, picture unchanged) beside the approved close image. G17 1.382 / 0.741",
    "stop": "neptune"
   }
  ]
