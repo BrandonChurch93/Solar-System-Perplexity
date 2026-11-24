@@ -264,7 +264,7 @@ def read(a, b, margin, scale, wide, floor):
     ok &= ~edge
     p = S.pattern(picture, later, ok, wide / 5, wide, floor)
     value, at, share = S.patterned(p)
-    out = {'value': value, 'at': [int(round(at[0] / scale)), int(round(at[1] / scale))] if at else None, 'share': share, 'on': on, 'by': None, 'rule': None, 'left': None, 'units': None, 'bulk': None, 'apart': None, 'no': None, 'refused': None}
+    out = {'value': value, 'at': [int(round(at[0] / scale)), int(round(at[1] / scale))] if at else None, 'share': share, 'on': on, 'by': None, 'rule': None, 'left': None, 'units': None, 'bulk': None, 'apart': None, 'no': None, 'refused': None, 'body': None, 'sky': None}
     body = way[3] & (a['which'] > 0) & ~edge
     own, met_at, _ = met(*way, a['which'], b['depth'], b['which'])
     if body.any():
@@ -278,6 +278,9 @@ def read(a, b, margin, scale, wide, floor):
     if value is None:
         return out, (p, later, rule)
     judged = np.isfinite(p)
+    for name, part in (('body', judged & (a['which'] > 0)), ('sky', judged & (a['which'] == 0))):
+        if part.mean() >= S.PATTERN_SHARE:
+            out[name] = float(np.percentile(p[part], 99))
     counts = np.bincount(rule[judged], minlength=4)[1:]
     out['by'] = {name: float(counts[i] / max(counts.sum(), 1)) for i, name in enumerate(RULES)}
     out['rule'] = block(p, value, rule)
