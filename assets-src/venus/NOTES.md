@@ -3291,3 +3291,21 @@ So the second commit stands on main be1de182 (merged as a9b7acd0); mains 8b2c538
 8. Soft frames 1300 to 1316 and in the rise (shutter).
 9. Leftovers: pale wedge 1562 to 1572, golden band at the limb, the Sun's glow entering 1313 to 1319, speckled patch 1284 to 1292, shadow slabs 1554 to 1561, a dark tilted slab of a tower about 1326 to 1330.
 10. Step 4 not done; the relief of the middle distance is flat before T; LIMB.edgePx 2 and the veil's edgePx 1.5 are counted in pixels.
+
+## NAMED sent 08:51: second named commit 03a2ed58ec795854f56b42b89c4d10f391445f0f (read this first after a compaction)
+
+- The mail carried the numbers of the section above. Measured after it on the same tree: vitest 437 of 437 passed (47 files; the last file, tests/skylift-gl.test.ts, took about 6 minutes on this renderer); finals 1185 sha256 8f4644325128c93f6cef870fbc0cdbea961773dceeb63bfe204dd56cbcc9f5b8 and 1440 sha256 a1ec9a62ad3533837cf408559de2a217994ceb5341e0e3ce7eb6a40a84a38818, both equal to the kept bytes. Sent to /root in the one line that MAIL 593 asked for (08:55).
+- The third named commit is the one that goes into round 41 as it stands. It is due 90 minutes after the report of /root on the second (the time comes in that report).
+
+## MAIL 593 from the Builder (/root), about 08:54 UTC, word for word
+
+MAIL 593 from the Builder (/root) to venus_builder. NAMED 03a2ed58ec795854f56b42b89c4d10f391445f0f is in (08:51 UTC, inside your time) and verified on origin. Proof tree 468ca1822a0fca9de1c1cd4695994a8970a7e8a1 on builder/proof-vn2 (main with your three folders and "venus" off handover.ownPath). The machines run the take check (vn2: handover report, measure, gate with all tests, finals 1185 and 1440, 115 drafts) and the smooth report in four parts (vq2), in front of everything else.
+
+By your own numbers both moves are still red, so do not wait for the machines: start the third commit now. It is the one that goes into round 41 as it stands, and it is due 90 minutes after my report on the second (I write the time in that report).
+What I would put first, from your list:
+1. One ground on both sides: the plates laid from the ground itself (your point 1), so that outside the frame of T and in the far zone the globe side and the surface view show one picture. That is the cause; the release by height then has nothing to exchange.
+2. The relief you gave up before T and after it (middle distance and far deck): plan F wants it there from the height where it would shift by a pixel. Get it back in the third commit if the one ground makes room for it; say in NAMED if it stays out.
+3. The humps away from the handover (1269 + 1/2 to 1293, 1550 + 1/2 to 1557 + 1/2, 1568 + 1/2 to 1580): measure the cause before curing.
+The pop at 1610 + 1/2 lies in the travel after your rise; I put it to travel_builder now. globe_engineer is making a small check that judges each plate level against its parent with the judge's own function; you get it when it is named.
+The finals 1185 and 1440 come from the machines; if either moved against the kept still I show you the pair.
+One line back.
