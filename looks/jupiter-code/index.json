@@ -1,9 +1,83 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T05:23:07.040Z",
- "head": "1cff5b2958a85943f117840cba9bbbe962777803",
- "note": "05:26 UTC. Bend of MAIL 526, not committed yet: local merge of main 5014624 plus the bend in plan.ts and deck.json. Drafts 3150 to 3244. Measured: 3055, 3059, 3060, 3150 equal to the byte; seam tool before lowest 0.948 at 3240 and against the way from 3241 + 1/2, after lowest 1.046 and never against; mean level 59.5, 59.4, 59.3, 59.3, 59.4 across 3237 to 3242. Still wrong: rise path red 3 on the old law (search running), left edge of the late surface view soft.",
+ "pushed": "2026-11-24T05:50:00.747Z",
+ "head": "68780bfd06d6ba1d796c819be3c19df0db80f94f",
+ "note": "Tree 68780bf (the bend of the surface view into the pull back, the rise's law found on the judge; on main 3060b72). Path green, parity green (block -7.685 at 3038). Finals of 2895 and 3150 beside the kept stills. Pictures part of the rise is rendering now.",
  "looks": [
+  {
+   "time": "2026-11-24T05:49:59.438Z",
+   "file": "20261124054959438-note-jupiter-parity.jpg",
+   "source": "out/work/logs/bB/jupiter-parity.png",
+   "kind": "note",
+   "label": "parity on 68780bf, green: mean 1.979 at 3353, coarse 1.148, block -7.685 at 3038, frame -1.123",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T05:49:58.122Z",
+   "file": "20261124054958122-note-pair-2895-kept-new.jpg",
+   "source": "../work/seam/pair-2895-kept-new.jpg",
+   "kind": "note",
+   "label": "judged 2895 at final: kept still left, head 68780bf right (sha 90e92669, the hold sky of MAIL 448)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T05:49:57.003Z",
+   "file": "20261124054957003-note-pair-3150-storm.jpg",
+   "source": "../work/seam/pair-3150-storm.jpg",
+   "kind": "note",
+   "label": "judged 3150 at final, the storm at full size: kept still left, head 68780bf right",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T05:49:56.134Z",
+   "file": "20261124054956134-note-pair-3150-kept-new.jpg",
+   "source": "../work/seam/pair-3150-kept-new.jpg",
+   "kind": "note",
+   "label": "judged 3150 at final: kept still (left, the frozen build of 23 November) against head 68780bf (right); same camera, the surface view is built from code",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T05:48:44.137Z",
+   "file": "20261124054844137-frame-bB-3150.jpg",
+   "source": "out/work/jupiter/final/bB-3150.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3150, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "3da6c690cf58b2c3"
+  },
+  {
+   "time": "2026-11-24T05:45:20.269Z",
+   "file": "20261124054520269-frame-bB-2895.jpg",
+   "source": "out/work/jupiter/final/bB-2895.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2895, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "3da6c690cf58b2c3"
+  },
+  {
+   "time": "2026-11-24T05:34:52.085Z",
+   "file": "20261124053452085-frame-f03286.jpg",
+   "source": "out/work/jupiter/frames/b3/f03286.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3286, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3286,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "3da6c690cf58b2c3"
+  },
   {
    "time": "2026-11-24T05:23:06.334Z",
    "file": "20261124052306334-note-b1-d.jpg",
@@ -11,86 +85,6 @@
    "kind": "note",
    "label": "Draft, the seam of the rise with the bend: 3237, 3239, 3240 to 3244 (rise still on the law before the new search)",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T05:23:05.731Z",
-   "file": "20261124052305731-note-b1-c.jpg",
-   "source": "../work/seam/b1-c.jpg",
-   "kind": "note",
-   "label": "Draft, surface view 3222 to 3239 with the bend: the pull back the rise takes over",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T05:23:05.035Z",
-   "file": "20261124052305035-note-b1-b.jpg",
-   "source": "../work/seam/b1-b.jpg",
-   "kind": "note",
-   "label": "Draft, surface view 3186 to 3219 every 3 with the bend: across and into the pull back",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T05:23:04.385Z",
-   "file": "20261124052304385-note-b1-a.jpg",
-   "source": "../work/seam/b1-a.jpg",
-   "kind": "note",
-   "label": "Draft, surface view 3150 to 3183 every 3 with the bend of MAIL 526 (3150 equal to the byte, then the track turns across)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T05:22:15.417Z",
-   "file": "20261124052215417-frame-f03244.jpg",
-   "source": "out/work/jupiter/frames/b1/f03244.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3244, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3244,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "3da6c690cf58b2c3"
-  },
-  {
-   "time": "2026-11-24T05:20:20.654Z",
-   "file": "20261124052020654-frame-f03239.jpg",
-   "source": "out/work/jupiter/frames/b1/f03239.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3239, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3239,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "3da6c690cf58b2c3"
-  },
-  {
-   "time": "2026-11-24T05:13:56.706Z",
-   "file": "20261124051356706-frame-f03055.jpg",
-   "source": "out/work/jupiter/frames/b1/f03055.png",
-   "kind": "frame",
-   "label": "jupiter.dive frame 3055, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 3055,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "3da6c690cf58b2c3"
-  },
-  {
-   "time": "2026-11-24T04:55:26.939Z",
-   "file": "20261124045526939-frame-f02895.jpg",
-   "source": "out/work/jupiter/frames/v3/f02895.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2895, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "3da6c690cf58b2c3"
   }
  ]
 }
