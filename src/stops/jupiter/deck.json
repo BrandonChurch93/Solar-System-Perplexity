@@ -750,6 +750,68 @@
       5
     ]
   },
+  "calm": {
+    "note": "A second smooth field over the ground, written by assets-src/jupiter/plates/calm.py to deck-calm.bin (three stacked blocks of pixels x pixels, 16 bit, value times scale; pixels must equal tone.pixels, because the loader lays it beside the tone field in one texture). The ground is multiplied by it wherever and as far as it is multiplied by the tone field (tone.lift), on both sides of the handover, so the surface view itself does not take it. It changes two things the plates paint east of the storm, which from above read as faults. hue: where the ground outside the near plate's own repaint is colder than its surround, it is led to the hue of the warm ground around it. The measure is (blue - red) / (blue + red) of the ground blurred by blurUnits; the first number of cold is none and the second is full, the same way round for warm; darkBias weights a second blur towards the dark, so bright cloud tops inside a cold area do not hide it. The warm ground is carried in over surroundUnits; the target is at least lift times its brightness. The gain of a channel is at most the number most, all three channels scaled together so the hue holds, and at least the number least. softUnits blurs the mask and the gain. nestShare is the share of the near plate's own repaint above which hue does nothing. shade: the storm's cast shade in the near plate ends at the straight line where that plate gives way to the globe's own picture (plates.nest). The shade is carried on past that line: the ground outside is darkened to the level carried out from inside (carryUnits; inside is where the repaint's share is over the number inside, the ground outside is measured where it is under the number outside), fully up to the first distance of reach from the storm's centre and not at all from the second, that distance moved by a seeded value noise (noise: wavelength and amplitude in units; seed), and only where the inside is darker than the outside by the ratios in dark (none at the first, full at the second) and between the rows (chart y: off, on, on, off). lift: inside, the shade is lifted by up to the third number, rising from the first to the second distance from the storm's centre, so the step into the carried shade is small. edgeUnits: the field is led back to 1 over this distance inside its own border. preview: zoom and exposure of the before and after picture the script writes to out/work/jupiter/calm.",
+    "centre": [
+      9,
+      0
+    ],
+    "size": 24,
+    "pixels": 256,
+    "scale": 4,
+    "edgeUnits": 1.5,
+    "hue": {
+      "blurUnits": 0.5,
+      "darkBias": 0.02,
+      "cold": [
+        0.03,
+        0.14
+      ],
+      "warm": [
+        -0.02,
+        0.06
+      ],
+      "nestShare": 0.1,
+      "softUnits": 0.4,
+      "surroundUnits": 3.0,
+      "lift": 0.85,
+      "most": 3.2,
+      "least": 0.4
+    },
+    "shade": {
+      "carryUnits": 0.3,
+      "inside": 0.98,
+      "outside": 0.02,
+      "reach": [
+        8.8,
+        12.5
+      ],
+      "noise": [
+        3.5,
+        1.0
+      ],
+      "seed": 7,
+      "lift": [
+        5.5,
+        8.0,
+        2.0
+      ],
+      "dark": [
+        0.15,
+        0.4
+      ],
+      "rows": [
+        -5.2,
+        -4.2,
+        3.2,
+        4.2
+      ]
+    },
+    "preview": {
+      "zoom": 3,
+      "exposure": 1.6
+    }
+  },
   "above": {
     "note": "How the ground looks from above the air, so the far field of the surface view's scene is the globe's far field at the handover. Knots lie evenly in the square root of the sine of the angle between the ray and the ground (0 at the horizon, 1 straight down). gain: the light of the ground is multiplied by it. air: light added on top, in the scene's own units before the exposure. Both act by the weight of air.lift (nothing under its first height, so frames 3060 to 3239 do not change). Measured at frame 3024 on stills of both sides: the globe alone (beauty/side=orbit/noplace) over the scene, medians per bin of the sine; under a sine of 0.2 the spread of the globe no longer follows the scene, so there the rest is added light.",
     "gain": [
