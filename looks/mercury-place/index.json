@@ -1,9 +1,36 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T06:38:51.432Z",
- "head": "7c885d343d584d08dacf6688e4bfed29e0fc604c",
- "note": "bend whole: rise mixed back to the old leg by 1014 so 1016 keeps its camera to the bit; seam tool rise lowest 1.025 at 960; path green (speed step 0.073 at 994 + 1/2); pop on rate 2 frames 956 to 1016 at most 1.15; sheet 967 to 981 added",
+ "pushed": "2026-11-24T06:53:27.275Z",
+ "head": "d5db35dc247537a0bf755469ca9ea1607d2d05e8",
+ "note": "whole smooth runs on d5db35dc; dive limb strip and band tone sheets, both known reds",
  "looks": [
+  {
+   "time": "2026-11-24T06:53:26.044Z",
+   "file": "20261124065326044-note-sheet.jpg",
+   "source": "out/work/mercury/place/sm/dive/sheet.jpg",
+   "kind": "note",
+   "label": "dive 713 to 746 every third frame, band tone against the globe",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T06:53:25.092Z",
+   "file": "20261124065325092-note-limbzone.jpg",
+   "source": "out/work/mercury/place/sm/limbzone.jpg",
+   "kind": "note",
+   "label": "dive 736 to 760, the strip under the limb where the pattern number is red (known, not cured)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T06:50:11.608Z",
+   "file": "20261124065011608-compare-mercury-rise-sides.jpg",
+   "source": "out/work/handover/mercury-rise-sides.png",
+   "kind": "compare",
+   "label": "mercury rise, both sides at T (frame 977) and their difference times 8",
+   "stop": "mercury",
+   "segment": "mercury.rise",
+   "frame": 977,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-24T06:38:50.829Z",
    "file": "20261124063850829-note-r2.jpg",
@@ -42,30 +69,6 @@
    "source": "out/work/mercury/place/b2/t1.jpg",
    "kind": "note",
    "label": "second bend: surface view 877 to 906, every frame, draft",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T06:16:12.883Z",
-   "file": "20261124061612883-note-t3.jpg",
-   "source": "out/work/mercury/place/b2/t3.jpg",
-   "kind": "note",
-   "label": "second bend (end 140, skew 1.7): surface view 937 to 964, every frame, draft",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T05:43:26.059Z",
-   "file": "20261124054326059-note-v955.jpg",
-   "source": "out/work/mercury/place/bt/v955.jpg",
-   "kind": "note",
-   "label": "surface view with the bend at 955, 5 frames before the seam (draft)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T05:43:25.035Z",
-   "file": "20261124054325035-note-sheet.jpg",
-   "source": "out/work/mercury/place/bt/sheet.jpg",
-   "kind": "note",
-   "label": "surface view with the bend, every 3rd frame 877 to 958, then 959 and 960 (draft): one ground, no hole, no border",
    "stop": "mercury"
   }
  ]
