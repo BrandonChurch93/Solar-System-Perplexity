@@ -1,0 +1,14 @@
+{
+ "critic": "R4",
+ "score": 8,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "frames 3711–3793, foreground ring lanes",
+   "what": "The rings and globe separate in depth, but the nearest lanes resolve as long, nearly uniform streaks. There are few distinct foreground grains to track, so the low pass reads more like a sweep over a flat band than a flight through particulate rings.",
+   "fix": "Add a sparse layer of depth-separated ring particles that sweep faster than the distant lanes, with continuous motion blur on the closest grains."
+  }
+ ]
+}
