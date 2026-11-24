@@ -1,72 +1,84 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T07:28:44.521Z",
+ "pushed": "2026-11-24T07:44:39.863Z",
  "head": "6c69ed497f7bb9ce97cde498a2ad785c2fee13dd",
- "note": "07:29 UTC, head 6c69ed4 (src of 76017a8): dive every frame 3041 to 3063 at draft and the seam at full size. The dive's pictures part of this head is red on one line (pattern 0.76 from 3046 + 1/2, limit 0.45, always the far ground under the limb). Parity, finals and the rise's part are running.",
+ "note": "07:45 UTC head 6c69ed4: parity green (block at 3038 minus 7.497), final 3150 equals the bytes of MAIL 546, final 2895 pair (hold sky of MAIL 448), rise every frame 3230 to 3244 with the change of view at full size; the rise's pictures part is rendering",
  "looks": [
   {
-   "time": "2026-11-24T07:17:40.688Z",
-   "file": "20261124071740688-note-dive-T-seam.jpg",
-   "source": "../work/named/sheets/dive-T-seam.jpg",
+   "time": "2026-11-24T07:44:38.515Z",
+   "file": "20261124074438515-note-rise-T-seam-top.jpg",
+   "source": "../work/named/sheets/rise-T-seam-top.jpg",
    "kind": "note",
-   "label": "76017a8 dive 3058 to 3061 lower 520 rows at full size, the change of view is between 3059 and 3060: one motion, no jump I can name; STILL WRONG the ground at the left is soft and dark",
+   "label": "rise 3238 to 3241 at full size, x 520 to 1920, upper 520 rows: limb and sky across the change of view",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-24T07:17:26.701Z",
-   "file": "20261124071726701-note-dive-T-bottom.jpg",
-   "source": "../work/named/sheets/dive-T-bottom.jpg",
+   "time": "2026-11-24T07:44:37.287Z",
+   "file": "20261124074437287-note-rise-T-seam-low.jpg",
+   "source": "../work/named/sheets/rise-T-seam-low.jpg",
    "kind": "note",
-   "label": "76017a8 dive 3049 to 3052 bottom 440 rows at full size: STILL WRONG a cream puff leaves at the bottom edge, brighter than the ground round it, and a soft pale patch at the bottom left corner",
+   "label": "rise 3238 to 3241 at full size, x 0 to 1400, lower 520 rows: no jump at 3240 that I can name",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-24T07:17:25.570Z",
-   "file": "20261124071725570-note-dive-T.jpg",
-   "source": "../work/named/sheets/dive-T.jpg",
+   "time": "2026-11-24T07:44:36.100Z",
+   "file": "20261124074436100-note-rise-T-b.jpg",
+   "source": "../work/named/sheets/rise-T-b.jpg",
    "kind": "note",
-   "label": "76017a8 MAIL 540 dive, every frame 3049 to 3063 at draft, the change of view is at 3059 to 3060: I cannot name a jump; the far edge of the ground is the limb; the set's border is not in frame",
+   "label": "rise, every frame 3239 to 3244 at draft, head 6c69ed4; the view changes at 3240",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-24T07:17:24.407Z",
-   "file": "20261124071724407-note-dive-e.jpg",
-   "source": "../work/named/sheets/dive-e.jpg",
+   "time": "2026-11-24T07:44:34.739Z",
+   "file": "20261124074434739-note-rise-T-a.jpg",
+   "source": "../work/named/sheets/rise-T-a.jpg",
    "kind": "note",
-   "label": "76017a8 dive 3041 to 3049 every frame at draft (frames of my own pictures part): the move holds as film frames; two flat pale lumps at lower right 3041 to 3044",
+   "label": "rise, every frame 3230 to 3238 at draft, head 6c69ed4 (MAIL 540: 10 before T to 4 after)",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-24T07:04:59.023Z",
-   "file": "20261124070459023-note-dive-d.jpg",
-   "source": "../work/named/sheets/dive-d.jpg",
+   "time": "2026-11-24T07:36:00.450Z",
+   "file": "20261124073600450-frame-bE-3150.jpg",
+   "source": "out/work/jupiter/final/bE-3150.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3150, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "5a18fcdc5a929484"
+  },
+  {
+   "time": "2026-11-24T07:33:56.391Z",
+   "file": "20261124073356391-note-parity.jpg",
+   "source": "../work/named/sheets/parity.jpg",
    "kind": "note",
-   "label": "dive 3032 to 3040 every frame, draft",
+   "label": "parity of head 6c69ed4, green: 16x9, uhd scaled down by 2, difference times 8. Largest block minus 7.497 at 3038 (main minus 22.681); the bright arcs are the limb's line",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-24T07:04:57.830Z",
-   "file": "20261124070457830-note-dive-3023-full.jpg",
-   "source": "../work/named/sheets/dive-3023-full.jpg",
+   "time": "2026-11-24T07:33:55.143Z",
+   "file": "20261124073355143-note-pair-2895.jpg",
+   "source": "../work/named/sheets/pair-2895.jpg",
    "kind": "note",
-   "label": "dive 3023 at full size, left part: the near plate's soft straight border against the speckled field",
+   "label": "2895 final at full size, x 1180 to 1870: left the PNG of MAIL 546 (main), right head 6c69ed4. The sky is the cured hold sky of MAIL 448: dark sky mean plus 0.683, largest 7; body under 0.97 radii no pixel over one level",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-24T07:04:56.679Z",
-   "file": "20261124070456679-note-dive-c.jpg",
-   "source": "../work/named/sheets/dive-c.jpg",
-   "kind": "note",
-   "label": "dive 3023 to 3031 every frame, draft",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T07:04:55.410Z",
-   "file": "20261124070455410-note-dive-b.jpg",
-   "source": "../work/named/sheets/dive-b.jpg",
-   "kind": "note",
-   "label": "dive 3006 to 3022 every second frame, draft",
-   "stop": "jupiter"
+   "time": "2026-11-24T07:32:38.872Z",
+   "file": "20261124073238872-frame-bE-2895.jpg",
+   "source": "out/work/jupiter/final/bE-2895.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2895, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "5a18fcdc5a929484"
   }
  ]
 }
