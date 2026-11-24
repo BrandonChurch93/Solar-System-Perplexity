@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T08:35:45.345Z",
- "head": "0b9017c01a9403f9d76cee578d342bfd10384386",
- "note": "08:36 second named commit 0b9017c0: cost of the cirrus march cut 2.4 times with the picture held (preview draft 52.7 s to 22.0 s, final 860.8 s to 376.0 s); the aim of 5 times is not reached; look faults of MAIL 573 not in it",
+ "pushed": "2026-11-24T09:00:05.655Z",
+ "head": "1a0ad24dc9d0e27f0d973c462c1554e5c9a4d2cd",
+ "note": "third commit in work: deck as cloud, storm without ruled rings, veil that thins upward; 4860 over approved, G17 1.411 / 1.041, 42 s a draft frame",
  "looks": [
+  {
+   "time": "2026-11-24T09:00:05.078Z",
+   "file": "20261124090005078-note-z-m2.jpg",
+   "source": "../../../../tmp/z-m2.jpg",
+   "kind": "note",
+   "label": "the same at twice the size: the storm and the limb. Known: spokes inside the eye, the band under the limb has no structure and is 20 to 40 levels too bright",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T09:00:04.480Z",
+   "file": "20261124090004480-note-q-m2.jpg",
+   "source": "../../../../tmp/q-m2.jpg",
+   "kind": "note",
+   "label": "4860 draft over the approved image. Third commit in work: the deck's short octaves are lumps and curl, no streaks at every size; no ruled rings; veil thins upward. G17 preview draft median 1.411 p25 1.041. 42 s a draft frame",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T08:35:44.799Z",
    "file": "20261124083544799-note-d-held.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/q-T23.jpg",
    "kind": "note",
    "label": "4860 16 by 9 draft T23 (top) over the approved image; work tree, not committed",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T06:38:27.258Z",
-   "file": "20261124063827258-note-look-T17-limb.jpg",
-   "source": "../../../../tmp/look-T17-limb.jpg",
-   "kind": "note",
-   "label": "4860 T17 limb at 3 times (above) against approved (below): thin stepped lines are a fault found, the deck relief cuts the veil's lowest layer",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T06:38:26.694Z",
-   "file": "20261124063826694-note-look-T17-pair.jpg",
-   "source": "../../../../tmp/look-T17-pair.jpg",
-   "kind": "note",
-   "label": "4860 preview draft T17 (above) beside the approved image (below): limb band work, veil thins upward",
    "stop": "neptune"
   }
  ]
