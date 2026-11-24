@@ -3924,3 +3924,46 @@ is in the picture at 3 to 12 px, and the same crispness for the far ring across 
     (0.4 s) and as far as the engine's slide of the leaving body is solved anew. The hold, the dive and the
     surface view keep the PRE's code and numbers.
   - FALLBACK: the PRE 68b45619c9b8a49e33e17639a44504a39e29e2a7 stays nameable as it is.
+
+### 11:27 to 11:55 UTC: 91d6247 pushed and in proof, PRE 2 mailed
+
+- COMMIT 91d62470b26f63decf5f17ae69ee1cf6716bc4ee (11:26, pushed): the rise ends with speed, on the merge of
+  main bdd47cf (5863ae0). Trees: src/stops/saturn 7f13c95306f08c785073d108e624e595858a9a22 (the PRE:
+  eeacefbcf0098b624009de980c4621033f21a26e), public/assets/saturn 75fa372a9187c0eb07c296a431b846aeb3962279
+  (equal to the PRE's).
+- WHAT THE ENGINE READS from the rise (out/scratch/carryread.ts, film.ts carryOf): speed 2.2000 radii a
+  second, 0.0001 degree from riseOut; rate 0.9735 radii a second squared, of it -0.6597 along riseOut (a
+  brake), span 0.4 s, drift 0.08. The brake is 0.12 of the speed over the span; the engine's own test allows
+  up to 7.5.
+- THE SPEED OF THE LENS over the whole rise (seamout.ts, radii a second): 0.34 at 3806, 0.36 at 3810, 0.86
+  at 3822, 1.46 at 3834, 1.84 at 3846, 2.15 at 3858, 2.36 at 3866, 2.42 at 3874 (its largest), 2.34 at 3882,
+  2.24 at 3886, 1.47 at 3890 (the travel's own dip while the carried speed decays), 5.75 at 3898. It rises
+  once and falls once inside the rise. The globe's radius in the picture falls in every frame: 524 px at
+  3806, 392 at 3866, 305 at 3886, 285 at 3898.
+- PROOF OF 91d6247 (/tmp/v/r45, job started 11:27):
+  - path: "VERDICT: green. No number is over its limit." (numbers as in the block before.)
+  - handover path: "saturn.dive every frame: pass", "saturn.rise every frame: pass".
+  - rise pictures, the judge's whole window 3798 to 3896 + 1/2 (saturn-rise.md, 11:43): "VERDICT: green. No
+    number is over its limit." "Largest level step: 0.05 at frame 3875 + 1/2 ..., limit 1.3." "Largest pop
+    score: 1.15 from frame 3872 + 1/2 to the next, limit 1.2." "Largest change in place: 21.9 from frame 3873
+    to 8 film frames later, most at pixel 1232, 692 ..., shown, not judged." "Largest change of the pattern
+    alone: 0.25 from frame 3821 + 1/2 to 8 film frames later, most at pixel 1220, 852 ..., limit 0.45."
+    From 3885 on the largest pop is 1.06 at 3895 + 1/2 (the PRE: 1.59, red, 11 frames over); the pop falls
+    to 0.74 at 3891 where the picture is slowest and is back at 1.0 by 3895. Pops over 1.1: 1.11 at 3836,
+    1.10 to 1.15 at 3870 + 1/2 to 3874 (the PRE had 1.12 to 1.17 at the same frames with the other course
+    of the stars: the panel shows the faint stars of the flight and the ring's fine lines at the fastest
+    part of the rise). Pattern over 0.2 only at 3818 + 1/2 to 3832 + 1/2 (0.20 to 0.25: the far ring
+    coming out behind the night limb, low on the globe).
+  - Looked at: rise_a (3798 to 3813), rise_b (3816 to 3840), rise_c (3844 to 3877), rise_d (3878 to 3896),
+    3866 at full size, the pops and the changes panels, the right edge 3817 to 3828 at full size (the far
+    ring comes out behind the night limb at 3820 and widens, cut by the limb, no fade), the moon 3842 to
+    3850 at full size by half frames (it rises over the limb from 3844 + 1/2 to 3848, cut by the limb, no
+    fade). The seam: the globe draws back through 3885 at one pace, nothing rests, nothing jumps.
+  - measure (11:54): "PASS G5 saturn: 3465 hold invalid 0 coverage 0.514; 3567 dive invalid 0 coverage
+    0.600; 3720 terrain invalid 0 coverage 0.725; 3866 rise invalid 0 coverage 0.464" and "PASS G17 saturn:
+    3465 median 1.054 p25 0.918 over 71 tiles; 3720 median 0.945 p25 0.477 over 62 tiles".
+- PRE 2 MAILED 11:46 (high): 91d6247 replaces 68b4561 for the third NAMED; NAMED promised when the rest is
+  back, 12:40 UTC at the latest; if a red shows that I cannot cure, I name 68b4561 and say so.
+- MAIN moved twice since the merge: 5cfbbf1 (status 230, Venus's warm list: kit/PROGRESS.md and
+  src/core/warm.json) and 36970ce (Neptune's third named commit). Status 230: "Saturn's third by 13:00."
+  I merge the newest main for the NAMED; my two picture trees stay those of 91d6247.
