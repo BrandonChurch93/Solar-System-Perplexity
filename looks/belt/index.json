@@ -1,9 +1,16 @@
 {
  "folder": "belt",
- "pushed": "2026-11-24T17:12:09.449Z",
+ "pushed": "2026-11-24T18:05:17.274Z",
  "head": "6f6f1229fc1360c2d88f28e420d4cce97ac226a2",
- "note": "far Sun 6f6f1229",
+ "note": "far Sun: hair as a march in three dimensions, loop with a soft body; work in progress, not named",
  "looks": [
+  {
+   "time": "2026-11-24T18:05:15.485Z",
+   "file": "20261124180515485-note-hv_m12.jpg",
+   "source": "../../../../tmp/farsun/out/hv_m12.jpg",
+   "kind": "note",
+   "label": "615 pair, approved left, far Sun right: marched hair and loop sheath, try m12, draft blur 4.18"
+  },
   {
    "time": "2026-11-24T17:11:22.585Z",
    "file": "20261124171122585-note-strip-520-615-n60.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/farsun/v_tuft_n47.jpg",
    "kind": "note",
    "label": "615 draft lower limb 3x, approved left, try n47 right, marks are position angles"
-  },
-  {
-   "time": "2026-11-24T16:10:04.336Z",
-   "file": "20261124161004336-note-v_box_n47.jpg",
-   "source": "../../../../tmp/farsun/v_box_n47.jpg",
-   "kind": "note",
-   "label": "615 draft, approved left, far Sun right: try n47, blur 4.12, all zones in bound; streamer at the bottom now a cone of rays that close on a tip (still too hard, being softened)"
   }
  ]
 }
