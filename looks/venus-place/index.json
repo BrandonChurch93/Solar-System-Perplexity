@@ -1,9 +1,36 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-24T03:52:49.150Z",
- "head": "b4a3c0818616e8767a64a61d783481d0dda48881",
- "note": "step 3: ground in earlier (test), and a dropped try; tones of the ground against the plates still open",
+ "pushed": "2026-11-24T04:07:27.433Z",
+ "head": "cfc12a2094b1f946ecddf8b08d2231009fb2e751",
+ "note": "step 3: the ground in the globe's tone from above (tone law), dive and rise beside frames without the ground",
  "looks": [
+  {
+   "time": "2026-11-24T04:07:26.503Z",
+   "file": "20261124040726503-note-g8r-sheet.jpg",
+   "source": "../../../../tmp/v/g8r-sheet.jpg",
+   "kind": "note",
+   "label": "The same in the rise, 1564, 1567, 1570, 1573: left with the ground, right without it. WRONG still: the plates beside the ground are another picture (the slabs and the towers at the lower right are plate content).",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T04:07:25.453Z",
+   "file": "20261124040725453-note-g7-sheet.jpg",
+   "source": "../../../../tmp/v/g7-sheet.jpg",
+   "kind": "note",
+   "label": "Step 3 with a tone law for the ground (working tree): from above the ground gives its forms over the globe's colour, its own tones come in by the line of sight as the plates' do. Left 1296, 1300 with the ground, right the same frames without it; then 1304, 1308 with, 1308 without, 1311 with. The pale patch of the last sheet is gone at 1296 to 1304. Draft, no grain.",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T04:06:17.978Z",
+   "file": "20261124040617978-compare-venus-dive-sides.jpg",
+   "source": "out/work/handover/venus-dive-sides.png",
+   "kind": "compare",
+   "label": "venus dive, both sides at T (frame 1343) and their difference times 8",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "frame": 1343,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-24T03:52:48.478Z",
    "file": "20261124035248478-note-g4-sheet.jpg",
@@ -42,30 +69,6 @@
    "source": "../../../../tmp/v/g3-sheet.jpg",
    "kind": "note",
    "label": "Venus step 3 try 3, working tree, draft, dive 1304 to 1329 every third frame: the close ground drawn on the globe from the height where it first shows (deck by scale against the frame, matte by cloud forms). Wrong: plates beside the ground paler and olive, dark slab upper right 1314 to 1323 is plate content, limb band right",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T03:11:41.321Z",
-   "file": "20261124031141321-note-g1-sheet2.jpg",
-   "source": "../../../../tmp/v/g1-sheet2.jpg",
-   "kind": "note",
-   "label": "Same try, 1329 to 1343. WRONG: hard lower edge lower left and the fin on the right at 1329 and 1332; plates of another tone beside the ground.",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T03:11:40.758Z",
-   "file": "20261124031140758-note-g1-sheet.jpg",
-   "source": "../../../../tmp/v/g1-sheet.jpg",
-   "kind": "note",
-   "label": "Step 3 first try (not committed): the ground of the surface view drawn on the globe from height 0.3 radii down, only where it is true from the eye. 1300 to 1326 every third frame, draft, no grain. WRONG: it is a dark slab with a hard lower edge (1311 to 1329), a comb on its far edge and a fin on the right (1311 to 1326), over plates of another tone.",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T03:11:40.132Z",
-   "file": "20261124031140132-note-suncrops.jpg",
-   "source": "../../../../tmp/v/suncrops.png",
-   "kind": "note",
-   "label": "Sun's core from one read on both sides (working tree, not committed): crops of 1332 to 1347 and 1541 to 1552, draft. No coloured specks seen on these crops. 1335: a faint stepped line on the limb under the Sun, to be checked.",
    "stop": "venus"
   }
  ]
