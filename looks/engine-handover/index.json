@@ -1,81 +1,75 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T03:24:31.740Z",
- "head": "c3337db0d6d1334c94aa5712b80ec089ec9d1873",
- "note": "stars lift by height: before pictures of the five rises that change (mercury venus earth jupiter neptune), after pictures render next",
+ "pushed": "2026-11-24T03:54:28.039Z",
+ "head": "eafbd89d2545bb29d9bd51bf81cd70966dce02b3",
+ "note": "star lift by height: before and after sheets of five rises, merged tree frames of Mercury and Jupiter; sides of Mercury rendering",
  "looks": [
   {
-   "time": "2026-11-24T03:24:31.160Z",
-   "file": "20261124032431160-note-b-neptune.jpg",
-   "source": "../../../../tmp/lift/b-neptune.png",
+   "time": "2026-11-24T03:54:27.421Z",
+   "file": "20261124035427421-note-m-jupiter-sky.jpg",
+   "source": "../../../../tmp/lift/m-jupiter-sky.png",
    "kind": "note",
-   "label": "stars lift by height, BEFORE (head c3337db0, lift by the clock): neptune rise, draft tier, every sixth frame and both sides of T",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T03:24:30.606Z",
-   "file": "20261124032430606-note-b-jupiter.jpg",
-   "source": "../../../../tmp/lift/b-jupiter.png",
-   "kind": "note",
-   "label": "stars lift by height, BEFORE (head c3337db0, lift by the clock): jupiter rise, draft tier, every sixth frame and both sides of T",
+   "label": "star lift by height on the merged tree, Jupiter sky crop consecutive 3270 to 3283, draft",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-24T03:24:30.036Z",
-   "file": "20261124032430036-note-b-earth.jpg",
-   "source": "../../../../tmp/lift/b-earth.png",
-   "kind": "note",
-   "label": "stars lift by height, BEFORE (head c3337db0, lift by the clock): earth rise, draft tier, every sixth frame and both sides of T",
-   "stop": "earth"
+   "time": "2026-11-24T03:54:27.396Z",
+   "file": "20261124035427396-compare-liftmerged-mercury-rise-sides.jpg",
+   "source": "out/work/handover/liftmerged-mercury-rise-sides.png",
+   "kind": "compare",
+   "label": "mercury rise, both sides at T (frame 977) and their difference times 8",
+   "stop": "mercury",
+   "segment": "mercury.rise",
+   "frame": 977,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-24T03:24:29.454Z",
-   "file": "20261124032429454-note-b-venus.jpg",
-   "source": "../../../../tmp/lift/b-venus.png",
+   "time": "2026-11-24T03:54:26.846Z",
+   "file": "20261124035426846-note-m-mercury-run.jpg",
+   "source": "../../../../tmp/lift/m-mercury-run.png",
    "kind": "note",
-   "label": "stars lift by height, BEFORE (head c3337db0, lift by the clock): venus rise, draft tier, every sixth frame and both sides of T",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T03:24:28.777Z",
-   "file": "20261124032428777-note-b-mercury.jpg",
-   "source": "../../../../tmp/lift/b-mercury.png",
-   "kind": "note",
-   "label": "stars lift by height, BEFORE (head c3337db0, lift by the clock): mercury rise, draft tier, every sixth frame and both sides of T",
+   "label": "star lift by height on the merged tree, Mercury consecutive 996 to 1002, draft",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-24T03:21:57.924Z",
-   "file": "20261124032157924-compare-liftbefore-neptune-rise-sides.jpg",
-   "source": "out/work/handover/liftbefore-neptune-rise-sides.png",
-   "kind": "compare",
-   "label": "neptune rise, both sides at T (frame 4956) and their difference times 8",
-   "stop": "neptune",
-   "segment": "neptune.rise",
-   "frame": 4956,
-   "tier": "draft"
+   "time": "2026-11-24T03:54:26.231Z",
+   "file": "20261124035426231-note-m-mercury.jpg",
+   "source": "../../../../tmp/lift/m-mercury.png",
+   "kind": "note",
+   "label": "star lift by height on the merged tree, Mercury rise on its new base 984 to 1026 every 6, draft",
+   "stop": "mercury"
   },
   {
-   "time": "2026-11-24T03:21:13.891Z",
-   "file": "20261124032113891-compare-liftbefore-jupiter-rise-sides.jpg",
-   "source": "out/work/handover/liftbefore-jupiter-rise-sides.png",
-   "kind": "compare",
-   "label": "jupiter rise, both sides at T (frame 3270) and their difference times 8",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3270,
-   "tier": "draft"
+   "time": "2026-11-24T03:54:25.304Z",
+   "file": "20261124035425304-note-ba-jupiter-full.jpg",
+   "source": "../../../../tmp/lift/ba-jupiter-full.png",
+   "kind": "note",
+   "label": "star lift by height, Jupiter rise before and after, draft",
+   "stop": "jupiter"
   },
   {
-   "time": "2026-11-24T03:19:22.899Z",
-   "file": "20261124031922899-compare-liftbefore-earth-rise-sides.jpg",
-   "source": "out/work/handover/liftbefore-earth-rise-sides.png",
-   "kind": "compare",
-   "label": "earth rise, both sides at T (frame 2100) and their difference times 8",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2100,
-   "tier": "draft"
+   "time": "2026-11-24T03:54:24.325Z",
+   "file": "20261124035424325-note-ba-jupiter-sky.jpg",
+   "source": "../../../../tmp/lift/ba-jupiter-sky.png",
+   "kind": "note",
+   "label": "star lift by height, Jupiter sky crop before and after, draft",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T03:54:23.322Z",
+   "file": "20261124035423322-note-ba-venus-sky.jpg",
+   "source": "../../../../tmp/lift/ba-venus-sky.png",
+   "kind": "note",
+   "label": "star lift by height, Venus sky crop before and after, draft",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T03:54:21.866Z",
+   "file": "20261124035421866-note-ba-earth.jpg",
+   "source": "../../../../tmp/lift/ba-earth.png",
+   "kind": "note",
+   "label": "star lift by height, Earth rise before and after, draft",
+   "stop": "earth"
   }
  ]
 }
