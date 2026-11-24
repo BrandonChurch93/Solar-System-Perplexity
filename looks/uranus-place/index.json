@@ -1,9 +1,39 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-24T05:21:43.257Z",
- "head": "c320c4af01701d4b7f426944d5ed8edeeaebe61c",
- "note": "one place (local c320c4af, main 85f27df2): dive 4158 to 4193 and rise 4386 to 4421 at draft; handover pass both; next the bend of the surface view after 4290",
+ "pushed": "2026-11-24T05:39:02.719Z",
+ "head": "145020cd09eaac15c98ec90552b562cf9df683ff",
+ "note": "head 145020cd on main 3060b725: one place, the bend after 4290, terrain sky without grain; 4290 final beside the kept still",
  "looks": [
+  {
+   "time": "2026-11-24T05:38:55.995Z",
+   "file": "20261124053855995-note-skya-crop.jpg",
+   "source": "../../../../tmp/skya-crop.png",
+   "kind": "note",
+   "label": "4290 final, right end of the horizon times two: kept still, one place, one place with the sky made again without grain",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T05:38:54.809Z",
+   "file": "20261124053854809-note-pair-4290.jpg",
+   "source": "../../../../tmp/pair-4290.png",
+   "kind": "note",
+   "label": "4290 final: the kept still (left) and head 145020cd (right): one place at the horizon and the terrain sky without grain",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T05:36:01.056Z",
+   "file": "20261124053601056-frame-sky-4290-nograin.jpg",
+   "source": "out/work/u/one/sky-4290-nograin.png",
+   "kind": "frame",
+   "label": "uranus.terrain frame 4290, final tier, nograin view",
+   "stop": "uranus",
+   "segment": "uranus.terrain",
+   "frame": 4290,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "engine": "7122c119266e5aee"
+  },
   {
    "time": "2026-11-24T05:21:37.904Z",
    "file": "20261124052137904-note-sr-4410.jpg",
@@ -43,42 +73,6 @@
    "kind": "note",
    "label": "one place c320c4af on main 85f27df2, draft, frames from 4170 (12 a sheet)",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T05:21:29.370Z",
-   "file": "20261124052129370-note-sd-4158.jpg",
-   "source": "../../../../tmp/sd-4158.png",
-   "kind": "note",
-   "label": "one place c320c4af on main 85f27df2, draft, frames from 4158 (12 a sheet)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T05:20:13.761Z",
-   "file": "20261124052013761-frame-final-4035.jpg",
-   "source": "out/work/u/one/final-4035.png",
-   "kind": "frame",
-   "label": "uranus.hold frame 4035, final tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7122c119266e5aee"
-  },
-  {
-   "time": "2026-11-24T05:19:20.663Z",
-   "file": "20261124051920663-frame-final-4290.jpg",
-   "source": "out/work/u/one/final-4290.png",
-   "kind": "frame",
-   "label": "uranus.terrain frame 4290, final tier",
-   "stop": "uranus",
-   "segment": "uranus.terrain",
-   "frame": 4290,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7122c119266e5aee"
   }
  ]
 }
