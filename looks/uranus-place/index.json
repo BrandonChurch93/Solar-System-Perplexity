@@ -1,9 +1,41 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-24T22:24:38.102Z",
+ "pushed": "2026-11-24T22:33:02.588Z",
  "head": "e9e2c3a72b60ef94a56fb30619383372aa28eab1",
- "note": "trial, not committed: white tops with no angle law (left) against the named tree (right); 4290 trial over the approved close image; the corner blob at 4375 is still bad",
+ "note": "white tops: the view angle is out of the law, whites are fixed on the ground with a lane along the flight's track; drafts, proof chain running; open: a pale grey patch passes the lower left corner at 4375",
  "looks": [
+  {
+   "time": "2026-11-24T22:33:01.976Z",
+   "file": "20261124223301976-note-c4035.jpg",
+   "source": "../../../../tmp/v3/c4035.jpg",
+   "kind": "note",
+   "label": "4035 globe: approved hero, new tops law draft, named tree final",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T22:33:01.336Z",
+   "file": "20261124223301336-note-cmp-b.jpg",
+   "source": "../../../../tmp/v3/cmp-b.jpg",
+   "kind": "note",
+   "label": "new tops law left, named tree right: 4406, 4416",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T22:33:00.688Z",
+   "file": "20261124223300688-note-cmp-a.jpg",
+   "source": "../../../../tmp/v3/cmp-a.jpg",
+   "kind": "note",
+   "label": "new tops law left: 4375, 4390, 4398; right: 4375 of the rejected trial, 4390 and 4398 of the named tree",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T22:33:00.032Z",
+   "file": "20261124223300032-note-c4290.jpg",
+   "source": "../../../../tmp/v3/c4290.jpg",
+   "kind": "note",
+   "label": "4290 draft with the new tops law (top), approved close image (middle), named tree final (bottom)",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-24T22:24:37.449Z",
    "file": "20261124222437449-note-cmp-rise2.jpg",
@@ -277,50 +309,6 @@
    "kind": "note",
    "label": "item 4: 4436 final, shutter open beside closed, native crops L R S, main 7d52b3e0 merged",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T21:20:45.920Z",
-   "file": "20261124212045920-note-closed-4137.jpg",
-   "source": "../../../../tmp/tf/closed-4137.png",
-   "kind": "note",
-   "label": "item 4: 4137 final, shutter open beside closed, native crops C E A, main 7d52b3e0 merged",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T21:20:44.818Z",
-   "file": "20261124212044818-note-travel-12.jpg",
-   "source": "../../../../tmp/tf/travel-12.jpg",
-   "kind": "note",
-   "label": "travel 4455 to 4530, 12 frames at draft, main 7d52b3e0 merged, new rise ending in the hold's pose (engine dim change not in)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T21:19:52.414Z",
-   "file": "20261124211952414-frame-f4530.jpg",
-   "source": "out/work/u/r45/tr/f4530.png",
-   "kind": "frame",
-   "label": "neptune.hold frame 4530, draft tier",
-   "stop": "neptune",
-   "segment": "neptune.hold",
-   "frame": 4530,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
-  },
-  {
-   "time": "2026-11-24T21:19:17.949Z",
-   "file": "20261124211917949-frame-f4523.jpg",
-   "source": "out/work/u/r45/tr/f4523.png",
-   "kind": "frame",
-   "label": "uranus.travel frame 4523, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.travel",
-   "frame": 4523,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
   }
  ]
 }
