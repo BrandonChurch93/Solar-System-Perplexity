@@ -3466,3 +3466,133 @@ Run after the commit, 10:16 to 10:21 (script `/tmp/v/x3.sh`, tree put back, noth
 - Not run: the same for the dive (1319 + 1/2 to 1323 + 1/2), and the rows after 1552 + 1/2 of the rise.
 
 What to do next, in this order, if a round follows: (1) the ground inside the frame of T held without the release and its footprint cured where it shows (the pale far deck and the slab at the right edge are the tones of T's line of sight seen from above: the law of `tone` and `ground.lay` there), then the pattern of 1540 to 1560 measured again; (2) the far band under the limb laid from the ground; (3) the plates of the place and the globe's own map one picture under `show.heights`.
+
+## MAIL 636 from the Builder (received about 10:26), word for word
+
+MAIL 636 from the Builder (/root) to venus_builder. RECEIPT of your third NAMED 8d8eba9eb74fe286fa236347479c5250217d88ae. No stop.
+
+1. It is the third named commit, so it goes into Venus's round as it stands (second note; d186). That round is round 41. It starts when the take is on main, and the take needs a clean engine check, not a green smooth report: the reds the machines read go into the round as severe issues.
+2. Proof tree 1ca6f244a1ac87b8ec133178f54b9419c351d19f on builder/proof-vn3 = main c2c4913392fcf3f934e4fadedd61b32573d51010 with your three folders and venus out of handover.ownPath (35 files inside, the one config line outside). At the front of the queue since 10:24 UTC: vn3 (115 engine drafts, finals 1185 and 1440, the handover report with every part, gates, tsc, tests), vq3 (path, place, parity; counts), vz3 (the pictures in 4 and 4 slices). Main's tools/smooth.ts and tools/img/smooth.py are the ones that run there.
+3. Your branch head reads 1e682e0123ac856ff8931fecdd6bc3b297d942af now. I take 8d8eba9e as named and nothing after it. If 1e682e01 holds anything but notes, say what in one line; it is not in the take.
+4. Until the round's list comes: keep working on your branch, in your own order of cures, the release first (the relief held or carried by the plates above 1 to 3 times the height of T, so that the lit crests do not go out while the flat plate stands), then the far zone laid from the ground, then the plates of the place and the globe's own map as one picture where show.heights mixes them. Your run without the release (0.52 where the commit reads 1.15) is the evidence that the first hump is a real exchange and not the measure; it goes to harness_builder as that. Do not name a fourth commit: what you have ready goes in as the fix of round 41 when its issues reach you.
+5. Your numbers are STATED until the machines read them. The bytes: plus 0.65 MB against main is noted against the tree's 3 GB limit.
+
+What follows from it: 1e682e01 holds notes only (one file, `assets-src/venus/NOTES.md`), so no answer is owed. No fourth NAMED: the cures go on on the branch in whole steps and wait for the list of round 41. Order: the release, the far zone, the plates and the globe's own map under `show.heights`.
+
+## The release, first cure tried: the near ground kept whole inside the frame of T (10:27 to 10:40, read this after a compaction)
+
+What the release does (relief.ts, `let`): inside the frame of T the limits `true` and `skin` are multiplied by a share that is none at the height of T and 1 at 3 times that height. So between 1 and 3 times the height of T (rise 1540 to 1553, dive 1320 to 1343) the faces that another eye sees larger than they were stored drop out one after another, by height, and the flat plate stands where a lit crest stood. That is a border that moves by height (RULED of MAIL 596: borders set on the ground).
+
+Tried (scratch state x4): inside the frame of T the ground keeps all of its picture at every height where the camera of T sees it from above (sine of its elevation over the point over `flat.sinElevation` [0.25, 0.45], the part that keeps its relief); the far ground, which lies flat on the deck where the plates hold the same picture, is let go by height as before. One line of the shader: `let = mix(1, max(uLet.x * (1 - holds), 1e-6), inT)` with `holds = smoothstep(uFlat.x, uFlat.y, sine)`.
+
+Measured, `pat.ts --from 1540 --to 1580` (the report's pattern number, reach 8 film frames, rows 1540 to 1572 + 1/2), against the rows of the report of the third named commit:
+
+| rows | third named commit | x4 | where in x4 |
+|---|---|---|---|
+| 1540 + 1/2 to 1543 + 1/2 | 0.48 to 1.15 | 0.26 to 0.52 (3 rows over the limit: 0.52, 0.49, 0.47 at 1542 to 1543) | left edge, pixel 0 to 132, 930 to 950 |
+| 1544 to 1546 + 1/2 | 1.06 to 1.14 | 0.47 to 0.65 (6 rows over) | the limb at the right, pixel 1564 to 1912, 364 to 440 |
+| 1547 to 1549 + 1/2 | 0.28 to 0.99 | 0.30 to 0.41 | |
+| 1550 to 1557 + 1/2 (second hump) | 0.38 to 0.74 | 0.17 to 0.35 | |
+| 1558 to 1567 + 1/2 | 0.24 to 0.42 | 0.19 to 0.28 | |
+| 1568 to 1572 + 1/2 (third hump) | 0.39 to 0.61 | 0.39 to 0.61 | right edge and limb |
+
+- So the first hump falls from 1.15 to 0.65 and from 15 rows over the limit to 9, the second hump (0.74) is gone, the third is not touched.
+- Seen at half size, 1544 to 1572 every fourth frame (looks of 10:41): the tower group keeps its lit crests to 1564 and thins out with the whole ground between 1566 and 1575 (`ground.heights`); no hard arc and no fan as in the run with nothing let go. Still there as in the commit: the pale patch of the far deck with a blue tint at 1552 to 1560, the shadow slab right of it.
+- Left to find: the left edge at 1542 (also in the run with nothing let go, so not the release: the ground outside the frame of T under `true`, which goes by angle and distance), and the limb at the right at 1546 (the far ground let go by height over plates that hold other forms there).
+
+## The release, the cure that is kept: the near ground whole at every height, in and out of the frame of T (10:41 to 11:06, read this after a compaction)
+
+A/B under the limb (10:41 to 10:45, stills 1546, 1550, 1554 at the draft tier; A the tree state with the far ground let go by height, B the far ground held, release [1000, 3000]): mean difference of 255 between A and B 0.23, 4.48, 6.22. A shows the plates there: cloud forms with warm blotchy colours, a blue white speckled patch at the top left of the centre, a dark brown band along the limb. B shows the far deck of T as smooth pale haze with a fringe of radial streaks at the horizon of T. So in the far zone the plates hold another picture than the ground, and the exchange of the two by height is the hump on the limb (0.65 at 1546).
+
+Left edge (crops 1541 to 1551 of the run x4): the dark near ground at the lower left gives way to a pale brown flat plate between 1545 and 1551. Outside the frame of T `true` and `skin` held in full there and took the ground out by the angle and the distance of the eye.
+
+Second form of the cure (scratch state x5, the one that is kept): `let = max(mix(1, uLet.x, inT) * (1 - keeps), 1e-6)` with `keeps = smoothstep(uKeep.x, uKeep.y, sine of the elevation of the camera of T over the point)`. Where the camera of T sees the ground from above (sine over 0.45) `true` and `skin` take nothing out, at any height, inside the frame of T and outside it; under 0.25 they hold as before. The values have their own key, `ground.keep` [0.25, 0.45] in `plates.json` (with `keepNote`); they equal `flat.sinElevation` today because the ground that keeps its relief is the ground that must not go out, but they are not read from it. Files: `relief.ts` (uniform `uKeep`, `GroundShare.keep`), `set.ts`, `assets.ts`, `plates.json`.
+
+Measured on the base be1de182 with `pat.ts` (the report's pattern number, reach 8 film frames):
+
+| rows | third named commit | x5 | where in x5 |
+|---|---|---|---|
+| rise 1540 + 1/2 to 1543 + 1/2 | 0.48 to 1.15 | 0.26 to 0.48 (4 rows over the limit: 0.484, 0.477, 0.472, 0.454 at 1542 to 1543 + 1/2) | left edge, pixel 0 to 132, 936 to 960 |
+| rise 1544 to 1546 + 1/2 | 1.06 to 1.14 | 0.48 to 0.65 (6 rows over) | the limb at the right, pixel 1564 to 1912, 364 to 440 |
+| rise 1547 to 1567 + 1/2 | 0.24 to 0.99 | 0.16 to 0.42 | |
+| rise 1568 to 1572 + 1/2 (third hump) | 0.39 to 0.61 | 0.39 to 0.61 (9 rows over) | right edge and limb |
+| dive 1316 to 1319 | | 0.21 to 0.38 | |
+| dive 1319 + 1/2 to 1323 + 1/2 | 0.78 at 1320 | 0.49 to 0.78 (9 rows over, most 0.777 at 1320) | the far band under the limb, pixel 844 to 1536, 244 to 380 |
+| dive 1324 to 1336 + 1/2 | | 0.11 to 0.445 | |
+
+- Rise: most 0.652 at 1546 where the commit reads 1.15; 19 rows over the limit in 1540 to 1572 + 1/2. Dive 1316 to 1336 + 1/2: most 0.777 at 1320, as in the commit, 9 rows over. The far band of the dive is not the release.
+- Texel view, the rule of G13, 27 frames (dive 1316 to 1342 every third, rise 1540 to 1572 every second): 0 of 27 over 0.02 soft, worst 1316 with 0.63 percent.
+- Seen (looks of 11:04, every frame 1540 to 1575 at one third size, crops at full size 1552 to 1564): the tower group keeps its relief and its shadow rays as an island to 1575 and goes with the whole ground by `ground.heights` [0.3, 0.9]; no hard arc, no fan. Not cured and seen: a blue white patch under the limb from 1548, a dark brown band along the limb at the right from 1547, a dark slab right of the pale zone 1555 to 1562 (it is in the plates: the preview of the plates without the ground shows it too), streaks in the ground at 1560 to 1564, the white cloud forms beyond the left border of the ground from 1544.
+- Layers view 1540 to 1552 (`txlist.ts --diag layers`): at 1540 the ground covers the body in the frame; its left border (left of the layer at the lower left) comes in from the left edge between 1542 and 1548; the far band along the limb is let go between 1544 and 1548; at 1552 the ground is an island. So the 0.48 at the left edge is the border of the ground coming into the frame with another picture beyond it (the plate outside the frame of T, which `tlay.py` leaves as it is), not a thing that moves on the ground.
+
+## MAIL 646 from the Builder (/root), 11:12 UTC, word for word
+
+MAIL 646 from the Builder (/root), 11:12 UTC. REPORT on your third named commit 8d8eba9eb74fe286fa236347479c5250217d88ae, and where it stands. No answer needed unless a line below is wrong.
+
+TAKEN. Your three folders are on main as of bdd47cf00077b5f5aea43b3d032d5ecf98c7d0c5 (pushed 11:09 UTC), file for file equal to the proof tree 1ca6f244 (36 files), and venus is off handover.ownPath in config/showcase.json as your commit has it. Merge that main before any further work; never rebase.
+
+MEASURED by the machines on the proof tree (main before the carry plus your three folders):
+- Engine drafts: 105 of 115 frames equal main's bytes. The 10 that differ all lie inside your dive and rise (1287, 1297, 1301, 1316, 1327, 1543, 1547, 1562, 1573, 1586). None elsewhere.
+- Judged finals 1185 and 1440: equal to the reference finals to the byte.
+- Measures: G5 pass. G13 pass, 0 of 495 frames. G17 pass, 1185 at 0.962 and 1440 at 0.936.
+- Handover report: pass on the dive and on the rise (side difference at T mean 0.035 of 255, flow gap mean 0.113 px a frame).
+- Gate on the take tree: build 0, 465 tests, G11 pass, G15 pass (352 and 1386 MB).
+- Smooth report, parts path, place and parity: GREEN.
+- Smooth report, part pictures, all 8 slices joined (the two .md files attached): RED.
+  Dive: the pattern of the picture changes in place by 0.47 at 1270, 0.83 at 1284 and 0.78 at 1320 against 0.45; 38 capture frames over it, the first at 1269 + 1/2.
+  Rise: pattern 1.14 at 1541 + 1/2, 1.15 at 1543 + 1/2 and 0.81 at 1575; 56 capture frames over it, the first at 1540 + 1/2. One pop of 1.25 at 1610 + 1/2 against 1.2 (3 capture frames over).
+- Part counts (job vq3-04): still out. Its warm frames for your piece go onto main's list when it is back, before the round is cut.
+
+WHAT HAPPENS NOW. This was your third named commit, so it goes into its round as it stands: round 41, Venus's first of three rounds for the second note, is cut from main with these red lines as severe issues beside the critics'. You will get the round's issues as one list when it closes.
+
+UNTIL THEN, keep working, on a branch that has main bdd47cf0 merged: the two pattern runs are the open cause (a picture that changes in place over 8 film frames, at 1270 to 1330 on the way down and 1540 to 1580 on the way up) and the pop at 1610. The panels attached show where on the frame: the changes panels of dive parts 1 to 3 and rise parts 1 to 3, the pops panel of rise part 4. A cure for these that you can prove by the same measure goes into your next named commit, which I take between rounds. Plan F stands: nothing in the dive or the rise comes in by the clock; say in the NAMED mail which motions read the time.
+
+Attached: venus-dive.md, venus-rise.md, venus-dive-p1of4-changes.png, venus-dive-p2of4-changes.png, venus-dive-p3of4-changes.png, venus-rise-p1of4-changes.png, venus-rise-p2of4-changes.png, venus-rise-p3of4-changes.png, venus-rise-p4of4-pops.png (kept in `/home/user/.perplexity/attachments/529edd2a49c84821912191a3d3c08766/`).
+
+What follows from it: the machines' numbers equal mine of the third commit (dive 0.83 at 1284, 0.78 at 1320; rise 1.15 at 1543 + 1/2, 0.81 at 1575; pop 1.25 at 1610 + 1/2), and they add 0.47 at 1270. Main bdd47cf0 is merged before any further work. The proof run of the near ground kept whole, started 11:07 on the old base, was stopped at 11:13 for that and runs again on the merged tree. A next named commit is allowed between rounds; until the list of round 41 comes, whole steps go to the branch without a NAMED mail.
+
+## Main bdd47cf0 merged (11:13 to 11:15)
+
+`git fetch --depth 1 origin main` gives a main without parents here, so `git merge` has no base. The base is known (be1de182, the main my branch held; the remote says bdd47cf0 is 19 commits ahead of it and 0 behind), so the merge was made three way with it: `git merge-tree --write-tree --merge-base=be1de182... HEAD FETCH_HEAD`, one conflict in this notebook (both sides hold the notes of 8d8eba9e, the branch 14 lines more; the branch's file kept), `git commit-tree` with the two parents, fast forward. Merge commit e3594096c45547f3db400e9f1e08e0b3be26b01c, pushed 11:15. Its tree is main bdd47cf0 plus those 14 lines of notes; the three Venus folders equal the branch before it. New from main outside my folders: 26 files, among them `src/director/film.ts` and `src/space/travel/path.ts` (the travel carries the speed and the bend of the end of the rise), `tools/smooth.ts`, `tools/img/smooth.py` (slices of a row; the measure itself is not changed), `tools/law.ts`, tests.
+
+## The far zone, what the plates hold there (11:06 to 11:20, no frame drawn)
+
+Tools of this step (scratch, not committed): `out/work/venus/place/fcam.ts` (the film's globe camera at given frames in the body fixed frame, the frame of `tcam.json`; at 1539 it prints the camera of `tcam.json` to the last digit), `/tmp/v/far/view.py` (the plates of a folder seen from that camera, unshaded, with the lines of equal sine of the elevation of the camera of T and the frame of T), `/tmp/v/far/mk.py` (`tlay.py make KIND film` with other values of `atT` into a scratch folder).
+
+- Geometry at the T of the rise (height 0.0209 radii, horizon 11.6 deg of arc away): sine 0.45 lies about 2.2 deg from the point under the camera, 0.2 at 4.8, 0.1 at 7.2, 0.05 at 9.1, 0.015 at 10.7. In the picture of T the ground between sine 0.1 and the horizon is a band about 27 pixels high at 1080 (1.5 deg of the field), the ground between 0.2 and 0.1 about 49 pixels. So the far zone of the plates (trust under 0.1 to 0.2: forms of the take, tones of T) is a ring 4 to 5 deg wide for which T holds a strip of some tens of pixel rows.
+- In the preview at 1550 the blue white patch lies between the sines 0.2 and 0.05, right of the middle, under the Sun: it is the bright far deck under the Sun in the picture of T, held in the plate by tone alone over the take's forms.
+- Tried without a draw: `trustSinElevation` [0.04, 0.08] in place of [0.1, 0.2] (scratch plates `/tmp/v/far/e1`). In the preview at 1546, 1550, 1556 the far zone is then the picture of T laid on the deck, a smooth pale sheet without the speckles, forms up to about 4 times as long as wide toward the horizon of T. Not drawn yet, so not judged.
+
+## Where the pattern runs lie, read from frames on disk (11:33 to 11:42, no frame drawn)
+
+The handover run of the proof chain left its 165 draft frames of the merged tree with the near ground kept whole. All of them were viewed on sheets of 16 (dive 1260 to 1349, rise 1530 to 1604). Scratch tools, not committed: `/tmp/v/offpat.py` (the functions `change`, `pattern` and `patterned` of `tools/img/smooth.py` on those frames, whole film frames, reach 8, with a mask by brightness in place of the body of the pose, so its number is not the report's), `/tmp/v/offcrop.py` (a frame, the frame 8 later carried back, the band picture of both and the pattern, about a point), `/tmp/v/offline.py` (grey values of both on a line).
+
+Dive, where the largest value lies and what the two frames hold there (grey values at quarter size):
+- 1274 to 1280, a ring all round the limb (0.27 to 0.56 by my mask). At the right limb of 1278, the night side, a line of 41 to 49 lies over 20 to 30; eight frames on there is none (16 to 25). It is the rim of the hold going out by `leave.heights`.
+- 1281 to 1287, the lit field at the upper left limb (0.61 at 1282; the machines' 0.83 at 1284 lies there). In 1284 the field reads 150 to 245 with its streaks; the same ground in 1292 reads 220 to 232, flat. The values do not keep their order (245 goes to 229, 150 to 225), so it is not the exposure alone: something lays an even bright tone over the forms there. Which layer is not known yet (the haze at the limb drawn at the rising gain, the limb glow, or both).
+- 1290 to 1296, the upper right limb (0.62 at 1292). Just inside the limb 1292 reads 190 to 214, 1300 reads 90 to 119: the glow of the limb going out by `dusk.limbHeights`.
+- 1297 to 1312 at most 0.39. 1313 on my mask takes in the sky, not usable.
+
+Rise:
+- 1568 to 1571 at the right limb (0.54 to 0.59): in 1570 the ground falls toward the limb (90 to 55), in 1578 it rises toward it (95 to 174). The glow of the limb coming in by `dusk.limbHeights`; the slope turns round, which the measure reads as the reverse pattern.
+- 1573 to 1580 (0.52 to 0.81, the machines' 0.81 at 1575): three places. The right limb as above. The lower middle of 1575 (towers of the plates, 27 to 56) against 1583 (other, weaker forms, 14 to 36). The upper left of 1576 (towers) against 1584 (smooth streaks of the globe's map). The last two are the plates and the wide ring giving way to the globe's own map by `show.heights`.
+- 1538 to 1547 on my mask takes in the sky, not usable; 1548 to 1567 at most 0.33.
+
+Seen on the sheets and not known before: 1284 to 1291 the lit field at the left limb goes to an even pale glare before it leaves the frame.
+
+## Proof chain of the near ground kept whole on main bdd47cf0 (11:16 to 12:15)
+
+Tree: merge e3594096 plus `ground.keep` [0.25, 0.45] (the near ground of the relief stays whole below those heights; `relief.ts`, `assets.ts`, `set.ts`, `plates.json`). Draft tier, this machine.
+
+- Build exit 0, `tsc --noEmit` exit 0. Tests: 48 files, 465 tests passed.
+- Handover report, exit 0: dive and rise each "side difference at T: pass", "flow gap at T: pass", "every frame: pass". All 165 frames viewed on sheets of 16.
+- `smooth --only pictures --kind rise`, exit 1: "rise: pop score 1.25 from frame 1610 + 1/2 to the next, limit 1.2 (3 frames over it, first 1610 + 1/2)" and "rise: the pattern of the picture changes in place by 0.81 from frame 1575 to 8 film frames later, limit 0.45 (35 frames over it, first 1542)". Rows over the limit: 1542 to 1546 + 1/2 (most 0.65 at 1546) and 1568 + 1/2 to 1580 + 1/2 (most 0.81 at 1575). Between them at most 0.42. The machines read 56 frames over on 8d8eba9e, the first hump 1.15 there.
+- `smooth --only pictures --kind dive`, exit 1: "dive: the pattern of the picture changes in place by 0.83 from frame 1284 to 8 film frames later, limit 0.45 (38 frames over it, first 1269 + 1/2)". Rows over the limit: 1269 + 1/2 to 1270 + 1/2 (0.45 to 0.47), 1277 + 1/2 to 1287 + 1/2 (most 0.83 at 1284, pixel 384, 340), 1291 to 1293 (most 0.50), 1319 + 1/2 to 1323 + 1/2 (most 0.78 at 1320). Largest level step 0.37 at 1316, largest pop 1.14 at 1319. The dive is as on 8d8eba9e: this step does not touch it.
+- `smooth --only path`: "smooth venus: green. out/work/smooth/venus.md".
+- Gate: "PASS G11  every asset has a row or a recipe", "PASS G15  at most 2 sets per frame; finished stops: venus/web 352 MB, venus/full 1386 MB".
+- Texel view by the rule of G13 on 28 frames (1296 to 1342 and 1540 to 1584): 0 of 28 over 0.02; worst 1316 with 0.63 percent, 1314 with 0.32, 1304 with 0.14. The first try of this step refused to start at 2.7 GB free disk; it ran after scratch files were removed.
+- Finals: 1185 sha256 8f4644325128c93f6cef870fbc0cdbea961773dceeb63bfe204dd56cbcc9f5b8, 1440 sha256 a1ec9a62ad3533837cf408559de2a217994ceb5341e0e3ce7eb6a40a84a38818, both equal to the kept ones.
+
+What it is: a whole step that takes the first hump of the rise from 1.15 to 0.65 and leaves every other red line where it was. Both moves stay red.
+
+A fact about the frames on disk, found while freeing space: a frame of the handover report and the capture frame of the same number in the smooth report are not the same picture (mean difference 7 of 255 at 1284, a shift of 0.85 by 0.68 pixels). The draft tier draws one sample in the middle of the shutter, and at capture rate 2 the shutter of a capture frame is half as long, so the sample lies an eighth of a film frame earlier. No jitter is in it.
