@@ -1,9 +1,49 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T15:25:20.156Z",
- "head": "5ee7c154fc9382d890f41a831388b9ea6b99ba74",
- "note": "ruling 3 study: what stays red with the plates alone and with the view never given up",
+ "pushed": "2026-11-24T15:42:02.024Z",
+ "head": "b76c6336b27bec47b4568c9bc3730082d73f61a8",
+ "note": "15:44 UTC: the measure against a rigid sequence (rows 3259 + 1/2 to 3262 + 1/2 and 3273 + 1/2 read red on a picture that cannot change), the rim off trial, the wide canvas beside the plates",
  "looks": [
+  {
+   "time": "2026-11-24T15:42:01.418Z",
+   "file": "20261124154201418-note-rm-a.jpg",
+   "source": "../work/ff/rm-a.jpg",
+   "kind": "note",
+   "label": "rise 3247, 3251, 3255, 3259 on the named bytes: dusk and dark aprons give way to the pale ring and the day",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T15:42:00.806Z",
+   "file": "20261124154200806-note-wide-view-vs-plates.jpg",
+   "source": "../work/ff/wide-view-vs-plates.jpg",
+   "kind": "note",
+   "label": "the wide canvas (left) and the plates through the air tables from the fit camera (right, plates at low size); yellow the approved frame",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T15:42:00.176Z",
+   "file": "20261124154200176-note-v7-vs-rm.jpg",
+   "source": "../work/ff/v7-vs-rm.jpg",
+   "kind": "note",
+   "label": "rise 3255 and 3259: top the named bytes, bottom the rim off (the canvas dusk fan ends in a straight line)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T15:41:59.501Z",
+   "file": "20261124154159501-note-pat-v7.jpg",
+   "source": "../work/ff/pat-v7.jpg",
+   "kind": "note",
+   "label": "rise 3251 to 3255 with the rim off: 0.96 to 1.26, the canvas edge shows at the right limb",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T15:41:58.823Z",
+   "file": "20261124154158823-note-pat-ideal-vs-Rm-6523.jpg",
+   "source": "../work/ff/pat-ideal-vs-Rm-6523.jpg",
+   "kind": "note",
+   "label": "rise 3261 + 1/2: top a rigid sequence (one picture carried by the sphere), bottom the film; the measure reads 0.70 and 0.69",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-24T15:25:19.480Z",
    "file": "20261124152519480-note-cmp2-fore.jpg",
@@ -173,52 +213,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "4f0c621e3acbf836"
-  },
-  {
-   "time": "2026-11-24T13:46:33.825Z",
-   "file": "20261124134633825-frame-bM-2895.jpg",
-   "source": "out/work/jupiter/final/bM-2895.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2895, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "4f0c621e3acbf836"
-  },
-  {
-   "time": "2026-11-24T13:46:04.927Z",
-   "file": "20261124134604927-note-k006560.jpg",
-   "source": "out/work/jupiter/frames/M1/k006560.png",
-   "kind": "note",
-   "label": "On the merge: draft frame 3280 of the rise at rate 2; its sha256 is the one of the same frame before the merge (ten of ten frames keep their bytes)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T13:46:03.604Z",
-   "file": "20261124134603604-note-jupiter-parity.jpg",
-   "source": "out/work/logs/n4/jupiter-parity.png",
-   "kind": "note",
-   "label": "On the merge of main 2bc36ce6 (the engine take): the parity sheet, green, the same numbers as before the merge",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T13:21:58.690Z",
-   "file": "20261124132158690-note-strip-ctl-b10.jpg",
-   "source": "../work/tab/strip-ctl-b10.jpg",
-   "kind": "note",
-   "label": "Rise 3273 to 3282: above the commit, below the tried table with the even fall (kept frames scaled, not rendered); not taken",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T13:21:57.996Z",
-   "file": "20261124132157996-note-bF-2997.jpg",
-   "source": "out/work/jupiter/final/bF-2997.png",
-   "kind": "note",
-   "label": "2997 at final on the third state: the first commit's bytes",
-   "stop": "jupiter"
   }
  ]
 }
