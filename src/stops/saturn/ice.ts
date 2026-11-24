@@ -1,10 +1,15 @@
 import * as THREE from 'three'
+import { bufferFrame } from '../../core/frame'
 import grains from './grains.json'
 import ice from './ice.json'
 
 const SPOKES = ice.spokes.at.length
 const SAND = ice.sand.layers.length
 export const GRAIN_LEVELS = grains.levels.name.length
+
+// The limits of the look that are written in pixels are angles: shares of the height of the frame, written as
+// pixels of the 16 by 9 master. The factor that makes them pixels of the frame that is drawn is the film's own
+// (src/core/frame.ts, bufferFrame), so a frame of any size shows the same grains at the same places.
 
 // The 32 bit mix that the shaders use (ringPcg in field.ts), for the numbers a grain has of its own.
 export function pcg(v: number): number {
@@ -212,14 +217,15 @@ export function iceField(): Ice {
   const grainLevel = levels.map((level, i) => new THREE.Vector4(l.counted[i]! > 0.5 ? level.depth : 0, level.ref, l.pixels[i]![0], l.pixels[i]![1]))
   const grainFit = new THREE.Vector4(grains.share, total, 0, 0)
   const set = (spinRadians: number, near: number, focal: number): void => {
+    const scale = bufferFrame()
     orbit.x = spinRadians / (2 * Math.PI)
     orbit.z = near
     // the sand has its strength in the hold and none near the sheet
     const far = 1 - near
     sandFit.w = far
     sandSpark.set(g.spark.dense * far, g.spark.thin * far, g.spark.from, g.spark.to)
-    g.layers.forEach((layer, i) => sand[i]!.set(layer.pixels, layer.dense * g.far * far, layer.thin * g.far * far, layer.sparks))
-    levels.forEach((level, i) => (grainLevel[i]!.y = level.ref * focal))
+    g.layers.forEach((layer, i) => sand[i]!.set(layer.pixels * scale, layer.dense * g.far * far, layer.thin * g.far * far, layer.sparks))
+    levels.forEach((level, i) => grainLevel[i]!.set(grainLevel[i]!.x, level.ref * focal, l.pixels[i]![0]! * scale, l.pixels[i]![1]! * scale))
     grainFit.z = near
   }
   set(0, 0, 1000)
@@ -243,7 +249,7 @@ export function iceField(): Ice {
     levels,
     // the turn of the orbit that keeps pace with the globe, in full circles since the middle of the hold; how
     // near the lens is to the sheet (0 in the hold, 1 in the skim): the sand shows far from it, the spokes
-    // and the grains near it; and the focal length of the view in pixels
+    // and the grains near it; the focal length of the view in pixels
     set,
   }
 }
