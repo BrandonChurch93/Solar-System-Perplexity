@@ -1,9 +1,25 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-24T22:01:53.543Z",
+ "pushed": "2026-11-24T22:29:38.524Z",
  "head": "767f8d1161e9c440327557a61d1589aba60bb183",
- "note": "Named 767f8d11: the range view and the pose record. 47 judged draft frames byte equal before and after, 616 tests green. Uranus's rise is left with clouds that come in in place.",
+ "note": "limb air option of src/bodies, scratch on Mars only, option off by default; 0.0005 to 0.001 takes the stair step and the dark line off the lit edge, 0.002 and more reads as a soft band",
  "looks": [
+  {
+   "time": "2026-11-24T22:29:37.947Z",
+   "file": "20261124222937947-note-limb-2325-film-1to1.jpg",
+   "source": "../m752/limb-2325-film-1to1.png",
+   "kind": "note",
+   "label": "Mars 2325 final, lit limb at full size: off, 0.0005, 0.001, 0.002, 0.004",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T22:29:37.196Z",
+   "file": "20261124222937196-note-limb-2325-x4.jpg",
+   "source": "../m752/limb-2325-x4.png",
+   "kind": "note",
+   "label": "Mars 2325 final, lit limb x4: limb air off, heights 0.0005 to 0.004 radii, approved hero (look only, nothing turned on)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T22:01:52.069Z",
    "file": "20261124220152069-note-look-ju-6476-6488.jpg",
@@ -51,22 +67,6 @@
    "kind": "note",
    "label": "Uranus 4400 old depth view",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T21:17:26.375Z",
-   "file": "20261124211726375-note-look-3261-depth.jpg",
-   "source": "../m741/look-3261-depth.png",
-   "kind": "note",
-   "label": "Jupiter 3261 old depth view, 8 bit grey, too coarse for a camera map",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T21:17:25.165Z",
-   "file": "20261124211725165-note-c4035-limb8.jpg",
-   "source": "../m710/c4035-limb8.png",
-   "kind": "note",
-   "label": "Saturn 4035 limb times 8",
-   "stop": "saturn"
   }
  ]
 }
