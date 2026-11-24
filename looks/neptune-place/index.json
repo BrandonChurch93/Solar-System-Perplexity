@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T09:21:53.701Z",
- "head": "87af1f5550bf73bbd02878c44f6abca7e0a4e587",
- "note": "09:22 m5: per octave pitch ends the ruled rings, mottled deck; eye still flat and too dark; path green on main 2008483c with ownPath word off",
+ "pushed": "2026-11-24T09:47:27.896Z",
+ "head": "01075e03b1ffce03e1b0c36fb0e16b904c42808f",
+ "note": "4860 n2: the storm's arms wind into the eye (was a flat dark ellipse); still wrong: arms too clean, hard dark shadow bits under the streamers; 41.9 s a draft frame",
  "looks": [
+  {
+   "time": "2026-11-24T09:47:27.319Z",
+   "file": "20261124094727319-note-storm-n2.jpg",
+   "source": "../../../../tmp/storm-n2.jpg",
+   "kind": "note",
+   "label": "4860 n2 storm at three times size over the approved; floor 28 61 107 against 37 71 110",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T09:47:26.718Z",
+   "file": "20261124094726718-note-q-n2.jpg",
+   "source": "../../../../tmp/q-n2.jpg",
+   "kind": "note",
+   "label": "4860 n2 (work tree, not committed) over the approved image, preview draft, 41.9 s a frame; G17 median 1.285 p25 0.764; storm with arms winding in",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T09:21:52.327Z",
    "file": "20261124092152327-note-z-m5.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/d-after.jpg",
    "kind": "note",
    "label": "4860 of 0b9017c0 at preview draft beside the approved image: 22.0 s a draft frame after the first (before 52.7 s), G17 median 1.308 p25 0.821 on the preview file, 1.002 and 0.790 at 16 by 9 draft",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T07:53:13.175Z",
-   "file": "20261124075313175-note-d-before.jpg",
-   "source": "../../../../tmp/d-before.jpg",
-   "kind": "note",
-   "label": "4860 of fd95089a beside the approved image, the before of the cost round: preview draft 52.7 s a frame after the first (72.0 s with compile), G17 median 1.308 p25 0.821",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T07:28:39.096Z",
-   "file": "20261124072839096-note-d-T27.jpg",
-   "source": "../../../../tmp/d-T27.jpg",
-   "kind": "note",
-   "label": "T27 preview draft 4860 (left) beside the approved image: eye size right, rings too even, ridge too smooth",
    "stop": "neptune"
   }
  ]
