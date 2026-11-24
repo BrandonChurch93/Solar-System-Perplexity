@@ -1,9 +1,25 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-24T03:27:26.001Z",
+ "pushed": "2026-11-24T03:52:49.150Z",
  "head": "b4a3c0818616e8767a64a61d783481d0dda48881",
- "note": "Venus step 3 try 3 (working tree, not committed): ground on the globe from 0.3 radii, dive 1304 to 1343",
+ "note": "step 3: ground in earlier (test), and a dropped try; tones of the ground against the plates still open",
  "looks": [
+  {
+   "time": "2026-11-24T03:52:48.478Z",
+   "file": "20261124035248478-note-g4-sheet.jpg",
+   "source": "../../../../tmp/v/g4-sheet.jpg",
+   "kind": "note",
+   "label": "tried and dropped: plates take their stored tones where the ground is near; gives a dark hole and a white patch on the globe 1300 to 1320",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T03:52:47.739Z",
+   "file": "20261124035247739-note-g5-sheet.jpg",
+   "source": "../../../../tmp/v/g5-sheet.jpg",
+   "kind": "note",
+   "label": "step 3 test: ground in by height 0.9 to 0.3 radii (1287 to 1300) instead of 0.3 to 0.15; the bright patch shows from 1296 as a small pale blob; tones still the ground's own",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T03:27:25.259Z",
    "file": "20261124032725259-note-g3-big1.jpg",
@@ -51,34 +67,6 @@
    "kind": "note",
    "label": "Sun's core from one read on both sides (working tree, not committed): crops of 1332 to 1347 and 1541 to 1552, draft. No coloured specks seen on these crops. 1335: a faint stepped line on the limb under the Sun, to be checked.",
    "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T02:57:26.189Z",
-   "file": "20261124025726189-frame-f01605.jpg",
-   "source": "out/work/venus/place/same/e4/f01605.png",
-   "kind": "frame",
-   "label": "venus.travel frame 1605, draft tier",
-   "stop": "venus",
-   "segment": "venus.travel",
-   "frame": 1605,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "3479eb0af72c0bd3"
-  },
-  {
-   "time": "2026-11-24T02:56:36.212Z",
-   "file": "20261124025636212-frame-f01545.jpg",
-   "source": "out/work/venus/place/same/e4/f01545.png",
-   "kind": "frame",
-   "label": "venus.rise frame 1545, draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "frame": 1545,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "3479eb0af72c0bd3"
   }
  ]
 }
