@@ -1,74 +1,81 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T02:57:27.603Z",
- "head": "000b43ae32bf88f9583af8a0e78897045c4a23e2",
- "note": "two corners a flank for the bells of the one move (Venus), merged main 3efc31d; next the stars lift by height",
+ "pushed": "2026-11-24T03:24:31.740Z",
+ "head": "c3337db0d6d1334c94aa5712b80ec089ec9d1873",
+ "note": "stars lift by height: before pictures of the five rises that change (mercury venus earth jupiter neptune), after pictures render next",
  "looks": [
   {
-   "time": "2026-11-24T02:57:26.980Z",
-   "file": "20261124025726980-note-venus-corners-curves.jpg",
-   "source": "../view/venus-corners-curves.png",
+   "time": "2026-11-24T03:24:31.160Z",
+   "file": "20261124032431160-note-b-neptune.jpg",
+   "source": "../../../../tmp/lift/b-neptune.png",
    "kind": "note",
-   "label": "Venus rise forced onto the one move: rate, turn and picture speed over their means and their steps, one corner a flank against two (engine measure, scratch)",
+   "label": "stars lift by height, BEFORE (head c3337db0, lift by the clock): neptune rise, draft tier, every sixth frame and both sides of T",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T03:24:30.606Z",
+   "file": "20261124032430606-note-b-jupiter.jpg",
+   "source": "../../../../tmp/lift/b-jupiter.png",
+   "kind": "note",
+   "label": "stars lift by height, BEFORE (head c3337db0, lift by the clock): jupiter rise, draft tier, every sixth frame and both sides of T",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T03:24:30.036Z",
+   "file": "20261124032430036-note-b-earth.jpg",
+   "source": "../../../../tmp/lift/b-earth.png",
+   "kind": "note",
+   "label": "stars lift by height, BEFORE (head c3337db0, lift by the clock): earth rise, draft tier, every sixth frame and both sides of T",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T03:24:29.454Z",
+   "file": "20261124032429454-note-b-venus.jpg",
+   "source": "../../../../tmp/lift/b-venus.png",
+   "kind": "note",
+   "label": "stars lift by height, BEFORE (head c3337db0, lift by the clock): venus rise, draft tier, every sixth frame and both sides of T",
    "stop": "venus"
   },
   {
-   "time": "2026-11-24T02:18:42.294Z",
-   "file": "20261124021842294-note-carry-rise-fore.jpg",
-   "source": "../view/carry-rise-fore.png",
+   "time": "2026-11-24T03:24:28.777Z",
+   "file": "20261124032428777-note-b-mercury.jpg",
+   "source": "../../../../tmp/lift/b-mercury.png",
    "kind": "note",
-   "label": "Mars rise start with the carry, crops of the foreground 2669 to 2674 at full size, draft tier"
+   "label": "stars lift by height, BEFORE (head c3337db0, lift by the clock): mercury rise, draft tier, every sixth frame and both sides of T",
+   "stop": "mercury"
   },
   {
-   "time": "2026-11-24T01:55:44.597Z",
-   "file": "20261124015544597-compare-carry-dive-dive-sides.jpg",
-   "source": "out/work/handover/carry-dive-dive-sides.png",
+   "time": "2026-11-24T03:21:57.924Z",
+   "file": "20261124032157924-compare-liftbefore-neptune-rise-sides.jpg",
+   "source": "out/work/handover/liftbefore-neptune-rise-sides.png",
    "kind": "compare",
-   "label": "mars dive, both sides at T (frame 2475) and their difference times 8",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2475,
+   "label": "neptune rise, both sides at T (frame 4956) and their difference times 8",
+   "stop": "neptune",
+   "segment": "neptune.rise",
+   "frame": 4956,
    "tier": "draft"
   },
   {
-   "time": "2026-11-24T01:54:47.908Z",
-   "file": "20261124015447908-compare-carry-rise-rise-sides.jpg",
-   "source": "out/work/handover/carry-rise-rise-sides.png",
+   "time": "2026-11-24T03:21:13.891Z",
+   "file": "20261124032113891-compare-liftbefore-jupiter-rise-sides.jpg",
+   "source": "out/work/handover/liftbefore-jupiter-rise-sides.png",
    "kind": "compare",
-   "label": "mars rise, both sides at T (frame 2687) and their difference times 8",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "frame": 2687,
+   "label": "jupiter rise, both sides at T (frame 3270) and their difference times 8",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3270,
    "tier": "draft"
   },
   {
-   "time": "2026-11-24T01:54:37.872Z",
-   "file": "20261124015437872-note-carry-rise.jpg",
-   "source": "../view/carry-rise.png",
-   "kind": "note",
-   "label": "carry by the share (power 2), Mars surface view into the rise: 2668 to 2690, draft"
-  },
-  {
-   "time": "2026-11-24T01:54:36.694Z",
-   "file": "20261124015436694-note-carry-dive.jpg",
-   "source": "../view/carry-dive.png",
-   "kind": "note",
-   "label": "carry by the share (power 2), Mars dive into the surface view: 2486 to 2490 and 2480, draft"
-  },
-  {
-   "time": "2026-11-24T01:35:07.863Z",
-   "file": "20261124013507863-note-sheet-oldnew.jpg",
-   "source": "../../../../tmp/law/sheet-oldnew.png",
-   "kind": "note",
-   "label": "Mars rise, drafts 2670 2707 2744 before the law (top) and with it (bottom), commit 2658ca7"
-  },
-  {
-   "time": "2026-11-24T01:13:41.053Z",
-   "file": "20261124011341053-note-law-mars-rise-draft-across.jpg",
-   "source": "out/work/handover/law-mars-rise-draft-across.png",
-   "kind": "note",
-   "label": "Mars rise on the new law, across T 2687, draft: the close sheet's border enters from T+1 (place picture, plan F's to cure)",
-   "stop": "mars"
+   "time": "2026-11-24T03:19:22.899Z",
+   "file": "20261124031922899-compare-liftbefore-earth-rise-sides.jpg",
+   "source": "out/work/handover/liftbefore-earth-rise-sides.png",
+   "kind": "compare",
+   "label": "earth rise, both sides at T (frame 2100) and their difference times 8",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2100,
+   "tier": "draft"
   }
  ]
 }
