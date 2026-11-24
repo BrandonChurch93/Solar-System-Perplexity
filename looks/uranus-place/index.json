@@ -1,9 +1,117 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-24T17:37:22.607Z",
+ "pushed": "2026-11-24T18:03:22.301Z",
  "head": "7ad5778f4a2cc4eac5f21d13ff3d1acae84ab1cd",
- "note": "7ad5778f on main 73c2117e: tops proved, storm still comes in 4116 to 4124 and goes out 4437 to 4442 (named red, next step)",
+ "note": "On main 73c2117e, work in hand after 7ad5778f: the storm stands on the globe at every distance, nothing comes in at 4116 or goes out at 4437; judged 4035 and 4436 change on purpose at the storm",
  "looks": [
+  {
+   "time": "2026-11-24T18:03:21.702Z",
+   "file": "20261124180321702-note-s3-sheet.jpg",
+   "source": "../../../../tmp/tf/s3-sheet.jpg",
+   "kind": "note",
+   "label": "Drafts on main 73c2117e with the storm on the globe at every distance: arrival 3950 and 3960, dive 4112 to 4126, rise 4440 to 4454, leaving 4460 to 4495",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T18:03:21.112Z",
+   "file": "20261124180321112-note-s2-4436-three.jpg",
+   "source": "../../../../tmp/tf/s2-4436-three.jpg",
+   "kind": "note",
+   "label": "Judged 4436 final on main 73c2117e: plain main, 7ad5778f, and with the storm on the globe at every distance (whole strength at 4436 in place of 0.7)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T18:03:20.524Z",
+   "file": "20261124180320524-note-s2-4035-three.jpg",
+   "source": "../../../../tmp/tf/s2-4035-three.jpg",
+   "kind": "note",
+   "label": "Judged 4035 final on main 73c2117e: approved hero, before (plain main bytes), after with the storm standing on the globe at every distance (not committed yet)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T18:02:40.104Z",
+   "file": "20261124180240104-frame-d4495.jpg",
+   "source": "out/work/u/s2/d4495.png",
+   "kind": "frame",
+   "label": "uranus.travel frame 4495, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.travel",
+   "frame": 4495,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
+  {
+   "time": "2026-11-24T18:00:31.294Z",
+   "file": "20261124180031294-frame-d4454.jpg",
+   "source": "out/work/u/s2/d4454.png",
+   "kind": "frame",
+   "label": "uranus.rise frame 4454, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4454,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
+  {
+   "time": "2026-11-24T17:59:01.973Z",
+   "file": "20261124175901973-frame-d4126.jpg",
+   "source": "out/work/u/s2/d4126.png",
+   "kind": "frame",
+   "label": "uranus.dive frame 4126, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4126,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
+  {
+   "time": "2026-11-24T17:57:36.078Z",
+   "file": "20261124175736078-frame-d3960.jpg",
+   "source": "out/work/u/s2/d3960.png",
+   "kind": "frame",
+   "label": "uranus.hold frame 3960, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 3960,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
+  {
+   "time": "2026-11-24T17:57:07.002Z",
+   "file": "20261124175707002-frame-d3950.jpg",
+   "source": "out/work/u/s2/d3950.png",
+   "kind": "frame",
+   "label": "saturn.travel frame 3950, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.travel",
+   "frame": 3950,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
+  {
+   "time": "2026-11-24T17:52:03.891Z",
+   "file": "20261124175203891-frame-f4290.jpg",
+   "source": "out/work/u/s2/f4290.png",
+   "kind": "frame",
+   "label": "uranus.terrain frame 4290, final tier",
+   "stop": "uranus",
+   "segment": "uranus.terrain",
+   "frame": 4290,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
   {
    "time": "2026-11-24T17:37:21.996Z",
    "file": "20261124173721996-note-hold3.jpg",
@@ -207,108 +315,6 @@
    "first": 4174,
    "last": 4185,
    "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T16:51:53.645Z",
-   "file": "20261124165153645-sheet-uranus-dive-draft-across.jpg",
-   "source": "out/work/handover/uranus-dive-draft-across.png",
-   "kind": "sheet",
-   "label": "uranus dive, every frame 4180 to 4191 (across T, frame 4186), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "first": 4180,
-   "last": 4191,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T16:51:51.930Z",
-   "file": "20261124165151930-compare-uranus-dive-step-in-place.jpg",
-   "source": "out/work/handover/uranus-dive-step-in-place.png",
-   "kind": "compare",
-   "label": "uranus dive, the largest step of the level in place (2.77): frame 4173, frame 4174, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4174
-  },
-  {
-   "time": "2026-11-24T16:39:09.248Z",
-   "file": "20261124163909248-frame-d4454.jpg",
-   "source": "out/work/u/k4/d4454.png",
-   "kind": "frame",
-   "label": "uranus.rise frame 4454, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4454,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
-  },
-  {
-   "time": "2026-11-24T16:38:07.352Z",
-   "file": "20261124163807352-frame-d4126.jpg",
-   "source": "out/work/u/k4/d4126.png",
-   "kind": "frame",
-   "label": "uranus.dive frame 4126, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4126,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
-  },
-  {
-   "time": "2026-11-24T16:37:02.853Z",
-   "file": "20261124163702853-note-4290-three.jpg",
-   "source": "../../../../tmp/tf/4290-three.jpg",
-   "kind": "note",
-   "label": "4290: approved, third named, this build on main 4752aa1e (bytes equal to plain main)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T16:37:02.051Z",
-   "file": "20261124163702051-note-jc4436.jpg",
-   "source": "../../../../tmp/tf/jc4436.jpg",
-   "kind": "note",
-   "label": "judged 4436 final on main 4752aa1e: top plain main, bottom the tops as a light of the ground (b238e1ca)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T16:37:01.262Z",
-   "file": "20261124163701262-note-jc4137.jpg",
-   "source": "../../../../tmp/tf/jc4137.jpg",
-   "kind": "note",
-   "label": "judged 4137 final on main 4752aa1e: top plain main, bottom the tops as a light of the ground (b238e1ca, not pushed yet)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T16:24:44.877Z",
-   "file": "20261124162444877-frame-main-f4290.jpg",
-   "source": "out/work/u/k4/main-f4290.png",
-   "kind": "frame",
-   "label": "uranus.terrain frame 4290, final tier",
-   "stop": "uranus",
-   "segment": "uranus.terrain",
-   "frame": 4290,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
-  },
-  {
-   "time": "2026-11-24T16:22:54.011Z",
-   "file": "20261124162254011-frame-main-f4035.jpg",
-   "source": "out/work/u/k4/main-f4035.png",
-   "kind": "frame",
-   "label": "uranus.hold frame 4035, final tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
   }
  ]
 }
