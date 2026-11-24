@@ -459,7 +459,7 @@ void main() {
     vec4 by = uKnotRay[n];
     vec3 axisAt = spinY(uKnotAxis[n].xyz, -uSpin);
     float sum = 0.0;
-    for (int i = 0; i < steps; i++) {
+    for (int i = 0; i < (halfK > 0.0 ? steps : 0); i++) {
       vec3 q = ro + rd * (tk - halfK + (float(i) + offset) * dt);
       vec3 from = q - knotAt;
       float dist = length(from);
