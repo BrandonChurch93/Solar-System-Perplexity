@@ -1,9 +1,25 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-23T23:59:02.038Z",
- "head": "632d744175eea966ca502244f425afeafe2e8096",
- "note": "heights v2 (canyon carried west with wander and gullies, far fan) and colour laid at true height with the canyon painted by code; faults seen: canyon reads as a black strait, curtain walls at the seen border, straight lines of the seen rectangle, light band with a straight edge at the top of 2427",
+ "pushed": "2026-11-24T00:15:25.522Z",
+ "head": "f95c36066d14cca26db2ae192f3c036da4c683a6",
+ "note": "heights v3 on f95c3606: walls are slopes (largest step 2.00 texel widths at every level); stills on plan E's curve; still wrong: black strait, thin dark line on the straight north edge of the seen ground",
  "looks": [
+  {
+   "time": "2026-11-24T00:15:24.953Z",
+   "file": "20261124001524953-note-e1-sheet.jpg",
+   "source": "out/work/place/see/e1-sheet.jpg",
+   "kind": "note",
+   "label": "tool stills on plan E's curve (6d260fb), place picture off, heights v3: dive 2439 2452 2461 2471 2475 (heights of the old 2427 to 2454) and rise 2713 2703 2697 2690 2688; country alone and with the close view over it. The levels beyond 8.5 degrees are drawn unlit by this tool",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T00:15:24.340Z",
+   "file": "20261124001524340-note-c5-shade.jpg",
+   "source": "out/work/place/country/c5-shade.jpg",
+   "kind": "note",
+   "label": "height pyramid v3 (commit f95c3606): every slope held under 2.0, five levels shaded by the film Sun, seen ground outlined",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-23T23:59:01.447Z",
    "file": "20261123235901447-note-v1-sheet.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/place/country/paint-3.8.jpg",
    "kind": "note",
    "label": "plate 3.8 deg before and after the canyon colour painted by code from the measured table (heights v2)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T23:16:31.001Z",
-   "file": "20261123231631001-note-c3-shade.jpg",
-   "source": "out/work/place/country/c3-shade.jpg",
-   "kind": "note",
-   "label": "heights of the country, second run, five levels as shaded relief: the carried on canyon has wandering rims, the far ground of the fan takes the relief of the plate (no flat fan at 8.5 and 3.8); still wrong: smooth canyon walls, straight edge of the seen ground at 1.6 and 0.7",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T22:53:33.443Z",
-   "file": "20261123225333443-note-t2442.jpg",
-   "source": "out/work/place/see/t2442.png",
-   "kind": "note",
-   "label": "tool still, frame 2442 old curve: the height pyramid drawn as real ground through the film camera, colour still the old flat plates",
    "stop": "mars"
   }
  ]
