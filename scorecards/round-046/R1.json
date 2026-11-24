@@ -1,0 +1,63 @@
+{
+ "critic": "R1",
+ "score": 6,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "pair-04-b.png",
+   "where": "panel F, upper right of the storm-eye crop",
+   "what": "the bright rim has collapsed: a patch at 163 lum in the approved crop is 115 here, and the whole upper-right third of the crop sits about 26 lum dark",
+   "fix": "raise that rim back to the approved highlight level and restore its warmth"
+  },
+  {
+   "severity": "major",
+   "file": "pair-04-b.png",
+   "where": "panel D sunlit ridges, and the lit edges in panel I",
+   "what": "ridge highlights in the dark cloud field are 20 to 30 lum too dark and have gone gray",
+   "fix": "restore those ridge highlights and their saturation; do not lift the already-matched shadow floor"
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "upper-center cloud deck",
+   "what": "the sunlit deck is about 10 lum too dark and the highlights are duller and less warm",
+   "fix": "raise that deck and warm the highlights back to the approved frame"
+  },
+  {
+   "severity": "major",
+   "file": "pair-04-b.png",
+   "where": "panel H, planetary horizon along the bottom of the crop",
+   "what": "the horizon and cloud edge are 12 to 16 lum too dark; the starfield above them already matches",
+   "fix": "lift only the horizon glow and the cloud edge, and leave the stars"
+  },
+  {
+   "severity": "major",
+   "file": "pair-04-b.png",
+   "where": "panel G lower bands and the shadow side of panel B",
+   "what": "the troughs are opened up (darks about 8 to 11 lum too bright) while the nearby highlights are pushed down",
+   "fix": "drop the shadow floor and open the highlights so the contrast matches the approved crops"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "panels A, E, and F, fine cloud detail",
+   "what": "edge energy is about 15 to 30 percent higher than the approved crops, so the swirls look harsher",
+   "fix": "soften the microcontrast back to the approved crops; do not add texture"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "panel B, haze beside the sunlit limb",
+   "what": "the haze and the darker side of the limb crop are about 3 to 5 lum too bright",
+   "fix": "lower that haze to the approved falloff"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "Io and its shadow",
+   "what": "Io sits about 2 lum dark and the shadow edge is slightly harder than the approved frame",
+   "fix": "lift Io slightly and soften the penumbra"
+  }
+ ]
+}

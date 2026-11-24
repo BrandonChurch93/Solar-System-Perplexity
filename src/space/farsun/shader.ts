@@ -86,6 +86,8 @@ uniform vec4 uFringeShape;
 uniform vec3 uFringeColour;
 uniform vec4 uFringeLobe[${MAX_LOBES}];
 uniform vec4 uFringeLobeBy[${MAX_LOBES}];
+uniform int uStrandLobe[${MAX_LOBES}];
+uniform int uStrandLobes;
 uniform vec3 uFringeFan;
 uniform vec3 uFringeCurl;
 uniform float uLoopGain[${MAX_LOOPS}];
@@ -382,11 +384,15 @@ void main() {
         float here = exp(-(1.0 - dot(sd, lobe.xyz)) * lobe.w);
         more += by.x * here;
         high += by.y * here;
+        knot += uFringeKnot[k].x * exp(-(1.0 - dot(sd, lobe.xyz)) * uFringeKnot[k].y - up / max(uFringeKnot[k].z, 1e-3));
+      }
+      for (int k = 0; k < uStrandLobes; k++) {
+        vec4 lobe = uFringeLobe[uStrandLobe[k]];
+        vec4 by = uFringeLobeBy[uStrandLobe[k]];
         vec3 foot = normalize(wisp - (wisp - lobe.xyz) * min(up * uFringeFan.x, 0.8));
         float strand = pow(vnoise(foot * uFringeFan.y), uFringeFan.z) + 0.5 * pow(vnoise(foot * (uFringeFan.y * 2.3) + 2.0), uFringeFan.z);
         float reach = by.z * (0.35 + 1.3 * vnoise(foot * (uFringeFan.y * 0.31) + 11.0));
         strands += by.w * exp(-(1.0 - dot(foot, lobe.xyz)) * lobe.w) * strand * exp(-up / max(reach, 1e-3));
-        knot += uFringeKnot[k].x * exp(-(1.0 - dot(sd, lobe.xyz)) * uFringeKnot[k].y - up / max(uFringeKnot[k].z, 1e-3));
       }
       float tall = mix(uFringeShape.x, uFringeShape.y, pow(vnoise(sd * 6.0 + 5.0), 2.0)) * high;
       vec3 bent = sd + (vec3(vnoise(sd * 9.0 + 1.0), vnoise(sd * 9.0 + 4.0), vnoise(sd * 9.0 + 7.0)) - 0.5) * (up * uFringeShape.w);
@@ -407,7 +413,7 @@ void main() {
     float offset = fract(sin(dot(cell, vec3(12.9898, 78.233, 37.719))) * 43758.5453);
     vec4 by = uKnotRay[n];
     float sum = 0.0;
-    for (int i = 0; i < steps; i++) {
+    for (int i = 0; i < (halfK > 0.0 ? steps : 0); i++) {
       vec3 q = ro + rd * (tk - halfK + (float(i) + offset) * dt);
       vec3 from = q - knotAt;
       float dist = length(from);

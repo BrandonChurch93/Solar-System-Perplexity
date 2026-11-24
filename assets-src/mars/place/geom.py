@@ -61,6 +61,60 @@ def load(path='out/work/place/geometry.json'):
         return json.load(f)
 
 
+PLATES = 'assets-src/mars/place/plates.json'
+
+
+def heading_bearing(G=None):
+    """The bearing of the plan's heading at the spot, degrees clockwise from north (plan.ts dive.headingDeg through
+    geometry.json): the one number by which the place stands on the globe."""
+    G = G or load()
+    _, east, north = patch_frame()
+    h = np.asarray(G['headingBody'], np.float64)
+    return float(np.degrees(np.arctan2(h @ east, h @ north)) % 360)
+
+
+def turn_deg(C=None, G=None):
+    """How far the place is turned (clockwise, about the spot) against the bearing its lines and takes were made for
+    (plates.json country.frame.bearingDeg)."""
+    C = C or json.load(open(PLATES))['country']
+    return (heading_bearing(G) - C['frame']['bearingDeg'] + 180) % 360 - 180
+
+
+def turned(points, turn):
+    """Points (degrees east, north of the spot) turned clockwise about the spot by `turn` degrees."""
+    a = np.radians(turn)
+    c, s = np.cos(a), np.sin(a)
+    return [[float(x * c + y * s), float(-x * s + y * c)] for x, y in points]
+
+
+def canyon_lines(C, G=None):
+    """The lines of the carried on canyon in true degrees east and north of the spot: `axis` of plates.json is given
+    for the frame bearing and turns with the place; `axisMap` is given on the globe's map and is hung on as it is.
+    Returned: (behind, ahead) point lists."""
+    K = C['canyon']
+    t = turn_deg(C, G)
+    behind = turned(K['axis'], t) + [list(p) for p in K.get('axisMap', [])]
+    ahead = None
+    if 'east' in K:
+        ahead = turned(K['east']['axis'], t) + [list(p) for p in K['east'].get('axisMap', [])]
+    return behind, ahead
+
+
+def plate_sun_bearing(C, G=None):
+    """Where the light painted in the turned takes comes from (country.sunBearingDeg is given for the frame bearing)."""
+    return (C['sunBearingDeg'] + turn_deg(C, G)) % 360
+
+
+def scene_sun(name='surface', G=None):
+    """The scene's Sun at the spot as (east, north, up), unit: the globe's own Sun at the named moment of geometry.json
+    (hold, dive, surface, rise)."""
+    G = G or load()
+    n, east, north = patch_frame()
+    b = np.asarray([s for s in G['sun'] if s['name'] == name][0]['body'], np.float64)
+    v = np.array([b @ east, b @ north, b @ n])
+    return v / np.linalg.norm(v)
+
+
 class Camera:
     def __init__(self, pose, width=1920, height=1080):
         self.p = np.array(pose['position'], dtype=np.float64)

@@ -18,6 +18,11 @@
     0.9397181268365832,
     0.26991903643178455
   ],
+  "lit": {
+    "note": "The baked lit side (phobos-lit.jpg, the hero's own pixels) is shown in full while the eye stands within fromDeg of the eye of the hold's middle, as seen from the moon in the moon's own frame, and is gone at toDeg, where the moon's own light draws it. The hold reaches 10.3 degrees at its last frame (npx tsx assets-src/mars/phobos/angle.ts), so the hold keeps the baked side in full.",
+    "fromDeg": 12,
+    "toDeg": 24
+  },
   "stickney": {
     "lon": 38.2324,
     "lat": -11.5137
