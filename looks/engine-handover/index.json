@@ -1,74 +1,65 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T19:27:08.448Z",
- "head": "7da2c8a3736f7ff81a866b7aa4fd4b6fa16a8bff",
- "note": "the cure of the pattern measure read on the rig (150 cases) and on real frames of mars and saturn; mars third: a second exchange in the dive at 2437 to 2441; uranus read next",
+ "pushed": "2026-11-24T19:50:13.792Z",
+ "head": "3801689a216bb9d57aaf031969084ce9a67f6824",
+ "note": "reading the red pattern lines of the rises on real frames three ways (main, the cure, the camera's own map); jupiter's far limb 3242 to 3257 at full size; nothing renders",
  "looks": [
   {
-   "time": "2026-11-24T19:27:07.809Z",
-   "file": "20261124192707809-note-way2-mars3-rise-2719.jpg",
-   "source": "out/work/cure/way2-mars3-rise-2719.jpg",
+   "time": "2026-11-24T19:50:13.156Z",
+   "file": "20261124195013156-note-way2-mars3-dive-2451.jpg",
+   "source": "out/work/cure/way2-mars3-dive-2451.jpg",
    "kind": "note",
-   "label": "the cure on real frames, mars rise pair 2719 and 2727: main 0.601 at the dust swirl, the cure 0.192",
+   "label": "the cure on real frames, mars dive pair 2451 and 2459: where its way lies off the camera's map",
    "stop": "mars"
   },
   {
-   "time": "2026-11-24T19:27:07.224Z",
-   "file": "20261124192707224-note-way-mars3-2447.jpg",
-   "source": "out/work/cure/way-mars3-2447.jpg",
+   "time": "2026-11-24T19:50:12.416Z",
+   "file": "20261124195012416-note-rise-2703-crop.jpg",
+   "source": "out/work/inplace/mars3/rise-2703-crop.jpg",
    "kind": "note",
-   "label": "the cure on real frames, mars dive pair 2447 and 2455: it reads 0.791 at the top right where its way is off the camera's map by 20 quarter px and more",
-   "stop": "mars"
+   "label": "mars third rise 2703 to 2714 at the small canyon, drafts: the dune plain dissolves into the relief of the globe over 2707 to 2711"
   },
   {
-   "time": "2026-11-24T19:27:06.655Z",
-   "file": "20261124192706655-note-mars3-dive-2401.jpg",
-   "source": "out/work/cure/mars3-dive-2401.jpg",
+   "time": "2026-11-24T19:50:11.802Z",
+   "file": "20261124195011802-note-ju3-rise-3254.jpg",
+   "source": "out/work/cure/ju3-rise-3254.jpg",
    "kind": "note",
-   "label": "the cure on real frames, mars dive pair 2401 and 2409: its reading from the nearer end judges only the moon in front of the disc, 1.069 on 5 percent of the frame",
-   "stop": "mars"
+   "label": "the cure on real frames, jupiter rise pair 3254 and 3262: its reading from the nearer end on a strip along the far limb, 3 percent of the frame"
   },
   {
-   "time": "2026-11-24T19:27:06.063Z",
-   "file": "20261124192706063-note-way-mars3-2435.jpg",
-   "source": "out/work/cure/way-mars3-2435.jpg",
+   "time": "2026-11-24T19:50:11.201Z",
+   "file": "20261124195011201-note-way2-ju3-rise-3249.jpg",
+   "source": "out/work/cure/way2-ju3-rise-3249.jpg",
    "kind": "note",
-   "label": "the cure of the pattern measure on real frames, mars dive pair 2435 and 2443: the nearer frame, the farther carried by the cure and by the camera's own map, the pattern change of each, and how far the way of the cure lies off the camera",
-   "stop": "mars"
+   "label": "the pattern measure on real frames, jupiter rise pair 3249 and 3257: main 0.585, the cure 0.548, the camera's map 0.747, all at the far limb and the lower right"
   },
   {
-   "time": "2026-11-24T19:27:05.465Z",
-   "file": "20261124192705465-note-rise-2697.jpg",
-   "source": "out/work/inplace/mars3/rise-2697.jpg",
+   "time": "2026-11-24T19:50:10.300Z",
+   "file": "20261124195010300-note-way2-ju3-rise-3288.jpg",
+   "source": "out/work/cure/way2-ju3-rise-3288.jpg",
    "kind": "note",
-   "label": "mars third rise 2697 to 2708, drafts: the far relief comes back over the plain from 2703"
+   "label": "the pattern measure on real frames, jupiter rise pair 3288 and 3296: the camera's own map reads 1.385 at the moon crossing the disc, the cure follows the moon and reads 0.222"
   },
   {
-   "time": "2026-11-24T19:27:04.681Z",
-   "file": "20261124192704681-note-dive-2433.jpg",
-   "source": "out/work/inplace/mars3/dive-2433.jpg",
+   "time": "2026-11-24T19:50:09.577Z",
+   "file": "20261124195009577-note-way2-ju3-rise-3261.jpg",
+   "source": "out/work/cure/way2-ju3-rise-3261.jpg",
    "kind": "note",
-   "label": "mars third dive 2433 to 2444, drafts: the relief around the canyon dissolves into the plain over 2437 to 2441"
+   "label": "the pattern measure on real frames, jupiter rise pair 3261 and 3269: main 0.686 where its carried picture is smeared, the cure 0.233, the camera's own map 0.242"
   },
   {
-   "time": "2026-11-24T19:24:51.179Z",
-   "file": "20261124192451179-compare-uranus-rise-step-in-place.jpg",
-   "source": "out/work/handover/uranus-rise-step-in-place.png",
-   "kind": "compare",
-   "label": "uranus rise, the largest step of the level in place (1.25): frame 4402, frame 4403, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4403
+   "time": "2026-11-24T19:50:08.898Z",
+   "file": "20261124195008898-note-ju3-limb-b.jpg",
+   "source": "out/work/cure/ju3-limb-b.jpg",
+   "kind": "note",
+   "label": "jupiter third rise, the far limb at full size, drafts 3250 to 3257, consecutive: a violet second limb comes in from 3250, a pale cloud deck from 3253"
   },
   {
-   "time": "2026-11-24T19:13:55.045Z",
-   "file": "20261124191355045-compare-uranus-dive-step-in-place.jpg",
-   "source": "out/work/handover/uranus-dive-step-in-place.png",
-   "kind": "compare",
-   "label": "uranus dive, the largest step of the level in place (2.85): frame 4173, frame 4174, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4174
+   "time": "2026-11-24T19:50:08.235Z",
+   "file": "20261124195008235-note-ju3-limb-a.jpg",
+   "source": "out/work/cure/ju3-limb-a.jpg",
+   "kind": "note",
+   "label": "jupiter third rise, the far limb at full size, drafts 3242 to 3249, consecutive: one blue limb, dark ground"
   }
  ]
 }
