@@ -1,71 +1,71 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T21:33:16.199Z",
- "head": "9feabec0ea981bbedebf558a968d4a024ed7dea6",
- "note": "round 2 state B: one canyon scene through T, rise ends north up, later stops hash equal; border of the close ground still in frame at 2683 to 2686",
+ "pushed": "2026-11-24T22:09:05.743Z",
+ "head": "7253f5fd7c980a2736f425d68448070c5bb24c7f",
+ "note": "7253f5fd named commit: every frame about both T, final 2726, border taken apart, texels",
  "looks": [
   {
-   "time": "2026-11-24T21:33:15.567Z",
-   "file": "20261124213315567-note-r2-dive.jpg",
-   "source": "out/work/place/see/r2-dive.jpg",
+   "time": "2026-11-24T22:09:05.092Z",
+   "file": "20261124220905092-note-t51.jpg",
+   "source": "out/work/place/see/t51.jpg",
    "kind": "note",
-   "label": "Dive draft one sample 2427 to 2440, the strokes of the lower right are in the ground itself",
+   "label": "texel pictures 2447, 2470, 2687, 2704, 2720",
    "stop": "mars"
   },
   {
-   "time": "2026-11-24T21:33:14.994Z",
-   "file": "20261124213314994-note-r2-rise3.jpg",
-   "source": "out/work/place/see/r2-rise3.jpg",
+   "time": "2026-11-24T22:09:04.476Z",
+   "file": "20261124220904476-note-bd-R.jpg",
+   "source": "out/work/place/see/bd-R.jpg",
    "kind": "note",
-   "label": "Rise end and travel draft 2732 to 2810, planet low with the bottom cut",
+   "label": "close set alone at 2684, 2686, 2689: its east border",
    "stop": "mars"
   },
   {
-   "time": "2026-11-24T21:33:14.426Z",
-   "file": "20261124213314426-note-r2-rise2.jpg",
-   "source": "out/work/place/see/r2-rise2.jpg",
+   "time": "2026-11-24T22:09:03.906Z",
+   "file": "20261124220903906-note-bd-H.jpg",
+   "source": "out/work/place/see/bd-H.jpg",
    "kind": "note",
-   "label": "Rise draft 2704 to 2726, the disc comes out north up",
+   "label": "globe side alone at 2684, 2686, 2689",
    "stop": "mars"
   },
   {
-   "time": "2026-11-24T21:33:13.816Z",
-   "file": "20261124213313816-note-r2-rise1.jpg",
-   "source": "out/work/place/see/r2-rise1.jpg",
+   "time": "2026-11-24T22:09:03.383Z",
+   "file": "20261124220903383-note-m51-2726-cap.jpg",
+   "source": "out/work/place/see/m51-2726-cap.jpg",
    "kind": "note",
-   "label": "Rise draft 2683 to 2700, north up end. Wrong: border of the close ground at the right edge of 2683 and 2686, dark dome lower right 2686 and 2689, blade at the left 2696 and 2700",
+   "label": "7253f5fd final 2726, crop at the cap",
    "stop": "mars"
   },
   {
-   "time": "2026-11-24T21:33:13.004Z",
-   "file": "20261124213313004-note-r2-new.jpg",
-   "source": "out/work/place/see/r2-new.jpg",
+   "time": "2026-11-24T22:09:02.827Z",
+   "file": "20261124220902827-note-m51-2726-canyon.jpg",
+   "source": "out/work/place/see/m51-2726-canyon.jpg",
    "kind": "note",
-   "label": "Round 2 state B draft: 2427, 2469, 2689, 2726",
+   "label": "7253f5fd final 2726, crop at the canyon",
    "stop": "mars"
   },
   {
-   "time": "2026-11-24T21:01:56.668Z",
-   "file": "20261124210156668-note-r1-c.jpg",
-   "source": "out/work/place/see/r1-c.jpg",
+   "time": "2026-11-24T22:09:02.202Z",
+   "file": "20261124220902202-note-p51-rise2.jpg",
+   "source": "out/work/place/see/p51-rise2.jpg",
    "kind": "note",
-   "label": "2752 2760 new against 2726 2760 committed: the travel after the rise changes with the rise end (open: later stops' placement)",
+   "label": "7253f5fd draft, every frame 2685 to 2692 of the rise",
    "stop": "mars"
   },
   {
-   "time": "2026-11-24T21:01:56.081Z",
-   "file": "20261124210156081-note-r1-b.jpg",
-   "source": "out/work/place/see/r1-b.jpg",
+   "time": "2026-11-24T22:09:01.591Z",
+   "file": "20261124220901591-note-p51-rise.jpg",
+   "source": "out/work/place/see/p51-rise.jpg",
    "kind": "note",
-   "label": "rise 2716 to 2744, draft, north up rise end: the disc unrolls while in view (to be judged)",
+   "label": "7253f5fd draft, every frame 2671 to 2685 about T of the rise",
    "stop": "mars"
   },
   {
-   "time": "2026-11-24T21:01:55.512Z",
-   "file": "20261124210155512-note-r1-a.jpg",
-   "source": "out/work/place/see/r1-a.jpg",
+   "time": "2026-11-24T22:09:00.772Z",
+   "file": "20261124220900772-note-p51-dive.jpg",
+   "source": "out/work/place/see/p51-dive.jpg",
    "kind": "note",
-   "label": "rise 2683 to 2712 every third or fourth frame, draft, north up rise end",
+   "label": "7253f5fd draft, every frame 2467 to 2481 about T of the dive",
    "stop": "mars"
   }
  ]
