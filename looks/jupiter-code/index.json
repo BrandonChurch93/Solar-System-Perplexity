@@ -1,9 +1,91 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T19:47:12.548Z",
- "head": "f62f610b47e888abf747d2f686cef8a007446244",
- "note": "19:50 UTC: MAIL 725 read; item 1 cause confirmed by the globe's own curve (place lit at ndl 0.84, close view painted at ndl 0.53 to 0.59); the place moves next",
+ "pushed": "2026-11-24T20:32:15.528Z",
+ "head": "18c4bd32b46191358b9e6b341528188ffe884d7b",
+ "note": "round 2 of 3, work in progress 20:33 UTC: one Sun over the place (32 degrees), exposure by height removed; experiment with one program from 3.2 radii",
  "looks": [
+  {
+   "time": "2026-11-24T20:32:14.926Z",
+   "file": "20261124203214926-note-c1.jpg",
+   "source": "../work/r5/c1.jpg",
+   "kind": "note",
+   "label": "r2 experiment C1: the ground drawn by the deck program alone from 3.2 radii, plates only (unfinished)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T20:32:14.316Z",
+   "file": "20261124203214316-note-d3.jpg",
+   "source": "../work/r5/d3.jpg",
+   "kind": "note",
+   "label": "r2 draft A1 rise 3276 to 3312 (unfinished: yellow wedge at 3276, half lit disc)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T20:32:13.728Z",
+   "file": "20261124203213728-note-d2.jpg",
+   "source": "../work/r5/d2.jpg",
+   "kind": "note",
+   "label": "r2 draft A1 3030 to 3268 (unfinished)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T20:32:13.131Z",
+   "file": "20261124203213131-note-d1.jpg",
+   "source": "../work/r5/d1.jpg",
+   "kind": "note",
+   "label": "r2 draft A1 dive 2975 to 3030 (unfinished: look still changes at 3018 to 3030 where the deck program takes over)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T20:32:12.565Z",
+   "file": "20261124203212565-note-pair-3150-A1.jpg",
+   "source": "../work/r5/pair-3150-A1.jpg",
+   "kind": "note",
+   "label": "r2 draft A1 3150: approved image left, frame right (one Sun at 32 degrees, no exposure by height)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T20:28:29.344Z",
+   "file": "20261124202829344-frame-f02997.jpg",
+   "source": "out/work/jupiter/frames/C1/f02997.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 2997, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 2997,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
+  {
+   "time": "2026-11-24T20:27:40.502Z",
+   "file": "20261124202740502-frame-f03150.jpg",
+   "source": "out/work/jupiter/frames/C1/f03150.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3150, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
+  {
+   "time": "2026-11-24T20:21:39.885Z",
+   "file": "20261124202139885-frame-f03256.jpg",
+   "source": "out/work/jupiter/frames/A1/f03256.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3256, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3256,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
   {
    "time": "2026-11-24T19:47:11.918Z",
    "file": "20261124194711918-note-jupiter-rise-changes.jpg",
@@ -85,20 +167,6 @@
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-24T18:56:44.010Z",
-   "file": "20261124185644010-frame-f03060.jpg",
-   "source": "out/work/jupiter/frames/depE/f03060.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3060, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3060,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
-  },
-  {
    "time": "2026-11-24T18:30:52.500Z",
    "file": "20261124183052500-note-cand-near.jpg",
    "source": "../work/r3/cand-near.jpg",
@@ -131,34 +199,6 @@
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-24T18:12:03.696Z",
-   "file": "20261124181203696-frame-bU-2997.jpg",
-   "source": "out/work/jupiter/final/bU-2997.png",
-   "kind": "frame",
-   "label": "jupiter.dive frame 2997, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 2997,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
-  },
-  {
-   "time": "2026-11-24T18:07:53.991Z",
-   "file": "20261124180753991-frame-bU-3296.jpg",
-   "source": "out/work/jupiter/final/bU-3296.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3296, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3296,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
-  },
-  {
    "time": "2026-11-24T18:05:17.035Z",
    "file": "20261124180517035-frame-bU-2895.jpg",
    "source": "out/work/jupiter/final/bU-2895.png",
@@ -178,46 +218,6 @@
    "source": "../work/r3/t1-tone-x3.png",
    "kind": "note",
    "label": "Ruling 3, rejected: the tone field carried out to 17 units bakes the air into the ground (white bloom, dark fan). Panels: view laid back, plates, plates times tone, tone",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T18:02:16.469Z",
-   "file": "20261124180216469-note-near-guide-new.jpg",
-   "source": "../work/r3/near-guide-new.png",
-   "kind": "note",
-   "label": "Ruling 3 step 2: new guide of the near plate, the wide canvas laid back from above (not a film frame). The fan is the ground the view saw; the tan below is unseen ground",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T18:02:15.055Z",
-   "file": "20261124180215055-note-Rb-a.jpg",
-   "source": "../work/r3/Rb-a.jpg",
-   "kind": "note",
-   "label": "Rise 3247 to 3259 on the merge (before the exposure change): dark aprons at lower left give way to pale puffs at 3253, the right far field turns from dusk to bright streaks. This is ruling 3's red as the eye sees it",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T17:38:25.525Z",
-   "file": "20261124173825525-note-Rt-band4.jpg",
-   "source": "../work/sky/Rt-band4.png",
-   "kind": "note",
-   "label": "own red, cause found: 3260 and 3264 upper right, level times 4. The band without stars between the limb and the star field is the surface sky plate under its painted horizon (a star free haze fill), bared when the horizon dips with height; its straight top is the plate's horizon",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T17:38:24.315Z",
-   "file": "20261124173824315-note-c3296-pair.jpg",
-   "source": "../work/sky/c3296-pair.jpg",
-   "kind": "note",
-   "label": "3296 final tier: left the merge (69073d9d), right the working tree (f1ae6b37): the sky is the next stop's from 0.39 radii up; on the sphere 3220 of 870207 pixels differ, 3213 by one level, 2 over three levels at 3 px from the limb",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T17:38:23.215Z",
-   "file": "20261124173823215-note-c2997-pair.jpg",
-   "source": "../work/sky/c2997-pair.jpg",
-   "kind": "note",
-   "label": "2997 final tier: left the merge (8fec1528), right the working tree (2e7fd007): the sky is another part of the star field; on the sphere 16480 of 1716543 pixels differ, each by one level, none deeper than 300 px from the limb",
    "stop": "jupiter"
   }
  ]
