@@ -1,17 +1,19 @@
 import * as THREE from 'three'
 import { args } from './lib/common'
 import { config } from '../src/config'
+import { setCapture, spanMid } from '../src/core/clock'
 import { shutterMid } from '../src/core/sampler'
 import { FilmDirector } from '../src/director/film'
 import { forceOneMove, handoverOf } from '../src/director/handover'
-import { carried } from '../src/director/pace'
 import { plans } from '../src/director/plans'
+import { carriedCamera } from './smooth/camera'
 
 // The seam between a surface view and its dive or its rise, read on the eye itself (ruling d196): across the seam the eye's speed over
 // its own height may not dip and the eye may not stop and go back the way it came.
 //   npx tsx tools/seam.ts [--stop ID] [--kind dive|rise] [--rate N] [--frames N] [--before N] [--rows] [--force]
-// The eye is the film's own camera as a camera at the unit sphere of the stop (pace.ts carried: the close view through the twin, the
-// globe as it stands), taken in the frame the ground itself stands in, so what is counted is its way over the ground. From one capture frame to
+// The eye is the film's own camera as a camera at the unit sphere of the stop, read as the judge reads it (tools/smooth/camera.ts,
+// carriedCamera at the capture rate: the close view through the twin, the globe as it stands), taken in the frame the ground itself
+// stands in, so what is counted is its way over the ground. From one capture frame to
 // the next: the length of that way a film frame over the height of the eye above the sphere. That number is the share of its own
 // height the eye flies in a film frame, and so the speed at which the near ground runs through the picture.
 // One line a seam:
@@ -26,6 +28,7 @@ import { plans } from '../src/director/plans'
 //   --before  film frames of the surface view shown and read before a rise or after a dive (3; give the length of your bend).
 //   --rate    capture frames a film frame (2).
 //   --force   fly the stop on the engine's one move whatever handover.ownPath says.
+// Under the line of a rise on the one move: the way the move alone takes the eye out of the seam, and the terrain.bend that ends on it.
 // Nothing is written and nothing is judged here: the judge is the line of npm run smooth.
 
 type Kind = 'dive' | 'rise'
@@ -34,6 +37,7 @@ interface Row { f: number; speed: number; along: number; up: number; across: num
 const a = args()
 if (a.force === 'true') forceOneMove(true)
 const rate = Math.max(1, Math.round(Number(a.rate ?? 2)))
+setCapture(rate)
 const frames = Number(a.frames ?? 16)
 const before = Number(a.before ?? 3)
 const film = new FilmDirector(plans)
@@ -43,6 +47,29 @@ function label(f: number): string {
   const whole = Math.floor(f + 1e-9)
   const part = Math.round((f - whole) * rate)
   return part === 0 ? String(whole) : whole + ' + ' + part + '/' + rate
+}
+
+// For a stop on the one move whose surface view is the engine's (terrain.bend of its params, src/director/bend.ts): the way the one move
+// alone takes the eye out of the seam, in the ground's frame of the surface view where its bend begins (or at the seam, if it has none),
+// and the bend that ends on that way.
+function advice(plan: (typeof plans)[number]): string {
+  const span = plan.seg.terrain.end - plan.seg.terrain.start
+  const bend = plan.p.terrain.bend
+  const at = span - (bend ? bend.frames / config.fps : 0)
+  const step = 1e-4
+  const here = plan.terrain(at).position
+  const way = here.clone().sub(plan.terrain(at - step).position).normalize()
+  const up = plan.closeGround(here, plan.seg.terrain.start + at).up
+  const level = way.clone().addScaledVector(up, -way.dot(up)).normalize()
+  const right = level.clone().cross(up).normalize()
+  const angles = (d: THREE.Vector3): string => '[' + deg(Math.atan2(d.dot(right), d.dot(level))).toFixed(1) + ', ' + deg(Math.asin(Math.min(Math.max(d.dot(up), -1), 1))).toFixed(1) + ']'
+  const first = plan.eyeFirstWay('rise')
+  const across = first.clone().addScaledVector(way, -first.dot(way)).normalize()
+  return (
+    '  the one move alone leaves the seam toward ' + angles(first) + ' (azimuth from the surface view\'s level way, 90 to its right; elevation), ' + deg(first.angleTo(way)).toFixed(1) +
+    ' degrees from the way of the surface view ' + (bend ? 'where its bend begins' : 'at the seam') + ' ' + angles(way) + '; the bend that ends on it: "acrossDeg": ' + angles(across) + ', "turnDeg": ' + deg(first.angleTo(way)).toFixed(1) +
+    (bend ? '; the bend it has: ' + JSON.stringify(bend) : '')
+  )
 }
 
 function seam(stop: string, kind: Kind): string[] {
@@ -55,8 +82,8 @@ function seam(stop: string, kind: Kind): string[] {
   // through the twin of one fixed time, so a stop whose ground turns by a law of its own is read on that law.
   const fixed = plan.seg.terrain.start
   const eye = (k: number): { ground: THREE.Vector3; quaternion: THREE.Quaternion; height: number; up: THREE.Vector3 } => {
-    const time = (k + shutterMid()) / (config.fps * rate)
-    const c = carried(film, plan, Math.floor(k / rate), time)
+    const time = (k / rate + spanMid()) / config.fps
+    const c = carriedCamera(film, plan, plan.id, k / rate, time)
     const g = plan.twin(plan.untwin(c.pose, time), fixed)
     return { ground: g.position, quaternion: g.quaternion, height: g.position.length() - 1, up: g.position.clone().normalize() }
   }
@@ -108,6 +135,7 @@ function seam(stop: string, kind: Kind): string[] {
       ' | surface view, largest step a film frame ' + over(step) + ' at ' + label(stepAt) +
       (h ? ' | change of view at ' + label(Math.round((h.time * config.fps - shutterMid()) * rate) / rate) : ''),
   )
+  if (kind === 'rise' && plan.engineMove) out.push(advice(plan))
   if (a.rows === 'true') {
     out.push('  frame        speed/height   over own   along      up     across   turn deg   height')
     for (const r of rows) out.push('  ' + label(r.f).padEnd(12) + ' ' + r.speed.toFixed(5).padStart(10) + ' ' + (still ? '' : (r.speed / own).toFixed(3)).padStart(10) + ' ' + r.along.toFixed(3).padStart(8) + ' ' + r.up.toFixed(3).padStart(8) + ' ' + r.across.toFixed(3).padStart(8) + ' ' + r.turn.toFixed(4).padStart(9) + '   ' + r.height.toExponential(3) + (r.inMove ? '' : '  surface view'))
