@@ -584,7 +584,8 @@ export class FilmDirector implements Director {
     const radius = mix(this.sunFor(index).radius, this.sunFor(index + 1).radius, smooth(ramp(0.25, 0.8, u)))
     const sun = discShare(this.sunWorld.clone().applyQuaternion(inv), Math.sin(Math.min(radius, 1.5)), pose.vfov, aspect)
     const glow = index === 0 ? smooth(ramp(SUN_GLOW_FROM, this.sunSwapSpan[1], u)) : 1
-    return Math.min(this.leaveWeight(index, u, pose.position) * body(index) + body(index + 1) + glow * sun, 1)
+    const weight = index === 0 ? 1 - smooth(ramp(this.sunSwapSpan[0], this.sunSwapSpan[1], u)) : this.leaveWeight(index, u, pose.position)
+    return Math.min(weight * body(index) + body(index + 1) + glow * sun, 1)
   }
 
   private sunSeen(index: number, time: number): number {
