@@ -1037,3 +1037,7 @@ State when this came: agent/travel-pin = 32a0d67, 8319d7e (pinned earth, pinEase
 - uranus_builder (low, no answer): Uranus's rings and veil come in by the lens's distance (agent/uranus-place 6e5cb48f, not on main); frames 3942 to 3969 change, nothing of the travel's camera or sky.
 - Polish merged with main f6ce51a5: against main only this notebook and the probes of `assets-src/travel/` (text, 359 lines; src, tests, tools, public, config, kit are main's to the byte). Build 0, vitest 418 in 44, tsc 0, shaderaudit 23.
 - NOTHING of mine is open and nothing of mine is off main. No NAMED mail is owed: every law I changed is on main. Next: only what the Builder sends (60 pictures a second proofs of the stops' named commits).
+
+## 06:37 UTC: MAIL 546
+
+- Main b0b87889: the centred sample pattern (review and final pictures move as a whole by 0.09 px left, 0.035 px up; drafts the same bytes) and the plan check in tools/lib/pace.ts. Nothing of mine imports `director/pace`. NAMED d06a15a9 is received (text only), taken with the next take; nothing to do. Slot free for proofs. Polish merged with b0b87889, tsc 0.
