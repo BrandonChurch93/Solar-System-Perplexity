@@ -1,9 +1,17 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T03:27:02.887Z",
+ "pushed": "2026-11-24T03:56:38.940Z",
  "head": "f0532ddcee36b3aee8b9ad491bcc4c79ca96d488",
- "note": "turned place: side canyon meets the main trough (heights alone); close side dumped again at T 2475, plates in work",
+ "note": "turned place, first plates from above; main trough paint wrong (pale slab), in work; engine stills follow",
  "looks": [
+  {
+   "time": "2026-11-24T03:56:37.990Z",
+   "file": "20261124035637990-note-k-plates.jpg",
+   "source": "out/work/place/see/k-plates.jpg",
+   "kind": "note",
+   "label": "turned place, first plates as stored (own light, relit for the globe's Sun, cast shadow baked): land-8p5 and land-3p8 from above, north up. FAULTS seen: the main trough is painted as a pale slab with straight round ends; canyon walls slate black",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T03:27:02.294Z",
    "file": "20261124032702294-note-trough.jpg",
@@ -64,14 +72,6 @@
    "source": "out/work/place/see/f52452-lit.png",
    "kind": "note",
    "label": "2452 as the cap lights the relit country (preview, not the engine)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T02:04:13.130Z",
-   "file": "20261124020413130-note-f5-sheet.jpg",
-   "source": "out/work/place/see/f5-sheet.jpg",
-   "kind": "note",
-   "label": "country relit by code, heights v7: plates alone, heights alone, as the cap lights it, with the close view; 2439 2452 2471 (preview by mesh, not the engine)",
    "stop": "mars"
   }
  ]
