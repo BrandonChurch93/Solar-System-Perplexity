@@ -1,9 +1,81 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T01:05:55.256Z",
+ "pushed": "2026-11-24T01:30:19.828Z",
  "head": "a998eca2f90811e1b60a7e3c589a2545e13d6ed7",
- "note": "MAIL 427: the hold's beat is in the sky patch (one texel per film pixel, bilinear taps), not in the clouds; cure in work",
+ "note": "MAIL 427: the hold's beat is the sky patch (one texel per film pixel, bilinear taps); cure B3 in the tree, not committed; finals of 2895 rendering",
  "looks": [
+  {
+   "time": "2026-11-24T01:30:18.665Z",
+   "file": "20261124013018665-note-draft2895-old-new.jpg",
+   "source": "../work/m427/draft2895-old-new.jpg",
+   "kind": "note",
+   "label": "2895 draft, right of the planet at full size: left as on main, right with the cure (draft only; the final pair follows)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T01:30:17.368Z",
+   "file": "20261124013017368-note-hold-curves.jpg",
+   "source": "../work/m427/hold-curves.png",
+   "kind": "note",
+   "label": "hold, change per capture frame at rate 2 draft: red as on main, green the cure B3 (worst 0.8 percent off the mean of three, was 15.0)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T01:29:35.234Z",
+   "file": "20261124012935234-frame-f02895.jpg",
+   "source": "out/work/jupiter/frames/evnewf/f02895.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2895, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "30385d6e31de94ff"
+  },
+  {
+   "time": "2026-11-24T01:22:00.871Z",
+   "file": "20261124012200871-frame-f03296.jpg",
+   "source": "out/work/jupiter/frames/evnewd/f03296.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3296, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3296,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "30385d6e31de94ff"
+  },
+  {
+   "time": "2026-11-24T01:20:20.176Z",
+   "file": "20261124012020176-frame-f03059.jpg",
+   "source": "out/work/jupiter/frames/evnewd/f03059.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 3059, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 3059,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "30385d6e31de94ff"
+  },
+  {
+   "time": "2026-11-24T01:17:54.695Z",
+   "file": "20261124011754695-frame-f02805.jpg",
+   "source": "out/work/jupiter/frames/evnewd/f02805.png",
+   "kind": "frame",
+   "label": "mars.travel frame 2805, draft tier",
+   "stop": "mars",
+   "segment": "mars.travel",
+   "frame": 2805,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "30385d6e31de94ff"
+  },
   {
    "time": "2026-11-24T01:05:45.503Z",
    "file": "20261124010545503-note-hold0-diff-5789-5790.jpg",
@@ -18,22 +90,6 @@
    "source": "../work/m427/hold0-curve.png",
    "kind": "note",
    "label": "MAIL 427 hold beat: my run of the proof gives the Builder's curve (draft, rate 2, captures 5760 to 5819)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T00:42:23.696Z",
-   "file": "20261124004223696-note-s5-ell-a.jpg",
-   "source": "../work/f/s5-ell-a.jpg",
-   "kind": "note",
-   "label": "step 5: the rings the functions turn on (0.5, 1.15, 1.7, 2.4, 3.2 units), drawn over the painting from above",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T00:42:23.167Z",
-   "file": "20261124004223167-note-s5-height-low.jpg",
-   "source": "../work/f/s5-height-low.jpg",
-   "kind": "note",
-   "label": "step 5: the painting's relief blurred by 0.3 units, the broad height the functions stand on",
    "stop": "jupiter"
   }
  ]
