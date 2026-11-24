@@ -1,0 +1,19 @@
+Image 1 is a square, straight down (nadir) orbital photograph of canyon land on Mars in low evening light, north at the top, about 225 km across. Its middle (a square that takes the middle 42 percent of the width) is finished and must stay as it is: the canyon that runs in from the left of that square with its sunlit north wall and its shadowed south wall, the dark ground, the lit cliff and the pale hazy plain right of it. Everything else stays as well, every scarp, mesa and hollow where it is, except one thing.
+
+The one thing: left of the middle square the same canyon runs on toward the left for about 55 km more. There image 1 has only a rough sketch of it: a near black smeared blob with a soft edge. The sketch is right about where the canyon runs, how wide it is and where it ends, and wrong about what it looks like.
+
+Image 2 is an oblique aerial photograph taken low over the same land, looking east south east. It shows what the walls of this canyon are made of: cliffs of layered rock in horizontal bands, spurs and buttresses, gullies, talus aprons at the foot, rubble on the floor.
+
+Task: redraw image 1 as one seamless nadir orbital photograph with the same framing, the same scale and north at the top.
+
+1. The middle square and all the land around stay as they are, every light and dark patch where it is.
+
+2. In place of the near black blob draw the canyon as the same canyon that the middle shows, in the same place and with the same width as the sketch. Its north wall is sunlit: stepped cliffs of layered rock in thin bands of rust, tan and brown that follow the wall along its length, cut by spurs and gullies, talus aprons at the foot. Its south wall is in shadow: the same cliffs, spurs and gullies in dark brown, the ground in them still to be made out. The floor is dim: rubble, low hummocks, a few landslide tongues. The rims are irregular, with alcoves and spurs, never a straight line. Toward its left end the canyon grows shallower and narrower over a long stretch and runs out into the plateau as a few shallow branching troughs; it does not end at a wall.
+
+3. No seam, no step and no change of sharpness or colour where the middle square meets the rest: one piece of land under one light.
+
+4. No smear, no blur, no streaks, no flat cells, no bright outlines, no etched look. No pure black: the darkest shadow still shows ground. No mist, no cloud, no smoke, no water.
+
+5. No fan, no pleats, no long parallel lines, nothing that radiates from one point. No new round pits, no fields of craters.
+
+Light: a low Sun in the south south east, soft long shadows falling toward the north north west, the same everywhere. A photograph from orbit: no horizon, no sky, no text, no border, no vignette.

@@ -407,7 +407,7 @@ void main() {
     float offset = fract(sin(dot(cell, vec3(12.9898, 78.233, 37.719))) * 43758.5453);
     vec4 by = uKnotRay[n];
     float sum = 0.0;
-    for (int i = 0; i < steps; i++) {
+    for (int i = 0; i < (halfK > 0.0 ? steps : 0); i++) {
       vec3 q = ro + rd * (tk - halfK + (float(i) + offset) * dt);
       vec3 from = q - knotAt;
       float dist = length(from);

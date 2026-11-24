@@ -3,7 +3,8 @@ import { HAZE_GLSL, hazeUniforms, type HazeParams } from '../../bodies/haze'
 import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { EQUIRECT_GLSL } from '../../space/sky'
-import { CALM_GLSL, DETAIL_GLSL } from './clouds'
+import { ABOVE_GLSL, CALM_GLSL, DETAIL_GLSL, STORED_GLSL } from './clouds'
+import { frameUniform } from '../../core/frame'
 import { PALL_GLSL, pallUniforms } from './pall'
 
 export const CURVE_KNOTS = 33
@@ -24,7 +25,6 @@ export interface PlaceSet {
   e: number[]
   u: number[]
   radius: number
-  fade: number[]
   grade: number[]
   uniforms: Record<string, THREE.IUniform>
 }
@@ -94,7 +94,7 @@ const PATCH_SAMPLERS = Array.from({ length: MAX_PATCHES }, (_, i) => 'uniform sa
 
 const PATCH_LEVELS = Array.from({ length: MAX_PATCHES }, (_, i) => `    if (uPatchCount > ${i}.5) {
       vec2 q = g * uPatchScale[${i}];
-      float w = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent));
+      float w = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent * uFrame));
       if (w > 0.0) albedo = mix(albedo, textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb, w);
       parent = gd * uPatchScale[${i}] * uPatchSize[${i}];
       texels = mix(texels, parent, step(0.5, w));
@@ -115,6 +115,7 @@ uniform vec3 uPatchE;
 uniform vec3 uPatchU;
 uniform float uFeather;
 uniform vec2 uPatchFade;
+uniform float uFrame;
 uniform vec3 uSpotN;
 uniform vec3 uSpotE;
 uniform vec3 uSpotU;
@@ -190,6 +191,20 @@ uniform vec3 uPlaceE;
 uniform vec3 uPlaceU;
 uniform vec4 uPlace;
 uniform vec3 uGrade;
+uniform sampler2D uHeightFore;
+uniform sampler2D uHeightNear;
+uniform sampler2D uHeightMid;
+uniform vec4 uForeMap;
+uniform vec4 uNear;
+uniform vec4 uMid;
+uniform vec2 uBlend;
+uniform vec2 uHeightRange;
+uniform float uRadius;
+uniform vec2 uShell;
+uniform vec4 uMarch;
+uniform float uPixel;
+uniform vec3 uEye;
+uniform mat3 uToChart;
 in vec3 vClip;
 in vec3 vPos;
 in vec3 vView;
@@ -200,6 +215,8 @@ ${DIAG_GLSL}
 ${HAZE_GLSL}
 ${PALL_GLSL}
 ${CALM_GLSL}
+${ABOVE_GLSL}
+${STORED_GLSL}
 ${DETAIL_GLSL}
 vec3 spinY(vec3 d, float a) {
   float c = cos(a), s = sin(a);
@@ -300,16 +317,72 @@ ${PATCH_LEVELS}
   float placed = 0.0;
   for (int k = 0; k < (uPlace.w > 0.0 ? 1 : 0); k++) {
     vec2 c = vec2(dot(d, uPlaceE), dot(d, uPlaceU)) * uPlace.x;
-    vec2 cx = dFdx(c);
-    vec2 cy = dFdy(c);
-    vec2 cs;
-    c = calm(c, cs);
-    cx = vec2(cs.x * cx.x - cs.y * cx.y, cs.y * cx.x + cs.x * cx.y);
-    cy = vec2(cs.x * cy.x - cs.y * cy.y, cs.y * cy.x + cs.x * cy.y);
+    vec2 cx = dFdx(c) * uGrad;
+    vec2 cy = dFdy(c) * uGrad;
+    vec3 D = uToChart * dir;
+    vec3 sx = dFdx(D);
+    vec3 sy = dFdy(D);
+    vec2 cs = vec2(1.0, 0.0);
+    vec2 box = abs(c - uPlateBoxFar.xy) * (2.0 * uPlateBoxFar.z);
+    vec3 E = uEye;
+    float bD = dot(D, E) + uRadius * D.z;
+    float apart = dot(E, E) + 2.0 * uRadius * E.z;
+    float cTop = apart - 2.0 * uRadius * uShell.y - uShell.y * uShell.y;
+    float cLow = apart - 2.0 * uRadius * uShell.x - uShell.x * uShell.x;
+    float dTop = bD * bD - cTop;
+    float dLow = bD * bD - cLow;
+    bool reached = dot(d, uPlaceN) > 0.5 && max(box.x, box.y) < 1.0 && dTop > 0.0 && (cTop < 0.0 || bD < 0.0);
+    float t0 = reached ? max(-bD - sqrt(max(dTop, 0.0)), 0.0) : 0.0;
+    float t1 = reached ? (dLow > 0.0 && -bD - sqrt(max(dLow, 0.0)) > 0.0 ? -bD - sqrt(max(dLow, 0.0)) : -bD + sqrt(max(dTop, 0.0))) : 0.0;
+    float pix = uPixel * uGrad;
+    float t = t0;
+    float tPrev = t0;
+    float gap = 1.0;
+    float gapPrev = 1.0;
+    bool hit = false;
+    vec3 w = vec3(0.0);
+    for (int i = 0; i < (reached ? int(uMarch.w) : 0); i++) {
+      vec3 p = E + D * t;
+      vec2 at = calm(p.xy, cs);
+      w = levels(at);
+      gap = above(p) - stored(at, w);
+      if (gap < uMarch.z * t * pix) { hit = true; break; }
+      if (t > t1) break;
+      tPrev = t;
+      gapPrev = gap;
+      float fall = max(-(D.z + (D.x * p.x + D.y * p.y) / uRadius), 0.0);
+      t += max(gap / (fall + uMarch.x), uMarch.y * t * pix);
+    }
+    for (int i = 0; i < (hit ? 3 : 0); i++) {
+      float tm = gapPrev > 0.0 && gap < gapPrev ? tPrev + (t - tPrev) * gapPrev / (gapPrev - gap) : 0.5 * (t + tPrev);
+      vec3 p = E + D * tm;
+      float gm = above(p) - stored(calm(p.xy, cs), w);
+      if (gm > 0.0) { tPrev = tm; gapPrev = gm; } else { t = tm; gap = gm; }
+    }
+    for (int j = 0; j < (hit ? 1 : 0); j++) {
+      c = calm((E + D * t).xy, cs);
+      vec3 V = vec3(cs.x * D.x - cs.y * D.y, cs.y * D.x + cs.x * D.y, D.z);
+      float breadth = t * pix;
+      float hs = max(breadth, mix(uPlateTexel.y, uForeMap.w, w.x));
+      vec2 slope = vec2(stored(c + vec2(hs, 0.0), w) - stored(c - vec2(hs, 0.0), w), stored(c + vec2(0.0, hs), w) - stored(c - vec2(0.0, hs), w)) / (2.0 * hs);
+      vec3 nr = normalize(vec3(c / uRadius - slope, 1.0));
+      float facing = min(dot(V, nr), -uFoot.x);
+      sx = vec3(cs.x * sx.x - cs.y * sx.y, cs.y * sx.x + cs.x * sx.y, sx.z);
+      sy = vec3(cs.x * sy.x - cs.y * sy.y, cs.y * sy.x + cs.x * sy.y, sy.z);
+      sx = normalize(sx - V * dot(V, sx));
+      sy = normalize(sy - V * dot(V, sy));
+      cx = breadth * (sx - V * (dot(sx, nr) / facing)).xy;
+      cy = breadth * (sy - V * (dot(sy, nr) / facing)).xy;
+    }
+    for (int j = 0; j < (hit ? 0 : 1); j++) {
+      c = calm(c, cs);
+      cx = vec2(cs.x * cx.x - cs.y * cx.y, cs.y * cx.x + cs.x * cx.y);
+      cy = vec2(cs.x * cy.x - cs.y * cy.y, cs.y * cy.x + cs.x * cy.y);
+    }
     vec2 sunAz = vec2(cs.x * uSunAz.x - cs.y * uSunAz.y, cs.y * uSunAz.x + cs.x * uSunAz.y);
-    float foot = sqrt(max(dot(cx, cx), dot(cy, cy)));
+    float foot = sqrt(max(dot(cx, cx), dot(cy, cy))) / uGrad;
     vec2 r = abs(c - uPlateBoxFar.xy) * (2.0 * uPlateBoxFar.z);
-    placed = uPlace.w * step(0.5, dot(d, uPlaceN)) * (1.0 - smoothstep(uPlace.z, uPlace.y, foot)) * (1.0 - smoothstep(uPlateJoin.x, uPlateJoin.y, max(r.x, r.y)));
+    placed = uPlace.w * step(0.5, dot(d, uPlaceN)) * (1.0 - smoothstep(uPlateJoin.x, uPlateJoin.y, max(r.x, r.y)));
     for (int j = 0; j < (placed > 0.0 ? 1 : 0); j++) {
       vec2 f = abs(c - uPlateBoxFore.xy) * (2.0 * uPlateBoxFore.zw);
       vec2 a = abs(c - uPlateBoxNear.xy) * (2.0 * uPlateBoxNear.z);
@@ -318,8 +391,8 @@ ${PATCH_LEVELS}
       float wn = (1.0 - wf) * (1.0 - smoothstep(uPlateJoin.x, uPlateJoin.y, max(a.x, a.y)));
       float wm = (1.0 - wf - wn) * (1.0 - smoothstep(uPlateJoin.x, uPlateJoin.y, max(b.x, b.y)));
       float wr = 1.0 - wf - wn - wm;
-      vec2 px = cx * uGrad;
-      vec2 py = cy * uGrad;
+      vec2 px = cx;
+      vec2 py = cy;
       vec4 plate = vec4(0.0);
       for (int i = 0; i < (wf > 0.0 ? 1 : 0); i++) plate += wf * textureGrad(uPlateFore, (c - uPlateBoxFore.xy) * uPlateBoxFore.zw + 0.5, px * uPlateBoxFore.zw, py * uPlateBoxFore.zw);
       for (int i = 0; i < (wn > 0.0 ? 1 : 0); i++) plate += wn * textureGrad(uPlateNear, (c - uPlateBoxNear.xy) * uPlateBoxNear.z + 0.5, px * uPlateBoxNear.z, py * uPlateBoxNear.z);
@@ -373,7 +446,7 @@ ${PATCH_LEVELS}
   vec2 toSun = vec2(dot(sunT, east) / max(cos(lat), 0.25) / (2.0 * PI) * uWispShape.x, dot(sunT, north) * uWispShape.y) * uWispShadow.y;
   vec2 fine = textureGrad(uWisp, wuv, wdx * uGrad, wdy * uGrad).rg;
   float body = fine.r + (fine.g - 0.5) * uWispShadow.w;
-  float shade2 = textureGrad(uWisp, wuv + toSun, wdx * uWispShadow.z, wdy * uWispShadow.z).r;
+  float shade2 = textureGrad(uWisp, wuv + toSun, wdx * (uWispShadow.z * uFrame), wdy * (uWispShadow.z * uFrame)).r;
   float wisp = ((body - 0.5) * uWispShape.z - (shade2 - 0.5) * uWispShadow.x) * max(steady, fl.z * 0.6) * calm;
   lin *= max(1.0 + wisp * (1.0 - soft) * (1.0 - placed), 0.0);
   vec3 direct = curveAt(ndl) * mix(vec3(1.0), limbAt(mu), uLimbAmount * mix(uLimbLit.x, 1.0, smoothstep(uLimbLit.y, uLimbLit.z, ndl)));
@@ -384,7 +457,7 @@ ${PATCH_LEVELS}
     vec3 hd = spinY(uToBody * normalize(n - dir * (uVeil.y / max(mu, 0.3))), uSpin);
     float hlon = atan(hd.x, hd.z) / (2.0 * PI);
     float hlat = asin(clamp(hd.y, -1.0, 1.0)) / (2.0 * PI) * uVeil.z;
-    float hl = log2(max(vfoot * 2048.0 / (2.0 * PI), 1e-6));
+    float hl = log2(max(vfoot * uFrame * 2048.0 / (2.0 * PI), 1e-6));
     float hv = 0.6 * textureLod(uWisp, vec2(hlon * 4.0 + uVeil.w, hlat), hl + 3.0).r + 0.4 * textureLod(uWisp, vec2(hlon * 12.0 - 2.0 * uVeil.w, hlat * 3.0) + 0.37, hl + 4.2).r;
     float ha = 1.0 - exp(-uVeil.x * (0.35 + 1.3 * smoothstep(0.3, 0.7, hv)) / max(mu, 0.25));
     col = mix(col, uVeilColor * knee(direct) * uTint, ha);
@@ -473,13 +546,15 @@ export class Globe {
         uPlateFore: o.place.uniforms.uPlateFore!, uPlateNear: o.place.uniforms.uPlateNear!, uPlateMid: o.place.uniforms.uPlateMid!, uPlateFar: o.place.uniforms.uPlateFar!,
         uPlateBoxFore: o.place.uniforms.uFore!, uPlateBoxNear: o.place.uniforms.uNear!, uPlateBoxMid: o.place.uniforms.uMid!, uPlateBoxFar: o.place.uniforms.uFar!,
         uPlateTexel: o.place.uniforms.uTexel!, uPlateJoin: o.place.uniforms.uJoin!,
+        uHeightFore: o.place.uniforms.uHeightFore!, uHeightNear: o.place.uniforms.uHeightNear!, uHeightMid: o.place.uniforms.uHeightMid!, uForeMap: o.place.uniforms.uForeMap!, uNear: o.place.uniforms.uNear!, uMid: o.place.uniforms.uMid!, uBlend: o.place.uniforms.uBlend!, uHeightRange: o.place.uniforms.uHeightRange!,
+        uRadius: o.place.uniforms.uRadius!, uShell: o.place.uniforms.uShell!, uMarch: o.place.uniforms.uMarch!, uPixel: o.place.uniforms.uPixel!, uEye: o.place.uniforms.uEye!, uToChart: o.place.uniforms.uToChart!,
         uTone: o.place.uniforms.uTone!, uToneBox: o.place.uniforms.uToneBox!, uToneLift: o.place.uniforms.uToneLift!, uCalmBox: o.place.uniforms.uCalmBox!,
         uDetail: o.place.uniforms.uDetail!, uDetailLook: o.place.uniforms.uDetailLook!, uDetailTone: o.place.uniforms.uDetailTone!, uDetailHigh: o.place.uniforms.uDetailHigh!, uFoot: o.place.uniforms.uFoot!, uSunAz: o.place.uniforms.uSunAz!, uStorm: o.place.uniforms.uStorm!, uStormTurn: o.place.uniforms.uStormTurn!, uEddy: o.place.uniforms.uEddy!, uEddyTurn: o.place.uniforms.uEddyTurn!, uSeam: o.place.uniforms.uSeam!,
         uPlateGrade: { value: new THREE.Vector3(1 / o.place.grade[0]!, 1 / o.place.grade[1]!, 1 / o.place.grade[2]!) },
         uPlaceN: { value: new THREE.Vector3().fromArray(o.place.n) }, uPlaceE: { value: new THREE.Vector3().fromArray(o.place.e) }, uPlaceU: { value: new THREE.Vector3().fromArray(o.place.u) },
-        uPlace: { value: new THREE.Vector4(o.place.radius, o.place.fade[0]!, o.place.fade[1]!, 0) },
+        uPlace: { value: new THREE.Vector4(o.place.radius, 0, 0, 0) },
         uGrade: { value: new THREE.Vector3(1, 1, 1) },
-        uDiag: diagUniform, uGrad: gradUniform,
+        uDiag: diagUniform, uGrad: gradUniform, uFrame: frameUniform,
         ...pallUniforms(o.pallShell),
       },
       transparent: true,
