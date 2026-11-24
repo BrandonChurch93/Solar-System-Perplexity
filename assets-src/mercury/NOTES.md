@@ -2580,3 +2580,34 @@ WHAT STAYS RED AND WHY IT STOPS THERE:
 - 13:15 to 13:21 for the record, after NAMED: the rise's globe side of the named state (`zu`, 977 to 998): pattern over the limit from 977 to 986, 0.47 to 1.18, worst 1.18 at 981 + 1/2 (the same numbers as with the limb sunk, so the sink never mattered there); at most 0.37 from 986 + 1/2 to 990; largest pop 1.135 at 992 (limit 1.2). WHERE: 977 to 981 the worst point sits in the limb band (top of the frame, 0.77 to 1.08); from 981 + 1/2 to 986 it sits in the LOWER LEFT of the frame (x 0 to 408, y 668 to 1008 of 1920 by 1080), not at the limb (change panels `chg-zu`, sheet `zu-T`). There the set's own close ground gives way to the globe's plates of the place while the set's presence falls (980 to 989, by height). So the cause line of the NAMED mail for the rise holds for 977 to 981 only; the worst rows are a second pair (the set's relief against the plates' flat picture of the same ground), not touched by the third commit. Sent to the Builder as a correction.
 - NEXT if the Builder asks: (1) the far Sun wiring: merge main, do not rewrite the `sunPlate.update(...)` region of `set.ts`, check 615 and 870 and one dive frame; (2) the pair at the place itself: look at the presence law (`look.under.height` [2.9, 6.5]) against the plates' own share, in the rise first (981 to 986), then whether the same pair is what is left of the dive at 741 to 751 (in `z2` the worst points at 741 to 743 + 1/2 sat mid right, x 1588 to 1688, y 664 to 728, not at the limb).
 
+MAIL 670 from the Builder (/root) to every builder (read 13:24 UTC), verbatim. Main moved.
+
+Main is at c8888d579e98130bd2d7c54e34d83f450fb1a164 (13:02 UTC; the commit on top of it, 2bc36ce6, is a status and changes no code). It holds the engine take, 31 files:
+- the far Sun from code (src/space/farsun/, with its one line of wiring in src/stops/sun/set.ts, src/stops/mercury/set.ts and the travel);
+- the shares by height in the handover (src/director/handover.ts, film.ts, tools/handover.ts);
+- the globe's cap cure (src/bodies/cap.ts, src/bodies/planet.ts).
+MEASURED on it here: build 0, tsc 0, 485 tests in 49 files pass, G11 pass, cues 46 segments and 17 handovers. On the machines before the take (proof fh1): 19 of 19 jobs back, the frames of the stops that do not use these pieces keep their bytes at the draft tier.
+
+Standing from it:
+1. Merge origin main at your next commit, run the tests on the merge, and name commits only on top of it.
+2. If you named a commit that was cut before it, I take your three folders onto main as they are. Where main changed a file inside your folders (only src/stops/sun/set.ts and src/stops/mercury/set.ts, one line each) I merge that file three way and tell you if it does not merge clean.
+3. Rounds 41 (Venus) and 42 (Neptune) are starting on this main. No stop is taken onto main between the start and the pack of those two rounds. Takes that touch tools only may land.
+4. One shared test ran over its 5 second limit on a loaded machine (tests/globe-cap.test.ts, "brings a colour level in by the texels of its parent"), and passes alone. If you see it, run that file alone, report both results, and do not touch the test.
+No answer needed.
+
+MAIL 671 from the Builder (/root) to mercury_builder (read 13:24 UTC, high), verbatim. RECEIPT of your third NAMED 041b3ba072bf359407d1ccfb7112520ab6aa7633, and of your two mails after it (the test run; the correction for the rise 977 to 986).
+
+Verified: 041b3ba0 was the head of agent/mercury-place when I read it; your later heads are notes only. Against your merge base 62ff7be6 nothing outside your three folders differs. Mercury stays on handover.ownPath.
+
+The far Sun's wiring: main c8888d57 changed one line of src/stops/mercury/set.ts after your merge (the gain of sunPlate.update gets the factor (shot.sun.far ? 0 : 1)). I merged the file three way: clean, your 441 lines with that one line changed (your line 387). That is the file in the proof tree and the file I take. When you merge main you will get the same line.
+
+Proof tree: 93607f340345a6ddaf2c39bc97b24d4fd53f8b9b on builder/proof-me3 = main c8888d57 with your three folders (20 files differ from main). On the machines now, 27 jobs: the stop check me3 (the 115 draft frames against main, finals 615 and 870, the handover report, the measure, the warm list, G11 and G15), the pictures as 8 slices (my3) and the report in 4 parts (mk3: whole dive, whole rise, path with place and parity, warm and counts).
+
+Rulings:
+1. This is your third commit. It goes into its round as it stands, and what the machines' report shows red is written into that round as severe issues, beside the critics'. What you state yourself (dive 739 to 751, 0.92 at 747; rise 964 to 972, 0.64 at 971; rise 977 to 986, 1.18 at 981 + 1/2, with the second pair in the lower left from 981 + 1/2 on) is noted as STATED until the machines' numbers are in.
+2. The test run: the one red is a time limit in a shared test that passes alone. Not yours. I run the whole suite on the proof tree at the take.
+3. Your round is in the next batch, after rounds 41 (Venus) and 42 (Neptune) are packed. Until then, go on with the cure of both pairs (the limb band of the two far grounds, and the close ground against the globe's plates by the eye's height), on top of main c8888d57. That work is the fix of your round 1 and is named for round 2. Do not name it before I send you the issues of round 1, unless a cure is whole and measured before then: in that case tell me and I decide whether round 1 judges it.
+4. Check first whether the second pair is also what is left of the dive at 741 to 751, since your line there rests on two change panels only, and send me the answer in one line.
+
+- 13:25 PLAN: (a) merge main, build, tests on the merge; (b) ruling 4: dive 739 to 755 of the named state rendered again, the worst point of every row and change panels at 741, 743, 745, 747, 749, 751, then one line to the Builder; (c) the cure of both pairs.
+
