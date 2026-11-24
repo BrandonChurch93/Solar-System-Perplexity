@@ -1,9 +1,33 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T23:29:12.798Z",
+ "pushed": "2026-11-24T23:35:15.647Z",
  "head": "15d489e9e70ff9fb2c598d02ba7fb0288f6d799e",
- "note": "round 2 state with the true far Sun: dive 736 to 783 every frame, the sheet about T",
+ "note": "MAIL 770: b0b87889 beside the round 2 state at 60 a second, 739 to 759; render of 690 to 735 runs",
  "looks": [
+  {
+   "time": "2026-11-24T23:35:14.529Z",
+   "file": "20261124233514529-note-b0a1-05.jpg",
+   "source": "out/work/mercury/place/sheets/b0a1-05.jpg",
+   "kind": "note",
+   "label": "b0b87889 on top, round 2 state below, half frames, sheet 05",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T23:35:13.301Z",
+   "file": "20261124233513301-note-b0a1-03.jpg",
+   "source": "out/work/mercury/place/sheets/b0a1-03.jpg",
+   "kind": "note",
+   "label": "b0b87889 on top, round 2 state below, half frames, sheet 03",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T23:35:12.043Z",
+   "file": "20261124233512043-note-b0a1-01.jpg",
+   "source": "out/work/mercury/place/sheets/b0a1-01.jpg",
+   "kind": "note",
+   "label": "b0b87889 on top, round 2 state below, half frames, sheet 01",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T23:29:11.536Z",
    "file": "20261124232911536-note-a1-d3.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/mercury/place/sheets/a1-T-hz.jpg",
    "kind": "note",
    "label": "round 2 state, T: horizon and sky at 758 + 1/2, 759 + 1/2, 760 + 1/2, native size",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T23:29:06.760Z",
-   "file": "20261124232906760-note-a1-T-ll.jpg",
-   "source": "out/work/mercury/place/sheets/a1-T-ll.jpg",
-   "kind": "note",
-   "label": "round 2 state, T: lower left ground at 758 + 1/2, 759 + 1/2, 760 + 1/2",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T23:29:05.394Z",
-   "file": "20261124232905394-note-a1-T-dive.jpg",
-   "source": "out/work/mercury/place/sheets/a1-T-dive.jpg",
-   "kind": "note",
-   "label": "round 2 state, dive about T (759 + 1/2): 749 + 1/2 to 763 + 1/2, draft, true far Sun",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T23:07:30.167Z",
-   "file": "20261124230730167-note-b0-web-full.jpg",
-   "source": "out/work/mercury/place/sheets/b0-web-full.jpg",
-   "kind": "note",
-   "label": "b0 dive 699 to 729: web set on top, full set below",
    "stop": "mercury"
   }
  ]
