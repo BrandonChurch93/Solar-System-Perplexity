@@ -1,9 +1,33 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T19:22:37.780Z",
- "head": "2c088fa97c35f5c7ea1893b997c7b34caa6ede4d",
- "note": "19:24 ruling 1 and 3: the near plate rebuilt on the globe's own picture, first take; nothing committed yet under src or public (a render runs)",
+ "pushed": "2026-11-24T19:47:12.548Z",
+ "head": "f62f610b47e888abf747d2f686cef8a007446244",
+ "note": "19:50 UTC: MAIL 725 read; item 1 cause confirmed by the globe's own curve (place lit at ndl 0.84, close view painted at ndl 0.53 to 0.59); the place moves next",
  "looks": [
+  {
+   "time": "2026-11-24T19:47:11.918Z",
+   "file": "20261124194711918-note-jupiter-rise-changes.jpg",
+   "source": "out/work/logs/bU/jupiter-rise-changes.png",
+   "kind": "note",
+   "label": "rise of head f62f610, pattern changes (red 0.67 at 3261 + 1/2)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T19:47:11.346Z",
+   "file": "20261124194711346-note-jupiter-dive-changes.jpg",
+   "source": "out/work/logs/bU/jupiter-dive-changes.png",
+   "kind": "note",
+   "label": "dive of head f62f610, pattern changes (red 0.76 at 3019 + 1/2): the two looks of the place, the cause is one Sun at 57 degrees against a view lit at about 33",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T19:47:10.650Z",
+   "file": "20261124194710650-note-look-pair-3150.jpg",
+   "source": "../work/r3/look-pair-3150.jpg",
+   "kind": "note",
+   "label": "close view: approved image (left) beside frame 3150 of head f62f610 (right); round 2 list item 1 not built yet",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-24T19:22:36.059Z",
    "file": "20261124192236059-note-near-plate-r2t1.jpg",
@@ -194,30 +218,6 @@
    "source": "../work/sky/c2997-pair.jpg",
    "kind": "note",
    "label": "2997 final tier: left the merge (8fec1528), right the working tree (2e7fd007): the sky is another part of the star field; on the sphere 16480 of 1716543 pixels differ, each by one level, none deeper than 300 px from the limb",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T17:38:22.190Z",
-   "file": "20261124173822190-note-Dt-right2.jpg",
-   "source": "../work/sky/Dt-right2.png",
-   "kind": "note",
-   "label": "dive 2994 to 2997, right quarter at full size, level times 2, working tree",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T17:38:21.126Z",
-   "file": "20261124173821126-note-Dt-left1.jpg",
-   "source": "../work/sky/Dt-left1.png",
-   "kind": "note",
-   "label": "dive 2990 to 2993, left quarter at full size, level times 2, working tree: the sky moves 1.00 to 1.2 degrees a frame, as the camera turns",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T17:38:20.158Z",
-   "file": "20261124173820158-note-Rt-sky1.jpg",
-   "source": "../work/sky/Rt-sky1.png",
-   "kind": "note",
-   "label": "rise, sky windows at full size, working tree: stars are points, the field moves only as the camera turns",
    "stop": "jupiter"
   }
  ]
