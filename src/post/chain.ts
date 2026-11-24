@@ -71,7 +71,6 @@ uniform int uMode;
 uniform sampler2D uStreak;
 uniform float uFlare;
 uniform float uSharpen;
-uniform float uLimit;
 uniform vec2 uPixel;
 in vec2 vUv;
 out vec4 outColor;
@@ -112,13 +111,11 @@ void main() {
   float vig = mix(1.0, 1.0 / pow(1.0 + r2 * 0.9, 2.0), uVignette);
   vec3 c = develop(hdr, bloom, streak, vig);
   if (uSharpen > 0.0) {
-    vec3 east = develop(texture(uScene, vUv + vec2(uPixel.x, 0.0)).rgb, bloom, streak, vig);
-    vec3 west = develop(texture(uScene, vUv - vec2(uPixel.x, 0.0)).rgb, bloom, streak, vig);
-    vec3 north = develop(texture(uScene, vUv + vec2(0.0, uPixel.y)).rgb, bloom, streak, vig);
-    vec3 south = develop(texture(uScene, vUv - vec2(0.0, uPixel.y)).rgb, bloom, streak, vig);
-    vec3 around = east + west + north + south;
-    vec3 sharp = max(c + uSharpen * (c - around * 0.25), vec3(0.0));
-    c = uLimit > 0.5 ? clamp(sharp, min(c, min(min(east, west), min(north, south))), max(c, max(max(east, west), max(north, south)))) : sharp;
+    vec3 around = develop(texture(uScene, vUv + vec2(uPixel.x, 0.0)).rgb, bloom, streak, vig)
+      + develop(texture(uScene, vUv - vec2(uPixel.x, 0.0)).rgb, bloom, streak, vig)
+      + develop(texture(uScene, vUv + vec2(0.0, uPixel.y)).rgb, bloom, streak, vig)
+      + develop(texture(uScene, vUv - vec2(0.0, uPixel.y)).rgb, bloom, streak, vig);
+    c = max(c + uSharpen * (c - around * 0.25), vec3(0.0));
   }
   float l = dot(c, vec3(0.2126, 0.7152, 0.0722));
   c = mix(vec3(l), c, uSaturation);
@@ -191,7 +188,7 @@ export class PostChain {
     this.final = new Pass(FINAL, {
       uScene: { value: null }, uBloom: { value: null }, uBloomStrength: { value: 0.1 }, uBloomNorm: { value: 1 / LEVELS }, uExposure: { value: 1 },
       uVignette: { value: 0.5 }, uGrain: { value: 0.01 }, uSaturation: { value: 1 }, uContrast: { value: 1 }, uLift: { value: new THREE.Vector3() }, uGain: { value: new THREE.Vector3(1, 1, 1) },
-      uFade: { value: 1 }, uFrame: { value: 0 }, uAspect: { value: 16 / 9 }, uMode: { value: 0 }, uStreak: { value: null }, uFlare: { value: 0 }, uSharpen: { value: 0 }, uLimit: { value: 0 }, uPixel: { value: new THREE.Vector2() },
+      uFade: { value: 1 }, uFrame: { value: 0 }, uAspect: { value: 16 / 9 }, uMode: { value: 0 }, uStreak: { value: null }, uFlare: { value: 0 }, uSharpen: { value: 0 }, uPixel: { value: new THREE.Vector2() },
     })
     this.streak = new Pass(STREAK, { uTex: { value: null }, uStep: { value: new THREE.Vector2() }, uThreshold: { value: 0 } })
   }
@@ -251,7 +248,6 @@ export class PostChain {
     f.uStreak!.value = this.streaks[1]!.texture
     f.uFlare!.value = p.flare
     f.uSharpen!.value = isRaw(diag) || diag === 'ungraded' ? 0 : p.sharpen * (accumulated ? 1 : LIVE_SHARPEN)
-    f.uLimit!.value = accumulated ? 1 : 0
     ;(f.uPixel!.value as THREE.Vector2).set(1 / this.width, 1 / this.height)
     f.uScene!.value = scene
     f.uBloom!.value = acc
