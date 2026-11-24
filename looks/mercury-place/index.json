@@ -1,6 +1,6 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T02:07:26.606Z",
+ "pushed": "2026-11-24T02:07:36.319Z",
  "head": "c6bbaf6be2a2b9365830f4673441748fa0205660",
  "note": "dive side difference traced: the spin's cos and sin in the globe shader are 1e-4 off on this renderer; cure is to pass them from the plan",
  "looks": [
