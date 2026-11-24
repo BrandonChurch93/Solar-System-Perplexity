@@ -375,24 +375,32 @@ export class Ground {
       const map = await ctx.texture(base + t.file, { srgb: true, anisotropy: 8 })
       const [dw, dh] = t.distSize
       const [x0, y0, bw, bh] = t.box
-      const field = async (file: string): Promise<(x: number, y: number) => number> => {
-        const data = unpack(await ctx.buffer(base + file), dw * dh, file)
-        return (x, y) => {
-          const px = Math.min(Math.max(((x - x0) / bw) * dw - 0.5, 0), dw - 1)
-          const py = Math.min(Math.max(((y - y0) / bh) * dh - 0.5, 0), dh - 1)
-          const ix = Math.min(Math.floor(px), dw - 2)
-          const iy = Math.min(Math.floor(py), dh - 2)
-          const tx = px - ix
-          const ty = py - iy
-          const a = data[iy * dw + ix]!
-          const b = data[iy * dw + ix + 1]!
-          const c = data[(iy + 1) * dw + ix]!
-          const e = data[(iy + 1) * dw + ix + 1]!
-          return (a * (1 - tx) + b * tx) * (1 - ty) + (c * (1 - tx) + e * tx) * ty
-        }
+      const grid = async (file: string): Promise<Float32Array> => unpack(await ctx.buffer(base + file), dw * dh, file)
+      const least = (data: Float32Array, rx: number, ry: number) => (x: number, y: number): number => {
+        const i0 = Math.max(Math.floor(((x - rx - x0) / bw) * dw - 0.5), 0)
+        const i1 = Math.min(Math.ceil(((x + rx - x0) / bw) * dw - 0.5), dw - 1)
+        const j0 = Math.max(Math.floor(((y - ry - y0) / bh) * dh - 0.5), 0)
+        const j1 = Math.min(Math.ceil(((y + ry - y0) / bh) * dh - 0.5), dh - 1)
+        let v = Infinity
+        for (let j = j0; j <= j1; j++) for (let i = i0; i <= i1; i++) v = Math.min(v, data[j * dw + i]!)
+        return v === Infinity ? 0 : v
       }
-      const lift = await field(t.dist)
-      const half = t.body ? await field(t.body) : (): number => 0
+      const field = (data: Float32Array) => (x: number, y: number): number => {
+        const px = Math.min(Math.max(((x - x0) / bw) * dw - 0.5, 0), dw - 1)
+        const py = Math.min(Math.max(((y - y0) / bh) * dh - 0.5, 0), dh - 1)
+        const ix = Math.min(Math.floor(px), dw - 2)
+        const iy = Math.min(Math.floor(py), dh - 2)
+        const tx = px - ix
+        const ty = py - iy
+        const a = data[iy * dw + ix]!
+        const b = data[iy * dw + ix + 1]!
+        const c = data[(iy + 1) * dw + ix]!
+        const e = data[(iy + 1) * dw + ix + 1]!
+        return (a * (1 - tx) + b * tx) * (1 - ty) + (c * (1 - tx) + e * tx) * ty
+      }
+      const lift = field(await grid(t.dist))
+      const cells = Math.max(2, Math.round(look.towerMesh))
+      const half = t.body ? least(await grid(t.body), bw / cells, bh / Math.max(2, Math.round((cells * bh) / bw))) : (): number => 0
       const sheet = (side: number): THREE.BufferGeometry => {
         const deep: number[] = []
         const geo = build(t.box, 0, 0, look.towerMesh, (x, y, d) => {
