@@ -11,7 +11,7 @@ import { setCapture, spanMid } from '../src/core/clock'
 import type { Pose } from '../src/core/types'
 import { plans } from '../src/director/plans'
 import { LANDING_FROM, MIN_POINTS, carriedCamera, curves, landingCurves, ringPlane, sampleLanding, sampleWindow, sphereHit, type Kind, type Plane, type Ring } from './smooth/camera'
-import { LANDING_FLOOR, LANDING_LATE, judgeCurve, judgeLanding, longestGap, position, shown, table, type CurveResult, type Fault, type LandingResult, type Row } from './smooth/path'
+import { LANDING_FLOOR, LANDING_LATE, LANDING_SHOWN, judgeCurve, judgeLanding, longestGap, position, shown, table, type CurveResult, type Fault, type LandingResult, type Row } from './smooth/path'
 
 // The measures of a smooth dive and rise (kit/PROGRESS.md, second review note of 2026-11-23, plan I). One stop.
 //   npm run smooth -- --stop ID [--kind dive|rise|landing] [--only path,pictures,place,parity,counts] [--rate N] [--calibrate] [--ring picture|ground]
@@ -168,8 +168,8 @@ function landingOf(): LandingKind | null {
     segment: w.travel.id, into: w.hold.id, firstFrame: w.landingFrame, holdFrame: w.travel.endFrame, window: [w.firstFrame, w.firstFrame + w.frames - 1], judged, runs,
     rows: table(shifted, fine ? runs[1]!.curves : null, w.firstFrame, w.frames, fine ? fine.k0 : 0, fine ? fine.rate : 1),
     sides: Array.from({ length: w.frames }, (_, i) => w.samples[w.firstFrame + i - w.k0]!.segment),
-    faults: named(false).filter(() => judged),
-    shown: [...named(false).filter(() => !judged), ...named(true)].map((x) => x.text),
+    faults: named(false).filter((x) => judged && !LANDING_SHOWN.includes(x.rule)),
+    shown: [...named(false).filter((x) => !judged || LANDING_SHOWN.includes(x.rule)), ...named(true)].map((x) => x.text),
   }
 }
 
@@ -729,7 +729,7 @@ function landingText(p: LandingKind | null): string[] {
       lines.push('| ' + [r.rate === 1 ? 'whole frames' : 'rate ' + r.rate, c.name, Number(c.mean.toPrecision(4)) + ' px' + (c.floored ? ' (under the floor ' + c.floor + ' px, its values are over the floor; shown, not judged)' : ''), cell(c.first), cell(c.hold), cell(c.seam?.value, 3, L.maxStep), pos(c.seam), cell(c.halfSeam?.value, 3, L.maxStep), pos(c.halfSeam), cell(c.peakLoss?.value), pos(c.peakLoss), cell(c.growth?.value, 3, L.maxStep), pos(c.growth), cell(c.hump.value, 3, L.maxRebound), pos(c.hump), cell(c.dip?.value, 3, L.maxStep), pos(c.dip)].join(' | ') + ' |')
     }
   }
-  lines.push('', 'Limits: step ' + L.maxStep + ' of the mean over one film frame from ' + L.seamFrames + ' film frames before the hold to ' + L.seamFrames + ' into it; the largest loss not in the last ' + LANDING_LATE + ' film frames before the hold, and no loss there larger than the one a film frame before by more than ' + L.maxStep + '; no loss under a third of the one a film frame before while the speed is over the hold\'s own; climb after a fall ' + L.maxRebound + '; not under the hold\'s own by more than ' + L.maxStep + '. A loss and a speed over the hold\'s own count from ' + LANDING_FLOOR + ' of the mean. A curve whose mean is under ' + L.floors.speedPx + ' px a film frame stands still in the picture: it is given over that floor, shown and not judged. The ' + S.reachFrames + ' film frames before the landing and the frames further into the hold are shown and not judged.', '')
+  lines.push('', 'Limits: step ' + L.maxStep + ' of the mean over one film frame from ' + L.seamFrames + ' film frames before the hold to ' + L.seamFrames + ' into it; the largest loss not in the last ' + LANDING_LATE + ' film frames before the hold, and no loss there larger than the one a film frame before by more than ' + L.maxStep + '; no loss under a third of the one a film frame before while the speed is over the hold\'s own; climb after a fall ' + L.maxRebound + '; not under the hold\'s own by more than ' + L.maxStep + '. A loss and a speed over the hold\'s own count from ' + LANDING_FLOOR + ' of the mean. The two rules of the loss (where the largest lies and how it grows, and letting go) are shown and not judged: the path alone does not part a good arrival from a bad one by them. A curve whose mean is under ' + L.floors.speedPx + ' px a film frame stands still in the picture: it is given over that floor, shown and not judged. The ' + S.reachFrames + ' film frames before the landing and the frames further into the hold are shown and not judged.', '')
   if (p.faults.length) lines.push(...p.faults.map((f) => '- RED ' + f.text), '')
   else lines.push(p.judged ? 'No judged number of the landing is over its limit.' : 'Nothing of this landing is judged.', '')
   if (p.shown.length) lines.push(...p.shown.map((t) => '- shown, not judged: ' + t), '')

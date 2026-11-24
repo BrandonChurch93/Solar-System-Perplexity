@@ -224,6 +224,8 @@ export function judgeCurve(name: string, unit: string, raw: (number | null)[], k
 // A loss and a speed over the hold's own count for lateBrake and letGo from LANDING_FLOOR of the mean.
 export const LANDING_LATE = 4
 export const LANDING_FLOOR = 0.01
+// The path alone does not part a good arrival from a bad one by these three (travel_builder, 2026-11-24): the tool shows them and does not judge them.
+export const LANDING_SHOWN: Fault['rule'][] = ['lateBrake', 'brakeGrows', 'letGo']
 
 export interface LandingResult {
   name: string
