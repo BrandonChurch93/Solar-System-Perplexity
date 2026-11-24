@@ -4777,3 +4777,112 @@ Attached: neptune-dive.md, neptune-rise.md, neptune-dive-p4of8-changes.png, nept
   code's own objects (the eye of 1 unit, streamers 1 to 3) are in no map and are never under 8 px, so they stay newcomers at
   8 to 3 units of distance unless either the hold's map takes them (4605 changes) or the scene draws the map's forms (4860's
   composition moves). That fork goes to the Builder with frames.
+
+## MAIL 670 from the Builder (/root), read 13:25 UTC, low priority, word for word
+
+MAIL 670 from the Builder (/root) to every builder. Main moved.
+
+Main is at c8888d579e98130bd2d7c54e34d83f450fb1a164 (13:02 UTC; the commit on top of it, 2bc36ce6, is a status and changes no code). It holds the engine take, 31 files:
+- the far Sun from code (src/space/farsun/, with its one line of wiring in src/stops/sun/set.ts, src/stops/mercury/set.ts and the travel);
+- the shares by height in the handover (src/director/handover.ts, film.ts, tools/handover.ts);
+- the globe's cap cure (src/bodies/cap.ts, src/bodies/planet.ts).
+MEASURED on it here: build 0, tsc 0, 485 tests in 49 files pass, G11 pass, cues 46 segments and 17 handovers. On the machines before the take (proof fh1): 19 of 19 jobs back, the frames of the stops that do not use these pieces keep their bytes at the draft tier.
+
+Standing from it:
+1. Merge origin main at your next commit, run the tests on the merge, and name commits only on top of it.
+2. If you named a commit that was cut before it, I take your three folders onto main as they are. Where main changed a file inside your folders (only src/stops/sun/set.ts and src/stops/mercury/set.ts, one line each) I merge that file three way and tell you if it does not merge clean.
+3. Rounds 41 (Venus) and 42 (Neptune) are starting on this main. No stop is taken onto main between the start and the pack of those two rounds. Takes that touch tools only may land.
+4. One shared test ran over its 5 second limit on a loaded machine (tests/globe-cap.test.ts, "brings a colour level in by the texels of its parent"), and passes alone. If you see it, run that file alone, report both results, and do not touch the test.
+No answer needed.
+
+## 24 Nov, 12:56 to 13:50 UTC: the far look of the scene is the globe's map (trial, not yet committed), and what it leaves
+
+Lab log, in the order it happened. Every number here is from preview draft frames and from MY proxy (assets-src/neptune/check/weave.py,
+the report's pattern function on two frames 8 apart, the later carried back by the poses), not from the tool. No green is claimed.
+
+1. Built (working tree): planet.ts gives the scene the declarations it lacked (uShadow, uTint, uDeck, uCloud in MAP_UNIFORMS and
+   MAP_DECL; the globe's own shader text is the same, checked by its hash at 12:56). deep.ts takes mapGlsl with every uniform
+   renamed with a G and shares the globe's uniform OBJECTS, so both shaders read one state. set.ts gives the map's state in the
+   surface view too (spin, stream, storm angle, cirrus, shadow, home by the off axis angle) and the turn from the scene to the
+   globe's body. The far look is read where the ray meets the smooth planet: the map's deck under the globe's curve of light with
+   the globe's shadow of its cloud layer, the cloud layer as a sheet under the globe's curve for cloud.
+2. Registration, SEEN: the map alone in the scene (far.on 2) at 4716 lies on the globe's own picture to the pixel.
+3. First law (by the eye's distance, 3 to 8 units), MEASURED pairs: 4704 0.14, 4708 0.29, 4712 0.33, 4716 0.14, 4720 0.19,
+   4723 0.29, 4724 0.33, 4727 0.55, 4728 0.49, 4732 0.61, 4736 1.18, 4740 1.26, 4744 1.32, 4748 1.01, 4752 0.73.
+   Pushed head for comparison: 4704 0.70, 4708 0.44, 4712 0.69, 4716 0.71, 4720 1.15, 4723 1.18, 4724 1.12, 4727 0.96,
+   4728 0.85, 4732 0.22, 4736 0.34, 4740 0.54. So the upper exchange is gone and the whole of it sat at 8 to 3 units of distance.
+   SEEN there: streamer 1 grows inside the map's white band, a dark near deck spreads from the lower left, the code's eye
+   appears at the lower end of the map's hook.
+4. The map alone at 4860 (far.on 2), SEEN beside the approved image: the map's dark oval lies right of the code's eye, the hook
+   is a white streak above it, and the map's broad white band fills the lower left of the frame from the line of streamer 1 to
+   the corner, where the approved image and the scene have the dark near deck. So the map's band cannot stay near the ground
+   without changing the composition of 4860, and the code's eye and streamers are in no map. That is the fork (below).
+5. The tool's measure read (tools/img/smooth.py, pattern): 1 minus the local correlation of the detail between 8 and 40 px,
+   each divided by its local contrast, the 99th percentile over the frame, limit 0.45. Two things follow. A level or a veil
+   counts little, detail counts. And a blend between two unrelated patterns reads by how fast the ODDS between them change:
+   for a step that changes the odds by a factor f the measure is 1 - 2 / (sqrt(f) + 1 / sqrt(f)), 0.30 at f = 6. A smoothstep
+   has an end where the last of the leaving picture goes out in one step (f without bound).
+6. Second law: the code's own picture stands round ONE spot of ground (the point under the eye of 4860; whole within 3 units,
+   none beyond 8), so no point of the ground changes its picture because the eye moves, and it comes in by the eye's height
+   alone. With a smoothstep of the logarithm from 0.9 to 0.036 radii, MEASURED: 4704 0.14, 4708 0.29, 4712 0.33, 4716 0.14,
+   4720 0.19, 4724 0.33, 4728 0.49, 4732 0.54, 4736 0.65, 4740 0.82, 4744 0.92, 4748 0.61, 4752 0.71.
+   CONTROL (far.on 0, which is the head's scene): 4740 0.54, 4744 0.55, 4748 0.61, 4752 0.71, all at the lumps of streamer 1.
+   The tool calls the head green there, so my proxy has a floor of 0.54 to 0.71 under 0.08 radii (it carries the later frame
+   back on the smooth sphere and the lumps stand above it). 4748 and 4752 of the trial ARE that floor.
+7. Third law, the one in the tree now: the same, with the law whose odds are a power of the height (cut off at a share of
+   0.01 at both ends; deep.json far.height, far.tail). Shares by frame: 4712 0.014, 4716 0.046, 4720 0.115, 4724 0.246,
+   4728 0.446, 4732 0.666, 4736 0.838, 4740 0.930, 4744 0.975, 4748 0.993, 4752 1. MEASURED: 4708 0.29, 4712 0.33,
+   4716 0.14, 4720 0.30, 4724 0.43, 4728 0.67, 4732 0.62, 4736 0.68, 4740 0.68, 4744 0.75, 4748 0.61, 4752 0.71.
+   Flatter than the smoothstep, no end step, and still over the limit by my proxy from 4728 to 4744. Where the two pictures
+   are opposite (the white band over the dark deck) a blend passes through no contrast and comes out reversed, at any speed.
+8. Tone, SEEN at 13:42 on a sheet of head against trial: with a tone of my own (1.5, 1.0, 0.65) the far look stood teal and
+   bright at 4724 where the globe's own picture is navy under the grade of the fall, and the leaving band read purple. Cause:
+   the scene is graded only by the rest of the way (1 over power at the top, 1 at the ground), so the map's azure came through
+   ungraded. Cure: the far look takes the globe's own grade of the fall at its full strength (the same lines as planet.ts,
+   deep.json globe.fall), on the colour as the film shows it. Then the scene's grade by height completes it to exactly the
+   globe's grade at every height. No tone of my own is left (far.tone, far.power, far.cloud are 1).
+   SEEN after it: 4716 and 4724 of the trial stand in the tone of the globe; the storm of the globe (dark oval, white streak)
+   is one picture to 4724, the eye and the streamers grow in under it from 4728, the band thins to 4744.
+   MEASURED after it: 4716 0.39, 4724 0.39, 4732 0.68, 4740 0.99 (at the limb on the right, where the scene's border of 16 to
+   26 degrees hands the limb band from the globe to the scene; the head has the same border).
+   4860: far field means (linear) R 0.0177, G 0.0559, B 0.1438 against the approved 0.0416, 0.1067, 0.2041 (pushed head
+   0.0179, 0.0565, 0.1401, so the grade lands where the head stood); G17 at preview draft median 1.331, p25 0.772 (pushed head
+   at the same format 1.286 and 0.615). The tiles of the limb row at the left read 33, 6.3, 6.7, 8.5, 8.3 times the approved's
+   detail: cyan dabs and streaks of the map by the limb. Named, not cured.
+9. Known and named at this hour: (a) the exchange is flatter and is still an exchange: the white band of the map leaves over
+   the dark near deck, the eye and the streamers come in, 4728 to 4744; (b) the leaving band reads lilac at 4740; (c) the
+   limb on the right at 4740 to 4748; (d) cyan dabs by the limb at 4860; (e) the far field of 4860 is darker than the
+   approved, as at the head; (f) the rise is not worked; (g) the grade's lines stand twice (planet.ts and deep.ts), one text
+   is owed.
+10. Looks pushed 13:10 (62e49fb6) and 13:49 (fa1c5e94). The tool itself runs on the trial from 13:48 (capture frames 9440 to
+    9514), one render, nothing else beside it.
+
+The fork, as I see it at this hour: 4605 keeps its bytes and the composition of 4860 stays, so two pictures of one place are
+fixed and they are not one picture: the map has a broad white band where the scene has its dark near deck, and the scene's eye
+(3.8 units across with its collar) and streamers are in no map. What can be one picture is one now (everything beyond 8 units
+of the place is the map itself, by the same lines). What cannot be is brought in by height at the slowest law the dive has
+room for. To make it one picture needs one of: the map takes the scene's objects at the place (4605 changes); the scene
+carries the map's band and oval at the place (4860's composition changes); or the place moves 2 to 3 units so that the code's
+eye stands in the map's own vortex (the path of the dive and the far field of 4860 move, the band stays a difference).
+
+## 24 Nov, 13:57 to 14:13 UTC: the tool stopped, the checks of the trial, the rise measured by the proxy
+
+1. The tool on the trial (capture frames 9440 to 9514) was stopped by me at 13:58 at 20 of 108 draft frames, 459 s: 23 s a
+   frame, so it would have ended near 14:30 and held every other check (one render at a time). NO NUMBER OF THE TOOL STANDS
+   FOR THE TRIAL. Every number below is my proxy (preview draft, pairs 8 frames apart, the report's pattern function).
+2. 4605 at preview draft: sha256 begins 9ef19839, the same bytes as the kept frame of the plates round
+   (out/work/nep/plates/after/f4605.png). The hold keeps its bytes at this format; the final is not rendered by me.
+3. SEEN, every frame of the sheet: 4757, 4758, 4769, 4770 (the change of view in the dive) and 4949, 4950, 4956, 4957, 4958
+   (in the rise) stand as one picture across the change; the cyan dab by the limb at the upper left is in all of them.
+4. The rise, MEASURED by the proxy, head's scene (far.on 0) against the trial, same poses:
+   4964 to 4972: 0.98 against 1.31 (heights 0.038 to 0.072; the trial's largest is at the lower edge, the map's band coming in
+   over the dark near deck, lilac)
+   4972 to 4980: 0.41 against 1.06 (0.072 to 0.157)
+   4980 to 4988: 1.51 against 0.59 (0.157 to 0.343; the tool's red of MAIL 654 stood here, 1.47 at 4980 + 1/2)
+   4988 to 4996: 1.15 against 0.47 (0.343 to 0.749)
+   4996 to 5004: 0.37 against 0.15
+   So in the rise the trial takes the exchange out of 4980 to 4996 and puts a new one at 4964 to 4980: the same fork seen from
+   below. The rise climbs 0.64 to 0.78 e-folds in 8 frames; the law has 3.2 e-folds, so the place leaves within about 28 frames.
+5. SEEN and checked against the head's scene: the warm specks on the night side at 4988 and 4996 are in the head's scene too,
+   at the same spots (c5 against f5). Not of this change. Named as a red of the rise that stands.
+6. tsc clean. The globe's shader text for 0, 3 and 8 plates keeps its hashes (bf3362b2, 43355d83, 03d549e3).
