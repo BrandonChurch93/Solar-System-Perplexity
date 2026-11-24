@@ -1,9 +1,47 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T08:17:55.193Z",
- "head": "b9c472dcb3c21b8ad6db203bd2872116352421e0",
- "note": "second commit in proof: T sheets of dive (2467 to 2481) and rise (2671 to 2685): one ground on both sides, tone and sky still jump",
+ "pushed": "2026-11-24T08:41:24.563Z",
+ "head": "85cadf1c78e27d682ad14c323c54398c8343f551",
+ "note": "plan F in the set: the close view's meshes drawn in the globe's scene through the twin, 2476 beside 2477 (P1 first try with holes and veil, Q1 depth cleared and air on the sky only)",
  "looks": [
+  {
+   "time": "2026-11-24T08:41:23.998Z",
+   "file": "20261124084123998-note-Q1.jpg",
+   "source": "out/work/place/see/Q1.jpg",
+   "kind": "note",
+   "label": "Mars plan F: globe side frame 2476 with the close view's own ground in its scene (left) beside the close side 2477 (right), draft; Q1",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T08:41:23.443Z",
+   "file": "20261124084123443-note-P1.jpg",
+   "source": "out/work/place/see/P1.jpg",
+   "kind": "note",
+   "label": "Mars plan F: globe side frame 2476 with the close view's own ground in its scene (left) beside the close side 2477 (right), draft; P1",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T08:19:25.758Z",
+   "file": "20261124081925758-compare-mars-rise-sides.jpg",
+   "source": "out/work/handover/mars-rise-sides.png",
+   "kind": "compare",
+   "label": "mars rise, both sides at T (frame 2681) and their difference times 8",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "frame": 2681,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T08:18:54.698Z",
+   "file": "20261124081854698-compare-mars-dive-sides.jpg",
+   "source": "out/work/handover/mars-dive-sides.png",
+   "kind": "compare",
+   "label": "mars dive, both sides at T (frame 2477) and their difference times 8",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2477,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-24T08:17:54.608Z",
    "file": "20261124081754608-note-H-rise-2.jpg",
@@ -34,38 +72,6 @@
    "source": "out/work/place/see/H-dive-1.jpg",
    "kind": "note",
    "label": "second commit in proof: every frame 10 before T to 4 after, draft, H-dive-1",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T08:01:34.489Z",
-   "file": "20261124080134489-note-G-crop.jpg",
-   "source": "out/work/place/see/G-crop.jpg",
-   "kind": "note",
-   "label": "cure A v6 (in proof, not yet committed): G-crop; fan border wanders, made ground takes the fan's tone",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T08:01:33.925Z",
-   "file": "20261124080133925-note-G2.jpg",
-   "source": "out/work/place/see/G2.jpg",
-   "kind": "note",
-   "label": "cure A v6 (in proof, not yet committed): G2; fan border wanders, made ground takes the fan's tone",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T08:01:33.075Z",
-   "file": "20261124080133075-note-G1.jpg",
-   "source": "out/work/place/see/G1.jpg",
-   "kind": "note",
-   "label": "cure A v6 (in proof, not yet committed): G1; fan border wanders, made ground takes the fan's tone",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T07:49:40.254Z",
-   "file": "20261124074940254-note-F3.jpg",
-   "source": "out/work/place/see/F3.jpg",
-   "kind": "note",
-   "label": "cure A v5 (not committed): F3; pale slivers gone, straight fan border still there from above and at 2470",
    "stop": "mars"
   }
  ]
