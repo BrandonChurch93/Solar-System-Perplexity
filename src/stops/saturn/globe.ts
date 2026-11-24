@@ -105,7 +105,9 @@ uniform vec3 uBandFine;
 uniform vec4 uBandFit;
 uniform vec4 uBandMore;
 uniform vec3 uBandTint;
-uniform float uBandCalm;
+uniform float uBandWide;
+uniform vec3 uBandZone;
+uniform vec3 uBandRelief;
 uniform vec3 uTerm;
 uniform sampler2D uTable;
 uniform float uNightFloor;
@@ -178,7 +180,8 @@ float bandFine(float lon, float lat, vec4 rate, out float drawn) {
     cell *= 0.5;
     amount *= uBandMore.z;
   }
-  return sum;
+  // some belts are more streaked than others: the strength changes with the latitude alone
+  return sum * mix(uBandZone.x, uBandZone.y, bandNoise(vec2(0.5, lat / uBandZone.z), 1, uint(uBandMore.w) + 977u));
 }
 vec3 curveAt(float ndl) {
   float x = clamp(ndl * 0.5 + 0.5, 0.0, 1.0) * 32.0;
@@ -210,6 +213,7 @@ void main() {
   vec3 albedo = inverseFilmic(equirectGrad(uMap, d, uGrad).rgb);
   vec3 soft = inverseFilmic(equirectGrad(uMap, d, uNightBlur).rgb);
   float texels = diagTexelsDir(p, uMapWidth);
+  float mapTexels = texels;
   // near the lens the bands get their fine structure from functions: it comes with the nearness of the surface
   // to the lens, and where it is whole the texels view counts its finest cells, as the ring sheet does
   // the change of the longitude and the latitude of the spun direction over one pixel, in radians
@@ -221,7 +225,8 @@ void main() {
   for (int k = 0; k < (uBandFine.x > 0.0 ? 1 : 0); k++) {
     bandNear = 1.0 - smoothstep(uBandFine.y, uBandFine.z, log(max(length(p - uCam), 1e-6)));
     float drawn = 0.0;
-    albedo *= exp(bandFine(atan(d.z, d.x), lat, bandRate, drawn) * bandNear * uBandTint);
+    // toward the terminator the low sun sets the relief of the cloud tops off more strongly
+    albedo *= exp(bandFine(atan(d.z, d.x), lat, bandRate, drawn) * bandNear * (1.0 + uBandRelief.x * (1.0 - smoothstep(uBandRelief.y, uBandRelief.z, ndl))) * uBandTint);
     texels = max(texels, bandNear >= 1.0 ? drawn : 0.0);
   }
   for (int k = 0; k < (uProbe >= 5 ? 1 : 0); k++) {
@@ -236,12 +241,14 @@ void main() {
   // near the sheet the terminator is narrower: the twilight zone is cut down by the dusk (0 in the hold)
   vec3 lit = (light - night) * shadow * mix(1.0, pow(max(mu, 1e-3), uLimb.y), uLimb.x) * mix(1.0, smoothstep(uDusk.x, uDusk.y, ndl), uDusk.z) + night * uDusk.w;
   for (int k = 0; k < (uFine.w > 0.0 ? 1 : 0); k++) {
-    vec3 mid = inverseFilmic(equirectGrad(uMap, d, uFine.x).rgb);
+    // the neighbourhood the small features of the map are set off against keeps its size on the globe when the
+    // lens comes near: uFine.x pixels in the far view, near the lens never fewer texels than globeFine.wide
+    float wide = mix(uFine.x, max(uFine.x, uBandWide / max(mapTexels, 1e-3)), bandNear);
+    vec3 mid = inverseFilmic(equirectGrad(uMap, d, wide).rgb);
     vec3 lw = vec3(0.2126, 0.7152, 0.0722);
     float lm = max(dot(mid, lw), 1e-3);
     float power = clamp(uFine.y * pow(1.0 + 5.0 * lm * dot(lit, lw), 1.2), 1.0, uFine.z);
-    // where the functions carry the fine structure the sharpening of the map's own texels steps back by so much
-    albedo *= mix(1.0, min(pow(clamp(dot(albedo, lw) / lm, 0.5, 2.0), power - 1.0), uFineTop), uFine.w * (1.0 - bandNear * uBandCalm));
+    albedo *= mix(1.0, min(pow(clamp(dot(albedo, lw) / lm, 0.5, 2.0), power - 1.0), uFineTop), uFine.w);
   }
   vec3 col = mix(soft, albedo, smoothstep(-0.25, 0.1, ndl)) * lit * uTint;
   // near the sheet the night side is grey, not the colour of the clouds in the last red light (none in the hold)
@@ -288,7 +295,7 @@ export class Globe {
         uHazeShadow: { value: look.hazeShadow },
         uRim: { value: new THREE.Vector4().fromArray(look.rim) }, uRimNight: { value: new THREE.Vector4().fromArray(look.rimNight) },
         uRimPower: { value: look.rimPower }, uNightBlur: { value: look.nightBlur }, uFine: { value: new THREE.Vector4(look.fine[0], look.fine[1], look.fine[2], 0) }, uFineTop: { value: look.fineTop },
-        uBandFine: { value: new THREE.Vector3(0, Math.log(skim.globeFine.reach[0]!), Math.log(skim.globeFine.reach[1]!)) }, uBandCalm: { value: skim.globeFine.calm },
+        uBandFine: { value: new THREE.Vector3(0, Math.log(skim.globeFine.reach[0]!), Math.log(skim.globeFine.reach[1]!)) }, uBandWide: { value: skim.globeFine.wide }, uBandZone: { value: new THREE.Vector3().fromArray(skim.globeFine.zone) }, uBandRelief: { value: new THREE.Vector3().fromArray(skim.globeFine.relief) },
         uBandFit: { value: new THREE.Vector4(skim.globeFine.cell, skim.globeFine.stretch, skim.globeFine.amount, skim.globeFine.bend) },
         uBandMore: { value: new THREE.Vector4(skim.globeFine.pixels[0]!, skim.globeFine.pixels[1]!, skim.globeFine.fall, skim.globeFine.seed) }, uBandTint: { value: new THREE.Vector3().fromArray(skim.globeFine.tint) },
         uTerm: { value: new THREE.Vector3().fromArray(look.termShift) },
