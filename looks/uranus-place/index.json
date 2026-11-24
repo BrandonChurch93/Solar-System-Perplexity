@@ -1,9 +1,80 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-24T20:03:52.738Z",
+ "pushed": "2026-11-24T20:29:43.002Z",
  "head": "3c0f8d1f0c316c07aea77e0055bba39824811051",
- "note": "round 45 work: new rise in the hold's pose with a leave, first drafts; dive light cause",
+ "note": "Round 45 on main 7d52b3e0: the dive at draft with diveSoft 0, four sheets; the rise sheets of the final path follow when its frames are drawn (about 20:42)",
  "looks": [
+  {
+   "time": "2026-11-24T20:29:42.395Z",
+   "file": "20261124202942395-note-r45-dive-4.jpg",
+   "source": "../../../../tmp/tf/r45-dive-4.jpg",
+   "kind": "note",
+   "label": "Round 45 work tree on main 7d52b3e0, dive 4182 to 4199 at draft",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T20:29:41.694Z",
+   "file": "20261124202941694-note-r45-dive-3.jpg",
+   "source": "../../../../tmp/tf/r45-dive-3.jpg",
+   "kind": "note",
+   "label": "Round 45 work tree on main 7d52b3e0, dive 4158 to 4181 at draft",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T20:29:41.104Z",
+   "file": "20261124202941104-note-r45-dive-2.jpg",
+   "source": "../../../../tmp/tf/r45-dive-2.jpg",
+   "kind": "note",
+   "label": "Round 45 work tree on main 7d52b3e0, dive 4134 to 4157 at draft: the galaxy core still crosses the left strip 4141 to 4147 (not cured, named)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T20:29:40.301Z",
+   "file": "20261124202940301-note-r45-dive-1.jpg",
+   "source": "../../../../tmp/tf/r45-dive-1.jpg",
+   "kind": "note",
+   "label": "Round 45 work tree on main 7d52b3e0, dive 4110 to 4133 at draft with diveSoft 0: the hold's shadow stays, the storm is there from 4110",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T20:18:35.419Z",
+   "file": "20261124201835419-compare-uranus-dive-sides.jpg",
+   "source": "out/work/handover/uranus-dive-sides.png",
+   "kind": "compare",
+   "label": "uranus dive, both sides at T (frame 4186) and their difference times 8",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4186,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T20:06:19.820Z",
+   "file": "20261124200619820-frame-f4470.jpg",
+   "source": "out/work/u/r45/ra/f4470.png",
+   "kind": "frame",
+   "label": "uranus.travel frame 4470, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.travel",
+   "frame": 4470,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
+  {
+   "time": "2026-11-24T20:04:05.966Z",
+   "file": "20261124200405966-frame-f4454.jpg",
+   "source": "out/work/u/r45/ra/f4454.png",
+   "kind": "frame",
+   "label": "uranus.rise frame 4454, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4454,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
   {
    "time": "2026-11-24T20:03:52.129Z",
    "file": "20261124200352129-note-ns-cmp.jpg",
@@ -19,34 +90,6 @@
    "kind": "note",
    "label": "rise trial on main 7d52b3e0 merged: exit in the hold's pose, bend off, leave built in; drafts 4380 to 4456 step 8, last tile the hold's last frame 4110",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T20:03:34.972Z",
-   "file": "20261124200334972-frame-f4448.jpg",
-   "source": "out/work/u/r45/ra/f4448.png",
-   "kind": "frame",
-   "label": "uranus.rise frame 4448, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4448,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
-  },
-  {
-   "time": "2026-11-24T19:58:00.487Z",
-   "file": "20261124195800487-frame-f4466.jpg",
-   "source": "out/work/u/r45/ra/f4466.png",
-   "kind": "frame",
-   "label": "uranus.travel frame 4466, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.travel",
-   "frame": 4466,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
   },
   {
    "time": "2026-11-24T19:30:03.677Z",
@@ -245,64 +288,6 @@
    "format": "16x9",
    "diag": "texels",
    "job": "g13"
-  },
-  {
-   "time": "2026-11-24T18:27:57.139Z",
-   "file": "20261124182757139-sheet-uranus-rise-top.jpg",
-   "source": "out/work/handover/uranus-rise-top.png",
-   "kind": "sheet",
-   "label": "uranus rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 4391), place picture off, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "first": 4391,
-   "last": 4454,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T18:26:47.407Z",
-   "file": "20261124182647407-sheet-uranus-rise-draft-after.jpg",
-   "source": "out/work/handover/uranus-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "uranus rise, every frame 4392 to 4403 (after T, frame 4391), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "first": 4392,
-   "last": 4403,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T18:26:44.778Z",
-   "file": "20261124182644778-sheet-uranus-rise-draft-before.jpg",
-   "source": "out/work/handover/uranus-rise-draft-before.png",
-   "kind": "sheet",
-   "label": "uranus rise, every frame 4380 to 4390 (before T, frame 4391), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "first": 4380,
-   "last": 4390,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T18:26:42.870Z",
-   "file": "20261124182642870-sheet-uranus-rise-draft-across.jpg",
-   "source": "out/work/handover/uranus-rise-draft-across.png",
-   "kind": "sheet",
-   "label": "uranus rise, every frame 4385 to 4396 (across T, frame 4391), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "first": 4385,
-   "last": 4396,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T18:26:41.142Z",
-   "file": "20261124182641142-compare-uranus-rise-step-in-place.jpg",
-   "source": "out/work/handover/uranus-rise-step-in-place.png",
-   "kind": "compare",
-   "label": "uranus rise, the largest step of the level in place (1.16): frame 4402, frame 4403, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4403
   }
  ]
 }
