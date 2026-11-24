@@ -1,9 +1,17 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T11:24:35.134Z",
- "head": "36502232977ef3004ac574c78b3ca7707129b9bc",
- "note": "plan of the third commit: looks and lights by nearness (chart); memory walk at frame 1915 of 2174, counts flat",
+ "pushed": "2026-11-24T11:36:36.396Z",
+ "head": "4209a71f2204dc61db065321753dbd75dc1f4954",
+ "note": "walk in texels at frame 2000 flat; third commit patch waits for the slot; far band 1880 to 1902 as it stands (red, named)",
  "looks": [
+  {
+   "time": "2026-11-24T11:36:35.511Z",
+   "file": "20261124113635511-note-r2-1880-1902.jpg",
+   "source": "../../../../tmp/gl/s9/r2-1880-1902.jpg",
+   "kind": "note",
+   "label": "second named tree, dive 1880 to 1902 draft: the far band under the limb whitens 1890 to 1898 (Z, two pictures by angle, the named red)",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T11:24:34.264Z",
    "file": "20261124112434264-note-laws.jpg",
@@ -90,14 +98,6 @@
    "source": "../../../../tmp/gl/s8/sky-ab.jpg",
    "kind": "note",
    "label": "sky of the move, named against wide sky by height",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T10:09:35.409Z",
-   "file": "20261124100935409-note-r2-diff.jpg",
-   "source": "../../../../tmp/gl/s8/r2-diff.jpg",
-   "kind": "note",
-   "label": "ade4386b against named 571f42dc, difference times 10, nine frames",
    "stop": "earth"
   }
  ]
