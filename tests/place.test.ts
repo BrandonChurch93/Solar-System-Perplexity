@@ -452,14 +452,19 @@ describe('the two sides of a stop that hands over', () => {
           const time = (f + config.shutterFraction / 2) / fps
           const globe = film.shotAt(f, time, 'orbit')
           const w = placeWeight(s, time)
-          expect(globe.skyShare).toBe(skyWeight(s, time))
+          // A stop may give the share itself through the hook of the plan (skyShare by height, not by the clock): then its low share is what the film shows.
+          expect(globe.skyShare).toBe(p.skyShare(s, time)?.low ?? skyWeight(s, time))
           expect(skyTurnWeight(s, time)).toBeGreaterThanOrEqual(0)
+          // A stop that asked for limbSky keeps the horizon of the picture for as long as the sky of the close view has a share.
+          const horizon = h.limbSky ? Math.max(w, globe.skyShare!) : 0
           if (w > 0 && h.picture) {
             inside++
             expect(globe.place!.weight).toBe(w)
             expect(f).toBeGreaterThanOrEqual(h.placeFirstFrame)
             expect(f).toBeLessThanOrEqual(h.placeLastFrame)
-          } else expect(globe.place).toBeUndefined()
+          } else if (horizon > 0) expect(globe.place!.weight).toBe(0)
+          else expect(globe.place).toBeUndefined()
+          if (globe.place) expect(globe.place.horizon).toBe(h.limbSky ? horizon : undefined)
           expect(film.shotAt(f, time, 'terrain').place).toBeUndefined()
         }
         if (h.picture) expect(inside).toBeGreaterThan(0)
@@ -484,7 +489,7 @@ describe('the two sides of a stop that hands over', () => {
       for (const kind of kinds) {
         const h = handoverOf(p.id, kind)
         if (!h) continue
-        const pose = (t: number): Pose => (kind === 'dive' ? p.divePose(t, 'orbit') : p.risePose(t, 'orbit'))
+        const pose = (t: number): Pose => p.eye(kind, t, 'orbit')
         const a = pose(h.time - dt)
         const b = pose(h.time)
         const d = pose(h.time + dt)
@@ -680,7 +685,7 @@ describe('the top down view of the harness', () => {
           const close = film.shotAt(f, time, 'terrain')
           forceTop(false)
           const place = p.place(kind, time)
-          const path = kind === 'dive' ? p.divePose(time, 'orbit') : p.risePose(time, 'orbit')
+          const path = p.eye(kind, time, 'orbit')
           const above = p.topDown(kind, time, path)
           expect(above.position.length()).toBeCloseTo(path.position.length(), 12)
           expect(above.position.clone().normalize().distanceTo(place)).toBeLessThan(1e-9)
@@ -688,8 +693,10 @@ describe('the top down view of the harness', () => {
           const dir = new THREE.Vector3(0, 0, -1).applyQuaternion(above.quaternion)
           expect(dir.distanceTo(place.clone().negate())).toBeLessThan(1e-9)
           const up = new THREE.Vector3(0, 1, 0).applyQuaternion(above.quaternion)
-          const twin = p.twin(p.closePose(kind, h.time), h.time)
-          const look = new THREE.Vector3(0, 0, -1).applyQuaternion(twin.quaternion).applyQuaternion(p.turn(h.time).invert()).applyQuaternion(p.turn(time))
+          // The heading is that of the close pose at T on a path of the stop's own, and that of the surface view at its seam on the one move.
+          const from = p.engineMove ? (kind === 'dive' ? p.seg.terrain.start : p.seg.terrain.end) : h.time
+          const twin = p.engineMove ? p.twin(p.terrain(from - p.seg.terrain.start), from) : p.twin(p.closePose(kind, from), from)
+          const look = new THREE.Vector3(0, 0, -1).applyQuaternion(twin.quaternion).applyQuaternion(p.turn(from).invert()).applyQuaternion(p.turn(time))
           const flat = look.addScaledVector(place, -look.dot(place)).normalize()
           expect(up.dot(flat)).toBeGreaterThan(0.999)
           // The film puts the pose into the set and adds its drift on the camera side, so the turn from the path's camera to the one above is the same angle in both, and the step between them the same length times the size of the set.
@@ -909,6 +916,7 @@ describe('the options on a diagnostic string', () => {
     expect(() => parseProbe('ungraded/dump=1.5,0,image')).toThrow()
     expect(() => parseProbe('ungraded/dump=0,0,colour')).toThrow()
     for (const s of ['beauty', 'texels/side=orbit/shut', 'beauty/side=terrain/t=81.80833/noplace', 'beauty/side=orbit/mask', 'beauty/picture', 'beauty/side=orbit/noplace/top']) expect(probeString(parseProbe(s))).toBe(s)
+    for (const s of ['beauty', 'beauty/side=orbit/limb=2/in=0,0,0,0/tone=0,0,0,0']) expect('limbSky' in parseProbe(s)).toBe(false)
     expect(parseProbe('beauty/side=orbit/limb=0').limb).toBe(0)
     expect(parseProbe('beauty/limb=2.5').limb).toBe(2.5)
     expect(parseProbe('beauty/side=orbit').limb).toBe(undefined)
