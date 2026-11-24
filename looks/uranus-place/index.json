@@ -1,9 +1,89 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-24T16:14:34.106Z",
+ "pushed": "2026-11-24T16:37:03.810Z",
  "head": "b238e1cadf349d6dbcf848d3c898759a828b9d5e",
- "note": "Form F rows done: rise flows 0.64 (was 1.45), true carry 0.64 (was 1.14 to 1.61); dive flows 1.43 stays, true carry 1.28 at 4161 on the limb band; merged main 4752aa1e as b238e1ca, proofs running",
+ "note": "main 4752aa1e: judged 4137 and 4436 against plain main, 4290 beside approved; proofs still run",
  "looks": [
+  {
+   "time": "2026-11-24T16:37:02.853Z",
+   "file": "20261124163702853-note-4290-three.jpg",
+   "source": "../../../../tmp/tf/4290-three.jpg",
+   "kind": "note",
+   "label": "4290: approved, third named, this build on main 4752aa1e (bytes equal to plain main)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T16:37:02.051Z",
+   "file": "20261124163702051-note-jc4436.jpg",
+   "source": "../../../../tmp/tf/jc4436.jpg",
+   "kind": "note",
+   "label": "judged 4436 final on main 4752aa1e: top plain main, bottom the tops as a light of the ground (b238e1ca)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T16:37:01.262Z",
+   "file": "20261124163701262-note-jc4137.jpg",
+   "source": "../../../../tmp/tf/jc4137.jpg",
+   "kind": "note",
+   "label": "judged 4137 final on main 4752aa1e: top plain main, bottom the tops as a light of the ground (b238e1ca, not pushed yet)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T16:36:29.183Z",
+   "file": "20261124163629183-frame-main-f4436.jpg",
+   "source": "out/work/u/k4/main-f4436.png",
+   "kind": "frame",
+   "label": "uranus.rise frame 4436, final tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4436,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
+  {
+   "time": "2026-11-24T16:32:18.476Z",
+   "file": "20261124163218476-frame-main-f4137.jpg",
+   "source": "out/work/u/k4/main-f4137.png",
+   "kind": "frame",
+   "label": "uranus.dive frame 4137, final tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4137,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
+  {
+   "time": "2026-11-24T16:24:44.877Z",
+   "file": "20261124162444877-frame-main-f4290.jpg",
+   "source": "out/work/u/k4/main-f4290.png",
+   "kind": "frame",
+   "label": "uranus.terrain frame 4290, final tier",
+   "stop": "uranus",
+   "segment": "uranus.terrain",
+   "frame": 4290,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
+  {
+   "time": "2026-11-24T16:22:54.011Z",
+   "file": "20261124162254011-frame-main-f4035.jpg",
+   "source": "out/work/u/k4/main-f4035.png",
+   "kind": "frame",
+   "label": "uranus.hold frame 4035, final tier",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
   {
    "time": "2026-11-24T16:14:33.406Z",
    "file": "20261124161433406-note-k3-rsheet-c.jpg",
@@ -67,48 +147,6 @@
    "kind": "note",
    "label": "4160 draft, third NAMED code over form F (tops white only by the view angle, none added by height), main 2bc36ce6, uncommitted",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T15:31:29.835Z",
-   "file": "20261124153129835-frame-f4290.jpg",
-   "source": "out/work/u/k3/f4290.png",
-   "kind": "frame",
-   "label": "uranus.terrain frame 4290, final tier",
-   "stop": "uranus",
-   "segment": "uranus.terrain",
-   "frame": 4290,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "bfe554c9c4ef0dd5"
-  },
-  {
-   "time": "2026-11-24T15:28:57.164Z",
-   "file": "20261124152857164-frame-d4408.jpg",
-   "source": "out/work/u/k3/d4408.png",
-   "kind": "frame",
-   "label": "uranus.rise frame 4408, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4408,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "bfe554c9c4ef0dd5"
-  },
-  {
-   "time": "2026-11-24T15:27:02.144Z",
-   "file": "20261124152702144-frame-d4199.jpg",
-   "source": "out/work/u/k3/d4199.png",
-   "kind": "frame",
-   "label": "uranus.dive frame 4199, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4199,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "bfe554c9c4ef0dd5"
   },
   {
    "time": "2026-11-24T15:24:20.502Z",
@@ -191,20 +229,6 @@
    "stop": "uranus"
   },
   {
-   "time": "2026-11-24T13:18:18.209Z",
-   "file": "20261124131818209-frame-f4035.jpg",
-   "source": "out/work/u/n4/f4035.png",
-   "kind": "frame",
-   "label": "uranus.hold frame 4035, final tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "bfe554c9c4ef0dd5"
-  },
-  {
    "time": "2026-11-24T12:17:20.710Z",
    "file": "20261124121720710-note-f4436-three.jpg",
    "source": "../../../../tmp/tm/f4436-three.jpg",
@@ -254,30 +278,6 @@
    "source": "../../../../tmp/tm/pair4.jpg",
    "kind": "note",
    "label": "pattern pairs on 0ac434b6, draft: row 1 rise 4404 against 4412 as shipped (flows 1.24, cameras 1.14), row 2 the same with the white tops off (0.42, 0.26), row 3 dive 4158 against 4166 as shipped (1.16, 1.59), row 4 the same with the tops off (1.04, 0.39); columns: frame, later frame carried back by the flows, by the true cameras, pattern by the flows, by the cameras (main c2c49133)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T11:42:48.407Z",
-   "file": "20261124114248407-note-4290-three.jpg",
-   "source": "../../../../tmp/tm/4290-three.jpg",
-   "kind": "note",
-   "label": "judged 4290 final: approved references/approved/uranus-close.jpg, before (b5874a22, sha256 d11470c2), after (0ac434b6, sha256 2adad6e9); against approved mean difference 2.75 before, 2.79 after of 255 (main c2c49133)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T11:34:32.235Z",
-   "file": "20261124113432235-note-h3-rise-3.jpg",
-   "source": "../../../../tmp/tm/h3-rise-3.jpg",
-   "kind": "note",
-   "label": "rise on 0ac434b6, every draft frame of the handover run, sheet 3 of 3 (main c2c49133)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T11:34:31.316Z",
-   "file": "20261124113431316-note-h3-dive-3.jpg",
-   "source": "../../../../tmp/tm/h3-dive-3.jpg",
-   "kind": "note",
-   "label": "dive on 0ac434b6, every draft frame of the handover run, sheet 3 of 3 (main c2c49133)",
    "stop": "uranus"
   }
  ]
