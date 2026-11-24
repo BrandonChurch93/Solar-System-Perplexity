@@ -1,9 +1,33 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T03:22:38.715Z",
- "head": "85312d1ba89d4fbb4811dc70dc8f5b02871b7c43",
- "note": "4860 T8 under the approved image, and a spread of the dive with it; not committed yet",
+ "pushed": "2026-11-24T03:42:54.084Z",
+ "head": "b57b7c2d8fee95bea61acab2fcd97e380aed0159",
+ "note": "4860 T11 over the approved image; the dive 4708 to 4731 every frame, the rest renders",
  "looks": [
+  {
+   "time": "2026-11-24T03:42:52.863Z",
+   "file": "20261124034252863-note-s-V1-4720.jpg",
+   "source": "../../../../tmp/s-V1-4720.jpg",
+   "kind": "note",
+   "label": "the dive, every frame 4720 to 4731: two forms at once from 4724 to 4730 (the map's long streak and bow go, the scene's ridge and eye come), the fault that the map giving way inside the fan cures next",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T03:42:51.756Z",
+   "file": "20261124034251756-note-s-V1-4708.jpg",
+   "source": "../../../../tmp/s-V1-4708.jpg",
+   "kind": "note",
+   "label": "the dive with T11 on the merge of main 0e5ddf1b, every frame 4708 to 4719: the globe's own map",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T03:42:50.523Z",
+   "file": "20261124034250523-note-q-T11.jpg",
+   "source": "../../../../tmp/q-T11.jpg",
+   "kind": "note",
+   "label": "4860 draft T11 (above) over the approved image (below), the config of the next commit",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T03:22:38.144Z",
    "file": "20261124032238144-note-v-D1.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/s-r2-5014.jpg",
    "kind": "note",
    "label": "the rise on 85312d1b, every frame 5014 to 5024: the globe alone, the pose of the travel",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T02:24:33.544Z",
-   "file": "20261124022433544-note-s-r2-4998.jpg",
-   "source": "../../../../tmp/s-r2-4998.jpg",
-   "kind": "note",
-   "label": "the rise on 85312d1b, every frame 4998 to 5013: the globe alone",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T02:24:32.979Z",
-   "file": "20261124022432979-note-s-r2-4982.jpg",
-   "source": "../../../../tmp/s-r2-4982.jpg",
-   "kind": "note",
-   "label": "the rise on 85312d1b, every frame 4982 to 4997: 4978 to 4990 two forms at once (the scene's thin streamers over the map's broad streaks), the fault that point 1 of mail 453 cures; from 4991 the globe alone",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T02:24:32.375Z",
-   "file": "20261124022432375-note-s-r2-4966.jpg",
-   "source": "../../../../tmp/s-r2-4966.jpg",
-   "kind": "note",
-   "label": "the rise on 85312d1b, every frame 4966 to 4981: the scene holds its layout; from 4978 the globe's own map comes in under it by height",
    "stop": "neptune"
   }
  ]
