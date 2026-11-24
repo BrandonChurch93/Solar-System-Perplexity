@@ -3727,3 +3727,36 @@ is in the picture at 3 to 12 px, and the same crispness for the far ring across 
 - NEXT (the order): the flight for G17 in rt (render d = 28 and 34 at final nograin 3720, g17map.py, choose),
   the paces of the rise, then the judge's WHOLE windows on it (dive 3528 to 3641 + 1/2, rise 3798 to 3896 +
   1/2) with the 3807 place at the right edge, path, parity, gate, tests; mail PRE with its sha (MAIL 545).
+- THE FLIGHT FOR G17, MEASURED AND COMMITTED LOCALLY (10:01 UTC): d07e2b453fc32afdab00ff3ec3b084e232ff452f on
+  4f21127 (only src/stops/saturn/skim.json differs from the second NAMED 1e4bfd4 besides the notebook).
+  - G17 by render in rt (final nograin 3720, the film's shutter, /tmp/v/job_g.sh D, tile maps by g17map.py):
+    d = 0: median 0.683, p25 0.325, 27 of 62 tiles at or over 0.8; d = 28: median 0.945, p25 0.477, 35 tiles;
+    d = 40: median 1.095, p25 0.566, 36 tiles. The tiles that stay under 0.8 at d = 28 lie on the globe and on
+    the far horizon (0.79, 0.75, 0.67, 0.65, 0.59, 0.56, 0.48, 0.42, 0.27) and do not move with the angle.
+  - CHOSEN d = 28: the larger forward part of the motion (the brief wants clear forward movement) with a margin
+    of 0.145 over the limit. path.forward 1.501, path.side -0.7981, path.bend.turnDeg 218.
+  - The pose at 3720.25 (the middle of the shutter of 3720) is equal to the old one to 8.9e-16 (pose3720.ts in
+    rt against repo before the copy); 3720.0 and 3720.5 differ by 1.06e-3, as they must: the way through it is
+    another. The DRAFT still of 3720 is taken at 3720.0 and so differs (560270 px, largest 113, mean 1.13); the
+    FINAL 3720 changes on purpose (less smear across the ringlets). Say both in the mail.
+  - Paces of the dive: as in the block above. Paces of the rise: HI=0.6 npx tsx out/scratch/opt7.ts rise 500 2
+    (log /tmp/v/r42/opt_rise_d28b.log, hard 0.984; with the default HI 0.4 it stayed red at 1.006): reach peak
+    [0.347, 0.54] rounds [0.534, 0.515, 0.085, 0.031]; climb [0.261, 0.261], [0.592, 0.557, 0.03, 0.6]; round
+    [0.298, 0.404], [0.321, 0.183, 0.103, 0.436]; view [0.417, 0.468], [0.03, 0.068, 0.117, 0.223].
+  - Path proof (rt and again in mainref on d07e2b4, /tmp/v/r43/smooth_path.md): "VERDICT: green. No number is
+    over its limit." Dive steps: rate 0.066 at 3545, turn 0.062 at 3576, speed 0.058 over 8 at 3574. Rise: rate
+    0.074 at 3811 + 1/2, turn 0.071 at 3868, speed 0.079 over 8 at 3883 (limit 0.08, THIN), seam in 0.071.
+    Seams: dive lowest 1.00 at 3631 + 1/2 (limit 0.87); rise lowest 1.00 at 3794, inside the rise 1.07 at 3810
+    + 1/2, largest step from one capture frame to the next 0.10 at 3811.
+  - Way of the lens (ringway.ts 3630 3810 15): 3630 foot 3.331, h 0.5866, across 1.094e-2; 3720 foot 2.589, h
+    0.3955, across 5.889e-3 (was 8.521e-3), heading 50.2 degrees off inward, 28 off the view; 3750 foot 2.390;
+    lowest h 0.3519 at 3765; 3780 foot 2.276; 3795 foot 2.375, h 0.4235; 3810 foot 2.515, h 0.5028.
+  - Draft sheets of it looked at: /tmp/v/r42/d28_sheet.png (3567 to 3866), d28b_sheet_a.png (3716 to 3726
+    consecutive), d28b_sheet_b.png (every second 3728 to 3760): sound at sheet size, no jump. The lower left of
+    the final 3720 at full size beside the approved (/tmp/v/r42/g17_pair_lowleft.png): the ringlets are crisp
+    lines now where the named commit smears them.
+  - Looks pushed 10:03 (5 new). RUNNING since 10:01: /tmp/v/job_w.sh d07e2b4 /tmp/v/r43 "path rise dive g17
+    parity gate vitest finals head" (log /tmp/v/r43w.log).
+  - STILL TO DO ON IT: read the judge's rise and dive reports over the WHOLE windows; the entry of the far ring
+    beside the night limb at the right frame edge (3807 + 1/2 on the old flight, about 3812 to 3820 on this
+    one); then mail PRE (or the third NAMED when the report on 1e4bfd4 names a due time).
