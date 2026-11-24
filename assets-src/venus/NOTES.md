@@ -3251,3 +3251,43 @@ Windows of the pattern number on the dive (pat.ts, frames 1316 to 1344, limit 0.
 | 1, 2 and 3 | 0.628 | 1320 | 10 |
 | the same, the whole margin 0.05 to 0.8 with forms, release fading across it | 0.889 | 1320 + 1/2 | 12 |
 The third row showed the edge of the frame of T as a straight line on the right (dark ground against the paler take outside); the fourth softened it and drew the far right ground stretched (a fan of streaks). Kept: release inside the narrow margin (0.05 to 0.3, moved by forms), the wide margin only for the near ground.
+
+## MAIL 572 and MAIL 575 from /root, 07:29 and 07:45 UTC (as kept in my summary; where "..." stands, text was left out there, so not word for word in full)
+
+MAIL 572 (07:29 UTC, low): "MAIN IS NOW 8b2c538f62b5f63f910d1c62cd96fbf78f06560c. ... Stop builders: your named commit is due 08:30 UTC (mail starting NAMED and the full sha, pushed to your branch). A commit on an older main is taken as long as it touches only your three folders; say which main it stands on. Do not wait for a report that is still out. Fetch main with --depth 1 only. If your disk is short, handover_engineer has a script that removes packs whose objects all stand elsewhere ...; ask it for /tmp/slim.py."
+
+MAIL 575 (07:45 UTC, low): "Main is aaea819b3ec05f04742fdb6f55ccb032327aed47: take D, handover_engineer's tools ... Nothing under src, config, public or package.json changed, so no hash moves and no picture changes; no merge is needed for a named commit, a proof tree takes a stop's three folders onto main as before. The deadlines of MAIL 572 stand (named commits by 08:30 UTC; Venus by 08:56, Neptune by 09:00, the far Sun by 08:15). ... No answer is needed."
+
+So the second commit stands on main be1de182 (merged as a9b7acd0); mains 8b2c538f and aaea819b are not merged.
+
+## Proofs of the second named commit a70fd5c0 (measured 07:53 to 08:50 on space-sandbox, draft tier)
+
+- Handover draft: "venus.dive side difference at T: pass", "venus.dive flow gap at T: pass", "venus.dive every frame: pass", "venus.rise side difference at T: pass", "venus.rise flow gap at T: pass", "venus.rise every frame: pass". Sides at T: dive mean 0.035 (first commit 0.026), p99 1, 99.9th 15, max 110; rise mean 0.045 (first commit 0.033), p99 1, 99.9th 8, max 107 (limits mean 0.5, p99 4). Flow gap mean 0.113 px on both.
+- Path lines: dive "Height: mean ratio per frame 0.94038 on the way to T; fastest frame 1314 at 1.612 times the mean rate; frame 1277 (one fifth of the way) at 0.626 of the mean. The place is at most 0.315 of the half frame from the middle (frame 1277)."; rise "Height: mean ratio per frame 1.08575 on the way from T; fastest frame 1567 at 1.558 times the mean rate; frame 1591 (one fifth of the way) at 0.606 of the mean. The place is at most 0.3 of the half frame from the middle (frame 1591)."
+- Body steps of the handover report: dive level 3.48 into 1289, colour 4.11 into 1291; rise level 2.51 into 1591, colour 2.94 into 1569.
+- smooth, part path: "smooth venus: green. out/work/smooth/venus.md".
+- smooth, part pictures, rise: RED, 2 numbers. "RED pop score 1.25 from frame 1610 + 1/2 to the next, limit 1.2 (3 frames over it, first 1610 + 1/2)" (the leaving leg, not touched); "RED the pattern of the picture changes in place by 1.16 from frame 1543 + 1/2 to 8 film frames later, limit 0.45 (56 frames over it, first 1540 + 1/2)", most at pixel 260, 780. First commit: 1.37, 64 frames over, most at pixel 0, 876. Level step 0.33 at 1564 + 1/2, green.
+  - Rows of the pattern: 0.23 up to 1540, 0.52 at 1540 + 1/2, 0.95 at 1541, 1.16 at 1543 + 1/2 and 1544, 0.77 at 1548, 0.46 at 1548 + 1/2, 0.31 at 1549; second hump 1550 + 1/2 to 1557 + 1/2 (most 0.77 at 1554 + 1/2 and 1555); third 1568 + 1/2 to 1580 (most 0.81 at 1575).
+  - The first hump is 8 frames wide with steep sides, so it reads as one change of about one frame's length near 1548 + 1/2 to 1549 + 1/2 (height about 0.04), a blob in the lower left at the left edge of the frame of T. What changes there is not found yet.
+- smooth, part pictures, dive: RED, 1 number. "RED the pattern of the picture changes in place by 0.83 from frame 1284 to 8 film frames later, limit 0.45 (40 frames over it, first 1269 + 1/2)", most at pixel 384, 340. First commit: 1.27 from 1326, 63 frames over. Level step 0.37 at 1316 and pop 1.14 from 1316, both green.
+  - Rows over the limit: 1269 + 1/2 to 1270 + 1/2, 1277 + 1/2 to 1287 + 1/2, 1291 to 1293 (frames this commit does not change, the ground has no weight there) and 1319 + 1/2 to 1324 + 1/2 (most 0.69 at 1320 + 1/2 and 1321). From 1325 to T the pattern is 0.38 and less, from 1336 it is 0.14 and less.
+  - The hump 1319 + 1/2 to 1324 + 1/2 is the mirror of the first hump of the rise: one change near 1325 (height about 0.042, twice the height of T). By the code that is the ground inside the frame of T let go by height (release 1 to 3 times the height of T, the limits of true and skin scaled, so each face swaps within about a frame and a half); not yet proved by a run.
+- G13 by my texel view on 24 frames (1296, 1304, 1310, 1314, 1316, 1319 to 1340 every third, 1342, 1540, 1542, 1544, 1547 to 1562 every third, 1566): "texel view, same rule as G13 (counted when green > 0.5, soft when red byte < 127.5): 0 of 24 frames over 0.02 soft; worst frame 1316 0.63%, frame 1314 0.32%, frame 1304 0.14%". The other frames of the two moves were not counted on this state.
+- Gate: "PASS G11  every asset has a row or a recipe", "PASS G15  at most 2 sets per frame; finished stops: venus/web 352 MB, venus/full 1386 MB".
+- tsc 0. vitest was started alone at 08:45:53 and had not ended when these notes were committed (08:49); its count stands in the NAMED mail.
+- Draft frames against the first named commit's: 1262, 1287, 1343, 1349, 1532, 1539, 1586, 1604 equal to the byte; 1320, 1335, 1342, 1542, 1560 differ, on purpose.
+- Finals 1185 and 1440 were not yet rendered on this state when these notes were committed; what the NAMED mail says about them holds. The changed code draws only on the globe side below the height 0.9, and the drafts 1343, 1349, 1532 (surface view) keep their bytes.
+- Seen in every frame of the sheets 1260 to 1349 and 1530 to 1604: no frame where the scene changes can be named; a darker footprint of the frame of T stands against the paler plates (right edge about 1324 to 1331, lower and right edge about 1548 to 1556).
+
+## Still wrong after the second named commit
+
+1. Pattern red on both moves (numbers above). Ground and plates are still two pictures outside the frame of T and in the far zone; the footprint of the frame of T shows. Cure: the plates laid from the ground itself, also outside the frame of T (stage 2).
+2. The change near 1548 + 1/2 in the rise (lower left), cause not found.
+3. Pattern humps away from the handover: dive 1277 + 1/2 to 1293 (0.83 in the first report) and 1269 + 1/2 to 1270 + 1/2 (0.47), rise 1568 + 1/2 to 1580 (0.81); cause not measured.
+4. Rise pop 1.25 at 1610 + 1/2 (leaving leg).
+5. Body level step 3.48 into 1289, colour 4.11 into 1291.
+6. Path green by thin margins; the dive set of MAIL 557 not tested; the rise eye goes against the surface view's way from 1533 + 1/2.
+7. Limb crisp on the globe side, soft on the surface side at T; haze streaks beside the Sun.
+8. Soft frames 1300 to 1316 and in the rise (shutter).
+9. Leftovers: pale wedge 1562 to 1572, golden band at the limb, the Sun's glow entering 1313 to 1319, speckled patch 1284 to 1292, shadow slabs 1554 to 1561, a dark tilted slab of a tower about 1326 to 1330.
+10. Step 4 not done; the relief of the middle distance is flat before T; LIMB.edgePx 2 and the veil's edgePx 1.5 are counted in pixels.
