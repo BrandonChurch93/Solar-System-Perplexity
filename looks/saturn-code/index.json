@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T11:12:27.860Z",
- "head": "ef514cec912a1e4e4cf15d2e2883d31876c0b676",
- "note": "PRE 68b4561: the dive's pictures read green here (pattern 0.41 at 3565, pop 1.04); trying the rise's end with speed on the carry of main 717b862",
+ "pushed": "2026-11-24T11:27:43.491Z",
+ "head": "91d62470b26f63decf5f17ae69ee1cf6716bc4ee",
+ "note": "91d6247 pushed: the rise ends with speed 2.2 radii a second over the drift and the travel carries it on; rest line 0.375 (PRE 0.026), path green; whole proof running",
  "looks": [
+  {
+   "time": "2026-11-24T11:27:42.652Z",
+   "file": "20261124112742652-note-ct_seam_a.jpg",
+   "source": "../../../../tmp/v/ct_seam_a.png",
+   "kind": "note",
+   "label": "first trial of the carry, 3880 to 3896 every second frame (before the sky's lift was made a smooth step of the height)"
+  },
+  {
+   "time": "2026-11-24T11:27:41.521Z",
+   "file": "20261124112741521-note-ct_seam_b.jpg",
+   "source": "../../../../tmp/v/ct_seam_b.png",
+   "kind": "note",
+   "label": "trial of the carry: the seam from the rise into the travel, 3877 to 3896 and a half, every third capture frame; the globe draws back at one pace, no rest"
+  },
   {
    "time": "2026-11-24T11:12:27.085Z",
    "file": "20261124111227085-note-saturn-dive-changes.jpg",
@@ -46,21 +60,6 @@
    "source": "../../../../tmp/v/r44/sheets/dive_b.png",
    "kind": "note",
    "label": "PRE 68b4561 dive 3560 to 3590"
-  },
-  {
-   "time": "2026-11-24T11:12:20.769Z",
-   "file": "20261124111220769-note-dive_a.jpg",
-   "source": "../../../../tmp/v/r44/sheets/dive_a.png",
-   "kind": "note",
-   "label": "PRE 68b4561 dive, every second film frame 3528 to 3558 (judge's own frames, draft)"
-  },
-  {
-   "time": "2026-11-24T10:48:15.098Z",
-   "file": "20261124104815098-note-saturn-rise-changes.jpg",
-   "source": "../../../../tmp/v/r44/saturn-rise-changes.png",
-   "kind": "note",
-   "label": "68b4561 the judge's changes panel of the rise: pattern green, largest 0.35 at 3871 (limit 0.45)",
-   "stop": "saturn"
   }
  ]
 }
