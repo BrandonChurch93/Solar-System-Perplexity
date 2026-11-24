@@ -1,17 +1,19 @@
 import * as THREE from 'three'
 import { args } from './lib/common'
 import { config } from '../src/config'
+import { setCapture, spanMid } from '../src/core/clock'
 import { shutterMid } from '../src/core/sampler'
 import { FilmDirector } from '../src/director/film'
 import { forceOneMove, handoverOf } from '../src/director/handover'
-import { carried } from '../src/director/pace'
 import { plans } from '../src/director/plans'
+import { carriedCamera } from './smooth/camera'
 
 // The seam between a surface view and its dive or its rise, read on the eye itself (ruling d196): across the seam the eye's speed over
 // its own height may not dip and the eye may not stop and go back the way it came.
 //   npx tsx tools/seam.ts [--stop ID] [--kind dive|rise] [--rate N] [--frames N] [--before N] [--rows] [--force]
-// The eye is the film's own camera as a camera at the unit sphere of the stop (pace.ts carried: the close view through the twin, the
-// globe as it stands), taken in the frame the ground itself stands in, so what is counted is its way over the ground. From one capture frame to
+// The eye is the film's own camera as a camera at the unit sphere of the stop, read as the judge reads it (tools/smooth/camera.ts,
+// carriedCamera at the capture rate: the close view through the twin, the globe as it stands), taken in the frame the ground itself
+// stands in, so what is counted is its way over the ground. From one capture frame to
 // the next: the length of that way a film frame over the height of the eye above the sphere. That number is the share of its own
 // height the eye flies in a film frame, and so the speed at which the near ground runs through the picture.
 // One line a seam:
@@ -35,6 +37,7 @@ interface Row { f: number; speed: number; along: number; up: number; across: num
 const a = args()
 if (a.force === 'true') forceOneMove(true)
 const rate = Math.max(1, Math.round(Number(a.rate ?? 2)))
+setCapture(rate)
 const frames = Number(a.frames ?? 16)
 const before = Number(a.before ?? 3)
 const film = new FilmDirector(plans)
@@ -79,8 +82,8 @@ function seam(stop: string, kind: Kind): string[] {
   // through the twin of one fixed time, so a stop whose ground turns by a law of its own is read on that law.
   const fixed = plan.seg.terrain.start
   const eye = (k: number): { ground: THREE.Vector3; quaternion: THREE.Quaternion; height: number; up: THREE.Vector3 } => {
-    const time = (k + shutterMid()) / (config.fps * rate)
-    const c = carried(film, plan, Math.floor(k / rate), time)
+    const time = (k / rate + spanMid()) / config.fps
+    const c = carriedCamera(film, plan, plan.id, k / rate, time)
     const g = plan.twin(plan.untwin(c.pose, time), fixed)
     return { ground: g.position, quaternion: g.quaternion, height: g.position.length() - 1, up: g.position.clone().normalize() }
   }
