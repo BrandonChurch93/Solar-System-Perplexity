@@ -8,6 +8,7 @@ import { FilmDirector } from '../src/director/film'
 import { sideAt } from '../src/director/handover'
 import { plans } from '../src/director/plans'
 import { SEAM_OWN, SEAM_REACH, curves, eyeCurves, landingCurves, planeHit, ringPlane, sampleLanding, sampleSeam, sampleWindow, seen, type SeamWindow } from '../tools/smooth/camera'
+import { missing, partOwn, popSpan, sliceName, sliceNeed } from '../tools/smooth/slice'
 import { judgeCurve, judgeLanding, judgeSeam, longestGap, parityFrames, position, shown, table } from '../tools/smooth/path'
 
 const limits = { maxStep: 0.08, maxRebound: 0.03, seamFrames: 2 }
@@ -475,5 +476,68 @@ describe('the eye against the near ground at the seam with the surface view', ()
       }
     }
     expect(seams).toBe(17)
+  })
+})
+
+describe('one move in slices', () => {
+  const total = 228
+  const window = 32
+  const reach = 16
+
+  it('places the window of the median as the image measure does: round the frame, moved inward at both ends', () => {
+    expect(popSpan(100, total, window)).toEqual([84, 116])
+    expect(popSpan(0, total, window)).toEqual([0, 32])
+    expect(popSpan(10, total, window)).toEqual([0, 32])
+    expect(popSpan(227, total, window)).toEqual([195, 227])
+    expect(popSpan(220, total, window)).toEqual([195, 227])
+    expect(popSpan(4, 10, window)).toEqual([0, 9])
+  })
+
+  it('gives every frame of the window to exactly one part', () => {
+    for (const of of [1, 2, 4, 7, 8, 40]) {
+      const owners = new Array<number>(total).fill(0)
+      for (let part = 1; part <= of; part++) {
+        const own = partOwn(part, of, total)
+        for (let i = own.first; i < own.end; i++) owners[i]!++
+      }
+      expect(owners.every((n) => n === 1)).toBe(true)
+    }
+    expect(partOwn(2, 4, total)).toEqual({ first: 57, end: 114 })
+  })
+
+  it('holds for each of its frames both neighbours, the window of the median with the frame after it, and the frame the change is measured against', () => {
+    for (const of of [1, 3, 4, 8, 40]) {
+      for (let part = 1; part <= of; part++) {
+        const own = partOwn(part, of, total)
+        const [lo, hi] = sliceNeed(own, total, window, reach)
+        const has = (i: number): boolean => i < 0 || i > total - 1 || (i >= lo && i <= hi)
+        for (let i = own.first; i < own.end; i++) {
+          const [a, b] = popSpan(i, total, window)
+          expect([i - 1, i + 1, a, b + 1, i + reach].every(has)).toBe(true)
+        }
+        expect(lo).toBeGreaterThanOrEqual(0)
+        expect(hi).toBeLessThanOrEqual(total - 1)
+      }
+    }
+  })
+
+  it('reaches 16 frames back and 17 on inside the window, and to the window of the median at its two ends', () => {
+    expect(sliceNeed({ first: 57, end: 114 }, total, window, reach)).toEqual([41, 130])
+    expect(sliceNeed({ first: 0, end: 57 }, total, window, reach)).toEqual([0, 73])
+    expect(sliceNeed({ first: 171, end: 228 }, total, window, reach)).toEqual([155, 227])
+    expect(sliceNeed({ first: 220, end: 228 }, total, window, reach)).toEqual([195, 227])
+    expect(sliceNeed({ first: 0, end: 4 }, total, window, reach)).toEqual([0, 33])
+    expect(sliceNeed({ first: 0, end: total }, total, window, reach)).toEqual([0, total - 1])
+  })
+
+  it('names a part by its number and a run of frames by its capture frames', () => {
+    expect(sliceName(3, 8, 0, 0)).toBe('p3of8')
+    expect(sliceName(null, null, 1380, 1436)).toBe('k1380-1436')
+  })
+
+  it('finds the runs of frames that no part owns', () => {
+    expect(missing([{ first: 0, end: 57 }, { first: 114, end: 171 }], total)).toEqual([{ first: 57, end: 114 }, { first: 171, end: 228 }])
+    expect(missing([{ first: 0, end: 120 }, { first: 100, end: 228 }], total)).toEqual([])
+    expect(missing([], 3)).toEqual([{ first: 0, end: 3 }])
   })
 })
