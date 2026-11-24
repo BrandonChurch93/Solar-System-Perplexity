@@ -1,9 +1,41 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-24T05:28:34.644Z",
+ "pushed": "2026-11-24T05:50:10.637Z",
  "head": "63f62b9785e5ce3fe0e651e08d95a07287ea8c44",
- "note": "05:33 chain G: the top of the frame round T in both moves at full size; smooth whole still running",
+ "note": "05:53 smooth panels of the tree to be named: pattern change and pops of dive and rise",
  "looks": [
+  {
+   "time": "2026-11-24T05:50:09.916Z",
+   "file": "20261124055009916-note-venus-rise-pops.jpg",
+   "source": "out/work/smooth/venus-rise-pops.png",
+   "kind": "note",
+   "label": "smooth panel rise-pops, pictures part of the whole run on the tree of chain G (main 8fb9ba9b merged)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T05:50:09.209Z",
+   "file": "20261124055009209-note-venus-dive-pops.jpg",
+   "source": "out/work/smooth/venus-dive-pops.png",
+   "kind": "note",
+   "label": "smooth panel dive-pops, pictures part of the whole run on the tree of chain G (main 8fb9ba9b merged)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T05:50:08.535Z",
+   "file": "20261124055008535-note-venus-rise-changes.jpg",
+   "source": "out/work/smooth/venus-rise-changes.png",
+   "kind": "note",
+   "label": "smooth panel rise-changes, pictures part of the whole run on the tree of chain G (main 8fb9ba9b merged)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T05:50:07.504Z",
+   "file": "20261124055007504-note-venus-dive-changes.jpg",
+   "source": "out/work/smooth/venus-dive-changes.png",
+   "kind": "note",
+   "label": "smooth panel dive-changes, pictures part of the whole run on the tree of chain G (main 8fb9ba9b merged)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T05:28:33.913Z",
    "file": "20261124052833913-note-c1543-top.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/v/hg/s1594.jpg",
    "kind": "note",
    "label": "rise 1594 on, main 8fb9ba9b merged, corners wired, ground on the globe",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T05:20:28.775Z",
-   "file": "20261124052028775-note-s1578.jpg",
-   "source": "../../../../tmp/v/hg/s1578.jpg",
-   "kind": "note",
-   "label": "rise 1578 on, main 8fb9ba9b merged, corners wired, ground on the globe",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T05:20:27.853Z",
-   "file": "20261124052027853-note-s1562.jpg",
-   "source": "../../../../tmp/v/hg/s1562.jpg",
-   "kind": "note",
-   "label": "rise 1562 on, main 8fb9ba9b merged, corners wired, ground on the globe",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T05:20:26.754Z",
-   "file": "20261124052026754-note-s1546.jpg",
-   "source": "../../../../tmp/v/hg/s1546.jpg",
-   "kind": "note",
-   "label": "rise 1546 on, main 8fb9ba9b merged, corners wired, ground on the globe",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T05:20:25.939Z",
-   "file": "20261124052025939-note-s1530.jpg",
-   "source": "../../../../tmp/v/hg/s1530.jpg",
-   "kind": "note",
-   "label": "rise 1530 on, main 8fb9ba9b merged, corners wired, ground on the globe",
    "stop": "venus"
   }
  ]
