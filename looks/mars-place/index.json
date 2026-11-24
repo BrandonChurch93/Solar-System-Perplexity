@@ -1,9 +1,49 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T20:27:13.919Z",
+ "pushed": "2026-11-24T20:38:45.181Z",
  "head": "024eaa6dd045f918b610a6c0276af3515b5c82b9",
- "note": "round 2 item 1: country round the place from takes led by the laid ground; test renders running",
+ "note": "round 2 item 1, test state e0: plates hold the laid close ground and takes of the same land from above; 2427, 2689, 2726 of this state not rendered yet",
  "looks": [
+  {
+   "time": "2026-11-24T20:38:44.517Z",
+   "file": "20261124203844517-note-e0-plates.jpg",
+   "source": "out/work/place/see/e0-plates.jpg",
+   "kind": "note",
+   "label": "plates 0.3 0.7 1.6 of state e0 from straight above (laid ground is shards from above; holds only seen at a slant)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T20:38:43.827Z",
+   "file": "20261124203843827-note-e0-a.jpg",
+   "source": "out/work/place/see/e0-a.jpg",
+   "kind": "note",
+   "label": "2440 2445 2450 2456 state e0",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T20:38:43.202Z",
+   "file": "20261124203843202-note-e0-b.jpg",
+   "source": "out/work/place/see/e0-b.jpg",
+   "kind": "note",
+   "label": "2462 2466 2468 state e0, beside c1 at 2468",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T20:38:42.568Z",
+   "file": "20261124203842568-note-e0-c.jpg",
+   "source": "out/work/place/see/e0-c.jpg",
+   "kind": "note",
+   "label": "2469 2471 2474 state e0, beside c1 at 2471",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T20:38:41.536Z",
+   "file": "20261124203841536-note-f2469.jpg",
+   "source": "out/work/place/cl/e0r/f2469.png",
+   "kind": "note",
+   "label": "2469 draft, test state e0 (country round the place from takes seen from above, takes not yet enlarged)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T20:27:12.994Z",
    "file": "20261124202712994-note-r38-take.jpg",
@@ -26,46 +66,6 @@
    "source": "out/work/place/see/c1-way.jpg",
    "kind": "note",
    "label": "test c1 (short lay, landunder): 2434 to 2476, 2687 to 2696: one country to 2462, still a plain that turns into canyon land at 2468",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T20:27:10.562Z",
-   "file": "20261124202710562-note-d0-HR.jpg",
-   "source": "out/work/place/see/d0-HR.jpg",
-   "kind": "note",
-   "label": "test: globe ground alone (left) against close meshes alone (right) at 2450, 2456, 2462, 2466: the meshes from above are a slab with straight sides",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T20:27:09.408Z",
-   "file": "20261124202709408-note-takes-r.jpg",
-   "source": "out/work/place/see/takes-r.jpg",
-   "kind": "note",
-   "label": "takes of round 2: leads (left) and takes, top row r16 lead, r16 take, r07 lead; bottom row r03 lead, r03 take, r07 take",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T20:07:21.470Z",
-   "file": "20261124200721470-note-b5-keep-1p6.jpg",
-   "source": "out/work/place/see/b5-keep-1p6.jpg",
-   "kind": "note",
-   "label": "the 1.6 degree plate, lay 2 against committed, rings at 0.15, 0.25, 0.45, 0.7 degrees",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T20:07:20.649Z",
-   "file": "20261124200720649-note-x3-u1b.jpg",
-   "source": "out/work/place/see/x3-u1b.jpg",
-   "kind": "note",
-   "label": "exchange 3: patch-19 against land-8p5 after landunder.py (panel: parent, child, pattern), patch-19 before and after",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T20:07:20.032Z",
-   "file": "20261124200720032-note-grid-2468-corners.jpg",
-   "source": "out/work/place/see/grid-2468-corners.jpg",
-   "kind": "note",
-   "label": "what the lower corners of 2468 are: a grid on the plates (0.02 degrees): made sand south east of the spot, a dark made hill north of it",
    "stop": "mars"
   }
  ]
