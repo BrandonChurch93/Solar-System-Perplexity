@@ -16,6 +16,8 @@ export const cloud = curve.cloud
 export const air = { ...hazeJson.air, near: [0.22, 0.45, 0.9] } as AirParams
 export const limb = hazeJson.limb as LimbParams
 
+// shadowSoft: the footprint with which the shadow of the cirrus is read, in pixels of a frame 1080 high; the set scales it by the height of
+// the frame that is drawn, so the shadow is as soft at 3840 wide as at 1920 wide. soft 1 is the plain footprint of one pixel of the frame.
 export const clouds: CloudParams = { height: 0.004, shadow: 0.45, shadowSoft: 3, soft: 1, shear: 0.35, shearBands: 5, relief: 0 }
 export const storm = { lon: -0.25, lat: -18.8, radiusDeg: 7, degPerSecond: 2.5, fullSeconds: 2.6, easeSeconds: 1.6 }
 export const stream = { degPerSecond: 1.5, fullSeconds: 2.6, easeSeconds: 1.6 }
@@ -67,5 +69,7 @@ export const ring = {
   mapScale: 0.25,
   degPerSecond: 0.8,
   grain: { repeat: [4, 0.25] as [number, number], fine: 4, amount: 0.8, top: 8 },
-  solid: { amount: 0.95, density: 250, ground: [0.0052, 0.0087, 0.0108] as [number, number, number], rise: [0.1, 0.35], near: [0.58, 0.82] as [number, number] },
+  // solid: the near part of the ring drawn as a body in the rise. height: the eye's height over the planet in radii from which it
+  // comes in and at which it is whole (by the height, never by the clock; the heights the old shares 0.1 and 0.35 of the rise stood at).
+  solid: { amount: 0.95, density: 250, ground: [0.0052, 0.0087, 0.0108] as [number, number, number], height: [0.031, 0.165], near: [0.58, 0.82] as [number, number] },
 }
