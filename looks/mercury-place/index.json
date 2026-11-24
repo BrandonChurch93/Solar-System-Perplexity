@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T21:08:34.043Z",
- "head": "befb5f47996cb9ff4b6ffb6df289ed9cc2b1fe80",
- "note": "check",
+ "pushed": "2026-11-24T21:35:56.269Z",
+ "head": "15d489e9e70ff9fb2c598d02ba7fb0288f6d799e",
+ "note": "dive handover sheets with the true far Sun; main b890fee7 merged; the leave line (MAIL 760): pull back being fitted on the path, first green reading 0.077",
  "looks": [
+  {
+   "time": "2026-11-24T21:35:55.637Z",
+   "file": "20261124213555637-note-t1-b.jpg",
+   "source": "out/work/mercury/place/sheets/t1-b.jpg",
+   "kind": "note",
+   "label": "dive about T with the true far Sun, draft, frames 756 + 1/2 to 763 + 1/2",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T21:35:54.896Z",
+   "file": "20261124213554896-note-t1-a.jpg",
+   "source": "out/work/mercury/place/sheets/t1-a.jpg",
+   "kind": "note",
+   "label": "dive about T (759 + 1/2) with the true far Sun, draft, frames 749 + 1/2 to 756 + 1/2 (build before the merge of main b890fee7)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T21:06:19.130Z",
    "file": "20261124210619130-note-d19-crop.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/m/h615-left.png",
    "kind": "note",
    "label": "615 draft at the far Sun's left limb, card before and after reach.py: the old Sun's plumes and the orange dash are out",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T20:50:26.166Z",
-   "file": "20261124205026166-note-e20-z.jpg",
-   "source": "../../../../tmp/m/e20-z.jpg",
-   "kind": "note",
-   "label": "e20 rise to 1018, far Sun off",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T20:50:25.615Z",
-   "file": "20261124205025615-note-e20-a.jpg",
-   "source": "../../../../tmp/m/e20-a.jpg",
-   "kind": "note",
-   "label": "e20 rise 1003 on, one structure, far Sun off: the grey place ground turns into the gold map (own list, two laws of light)",
    "stop": "mercury"
   }
  ]
