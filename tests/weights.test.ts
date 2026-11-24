@@ -46,6 +46,14 @@ for (const plan of plans) {
 const high = (s: Span, time: number): number => s.plan.eyeShot(s.kind, time, 'orbit').pose.position.length() - 1
 const beforeT = (s: Span, time: number): boolean => (s.kind === 'dive' ? time < s.full : time >= s.full)
 const theFilm = (): FilmDirector => new FilmDirector(plans)
+// The span the laws are tried on with eyes made up here: a dive that leaves both weights to the engine, with the sky over 24 frames and
+// the picture over 12 before T (the numbers the made up heights are written for). It is picked by what it has, never by its name: a
+// stop may take its sky or its picture into its own hands at any time, as Venus did.
+const tried = (): Span => {
+  const s = spans.find((x) => x.kind === 'dive' && !x.own && x.h.picture && x.h.skyFrames === 24 && x.h.firstFrame - x.h.placeFirstFrame === 12)
+  if (!s) throw new Error('no dive of the film leaves a sky over 24 frames and a picture over 12 to the engine any more: these tests need a span made in memory')
+  return s
+}
 
 describe('the weights of a dive and a rise by the height of the eye', () => {
   afterEach(() => {
@@ -134,7 +142,7 @@ describe('the weights of a dive and a rise by the height of the eye', () => {
   })
 
   it('are one number for one height: an eye that comes back up takes the weight back', () => {
-    const s = spans.find((x) => x.seg.id === 'venus.dive')!
+    const s = tried()
     expect(s.h.picture).toBe(true)
     // heights by the frames left to T: down, up again to where it was, and down to T
     const table: Record<number, number> = { 24: 0.5, 12: 0.08, 10: 0.05, 8: 0.03, 6: 0.05, 4: 0.03, 2: 0.025, 0: 0.02 }
@@ -158,7 +166,7 @@ describe('the weights of a dive and a rise by the height of the eye', () => {
   })
 
   it('ask an eye for the two ends of a span once and for the height of the sample every time, unless the caller gives it', () => {
-    const s = spans.find((x) => x.seg.id === 'venus.dive')!
+    const s = tried()
     const made = (base: number, asked: number[]) => (_stop: string, _kind: 'dive' | 'rise', time: number): number => {
       asked.push(time)
       return base + (s.full - time) * 0.1
@@ -228,7 +236,7 @@ describe('the weights of a dive and a rise by the height of the eye', () => {
   })
 
   it('refuse a span without a film to ask and one over which the eye does not come down', () => {
-    const s = spans.find((x) => x.seg.id === 'venus.dive')!
+    const s = tried()
     const inside = (s.full + s.farPlace) / 2
     eyeHeights(null)
     expect(() => skyWeight(s.seg, inside)).toThrow(/no film has said how to ask/)
