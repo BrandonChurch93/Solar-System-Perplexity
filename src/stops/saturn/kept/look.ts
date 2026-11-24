@@ -90,7 +90,7 @@ export const rings: RingLook = {
   shadeTint: [0.97, 1, 0.94],
   shadeGrey: [0.3, 0.85],
   innerDark: [0.7, 1.45, 1.62, 0.5],
-  shadeSolid: [0.995, 0.6],
+  shadeSolid: [0.995, 0.116],
   sparkle: 1.6,
   sparkleTint: [1, 0.9, 0.8],
   sparkleCell: 0.005,
@@ -171,7 +171,7 @@ export const titan: TitanLook = {
 
 export const streak: StreakLook = {
   gain: 1,
-  fade: 0.6,
+  fade: 0.116,
   upper: [0.785, 0.8505, 0.0058],
   lower: [0.885, 0.8915, 0.0032],
   smudge: [0.821, 0.8415, 0.009],
