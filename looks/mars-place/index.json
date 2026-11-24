@@ -1,9 +1,33 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T08:50:44.425Z",
+ "pushed": "2026-11-24T09:08:15.993Z",
  "head": "85cadf1c78e27d682ad14c323c54398c8343f551",
- "note": "plan F: the close view's own ground on the globe side by height; test bands R and S show where the fan fills the frame",
+ "note": "plan F: every frame round both changes of view, the close view's own ground on the globe side by height",
  "looks": [
+  {
+   "time": "2026-11-24T09:08:14.915Z",
+   "file": "20261124090814915-note-F-rise-b.jpg",
+   "source": "out/work/place/see/F-rise-b.jpg",
+   "kind": "note",
+   "label": "plan F, rise 2679 to 2685 draft, every frame: 2681 close side, 2682 on the globe side with the close view's own ground",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T09:08:14.082Z",
+   "file": "20261124090814082-note-F-rise-a.jpg",
+   "source": "out/work/place/see/F-rise-a.jpg",
+   "kind": "note",
+   "label": "plan F, rise 2671 to 2678 draft, every frame (close side)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T09:08:13.112Z",
+   "file": "20261124090813112-note-F-dive-b.jpg",
+   "source": "out/work/place/see/F-dive-b.jpg",
+   "kind": "note",
+   "label": "plan F, dive 2475 to 2481 draft, every frame: 2476 is the globe side with the close view's own ground, 2477 the close side",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T08:50:43.836Z",
    "file": "20261124085043836-note-S1.jpg",
@@ -46,33 +70,6 @@
    "segment": "mars.rise",
    "frame": 2681,
    "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T08:18:54.698Z",
-   "file": "20261124081854698-compare-mars-dive-sides.jpg",
-   "source": "out/work/handover/mars-dive-sides.png",
-   "kind": "compare",
-   "label": "mars dive, both sides at T (frame 2477) and their difference times 8",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2477,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T08:17:54.608Z",
-   "file": "20261124081754608-note-H-rise-2.jpg",
-   "source": "out/work/place/see/H-rise-2.jpg",
-   "kind": "note",
-   "label": "second commit in proof: every frame 10 before T to 4 after, draft, H-rise-2",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T08:17:54.050Z",
-   "file": "20261124081754050-note-H-rise-1.jpg",
-   "source": "out/work/place/see/H-rise-1.jpg",
-   "kind": "note",
-   "label": "second commit in proof: every frame 10 before T to 4 after, draft, H-rise-1",
-   "stop": "mars"
   }
  ]
 }
