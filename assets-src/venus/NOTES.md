@@ -2791,3 +2791,39 @@ My tree stands on main 11c4350e, which is older than f2375d2e: the merge of 3efc
 - Seen, every frame of the dive on five sheets (/tmp/v/hes2) and 1326 to 1343 at half size: one descent, the globe slides up and left out of the frame, the limb levels, the Sun enters at 1313 to 1320. Still wrong and seen: 1300 to 1316 soft under the shutter floor; 1320 to 1332 the plates read flat with the dark tower group painted on; from 1333 to 1340 the ground of the surface view comes in over them by height and the near cloud forms change (step 3).
 
 After these proofs main moved to 3efc31da. (a) is committed on this tree, then main is merged and the merge is measured again (tsc, tests, build, gate, judge, a sample of 27 frames by bytes against this run, finals).
+
+### Mail from handover_engineer (02:58 VM, 24 Nov, high priority), word for word: a pace with two corners per flank
+
+"handover_engineer to venus_builder: the two corners are built, commit 000b43ae on agent/engine-handover (on main 3efc31d merged; files src/director/pace.ts, moves.ts, handover.ts, tests/pace.test.ts, tests/onemove.test.ts). It is an option of the stop alone and changes no byte where it is not named (shots of all 5400 frames and 10800 half frames equal the head before). /root takes it to main after its proof; until then merge my branch into a scratch copy to try it, not into your pushed branch.
+HOW: in handover.rise (or dive) of your move.json, pace and turn each may carry "corners": {"rise": [foot, top], "fall": [foot, top]}. "rise" is the far flank (the hold's end of a dive, the travel's end of a rise), "fall" the flank at the surface view. foot is the share of the flank over which its slope comes in at the end of the move, top the share over which it goes out at the plateau; each above 0, the two at most 1 together. A flank you do not name keeps "corner" at both ends. A long foot at the far end is your long soft corner; a short foot at the near flank your short one.
+THE SET I found on my head (main 3efc31d plus the carry), your rise forced onto the one move with your block (T 0.124, liftPower 0) and the surface view as it is on main, WITHOUT your slowed drift of MAIL 472:
+"rise": {"at": 0.124, "picture": false, "pace": {"rise": 0.55, "fall": 0.4, "corner": 0.2, "corners": {"rise": [0.6, 0.1], "fall": [0.05, 0.2]}}, "turn": {"rise": 0.475, "fall": 0.5, "corner": 0.2, "corners": {"rise": [0.05, 0.1], "fall": [0.3, 0.05]}}, "liftPower": 0}
+The harness's path part prints no step line for the rise with it at either rate (before: 0.082 at 1555 to 1556, 0.123 at 1589 to 1601). It is THIN: at rate 2 the rate reads 0.0795 and the speed 0.0791 against 0.08, and "falls by 0.040 before its largest value, lowest at 1541" stays on my tree, which your slowed surface view is to cure. So do not take the set as it is: search again on your own tree after the slowed drift is in. Corners on the pace alone do not do it (0.091 at 1593); the far end is mostly the turn's bell ending (at 1590 the place slides 8.5 px a frame across the picture, the zoom gives 4.7), so the turn needs its corners as well.
+What would give real margin and is yours to weigh: the place stands at x 957 in the surface view and at 642 where the travel takes over, so the rise must slide it 315 px while it also ends its zoom. If the rise's far pose held the place nearer the middle (rise.offset), the far end would have less to stop.
+A search tool you can run on your own tree follows in a commit of mine within the half hour (tools/, the engine's own measure, about 15 ms a set); I mail you the line to call."
+
+What follows: nothing for (a). The corners are not on main; the search runs in the second tree once the slowed drift is in and the tool has come. The rise's far pose is the travel's first pose ("your rise must end in the pose, the speed and the look that travel starts with today"), so rise.offset is not mine to move without the Builder's word.
+
+### Mail from handover_engineer (03:01 VM, 24 Nov, low priority), word for word: the search tool
+
+"handover_engineer to venus_builder: the search tool is 04cba9e1 on agent/engine-handover (tools/law.ts, one file, on top of the corners commit 000b43ae). On your own tree, with the slowed surface view in:
+npx tsx tools/law.ts --stop venus --kind rise --corners --tries 4000 --seed 7
+It flies your rise on the one move (also while Venus is in ownPath), starts from the law your move.json has, tries the flanks, the corner, liftPower and the two corners a flank of both bells, and prints each better set with the worst step of rate, turn and speed and the worst fall or climb round a peak; the last lines are the block to put under handover.rise. --rebound 0 leaves the rebound out of the score (while your surface view still makes it), --start '{"pace":{...},"turn":{...},"liftPower":0}' starts from a set of your choice (for example mine of the last mail), --seed N takes another sequence (try three or four, the best differ), --rate 2 searches at half frames (slower, stricter). About 15 ms a set, a minute for 4000. It is the engine's own measure, not the judge: confirm with npm run smooth -- --stop venus --only path.
+One caution from my run: the search presses all three curves against the limit, so take a set only if it leaves you margin (I would want 0.075 or less at rate 2), else it turns red with the next change of your surface view."
+
+### (a) on main 7e7fb893: the merge measured again (02:55 to 03:01 VM)
+
+Commit 29398ac9 is (a) on main 11c4350e; 5017aa40 merges main 7e7fb893 (which holds the rise's law, 2658ca76, that reads `turn` and `liftPower`). On the merge:
+- tsc 0; vitest 37 files, 302 passed; build 0.
+- "PASS G11  every asset has a row or a recipe"; "PASS G15  at most 2 sets per frame; finished stops: venus/web 352 MB, venus/full 1386 MB".
+- A sample of 27 frames at draft against the proven tree by sha256 (dive 1262, 1275, 1287, 1300, 1310, 1320, 1330, 1338, 1343, 1347; rise 1530, 1534, 1539, 1545, 1555, 1570, 1586, 1600, 1604; hold 1185, 1259; terrain 1350, 1440, 1529; travel 1605, 1606, 1610): equal 27 of 27. So the pins hold (turn equal to pace, liftPower 0) and the handover report, G13 and G5 of the proven tree stand for the merge.
+- Finals 1185 and 1440: the kept stills' bytes again (0539... and b24b...).
+- Path judge, exit 1, word for word:
+  "smooth venus: red, 6 over the limit or not measured. out/work/smooth/venus.md"
+  "rise: whole frames, speed: changes by 0.082 of the mean (over 8 points) over one film frame in 2 steps from frame 1555 to 1556, most at 1556, limit 0.08"
+  "rise: whole frames, speed: changes by 0.115 of the mean (over 8 points) over one film frame in 13 steps from frame 1589 to 1601, most at 1599, limit 0.08"
+  "rise: whole frames, speed: falls by 0.238 of the mean (over 8 points) before its largest value (frame 1578), lowest at frame 1538, limit 0.03"
+  "rise: rate 2, speed: changes by 0.082 of the mean (over 8 points) over one film frame in 4 steps from frame 1555 to 1556 + 1/2, most at 1555 + 1/2, limit 0.08"
+  "rise: rate 2, speed: changes by 0.116 of the mean (over 8 points) over one film frame in 26 steps from frame 1589 to 1601 + 1/2, most at 1599, limit 0.08"
+  "rise: rate 2, speed: falls by 0.245 of the mean (over 8 points) before its largest value (frame 1578 + 1/2), lowest at frame 1538, limit 0.03"
+- Net size of the three Venus folders: origin/main 162.075 MB, this tree 162.17 MB: 0.09 MB more, text alone (this notebook and the two tools fcam.ts and flay.py); no asset came in or went out.
