@@ -26,6 +26,7 @@ import { plans } from '../src/director/plans'
 //   --before  film frames of the surface view shown and read before a rise or after a dive (3; give the length of your bend).
 //   --rate    capture frames a film frame (2).
 //   --force   fly the stop on the engine's one move whatever handover.ownPath says.
+// Under the line of a rise on the one move: the way the move alone takes the eye out of the seam, and the terrain.bend that ends on it.
 // Nothing is written and nothing is judged here: the judge is the line of npm run smooth.
 
 type Kind = 'dive' | 'rise'
@@ -43,6 +44,29 @@ function label(f: number): string {
   const whole = Math.floor(f + 1e-9)
   const part = Math.round((f - whole) * rate)
   return part === 0 ? String(whole) : whole + ' + ' + part + '/' + rate
+}
+
+// For a stop on the one move whose surface view is the engine's (terrain.bend of its params, src/director/bend.ts): the way the one move
+// alone takes the eye out of the seam, in the ground's frame of the surface view where its bend begins (or at the seam, if it has none),
+// and the bend that ends on that way.
+function advice(plan: (typeof plans)[number]): string {
+  const span = plan.seg.terrain.end - plan.seg.terrain.start
+  const bend = plan.p.terrain.bend
+  const at = span - (bend ? bend.frames / config.fps : 0)
+  const step = 1e-4
+  const here = plan.terrain(at).position
+  const way = here.clone().sub(plan.terrain(at - step).position).normalize()
+  const up = plan.closeGround(here, plan.seg.terrain.start + at).up
+  const level = way.clone().addScaledVector(up, -way.dot(up)).normalize()
+  const right = level.clone().cross(up).normalize()
+  const angles = (d: THREE.Vector3): string => '[' + deg(Math.atan2(d.dot(right), d.dot(level))).toFixed(1) + ', ' + deg(Math.asin(Math.min(Math.max(d.dot(up), -1), 1))).toFixed(1) + ']'
+  const first = plan.eyeFirstWay('rise')
+  const across = first.clone().addScaledVector(way, -first.dot(way)).normalize()
+  return (
+    '  the one move alone leaves the seam toward ' + angles(first) + ' (azimuth from the surface view\'s level way, 90 to its right; elevation), ' + deg(first.angleTo(way)).toFixed(1) +
+    ' degrees from the way of the surface view ' + (bend ? 'where its bend begins' : 'at the seam') + ' ' + angles(way) + '; the bend that ends on it: "acrossDeg": ' + angles(across) + ', "turnDeg": ' + deg(first.angleTo(way)).toFixed(1) +
+    (bend ? '; the bend it has: ' + JSON.stringify(bend) : '')
+  )
 }
 
 function seam(stop: string, kind: Kind): string[] {
@@ -108,6 +132,7 @@ function seam(stop: string, kind: Kind): string[] {
       ' | surface view, largest step a film frame ' + over(step) + ' at ' + label(stepAt) +
       (h ? ' | change of view at ' + label(Math.round((h.time * config.fps - shutterMid()) * rate) / rate) : ''),
   )
+  if (kind === 'rise' && plan.engineMove) out.push(advice(plan))
   if (a.rows === 'true') {
     out.push('  frame        speed/height   over own   along      up     across   turn deg   height')
     for (const r of rows) out.push('  ' + label(r.f).padEnd(12) + ' ' + r.speed.toFixed(5).padStart(10) + ' ' + (still ? '' : (r.speed / own).toFixed(3)).padStart(10) + ' ' + r.along.toFixed(3).padStart(8) + ' ' + r.up.toFixed(3).padStart(8) + ' ' + r.across.toFixed(3).padStart(8) + ' ' + r.turn.toFixed(4).padStart(9) + '   ' + r.height.toExponential(3) + (r.inMove ? '' : '  surface view'))
