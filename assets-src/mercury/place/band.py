@@ -255,6 +255,51 @@ def sides(kind):
     return SIDES[kind]
 
 
+def fanned(fan, inner, source, copy, clean, seen, theta, d, depth, room, pd):
+    lack = np.clip(1 - seen, 0, 1)
+    need = (lack > 1e-3) & (d <= fan['reachDeg'] * pd) & (depth <= room)
+    if not need.any():
+        return copy, seen
+    ys, xs = np.nonzero(need)
+    pad = int(fan['blendPx'] * 4) + 2
+    y0, y1, x0, x1 = max(ys.min() - pad, 0), min(ys.max() + pad + 1, SIZE), max(xs.min() - pad, 0), min(xs.max() + pad + 1, SIZE)
+    box = (slice(y0, y1), slice(x0, x1))
+    yy, xx = np.mgrid[y0:y1, x0:x1].astype(np.float32)
+    turns = np.radians(np.arange(0, 360, fan['stepDeg']))
+    moves = [(np.float32(round(fan['shiftDeg'] * pd * np.cos(a))), np.float32(round(fan['shiftDeg'] * pd * np.sin(a)))) for a in turns]
+    best = np.zeros(xx.shape, np.float32)
+    pick = np.full(xx.shape, -1, np.int16)
+    gain = []
+    for i, (a, (mx, my)) in enumerate(zip(turns, moves)):
+        turn = np.abs((theta[box] - a + np.pi) % (2 * np.pi) - np.pi)
+        score = np.exp(-(turn / np.radians(fan['softDeg'])) ** 2).astype(np.float32) * (cv2.remap(source, xx - mx, yy - my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT) > 0.999)
+        better = score > best
+        best[better] = score[better]
+        pick[better] = i
+        gain.append(float(score[need[box]].sum()))
+    lead = int(np.argmax(gain))
+    pick[cv2.remap(source, xx - moves[lead][0], yy - moves[lead][1], cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT) > 0.999] = lead
+    acc = np.zeros(xx.shape + (3,), np.float32)
+    tot = np.zeros(xx.shape, np.float32)
+    cover = np.zeros(xx.shape, np.float32)
+    for i, (mx, my) in enumerate(moves):
+        m = (pick == i) & need[box]
+        if not m.any():
+            continue
+        near = RP.blur(m.astype(np.float32), fan['blendPx'])
+        w = near * cv2.remap(source, xx - mx, yy - my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT)
+        acc += w[..., None] * cv2.remap(inner, xx - mx, yy - my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT)
+        tot += w
+        cover += near
+    have = lack[box] * P.step(fan['least'][0], fan['least'][1], tot / np.maximum(cover, 1e-6)) * need[box]
+    whole = seen[box] + have
+    mixed = (clean[box] + have[..., None] * acc / np.maximum(tot, 1e-6)[..., None]) / np.maximum(whole, 1e-6)[..., None]
+    copy[box] = np.where((have > 1e-4)[..., None], mixed, copy[box])
+    seen[box] = whole
+    print('fan: px lacking a source', int(need.sum()), 'filled', int((have > 0.5).sum()), 'lead direction', lead, 'share of the fill', round(float(((pick == lead) & need[box] & (have > 0.5)).sum() / max(int((have > 0.5).sum()), 1)), 3), 'directions used', sorted(set(int(v) for v in np.unique(pick[need[box] & (have > 0.5)]))), flush=True)
+    return copy, seen
+
+
 def spill(inner, level, kind='dive'):
     S = B['spill']
     R = RP.R
@@ -276,16 +321,27 @@ def spill(inner, level, kind='dive'):
     yy, xx = np.mgrid[0:SIZE, 0:SIZE].astype(np.float32)
     theta = np.arctan2(ny, nx)
     copy, seen, total = np.zeros_like(inner), np.zeros_like(d), np.zeros_like(d)
+    fan = S.get('fan', {}).get(kind)
+    clean = np.zeros_like(inner) if fan else None
     for a in sides(kind):
         turn = np.abs((theta - a + np.pi) % (2 * np.pi) - np.pi)
         w = np.exp(-(turn / np.radians(S['sideSoftDeg'])) ** 2).astype(np.float32)
         sx, sy = xx - np.float32(round(S['shiftDeg'] * pd * np.cos(a))), yy - np.float32(round(S['shiftDeg'] * pd * np.sin(a)))
-        copy += w[..., None] * cv2.remap(inner, sx, sy, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT)
-        seen += w * cv2.remap(source, sx, sy, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT)
+        moved = cv2.remap(inner, sx, sy, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT)
+        there = cv2.remap(source, sx, sy, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT)
+        copy += w[..., None] * moved
+        seen += w * there
         total += w
-    total = np.maximum(total, 1e-6)
+        if fan:
+            clean += (w * there)[..., None] * moved
+        del moved, there
+    total = np.maximum(total, fan['leastSum'] if fan else 1e-6)
     copy /= total[..., None]
     seen /= total
+    if fan:
+        clean /= total[..., None]
+        copy, seen = fanned(fan, inner, source, copy, clean, seen, theta, d, depth, S['seam']['roomDeg'] * pd, pd)
+        del clean
     del xx, yy, sx, sy, theta, nx, ny
     top = max(RP.WIDTH)
     cut = WORK / ('seam-%s.npy' % kind)
@@ -323,6 +379,9 @@ def spill(inner, level, kind='dive'):
     del eye
     place = RP.blur(f2 * far, S['stepPx'])
     weight = seen * (1 - P.step(S['fadeDeg'][0] * pd, S['fadeDeg'][1] * pd, d)) * ~f2
+    if fan:
+        place = np.where(f2 & (seen * far > 0.99) & (cv2.distanceTransform(f2.astype(np.uint8), cv2.DIST_L2, 5) <= fan['edgePx']), 1, place).astype(np.float32)
+        weight = weight * (1 - P.step(0, 1, 2 * RP.blur(((seen < 0.5) & ~f2).astype(np.float32), fan['featherDeg'] * pd)))
     if join is not None:
         k = join * (1 - P.step(0, S['join']['deg'] * pd, cv2.distanceTransform(f2.astype(np.uint8), cv2.DIST_L2, cv2.DIST_MASK_PRECISE))) * f2
         weight = weight + np.clip(k * seen / np.maximum(1 - place * (1 - k), 1e-6), 0, 1) * f2
@@ -396,6 +455,28 @@ def lay(levels):
         print('band laid on level', n, flush=True)
 
 
+def apron(outer, lx, place, n, kind):
+    A = B.get('apron', {}).get(kind)
+    if not A:
+        return outer
+    import json
+    pd = per_deg(n)
+    f = place > 0.5
+    out = cv2.distanceTransform((~f).astype(np.uint8), cv2.DIST_L2, 5) / pd
+    said = WORK / ('apron-%s.json' % kind)
+    if n == max(RP.WIDTH):
+        said.write_text(json.dumps({'floor': float(np.percentile(lx[f] @ LUMA, A['floorPct']))}))
+    floor = json.loads(said.read_text())['floor']
+    w = (1 - P.step(A['fadeDeg'][0], A['fadeDeg'][1], out)).astype(np.float32)
+    del out
+    outer = outer + w[..., None] * np.array(A['tone'], np.float32)
+    lum = outer @ LUMA
+    lifted = floor + A['soft'] * np.logaddexp(0, (lum - floor) / A['soft'])
+    outer += (w * (lifted - lum))[..., None]
+    print('apron level', n, 'tone step', A['tone'], 'shadow floor', round(floor, 3), 'px lifted by over 0.1', int((w * (lifted - lum) > 0.1).sum()), flush=True)
+    return outer.astype(np.float32)
+
+
 def rise(levels):
     for n in sorted(levels, reverse=True):
         under = np.load(WORK / ('B%d.npy' % n)).astype(np.float32)
@@ -405,7 +486,7 @@ def rise(levels):
         soft = np.clip(place - sharp, 0, 1)[..., None]
         place = place[..., None]
         inner = lx + soft * fill(lx, craters(n), n)[..., None]
-        outer = RP.ln(under) + tone
+        outer = apron(RP.ln(under) + tone, lx, place[..., 0], n, 'rise')
         if B.get('spill'):
             place, inner, mirror, over = spill(inner, n, 'rise')
             outer = over * mirror + (1 - over) * outer
