@@ -3598,3 +3598,108 @@ is in the picture at 3 to 12 px, and the same crispness for the far ring across 
   measure, and the lift's straight course made a level step of 0.10 at 3853 + 1/2).
 - git push failed with "could not read Username" between 08:21 and 08:26 (three looks pushes), then worked
   again without any change on my side.
+
+## 24 Nov, 08:50 to 09:50 UTC: proofs of the second commit, MAILS 596, 598 and 613, the plan for the flight (G17)
+
+- SECOND COMMIT: 1e4bfd4e46d236e0032fc1f045cc954c58511d41 (test A: one border for the globe's shadow, the
+  shaded sheet solid from its inner edge; kept/look.ts, kept/rings.ts, sheet.ts, sheet.json). The camera is
+  untouched. Proofs in /tmp/v/r41, all on that sha (job_w.sh and job_x.sh in the mainref worktree):
+  - path green (the numbers of 2ab7243: dive lowest 1.00 at 3634, rise 1.00 at 3794; steps 0.066, 0.067,
+    0.075, 0.077).
+  - parity green: mean 2.557, coarse 1.044, block -4.631, level -0.960, all at 3720 (the numbers of 2ab7243).
+  - finals equal to the byte to 2ab7243's: 3465 f4b3a39598b5e761fa1c45c9c3cf19836a621e6aa70a95453c64bbb654a2a963,
+    3720 408729eb246dbe02ee7ee02ee0a52d004671faad01f005fdea018cac09bed0d5.
+  - gate: "PASS G11  every asset has a row or a recipe", "PASS G15  at most 2 sets per frame; finished stops:
+    saturn/web 274 MB, saturn/full 747 MB". tsc 0, build 0, vitest exit 0, 437 tests in 47 files.
+  - G17 by the measure's own tools/measure/g17.py on nograin finals of this head (npm run still, tier final,
+    diag nograin): 3720 median 0.683, p25 0.325 over 62 tiles (worst [11,5] 0.0095, [10,5] 0.038, [0,6] 0.052,
+    [0,5] 0.058, [1,7] 0.062); 3465 median 1.054, p25 0.918 over 71 tiles. The numbers of the machines on 2ab7243.
+  - 26 draft frames against 2ab7243's (/tmp/v/r39/head): equal to the byte 3330 to 3539 (approach, hold),
+    3720, 3922 to 3960. Changed: dive 3573 (3.0 percent of the pixels), 3576; surface view 3630 (1.4 percent,
+    x 1407 to 1919), 3660 (0.66), 3780 (12 px by 1 level), 3809 (0.53): the shaded far ring right of the globe
+    is solid now where the sky showed through it; rise 3842, 3852, 3859 (2.0 to 2.7); way out 3885, 3890
+    (4.0), 3900 (2.7): the shade of the ring solid with one crisp border, the star cloud no longer shows
+    through it. Pairs /tmp/v/r41/pair_*.png (in the looks).
+- THE JUDGE'S OWN RISE PICTURES ON 1e4bfd4 (npm run smooth, pictures, rise; 198 frames, 15 minutes):
+  red, 2 numbers. "RED pop score 1.59 from frame 3895 + 1/2 to the next, limit 1.2 (11 frames over it, first
+  3891)": all 11 are 3891 to 3896, the travel's take off; inside the rise the largest is 1.19 (3873 + 1/2 to
+  3875). "RED the pattern of the picture changes in place by 0.55 from frame 3807 + 1/2 to 8 film frames later,
+  limit 0.45": NEW, one capture frame (3807 reads 0.34, 3808 0.30), most at pixel 1872, 608. On 2ab7243 the
+  same place read 0.41 and 0.448 (3807 + 1/2, 3808), so it stood 0.002 under the limit and I never saw it: MY
+  SCAN OF TEST A BEGAN AT 3852 AND THE JUDGE'S WINDOW BEGINS AT 3798. Lesson: scan the judge's whole window
+  (dive 3528 to 3641 + 1/2, rise 3798 to 3896 + 1/2), not the frames of the old reds.
+  What is there (/tmp/v/r41/rise3807_edge.png): at 3807 the lit far ring beyond the globe's shadow comes into
+  the frame at the right edge (x 1915, y 540 to 565), in the last frames of the bend, and grows to 80 px by
+  3815 + 1/2; between it and the globe's dark limb lies the shaded ring, solid and without detail in this
+  commit, with a crisp border. My copy of the judge's map (/tmp/v/patmap3.py 7615 7631, the same 0.55 at
+  1872, 608) shows the patch over the limit: x 1816 to 1919, y 548 to 755, 13072 px, on the night side of the
+  globe round the place where the ring comes out from behind the limb (/tmp/v/r41/patmap_3807h.png). Reading,
+  not proven by a variant: the night side has no detail of its own, so within the 40 px of the measure the
+  pattern there is that of the growing ring, and the crisp border of this commit lets the ring come out
+  brighter than the wide border of 2ab7243 did. The old red at 3859 reads 0.11 (3858 to 3863 +
+  1/2: 0.11 to 0.17): cured by the judge's own run. Largest pattern elsewhere 0.30 at 3815 + 1/2.
+- THE JUDGE'S OWN DIVE PICTURES ON 1e4bfd4: still running when this block was written (228 frames); their
+  lines go into the NAMED mail and into the next block.
+- The judge's body mask is the unit sphere less a margin of 20 px at its edge (cv2.erode, tools/img/smooth.py
+  line 105). On a globe flattened to 0.902 that margin does not keep it inside the limb at the pole.
+- MAIL 596 (09:05): a level check for plate pyramids (assets-src/shared/globe-levels.py on main 81d568a7);
+  asked: run it on every pyramid the dive and the rise show and put its lines into the NAMED mail. MEASURED in
+  the code: Saturn's globe has no pyramid. One wrap (wrap-color.jpg, 8192 by 4096) is the only picture of the
+  globe in every frame, in the kept set and in the model alike; the close patch (close-globe.jpg) is loaded
+  by the kept set and its weight is uClose, which is 0 at every frame (skim.json handover.kept.close 0,
+  kept/globe.ts pw). The rings are a radial profile (function and table), no plates. So there is no pair to
+  judge; said so in NAMED.
+- MAIL 598 (09:05): on 2ab7243 G5 passes, G13 passes on all 495 frames, G17 fails at 3720 (median 0.683, p25
+  0.325 over 62 tiles); warm list and counts green. Asked in the second NAMED: 3720 beside the approved image
+  with the G17 lines by my own run, and the reds of the dive and the rise as they stand.
+- MAIL 613 (09:22): the engine's default sky weight (skyFrames 24) and place weight (placeFrames 12) run by the
+  clock; "Saturn: none". Owed in NAMED, one line: which hooks the stop sets and the frames in which anything
+  of mine still reads the time in a dive or a rise. Mine: plan.ts handover dive and rise both picture false
+  and skyFrames 0; the hold's sky leaves by the distance of the lens from the hold's path (plan.heroSky), the
+  flight's stars come in by height (plan.skyLiftAt), the sky gain and the glow by height (plan.lowAt), the
+  kept set gives way to the model by height, the shade turns solid by the distance to the globe. Frames that
+  read the time: none (the orbits of the ring and the grains run in their own time).
+- 09:34 the named sha was pushed alone (MAIL 621: one sandbox lost its GitHub login; push while it works, a
+  bundle attached to the mail if it does not: git bundle create NAME.bundle origin/main..HEAD).
+- THE SHADE BETWEEN HOLD AND DIVE (item 15, new on the list): uSolid.x = smooth(dove / 0.116) with dove = how
+  much nearer to the globe the lens is than at the end of the hold. The lens is 5.476 radii from the centre at
+  3540 and 5.360 at about 3552, so the shaded ring turns solid over 3540 to 3552. It did so before this commit
+  from radius 1.5 on; now from the inner edge on, so the C ring's shade joins. Looked at once
+  (/tmp/v/r41/shade_3538_3556.png, every second frame, x 1300 to 1920, y 520 to 1000): through 3546 the shade
+  is the hold's dark wedge with its faint streak and no edge at the ring's inner end; from 3548 to 3556 the
+  stars in the gap between globe and ring come up and the inner edge of the shaded ring shows. So stars come
+  in there by distance; open, not judged frame by frame at full size yet.
+- G17 BY TILE (/tmp/v/g17map.py APPROVED FILM: the measure's own g17.py, the ratio of every kept tile). On
+  the nograin final of 3720: 27 of the 62 tiles are at or over 0.8, the median needs 31 or 32. Rows top to
+  bottom, columns left to right:
+    row 0:  .     .     .     .     .     .     .     .    0.55  0.48   .     .
+    row 1:  .     .     .    0.42   .    0.27  0.59  0.79   .     .     .     .
+    row 2:  .    2.20  2.80  3.29   .     .    0.76   .     .     .     .     .
+    row 3: 1.01  1.03  0.37  0.97  1.28  2.74  0.69   .     .     .     .     .
+    row 4: 0.13  0.43  0.25  0.67  1.20  0.90  0.66  0.19  0.16   .     .     .
+    row 5: 0.06  0.12  0.68  0.32  0.64  1.40  1.95  1.76  1.22  0.43  0.04  0.01
+    row 6: 0.05  0.07  0.31  1.14  0.34  0.57  1.04  1.95  3.03  2.80  2.73  1.70
+    row 7: 0.20  0.06  0.07  0.41  1.43  0.89  0.36  0.75  1.35  2.40  2.53  3.26
+  The right end of row 5 is layout (the approved has lit ring there, the true world has the globe's shadow on
+  the ring); the left ends of rows 4 to 7 are the near ring under the shutter.
+- THE FLIGHT FOR G17 (ruling 2 of MAIL 577), PLAN AND FIRST NUMBERS (scratch tree rt, nothing committed):
+  - out/scratch/ringway.ts FROM TO STEP: the way of the lens over the ring plane by frame (foot, height,
+    speed, the part across the ringlets, the heading off the inward radial and off the view axis).
+  - Now: at 3720 the lens goes 9.205e-3 radii a frame over the plane, 8.521e-3 of it across the ringlets (the
+    heading is the view axis, 22.2 degrees off the inward radial).
+  - The straight skim can head left of its view axis with numbers alone: path.forward 1.7 cos d, path.side
+    -1.7 sin d keeps the speed. d = 28 degrees: heading 50.2 degrees off the radial, across 5.889e-3 (0.69 of
+    now). The pose at 3720 stays; the start of the skim (3630) moves to foot 3.331 (3.550 now).
+  - The bend after 3720 stays a turn to the RIGHT (path.bend.turnDeg 190 + d = 218): the heading swings back
+    through the view axis and on as now, the end of the skim is where it is now (3810: foot 2.515, height
+    0.5028, heading 171.7 off inward; now 2.532, 0.5028, 174.5). A turn to the left (turnDeg -130) was tried on
+    paper: the globe would drift right through the whole skim and swing back in the rise. Dropped.
+  - Globe centre in the picture with d = 28: 1143 px at 3630, 1448 at 3720, 1535 at 3750, 1353 at 3810 (now
+    1303, 1449, 1481 at 3740, 1290).
+  - The paces of the dive must be found again (the tool's path is red with the old ones): opt7.ts dive 400 1
+    gives hard 0.831 (the old dive stands at 0.832): reach [0.353, 0.802] rounds [0.03, 0.287, 0.112, 0.118];
+    climb [0.737, 0.791], [0.032, 0.275, 0.315, 0.048]; round [0.558, 0.733], [0.068, 0.305, 0.148, 0.061]; view
+    [0.492, 0.527], [0.191, 0.093, 0.085, 0.033] (/tmp/v/r42/opt_dive_d28.log). The rise: not searched yet.
+  - NEXT: G17 by render for d = 28, 34 (final nograin 3720, then g17map.py), choose d, search the paces of
+    both moves, then every proof again over the judge's whole windows (the judged dive frame 3567 and every
+    frame of the skim but 3720's pose change), and the place 3807 at the right edge with it.
