@@ -1,9 +1,41 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T18:32:13.883Z",
+ "pushed": "2026-11-24T18:50:39.526Z",
  "head": "024eaa6dd045f918b610a6c0276af3515b5c82b9",
- "note": "test state: toned lay of the close ground on the plates, no commit; compared from above against the committed look",
+ "note": "test states only, no commit: what stands in the corners of dive and rise measured (the plates' skirt, not the aprons); next the skirt without the long run on",
  "looks": [
+  {
+   "time": "2026-11-24T18:50:38.899Z",
+   "file": "20261124185038899-note-zero-view.jpg",
+   "source": "out/work/place/see/zero-view.jpg",
+   "kind": "note",
+   "label": "surface view with apron alpha 0 against the committed frame: the surface view needs the aprons at 2477 to 2520 and 2680",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T18:50:38.332Z",
+   "file": "20261124185038332-note-zv.jpg",
+   "source": "out/work/place/see/zv.jpg",
+   "kind": "note",
+   "label": "what stands in the corners: aprons at alpha 0 (Z) and all close pictures tinted (V): the stripes are the globe's plates, not the aprons",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T18:50:37.752Z",
+   "file": "20261124185037752-note-b3-low.jpg",
+   "source": "out/work/place/see/b3-low.jpg",
+   "kind": "note",
+   "label": "test, not committed: b3 film frames 2471 to 2476, 2684 to 2690, 2468; corners still stripes and a dark basin",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T18:50:37.142Z",
+   "file": "20261124185037142-note-b3-above.jpg",
+   "source": "out/work/place/see/b3-above.jpg",
+   "kind": "note",
+   "label": "test, not committed: from above, committed (ref) against toned lay b3; striped fans round the place are the skirt's run on",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T18:32:12.789Z",
    "file": "20261124183212789-note-b3-plates.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/place/see/b2-V.jpg",
    "kind": "note",
    "label": "every picture of the close ground tinted at 2471 and 2690: the pale block at the lower left is L0's own picture (pale red) behind L1",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T17:45:34.806Z",
-   "file": "20261124174534806-note-b2-film.jpg",
-   "source": "out/work/place/see/b2-film.jpg",
-   "kind": "note",
-   "label": "film frames of dive and rise with the test plates of lay 2, not committed; far plateau too bright from above, dark basin wall lower right",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T17:45:33.644Z",
-   "file": "20261124174533644-note-b2-H.jpg",
-   "source": "out/work/place/see/b2-H.jpg",
-   "kind": "note",
-   "label": "globe ground alone with the test plates of lay 2, not committed",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T17:45:32.689Z",
-   "file": "20261124174532689-note-b2-plates.jpg",
-   "source": "out/work/place/see/b2-plates.jpg",
-   "kind": "note",
-   "label": "test plates from above after lay 2 and skirt, not committed",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T17:45:31.834Z",
-   "file": "20261124174531834-note-b0-R.jpg",
-   "source": "out/work/place/see/b0-R.jpg",
-   "kind": "note",
-   "label": "close ground alone with the L0 apron hidden behind L1",
    "stop": "mars"
   }
  ]
