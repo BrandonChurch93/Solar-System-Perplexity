@@ -1,9 +1,33 @@
 {
  "folder": "venus",
- "pushed": "2026-11-24T21:17:41.910Z",
- "head": "43cbe72e6fb5a134d6f8e122bc78809ab5716ff7",
- "note": "on the batch tip 1924a104 with handover.rise.pullBack speed 1.0 over 0.2 from 0.6: leave line 0.193 (limit 0.07) by the path; smooth rise rendering now",
+ "pushed": "2026-11-24T21:39:50.896Z",
+ "head": "39dcfabad2ccc23b7e21d4f5bd95a555ed758fc5",
+ "note": "pull back in: leave line 0.193 (limit 0.07); smooth on the tip: rise pop 1.21 at 1610 + 1/2 and pattern 0.72 at 1608 + 1/2 (travel frames), 0.65 at 1575, 0.62 at 1547 + 1/2; dive pattern 0.47 at 1311, pop 1.18; handover rendering",
  "looks": [
+  {
+   "time": "2026-11-24T21:39:50.235Z",
+   "file": "20261124213950235-note-r1608-1620.jpg",
+   "source": "../../../../tmp/v/shD/r1608-1620.jpg",
+   "kind": "note",
+   "label": "travel 1608 to 1620 after the rise with the pull back, draft",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T21:39:49.611Z",
+   "file": "20261124213949611-note-r1596-1607.jpg",
+   "source": "../../../../tmp/v/shD/r1596-1607.jpg",
+   "kind": "note",
+   "label": "rise into the travel 1596 to 1607, draft, with the pull back: the disc gets smaller at every frame through the seam 1605",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T21:39:48.761Z",
+   "file": "20261124213948761-note-r1584-1595.jpg",
+   "source": "../../../../tmp/v/shD/r1584-1595.jpg",
+   "kind": "note",
+   "label": "rise 1584 to 1595, draft, batch tip with the pull back (speed 1.0, over 0.2, from 0.6): every film frame",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T21:17:41.291Z",
    "file": "20261124211741291-note-pair-1548-1556.jpg",
@@ -46,42 +70,6 @@
    "segment": "venus.rise",
    "first": 1539,
    "last": 1604,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T20:37:56.964Z",
-   "file": "20261124203756964-sheet-venus-rise-draft-after.jpg",
-   "source": "out/work/handover/venus-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "venus rise, every frame 1540 to 1551 (after T, frame 1539), draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1540,
-   "last": 1551,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T20:37:55.182Z",
-   "file": "20261124203755182-sheet-venus-rise-draft-before.jpg",
-   "source": "out/work/handover/venus-rise-draft-before.png",
-   "kind": "sheet",
-   "label": "venus rise, every frame 1530 to 1538 (before T, frame 1539), draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1530,
-   "last": 1538,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T20:37:53.706Z",
-   "file": "20261124203753706-sheet-venus-rise-draft-across.jpg",
-   "source": "out/work/handover/venus-rise-draft-across.png",
-   "kind": "sheet",
-   "label": "venus rise, every frame 1533 to 1544 (across T, frame 1539), draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1533,
-   "last": 1544,
    "tier": "draft"
   }
  ]
