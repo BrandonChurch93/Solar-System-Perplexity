@@ -1,9 +1,17 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T04:43:15.955Z",
- "head": "b68de107a21b8ace77881328432852d0b9366c8a",
- "note": "04:48 tongue cured, cap reach 17 shows no border line, G15 cure running (two finest levels smaller, matte out)",
+ "pushed": "2026-11-24T05:20:00.625Z",
+ "head": "dd1ddb9cd881f1b397a4c596b76f58d93a699881",
+ "note": "05:22 pushed dd1ddb9c: turn 140, cap relief, picture off, bend; G15 1399.4 MB, tests 398, path green, seam 1.025",
  "looks": [
+  {
+   "time": "2026-11-24T05:19:59.816Z",
+   "file": "20261124051959816-note-b-sheet.jpg",
+   "source": "out/work/place/see/b-sheet.jpg",
+   "kind": "note",
+   "label": "the bend of the surface view (d196), draft: 2610, 2625, 2640, 2655, 2669 and the rise at 2672, 2676, 2680",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T04:43:15.375Z",
    "file": "20261124044315375-note-q-sheet.jpg",
@@ -64,14 +72,6 @@
    "source": "out/work/place/see/crops-v9.jpg",
    "kind": "note",
    "label": "heights v9 of the turned place (heading 245.9) from straight above, lit by the globe's Sun at the middle of the surface view, no cast shadow yet: 8.5, 3.8, 1.6, 0.7 degrees",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T02:36:17.217Z",
-   "file": "20261124023617217-note-map19-crops.jpg",
-   "source": "out/work/place/see/map19-crops.jpg",
-   "kind": "note",
-   "label": "the globe's map at the place (patch-19, centre 19 and 8.5 degrees) with the Sun by the globe (yellow 310), the camera now (green 100) and after a turn (magenta 240, pink 255)",
    "stop": "mars"
   }
  ]
