@@ -1,9 +1,41 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T20:05:05.600Z",
+ "pushed": "2026-11-24T20:39:49.398Z",
  "head": "befb5f47996cb9ff4b6ffb6df289ed9cc2b1fe80",
- "note": "one structure under the planet: rise 958 to 994 pattern at most 0.28, dive 734 to 773 at most 0.35 (limit 0.45), every frame looked at; sky card cut first dry run, not kept",
+ "note": "whole measure of the one structure: dive worst 0.60 at 722 (own list), rise worst 0.93 at 1009 (own list), the three ordered ranges under 0.36; sky card remnant cut and seen at 615",
  "looks": [
+  {
+   "time": "2026-11-24T20:39:48.813Z",
+   "file": "20261124203948813-note-h615-mark.jpg",
+   "source": "../../../../tmp/m/h615-mark.png",
+   "kind": "note",
+   "label": "615 draft at the mark (frame 1545 to 1845, 383 to 683, twice size): before and after, the orange mark under the far Sun's loop is out",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T20:39:48.210Z",
+   "file": "20261124203948210-note-h615-card.jpg",
+   "source": "../../../../tmp/m/h615-card.png",
+   "kind": "note",
+   "label": "615 draft, far Sun on: card before, card after, difference times 16: outside 1.66 Sun radii 932 pixels by 1 code",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T20:39:47.650Z",
+   "file": "20261124203947650-note-reach-mark.jpg",
+   "source": "out/work/mercury/reach-mark.png",
+   "kind": "note",
+   "label": "sky card at 2839, 983, 300 px native: before, after (top as shipped, bottom at 4 times gain)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T20:39:46.922Z",
+   "file": "20261124203946922-note-reach-check.jpg",
+   "source": "out/work/mercury/reach-check.jpg",
+   "kind": "note",
+   "label": "sky card remnant, the cut as it now stands: card at 4 times gain before and after (inside 1.3 Sun radii only the dark floor and the cool round stars, warm ground filled from the sky round it, long specks out)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T20:05:04.994Z",
    "file": "20261124200504994-note-reach-check.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/m/e17-b.jpg",
    "kind": "note",
    "label": "one structure, rise e17-b, far Sun off (measure only)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T20:05:02.526Z",
-   "file": "20261124200502526-note-e17-a.jpg",
-   "source": "../../../../tmp/m/e17-a.jpg",
-   "kind": "note",
-   "label": "one structure, rise e17-a, far Sun off (measure only)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T19:46:16.298Z",
-   "file": "20261124194616298-note-card-reach.jpg",
-   "source": "../../../../tmp/m/card-reach.png",
-   "kind": "note",
-   "label": "sky-hold.webp at 4 times gain round the approved Sun, circles at 1, 1.3, 1.5, 1.8 Sun radii, approved frame in magenta",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T19:46:15.609Z",
-   "file": "20261124194615609-note-h615-sun.jpg",
-   "source": "../../../../tmp/m/h615-sun.png",
-   "kind": "note",
-   "label": "615 draft, far Sun on (left) and off by scratch (right): what the sky card still holds of the approved Sun (disc noise, fringe, filaments, plumes); round 2 item of MAIL 692 and 713",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T19:46:14.880Z",
-   "file": "20261124194614880-note-du-1964.jpg",
-   "source": "../../../../tmp/m/du-1964.jpg",
-   "kind": "note",
-   "label": "982: globe over the set (left) against the commit's one draw under (middle), difference times 6 (right): the two sets of the terrain show through each other in the ring when each is cut by itself; one structure from now on",
    "stop": "mercury"
   }
  ]
