@@ -1,9 +1,17 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T17:27:17.961Z",
+ "pushed": "2026-11-24T17:47:53.181Z",
  "head": "404a7f06c4439436a06972a472e15098457ef42d",
- "note": "NAMED 404a7f06 on main 57695be8, tests 554 passed; handover pass, pictures green (pop 1.18 at 244), seam GREEN, warm clean. Frame 60 draft: share by band 0.165 0.215 0.193 0.151 0.104 0.063 0.035 0.027 0.020 | dark 0.190 body 0.663 pale 0.062 white 0.022 | half width 4.6 px, 4439 shapes, fine detail 0.0595, mean 0.334",
+ "note": "round 2, item 1 (the material at 60), head 404a7f06 unchanged; frame 60 draft: share by band 0.165 0.215 0.193 0.151 0.104 0.063 0.035 0.027 0.020 / dark 0.190 body 0.663 pale 0.062 white 0.022 / brightest 15 percent half width 4.6 px, 4439 shapes, fine detail 0.0595, mean 0.334; distance 0.062",
  "looks": [
+  {
+   "time": "2026-11-24T17:47:52.396Z",
+   "file": "20261124174752396-note-zd.jpg",
+   "source": "../../../../tmp/rd/zd.jpg",
+   "kind": "note",
+   "label": "round 2 begun, frame 60 draft at two times (crop 700 760 480 270): which term draws what. d1 without the hairlines, d2 without the threads, d3 without the hot patches, d4 without the dark middle, last the approved. Seen: mine is tents (a crease toward every corner, a peak) between crisp cracks with silk lines; the approved is round bulbs, soft dark valleys, broad bright fibres up the flank from the pits, a mottled brown top",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T17:27:17.196Z",
    "file": "20261124172717196-note-p20-pops.jpg",
@@ -72,14 +80,6 @@
    "source": "../../../../tmp/f19-60-a.jpg",
    "kind": "note",
    "label": "1f74d5c9 on main ed003c70, frame 60 draft beside the approved (bytes equal a5b15421)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T16:18:38.441Z",
-   "file": "20261124161838441-note-f18-00090-whole.jpg",
-   "source": "../../../../tmp/f18-00090-whole.jpg",
-   "kind": "note",
-   "label": "a5b15421 final tier, frame 90 whole at half size, left approved, right mine",
    "stop": "sun"
   }
  ]
