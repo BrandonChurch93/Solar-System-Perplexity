@@ -1,9 +1,41 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T13:39:39.040Z",
- "head": "413128b0df8460fbf57e82a50bc87045e1557477",
- "note": "13:41 head 413128b0 = item 1 on the merge of main 2bc36ce6 (tests 485 passed in 49 files, tsc 0). Frame 60 draft keeps the bytes of the t15 trial: share by band 0.1 .. 0.9 : 0.191 0.235 0.171 0.125 0.089 0.060 0.040 0.031 0.022 / dark (under 0.15) 0.224 | body (0.15 to 0.55) 0.620 | pale (0.65 to 0.85) 0.071 | white (over 0.85) 0.024 / brightest 15 percent: half width 4.8 px, 5383 shapes | fine detail 0.0657 | mean 0.323. 247 and 270 keep their bytes. Red by eye: at three to one the cells stand apart with wide dark feet; trials on the lane and the rim run now, the proof chain after them.",
+ "pushed": "2026-11-24T13:59:23.711Z",
+ "head": "1154099e249a95910f3ec137c6b7886323e15c71",
+ "note": "14:02 head 1154099e (config only on the merge of main 2bc36ce6): the cells touch. Frame 60 draft: share by band 0.1 .. 0.9 : 0.165 0.231 0.178 0.128 0.092 0.066 0.044 0.036 0.027 / dark (under 0.15) 0.195 | body (0.15 to 0.55) 0.630 | pale (0.65 to 0.85) 0.080 | white (over 0.85) 0.030 / brightest 15 percent: half width 4.3 px, 5530 shapes | fine detail 0.0702 | mean 0.340. Distance 0.041. 247 and 270 keep their bytes. The proof chain runs (tests, warm, handover, pictures, judged, G13, run 61 to 68, path, seam, gate, build, final tier). Red by eye: more gold and less orange than the approved, crisper and more threaded than its soft bulbs; at 229 the field of cells reads finer than the map round it.",
  "looks": [
+  {
+   "time": "2026-11-24T13:59:22.356Z",
+   "file": "20261124135922356-note-z1b-ball.jpg",
+   "source": "../../../../tmp/z1b-ball.jpg",
+   "kind": "note",
+   "label": "head 1154099e: the rise at 197, 205, 213, 221, 229, 237, draft",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T13:59:21.431Z",
+   "file": "20261124135921431-note-whole-pair-z1.jpg",
+   "source": "../../../../tmp/whole-pair-z1.jpg",
+   "kind": "note",
+   "label": "frame 60 whole at half size, the approved left, head 1154099e right, draft",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T13:59:20.361Z",
+   "file": "20261124135920361-note-pair-z1b.jpg",
+   "source": "../../../../tmp/pair-z1b.jpg",
+   "kind": "note",
+   "label": "frame 60 at one to one, the approved left, head 1154099e right, draft",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T13:59:19.298Z",
+   "file": "20261124135919298-note-zoom-pair-z1.jpg",
+   "source": "../../../../tmp/zoom-pair-z1.jpg",
+   "kind": "note",
+   "label": "frame 60 at three to one, the approved left, head 1154099e right: the cells touch along thin creases",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T13:39:38.432Z",
    "file": "20261124133938432-note-zoom-pair-m16.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/pair-t15.jpg",
    "kind": "note",
    "label": "frame 60 draft, one to one: approved left, 884ff04d right",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T12:50:57.062Z",
-   "file": "20261124125057062-note-t13-ball.jpg",
-   "source": "../../../../tmp/t13-ball.jpg",
-   "kind": "note",
-   "label": "trial t13 draft at half size: 205, 213, 221, 229, 237; last cell is 229 of 7f4e02c1",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T12:50:56.528Z",
-   "file": "20261124125056528-note-t13-229-crop.jpg",
-   "source": "../../../../tmp/t13-229-crop.jpg",
-   "kind": "note",
-   "label": "frame 229 draft, one to one crop, trial t13: the field of cells on the ball",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T12:50:55.971Z",
-   "file": "20261124125055971-note-pair-t13.jpg",
-   "source": "../../../../tmp/pair-t13.jpg",
-   "kind": "note",
-   "label": "frame 60 draft, one to one: approved left, trial t13 right (uncommitted config)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T12:31:41.214Z",
-   "file": "20261124123141214-note-pair-t9.jpg",
-   "source": "../../../../tmp/pair-t9.jpg",
-   "kind": "note",
-   "label": "trial t9 of the cells (not committed): approved beside frame 60 draft at one to one, box x 560 y 600, 800 by 440",
    "stop": "sun"
   }
  ]
