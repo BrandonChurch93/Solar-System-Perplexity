@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T20:48:14.760Z",
- "head": "73f7a718f27257a396c2002f0164242932a3e060",
- "note": "20:53 UTC: MAIL 733 point 2 answered (the dive makes the laid deep's program and sphere at 4686 + 1/2 and the surface view's sphere at 4758; 4950 is the shared sky's three point clouds); the rise's red of my proxy at 4984 and 4988 proven as parallax of the cloud sheet; still red and named: hump 4696 at the limb, white specks of the dim side",
+ "pushed": "2026-11-24T21:15:00.688Z",
+ "head": "5389a5a68536018ec86e873ece0c4660dd494ae8",
+ "note": "21:15 UTC: review tier 4860 beside the approved; dive 4680 to 4745 looked at frame by frame; the new leave line read ahead on the batch's code: not printed for Neptune (the rise goes into the retreat), with a retreat counted 0.148 against the floor 0.07; batch 4 is on main, merge and tests next",
  "looks": [
+  {
+   "time": "2026-11-24T21:14:59.475Z",
+   "file": "20261124211459475-note-ev-dive-4704.jpg",
+   "source": "out/work/nep/weave/ev-dive-4704.jpg",
+   "kind": "note",
+   "label": "21:15 UTC: dive, every frame 4704 to 4715 (present state, preview draft), looked at: one storm growing evenly, the deck goes to navy by the height; white specks of small cloud on the dim side, named",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T21:14:58.152Z",
+   "file": "20261124211458152-note-look-rev-4860.jpg",
+   "source": "out/work/nep/weave/look-rev-4860.jpg",
+   "kind": "note",
+   "label": "21:15 UTC: 4860 at REVIEW tier (16 by 9, 4 samples, 5.7 min) beside the approved image, present state (my folders' code unchanged since 5c671343); G17 on this frame median 1.164, p25 0.694 (preview draft 1.382 / 0.741); 7.4 s a preview draft frame",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T20:48:14.172Z",
    "file": "20261124204814172-note-shell-4988.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/nep/weave/look-h0-4860.jpg",
    "kind": "note",
    "label": "4860 now (5c671343) beside the approved close image. G17 1.382 / 0.741",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T19:45:28.482Z",
-   "file": "20261124194528482-note-last24-low.jpg",
-   "source": "out/work/nep/weave/last24-low.jpg",
-   "kind": "note",
-   "label": "the near deck of those frames enlarged (lower left), 4746, 4758, 4769: the pale patches the map leaves over the dark deck are fewer and bluer now (named: lilac), and go out with the height on both",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T19:45:27.905Z",
-   "file": "20261124194527905-note-last24-top.jpg",
-   "source": "out/work/nep/weave/last24-top.jpg",
-   "kind": "note",
-   "label": "the far field of those frames enlarged (upper left 480 by 150 of 960), 4746, 4756, 4764, 4769: named (left) has the hard white patch and the cyan dab; present (right) has long white bands by the limb, and a turquoise streak of the map still stands in them (named, the map's own azure)",
    "stop": "neptune"
   }
  ]
