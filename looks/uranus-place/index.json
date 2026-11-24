@@ -1,9 +1,31 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-24T00:49:45.454Z",
- "head": "1d5f6b61d07cf99d1981b7022af3eb7a2ddf883c",
- "note": "step 3 first look: 4290 with the haze as a volume against the approved close; step 2 report passes with the picture off (dive 0.003, rise 0.002), G13 running",
+ "pushed": "2026-11-24T01:12:09.872Z",
+ "head": "ce78f05b3ce86ec9c616ea9b5a112d656deb120b",
+ "note": "step 2 READY ce78f05b (main 79199f35); step 3 slab stills from the scratch tree; dive pace cure next",
  "looks": [
+  {
+   "time": "2026-11-24T01:12:09.118Z",
+   "file": "20261124011209118-note-b3-sheet.jpg",
+   "source": "../../../../tmp/b3-sheet.png",
+   "kind": "note",
+   "label": "Step 3 in the scratch tree (not committed), draft stills: the deck seen through a haze layer by depth, frames 4162 to 4178 (first two on the old path), last panel 4176 with the blend by height for compare. Tree ce78f05b, main 79199f35",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T00:56:15.029Z",
+   "file": "20261124005615029-job-frame-04035.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.hold frame 4035, final tier, nograin view, from the running measure job",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
   {
    "time": "2026-11-24T00:49:44.448Z",
    "file": "20261124004944448-note-v-4290-crops.jpg",
@@ -68,29 +90,6 @@
    "segment": "uranus.rise",
    "first": 4380,
    "last": 4390,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T00:33:50.540Z",
-   "file": "20261124003350540-sheet-uranus-rise-draft-across.jpg",
-   "source": "out/work/handover/uranus-rise-draft-across.png",
-   "kind": "sheet",
-   "label": "uranus rise, every frame 4385 to 4396 (across T, frame 4391), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "first": 4385,
-   "last": 4396,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T00:25:59.325Z",
-   "file": "20261124002559325-compare-uranus-rise-sides.jpg",
-   "source": "out/work/handover/uranus-rise-sides.png",
-   "kind": "compare",
-   "label": "uranus rise, both sides at T (frame 4391) and their difference times 8",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4391,
    "tier": "draft"
   }
  ]
