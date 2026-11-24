@@ -1,9 +1,17 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T10:14:39.135Z",
+ "pushed": "2026-11-24T10:43:52.927Z",
  "head": "aac984cc9dfffd0b71d7b3fd5a0fc95a2ef9e2ee",
- "note": "proof 47: main da59c441 merged, sides at T 0.002 and 0.001, finals kept; cap drop search next",
+ "note": "cap drop found: the graphics card's cos and sin of the spin; cured in my set by turning the mesh on the CPU",
  "looks": [
+  {
+   "time": "2026-11-24T10:43:52.099Z",
+   "file": "20261124104352099-note-drop-cure.jpg",
+   "source": "out/work/place/see/drop-cure.png",
+   "kind": "note",
+   "label": "The cap's drop found: left the close view's own ground alone, middle the globe side's cap alone as on main (0.000156 and 0.000210 radii too low, white seams), right the cap with the body's turn made on the CPU in my set (0.000002 and 0.000004, seams gone). Dive 2476 above, rise 2682 below, draft",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T10:14:38.385Z",
    "file": "20261124101438385-note-M-a.jpg",
@@ -64,14 +72,6 @@
    "source": "out/work/place/see/K-a.jpg",
    "kind": "note",
    "label": "sky by height, dive 2456 2462 2465 2467, draft",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T09:25:45.665Z",
-   "file": "20261124092545665-note-sides44-dive.jpg",
-   "source": "out/work/place/see/sides44-dive.jpg",
-   "kind": "note",
-   "label": "sides tool at T of the dive, draft: close side, globe side, difference times 8 (mean 0.057, 99th percentile 1)",
    "stop": "mars"
   }
  ]
