@@ -1,9 +1,157 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-24T22:33:02.588Z",
+ "pushed": "2026-11-24T22:59:41.138Z",
  "head": "e9e2c3a72b60ef94a56fb30619383372aa28eab1",
- "note": "white tops: the view angle is out of the law, whites are fixed on the ground with a lane along the flight's track; drafts, proof chain running; open: a pale grey patch passes the lower left corner at 4375",
+ "note": "rise sheets of the tops law by lane only, and the 4375 corner patch at native size: it is fixed on the ground and passes out of frame, its flat look with a cut edge is open",
  "looks": [
+  {
+   "time": "2026-11-24T22:59:40.409Z",
+   "file": "20261124225940409-note-corner.jpg",
+   "source": "../../../../tmp/y2/corner.jpg",
+   "kind": "note",
+   "label": "lower left corner at native size (520 by 360 of 1920 by 1080, draft), 4366 to 4390 every third frame: the pale grey patch slides down and left out of frame with the ground; largest level 129, 124, 122, 122, 120, 120, 110, 96, 79; it does not grow in place",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T22:55:53.855Z",
+   "file": "20261124225553855-note-rise-2.jpg",
+   "source": "../../../../tmp/y2/rise-2.jpg",
+   "kind": "note",
+   "label": "rise 4430 to 4454 every frame, draft",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T22:55:53.167Z",
+   "file": "20261124225553167-note-rise-1.jpg",
+   "source": "../../../../tmp/y2/rise-1.jpg",
+   "kind": "note",
+   "label": "rise 4405 to 4429 every frame, draft",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T22:55:52.513Z",
+   "file": "20261124225552513-note-rise-0.jpg",
+   "source": "../../../../tmp/y2/rise-0.jpg",
+   "kind": "note",
+   "label": "rise 4380 to 4404 every frame, draft, tops law by lane only (handover run 22:32)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T22:55:00.470Z",
+   "file": "20261124225500470-sheet-uranus-rise-top.jpg",
+   "source": "out/work/handover/uranus-rise-top.png",
+   "kind": "sheet",
+   "label": "uranus rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 4391), place picture off, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "first": 4391,
+   "last": 4454,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T22:53:23.449Z",
+   "file": "20261124225323449-sheet-uranus-rise-draft-after.jpg",
+   "source": "out/work/handover/uranus-rise-draft-after.png",
+   "kind": "sheet",
+   "label": "uranus rise, every frame 4392 to 4403 (after T, frame 4391), draft tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "first": 4392,
+   "last": 4403,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T22:53:21.698Z",
+   "file": "20261124225321698-sheet-uranus-rise-draft-before.jpg",
+   "source": "out/work/handover/uranus-rise-draft-before.png",
+   "kind": "sheet",
+   "label": "uranus rise, every frame 4380 to 4390 (before T, frame 4391), draft tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "first": 4380,
+   "last": 4390,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T22:53:20.021Z",
+   "file": "20261124225320021-sheet-uranus-rise-draft-across.jpg",
+   "source": "out/work/handover/uranus-rise-draft-across.png",
+   "kind": "sheet",
+   "label": "uranus rise, every frame 4385 to 4396 (across T, frame 4391), draft tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "first": 4385,
+   "last": 4396,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T22:53:18.265Z",
+   "file": "20261124225318265-compare-uranus-rise-step-in-place.jpg",
+   "source": "out/work/handover/uranus-rise-step-in-place.png",
+   "kind": "compare",
+   "label": "uranus rise, the largest step of the level in place (4.53): frame 4403, frame 4404, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4404
+  },
+  {
+   "time": "2026-11-24T22:45:37.112Z",
+   "file": "20261124224537112-sheet-uranus-dive-top.jpg",
+   "source": "out/work/handover/uranus-dive-top.png",
+   "kind": "sheet",
+   "label": "uranus dive, the globe side alone from straight above the place, 12 frames from the far end to T (frame 4186), place picture off, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "first": 4110,
+   "last": 4186,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T22:44:49.563Z",
+   "file": "20261124224449563-sheet-uranus-dive-draft-after.jpg",
+   "source": "out/work/handover/uranus-dive-draft-after.png",
+   "kind": "sheet",
+   "label": "uranus dive, every frame 4187 to 4198 (after T, frame 4186), draft tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "first": 4187,
+   "last": 4198,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T22:44:47.783Z",
+   "file": "20261124224447783-sheet-uranus-dive-draft-before.jpg",
+   "source": "out/work/handover/uranus-dive-draft-before.png",
+   "kind": "sheet",
+   "label": "uranus dive, every frame 4174 to 4185 (before T, frame 4186), draft tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "first": 4174,
+   "last": 4185,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T22:44:46.006Z",
+   "file": "20261124224446006-sheet-uranus-dive-draft-across.jpg",
+   "source": "out/work/handover/uranus-dive-draft-across.png",
+   "kind": "sheet",
+   "label": "uranus dive, every frame 4180 to 4191 (across T, frame 4186), draft tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "first": 4180,
+   "last": 4191,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T22:44:44.298Z",
+   "file": "20261124224444298-compare-uranus-dive-step-in-place.jpg",
+   "source": "out/work/handover/uranus-dive-step-in-place.png",
+   "kind": "compare",
+   "label": "uranus dive, the largest step of the level in place (2.8): frame 4173, frame 4174, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4174
+  },
   {
    "time": "2026-11-24T22:33:01.976Z",
    "file": "20261124223301976-note-c4035.jpg",
@@ -160,154 +308,6 @@
    "source": "../../../../tmp/w2/rise-0.jpg",
    "kind": "note",
    "label": "rise 4380 to 4404 draft, named tree (base 79ade566)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T21:57:42.616Z",
-   "file": "20261124215742616-sheet-uranus-rise-top.jpg",
-   "source": "out/work/handover/uranus-rise-top.png",
-   "kind": "sheet",
-   "label": "uranus rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 4391), place picture off, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "first": 4391,
-   "last": 4454,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T21:55:57.776Z",
-   "file": "20261124215557776-sheet-uranus-rise-draft-after.jpg",
-   "source": "out/work/handover/uranus-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "uranus rise, every frame 4392 to 4403 (after T, frame 4391), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "first": 4392,
-   "last": 4403,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T21:55:56.016Z",
-   "file": "20261124215556016-sheet-uranus-rise-draft-before.jpg",
-   "source": "out/work/handover/uranus-rise-draft-before.png",
-   "kind": "sheet",
-   "label": "uranus rise, every frame 4380 to 4390 (before T, frame 4391), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "first": 4380,
-   "last": 4390,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T21:55:54.300Z",
-   "file": "20261124215554300-sheet-uranus-rise-draft-across.jpg",
-   "source": "out/work/handover/uranus-rise-draft-across.png",
-   "kind": "sheet",
-   "label": "uranus rise, every frame 4385 to 4396 (across T, frame 4391), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "first": 4385,
-   "last": 4396,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T21:55:52.564Z",
-   "file": "20261124215552564-compare-uranus-rise-step-in-place.jpg",
-   "source": "out/work/handover/uranus-rise-step-in-place.png",
-   "kind": "compare",
-   "label": "uranus rise, the largest step of the level in place (3.52): frame 4403, frame 4404, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4404
-  },
-  {
-   "time": "2026-11-24T21:47:56.773Z",
-   "file": "20261124214756773-sheet-uranus-dive-top.jpg",
-   "source": "out/work/handover/uranus-dive-top.png",
-   "kind": "sheet",
-   "label": "uranus dive, the globe side alone from straight above the place, 12 frames from the far end to T (frame 4186), place picture off, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "first": 4110,
-   "last": 4186,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T21:47:09.351Z",
-   "file": "20261124214709351-sheet-uranus-dive-draft-after.jpg",
-   "source": "out/work/handover/uranus-dive-draft-after.png",
-   "kind": "sheet",
-   "label": "uranus dive, every frame 4187 to 4198 (after T, frame 4186), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "first": 4187,
-   "last": 4198,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T21:47:07.571Z",
-   "file": "20261124214707571-sheet-uranus-dive-draft-before.jpg",
-   "source": "out/work/handover/uranus-dive-draft-before.png",
-   "kind": "sheet",
-   "label": "uranus dive, every frame 4174 to 4185 (before T, frame 4186), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "first": 4174,
-   "last": 4185,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T21:47:05.786Z",
-   "file": "20261124214705786-sheet-uranus-dive-draft-across.jpg",
-   "source": "out/work/handover/uranus-dive-draft-across.png",
-   "kind": "sheet",
-   "label": "uranus dive, every frame 4180 to 4191 (across T, frame 4186), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "first": 4180,
-   "last": 4191,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T21:47:04.073Z",
-   "file": "20261124214704073-compare-uranus-dive-step-in-place.jpg",
-   "source": "out/work/handover/uranus-dive-step-in-place.png",
-   "kind": "compare",
-   "label": "uranus dive, the largest step of the level in place (2.79): frame 4173, frame 4174, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4174
-  },
-  {
-   "time": "2026-11-24T21:46:32.377Z",
-   "file": "20261124214632377-note-eye-track.jpg",
-   "source": "../../../../tmp/tf/eye-track.png",
-   "kind": "note",
-   "label": "BAD, a known red of the new rise: the eye seen from the side 4370 to 4426, it stops going forward at 4394 and goes back 0.054 R to 4420 (engine-dim 79ade566 and main b890fee7 merged)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T21:20:48.748Z",
-   "file": "20261124212048748-note-closed-4436-whole.jpg",
-   "source": "../../../../tmp/tf/closed-4436-whole.jpg",
-   "kind": "note",
-   "label": "item 4: 4436 final whole frame, shutter open beside closed",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T21:20:47.844Z",
-   "file": "20261124212047844-note-closed-4137-whole.jpg",
-   "source": "../../../../tmp/tf/closed-4137-whole.jpg",
-   "kind": "note",
-   "label": "item 4: 4137 final whole frame, shutter open beside closed",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T21:20:46.847Z",
-   "file": "20261124212046847-note-closed-4436.jpg",
-   "source": "../../../../tmp/tf/closed-4436.png",
-   "kind": "note",
-   "label": "item 4: 4436 final, shutter open beside closed, native crops L R S, main 7d52b3e0 merged",
    "stop": "uranus"
   }
  ]
