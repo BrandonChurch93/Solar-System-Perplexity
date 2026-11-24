@@ -1,9 +1,41 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T07:05:00.166Z",
+ "pushed": "2026-11-24T07:28:31.600Z",
  "head": "6c69ed497f7bb9ce97cde498a2ad785c2fee13dd",
- "note": "Dive on the head that is being measured (src of 76017a8), draft, every frame I have so far. Seen: 2997 to 3005 the plates come in by height; 3006 to 3026 the ground reads as painted relief, and at 3023 to 3026 the near plate ends at the left in a soft straight border against a grey speckled field (a set's border, named in my list); 3032 to 3040 hold as film frames. Correction to the push of 06:48: the look labelled frames near the seam 3240 holds 3252, 3254, 3256, 3258, and the next one 3259 to 3262. T sheets of dive and rise follow when their frames exist.",
+ "note": "07:29 UTC, head 6c69ed4 (src of 76017a8): dive every frame 3041 to 3063 at draft and the seam at full size. The dive's pictures part of this head is red on one line: the pattern changes in place by 0.76 from 3046 + 1/2 (limit 0.45, 53 frames over it, first 3017), always the far ground under the limb. Level step 0.30 and pop 1.10 are inside. Parity, finals and the rise's part are running.",
  "looks": [
+  {
+   "time": "2026-11-24T07:17:40.688Z",
+   "file": "20261124071740688-note-dive-T-seam.jpg",
+   "source": "../work/named/sheets/dive-T-seam.jpg",
+   "kind": "note",
+   "label": "76017a8 dive 3058 to 3061 lower 520 rows at full size, the change of view is between 3059 and 3060: one motion, no jump I can name; STILL WRONG the ground at the left is soft and dark",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T07:17:26.701Z",
+   "file": "20261124071726701-note-dive-T-bottom.jpg",
+   "source": "../work/named/sheets/dive-T-bottom.jpg",
+   "kind": "note",
+   "label": "76017a8 dive 3049 to 3052 bottom 440 rows at full size: STILL WRONG a cream puff leaves at the bottom edge, brighter than the ground round it, and a soft pale patch at the bottom left corner",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T07:17:25.570Z",
+   "file": "20261124071725570-note-dive-T.jpg",
+   "source": "../work/named/sheets/dive-T.jpg",
+   "kind": "note",
+   "label": "76017a8 MAIL 540 dive, every frame 3049 to 3063 at draft, the change of view is at 3059 to 3060: I cannot name a jump; the far edge of the ground is the limb; the set's border is not in frame",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T07:17:24.407Z",
+   "file": "20261124071724407-note-dive-e.jpg",
+   "source": "../work/named/sheets/dive-e.jpg",
+   "kind": "note",
+   "label": "76017a8 dive 3041 to 3049 every frame at draft (frames of my own pictures part): the move holds as film frames; two flat pale lumps at lower right 3041 to 3044",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-24T07:04:59.023Z",
    "file": "20261124070459023-note-dive-d.jpg",
@@ -34,38 +66,6 @@
    "source": "../work/named/sheets/dive-b.jpg",
    "kind": "note",
    "label": "dive 3006 to 3022 every second frame, draft",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T07:04:54.445Z",
-   "file": "20261124070454445-note-dive-a.jpg",
-   "source": "../work/named/sheets/dive-a.jpg",
-   "kind": "note",
-   "label": "dive 2970 to 3009, draft, this head",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T06:48:01.522Z",
-   "file": "20261124064801522-note-A-big2.jpg",
-   "source": "../work/seam/A-big2.jpg",
-   "kind": "note",
-   "label": "draft, cure A, large: 3252 to 3262, the set's border (the place as an island with a cumulus rim on the soft globe, loose puffs at the bottom, a soft dark edge at the right). Not cured, first line of what is wrong.",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T06:48:00.530Z",
-   "file": "20261124064800530-note-A-big1.jpg",
-   "source": "../work/seam/A-big1.jpg",
-   "kind": "note",
-   "label": "draft, cure A, large: frames near the seam 3240 (no jump at T)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T06:47:59.859Z",
-   "file": "20261124064759859-note-A-surf.jpg",
-   "source": "../work/seam/A-surf.jpg",
-   "kind": "note",
-   "label": "draft, cure A (0d0be40): the surface view after the judged frame, every ninth frame 3159 to 3237; the push bends through the right into the pull back, the storm stays upper left; mean level falls from 58 to 47, no step",
    "stop": "jupiter"
   }
  ]
