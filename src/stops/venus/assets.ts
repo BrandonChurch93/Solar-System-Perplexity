@@ -44,13 +44,16 @@ export const place = {
   rim: platesJson.rim,
   forms: platesJson.forms.look as [number, number, number],
   tone: { cos: platesJson.tone.cos as [number, number], power: platesJson.tone.curve, air: platesJson.tone.air, heights: platesJson.tone.heights as [number, number], live: platesJson.tone.live },
-  air: { heights: platesJson.air.heights as [number, number], sunHeights: platesJson.air.sun.heights as [number, number], haze: platesJson.air.haze },
+  air: { heights: platesJson.air.heights as [number, number], sunHeights: platesJson.air.sun.heights as [number, number], exactHeights: platesJson.air.sun.exactHeights as [number, number], haze: platesJson.air.haze },
   centre: [0, 1, 2].map((i) => under[i]! * Math.cos(ahead) + heading[i]! * Math.sin(ahead)) as [number, number, number],
   feather: platesJson.feather,
   fade: platesJson.fade as [number, number],
   heading: heading as [number, number, number],
   show: { heights: platesJson.show.heights as [number, number] },
-  dusk: { gain: platesJson.dusk.gain, hue: platesJson.dusk.hue, limbHeights: platesJson.dusk.limbHeights as [number, number], tint: platesJson.dusk.tint as [number, number, number], dive: platesJson.dusk.dive as [number, number], rise: platesJson.dusk.rise as [number, number] },
+  dusk: { gain: platesJson.dusk.gain, hue: platesJson.dusk.hue, limbHeights: platesJson.dusk.limbHeights as [number, number], tint: platesJson.dusk.tint as [number, number, number], heights: platesJson.dusk.heights as [number, number] },
+  leave: { heights: platesJson.leave.heights as [number, number] },
+  ground: { heights: platesJson.ground.heights as [number, number], bandHeights: platesJson.ground.bandHeights as [number, number], true: platesJson.ground.true as [number, number], skin: platesJson.ground.skin as [number, number], tall: platesJson.ground.tall as [number, number], release: platesJson.ground.release as [number, number], matte: platesJson.ground.matte, frustum: { margin: platesJson.ground.frustum.margin as [number, number], near: platesJson.ground.frustum.near as [number, number], forms: platesJson.ground.frustum.forms, wide: platesJson.ground.frustum.wide }, flat: { sinElevation: platesJson.ground.flat.sinElevation as [number, number], horizon: platesJson.ground.flat.horizon as [number, number] }, band: [(platesJson.ground.bandDeg[0]! * Math.PI) / 180, (platesJson.ground.bandDeg[1]! * Math.PI) / 180] as [number, number], tone: { broad: platesJson.ground.tone.broad, under: platesJson.ground.tone.under as Record<'dive' | 'rise', [number, number, number]> } },
+  sky: { low: platesJson.sky.low as [number, number], carry: platesJson.sky.carry as [number, number], lift: platesJson.sky.lift },
 }
 
 const TINTS: [number, number, number][] = [[0.85, 0.3, 0.25], [0.3, 0.75, 0.35], [0.9, 0.75, 0.2], [0.4, 0.5, 0.9]]
@@ -73,7 +76,7 @@ function reliefDef(key: 'full' | 'web'): CloudReliefDef {
     masks: 'relief-masks.png',
     maskBox: box(reliefJson.masks.box),
     air: 'relief-air.png',
-    airSun: { file: platesJson.air.sun.file, limbFile: platesJson.air.sun.limbFile, atDeg: platesJson.air.sun.atDeg as [number, number], boxDeg: platesJson.air.sun.boxDeg as [number, number, number] },
+    airSun: { file: platesJson.air.sun.file, limbFile: platesJson.air.sun.limbFile, atDeg: platesJson.air.sun.atDeg as [number, number], boxDeg: platesJson.air.sun.boxDeg as [number, number, number], exactCoreDeg: platesJson.air.sun.exactCoreDeg as [number, number], exactUnderDeg: platesJson.air.sun.exactUnderDeg },
   }
 }
 
