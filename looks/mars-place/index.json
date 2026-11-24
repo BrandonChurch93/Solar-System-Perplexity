@@ -1,9 +1,25 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T10:43:52.927Z",
+ "pushed": "2026-11-24T10:59:30.252Z",
  "head": "aac984cc9dfffd0b71d7b3fd5a0fc95a2ef9e2ee",
- "note": "cap drop found: the graphics card's cos and sin of the spin; cured in my set by turning the mesh on the CPU",
+ "note": "proof 48 running: cap in place, dissolve 2467 to 2472 is one mesa; plain round it still two grounds",
  "looks": [
+  {
+   "time": "2026-11-24T10:59:29.122Z",
+   "file": "20261124105929122-note-P-dive-a.jpg",
+   "source": "out/work/place/see/P-dive-a.png",
+   "kind": "note",
+   "label": "Proof 48, dive 2467 to 2472, draft, film as it stands (turn on the mesh by height, hazeDepth 0.25): the dissolve by height is now one mesa in one place; the plain round it still changes from the cap's smooth plain to the fan's rough ground, fan borders lower left and right",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T10:59:28.144Z",
+   "file": "20261124105928144-note-haze-H.jpg",
+   "source": "out/work/place/see/haze-H.png",
+   "kind": "note",
+   "label": "Cap alone with near.json hazeDepth 0.25 (right) against 0.6 (middle) and the close ground alone (left), 2466 and 2686, draft: the dark end and the middle of the cap now agree with the close ground, the bright far plateau does not",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T10:43:52.099Z",
    "file": "20261124104352099-note-drop-cure.jpg",
@@ -56,22 +72,6 @@
    "source": "out/work/place/see/K-c.jpg",
    "kind": "note",
    "label": "sky by height, 2474 2476 2477 (T dive) and 2681 2682 2686 (T rise), draft",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T09:39:24.017Z",
-   "file": "20261124093924017-note-K-b.jpg",
-   "source": "out/work/place/see/K-b.jpg",
-   "kind": "note",
-   "label": "sky by height, dive 2468 to 2473, draft: dissolve by height, fan border right, pale wedge lower left",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T09:39:22.826Z",
-   "file": "20261124093922826-note-K-a.jpg",
-   "source": "out/work/place/see/K-a.jpg",
-   "kind": "note",
-   "label": "sky by height, dive 2456 2462 2465 2467, draft",
    "stop": "mars"
   }
  ]
