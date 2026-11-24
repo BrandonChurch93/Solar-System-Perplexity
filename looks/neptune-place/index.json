@@ -1,9 +1,49 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T01:07:58.985Z",
- "head": "2c87fb73f5d7cbbaab2cf699b8cea4edf67fd289",
- "note": "layout fit to the map from above, first try, unfinished (mail 429)",
+ "pushed": "2026-11-24T01:41:33.960Z",
+ "head": "85312d1ba89d4fbb4811dc70dc8f5b02871b7c43",
+ "note": "dive 4707 to 4769 every frame with the layout fitted to the map (85312d1b), 4860 beside approved",
  "looks": [
+  {
+   "time": "2026-11-24T01:41:33.419Z",
+   "file": "20261124014133419-note-d-L4.jpg",
+   "source": "../../../../tmp/d-L4.jpg",
+   "kind": "note",
+   "label": "4860 preview draft beside the approved image, commit 85312d1b: far field is now the dark oval up to its pale rim with the band of cirrus at the horizon; the bow comes in at the upper left; near and middle field as before",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T01:41:32.866Z",
+   "file": "20261124014132866-note-s-l4-4755.jpg",
+   "source": "../../../../tmp/s-l4-4755.jpg",
+   "kind": "note",
+   "label": "Dive, every frame from 4755 (sheet of 16), preview draft, commit 85312d1b: the scene's layout fitted to the map from above. One dark oval, far rim band and bow from the hold's planet down to the surface view",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T01:41:32.324Z",
+   "file": "20261124014132324-note-s-l4-4739.jpg",
+   "source": "../../../../tmp/s-l4-4739.jpg",
+   "kind": "note",
+   "label": "Dive, every frame from 4739 (sheet of 16), preview draft, commit 85312d1b: the scene's layout fitted to the map from above. One dark oval, far rim band and bow from the hold's planet down to the surface view",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T01:41:31.767Z",
+   "file": "20261124014131767-note-s-l4-4723.jpg",
+   "source": "../../../../tmp/s-l4-4723.jpg",
+   "kind": "note",
+   "label": "Dive, every frame from 4723 (sheet of 16), preview draft, commit 85312d1b: the scene's layout fitted to the map from above. One dark oval, far rim band and bow from the hold's planet down to the surface view",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T01:41:31.202Z",
+   "file": "20261124014131202-note-s-l4-4707.jpg",
+   "source": "../../../../tmp/s-l4-4707.jpg",
+   "kind": "note",
+   "label": "Dive, every frame from 4707 (sheet of 16), preview draft, commit 85312d1b: the scene's layout fitted to the map from above. One dark oval, far rim band and bow from the hold's planet down to the surface view",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T01:07:58.376Z",
    "file": "20261124010758376-note-v-l1.jpg",
@@ -26,46 +66,6 @@
    "source": "../../../../tmp/v-4707ab.jpg",
    "kind": "note",
    "label": "4707 master draft, left before step 2 (31c1000c), right step 2 (9087f008): plates off, grade by height, the Sun's flare of the sky plate now in frame at the right edge",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T01:07:56.676Z",
-   "file": "20261124010756676-note-plan-td1-4706.jpg",
-   "source": "../../../../tmp/plan-td1-4706.jpg",
-   "kind": "note",
-   "label": "TOOL, not a film frame: the globe's own map at frame 4706 laid out in the surface scene's coordinates (40 px a unit, u right, v up); red circle the scene's storm, white line its main streamer, green the footprint of 4860. The measure for the layout fit of mail 429",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T00:37:10.106Z",
-   "file": "20261124003710106-note-v-g8.jpg",
-   "source": "../../../../tmp/v-g8.jpg",
-   "kind": "note",
-   "label": "neptune at T with the engine's sky share (sky.own false, as committed 9087f008): stars step 4757 to 4758 and 4956 to 4957",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T00:37:09.579Z",
-   "file": "20261124003709579-note-d-N1.jpg",
-   "source": "../../../../tmp/d-N1.jpg",
-   "kind": "note",
-   "label": "neptune 4860 beside approved, shadow 48 taps (preview draft)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T00:37:08.895Z",
-   "file": "20261124003708895-note-v-g7.jpg",
-   "source": "../../../../tmp/v-g7.jpg",
-   "kind": "note",
-   "label": "neptune hold 4605 4679 4680, 4707, rise 4950 to 5024, sky.own true (preview draft)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T00:37:08.316Z",
-   "file": "20261124003708316-note-v-g5.jpg",
-   "source": "../../../../tmp/v-g5.jpg",
-   "kind": "note",
-   "label": "neptune dive 4716 to 4769, scene on the globe by height, sky.own true (preview draft)",
    "stop": "neptune"
   }
  ]
