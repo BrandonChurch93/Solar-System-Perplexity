@@ -4150,3 +4150,54 @@ CHECKS on 0b9017c0: tsc clean; vitest 398 of 398; G11 PASS, G15 PASS; npm run sm
 - Next (third commit, the last): the look faults at 4860 on top of this shader (the T27 tree, `out/work/nep/cost/deep.new.ts`
   needs the cuts of `deep.F.ts` carried over; its veil must be looked at in 4707 and 5006 first), the unused `lack` out, and
   any further cost that keeps the samples.
+
+## MAIL 579 from the Builder (/root), arrived about 08:42 UTC (VM clock), word for word
+
+MAIL 579 from the Builder (/root) to neptune_builder. Your second commit 0b9017c01a9403f9d76cee578d342bfd10384386 is taken as NAMED (verified on agent/neptune-place at 08:36 UTC). Its proof tree is d69fdb28 on builder/proof-ne2 (main with your three folders). The take check and the whole smooth report on it are queued in front of everything else (jobs ne2 and nt2).
+
+Rulings:
+1. The cost is accepted as it stands. No further cut is asked of you, and none may cost picture: Brandon's words are that the cost of a frame is no limit. Your finding about loops nested in a march goes to the other builders with your name on it.
+2. Your third commit is the look of 4860: the ruled rings in the storm, the streaked deck, the flat white band of 14 rows under the limb, the glow twice too bright and too red, and the unused out value. Look at 4707 and 5006 and the veil before you name it, since that tree changes them. Work on it now, do not wait for the report.
+3. When to name it: as soon as it is right, and at the latest 90 minutes after my report on the second commit reaches you. The pictures of your dive and rise take the machines about 2 to 3 hours on this shader. If your third is named before that report is back, the machines drop the second and run the third. So do not hold a finished third back.
+4. The third goes into its round as it stands, every red number as a severe issue (d186).
+5. Parity and seam are measured on the proof tree by the machines (nt2-03). The handover sets of MAIL 560 stay out, as you decided.
+6. Merge 105da414 without a trailer: known, history is never rewritten. Leave it.
+Rules as before: three folders, your branch, never main. One line back that you have this.
+
+## My answer to MAIL 579, 08:41 UTC (VM clock), word for word
+
+I have MAIL 579: cost accepted, the third commit is the look of 4860 (rings, streaked deck, white band, glow, the unused out value), 4707, 5006 and the veil looked at before I name it, named as soon as it is right and at the latest 90 minutes after your report on the second. HOLD THE FINDING ABOUT LOOPS, do not pass it on under my name: I tested it directly after the mail and the test speaks against it. A loop of no turns holding 18 noise reads, put inside the search loop of 0b9017c0, cost nothing (4861 22.1 s against 22.0 s), so the renderer does skip a loop that does not run. What stands is only the measurement: the step that moved the light taps out of the search loop, with three other changes in the same step, took 29.6 s to 21.8 s on the same samples; I do not know which of the four did it. My guess now, not tested: four pixels run together, so a tap pass was paid whenever any one of the four had cloud, and gathering them is what paid. One weakness of the test: the compiler may have dropped the body; a run with the loop taking one turn is going now and I write to you again only if it overturns this.
+
+## 08:44 UTC: the test of the loop finding, the log
+
+- Where the commit's 22.0 s go at 4861 (runs p1, p2 and the earlier cE1): deck 4.8 s, shadow taps 2.5 s, the taps toward the
+  Sun 5.8 s, the search for cloud steps about 8.9 s.
+- t1 (`deep.T1.ts`): a loop inside the search loop, after the density is read, that holds two bends (18 noise reads) and takes
+  uCirrusSkip.w turns, which is 0. 4861 22.1 s. So a loop of no turns seemed to cost nothing, and I mailed that (above).
+- t2 (`deep.T2.ts`): the same loop taking ONE turn. 4861 21.8 s, the picture equal to the commit's to the byte. So the body
+  costs nothing even when it runs: its result was multiplied by 0.0 and the compiler dropped it. THE TEST t1 WAS VOID, as the
+  weakness I named in the mail said it might be. Neither t1 nor t2 says anything about loops. What I mailed at 08:41 ("the
+  renderer does skip a loop that does not run") is NOT shown. I was wrong to state it before the control run was back.
+- t3, t4 (`deep.T3.ts`, `deep.T4.ts`): the same with a body the compiler cannot drop (its result is added to the step's
+  distance times 1e-7): no turns, and one turn. If t4 costs more than the commit, the body is live; then t3 says whether a loop
+  of no turns is paid.
+- t3: no turns, body live. 4861 23.5 s. t4: one turn, body live. 4861 28.0 s. The commit without the loop: 22.0 s. One run
+  each; repeats of one shader spread 0.3 s (22.0, 22.1, 21.8). Both pictures equal the commit's but for 0.05 percent of the
+  pixels (the 1e-7 on the distance).
+- READING: the body is live (one turn costs 6.0 s). A loop of no turns costs 1.5 s, a quarter of one turn at most, so the
+  renderer does NOT run a loop's body once before it tests it. My inference in the NAMED mail is refuted, and so is the wider
+  sentence (continue, early return and a loop of no turns save nothing). What the 1.5 s is I do not know: the loop's own
+  set up, the place of the code, or the run. Not followed further; the cost is accepted (MAIL 579, 1).
+- LESSON, mine: two wrong sentences went to the Builder in ten minutes, the first an inference dressed as a finding, the
+  second a test without its control. A timing test of the compiler needs the control that shows the body is live BEFORE the
+  number means anything.
+- src restored to 0b9017c0 (cmp and git status clean but for this notebook), 08:46.
+
+## My correction to the Builder (/root), 08:47 UTC (VM clock), low priority, word for word
+
+CORRECTION to my 08:41 answer, from neptune_builder. Two sentences of mine about loops were wrong and neither may be passed on.
+1. My 08:41 sentence "the renderer does skip a loop that does not run" rested on a void test: its control run came back after I mailed and showed the compiler had dropped the loop's body (one turn cost 21.8 s against 22.0 s, picture equal to the byte). I should not have stated it before the control was back.
+2. The test done properly, body kept live, same shader otherwise, draft 4861, one run each (repeats of one shader spread 0.3 s): without the loop 22.0 s, the loop with no turns 23.5 s, the loop with one turn 28.0 s. So a loop that does not run costs at most a quarter of one turn, and the claim in my NAMED mail ("runs a loop's body once before it tests it", "a loop of no turns saves nothing") is refuted. What the 1.5 s is I do not know.
+WHAT STANDS, and all that may go to the other builders: one step that moved the nine light taps out of the search loop, together with three other changes, took 29.6 s to 21.8 s on the same samples. Which of the four did it I did not separate. No rule about the renderer follows from it.
+No answer needed. I am on the third commit.
+
