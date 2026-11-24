@@ -153,7 +153,6 @@ export const createSet: SetFactory = async (ctx) => {
       orbit.visible = inOrbit && state.weight > 0
       terrain.visible = !inOrbit
       const gain = 1 / shot.post.exposure
-      const seg = state.segment
       if (!inOrbit) {
         back.copy(state.rotation).invert()
         eye.copy(world.position).applyQuaternion(back).negate()
@@ -178,9 +177,8 @@ export const createSet: SetFactory = async (ctx) => {
       eyeWorld.copy(eye).applyQuaternion(state.rotation)
       const near = Math.sqrt((home * home - 1) / Math.max(camera.lengthSq() - 1, 1e-6))
       const leaving = state.time > leaveAt
-      const away = leaving ? smooth((near - look.back[0]!) / (look.back[1]! - look.back[0]!)) : smooth((state.time - plan.seg.hold.end + look.away[0]!) / (look.away[0]! + look.away[1]!))
-      const pace = seg.stop === plan.id && (seg.kind === 'dive' || seg.kind === 'rise') ? plan.pace(seg.kind, state.time) : 0
-      const lights = (1 - look.lights[2]! * smooth((pace - look.lights[0]!) / (look.lights[1]! - look.lights[0]!))) * smooth((near - look.lightsFrom[0]!) / (look.lightsFrom[1]! - look.lightsFrom[0]!))
+      const away = smooth(Math.pow(Math.max((near - look.away[0]!) / (look.away[1]! - look.away[0]!), 0), look.away[2]!))
+      const lights = (1 - look.lights[2]! * smooth(Math.log(near / look.lights[0]!) / Math.log(look.lights[1]! / look.lights[0]!))) * smooth((near - look.lightsFrom[0]!) / (look.lightsFrom[1]! - look.lightsFrom[0]!))
       globe.update(light, eyeWorld, state.rotation, plan.spin(state.time), gain, state.weight, flow, plan.clock(state.time) - plan.holdMid, away, 0, perLine)
       const gu = globe.material.uniforms
       const gone = ending ? 0 : smooth((state.time - plan.seg.rise.end - look.ebb[0]!) / (look.ebb[1]! - look.ebb[0]!))

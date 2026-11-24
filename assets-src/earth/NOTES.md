@@ -3860,3 +3860,98 @@ The tail of the same page (view nograin, tier final, the four judged frames, as 
 - The walk's whole time in frames: 4974 s. The exit code of the tool was not recorded by my waiter; the log ends with the line of the fourth final.
 - Sampler (every 2 s) over 11:00:10 to 12:23:26: most of all the browser's processes 3299 MB at 12:06:52 (graphics process 2262, page 501), which is the moment the view goes from texels to nograin; least available on the machine 3936 MB at 11:43:48 (my own test run in the scratch copy ran then), in the tail alone 4415 MB at 12:12:02.
 What this measures: in the texel pass over my whole stop in order nothing climbs. Textures 47 at 1680, 48 from 1681 to 2174; buffers 13 to 1867, 30 from 1868 to 2174; programs 8 then 10 from 1868; vertex arrays 8 then 11 from 1868; framebuffers 18 then 19 from 1681; renderbuffers 1. The one step at 1868 is the close view's ground coming onto the globe by height (`lowLook` over 0), drawn once and kept. The four finals after it add 2 textures, 16 buffers, 5 programs, 5 vertex arrays and 231 MB in the graphics process (2064 to 2295), with no loss. On my machine the order that died on the render machines does not die and does not climb. Not walked yet: the beauty pass over all 495 frames (about 75 minutes), put after the third commit's proof.
+
+12:24 to 12:30 UTC. Memory answer part 2 sent to /root 12:24 (high): the numbers above. Looks pushed 12:12.
+
+The limb at T, measured again with a tool that lines each column up at its own limb row (`python3 /tmp/gl/s9/limbprof.py DIR_A frameA DIR_B frameB columns...`: the limb row is the first row whose red is 60 over the sky's; grey and BGR of 9 columns averaged), second named tree, draft:
+- Dive, 1918 (globe side) against 1920 (surface side), surface minus globe in grey: column 400: -22 at the limb row, +4 to +10 in the 12 rows over it, mean of rows -30 to 30: 3.90; column 960: -20 at the limb row, +12 to +20 in rows -12 to -2, mean 6.38; column 1500: -23 at the limb row, -5 to -9 over it, mean 5.11. 1919 against 1920: largest 2.5, means 0.60 to 0.74 (both surface side).
+- At the limb row and the two rows under it the globe side is brighter mostly in green: column 400 BGR globe 229 203 99, 227 198 107, 227 201 110 against surface 215 170 80, 216 178 106, 222 189 127. The surface side climbs from the sky to the haze over about 8 rows (green 158, 164, 170, 178, 189, 200), the globe side jumps in 2 rows (150, 175, 203) and then stays.
+- Rise, 2102 (globe) against 2099 (surface): column 400: -21 at the limb row, BGR 231 205 86 against 213 167 79; column 1500: -27, BGR 229 198 85 against 199 159 74.
+What it is in the code: inside the limb the air shell covers the globe by `exp(h / inner) * innerStrength + exp(-(h / innerWide.x)^2) * innerWide.y`, 0.95 at the limb, in the rim colour `air.rim` times `descent.rim` [0.1, 0.37, 0.62] at low height; the cover's fall (0.69 at 2 px, 0.48 at 4, 0.29 at 6, 0.14 at 8 at T) is near the surface side's climb over 8 rows already. So the shape is close and the colour is too bright, mostly in green. On top the air's line (`line` times `descent.line[0]` 0.1, 8.7 px wide at T, centred 4.9 px inside the limb) adds light.
+Trials queued (`/tmp/gl/s9/go1.sh`, after the "before" frames; frames 1918, 2102, 1900 each, draft):
+- v1: `descent.rim` [0.065, 0.245, 0.43] (0.65 of today's), into `/tmp/gl/s9/k3`.
+- v2: v1 and `descent.line` [0.05, 1], into `/tmp/gl/s9/k4`.
+- v3: the inner rim out by height (`rimOut` [0.12, 0.04]), into `/tmp/gl/s9/k5`. I expect it worse (it bares the hard edge of the globe against the sky); it is rendered to know.
+All three are laws of the height alone (they act through `low`, 0 above height 0.7), so no judged frame changes by them: 1755 (height 3.443), 1857 (1.397), 2156 (1.887) have `low` 0.
+
+### MAIL 664 from /root, received 12:52 UTC (the report on the second named commit; the third commit is due within 90 minutes of it: 14:22 UTC), verbatim
+
+MAIL 664 from the Builder (/root). REPORT on your second NAMED commit ade4386b7fbb87b0d435b157c8b7c9ba67ff63b8 (proof cef819ac47028a4b00247a8f4703691fd3ececfb). Every number is MEASURED on the render machines unless marked.
+
+Green:
+- Take check: 104 of the 114 draft frames of the film equal main's bytes; the 10 that differ lie inside Earth. Judged final 1755 equals main (ab7cfd53). Judged final 2010 is c3956984, as you named with your first commit: drawn on a machine and seen beside the kept still, 19230 pixels differ, 176 by more than one level, the largest by 5. Nothing to see by eye.
+- Report: path, place and parity green (side difference at T without the place picture 0.876 in the dive and 0.856 in the rise, limit 6; parity largest mean difference 1.769 at 2156, limit 12).
+- Handover report (T at 1919 and at 2100): the dive passes and the rise passes. Largest step of the body between two frames: level 1.5 into 1877 and colour 2.3 into 1874 in the dive; level 4.44 into 2119 and colour 4.83 into 2120 in the rise (limits 6 and 8).
+- Pictures: the dive's parts 1 and 2 and the rise's part 4. Level 0.19 in the dive and 0.25 in the rise (limit 1.3).
+
+Red (pictures at the draft tier, rate 2; limits: pattern 0.45, pop 1.2):
+- Dive: the pattern of the picture changes in place by 1.11 from 1889 + 1/2 to 8 film frames later, most at pixel 528, 124. 31 frames are over the limit, the first 1882 (all in part 3; part 2 ends at 0.43).
+- Dive: pop 1.21 from 1918 + 1/2 to the next, the last capture frame before the surface view (part 4).
+- Rise: pattern 0.95 from 2118 + 1/2, most at pixel 620, 220. 54 frames are over the limit, the first 2108 + 1/2 (part 1 0.47 at 2109 + 1/2, part 2 0.95 at 2118 + 1/2, part 3 0.60 at 2159 + 1/2).
+- Rise: pop 1.204 from 2088 to the next. That is the first frame of the window, where the median has fewer neighbours on one side. harness_builder has the ends of the window as its next point, so do not spend your commit on this one number.
+
+STATED by harness_builder, not repeated on the machines yet: with the border cure your 1890 reads 1.149 where it read 1.063. So the cure does not help Earth: the exchange of the pattern in the middle of the dive is real.
+
+Not measured on the machines: G13 and G17. The measure dies at its fourth final after the 495 texel frames on one page. Your memory walk is logged as MEASURED by you (nothing climbs, 2295 MB at the fourth final), and harness_builder has the cure as a new point (the finals on a fresh page). Until that is on main your own G13 and G17 are STATED. The counts are still running (eq2-04).
+
+Rulings that stand: MAIL 648 (one world; direction Y; Z as the fallback; X out; 2010 not less close).
+
+Early notice from the pull back work, round work unless it fits your third commit without risk: your rise ends on this.exitPose(time) at src/stops/earth/plan.ts line 101. It has to end on this.after(time), so that the engine can hand the speed of the rise to the travel.
+
+Worth most in the third: the pattern in the dive from 1882 to about 1897 and in the rise from 2108 to about 2160, which is where a picture is exchanged in place for another one; then the pop at 1918 + 1/2.
+
+These pictures were read with the pattern measure as it was before main 62ff7be6. Since 12:22 UTC main carries its border cure (a slope of the level at the border of the judged area no longer reads as detail; no limit changed). Your third proof is read with the new measure.
+
+Your third and last commit is due within 90 minutes of this mail (d186). It goes into your stop's round as it stands; red measures go in as severe issues beside the critics'. A path change must not change the judged surface frame (d196).
+
+Base: stay on your branch. The engine take (the handover engine, the globe's cure, the far Sun) is being checked on main's tree now and lands within the hour; I send its sha. Merge it if your commit is not named yet. Your proof is built on the engine tree either way, so do not wait for it.
+
+Attached: the joined reports of the dive and the rise, the changes panels of dive part 3 and rise parts 1 to 3, the pops panels of dive part 4 and rise part 1, the handover report.
+
+(The attachments lie in /home/user/.perplexity/attachments/68d2c1096e3141fa8b743a0bf5a8b7c4/: earth-dive.md, earth-rise.md, earth-dive-p3of4-changes.png, earth-dive-p4of4-pops.png, earth-rise-p1of4-changes.png, earth-rise-p2of4-changes.png, earth-rise-p3of4-changes.png, earth-rise-p1of4-pops.png, earth-handover.md.)
+
+### 12:40 to 12:55 UTC, the third commit's patch on frames, the limb trials, the plan for the 90 minutes
+
+- "Before" frames of the second named tree: finals `/tmp/gl/s9/before-1857-final.png` (383 s) and `before-2156-final.png` (386 s); 15 draft frames in `/tmp/gl/s9/b0`.
+- Base patch in (look and lights by nearness, `picture: false` on both sides). Draft frames 1916 to 1920 and 2099 to 2102 against the second named tree (`cmp.py`): "mean 0.00 99th 0 largest 0" on all nine. So at draft, rate 1, the patch changes no frame at either T; `picture: false` shows only at rate 2 and at the final tier, as read.
+- Where the step at T is, measured on these frames (grey, mean absolute difference of two frames one frame apart, whole frame and by rows): 1918 against 1919 (across T) 4.627 whole, rows 0 to 150: 1.63, 150 to 300: 4.08, 300 to 540: 3.72, 540 to 800: 6.10, 800 to 1080: 5.93; 1920 against 1919 (both surface side) 4.240 whole, 1.49, 1.57, 3.68, 6.23, 5.77. So all of what T adds lies in rows 150 to 300, the band of the limb (4.08 against 1.57); the ground does not step. The difference picture (`/tmp/gl/s9/Tdiff.jpg`) shows two things there: the thin line at the limb (the rim, globe side brighter), and over the limb a glow that the globe side has brighter at both ends of the limb and darker in the middle than the surface side.
+- Limb trials, 1918 of each against the surface side's 1919, mean absolute difference in rows -2 to 2 about the limb and in rows -14 to 10 (`/tmp/gl/s9/band.py`): today 21.18 and 12.01; v1 (`descent.rim` 0.65 of today's) 14.63 and 10.47; v2 (v1 and the line halved) 14.20 and 10.40; v3 (rim out by height) 34.77 and 15.08; v4 (rim [0.03, 0.185, 0.38]) 13.04 and 10.29; v5 (v4, `descent.inner` 0.04) 14.52 and 10.27; v6 (v5 and a mist of 0.02) 14.21 and 10.39. Two surface frames one apart: 1.61 and 1.46. On the rise (2102 against 2100, two frames apart, so coarser): today 17.62 and 15.40; v1 15.51 and 15.24; v4 16.62 and 15.82; v5 16.09 and 15.30; v6 15.16 and 15.00.
+- Taken: v1, `descent.rim` [0.065, 0.245, 0.43]. One number, a tint by the height (it acts through `low`, 0 above height 0.7, so 1755, 1857 and 2156 do not read it). It takes about a third off the line at the limb in the dive and is not worse on the rise. Not cured by it: the glow over the limb (rows -14 to -3 stay at 11.5), which is the larger share of the step. Its cause as I read it: over the horizon the surface view shows the close picture's own strip of glow, the globe side shows the air shell's glow, two things. That needs the one object on both sides and is not in this commit; named.
+- v3 is out as expected (it bares the globe's hard edge against the sky).
+- From MAIL 664's early notice: `far()` in `plan.ts` (line 115 in my tree) now ends the rise on `this.after(time)`. On my main `after` returns `exitPose` for a stop whose hold starts before its rise ends (`riseIntoHold` false, `src/director/moves.ts` lines 228 to 234), so the poses are the same today; the frames of the rise show it.
+- `npx tsc --noEmit` on the patched tree: no output.
+- The chain of the proof runs since 12:55:06 (`/tmp/gl/s9/go3.sh`, one process at a time, state lines in `/tmp/gl/s9/state`): rate 2 at the dive's T (1911 to 1926), rate 2 over the rise's look span (2148 to 2174), draft 1826 to 1860, finals 1755, 2010, 1857, 2156, draft 1861 to 1910, draft 2096 to 2147 and the frames outside, tsc, vitest without the three tests that open a browser in my tree, gate, path, seam, parity.
+- Not done in this commit, by judgement of the time (90 minutes): Y. Z stays and is named with its cause.
+
+### 13:03 to 13:10 UTC, the third tree measured at the dive's T and over the rise's look span (my own rate 2 measure, the measure as it was before main 62ff7be6)
+
+- Dive, 1911 to 1926, 32 draft frames at rate 2 (`out/work/earth/place/p3/Tdive-1911-1926.json`, log `/tmp/gl/s9/pics-Tdive.log`): at 1918 + 1/2 the residual reads 1.210, pop every pixel 1.221, carried 1.158, pop 1.158, block 6.910, level step 0.099. The machines read on ade4386b at the same frame: left 1.24, pop every pixel 1.25, carried 1.21, pop 1.21, block 7.80, level step 0.14. At 1918 the pop reads 0.965, at 1919 0.961.
+- The same run prints pops over 1.2 at 1911 to 1916 (1.76 at 1911 falling to 1.30 at 1916). The window is only 16 film frames long there, so the median the pop is read against has no frames before 1911; the residuals themselves (1.48 at 1915, 1.29 at 1916) equal what the machines call "left" (1.49, 1.29), where the median around was 1.49 and 1.33. I count them as the short window and say so; they are not proved green by me.
+- The step still sits from 1918 + 1/2 to 1919 with `picture: false`. My earlier reading that it would move by half a frame is not confirmed.
+- The rate 2 capture against the rate 1 frames (`cmp.py`): the capture's own frames differ from the rate 1 frames of the same tree by a mean of 0.87 to 0.92 (1918 of the trial with the same look against the capture's 1918: "mean 0.92 99th 9 largest 48", fullest cell row 7 col 10; the surface frames 1919 and 1920 of the base patch against the capture's: mean 0.87 and 0.88, largest 68 and 63, same cell). So that difference is the capture and not the tree. What the tree changes at rate 1 against the second named tree: 1918 "mean 0.11 99th 1 largest 28", 1900 mean 0.12, 2102 mean 0.11, fullest cell row 2 col 0 or 1 (the limb at the left).
+- Rise, 2148 to 2174, 54 draft frames at rate 2 (`riselook-2148-2174.json`, log `/tmp/gl/s9/pics-riselook.log`): "pop over 1.2:" empty, "pattern over 0.45:" empty. Pattern by frame: 2150 + 1/2 0.36 (the highest), 2156 0.25, 2158 0.26, 2159 + 1/2 0.26, 2160 0.26, 2161 0.25, 2162 0.21, 2164 0.12, 2166 0.06. The machines read 0.55 at 2158, 0.59 at 2160 and 0.60 at 2159 + 1/2 on ade4386b. Level step highest 0.13 at 2154; pop highest 1.09.
+- Looked at every frame of 1911 to 1926 and of 2148 to 2174 on sheets (`/tmp/gl/s9/T-dive-n3.jpg`, `rise-look-a.jpg`, `rise-look-b.jpg`) and the limb at 1917 to 1920 enlarged (`zoom-n3.jpg`). Seen: the limb of the globe side (1917, 1918) is still a hard stepped edge and the surface side (1919, 1920) a soft one; one white pixel at the limb in 1917 at the left crop. The rise reads as one globe that grows smaller, no frame where the look jumps.
+- Looks pushed 13:09.
+
+### 13:13 to 13:16 UTC, the dive's look span on the third tree
+
+- Draft 1826 to 1860 rendered (216 s) and every frame looked at on two sheets (`/tmp/gl/s9/dive-look-a.jpg`, `dive-look-b.jpg`): one globe that grows, no frame where the look jumps; the Moon leaves at the right border at 1849 to 1850 as before.
+- Against the second named tree (`cmp.py`, `/tmp/gl/s9/b0` against `/tmp/gl/s9/n3`): 1829 "mean 0.00 99th 0 largest 0" (the hold, byte equal), 1830 "mean 0.00 99th 0 largest 1", 1834 mean 0.16 largest 25, 1838 mean 0.30 largest 33, 1842 mean 0.39 largest 27, 1846 mean 0.42 largest 30, 1850 mean 0.41 largest 47, 1854 mean 0.24 largest 41, 1858 mean 0.04 largest 41.
+- My rate 1 reading (`/tmp/gl/s7/pics.py`, not the machines' measure) on this span, this tree against the first named tree (`out/work/earth/place/n1`), to see whether the look by nearness changes it: pattern highest 0.70 at 1842 on this tree, 0.71 at 1842 on the first named tree; over 0.45 at 1837 to 1847 here, 1837 to 1848 there; pop 1.32 at 1859, 1.30 at 1858, 1.24 at 1857 on both. The machines read 0.17 at 1842 and pop 1.00 there on ade4386b, so this rate 1 tool reads high in this span on every tree; what it shows is that the two trees read the same by it. Not measured at rate 2 on this tree: 1830 to 1860.
+
+### MAIL 670 from the Builder (/root), received 13:26 UTC, verbatim
+
+MAIL 670 from the Builder (/root) to every builder. Main moved.
+
+Main is at c8888d579e98130bd2d7c54e34d83f450fb1a164 (13:02 UTC; the commit on top of it, 2bc36ce6, is a status and changes no code). It holds the engine take, 31 files:
+- the far Sun from code (src/space/farsun/, with its one line of wiring in src/stops/sun/set.ts, src/stops/mercury/set.ts and the travel);
+- the shares by height in the handover (src/director/handover.ts, film.ts, tools/handover.ts);
+- the globe's cap cure (src/bodies/cap.ts, src/bodies/planet.ts).
+MEASURED on it here: build 0, tsc 0, 485 tests in 49 files pass, G11 pass, cues 46 segments and 17 handovers. On the machines before the take (proof fh1): 19 of 19 jobs back, the frames of the stops that do not use these pieces keep their bytes at the draft tier.
+
+Standing from it:
+1. Merge origin main at your next commit, run the tests on the merge, and name commits only on top of it.
+2. If you named a commit that was cut before it, I take your three folders onto main as they are. Where main changed a file inside your folders (only src/stops/sun/set.ts and src/stops/mercury/set.ts, one line each) I merge that file three way and tell you if it does not merge clean.
+3. Rounds 41 (Venus) and 42 (Neptune) are starting on this main. No stop is taken onto main between the start and the pack of those two rounds. Takes that touch tools only may land.
+4. One shared test ran over its 5 second limit on a loaded machine (tests/globe-cap.test.ts, "brings a colour level in by the texels of its parent"), and passes alone. If you see it, run that file alone, report both results, and do not touch the test.
+No answer needed.

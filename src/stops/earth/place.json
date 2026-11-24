@@ -206,12 +206,14 @@
       "dive": {
         "at": 0.99,
         "dissolveFrames": 1,
+        "picture": false,
         "placeFrames": 0,
         "skyFrames": 120
       },
       "rise": {
         "at": 0.005,
         "dissolveFrames": 1,
+        "picture": false,
         "placeFrames": 0,
         "skyFrames": 120
       }

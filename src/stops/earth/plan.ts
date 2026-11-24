@@ -112,7 +112,7 @@ export class Plan extends StopPlan {
   }
 
   private far(kind: 'dive' | 'rise', time: number): Pose {
-    return kind === 'dive' ? this.hold(time - this.seg.hold.start) : this.exitPose(time)
+    return kind === 'dive' ? this.hold(time - this.seg.hold.start) : this.after(time)
   }
 
   private lawOf(kind: 'dive' | 'rise'): Law {
