@@ -4,10 +4,12 @@ import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import deck from './deck.json'
 import fields from './deck-fields.json'
 import { frameUniform } from '../../core/frame'
+import curve from './curve.json'
 import place from './place.json'
 
 const OCTAVES = 10
 const ABOVE_KNOTS = deck.above.gain.length
+const CURVE_KNOTS = curve.curve.length
 const FLASHES = deck.life.flash.sites.length
 
 export const EDDIES = deck.life.eddies.length
@@ -184,7 +186,7 @@ uniform sampler2D uAir;
 uniform sampler2D uAirThrough;
 uniform vec4 uAirKnots;
 uniform vec2 uAirTurn;
-uniform float uAirLift;
+uniform vec2 uAirLift;
 uniform vec3 uAboveGain[${ABOVE_KNOTS}];
 uniform vec3 uAboveAir[${ABOVE_KNOTS}];
 uniform vec2 uAboveMix;
@@ -192,9 +194,9 @@ uniform sampler2D uTone;
 uniform vec4 uToneBox;
 uniform vec3 uToneLift;
 uniform vec4 uCalmBox;
-uniform vec2 uToneRim;
-uniform vec4 uToneRimNoise;
-uniform vec3 uExpose;
+uniform vec2 uSeenReach;
+uniform vec3 uSunCurve[${CURVE_KNOTS}];
+uniform vec3 uSunChart;
 uniform vec3 uLayer;
 uniform vec4 uStorm;
 uniform float uStormTurn;
@@ -281,12 +283,7 @@ vec4 seenAt(vec3 p, vec3 D, vec3 n, float foot, vec2 dx, vec2 dy, out vec2 size,
   float near = 1.0 / max(-q.z, 1e-6);
   vec2 at = uFitWindow.x * q.xy * near;
   float edge = q.z < 0.0 ? smoothstep(uFitWindow.w, uTrust.w, min(uFitWindow.y - abs(at.x), uFitWindow.z - abs(at.y))) : 0.0;
-  float toned = smoothstep(uToneLift.x, uToneLift.y, above(vEye));
-  for (int i = 0; i < (toned > 0.0 && edge > 0.0 ? 1 : 0); i++) {
-    vec2 inner = atan(uFitWindow.yz / uFitWindow.x) - atan(abs(at) / uFitWindow.x);
-    float moved = (vnoise(p.xy / uToneRimNoise.x) - 0.5) * uToneRimNoise.y + (vnoise(p.xy / uToneRimNoise.z + 37.0) - 0.5) * uToneRimNoise.w;
-    edge *= mix(1.0, smoothstep(uToneRim.x, uToneRim.y, min(inner.x, inner.y) + moved), toned);
-  }
+  edge *= 1.0 - smoothstep(uSeenReach.x, uSeenReach.y, d);
   for (int i = 0; i < (inside && edge > 0.0 ? 1 : 0); i++) {
     vec2 spot = at + vec2(0.5, -0.5);
     vec2 cell = (uFitWindow.yz + spot) / uRangeShape.x - 0.5;
@@ -477,7 +474,8 @@ void main() {
       through = vec3(texture(uAirThrough, vec2(0.5, row)).r, texture(uAirThrough, vec2(0.5, row + 1.0 / 3.0)).r, texture(uAirThrough, vec2(0.5, row + 2.0 / 3.0)).r);
       added = vec3(texture(uAir, vec2(column, row)).r, texture(uAir, vec2(column, row + 1.0 / 3.0)).r, texture(uAir, vec2(column, row + 2.0 / 3.0)).r);
     }
-    float thin = uAirLift;
+    vec2 out2 = abs(there.xy - uFar.xy) * (2.0 * uFar.z);
+    float thin = smoothstep(uAirLift.x, uAirLift.y, max(out2.x, out2.y));
     vec3 throughLow = through;
     vec3 addedLow = added;
     for (int i = 0; i < (thin > 0.0 ? 1 : 0); i++) {
@@ -494,8 +492,13 @@ void main() {
     vec3 fineSum = vec3(0.0);
     for (int i = 0; i < (on > 0.0 ? taps : 0); i++) fineSum += made(g + axis * (major * ((float(i) + 0.5) / float(taps) - 0.5)), cut, least);
     float shade = clamp(1.0 + on * max(plate.a, uDetailLook.z) * (uDetail.y * fineSum.z - uDetailTone * dot(fineSum.xy, sunAz)) / float(taps), 1.0 - uDetailLook.w, 1.0 + uDetailLook.w);
-    vec3 ground = unfilm(plate.rgb);
-    for (int i = 0; i < (toned > 0.0 && seen.a < 1.0 ? 1 : 0); i++) ground *= mix(vec3(1.0), toneAt(g) * calmAt(g), toned);
+    float ndl = dot(normalize(there + vec3(0.0, 0.0, uRadius)), uSunChart);
+    float knotAt = clamp(sign(ndl) * sqrt(abs(ndl)) * 0.5 + 0.5, 0.0, 1.0) * ${CURVE_KNOTS - 1}.0;
+    int knotLow = int(min(floor(knotAt), ${CURVE_KNOTS - 2}.0));
+    vec3 lit = mix(uSunCurve[knotLow], uSunCurve[knotLow + 1], knotAt - float(knotLow));
+    seen.rgb *= lit;
+    vec3 ground = unfilm(plate.rgb) * lit;
+    for (int i = 0; i < (seen.a < 1.0 ? 1 : 0); i++) ground *= toneAt(g) * calmAt(g);
     col = mix(ground * shade * through + added, seen.rgb * fine * shade, seen.a);
     for (int i = 0; i < (thin > 0.0 ? 1 : 0); i++) {
       float knot = sqrt(clamp(sine, 0.0, 1.0)) * ${ABOVE_KNOTS - 1}.0;
@@ -536,7 +539,6 @@ void main() {
     }
     float kept = mix(major / sizePlate, countView, seen.a) / uGrad;
     texels = max(kept, on * 2.0 * span / (uGrad * 1.6 * least));
-    col *= uExpose;
     alpha = 1.0;
     for (int i = 0; i < (uLayer.z > 0.5 ? 1 : 0); i++) {
       vec2 r = abs(there.xy - uFar.xy) * (2.0 * uFar.z);
@@ -552,7 +554,7 @@ void main() {
     vec3 level = normalize(D - dot(D, up) * up);
     float u = dot(E.xy + level.xy * sqrt(max(high, 0.0)), uSunAz);
     vec2 at = vec2(clamp((u - uLimbKnots.x) * uLimbKnots.y, uLimbShape.y, 1.0 - uLimbShape.y), clamp(sqrt(rise * uLimbShape.x), 0.0, 1.0) * uLimbKnots.z + uLimbKnots.w);
-    for (int i = 0; i < (rise < 1.0 / uLimbShape.x ? 1 : 0); i++) col = vec3(texture(uLimb, at).r, texture(uLimb, at + vec2(0.0, 1.0 / 3.0)).r, texture(uLimb, at + vec2(0.0, 2.0 / 3.0)).r) * uExpose;
+    for (int i = 0; i < (rise < 1.0 / uLimbShape.x ? 1 : 0); i++) col = vec3(texture(uLimb, at).r, texture(uLimb, at + vec2(0.0, 1.0 / 3.0)).r, texture(uLimb, at + vec2(0.0, 2.0 / 3.0)).r);
     alpha = 1.0 - smoothstep(uLimbShape.z, uLimbShape.w, rise);
     for (int i = 0; i < (uLayer.z > 0.5 ? 1 : 0); i++) {
       col *= uLayer.y;
@@ -695,7 +697,7 @@ export class CloudDeck {
       uAirThrough: { value: ctx.floatTexture(through, 1, 3 * as) },
       uAirKnots: { value: new THREE.Vector4(air.sinRange[0]!, 1 / Math.log(air.sinRange[1]! / air.sinRange[0]!), air.sinRange[1]!, (ad - 1) / (ad * Math.PI)) },
       uAirTurn: { value: new THREE.Vector2((as - 1) / (3 * as), 0.5 / (3 * as)) },
-      uAirLift: { value: 0 },
+      uAirLift: { value: new THREE.Vector2().fromArray(place.scene.air) },
       uAboveGain: { value: deck.above.gain.map((v) => new THREE.Vector3().fromArray(v)) },
       uAboveAir: { value: deck.above.air.map((v) => new THREE.Vector3().fromArray(v)) },
       uAboveMix: { value: new THREE.Vector2(deck.above.even, deck.above.floor) },
@@ -703,9 +705,9 @@ export class CloudDeck {
       uCalmBox: { value: new THREE.Vector4(cm.centre[0]!, cm.centre[1]!, 1 / cm.size, cm.scale) },
       uToneBox: { value: new THREE.Vector4(tn.centre[0]!, tn.centre[1]!, 1 / tn.size, tn.scale) },
       uToneLift: { value: new THREE.Vector3(tn.lift[0]!, tn.lift[1]!, 0.5 / tn.pixels) },
-      uToneRim: { value: new THREE.Vector2(THREE.MathUtils.degToRad(tn.rim[0]!), THREE.MathUtils.degToRad(tn.rim[1]!)) },
-      uToneRimNoise: { value: new THREE.Vector4(tn.rimNoise[0]!, THREE.MathUtils.degToRad(tn.rimNoise[1]!), tn.rimNoise[2]!, THREE.MathUtils.degToRad(tn.rimNoise[3]!)) },
-      uExpose: { value: new THREE.Vector3(1, 1, 1) },
+      uSeenReach: { value: new THREE.Vector2().fromArray(tn.known) },
+      uSunCurve: { value: curve.curve.map((c) => new THREE.Vector3(c[0]! / place.solved.light[0]!, c[1]! / place.solved.light[1]!, c[2]! / place.solved.light[2]!)) },
+      uSunChart: { value: new THREE.Vector3().fromArray(place.solved.sun) },
       uStorm: { value: new THREE.Vector4(deck.life.storm.centre[0]!, deck.life.storm.centre[1]!, deck.life.storm.coreUnits, deck.life.storm.rimUnits) },
       uStormTurn: { value: 0 },
       uEddy: { value: deck.life.eddies.map((e) => new THREE.Vector4(e.centre[0]!, e.centre[1]!, e.coreUnits, e.rimUnits)) },
@@ -728,7 +730,7 @@ export class CloudDeck {
       uFlashCore: { value: new THREE.Vector3(fl.core.tight, fl.core.spill, fl.core.floor) },
       uHazeSpan: { value: hz.bands.map((b) => new THREE.Vector4(b.edgeUnits[0]!, b.edgeUnits[1]!, b.reachUnits[0]!, b.reachUnits[1]!)) },
       uHazeLight: { value: new THREE.Vector4(1 / Math.tan(THREE.MathUtils.degToRad(hz.sunElevationDeg)), 0, hz.minCosine, Math.log2(hz.lightBlurUnits / texel[2]!)) },
-      uHazeLit: { value: new THREE.Vector3(hz.lit[0]!, hz.lit[1]!, 0) },
+      uHazeLit: { value: new THREE.Vector3(hz.lit[0]!, hz.lit[1]!, 1) },
       uHazeGlow: { value: new THREE.Vector3().fromArray(hz.glow) },
       uHazeShade: { value: new THREE.Vector3().fromArray(hz.shadowTint) },
       uOwn: { value: 0 }, uEye: { value: new THREE.Vector3() }, uAxes: { value: new THREE.Matrix3() }, uLayer: { value: new THREE.Vector3(1, 1, 0) }, uToChart: { value: new THREE.Matrix3() },

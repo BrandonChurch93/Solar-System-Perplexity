@@ -9,10 +9,9 @@ import { CloudDeck } from './clouds'
 import { Globe } from './globe'
 import { Io } from './io'
 import * as look from './look'
-import fields from './deck-fields.json'
 import { bufferFrame } from '../../core/frame'
 import place from './place.json'
-import { chartAxes, chartEye, closeHeight, eddyTurn, exposed, exposure, flashNow, hazeDrift, heightTable, low, lowEven, plan, ringTurn, stormTurn } from './plan'
+import { chartAxes, chartEye, closeHeight, eddyTurn, flashNow, hazeDrift, low, plan, ringTurn, stormTurn } from './plan'
 import proof from './proof.json'
 import skyJson from './sky.json'
 
@@ -53,7 +52,7 @@ export const createSet: SetFactory = async (ctx) => {
     wisp: { texture: wispMap, ...look.wisp },
     veil: look.veil,
     pallShell: plan.p.coverShell ?? [1, 1.015],
-    place: { n: place.solved.n, e: place.solved.e, u: place.solved.u, radius: place.solved.radiusUnits, grade: fields.grade, uniforms: ground.material.uniforms },
+    place: { n: place.solved.n, e: place.solved.e, u: place.solved.u, radius: place.solved.radiusUnits, grade: place.solved.light, uniforms: ground.material.uniforms },
     patches: { center: direction(patches.center.lon, patches.center.lat), textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), feather: patches.feather, fade: patches.fade },
   })
   globe.mesh.quaternion.fromArray(fit.globe.quaternion)
@@ -86,12 +85,6 @@ export const createSet: SetFactory = async (ctx) => {
     if (time >= rise.end) return free
     return place.solved.local + (free - place.solved.local) * smooth((time - release) / (rise.end - release))
   }
-  const ratio = (time: number): number[] => {
-    const kind = time < terrainMid ? 'dive' : 'rise'
-    const flown = exposure(kind === 'dive' ? dive.start - terrainMid : rise.end - terrainMid)
-    return place.exposure.ratio[kind].map((v) => v * flown)
-  }
-  const stopped = { dive: heightTable(place.scene.expose.dive), rise: heightTable(place.scene.expose.rise) }
   const holdTurn = plan.hold(plan.holdMid - plan.seg.hold.start).quaternion
   const glowHome = new THREE.Vector3().fromArray(look.glowDir).normalize().applyQuaternion(holdTurn)
   const moonHome = new THREE.Vector3().fromArray(look.moonSun).normalize()
@@ -128,11 +121,8 @@ export const createSet: SetFactory = async (ctx) => {
       back.copy(state.rotation).invert()
       eye.copy(world.position).negate().applyQuaternion(back)
       const height = inOrbit ? eye.length() - 1 : closeHeight(eye)
-      const move = state.segment.stop !== plan.id ? '' : state.segment.kind === 'dive' ? 'dive' : state.segment.kind === 'rise' ? 'rise' : ''
-      const gain = (move ? stopped[move](height) : 1) / shot.post.exposure
+      const gain = 1 / shot.post.exposure
       const scene = place.scene
-      const share = lowEven(height, scene.grade, scene.gradeRound)
-      const r = ratio(state.time)
       const du = ground.material.uniforms
       du.uStormTurn!.value = stormTurn(state.time - terrainMid)
       const eddies = du.uEddyTurn!.value as number[]
@@ -146,11 +136,8 @@ export const createSet: SetFactory = async (ctx) => {
       du.uOwn!.value = inOrbit ? 1 : 0
       ;(du.uLayer!.value as THREE.Vector3).set(deckShare, limbShare, inOrbit ? 1 : 0)
       if (!inOrbit || own) {
-        ground.update(gain * (inOrbit ? state.weight : 1) * exposed(state.time - terrainMid), shot.post.vignette, view)
-        ;(du.uExpose!.value as THREE.Vector3).set(Math.pow(r[0]!, share - 1), Math.pow(r[1]!, share - 1), Math.pow(r[2]!, share - 1))
-        const thin = 1 - low(height, scene.air)
-        du.uAirLift!.value = thin
-        ;(du.uHazeLit!.value as THREE.Vector3).z = 1 - thin
+        ground.update(gain * (inOrbit ? state.weight : 1), shot.post.vignette, view)
+        if (!inOrbit) (du.uSunChart!.value as THREE.Vector3).fromArray(place.solved.sun)
         const bands = du.uHazeBand!.value as THREE.Vector4[]
         for (let b = 0; b < bands.length; b++) bands[b]!.z = hazeDrift(b, state.time - terrainMid)
         const flashes = du.uFlash!.value as THREE.Vector4[]
@@ -166,12 +153,12 @@ export const createSet: SetFactory = async (ctx) => {
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
       const lit = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0
       light.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()
+      if (own) (du.uSunChart!.value as THREE.Vector3).copy(light).applyMatrix3(du.uToChart!.value as THREE.Matrix3)
       camera.copy(world.position).negate()
       const elapsed = state.time - plan.holdMid
       const local = flowTime(state.time)
       const gu = globe.material.uniforms
       ;(gu.uPlace!.value as THREE.Vector4).w = own ? low(height, scene.ground) : 0
-      ;(gu.uGrade!.value as THREE.Vector3).set(Math.pow(r[0]!, share), Math.pow(r[1]!, share), Math.pow(r[2]!, share))
       gu.uFlowT!.value = THREE.MathUtils.degToRad(look.flow.bandDegPerSecond) * local
       gu.uSwirlT!.value = THREE.MathUtils.degToRad(look.flow.swirlDegPerSecond) * local
       gu.uWispT!.value = look.flow.wispTilesPerSecond * elapsed

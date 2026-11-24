@@ -190,7 +190,6 @@ uniform vec3 uPlaceN;
 uniform vec3 uPlaceE;
 uniform vec3 uPlaceU;
 uniform vec4 uPlace;
-uniform vec3 uGrade;
 uniform sampler2D uHeightFore;
 uniform sampler2D uHeightNear;
 uniform sampler2D uHeightMid;
@@ -469,7 +468,7 @@ ${PATCH_LEVELS}
   float cover = inside + (1.0 - inside) * air;
   col *= mix(min(1.0, uEdge.w / max(dot(col, vec3(0.2126, 0.7152, 0.0722)), 1e-5)), 1.0, inside);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
-  col *= uGrade * (uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette));
+  col *= (uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette));
   for (int k = 0; k < (uPall.x > 0.0 ? 1 : 0); k++) {
     vec4 cloud = pall(vClip.xy / vClip.z);
     cloud.rgb *= max(smoothstep(uPallLit.x, uPallLit.y, ndl), uPallLit.z);
@@ -553,7 +552,6 @@ export class Globe {
         uPlateGrade: { value: new THREE.Vector3(1 / o.place.grade[0]!, 1 / o.place.grade[1]!, 1 / o.place.grade[2]!) },
         uPlaceN: { value: new THREE.Vector3().fromArray(o.place.n) }, uPlaceE: { value: new THREE.Vector3().fromArray(o.place.e) }, uPlaceU: { value: new THREE.Vector3().fromArray(o.place.u) },
         uPlace: { value: new THREE.Vector4(o.place.radius, 0, 0, 0) },
-        uGrade: { value: new THREE.Vector3(1, 1, 1) },
         uDiag: diagUniform, uGrad: gradUniform, uFrame: frameUniform,
         ...pallUniforms(o.pallShell),
       },
