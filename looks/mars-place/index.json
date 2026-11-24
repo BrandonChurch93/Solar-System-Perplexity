@@ -1,71 +1,39 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T01:04:17.202Z",
- "head": "f95c36066d14cca26db2ae192f3c036da4c683a6",
- "note": "01:30 look: tool stills on plan E with the new canyon plates; canyon west of the spot does not read yet, mound and streaks remain",
+ "pushed": "2026-11-24T01:20:00.830Z",
+ "head": "32b4965c200be282e5f84855c715eb392fd6b063",
+ "note": "02:00 look: heights v4 read as a canyon when lit by the Sun; the unlit colour plates do not say it",
  "looks": [
   {
-   "time": "2026-11-24T01:04:16.638Z",
-   "file": "20261124010416638-note-c07-take1-v.jpg",
-   "source": "out/work/place/c07-take1-v.jpg",
+   "time": "2026-11-24T01:20:00.229Z",
+   "file": "20261124012000229-note-heights-v4.jpg",
+   "source": "out/work/place/see/heights-v4.jpg",
    "kind": "note",
-   "label": "new asset c07 take 1 beside its lead",
+   "label": "heights v4 from above at 1.6, 0.7, 0.3 degrees (colour -7 to +1 km, white line: border of the ground the close view saw)",
    "stop": "mars"
   },
   {
-   "time": "2026-11-24T01:04:16.094Z",
-   "file": "20261124010416094-note-c16-take1-v.jpg",
-   "source": "out/work/place/c16-take1-v.jpg",
+   "time": "2026-11-24T01:19:59.699Z",
+   "file": "20261124011959699-note-d12471-shade.jpg",
+   "source": "out/work/place/see/d12471-shade.png",
    "kind": "note",
-   "label": "new asset c16 take 1 beside its lead",
+   "label": "2471 the heights v4 alone lit by the Sun: plateau, lit north wall, floor in cast shadow; a round shadow at the far end of the canyon",
    "stop": "mars"
   },
   {
-   "time": "2026-11-24T01:04:15.550Z",
-   "file": "20261124010415550-note-c38-take1-v.jpg",
-   "source": "out/work/place/c38-take1-v.jpg",
+   "time": "2026-11-24T01:19:59.133Z",
+   "file": "20261124011959133-note-d22452-lit.jpg",
+   "source": "out/work/place/see/d22452-lit.png",
    "kind": "note",
-   "label": "new asset c38 take 1 beside its lead",
+   "label": "2452 preview: the bake 12 plates under the light of the heights (tool only; the plates' own painted light is still in them)",
    "stop": "mars"
   },
   {
-   "time": "2026-11-24T01:04:15.009Z",
-   "file": "20261124010415009-note-plates12.jpg",
-   "source": "out/work/place/see/plates12.jpg",
+   "time": "2026-11-24T01:19:58.414Z",
+   "file": "20261124011958414-note-d2-sheet.jpg",
+   "source": "out/work/place/see/d2-sheet.jpg",
    "kind": "note",
-   "label": "plates of 3.8, 1.6, 0.7, 0.3 degrees: above bake 11 painted by code, below bake 12 from the new assets c38, c16, c07, c03",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T01:04:14.476Z",
-   "file": "20261124010414476-note-c12471.jpg",
-   "source": "out/work/place/see/c12471.png",
-   "kind": "note",
-   "label": "tool still 2471, country alone, bake 12: the canyon west of the spot reads as a black slot in a cliff, the ground in front falls away",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T01:04:13.911Z",
-   "file": "20261124010413911-note-c12452.jpg",
-   "source": "out/work/place/see/c12452.png",
-   "kind": "note",
-   "label": "tool still 2452, country alone, bake 12: the place reads as a hollow in a mound, the slopes carry streaked colour",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T01:04:13.333Z",
-   "file": "20261124010413333-note-c12439-both.jpg",
-   "source": "out/work/place/see/c12439-both.png",
-   "kind": "note",
-   "label": "tool still 2439 with the close view: the pale wedge is the close view's far ground in its own haze, the blotches are the country standing through it",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T01:04:12.474Z",
-   "file": "20261124010412474-note-c1-sheet.jpg",
-   "source": "out/work/place/see/c1-sheet.jpg",
-   "kind": "note",
-   "label": "tool stills on plan E's curve, bake 12 (new canyon plates on heights v3): 2439 2452 2461 2471 2475 and rise 2713 2703 2697 2690 2688; left of each pair country alone, right with the close view; tool draws all levels unlit, no air",
+   "label": "tool stills on main's one move, heights v4 (made from the new plates), colour bake 12: 2439, 2452, 2471; panels: colour unlit as own levels draw today, the heights alone lit by the Sun with cast shadows, a preview of the plates under that light, with the close view",
    "stop": "mars"
   }
  ]
