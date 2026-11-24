@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T00:35:17.675Z",
- "head": "4a26272392321afecc04a808669f537d98c747a3",
- "note": "Sun ground from functions, unfinished: frame 60 beside approved (G17 1.01 / 0.78, blur 0.055 / 0.040), held camera six frames and row against time, globe side of the rise",
+ "pushed": "2026-11-24T00:58:22.682Z",
+ "head": "4e530d52a55b87d8aa0143962ad21c4bafdde7f9",
+ "note": "c29: cells as tall bulbs lit by height, streaks, warm lanes; answers MAIL 428 point 1 in part; unfinished",
  "looks": [
+  {
+   "time": "2026-11-24T00:58:22.123Z",
+   "file": "20261124005822123-note-c29b-four.jpg",
+   "source": "out/work/sun/convect/c29b-four.jpg",
+   "kind": "note",
+   "label": "c29 frames 0, 90 (top), 222, 247 (bottom), draft, unfinished: same ground on both sides of the rise; 247 still two patterns over each other",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T00:58:21.576Z",
+   "file": "20261124005821576-note-c29-whole-pair.jpg",
+   "source": "out/work/sun/convect/c29-whole-pair.jpg",
+   "kind": "note",
+   "label": "c29 frame 60 whole, approved left, mine right (draft, unfinished): mine more orange, far field not yet a fine bright grain, penumbra too even, umbra not black",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T00:56:14.696Z",
+   "file": "20261124005614696-note-c29-near-pair.jpg",
+   "source": "out/work/sun/convect/c29-near-pair.jpg",
+   "kind": "note",
+   "label": "c29 frame 60 near ground, approved left, mine right (draft tier, unfinished): bulbs with height, streaks, warm lanes. G17 1.17, lower quarter 0.98; quantiles 0.245 0.358 0.506 (approved 0.218 0.368 0.562); blur 40 px ground 0.054",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T00:35:16.936Z",
    "file": "20261124003516936-note-c17-rise.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/sun/convect/h16-six.jpg",
    "kind": "note",
    "label": "camera held, six consecutive frames 60 to 65 at native size (state h16: one step before c18, flatter tops)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T00:35:14.187Z",
-   "file": "20261124003514187-note-c18-near-pair.jpg",
-   "source": "out/work/sun/convect/c18-near-pair.jpg",
-   "kind": "note",
-   "label": "frame 60 near field at native size beside the approved image (c18)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T00:35:13.606Z",
-   "file": "20261124003513606-note-c18-whole-pair.jpg",
-   "source": "out/work/sun/convect/c18-whole-pair.jpg",
-   "kind": "note",
-   "label": "frame 60 draft beside the approved image, ground from functions (c18): G17 1.01 lower quarter 0.78, blur 40 px difference ground 0.055 whole 0.040 (unfinished)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T00:11:13.361Z",
-   "file": "20261124001113361-note-h12-evo.jpg",
-   "source": "out/work/sun/convect/h12-evo.jpg",
-   "kind": "note",
-   "label": "same crop at frames 0 24 48 72 90 108, camera held: cells are born, spread, split and are swallowed (too fast, life doubled since)",
    "stop": "sun"
   }
  ]
