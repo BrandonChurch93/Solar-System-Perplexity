@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T15:59:58.203Z",
- "head": "a9839f0260a18b0e89567bd9468c2080a06d26b7",
- "note": "16:01 UTC. Law from 2.0 radii in trial (two parts, by height alone): by my proxies every pair of the dive from 4704 and of the rise to 4984 is under 0.45; reds named: 4696 hump (0.65), 4988 to 4996 night side (0.49). Preview draft 12 s a frame mean over 4688 to 4764, 10.7 s over the rise, 25 s at 4860. Tests, parity, G15, the report's pictures not run on this state.",
+ "pushed": "2026-11-24T16:26:43.000Z",
+ "head": "237668930f531e871ff6c5b12d432f39dbe36043",
+ "note": "16:29 UTC. Point 4 of MAIL 688, trial not committed: the grade of the fall as one text; lilac at 4720 and warm specks at 4988 go, deck blue stays (control without the grade beside it). RED named: 4860 is not the same picture drawn alone and drawn after dive frames (thin line of bands by the limb), cause being sought. Still red by my proxies: rise 4988 0.49, hump 4696. About 12 s a preview draft frame, 25 to 32 s at the surface.",
  "looks": [
+  {
+   "time": "2026-11-24T16:26:42.420Z",
+   "file": "20261124162642420-note-g2-crops.jpg",
+   "source": "out/work/nep/weave/g2-crops.jpg",
+   "kind": "note",
+   "label": "grade of the fall, trial: left as pushed, middle one text that does not strengthen colours off the line, right no grade (control). 4988 night side, 4720 bands, 4707, 4860 far band",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T16:26:41.864Z",
+   "file": "20261124162641864-note-look-g2-4860.jpg",
+   "source": "out/work/nep/weave/look-g2-4860.jpg",
+   "kind": "note",
+   "label": "4860 beside the approved image: drawn after frames of the dive, drawn alone, their difference times 4 (a thin line of the map's bands by the limb, 172 levels at most). G17 1.382 and 1.381, p25 0.741",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T15:59:57.653Z",
    "file": "20261124155957653-note-look-q3-4860.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/nep/weave/p23-a.jpg",
    "kind": "note",
    "label": "The place moved 2.3 units across the band (uncommitted): 4724, 4732, 4740, 4748, 4756, 4860 at preview draft",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T14:58:00.568Z",
-   "file": "20261124145800568-note-look-p23-4860.jpg",
-   "source": "out/work/nep/weave/look-p23-4860.jpg",
-   "kind": "note",
-   "label": "4860: moved place (across 2.3) | approved | committed b8a38cbe. G17 median 1.382 (was 1.331). Near picture stays; far field by the limb moved",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T14:37:20.605Z",
-   "file": "20261124143720605-note-look-fork.jpg",
-   "source": "out/work/nep/weave/look-fork.jpg",
-   "kind": "note",
-   "label": "Why the exchange stands after f4e94e04, seen from above: left top the globe's map at 4704, left bottom the scene from code at 4748, both laid on the same ground (a line a unit, the first streamer on the yellow line). They are opposite in tone on both sides of that line: the map has its dark vortex north of it and a white band south of it, the scene a pale plain with a small eye north and its dark near deck south. Right: 4860 beside the approved, G17 at preview draft 1.331 / 0.772, 25.2 s a draft frame.",
    "stop": "neptune"
   }
  ]
