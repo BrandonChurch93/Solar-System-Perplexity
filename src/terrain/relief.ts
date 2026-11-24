@@ -246,6 +246,17 @@ void main() {
   outColor = vec4(0.0, 0.0, 0.0, uMark);
 }`
 
+// The relief with a presence (Relief.presence): the same shader with its premultiplied output times a share. Built when a relief asks
+// for the first time; a relief that never asks keeps the shaders above to the letter.
+const HEAD = 'out vec4 outColor;'
+const LIT = 'vec4(col * alpha, alpha)'
+const AIR_LIT = 'vec4(glow * uGain * vig, cut)'
+
+export function withPresence(source: string, lit: string): string {
+  if (source.split(HEAD).length !== 2 || source.split(lit).length !== 2 || source.includes('uPresence')) throw new Error('the relief shader has no single place for a presence')
+  return source.replace(HEAD, HEAD + '\nuniform float uPresence;').replace(lit, lit + ' * uPresence')
+}
+
 interface Grid {
   cols: number
   rows: number
@@ -291,6 +302,8 @@ export class Relief {
   private readonly soft = marker(0)
   private readonly none = new THREE.MeshBasicMaterial({ visible: false })
   private state: 'new' | 'ready' | 'off' = 'new'
+  private readonly share = { value: 1 }
+  private fades = false
 
   private constructor(def: ReliefDef, motion: ReliefMotion) {
     this.def = def
@@ -338,6 +351,7 @@ export class Relief {
   }
 
   screen(renderer: THREE.WebGLRenderer, camera: THREE.Camera, width: number, height: number, tile: number): boolean {
+    if (this.share.value < 1) return false
     if (!this.ready(renderer)) return false
     this.group.updateWorldMatrix(true, true)
     const tc = Math.ceil(width / tile) - 1
@@ -474,6 +488,28 @@ export class Relief {
 
   show(): void {
     for (const l of this.layers) l.mesh.geometry = l.grid.full
+  }
+
+  // How much of the relief is there, 0 to 1: the premultiplied output of every layer and of the air times the share. A pixel one part of
+  // the relief covers is then the picture with the relief times the share plus the picture without it times the rest; where parts lie over
+  // one another the one behind shows through the one in front while the share is between 0 and 1. Off until a set calls it: a relief that
+  // never does keeps its shaders to the letter and draws as before. The first call gives the materials the shader with the share, which
+  // is a new program: call it once where the set is built, so the program is compiled with the others. Under 1 the relief is no shield
+  // (screen answers false), so nothing behind it is culled. The share is the set's to give from a height, a distance or an angle, never
+  // from a frame number.
+  presence(share: number): void {
+    if (!(share >= 0 && share <= 1)) throw new Error('the presence of a relief is a share from 0 to 1, not ' + share)
+    if (!this.fades) {
+      this.fades = true
+      const parts: [THREE.ShaderMaterial, string][] = this.layers.map((l) => [l.material, LIT])
+      if (this.air) parts.push([this.air.material, AIR_LIT])
+      for (const [material, lit] of parts) {
+        material.fragmentShader = withPresence(material.fragmentShader, lit)
+        material.uniforms.uPresence = this.share
+        material.needsUpdate = true
+      }
+    }
+    this.share.value = share
   }
 
   static async load(ctx: SetContext, base: string, def: ReliefDef, motion: ReliefMotion): Promise<Relief> {
