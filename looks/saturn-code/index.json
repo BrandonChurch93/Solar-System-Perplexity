@@ -1,9 +1,39 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T09:27:51.026Z",
- "head": "1e4bfd4e46d236e0032fc1f045cc954c58511d41",
- "note": "second commit 1e4bfd4 proofs: rise pictures by the judge, G17 3720 median 0.683; dive pictures running",
+ "pushed": "2026-11-24T09:45:41.440Z",
+ "head": "cc9c47bb313114061aec16b74d328ea62785931a",
+ "note": "second NAMED sent 09:45 UTC: dive 3580 and rise 3859 cured, pole red stands (judge's body), new red at 3807 + 1/2 located, item 15 sheet",
  "looks": [
+  {
+   "time": "2026-11-24T09:45:40.791Z",
+   "file": "20261124094540791-note-saturn-dive-pops.jpg",
+   "source": "../../../../tmp/v/r41/saturn-dive-pops.png",
+   "kind": "note",
+   "label": "the judge's dive pops on the second named commit (largest 1.09 at 3563)",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-24T09:45:40.153Z",
+   "file": "20261124094540153-note-saturn-dive-changes.jpg",
+   "source": "../../../../tmp/v/r41/saturn-dive-changes.png",
+   "kind": "note",
+   "label": "the judge's dive pictures on the second named commit: change maps (pattern 0.53 at 3561 at the top of the globe)",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-24T09:39:11.214Z",
+   "file": "20261124093911214-note-shade_3538_3556.jpg",
+   "source": "../../../../tmp/v/r41/shade_3538_3556.png",
+   "kind": "note",
+   "label": "item 15: the ring's shade between hold and dive, every second frame 3538 to 3556"
+  },
+  {
+   "time": "2026-11-24T09:39:10.160Z",
+   "file": "20261124093910160-note-patmap_3807h.jpg",
+   "source": "../../../../tmp/v/r41/patmap_3807h.png",
+   "kind": "note",
+   "label": "rise 3807 + 1/2: the patch of the judge's pattern red (0.55) at the right frame edge, both frames as compared"
+  },
   {
    "time": "2026-11-24T09:27:36.114Z",
    "file": "20261124092736114-note-saturn-rise-changes.jpg",
@@ -33,34 +63,6 @@
    "source": "../../../../tmp/v/r41/3720_beside_approved_small.png",
    "kind": "note",
    "label": "3720 final beside the approved close image (approved left, film right)"
-  },
-  {
-   "time": "2026-11-24T09:10:14.837Z",
-   "file": "20261124091014837-note-pair_3630.jpg",
-   "source": "../../../../tmp/v/r41/pair_3630.png",
-   "kind": "note",
-   "label": "3630 surface view, draft: first named commit left, second right (the shaded far ring right of the globe)"
-  },
-  {
-   "time": "2026-11-24T09:10:14.148Z",
-   "file": "20261124091014148-note-pair_3573.jpg",
-   "source": "../../../../tmp/v/r41/pair_3573.png",
-   "kind": "note",
-   "label": "3573 dive, draft: first named commit left, second right (one border for the globe shadow)"
-  },
-  {
-   "time": "2026-11-24T09:10:12.974Z",
-   "file": "20261124091012974-note-pair_3885.jpg",
-   "source": "../../../../tmp/v/r41/pair_3885.png",
-   "kind": "note",
-   "label": "3885 way out, draft: first named commit left, second right (the shaded ring solid from its inner edge, one crisp shadow border)"
-  },
-  {
-   "time": "2026-11-24T08:51:32.694Z",
-   "file": "20261124085132694-note-pop3895_crop.jpg",
-   "source": "../../../../tmp/v/r40/pop3895_crop.png",
-   "kind": "note",
-   "label": "3895 and 3895 + 1/2 crop: the take off after the rise, where the pop reads over the limit (red on main too)"
   }
  ]
 }
