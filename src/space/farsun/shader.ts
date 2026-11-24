@@ -3,8 +3,8 @@ import { GRADE_GLSL } from '../../stops/sun/grade'
 import { NOISE_GLSL } from '../../terrain/relief'
 
 export const MAX_LOOPS = 16
-export const MAX_LOBES = 8
-export const MAX_KNOTS = 14
+export const MAX_LOBES = 12
+export const MAX_KNOTS = 48
 
 export const FARSUN_VERT = /* glsl */ `
 uniform float uDepth;
@@ -88,6 +88,12 @@ uniform vec4 uFringeLobe[${MAX_LOBES}];
 uniform vec4 uFringeLobeBy[${MAX_LOBES}];
 uniform vec3 uFringeFan;
 uniform vec3 uFringeCurl;
+uniform vec4 uFringeSheet;
+uniform vec4 uFringeHairBy;
+uniform vec3 uFringeHairCurl;
+uniform float uFringeHairLay;
+uniform vec2 uFringeHair[${MAX_LOBES}];
+uniform vec3 uFringeSpike;
 uniform float uLoopGain[${MAX_LOOPS}];
 uniform float uLoopRagged[${MAX_LOOPS}];
 uniform float uHaloEdge;
@@ -390,10 +396,37 @@ void main() {
       }
       float tall = mix(uFringeShape.x, uFringeShape.y, pow(vnoise(sd * 6.0 + 5.0), 2.0)) * high;
       vec3 bent = sd + (vec3(vnoise(sd * 9.0 + 1.0), vnoise(sd * 9.0 + 4.0), vnoise(sd * 9.0 + 7.0)) - 0.5) * (up * uFringeShape.w);
-      float spike = 40.0 * pow(vnoise(bent * uFringeShape.z), 8.0) + 24.0 * pow(vnoise(bent * (uFringeShape.z * 2.7) + 3.0), 8.0);
+      float spike = uFringeSpike.x * pow(vnoise(bent * uFringeShape.z), uFringeSpike.z) + uFringeSpike.y * pow(vnoise(bent * (uFringeShape.z * 2.7) + 3.0), uFringeSpike.z);
       sum += (exp(-up / tall) * spike * more + strands + knot) * (fade * step(1.0, r));
     }
-    gas += burnWhite(uFringeColour * (sum * dt * uFringe.z * uBurn.x));
+    float hair = 0.0;
+    vec3 sheetN = spinY(uFringeSheet.xyz, -uSpin);
+    float facing = dot(rd, sheetN);
+    for (int j = 0; j < (uFringeHairBy.z > 0.0 && abs(facing) > 1e-3 ? 3 : 0); j++) {
+      float ts = (uFringeSheet.w + (float(j) - 1.0) * uFringeHairLay - dot(ro, sheetN)) / facing;
+      vec3 q = ro + rd * ts;
+      float r = length(q);
+      if (ts <= 0.0 || r >= uFringe.y) continue;
+      vec3 sd = spinY(q / r, uSpin);
+      float up = max(r - 1.0, 0.0);
+      float fade = 1.0 - smoothstep(0.5 * (uFringe.y - 1.0), uFringe.y - 1.0, up);
+      vec3 level = (sd - uFringeSheet.xyz * dot(sd, uFringeSheet.xyz)) * uFringeHairCurl.y + up * uFringeHairCurl.z;
+      vec3 wisp = sd + (vec3(vnoise(level + 1.0), vnoise(level + 4.0), vnoise(level + 7.0)) - 0.5) * (up * uFringeHairCurl.x);
+      float layer = 0.0;
+      for (int n = 0; n < ${MAX_LOBES}; n++) {
+        vec2 by = uFringeHair[n];
+        if (by.x <= 0.0) continue;
+        vec4 lobe = uFringeLobe[n];
+        vec3 foot = normalize(wisp - (wisp - lobe.xyz) * min(up * uFringeHairBy.w, 0.8));
+        vec3 inSheet = foot - uFringeSheet.xyz * dot(foot, uFringeSheet.xyz);
+        vec3 cellAt = inSheet * uFringeHairBy.x + float(j) * 17.3;
+        float strand = pow(vnoise(cellAt), uFringeHairBy.y) + 0.5 * pow(vnoise(cellAt * 2.3 + 2.0), uFringeHairBy.y);
+        float reach = by.y * (0.35 + 1.3 * vnoise(inSheet * (uFringeHairBy.x * 0.31) + 11.0));
+        layer += by.x * exp(-(1.0 - dot(foot, lobe.xyz)) * lobe.w) * strand * exp(-up / max(reach, 1e-3));
+      }
+      hair += layer * fade * uFringeHairBy.z / abs(facing);
+    }
+    gas += burnWhite(uFringeColour * ((sum * dt + hair) * uFringe.z * uBurn.x));
   }
   for (int n = 0; n < (cover < 0.5 && (uParts & 4) != 0 ? ${MAX_KNOTS} : 0); n++) {
     if (uKnotBy[n].z <= 0.0) continue;
