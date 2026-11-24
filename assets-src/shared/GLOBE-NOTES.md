@@ -370,3 +370,13 @@ Draft stills `out/work/stills/f%05d-16x9-draft-full.png`, sha256, frames 360 (su
 - `light.from` on Mars, scratch tree (heights v3, light 1,1), draft: with `from` Infinity the hold 2325 differs from the picture without `from` by mean 0.08 of 255, largest 64 (the canyon's walls), 12 percent of the pixels, 0.01 percent by more than 8; frame 2400 above the band by mean 0.07; frame 2409 in the band by nothing. The hold took 28.6 s against 19.5 s. The hold is the approved picture, so the stop keeps `from` under the hold's height or sends the pair to the Builder (MAIL 454 item 2, iii).
 - Proof of the commit named to the Builder (1e36be06, and its merge with main f2375d2e, abe760fd): tsc clean, the whole suite 316 passed and 0 failed on the merge, build made; 20 draft frames with the options off equal to main's (14 frames of nine stops, Mars 2401 to 2406; 2997 against main f2375d2e, which changed it).
 - A second Sun for the cap's own light was asked and ruled out (MAIL 462): the cap lights with the globe's Sun.
+- The frame factor (section 9, NOTE 501). Commits d788d85c (the factor) and 73f4aa6e (the scale of a place picture against the master's), merged with main 26677ed9 as dace4ba6. On 73f4aa6e: `npx vitest run` 376 passed, 0 failed; 20 draft frames at 16 by 9: 360, 615, 1185, 1755, 2325, 2895, 3465, 4035, 4605, 717, 1857, 2997, 4707 byte equal to the same frames of abe760fd (before the change), Mars 2401 to 2406 and 2427 byte equal to the same rendered at main 6884e808, which had changed them. On dace4ba6: tsc clean, 376 passed, build made; 615 and 717 equal to main 26677ed9, 2325 and 2427 equal to 73f4aa6e.
+- `npm run smooth -- --stop mars --only parity` (uhd scaled down by 2 against 16 by 9, draft, levels of 255), main 26677ed9 against dace4ba6. Both green. Mean, 99th percentile, largest coarse difference, block level:
+  - 2423 dive: 1.286, 4.6, 18.25, -1.813 to 1.255, 4.5, 18.25, -1.816
+  - 2445 dive: 1.393, 5.9, 3.61, -0.903 to 1.284, 4.5, 3.47, -1.051
+  - 2468 dive: 1.316, 5.1, 5.46, -0.965 to 1.310, 5.0, 5.46, -0.965
+  - 2580 terrain: 1.552, 9.3, 8.23, -2.046, the same after (the place picture has the master's pixels at uhd, so its factor is 1)
+  - 2689 rise: 1.353, 6.2, 5.16, -1.431, the same after
+  - 2708 rise: 1.475, 7.0, 3.87, -1.394 to 1.310, 5.0, 3.58, -1.360
+  - 2726 rise: 1.540, 8.8, 31.23, -1.633 to 1.188, 4.0, 13.66, -0.855
+  The four numbers the limits read (mean 1.552, coarse mean 0.549, block -2.046, level -0.508) stand at 2580 before and after. Mars was inside the limits before the change; the change is seen on five of the seven frames, most at 2726. Seconds a draft frame at uhd 18.9 before, 22.0 after (one run each).
