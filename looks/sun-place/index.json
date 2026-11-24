@@ -1,9 +1,36 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T08:01:53.290Z",
- "head": "123287935619046b16ace6fd331b221083dd77e9",
- "note": "A jump at T found by the handover tool and cured: the surface view's sky now rides with its ground on the globe's side (one line in set.ts). Side difference at T mean 0.015, 99th percentile 1, pass (before: the tool's difference picture at gain 8 had mean 19.07, sky rows 40.7). Frame 60 unchanged (draft bytes equal): sun-near at the final tier share by band 0.173 0.187 0.156 0.131 0.108 0.080 0.058 0.050 0.023 | dark 0.206 body 0.583 pale 0.108 white 0.023 | half width 6.1 px, 2113 shapes; distance 0.061. G17 median 1.335, lower quarter 1.121. Blur 40 px ground 0.0521, whole 0.0348",
+ "pushed": "2026-11-24T08:29:25.990Z",
+ "head": "19ca786c835a61e56e93066c55763f23c5346888",
+ "note": "named head 19ca786c: every frame 180 to 211 of the rise seen, one even pull back, no step or pop at this size; the ground reads as a bed of pebbles from here. Frame 60 unchanged since the last look: share by band 0.173 0.187 0.156 0.131 0.108 0.080 0.058 0.050 0.023 | dark 0.206 body 0.583 pale 0.108 white 0.023 | half width 6.1 px, 2113 shapes; distance 0.061. G17 median 1.335, lower quarter 1.121. Blur 40 px ground 0.0521, whole 0.0348",
  "looks": [
+  {
+   "time": "2026-11-24T08:29:24.769Z",
+   "file": "20261124082924769-note-h-196-211.jpg",
+   "source": "../../../../tmp/h-196-211.jpg",
+   "kind": "note",
+   "label": "sun rise on the named head 19ca786c, draft, every frame 196 to 211",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T08:29:23.730Z",
+   "file": "20261124082923730-note-h-180-195.jpg",
+   "source": "../../../../tmp/h-180-195.jpg",
+   "kind": "note",
+   "label": "sun rise on the named head 19ca786c, draft, every frame 180 to 195 (the handover tool's own frames)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T08:15:40.948Z",
+   "file": "20261124081540948-compare-sun-rise-sides.jpg",
+   "source": "out/work/handover/sun-rise-sides.png",
+   "kind": "compare",
+   "label": "sun rise, both sides at T (frame 216) and their difference times 8",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 216,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-24T08:01:52.156Z",
    "file": "20261124080152156-note-T-after.jpg",
@@ -37,38 +64,11 @@
    "stop": "sun"
   },
   {
-   "time": "2026-11-24T07:57:15.448Z",
-   "file": "20261124075715448-compare-sun-rise-sides.jpg",
-   "source": "out/work/handover/sun-rise-sides.png",
-   "kind": "compare",
-   "label": "sun rise, both sides at T (frame 216) and their difference times 8",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "frame": 216,
-   "tier": "draft"
-  },
-  {
    "time": "2026-11-24T07:33:53.252Z",
    "file": "20261124073353252-note-pair60-final.jpg",
    "source": "../../../../tmp/pair60-final.jpg",
    "kind": "note",
    "label": "frame 60 at the final tier, head b3572b5f: left the kept still of main (sha256 8dd81351), right mine (sha256 c71a8b3d); below the near ground one to one. Changed on purpose: the ground of MAILS 505 and 547 (cells with height in place of the flat ground). My eye: mine still reads as polished stones",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T07:17:42.885Z",
-   "file": "20261124071742885-note-e1-s6.jpg",
-   "source": "../../../../tmp/e1-s6.jpg",
-   "kind": "note",
-   "label": "frames 224, 228, 232, 240, 247, 258, 269 draft: the rise after T on the one move",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T07:17:41.136Z",
-   "file": "20261124071741136-note-e1-s5.jpg",
-   "source": "../../../../tmp/e1-s5.jpg",
-   "kind": "note",
-   "label": "frames 112, 128, 144, 160 (the bend of the surface view), 190, 198 (the rise before T), draft",
    "stop": "sun"
   }
  ]
