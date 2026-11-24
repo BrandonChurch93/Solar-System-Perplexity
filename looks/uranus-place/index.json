@@ -1,9 +1,105 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-24T16:53:17.680Z",
+ "pushed": "2026-11-24T17:13:58.151Z",
  "head": "b238e1cadf349d6dbcf848d3c898759a828b9d5e",
- "note": "main 4752aa1e: handover dive frames of the merge b238e1ca while the proofs run; storm comes in 4116 to 4124 by distance, still red",
+ "note": "main 4752aa1e: handover rise frames of the merge b238e1ca; handover six lines pass; storm goes out 4437 to 4442 by distance, still red",
  "looks": [
+  {
+   "time": "2026-11-24T17:13:56.868Z",
+   "file": "20261124171356868-note-hr-e.jpg",
+   "source": "../../../../tmp/tf/hr-e.jpg",
+   "kind": "note",
+   "label": "rise 4440 to 4454, every frame, draft, b238e1ca: no storm left on the globe from 4443",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T17:13:55.646Z",
+   "file": "20261124171355646-note-hr-d.jpg",
+   "source": "../../../../tmp/tf/hr-d.jpg",
+   "kind": "note",
+   "label": "rise 4425 to 4439, every frame, draft, b238e1ca: the storm stands to 4436 and goes out on the globe over 4437 to 4442 with the plates share by distance (named red, not cured yet)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T17:13:54.410Z",
+   "file": "20261124171354410-note-hr-b.jpg",
+   "source": "../../../../tmp/tf/hr-b.jpg",
+   "kind": "note",
+   "label": "rise 4395 to 4409, every frame, draft, b238e1ca on main 4752aa1e: the white of the tops comes up by view angle, no step; soft white at the left edge 4402 to 4409 is the storm ring passing near the eye",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T17:04:01.328Z",
+   "file": "20261124170401328-job-frame-04110.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.dive frame 4110, draft tier, texels view, from the running g13 job",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4110,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "g13"
+  },
+  {
+   "time": "2026-11-24T17:03:33.186Z",
+   "file": "20261124170333186-sheet-uranus-rise-top.jpg",
+   "source": "out/work/handover/uranus-rise-top.png",
+   "kind": "sheet",
+   "label": "uranus rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 4391), place picture off, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "first": 4391,
+   "last": 4454,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T17:02:19.540Z",
+   "file": "20261124170219540-sheet-uranus-rise-draft-after.jpg",
+   "source": "out/work/handover/uranus-rise-draft-after.png",
+   "kind": "sheet",
+   "label": "uranus rise, every frame 4392 to 4403 (after T, frame 4391), draft tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "first": 4392,
+   "last": 4403,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T17:02:17.669Z",
+   "file": "20261124170217669-sheet-uranus-rise-draft-before.jpg",
+   "source": "out/work/handover/uranus-rise-draft-before.png",
+   "kind": "sheet",
+   "label": "uranus rise, every frame 4380 to 4390 (before T, frame 4391), draft tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "first": 4380,
+   "last": 4390,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T17:02:15.854Z",
+   "file": "20261124170215854-sheet-uranus-rise-draft-across.jpg",
+   "source": "out/work/handover/uranus-rise-draft-across.png",
+   "kind": "sheet",
+   "label": "uranus rise, every frame 4385 to 4396 (across T, frame 4391), draft tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "first": 4385,
+   "last": 4396,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T17:02:14.102Z",
+   "file": "20261124170214102-compare-uranus-rise-step-in-place.jpg",
+   "source": "out/work/handover/uranus-rise-step-in-place.png",
+   "kind": "compare",
+   "label": "uranus rise, the largest step of the level in place (1.16): frame 4402, frame 4403, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4403
+  },
   {
    "time": "2026-11-24T16:53:16.551Z",
    "file": "20261124165316551-note-hd-e.jpg",
@@ -19,17 +115,6 @@
    "kind": "note",
    "label": "dive 4155 to 4169, every frame, draft, b238e1ca: the white of the tops thins by view angle, no step",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T16:53:15.014Z",
-   "file": "20261124165315014-compare-uranus-rise-sides.jpg",
-   "source": "out/work/handover/uranus-rise-sides.png",
-   "kind": "compare",
-   "label": "uranus rise, both sides at T (frame 4391) and their difference times 8",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4391,
-   "tier": "draft"
   },
   {
    "time": "2026-11-24T16:53:14.625Z",
@@ -223,70 +308,6 @@
    "source": "../../../../tmp/k3b-4176.png",
    "kind": "note",
    "label": "4176 draft, third NAMED code over form F, main 2bc36ce6, uncommitted",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T15:37:12.203Z",
-   "file": "20261124153712203-note-k3b-4408.jpg",
-   "source": "../../../../tmp/k3b-4408.png",
-   "kind": "note",
-   "label": "4408 draft, third NAMED code over form F, main 2bc36ce6, uncommitted",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T15:37:10.865Z",
-   "file": "20261124153710865-note-k3b-4160.jpg",
-   "source": "../../../../tmp/k3b-4160.png",
-   "kind": "note",
-   "label": "4160 draft, third NAMED code over form F (tops white only by the view angle, none added by height), main 2bc36ce6, uncommitted",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T15:24:20.502Z",
-   "file": "20261124152420502-note-k3-4168-duo.jpg",
-   "source": "../../../../tmp/k3-4168-duo.png",
-   "kind": "note",
-   "label": "4168 draft form E over form F, main 2bc36ce6, uncommitted",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T15:24:19.820Z",
-   "file": "20261124152419820-note-k3-4404-duo.jpg",
-   "source": "../../../../tmp/k3-4404-duo.png",
-   "kind": "note",
-   "label": "4404 draft form E over form F (white only where the view is steeper than the surface flight ever sees), main 2bc36ce6, uncommitted",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T15:24:19.146Z",
-   "file": "20261124152419146-note-k2-4350-ab.jpg",
-   "source": "../../../../tmp/k2-4350-ab.png",
-   "kind": "note",
-   "label": "4350 draft, third NAMED code against form E on main 2bc36ce6: form E whitens the surface view, dropped",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T14:57:39.474Z",
-   "file": "20261124145739474-note-tmw-k2-8326.jpg",
-   "source": "../../../../tmp/tmw-k2-8326.png",
-   "kind": "note",
-   "label": "tops cure in work on main 2bc36ce6: 4163, the same ground 8 frames later by the true cameras, and where the pattern measure reads over 0.45 (the limb haze passing over a top)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T14:57:38.233Z",
-   "file": "20261124145738233-note-k2-corner-sheet.jpg",
-   "source": "../../../../tmp/k2-corner-sheet.png",
-   "kind": "note",
-   "label": "tops cure in work on main 2bc36ce6, not committed: dive 4158 to 4177 every frame, upper right of the frame; the tops dim by the view angle and the limb haze comes over them",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T14:30:21.626Z",
-   "file": "20261124143021626-note-k1-4199-cmp.jpg",
-   "source": "../../../../tmp/k1-4199-cmp.png",
-   "kind": "note",
-   "label": "4199 draft, rejected first form (term taken off the ground): dark holes, main 2bc36ce6",
    "stop": "uranus"
   }
  ]
