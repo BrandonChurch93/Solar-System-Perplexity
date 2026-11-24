@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T14:20:28.588Z",
+ "pushed": "2026-11-24T14:41:20.336Z",
  "head": "1154099e249a95910f3ec137c6b7886323e15c71",
- "note": "14:21 MAIL 683 in (the material at 60 costs the round): the proof chain on 1154099e is stopped at frame 202 of the handover (tests 485 passed in 49 files, warm walk exit 0 with 0 frames that did work, both done). Frame 60 draft of 1154099e: share by band 0.1 .. 0.9 : 0.165 0.231 0.178 0.128 0.092 0.066 0.044 0.036 0.027 / dark (under 0.15) 0.195 | body (0.15 to 0.55) 0.630 | pale (0.65 to 0.85) 0.080 | white (over 0.85) 0.030 / brightest 15 percent: half width 4.3 px, 5530 shapes | fine detail 0.0702 | mean 0.340. Red: fine detail 0.0702 against the approved 0.0373 and 5530 bright shapes against 1153 (hairline threads, reads as brushed metal), white 0.030 against 0.010. Trials on the threads, the dome's foot, the spread of sizes and the penumbra start now.",
+ "note": "MAIL 683 work, trial e1 frame 60 draft: dark 0.209, body 0.630, pale 0.071, white 0.021; brightest 15 percent half width 5.4 px, 3416 shapes, fine detail 0.0557, mean 0.335; distance 0.044. Not right yet: plates with glassy streaks, penumbra trials e2 e3",
  "looks": [
+  {
+   "time": "2026-11-24T14:41:19.533Z",
+   "file": "20261124144119533-note-e-spot.jpg",
+   "source": "../../../../tmp/e-spot.jpg",
+   "kind": "note",
+   "label": "penumbra trials (not committed), frame 60 draft: approved, e1 as at head, e2 and e3 with fewer, broader, curved fibres",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T14:41:18.871Z",
+   "file": "20261124144118871-note-e-zoom.jpg",
+   "source": "../../../../tmp/e-zoom.jpg",
+   "kind": "note",
+   "label": "trial e1 (not committed), frame 60 draft at two to one, left mine, right approved: rim zones hot, middles dark, cells touch; still plates with glassy streaks, fibres not radial yet",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T14:20:27.952Z",
    "file": "20261124142027952-note-z1-rise-a.jpg",
@@ -53,22 +69,6 @@
    "source": "../../../../tmp/zoom-pair-z1.jpg",
    "kind": "note",
    "label": "frame 60 at three to one, the approved left, head 1154099e right: the cells touch along thin creases",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T13:39:38.432Z",
-   "file": "20261124133938432-note-zoom-pair-m16.jpg",
-   "source": "../../../../tmp/zoom-pair-m16.jpg",
-   "kind": "note",
-   "label": "frame 60 at three to one, the approved left, head 413128b0 right: the cells still stand apart as stones with wide dark feet, the approved's touch",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T13:39:37.813Z",
-   "file": "20261124133937813-note-m16-ball.jpg",
-   "source": "../../../../tmp/m16-ball.jpg",
-   "kind": "note",
-   "label": "head 413128b0 on main 2bc36ce6: the rise at 197, 205, 213, 221, 229, 237, draft",
    "stop": "sun"
   }
  ]
