@@ -1,64 +1,75 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T00:33:51.437Z",
- "head": "6d260fb8a34c0e2469f726853662dbeb4b09cb8e",
- "note": "near bodies in the sample count (mail 411): Mars 2411 review with the moon named, 128 samples against 21",
+ "pushed": "2026-11-24T01:13:41.710Z",
+ "head": "0c2244edf5be6f83754ddfc7f0049ee740f3d8db",
+ "note": "The rise's law for Mars (speed of the picture 0.097 to 0.074 of the mean): draft of every frame 2668 to 2747; neighbours and the dive keep their bytes",
  "looks": [
   {
-   "time": "2026-11-24T00:33:49.947Z",
-   "file": "20261124003349947-note-near-2411-full.jpg",
-   "source": "../../../../tmp/nb/near-2411-full.png",
+   "time": "2026-11-24T01:13:41.053Z",
+   "file": "20261124011341053-note-law-mars-rise-draft-across.jpg",
+   "source": "out/work/handover/law-mars-rise-draft-across.png",
    "kind": "note",
-   "label": "Mars 2411 review whole frame at half size: 21 samples (6d260fb) against 128 samples (moon named); the planet keeps its picture"
+   "label": "Mars rise on the new law, across T 2687, draft: the close sheet's border enters from T+1 (place picture, plan F's to cure)",
+   "stop": "mars"
   },
   {
-   "time": "2026-11-24T00:33:48.839Z",
-   "file": "20261124003348839-note-near-2411-moon.jpg",
-   "source": "../../../../tmp/nb/near-2411-moon.png",
+   "time": "2026-11-24T01:13:40.426Z",
+   "file": "20261124011340426-note-sheet-4.jpg",
+   "source": "../../../../tmp/law/sheet-4.png",
    "kind": "note",
-   "label": "Mars 2411 review, the moon at the right edge at 2x: 21 samples as on 6d260fb (separate copies) against 128 samples with the moon named to the motion measure (near bodies, mail 411)"
+   "label": "Mars rise on the new law (eye's direction on its own bell, lift in the height), draft, frames 2732 to 2747"
   },
   {
-   "time": "2026-11-24T00:05:50.606Z",
-   "file": "20261124000550606-note-review-moon.jpg",
-   "source": "../../../../tmp/ph/review-moon.png",
+   "time": "2026-11-24T01:13:39.804Z",
+   "file": "20261124011339804-note-sheet-3.jpg",
+   "source": "../../../../tmp/law/sheet-3.png",
    "kind": "note",
-   "label": "Mars dive 2409 to 2411, draft beside review at full size: the shutter smears Phobos by 81, 118, 188 px; the dashes are 17 to 21 samples"
+   "label": "Mars rise on the new law (eye's direction on its own bell, lift in the height), draft, frames 2716 to 2731"
   },
   {
-   "time": "2026-11-24T00:05:49.909Z",
-   "file": "20261124000549909-note-left-moon.jpg",
-   "source": "../../../../tmp/ph/left-moon.png",
+   "time": "2026-11-24T01:13:39.176Z",
+   "file": "20261124011339176-note-sheet-2.jpg",
+   "source": "../../../../tmp/law/sheet-2.png",
    "kind": "note",
-   "label": "Mars dive 2407 to 2412 at draft, the moon at full size: the pale streaked band on the flank is the moon's colour map, seen round the moon"
+   "label": "Mars rise on the new law (eye's direction on its own bell, lift in the height), draft, frames 2700 to 2715"
   },
   {
-   "time": "2026-11-23T23:42:26.330Z",
-   "file": "20261123234226330-note-pace-e.jpg",
-   "source": "../../../../tmp/hz/pace-e.png",
+   "time": "2026-11-24T01:13:38.540Z",
+   "file": "20261124011338540-note-sheet-1.jpg",
+   "source": "../../../../tmp/law/sheet-1.png",
    "kind": "note",
-   "label": "E move: rate of fall, turn and picture speed of the nine stops forced onto the one move (own cross check, not the judge)"
+   "label": "Mars rise on the new law (eye's direction on its own bell, lift in the height), draft, frames 2684 to 2699"
   },
   {
-   "time": "2026-11-23T23:42:25.739Z",
-   "file": "20261123234225739-note-rise-sheet-4.jpg",
-   "source": "../../../../tmp/e7/rise-sheet-4.png",
+   "time": "2026-11-24T01:13:37.896Z",
+   "file": "20261124011337896-note-sheet-0.jpg",
+   "source": "../../../../tmp/law/sheet-0.png",
    "kind": "note",
-   "label": "E move, Mars rise on the one eye, draft tier, sheet 4 of 0 to 5 (frames 2668 to 2747); patch of other ground lower right from 2691 is the place picture"
+   "label": "Mars rise on the new law (eye's direction on its own bell, lift in the height), draft, frames 2668 to 2683"
   },
   {
-   "time": "2026-11-23T23:42:25.039Z",
-   "file": "20261123234225039-note-rise-sheet-3.jpg",
-   "source": "../../../../tmp/e7/rise-sheet-3.png",
-   "kind": "note",
-   "label": "E move, Mars rise on the one eye, draft tier, sheet 3 of 0 to 5 (frames 2668 to 2747); patch of other ground lower right from 2691 is the place picture"
+   "time": "2026-11-24T01:12:56.960Z",
+   "file": "20261124011256960-sheet-law-mars-rise-draft-after.jpg",
+   "source": "out/work/handover/law-mars-rise-draft-after.png",
+   "kind": "sheet",
+   "label": "mars rise, every frame 2688 to 2699 (after T, frame 2687), draft tier",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "first": 2688,
+   "last": 2699,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T23:42:24.446Z",
-   "file": "20261123234224446-note-rise-sheet-2.jpg",
-   "source": "../../../../tmp/e7/rise-sheet-2.png",
-   "kind": "note",
-   "label": "E move, Mars rise on the one eye, draft tier, sheet 2 of 0 to 5 (frames 2668 to 2747); patch of other ground lower right from 2691 is the place picture"
+   "time": "2026-11-24T01:12:22.754Z",
+   "file": "20261124011222754-sheet-law-mars-rise-draft-before.jpg",
+   "source": "out/work/handover/law-mars-rise-draft-before.png",
+   "kind": "sheet",
+   "label": "mars rise, every frame 2675 to 2686 (before T, frame 2687), draft tier",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "first": 2675,
+   "last": 2686,
+   "tier": "draft"
   }
  ]
 }
