@@ -10,7 +10,8 @@ import { carriedCamera, curves, project, type Kind, type Sample, type Window } f
 // over the first REACH frames of the travel. End: the picture speed of the body that arrives (its centre and its edge) and of the sky (the turn),
 // over the last REACH frames and the first frames of the hold. A step is the change of a speed from one film frame to the next, px a frame.
 // The seam columns cover the judge's own span: up to 2 film frames past the first frame of the travel.
-//   npx tsx assets-src/travel/seams.ts [--reach 15] [--rate 2] [--rows 1]
+//   npx tsx assets-src/travel/seams.ts [--reach 15] [--rate 2] [--rows 1] [--accel 12]
+// --accel N: for rows + 1 to + N at the highest rate, the acceleration (the judge's step) and its change, px and as a share of the mean of the move.
 
 const arg = (name: string, d: number): number => {
   const i = process.argv.indexOf('--' + name)
@@ -19,6 +20,7 @@ const arg = (name: string, d: number): number => {
 const REACH = arg('reach', 15)
 const RATE = arg('rate', 2)
 const ROWS = arg('rows', 0)
+const ACCEL = arg('accel', 0)
 const master = config.formats[config.formatKeys.master]!
 const film = new FilmDirector(plans)
 const RAD = Math.PI / 180
@@ -93,6 +95,30 @@ config.stopIds.forEach((stop, i) => {
     const startTurn = worst(turn, out.firstFrame + 1 / rate, out.firstFrame + REACH)
     lines.push([out.id, 'start', 'rate ' + rate, hasSeam ? 'after rise' : 'after hold', 'speed step, frames +1 and +2: ' + fmt(seam), 'first ' + REACH + ': ' + fmt(start), 'turn step deg, +1 and +2: ' + fmt(seamTurn), 'first ' + REACH + ': ' + fmt(startTurn)].join(' | '))
     if (ROWS && rate === 1) lines.push('  speed px a frame from ' + (out.firstFrame - 2) + ': ' + Array.from({ length: REACH + 2 }, (_, j) => at(speed, out.firstFrame - 2 + j)).map((v) => (v === null ? '-' : v.toFixed(2))).join(' '))
+    if (ACCEL && rate === RATE) {
+      const own = { first: rise.firstFrame * rate + 1, end: rise.endFrame * rate }
+      let sum = 0
+      let count = 0
+      for (let k = own.first; k < own.end; k++) {
+        const v = at(speed, k)
+        if (v !== null) { sum += v; count++ }
+      }
+      const acc = (k: number): number => (at(speed, k) ?? 0) - (at(speed, k - rate) ?? 0)
+      const big = { acc: 0, accAt: 0, change: 0, changeAt: 0 }
+      for (let k = out.firstFrame * rate + 1; k <= (out.firstFrame + REACH) * rate; k++) {
+        if (Math.abs(acc(k)) > big.acc) { big.acc = Math.abs(acc(k)); big.accAt = k / rate }
+        if (Math.abs(acc(k) - acc(k - rate)) > big.change) { big.change = Math.abs(acc(k) - acc(k - rate)); big.changeAt = k / rate }
+      }
+      lines.push('  ' + out.id + ' rate ' + rate + ' largest acceleration in the first ' + REACH + ': ' + big.acc.toFixed(2) + ' at ' + big.accAt + ', largest change of acceleration: ' + big.change.toFixed(2) + ' at ' + big.changeAt)
+      for (let row = 1; row <= ACCEL; row++) {
+        const cells: string[] = []
+        for (let h = 0; h < rate; h++) {
+          const k = (out.firstFrame + row) * rate + h
+          cells.push('at ' + k / rate + ' speed ' + (at(speed, k) ?? 0).toFixed(2) + ' acc ' + acc(k).toFixed(3) + ' change ' + (acc(k) - acc(k - rate)).toFixed(3))
+        }
+        lines.push('    row + ' + row + ': ' + cells.join(' | '))
+      }
+    }
     if (!travel || !next) continue
     const e = arriving(next, travel.endFrame - REACH - 2, travel.endFrame + 4, rate)
     const span: [number, number] = [travel.endFrame - REACH, travel.endFrame + 2]
