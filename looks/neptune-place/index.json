@@ -1,9 +1,17 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T02:30:43.169Z",
+ "pushed": "2026-11-24T02:43:50.024Z",
  "head": "85312d1ba89d4fbb4811dc70dc8f5b02871b7c43",
- "note": "the rise on 85312d1b, every frame 4950 to 5024 in five sheets: the layout holds; 4978 to 4990 the scene's thin streamers stand over the map's broad streaks (two forms at once, what point 1 of mail 453 cures)",
+ "note": "4860 after mail 473, draft N13 beside the approved image (work in progress, not committed)",
  "looks": [
+  {
+   "time": "2026-11-24T02:43:49.348Z",
+   "file": "20261124024349348-note-d-N13.jpg",
+   "source": "../../../../tmp/d-N13.jpg",
+   "kind": "note",
+   "label": "4860 draft N13 (left, not committed) beside the approved image: veil at the limb, one ridge of heaps, storm with a soft ragged rim and dark blue floor, deck streaks reduced and none in the near field, second streamer broken. Still wrong: the ridge is a white rope without grey flanks or translucent fringe, far field without bands",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T02:24:34.112Z",
    "file": "20261124022434112-note-s-r2-5014.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/v-r1.jpg",
    "kind": "note",
    "label": "Rise on commit 85312d1b, a sample of twelve frames 4950 to 5006, preview draft: one layout from the surface view up to the planet; every frame follows with the next commit",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T01:41:33.419Z",
-   "file": "20261124014133419-note-d-L4.jpg",
-   "source": "../../../../tmp/d-L4.jpg",
-   "kind": "note",
-   "label": "4860 preview draft beside the approved image, commit 85312d1b: far field is now the dark oval up to its pale rim with the band of cirrus at the horizon; the bow comes in at the upper left; near and middle field as before",
    "stop": "neptune"
   }
  ]
