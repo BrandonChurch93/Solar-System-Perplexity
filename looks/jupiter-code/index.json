@@ -1,9 +1,33 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T14:22:31.975Z",
- "head": "1e27d9c26eeaa9c6823ba87bae3373c57bd20311",
- "note": "14:28 UTC. Ruling 3, diagnosis only, nothing built: on the named bytes the pair 3251 + 1/2 to 3259 + 1/2 reads 0.53; the three red places are the right far field (dusk to day), the left far field and the bottom left corner, each a canvas that gives way to a plate with another picture of the same ground.",
+ "pushed": "2026-11-24T14:46:34.212Z",
+ "head": "5ee7c154fc9382d890f41a831388b9ea6b99ba74",
+ "note": "14:46 UTC. Ruling 3, reading before building. The plates alone still change in place under the rising eye, and the far field differs between canvas and plates in light as well as in pattern. First far field candidate is a fault and is shown as one.",
  "looks": [
+  {
+   "time": "2026-11-24T14:46:33.603Z",
+   "file": "20261124144633603-note-cand-a-right.jpg",
+   "source": "../work/ff/cand-a-right.jpg",
+   "kind": "note",
+   "label": "FAULT, first candidate of the far field made from the view (left the mid plate today, right the candidate, top down, 20 units wide): a fan of radial streaks with colour fringes. Not kept",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T14:46:32.978Z",
+   "file": "20261124144632978-note-gpat-v1.jpg",
+   "source": "../work/ff/gpat-v1.jpg",
+   "kind": "note",
+   "label": "Plates alone, pairs 3247, 3251, 3255 against 8 frames later carried by the ground: 0.58, 0.51, 0.49 by my strict reading (the named bytes 0.73, 0.72, 0.79). Red outlines are over 0.45",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T14:46:31.609Z",
+   "file": "20261124144631609-note-v1-vs-base.jpg",
+   "source": "../work/ff/v1-vs-base.jpg",
+   "kind": "note",
+   "label": "Rise 3247 and 3255: left the named bytes, right the plates alone (no canvas drawn). FAULT read from it: the far field is dusk in the canvas and day in the plates, so the exchange is a change of light and of pattern",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-24T14:22:30.985Z",
    "file": "20261124142230985-note-g-bl.jpg",
@@ -206,30 +230,6 @@
    "source": "../work/named3/sheets/dive-3043-3054.jpg",
    "kind": "note",
    "label": "a90e29f dive, whole frames 3043 to 3054 at draft",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T12:54:41.425Z",
-   "file": "20261124125441425-note-dive-3027-3033.jpg",
-   "source": "../work/named3/sheets/dive-3027-3033.jpg",
-   "kind": "note",
-   "label": "a90e29f dive, whole frames 3027 to 3033 and 3043 at draft",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T12:54:40.085Z",
-   "file": "20261124125440085-note-dive-3015-3026.jpg",
-   "source": "../work/named3/sheets/dive-3015-3026.jpg",
-   "kind": "note",
-   "label": "a90e29f dive, whole frames 3015 to 3026 at draft (the report's own frames)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T12:39:14.179Z",
-   "file": "20261124123914179-note-body-3292.jpg",
-   "source": "../work/named3/body-3292.jpg",
-   "kind": "note",
-   "label": "rise 3291, 3292 the same: globe alone, body mean falls 6.86, in place +0.41; the new ground is the night side and the rim",
    "stop": "jupiter"
   }
  ]
