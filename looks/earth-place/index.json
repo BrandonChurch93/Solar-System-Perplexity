@@ -1,9 +1,25 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T17:10:12.214Z",
- "head": "f7ab197acd05bea7317f6e576894f818484ae09a",
- "note": "try 8 measured: pattern worse 1876 to 1881, unchanged after; own fault found (a uniform dropped) and mended",
+ "pushed": "2026-11-24T17:19:44.580Z",
+ "head": "7f7a7fe24d7412be6d3fd691bb77f74bbde934c5",
+ "note": "Y: try 8 measured not a cure, Y2 (deck mask as cover) fails the hold on sight, dropped; fallback state stays pushed",
  "looks": [
+  {
+   "time": "2026-11-24T17:19:43.767Z",
+   "file": "20261124171943767-note-diag-far.jpg",
+   "source": "../../../../tmp/gl/s11/diag-far.jpg",
+   "kind": "note",
+   "label": "Far band 1886 to 1894, draft: as it is, lay back detail off, veil off. The island with its puffs goes and the lay back's deck comes, by angle. This is the exchange the pattern measure reads (to 1.12 at 1890).",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T17:19:43.152Z",
+   "file": "20261124171943152-note-y2-look.jpg",
+   "source": "../../../../tmp/gl/s11/y2-look.jpg",
+   "kind": "note",
+   "label": "Y2 trial, Python only, no render: plate, plate plus a bank whose cover is the close picture's own deck mask, the lay back. Read: a dense fan with radial streaks that ends at once on its west side and hides the west half of Cuba. Fails condition (b). Dropped.",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T17:10:11.178Z",
    "file": "20261124171011178-note-pmap-bank.jpg",
@@ -82,22 +98,6 @@
    "source": "../../../../tmp/gl/s11/f8/ctx2.png",
    "kind": "note",
    "label": "bank try 8, 1755 final: kept above, new below, x2 on the Gulf; 12326 px differ, 4883 of them outside the accepted box by 1 level (bloom)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T15:59:08.934Z",
-   "file": "20261124155908934-note-pairs-1.jpg",
-   "source": "../../../../tmp/gl/s11/d7/pairs-1.jpg",
-   "kind": "note",
-   "label": "bank try 7 draft: 1882 1886 1890 before left, bank right; white streaks left at far left are a fault",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T15:59:08.327Z",
-   "file": "20261124155908327-note-pairs-0.jpg",
-   "source": "../../../../tmp/gl/s11/d7/pairs-0.jpg",
-   "kind": "note",
-   "label": "bank try 7 draft: 1857 1870 1878 before left, bank right",
    "stop": "earth"
   }
  ]
