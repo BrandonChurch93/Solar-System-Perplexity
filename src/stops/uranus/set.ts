@@ -1,7 +1,6 @@
 import { handoverOf } from '../../director/handover'
 import * as THREE from 'three'
 import { FarPoint } from '../../bodies/farpoint'
-import { config } from '../../config'
 import type { SetContext, SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { ramp, smooth } from '../../director/rig'
 import { Deck, Glow } from './deck'
@@ -277,7 +276,7 @@ export const createSet: SetFactory = async (ctx) => {
       lowArcs.against(ball, 1, look.place.onSky)
       lowArcs.mesh.visible = !moving && arched > 0 && look.show.rings
       const ringed = low ? (rising ? handed : 1 - reach(look.place.rings.dive, altitude)) : 1
-      const settling = (!mine && kind === 'travel') || (mine && kind === 'hold') ? smooth(ramp(look.arrival.rings[0], look.arrival.rings[1], (state.time - plan.seg.hold.start) * config.fps)) : 1
+      const settling = (!mine && kind === 'travel') || (mine && kind === 'hold') ? smooth(ramp(Math.log(look.arrival.rings[0]), Math.log(look.arrival.rings[1]), Math.log(distance))) : 1
       rings.update(sun, gain * state.weight * settling * ringed)
       const lifted = mine && left ? look.departing.rings[2] + (1 - look.departing.rings[2]) * smooth(ramp(look.departing.rings[0], look.departing.rings[1], altitude)) : 1
       farRings.update(sun, gain * state.weight * lifted * ringed)
