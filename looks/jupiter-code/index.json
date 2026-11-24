@@ -1,9 +1,47 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T06:29:30.586Z",
- "head": "68780bfd06d6ba1d796c819be3c19df0db80f94f",
- "note": "06:30 UTC: trial A of the bend (through the right) on the rise's first frames; panels of the rise's pictures part on 68780bf (red: level step 1.96 at 3282 + 1/2, pop 1.23 at 3313, pattern 1.07)",
+ "pushed": "2026-11-24T06:48:02.649Z",
+ "head": "af4337a066f1a00d0f035a280bea822e06d90e05",
+ "note": "06:50 UTC: head af4337a (cure A, merged on main b0b8788): build, tests 427 of 427, path and seam green; the dive's pictures part is rendering, then the rise's, parity and the finals. Not cured: the set's border at 3252 to 3262.",
  "looks": [
+  {
+   "time": "2026-11-24T06:48:01.522Z",
+   "file": "20261124064801522-note-A-big2.jpg",
+   "source": "../work/seam/A-big2.jpg",
+   "kind": "note",
+   "label": "draft, cure A, large: 3252 to 3262, the set's border (the place as an island with a cumulus rim on the soft globe, loose puffs at the bottom, a soft dark edge at the right). Not cured, first line of what is wrong.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T06:48:00.530Z",
+   "file": "20261124064800530-note-A-big1.jpg",
+   "source": "../work/seam/A-big1.jpg",
+   "kind": "note",
+   "label": "draft, cure A, large: frames near the seam 3240 (no jump at T)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T06:47:59.859Z",
+   "file": "20261124064759859-note-A-surf.jpg",
+   "source": "../work/seam/A-surf.jpg",
+   "kind": "note",
+   "label": "draft, cure A (0d0be40): the surface view after the judged frame, every ninth frame 3159 to 3237; the push bends through the right into the pull back, the storm stays upper left; mean level falls from 58 to 47, no step",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T06:45:47.329Z",
+   "file": "20261124064547329-frame-f03060.jpg",
+   "source": "out/work/jupiter/frames/D0/f03060.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3060, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3060,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "5a18fcdc5a929484"
+  },
   {
    "time": "2026-11-24T06:29:29.474Z",
    "file": "20261124062929474-note-jupiter-rise-pops.jpg",
@@ -34,50 +72,6 @@
    "source": "../work/seam/A-rise-a.jpg",
    "kind": "note",
    "label": "draft, trial A (bend through the right): rise 3239 to 3250, every frame",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T06:28:53.160Z",
-   "file": "20261124062853160-frame-f03159.jpg",
-   "source": "out/work/jupiter/frames/A2/f03159.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3159, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3159,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "3da6c690cf58b2c3"
-  },
-  {
-   "time": "2026-11-24T06:28:03.457Z",
-   "file": "20261124062803457-frame-f03259.jpg",
-   "source": "out/work/jupiter/frames/A2/f03259.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3259, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3259,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "3da6c690cf58b2c3"
-  },
-  {
-   "time": "2026-11-24T06:10:28.051Z",
-   "file": "20261124061028051-note-bendview.jpg",
-   "source": "../work/seam/bendview.jpg",
-   "kind": "note",
-   "label": "Draft, the surface view after the judged frame, head 68780bf: 3150, 3180, 3210, 3228, 3237, 3239 (the push bends into a track to the left and on into the pull back)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T06:04:25.304Z",
-   "file": "20261124060425304-note-rise-s1.jpg",
-   "source": "../work/seam/rise-s1.jpg",
-   "kind": "note",
-   "label": "Draft, every film frame 3241 to 3248 of the rise, head 68780bf (pale wedge in the bottom left corner from 3244)",
    "stop": "jupiter"
   }
  ]
