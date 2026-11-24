@@ -63,9 +63,19 @@ uniform vec4 uEvenTint;
 uniform vec2 uGlowReach;
 uniform vec2 uSite;
 uniform vec4 uBox, uLand, uKick, uFlash;
-uniform float uGlowBeat, uLandOn, uKickOn;
+uniform float uGlowBeat, uGlowPlain, uLandOn, uKickOn;
 uniform vec2 uFlashOn;
 uniform vec3 uLandVeil;
+uniform float uGroundMost;
+// light the opening throws on the ground lifts it toward uGroundMost and no further; where the ground is
+// brighter than that already it adds nothing, so the pool under a foot cannot grow into a white patch
+vec3 thrown(vec3 base, vec3 lit) {
+  float b = dot(base, vec3(0.3, 0.5, 0.2));
+  float d = dot(lit, vec3(0.3, 0.5, 0.2)) - b;
+  if (uGroundMost <= 0.0 || d <= 0.0) return lit;
+  float room = max(uGroundMost - b, 0.0);
+  return mix(base, lit, room / (d + room));
+}
 uniform vec2 uSize;
 uniform float uGrad;
 uniform float uGain;
@@ -280,12 +290,14 @@ void main() {
   }
   for (int k = 0; k < ((here.z < -0.5 && gb.x > 0.0 && gb.x < 1.0 && gb.y > 0.0 && gb.y < 1.0) ? 1 : 0); k++) {
     float landed = uLandOn * exp(-dot(here - uLand.xyz, here - uLand.xyz) * uLand.w) + uKickOn * exp(-dot(here - uKick.xyz, here - uKick.xyz) * uKick.w);
-    col *= 1.0 + textureLod(uGlow, gb, 0.0).rgb * (uGlowBeat * (1.0 - lift * smoothstep(uGlowReach.x, uGlowReach.y, ring)) * (1.0 + landed));
-    col += uLandVeil * landed;
+    vec3 glowMap = textureLod(uGlow, gb, 0.0).rgb;
+    float glowRing = 1.0 - lift * smoothstep(uGlowReach.x, uGlowReach.y, ring);
+    col = thrown(col * (1.0 + glowMap * (uGlowPlain * glowRing)), col * (1.0 + glowMap * (uGlowBeat * glowRing * (1.0 + landed))));
+    col = thrown(col, col + uLandVeil * landed);
   }
   for (int k = 0; k < (uFlashOn.x + uFlashOn.y > 0.0 ? 1 : 0); k++) {
     float pool = exp(-dot(here - uFlash.xyz, here - uFlash.xyz) * uFlash.w);
-    col = col * (1.0 + uFlashOn.x * pool) + uLandVeil * (uFlashOn.y * pool);
+    col = thrown(col, col * (1.0 + uFlashOn.x * pool) + uLandVeil * (uFlashOn.y * pool));
   }
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
@@ -325,7 +337,7 @@ export class Ground {
       vertexShader: VERT,
       fragmentShader: frag(seethe !== undefined),
       uniforms: {
-        uGrade: { value: grade }, uPlate: { value: plate }, uApron: { value: apron }, uApronSize: { value: new THREE.Vector2(second.width, second.height) }, uApronOn: { value: look.apron.amount }, uApronOut: { value: 0 }, uApronEdge: { value: 1 }, uApronCell: { value: new THREE.Vector2(look.apron.cell, look.apron.calm) }, uGlow: { value: glow }, uField: { value: field }, uFieldSize: { value: new THREE.Vector4(fieldData.size, (field.image as unknown as { width: number }).width, look.field.grid, look.field.sharp) }, uFieldFine: { value: new THREE.Vector4(0, look.field.fine.below[0], look.field.fine.below[1], look.field.fine.scale) }, uFieldFineMore: { value: new THREE.Vector2(look.field.fine.gain, look.field.fine.soft) }, uOwn: { value: new THREE.Vector4(look.own.ring[0], look.own.ring[1], look.own.side, look.own.near) }, uUp: { value: new THREE.Vector4(look.own.up[0], look.own.up[1], look.own.rough[0], look.own.rough[1]) }, uLift: { value: new THREE.Vector2(...look.lift) }, uEven: { value: new THREE.Vector4(look.even.from[0], look.even.from[1], look.even.far[0], look.even.far[1]) }, uEvenTint: { value: new THREE.Vector4(...look.even.tint, look.even.dim) }, uGlowReach: { value: new THREE.Vector2(...look.glowReach) }, uSite: { value: new THREE.Vector2(...look.site) }, uBox: { value: new THREE.Vector4(...stage.loopsBox) }, uGlowBeat: { value: 1 }, uLand: { value: new THREE.Vector4(0, 0, 1, 1) }, uLandOn: { value: 0 }, uKick: { value: new THREE.Vector4(0, 0, 1, 1) }, uKickOn: { value: 0 }, uFlash: { value: new THREE.Vector4(0, 0, 1, 1) }, uFlashOn: { value: new THREE.Vector2() }, uLandVeil: { value: new THREE.Vector3() }, uSize: { value: new THREE.Vector2(img.width, img.height) },
+        uGrade: { value: grade }, uPlate: { value: plate }, uApron: { value: apron }, uApronSize: { value: new THREE.Vector2(second.width, second.height) }, uApronOn: { value: look.apron.amount }, uApronOut: { value: 0 }, uApronEdge: { value: 1 }, uApronCell: { value: new THREE.Vector2(look.apron.cell, look.apron.calm) }, uGlow: { value: glow }, uField: { value: field }, uFieldSize: { value: new THREE.Vector4(fieldData.size, (field.image as unknown as { width: number }).width, look.field.grid, look.field.sharp) }, uFieldFine: { value: new THREE.Vector4(0, look.field.fine.below[0], look.field.fine.below[1], look.field.fine.scale) }, uFieldFineMore: { value: new THREE.Vector2(look.field.fine.gain, look.field.fine.soft) }, uOwn: { value: new THREE.Vector4(look.own.ring[0], look.own.ring[1], look.own.side, look.own.near) }, uUp: { value: new THREE.Vector4(look.own.up[0], look.own.up[1], look.own.rough[0], look.own.rough[1]) }, uLift: { value: new THREE.Vector2(...look.lift) }, uEven: { value: new THREE.Vector4(look.even.from[0], look.even.from[1], look.even.far[0], look.even.far[1]) }, uEvenTint: { value: new THREE.Vector4(...look.even.tint, look.even.dim) }, uGlowReach: { value: new THREE.Vector2(...look.glowReach) }, uSite: { value: new THREE.Vector2(...look.site) }, uBox: { value: new THREE.Vector4(...stage.loopsBox) }, uGlowBeat: { value: 1 }, uGlowPlain: { value: 1 }, uLand: { value: new THREE.Vector4(0, 0, 1, 1) }, uLandOn: { value: 0 }, uKick: { value: new THREE.Vector4(0, 0, 1, 1) }, uKickOn: { value: 0 }, uFlash: { value: new THREE.Vector4(0, 0, 1, 1) }, uFlashOn: { value: new THREE.Vector2() }, uLandVeil: { value: new THREE.Vector3() }, uGroundMost: { value: 0 }, uSize: { value: new THREE.Vector2(img.width, img.height) },
         uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTime: { value: 0 },
         uCellSize: { value: look.cell },
         ...lifeUniforms(life),
@@ -405,8 +417,9 @@ export class Ground {
     this.mesh.visible = !mixed || weight > 0 || site > 0
   }
 
-  land(reach: number, veil: [number, number, number]): void {
+  land(reach: number, veil: [number, number, number], most = 0): void {
     ;(this.material.uniforms.uLandVeil!.value as THREE.Vector3).fromArray(veil)
+    this.material.uniforms.uGroundMost!.value = most
     const feet = stage.feet as [number, number][]
     const at = (foot: [number, number], into: THREE.Vector4): void => {
       const p = stage.onGround(foot[0], foot[1])
@@ -425,7 +438,7 @@ export class Ground {
     ;(this.material.uniforms.uFlash!.value as THREE.Vector4).set(p.x, p.y, p.z, 1 / (reach * reach))
   }
 
-  update(camera: THREE.Vector3, time: number, gain: number, vignette: number, aspect: number, lod: number, lit: number, open = 0, since = 0, beat = 0, land = 0, kick = 0, flash = 0, veil = 0): void {
+  update(camera: THREE.Vector3, time: number, gain: number, vignette: number, aspect: number, lod: number, lit: number, open = 0, since = 0, beat = 0, land = 0, kick = 0, flash = 0, veil = 0, opened = 0): void {
     const u = this.material.uniforms
     u.uLandOn!.value = land
     u.uKickOn!.value = kick
@@ -440,7 +453,10 @@ export class Ground {
     u.uTime!.value = time
     u.uApronOut!.value = THREE.MathUtils.smoothstep(time, this.out[0], this.out[1])
     u.uApronEdge!.value = THREE.MathUtils.smoothstep(time, this.edge[0], this.edge[1])
-    u.uGlowBeat!.value = stage.litMax * (1 + lit) * (1 + this.pulse[0] * (0.6 * Math.sin(time * this.pulse[1]) + 0.4 * Math.sin(time * this.pulse[1] * 1.83))) * (1 + beat)
+    const glow = stage.litMax * (1 + lit) * (1 + this.pulse[0] * (0.6 * Math.sin(time * this.pulse[1]) + 0.4 * Math.sin(time * this.pulse[1] * 1.83)))
+    u.uGlowBeat!.value = glow * (1 + beat)
+    // the same without the share of the opening: what the ground has under the feet when nothing is thrown on it
+    u.uGlowPlain!.value = glow * (1 + beat - opened)
     u.uGain!.value = gain
     u.uVignette!.value = vignette
     u.uAspect!.value = aspect

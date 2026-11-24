@@ -44,6 +44,9 @@ export function lifeUniforms(maps: LifeMaps): Record<string, THREE.IUniform> {
   }
 }
 
+/** The moment named in life.json (calm), in the time the life runs on. */
+export const lifeCalmAt: number = data.calm.at
+
 /** The share of the life's own light at this time (0 at the moment named in life.json, 1 away from it); it is set on the given uniforms and returned. */
 export function lifeCalm(uniforms: Record<string, THREE.IUniform>, time: number): number {
   const x = Math.min(Math.abs(time - data.calm.at) / data.calm.ease, 1)
