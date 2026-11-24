@@ -1,9 +1,33 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T03:41:49.195Z",
+ "pushed": "2026-11-24T04:08:27.126Z",
  "head": "e345480ca8263e43c531fd91f07967f98c27df4b",
- "note": "parity cause found and cured in code (levels came in by texels a pixel of the format, now a 1080th of the frame height); 12 master frames keep their bytes; band mend building",
+ "note": "parity green on my tree (factor rows over 1080), pale quad mended in band.py, lobe out; frames being read",
  "looks": [
+  {
+   "time": "2026-11-24T04:08:26.365Z",
+   "file": "20261124040826365-note-mercury-parity.jpg",
+   "source": "out/work/mercury/place/par/mercury-parity.png",
+   "kind": "note",
+   "label": "parity panel on my tree with the frame height factor: green, what is left is sky",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T04:08:25.561Z",
+   "file": "20261124040825561-note-cmp-986.jpg",
+   "source": "out/work/mercury/place/quad/cmp-986.jpg",
+   "kind": "note",
+   "label": "986 left part, c7248b33 beside the mended rise plates",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T04:08:24.515Z",
+   "file": "20261124040824515-note-cmp-989.jpg",
+   "source": "out/work/mercury/place/quad/cmp-989.jpg",
+   "kind": "note",
+   "label": "989 left part, c7248b33 beside the mended rise plates: the pale quad is gone",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T03:41:47.342Z",
    "file": "20261124034147342-note-whole-986-996.jpg",
@@ -46,33 +70,6 @@
    "segment": "mercury.rise",
    "frame": 977,
    "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T02:33:59.439Z",
-   "file": "20261124023359439-compare-mercury-dive-sides.jpg",
-   "source": "out/work/handover/mercury-dive-sides.png",
-   "kind": "compare",
-   "label": "mercury dive, both sides at T (frame 760) and their difference times 8",
-   "stop": "mercury",
-   "segment": "mercury.dive",
-   "frame": 760,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T02:26:16.863Z",
-   "file": "20261124022616863-note-s7-760-crop.jpg",
-   "source": "out/work/mercury/place/tmp/s7-760-crop.png",
-   "kind": "note",
-   "label": "760 lower left corner, twice the size: before, after the shell runs the globe's spin (same craters, moved 0.68 px), difference times 4",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T02:07:25.972Z",
-   "file": "20261124020725972-note-sides760b.jpg",
-   "source": "out/work/mercury/place/tmp/sides760b.png",
-   "kind": "note",
-   "label": "mercury dive, both sides at T (760), lower left corner, and their difference times 8: globe is 0.5 texel of level 4 off the shell; cause found, the renderer's cos in the globe's spin is 1e-4 off",
-   "stop": "mercury"
   }
  ]
 }
