@@ -1,9 +1,20 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-24T05:39:02.719Z",
+ "pushed": "2026-11-24T05:39:11.829Z",
  "head": "145020cd09eaac15c98ec90552b562cf9df683ff",
  "note": "head 145020cd on main 3060b725: one place, the bend after 4290, terrain sky without grain; 4290 final beside the kept still",
  "looks": [
+  {
+   "time": "2026-11-24T05:39:06.294Z",
+   "file": "20261124053906294-compare-uranus-dive-sides.jpg",
+   "source": "out/work/handover/uranus-dive-sides.png",
+   "kind": "compare",
+   "label": "uranus dive, both sides at T (frame 4186) and their difference times 8",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4186,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-24T05:38:55.995Z",
    "file": "20261124053855995-note-skya-crop.jpg",
@@ -64,14 +75,6 @@
    "source": "../../../../tmp/sd-4182.png",
    "kind": "note",
    "label": "one place c320c4af on main 85f27df2, draft, frames from 4182 (12 a sheet)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T05:21:30.799Z",
-   "file": "20261124052130799-note-sd-4170.jpg",
-   "source": "../../../../tmp/sd-4170.png",
-   "kind": "note",
-   "label": "one place c320c4af on main 85f27df2, draft, frames from 4170 (12 a sheet)",
    "stop": "uranus"
   }
  ]
