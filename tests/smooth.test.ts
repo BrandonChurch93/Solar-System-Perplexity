@@ -12,7 +12,7 @@ import { plans } from '../src/director/plans'
 import { SEAM_OWN, SEAM_REACH, curves, eyeCurves, landingCurves, planeHit, ringPlane, sampleLanding, sampleLeave, sampleSeam, sampleWindow, seen, type SeamWindow } from '../tools/smooth/camera'
 import { missing, partOwn, popContext, popSpan, sliceName, sliceNeed } from '../tools/smooth/slice'
 import { buildFault, differ, gather, gatherFaults, pieceStem, roleOf, runFacts, type Given } from '../tools/smooth/whole'
-import { changeNote, judgeCurve, judgeLanding, judgeLeave, judgeSeam, longestGap, parityFrames, peakRows, position, shown, table } from '../tools/smooth/path'
+import { changeNote, judgeCurve, judgeLanding, judgeLeave, judgeSeam, longestGap, minLeaveOf, parityFrames, peakRows, position, shown, table } from '../tools/smooth/path'
 
 const limits = { maxStep: 0.08, maxRebound: 0.03, seamFrames: 2 }
 const bell = (n: number, edge = 0): number[] => Array.from({ length: n }, (_, i) => edge + 1 - Math.cos((2 * Math.PI * (i + 0.5)) / n))
@@ -721,6 +721,59 @@ describe('the picture between a rise and the travel that leaves the stop', () =>
     const r = judgeLeave([null, null, null], 0, 2, 0.3)
     expect(r.over).toBeNull()
     expect(r.fault).toBeNull()
+  })
+
+  it('takes the limit from smooth.path.minLeave of the config, 0.07 by the ruling, and refuses a config without it', () => {
+    expect(config.raw.smooth.path.minLeave).toBe(0.07)
+    expect(minLeaveOf(config.raw.smooth.path)).toBe(0.07)
+    expect(minLeaveOf({ minLeave: 0.5 })).toBe(0.5)
+    for (const bad of [undefined, null, 0, 1, -0.07, 7, NaN, Infinity, '0.07', [0.07]]) expect(() => minLeaveOf({ minLeave: bad })).toThrow('smooth.path.minLeave in config/showcase.json needs a number over 0 and under 1')
+    expect(() => minLeaveOf({})).toThrow('it is undefined')
+    expect(() => minLeaveOf({ minLeave: '0.07' })).toThrow('it is "0.07"')
+  })
+
+  it('rules the seven seams as measured on the plans of the ruling: five come to rest, Earth and Saturn do not', () => {
+    const min = minLeaveOf(config.raw.smooth.path)
+    const reach = config.raw.smooth.reachFrames
+    const measured: [string, number, number, number, number, number, number, boolean][] = [
+      ['mercury', 1035, 0.30, 1037, 24.21, 97.87, 0.012, true],
+      ['venus', 1605, 0.25, 1605.5, 14.59, 92.90, 0.017, true],
+      ['earth', 2175, 1.80, 2176, 18.70, 102.85, 0.096, false],
+      ['mars', 2745, 0.36, 2745.5, 42.89, 65.78, 0.008, true],
+      ['jupiter', 3315, 0.36, 3315.5, 14.68, 43.78, 0.024, true],
+      ['saturn', 3885, 3.36, 3889, 8.96, 34.77, 0.375, false],
+      ['uranus', 4455, 0.16, 4457, 31.64, 121.49, 0.005, true],
+    ]
+    const red: string[] = []
+    for (const [stop, seam, low, at, first, last, over, rests] of measured) {
+      const k0 = (seam - reach) * 2 - 1
+      const n = reach * 4
+      const dip = at * 2 - k0
+      const speed = [null, ...Array.from({ length: n }, (_, j) => {
+        const i = j + 1
+        return i <= dip ? first + (low - first) * (i - 1) / (dip - 1) : low + (last - low) * (i - dip) / (n - dip)
+      })]
+      const r = judgeLeave(speed, k0, 2, min)
+      expect(r.first).toEqual({ value: first, k: (seam - reach) * 2 })
+      expect(r.last!.k).toBe((seam + reach) * 2 - 1)
+      expect(r.lowest!.k).toBe(at * 2)
+      expect(r.over).toBeCloseTo(low / first, 12)
+      expect(Math.abs(r.over! - over)).toBeLessThan(0.001)
+      expect(r.fault !== null).toBe(rests)
+      if (r.fault) {
+        red.push(stop + ' ' + r.fault.frame)
+        expect(r.fault.value).toBe(r.over)
+        expect(r.fault.limit).toBe(0.07)
+        expect(r.fault.rule).toBe('rest')
+        expect(r.fault.text).toContain('at frame ' + position(at * 2, 2) + ', ')
+        expect(r.fault.text).toContain('limit 0.07')
+      }
+    }
+    expect(red).toEqual(['mercury 1037', 'venus 1605', 'mars 2745', 'jupiter 3315', 'uranus 4457'])
+    const mercury = judgeLeave([null, 24.21, 0.3, 97.87], 2070, 2, min).fault!
+    expect(mercury.text).toBe('rest: the picture comes to rest between the rise and the travel: the fastest point of the body\'s edge moves 0.30 px a film frame at frame 1036, ' + shown(0.3 / 24.21, 3, min) + ' of the slower end of the window, limit 0.07')
+    expect(judgeLeave([null, 100, 7, 100], 0, 2, min).fault).toBeNull()
+    expect(judgeLeave([null, 100, 6.9, 100], 0, 2, min).fault).not.toBeNull()
   })
 
   it('is sampled at the seven seams from a rise into a travel: not at the first stop, whose travel follows its hold, and not at the last', () => {
