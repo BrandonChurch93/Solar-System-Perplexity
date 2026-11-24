@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T17:50:05.796Z",
+ "pushed": "2026-11-24T18:13:43.385Z",
  "head": "bc97f0c337218f40b3a0f8b3f0c54a426627d036",
- "note": "T8: ring tone at 3720 fitted by material (dense far gain, thin zones by view cosine); item 18 dusk of the globe by lens height in work",
+ "note": "item 18 (dusk of the globe by the height of the lens) settled at 3720, now item 19: the fine dark grain of the near rings",
  "looks": [
+  {
+   "time": "2026-11-24T18:13:42.783Z",
+   "file": "20261124181342783-note-z_t9s.jpg",
+   "source": "../../../../tmp/v/t17/z_t9s.png",
+   "kind": "note",
+   "label": "instrument only, not the film: the same crop with the shutter at 2 degrees, to tell the shutter's part from the field's part of item 19"
+  },
+  {
+   "time": "2026-11-24T18:13:42.212Z",
+   "file": "20261124181342212-note-z_t9c.jpg",
+   "source": "../../../../tmp/v/t17/z_t9c.png",
+   "kind": "note",
+   "label": "3720 near rings at three times, approved left, trial T9c right: item 19, the film's ringlets are drawn out by the shutter and lack the fine dark grooves and the grain of the sheet"
+  },
+  {
+   "time": "2026-11-24T18:13:41.615Z",
+   "file": "20261124181341615-note-w9c_ur.jpg",
+   "source": "../../../../tmp/v/t17/w9c_ur.png",
+   "kind": "note",
+   "label": "3720 globe, approved left, trial T9c right: item 18, the night side is dark now and the terminator narrower; the limb halo is still orange and wide (item 20)"
+  },
   {
    "time": "2026-11-24T17:50:05.153Z",
    "file": "20261124175005153-note-w9g_ur.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/v/t17/v8_lm.png",
    "kind": "note",
    "label": "3720 lower middle at full size: approved close (left), trial T7e final (right); the B ring of the trial is lighter (0.747 against 0.704)"
-  },
-  {
-   "time": "2026-11-24T17:28:07.197Z",
-   "file": "20261124172807197-note-v8_ll.jpg",
-   "source": "../../../../tmp/v/t17/v8_ll.png",
-   "kind": "note",
-   "label": "3720 lower left at full size: approved close (left), trial T7e final on main ed003c7 (right)"
-  },
-  {
-   "time": "2026-11-24T17:01:45.334Z",
-   "file": "20261124170145334-note-r50_dive_pops.jpg",
-   "source": "../../../../tmp/v/t17/r50_dive_pops.png",
-   "kind": "note",
-   "label": "dive of trial T7e (draft, rate 2): the four largest pops, 1.02 to 1.04 (limit 1.2)"
-  },
-  {
-   "time": "2026-11-24T17:01:44.263Z",
-   "file": "20261124170144263-note-r50_rise_changes.jpg",
-   "source": "../../../../tmp/v/t17/r50_rise_changes.png",
-   "kind": "note",
-   "label": "rise of trial T7e (draft, rate 2): the largest changes in place and of the pattern; pattern 0.25 at 3820 + 1/2 (named commit 0.24, limit 0.45)"
   }
  ]
 }
