@@ -16,14 +16,14 @@ describe('the place of the samples inside a pixel', () => {
       expect(Math.abs(mean(s.map((x) => x.jitterY)))).toBeLessThanOrEqual(1e-12)
     }
   })
-  it('has no mean offset and stays near the pixel at every count from 1 to the largest a tier may take', () => {
+  it('has no mean offset and stays inside the pixel at every count from 1 to the largest a tier may take', () => {
     for (let n = 1; n <= Math.max(...named); n++) {
       const s = samplesFor(n)
       expect(Math.abs(mean(s.map((x) => x.jitterX)))).toBeLessThanOrEqual(1e-12)
       expect(Math.abs(mean(s.map((x) => x.jitterY)))).toBeLessThanOrEqual(1e-12)
       for (const x of s) {
-        expect(Math.abs(x.jitterX)).toBeLessThanOrEqual(0.62)
-        expect(Math.abs(x.jitterY)).toBeLessThanOrEqual(0.62)
+        expect(Math.abs(x.jitterX)).toBeLessThan(0.5)
+        expect(Math.abs(x.jitterY)).toBeLessThan(0.5)
       }
     }
   })
@@ -31,14 +31,37 @@ describe('the place of the samples inside a pixel', () => {
     expect([...jitterOffsets(1)]).toEqual([0, 0])
     expect([samplesFor(1)[0]!.jitterX, samplesFor(1)[0]!.jitterY]).toEqual([0, 0])
   })
-  it('is the sequence it was, each count less its own mean, in the order it was', () => {
+  it('keeps the order of the sequence it was on each axis', () => {
+    for (const n of named.filter((c) => c > 1)) {
+      const was = Array.from({ length: n }, (_, i) => [(0.5 + (i + 1) / G) % 1, (0.5 + (i + 1) / (G * G)) % 1] as const)
+      const s = samplesFor(n)
+      for (let i = 0; i < n; i++) {
+        for (let j = i + 1; j < n; j++) {
+          expect(Math.sign(s[i]!.jitterX - s[j]!.jitterX)).toBe(Math.sign(was[i]![0] - was[j]![0]))
+          expect(Math.sign(s[i]!.jitterY - s[j]!.jitterY)).toBe(Math.sign(was[i]![1] - was[j]![1]))
+        }
+      }
+    }
+  })
+  it('puts one sample at the middle of each of n equal strips of the pixel on each axis, at every count', () => {
+    for (let n = 2; n <= Math.max(...named); n++) {
+      const s = samplesFor(n)
+      const xs = s.map((x) => x.jitterX).sort((a, b) => a - b)
+      const ys = s.map((x) => x.jitterY).sort((a, b) => a - b)
+      for (let k = 0; k < n; k++) {
+        expect(xs[k]!).toBeCloseTo((k + 0.5) / n - 0.5, 12)
+        expect(ys[k]!).toBeCloseTo((k + 0.5) / n - 0.5, 12)
+      }
+    }
+  })
+  it('moves no sample further than 0.1 of a pixel from the place the sequence less its mean gave it', () => {
     for (const n of named.filter((c) => c > 1)) {
       const was = Array.from({ length: n }, (_, i) => [((0.5 + (i + 1) / G) % 1) - 0.5, ((0.5 + (i + 1) / (G * G)) % 1) - 0.5] as const)
       const mx = mean(was.map((w) => w[0]))
       const my = mean(was.map((w) => w[1]))
       samplesFor(n).forEach((x, i) => {
-        expect(x.jitterX).toBeCloseTo(was[i]![0] - mx, 12)
-        expect(x.jitterY).toBeCloseTo(was[i]![1] - my, 12)
+        expect(Math.abs(x.jitterX - (was[i]![0] - mx))).toBeLessThanOrEqual(0.1)
+        expect(Math.abs(x.jitterY - (was[i]![1] - my))).toBeLessThanOrEqual(0.1)
       })
     }
   })
