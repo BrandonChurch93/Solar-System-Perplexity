@@ -1,9 +1,16 @@
 {
  "folder": "belt",
- "pushed": "2026-11-24T17:07:23.493Z",
+ "pushed": "2026-11-24T17:11:23.591Z",
  "head": "6f6f1229fc1360c2d88f28e420d4cce97ac226a2",
- "note": "far Sun 6f6f1229 on main ed003c70: 615 at the final tier 4.13 (aim 4.0 not met), every zone in bound",
+ "note": "far Sun 6f6f1229: strip for condition (c)",
  "looks": [
+  {
+   "time": "2026-11-24T17:11:22.585Z",
+   "file": "20261124171122585-note-strip-520-615-n60.jpg",
+   "source": "../../../../tmp/farsun/out/strip-520-615-n60.jpg",
+   "kind": "note",
+   "label": "520, 530, 540, 560, 580, 615 at draft, the same crop about the disc centre: for condition (c)"
+  },
   {
    "time": "2026-11-24T17:07:21.612Z",
    "file": "20261124170721612-note-looks14-467-495-713-1027.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/farsun/v_box_n47.jpg",
    "kind": "note",
    "label": "615 draft, approved left, far Sun right: try n47, blur 4.12, all zones in bound; streamer at the bottom now a cone of rays that close on a tip (still too hard, being softened)"
-  },
-  {
-   "time": "2026-11-24T15:33:04.858Z",
-   "file": "20261124153304858-note-v_tuft_n33.jpg",
-   "source": "../../../../tmp/farsun/v_tuft_n33.jpg",
-   "kind": "note",
-   "label": "far Sun 615 lower limb 3x with position angles, approved left, try n33 right"
   }
  ]
 }
