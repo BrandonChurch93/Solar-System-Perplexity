@@ -1,9 +1,23 @@
 {
  "folder": "belt",
- "pushed": "2026-11-24T15:33:05.698Z",
+ "pushed": "2026-11-24T16:10:07.947Z",
  "head": "c0a7f5ef8ffc52f7117af5080565727274309e15",
- "note": "far Sun tries at 615: streamer leans as the approved one, loop as twisted ropes; face mottle hue in work",
+ "note": "far Sun tries at 615, n47 (uncommitted): streamer as rays closing on a tip, loop as twisted rope, veil cut beyond 1.1 R",
  "looks": [
+  {
+   "time": "2026-11-24T16:10:06.291Z",
+   "file": "20261124161006291-note-v_tuft_n47.jpg",
+   "source": "../../../../tmp/farsun/v_tuft_n47.jpg",
+   "kind": "note",
+   "label": "615 draft lower limb 3x, approved left, try n47 right, marks are position angles"
+  },
+  {
+   "time": "2026-11-24T16:10:04.336Z",
+   "file": "20261124161004336-note-v_box_n47.jpg",
+   "source": "../../../../tmp/farsun/v_box_n47.jpg",
+   "kind": "note",
+   "label": "615 draft, approved left, far Sun right: try n47, blur 4.12, all zones in bound; streamer at the bottom now a cone of rays that close on a tip (still too hard, being softened)"
+  },
   {
    "time": "2026-11-24T15:33:04.858Z",
    "file": "20261124153304858-note-v_tuft_n33.jpg",
@@ -45,22 +59,6 @@
    "source": "../../../../tmp/farsun/v_box_n19.jpg",
    "kind": "note",
    "label": "far Sun 615 draft try n19, approved left, mine right, blurred mean 4.41, not named"
-  },
-  {
-   "time": "2026-11-24T14:39:58.182Z",
-   "file": "20261124143958182-note-farsun-615-pair-12-final.jpg",
-   "source": "../../../../tmp/farsun/out/farsun-615-pair-12-final.jpg",
-   "kind": "note",
-   "label": "far Sun frame 615 final tier, whole frame half size: approved left, c0a7f5ef right",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T14:39:57.471Z",
-   "file": "20261124143957471-note-farsun-615-box-12-final.jpg",
-   "source": "../../../../tmp/farsun/out/farsun-615-box-12-final.jpg",
-   "kind": "note",
-   "label": "far Sun frame 615 final tier, box native: approved left, c0a7f5ef right, blur 12 measure 4.42",
-   "stop": "sun"
   }
  ]
 }
