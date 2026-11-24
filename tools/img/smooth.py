@@ -76,7 +76,8 @@ def left(a, b, f=None, g=None, agree=True):
 
 
 def body(pose, shape, margin):
-    """Where the frame shows the body: the pixels whose ray meets the unit sphere of the stop, less a margin at its edge. pose: p, q (x, y, z, w), vfov."""
+    """Where the frame shows the body: the pixels whose ray meets the unit sphere of the stop, or its rings in front of it when the pose names them
+    (rings: normal, inner, outer), less a margin at the edge. pose: p, q (x, y, z, w), vfov."""
     h, w = shape
     k = h / 2 / np.tan(np.radians(pose['vfov']) / 2)
     xs, ys = places(shape)
@@ -88,7 +89,17 @@ def body(pose, shape, margin):
     p = np.array(pose['p'], dtype=np.float64)
     near = -(ray @ p)
     disc = near * near - p @ p + 1
-    hit = (disc > 0) & (near - np.sqrt(np.maximum(disc, 0)) > 0)
+    front = near - np.sqrt(np.maximum(disc, 0))
+    hit = (disc > 0) & (front > 0)
+    rings = pose.get('rings')
+    if rings:
+        n = np.array(rings['normal'], dtype=np.float64)
+        n /= np.linalg.norm(n)
+        slope = ray @ n
+        with np.errstate(all='ignore'):
+            far = -(p @ n) / slope
+            radius = np.linalg.norm(p + ray * far[..., None], axis=-1)
+            hit |= np.isfinite(far) & (far > 0) & (radius >= rings['inner']) & (radius <= rings['outer']) & ~(hit & (front < far))
     size = 2 * int(round(margin)) + 1
     return cv2.erode(hit.astype(np.uint8), np.ones((size, size), np.uint8), borderType=cv2.BORDER_CONSTANT, borderValue=1) > 0
 

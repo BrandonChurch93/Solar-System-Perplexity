@@ -27,6 +27,8 @@ import { judgeCurve, position, table, type CurveResult, type Fault, type Row } f
 //           The pop is counted twice, once with every pixel and once with nothing left where the flow from a frame to the next and the flow
 //           back do not agree (ground uncovered, content entering at the edge); the smaller of the two is the pop. The change in place: a frame against the frame smooth.pictures.changeFrames film frames later, carried back along
 //           the flows, the difference smoothed, its 99th percentile on the body: a look that is replaced in place within those frames.
+//           The rings of a stop named in smooth.pictures.ringBodies count as its body. The same number on the frames of the surface view
+//           beside the move stands next to it: the life of the ground itself.
 //           Frames at whole film frames are shared with npm run handover (out/work/handover/<stop>/frames), so nothing is rendered twice.
 // place     the handover with the place picture switched off (the noplace view), draft tier: both sides at T, and every frame from one before the
 //           place window and the dissolve to one after them: the steps of level and colour on the body as npm run handover counts them, and
@@ -197,13 +199,14 @@ async function still(k: number, tier: string, diag: string, fmt = format): Promi
 interface PictureNumbers { level: number[]; levelStep: (number | null)[]; residual: (number | null)[]; base: (number | null)[]; popAll: (number | null)[]; popCarried: (number | null)[]; pop: (number | null)[]; motionPx: (number | null)[]; unsure: (number | null)[]; popBlock: (number | null)[]; popBlockAt: ([number, number] | null)[]; grid: [number, number]; change: (number | null)[]; changeTop: (number | null)[]; changeAt: ([number, number] | null)[]; changeShare: (number | null)[] }
 interface PictureRow { k: number; frame: number; level: number; levelStep: number | null; residual: number | null; base: number | null; popAll: number | null; popCarried: number | null; pop: number | null; motionPx: number | null; unsure: number | null; popBlock: number | null; popBlockAt: [number, number] | null; change: number | null; changeTop: number | null; changeAt: [number, number] | null; changeShare: number | null }
 interface Most { k: number; frame: number; value: number }
-interface PictureKind { segment: string; firstFrame: number; endFrame: number; window: [number, number]; rate: number; frames: number; rows: PictureRow[]; levelStep: Most | null; pop: Most | null; popBlock: (Most & { at: [number, number] | null }) | null; change: (Most & { at: [number, number] | null }) | null; changeFrames: number; panel: string | null; changePanel: string | null; why: string[] }
+interface PictureKind { segment: string; firstFrame: number; endFrame: number; window: [number, number]; rate: number; frames: number; rows: PictureRow[]; levelStep: Most | null; pop: Most | null; popBlock: (Most & { at: [number, number] | null }) | null; change: (Most & { at: [number, number] | null }) | null; changeFrames: number; ground: { value: number; first: number; last: number } | null; panel: string | null; changePanel: string | null; why: string[] }
 
-const CHANGE = { frames: (S.pictures as { changeFrames?: number }).changeFrames ?? 8, blurPx: (S.pictures as { changeBlurPx?: number }).changeBlurPx ?? 20, max: (S.pictures as { maxChange?: number | null }).maxChange ?? null }
+const CHANGE = { frames: (S.pictures as { changeFrames?: number }).changeFrames ?? 8, blurPx: (S.pictures as { changeBlurPx?: number }).changeBlurPx ?? 20, max: (S.pictures as { maxChange?: number | null }).maxChange ?? null, rings: (S.pictures as { ringBodies?: string[] }).ringBodies ?? [] }
 
-function poseOf(k: number, r: number): { p: number[]; q: number[]; vfov: number } {
+function poseOf(k: number, r: number): { p: number[]; q: number[]; vfov: number; rings?: { normal: number[]; inner: number; outer: number } } {
   const pose = carriedCamera(film, plan, stop!, k / r, (k / r + spanMid()) / cfg.fps).pose
-  return { p: pose.position.toArray(), q: pose.quaternion.toArray(), vfov: pose.vfov }
+  const rings = CHANGE.rings.includes(stop!) ? plan.fit.rings : null
+  return { p: pose.position.toArray(), q: pose.quaternion.toArray(), vfov: pose.vfov, ...(rings && rings.outer > rings.inner ? { rings } : {}) }
 }
 
 async function picturesOf(kind: Kind): Promise<PictureKind | null> {
@@ -273,7 +276,10 @@ async function picturesOf(kind: Kind): Promise<PictureKind | null> {
       return { paths: paths.slice(i, last + 1), poses: [poses[i]!, poses[last]!], label: stop + ' ' + kind + ' frame ' + position(row.k, r) + ', frame ' + position(row.k + CHANGE.frames * r, r) + ' carried back to it, their smoothed difference times 6: change ' + row.change!.toFixed(1) }
     }) })
   }
-  return { segment: seg.id, firstFrame: seg.firstFrame, endFrame: seg.endFrame, window: [first, end - 1], rate: r, frames: ks.length, rows, levelStep, pop, popBlock: block ? { ...block, at: rows.find((row) => row.k === block.k)!.popBlockAt } : null, change: change ? { ...change, at: rows.find((row) => row.k === change.k)!.changeAt } : null, changeFrames: CHANGE.frames, panel, changePanel, why }
+  const reach = CHANGE.frames * r
+  const beside = rows.filter((row) => row.change !== null && (kind === 'dive' ? row.k >= seg.endFrame * r : row.k + reach < seg.firstFrame * r))
+  const ground = beside.length > 0 ? { value: Math.max(...beside.map((row) => row.change!)), first: beside[0]!.k, last: beside.at(-1)!.k + reach } : null
+  return { segment: seg.id, firstFrame: seg.firstFrame, endFrame: seg.endFrame, window: [first, end - 1], rate: r, frames: ks.length, rows, levelStep, pop, ground, popBlock: block ? { ...block, at: rows.find((row) => row.k === block.k)!.popBlockAt } : null, change: change ? { ...change, at: rows.find((row) => row.k === change.k)!.changeAt } : null, changeFrames: CHANGE.frames, panel, changePanel, why }
 }
 
 async function picturesPart(): Promise<PartResult & { kinds: Record<string, PictureKind | null>; tier: string; rate: number; secondsAFrame: number | null }> {
@@ -297,6 +303,7 @@ function picturesText(kind: Kind, p: PictureKind | null): string[] {
   if (p.pop) lines.push('Largest pop score: ' + p.pop.value.toFixed(2) + ' from frame ' + position(p.pop.k, p.rate) + ' to the next, ' + lim(P.maxPop) + '.')
   if (p.popBlock) lines.push('Largest pop score of one block (a grid of ' + P.grid.join(' by ') + '): ' + p.popBlock.value.toFixed(2) + ' from frame ' + position(p.popBlock.k, p.rate) + ' to the next' + (p.popBlock.at ? ', block column ' + p.popBlock.at[0] + ' row ' + p.popBlock.at[1] + ' from the top left' : '') + ', ' + lim(P.maxPopBlock) + '.')
   if (p.change) lines.push('Largest change in place: ' + p.change.value.toFixed(1) + ' from frame ' + position(p.change.k, p.rate) + ' to ' + p.changeFrames + ' film frames later' + (p.change.at ? ', most at pixel ' + p.change.at.join(', ') : '') + ' (display values 0 to 255: the later frame carried back along the motion, the difference smoothed over ' + CHANGE.blurPx + ' px, its 99th percentile on the body), ' + lim(CHANGE.max) + '.')
+  if (p.ground) lines.push('The ground beside it, the same number on the surface view alone (frames ' + position(p.ground.first, p.rate) + ' to ' + position(p.ground.last, p.rate) + '): ' + p.ground.value.toFixed(1) + (CHANGE.max !== null && p.ground.value > CHANGE.max ? ', over the limit by itself' : '') + '.')
   if (p.panel) lines.push('The four largest pops, each with the next frame and what is left without the motion: ' + p.panel.slice(ROOT.length + 1))
   if (p.changePanel) lines.push('The largest changes in place, each with the later frame carried back and the difference: ' + p.changePanel.slice(ROOT.length + 1))
   lines.push('')
