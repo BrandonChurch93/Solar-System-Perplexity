@@ -1,9 +1,53 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T12:47:10.870Z",
- "head": "22aa54e394207509b7631e4842ed025175b3aca1",
- "note": "named state on the machines; own runs with the new judge: dive pictures green; re-check of list item 15 (shade and stars between hold and dive)",
+ "pushed": "2026-11-24T13:02:16.019Z",
+ "head": "5dadc068bbfc401416c14cf3b4c537e089539e97",
+ "note": "named trees with the new judge: dive and rise pictures green; looking at 3720 against the approved (item 17) and the sky through the dive (item 15); handover parts and G13 still running",
  "looks": [
+  {
+   "time": "2026-11-24T13:02:08.613Z",
+   "file": "20261124130208613-note-saturn-rise-changes.jpg",
+   "source": "../../../../tmp/v/r47/saturn-rise-changes.png",
+   "kind": "note",
+   "label": "rise pictures with the new judge: pattern 0.24 at 3820 + 1/2 (limit 0.45)",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-24T13:02:07.679Z",
+   "file": "20261124130207679-note-saturn-rise-pops.jpg",
+   "source": "../../../../tmp/v/r47/saturn-rise-pops.png",
+   "kind": "note",
+   "label": "rise pictures with the new judge on the named trees: green, largest pop 1.15 at 3872 + 1/2 (limit 1.2)",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-24T13:02:06.939Z",
+   "file": "20261124130206939-note-dive_b.jpg",
+   "source": "../../../../tmp/v/r47/dive_b.png",
+   "kind": "note",
+   "label": "dive 3576 to 3609 every third frame, draft, named trees: the warm field leaves again with the height"
+  },
+  {
+   "time": "2026-11-24T13:02:06.208Z",
+   "file": "20261124130206208-note-dive_a.jpg",
+   "source": "../../../../tmp/v/r47/dive_a.png",
+   "kind": "note",
+   "label": "dive 3540 to 3573 every third frame, draft, named trees: the sky at the top left turns from the hold's blue to the film's warm field (item 15)"
+  },
+  {
+   "time": "2026-11-24T13:02:05.250Z",
+   "file": "20261124130205250-note-3720_ll_pair.jpg",
+   "source": "../../../../tmp/v/r47/3720_ll_pair.png",
+   "kind": "note",
+   "label": "3720 lower left at full size: approved (left), named trees (right); item 17: highlights clip to white, dark ringlets brown where the approved has grey"
+  },
+  {
+   "time": "2026-11-24T13:02:04.091Z",
+   "file": "20261124130204091-note-3720_three.jpg",
+   "source": "../../../../tmp/v/r47/3720_three.png",
+   "kind": "note",
+   "label": "3720 final: approved close image (top), kept still (middle), named trees (bottom); list item 17, the ring reads brighter and whiter than the approved"
+  },
   {
    "time": "2026-11-24T12:46:57.336Z",
    "file": "20261124124657336-note-gap_x5.jpg",
@@ -17,51 +61,6 @@
    "source": "../../../../tmp/v/r47/shade_c.png",
    "kind": "note",
    "label": "list item 15 at full size, 3546 to 3549: the stars of the film's field come up in the gap between globe and ring as the hold's sky leaves by distance"
-  },
-  {
-   "time": "2026-11-24T12:46:55.337Z",
-   "file": "20261124124655337-note-saturn-dive-pops.jpg",
-   "source": "../../../../tmp/v/r47/saturn-dive-pops.png",
-   "kind": "note",
-   "label": "dive pictures, the four largest pops: 1.04 at 3578 (limit 1.2)",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-24T12:46:54.371Z",
-   "file": "20261124124654371-note-saturn-dive-changes.jpg",
-   "source": "../../../../tmp/v/r47/saturn-dive-changes.png",
-   "kind": "note",
-   "label": "dive pictures on the named trees with the new judge (main 62ff7be): green, pattern 0.21 at 3596 + 1/2 (limit 0.45), change in place 15.8 at 3606 shown",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-24T12:27:09.942Z",
-   "file": "20261124122709942-note-3866_ll_beside.jpg",
-   "source": "../../../../tmp/v/r45/3866_ll_beside.png",
-   "kind": "note",
-   "label": "judged frame 3866, lower left at full size: the kept still on the left, 91d6247 at the final tier on the right (the near ring drawn out by the film's shutter)"
-  },
-  {
-   "time": "2026-11-24T12:15:51.433Z",
-   "file": "20261124121551433-note-final_3866.jpg",
-   "source": "../../../../tmp/v/r45/final_3866.png",
-   "kind": "note",
-   "label": "91d6247 judged frame 3866, final tier, 64 shutter samples"
-  },
-  {
-   "time": "2026-11-24T12:15:50.702Z",
-   "file": "20261124121550702-note-3866_beside_kept.jpg",
-   "source": "../../../../tmp/v/r45/3866_beside_kept.png",
-   "kind": "note",
-   "label": "judged frame 3866 at the final tier: the kept still on the left, 91d6247 on the right (changes on purpose: the rise ends with speed)"
-  },
-  {
-   "time": "2026-11-24T12:14:16.147Z",
-   "file": "20261124121416147-note-saturn-parity.jpg",
-   "source": "../../../../tmp/v/r45/saturn-parity.png",
-   "kind": "note",
-   "label": "parity panel of 91d6247: the same film frames at uhd scaled down against 16x9, green (mean 2.785 at 3720, block level -6.563 at 3866)",
-   "stop": "saturn"
   }
  ]
 }
