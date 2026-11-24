@@ -1,71 +1,71 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T22:53:35.040Z",
+ "pushed": "2026-11-24T23:19:10.008Z",
  "head": "faeea78babada5abc9cc9468d4cc7a473b6253ab",
- "note": "22:54 UTC, MAIL 773 commit 1 in work, nothing committed: the ground as a marched slab of gas lit from within (no light direction, no highlight, no shade in it). Trials s2 to s4 of frame 60 beside the approved at 1 to 1. Seen: glowing lumps with threads inside, far cells melt into a bright band; still wrong: cells stand apart as lumps and are not packed, penumbra dark and smeared with a comb at its rim, a dark line on the horizon. s4c frame 60:  share by band 0.1 .. 0.9 : 0.288 0.238 0.168 0.114 0.069 0.043 0.026 0.022 0.011 dark (under 0.15) 0.309 | body (0.15 to 0.55) 0.590 | pale (0.65 to 0.85) 0.047 | white (over 0.85) 0.012 brightest 15 percent: half width 10.3 px, 1682 shapes | fine detail 0.0319 | mean 0.279 ",
+ "note": "23:21 UTC, the state of commit 1 (MAIL 773 points 1, 2, 3, 5), not yet committed: the ground is a marched slab of gas, lit from within. Pairs beside the approved at 1 to 1 for 0, 60, 90; 60 to 64 consecutive (whole frames, not yet half frames); the rise 217 to 240. Still wrong: cells rounder and looser than the approved, fine detail 0.0205 against 0.0373, a stipple on the brightest tops that changes from frame to frame, upright streaks on near flanks at 75, penumbra soft and hatched, a wide flat band under the horizon. Frame 60:  share by band 0.1 .. 0.9 : 0.177 0.237 0.197 0.138 0.101 0.058 0.033 0.027 0.018 dark (under 0.15) 0.191 | body (0.15 to 0.55) 0.674 | pale (0.65 to 0.85) 0.060 | white (over 0.85) 0.018 brightest 15 percent: half width 12.5 px, 855 shapes | fine detail 0.0205 | mean 0.325 ",
  "looks": [
   {
-   "time": "2026-11-24T22:53:04.224Z",
-   "file": "20261124225304224-note-s2-p1.jpg",
-   "source": "../../../../tmp/v/s2-p1.jpg",
+   "time": "2026-11-24T23:19:09.436Z",
+   "file": "20261124231909436-note-c1-00217-whole.jpg",
+   "source": "../../../../tmp/v/c1-00217-whole.jpg",
    "kind": "note",
-   "label": "frame 60, the first slab trials s2a and s2c (22:43), for the way it came",
+   "label": "frame 217 with the slab, two thirds size",
    "stop": "sun"
   },
   {
-   "time": "2026-11-24T22:53:03.651Z",
-   "file": "20261124225303651-note-s4c-whole.jpg",
-   "source": "../../../../tmp/v/s4c-whole.jpg",
+   "time": "2026-11-24T23:19:08.864Z",
+   "file": "20261124231908864-note-c1b-rise.jpg",
+   "source": "../../../../tmp/v/c1b-rise.jpg",
    "kind": "note",
-   "label": "frame 60 whole, slab trial s4c, two thirds size",
+   "label": "the rise with the slab: 225, 231, 240; bottom right 231 of head faeea78b",
    "stop": "sun"
   },
   {
-   "time": "2026-11-24T22:53:03.115Z",
-   "file": "20261124225303115-note-s4a-p1.jpg",
-   "source": "../../../../tmp/v/s4a-p1.jpg",
+   "time": "2026-11-24T23:19:08.319Z",
+   "file": "20261124231908319-note-c1-60-75.jpg",
+   "source": "../../../../tmp/v/c1-60-75.jpg",
    "kind": "note",
-   "label": "frame 60, approved left, slab trial s4a (hotter) right, 1 to 1",
+   "label": "frames 60 and 75 at 3x, the same box of the picture (not the same ground)",
    "stop": "sun"
   },
   {
-   "time": "2026-11-24T22:53:02.576Z",
-   "file": "20261124225302576-note-s4c-spot.jpg",
-   "source": "../../../../tmp/v/s4c-spot.jpg",
+   "time": "2026-11-24T23:19:07.755Z",
+   "file": "20261124231907755-note-c1-consec.jpg",
+   "source": "../../../../tmp/v/c1-consec.jpg",
    "kind": "note",
-   "label": "frame 60, the spot, approved left, slab trial s4c right, 1 to 1",
+   "label": "frames 60 to 64, consecutive whole frames at 2x, one box of the picture; last: the difference of 60 and 61 times 4",
    "stop": "sun"
   },
   {
-   "time": "2026-11-24T22:53:02.011Z",
-   "file": "20261124225302011-note-s4c-p1.jpg",
-   "source": "../../../../tmp/v/s4c-p1.jpg",
+   "time": "2026-11-24T23:19:07.189Z",
+   "file": "20261124231907189-note-c1-90-p1.jpg",
+   "source": "../../../../tmp/v/c1-90-p1.jpg",
    "kind": "note",
-   "label": "frame 60, approved left, trial s4c of the marched slab right, 1 to 1 (not committed).  share by band 0.1 .. 0.9 : 0.288 0.238 0.168 0.114 0.069 0.043 0.026 0.022 0.011 dark (under 0.15) 0.309 | body (0.15 to 0.55) 0.590 | pale (0.65 to 0.85) 0.047 | white (over 0.85) 0.012 brightest 15 percent: half width 10.3 px, 1682 shapes | fine detail 0.0319 | mean 0.279 ",
+   "label": "frame 90, approved (of frame 60) left, slab right, 1 to 1",
    "stop": "sun"
   },
   {
-   "time": "2026-11-24T22:28:40.540Z",
-   "file": "20261124222840540-note-rise0-spot.jpg",
-   "source": "../../../../tmp/v/rise0-spot.jpg",
+   "time": "2026-11-24T23:19:06.590Z",
+   "file": "20261124231906590-note-c1-0-p1.jpg",
+   "source": "../../../../tmp/v/c1-0-p1.jpg",
    "kind": "note",
-   "label": "head rise at native size: 228 to 240, the map and the grain of the cells in it",
+   "label": "frame 0, approved (of frame 60) left, slab right, 1 to 1",
    "stop": "sun"
   },
   {
-   "time": "2026-11-24T22:28:40.002Z",
-   "file": "20261124222840002-note-rise0-edge.jpg",
-   "source": "../../../../tmp/v/rise0-edge.jpg",
+   "time": "2026-11-24T23:19:06.021Z",
+   "file": "20261124231906021-note-c1-60-p3.jpg",
+   "source": "../../../../tmp/v/c1-60-p3.jpg",
    "kind": "note",
-   "label": "head rise at native size: 207, 213, 219, 225 round the place",
+   "label": "frame 60, the horizon on the left, approved left, slab right, 1 to 1",
    "stop": "sun"
   },
   {
-   "time": "2026-11-24T22:28:39.447Z",
-   "file": "20261124222839447-note-rise0-2.jpg",
-   "source": "../../../../tmp/v/rise0-2.jpg",
+   "time": "2026-11-24T23:19:05.448Z",
+   "file": "20261124231905448-note-c1-60-p2.jpg",
+   "source": "../../../../tmp/v/c1-60-p2.jpg",
    "kind": "note",
-   "label": "head faeea78b rise, every third frame 252 to 269, draft",
+   "label": "frame 60, right of the spot, approved left, slab right, 1 to 1",
    "stop": "sun"
   }
  ]
