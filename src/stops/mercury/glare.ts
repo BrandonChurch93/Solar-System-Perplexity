@@ -4,9 +4,9 @@ export type GlareSide = 'dive' | 'rise'
 
 export interface GlareLook {
   peak: number
-  fall: Record<GlareSide, number>
-  span: Record<GlareSide, number>
+  fade: Record<GlareSide, [number, number]>
   height: number
+  top: [number, number]
   keep: [number, number]
   color: [number, number, number]
   halo: [number, number]
@@ -82,11 +82,6 @@ export class Glare {
     this.mesh.frustumCulled = false
     this.mesh.renderOrder = 10
     this.mesh.visible = false
-  }
-
-  bloom(frames: number, side: GlareSide): number {
-    const end = Math.exp(-this.look.span[side] / this.look.fall[side])
-    return Math.max((Math.exp(-Math.abs(frames) / this.look.fall[side]) - end) / (1 - end), 0)
   }
 
   update(amount: number, sun: THREE.Vector3, camera: THREE.PerspectiveCamera, gain: number, aspect: number, time: number, leaving = 0): void {
