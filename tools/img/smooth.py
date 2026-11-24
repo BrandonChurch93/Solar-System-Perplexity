@@ -13,6 +13,7 @@ AGREE_SHARE = 0.01
 AGREE_PX2 = 0.5
 JUDGED_SHARE = 0.1
 BLOCK_SHARE = 0.5
+PATTERN_SHARE = 0.02
 
 
 def grey(path):
@@ -122,6 +123,32 @@ def change(frames, fw, bw, i, n, sigma, first=None, last=None):
     return d, moved, ok
 
 
+def pattern(a, b, ok, fine, wide, floor):
+    """How far the pattern of b is from the pattern of a, per pixel: 0 the same pattern, 1 an unrelated one, 2 the reverse.
+    Both are reduced to their detail between the two widths (the local mean taken out) and divided by their local contrast,
+    so a veil that lifts the level and lowers the contrast counts little. Only where both have detail over the floor."""
+    okf = ok.astype(np.float32)
+    soft = lambda x, s: cv2.GaussianBlur(x.astype(np.float32), (0, 0), s)
+    near, far = np.maximum(soft(okf, fine), 1e-6), np.maximum(soft(okf, wide), 1e-6)
+    da = (soft(a * okf, fine) / near - soft(a * okf, wide) / far) * okf
+    db = (soft(b * okf, fine) / near - soft(b * okf, wide) / far) * okf
+    ca = np.sqrt(np.maximum(soft(da * da, wide) / far, 0))
+    cb = np.sqrt(np.maximum(soft(db * db, wide) / far, 0))
+    p = 1 - (soft(da * db, wide) / far) / np.maximum(ca * cb, 1e-6)
+    p[~(ok & (soft(okf, wide) >= 0.5) & (ca > floor) & (cb > floor))] = np.nan
+    return p
+
+
+def patterned(p):
+    """The 99th percentile of a pattern change, where its largest value is, and the share of the frame that is judged."""
+    judged = np.isfinite(p)
+    share = float(judged.mean())
+    if share < PATTERN_SHARE:
+        return None, None, share
+    at = np.unravel_index(np.nanargmax(p), p.shape)
+    return float(np.nanpercentile(p, 99)), [int(at[1]), int(at[0])], share
+
+
 def changed(d):
     """The 99th percentile and the largest value of a smoothed change, where the largest is, and the share of the frame that is judged."""
     judged = np.isfinite(d)
@@ -168,6 +195,8 @@ def pictures(job):
     agree = job.get('agree', True)
     reach = int(job.get('changeFrames', 0))
     sigma = float(job.get('changeBlur', 20)) * scale
+    wide = float(job.get('patternPx', 40)) * scale
+    low = float(job.get('patternFloor', 1))
     poses = job.get('poses') or [None] * len(paths)
     frames = []
     levels = []
@@ -245,23 +274,32 @@ def pictures(job):
     top = [None] * n
     spot = [None] * n
     judged = [None] * n
+    weave = [None] * n
+    weaveAt = [None] * n
+    weaveShare = [None] * n
     if reach > 0:
         for i in range(n - reach):
             if any(fw[j] is None for j in range(i, i + reach)):
                 continue
             first, last = (body(poses[j], frames[j].shape, sigma) if poses[j] else None for j in (i, i + reach))
-            d, _, _ = change(frames, fw, bw, i, reach, sigma, first, last)
+            d, later, ok = change(frames, fw, bw, i, reach, sigma, first, last)
             shift[i], top[i], at, judged[i] = changed(d)
             spot[i] = [int(round(at[0] / scale)), int(round(at[1] / scale))] if at else None
+            weave[i], at, weaveShare[i] = patterned(pattern(frames[i].astype(np.float32), later, ok, wide / 5, wide, low))
+            weaveAt[i] = [int(round(at[0] / scale)), int(round(at[1] / scale))] if at else None
     return {'level': levels, 'levelStep': step, 'residual': residual, 'base': base, 'popAll': plain, 'popCarried': masked, 'pop': pop, 'motionPx': moved, 'unsure': unsure, 'popBlock': block, 'popBlockAt': where, 'grid': [cols, rows],
-            'change': shift, 'changeTop': top, 'changeAt': spot, 'changeShare': judged, 'changeFrames': reach}
+            'change': shift, 'changeTop': top, 'changeAt': spot, 'changeShare': judged, 'changeFrames': reach,
+            'pattern': weave, 'patternAt': weaveAt, 'patternShare': weaveShare}
 
 
 def changes(job):
-    """Rows of three: a frame, a later frame carried back to it along the flows, and their smoothed difference times the gain (black where it is not judged)."""
+    """Rows of four: a frame, a later frame carried back to it along the flows, their smoothed difference times the gain, and the change of their
+    pattern (white is 1, an unrelated pattern). Black where it is not judged."""
     scale = job.get('scale', 0.25)
     gain = job.get('gain', 6)
     sigma = float(job.get('changeBlur', 20)) * scale
+    wide = float(job.get('patternPx', 40)) * scale
+    low = float(job.get('patternFloor', 1))
     rows = []
     for item in job['chains']:
         frames = [small(grey(p), scale) for p in item['paths']]
@@ -276,7 +314,9 @@ def changes(job):
         back[~ok] = 0
         cb = np.repeat(back[..., None], 3, axis=2)
         dd = np.repeat(np.clip(np.abs(np.nan_to_num(d)) * gain, 0, 255).astype(np.uint8)[..., None], 3, axis=2)
-        rows.append((item['label'], np.concatenate([ca, cb, dd], axis=1)))
+        p = pattern(frames[0].astype(np.float32), moved, ok, wide / 5, wide, low)
+        pp = np.repeat(np.clip(np.nan_to_num(p) * 255, 0, 255).astype(np.uint8)[..., None], 3, axis=2)
+        rows.append((item['label'], np.concatenate([ca, cb, dd, pp], axis=1)))
     if not rows:
         return {'written': False}
     return {'written': True, 'size': write_sheet(rows, job['output'], job.get('limit'))}

@@ -125,6 +125,70 @@ describe('the one move of the engine', () => {
     }
   })
 
+  it('carries the surface view\'s own motion out of the seam and lets it go by the share of the move still to do, with no count of frames in it', () => {
+    forceOneMove(true)
+    const dt = 1e-4
+    for (const p of handing) {
+      for (const kind of kinds) {
+        const s = p.seg[kind]
+        if (!s) continue
+        // The eye leaves the seam at the velocity the surface view has there, each taken from its own side of the seam.
+        const seam = kind === 'dive' ? s.end : s.start
+        const into = kind === 'dive' ? -1 : 1
+        const ground = (t: number): Pose => p.twin(p.terrain(t - p.seg.terrain.start), t)
+        const at = ground(seam)
+        const surface = at.position.clone().sub(ground(seam - into * dt).position).multiplyScalar(into / dt)
+        const eye = p.eye(kind, seam + into * dt, 'orbit').position.clone().sub(at.position).multiplyScalar(into / dt)
+        expect(eye.distanceTo(surface), p.id + ' ' + kind).toBeLessThan(0.02 * surface.length() + 1e-3 * high(at))
+      }
+    }
+    // No count of frames: the span of the paths of the stops' own is not read by the one move.
+    const sample = (): Pose[] => kinds.flatMap((kind) => times(mars.seg[kind]!.firstFrame, mars.seg[kind]!.endFrame, 7.5).map((t) => mars.eye(kind, t, 'orbit')))
+    const h = config.raw.handover as { coastFrames: number; carry: { power: number; stepsPerFrame: number } }
+    const kept = { coastFrames: h.coastFrames, power: h.carry.power }
+    const as = sample()
+    try {
+      h.coastFrames = 30
+      const other = sample()
+      as.forEach((a, i) => {
+        expect(other[i]!.position.toArray()).toEqual(a.position.toArray())
+        expect(other[i]!.quaternion.toArray()).toEqual(a.quaternion.toArray())
+      })
+      // The power is read: with another the near end stands elsewhere inside the move, and both ends stay.
+      h.carry.power = 0.5
+      const more = sample()
+      expect(Math.max(...as.map((a, i) => a.position.distanceTo(more[i]!.position) / high(a)))).toBeGreaterThan(1e-4)
+      for (const kind of kinds) {
+        const seg = mars.seg[kind]!
+        const far = kind === 'dive' ? mars.hold(seg.start - mars.seg.hold.start) : mars.after(seg.end)
+        expect(mars.eye(kind, kind === 'dive' ? seg.start : seg.end, 'orbit').position.distanceTo(far.position)).toBeLessThan(1e-9)
+      }
+    } finally {
+      h.coastFrames = kept.coastFrames
+      h.carry.power = kept.power
+    }
+    // It holds at fractions of a frame: over the first frames from the seam the eye's step changes by a small share from one sixty
+    // fourth of a frame to the next, at the times the sums are taken and between them.
+    for (const kind of kinds) {
+      const seg = mars.seg[kind]!
+      const seam = kind === 'dive' ? seg.end : seg.start
+      const into = kind === 'dive' ? -1 : 1
+      const at = (i: number): THREE.Vector3 => mars.eye(kind, seam + (into * i) / (64 * fps), 'orbit').position
+      let worst = 0
+      for (let i = 1; i < 64 * 6; i++) {
+        const a = at(i).sub(at(i - 1))
+        const b = at(i + 1).sub(at(i))
+        worst = Math.max(worst, a.distanceTo(b) / Math.max(a.length(), b.length()))
+      }
+      expect(worst, kind).toBeLessThan(0.05)
+    }
+    for (const bad of [{ power: -1, stepsPerFrame: 8 }, { power: 9, stepsPerFrame: 8 }, { power: 2, stepsPerFrame: 0 }, { power: 2, stepsPerFrame: 2.5 }]) {
+      const off = JSON.parse(JSON.stringify(raw)) as typeof raw
+      off.handover.carry = bad
+      expect(() => buildConfig(off)).toThrow(/handover.carry/)
+    }
+  })
+
   it('undoes the twin of every stop: a camera of the globe taken into the close view and back stands where it stood', () => {
     for (const p of handing) {
       const t = p.seg.terrain.start + 0.37
@@ -259,6 +323,40 @@ describe('the pace of the one move', () => {
     const bare = JSON.parse(JSON.stringify(raw)) as typeof raw
     for (const name of ['pace', 'turn', 'liftPower'] as const) delete (bare.handover.rise as Side)[name]
     expect(() => buildConfig(bare)).not.toThrow()
+  })
+
+  it('takes two corners a flank from the stop, for the bell that names them, and both ends of the move stay where they were', () => {
+    const corners = { rise: [0.6, 0.1] as [number, number], fall: [0.05, 0.2] as [number, number] }
+    const pace = { rise: 0.55, fall: 0.4, corner: 0.2 }
+    const turn = { rise: 0.475, fall: 0.5, corner: 0.2 }
+    const plain = coveredPlan(handover({}, { pace, turn, liftPower: 0 }))
+    const set = coveredPlan(handover({}, { pace: { ...pace, corners }, turn: { ...turn, corners: { fall: [0.3, 0.05] } }, liftPower: 0 }))
+    const law = set.eyeLaw('rise')
+    expect(law.pace).toEqual({ ...pace, corners })
+    expect(law.turn).toEqual({ ...turn, corners: { fall: [0.3, 0.05] } })
+    // A bell that names none keeps its three numbers and no fourth: the dive of the same stop, and the stop without the option.
+    expect(Object.keys(set.eyeLaw('dive').pace).sort()).toEqual(['corner', 'fall', 'rise'])
+    expect(Object.keys(plain.eyeLaw('rise').pace).sort()).toEqual(['corner', 'fall', 'rise'])
+    // Where no turn is named and the film has none for the side, the direction rides the bell of the height, corners and all.
+    const dive = coveredPlan(handover({ pace: { corners: { rise: [0.3, 0.1] } } }, {})).eyeLaw('dive')
+    expect(dive.turn).toBe(dive.pace)
+    expect(dive.pace.corners).toEqual({ rise: [0.3, 0.1] })
+    // The ends are the neighbours' whatever the bell; between them the eye is elsewhere.
+    const s = plain.seg.rise
+    for (const view of ['orbit', 'terrain'] as const) {
+      for (const t of [s.start, s.end]) {
+        const a = plain.eye('rise', t, view)
+        const b = set.eye('rise', t, view)
+        expect(a.position.distanceTo(b.position)).toBeLessThan(1e-9)
+        expect(deg(a.quaternion, b.quaternion)).toBeLessThan(1e-6)
+      }
+    }
+    const mid = (s.start + s.end) / 2
+    expect(Math.abs(Math.log(high(set.eye('rise', mid, 'orbit')) / high(plain.eye('rise', mid, 'orbit'))))).toBeGreaterThan(0.01)
+    // Refused where the number is read: corners that make a flank too steep for the segment, corners that leave a flank no room.
+    expect(() => coveredPlan(handover({}, { pace: { rise: 0.3, fall: 0.3, corner: 0.2, corners: { rise: [0.9, 0.1] } } })).eyeLaw('rise')).toThrow(/the limit is/)
+    expect(() => coveredPlan(handover({}, { pace: { corners: { rise: [0.7, 0.6] } } })).eyeLaw('rise')).toThrow(/two corners of the rise flank/)
+    expect(() => coveredPlan(handover({}, { turn: { corners: { fall: [0.5, 0] } } })).eyeLaw('rise')).toThrow(/two corners of the fall flank/)
   })
 
   it('is the move as it was where a stop names the old law: the bell of handover.pace for both and no lift give the pose of one share to the last bit', () => {

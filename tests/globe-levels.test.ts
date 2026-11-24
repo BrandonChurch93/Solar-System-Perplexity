@@ -107,6 +107,31 @@ describe('the options of the patch levels', () => {
     expect(short.material.uniforms.uPatchAniso!.value).toEqual([16, 16, 16, 1, 1, 1])
   })
 
+  it('moves the square of a level in the plane of the spot only for a stop that gives centres', () => {
+    const plain = planetWith(5)
+    const moved = planetWith(5, { centresDeg: [[0, 0], [0, 0], [1.5, -0.5], [2, 1], [0, 0]] })
+    const text = moved.material.fragmentShader
+    const slots = (plain.material.uniforms.uPatchScale!.value as number[]).length
+    expect(hash(plain)).toBe(KEPT)
+    expect(plain.material.uniforms.uPatchCentre).toBeUndefined()
+    expect(plain.material.fragmentShader).not.toContain('uPatchCentre')
+    expect(count(text, 'uniform vec2 uPatchCentre[' + slots + '];')).toBe(1)
+    expect(count(text, '] * uPatchScale[')).toBe(count(plain.material.fragmentShader, '] * uPatchScale['))
+    expect(count(text, 'vec2 q = (g - uPatchCentre[')).toBe(slots)
+    expect(count(text, 'vec2 q = g * uPatchScale[')).toBe(0)
+    expect(text.replace(/\(g - uPatchCentre\[\d+\]\)/g, 'g').replace('\nuniform vec2 uPatchCentre[' + slots + '];', '')).toBe(plain.material.fragmentShader)
+    expect(count(text, 'uniform sampler2D')).toBe(count(plain.material.fragmentShader, 'uniform sampler2D'))
+    const c = moved.material.uniforms.uPatchCentre!.value as THREE.Vector2[]
+    expect(c.length).toBe(slots)
+    expect(c[2]!.x).toBeCloseTo(Math.tan((1.5 * Math.PI) / 180), 12)
+    expect(c[2]!.y).toBeCloseTo(-Math.tan((0.5 * Math.PI) / 180), 12)
+    expect(c[3]!.toArray()).toEqual([Math.tan((2 * Math.PI) / 180), Math.tan(Math.PI / 180)])
+    expect(c[0]!.toArray()).toEqual([0, 0])
+    expect(() => planetWith(5, { centresDeg: [[0, 0]] })).toThrow('one entry per patch level')
+    plain.dispose()
+    moved.dispose()
+  })
+
   it('adds no sampler with either option', () => {
     const units = needs('full', config.formatKeys.master).limits.MAX_TEXTURE_IMAGE_UNITS!
     const p = planetWith(10, { own: Array.from({ length: 10 }, (_, i) => i > 4), fadeMinor: true })
