@@ -143,6 +143,7 @@ export const createSet: SetFactory = async (ctx) => {
   const over = new THREE.Group()
   over.add(deck.cover, glow.mesh, lowArcs.mesh, riseArcs.mesh, riseRings.mesh)
   const coverEye = new THREE.Vector3()
+  const eyeNow = new THREE.Vector3()
   const steep: [number, number] = [look.place.steep[0], look.place.steep[1]]
   const origin = new THREE.Vector3()
   const ball = new THREE.Vector3()
@@ -232,15 +233,17 @@ export const createSet: SetFactory = async (ctx) => {
       globe.soften(left ? look.globe.soft : nearing, left ? look.globe.awayShade : 1)
       globe.near(look.near.tint, near)
       const relit = low && !look.show.down
-      const plated = low ? reach(look.place.plates[kind as 'dive' | 'rise'], altitude) : 0
       globe.rim(low ? reach(look.place.rim.span, altitude) * (1 - reach(look.place.rim.near, altitude)) : 0, look.place.rim.feather, look.place.rim.wave)
       const flat = low ? reach(look.place.light.down, altitude) : 0
       steep[0] = look.place.steep[0] + (look.place.steepLow[0] - look.place.steep[0]) * flat
       steep[1] = look.place.steep[1] + (look.place.steepLow[1] - look.place.steep[1]) * flat
       if (low) {
         const from = look.place.fixedEye ? eyes[kind as 'dive' | 'rise'] : eyeAt(kind as 'dive' | 'rise', state.time)
-        globe.place(relit ? reach(look.place.light.up, altitude) : 0, relit ? flat : 0, plated, state.time - terrainMid, from, steep)
-      } else globe.place(0, 0, 0, state.time - terrainMid, eyes.dive, steep)
+        globe.place(relit ? reach(look.place.light.up, altitude) : 0, relit ? flat : 0, state.time - terrainMid, from, steep)
+      } else {
+        placeEye()
+        globe.place(0, 0, state.time - terrainMid, eyeNow.copy(eye).applyQuaternion(turn.copy(plan.deckFrame(state.time)).invert()), steep)
+      }
       globe.face(left ? look.face.weight : 0)
       halo.update(sun, gain * state.weight * (1 + (look.near.halo - 1) * near) * (1 - sky), plan.spin(state.time), clock)
       placeEye()

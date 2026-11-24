@@ -82,7 +82,7 @@ vec3 deckLight(float mu, float psi) {
 const PLATE_UNIFORMS = PLATE_SAMPLERS + /* glsl */ `
 uniform float uPlateScale[4];
 uniform float uPlateSize[4];
-uniform vec3 uPlace;
+uniform vec2 uPlace;
 uniform sampler2D uPlaceField;
 uniform vec3 uPlaceN;
 uniform vec3 uPlaceE;
@@ -227,7 +227,7 @@ void main() {
 ${FAR_LEVELS}
   vec2 q0 = pg * uPlateScale[0];
   vec3 calm = textureLod(uPlate0, q0 + 0.5, uPlateWide).rgb;
-  vec3 aS = mix(calm * calm * uPlace.z, aP, smoothstep(0.5, 0.5 - uPlace.y, max(abs(q0.x), abs(q0.y))) * textureLod(uPlaceField, q0 + 0.5, 0.0).a);
+  vec3 aS = mix(calm * calm * uPlace.y, aP, smoothstep(0.5, 0.5 - uPlace.x, max(abs(q0.x), abs(q0.y))) * textureLod(uPlaceField, q0 + 0.5, 0.0).a);
   vec2 nd = vClip.xy / vClip.z;
   vec2 unit = uBase.x * vec2(uAspect, 1.0) / (uWin.zw - uWin.xy);
   vec2 ka = dFdx(uvT) / max(abs(dFdx(nd.x)), 1e-9) / unit * uLens.x;
