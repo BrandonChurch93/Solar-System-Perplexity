@@ -10,8 +10,8 @@ import { handoverFrame, handoverOf } from '../src/director/handover'
 import { setCapture, spanMid } from '../src/core/clock'
 import type { Pose } from '../src/core/types'
 import { plans } from '../src/director/plans'
-import { LANDING_FROM, MIN_POINTS, carriedCamera, curves, landingCurves, ringPlane, sampleLanding, sampleWindow, sphereHit, type Kind, type Plane, type Ring } from './smooth/camera'
-import { LANDING_FLOOR, LANDING_LATE, LANDING_SHOWN, judgeCurve, judgeLanding, longestGap, parityFrames, position, shown, table, type CurveResult, type Fault, type LandingResult, type Row } from './smooth/path'
+import { LANDING_FROM, MIN_POINTS, SEAM_OWN, SEAM_REACH, carriedCamera, curves, eyeCurves, landingCurves, ringPlane, sampleLanding, sampleSeam, sampleWindow, sphereHit, type Kind, type Plane, type Ring } from './smooth/camera'
+import { LANDING_FLOOR, LANDING_LATE, LANDING_SHOWN, judgeCurve, judgeLanding, judgeSeam, longestGap, parityFrames, position, shown, table, type CurveResult, type Fault, type LandingResult, type Row, type SeamResult } from './smooth/path'
 
 // The measures of a smooth dive and rise (kit/PROGRESS.md, second review note of 2026-11-23, plan I). One stop.
 //   npm run smooth -- --stop ID [--kind dive|rise|landing] [--only path,pictures,place,parity,counts] [--rate N] [--calibrate] [--ring picture|ground]
@@ -21,7 +21,10 @@ import { LANDING_FLOOR, LANDING_LATE, LANDING_SHOWN, judgeCurve, judgeLanding, l
 //           every step and every rebound compares the mean over the points that have ground in every frame it compares, and their count
 //           stands beside the number; a row with fewer than 5 of the 8 is shown and not judged, and the report says how many rows that was.
 //           A point counts only on what the camera sees of the place's own surface (the plane of the rings where the place lies on the
-//           rings). --ring ground tries the ring laid on the ground.
+//           rings). --ring ground tries the ring laid on the ground. At the seam with the surface view (the end of a dive, the start of a
+//           rise): the way of the eye over its own height above the ground as the stop's twin holds it, over the same number of the surface view
+//           itself, 16 film frames to each side at the capture rate. Judged: its lowest value (smooth.path.minEye); its largest step and the
+//           part along the surface view's own direction of motion are shown.
 // pictures  from draft frames, every frame of the dive and of the rise and smooth.reachFrames film frames into each neighbour (capture frames once
 //           the page knows a rate, whole film frames until then): the step of the frame's level against the line through its two neighbours,
 //           and the pop score: what is left of the difference between a frame and the next once the motion between them is taken out, over the
@@ -99,7 +102,7 @@ const ringGround: Plane | null = ringPlane(plan)
 interface PartResult { measured: boolean; pass: boolean; why: string[]; note?: string }
 
 interface PathRun { rate: number; curves: CurveResult[] }
-interface PathKind { segment: string; firstFrame: number; endFrame: number; frameT: number | null; window: [number, number]; runs: PathRun[]; rows: Row[]; sides: string[]; heights: (number | null)[]; faults: Fault[] }
+interface PathKind { segment: string; firstFrame: number; endFrame: number; frameT: number | null; window: [number, number]; runs: PathRun[]; rows: Row[]; sides: string[]; heights: (number | null)[]; faults: Fault[]; eye: (SeamResult & { seam: number; own: number | null }) | null }
 
 const UNITS: ['fall' | 'turn' | 'speed', string, string, number | null][] = [
   ['fall', 'rate', 'log of the height a film frame', null],
@@ -121,6 +124,9 @@ function pathOf(kind: Kind): PathKind | null {
     runs.push({ rate: r, curves: UNITS.map(([key, name, unit, floor]) => judgeCurve(name, unit, c[key], w.k0, r, w.own, S.path, floor, key === 'speed' ? { values: c.ring, min: MIN_POINTS } : null)) })
   }
   const w = whole!
+  const sw = sampleSeam(cfg, film, plan, kind, rate)
+  const ec = sw ? eyeCurves(sw, plan, ringGround) : null
+  const eye = sw && ec ? { seam: sw.seam, own: ec.own, ...judgeSeam(ec.speed, ec.along, sw.k0, rate, S.path.minEye ?? null, kind === 'dive' ? { first: sw.k0, end: sw.seam * rate } : { first: sw.seam * rate + 1, end: (sw.seam + SEAM_REACH) * rate }) } : null
   const h = handoverOf(stop!, kind)
   const at = (f: number): number => f - w.k0
   const frames = Array.from({ length: w.frames }, (_, i) => w.firstFrame + i)
@@ -131,7 +137,8 @@ function pathOf(kind: Kind): PathKind | null {
     rows: table(shifted, fine ? runs[1]!.curves : null, w.firstFrame, w.frames, fine ? fine.k0 : 0, fine ? fine.rate : 1),
     sides: frames.map((f) => w.samples[at(f)]!.segment.split('.')[1] + ' ' + w.samples[at(f)]!.side),
     heights: frames.map((f) => Number(w.samples[at(f)]!.height.toExponential(4))),
-    faults: runs.flatMap((r) => r.curves.flatMap((c) => c.faults.map((x) => ({ ...x, text: (r.rate === 1 ? 'whole frames, ' : 'rate ' + r.rate + ', ') + x.text })))),
+    faults: [...runs.flatMap((r) => r.curves.flatMap((c) => c.faults.map((x) => ({ ...x, text: (r.rate === 1 ? 'whole frames, ' : 'rate ' + r.rate + ', ') + x.text })))), ...(eye?.fault ? [eye.fault] : [])],
+    eye,
   }
 }
 
@@ -691,6 +698,12 @@ function pathText(kind: Kind, p: PathKind | null): string[] {
     }).join(', ') + '.')
   }
   lines.push('', 'Limits: step ' + L.maxStep + ' of the mean over one film frame, from ' + L.seamFrames + ' film frames before the segment to ' + L.seamFrames + ' after it; fall before the largest value and climb after it ' + L.maxRebound + ' of the mean, inside the segment. Steps further into the neighbours are shown and not judged.', '')
+  if (p.eye) {
+    const e = p.eye
+    const at = (x: { value: number; k: number } | null, limit: number | null = null): string => (x ? shown(x.value, 2, limit) + ' at frame ' + position(x.k, e.rate) : 'not measured')
+    const min: number | null = L.minEye ?? null
+    lines.push('The eye against the near ground at the seam with the surface view (film frame ' + e.seam + ', ' + SEAM_REACH + ' film frames to each side, read at rate ' + e.rate + '): the way of the eye over its own height above the ground, per film frame, over the same number of the surface view itself (' + (e.own === null ? 'not measured' : Number(e.own.toPrecision(3)) + ' of its height a film frame, the mean of its ' + (kind === 'dive' ? 'first ' : 'last ') + SEAM_OWN + ' film frames') + '). A step is named by the frame it ends on; `tools/seam.ts` names it by the frame it starts on. Lowest ' + at(e.lowest, min) + ', ' + (min === null ? 'no limit yet, not judged' : 'limit ' + min) + '; inside the ' + kind + ' itself ' + at(e.inMove) + '. Largest step from one capture frame to the next ' + at(e.step) + ', shown. The part along the surface view\'s own direction of motion: ' + (e.lowest ? shown(e.along[e.lowest.k - e.k0]!, 2) + ' at the lowest, ' : '') + 'lowest ' + at(e.back) + ', shown; under 0 the eye goes back.', '')
+  }
   if (p.faults.length) lines.push(...p.faults.map((f) => '- RED ' + f.text), '')
   else lines.push('No number of the path is over its limit.', '')
   const fine = p.runs.length > 1
