@@ -1,9 +1,25 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T04:11:41.453Z",
+ "pushed": "2026-11-24T04:43:15.955Z",
  "head": "b68de107a21b8ace77881328432852d0b9366c8a",
- "note": "turned place on main's cap, picture off: join with the main trough at 2439, 2452, 2700, 2713; faults: pale tongue of the side canyon floor into the trough, dotted border line of the cap at 2713, worm grain, pale close patch",
+ "note": "04:48 tongue cured, cap reach 17 shows no border line, G15 cure running (two finest levels smaller, matte out)",
  "looks": [
+  {
+   "time": "2026-11-24T04:43:15.375Z",
+   "file": "20261124044315375-note-q-sheet.jpg",
+   "source": "out/work/place/see/q-sheet.jpg",
+   "kind": "note",
+   "label": "rise 2704, 2708, 2712 with the cap reach at 17 degrees, no dotted border; lower right: 2708 at full size",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T04:43:14.478Z",
+   "file": "20261124044314478-note-m-sheet.jpg",
+   "source": "out/work/place/see/m-sheet.jpg",
+   "kind": "note",
+   "label": "engine draft stills after the tongue cure, picture off, rise on its own law: 2439, 2452, 2471, 2700, 2706",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T04:11:40.644Z",
    "file": "20261124041140644-note-k-sheet.jpg",
@@ -56,22 +72,6 @@
    "source": "out/work/place/see/map19-crops.jpg",
    "kind": "note",
    "label": "the globe's map at the place (patch-19, centre 19 and 8.5 degrees) with the Sun by the globe (yellow 310), the camera now (green 100) and after a turn (magenta 240, pink 255)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T02:36:16.385Z",
-   "file": "20261124023616385-note-j-sheet.jpg",
-   "source": "out/work/place/see/j-sheet.jpg",
-   "kind": "note",
-   "label": "engine draft stills j (heights v8: relaxed membrane, craters, rock layers; still the close image's Sun, scratch) at 2439 2452 2471 2700 2713",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T02:22:31.756Z",
-   "file": "20261124022231756-note-i-sheet.jpg",
-   "source": "out/work/place/see/i-sheet.jpg",
-   "kind": "note",
-   "label": "ENGINE with the cap (scratch tree, relit plates, heights v7): 2439 2452 2471 2700 2713 lit by the close image's Sun; last tile: 2452 lit by the globe's Sun (wrong walls)",
    "stop": "mars"
   }
  ]
