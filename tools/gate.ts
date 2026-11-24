@@ -4,7 +4,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSy
 import { join } from 'node:path'
 import { DIST, ROOT, WORK, args, ensureBuild, formatId, linkDist, loadConfig, readRecord } from './lib/common'
 import { computeHashes } from './lib/hashes'
-import { DETERMINISM, WARM_SELF, determinismFrames, keptDeterminism, keptWarm, readKept, toolHash, warmSelfFrames } from './gate/kept'
+import { DETERMINISM, WARM_SELF, determinismFrames, keptDeterminism, keptWarm, pinnedBrowser, readKept, toolHash, warmSelfFrames } from './gate/kept'
 import { openCapture, renderPng } from './lib/browser'
 import { decodePng } from './lib/frames'
 import { decodeFramePng, psnrPng } from './lib/encode'
@@ -282,7 +282,7 @@ const checks: Record<string, () => Promise<Result> | Result> = {
   },
   G3: () => {
     const h = computeHashes(ROOT)
-    const build = { engineHash: h.engine, stopHashes: h.stops }
+    const build = { engineHash: h.engine, stopHashes: h.stops, browser: pinnedBrowser(ROOT) }
     const listed = (JSON.parse(readFileSync(join(ROOT, 'src/core/warm.json'), 'utf8')) as { frames: number[] }).frames
     const kd = keptDeterminism(readKept(join(WORK, 'determinism', 'result.json')), { ...build, ...DETERMINISM, format: formatId(cfg, DETERMINISM.format), tool: toolHash(ROOT, 'tools/determinism.ts'), frames: determinismFrames(cfg.segments) })
     const kw = keptWarm(readKept(join(WORK, 'warm', 'self.json')), { ...build, ...WARM_SELF, format: cfg.formatKeys.preview, tool: toolHash(ROOT, 'tools/warmcheck.ts'), ...warmSelfFrames(cfg.segments, listed) })

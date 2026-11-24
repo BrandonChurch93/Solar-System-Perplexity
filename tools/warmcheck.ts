@@ -67,12 +67,15 @@ async function still(page: Page, frame: number, warm: boolean, others: number[])
 async function self(): Promise<never> {
   const { stop, frames, terrain } = warmSelfFrames(cfg.segments, listed().frames)
   const cold: string[] = []
+  const browsers = new Set<string>()
   for (const f of frames) {
     const s = await open(f)
+    browsers.add(s.browserVersion)
     cold.push((await still(s.page, f, false, [])).hash)
     await s.close()
   }
   const s = await open(frames[0]!)
+  browsers.add(s.browserVersion)
   let differ = 0
   let drawn = 0
   const rows: { frame: number; cold: string; warm: string; drawn: number }[] = []
@@ -92,7 +95,7 @@ async function self(): Promise<never> {
   await s.close()
   say(differ > 0 ? 'warm: FAIL' : drawn > 0 ? 'warm: pass' : 'warm: pass, but no warm draw was made (the list holds no frame of ' + stop + '), so nothing was proven')
   mkdirSync(join(WORK, 'warm'), { recursive: true })
-  writeFileSync(join(WORK, 'warm', 'self.json'), JSON.stringify({ ok: differ === 0, stop, frames, terrain, format, tier, assets: a.assets ?? (player ? 'web' : WARM_SELF.assets), engineHash: hashes.engine, stopHashes: hashes.stops, tool: toolHash(ROOT, 'tools/warmcheck.ts'), machine: machineId(), rows, lines }, null, 1))
+  writeFileSync(join(WORK, 'warm', 'self.json'), JSON.stringify({ ok: differ === 0, stop, frames, terrain, format, tier, assets: a.assets ?? (player ? 'web' : WARM_SELF.assets), engineHash: hashes.engine, stopHashes: hashes.stops, tool: toolHash(ROOT, 'tools/warmcheck.ts'), browser: [...browsers].join(', '), machine: machineId(), rows, lines }, null, 1))
   process.exit(differ === 0 ? 0 : 1)
 }
 

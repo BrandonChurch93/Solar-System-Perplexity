@@ -2,9 +2,9 @@ import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { determinismFrames, keptDeterminism, keptWarm, toolHash, warmSelfFrames } from '../tools/gate/kept'
+import { determinismFrames, keptDeterminism, keptWarm, pinnedBrowser, toolHash, warmSelfFrames } from '../tools/gate/kept'
 
-const build = { engineHash: 'e1', stopHashes: { sun: 's1', venus: 'v1' }, format: 'p', tier: 'review', assets: 'full', tool: 't1' }
+const build = { engineHash: 'e1', stopHashes: { sun: 's1', venus: 'v1' }, format: 'p', tier: 'review', assets: 'full', tool: 't1', browser: '147.0.7727.15' }
 const frames = [360, 735, 495, 90]
 const hashes = Object.fromEntries(frames.map((f) => [f, 'h' + f]))
 const record = (over: object = {}): Record<string, unknown> => ({ ok: true, frames, ...build, machine: 'machine 4x', runs: { 'fresh-forward': { ...hashes }, 'fresh-reverse': { ...hashes } }, single: { 90: 'h90' }, ...over })
@@ -42,6 +42,15 @@ describe('gate G3 from the record of the determinism check', () => {
     expect(keptDeterminism(record({ tool: 't0' }), want).why).toBe('the record is of another state of the tool (t0 against t1)')
     expect(keptDeterminism(record({ tool: undefined }), want).why).toContain('another state of the tool')
     expect(keptDeterminism(record({ machine: '' }), want).why).toBe('the record names no machine')
+  })
+
+  it('takes no record without a browser, of another browser than the tree pins, or when the tree pins none', () => {
+    expect(keptDeterminism(record({ browser: undefined }), want).why).toBe('the record names no browser')
+    expect(keptDeterminism(record({ browser: '' }), want).why).toBe('the record names no browser')
+    expect(keptDeterminism(record({ browser: '147.0.7727.16' }), want).why).toBe('the record is of another browser (147.0.7727.16 against 147.0.7727.15, the version this tree pins)')
+    expect(keptDeterminism(record({ browser: '147.0.7727.15, 148.0.1.2' }), want).why).toContain('another browser')
+    expect(keptDeterminism(record(), { ...want, browser: '' }).why).toBe('this tree pins no browser version in config/webgl-caps.json')
+    expect(keptDeterminism(record({ browser: '' }), { ...want, browser: '' }).why).toBe('this tree pins no browser version in config/webgl-caps.json')
   })
 
   it('takes no record of other frames than the tool would pick now', () => {
@@ -83,6 +92,12 @@ describe('gate G3 from the record of the warm start\'s self test', () => {
     expect(keptWarm(warm({ tool: 't0' }), wanted).why).toContain('another state of the tool')
   })
 
+  it('takes no record without a browser or of another browser than the tree pins', () => {
+    expect(keptWarm(warm({ browser: undefined }), wanted).why).toBe('the record names no browser')
+    expect(keptWarm(warm({ browser: '146.0.1.1' }), wanted).why).toBe('the record is of another browser (146.0.1.1 against 147.0.7727.15, the version this tree pins)')
+    expect(keptWarm(warm(), { ...wanted, browser: '' }).why).toContain('pins no browser version')
+  })
+
   it('takes no record of another list than the test would check now', () => {
     expect(keptWarm(warm({ stop: 'venus' }), wanted).why).toContain('other frames')
     expect(keptWarm(warm({ frames: [690, 997] }), wanted).why).toContain('other frames')
@@ -110,6 +125,18 @@ describe('what the two checks draw and the state of their tools', () => {
     expect(warmSelfFrames(segments, [])).toEqual({ stop: 'venus', frames: [201, 321, 351], terrain: 271 })
     expect(warmSelfFrames(segments, [120, 400])).toEqual({ stop: 'mars', frames: [381, 501, 532], terrain: 451 })
     expect(warmSelfFrames(segments, [400, 250])).toEqual({ stop: 'venus', frames: [201, 321, 351], terrain: 271 })
+  })
+
+  it('reads the browser version the tree pins from config/webgl-caps.json', () => {
+    const root = mkdtempSync(join(tmpdir(), 'kept-'))
+    expect(pinnedBrowser(root)).toBe('')
+    mkdirSync(join(root, 'config'), { recursive: true })
+    writeFileSync(join(root, 'config/webgl-caps.json'), JSON.stringify({ browser: 'Chrome for Testing 147.0.7727.15', flags: [] }))
+    expect(pinnedBrowser(root)).toBe('147.0.7727.15')
+    writeFileSync(join(root, 'config/webgl-caps.json'), JSON.stringify({ flags: [] }))
+    expect(pinnedBrowser(root)).toBe('')
+    writeFileSync(join(root, 'config/webgl-caps.json'), 'not json')
+    expect(pinnedBrowser(root)).toBe('')
   })
 
   it('hashes the tool with every file under tools it imports, and nothing outside', () => {
