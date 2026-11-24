@@ -2,7 +2,8 @@ import { createHash } from 'node:crypto'
 import { appendFileSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import type { Page } from 'playwright-core'
-import { DIST, ROOT, WORK, args, ensureBuild, loadConfig, requireDisk } from './lib/common'
+import { DIST, ROOT, WORK, args, ensureBuild, loadConfig, machineId, requireDisk } from './lib/common'
+import { WARM_SELF, toolHash, warmSelfFrames } from './gate/kept'
 import { openCapture, pageFault, type Session } from './lib/browser'
 import { makerLines, watchMakers } from './lib/makers'
 import { judgedFrames, segmentAtFrame } from '../src/director/timeline'
@@ -29,7 +30,7 @@ interface Api { memory(): { peakBytes: number; loaded: string[] }; png(): Promis
 const cfg = loadConfig()
 requireDisk(cfg)
 const a = args()
-const tier = a.tier ?? 'draft'
+const tier = a.tier ?? WARM_SELF.tier
 const format = a.format ?? (a.stills ? cfg.formatKeys.master : cfg.formatKeys.preview)
 const player = a.player === 'true'
 const first = a.first ? Number(a.first) : 0
@@ -41,9 +42,9 @@ if (a.write === 'true' && a.reset === 'true') {
   const was = listed()
   list(was.recipe, was.frames.filter((f) => f < first || f >= last + 1))
 }
-ensureBuild()
+const hashes = ensureBuild()
 
-const open = (first: number): Promise<Session> => openCapture({ dist: DIST, format, assets: a.assets ?? (player ? 'web' : 'full'), mode: player ? 'live' : 'capture', query: player ? '&frame=' + first : '' })
+const open = (first: number): Promise<Session> => openCapture({ dist: DIST, format, assets: a.assets ?? (player ? 'web' : WARM_SELF.assets), mode: player ? 'live' : 'capture', query: player ? '&frame=' + first : '' })
 const sha = (b64: string): string => createHash('sha256').update(Buffer.from(b64, 'base64')).digest('hex')
 
 async function usable(page: Page, frame: number): Promise<void> {
@@ -64,13 +65,7 @@ async function still(page: Page, frame: number, warm: boolean, others: number[])
 }
 
 async function self(): Promise<never> {
-  const dives = cfg.segments.filter((x) => x.kind === 'dive')
-  const dive = dives.find((x) => listed().frames.some((f) => segmentAtFrame(f).stop === x.stop)) ?? dives[0]!
-  const of = (kind: string): number => {
-    const x = cfg.segments.find((y) => y.stop === dive.stop && y.kind === kind)!
-    return x.firstFrame + Math.floor(x.frames / 2)
-  }
-  const frames = [dive.firstFrame, of('rise'), of('travel')]
+  const { stop, frames, terrain } = warmSelfFrames(cfg.segments, listed().frames)
   const cold: string[] = []
   for (const f of frames) {
     const s = await open(f)
@@ -80,15 +75,24 @@ async function self(): Promise<never> {
   const s = await open(frames[0]!)
   let differ = 0
   let drawn = 0
+  const rows: { frame: number; cold: string; warm: string; drawn: number }[] = []
+  const lines: string[] = []
+  const say = (line: string): void => {
+    lines.push(line)
+    console.log(line)
+  }
   for (const [i, f] of frames.entries()) {
-    const r = await still(s.page, f, true, [of('terrain'), ...frames.filter((x) => x !== f).reverse()])
+    const r = await still(s.page, f, true, [terrain, ...frames.filter((x) => x !== f).reverse()])
     drawn += r.drawn
     const same = r.hash === cold[i]
     if (!same) differ++
-    console.log('frame ' + f + ' ' + (same ? 'identical' : 'DIFFERENT') + ' ' + cold[i]!.slice(0, 16) + ' ' + r.hash.slice(0, 16) + ' after ' + r.drawn + ' warm draws and 3 other frames')
+    rows.push({ frame: f, cold: cold[i]!, warm: r.hash, drawn: r.drawn })
+    say('frame ' + f + ' ' + (same ? 'identical' : 'DIFFERENT') + ' ' + cold[i]!.slice(0, 16) + ' ' + r.hash.slice(0, 16) + ' after ' + r.drawn + ' warm draws and 3 other frames')
   }
   await s.close()
-  console.log(differ > 0 ? 'warm: FAIL' : drawn > 0 ? 'warm: pass' : 'warm: pass, but no warm draw was made (the list holds no frame of ' + dive.stop + '), so nothing was proven')
+  say(differ > 0 ? 'warm: FAIL' : drawn > 0 ? 'warm: pass' : 'warm: pass, but no warm draw was made (the list holds no frame of ' + stop + '), so nothing was proven')
+  mkdirSync(join(WORK, 'warm'), { recursive: true })
+  writeFileSync(join(WORK, 'warm', 'self.json'), JSON.stringify({ ok: differ === 0, stop, frames, terrain, format, tier, assets: a.assets ?? (player ? 'web' : WARM_SELF.assets), engineHash: hashes.engine, stopHashes: hashes.stops, tool: toolHash(ROOT, 'tools/warmcheck.ts'), machine: machineId(), rows, lines }, null, 1))
   process.exit(differ === 0 ? 0 : 1)
 }
 

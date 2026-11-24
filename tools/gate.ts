@@ -2,7 +2,9 @@ import { execFileSync, spawnSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
 import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
-import { DIST, ROOT, WORK, args, ensureBuild, linkDist, loadConfig, readRecord } from './lib/common'
+import { DIST, ROOT, WORK, args, ensureBuild, formatId, linkDist, loadConfig, readRecord } from './lib/common'
+import { computeHashes } from './lib/hashes'
+import { DETERMINISM, WARM_SELF, determinismFrames, keptDeterminism, keptWarm, readKept, toolHash, warmSelfFrames } from './gate/kept'
 import { openCapture, renderPng } from './lib/browser'
 import { decodePng } from './lib/frames'
 import { decodeFramePng, psnrPng } from './lib/encode'
@@ -279,9 +281,19 @@ const checks: Record<string, () => Promise<Result> | Result> = {
     return { id: 'G2', pass: r.ok, note: r.ok ? (m?.[1] ?? 'tests pass').trim() : r.out.slice(-600) }
   },
   G3: () => {
-    const r = run('npx', ['tsx', 'tools/determinism.ts'])
-    const w = run('npx', ['tsx', 'tools/warmcheck.ts', '--self'])
-    return { id: 'G3', pass: r.ok && w.ok, note: r.out.trim().split('\n').slice(-6).concat(w.out.trim().split('\n').slice(-4)).join('; ') }
+    const h = computeHashes(ROOT)
+    const build = { engineHash: h.engine, stopHashes: h.stops }
+    const listed = (JSON.parse(readFileSync(join(ROOT, 'src/core/warm.json'), 'utf8')) as { frames: number[] }).frames
+    const kd = keptDeterminism(readKept(join(WORK, 'determinism', 'result.json')), { ...build, ...DETERMINISM, format: formatId(cfg, DETERMINISM.format), tool: toolHash(ROOT, 'tools/determinism.ts'), frames: determinismFrames(cfg.segments) })
+    const kw = keptWarm(readKept(join(WORK, 'warm', 'self.json')), { ...build, ...WARM_SELF, format: cfg.formatKeys.preview, tool: toolHash(ROOT, 'tools/warmcheck.ts'), ...warmSelfFrames(cfg.segments, listed) })
+    const part = (name: string, k: { why: string; machine: string; lines: string[] }, argv: string[], last: number): { ok: boolean; lines: string[] } => {
+      if (!k.why) return { ok: true, lines: [name + ': the record of this build is reused, made on ' + k.machine + ', nothing is drawn here', ...k.lines.slice(-last)] }
+      const r = run('npx', ['tsx', ...argv])
+      return { ok: r.ok, lines: [name + ': run here (' + k.why + ')', ...r.out.trim().split('\n').slice(-last)] }
+    }
+    const r = part('determinism', kd, ['tools/determinism.ts'], 6)
+    const w = part('warm', kw, ['tools/warmcheck.ts', '--self'], 4)
+    return { id: 'G3', pass: r.ok && w.ok, note: r.lines.concat(w.lines).join('; ') }
   },
   G4: async () => {
     ensureBuild()
