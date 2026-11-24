@@ -380,3 +380,8 @@ Draft stills `out/work/stills/f%05d-16x9-draft-full.png`, sha256, frames 360 (su
   - 2708 rise: 1.475, 7.0, 3.87, -1.394 to 1.310, 5.0, 3.58, -1.360
   - 2726 rise: 1.540, 8.8, 31.23, -1.633 to 1.188, 4.0, 13.66, -0.855
   The four numbers the limits read (mean 1.552, coarse mean 0.549, block -2.046, level -0.508) stand at 2580 before and after. Mars was inside the limits before the change; the change is seen on five of the seven frames, most at 2726. Seconds a draft frame at uhd 18.9 before, 22.0 after (one run each).
+- Merge of main e7fc53a2 (88ba5871; the parity now reads the hold and the leaving leg, nine frames). Mars parity again, main e7fc53a2 against the merge, both green. Mean, 99th percentile, largest coarse difference, block level:
+  - 2325 hold: 2.014, 16.5, 28.38, 3.250 to 1.305, 6.1, 6.24, -1.270. In the difference picture the band of Valles Marineris, where a plate level came in earlier at uhd, is gone.
+  - 2783 travel: 1.919, 20.9, 32.65, -2.806 to 1.918, 20.9, 32.65, -2.806; level -0.98, fine detail 1.755. The difference picture shows the stars (`src/space`, not this folder) and faintly the moon's fine detail. The largest pixel fell from 210 to 169.
+  - The seven frames between as in the entry above, to the digit.
+  The largest numbers before: mean 2.014 and block 3.250 at the hold; after: mean 1.918, coarse mean 1.024, block -2.806, level -0.980, all at 2783.
