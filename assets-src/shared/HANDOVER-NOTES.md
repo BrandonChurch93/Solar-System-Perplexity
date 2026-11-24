@@ -666,6 +666,32 @@ Read this file first after a compaction, then the task mail, then `cut/HANDOVER.
 - LOOKS 07:20: the plot `out/work/looks-extra/eye-earth-uranus-rise.png` (the judge's eye curve across the seam of the Earth rise and the Uranus rise forced onto the one move: the film's law, the withdrawn set, the green set; made by scratch `out/work/tmp/eyerows.ts STOP KIND ['JSON']`, which prints the curve as JSON).
 - /root's log d204 (07:05) still says Earth's rise and Uranus's rise have no set and need the bend (MAIL 561 told Earth so): my mail of 07:18 corrects it, both sets are green. If earth_builder or uranus_builder ask, the sets are above.
 
+### 07:20 to 07:45 (24 Nov), the tools commit named (0869e6c1), MAIL 572, the shutter measured and left, every builder's head through the judge by overlay
+
+- NAMED 07:26: 0869e6c1593a4fcb19a3288f0a0edc2a988baa24 on the merge 3d79cc43 of main 09d64d78 (tools and tests only; the diff on src, config, package.json and public is empty). /root takes it as take D (MAIL 572).
+- MAIL 572 (07:29 by /root's clock, to all): main is 8b2c538f62b5f63f910d1c62cd96fbf78f06560c and holds take C (be1de182: my `Relief.presence` and sky_builder's pixel factor swap; check eq1: 115 of 115 drafts equal the reference, 18 of 18 judged finals equal; build, 437 of 437 tests in 47 files, tsc, G11, cues, shots clean). Take D is coming: 0869e6c1. The stops' named commits are due 08:30 UTC. Stops fetch main with `--depth 1` only. /root offers my `/tmp/slim.py` to any builder short of disk: send it as an attachment when one asks (`python3 /tmp/slim.py` prints the plan, `--go` does it; a pack goes only when each of its objects stands in another pack).
+- FETCHING HERE: a depth 1 fetch would cut the merge base of this branch, so my merges keep plain `git fetch origin main` (never `--deepen`), and `/tmp/slim.py --go` when the packs have doubled.
+- THE SHUTTER'S SHARE (MAIL 432.4, MAIL 351 item 2), MEASURED AND LEFT AS IT IS (scratch `out/work/tmp/shares.ts`, `rawsteps.ts`, `rawprobe.ts`, `truth.ts`):
+  - `src/core/motion.ts`: `rawMotion` reads the orbit side on the unit sphere and the terrain side on the plane y = -ground of the set; `shutterScale` = max(allowed / raw, `minShutter` 0.5), `maxBlurPx` 14, `blurEaseFrames` 12.
+  - The step of MAIL 351 item 2 at Saturn 3832 is gone on main: in the capped frames of Saturn's rise the logarithm of raw bends at most 0.125 (3859), 0.084 at 3835.
+  - The large steps of the share at seams (up to 0.296, Neptune dive 4759) are the kinks of floor and cap while raw falls; the blur that is kept is continuous.
+  - At the change of view the measure steps between the two sides for one and the same eye: Mars rise 2687 orbit 86.5 px (equal to the plan's own truth 86.55), terrain 68.5; forced onto the one move Uranus rise 26.5 to 57.9 at 4391, Venus rise 21.3 to 37.7 at 1542, Mercury rise 36.3 to 50.9 at 977. Nearly all those frames stand at the floor 0.5, so the share itself does not step.
+  - DECISION: no change. A cure would be one measure on the eye's own geometry for both sides on the one move, off by default; only if /root asks.
+- Plan F's switch `handover.scene` was never built; the stops draw their place themselves; not needed.
+- SATURN AND THE ONE MOVE: the one move reads heights above the unit sphere (`glide`, `target`, `eyeHeight` in `src/director/moves.ts`, about lines 371 to 478 and 620 to 640). A place on the rings (`spot.on === 'rings'`, `turn()` identity) would need heights above the plane, range = height / lift and a centre on the plane. Not begun, and not needed today: Saturn's own path reads green (below).
+- EVERY BUILDER'S HEAD THROUGH THE JUDGE'S PATH PART, 07:33 to 07:43. Tool `/tmp/law/overlay.sh STOP BRANCH`: the files of `src/stops/STOP` that the branch changed against main (`gh api repos/.../compare/main...SHA`), fetched with `gh api .../contents/PATH?ref=SHA -H "Accept: application/vnd.github.raw"` and laid over this tree; the stop in or out of `handover.ownPath` as the branch's config has it; the folder's tree hash against the branch's (`git write-tree --prefix=src/stops/STOP/` on a scratch index against `gh api .../contents/src/stops?ref=SHA`: equal for all nine); `npm run smooth -- --stop ID --only path` and `npx tsx tools/seam.ts --stop ID`; then `git checkout -- src/stops/ID config/showcase.json; git clean -fdq -- src/stops/ID`. Outputs `/tmp/law/overlay/STOP/`. The engine under them is this tree's (main 09d64d78 and the tools commit); against Earth's base f6ce51a5 it differs only in `src/core/jitter.ts`, `src/core/sampler.ts`, `src/director/pace.ts` (the plan check moved to tools) and `src/terrain/relief.ts`, none of which moves a camera.
+  - sun b3572b5f (pushed 07:08), on the one move: green; eye at the rise 1.000 at 179 + 1/2
+  - mercury d5db35dc (06:50), own path: green; eye 0.912 at 795 + 1/2 and 0.928 at 944
+  - venus 2cf336a3 (06:44), on the one move: green; eye 0.997 at 1350 and 0.990 at 1530 + 1/2
+  - earth 6c75f48f (06:20), own path: RED, 21 numbers. Dive: turn 0.094 at 1865 and 0.106 at 1901, speed 0.105 at 1838. Rise: turn 0.120 at 2118, 0.117 at 2143, 0.085 at 2168, climbs again 0.218 after 2124; speed 0.117 at 2127, 0.182 at 2169, falls 0.096 before 2160. Eye green: 0.984 at 1919 and 0.951 at 2084
+  - mars b9c472dc (06:38), on the one move: green; eye 0.996 at 2490 + 1/2 and 0.993 at 2654
+  - jupiter 6c69ed49 (07:01), on the one move: green; eye 0.995 at 3060 + 1/2 and 0.948 at 3224
+  - saturn 2ab7243b (07:36; 086fcbd5 before it read the same), own path: green; eye 1.000 at 3634 and 0.999 at 3794
+  - uranus 53152d5f (06:48), own path: green; eye 1.000 at 4200 + 1/2 and 0.999 at 4364
+  - neptune fd95089a (06:12), on the one move: green; eye 0.995 at 4785 + 1/2 and 0.942 at 4950 + 1/2
+- EARTH ON THE ONE MOVE, ON ITS OWN HEAD (`/tmp/law/overlay-forced.sh earth agent/earth-place 'JSON'`: the same overlay, then scratch `lawjudge.ts` and `tools/law.ts --tries 0 --rounds 0`; tree 2f821422 equal to the branch's): no law for the dive and the rise set of 07:18 under `handover.rise`: the path part is GREEN, none over. Dive steps 0.876, rebound 0.01, eye 0.994; rise 0.966, 0.87, eye 0.951 at 2084, inside the move 1.021. Mailed to earth_builder at 07:40 (no answer needed) with the cost: the camera of every dive and rise frame moves, the judged frames 1857 and 2156 among them; I measured the path only, no picture. Leaving `handover.ownPath` is its own commit.
+- LOOKS 07:40 (3f8df859): the plot `out/work/looks-extra/path-earth-own-and-onemove.png` (`python3 /tmp/law/plotpath.py OUT TITLE A.md LABEL_A B.md LABEL_B` draws the per frame rows of two smooth reports over each other, clipped to what is judged).
+
 ## E as built (23:45), the engine's one move
 
 - Switches: `handover.ownPath` (my config block): the stops that keep the path of their own class. Today all but mars. A builder takes its name off in its own commit. `--diag onemove` (probe.ts, `forceOneMove`) draws any stop on E without touching the config; the scene word carries `|onemove` so the caches do not mix.
@@ -809,15 +835,15 @@ MAIL 351 (22:19 by /root's clock, 22:14 by mine), the work from here. In its wor
 
 ## Next
 
-(rewritten 07:20, 24 Nov)
+(rewritten 07:45, 24 Nov)
 
 NOW, in this order (hours in UTC by this VM's clock; /root's clock reads about 3 min more):
-1. THE TOOLS COMMIT (the eye in the plan check and the search, the seam tool cured) is proven and stands on top of the merge 3d79cc43 of main 09d64d78: if `git log origin/agent/engine-handover -1` does not show it, push it; then NAMED to /root with the full sha and the proof plan (tools and tests only: no frame can change, every draft and final equal).
-2. The sets are with /root (mails 06:56 and 07:18): venus dive, earth rise, jupiter rise, uranus dive and rise, neptune dive and rise. None for venus rise on main's surface view, none for Saturn. A set goes only to a builder that leaves `handover.ownPath` or asks.
-3. Builders' requests by mail. neptune_builder will ask for the bend (it is on the one move, rise eye 0.942 at 4950). Saturn: if /root asks for the one move on the plane of the rings, that is an engine change of its own (the glide's heights and the lift read the globe today).
-4. At every mail of a new main: plain `git fetch origin main`, merge (never rebase), prove, push. Deadlines /root gave the stops: NAMED by 07:00 UTC, by 08:30 UTC for those that need the bend.
-5. Looks at least every 30 minutes (last 06:55, f02df2ef). Notebook with every push. Disk: 7.2 GB free at 07:19 (`/tmp/slim.py` when the packs have doubled again).
-6. Later: per stop switch `handover.oneMove`; the shutter's share (MAIL 432.4); F "globe"; the seam tool's advice for a stop that bends in its own `terrain()` (it has no way to say where its bend begins). MAIL 520 (2), the place picture at 4K: do not cure (MAIL 539).
+1. SERVICE. Nothing is owed to /root: the tools commit 0869e6c1 is named (take D), the sets are with /root, MAIL 554 is answered. Mail /root only NAMED, a blocker or an answer it asked for (MAIL 520).
+2. At every mail of a new main: plain `git fetch origin main`, `git merge --no-ff origin/main` with the trailer (never rebase), build, whole vitest by the json reporter, tsc, push. Main is 8b2c538f (take C); take D follows.
+3. Builders' requests by mail. earth_builder has the measure of its head (red on its own path, green on the one move with the rise set) and may ask for more. neptune_builder may ask for the bend (rise eye 0.942 at 4950 + 1/2, green). Any builder may ask for `/tmp/slim.py`: send the file as an attachment with the two lines on its use. The stops' named commits are due 08:30 UTC.
+4. Before a stop is named, its head can be read in 15 s: `/tmp/law/overlay.sh STOP agent/BRANCH` (if `/tmp` is gone, the method is in the entry "07:20 to 07:45").
+5. Looks at least every 30 minutes (last 07:40). Notebook with every push. Disk: 7.1 GB free at 07:36 (`/tmp/slim.py --go` when the packs have doubled again).
+6. Later, only on /root's word: the one move on the plane of the rings (Saturn); per stop switch `handover.oneMove`; one measure of the shutter for both sides; F "globe"; the seam tool's advice for a stop that bends in its own `terrain()`. MAIL 520 (2), the place picture at 4K: do not cure (MAIL 539).
 
 Standing:
 - The tone split stays off. `follow` stays unnamed (`stash@{0}`). /root renders the final tier frames itself. limbSky stays off and goes when F's one air lands.
