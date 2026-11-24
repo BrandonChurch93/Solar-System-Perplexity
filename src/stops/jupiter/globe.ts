@@ -4,7 +4,7 @@ import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { EQUIRECT_GLSL } from '../../space/sky'
 import { ABOVE_GLSL, CALM_GLSL, DETAIL_GLSL, STORED_GLSL } from './clouds'
-import { frameUniform } from './frame'
+import { frameUniform } from '../../core/frame'
 import { PALL_GLSL, pallUniforms } from './pall'
 
 export const CURVE_KNOTS = 33

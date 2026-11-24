@@ -3,7 +3,7 @@ import type { RenderView, SetContext } from '../../core/types'
 import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import deck from './deck.json'
 import fields from './deck-fields.json'
-import { frameUniform } from './frame'
+import { frameUniform } from '../../core/frame'
 import place from './place.json'
 
 const OCTAVES = 10

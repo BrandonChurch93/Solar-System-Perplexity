@@ -10,7 +10,7 @@ import { Globe } from './globe'
 import { Io } from './io'
 import * as look from './look'
 import fields from './deck-fields.json'
-import { setFrame } from './frame'
+import { bufferFrame } from '../../core/frame'
 import place from './place.json'
 import { chartAxes, chartEye, closeHeight, eddyTurn, exposed, exposure, flashNow, hazeDrift, low, lowEven, plan, ringTurn, stormTurn } from './plan'
 import proof from './proof.json'
@@ -120,7 +120,7 @@ export const createSet: SetFactory = async (ctx) => {
     world,
     sky,
     update: (state, shot, view) => {
-      const frame = setFrame(view)
+      const frame = bufferFrame()
       const inOrbit = state.view === 'orbit'
       orbit.visible = inOrbit && state.weight > 0
       terrain.visible = !inOrbit
