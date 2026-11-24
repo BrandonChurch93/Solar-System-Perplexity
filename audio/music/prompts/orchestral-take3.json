@@ -1,0 +1,530 @@
+{
+ "chunks": [
+  {
+   "text": "[Sun Surface]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "cinematic symphony orchestra",
+    "instrumental only",
+    "epic space film score",
+    "great production quality",
+    "wide concert hall sound",
+    "soft opening",
+    "starts at once with a low string drone",
+    "gentle shimmering violins",
+    "warm glow",
+    "low energy"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "loud",
+    "drums",
+    "fade in"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Sun Rise]",
+   "duration_ms": 3000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "cinematic symphony orchestra",
+    "instrumental only",
+    "gentle swell",
+    "strings rising",
+    "soft cymbal roll",
+    "growing"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Sun Revealed]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "cinematic symphony orchestra",
+    "instrumental only",
+    "warm noble theme enters",
+    "horns and strings",
+    "moderate level",
+    "calm and majestic",
+    "medium energy"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Travel To Mercury]",
+   "duration_ms": 3000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "cinematic symphony orchestra",
+    "instrumental only",
+    "crescendo",
+    "rising strings",
+    "timpani roll",
+    "building tension",
+    "getting louder"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Mercury Arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "cinematic symphony orchestra",
+    "instrumental only",
+    "loud and powerful",
+    "high energy",
+    "full orchestra hits on the first beat",
+    "bright glittering strings and celesta, brilliant trumpets",
+    "broad main theme, sustained",
+    "big and majestic"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "sparse"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Mercury Surface Then Build]",
+   "duration_ms": 11000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "cinematic symphony orchestra",
+    "instrumental only",
+    "starts soft and gentle with a thin texture",
+    "only soft harp and celesta over held strings",
+    "low energy for the first half",
+    "then a crescendo with rising strings and swelling horns",
+    "timpani roll at the end",
+    "getting louder into the next section"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Venus Arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "cinematic symphony orchestra",
+    "instrumental only",
+    "loud and powerful",
+    "high energy",
+    "full orchestra hits on the first beat",
+    "lush thick strings and glowing horns, rich and full",
+    "broad main theme, sustained",
+    "big and majestic"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "sparse"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Venus Surface Then Build]",
+   "duration_ms": 11000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "cinematic symphony orchestra",
+    "instrumental only",
+    "starts soft and gentle with a thin texture",
+    "only soft muted strings and a breathy flute",
+    "low energy for the first half",
+    "then a crescendo with rising strings and swelling horns",
+    "timpani roll at the end",
+    "getting louder into the next section"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Earth Arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "cinematic symphony orchestra",
+    "instrumental only",
+    "loud and powerful",
+    "high energy",
+    "full orchestra hits on the first beat",
+    "warm soaring string melody, noble horns, hopeful",
+    "broad main theme, sustained",
+    "big and majestic"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "sparse"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Earth Surface Then Build]",
+   "duration_ms": 11000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "cinematic symphony orchestra",
+    "instrumental only",
+    "starts soft and gentle with a thin texture",
+    "only soft solo cello and piano over held strings",
+    "low energy for the first half",
+    "then a crescendo with rising strings and swelling horns",
+    "timpani roll at the end",
+    "getting louder into the next section"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Mars Arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "cinematic symphony orchestra",
+    "instrumental only",
+    "loud and powerful",
+    "high energy",
+    "full orchestra hits on the first beat",
+    "pounding war drums, bold brass, driving low strings",
+    "broad main theme, sustained",
+    "big and majestic"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "sparse"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Mars Surface Then Build]",
+   "duration_ms": 11000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "cinematic symphony orchestra",
+    "instrumental only",
+    "starts soft and gentle with a thin texture",
+    "only soft low string ostinato with a light pulse",
+    "low energy for the first half",
+    "then a crescendo with rising strings and swelling horns",
+    "timpani roll at the end",
+    "getting louder into the next section"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Jupiter Arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "cinematic symphony orchestra",
+    "instrumental only",
+    "loud and powerful",
+    "high energy",
+    "full orchestra hits on the first beat",
+    "massive low brass, thundering timpani, colossal",
+    "broad main theme, sustained",
+    "big and majestic"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "sparse"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Jupiter Surface Then Build]",
+   "duration_ms": 11000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "cinematic symphony orchestra",
+    "instrumental only",
+    "starts soft and gentle with a thin texture",
+    "only soft deep basses and slow woodwinds",
+    "low energy for the first half",
+    "then a crescendo with rising strings and swelling horns",
+    "timpani roll at the end",
+    "getting louder into the next section"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Saturn Arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "cinematic symphony orchestra",
+    "instrumental only",
+    "loud and powerful",
+    "high energy",
+    "full orchestra hits on the first beat",
+    "grand sweeping strings, harp glissandi, bright bells",
+    "broad main theme, sustained",
+    "big and majestic"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "sparse"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Saturn Surface Then Build]",
+   "duration_ms": 11000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "cinematic symphony orchestra",
+    "instrumental only",
+    "starts soft and gentle with a thin texture",
+    "only soft glassy string harmonics and harp",
+    "low energy for the first half",
+    "then a crescendo with rising strings and swelling horns",
+    "timpani roll at the end",
+    "getting louder into the next section"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Uranus Arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "cinematic symphony orchestra",
+    "instrumental only",
+    "loud and powerful",
+    "high energy",
+    "full orchestra hits on the first beat",
+    "icy shimmering high strings over powerful brass chords",
+    "broad main theme, sustained",
+    "big and majestic"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "sparse"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Uranus Surface Then Build]",
+   "duration_ms": 11000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "cinematic symphony orchestra",
+    "instrumental only",
+    "starts soft and gentle with a thin texture",
+    "only soft clarinet over glassy held strings",
+    "low energy for the first half",
+    "then a crescendo with rising strings and swelling horns",
+    "timpani roll at the end",
+    "getting louder into the next section"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Neptune Arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "cinematic symphony orchestra",
+    "instrumental only",
+    "loud and powerful",
+    "high energy",
+    "full orchestra hits on the first beat",
+    "dark thundering low brass and drums, stormy, immense",
+    "broad main theme, sustained",
+    "big and majestic"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "sparse"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Neptune Surface Then Build]",
+   "duration_ms": 12500,
+   "positive_styles": [
+    "60 BPM",
+    "D minor",
+    "cinematic symphony orchestra",
+    "instrumental only",
+    "starts soft and gentle with a thin texture",
+    "only soft low held strings and a solo horn",
+    "low energy for the first half",
+    "then the biggest build of the piece",
+    "full orchestra rising",
+    "timpani roll and cymbal swell",
+    "getting louder and louder"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Looking Back, Final Climax]",
+   "duration_ms": 12000,
+   "positive_styles": [
+    "60 BPM",
+    "cinematic symphony orchestra",
+    "instrumental only",
+    "D major",
+    "the loudest moment of the whole piece",
+    "very high energy",
+    "full orchestra fortissimo",
+    "triumphant main theme",
+    "towering brass, soaring strings, crashing cymbals",
+    "sustained at full power to the very end"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "soft",
+    "sparse",
+    "fade out"
+   ],
+   "context_adherence": "low"
+  }
+ ]
+}

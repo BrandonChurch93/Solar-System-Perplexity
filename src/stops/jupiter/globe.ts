@@ -3,7 +3,7 @@ import { HAZE_GLSL, hazeUniforms, type HazeParams } from '../../bodies/haze'
 import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { EQUIRECT_GLSL } from '../../space/sky'
-import { DETAIL_GLSL } from './clouds'
+import { CALM_GLSL, DETAIL_GLSL } from './clouds'
 import { PALL_GLSL, pallUniforms } from './pall'
 
 export const CURVE_KNOTS = 33
@@ -182,6 +182,8 @@ uniform float uDetailTone;
 uniform float uDetailHigh;
 uniform vec3 uFoot;
 uniform vec2 uSunAz;
+uniform vec4 uStorm;
+uniform float uStormTurn;
 uniform vec3 uPlaceN;
 uniform vec3 uPlaceE;
 uniform vec3 uPlaceU;
@@ -196,6 +198,7 @@ ${INVERSE_FILMIC_GLSL}
 ${DIAG_GLSL}
 ${HAZE_GLSL}
 ${PALL_GLSL}
+${CALM_GLSL}
 ${DETAIL_GLSL}
 vec3 spinY(vec3 d, float a) {
   float c = cos(a), s = sin(a);
@@ -298,6 +301,11 @@ ${PATCH_LEVELS}
     vec2 c = vec2(dot(d, uPlaceE), dot(d, uPlaceU)) * uPlace.x;
     vec2 cx = dFdx(c);
     vec2 cy = dFdy(c);
+    vec2 cs;
+    c = calm(c, cs);
+    cx = vec2(cs.x * cx.x - cs.y * cx.y, cs.y * cx.x + cs.x * cx.y);
+    cy = vec2(cs.x * cy.x - cs.y * cy.y, cs.y * cy.x + cs.x * cy.y);
+    vec2 sunAz = vec2(cs.x * uSunAz.x - cs.y * uSunAz.y, cs.y * uSunAz.x + cs.x * uSunAz.y);
     float foot = sqrt(max(dot(cx, cx), dot(cy, cy)));
     vec2 r = abs(c - uPlateBoxFar.xy) * (2.0 * uPlateBoxFar.z);
     placed = uPlace.w * step(0.5, dot(d, uPlaceN)) * (1.0 - smoothstep(uPlace.z, uPlace.y, foot)) * (1.0 - smoothstep(uPlateJoin.x, uPlateJoin.y, max(r.x, r.y)));
@@ -335,7 +343,7 @@ ${PATCH_LEVELS}
       float on = smoothstep(least, 2.0 * least, cut);
       vec3 fineSum = vec3(0.0);
       for (int i = 0; i < (on > 0.0 ? taps : 0); i++) fineSum += made(c + axis * (major * ((float(i) + 0.5) / float(taps) - 0.5)), cut, least);
-      float shade = clamp(1.0 + on * max(plate.a, uDetailLook.z) * (uDetail.y * fineSum.z - uDetailTone * dot(fineSum.xy, uSunAz)) / float(taps), 1.0 - uDetailLook.w, 1.0 + uDetailLook.w);
+      float shade = clamp(1.0 + on * max(plate.a, uDetailLook.z) * (uDetail.y * fineSum.z - uDetailTone * dot(fineSum.xy, sunAz)) / float(taps), 1.0 - uDetailLook.w, 1.0 + uDetailLook.w);
       vec2 tv = clamp(vec2(c.x - uToneBox.x, uToneBox.y - c.y) * uToneBox.z + 0.5, uToneLift.z, 1.0 - uToneLift.z);
       vec3 tone = mix(vec3(1.0), uToneBox.w * vec3(texture(uTone, vec2(tv.x, tv.y / 3.0)).r, texture(uTone, vec2(tv.x, (tv.y + 1.0) / 3.0)).r, texture(uTone, vec2(tv.x, (tv.y + 2.0) / 3.0)).r), high);
       lin = mix(lin, inverseFilmic(plate.rgb) * uPlateGrade * tone * shade, placed);
@@ -463,7 +471,7 @@ export class Globe {
         uPlateBoxFore: o.place.uniforms.uFore!, uPlateBoxNear: o.place.uniforms.uNear!, uPlateBoxMid: o.place.uniforms.uMid!, uPlateBoxFar: o.place.uniforms.uFar!,
         uPlateTexel: o.place.uniforms.uTexel!, uPlateJoin: o.place.uniforms.uJoin!,
         uTone: o.place.uniforms.uTone!, uToneBox: o.place.uniforms.uToneBox!, uToneLift: o.place.uniforms.uToneLift!,
-        uDetail: o.place.uniforms.uDetail!, uDetailLook: o.place.uniforms.uDetailLook!, uDetailTone: o.place.uniforms.uDetailTone!, uDetailHigh: o.place.uniforms.uDetailHigh!, uFoot: o.place.uniforms.uFoot!, uSunAz: o.place.uniforms.uSunAz!,
+        uDetail: o.place.uniforms.uDetail!, uDetailLook: o.place.uniforms.uDetailLook!, uDetailTone: o.place.uniforms.uDetailTone!, uDetailHigh: o.place.uniforms.uDetailHigh!, uFoot: o.place.uniforms.uFoot!, uSunAz: o.place.uniforms.uSunAz!, uStorm: o.place.uniforms.uStorm!, uStormTurn: o.place.uniforms.uStormTurn!, uEddy: o.place.uniforms.uEddy!, uEddyTurn: o.place.uniforms.uEddyTurn!, uSeam: o.place.uniforms.uSeam!,
         uPlateGrade: { value: new THREE.Vector3(1 / o.place.grade[0]!, 1 / o.place.grade[1]!, 1 / o.place.grade[2]!) },
         uPlaceN: { value: new THREE.Vector3().fromArray(o.place.n) }, uPlaceE: { value: new THREE.Vector3().fromArray(o.place.e) }, uPlaceU: { value: new THREE.Vector3().fromArray(o.place.u) },
         uPlace: { value: new THREE.Vector4(o.place.radius, o.place.fade[0]!, o.place.fade[1]!, 0) },

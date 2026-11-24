@@ -1,8 +1,9 @@
 import * as THREE from 'three'
-import { config } from '../config'
-import { handoverOf } from '../director/handover'
-import { segmentAtFrame } from '../director/timeline'
-import { sampleCount, shutterMid } from './sampler'
+import { config, type Segment } from '../config'
+import { forcedWord, handoverOf, type Handover } from '../director/handover'
+import { handoverChanges, segmentAtFrame } from '../director/timeline'
+import { clockStamp, shutterSpan, spanMid, wholeFrame } from './clock'
+import { sampleCount, shutterOffset } from './sampler'
 import type { SetState, Shot, ViewKind } from './types'
 
 export interface ShotSource { shotAt(frame: number, time: number, side?: ViewKind): Shot }
@@ -93,7 +94,125 @@ export function samplesNeeded(base: number, cap: number, motion: number): number
   return need <= base ? base : Math.min(need, Math.max(cap, base))
 }
 
-export interface FramePlan { samples: number; raw: number; seen: number; soft: number; split: boolean }
+// shutter is the share of the film's shutter the frame keeps (E6): 1 everywhere but in the capped frames of a dive or a rise that hands over.
+// raw stays the motion across the full shutter; seen is the motion across the shutter that is open, and the sample count follows it.
+export interface FramePlan { samples: number; raw: number; seen: number; soft: number; split: boolean; shutter: number }
+
+const SIDES: ViewKind[] = ['orbit', 'terrain']
+// How often the share of the shutter is corrected by the measure across the shortened shutter (shutterScale). After two the motion left is the
+// allowed one to a hundred thousandth of a pixel at every frame of the film.
+const REFINE = 2
+
+// The motion of one frame between two times inside it (in frames from its start), as framePlan measures it: on the frame's own side, and inside
+// the dissolve window on both sides, the larger one. The sides are named there, so this never asks which side a time takes.
+function motionOver(source: ShotSource, frame: number, split: boolean, from: number, to: number): number {
+  const at = (offset: number, side?: ViewKind): Shot => source.shotAt(frame, (frame + offset) / config.fps, side)
+  if (split) return Math.max(...SIDES.map((side) => rawMotion(at(from, side), at(spanMid(), side), at(to, side))))
+  return rawMotion(at(from), at(spanMid()), at(to))
+}
+
+// E6, the capped shutter (decision d129). One steady move of a factor of a hundred in ninety frames changes scale by 6 to 14 percent a frame, so
+// across the film's shutter the picture of a dive or a rise moves by 25 to 150 px for most of the way, and a still of it is a smear. In a dive or
+// a rise of a stop that hands over, the shutter of a frame is therefore cut down around its middle until the motion left is handover.maxBlurPx:
+// scale = min(1, allowed / raw), with raw the motion across the full shutter. The middle of the shutter stays, so the time of the frame, the sky
+// (drawn at the middle) and the draft tier (one sample at the middle) stay where they were.
+// The seams: the segments before and after run with the full shutter. Where the segment's own first or last frame moves more than maxBlurPx, the
+// blur a frame may keep rises to that motion over handover.blurEaseFrames with a smooth ramp, so that frame keeps its full shutter and no frame
+// steps. Where it moves less, the cap lets go by itself and there is no ramp.
+// The cap is off with handover.maxBlurPx 0: then no frame is capped, the share is 1 everywhere and the floor and the ease have nothing to do.
+// The floor (handover.minShutter, 0 for off): a capped frame never runs with less of the film's shutter than this share, scale = max(allowed / raw,
+// floor). A shutter that is far shorter than the step to the next frame shows a fast edge as separate sharp copies; with the floor the fastest
+// frames keep that share of their motion as blur instead, most at the rim of the picture and next to none at the place the camera goes to, and
+// the sample count follows the blur that results. A frame that is not capped keeps its full shutter, so the seams stay as they are.
+interface Cap { stamp: string; raw: Map<number, number>; scale: Map<number, number> }
+const caps = new WeakMap<ShotSource, Cap>()
+const CAP_KEPT = 1 << 15
+
+function capOf(source: ShotSource): Cap {
+  const stamp = handoverChanges() + '|' + config.raw.handover.maxBlurPx + '|' + config.raw.handover.blurEaseFrames + '|' + config.raw.handover.minShutter + '|' + forcedWord() + '|' + clockStamp()
+  let cap = caps.get(source)
+  if (!cap || cap.stamp !== stamp) {
+    cap = { stamp, raw: new Map(), scale: new Map() }
+    caps.set(source, cap)
+  }
+  return cap
+}
+
+function inWindow(frame: number, h: Handover): boolean {
+  const whole = wholeFrame(frame)
+  return whole >= h.firstFrame && whole <= h.lastFrame
+}
+
+function fullMotion(cap: Cap, source: ShotSource, frame: number, h: Handover): number {
+  let raw = cap.raw.get(frame)
+  if (raw === undefined) {
+    raw = motionOver(source, frame, inWindow(frame, h), 0, shutterSpan())
+    cap.raw.set(frame, raw)
+  }
+  return raw
+}
+
+function handing(frame: number): { segment: Segment; h: Handover } | null {
+  const segment = segmentAtFrame(frame)
+  const h = segment.kind === 'dive' || segment.kind === 'rise' ? handoverOf(segment.stop, segment.kind) : null
+  return h ? { segment, h } : null
+}
+
+// The motion in px the cap lets a frame keep across its shutter: handover.maxBlurPx, and near a seam that moves faster, the ramp up to that seam's
+// motion. Infinity outside the dives and rises of the stops that hand over: nothing is capped there. A frame that runs at the floor
+// (handover.minShutter) keeps more than this: its plan has the motion left in seen.
+export function blurAllowed(source: ShotSource, frame: number): number {
+  const own = handing(frame)
+  if (!own) return Infinity
+  const max = config.raw.handover.maxBlurPx
+  // 0 switches the cap off: nothing is capped anywhere, every frame keeps the film's full shutter and its plan is the one of before E6.
+  if (!(max > 0)) return Infinity
+  const ease = config.raw.handover.blurEaseFrames
+  const cap = capOf(source)
+  let allowed = max
+  for (const edge of [own.segment.firstFrame, own.segment.endFrame - 1]) {
+    const away = Math.abs(frame - edge)
+    if (away >= ease) continue
+    const seam = fullMotion(cap, source, edge, own.h)
+    if (!(seam > max)) continue
+    const x = 1 - away / ease
+    const w = x * x * (3 - 2 * x)
+    allowed = Math.max(allowed, max * (1 - w) + seam * w)
+  }
+  return allowed
+}
+
+export function shutterScale(source: ShotSource, frame: number): number {
+  const own = handing(frame)
+  if (!own) return 1
+  const cap = capOf(source)
+  let scale = cap.scale.get(frame)
+  if (scale === undefined) {
+    if (cap.scale.size >= CAP_KEPT) {
+      cap.scale.clear()
+      cap.raw.clear()
+    }
+    const raw = fullMotion(cap, source, frame, own.h)
+    const allowed = blurAllowed(source, frame)
+    scale = 1
+    if (raw > allowed) {
+      scale = allowed / raw
+      // Where a move starts or ends inside the shutter the motion is not even across it, and allowed / raw alone leaves a little more or less than
+      // the allowed blur (3.6 percent more at the worst frame of the film). So the share is corrected by what is measured across the shortened
+      // shutter itself.
+      const split = inWindow(frame, own.h)
+      for (let i = 0; i < REFINE; i++) {
+        const left = motionOver(source, frame, split, shutterOffset(0, scale), shutterOffset(1, scale))
+        if (!(left > 0)) break
+        scale = Math.min(scale * (allowed / left), 1)
+      }
+      const floor = config.raw.handover.minShutter
+      if (scale < floor) scale = floor
+    }
+    cap.scale.set(frame, scale)
+  }
+  return scale
+}
 
 export function framePlan(source: ShotSource, frame: number, tier: string): FramePlan {
   const segment = segmentAtFrame(frame)
@@ -101,15 +220,18 @@ export function framePlan(source: ShotSource, frame: number, tier: string): Fram
   const cap = config.tiers[tier]!.maxSamplesPerFrame
   const at = (offset: number, side?: ViewKind): Shot => source.shotAt(frame, (frame + offset) / config.fps, side)
   const h = segment.kind === 'dive' || segment.kind === 'rise' ? handoverOf(segment.stop, segment.kind) : null
-  if (h && frame >= h.firstFrame && frame <= h.lastFrame) {
-    const sides: ViewKind[] = ['orbit', 'terrain']
-    const raw = Math.max(...sides.map((side) => rawMotion(at(0, side), at(shutterMid(), side), at(config.shutterFraction, side))))
-    return { samples: cap <= base ? base : samplesNeeded(base, cap, raw), raw, seen: raw, soft: 0, split: true }
+  if (h) {
+    const split = inWindow(frame, h)
+    const raw = motionOver(source, frame, split, 0, shutterSpan())
+    const shutter = shutterScale(source, frame)
+    const left = shutter === 1 ? raw : motionOver(source, frame, split, shutterOffset(0, shutter), shutterOffset(1, shutter))
+    const seen = split ? left : left * seenShare(at(spanMid()))
+    return { samples: cap <= base ? base : samplesNeeded(base, cap, seen), raw, seen, soft: 0, split, shutter }
   }
-  const mid = at(shutterMid())
-  const raw = rawMotion(at(0), mid, at(config.shutterFraction))
+  const mid = at(spanMid())
+  const raw = rawMotion(at(0), mid, at(shutterSpan()))
   const seen = raw * seenShare(mid)
-  return { samples: cap <= base ? base : samplesNeeded(base, cap, seen), raw, seen, soft: h ? 0 : softness(raw), split: false }
+  return { samples: cap <= base ? base : samplesNeeded(base, cap, seen), raw, seen, soft: softness(raw), split: false, shutter: 1 }
 }
 
 export function frameSamples(source: ShotSource, frame: number, tier: string): number {

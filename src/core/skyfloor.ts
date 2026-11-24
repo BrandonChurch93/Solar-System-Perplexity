@@ -122,3 +122,13 @@ export function ringWeight(ring: [number, number, number, number], tan: [number,
   const x = Math.min(Math.max((r - ring[2]) / (ring[3] - ring[2]), 0), 1)
   return x * x * (3 - 2 * x)
 }
+
+// The weight of a sky patch on the globe side of a dive or rise that hands over, before the patch's own weight by time. low is the share of
+// the sky of the close view, high that of the sky of the globe view. Without a high of the stop's own the globe view's patch takes what the
+// close view's leaves in a dive and nothing in a rise, where the sky already turns to the next stop.
+export function sharedSkyWeight(patchView: string, setView: string, kind: string, low: number, high: number | undefined): number {
+  if (patchView === 'terrain') return low
+  if (patchView !== setView) return 0
+  if (high !== undefined) return high
+  return kind === 'rise' ? 0 : 1 - low
+}

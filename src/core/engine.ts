@@ -6,10 +6,11 @@ import { floatTarget } from './pass'
 import { TILE, openTiles, type Tiles } from './tiles'
 import { midShutterCarry } from './held'
 import { framePlan } from './motion'
-import { samplesFor, shutterMid } from './sampler'
+import { captureFrames, captureRate, shutterSeconds, spanMid, wholeFrame } from './clock'
+import { samplesFor } from './sampler'
 import { SetLoader } from './sets'
 import type { PlaceState, RenderView, Shot, SkyFloor, SkyPatch, ViewKind } from './types'
-import { floorRing } from './skyfloor'
+import { floorRing, sharedSkyWeight } from './skyfloor'
 import { Place, placeCamera, placeLayout, type PlaceMode, type PlacePicture } from './place'
 import { gradUniform, isRaw, setDiag, setFine, setSamples } from '../diagnostics/diag'
 import { applyProbe, parseProbe, type Probe } from '../diagnostics/probe'
@@ -73,6 +74,7 @@ export class Engine {
   private readonly carry = new THREE.Matrix4()
   private sampleCount = 1
   private soft = 0
+  private shutter = 1
   private asked = 0
   private lastFrame: { frame: number; tier: string } | null = null
   private readonly marked = new WeakSet<THREE.Material>()
@@ -217,7 +219,8 @@ export class Engine {
 
   skyBytes = 0
 
-  async prepare(frame: number): Promise<void> {
+  async prepare(at: number): Promise<void> {
+    const frame = wholeFrame(at)
     await this.ensureSky()
     await this.sets.ensure(setsForFrame(frame), this.assets)
     await this.belt.prepare(frame, this.assets, this.renderer)
@@ -225,7 +228,7 @@ export class Engine {
 
   async renderFrame(frame: number, tier: string): Promise<void> {
     if (!this.director) throw new Error('no director')
-    const f = Math.min(Math.max(Math.floor(frame), 0), config.frameCount - 1)
+    const f = Math.min(Math.max(frame, 0), (captureFrames() - 1) / captureRate())
     const epoch = this.sets.epoch
     this.asked++
     await this.prepare(f)
@@ -239,10 +242,11 @@ export class Engine {
     const probe = this.probe
     applyProbe(probe)
     const plan = framePlan(this.director, f, tier)
-    const samples = samplesFor(plan.samples)
+    const samples = samplesFor(plan.samples, plan.shutter)
     this.soft = plan.soft
+    this.shutter = plan.shutter
     const still = probe.shut
-    const middle = probe.time ?? (f + shutterMid()) / config.fps
+    const middle = probe.time ?? (f + spanMid()) / config.fps
     const mid = this.director.shotAt(f, middle)
     let other: Shot | null = null
     const midOf = (shot: Shot): Shot => {
@@ -267,6 +271,7 @@ export class Engine {
   renderLive(shot: Shot): void {
     this.lastFrame = null
     this.soft = 0
+    this.shutter = 1
     this.accumulator.begin()
     this.renderSample(shot, shot, 0, 0, 0, 1)
     this.accumulator.add(this.renderer, this.sampleTarget.texture, 1)
@@ -308,7 +313,8 @@ export class Engine {
     }
     const placed = this.probe.place && shot.place && shot.place.weight > 0 && (!raw || diag === 'texels') ? shot.place : null
     const limbed = placed && this.probe.limb !== undefined ? { ...placed, limbReachDeg: this.probe.limb } : placed
-    const place = limbed && this.probe.edgeIn !== undefined ? { ...limbed, edgeIn: this.probe.edgeIn } : limbed
+    const edged = limbed && this.probe.edgeIn !== undefined ? { ...limbed, edgeIn: this.probe.edgeIn } : limbed
+    const place = edged && this.probe.toneIn !== undefined ? { ...edged, toneIn: this.probe.toneIn } : edged
     const picture = place ? this.picture(place, shot) : null
     r.setRenderTarget(this.sampleTarget)
     r.clear(true, true, true)
@@ -316,12 +322,16 @@ export class Engine {
       this.skyPatches.length = 0
       const aims = this.director!.sky
       const share = shot.skyShare ?? 0
+      const high = shot.skyShareHigh
+      const shared = share > 0 || high !== undefined
       for (const state of shot.sets) {
         for (const patch of this.sets.get(state.id)?.sky ?? []) {
           const kind = shot.segment.kind
           let weight: number
-          if (share > 0) weight = patch.view === 'terrain' ? share * (patch.weight ? patch.weight(shot.time, 'terrain') : 1) : patch.view === state.view && kind !== 'rise' ? (1 - share) * (patch.weight ? patch.weight(shot.time, state.view) : 1) : 0
-          else {
+          if (shared) {
+            const w = sharedSkyWeight(patch.view, state.view, kind, share, high)
+            weight = w > 0 ? w * (patch.weight ? patch.weight(shot.time, patch.view === 'terrain' ? 'terrain' : state.view) : 1) : 0
+          } else {
             if (patch.view !== state.view) continue
             const arriving = kind === 'travel' && state.id !== shot.segment.stop
             const base = shot.segment.stop === config.endingId ? 0 : kind === 'travel' ? (arriving ? shot.skyPatch ?? THREE.MathUtils.smoothstep(shot.u, 0.2, 0.8) : 0) : kind === 'rise' && state.view === 'orbit' ? 0 : 1
@@ -333,13 +343,13 @@ export class Engine {
           this.skyPatches.push({ patch: share > 0 && shot.skyFloor && patch.view === 'terrain' ? this.floored(patch, shot.skyFloor) : patch, weight })
         }
       }
-      if (share > 0 && this.skyPatches.length > 1) this.skyPatches.sort((a, b) => (a.patch.view === 'terrain' ? 0 : 1) - (b.patch.view === 'terrain' ? 0 : 1))
+      if (shared && this.skyPatches.length > 1) this.skyPatches.sort((a, b) => (a.patch.view === 'terrain' ? 0 : 1) - (b.patch.view === 'terrain' ? 0 : 1))
       if (aims) this.sky.setFrame(aims.frame)
       this.sky.setPatches(this.skyPatches)
       this.sky.setStarLift(shot.skyStars ?? 0, config.raw.travel.sky.starLevel / Math.max(shot.skyExposure, 1e-3), config.raw.travel.sky.flightStars.level)
       this.sky.setBandLook(shot.skyLook ?? 0)
     }
-    const view: RenderView = { camera: cam, diag, format: this.format, sample: index, samples: count, cameraPosition: shot.camera.position, farLight: shot.farLight }
+    const view: RenderView = { camera: cam, diag, format: this.format, sample: index, samples: count, cameraPosition: shot.camera.position, farLight: shot.farLight, shutter: this.shutter, shutterSeconds: shutterSeconds() }
     for (const state of shot.sets) {
       const set = this.sets.get(state.id)!
       set.world.position.copy(state.origin).sub(shot.camera.position)
@@ -570,7 +580,8 @@ export class Engine {
     await this.sets.ensure(ids, this.assets)
   }
 
-  ready(frame: number): boolean {
+  ready(at: number): boolean {
+    const frame = wholeFrame(at)
     return this.skyTexture !== null && this.skyAssets === this.assets && setsForFrame(frame).every((id) => this.sets.has(id, this.assets)) && this.belt.ready(frame, this.assets)
   }
 

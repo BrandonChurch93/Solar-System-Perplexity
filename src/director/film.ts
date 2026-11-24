@@ -1,12 +1,14 @@
 import * as THREE from 'three'
 import { config, type Segment } from '../config'
+import { spanMid } from '../core/clock'
 import type { Director } from '../core/engine'
+import { shutterScale } from '../core/motion'
 import type { CoverState, PlaceState, Pose, SetState, Shot, SkyFloor, SunState, ViewKind } from '../core/types'
 import { defaultPost } from '../post/chain'
 import { StopPlan, easeInOut, type OrbitShot } from './moves'
 import { arc, drift, forward, lookAt, mix, ramp, slerpDir, smooth, smoother } from './rig'
 import { coverWindow, segmentAtFrame } from './timeline'
-import { handoverFrame, handoverOf, placeWeight, skyTurnWeight, skyWeight, topForced } from './handover'
+import { handoverFrame, handoverOf, placeWeight, shutterScales, skyTurnWeight, skyWeight, topForced } from './handover'
 import skyFrame from '../space/skyframe.json'
 import world from './world.json'
 import { aimAt, type SkyAims } from '../space/aim'
@@ -77,6 +79,9 @@ export class FilmDirector implements Director {
   private readonly openRef = new Map<number, number>()
   private readonly settled = new Map<number, [number, number]>()
   private readonly skyFloors = new Map<string, SkyFloor>()
+  // E6: the share of the film's shutter a frame keeps, as this film's own shots measure it. The film that is asked for a shot hands it to the
+  // handover, where a sample takes its side by its position inside the shutter that is open.
+  private readonly shutterOf = (frame: number): number => shutterScale(this, frame)
   private lookbackUp = new THREE.Vector3()
   private lookbackSun = new THREE.Vector3()
   private lookbackSide = new THREE.Vector3()
@@ -85,6 +90,7 @@ export class FilmDirector implements Director {
   sky: SkyAims = { frame: new THREE.Quaternion(), turns: {}, orbits: {}, patches: {}, fitted: { frame: 0, terrainFrame: 0 }, anchor: '', follows: {}, open: {} }
 
   constructor(plans: StopPlan[]) {
+    shutterScales(this.shutterOf)
     this.plans = plans
     this.frames.push({ rotation: new THREE.Quaternion(), origin: new THREE.Vector3() })
     this.approach.push(new THREE.Vector3(0, 0, -1))
@@ -595,6 +601,7 @@ export class FilmDirector implements Director {
   }
 
   shotAt(frame: number, time: number, forced?: ViewKind): Shot {
+    shutterScales(this.shutterOf)
     const segment = segmentAtFrame(frame)
     const u = (time - segment.start) / (segment.end - segment.start)
     const post = defaultPost()
@@ -614,6 +621,7 @@ export class FilmDirector implements Director {
     let skyStars = 0
     let skyPatch = 1
     let skyShare: number | undefined
+    let skyShareHigh: number | undefined
     let skyCarry: THREE.Quaternion | null = null
     let skyFloor: SkyFloor | null = null
     let place: PlaceState | undefined
@@ -690,7 +698,7 @@ export class FilmDirector implements Director {
       if (index === 0) sunWeight = smooth(ramp(SUN_GLOW_FROM, this.sunSwapSpan[1], u))
       const arriving = state(index + 1, 'orbit')
       if (index > 0 && this.shapes[index]!.look.pin[1] > 0) farLight = Math.pow(smooth(ramp(this.lit[index]!, this.lit[index]! + FAR_LIGHT.frames / ((segment.end - segment.start) * config.fps), u)), FAR_LIGHT.power)
-      const midTime = (frame + config.shutterFraction * 0.5) / config.fps
+      const midTime = (frame + spanMid()) / config.fps
       if (Math.abs(time - midTime) > 1e-9) {
         const to = arriving.origin.clone().sub(position)
         const px = (Math.asin(Math.min(1 / to.length(), 1)) / THREE.MathUtils.degToRad(pose.vfov)) * 1080
@@ -794,8 +802,13 @@ export class FilmDirector implements Director {
       if (hand && view === 'orbit' && (segment.kind === 'dive' || segment.kind === 'rise')) {
         const kind = segment.kind
         const dive = kind === 'dive'
-        const turned = skyTurnWeight(segment, time)
-        skyShare = skyWeight(segment, time)
+        const carry = p.skyCarryShare(segment, time)
+        if (carry !== null && !(carry >= 0 && carry <= 1)) throw new Error(p.id + ': skyCarryShare must lie from 0 to 1')
+        const turned = carry ?? skyTurnWeight(segment, time)
+        const own = p.skyShare(segment, time)
+        if (own && !(own.low >= 0 && own.low <= 1 && (own.high === undefined || (own.high >= 0 && own.high <= 1)))) throw new Error(p.id + ': skyShare must give low and high from 0 to 1')
+        skyShare = own ? own.low : skyWeight(segment, time)
+        if (own && own.high !== undefined) skyShareHigh = own.high
         if (hand.skyFloor && skyShare > 0) skyFloor = this.skyFloorOf(index, kind, hand.time)
         skyGlow = mix(1, p.p.light.terrainSkyGlow ?? 1, skyShare)
         const low = this.sky.turns[p.id] ?? NO_TURN
@@ -814,7 +827,7 @@ export class FilmDirector implements Director {
         if (weight > 0 && hand.picture) {
           const tw = inSet(s, p.twin(p.closePose(kind, hand.time), time))
           tw.quaternion.multiply(drift(hand.time))
-          place = { stop: p.id, kind, weight, frame: handoverFrame(hand), time: hand.time, live: hand.live, twin: tw, centre: s.origin.clone(), radius: 1, scale: hand.place.scale, margin: hand.place.margin, matte: hand.place.matte, valid: hand.place.valid, lens: hand.place.lens, seen: hand.place.seen, maxEnlarge: hand.place.maxEnlarge, enlargeSoft: hand.place.enlargeSoft, limbReachDeg: hand.place.limbReachDeg, limbHoldDeg: hand.place.limbHoldDeg, edgeIn: hand.place.edgeIn }
+          place = { stop: p.id, kind, weight, frame: handoverFrame(hand), time: hand.time, live: hand.live, twin: tw, centre: s.origin.clone(), radius: 1, scale: hand.place.scale, margin: hand.place.margin, matte: hand.place.matte, valid: hand.place.valid, lens: hand.place.lens, seen: hand.place.seen, maxEnlarge: hand.place.maxEnlarge, enlargeSoft: hand.place.enlargeSoft, limbReachDeg: hand.place.limbReachDeg, limbHoldDeg: hand.place.limbHoldDeg, edgeIn: hand.place.edgeIn, toneIn: hand.place.toneIn }
         }
       }
       if (segment.kind === 'dive' || segment.kind === 'rise') {
@@ -837,7 +850,9 @@ export class FilmDirector implements Director {
         if (lift > 0) {
           const w = coverWindow(segment)
           const from = p.p.light.skyLiftFrom
-          const x = smooth(ramp(w ? (from === undefined ? w.lastFrame + 1 : mix(w.centerFrame, w.lastFrame + 1, from)) / config.fps : hand ? hand.time : segment.start, segment.end, time))
+          const liftAt = p.skyLiftAt(segment, time)
+          if (liftAt !== null && !Number.isFinite(liftAt)) throw new Error(p.id + ': skyLiftAt must give a time')
+          const x = smooth(ramp(w ? (from === undefined ? w.lastFrame + 1 : mix(w.centerFrame, w.lastFrame + 1, from)) / config.fps : hand ? hand.time : segment.start, segment.end, liftAt ?? time))
           skyStars = lift * (1 - (1 - x) * (1 - x))
           light = { ...light, sky: mix(light.sky, OPEN.openExposure, skyStars) }
         }
@@ -853,6 +868,7 @@ export class FilmDirector implements Director {
     const sun: SunState = { dir: this.sunWorld.clone(), color: SUN_COLOR, intensity: 3, angularRadius: light.radius, glare: light.glare * sunWeight }
     const out: Shot = { frame, time, segment, u, camera: pose, skyQuaternion: skyCarry ? skyCarry.multiply(pose.quaternion) : pose.quaternion.clone(), skyExposure: light.sky, skyGlow, skyTurn, skyStars, skyPatch, skyLook, near, far, sun, sets, post, cover, dust, farLight }
     if (skyShare !== undefined) out.skyShare = skyShare
+    if (skyShareHigh !== undefined) out.skyShareHigh = skyShareHigh
     if (skyFloor) out.skyFloor = skyFloor
     if (place) out.place = place
     return out

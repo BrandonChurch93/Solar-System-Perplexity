@@ -76,7 +76,7 @@ def write(ground, name, folder):
 
 
 def lay_all(kind):
-    place = M.Place(kind)
+    place = M.Place(kind, border=SPEC['mask']['borderPx'])
     s = SPEC['sets'][kind]
     folder = OUT / kind
     folder.mkdir(parents=True, exist_ok=True)
