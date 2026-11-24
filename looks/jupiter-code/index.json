@@ -1,9 +1,67 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T08:09:04.093Z",
- "head": "dfd3c01dca5473a9d36e1195f19d9d75af9ee49a",
- "note": "The rise on the named head dfd3c01 (bytes of 6c69ed4): every frame 3276 to 3315 at draft, judged 3296, the panels of the pictures part (red: level step 1.95, pop 1.22, pattern 0.71)",
+ "pushed": "2026-11-24T08:28:20.562Z",
+ "head": "258a0a4289d35c1060b75633458503e0876fac43",
+ "note": "after NAMED dfd3c01: the pale patch at 3296 is the shared sky's cloud; next cures: the rise's turn (pop), the limb at the sky's entry (level step), the look from above (pattern), the set's border",
  "looks": [
+  {
+   "time": "2026-11-24T08:28:19.484Z",
+   "file": "20261124082819484-note-rise-sky-x6-crop.jpg",
+   "source": "../work/named/sheets/rise-sky-x6-crop.jpg",
+   "kind": "note",
+   "label": "judged 3296 draft, crop under the globe at display times 6: soft on all sides, blue, part of the sky's band",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T08:28:18.540Z",
+   "file": "20261124082818540-note-rise-sky-x4.jpg",
+   "source": "../work/named/sheets/rise-sky-x4.jpg",
+   "kind": "note",
+   "label": "rise 3288 to 3302, the sky under the globe at display times 4: the pale patch at judged 3296 is a cloud of the shared sky, it moves with the stars; not a patch of this stop",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T08:20:12.035Z",
+   "file": "20261124082012035-job-frame-02895.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "jupiter.hold frame 2895, final tier, nograin view, from the running measure job",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-24T08:18:38.728Z",
+   "file": "20261124081838728-frame-f02787.jpg",
+   "source": "out/work/jupiter/frames/D1/f02787.png",
+   "kind": "frame",
+   "label": "mars.travel frame 2787, draft tier",
+   "stop": "mars",
+   "segment": "mars.travel",
+   "frame": 2787,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "5a18fcdc5a929484"
+  },
+  {
+   "time": "2026-11-24T08:17:08.419Z",
+   "file": "20261124081708419-job-frame-03265.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "jupiter.rise frame 3265, draft tier, texels view, from the running measure job",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3265,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-24T08:07:26.641Z",
    "file": "20261124080726641-note-rise-changes.jpg",
@@ -21,57 +79,11 @@
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-24T08:06:58.934Z",
-   "file": "20261124080658934-job-frame-02820.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "jupiter.hold frame 2820, draft tier, texels view, from the running measure job",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2820,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
    "time": "2026-11-24T08:05:08.815Z",
    "file": "20261124080508815-note-rise-g.jpg",
    "source": "../work/named/sheets/rise-g.jpg",
    "kind": "note",
    "label": "rise 3304 to 3315 at draft, head 6c69ed4: the end of the pull back",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T08:04:55.553Z",
-   "file": "20261124080455553-note-rise-3296-low.jpg",
-   "source": "../work/named/sheets/rise-3296-low.jpg",
-   "kind": "note",
-   "label": "judged 3296 at draft, bottom at full size: a faint pale patch with a straight left edge in the sky under the globe (cause not found yet)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T08:03:57.296Z",
-   "file": "20261124080357296-note-rise-f.jpg",
-   "source": "../work/named/sheets/rise-f.jpg",
-   "kind": "note",
-   "label": "rise 3288 to 3303 at draft, head 6c69ed4: the pull back over the globe, Io in front, the night side turns in",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T08:03:35.527Z",
-   "file": "20261124080335527-note-rise-3296.jpg",
-   "source": "../work/named/sheets/rise-3296.jpg",
-   "kind": "note",
-   "label": "judged 3296 at draft, head 6c69ed4 (2.56 radii of eye height on the one move)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T08:02:55.435Z",
-   "file": "20261124080255435-note-rise-e.jpg",
-   "source": "../work/named/sheets/rise-e.jpg",
-   "kind": "note",
-   "label": "rise 3276 to 3287 at draft, head 6c69ed4: the set is a pale embossed patch with a black blot (the storm's shadow) on the globe to 3284; the sky enters at the left with a white limb at 3282 to 3283",
    "stop": "jupiter"
   }
  ]
