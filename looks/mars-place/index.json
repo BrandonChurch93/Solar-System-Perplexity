@@ -1,9 +1,65 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T11:13:03.421Z",
+ "pushed": "2026-11-24T11:22:38.488Z",
  "head": "aac984cc9dfffd0b71d7b3fd5a0fc95a2ef9e2ee",
- "note": "proof 49: dive 10 before T to 4 after; plates made from the level under them",
+ "note": "Proof 49 of the third commit: cap sheets of dive and rise, the rise and 2412 sheets, the texels answer for G13",
  "looks": [
+  {
+   "time": "2026-11-24T11:22:37.309Z",
+   "file": "20261124112237309-note-Q-texels.jpg",
+   "source": "out/work/place/see/Q-texels.png",
+   "kind": "note",
+   "label": "Proof 49, G13 answer: 2687 and 2720, picture left, texels view right, draft. Green alone is under 1 texel a pixel: at 2687 the globe's own ground outside the close ground's border, lower right (soft 6.28 percent); at 2720 the globe's wrap outside the patches, lower left and right (soft 5.68 percent)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T11:20:28.554Z",
+   "file": "20261124112028554-note-Q-cap-rise.jpg",
+   "source": "out/work/place/see/Q-cap-rise.png",
+   "kind": "note",
+   "label": "Proof 49, rise 2692, 2694, 2698, 2702, 2706, 2712, 2720, draft: the place and its canyon stay one picture while they shrink (plates made from the level under them); pale bar in the canyon's shade at 2692 and 2694; the place reads as a small canyon in a plain",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T11:20:27.436Z",
+   "file": "20261124112027436-note-Q-cap-dive.jpg",
+   "source": "out/work/place/see/Q-cap-dive.png",
+   "kind": "note",
+   "label": "Proof 49, dive 2440, 2452, 2460, 2464, 2466, draft, the globe's own ground above the band: one canyon through the levels; straight pale shapes in the canyon's shade at 2460 to 2466 (the made aprons), haze thinner than before near the ground",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T11:16:28.730Z",
+   "file": "20261124111628730-note-Q-2412.jpg",
+   "source": "out/work/place/see/Q-2412.png",
+   "kind": "note",
+   "label": "Dive 2411, 2412, 2413, draft: the level step the report reads at 2412 + 1/2 (1.32, limit 1.3) is Phobos leaving the frame at the right edge within two frames (mean level 69.53, 68.51, 68.83); nothing of the ground changes",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T11:16:11.478Z",
+   "file": "20261124111611478-note-Q-rise-c.jpg",
+   "source": "out/work/place/see/Q-rise-c.png",
+   "kind": "note",
+   "label": "Proof 49, rise 2686 to 2690, draft: the fan's borders lower left (pale block) and right (dark) at 2686 to 2688, the dissolve by height 2687 to 2689 with one mesa in one place, 2690 the cap alone with a pale bar in the canyon's shade at the foot of the frame",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T11:16:10.521Z",
+   "file": "20261124111610521-note-Q-rise-b.jpg",
+   "source": "out/work/place/see/Q-rise-b.png",
+   "kind": "note",
+   "label": "Proof 49, rise 2680 to 2685 (T 2681 to 4 after), draft: no jump from 2681 to 2682; dark corner lower right at 2684 and 2685 (the fan's border)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T11:16:09.597Z",
+   "file": "20261124111609597-note-Q-rise-a.jpg",
+   "source": "out/work/place/see/Q-rise-a.png",
+   "kind": "note",
+   "label": "Proof 49, rise 2671 to 2679 (10 to 2 before T), draft, close side: no border, no far edge",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T11:13:02.278Z",
    "file": "20261124111302278-note-pyr-plates.jpg",
@@ -11,65 +67,6 @@
    "kind": "note",
    "label": "The land plates 0.7, 1.6, 3.8, 8.5 degrees: above as committed, below made from the level under them (pyramid.py); pattern between neighbours 0.69, 0.59, 0.98 before, 0.00 after",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T11:13:01.181Z",
-   "file": "20261124111301181-note-Q-dive-b.jpg",
-   "source": "out/work/place/see/Q-dive-b.png",
-   "kind": "note",
-   "label": "Proof 49, dive 2473 to 2481 (4 before T to 4 after, T 2477), draft: pale wedge lower left and dark corner lower right at 2473 to 2475 (the fan's borders), none at 2476; no jump from 2476 to 2477; close side clean",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T11:13:00.133Z",
-   "file": "20261124111300133-note-Q-dive-a.jpg",
-   "source": "out/work/place/see/Q-dive-a.png",
-   "kind": "note",
-   "label": "Proof 49, dive 2467 to 2472 (10 to 5 before T), draft: the turn on the mesh by height, hazeDepth 0.25, plates made from the level under them. One mesa in one place through the dissolve by height; the plain round it changes from the cap's to the fan's; fan borders lower left and right",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T10:59:29.122Z",
-   "file": "20261124105929122-note-P-dive-a.jpg",
-   "source": "out/work/place/see/P-dive-a.png",
-   "kind": "note",
-   "label": "Proof 48, dive 2467 to 2472, draft, film as it stands (turn on the mesh by height, hazeDepth 0.25): the dissolve by height is now one mesa in one place; the plain round it still changes from the cap's smooth plain to the fan's rough ground, fan borders lower left and right",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T10:59:28.144Z",
-   "file": "20261124105928144-note-haze-H.jpg",
-   "source": "out/work/place/see/haze-H.png",
-   "kind": "note",
-   "label": "Cap alone with near.json hazeDepth 0.25 (right) against 0.6 (middle) and the close ground alone (left), 2466 and 2686, draft: the dark end and the middle of the cap now agree with the close ground, the bright far plateau does not",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T10:43:52.099Z",
-   "file": "20261124104352099-note-drop-cure.jpg",
-   "source": "out/work/place/see/drop-cure.png",
-   "kind": "note",
-   "label": "The cap's drop found: left the close view's own ground alone, middle the globe side's cap alone as on main (0.000156 and 0.000210 radii too low, white seams), right the cap with the body's turn made on the CPU in my set (0.000002 and 0.000004, seams gone). Dive 2476 above, rise 2682 below, draft",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T10:14:38.385Z",
-   "file": "20261124101438385-note-M-a.jpg",
-   "source": "out/work/place/see/M-a.png",
-   "kind": "note",
-   "label": "proof 47 on main da59c441 merged plus one shader for the scaled eye: draft 2468 2472 2476 2477 2681 2682 2686 2690; sides at T mean 0.002 and 0.001",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T10:09:15.146Z",
-   "file": "20261124100915146-compare-mars-rise-sides.jpg",
-   "source": "out/work/handover/mars-rise-sides.png",
-   "kind": "compare",
-   "label": "mars rise, both sides at T (frame 2681) and their difference times 8",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "frame": 2681,
-   "tier": "draft"
   }
  ]
 }
