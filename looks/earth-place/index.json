@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T00:05:37.868Z",
+ "pushed": "2026-11-24T00:30:33.819Z",
  "head": "46fe41ce7edd072b89a447b2402af9ed55dd5513",
- "note": "step 3 trial b5: towers keep their tone through the blend at 2118; lone dark pixels on tower rims not cured yet",
+ "note": "step 3 trial c2: far cap lit by the scene Sun, rim line at 2118 gone, 2010 within 2 code values of step 1; consecutive frames rendering",
  "looks": [
+  {
+   "time": "2026-11-24T00:30:33.205Z",
+   "file": "20261124003033205-note-strip-rise.jpg",
+   "source": "../../../../tmp/gl/s3/strip-rise.jpg",
+   "kind": "note",
+   "label": "step 3 trial, not committed: frames 2080 2110 2140, a second apart, the same tower foot marked",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T00:30:32.602Z",
+   "file": "20261124003032602-note-strip-dive.jpg",
+   "source": "../../../../tmp/gl/s3/strip-dive.jpg",
+   "kind": "note",
+   "label": "step 3 trial, not committed: frames 1880 1910 1940, a second apart, one tower foot marked (projected from the world point); 1880 is above the height where the close ground shows",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T00:30:31.997Z",
+   "file": "20261124003031997-note-c2-z2118.jpg",
+   "source": "../../../../tmp/gl/pw/c2-z2118.jpg",
+   "kind": "note",
+   "label": "step 3 trial c2, not committed: zoom of frame 2118; left step 1 (46fe41ce, tower pale where the glint came through), middle b5 (dark line on the far rim), right c2 (far cap lit by the scene Sun)",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T00:05:29.163Z",
    "file": "20261124000529163-note-shadow-dir.jpg",
@@ -49,36 +73,6 @@
    "format": "16x9",
    "diag": "texels",
    "job": "g13"
-  },
-  {
-   "time": "2026-11-23T23:17:00.467Z",
-   "file": "20261123231700467-job-frame-01862.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "earth.dive frame 1862, draft tier, texels view, from the running g13 job",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1862,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "g13"
-  },
-  {
-   "time": "2026-11-23T23:11:40.422Z",
-   "file": "20261123231140422-note-earth-rise-draft-across.jpg",
-   "source": "../../../../tmp/gl/pw/earth-rise-draft-across.jpg",
-   "kind": "note",
-   "label": "step 1 trial: every frame 2100 to 2105 on the globe side, place picture off (handover sheet, draft)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T23:11:39.783Z",
-   "file": "20261123231139783-note-earth-dive-draft-across.jpg",
-   "source": "../../../../tmp/gl/pw/earth-dive-draft-across.jpg",
-   "kind": "note",
-   "label": "step 1 trial: every frame 1913 to 1919 on the globe side, place picture off (handover sheet, draft)",
-   "stop": "earth"
   }
  ]
 }
