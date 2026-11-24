@@ -1,9 +1,17 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T07:20:46.347Z",
- "head": "4ef110160bc7abc71a57ab53fed01687b48e9ef0",
- "note": "tools only: the judge's eye line in the plan check and the law search, the seam tool reads the plane of the rings; green sets for the Earth rise and the Uranus rise on the one move; proof of the tools commit running",
+ "pushed": "2026-11-24T07:40:40.825Z",
+ "head": "0869e6c1593a4fcb19a3288f0a0edc2a988baa24",
+ "note": "Service: every builder's head read through the judge's path part by overlay (eight green, Earth red on its own path, green on the one move); tools commit 0869e6c1 named",
  "looks": [
+  {
+   "time": "2026-11-24T07:40:40.170Z",
+   "file": "20261124074040170-note-path-earth-own-and-onemove.jpg",
+   "source": "out/work/looks-extra/path-earth-own-and-onemove.png",
+   "kind": "note",
+   "label": "Earth 6c75f48f, the judge's path curves: its own path (red, 21 over) and the engine's one move with the rise law (green)",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T07:20:45.270Z",
    "file": "20261124072045270-note-eye-earth-uranus-rise.jpg",
@@ -55,14 +63,6 @@
    "source": "../../../../tmp/bend/mars-8.png",
    "kind": "note",
    "label": "Mars's own tree dd1ddb9c, draft, rise frames 2676 to 2684: the pale wedge enters at 2683",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T05:34:04.671Z",
-   "file": "20261124053404671-note-mars-T.jpg",
-   "source": "../../../../tmp/bend/mars-T.png",
-   "kind": "note",
-   "label": "Mars's own tree dd1ddb9c (its bend, no place picture), draft, rise frames 2685 to 2690: the border of the close set stands in the frame from 2683 to 2687, and 2687 to 2688 (the change of view) is a cut between two pictures that differ",
    "stop": "mars"
   }
  ]
