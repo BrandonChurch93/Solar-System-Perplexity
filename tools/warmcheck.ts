@@ -123,6 +123,7 @@ const cold = a.cold === 'true'
 const write = a.write === 'true'
 const rate = a.rate ? Number(a.rate) : 1
 const label = a.label ?? (cold ? 'cold' : 'warm')
+const UPLOADS = ['texImage2D', 'texSubImage2D', 'texStorage2D', 'compressedTexImage2D', 'compressedTexSubImage2D', 'texImage3D', 'texSubImage3D', 'texStorage3D', 'copyTexImage2D']
 const guarded = ['dive', 'terrain', 'rise', 'travel']
 if (write && first !== 0 && !(segmentAtFrame(first).kind === 'hold' && segmentAtFrame(first).firstFrame === first)) {
   console.error('warm: --write starts at frame 0 or at the first frame of a hold')
@@ -140,6 +141,18 @@ let sets = 0
 let peak = 0
 try {
   await s.page.evaluate((r) => (window as unknown as { showcase: Api }).showcase.setRate(r), rate)
+  await s.page.evaluate((names) => {
+    const gl = document.querySelector('canvas')!.getContext('webgl2') as unknown as Record<string, (...x: unknown[]) => unknown>
+    const made: string[] = []
+    ;(window as unknown as { made: string[] }).made = made
+    for (const name of names) {
+      const was = gl[name]!.bind(gl)
+      gl[name] = (...x: unknown[]) => {
+        made.push(name + ' ' + x.filter((v) => typeof v === 'number').join(' '))
+        return was(...x)
+      }
+    }
+  }, UPLOADS)
   for (let i = first * rate; i <= last * rate; i++) {
     const f = i / rate
     const t = Date.now()
@@ -147,8 +160,10 @@ try {
       const api = (window as unknown as { showcase: Api }).showcase
       const drawn = warm ? await api.ahead(frame as number, tr as string, start as boolean) : 0
       const before = api.counts()
+      const made = (window as unknown as { made: string[] }).made
+      made.length = 0
       await api.renderFrame(index as number, tr as string)
-      return { ...api.counts(), drawn, before, sets: api.memory().loaded.length, peak: api.memory().peakBytes }
+      return { ...api.counts(), drawn, before, sets: api.memory().loaded.length, peak: api.memory().peakBytes, made: made.slice(0, 12) }
     }, [i, f, tier, !cold, i === first * rate] as const)
     await usable(s.page, f)
     sets = Math.max(sets, c.sets)
@@ -159,6 +174,7 @@ try {
     if (work) {
       const line = 'frame ' + f + ' ' + seg.id + ': programs ' + c.programs + ', textures ' + c.textures + ', buffers ' + c.buffers
       console.log(line)
+      for (const m of c.made) console.log('  ' + m)
       if (guarded.includes(seg.kind)) bad.push(line)
       if (seg.kind !== 'hold') found.push(f)
     }
