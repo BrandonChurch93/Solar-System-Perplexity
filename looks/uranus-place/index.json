@@ -1,9 +1,25 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-24T15:37:14.099Z",
+ "pushed": "2026-11-24T15:50:45.594Z",
  "head": "c4d2507f91714cbdcb28b1c0757d64912f52b4ef",
- "note": "tops form F on main 2bc36ce6 uncommitted: final 4290 has the third NAMED bytes 2adad6e9; pattern rows render now",
+ "note": "Form F dive every frame 4150 to 4181 on capture drafts; pattern rows still rendering",
  "looks": [
+  {
+   "time": "2026-11-24T15:50:44.196Z",
+   "file": "20261124155044196-note-k3-sheet-c.jpg",
+   "source": "../../../../tmp/k3-sheet-c.png",
+   "kind": "note",
+   "label": "Form F dive 4166 to 4181, every frame: the tops thin with the view angle, none left by 4184 (main 2bc36ce6)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T15:50:42.886Z",
+   "file": "20261124155042886-note-k3-sheet-b.jpg",
+   "source": "../../../../tmp/k3-sheet-b.png",
+   "kind": "note",
+   "label": "Form F dive 4150 to 4165, every frame, capture drafts (on c4d2507f plus uncommitted, main 2bc36ce6)",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-24T15:37:13.167Z",
    "file": "20261124153713167-note-k3b-4176.jpg",
@@ -263,26 +279,6 @@
    "kind": "note",
    "label": "rise on 0ac434b6, every draft frame of the handover run, sheet 1 of 3 (main c2c49133)",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T11:34:27.567Z",
-   "file": "20261124113427567-note-h3-dive-1.jpg",
-   "source": "../../../../tmp/tm/h3-dive-1.jpg",
-   "kind": "note",
-   "label": "dive on 0ac434b6, every draft frame of the handover run, sheet 1 of 3 (main c2c49133)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T11:33:21.352Z",
-   "file": "20261124113321352-sheet-uranus-rise-top.jpg",
-   "source": "out/work/handover/uranus-rise-top.png",
-   "kind": "sheet",
-   "label": "uranus rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 4391), place picture off, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "first": 4391,
-   "last": 4454,
-   "tier": "draft"
   }
  ]
 }
