@@ -1,9 +1,51 @@
 {
  "folder": "belt",
- "pushed": "2026-11-24T18:28:38.258Z",
- "head": "6f6f1229fc1360c2d88f28e420d4cce97ac226a2",
- "note": "far Sun: cause of the wedge found (two ray cones with the apex outside the body), taken out; hair as a march; not named yet",
+ "pushed": "2026-11-24T19:53:13.396Z",
+ "head": "a3df7524897a79e1520dc79b13e179fd2254d726",
+ "note": "far Sun a3df7524: the wedge cured, the hair as a march, the mottle to the limb",
  "looks": [
+  {
+   "time": "2026-11-24T19:53:12.574Z",
+   "file": "20261124195312574-note-wedge-now-520-580.jpg",
+   "source": "../../../../tmp/farsun/out/wedge-now-520-580.jpg",
+   "kind": "note",
+   "label": "520 and 580 at native size where the wedge was"
+  },
+  {
+   "time": "2026-11-24T19:53:11.640Z",
+   "file": "20261124195311640-note-w2a.jpg",
+   "source": "../../../../tmp/farsun/out/w2a.jpg",
+   "kind": "note",
+   "label": "520, 580, 720, 615 whole frames, draft: no wedge"
+  },
+  {
+   "time": "2026-11-24T19:53:10.876Z",
+   "file": "20261124195310876-note-far3_w2.jpg",
+   "source": "../../../../tmp/farsun/out/far3_w2.jpg",
+   "kind": "note",
+   "label": "615, 1027, 1047 at native size: the marched hair at every angle"
+  },
+  {
+   "time": "2026-11-24T19:53:10.104Z",
+   "file": "20261124195310104-note-pair615-final-limb-18.jpg",
+   "source": "../../../../tmp/farsun/out/pair615-final-limb-18.jpg",
+   "kind": "note",
+   "label": "615 final tier, the left limb: approved left, a3df7524 right"
+  },
+  {
+   "time": "2026-11-24T19:53:09.374Z",
+   "file": "20261124195309374-note-pair615-final-loop-18.jpg",
+   "source": "../../../../tmp/farsun/out/pair615-final-loop-18.jpg",
+   "kind": "note",
+   "label": "615 final tier, the loop: approved left, a3df7524 right"
+  },
+  {
+   "time": "2026-11-24T19:53:08.546Z",
+   "file": "20261124195308546-note-pair615-final-box-18.jpg",
+   "source": "../../../../tmp/farsun/out/pair615-final-box-18.jpg",
+   "kind": "note",
+   "label": "615 final tier, the box: approved left, a3df7524 right (blur 4.07)"
+  },
   {
    "time": "2026-11-24T18:28:36.501Z",
    "file": "20261124182836501-note-w_m16.jpg",
@@ -17,48 +59,6 @@
    "source": "../../../../tmp/farsun/out/lp_m18.jpg",
    "kind": "note",
    "label": "615 loop, draft: approved, named 6f6f1229 (the hard wedge at the right), now (wedge out, two cones removed; blur 4.07)"
-  },
-  {
-   "time": "2026-11-24T18:05:15.485Z",
-   "file": "20261124180515485-note-hv_m12.jpg",
-   "source": "../../../../tmp/farsun/out/hv_m12.jpg",
-   "kind": "note",
-   "label": "615 pair, approved left, far Sun right: marched hair and loop sheath, try m12, draft blur 4.18"
-  },
-  {
-   "time": "2026-11-24T17:11:22.585Z",
-   "file": "20261124171122585-note-strip-520-615-n60.jpg",
-   "source": "../../../../tmp/farsun/out/strip-520-615-n60.jpg",
-   "kind": "note",
-   "label": "520, 530, 540, 560, 580, 615 at draft, the same crop about the disc centre: for condition (c)"
-  },
-  {
-   "time": "2026-11-24T17:07:21.612Z",
-   "file": "20261124170721612-note-looks14-467-495-713-1027.jpg",
-   "source": "../../../../tmp/farsun/out/looks14-467-495-713-1027.jpg",
-   "kind": "note",
-   "label": "467, 495, 713, 1027 at draft, commit 6f6f1229"
-  },
-  {
-   "time": "2026-11-24T17:07:20.110Z",
-   "file": "20261124170720110-note-pair615-final-upperleft.jpg",
-   "source": "../../../../tmp/farsun/out/pair615-final-upperleft.jpg",
-   "kind": "note",
-   "label": "615 final tier, upper left of the box, approved left"
-  },
-  {
-   "time": "2026-11-24T17:07:18.470Z",
-   "file": "20261124170718470-note-pair615-final-limb.jpg",
-   "source": "../../../../tmp/farsun/out/pair615-final-limb.jpg",
-   "kind": "note",
-   "label": "615 final tier, limb at the left, approved left"
-  },
-  {
-   "time": "2026-11-24T17:07:16.756Z",
-   "file": "20261124170716756-note-pair615-final-loop.jpg",
-   "source": "../../../../tmp/farsun/out/pair615-final-loop.jpg",
-   "kind": "note",
-   "label": "615 final tier, loop and plume, approved left"
   }
  ]
 }
