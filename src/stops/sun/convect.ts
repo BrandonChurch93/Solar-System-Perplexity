@@ -53,6 +53,7 @@ uniform vec4 uCvBend;
 uniform vec4 uCvAboveMore;
 uniform vec4 uCvSwallow;
 uniform float uFormat;
+uniform vec4 uCvLine;
 uniform vec4 uCvPatch;
 uniform vec4 uCvTight;
 uniform vec4 uCvCurl;
@@ -64,6 +65,14 @@ vec3 cvH3(vec3 p) {
   p += dot(p, p.yxz + 33.33);
   return fract((p.xxy + p.yxx) * p.zyx);
 }
+// What the last look at the diagram leaves for the threads of the lanes: the distances to the three nearest lanes
+// of the cell (lattice units, cvNear.x the least) and the ways up from the two nearest (unit length).
+// cvFan: the way up from the lane net by a softer measure than e (uCvLine.w to a lattice unit), not of unit
+// length: it turns from one lane's way up to the next over a span, not at a line.
+vec3 cvNear;
+vec2 cvUp1;
+vec2 cvUp2;
+vec2 cvFan;
 // The diagram of the cells at q (lattice units) and time t (seconds). wrap: the lattice repeats after so many
 // squares along x (0: it does not repeat).
 // e: distance to the nearest lane and ge: its gradient (lattice units), rel: q minus the cell's own middle,
@@ -126,6 +135,10 @@ void cvDiagram(vec2 q, float t, float wrap, out float e, out vec2 ge, out vec2 r
   vec2 s1 = sp[bi];
   float acc = 0.0;
   vec2 gacc = vec2(0.0);
+  vec3 m = vec3(1e9);
+  vec2 u1 = vec2(1.0, 0.0);
+  vec2 u2 = vec2(0.0, 1.0);
+  vec2 facc = vec2(0.0);
   float sharp = uCvLane.w;
   for (int i = 0; i < 36; i++) {
     if (i == bi) continue;
@@ -148,7 +161,24 @@ void cvDiagram(vec2 q, float t, float wrap, out float e, out vec2 ge, out vec2 r
     float wt = exp(-sharp * min(ej, 4.0));
     acc += wt;
     gacc += wt * gj;
+    // (a cell that has not parted yet has its two halves in one place: that is one lane, not two)
+    if (i - (i / 2) * 2 == 1 && all(equal(sp[i], sp[i - 1]))) continue;
+    facc += exp(-uCvLine.w * min(ej, 4.0)) * gj;
+    if (ej < m.x) {
+      m = vec3(ej, m.x, m.y);
+      u2 = u1;
+      u1 = gj;
+    } else if (ej < m.y) {
+      m = vec3(m.x, ej, m.y);
+      u2 = gj;
+    } else if (ej < m.z) {
+      m.z = ej;
+    }
   }
+  cvNear = m;
+  cvUp1 = u1;
+  cvUp2 = u2;
+  cvFan = facc;
   e = max(-log(max(acc, 1e-30)) / sharp, 0.0);
   ge = gacc / max(acc, 1e-30);
   own = si[bi];
@@ -377,6 +407,11 @@ uniform vec4 uCvVeil;
 uniform vec3 uCvVeilTint;
 uniform vec4 uCvFar;
 uniform vec4 uCvFlat;
+uniform vec4 uCvLineMore;
+uniform vec4 uCvLineIn;
+uniform vec4 uCvLineFlow;
+uniform vec4 uCvHole;
+uniform vec2 uCvLineClose;
 uniform vec4 uCvMesh;
 uniform float uCvKeep;
 in vec2 vG;
@@ -407,6 +442,10 @@ void main() {
   vec3 own;
   vec2 petal;
   float dome = cvDome(g, t, e, ge, rel, own, petal);
+  vec3 near = max(cvNear, 0.0);
+  vec2 up1 = cvUp1;
+  vec2 up2 = cvUp2;
+  vec2 fanRaw = cvFan;
   vec4 fibre;
   vec4 spot = cvSpot(g, t, fibre);
   float L = uCvCell.x;
@@ -526,6 +565,38 @@ void main() {
   float lum = uCvTone.x + (top - uCvTone.x) * body;
   // a few bright points stand in the lanes
   lum += uCvPoints.x * (1.0 - smoothstep(0.0, uCvPoints.y, e)) * smoothstep(uCvPoints.z, 1.0, vnoise(vec3(g / L * uCvPoints.w, t * 0.3))) * fine;
+  // threads of the lanes: thin bright lines on the flank of a cell. They leave the lane square to it and run up
+  // the flank toward the cap; where two lanes meet in a pit the way up turns from one lane's to the other's, and
+  // the threads of both turn with it and close in on the line between them, so round every pit they stand like
+  // petals. The cap is free of them. A thread is a level line of one noise of the place where it leaves the
+  // lane, so the threads stand in bunches, close where that noise is steep and none where it is level. A second,
+  // wider noise cuts the bunches to unequal lengths, and that cut travels outward along the threads with the
+  // cell's own flow
+  // (leaves: the place on the lane straight below, by the softer way up, uCvLine.w. uCvLine.x: noise cells to a
+  // lattice unit along the lane, uCvLineMore.x level lines to the noise's whole range. uCvLine.y: a thread is no
+  // straight line, the noise changes slowly with the height on the flank. uCvLineFlow.z: noise cells of the cut
+  // to a lattice unit. A thread is uCvLine.z 1080ths of the frame height to each side of its line, near or far;
+  // round it a glow of uCvLineMore.y of its light falls off over uCvLineFlow.w more; where the level lines stand
+  // closer than a thread is wide they are not drawn: uCvLineClose is the share of the lines' distance that a
+  // thread's width may hold, full below the first and none over the second, so no grating of threads a pixel or two
+  // apart is drawn that would crawl as the eye moves. Seen from above there are none)
+  {
+    vec2 leaves = rel - normalize(fanRaw + vec2(1e-6, 0.0)) * near.x;
+    // (how far a pixel is from the line is read from the noise's own slope and the pixel's step in the place it
+    // is looked up at, not from the noise's difference between neighbour pixels: that difference is one for a
+    // block of four pixels and would break a thin line into dots)
+    vec3 np = vec3(leaves * uCvLine.x, own.y * 31.0 + 2.0 + way * uCvLine.y);
+    float tn = vnoise(np);
+    vec2 gn = (vec2(vnoise(np + vec3(0.02, 0.0, 0.0)), vnoise(np + vec3(0.0, 0.02, 0.0))) - tn) / 0.02;
+    float per = uCvLineMore.x * length(vec2(dot(gn, dFdx(np.xy)), dot(gn, dFdy(np.xy))));
+    float thin = uCvLine.z * uFormat;
+    float off = abs(fract(tn * uCvLineMore.x) - 0.5) / max(per, 1e-6);
+    float line = ((1.0 - smoothstep(thin - 0.5 * uFormat, thin + 0.5 * uFormat, off)) + uCvLineMore.y * (1.0 - smoothstep(thin, thin + uCvLineFlow.w * uFormat, off))) * (1.0 - smoothstep(uCvLineClose.x, uCvLineClose.y, per * thin));
+    float cut = smoothstep(uCvLineMore.z, uCvLineMore.w, vnoise(vec3(leaves * uCvLineFlow.z + 3.0, way * uCvLineFlow.x - t * uCvLineFlow.y + own.y * 7.0)));
+    lum += uCvLineIn.w * line * cut * smoothstep(uCvLineIn.x, uCvLineIn.y, way) * mix(uCvLineIn.z, 1.0, 1.0 - laneW / laneE * exp(-e / laneE)) * lowView * fine * (1.0 - spot.x);
+  }
+  // the pits: where lanes meet the ground is black in a round place, nowhere else
+  lum *= 1.0 - uCvHole.x * (1.0 - smoothstep(uCvHole.y, uCvHole.z, length(vec2(e / L, near.y)))) * (1.0 - spot.x);
   lum = mix(uCvFar.z * (1.0 + uCvFarMore.x * mottle), lum, mix(uCvFar.w, 1.0, fine));
 
   // the sunspot: fibres with bodies, grains that run toward the umbra along them, a bright head where each ends
@@ -549,7 +620,11 @@ void main() {
   // the light falls toward the limb: the flatter the ball itself is seen, the less of the deep hot gas shows
   lum *= 1.0 - uCvFall.x * pow(1.0 - muFlat, uCvFall.y);
   // the shoulder of a bulb, where its skin turns down into the lane, is a thin bright line, broken along its way
-  float rim = exp(-pow((way - uCvRim.y) / uCvRim.z, 2.0)) * smoothstep(uCvRim.w, uCvRim.w + 0.3, vnoise(vec3(g / L * 5.0, t * 0.2 + own.y * 9.0))) * (1.0 - spot.x);
+  // (it is a crescent: it stands on the far edge of a cell alone, where the skin rolls over into the crease and is
+  // seen along itself: the line is where the skin is seen edge on, by the power uCvRim.z, beyond uCvRim.y of the
+  // way to the lane; uCvHole.w is the span of the turn away from the eye over which it comes in. With no such
+  // span it is a ring at uCvRim.y of the way, uCvRim.z wide, all round)
+  float rim = (uCvHole.w > 0.0 ? pow(1.0 - mu, uCvRim.z) * smoothstep(uCvRim.y - 0.2, uCvRim.y, way) : exp(-pow((way - uCvRim.y) / uCvRim.z, 2.0))) * smoothstep(uCvRim.w, uCvRim.w + 0.3, vnoise(vec3(g / L * 5.0, t * 0.2 + own.y * 9.0))) * (1.0 - spot.x) * (uCvHole.w > 0.0 ? smoothstep(0.0, uCvHole.w, muFlat - mu) : 1.0);
   // the gloss of the bulbs: a sheen where the surface lies between the eye and the far light
   vec3 lightDir = normalize(ST_RIGHT * uCvSheen.x + ST_FWD * uCvSheen.y - ST_DOWN * uCvSheen.z);
   float sheen = pow(max(dot(normal, normalize(toEye + lightDir)), 0.0), uCvGloss.x);
@@ -712,6 +787,12 @@ export class Surface {
         uCvVeilTint: { value: new THREE.Vector3().fromArray((l.veil.tint as number[]).map(srgbToLinear)) },
         uCvFar: { value: new THREE.Vector4(l.far.from, l.far.to, l.far.level, l.far.keep) },
         uCvFlat: { value: new THREE.Vector4(l.far.flat[0]!, l.far.flat[1]!, l.far.lane, 0) },
+        uCvLine: { value: new THREE.Vector4(l.line.scale, l.line.curl, l.line.wide, l.line.soft) },
+        uCvLineMore: { value: new THREE.Vector4(l.line.levels, l.line.glow[0]!, l.line.bunch[1]!, l.line.bunch[2]!) },
+        uCvLineIn: { value: new THREE.Vector4(l.line.from[0]!, l.line.from[1]!, l.line.lane, l.line.amount) },
+        uCvLineFlow: { value: new THREE.Vector4(l.line.flow[0]!, l.line.flow[1]!, l.line.bunch[0]!, l.line.glow[1]!) },
+        uCvHole: { value: new THREE.Vector4(l.pit.amount, l.pit.from, l.pit.to, l.rim.far) },
+        uCvLineClose: { value: new THREE.Vector2(l.line.close[0]!, l.line.close[1]!) },
       },
     })
     // Rings round the point under the stage's camera. Their spacing follows what a pixel covers on the ground from the
