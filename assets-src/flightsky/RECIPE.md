@@ -40,3 +40,13 @@ Defaults that the command relies on: `--blur 1.5`, `--vivid 1.6`, `--warm 0.5`, 
   5. `--extra N`: N faint points below the detection limit. Position drawn with density proportional to the starless luminance to the power 1.5 (the top and bottom fifth of the strip get none), flux between the two `--faint` values with most near the low one, color of the strip under the point plus a random warm or cool shift.
   6. The records are shuffled with the seeded generator and written.
 - The count printed by the command at the time of delivery: 363 thousand found stars plus 400 thousand faint points.
+
+## The star field of the band at a stop (no file, drawn by the sky pass)
+
+- Since MAIL 732 the band at a stop (`uFlightStrip.x` under 1) is not the photograph strip `skyband.jpg` shown as it is. The cloud's light is `skybandglow.png` (the strip without stars, above), its colour calmed half way toward level 6 of `skyband.jpg`, and its stars are drawn by `stopLayer` in `src/space/sky.ts` from the values under `travel.sky.flightStrip.stop` of `config/showcase.json`.
+- A layer is a grid of cells in band coordinates (`cells` across the 180 degree strip and up its 45 degrees, repeated with the strip). Each cell holds one star at a hashed place, with a hashed weight `min(u ^ (-1 / slope), cap)` (a power law of star counts) and a hashed cool or warm tint whose mean is white. A star is a Gaussian `exp(-r2 / core)` in pixels of the 1080 line picture, the same core as the catalog stars (0.7), found through the screen derivatives of the band coordinate, so its size on screen does not follow the lens or the format.
+- A layer's mean light is `light` times the cloud's light at that place, whatever the lens; where a cell is under `fine[0]` pixels the layer is its mean (smooth light), with a ramp to `fine[1]`.
+- Two layers: `points` (1080 by 180 cells, few and bright, slope 1.2, cap 120) and `grain` (5400 by 900 cells, about one a pixel at the stops' lens, slope 3, cap 5). `share` is the part of the cloud's smooth light that is taken out and given to the stars; what is left stays as the unresolved glow.
+- Dust lanes: `min(photograph / cloud, 1) ^ lane` scales the cloud and both star layers, so a lane has fewer and fainter stars, with the photograph's own structure, and a bright blob of the photograph adds nothing.
+- The band grade (`skyFrame.band.gamma`) and the warm look read the level from the cloud and lanes, not from a single star, so a bright star keeps the cloud's hue.
+- No seed and no file: the hash of the cell index is the star. The same field stands at every stop and in both formats.
