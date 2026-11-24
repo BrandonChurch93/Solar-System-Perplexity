@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T01:48:24.067Z",
+ "pushed": "2026-11-24T02:12:37.344Z",
  "head": "85312d1ba89d4fbb4811dc70dc8f5b02871b7c43",
- "note": "rise sample on 85312d1b",
+ "note": "4860 after mail 457 (draft N5, not committed) beside the approved image; the rise on 85312d1b, first sixteen frames",
  "looks": [
+  {
+   "time": "2026-11-24T02:12:36.190Z",
+   "file": "20261124021236190-note-s-r2-4950.jpg",
+   "source": "../../../../tmp/s-r2-4950.jpg",
+   "kind": "note",
+   "label": "the rise on 85312d1b, every frame 4950 to 4965 (the rest renders)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T02:12:34.949Z",
+   "file": "20261124021234949-note-d-N5.jpg",
+   "source": "../../../../tmp/d-N5.jpg",
+   "kind": "note",
+   "label": "4860 draft N5 (left) beside the approved image: one main ridge of strands, storm with fine rings, bands in the far field, streaked deck",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T01:48:23.481Z",
    "file": "20261124014823481-note-v-r1.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/s-l4-4707.jpg",
    "kind": "note",
    "label": "Dive, every frame from 4707 (sheet of 16), preview draft, commit 85312d1b: the scene's layout fitted to the map from above. One dark oval, far rim band and bow from the hold's planet down to the surface view",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T01:07:58.376Z",
-   "file": "20261124010758376-note-v-l1.jpg",
-   "source": "../../../../tmp/v-l1.jpg",
-   "kind": "note",
-   "label": "UNFINISHED, layout fit first try (uncommitted): dive 4707 4715 4720 4725 4730 4740 4750 4758, preview draft. The scene's dark oval, far rim band and bow stand where the map has them; faults: bow a stub, far rim band thin, deck streaky from mid heights, cobalt at 4715 to 4720",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T01:07:57.813Z",
-   "file": "20261124010757813-note-d-L1.jpg",
-   "source": "../../../../tmp/d-L1.jpg",
-   "kind": "note",
-   "label": "UNFINISHED, layout fit first try (uncommitted): 4860 preview draft beside the approved image. The dark zone is now the oval of the map's vortex, the pale deck begins at its far rim; new: cirrus band on the far rim (at the horizon) and the bow west of the storm (a stub, being reworked)",
    "stop": "neptune"
   }
  ]
