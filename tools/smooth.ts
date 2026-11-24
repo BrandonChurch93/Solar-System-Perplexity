@@ -10,11 +10,11 @@ import { handoverFrame, handoverOf } from '../src/director/handover'
 import { setCapture, spanMid } from '../src/core/clock'
 import type { Pose } from '../src/core/types'
 import { plans } from '../src/director/plans'
-import { MIN_POINTS, carriedCamera, curves, ringPlane, sampleWindow, sphereHit, type Kind, type Plane, type Ring } from './smooth/camera'
-import { judgeCurve, longestGap, position, shown, table, type CurveResult, type Fault, type Row } from './smooth/path'
+import { LANDING_FROM, MIN_POINTS, carriedCamera, curves, landingCurves, ringPlane, sampleLanding, sampleWindow, sphereHit, type Kind, type Plane, type Ring } from './smooth/camera'
+import { LANDING_FLOOR, LANDING_LATE, judgeCurve, judgeLanding, longestGap, position, shown, table, type CurveResult, type Fault, type LandingResult, type Row } from './smooth/path'
 
 // The measures of a smooth dive and rise (kit/PROGRESS.md, second review note of 2026-11-23, plan I). One stop.
-//   npm run smooth -- --stop ID [--kind dive|rise] [--only path,pictures,place,parity,counts] [--rate N] [--calibrate] [--ring picture|ground]
+//   npm run smooth -- --stop ID [--kind dive|rise|landing] [--only path,pictures,place,parity,counts] [--rate N] [--calibrate] [--ring picture|ground]
 // path      from the camera path alone, at whole film frames and at the capture rate (smooth.rate): the fall or climb of the height, the turn of the
 //           camera and the speed of the picture at the place, each over the mean of the move. Judged: the change over one film frame, the same
 //           across both seams, and one rise and one fall (smooth.path). The speed is a mean over ground points on a ring round the place:
@@ -58,16 +58,21 @@ if (!stop || !cfg.stopIds.includes(stop)) {
 }
 const S = cfg.raw.smooth
 const PARTS = ['path', 'pictures', 'place', 'parity', 'counts']
-const only = a.only ? a.only.split(',') : PARTS
+const landing = a.kind === 'landing'
+const only = a.only ? a.only.split(',') : landing ? ['path'] : PARTS
 for (const p of only) {
   if (!PARTS.includes(p)) {
     console.error('smooth: --only takes ' + PARTS.join(', '))
     process.exit(2)
   }
 }
-const kinds: Kind[] = a.kind ? [a.kind as Kind] : ['dive', 'rise']
+const kinds: Kind[] = landing ? [] : a.kind ? [a.kind as Kind] : ['dive', 'rise']
 if (kinds.some((k) => k !== 'dive' && k !== 'rise')) {
-  console.error('smooth: --kind is dive or rise')
+  console.error('smooth: --kind is dive, rise or landing')
+  process.exit(2)
+}
+if (landing && only.some((p) => p !== 'path')) {
+  console.error('smooth: --kind landing has the path part only')
   process.exit(2)
 }
 const rate = a.rate ? Number(a.rate) : S.rate
@@ -129,9 +134,53 @@ function pathOf(kind: Kind): PathKind | null {
   }
 }
 
-function pathPart(): PartResult & { kinds: Record<string, PathKind | null> } {
-  const out: Record<string, PathKind | null> = {}
+interface LandingRun { rate: number; curves: LandingResult[] }
+interface LandingKind { segment: string; into: string; firstFrame: number; holdFrame: number; window: [number, number]; judged: boolean; runs: LandingRun[]; rows: Row[]; sides: string[]; faults: Fault[]; shown: string[] }
+
+const LANDING: ['sky' | 'centre' | 'edge' | 'limb', string][] = [
+  ['sky', 'sky'],
+  ['centre', 'centre'],
+  ['edge', 'edge'],
+  ['limb', 'centre and edge'],
+]
+
+// The travel out of the first stop has no landing law: it is shown and not judged. So is a curve whose mean is under the floor: what it
+// measures stands still in the picture.
+function landingOf(): LandingKind | null {
+  const rates = rate > 1 ? [1, rate] : [1]
+  const runs: LandingRun[] = []
+  let whole: ReturnType<typeof sampleLanding> = null
+  let fine: ReturnType<typeof sampleLanding> = null
+  for (const r of rates) {
+    const w = sampleLanding(cfg, film, plan, r, S.reachFrames)
+    if (!w) return null
+    if (r === 1) whole = w
+    else fine = w
+    const c = landingCurves(w, master.width, master.height)
+    runs.push({ rate: r, curves: LANDING.map(([key, name]) => judgeLanding(name, 'px a film frame', c[key], w.k0, r, w.own, S.path, S.path.floors.speedPx)) })
+  }
+  const w = whole!
+  const lead = w.firstFrame - w.k0
+  const shifted = runs[0]!.curves.map((c) => ({ name: c.name, over: c.over.slice(lead), step: c.step.slice(lead), points: null }))
+  const judged = w.travel.stop !== cfg.stopIds[0]
+  const named = (still: boolean): Fault[] => runs.flatMap((r) => r.curves.filter((c) => c.floored === still).flatMap((c) => c.faults.map((x) => ({ ...x, text: (r.rate === 1 ? 'whole frames, ' : 'rate ' + r.rate + ', ') + x.text }))))
+  return {
+    segment: w.travel.id, into: w.hold.id, firstFrame: w.landingFrame, holdFrame: w.travel.endFrame, window: [w.firstFrame, w.firstFrame + w.frames - 1], judged, runs,
+    rows: table(shifted, fine ? runs[1]!.curves : null, w.firstFrame, w.frames, fine ? fine.k0 : 0, fine ? fine.rate : 1),
+    sides: Array.from({ length: w.frames }, (_, i) => w.samples[w.firstFrame + i - w.k0]!.segment),
+    faults: named(false).filter(() => judged),
+    shown: [...named(false).filter(() => !judged), ...named(true)].map((x) => x.text),
+  }
+}
+
+function pathPart(): PartResult & { kinds: Record<string, PathKind | LandingKind | null> } {
+  const out: Record<string, PathKind | LandingKind | null> = {}
   const why: string[] = []
+  if (landing) {
+    const p = landingOf()
+    out.landing = p
+    if (p) for (const f of p.faults) why.push('landing: ' + f.text)
+  }
   for (const kind of kinds) {
     const p = pathOf(kind)
     out[kind] = p
@@ -400,11 +449,11 @@ async function placeOf(kind: Kind): Promise<PlaceKind | null> {
     if (max !== null && value !== undefined && value > max) why.push('place picture off: ' + text + ', limit ' + max)
   }
   const lim = (v: number | null): number | null => v
-  judge(sides.mean, lim(P.sideMean), 'mean side difference at T ' + sides.mean.toFixed(3))
+  judge(sides.mean, lim(P.sideMean), 'mean side difference at T ' + shown(sides.mean, 3, P.sideMean))
   judge(sides.p99, lim(P.sideP99), '99th percentile of the side difference at T ' + sides.p99)
-  judge(found.bodyLevelStep?.value, lim(P.levelStep), 'the mean level of the body steps by ' + (found.bodyLevelStep?.value ?? 0).toFixed(2) + ' into frame ' + position(found.bodyLevelStep?.k ?? 0, r))
-  judge(found.bodyColourStep?.value, lim(P.colourStep), 'the mean colour of the body steps by ' + (found.bodyColourStep?.value ?? 0).toFixed(2) + ' into frame ' + position(found.bodyColourStep?.k ?? 0, r))
-  judge(found.pop?.value, lim(P.maxPop), 'pop score ' + (found.pop?.value ?? 0).toFixed(2) + ' from frame ' + position(found.pop?.k ?? 0, r) + ' to the next')
+  judge(found.bodyLevelStep?.value, lim(P.levelStep), 'the mean level of the body steps by ' + shown(found.bodyLevelStep?.value ?? 0, 2, P.levelStep) + ' into frame ' + position(found.bodyLevelStep?.k ?? 0, r))
+  judge(found.bodyColourStep?.value, lim(P.colourStep), 'the mean colour of the body steps by ' + shown(found.bodyColourStep?.value ?? 0, 2, P.colourStep) + ' into frame ' + position(found.bodyColourStep?.k ?? 0, r))
+  judge(found.pop?.value, lim(P.maxPop), 'pop score ' + shown(found.pop?.value ?? 0, 2, P.maxPop) + ' from frame ' + position(found.pop?.k ?? 0, r) + ' to the next')
   return { segment: seg.id, frameT, window: [h.placeFirstFrame, h.placeLastFrame], frames: [first, last], rate: r, sides: { mean: sides.mean, p50: sides.p50, p99: sides.p99, p999: sides.p999, max: sides.max, shareOver16: sides.shareOver16, panel: stem + '-place-sides.png' }, rows, ...found, why }
 }
 
@@ -428,10 +477,10 @@ function placeText(kind: Kind, p: PlaceKind | null): string[] {
   if (p.note) lines.push('Note: ' + p.note + '.', '')
   if (p.why.length) lines.push(...p.why.map((w) => '- RED ' + w), '')
   if (!p.sides) return lines
-  lines.push('Both sides at T, the globe side without the place picture (display values 0 to 255): mean difference ' + p.sides.mean.toFixed(3) + ' (' + lim(P.sideMean, H.sideMean) + '), 99th percentile ' + p.sides.p99 + ' (' + lim(P.sideP99, H.sideP99) + '), 99.9th ' + p.sides.p999 + ', max ' + p.sides.max + ', ' + (p.sides.shareOver16 * 100).toFixed(2) + ' percent of pixels over 16. Picture: ' + p.sides.panel.slice(ROOT.length + 1))
-  if (p.bodyLevelStep) lines.push('Largest step between two frames on the body: mean level ' + p.bodyLevelStep.value.toFixed(2) + ' into frame ' + position(p.bodyLevelStep.k, p.rate) + ' (' + lim(P.levelStep, H.levelStep) + ')' + (p.bodyColourStep ? ', mean colour ' + p.bodyColourStep.value.toFixed(2) + ' into frame ' + position(p.bodyColourStep.k, p.rate) + ' (' + lim(P.colourStep, H.colourStep) + ')' : '') + '.')
+  lines.push('Both sides at T, the globe side without the place picture (display values 0 to 255): mean difference ' + shown(p.sides.mean, 3, P.sideMean) + ' (' + lim(P.sideMean, H.sideMean) + '), 99th percentile ' + p.sides.p99 + ' (' + lim(P.sideP99, H.sideP99) + '), 99.9th ' + p.sides.p999 + ', max ' + p.sides.max + ', ' + (p.sides.shareOver16 * 100).toFixed(2) + ' percent of pixels over 16. Picture: ' + p.sides.panel.slice(ROOT.length + 1))
+  if (p.bodyLevelStep) lines.push('Largest step between two frames on the body: mean level ' + shown(p.bodyLevelStep.value, 2, P.levelStep) + ' into frame ' + position(p.bodyLevelStep.k, p.rate) + ' (' + lim(P.levelStep, H.levelStep) + ')' + (p.bodyColourStep ? ', mean colour ' + shown(p.bodyColourStep.value, 2, P.colourStep) + ' into frame ' + position(p.bodyColourStep.k, p.rate) + ' (' + lim(P.colourStep, H.colourStep) + ')' : '') + '.')
   if (p.levelStep) lines.push('Largest level step of the whole frame against the middle of its two neighbours: ' + p.levelStep.value.toFixed(2) + ' at frame ' + position(p.levelStep.k, p.rate) + '.')
-  if (p.pop) lines.push('Largest pop score: ' + p.pop.value.toFixed(2) + ' from frame ' + position(p.pop.k, p.rate) + ' to the next (' + (P.maxPop === null ? 'no limit yet, not judged' : 'limit ' + P.maxPop) + ').')
+  if (p.pop) lines.push('Largest pop score: ' + shown(p.pop.value, 2, P.maxPop) + ' from frame ' + position(p.pop.k, p.rate) + ' to the next (' + (P.maxPop === null ? 'no limit yet, not judged' : 'limit ' + P.maxPop) + ').')
   lines.push('', '| frame | level | body share | body level | body level step | body colour step | level step | pop | pop of one block |', '|---|---|---|---|---|---|---|---|---|')
   for (const row of p.rows) lines.push('| ' + [position(row.k, p.rate) + (row.k === p.frameT * p.rate ? ' T' : ''), row.level.toFixed(2), row.bodyShare.toFixed(3), row.bodyLevel.toFixed(2), cell(row.bodyLevelStep, 2), cell(row.bodyColourStep, 2), cell(row.levelStep, 2), cell(row.pop, 2), cell(row.popBlock, 2)].join(' | ') + ' |')
   lines.push('')
@@ -481,7 +530,7 @@ async function parityPart(): Promise<PartResult & Partial<ParityOut>> {
     const bad = rows.filter((row) => Math.abs(row[key]) > max)
     if (bad.length === 0) return
     const top = bad.reduce((x, y) => (Math.abs(y[key]) > Math.abs(x[key]) ? y : x))
-    why.push('parity: ' + what + ' ' + top[key].toFixed(3) + ' at frame ' + top.frame + ' (' + top.segment + '), limit ' + max + (bad.length > 1 ? ' (' + bad.length + ' frames over it)' : ''))
+    why.push('parity: ' + what + ' ' + shown(top[key], 3, top[key] < 0 ? -max : max) + ' at frame ' + top.frame + ' (' + top.segment + '), limit ' + max + (bad.length > 1 ? ' (' + bad.length + ' frames over it)' : ''))
   }
   const lim = (v: number | null): number | null => v
   judge('mean', lim(P.maxMean), 'mean difference between ' + bigId + ' scaled down and ' + filmId)
@@ -495,18 +544,18 @@ function parityText(p: PartResult & Partial<ParityOut>): string[] {
   const P = S.parity
   const lim = (v: number | null): string => (v === null ? 'no limit yet, not judged' : 'limit ' + v)
   const rows = p.rows ?? []
-  const top = (key: 'mean' | 'coarse' | 'blockLevel' | 'level'): string => {
+  const top = (key: 'mean' | 'coarse' | 'blockLevel' | 'level', max: number | null): string => {
     if (rows.length === 0) return 'none'
     const r = rows.reduce((x, y) => (Math.abs(y[key]) > Math.abs(x[key]) ? y : x))
-    return r[key].toFixed(3) + ' at frame ' + r.frame + ' (' + r.segment + ')'
+    return shown(r[key], 3, max === null ? null : r[key] < 0 ? -max : max) + ' at frame ' + r.frame + ' (' + r.segment + ')'
   }
   const [bigId, filmId] = p.formats!
   const lines = [
     'The same film frame at ' + bigId + ' scaled down by ' + p.factor + ' against ' + filmId + ', tier ' + p.tier + ', display values 0 to 255. Seconds a rendered frame on ' + machineId() + ': ' + Object.entries(p.secondsAFrame ?? {}).map(([k, v]) => k + ' ' + (v === null ? 'already rendered' : v)).join(', ') + '.', '',
-    'Largest mean difference: ' + top('mean') + ', ' + lim(P.maxMean) + '.',
-    'Largest mean difference at one ' + P.coarse + 'th of the size (what is left when the fine grain is averaged away): ' + top('coarse') + ', ' + lim(P.maxCoarse) + '.',
-    'Largest level difference of one block (a grid of ' + S.pictures.grid.join(' by ') + '): ' + top('blockLevel') + ', ' + lim(P.maxBlockLevel) + '.',
-    'Largest level difference of the whole frame: ' + top('level') + ', ' + lim(P.maxLevel) + '.',
+    'Largest mean difference: ' + top('mean', P.maxMean) + ', ' + lim(P.maxMean) + '.',
+    'Largest mean difference at one ' + P.coarse + 'th of the size (what is left when the fine grain is averaged away): ' + top('coarse', P.maxCoarse) + ', ' + lim(P.maxCoarse) + '.',
+    'Largest level difference of one block (a grid of ' + S.pictures.grid.join(' by ') + '): ' + top('blockLevel', P.maxBlockLevel) + ', ' + lim(P.maxBlockLevel) + '.',
+    'Largest level difference of the whole frame: ' + top('level', P.maxLevel) + ', ' + lim(P.maxLevel) + '.',
   ]
   if (p.panel) lines.push('Picture: ' + p.panel.slice(ROOT.length + 1))
   lines.push('')
@@ -652,13 +701,49 @@ function pathText(kind: Kind, p: PathKind | null): string[] {
   const head = ['frame', 'segment and side', 'height', 'rate', 'step', ...(fine ? ['step at rate ' + p.runs[1]!.rate] : []), 'turn', 'step', ...(fine ? ['step at rate ' + p.runs[1]!.rate] : []), 'speed', 'step', ...(fine ? ['step at rate ' + p.runs[1]!.rate] : []), ...(dots ? ['points'] : [])]
   lines.push('Every film frame of the window. rate, turn and speed are over the mean of the move; step is the change from the film frame before; a star marks a step over ' + L.maxStep + '.', '')
   lines.push('| ' + head.join(' | ') + ' |', '|' + head.map(() => '---').join('|') + '|')
-  const star = (v: number | null): string => (v === null ? '' : v.toFixed(3) + (v > L.maxStep ? ' *' : ''))
+  const star = (v: number | null): string => (v === null ? '' : shown(v, 3, L.maxStep) + (v > L.maxStep ? ' *' : ''))
   p.rows.forEach((row, i) => {
     const cells = [String(row.frame) + (row.frame === p.firstFrame ? ' first' : row.frame === p.endFrame - 1 ? ' last' : row.frame === p.frameT ? ' T' : ''), p.sides[i]!, p.heights[i] === null ? '' : p.heights[i]!.toExponential(3)]
     for (const name of ['rate', 'turn', 'speed']) {
       const v = row.values[name]!
       cells.push(cell(v.over), star(v.step), ...(fine ? [star(v.fine)] : []))
       if (v.points !== undefined) cells.push(String(v.points))
+    }
+    lines.push('| ' + cells.join(' | ') + ' |')
+  })
+  lines.push('')
+  return lines
+}
+
+function landingText(p: LandingKind | null): string[] {
+  if (!p) return ['### landing', '', 'No travel arrives at this stop.', '']
+  const L = S.path
+  const lines = ['### landing (' + p.segment + ' into ' + p.into + ', frames ' + p.firstFrame + ' to ' + (p.holdFrame - 1) + ', first frame of the hold ' + p.holdFrame + ', window ' + p.window[0] + ' to ' + p.window[1] + ')', '']
+  lines.push('The last part of the travel that arrives at ' + stop + ', from ' + LANDING_FROM + ' of its length, in the camera of ' + stop + ', in px of the master a film frame: sky is the turn of the camera (what the stars do), centre the way of the centre of the body, edge the growth of its radius, centre and edge the fastest point of its edge. Every value is over the mean of the curve in the landing. loss is what a curve loses over one film frame.', '')
+  if (!p.judged) lines.push('This travel has no landing law yet: shown, not judged.', '')
+  lines.push('| run | curve | mean | at the start | hold\'s own | step at the seam | at | step between capture frames at the seam | at | largest loss | at | growth of the loss in the last ' + LANDING_LATE + ' | at | climb after a fall | at | under the hold\'s own | at |')
+  lines.push('|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|')
+  for (const r of p.runs) {
+    for (const c of r.curves) {
+      const pos = (x: { k: number } | null): string => (x && x.k >= 0 ? position(x.k, r.rate) : '')
+      lines.push('| ' + [r.rate === 1 ? 'whole frames' : 'rate ' + r.rate, c.name, Number(c.mean.toPrecision(4)) + ' px' + (c.floored ? ' (under the floor ' + c.floor + ': over the floor, shown, not judged)' : ''), cell(c.first), cell(c.hold), cell(c.seam?.value, 3, L.maxStep), pos(c.seam), cell(c.halfSeam?.value, 3, L.maxStep), pos(c.halfSeam), cell(c.peakLoss?.value), pos(c.peakLoss), cell(c.growth?.value, 3, L.maxStep), pos(c.growth), cell(c.hump.value, 3, L.maxRebound), pos(c.hump), cell(c.dip?.value, 3, L.maxStep), pos(c.dip)].join(' | ') + ' |')
+    }
+  }
+  lines.push('', 'Limits: step ' + L.maxStep + ' of the mean over one film frame from ' + L.seamFrames + ' film frames before the hold to ' + L.seamFrames + ' into it; the largest loss not in the last ' + LANDING_LATE + ' film frames before the hold, and no loss there larger than the one a film frame before by more than ' + L.maxStep + '; no loss under a third of the one a film frame before while the speed is over the hold\'s own; climb after a fall ' + L.maxRebound + '; not under the hold\'s own by more than ' + L.maxStep + '. A loss and a speed over the hold\'s own count from ' + LANDING_FLOOR + ' of the mean. A curve whose mean is under ' + L.floors.speedPx + ' px a film frame stands still in the picture: it is given over that floor, shown and not judged. The ' + S.reachFrames + ' film frames before the landing and the frames further into the hold are shown and not judged.', '')
+  if (p.faults.length) lines.push(...p.faults.map((f) => '- RED ' + f.text), '')
+  else lines.push(p.judged ? 'No judged number of the landing is over its limit.' : 'Nothing of this landing is judged.', '')
+  if (p.shown.length) lines.push(...p.shown.map((t) => '- shown, not judged: ' + t), '')
+  const fine = p.runs.length > 1
+  const names = LANDING.map(([, name]) => name)
+  const head = ['frame', 'segment', ...names.flatMap((n) => [n, 'step', ...(fine ? ['step at rate ' + p.runs[1]!.rate] : [])])]
+  lines.push('Every film frame of the window. The curves are over their mean in the landing; step is the change from the film frame before; a star marks a step over ' + L.maxStep + '.', '')
+  lines.push('| ' + head.join(' | ') + ' |', '|' + head.map(() => '---').join('|') + '|')
+  const star = (v: number | null): string => (v === null ? '' : shown(v, 3, L.maxStep) + (v > L.maxStep ? ' *' : ''))
+  p.rows.forEach((row, i) => {
+    const cells = [String(row.frame) + (row.frame === p.firstFrame ? ' landing' : row.frame === p.holdFrame ? ' hold' : ''), p.sides[i]!]
+    for (const name of names) {
+      const v = row.values[name]!
+      cells.push(cell(v.over), star(v.step), ...(fine ? [star(v.fine)] : []))
     }
     lines.push('| ' + cells.join(' | ') + ' |')
   })
@@ -724,7 +809,8 @@ async function main(): Promise<void> {
       continue
     }
     if (p.note) lines.push('Note: ' + p.note + '.', '')
-    if (name === 'path') for (const kind of kinds) lines.push(...pathText(kind, (p as ReturnType<typeof pathPart>).kinds[kind] ?? null))
+    if (name === 'path') for (const kind of kinds) lines.push(...pathText(kind, ((p as ReturnType<typeof pathPart>).kinds[kind] ?? null) as PathKind | null))
+    if (name === 'path' && landing) lines.push(...landingText(((p as ReturnType<typeof pathPart>).kinds.landing ?? null) as LandingKind | null))
     if (name === 'pictures') {
       const pp = p as Awaited<ReturnType<typeof picturesPart>>
       lines.push('Tier ' + pp.tier + ', rate ' + pp.rate + (pp.secondsAFrame === null ? ', every frame was already rendered' : ', ' + pp.secondsAFrame + ' s a rendered frame on ' + machineId()) + '.', '')

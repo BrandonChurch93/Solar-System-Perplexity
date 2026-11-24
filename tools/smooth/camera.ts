@@ -30,11 +30,7 @@ export function carriedCamera(film: FilmDirector, plan: StopPlan, stop: string, 
   return { pose: set.view === 'terrain' ? plan.twin(local, time) : local, side: set.view, segment: seg.id }
 }
 
-export function sampleWindow(cfg: Config, film: FilmDirector, plan: StopPlan, kind: Kind, rate: number, reachFrames: number): Window | null {
-  const seg = cfg.segments.find((s) => s.stop === plan.id && s.kind === kind)
-  if (!seg) return null
-  const firstFrame = Math.max(seg.firstFrame - reachFrames, 0)
-  const endFrame = Math.min(seg.endFrame + reachFrames, cfg.frameCount)
+function samplesOf(cfg: Config, film: FilmDirector, plan: StopPlan, rate: number, firstFrame: number, endFrame: number): { k0: number; samples: Sample[] } {
   const k0 = Math.max(firstFrame * rate - 1, 0)
   const samples: Sample[] = []
   setCapture(rate)
@@ -44,7 +40,64 @@ export function sampleWindow(cfg: Config, film: FilmDirector, plan: StopPlan, ki
     const c = carriedCamera(film, plan, plan.id, at, time)
     samples.push({ k, frame: Math.floor(at), time, segment: c.segment, side: c.side, pose: c.pose, height: c.pose.position.length() - 1 })
   }
-  return { kind, seg, rate, k0, samples, own: { first: seg.firstFrame * rate + 1, end: seg.endFrame * rate }, firstFrame, frames: endFrame - firstFrame }
+  return { k0, samples }
+}
+
+export function sampleWindow(cfg: Config, film: FilmDirector, plan: StopPlan, kind: Kind, rate: number, reachFrames: number): Window | null {
+  const seg = cfg.segments.find((s) => s.stop === plan.id && s.kind === kind)
+  if (!seg) return null
+  const firstFrame = Math.max(seg.firstFrame - reachFrames, 0)
+  const endFrame = Math.min(seg.endFrame + reachFrames, cfg.frameCount)
+  return { kind, seg, rate, ...samplesOf(cfg, film, plan, rate, firstFrame, endFrame), own: { first: seg.firstFrame * rate + 1, end: seg.endFrame * rate }, firstFrame, frames: endFrame - firstFrame }
+}
+
+// The landing of a stop: the last part of the travel that arrives at it, from the share LANDING_FROM of the travel to the first frame of the
+// hold, in the camera of the arriving stop. own is the span of capture frames whose step lies inside the landing; the window reaches
+// reachFrames film frames before the landing and into the hold.
+export const LANDING_FROM = 0.68
+
+export interface LandingWindow { travel: Segment; hold: Segment; rate: number; k0: number; samples: Sample[]; own: { first: number; end: number }; firstFrame: number; frames: number; landingFrame: number }
+
+export function sampleLanding(cfg: Config, film: FilmDirector, plan: StopPlan, rate: number, reachFrames: number): LandingWindow | null {
+  const hold = cfg.segments.find((s) => s.stop === plan.id && s.kind === 'hold')
+  const travel = hold ? cfg.segments.find((s) => s.kind === 'travel' && s.endFrame === hold.firstFrame) : undefined
+  if (!hold || !travel) return null
+  const landingFrame = travel.firstFrame + Math.ceil(LANDING_FROM * (travel.endFrame - travel.firstFrame) - 1e-9)
+  const firstFrame = Math.max(landingFrame - reachFrames, 0)
+  const endFrame = Math.min(travel.endFrame + reachFrames, cfg.frameCount)
+  return { travel, hold, rate, ...samplesOf(cfg, film, plan, rate, firstFrame, endFrame), own: { first: landingFrame * rate + 1, end: travel.endFrame * rate }, firstFrame, frames: endFrame - firstFrame, landingFrame }
+}
+
+export interface LandingCurves { sky: (number | null)[]; centre: (number | null)[]; edge: (number | null)[]; limb: (number | null)[] }
+
+// What changed from capture frame k - 1 to k in the picture, in pixels a film frame: sky, the turn of the camera (what the stars do); centre,
+// the way of the centre of the arriving body; edge, the growth of its radius; limb, centre and edge together, the fastest point of its edge.
+export function landingCurves(w: LandingWindow, width: number, height: number): LandingCurves {
+  const out: LandingCurves = { sky: [], centre: [], edge: [], limb: [] }
+  const focal = (p: Pose): number => height / 2 / Math.tan((p.vfov * RAD) / 2)
+  const radius = (p: Pose): number | null => (p.position.lengthSq() > 1 ? focal(p) / Math.sqrt(p.position.lengthSq() - 1) : null)
+  const zero = new THREE.Vector3()
+  w.samples.forEach((s, i) => {
+    const prev = i > 0 && w.samples[i - 1]!.k === s.k - 1 ? w.samples[i - 1]! : null
+    if (!prev) {
+      out.sky.push(null)
+      out.centre.push(null)
+      out.edge.push(null)
+      out.limb.push(null)
+      return
+    }
+    out.sky.push(prev.pose.quaternion.angleTo(s.pose.quaternion) * ((focal(prev.pose) + focal(s.pose)) / 2) * w.rate)
+    const a = project(prev.pose, zero, width, height)
+    const b = project(s.pose, zero, width, height)
+    const centre = a.front && b.front ? Math.hypot(b.x - a.x, b.y - a.y) * w.rate : null
+    const ra = radius(prev.pose)
+    const rb = radius(s.pose)
+    const edge = ra !== null && rb !== null ? Math.abs(rb - ra) * w.rate : null
+    out.centre.push(centre)
+    out.edge.push(edge)
+    out.limb.push(centre !== null && edge !== null ? centre + edge : null)
+  })
+  return out
 }
 
 export function project(p: Pose, point: THREE.Vector3, width: number, height: number): { x: number; y: number; front: boolean } {

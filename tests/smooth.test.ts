@@ -7,8 +7,8 @@ import { shutterMid } from '../src/core/sampler'
 import { FilmDirector } from '../src/director/film'
 import { sideAt } from '../src/director/handover'
 import { plans } from '../src/director/plans'
-import { curves, planeHit, ringPlane, sampleWindow, seen } from '../tools/smooth/camera'
-import { judgeCurve, longestGap, position, shown, table } from '../tools/smooth/path'
+import { curves, landingCurves, planeHit, ringPlane, sampleLanding, sampleWindow, seen } from '../tools/smooth/camera'
+import { judgeCurve, judgeLanding, longestGap, position, shown, table } from '../tools/smooth/path'
 
 const limits = { maxStep: 0.08, maxRebound: 0.03, seamFrames: 2 }
 const bell = (n: number, edge = 0): number[] => Array.from({ length: n }, (_, i) => edge + 1 - Math.cos((2 * Math.PI * (i + 0.5)) / n))
@@ -268,6 +268,93 @@ describe('the camera of a move, sampled', () => {
       expect(c.turn.filter((v) => v !== null).every((v) => v! >= 0)).toBe(true)
       expect(c.speed.filter((v) => v !== null).length).toBeGreaterThan(one.seg.endFrame - one.seg.firstFrame - 5)
     }
+  })
+})
+
+describe('the landing of a travel, judged', () => {
+  const hold = 2
+  const n = 24
+  const own = { first: 13, end: 12 + n }
+  const ease = (j: number): number => hold + 6 * (1 - j / n) ** 2
+  const curve = (speed: (j: number) => number): number[] => Array.from({ length: 12 + n + 14 }, (_, i) => (i < 12 ? speed(0) : i >= 12 + n ? hold : speed(i - 12)))
+  const judge = (raw: number[]): ReturnType<typeof judgeLanding> => judgeLanding('sky', 'px', raw, 0, 1, own, limits)
+
+  it('passes a brake that eases into the speed of the hold', () => {
+    const r = judge(curve(ease))
+    expect(r.faults).toEqual([])
+    expect(r.hold).toBeCloseTo(hold / r.mean, 9)
+    expect(r.peakLoss!.frame).toBe(14)
+    expect(r.hump.value).toBe(0)
+    expect(r.seam!.value).toBeLessThan(0.01)
+  })
+
+  it('names a step at the seam into the hold', () => {
+    expect(rules(judge(curve((j) => hold + 1 + 5 * (1 - j / n) ** 2)))).toContain('seam')
+  })
+
+  it('names a brake that grows into the last frames and then lets go', () => {
+    const tail = [7.13, 6.42, 4.89, 2.82, 2.35]
+    const raw = curve((j) => (j >= n - 5 ? tail[j - (n - 5)]! : 7.13 + 0.05 * (n - 5 - j)))
+    raw[12 + n] = 2.35
+    for (let i = 12 + n; i < raw.length; i++) raw[i] = 2.35
+    const r = judge(raw)
+    expect(rules(r)).toContain('lateBrake')
+    expect(rules(r)).toContain('brakeGrows')
+    expect(rules(r)).toContain('letGo')
+    expect(r.peakLoss!.frame).toBe(12 + n - 2)
+    expect(r.letGo!.frame).toBe(12 + n - 1)
+  })
+
+  it('names a climb after the speed has started to fall, and not a climb before the first fall', () => {
+    const r = judge(curve((j) => ease(j) + (j >= 8 && j < 12 ? 1 : 0)))
+    expect(rules(r)).toContain('hump')
+    expect(r.hump.frame).toBe(12 + 8)
+    const rising = judge(curve((j) => (j < 4 ? ease(4) - 0.3 * (4 - j) : ease(j))))
+    expect(rising.faults).toEqual([])
+  })
+
+  it('names a dip under the speed of the hold', () => {
+    const r = judge(curve((j) => (j >= n - 2 ? hold - 0.5 : ease(j))))
+    expect(rules(r)).toContain('dip')
+    expect(r.dip!.value).toBeCloseTo(0.5 / r.mean, 9)
+  })
+
+  it('finds a shake between capture frames at the seam', () => {
+    const fine = Array.from({ length: 2 * (12 + n + 14) }, (_, i) => (i < 24 ? ease(0) : i >= 24 + 2 * n ? hold : ease((i - 24) / 2)))
+    const span = { first: 25, end: 24 + 2 * n }
+    expect(judgeLanding('sky', 'px', fine, 0, 2, span, limits).faults).toEqual([])
+    fine[24 + 2 * n - 1] = fine[24 + 2 * n - 1]! + 0.5
+    expect(rules(judgeLanding('sky', 'px', fine, 0, 2, span, limits))).toContain('halfSeam')
+  })
+})
+
+describe('the landing of a stop, sampled', () => {
+  const film = new FilmDirector(plans)
+  const S = config.raw.smooth
+  const master = config.formats[config.formatKeys.master]!
+
+  it('is the last part of the travel that arrives at the stop, and the first stop has none', () => {
+    expect(sampleLanding(config, film, plans[0]!, 1, S.reachFrames)).toBeNull()
+    for (const plan of plans.slice(1)) {
+      const w = sampleLanding(config, film, plan, 2, S.reachFrames)!
+      const hold = config.segments.find((s) => s.stop === plan.id && s.kind === 'hold')!
+      expect(w.travel.kind).toBe('travel')
+      expect(w.travel.endFrame).toBe(hold.firstFrame)
+      expect(w.landingFrame).toBe(w.travel.firstFrame + Math.ceil(0.68 * (w.travel.endFrame - w.travel.firstFrame) - 1e-9))
+      if (w.travel.endFrame - w.travel.firstFrame === 75) expect(w.landingFrame).toBe(w.travel.firstFrame + 51)
+      expect(w.own).toEqual({ first: w.landingFrame * 2 + 1, end: hold.firstFrame * 2 })
+      expect(w.samples[0]!.k).toBe((w.landingFrame - S.reachFrames) * 2 - 1)
+      expect(w.samples[w.samples.length - 1]!.k).toBe((hold.firstFrame + S.reachFrames) * 2 - 1)
+      const c = landingCurves(w, master.width, master.height)
+      expect(c.sky.length).toBe(w.samples.length)
+      expect(c.sky[0]).toBeNull()
+      for (let k = w.own.first; k < w.own.end; k++) {
+        const i = k - w.k0
+        expect(c.sky[i]).toBeGreaterThanOrEqual(0)
+        expect(c.limb[i]).toBeCloseTo(c.centre[i]! + c.edge[i]!, 9)
+      }
+    }
+    setCapture(1)
   })
 })
 

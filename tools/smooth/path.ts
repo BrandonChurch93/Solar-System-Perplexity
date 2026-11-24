@@ -6,7 +6,7 @@ export interface Span { first: number; end: number }
 
 export interface CurveLimits { maxStep: number; maxRebound: number; seamFrames: number }
 
-export interface Fault { curve: string; rule: 'step' | 'halfStep' | 'climbAfterPeak' | 'fallBeforePeak' | 'mean'; k: number; frame: number; value: number; limit: number; first?: number; last?: number; count?: number; points?: number; text: string }
+export interface Fault { curve: string; rule: 'step' | 'halfStep' | 'climbAfterPeak' | 'fallBeforePeak' | 'mean' | 'seam' | 'halfSeam' | 'lateBrake' | 'brakeGrows' | 'letGo' | 'hump' | 'dip'; k: number; frame: number; value: number; limit: number; first?: number; last?: number; count?: number; points?: number; text: string }
 
 // A curve that is a mean over points (the speed of the picture: ground points on a ring round the place). values[i] holds what every point gave
 // at capture frame k0 + i, null where a point has no ground under it. A step and a rebound compare the mean over one fixed set of points, the
@@ -212,6 +212,135 @@ export function judgeCurve(name: string, unit: string, raw: (number | null)[], k
   return { name, unit, rate, mean, floor, floored, over, step, halfStep, peak, worstStep, worstHalfStep, worstBeyond, seams, climbAfterPeak: climb, fallBeforePeak: fall, missing, points, faults }
 }
 
+// The landing of a travel, judged: a curve of the speed of the picture from the start of the landing to the hold it arrives at.
+// loss is what the speed loses over one film frame (the value one film frame earlier less the value), hold the mean of the first seamFrames film
+// frames of the hold; all over the mean of the landing. Judged:
+// seam, halfSeam  the change over one film frame (and between capture frames) from seamFrames film frames before the hold to seamFrames into it
+// lateBrake       the largest loss does not lie in the last LANDING_LATE film frames before the hold
+// brakeGrows      in those frames no loss is larger than the loss one film frame before it by more than the step limit
+// letGo           the loss does not fall to under a third of the loss one film frame earlier while the speed is still over the hold's own
+// hump            the speed does not climb again by more than the rebound limit once it has started to fall
+// dip             the speed of the last seamFrames film frames is not under the hold's own by more than the step limit
+// A loss and a speed over the hold's own count for lateBrake and letGo from LANDING_FLOOR of the mean.
+export const LANDING_LATE = 4
+export const LANDING_FLOOR = 0.01
+
+export interface LandingResult {
+  name: string
+  unit: string
+  rate: number
+  mean: number
+  floor: number | null
+  floored: boolean
+  over: (number | null)[]
+  step: (number | null)[]
+  loss: (number | null)[]
+  points: null
+  hold: number | null
+  first: number | null
+  seam: Mark | null
+  halfSeam: Mark | null
+  peakLoss: Mark | null
+  growth: Mark | null
+  letGo: (Mark & { before: number }) | null
+  hump: Mark
+  dip: Mark | null
+  faults: Fault[]
+}
+
+export function judgeLanding(name: string, unit: string, raw: (number | null)[], k0: number, rate: number, own: Span, limits: CurveLimits, floor: number | null = null): LandingResult {
+  const frameOf = (k: number): number => Math.floor(k / rate)
+  let sum = 0
+  let count = 0
+  for (let k = own.first; k < own.end; k++) {
+    const v = raw[k - k0] ?? null
+    if (v !== null) {
+      sum += v
+      count++
+    }
+  }
+  const mean = count > 0 ? sum / count : 0
+  const floored = floor !== null && Math.abs(mean) < floor
+  const scale = floored ? floor! : mean
+  const faults: Fault[] = []
+  const say = (rule: Fault['rule'], m: Mark, limit: number, text: string): void => {
+    faults.push({ curve: name, rule, k: m.k, frame: m.frame, value: digits(m.value), limit, text: name + ': ' + text })
+  }
+  if (!(scale > 0)) faults.push({ curve: name, rule: 'mean', k: own.first, frame: frameOf(own.first), value: digits(mean, 6), limit: 0, text: name + ': the mean of the landing is ' + digits(mean, 6) + ' ' + unit + ', it must be above 0' })
+  const over = raw.map((v) => (v === null || !(scale > 0) ? null : v / scale))
+  const o = (k: number): number | null => over[k - k0] ?? null
+  const lossAt = (k: number, lag = rate): number | null => {
+    const a = k - lag >= k0 ? o(k - lag) : null
+    const b = o(k)
+    return a === null || b === null ? null : a - b
+  }
+  const loss = raw.map((_, i) => lossAt(k0 + i))
+  const step = loss.map((v) => (v === null ? null : Math.abs(v)))
+  const reach = limits.seamFrames * rate
+  let held = 0
+  let holds = 0
+  for (let k = own.end + 1; k <= own.end + reach; k++) {
+    const v = o(k)
+    if (v !== null) {
+      held += v
+      holds++
+    }
+  }
+  const hold = holds > 0 ? held / holds : null
+  const most = (from: number, to: number, value: (k: number) => number | null): Mark | null => {
+    let out: Mark | null = null
+    for (let k = from; k <= to; k++) {
+      const v = value(k)
+      if (v !== null && (!out || v > out.value)) out = { k, frame: frameOf(k), value: v }
+    }
+    return out
+  }
+  const seam = most(own.end - reach + 1, own.end + reach, (k) => step[k - k0] ?? null)
+  const halfSeam = rate > 1 ? most(own.end - reach + 1, own.end + reach, (k) => { const v = lossAt(k, 1); return v === null ? null : Math.abs(v) }) : null
+  if (seam && seam.value > limits.maxStep) say('seam', seam, limits.maxStep, 'changes by ' + shown(seam.value, 3, limits.maxStep) + ' of the mean over one film frame at the seam into the hold, at frame ' + position(seam.k, rate) + ', limit ' + limits.maxStep)
+  if (halfSeam && halfSeam.value > limits.maxStep) say('halfSeam', halfSeam, limits.maxStep, 'changes by ' + shown(halfSeam.value, 3, limits.maxStep) + ' of the mean from one capture frame to the next at the seam into the hold, at frame ' + position(halfSeam.k, rate) + ', limit ' + limits.maxStep)
+  const late = own.end - LANDING_LATE * rate
+  const peakLoss = most(own.first + rate, own.end, (k) => loss[k - k0] ?? null)
+  if (peakLoss && peakLoss.value > LANDING_FLOOR && peakLoss.k > late) say('lateBrake', peakLoss, 0, 'loses most over one film frame (' + peakLoss.value.toFixed(3) + ' of the mean) at frame ' + position(peakLoss.k, rate) + ', inside the last ' + LANDING_LATE + ' film frames before the hold: the brake grows into the hold')
+  const growth = most(late + 1, own.end, (k) => {
+    const a = loss[k - k0] ?? null
+    const b = k - rate >= k0 ? loss[k - rate - k0] ?? null : null
+    return a === null || b === null ? null : a - b
+  })
+  if (growth && growth.value > limits.maxStep) say('brakeGrows', growth, limits.maxStep, 'the loss over one film frame grows by ' + shown(growth.value, 3, limits.maxStep) + ' of the mean against the film frame before, at frame ' + position(growth.k, rate) + ' in the last ' + LANDING_LATE + ' film frames before the hold, limit ' + limits.maxStep)
+  let letGo: LandingResult['letGo'] = null
+  if (hold !== null) {
+    for (let k = own.first + 2 * rate; k <= own.end; k++) {
+      const now = loss[k - k0] ?? null
+      const before = loss[k - rate - k0] ?? null
+      const speed = o(k - rate)
+      if (now === null || before === null || speed === null || !(before > LANDING_FLOOR) || !(speed - hold > LANDING_FLOOR) || !(now < before / 3)) continue
+      if (!letGo || before - now > letGo.before - letGo.value) letGo = { k, frame: frameOf(k), value: now, before }
+    }
+  }
+  if (letGo) say('letGo', letGo, 0, 'lets go: the loss over one film frame falls from ' + letGo.before.toFixed(3) + ' to ' + letGo.value.toFixed(3) + ' of the mean at frame ' + position(letGo.k, rate) + ', to under a third, while the speed is still over the hold\'s own (' + (hold ?? 0).toFixed(3) + ')')
+  let hump: Mark = { k: -1, frame: -1, value: 0 }
+  let high = -Infinity
+  let low: number | null = null
+  for (let k = own.first; k < own.end; k++) {
+    const v = o(k)
+    if (v === null) continue
+    if (low !== null) {
+      low = Math.min(low, v)
+      if (v - low > hump.value) hump = { k, frame: frameOf(k), value: v - low }
+    } else if (v < high) low = v
+    high = Math.max(high, v)
+  }
+  if (hump.value > limits.maxRebound) say('hump', hump, limits.maxRebound, 'climbs again by ' + shown(hump.value, 3, limits.maxRebound) + ' of the mean after it has started to fall, up to frame ' + position(hump.k, rate) + ', limit ' + limits.maxRebound)
+  let dip: Mark | null = null
+  if (hold !== null) {
+    const under = most(own.end - reach + 1, own.end, (k) => { const v = o(k); return v === null ? null : hold - v })
+    dip = under
+    if (under && under.value > limits.maxStep) say('dip', under, limits.maxStep, 'dips under the hold\'s own speed (' + hold.toFixed(3) + ') by ' + shown(under.value, 3, limits.maxStep) + ' of the mean at frame ' + position(under.k, rate) + ', limit ' + limits.maxStep)
+  }
+  return { name, unit, rate, mean, floor, floored, over, step, loss, points: null, hold, first: o(own.first), seam, halfSeam, peakLoss, growth, letGo, hump, dip, faults }
+}
+
 // A value as it is printed: with more digits where the usual ones would print it as its limit.
 export function shown(v: number, digits: number, limit: number | null = null): string {
   let n = digits
@@ -245,7 +374,7 @@ export interface Row { frame: number; values: Record<string, { over: number | nu
 
 // One row for every film frame of the window: the value and the step of the whole frame analysis, and the largest step over one film frame that
 // the capture rate analysis finds among the capture frames of that film frame.
-export function table(whole: CurveResult[], fine: CurveResult[] | null, firstFrame: number, frames: number, k0: number, rate: number): Row[] {
+export function table(whole: Pick<CurveResult, 'name' | 'over' | 'step' | 'points'>[], fine: Pick<CurveResult, 'step'>[] | null, firstFrame: number, frames: number, k0: number, rate: number): Row[] {
   const rows: Row[] = []
   for (let i = 0; i < frames; i++) {
     const values: Row['values'] = {}
