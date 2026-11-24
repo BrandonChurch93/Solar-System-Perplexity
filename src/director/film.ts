@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { config, type Segment } from '../config'
+import { spanMid } from '../core/clock'
 import type { Director } from '../core/engine'
 import { shutterScale } from '../core/motion'
 import type { CoverState, PlaceState, Pose, SetState, Shot, SkyFloor, SunState, ViewKind } from '../core/types'
@@ -442,7 +443,7 @@ export class FilmDirector implements Director {
     const hold = this.toWorld(index + 1, b.hold(time - b.seg.hold.start))
     const full = this.sizeOf(index, hold)
     const small = this.small[index]!
-    const want = (small + (full - small) * t * t * (3 - 2 * t)) * Math.tan(THREE.MathUtils.degToRad(pose.vfov) / 2)
+    const want = (small + (full - small) * smoother(t)) * Math.tan(THREE.MathUtils.degToRad(pose.vfov) / 2)
     const ray = pose.position.clone().sub(body).normalize()
     if (shape.look.pin[1] <= 0) {
       const hero = hold.position.clone().sub(body).normalize().applyQuaternion(hold.quaternion.clone().invert()).applyQuaternion(pose.quaternion)
@@ -653,7 +654,7 @@ export class FilmDirector implements Director {
         const end = this.lookbackPlace(time)
         const g = LOOKBACK.glide
         const w = glide(u, g.aim)
-        const lit = p.lightDir.clone().lerp(this.lookbackSun, smooth(u * g.light)).normalize()
+        const lit = p.lightDir.clone().lerp(this.lookbackSun, smoother(Math.min(u * g.light, 1))).normalize()
         const phase = mix(a.position.angleTo(p.lightDir), end.phase, glide(u, g.phase))
         const position = this.nightSide(phase, end.azimuth * glide(u, g.turn), a.position.length() * Math.pow(end.distance / a.position.length(), glide(u, g.pull)), lit)
         const track = (x: THREE.Vector3): THREE.Quaternion => lookAt(x, new THREE.Vector3(), this.lookbackSun)
@@ -697,7 +698,7 @@ export class FilmDirector implements Director {
       if (index === 0) sunWeight = smooth(ramp(SUN_GLOW_FROM, this.sunSwapSpan[1], u))
       const arriving = state(index + 1, 'orbit')
       if (index > 0 && this.shapes[index]!.look.pin[1] > 0) farLight = Math.pow(smooth(ramp(this.lit[index]!, this.lit[index]! + FAR_LIGHT.frames / ((segment.end - segment.start) * config.fps), u)), FAR_LIGHT.power)
-      const midTime = (frame + config.shutterFraction * 0.5) / config.fps
+      const midTime = (frame + spanMid()) / config.fps
       if (Math.abs(time - midTime) > 1e-9) {
         const to = arriving.origin.clone().sub(position)
         const px = (Math.asin(Math.min(1 / to.length(), 1)) / THREE.MathUtils.degToRad(pose.vfov)) * 1080
