@@ -430,8 +430,19 @@ ${TAP_LEVELS}
   col = col * exp(-tau * uExtinction) + hazeLight(n, dir) * (1.0 - exp(-tau));
   for (int pass = 0; pass < (uPlaceOn > 0.0 ? 1 : 0); pass++) under = under * exp(-tau * uExtinction) + hazeLight(n, dir) * (1.0 - exp(-tau));
   float b = sqrt(max(1.0 - mu * mu, 0.0));
-  if (b > ${(1 - LIMB.inside).toFixed(3)}) {
-    vec4 lg = limbGlow(normalize(n + dir * mu), b) * uLimbK;
+  float gb = b;
+  vec3 gat = normalize(n + dir * mu);
+  // In a dive and a rise the glow of the limb lies on the ground where the far end of the move sees it (set.ts, uLimbEye): it goes
+  // over the horizon with its ground on the way down and comes over it on the way up, and no height sets its weight.
+  for (int fix = 0; fix < (uLimbHeld > 0.5 ? 1 : 0); fix++) {
+    vec3 hd = normalize(n - uLimbEye);
+    float hc = dot(n, hd);
+    gb = hc > 0.0 ? 1.0 : sqrt(max(1.0 - hc * hc, 0.0));
+    gat = normalize(n - hd * hc);
+  }
+  if (gb > ${(1 - LIMB.inside).toFixed(3)}) {
+    vec4 lg = limbGlow(gat, gb) * uLimbK;
+    for (int fix = 0; fix < (uLimbHeld > 0.5 ? 1 : 0); fix++) lg = limbInside(gat, gb) * uLimbK;
     col = col * (1.0 - lg.a) + max(lg.rgb, 0.0) / uDusk.xyz;
     under = under * (1.0 - lg.a) + max(lg.rgb, 0.0) / uDusk.xyz;
   }
@@ -596,7 +607,7 @@ export class Globe {
         uBoltLook: { value: new THREE.Vector2(1 / (2 * Math.tan(THREE.MathUtils.degToRad(o.bolts.widthDeg) / 2)), o.bolts.gain) },
         uBoltColor: { value: new THREE.Vector3().fromArray(o.bolts.color) },
         uCell: { value: this.cells }, uCellAmp: { value: this.amps }, uCellCount: { value: o.bolts.cells.length },
-        uLimb: { value: o.limb }, uLimbS: { value: new THREE.Vector3(1, 0, 0) }, uLimbT: { value: new THREE.Vector3(0, 1, 0) }, uLimbK: { value: 1 }, uLimbFar: { value: 0 },
+        uLimb: { value: o.limb }, uLimbS: { value: new THREE.Vector3(1, 0, 0) }, uLimbT: { value: new THREE.Vector3(0, 1, 0) }, uLimbK: { value: 1 }, uLimbFar: { value: 0 }, uLimbHeld: { value: 0 }, uLimbEye: { value: new THREE.Vector3(0, 0, 3) },
         uTaps: { value: 0 }, uSmear: { value: 1 }, uCamObj: { value: new THREE.Vector3(0, 0, 5) }, uNextCam: { value: new THREE.Vector3(0, 0, 5) }, uNextRot: { value: new THREE.Matrix3() }, uJitter: { value: new THREE.Vector2() },
         uGraze: { value: new THREE.Vector3(o.graze.most, o.graze.from, o.graze.to) },
         uLift: { value: new THREE.Vector4(o.lift.floor, o.lift.stops, o.lift.from, o.lift.to) }, uShade: { value: new THREE.Vector3(o.shade.far, o.shade.grad, o.shade.cap) }, uMauve: { value: new THREE.Vector3(o.mauve.from, o.mauve.to, o.mauve.rest) },
