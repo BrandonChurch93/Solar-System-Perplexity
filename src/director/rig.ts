@@ -19,6 +19,11 @@ export const smoother = (t: number): number => {
   const x = clamp01(t)
   return x * x * x * (x * (x * 6 - 15) + 10)
 }
+export const softSmooth = (t: number, lead: number): number => {
+  const x = clamp01(t)
+  const s = Math.min(x / lead, 1)
+  return x * x * (3 - 2 * x) - 3 * lead * lead * s * s * (1 - s) * (1 - s) * (1 - s)
+}
 export const ramp = (a: number, b: number, t: number): number => clamp01((t - a) / (b - a))
 export const mix = (a: number, b: number, t: number): number => a + (b - a) * t
 
