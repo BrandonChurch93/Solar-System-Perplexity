@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T22:32:39.429Z",
+ "pushed": "2026-11-24T22:58:51.391Z",
  "head": "38591789c340058ad8cc55ca9d84ae3550aa9336",
- "note": "dive slice green after the cure (pattern 0.28, was 0.54); rise slice still red at the foot (0.67); foot dust put on the plate's height law, full proof job r55 renders",
+ "note": "r55: rise still red by 0.01 (pattern 0.46 at 3816 + 1/2, the dust inside the inner rim leaving by height); dive part running; working on a law by the view angle in place of the height",
  "looks": [
+  {
+   "time": "2026-11-24T22:58:50.158Z",
+   "file": "20261124225850158-note-r55_rise_changes.jpg",
+   "source": "../../../../tmp/v/t20/r55_rise_changes.png",
+   "kind": "note",
+   "label": "r55 rise, the report's changes sheet"
+  },
+  {
+   "time": "2026-11-24T22:58:49.175Z",
+   "file": "20261124225849175-note-rise_3808_3832.jpg",
+   "source": "../../../../tmp/v/t20/rise_3808_3832.png",
+   "kind": "note",
+   "label": "rise 3808, 3816, 3824, 3832, crop x 900 to 1860, y 640 to 1080: the dust inside the inner rim thins by the height of the lens (proof run r55, rise pattern 0.46 at 3816 + 1/2 against the limit 0.45, red by 0.01)"
+  },
   {
    "time": "2026-11-24T22:32:38.755Z",
    "file": "20261124223238755-note-foot4.jpg",
@@ -47,20 +61,6 @@
    "kind": "note",
    "label": "r54 rise changes sheet: RED pattern 0.70 from 3822.5 (limit 0.45), the dust plate and the tone table swap by height in the fast climb; cure in work",
    "stop": "saturn"
-  },
-  {
-   "time": "2026-11-24T21:46:17.807Z",
-   "file": "20261124214617807-note-c_footn_r54.jpg",
-   "source": "../../../../tmp/v/t18/c_footn_r54.png",
-   "kind": "note",
-   "label": "3720 foot at native size, approved left, film right"
-  },
-  {
-   "time": "2026-11-24T21:46:17.034Z",
-   "file": "20261124214617034-note-pairfull_r54.jpg",
-   "source": "../../../../tmp/v/t18/pairfull_r54.png",
-   "kind": "note",
-   "label": "3720 final tier beside the approved image, both at full size (approved left)"
   }
  ]
 }
