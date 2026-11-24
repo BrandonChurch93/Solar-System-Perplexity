@@ -1,9 +1,41 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T03:22:46.751Z",
+ "pushed": "2026-11-24T03:45:55.811Z",
  "head": "f17274e705de4b7f527945333d364d3d8b559305",
- "note": "step 4 in work: ring field study, shadows without clouds found in the sparse ring, rule being rebuilt",
+ "note": "step 4 first pass on frames: sea floor relief gone outside the close view, ring field on; veil bodies being removed, frames rendering",
  "looks": [
+  {
+   "time": "2026-11-24T03:45:54.578Z",
+   "file": "20261124034554578-note-field13-near.jpg",
+   "source": "../../../../tmp/gl/s4/field13-near.jpg",
+   "kind": "note",
+   "label": "step 4: the ring field beside the close view (cover red) with the shadow share rule and without veil bodies",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T03:45:53.518Z",
+   "file": "20261124034553518-note-ab-rise2.jpg",
+   "source": "../../../../tmp/gl/s4/ab-rise2.jpg",
+   "kind": "note",
+   "label": "step 4, 2121 and 2125 whole frames, draft: before (left) and after (right), first pass",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T03:45:52.544Z",
+   "file": "20261124034552544-note-ab-1889-left.jpg",
+   "source": "../../../../tmp/gl/s4/ab-1889-left.jpg",
+   "kind": "note",
+   "label": "step 4, 1889 left border at full size, draft: before and after (first pass)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T03:45:51.148Z",
+   "file": "20261124034551148-note-ab-1889-right.jpg",
+   "source": "../../../../tmp/gl/s4/ab-1889-right.jpg",
+   "kind": "note",
+   "label": "step 4, 1889 right border at full size, draft: before (f17274e7) and after the calm near sea and the ring field (first pass, grey veil bodies still in it)",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T03:22:46.167Z",
    "file": "20261124032246167-note-c-1889-left.jpg",
@@ -34,50 +66,6 @@
    "source": "../../../../tmp/gl/s4/pieces.jpg",
    "kind": "note",
    "label": "step 4 study: the ground near the nadir outside the close view: lay back with the repaint, with the hold's level, the hold's level alone, the plate today",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T02:59:11.114Z",
-   "file": "20261124025911114-note-outline.jpg",
-   "source": "../../../../tmp/gl/s4/outline.jpg",
-   "kind": "note",
-   "label": "step 4 study: the canvas edge of the close view drawn on 1896, 1900, 2119, 2121 (draft, rim rule commit f17274e7)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T02:47:08.794Z",
-   "file": "20261124024708794-job-frame-02123.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "earth.rise frame 2123, draft tier, texels view, from the running g13 job",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2123,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "g13"
-  },
-  {
-   "time": "2026-11-24T02:36:52.380Z",
-   "file": "20261124023652380-job-frame-01906.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "earth.dive frame 1906, draft tier, texels view, from the running g13 job",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1906,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "g13"
-  },
-  {
-   "time": "2026-11-24T02:34:12.766Z",
-   "file": "20261124023412766-note-border-2121.jpg",
-   "source": "../../../../tmp/gl/s3/border-2121.jpg",
-   "kind": "note",
-   "label": "2121 border of the place against the map: detail ends, step 4 next",
    "stop": "earth"
   }
  ]
