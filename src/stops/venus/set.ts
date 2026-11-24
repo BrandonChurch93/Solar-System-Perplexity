@@ -102,13 +102,13 @@ export const createSet: SetFactory = async (ctx) => {
 
   const ground = await CloudRelief.load(ctx, base, reliefDefs[key], look.relief)
   const globe = new Globe({
-    map, mapWidth: wrap.sets[key].color[0], curve: look.curve, haze: look.haze, limb: limbMap, graze: look.graze, lift: look.lift, shade: look.shade, mauve: look.mauve, weave: { ...look.weave, lod: Math.log2(wrap.sets[key].color[0] / look.weave.base), camera: new THREE.Vector3().fromArray(fit.camera.position).applyQuaternion(globeTurn.clone().invert()) },
+    map, mapWidth: wrap.sets[key].color[0], mapFull: wrap.sets.full.color[0], curve: look.curve, haze: look.haze, limb: limbMap, graze: look.graze, lift: look.lift, shade: look.shade, mauve: look.mauve, weave: { ...look.weave, lod: Math.log2(wrap.sets[key].color[0] / look.weave.base), camera: new THREE.Vector3().fromArray(fit.camera.position).applyQuaternion(globeTurn.clone().invert()) },
     rim: holdRim,
     hold: { ...look.hold, map: holdMap, right: new THREE.Vector3(1, 0, 0).applyQuaternion(holdBack), up: new THREE.Vector3(0, 1, 0).applyQuaternion(holdBack), forward: new THREE.Vector3(0, 0, -1).applyQuaternion(holdBack), centre: [-holdCam.x / holdCam.z, -holdCam.y / holdCam.z], half: look.hold.margin / Math.sqrt(holdCam.lengthSq() - 1), lod: Math.log2(wrap.sets[key].color[0] / look.hold.base) },
     swirl: { axis: direction(look.swirl.lon, look.swirl.lat), wideDeg: look.swirl.wideDeg },
-    patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: spotBody, feather: patches.feather, fade: patches.fade },
+    patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), full: patches.full, exact: key === 'full', spot: spotBody, feather: patches.feather, fade: patches.fade },
     air: { deck: ground.deck!.colours, deckSpanDeg: look.relief.air.deckSpanDeg },
-    place: { textures: placeTextures, rim: place.rim, widthsDeg: place.levels.map((l) => l.widthDeg), centre: new THREE.Vector3().fromArray(place.centre), feather: place.feather, fade: place.fade, forms: place.forms, tone: place.tone, wide: { ...place.wide, texture: wideTexture } },
+    place: { textures: placeTextures, rim: place.rim, widthsDeg: place.levels.map((l) => l.widthDeg), full: place.levels.map((l) => l.full), centre: new THREE.Vector3().fromArray(place.centre), feather: place.feather, fade: place.fade, forms: place.forms, tone: place.tone, wide: { ...place.wide, texture: wideTexture } },
     flow: { map: flowMap, strength: look.drift.strength, shadow: look.drift.shadow, shadowOffset: look.drift.shadowOffset },
     bolts: { map: boltMap, center: direction(wrap.bolt.lon, wrap.bolt.lat), widthDeg: wrap.bolt.widthDeg, gain: 1, color: look.boltColor, cells: look.cells.map((c) => ({ dir: direction(c.lon, c.lat), radiusDeg: c.radiusDeg, painted: c.painted })) },
   })
@@ -359,7 +359,7 @@ export const createSet: SetFactory = async (ctx) => {
         if (a.view === 'orbit' && b.view === 'orbit') {
           const px = slide(a.pose, b.pose, view.format.width, view.format.height)
           const scale = frameScale
-          if (px / scale > look.motion.from) taps = Math.min(Math.ceil(px / look.motion.step), look.motion.most)
+          if (px / scale > look.motion.from) taps = Math.min(Math.ceil(px / scale / look.motion.step), look.motion.most)
           smear = 1 + Math.min(Math.max((px * view.samples / scale - look.motion.smear.from) * look.motion.smear.share, 0), look.motion.smear.most) * scale
           if (taps > 0) {
             turnBack.copy(a.pose.quaternion).invert()
@@ -372,9 +372,10 @@ export const createSet: SetFactory = async (ctx) => {
       globe.motion(taps, smear, camera, shot.camera.quaternion, shift, turn, zoom, view.camera.view?.offsetX ?? 0, view.camera.view?.offsetY ?? 0)
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
-      rim.update(camera, limbS, limbT, gain * state.weight * limbK, vignette, aspect, Math.min(LIMB.edgePx / radiusPx, 0.02), left, heldLimb ? limbEye : null)
+      // The edge of the limb (LIMB.edgePx) and the size under which the globe is not drawn are counted in pixels of the master frame (d253).
+      rim.update(camera, limbS, limbT, gain * state.weight * limbK, vignette, aspect, Math.min(LIMB.edgePx * frameScale / radiusPx, 0.02), left, heldLimb ? limbEye : null)
       holdRim.update(camera, state.rotation, ending ? 0 : look.hold.weight * (1 - left))
-      const visible = radiusPx > 0.6
+      const visible = radiusPx / frameScale > 0.6
       globe.mesh.visible = visible
       rim.mesh.visible = visible
       far.update(radiusPx, view, plan.p.tint, gain)

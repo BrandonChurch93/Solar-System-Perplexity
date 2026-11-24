@@ -21,6 +21,8 @@ export const patches = {
     { file: 'patch-a.jpg', widthDeg: 90 },
     { file: 'patch-b.jpg', widthDeg: 53.13010235 },
   ] as { file: string; widthDeg: number }[],
+  // The width of each patch in the full set, in texels: what the exchange of the levels counts in both sets (plates.json, texelsNote).
+  full: platesJson.texels.patches as number[],
   feather: 0.12,
   fade: [1.02, 1.5] as [number, number],
 }
@@ -38,9 +40,11 @@ export const place = {
     const colourOf = l.colour ? platesJson.levels.findIndex((x) => x.tag === l.colour) : -1
     if (l.colour && (colourOf < 0 || 'colour' in platesJson.levels[colourOf]!)) throw new Error('plates.json: level ' + l.tag + ' needs a level with its own colour')
     if (l.colour && (l.most ?? 0) <= 0) throw new Error('plates.json: level ' + l.tag + ' needs most')
-    return { tag: l.tag, file: l.file, widthDeg: l.widthDeg, colourOf, most: l.most ?? 1, dive: twice ? l.file.replace('.jpg', '-dive.jpg') : l.file, rise: twice ? l.file.replace('.jpg', '-rise.jpg') : l.file }
+    const full = (platesJson.texels.plates as Record<string, number>)[l.tag]
+    if (!full) throw new Error('plates.json: texels.plates has no width for level ' + l.tag)
+    return { tag: l.tag, file: l.file, widthDeg: l.widthDeg, full, colourOf, most: l.most ?? 1, dive: twice ? l.file.replace('.jpg', '-dive.jpg') : l.file, rise: twice ? l.file.replace('.jpg', '-rise.jpg') : l.file }
   }),
-  wide: { file: platesJson.wide.file, widthDeg: platesJson.wide.widthDeg, rim: platesJson.wide.rim, forms: platesJson.wide.forms, formsDeg: platesJson.wide.formsDeg as [number, number], own: platesJson.wide.own },
+  wide: { file: platesJson.wide.file, widthDeg: platesJson.wide.widthDeg, full: platesJson.texels.wide, rim: platesJson.wide.rim, forms: platesJson.wide.forms, formsDeg: platesJson.wide.formsDeg as [number, number], own: platesJson.wide.own },
   rim: platesJson.rim,
   forms: platesJson.forms.look as [number, number, number],
   tone: { cos: platesJson.tone.cos as [number, number], power: platesJson.tone.curve, air: platesJson.tone.air, heights: platesJson.tone.heights as [number, number], live: platesJson.tone.live },
@@ -64,6 +68,7 @@ function reliefDef(key: 'full' | 'web'): CloudReliefDef {
   const box = (b: number[]): [number, number, number, number] => [b[0]! * k, b[1]! * k, b[2]! * k, b[3]! * k]
   return {
     imageSize: reliefJson.imageSize[key] as [number, number],
+    perFull: reliefJson.imageSize.full[0]! / reliefJson.imageSize[key][0]!,
     vfovDeg: reliefJson.camera.vfovDeg,
     up: reliefJson.camera.up as [number, number, number],
     radius: reliefJson.camera.radius,

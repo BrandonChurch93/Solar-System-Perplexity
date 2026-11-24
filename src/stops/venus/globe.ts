@@ -16,6 +16,10 @@ export const MAX_CELLS = 16
 export interface GlobePatches {
   textures: THREE.Texture[]
   widthsDeg: number[]
+  // The width of each level in the full set, in texels: the exchange of the levels counts these in both sets, so the set does not move
+  // the moment at which a level arrives (decision d253; plates.json, texelsNote). exact: this is the full set, the widths must be these.
+  full: number[]
+  exact: boolean
   spot: THREE.Vector3
   feather: number
   fade: [number, number]
@@ -28,13 +32,16 @@ export interface GlobePlace {
   textures: THREE.Texture[]
   rim: number
   widthsDeg: number[]
+  // The width of each plate in the full set, in texels (as GlobePatches.full).
+  full: number[]
   centre: THREE.Vector3
   feather: number
   fade: [number, number]
   // The border of the widest plate follows its own cloud forms: amount (share of the plate width) and the two mip levels whose ratio gives the forms.
+  // The levels are levels of the full set's plate; a smaller set reads the levels that cover the same ground.
   forms: [number, number, number]
   // The wide ring (plates.json, wide): one channel of forms about the same centre, drawn over the globe's own colour.
-  wide: { texture: THREE.Texture; widthDeg: number; rim: number; forms: number; formsDeg: [number, number]; own: number }
+  wide: { texture: THREE.Texture; widthDeg: number; full: number; rim: number; forms: number; formsDeg: [number, number]; own: number }
   // The look of the place from above (plates.json, tone): the light of the plates, not below floor, raised to the power of the tone map
   // times its factor, less so the nearer the line of sight is to the one of the camera at T. widthDeg: the width of the map; cos: the
   // cosines between which that nearness goes from 0 to 1; power: the curve of that ramp.
@@ -60,6 +67,8 @@ export interface GlobeBolts {
 export interface GlobeOptions {
   map: THREE.Texture
   mapWidth: number
+  // The width of the map in the full set (wrap.json, color.full): what the first patch counts for its arrival.
+  mapFull: number
   curve: number[][]
   haze: HazeParams
   patches: GlobePatches
@@ -103,8 +112,8 @@ const PATCH_LEVELS = Array.from({ length: MAX_PATCHES }, (_, i) => `    if (uPat
       float w = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent * uFrame));
       wl[${i}] = w;
       for (int k = 0; k < (w > 0.0 && uPatchCount > ${i}.5 && uTaps == 0 ? 1 : 0); k++) albedo = mix(albedo, textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb, w);
-      parent = gd * uPatchScale[${i}] * uPatchSize[${i}];
-      texels = mix(texels, parent, step(0.5, w));
+      parent = gd * uPatchScale[${i}] * uPatchFull[${i}];
+      texels = mix(texels, gd * uPatchScale[${i}] * uPatchSize[${i}], step(0.5, w));
       near = max(near, w * step(${i}.5, 2.0));
     }`).join('\n')
 
@@ -135,7 +144,7 @@ const PLACE_GLSL = Array.from({ length: PLACE_LEVELS }, (_, i) => `    {
         cover = cover * (1.0 - w) + w;
         placeTexels = mix(placeTexels, pgd * uPlaceScale[${i}] * uPlaceSize[${i}], w);
       }
-      parentPlace = pgd * uPlaceScale[${i}] * uPlaceSize[${i}];
+      parentPlace = pgd * uPlaceScale[${i}] * uPlaceFull[${i}];
     }`).join('\n')
 
 const TAP_LEVELS = Array.from({ length: MAX_PATCHES }, (_, i) => `    for (int k = 0; k < (wl[${i}] > 0.0 ? 1 : 0); k++) a = mix(a, textureGrad(uPatch${i}, gm * uPatchScale[${i}] + 0.5, major * uPatchScale[${i}], minor * uPatchScale[${i}]).rgb, wl[${i}]);`).join('\n')
@@ -148,6 +157,8 @@ uniform sampler2D uBolt;
 ${PATCH_SAMPLERS}
 uniform float uPatchScale[${MAX_PATCHES}];
 uniform float uPatchSize[${MAX_PATCHES}];
+uniform float uPatchFull[${MAX_PATCHES}];
+uniform float uMapPerFull;
 uniform float uPatchCount;
 ${PLACE_SAMPLERS}
 uniform vec3 uPlaceN;
@@ -155,6 +166,7 @@ uniform vec3 uPlaceE;
 uniform vec3 uPlaceU;
 uniform float uPlaceScale[${PLACE_LEVELS}];
 uniform float uPlaceSize[${PLACE_LEVELS}];
+uniform float uPlaceFull[${PLACE_LEVELS}];
 uniform vec4 uPlaceLook;
 uniform vec3 uPlaceForms;
 uniform float uPlaceOn;
@@ -305,7 +317,9 @@ void main() {
     gx *= grad;
     gy *= grad;
     float front = step(0.3, dn);
-    float parent = texels;
+    // What the exchange of the levels counts: texels of the full set a pixel of the master frame (uFrame), in every set and at every
+    // size of the frame. texels itself stays what this set shows, for the diagnostics.
+    float parent = texels * uMapPerFull;
 ${PATCH_LEVELS}
   }
   float eu = atan(dc.x, dc.z) / (2.0 * PI) + 0.5;
@@ -550,6 +564,18 @@ export class Globe {
       return w ? 1 / (2 * Math.tan(THREE.MathUtils.degToRad(w) / 2)) : 1
     }
     const size = (i: number): number => (p.textures[i]?.image as unknown as { width: number } | undefined)?.width ?? 1
+    // The full set's width of each picture that an exchange counts (decision d253). In the full set the pictures must have these widths.
+    const placeSize = (i: number): number => (o.place.textures[i]?.image as unknown as { width: number } | undefined)?.width ?? 1
+    const fullOf = (name: string, full: number | undefined, loaded: number): number => {
+      if (!(full !== undefined && full >= loaded)) throw new Error('venus: ' + name + ' has no width of the full set at least its own (' + String(full) + ', ' + loaded + ')')
+      if (p.exact && full !== loaded) throw new Error('venus: ' + name + ' is ' + loaded + ' wide in the full set, plates.json says ' + full)
+      return full
+    }
+    const patchFull = levels.map((i) => (p.textures[i] ? fullOf('patch ' + i, p.full[i], size(i)) : 1))
+    const placeFull = Array.from({ length: PLACE_LEVELS }, (_, i) => (o.place.textures[i] ? fullOf('plate ' + i, o.place.full[i], placeSize(i)) : 1))
+    const mapPerFull = fullOf('the map', o.mapFull, o.mapWidth) / o.mapWidth
+    // The mip levels of forms are levels of the full set's widest plate: this set reads the levels that cover the same ground.
+    const formsUnder = Math.log2(placeFull[0]! / placeSize(0))
     const frame = (c: THREE.Vector3): [THREE.Vector3, THREE.Vector3, THREE.Vector3] => {
       const nrm = c.clone().normalize()
       const east = new THREE.Vector3(0, 1, 0).cross(nrm).normalize()
@@ -559,6 +585,7 @@ export class Globe {
     const [bn, be, bu] = frame(o.bolts.center)
     const [placeN, placeE, placeU] = frame(o.place.centre)
     const wideSize = (o.place.wide.texture.image as unknown as { width: number } | undefined)?.width ?? 1
+    fullOf('the wide ring', o.place.wide.full, wideSize)
     const wideScale = 1 / (2 * Math.tan(THREE.MathUtils.degToRad(o.place.wide.widthDeg) / 2))
     const widePerDeg = THREE.MathUtils.degToRad(1) * wideSize * wideScale
     this.count = o.bolts.cells.length
@@ -575,16 +602,16 @@ export class Globe {
         ...hazeUniforms(o.haze),
         uMap: { value: o.map }, uFlow: { value: o.flow.map }, uBolt: { value: o.bolts.map },
         ...Object.fromEntries(levels.map((i) => ['uPatch' + i, { value: tex(i) }])),
-        uPatchScale: { value: levels.map(scale) }, uPatchSize: { value: levels.map(size) },
+        uPatchScale: { value: levels.map(scale) }, uPatchSize: { value: levels.map(size) }, uPatchFull: { value: patchFull }, uMapPerFull: { value: mapPerFull },
         uPatchCount: { value: p.textures.length },
         uFeather: { value: p.feather }, uPatchFade: { value: new THREE.Vector2(p.fade[0], p.fade[1]) }, uFrame: frameUniform,
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
         ...Object.fromEntries(Array.from({ length: PLACE_LEVELS }, (_, i) => ['uPlace' + i, { value: o.place.textures[i] ?? o.place.textures[0] ?? o.map }])),
         uPlaceN: { value: placeN }, uPlaceE: { value: placeE }, uPlaceU: { value: placeU },
         uPlaceScale: { value: Array.from({ length: PLACE_LEVELS }, (_, i) => 1 / (2 * Math.tan(THREE.MathUtils.degToRad(o.place.widthsDeg[i] ?? 90) / 2))) },
-        uPlaceSize: { value: Array.from({ length: PLACE_LEVELS }, (_, i) => (o.place.textures[i]?.image as unknown as { width: number } | undefined)?.width ?? 1) },
+        uPlaceSize: { value: Array.from({ length: PLACE_LEVELS }, (_, i) => placeSize(i)) }, uPlaceFull: { value: placeFull },
         uPlaceLook: { value: new THREE.Vector4(o.place.feather, o.place.fade[0], o.place.fade[1], o.place.rim * 0.5) },
-        uPlaceForms: { value: new THREE.Vector3(o.place.forms[0], o.place.forms[1], o.place.forms[2]) },
+        uPlaceForms: { value: new THREE.Vector3(o.place.forms[0], Math.max(o.place.forms[1] - formsUnder, 0), Math.max(o.place.forms[2] - formsUnder, 0)) },
         uPlaceOn: { value: 0 },
         uToneEye: { value: new THREE.Vector3(0, 0, 5) },
         uToneLook: { value: new THREE.Vector4(o.place.tone.air, 1, o.place.tone.cos[0], o.place.tone.cos[1]) },

@@ -69,6 +69,8 @@
     "note": "The weight of the plates over the globe, by the height of the camera over the cloud tops (radii, eased in the logarithm): none above the upper height, full below the lower one. The upper height is the height of the first frame of the dive, so the place comes in from that frame on and grows with nearness, and it is gone in the rise before the travel starts. Outside the dive and the rise of Venus the plates are off, so the hold is not touched.",
     "heights": [0.8, 3.4]
   },
+  "texelsNote": "Decision d253 (MAIL 802). What an exchange counts is the full set's texels in both sets, so the asset set does not move the moment at which a patch or a plate arrives or the place of a border: the web set is only softer. texels: the width of each picture in the full set (patches: the dive patches in their order; plates: the levels by tag; wide: the wide ring). The wrap and the pictures of the ground have theirs in wrap.json (color.full) and relief.json (imageSize.full). A mip level named in this file (forms.look, ground.matte.level) is a level of the full set's picture; the web set reads the level that covers the same ground. In the full set a picture of another width than the one written here stops the load.",
+  "texels": { "patches": [4096, 4096], "plates": { "w": 4096, "a": 4096, "b": 4096, "c": 4096, "d": 4096 }, "wide": 8192 },
   "forms": {
     "note": "The border of the widest plate (level w) follows its own cloud forms and not a circle: the weight falls over rim (share of the plate width, from the inscribed circle inward), and the circle is drawn inward by up to look[0] of the plate width where the plate is brighter than its surroundings (the ratio of its mip levels look[1] and look[2]).",
     "look": [0.06, 6, 9]

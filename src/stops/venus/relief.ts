@@ -16,6 +16,9 @@ export interface CloudLayerDef {
 
 export interface CloudReliefDef {
   imageSize: [number, number]
+  // The full set's texels a texel of this set (1 in the full set): a mip level named for the full set's picture is read this many
+  // levels lower in log2 (plates.json, texelsNote).
+  perFull: number
   vfovDeg: number
   up: [number, number, number]
   radius: number
@@ -462,6 +465,8 @@ export class CloudRelief {
   readonly globeGround = new THREE.Group()
   private readonly motion: CloudMotion
   private radius = 1
+  // Mip levels this set lies under the full set (log2 of the full set's texels a texel of this set), for levels named for the full set.
+  private levelsUnderFull = 0
   carry: { map: THREE.Texture; fwd: THREE.Vector3; right: THREE.Vector3; span: THREE.Vector3; cut: THREE.Vector3; gain: number } | null = null
   // The colours of the far deck by azimuth and the frame they are laid in (this scene's axes), for the haze of the globe side.
   deck: { colours: THREE.Vector3[]; fwd: THREE.Vector3; right: THREE.Vector3 } | null = null
@@ -473,6 +478,8 @@ export class CloudRelief {
   static async load(ctx: SetContext, base: string, def: CloudReliefDef, motion: CloudMotion): Promise<CloudRelief> {
     const r = new CloudRelief(motion)
     r.radius = def.radius
+    if (!(def.perFull >= 1)) throw new Error('the ground needs the full set at least as wide as this set')
+    r.levelsUnderFull = Math.log2(def.perFull)
     const [W, H] = def.imageSize
     const th = Math.tan(rad(def.vfovDeg) / 2)
     const aspect = W / H
@@ -760,6 +767,8 @@ export class CloudRelief {
       ;(l.material.uniforms.uSkin!.value as THREE.Vector2).fromArray(share.skin)
       ;(l.material.uniforms.uTall!.value as THREE.Vector2).fromArray(share.tall)
       ;(l.material.uniforms.uMatte!.value as THREE.Vector4).fromArray(share.matte)
+      // matte.level is a level of the full set's picture: this set reads the level that covers the same part of the image.
+      ;(l.material.uniforms.uMatte!.value as THREE.Vector4).z = Math.max(share.matte[2]! - this.levelsUnderFull, 0)
       ;(l.material.uniforms.uEyeT!.value as THREE.Vector3).copy(eyeT)
       ;(l.material.uniforms.uAxesT!.value as THREE.Matrix3).copy(share.atT.axes)
       ;(l.material.uniforms.uLensT!.value as THREE.Vector2).set(share.atT.tan * aspect, share.atT.tan)

@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { bufferFrame } from '../../core/frame'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { NOISE_GLSL } from '../../terrain/relief'
 
@@ -216,7 +217,8 @@ export class Veil {
     ;(u.uCam!.value as THREE.Vector3).copy(eye)
     u.uBend!.value = bend
     ;(u.uCentre!.value as THREE.Vector3).copy(centre)
-    u.uPx!.value = l.edgePx * 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2) / height
+    // edgePx is in pixels of the master frame: the engine's measure of the frame makes it buffer pixels (src/core/frame.ts, d253).
+    u.uPx!.value = l.edgePx * bufferFrame() * 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2) / height
     u.uAmount!.value = amount
     const thin = mist * (1 - THREE.MathUtils.smoothstep(amount, l.sheets.mist[1], l.sheets.mist[2]))
     const fast = rush * (1 - thin * l.sheets.mist[4])
