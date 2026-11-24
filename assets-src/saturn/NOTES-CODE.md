@@ -2899,3 +2899,91 @@ is in the picture at 3 to 12 px, and the same crispness for the far ring across 
   - On the working tree (a4dec17 plus these numbers): tsc exit 0; vitest 41 files, 374 tests pass; handover
     --only path: "saturn.dive every frame: pass", "saturn.rise every frame: pass"; smooth --only path: "smooth
     saturn: green".
+
+## 04:25 to 04:35 VM: what the moved change of view does to the picture, the pace committed, main d38353f merged
+
+- Job S (scratch tree, draft tier, frames 3848 to 3862, the same paces, rise.at 0.56 against 0.667): 3848 to
+  3852, 3861 and 3862 are the same bytes; 3853 to 3860 differ in 1266 to 2340 pixels of the frame, at most 14
+  levels, mean 0.0002 to 0.0005 levels: single scattered pixels, stars at the upper left and the edge of the
+  ring and of the globe at the lower right (12 pixels of 5 levels or more at 3855, 21 at 3860). So the engine's
+  two views draw the same picture and where the change sits is free. Frames in /tmp/v/r30/at056 and at667.
+- Commit 8d471c2 (the paces and rise.at in skim.json, this notebook). Then main d38353f merged without a
+  conflict as 23cb30efa0f10f2aa37dc75452290f81d923f85a (Jupiter's hold sky d188, travel d189: every leg lands
+  and starts in one move, in src/space/travel/path.ts and src/director/film.ts; nothing of mine).
+- On 23cb30e: tsc exit 0; vitest 41 files, 380 tests pass; handover --only path: "saturn.dive every frame:
+  pass", "saturn.rise every frame: pass"; smooth --only path: "smooth saturn: green", "VERDICT: green. No
+  number is over its limit." Pushed to agent/saturn-code at 04:30.
+- The path lines as they print (out/work/smooth/saturn.md). Dive, whole frames: rate largest 1.166 at 3573,
+  step 0.065 at 3549; turn 1.805 at 3580, step 0.066 at 3562, fall before 0.005; speed 1.611 at 3593, step
+  0.066 over 6 at 3618, climb after 0.004 over 6. Rate 2: rate 1.168, step 0.066 at 3546 + 1/2; turn 1.815,
+  step 0.067 at 3562, fall 0.006; speed 1.618, step 0.067 over 6 at 3618, climb 0.006 over 6. Fewest points 6.
+  Rise, whole frames: rate 1.746 at 3846, step 0.072 at 3817; turn 1.862 at 3842, step 0.070 at 3833; speed
+  1.553 at 3859, step 0.074 over 8 at 3877. Rate 2: rate 1.759, step 0.072 at 3816 + 1/2; turn 1.875, step
+  0.070 at 3833 + 1/2; speed 1.554, step 0.075 over 8 at 3877. No fall, no climb. Rows of the speed shown and
+  not judged: whole frames 17 (3838 to 3854), rate 2 34 (3837 + 1/2 to 3854); fewest points 4.
+- Beyond my seam, shown and not judged: the speed steps 0.852 at 3896 (0.980 at 3896 + 1/2) of my rise's mean:
+  the leg to Uranus picking up speed from 3889 on (travel, not my folder; mail 387: do not shape the rise
+  against it).
+- Job T started 04:31 in the worktree on 23cb30e (pictures of the rise first) and was stopped at 04:42: my
+  sheet of its rise frames showed a fault that had to be cured before any report (next section). Its rise
+  frames stay in the worktree (out/work/smooth/saturn/frames, k = film frame times 2); no pictures report.
+
+## 04:38 to 05:05 VM: a one frame slit along a spoke of the sheet's mesh, the sheet as one triangle; mails 520 and 526
+
+- MAIL 520 (04:40): main 8fb9ba9b and later; a named commit sits on it. d193: src/core/frame.ts (frameUniform,
+  bufferFrame) is the one measure of buffer pixels in a master pixel: use it, not a factor of my own. d194:
+  smooth builds before it opens a page; run parity again on the head. Main a19dc7a merged without a conflict
+  as 4d8b904 (d191 the sky's dim starts every leg at nothing, d192 stars by height on other stops' rises).
+- FOUND on my own sheet of the rise frames of job T (capture rate 2, draft): at capture frame k007640 (film
+  3820) a thin dark slit runs from (0, 551) to about (805, 582), 5 px wide at the left edge and 1 px at x 700,
+  and the sky shows through the ring sheet in it. Only in that frame (not at 3819 + 1/2, not at 3820 + 1/2,
+  not in the film rate still of 3820). /tmp/v/flash2.py finds it (2865 pixels dark here and bright in both
+  neighbours) and nothing else in the rise.
+- MEASURED (out/scratch/slit2.ts): in the frame of the rings the slit is one spoke: azimuth 146.11 +/- 0.04
+  degrees, radius 1.37 to 1.87 and on past the frame. The sheet's mesh had 720 segments, an edge every half
+  degree: it is the shared edge at 146.0. The lens is at height 0.302 there and the outer end of that edge lies
+  behind the plane of the lens. So the cause: the software rasteriser cuts every triangle on its own where it
+  passes behind the lens, the two cut copies of a shared edge need not meet, and the long slivers of the mesh
+  (half a degree wide, 2.7 radii long) open a wedge. It can strike any frame with the lens near the plane, at
+  any rate and format.
+- CURE (sheet.ts): the sheet is no mesh. Each of its two passes is one triangle over the whole picture
+  (gl_Position from the corner alone, nothing to clip), and the point of the plane under a pixel is where the
+  ray through that pixel meets the plane: the vertex shader gives the ray in the frame of the rings (the
+  inverse of the model view matrix, the projection matrix for the lens) and the lens there; the fragment
+  shader has depth = -eye.y / ray.y and q = eye.xz + ray.xz * depth, in place of the varying vLocal.xz. A ray
+  that does not meet the plane, or meets it past 1e6 radii, gets a point far outside the ice. The bounds of the
+  ice (the inner end of the model, the end of the ice past the rim) are a uniform (uBounds) where they were the
+  rim of the mesh. sheet.json segments is gone with the mesh. The error of q by this way is the float's error
+  of the ray over the angle of a pixel: about 0.0003 px at the master, 0.0005 px in the 4K capture, the same
+  at every distance.
+- PROOF, rate 2, draft, k007639 to k007641, the same tree with the mesh and with the triangle: the slit is
+  gone at k007640 (flash2: 10 pixels of grain where it counted 2865). The other two frames differ from the
+  mesh's in 345141 and 360016 pixels by a mean of 0.19 levels, 15 and 24 pixels by more than 8, largest 11 and
+  16. The difference picture is the sand's cross hatch: the mesh's long slivers carried q a little wrong (a
+  few hundredths of a pixel), so the pattern sits a shade off. Film rate, draft, triangle against mesh (the
+  mesh on 23cb30e): 3465 the same bytes (the kept set draws there); 3660 mean 0.151, 14 pixels over 8, largest
+  25; 3720 mean 0.225, 32 pixels over 8, largest 70; 3829 mean 0.150, 5 over 8; 3866 mean 0.105, none over 8,
+  largest 6. The pixels over 8 at 3720 lie on hard ring edges near the lens (the stair of an edge moved by one
+  pixel at a few steps, the draft tier has one sample a pixel) and on grains. Nothing that the eye sees.
+  Frames in /tmp/v/r32 (base, full, pre, mesh; slit_cure_7640.png in the looks).
+- The kept set's rings (kept/rings.ts) are a mesh too (small triangles, shared edges) and draw while the lens
+  is high in the dive. Not changed. The detector runs over every dive frame of the next pictures run.
+- The frame factor: pixelScale(height) of ice.ts and grains.json frame are gone; ice.ts, grains.ts, model.ts
+  and kept/set.ts take bufferFrame() of src/core/frame.ts. A commit with nothing else. tsc exit 0, vitest 42
+  files, 398 tests pass on the tree with both changes.
+- MAIL 526 (04:52, d196): across each seam with the surface view the eye's speed over its own height never
+  dips and never turns back; cured in the surface view's own path; the camera of the judged surface frame
+  (3720) stays to the byte, the bend lives after it; a new line of smooth reads it (due 05:40). A stop that
+  needs the bend may name by 08:30 if it says so before 07:00.
+- MEASURED (out/scratch/seam.ts, rate 2, the eye's speed over its height against the last capture frame
+  before the seam, over the ring plane and over the globe's surface): dive to skim at 3630: lowest 0.998 and
+  0.998, the direction does not turn: clean. Skim to rise at 3810: lowest 0.616 and 0.630 at 3814 + 1/2, the
+  eye's direction turns up to 13.8 degrees per half frame from 3812 to 3817. The skim pushes straight at the
+  globe (velocity -8.5, -3.5, -1.7 thousandths of a radius a frame along e1, e2 and the normal at 3720) and
+  the way out lies back along nearly the same line (foot 5.9, height 2.94), so the rise turned the eye round
+  in its first eight frames. Mailed at 04:59 with the ask for the later time.
+- PLAN of the bend: skimAt keeps its path to the byte up to just past 3720 (the take of 3720 ends at u =
+  shutter over 2 * 180). From there the direction of the eye's velocity turns at a steady pace from the push
+  through a track across to the pull back toward the way out, and its speed stays the same share of its height
+  over the plane, so the height levels and then climbs. The rise takes that motion at 3810 and only speeds it
+  up; its paces are set again by the path judge.

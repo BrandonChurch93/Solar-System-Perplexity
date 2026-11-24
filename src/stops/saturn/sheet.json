@@ -1,6 +1,5 @@
 {
   "source": "how the ring sheet is lit and drawn (sheet.ts). Lengths in planet radii, angles in degrees. The view and phase numbers are measured on the approved hero (assets-src/saturn/code/hero_light.py) between phase 80 and 120; the last phase knot is set on the approved close.",
-  "segments": 720,
   "view": {
     "note": "brightness goes with ((cosine of the Sun + cosine of the view where the model was measured) / (cosine of the Sun + cosine of the view)) to a power: one for a dense sheet, one for a thin one, the ratio held between two limits",
     "dense": 0,
