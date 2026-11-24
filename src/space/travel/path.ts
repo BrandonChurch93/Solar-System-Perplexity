@@ -18,6 +18,7 @@ export interface TravelLook {
   passKnee: number
   passLead: number
   passRound: number
+  passStart: [number, number]
   follow: number
   cruise: number
   early: number
@@ -35,17 +36,17 @@ export interface TravelLook {
   steady: [number, number]
 }
 
-const BASE: TravelLook = { pan: [2, 2], panSpan: [0, 0.97], lead: [0, 1], roll: [2, 2], rollSpan: [0, 0.97], bowDeg: 0, grow: [2, 3], swing: [0.1, 1], offset: [0.1, 1], settle: 0.5, clearDeg: 2, passBy: 0.3, passPower: 2, passKnee: 1, passLead: 0.5, passRound: 0.2, land: 0, landTurn: [0, 0, 0, 0, 0], landGrow: [0, 0, 0, 0, 0], follow: 0, cruise: 0.3, early: 0.06, point: 0, growRun: [0, 0, 0], pin: [0, 0], pinEase: [2, 2], turnRun: [0, 0], window: 0, patchEnd: 0, pinFrames: 8, steady: [0, 0] }
+const BASE: TravelLook = { pan: [2, 2], panSpan: [0, 0.97], lead: [0, 1], roll: [2, 2], rollSpan: [0, 0.97], bowDeg: 0, grow: [2, 3], swing: [0.1, 1], offset: [0.1, 1], settle: 0.5, clearDeg: 2, passBy: 0.3, passPower: 2, passKnee: 1, passLead: 0.5, passRound: 0.2, passStart: [0, 0], land: 0, landTurn: [0, 0, 0, 0, 0], landGrow: [0, 0, 0, 0, 0], follow: 0, cruise: 0.3, early: 0.06, point: 0, growRun: [0, 0, 0], pin: [0, 0], pinEase: [2, 2], turnRun: [0, 0], window: 0, patchEnd: 0, pinFrames: 8, steady: [0, 0] }
 
 export const TRAVEL: Record<string, Partial<TravelLook>> = {
   sun: { panSpan: [0, 1], rollSpan: [0, 1], cruise: 0, window: 41, patchEnd: 0.7 },
-  mercury: { land: 0.68, landTurn: [60, 0.052, 0.107, 30, 58], landGrow: [70, 0.3, 0.07, 40, 58], growRun: [0.2818, 0.2, 0.3], point: 0.0015, early: 0.0933, passBy: 0.32, passPower: 3, passKnee: 0.6, pin: [0, 1], pinEase: [2, 9], turnRun: [0.36, 0.36], panSpan: [0, 1], window: 51, pinFrames: 2, steady: [60, 200] },
-  venus: { land: 0.68, landTurn: [60, 0.052, 0.107, 30, 58], landGrow: [70, 0.3, 0.07, 40, 58], growRun: [0.3672, 0.2, 0.3], point: 0.0015, early: 0.115, passBy: 0.275, passPower: 3, passKnee: 0.6, pin: [0, 1], pinEase: [2, 9], turnRun: [0.35, 0.35], panSpan: [0, 1], window: 51, pinFrames: 2, steady: [60, 200] },
+  mercury: { land: 0.68, landTurn: [60, 0.052, 0.107, 30, 58], landGrow: [70, 0.3, 0.07, 40, 58], growRun: [0.2818, 0.2, 0.3], point: 0.0015, early: 0.0933, passBy: 0.32, passPower: 3, passKnee: 0.6, passStart: [0.03, 1], pin: [0, 1], pinEase: [2, 9], turnRun: [0.36, 0.36], panSpan: [0, 1], window: 51, pinFrames: 2, steady: [60, 200] },
+  venus: { land: 0.68, landTurn: [60, 0.052, 0.107, 30, 58], landGrow: [70, 0.3, 0.07, 40, 58], growRun: [0.3672, 0.2, 0.3], point: 0.0015, early: 0.115, passBy: 0.275, passPower: 3, passKnee: 0.6, passStart: [0.03, 1], pin: [0, 1], pinEase: [2, 9], turnRun: [0.35, 0.35], panSpan: [0, 1], window: 51, pinFrames: 2, steady: [60, 200] },
   earth: { land: 0.68, landTurn: [60, 0.04, 0.107, 30, 58], landGrow: [70, 0.3, 0.07, 40, 58], growRun: [0.3351, 0.2, 0.3], point: 0.0015, early: 0.15, passBy: 0.31, passPower: 3, pin: [0, 1], pinEase: [2, 9], turnRun: [0.4, 0.36], panSpan: [0, 1], window: 48, pinFrames: 2, steady: [60, 200] },
   mars: { land: 0.68, landTurn: [60, 0.058, 0.107, 24, 58], landGrow: [95, 0.41, 0.07, 50, 58], growRun: [0.3, 0.2, 0.3], point: 0.0015, early: 0.1, pin: [0, 1], pinEase: [2, 9], turnRun: [0.36, 0.36], panSpan: [0, 1], window: 33 },
-  jupiter: { land: 0.68, landTurn: [60, 0.1, 0.107, 30, 58], landGrow: [70, 0.3, 0.07, 40, 58], growRun: [0.3, 0.2, 0.3], point: 0.0015, early: 0.1, passBy: 0.32, passPower: 3, passKnee: 0.6, follow: 1, pin: [0, 1], pinEase: [2, 9], turnRun: [0.36, 0.4], panSpan: [0, 1], window: 49, pinFrames: 2, steady: [60, 200] },
+  jupiter: { land: 0.68, landTurn: [60, 0.1, 0.107, 30, 58], landGrow: [70, 0.3, 0.07, 40, 58], growRun: [0.3, 0.2, 0.3], point: 0.0015, early: 0.1, passBy: 0.32, passPower: 3, passKnee: 0.6, follow: 1, passStart: [0, 1], pin: [0, 1], pinEase: [2, 9], turnRun: [0.36, 0.4], panSpan: [0, 1], window: 49, pinFrames: 2, steady: [60, 200] },
   saturn: { land: 0.68, landTurn: [60, 0.062, 0.107, 24, 58], landGrow: [95, 0.41, 0.07, 50, 58], growRun: [0.26, 0.2, 0.3], point: 0.0015, early: 0.1, passBy: 0.42, passPower: 3, pin: [0, 1], pinEase: [2, 9], turnRun: [0.36, 0.36], panSpan: [0, 1], window: 30, pinFrames: 4 },
-  uranus: { land: 0.68, landTurn: [60, 0.105, 0.107, 30, 58], landGrow: [70, 0.3, 0.07, 40, 58], growRun: [0.3935, 0.2, 0.3], point: 0.0015, early: 0.1083, passBy: 0.228, passPower: 3, passKnee: 0.6, passLead: 0.6, pin: [0, 1], pinEase: [2, 9], turnRun: [0.35, 0.36], panSpan: [0, 1], window: 47, steady: [60, 200] },
+  uranus: { land: 0.68, landTurn: [60, 0.105, 0.107, 30, 58], landGrow: [70, 0.3, 0.07, 40, 58], growRun: [0.3935, 0.2, 0.3], point: 0.0015, early: 0.1083, passBy: 0.228, passPower: 3, passKnee: 0.6, passLead: 0.6, passStart: [0.07, 1], pin: [0, 1], pinEase: [2, 9], turnRun: [0.35, 0.36], panSpan: [0, 1], window: 47, steady: [60, 200] },
 }
 
 export function travelLook(id: string): TravelLook {
@@ -127,7 +128,7 @@ const polySum = (a: Poly, first: number): Poly => [first, ...a.map((c, i) => c /
 const STEP: Poly = [0, 0, 3, -2]
 const SOFT: Poly = [0, 0, 0, 10, -15, 6]
 
-export function passCurve(power: number, knee: number, lead: number, round: number): (t: number) => number {
+export function passCurve(power: number, knee: number, lead: number, round: number, start: [number, number] = [0, 0]): (t: number) => number {
   const p = Math.max(2, Math.round(power))
   const half = knee < 1 ? Math.min(round, knee) : 0
   const cuts = [0, ...(lead > 0 ? [lead] : []), ...(knee < 1 ? [knee - half, knee + half] : [])].sort((a, b) => a - b).filter((c, i, all) => i === 0 || c > all[i - 1]!)
@@ -154,7 +155,17 @@ export function passCurve(power: number, knee: number, lead: number, round: numb
     return polyAt(at.place, t - at.from)
   }
   const whole = raw(1)
-  return (t) => raw(Math.max(t, 0)) / whole
+  const [a, b] = start
+  const flat = pieces[pieces.length - 1]!
+  const v = flat.speed[0]!
+  const m = (7 * (1 - whole / v) - 2 * (a + b)) / 3
+  if (!(b > a) || knee + half > b || flat.speed.some((c, i) => i > 0 && c !== 0) || !(m > a && m < b)) return (t) => raw(Math.max(t, 0)) / whole
+  const top = (2 * v) / (b - a)
+  const up = polySum(polyOf(SOFT, 1 / (m - a), 0), 0).map((c) => c * top)
+  const upPlace = polySum(up, 0)
+  const down = polySum(polyOf(SOFT, -1 / (b - m), 1), 0).map((c, i) => c * top + (i === 0 ? polyAt(up, m - a) : 0))
+  const downPlace = polySum(down, polyAt(upPlace, m - a))
+  return (t) => (t >= b ? raw(t) : t > m ? polyAt(downPlace, t - m) : t > a ? polyAt(upPlace, t - a) : 0) / whole
 }
 
 export type Landing = [number, number, number, number, number]
@@ -225,7 +236,7 @@ export class TravelShape {
     const beta = betaEase(this.look.grow[0], this.look.grow[1])
     const ease = runEase(run[1], run[2])
     this.growEase = run[1] > 0 ? (x) => ease(span([run[0], 1], x)) : beta
-    this.passRun = passCurve(this.look.passPower, this.look.passKnee, this.look.passLead, this.look.passRound)
+    this.passRun = passCurve(this.look.passPower, this.look.passKnee, this.look.passLead, this.look.passRound, this.look.passStart)
   }
 
   private landings(): NonNullable<TravelShape['landed']> {
