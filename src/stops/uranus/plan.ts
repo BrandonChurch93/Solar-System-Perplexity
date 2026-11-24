@@ -99,6 +99,7 @@ function frame(g: Pivot, sweep: number, turn: number): { out: THREE.Vector3; qua
 }
 
 const BEND_STEPS = 64
+const POSES_KEPT = 32
 
 export class UranusPlan extends StopPlan {
   private kept = false
@@ -289,7 +290,21 @@ export class UranusPlan extends StopPlan {
     return { position: base.position, quaternion: base.quaternion.multiply(new THREE.Quaternion().setFromUnitVectors(want, now)), vfov: base.vfov }
   }
 
+  private readonly poses = new Map<string, Pose>()
+
   flown(kind: 'dive' | 'rise', time: number): Pose {
+    if (this.kept) return this.joined(kind, time)
+    const key = kind + time
+    let pose = this.poses.get(key)
+    if (!pose) {
+      if (this.poses.size >= POSES_KEPT) this.poses.clear()
+      pose = this.joined(kind, time)
+      this.poses.set(key, pose)
+    }
+    return { position: pose.position.clone(), quaternion: pose.quaternion.clone(), vfov: pose.vfov }
+  }
+
+  private joined(kind: 'dive' | 'rise', time: number): Pose {
     const k = path.bend.back
     const x = kind === 'rise' ? (time - this.seg.rise.start) / (this.seg.rise.end - this.seg.rise.start) : 0
     if (x <= k[0]!) return this.led(kind, time, this.anchor(kind, time))
