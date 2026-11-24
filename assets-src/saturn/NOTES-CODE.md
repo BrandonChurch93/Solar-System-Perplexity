@@ -2174,3 +2174,35 @@ A cure, if the Builder wants one: one layout for the whole stop. Either the hero
 weight at every height and the model's field is read at the same pushed radius (then the plane is rigid, its
 rings are not exact circles, 3720 moves by up to 0.05 radii of ring layout), or the hold is drawn on true
 circles (then 3465 loses against the approved hero: the model alone measured 12.3 and 5.9 against 5.5 and 2.2).
+
+## 2026-11-24, 00:46 to 01:00 VM: step 1 committed (07cadd2), main 4f2127a merged (e7a9815), proofs on the merge
+
+main moved to 4f2127a while I wrote the notes (the travels' seam cure, d162: src/space/travel/path.ts passCurve,
+two lines of src/director/film.ts, tests/pass.test.ts). Step 1 is commit 07cadd2 on the merge of 65fb91d; the
+merge of 4f2127a is e7a9815. On e7a9815:
+
+- tsc clean. vitest exit 0: 32 files, 0 not ok (346 rows ok by the count that gave 340 before; the six new rows
+  are tests/pass.test.ts).
+- `npm run smooth -- --stop saturn --only path`: "smooth saturn: green. out/work/smooth/saturn.md", in the
+  report "VERDICT: green. No number is over its limit." The two reds at 3887 are gone with the travel's cure, as
+  mail 387 (4) said. Dive, whole frames: rate 0.037, turn 0.053, speed 0.060 (rate 2: 0.037, 0.054, 0.061).
+  Rise, whole frames: rate 0.067, turn 0.067, speed 0.067 (rate 2: 0.068 each); seam in 0.009, 0.002, 0.003; seam
+  out 0.007, 0.008, 0.020; fall before the peak at most 0.005, no climb after it. Largest values over the mean:
+  dive rate 1.599 at 3592, turn 1.945 at 3584, speed 1.676 at 3582; rise rate 2.148 at 3848, turn 2.110 at
+  3848, speed 1.686 at 3849. Shown and not judged: the travel's speed steps 0.169 at 3892 and 0.672 at 3896.
+- `npm run handover -- --stop saturn --tier draft --only path` (18 s, no pictures): the same two red lines as
+  before the merge (dive 3591 at 2 times, 3550 at 0.31; rise 3848 at 3.39).
+- Draft pictures on the merge (job /tmp/v/job26.sh, /tmp/v/r26): 3465, 3390, 3539, 3720, 3560, 3588, 3589, 3600,
+  3850 and every frame 3856 to 3884 keep the bytes they had before the merge. 3380, 3885 and 3886 changed by
+  the merge (the travel's cure changes the arrival's size curve and the first frames of the leg): rendered on
+  a worktree of main 4f2127a itself (/home/user/workspace/mainref), 3380, 3885 and 3888 of my tree equal main's
+  bytes. So step 1 changes no frame before 3540 and none after 3884.
+
+The handover tool's rate rule, read again (cut/HANDOVER.md E3: "rises smoothly from the hold's own rate, stays
+near constant"; plan E of the second note: "rises once and falls once"). Both can hold together with a pace
+that has a level top: up, level, down. My note above that the rise cannot pass was wrong: it can if the top is
+held through T and the fall takes the last 21 frames or so: top about 1.5 of the mean, steps about 0.07, the
+far part's mean about 0.55 of the top, so the fastest frame is about 1.8 times it. In the dive: up over about
+22 frames to about 1.23 of the mean, level to about 3605, down to the skim's 0.85: steps about 0.06, the
+fastest frame about 1.4 times the far mean, 0.5 of it at 3550. That is a third try of the pace (all frames
+of the dive and the rise move). Pace gets a level top for it (peak as two shares).
