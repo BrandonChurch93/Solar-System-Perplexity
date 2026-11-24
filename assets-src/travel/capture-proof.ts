@@ -16,7 +16,7 @@ if (out) mkdirSync(out, { recursive: true })
 ensureBuild()
 const s = await openCapture({ dist: DIST, format, assets: a.assets ?? 'full', query })
 const info = await s.page.evaluate(() => JSON.stringify((window as unknown as { showcase: { info(): object } }).showcase.info()))
-console.log('INFO ' + info.slice(0, 220))
+console.log('INFO ' + JSON.stringify({ ...JSON.parse(info), tier }).slice(0, 220))
 for (const k of frames) {
   const t0 = Date.now()
   const [b64, samples] = await s.page.evaluate(async ([f, t]) => {
