@@ -1,73 +1,70 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T18:42:41.596Z",
- "head": "7835b8e2883ff8ac6a62518b2028f95d11f6ecf0",
- "note": "Campaign 3 on the take 2f1028ee (in place judged at 5): Mars's third is rendering, Uranus after it. Beside it: reading globe_engineer's cure of the pattern measure against my rig, cases at z 2 to 5.3",
+ "pushed": "2026-11-24T19:02:27.977Z",
+ "head": "7da2c8a3736f7ff81a866b7aa4fd4b6fa16a8bff",
+ "note": "mars third read: dive passes at 4.85 in place, rise red 7.43 into 2689 (both grounds); uranus renders; the cure of the pattern measure on the rig",
  "looks": [
   {
-   "time": "2026-11-24T18:42:40.600Z",
-   "file": "20261124184240600-note-dive-a.jpg",
-   "source": "out/work/inplace/mars3/dive-a.jpg",
-   "kind": "note",
-   "label": "Mars's third dive, frames 2400 to 2436, every fourth, drafts (1 sample): Phobos passes in front, then the dive to the canyon"
-  },
-  {
-   "time": "2026-11-24T18:38:12.563Z",
-   "file": "20261124183812563-compare-mars3-dive-step-body.jpg",
+   "time": "2026-11-24T19:02:26.832Z",
+   "file": "20261124190226832-note-mars3-dive-step-body.jpg",
    "source": "out/work/handover/mars3-dive-step-body.png",
+   "kind": "note",
+   "label": "mars third dive, largest step 3.32 body, 4.85 in place into 2469",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T19:02:25.839Z",
+   "file": "20261124190225839-note-mars3-rise-step-body.jpg",
+   "source": "out/work/handover/mars3-rise-step-body.png",
+   "kind": "note",
+   "label": "mars third rise, largest step of the body mean 5.81 into 2694",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T19:02:24.874Z",
+   "file": "20261124190224874-note-mars3-rise-step-in-place.jpg",
+   "source": "out/work/handover/mars3-rise-step-in-place.png",
+   "kind": "note",
+   "label": "mars third rise, largest step in place 7.43 into 2689, both grounds",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T19:02:23.613Z",
+   "file": "20261124190223613-note-rise-2690.jpg",
+   "source": "out/work/inplace/mars3/rise-2690.jpg",
+   "kind": "note",
+   "label": "mars third rise 2690 to 2698, the globe alone"
+  },
+  {
+   "time": "2026-11-24T19:02:22.237Z",
+   "file": "20261124190222237-note-rise-T.jpg",
+   "source": "out/work/inplace/mars3/rise-T.jpg",
+   "kind": "note",
+   "label": "mars third rise across T 2681, drafts"
+  },
+  {
+   "time": "2026-11-24T19:02:21.200Z",
+   "file": "20261124190221200-note-dive-T-top.jpg",
+   "source": "out/work/inplace/mars3/dive-T-top.jpg",
+   "kind": "note",
+   "label": "mars third dive across T, the horizon band at full size"
+  },
+  {
+   "time": "2026-11-24T19:02:20.139Z",
+   "file": "20261124190220139-note-dive-T.jpg",
+   "source": "out/work/inplace/mars3/dive-T.jpg",
+   "kind": "note",
+   "label": "mars third on main, dive across T 2477, drafts"
+  },
+  {
+   "time": "2026-11-24T18:59:39.619Z",
+   "file": "20261124185939619-compare-mars3-rise-step-in-place.jpg",
+   "source": "out/work/handover/mars3-rise-step-in-place.png",
    "kind": "compare",
-   "label": "mars dive, the largest step of the mean level of the body (3.32): frame 2468, frame 2469, the ground that is new in it, and the change on the ground both show times 8",
+   "label": "mars rise, the largest step of the level in place (7.43): frame 2688, frame 2689, the ground that is new in it, and the change on the ground both show times 8",
    "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2469
-  },
-  {
-   "time": "2026-11-24T18:18:05.802Z",
-   "file": "20261124181805802-note-rise-T.jpg",
-   "source": "out/work/inplace/saturn/rise-T.jpg",
-   "kind": "note",
-   "label": "saturn rise across T (3852 place side, 3853 globe side), drafts, consecutive frames 3850 to 3855, crop at 0.52: in place the level moves 0.19 to 0.27 a frame, 0.26 into 3853"
-  },
-  {
-   "time": "2026-11-24T18:18:05.005Z",
-   "file": "20261124181805005-note-dive-T.jpg",
-   "source": "out/work/inplace/saturn/dive-T.jpg",
-   "kind": "note",
-   "label": "saturn dive across T (3588 globe side, 3589 place side), drafts, consecutive frames 3586 to 3591, crop at 0.62: in place the level moves 0.20 to 0.23 a frame, 0.22 into 3589"
-  },
-  {
-   "time": "2026-11-24T18:06:30.199Z",
-   "file": "20261124180630199-compare-saturn-rise-step-in-place.jpg",
-   "source": "out/work/handover/saturn-rise-step-in-place.png",
-   "kind": "compare",
-   "label": "saturn rise, the largest step of the level in place (0.34): frame 3846, frame 3847, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "saturn",
-   "segment": "saturn.rise",
-   "frame": 3847
-  },
-  {
-   "time": "2026-11-24T18:03:18.759Z",
-   "file": "20261124180318759-note-dive-b.jpg",
-   "source": "out/work/inplace/saturn/dive-b.jpg",
-   "kind": "note",
-   "label": "saturn dive, draft, every fourth frame 3594 to 3629 on the merged tree"
-  },
-  {
-   "time": "2026-11-24T18:03:17.526Z",
-   "file": "20261124180317526-note-dive-a.jpg",
-   "source": "out/work/inplace/saturn/dive-a.jpg",
-   "kind": "note",
-   "label": "saturn dive, draft, every sixth frame 3540 to 3594 on the merged tree (the campaign for the rest of mail 682)"
-  },
-  {
-   "time": "2026-11-24T18:00:26.918Z",
-   "file": "20261124180026918-compare-saturn-dive-step-in-place.jpg",
-   "source": "out/work/handover/saturn-dive-step-in-place.png",
-   "kind": "compare",
-   "label": "saturn dive, the largest step of the level in place (0.27): frame 3605, frame 3606, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "saturn",
-   "segment": "saturn.dive",
-   "frame": 3606
+   "segment": "mars.rise",
+   "frame": 2689
   }
  ]
 }
