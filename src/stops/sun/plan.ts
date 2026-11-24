@@ -1,8 +1,8 @@
 import * as THREE from 'three'
-import { config } from '../../config'
+import { config, type Segment } from '../../config'
 import type { Pose, ViewKind } from '../../core/types'
 import { StopPlan, type Fit, type MoveParams } from '../../director/moves'
-import { handoverOf, type HandoverSide } from '../../director/handover'
+import { handoverOf, type HandoverSide, type SkyShares } from '../../director/handover'
 import { Bend } from '../../director/bend'
 import { coverFrames } from '../../director/timeline'
 import { lookAt, mix, slerpDir, smooth } from '../../director/rig'
@@ -19,7 +19,7 @@ export const params: MoveParams = {
   travel: { turnDeg: 26, side: 1 },
   light: { exposure: 1, skyExposure: 0.45, sunRadiusDeg: 5, sunGlare: 1, flare: 0.35 },
   cover: [2.8, 1.05, 0.28],
-  handover: { rise: { at: place.rise.at, dissolveFrames: place.rise.dissolveFrames, placeFrames: place.rise.placeFrames, picture: place.rise.picture, pace: place.rise.law.pace as HandoverSide['pace'], turn: place.rise.law.turn as HandoverSide['turn'], liftPower: place.rise.law.liftPower } },
+  handover: { rise: { at: place.rise.at, dissolveFrames: place.rise.dissolveFrames, placeFrames: place.rise.placeFrames, skyFrames: place.rise.skyFrames, picture: place.rise.picture, pace: place.rise.law.pace as HandoverSide['pace'], turn: place.rise.law.turn as HandoverSide['turn'], liftPower: place.rise.law.liftPower } },
   spinDegPerSecond: 3.4,
   moonDegPerSecond: 0,
   tint: [1, 0.8, 0.4],
@@ -192,6 +192,14 @@ export class SunPlan extends StopPlan {
 
   carry(time: number): THREE.Quaternion {
     return this.turn(time).multiply(this.turn(this.anchorTime).invert())
+  }
+
+  // PLAN F: the share of the close view's sky on the globe side of the rise is read from the height of the lens, by
+  // the same heights as the sky of the set (place.json onGlobe.heights.sky), and not from the clock (skyFrames is 0)
+  override skyShare(seg: Segment, time: number): SkyShares | null {
+    if (seg.kind !== 'rise') return null
+    const [from, to] = place.onGlobe.heights.sky as [number, number]
+    return { low: 1 - THREE.MathUtils.smoothstep(Math.log(Math.max(this.eyeHeight(time), 1e-4)), Math.log(from), Math.log(to)) }
   }
 }
 

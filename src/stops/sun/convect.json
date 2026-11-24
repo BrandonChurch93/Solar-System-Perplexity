@@ -189,7 +189,7 @@
    "knee": 3.0
   },
   "swallow": [
-   1.2,
+   1.7,
    2
   ]
  },
@@ -280,7 +280,7 @@
    "to": 0.36,
    "level": 0.5,
    "keep": 0.0,
-   "mottle": 0.5,
+   "mottle": 0,
    "wave": 2.0,
    "band": [
     0.2,
@@ -437,6 +437,24 @@
    "amount": 0.5,
    "from": 0.02,
    "to": 0.07
+  },
+  "wide": {
+   "amount": 0.4,
+   "level": 0.36,
+   "power": 0.5,
+   "most": 1.2,
+   "texels": 2,
+   "note": "the wide light and dark of the globe own map under the cells, at the place on the ball where the globe shows it (the ground is the globe own ground, near and far): amount is the share of it the ground takes, level the light of the map that leaves the ground as it is, power how the map light is read, most the most it adds, texels the least width of a sample in texels of the map; far is the same four where a pixel holds the map as the globe shows it, band the texels of the map to a pixel (in 1080ths of the frame height) between which the near reading gives way to the far one",
+   "far": {
+    "amount": 1.0,
+    "level": 0.21,
+    "power": 0.75,
+    "most": 2.5
+   },
+   "band": [
+    0.2,
+    0.55
+   ]
   }
  },
  "jets": {

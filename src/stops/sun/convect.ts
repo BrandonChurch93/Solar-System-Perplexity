@@ -415,6 +415,12 @@ uniform vec2 uCvLineClose;
 uniform vec2 uCvFoot;
 uniform vec4 uCvMesh;
 uniform float uCvKeep;
+uniform sampler2D uCvMap;
+uniform mat3 uCvToMap;
+uniform vec4 uCvWide;
+uniform vec4 uCvWideMore;
+uniform vec4 uCvWideFar;
+uniform vec2 uCvWideBand;
 in vec2 vG;
 in vec3 vPos;
 in vec3 vView;
@@ -605,6 +611,30 @@ void main() {
   // holds the cell; from above and far off the lanes alone are dark)
   lum *= 1.0 - uCvHole.x * (1.0 - smoothstep(uCvHole.y, uCvHole.z, length(vec2(e / L, near.y)))) * (1.0 - spot.x) * lowView * footed;
   lum = mix(uCvFar.z * (1.0 + uCvFarMore.x * mottle), lum, mix(uCvFar.w, 1.0, fine));
+  // the ground is the globe's own ground: the wide light and dark of the globe's map lies under the cells at the
+  // place on the ball where the globe itself shows it, near or far, by no height and no angle. So where a pixel can
+  // no longer hold the cells they leave the globe's own pattern behind and not another, and the globe's face that
+  // the ground gives way to on the rise is the same picture
+  // (uCvWide: the share of the map's light that the ground takes, the map's level that leaves the ground as it
+  // is, the power the map's light is read by, the most it may add. A sample of the map covers at least
+  // uCvWideMore.x of its texels each way, so the enlarged map is a soft tone and no texel of it shows.
+  // uCvWideFar is the same four where a pixel holds the map as the globe shows it: between uCvWideBand.x and
+  // uCvWideBand.y texels of the map to a pixel (in 1080ths of the frame height) the one gives way to the other.
+  // It is the same map through two readings, so the pattern is one and only its strength grows with distance)
+  {
+    vec3 md = uCvToMap * dir;
+    vec2 muv = vec2(atan(md.x, md.z) / 6.283185307179586 + 0.5, asin(clamp(md.y, -1.0, 1.0)) / 3.141592653589793 + 0.5);
+    float mAlt = fract(muv.x + 0.5) - 0.5;
+    vec2 mdx = vec2(abs(dFdx(muv.x)) < abs(dFdx(mAlt)) ? dFdx(muv.x) : dFdx(mAlt), dFdx(muv.y));
+    vec2 mdy = vec2(abs(dFdy(muv.x)) < abs(dFdy(mAlt)) ? dFdy(muv.x) : dFdy(mAlt), dFdy(muv.y));
+    float wideFoot = sqrt(length(mdx * uCvWideMore.yz) * length(mdy * uCvWideMore.yz)) * uFormat;
+    mdx *= max(1.0, uCvWideMore.x / max(length(mdx * uCvWideMore.yz), 1e-6));
+    mdy *= max(1.0, uCvWideMore.x / max(length(mdy * uCvWideMore.yz), 1e-6));
+    float wideLum = dot(textureGrad(uCvMap, muv, mdx, mdy).rgb, vec3(0.3, 0.5, 0.2));
+    float wideNear = 1.0 + uCvWide.x * clamp(pow(wideLum / uCvWide.y, uCvWide.z) - 1.0, -1.0, uCvWide.w);
+    float wideFar = 1.0 + uCvWideFar.x * clamp(pow(wideLum / uCvWideFar.y, uCvWideFar.z) - 1.0, -1.0, uCvWideFar.w);
+    lum *= mix(wideNear, wideFar, smoothstep(uCvWideBand.x, uCvWideBand.y, wideFoot));
+  }
 
   // the sunspot: fibres with bodies, grains that run toward the umbra along them, a bright head where each ends
   // over the dark floor
@@ -731,8 +761,9 @@ export class Surface {
   private readonly towards = new THREE.Vector3()
   private readonly over: number
 
-  /** shared: the uniforms of the lights that the opening throws on the ground, kept by the old ground. */
-  constructor(shared: Shared) {
+  /** shared: the uniforms of the lights that the opening throws on the ground, kept by the old ground. map: the
+   * globe's own map, toStage: the turn from the map's axes to the stage's (the globe lays the stage by it). */
+  constructor(shared: Shared, map: THREE.Texture, toStage: THREE.Matrix3) {
     const c = data.cells
     const s = data.spot
     const m = data.mesh
@@ -768,6 +799,12 @@ export class Surface {
         uCvStream: { value: new THREE.Vector4(s.fibres.stream, s.fibres.ends, s.fibres.headLong, s.fibres.power) },
         uCvMesh: { value: new THREE.Vector4(m.real[0]!, m.real[1]!, 1, l.streak) },
         uCvKeep: { value: 1 },
+        uCvMap: { value: map },
+        uCvToMap: { value: toStage.clone().transpose() },
+        uCvWide: { value: new THREE.Vector4(l.wide.amount, l.wide.level, l.wide.power, l.wide.most) },
+        uCvWideFar: { value: new THREE.Vector4(l.wide.far.amount, l.wide.far.level, l.wide.far.power, l.wide.far.most) },
+        uCvWideBand: { value: new THREE.Vector2(l.wide.band[0]!, l.wide.band[1]!) },
+        uCvWideMore: { value: new THREE.Vector4(l.wide.texels, (map.image as unknown as { width: number }).width, (map.image as unknown as { height: number }).height, 0) },
         uCvHeat: { value: new THREE.Vector4(l.lane, l.middleWide, l.young, l.old) },
         uCvTone: { value: new THREE.Vector4(l.dark, l.top, l.spread, l.middle) },
         uCvShade: { value: new THREE.Vector4(l.limb, l.shade[0]!, l.shade[1]!, l.glint) },

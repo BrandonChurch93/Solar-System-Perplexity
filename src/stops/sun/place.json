@@ -113,16 +113,16 @@
         0.48
       ],
       "loops": [
-        0.22,
-        0.6
+        0.3,
+        2.2
       ],
       "corona": [
         0.3,
-        0.9
+        1.6
       ],
       "sky": [
         0.3,
-        0.9
+        1.6
       ],
       "strands": [
         0.06,
@@ -141,8 +141,8 @@
         0.17
       ],
       "surface": [
-        0.6,
-        1.8
+        0.5,
+        2.4
       ]
     },
     "loopsCut": 0.12,
@@ -155,12 +155,13 @@
     "at": 0.4,
     "dissolveFrames": 1,
     "placeFrames": 12,
+    "skyFrames": 0,
     "picture": false,
     "easeIn": 0.1556,
     "easeOut": 0.1778,
     "coast": 4,
     "steps": 2048,
-    "note": "the rise is one path in the frame of the turning globe: height runs in equal ratios from the close glide (coasting to rest over coast seconds, carried with the globe) to the hold run back in time, rate eased over the first easeIn and the last easeOut of the segment; the direction from the centre turns in step with height, the camera keeps the spot by a look at it and turns from the close framing to the hold framing with the same progress, the lens too. at, dissolveFrames and placeFrames are the handover times of cut/HANDOVER.md E1: T sits where the frame is all photosphere, so no sky is in the picture when the side changes. Since the stop left handover.ownPath (config/showcase.json) the rise is flown by the engine's one move with law (pace, turn, liftPower: the set handover_engineer searched for the Sun); easeIn, easeOut, coast, steps and turn belong to the stop's own path, which the engine no longer asks for",
+    "note": "the rise is one path in the frame of the turning globe: height runs in equal ratios from the close glide (coasting to rest over coast seconds, carried with the globe) to the hold run back in time, rate eased over the first easeIn and the last easeOut of the segment; the direction from the centre turns in step with height, the camera keeps the spot by a look at it and turns from the close framing to the hold framing with the same progress, the lens too. at, dissolveFrames and placeFrames are the handover times of cut/HANDOVER.md E1: T sits where the frame is all photosphere, so no sky is in the picture when the side changes. Since the stop left handover.ownPath (config/showcase.json) the rise is flown by the engine's one move with law (pace, turn, liftPower: the set handover_engineer searched for the Sun); easeIn, easeOut, coast, steps and turn belong to the stop's own path, which the engine no longer asks for; skyFrames 0: the close view's sky leaves by the height of the lens (the plan's skyShare, heights onGlobe.heights.sky) and not by the clock",
     "turn": 2,
     "law": {
       "pace": {
