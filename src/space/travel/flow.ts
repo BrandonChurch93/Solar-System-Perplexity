@@ -28,6 +28,7 @@ function smoothed(raw: Float64Array, n: number, width: number, guard: number): F
 
 export class Flow {
   private readonly tables = new Map<string, Float64Array>()
+  private readonly next = new THREE.Vector3()
 
   constructor(private readonly director: FlowDirector, private readonly ease = 0) {}
 
@@ -62,7 +63,10 @@ export class Flow {
   at(seg: Segment, frame: number, step: number, out: THREE.Vector3): THREE.Vector3 {
     if (!FLOW.kinds.includes(seg.kind)) return out.set(0, 0, 0)
     const t = this.table(seg)
-    const k = Math.min(Math.max((frame - seg.firstFrame) * FLOW.stepsPerFrame + step, 0), seg.frames * FLOW.stepsPerFrame)
-    return out.set(t[k * 3]!, t[k * 3 + 1]!, t[k * 3 + 2]!)
+    const s = Math.min(Math.max((frame - seg.firstFrame) * FLOW.stepsPerFrame + step, 0), seg.frames * FLOW.stepsPerFrame)
+    const k = Math.floor(s)
+    out.set(t[k * 3]!, t[k * 3 + 1]!, t[k * 3 + 2]!)
+    if (s > k) out.lerp(this.next.set(t[k * 3 + 3]!, t[k * 3 + 4]!, t[k * 3 + 5]!), s - k)
+    return out
   }
 }
