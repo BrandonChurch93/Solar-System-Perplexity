@@ -21,7 +21,7 @@ for (const kind of ['dive', 'rise'] as const) {
   const frame = kind === 'dive' ? h.lastFrame : h.firstFrame
   for (const side of ['orbit', 'terrain'] as const) {
     const s = film.shotAt(frame, h.time, side)
-    const p = kind === 'dive' ? plan.divePose(h.time, side) : plan.risePose(h.time, side)
+    const p = plan.eye(kind, h.time, side)
     console.log(kind, side, 'frame', frame, 'time', h.time, 'window', h.placeFirstFrame, h.placeLastFrame, 'dissolve', h.firstFrame, h.lastFrame, 'shot camera from the plan pose: position', s.camera.position.distanceTo(p.position).toExponential(2), 'turned deg', THREE.MathUtils.radToDeg(s.camera.quaternion.angleTo(p.quaternion)).toFixed(4), 'vfov', s.camera.vfov, p.vfov)
     if (side !== 'orbit') continue
     // The shot's camera is the plan's pose set into the film's world and turned by the film's drift; here the same in the plan's frame.

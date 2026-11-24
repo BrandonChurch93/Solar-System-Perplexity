@@ -1,6 +1,7 @@
 import * as THREE from 'three'
-import { config } from '../../config'
+import { config, type Segment } from '../../config'
 import type { Pose, ViewKind } from '../../core/types'
+import { handoverOf } from '../../director/handover'
 import { StopPlan, type Fit, type MoveParams } from '../../director/moves'
 import { drift, lookAt } from '../../director/rig'
 import close from './close.json'
@@ -19,7 +20,7 @@ export const params: MoveParams = {
   light: { exposure: 1, skyExposure: 0.65, sunRadiusDeg: 0.14, sunGlare: 0.6, flare: 0 },
   skyAim: { orbit: [25.78793, 56.89437, -50.63077], terrain: [180, -12, 40] },
   cover: [0.27, 0.43, 0.8],
-  handover: { dive: { at: move.dive.at, picture: false }, rise: { at: move.rise.at, picture: false } },
+  handover: { dive: { at: move.dive.at, picture: false, skyFrames: 0, ...move.one.dive }, rise: { at: move.rise.at, picture: false, skyFrames: 0, ...move.one.rise } },
   spinDegPerSecond: 1.3,
   moonDegPerSecond: 0.3,
   tint: [0.3, 0.5, 1],
@@ -141,6 +142,45 @@ class NeptunePlan extends StopPlan {
   override risePose(time: number, view: ViewKind): Pose {
     const pose = this.flown('rise', time)
     return view === 'orbit' ? this.spun(pose, time) : this.toClose(pose)
+  }
+
+  // The sky on the globe side by the eye's height, never by the clock (move.json, sky.height): the sky of the hold stays on the Sun while
+  // the Sun and the sky are in the frame; between the two heights, where the globe fills the frame but for one corner, it turns to the
+  // sky of the close view (dive). The same law holds between two frames of the film and at any rate of capture.
+  private skyLow(kind: 'dive' | 'rise', time: number): number {
+    const high = this.eye(kind, time, 'orbit').position.length() - 1
+    return 1 - smooth(Math.log(Math.max(high, 1e-6) / move.sky.height[1]!) / Math.log(move.sky.height[0]! / move.sky.height[1]!))
+  }
+
+  // The share of the close view's sky layer on the globe side: by the same height law when sky.own is set, else the engine's (with
+  // skyFrames 0 that one changes in one frame at the change of view).
+  override skyShare(seg: Segment, time: number): { low: number } | null {
+    return move.sky.own && (seg.kind === 'dive' || seg.kind === 'rise') ? { low: this.skyLow(seg.kind, time) } : null
+  }
+
+  // The carry of the sky in the rise, where the sky stays in the frame from the change of view to the travel: the stars turn back from
+  // the sky of the close view to the sky of the travel with the eye's own turn, by the angle its line of sight still has to go to the
+  // direction the rise ends on (the eye turns one way through the whole rise, about 96 degrees). Past the first share of that turn
+  // (move.json sky.back), over which it sets in softly, the stars' turn is in step with the eye's own, so the stars come to rest as
+  // the eye does and never go back the other way. Two laws tried and left (assets-src/neptune/NOTES.md, 24 Nov 10:15): by the
+  // logarithm of the height the turn was over ten frames before the eye had come to rest, and the stars went back in those frames;
+  // by the square of the angle done they ran half as fast again at the judged frame. Nothing here reads the clock.
+  private skyBack(time: number): number {
+    const ahead = (t: number): THREE.Vector3 => new THREE.Vector3(0, 0, -1).applyQuaternion(this.eye('rise', t, 'orbit').quaternion)
+    const end = ahead(this.seg.rise.end)
+    const whole = ahead((handoverOf(this.id, 'rise')!.lastFrame + 1) / config.fps).angleTo(end)
+    const done = 1 - Math.min(ahead(time).angleTo(end) / whole, 1)
+    const soft = move.sky.back
+    return 1 - (done < soft ? (done * done) / (2 * soft) : done - soft / 2) / (1 - soft / 2)
+  }
+
+  override skyCarryShare(seg: Segment, time: number): number | null {
+    return seg.kind === 'dive' ? this.skyLow('dive', time) : seg.kind === 'rise' ? this.skyBack(time) : null
+  }
+
+  // The turn of the rise is the carry above (the engine gives no turn of its own to a stop without skyTurnEase).
+  override skyTurnShare(seg: Segment, time: number): number | null {
+    return seg.kind === 'dive' ? this.skyLow('dive', time) : super.skyTurnShare(seg, time)
   }
 
   override hold(tRel: number): Pose {
