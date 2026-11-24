@@ -33,12 +33,21 @@ the angle toward the camera), `span` (the angle between its feet), `turn` (the t
 `height` and `width` in solar radii and `lean` in radians. The places are read off the approved hero
 (`references/approved/sun-hero.png`): the large systems stand at about 205, 30, -28 and 150 degrees.
 `spinAt` is the body's turn at the moment those places are read (the middle of the handover, frame 474).
+The last four loops are read off the approved Mercury image (`references/approved/mercury-hero.png`): the
+flames of the active region at the left limb and the low loop at the bottom left. They stand behind the limb
+of the Sun stop's view (their second angle is negative by more than their height can clear, so the body
+hides them up to the handover) and the body's own turn brings them over the limb on the way to Mercury.
 
 ## The handover (look.json, `handover`, `wear`)
 
 Both are distances of the camera from the Sun's centre in solar radii, never times. From `handover[0]` to
 `handover[1]` the hold's globe gives way to the far Sun; from `wear[0]` to `wear[1]` the far Sun goes from
 the hold's own law (the same map, grade, limb factor and motion as `src/stops/sun/globe.ts`) to its own.
+The wear is `sqrt(1 - x)` with x the distance between the two ends: the camera leaves the Sun on an ease
+and stands still at `wear[1]` (the distance where the Sun has the size it has from the next stop, one over
+the sine of that stop's sunRadiusDeg), so a law that is steep in distance there is even in the film: the lit
+part of the frame gains at most about 4 levels in one film frame. If that stop's radius changes, `wear[1]`
+changes with it. The first part of the burn (0 to `burn.split`) follows the same share.
 
 ## The burn (look.json, `burn`)
 
@@ -58,7 +67,8 @@ and zero at burn 0.
 at burn 1; it is zero at burn 0 like the first. `white` is the ceiling of the shoulder at burn 1 (the
 ceiling at burn 0 is `body.ceiling`): the burnt face clips to this near white and not to the hold's orange.
 `desat` is the range of luminance, before the shoulder, over which a colour loses its hue toward white, as a
-film does when every layer is full: it is one function for the face, the chromosphere, the loops and the
+film does when every layer is full, in the measure of the burn (none at burn 0, so the loops keep the
+hold's red at the handover): it is one function for the face, the chromosphere, the loops and the
 fringe, so a loop that is as bright as the face burns to the same pale gold. The limb law still holds under
 it, which leaves the cream at the limb. The corona does not take the exposure: it stays at times 1.
 `hide` is the range, in disc radii from the centre, over which the pass covers what is drawn behind it once
@@ -69,8 +79,11 @@ the burn passes one half: nothing behind a burnt Sun is seen through its light.
 A dim layer of fine flames all round the limb, part of the same body: it is marched in the body's frame
 between the surface and `top` radii, its flames stand where a value noise of the direction on the sphere is
 high (`scale`), lean with height (`lean`) and fall off with the height over `height` (low and high places).
-It takes the same exposure as the loops. At burn 0 it is under the visible floor: the proof at frame 472
-is drawn with it in.
+It takes the same exposure as the loops, and it belongs to the far look: its strength goes with one minus
+the wear, like the body's own white heat, so it is absent at the start of the handover (the proof at frame
+472) and whole from `wear[1]` on. `lobe` is one place on the sphere (`at` as for the loops, `width` in
+degrees) where the flames are `gain` times stronger and `tall` times taller: the active region at the left
+limb of the approved Mercury image.
 
 ## The rule at frame 615
 

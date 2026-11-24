@@ -14,8 +14,12 @@ export function globeShare(distance: number): number {
 }
 
 export function wearShare(distance: number): number {
-  return 1 - smoothstep(Math.log(distance), Math.log(look.wear[0]!), Math.log(look.wear[1]!))
+  const x = Math.min(Math.max((distance - look.wear[0]!) / (look.wear[1]! - look.wear[0]!), 0), 1)
+  return Math.sqrt(1 - x)
 }
+
+const off = typeof location !== 'undefined' ? new URLSearchParams(location.search).get('farloops') : null
+export const loopsOff: number[] = off ? off.split(',').map(Number) : []
 
 export function discShare(radiusPx: number): number {
   return smoothstep(radiusPx, look.disc[0]!, look.disc[1]!)

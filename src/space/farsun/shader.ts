@@ -75,12 +75,14 @@ uniform vec4 uBurn;
 uniform vec3 uIrrColour;
 uniform vec2 uHide;
 uniform vec3 uWhite;
-uniform vec2 uDesat;
+uniform vec3 uDesat;
 uniform vec2 uHalo;
 uniform vec3 uHaloColour;
 uniform vec4 uFringe;
 uniform vec4 uFringeShape;
 uniform vec3 uFringeColour;
+uniform vec4 uFringeLobe;
+uniform vec2 uFringeLobeBy;
 uniform int uParts;
 in vec2 vNdc;
 out vec4 outColor;
@@ -174,7 +176,7 @@ vec3 whiteLook(vec3 d, float mu, float pixel) {
 }
 vec3 burnWhite(vec3 x) {
   float l = dot(x, vec3(0.2126, 0.7152, 0.0722));
-  return mix(x, vec3(l), smoothstep(uDesat.x, uDesat.y, l));
+  return mix(x, vec3(l), uDesat.z * smoothstep(uDesat.x, uDesat.y, l));
 }
 vec3 shoulder(vec3 x) {
   return uWhite * (vec3(1.0) - exp(-x / uWhite));
@@ -325,10 +327,11 @@ void main() {
       float r = length(q);
       vec3 sd = spinY(q / r, uSpin);
       float up = max(r - 1.0, 0.0);
-      float tall = mix(uFringeShape.x, uFringeShape.y, pow(vnoise(sd * 6.0 + 5.0), 2.0));
+      float lobe = exp(-(1.0 - dot(sd, uFringeLobe.xyz)) * uFringeLobe.w);
+      float tall = mix(uFringeShape.x, uFringeShape.y, pow(vnoise(sd * 6.0 + 5.0), 2.0)) * (1.0 + uFringeLobeBy.y * lobe);
       vec3 bent = sd + (vec3(vnoise(sd * 9.0 + 1.0), vnoise(sd * 9.0 + 4.0), vnoise(sd * 9.0 + 7.0)) - 0.5) * (up * uFringeShape.w);
       float spike = 40.0 * pow(vnoise(bent * uFringeShape.z), 8.0) + 24.0 * pow(vnoise(bent * (uFringeShape.z * 2.7) + 3.0), 8.0);
-      sum += exp(-up / tall) * spike * step(1.0, r);
+      sum += exp(-up / tall) * spike * (1.0 + uFringeLobeBy.x * lobe) * step(1.0, r);
     }
     gas += burnWhite(uFringeColour * (sum * dt * uFringe.z * uBurn.x));
   }

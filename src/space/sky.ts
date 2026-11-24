@@ -1128,7 +1128,7 @@ export class Sky {
     if (some) renderer.render(this.starScene, camera)
     const fs = sun.far
     if (fs && farShare > 0 && (!fs.centre || fs.share >= 1)) {
-      const centre = fs.centre ?? this.farCentre.copy(sun.dir).multiplyScalar(1 / Math.sin(Math.min(Math.max(sun.angularRadius, 1e-5), 1.5)))
+      const centre = fs.centre ?? this.farCentre.copy(fs.dir ?? sun.dir).multiplyScalar(1 / Math.sin(Math.min(Math.max(sun.angularRadius, 1e-5), 1.5)))
       farSun.set({ camera, centre, body: fs.body, spin: fs.spin, time: fs.time, holdTime: fs.holdTime, exposure: fs.exposure, burn: fs.burn, vignette, aspect, height }, farShare, 0)
       farSun.render(renderer, target)
     }

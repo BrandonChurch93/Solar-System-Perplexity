@@ -14,7 +14,7 @@ import world from './world.json'
 import { aimAt, type SkyAims } from '../space/aim'
 import { TravelShape, inFrame } from '../space/travel/path'
 import { discShare, openSky } from '../space/travel/open'
-import { globeShare } from '../space/farsun/share'
+import { globeShare, wearShare } from '../space/farsun/share'
 import farLook from '../space/farsun/look.json'
 import sunFit from '../stops/sun/fit.json'
 
@@ -523,7 +523,7 @@ export class FilmDirector implements Director {
 
   private sunBurn(u: number, position: THREE.Vector3): number {
     const split = farLook.burn.split
-    if (u < SUN_LEAVE) return split * smooth(ramp(Math.log(farLook.handover[0]!), -Math.log(Math.sin(this.sunFor(1).radius)), Math.log(position.distanceTo(this.frames[0]!.origin))))
+    if (u < SUN_LEAVE) return split * (1 - wearShare(position.distanceTo(this.frames[0]!.origin)))
     if (!this.burnSpan) {
       const seg = this.plans[0]!.seg.travel!
       const at = (x: number): number => 1 / this.travelCamera(0, seg.start + (seg.end - seg.start) * x).position.distanceTo(this.frames[1]!.origin)
@@ -885,6 +885,15 @@ export class FilmDirector implements Director {
     const sun: SunState = { dir: this.sunWorld.clone(), color: SUN_COLOR, intensity: 3, angularRadius: light.radius, glare: light.glare * sunWeight }
     const first = this.plans[0]!
     if (index > 0 || segment.kind === 'travel') sun.far = { centre: index === 0 && u < SUN_LEAVE ? this.frames[0]!.origin.clone().sub(pose.position) : undefined, share: index === 0 ? (u < SUN_LEAVE ? 1 - globeShare(pose.position.distanceTo(this.frames[0]!.origin)) : 1) : sunWeight, body: this.frames[0]!.rotation.clone().multiply(SUN_BODY), spin: first.spin(time), holdTime: time - first.holdMid, time, exposure: light.exposure, vfov: pose.vfov, burn: index === 0 ? this.sunBurn(u, pose.position) : 1 }
+    if (sun.far && (segment.kind === 'dive' || segment.kind === 'rise')) {
+      const held = this.sky.orbits[segment.kind === 'rise' && index > 0 ? this.plans[index + 1]?.id ?? config.endingId : this.plans[index]!.id]
+      if (held) {
+        const ride = skyTurn.clone().multiply(held.clone().invert())
+        sun.far.dir = sun.dir.clone().applyQuaternion(ride)
+        sun.far.body = ride.multiply(sun.far.body)
+      }
+      sun.far.share *= 1 - (skyShare ?? 0)
+    }
     const out: Shot = { frame, time, segment, u, camera: pose, skyQuaternion: skyCarry ? skyCarry.multiply(pose.quaternion) : pose.quaternion.clone(), skyExposure: light.sky, skyGlow, skyTurn, skyStars, skyPatch, skyLook, near, far, sun, sets, post, cover, dust, farLight }
     if (skyShare !== undefined) out.skyShare = skyShare
     if (skyShareHigh !== undefined) out.skyShareHigh = skyShareHigh
