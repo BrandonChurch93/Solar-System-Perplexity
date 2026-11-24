@@ -130,6 +130,7 @@ uniform vec3 uKShadowL;
 uniform vec3 uKPenumbra;
 uniform vec2 uKPenumbraFar;
 uniform vec2 uKSolid;
+uniform vec2 uKShadeRamp;
 uniform vec4 uKOver;
 uniform vec4 uKStrand;
 uniform float uKSheetR[9];
@@ -174,7 +175,7 @@ vec4 keptSheet(float r, float phi, float x, float texels, float mu, float along,
   float keep = max(smoothstep(uKSheetFit.x, uKSheetFit.y, r), 1.0 - smoothstep(1.0 - bw, 1.0 + bw, bb));
   float sheet = fore ? (1.0 - smoothstep(1.0 - bw, 1.0 + bw, bb)) * lit * smoothstep(uKEdge.x - fw, uKEdge.x + fw, r) * mix(1.0, keep, smoothstep(1.0 - bw, 1.0 + bw, bb)) * (1.0 - smoothstep(uKEdge.y - 0.002, uKEdge.y + 0.002, r)) : 0.0;
   a = max(a, (1.0 - keptKnots(r, uKSheetT)) * sheet);
-  a = max(a, uKSolid.x * uKSolid.y * (1.0 - lit) * body * ramp);
+  a = max(a, uKSolid.x * uKSolid.y * (1.0 - lit) * body * smoothstep(uKShadeRamp.x, uKShadeRamp.y, r));
   vec3 wedge = uKSheetGlow.rgb * (1.0 - smoothstep(uKSheetFit.z, uKSheetFit.w, bb)) * keptKnots(r, uKWedgeG) * sheet * day;
   for (int j = 0; j < (over > 0.0 ? 1 : 0); j++) {
     float sx = (uKStrand.x + (r - uKEdge.x) * uKStrand.y - uKSpan.x) * uKSpan.y;
@@ -426,7 +427,7 @@ export class Sheet {
       uKFloorTone: { value: new THREE.Vector4(kl.floorTone[0], kl.floorTone[1], kl.unlit, skim.handover.kept.view) },
       uKAzGain: { value: azimuth.coeffs.flat() }, uKAzRadii: { value: azimuth.radii },
       uKShadowL: { value: this.farShadow }, uKPenumbra: { value: this.farPenumbra }, uKPenumbraFar: { value: new THREE.Vector2().fromArray(kl.penumbraFar) },
-      uKSolid: { value: this.farSolid },
+      uKSolid: { value: this.farSolid }, uKShadeRamp: { value: new THREE.Vector2().fromArray(kl.shadeRamp) },
       uKOver: { value: new THREE.Vector4().fromArray(kl.over) },
       uKStrand: { value: new THREE.Vector4(kl.strand[0], kl.strand[1], kl.strand[2], kl.overTone[2]) },
       uKSheetR: { value: kl.sheetRadii }, uKSheetT: { value: kl.sheetThrough }, uKWedgeG: { value: kl.wedgeGain },

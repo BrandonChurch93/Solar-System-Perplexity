@@ -17,10 +17,11 @@
   "gain": [1, 1],
   "unlit": 0.12,
   "shadow": {
-    "note": "the globe's shadow on the plane: edge half width at the limb and its growth per radius along the Sun's ray, how much farther each colour reaches into the shadow, and what is left inside it",
+    "note": "the globe's shadow on the plane: edge half width at the limb and its growth per radius along the Sun's ray, how much farther each colour reaches into the shadow, and what is left inside it. solid: in the far look and in the set of the kept build the shaded sheet lets no star through from its inner edge on; it grows solid between these two radii (planet radii). The sheet in the light keeps its own opacity",
     "soft": [0.006, 0.012],
     "reach": [1.25, 1.1, 1],
-    "floor": [0.006, 0.008, 0.012]
+    "floor": [0.006, 0.008, 0.012],
+    "solid": [1.2458, 1.27]
   },
   "layer": [0.95, 0.7, 0.2],
   "limb": [0.97, 1.0],

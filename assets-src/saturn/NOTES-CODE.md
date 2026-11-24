@@ -3539,3 +3539,62 @@ is in the picture at 3 to 12 px, and the same crispness for the far ring across 
   Then copy into the repo, commit locally, run job W with "keepframes dive rise path parity finals gate
   vitest", check the two finals (3465 must stay f4b3a395..., 3720 must stay 408729eb... unless a cure moves
   them on purpose), merge the newest main by the plumbing recipe, push whole.
+
+## 24 Nov, 08:00 to 08:50 UTC: after the first NAMED mail, the Builder's report, the second commit
+
+- NAMED 2ab7243b7cb5e5e5f741ae6a763952e15a1f5b22 was mailed at 07:57 (notebook commit 08fae29 on top).
+- MAIL 577 (08:26), the Builder's report on it: drafts, finals, gate, handover, path, parity as I stated. RED:
+  dive pattern 0.56 at 3580 (20 over, first 3560; 0.53 at 3561, "the top of the globe" and "the outer ring edge
+  at the lower right"), rise pop 1.63 at 3895 + 1/2 (11 over, first 3875) and rise pattern 0.50 at 3859 (5
+  over). Wanted: "the ring's fine structure filtered to the pixel at every scale of the rise and of the travel
+  after it", and the two places of the dive "cured or explained with pictures". SECOND COMMIT DUE 09:56 UTC,
+  answer with NAMED and the full sha.
+  RULING 1: d196 stands (the bend after 3720; depth must read in every frame; the camera of 3720 to the byte).
+  So item 11 is ruled: it stays as it is.
+  RULING 2: G17 at 3720 is read with the film's shutter, limit 0.8 stays. "The cure is in the flight: the pose
+  at the middle of 3720's shutter stays, the way the camera travels through it may change, so that it crosses
+  fewer ringlets a frame at 3720". Red means a severe issue in the round. This lifts MAIL 311 for this one
+  purpose (a bent path is allowed, the pace is not: MAIL 298 and plan E still hold).
+- TOOLS FOR THE JUDGE'S OWN NUMBERS (all in /tmp/v, scratch, K = 2 x frame):
+  - rt/out/scratch/rate2.ts and /tmp/v/job_r2.sh TREE DIR SPANS: capture frames at rate 2, named like the
+    judge's (k%06d-r2-draft.png).
+  - /tmp/v/patscan2.py DIR K0 K1 POSES POLAR (cwd mainref): the judge's own pictures() on those frames; POLAR 1
+    is the judge's body (unit sphere), 0.902 the globe as it is drawn. It gives the judge's numbers to the
+    digit on the named commit's frames. Pops are exact from 16 capture frames after K0, and for the last
+    frames of a move's window when K1 is the window's last frame (the judge moves the window inward there).
+  - /tmp/v/leftreg.py POSES K... -- DIR...: what is left without the motion, split by globe, rings, sky near
+    the body, sky beyond.
+- WHAT THE REDS ARE, MEASURED (this corrects two causes of the first NAMED mail):
+  1. Dive, pole, 3560 to 3567 + 1/2 (16 capture frames): NOT the course of the hero sky. The straight course
+     gave 0.539 at 3561 against 0.532. The judge's body (tools/img/smooth.py body()) is the unit sphere; my
+     globe is drawn flattened (fit.json globe.scale [1, 0.902, 1], as in main). At the pole the unit sphere
+     reaches up to 55 px beyond the drawn limb (3561, column 1440), the margin is 20 px, so a strip of sky up to
+     35 px high is judged as body, and in it the stars change (the hold's sky leaves, the flight's stars come
+     in, both by where the lens is). Same frames, same function, only the body flattened by 0.902 along the
+     ring normal: largest 0.288 at 3562 + 1/2, none over. tools/smooth.ts poseOf hands body() the rings and not
+     the globe's scale, so this is not curable in my folders. Picture /tmp/v/r40/mask_pole_3561.png.
+  2. Dive, 3580, 3580 + 1/2, 3581, 3587 + 1/2: the shadow's border widening away from the hero pose, as said.
+     Cured by one border (kept/look.ts penumbraAway = penumbra): 0.556, 0.498, 0.523, 0.459 become 0.216,
+     0.313, 0.197, 0.371.
+  3. Rise pattern, 3858 + 1/2 to 3863 + 1/2: NOT the course of the lift. It is the star cloud seen through
+     the shaded C ring: the shade grew solid only between radius 1.2458 and 1.5. With the shade solid from the
+     ring's inner edge (new sheet.json shadow.solid [1.2458, 1.27], used by the kept set and by the far look
+     alike) the largest pattern of the rise is 0.238 at 3871, none over; the lift's course is untouched.
+  4. Rise pop. 3875 reads 1.194 with the cure of 3 (was 1.21). 3891 to 3896 is the travel leg taking off
+     after its standstill (3885 to 3888): what is left without the motion goes 0.42 (the film's grain, also on
+     the empty sky) to 1.54 inside 8 film frames and the median of the judge's window (3880 + 1/2 to 3896 + 1/2)
+     stays at 0.82. Main's own frames (8b2c538, same window, same function) read 1.43 at 3895 + 1/2 with 5
+     frames over 1.2: red on main too. The ring profile is filtered already (mip chain at 1.2 px of the pixel's
+     radial footprint, kept/look.ts lodBias); twice that width takes the left over at 3895 + 1/2 from 1.519 to
+     1.443, no clumps and no spokes change nothing (1.519, 1.523). Split at 3895 + 1/2: rings 0.47, sky within 8
+     quarter pixels of the body 0.23, sky beyond 0.18, globe 0.12. For 1.2 the part that comes with the motion
+     would have to fall to an eighth. So no filter of mine cures it; it needs a ruling or a gentler take off.
+- TEST A (kept): one border and shadow.solid. Dive, judge's body: 16 over, all at the pole (0.528 at 3561);
+  elsewhere the largest is 0.395 at 3592 + 1/2 (frames 3552 to 3607 measured). Flattened body: largest 0.387
+  at 3587 + 1/2, none over. Rise (3852 to 3896 + 1/2 measured): pattern 0.238, pops as in 4. The hold's draft
+  frame 3535 is equal to the byte to the named commit's (the shade is solid only in the dive: uSolid.x is 0
+  in the hold; the border is the hero's at the hero pose).
+- DROPPED: the straight hero sky course and the straight lift course of the plan above (no effect on the
+  measure, and the lift's straight course made a level step of 0.10 at 3853 + 1/2).
+- git push failed with "could not read Username" between 08:21 and 08:26 (three looks pushes), then worked
+  again without any change on my side.
