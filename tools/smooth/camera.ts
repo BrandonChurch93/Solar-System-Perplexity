@@ -72,7 +72,7 @@ export interface LandingCurves { sky: (number | null)[]; centre: (number | null)
 
 // What changed from capture frame k - 1 to k in the picture, in pixels a film frame: sky, the turn of the camera (what the stars do); centre,
 // the way of the centre of the arriving body; edge, the growth of its radius; limb, centre and edge together, the fastest point of its edge.
-export function landingCurves(w: LandingWindow, width: number, height: number): LandingCurves {
+export function landingCurves(w: Pick<LandingWindow, 'samples' | 'rate'>, width: number, height: number): LandingCurves {
   const out: LandingCurves = { sky: [], centre: [], edge: [], limb: [] }
   const focal = (p: Pose): number => height / 2 / Math.tan((p.vfov * RAD) / 2)
   const radius = (p: Pose): number | null => (p.position.lengthSq() > 1 ? focal(p) / Math.sqrt(p.position.lengthSq() - 1) : null)
@@ -98,6 +98,18 @@ export function landingCurves(w: LandingWindow, width: number, height: number): 
     out.limb.push(centre !== null && edge !== null ? centre + edge : null)
   })
   return out
+}
+
+// The seam from a rise into the travel that leaves the stop: reachFrames film frames to each side, in the camera of the stop. A rise that is
+// followed by anything else (the first stop's, the last stop's) has none.
+export interface LeaveWindow { rise: Segment; travel: Segment; seam: number; rate: number; k0: number; samples: Sample[] }
+
+export function sampleLeave(cfg: Config, film: FilmDirector, plan: StopPlan, rate: number, reachFrames: number): LeaveWindow | null {
+  const rise = cfg.segments.find((s) => s.stop === plan.id && s.kind === 'rise')
+  const travel = rise ? cfg.segments.find((s) => s.kind === 'travel' && s.firstFrame === rise.endFrame) : undefined
+  if (!rise || !travel) return null
+  const seam = rise.endFrame
+  return { rise, travel, seam, rate, ...samplesOf(cfg, film, plan, rate, Math.max(seam - reachFrames, 0), Math.min(seam + reachFrames, cfg.frameCount)) }
 }
 
 export function project(p: Pose, point: THREE.Vector3, width: number, height: number): { x: number; y: number; front: boolean } {
