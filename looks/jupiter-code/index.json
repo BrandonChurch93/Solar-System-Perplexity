@@ -1,9 +1,73 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T22:15:50.606Z",
- "head": "e29762084f3c913a9dedfd61776cede322c592fe",
- "note": "22:16 UTC, commit e297620 on the merge of main b890fee, rise pictures as they render (draft, rate 2): 3246 to 3277 every frame. Red by my own eye: the place stands as an island on the plain globe from about 3268 (3274 whole frame), pale puffs from the bottom edge from 3250, the dive's limb strip.",
+ "pushed": "2026-11-24T22:27:19.419Z",
+ "head": "5f3565032784c723e137d07da505bb17e1ec4adf",
+ "note": "22:28 UTC, named state 5f35650 (code of e297620): the whole rise 3246 to 3334 every frame at draft, the tool's rise report is red (pattern 1.16 from 3253 in the lower left, pop 1.36 from 3283). Red by my own eye: the storm as a scar on the plain zone 3266 to 3305, in the judged frame 3296 too.",
  "looks": [
+  {
+   "time": "2026-11-24T22:24:55.617Z",
+   "file": "20261124222455617-note-full-3296.jpg",
+   "source": "../work/r5/full-3296.jpg",
+   "kind": "note",
+   "label": "rise 3296 draft, whole frame, the judged frame now at 1.216 radii: the scar is in it (red, mine)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T22:24:54.886Z",
+   "file": "20261124222454886-note-full-3284.jpg",
+   "source": "../work/r5/full-3284.jpg",
+   "kind": "note",
+   "label": "rise 3284 draft, whole frame: the storm as a scar on the plain zone (red, mine)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T22:24:54.229Z",
+   "file": "20261124222454229-note-rs-ll-1.jpg",
+   "source": "../work/r5/rs-ll-1.jpg",
+   "kind": "note",
+   "label": "rise 3250 to 3257, lower left at full size: streaked ground comes in, pattern 1.16 by my own reading (red, mine)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T22:24:53.659Z",
+   "file": "20261124222453659-note-rs-leave-storm.jpg",
+   "source": "../work/r5/rs-leave-storm.jpg",
+   "kind": "note",
+   "label": "rise 3298 to 3309, the storm at twice the size: it fades in place by height (red, mine)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T22:24:52.959Z",
+   "file": "20261124222452959-note-s-rise-h.jpg",
+   "source": "../work/r5/s-rise-h.jpg",
+   "kind": "note",
+   "label": "rise and travel 3314 to 3334, every frame, draft",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T22:24:52.317Z",
+   "file": "20261124222452317-note-s-rise-g.jpg",
+   "source": "../work/r5/s-rise-g.jpg",
+   "kind": "note",
+   "label": "rise 3302 to 3313, every frame, draft, half size",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T22:24:51.640Z",
+   "file": "20261124222451640-note-s-rise-f.jpg",
+   "source": "../work/r5/s-rise-f.jpg",
+   "kind": "note",
+   "label": "rise 3290 to 3301, every frame, draft, half size",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T22:24:50.924Z",
+   "file": "20261124222450924-note-s-rise-e.jpg",
+   "source": "../work/r5/s-rise-e.jpg",
+   "kind": "note",
+   "label": "rise 3278 to 3289, every frame, draft, half size",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-24T22:15:41.444Z",
    "file": "20261124221541444-note-limb-crops.jpg",
@@ -130,70 +194,6 @@
    "source": "../work/r5/s-dive-c.jpg",
    "kind": "note",
    "label": "round 2 dive 3024 to 3035 every frame at half size (smooth run frames, before the merge): one storm, one light, no second limb",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T21:57:30.392Z",
-   "file": "20261124215730392-note-s-2983.jpg",
-   "source": "../work/r5/s-2983.jpg",
-   "kind": "note",
-   "label": "2983 whole frame (smooth run frames, before the merge): the place shows as a small dark mark left of the centre while the disc is still whole",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T21:57:29.383Z",
-   "file": "20261124215729383-note-s-storm-in.jpg",
-   "source": "../work/r5/s-storm-in.jpg",
-   "kind": "note",
-   "label": "RED found by myself: the storm's first show on the full disc. Crop at full size, 2978 to 2992: a dark blotch with rust claws about 60 px wide comes in on the pale zone by height (3.2 to 1.6 radii)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T21:57:28.294Z",
-   "file": "20261124215728294-note-pair-3150-r2.jpg",
-   "source": "../work/r5/pair-3150-r2.jpg",
-   "kind": "note",
-   "label": "3150 at final, approved image left, this commit right (same state as the named commit e297620; the far ground under the limb is flat, match 7.85 against 7.25 in round 46: a known red)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T21:35:38.781Z",
-   "file": "20261124213538781-note-s-dive-b.jpg",
-   "source": "../work/r5/s-dive-b.jpg",
-   "kind": "note",
-   "label": "round 2 dive 3014 to 3023 every frame, smooth run frames at half size (unfinished)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T21:35:37.504Z",
-   "file": "20261124213537504-note-s-dive-a.jpg",
-   "source": "../work/r5/s-dive-a.jpg",
-   "kind": "note",
-   "label": "round 2 dive 2996 to 3016 step 2, smooth run frames at half size (unfinished)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T21:35:36.095Z",
-   "file": "20261124213536095-note-s-dive-in.jpg",
-   "source": "../work/r5/s-dive-in.jpg",
-   "kind": "note",
-   "label": "round 2 dive 2966 to 2996 step 2, crop x 640 to 1280 y 240 to 720 at full size, smooth run frames (unfinished): the place comes in over the pale zone 2980 to 2988",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T21:13:04.801Z",
-   "file": "20261124211304801-note-crops-3150-r2.jpg",
-   "source": "../work/r5/crops-3150-r2.png",
-   "kind": "note",
-   "label": "3150 at full size, approved left, working tree right: right limb and upper left. The flat band and the smeared streaks are the known red of this state",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T21:13:04.151Z",
-   "file": "20261124211304151-note-shadow-2895.jpg",
-   "source": "../work/r5/shadow-2895.png",
-   "kind": "note",
-   "label": "2895 at final, Io's shadow at 3 times: round 46 left, soft edge right; no pixel outside the shadow moved by more than 2 levels",
    "stop": "jupiter"
   }
  ]
