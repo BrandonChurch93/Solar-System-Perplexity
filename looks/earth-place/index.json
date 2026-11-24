@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T02:59:12.329Z",
+ "pushed": "2026-11-24T03:22:46.751Z",
  "head": "f17274e705de4b7f527945333d364d3d8b559305",
- "note": "rim rule committed on the merge of main 7e7fb893 (f17274e7), 15 draft frames byte equal across the merge; step 4 study pictures, no step 4 code yet",
+ "note": "step 4 in work: ring field study, shadows without clouds found in the sparse ring, rule being rebuilt",
  "looks": [
+  {
+   "time": "2026-11-24T03:22:46.167Z",
+   "file": "20261124032246167-note-c-1889-left.jpg",
+   "source": "../../../../tmp/gl/s4/c-1889-left.jpg",
+   "kind": "note",
+   "label": "step 4 before: 1889 left border at full size (f17274e7)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T03:22:45.603Z",
+   "file": "20261124032245603-note-tile4-crop.jpg",
+   "source": "../../../../tmp/gl/s4/tile4-crop.jpg",
+   "kind": "note",
+   "label": "step 4 study: one take (top left), sparse keep with the old shadow rule (top right), first own shadow rule (bottom left), labels and matte (bottom right)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T03:22:44.641Z",
+   "file": "20261124032244641-note-field11-near.jpg",
+   "source": "../../../../tmp/gl/s4/field11-near.jpg",
+   "kind": "note",
+   "label": "step 4 study: the ring field beside the close view (cover red); shadows still stand without their clouds, not taken",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T02:59:11.722Z",
    "file": "20261124025911722-note-pieces.jpg",
@@ -54,30 +78,6 @@
    "source": "../../../../tmp/gl/s3/border-2121.jpg",
    "kind": "note",
    "label": "2121 border of the place against the map: detail ends, step 4 next",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T02:34:11.609Z",
-   "file": "20261124023411609-note-limb-zoom.jpg",
-   "source": "../../../../tmp/gl/s3/limb-zoom.jpg",
-   "kind": "note",
-   "label": "limb at 8 times: 1918 and 2101 globe side hard, 1919 and 2100 soft band; half level moves 6.35 and 6.53 px in one frame",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T02:34:10.567Z",
-   "file": "20261124023410567-note-e3-corner-run.jpg",
-   "source": "../../../../tmp/gl/s3/e3-corner-run.jpg",
-   "kind": "note",
-   "label": "corner tower 2097 to 2102 with the rim rule and mesh 1280: no pale line",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T02:12:45.844Z",
-   "file": "20261124021245844-note-e2-corner2.jpg",
-   "source": "../../../../tmp/gl/s3/e2-corner2.jpg",
-   "kind": "note",
-   "label": "corner tower at 2099, 12 times: step 1, step 3 as committed (pale line and dark gap at the rim), trial with both caps meeting at the rim",
    "stop": "earth"
   }
  ]
