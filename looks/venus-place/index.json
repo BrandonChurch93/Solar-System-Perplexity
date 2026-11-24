@@ -1,75 +1,91 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-24T14:07:51.135Z",
+ "pushed": "2026-11-24T14:27:14.309Z",
  "head": "7c1dfe17b970546eebab68476ae47fca1c0126aa",
- "note": "Chain W running on the merge with main 2bc36ce6: dive 1260 to 1291 with the limb glow held on the ground",
+ "note": "Chain W on the merge with main 2bc36ce6, limb glow laid on the ground: all 11 sheets of the two moves viewed; three of them here",
  "looks": [
   {
-   "time": "2026-11-24T14:07:50.031Z",
-   "file": "20261124140750031-note-s1276.jpg",
-   "source": "../../../../tmp/v/hwp/s1276.jpg",
+   "time": "2026-11-24T14:27:13.454Z",
+   "file": "20261124142713454-note-s1578.jpg",
+   "source": "../../../../tmp/v/hw/s1578.jpg",
    "kind": "note",
-   "label": "Same run, 1276 to 1291: speckled patch lower left from 1286 still there",
+   "label": "Chain W: rise 1578 to 1593. The glow of the limb comes over the horizon with its ground",
    "stop": "venus"
   },
   {
-   "time": "2026-11-24T14:07:48.977Z",
-   "file": "20261124140748977-note-s1260.jpg",
-   "source": "../../../../tmp/v/hwp/s1260.jpg",
+   "time": "2026-11-24T14:27:12.482Z",
+   "file": "20261124142712482-note-s1546.jpg",
+   "source": "../../../../tmp/v/hw/s1546.jpg",
    "kind": "note",
-   "label": "Chain W on merge 7c1dfe17 with the limb glow laid on the ground, not committed: draft frames 1260 to 1275 of the handover run",
+   "label": "Chain W: rise 1546 to 1561. Golden band at the limb 1546 to 1553, blue white patch upper right, dark slabs at right 1554 to 1561",
    "stop": "venus"
   },
   {
-   "time": "2026-11-24T14:01:39.811Z",
-   "file": "20261124140139811-compare-venus-dive-sides.jpg",
-   "source": "out/work/handover/venus-dive-sides.png",
-   "kind": "compare",
-   "label": "venus dive, both sides at T (frame 1343) and their difference times 8",
+   "time": "2026-11-24T14:27:11.347Z",
+   "file": "20261124142711347-note-s1308.jpg",
+   "source": "../../../../tmp/v/hw/s1308.jpg",
+   "kind": "note",
+   "label": "Chain W, not committed yet: dive 1308 to 1323. The sky and the Sun's glow come in from 1313, a pale band under the limb from 1320",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T14:16:26.814Z",
+   "file": "20261124141626814-sheet-venus-rise-top.jpg",
+   "source": "out/work/handover/venus-rise-top.png",
+   "kind": "sheet",
+   "label": "venus rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 1539), place picture off, draft tier",
    "stop": "venus",
-   "segment": "venus.dive",
-   "frame": 1343,
+   "segment": "venus.rise",
+   "first": 1539,
+   "last": 1604,
    "tier": "draft"
   },
   {
-   "time": "2026-11-24T13:44:34.084Z",
-   "file": "20261124134434084-note-h3-a.jpg",
-   "source": "../../../../tmp/v/h3-a.jpg",
-   "kind": "note",
-   "label": "Trial, not a commit: the glow of the limb on the ground, no height in its weight. Stills 1296 to 1320 of the dive and 1564, 1568, 1572 of the rise, draft",
-   "stop": "venus"
+   "time": "2026-11-24T14:15:30.292Z",
+   "file": "20261124141530292-sheet-venus-rise-draft-after.jpg",
+   "source": "out/work/handover/venus-rise-draft-after.png",
+   "kind": "sheet",
+   "label": "venus rise, every frame 1540 to 1551 (after T, frame 1539), draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "first": 1540,
+   "last": 1551,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-24T13:13:16.490Z",
-   "file": "20261124131316490-note-h1-b.jpg",
-   "source": "../../../../tmp/v/h1-b.jpg",
-   "kind": "note",
-   "label": "Trial, not a commit: the same glow through the dive, stills 1276 to 1312, draft",
-   "stop": "venus"
+   "time": "2026-11-24T14:15:28.411Z",
+   "file": "20261124141528411-sheet-venus-rise-draft-before.jpg",
+   "source": "out/work/handover/venus-rise-draft-before.png",
+   "kind": "sheet",
+   "label": "venus rise, every frame 1530 to 1538 (before T, frame 1539), draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "first": 1530,
+   "last": 1538,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-24T13:13:15.858Z",
-   "file": "20261124131315858-note-h2-a.jpg",
-   "source": "../../../../tmp/v/h2-a.jpg",
-   "kind": "note",
-   "label": "Trial, not a commit: the glow of the limb laid on the ground of the far end's eye. 1259 against 1260 and 1604 against 1605, draft stills",
-   "stop": "venus"
+   "time": "2026-11-24T14:15:26.745Z",
+   "file": "20261124141526745-sheet-venus-rise-draft-across.jpg",
+   "source": "out/work/handover/venus-rise-draft-across.png",
+   "kind": "sheet",
+   "label": "venus rise, every frame 1533 to 1544 (across T, frame 1539), draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "first": 1533,
+   "last": 1544,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-24T12:59:01.853Z",
-   "file": "20261124125901853-note-limb-ab.jpg",
-   "source": "../../../../tmp/v/limb-ab.jpg",
-   "kind": "note",
-   "label": "venus 1284, 1292, 1300: 80033a73 left, the glow of the limb off right (experiment)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T12:59:01.216Z",
-   "file": "20261124125901216-note-limbfull.jpg",
-   "source": "../../../../tmp/v/limbfull.jpg",
-   "kind": "note",
-   "label": "venus experiment, refused: the glow of the limb kept whole down to height 0.12, frames 1288 to 1328 (wide band on the limb; pattern 0.5 to 1.0 through 1277 to 1304)",
-   "stop": "venus"
+   "time": "2026-11-24T14:09:42.833Z",
+   "file": "20261124140942833-compare-venus-rise-sides.jpg",
+   "source": "out/work/handover/venus-rise-sides.png",
+   "kind": "compare",
+   "label": "venus rise, both sides at T (frame 1539) and their difference times 8",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "frame": 1539,
+   "tier": "draft"
   }
  ]
 }
