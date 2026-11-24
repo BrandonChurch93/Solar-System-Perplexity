@@ -1,9 +1,58 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T05:49:17.982Z",
- "head": "e3df591ce360c5cb373f3fcfafe5d221ef260ae5",
- "note": "bend of the skim into the rise proven at draft: T sheet 3842 to 3856, rise pictures red twice (pattern at 3808 frame edge and 3859 sky through the thin inner ring; pops in the engine's sky dip and the travel), parity on my tree",
+ "pushed": "2026-11-24T06:14:40.081Z",
+ "head": "3f7ef2815f0708731c2b54c53c08b2fe9670f631",
+ "note": "dive pictures red on pattern: cause looked for with the judge's own code and body mask; trial of the sky look",
  "looks": [
+  {
+   "time": "2026-11-24T06:14:39.483Z",
+   "file": "20261124061439483-note-limb_specks.jpg",
+   "source": "../../../../tmp/v/r34/limb_specks.png",
+   "kind": "note",
+   "label": "top limb 3568 to 3576 at six times, draft: single dark pixels along the limb from 3570"
+  },
+  {
+   "time": "2026-11-24T06:14:38.873Z",
+   "file": "20261124061438873-note-sky3720_stack.jpg",
+   "source": "../../../../tmp/v/r35/sky3720_stack.png",
+   "kind": "note",
+   "label": "sky of 3720, top left 1000 by 330: approved, head, trial with the sky look named to the engine (not committed)"
+  },
+  {
+   "time": "2026-11-24T06:14:38.342Z",
+   "file": "20261124061438342-note-pm2_3581.jpg",
+   "source": "../../../../tmp/v/r34/pm2_3581.png",
+   "kind": "note",
+   "label": "dive 3581: pattern change to 3589 on the body: the red is the border of the globe's shadow on the ring at the bottom edge of the frame"
+  },
+  {
+   "time": "2026-11-24T06:14:37.783Z",
+   "file": "20261124061437783-note-patdet_3561.jpg",
+   "source": "../../../../tmp/v/r34/patdet_3561.png",
+   "kind": "note",
+   "label": "dive 3561 to 3569 at the pole, the judge's own steps: 3561, 3569 carried back (the limb is warped by the flow), detail of each, pattern change, contrast of each"
+  },
+  {
+   "time": "2026-11-24T06:14:37.157Z",
+   "file": "20261124061437157-note-pm2_3561.jpg",
+   "source": "../../../../tmp/v/r34/pm2_3561.png",
+   "kind": "note",
+   "label": "dive 3561: the frame, the judge's pattern change to 3569 on the body (red over 0.45), 3561 grey, 3569 carried back: the red is at the north pole under the top limb"
+  },
+  {
+   "time": "2026-11-24T06:00:31.303Z",
+   "file": "20261124060031303-note-patmap_3808.jpg",
+   "source": "../../../../tmp/v/r34/patmap_3808.png",
+   "kind": "note",
+   "label": "the judge's pattern change 3808 to 3816 laid over 3808 (4 times brighter, crop 1120,300 to 1920,900): the red is at the right frame edge on the night limb, where the far ring's lit piece comes in from 3806 + 1/2"
+  },
+  {
+   "time": "2026-11-24T06:00:30.278Z",
+   "file": "20261124060030278-note-patmap_3859.jpg",
+   "source": "../../../../tmp/v/r34/patmap_3859.png",
+   "kind": "note",
+   "label": "the judge's pattern change 3859 to 3867 laid over 3859 (4 times brighter, crop 900,560 to 1700,1080; red over 0.45, yellow over 0.3, dark not judged): the red on the body is the star cloud seen through the thin inner ring at the bottom frame edge, where the near lit ring comes in from 3863; the same cloud higher up is not flagged"
+  },
   {
    "time": "2026-11-24T05:49:13.195Z",
    "file": "20261124054913195-note-saturn-rise-changes.jpg",
@@ -11,55 +60,6 @@
    "kind": "note",
    "label": "smooth pictures rise on e3df591: the changes picture (pattern red at 3808 right frame edge, 3859 lower right)",
    "stop": "saturn"
-  },
-  {
-   "time": "2026-11-24T05:49:11.653Z",
-   "file": "20261124054911653-note-cring_zoom.jpg",
-   "source": "../../../../tmp/v/r34/cring_zoom.png",
-   "kind": "note",
-   "label": "rise 3859 to 3867 every second frame, crop at the globe's lower right at 2 times: the sky seen through the thin inner ring in the globe's shadow slides against the ring (the judge's pattern red 0.55)"
-  },
-  {
-   "time": "2026-11-24T05:43:19.859Z",
-   "file": "20261124054319859-note-rise_c.jpg",
-   "source": "../../../../tmp/v/r34/rise_c.jpg",
-   "kind": "note",
-   "label": "the rise after the bend, draft, every frame 3854 to 3872"
-  },
-  {
-   "time": "2026-11-24T05:43:19.155Z",
-   "file": "20261124054319155-note-rise_b.jpg",
-   "source": "../../../../tmp/v/r34/rise_b.jpg",
-   "kind": "note",
-   "label": "the rise after the bend, draft, every frame 3830 to 3853"
-  },
-  {
-   "time": "2026-11-24T05:43:18.501Z",
-   "file": "20261124054318501-note-rise_a.jpg",
-   "source": "../../../../tmp/v/r34/rise_a.jpg",
-   "kind": "note",
-   "label": "the rise after the bend, draft, every frame 3806 to 3829: the pull back of the skim runs on into the lift"
-  },
-  {
-   "time": "2026-11-24T05:43:17.757Z",
-   "file": "20261124054317757-note-T_sheet.jpg",
-   "source": "../../../../tmp/v/r34/T_sheet.jpg",
-   "kind": "note",
-   "label": "the rise with the bend, draft, every frame 3842 to 3856 (the engine changes the view at 3852): no border of a set, no jump at 3852 (frame to frame mean difference 11.70, 11.75, 11.78, 11.79 across it)"
-  },
-  {
-   "time": "2026-11-24T05:28:21.002Z",
-   "file": "20261124052821002-note-f03810.jpg",
-   "source": "../../../../tmp/v/r33/b2/f03810.png",
-   "kind": "note",
-   "label": "3810 draft, the last frame of the skim with the bend: the eye pulls back and lifts, the lens as at 3720"
-  },
-  {
-   "time": "2026-11-24T05:28:20.367Z",
-   "file": "20261124052820367-note-b2_b.jpg",
-   "source": "../../../../tmp/v/r33/b2_b.jpg",
-   "kind": "note",
-   "label": "the bend of the skim, draft, every sixth frame 3770 to 3810: the track turns into the pull back the rise takes over"
   }
  ]
 }
