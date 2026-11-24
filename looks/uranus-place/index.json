@@ -1,9 +1,33 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-24T15:51:06.177Z",
- "head": "c4d2507f91714cbdcb28b1c0757d64912f52b4ef",
- "note": "Form F dive every frame 4150 to 4181 on capture drafts; pattern rows still rendering",
+ "pushed": "2026-11-24T16:14:34.106Z",
+ "head": "b238e1cadf349d6dbcf848d3c898759a828b9d5e",
+ "note": "Form F rows done: rise flows 0.64 (was 1.45), true carry 0.64 (was 1.14 to 1.61); dive flows 1.43 stays, true carry 1.28 at 4161 on the limb band; merged main 4752aa1e as b238e1ca, proofs running",
  "looks": [
+  {
+   "time": "2026-11-24T16:14:33.406Z",
+   "file": "20261124161433406-note-k3-rsheet-c.jpg",
+   "source": "../../../../tmp/k3-rsheet-c.png",
+   "kind": "note",
+   "label": "Form F rise 4412 to 4420, every frame, capture drafts (tree of eb994477, drawn on main 2bc36ce6)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T16:14:32.470Z",
+   "file": "20261124161432470-note-k3-rsheet-b.jpg",
+   "source": "../../../../tmp/k3-rsheet-b.png",
+   "kind": "note",
+   "label": "Form F rise 4396 to 4411, every frame, capture drafts: the tops come up with the view angle (tree of eb994477, drawn on main 2bc36ce6)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T16:02:11.655Z",
+   "file": "20261124160211655-note-tmw-8322.jpg",
+   "source": "../../../../tmp/tmw-8322.png",
+   "kind": "note",
+   "label": "Form F, 4161 against 4169 carried back by the true cameras (left, middle) and where the pattern is over 0.45 (right): the limb's band of the light law closing over the ground, none on the storm (main 2bc36ce6, uncommitted)",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-24T15:50:44.196Z",
    "file": "20261124155044196-note-k3-sheet-c.jpg",
@@ -254,30 +278,6 @@
    "source": "../../../../tmp/tm/h3-dive-3.jpg",
    "kind": "note",
    "label": "dive on 0ac434b6, every draft frame of the handover run, sheet 3 of 3 (main c2c49133)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T11:34:30.159Z",
-   "file": "20261124113430159-note-h3-rise-2.jpg",
-   "source": "../../../../tmp/tm/h3-rise-2.jpg",
-   "kind": "note",
-   "label": "rise on 0ac434b6, every draft frame of the handover run, sheet 2 of 3 (main c2c49133)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T11:34:29.175Z",
-   "file": "20261124113429175-note-h3-dive-2.jpg",
-   "source": "../../../../tmp/tm/h3-dive-2.jpg",
-   "kind": "note",
-   "label": "dive on 0ac434b6, every draft frame of the handover run, sheet 2 of 3 (main c2c49133)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T11:34:28.478Z",
-   "file": "20261124113428478-note-h3-rise-1.jpg",
-   "source": "../../../../tmp/tm/h3-rise-1.jpg",
-   "kind": "note",
-   "label": "rise on 0ac434b6, every draft frame of the handover run, sheet 1 of 3 (main c2c49133)",
    "stop": "uranus"
   }
  ]
