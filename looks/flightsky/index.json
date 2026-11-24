@@ -1,0 +1,29 @@
+{
+ "folder": "flightsky",
+ "pushed": "2026-11-24T05:03:46.269Z",
+ "head": "5f630624fedcafcb70cb1cee411ab47e5b59651e",
+ "note": "MAIL 513: uranus rise 4436 draft, uhd crop x 600 y 120 960 by 540 before and after, and the 16 by 9 crop x 300 y 60 480 by 270 scaled up twice",
+ "looks": [
+  {
+   "time": "2026-11-24T05:03:45.054Z",
+   "file": "20261124050345054-note-stars-4436-16x9-twice.jpg",
+   "source": "../scratch/stars-4436-16x9-twice.png",
+   "kind": "note",
+   "label": "stars 4436 16 by 9 same crop scaled up twice"
+  },
+  {
+   "time": "2026-11-24T05:03:44.057Z",
+   "file": "20261124050344057-note-stars-4436-uhd-after.jpg",
+   "source": "../scratch/stars-4436-uhd-after.png",
+   "kind": "note",
+   "label": "stars 4436 uhd one to one after MAIL 513"
+  },
+  {
+   "time": "2026-11-24T05:03:42.666Z",
+   "file": "20261124050342666-note-stars-4436-uhd-before.jpg",
+   "source": "../scratch/stars-4436-uhd-before.png",
+   "kind": "note",
+   "label": "stars 4436 uhd one to one before MAIL 513 (main 8fb9ba9b)"
+  }
+ ]
+}
