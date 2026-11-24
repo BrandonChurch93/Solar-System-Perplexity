@@ -3748,3 +3748,46 @@ Why the dive does not take the rise's pair: the machines' table shows the rise's
 Patch held in scratch (`/tmp/gl/s9/set.ts`, `look.ts`), goes in when the walk frees the slot.
 
 Correction owed to /root from an earlier mail: the sun glow at the top border has no step at the rise's change of view. Mean of 400 columns at the top border: 109.20 at 2096, 111.43 at 2100, 111.83 at 2101, 110.83 at 2103, 102.23 at 2106, 82.59 at 2110.
+
+### MAIL 648 from the Builder (/root), 11:23 UTC, verbatim
+
+MAIL 648 from the Builder (/root), 11:23 UTC. RULING on your BLOCKER (item 4 of MAIL 637), and two things you need for the third commit.
+
+1. THE CLOCK. Your 90 minutes have not started. The checks of your second commit (et2, ez2, eq2) went onto the machines only now, behind Uranus's; the report will reach you at about 13:00 to 13:30 UTC at the earliest, and the third commit is due 90 minutes after the report. Plan with that.
+
+2. RULING: Y is the direction, Z is the fallback, X is out.
+Why: X turns a band of about 180 rows of the judged 2010 away from its approved picture. Y changes about 25 by 40 px of 1755. Z leaves two grounds exchanged in the dive, which is the very thing Brandon's note names ("it's obviously a transition", "like there's actually a place on the planet that the camera's going to"). One world, settled where it costs the least likeness.
+Y is ruled by its conditions, not by a technique:
+(a) One ground in the far zone at every level from the hold to the close view. The close picture's deck exists in that world.
+(b) From the hold it reads as a bank of cloud that belongs to the hero's cloud forms: no straight edge of the wedge, no dense patch that ends at once, no dark mottling from above. The change of 1755 against the approved hero stays inside the bank and is named with a pair picture and its size in pixels, MEASURED.
+(c) 2010 is not less close to its approved picture than it is now.
+(d) Built from code, not a third picture laid on. A thought that may make (b) cheap, yours to judge: a tenth to a half of cloud seen from above closes to a deck at the grazing angle of the close camera when the clouds stand (have height). If the far zone's cloud is made of standing puffs from code, the hold may keep most of its sea and Cuba, and the deck of 2010 comes from the angle for real, by parallax, not by an exchange of two pictures.
+If Y is whole (a to d measured, 1755, 1857 and 2010 at final shown) by your due time, it is in the third commit. If not, the third commit is named with Z and the red with this cause, and Y goes on as the cure of that severe issue after round 1. Do not name a half Y.
+
+3. THE RISE, 2158 and 2160 (0.55 and 0.59): IN. Spread look.back by nearness over as many frames as the limit needs. 2156 is a rise frame, not a frame with an approved picture, so it may change on purpose; name it with its share and a pair picture. If your proof shows the judged look of the rise harmed, take it back and name the red instead.
+
+4. NEW FROM THE ENGINE, yours to cure in the third commit: handover_engineer's shares by height (NAMED f1faa508, head 8fd084dc on agent/engine-handover, its merge with main 1c3da4b2). skyWeight and placeWeight read the log of the height of the globe camera, never the time. It is being proven now and goes onto main in the next hours, before your third commit is named. Its finding on Earth: by height your place picture comes in over 5 frames (0.265 and 0.248 a frame, against 0.124 by the clock), because your eye flies almost level before T. The cure is yours: one picture on both sides of the exchange, so that its speed shows nothing. placeFrames 24 is the stopgap its engineer measured. To work ahead, merge 8fd084dc into your branch now; I tell you when it is on main.
+
+(a) and (c) of your mail (the dive's look and the night lights by nearness, 1857 dimmer in the lights on purpose): agreed, name 1857 with a pair picture.
+
+After MAIL 648, 11:24 to 11:36 UTC, while the texel walk runs (no edit in `src` or `public`):
+
+- Looks pushed 11:24 (chart of the laws by nearness).
+- A plain `git fetch origin agent/engine-handover` pulled over 860 MB and I killed it (disk back to 3.9 GB after the temp pack was removed). Rule for me: no fetch without `--depth 1`. The engine head 8fd084dc09b9ff9fdb646df916db8967daa85298 sits in a scratch repo `/tmp/gl/eng` (depth 1, no blobs but the changed ones). 34 files differ outside my three folders (`/tmp/gl/eng/diff-names.txt`). A real merge is not possible cheaply in my shallow repo; I check the engine as an overlay of these files in the worktree, never committed, then restore.
+- Read in the engine's `src/director/handover.ts`: with `placeFrames` 0 the new `placeWeight` is 0 before the T frame and 1 in it, as today. My `place.json` has `placeFrames` 0 on both sides in both named trees; main's older Earth has 12, which is what the engineer measured (1.5 / 12 = 0.125 a frame). So the finding should not hold on my tree. NOT MEASURED yet: frames near T with the engine files.
+- Found: `picture` is not set false in `place.json` `path.handover`, so the engine's place picture stands at weight 1 on the globe side samples of the T frame (1919 before 1919.25; 2100 from 2100.25). This fits the machines' pop 1.21 from 1918 + 1/2 and my own item "limb line changes for one frame at T". Trial planned: `"picture": false` on both sides, proved on 1915 to 1921 and 2098 to 2104, seam and parity; kept only if the frames are not worse.
+- The pop 1.204 at 2088 lies in the surface view (2088 to 2099 + 1/2), frames I may not change. The residual falls smoothly from 1.83 at 2088 to 1.39 at 2100 against a window median of 1.52: it reads as the edge of the measure window. To be named so, not cured.
+- One law of the far look for dive and rise, by nearness only: `look.away = [1, 1.95, 0.5]`, `look.back` removed, `away = smooth(((near - 1) / 0.95) ^ 0.5)`. Computed with no render (`npx tsx out/work/earth/place/tmp/laws4.ts`, values at frame + 1/8). Dive: largest change of the share over 8 frames 0.450 from 1843 (today by the clock about 0.455), leaves 0 at 1831, arrives at 1857; shares 1834 0.0251, 1838 0.1307, 1842 0.3055, 1846 0.5246, 1850 0.7541, 1854 0.9404, 1856 0.9914, 1857 0.9999. Rise: largest change over 8 frames 0.567 from 2157.5 (today `1.03, 1.35, 1`: 0.996 from 2159.5), leaves 1 at 2152.5, arrives 0 at 2169.5; shares 2154 0.9672, 2156 0.8768 (the judged 2156 changes on purpose), 2158 0.7519, 2160 0.6094, 2162 0.4620, 2164 0.3188, 2166 0.1865, 2168 0.0702, 2170 0. Others computed: `1, 1.86, 0.41` rise 0.632, dive 0.432, 2156 0.9395; `1, 2.2, 0.5` rise 0.516 but 1857 0.9631 (the judged 1857 would then not be whole).
+- `leaving` stays in one place only: `uFree = leaving ? 1 : away`, a latch by the segment so that 2174 ends in the look the travel starts with. It reads the segment, not a share over time; it will be named.
+- The night lights law stays as written under (c).
+
+Y, the size of the bank at the hold, computed from the fitted camera and the poses (`npx tsx out/work/earth/place/tmp/bank.ts FROM TO FRAMES`, samples every 2 by 0.25 px of the close picture):
+- The close picture's ground from 5 to 13.5 degrees of arc covers at 1755 x 847 to 970, y 385 to 515 of the 1920 by 1080 frame: 123 by 130 px, 10268 pixels. From 8 to 13.5 degrees: 115 by 129 px, 7657 pixels. From 0 to 5 degrees (the zone both pictures already share): 39 by 42 px.
+- At 1829: 127 by 132 px. At 1857: 279 by 255 px.
+- So a Y that carries the whole far band of the close picture would change about 10 thousand pixels of 1755, not 25 by 40 px (about 1 thousand) as MAIL 648 assumes. That number goes to /root with the NAMED mail, or earlier if Y is tried.
+
+Y, design so far (nothing built, nothing measured on frames):
+- The close camera stands at 0.030751 radii. Grazing angle of its rays at the ground: 16.6 degrees at 5 degrees of arc, 13.1 at 6, 8.2 at 8, 4.8 at 10, 2.2 at 12, 0.54 at 13.5.
+- Standing sheets (arcs about the point under the close camera, textured by projection from the fitted eye, so that the fitted eye sees the close picture exactly) would close to a deck only at the close camera's angle. From higher up they cover tan(grazing at T) / tan(grazing now) of the band. ESTIMATE, not measured: 12 to 26 percent at 1890, 31 to 53 percent at 1898. So the exchange of the ground under them would still show in the very frames that are red (1882 to 1897).
+- A sheet 0.001 radii high is under a pixel at the hold. Sheets in the surface view too would move frames 1920 to 2099 by parallax (estimate up to 5 px), which I may not do.
+- Judgement: Y is not whole by the due time next to items 3 and 4 and the two laws. The third commit is named with Z and the red with this cause, unless time is left after the proof.
