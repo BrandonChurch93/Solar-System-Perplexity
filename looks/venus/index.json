@@ -1,9 +1,33 @@
 {
  "folder": "venus",
- "pushed": "2026-11-24T19:05:40.563Z",
+ "pushed": "2026-11-24T19:37:26.143Z",
  "head": "8b7994375d9917b14ff91634a36c266dc1d1c35c",
- "note": "dive pop cure in trial: air.haze.heights, slice 1313 to 1323 green (pop 1.17); whole proofs running",
+ "note": "dive pop cured by air.haze.heights 0.4, pattern moved (0.49, 7 over); 3.4 measured worse; mu 0.10 in trial",
  "looks": [
+  {
+   "time": "2026-11-24T19:37:25.507Z",
+   "file": "20261124193725507-note-hazeH34-dive.jpg",
+   "source": "../../../../tmp/v/c/hazeH34-dive.jpg",
+   "kind": "note",
+   "label": "dive 1292 to 1312 with the upper height 3.4 (not kept): thin pale rim from 1300, band from 1308",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T19:37:24.930Z",
+   "file": "20261124193724930-note-dive-changes-B.jpg",
+   "source": "../../../../tmp/v/c/dive-changes-B.jpg",
+   "kind": "note",
+   "label": "dive, upper height 3.4, not kept: pattern 0.54 at 1304, 16 over; the pattern reads wherever this air lies over the far ground in the fast part of the dive",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T19:37:24.334Z",
+   "file": "20261124193724334-note-dive-changes-A.jpg",
+   "source": "../../../../tmp/v/c/dive-changes-A.jpg",
+   "kind": "note",
+   "label": "dive, air.haze.heights upper 0.4: pop cured (1.17 at 1316, none over; 1.31 on the named commit), pattern 0.49 at 1309 + 1/2, 7 over (0.46, 3 over on the named commit): the far ground goes under the air at the limb",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T19:05:39.900Z",
    "file": "20261124190539900-note-hazeH-dive.jpg",
@@ -43,34 +67,6 @@
    "kind": "note",
    "label": "handover sheet dive 1324 to 1339, draft, same tree",
    "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T18:08:34.059Z",
-   "file": "20261124180834059-note-s1530.jpg",
-   "source": "../../../../tmp/v/hx/s1530.jpg",
-   "kind": "note",
-   "label": "handover sheet rise 1530 to 1545, draft, same tree",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T18:08:32.372Z",
-   "file": "20261124180832372-note-s1546.jpg",
-   "source": "../../../../tmp/v/hx/s1546.jpg",
-   "kind": "note",
-   "label": "handover sheet rise 1546 to 1561, draft, on the merge of main 9e15c6a4 with haze mu 0.12 and the new flash law",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T18:01:06.710Z",
-   "file": "20261124180106710-sheet-venus-rise-top.jpg",
-   "source": "out/work/handover/venus-rise-top.png",
-   "kind": "sheet",
-   "label": "venus rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 1539), place picture off, draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1539,
-   "last": 1604,
-   "tier": "draft"
   }
  ]
 }
