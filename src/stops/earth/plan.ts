@@ -89,7 +89,7 @@ export class Plan extends StopPlan {
 
   pace(kind: 'dive' | 'rise', time: number): number {
     const h = 0.25 / config.fps
-    const at = (t: number): Pose => this.route(kind, t)
+    const at = (t: number): Pose => this.eye(kind, t, 'orbit')
     return Math.abs(size(at(time + h)) - size(at(time - h))) / (2 * h * config.fps)
   }
 

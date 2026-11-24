@@ -158,7 +158,7 @@ The place is the approved close image `references/approved/earth-close.jpg` laid
 
 ### Terrain relief and its sky
 
-- `public/assets/earth/<set>/relief-ground.webp`, `public/assets/earth/<set>/relief-towers.webp`, `public/assets/earth/<set>/relief-lift.bin`, `public/assets/earth/<set>/relief-masks.png` and `public/assets/earth/<set>/sky-terrain.webp`: see `assets-src/earth/relief/RECIPE.md`.
+- `public/assets/earth/<set>/relief-ground.webp`, `public/assets/earth/<set>/relief-towers.webp`, `public/assets/earth/<set>/relief-lift.bin`, `public/assets/earth/<set>/relief-body.bin`, `public/assets/earth/<set>/relief-masks.png` and `public/assets/earth/<set>/sky-terrain.webp`: see `assets-src/earth/relief/RECIPE.md`.
 
 ## Checks
 

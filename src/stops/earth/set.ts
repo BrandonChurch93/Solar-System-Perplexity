@@ -15,7 +15,7 @@ import { Ground, type GroundDef } from './relief'
 import reliefJson from './relief.json'
 import * as look from './look'
 import placeJson from './place.json'
-import { centre as placeCentre, fromLocal, placeFrame, radius as placeRadius } from './place'
+import { carry, centre as placeCentre, fromLocal, placeFrame, radius as placeRadius } from './place'
 import { plan } from './plan'
 import skyJson from './sky.json'
 
@@ -100,7 +100,7 @@ export const createSet: SetFactory = async (ctx) => {
     const dive = time >= down.start && time < down.end
     const seg = dive ? down : time >= plan.seg.rise.start && time < plan.seg.rise.end ? plan.seg.rise : null
     if (!seg) return null
-    const height = (dive ? plan.divePose(time, 'orbit') : plan.risePose(time, 'orbit')).position.length() - 1
+    const height = plan.eye(dive ? 'dive' : 'rise', time, 'orbit').position.length() - 1
     const high = smooth((Math.log(Math.max(height, 1e-6)) - skyLow[0]!) / (skyLow[1]! - skyLow[0]!))
     const share = skyWeight(seg, time)
     return [share < 1 ? high / (1 - share) : 0, share > 0 ? (1 - high) / share : 0]
@@ -120,6 +120,7 @@ export const createSet: SetFactory = async (ctx) => {
   const eyeBody = new THREE.Vector3()
   const back = new THREE.Quaternion()
   const sunLocal = new THREE.Vector3()
+  const sunPlace = new THREE.Vector3()
   const airTint = new THREE.Vector3()
   const descent = look.descent
   const lens = defaultPost().vignette * config.raw.handover.place.lens
@@ -147,7 +148,7 @@ export const createSet: SetFactory = async (ctx) => {
         eye.copy(world.position).applyQuaternion(back).negate()
         if (ground.group.parent !== terrain) terrain.add(ground.group)
         ground.group.visible = true
-        ground.update(state.time - terrainMid, gain, shot.post.vignette, shot.post.bloomStrength, view, eye, view.place === true ? lens : 0, null)
+        ground.update(state.time - terrainMid, gain, shot.post.vignette, shot.post.bloomStrength, view, eye, sunPlace.copy(plan.lightDir).applyQuaternion(toPlace.copy(carry(plan, state.time)).invert()), view.place === true ? lens : 0, null)
         return
       }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
@@ -184,7 +185,7 @@ export const createSet: SetFactory = async (ctx) => {
       onGlobe.quaternion.copy(plan.turn(state.time)).multiply(placeFrame).multiply(fromLocal).normalize()
       onGlobe.position.copy(placeCentre).applyQuaternion(onGlobe.quaternion).multiplyScalar(-1 / placeRadius)
       toPlace.copy(onGlobe.quaternion).invert()
-      if (lowLook > 0) ground.update(Math.min(Math.max(state.time, plan.seg.terrain.start), plan.seg.terrain.end) - terrainMid, gain, shot.post.vignette, shot.post.bloomStrength, view, eyePlace.copy(eye).applyQuaternion(toPlace).multiplyScalar(placeRadius).add(placeCentre), 0, lowLook)
+      if (lowLook > 0) ground.update(Math.min(Math.max(state.time, plan.seg.terrain.start), plan.seg.terrain.end) - terrainMid, gain, shot.post.vignette, shot.post.bloomStrength, view, eyePlace.copy(eye).applyQuaternion(toPlace).multiplyScalar(placeRadius).add(placeCentre), sunPlace.copy(plan.lightDir).applyQuaternion(toPlace), 0, lowLook)
       const turned = plan.spin(state.time)
       eyeBody.copy(eye).applyQuaternion(untilt)
       ;(gu.uEyeBody!.value as THREE.Vector3).set(Math.cos(turned) * eyeBody.x - Math.sin(turned) * eyeBody.z, eyeBody.y, Math.sin(turned) * eyeBody.x + Math.cos(turned) * eyeBody.z)
