@@ -24,6 +24,7 @@ export const softSmooth = (t: number, lead: number): number => {
   const s = Math.min(x / lead, 1)
   return x * x * (3 - 2 * x) - 3 * lead * lead * s * s * (1 - s) * (1 - s) * (1 - s)
 }
+export const lookbackLight = (u: number): number => softSmooth(u * 1.5, 0.3)
 export const ramp = (a: number, b: number, t: number): number => clamp01((t - a) / (b - a))
 export const mix = (a: number, b: number, t: number): number => a + (b - a) * t
 

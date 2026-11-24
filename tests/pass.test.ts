@@ -1,4 +1,4 @@
-import { smooth, softSmooth } from '../src/director/rig'
+import { lookbackLight, smooth, softSmooth } from '../src/director/rig'
 import { describe, expect, it } from 'vitest'
 import { passCurve, TRAVEL, travelLook } from '../src/space/travel/path'
 
@@ -48,6 +48,7 @@ describe('softSmooth', () => {
     const h = 1e-3
     expect((softSmooth(2 * h, 0.3) - 2 * softSmooth(h, 0.3)) / (h * h)).toBeLessThan(0.4)
     expect((smooth(2 * h) - 2 * smooth(h)) / (h * h)).toBeGreaterThan(5.9)
+    for (let u = 0.2; u <= 1; u += 0.0131) expect(lookbackLight(u)).toBe(smooth(u * 1.5))
     let last = 0
     for (let x = h; x <= 1; x += h) {
       const v = softSmooth(x, 0.3)
