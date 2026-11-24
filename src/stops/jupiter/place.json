@@ -1,5 +1,5 @@
 {
-  "note": "The place of the dive (cut/HANDOVER.md S1). oval: the centre of the small orange oval in the wake of the great storm, in degrees on the globe's surface with the flow at rest as frozen for the dive (measured by assets-src/jupiter/plates/place.py on the globe's own imagery). vortex: the centre of the close image's funnel in chart units (measured on the laid back image). The chart of the close view is laid on the globe so that the vortex sits on the oval and the baked Sun of the close image (deck.json light.azimuthDeg) points to the globe's Sun at the handover. freeze: the globe's band flow and the storm's swirl ease to rest from afterDiveStart seconds into the dive over easeSeconds, and the spin stops at the handover, so the place is a rigid ground while it is near. solved is written by the tool: local is the frozen flow time in seconds, toSurface the rotation from the close view's frame to the globe's surface frame (the frame of the lookups, before the spin), n e u the chart's origin and axes there, twinHeight the close camera's height in radii. approach: how the close view comes to the surface view and leaves it. At the first frame of the surface view the camera is the surface view's own camera with its own speed; before it (dive) and after its last frame (rise) the camera is that flight carried on, plus height units up and back units behind along the heading, both times the share of seconds outside the surface view raised to power, so speed and turn rate have no step. Over track seconds the camera takes up a look at the vortex that keeps it where it stands in the frame at that first or last frame. handover: the options of the engine's handover per kind (assets-src/shared/HANDOVER-NOTES.md). freeze.releaseAfterRise: seconds after the handover of the rise from which the frozen flow time is led back to the running one, reached at the end of the rise. plates.fadeUnitsPerPixel: the globe shows the plates of the place (the same four the surface view reads, same chart, same weights) instead of its own imagery where a pixel covers less than the second number of units on the ground, not at all over the first. exposure.ratio: per channel, the light of the surface view's plates over the globe's light on the same plates at the handover (measured on stills of both sides); the globe is multiplied by it to the power of a share that runs smoothly from 0 at the start of the dive to 1 at the first frame of the surface view, the close side by it to the power of the share minus 1, and the same back in the rise, so the exposure is one function of time with no step at the handover.",
+  "note": "The place of the dive (cut/HANDOVER.md S1). oval: the centre of the small orange oval in the wake of the great storm, in degrees on the globe's surface with the flow at rest as frozen for the dive (measured by assets-src/jupiter/plates/place.py on the globe's own imagery). vortex: the centre of the close image's funnel in chart units (measured on the laid back image). The chart of the close view is laid on the globe so that the vortex sits on the oval and the baked Sun of the close image (deck.json light.azimuthDeg) points to the globe's Sun at the handover. freeze: the globe's band flow and the storm's swirl ease to rest from afterDiveStart seconds into the dive over easeSeconds, and the spin stops at the handover, so the place is a rigid ground while it is near. solved is written by the tool: local is the frozen flow time in seconds, toSurface the rotation from the close view's frame to the globe's surface frame (the frame of the lookups, before the spin), n e u the chart's origin and axes there, twinHeight the close camera's height in radii. handover: the options of the engine's handover per kind and the law of the engine's one move (assets-src/shared/HANDOVER-NOTES.md). freeze.releaseAfterRise: seconds after the handover of the rise from which the frozen flow time is led back to the running one, reached at the end of the rise. exposure.ratio: per channel, the light of the surface view's plates over the globe's light on the same plates at the handover (measured on stills of both sides); the globe is multiplied by it to the power of a share read from the camera's height (scene.grade), the deck's own program by it to the power of the share minus 1, in the dive and in the rise alike, so the exposure is one function of the height with no step at the change of view.",
   "oval": {
     "lon": -26.628,
     "lat": -5.783
@@ -14,19 +14,61 @@
     "releaseAfterRise": 0.4
   },
   "handover": {
-    "limbNote": "place.limbReachDeg on both kinds: the globe draws a wide warm glow over its limb, the surface view a clean edge with a thin blue line. With the reach the engine carries the picture's horizon and sky onto the camera's limb with the weight of the place picture, so the limb of the surface view comes in over the frames of the place window and not in one frame (seen on 3021 to 3023 and 3271 to 3273 at 4 times).",
     "dive": {
-      "at": 0.6,
-      "place": {
-        "limbReachDeg": 8
-      }
+      "at": 0.99,
+      "placeFrames": 0,
+      "skyFrames": 0,
+      "picture": false,
+      "pace": {
+        "rise": 0.45,
+        "fall": 0.45,
+        "corner": 0.05
+      },
+      "turn": {
+        "rise": 0.45,
+        "fall": 0.45,
+        "corner": 0.05
+      },
+      "liftPower": 0.625
     },
     "rise": {
-      "at": 0.4,
-      "place": {
-        "limbReachDeg": 8
-      }
-    }
+      "at": 0.001,
+      "placeFrames": 0,
+      "skyFrames": 0,
+      "picture": false,
+      "pace": {
+        "rise": 0.475,
+        "fall": 0.475,
+        "corner": 0.05,
+        "corners": {
+          "fall": [
+            0.4,
+            0.05
+          ],
+          "rise": [
+            0.05,
+            0.55
+          ]
+        }
+      },
+      "turn": {
+        "rise": 0.45,
+        "fall": 0.55,
+        "corner": 0.35,
+        "corners": {
+          "fall": [
+            0.05,
+            0.05
+          ],
+          "rise": [
+            0.3,
+            0.05
+          ]
+        }
+      },
+      "liftPower": 1.375
+    },
+    "note": "The change of view sits at the seams of the surface view (frames 3059 and 3240), so the whole dive and the whole rise are drawn by the globe's group, which holds the deck's own program (scene). No place picture, no sky frames, no limb reach: nothing of the change of view runs on the film's clock. The camera of both moves is the engine's one move (plan E; jupiter is off handover.ownPath in config/showcase.json): one glide from the hold, or to the pose after the rise, to the surface view's own seam pose carried at its velocity. pace, turn and liftPower are that move's law for this stop (StopPlan.eyeLaw): the bell of the height, the bell of the eye's direction and the power of the lift, found for the dive with npx tsx tools/law.ts --stop jupiter --kind dive, and for the rise with npx tsx assets-src/jupiter/deck/law.ts --kind rise --pop 1.06 --tries 3000 --seed 11, the same search held against the judge of npm run smooth itself at whole frames and at the capture rate and against a model of the stars' pop in the last frames of the move (the way of the sky on screen from one capture frame to the next over the median of its neighbours), so the rise ends without a jolt of the sky. Both are inside the limits of the path judge: the largest step of the dive is 0.065 and of the rise 0.078 of the mean a film frame, against 0.08."
   },
   "solved": {
     "local": 2.4095937488607793,
@@ -70,28 +112,6 @@
     "radiusUnits": 331.94631945631824,
     "twinHeight": 0.003012535284734774
   },
-  "approach": {
-    "dive": {
-      "seconds": 1.2,
-      "height": 12.5,
-      "back": 8.2,
-      "power": 2.5,
-      "track": 0.4
-    },
-    "rise": {
-      "seconds": 1.0,
-      "height": 13.0,
-      "back": 7.3,
-      "power": 2.5,
-      "track": 0.4
-    }
-  },
-  "plates": {
-    "fadeUnitsPerPixel": [
-      0.5,
-      0.2
-    ]
-  },
   "exposure": {
     "ratio": {
       "dive": [
@@ -113,211 +133,60 @@
       0.38
     ]
   },
-  "pace": {
-    "note": "The pace of the far part of the dive and of the rise. The engine flies it on one schedule; on that schedule the lit face fills the frame within a dozen frames of the dive, and in the rise the night side swings in as fast, so the mean level of the body stepped by up to 6.7 and 10.9 a frame (the handover report allows 6). The camera keeps the engine's path and only its timing changes: each knot is [film seconds after the segment starts, seconds on the engine's path], joined by a monotone cubic with a slope of 1 at both ends, and outside the knots the two are equal, so the hold, the frames at the handover and the frame after the rise keep their camera. Made by assets-src/jupiter/deck/pace.py from stills of every frame (dive: 3.8 levels a frame, at most 0.11 of the logarithm of the height a frame; rise: 4.5 and 0.185; the lag averaged over 2 frames each way). The knots of the rise from 2.0417 s on (film frames 3301 to 3311) sit at each frame's sample time and were then set from stills of the paced path (pace.py --set), which showed a step of 5.99 into frame 3307; the catching up moved to frames 3308 to 3312, where the level is nearly flat.",
-    "dive": [
-      [
-        0.1333,
-        0.1333
-      ],
-      [
-        0.2,
-        0.2
-      ],
-      [
-        0.2667,
-        0.2626
-      ],
-      [
-        0.3333,
-        0.3132
-      ],
-      [
-        0.4,
-        0.3578
-      ],
-      [
-        0.4667,
-        0.4022
-      ],
-      [
-        0.5333,
-        0.4503
-      ],
-      [
-        0.6,
-        0.5065
-      ],
-      [
-        0.6667,
-        0.575
-      ],
-      [
-        0.7333,
-        0.6501
-      ],
-      [
-        0.8,
-        0.7257
-      ],
-      [
-        0.8667,
-        0.8013
-      ],
-      [
-        0.9333,
-        0.8768
-      ],
-      [
-        1.0,
-        0.9524
-      ],
-      [
-        1.0667,
-        1.0278
-      ],
-      [
-        1.1333,
-        1.1031
-      ],
-      [
-        1.2,
-        1.1781
-      ],
-      [
-        1.2667,
-        1.2526
-      ],
-      [
-        1.3333,
-        1.3269
-      ],
-      [
-        1.4,
-        1.3995
-      ],
-      [
-        1.4917,
-        1.4917
-      ]
+  "scene": {
+    "note": "One scene through the change of view (second review note, plan F). Every weight here is read from the height of the camera over the sphere in radii and runs smoothly in the logarithm of the height between its two numbers; nothing is read from the film's clock. ground: the close ground (the deck's plates on the deck's own relief, found by the same march) drawn by the globe's program in place of its own imagery, lit as the globe is lit; all of it at and below the first height, none at and above the second. deck: the deck's own program drawn over the globe; all of it at and below the first height, none of it at and above the second. limb: the same for the deck's own horizon glow, and the globe's shells give way by the same weight. air: the air of the approved view; all of it at and below the first height (which lies above every height of the surface view, so its frames keep their look), none at and above the second, where the ground shows as the globe shows it. grade: the share of the level ratio between the two programs that the globe takes; all at and below the first height, none at and above the second, which lies under the hold's lowest height, so the hold keeps its bytes. It runs evenly in the logarithm of the height, so no frame takes more of the change of level than its share of the fall, with its two ends rounded over gradeRound of the span. sky: the share of the surface view's sky. skyTurn: the turn of the sky and the carry of the stars toward the surface view's. halo: the glow of the globe's shells beyond the limb keeps the angle on screen it has at this height. At and above it the shells are drawn as the hold draws them; below it their scale heights shrink by the distance from the camera to the limb over that distance at this height, and their depth by the square root of the same, which keeps the level at the limb. Without it the widest shell, a tenth of a radius high, spread over the sky as a veil once the camera was near or inside it (frames 3279 to 3286 of the rise). The height lies under the hold's lowest height, so the hold keeps its bytes.",
+    "ground": [
+      0.52,
+      1.3
     ],
-    "rise": [
-      [
-        1.0167,
-        1.0167
+    "deck": [
+      0.03,
+      0.09
+    ],
+    "limb": [
+      0.03,
+      0.09
+    ],
+    "air": [
+      0.0041,
+      0.0416
+    ],
+    "grade": [
+      0.0041,
+      3.2
+    ],
+    "gradeRound": 0.15,
+    "sky": [
+      0.0416,
+      0.3
+    ],
+    "skyTurn": [
+      0.0416,
+      3.2
+    ],
+    "halo": 3.2,
+    "limbTable": {
+      "note": "The hold's limb table (limb) lifts the light of the globe toward its limb. From near that reads as a white band, and where the dark sky enters the frame beside it the level of the picture steps. In this stop's own dive and rise the table's share falls to least while the height rises through from, and comes back while it rises through to (the dive and the rise have their own heights; the judged frames 2997 and 3296 lie at and above the second height of their move and keep the hold's limb). All heights in radii, weights smooth in the logarithm of the height. dark: where the table is off the body is darkened toward its limb as a ball of cloud is, by depth times (1 - cosine / edge) to the power, the cosine taken between the ray and the ground's normal and the share of the table's absence as the weight.",
+      "least": 0,
+      "from": [
+        0.09,
+        0.3
       ],
-      [
-        1.1,
-        1.1273
-      ],
-      [
-        1.1667,
-        1.2594
-      ],
-      [
-        1.2333,
-        1.3703
-      ],
-      [
-        1.3,
-        1.467
-      ],
-      [
-        1.3667,
-        1.5632
-      ],
-      [
-        1.4333,
-        1.6609
-      ],
-      [
-        1.5,
-        1.7592
-      ],
-      [
-        1.5667,
-        1.8538
-      ],
-      [
-        1.6333,
-        1.924
-      ],
-      [
-        1.7,
-        1.9745
-      ],
-      [
-        1.7667,
-        2.018
-      ],
-      [
-        1.8333,
-        2.0567
-      ],
-      [
-        1.9,
-        2.0912
-      ],
-      [
-        1.9667,
-        2.1226
-      ],
-      [
-        2.0333,
-        2.1524
-      ],
-      [
-        2.0417,
-        2.1561
-      ],
-      [
-        2.075,
-        2.1708
-      ],
-      [
-        2.1083,
-        2.1848
-      ],
-      [
-        2.1417,
-        2.1996
-      ],
-      [
-        2.175,
-        2.2163
-      ],
-      [
-        2.2083,
-        2.2329
-      ],
-      [
-        2.2417,
-        2.2503
-      ],
-      [
-        2.275,
-        2.2723
-      ],
-      [
-        2.3083,
-        2.3003
-      ],
-      [
-        2.3417,
-        2.335
-      ],
-      [
-        2.375,
-        2.3717
-      ],
-      [
-        2.4083,
-        2.4083
-      ]
-    ]
-  },
-  "sky": {
-    "note": "The sky in the rise. The engine turns the sky from this stop's surface aim to the next stop's orbit aim over the whole rise, fastest in the middle, where on its own schedule the planet still fills the frame. With the pace the whole disc is in frame from frame 3290, so the turn would run in full view. turnFrames: the turn is finished this many frames after the handover, while the planet still fills most of the frame; 0 keeps the engine's schedule at the paced time. Seen at the draft tier, every frame: with 0 the Milky Way flashes along the right edge in 3291 to 3294; with 8 it stands in the top right corner from 3275 to 3280 and the surface sky is turned out of view in three frames; with 17 it crosses the top right corner in 3281 to 3283 and the sky from 3284 on moves with the camera only.",
-    "turnFrames": 17
+      "to": {
+        "dive": [
+          0.5,
+          1.15
+        ],
+        "rise": [
+          0.5,
+          2.3
+        ]
+      },
+      "dark": {
+        "depth": 0.75,
+        "edge": 0.7,
+        "power": 1.0
+      }
+    }
   }
 }
