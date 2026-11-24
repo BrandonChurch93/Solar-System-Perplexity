@@ -1,64 +1,64 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T03:11:52.320Z",
- "head": "6426068078fe4714b8a75ff6ba31a6c7eb46f10e",
- "note": "parity of the ringlets at 4K cured in the kept set by a footprint in shares of the frame; every grain a square; hunting the dashed line outside the rim (the arc term)",
+ "pushed": "2026-11-24T03:45:22.836Z",
+ "head": "7825f775911cce29f41c787e753ed76dc3f9d4c8",
+ "note": "merged main 6884e80; found why 3720 loses fine detail (shutter blur across the ringlets) and what the pop at 3815 is; parity term of the near look in work",
  "looks": [
+  {
+   "time": "2026-11-24T03:45:22.212Z",
+   "file": "20261124034522212-note-pop3815_crops.jpg",
+   "source": "../../../../tmp/v/r29/pop3815_crops.png",
+   "kind": "note",
+   "label": "lower left at 3814 to 3817: the ringlets soften as the lens speeds up"
+  },
+  {
+   "time": "2026-11-24T03:45:21.569Z",
+   "file": "20261124034521569-note-pop3815_sheet.jpg",
+   "source": "../../../../tmp/v/r29/pop3815_sheet.png",
+   "kind": "note",
+   "label": "frame 3815 and what is left of the pairs 3814, 3815, 3816 after the motion is taken out"
+  },
+  {
+   "time": "2026-11-24T03:45:20.958Z",
+   "file": "20261124034520958-note-rim_res_3895.jpg",
+   "source": "../../../../tmp/v/r29/rim_res_3895.png",
+   "kind": "note",
+   "label": "what is left of the pair 3895 to 3896 at the rim"
+  },
+  {
+   "time": "2026-11-24T03:45:20.330Z",
+   "file": "20261124034520330-note-g17_left_draft_3720.jpg",
+   "source": "../../../../tmp/v/r29/g17_left_draft_3720.png",
+   "kind": "note",
+   "label": "3720 lower left, approved beside the draft: soft bands where the approved has hairlines"
+  },
+  {
+   "time": "2026-11-24T03:45:19.765Z",
+   "file": "20261124034519765-note-g17_left_3720.jpg",
+   "source": "../../../../tmp/v/r29/g17_left_3720.png",
+   "kind": "note",
+   "label": "3720 lower left, approved beside the final still"
+  },
+  {
+   "time": "2026-11-24T03:45:19.118Z",
+   "file": "20261124034519118-note-g17_tiles_3720_small.jpg",
+   "source": "../../../../tmp/v/r29/g17_tiles_3720_small.png",
+   "kind": "note",
+   "label": "G17 at 3720 by tiles, film against approved"
+  },
+  {
+   "time": "2026-11-24T03:45:18.203Z",
+   "file": "20261124034518203-note-seam_crops.jpg",
+   "source": "../../../../tmp/v/r29/seam_crops.png",
+   "kind": "note",
+   "label": "dashed line outside the rim at 3563 and 3465, before and after the cure"
+  },
   {
    "time": "2026-11-24T03:11:51.657Z",
    "file": "20261124031151657-note-par_q_3800_sheet.jpg",
    "source": "../../../../tmp/v/r29/par_q_3800_sheet.png",
    "kind": "note",
    "label": "3800 parity with every grain a square: master, uhd scaled down, difference times 8"
-  },
-  {
-   "time": "2026-11-24T03:11:51.071Z",
-   "file": "20261124031151071-note-dots_experiments.jpg",
-   "source": "../../../../tmp/v/r29/dots_experiments.png",
-   "kind": "note",
-   "label": "3563 same crop: as is, arc term off (dashes gone), sparkle off, polar map off"
-  },
-  {
-   "time": "2026-11-24T03:11:50.529Z",
-   "file": "20261124031150529-note-dots_3563.jpg",
-   "source": "../../../../tmp/v/r29/dots_3563.png",
-   "kind": "note",
-   "label": "3563 dashed line of tan dashes outside the faint F ring line (kept set, both sizes)"
-  },
-  {
-   "time": "2026-11-24T03:11:49.973Z",
-   "file": "20261124031149973-note-par_f_3563_sheet.jpg",
-   "source": "../../../../tmp/v/r29/par_f_3563_sheet.png",
-   "kind": "note",
-   "label": "3563 parity after the cure: master, uhd scaled down, difference times 8"
-  },
-  {
-   "time": "2026-11-24T03:11:49.395Z",
-   "file": "20261124031149395-note-parity_3563_before_after.jpg",
-   "source": "../../../../tmp/v/r29/parity_3563_before_after.png",
-   "kind": "note",
-   "label": "3563 lower left: master, uhd before, uhd after the footprint cure of the kept set (after matches master)"
-  },
-  {
-   "time": "2026-11-24T02:47:45.190Z",
-   "file": "20261124024745190-note-outside_diff.jpg",
-   "source": "../../../../tmp/v/r28/outside_diff.png",
-   "kind": "note",
-   "label": "ruling a and sky cure: a359a4b against now at 3360, 3380, 3890, 3900 (difference times 16)"
-  },
-  {
-   "time": "2026-11-24T02:47:44.527Z",
-   "file": "20261124024744527-note-globe_3716_3725.jpg",
-   "source": "../../../../tmp/v/r28/globe_3716_3725.png",
-   "kind": "note",
-   "label": "ruling a: globe at full size 3716, 3720, 3725 draft and the difference times 8"
-  },
-  {
-   "time": "2026-11-24T02:29:45.403Z",
-   "file": "20261124022945403-note-skydiff_3465.jpg",
-   "source": "../../../../tmp/v/r28/skydiff_3465.png",
-   "kind": "note",
-   "label": "hold 3465 at final, sky picture without the grain of its glow input: kept still, new still (both x3), difference x12; body equal but for 1 level on 0.5 percent"
   }
  ]
 }
