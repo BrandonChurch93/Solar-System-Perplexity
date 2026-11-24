@@ -1,75 +1,90 @@
 {
  "folder": "venus",
- "pushed": "2026-11-24T20:23:59.008Z",
- "head": "8b7994375d9917b14ff91634a36c266dc1d1c35c",
- "note": "whole rise on the state in work: pop at the seam as before, pattern 19 over (20), the cover 1546 to 1547 a little worse, 1548 under; handover and finals in work",
+ "pushed": "2026-11-24T20:52:49.843Z",
+ "head": "43cbe72e6fb5a134d6f8e122bc78809ab5716ff7",
+ "note": "state C (air by its own heights, dive pop cured to 1.18): the three rise pairs of MAIL 749; merge of batch tip 1924a104 done, pull back in work",
  "looks": [
   {
-   "time": "2026-11-24T20:23:57.740Z",
-   "file": "20261124202357740-note-rise-pops-Cw.jpg",
-   "source": "../../../../tmp/v/c/rise-pops-Cw.jpg",
+   "time": "2026-11-24T20:52:49.202Z",
+   "file": "20261124205249202-note-pair-1575-1583.jpg",
+   "source": "../../../../tmp/v/c/pair-1575-1583.jpg",
    "kind": "note",
-   "label": "whole rise, same state: the four largest pops; 1.28 at 1610 + 1/2 is the rest at the seam (travel's frames); 1.10 at 1553 (1.196 on the named commit)",
+   "label": "rise pair-1575-1583, state C draft: the pairs MAIL 749 asks about",
    "stop": "venus"
   },
   {
-   "time": "2026-11-24T20:23:56.554Z",
-   "file": "20261124202356554-note-rise-changes-Cw.jpg",
-   "source": "../../../../tmp/v/c/rise-changes-Cw.jpg",
+   "time": "2026-11-24T20:52:48.581Z",
+   "file": "20261124205248581-note-pair-1547-1555.jpg",
+   "source": "../../../../tmp/v/c/pair-1547-1555.jpg",
    "kind": "note",
-   "label": "whole rise, mu 0.10 and the air's heights 0.035 to 0.4: changes; pattern 19 over (0.62 at 1547 + 1/2, 0.65 at 1575, 0.76 on travel's frames); largest change in place 73.9 at 1551 (88.0 on the named commit)",
+   "label": "rise pair-1547-1555, state C draft: the pairs MAIL 749 asks about",
    "stop": "venus"
   },
   {
-   "time": "2026-11-24T20:23:56.293Z",
-   "file": "20261124202356293-compare-venus-dive-sides.jpg",
-   "source": "out/work/handover/venus-dive-sides.png",
-   "kind": "compare",
-   "label": "venus dive, both sides at T (frame 1343) and their difference times 8",
+   "time": "2026-11-24T20:52:47.974Z",
+   "file": "20261124205247974-note-pair-1542-1550.jpg",
+   "source": "../../../../tmp/v/c/pair-1542-1550.jpg",
+   "kind": "note",
+   "label": "rise pair-1542-1550, state C draft: the pairs MAIL 749 asks about",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T20:38:52.562Z",
+   "file": "20261124203852562-sheet-venus-rise-top.jpg",
+   "source": "out/work/handover/venus-rise-top.png",
+   "kind": "sheet",
+   "label": "venus rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 1539), place picture off, draft tier",
    "stop": "venus",
-   "segment": "venus.dive",
-   "frame": 1343,
+   "segment": "venus.rise",
+   "first": 1539,
+   "last": 1604,
    "tier": "draft"
   },
   {
-   "time": "2026-11-24T20:07:44.040Z",
-   "file": "20261124200744040-note-dive-changes-Cw.jpg",
-   "source": "../../../../tmp/v/c/dive-changes-Cw.jpg",
-   "kind": "note",
-   "label": "whole dive, same state: changes; pattern 0.47 at 1311, one frame over 0.45 (the far ground going under the air at the limb); largest change in place 75.6 (110.2 on the named commit)",
-   "stop": "venus"
+   "time": "2026-11-24T20:37:56.964Z",
+   "file": "20261124203756964-sheet-venus-rise-draft-after.jpg",
+   "source": "out/work/handover/venus-rise-draft-after.png",
+   "kind": "sheet",
+   "label": "venus rise, every frame 1540 to 1551 (after T, frame 1539), draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "first": 1540,
+   "last": 1551,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-24T20:07:43.427Z",
-   "file": "20261124200743427-note-dive-pops-Cw.jpg",
-   "source": "../../../../tmp/v/c/dive-pops-Cw.jpg",
-   "kind": "note",
-   "label": "whole dive, mu 0.10 and the air's heights 0.035 to 0.4: the four largest pops; 1.18 at the most, none over 1.2 (1.31, 9 over on the named commit)",
-   "stop": "venus"
+   "time": "2026-11-24T20:37:55.182Z",
+   "file": "20261124203755182-sheet-venus-rise-draft-before.jpg",
+   "source": "out/work/handover/venus-rise-draft-before.png",
+   "kind": "sheet",
+   "label": "venus rise, every frame 1530 to 1538 (before T, frame 1539), draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "first": 1530,
+   "last": 1538,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-24T19:49:04.239Z",
-   "file": "20261124194904239-note-dive-changes-C.jpg",
-   "source": "../../../../tmp/v/c/dive-changes-C.jpg",
-   "kind": "note",
-   "label": "dive, mu 0.10 and heights to 0.4, slice 1300 to 1323: changes panel; pop 1.18 (limit 1.2), pattern 0.47 at 1311 (limit 0.45, 1 frame over)",
-   "stop": "venus"
+   "time": "2026-11-24T20:37:53.706Z",
+   "file": "20261124203753706-sheet-venus-rise-draft-across.jpg",
+   "source": "out/work/handover/venus-rise-draft-across.png",
+   "kind": "sheet",
+   "label": "venus rise, every frame 1533 to 1544 (across T, frame 1539), draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "first": 1533,
+   "last": 1544,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-24T19:49:03.620Z",
-   "file": "20261124194903620-note-hz3-1550.jpg",
-   "source": "../../../../tmp/v/c/hz3-1550.jpg",
-   "kind": "note",
-   "label": "1550 rise, the second rim: top mu 0.06, middle mu 0.12 (named commit), bottom mu 0.10 with the air's own heights 0.035 to 0.4 (in work)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T19:37:25.507Z",
-   "file": "20261124193725507-note-hazeH34-dive.jpg",
-   "source": "../../../../tmp/v/c/hazeH34-dive.jpg",
-   "kind": "note",
-   "label": "dive 1292 to 1312 with the upper height 3.4 (not kept): thin pale rim from 1300, band from 1308",
-   "stop": "venus"
+   "time": "2026-11-24T20:37:51.839Z",
+   "file": "20261124203751839-compare-venus-rise-step-in-place.jpg",
+   "source": "out/work/handover/venus-rise-step-in-place.png",
+   "kind": "compare",
+   "label": "venus rise, the largest step of the level in place (4.27): frame 1572, frame 1573, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "frame": 1573
   }
  ]
 }
