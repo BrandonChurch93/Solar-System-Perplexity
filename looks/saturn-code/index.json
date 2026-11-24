@@ -1,9 +1,37 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T06:14:40.081Z",
- "head": "3f7ef2815f0708731c2b54c53c08b2fe9670f631",
- "note": "dive pictures red on pattern: cause looked for with the judge's own code and body mask; trial of the sky look",
+ "pushed": "2026-11-24T06:30:31.386Z",
+ "head": "589fd9aa521bb3644012e939b9a125a2242bf6ef",
+ "note": "main f6ce51a merged with the sky look as 589fd9a; path green with the eye line; T sheet; pictures and parity running",
  "looks": [
+  {
+   "time": "2026-11-24T06:30:30.576Z",
+   "file": "20261124063030576-note-dive_sky_pairs.jpg",
+   "source": "../../../../tmp/v/r35/dive_sky_pairs.png",
+   "kind": "note",
+   "label": "dive 3596 to 3632: head before against the trial with the engine's new sky and the look (stars 8): the sky dims and evens by height, no swell"
+  },
+  {
+   "time": "2026-11-24T06:30:29.861Z",
+   "file": "20261124063029861-note-sky3720_four.jpg",
+   "source": "../../../../tmp/v/r35/sky3720_four.png",
+   "kind": "note",
+   "label": "sky of 3720 (0 to 1000 by 0 to 300): approved, head before, look stars 8 cap 0.5, look stars 5.5 cap 0.9 (taken)"
+  },
+  {
+   "time": "2026-11-24T06:30:29.115Z",
+   "file": "20261124063029115-note-t_crops.jpg",
+   "source": "../../../../tmp/v/r36/t_crops.png",
+   "kind": "note",
+   "label": "589fd9a: 3850 to 3853 at full size, the left half under the sky, across T 3852"
+  },
+  {
+   "time": "2026-11-24T06:30:28.125Z",
+   "file": "20261124063028125-note-tsheet_sheet.jpg",
+   "source": "../../../../tmp/v/r36/tsheet_sheet.png",
+   "kind": "note",
+   "label": "589fd9a (main f6ce51a merged, the sky look named): every frame 3842 to 3856 at draft, the change of view T is 3852: no border of the set, no far edge of the plane, no jump at T (frame to frame mean difference 14.27, 14.44, 14.54, 14.69 across it)"
+  },
   {
    "time": "2026-11-24T06:14:39.483Z",
    "file": "20261124061439483-note-limb_specks.jpg",
@@ -31,35 +59,6 @@
    "source": "../../../../tmp/v/r34/patdet_3561.png",
    "kind": "note",
    "label": "dive 3561 to 3569 at the pole, the judge's own steps: 3561, 3569 carried back (the limb is warped by the flow), detail of each, pattern change, contrast of each"
-  },
-  {
-   "time": "2026-11-24T06:14:37.157Z",
-   "file": "20261124061437157-note-pm2_3561.jpg",
-   "source": "../../../../tmp/v/r34/pm2_3561.png",
-   "kind": "note",
-   "label": "dive 3561: the frame, the judge's pattern change to 3569 on the body (red over 0.45), 3561 grey, 3569 carried back: the red is at the north pole under the top limb"
-  },
-  {
-   "time": "2026-11-24T06:00:31.303Z",
-   "file": "20261124060031303-note-patmap_3808.jpg",
-   "source": "../../../../tmp/v/r34/patmap_3808.png",
-   "kind": "note",
-   "label": "the judge's pattern change 3808 to 3816 laid over 3808 (4 times brighter, crop 1120,300 to 1920,900): the red is at the right frame edge on the night limb, where the far ring's lit piece comes in from 3806 + 1/2"
-  },
-  {
-   "time": "2026-11-24T06:00:30.278Z",
-   "file": "20261124060030278-note-patmap_3859.jpg",
-   "source": "../../../../tmp/v/r34/patmap_3859.png",
-   "kind": "note",
-   "label": "the judge's pattern change 3859 to 3867 laid over 3859 (4 times brighter, crop 900,560 to 1700,1080; red over 0.45, yellow over 0.3, dark not judged): the red on the body is the star cloud seen through the thin inner ring at the bottom frame edge, where the near lit ring comes in from 3863; the same cloud higher up is not flagged"
-  },
-  {
-   "time": "2026-11-24T05:49:13.195Z",
-   "file": "20261124054913195-note-saturn-rise-changes.jpg",
-   "source": "../../../../tmp/v/r34/saturn-rise-changes.png",
-   "kind": "note",
-   "label": "smooth pictures rise on e3df591: the changes picture (pattern red at 3808 right frame edge, 3859 lower right)",
-   "stop": "saturn"
   }
  ]
 }
