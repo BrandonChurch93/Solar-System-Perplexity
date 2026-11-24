@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T18:54:56.863Z",
+ "pushed": "2026-11-24T19:15:07.642Z",
  "head": "befb5f47996cb9ff4b6ffb6df289ed9cc2b1fe80",
- "note": "961: no pop with the cut carried by the globe (4951 pixels by 1 code); open ground beside the set mapped, a whole globe stays under the near field",
+ "note": "19:15 structure D (two draws of the globe, cut over the set, whole under the near field): 961 far weight 0 against 0.0001 differs by 1 code at most; rise 960 to 998 rendered, dive rendering, measure next",
  "looks": [
+  {
+   "time": "2026-11-24T19:15:06.456Z",
+   "file": "20261124191506456-note-e15-b.jpg",
+   "source": "../../../../tmp/m/e15-b.jpg",
+   "kind": "note",
+   "label": "structure D rise 980 to 998, every frame, scratch frames without the far Sun",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T19:15:05.504Z",
+   "file": "20261124191505504-note-e15-a.jpg",
+   "source": "../../../../tmp/m/e15-a.jpg",
+   "kind": "note",
+   "label": "structure D rise 960 to 979, every frame, scratch frames without the far Sun (globe over the set while the far weight is under 1, whole globe kept under the near field)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T18:54:56.064Z",
    "file": "20261124185456064-note-gap2-970-976-762.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/m/s976-far.jpg",
    "kind": "note",
    "label": "s976: 976 set alone against shell; 980 and 990 from above with the border off: the set's far ground cannot be the globe's ground",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T17:37:50.780Z",
-   "file": "20261124173750780-note-m713b.jpg",
-   "source": "../../../../tmp/m/m713b.jpg",
-   "kind": "note",
-   "label": "MAIL 713: 615 at 1594,810 (top) and 1696,535 (bottom): frame with far Sun, frame with far Sun off (scratch), sky card at gain 4. The orange mark under the loop is the card's remnant (MAIL 692)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T17:22:10.954Z",
-   "file": "20261124172210954-note-e14-760-780.jpg",
-   "source": "../../../../tmp/m/e14-760-780.jpg",
-   "kind": "note",
-   "label": "e14: dive 760 to 780 with the new shown law, measure 0.25 at most",
    "stop": "mercury"
   }
  ]
