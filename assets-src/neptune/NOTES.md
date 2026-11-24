@@ -5234,3 +5234,227 @@ All numbers below: MY proxies and my own pixel counts at preview draft, not the 
    measured 12:30 to 12:56, not cured); the sheet of the last 24 frames of the dive against the named b8a38cbe; the 4860 pair
    that names what moved in the far field (eighths of the frame from the top, now against named, both in order: mean 0.27,
    15.04, 20.51, 7.59, 1.56, 0.03, 0.01, 0.00; largest 5, 202, 195, 167, 31, 5, 1, 1: the lower half is the same picture).
+
+## 17:15 to 17:50 UTC: a trial for the white specks (not kept), what moved 4605 by its bytes at the merge, a mail of the handover engineer
+
+MAIL from /root/handover_engineer (read 17:49 UTC, low priority, no answer asked), word for word:
+
+"From handover_engineer, for your information, no answer needed, nothing asked of you. Since main d4e9ad74 the handover report prints a second reading of the body's step beside the present one: the change on the ground both frames of a pair show, laid over by the camera's pose. The verdict is still from the mean of the body until /root decides; the table of the stops went to /root at 17:46 UTC.
+MEASURED on Neptune as on main 2bc36ce6 (your folders are unchanged since), drafts at 1920 x 1080, limits 6 (level) and 8 (colour), mean of the body | in place:
+- Dive: 1.60 into 4709, colour 2.42 into 4714 | 2.02 into 4708, colour 3.45 into 4708. Pass both ways.
+- Rise: 2.35 into 4969, colour 2.89 into 4969 | 3.83 into 5001, colour 6.64 into 5001. Pass both ways, but in place the colour has 1.36 of room, the least of all stops I read. Into 4998 to 5003 (heights 0.91 to 1.49 radii) the ground both frames show gets lighter by 3.1 to 3.8 a frame and bluer by 5.8 to 6.6 a frame; the mean of the body reads +0.6 to +1.7 there because each frame opens on 16 percent of new, darker ground. On the sheet attached (4994 to 5006) the dark, hard ground of the place turns into the lighter even blue of the globe in about ten frames.
+Attached: that sheet, and the tool's step picture into 5001 (frame before, frame, new ground in magenta, change in place times 8)."
+
+(The two attachments are kept at out/work/nep/mail/, not in git.)
+
+WHAT IT MEANS FOR ME. The numbers are of main 2bc36ce6, my third commit: before the fix of the exchange (b8a38cbe), before
+the move of the place, before the law from 2.0 radii and before the grade of the fall. On that state the place went out by
+0.9 radii and the globe took over in about ten frames. The state of this branch changes the tones between 1.9 and 0.25
+radii by the grade of the fall, which in the rise is 4985 to 5006: the same frames. So the step in place of the rise must
+be measured on the present state before I name it (npm run handover -- --stop neptune --kind rise --only frames, the second
+reading is in the tool since main d4e9ad74, which this branch holds). Owed, next after the tests.
+
+1. THE TRIAL FOR THE WHITE SPECKS OF THE DIM SIDE (point 12 of the last section, "what would cure them in kind, not tried"):
+   tried now, measured, NOT KEPT. The law: the cloud of the map keeps a share of itself by the cosine of the Sun at its
+   place (none at 0.0, all at 0.3) and by how far the grade of the fall has come (none of the law at the hold), in the
+   globe's shader and in the far look of the scene alike (one function in the grade's text).
+   CONTROL first (the law with a range that takes nothing, cosine -1.0 to -0.9): six frames, each the bytes of the tree
+   without the law (4605, 4707, 4720, 4860, 4988, 4996). So the law itself is neutral.
+   TRIAL (0.0 to 0.3), ten frames, preview draft, 104 s: 4605 and 4860 keep their bytes. Pixels that move by more than 2
+   levels: 4707 5744 (largest 34), 4716 12459 (123), 4720 11426 (76), 4984 3079 (61), 4988 5029 (116), 4992 4547 (114),
+   4996 2715 (49), 5000 915 (20), all on the dim left of the globe.
+   BY THE EYE (t1-rise.jpg, t1-dive.jpg, t1-bit.jpg, t1-4707.jpg, each the present state beside the trial): the fields of
+   small puffs low on the dim side are fainter at 4992 and 4996 and still there; the cloud groups left of the storm at 4716
+   and 4720 are a little dimmer; 4707 is nearly the same picture. The hard white bit (645, 410 of 960 at 4988) is NOT
+   touched: it stands where the cosine is 0.3 or more, on a deck that the grade has taken to black. A range wide enough to
+   take it would dim the storm's own cloud at 4707 to 4720.
+   BY MY PROXY (poses, limit 0.45, pairs 8 frames apart, not the report): 4984 0.53 to 0.37, 4988 0.48 to 0.46, 4992 0.37
+   to 0.46. One pair better, one a new red by a hair: the law changes the cloud by the height as the grade does, and
+   between 0.51 and 1.11 radii that is itself a change of the pattern.
+   So it does not cure what it was for and costs a pair. The tree is put back; the trial is kept as a patch outside git
+   (out/work/nep/weave/dusk.patch). NAMED AS THEY ARE: the white specks of the dim side at 4984 to 5000 and the hard white
+   bit at 4984 to 4992 are small clouds of the globe's own map, in light, over a deck that the grade takes to black. They
+   are not warm any more (point 12 of the last section).
+   A NOTE ON THE GRADE that these numbers gave: at 4992 the pair reads 0.16 without the grade (control nf2) and 0.37 with
+   it. The grade comes in by the height between 1.9 and 0.25 radii and a pair of the rise 8 frames apart spans 0.39 of
+   that range; it is under the limit, I name it as the price of the grade there.
+2. 4605 HAS OTHER BYTES SINCE THE MERGE OF MAIN 1896a516, AND IT IS NOT MY CODE. Found at the control of point 1: the tree
+   without the law gave 4605 at preview draft as sha256 a2b1f371, where every render to 16:56 gave 9ef19839. Against the
+   old frame: 1265 pixels of 518400 differ, 2 of them by 3 levels or more (largest 5), 728 up and 537 down, thin over the
+   whole frame, globe and sky. 4707: 971 pixels, largest 4. 4860: 256 pixels, largest 1, all in the upper 210 rows (the
+   far field). The render is the same from run to run (five runs, one hash).
+   CONTROLS, each one part of the working tree put back to 8bcb6a8c (my last commit before the merge), three frames
+   rendered, the part restored; nothing of it committed, the tree checked clean after each:
+     config, src and public all back: 9ef19839 again, and 4707 and 4860 their old bytes. So the merge does it.
+     src/space/farsun/shader.ts back: a2b1f371. src/core/warm.json back: a2b1f371. config/showcase.json back: a2b1f371.
+     src/stops (all) back: 9ef19839. Then by stop: uranus a2b1f371, saturn a2b1f371, jupiter a2b1f371, mars 9ef19839.
+   So the source of the Mars stop on main since take batch 3 (src/stops/mars) moves the bytes of Neptune's frames.
+   BY WHAT PATH (17:55 UTC, no render needed): the camera of the film at Neptune's sphere, as the smooth report takes it
+   (assets-src/neptune/check/weave.ts), printed with Mars as on main and with Mars put back: at 4605 the eye differs by
+   5e-13, 1.1e-12 and 2e-13 radii and the turn by 1e-17 to 2e-16; at 4707 by 2e-13 to 7e-13 radii; at 4860 the eye is the
+   same to the bit and the turn differs by 1e-16. The turn of the ground (plan.laid) is the same to the bit. So Mars's new
+   path (its dive's heading, the bend of its last frames) moves the film's world by a little, and the eye of every later
+   stop, taken from that world back to its own sphere, is the same eye to twelve places and not to the last bit. The card
+   rounds some pixels the other way. No picture changes; no code of mine is in it.
+   WHAT FOLLOWS. "4605 to the byte" holds between two states on the SAME main only. Against a frame kept from before take
+   batch 3 it reads red for every stop behind Mars, whatever that stop did. From here on my byte checks of the hold are
+   against the head of this branch on the present main (4605 a2b1f371, 4707 4bf4779c, 4860 e79b0602 at preview draft), and
+   I say so with each. To tell /root with the naming.
+3. THE HUMP AT 4693 TO 4700 (owed since 12:56), looked at again, NOT cured, named with its proof. My proxy by poses reads
+   0.65 at the pair 4696 to 4704 (limit 0.45) and 0.17 when the judged body ends 40 px of 1920 further inside the limb.
+   The report takes the body to 20 px of 1920 inside the limb (tools/img/smooth.py, body: sigma is changeBlurPx 20 times
+   scale 0.25, measured at 480 wide in the band of 8 to 40 px of 1920, floor 1 level). The hot spot is at 1732, 800 of 1920:
+   a tongue between the later frame's limb and its frame edge, about 34 px inside the earlier frame's limb. The limb's own
+   look there (a row of 4696 at preview): a bright rim of about 200 levels from 16 to 40 px of 1920 inside the limb, falling
+   to 160 by 76 px (the hold's own limb: the veil of haze.json with veilMu 0.25 to 0.5, the air glow, the forward light). As
+   the eye nears, that rim stands on other ground 8 frames later, and the pair, carried on the ground, reads the rim as a
+   change of the ground. No pattern of the ground changes there by the eye (g3d-pose-4696.jpg, g3d-limb-4696.jpg). To take
+   the number down I would have to flatten the limb's look between 1.6 and 1.1 radii, which is the limb of the judged 4707
+   and the hold's own look just above it. I do not: it would cost picture for a number (MAIL 579). Named.
+4. GATES on b175a5d6 (17:15 to 17:17 UTC): G11 PASS. G15 PASS ("at most 2 sets per frame; finished stops: sun/web 198 MB,
+   sun/full 791 MB"). Net size of my three folders 76.782 MB, on main 82.639 MB.
+5. MAIN MERGED AGAIN at 17:48 UTC: 5c671343 is the merge of origin/main 9e15c6a4 (two files, kit/PROGRESS.md and
+   tests/weights.test.ts: main's cure of its three red tests). TESTS ON THE MERGE (npx vitest run, alone, 17:48:18 to
+   17:54:56, 398 s, tap reporter, log /tmp/vitest-5c67.log): 53 files, 554 tests, 554 pass, none failed, none skipped.
+   tests/globe-cap.test.ts, "brings a colour level in by the texels of its parent": 4349 ms, under its 5 s.
+6. LOOKS pushed 17:32 UTC (065203b7, 8 looks): 4860 beside the approved, G17 1.382 / 0.741, 7.4 s a preview draft frame, and
+   the change of 4605's bytes named as being traced.
+7. THE DISK was full at 17:27 (5.5 MB free of 25 GB) when I made a worktree of main for a control: its build could not
+   copy the assets. I removed that worktree and an old one of mine (/tmp/c-wt); 3.8 GB free since. A worktree of main with
+   its build needs about 4.1 GB, so controls against another commit are made in the working tree, one part at a time,
+   restored and checked clean (as in point 2), not in a worktree.
+
+## 17:55 to 18:30 UTC: the rise's step in place measured on the present state; the grade of the fall took the level in a third of its way
+
+1. MEASURED with the handover report as the engineer did (npm run -s handover -- --stop neptune --kind rise --tier draft
+   --only frames --format preview; 75 frames, 704 s; preview drafts, where the engineer read drafts at 1920 by 1080), on
+   5c671343 (the present state):
+   on the mean of the body: level 3.08 into 4970, colour 3.79 into 5003 (limits 6 and 8): pass.
+   IN PLACE: level 3.61 into 5001, colour 6.57 into 5002: would pass, with 1.43 of room in the colour.
+   So the present state reads as main 2bc36ce6 did for the engineer (3.83 and 6.64 into 5001), though the picture under it
+   is another: there the place went out in ten frames, here it is the grade of the fall alone.
+   The step in place of the blue by frame (rise, heights in radii):
+     4985 (0.256) 0.34, 4988 (0.343) 1.51, 4990 2.57, 4992 (0.507) 3.35, 4994 3.86, 4996 (0.749) 4.49, 4998 5.46, 5000 (1.108)
+     6.21, 5001 6.47, 5002 (1.348) 6.57, 5003 6.23, 5004 4.98, 5005 3.18, 5006 (1.948) 1.28, 5007 0.73.
+   Under 0.25 radii and over 1.95 the step is 0.4 to 1.0. So what stands over that is the grade, and it is not even: most of
+   it falls between 0.9 and 1.6 radii.
+2. THE CAUSE. The share of the grade ran as a smoothstep of the logarithm of the height between 1.9 and 0.25 radii, and
+   the share scales the POWER a tone under the pivot is raised to (1 at the top, 2.6, 3.1, 3.7 at the bottom). The first of
+   a power takes most of a tone's level. From the two reports (out/work/nep/weave/response.py: the step in place less its
+   floor, summed from the top down, against the share at each frame): the first 0.1 of the share takes 0.21 to 0.24 of all
+   the grade takes, the first 0.3 takes 0.48 to 0.53, the upper half of the share only 0.29 to 0.36. The rate falls from
+   about 2.2 at share 0 to 0.75 at share 0.45 and stays there.
+3. FIRST FORM OF A CURE (trial e1): the share run so that a tone which the whole grade takes to 0.2 of its level falls
+   evenly with the logarithm of the height, set in and out over 0.15 of the range. 4605 and 4860 keep their bytes (the
+   share is 0 and 1 exactly outside the range). Rise by the report: on the body level 3.08 into 4970, colour 3.5 into 4972;
+   in place level 3.11 into 4989, colour 6.19 into 4989. The top is down (5002: 5.47 for 6.57) and a new peak stands at
+   the bottom (4988, 4989: 6.2), with 4.0 between. A single tone is not the picture: the rate does not go on falling with
+   the share, it stays at 0.75.
+4. SECOND FORM (trial e2, rendering 18:27): the share as way times (0.42 + 0.58 times way), way being the share of the
+   logarithm of the height, set in and out over 0.15 of itself at either end. Against the measured rate this is even to
+   about 2 parts in 100 (way 0.25, 0.5, 0.75 give 0.27, 0.52, 0.75 of the grade's whole).
+
+## 18:30 to 19:37 UTC: the even run of the grade measured on rise and dive, and NOT KEPT: it trades the dive's pattern for the rise's step in place
+
+The handover report's numbers below are the tool's, at preview drafts (960 by 540; the engineer read drafts at 1920 by 1080).
+The pattern numbers are MY proxies (weave.py by poses, chain.py by the flows of whole frames), not the report.
+
+1. TRIAL e2 (`globe.fall.even` [0.42, 0.15]), rise by the report (708 s): on the body level 3.08 into 4970, colour 3.5 into
+   4972; IN PLACE level 3.00 into 5002, colour 5.72 into 5002 (the present state: 3.61 and 6.57). The blue in place by
+   frame: 4988 4.38, 4990 4.85, 4992 4.46, 4994 4.34, 4996 4.63, 4998 5.21, 5000 5.48, 5002 5.72, 5003 5.42, 5004 3.82,
+   5006 1.09. Even between 4.3 and 5.7 where the present state runs from 1.5 to 6.6.
+2. TRIAL e3 (`even` [0.36, 0.15], slower at the top), rise by the report (704 s): on the body as e2; IN PLACE level 2.89
+   into 5001, colour 5.55 into 5001. By frame: 4987 2.94, 4988 4.57, 4989 5.09, 4990 5.05, 4992 4.63, 4993 4.50, 4994
+   4.51, 4996 4.78, 4998 5.33, 5000 5.51, 5001 5.55, 5002 5.53, 5003 5.08, 5004 3.52, 5005 2.12, 5006 1.05.
+   It cannot go far under 5: the grade takes 80 to 90 levels of blue from the ground in place in all, and the rise passes
+   its whole range of heights (1.9 to 0.25 radii) in 21 frames, 0.098 of the logarithm of the height a frame, evenly.
+3. BYTES, e2 and e3 (preview drafts, against head on the same main, dir h0): 4605 a2b1f371 and 4860 e79b0602, the same.
+   The share is exactly 0 over the first height and exactly 1 under the second.
+4. LOOKED AT (sheets e2-rise, e2-dive, e3-rise, e3-dive, e3-dive-b, every frame): the storm and the bands are the same
+   pattern on both sides; with the even run the planet is a little lighter at 4708 to 4716 and darkens later, and in
+   the rise 4992 to 5004 it is a little darker. Nothing new appears.
+5. THE DIVE, by the report, both ways (90 frames each, 917 s and 903 s, 10.1 s a frame in the report's run):
+     e3:                on the body level 2.78 into 4719, colour 4.81 into 4719; in place level 1.90 into 4719, colour 4.06 into 4720.
+     present 5c671343:  on the body level 2.16 into 4710, colour 4.03 into 4716; in place level 1.97 into 4709, colour 3.71 into 4713.
+   The blue in place by frame, present | e3 (height in radii): 4700 (1.362) 1.94 | 1.60, 4704 (1.126) 2.61 | 2.14, 4708
+   (0.898) 3.25 | 2.84, 4712 (0.689) 3.65 | 3.49, 4716 (0.516) 3.43 | 3.74, 4718 2.79 | 3.87, 4720 (0.385) 2.13 | 4.06, 4722
+   1.13 | 3.66, 4724 (0.286) 0.27 | 1.65.
+   WHY: the dive does not pass the heights evenly. A frame of the dive takes 0.035 of the logarithm of the height at 1.6
+   radii and 0.074 at 0.4 radii (the rise 0.098 everywhere). The present run puts most of the grade high, where the dive
+   is slow and the rise is as fast as anywhere; the even run puts more of it low, where the dive is fastest.
+6. MY PROXIES of the pattern, pairs 8 frames apart, limit 0.45.
+   By the flows of whole frames (chain.py, step 1), present (dir h0d, the report's own frames) | e3 (dir e3d):
+     4704 0.37 | 0.32, 4708 0.29 | 0.26, 4712 0.26 | 0.35, 4716 0.34 | 0.41, 4720 0.06 | 0.10, 4724 0.13 | 0.13, 4728 0.15 | 0.15.
+   Rise by the flows, present (g3d) | e3 (e3r): 4984 0.30 | 0.37, 4988 0.54 | 0.49, 4992 0.67 | 0.66 (the flows agree on 0.67
+   to 0.73 of the body only at 4992; by poses that pair reads 0.37 | 0.34).
+   By poses (weave.py), present | e3: 4688 0.27 | 0.27, 4696 0.65 | 0.66, 4704 0.28 | 0.26, 4712 0.22 | 0.31; rise 4984 0.53
+   | 0.52, 4988 0.48 | 0.49, 4992 0.37 | 0.34, 4996 0.27 | 0.21.
+   So in the dive the even run costs the pairs 4712 to 4720 and 4716 to 4724 about 0.08 each (0.41 of 0.45 at 4716), and
+   the rise's pairs gain nothing that both proxies agree on. Cause as far as I can say: between 4716 and 4724 the power a
+   tone is raised to grows by a factor 1.39 with the even run and 1.21 with the present one (2.6 at the end), and a change
+   of power is a change of contrast, which the pattern measure reads.
+7. DECISION: NOT KEPT. What the even run buys is 1.0 on a reading that is shown and not judged and passes either way (the
+   rise in place, 6.57 to 5.55 of 8). What it costs is judged: 0.8 on the dive's body (4.03 to 4.81 of 8) and, by my proxy,
+   0.07 to 0.09 of the 0.11 to 0.19 the pattern has left at 4712 and 4716, the frames the exchange is made in and the note
+   is about. A form between the two (thought through with the response measured at 18:07, not rendered: the present run
+   with its top made flat) would take the rise to about 5.7 and put the difference at 0.84 to 0.6 radii, where the dive's
+   own step has its largest value already. The grade's whole is the same in every form and the rise is fast; a run by the
+   height alone moves the step from one of the two to the other.
+   What would lower both is a longer way in height. The top is held by the hold's bytes (2.072 radii) and the judged 5006
+   (1.948); the bottom (0.25) stands over the last of the exchange (0.25 to 0.15 radii) so that the place comes in whole
+   under a grade that stands still. Not tried; named here.
+   The tree is back at 5c671343 (git status: this notebook alone). The patch is kept as a work file
+   (out/work/nep/weave/e3.patch), frames in e2, e3, e3r, e3d, h0d.
+8. THE STATE AS IT STANDS (5c671343), by the handover report at preview drafts, limits 6 (level) and 8 (colour):
+     dive: on the body 2.16 into 4710 and 4.03 into 4716; in place 1.97 into 4709 and 3.71 into 4713.
+     rise: on the body 3.08 into 4970 and 3.79 into 5003; in place 3.61 into 5001 and 6.57 into 5002.
+   Pass both ways. The rise in place has 1.43 of room in the colour: named, with its cause (point 2 of the section before).
+9. LOOKS pushed 18:42, 19:15 and 19:35 UTC, each with 4860 beside the approved image (bytes unchanged, G17 1.382 / 0.741)
+   and the trial's sheets; 7.4 s a preview draft frame in my harness.
+
+## 19:36 to 19:47 UTC: the sheet owed by MAIL 688 point 3, the last 24 frames of the dive against the named ones
+
+1. THE NAMED FRAMES, by a control in the working tree (no worktree, the disk): `git checkout b8a38cbe -- src/stops/neptune`
+   (the six files that differ; band.ts, added since, stays and is not read by the old lines; public/assets/neptune is the
+   same at both), frames 4746 to 4769 at preview draft into out/work/nep/weave/n24 (524 s for 24 frames: these low frames
+   took 21 to 25 s each in that run), then `git checkout HEAD -- src/stops/neptune`; git status showed the notebook alone.
+   The present frames are the handover report's own of 19:15 to 19:30 on 5c671343 (dir h0d).
+   The named state is drawn here on present main (the camera differs from its own main's by 1e-13 radii, the section of
+   17:15 to 17:50), which is what a sheet needs and no more.
+2. THE SHEETS (last24-0, -1, -2: eight frames each, named left, present right, 640 px a frame; last24-top and last24-low:
+   enlargements). I looked at all 24 pairs and at both enlargements.
+   - The near picture is the same frame by frame: the cloud wall across the frame, the vortex behind it, the plain. No
+     step, nothing that comes in or goes out between two frames on either side.
+   - The far field by the limb is another piece of the map, 3 degrees on: named, a hard white patch with a ragged edge
+     and the cyan dab at the upper left, in all 24 frames; present, long white bands along the limb. A turquoise streak of
+     the map still stands in those bands (4746 at 428, 35 of 960 by 540; 4764 to 4769 at 400 to 440, 55): the map's own
+     azure, named with the reds, not cured.
+   - The near deck, lower left: the pale patches the map leaves over the dark deck are fewer and bluer now (named: lilac
+     and broad at 4746), and go out with the height on both sides (gone by 4758).
+3. LOOKS pushed 19:45 UTC (the three sheets, the two enlargements, 4860 beside the approved image, G17 1.382 / 0.741).
+4. PARITY (npm run smooth, only parity) started 19:46:54 on 5c671343, alone.
+
+## 20:09 UTC: the tool's parity, G11, G15 and the net size on the present state 5c671343
+
+1. PARITY (npm run -s smooth -- --stop neptune --only parity, alone, 19:46:54 to 20:09:02, 1328 s, exit 0, on 5c671343 with
+   the notebook alone uncommitted; log out/work/nep/weave/par5.log, copy out/work/nep/weave/smooth-parity-5c67.md and .png):
+   "VERDICT: green. No number is over its limit."
+   "Largest mean difference: 1.776 at frame 4860 (neptune.terrain), limit 12."
+   "Largest mean difference at one 8th of the size (what is left when the fine grain is averaged away): 0.933 at frame 4860
+   (neptune.terrain), limit 3.2."
+   "Largest level difference of one block (a grid of 16 by 9): 3.695 at frame 4860 (neptune.terrain), limit 12."
+   "Largest level difference of the whole frame: 0.556 at frame 4860 (neptune.terrain), limit 2.2."
+   Frames 4605, 4703, 4725, 4748, 4860, 4969, 4988, 5006. Both halves of the panel looked at: faint outlines of edges
+   (Triton's rim at 4605 and 5006, the cloud wall and the eye at 4748, 4860, 4969), nothing coarse, no block.
+   The tool's seconds a frame at the draft tier here: 16 by 9 37.06, uhd 124.98.
+2. G11 PASS ("every asset has a row or a recipe"), G15 PASS ("at most 2 sets per frame"), 20:09 to 20:10 UTC.
+3. NET of my three folders: 76.782 MB at 5c671343 against 82.639 MB on main (minus 5.857).
+4. LOOKS pushed 20:09 UTC (the parity panel, 4860 beside the approved image, G17 1.382 / 0.741).
+5. THE HUMP at 4693 to 4700, as it stands (MY proxy by poses, not the report): 4696 to 4704 reads 0.65, largest at 1732, 800
+   of 1920 by 1080, on the right limb. Looked at again (g3d-pose-4696-hot.jpg: the earlier frame, the later one carried
+   back, the change): the hot strip lies along the edge of what the later frame still shows, where its limb (the air's
+   glow and the brightened bands under it, a band 20 to 60 px wide at 1920) is laid on ground that the earlier frame sees
+   plainly. The tool takes 20 px off the body's edge; with 40 px more my proxy reads 0.17. It is the limb passing over the
+   ground, 5.4 degrees in those 8 frames (the horizon stands 67.3 degrees from the point under the eye at 1.59 radii and
+   61.9 at 1.13), not a second picture of a place. NOT CURED: a cure in the picture would be another limb between 1.6 and
+   1.1 radii than the hold's, and 4707 is judged with that limb. Named as a red I know, with this proof.
