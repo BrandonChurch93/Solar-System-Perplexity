@@ -66,6 +66,30 @@ def old_plate(tag):
     return read(WORK / tag / 'plate-4096.png')
 
 
+def present(kind, tag, folder='full'):
+    """The plate of a level as the film shows it at that handover, display values 0 to 1: the file of the set, put together
+    with the plate of its colour level for a level that holds its light alone."""
+    level = LEVELS[tag]
+    path = ROOT / 'public/assets/venus' / folder / level['file'].replace('.jpg', f'-{kind}.jpg')
+    if 'colour' not in level:
+        return read(path)
+    giver = ROOT / 'public/assets/venus' / folder / LEVELS[level['colour']]['file'].replace('.jpg', f'-{kind}.jpg')
+    light = cv2.imread(str(path), cv2.IMREAD_GRAYSCALE)
+    parent = cv2.imread(str(giver), cv2.IMREAD_COLOR)
+    return lay.to_value(lay.put_together(light, parent, lay.colour_share(SPEC['levels'], tag), level['most']))
+
+
+def base(kind, tag, start):
+    """The plate a run starts from: the plate of build.py ('build') or the plate of the film as it stands ('film'), read once
+    into t/<kind>-<tag>-start.png so that a second run does not start from its own result."""
+    if start == 'build':
+        return old_plate(tag)
+    kept = T / f'{kind}-{tag}-start.png'
+    if not kept.exists():
+        cv2.imwrite(str(kept), np.clip(present(kind, tag) * 255 + 0.5, 0, 255).astype(np.uint8))
+    return read(kept)
+
+
 def project(cam, tag):
     """Where every pixel of the plate of tag lies in the frame of the camera at T (pixels of a frame w by h are fx * w, fy * h),
     whether it is in front and seen, and the sine of the elevation of the camera over it."""
@@ -116,14 +140,14 @@ def frames(kind):
     return T / f'close-{f}.png', T / f'globe-{f}'
 
 
-def make(kind, tag):
+def make(kind, tag, start='build'):
     cam = camera(kind)
     close, globe = frames(kind)
     fx, fy, ok, elevation = project(cam, tag)
     cover, trust = weights(fx, fy, ok, elevation)
     c = laid(read(close), fx, fy)
     g = laid(read(str(globe) + '.png'), fx, fy)
-    old = old_plate(tag)
+    old = base(kind, tag, start)
     sigma = AT['toneSigma'][tag] * SIZE
     lc, m = low(c, cover, sigma)
     lg, _ = low(g, cover, sigma)
@@ -180,13 +204,13 @@ def check(kind, tag):
     write(T / f'check-{kind}-{tag}.jpg', np.hstack([a, b]))
 
 
-def blocks(kind, tag, cam):
+def blocks(kind, tag, cam, start='build'):
     """Shift of the plate against the laid back draw of the globe, in plate pixels, by blocks of the replaced part."""
     _, globe = frames(kind)
     fx, fy, ok, elevation = project(cam, tag)
     _, trust = weights(fx, fy, ok, elevation)
     g = cv2.cvtColor(laid(read(str(globe) + '.png'), fx, fy), cv2.COLOR_BGR2GRAY)
-    o = cv2.cvtColor(old_plate(tag), cv2.COLOR_BGR2GRAY)
+    o = cv2.cvtColor(base(kind, tag, start), cv2.COLOR_BGR2GRAY)
     g -= cv2.GaussianBlur(g, (0, 0), 12)
     o -= cv2.GaussianBlur(o, (0, 0), 12)
     b = 512
@@ -202,13 +226,13 @@ def blocks(kind, tag, cam):
     return np.array(found)
 
 
-def calib(kind, tag):
+def calib(kind, tag, start='build'):
     """Measures the shift with the camera of tcam.ts alone and with the shift of plates.json, and prints the value to write there."""
     per = LEVELS[tag]['widthDeg'] / SIZE
-    raw = blocks(kind, tag, camera(kind, False))
+    raw = blocks(kind, tag, camera(kind, False), start)
     med = np.median(raw, axis=0)
     print(kind, tag, 'blocks', len(raw), 'camera alone: plate against laid back globe, plate pixels', med.round(2), 'spread', raw.std(axis=0).round(2), 'as shiftDeg [east, north]', [round(float(med[0] * per), 6), round(float(-med[1] * per), 6)])
-    now = blocks(kind, tag, camera(kind))
+    now = blocks(kind, tag, camera(kind), start)
     print(kind, tag, 'with shiftDeg', AT['shiftDeg'][kind], 'left over, plate pixels', np.median(now, axis=0).round(2), 'spread', now.std(axis=0).round(2))
 
 
@@ -250,16 +274,19 @@ def split(kind, tag):
 if __name__ == '__main__':
     cmd, kind = sys.argv[1], sys.argv[2]
     rest = sys.argv[3:]
+    start = 'build'
+    if rest and rest[0] in ('film', 'build'):
+        start, rest = rest[0], rest[1:]
     if cmd == 'lock':
         suffix, rest = rest[0], rest[1:]
     tags = rest or AT['tags']
     for tag in tags:
         if cmd == 'calib':
-            calib(kind, tag)
+            calib(kind, tag, start)
         elif cmd == 'check':
             check(kind, tag)
         elif cmd == 'make':
-            make(kind, tag)
+            make(kind, tag, start)
         elif cmd == 'lock':
             lock(kind, suffix, tag)
         elif cmd == 'export':
