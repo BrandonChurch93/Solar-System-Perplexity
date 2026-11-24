@@ -313,6 +313,7 @@ import * as THREE from 'three'
 import { Planet } from ${at('src/bodies/planet.ts')}
 import { SetLoader, heightTexture } from ${at('src/core/sets.ts')}
 import { config } from ${at('src/config.ts')}
+import { setFrame } from ${at('src/core/frame.ts')}
 
 const renderer = new THREE.WebGLRenderer({ canvas: document.createElement('canvas') })
 
@@ -371,6 +372,7 @@ async function shot(o) {
   cam.updateMatrixWorld(true)
   const world = new THREE.Scene()
   world.add(planet.mesh)
+  setFrame(o.frame ?? 1, 1)
   planet.update(from, new THREE.Vector3().fromArray(o.sun ?? [0.3, 0.2, 1]).normalize(), 0, 1, 1)
   const target = new THREE.WebGLRenderTarget(o.width, o.height, { type: THREE.FloatType })
   renderer.setRenderTarget(target)
@@ -396,7 +398,7 @@ window.cap = { shot }
 interface Box { north: [number, number]; east: [number, number]; value: number }
 interface HeightDef { size: number; widthDeg: number; low: number; high: number; base: number; boxes: Box[] }
 interface HazeDef { scaleHeight: number; depth: number; day: [number, number, number]; twilight: [number, number, number]; strength: number; extinction: number; forward: number; top: number }
-interface CapShot { centresDeg?: [number, number][]; light?: { relief: number; own: number; from?: number }; haze?: HazeDef; sun?: [number, number, number]; own?: boolean; map: [number, number, number]; levels: { rgb: [number, number, number]; size: number; widthDeg: number }[]; heights?: HeightDef[]; border: [number, number]; from: [number, number]; cells: number; pixel: number; reachDeg?: number; vfov: number; width: number; height: number; near: number; position: number[]; up: number[]; target: number[] }
+interface CapShot { frame?: number; centresDeg?: [number, number][]; light?: { relief: number; own: number; from?: number }; haze?: HazeDef; sun?: [number, number, number]; own?: boolean; map: [number, number, number]; levels: { rgb: [number, number, number]; size: number; widthDeg: number }[]; heights?: HeightDef[]; border: [number, number]; from: [number, number]; cells: number; pixel: number; reachDeg?: number; vfov: number; width: number; height: number; near: number; position: number[]; up: number[]; target: number[] }
 interface CapRead { pixels: number[]; bytes: number; drawn: boolean; triangles: number }
 
 const filmicInverse = (v: number): number => {
@@ -625,6 +627,26 @@ describe.skipIf(!have)('the relief cap in a WebGL2 browser', () => {
     }
     expect(errors).toEqual([])
   }, 240000)
+
+  it('brings a colour level in by the texels of its parent a 1080th of the frame height: twice the rows with the frame factor 2 keep the mix, without the factor the finer level is whole', async () => {
+    const view: CapShot = { ...top, vfov: 30, levels: [{ rgb: RED, size: 72, widthDeg: 30 }, { rgb: GREEN, size: 8, widthDeg: 6 }] }
+    const share = (r: CapRead, o: CapShot): number => {
+      const p = px(r, o, o.width / 2, o.height / 2)
+      return (p[0]! - scene(RED)[0]!) / (scene(GREEN)[0]! - scene(RED)[0]!)
+    }
+    const twice: CapShot = { ...view, width: 192, height: 192 }
+    const one = share(await call(view), view)
+    const kept = share(await call({ ...twice, frame: 2 }), twice)
+    const lost = share(await call(twice), twice)
+    expect(one).toBeGreaterThan(0.2)
+    expect(one).toBeLessThan(0.8)
+    expect(Math.abs(kept - one)).toBeLessThan(0.02)
+    expect(lost).toBeGreaterThan(0.98)
+    const half: CapShot = { ...view, width: 48, height: 48 }
+    expect(share(await call(half), half)).toBeLessThan(0.02)
+    expect(Math.abs(share(await call({ ...half, frame: 0.5 }), half) - one)).toBeLessThan(0.03)
+    expect(errors).toEqual([])
+  })
 
   it('measures the haze to its own surface: the sphere\'s depth where the height is 0, more air over a pit, less over a mesa', async () => {
     const haze: HazeDef = { scaleHeight: 0.01, depth: 0.4, day: [1, 1, 1], twilight: [0, 0, 0], strength: 1, extinction: 1, forward: 0, top: 1 }

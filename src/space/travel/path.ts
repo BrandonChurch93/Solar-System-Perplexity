@@ -334,12 +334,14 @@ export class TravelShape {
   }
 }
 
-export function inFrame(q: THREE.Quaternion, vfovDeg: number, aspect: number, to: THREE.Vector3, radius: number, marginDeg: number): boolean {
-  const d = to.length()
-  const v = to.clone().multiplyScalar(1 / d).applyQuaternion(q.clone().invert())
+export function outsideFrame(q: THREE.Quaternion, vfovDeg: number, aspect: number, to: THREE.Vector3): number {
+  const v = to.clone().multiplyScalar(1 / to.length()).applyQuaternion(q.clone().invert())
   const hy = THREE.MathUtils.degToRad(vfovDeg) / 2
   const hx = Math.atan(Math.tan(hy) * aspect)
-  const need = Math.asin(Math.min(radius / d, 1)) + THREE.MathUtils.degToRad(marginDeg)
   const out = Math.max(v.x * Math.cos(hx) + v.z * Math.sin(hx), -v.x * Math.cos(hx) + v.z * Math.sin(hx), v.y * Math.cos(hy) + v.z * Math.sin(hy), -v.y * Math.cos(hy) + v.z * Math.sin(hy))
-  return Math.asin(Math.min(Math.max(out, -1), 1)) < need
+  return Math.asin(Math.min(Math.max(out, -1), 1))
+}
+
+export function inFrame(q: THREE.Quaternion, vfovDeg: number, aspect: number, to: THREE.Vector3, radius: number, marginDeg: number): boolean {
+  return outsideFrame(q, vfovDeg, aspect, to) < Math.asin(Math.min(radius / to.length(), 1)) + THREE.MathUtils.degToRad(marginDeg)
 }
