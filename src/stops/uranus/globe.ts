@@ -3,7 +3,7 @@ import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { EQUIRECT_GLSL } from '../../space/sky'
 import patchJson from './patches.json'
-import { seenUniform } from './seen'
+import { frameUniform } from '../../core/frame'
 
 export const SPHERE_VERT = /* glsl */ `
 out vec3 vLocal;
@@ -105,7 +105,7 @@ uniform float uPatchSize[${PATCH_COUNT}];
 uniform float uFeather;
 uniform vec2 uPatchRim;
 uniform vec2 uPatchFade;
-uniform float uSeen;
+uniform float uFrame;
 uniform vec3 uSpotN;
 uniform vec3 uSpotE;
 uniform vec3 uSpotU;
@@ -192,11 +192,11 @@ void main() {
   float aa = dot(ax, ax) + dot(ay, ay);
   float ad = length(cross(ax, ay));
   float lean = max(2.0 * ad / max(aa + sqrt(max(aa * aa - 4.0 * ad * ad, 0.0)), 1e-20), 1.0 / 16.0);
-  float seen = lean * uSeen;
+  float seen = lean * uFrame;
   float close = 1.0 - smoothstep(uPatchFade.x, uPatchFade.y, texels * seen);
   float grad = max(uGrad, close * uWrapSoft / max(texels * lean, 1e-3));
   vec3 enc = equirectGrad(uMap, d, grad).rgb;
-  enc = max(enc + (1.0 - close) * (uSharp.x + uSharp.y * (1.0 - mu)) * (enc - equirectGrad(uMap, d, max(uGrad * uSeen, close * uWrapSoft / max(texels * lean, 1e-3)) * 4.0).rgb), vec3(0.0));
+  enc = max(enc + (1.0 - close) * (uSharp.x + uSharp.y * (1.0 - mu)) * (enc - equirectGrad(uMap, d, max(uGrad * uFrame, close * uWrapSoft / max(texels * lean, 1e-3)) * 4.0).rgb), vec3(0.0));
   vec3 wide = inverseFilmic(enc);
   float dn = dot(d, uSpotN);
   vec2 g = vec2(dot(d, uSpotE), dot(d, uSpotU)) / max(dn, 0.05);
@@ -376,7 +376,7 @@ export class Globe {
         uDeckCentre: { value: v3(pl.deck.centre) }, uDeckRadius: { value: pl.deck.radius }, uDeckF0: { value: v3(pl.deck.f0) }, uDeckR0: { value: v3(pl.deck.r0) },
         uDeckFlow: { value: new THREE.Vector4().fromArray(pl.deck.flow) }, uDeckFlowDir: { value: new THREE.Vector2(Math.cos(pl.deck.flowAngle), Math.sin(pl.deck.flowAngle)) }, uDeckTime: { value: 0 },
         uDeckLight: { value: pl.deck.light }, uDeckLightSize: { value: new THREE.Vector3(pl.deck.lightSize[0], pl.deck.lightSize[1], pl.deck.psiMax) },
-        uDiag: diagUniform, uGrad: gradUniform, uSeen: seenUniform,
+        uDiag: diagUniform, uGrad: gradUniform, uFrame: frameUniform,
       },
     })
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1, 384, 192), this.material)

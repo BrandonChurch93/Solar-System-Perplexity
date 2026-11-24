@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { DIAG_GLSL, diagUniform, fineUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import deckJson from './deck.json'
-import { seenUniform } from './seen'
+import { frameUniform } from '../../core/frame'
 import nearJson from './deck-near.json'
 import cloudJson from './deck-cloud.json'
 
@@ -97,7 +97,7 @@ uniform float uAspect;
 uniform float uFade;
 uniform float uGrad;
 uniform float uFine;
-uniform float uSeen;
+uniform float uFrame;
 uniform vec2 uLens;
 uniform float uSharp;
 uniform float uBloom;
@@ -182,21 +182,21 @@ void main() {
   vec2 cx = dFdx(uvT) * uGrad;
   vec2 cy = dFdy(uvT) * uGrad;
   vec3 enc = textureGrad(uColor, uvC, cx, cy).rgb;
-  enc = max(enc + uSharp * (enc - textureGrad(uColor, uvC, cx * (4.0 * uSeen), cy * (4.0 * uSeen)).rgb), vec3(0.0));
+  enc = max(enc + uSharp * (enc - textureGrad(uColor, uvC, cx * (4.0 * uFrame), cy * (4.0 * uFrame)).rgb), vec3(0.0));
   float plateT = diagTexels(uvT * uColorSize);
   vec2 uvN = (uvT - uNearWin.xy) / (uNearWin.zw - uNearWin.xy);
   vec2 eN = min(uvN, 1.0 - uvN);
-  float wN = smoothstep(0.0, uNearMix.z, min(eN.x, eN.y)) * (1.0 - smoothstep(uNearMix.x, uNearMix.y, plateT * uFine * uSeen));
+  float wN = smoothstep(0.0, uNearMix.z, min(eN.x, eN.y)) * (1.0 - smoothstep(uNearMix.x, uNearMix.y, plateT * uFine * uFrame));
   for (int k = 0; k < (wN > 0.0 ? 1 : 0); k++) {
     vec2 nx = cx / (uNearWin.zw - uNearWin.xy);
     vec2 ny = cy / (uNearWin.zw - uNearWin.xy);
     vec3 fine = textureGrad(uNear, uvN, nx, ny).rgb;
-    fine = max(fine + uSharp * (fine - textureGrad(uNear, uvN, nx * (4.0 * uSeen), ny * (4.0 * uSeen)).rgb), vec3(0.0));
+    fine = max(fine + uSharp * (fine - textureGrad(uNear, uvN, nx * (4.0 * uFrame), ny * (4.0 * uFrame)).rgb), vec3(0.0));
     enc = mix(enc, fine, wN);
   }
   vec3 wide = vec3(0.0);
   for (int k = 2; k < 8; k++) {
-    float span = exp2(float(k)) * uSeen;
+    float span = exp2(float(k)) * uFrame;
     wide += textureGrad(uColor, uvC, cx * span, cy * span).rgb;
   }
   vec3 lin = inverseFilmic(enc);
@@ -221,7 +221,7 @@ void main() {
   float wD = mix(1.0 - smoothstep(uBase.z, uBase.w, farT), 1.0 - smoothstep(uBase.z, uBase.w, thin), wT);
   vec3 rel = pa - uCentre;
   vec2 g = vec2(dot(rel, uF0) * uFlowDir.y + dot(rel, uR0) * uFlowDir.x, dot(rel, uF0) * uFlowDir.x - dot(rel, uR0) * uFlowDir.y) * vec2(0.55, 1.0) * uDetail.w;
-  float fw = max(length(dFdx(g)), length(dFdy(g))) * uFine * max(uSeen, 1.0);
+  float fw = max(length(dFdx(g)), length(dFdy(g))) * uFine * max(uFrame, 1.0);
   float c0 = billow(g, fw);
   float c1 = billow(g + uSunG * 0.1, fw);
   float fl = smoothstep(0.08, 0.3, c0) * (1.0 - smoothstep(0.12, 0.35, fw * 4.0)) * smoothstep(0.5, 0.85, soft(g * 4.0 + 5.0));
@@ -238,7 +238,7 @@ void main() {
   vec2 gq = cloudPlace(q);
   float dq = cloudAt(gq, 1.0) * reach * lit;
   float veilA = clamp(dq * uCloudB.x, 0.0, 1.0);
-  float under = clamp(cloudAt(cloudPlace(uCentre + rs * n), 4.0 * uSeen) * uCloudB.x, 0.0, 1.0) * smoothstep(uCloudB.z, uCloudB.w, mu) * lit;
+  float under = clamp(cloudAt(cloudPlace(uCentre + rs * n), 4.0 * uFrame) * uCloudB.x, 0.0, 1.0) * smoothstep(uCloudB.z, uCloudB.w, mu) * lit;
   col *= 1.0 - uCloudB.y * under;
   col = col * (1.0 - veilA) + deckLight(muQ, psi) * uCloudTint * dq;
   float cloudT = diagTexels(gq * uCloudA.y * vec2(uCloudD.y, 1.0) * float(textureSize(uCloud, 0).x));
@@ -392,7 +392,7 @@ export class Deck {
         uHeight: { value: t.height }, uLift: { value: look.lift }, uColor: { value: t.color }, uFar: { value: t.far }, uLight: { value: t.light },
         uLightSize: { value: new THREE.Vector2().fromArray(j.lightSize) }, uColorSize: { value: new THREE.Vector2().fromArray(j.imageSize[key]) }, uFarSize: { value: new THREE.Vector2().fromArray(j.farSize[key]) },
         uWin: { value: new THREE.Vector4().fromArray(j.window) }, uCamL: { value: new THREE.Vector3() }, uLimb: { value: new THREE.Vector2().fromArray(look.limb) }, uEdge: { value: look.edge }, uInset: { value: new THREE.Vector2().fromArray(look.inset) }, uAMax: { value: j.aMax }, uEps: { value: j.eps },
-        uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uFade: { value: 1 }, uDiag: diagUniform, uGrad: gradUniform, uFine: fineUniform, uSeen: seenUniform, uLens: { value: new THREE.Vector2(1, 1) }, uSharp: { value: look.sharp }, uBloom: { value: 0 },
+        uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uFade: { value: 1 }, uDiag: diagUniform, uGrad: gradUniform, uFine: fineUniform, uFrame: frameUniform, uLens: { value: new THREE.Vector2(1, 1) }, uSharp: { value: look.sharp }, uBloom: { value: 0 },
         uDetail: { value: new THREE.Vector4(look.detail.tone, look.detail.relief, look.detail.fleck, look.detail.scale) },
         uBase: { value: new THREE.Vector4(Math.tan(THREE.MathUtils.degToRad(j.vfovDeg) / 2), 0, look.detail.stretch[0], look.detail.stretch[1]) },
         uSunG: { value: sunG },
