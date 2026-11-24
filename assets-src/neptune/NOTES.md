@@ -4886,3 +4886,60 @@ eye stands in the map's own vortex (the path of the dive and the far field of 48
 5. SEEN and checked against the head's scene: the warm specks on the night side at 4988 and 4996 are in the head's scene too,
    at the same spots (c5 against f5). Not of this change. Named as a red of the rise that stands.
 6. tsc clean. The globe's shader text for 0, 3 and 8 plates keeps its hashes (bf3362b2, 43355d83, 03d549e3).
+
+## 24 Nov, 14:13 to 14:38 UTC: the fix committed, main merged, and why the exchange still stands (seen from above)
+
+1. Commits: f4e94e04 (the fix, one cause: planet.ts, deep.ts, set.ts, deep.json), bb4fe2f4 (notebook), b8a38cbe (merge of
+   main 2bc36ce6 on c8888d57, MAIL 670 point 1). Pushed 14:16, c2d46ba5..b8a38cbe.
+2. On the merge: tsc clean; vitest 175 files, 485 of 485 (before the merge 170 files, 465 of 465; tests/globe-cap.test.ts did
+   not run over its limit in either run); G11 pass; 4605, 4724, 4740, 4860 at preview draft THE SAME BYTES as before the
+   merge (4605 sha256 begins 9ef19839), so main's engine take moves none of these four at this format.
+   Net of my three folders: 76.734 MB at b8a38cbe against 82.639 MB on main (minus 5.905). Nothing outside them differs.
+3. Parity (npm run smooth, only parity) started 14:23 on the merge: 16 by 9 part drawn by 14:31, the 4 times format after it.
+4. Looks pushed 14:14 (cb03fea6) and 14:37 (9624e0a0).
+5. SEEN FROM ABOVE (maplay.py: the globe at 4704 and the scene at 4748 of the head, both laid on the ground in the scene's
+   band coordinates, u along the band, v across, a line a unit; work file /tmp/lay-both.jpg, look-fork.jpg pushed):
+   - the map: a dark vortex about 8 units by 4, centre near (0, 2), from v 0.5 to 4.5, with a white comma streak in it from
+     (-4, 3) to (-1, 0.5); south of it a white band from v -0.5 to -2 (torn at u 0 to 3); south of -2 dark blue; a second
+     broad white band at v 5 to 7.
+   - the scene: the first streamer on v 0 (u -4.5 to 1), the eye at (-1.44, 0.94), the second streamer at v 1.8, a dark
+     blob at (-4.5, 2.5), a pale plain all round the eye, the dark near deck south of v -0.3.
+   So the scene is the map's storm with the tones REVERSED on both sides of the first streamer: north of it the map is
+   dark (vortex) and the scene pale; south of it the map is white (band) and the scene dark. That is why a slower law
+   does not cure it: a blend of opposites goes through no contrast and comes out reversed.
+   The eye does stand in the map's vortex already (my line of 13:50 on "the place moves so that the eye stands in the
+   vortex" was wrong in that; corrected here).
+6. What follows from 5, within the ruling of MAIL 429 (4860 may move in its far field, the near picture stays): move the
+   place about 2.3 units across the band (3.15 degrees of arc) so that the scene's first streamer lies on the SOUTH edge
+   of the map's band. Then: dark near deck on the map's dark; pale plain, eye and streamers on the map's white band; the
+   map's vortex is the wide dark zone behind the eye (the very words of the ruling). Not measured yet. Trial first, as
+   one number (deep.json far.shift: the map turned under the scene about the scene's e1), valid below 0.15 radii where the
+   scene covers the picture; pairs 4732, 4740, 4748 and 4964, 4972, 4980. Only if the pairs fall does the place itself move
+   (plan.ts onGlobe; the hold keeps its aim and its bytes; the Sun in the scene turns by up to 3 degrees, to be seen).
+
+## MY NAMED MAIL 4 to /root, 14:39 UTC 24 Nov (high priority), word for word
+
+NAMED (Neptune, first fix for the exchange of MAIL 654). Branch agent/neptune-place, head b8a38cbe7be49c70b1e86c1f6851cf002068941f = merge of main 2bc36ce6 (on c8888d57) over f4e94e04 (the fix, one cause) and bb4fe2f4 (notebook). Not green. What it is and what it leaves:
+
+CAUSE: the scene from code carried a second picture of the whole planet (its own far deck), laid over the globe's map between 0.9 and 0.15 radii. That was the exchange at 4723 and at 4980 + 1/2.
+
+FIX: beyond 8 units of the place the scene now shows the globe's own map, read by the globe's own lines (mapGlsl of planet.ts, the globe's own uniform objects) under the globe's own grade of the fall. The place's own deck, eye and streamers stand round one fixed spot of ground (whole within 3 units, none beyond 8) and come in over the map by the eye's height alone, 0.9 to 0.036 radii. Nothing reads the clock.
+
+MEASURED, BY MY PROXY ONLY (preview draft, pairs 8 frames apart, the report's pattern function, limit 0.45). No number of the tool: I stopped its run at 20 of 108 frames (23 s a frame, it would have held every other check).
+Dive, head to now: 4716 0.71 to 0.39, 4724 1.12 to 0.39, 4732 0.22 to 0.68, 4740 0.54 to 0.99.
+Rise, head to now: 4964 0.98 to 1.31, 4972 0.41 to 1.06, 4980 1.51 to 0.59, 4988 1.15 to 0.47, 4996 0.37 to 0.15.
+SEEN: the storm of the globe (dark oval, white streak) is one picture to 4724 and from 4988; the changes of view (4757 to 4770, 4949 to 4958) stand as one picture.
+
+KEPT: 4605 at preview draft, sha256 9ef19839, the same bytes before the fix, after it and on the merge of main. 4724, 4740, 4860 the same bytes before and after the merge. The globe's shader text keeps its hashes. tsc clean. vitest 465 of 465 before the merge, 485 of 485 on it (globe-cap did not run over). G11 pass. Parity NOT measured: I stopped its run after 15 minutes at the fourth frame of the 4 times format (16 by 9 part drawn, no number read); it is owed on the next named commit. Net of my three folders 76.734 MB against 82.639 on main.
+
+RED, known and named:
+1. Still an exchange, lower and weaker: 4728 to 4744 in the dive, 4964 to 4980 in the rise. Seen from above, map and scene laid on the same ground: the two are opposite in tone on both sides of the first streamer. The map has its dark vortex (8 by 4 units) north of that line and a white band 1.5 units wide south of it; the scene has a pale plain with a small eye north of it and its dark near deck south. Opposites exchange at any speed, so a slower law alone does not cure it.
+2. The map's band leaves lilac over the dark near deck (4740, 4972).
+3. The limb on the right at 4740 to 4748 (the scene's border of 16 to 26 degrees).
+4. 4860: a cyan dab of the map by the limb at the upper left, a hard white patch of the map above the eye, far field darker than the approved as at the head. G17 at preview draft 1.331, lower quarter 0.772 (head 1.286, 0.615).
+5. Warm specks on the night side at 4988 and 4996: in the head's scene too, not of this change, not cured.
+6. The grade of the fall stands as text twice (planet.ts, deep.ts). The hump at 4693 to 4700 is not touched. G15 not run.
+
+NEXT, unless you rule otherwise: within MAIL 429 (4860 may move in its far field) I move the place about 2.3 units across the band (3.2 degrees), so that the scene's streamer lies on the south edge of the map's band: dark near deck on the map's dark, pale plain and streamers on the map's white band, the map's vortex the wide dark zone behind the eye. The hold keeps its aim and its bytes, the near picture of 4860 stays, the end of the dive moves 3 degrees. First as a trial of one number (the map shifted under the scene), measured by pairs, before any path moves. Then the law from 2.0 radii, then the rise. Looks pushed 14:14 (cb03fea6) and 14:37 (9624e0a0, the two pictures laid on one ground).
+
+Parity: the run was stopped by me at 14:38 (16 by 9 part drawn, 4 times format at its fourth frame, 4748, after 15 minutes). No number.
