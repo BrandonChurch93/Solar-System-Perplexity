@@ -176,7 +176,7 @@ Measured in `tests/globe-gl.test.ts` (128 pixel row through an own level of 30 d
 Second review note, plan F: nothing in the picture may come by the clock or by the view. The engine (handover_engineer, type `Air` in `src/core/types.ts`) mixes the knots of a stop's `air` params over the log of the eye's height and hands `shot.air` per shutter sample. In `src/bodies/air.ts`:
 
 - `HazeAir = { depth, scaleHeight, day, twilight, night, edge: [from, to], strength, extinction, forward }`, the numbers of `HAZE_GLSL`.
-- `GlobeAir = { limb, tint, haze: HazeAir }`, the part of `Air` the globe reads. `Air` has more fields (`height`, `share`, `exposure`, `shell`, `sky`, `stars`, `sunRadius`, `glare`); the globe does not read them.
+- `GlobeAir = { limb?, tint?, haze?: HazeAir }`, the part of `Air` the globe reads; each part is optional as in the engine's `Air` (agent/engine-handover dddef05: a body has a part at every height or at none) and `planet.setAir` writes only the parts the air holds. `Air` has more fields (`height`, `share`, `exposure`, `shell`, `sky`, `stars`, `sunRadius`, `glare`); the globe does not read them.
 - `planet.setAir(air)` writes `uLimb`, `uTint` and the haze of the ground; `shell.setAir(air.shell)` writes a `HazeShell`; `setHazeAir(uniforms, hazeAir)` writes any material that includes `HAZE_GLSL` and made its uniforms with `hazeUniforms` (Venus, Jupiter, Saturn, Neptune). `uExtinction` is written where the material has it.
 - `hazeAir(params)` turns the `HazeParams` a globe was made with into a `HazeAir`, with the defaults the shader has (`night` 0 0 0, `edge` -0.16 0.34), for a stop that writes its top knot from its look.
 
@@ -185,13 +185,15 @@ No shader text changes and no uniform is added: the setters write the uniforms t
 ```
 if (shot.air) {
   planet.setAir(shot.air)
-  shell.setAir(shot.air.shell)
+  if (shot.air.shell) shell.setAir(shot.air.shell)
 }
 ```
 
+(a stop with a material of its own: `if (shot.air?.haze) setHazeAir(material.uniforms, shot.air.haze)`)
+
 and takes out its own lines keyed to a view, a segment or a time. The top knot of the stop's `air` holds today's numbers of the hold; the engine hands the top knot through untouched at and above its height, so the hold keeps its bytes.
 
-Measured (`tests/globe-air.test.ts`, 5 tests): with the air made from the params the globe was built with, every uniform of the planet and of the shell holds the value it had, compared as JSON; the planet text is `81b01893...` and the shell text `692d6d8b...` before and after; each field lands in its uniform; the arrays of the air are copied, not kept; uniforms without a haze are refused.
+Measured (`tests/globe-air.test.ts`, 6 tests): an air with no haze, no limb or no tint leaves those uniforms as they were; with the air made from the params the globe was built with, every uniform of the planet and of the shell holds the value it had, compared as JSON; the planet text is `81b01893...` and the shell text `692d6d8b...` before and after; each field lands in its uniform; the arrays of the air are copied, not kept; uniforms without a haze are refused.
 
 ### Patch for `src/stops/mars/set.ts` (owner: mars_place_builder)
 

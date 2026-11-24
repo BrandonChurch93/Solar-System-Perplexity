@@ -16,9 +16,9 @@ export interface HazeAir {
 }
 
 export interface GlobeAir {
-  limb: number
-  tint: Rgb
-  haze: HazeAir
+  limb?: number
+  tint?: Rgb
+  haze?: HazeAir
 }
 
 export function hazeAir(p: HazeParams): HazeAir {

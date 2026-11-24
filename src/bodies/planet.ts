@@ -419,9 +419,9 @@ export class Planet {
 
   setAir(air: GlobeAir): void {
     const u = this.material.uniforms
-    u.uLimb!.value = air.limb
-    ;(u.uTint!.value as THREE.Vector3).fromArray(air.tint)
-    setHazeAir(u, air.haze)
+    if (air.limb !== undefined) u.uLimb!.value = air.limb
+    if (air.tint) (u.uTint!.value as THREE.Vector3).fromArray(air.tint)
+    if (air.haze) setHazeAir(u, air.haze)
   }
 
   setOwnGain(gain: [number, number, number]): void {

@@ -62,10 +62,25 @@ describe('the air of the globe', () => {
     p.dispose()
   })
 
+  it('writes only the parts an air holds: an air of the film with no haze, no limb or no tint leaves those uniforms alone', () => {
+    const p = planet()
+    const before = values(p.material.uniforms)
+    const film: GlobeAir & { height: number; share: number; exposure: number; sky: number; stars: number; sunRadius: number; glare: number } = { height: 1, share: 0, exposure: 1, sky: 1, stars: 1, sunRadius: 0.3, glare: 1 }
+    p.setAir(film)
+    expect(values(p.material.uniforms)).toBe(before)
+    p.setAir({ ...film, limb: 0.4 })
+    expect(p.material.uniforms.uLimb!.value).toBe(0.4)
+    expect(p.material.uniforms.uHazeTau!.value).toBe(look.haze.depth)
+    p.setAir({ ...film, haze: low.haze! })
+    expect(p.material.uniforms.uHazeTau!.value).toBe(1.5)
+    expect(p.material.uniforms.uLimb!.value).toBe(0.4)
+    p.dispose()
+  })
+
   it('sets the shell the same way and leaves the shell text as it was', () => {
     const shell = new HazeShell(look.shellHaze, { value: 0 })
     const names = Object.keys(shell.material.uniforms).sort()
-    shell.setAir(low.haze)
+    shell.setAir(low.haze!)
     const u = shell.material.uniforms
     expect(Object.keys(u).sort()).toEqual(names)
     expect(u.uHazeTau!.value).toBe(1.5)
@@ -76,7 +91,7 @@ describe('the air of the globe', () => {
 
   it('does not take the arrays of the air as its own and refuses uniforms without a haze', () => {
     const u = hazeUniforms(look.haze)
-    const air = { ...low.haze, day: [0.4, 0.3, 0.2] as [number, number, number] }
+    const air = { ...low.haze!, day: [0.4, 0.3, 0.2] as [number, number, number] }
     setHazeAir(u, air)
     ;(u.uHazeDay!.value as THREE.Vector3).x = 9
     expect(air.day).toEqual([0.4, 0.3, 0.2])
