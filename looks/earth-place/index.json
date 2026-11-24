@@ -1,9 +1,17 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T11:36:36.396Z",
- "head": "4209a71f2204dc61db065321753dbd75dc1f4954",
- "note": "walk in texels at frame 2000 flat; third commit patch waits for the slot; far band 1880 to 1902 as it stands (red, named)",
+ "pushed": "2026-11-24T11:54:10.793Z",
+ "head": "268def8c6fa551f6ae327c296003b1591f7957cc",
+ "note": "walk in texels at frame 2100 flat (textures 48, buffers 30, programs 10); the step at T read on frames; patch waits for the slot",
  "looks": [
+  {
+   "time": "2026-11-24T11:54:09.864Z",
+   "file": "20261124115409864-note-r2-limb-zoom.jpg",
+   "source": "../../../../tmp/gl/s9/r2-limb-zoom.jpg",
+   "kind": "note",
+   "label": "second named tree, draft 1917 to 1920 at three columns, limb enlarged 3 times: globe side has a hard cyan rim line, surface side none (the step at T, named red)",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T11:36:35.511Z",
    "file": "20261124113635511-note-r2-1880-1902.jpg",
@@ -90,14 +98,6 @@
    "source": "../../../../tmp/gl/s8/rise-r2-a.jpg",
    "kind": "note",
    "label": "rise 2106 to 2117 this tree",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T10:09:36.312Z",
-   "file": "20261124100936312-note-sky-ab.jpg",
-   "source": "../../../../tmp/gl/s8/sky-ab.jpg",
-   "kind": "note",
-   "label": "sky of the move, named against wide sky by height",
    "stop": "earth"
   }
  ]
