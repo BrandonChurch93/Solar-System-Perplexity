@@ -16,9 +16,9 @@ const MARS = [8.5, 3.8, 1.6, 0.7, 0.3]
 const scaleOf = (deg: number): number => 1 / (2 * Math.tan((deg * Math.PI) / 360))
 const level = (widthDeg: number, size = 4): CapOptions['levels'][number] => ({ height: capHeights(new Uint16Array(size * size), size), size, widthDeg, low: -0.002, high: 0.001 })
 const options = (o: Partial<CapOptions> = {}): CapOptions => ({ levels: MARS.map((w) => level(w)), border: [0.065, 0.074], from: [2, 1.2], cells: 128, pixel: 2e-4, ...o })
-const planet = (cap?: CapOptions): Planet => {
+const planet = (cap?: CapOptions, exactSpin = false): Planet => {
   const t = new THREE.Texture()
-  return new Planet({ map: t, mapWidth: 8, height: t, heightWidth: 8, light: look.light, haze: look.haze, grazing: look.grazing, ...(cap ? { cap } : {}) })
+  return new Planet({ map: t, mapWidth: 8, height: t, heightWidth: 8, light: look.light, haze: look.haze, grazing: look.grazing, ...(cap ? { cap } : {}), ...(exactSpin ? { exactSpin } : {}) })
 }
 
 describe('the relief cap of the globe', () => {
@@ -278,6 +278,32 @@ it('knows the foot of the eye in the frame of its plates, whatever the turn of t
     always.dispose()
   })
 
+  it('turns its ground by a cosine and a sine of the page, and the colours too only for a stop that sets `exactSpin`', () => {
+    const off = planet(options())
+    const on = planet(options(), true)
+    const vert = off.cap!.material.vertexShader
+    expect(vert).toContain('uniform vec2 uSpinTurn;')
+    expect(vert).toContain('float c = uSpinTurn.x, s = uSpinTurn.y;')
+    for (const word of ['cos(', 'sin(', 'uSpin;']) expect(vert).not.toContain(word)
+    expect(on.cap!.material.vertexShader).toBe(vert)
+    expect(off.cap!.material.uniforms.uSpinTurn).toBe(off.material.uniforms.uSpinTurn)
+    off.update(new THREE.Vector3(0, 0, 3), new THREE.Vector3(1, 0, 0), 0.187, 1, 1)
+    const turn = off.material.uniforms.uSpinTurn!.value as THREE.Vector2
+    expect(turn.x).toBe(Math.cos(0.187))
+    expect(turn.y).toBe(Math.sin(0.187))
+    expect(off.material.uniforms.uSpin!.value).toBe(0.187)
+    for (const [a, b] of [[off.material.fragmentShader, on.material.fragmentShader], [off.cap!.material.fragmentShader, on.cap!.material.fragmentShader]] as const) {
+      expect(a).toContain('vec3 d = spinY(normalize(vLocal), uSpin);')
+      expect(a).not.toContain('uSpinTurn')
+      expect(b).toContain('vec3 d = spinBy(normalize(vLocal), uSpinTurn);')
+      expect(b).toContain('uBodyToWorld * spinBy(slope, vec2(uSpinTurn.x, -uSpinTurn.y));')
+      for (const word of ['spinY', 'uSpin;', 'uSpin)']) expect(b).not.toContain(word)
+      expect(b.split('\n').length).toBe(a.split('\n').length - 1)
+    }
+    off.dispose()
+    on.dispose()
+  })
+
   it('reads the heights in the vertex shader only, by the pixel footprint as an angle and not by a format', () => {
     const cap = new ReliefCap('void main() {}', {}, options({ levels: [{ ...level(8.5), mask: new THREE.Texture() }, level(3.8)] }))
     const text = cap.material.vertexShader
@@ -359,8 +385,9 @@ async function shot(o) {
     map, mapWidth: 8, height, heightWidth: 2048,
     light: { wrap: 0.2, power: 1, gain: 1, night: [0, 0, 0], sun: [0.2, 0.15, 0.1], relief: 0, reliefNear: 0, limb: 0 },
     haze: o.haze ?? { scaleHeight: 0.01, depth: 0, day: [0, 0, 0], twilight: [0, 0, 0], strength: 0, extinction: 1, forward: 0, top: 1 },
-    patches: { textures, widthsDeg: o.levels.map((l) => l.widthDeg), spot: new THREE.Vector3(0, 0, 1), feather: 0.01, fade: [1, 2], nearDeg: 0, own: o.levels.map(() => o.own ?? true), ...(o.centresDeg ? { centresDeg: o.centresDeg } : {}) },
+    patches: { textures, widthsDeg: o.levels.map((l) => l.widthDeg), spot: new THREE.Vector3().fromArray(o.spot ?? [0, 0, 1]), feather: 0.01, fade: [1, 2], nearDeg: 0, own: o.levels.map(() => o.own ?? true), ...(o.centresDeg ? { centresDeg: o.centresDeg } : {}) },
     ...(levels.length ? { cap: { levels, border: o.border, from: o.from, cells: o.cells, pixel: o.pixel, ...(o.reachDeg ? { reachDeg: o.reachDeg } : {}), ...(o.light ? { light: o.light } : {}) } } : {}),
+    ...(o.exactSpin ? { exactSpin: true } : {}),
   })
   const cam = new THREE.PerspectiveCamera(o.vfov, o.width / o.height, o.near, 10)
   cam.position.fromArray(o.position)
@@ -373,7 +400,7 @@ async function shot(o) {
   const world = new THREE.Scene()
   world.add(planet.mesh)
   setFrame(o.frame ?? 1, 1)
-  planet.update(from, new THREE.Vector3().fromArray(o.sun ?? [0.3, 0.2, 1]).normalize(), 0, 1, 1)
+  planet.update(from, new THREE.Vector3().fromArray(o.sun ?? [0.3, 0.2, 1]).normalize(), o.spin ?? 0, 1, 1)
   const target = new THREE.WebGLRenderTarget(o.width, o.height, { type: THREE.FloatType })
   renderer.setRenderTarget(target)
   renderer.setClearColor(0x000000, 0)
@@ -398,7 +425,7 @@ window.cap = { shot }
 interface Box { north: [number, number]; east: [number, number]; value: number }
 interface HeightDef { size: number; widthDeg: number; low: number; high: number; base: number; boxes: Box[] }
 interface HazeDef { scaleHeight: number; depth: number; day: [number, number, number]; twilight: [number, number, number]; strength: number; extinction: number; forward: number; top: number }
-interface CapShot { frame?: number; centresDeg?: [number, number][]; light?: { relief: number; own: number; from?: number }; haze?: HazeDef; sun?: [number, number, number]; own?: boolean; map: [number, number, number]; levels: { rgb: [number, number, number]; size: number; widthDeg: number }[]; heights?: HeightDef[]; border: [number, number]; from: [number, number]; cells: number; pixel: number; reachDeg?: number; vfov: number; width: number; height: number; near: number; position: number[]; up: number[]; target: number[] }
+interface CapShot { spin?: number; exactSpin?: boolean; spot?: [number, number, number]; frame?: number; centresDeg?: [number, number][]; light?: { relief: number; own: number; from?: number }; haze?: HazeDef; sun?: [number, number, number]; own?: boolean; map: [number, number, number]; levels: { rgb: [number, number, number]; size: number; widthDeg: number }[]; heights?: HeightDef[]; border: [number, number]; from: [number, number]; cells: number; pixel: number; reachDeg?: number; vfov: number; width: number; height: number; near: number; position: number[]; up: number[]; target: number[] }
 interface CapRead { pixels: number[]; bytes: number; drawn: boolean; triangles: number }
 
 const filmicInverse = (v: number): number => {
@@ -666,6 +693,41 @@ describe.skipIf(!have)('the relief cap in a WebGL2 browser', () => {
     expect(Math.abs(at(on, 0) - datum)).toBeLessThan(datum * 0.01)
     expect(at(on, -1.5)).toBeGreaterThan(datum * 1.5)
     expect(at(on, 1.5)).toBeLessThan(datum * 0.5)
+    expect(errors).toEqual([])
+  }, 240000)
+
+  it('keeps its ground on the sphere and its colours on the spot while the body turns', async () => {
+    const eye = 0.001
+    const square = (latDeg: number, spin: number, exactSpin: boolean): CapShot => {
+      const body = [0, Math.sin(rad(latDeg)), Math.cos(rad(latDeg))] as [number, number, number]
+      const world = [Math.sin(spin) * body[2], body[1], Math.cos(spin) * body[2]]
+      return {
+        ...low, spin, spot: body, ...(exactSpin ? { exactSpin } : {}), levels: [{ rgb: RED, size: 8, widthDeg: 30 }, { rgb: GREEN, size: 8, widthDeg: 0.02 }], heights: [flatLevel(12)],
+        near: 1e-4, position: world.map((v) => v * (1 + eye)), up: [0, 1, 0], target: [0, 0, 0],
+      }
+    }
+    const read = async (o: CapShot): Promise<{ n: number; x: number; y: number; w: number }> => {
+      const r = await call(o)
+      expect(r.drawn).toBe(true)
+      let n = 0, x = 0, y = 0, w = 0
+      for (let j = 0; j < o.height; j++) for (let i = 0; i < o.width; i++) if (is(px(r, o, i, j), GREEN)) {
+        n++
+        x += i
+        y += j
+        if (j === o.height / 2) w++
+      }
+      return { n, x: x / Math.max(n, 1) - (o.width - 1) / 2, y: y / Math.max(n, 1) - (o.height - 1) / 2, w }
+    }
+    const wide = (0.99 * Math.tan(rad(0.01)) / (eye * Math.tan(rad(20)))) * 96
+    for (const spin of [0, 0.079, 0.187]) {
+      const ground = await read(square(0, spin, false))
+      expect(Math.abs(ground.w - wide)).toBeLessThan(1.5)
+      for (const lat of [0, 45]) {
+        const exact = await read(square(lat, spin, true))
+        expect(Math.abs(exact.w - wide)).toBeLessThan(1.5)
+        expect(Math.hypot(exact.x, exact.y)).toBeLessThan(1)
+      }
+    }
     expect(errors).toEqual([])
   }, 240000)
 })

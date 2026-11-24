@@ -18,7 +18,7 @@ const sha = (x: unknown): string => createHash('sha256').update(JSON.stringify(x
 for (let k = 0; k < config.frameCount * rate; k++) {
   const p = k / rate
   const frame = Math.floor(p)
-  const shot = film.shotAt(frame, (p + spanMid()) / config.fps)
+  const shot = film.shotAt(p, (p + spanMid()) / config.fps)
   const seg = config.segments.find((s) => frame >= s.firstFrame && frame < s.endFrame)!
   flow.at(seg, p, 0, a)
   flow.at(seg, p, shutterSpan() * FLOW.stepsPerFrame, b)

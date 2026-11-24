@@ -1,0 +1,13 @@
+# Far Sun wiring for travel_builder (src/core/types.ts, src/director/film.ts, src/space/sky.ts).
+# types.ts: FarSunState and SunState.far carry what the body needs to draw itself in the sky pass
+#   (true centre while the Sun's set is the frame, share, body turn, spin, times, exposure, burn).
+# film.ts: leaveWeight for the Sun is by distance (the globe is drawn while globeShare is above 0), not by u.
+#   sunBurn is the body's exposure climb as a function of the camera's place (Sun side by distance from the
+#   Sun, Mercury side by Mercury's size in the frame). sun.far is filled in every travel and at every stop after the Sun.
+# sky.ts: uSunFar takes the far Sun's share out of the sky's own disc term; the body is drawn at the end of
+#   the sky pass with the sky's camera, at the true centre in the Sun's frame, else at sun.dir by angular radius.
+# types.ts: FarSunState.dir is the direction the body is drawn at when it is not sun.dir.
+# film.ts: in dive and rise the body rides the stars (mercury_builder's formula): dir and body are turned by
+#   skyTurn times the inverse of the orbit turn of this stop (dive) or of the next stop (rise), and the
+#   share takes one minus shot.skyShare. sunBurn's Sun side is one minus wearShare, one law with the wear.
+# sky.ts: the far draw stands at far.dir when it is given.

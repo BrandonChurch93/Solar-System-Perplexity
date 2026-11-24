@@ -55,6 +55,7 @@ uniform float uHome;
 uniform sampler2D uGrain;
 uniform vec4 uGrainShape;
 uniform float uGrainTop;
+uniform float uGrainAlong;
 uniform vec2 uSolid;
 uniform vec3 uSolidGround;
 uniform vec2 uSolidNear;
@@ -81,6 +82,18 @@ void main() {
     vec2 coarse = uGrainShape.xy;
     vec2 fine = coarse * uGrainShape.z;
     float g = textureGrad(uGrain, uv * coarse, gx * coarse, gy * coarse).r * textureGrad(uGrain, uv * fine + 0.37, gx * fine, gy * fine).r * uGrainTop * uGrainTop;
+    for (int a = 0; a < (uGrainAlong > 0.0 ? 1 : 0); a++) {
+      vec2 ax = vec2(max(uGrainAlong / 16.0, max(abs(gx.x), abs(gy.x))), 0.0);
+      vec2 ay = vec2(0.0, max(abs(gx.y), abs(gy.y)));
+      float wide = 0.0;
+      float thin = 0.0;
+      for (int n = 0; n < 16; n++) {
+        vec2 at = uv + vec2(((float(n) + 0.5) / 16.0 - 0.5) * uGrainAlong, 0.0);
+        wide += textureGrad(uGrain, at * coarse, ax * coarse, ay * coarse).r;
+        thin += textureGrad(uGrain, at * fine + 0.37, ax * fine, ay * fine).r;
+      }
+      g = wide * thin * uGrainTop * uGrainTop / 256.0;
+    }
     strands *= mix(1.0, g, uGrainShape.w);
   }
   float edge = smoothstep(uRange.x, uRange.x + 0.03, r) * (1.0 - smoothstep(uRange.y - 0.03, uRange.y, r));
@@ -126,7 +139,7 @@ export class Ring {
         uColor: { value: new THREE.Vector3().fromArray(p.color) }, uGain: { value: 1 }, uSunL: { value: new THREE.Vector3(1, 0, 0) }, uSunW: { value: new THREE.Vector3(1, 0, 0) },
         uForward: { value: new THREE.Vector2(p.forward, p.forwardPower) }, uTurn: { value: 0 }, uRange: { value: new THREE.Vector2(p.inner, p.outer) }, uCentre: { value: new THREE.Vector3() },
         uHome: { value: 1 },
-        uGrain: { value: p.grain?.map ?? p.bands }, uGrainShape: { value: new THREE.Vector4(p.grain?.repeat[0] ?? 1, p.grain?.repeat[1] ?? 1, p.grain?.fine ?? 1, 0) }, uGrainTop: { value: p.grain?.top ?? 1 },
+        uGrain: { value: p.grain?.map ?? p.bands }, uGrainShape: { value: new THREE.Vector4(p.grain?.repeat[0] ?? 1, p.grain?.repeat[1] ?? 1, p.grain?.fine ?? 1, 0) }, uGrainTop: { value: p.grain?.top ?? 1 }, uGrainAlong: { value: 0 },
       },
       side: THREE.DoubleSide,
       blending: THREE.CustomBlending,
@@ -152,6 +165,10 @@ export class Ring {
     this.material.uniforms.uSolidGround = { value: new THREE.Vector3().fromArray(p.solid?.ground ?? [0, 0, 0]) }
     this.material.uniforms.uSolidNear = { value: new THREE.Vector2().fromArray(p.solid?.near ?? [-3, -2]) }
     this.solidAmount = p.solid?.amount ?? 0
+  }
+
+  along(turns: number): void {
+    this.material.uniforms.uGrainAlong!.value = turns
   }
 
   solid(weight: number): void {
