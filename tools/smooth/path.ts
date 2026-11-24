@@ -6,7 +6,7 @@ export interface Span { first: number; end: number }
 
 export interface CurveLimits { maxStep: number; maxRebound: number; seamFrames: number }
 
-export interface Fault { curve: string; rule: 'step' | 'halfStep' | 'climbAfterPeak' | 'fallBeforePeak' | 'mean' | 'seam' | 'halfSeam' | 'lateBrake' | 'brakeGrows' | 'letGo' | 'hump' | 'dip' | 'eye'; k: number; frame: number; value: number; limit: number; first?: number; last?: number; count?: number; points?: number; text: string }
+export interface Fault { curve: string; rule: 'step' | 'halfStep' | 'climbAfterPeak' | 'fallBeforePeak' | 'mean' | 'seam' | 'halfSeam' | 'lateBrake' | 'brakeGrows' | 'letGo' | 'hump' | 'dip' | 'eye' | 'rest'; k: number; frame: number; value: number; limit: number; first?: number; last?: number; count?: number; points?: number; text: string }
 
 // A curve that is a mean over points (the speed of the picture: ground points on a ring round the place). values[i] holds what every point gave
 // at capture frame k0 + i, null where a point has no ground under it. A step and a rebound compare the mean over one fixed set of points, the
@@ -380,6 +380,20 @@ export function longestGap(has: boolean[]): { first: number; last: number } | nu
   return out
 }
 
+// The rows of the panel of changes: the two largest changes of the pattern, then the largest changes in place up to four rows, none within apart capture frames of another.
+// A row can have a pattern and no change in place: the two are judged from different shares of the frame.
+export function peakRows<T extends { k: number; change: number | null; pattern: number | null }>(rows: T[], apart: number): T[] {
+  const peaks: T[] = []
+  const free = (row: T): boolean => peaks.every((q) => Math.abs(q.k - row.k) >= apart)
+  for (const row of rows.filter((x) => x.pattern !== null).sort((x, y) => y.pattern! - x.pattern!)) if (peaks.length < 2 && free(row)) peaks.push(row)
+  for (const row of rows.filter((x) => x.change !== null).sort((x, y) => y.change! - x.change!)) if (peaks.length < 4 && free(row)) peaks.push(row)
+  return peaks.sort((x, y) => x.k - y.k)
+}
+
+export function changeNote(row: { change: number | null; pattern: number | null }): string {
+  return 'change ' + (row.change === null ? 'not measured' : row.change.toFixed(1)) + ', pattern ' + (row.pattern === null ? 'not measured' : row.pattern.toFixed(2))
+}
+
 export function position(k: number, rate: number): string {
   const whole = Math.floor(k / rate)
   const part = k - whole * rate
@@ -421,6 +435,32 @@ export function parityFrames(segments: { id: string; stop: string; kind: string;
     for (const share of at[kind] ?? []) out.push({ segment: seg.id, kind, share, frame: Math.min(seg.firstFrame + Math.round(share * (seg.endFrame - seg.firstFrame)), seg.endFrame - 1) })
   }
   return out
+}
+
+export interface LeaveResult { rate: number; k0: number; speed: (number | null)[]; lowest: { value: number; k: number } | null; first: { value: number; k: number } | null; last: { value: number; k: number } | null; over: number | null; fault: Fault | null }
+
+// The picture round the seam from a rise into its travel: the lowest speed, the speeds at the two ends of the window, and the lowest over the
+// smaller of those two. A rise and its travel are one flight: the speed falls once and rises once and does not come to rest. Judged: the
+// lowest over the slower end against min.
+export function judgeLeave(speed: (number | null)[], k0: number, rate: number, min: number | null): LeaveResult {
+  let lowest: LeaveResult['lowest'] = null
+  let first: LeaveResult['first'] = null
+  let last: LeaveResult['last'] = null
+  speed.forEach((v, i) => {
+    if (v === null) return
+    if (!lowest || v < lowest.value) lowest = { value: v, k: k0 + i }
+    first ??= { value: v, k: k0 + i }
+    last = { value: v, k: k0 + i }
+  })
+  const low = lowest as LeaveResult['lowest']
+  const a = first as LeaveResult['first']
+  const b = last as LeaveResult['last']
+  const end = a && b ? Math.min(a.value, b.value) : null
+  const over = low && end !== null && end > 0 ? low.value / end : null
+  const fault: Fault | null = low && over !== null && min !== null && over < min
+    ? { curve: 'rest', rule: 'rest', k: low.k, frame: Math.floor(low.k / rate), value: over, limit: min, text: 'rest: the picture comes to rest between the rise and the travel: the fastest point of the body\'s edge moves ' + low.value.toFixed(2) + ' px a film frame at frame ' + position(low.k, rate) + ', ' + shown(over, 3, min) + ' of the slower end of the window, limit ' + min }
+    : null
+  return { rate, k0, speed, lowest: low, first: a, last: b, over, fault }
 }
 
 export interface SeamResult { rate: number; k0: number; speed: (number | null)[]; along: (number | null)[]; lowest: { value: number; k: number } | null; inMove: { value: number; k: number } | null; step: { value: number; k: number } | null; back: { value: number; k: number } | null; fault: Fault | null }
