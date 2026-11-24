@@ -1,9 +1,25 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-24T12:31:36.590Z",
+ "pushed": "2026-11-24T12:59:02.457Z",
  "head": "80033a732012e484fa7fecd4b44bb5c3a03d7a95",
- "note": "80033a73 pushed; the dive's limb humps 1270 to 1293 traced to the glow of the limb (0.83 to 0.19 with it off); cure being tried",
+ "note": "the limb glow as a band by angle slides over the ground (0.5 to 1.0); next try: the glow laid on the ground where the far end of the move sees it",
  "looks": [
+  {
+   "time": "2026-11-24T12:59:01.853Z",
+   "file": "20261124125901853-note-limb-ab.jpg",
+   "source": "../../../../tmp/v/limb-ab.jpg",
+   "kind": "note",
+   "label": "venus 1284, 1292, 1300: 80033a73 left, the glow of the limb off right (experiment)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T12:59:01.216Z",
+   "file": "20261124125901216-note-limbfull.jpg",
+   "source": "../../../../tmp/v/limbfull.jpg",
+   "kind": "note",
+   "label": "venus experiment, refused: the glow of the limb kept whole down to height 0.12, frames 1288 to 1328 (wide band on the limb; pattern 0.5 to 1.0 through 1277 to 1304)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T12:31:35.925Z",
    "file": "20261124123135925-note-venus-dive-changes-V.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/hv/s1276.jpg",
    "kind": "note",
    "label": "dive 1276 to 1291, merged tree with the near ground kept whole, draft",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T11:42:46.392Z",
-   "file": "20261124114246392-note-crop-rise.jpg",
-   "source": "../../../../tmp/v/off/crop-rise.jpg",
-   "kind": "note",
-   "label": "rise: same view at 1570 right limb, 1575 lower middle, 1576 right limb, 1576 upper left (offline, my mask)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T11:42:45.305Z",
-   "file": "20261124114245305-note-crop-dive.jpg",
-   "source": "../../../../tmp/v/off/crop-dive.jpg",
-   "kind": "note",
-   "label": "dive: frame, frame 8 later carried back, band of both, pattern, at 1278 right limb, 1282 and 1284 upper left limb, 1292 upper right limb (offline, my mask)",
    "stop": "venus"
   }
  ]
