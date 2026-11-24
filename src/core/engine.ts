@@ -2,6 +2,8 @@ import * as THREE from 'three'
 import { config, type FormatDef } from '../config'
 import { Accumulator } from './accumulator'
 import { OPTIONAL_EXTENSIONS, REQUIRED_EXTENSIONS, missing, needs } from './caps'
+import { Counter } from './counts'
+import { Warm } from './warm'
 import { floatTarget } from './pass'
 import { TILE, openTiles, type Tiles } from './tiles'
 import { midShutterCarry } from './held'
@@ -19,6 +21,7 @@ import { Belt } from '../space/belt/belt'
 import { Dust } from '../space/dust'
 import { Sky } from '../space/sky'
 import { implicitUniform } from './texel'
+import { setFrame, setPass } from './frame'
 import type { SkyAims } from '../space/aim'
 import { Cover, coverReaches } from '../terrain/cover'
 import type { Relief } from '../terrain/relief'
@@ -42,6 +45,8 @@ export class Engine {
   readonly renderer: THREE.WebGLRenderer
   readonly canvas: HTMLCanvasElement
   readonly sets: SetLoader
+  readonly counter: Counter
+  readonly warm = new Warm()
   readonly sky: Sky
   format: FormatDef
   assets: string
@@ -93,6 +98,7 @@ export class Engine {
     this.renderer.autoClear = false
     this.renderer.setClearColor(0x000000, 0)
     const gl = this.renderer.getContext() as WebGL2RenderingContext
+    this.counter = new Counter(gl)
     const lacking = missing(gl, needs(assets, format.id))
     if (lacking.length > 0) throw new Error('this browser lacks: ' + lacking.join(', '))
     for (const e of OPTIONAL_EXTENSIONS) gl.getExtension(e)
@@ -141,6 +147,7 @@ export class Engine {
   private applySize(): void {
     const { width, height } = this.format
     this.renderer.setSize(width, height, false)
+    setFrame(height, config.raw.formats.master.height)
     this.canvas.style.aspectRatio = width + ' / ' + height
     this.sampleTarget.dispose()
     this.accumulator.dispose()
@@ -444,7 +451,8 @@ export class Engine {
     const diag = this.probe.view
     const raw = isRaw(diag)
     const caps = r.capabilities
-    const layout = placeLayout(this.format, place, Math.min(caps.maxTextureSize, r.getContext().getParameter(r.getContext().MAX_RENDERBUFFER_SIZE) as number))
+    const edge = Math.min(caps.maxTextureSize, r.getContext().getParameter(r.getContext().MAX_RENDERBUFFER_SIZE) as number)
+    const layout = placeLayout(this.format, place, edge)
     const grad = gradUniform.value
     const key = [place.stop, place.kind, place.live ? 'live' : place.time, this.assets, this.format.id, raw ? diag : 'beauty', grad, layout.scale, layout.left, layout.right, layout.bottom, layout.top, place.matte ?? 'pair'].join('|')
     if (!place.live) {
@@ -462,6 +470,8 @@ export class Engine {
     const cam = this.place.camera
     placeCamera(cam, this.format, layout, at.camera, at.near, at.far)
     const view: RenderView = { camera: cam, diag, format: { ...this.format, width: this.format.width * layout.scale, height: this.format.height * layout.scale }, sample: 0, samples: 1, cameraPosition: at.camera.position, farLight: at.farLight, place: true, placeScale: layout.scale }
+    const master = config.formats[config.formatKeys.master]!
+    setPass(this.format.id === master.id ? 1 : layout.scale / placeLayout(master, place, edge).scale)
     for (const state of states) {
       const set = this.sets.get(state.id)!
       set.world.position.copy(state.origin).sub(at.camera.position)
@@ -484,6 +494,7 @@ export class Engine {
     r.setClearColor(0x000000, 0)
     gradUniform.value = grad
     setFine(1)
+    setPass(1)
     return picture
   }
 
@@ -575,6 +586,16 @@ export class Engine {
     hidden.forEach((m, i) => {
       m.visible = was[i]!
     })
+  }
+
+  ahead(p: number, tier = 'draft', last = config.frameCount - 1, all = false): number {
+    return this.warm.step(this, p, tier, last, all)
+  }
+
+  warmDraw(frame: number, tier: string): void {
+    const kept = [this.lastFrame, this.lastShot, this.sampleCount] as const
+    this.drawFrame(frame, tier)
+    ;[this.lastFrame, this.lastShot, this.sampleCount] = kept
   }
 
   async prefetch(ids: string[]): Promise<void> {

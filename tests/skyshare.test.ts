@@ -1,9 +1,12 @@
 import { afterAll, describe, expect, it } from 'vitest'
 import { config, type Segment } from '../src/config'
 import type { Shot } from '../src/core/types'
-import { handoverOf, skyTurnWeight, skyWeight, type SkyShares } from '../src/director/handover'
+import { forceSide, handoverOf, skyTurnWeight, skyWeight, type SkyShares } from '../src/director/handover'
 import { sharedSkyWeight } from '../src/core/skyfloor'
-import { StopPlan } from '../src/director/moves'
+import { StopPlan, type MoveParams } from '../src/director/moves'
+import { mix, ramp, smooth } from '../src/director/rig'
+import { FilmDirector } from '../src/director/film'
+import { plans } from '../src/director/plans'
 import { COVERED, coveredFit, coveredParams, coveredPlan, filmWith, restorePlans } from './lib/covered'
 
 const fps = config.fps
@@ -141,7 +144,7 @@ describe('the clock of the sky of a stop that hands over', () => {
     }
   }
 
-  it('is the engine\'s when the plan gives none: no hook answers by default, and a plan that answers with the engine\'s own schedule gets the same shots', () => {
+  it('is the engine\'s when the plan gives none: no hook answers by default, and a plan that answers the carry with the engine\'s own schedule gets the same shots', () => {
     const plain = coveredPlan(handing)
     const base = filmWith(plain)
     each(plain, (s, _f, time) => {
@@ -151,7 +154,7 @@ describe('the clock of the sky of a stop that hands over', () => {
     })
     lifts[COVERED] = 1
     answers.carry = (s, time) => skyTurnWeight(s, time)
-    answers.lift = (_s, time) => time
+    answers.lift = () => null
     const plan = own()
     const film = filmWith(plan)
     let lifted = 0
@@ -160,6 +163,30 @@ describe('the clock of the sky of a stop that hands over', () => {
       if ((film.shotAt(f, time, 'orbit').skyStars ?? 0) > 0) lifted++
     })
     expect(lifted).toBeGreaterThan(0)
+  })
+
+  it('keeps the course by the clock for a plan that gives a time: the old step from the change of view to the end of the rise, in the globe view alone', () => {
+    lifts[COVERED] = 1
+    answers.carry = () => null
+    answers.lift = (_s, time) => time
+    const plan = own()
+    const film = filmWith(plan)
+    const rise = plan.seg.rise
+    const from = handoverOf(plan.id, 'rise')!.time
+    let between = 0
+    for (let f = rise.firstFrame; f < rise.endFrame; f++) {
+      for (const o of [0, config.shutterFraction / 2, 0.5]) {
+        const time = (f + o) / fps
+        const x = smooth(ramp(from, rise.end, time))
+        const globe = film.shotAt(f, time, 'orbit')
+        expect(globe.skyStars).toBe(1 - (1 - x) * (1 - x))
+        expect(film.shotAt(f, time, 'terrain').skyStars ?? 0).toBe(0)
+        if (globe.skyStars! > 0 && globe.skyStars! < 1) between++
+      }
+    }
+    expect(between).toBeGreaterThan(rise.frames)
+    const dive = plan.seg.dive!
+    for (let f = dive.firstFrame; f < dive.endFrame; f++) for (const side of ['orbit', 'terrain'] as const) expect(film.shotAt(f, (f + 0.25) / fps, side).skyStars ?? 0).toBe(0)
   })
 
   it('takes the weight of the carry from the plan', () => {
@@ -209,5 +236,210 @@ describe('the clock of the sky of a stop that hands over', () => {
     plan = own()
     film = filmWith(plan)
     expect(() => film.shotAt(rise.firstFrame + 2, (rise.firstFrame + 2.25) / fps, 'orbit')).toThrow(/skyLiftAt/)
+  })
+})
+
+describe('the lift of the stars by the height of the lens', () => {
+  const lifts = config.raw.travel.sky.riseLift as Record<string, number>
+  const kept = lifts[COVERED]!
+  const power = config.raw.handover.skyLift.power
+  afterAll(() => {
+    lifts[COVERED] = kept
+    config.raw.handover.skyLift.power = power
+    restorePlans()
+  })
+  const lit = (skyLift: NonNullable<MoveParams['light']['skyLift']>): StopPlan => {
+    const params = coveredParams()
+    return new StopPlan(COVERED, coveredFit, { ...params, ...handing, light: { ...params.light, skyLift } })
+  }
+  // The heights a plan flies in a segment, at the borders of its film frames.
+  const heights = (plan: StopPlan, kind: 'hold' | 'terrain'): number[] => {
+    const s = plan.seg[kind]
+    const out: number[] = []
+    for (let f = s.firstFrame; f <= s.endFrame; f++) out.push(plan.eyeHeight(Math.min(f / fps, s.end - 1e-9)))
+    return out
+  }
+
+  it('is one function of the height: nothing over the surface view, whole where the hold flies, never falling as the lens climbs', () => {
+    const plan = coveredPlan(handing)
+    const low = Math.max(...heights(plan, 'terrain'))
+    const high = Math.min(...heights(plan, 'hold'))
+    expect(high).toBeGreaterThan(low)
+    for (const h of heights(plan, 'terrain')) expect(plan.skyLift(h)).toBe(0)
+    for (const h of heights(plan, 'hold')) expect(plan.skyLift(h)).toBe(1)
+    expect(plan.skyLift(0)).toBe(0)
+    expect(plan.skyLift(-1)).toBe(0)
+    expect(plan.skyLift(1e6)).toBe(1)
+    // the default: a smooth step of the logarithm of the height between the two, to the power of the config
+    expect(plan.skyLift(Math.sqrt(low * high))).toBeCloseTo(1 - Math.pow(0.5, power), 12)
+    let last = 0
+    let between = 0
+    for (let i = 0; i <= 400; i++) {
+      const lift = plan.skyLift(low * Math.pow(high / low, i / 400))
+      expect(lift).toBeGreaterThanOrEqual(last)
+      if (lift > 0 && lift < 1) between++
+      last = lift
+    }
+    expect(last).toBe(1)
+    expect(between).toBeGreaterThan(390)
+  })
+
+  it('gives both views of a rise the same lift at the same height, at every fraction of a frame, and the exposure of the sky with it', () => {
+    lifts[COVERED] = 1
+    const plan = coveredPlan(handing)
+    const film = filmWith(plan)
+    const rise = plan.seg.rise
+    const open = config.raw.travel.sky.openExposure
+    let between = 0
+    let close = 0
+    for (let f = rise.firstFrame; f < rise.endFrame; f++) {
+      for (const o of [0, config.shutterFraction / 2, 0.5, 0.75]) {
+        const time = (f + o) / fps
+        const sides = (['orbit', 'terrain'] as const).map((side) => film.shotAt(f, time, side))
+        for (const shot of sides) expect(shot.skyStars).toBe(plan.skyLift(shot.sets[0]!.height))
+        expect(sides[0]!.skyStars!).toBeCloseTo(sides[1]!.skyStars!, 9)
+        expect(sides[1]!.skyExposure).toBeCloseTo(mix(plan.p.light.skyExposure, open, sides[1]!.skyStars!) * plan.skyGain(time), 12)
+        if (sides[1]!.skyStars! > 0 && sides[1]!.skyStars! < 1) between++
+        if (sides[1]!.skyStars! > 0) close++
+      }
+    }
+    expect(between).toBeGreaterThan(rise.frames)
+    expect(close).toBeGreaterThan(rise.frames)
+    // the last frame of the rise stands at the level the open flight takes over with
+    expect(film.shotAt(rise.endFrame - 1, (rise.endFrame - 1 + config.shutterFraction) / fps, 'orbit').skyStars).toBe(1)
+  })
+
+  it('lifts nothing in a hold, a dive or a surface view, nor in a rise whose far sky is the stop\'s own', () => {
+    lifts[COVERED] = 1
+    const plan = coveredPlan(handing)
+    let film = filmWith(plan)
+    for (const kind of ['hold', 'dive', 'terrain'] as const) {
+      const s = plan.seg[kind]!
+      for (let f = s.firstFrame; f < s.endFrame; f++) {
+        expect(film.shotAt(f, (f + 0.25) / fps).skyStars ?? 0).toBe(0)
+        if (kind === 'dive') for (const side of ['orbit', 'terrain'] as const) expect(film.shotAt(f, (f + 0.25) / fps, side).skyStars ?? 0).toBe(0)
+      }
+    }
+    lifts[COVERED] = 0
+    film = filmWith(coveredPlan(handing))
+    const rise = plan.seg.rise
+    for (let f = rise.firstFrame; f < rise.endFrame; f++) for (const side of ['orbit', 'terrain'] as const) expect(film.shotAt(f, (f + 0.25) / fps, side).skyStars ?? 0).toBe(0)
+  })
+
+  it('takes the heights and the power of the stop, and the power of the config where the stop names none', () => {
+    const own = lit({ heights: [0.01, 1], power: 2 })
+    expect(own.skyLift(0.01)).toBe(0)
+    expect(own.skyLift(0.005)).toBe(0)
+    expect(own.skyLift(1)).toBe(1)
+    expect(own.skyLift(0.1)).toBeCloseTo(0.75, 12)
+    expect(own.skyLift(Math.pow(10, -1.5))).toBeCloseTo(1 - Math.pow(1 - smooth(0.25), 2), 12)
+    const plain = coveredPlan(handing)
+    const strong = lit({ power: 3 })
+    const span = lit({ heights: [0.01, 1] })
+    for (const h of [0.002, 0.02, 0.1, 0.5, 0.9, 2]) {
+      expect(strong.skyLift(h)).toBeCloseTo(1 - Math.pow(1 - plain.skyLift(h), 3 / power), 12)
+      expect(span.skyLift(h)).toBeCloseTo(1 - Math.pow(1 - smooth(ramp(Math.log(0.01), 0, Math.log(h))), power), 12)
+    }
+    config.raw.handover.skyLift.power = 2 * power
+    const other = coveredPlan(handing)
+    for (const h of [0.002, 0.02, 0.1, 0.5, 0.9, 2]) expect(other.skyLift(h)).toBeCloseTo(1 - Math.pow(1 - plain.skyLift(h), 2), 12)
+    config.raw.handover.skyLift.power = power
+  })
+
+  it('refuses heights out of order, a power that is not above 0 and an upper height over the end of the rise', () => {
+    expect(() => lit({ heights: [1, 0.01] }).skyLift(0.1)).toThrow(/heights of the star lift/)
+    expect(() => lit({ heights: [0, 1] }).skyLift(0.1)).toThrow(/heights of the star lift/)
+    expect(() => lit({ heights: [0.5, 0.5] }).skyLift(0.1)).toThrow(/heights of the star lift/)
+    expect(() => lit({ power: 0 }).skyLift(0.1)).toThrow(/power of the star lift/)
+    expect(() => lit({ power: -1 }).skyLift(0.1)).toThrow(/power of the star lift/)
+    const plan = coveredPlan(handing)
+    const end = plan.eyeHeight(plan.seg.rise.end - 1e-9)
+    expect(() => lit({ heights: [0.01, end * 1.01] }).skyLift(0.1)).toThrow(/rise ends at/)
+    expect(() => lit({ heights: [0.01, end] }).skyLift(0.1)).not.toThrow()
+  })
+})
+
+describe('the lift of the stars over the stops of the film', () => {
+  const lifts = config.raw.travel.sky.riseLift as Record<string, number>
+
+  it('climbs with the lens through every rise that ends in the open flight, is the same on both sides where the view changes and stands whole where the flight takes over', () => {
+    restorePlans()
+    const film = new FilmDirector(plans)
+    let byHeight = 0
+    for (const p of plans) {
+      const rise = p.seg.rise
+      const level = config.stopIds.indexOf(p.id) > 0 ? lifts[p.id] ?? 0 : 0
+      const clock = p.skyLiftAt(rise, (rise.start + rise.end) / 2) !== null
+      let last = 0
+      for (let f = rise.firstFrame; f < rise.endFrame; f++) {
+        for (const o of [0, config.shutterFraction / 2, 0.5]) {
+          const time = (f + o) / fps
+          const shot = film.shotAt(f, time)
+          const stars = shot.skyStars ?? 0
+          if (level === 0) expect(stars).toBe(0)
+          if (level === 0 || clock) continue
+          expect(stars).toBe(level * p.skyLift(shot.sets[0]!.height))
+          // the lens of a rise may sink for a frame or two where it leaves the surface view: the lift follows the height, not the clock
+          if (shot.sets[0]!.height >= p.eyeHeight(Math.max(time - 1 / fps, rise.start))) expect(stars).toBeGreaterThanOrEqual(last - 1e-12)
+          last = stars
+        }
+      }
+      if (level === 0) continue
+      // where the open flight takes over: the last moment of the rise and the first of the travel
+      const end = film.shotAt(rise.endFrame - 1, rise.end - 1e-9).skyStars!
+      const next = film.shotAt(rise.endFrame, rise.end + 1e-9).skyStars!
+      expect(end).toBeCloseTo(level, 6)
+      expect(next).toBeCloseTo(end, 6)
+      if (clock) continue
+      byHeight++
+      const h = handoverOf(p.id, 'rise')
+      if (h) {
+        const frame = Math.floor(h.time * fps + 1e-9)
+        // each side reads the height of its own lens, and a plan may find its twin by a numeric solve: the two agree as far as the heights do
+        const [globe, close] = [film.shotAt(frame, h.time, 'orbit'), film.shotAt(frame, h.time, 'terrain')]
+        expect(globe.skyStars!).toBe(level * p.skyLift(globe.sets[0]!.height))
+        expect(close.skyStars!).toBe(level * p.skyLift(close.sets[0]!.height))
+        expect(globe.skyStars!).toBeCloseTo(close.skyStars!, 6)
+      }
+      // nothing lifts in the hold, the dive and the surface view
+      for (const s of [p.seg.hold, p.seg.dive, p.seg.terrain]) {
+        if (!s || s.start >= rise.end) continue
+        for (let f = s.firstFrame; f < s.endFrame; f += 7) expect(film.shotAt(f, (f + 0.25) / fps).skyStars ?? 0).toBe(0)
+      }
+    }
+    expect(byHeight).toBeGreaterThan(0)
+  })
+
+  it('reads the same heights whatever side the harness forces: a plan whose forced close view stays low at the end of the rise lifts as it does on the film\'s path', () => {
+    restorePlans()
+    const fresh = (p: StopPlan): void => {
+      ;(p as unknown as { lifts?: unknown }).lifts = undefined
+    }
+    let low = 0
+    try {
+      for (const p of plans) {
+        const rise = p.seg.rise
+        const level = config.stopIds.indexOf(p.id) > 0 ? lifts[p.id] ?? 0 : 0
+        if (level === 0 || p.skyLiftAt(rise, (rise.start + rise.end) / 2) !== null) continue
+        const end = p.eyeHeight(rise.end - 1e-9)
+        const at = [0.001, 0.01, 0.03, 0.1, 0.3, 1, 2, 3, end]
+        fresh(p)
+        const film = at.map((h) => p.skyLift(h))
+        for (const side of ['terrain', 'orbit'] as const) {
+          forceSide(side)
+          fresh(p)
+          if (side === 'terrain' && p.eyeHeight(rise.end - 1e-9) < 0.5 * end) low++
+          expect(at.map((h) => p.skyLift(h))).toEqual(film)
+        }
+        forceSide(null)
+        fresh(p)
+        expect(film[film.length - 1]).toBe(1)
+      }
+    } finally {
+      forceSide(null)
+      for (const p of plans) fresh(p)
+    }
+    // the case that failed in the harness: a close view that does not climb with the globe's camera when it is forced past the change of view
+    expect(low).toBeGreaterThan(0)
   })
 })

@@ -133,9 +133,11 @@ Type: `SetContext.texture` takes `TextureOptions` from `src/core/types.ts` (owne
 +export interface TextureOptions { srgb?: boolean; mips?: boolean; repeat?: boolean; mirror?: boolean; anisotropy?: number; flipY?: boolean; linear?: boolean; channels?: 1 }
 ```
 
-## 4. A centre per patch level
+## 4. A centre per patch level (`centresDeg`)
 
-Not built. The Mars builder measured that it would save 18 MB, not a level.
+`patches.centresDeg: [[east, north], ...]`, one pair per level, degrees. The plate of a level stays gnomonic about `patches.spot`, north up; its square is moved in that plane by the tangent of the two angles: it spans centre - tan(width / 2) to centre + tan(width / 2) on each axis, in the plane's unit (tangent of the angle from the spot). Asked by the Mars builder for the corners of the frame the eye's foot leaves soft (MAIL 454 item 4). The text gets `uniform vec2 uPatchCentre[slots];` and reads `(g - uPatchCentre[i])` where it read `g`; with those two taken out it is the text without the option, and a stop that gives no centres keeps its text (`81b01893...`). No sampler. The cap draws the planet's text, so the colour follows there too. The heights of a cap stay centred on the spot (its grids are one lattice about it).
+
+Measured (`tests/globe-levels.test.ts`, `tests/globe-cap.test.ts`): a level 6 degrees wide with centre 3 east shows from 0 to 6 east and from 3 south to 3 north, with centre 3 north the same turned, on the sphere and on the cap.
 
 ## 5. Haze glow about a direction of the stop (`glow`)
 
@@ -171,6 +173,179 @@ Off: a set with own levels and no `ownGain` keeps the text it had (sha256 `813ce
 
 Measured in `tests/globe-gl.test.ts` (128 pixel row through an own level of 30 degrees over a lit level): gain 1 1 1 gives the pixels of the build without the option, exactly; with gain 2 1 0.5 the centre pixel is the scene value of the texel times the gain to 1e-5; the channel with gain 1 keeps its values exactly; across the feather the other two channels move by `w * scene * (gain - 1)` to 1e-4 with `w` the weight read from the channel with gain 1; the pixels the own level does not reach are exactly those of the lit level alone.
 
+## 7. The air of the globe by the eye's height (`setAir`)
+
+Second review note, plan F: nothing in the picture may come by the clock or by the view. The engine (handover_engineer, type `Air` in `src/core/types.ts`) mixes the knots of a stop's `air` params over the log of the eye's height and hands `shot.air` per shutter sample. In `src/bodies/air.ts`:
+
+- `HazeAir = { depth, scaleHeight, day, twilight, night, edge: [from, to], strength, extinction, forward }`, the numbers of `HAZE_GLSL`.
+- `GlobeAir = { limb?, tint?, haze?: HazeAir }`, the part of `Air` the globe reads; each part is optional as in the engine's `Air` (agent/engine-handover dddef05: a body has a part at every height or at none) and `planet.setAir` writes only the parts the air holds. `Air` has more fields (`height`, `share`, `exposure`, `shell`, `sky`, `stars`, `sunRadius`, `glare`); the globe does not read them.
+- `planet.setAir(air)` writes `uLimb`, `uTint` and the haze of the ground; `shell.setAir(air.shell)` writes a `HazeShell`; `setHazeAir(uniforms, hazeAir)` writes any material that includes `HAZE_GLSL` and made its uniforms with `hazeUniforms` (Venus, Jupiter, Saturn, Neptune). `uExtinction` is written where the material has it.
+- `hazeAir(params)` turns the `HazeParams` a globe was made with into a `HazeAir`, with the defaults the shader has (`night` 0 0 0, `edge` -0.16 0.34), for a stop that writes its top knot from its look.
+
+No shader text changes and no uniform is added: the setters write the uniforms the globe has today. A stop that never calls them keeps every byte. A stop turns it on in its `update`:
+
+```
+if (shot.air) {
+  planet.setAir(shot.air)
+  if (shot.air.shell) shell.setAir(shot.air.shell)
+}
+```
+
+(a stop with a material of its own: `if (shot.air?.haze) setHazeAir(material.uniforms, shot.air.haze)`)
+
+and takes out its own lines keyed to a view, a segment or a time. The top knot of the stop's `air` holds today's numbers of the hold; the engine hands the top knot through untouched at and above its height, so the hold keeps its bytes.
+
+Measured (`tests/globe-air.test.ts`, 6 tests): an air with no haze, no limb or no tint leaves those uniforms as they were; with the air made from the params the globe was built with, every uniform of the planet and of the shell holds the value it had, compared as JSON; the planet text is `81b01893...` and the shell text `692d6d8b...` before and after; each field lands in its uniform; the arrays of the air are copied, not kept; uniforms without a haze are refused.
+
+### Patch for `src/stops/mars/set.ts` (owner: mars_place_builder)
+
+Today `low` and `near` are already functions of the log of the eye's height, but `ending` (the segment), `lit` (the retreat's clock) and `diveT` switch them. With the air:
+
+```
+-      const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
+-      const lit = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0
+-      light.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()
++      const air = shot.air
++      if (!air) throw new Error('mars needs the air of its params')
++      light.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, air.sunShare ?? 0).normalize()
+...
+-      const low = ending ? 0 : 1 - smooth(...)
+-      (the lines that write uTint, uHazeDay, uHazeTau, uHazeH, uHazeEdge of the planet and of the shell, and the `near` mixes over them)
++      planet.setAir(air)
++      shell.setAir(air.shell)
++      const low = air.share
+```
+
+and the numbers that stay in the set (`uGrazingShape.x`, `uGrazingDetail.w`, `uVignette`, the gains of halo and glint, the glow colours, the own gain) read `air.share` or their own knot field instead of `low`, `near`, `ending` and `diveT`. The knots: the heights `descent.high` 0.7, `near.high` 0.03, `descent.low` 0.05 and `near.low` 0.0022 of today, each with the values today's lines give at that height, the top knot equal to `look.haze`, `look.shellHaze`, tint 1 1 1 and `look.light.limb`. The curve between two knots is the engine's, not today's product of two smoothsteps, so dive frames move a little and hold frames do not. The light of the retreat (`lit`) is not air; it needs its own rule by height or by distance from the stop and is the stop builder's and the engine's to settle.
+
+## 8. Relief cap (`cap`)
+
+Second review note, plan F: relief as geometry on the globe itself from the height where the tallest thing shifts a pixel. `src/bodies/cap.ts`, class `ReliefCap`, turned on by `cap` in the options of `Planet`:
+
+```
+cap: {
+  levels: [{ height, size, widthDeg, low, high, mask? }, ...],   coarse to fine
+  border: [inner, outer],     radii of ground distance about the spot; the height goes to 0 between them
+  from: [high, low],          heights of the eye in radii; the relief grows from 0 at `high` to full at `low`, over the log of the height
+  cells: n,                   cells along the side of each level, a multiple of 64
+  pixel: radians,             the angle of one pixel row of the master format (also `cap.setPixel`)
+  feather, fade, reachDeg     optional
+}
+```
+
+What a stop hands: square gnomonic plates of heights about `patches.spot`, north up, row 0 at the north edge, texel centres at (i + 0.5) / N, raw uint16, radii over the unit sphere = low + v / 65535 * (high - low). The stop reads the file with `ctx.buffer(path)` and makes the texture with `heightTexture(ctx, new Uint16Array(buffer), size)` from `src/core/sets.ts`: the heights stay 16 bit integers on the card (`R16UI`, nearest, with a mip chain made by a 2 by 2 box in JS), are counted in the set's bytes (2 bytes a texel plus a third for the mips: 10.67 MB for 2048 squared) and are disposed with the set.
+
+What it draws:
+
+- A mesh, child of `planet.mesh`, in the same depth buffer. Instanced patches (64 by 64 to a level) on one integer lattice per level, the vertices on the texel centres of the level (of its mip when `cells` is less than `size`, of the texels and the points between when it is more). A coarser grid drops the patches that lie wholly inside the next finer square less two of its cells, so the grids overlap in a band and there is no T junction. `reachDeg` adds grids of twice the width each, with no height, out to that half angle, so the border against the 320 segment sphere can lie beyond the horizon.
+- Vertex shader only reads the heights (`usampler2D`, `texelFetch`, bilinear and between two mips by hand). The level of detail is the larger of the pixel's footprint (`pixel` times the distance of the vertex from the eye: an angle, no format in it) and the cell of the grid. Levels blend coarse to fine with the feather of the plates (0.12 of the width) and the fade of the patch levels (`fade`, in texels of the level above per pixel). Position = direction times (1 + height); the varying `vLocal` stays the undisplaced direction, so the fragment text reads colour, levels and light at the place straight under the point: colour is to be laid as a map from straight above.
+- Fragment text: the planet's own text for its option set, without one line; the uniforms are the planet's own objects, so `setAir`, `setOwnGain`, `setGlow` and every uniform a stop writes on the planet hold on the cap.
+- The sphere under it: the planet's text gets `uniform float uCapCut;` and one `discard` line. The cut is 0 and the cap is not drawn while the eye is at or above `from[0]`; below it the sphere is cut one cell inside the cap's outer edge.
+- `cap.setSink(depth, radius)` with a `mask` beside a level: the cap sinks by `depth` (radii) where the mask is 1, within `radius` (radians of ground) of the eye's foot, so a close view's own mesh wins the depth test there (asked by handover_engineer; the stop sets both by `air.height`).
+
+- Grids by pixel footprint (`fine`, default 1): a grid is drawn only while the cells of its parent are larger than `fine` pixels (of `pixel`, an angle) at the nearest ground the eye can see in it; the finest grid drawn is drawn whole. The eye's height less the highest `high` of the levels and the distance of its foot from the grid's square decide, nothing else. `fine: 0` draws every grid always. Why: triangles far under a pixel give wrong screen derivatives in the fragment text (the renderer snaps vertices to a sixteenth of a pixel), seen on Mars as a noisy square over the finest levels from 2.4 radii down to about 0.1. With `fine: 1` the cells of the finest grid drawn lie between about 0.45 and 1 pixel of the 1080 row format, twice that at 2160 rows; `fine: 0.5` halves them.
+
+- Light of its own heights (`light: { relief, own, from? }`, numbers of the stop; `cap.setLight(relief, own)` per frame; MAIL 431 item 3, MAIL 454 item 2). The vertex shader takes the normal of the height pyramid at the vertex: central differences of the same read that places the vertex, over half the larger of pixel footprint and cell to each side, with the tangents of the gnomonic direction written out (no differences of positions). It goes to the fragment text as a varying. `relief` (1 is the true normal) adds the difference between that normal and the ball's to the normal the lit levels are shaded with: same Sun, wrap, curve and night as the ball. `own` multiplies the scene value of the own levels by 1 + lift, lift = clamp((nc.s - n0.s) / max(n0.s + wrap, 0.06), -0.85, 1.6), nc the heights' normal, n0 the ball's (the law of the wrap relief), for plates that carry no slope light of their own. The normal is that of the heights as baked: at full wherever the cap is drawn, not multiplied by the share of the band, not by the border, and without the sink. Only the displacement comes in by the band.
+- `light.from` (a height of the eye in radii, above the band's top; `Infinity` is allowed): the cap is drawn from that height down, level above the band, lit by its heights at full. Without it the cap is drawn from the band's top as before. For a stop whose plates have no slope light, so that the ground is lit the same from the hold down. Cost: the cap's vertex work in every frame under that height.
+- Without `light` the cap has no such varying, no uniform and four height reads a vertex fewer.
+- Haze to its own surface (always with the cap, no number): the height of the vertex as drawn goes to the fragment text, and the haze depth is measured along the view ray from the eye to the point at that height over the datum, not to the ball, by `airDepth` of the chunk below. The density at a height is exp(-height / scale height) at both ends, not held at the datum's, so ground under the datum has more air over it.
+
+### One air to the ground (`GROUND_AIR_GLSL`, MAIL 454 item 3)
+
+`src/bodies/haze.ts` exports a chunk for any material that draws ground under the air of a body, the cap and a stop's close view alike. It goes after the haze text (`hazeGlsl(glow)` or `HAZE_GLSL`), whose uniforms and `hazeCh`, `hazeLight` it uses:
+
+```
+float airDepth(float ha, float ca, float hb, float cb, float scaleHeight, float depth)
+float airDepthTo(vec3 eye, vec3 point, float scaleHeight, float depth)
+vec3  airOver(vec3 col, float tau, float extinction, vec3 up, vec3 dir)
+```
+
+- `airDepth`: optical depth along the straight ray from the eye to a point of the ground. `ha`, `hb`: heights of the eye and of the point over the datum, in radii of the body (negative under the datum). `ca`, `cb`: cosine between the ray's direction (eye to point) and the local up at the eye and at the point. `scaleHeight`, `depth`: `uHazeH`, `uHazeTau`, the `scaleHeight` and `depth` of `Air.haze`. Three cases: the ray rises at the eye; it descends at both ends; it passes its lowest point between them.
+- `airDepthTo`: the same from two positions measured from the body's centre in radii. In float32 the direction of a point nearer than about 1e-5 radii is coarse; a close view that has heights and cosines of its own calls `airDepth`.
+- `airOver`: the colour seen through that air: `col * exp(-tau * extinction) + hazeLight(up, dir) * (1 - exp(-tau))`, `up` the local up at the point, `dir` the ray's direction, `extinction` the `uExtinction` of `Air.haze`.
+- The glow of a haze made with `glow: true` is read by `hazeLight`, so it is a number of the air too: `HazeAir` has `glow?: Rgb` and `glowPower?: number`, both or neither, and `setHazeAir` writes them where the uniforms hold a glow and the air names one. The direction of the glow stays the stop's (`setHazeGlow`).
+- A material takes its uniforms from `hazeUniforms(params)` plus `uExtinction`, writes them per frame with `setHazeAir(material.uniforms, shot.air.haze)`, and sets `uSunW` (and `uCam` if it uses it).
+- `airDepth(ha, ca, hb, cb, scaleHeight, depth)` is also exported as a TypeScript function with the same lines, for a stop's tools.
+- It is the ball's own law: with the point on the datum it is the depth the planet's text gives the ground. The planet's text for a stop without a cap does not hold the chunk.
+- Measured against the integral of exp(-h / H) along the ray on the sphere (H 0.003, eye 0.0005, 0.002 and 0.01 radii up, rays from straight down to 17 degrees up, distances 1e-5 to 0.1 radii): the depth grows with the distance in every case and lies between 0.84 and 1.57 of the integral: 0.96 straight down, 0.90 at 17 degrees down or up, 0.87 at 3 degrees, 1.2 to 1.4 at half a degree, 1.57 for a level ray at short range, 1.0 to 1.1 at 0.1 radii. The spread is the Chapman term of the ball (`hazeCh`), kept so that the ball and the ground agree; a change of it would change every hold.
+
+Off: a planet without `cap` keeps its text (`81b01893...`, own `813ceb84...`), has no child mesh and no uniform with `Cap` in its name. The text of the sphere of a planet with a cap is the text it had before these two; only the cap's own text differs.
+
+Not there yet: no cast shadow (advice to a stop: multiply it into the colour plates it bakes from the same heights and Sun; a shadow plate would cost a sampler of the 16 and 5.6 MB a level), no march in the fragment shader.
+
+Other owners: `src/core/caps.ts` needs `MAX_VERTEX_TEXTURE_IMAGE_UNITS: 10` and `MAX_COMBINED_TEXTURE_IMAGE_UNITS: 26` (on agent/engine-handover 051a2226). `SetContext` in `src/core/types.ts` is not changed: `heightTexture` is a function beside the loader and finds the set's counter through the context, also through a copy of it (`{ ...ctx }`).
+
+Measured on the synthetic height (`tests/globe-cap.test.ts`, 11 tests in node and 10 in the harness browser, pictures of 96 to 192 pixels, float target):
+
+- Every height 0, eye above the spot: no pixel differs from the globe without a cap by more than 1e-6. Eye 0.02 radii up looking along the ground: under 1 percent of the values differ by more than 1e-4.
+- Eye above the band: the picture equals the picture of a globe without the option value for value, the triangle count is the sphere's, and the set's bytes rise by exactly the heights with their mips.
+- A ridge 0.03 radii tall seen from 0.02 radii up: the column through it has ground, then sky; the red ground behind the ridge is gone; its crest stands more than 4 rows above the horizon of the sphere and within 2.5 rows of the row computed from the geometry.
+- A trough 0.04 radii deep: the far ground moves down by more than 3 rows and every pixel the sphere covered is still covered (the sphere does not close the trough, the cap leaves no hole).
+- Rim: a bump inside the border seen from four sides at 0.01 radii, with and without a skirt of 20 degrees: every pixel the sphere covered is covered.
+- Pixel as an angle: a ridge one texel wide has its crest at the same share of the picture height at 96 and at 192 rows (within one row of 96); with a pixel 400 times wider it stands less than 0.6 as tall.
+- Light: a mesa 0.01 radii tall seen from above, Sun 45 degrees up in the east. Without `light` no pixel of the row through it differs from the level ground. With the strength of its kind at 1 (own levels: `own`; lit levels: `relief`) the east wall is brighter than without by more than 10 percent, the west wall darker by more than 20 percent, the level ground and the mesa's top within 1 percent; with only the other strength at 1 every pixel of the row is within 1 percent of the picture without `light`.
+- Light above the band (`light.from`): the same mesa with the eye above the band. Without `from` the cap is not drawn and the picture is the globe's value for value. With `from` above the eye the walls are lit as below the band (east over 10 percent brighter, west over 20 percent darker, within 0.05 of the ratio below the band), the level ground within 1 percent, and the cover of every pixel is the globe's.
+- Haze: a globe with haze (scale height 0.01, depth 0.4) seen from above. Every height 0: no value differs from the globe without a cap by more than 2e-5. A pit 0.02 radii deep is more than 1.5 times as bright in the haze as the datum beside it, a mesa 0.02 tall less than half as bright, the datum itself within 1 percent.
+
+### Measured on Mars (plan of `agent/mars-place` 632d7441, first bake c49c7dd5, set wired in a scratch worktree only)
+
+Eye path of the dive: hold 2.49 to 2.4208 radii (frame 2400), 1.92 at 2406, 1.28 at 2409, 0.032 at 2430, 0.0021 at 2448, view change at frame 2454.25 with 0.00172 radii, field 30 degrees at the hold to 60 at the view change.
+
+- Band `from: [2.4, 2.0]`: frames 2401.8 to 2405.6. Shift of the full relief at 3840 by 2160 (largest over the cap, displaced against undisplaced point, numpy on the height files): 0.55 px at 2400, 0.52 at the band's top, 0.39 at its bottom, 0.57 at 2407, 1.10 at 2409, 2.7 at 2412, 10.8 at 2418. The drawn shift (share times full) rises from 0 to 0.39 px over the band. The full relief passes half a pixel on the way down at frame 2406.6 (1.80 radii).
+- Hold: frame 2325 with the cap built and not drawn has the sha256 of the frame without the option (`fd128b1a...`, draft).
+- The swap of sphere for cap at the band's top, with every height 0 and the cap forced on at frame 2400 (draft, against the frame without a cap): 10.7 percent of the pixels differ, 201519 by 1 of 255, 13789 by 2, 3635 by 3, 2171 by 4 or more, largest 27, at fine detail of the plates. The cap lies on the true sphere and the sphere mesh on chords of 1.125 degrees, so the ground moves by a part of a pixel; before `fine` the same test gave a square of noise with differences up to 178.
+- Grids over the dive with `fine: 1`: the 68 degree grid alone down to frame 2409.5 (1.18 radii), 34 from there, 17 from 2414.75 (0.47), 8.5 from 2419.25 (0.21), 3.8 from 2424.25 (0.089), 1.6 from 2430 (0.032), 0.7 from 2436 (0.011), 0.3 from 2441 (0.0047). Frame 2448 is the same picture byte for byte with `fine` 0, 0.5 and 1 (every grid drawn); frame 2409 loses the noise.
+- Gap at the view change, 3840 by 2160, between the cap's triangles (vertices on the texel centres) and the bilinear surface through the same data, outside the close view, each level where it is the finest: `cells` = `size`: largest 2.8 / 11.0 / 14.4 / 12.9 / 7.0 px for the levels 8.5 / 3.8 / 1.6 / 0.7 / 0.3, 99.9th percentile 0.35 / 1.13 / 3.4 / 3.3 / 0.69, 99th 0.13 / 0.12 / 0.65 / 0.55 / 0.23; `cells` = 2 `size`: largest 0.71 / 2.7 / 3.6 / 3.2 / 1.75. A cell there is 1.2 px across in the middle and up to 7 px at the near edge of a level's ring. The large gaps are steps of the bake: largest step between two neighbours 1725 m in a 246 m texel on the seam of the two height sources, 1767 m in a 20 m texel inside the close view's own part; outside both the 99.9th percentile of the step is 294 / 188 / 118 / 49 / 16 m. Sent to mars_place_builder with rows and columns.
+- Cost: a draft still (1920 by 1080, 1 sample) takes 21 s without the cap at 2409 and 2430 and 36 s at 2448; with the cap 28 s, 53 s and 67 s (`cells` 2048, `fine` 1).
+- Memory: 10.67 MB a level of 2048 with its mips, 53.3 MB for five, counted in the set's bytes; the masks are one channel textures of the stop.
+- Pictures (looks, folder engine-globe): 2430 and 2448 globe alone with and without the cap; 2447, 2448, 2449 in the film's own view. The walls show streaks: the colour of the plates is pulled down steps one texel wide.
+
+### On the heights baked again (`agent/mars-place` f95c3606, no slope steeper than 2, same scratch wiring)
+
+- Steps of the bake, largest between two neighbours of a level: 491 / 220 / 92 / 40 / 17 m in texels of 246 / 110 / 46 / 20 / 9 m (before: 1725 m and 1767 m); none over 2 texel widths on the seam, inside the close view's part or outside.
+- Gap at the view change (frame 2454.25, 0.00172 radii), 3840 by 2160, same measure as above, each level where it is the finest, all the ground in frame: `cells` = `size`: largest 3.1 / 3.6 / 3.9 / 1.9 / 0.8 px, 99.9th percentile 0.44 / 1.34 / 1.21 / 0.71 / 0.32, share of the cells over half a pixel 0.08 / 0.39 / 1.2 / 0.36 / 0.014 percent. `cells` = 2 `size`: largest 0.78 / 0.91 / 0.98 / 0.46 / 0.20 px, 99.99th percentile 0.35 / 0.58 / 0.47 / 0.25 / 0.13, share over half a pixel 0.001 / 0.015 / 0.007 / 0 / 0 percent. The measure falls with the square of the cells, so 3 `size` (6144, a multiple of 64) would give 0.43 px at most; not rendered.
+- Draft stills of the film's own view 2409, 2430, 2447, 2448, 2449 (`cells` 2048, `fine` 1): the curtain walls and streaks of the first bake are gone. 2447 to 2448 and 2448 to 2449 differ by a mean of 10.6 and 10.9 of 255 over the frame (first bake 12.2 and 12.2; the eye moves), no pop seen in the three. Time 38 s, 44 s, 68 s, 67 s, 66 s; without the cap 20 s, 21 s, 36 s (2409, 2430, 2448).
+- One still at 3840 by 2160, frame 2448, one sample (`--format uhd --tier draft`), `fine` 0.5: `cells` 4096 takes 234 s, `cells` 2048 takes 108 s. Between the two 6.6 percent of the pixels differ, 0.008 percent by more than 8 of 255, 0.0007 percent by more than 32, largest 55. Read one to one, the rims, the mesa and the horizon show no facet in either. Not a final: one sample, no shutter.
+
+### The swap of sphere for cap in the film's terms (MAIL 431 item 2)
+
+Review tier, capture rate 2, 1920 by 1080, 16 samples a frame, heights of f95c3606, `cells` 2048, `fine` 1, pictures k = 2 times the film frame. The band's top (2.4 radii, frame 2401.8) lies between k 4803 and k 4804: 4803 is the last picture of the sphere alone, 4804 the first with the cap. Mean absolute change of the picture into each k, of 255:
+
+| into k | 4800 | 4801 | 4802 | 4803 | 4804 (swap) | 4805 | 4806 | 4807 | 4808 |
+|---|---|---|---|---|---|---|---|---|---|
+| with the cap | 3.482 | 4.216 | 5.800 | 7.401 | 8.918 | 10.338 | 11.515 | 11.921 | 11.539 |
+| without (`nocap`) | | | | 7.401 | 8.924 | 10.343 | 11.522 | | |
+
+- 4802 and 4803 are byte equal with and without the cap (the cap is built and not drawn).
+- The picture with the cap against the picture without it: k 4804 mean 0.031, largest 15, 6.7 percent of pixels differ, 0.05 percent by more than 2, none by more than 8; k 4805 mean 0.032, largest 20; k 4806 mean 0.036, largest 25.
+- The swap is 0.35 percent of the change the film makes in that step (0.031 of 8.92). The step into 4804 is 1.8 percent over the mean of its four neighbours (8.918 against 8.764) and 0.5 percent over the mean of the two beside it (8.870), with or without the cap. Under a tenth: it stays, no finer sphere built.
+- With the light and the haze of the cap's own surface in (`light: 1, 1`), k 4804 differs from the same picture before them on 0.06 percent of pixels, by 1 of 255.
+- Time of a review picture: 25 s before the swap, 84 s after it, 182 s with `light`.
+
+### Light and haze of the cap on Mars (heights of f95c3606, plates that still carry painted light, draft, scratch wiring)
+
+- Haze to the own surface, no light option, against the same frame before: 2448 mean 8.86 of 255, brighter by 8.6, 29 percent of pixels by more than 8, largest 66 (the canyon floor lies down to 0.0022 radii under the datum); 2430 mean 0.67.
+- `light: { relief: 1, own: 0 }` on top: 2448 changes on 0.01 percent of pixels, 2430 on 0.3 percent, 2409 on 1.5 percent (largest 72): the close levels of this stop are own levels.
+- `light: { relief: 1, own: 1 }` on top: 2448 mean 1.17, 16.6 percent of pixels by more than 2, 3.6 percent by more than 8, largest 86; 2430 mean 1.65, 9.1 percent by more than 8. 2447 to 2448 and 2448 to 2449 differ by a mean of 7.9 and 8.5 (before 10.6 and 10.9). Read one to one at 2448 no facet and no noise is seen on the walls.
+- Cost, draft still: 2430 44 s without `light`, 77 s with; 2448 68 s and 113 s (36 s without a cap).
+- The strengths are the stop's. With plates without painted light the levels would be lit levels (`own: false`) and `relief` 1 alone lights them.
+
+Not closed: by the measure the gap is under one pixel with `cells` = 2 `size` and under half a pixel only with 3 `size`; no march in the fragment text. The sink is not driven on Mars (numbers of handover_engineer). No picture at the final tier from here. Seen in the pictures and not the cap's: a thin straight crest north of the close ground (the bake, named by its builder), plates softer than the first set.
+
+## 9. The frame factor (NOTE 501): a fade reads an angle, not a pixel
+
+The fault: the colour levels of a globe come in by the texels of the parent a pixel (`uPatchFade`, 1.1 to 1.7, against `gd * scale * size` from `dFdx` and `dFdy`). A pixel of uhd is half as large as one of 16 by 9, so at uhd every level came in at twice the height, at preview at half.
+
+- `src/core/frame.ts`: `frameUniform` (one object for the whole film, `{ value }`, usable as a uniform `uFrame`) and `setFrame(height, master)`. The engine writes it where it sets the size of the drawing buffer (`applySize`): the height of the format over the height of the master, 1 at 16 by 9, 2 at uhd, 0.5 at preview. It is the engine's format, not `view.format`: in the pass that draws a place picture `view.format` is the layout's, larger by the picture's scale, and a factor taken from it would change that picture at 16 by 9.
+- `setPass(scale)` and `bufferFrame()`: a place picture is drawn at the format's size times a scale, and the edge limit gives uhd the scale 1 where 16 by 9 has 2, so a pixel of the uhd picture is a pixel of the master's picture. For code that reads a density a pixel of the buffer and does not know the picture's scale (the globe, the far point; the terrain shaders know it as `uFine`) the engine sets, while it draws a place picture, the picture's scale over the scale the master's picture has; `bufferFrame()` is the frame factor times that, 1 in the master's picture and in the uhd picture of today.
+- `Planet.update` writes `uPatchFade` as the stop's two numbers over the factor. smoothstep(a, b, x * f) is smoothstep(a / f, b / f, x), so no text changes and at 16 by 9 the two numbers are the stop's own bits. The text hashes of the globe stand. The cap draws with the globe's uniforms and follows.
+- Not touched, because it only picks a mip or is a diagnostic: `textureGrad` gradients (`uGrad`), `diagTexelsDir`, `drawn`, the texel plan of `src/core/texel.ts`.
+- Already an angle: the cap (`pixel` is a number of the stop, an angle; its grids, its level choice and `uCapFade` read `pixel * distance`).
+- `FarPoint` (every stop draws its body as a point from afar with it): the core of the point was 0.9 square pixels of the buffer whatever the format, and the gain read min(radius in buffer pixels, 1). Now the radius is taken in pixels of the master, and above 16 by 9 the core is widened by the factor squared (through `uWide`, which the text already has), so the point has the same angle and the same light at uhd. Under 16 by 9 the core stays a pixel's (a core of half a pixel would fall between the pixels). At 16 by 9 every uniform has the value of before.
+- Seen and left, not mine or not in use: `src/bodies/standin.ts` (imported by nothing; line width by `fwidth`, a radius threshold in pixels); `src/core/place.ts` (the weight of a place picture falls by picture texels a frame pixel times the picture's scale; the picture is drawn at the format's size times that scale, so the ratio is the same in every format as long as the scale is; if the edge limit of `caps.ts` gives uhd a smaller scale than 16 by 9 the two differ: the engine's to check); `src/post/chain.ts` (sharpening one pixel wide, grain by the pixel) and `src/space` (dust has its own `height / 1080`).
+
+Measured (`tests/globe-frame.test.ts`, 5 tests in node; `tests/globe-cap.test.ts`, one more in the harness browser): a level whose parent has 1.3 texels a row at 96 rows shows 0.73 of the finer level in the middle; at 192 rows with the factor 2 the same within 0.02, without the factor 1.0; at 48 rows with the factor 0.5 the same within 0.03, without it 0.0.
+
 ## Proof with the options off
 
 Draft stills `out/work/stills/f%05d-16x9-draft-full.png`, sha256, frames 360 (sun.hold), 615 (mercury.hold), 717 (mercury.dive), 1185 (venus.hold), 1857 (earth.dive), 2325 (mars.hold), 2427 (mars.dive), 2997 (jupiter.dive), 3465 (saturn.hold), 4035 (uranus.hold), 4707 (neptune.dive). The references were rendered at `412d2d09` before any change. The runs are named in the log below.
@@ -186,3 +361,12 @@ Draft stills `out/work/stills/f%05d-16x9-draft-full.png`, sha256, frames 360 (su
 - Options off after the merge of main 03510ddd: the 11 draft stills at f6dcf002 are byte equal to the same frames rendered at main 03510ddd. Main itself differs from the references of `412d2d09` at frame 2427 only (the Mars dive of the handover engine). `npx vitest run`: 76 files, 160 tests green.
 - Gain of the own levels (section 6), asked by the Mars builder. `npx vitest run`: 76 files, 162 tests green (one more in `tests/globe-levels.test.ts`, one more in `tests/globe-gl.test.ts`). Options off: the 11 draft stills are byte equal to the same frames of main 03510ddd.
 - Gain of the own levels moved from the texel to the scene value (section 6), asked by the Mars builder. `npx vitest run`: 82 files, 180 tests green. Options off: the 11 draft stills are byte equal to the same frames of main fdf97b84. On `agent/mars-place` 8b7c9a40 with this planet shader in a scratch worktree (`beauty/side=orbit/noplace`, draft): frame 2448, where that stop's gain is 1, keeps its bytes (sha256 `1e19db65...`); frame 2426 changes on 810912 of 2073600 pixels, by at most 4 of 255, mean 106.82 69.34 53.78 to 107.27 69.80 54.18.
+- Air setters (section 7) and relief cap (section 8), MAIL 373 and 376. Commits 329343cd (air), 8445b6f6 (cap, loader), 63761051 (grids by footprint). Options off at 8445b6f6 against main 72816fc: the nine hold frames 360, 615, 1185, 1755, 2325, 2895, 3465, 4035, 4605 and the dive frames 717, 1857, 2427, 2997, 4707 at draft are byte equal (frame 360 was rendered one edit of `cap.ts` before the commit). `npx vitest run` after the merge of main 304f1c68: 244 tests green, tsc clean.
+- Merge of main 304f1c68 (e28f9c95): the same 14 draft frames with the options off are byte equal to main 72816fc but frame 717, which main itself changed (Mercury); 717 at e28f9c95 equals 717 rendered at main 304f1c68 (`93a380d7...`). `npx tsc --noEmit` clean, `npx vitest run` 244 green.
+- Merge of main 65fb91d (e8283808, the capture rate): the same 14 draft frames with the options off are byte equal to the 14 of e28f9c95. `npx tsc --noEmit` clean, `npx vitest run` 256 green (33 files), `vite build` clean (run by the still tool).
+- Cap on Mars's heights baked again (section 8, last part): drafts 2409 to 2449, one still at 3840 by 2160, the gap measured again.
+- Merge of main 94be42ed and 4d7175f6 (69ac8b40, plan E's one move). Swap of sphere for cap measured in the film's terms: it stays (section 8). Light of the cap's own heights (`light`) and haze to its own surface (MAIL 431 item 3). Proof with the options off on the merge with these changes in the tree: the 14 draft frames; 13 are byte equal to the 14 of e8283808, frame 2427 (changed by main's plan E) is byte equal to 2427 rendered at main 4d7175f6 (`4d85b04d...`). `npx tsc --noEmit` clean, `npx vitest run` 291 passed, 0 failed, 1 todo of main's (37 files), `vite build` clean (run by the still tool).
+- MAIL 454: the light at full wherever the cap is drawn and from a height the stop names (`light.from`); the air to the ground as one exported chunk (`GROUND_AIR_GLSL`), used by the cap; a centre per colour level (`centresDeg`, section 4).
+- `light.from` on Mars, scratch tree (heights v3, light 1,1), draft: with `from` Infinity the hold 2325 differs from the picture without `from` by mean 0.08 of 255, largest 64 (the canyon's walls), 12 percent of the pixels, 0.01 percent by more than 8; frame 2400 above the band by mean 0.07; frame 2409 in the band by nothing. The hold took 28.6 s against 19.5 s. The hold is the approved picture, so the stop keeps `from` under the hold's height or sends the pair to the Builder (MAIL 454 item 2, iii).
+- Proof of the commit named to the Builder (1e36be06, and its merge with main f2375d2e, abe760fd): tsc clean, the whole suite 316 passed and 0 failed on the merge, build made; 20 draft frames with the options off equal to main's (14 frames of nine stops, Mars 2401 to 2406; 2997 against main f2375d2e, which changed it).
+- A second Sun for the cap's own light was asked and ruled out (MAIL 462): the cap lights with the globe's Sun.

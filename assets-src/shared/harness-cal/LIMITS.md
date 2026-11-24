@@ -95,3 +95,57 @@ old: the mean over the points that have ground under them, frame by frame, as in
 | neptune | rise | rate 2 | 0.136, 0.058, 0.000, 3 | 0.136 (8), 0.058, 0.000, 3, 5 | 0.122 (8), 0.162, 0.001, 4 |
 
 red numbers of the speed curve: old 151 , fixed set 138 , ground ring 138 ; faults of rate and turn that differ: 0
+
+## The frozen film by the tool itself (job B, sfz-01 to 09, 2026-11-24)
+
+Commit 9109065a (the src of 8c454593, the tool and the smooth block of agent/harness), `npm run smooth -- --stop <id> --only pictures --calibrate`, draft tier, whole film frames, 213 pictures a stop (the sun 114), on nine render machines. Limits of d165: level step 1.3, pop 1.2, change in place 20 (8 film frames, smoothed over 20 px), block pop shown and not judged, Saturn's rings count as its body. The reports are in `frozen/`. The two pattern columns are not from these reports: they are the change of the pattern alone (MAIL 452 point 5, tool commit 6536383c) measured on quarter size copies of the same frozen frames; no limit is set for it yet.
+
+| stop | job | move | level step | pop | block pop (not judged) | change in place | its ground | pattern alone | its ground | red numbers |
+|---|---|---|---|---|---|---|---|---|---|---|
+| sun | sfz-01 | rise | 0.62 @205 | 1.15 @266 | 2.68 @256 | 54.4 @229 RED | 12.6 | 1.04 @202 | 0.09 | 1 |
+| mercury | sfz-02 | dive | 0.70 @706 | 1.16 @732 | 7.89 @701 | 111.2 @731 RED | 3.3 | 1.41 @729 | 0.01 | 1 |
+| mercury | sfz-02 | rise | 1.61 @1024 RED | 1.48 @1034 RED | 13.80 @1045 | 134.2 @995 RED | 3.5 | 1.42 @993 | 0.03 | 3 |
+| venus | sfz-03 | dive | 0.99 @1277 | 1.14 @1264 | 5.74 @1337 | 75.9 @1300 RED | 1.8 | 0.82 @1332 | 0.01 | 1 |
+| venus | sfz-03 | rise | 0.88 @1583 | 1.13 @1602 | 7.52 @1615 | 95.2 @1568 RED | 3.9 | 1.08 @1544 | 0.02 | 1 |
+| earth | sfz-04 | dive | 0.60 @1902 | 1.47 @1887 RED | 4.26 @1869 | 134.5 @1885 RED | 1.2 | 0.94 @1886 | 0.01 | 2 |
+| earth | sfz-04 | rise | 1.25 @2151 | 1.83 @2123 RED | 8.25 @2122 | 151.1 @2119 RED | 2.3 | 1.03 @2103 | 0.02 | 2 |
+| mars | sfz-05 | dive | 1.82 @2403 RED | 1.87 @2421 RED | 11.64 @2402 | 63.7 @2439 RED | 1.3 | 1.04 @2442 | 0.02 | 3 |
+| mars | sfz-05 | rise | 1.65 @2731 RED | 1.31 @2720 RED | 6.61 @2738 | 76.7 @2697 RED | 2.5 | 1.12 @2698 | 0.02 | 3 |
+| jupiter | sfz-06 | dive | 1.23 @2990 | 1.16 @2971 | 7.87 @3050 | 79.8 @3052 RED | 2.2 | 0.95 @3024 | 0.02 | 1 |
+| jupiter | sfz-06 | rise | 2.30 @3287 RED | 1.27 @3294 RED | 5.68 @3249 | 77.7 @3274 RED | 2.8 | 0.72 @3239 | 0.03 | 3 |
+| saturn | sfz-07 | dive | 0.08 @3557 | 1.09 @3545 | 4.09 @3547 | 10.0 @3551 | 5.2 | 0.17 @3546 | 0.10 | 0 |
+| saturn | sfz-07 | rise | 0.63 @3895 | 1.54 @3815 RED | 15.55 @3895 | 25.5 @3814 RED | 11.0 | 0.27 @3853 | 0.20 | 2 |
+| uranus | sfz-08 | dive | 0.77 @4138 | 1.20 @4175 RED | 5.63 @4167 | 95.1 @4171 RED | 9.1 | 1.01 @4174 | 0.13 | 2 |
+| uranus | sfz-08 | rise | 0.21 @4391 | 1.52 @4400 RED | 28.29 @4465 | 89.4 @4397 RED | 14.5 | 0.98 @4397 | 0.22 | 2 |
+| neptune | sfz-09 | dive | 0.26 @4744 | 1.30 @4716 RED | 7.89 @4745 | 75.6 @4743 RED | 7.0 | 1.43 @4737 | 0.32 | 2 |
+| neptune | sfz-09 | rise | 0.77 @4965 | 1.79 @4963 RED | 12.02 @4964 | 69.9 @4958 RED | 4.9 | 1.48 @4957 | 0.32 | 2 |
+
+The change in place: every ground is under 20 (largest 14.5, Uranus's rise), every frozen move but Saturn's dive is over it (smallest 25.5, Saturn's rise, then 54.4). The pattern alone: the grounds and Saturn's two moves end at 0.32, the smallest of the other moves is 0.72.
+
+## The frozen film by the tool itself, with the pattern number (job C, spc-01 to 09, 2026-11-24)
+
+Commit c3e99418 (the src of 8c454593, the tool of 9109065a with the change of the pattern alone of 6536383c), `npm run smooth -- --stop <id> --only pictures --calibrate`, draft tier, whole film frames, 213 pictures a stop (the sun 114), on nine render machines. The reports in `frozen/` are these nine (they hold every number of job B and the pattern beside it; their own verdict lines still judge the change in place against 20, the limit of that commit). The red marks in this table are against the block as it stands since eaace201: level step 1.3, pop 1.2, pattern 0.45; the block pop and the change in place are shown and not judged. A pop of 1.20 that is red is over 1.2 by less than 0.005 (Uranus's dive 1.2002).
+
+| stop | job | move | level step | pop | block pop (not judged) | change in place (not judged) | its ground | pattern alone | its ground | rows without a measured pattern | red numbers |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| sun | spc-01 | rise | 0.62 @205 | 1.15 @266 | 2.68 @256 | 54.4 @229 | 12.6 | 1.04 @202 RED | 0.09 | 0 | 1 |
+| mercury | spc-02 | dive | 0.70 @706 | 1.16 @732 | 7.89 @701 | 111.2 @731 | 3.3 | 1.41 @729 RED | 0.01 | 0 | 1 |
+| mercury | spc-02 | rise | 1.61 @1024 RED | 1.48 @1034 RED | 13.80 @1045 | 134.2 @995 | 3.5 | 1.41 @993 RED | 0.03 | 0 | 3 |
+| venus | spc-03 | dive | 0.99 @1277 | 1.14 @1264 | 5.74 @1337 | 75.9 @1300 | 1.8 | 0.82 @1332 RED | 0.01 | 0 | 1 |
+| venus | spc-03 | rise | 0.88 @1583 | 1.13 @1602 | 7.52 @1615 | 95.2 @1568 | 3.9 | 1.08 @1544 RED | 0.02 | 0 | 1 |
+| earth | spc-04 | dive | 0.60 @1902 | 1.47 @1887 RED | 4.26 @1869 | 134.5 @1885 | 1.2 | 0.94 @1886 RED | 0.01 | 0 | 2 |
+| earth | spc-04 | rise | 1.25 @2151 | 1.83 @2123 RED | 8.25 @2122 | 151.1 @2119 | 2.3 | 1.03 @2103 RED | 0.02 | 0 | 2 |
+| mars | spc-05 | dive | 1.82 @2403 RED | 1.87 @2421 RED | 11.64 @2402 | 63.7 @2439 | 1.3 | 1.03 @2442 RED | 0.02 | 0 | 3 |
+| mars | spc-05 | rise | 1.65 @2731 RED | 1.31 @2720 RED | 6.61 @2738 | 76.7 @2697 | 2.5 | 1.12 @2697 RED | 0.02 | 0 | 3 |
+| jupiter | spc-06 | dive | 1.23 @2990 | 1.16 @2971 | 7.87 @3050 | 79.8 @3052 | 2.2 | 0.81 @3024 RED | 0.02 | 0 | 1 |
+| jupiter | spc-06 | rise | 2.30 @3287 RED | 1.27 @3294 RED | 5.68 @3249 | 77.7 @3274 | 2.8 | 0.74 @3239 RED | 0.03 | 0 | 3 |
+| saturn | spc-07 | dive | 0.08 @3557 | 1.09 @3545 | 4.09 @3547 | 10.0 @3551 | 5.2 | 0.19 @3568 | 0.10 | 0 | 0 |
+| saturn | spc-07 | rise | 0.63 @3895 | 1.54 @3815 RED | 15.55 @3895 | 25.5 @3814 | 11.0 | 0.41 @3851 | 0.21 | 0 | 1 |
+| uranus | spc-08 | dive | 0.77 @4138 | 1.20 @4175 RED | 5.63 @4167 | 95.1 @4171 | 9.1 | 0.99 @4155 RED | 0.16 | 0 | 2 |
+| uranus | spc-08 | rise | 0.21 @4391 | 1.52 @4400 RED | 28.29 @4465 | 89.4 @4397 | 14.5 | 0.98 @4397 RED | 0.22 | 0 | 2 |
+| neptune | spc-09 | dive | 0.26 @4744 | 1.30 @4716 RED | 7.89 @4745 | 75.6 @4743 | 7.0 | 1.44 @4738 RED | 0.31 | 0 | 2 |
+| neptune | spc-09 | rise | 0.77 @4965 | 1.79 @4963 RED | 12.02 @4964 | 69.9 @4958 | 4.9 | 1.49 @4957 RED | 0.32 | 0 | 2 |
+
+The pattern alone, by the tool at full size: the grounds end at 0.32 (Neptune's two), Saturn's two moves read 0.19 and 0.41, the other fifteen moves 0.74 to 1.49. The quarter size copies of the table above read the same to 0.02 but for Saturn's rise (0.27 there, 0.41 here, at 3851 on the rings near the lower edge), Saturn's dive (0.17, 0.19), Jupiter's dive (0.95, 0.81) and Uranus's dive ground (0.13, 0.16). The pattern is measured in every row of every move: the longest run without a measure is 0 everywhere.
+
+Sorted, by the tool: level step 0.08, 0.21, 0.26, 0.60, 0.62, 0.63, 0.70, 0.77, 0.77, 0.88, 0.99, 1.23, 1.25 | 1.61, 1.65, 1.82, 2.30. Pop 1.09, 1.13, 1.14, 1.15, 1.16, 1.16 | 1.2002, 1.27, 1.30, 1.31, 1.47, 1.48, 1.52, 1.54, 1.79, 1.83, 1.87. Pattern 0.19, 0.41 | 0.74, 0.81, 0.82, 0.94, 0.98, 0.99, 1.03, 1.03, 1.04, 1.08, 1.12, 1.41, 1.41, 1.44, 1.49. Pattern on the grounds 0.01 to 0.03 (ten), 0.09, 0.10, 0.16, 0.21, 0.22, 0.31, 0.32.
