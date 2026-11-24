@@ -74,8 +74,10 @@ def main():
     wide = float(cfg['patternPx']) * scale
     pa, pb = poses[a_id], poses[b_id]
     mx, my, inside = carry(pa, pb, a.shape)
-    first = smooth.body(pa, a.shape, sigma)
-    last = smooth.body(pb, b.shape, sigma)
+    # WEAVE_MARGIN (px of 1920, a tool for causes, not the report's number): a wider margin inside the limb of both frames.
+    margin = sigma + float(os.environ.get('WEAVE_MARGIN', '0')) * scale
+    first = smooth.body(pa, a.shape, margin)
+    last = smooth.body(pb, b.shape, margin)
     ok = first & inside & (cv2.remap(last.astype(np.float32), mx, my, cv2.INTER_NEAREST, borderMode=cv2.BORDER_CONSTANT, borderValue=0) > 0.5)
     later = cv2.remap(b.astype(np.float32), mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
     p = smooth.pattern(a.astype(np.float32), later, ok, wide / 5, wide, float(cfg['patternFloor']))

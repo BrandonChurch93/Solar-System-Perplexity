@@ -4747,3 +4747,33 @@ Attached: neptune-dive.md, neptune-rise.md, neptune-dive-p4of8-changes.png, nept
   (breaks that). I take the first.
 - The engine has no switch that draws the globe alone through the surface view (grep of src/director for the word of the
   mail at line 2525 found none; plan.ts line 23 has handover.dive and handover.rise only).
+
+## 24 Nov, 12:30 to 12:56: the three humps by cause, and the first step taken
+
+- MEASURED with the real tool, one slice (npm run -s smooth, kind dive, only pictures, frames round 4696): 0.76 at pixel
+  612, 140 of the 1920 frame. That pixel lies on the limb. My proxy gave 0.60 there.
+- Hump 1 (4693 to 4700) by cause, MEASURED: the hot spot is the later frame's limb line (the air's glow and the dark band at
+  the horizon) carried back onto the earlier frame's ground. It is no pattern of the ground. With more margin inside the limb
+  (weave.py, new env WEAVE_MARGIN, px of 1920): 4692 to 4700 gives 0.46, 0.15 (20 px), 0.06 (40 px); 4696 to 4704 gives 0.60,
+  0.32 (20), 0.25 (40), 0.11 (80). Control: 4704 to 4712 (0.70 at 532, 928) and 4708 to 4716 (0.44 at 424, 588) do not move
+  with the margin, so those are on the ground.
+- Hump 2 (4704 to 4713) by cause, SEEN in crops at the hot pixel: the dark lower left corner. At 4712 (show 0.06) the scene's
+  deck comes in as a hard edged lighter blue patch over the map's night side (about R5 G13 B27 against 1, 1, 2), and from
+  4720 to 4728 more such patches. The fall grade also turns the dim night side clouds from white blue to small orange dots.
+  Same cause as the storm's exchange: the scene's deck is another pattern than the map's.
+- Hump 3 (4716 to 4728), SEEN: the map's cirrus (hook, bow, the band at v -1 to 0.3) leaves, the scene's streamer 1, the
+  veil sheet and the eye come in, and the two decks differ.
+- home over the dive, MEASURED (out/work/nep/weave/home.ts, a work file): the eye stays near the hold's axis. Off axis 3.5
+  degrees at 4680, 5.8 at 4708, 9.5 at 4724, 12.7 at 4740, 15.0 at 4769; home 1.000 to 4708, 0.92 at 4724, 0.74 at 4740, 0.57
+  at 4769. Forcing home to 1 gave bit equal frames at 4696 and 4704 and at most 2 levels at 4712. So the hold's layer stays on
+  and the cirrus bend stays off through the upper dive: the globe of the dive is the hold's picture, as it should be.
+- The first step (cause: two pictures of one place): the globe's map functions (the turn of the deck and of the cloud layer,
+  layerAt with the wrap, the hold's layer, the mend and the levels) leave planet.ts's shader string as an exported piece,
+  mapGlsl, so that the scene from code can read the same map by the same lines. Proof that the globe did not move: the
+  shader text made for 0, 3 and 8 shown plates has the same sha256 before and after (bf3362b2, 43355d83, 03d549e3;
+  out/work/nep/weave/fragsame.ts, a work file). So the hold keeps its bytes by construction.
+- Plan from here: the scene's far look (by the eye's distance to the ground, per pixel, never by the clock) is that map: its
+  deck as the albedo, its cirrus as a sheet. The code's own deck and streamers stand only near. Known before it is built: the
+  code's own objects (the eye of 1 unit, streamers 1 to 3) are in no map and are never under 8 px, so they stay newcomers at
+  8 to 3 units of distance unless either the hold's map takes them (4605 changes) or the scene draws the map's forms (4860's
+  composition moves). That fork goes to the Builder with frames.
