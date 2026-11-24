@@ -1,9 +1,36 @@
 {
  "folder": "venus",
- "pushed": "2026-11-24T20:07:44.764Z",
+ "pushed": "2026-11-24T20:23:59.008Z",
  "head": "8b7994375d9917b14ff91634a36c266dc1d1c35c",
- "note": "whole dive on the state in work: pop 1.18 none over, pattern 0.47 one frame over; rise run in work",
+ "note": "whole rise on the state in work: pop at the seam as before, pattern 19 over (20), the cover 1546 to 1547 a little worse, 1548 under; handover and finals in work",
  "looks": [
+  {
+   "time": "2026-11-24T20:23:57.740Z",
+   "file": "20261124202357740-note-rise-pops-Cw.jpg",
+   "source": "../../../../tmp/v/c/rise-pops-Cw.jpg",
+   "kind": "note",
+   "label": "whole rise, same state: the four largest pops; 1.28 at 1610 + 1/2 is the rest at the seam (travel's frames); 1.10 at 1553 (1.196 on the named commit)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T20:23:56.554Z",
+   "file": "20261124202356554-note-rise-changes-Cw.jpg",
+   "source": "../../../../tmp/v/c/rise-changes-Cw.jpg",
+   "kind": "note",
+   "label": "whole rise, mu 0.10 and the air's heights 0.035 to 0.4: changes; pattern 19 over (0.62 at 1547 + 1/2, 0.65 at 1575, 0.76 on travel's frames); largest change in place 73.9 at 1551 (88.0 on the named commit)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T20:23:56.293Z",
+   "file": "20261124202356293-compare-venus-dive-sides.jpg",
+   "source": "out/work/handover/venus-dive-sides.png",
+   "kind": "compare",
+   "label": "venus dive, both sides at T (frame 1343) and their difference times 8",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "frame": 1343,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-24T20:07:44.040Z",
    "file": "20261124200744040-note-dive-changes-Cw.jpg",
@@ -42,30 +69,6 @@
    "source": "../../../../tmp/v/c/hazeH34-dive.jpg",
    "kind": "note",
    "label": "dive 1292 to 1312 with the upper height 3.4 (not kept): thin pale rim from 1300, band from 1308",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T19:37:24.930Z",
-   "file": "20261124193724930-note-dive-changes-B.jpg",
-   "source": "../../../../tmp/v/c/dive-changes-B.jpg",
-   "kind": "note",
-   "label": "dive, upper height 3.4, not kept: pattern 0.54 at 1304, 16 over; the pattern reads wherever this air lies over the far ground in the fast part of the dive",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T19:37:24.334Z",
-   "file": "20261124193724334-note-dive-changes-A.jpg",
-   "source": "../../../../tmp/v/c/dive-changes-A.jpg",
-   "kind": "note",
-   "label": "dive, air.haze.heights upper 0.4: pop cured (1.17 at 1316, none over; 1.31 on the named commit), pattern 0.49 at 1309 + 1/2, 7 over (0.46, 3 over on the named commit): the far ground goes under the air at the limb",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T19:05:39.900Z",
-   "file": "20261124190539900-note-hazeH-dive.jpg",
-   "source": "../../../../tmp/v/c/hazeH-dive.jpg",
-   "kind": "note",
-   "label": "cure in trial for the dive pop: air.haze.heights 0.035 to 0.4 (the air on the line of sight comes in from 1302 on, a thin rim at the limb that widens); slice 1313 to 1323 green, pop 1.17 at 1316 at the most (1.31 on the named commit)",
    "stop": "venus"
   }
  ]
