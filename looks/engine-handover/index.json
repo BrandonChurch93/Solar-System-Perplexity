@@ -1,9 +1,44 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T12:18:12.769Z",
- "head": "c9e75312dea1e89e6fb38135aab36b967db3962d",
- "note": "MAIL 602: 73 drafts of Mars 2684 to 2756 with the pull back 1.77 over 0.8 from 1.9 and the same frames plain; 2684 to 2687 are the same bytes; the disc no longer stands at the seam",
+ "pushed": "2026-11-24T12:48:41.305Z",
+ "head": "40cd0e8c6d18cd12f4c9ccc267970d2f101c31b4",
+ "note": "Mars seam at capture rate 2 with and without the pull back: 141 draft frames each, clips at 60 pictures a second, limb steps a capture frame",
  "looks": [
+  {
+   "time": "2026-11-24T12:48:40.570Z",
+   "file": "20261124124840570-note-check-sbs.jpg",
+   "source": "out/work/h602/clip/check-sbs.png",
+   "kind": "note",
+   "label": "Three frames of the side by side clip at 60 pictures a second (film 2730, 2745, 2752): main today left, the pull back right; clip in out/work/h602/clip on the engine VM"
+  },
+  {
+   "time": "2026-11-24T12:48:39.975Z",
+   "file": "20261124124839975-note-limb-steps-rate2.jpg",
+   "source": "out/work/h602/limb-steps-rate2.png",
+   "kind": "note",
+   "label": "Mars seam 2745 at capture rate 2 from draft pictures: limb steps a capture frame, main today against the pull back (scratch 1.77 over 0.8 from 1.9)"
+  },
+  {
+   "time": "2026-11-24T12:36:48.959Z",
+   "file": "20261124123648959-note-c60-sheet-5472.jpg",
+   "source": "out/work/h602/c60-sheet-5472.png",
+   "kind": "note",
+   "label": "Mars before the seam at capture rate 2 with the pull back, capture frames 5472 to 5483 = film 2736 to 2741.5, draft"
+  },
+  {
+   "time": "2026-11-24T12:36:47.673Z",
+   "file": "20261124123647673-note-c60-sheet-5496.jpg",
+   "source": "out/work/h602/c60-sheet-5496.png",
+   "kind": "note",
+   "label": "Mars after the seam at capture rate 2 with the pull back, capture frames 5496 to 5507 = film 2748 to 2753.5, draft"
+  },
+  {
+   "time": "2026-11-24T12:36:46.510Z",
+   "file": "20261124123646510-note-c60-sheet-5484.jpg",
+   "source": "out/work/h602/c60-sheet-5484.png",
+   "kind": "note",
+   "label": "Mars seam 2745 at capture rate 2 with the pull back (scratch 1.77 over 0.8 from 1.9), capture frames 5484 to 5495 = film 2742 to 2747.5, draft"
+  },
   {
    "time": "2026-11-24T12:18:12.077Z",
    "file": "20261124121812077-note-d19-pair-b.jpg",
@@ -24,41 +59,6 @@
    "source": "out/work/h602/limb-steps-pictures.png",
    "kind": "note",
    "label": "MAIL 602, limb of Mars measured on the drafts, plain rise against the pull back 1.77 over 0.8 from 1.9: plain stands 0 to 2 px a frame over 2743 to 2749, pulled never under 6 px at the right limb"
-  },
-  {
-   "time": "2026-11-24T12:14:42.719Z",
-   "file": "20261124121442719-note-d19-limb-right.jpg",
-   "source": "out/work/h602/d19-limb-right.png",
-   "kind": "note",
-   "label": "MAIL 602 scratch, Mars 2740 to 2751 with the pull back 1.77 over 0.8 from 1.9, right limb at full size: one edge, it moves left in every frame (8 8 7 6 6 6 6 9 10 px), stars stand from 2744"
-  },
-  {
-   "time": "2026-11-24T12:14:41.518Z",
-   "file": "20261124121441518-note-d19-sheet-2744.jpg",
-   "source": "out/work/h602/d19-sheet-2744.png",
-   "kind": "note",
-   "label": "MAIL 602 scratch, Mars rise and seam into the travel with the pull back 1.77 over 0.8 from 1.9 (value in the built dist only), draft tier, consecutive frames from 2744"
-  },
-  {
-   "time": "2026-11-24T12:14:40.141Z",
-   "file": "20261124121440141-note-d19-sheet-2732.jpg",
-   "source": "out/work/h602/d19-sheet-2732.png",
-   "kind": "note",
-   "label": "MAIL 602 scratch, Mars rise and seam into the travel with the pull back 1.77 over 0.8 from 1.9 (value in the built dist only), draft tier, consecutive frames from 2732"
-  },
-  {
-   "time": "2026-11-24T12:14:39.282Z",
-   "file": "20261124121439282-note-d19-sheet-2720.jpg",
-   "source": "out/work/h602/d19-sheet-2720.png",
-   "kind": "note",
-   "label": "MAIL 602 scratch, Mars rise and seam into the travel with the pull back 1.77 over 0.8 from 1.9 (value in the built dist only), draft tier, consecutive frames from 2720"
-  },
-  {
-   "time": "2026-11-24T12:14:38.240Z",
-   "file": "20261124121438240-note-d19-sheet-2708.jpg",
-   "source": "out/work/h602/d19-sheet-2708.png",
-   "kind": "note",
-   "label": "MAIL 602 scratch, Mars rise and seam into the travel with the pull back 1.77 over 0.8 from 1.9 (value in the built dist only), draft tier, consecutive frames from 2708"
   }
  ]
 }
