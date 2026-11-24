@@ -3,3 +3,5 @@
 # In travel the weight of globe, backdrop, corona shell and prominence card is globeShare(distance), and the
 #   far Sun's pass is drawn over the globe with one minus it. The flattening knobs of `leave` are out.
 # On dispose the set takes its map back (farSun.wear(null)).
+# At the top of update the far Sun's mesh is switched off, so a view that returns early (terrain) never
+#   draws it and its visibility is no state carried from another frame.

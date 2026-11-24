@@ -3,8 +3,10 @@
 # In travel the weight of globe, backdrop, corona shell and prominence card is globeShare(distance), and the
 #   far Sun's pass is drawn over the globe with one minus it. The flattening knobs of `leave` are out.
 # On dispose the set takes its map back (farSun.wear(null)).
+# At the top of update the far Sun's mesh is switched off, so a view that returns early (terrain) never
+#   draws it and its visibility is no state carried from another frame.
 diff --git a/src/stops/sun/set.ts b/src/stops/sun/set.ts
-index 0ac8dc9f..88b7f249 100644
+index 0ac8dc9f..96c7a787 100644
 --- a/src/stops/sun/set.ts
 +++ b/src/stops/sun/set.ts
 @@ -15,6 +15,7 @@ import { Prominences } from './prominence'
@@ -25,7 +27,15 @@ index 0ac8dc9f..88b7f249 100644
  
    if (opening.on) ground.land(look.opening.surge.reach, look.opening.surge.veil, look.opening.surge.most)
    if (opening.on) ground.flash(look.opening.erupt.flash.span)
-@@ -115,7 +119,7 @@ export const createSet: SetFactory = async (ctx) => {
+@@ -91,6 +95,7 @@ export const createSet: SetFactory = async (ctx) => {
+     update: (state, shot, view) => {
+       const inOrbit = state.view === 'orbit'
+       const kind = state.segment.kind
++      farSun.mesh.visible = false
+       const rising = kind === 'rise'
+       const placing = inOrbit && rising
+       orbit.visible = inOrbit && state.weight > 0
+@@ -115,7 +120,7 @@ export const createSet: SetFactory = async (ctx) => {
        const height = Math.max(inOrbit ? world.position.length() - 1 : eye.distanceTo(stage.centre) / stage.radius - 1, 1e-4)
        const above = (r: number[]): number => (rising ? THREE.MathUtils.smoothstep(Math.log(height), Math.log(r[0]!), Math.log(r[1]!)) : inOrbit ? 1 : 0)
        const skyIn = above(by.sky)
@@ -34,7 +44,7 @@ index 0ac8dc9f..88b7f249 100644
        backdrop.update(shown, gain, vignette, aspect)
        backdropTerrain.update(terrain.visible ? 1 - skyIn : 0, gain, vignette, aspect)
        if (terrain.visible) {
-@@ -146,7 +150,8 @@ export const createSet: SetFactory = async (ctx) => {
+@@ -146,7 +151,8 @@ export const createSet: SetFactory = async (ctx) => {
        const spin = plan.spin(state.time)
        globe.place(placing ? 1 : 0, 1 - above(by.tidy), 1 - above(by.corona), 1 - above(by.spot))
        const glow = above(by.corona)
@@ -44,7 +54,7 @@ index 0ac8dc9f..88b7f249 100644
        const going = leaving ? even(state.u, look.leave.over) : 0
        const open = Math.pow(look.leave.open, going)
        const flat = leaving ? even(state.u, look.leave.wash) : 0
-@@ -211,9 +216,9 @@ export const createSet: SetFactory = async (ctx) => {
+@@ -211,9 +217,9 @@ export const createSet: SetFactory = async (ctx) => {
          unfit.identity()
        }
        globe.update(elapsed, spin, gain, state.weight, vignette, aspect, undefined, undefined, open, wash.set(look.leave.pale[0] * level, look.leave.pale[1] * level, look.leave.pale[2] * level, going > 0 ? Math.max(flat, 1e-6) : 0), look.leave.shade)
@@ -56,7 +66,7 @@ index 0ac8dc9f..88b7f249 100644
        const distance = world.position.length()
        const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
        const visible = radiusPx > 0.6
-@@ -221,8 +226,15 @@ export const createSet: SetFactory = async (ctx) => {
+@@ -221,8 +227,15 @@ export const createSet: SetFactory = async (ctx) => {
        corona.mesh.visible = visible
        prominences.mesh.visible = visible
        far.update(radiusPx, view, plan.p.tint, gain)

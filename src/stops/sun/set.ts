@@ -95,6 +95,7 @@ export const createSet: SetFactory = async (ctx) => {
     update: (state, shot, view) => {
       const inOrbit = state.view === 'orbit'
       const kind = state.segment.kind
+      farSun.mesh.visible = false
       const rising = kind === 'rise'
       const placing = inOrbit && rising
       orbit.visible = inOrbit && state.weight > 0
