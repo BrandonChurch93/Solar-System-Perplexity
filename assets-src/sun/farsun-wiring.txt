@@ -1,0 +1,15 @@
+The far Sun's wiring for src/stops/sun/set.ts, ready for the Sun's set as it stands after b3572b5f (MAIL 566, MAIL 571).
+
+What it is: the 21 lines of belt_builder's b3489b63 (agent/farsun) in src/stops/sun/set.ts, merged three-way onto my set.ts
+(git merge-file, base b0b87889: 0 conflicts; 17 lines added, 4 replaced). It is not applied here: main has no
+src/space/farsun/, so set.ts with these lines does not compile on main alone.
+
+How to use it, on a tree that holds src/space/farsun/ (agent/farsun) and this branch:
+  git apply assets-src/sun/farsun-wiring.patch
+A plain git merge of b3489b63 into this branch on a shallow clone reports conflicts in src/stops/sun/set.ts and
+src/stops/sun/loops.ts; both come from a wrong base. loops.ts is not touched by agent/farsun: keep this branch's. For set.ts
+take this branch's file and apply the patch.
+
+Checked 24 Nov 07:26 UTC on a scratch tree (this branch at b3572b5f, plus every other file of git diff b0b87889 b3489b63,
+plus this patch): npx tsc --noEmit exit 0; without src/space/farsun/ exit 1 (cannot find module). Not checked: tests, any
+picture. The Sun's travel 450 to 539 changes with it (the leave knobs are out, the far Sun's pass is drawn over the globe).
