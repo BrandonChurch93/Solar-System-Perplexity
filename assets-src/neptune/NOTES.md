@@ -4505,3 +4505,70 @@ lm.sh (the right half up to the limb at three times), boxes.py, limb.py, g17.py.
 - NOT MEASURED on this state: the tool's parity (uhd against 16 by 9), any review tier frame, the G13 line of the texels
   view. The diff of deep.ts adds nothing counted in pixels (READ: no new use of the buffer's size, gl_FragCoord or a
   derivative), so the parity of the first commit's kind is expected to hold; that is a reading, not a measure.
+
+## 10:29 to 10:36 UTC: after the commit, before the mail: path on the commit, a stand-in for parity, both changes of view, the end of the rise
+
+- Commit 835c95748f334d50706822e92ba43767ce577a41 pushed 10:29 (ls-remote says the same sha). Net size of my three folders
+  82.64 MB (0b9017c0 82.58, main c797cdc8 94.35).
+- npm run smooth -- --stop neptune --only path on 835c9574, 10:30: "VERDICT: green. No number is over its limit."; last line
+  "smooth neptune: green. out/work/smooth/neptune.md". Numbers as at 10:19.
+- A stand-in for the parity, one size step lower than the tool's (tools/img/smooth.py, op parity, coarse 8, grid 16 by 9):
+  4860 preview draft (fin2) as the film's frame against the 16 by 9 draft (fin16) as the large one: mean 2.273, coarse 1.361,
+  block 4.624 at 5,3, level 0.719, detail 1.393. Limits 12, 3.2, 12, 2.2. Not the tool's uhd against 16 by 9.
+- Change of view of the dive, preview drafts (fin6: 4755, 4756, 4759, 4760; 39.2 s with compile, 19.2, 20.6, 19.8 s; fin2: 4757,
+  4758), mean difference of neighbours in levels: 8.60, 8.36, 8.12 (4757 to 4758), 7.81, 7.60; coarse 5.53, 5.23, 5.03, 4.73,
+  4.45. An even fall through the change of view. Sheet /tmp/seam-dive.jpg looked at: one scene in six frames, no step. Lower
+  left at full size (/tmp/ll.jpg): a faint pale wisp on the near deck in all six frames, moving with the ground.
+- Change of view of the rise (fin5): 4956 to 4957 7.94, 4957 to 4958 8.35, 4958 to 4959 8.76. Sheet /tmp/rise-a.jpg (4956 to
+  4971, sixteen frames) looked at: the whirl recedes evenly, no step.
+- End of the rise (fin7: 5023 to 5028, 1.1 to 1.6 s a frame; 5024 equal to fin5's to the bit): star shift 5024 to 5027 (0,0),
+  5028 (0,+1). No step into the travel.
+- A slip caught before sending: I had written the soft spread of the eye's floor (21.6 against 34.2) under the name fine.
+  The mail carries both, named rightly.
+
+## My third NAMED mail to the Builder (/root), sent between 10:36:35 and 10:37:17 UTC (VM clock), high priority, word for word
+
+NAMED 835c95748f334d50706822e92ba43767ce577a41. THE PROOF TREE NEEDS "neptune" OFF handover.ownPath, as c8625916 on builder/proof-ne3.
+Third and last named commit. Branch agent/neptune-place, pushed 10:29 UTC (VM clock). It stands on main c797cdc865c8489d84acb2ebb6168df66f7e50c6, no merge (MAILS 572, 575). Against 0b9017c0 it changes five files, all in my folders: src/stops/neptune/deep.ts, deep.json, move.json, plan.ts and assets-src/neptune/NOTES.md. No asset, no path, no config.
+
+JUDGED FRAMES
+- 4605 left alone. 16 by 9 draft sha256 begins 5ae18138, as on fd95089a and 0b9017c0. Its final is not rendered by me in this round, so the bytes of MAIL 546 are not checked here.
+- 4707 left alone: equal to 0b9017c0's to the bit at preview draft.
+- 4860 CHANGED ON PURPOSE: the look, below.
+- 5006 CHANGED ON PURPOSE, in the stars only: against 0b9017c0's frame mean 2.93 levels, 33.56 percent of the pixels; the difference picture is black over the planet, the ring and the moon. Cause: the star turn of the rise no longer reads the clock (next point).
+
+MAIL 613, THE LINE. My stop sets handover dive and rise picture false and skyFrames 0; its own skyShare by the logarithm of the eye's height in both moves (move.json sky.height 0.4 to 0.2, sky.own true); the star carry by the same height law in the dive and by the eye's angle in the rise; with deep.json on true the place layer is not drawn and every weight of the scene on the globe (show, fall, tone, ground, limb, layEdge, home) goes by the eye's height or angle, so the sky and the haze are one law on both sides of the change of view. I use no Relief.presence and no plan.air (no relief here). Frames in which anything of mine reads the time inside a dive or a rise: NONE.
+What was still by the clock in 0b9017c0: the star turn of the rise, frames 4957 to 5024 (the engine's skyTurnWeight). Now plan.ts skyBack: the share is the angle the eye's line of sight still has to go to the direction the rise ends on, over the whole angle (95.5 degrees, falls in every frame), with a soft start over its first 0.15 (move.json sky.back). MEASURED on preview drafts, star shift in px a frame at 960 wide: 4957 to 4966 equal to 0b9017c0's; 4968 -13, 4970 -27, 4972 -44 across (0b9017c0: -8, -16, -23), 8 to 9 px a frame more each frame, no jump; 5006 (-23,-20), 5010 (-16,-15), 5016 (-8,-9), 5020 (-4,-4), 5023 (-1,-1), 5024 to 5027 (0,0). The clock's law gave (-32,-28) at 5006, the same (-8,-9) at 5016 and (-2,-3) at 5020. Two laws tried and left: by the logarithm of the height the stars WENT BACK the other way from about 5014 to 5023 (measured, a fault of my first try); by the square of the angle they ran half as fast again at 5006.
+
+THE LOOK OF 4860 (MAIL 579), preview draft beside the approved image, looks head of 10:28:
+1. Ruled rings in the storm: gone. The storm is an eye with a ragged wall, a pale collar and three arms that wind in. Eye floor 26 58 103 against the approved 37 71 110.
+2. Streaked deck: lump and curl by octave. Boxes mine against approved: near left 3 15 37 against 3 16 34; near mid 5 19 44 against 7 27 52; mid right 79 124 171 against 85 124 165; mid far 78 112 148 against 66 102 136.
+3. Flat white band under the limb: now a veil of long bands in five sizes. Rows 3 to 10 below the limb, three columns: 164 205 231, 175 208 233, 172 206 232 against 147 190 222, 188 211 235, 172 204 231.
+4. Glow: 3 rows above the limb 45 95 146 against 38 100 150.
+5. The unused out value is out.
+Looked at before naming: 4707 (bit equal), 5006 (stars only), the veil from above at 4730, 4745, 4752, 4755 to 4760, eight frames in a row 4856 to 4863 (differences 6.07 to 6.09 mean, all alike, drift only), the rise 4956 to 4971 and 4996 to 5024 frame by frame.
+G17 at 4860: 16 by 9 draft median 0.934, lower quarter 0.549 (0b9017c0: 1.002 and 0.790); preview 1.286 and 0.615.
+
+STILL WRONG AT 4860, every one a red I know:
+- No white torn bands in the far field: mine are soft pale and blue bands, the veil hides the deck's small structure there.
+- Rows 20 to 45 below the limb are darker than the approved (114 164 206, 102 149 195, 153 190 223 against 192 215 232, 161 194 223, 203 218 231).
+- The eye is smaller and more of a pinwheel than the approved's wide dark oval; its near wall is one clear edge; the spread of its floor is 21.6 against 34.2 (soft) and 14.3 against 14.6 (fine); fine comb lines at its right rim at three times size.
+- The shadow of the second streamer is shorter than the approved's long band.
+- The lower quarter of G17 fell from 0.790 to 0.549 at 16 by 9 (soft shadows and the veil).
+- From above (4730 to 4758) the storm reads as a clean whirl; at 4730 a faint paler wedge of the veil's edge right of the storm; a pale blotch on the near deck at 4745 was cured (near drop 0.56), a faint pale wisp stays on the near deck lower left at 4755 to 4760, moving with the ground.
+
+PATH, npm run smooth -- --stop neptune --only path on 835c9574: "VERDICT: green. No number is over its limit.", last line "smooth neptune: green. out/work/smooth/neptune.md". Dive: rate step 0.059 at 4760, turn 0.060 at 4712, speed 0.060 over 8 at 4692; rate 2: 0.059, 0.061, 0.061; climb after 0.013. Rise: rate 0.066 at 5023, turn 0.064 at 4957, speed 0.068 over 5 at 5022; rate 2: 0.066, 0.066, 0.069; fall before 0.018 and 0.021. Limits 0.08 and 0.03. The same green in a laid-out tree of main 2008483c with the word off and this src (10:24), tsc clean there. MEASURED by me, STATED.
+
+CHANGE OF VIEW, preview drafts, mean difference of neighbours in levels: dive 4755 to 4760: 8.60, 8.36, 8.12 (4757 to 4758), 7.81, 7.60; rise 4956 to 4959: 7.94 (4956 to 4957), 8.35, 8.76. No step at either. Not the tool's seam; the handover report and the measure are not run on this commit.
+
+MAIL 596, globe-levels.py, 99th percentile against 0.45: patch-96 to patch-64 0.00; patch-64 to patch-40 0.03; patch-40 to place-26 1.16 OVER; place-26 to place-16 0.35; place-16 to place-10 0.19; place-10 to place-6 0.69 OVER; place-6 to place-3.5 0.20. TWO PAIRS RED. READ in code, not proved by a render without them: with deep.json on true the place plates are not drawn in the film (lay 0); the film's pyramid is patch-96, 64, 40, both pairs clean, and what comes in by height is the one scene on the globe (globe.height 0.9 to 0.15, border 16 to 26 degrees on the ground). Cure: take the place plates out of the stop; not done in this commit.
+
+NOT MEASURED ON THIS COMMIT, named:
+- The tool's parity. A stand-in one size step lower, the tool's own op on 4860 preview draft against 16 by 9 draft: mean 2.273, coarse 1.361, block 4.624 at 5,3, level 0.719 (limits 12, 3.2, 12, 2.2). The diff adds nothing counted in pixels (READ).
+- No review or final tier frame; no pictures part.
+- G13: on 0b9017c0 the texels view at 4757 to 4759, master, said soft 61.9 to 63.7 percent, mean 0.92 to 0.94, OVER. Not looked into, not run again.
+- Merge 105da414 without a trailer, known.
+
+SECONDS A DRAFT FRAME on my VM (4 cores), preview: 4860 22.0 to 23.6 (0b9017c0 22.0), 4745 14.4 (14.0), 4985 7.5 (8.1), 5006 2.6, 4707 1.4; 16 by 9: 4860 81.7 (80.6), 4605 23.3. The cost stands as accepted (MAIL 579).
+
+CHECKS on 835c9574: tsc clean; vitest alone 398 of 398; G11 PASS, G15 PASS; no asset changed. Net size of my three folders 82.64 MB against main's 94.35 MB, 11.71 MB less.
