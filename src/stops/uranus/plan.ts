@@ -45,6 +45,13 @@ export function below(span: [number, number], altitude: number): number {
   return 1 - smooth(ramp(Math.log(span[0]), Math.log(span[1]), Math.log(Math.max(altitude, 1e-4))))
 }
 
+export function turned(span: [number, number], soft: number, altitude: number): number {
+  const x = 1 - ramp(Math.log(span[0]), Math.log(span[1]), Math.log(Math.max(altitude, 1e-4)))
+  const end = (u: number): number => soft * (u * u * u - (u * u * u * u) / 2)
+  const p = x < soft ? end(x / soft) : x > 1 - soft ? 1 - soft - end((1 - x) / soft) : x - soft / 2
+  return Math.min(Math.max(p / (1 - soft), 0), 1)
+}
+
 const X = new THREE.Vector3(1, 0, 0)
 const CENTRE = new THREE.Vector3().fromArray(deck.centre)
 const UNIT = 1 / deck.radius
@@ -181,17 +188,22 @@ export class UranusPlan extends StopPlan {
 
   skyTurnShare(seg: Segment, time: number): number | null {
     if (!this.handed(seg)) return super.skyTurnShare(seg, time)
-    return below(low.skyTurn, this.altitude(time))
+    return this.skyTurned(seg, time)
+  }
+
+  private skyTurned(seg: Segment, time: number): number {
+    return seg.kind === 'dive' ? turned(low.skyDive.turn, low.skyDive.soft, this.altitude(time)) : below(low.skyTurn, this.altitude(time))
   }
 
   skyCarryShare(seg: Segment, time: number): number | null {
-    return this.handed(seg) ? below(low.skyTurn, this.altitude(time)) : null
+    return this.handed(seg) ? this.skyTurned(seg, time) : null
   }
 
   skyShare(seg: Segment, time: number): SkyShares | null {
     if (!this.handed(seg)) return null
-    const share = below(low.skyPicture, this.altitude(time))
-    return seg.kind === 'dive' ? { low: share, high: 1 - share } : { low: share }
+    if (seg.kind !== 'dive') return { low: below(low.skyPicture, this.altitude(time)) }
+    const share = below(low.skyDive.picture, this.altitude(time))
+    return { low: share, high: 1 - share }
   }
 
   skyLiftAt(seg: Segment, time: number): number | null {
