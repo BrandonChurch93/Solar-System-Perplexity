@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T17:28:17.603Z",
- "head": "8e735db2e4e48719933c955e7dc05732ab4f8451",
- "note": "item 17 goes on: trial T7e final beside the approved close at full size, the base change of main ed003c7 as a picture; next the dense ring's far gain and the thin zones' view law (T8)",
+ "pushed": "2026-11-24T17:50:05.796Z",
+ "head": "bc97f0c337218f40b3a0f8b3f0c54a426627d036",
+ "note": "T8: ring tone at 3720 fitted by material (dense far gain, thin zones by view cosine); item 18 dusk of the globe by lens height in work",
  "looks": [
+  {
+   "time": "2026-11-24T17:50:05.153Z",
+   "file": "20261124175005153-note-w9g_ur.jpg",
+   "source": "../../../../tmp/v/t17/w9g_ur.png",
+   "kind": "note",
+   "label": "3720 globe upper right at full size: approved left, film right; night side brown 26,19,12 against 11,12,12 and a wider terminator (item 18, in work); the globe larger and further right (camera of 3720, needs a ruling)"
+  },
+  {
+   "time": "2026-11-24T17:50:04.497Z",
+   "file": "20261124175004497-note-w9g_a.jpg",
+   "source": "../../../../tmp/v/t17/w9g_a.png",
+   "kind": "note",
+   "label": "3720 trial T8 lower left at full size, no film grain: approved left, film right; the near ringlets are fewer and softer than the approved's fine dark grooves (open)"
+  },
+  {
+   "time": "2026-11-24T17:50:03.877Z",
+   "file": "20261124175003877-note-t8a_whole.jpg",
+   "source": "../../../../tmp/v/t17/t8a_whole.png",
+   "kind": "note",
+   "label": "3720 trial T8, whole frame: the approved close above, the film below; ring tone by material now within 0.01 of the approved in six zones; the globe and the fine dark grain of the near rings still open"
+  },
   {
    "time": "2026-11-24T17:28:08.497Z",
    "file": "20261124172808497-note-base_diff_3465.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/v/t17/r50_rise_changes.png",
    "kind": "note",
    "label": "rise of trial T7e (draft, rate 2): the largest changes in place and of the pattern; pattern 0.25 at 3820 + 1/2 (named commit 0.24, limit 0.45)"
-  },
-  {
-   "time": "2026-11-24T16:32:28.876Z",
-   "file": "20261124163228876-note-r50_dive_changes.jpg",
-   "source": "../../../../tmp/v/t17/r50_dive_changes.png",
-   "kind": "note",
-   "label": "dive of trial T7e (draft, rate 2): the largest changes in place and of the pattern; pattern 0.29 at 3601 (named commit 0.21, limit 0.45), the grade by height comes in from 3588 to 3620"
-  },
-  {
-   "time": "2026-11-24T16:32:27.696Z",
-   "file": "20261124163227696-note-matzones_masks.jpg",
-   "source": "../../../../tmp/v/t17/matzones_masks.png",
-   "kind": "note",
-   "label": "3720 final, trial T7e (right) beside the approved close (left): the zones the tone is measured in, A ring green, B ring red, each picture cut by its own division"
-  },
-  {
-   "time": "2026-11-24T16:11:34.794Z",
-   "file": "20261124161134794-note-v_sim9_ll.jpg",
-   "source": "../../../../tmp/v/t17/v_sim9_ll.png",
-   "kind": "note",
-   "label": "Saturn 3720 lower left: simulated colour pivot on trial T7e, a computed picture and not a render"
   }
  ]
 }
