@@ -1,9 +1,60 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T06:52:27.190Z",
- "head": "c8ca94eb4d524367af5303b2c09d93239482bb79",
- "note": "main b0b8788 merged as c8ca94e; rise pictures on 589fd9a: two red lines (travel onset pops, stars through the shaded ring); dive pictures running, finals next",
+ "pushed": "2026-11-24T07:08:55.988Z",
+ "head": "3af4dfcf099a0751a180fc37008e3a6eb376e1ba",
+ "note": "dive pictures of the bent head: pattern red at the pole and at the shadow tip, their causes; proofs of the merged head render now",
  "looks": [
+  {
+   "time": "2026-11-24T07:08:49.171Z",
+   "file": "20261124070849171-note-pat3859.jpg",
+   "source": "../../../../tmp/v/r36/pat3859.png",
+   "kind": "note",
+   "label": "rise 3859 against 3867, my copy of the judge's pattern map: red is over 0.45, on the shaded inner ring at the bottom"
+  },
+  {
+   "time": "2026-11-24T07:08:47.772Z",
+   "file": "20261124070847772-note-rise_shade2.jpg",
+   "source": "../../../../tmp/v/r36/rise_shade2.png",
+   "kind": "note",
+   "label": "rise right bottom quarter 3838 to 3868 every second frame, draft: stars through the shaded inner ring"
+  },
+  {
+   "time": "2026-11-24T07:08:46.468Z",
+   "file": "20261124070846468-note-dive_tip.jpg",
+   "source": "../../../../tmp/v/r36/dive_tip.png",
+   "kind": "note",
+   "label": "dive bottom right corner 3578 to 3589, draft: the shadow tip where the pattern reads 0.56"
+  },
+  {
+   "time": "2026-11-24T07:08:45.301Z",
+   "file": "20261124070845301-note-dive_limb.jpg",
+   "source": "../../../../tmp/v/r36/dive_limb.png",
+   "kind": "note",
+   "label": "dive top limb 3570 to 3577, draft: dark single pixels just inside the limb at the pole"
+  },
+  {
+   "time": "2026-11-24T07:08:43.950Z",
+   "file": "20261124070843950-note-dive_a.jpg",
+   "source": "../../../../tmp/v/r36/dive_a.png",
+   "kind": "note",
+   "label": "dive 3536 to 3572 every fourth frame, draft, 589fd9a"
+  },
+  {
+   "time": "2026-11-24T07:08:43.030Z",
+   "file": "20261124070843030-note-saturn-dive-pops.jpg",
+   "source": "../../../../tmp/v/r36/saturn-dive-pops.png",
+   "kind": "note",
+   "label": "dive pictures on 589fd9a, the judge's panel of the four largest pops (largest 1.09 at 3563, limit 1.2)",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-24T07:08:41.733Z",
+   "file": "20261124070841733-note-saturn-dive-changes.jpg",
+   "source": "../../../../tmp/v/r36/saturn-dive-changes.png",
+   "kind": "note",
+   "label": "dive pictures on 589fd9a, the judge's panel of the changes in place: pattern 0.53 at the pole 3561, 0.56 at the shadow tip 3580 (limit 0.45)",
+   "stop": "saturn"
+  },
   {
    "time": "2026-11-24T06:52:25.887Z",
    "file": "20261124065225887-note-saturn-rise-pops.jpg",
@@ -11,56 +62,6 @@
    "kind": "note",
    "label": "589fd9a, the judge's panel of the rise: the four largest pops are 3892 to 3896, the travel leaving its rest; inside the rise the largest is 1.21 at 3875",
    "stop": "saturn"
-  },
-  {
-   "time": "2026-11-24T06:52:25.088Z",
-   "file": "20261124065225088-note-saturn-rise-changes.jpg",
-   "source": "../../../../tmp/v/r36/saturn-rise-changes.png",
-   "kind": "note",
-   "label": "589fd9a, the judge's panel of the rise: pattern 0.50 at 3859 lies on the shaded ring at the bottom right where the star cloud shows through it (two layers that move apart); 0.45 at 3808 at the right frame edge",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-24T06:52:24.188Z",
-   "file": "20261124065224188-note-rise_e.jpg",
-   "source": "../../../../tmp/v/r36/rise_e.png",
-   "kind": "note",
-   "label": "589fd9a draft: every second frame 3866 to 3884, the end of the rise"
-  },
-  {
-   "time": "2026-11-24T06:52:23.345Z",
-   "file": "20261124065223345-note-rise_c.jpg",
-   "source": "../../../../tmp/v/r36/rise_c.png",
-   "kind": "note",
-   "label": "589fd9a draft: every second frame 3842 to 3864 of the rise, across T 3852"
-  },
-  {
-   "time": "2026-11-24T06:52:22.123Z",
-   "file": "20261124065222123-note-rise_b.jpg",
-   "source": "../../../../tmp/v/r36/rise_b.png",
-   "kind": "note",
-   "label": "589fd9a draft: every second frame 3814 to 3840 of the rise"
-  },
-  {
-   "time": "2026-11-24T06:52:20.327Z",
-   "file": "20261124065220327-note-rise_a.jpg",
-   "source": "../../../../tmp/v/r36/rise_a.png",
-   "kind": "note",
-   "label": "589fd9a draft: every frame 3798 to 3812, the end of the bend and the first frames of the rise"
-  },
-  {
-   "time": "2026-11-24T06:30:30.576Z",
-   "file": "20261124063030576-note-dive_sky_pairs.jpg",
-   "source": "../../../../tmp/v/r35/dive_sky_pairs.png",
-   "kind": "note",
-   "label": "dive 3596 to 3632: head before against the trial with the engine's new sky and the look (stars 8): the sky dims and evens by height, no swell"
-  },
-  {
-   "time": "2026-11-24T06:30:29.861Z",
-   "file": "20261124063029861-note-sky3720_four.jpg",
-   "source": "../../../../tmp/v/r35/sky3720_four.png",
-   "kind": "note",
-   "label": "sky of 3720 (0 to 1000 by 0 to 300): approved, head before, look stars 8 cap 0.5, look stars 5.5 cap 0.9 (taken)"
   }
  ]
 }
