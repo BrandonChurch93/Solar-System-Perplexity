@@ -1,0 +1,106 @@
+{
+ "critic": "R3",
+ "score": 6,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "crops C and E, upper-right bands and mid-disk",
+      "what": "at native size the cloud deck is stretched airbrushed paint; filaments are gone and the bands read as a smeared map",
+      "fix": "add a higher-frequency turbulence layer and cut the directional smear so the close view keeps filament detail"
+     },
+     {
+      "severity": "major",
+      "file": "image-07.png",
+      "where": "crops L and R, upper deck and the disk right of the storm",
+      "what": "same soft paint: parallel streaks with no cross-flow, and the right flank is nearly featureless",
+      "fix": "bring those regions up to the storm's spatial frequency instead of a blurred base texture"
+     },
+     {
+      "severity": "minor",
+      "file": "image-06.png",
+      "where": "crop A, storm eyewall",
+      "what": "the vortex has structure, but the white arms are soft and the highlights are flat white",
+      "fix": "keep internal filament contrast in the bright clouds and soften only the outer falloff"
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "crop I, crescent moon on the right edge",
+      "what": "the lit limb stair-steps against space",
+      "fix": "antialias the moon silhouette so the curve has partial-coverage pixels"
+     },
+     {
+      "severity": "minor",
+      "file": "image-03.png",
+      "where": "crop L, moon at lower right",
+      "what": "the crescent is flat, and the dark limb reads as a faint cutout",
+      "fix": "add crater shading on the lit face and fade the unlit edge into the sky"
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "crop G, sunlit northern limb",
+      "what": "the rim is blown to a thin white line and eats the cloud detail under it",
+      "fix": "lower the limb exposure so the glow is a falloff and the bands stay readable inside it"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-15.png",
+      "where": "Q and R, center and right side of the globe below the terminator",
+      "what": "The cloud texture stretches into nearly parallel streaks and then dissolves into a smooth blue wash. The globe reads as a painted surface at native size.",
+      "fix": "Reduce directional stretching and preserve fine cloud structure through the terminator, letting the light fade without blurring the texture."
+     },
+     {
+      "severity": "major",
+      "file": "image-10.png",
+      "where": "A, E and I, cyan surface immediately below the horizon",
+      "what": "Most cloud detail compresses into long, soft bands parallel to the limb, with little variation in scale or direction. The sharper wisps farther down make the smeared band more conspicuous.",
+      "fix": "Break up the parallel bands with finer cloud structure and vary the scale and direction of the detail across the visible surface."
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "Upper middle of the globe, bright hook-shaped cloud against the terminator",
+      "what": "The chalk-white fragments have hard edges and look pasted on against the much softer surrounding clouds.",
+      "fix": "Soften the fragment edges, add faint connecting wisps, and carry the local lighting falloff through the bright cloud."
+     },
+     {
+      "severity": "minor",
+      "file": "image-10.png",
+      "where": "C, F and H, brighter ring edges and their right-hand ends",
+      "what": "Paired bright lines make parts of the ring look like an outlined rail, and the outermost line ends in a conspicuous bright tip in the limb glow.",
+      "fix": "Vary the opacity across the ring edges, reduce the paired highlights, and fade the ends into the atmospheric scattering."
+     },
+     {
+      "severity": "minor",
+      "file": "image-16.png",
+      "where": "T and U, dense star field beside the shadowed globe",
+      "what": "Several brighter stars read as soft round dots with heavy halos rather than compact points.",
+      "fix": "Tighten the star cores and reserve stronger bloom for the very brightest stars."
+     }
+    ]
+   }
+  }
+ ]
+}
