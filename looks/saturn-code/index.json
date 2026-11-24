@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T15:36:12.540Z",
+ "pushed": "2026-11-24T16:11:40.980Z",
  "head": "f90f86a71a878e901ebbdcf8a0ac19237adafe4e",
- "note": "item 17 trial T7e (ring grade by height, toe 0.5, ceiling 1.0): 3720 beside the approved close, dive and rise sheets at draft; local trial, not on the branch",
+ "note": "Saturn item 17: trial T7e of the ring grade by height at 3720 beside the approved close, with a simulated colour pivot; proofs of the trial are running; nothing new on the branch",
  "looks": [
+  {
+   "time": "2026-11-24T16:11:34.794Z",
+   "file": "20261124161134794-note-v_sim9_ll.jpg",
+   "source": "../../../../tmp/v/t17/v_sim9_ll.png",
+   "kind": "note",
+   "label": "Saturn 3720 lower left: simulated colour pivot on trial T7e, a computed picture and not a render"
+  },
+  {
+   "time": "2026-11-24T16:11:34.230Z",
+   "file": "20261124161134230-note-v_div_farnear.jpg",
+   "source": "../../../../tmp/v/t17/v_div_farnear.png",
+   "kind": "note",
+   "label": "Saturn 3720 at the division: far look alone beside near light alone, instrument renders of trial T7"
+  },
+  {
+   "time": "2026-11-24T16:11:33.656Z",
+   "file": "20261124161133656-note-v_div.jpg",
+   "source": "../../../../tmp/v/t17/v_div.png",
+   "kind": "note",
+   "label": "Saturn 3720 final at the division: approved close beside trial T7e (ring grade by height, toe 0.5, ceiling 1.0), not on the branch"
+  },
   {
    "time": "2026-11-24T15:36:11.394Z",
    "file": "20261124153611394-note-d8_rise_3838.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/v/t17/t7e_left.png",
    "kind": "note",
    "label": "item 17 trial T7e, frame 3720 final, left half beside the approved close"
-  },
-  {
-   "time": "2026-11-24T15:36:06.470Z",
-   "file": "20261124153606470-note-t7e_three.jpg",
-   "source": "../../../../tmp/v/t17/t7e_three.png",
-   "kind": "note",
-   "label": "item 17 trial T7e, frame 3720 final: approved close, named commit, trial"
-  },
-  {
-   "time": "2026-11-24T15:16:18.005Z",
-   "file": "20261124151618005-note-ll_corner.jpg",
-   "source": "../../../../tmp/v/t17/ll_corner.png",
-   "kind": "note",
-   "label": "3720 final without grain, lower left corner: approved close on top, the named commit in the middle, trial T7d below"
-  },
-  {
-   "time": "2026-11-24T15:16:17.393Z",
-   "file": "20261124151617393-note-mid_diag.jpg",
-   "source": "../../../../tmp/v/t17/mid_diag.png",
-   "kind": "note",
-   "label": "3720 final without grain, crop x 400 to 1040, y 600 to 945: approved close on top, the named commit in the middle, trial T7d below; T7d fails G17 at 0.779 against 0.945 named, so it is not offered as it stands"
   }
  ]
 }
