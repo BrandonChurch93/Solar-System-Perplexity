@@ -107,11 +107,10 @@ export const createSet: SetFactory = async (ctx) => {
     color: await ctx.texture(base + 'deck-color.jpg', { srgb: true, anisotropy: 16 }),
     near: await ctx.texture(base + 'deck-near.jpg', { srgb: true, anisotropy: 16 }),
     cloud: await ctx.texture(base + 'deck-cloud.jpg', { srgb: false, anisotropy: 16, repeat: true }),
-    far: await ctx.texture(base + 'deck-far.jpg', { srgb: false, anisotropy: 16, repeat: true }),
     height: await ctx.dataTexture(base + 'deck-height.bin', deckJson.heightSize[0]!, deckJson.heightSize[1]!, 1),
     light: deckLight,
     halo: deckHalo,
-  }, key, look.deck)
+  }, key, look.deck, globe.plates(), look.place.deck.calm)
   terrain.add(deck.group)
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
   const deckCentre = new THREE.Vector3().fromArray(deckJson.centre)
@@ -142,6 +141,7 @@ export const createSet: SetFactory = async (ctx) => {
   const over = new THREE.Group()
   over.add(deck.cover, glow.mesh, lowArcs.mesh, riseArcs.mesh, riseRings.mesh)
   const coverEye = new THREE.Vector3()
+  const steep: [number, number] = [look.place.steep[0], look.place.steep[1]]
   const origin = new THREE.Vector3()
   const ball = new THREE.Vector3()
   const seated = new THREE.Quaternion()
@@ -230,8 +230,14 @@ export const createSet: SetFactory = async (ctx) => {
       const relit = low && !look.show.down
       const plated = low ? reach(look.place.plates[kind as 'dive' | 'rise'], altitude) : 0
       globe.rim(low ? reach(look.place.rim.span, altitude) * (1 - reach(look.place.rim.near, altitude)) : 0, look.place.rim.feather, look.place.rim.wave)
-      if (low) globe.place(relit ? reach(look.place.light.up, altitude) : 0, relit ? reach(look.place.light.down, altitude) : 0, plated, state.time - terrainMid, look.place.fixedEye ? eyes[kind as 'dive' | 'rise'] : eyeAt(kind as 'dive' | 'rise', state.time), kind === 'rise' ? look.place.tops.climb : look.place.tops.shell[1])
-      else globe.place(0, 0, 0, state.time - terrainMid, eyes.dive, look.place.tops.shell[1])
+      const flat = low ? reach(look.place.light.down, altitude) : 0
+      steep[0] = look.place.steep[0] + (look.place.steepLow[0] - look.place.steep[0]) * flat
+      steep[1] = look.place.steep[1] + (look.place.steepLow[1] - look.place.steep[1]) * flat
+      if (low) {
+        const from = look.place.fixedEye ? eyes[kind as 'dive' | 'rise'] : eyeAt(kind as 'dive' | 'rise', state.time)
+        const over = from.length() - 1
+        globe.place(relit ? reach(look.place.light.up, altitude) : 0, relit ? flat : 0, plated, state.time - terrainMid, from, 1 - reach(look.place.tops.span, over), steep)
+      } else globe.place(0, 0, 0, state.time - terrainMid, eyes.dive, 0, steep)
       globe.face(left ? look.face.weight : 0)
       halo.update(sun, gain * state.weight * (1 + (look.near.halo - 1) * near) * (1 - sky), plan.spin(state.time), clock)
       placeEye()

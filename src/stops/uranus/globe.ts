@@ -49,9 +49,9 @@ const PATCH_LEVELS = Array.from({ length: PATCH_COUNT }, (_, i) => `    {
 
 export const PLATE_COUNT = 4
 
-const PLATE_SAMPLERS = Array.from({ length: PLATE_COUNT }, (_, i) => 'uniform sampler2D uPlate' + i + ';').join('\n')
+export const PLATE_SAMPLERS = Array.from({ length: PLATE_COUNT }, (_, i) => 'uniform sampler2D uPlate' + i + ';').join('\n')
 
-const PLATE_LEVELS = Array.from({ length: PLATE_COUNT }, (_, i) => `    {
+export const PLATE_LEVELS = Array.from({ length: PLATE_COUNT }, (_, i) => `    {
       vec2 q = pg * uPlateScale[${i}];
       float w = smoothstep(0.5, 0.5 - uPlace.y, max(abs(q.x), abs(q.y)));
       for (int j = 0; j < (w > 0.0 ? 1 : 0); j++) {
@@ -289,7 +289,7 @@ ${PLATE_LEVELS}
     vec3 fibre = top.rgb;
 ${TOP_LEVELS}
     vec3 calm = textureGrad(uPlate0, q0 + 0.5, qx * uPlateScale[0] + vec2(uTopFine.y, 0.0), qy * uPlateScale[0] + vec2(0.0, uTopFine.y)).rgb;
-    lifted = wq * clamp(top.a * (1.0 + uTopFine.x * (dot(fibre, vec3(1.0)) / max(dot(calm, vec3(1.0)), 1e-3) - 1.0)), 0.0, 1.0) * smoothstep(uTops.x, uTops.y, dot(nq, uSunW)) * smoothstep(uTopSeen.x, uTopSeen.y, dot(onShell, -rd)) * smoothstep(uTopEye.x, uTopEye.y, length(pgq)) * smoothstep(0.0, uTopShell.y, length(uPlaceEye) - uTopShell.x);
+    lifted = wq * clamp(top.a * (1.0 + uTopFine.x * (dot(fibre, vec3(1.0)) / max(dot(calm, vec3(1.0)), 1e-3) - 1.0)), 0.0, 1.0) * smoothstep(uTops.x, uTops.y, dot(nq, uSunW)) * smoothstep(uTopSeen.x, uTopSeen.y, dot(onShell, -rd)) * smoothstep(uTopEye.x, uTopEye.y, length(pgq)) * uTopShell.y;
   }
   col += uNear * uTopWhite * lifted;
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
@@ -325,7 +325,7 @@ export interface PlaceOptions {
   aMax: number
   steep: [number, number]
   relitSoft: number
-  topLight: { sun: [number, number]; seen: [number, number]; white: [number, number, number]; shell: [number, number]; eye: [number, number]; fine: [number, number] }
+  topLight: { sun: [number, number]; seen: [number, number]; white: [number, number, number]; shell: number; eye: [number, number]; fine: [number, number] }
   feather: number
   deck: { centre: number[]; radius: number; f0: number[]; r0: number[]; flow: [number, number, number, number]; flowAngle: number; light: THREE.Texture; lightSize: number[]; psiMax: number }
 }
@@ -370,7 +370,7 @@ export class Globe {
         ...Object.fromEntries(pl.textures.map((t, i) => ['uPlate' + i, { value: t }])),
         uPlateScale: { value: pl.halfTans.map((t) => 1 / (2 * t)) },
         uPlateSize: { value: pl.textures.map((t) => (t.image as unknown as { width: number }).width) },
-        uPlace: { value: new THREE.Vector3(0, pl.feather, pl.aMax) }, uRelit: { value: new THREE.Vector3(0, 0, pl.relitSoft) }, uSteep: { value: new THREE.Vector2().fromArray(pl.steep) }, uTops: { value: new THREE.Vector2().fromArray(pl.topLight.sun) }, uTopSeen: { value: new THREE.Vector2().fromArray(pl.topLight.seen) }, uTopWhite: { value: new THREE.Vector3().fromArray(pl.topLight.white) }, uTopShell: { value: new THREE.Vector2(1 + pl.topLight.shell[0], pl.topLight.shell[1]) }, uTopEye: { value: new THREE.Vector2(pl.topLight.eye[0] / pl.deck.radius, pl.topLight.eye[1] / pl.deck.radius) }, uTopFine: { value: new THREE.Vector2().fromArray(pl.topLight.fine) }, uPlaceField: { value: pl.field }, uPlaceRef: { value: pl.clockRef }, uPlaceEye: { value: new THREE.Vector3(0, 1, 0) }, uCloudTime: { value: 0 },
+        uPlace: { value: new THREE.Vector3(0, pl.feather, pl.aMax) }, uRelit: { value: new THREE.Vector3(0, 0, pl.relitSoft) }, uSteep: { value: new THREE.Vector2().fromArray(pl.steep) }, uTops: { value: new THREE.Vector2().fromArray(pl.topLight.sun) }, uTopSeen: { value: new THREE.Vector2().fromArray(pl.topLight.seen) }, uTopWhite: { value: new THREE.Vector3().fromArray(pl.topLight.white) }, uTopShell: { value: new THREE.Vector2(1 + pl.topLight.shell, 0) }, uTopEye: { value: new THREE.Vector2(pl.topLight.eye[0] / pl.deck.radius, pl.topLight.eye[1] / pl.deck.radius) }, uTopFine: { value: new THREE.Vector2().fromArray(pl.topLight.fine) }, uPlaceField: { value: pl.field }, uPlaceRef: { value: pl.clockRef }, uPlaceEye: { value: new THREE.Vector3(0, 1, 0) }, uCloudTime: { value: 0 },
         uPlaceRot: { value: new THREE.Matrix3().setFromMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(pl.rot)) },
         uPlaceN: { value: v3(pl.frame.n) }, uPlaceE: { value: v3(pl.frame.e) }, uPlaceU: { value: v3(pl.frame.u) },
         uDeckCentre: { value: v3(pl.deck.centre) }, uDeckRadius: { value: pl.deck.radius }, uDeckF0: { value: v3(pl.deck.f0) }, uDeckR0: { value: v3(pl.deck.r0) },
@@ -420,14 +420,22 @@ export class Globe {
     ;(u.uPatchRim!.value as THREE.Vector2).set(base + (feather - base) * on, wave * on)
   }
 
-  place(up: number, down: number, on: number, deckTime: number, eye: THREE.Vector3, above: number): void {
+  place(up: number, down: number, on: number, deckTime: number, eye: THREE.Vector3, tops: number, steep: [number, number]): void {
     const u = this.material.uniforms
+    ;(u.uSteep!.value as THREE.Vector2).set(steep[0], steep[1])
     ;(u.uPlaceEye!.value as THREE.Vector3).copy(eye)
-    ;(u.uTopShell!.value as THREE.Vector2).y = above
+    ;(u.uTopShell!.value as THREE.Vector2).y = tops
     ;(u.uRelit!.value as THREE.Vector3).x = up
     ;(u.uRelit!.value as THREE.Vector3).y = down
     ;(u.uPlace!.value as THREE.Vector3).x = on
     u.uDeckTime!.value = deckTime
+  }
+
+  plates(): Record<string, THREE.IUniform> {
+    const u = this.material.uniforms
+    const out: Record<string, THREE.IUniform> = { uPlateScale: u.uPlateScale!, uPlateSize: u.uPlateSize!, uPlace: u.uPlace!, uPlaceField: u.uPlaceField!, uPlaceN: u.uPlaceN!, uPlaceE: u.uPlaceE!, uPlaceU: u.uPlaceU! }
+    for (let i = 0; i < PLATE_COUNT; i++) out['uPlate' + i] = u['uPlate' + i]!
+    return out
   }
 
   face(weight: number): void {
