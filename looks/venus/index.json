@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-24T18:36:32.902Z",
- "head": "ad1d6a92ff1ce256f6e9392ddf6e80ac8445be36",
- "note": "MAIL 707: rise smooth pictures on the commit tree; dive smooth running",
+ "pushed": "2026-11-24T18:58:14.209Z",
+ "head": "8b7994375d9917b14ff91634a36c266dc1d1c35c",
+ "note": "MAIL 707 named 8b799437; dive pop 1.31 is a new red of mine, cure in trial: air.haze.heights",
  "looks": [
+  {
+   "time": "2026-11-24T18:58:13.628Z",
+   "file": "20261124185813628-note-dive-changes-X.jpg",
+   "source": "../../../../tmp/v/c/dive-changes-X.jpg",
+   "kind": "note",
+   "label": "dive smooth pictures on the named commit: pattern 0.46 at 1311, 3 over (0.57 at 1322, 12 over before)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T18:58:13.012Z",
+   "file": "20261124185813012-note-dive-pops-X.jpg",
+   "source": "../../../../tmp/v/c/dive-pops-X.jpg",
+   "kind": "note",
+   "label": "dive smooth pictures on the named commit 8b799437: new red, pop 1.31 at 1318 + 1/2, 9 over (1316 to 1320); what is left shows a grey band along the limb: the air on the line of sight at mu 0.12 coming in by height",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T18:36:32.001Z",
    "file": "20261124183632001-note-rise-changes-X.jpg",
@@ -58,30 +74,6 @@
    "segment": "venus.rise",
    "first": 1540,
    "last": 1551,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T18:00:08.397Z",
-   "file": "20261124180008397-sheet-venus-rise-draft-before.jpg",
-   "source": "out/work/handover/venus-rise-draft-before.png",
-   "kind": "sheet",
-   "label": "venus rise, every frame 1530 to 1538 (before T, frame 1539), draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1530,
-   "last": 1538,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T18:00:06.888Z",
-   "file": "20261124180006888-sheet-venus-rise-draft-across.jpg",
-   "source": "out/work/handover/venus-rise-draft-across.png",
-   "kind": "sheet",
-   "label": "venus rise, every frame 1533 to 1544 (across T, frame 1539), draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1533,
-   "last": 1544,
    "tier": "draft"
   }
  ]
