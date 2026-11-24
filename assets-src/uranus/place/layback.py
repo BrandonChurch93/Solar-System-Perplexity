@@ -106,7 +106,7 @@ def tex_lod(pyr, u, v, lod, wrap=False):
 class Source:
     def __init__(self):
         self.color = pyramid(np.asarray(Image.open(PUB + 'deck-color.jpg').convert('RGB')))
-        self.far = pyramid(np.asarray(Image.open(PUB + 'deck-far.jpg').convert('RGB')))
+        self.far = pyramid(np.asarray(Image.open('out/work/u/t/deck-far.jpg').convert('RGB')))
         self.near = pyramid(np.asarray(Image.open(PUB + 'deck-near.jpg').convert('RGB')))
         self.pixel = (WIN[2] - WIN[0]) / self.color[0].shape[1]
         nx, ny = DECK['lightSize']
