@@ -12,6 +12,7 @@ import type { Pose } from '../src/core/types'
 import { plans } from '../src/director/plans'
 import { LANDING_FROM, MIN_POINTS, SEAM_OWN, SEAM_REACH, carriedCamera, curves, eyeCurves, landingCurves, ringPlane, sampleLanding, sampleLeave, sampleSeam, sampleWindow, sphereHit, type Kind, type Plane, type Ring } from './smooth/camera'
 import { IN_PLACE } from './lib/steps'
+import { apart, shownRows } from './smooth/maps'
 import { placeReadings } from './smooth/place'
 import { missing, partOwn, popContext, sliceName, sliceNeed, type Span } from './smooth/slice'
 import { MOVES, PIECES, buildFault, differ, gather, gatherFaults, pieceStem, runFacts, type Facts, type Given } from './smooth/whole'
@@ -71,6 +72,10 @@ import { LANDING_FLOOR, LANDING_LATE, LANDING_SHOWN, changeNote, judgeCurve, jud
 //           part that is missing or there twice and writes nothing then (exit 2). The report says which machine wrote which part.
 //           --part path,place,parity,counts (one or more) is --only with a file name of its own, <stop>-part-<names>.json and .md, so that
 //           two runs in one folder do not write over each other; --part place --kind dive|rise writes <stop>-<kind>-part-place.
+//           --carry reads the pattern a second way beside it, which judges nothing: each pair carried by the camera's own map (tools/img/carry.py),
+//           then the flow on the carried pair, the reading after both; its numbers stand in columns and keys of their own (patternMap).
+//           The depth is made from the pose (the stop's globe, its rings); --carry-from FOLDER takes it from the range pictures of the render
+//           and their pose records there (kNNNNNN-rR-TIER-range.png and .pose.json; a row is read when both its frames have them).
 // Everything is written to out/work/smooth/<stop>.json and .md (<stop>-<kind> when --kind is given). Exit 1 when a number is over its limit in config smooth, or when a part that was
 // asked for could not be measured. --calibrate writes every number and exits 0: the run that sets the limits.
 
@@ -105,6 +110,9 @@ if (landing && only.some((p) => p !== 'path')) {
   process.exit(2)
 }
 const calibrate = a.calibrate === 'true'
+const mapFrom = a['carry-from'] ?? null
+const byMap = a.carry === 'true' || mapFrom !== null
+const mapMax = a['carry-limit'] === undefined ? null : Number(a['carry-limit'])
 const dir = join(WORK, 'smooth')
 const partOf = a.part === undefined || piece ? null : /^(\d+)\/(\d+)$/.exec(a.part)
 const framesOf = a.frames === undefined ? null : /^(\d+)-(\d+)$/.exec(a.frames)
@@ -309,22 +317,24 @@ async function still(k: number, tier: string, diag: string, fmt = format): Promi
   }
 }
 
-interface PictureNumbers { level: number[]; levelStep: (number | null)[]; residual: (number | null)[]; base: (number | null)[]; popAll: (number | null)[]; popCarried: (number | null)[]; pop: (number | null)[]; motionPx: (number | null)[]; unsure: (number | null)[]; popBlock: (number | null)[]; popBlockAt: ([number, number] | null)[]; grid: [number, number]; change: (number | null)[]; changeTop: (number | null)[]; changeAt: ([number, number] | null)[]; changeShare: (number | null)[]; pattern: (number | null)[]; patternAt: ([number, number] | null)[]; patternShare: (number | null)[] }
-interface PictureRow { k: number; frame: number; level: number; levelStep: number | null; residual: number | null; base: number | null; popAll: number | null; popCarried: number | null; pop: number | null; motionPx: number | null; unsure: number | null; popBlock: number | null; popBlockAt: [number, number] | null; change: number | null; changeTop: number | null; changeAt: [number, number] | null; changeShare: number | null; pattern: number | null; patternAt: [number, number] | null; patternShare: number | null }
+interface PictureNumbers { level: number[]; levelStep: (number | null)[]; residual: (number | null)[]; base: (number | null)[]; popAll: (number | null)[]; popCarried: (number | null)[]; pop: (number | null)[]; motionPx: (number | null)[]; unsure: (number | null)[]; popBlock: (number | null)[]; popBlockAt: ([number, number] | null)[]; grid: [number, number]; change: (number | null)[]; changeTop: (number | null)[]; changeAt: ([number, number] | null)[]; changeShare: (number | null)[]; pattern: (number | null)[]; patternAt: ([number, number] | null)[]; patternShare: (number | null)[]; patternMap?: (number | null)[]; patternMapAt?: ([number, number] | null)[]; patternMapShare?: (number | null)[]; patternMapOn?: (number | null)[]; patternMapBy?: (ByRule | null)[]; patternMapRule?: (string | null)[]; patternMapLeft?: (number | null)[]; patternMapUnits?: (number[] | null)[] }
+interface ByRule { map: number; sky: number; flow: number }
+interface PictureRow { k: number; frame: number; level: number; levelStep: number | null; residual: number | null; base: number | null; popAll: number | null; popCarried: number | null; pop: number | null; motionPx: number | null; unsure: number | null; popBlock: number | null; popBlockAt: [number, number] | null; change: number | null; changeTop: number | null; changeAt: [number, number] | null; changeShare: number | null; pattern: number | null; patternAt: [number, number] | null; patternShare: number | null; patternMap?: number | null; patternMapAt?: [number, number] | null; patternMapShare?: number | null; patternMapOn?: number | null; patternMapBy?: ByRule | null; patternMapRule?: string | null; patternMapLeft?: number | null; patternMapUnits?: number[] | null }
 interface Most { k: number; frame: number; value: number }
-interface PictureKind { segment: string; firstFrame: number; endFrame: number; window: [number, number]; rate: number; frames: number; rows: PictureRow[]; levelStep: Most | null; pop: Most | null; popBlock: (Most & { at: [number, number] | null }) | null; change: (Most & { at: [number, number] | null }) | null; pattern: (Most & { at: [number, number] | null }) | null; changeFrames: number; silent: { frames: number; first: number; last: number; body: number } | null; ground: { value: number; pattern: number | null; first: number; last: number } | null; panel: string | null; changePanel: string | null; why: string[]; context?: [number, number]; lead?: string[]; tail?: string[] }
+interface PictureKind { segment: string; firstFrame: number; endFrame: number; window: [number, number]; rate: number; frames: number; rows: PictureRow[]; levelStep: Most | null; pop: Most | null; popBlock: (Most & { at: [number, number] | null }) | null; change: (Most & { at: [number, number] | null }) | null; pattern: (Most & { at: [number, number] | null }) | null; changeFrames: number; silent: { frames: number; first: number; last: number; body: number } | null; ground: { value: number; pattern: number | null; first: number; last: number } | null; panel: string | null; changePanel: string | null; why: string[]; context?: [number, number]; lead?: string[]; tail?: string[]; mapPanel?: string; mapSource?: 'range' | 'made' }
 interface SliceInfo { name: string; part: number | null; of: number | null; total: number; own: [number, number]; need: [number, number]; pops: number[]; changes: number[] }
 let slice: SliceInfo | null = null
 
 const CHANGE = { frames: (S.pictures as { changeFrames?: number }).changeFrames ?? 8, blurPx: (S.pictures as { changeBlurPx?: number }).changeBlurPx ?? 20, max: (S.pictures as { maxChange?: number | null }).maxChange ?? null, rings: (S.pictures as { ringBodies?: string[] }).ringBodies ?? [] }
 const PATTERN = { px: (S.pictures as { patternPx?: number }).patternPx ?? 40, floor: (S.pictures as { patternFloor?: number }).patternFloor ?? 1, max: (S.pictures as { maxPattern?: number | null }).maxPattern ?? null }
 
-function poseOf(k: number, r: number): { p: number[]; q: number[]; vfov: number; rings?: { normal: number[]; inner: number; outer: number }; globe?: { quaternion: number[]; scale: number[] } } {
-  const pose = carriedCamera(film, plan, stop!, k / r, (k / r + spanMid()) / cfg.fps).pose
+function poseOf(k: number, r: number): { p: number[]; q: number[]; vfov: number; rings?: { normal: number[]; inner: number; outer: number }; globe?: { quaternion: number[]; scale: number[] }; turn?: number[] } {
+  const time = (k / r + spanMid()) / cfg.fps
+  const pose = carriedCamera(film, plan, stop!, k / r, time).pose
   const rings = CHANGE.rings.includes(stop!) ? plan.fit.rings : null
   // a globe that the stop draws flattened (fit.globe.scale) is the body as it is drawn, not the unit sphere round it
   const globe = plan.fit.globe?.scale?.some((s) => s !== 1) ? { quaternion: plan.fit.globe.quaternion, scale: plan.fit.globe.scale } : null
-  return { p: pose.position.toArray(), q: pose.quaternion.toArray(), vfov: pose.vfov, ...(rings && rings.outer > rings.inner ? { rings } : {}), ...(globe ? { globe } : {}) }
+  return { p: pose.position.toArray(), q: pose.quaternion.toArray(), vfov: pose.vfov, ...(rings && rings.outer > rings.inner ? { rings } : {}), ...(globe ? { globe } : {}), ...(byMap ? { turn: plan.turn(time).toArray() } : {}) }
 }
 
 interface Sums { levelStep: Most | null; pop: Most | null; block: Most | null; change: Most | null; pattern: Most | null; why: string[]; top: PictureRow[]; peaks: PictureRow[]; silent: PictureKind['silent']; ground: PictureKind['ground'] }
@@ -370,7 +380,31 @@ function sumsOf(kind: Kind, seg: { firstFrame: number; endFrame: number }, first
   return { levelStep, pop, block, change, pattern, why, top, peaks, silent, ground }
 }
 
-function kindOf(seg: { id: string; firstFrame: number; endFrame: number }, first: number, end: number, r: number, total: number, rows: PictureRow[], sums: Sums, panel: string | null, changePanel: string | null, more: { context?: [number, number]; lead?: string[]; tail?: string[] }): PictureKind {
+interface Ranged { depth: string; sky: number[]; range: unknown; bodies: unknown[] }
+
+function rangeOf(k: number, r: number, tier: string, pose: { p: number[]; q: number[]; vfov: number }): Ranged | null {
+  const name = join(mapFrom!, 'k' + String(k).padStart(6, '0') + '-r' + r + '-' + tier)
+  if (!existsSync(name + '-range.png') || !existsSync(name + '.pose.json')) return null
+  const rec = JSON.parse(readFileSync(name + '.pose.json', 'utf8')) as { k: number; rate: number; camera: { p: number[]; q: number[]; vfov: number }; sky: { q: number[] }; range: unknown; bodies: unknown[] }
+  const off = Math.max(...pose.p.map((v, i) => Math.abs(v - rec.camera.p[i]!)), ...pose.q.map((v, i) => Math.abs(v - rec.camera.q[i]!)), Math.abs(pose.vfov - rec.camera.vfov))
+  if (rec.k !== k || rec.rate !== r || !(off < 1e-9)) {
+    console.error('smooth: ' + name + '.pose.json is not the pose of capture frame ' + k + ' at rate ' + r + ' of this build (off by ' + off + ')')
+    process.exit(2)
+  }
+  return { depth: name + '-range.png', sky: rec.sky.q, range: rec.range, bodies: rec.bodies }
+}
+
+function mapLines(p: PictureKind): string[] {
+  const read = p.rows.filter((row) => row.patternMap !== undefined && row.patternMap !== null)
+  if (read.length === 0) return ['The pattern by the camera\'s own map, read beside (it judges nothing): no row has a reading.']
+  const top = read.reduce((x, y) => (y.patternMap! > x.patternMap! ? y : x))
+  const share = (key: keyof ByRule): string => (read.reduce((sum, row) => sum + (row.patternMapBy?.[key] ?? 0), 0) / read.length).toFixed(2)
+  const runs = apart(p.rows, PATTERN.max, mapMax ?? PATTERN.max)
+  const sides = runs.length === 0 ? 'No row where the two readers fall on different sides of ' + (mapMax === null ? 'the limit ' + PATTERN.max : 'their limits (main ' + PATTERN.max + ', the map ' + mapMax + ')') + '.' : 'Rows where the two readers fall on different sides of ' + (mapMax === null ? 'the limit ' + PATTERN.max : 'their limits (main ' + PATTERN.max + ', the map ' + mapMax + ')') + ': ' + runs.map((run) => (run.last > run.first ? 'frames ' + position(run.first, p.rate) + ' to ' + position(run.last, p.rate) : 'frame ' + position(run.first, p.rate)) + ' (' + run.rows + (run.rows === 1 ? ' row' : ' rows') + ', red on ' + (run.red === 'main' ? 'main\'s reader' : 'the map') + ' alone, farthest apart at ' + position(run.k, p.rate) + ': main ' + run.main.toFixed(2) + ', the map ' + run.map.toFixed(2) + ')').join('; ') + '.'
+  return ['The pattern by the camera\'s own map, read beside (it judges nothing): largest ' + top.patternMap!.toFixed(2) + ' from frame ' + position(top.k, p.rate) + ' to ' + p.changeFrames + ' film frames later, read on ' + (top.patternMapOn === 1 ? 'the later frame' : 'the first frame') + (top.patternMapAt ? ', most at pixel ' + top.patternMapAt.join(', ') + ' of it' : '') + ', its largest block under ' + (top.patternMapRule === 'map' ? 'the map' : top.patternMapRule === 'sky' ? 'the sky' : 'the flow') + ' (each pair carried by the camera\'s map from the depth and the pose of its frames, the turn of the body taken out, the sky by the camera\'s rotation; ' + (p.mapSource === 'range' ? 'the depth from the range pictures of the render, every surface the stop\'s one body; the column by unit is the share of the judged pixels whose range the render handed in each unit of the pose record, in the record\'s order' : 'the depth made from the pose: the stop\'s globe as it is fitted, its rings') + '; then the flow on the carried pair; the reading after both, on the nearer frame, the farther from its finer picture). Mean share of the judged pixels over ' + read.length + (read.length === 1 ? ' row' : ' rows') + ': the map ' + share('map') + ', the sky ' + share('sky') + ', the flow ' + share('flow') + '.', sides]
+}
+
+function kindOf(seg: { id: string; firstFrame: number; endFrame: number }, first: number, end: number, r: number, total: number, rows: PictureRow[], sums: Sums, panel: string | null, changePanel: string | null, more: { context?: [number, number]; lead?: string[]; tail?: string[]; mapPanel?: string; mapSource?: 'range' | 'made' }): PictureKind {
   const { levelStep, pop, block, change, pattern, silent, ground, why } = sums
   return { segment: seg.id, firstFrame: seg.firstFrame, endFrame: seg.endFrame, window: [first, end - 1], rate: r, frames: total, rows, levelStep, pop, ground, popBlock: block ? { ...block, at: rows.find((row) => row.k === block.k)!.popBlockAt } : null, change: change ? { ...change, at: rows.find((row) => row.k === change.k)!.changeAt } : null, pattern: pattern ? { ...pattern, at: rows.find((row) => row.k === pattern.k)!.patternAt } : null, changeFrames: CHANGE.frames, silent, panel, changePanel, why, ...more }
 }
@@ -404,9 +438,12 @@ async function picturesOf(kind: Kind): Promise<PictureKind | null> {
     paths.push(await still(k, tier, 'beauty'))
     if (paths.length % 20 === 0) console.log(stop + ' ' + kind + ': ' + paths.length + ' of ' + ks.length + ' ' + tier + ' frames, ' + Math.round((Date.now() - t0) / 1000) + ' s')
   }
-  const poses = ks.map((k) => poseOf(k, r))
-  const n = measure<PictureNumbers>({ op: 'pictures', paths, poses, scale: P.flowScale, window: P.popWindow * r, floor: P.popFloor, grid: P.grid, changeFrames: CHANGE.frames * r, changeBlur: CHANGE.blurPx, patternPx: PATTERN.px, patternFloor: PATTERN.floor, first: lo, total, own: [own.first, own.end], lead: context[0] * r, tail: context[1] * r })
-  const rows: PictureRow[] = ks.map((k, i) => ({ k, frame: Math.floor(k / r), level: n.level[i]!, levelStep: n.levelStep[i] ?? null, residual: n.residual[i] ?? null, base: n.base[i] ?? null, popAll: n.popAll[i] ?? null, popCarried: n.popCarried[i] ?? null, pop: n.pop[i] ?? null, motionPx: n.motionPx[i] ?? null, unsure: n.unsure[i] ?? null, popBlock: n.popBlock[i] ?? null, popBlockAt: n.popBlockAt[i] ?? null, change: n.change[i] ?? null, changeTop: n.changeTop[i] ?? null, changeAt: n.changeAt[i] ?? null, changeShare: n.changeShare[i] ?? null, pattern: n.pattern[i] ?? null, patternAt: n.patternAt[i] ?? null, patternShare: n.patternShare[i] ?? null })).filter((row) => row.k - k0 >= own.first && row.k - k0 < own.end)
+  const flat = ks.map((k) => poseOf(k, r))
+  const ranged = mapFrom ? ks.map((k, i) => rangeOf(k, r, tier, flat[i]!)) : null
+  const poses = flat.map((pose, i) => (ranged?.[i] ? { ...pose, sky: ranged[i]!.sky, range: ranged[i]!.range, bodies: ranged[i]!.bodies } : pose))
+  const depths = ranged ? ranged.map((x) => x?.depth ?? null) : null
+  const n = measure<PictureNumbers>({ op: 'pictures', paths, poses, ...(depths ? { depths } : {}), scale: P.flowScale, window: P.popWindow * r, floor: P.popFloor, grid: P.grid, changeFrames: CHANGE.frames * r, changeBlur: CHANGE.blurPx, patternPx: PATTERN.px, patternFloor: PATTERN.floor, ...(byMap ? { carry: true } : {}), first: lo, total, own: [own.first, own.end], lead: context[0] * r, tail: context[1] * r })
+  const rows: PictureRow[] = ks.map((k, i) => ({ k, frame: Math.floor(k / r), level: n.level[i]!, levelStep: n.levelStep[i] ?? null, residual: n.residual[i] ?? null, base: n.base[i] ?? null, popAll: n.popAll[i] ?? null, popCarried: n.popCarried[i] ?? null, pop: n.pop[i] ?? null, motionPx: n.motionPx[i] ?? null, unsure: n.unsure[i] ?? null, popBlock: n.popBlock[i] ?? null, popBlockAt: n.popBlockAt[i] ?? null, change: n.change[i] ?? null, changeTop: n.changeTop[i] ?? null, changeAt: n.changeAt[i] ?? null, changeShare: n.changeShare[i] ?? null, pattern: n.pattern[i] ?? null, patternAt: n.patternAt[i] ?? null, patternShare: n.patternShare[i] ?? null, ...(n.patternMap ? { patternMap: n.patternMap[i] ?? null, patternMapAt: n.patternMapAt?.[i] ?? null, patternMapShare: n.patternMapShare?.[i] ?? null, patternMapOn: n.patternMapOn?.[i] ?? null, patternMapBy: n.patternMapBy?.[i] ?? null, patternMapRule: n.patternMapRule?.[i] ?? null, patternMapLeft: n.patternMapLeft?.[i] ?? null, ...(n.patternMapUnits?.[i] ? { patternMapUnits: n.patternMapUnits[i]! } : {}) } : {}) })).filter((row) => row.k - k0 >= own.first && row.k - k0 < own.end)
   const sums = sumsOf(kind, seg, first, r, total, rows)
   let panel: string | null = null
   if (sums.top.length > 0) {
@@ -424,7 +461,17 @@ async function picturesOf(kind: Kind): Promise<PictureKind | null> {
   }
   const lead = sliced ? [(partOf ? 'Part ' + Number(partOf[1]) + ' of ' + Number(partOf[2]) : 'A slice') + ' of the move: the frames ' + position(k0 + own.first, r) + ' to ' + position(k0 + own.end - 1, r) + ' (capture frames ' + (k0 + own.first) + ' to ' + (k0 + own.end - 1) + '), ' + rows.length + ' of the ' + total + ' of the window, measured with the frames ' + position(k0 + lo, r) + ' to ' + position(k0 + hi, r) + ' round them. Every row is the row of the whole run. The largest values, the lines in red and the verdict here are of these frames alone: the report of the move is the join of all its parts (--join).'] : undefined
   if (sliced) slice = { name: sliceTag, part: partOf ? Number(partOf[1]) : null, of: partOf ? Number(partOf[2]) : null, total, own: [k0 + own.first, k0 + own.end - 1], need: [k0 + lo, k0 + hi], pops: sums.top.map((row) => row.k), changes: sums.peaks.map((row) => row.k) }
-  return kindOf(seg, first, end, r, total, rows, sums, panel, changePanel, { context, ...(lead ? { lead } : {}) })
+  let mapPanel: string | null = null
+  const picks = byMap ? shownRows(rows, PATTERN.max, mapMax ?? PATTERN.max, 6) : []
+  if (picks.length > 0) {
+    mapPanel = join(dir, stop + '-' + kind + (sliceTag ? '-' + sliceTag : '') + '-maps.png')
+    measure({ op: 'maps', output: mapPanel, scale: P.flowScale, changeBlur: CHANGE.blurPx, patternPx: PATTERN.px, patternFloor: PATTERN.floor, limit: cfg.raw.critics.maxImageLongEdgePx, pairs: picks.map((row) => {
+      const i = row.k - ks[0]!
+      const last = i + CHANGE.frames * r
+      return { paths: [paths[i]!, paths[last]!], poses: [poses[i]!, poses[last]!], ...(depths ? { depths: [depths[i]!, depths[last]!] } : {}), label: stop + ' ' + kind + ' frame ' + position(row.k, r) + ' and frame ' + position(row.k + CHANGE.frames * r, r) + ', main\'s reader ' + (row.pattern === null ? 'none' : row.pattern.toFixed(2)) + ', by the camera\'s map' }
+    }) })
+  }
+  return kindOf(seg, first, end, r, total, rows, sums, panel, changePanel, { context, ...(lead ? { lead } : {}), ...(mapPanel ? { mapPanel } : {}), ...(byMap ? { mapSource: depths ? 'range' as const : 'made' as const } : {}) })
 }
 
 type PicturesPart = PartResult & { kinds: Record<string, PictureKind | null>; tier: string; rate: number; secondsAFrame: number | null }
@@ -510,7 +557,7 @@ function joinPart(j: Joined, kind: Kind): PicturesPart {
     ...(sums.top.length > 0 ? ['The four largest pops, each with the next frame and what is left without the motion, are in the panels of the parts: ' + sums.top.map((row) => where(row.k, 'pops')).join(', ') + '.'] : []),
     ...(sums.peaks.length > 0 ? ['The two largest changes of the pattern and the largest changes in place, each with the later frame carried back, the difference and the change of the pattern, are in the panels of the parts: ' + sums.peaks.map((row) => where(row.k, 'changes')).join(', ') + '.'] : []),
   ]
-  const out = kindOf({ id: base.segment, firstFrame: base.firstFrame, endFrame: base.endFrame }, first, base.window[1] + 1, r, total, rows, sums, null, null, { ...(base.context ? { context: base.context } : {}), tail })
+  const out = kindOf({ id: base.segment, firstFrame: base.firstFrame, endFrame: base.endFrame }, first, base.window[1] + 1, r, total, rows, sums, null, null, { ...(base.context ? { context: base.context } : {}), ...(base.mapSource ? { mapSource: base.mapSource } : {}), tail })
   return { measured: true, pass: sums.why.length === 0, why: sums.why.map((w) => kind + ': ' + w), kinds: { [kind]: out }, ...rest }
 }
 
@@ -636,8 +683,11 @@ function picturesText(kind: Kind, p: PictureKind | null): string[] {
   if (p.tail) lines.push(...p.tail)
   lines.push('')
   if (p.why.length) lines.push(...p.why.map((w) => '- RED ' + w), '')
-  lines.push('| frame | level | level step | motion px | left | median round it | pop, every pixel | pop, carried only | pop | not carried | pop of one block | block | change in place | its largest | judged | pattern | judged |', '|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|')
-  for (const row of p.rows) lines.push('| ' + [position(row.k, p.rate) + (row.frame === p.firstFrame && row.k % p.rate === 0 ? ' first' : row.frame === p.endFrame - 1 && row.k % p.rate === 0 ? ' last' : ''), row.level.toFixed(2), cell(row.levelStep, 2, P.maxLevelStep), cell(row.motionPx, 1), cell(row.residual, 2), cell(row.base, 2), cell(row.popAll, 2), cell(row.popCarried, 2), cell(row.pop, 2, P.maxPop), cell(row.unsure, 3), cell(row.popBlock, 2), row.popBlockAt ? row.popBlockAt.join(',') : '', cell(row.change, 1, CHANGE.max), cell(row.changeTop, 1), cell(row.changeShare, 2), cell(row.pattern, 2, PATTERN.max), cell(row.patternShare, 2)].join(' | ') + ' |')
+  const mapped = p.rows.some((row) => row.patternMap !== undefined)
+  const united = p.rows.some((row) => row.patternMapUnits)
+  if (mapped) lines.push(...mapLines(p), ...(p.mapPanel ? ['Pairs as that reader takes them (the frame read on, the other frame, the other carried onto it, their difference times 4, the rule of each pixel: green the map, blue the sky, orange the flow, and the change of the pattern), the largest reading and the rows where the two readers fall on different sides of the limit: ' + p.mapPanel.slice(ROOT.length + 1)] : []), '')
+  lines.push('| frame | level | level step | motion px | left | median round it | pop, every pixel | pop, carried only | pop | not carried | pop of one block | block | change in place | its largest | judged | pattern | judged |' + (mapped ? ' pattern by the map | read on | judged | by the map | the sky | by the flow | largest block | flow left px |' + (united ? ' by unit |' : '') : ''), '|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|' + (mapped ? '---|---|---|---|---|---|---|---|' + (united ? '---|' : '') : ''))
+  for (const row of p.rows) lines.push('| ' + [position(row.k, p.rate) + (row.frame === p.firstFrame && row.k % p.rate === 0 ? ' first' : row.frame === p.endFrame - 1 && row.k % p.rate === 0 ? ' last' : ''), row.level.toFixed(2), cell(row.levelStep, 2, P.maxLevelStep), cell(row.motionPx, 1), cell(row.residual, 2), cell(row.base, 2), cell(row.popAll, 2), cell(row.popCarried, 2), cell(row.pop, 2, P.maxPop), cell(row.unsure, 3), cell(row.popBlock, 2), row.popBlockAt ? row.popBlockAt.join(',') : '', cell(row.change, 1, CHANGE.max), cell(row.changeTop, 1), cell(row.changeShare, 2), cell(row.pattern, 2, PATTERN.max), cell(row.patternShare, 2), ...(mapped ? [cell(row.patternMap ?? null, 2), row.patternMapOn === 1 ? 'the later' : row.patternMapOn === 0 ? 'the first' : '', cell(row.patternMapShare ?? null, 2), cell(row.patternMapBy?.map ?? null, 2), cell(row.patternMapBy?.sky ?? null, 2), cell(row.patternMapBy?.flow ?? null, 2), row.patternMapRule ?? '', cell(row.patternMapLeft ?? null, 1), ...(united ? [row.patternMapUnits ? row.patternMapUnits.map((v) => v.toFixed(2)).join(', ') : ''] : [])] : [])].join(' | ') + ' |')
   lines.push('')
   return lines
 }

@@ -348,9 +348,65 @@ def pictures(job):
     for i in range(n):
         if not inside(i + 1):
             residual[i] = moved[i] = unsure[i] = None
-    return {'level': levels, 'levelStep': step, 'residual': residual, 'base': base, 'popAll': plain, 'popCarried': masked, 'pop': pop, 'motionPx': moved, 'unsure': unsure, 'popBlock': block, 'popBlockAt': where, 'grid': [cols, rows],
+    more = mapped(job, paths, frames, poses, scale, sigma, wide, low, reach, [i for i in range(n - reach) if own[0] <= i + start < own[1] and inside(i + reach) and not any((j + 1) in marks for j in range(i, i + reach))]) if reach > 0 and job.get('carry') else {}
+    return {**more, 'level': levels, 'levelStep': step, 'residual': residual, 'base': base, 'popAll': plain, 'popCarried': masked, 'pop': pop, 'motionPx': moved, 'unsure': unsure, 'popBlock': block, 'popBlockAt': where, 'grid': [cols, rows],
             'change': shift, 'changeTop': top, 'changeAt': spot, 'changeShare': judged, 'changeFrames': reach,
             'pattern': weave, 'patternAt': weaveAt, 'patternShare': weaveShare}
+
+
+def mapped(job, paths, frames, poses, scale, margin, wide, floor, reach, rows):
+    """The pattern of each row's pair read a second way, beside the reader above and judging nothing: the pair carried by the camera's own map,
+    the flow on the carried pair, the reading after both (carry.py). Keys of their own: patternMap and what belongs to it."""
+    import carry as C
+    n = len(paths)
+    keys = {key: [None] * n for key in ('patternMap', 'patternMapAt', 'patternMapShare', 'patternMapOn', 'patternMapBy', 'patternMapRule', 'patternMapLeft', 'patternMapUnits')}
+    held = {}
+    depths = job.get('depths') or [None] * n
+
+    def frame(j):
+        if j not in held:
+            pose = C.told(poses[j])
+            depth, which, unit = C.source(pose, frames[j].shape, depths[j])
+            held[j] = {'grey': frames[j], 'full': lambda: grey(paths[j]), 'depth': depth, 'which': which, 'unit': unit, 'pose': pose}
+        return held[j]
+
+    for i in rows:
+        if not poses[i] or not poses[i + reach] or (job.get('depths') and not (depths[i] and depths[i + reach])):
+            continue
+        for j in [j for j in held if j < i]:
+            del held[j]
+        out, _ = C.read(frame(i), frame(i + reach), margin, scale, wide, floor)
+        keys['patternMap'][i], keys['patternMapAt'][i], keys['patternMapShare'][i] = out['value'], out['at'], out['share']
+        keys['patternMapOn'][i], keys['patternMapBy'][i], keys['patternMapRule'][i], keys['patternMapLeft'][i], keys['patternMapUnits'][i] = out['on'], out['by'], out['rule'], out['left'], out['units']
+    return keys
+
+
+def maps(job):
+    """Rows of six for pairs read by the camera's own map (carry.py): the frame read on, the other frame as it is, the other frame carried onto
+    it by the map and the flow, their difference times 4, the rule of each pixel (green the map, blue the sky, orange the flow, black not
+    judged), the change of their pattern (white is 1). The label of a row ends with its reading."""
+    import carry as C
+    scale = job.get('scale', 0.25)
+    margin = float(job.get('changeBlur', 20)) * scale
+    wide = float(job.get('patternPx', 40)) * scale
+    low = float(job.get('patternFloor', 1))
+    rows = []
+    readings = []
+    for item in job['pairs']:
+        sides = []
+        for path, pose, depth in zip(item['paths'], item['poses'], item.get('depths') or [None, None]):
+            g = grey(path)
+            reduced = small(g, scale)
+            pose = C.told(pose)
+            d, which, unit = C.source(pose, reduced.shape, depth)
+            sides.append({'grey': reduced, 'full': (lambda g=g: g), 'depth': d, 'which': which, 'unit': unit, 'pose': pose})
+        out, row = C.panels(sides[0], sides[1], margin, scale, wide, low)
+        readings.append(out)
+        by = out['by'] or {}
+        rows.append((item['label'] + (': no reading' if out['value'] is None else ': %.2f read on the %s frame, shares map %.2f, sky %.2f, flow %.2f, largest block under the %s' % (out['value'], 'later' if out['on'] else 'first', by.get('map', 0), by.get('sky', 0), by.get('flow', 0), out['rule'])), row))
+    if not rows:
+        return {'written': False, 'readings': readings}
+    return {'written': True, 'readings': readings, 'size': write_sheet(rows, job['output'], job.get('limit'))}
 
 
 def changes(job):
@@ -476,6 +532,8 @@ def main():
         out = panel(job)
     elif op == 'changes':
         out = changes(job)
+    elif op == 'maps':
+        out = maps(job)
     elif op == 'parity':
         out = parity(job)
     else:
