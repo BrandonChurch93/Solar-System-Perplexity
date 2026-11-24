@@ -1,9 +1,30 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T23:02:23.073Z",
+ "pushed": "2026-11-24T23:26:25.372Z",
  "head": "e789b0c94d6e4fc6000c0fa5e2d88c7e1387f563",
- "note": "blur law: the named frames as they are at the final tier beside their drafts; first reading sent; candidates (whole shutter, soft opening) render",
+ "note": "blur law: 3003 at the final tier under three shutters from one build; the pictures of mail 805 (Mars 2427 and Earth 1857 at both rates) are rendering",
  "looks": [
+  {
+   "time": "2026-11-24T23:26:24.475Z",
+   "file": "20261124232624475-note-3003bc-tl.jpg",
+   "source": "../../../../tmp/law/v2/3003bc-tl.jpg",
+   "kind": "note",
+   "label": "Jupiter 3003 final tier, upper left quarter at full size: above the whole shutter that opens at once, below the same shutter with the soft opening"
+  },
+  {
+   "time": "2026-11-24T23:26:23.643Z",
+   "file": "20261124232623643-note-3003-br.jpg",
+   "source": "../../../../tmp/law/v2/3003-br.jpg",
+   "kind": "note",
+   "label": "Jupiter 3003 final tier, lower right quarter at full size: above the film as it is (64 samples), below the whole shutter (77 samples)"
+  },
+  {
+   "time": "2026-11-24T23:26:22.408Z",
+   "file": "20261124232622408-note-3003abc-zoom.jpg",
+   "source": "../../../../tmp/law/v2/3003abc-zoom.jpg",
+   "kind": "note",
+   "label": "Jupiter 3003 final tier, the same place at twice the size (x 1500 to 1920, y 560 to 800): A the film as it is (cap 14 px, floor 0.5; 23 px of blur, 95 px to the next frame), B the film's whole shutter (46 px), C the whole shutter with a soft opening (flank 0.5 from 14 px; 30 px at half height). Scratch tree, one build, by the probe option blur"
+  },
   {
    "time": "2026-11-24T23:02:09.525Z",
    "file": "20261124230209525-note-ju-drafts2.jpg",
@@ -54,29 +75,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "03b89560bc9f479b"
-  },
-  {
-   "time": "2026-11-24T22:55:38.325Z",
-   "file": "20261124225538325-note-mars-2702-ll.jpg",
-   "source": "../../../../tmp/law/r1/mars-2702-ll.jpg",
-   "kind": "note",
-   "label": "Mars 2702 lower left quarter at full size: final as it is (151 samples) beside the draft (one sample)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T22:55:36.987Z",
-   "file": "20261124225536987-note-mars-2436-lr.jpg",
-   "source": "../../../../tmp/law/r1/mars-2436-lr.jpg",
-   "kind": "note",
-   "label": "Mars 2436 lower right quarter at full size: final as it is beside the draft (one sample)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T22:55:35.652Z",
-   "file": "20261124225535652-note-2436-whole.jpg",
-   "source": "../../../../tmp/law/v/2436-whole.jpg",
-   "kind": "note",
-   "label": "Mars 2436 final tier as it is (67 samples), whole frame"
   }
  ]
 }
