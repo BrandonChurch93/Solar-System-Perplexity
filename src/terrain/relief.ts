@@ -257,6 +257,20 @@ export function withPresence(source: string, lit: string): string {
   return source.replace(HEAD, HEAD + '\nuniform float uPresence;').replace(lit, lit + ' * uPresence')
 }
 
+// The eye of the layers under a scaled group. The layers take the eye out of the model view matrix as if the group had no scale; under a
+// scale s that is s squared times the eye, so the valley mist is seen from near the picture's own eye and not from the camera. A set that
+// stands the relief in another scene with a scale (the close view's ground in the globe's scene, through the twin) gets the same line
+// times 1 over s squared. Built when a relief finds its group scaled for the first time (Relief.update); a relief whose group is never
+// scaled keeps the shader above to the letter.
+const EYE_OUT = 'out vec3 vEye;'
+const EYE = 'vEye = -transpose(mat3(modelViewMatrix)) * modelViewMatrix[3].xyz;'
+const EYE_PLAIN = 1e-9
+
+export function withEyeScale(source: string): string {
+  if (source.split(EYE_OUT).length !== 2 || source.split(EYE).length !== 2 || source.includes('uEyeScale')) throw new Error('the relief shader has no single place for the scale of its eye')
+  return source.replace(EYE_OUT, EYE_OUT + '\nuniform float uEyeScale;').replace(EYE, EYE.slice(0, -1) + ' * uEyeScale;')
+}
+
 interface Grid {
   cols: number
   rows: number
@@ -304,6 +318,8 @@ export class Relief {
   private state: 'new' | 'ready' | 'off' = 'new'
   private readonly share = { value: 1 }
   private fades = false
+  private readonly eyeScale = { value: 1 }
+  private scaled = false
 
   private constructor(def: ReliefDef, motion: ReliefMotion) {
     this.def = def
@@ -724,6 +740,19 @@ export class Relief {
   update(dt: number, gain: number, vignette: number, view: RenderView): void {
     const d = this.def
     const m = this.motion
+    this.group.updateWorldMatrix(true, false)
+    const e = this.group.matrixWorld.elements
+    const s2 = e[0]! * e[0]! + e[1]! * e[1]! + e[2]! * e[2]!
+    const plain = Math.abs(s2 - 1) < EYE_PLAIN
+    if (!plain && !this.scaled) {
+      this.scaled = true
+      for (const l of this.layers) {
+        l.material.vertexShader = withEyeScale(l.material.vertexShader)
+        l.material.uniforms.uEyeScale = this.eyeScale
+        l.material.needsUpdate = true
+      }
+    }
+    this.eyeScale.value = plain ? 1 : 1 / s2
     if (this.air) {
       const u = this.air.material.uniforms
       const f = m.air?.drift
