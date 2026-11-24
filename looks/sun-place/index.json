@@ -1,72 +1,76 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T10:19:35.704Z",
+ "pushed": "2026-11-24T10:44:55.846Z",
  "head": "868c6c33e442a7078a4e6d6c8dd91dd5ebf5fd12",
- "note": "868c6c33 (not named yet), handover draft frames 180 to 229, every frame. My gauge, pattern over 8 frames (limit 0.45): 180 0.429, 187 0.504 (one cell swap near the camera, red), 195 0.390, 203 0.345, 209 0.384, 213 0.411, 217 0.241, 221 0.181 (named head 217 0.517, 221 1.083, 225 1.254). Pop at rate 1 largest 1.100 at 190 (limit 1.2), level step largest 0.46 at 229. New fault found: 208 to 216 reads 0.425 against 0.296 on the named head, bottom rows, because the wide tone changes its reading by footprint as the camera rises. Still wrong: cells read as polished pebbles, function ground paler than the globe face around it at 218 to 225. Frame 60 draft (trial w5, same values as the commit but far level 0.18), sun-near: dark (under 0.15) 0.206 | body (0.15 to 0.55) 0.571 | pale (0.65 to 0.85) 0.107 | white (over 0.85) 0.035 ; brightest 15 percent: half width 6.2 px, 3653 shapes | fine detail 0.0580 | mean 0.364 ; distance 0.065. Aims of MAIL 505 missed.",
+ "note": "868c6c33 measured whole (draft, rate 1): handover three lines pass (body level step 2.91 into 225, was 6.06), pictures level step 0.46, pop 1.11, pattern RED 0.50 at 205 (rows over: 187, 194, 205, 206; rows 216 to 229 now 0.29 to 0.08). Sheets e, f, g: every frame 230 to 269, nothing wrong seen; 245 to 269 keep their bytes. Cause of the red: the map tone read by two readings mixed by pixel size (a change by height), and cells filled in place. Trial c3 (not committed): each cell takes the map light at its own middle by one law, only the tone wider than 48 texels is weaker from close by; filling law slower. My gauge 205 0.328 (was 0.597), 213 0.213 (0.411), 217 0.131, 221 0.183, 187 0.176 (0.504). Bad in c3: frame 60 further from the approved, some cells too dark. Frame 60 draft c3, sun-near: dark (under 0.15) 0.267 | body (0.15 to 0.55) 0.496 | pale (0.65 to 0.85) 0.107 | white (over 0.85) 0.059 ; brightest 15 percent: half width 11.2 px, 2820 shapes | fine detail 0.0539 | mean 0.355 ; distance 0.133. Aims of MAIL 505 missed, cells still read as pebbles.",
  "looks": [
   {
-   "time": "2026-11-24T10:19:34.581Z",
-   "file": "20261124101934581-note-s8-d.jpg",
-   "source": "../../../../tmp/s8-d.jpg",
+   "time": "2026-11-24T10:44:54.499Z",
+   "file": "20261124104454499-note-c3-229.jpg",
+   "source": "../../../../tmp/c3-229.jpg",
    "kind": "note",
-   "label": "868c6c33 rise draft every frame, sheet d",
+   "label": "trial c3 frame 229",
    "stop": "sun"
   },
   {
-   "time": "2026-11-24T10:19:33.526Z",
-   "file": "20261124101933526-note-s8-c.jpg",
-   "source": "../../../../tmp/s8-c.jpg",
+   "time": "2026-11-24T10:44:53.250Z",
+   "file": "20261124104453250-note-c3-217.jpg",
+   "source": "../../../../tmp/c3-217.jpg",
    "kind": "note",
-   "label": "868c6c33 rise draft every frame, sheet c",
+   "label": "trial c3 frame 217",
    "stop": "sun"
   },
   {
-   "time": "2026-11-24T10:19:32.683Z",
-   "file": "20261124101932683-note-s8-b.jpg",
-   "source": "../../../../tmp/s8-b.jpg",
+   "time": "2026-11-24T10:44:52.257Z",
+   "file": "20261124104452257-note-c3-60.jpg",
+   "source": "../../../../tmp/c3-60.jpg",
    "kind": "note",
-   "label": "868c6c33 rise draft every frame, sheet b",
+   "label": "trial c3 frame 60: each cell takes the map light at its own middle",
    "stop": "sun"
   },
   {
-   "time": "2026-11-24T10:19:31.628Z",
-   "file": "20261124101931628-note-s8-a.jpg",
-   "source": "../../../../tmp/s8-a.jpg",
+   "time": "2026-11-24T10:44:51.122Z",
+   "file": "20261124104451122-note-changes8.jpg",
+   "source": "../../../../tmp/changes8.jpg",
    "kind": "note",
-   "label": "868c6c33 rise draft every frame, sheet a",
+   "label": "868c6c33 smooth pictures rate 1: largest changes (red 0.50 at 205)",
    "stop": "sun"
   },
   {
-   "time": "2026-11-24T09:56:49.110Z",
-   "file": "20261124095649110-note-x1-171.jpg",
-   "source": "../../../../tmp/x1-171.jpg",
+   "time": "2026-11-24T10:44:49.868Z",
+   "file": "20261124104449868-note-s8-g.jpg",
+   "source": "../../../../tmp/s8-g.jpg",
    "kind": "note",
-   "label": "x1-171.jpg: one ground, commit 868c6c33 or its last trial",
+   "label": "868c6c33 rise draft every frame, sheet g 256 to 269",
    "stop": "sun"
   },
   {
-   "time": "2026-11-24T09:56:48.067Z",
-   "file": "20261124095648067-note-w5-171-events.jpg",
-   "source": "../../../../tmp/w5-171-events.jpg",
+   "time": "2026-11-24T10:44:48.655Z",
+   "file": "20261124104448655-note-s8-f.jpg",
+   "source": "../../../../tmp/s8-f.jpg",
    "kind": "note",
-   "label": "w5-171-events.jpg: one ground, commit 868c6c33 or its last trial",
+   "label": "868c6c33 rise draft every frame, sheet f 242 to 255",
    "stop": "sun"
   },
   {
-   "time": "2026-11-24T09:56:47.206Z",
-   "file": "20261124095647206-note-w5-p171.jpg",
-   "source": "../../../../tmp/w5-p171.png",
+   "time": "2026-11-24T10:44:47.428Z",
+   "file": "20261124104447428-note-s8-e.jpg",
+   "source": "../../../../tmp/s8-e.jpg",
    "kind": "note",
-   "label": "w5-p171.png: one ground, commit 868c6c33 or its last trial",
+   "label": "868c6c33 rise draft every frame, sheet e 230 to 241",
    "stop": "sun"
   },
   {
-   "time": "2026-11-24T09:56:46.169Z",
-   "file": "20261124095646169-note-cal.jpg",
-   "source": "../../../../tmp/cal.jpg",
-   "kind": "note",
-   "label": "cal.jpg: one ground, commit 868c6c33 or its last trial",
-   "stop": "sun"
+   "time": "2026-11-24T10:23:43.226Z",
+   "file": "20261124102343226-sheet-sun-rise-draft-after.jpg",
+   "source": "out/work/handover/sun-rise-draft-after.png",
+   "kind": "sheet",
+   "label": "sun rise, every frame 217 to 228 (after T, frame 216), draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "first": 217,
+   "last": 228,
+   "tier": "draft"
   }
  ]
 }
