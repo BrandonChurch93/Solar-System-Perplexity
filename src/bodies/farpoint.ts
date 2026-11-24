@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import type { RenderView } from '../core/types'
 import { smooth } from '../director/rig'
+import { bufferFrame } from '../core/frame'
 
 const VERT = /* glsl */ `
 uniform float uSize;
@@ -43,10 +44,13 @@ export class FarPoint {
     const px = (radiusPx * 1080) / view.format.height
     const far = lit === undefined ? 1 - smooth((radiusPx - 0.0015 * view.format.height) / (0.014 * view.format.height)) : lit * Math.exp(-YOUNG.fade * Math.max(px - YOUNG.from, 0)) * (1 - smooth((px - YOUNG.gone[0]) / (YOUNG.gone[1] - YOUNG.gone[0])))
     this.material.uniforms.uHalo!.value = lit === undefined ? 0.07 : 0
-    this.material.uniforms.uWide!.value = lit === undefined ? 0 : 0.9 + YOUNG.wide * radiusPx * radiusPx
+    const f = bufferFrame()
+    const core = Math.max(f, 1) ** 2
+    const r = radiusPx / f
+    this.material.uniforms.uWide!.value = lit === undefined ? (core > 1 ? 0.9 * core : 0) : (0.9 + YOUNG.wide * r * r) * core
     this.points.visible = far > 0 && view.diag === 'beauty'
     this.material.uniforms.uSize!.value = Math.max(15, (30 * view.format.height) / 1080)
-    ;(this.material.uniforms.uColor!.value as THREE.Vector3).fromArray(tint).addScalar(0.35).multiplyScalar(far * gain * (5 + 9 * Math.min(radiusPx, 1)))
+    ;(this.material.uniforms.uColor!.value as THREE.Vector3).fromArray(tint).addScalar(0.35).multiplyScalar(far * gain * (5 + 9 * Math.min(r, 1)))
   }
 
   dispose(): void {

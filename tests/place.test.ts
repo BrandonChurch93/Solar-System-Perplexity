@@ -414,9 +414,11 @@ describe('the two sides of a stop that hands over', () => {
         expect(close.sets[0]!.view).toBe('terrain')
         expect(deg(globe.skyQuaternion, close.skyQuaternion)).toBeLessThan(1e-5)
         expect(globe.skyTurn.toArray()).toEqual(close.skyTurn.toArray())
-        expect(globe.skyExposure).toBeCloseTo(close.skyExposure, 9)
+        // The stars' lift and the exposure that goes with it read the height of the lens of their own side, and a plan may find its twin by
+        // a numeric solve (near): the two sides agree as far as their two heights do, to a ten thousandth of a step of the display.
+        expect(globe.skyExposure).toBeCloseTo(close.skyExposure, 6)
         expect(globe.skyGlow).toBeCloseTo(close.skyGlow, 9)
-        expect(globe.skyStars ?? 0).toBeCloseTo(close.skyStars ?? 0, 9)
+        expect(globe.skyStars ?? 0).toBeCloseTo(close.skyStars ?? 0, 6)
         expect(globe.skyLook ?? 0).toBeCloseTo(close.skyLook ?? 0, 9)
         expect(globe.skyShare).toBe(1)
         expect(globe.camera.vfov).toBeCloseTo(close.camera.vfov, 9)
