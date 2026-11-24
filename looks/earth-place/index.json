@@ -1,9 +1,53 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T02:34:14.029Z",
- "head": "3a6b18447c9e495e006c1f7210ec2df4fe2085dc",
- "note": "pale line cured by rim rule and mesh 1280, checks running; limb changes in one frame at both seams (measured); step 4 border study",
+ "pushed": "2026-11-24T02:59:12.329Z",
+ "head": "f17274e705de4b7f527945333d364d3d8b559305",
+ "note": "rim rule committed on the merge of main 7e7fb893 (f17274e7), 15 draft frames byte equal across the merge; step 4 study pictures, no step 4 code yet",
  "looks": [
+  {
+   "time": "2026-11-24T02:59:11.722Z",
+   "file": "20261124025911722-note-pieces.jpg",
+   "source": "../../../../tmp/gl/s4/pieces.jpg",
+   "kind": "note",
+   "label": "step 4 study: the ground near the nadir outside the close view: lay back with the repaint, with the hold's level, the hold's level alone, the plate today",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T02:59:11.114Z",
+   "file": "20261124025911114-note-outline.jpg",
+   "source": "../../../../tmp/gl/s4/outline.jpg",
+   "kind": "note",
+   "label": "step 4 study: the canvas edge of the close view drawn on 1896, 1900, 2119, 2121 (draft, rim rule commit f17274e7)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T02:47:08.794Z",
+   "file": "20261124024708794-job-frame-02123.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "earth.rise frame 2123, draft tier, texels view, from the running g13 job",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2123,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "g13"
+  },
+  {
+   "time": "2026-11-24T02:36:52.380Z",
+   "file": "20261124023652380-job-frame-01906.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "earth.dive frame 1906, draft tier, texels view, from the running g13 job",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1906,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "g13"
+  },
   {
    "time": "2026-11-24T02:34:12.766Z",
    "file": "20261124023412766-note-border-2121.jpg",
@@ -29,54 +73,12 @@
    "stop": "earth"
   },
   {
-   "time": "2026-11-24T02:26:46.638Z",
-   "file": "20261124022646638-job-frame-01830.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "earth.dive frame 1830, draft tier, texels view, from the running g13 job",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1830,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "g13"
-  },
-  {
    "time": "2026-11-24T02:12:45.844Z",
    "file": "20261124021245844-note-e2-corner2.jpg",
    "source": "../../../../tmp/gl/s3/e2-corner2.jpg",
    "kind": "note",
    "label": "corner tower at 2099, 12 times: step 1, step 3 as committed (pale line and dark gap at the rim), trial with both caps meeting at the rim",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T01:44:58.841Z",
-   "file": "20261124014458841-note-z-all.jpg",
-   "source": "../../../../tmp/gl/s3/z-all.jpg",
-   "kind": "note",
-   "label": "step 3 still wrong: pale line beside one corner tower 2097 to 2102",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T01:44:58.041Z",
-   "file": "20261124014458041-note-strip-rise.jpg",
-   "source": "../../../../tmp/gl/s3/strip-rise.jpg",
-   "kind": "note",
-   "label": "step 3 final: painted shadow fixed to its tower foot, frames 2071 2101 2131",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T01:40:02.666Z",
-   "file": "20261124014002666-sheet-earth-dive-draft-before.jpg",
-   "source": "out/work/handover/earth-dive-draft-before.png",
-   "kind": "sheet",
-   "label": "earth dive, every frame 1907 to 1918 (before T, frame 1919), draft tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "first": 1907,
-   "last": 1918,
-   "tier": "draft"
   }
  ]
 }
