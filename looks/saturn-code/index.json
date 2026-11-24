@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T19:49:56.821Z",
+ "pushed": "2026-11-24T20:19:20.330Z",
  "head": "bc97f0c337218f40b3a0f8b3f0c54a426627d036",
- "note": "round 44 list, step 1: the pose of the close view solved again (limb within 15 px, horizon within 5 px of the approved); next the dark inner ring into the globe and the fine grains",
+ "note": "round 2 list: pose solved again, dark inner ring into the planet, foot band, ring tone by radius from the approved image, no moonlets; in work",
  "looks": [
+  {
+   "time": "2026-11-24T20:19:19.656Z",
+   "file": "20261124201919656-note-c_foot2_in4.jpg",
+   "source": "../../../../tmp/v/t18/c_foot2_in4.png",
+   "kind": "note",
+   "label": "crop of the foot of the globe at 3720, 1.5 times (approved left): dust runs into the planet, no sky between ring and globe"
+  },
+  {
+   "time": "2026-11-24T20:19:18.988Z",
+   "file": "20261124201918988-note-pair_in4.jpg",
+   "source": "../../../../tmp/v/t18/pair_in4.png",
+   "kind": "note",
+   "label": "3720 beside the approved image (left): inner dust as the stuff of the thin inner ring, darker by the low view on the far side, foot band"
+  },
+  {
+   "time": "2026-11-24T20:09:08.134Z",
+   "file": "20261124200908134-note-pair_in3.jpg",
+   "source": "../../../../tmp/v/t18/pair_in3.png",
+   "kind": "note",
+   "label": "3720 beside the approved image (left): pose solved again, inner dust and foot band, ring tone by radius first try, no moonlets"
+  },
   {
    "time": "2026-11-24T19:49:55.994Z",
    "file": "20261124194955994-note-pair_pg.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/v/t17/d_three_ll.png",
    "kind": "note",
    "label": "instrument only, not the film: 3720 lower left at full size with the lens heading 28 (the film), 38 and 48 degrees left of its view axis: the shutter's part of the soft near rings; the heading stays at 28 so that the point the picture flows out of stays in the frame"
-  },
-  {
-   "time": "2026-11-24T18:50:06.427Z",
-   "file": "20261124185006427-note-t9c_whole.jpg",
-   "source": "../../../../tmp/v/t17/t9c_whole.png",
-   "kind": "note",
-   "label": "3720 whole frame, approved above, trial T9c below (T8 tone of the rings and item 18, the dusk of the globe by the height of the lens)"
-  },
-  {
-   "time": "2026-11-24T18:13:42.783Z",
-   "file": "20261124181342783-note-z_t9s.jpg",
-   "source": "../../../../tmp/v/t17/z_t9s.png",
-   "kind": "note",
-   "label": "instrument only, not the film: the same crop with the shutter at 2 degrees, to tell the shutter's part from the field's part of item 19"
-  },
-  {
-   "time": "2026-11-24T18:13:42.212Z",
-   "file": "20261124181342212-note-z_t9c.jpg",
-   "source": "../../../../tmp/v/t17/z_t9c.png",
-   "kind": "note",
-   "label": "3720 near rings at three times, approved left, trial T9c right: item 19, the film's ringlets are drawn out by the shutter and lack the fine dark grooves and the grain of the sheet"
   }
  ]
 }
