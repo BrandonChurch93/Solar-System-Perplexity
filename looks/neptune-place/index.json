@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T20:23:50.117Z",
- "head": "e988e159f02905c3bfe44fa4cd7833afeee8e262",
- "note": "20:25 UTC: main 07693d93 merged (fd6ba678), tests 554 of 554, pushed e988e159; MAIL 733 point 2 being measured (what 4708 and 4950 make on the card); reds named as before: rise pattern 4984 and 4988 by my proxy, hump 4696 at the limb, white specks of the dim side",
+ "pushed": "2026-11-24T20:48:14.760Z",
+ "head": "73f7a718f27257a396c2002f0164242932a3e060",
+ "note": "20:53 UTC: MAIL 733 point 2 answered (the dive makes the laid deep's program and sphere at 4686 + 1/2 and the surface view's sphere at 4758; 4950 is the shared sky's three point clouds); the rise's red of my proxy at 4984 and 4988 proven as parallax of the cloud sheet; still red and named: hump 4696 at the limb, white specks of the dim side",
  "looks": [
+  {
+   "time": "2026-11-24T20:48:14.172Z",
+   "file": "20261124204814172-note-shell-4988.jpg",
+   "source": "out/work/nep/made/shell-4988.jpg",
+   "kind": "note",
+   "label": "20:53 UTC: rise pair 4988 to 4996 by my proxy (not the report). Above: the later frame carried back on the deck, pattern 0.48 (red islands round the white specks). Below: carried on the cloud sheet 0.004 radii higher, 0.26. The red is the sheet sliding over the deck (parallax), not a second picture",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T20:48:13.554Z",
+   "file": "20261124204813554-note-look-h0-4860.jpg",
+   "source": "out/work/nep/weave/look-h0-4860.jpg",
+   "kind": "note",
+   "label": "20:53 UTC: 4860 beside the approved image, present state (code of 5c671343 on main 07693d93, pushed 73f7a718); G17 1.382 / 0.741; 7.4 s a preview draft frame",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T20:23:43.641Z",
    "file": "20261124202343641-note-look-h0-4860.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/nep/weave/last24-top.jpg",
    "kind": "note",
    "label": "the far field of those frames enlarged (upper left 480 by 150 of 960), 4746, 4756, 4764, 4769: named (left) has the hard white patch and the cyan dab; present (right) has long white bands by the limb, and a turquoise streak of the map still stands in them (named, the map's own azure)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T19:45:27.306Z",
-   "file": "20261124194527306-note-last24-2.jpg",
-   "source": "out/work/nep/weave/last24-2.jpg",
-   "kind": "note",
-   "label": "the last 24 frames of the dive (MAIL 688 point 3), 4762 to 4769 every frame: left the named b8a38cbe (before the place moved), right the present 5c671343. The near picture (cloud wall, vortex, plain) is the same frame by frame; the far field by the limb is another piece of the map, 3 degrees on",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T19:45:26.712Z",
-   "file": "20261124194526712-note-last24-1.jpg",
-   "source": "out/work/nep/weave/last24-1.jpg",
-   "kind": "note",
-   "label": "the last 24 frames of the dive (MAIL 688 point 3), 4754 to 4761 every frame: left the named b8a38cbe (before the place moved), right the present 5c671343. The near picture (cloud wall, vortex, plain) is the same frame by frame; the far field by the limb is another piece of the map, 3 degrees on",
    "stop": "neptune"
   }
  ]
