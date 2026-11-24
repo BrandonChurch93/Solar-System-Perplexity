@@ -6,7 +6,7 @@ import * as THREE from 'three'
 import { build } from 'vite'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { CHROME, CHROME_FLAGS } from '../tools/lib/browser'
-import { CAP_PATCHES, ReliefCap, capCells, capGrids, capHeightBytes, capHeights, capOverlap, capVert, type CapOptions } from '../src/bodies/cap'
+import { CAP_PATCHES, ReliefCap, capCells, capFinest, capGrids, capHeightBytes, capHeights, capOverlap, capVert, type CapOptions } from '../src/bodies/cap'
 import { Planet, planetFrag } from '../src/bodies/planet'
 import * as look from '../src/stops/mars/look'
 
@@ -173,6 +173,53 @@ it('knows the foot of the eye in the frame of its plates, whatever the turn of t
       if (drawn > 1) both++
     }
     expect(both).toBeGreaterThan(0)
+  })
+
+  it('draws no grid whose parent already has cells under `fine` pixels at the nearest ground, and the finest drawn grid whole', () => {
+    const grids = capGrids(MARS, 34)
+    const cells = 2048
+    const cellG = grids.map((w) => 1 / (cells * scaleOf(w)))
+    const halfG = grids.map((w) => 0.5 / scaleOf(w))
+    const pixel = (2 * Math.tan(Math.PI / 12)) / 1080
+    let last = 0
+    for (let a = 0; a <= 400; a++) {
+      const height = 3 * Math.exp(-a * 0.02)
+      const k = capFinest(cellG, halfG, 1, pixel, height, 0, 0)
+      expect(k).toBeGreaterThanOrEqual(last)
+      expect(k - last).toBeLessThanOrEqual(1)
+      if (k > 0) expect(cellG[k - 1]! / (pixel * height)).toBeGreaterThan(1)
+      if (k < grids.length - 1) expect(cellG[k]! / (pixel * height)).toBeLessThanOrEqual(1)
+      last = k
+    }
+    expect(capFinest(cellG, halfG, 1, pixel, 2.4, 0, 0)).toBe(0)
+    expect(last).toBe(grids.length - 1)
+    expect(capFinest(cellG, halfG, 0.5, pixel, 0.5, 0, 0)).toBeGreaterThanOrEqual(capFinest(cellG, halfG, 1, pixel, 0.5, 0, 0))
+    expect(capFinest(cellG, halfG, 1, pixel, 0.001, 0.05, 0)).toBeLessThan(capFinest(cellG, halfG, 1, pixel, 0.001, 0, 0))
+    const small = capGrids(MARS, 30)
+    for (let k = 0; k < small.length; k++) {
+      const inst = capCells(small, 256, k)
+      const count = small.map(() => 0)
+      for (let i = 0; i < inst.length; i += 3) count[inst[i + 2]!]!++
+      expect(count[k]).toBe(CAP_PATCHES * CAP_PATCHES)
+      for (let j = 0; j < small.length; j++) {
+        if (j > k) expect(count[j]).toBe(0)
+        if (j < k) expect(count[j]).toBeGreaterThan(0)
+      }
+    }
+    const cap = new ReliefCap('void main() {}', {}, options({ levels: [level(8.5), level(3.8)], pixel: 1e-3 }))
+    const geometry = cap.mesh.geometry as THREE.InstancedBufferGeometry
+    expect(cap.grids).toBe(2)
+    cap.update(1.5, new THREE.Vector2())
+    expect(cap.grids).toBe(1)
+    expect(geometry.instanceCount).toBe(CAP_PATCHES * CAP_PATCHES)
+    cap.update(1e-4, new THREE.Vector2())
+    expect(cap.grids).toBe(2)
+    expect(geometry.instanceCount).toBe(capCells([8.5, 3.8], 128).length / 3)
+    cap.dispose()
+    const all = new ReliefCap('void main() {}', {}, options({ levels: [level(8.5), level(3.8)], pixel: 1e-3, fine: 0 }))
+    all.update(1.5, new THREE.Vector2())
+    expect(all.grids).toBe(2)
+    all.dispose()
   })
 
   it('reads the heights in the vertex shader only, by the pixel footprint as an angle and not by a format', () => {

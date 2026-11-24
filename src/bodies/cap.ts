@@ -18,6 +18,7 @@ export interface CapOptions {
   feather?: number
   fade?: [number, number]
   reachDeg?: number
+  fine?: number
 }
 
 export const CAP_PATCHES = 64
@@ -84,11 +85,12 @@ export const capOverlap = (gridsDeg: number[], cells: number): number => {
   return most
 }
 
-export function capCells(gridsDeg: number[], cells: number): Float32Array {
+export function capPatches(gridsDeg: number[], cells: number): { ring: Float32Array; core: Float32Array }[] {
   if (cells % CAP_PATCHES !== 0) throw new Error('the cells of a cap are a multiple of ' + CAP_PATCHES)
   const patch = cells / CAP_PATCHES
-  const out: number[] = []
-  for (let k = 0; k < gridsDeg.length; k++) {
+  return gridsDeg.map((_, k) => {
+    const ring: number[] = []
+    const core: number[] = []
     const next = gridsDeg[k + 1]
     const inner = next === undefined ? -1 : 0.5 * scaleOf(gridsDeg[k]!) / scaleOf(next) - 2 / cells
     for (let j = 0; j < CAP_PATCHES; j++) {
@@ -97,12 +99,33 @@ export function capCells(gridsDeg: number[], cells: number): Float32Array {
         const x1 = ((i + 1) * patch) / cells - 0.5
         const y0 = (j * patch) / cells - 0.5
         const y1 = ((j + 1) * patch) / cells - 0.5
-        if (x0 >= -inner && x1 <= inner && y0 >= -inner && y1 <= inner) continue
-        out.push(i * patch, j * patch, k)
+        const inside = x0 >= -inner && x1 <= inner && y0 >= -inner && y1 <= inner
+        ;(inside ? core : ring).push(i * patch, j * patch, k)
       }
     }
+    return { ring: new Float32Array(ring), core: new Float32Array(core) }
+  })
+}
+
+export function capCells(gridsDeg: number[], cells: number, finest = gridsDeg.length - 1): Float32Array {
+  const patches = capPatches(gridsDeg, cells)
+  const out: number[] = []
+  for (let k = 0; k <= finest; k++) {
+    out.push(...patches[k]!.ring)
+    if (k === finest) out.push(...patches[k]!.core)
   }
   return new Float32Array(out)
+}
+
+export function capFinest(cellG: number[], halfG: number[], fine: number, pixel: number, height: number, footX: number, footY: number): number {
+  let k = 0
+  while (k + 1 < cellG.length) {
+    const half = halfG[k + 1]!
+    const away = Math.hypot(Math.max(Math.abs(footX) - half, 0), Math.max(Math.abs(footY) - half, 0))
+    if (!(cellG[k]! > fine * pixel * Math.hypot(height, away))) break
+    k++
+  }
+  return k
 }
 
 const levelRead = (j: number, mask: boolean): string => `  {
@@ -157,8 +180,10 @@ float capRead(highp usampler2D t, vec2 uv, float lod) {
   float top = log2(float(textureSize(t, 0).x));
   float l = clamp(lod, 0.0, top);
   int a = int(floor(l));
-  int b = int(min(float(a) + 1.0, top));
-  return mix(capFlat(t, uv, a), capFlat(t, uv, b), l - float(a));
+  float f = l - float(a);
+  float v = capFlat(t, uv, a);
+  if (f > 0.0) v = mix(v, capFlat(t, uv, int(min(float(a) + 1.0, top))), f);
+  return v;
 }
 float capHeight(vec2 g, float foot, float cell) {
   float h = 0.0;
@@ -194,6 +219,13 @@ export class ReliefCap {
   readonly cut: number
   readonly gridsDeg: number[]
   private readonly from: [number, number]
+  private readonly patches: { ring: Float32Array; core: Float32Array }[]
+  private readonly cells: THREE.InstancedBufferAttribute
+  private readonly cellG: number[]
+  private readonly halfG: number[]
+  private readonly fine: number
+  private readonly top: number
+  private finest = -1
 
   constructor(fragmentShader: string, shared: Record<string, THREE.IUniform>, o: CapOptions) {
     const levels = o.levels
@@ -224,11 +256,16 @@ export class ReliefCap {
         index.push(a, a + 1, a + side + 1, a, a + side + 1, a + side)
       }
     }
-    const cells = capCells(this.gridsDeg, o.cells)
+    this.patches = capPatches(this.gridsDeg, o.cells)
+    this.cells = new THREE.InstancedBufferAttribute(new Float32Array(this.patches.reduce((n, p) => n + p.ring.length, 0) + Math.max(...this.patches.map((p) => p.core.length))), 3)
+    this.cells.setUsage(THREE.DynamicDrawUsage)
+    this.cellG = scales.map((x) => 1 / (o.cells * x))
+    this.halfG = scales.map((x) => 0.5 / x)
+    this.fine = o.fine ?? 1
+    this.top = Math.max(0, ...levels.map((l) => l.high))
     geometry.setAttribute('position', new THREE.BufferAttribute(position, 3))
     geometry.setIndex(index)
-    geometry.setAttribute('aCell', new THREE.InstancedBufferAttribute(cells, 3))
-    geometry.instanceCount = cells.length / 3
+    geometry.setAttribute('aCell', this.cells)
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
       vertexShader: capVert(masks, scales.length),
@@ -257,6 +294,28 @@ export class ReliefCap {
     this.mesh = new THREE.Mesh(geometry, this.material)
     this.mesh.frustumCulled = false
     this.mesh.visible = false
+    this.draw(scales.length - 1)
+  }
+
+  private draw(finest: number): void {
+    if (finest === this.finest) return
+    this.finest = finest
+    const to = this.cells.array as Float32Array
+    let n = 0
+    for (let k = 0; k <= finest; k++) {
+      to.set(this.patches[k]!.ring, n)
+      n += this.patches[k]!.ring.length
+      if (k === finest) {
+        to.set(this.patches[k]!.core, n)
+        n += this.patches[k]!.core.length
+      }
+    }
+    this.cells.needsUpdate = true
+    ;(this.mesh.geometry as THREE.InstancedBufferGeometry).instanceCount = n / 3
+  }
+
+  get grids(): number {
+    return this.finest + 1
   }
 
   share(height: number): number {
@@ -269,6 +328,7 @@ export class ReliefCap {
     ;(this.material.uniforms.uCapFoot!.value as THREE.Vector2).copy(foot)
     this.material.uniforms.uCapOn!.value = on
     this.mesh.visible = on > 0
+    if (on > 0) this.draw(this.fine > 0 ? capFinest(this.cellG, this.halfG, this.fine, this.material.uniforms.uCapPixel!.value as number, Math.max(height - this.top, 0), foot.x, foot.y) : this.gridsDeg.length - 1)
     return on > 0
   }
 
