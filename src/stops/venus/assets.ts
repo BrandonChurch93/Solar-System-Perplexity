@@ -40,9 +40,10 @@ export const place = {
     if (l.colour && (l.most ?? 0) <= 0) throw new Error('plates.json: level ' + l.tag + ' needs most')
     return { tag: l.tag, file: l.file, widthDeg: l.widthDeg, colourOf, most: l.most ?? 1, dive: twice ? l.file.replace('.jpg', '-dive.jpg') : l.file, rise: twice ? l.file.replace('.jpg', '-rise.jpg') : l.file }
   }),
+  wide: { file: platesJson.wide.file, widthDeg: platesJson.wide.widthDeg, rim: platesJson.wide.rim, forms: platesJson.wide.forms, formsDeg: platesJson.wide.formsDeg as [number, number], own: platesJson.wide.own },
   rim: platesJson.rim,
   forms: platesJson.forms.look as [number, number, number],
-  tone: { dive: platesJson.tone.files.dive, rise: platesJson.tone.files.rise, size: platesJson.tone.size, widthDeg: platesJson.tone.widthDeg, cos: platesJson.tone.cos as [number, number], power: platesJson.tone.curve, floor: platesJson.tone.floor, colour: platesJson.tone.colour, edge: platesJson.tone.edge as [number, number], heights: platesJson.tone.heights as [number, number] },
+  tone: { cos: platesJson.tone.cos as [number, number], power: platesJson.tone.curve, air: platesJson.tone.air, heights: platesJson.tone.heights as [number, number], live: platesJson.tone.live },
   air: { heights: platesJson.air.heights as [number, number], sunHeights: platesJson.air.sun.heights as [number, number], haze: platesJson.air.haze },
   centre: [0, 1, 2].map((i) => under[i]! * Math.cos(ahead) + heading[i]! * Math.sin(ahead)) as [number, number, number],
   feather: platesJson.feather,
