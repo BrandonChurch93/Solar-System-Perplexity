@@ -124,7 +124,7 @@ class Line {
   }
 
   pose(time: number, side: ViewKind): Pose {
-    return this.kind === 'dive' ? plan.divePose(time, side) : plan.risePose(time, side)
+    return plan.eye(this.kind, time, side)
   }
 
   // The camera of either side as a camera at the unit sphere: the globe side as it is, the close side through the twin.

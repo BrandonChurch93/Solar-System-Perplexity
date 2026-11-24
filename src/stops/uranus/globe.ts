@@ -40,7 +40,7 @@ const PATCH_SAMPLERS = Array.from({ length: PATCH_COUNT }, (_, i) => 'uniform sa
 
 const PATCH_LEVELS = Array.from({ length: PATCH_COUNT }, (_, i) => `    {
       vec2 q = g * uPatchScale[${i}];
-      float w = smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent * lean));
+      float w = smoothstep(0.5, 0.5 - ${i === 0 ? 'uPatchRim.x' : 'uFeather'}, max(abs(q.x), abs(q.y))${i === 0 ? ' + uPatchRim.y * (0.5 + 0.25 * sin(q.x * 41.0 + 1.3) * sin(q.y * 33.0 + 0.7) + 0.25 * sin(q.x * 87.0 - q.y * 71.0 + 2.1))' : ''}) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent * lean));
       for (int j = 0; j < (w > 0.0 ? 1 : 0); j++) enc = mix(enc, textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb, w);
       parent = gd * uPatchScale[${i}] * uPatchSize[${i}];
       texels = mix(texels, parent, step(0.5, w));
@@ -56,10 +56,14 @@ const PLATE_LEVELS = Array.from({ length: PLATE_COUNT }, (_, i) => `    {
       for (int j = 0; j < (w > 0.0 ? 1 : 0); j++) {
         vec4 s = textureGrad(uPlate${i}, q + 0.5, px * uPlateScale[${i}], py * uPlateScale[${i}]);
         aP = mix(aP, s.rgb * s.rgb * uPlace.z, ${i === 0 ? '1.0' : 'w'});
-        ${i === 0 ? 'tops = s.a;' : ''}
       }
       ${i === 0 ? 'field = textureLod(uPlaceField, q + 0.5, 0.0); wP = w * field.a;' : ''}
       texP = mix(texP, pgd * uPlateScale[${i}] * uPlateSize[${i}], step(0.5, w));
+    }`).join('\n')
+
+const TOP_LEVELS = Array.from({ length: PLATE_COUNT - 1 }, (_, i) => `    {
+      vec2 q = pgq * uPlateScale[${i + 1}];
+      fibre = mix(fibre, textureGrad(uPlate${i + 1}, q + 0.5, qx * uPlateScale[${i + 1}], qy * uPlateScale[${i + 1}]).rgb, smoothstep(0.5, 0.5 - uPlace.y, max(abs(q.x), abs(q.y))));
     }`).join('\n')
 
 const FRAG = /* glsl */ `
@@ -74,8 +78,10 @@ uniform vec3 uRelit;
 uniform vec2 uSteep;
 uniform vec2 uTops;
 uniform vec2 uTopSeen;
-uniform float uTopClear;
 uniform vec3 uTopWhite;
+uniform vec2 uTopShell;
+uniform vec2 uTopEye;
+uniform vec2 uTopFine;
 uniform sampler2D uPlaceField;
 uniform vec3 uPlaceEye;
 uniform float uPlaceRef;
@@ -96,6 +102,7 @@ uniform vec3 uDeckLightSize;
 uniform float uPatchScale[${PATCH_COUNT}];
 uniform float uPatchSize[${PATCH_COUNT}];
 uniform float uFeather;
+uniform vec2 uPatchRim;
 uniform vec2 uPatchFade;
 uniform vec3 uSpotN;
 uniform vec3 uSpotE;
@@ -160,6 +167,13 @@ vec3 spinY(vec3 d, float a) {
 float rate(vec4 k, float lat) {
   return k.x + k.y * sin(k.z * lat + k.w);
 }
+vec3 flowed(vec3 nd) {
+  vec3 pS = uDeckCentre + uDeckRadius * nd;
+  float alongF = dot(pS, uDeckF0) * uDeckFlowDir.y + dot(pS, uDeckR0) * uDeckFlowDir.x;
+  float acrossF = dot(pS, uDeckF0) * uDeckFlowDir.x - dot(pS, uDeckR0) * uDeckFlowDir.y;
+  float kF = uDeckTime * (uDeckFlow.x + uDeckFlow.y * sin(acrossF * uDeckFlow.z + uDeckFlow.w) + 0.4 * uDeckFlow.y * sin(acrossF * uDeckFlow.z * 2.7 + alongF * 0.11 + 1.3));
+  return normalize(pS - (uDeckF0 * uDeckFlowDir.y + uDeckR0 * uDeckFlowDir.x) * kF - uDeckCentre);
+}
 void main() {
   vec3 d0 = normalize(vLocal);
   float lat = asin(clamp(d0.y, -1.0, 1.0));
@@ -208,7 +222,6 @@ ${PATCH_LEVELS}
   vec3 aP = vec3(0.0);
   vec4 field = vec4(1.0, 1.0, 1.0, 0.0);
   float wP = 0.0;
-  float tops = 0.0;
   float texP = 0.0;
   for (int k = 0; k < (pn > 0.5 && uPlace.x > 0.0 ? 1 : 0); k++) {
 ${PLATE_LEVELS}
@@ -252,7 +265,30 @@ ${PLATE_LEVELS}
   vec3 luma = vec3(0.2126, 0.7152, 0.0722);
   float lift = log2(max(dot(relit, luma), 1e-5) / max(dot(own, luma), 1e-5));
   col = mix(own, relit, mix(uRelit.y, uRelit.x, smoothstep(-uRelit.z, uRelit.z, lift)) * (1.0 - smoothstep(uSteep.x, uSteep.y, muD)));
-  col += uNear * uTopWhite * (wP * tops * smoothstep(uTops.x, uTops.y, ndl) * smoothstep(uTopSeen.x, uTopSeen.y, muD) * uTopClear);
+  vec3 toGround = pD - uPlaceEye;
+  vec3 rd = normalize(toGround);
+  float rb = dot(uPlaceEye, rd);
+  float rc = dot(uPlaceEye, uPlaceEye) - uTopShell.x * uTopShell.x;
+  float tq = max(-rb - sqrt(max(rb * rb - rc, 0.0)), 0.0);
+  vec3 onShell = normalize(uPlaceEye + rd * tq);
+  vec3 sq = transpose(uPlaceRot) * onShell;
+  vec3 naq = flowed(uPlaceRot * spinY(sq, (uTime - uPlaceRef) * rate(uBandRate, asin(clamp(sq.y, -1.0, 1.0)))));
+  float pnq = dot(naq, uPlaceN);
+  vec2 pgq = vec2(dot(naq, uPlaceE), dot(naq, uPlaceU)) / max(pnq, 0.05);
+  vec2 qx = dFdx(pgq) * uGrad;
+  vec2 qy = dFdy(pgq) * uGrad;
+  vec2 q0 = pgq * uPlateScale[0];
+  float lifted = 0.0;
+  for (int k = 0; k < (pnq > 0.5 && uPlace.x > 0.0 && rc > 0.0 ? 1 : 0); k++) {
+    float wq = smoothstep(0.5, 0.5 - uPlace.y, max(abs(q0.x), abs(q0.y))) * textureLod(uPlaceField, q0 + 0.5, 0.0).a * uPlace.x;
+    vec3 nq = normalize(n - vPos * ((1.0 - tq / max(length(toGround), 1e-6)) * length(d0 - vCamL) / max(length(vPos), 1e-6)));
+    vec4 top = textureGrad(uPlate0, q0 + 0.5, qx * uPlateScale[0], qy * uPlateScale[0]);
+    vec3 fibre = top.rgb;
+${TOP_LEVELS}
+    vec3 calm = textureGrad(uPlate0, q0 + 0.5, qx * uPlateScale[0] + vec2(uTopFine.y, 0.0), qy * uPlateScale[0] + vec2(0.0, uTopFine.y)).rgb;
+    lifted = wq * clamp(top.a * (1.0 + uTopFine.x * (dot(fibre, vec3(1.0)) / max(dot(calm, vec3(1.0)), 1e-3) - 1.0)), 0.0, 1.0) * smoothstep(uTops.x, uTops.y, dot(nq, uSunW)) * smoothstep(uTopSeen.x, uTopSeen.y, dot(onShell, -rd)) * smoothstep(uTopEye.x, uTopEye.y, length(pgq)) * smoothstep(0.0, uTopShell.y, length(uPlaceEye) - uTopShell.x);
+  }
+  col += uNear * uTopWhite * lifted;
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.15, 0.45, 0.9), vec2(bandTurn, cloudTurn) * 4.0, length(vView));
 }`
@@ -286,7 +322,7 @@ export interface PlaceOptions {
   aMax: number
   steep: [number, number]
   relitSoft: number
-  topLight: { sun: [number, number]; seen: [number, number]; white: [number, number, number] }
+  topLight: { sun: [number, number]; seen: [number, number]; white: [number, number, number]; shell: [number, number]; eye: [number, number]; fine: [number, number] }
   feather: number
   deck: { centre: number[]; radius: number; f0: number[]; r0: number[]; flow: [number, number, number, number]; flowAngle: number; light: THREE.Texture; lightSize: number[]; psiMax: number }
 }
@@ -317,7 +353,7 @@ export class Globe {
         ...Object.fromEntries(p.textures.map((t, i) => ['uPatch' + i, { value: t }])),
         uPatchScale: { value: p.widthsDeg.map((w) => 1 / (2 * Math.tan(THREE.MathUtils.degToRad(w) / 2))) },
         uPatchSize: { value: p.textures.map((t) => (t.image as unknown as { width: number }).width) },
-        uFeather: { value: p.feather }, uPatchFade: { value: new THREE.Vector2().fromArray(p.fade) },
+        uFeather: { value: p.feather }, uPatchRim: { value: new THREE.Vector2(p.feather, 0) }, uPatchFade: { value: new THREE.Vector2().fromArray(p.fade) },
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
         uSpin: { value: 0 }, uTime: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uNear: { value: new THREE.Vector3(1, 1, 1) }, uSoft: { value: 0 }, uSharp: { value: new THREE.Vector2(o.sharp[0], o.sharp[1]) }, uWrapSoft: { value: o.wrapSoft }, uToRing: { value: new THREE.Matrix4() }, uRingProfile: { value: null }, uRingShade: { value: new THREE.Vector3(0, 1, 2) }, uRingN: { value: new THREE.Vector3(0, 1, 0) }, uRingSun: { value: new THREE.Vector3(0, 1, 0) }, uShadeMix: { value: 1 },
         uSunW: { value: new THREE.Vector3(1, 0, 0) },
@@ -331,7 +367,7 @@ export class Globe {
         ...Object.fromEntries(pl.textures.map((t, i) => ['uPlate' + i, { value: t }])),
         uPlateScale: { value: pl.halfTans.map((t) => 1 / (2 * t)) },
         uPlateSize: { value: pl.textures.map((t) => (t.image as unknown as { width: number }).width) },
-        uPlace: { value: new THREE.Vector3(0, pl.feather, pl.aMax) }, uRelit: { value: new THREE.Vector3(0, 0, pl.relitSoft) }, uSteep: { value: new THREE.Vector2().fromArray(pl.steep) }, uTops: { value: new THREE.Vector2().fromArray(pl.topLight.sun) }, uTopSeen: { value: new THREE.Vector2().fromArray(pl.topLight.seen) }, uTopClear: { value: 0 }, uTopWhite: { value: new THREE.Vector3().fromArray(pl.topLight.white) }, uPlaceField: { value: pl.field }, uPlaceRef: { value: pl.clockRef }, uPlaceEye: { value: new THREE.Vector3(0, 1, 0) }, uCloudTime: { value: 0 },
+        uPlace: { value: new THREE.Vector3(0, pl.feather, pl.aMax) }, uRelit: { value: new THREE.Vector3(0, 0, pl.relitSoft) }, uSteep: { value: new THREE.Vector2().fromArray(pl.steep) }, uTops: { value: new THREE.Vector2().fromArray(pl.topLight.sun) }, uTopSeen: { value: new THREE.Vector2().fromArray(pl.topLight.seen) }, uTopWhite: { value: new THREE.Vector3().fromArray(pl.topLight.white) }, uTopShell: { value: new THREE.Vector2(1 + pl.topLight.shell[0], pl.topLight.shell[1]) }, uTopEye: { value: new THREE.Vector2(pl.topLight.eye[0] / pl.deck.radius, pl.topLight.eye[1] / pl.deck.radius) }, uTopFine: { value: new THREE.Vector2().fromArray(pl.topLight.fine) }, uPlaceField: { value: pl.field }, uPlaceRef: { value: pl.clockRef }, uPlaceEye: { value: new THREE.Vector3(0, 1, 0) }, uCloudTime: { value: 0 },
         uPlaceRot: { value: new THREE.Matrix3().setFromMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(pl.rot)) },
         uPlaceN: { value: v3(pl.frame.n) }, uPlaceE: { value: v3(pl.frame.e) }, uPlaceU: { value: v3(pl.frame.u) },
         uDeckCentre: { value: v3(pl.deck.centre) }, uDeckRadius: { value: pl.deck.radius }, uDeckF0: { value: v3(pl.deck.f0) }, uDeckR0: { value: v3(pl.deck.r0) },
@@ -375,10 +411,16 @@ export class Globe {
     ;(u.uRingSun!.value as THREE.Vector3).copy(sunLocal)
   }
 
-  place(up: number, down: number, on: number, clear: number, deckTime: number, eye: THREE.Vector3): void {
+  rim(on: number, feather: number, wave: number): void {
     const u = this.material.uniforms
-    u.uTopClear!.value = clear
+    const base = u.uFeather!.value as number
+    ;(u.uPatchRim!.value as THREE.Vector2).set(base + (feather - base) * on, wave * on)
+  }
+
+  place(up: number, down: number, on: number, deckTime: number, eye: THREE.Vector3, above: number): void {
+    const u = this.material.uniforms
     ;(u.uPlaceEye!.value as THREE.Vector3).copy(eye)
+    ;(u.uTopShell!.value as THREE.Vector2).y = above
     ;(u.uRelit!.value as THREE.Vector3).x = up
     ;(u.uRelit!.value as THREE.Vector3).y = down
     ;(u.uPlace!.value as THREE.Vector3).x = on
