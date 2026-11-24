@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T20:19:20.330Z",
- "head": "bc97f0c337218f40b3a0f8b3f0c54a426627d036",
- "note": "round 2 list: pose solved again, dark inner ring into the planet, foot band, ring tone by radius from the approved image, no moonlets; in work",
+ "pushed": "2026-11-24T20:45:14.242Z",
+ "head": "290448a5de4742df6fb551dc46652f3e34e8a588",
+ "note": "round 2 list, items 1 and 2: pose, inner ring into the planet, foot band, ring tone by radius, fine grains; proofs running",
  "looks": [
+  {
+   "time": "2026-11-24T20:45:13.567Z",
+   "file": "20261124204513567-note-c_near_in8.jpg",
+   "source": "../../../../tmp/v/t18/c_near_in8.png",
+   "kind": "note",
+   "label": "3720 near field at full size, approved left: fine grains and sand in place of moonlets; still coarser than the approved, white grains stand on the dark gap"
+  },
+  {
+   "time": "2026-11-24T20:45:12.923Z",
+   "file": "20261124204512923-note-c_foot2_in9.jpg",
+   "source": "../../../../tmp/v/t18/c_foot2_in9.png",
+   "kind": "note",
+   "label": "crop of the foot of the globe at 3720, 1.5 times, approved left: no sky between ring and globe; the band on the globe is too tall and too hard here, softened in the next take"
+  },
+  {
+   "time": "2026-11-24T20:45:12.124Z",
+   "file": "20261124204512124-note-pair_in9.jpg",
+   "source": "../../../../tmp/v/t18/pair_in9.png",
+   "kind": "note",
+   "label": "3720 beside the approved image (left), full frame: new pose, bright inner ring matter to the planet, dust band in front of the globe's foot (this take: band too hard, softened after), ring tone by radius, fine grains, no moonlets"
+  },
   {
    "time": "2026-11-24T20:19:19.656Z",
    "file": "20261124201919656-note-c_foot2_in4.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/v/t17/look_3720_t10_pair.png",
    "kind": "note",
    "label": "3720 beside the approved close (left approved, right the tree before round 44's list): start of the new pose work"
-  },
-  {
-   "time": "2026-11-24T18:50:08.389Z",
-   "file": "20261124185008389-note-b9c_r2.jpg",
-   "source": "../../../../tmp/v/t17/b9c_r2.png",
-   "kind": "note",
-   "label": "3720 terminator at full size, approved left, trial T9c right: the night side is dark, the fall as wide as the approved's by measure (103 to 139 px against 91 to 139), its last part longer"
-  },
-  {
-   "time": "2026-11-24T18:50:07.801Z",
-   "file": "20261124185007801-note-b3a_ll.jpg",
-   "source": "../../../../tmp/v/t17/b3a_ll.png",
-   "kind": "note",
-   "label": "3720 lower left at full size, approved left, trial right: item 19, dark grooves at the edges of the two widest octaves of ringlets in the thin rings near the sheet"
-  },
-  {
-   "time": "2026-11-24T18:50:07.135Z",
-   "file": "20261124185007135-note-d_three_ll.jpg",
-   "source": "../../../../tmp/v/t17/d_three_ll.png",
-   "kind": "note",
-   "label": "instrument only, not the film: 3720 lower left at full size with the lens heading 28 (the film), 38 and 48 degrees left of its view axis: the shutter's part of the soft near rings; the heading stays at 28 so that the point the picture flows out of stays in the frame"
   }
  ]
 }
