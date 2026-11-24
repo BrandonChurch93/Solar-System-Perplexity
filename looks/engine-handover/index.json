@@ -1,9 +1,30 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T08:56:54.122Z",
- "head": "1ff567faf64bb0519151a9924e225ac7748168c8",
- "note": "Mars at T, both sides from one eye: the globe side's ground lies 24 px lower, cause being measured; eye line of the relief under a scaled group is next",
+ "pushed": "2026-11-24T09:33:55.739Z",
+ "head": "caab1ffc276982c834ae4e244cfd71f5e54255e6",
+ "note": "Mars cap test read: the globe side at T is the same ground seen from an eye 1.5e-4 radii higher (rigid fit to 2.3 px); next the pattern numbers for MAIL 611 2(a)",
  "looks": [
+  {
+   "time": "2026-11-24T09:25:03.070Z",
+   "file": "20261124092503070-note-crop-texels.jpg",
+   "source": "../../../../tmp/law/capmarch/crop-texels.png",
+   "kind": "note",
+   "label": "Mars 2477 globe side, texels view at full size"
+  },
+  {
+   "time": "2026-11-24T09:25:02.494Z",
+   "file": "20261124092502494-note-pred-dive.jpg",
+   "source": "../../../../tmp/law/capmarch/pred-dive.png",
+   "kind": "note",
+   "label": "Mars 2477: the ground predicted from the plates and bins, marched from the plan's eye, against the renders"
+  },
+  {
+   "time": "2026-11-24T09:25:01.790Z",
+   "file": "20261124092501790-note-sheet-diag.jpg",
+   "source": "../../../../tmp/law/capmarch/sheet-diag.png",
+   "kind": "note",
+   "label": "Mars 2477 globe side, cap test: beauty and texels views, the ground of the cap in large flat facets"
+  },
   {
    "time": "2026-11-24T08:56:53.500Z",
    "file": "20261124085653500-note-mars-sides-2681-0850.jpg",
@@ -42,29 +63,6 @@
    "kind": "note",
    "label": "Mars's head b9c472dc laid over this tree (stop folder and assets equal by tree hash), draft tier, frames 2474 to 2479 of the dive: T is 2477, the ground and the sky change in one frame",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T07:59:02.050Z",
-   "file": "20261124075902050-note-path-nine-heads-0758.jpg",
-   "source": "out/work/looks-extra/path-nine-heads-0758.png",
-   "kind": "note",
-   "label": "every builder's head through the judge's path part at 07:58 UTC, one row a stop: Earth's own path red in both moves, the eight others green"
-  },
-  {
-   "time": "2026-11-24T07:40:40.170Z",
-   "file": "20261124074040170-note-path-earth-own-and-onemove.jpg",
-   "source": "out/work/looks-extra/path-earth-own-and-onemove.png",
-   "kind": "note",
-   "label": "Earth 6c75f48f, the judge's path curves: its own path (red, 21 over) and the engine's one move with the rise law (green)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T07:20:45.270Z",
-   "file": "20261124072045270-note-eye-earth-uranus-rise.jpg",
-   "source": "out/work/looks-extra/eye-earth-uranus-rise.png",
-   "kind": "note",
-   "label": "the eye across the seam of the Earth rise and the Uranus rise, forced onto the one move: the film's law, the withdrawn set, the green set, the judge's limit 0.87",
-   "stop": "earth"
   }
  ]
 }
