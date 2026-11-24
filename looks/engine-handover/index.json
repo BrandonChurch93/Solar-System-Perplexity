@@ -1,9 +1,23 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T17:08:47.281Z",
+ "pushed": "2026-11-24T17:23:57.710Z",
  "head": "46e6a5606c9d9e80d335737a691ae27c49933b41",
- "note": "Neptune's rise is rendering for the table of mail 682; the pattern rig is running the exchange cases at 16 to 128 px",
+ "note": "The pattern rig: a visible exchange in a rise by 3 reads 0.09 once the widths are multiplied by the enlargement (as on main 0.83); mailed to the Builder. Neptune's rise renders for the table of mail 682",
  "looks": [
+  {
+   "time": "2026-11-24T17:23:56.355Z",
+   "file": "20261124172356355-note-pattern-rig-z3-s32.jpg",
+   "source": "out/work/inplace/looks/pattern-rig-z3-s32.png",
+   "kind": "note",
+   "label": "PLANTED, a rig, not the film: the same rise, the whole exchange of all detail under 32 px. As on main 1.11, with the widths times the enlargement 0.44 (limit 0.45)"
+  },
+  {
+   "time": "2026-11-24T17:23:54.839Z",
+   "file": "20261124172354839-note-pattern-rig-z3-s16.jpg",
+   "source": "out/work/inplace/looks/pattern-rig-z3-s16.png",
+   "kind": "note",
+   "label": "PLANTED, a rig, not the film: a rigid rise by 3 over one window of the judge. Top one picture, bottom the whole exchange of all detail under 16 px. The judge's pattern as on main reads the bottom row 0.83; with the widths times the enlargement 0.09 (limit 0.45)"
+  },
   {
    "time": "2026-11-24T17:08:27.846Z",
    "file": "20261124170827846-note-neptune-rise-first.jpg",
@@ -57,26 +71,6 @@
    "stop": "venus",
    "segment": "venus.dive",
    "frame": 1290
-  },
-  {
-   "time": "2026-11-24T15:39:56.392Z",
-   "file": "20261124153956392-compare-mars-rise-step-in-place.jpg",
-   "source": "out/work/handover/mars-rise-step-in-place.png",
-   "kind": "compare",
-   "label": "mars rise, the largest step of the level in place (4.63): frame 2709, frame 2710, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "frame": 2710
-  },
-  {
-   "time": "2026-11-24T15:36:10.586Z",
-   "file": "20261124153610586-compare-mars-dive-step-body.jpg",
-   "source": "out/work/handover/mars-dive-step-body.png",
-   "kind": "compare",
-   "label": "mars dive, the largest step of the mean level of the body (3.12): frame 2439, frame 2440, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2440
   }
  ]
 }
