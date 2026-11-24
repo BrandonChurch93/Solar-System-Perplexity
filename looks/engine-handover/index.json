@@ -1,9 +1,26 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T18:18:06.871Z",
- "head": "2f1028ee7a80de891e8aef03312652c1dddf8606",
- "note": "Saturn read both ways on the merged tree: 1.16 and 1.36 by the mean of the body, 0.27 and 0.34 in place; the take of mail 717 is named (2f1028ee); Mars's third renders",
+ "pushed": "2026-11-24T18:42:41.596Z",
+ "head": "7835b8e2883ff8ac6a62518b2028f95d11f6ecf0",
+ "note": "Campaign 3 on the take 2f1028ee (in place judged at 5): Mars's third is rendering, Uranus after it. Beside it: reading globe_engineer's cure of the pattern measure against my rig, cases at z 2 to 5.3",
  "looks": [
+  {
+   "time": "2026-11-24T18:42:40.600Z",
+   "file": "20261124184240600-note-dive-a.jpg",
+   "source": "out/work/inplace/mars3/dive-a.jpg",
+   "kind": "note",
+   "label": "Mars's third dive, frames 2400 to 2436, every fourth, drafts (1 sample): Phobos passes in front, then the dive to the canyon"
+  },
+  {
+   "time": "2026-11-24T18:38:12.563Z",
+   "file": "20261124183812563-compare-mars3-dive-step-body.jpg",
+   "source": "out/work/handover/mars3-dive-step-body.png",
+   "kind": "compare",
+   "label": "mars dive, the largest step of the mean level of the body (3.32): frame 2468, frame 2469, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2469
+  },
   {
    "time": "2026-11-24T18:18:05.802Z",
    "file": "20261124181805802-note-rise-T.jpg",
@@ -51,22 +68,6 @@
    "stop": "saturn",
    "segment": "saturn.dive",
    "frame": 3606
-  },
-  {
-   "time": "2026-11-24T17:38:53.010Z",
-   "file": "20261124173853010-note-neptune-rise-step-body.jpg",
-   "source": "out/work/handover/neptune-rise-step-body.png",
-   "kind": "note",
-   "label": "Neptune rise into 4969: worst step by the mean of the body 2.35, in place 0.21: the frame opens on darker ground",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T17:38:52.346Z",
-   "file": "20261124173852346-note-neptune-rise-step-in-place.jpg",
-   "source": "out/work/handover/neptune-rise-step-in-place.png",
-   "kind": "note",
-   "label": "Neptune rise into 5001: worst step in place, level 3.83, colour 6.64 (limits 6 and 8), a wash over all the kept ground",
-   "stop": "neptune"
   }
  ]
 }
