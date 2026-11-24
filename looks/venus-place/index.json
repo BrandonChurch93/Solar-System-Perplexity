@@ -1,28 +1,71 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-24T04:07:27.433Z",
+ "pushed": "2026-11-24T04:27:42.548Z",
  "head": "cfc12a2094b1f946ecddf8b08d2231009fb2e751",
- "note": "step 3: the ground in the globe's tone from above (tone law), dive and rise beside frames without the ground",
+ "note": "04:28 merged main with the carry: dive sheets 1292 to 1349, rise sides at T before (5.409) and after the release (0.027); proof chain G running",
  "looks": [
   {
-   "time": "2026-11-24T04:07:26.503Z",
-   "file": "20261124040726503-note-g8r-sheet.jpg",
-   "source": "../../../../tmp/v/g8r-sheet.jpg",
+   "time": "2026-11-24T04:27:41.628Z",
+   "file": "20261124042741628-note-venus-rise-sides.jpg",
+   "source": "out/work/handover/venus-rise-sides.png",
    "kind": "note",
-   "label": "The same in the rise, 1564, 1567, 1570, 1573: left with the ground, right without it. WRONG still: the plates beside the ground are another picture (the slabs and the towers at the lower right are plate content).",
+   "label": "venus rise, both sides at T after ground.release: mean 0.027",
    "stop": "venus"
   },
   {
-   "time": "2026-11-24T04:07:25.453Z",
-   "file": "20261124040725453-note-g7-sheet.jpg",
-   "source": "../../../../tmp/v/g7-sheet.jpg",
+   "time": "2026-11-24T04:27:40.882Z",
+   "file": "20261124042740882-note-r1537.jpg",
+   "source": "../../../../tmp/v/hfp/r1537.jpg",
    "kind": "note",
-   "label": "Step 3 with a tone law for the ground (working tree): from above the ground gives its forms over the globe's colour, its own tones come in by the line of sight as the plates' do. Left 1296, 1300 with the ground, right the same frames without it; then 1304, 1308 with, 1308 without, 1311 with. The pale patch of the last sheet is gone at 1296 to 1304. Draft, no grain.",
+   "label": "venus rise 1538 to 1541 BEFORE the cure: the globe side at 1540 is softer than the surface side at 1539 (sides at T mean 5.409), cured by ground.release, sides now 0.027",
    "stop": "venus"
   },
   {
-   "time": "2026-11-24T04:06:17.978Z",
-   "file": "20261124040617978-compare-venus-dive-sides.jpg",
+   "time": "2026-11-24T04:27:40.160Z",
+   "file": "20261124042740160-note-s1340.jpg",
+   "source": "../../../../tmp/v/hfp/s1340.jpg",
+   "kind": "note",
+   "label": "venus dive on merged main with the carry, draft, frames from 1340, ground on the globe from 1293, working tree before the release at T",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T04:27:39.430Z",
+   "file": "20261124042739430-note-s1324.jpg",
+   "source": "../../../../tmp/v/hfp/s1324.jpg",
+   "kind": "note",
+   "label": "venus dive on merged main with the carry, draft, frames from 1324, ground on the globe from 1293, working tree before the release at T",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T04:27:38.610Z",
+   "file": "20261124042738610-note-s1308.jpg",
+   "source": "../../../../tmp/v/hfp/s1308.jpg",
+   "kind": "note",
+   "label": "venus dive on merged main with the carry, draft, frames from 1308, ground on the globe from 1293, working tree before the release at T",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T04:27:37.830Z",
+   "file": "20261124042737830-note-s1292.jpg",
+   "source": "../../../../tmp/v/hfp/s1292.jpg",
+   "kind": "note",
+   "label": "venus dive on merged main with the carry, draft, frames from 1292, ground on the globe from 1293, working tree before the release at T",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T04:26:58.068Z",
+   "file": "20261124042658068-compare-venus-rise-sides.jpg",
+   "source": "out/work/handover/venus-rise-sides.png",
+   "kind": "compare",
+   "label": "venus rise, both sides at T (frame 1539) and their difference times 8",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "frame": 1539,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T04:26:49.695Z",
+   "file": "20261124042649695-compare-venus-dive-sides.jpg",
    "source": "out/work/handover/venus-dive-sides.png",
    "kind": "compare",
    "label": "venus dive, both sides at T (frame 1343) and their difference times 8",
@@ -30,46 +73,6 @@
    "segment": "venus.dive",
    "frame": 1343,
    "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T03:52:48.478Z",
-   "file": "20261124035248478-note-g4-sheet.jpg",
-   "source": "../../../../tmp/v/g4-sheet.jpg",
-   "kind": "note",
-   "label": "tried and dropped: plates take their stored tones where the ground is near; gives a dark hole and a white patch on the globe 1300 to 1320",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T03:52:47.739Z",
-   "file": "20261124035247739-note-g5-sheet.jpg",
-   "source": "../../../../tmp/v/g5-sheet.jpg",
-   "kind": "note",
-   "label": "step 3 test: ground in by height 0.9 to 0.3 radii (1287 to 1300) instead of 0.3 to 0.15; the bright patch shows from 1296 as a small pale blob; tones still the ground's own",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T03:27:25.259Z",
-   "file": "20261124032725259-note-g3-big1.jpg",
-   "source": "../../../../tmp/v/g3-big1.jpg",
-   "kind": "note",
-   "label": "Venus step 3 try 3, working tree, draft, 1314 1317 1320 1323 larger",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T03:27:24.704Z",
-   "file": "20261124032724704-note-g3-sheet2.jpg",
-   "source": "../../../../tmp/v/g3-sheet2.jpg",
-   "kind": "note",
-   "label": "Venus step 3 try 3, working tree, draft, dive 1332 to 1343 (T is 1343): one place getting nearer; not yet checked against the surface side at T by numbers",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T03:27:24.122Z",
-   "file": "20261124032724122-note-g3-sheet.jpg",
-   "source": "../../../../tmp/v/g3-sheet.jpg",
-   "kind": "note",
-   "label": "Venus step 3 try 3, working tree, draft, dive 1304 to 1329 every third frame: the close ground drawn on the globe from the height where it first shows (deck by scale against the frame, matte by cloud forms). Wrong: plates beside the ground paler and olive, dark slab upper right 1314 to 1323 is plate content, limb band right",
-   "stop": "venus"
   }
  ]
 }
