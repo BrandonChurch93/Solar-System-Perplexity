@@ -1,9 +1,33 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T10:23:57.403Z",
- "head": "7c5262ec8b1ef32a451415ab43df3e7d918a25f6",
- "note": "Second NAMED mail is out (7721387). Pattern panel of the rise on that head: the red sits along the horizon band and in the corners, the storm itself holds. Working on the third commit: exposure by height for the body level, the limb given back evenly.",
+ "pushed": "2026-11-24T10:49:37.159Z",
+ "head": "fda7a70d910724c197084883728f5cb536febb17",
+ "note": "10:52 UTC third commit work: limb table removed (hold limb at every height), exposure by height refit running (trial E3), cure C (one source from the wrap down) tool written, not run yet",
  "looks": [
+  {
+   "time": "2026-11-24T10:49:29.264Z",
+   "file": "20261124104929264-note-place-2895-hero.jpg",
+   "source": "../work/t3/place-2895-hero.jpg",
+   "kind": "note",
+   "label": "2895 at the place (before cure C) beside the approved hero crop",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T10:49:28.347Z",
+   "file": "20261124104928347-note-view1.jpg",
+   "source": "../work/cure/view1.jpg",
+   "kind": "note",
+   "label": "cure C preview: globe wrap, mid plate, mid plate as seen from above (top row at the hold scale)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T10:49:27.030Z",
+   "file": "20261124104927030-note-e2-sheet.jpg",
+   "source": "../work/t3/e2-sheet.jpg",
+   "kind": "note",
+   "label": "trial E2 rise 3272 to 3296: limb table removed, exposure by height (level step still red 1.57, refit running)",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-24T10:23:55.965Z",
    "file": "20261124102355965-note-pat-g1.jpg",
@@ -183,42 +207,6 @@
    "kind": "note",
    "label": "Level check of MAIL 596. Top row: far plate, mid plate reduced to it, their difference: 0.85, OVER (the globe's own oval against the close image's storm). Bottom row: mid plate to near plate, 0.05",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T09:26:40.489Z",
-   "file": "20261124092640489-note-bN-2895-pair.jpg",
-   "source": "../work/g448/bN-2895-pair.jpg",
-   "kind": "note",
-   "label": "2895 at final: the kept still, this head ba2d0b1, difference times 24 (crop of the lower right). The change is the hold sky without the grain that was baked into it, MAIL 448",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T09:26:09.056Z",
-   "file": "20261124092609056-frame-bN-3150.jpg",
-   "source": "out/work/jupiter/final/bN-3150.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3150, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "5a18fcdc5a929484"
-  },
-  {
-   "time": "2026-11-24T09:22:47.898Z",
-   "file": "20261124092247898-frame-bN-2895.jpg",
-   "source": "out/work/jupiter/final/bN-2895.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2895, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "5a18fcdc5a929484"
   }
  ]
 }
