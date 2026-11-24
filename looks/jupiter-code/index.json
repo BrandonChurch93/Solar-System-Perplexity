@@ -1,9 +1,89 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T18:02:18.802Z",
- "head": "5e0f209940652fc459f781ca14255616e46c8b9e",
- "note": "18:06 UTC. Sky stands still (commit 4695edb), exposure by height out (5e0f209, MAIL 720). Judged finals and the rise and dive reports of that head are rendering. Ruling 3 step 2 in work: near plate from the wide canvas.",
+ "pushed": "2026-11-24T18:19:24.874Z",
+ "head": "f8df0291a2bb00cfd1a334312d5a9d576bbb253c",
+ "note": "18:21 UTC. Exposure by height is out, the four judged frames keep their bytes. Rise and dive pictures of that head render now. Next: new near and mid plates for rulings 3 and 1.",
  "looks": [
+  {
+   "time": "2026-11-24T18:19:23.779Z",
+   "file": "20261124181923779-note-Rm-above.jpg",
+   "source": "../work/r3/Rm-above.jpg",
+   "kind": "note",
+   "label": "rise 3264 to 3296 of the old base, from above: the pale ring of towers the near take invented",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T18:19:23.099Z",
+   "file": "20261124181923099-note-near-globe-vs-view.jpg",
+   "source": "../work/r3/near-globe-vs-view.jpg",
+   "kind": "note",
+   "label": "ruling 3: the globe's albedo over the near plate, the surface view laid back on the ground, the same blurred, their ratio (nine stops: the far light is the air's, not the ground's)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T18:19:21.971Z",
+   "file": "20261124181921971-note-globe-vs-midnest.jpg",
+   "source": "../work/r3/globe-vs-midnest.jpg",
+   "kind": "note",
+   "label": "ruling 1 and 3: left the globe's own picture at the storm over 61 units (circles 5, 10, 16.5 units), right the shipped mid plate: two pictures of one ground",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T18:12:03.696Z",
+   "file": "20261124181203696-frame-bU-2997.jpg",
+   "source": "out/work/jupiter/final/bU-2997.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 2997, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 2997,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
+  {
+   "time": "2026-11-24T18:07:53.991Z",
+   "file": "20261124180753991-frame-bU-3296.jpg",
+   "source": "out/work/jupiter/final/bU-3296.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3296, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3296,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
+  {
+   "time": "2026-11-24T18:05:17.035Z",
+   "file": "20261124180517035-frame-bU-2895.jpg",
+   "source": "out/work/jupiter/final/bU-2895.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2895, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
+  {
+   "time": "2026-11-24T18:04:19.501Z",
+   "file": "20261124180419501-frame-bU-3150.jpg",
+   "source": "out/work/jupiter/final/bU-3150.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3150, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
   {
    "time": "2026-11-24T18:02:17.582Z",
    "file": "20261124180217582-note-t1-tone-x3.jpg",
@@ -27,34 +107,6 @@
    "kind": "note",
    "label": "Rise 3247 to 3259 on the merge (before the exposure change): dark aprons at lower left give way to pale puffs at 3253, the right far field turns from dusk to bright streaks. This is ruling 3's red as the eye sees it",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T17:40:53.928Z",
-   "file": "20261124174053928-frame-bT-2895.jpg",
-   "source": "out/work/jupiter/final/bT-2895.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2895, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
-  },
-  {
-   "time": "2026-11-24T17:39:53.262Z",
-   "file": "20261124173953262-frame-bT-3150.jpg",
-   "source": "out/work/jupiter/final/bT-3150.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3150, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
   },
   {
    "time": "2026-11-24T17:38:25.525Z",
@@ -113,34 +165,6 @@
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-24T17:36:22.341Z",
-   "file": "20261124173622341-frame-bT-2997.jpg",
-   "source": "out/work/jupiter/final/bT-2997.png",
-   "kind": "frame",
-   "label": "jupiter.dive frame 2997, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 2997,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
-  },
-  {
-   "time": "2026-11-24T17:32:12.243Z",
-   "file": "20261124173212243-frame-bT-3296.jpg",
-   "source": "out/work/jupiter/final/bT-3296.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3296, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3296,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
-  },
-  {
    "time": "2026-11-24T17:24:41.392Z",
    "file": "20261124172441392-note-pat-Rb.jpg",
    "source": "../work/ff/pat-Rb.jpg",
@@ -194,30 +218,6 @@
    "source": "../work/t/dn-right.jpg",
    "kind": "note",
    "label": "dive 2987 to 3001, right 480 px lifted: merge of main top, old world bottom",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T16:59:04.142Z",
-   "file": "20261124165904142-note-n2997-pair.jpg",
-   "source": "../work/t/n2997-pair.jpg",
-   "kind": "note",
-   "label": "2997 final: named bytes left, merge of main ed003c70 right; only the sky differs",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T16:36:45.637Z",
-   "file": "20261124163645637-note-m12-sky.jpg",
-   "source": "../work/t/m12-sky.png",
-   "kind": "note",
-   "label": "Frame 2990 draft, sky right of the globe at full size: before the merge (left) and after it (right)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T16:36:44.950Z",
-   "file": "20261124163644950-note-m12.jpg",
-   "source": "../work/t/m12.jpg",
-   "kind": "note",
-   "label": "Draft frames 2990, 3000, 3010, 3280 before (left) and after (middle) the merge of main ed003c70, difference times 8 (right): my folders are the same, the bytes are not",
    "stop": "jupiter"
   }
  ]
