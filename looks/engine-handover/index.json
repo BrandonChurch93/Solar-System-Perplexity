@@ -1,9 +1,17 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T04:18:22.919Z",
+ "pushed": "2026-11-24T04:46:17.654Z",
  "head": "2b9c652b51c54ceb8e25bfaa7033d71843306da2",
- "note": "law sets for the one move per stop, searched and judged; mails to the builders next",
+ "note": "MAIL 518: the dent at 2670 to 2674 is in the path, a turning point: chart of the eye's speed across the seam",
  "looks": [
+  {
+   "time": "2026-11-24T04:46:16.989Z",
+   "file": "20261124044616989-note-dent-mars.jpg",
+   "source": "../../../../tmp/lines/dent-mars.png",
+   "kind": "note",
+   "label": "MAIL 518: the eye's speed over its height across the seam into Mars's rise, rate 2, three trees (a chart, no render)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T04:18:04.190Z",
    "file": "20261124041804190-note-m-jupiter-full.jpg",
@@ -61,14 +69,6 @@
    "source": "../../../../tmp/lift/ba-jupiter-full.png",
    "kind": "note",
    "label": "star lift by height, Jupiter rise before and after, draft",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T03:54:24.325Z",
-   "file": "20261124035424325-note-ba-jupiter-sky.jpg",
-   "source": "../../../../tmp/lift/ba-jupiter-sky.png",
-   "kind": "note",
-   "label": "star lift by height, Jupiter sky crop before and after, draft",
    "stop": "jupiter"
   }
  ]
