@@ -1,9 +1,17 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T17:47:53.181Z",
+ "pushed": "2026-11-24T18:13:07.669Z",
  "head": "404a7f06c4439436a06972a472e15098457ef42d",
- "note": "round 2, item 1 (the material at 60), head 404a7f06 unchanged; frame 60 draft: share by band 0.165 0.215 0.193 0.151 0.104 0.063 0.035 0.027 0.020 / dark 0.190 body 0.663 pale 0.062 white 0.022 / brightest 15 percent half width 4.6 px, 4439 shapes, fine detail 0.0595, mean 0.334; distance 0.062",
+ "note": "round 2, item 1 in work (head 404a7f06 unchanged, trials only); frame 60 draft of trial k1: share by band 0.115 0.199 0.203 0.158 0.115 0.077 0.050 0.035 0.026 / dark 0.141 body 0.671 pale 0.087 white 0.026 / brightest 15 percent half width 3.3 px, 3835 shapes, fine detail 0.0688, mean 0.368; distance 0.109",
  "looks": [
+  {
+   "time": "2026-11-24T18:13:06.998Z",
+   "file": "20261124181306998-note-pk.jpg",
+   "source": "../../../../tmp/rd/pk.jpg",
+   "kind": "note",
+   "label": "round 2 in work, not committed: frame 60 draft at one to one (crop 560 600 800 440). Top left the approved; the other three are trials of a new law in the shader: the bulb's shape by a round distance to the lanes (no tent creases), flowers of bright petals round every pit where lanes meet, a soft dark foot; the last with a darker, wider foot. Seen: closer in colour, but they read as separate pebbles (a dark foot all round each); next the dark goes to the pits and the lanes stay thin",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T17:47:52.396Z",
    "file": "20261124174752396-note-zd.jpg",
@@ -72,14 +80,6 @@
    "source": "../../../../tmp/h20-sides.jpg",
    "kind": "note",
    "label": "1f74d5c9, the two sides at T by the new main's handover tool (the run is still going)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T16:35:41.330Z",
-   "file": "20261124163541330-note-f19-60-a.jpg",
-   "source": "../../../../tmp/f19-60-a.jpg",
-   "kind": "note",
-   "label": "1f74d5c9 on main ed003c70, frame 60 draft beside the approved (bytes equal a5b15421)",
    "stop": "sun"
   }
  ]
