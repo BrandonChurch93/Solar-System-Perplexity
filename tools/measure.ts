@@ -174,6 +174,9 @@ const key: RecordKey = {
 }
 const taken = takeUp<TexelRow, FinalRow>(record, key, a.fresh === 'true')
 if (taken.said) console.log(taken.said)
+process.on('exit', (code) => {
+  if (code !== 0 && existsSync(record)) console.error('measure: the run did not end. The same command takes up the ' + (readFileSync(record, 'utf8').split('\n').filter((l) => l).length - 1) + ' finished frame(s) of ' + record)
+})
 const tookUp = { G13: 0, finals: 0 }
 
 if (only.includes('G13')) {

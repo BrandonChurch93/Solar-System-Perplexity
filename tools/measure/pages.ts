@@ -15,10 +15,12 @@ export interface KeeperOptions<T> {
   closeWaitMs?: number
 }
 
+const firstLine = (e: unknown): string => String(e).split('\n')[0]!.slice(0, 200)
+
 // One page at a time for a whole run: the old one is closed before the next is opened, the two never live at once. A frame whose page
-// is lost is drawn again on a new page, a bounded number of times in one run; a page is left for a new one after pageFrames frames; and
-// the judged finals, the largest pictures a measure draws, get a page that has drawn nothing before them. No number of a measure is read
-// from what a page has drawn before.
+// is lost is drawn again on a new page, a bounded number of times in one run, and a new page that does not open counts as one of them;
+// a page is left for a new one after pageFrames frames; and the judged finals, the largest pictures a measure draws, get a page that
+// has drawn nothing before them. No number of a measure is read from what a page has drawn before.
 export class Keeper<T extends { close(): Promise<void> }> {
   readonly restarts: Restart[] = []
   pages = 1
@@ -26,6 +28,7 @@ export class Keeper<T extends { close(): Promise<void> }> {
   onPage = 0
   drawn = 0
   private src: T
+  private gone = false
   private view: ((src: T) => Promise<void>) | null = null
   private readonly closeAt: Set<number>
 
@@ -40,10 +43,12 @@ export class Keeper<T extends { close(): Promise<void> }> {
 
   async setView(set: (src: T) => Promise<void>): Promise<void> {
     this.view = set
-    await set(this.src)
+    if (!this.gone) await set(this.src)
   }
 
   private async leave(): Promise<void> {
+    if (this.gone) return
+    this.gone = true
     const wait = this.o.closeWaitMs ?? 20000
     let timer: ReturnType<typeof setTimeout> | undefined
     await Promise.race([
@@ -56,43 +61,53 @@ export class Keeper<T extends { close(): Promise<void> }> {
   }
 
   private async next(): Promise<void> {
-    this.src = await this.o.open()
+    const src = await this.o.open()
+    try {
+      if (this.view) await this.view(src)
+    } catch (e) {
+      await src.close().catch(() => undefined)
+      throw e
+    }
+    this.src = src
+    this.gone = false
     this.pages++
     this.onPage = 0
-    if (this.view) await this.view(this.src)
   }
 
   async fresh(): Promise<void> {
-    if (this.onPage <= 0) return
+    if (this.onPage <= 0 || this.gone) return
     await this.leave()
-    await this.next()
     this.planned++
   }
 
   async draw<R>(frame: number, fn: (src: T) => Promise<R>): Promise<R> {
     if (this.o.pageFrames > 0 && this.onPage >= this.o.pageFrames) {
-      const had = this.onPage
+      this.o.say('a fresh page before frame ' + frame + ', after ' + this.onPage + ' frames on the last')
       await this.fresh()
-      this.o.say('a fresh page before frame ' + frame + ', after ' + had + ' frames on the last (page ' + this.pages + ')')
     }
     for (;;) {
+      let opening = false
       try {
+        if (this.gone) {
+          opening = true
+          await this.next()
+          opening = false
+        }
         if (this.closeAt.delete(frame) && this.o.kill) await this.o.kill(this.src, frame)
         const r = await fn(this.src)
         this.onPage++
         this.drawn++
         return r
       } catch (e) {
-        const reason = this.o.lost(e)
+        const reason = opening ? 'the new page did not open: ' + firstLine(e) : this.o.lost(e)
         if (reason === null) throw e
-        if (this.restarts.length >= this.o.maxRestarts) {
-          await this.leave()
-          throw new Error('the page was lost at frame ' + frame + ' and ' + this.o.maxRestarts + ' restart(s) are used up (--restarts ' + this.o.maxRestarts + '): ' + reason)
+        const usedUp = this.restarts.length >= this.o.maxRestarts
+        if (!usedUp) {
+          this.restarts.push({ frame, reason })
+          this.o.say('restart ' + this.restarts.length + ' of ' + this.o.maxRestarts + ' at frame ' + frame + ' on a new page: ' + reason)
         }
-        this.restarts.push({ frame, reason })
-        this.o.say('restart ' + this.restarts.length + ' of ' + this.o.maxRestarts + ' at frame ' + frame + ' on a new page: ' + reason)
         await this.leave()
-        await this.next()
+        if (usedUp) throw new Error('the page was lost at frame ' + frame + ' and ' + this.o.maxRestarts + ' restart(s) are used up (--restarts ' + this.o.maxRestarts + '): ' + reason)
       }
     }
   }

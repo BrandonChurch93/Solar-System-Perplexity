@@ -109,14 +109,14 @@ describe('the page a measure draws on', () => {
     expect(b.log).toEqual([
       'drew 1 on page 1 in texels',
       'drew 2 on page 1 in texels',
+      'said: a fresh page before frame 3, after 2 frames on the last',
       'closed page 1',
       'opened page 2',
-      'said: a fresh page before frame 3, after 2 frames on the last (page 2)',
       'drew 3 on page 2 in texels',
       'drew 4 on page 2 in texels',
+      'said: a fresh page before frame 5, after 2 frames on the last',
       'closed page 2',
       'opened page 3',
-      'said: a fresh page before frame 5, after 2 frames on the last (page 3)',
       'drew 5 on page 3 in texels',
     ])
     expect(b.keeper.restarts).toEqual([])
@@ -127,18 +127,50 @@ describe('the page a measure draws on', () => {
     const b = bench()
     await b.keeper.fresh()
     expect(b.log).toEqual([])
+    await b.keeper.setView(view('texels'))
     await b.draw(1)
     await b.keeper.fresh()
     await b.keeper.fresh()
-    expect(b.log).toEqual(['drew 1 on page 1 in ', 'closed page 1', 'opened page 2'])
+    await b.keeper.setView(view('nograin'))
+    await b.draw(2)
+    expect(b.log).toEqual(['drew 1 on page 1 in texels', 'closed page 1', 'opened page 2', 'drew 2 on page 2 in nograin'])
     expect(b.keeper.page.name).toBe('page 2')
+    expect([b.keeper.pages, b.keeper.planned, b.keeper.restarts.length]).toEqual([2, 1, 0])
   })
 
-  it('leaves no page open when the next cannot be opened', async () => {
-    const b = bench({ open: async () => Promise.reject(new Error('no page')) })
-    await b.draw(1)
-    await expect(b.keeper.fresh()).rejects.toThrow('no page')
-    expect(b.log).toEqual(['drew 1 on page 1 in ', 'closed page 1'])
+  it('counts a new page that does not open as a restart and tries again, with no page left open', async () => {
+    let fails = 2
+    const b = bench({ closeAt: [1] })
+    const open = b.keeper['o'].open
+    b.keeper['o'].open = async () => (fails-- > 0 ? Promise.reject(new Error('no browser\nmore')) : open())
+    expect(await b.draw(1)).toBe('1 by page 2')
+    expect(b.log).toEqual([
+      'said: restart 1 of 3 at frame 1 on a new page: the page closed at frame 1',
+      'closed page 1',
+      'said: restart 2 of 3 at frame 1 on a new page: the new page did not open: Error: no browser',
+      'said: restart 3 of 3 at frame 1 on a new page: the new page did not open: Error: no browser',
+      'opened page 2',
+      'drew 1 on page 2 in ',
+    ])
+  })
+
+  it('stops when the new page does not open and the restarts are used up, the old page closed once', async () => {
+    const b = bench({ maxRestarts: 1, closeAt: [1], open: async () => Promise.reject(new Error('no browser')) })
+    await expect(b.draw(1)).rejects.toThrow('the page was lost at frame 1 and 1 restart(s) are used up (--restarts 1): the new page did not open: Error: no browser')
+    await b.keeper.close()
+    expect(b.log.filter((l) => l.startsWith('closed'))).toEqual(['closed page 1'])
+  })
+
+  it('closes a new page that does not take the view', async () => {
+    const b = bench({ maxRestarts: 1, closeAt: [1] })
+    let n = 0
+    await b.keeper.setView(async (p) => {
+      if (n++ > 0) throw new Error('no view')
+      p.view = 'texels'
+      return Promise.resolve()
+    })
+    await expect(b.draw(1)).rejects.toThrow('the new page did not open: Error: no view')
+    expect(b.log.filter((l) => l.startsWith('closed'))).toEqual(['closed page 1', 'closed page 2'])
   })
 
   it('does not wait for ever on a lost page that will not close', async () => {
