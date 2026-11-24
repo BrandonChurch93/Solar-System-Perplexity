@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T18:57:25.161Z",
- "head": "b34945ea0bb63c2c1e895f1c54d98b0e3fd59311",
- "note": "trial v2: one weight by the eye's height for the two grounds; rise in place largest -2.99 into 2130, rough pattern under 0.45 on both legs; not committed",
+ "pushed": "2026-11-24T19:16:52.313Z",
+ "head": "771717afb203199cfaab2e2b196a0da197e01e8f",
+ "note": "trial v3: one weight by height, softer law; rise in place level -2.44 into 2130 draft; flat ground class -4.54; next a veil weight of its own",
  "looks": [
+  {
+   "time": "2026-11-24T19:16:51.355Z",
+   "file": "20261124191651355-note-v2-dive-centre.jpg",
+   "source": "../../../../tmp/gl/s14/v2-dive-centre.jpg",
+   "kind": "note",
+   "label": "trial v2 dive centre native crops 1866 to 1888",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T19:16:50.265Z",
+   "file": "20261124191650265-note-v3-rise-c.jpg",
+   "source": "../../../../tmp/gl/s14/v3-rise-c.jpg",
+   "kind": "note",
+   "label": "trial v3 rise 2136 to 2150 every frame, draft, not committed",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T19:16:49.024Z",
+   "file": "20261124191649024-note-v3-rise-b.jpg",
+   "source": "../../../../tmp/gl/s14/v3-rise-b.jpg",
+   "kind": "note",
+   "label": "trial v3 rise 2120 to 2135 every frame, draft, not committed",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T18:57:15.706Z",
    "file": "20261124185715706-note-v2-dive-b.jpg",
@@ -74,30 +98,6 @@
    "source": "../../../../tmp/gl/s14/v1-dive-a.jpg",
    "kind": "note",
    "label": "trial v1, dive 1866 to 1896 every second frame: haze patch and streak come in 1870 to 1880",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T18:29:13.982Z",
-   "file": "20261124182913982-note-v1-rise-b.jpg",
-   "source": "../../../../tmp/gl/s14/v1-rise-b.jpg",
-   "kind": "note",
-   "label": "trial v1, rise 2124 to 2139 every frame: haze thins slower, patch still reads as laid on the map",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T18:29:13.364Z",
-   "file": "20261124182913364-note-v1-rise-a.jpg",
-   "source": "../../../../tmp/gl/s14/v1-rise-a.jpg",
-   "kind": "note",
-   "label": "trial v1, one law by height, rise 2108 to 2123 every frame (draft)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T17:58:45.591Z",
-   "file": "20261124175845591-note-pmap-rise.jpg",
-   "source": "../../../../tmp/gl/s13/pmap-rise.jpg",
-   "kind": "note",
-   "label": "rise middle on f7ab197a, where the pattern is red: 2113 2115 2118 2122 2126",
    "stop": "earth"
   }
  ]
