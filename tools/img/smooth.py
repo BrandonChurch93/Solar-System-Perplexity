@@ -178,9 +178,17 @@ def span(i, n, window):
     return lo, min(lo + window, n - 1)
 
 
-def around(values, i, window):
+def near(i, n, window, first=0, total=None):
+    """The window round i as places in a list of n that starts at place first of a row of total: the window is the whole row's."""
+    lo, hi = span(i + first, n if total is None else total, window)
+    if lo < first or hi - first > n - 1:
+        raise SystemExit('smooth.py: the slice does not hold the window round frame %d of the row' % (i + first))
+    return lo - first, hi - first
+
+
+def around(values, i, window, first=0, total=None):
     """The median of the values in the window round i, i itself left out."""
-    lo, hi = span(i, len(values), window)
+    lo, hi = near(i, len(values), window, first, total)
     picked = [values[j] for j in range(lo, hi + 1) if j != i and values[j] is not None]
     return float(np.median(picked)) if picked else None
 
@@ -205,6 +213,9 @@ def pictures(job):
         levels.append(float(g.mean()))
         frames.append(small(g, scale))
     n = len(paths)
+    start = int(job.get('first', 0))
+    total = int(job.get('total', n))
+    own = job.get('own') or [start, start + n]
     fw = [None] * n
     bw = [None] * n
     residual = [None] * n
@@ -244,7 +255,7 @@ def pictures(job):
     where = [None] * n
 
     def ratio(stack, i):
-        lo, hi = span(i, n, window)
+        lo, hi = near(i, n, window, start, total)
         rest = [stack[j] for j in range(lo, hi + 1) if j != i and stack[j] is not None]
         if not rest or not np.isfinite(np.stack(rest)).any():
             return None
@@ -253,16 +264,16 @@ def pictures(job):
             return stack[i] / np.maximum(np.nanmedian(np.stack(rest), axis=0), floor)
 
     for i in range(n):
-        if residual[i] is None:
+        if residual[i] is None or not own[0] <= i + start < own[1]:
             continue
-        m = around(residual, i, window)
+        m = around(residual, i, window, start, total)
         if m is None:
             continue
         base[i] = m
         plain[i] = pop[i] = residual[i] / max(m, floor)
         cells = ratio(grids, i)
         if agree:
-            masked[i] = carried[i] / max(around(carried, i, window), floor)
+            masked[i] = carried[i] / max(around(carried, i, window, start, total), floor)
             pop[i] = min(plain[i], masked[i])
             other = ratio(sure, i)
             cells = None if cells is None or other is None else np.minimum(cells, other)
@@ -279,7 +290,7 @@ def pictures(job):
     weaveShare = [None] * n
     if reach > 0:
         for i in range(n - reach):
-            if any(fw[j] is None for j in range(i, i + reach)):
+            if not own[0] <= i + start < own[1] or any(fw[j] is None for j in range(i, i + reach)):
                 continue
             first, last = (body(poses[j], frames[j].shape, sigma) if poses[j] else None for j in (i, i + reach))
             d, later, ok = change(frames, fw, bw, i, reach, sigma, first, last)
