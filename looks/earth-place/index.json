@@ -1,9 +1,17 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T11:54:10.793Z",
+ "pushed": "2026-11-24T12:12:00.422Z",
  "head": "268def8c6fa551f6ae327c296003b1591f7957cc",
- "note": "walk in texels at frame 2100 flat (textures 48, buffers 30, programs 10); the step at T read on frames; patch waits for the slot",
+ "note": "12:12 texel walk of 495 frames on one page flat in every count, tail of four finals running; third commit patch waits for the render slot",
  "looks": [
+  {
+   "time": "2026-11-24T12:11:54.879Z",
+   "file": "20261124121154879-note-r2-limb-zoom.jpg",
+   "source": "../../../../tmp/gl/s9/r2-limb-zoom.jpg",
+   "kind": "note",
+   "label": "second named tree, draft rate 2, limb zoom 1918 globe side against 1920 surface side: the step at T sits in the air's inner rim",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T11:54:09.864Z",
    "file": "20261124115409864-note-r2-limb-zoom.jpg",
@@ -90,14 +98,6 @@
    "source": "../../../../tmp/gl/s8/rise-r2-b.jpg",
    "kind": "note",
    "label": "rise 2118 to 2126 this tree",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T10:37:15.038Z",
-   "file": "20261124103715038-note-rise-r2-a.jpg",
-   "source": "../../../../tmp/gl/s8/rise-r2-a.jpg",
-   "kind": "note",
-   "label": "rise 2106 to 2117 this tree",
    "stop": "earth"
   }
  ]
