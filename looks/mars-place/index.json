@@ -1,9 +1,55 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T09:08:15.993Z",
- "head": "85cadf1c78e27d682ad14c323c54398c8343f551",
- "note": "plan F: every frame round both changes of view, the close view's own ground on the globe side by height",
+ "pushed": "2026-11-24T09:27:16.600Z",
+ "head": "0642b538e6211be58f963d2ae2a8272dcac5f9a3",
+ "note": "plan F: side difference at T 0.057 and 0.072 (was 17.9 and 19.5); the close ground comes in by height over 2464 to 2472 and leaves over 2687 to 2693",
  "looks": [
+  {
+   "time": "2026-11-24T09:26:52.104Z",
+   "file": "20261124092652104-compare-mars-dive-sides.jpg",
+   "source": "out/work/handover/mars-dive-sides.png",
+   "kind": "compare",
+   "label": "mars dive, both sides at T (frame 2477) and their difference times 8",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2477,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T09:25:45.665Z",
+   "file": "20261124092545665-note-sides44-dive.jpg",
+   "source": "out/work/place/see/sides44-dive.jpg",
+   "kind": "note",
+   "label": "sides tool at T of the dive, draft: close side, globe side, difference times 8 (mean 0.057, 99th percentile 1)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T09:25:45.051Z",
+   "file": "20261124092545051-note-F-band-rise.jpg",
+   "source": "out/work/place/see/F-band-rise.jpg",
+   "kind": "note",
+   "label": "plan F, rise 2688, 2691, 2694, 2697 draft: the close ground leaving by height (share 0.92, 0.35, 0, 0)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T09:25:44.400Z",
+   "file": "20261124092544400-note-F-band-dive.jpg",
+   "source": "out/work/place/see/F-band-dive.jpg",
+   "kind": "note",
+   "label": "plan F, dive 2460, 2463, 2466 draft: the close ground coming in by height (share 0, 0.1, 0.35); last tile 2467 before the order cure, with the dark strip at the limb that the cure took out",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T09:09:05.169Z",
+   "file": "20261124090905169-compare-mars-rise-sides.jpg",
+   "source": "out/work/handover/mars-rise-sides.png",
+   "kind": "compare",
+   "label": "mars rise, both sides at T (frame 2681) and their difference times 8",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "frame": 2681,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-24T09:08:14.915Z",
    "file": "20261124090814915-note-F-rise-b.jpg",
@@ -27,49 +73,6 @@
    "kind": "note",
    "label": "plan F, dive 2475 to 2481 draft, every frame: 2476 is the globe side with the close view's own ground, 2477 the close side",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T08:50:43.836Z",
-   "file": "20261124085043836-note-S1.jpg",
-   "source": "out/work/place/see/S1.jpg",
-   "kind": "note",
-   "label": "plan F test, rise 2682 to 2691 with the close ground all there: it fills the frame to about 2685",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T08:50:43.204Z",
-   "file": "20261124085043204-note-R1.jpg",
-   "source": "out/work/place/see/R1.jpg",
-   "kind": "note",
-   "label": "plan F test: close ground all there from 2440 to 2476 on the globe side (a test band, not committed): the fan and its borders from above",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T08:41:23.998Z",
-   "file": "20261124084123998-note-Q1.jpg",
-   "source": "out/work/place/see/Q1.jpg",
-   "kind": "note",
-   "label": "Mars plan F: globe side frame 2476 with the close view's own ground in its scene (left) beside the close side 2477 (right), draft; Q1",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T08:41:23.443Z",
-   "file": "20261124084123443-note-P1.jpg",
-   "source": "out/work/place/see/P1.jpg",
-   "kind": "note",
-   "label": "Mars plan F: globe side frame 2476 with the close view's own ground in its scene (left) beside the close side 2477 (right), draft; P1",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T08:19:25.758Z",
-   "file": "20261124081925758-compare-mars-rise-sides.jpg",
-   "source": "out/work/handover/mars-rise-sides.png",
-   "kind": "compare",
-   "label": "mars rise, both sides at T (frame 2681) and their difference times 8",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "frame": 2681,
-   "tier": "draft"
   }
  ]
 }
