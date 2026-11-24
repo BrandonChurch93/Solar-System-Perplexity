@@ -241,9 +241,21 @@ describe('the record a measure takes up', () => {
     writeFileSync(f, readFileSync(f, 'utf8') + '{"g13":{"frame":1261,"fract')
     const t = takeUp<{ frame: number }, { frame: number; tier: string }>(f, key)
     expect([...t.g13.keys()]).toEqual([1260])
-    expect(t.said).toContain('its last line was torn and is dropped')
+    expect(t.said).toContain('; 1 torn line(s) dropped')
     note(f, { g13: row(1261) })
     expect([...takeUp<{ frame: number }, { frame: number; tier: string }>(f, key).g13.keys()]).toEqual([1260, 1261])
+  })
+
+  it('drops a torn line in the middle and a line that is no frame, and keeps the whole lines after them', () => {
+    const f = file()
+    takeUp(f, key)
+    note(f, { g13: row(1260) })
+    writeFileSync(f, readFileSync(f, 'utf8') + '{"g13":{"frame":1261,"fract{"g13":{"frame":1262,"fraction":1}}\n{"other":1}\n')
+    note(f, { g13: row(1263) })
+    const t = takeUp<{ frame: number }, { frame: number; tier: string }>(f, key)
+    expect([...t.g13.keys()]).toEqual([1260, 1263])
+    expect(t.said).toContain('2 texel frame(s) and 0 judged final(s) done; 2 torn line(s) dropped')
+    expect(readFileSync(f, 'utf8').split('\n')).toHaveLength(4)
   })
 
   it('does not take up a record when told to start fresh, or one with no readable first line', () => {

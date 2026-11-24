@@ -130,7 +130,7 @@ function differs(a: RecordKey, b: RecordKey): string[] {
 }
 
 // The record of a run: its first line is what the run was drawn with, each further line one finished frame. A record whose first line
-// is not this run's to the letter is not taken up; a last line torn by the run's end is dropped.
+// is not this run's to the letter is not taken up; a line torn by the run's end is dropped, a whole line is a whole frame.
 export function takeUp<G extends { frame: number }, F extends { frame: number; tier: string }>(file: string, key: RecordKey, fresh = false): Taken<G, F> {
   const none = (said: string): Taken<G, F> => {
     writeFileSync(file, JSON.stringify({ key }) + '\n')
@@ -159,18 +159,18 @@ export function takeUp<G extends { frame: number }, F extends { frame: number; t
       row = JSON.parse(line) as { g13?: G; final?: F }
     } catch {
       torn++
-      break
+      continue
     }
     if (row.g13 && Number.isInteger(row.g13.frame)) g13.set(row.g13.frame, row.g13)
     else if (row.final && Number.isInteger(row.final.frame)) finals.set(row.final.tier + ' ' + row.final.frame, row.final)
     else {
       torn++
-      break
+      continue
     }
     good.push(line)
   }
   writeFileSync(file, good.join('\n') + '\n')
-  return { g13, finals, said: 'took up the record of an earlier run of this build: ' + g13.size + ' texel frame(s) and ' + finals.size + ' judged final(s) done' + (torn ? '; its last line was torn and is dropped' : '') }
+  return { g13, finals, said: 'took up the record of an earlier run of this build: ' + g13.size + ' texel frame(s) and ' + finals.size + ' judged final(s) done' + (torn ? '; ' + torn + ' torn line(s) dropped' : '') }
 }
 
 export function note(file: string, row: Record<string, unknown>): void {

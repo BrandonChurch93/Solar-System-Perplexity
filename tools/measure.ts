@@ -128,6 +128,12 @@ const keeper = new Keeper(first, {
     await Promise.resolve()
   },
 })
+for (const [signal, code] of [['SIGTERM', 143], ['SIGHUP', 129]] as const) {
+  process.on(signal, () => {
+    console.error('measure: stopped by ' + signal)
+    process.exit(code)
+  })
+}
 console.log('measure ' + stop + ': a lost page is replaced at most ' + maxRestarts + ' time(s) in this run (--restarts), ' + (pageFrames > 0 ? 'a fresh page every ' + pageFrames + ' frames (--page-frames)' : 'no fresh page by count (--page-frames 0)'))
 const texels = (s: typeof first): Promise<void> => s.setDiagnostic('texels')
 const nograin = (s: typeof first): Promise<void> => s.setDiagnostic('nograin')
