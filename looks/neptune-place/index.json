@@ -1,9 +1,17 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T01:41:33.960Z",
+ "pushed": "2026-11-24T01:48:24.067Z",
  "head": "85312d1ba89d4fbb4811dc70dc8f5b02871b7c43",
- "note": "dive 4707 to 4769 every frame with the layout fitted to the map (85312d1b), 4860 beside approved",
+ "note": "rise sample on 85312d1b",
  "looks": [
+  {
+   "time": "2026-11-24T01:48:23.481Z",
+   "file": "20261124014823481-note-v-r1.jpg",
+   "source": "../../../../tmp/v-r1.jpg",
+   "kind": "note",
+   "label": "Rise on commit 85312d1b, a sample of twelve frames 4950 to 5006, preview draft: one layout from the surface view up to the planet; every frame follows with the next commit",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T01:41:33.419Z",
    "file": "20261124014133419-note-d-L4.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/d-L1.jpg",
    "kind": "note",
    "label": "UNFINISHED, layout fit first try (uncommitted): 4860 preview draft beside the approved image. The dark zone is now the oval of the map's vortex, the pale deck begins at its far rim; new: cirrus band on the far rim (at the horizon) and the bow west of the storm (a stub, being reworked)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T01:07:57.260Z",
-   "file": "20261124010757260-note-v-4707ab.jpg",
-   "source": "../../../../tmp/v-4707ab.jpg",
-   "kind": "note",
-   "label": "4707 master draft, left before step 2 (31c1000c), right step 2 (9087f008): plates off, grade by height, the Sun's flare of the sky plate now in frame at the right edge",
    "stop": "neptune"
   }
  ]
