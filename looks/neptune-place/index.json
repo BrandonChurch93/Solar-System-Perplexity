@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T23:13:07.765Z",
+ "pushed": "2026-11-24T23:31:46.907Z",
  "head": "6d271fc4044f6e7891677cb9a78f6d329ad4a811",
- "note": "23:15 web cure named; one field trial: map as the deck at every height, scene detail and objects on it by place",
+ "note": "one field by place alone, place moved 2.3 to 5.0; 4860 beside approved in both sets; working tree, not named",
  "looks": [
+  {
+   "time": "2026-11-24T23:31:46.315Z",
+   "file": "20261124233146315-note-place5-4605.jpg",
+   "source": "out/work/nep/weave/place5-4605.png",
+   "kind": "note",
+   "label": "4605 at 1 to 1: hero, head, one field at place 5.0 full set, web set; still foreign: veil wedge, pale lift on the dark side, the pale spiral",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T23:31:45.730Z",
+   "file": "20261124233145730-note-place5-4860.jpg",
+   "source": "out/work/nep/weave/place5-4860.jpg",
+   "kind": "note",
+   "label": "4860 one field by place beside the approved close: head, place 5.0 full and web, place 1.2 and 3.5; G17 1.462 and 1.124 full; 40 s a draft frame; working tree",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T23:13:06.508Z",
    "file": "20261124231306508-note-obj-4605-11.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/nep/weave/wf3-4605-storm.jpg",
    "kind": "note",
    "label": "4605 storm at 1 to 1: web as on main | web cured | full set",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T22:26:00.754Z",
-   "file": "20261124222600754-note-wf3-4605.jpg",
-   "source": "out/work/nep/weave/wf3-4605.jpg",
-   "kind": "note",
-   "label": "4605 as the player draws it (web set, draft, 1920): as on main | web patch levels rewritten | full set. The black globe was my web files",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T22:26:00.192Z",
-   "file": "20261124222600192-note-one-4860.jpg",
-   "source": "out/work/nep/weave/one-4860.jpg",
-   "kind": "note",
-   "label": "4860: approved | main (G17 1.382 / 0.741) | trial, the globe map alone down to the foot (not kept). Draft, preview, 20 s a frame",
    "stop": "neptune"
   }
  ]
