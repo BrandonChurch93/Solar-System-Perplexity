@@ -1,9 +1,130 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-24T16:37:03.810Z",
+ "pushed": "2026-11-24T16:53:17.680Z",
  "head": "b238e1cadf349d6dbcf848d3c898759a828b9d5e",
- "note": "main 4752aa1e: judged 4137 and 4436 against plain main, 4290 beside approved; proofs still run",
+ "note": "main 4752aa1e: handover dive frames of the merge b238e1ca while the proofs run; storm comes in 4116 to 4124 by distance, still red",
  "looks": [
+  {
+   "time": "2026-11-24T16:53:16.551Z",
+   "file": "20261124165316551-note-hd-e.jpg",
+   "source": "../../../../tmp/tf/hd-e.jpg",
+   "kind": "note",
+   "label": "dive 4170 to 4184, every frame, draft, b238e1ca",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T16:53:15.361Z",
+   "file": "20261124165315361-note-hd-d.jpg",
+   "source": "../../../../tmp/tf/hd-d.jpg",
+   "kind": "note",
+   "label": "dive 4155 to 4169, every frame, draft, b238e1ca: the white of the tops thins by view angle, no step",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T16:53:15.014Z",
+   "file": "20261124165315014-compare-uranus-rise-sides.jpg",
+   "source": "out/work/handover/uranus-rise-sides.png",
+   "kind": "compare",
+   "label": "uranus rise, both sides at T (frame 4391) and their difference times 8",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4391,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T16:53:14.625Z",
+   "file": "20261124165314625-note-hd-a.jpg",
+   "source": "../../../../tmp/tf/hd-a.jpg",
+   "kind": "note",
+   "label": "dive 4110 to 4124, every frame, draft, b238e1ca on main 4752aa1e: the storm comes in on the globe over 4116 to 4124 with the plates share by distance (named red, not cured yet)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T16:52:53.291Z",
+   "file": "20261124165253291-sheet-uranus-dive-top.jpg",
+   "source": "out/work/handover/uranus-dive-top.png",
+   "kind": "sheet",
+   "label": "uranus dive, the globe side alone from straight above the place, 12 frames from the far end to T (frame 4186), place picture off, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "first": 4110,
+   "last": 4186,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T16:51:57.342Z",
+   "file": "20261124165157342-sheet-uranus-dive-draft-after.jpg",
+   "source": "out/work/handover/uranus-dive-draft-after.png",
+   "kind": "sheet",
+   "label": "uranus dive, every frame 4187 to 4198 (after T, frame 4186), draft tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "first": 4187,
+   "last": 4198,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T16:51:55.553Z",
+   "file": "20261124165155553-sheet-uranus-dive-draft-before.jpg",
+   "source": "out/work/handover/uranus-dive-draft-before.png",
+   "kind": "sheet",
+   "label": "uranus dive, every frame 4174 to 4185 (before T, frame 4186), draft tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "first": 4174,
+   "last": 4185,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T16:51:53.645Z",
+   "file": "20261124165153645-sheet-uranus-dive-draft-across.jpg",
+   "source": "out/work/handover/uranus-dive-draft-across.png",
+   "kind": "sheet",
+   "label": "uranus dive, every frame 4180 to 4191 (across T, frame 4186), draft tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "first": 4180,
+   "last": 4191,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T16:51:51.930Z",
+   "file": "20261124165151930-compare-uranus-dive-step-in-place.jpg",
+   "source": "out/work/handover/uranus-dive-step-in-place.png",
+   "kind": "compare",
+   "label": "uranus dive, the largest step of the level in place (2.77): frame 4173, frame 4174, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4174
+  },
+  {
+   "time": "2026-11-24T16:39:09.248Z",
+   "file": "20261124163909248-frame-d4454.jpg",
+   "source": "out/work/u/k4/d4454.png",
+   "kind": "frame",
+   "label": "uranus.rise frame 4454, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4454,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
+  {
+   "time": "2026-11-24T16:38:07.352Z",
+   "file": "20261124163807352-frame-d4126.jpg",
+   "source": "out/work/u/k4/d4126.png",
+   "kind": "frame",
+   "label": "uranus.dive frame 4126, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4126,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
   {
    "time": "2026-11-24T16:37:02.853Z",
    "file": "20261124163702853-note-4290-three.jpg",
@@ -27,34 +148,6 @@
    "kind": "note",
    "label": "judged 4137 final on main 4752aa1e: top plain main, bottom the tops as a light of the ground (b238e1ca, not pushed yet)",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T16:36:29.183Z",
-   "file": "20261124163629183-frame-main-f4436.jpg",
-   "source": "out/work/u/k4/main-f4436.png",
-   "kind": "frame",
-   "label": "uranus.rise frame 4436, final tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4436,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
-  },
-  {
-   "time": "2026-11-24T16:32:18.476Z",
-   "file": "20261124163218476-frame-main-f4137.jpg",
-   "source": "out/work/u/k4/main-f4137.png",
-   "kind": "frame",
-   "label": "uranus.dive frame 4137, final tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4137,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
   },
   {
    "time": "2026-11-24T16:24:44.877Z",
@@ -194,90 +287,6 @@
    "source": "../../../../tmp/k1-4199-cmp.png",
    "kind": "note",
    "label": "4199 draft, rejected first form (term taken off the ground): dark holes, main 2bc36ce6",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T14:30:20.923Z",
-   "file": "20261124143020923-note-k2-4404-cmp.jpg",
-   "source": "../../../../tmp/k2-4404-cmp.png",
-   "kind": "note",
-   "label": "4404 draft, before left, tops as a light of the ground right, main 2bc36ce6, uncommitted",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T14:30:20.188Z",
-   "file": "20261124143020188-note-k2-4168-cmp.jpg",
-   "source": "../../../../tmp/k2-4168-cmp.png",
-   "kind": "note",
-   "label": "4168 draft, before (cb7efafc) left, tops as a light of the ground right, main 2bc36ce6, uncommitted",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T13:44:54.495Z",
-   "file": "20261124134454495-note-pattern-rows.jpg",
-   "source": "../../../../tmp/tm/pattern-rows.png",
-   "kind": "note",
-   "label": "Uranus third NAMED cb7efafc (main 2bc36ce6): pattern rows of the dive and the rise against the machines' rows of the second NAMED (MAIL 666). Grey: machines on b5874a22. Blue: this commit by the judge before main 62ff7be6. Red: this commit by the judge on main. Solid rate 2 (dive 4134 to 4191, rise 4380 to 4412), dotted whole frames at rate 1. Limit 0.45.",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T13:23:41.315Z",
-   "file": "20261124132341315-note-pattern-rows.jpg",
-   "source": "../../../../tmp/tm/pattern-rows.png",
-   "kind": "note",
-   "label": "Uranus third commit, pattern rows of the dive and the rise against the machines' rows of the second NAMED (MAIL 666). Grey: machines on b5874a22. Blue: this commit by the judge before main 62ff7be6. Red: this commit by the judge on main. Solid rate 2, dotted whole frames at rate 1. Drafts of 0ac434b6 and 1527ad8d; rise 4412 + 1/2 to 4420 drawn on the engine tree 9cb93f98 (main c8888d57). Limit 0.45.",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T12:17:20.710Z",
-   "file": "20261124121720710-note-f4436-three.jpg",
-   "source": "../../../../tmp/tm/f4436-three.jpg",
-   "kind": "note",
-   "label": "judged 4436 final: second NAMED b5874a22, third commit (drawn on f403f27b = 0ac434b6 merged with main 36970ce3), difference times 8: only the place changes (0.49 percent of the pixels, mean 0.013 of 255)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T12:10:59.443Z",
-   "file": "20261124121059443-note-f4137-three.jpg",
-   "source": "../../../../tmp/tm/f4137-three.jpg",
-   "kind": "note",
-   "label": "judged 4137 final: second NAMED b5874a22, third commit (drawn on f403f27b = 0ac434b6 merged with main 36970ce3), difference times 8: only the place changes (1.48 percent of the pixels, mean 0.049 of 255)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T12:02:00.260Z",
-   "file": "20261124120200260-job-frame-04390.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "uranus.rise frame 4390, draft tier, texels view, from the running g13 job",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4390,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "g13"
-  },
-  {
-   "time": "2026-11-24T11:51:54.696Z",
-   "file": "20261124115154696-job-frame-04110.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "uranus.dive frame 4110, draft tier, texels view, from the running g13 job",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4110,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "g13"
-  },
-  {
-   "time": "2026-11-24T11:47:22.868Z",
-   "file": "20261124114722868-note-pair4.jpg",
-   "source": "../../../../tmp/tm/pair4.jpg",
-   "kind": "note",
-   "label": "pattern pairs on 0ac434b6, draft: row 1 rise 4404 against 4412 as shipped (flows 1.24, cameras 1.14), row 2 the same with the white tops off (0.42, 0.26), row 3 dive 4158 against 4166 as shipped (1.16, 1.59), row 4 the same with the tops off (1.04, 0.39); columns: frame, later frame carried back by the flows, by the true cameras, pattern by the flows, by the cameras (main c2c49133)",
    "stop": "uranus"
   }
  ]
