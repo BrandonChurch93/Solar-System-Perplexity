@@ -7,7 +7,7 @@ import { ramp, smooth } from '../../director/rig'
 import { Deck, Glow } from './deck'
 import deckJson from './deck.json'
 import deckRingsJson from './deck-rings.json'
-import { Globe } from './globe'
+import { Globe, TOP_PATH } from './globe'
 import { Halo } from './halo'
 import * as look from './look'
 import { Moon } from './moons'
@@ -54,9 +54,11 @@ export const createSet: SetFactory = async (ctx) => {
   const plateTextures: THREE.Texture[] = []
   for (const level of platesJson.levels) plateTextures.push(await ctx.texture(base + level.file, { srgb: false, anisotropy: 16 }))
   const globeTurn = new THREE.Quaternion().fromArray(fit.globe.quaternion)
+  const flight = plan.seg.terrain.end - plan.seg.terrain.start
+  const topPath = Array.from({ length: TOP_PATH }, (_, i) => plan.terrain(flight * i / (TOP_PATH - 1)).position.clone())
   const place = {
-    textures: plateTextures, halfTans: platesJson.levels.map((l) => l.halfTan), frame: platesJson, rot: plan.terrainFrame.clone().invert().multiply(globeTurn), field: await ctx.dataTexture(base + platesJson.field.file, platesJson.field.size, platesJson.field.size, 4), clockRef: platesJson.clockRef, aMax: platesJson.aMax, steep: look.place.steep, relitSoft: look.place.light.soft, topLight: look.place.tops, feather: platesJson.feather,
-    deck: { centre: deckJson.centre, radius: deckJson.radius, f0: deckJson.f0, r0: deckJson.r0, flow: look.deck.flow, flowAngle: deckJson.flowAngle, light: deckLight, lightSize: deckJson.lightSize, psiMax: deckJson.psiMax },
+    textures: plateTextures, halfTans: platesJson.levels.map((l) => l.halfTan), frame: platesJson, rot: plan.terrainFrame.clone().invert().multiply(globeTurn), field: await ctx.dataTexture(base + platesJson.field.file, platesJson.field.size, platesJson.field.size, 4), clockRef: platesJson.clockRef, aMax: platesJson.aMax, steep: look.place.steep, relitSoft: look.place.light.soft, topLight: { ...look.place.tops, path: topPath }, feather: platesJson.feather,
+    deck: { centre: deckJson.centre, radius: deckJson.radius, f0: deckJson.f0, r0: deckJson.r0, sun: deckJson.sun, flow: look.deck.flow, flowAngle: deckJson.flowAngle, light: deckLight, lightSize: deckJson.lightSize, psiMax: deckJson.psiMax },
   }
   const globe = new Globe({ map, cloud, shadow, light, shade, patches, face, place, ...look.globe })
   globe.mesh.quaternion.copy(globeTurn)
@@ -152,6 +154,7 @@ export const createSet: SetFactory = async (ctx) => {
   const skyTurn = new THREE.Quaternion()
 
   const sun = new THREE.Vector3()
+  const topSun = new THREE.Vector3()
   const turn = new THREE.Quaternion()
   const placeEye = (): void => {
     world.updateMatrix()
@@ -192,6 +195,7 @@ export const createSet: SetFactory = async (ctx) => {
       orbit.visible = inOrbit && state.weight > 0
       const gain = 1 / shot.post.exposure
       const aspect = view.format.width / view.format.height
+      globe.tops(topSun.copy(plan.lightDir).applyQuaternion(plan.deckFrame(state.time).invert()))
       terrain.visible = !inOrbit
       if (!inOrbit) {
         placeEye()
@@ -235,9 +239,8 @@ export const createSet: SetFactory = async (ctx) => {
       steep[1] = look.place.steep[1] + (look.place.steepLow[1] - look.place.steep[1]) * flat
       if (low) {
         const from = look.place.fixedEye ? eyes[kind as 'dive' | 'rise'] : eyeAt(kind as 'dive' | 'rise', state.time)
-        const over = from.length() - 1
-        globe.place(relit ? reach(look.place.light.up, altitude) : 0, relit ? flat : 0, plated, state.time - terrainMid, from, 1 - reach(look.place.tops.span, over), steep)
-      } else globe.place(0, 0, 0, state.time - terrainMid, eyes.dive, 0, steep)
+        globe.place(relit ? reach(look.place.light.up, altitude) : 0, relit ? flat : 0, plated, state.time - terrainMid, from, steep)
+      } else globe.place(0, 0, 0, state.time - terrainMid, eyes.dive, steep)
       globe.face(left ? look.face.weight : 0)
       halo.update(sun, gain * state.weight * (1 + (look.near.halo - 1) * near) * (1 - sky), plan.spin(state.time), clock)
       placeEye()
