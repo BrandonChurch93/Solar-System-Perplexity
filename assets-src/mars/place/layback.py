@@ -23,6 +23,8 @@ ap.add_argument('--image', default='', help='another picture to lay back instead
 ap.add_argument('--cover', default='')
 ap.add_argument('--frame-space', action='store_true', help='the picture is a film frame (1 px per frame px, no margins)')
 ap.add_argument('--frame', type=int, default=-1, help='lay back from the film camera of this frame instead of the twin')
+ap.add_argument('--heights', default='', help='PREFIX of country.py and heights.py for this width (PREFIX c and q): every texel is the ground at its true height, so the picture lands at its true place; alpha only where the picture eye saw the ground')
+ap.add_argument('--agree', type=float, default=0.0, help='with --heights: alpha falls to 0 where the picture read through the twin differs by more than this from the colour the mesh carries there (the twin does not see that ground); 0 is off')
 a = ap.parse_args()
 
 g = geom.load(a.geometry)
@@ -53,8 +55,17 @@ out = np.zeros((size, size, 4), np.float32)
 stretch = np.full((size, size), np.inf, np.float32)
 lod_map = np.zeros((size, size), np.float32)
 d = geom.patch_dirs(a.width_deg, size)
-fx, fy, front = cam.project(d)
 cosv, _ = cam.seen(d)
+eye_saw = None
+if a.heights:
+    folder, _, name = a.heights.rpartition('/')
+    made = np.load('%s/c%s-height.npy' % (folder, name))
+    mesh = np.load('%s/q%s-height.npy' % (folder, name))
+    eye_saw = cv2.resize(np.isfinite(mesh).astype(np.float32), (size, size), interpolation=cv2.INTER_LINEAR) > 0.999
+    h = cv2.resize(made.astype(np.float32), (size, size), interpolation=cv2.INTER_LINEAR)
+    d = d * (1 + h)[..., None]
+    del made, mesh, h
+fx, fy, front = cam.project(d)
 px, py = geom.picture_xy(layout, fx, fy)
 del d
 ok = front & (cosv > 0)
@@ -86,6 +97,14 @@ alpha = out[..., 3]
 rgb = out[..., :3] / np.maximum(alpha[..., None], 1e-6)
 inside = (px >= 0.5) & (px <= layout['width'] - 0.5) & (py >= 0.5) & (py <= layout['height'] - 0.5)
 alpha = alpha * ok * inside
+if eye_saw is not None:
+    alpha = alpha * eye_saw
+    if a.agree > 0:
+        own = cv2.imread('%s/q%s-colour.png' % (folder, name), cv2.IMREAD_COLOR).astype(np.float32) / 255
+        own = cv2.resize(own, (size, size), interpolation=cv2.INTER_LINEAR)
+        apart = np.abs(cv2.GaussianBlur(rgb, (0, 0), 2) - cv2.GaussianBlur(own, (0, 0), 2)).max(axis=2)
+        np.save(a.out + '-apart.npy', apart.astype(np.float32))
+        alpha = alpha * (apart < a.agree)
 rgba = np.dstack([np.clip(rgb, 0, 1), alpha])
 cv2.imwrite(a.out + '.png', np.round(rgba * 65535).astype(np.uint16))
 np.save(a.out + '-stretch.npy', stretch)

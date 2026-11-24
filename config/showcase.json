@@ -172,7 +172,7 @@
     "carry": {"power": 2, "stepsPerFrame": 8},
     "skyLift": {"power": 1},
     "pace": {"rise": 0.4, "fall": 0.4, "corner": 0.2},
-    "ownPath": ["mercury", "earth", "jupiter", "saturn", "uranus"],
+    "ownPath": ["mercury", "earth", "saturn", "uranus"],
     "maxBlurPx": 14,
     "blurEaseFrames": 12,
     "minShutter": 0.5,
