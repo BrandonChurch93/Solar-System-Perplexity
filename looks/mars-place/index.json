@@ -1,9 +1,31 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T09:39:27.264Z",
- "head": "0642b538e6211be58f963d2ae2a8272dcac5f9a3",
- "note": "second commit state B: sky of the close view by eye height, dive and rise through the band, draft",
+ "pushed": "2026-11-24T10:06:12.069Z",
+ "head": "4f3e93deb914c576c06f8959cab33db3b77c8091",
+ "note": "sky by height commit 4f3e93de: sides at T run again, dive mean 0.057 p99 1, rise 0.072 p99 1",
  "looks": [
+  {
+   "time": "2026-11-24T10:05:34.390Z",
+   "file": "20261124100534390-compare-mars-rise-sides.jpg",
+   "source": "out/work/handover/mars-rise-sides.png",
+   "kind": "compare",
+   "label": "mars rise, both sides at T (frame 2681) and their difference times 8",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "frame": 2681,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T10:05:02.631Z",
+   "file": "20261124100502631-compare-mars-dive-sides.jpg",
+   "source": "out/work/handover/mars-dive-sides.png",
+   "kind": "compare",
+   "label": "mars dive, both sides at T (frame 2477) and their difference times 8",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2477,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-24T09:39:26.091Z",
    "file": "20261124093926091-note-K-d.jpg",
@@ -35,28 +57,6 @@
    "kind": "note",
    "label": "sky by height, dive 2456 2462 2465 2467, draft",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T09:27:24.832Z",
-   "file": "20261124092724832-compare-mars-rise-sides.jpg",
-   "source": "out/work/handover/mars-rise-sides.png",
-   "kind": "compare",
-   "label": "mars rise, both sides at T (frame 2681) and their difference times 8",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "frame": 2681,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T09:26:52.104Z",
-   "file": "20261124092652104-compare-mars-dive-sides.jpg",
-   "source": "out/work/handover/mars-dive-sides.png",
-   "kind": "compare",
-   "label": "mars dive, both sides at T (frame 2477) and their difference times 8",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2477,
-   "tier": "draft"
   },
   {
    "time": "2026-11-24T09:25:45.665Z",
