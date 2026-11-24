@@ -1,9 +1,49 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T08:51:47.105Z",
+ "pushed": "2026-11-24T09:34:11.820Z",
  "head": "e3bf5894927d289b35f6bf1deb45f3173f41c93e",
- "note": "second commit started: the exchange of plate and lay back measured and mapped, cure in work",
+ "note": "level check: two pairs over on the named tree, cured in the files (one ground, strip); pattern in the frames still red, cause in the veil; proofs running",
  "looks": [
+  {
+   "time": "2026-11-24T09:34:11.157Z",
+   "file": "20261124093411157-note-lv-under-fullog.jpg",
+   "source": "../../../../tmp/gl/s8/lv-under-fullog.png",
+   "kind": "note",
+   "label": "level check after the cure: levels 96, 48, 24, all under 0.45",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T09:34:10.480Z",
+   "file": "20261124093410480-note-lv-low-full.jpg",
+   "source": "../../../../tmp/gl/s8/lv-low-full.png",
+   "kind": "note",
+   "label": "level check, named tree: plate against the low look, 1.27 over",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T09:34:09.759Z",
+   "file": "20261124093409759-note-kb1-pmap.jpg",
+   "source": "../../../../tmp/gl/s8/kb1-pmap.jpg",
+   "kind": "note",
+   "label": "trial b1, where the pattern still changes 1882 to 1890 (far field under the limb)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T09:34:08.550Z",
+   "file": "20261124093408550-note-v0-b1.jpg",
+   "source": "../../../../tmp/gl/s8/v0-b1.jpg",
+   "kind": "note",
+   "label": "one ground in the files against trial b1, 1870 and 1890",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T09:34:07.320Z",
+   "file": "20261124093407320-note-vA-above.jpg",
+   "source": "../../../../tmp/gl/s8/vA-above.jpg",
+   "kind": "note",
+   "label": "trial vA from above 1864 to 1876: ground on the globe at every angle, dark blob and blue wedge, not taken",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T08:51:36.035Z",
    "file": "20261124085136035-note-pl-low-700.jpg",
@@ -58,46 +98,6 @@
    "source": "../../../../tmp/gl/s7/judged.jpg",
    "kind": "note",
    "label": "new path, judged 1857 and 2156 at draft (new frames)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T08:02:42.861Z",
-   "file": "20261124080242861-note-rise-e.jpg",
-   "source": "../../../../tmp/gl/s7/rise-e.jpg",
-   "kind": "note",
-   "label": "new path, rise every frame 2145 to 2174, draft",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T08:02:42.140Z",
-   "file": "20261124080242140-note-sky-dive.jpg",
-   "source": "../../../../tmp/gl/s7/sky-dive.jpg",
-   "kind": "note",
-   "label": "new path, dive: upper left corner every second frame 1866 to 1888 (stars thin out in the frame)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T08:02:41.163Z",
-   "file": "20261124080241163-note-sky-rise.jpg",
-   "source": "../../../../tmp/gl/s7/sky-rise.jpg",
-   "kind": "note",
-   "label": "new path, rise: upper left corner every frame 2124 to 2141 (stars and the star band come up in the frame, by the eye's height)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T07:58:25.028Z",
-   "file": "20261124075825028-note-bend-a.jpg",
-   "source": "../../../../tmp/gl/s7/bend-a.jpg",
-   "kind": "note",
-   "label": "surface view with the engine's bend: odd frames 2063 to 2089, 2090, 2095, draft",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T07:58:24.434Z",
-   "file": "20261124075824434-note-rise-d.jpg",
-   "source": "../../../../tmp/gl/s7/rise-d.jpg",
-   "kind": "note",
-   "label": "new path, rise every frame 2133 to 2145, then 2150 2155 2160, draft",
    "stop": "earth"
   }
  ]
