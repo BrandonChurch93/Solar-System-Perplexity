@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { frameUniform } from '../../core/frame'
 import { diagUniform } from '../../diagnostics/diag'
 
 export interface RingLine {
@@ -69,6 +70,7 @@ uniform vec2 uBack;
 uniform float uShadowFloor;
 uniform float uGain;
 uniform float uFilter;
+uniform float uFrame;
 uniform vec2 uNearArc;
 uniform vec2 uAir;
 uniform float uCutSky;
@@ -91,7 +93,7 @@ float away(vec3 v) {
 }
 void main() {
   float fw = length(vec2(dFdx(vS), dFdy(vS)));
-  float sig = sqrt(uSigma * uSigma + fw * fw * uFilter);
+  float sig = sqrt(uSigma * uSigma + fw * fw * uFilter * uFrame * uFrame);
   float line = exp(-0.5 * vS * vS / (sig * sig)) * uSigma / sig;
   vec3 t = normalize(vTan);
   vec3 v = normalize(uCamL - vLocal);
@@ -318,7 +320,7 @@ export class Rings {
         uSigma: { value: look.sigma }, uColor: { value: new THREE.Vector3().fromArray(look.color) },
         uSunL: { value: new THREE.Vector3(1, 0, 0) }, uCamL: { value: new THREE.Vector3(0, 0, 5) }, uHoldCamL: { value: holdCamera.clone() },
         uGlint: { value: new THREE.Vector2().fromArray(look.glint) }, uForward: { value: new THREE.Vector2().fromArray(look.forward) }, uBack: { value: new THREE.Vector2().fromArray(look.back) },
-        uShadowFloor: { value: look.shadowFloor }, uGain: { value: 1 }, uDiag: diagUniform, uFilter: { value: look.filter },
+        uShadowFloor: { value: look.shadowFloor }, uGain: { value: 1 }, uDiag: diagUniform, uFilter: { value: look.filter }, uFrame: frameUniform,
         uNearArc: { value: new THREE.Vector2().fromArray(far ? look.near : [0, 0]) }, uAir: { value: new THREE.Vector2().fromArray(look.air) }, uCutSky: { value: look.cutSky },
       },
       side: THREE.DoubleSide,

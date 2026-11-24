@@ -1,0 +1,4 @@
+{
+  "note": "Proof switches, false in every commit. glowAlone draws the glow shells alone on a black sky: the glow input of the hold sky patch (assets-src/jupiter/RECIPE.md, hold sky, step 9).",
+  "glowAlone": false
+}
