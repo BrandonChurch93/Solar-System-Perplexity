@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T10:37:21.919Z",
- "head": "b0a84557d5e645f4a182ec8b88dbdab37eeec4d8",
- "note": "second named tree: rise frames 2106 to 2148 seen; plate still reads as laid on the map 2121 to 2136; memory walk in texel view running",
+ "pushed": "2026-11-24T11:03:13.906Z",
+ "head": "f86b64b4a6d6087907ab07ba8dcdaa0b26d2c1ca",
+ "note": "memory: short run of the measure tool's order on one page passed (21 texel frames, four finals, no crash); full 495 running; far zone of the plate against the close picture",
  "looks": [
+  {
+   "time": "2026-11-24T11:03:12.690Z",
+   "file": "20261124110312690-note-dive-high.jpg",
+   "source": "../../../../tmp/gl/s8/dive-high.jpg",
+   "kind": "note",
+   "label": "named tree, dive 1840, 1848, 1856, 1864 at draft",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T11:03:11.336Z",
+   "file": "20261124110311336-note-plates.jpg",
+   "source": "../../../../tmp/gl/s8/plates.jpg",
+   "kind": "note",
+   "label": "the plate (left, far zone is the hold's ground: sea, Cuba) against the low look (right); the pair the level check calls 1.27",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T11:03:10.359Z",
+   "file": "20261124110310359-note-lay-look.jpg",
+   "source": "../../../../tmp/gl/s8/lay-look.jpg",
+   "kind": "note",
+   "label": "far zone: the close picture laid back on the ground (left, cover outlined) against the repaint; past 6 degrees it shows a cloud deck",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T10:37:20.838Z",
    "file": "20261124103720838-note-dive-r2-b.jpg",
@@ -74,30 +98,6 @@
    "source": "../../../../tmp/gl/s8/pair-d.jpg",
    "kind": "note",
    "label": "named tree against one ground trial, frames from above",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T10:09:33.217Z",
-   "file": "20261124100933217-note-crop-1857.jpg",
-   "source": "../../../../tmp/gl/s8/crop-1857.jpg",
-   "kind": "note",
-   "label": "1857 named tree against the one ground trial ebd4f703 (taken back)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T09:34:11.157Z",
-   "file": "20261124093411157-note-lv-under-fullog.jpg",
-   "source": "../../../../tmp/gl/s8/lv-under-fullog.png",
-   "kind": "note",
-   "label": "level check after the cure: levels 96, 48, 24, all under 0.45",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T09:34:10.480Z",
-   "file": "20261124093410480-note-lv-low-full.jpg",
-   "source": "../../../../tmp/gl/s8/lv-low-full.png",
-   "kind": "note",
-   "label": "level check, named tree: plate against the low look, 1.27 over",
    "stop": "earth"
   }
  ]
