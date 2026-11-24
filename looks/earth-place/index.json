@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T22:53:45.367Z",
+ "pushed": "2026-11-24T23:15:46.549Z",
  "head": "811a508940b4e42d05de0ace894ea0e19aeaeb99",
- "note": "level rule by sharp direction and real detail: hold counts 0 px, dive centre a little crisper 1882 to 1898",
+ "note": "811a5089 K1 K2: draft dive 1830 to 1891 every frame; path green, gate pass, finals 1755 and 2010 kept bytes; rise draft and parity still running",
  "looks": [
+  {
+   "time": "2026-11-24T23:15:45.351Z",
+   "file": "20261124231545351-note-sh-1880-1891.jpg",
+   "source": "../../../../tmp/gl/s20/sh-1880-1891.jpg",
+   "kind": "note",
+   "label": "811a5089 draft dive 1880-1891, every frame",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T23:15:44.462Z",
+   "file": "20261124231544462-note-sh-1868-1879.jpg",
+   "source": "../../../../tmp/gl/s20/sh-1868-1879.jpg",
+   "kind": "note",
+   "label": "811a5089 draft dive 1868-1879, every frame",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T23:15:43.366Z",
+   "file": "20261124231543366-note-sh-1830-1843.jpg",
+   "source": "../../../../tmp/gl/s20/sh-1830-1843.jpg",
+   "kind": "note",
+   "label": "811a5089 draft dive 1830-1843, every frame",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T22:53:44.408Z",
    "file": "20261124225344408-note-sh-d1.jpg",
@@ -74,30 +98,6 @@
    "source": "../../../../tmp/gl/s19/dive-centre-1858-1876-native.jpg",
    "kind": "note",
    "label": "dive on 4c991724, draft, centre at native size, 1858 1864 1870 1876: soft from 1864",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T21:48:45.252Z",
-   "file": "20261124214845252-note-ta-a.jpg",
-   "source": "../../../../tmp/gl/s18/ta-a.jpg",
-   "kind": "note",
-   "label": "draft 2164 to 2179 with the pull back speed 1.0 over 0.5 and land 30: the rise's end and the first frames of the travel",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T21:48:44.615Z",
-   "file": "20261124214844615-note-rim-south.jpg",
-   "source": "../../../../tmp/gl/s18/rim-south.jpg",
-   "kind": "note",
-   "label": "the same, south rim in three strips: flat cloud tops and the straight start of the drawn relief are gone",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T21:48:43.564Z",
-   "file": "20261124214843564-note-rim-east.jpg",
-   "source": "../../../../tmp/gl/s18/rim-east.jpg",
-   "kind": "note",
-   "label": "plate raster after the near sea with the rim cure, east rim in three strips, native size: the clouds end on their own lumps, no straight cut (before: the look rim-east of 21:27)",
    "stop": "earth"
   }
  ]
