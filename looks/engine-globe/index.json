@@ -1,9 +1,65 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-24T20:33:44.419Z",
- "head": "223fa6966c7e37c25b7c6fb3bbb6762df5a6084d",
- "note": "MAIL 730 item 3: Mars 2726 and 2325 at the final tier. The streaked cap is the shutter (whole in the draft), the cap is the hero's at latitude 47.4, no pole near it. The limb: a pale band on the sphere that ends on its last pixel. Nothing cured yet.",
+ "pushed": "2026-11-24T21:17:30.910Z",
+ "head": "ba22f35a77b80cfef2cdac2d316ebe42418da732",
+ "note": "Range picture (24 bit, raw view range) and pose record carry a pair of a rise with no flow. Jupiter good; Uranus left with clouds that come in in place and the limb air's level. Not yet committed, tests and byte proof wait for the render slot.",
  "looks": [
+  {
+   "time": "2026-11-24T21:17:29.704Z",
+   "file": "20261124211729704-note-look-ur-8794-8810.jpg",
+   "source": "../m741/look-ur-8794-8810.jpg",
+   "kind": "note",
+   "label": "Uranus rise capture 8794 against 8810 carried by range and pose: 19.92 as it is, 15.90 carried; white clouds come in in place, limb air changes level",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T21:17:28.576Z",
+   "file": "20261124211728576-note-look-ju-6522-6538.jpg",
+   "source": "../m741/look-ju-6522-6538.jpg",
+   "kind": "note",
+   "label": "Jupiter rise capture 6522 against 6538 carried by the range picture and the pose, no flow: 50.18 as it is, 14.08 carried",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T21:17:27.603Z",
+   "file": "20261124211727603-note-look-4400-depth.jpg",
+   "source": "../m741/look-4400-depth.png",
+   "kind": "note",
+   "label": "Uranus 4400 old depth view",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T21:17:26.375Z",
+   "file": "20261124211726375-note-look-3261-depth.jpg",
+   "source": "../m741/look-3261-depth.png",
+   "kind": "note",
+   "label": "Jupiter 3261 old depth view, 8 bit grey, too coarse for a camera map",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T21:17:25.165Z",
+   "file": "20261124211725165-note-c4035-limb8.jpg",
+   "source": "../m710/c4035-limb8.png",
+   "kind": "note",
+   "label": "Saturn 4035 limb times 8",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-24T21:17:23.853Z",
+   "file": "20261124211723853-note-c3465-limb8.jpg",
+   "source": "../m710/c3465-limb8.png",
+   "kind": "note",
+   "label": "Jupiter 3465 limb times 8, the 1 px stairs",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T21:17:21.494Z",
+   "file": "20261124211721494-note-look-2325-limb-sharpen.jpg",
+   "source": "../m710/look-2325-limb-sharpen.png",
+   "kind": "note",
+   "label": "Mars 2325 lit limb, full size crop: the hard rim inside the glow (MAIL 730 item 3)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T20:33:34.106Z",
    "file": "20261124203334106-note-c2325-top-final.jpg",
@@ -11,62 +67,6 @@
    "kind": "note",
    "label": "Mars 2325 final, the upper limb six times the size",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T20:33:33.432Z",
-   "file": "20261124203333432-note-c2325-left-final.jpg",
-   "source": "../m710/c2325-left-final.png",
-   "kind": "note",
-   "label": "Mars 2325 final, the lit limb six times the size: the pale band of the ground ends on the last pixel of the sphere, the cyan glow starts lower beyond it",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T20:33:32.735Z",
-   "file": "20261124203332735-note-caps-map.jpg",
-   "source": "../m710/caps-map.png",
-   "kind": "note",
-   "label": "The three caps of the Mars map about their own middles, 8 degrees: the hero's cap at latitude 47.4 (the one in 2726 and 2325), the pole cap at 83.4, the south cap at minus 84.8",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T20:33:32.014Z",
-   "file": "20261124203332014-note-look-2726-cap8-final-draft.jpg",
-   "source": "../m710/look-2726-cap8-final-draft.png",
-   "kind": "note",
-   "label": "Mars 2726 the cap eight times the size: left final, right draft. Measured: the final is the draft drawn out by 16 to 18 px at minus 40 degrees here, 6 px mid disc, 2 px upper left",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T20:33:30.566Z",
-   "file": "20261124203330566-note-look-2726-cap-final-draft.jpg",
-   "source": "../m710/look-2726-cap-final-draft.png",
-   "kind": "note",
-   "label": "Mars 2726 the cap at the lower right twice the size: left the final tier (64 samples of the shutter), right the draft (1 sample at the middle of the shutter). The cap is whole in the draft; the streaks are the shutter",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T18:26:06.833Z",
-   "file": "20261124182606833-note-venus-rise-k3086-3086-changes.jpg",
-   "source": "../try/out/work/smooth/venus-rise-k3086-3086-changes.png",
-   "kind": "note",
-   "label": "The report's own panel of the changes with the cure, Venus rise 1543: second row is the reading on the later frame",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T18:22:38.718Z",
-   "file": "20261124182238718-note-six-ne4696.jpg",
-   "source": "../m710/six-ne4696.png",
-   "kind": "note",
-   "label": "Neptune dive 4696 at 86c31561: main 0.716 kept, on the nearer frame 0.450",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T18:22:38.089Z",
-   "file": "20261124182238089-note-six-me746.jpg",
-   "source": "../m710/six-me746.png",
-   "kind": "note",
-   "label": "Mercury dive 746 + 1/2 at 86c31561: main 1.019 kept, on the nearer frame 0.251",
-   "stop": "mercury"
   }
  ]
 }
