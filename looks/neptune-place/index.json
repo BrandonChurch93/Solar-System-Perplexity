@@ -1,8 +1,8 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T17:32:08.998Z",
+ "pushed": "2026-11-24T17:32:18.058Z",
  "head": "b175a5d667c30338c2a37e8d767a4f2e3612cd13",
- "note": "4860 beside approved, G17 1.382/0.741, 7.4 s a preview draft frame. KNOWN RED being traced: 4605 at preview draft has other bytes since the merge of main 1896a516 (a2b1f371, was 9ef19839; 1265 px, largest 5 levels, spread thin over the frame); my code is the same on both sides, cause not found yet (not farsun shader, not warm.json). Dusk trial for the white specks waits on it.",
+ "note": "4860 beside approved, G17 1.382/0.741, 7.4 s a preview draft frame. KNOWN RED being traced: 4605 at preview draft has other bytes since the merge of main 1896a516 (a2b1f371, was 9ef19839; 1265 px, largest 5 levels, thin over the frame); cause not found yet (not farsun shader, not warm.json)",
  "looks": [
   {
    "time": "2026-11-24T17:32:08.290Z",
