@@ -1,8 +1,8 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T04:18:05.768Z",
+ "pushed": "2026-11-24T04:18:22.919Z",
  "head": "2b9c652b51c54ceb8e25bfaa7033d71843306da2",
- "note": "lift by height is in (2b9c652b); now each builder's forced line and law set for the one move, searched with tools/law.ts",
+ "note": "law sets for the one move per stop, searched and judged; mails to the builders next",
  "looks": [
   {
    "time": "2026-11-24T04:18:04.190Z",
