@@ -170,6 +170,7 @@
     "maxRateOverMean": 2,
     "coastFrames": 8,
     "carry": {"power": 2, "stepsPerFrame": 8},
+    "skyLift": {"power": 1},
     "pace": {"rise": 0.4, "fall": 0.4, "corner": 0.2},
     "ownPath": ["sun", "mercury", "earth", "jupiter", "saturn", "uranus", "neptune"],
     "maxBlurPx": 14,
