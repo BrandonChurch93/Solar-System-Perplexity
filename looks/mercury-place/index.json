@@ -1,9 +1,33 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T08:24:18.611Z",
+ "pushed": "2026-11-24T08:52:12.999Z",
  "head": "27f1ba3eb30576e89f64aebb80dd252ffc09bcbd",
- "note": "named 27f1ba3e; whole tests on the merge 443 of 443; cure of the pattern red started: first place plate comes in over 34 frames, rise gets a 38 deg plate of its own",
+ "note": "one ground: plate 1 now carries the place's coarse field in the disc; trials c1 to c3 of the slow exchange dropped",
  "looks": [
+  {
+   "time": "2026-11-24T08:52:12.430Z",
+   "file": "20261124085212430-note-plate1-pair.jpg",
+   "source": "../../../../tmp/m/plate1-pair.jpg",
+   "kind": "note",
+   "label": "plate 1 about the spot: old (left), new (right) with the place's coarse crater field inside 15.5 to 17.5 degrees, in the map's tones (MAIL 587 point 3, first way)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T08:52:11.886Z",
+   "file": "20261124085211886-note-top-pair.jpg",
+   "source": "../../../../tmp/m/top-pair.jpg",
+   "kind": "note",
+   "label": "under the limb, trial c2: a long presence of the set shows its bright patch from 740 instead of 748, so it is dropped",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T08:52:11.326Z",
+   "file": "20261124085211326-note-717-pair.jpg",
+   "source": "../../../../tmp/m/717-pair.jpg",
+   "kind": "note",
+   "label": "717: named head (left) against trial c1 (right): a slow even exchange leaves a grey lit bulge on the night side, so it is dropped",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T08:08:08.006Z",
    "file": "20261124080808006-job-frame-00540.jpg",
@@ -48,30 +72,6 @@
    "source": "out/work/mercury/place/pat/r1.jpg",
    "kind": "note",
    "label": "pattern red in the rise, where: 983, 988, 993, 1001 each against the frame 8 later (frame, later frame carried back, difference, pattern change): the limb strip, the ring round the place, then the whole disc",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T07:15:26.074Z",
-   "file": "20261124071526074-note-disc.jpg",
-   "source": "out/work/mercury/place/pat/disc.jpg",
-   "kind": "note",
-   "label": "place disc 700 to 724, rate 2 draft: map, plate 1 in 704 to 716, the place's own picture in 720 to 724",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T07:15:25.054Z",
-   "file": "20261124071525054-note-limb.jpg",
-   "source": "out/work/mercury/place/pat/limb.jpg",
-   "kind": "note",
-   "label": "limb strip 732 to 760 every 2nd frame, rate 2 draft: map's gold limb to 738, pale band 740 to 748, the set in from 750",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T07:06:37.212Z",
-   "file": "20261124070637212-note-m1.jpg",
-   "source": "out/work/mercury/place/pat/m1.jpg",
-   "kind": "note",
-   "label": "the same for 692, 706, 713, 723: a spot on the night side, then the disc of the place where plate 1 and plate 2 come in",
    "stop": "mercury"
   }
  ]
