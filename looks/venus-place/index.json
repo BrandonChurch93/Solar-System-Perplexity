@@ -1,9 +1,41 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-24T10:41:17.691Z",
+ "pushed": "2026-11-24T11:04:23.485Z",
  "head": "1e682e0123ac856ff8931fecdd6bc3b297d942af",
- "note": "after the third named commit: test of the near ground kept whole inside the frame of T (not committed)",
+ "note": "Rise 1540 to 1575 with the near ground kept whole at every height (not committed): pattern at most 0.65 (limb, far zone) where the commit reads 1.15; left edge 0.48; third hump 0.61; dive far band 0.78 unchanged",
  "looks": [
+  {
+   "time": "2026-11-24T11:04:22.899Z",
+   "file": "20261124110422899-note-x5left.jpg",
+   "source": "../../../../tmp/v/x5left.jpg",
+   "kind": "note",
+   "label": "venus rise, near ground kept whole, x5left",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T11:04:22.315Z",
+   "file": "20261124110422315-note-x5c.jpg",
+   "source": "../../../../tmp/v/x5c.jpg",
+   "kind": "note",
+   "label": "venus rise, near ground kept whole, x5c",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T11:04:21.748Z",
+   "file": "20261124110421748-note-x5b.jpg",
+   "source": "../../../../tmp/v/x5b.jpg",
+   "kind": "note",
+   "label": "venus rise, near ground kept whole, x5b",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T11:04:20.954Z",
+   "file": "20261124110420954-note-x5a.jpg",
+   "source": "../../../../tmp/v/x5a.jpg",
+   "kind": "note",
+   "label": "venus rise, near ground kept whole, x5a",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T10:41:16.770Z",
    "file": "20261124104116770-note-x4b.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/v/hu/s1562.jpg",
    "kind": "note",
    "label": "third commit state: draft frames 1562 to 1577",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T10:07:46.179Z",
-   "file": "20261124100746179-note-s1276.jpg",
-   "source": "../../../../tmp/v/hu/s1276.jpg",
-   "kind": "note",
-   "label": "third commit state: draft frames 1276 to 1291",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T10:07:45.176Z",
-   "file": "20261124100745176-note-changes.jpg",
-   "source": "../../../../tmp/v/pat1/dive16/changes.png",
-   "kind": "note",
-   "label": "dive, pattern over 8 frames at 1270, 1284, 1292: at 1284 the blob lies at the left edge of the lit streak field of the globe's own map, where the plates of the place come in by height",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T10:07:44.292Z",
-   "file": "20261124100744292-note-venus-dive-changes-U.jpg",
-   "source": "../../../../tmp/v/venus-dive-changes-U.png",
-   "kind": "note",
-   "label": "third commit state, smooth dive panel: pattern 0.83 from 1284 (second commit 0.83), 38 frames over; 0.78 at 1320 along the far band under the limb",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T09:53:16.601Z",
-   "file": "20261124095316601-note-changes.jpg",
-   "source": "../../../../tmp/v/pat1/rise16/changes.png",
-   "kind": "note",
-   "label": "rise, pattern over 8 frames at the humps: 0.74 at 1554 + 1/2 one blob at pixel 604, 724; 0.81 at 1575 spread along the limb and the lower edge",
    "stop": "venus"
   }
  ]
