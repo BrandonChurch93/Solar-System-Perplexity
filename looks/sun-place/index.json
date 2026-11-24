@@ -1,9 +1,41 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T11:09:42.379Z",
+ "pushed": "2026-11-24T11:29:12.323Z",
  "head": "7f4e02c1699e026506d39401b7cb58107cb0b64c",
- "note": "7f4e02c1 pushed, not named yet, proof running. Frame 60 draft sun-near: dark (under 0.15) 0.238 | body (0.15 to 0.55) 0.520 | pale (0.65 to 0.85) 0.111 | white (over 0.85) 0.059; brightest 15 percent: half width 11.0 px, 2904 shapes | fine detail 0.0552 | mean 0.366; distance 0.112. G13 by the gate's count, draft: 231 to 236 at 0.11 percent or under (19ca786c: 232 20.42, 233 13.79, 234 6.19). Red: aims of MAIL 505 missed, cells read as stones, function ground paler than the map round it at 225 to 237.",
+ "note": "7f4e02c1 proof running, sheets 180 to 227 seen: no jump at T, no pop seen at this size; the function ground stands as a paler field of cells in the orange map from 216 on (red). Frame 60 draft sun-near unchanged since the last look: dark (under 0.15) 0.238 | body (0.15 to 0.55) 0.520 | pale (0.65 to 0.85) 0.111 | white (over 0.85) 0.059; brightest 15 percent: half width 11.0 px, 2904 shapes | fine detail 0.0552 | mean 0.366; distance 0.112.",
  "looks": [
+  {
+   "time": "2026-11-24T11:29:11.237Z",
+   "file": "20261124112911237-note-s9-d.jpg",
+   "source": "../../../../tmp/s9-d.jpg",
+   "kind": "note",
+   "label": "7f4e02c1 rise draft every frame, sheet d 216 to 227 (T at 216)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T11:29:10.371Z",
+   "file": "20261124112910371-note-s9-c.jpg",
+   "source": "../../../../tmp/s9-c.jpg",
+   "kind": "note",
+   "label": "7f4e02c1 rise draft every frame, sheet c 204 to 215",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T11:29:09.544Z",
+   "file": "20261124112909544-note-s9-b.jpg",
+   "source": "../../../../tmp/s9-b.jpg",
+   "kind": "note",
+   "label": "7f4e02c1 rise draft every frame, sheet b 192 to 203",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T11:29:08.708Z",
+   "file": "20261124112908708-note-s9-a.jpg",
+   "source": "../../../../tmp/s9-a.jpg",
+   "kind": "note",
+   "label": "7f4e02c1 rise draft every frame, sheet a 180 to 191",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T11:09:41.456Z",
    "file": "20261124110941456-note-c5-229-241.jpg",
@@ -34,47 +66,6 @@
    "source": "../../../../tmp/c4-60.jpg",
    "kind": "note",
    "label": "7f4e02c1 frame 60 draft, whole frame: each cell takes the light of the map at its own middle",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T11:09:37.061Z",
-   "file": "20261124110937061-note-pair60-9.jpg",
-   "source": "../../../../tmp/pair60-9.jpg",
-   "kind": "note",
-   "label": "7f4e02c1 frame 60 draft at one to one: approved (left, reduced to 1920) and mine (right), box x 480 to 1440, y 560 to 1080",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T11:09:19.896Z",
-   "file": "20261124110919896-compare-sun-rise-sides.jpg",
-   "source": "out/work/handover/sun-rise-sides.png",
-   "kind": "compare",
-   "label": "sun rise, both sides at T (frame 216) and their difference times 8",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "frame": 216,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T11:06:09.096Z",
-   "file": "20261124110609096-job-frame-00231.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "sun.rise frame 231, draft tier, texels view, from the running g13 job",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "frame": 231,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "g13"
-  },
-  {
-   "time": "2026-11-24T10:44:54.499Z",
-   "file": "20261124104454499-note-c3-229.jpg",
-   "source": "../../../../tmp/c3-229.jpg",
-   "kind": "note",
-   "label": "trial c3 frame 229",
    "stop": "sun"
   }
  ]
