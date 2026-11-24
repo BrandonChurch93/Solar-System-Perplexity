@@ -12,7 +12,7 @@ import { handoverFrame, handoverOf, horizonWeight, placeWeight, shutterScales, s
 import skyFrame from '../space/skyframe.json'
 import world from './world.json'
 import { aimAt, type SkyAims } from '../space/aim'
-import { TravelShape, inFrame } from '../space/travel/path'
+import { TravelShape, inFrame, outsideFrame } from '../space/travel/path'
 import { discShare, openSky } from '../space/travel/open'
 
 const NO_TURN = new THREE.Quaternion()
@@ -45,7 +45,7 @@ const SUN_LEAVE = 0.55
 const SUN_SWAP: [number, number] = [0.42, SUN_LEAVE]
 const SUN_GLOW_FROM = 0.06
 const SUN_HAND = { span: [0.25, 0.8] as [number, number], last: 0.6, reach: 2, behind: 1000 }
-const SUN_DIM = { level: 0.25, window: 0.4, taps: 6, back: [0.8, 1] as [number, number] }
+const SUN_DIM = { level: 0.25, nearDeg: [-16, 14] as [number, number], back: [0.8, 1] as [number, number] }
 const RETREAT_DUST = 0.045
 const LOCK_PX: [number, number] = [3, 40]
 const PLACE_TIE = 1e-6
@@ -443,7 +443,7 @@ export class FilmDirector implements Director {
     const hold = this.toWorld(index + 1, b.hold(time - b.seg.hold.start))
     const full = this.sizeOf(index, hold)
     const small = this.small[index]!
-    const want = (small + (full - small) * smoother(t)) * Math.tan(THREE.MathUtils.degToRad(pose.vfov) / 2)
+    const want = (small + (full - small) * shape.arrive(t)) * Math.tan(THREE.MathUtils.degToRad(pose.vfov) / 2)
     const ray = pose.position.clone().sub(body).normalize()
     if (shape.look.pin[1] <= 0) {
       const hero = hold.position.clone().sub(body).normalize().applyQuaternion(hold.quaternion.clone().invert()).applyQuaternion(pose.quaternion)
@@ -541,12 +541,11 @@ export class FilmDirector implements Director {
   private sunSeen(index: number, time: number): number {
     const seg = this.plans[index]!.seg.travel!
     const master = config.formats[config.formatKeys.master]!
-    let sum = 0
-    for (let k = -SUN_DIM.taps; k <= SUN_DIM.taps; k++) {
-      const pose = this.travelCamera(index, Math.min(Math.max(time + (k / SUN_DIM.taps) * SUN_DIM.window, seg.start), seg.end))
-      if (inFrame(pose.quaternion, pose.vfov, master.width / master.height, this.sunWorld, 0, 0)) sum++
+    const near = (at: number): number => {
+      const pose = this.travelCamera(index, at)
+      return ramp(SUN_DIM.nearDeg[0], SUN_DIM.nearDeg[1], -THREE.MathUtils.radToDeg(outsideFrame(pose.quaternion, pose.vfov, master.width / master.height, this.sunWorld)))
     }
-    return sum / (2 * SUN_DIM.taps + 1)
+    return Math.max(near(time) - near(seg.start), 0)
   }
 
   private brightNear(index: number, time: number): number {
@@ -849,14 +848,22 @@ export class FilmDirector implements Director {
         near = Math.min(Math.max(0.02 * d, p.handsOver ? Math.min(0.0004, 0.2 * d) : 0.0004), 1)
         const low = p.p.light.skyLow
         if (low && segment.kind !== 'hold') light = { ...light, sky: light.sky * (skyShare === undefined ? mix(low[2], 1, smooth(ramp(low[0], low[1], d))) : mix(mix(low[2], 1, smooth(ramp(low[0], low[1], d))), 1, skyShare)) }
-        const lift = segment.kind === 'rise' && index > 0 ? riseLift(p.id) : 0
-        if (lift > 0) {
+      }
+      // The stars of the open flight over the stop. lifted is the level of the sky the segment ends in: the open flight's after a rise
+      // (travel.sky.riseLift of the stop), the stop's own in a hold, a dive and a surface view, where nothing lifts. Under it the lift is
+      // one function of the height of the lens (StopPlan.skyLift), the same in both views, and the exposure of the sky goes with it to
+      // the open flight's. A stop that still gives a time (skyLiftAt) keeps the course by the clock in its globe view, as it was.
+      const lifted = segment.kind === 'rise' && index > 0 ? riseLift(p.id) : 0
+      if (lifted > 0) {
+        const liftAt = p.skyLiftAt(segment, time)
+        if (liftAt === null) {
+          skyStars = lifted * p.skyLift(this.heightOver(s, pose))
+          light = { ...light, sky: mix(light.sky, OPEN.openExposure, skyStars) }
+        } else if (view === 'orbit') {
+          if (!Number.isFinite(liftAt)) throw new Error(p.id + ': skyLiftAt must give a time')
           const w = coverWindow(segment)
-          const from = p.p.light.skyLiftFrom
-          const liftAt = p.skyLiftAt(segment, time)
-          if (liftAt !== null && !Number.isFinite(liftAt)) throw new Error(p.id + ': skyLiftAt must give a time')
-          const x = smooth(ramp(w ? (from === undefined ? w.lastFrame + 1 : mix(w.centerFrame, w.lastFrame + 1, from)) / config.fps : hand ? hand.time : segment.start, segment.end, liftAt ?? time))
-          skyStars = lift * (1 - (1 - x) * (1 - x))
+          const x = smooth(ramp(w ? (w.lastFrame + 1) / config.fps : hand ? hand.time : segment.start, segment.end, liftAt))
+          skyStars = lifted * (1 - (1 - x) * (1 - x))
           light = { ...light, sky: mix(light.sky, OPEN.openExposure, skyStars) }
         }
       }
