@@ -1,9 +1,17 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T19:05:03.714Z",
+ "pushed": "2026-11-24T19:30:16.144Z",
  "head": "404a7f06c4439436a06972a472e15098457ef42d",
- "note": "sun 60 round 2 at one to one, still wrong: tops spotted like stains, fans too neat, lanes too crisp. w2 sun-near: bands 0.224 0.235 0.178 0.117 0.083 0.058 0.034 0.028 0.017; dark 0.250 body 0.614 pale 0.061 white 0.017; half width 4.7 px, 2413 shapes, fine detail 0.0537, mean 0.307; distance 0.063",
+ "note": "round 2 item 1, uncommitted trial ye3 on head 404a7f06, frame 60 draft at one to one beside the approved. sun-near: share by band 0.1 .. 0.9 : 0.165 0.185 0.184 0.145 0.109 0.072 0.047 0.047 0.016 | dark 0.195 body 0.622 pale 0.095 white 0.016 | brightest 15 percent: half width 7.7 px, 2450 shapes, fine detail 0.0554, mean 0.349 | distance 0.067. Still wrong: cells read as blocky cobbles with straight lanes and hard outlines, tops smooth and blotched instead of fibred, penumbra stiff straight needles.",
  "looks": [
+  {
+   "time": "2026-11-24T19:29:37.962Z",
+   "file": "20261124192937962-note-p1ye3.jpg",
+   "source": "../../../../tmp/rd/p1ye3.jpg",
+   "kind": "note",
+   "label": "frame 60 draft, approved left, trial ye3 right, one to one",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T19:04:57.183Z",
    "file": "20261124190457183-note-pw.jpg",
@@ -66,18 +74,6 @@
    "segment": "sun.rise",
    "first": 204,
    "last": 215,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T17:04:26.193Z",
-   "file": "20261124170426193-sheet-sun-rise-draft-across.jpg",
-   "source": "out/work/handover/sun-rise-draft-across.png",
-   "kind": "sheet",
-   "label": "sun rise, every frame 210 to 221 (across T, frame 216), draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "first": 210,
-   "last": 221,
    "tier": "draft"
   }
  ]
