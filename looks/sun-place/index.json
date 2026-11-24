@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T01:32:01.481Z",
- "head": "13249a5c8c86f5bd17c8d935b819ab58b1249c6d",
- "note": "c38 draft pairs and the rise; a fault at 238 named; unfinished",
+ "pushed": "2026-11-24T01:44:04.057Z",
+ "head": "8eeab2c9122f0dd376e609fbc058b5f6dd25231f",
+ "note": "c43 = commit 6ac893f2: frame 60 pairs and 238 after the cure; full draft 0 to 269 running; unfinished",
  "looks": [
+  {
+   "time": "2026-11-24T01:44:02.886Z",
+   "file": "20261124014402886-note-c40-f00238.jpg",
+   "source": "out/work/sun/convect/c40-f00238.jpg",
+   "kind": "note",
+   "label": "frame 238 (draft) after the cure: the flat ring is gone (it was the part of my ground behind the horizon drawn over the front); far cells end in a mottle, no noise",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T01:44:01.766Z",
+   "file": "20261124014401766-note-c43-whole-pair.jpg",
+   "source": "out/work/sun/convect/c43-whole-pair.jpg",
+   "kind": "note",
+   "label": "c43 frame 60 whole (draft), approved left, mine right: cells to the limb as a grain, umbra black; limb band more orange than the approved gold",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T01:44:00.665Z",
+   "file": "20261124014400665-note-c43-near-pair.jpg",
+   "source": "out/work/sun/convect/c43-near-pair.jpg",
+   "kind": "note",
+   "label": "c43 = commit 6ac893f2, frame 60 near ground (draft), approved left, mine right, unfinished: heat by age and flow, broad hot and cool areas, broken rims. Reads as polished nuggets standing apart, too pale and too tall; the approved is low dark glass pressed together. G17 1.25, lower quarter 1.01; blur 40 px ground 0.048; quantiles 0.216 0.358 0.550 (approved 0.218 0.368 0.562)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T01:32:00.888Z",
    "file": "20261124013200888-note-c38-four.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/sun/convect/c34final-spot-1to1.jpg",
    "kind": "note",
    "label": "c34 frame 60 FINAL tier, the spot one to one, approved left, mine right: umbra black, fibres uneven with bright heads; my penumbra too small and too dull, the cells stand too high round it",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T01:20:00.332Z",
-   "file": "20261124012000332-note-c34final-near-1to1.jpg",
-   "source": "out/work/sun/convect/c34final-near-1to1.jpg",
-   "kind": "note",
-   "label": "c34 frame 60 at the FINAL tier, near ground one to one, approved left, mine right (after MAIL 444, uncommitted, unfinished): brightness from the cell's age and its flow, mottled, flow lines curl, no spokes; lanes thin and dark; mine still matt and creamy where the approved is dark glass with bright rims. G17 1.44, lower quarter 1.13; blur 40 px ground 0.063; quantiles 0.239 0.374 0.552 (approved 0.218 0.368 0.562); 311 s for the frame",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T01:09:03.056Z",
-   "file": "20261124010903056-note-c31final-spot-1to1.jpg",
-   "source": "out/work/sun/convect/c31final-spot-1to1.jpg",
-   "kind": "note",
-   "label": "c31 frame 60 FINAL tier, the spot one to one, approved left, mine right: my fibres too thick and smooth, shards at their outer ends, umbra dark red (the veil), not black",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T01:09:02.495Z",
-   "file": "20261124010902495-note-c31final-near-1to1.jpg",
-   "source": "out/work/sun/convect/c31final-near-1to1.jpg",
-   "kind": "note",
-   "label": "c31 frame 60 at the FINAL tier, near ground one to one, approved left, mine right (commit 13249a5c local, unfinished): mine reads as pleated satin tents, the approved as dark glass bubbles with bright rims; G17 1.47, lower quarter 1.23; blur 40 px ground 0.053; quantiles 0.260 0.382 0.543 (approved 0.218 0.368 0.562); 308 s for the frame",
    "stop": "sun"
   }
  ]
