@@ -1,9 +1,44 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T08:27:39.253Z",
- "head": "08fae295f4b4178be7ea4ad88e0983d5bffb800e",
- "note": "named commit is on the machines; testing the cures of the pattern reds at the judge's rate: shadow border, shade of the C ring solid from its inner edge",
+ "pushed": "2026-11-24T08:51:37.045Z",
+ "head": "1e4bfd4e46d236e0032fc1f045cc954c58511d41",
+ "note": "second commit in proof: one border for the globe shadow (dive and rise pattern cured), pole and take off pops explained with pictures",
  "looks": [
+  {
+   "time": "2026-11-24T08:51:32.694Z",
+   "file": "20261124085132694-note-pop3895_crop.jpg",
+   "source": "../../../../tmp/v/r40/pop3895_crop.png",
+   "kind": "note",
+   "label": "3895 and 3895 + 1/2 crop: the take off after the rise, where the pop reads over the limit (red on main too)"
+  },
+  {
+   "time": "2026-11-24T08:51:32.007Z",
+   "file": "20261124085132007-note-mask_pole_3561.jpg",
+   "source": "../../../../tmp/v/r40/mask_pole_3561.png",
+   "kind": "note",
+   "label": "3561: red is where the judge's unit sphere reaches beyond the drawn, flattened globe (sky judged as body)"
+  },
+  {
+   "time": "2026-11-24T08:51:31.078Z",
+   "file": "20261124085131078-note-pole_frames.jpg",
+   "source": "../../../../tmp/v/r40/pole_frames.png",
+   "kind": "note",
+   "label": "dive 3556 3561 3565 3569 pole crops: the sky strip the judge counts as body beside the flattened globe"
+  },
+  {
+   "time": "2026-11-24T08:51:30.131Z",
+   "file": "20261124085130131-note-gapA_dive.jpg",
+   "source": "../../../../tmp/v/r40/gapA_dive.png",
+   "kind": "note",
+   "label": "dive 3580 3586 3592 3598 at draft: named commit above, one border for the globe shadow below"
+  },
+  {
+   "time": "2026-11-24T08:51:28.680Z",
+   "file": "20261124085128680-note-gapA_rise.jpg",
+   "source": "../../../../tmp/v/r40/gapA_rise.png",
+   "kind": "note",
+   "label": "rise 3859 3863 3867 3871 at draft: named commit above, shadow border as one crisp line below (stars no longer show through the shaded C ring)"
+  },
   {
    "time": "2026-11-24T08:21:37.222Z",
    "file": "20261124082137222-note-pat3863_new.jpg",
@@ -24,41 +59,6 @@
    "source": "../../../../tmp/v/r40/pat3561_old.png",
    "kind": "note",
    "label": "dive 3561 on the named commit: where the pattern measure is over"
-  },
-  {
-   "time": "2026-11-24T08:21:34.604Z",
-   "file": "20261124082134604-note-mask_pole_3561.jpg",
-   "source": "../../../../tmp/v/r40/mask_pole_3561.png",
-   "kind": "note",
-   "label": "dive 3561, red: what the judge counts as body (unit sphere less 20 px) that is not on the drawn, flattened globe less the same margin; the pattern red of the dive at the pole sits there"
-  },
-  {
-   "time": "2026-11-24T08:01:40.929Z",
-   "file": "20261124080140929-note-s3885_head_main_diff.jpg",
-   "source": "../../../../tmp/v/r39/s3885_head_main_diff.jpg",
-   "kind": "note",
-   "label": "3885 draft: my head, main, their difference times 8 (the travel after the rise)"
-  },
-  {
-   "time": "2026-11-24T07:46:37.410Z",
-   "file": "20261124074637410-note-parity_2ab7243.jpg",
-   "source": "../../../../tmp/v/r39/parity_2ab7243.png",
-   "kind": "note",
-   "label": "saturn parity picture of the smooth report on head 2ab7243 (verdict green)"
-  },
-  {
-   "time": "2026-11-24T07:46:36.752Z",
-   "file": "20261124074636752-note-limb_head_main.jpg",
-   "source": "../../../../tmp/v/r37/limb_head_main.png",
-   "kind": "note",
-   "label": "saturn 3573 and 3576 draft, top limb at the pole times 4, head against main: the dark single pixels inside the limb are in main too"
-  },
-  {
-   "time": "2026-11-24T07:46:35.629Z",
-   "file": "20261124074635629-note-final_3720.jpg",
-   "source": "../../../../tmp/v/r39/final_3720.png",
-   "kind": "note",
-   "label": "saturn 3720 surface view, final tier, head 2ab7243 on main 8b2c538 (equal bytes to the final of c8ca94e)"
   }
  ]
 }
