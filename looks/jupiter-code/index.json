@@ -1,9 +1,97 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T12:54:47.243Z",
+ "pushed": "2026-11-24T13:21:59.277Z",
  "head": "5054d98ba26944b288d3eefe1c59512eaca96470",
- "note": "a90e29f: the dive pictures report is in (red on the pattern, 48 rows, as on the second commit); dive frames and the port's maps; G5 and G17 are running",
+ "note": "13:22 UTC: third state as it stands; finals 3296 and 2997 of it; the exposure tables tried on kept frames and not taken (the body's level sags and returns)",
  "looks": [
+  {
+   "time": "2026-11-24T13:21:58.690Z",
+   "file": "20261124132158690-note-strip-ctl-b10.jpg",
+   "source": "../work/tab/strip-ctl-b10.jpg",
+   "kind": "note",
+   "label": "Rise 3273 to 3282: above the commit, below the tried table with the even fall (kept frames scaled, not rendered); not taken",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T13:21:57.996Z",
+   "file": "20261124132157996-note-bF-2997.jpg",
+   "source": "out/work/jupiter/final/bF-2997.png",
+   "kind": "note",
+   "label": "2997 at final on the third state: the first commit's bytes",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T13:21:57.270Z",
+   "file": "20261124132157270-note-bF-3296.jpg",
+   "source": "out/work/jupiter/final/bF-3296.png",
+   "kind": "note",
+   "label": "3296 at final on the third state: the hold's limb law, exposure 1",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T13:21:56.674Z",
+   "file": "20261124132156674-note-tables-tried.jpg",
+   "source": "../work/tab/tables-tried.png",
+   "kind": "note",
+   "label": "Rise 3270 to 3284: the exposure table of the commit and three tables tried on its kept frames, not rendered: pop and level",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T13:21:37.230Z",
+   "file": "20261124132137230-frame-bF-2997.jpg",
+   "source": "out/work/jupiter/final/bF-2997.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 2997, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 2997,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "5a18fcdc5a929484"
+  },
+  {
+   "time": "2026-11-24T13:17:29.900Z",
+   "file": "20261124131729900-frame-bF-3296.jpg",
+   "source": "out/work/jupiter/final/bF-3296.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3296, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3296,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "5a18fcdc5a929484"
+  },
+  {
+   "time": "2026-11-24T13:12:55.959Z",
+   "file": "20261124131255959-job-frame-03250.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "jupiter.rise frame 3250, draft tier, texels view, from the running measure job",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3250,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-24T13:02:42.741Z",
+   "file": "20261124130242741-job-frame-02820.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "jupiter.hold frame 2820, draft tier, texels view, from the running measure job",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2820,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-24T12:54:46.077Z",
    "file": "20261124125446077-note-pat-new-rise-limb-4.jpg",
@@ -51,20 +139,6 @@
    "kind": "note",
    "label": "a90e29f dive, whole frames 3015 to 3026 at draft (the report's own frames)",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T12:53:12.858Z",
-   "file": "20261124125312858-job-frame-02895.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "jupiter.hold frame 2895, final tier, nograin view, from the running measure job",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
   },
   {
    "time": "2026-11-24T12:39:14.179Z",
@@ -144,62 +218,6 @@
    "source": "../work/named3/F-rise-changes.png",
    "kind": "note",
    "label": "a90e29f rise, the report's own picture: the two largest changes of the pattern (0.76 at 3251 + 1/2 far field at the horizon, 0.66 at 3261 + 1/2) and the largest changes in place; red, 48 rows over 0.45",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T12:06:36.834Z",
-   "file": "20261124120636834-note-limb-3283.jpg",
-   "source": "../work/named3/limb-3283.jpg",
-   "kind": "note",
-   "label": "a90e29f pixel state, 3283 and 3291 whole, and the limb bottom left at full size (the pattern measure is over 0.45 there in 3282 to 3284)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T12:06:35.637Z",
-   "file": "20261124120635637-note-globe-mid-pair.jpg",
-   "source": "../work/named3/globe-mid-pair.jpg",
-   "kind": "note",
-   "label": "the red pair of the level check as a picture: the globe's own lookups on the mid plate's ground (left), the mid plate (right); the tool reads 1.10 over 0.45",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T12:06:34.315Z",
-   "file": "20261124120634315-note-rise-3278-3289.jpg",
-   "source": "../work/named3/sheets/rise-3278-3289.jpg",
-   "kind": "note",
-   "label": "a90e29f pixel state (trial E3), rise 3278 to 3289 whole at draft: limb enters 3281, Io 3286, the place turns from the plates' blot to the globe's oval at 3283 to 3285, the plates' island is greyer than the globe round it",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T11:46:46.130Z",
-   "file": "20261124114646130-note-place-dive-strip.jpg",
-   "source": "../work/named3/place-dive-strip.jpg",
-   "kind": "note",
-   "label": "the place in the dive, 2995 to 3006: a90e29f above (the globe's oval gives way to the plates' storm), the full cure below (not taken)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T11:46:45.303Z",
-   "file": "20261124114645303-note-dive-bank.jpg",
-   "source": "../work/named3/sheets/dive-bank.jpg",
-   "kind": "note",
-   "label": "a90e29f dive 3050 to 3057, bottom left at full size: the cream bank of the plates leaves the frame (still wrong: day light beside dusk)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T11:46:44.278Z",
-   "file": "20261124114644278-note-dive-T-low.jpg",
-   "source": "../work/named3/sheets/dive-T-low.jpg",
-   "kind": "note",
-   "label": "a90e29f dive seam 3057 to 3064 at full size, the ground",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T11:46:43.124Z",
-   "file": "20261124114643124-note-dive-T-top.jpg",
-   "source": "../work/named3/sheets/dive-T-top.jpg",
-   "kind": "note",
-   "label": "a90e29f dive seam 3057 to 3064 at full size, the horizon",
    "stop": "jupiter"
   }
  ]
