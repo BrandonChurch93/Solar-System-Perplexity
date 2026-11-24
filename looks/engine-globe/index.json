@@ -1,75 +1,92 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-24T00:06:44.762Z",
- "head": "e28f9c95b956237526207510dd67897bbfbd8285",
- "note": "Relief cap on Mars in the film's own view, three consecutive frames; a fault found and cured (noise where triangles fell far under a pixel); the curtain walls are steps of the height bake, sent to mars_place_builder",
+ "pushed": "2026-11-24T00:35:31.955Z",
+ "head": "e828380834a141074fd3682ad34d23d7403593d8",
+ "note": "Relief cap on Mars with the heights baked again (agent/mars-place f95c3606, no slope over 2): the curtain walls are gone. Draft stills of the film's own view 2409 to 2449, pairs without and with the cap, and two crops one to one of a 3840 by 2160 still at 2448 (one sample, cells 4096). Not judged: colour plates are the builder's, the thin straight crest north of the close ground is the bake's.",
  "looks": [
   {
-   "time": "2026-11-24T00:06:32.772Z",
-   "file": "20261124000632772-note-capI-f2409.jpg",
-   "source": "out/work/t2/capI-f2409.png",
+   "time": "2026-11-24T00:35:30.895Z",
+   "file": "20261124003530895-note-cure-uhd-2448-crop-floor.jpg",
+   "source": "out/work/t2/cure-uhd-2448-crop-floor.png",
    "kind": "note",
-   "label": "Mars f2409 the film's own view with the relief cap (fine 1), draft"
+   "label": "Mars 2448 at 3840 by 2160, one sample, cells 4096, crop one to one of the canyon floor",
+   "stop": "mars"
   },
   {
-   "time": "2026-11-24T00:06:31.924Z",
-   "file": "20261124000631924-note-noise-2400.jpg",
-   "source": "out/work/t2/noise-2400.png",
+   "time": "2026-11-24T00:35:30.177Z",
+   "file": "20261124003530177-note-cure-uhd-2448-crop-rim.jpg",
+   "source": "out/work/t2/cure-uhd-2448-crop-rim.png",
    "kind": "note",
-   "label": "Mars f2400, flat cap forced on, 200 px at the place enlarged 3 times: left every grid drawn (noise from triangles far under a pixel), middle grids by pixel footprint (fine 1), right no cap"
+   "label": "Mars 2448 at 3840 by 2160, one sample, cells 4096, crop one to one of the far rim",
+   "stop": "mars"
   },
   {
-   "time": "2026-11-24T00:06:31.014Z",
-   "file": "20261124000631014-note-tri-2447-2449.jpg",
-   "source": "out/work/t2/tri-2447-2449.png",
+   "time": "2026-11-24T00:35:29.194Z",
+   "file": "20261124003529194-note-cure-pair-2430.jpg",
+   "source": "out/work/t2/cure-pair-2430.png",
    "kind": "note",
-   "label": "Mars f2447, 2448, 2449 the film's own view with the relief cap, draft, half size"
+   "label": "Mars 2430, left no cap, right cap, cured heights and new plates",
+   "stop": "mars"
   },
   {
-   "time": "2026-11-24T00:06:30.094Z",
-   "file": "20261124000630094-note-capI-f2448.jpg",
-   "source": "out/work/t2/capI-f2448.png",
+   "time": "2026-11-24T00:35:28.104Z",
+   "file": "20261124003528104-note-cure-pair-2448.jpg",
+   "source": "out/work/t2/cure-pair-2448.png",
    "kind": "note",
-   "label": "Mars f2448 the film's own view (Relief in front, relief cap behind), draft, cap on the first heights, scratch wiring"
+   "label": "Mars 2448, left no cap, right cap, cured heights and new plates",
+   "stop": "mars"
   },
   {
-   "time": "2026-11-24T00:06:17.017Z",
-   "file": "20261124000617017-still-f00360-16x9-draft-full.jpg",
-   "source": "out/work/stills/f00360-16x9-draft-full.png",
-   "kind": "still",
-   "label": "sun.hold frame 360, draft tier",
-   "stop": "sun",
-   "segment": "sun.hold",
-   "frame": 360,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "b9c0a9c3f8b9aab8"
-  },
-  {
-   "time": "2026-11-23T23:31:38.068Z",
-   "file": "20261123233138068-note-capA-f2448.jpg",
-   "source": "out/work/t2/capA-f2448.png",
+   "time": "2026-11-24T00:35:27.306Z",
+   "file": "20261124003527306-note-cure-tri-2447-2449.jpg",
+   "source": "out/work/t2/cure-tri-2447-2449.png",
    "kind": "note",
-   "label": "Mars f2448 globe alone with the relief cap, draft, whole frame"
+   "label": "Mars 2447 2448 2449, crop of three consecutive frames, cap on the cured heights",
+   "stop": "mars"
   },
   {
-   "time": "2026-11-23T23:31:37.294Z",
-   "file": "20261123233137294-note-pair-2430.jpg",
-   "source": "out/work/t2/pair-2430.png",
+   "time": "2026-11-24T00:35:26.464Z",
+   "file": "20261124003526464-note-cureB-f2449.jpg",
+   "source": "out/work/t2/cureB-f2449.png",
    "kind": "note",
-   "label": "Mars f2430 globe alone, draft: left with the relief cap, right without"
+   "label": "Mars 2449, cap on the cured heights, draft",
+   "stop": "mars"
   },
   {
-   "time": "2026-11-23T23:31:36.497Z",
-   "file": "20261123233136497-note-pair-2448.jpg",
-   "source": "out/work/t2/pair-2448.png",
+   "time": "2026-11-24T00:35:25.572Z",
+   "file": "20261124003525572-note-cureB-f2448.jpg",
+   "source": "out/work/t2/cureB-f2448.png",
    "kind": "note",
-   "label": "Mars f2448 globe alone (side=orbit/noplace), draft: left the relief cap on mars_place_builder's first heights, right the same frame without it"
+   "label": "Mars 2448, cap on the cured heights, draft",
+   "stop": "mars"
   },
   {
-   "time": "2026-11-23T23:23:06.150Z",
-   "file": "20261123232306150-still-f04707-16x9-draft-full.jpg",
+   "time": "2026-11-24T00:35:24.638Z",
+   "file": "20261124003524638-note-cureB-f2447.jpg",
+   "source": "out/work/t2/cureB-f2447.png",
+   "kind": "note",
+   "label": "Mars 2447, cap on the cured heights, draft",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T00:35:23.644Z",
+   "file": "20261124003523644-note-cureB-f2430.jpg",
+   "source": "out/work/t2/cureB-f2430.png",
+   "kind": "note",
+   "label": "Mars 2430, cap on the cured heights, draft",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T00:35:22.416Z",
+   "file": "20261124003522416-note-cureB-f2409.jpg",
+   "source": "out/work/t2/cureB-f2409.png",
+   "kind": "note",
+   "label": "Mars 2409, cap on the cured heights (f95c3606), film's own view, draft",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T00:17:11.783Z",
+   "file": "20261124001711783-still-f04707-16x9-draft-full.jpg",
    "source": "out/work/stills/f04707-16x9-draft-full.png",
    "kind": "still",
    "label": "neptune.dive frame 4707, draft tier",
@@ -79,11 +96,11 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "ad31090af7985df5"
+   "engine": "b9c0a9c3f8b9aab8"
   },
   {
-   "time": "2026-11-23T23:22:10.617Z",
-   "file": "20261123232210617-still-f02997-16x9-draft-full.jpg",
+   "time": "2026-11-24T00:16:07.459Z",
+   "file": "20261124001607459-still-f02997-16x9-draft-full.jpg",
    "source": "out/work/stills/f02997-16x9-draft-full.png",
    "kind": "still",
    "label": "jupiter.dive frame 2997, draft tier",
@@ -93,147 +110,7 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "ad31090af7985df5"
-  },
-  {
-   "time": "2026-11-23T23:21:28.777Z",
-   "file": "20261123232128777-still-f02427-16x9-draft-full.jpg",
-   "source": "out/work/stills/f02427-16x9-draft-full.png",
-   "kind": "still",
-   "label": "mars.dive frame 2427, draft tier",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2427,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "ad31090af7985df5"
-  },
-  {
-   "time": "2026-11-23T23:20:44.997Z",
-   "file": "20261123232044997-still-f01857-16x9-draft-full.jpg",
-   "source": "out/work/stills/f01857-16x9-draft-full.png",
-   "kind": "still",
-   "label": "earth.dive frame 1857, draft tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1857,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "ad31090af7985df5"
-  },
-  {
-   "time": "2026-11-23T23:19:55.779Z",
-   "file": "20261123231955779-still-f00717-16x9-draft-full.jpg",
-   "source": "out/work/stills/f00717-16x9-draft-full.png",
-   "kind": "still",
-   "label": "mercury.dive frame 717, draft tier",
-   "stop": "mercury",
-   "segment": "mercury.dive",
-   "frame": 717,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "ad31090af7985df5"
-  },
-  {
-   "time": "2026-11-23T23:19:02.333Z",
-   "file": "20261123231902333-still-f04605-16x9-draft-full.jpg",
-   "source": "out/work/stills/f04605-16x9-draft-full.png",
-   "kind": "still",
-   "label": "neptune.hold frame 4605, draft tier",
-   "stop": "neptune",
-   "segment": "neptune.hold",
-   "frame": 4605,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "ad31090af7985df5"
-  },
-  {
-   "time": "2026-11-23T23:18:15.032Z",
-   "file": "20261123231815032-still-f04035-16x9-draft-full.jpg",
-   "source": "out/work/stills/f04035-16x9-draft-full.png",
-   "kind": "still",
-   "label": "uranus.hold frame 4035, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "ad31090af7985df5"
-  },
-  {
-   "time": "2026-11-23T23:17:33.867Z",
-   "file": "20261123231733867-still-f03465-16x9-draft-full.jpg",
-   "source": "out/work/stills/f03465-16x9-draft-full.png",
-   "kind": "still",
-   "label": "saturn.hold frame 3465, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.hold",
-   "frame": 3465,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "ad31090af7985df5"
-  },
-  {
-   "time": "2026-11-23T23:16:50.598Z",
-   "file": "20261123231650598-still-f02895-16x9-draft-full.jpg",
-   "source": "out/work/stills/f02895-16x9-draft-full.png",
-   "kind": "still",
-   "label": "jupiter.hold frame 2895, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "ad31090af7985df5"
-  },
-  {
-   "time": "2026-11-23T23:16:05.638Z",
-   "file": "20261123231605638-still-f02325-16x9-draft-full.jpg",
-   "source": "out/work/stills/f02325-16x9-draft-full.png",
-   "kind": "still",
-   "label": "mars.hold frame 2325, draft tier",
-   "stop": "mars",
-   "segment": "mars.hold",
-   "frame": 2325,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "ad31090af7985df5"
-  },
-  {
-   "time": "2026-11-23T23:15:19.190Z",
-   "file": "20261123231519190-still-f01755-16x9-draft-full.jpg",
-   "source": "out/work/stills/f01755-16x9-draft-full.png",
-   "kind": "still",
-   "label": "earth.hold frame 1755, draft tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1755,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "ad31090af7985df5"
-  },
-  {
-   "time": "2026-11-23T23:14:31.320Z",
-   "file": "20261123231431320-still-f01185-16x9-draft-full.jpg",
-   "source": "out/work/stills/f01185-16x9-draft-full.png",
-   "kind": "still",
-   "label": "venus.hold frame 1185, draft tier",
-   "stop": "venus",
-   "segment": "venus.hold",
-   "frame": 1185,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "ad31090af7985df5"
+   "engine": "b9c0a9c3f8b9aab8"
   }
  ]
 }
