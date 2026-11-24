@@ -1,9 +1,25 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-24T07:22:20.662Z",
- "head": "2cf336a3b54978bdb4f8cd858488a4f3aa649ed7",
- "note": "item 1 measured: plates alone pattern 0.25, border by height 1.27, release 0.85; next the border fixed in space",
+ "pushed": "2026-11-24T07:47:39.058Z",
+ "head": "416ae4ea4234b2a8557ff493d0643091e66df84e",
+ "note": "Venus: ground border fixed in space, release inside the frame of T only, far ground flat on the deck: dive pattern 1.27 to 0.63 in the window, not yet proven",
  "looks": [
+  {
+   "time": "2026-11-24T07:47:38.428Z",
+   "file": "20261124074738428-note-s2-changes.jpg",
+   "source": "../../../../tmp/v/p1/s2-changes.jpg",
+   "kind": "note",
+   "label": "Venus dive: change of the pattern in the window 1316 to 1340 with the far ground flat: most 0.63 at 1320 (was 1.27 at 1326 on the named commit), 10 half frames over 0.45 (was 34)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T07:47:37.810Z",
+   "file": "20261124074737810-note-s2-a.jpg",
+   "source": "../../../../tmp/v/p1/s2-a.jpg",
+   "kind": "note",
+   "label": "Venus dive 1320 and 1324: left the ground with a fixed border and the frame of T, right the same with the far ground laid flat on the deck (work in progress, a straight edge at the right side of the frame of T is being cured)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T07:22:12.485Z",
    "file": "20261124072212485-note-band.jpg",
@@ -63,28 +79,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "e840cb2d5bf404e5"
-  },
-  {
-   "time": "2026-11-24T06:30:21.170Z",
-   "file": "20261124063021170-frame-f01350.jpg",
-   "source": "out/work/venus/place/same/i1/f01350.png",
-   "kind": "frame",
-   "label": "venus.terrain frame 1350, draft tier",
-   "stop": "venus",
-   "segment": "venus.terrain",
-   "frame": 1350,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e840cb2d5bf404e5"
-  },
-  {
-   "time": "2026-11-24T06:30:07.691Z",
-   "file": "20261124063007691-note-venus-parity.jpg",
-   "source": "out/work/smooth/venus-parity.png",
-   "kind": "note",
-   "label": "smooth parity panel on 3e1fa361: 16 by 9, uhd scaled down, the difference times 8; green (mean 1.892 at 1586)",
-   "stop": "venus"
   }
  ]
 }
