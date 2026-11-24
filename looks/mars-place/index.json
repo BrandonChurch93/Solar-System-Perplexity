@@ -1,9 +1,33 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T07:29:56.007Z",
+ "pushed": "2026-11-24T07:33:03.897Z",
  "head": "b9c472dcb3c21b8ad6db203bd2872116352421e0",
- "note": "cure A of the cut at T, v2 stills: nearer at T, worse from above; v3 and v4 rendering",
+ "note": "cure A v3: same rock at T on both sides, but pale straight lines, streaks at the foot, a glowing patch: not named",
  "looks": [
+  {
+   "time": "2026-11-24T07:33:03.006Z",
+   "file": "20261124073303006-note-C-crop.jpg",
+   "source": "out/work/place/see/C-crop.jpg",
+   "kind": "note",
+   "label": "cure A v3 (not committed): C-crop, globe side before and after against the close side at T",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T07:33:02.262Z",
+   "file": "20261124073302262-note-C2.jpg",
+   "source": "out/work/place/see/C2.jpg",
+   "kind": "note",
+   "label": "cure A v3 (not committed): C2, globe side before and after against the close side at T",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T07:33:01.499Z",
+   "file": "20261124073301499-note-C1.jpg",
+   "source": "out/work/place/see/C1.jpg",
+   "kind": "note",
+   "label": "cure A v3 (not committed): C1, globe side before and after against the close side at T",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T07:29:54.987Z",
    "file": "20261124072954987-note-B-crop.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/place/see/c2a.jpg",
    "kind": "note",
    "label": "country heights with the aprons, from above, 8.5, 3.8, 1.6 degrees",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T07:07:52.794Z",
-   "file": "20261124070752794-note-A1.jpg",
-   "source": "out/work/place/see/A1.jpg",
-   "kind": "note",
-   "label": "first run of the country with the aprons (levels 1.6 to 0.3 faulty, found and cured): 2476 globe before, 2476 and 2474 globe with aprons, 2477 close",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T06:34:49.724Z",
-   "file": "20261124063449724-note-ap2477.jpg",
-   "source": "out/work/place/see/ap2477.jpg",
-   "kind": "note",
-   "label": "ap2477",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T06:34:49.054Z",
-   "file": "20261124063449054-note-T-all.jpg",
-   "source": "out/work/place/see/T-all.jpg",
-   "kind": "note",
-   "label": "T-all",
    "stop": "mars"
   }
  ]
