@@ -1,7 +1,7 @@
 import { handoverOf } from '../../director/handover'
 import * as THREE from 'three'
 import { FarPoint } from '../../bodies/farpoint'
-import { config } from '../../config'
+import { bufferFrame } from '../../core/frame'
 import type { SetContext, SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { ramp, smooth } from '../../director/rig'
 import { Deck, Glow } from './deck'
@@ -107,11 +107,10 @@ export const createSet: SetFactory = async (ctx) => {
     color: await ctx.texture(base + 'deck-color.jpg', { srgb: true, anisotropy: 16 }),
     near: await ctx.texture(base + 'deck-near.jpg', { srgb: true, anisotropy: 16 }),
     cloud: await ctx.texture(base + 'deck-cloud.jpg', { srgb: false, anisotropy: 16, repeat: true }),
-    far: await ctx.texture(base + 'deck-far.jpg', { srgb: false, anisotropy: 16, repeat: true }),
     height: await ctx.dataTexture(base + 'deck-height.bin', deckJson.heightSize[0]!, deckJson.heightSize[1]!, 1),
     light: deckLight,
     halo: deckHalo,
-  }, key, look.deck)
+  }, key, look.deck, globe.plates(), look.place.deck.calm)
   terrain.add(deck.group)
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
   const deckCentre = new THREE.Vector3().fromArray(deckJson.centre)
@@ -142,6 +141,7 @@ export const createSet: SetFactory = async (ctx) => {
   const over = new THREE.Group()
   over.add(deck.cover, glow.mesh, lowArcs.mesh, riseArcs.mesh, riseRings.mesh)
   const coverEye = new THREE.Vector3()
+  const steep: [number, number] = [look.place.steep[0], look.place.steep[1]]
   const origin = new THREE.Vector3()
   const ball = new THREE.Vector3()
   const seated = new THREE.Quaternion()
@@ -209,7 +209,7 @@ export const createSet: SetFactory = async (ctx) => {
       const mine = shot.segment.stop === plan.id
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
-      const visible = radiusPx > 0.6
+      const visible = radiusPx > 0.6 * bufferFrame()
       const low = mine && (kind === 'dive' || kind === 'rise') && state.weight > 0
       const altitude = world.position.length() - 1
       const near = low ? reach(look.near.span, altitude) : 0
@@ -230,8 +230,14 @@ export const createSet: SetFactory = async (ctx) => {
       const relit = low && !look.show.down
       const plated = low ? reach(look.place.plates[kind as 'dive' | 'rise'], altitude) : 0
       globe.rim(low ? reach(look.place.rim.span, altitude) * (1 - reach(look.place.rim.near, altitude)) : 0, look.place.rim.feather, look.place.rim.wave)
-      if (low) globe.place(relit ? reach(look.place.light.up, altitude) : 0, relit ? reach(look.place.light.down, altitude) : 0, plated, state.time - terrainMid, look.place.fixedEye ? eyes[kind as 'dive' | 'rise'] : eyeAt(kind as 'dive' | 'rise', state.time), kind === 'rise' ? look.place.tops.climb : look.place.tops.shell[1])
-      else globe.place(0, 0, 0, state.time - terrainMid, eyes.dive, look.place.tops.shell[1])
+      const flat = low ? reach(look.place.light.down, altitude) : 0
+      steep[0] = look.place.steep[0] + (look.place.steepLow[0] - look.place.steep[0]) * flat
+      steep[1] = look.place.steep[1] + (look.place.steepLow[1] - look.place.steep[1]) * flat
+      if (low) {
+        const from = look.place.fixedEye ? eyes[kind as 'dive' | 'rise'] : eyeAt(kind as 'dive' | 'rise', state.time)
+        const over = from.length() - 1
+        globe.place(relit ? reach(look.place.light.up, altitude) : 0, relit ? flat : 0, plated, state.time - terrainMid, from, 1 - reach(look.place.tops.span, over), steep)
+      } else globe.place(0, 0, 0, state.time - terrainMid, eyes.dive, 0, steep)
       globe.face(left ? look.face.weight : 0)
       halo.update(sun, gain * state.weight * (1 + (look.near.halo - 1) * near) * (1 - sky), plan.spin(state.time), clock)
       placeEye()
@@ -275,7 +281,7 @@ export const createSet: SetFactory = async (ctx) => {
       lowArcs.against(ball, 1, look.place.onSky)
       lowArcs.mesh.visible = !moving && arched > 0 && look.show.rings
       const ringed = low ? (rising ? handed : 1 - reach(look.place.rings.dive, altitude)) : 1
-      const settling = (!mine && kind === 'travel') || (mine && kind === 'hold') ? smooth(ramp(look.arrival.rings[0], look.arrival.rings[1], (state.time - plan.seg.hold.start) * config.fps)) : 1
+      const settling = (!mine && kind === 'travel') || (mine && kind === 'hold') ? smooth(ramp(Math.log(look.arrival.rings[0]), Math.log(look.arrival.rings[1]), Math.log(distance))) : 1
       rings.update(sun, gain * state.weight * settling * ringed)
       const lifted = mine && left ? look.departing.rings[2] + (1 - look.departing.rings[2]) * smooth(ramp(look.departing.rings[0], look.departing.rings[1], altitude)) : 1
       farRings.update(sun, gain * state.weight * lifted * ringed)

@@ -15,6 +15,10 @@ import skyFrame from '../../space/skyframe.json'
 import skyJson from './sky.json'
 import nearJson from './near.json'
 import { handoverOf } from '../../director/handover'
+import { heightTexture } from '../../core/sets'
+import country from './country.json'
+import capJson from './cap.json'
+import closeJson from './close.json'
 
 function direction(lonDeg: number, latDeg: number): THREE.Vector3 {
   const lon = THREE.MathUtils.degToRad(lonDeg)
@@ -52,13 +56,20 @@ export const createSet: SetFactory = async (ctx) => {
   const patchTextures: THREE.Texture[] = []
   for (const level of patches.levels) patchTextures.push(await ctx.texture(base + level.file, { srgb: true, anisotropy: 16 }))
 
+  const capLevels = []
+  for (const l of country.levels) {
+    const size = l.size[key]
+    capLevels.push({ height: heightTexture(ctx, new Uint16Array(await ctx.buffer(base + l.height)), size), size, widthDeg: l.widthDeg, low: l.low, high: l.high })
+  }
   const planet = new Planet({
     map, mapWidth: (map.image as unknown as { width: number }).width, height: wrapHeight, heightWidth: sizes.height[0], light: look.light, haze: { ...look.haze, glow: true }, grazing: look.grazing,
+    cap: { levels: capLevels, border: capJson.border as [number, number], from: capJson.from as [number, number], cells: capJson.cells, pixel: THREE.MathUtils.degToRad(60) / 1080, fine: capJson.fine, reachDeg: capJson.reachDeg, feather: patches.feather, fade: patches.fade, light: capJson.light },
     patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: patches.fade, nearDeg: patches.nearDeg,
       ...(patches.levels.some((l) => l.own) ? { own: patches.levels.map((l) => l.own === true), ownGain: true } : {}), ...(patches.fadeMinor ? { fadeMinor: true } : {}) },
     storm: { mask: stormMask, axis: direction(wrap.storm.lon, wrap.storm.lat), radius: THREE.MathUtils.degToRad(wrap.storm.radiusDeg) },
   })
-  planet.mesh.quaternion.fromArray(fit.globe.quaternion)
+  const globeFit = new THREE.Quaternion().fromArray(fit.globe.quaternion)
+  planet.mesh.quaternion.copy(globeFit)
   planet.mesh.scale.fromArray(fit.globe.scale)
   const shell = new HazeShell({ ...look.shellHaze, glow: true }, diagUniform)
   const halo = new HazeShell(look.haloHaze, diagUniform)
@@ -81,13 +92,38 @@ export const createSet: SetFactory = async (ctx) => {
   const moonHome = new THREE.Vector3().fromArray(phobos.center)
   const moonHold = new THREE.Quaternion().fromArray(phobos.holdQuaternion)
   const tumbleAxis = new THREE.Vector3().fromArray(phobos.tumbleAxis).normalize()
+  // the baked lit side of the moon is the hero's light as the hold's eye saw it: it goes with the angle at the moon
+  // between the eye and that eye, in the moon's own frame (phobos.json lit), and the moon's own light takes over
+  const moonHoldEye = plan.hold(plan.holdMid - plan.seg.hold.start).position.clone().sub(moonHome).applyQuaternion(moonHold.clone().invert()).normalize()
+  const moonEye = new THREE.Vector3()
+  const moonTurn = new THREE.Quaternion()
 
   const far = new FarPoint()
   orbit.add(far.points)
 
   const ground = await Relief.load(lean, base, reliefDefs[key], look.relief)
   terrain.add(ground.group)
+  // the share of the close view's ground is the set's to give (close.json): asked once here so its shader is built with the others
+  ground.presence(1)
+  // In the globe's scene the close ground stands in front of the globe's own ground of the same place (the cap), which holds a made
+  // ground where the close view's eye saw none: the depth is cleared between the close view's air and its meshes, so the meshes are
+  // tested against each other only and the air, tested against the globe, lies on the sky alone. The whole of it is drawn after the
+  // globe's halo, glint and shell: the thin rim of the far mesh writes depth and would cut the shell at the limb behind it.
+  // The close view itself keeps its order.
+  const closeAir = ground.group.children.find((o) => o.renderOrder === -1) as THREE.Mesh | undefined
+  const closeDepth = new THREE.Mesh(new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(new Float32Array(9), 3)), new THREE.MeshBasicMaterial({ colorWrite: false, depthTest: false, depthWrite: false, transparent: true }))
+  closeDepth.frustumCulled = false
+  closeDepth.renderOrder = -0.5
+  closeDepth.visible = false
+  closeDepth.onBeforeRender = (renderer) => renderer.clearDepth()
+  ground.group.add(closeDepth)
+  const closeScene = (on: boolean): void => {
+    closeDepth.visible = on
+    ground.group.renderOrder = on ? 10 : 0
+    if (closeAir) (closeAir.material as THREE.Material).depthTest = on
+  }
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
+  let eyeScaled = false
 
   const tintLow = new THREE.Vector3().fromArray(look.descent.tint)
   const hazeLow = new THREE.Vector3().fromArray(look.descent.hazeDay)
@@ -141,20 +177,30 @@ export const createSet: SetFactory = async (ctx) => {
     sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, mips: false, anisotropy: 1 }), aim: new THREE.Quaternion().fromArray(skyFrame.patches.mars[view as ViewKind]), tan: [t * 16 / 9, t], gain: def.gain, add: def.add, ring: def.ring as [number, number, number, number], edge: def.margin / wide, unfold: def.unfold as [number, number] })
   }
 
-  // the land matte of the dive's place picture: 1 keeps the picture, its edge follows forms of the land (assets-src/mars/place/matte.py)
-  const placeMatte = { dive: await ctx.texture(base + 'place-matte-dive.png', { srgb: false, channels: 1 }) }
-
   return {
     id: plan.id,
     world,
     sky,
-    placeMatte,
     update: (state, shot, view) => {
       const inOrbit = state.view === 'orbit'
       orbit.visible = inOrbit && state.weight > 0
       terrain.visible = !inOrbit
       const gain = 1 / shot.post.exposure
+      // The relief builds its shader for a scaled group the first time it is updated under a scale (src/terrain/relief.ts, the eye of the
+      // valley mist). Asked for on the first update of the set, so that it is built with the others and every frame, alone or in a run,
+      // is drawn by the one shader. The scale is put back at once; each branch below sets its own.
+      if (!eyeScaled) {
+        eyeScaled = true
+        terrain.scale.setScalar(2)
+        ground.update(0, gain, shot.post.vignette, view)
+        terrain.scale.setScalar(1)
+      }
       if (!inOrbit) {
+        terrain.position.set(0, 0, 0)
+        terrain.quaternion.identity()
+        terrain.scale.setScalar(1)
+        closeScene(false)
+        ground.presence(1)
         ground.update(state.time - terrainMid, gain, shot.post.vignette, view)
         return
       }
@@ -162,6 +208,7 @@ export const createSet: SetFactory = async (ctx) => {
       const lit = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0
       light.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()
       camera.copy(world.position).negate()
+      planet.cap?.setPixel(THREE.MathUtils.degToRad(view.camera.fov) / 1080)
       const elapsed = state.time - plan.holdMid
       planet.material.uniforms.uStormAngle!.value = (wrap.storm.counterclockwise ? -1 : 1) * THREE.MathUtils.degToRad(look.storm.degPerSecond) * Math.min(Math.max(elapsed, -12), 12)
       const d = look.descent
@@ -221,7 +268,16 @@ export const createSet: SetFactory = async (ctx) => {
         for (let c = 0; c < 3; c++) ownGain[c] = (a.gain[c]! + (b.gain[c]! - a.gain[c]!) * k) * (1 + n.ownGain.tintFollow * ((1 + (d.tint[c]! - 1) * low) / d.tint[c]! - 1)) * ((1 + (n.tint[c]! - 1) * near) / n.tint[c]!)
       }
       if (hasOwn) planet.setOwnGain(ownGain)
-      planet.update(camera, light, plan.spin(state.time), gain, state.weight)
+      // The body's turn goes into the mesh, in double precision, and the planet is handed what is left of the spin, by the eye's height
+      // (close.json turn). The planet's and the cap's programs turn by the cos and sin the graphics card gives them, and those are not of
+      // length 1 together: at the dive's change of view the cap stood 0.00015 radii under its place, at the rise's 0.00020, against the
+      // close view's own ground in the same frame (PLACE-NOTES, 24 November 10:40). Above turn.high the card turns the body as before.
+      const tj = closeJson.turn
+      const onMesh = 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-5)) - Math.log(tj.low)) / (Math.log(tj.high) - Math.log(tj.low)))
+      const spin = plan.spin(state.time)
+      if (onMesh > 0) planet.mesh.quaternion.setFromAxisAngle(plan.axis, spin * onMesh).multiply(globeFit)
+      else planet.mesh.quaternion.copy(globeFit)
+      planet.update(camera, light, spin * (1 - onMesh), gain, state.weight)
       pu.uVignette!.value = shot.post.vignette * (1 - low)
       pu.uAspect!.value = view.format.width / view.format.height
       ;(shell.material.uniforms.uCam!.value as THREE.Vector3).copy(camera)
@@ -241,9 +297,27 @@ export const createSet: SetFactory = async (ctx) => {
       moon.mesh.position.copy(moonHome).applyQuaternion(turn)
       moon.mesh.quaternion.setFromAxisAngle(tumbleAxis, THREE.MathUtils.degToRad(look.moon.tumbleDegPerSecond) * elapsed).multiply(moonHold)
       moonWorld.copy(state.rotation).multiply(moon.mesh.quaternion)
+      moonEye.copy(camera).applyQuaternion(moonTurn.copy(state.rotation).invert()).sub(moon.mesh.position).applyQuaternion(moonTurn.copy(moon.mesh.quaternion).invert()).normalize()
+      moon.material.uniforms.uLitOn!.value = 1 - smooth((THREE.MathUtils.radToDeg(moonEye.angleTo(moonHoldEye)) - phobos.lit.fromDeg) / (phobos.lit.toDeg - phobos.lit.fromDeg))
       bounce.copy(moon.mesh.position).negate().normalize().applyQuaternion(state.rotation)
       moonLight.fromArray(look.moon.sunBias).applyQuaternion(state.rotation).add(light).normalize()
       moon.update(moonLight, bounce, moonWorld, gain * state.weight, shot.post.vignette, view.format.width / view.format.height)
+      // the close view's own ground in the globe's scene (close.json): at its true place through the twin, there by the eye's height
+      const moving = !ending && state.segment.stop === plan.id && (state.segment.kind === 'dive' || state.segment.kind === 'rise')
+      const c = closeJson.presence
+      const there = moving ? 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-5)) - Math.log(c.low)) / (Math.log(c.high) - Math.log(c.low))) : 0
+      terrain.visible = there > 0
+      // the globe's own air leaves as the close view's air comes: one share by the height
+      shell.material.uniforms.uGain!.value = gain * state.weight * (1 - there)
+      if (there > 0) {
+        const f = plan.twinFrame(state.time)
+        terrain.position.copy(f.origin)
+        terrain.quaternion.copy(f.rotation)
+        terrain.scale.setScalar(f.scale)
+        closeScene(true)
+        ground.presence(there)
+        ground.update(state.time - terrainMid, gain, shot.post.vignette, view)
+      }
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
       const visible = radiusPx > 0.6
