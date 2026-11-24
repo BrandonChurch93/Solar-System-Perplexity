@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T15:02:35.247Z",
+ "pushed": "2026-11-24T15:30:06.719Z",
  "head": "befb5f47996cb9ff4b6ffb6df289ed9cc2b1fe80",
- "note": "rise second pair: cause found, the rise plates lack the set's wide ground behind the eye; new tiles of the whole set are being drawn",
+ "note": "rise second pair: the plates' middle is mended ground, the set is a wedge; new lay of the set in work",
  "looks": [
+  {
+   "time": "2026-11-24T15:30:06.149Z",
+   "file": "20261124153006149-note-tiles-rise.jpg",
+   "source": "out/work/mercury/place/tiles-rise.jpg",
+   "kind": "note",
+   "label": "rise: 14 tiles of the pure set from the lay eye 990.25 (draft, far Sun's disc left out); scratch",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T15:30:05.556Z",
+   "file": "20261124153005556-note-set-lay-vs-plates-rise.jpg",
+   "source": "out/work/mercury/place/set-lay-vs-plates-rise.jpg",
+   "kind": "note",
+   "label": "rise, lay eye 990.25: the pure set laid on the sphere (left) against the installed rise plates (right), rings 1, 3, 4.5, 6 degrees; scratch, not proof",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T15:02:20.170Z",
    "file": "20261124150220170-note-ab-987.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/mercury/place/e3-chg.png",
    "kind": "note",
    "label": "rise 980 to 985 far look off: change panels, the red sits lower left",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T14:11:44.954Z",
-   "file": "20261124141144954-note-e2-T3.jpg",
-   "source": "out/work/mercury/place/e2-T3.jpg",
-   "kind": "note",
-   "label": "e2-T3: TEST far look off, left half, 756 to 762 through T (760)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T14:11:44.176Z",
-   "file": "20261124141144176-note-e2-T2.jpg",
-   "source": "out/work/mercury/place/e2-T2.jpg",
-   "kind": "note",
-   "label": "e2-T2: TEST far look off, right half, 758.5 to 764 through T (760)",
    "stop": "mercury"
   }
  ]
