@@ -1,9 +1,105 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-24T21:06:43.879Z",
- "head": "3c0f8d1f0c316c07aea77e0055bba39824811051",
- "note": "round 45 step 1: judged finals 4137 and 4436 before and now, 4035 difference at the storm, 4290 same bytes; main 7d52b3e0 merged",
+ "pushed": "2026-11-24T21:20:49.665Z",
+ "head": "9a951e07f17ad3c8929b43dc5fe9480fa9747ea6",
+ "note": "travel sheet 4455 to 4530 and the closed shutter pairs of 4137 and 4436; proofs rerun on main b890fee7 merged",
  "looks": [
+  {
+   "time": "2026-11-24T21:20:48.748Z",
+   "file": "20261124212048748-note-closed-4436-whole.jpg",
+   "source": "../../../../tmp/tf/closed-4436-whole.jpg",
+   "kind": "note",
+   "label": "item 4: 4436 final whole frame, shutter open beside closed",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T21:20:47.844Z",
+   "file": "20261124212047844-note-closed-4137-whole.jpg",
+   "source": "../../../../tmp/tf/closed-4137-whole.jpg",
+   "kind": "note",
+   "label": "item 4: 4137 final whole frame, shutter open beside closed",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T21:20:46.847Z",
+   "file": "20261124212046847-note-closed-4436.jpg",
+   "source": "../../../../tmp/tf/closed-4436.png",
+   "kind": "note",
+   "label": "item 4: 4436 final, shutter open beside closed, native crops L R S, main 7d52b3e0 merged",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T21:20:45.920Z",
+   "file": "20261124212045920-note-closed-4137.jpg",
+   "source": "../../../../tmp/tf/closed-4137.png",
+   "kind": "note",
+   "label": "item 4: 4137 final, shutter open beside closed, native crops C E A, main 7d52b3e0 merged",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T21:20:44.818Z",
+   "file": "20261124212044818-note-travel-12.jpg",
+   "source": "../../../../tmp/tf/travel-12.jpg",
+   "kind": "note",
+   "label": "travel 4455 to 4530, 12 frames at draft, main 7d52b3e0 merged, new rise ending in the hold's pose (engine dim change not in)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T21:19:52.414Z",
+   "file": "20261124211952414-frame-f4530.jpg",
+   "source": "out/work/u/r45/tr/f4530.png",
+   "kind": "frame",
+   "label": "neptune.hold frame 4530, draft tier",
+   "stop": "neptune",
+   "segment": "neptune.hold",
+   "frame": 4530,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
+  {
+   "time": "2026-11-24T21:19:17.949Z",
+   "file": "20261124211917949-frame-f4523.jpg",
+   "source": "out/work/u/r45/tr/f4523.png",
+   "kind": "frame",
+   "label": "uranus.travel frame 4523, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.travel",
+   "frame": 4523,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
+  {
+   "time": "2026-11-24T21:11:26.988Z",
+   "file": "20261124211126988-frame-f4436-closed.jpg",
+   "source": "out/work/u/r45/fin/f4436-closed.png",
+   "kind": "frame",
+   "label": "uranus.rise frame 4436, final tier, beauty&shutter=0 view",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4436,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty&shutter=0",
+   "engine": "1db409b8ada90e29"
+  },
+  {
+   "time": "2026-11-24T21:08:10.217Z",
+   "file": "20261124210810217-frame-f4137-closed.jpg",
+   "source": "out/work/u/r45/fin/f4137-closed.png",
+   "kind": "frame",
+   "label": "uranus.dive frame 4137, final tier, beauty&shutter=0 view",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4137,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty&shutter=0",
+   "engine": "1db409b8ada90e29"
+  },
   {
    "time": "2026-11-24T21:06:42.676Z",
    "file": "20261124210642676-note-f4035-diff.jpg",
@@ -51,34 +147,6 @@
    "stop": "uranus",
    "segment": "uranus.hold",
    "frame": 4035,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
-  },
-  {
-   "time": "2026-11-24T21:02:13.037Z",
-   "file": "20261124210213037-frame-f4436.jpg",
-   "source": "out/work/u/r45/fin/f4436.png",
-   "kind": "frame",
-   "label": "uranus.rise frame 4436, final tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4436,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
-  },
-  {
-   "time": "2026-11-24T20:58:50.080Z",
-   "file": "20261124205850080-frame-f4137.jpg",
-   "source": "out/work/u/r45/fin/f4137.png",
-   "kind": "frame",
-   "label": "uranus.dive frame 4137, final tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4137,
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
@@ -253,74 +321,6 @@
    "first": 4174,
    "last": 4185,
    "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T20:29:51.656Z",
-   "file": "20261124202951656-sheet-uranus-dive-draft-across.jpg",
-   "source": "out/work/handover/uranus-dive-draft-across.png",
-   "kind": "sheet",
-   "label": "uranus dive, every frame 4180 to 4191 (across T, frame 4186), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "first": 4180,
-   "last": 4191,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T20:29:49.949Z",
-   "file": "20261124202949949-compare-uranus-dive-step-in-place.jpg",
-   "source": "out/work/handover/uranus-dive-step-in-place.png",
-   "kind": "compare",
-   "label": "uranus dive, the largest step of the level in place (2.79): frame 4173, frame 4174, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4174
-  },
-  {
-   "time": "2026-11-24T20:29:42.395Z",
-   "file": "20261124202942395-note-r45-dive-4.jpg",
-   "source": "../../../../tmp/tf/r45-dive-4.jpg",
-   "kind": "note",
-   "label": "Round 45 work tree on main 7d52b3e0, dive 4182 to 4199 at draft",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T20:29:41.694Z",
-   "file": "20261124202941694-note-r45-dive-3.jpg",
-   "source": "../../../../tmp/tf/r45-dive-3.jpg",
-   "kind": "note",
-   "label": "Round 45 work tree on main 7d52b3e0, dive 4158 to 4181 at draft",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T20:29:41.104Z",
-   "file": "20261124202941104-note-r45-dive-2.jpg",
-   "source": "../../../../tmp/tf/r45-dive-2.jpg",
-   "kind": "note",
-   "label": "Round 45 work tree on main 7d52b3e0, dive 4134 to 4157 at draft: the galaxy core still crosses the left strip 4141 to 4147 (not cured, named)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T20:29:40.301Z",
-   "file": "20261124202940301-note-r45-dive-1.jpg",
-   "source": "../../../../tmp/tf/r45-dive-1.jpg",
-   "kind": "note",
-   "label": "Round 45 work tree on main 7d52b3e0, dive 4110 to 4133 at draft with diveSoft 0: the hold's shadow stays, the storm is there from 4110",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T20:06:19.820Z",
-   "file": "20261124200619820-frame-f4470.jpg",
-   "source": "out/work/u/r45/ra/f4470.png",
-   "kind": "frame",
-   "label": "uranus.travel frame 4470, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.travel",
-   "frame": 4470,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
   }
  ]
 }
