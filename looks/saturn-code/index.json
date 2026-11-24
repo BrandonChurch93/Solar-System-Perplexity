@@ -1,9 +1,37 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T18:13:43.385Z",
+ "pushed": "2026-11-24T18:50:08.983Z",
  "head": "bc97f0c337218f40b3a0f8b3f0c54a426627d036",
- "note": "item 18 (dusk of the globe by the height of the lens) settled at 3720, now item 19: the fine dark grain of the near rings",
+ "note": "item 19 (fine dark grain of the near rings): the shutter's part measured by heading, the field's part by dark grooves at the wide octaves; item 20 (the limb haze) in trial",
  "looks": [
+  {
+   "time": "2026-11-24T18:50:08.389Z",
+   "file": "20261124185008389-note-b9c_r2.jpg",
+   "source": "../../../../tmp/v/t17/b9c_r2.png",
+   "kind": "note",
+   "label": "3720 terminator at full size, approved left, trial T9c right: the night side is dark, the fall as wide as the approved's by measure (103 to 139 px against 91 to 139), its last part longer"
+  },
+  {
+   "time": "2026-11-24T18:50:07.801Z",
+   "file": "20261124185007801-note-b3a_ll.jpg",
+   "source": "../../../../tmp/v/t17/b3a_ll.png",
+   "kind": "note",
+   "label": "3720 lower left at full size, approved left, trial right: item 19, dark grooves at the edges of the two widest octaves of ringlets in the thin rings near the sheet"
+  },
+  {
+   "time": "2026-11-24T18:50:07.135Z",
+   "file": "20261124185007135-note-d_three_ll.jpg",
+   "source": "../../../../tmp/v/t17/d_three_ll.png",
+   "kind": "note",
+   "label": "instrument only, not the film: 3720 lower left at full size with the lens heading 28 (the film), 38 and 48 degrees left of its view axis: the shutter's part of the soft near rings; the heading stays at 28 so that the point the picture flows out of stays in the frame"
+  },
+  {
+   "time": "2026-11-24T18:50:06.427Z",
+   "file": "20261124185006427-note-t9c_whole.jpg",
+   "source": "../../../../tmp/v/t17/t9c_whole.png",
+   "kind": "note",
+   "label": "3720 whole frame, approved above, trial T9c below (T8 tone of the rings and item 18, the dusk of the globe by the height of the lens)"
+  },
   {
    "time": "2026-11-24T18:13:42.783Z",
    "file": "20261124181342783-note-z_t9s.jpg",
@@ -31,34 +59,6 @@
    "source": "../../../../tmp/v/t17/w9g_ur.png",
    "kind": "note",
    "label": "3720 globe upper right at full size: approved left, film right; night side brown 26,19,12 against 11,12,12 and a wider terminator (item 18, in work); the globe larger and further right (camera of 3720, needs a ruling)"
-  },
-  {
-   "time": "2026-11-24T17:50:04.497Z",
-   "file": "20261124175004497-note-w9g_a.jpg",
-   "source": "../../../../tmp/v/t17/w9g_a.png",
-   "kind": "note",
-   "label": "3720 trial T8 lower left at full size, no film grain: approved left, film right; the near ringlets are fewer and softer than the approved's fine dark grooves (open)"
-  },
-  {
-   "time": "2026-11-24T17:50:03.877Z",
-   "file": "20261124175003877-note-t8a_whole.jpg",
-   "source": "../../../../tmp/v/t17/t8a_whole.png",
-   "kind": "note",
-   "label": "3720 trial T8, whole frame: the approved close above, the film below; ring tone by material now within 0.01 of the approved in six zones; the globe and the fine dark grain of the near rings still open"
-  },
-  {
-   "time": "2026-11-24T17:28:08.497Z",
-   "file": "20261124172808497-note-base_diff_3465.jpg",
-   "source": "../../../../tmp/v/t17/base_diff_3465.png",
-   "kind": "note",
-   "label": "3465 named tree on main ed003c7 against the same tree on the base before: red dots are pixels one level apart (sky and globe, none on the rings)"
-  },
-  {
-   "time": "2026-11-24T17:28:07.901Z",
-   "file": "20261124172807901-note-v8_lm.jpg",
-   "source": "../../../../tmp/v/t17/v8_lm.png",
-   "kind": "note",
-   "label": "3720 lower middle at full size: approved close (left), trial T7e final (right); the B ring of the trial is lighter (0.747 against 0.704)"
   }
  ]
 }
