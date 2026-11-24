@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T20:54:32.795Z",
- "head": "a23218ee73134377670d40985d8c3bddcd2e8617",
- "note": "Frames 0, 60, 90 beside the approved close image and 217, 240, all draft, uncommitted material trial yr1 on a23218ee. a23218ee (pushed, not named) is the cure of MAIL 734 item 1 alone on 404a7f06: warm --first 192 --last 246 --rate 1 says 0 frames did work, exit 0; draft bytes of 0, 60, 90, 247 unchanged; half frames, tests, gate, path not yet run on it. sun-near frame 60 (yr1): share by band 0.181 0.184 0.180 0.150 0.108 0.074 0.047 0.036 0.010 | dark 0.210 body 0.622 pale 0.083 white 0.011 | brightest 15 percent half width 7.1 px, 1788 shapes, fine detail 0.0484, mean 0.339; distance 0.051. Still wrong: cells read as flat plates with feathered strokes and hard seams, lanes are thin cracks where the approved has wide soft dark valleys with pits, penumbra needles unchanged; 217 and 240 not yet looked at beside the head.",
+ "pushed": "2026-11-24T21:07:50.254Z",
+ "head": "a90cde4e750ca64209656ffde452326269ff2a4e",
+ "note": "Two trials that take the material of frame 60 apart (draft, uncommitted, on a23218ee). yt1, flowers off: one sheet of touching bulbs with soft lanes and mottled olive tops, no seams, but no bright fans and too dark. yt2, flowers alone: the fans fill whole cells and are cut by narrow dark seams where two pits are equally near; that is what read as plates and leaves. Next: fans short and local to their pit, fading wide instead of meeting in a seam. sun-near frame 60 of yt1: share by band 0.257 0.253 0.181 0.118 0.071 0.042 0.025 0.016 0.003 | dark 0.289 body 0.624 pale 0.041 white 0.004 | brightest 15 percent half width 8.7 px, 1754 shapes, fine detail 0.0381, mean 0.273; distance 0.113. Running now: proof of the cure of MAIL 734 item 1 on the merge with main 73809f4b (a90cde4e, local): tests, gate, path, warm 190 to 247 at rate 2.",
  "looks": [
+  {
+   "time": "2026-11-24T21:07:49.514Z",
+   "file": "20261124210749514-note-z3yt2.jpg",
+   "source": "../../../../tmp/rd/z3yt2.jpg",
+   "kind": "note",
+   "label": "frame 60 draft, trial yt2 (flowers alone on a plain top), 3x: approved left, ours right",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T21:07:48.830Z",
+   "file": "20261124210748830-note-z3yt1.jpg",
+   "source": "../../../../tmp/rd/z3yt1.jpg",
+   "kind": "note",
+   "label": "frame 60 draft, trial yt1 (flowers off), 3x: approved left, ours right",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T21:07:47.621Z",
+   "file": "20261124210747621-note-p1yt1.jpg",
+   "source": "../../../../tmp/rd/p1yt1.jpg",
+   "kind": "note",
+   "label": "frame 60 draft, trial yt1 (the flowers of the pits off), one to one: approved left, ours right",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T20:54:32.015Z",
    "file": "20261124205432015-note-f240.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/l5/pair0.jpg",
    "kind": "note",
    "label": "frame 0 draft, trial yr1 (uncommitted) on a23218ee, one to one: approved close image left, ours right",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T20:25:17.123Z",
-   "file": "20261124202517123-note-z3yr1.jpg",
-   "source": "../../../../tmp/rd/z3yr1.jpg",
-   "kind": "note",
-   "label": "frame 60 draft, trial yr1, 3x: approved left, ours right",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T20:25:16.517Z",
-   "file": "20261124202516517-note-p1yr1.jpg",
-   "source": "../../../../tmp/rd/p1yr1.jpg",
-   "kind": "note",
-   "label": "frame 60 draft, trial yr1, one to one: approved left, ours right",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T19:57:02.651Z",
-   "file": "20261124195702651-note-p1yl2.jpg",
-   "source": "../../../../tmp/rd/p1yl2.jpg",
-   "kind": "note",
-   "label": "frame 60 draft, approved left, trial yl2 right, one to one",
    "stop": "sun"
   }
  ]
