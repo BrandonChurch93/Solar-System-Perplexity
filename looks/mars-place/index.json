@@ -1,9 +1,41 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T08:01:35.088Z",
+ "pushed": "2026-11-24T08:17:55.193Z",
  "head": "b9c472dcb3c21b8ad6db203bd2872116352421e0",
- "note": "cure A v6: one ground at T on both sides; from above a soft dark stain with the close view's streaks; proofs running",
+ "note": "second commit in proof: T sheets of dive (2467 to 2481) and rise (2671 to 2685): one ground on both sides, tone and sky still jump",
  "looks": [
+  {
+   "time": "2026-11-24T08:17:54.608Z",
+   "file": "20261124081754608-note-H-rise-2.jpg",
+   "source": "out/work/place/see/H-rise-2.jpg",
+   "kind": "note",
+   "label": "second commit in proof: every frame 10 before T to 4 after, draft, H-rise-2",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T08:17:54.050Z",
+   "file": "20261124081754050-note-H-rise-1.jpg",
+   "source": "out/work/place/see/H-rise-1.jpg",
+   "kind": "note",
+   "label": "second commit in proof: every frame 10 before T to 4 after, draft, H-rise-1",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T08:17:53.427Z",
+   "file": "20261124081753427-note-H-dive-2.jpg",
+   "source": "out/work/place/see/H-dive-2.jpg",
+   "kind": "note",
+   "label": "second commit in proof: every frame 10 before T to 4 after, draft, H-dive-2",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T08:17:52.740Z",
+   "file": "20261124081752740-note-H-dive-1.jpg",
+   "source": "out/work/place/see/H-dive-1.jpg",
+   "kind": "note",
+   "label": "second commit in proof: every frame 10 before T to 4 after, draft, H-dive-1",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T08:01:34.489Z",
    "file": "20261124080134489-note-G-crop.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/place/see/F3.jpg",
    "kind": "note",
    "label": "cure A v5 (not committed): F3; pale slivers gone, straight fan border still there from above and at 2470",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T07:49:39.643Z",
-   "file": "20261124074939643-note-F2.jpg",
-   "source": "out/work/place/see/F2.jpg",
-   "kind": "note",
-   "label": "cure A v5 (not committed): F2; pale slivers gone, straight fan border still there from above and at 2470",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T07:49:38.794Z",
-   "file": "20261124074938794-note-F1.jpg",
-   "source": "out/work/place/see/F1.jpg",
-   "kind": "note",
-   "label": "cure A v5 (not committed): F1; pale slivers gone, straight fan border still there from above and at 2470",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T07:33:03.006Z",
-   "file": "20261124073303006-note-C-crop.jpg",
-   "source": "out/work/place/see/C-crop.jpg",
-   "kind": "note",
-   "label": "cure A v3 (not committed): C-crop, globe side before and after against the close side at T",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T07:33:02.262Z",
-   "file": "20261124073302262-note-C2.jpg",
-   "source": "out/work/place/see/C2.jpg",
-   "kind": "note",
-   "label": "cure A v3 (not committed): C2, globe side before and after against the close side at T",
    "stop": "mars"
   }
  ]
