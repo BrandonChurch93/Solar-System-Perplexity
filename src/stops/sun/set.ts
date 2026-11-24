@@ -229,7 +229,7 @@ export const createSet: SetFactory = async (ctx) => {
       farSun.mesh.visible = orbit.visible && visible && away < 1 && kind === 'travel'
       if (farSun.mesh.visible) {
         farSun.material.depthTest = false
-        farSun.set({ camera: view.camera, centre: world.position, body: farBody.copy(world.quaternion).multiply(fitTurn), spin, time: state.time, holdTime: elapsed, exposure: shot.post.exposure, vignette, aspect, height: view.format.height }, 1 - away, 0)
+        farSun.set({ camera: view.camera, centre: world.position, body: farBody.copy(world.quaternion).multiply(fitTurn), spin, time: state.time, holdTime: elapsed, exposure: shot.post.exposure, burn: shot.sun.far?.burn ?? 0, vignette, aspect, height: view.format.height }, 1 - away, 0)
       }
     },
     dispose: () => {

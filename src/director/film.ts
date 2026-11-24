@@ -14,6 +14,7 @@ import { aimAt, type SkyAims } from '../space/aim'
 import { TravelShape, inFrame } from '../space/travel/path'
 import { discShare, openSky } from '../space/travel/open'
 import { globeShare } from '../space/farsun/share'
+import farLook from '../space/farsun/look.json'
 import sunFit from '../stops/sun/fit.json'
 
 const NO_TURN = new THREE.Quaternion()
@@ -517,6 +518,19 @@ export class FilmDirector implements Director {
     return { radius: THREE.MathUtils.degToRad(l.sunRadiusDeg), glare: l.sunGlare, exposure: l.exposure, sky: l.skyExposure }
   }
 
+  private burnSpan: [number, number] | null = null
+
+  private sunBurn(u: number, position: THREE.Vector3): number {
+    const split = farLook.burn.split
+    if (u < SUN_LEAVE) return split * smooth(ramp(Math.log(farLook.handover[0]!), -Math.log(Math.sin(this.sunFor(1).radius)), Math.log(position.distanceTo(this.frames[0]!.origin))))
+    if (!this.burnSpan) {
+      const seg = this.plans[0]!.seg.travel!
+      const at = (x: number): number => 1 / this.travelCamera(0, seg.start + (seg.end - seg.start) * x).position.distanceTo(this.frames[1]!.origin)
+      this.burnSpan = [at(SUN_LEAVE), at(1)]
+    }
+    return split + (1 - split) * smooth(ramp(this.burnSpan[0], this.burnSpan[1], 1 / position.distanceTo(this.frames[1]!.origin)))
+  }
+
   private leaveWeight(index: number, u: number, position: THREE.Vector3): number {
     const hand = this.sunHand[index] ?? 0
     return index === 0 ? (u < SUN_LEAVE && globeShare(position.distanceTo(this.frames[0]!.origin)) > 0 ? 1 : 0) : u < Math.max(this.clear[index + 1]!, hand > SUN_HAND.span[0] ? hand : 0) ? 1 : 0
@@ -869,7 +883,7 @@ export class FilmDirector implements Director {
     post.flare = flare
     const sun: SunState = { dir: this.sunWorld.clone(), color: SUN_COLOR, intensity: 3, angularRadius: light.radius, glare: light.glare * sunWeight }
     const first = this.plans[0]!
-    if (index > 0 || segment.kind === 'travel') sun.far = { centre: index === 0 && u < SUN_LEAVE ? this.frames[0]!.origin.clone().sub(pose.position) : undefined, share: index === 0 ? (u < SUN_LEAVE ? 1 - globeShare(pose.position.distanceTo(this.frames[0]!.origin)) : 1) : sunWeight, body: this.frames[0]!.rotation.clone().multiply(SUN_BODY), spin: first.spin(time), holdTime: time - first.holdMid, time, exposure: light.exposure, vfov: pose.vfov }
+    if (index > 0 || segment.kind === 'travel') sun.far = { centre: index === 0 && u < SUN_LEAVE ? this.frames[0]!.origin.clone().sub(pose.position) : undefined, share: index === 0 ? (u < SUN_LEAVE ? 1 - globeShare(pose.position.distanceTo(this.frames[0]!.origin)) : 1) : sunWeight, body: this.frames[0]!.rotation.clone().multiply(SUN_BODY), spin: first.spin(time), holdTime: time - first.holdMid, time, exposure: light.exposure, vfov: pose.vfov, burn: index === 0 ? this.sunBurn(u, pose.position) : 1 }
     const out: Shot = { frame, time, segment, u, camera: pose, skyQuaternion: skyCarry ? skyCarry.multiply(pose.quaternion) : pose.quaternion.clone(), skyExposure: light.sky, skyGlow, skyTurn, skyStars, skyPatch, skyLook, near, far, sun, sets, post, cover, dust, farLight }
     if (skyShare !== undefined) out.skyShare = skyShare
     if (skyShareHigh !== undefined) out.skyShareHigh = skyShareHigh

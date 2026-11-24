@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { gradUniform } from '../../diagnostics/diag'
 import { FARSUN_FRAG, FARSUN_VERT, MAX_LOOPS } from './shader'
 import look from './look.json'
+import { FACE } from './face'
 import { wearShare } from './share'
 
 export { discShare, globeShare, wearShare } from './share'
@@ -26,6 +27,7 @@ export interface FarSunView {
   time: number
   holdTime: number
   exposure: number
+  burn: number
   vignette: number
   aspect: number
   height: number
@@ -36,6 +38,22 @@ tri.setAttribute('position', new THREE.BufferAttribute(new Float32Array([-1, -1,
 const flat = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1)
 
 export const PARTS = { body: 1, corona: 2, loops: 4, glare: 8, all: 15 }
+
+function faceTexture(): THREE.DataTexture {
+  const raw = atob(FACE.data)
+  const data = new Uint8Array(raw.length)
+  for (let i = 0; i < raw.length; i++) data[i] = raw.charCodeAt(i)
+  const tex = new THREE.DataTexture(data, FACE.width, FACE.height, THREE.RedFormat, THREE.UnsignedByteType)
+  tex.colorSpace = THREE.NoColorSpace
+  tex.wrapS = THREE.RepeatWrapping
+  tex.wrapT = THREE.ClampToEdgeWrapping
+  tex.generateMipmaps = true
+  tex.minFilter = THREE.LinearMipmapLinearFilter
+  tex.magFilter = THREE.LinearFilter
+  tex.unpackAlignment = 1
+  tex.needsUpdate = true
+  return tex
+}
 
 export class FarSun {
   readonly material: THREE.ShaderMaterial
@@ -91,10 +109,10 @@ export class FarSun {
         uReach: { value: look.reach }, uLimbU: { value: new THREE.Vector3().fromArray(look.limb.u) }, uLimbV: { value: new THREE.Vector3().fromArray(look.limb.v) },
         uColour: { value: new THREE.Vector3().fromArray(look.body.colour) }, uBright: { value: 1 }, uCeiling: { value: look.body.ceiling }, uHeat: { value: new THREE.Vector3().fromArray(look.body.heat) },
         uGrainScale: { value: new THREE.Vector3().fromArray(look.grain.scale) }, uGrainDepth: { value: new THREE.Vector3().fromArray(look.grain.depth) }, uGrainLife: { value: new THREE.Vector3().fromArray(look.grain.life) },
-        uSpots: { value: new THREE.Vector4(look.spots.mean, 0, look.spots.power, look.spots.gain) }, uSpotLook: { value: new THREE.Vector4(look.spots.bright[0]!, look.spots.bright[1]!, look.spots.limb, 0) },
+        uFace: { value: faceTexture() }, uFaceSize: { value: new THREE.Vector2(FACE.width, FACE.scale) }, uSpots: { value: new THREE.Vector4(0, 0, look.spots.power, look.spots.gain) }, uSpotLook: { value: new THREE.Vector4(look.spots.bright[0]!, look.spots.bright[1]!, look.spots.limb, 0) },
         uChromo: { value: new THREE.Vector4(look.chromosphere.height, look.chromosphere.gain, 0, 0) }, uChromoColour: { value: new THREE.Vector3().fromArray(look.chromosphere.colour) }, uSpicules: { value: new THREE.Vector2().fromArray(look.chromosphere.spicules) },
         uCorona: { value: new THREE.Vector4(look.corona.steps, look.corona.gain, look.corona.scale[0]!, look.corona.scale[1]!) }, uCoronaRays: { value: new THREE.Vector3(look.corona.rays[0]!, look.corona.rays[1]!, look.corona.far) },
-        uCoronaFront: { value: look.corona.front }, uGlareInside: { value: look.glare.inside }, uCoronaNear: { value: new THREE.Vector3().fromArray(look.corona.near) }, uCoronaWide: { value: new THREE.Vector3().fromArray(look.corona.wide) },
+        uCoronaFront: { value: look.corona.front }, uBurn: { value: new THREE.Vector4(1, 0, look.burn.fall, 0) }, uIrrColour: { value: new THREE.Vector3().fromArray(look.burn.colour) }, uGlareInside: { value: look.glare.inside }, uCoronaNear: { value: new THREE.Vector3().fromArray(look.corona.near) }, uCoronaWide: { value: new THREE.Vector3().fromArray(look.corona.wide) },
         uProm: { value: new THREE.Vector4(look.prominence.steps, look.prominence.shell, look.prominence.gain, look.prominence.flow) }, uPromColour: { value: new THREE.Vector3().fromArray(look.prominence.colour) }, uPromHot: { value: new THREE.Vector3().fromArray(look.prominence.hot) },
         uLoopMid: { value: mid }, uLoopAlong: { value: along }, uLoopUp: { value: up }, uLoopShape: { value: shape }, uLoops: { value: Math.min(look.loops.length, MAX_LOOPS) },
         uGlare: { value: new THREE.Vector4(0, 0, look.glare.tight, look.glare.wide) }, uGlareColour: { value: new THREE.Vector3().fromArray(look.glare.colour) }, uParts: { value: PARTS.all },
@@ -111,7 +129,11 @@ export class FarSun {
     wear(hold: FarSunHold | null): void {
     const u = this.material.uniforms
     u.uMapOn!.value = hold ? 1 : 0
-    if (!hold) return
+    if (!hold) {
+      u.uMap!.value = null
+      u.uGrade!.value = null
+      return
+    }
     u.uMap!.value = hold.map
     u.uGrade!.value = hold.grade
     u.uMapWidth!.value = hold.mapWidth
@@ -144,7 +166,9 @@ export class FarSun {
     ;(u.uLens!.value as THREE.Vector2).set(view.vignette, view.aspect)
     u.uPixel!.value = 2 / (p[5]! * view.height)
     const far = 1 - wearShare(distance)
-    u.uBright!.value = look.body.bright[0]! + (look.body.bright[1]! - look.body.bright[0]!) * far
+    const burnt = Math.pow(look.burn.gain, Math.min(Math.max(view.burn, 0), 1))
+    u.uBright!.value = (look.body.bright[0]! + (look.body.bright[1]! - look.body.bright[0]!) * far) * burnt
+    ;(u.uBurn!.value as THREE.Vector4).set(Math.pow(burnt, look.burn.gas), (look.burn.glow * (burnt - 1)) / (look.burn.gain - 1), look.burn.fall, 0)
     ;(u.uGlare!.value as THREE.Vector4).x = look.glare.gain[0]! + (look.glare.gain[1]! - look.glare.gain[0]!) * far
     u.uParts!.value = this.parts
     u.uDepth!.value = depth

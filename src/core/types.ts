@@ -18,7 +18,7 @@ export interface PostParams {
   sharpen: number
 }
 
-export interface FarSunState { centre?: THREE.Vector3; share: number; body: THREE.Quaternion; spin: number; holdTime: number; time: number; exposure: number; vfov: number }
+export interface FarSunState { centre?: THREE.Vector3; share: number; body: THREE.Quaternion; spin: number; holdTime: number; time: number; exposure: number; vfov: number; burn: number }
 
 export interface SunState { dir: THREE.Vector3; color: THREE.Color; intensity: number; angularRadius: number; glare: number; far?: FarSunState }
 

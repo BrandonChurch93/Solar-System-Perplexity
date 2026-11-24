@@ -69,7 +69,11 @@ uniform vec4 uLoopShape[${MAX_LOOPS}];
 uniform int uLoops;
 uniform vec4 uGlare;
 uniform vec3 uGlareColour;
+uniform sampler2D uFace;
+uniform vec2 uFaceSize;
 uniform float uGlareInside;
+uniform vec4 uBurn;
+uniform vec3 uIrrColour;
 uniform int uParts;
 in vec2 vNdc;
 out vec4 outColor;
@@ -154,13 +158,9 @@ vec3 whiteLook(vec3 d, float mu, float pixel) {
   heat += uGrainDepth.x * (granule(d, uGrainScale.x, uGrainLife.x) - 0.55) * (1.0 - smoothstep(0.12, 0.4, pixel * uGrainScale.x));
   for (int k = 0; k < (pixel * uGrainScale.y < 0.4 ? 1 : 0); k++) heat += uGrainDepth.y * (granule(d, uGrainScale.y, uGrainLife.y) - 0.55) * (1.0 - smoothstep(0.12, 0.4, pixel * uGrainScale.y));
   for (int k = 0; k < (pixel * uGrainScale.z < 0.4 ? 1 : 0); k++) heat += uGrainDepth.z * (granule(d, uGrainScale.z, uGrainLife.z) - 0.55) * (1.0 - smoothstep(0.12, 0.4, pixel * uGrainScale.z));
-  float face = 0.0;
-  for (int k = 0; k < (uMapOn > 0.0 ? 1 : 0); k++) {
-    float lod = log2(uMapWidth / 1024.0);
-    float fine = lumAt(d, max(lod + log2(max(pixel * 1024.0 / 6.283185307179586, 1e-3)), 0.0));
-    heat *= pow(clamp(fine / uSpots.x, 0.02, 6.0), uSpots.z);
-    face = uSpots.w * smoothstep(uSpotLook.x, uSpotLook.y, fine) * (1.0 + uSpotLook.z * (1.0 - mu));
-  }
+  float fine = textureLod(uFace, mapUv(d), max(log2(max(pixel * uFaceSize.x / 6.283185307179586, 1e-3)), 0.0)).r * uFaceSize.y;
+  heat *= pow(fine, uSpots.z);
+  float face = uSpots.w * smoothstep(uSpotLook.x, uSpotLook.y, fine) * (1.0 + uSpotLook.z * (1.0 - mu));
   heat = max(heat, 0.03);
   vec3 limb = vec3(1.0) - uLimbU - uLimbV + uLimbU * mu + uLimbV * mu * mu;
   return uColour * pow(vec3(heat), uHeat) * limb + uColour * face * mix(limb, vec3(1.0), 0.5);
@@ -219,7 +219,8 @@ void main() {
   float hit = -b - sqrt(max(1.0 - near2, 0.0));
   vec2 lq = vNdc * 0.5 * vec2(uLens.y, 1.0);
   float vig = mix(1.0, 1.0 / pow(1.0 + dot(lq, lq) * 0.9, 2.0), uLens.x);
-  float lens = uGain / mix(1.0, vig, uWear);
+  float lens = uGain / vig;
+  float dim = mix(vig, 1.0, uWear);
   for (int k = 0; k < (cover > 0.0 && (uParts & 1) != 0 ? 1 : 0); k++) {
     vec3 p = normalize(ro + rd * hit);
     float mu = clamp(dot(p, -rd), 0.0, 1.0);
@@ -239,7 +240,7 @@ void main() {
     }
     for (int j = 0; j < (uWear < 1.0 || uMapOn <= 0.0 ? 1 : 0); j++) {
       float share = uMapOn > 0.0 ? 1.0 - uWear : 1.0;
-      body += share * inverseFilmic(shoulder(whiteLook(d, mu, pixel / max(mu, 0.2)) * uBright));
+      body += share * inverseFilmic(shoulder(whiteLook(d, mu, pixel / max(mu, 0.2)) * (uBright * dim)));
     }
     col = body * cover;
     alpha = cover;
@@ -254,7 +255,7 @@ void main() {
     float path = (sqrt(max(top * top - near2, 0.0)) - sqrt(max(1.0 - near2, 0.0))) * through * ahead;
     vec3 tangent = spinY(normalize(ro + rd * (-b)), uSpin);
     float spic = 1.0 + uSpicules.y * (vnoise(tangent * uSpicules.x + vec3(0.0, uTime * 0.6, 0.0)) - 0.5) * 2.0;
-    gas += uChromoColour * (uChromo.y * path / max(uChromo.x, 1e-4) * 0.05 * max(spic, 0.0));
+    gas += uChromoColour * (uBurn.x * uChromo.y * path / max(uChromo.x, 1e-4) * 0.05 * max(spic, 0.0));
     int steps = int(uCorona.x);
     float dt = (end - t0) / float(steps);
     vec3 sum = vec3(0.0);
@@ -297,17 +298,18 @@ void main() {
           sum += g;
           warm += heat;
         }
-        gas += mix(uPromColour, uPromHot, smoothstep(1.5, 5.0, warm * dt * 60.0)) * (sum * dt * uProm.z);
+        gas += mix(uPromColour, uPromHot, smoothstep(1.5, 5.0, warm * dt * 60.0)) * (sum * dt * uProm.z * uBurn.x);
       }
     }
   }
+  gas *= dim;
   col += gas;
   alpha = max(alpha, 1.0 - exp(-dot(gas, vec3(0.3, 0.5, 0.2)) * 0.5));
   for (int k = 0; k < ((uParts & 8) != 0 ? 1 : 0); k++) {
     float o = max(x, 1.0) - 1.0;
     float inside = 1.0 - smoothstep(0.6, 1.0, x);
     float glow = uGlare.x * (exp(-o * uGlare.z) + uGlare.w / (1.0 + o * o * 1.5)) * (1.0 - uGlareInside * inside) * ahead;
-    col += uGlareColour * glow * (1.0 - uWear);
+    col += (uGlareColour * glow + uIrrColour * (uBurn.y * exp(-o * o * uBurn.z * uBurn.z) * (1.0 - uGlareInside * inside) * ahead)) * ((1.0 - uWear) * dim);
   }
   col *= lens * uOpacity;
   outColor = vec4(col, alpha * uOpacity);
