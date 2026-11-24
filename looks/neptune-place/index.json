@@ -1,9 +1,33 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T04:53:28.059Z",
- "head": "2a7f964088d1797fd1a135237bebe3c57ba92661",
- "note": "04:55 the dive on the engine's one move, every frame 4716 to 4769: no pop at T (4757 to 4758); the two forms 4720 to 4734 and the veil's slab stay on the list",
+ "pushed": "2026-11-24T05:14:32.050Z",
+ "head": "61e3be043daeb15d4a4de5d1699f79d7a02dc23f",
+ "note": "rise on the one move 4950 to 4985 every frame: no step at T 4956, one pull back; seam tool on my tree: dive 1.010, rise 0.942 at 4950 (one capture frame)",
  "looks": [
+  {
+   "time": "2026-11-24T05:14:30.775Z",
+   "file": "20261124051430775-note-s-R1-4974.jpg",
+   "source": "../../../../tmp/s-R1-4974.jpg",
+   "kind": "note",
+   "label": "R1 rise on the one move, every frame from 4974, preview draft (T 4956)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T05:14:29.558Z",
+   "file": "20261124051429558-note-s-R1-4962.jpg",
+   "source": "../../../../tmp/s-R1-4962.jpg",
+   "kind": "note",
+   "label": "R1 rise on the one move, every frame from 4962, preview draft (T 4956)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T05:14:28.187Z",
+   "file": "20261124051428187-note-s-R1-4950.jpg",
+   "source": "../../../../tmp/s-R1-4950.jpg",
+   "kind": "note",
+   "label": "R1 rise on the one move, every frame from 4950, preview draft (T 4956)",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T04:53:26.560Z",
    "file": "20261124045326560-note-s-W1-4764.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/s-W1-4716.jpg",
    "kind": "note",
    "label": "Dive on the one move, every frame from 4716 (preview draft, not committed yet)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T04:27:13.153Z",
-   "file": "20261124042713153-note-s-W1-4704.jpg",
-   "source": "../../../../tmp/s-W1-4704.jpg",
-   "kind": "note",
-   "label": "Dive on the one move, 4704 to 4715 (the scene comes in by height from 4708)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T04:27:11.928Z",
-   "file": "20261124042711928-note-s-W1-4692.jpg",
-   "source": "../../../../tmp/s-W1-4692.jpg",
-   "kind": "note",
-   "label": "Dive on the one move, 4692 to 4703",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T04:27:10.763Z",
-   "file": "20261124042710763-note-s-W1-4680.jpg",
-   "source": "../../../../tmp/s-W1-4680.jpg",
-   "kind": "note",
-   "label": "Dive on the engine's one move, every frame 4680 to 4691, preview draft (not committed yet)",
    "stop": "neptune"
   }
  ]
