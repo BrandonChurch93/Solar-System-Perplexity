@@ -1,9 +1,49 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T04:06:45.977Z",
- "head": "105da414c7ad3810f0b153d925ccd89ab64604d0",
- "note": "the dive with T11, every frame 4732 to 4767; proof a of NOTE 501 holds (five master draft hashes equal with the factor in)",
+ "pushed": "2026-11-24T04:27:14.446Z",
+ "head": "30df610d123e1604884eb37169b889124f11eaf8",
+ "note": "04:27 parity pairs green after the factor; 4860 pair T11; the dive on the one move, first 36 frames",
  "looks": [
+  {
+   "time": "2026-11-24T04:27:13.153Z",
+   "file": "20261124042713153-note-s-W1-4704.jpg",
+   "source": "../../../../tmp/s-W1-4704.jpg",
+   "kind": "note",
+   "label": "Dive on the one move, 4704 to 4715 (the scene comes in by height from 4708)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T04:27:11.928Z",
+   "file": "20261124042711928-note-s-W1-4692.jpg",
+   "source": "../../../../tmp/s-W1-4692.jpg",
+   "kind": "note",
+   "label": "Dive on the one move, 4692 to 4703",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T04:27:10.763Z",
+   "file": "20261124042710763-note-s-W1-4680.jpg",
+   "source": "../../../../tmp/s-W1-4680.jpg",
+   "kind": "note",
+   "label": "Dive on the engine's one move, every frame 4680 to 4691, preview draft (not committed yet)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T04:27:09.427Z",
+   "file": "20261124042709427-note-pair-4860-T11.jpg",
+   "source": "../../../../tmp/pair-4860-T11.jpg",
+   "kind": "note",
+   "label": "4860 beside the approved image, master draft, commit 30df610d (T11); G17 median 1.002, p25 0.790, 75 tiles",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T04:22:57.520Z",
+   "file": "20261124042257520-note-par-panel.jpg",
+   "source": "../../../../tmp/par-panel.png",
+   "kind": "note",
+   "label": "Parity pairs after the factor of note 501 (draft): 4702, 4725, 5006 uhd against master; 4747, 4860 master against preview; all under the limits",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T04:06:45.369Z",
    "file": "20261124040645369-note-s-V1-4756.jpg",
@@ -26,46 +66,6 @@
    "source": "../../../../tmp/s-V1-4732.jpg",
    "kind": "note",
    "label": "the dive V1 (T11 on merged main), every frame 4732 to 4743: the scene alone on the globe; from this height the veil reads as a grey slab with a straight edge and a stepped west end",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T03:42:52.863Z",
-   "file": "20261124034252863-note-s-V1-4720.jpg",
-   "source": "../../../../tmp/s-V1-4720.jpg",
-   "kind": "note",
-   "label": "the dive, every frame 4720 to 4731: two forms at once from 4724 to 4730 (the map's long streak and bow go, the scene's ridge and eye come), the fault that the map giving way inside the fan cures next",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T03:42:51.756Z",
-   "file": "20261124034251756-note-s-V1-4708.jpg",
-   "source": "../../../../tmp/s-V1-4708.jpg",
-   "kind": "note",
-   "label": "the dive with T11 on the merge of main 0e5ddf1b, every frame 4708 to 4719: the globe's own map",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T03:42:50.523Z",
-   "file": "20261124034250523-note-q-T11.jpg",
-   "source": "../../../../tmp/q-T11.jpg",
-   "kind": "note",
-   "label": "4860 draft T11 (above) over the approved image (below), the config of the next commit",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T03:22:38.144Z",
-   "file": "20261124032238144-note-v-D1.jpg",
-   "source": "../../../../tmp/v-D1.jpg",
-   "kind": "note",
-   "label": "dive spread T8: 4707 to 4769 every sixth frame, 4770, 4774, 4860 (preview draft)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T03:22:37.594Z",
-   "file": "20261124032237594-note-d1-pair.jpg",
-   "source": "../../../../tmp/d1-pair.jpg",
-   "kind": "note",
-   "label": "4860 draft T8 (below) under the approved image (above), work tree on 85312d1b",
    "stop": "neptune"
   }
  ]
