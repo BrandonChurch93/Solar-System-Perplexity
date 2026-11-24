@@ -1,9 +1,69 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T06:10:29.426Z",
+ "pushed": "2026-11-24T06:29:30.586Z",
  "head": "68780bfd06d6ba1d796c819be3c19df0db80f94f",
- "note": "06:15 UTC, head 68780bf. T of the rise (3230 to 3244, every frame) is clean: no border of the set, no far edge, no jump at 3240. Worst thing found: from 3243 + 1/2 the nearest cloud bank of the plates comes into the bottom left corner, pale, flat and soft this close (60 px at 3244, 460 px at 3248), passing by about 3258. Not cured yet; the bend takes the eye 0.43 units to the left, toward that bank. Pictures part of the rise is rendering.",
+ "note": "06:30 UTC: trial A of the bend (through the right) on the rise's first frames; panels of the rise's pictures part on 68780bf (red: level step 1.96 at 3282 + 1/2, pop 1.23 at 3313, pattern 1.07)",
  "looks": [
+  {
+   "time": "2026-11-24T06:29:29.474Z",
+   "file": "20261124062929474-note-jupiter-rise-pops.jpg",
+   "source": "../work/seam/jupiter-rise-pops.jpg",
+   "kind": "note",
+   "label": "pictures part of 68780bf, rise: the four largest pops; at 3313 what is left is the star field",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T06:29:28.278Z",
+   "file": "20261124062928278-note-jupiter-rise-changes.jpg",
+   "source": "../work/seam/jupiter-rise-changes.jpg",
+   "kind": "note",
+   "label": "pictures part of 68780bf, rise: the pattern panel (white is 1)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T06:29:27.099Z",
+   "file": "20261124062927099-note-A-rise-b.jpg",
+   "source": "../work/seam/A-rise-b.jpg",
+   "kind": "note",
+   "label": "draft, trial A: rise 3250 to 3261, every frame; the bank enters bottom left at 3251, the set is seen as an island from 3254",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T06:29:25.932Z",
+   "file": "20261124062925932-note-A-rise-a.jpg",
+   "source": "../work/seam/A-rise-a.jpg",
+   "kind": "note",
+   "label": "draft, trial A (bend through the right): rise 3239 to 3250, every frame",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T06:28:53.160Z",
+   "file": "20261124062853160-frame-f03159.jpg",
+   "source": "out/work/jupiter/frames/A2/f03159.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3159, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3159,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "3da6c690cf58b2c3"
+  },
+  {
+   "time": "2026-11-24T06:28:03.457Z",
+   "file": "20261124062803457-frame-f03259.jpg",
+   "source": "out/work/jupiter/frames/A2/f03259.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3259, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3259,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "3da6c690cf58b2c3"
+  },
   {
    "time": "2026-11-24T06:10:28.051Z",
    "file": "20261124061028051-note-bendview.jpg",
@@ -18,54 +78,6 @@
    "source": "../work/seam/rise-s1.jpg",
    "kind": "note",
    "label": "Draft, every film frame 3241 to 3248 of the rise, head 68780bf (pale wedge in the bottom left corner from 3244)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T06:04:24.132Z",
-   "file": "20261124060424132-note-rise-bl1.jpg",
-   "source": "../work/seam/rise-bl1.jpg",
-   "kind": "note",
-   "label": "Draft at full size, bottom left corner, 3243 to 3248, head 68780bf: the nearest cloud bank of the plates and soft ground beside it come into the corner from 3243 + 1/2 (60 px at 3244, 460 px at 3248), flat and soft this close. Not cured.",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T05:59:01.550Z",
-   "file": "20261124055901550-note-T-rise-c2.jpg",
-   "source": "../work/seam/T-rise-c2.jpg",
-   "kind": "note",
-   "label": "Draft at full size, bottom left: 3239 beside 3240, head 68780bf",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T05:59:00.446Z",
-   "file": "20261124055900446-note-T-rise-c3.jpg",
-   "source": "../work/seam/T-rise-c3.jpg",
-   "kind": "note",
-   "label": "Draft at full size, top left: 3239 (surface view) beside 3240 (first frame of the rise), head 68780bf",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T05:58:59.152Z",
-   "file": "20261124055859152-note-T-rise-a.jpg",
-   "source": "../work/seam/T-rise-a.jpg",
-   "kind": "note",
-   "label": "Draft, every film frame 3230 to 3244 across the change of view of the rise (T 3240), head 68780bf: no border of the set, no far edge of the ground, no jump at T (frame to frame mean absolute change 3.74, 3.73, 3.74 across it)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T05:49:59.438Z",
-   "file": "20261124054959438-note-jupiter-parity.jpg",
-   "source": "out/work/logs/bB/jupiter-parity.png",
-   "kind": "note",
-   "label": "parity on 68780bf, green: mean 1.979 at 3353, coarse 1.148, block -7.685 at 3038, frame -1.123",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T05:49:58.122Z",
-   "file": "20261124054958122-note-pair-2895-kept-new.jpg",
-   "source": "../work/seam/pair-2895-kept-new.jpg",
-   "kind": "note",
-   "label": "judged 2895 at final: kept still left, head 68780bf right (sha 90e92669, the hold sky of MAIL 448)",
    "stop": "jupiter"
   }
  ]
