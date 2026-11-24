@@ -1,9 +1,10 @@
-export interface Read { k: number; pattern: number | null; patternMap?: number | null }
+export interface Read { k: number; pattern: number | null; patternMap?: number | null; patternMapNo?: string | null }
 
-export interface Apart { first: number; last: number; rows: number; k: number; main: number; map: number; red: 'main' | 'map' }
+export interface Apart { first: number; last: number; rows: number; k: number; main: number; map: number; red: 'main' | 'map'; no?: string }
 
 // The rows where main's reader and the reader by the camera's map fall on different sides of their limits, as runs of rows that follow each
-// other: each run with the row where the two lie farthest apart. A row either reader has no number for is in no run and ends one.
+// other: each run with the row where the two lie farthest apart. A row either reader has no number for is in no run and ends one; a row the
+// map's reader refuses (patternMapNo) is a red of it, farther from main's number than any reading.
 export function apart<T extends Read>(rows: T[], max: number | null, mapMax: number | null): Apart[] {
   if (max === null || mapMax === null) return []
   const out: Apart[] = []
@@ -11,7 +12,8 @@ export function apart<T extends Read>(rows: T[], max: number | null, mapMax: num
   let before = Number.NaN
   for (const row of rows) {
     const main = row.pattern
-    const map = row.patternMap
+    const no = row.patternMapNo ?? null
+    const map = no !== null ? Number.POSITIVE_INFINITY : row.patternMap
     const differs = main !== null && map !== null && map !== undefined && main > max !== map > mapMax
     if (!differs) {
       run = null
@@ -21,9 +23,9 @@ export function apart<T extends Read>(rows: T[], max: number | null, mapMax: num
     if (run && row.k === before + 1 && run.red === red) {
       run.last = row.k
       run.rows += 1
-      if (Math.abs(main! - map!) > Math.abs(run.main - run.map)) Object.assign(run, { k: row.k, main: main!, map: map! })
+      if (Math.abs(main! - map!) > Math.abs(run.main - run.map)) Object.assign(run, { k: row.k, main: main!, map: map!, ...(no !== null ? { no } : {}) })
     } else {
-      run = { first: row.k, last: row.k, rows: 1, k: row.k, main: main!, map: map!, red }
+      run = { first: row.k, last: row.k, rows: 1, k: row.k, main: main!, map: map!, red, ...(no !== null ? { no } : {}) }
       out.push(run)
     }
     before = row.k
@@ -31,12 +33,13 @@ export function apart<T extends Read>(rows: T[], max: number | null, mapMax: num
   return out
 }
 
-// The rows shown as pictures: the largest reading by the map and one row of each run where the two readers differ, at most count of them.
+// The rows shown as pictures: the largest reading by the map and one row of each run where the two readers differ, the refused first, at most
+// count of them.
 export function shownRows<T extends Read>(rows: T[], max: number | null, mapMax: number | null, count: number): T[] {
   const read = rows.filter((row) => row.patternMap !== null && row.patternMap !== undefined)
-  if (read.length === 0) return []
-  const ks = new Set<number>([read.reduce((x, y) => (y.patternMap! > x.patternMap! ? y : x)).k])
-  for (const run of apart(rows, max, mapMax).sort((x, y) => Math.abs(y.main - y.map) - Math.abs(x.main - x.map))) {
+  const ks = new Set<number>(read.length > 0 ? [read.reduce((x, y) => (y.patternMap! > x.patternMap! ? y : x)).k] : [])
+  const far = (run: Apart): number => (run.no ? Number.MAX_VALUE : Math.abs(run.main - run.map))
+  for (const run of apart(rows, max, mapMax).sort((x, y) => far(y) - far(x))) {
     if (ks.size >= count) break
     ks.add(run.k)
   }

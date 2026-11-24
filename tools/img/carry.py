@@ -17,6 +17,10 @@ import smooth as S  # noqa: E402
 STEPS = 2
 LOWEST = -3 * STEPS
 SAME = 0.02
+BULK_PX = 8.0
+APART = 0.5
+NOT_CARRIED = 'the range does not carry the pattern'
+TWO_GROUNDS = 'two grounds'
 FLOW_PX = 0.5
 RULES = ('map', 'sky', 'flow')
 UNIT = [0.0, 0.0, 0.0, 1.0]
@@ -127,19 +131,27 @@ def carry(depth, which, a, b):
     return np.where(held, mx, xs).astype(np.float32), np.where(held, my, ys).astype(np.float32), far, held
 
 
-def seen(mx, my, far, held, which, depth, body):
-    """Where a carried pixel arrives on the surface it left: depth and body are the depth picture of the frame it arrives in. The body there is
-    its own and the distance to the lens is the one the picture holds at that place or beside it, to SAME of it; the sky arrives on sky. What
-    is covered in the frame it arrives in, or was covered where it left, is not seen."""
+def met(mx, my, far, held, which, depth, body):
+    """Where a carried pixel of a body arrives on its own body (own), and where the distance to the lens there is the one the picture holds
+    at that place or beside it, to SAME of it (at)."""
     solid = (body > 0) & np.isfinite(depth) & (depth > 0)
     near = cv2.erode(np.where(solid, depth, np.inf).astype(np.float32), np.ones((3, 3), np.uint8))
     wide = cv2.dilate(np.where(solid, depth, 0).astype(np.float32), np.ones((3, 3), np.uint8))
     take = lambda x: cv2.remap(x, mx, my, cv2.INTER_NEAREST, borderMode=cv2.BORDER_REPLICATE)
-    lo, hi, at = take(near), take(wide), take(np.where(solid, body, 0).astype(np.float32))
+    lo, hi, on = take(near), take(wide), take(np.where(solid, body, 0).astype(np.float32))
     ground = (which > 0) & np.isfinite(far)
+    own = held & ground & (on == which)
     with np.errstate(all='ignore'):
-        same = np.where(ground, (at == which) & (far >= lo * (1 - SAME)) & (far <= hi * (1 + SAME)), at == 0)
-    return held & same
+        at = own & (far >= lo * (1 - SAME)) & (far <= hi * (1 + SAME))
+    return own, at, held & ~ground & (on == 0)
+
+
+def seen(mx, my, far, held, which, depth, body):
+    """Where a carried pixel arrives on the surface it left: depth and body are the depth picture of the frame it arrives in. The body there is
+    its own and the distance to the lens is the one the picture holds at that place or beside it, to SAME of it; the sky arrives on sky. What
+    is covered in the frame it arrives in, or was covered where it left, is not seen."""
+    _, at, sky = met(mx, my, far, held, which, depth, body)
+    return at | sky
 
 
 def grown(mx, my, held):
@@ -252,7 +264,17 @@ def read(a, b, margin, scale, wide, floor):
     ok &= ~edge
     p = S.pattern(picture, later, ok, wide / 5, wide, floor)
     value, at, share = S.patterned(p)
-    out = {'value': value, 'at': [int(round(at[0] / scale)), int(round(at[1] / scale))] if at else None, 'share': share, 'on': on, 'by': None, 'rule': None, 'left': None, 'units': None}
+    out = {'value': value, 'at': [int(round(at[0] / scale)), int(round(at[1] / scale))] if at else None, 'share': share, 'on': on, 'by': None, 'rule': None, 'left': None, 'units': None, 'bulk': None, 'apart': None, 'no': None, 'refused': None}
+    body = way[3] & (a['which'] > 0) & ~edge
+    own, met_at, _ = met(*way, a['which'], b['depth'], b['which'])
+    if body.any():
+        out['bulk'] = float(np.median(size[body]) / scale)
+    if (own & ~edge).any():
+        out['apart'] = float((own & ~met_at & ~edge).sum() / (own & ~edge).sum())
+    if out['bulk'] is not None and out['bulk'] > BULK_PX:
+        out['no'] = NOT_CARRIED
+    elif out['apart'] is not None and out['apart'] > APART:
+        out['no'] = TWO_GROUNDS
     if value is None:
         return out, (p, later, rule)
     judged = np.isfinite(p)
@@ -263,6 +285,8 @@ def read(a, b, margin, scale, wide, floor):
     out['left'] = float(np.percentile(size[held], 99) / scale) if held.any() else None
     if a.get('unit') is not None:
         out['units'] = [float((judged & (a['unit'] == i)).sum() / judged.sum()) for i in range(len((a['pose'].get('range') or {}).get('units') or [1]))]
+    if out['no']:
+        out['refused'], out['value'] = value, None
     return out, (p, later, rule)
 
 

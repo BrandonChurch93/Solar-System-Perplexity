@@ -359,7 +359,7 @@ def mapped(job, paths, frames, poses, scale, margin, wide, floor, reach, rows):
     the flow on the carried pair, the reading after both (carry.py). Keys of their own: patternMap and what belongs to it."""
     import carry as C
     n = len(paths)
-    keys = {key: [None] * n for key in ('patternMap', 'patternMapAt', 'patternMapShare', 'patternMapOn', 'patternMapBy', 'patternMapRule', 'patternMapLeft', 'patternMapUnits')}
+    keys = {key: [None] * n for key in ('patternMap', 'patternMapAt', 'patternMapShare', 'patternMapOn', 'patternMapBy', 'patternMapRule', 'patternMapLeft', 'patternMapUnits', 'patternMapBulk', 'patternMapApart', 'patternMapNo', 'patternMapRefused')}
     held = {}
     depths = job.get('depths') or [None] * n
 
@@ -378,6 +378,8 @@ def mapped(job, paths, frames, poses, scale, margin, wide, floor, reach, rows):
         out, _ = C.read(frame(i), frame(i + reach), margin, scale, wide, floor)
         keys['patternMap'][i], keys['patternMapAt'][i], keys['patternMapShare'][i] = out['value'], out['at'], out['share']
         keys['patternMapOn'][i], keys['patternMapBy'][i], keys['patternMapRule'][i], keys['patternMapLeft'][i], keys['patternMapUnits'][i] = out['on'], out['by'], out['rule'], out['left'], out['units']
+        keys['patternMapBulk'][i], keys['patternMapApart'][i], keys['patternMapNo'][i], keys['patternMapRefused'][i] = out['bulk'], out['apart'], out['no'], out['refused']
+    keys['patternMapLimits'] = {'bulkPx': C.BULK_PX, 'apart': C.APART}
     return keys
 
 
@@ -403,7 +405,7 @@ def maps(job):
         out, row = C.panels(sides[0], sides[1], margin, scale, wide, low)
         readings.append(out)
         by = out['by'] or {}
-        rows.append((item['label'] + (': no reading' if out['value'] is None else ': %.2f read on the %s frame, shares map %.2f, sky %.2f, flow %.2f, largest block under the %s' % (out['value'], 'later' if out['on'] else 'first', by.get('map', 0), by.get('sky', 0), by.get('flow', 0), out['rule'])), row))
+        rows.append((item['label'] + (': no reading: %s (the flow left over the body %s px, the body at another distance on %s of it%s)' % (out['no'], '%.1f' % out['bulk'] if out['bulk'] is not None else 'none', '%.2f' % out['apart'] if out['apart'] is not None else 'none', ', the pair gave %.2f' % out['refused'] if out['refused'] is not None else '') if out['no'] else ': no reading' if out['value'] is None else ': %.2f read on the %s frame, shares map %.2f, sky %.2f, flow %.2f, largest block under the %s' % (out['value'], 'later' if out['on'] else 'first', by.get('map', 0), by.get('sky', 0), by.get('flow', 0), out['rule'])), row))
     if not rows:
         return {'written': False, 'readings': readings}
     return {'written': True, 'readings': readings, 'size': write_sheet(rows, job['output'], job.get('limit'))}

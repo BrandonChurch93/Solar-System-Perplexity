@@ -158,7 +158,7 @@ def tool(folder):
     other = S.pictures(job([0, 1, 3], carry=True, depths=[depths[j] for j in (0, 1, 3)]))
     ball = S.pictures(job([0, 1, 2], carry=True))
     return {'plainKeys': sorted(plain.keys()), 'mainSame': all(plain[k] == beside[k] for k in plain), 'more': sorted(set(beside) - set(plain)), 'main': plain['pattern'][0],
-            'clean': {k: beside[k][0] for k in beside if k.startswith('patternMap')}, 'exchange': {k: other[k][0] for k in other if k.startswith('patternMap')}, 'ball': ball['patternMap'][0], 'ballUnits': ball['patternMapUnits'][0], 'rows': [v is not None for v in beside['patternMap']]}
+            'limits': beside['patternMapLimits'], 'clean': {k: beside[k][0] for k in beside if k.startswith('patternMap') and k != 'patternMapLimits'}, 'exchange': {k: other[k][0] for k in other if k.startswith('patternMap') and k != 'patternMapLimits'}, 'ball': ball['patternMap'][0], 'ballUnits': ball['patternMapUnits'][0], 'rows': [v is not None for v in beside['patternMap']]}
 
 
 def main():
@@ -171,6 +171,10 @@ def main():
         untold['pose'] = {**untold['pose'], 'bodies': [{'place': [0, 0, 0], 'turn': t0}]}
         left, _, _ = read(frame(first, [globe(t0)]), untold)
         out[way] = {'clean': clean, 'exchange': other, 'untold': left}
+    low, high, turn = camera([0.2, 0.1, 1.12], [0.5, 0.3, 0.0]), camera([0.3, 0.1, 1.4], [0.4, 0.3, 0.0], 44, 3), about([0.1, 1, 0], 1)
+    a, b = frame(low, [globe(UNIT)]), frame(high, [globe(turn)])
+    shell = lambda f, pose, t: {**f, **{k: v for k, v in frame(pose, [globe(t, radius=1.03)]).items() if k in ('depth', 'which')}}
+    out['refusal'] = {'clean': read(a, b)[0], 'shell': read(shell(a, low, UNIT), shell(b, high, turn))[0], 'grounds': read(a, shell(b, high, turn))[0]}
     first, later, t0, t1 = leave(1, 'rise')
     a = frame(first, [globe(t0)])
     mx, my, far, held = C.carry(a['depth'], a['which'], a['pose'], frame(later, [globe(t1)])['pose'])

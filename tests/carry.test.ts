@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { apart, shownRows } from '../tools/smooth/maps'
 
-interface Reading { value: number | null; at: [number, number] | null; share: number; on: number; by: { map: number; sky: number; flow: number } | null; rule: string | null; left: number | null }
+interface Reading { value: number | null; at: [number, number] | null; share: number; on: number; by: { map: number; sky: number; flow: number } | null; rule: string | null; left: number | null; bulk: number | null; apart: number | null; no: string | null; refused: number | null }
 interface Way { clean: Reading; exchange: Reading; untold: Reading }
 interface Made {
   rise: Way
@@ -16,11 +16,13 @@ interface Made {
   oblate: { clean: Reading; ballOff: number; ballAgrees: number; asSphere: Reading }
   relief: { clean: Reading; asSphere: Reading }
   sky: { clean: Reading }
+  refusal: { clean: Reading; shell: Reading; grounds: Reading }
   range: { off: number; none: boolean; reduced: number; units: number; picked: boolean; pickedSmall: number[] }
-  tool: { plainKeys: string[]; mainSame: boolean; more: string[]; main: number | null; clean: Record<string, unknown>; exchange: Record<string, unknown>; ball: number | null; ballUnits: number[] | null; rows: boolean[] }
+  tool: { plainKeys: string[]; mainSame: boolean; more: string[]; limits: { bulkPx: number; apart: number }; main: number | null; clean: Record<string, unknown>; exchange: Record<string, unknown>; ball: number | null; ballUnits: number[] | null; rows: boolean[] }
 }
 
 const LIMIT = 0.45
+const NOT_CARRIED = 'the range does not carry the pattern'
 let made: Made
 let folder = ''
 
@@ -47,19 +49,42 @@ describe('the pattern of a pair read by the camera\'s own map, on made bodies wi
     expect(made.dive.clean.on).toBe(1)
   })
 
-  it('reads another pattern on the same body as an exchange, its largest block under the map', () => {
+  it('gives another pattern on the same body no reading: the map does not carry it, the pair itself an exchange, its largest block under the map', () => {
     for (const way of [made.rise, made.dive]) {
-      expect(way.exchange.value!).toBeGreaterThan(1)
+      expect(way.exchange.value).toBeNull()
+      expect(way.exchange.no).toBe(NOT_CARRIED)
+      expect(way.exchange.refused!).toBeGreaterThan(1)
       expect(way.exchange.rule).toBe('map')
     }
   })
 
-  it('leaves a turn the record does not tell to the flow, which finds it', () => {
+  it('gives a turn the record does not tell no reading, though the flow finds it: the flow left over the body is the evidence', () => {
     for (const way of [made.rise, made.dive]) {
-      expect(way.untold.value!).toBeLessThan(LIMIT)
+      expect(way.clean.bulk!).toBeLessThan(0.5)
+      expect(way.clean.no).toBeNull()
+      expect(way.untold.value).toBeNull()
+      expect(way.untold.no).toBe(NOT_CARRIED)
+      expect(way.untold.bulk!).toBeGreaterThan(made.tool.limits.bulkPx)
+      expect(way.untold.refused!).toBeLessThan(LIMIT)
       expect(way.untold.by!.flow).toBeGreaterThan(0.8)
       expect(way.untold.rule).toBe('flow')
     }
+  })
+
+  it('refuses a depth picture that lies off the surface the pattern is on, and says two grounds where the frames hold the body at two distances', () => {
+    const { clean, shell, grounds } = made.refusal
+    expect(clean.value!).toBeLessThan(0.05)
+    expect(clean.no).toBeNull()
+    expect(clean.bulk!).toBeLessThan(0.5)
+    expect(clean.apart!).toBeLessThan(0.05)
+    expect(shell.value).toBeNull()
+    expect(shell.no).toBe(NOT_CARRIED)
+    expect(shell.bulk!).toBeGreaterThan(made.tool.limits.bulkPx)
+    expect(shell.apart!).toBeLessThan(0.05)
+    expect(grounds.value).toBeNull()
+    expect(grounds.no).toBe('two grounds')
+    expect(grounds.bulk!).toBeLessThan(0.5)
+    expect(grounds.apart!).toBeGreaterThan(made.tool.limits.apart)
   })
 
   it('carries a moon the depth picture names by its own place and turn, and judges nothing of the ground it covers', () => {
@@ -108,14 +133,17 @@ describe('the pattern of a pair read by the camera\'s own map, on made bodies wi
     expect(made.tool.mainSame).toBe(true)
     expect(made.tool.plainKeys).toContain('pattern')
     expect(made.tool.plainKeys.some((k) => k.startsWith('patternMap'))).toBe(false)
-    expect(made.tool.more).toEqual(['patternMap', 'patternMapAt', 'patternMapBy', 'patternMapLeft', 'patternMapOn', 'patternMapRule', 'patternMapShare', 'patternMapUnits'])
+    expect(made.tool.more).toEqual(['patternMap', 'patternMapApart', 'patternMapAt', 'patternMapBulk', 'patternMapBy', 'patternMapLeft', 'patternMapLimits', 'patternMapNo', 'patternMapOn', 'patternMapRefused', 'patternMapRule', 'patternMapShare', 'patternMapUnits'])
+    expect(made.tool.limits).toEqual({ bulkPx: 8, apart: 0.5 })
     expect(made.tool.clean.patternMapUnits).toHaveLength(1)
     expect((made.tool.clean.patternMapUnits as number[])[0]!).toBeGreaterThan(0.5)
     expect(made.tool.ballUnits).toBeNull()
     expect(made.tool.rows).toEqual([true, false, false])
     expect(made.tool.clean.patternMap as number).toBeLessThan(0.05)
     expect(made.tool.ball as number).toBeLessThan(0.05)
-    expect(made.tool.exchange.patternMap as number).toBeGreaterThan(1)
+    expect(made.tool.exchange.patternMap).toBeNull()
+    expect(made.tool.exchange.patternMapNo).toBe(NOT_CARRIED)
+    expect(made.tool.exchange.patternMapRefused as number).toBeGreaterThan(1)
     expect(made.tool.exchange.patternMapRule).toBe('map')
   })
 })
@@ -139,5 +167,12 @@ describe('the rows where the two readers fall on different sides of their limits
     expect(shownRows(rows, 0.45, 0.45, 6).map((r) => r.k)).toEqual([11, 13, 15])
     expect(shownRows(rows, 0.45, 0.45, 2).map((r) => r.k)).toEqual([11, 13])
     expect(shownRows([row(1, 0.5, null)], 0.45, 0.45, 6)).toEqual([])
+  })
+
+  it('counts a row the map\'s reader refuses as a red of it, and shows it before any other', () => {
+    const no = (k: number, pattern: number | null): { k: number; pattern: number | null; patternMap: null; patternMapNo: string } => ({ k, pattern, patternMap: null, patternMapNo: 'two grounds' })
+    expect(apart([no(1, 0.2), no(2, 0.3), no(3, 0.9), no(4, null)], 0.45, 0.3)).toEqual([{ first: 1, last: 2, rows: 2, k: 1, main: 0.2, map: Number.POSITIVE_INFINITY, red: 'map', no: 'two grounds' }])
+    expect(shownRows([row(1, 0.5, 0.2), row(2, 0.7, 0.1), no(3, 0.2), row(4, 0.6, 0.6)], 0.45, 0.45, 2).map((r) => r.k)).toEqual([3, 4])
+    expect(shownRows([no(1, 0.2), no(2, null)], 0.45, 0.45, 6).map((r) => r.k)).toEqual([1])
   })
 })
