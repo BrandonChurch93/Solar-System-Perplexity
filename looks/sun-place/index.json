@@ -1,9 +1,44 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T08:53:14.489Z",
+ "pushed": "2026-11-24T09:32:23.315Z",
  "head": "19ca786c835a61e56e93066c55763f23c5346888",
- "note": "named head 19ca786c, rise every frame 212 to 229 at draft. Handover tool on it: sides pass, flow gap pass, every frame FAIL (body level steps 6.06 into frame 227, limit 6), cure in work. G5 and G17 PASS at review (60: median 1.377, lower quarter 1.171). Frame 60 final, sun-near: bands 0.173 0.187 0.156 0.131 0.108 0.080 0.058 0.050 0.023 | dark 0.206 body 0.583 pale 0.108 white 0.023 | half width 6.1 px, 2113 shapes, fine detail 0.0521, mean 0.357; distance 0.061; blur 40 px ground 0.0521, whole 0.0348",
+ "note": "trial, not committed: the ground takes the wide tone of the globe map at the place on the ball (one ground). My gauge of the pattern on the named head 225 to 233: 1.254; trial w2: 217 0.683, 221 0.720, 225 0.298, 229 0.073, 233 0.043 (limit 0.45): still red at 217 to 224, cause seen in w2-pats.png: the map's plage is stronger than the tone under the cells and the arcade leaves by height; next trial gives the tone by footprint and the arcade a long height. Frame 60 draft w2 sun-near: dark (under 0.15) 0.208 | body (0.15 to 0.55) 0.573 | pale (0.65 to 0.85) 0.106 | white (over 0.85) 0.032; brightest 15 percent: half width 6.4 px, 3329 shapes | fine detail 0.0558 | mean 0.360; distance 0.062. Frame 60 at one to one in w2-60-pair.jpg (approved left): cells still read as stones, look work of MAIL 547 waits behind the reds",
  "looks": [
+  {
+   "time": "2026-11-24T09:32:10.748Z",
+   "file": "20261124093210748-note-w1-rise.jpg",
+   "source": "../../../../tmp/w1-rise.jpg",
+   "kind": "note",
+   "label": "w1-rise.jpg: trial of one ground (the globe map's wide tone under the cells), not committed",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T09:32:10.189Z",
+   "file": "20261124093210189-note-w2-pats.jpg",
+   "source": "../../../../tmp/w2-pats.png",
+   "kind": "note",
+   "label": "w2-pats.png: trial of one ground (the globe map's wide tone under the cells), not committed",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T09:32:09.512Z",
+   "file": "20261124093209512-note-w2-60-pair.jpg",
+   "source": "../../../../tmp/w2-60-pair.jpg",
+   "kind": "note",
+   "label": "w2-60-pair.jpg: trial of one ground (the globe map's wide tone under the cells), not committed",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T09:06:16.808Z",
+   "file": "20261124090616808-compare-sun-rise-sides.jpg",
+   "source": "out/work/handover/sun-rise-sides.png",
+   "kind": "compare",
+   "label": "sun rise, both sides at T (frame 216) and their difference times 8",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 216,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-24T08:46:08.667Z",
    "file": "20261124084608667-job-frame-00000.jpg",
@@ -53,42 +88,6 @@
    "first": 204,
    "last": 215,
    "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T08:41:08.900Z",
-   "file": "20261124084108900-sheet-sun-rise-draft-across.jpg",
-   "source": "out/work/handover/sun-rise-draft-across.png",
-   "kind": "sheet",
-   "label": "sun rise, every frame 210 to 221 (across T, frame 216), draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "first": 210,
-   "last": 221,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T08:38:20.084Z",
-   "file": "20261124083820084-note-h221.jpg",
-   "source": "../../../../tmp/h221.jpg",
-   "kind": "note",
-   "label": "sun rise every frame 221 to 229, draft, named head 19ca786c",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T08:38:19.180Z",
-   "file": "20261124083819180-note-h212.jpg",
-   "source": "../../../../tmp/h212.jpg",
-   "kind": "note",
-   "label": "sun rise every frame 212 to 220, draft, named head 19ca786c (the change of view is at 216)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T08:29:24.769Z",
-   "file": "20261124082924769-note-h-196-211.jpg",
-   "source": "../../../../tmp/h-196-211.jpg",
-   "kind": "note",
-   "label": "sun rise on the named head 19ca786c, draft, every frame 196 to 211",
-   "stop": "sun"
   }
  ]
 }
