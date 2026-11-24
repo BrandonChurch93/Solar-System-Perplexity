@@ -3967,3 +3967,71 @@ is in the picture at 3 to 12 px, and the same crispness for the far ring across 
 - MAIN moved twice since the merge: 5cfbbf1 (status 230, Venus's warm list: kit/PROGRESS.md and
   src/core/warm.json) and 36970ce (Neptune's third named commit). Status 230: "Saturn's third by 13:00."
   I merge the newest main for the NAMED; my two picture trees stay those of 91d6247.
+- MAIL 656 (about 12:01 UTC), word for word: "PRE 2 read: 91d62470b26f63decf5f17ae69ee1cf6716bc4ee replaces
+  68b45619. The 13 jobs of the old PRE that were still waiting are withdrawn; no machine is spent on its rise
+  from here. Your third and last NAMED by 12:40 UTC as you wrote; it goes into its round as it stands. Because
+  the judged frame 3866 changes on purpose, show it beside the kept still in the NAMED (d186) and state the
+  hold 3465 and the surface view 3720 as bytes against your last proof. Ruled today on the judge (MAIL 653):
+  body() takes the globe's own scale, as your patch has it, so sky is no longer judged as the body at 3561;
+  the limit stays."
+- PROOF OF 91d6247, the rest (/tmp/v/r45):
+  - gate (11:54): "PASS G11  every asset has a row or a recipe" and "PASS G15  at most 2 sets per frame;
+    finished stops: saturn/web 274 MB, saturn/full 747 MB".
+  - vitest (12:00): exit 0, 465 tests in 48 files.
+  - finals: 3465 sha256 f4b3a39598b5e761fa1c45c9c3cf19836a621e6aa70a95453c64bbb654a2a963, equal to the byte
+    to the PRE 68b4561 and to 1e4bfd4 and 2ab7243 (not to the reference 21f107a6: 32.2 percent of the pixels
+    differ, largest 22, mean 0.325 of 255, as before). 3720 sha256
+    33bb2086f66838b044eb2cb0fbba49ae51dd2f35fe6486186b885c1e466617b7, equal to the byte to the PRE 68b4561
+    (1e4bfd4 had 408729eb; the reference 6c4e4e10 is the kept picture). 3866 sha256
+    29ee4549b5020a02ac1095156b3b41cfad8cb39baae968ca8df5d3424b757add, 214 s, 64 shutter samples (3465 and
+    3720 take 16: the lens is fast at 3866).
+  - parity (12:07): "VERDICT: green. No number is over its limit." Mean 2.785 at 3720 (limit 12), coarse
+    1.257 at 3720 (limit 3.2), block level -6.563 at 3866 (limit 12; the PRE: -6.722 at 3848), level -1.125
+    at 3720 (limit 2.2).
+  - head sample, 26 draft frames against the PRE's sample by bytes (12:10). Equal: 3330, 3350, 3370, 3389,
+    3390, 3420, 3465, 3510, 3539, 3573, 3576, 3630, 3660, 3720, 3780, 3809, 3960. Differ: 3842, 3852, 3859
+    (the rise, on purpose) and the travel 3885 (39.0 percent of the pixels, mean 3.47 of 255), 3890 (49.0
+    percent, mean 14.97), 3900 (31.0 percent, mean 6.73), 3922 (0.12 percent, largest 6), 3950 (0.06
+    percent, largest 7), 3959 (0.01 percent, largest 1). Why the travel differs to its end: carried() in
+    src/director/film.ts adds speed x span x carryWay(s) and rate x span squared x carryBend(s) to the
+    leaving pose, so the pose the travel leaves from stays carried on after the span and the travel takes
+    the difference out towards its end; 3960 is equal again. At 3885 also my sky.lift.power.
+  - 3866 at the final tier beside the kept still (3866_beside_kept.png), looked at whole and at full size in
+    three crops. The globe is nearer and larger than in the kept still (radius 392 px here) and
+    sharp; the far ring at the right, the globe's shadow on the ring, the moon over the limb and the sky are
+    crisp. The near ring at the lower left is drawn out along the flight by the film's shutter: its fine
+    lines stay lines, the grain between them is gone, and the nearest band in the corner is soft. The kept
+    still has the whole ring crisp there (its lens was slower at 3866). This is the price of one flight
+    through the seam: the fastest part of the rise is now 3874 (2.42 radii a second) and 3866 sits near it.
+    No blur cure of my own (MAIL 311). Open as item 16 of the list.
+- MERGED main 4885e4a (status 231 and d218, its progress file only) as 16bee4d. Trees of the head:
+  src/stops/saturn 7f13c95306f08c785073d108e624e595858a9a22, public/assets/saturn
+  75fa372a9187c0eb07c296a431b846aeb3962279, both equal to 91d6247's. No file outside my folders differs
+  from main. tsc exit 0 on 16bee4d. Path on 16bee4d: "VERDICT: green. No number is over its limit.", equal
+  from line 5 on to the report of 91d6247.
+- NOT RUN on 91d6247 before the NAMED: G13, the picture parts of the handover tool (sides, flow), the dive
+  pictures. The dive's code and numbers are the PRE's, where the dive pictures were green (level 0.01 at
+  3576, pop 1.04 at 3578, pattern 0.41 at 3565, limit 0.45), and the sample frames 3573 and 3576 are byte
+  equal. They run after the mail.
+- THE OPEN LIST FOR THE THIRD NAMED, worst first, old numbers kept, 16 is new:
+  16 the judged frame 3866: the near ring at the lower left is drawn out by the film's shutter (64 samples),
+     the kept still is crisp there; the price of one flight through the seam, no blur cure of my own.
+  10 pattern: dive 0.41 at 3565 at the pole (limit 0.45, thin; measured on the PRE, the dive is unchanged);
+     rise 0.25 at 3821 + 1/2 (the far ring coming out behind the night limb).
+  6  G17 at 3720: PASS 0.945 here (p25 0.477, 62 tiles), the machines have not read it yet.
+  12 pops at the end of the rise and at the travel's take off: 1.15 at 3872 + 1/2 inside the rise (limit
+     1.2, thin: faint stars of the flight and the ring's fine lines at the fastest part), 1.06 at 3895 + 1/2
+     after it (was 1.59, red).
+  2  the rest between the rise and the travel: the rest line reads 0.375 of the slower end (was 0.026), the
+     lowest 3.36 px at 3889, now inside the travel while the carried speed decays; no limit yet.
+  thin steps of the rise at rate 2 (limit 0.08): turn 0.073 at 3838 + 1/2, speed 0.070 over 8 at 3839 + 1/2.
+  11 the last 70 frames of the surface view bend and do not fly straight on (ruled, d196, stays).
+  15 the shade between the hold and the dive 3546 to 3556.
+  13 the onset of the rise at 3810 (largest step of the eye from one capture frame to the next 0.05 at 3815,
+     was 0.10 at 3811).
+  1  the globe near the lens 3808 to 3836.
+  14 dark limb pixels 3570 to 3577.
+  5  the sawtooth wedge through the Cassini division 3630 to 3690.
+  7  the ring's tone slides with the height 3840 to 3864.
+  3  the moon cut by the limb about 3610 to 3614 (it leaves, it does not fade).
+  4, 8 and 9 are closed.
