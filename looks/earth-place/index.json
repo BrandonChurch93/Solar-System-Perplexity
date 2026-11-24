@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T13:35:58.906Z",
- "head": "16a5b9934f69072bf8c29e80bf3afdf4a4e5ba52",
- "note": "third tree: 1755 and 2010 keep their bytes, 1857 and 2156 changed on purpose (pairs); merged main 2bc36ce6, eight draft frames byte equal across the merge, 446 tests pass without the browser files; mid frames and parity still running",
+ "pushed": "2026-11-24T13:56:40.199Z",
+ "head": "0eb8bc5f92abe18553e562a7a43b39249b55f16b",
+ "note": "merged main 2bc36ce6: frames byte equal across the merge, 446 tests pass; path red new on this main at 2175 + 1/2 and 2176 (the engine's carry of the rise's end speed, 0.0405 over its 0.02); far zone pattern red stands",
  "looks": [
+  {
+   "time": "2026-11-24T13:56:39.387Z",
+   "file": "20261124135639387-note-T-dive-third.jpg",
+   "source": "../../../../tmp/gl/s9/T-dive-third.jpg",
+   "kind": "note",
+   "label": "third tree, dive T frames 1909 to 1923 (change of view between 1918 and 1919)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T13:56:38.368Z",
+   "file": "20261124135638368-note-dive-mid-b.jpg",
+   "source": "../../../../tmp/gl/s9/dive-mid-b.jpg",
+   "kind": "note",
+   "label": "merge, dive 1886 to 1910 draft: the far zone exchange (pattern red) stands, 1886 to 1897",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T13:56:37.447Z",
+   "file": "20261124135637447-note-dive-mid-a.jpg",
+   "source": "../../../../tmp/gl/s9/dive-mid-a.jpg",
+   "kind": "note",
+   "label": "merge, dive 1861 to 1885 draft",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T13:35:58.089Z",
    "file": "20261124133558089-note-dive-look-b.jpg",
@@ -74,30 +98,6 @@
    "source": "../../../../tmp/gl/s9/r2-limb-zoom.jpg",
    "kind": "note",
    "label": "second named tree, draft 1917 to 1920 at three columns, limb enlarged 3 times: globe side has a hard cyan rim line, surface side none (the step at T, named red)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T11:36:35.511Z",
-   "file": "20261124113635511-note-r2-1880-1902.jpg",
-   "source": "../../../../tmp/gl/s9/r2-1880-1902.jpg",
-   "kind": "note",
-   "label": "second named tree, dive 1880 to 1902 draft: the far band under the limb whitens 1890 to 1898 (Z, two pictures by angle, the named red)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T11:24:34.264Z",
-   "file": "20261124112434264-note-laws.jpg",
-   "source": "../../../../tmp/gl/s9/laws.png",
-   "kind": "note",
-   "label": "third commit, computed with no render: the dive's far look and the night lights by nearness (red) against today's laws by the clock and by the pace (black dashes); judged 1857 gets dimmer night lights on purpose",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T11:03:12.690Z",
-   "file": "20261124110312690-note-dive-high.jpg",
-   "source": "../../../../tmp/gl/s8/dive-high.jpg",
-   "kind": "note",
-   "label": "named tree, dive 1840, 1848, 1856, 1864 at draft",
    "stop": "earth"
   }
  ]
