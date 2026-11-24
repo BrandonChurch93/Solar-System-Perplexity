@@ -1,9 +1,17 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T10:59:44.902Z",
- "head": "810c58a7061c6a6f7a5b3acddb111b85dcb0d09a",
- "note": "parity of the third commit green (tool, 8 frames); 4860 beside the approved is the look of 10:28, G17 0.934 and 0.549, 22 to 23.6 s a draft frame",
+ "pushed": "2026-11-24T11:27:04.341Z",
+ "head": "e7bbd54cf6158f171ca49f9ca39a87fa12821b9d",
+ "note": "Neptune cure 2 in work, not committed: far field of 4860 rebuilt (veil 0.012 thick so the limb stands on the deck, torn sheet laid out from the approved image on the ground). Preview draft 22 s a frame; G17 at preview 1.188 / 0.612 (committed 1.286 / 0.615). Still wrong: arc fades west too early, deck inside the oval too dark at v 2.4 to 3.2, limb rows 0 to 12 too bright",
  "looks": [
+  {
+   "time": "2026-11-24T11:27:03.742Z",
+   "file": "20261124112703742-note-look-1128.jpg",
+   "source": "out/work/nep/cost/look-1128.jpg",
+   "kind": "note",
+   "label": "Neptune 4860 work in progress over the approved image (preview draft): the far sheet rebuilt as a thin torn sheet outside an oval round the storm, limb lowered to the deck",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T10:59:44.225Z",
    "file": "20261124105944225-note-neptune-parity.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/storm-n2.jpg",
    "kind": "note",
    "label": "4860 n2 storm at three times size over the approved; floor 28 61 107 against 37 71 110",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T09:47:26.718Z",
-   "file": "20261124094726718-note-q-n2.jpg",
-   "source": "../../../../tmp/q-n2.jpg",
-   "kind": "note",
-   "label": "4860 n2 (work tree, not committed) over the approved image, preview draft, 41.9 s a frame; G17 median 1.285 p25 0.764; storm with arms winding in",
    "stop": "neptune"
   }
  ]
