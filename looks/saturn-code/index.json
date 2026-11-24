@@ -1,9 +1,51 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T15:16:18.624Z",
- "head": "55b49be7ef9c9843effc9cd2d3e9e3ecd4c52800",
- "note": "item 17 trial T7d measured: tone of 3720 nearer the approved close, but G17 falls to 0.779 (named 0.945, limit 0.8), so the ceiling is being retuned; nothing pushed to the branch",
+ "pushed": "2026-11-24T15:36:12.540Z",
+ "head": "f90f86a71a878e901ebbdcf8a0ac19237adafe4e",
+ "note": "item 17 trial T7e (ring grade by height, toe 0.5, ceiling 1.0): 3720 beside the approved close, dive and rise sheets at draft; local trial, not on the branch",
  "looks": [
+  {
+   "time": "2026-11-24T15:36:11.394Z",
+   "file": "20261124153611394-note-d8_rise_3838.jpg",
+   "source": "../../../../tmp/v/t17/d8_rise_3838.png",
+   "kind": "note",
+   "label": "item 17 trial T7e, rise frames 3838 and 3839 at full size, lower left"
+  },
+  {
+   "time": "2026-11-24T15:36:10.423Z",
+   "file": "20261124153610423-note-d8_dive_3602.jpg",
+   "source": "../../../../tmp/v/t17/d8_dive_3602.png",
+   "kind": "note",
+   "label": "item 17 trial T7e, dive frames 3602 and 3603 at full size, lower left"
+  },
+  {
+   "time": "2026-11-24T15:36:09.286Z",
+   "file": "20261124153609286-note-d8_sheet_rise.jpg",
+   "source": "../../../../tmp/v/t17/d8_sheet_rise.png",
+   "kind": "note",
+   "label": "item 17 trial T7e, rise at draft, every fourth frame 3808 to 3868"
+  },
+  {
+   "time": "2026-11-24T15:36:08.281Z",
+   "file": "20261124153608281-note-d8_sheet_dive.jpg",
+   "source": "../../../../tmp/v/t17/d8_sheet_dive.png",
+   "kind": "note",
+   "label": "item 17 trial T7e, dive at draft, every fifth frame 3560 to 3630"
+  },
+  {
+   "time": "2026-11-24T15:36:07.222Z",
+   "file": "20261124153607222-note-t7e_left.jpg",
+   "source": "../../../../tmp/v/t17/t7e_left.png",
+   "kind": "note",
+   "label": "item 17 trial T7e, frame 3720 final, left half beside the approved close"
+  },
+  {
+   "time": "2026-11-24T15:36:06.470Z",
+   "file": "20261124153606470-note-t7e_three.jpg",
+   "source": "../../../../tmp/v/t17/t7e_three.png",
+   "kind": "note",
+   "label": "item 17 trial T7e, frame 3720 final: approved close, named commit, trial"
+  },
   {
    "time": "2026-11-24T15:16:18.005Z",
    "file": "20261124151618005-note-ll_corner.jpg",
@@ -17,48 +59,6 @@
    "source": "../../../../tmp/v/t17/mid_diag.png",
    "kind": "note",
    "label": "3720 final without grain, crop x 400 to 1040, y 600 to 945: approved close on top, the named commit in the middle, trial T7d below; T7d fails G17 at 0.779 against 0.945 named, so it is not offered as it stands"
-  },
-  {
-   "time": "2026-11-24T15:16:16.701Z",
-   "file": "20261124151616701-note-d7_sheet_rise.jpg",
-   "source": "../../../../tmp/v/t17/d7_sheet_rise.png",
-   "kind": "note",
-   "label": "trial T7d: the rise 3808 to 3868 every 4th frame at the draft tier"
-  },
-  {
-   "time": "2026-11-24T15:16:16.014Z",
-   "file": "20261124151616014-note-d7_sheet_h.jpg",
-   "source": "../../../../tmp/v/t17/d7_sheet_h.png",
-   "kind": "note",
-   "label": "trial T7d: every frame 3598 to 3609 across the change of set at the draft tier"
-  },
-  {
-   "time": "2026-11-24T15:16:15.387Z",
-   "file": "20261124151615387-note-d7_sheet_dive.jpg",
-   "source": "../../../../tmp/v/t17/d7_sheet_dive.png",
-   "kind": "note",
-   "label": "trial T7d (item 17, working tree only): the dive 3560 to 3630 every 5th frame at the draft tier, the grade comes in by the height of the lens"
-  },
-  {
-   "time": "2026-11-24T14:39:35.949Z",
-   "file": "20261124143935949-note-t7b_left.jpg",
-   "source": "../../../../tmp/v/t17/t7b_left.png",
-   "kind": "note",
-   "label": "item 17 trial T7b at 3720 final, lower left at full size: approved close on top, the named frame in the middle, the trial below"
-  },
-  {
-   "time": "2026-11-24T14:39:35.224Z",
-   "file": "20261124143935224-note-t7b_three.jpg",
-   "source": "../../../../tmp/v/t17/t7b_three.png",
-   "kind": "note",
-   "label": "item 17 trial T7b at 3720 final: approved close on top, the named frame in the middle, the trial below. One tone curve on the lit ice of the rings, far look and near light alike, its share the air of the stop by the height of the lens. Lower half of the frame: mean 0.507 (approved 0.511, named 0.563), p95 0.831 (0.827, 0.910), white share 0.0001 (0.0003, 0.0083). Still wrong: the lowest rows are darker than the approved"
-  },
-  {
-   "time": "2026-11-24T14:34:57.836Z",
-   "file": "20261124143457836-note-d5_sheet_r.jpg",
-   "source": "../../../../tmp/v/t17/d5_sheet_r.png",
-   "kind": "note",
-   "label": "item 17 trial T5 (dropped, its driver was the distance from the lens, mail 374 rules the height): rise 3808 to 3838 every third frame, draft tier"
   }
  ]
 }
