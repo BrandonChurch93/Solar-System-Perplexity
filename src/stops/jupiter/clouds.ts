@@ -161,6 +161,7 @@ uniform vec3 uAboveAir[${ABOVE_KNOTS}];
 uniform sampler2D uTone;
 uniform vec4 uToneBox;
 uniform vec3 uToneLift;
+uniform vec4 uCalmBox;
 uniform vec2 uToneRim;
 uniform vec4 uToneRimNoise;
 uniform vec3 uExpose;
@@ -355,8 +356,12 @@ vec2 flashAt(vec2 g, vec3 c) {
   return vec2(s * smoothstep(uFlashLook.x, uFlashLook.y, (c.b - c.r) / max(c.b + c.r, uFlashCore.z)) * mix(uFlashShare, 1.0, smoothstep(uFlashLook.z, uFlashLook.w, lum)), (t + uFlashCore.y * s) * sqrt(max(lum, 0.0)));
 }
 vec3 toneAt(vec2 g) {
-  vec2 uv = clamp(vec2(g.x - uToneBox.x, uToneBox.y - g.y) * uToneBox.z + 0.5, uToneLift.z, 1.0 - uToneLift.z);
+  vec2 uv = clamp(vec2(g.x - uToneBox.x, uToneBox.y - g.y) * uToneBox.z + 0.5, uToneLift.z, 1.0 - uToneLift.z) * vec2(0.5, 1.0);
   return uToneBox.w * vec3(texture(uTone, vec2(uv.x, uv.y / 3.0)).r, texture(uTone, vec2(uv.x, (uv.y + 1.0) / 3.0)).r, texture(uTone, vec2(uv.x, (uv.y + 2.0) / 3.0)).r);
+}
+vec3 calmAt(vec2 g) {
+  vec2 uv = clamp(vec2(g.x - uCalmBox.x, uCalmBox.y - g.y) * uCalmBox.z + 0.5, uToneLift.z, 1.0 - uToneLift.z) * vec2(0.5, 1.0) + vec2(0.5, 0.0);
+  return uCalmBox.w * vec3(texture(uTone, vec2(uv.x, uv.y / 3.0)).r, texture(uTone, vec2(uv.x, (uv.y + 1.0) / 3.0)).r, texture(uTone, vec2(uv.x, (uv.y + 2.0) / 3.0)).r);
 }
 vec4 sunAt(vec2 g) {
   vec3 low = unfilm(textureLod(uPlateMid, (g - uMid.xy) * uMid.z + 0.5, uHazeLight.w).rgb) * toneAt(g);
@@ -477,7 +482,7 @@ void main() {
     for (int i = 0; i < (on > 0.0 ? taps : 0); i++) fineSum += made(g + axis * (major * ((float(i) + 0.5) / float(taps) - 0.5)), cut, least);
     float shade = clamp(1.0 + on * max(plate.a, uDetailLook.z) * (uDetail.y * fineSum.z - uDetailTone * dot(fineSum.xy, sunAz)) / float(taps), 1.0 - uDetailLook.w, 1.0 + uDetailLook.w);
     vec3 ground = unfilm(plate.rgb);
-    for (int i = 0; i < (toned > 0.0 && seen.a < 1.0 ? 1 : 0); i++) ground *= mix(vec3(1.0), toneAt(g), toned);
+    for (int i = 0; i < (toned > 0.0 && seen.a < 1.0 ? 1 : 0); i++) ground *= mix(vec3(1.0), toneAt(g) * calmAt(g), toned);
     col = mix(ground * shade * through + added, seen.rgb * fine * shade, seen.a);
     for (int i = 0; i < (thin > 0.0 ? 1 : 0); i++) {
       float knot = sqrt(clamp(sine, 0.0, 1.0)) * ${ABOVE_KNOTS - 1}.0;
@@ -597,9 +602,14 @@ export class CloudDeck {
     const vp = (v.pixels as Record<string, number[]>)[ctx.assets]!
     const tn = deck.tone
     const toneRaw = new Uint16Array(await ctx.buffer(base + 'deck-tone.bin'))
-    if (toneRaw.length !== 3 * tn.pixels * tn.pixels) throw new Error('deck tone size mismatch')
-    const tone = new Float32Array(toneRaw.length)
-    for (let i = 0; i < toneRaw.length; i++) tone[i] = toneRaw[i]! / 65535
+    const cm = deck.calm
+    const calmRaw = new Uint16Array(await ctx.buffer(base + 'deck-calm.bin'))
+    if (toneRaw.length !== 3 * tn.pixels * tn.pixels || calmRaw.length !== toneRaw.length || cm.pixels !== tn.pixels) throw new Error('deck tone size mismatch')
+    const tone = new Float32Array(2 * toneRaw.length)
+    for (let j = 0; j < 3 * tn.pixels; j++) for (let i = 0; i < tn.pixels; i++) {
+      tone[2 * j * tn.pixels + i] = toneRaw[j * tn.pixels + i]! / 65535
+      tone[(2 * j + 1) * tn.pixels + i] = calmRaw[j * tn.pixels + i]! / 65535
+    }
     const hz = deck.life.haze
     const fl = deck.life.flash
     const pn = place.solved.n
@@ -655,7 +665,8 @@ export class CloudDeck {
       uAirLift: { value: 0 },
       uAboveGain: { value: deck.above.gain.map((v) => new THREE.Vector3().fromArray(v)) },
       uAboveAir: { value: deck.above.air.map((v) => new THREE.Vector3().fromArray(v)) },
-      uTone: { value: ctx.floatTexture(tone, tn.pixels, 3 * tn.pixels) },
+      uTone: { value: ctx.floatTexture(tone, 2 * tn.pixels, 3 * tn.pixels) },
+      uCalmBox: { value: new THREE.Vector4(cm.centre[0]!, cm.centre[1]!, 1 / cm.size, cm.scale) },
       uToneBox: { value: new THREE.Vector4(tn.centre[0]!, tn.centre[1]!, 1 / tn.size, tn.scale) },
       uToneLift: { value: new THREE.Vector3(tn.lift[0]!, tn.lift[1]!, 0.5 / tn.pixels) },
       uToneRim: { value: new THREE.Vector2(THREE.MathUtils.degToRad(tn.rim[0]!), THREE.MathUtils.degToRad(tn.rim[1]!)) },
