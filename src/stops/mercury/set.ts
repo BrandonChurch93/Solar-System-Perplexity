@@ -142,19 +142,8 @@ export const createSet: SetFactory = async (ctx) => {
   terrain.add(limb.mesh, shell.mesh)
   near.add(rim.mesh, under.group, wipe, ground.group)
   world.add(near)
-  const present = { value: 1 }
-  for (const g of [ground.group, under.group]) {
-    g.traverse((o) => {
-      const m = (o as THREE.Mesh).material as THREE.ShaderMaterial | undefined
-      if (!m) return
-      const lit = 'vec4(col * alpha, alpha)'
-      const head = 'out vec4 outColor;'
-      if (!m.fragmentShader?.includes(lit) || !m.fragmentShader.includes(head)) throw new Error('the relief shader has no place for a presence')
-      m.fragmentShader = m.fragmentShader.replace(head, head + '\nuniform float uPresent;').replace(lit, lit + ' * uPresent')
-      m.uniforms.uPresent = present
-      m.needsUpdate = true
-    })
-  }
+  ground.presence(1)
+  under.presence(1)
   const maps = (group: THREE.Group, name: string): THREE.Texture | undefined => {
     let found: THREE.Texture | undefined
     group.traverse((o) => {
@@ -212,7 +201,7 @@ export const createSet: SetFactory = async (ctx) => {
   const floor = Math.max(plan.low(plan.seg.terrain.start).position.dot(nearUp), plan.low(plan.seg.terrain.end).position.dot(nearUp))
   const toLow = new THREE.Quaternion()
   const paint = (g: Globe, time: number, diving: boolean, rising: boolean, sunk: number, distance: number, offAxis: number, sun: THREE.Vector3, glow: THREE.Vector3, far: THREE.Vector3, line: THREE.Vector3, spun: number, gain: number, weight: number, rim: number, vignette: number, aspect: number): void => {
-    g.plates(plateLevels, rising ? risePlates : divePlates)
+    g.plates(plateLevels, rising ? risePlates : divePlates, rising)
     const close = 0
     const grade = diving ? by(look.carry.dive, time) : rising ? 1 - by(look.carry.rise, time) : 0
     g.near(close, sunk / closeRadius)
@@ -249,7 +238,8 @@ export const createSet: SetFactory = async (ctx) => {
       const mine = state.segment.stop === plan.id
       const shows = !inOrbit ? 1 : mine && (kind === 'dive' || kind === 'rise') ? 1 - THREE.MathUtils.smoothstep(Math.log(1 + plan.low(state.time).position.dot(nearUp)), Math.log(look.under.height[0]), Math.log(look.under.height[1])) : 0
       near.visible = shows > 0
-      present.value = shows
+      ground.presence(shows)
+      under.presence(shows)
       if (inOrbit && shows > 0) {
         const turn = plan.drawn(state.time)
         near.position.copy(plan.anchor.origin).applyQuaternion(turn)
@@ -270,7 +260,7 @@ export const createSet: SetFactory = async (ctx) => {
       const aspect = view.format.width / view.format.height
       toCamera.copy(view.camera.quaternion).invert()
       if (!inOrbit) {
-        glare.update(on ? glow(state.time, first ? 0 : 1) : 0, lowSunAt(state.time, state.rotation), view.camera, gain, aspect, state.time, mine && kind === 'rise' ? 1 : 0)
+        glare.update(on ? glow(state.time, first ? 0 : 1) : 0, lowSunAt(state.time, state.rotation), view.camera, gain, aspect, state.time)
         ground.update(state.time - terrainMid, gain, shot.post.vignette, view)
         under.update(state.time - terrainMid, gain, shot.post.vignette, view)
         const halo = !mine || (kind !== 'dive' && kind !== 'rise') ? 1 : smoother(ramp(haloEnds[kind][0]!, haloEnds[kind][1]!, lifted(state.time)))
@@ -316,7 +306,7 @@ export const createSet: SetFactory = async (ctx) => {
       } else if (leaving) {
         ghosts = look.flare.after
       }
-      glare.update(diving ? glow(state.time, 0) : rising ? glow(state.time, 1) : 0, glareSun, view.camera, gain, aspect, state.time, rising ? 1 : 0)
+      glare.update(diving ? glow(state.time, 0) : rising ? glow(state.time, 1) : 0, glareSun, view.camera, gain, aspect, state.time)
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
       const lit = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0
       light.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()
