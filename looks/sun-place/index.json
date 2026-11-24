@@ -1,9 +1,17 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T19:30:16.144Z",
+ "pushed": "2026-11-24T19:57:03.242Z",
  "head": "404a7f06c4439436a06972a472e15098457ef42d",
- "note": "round 2 item 1, uncommitted trial ye3 on head 404a7f06, frame 60 draft at one to one beside the approved. sun-near: share by band 0.1 .. 0.9 : 0.165 0.185 0.184 0.145 0.109 0.072 0.047 0.047 0.016 | dark 0.195 body 0.622 pale 0.095 white 0.016 | brightest 15 percent: half width 7.7 px, 2450 shapes, fine detail 0.0554, mean 0.349 | distance 0.067. Still wrong: cells read as blocky cobbles with straight lanes and hard outlines, tops smooth and blotched instead of fibred, penumbra stiff straight needles.",
+ "note": "round 2 item 1, uncommitted trial yl2 on head 404a7f06, frame 60 draft at one to one beside the approved: the corners of the cells are round by an exact law (fillet 0.24), the steep sides are no longer dark, each pit has a glow with fine petals on it. sun-near: share by band 0.1 .. 0.9 : 0.197 0.214 0.183 0.139 0.100 0.062 0.038 0.031 0.008 | dark (under 0.15) 0.224 | body (0.15 to 0.55) 0.636 | pale (0.65 to 0.85) 0.068 | white (over 0.85) 0.008 | brightest 15 percent: half width 8.3 px, 1994 shapes | fine detail 0.0465 | mean 0.319 | distance 0.047. Still wrong: petals too faint and the glow too even beside the approved's bright strokes, cell edges hard, a dotted bright line on far rims at the draft tier, penumbra stiff straight needles.",
  "looks": [
+  {
+   "time": "2026-11-24T19:57:02.651Z",
+   "file": "20261124195702651-note-p1yl2.jpg",
+   "source": "../../../../tmp/rd/p1yl2.jpg",
+   "kind": "note",
+   "label": "frame 60 draft, approved left, trial yl2 right, one to one",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T19:29:37.962Z",
    "file": "20261124192937962-note-p1ye3.jpg",
@@ -62,18 +70,6 @@
    "segment": "sun.rise",
    "first": 217,
    "last": 228,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T17:04:28.069Z",
-   "file": "20261124170428069-sheet-sun-rise-draft-before.jpg",
-   "source": "out/work/handover/sun-rise-draft-before.png",
-   "kind": "sheet",
-   "label": "sun rise, every frame 204 to 215 (before T, frame 216), draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "first": 204,
-   "last": 215,
    "tier": "draft"
   }
  ]
