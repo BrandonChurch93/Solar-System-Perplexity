@@ -1,9 +1,16 @@
 {
  "folder": "belt",
- "pushed": "2026-11-24T22:13:41.447Z",
+ "pushed": "2026-11-24T22:25:34.100Z",
  "head": "261f6dffe99b5c2b7474839b678105ecb5321d32",
- "note": "far Sun 261f6dff on main 70267111: mottle and firmer limb at 615, oval at 1027 cured",
+ "note": "far Sun 261f6dff on main 70267111, NAMED",
  "looks": [
+  {
+   "time": "2026-11-24T22:25:32.894Z",
+   "file": "20261124222532894-note-oval_zoom.jpg",
+   "source": "../../../../tmp/farsun/out/oval_zoom.jpg",
+   "kind": "note",
+   "label": "1027 (top) and 1040 (bottom), the Sun at full size: a3df7524 left, 261f6dff right; the white oval is gone"
+  },
   {
    "time": "2026-11-24T22:13:40.518Z",
    "file": "20261124221340518-note-fc_final.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/farsun/out/oval_t5.jpg",
    "kind": "note",
    "label": "1027 (top) and 1040 (bottom): a3df7524 left, now right; the white oval is gone"
-  },
-  {
-   "time": "2026-11-24T20:46:49.195Z",
-   "file": "20261124204649195-note-box_z12.jpg",
-   "source": "../../../../tmp/farsun/out/box_z12.jpg",
-   "kind": "note",
-   "label": "615 box: approved, try z1, try z2 (firmer limb, more mottle; work in progress)"
   }
  ]
 }
