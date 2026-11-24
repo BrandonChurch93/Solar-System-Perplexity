@@ -187,6 +187,7 @@ uniform vec2 uAirTurn;
 uniform float uAirLift;
 uniform vec3 uAboveGain[${ABOVE_KNOTS}];
 uniform vec3 uAboveAir[${ABOVE_KNOTS}];
+uniform vec2 uAboveMix;
 uniform sampler2D uTone;
 uniform vec4 uToneBox;
 uniform vec3 uToneLift;
@@ -477,6 +478,8 @@ void main() {
       added = vec3(texture(uAir, vec2(column, row)).r, texture(uAir, vec2(column, row + 1.0 / 3.0)).r, texture(uAir, vec2(column, row + 2.0 / 3.0)).r);
     }
     float thin = uAirLift;
+    vec3 throughLow = through;
+    vec3 addedLow = added;
     for (int i = 0; i < (thin > 0.0 ? 1 : 0); i++) {
       through = mix(through, vec3(1.0), thin);
       added *= 1.0 - thin;
@@ -498,7 +501,14 @@ void main() {
       float knot = sqrt(clamp(sine, 0.0, 1.0)) * ${ABOVE_KNOTS - 1}.0;
       int low = int(min(floor(knot), ${ABOVE_KNOTS - 2}.0));
       float part = knot - float(low);
-      col = mix(col, col * mix(uAboveGain[low], uAboveGain[low + 1], part) + mix(uAboveAir[low], uAboveAir[low + 1], part), thin);
+      vec3 byGain = mix(uAboveGain[low], uAboveGain[low + 1], part);
+      vec3 byAir = mix(uAboveAir[low], uAboveAir[low + 1], part);
+      col = mix(col, col * byGain + byAir, thin);
+      for (int j = 0; j < (thin < 1.0 && uAboveMix.x > 0.0 ? 1 : 0); j++) {
+        vec3 shallow = mix(ground * shade * throughLow + addedLow, seen.rgb * fine * shade, seen.a);
+        vec3 aloft = mix(ground * shade, seen.rgb * fine * shade, seen.a) * byGain + byAir;
+        col = mix(col, exp(mix(log(max(shallow, vec3(uAboveMix.y))), log(max(aloft, vec3(uAboveMix.y))), thin)), uAboveMix.x);
+      }
     }
     vec2 flash = flashAt(g, col);
     col = col * exp(flash.x) + uFlashGlow * flash.y;
@@ -688,6 +698,7 @@ export class CloudDeck {
       uAirLift: { value: 0 },
       uAboveGain: { value: deck.above.gain.map((v) => new THREE.Vector3().fromArray(v)) },
       uAboveAir: { value: deck.above.air.map((v) => new THREE.Vector3().fromArray(v)) },
+      uAboveMix: { value: new THREE.Vector2(deck.above.even, deck.above.floor) },
       uTone: { value: ctx.floatTexture(tone, 2 * tn.pixels, 3 * tn.pixels) },
       uCalmBox: { value: new THREE.Vector4(cm.centre[0]!, cm.centre[1]!, 1 / cm.size, cm.scale) },
       uToneBox: { value: new THREE.Vector4(tn.centre[0]!, tn.centre[1]!, 1 / tn.size, tn.scale) },

@@ -5,6 +5,8 @@ import type { Corners, Flanks } from '../../../src/director/pace'
 import { plans } from '../../../src/director/plans'
 import { MIN_POINTS, curves, ringPlane, sampleWindow } from '../../../tools/smooth/camera'
 import { judgeCurve } from '../../../tools/smooth/path'
+import * as THREE from 'three'
+import { setCapture, spanMid } from '../../../src/core/clock'
 
 // The search for the law of Jupiter's dive or rise on the engine's one move (handover.KIND of place.json: pace, turn, liftPower), held
 // against the judge of npm run smooth itself (tools/smooth: the speed of the picture on one fixed set of ring points) at whole frames and
@@ -30,6 +32,33 @@ const own = { ...((params.handover ?? {})[kind] ?? {}) } as Record<string, unkno
 const UNITS: ['fall' | 'turn' | 'speed', string, number | null][] = [['fall', 'rate', null], ['turn', 'turn', S.path.floors.turnDeg], ['speed', 'speed', S.path.floors.speedPx]]
 interface Score { total: number; faults: number; line: string }
 
+const RES = (m: number): number => 0.37 + 0.68 * Math.min(Math.max((m - 0.3) / 1.3, 0), 1)
+const POP = Number(a.pop ?? 1.1)
+function starPop(film: FilmDirector): { value: number; k: number } {
+  setCapture(2)
+  const seg = cfg.segments.find((x) => x.stop === stop && x.kind === kind)!
+  const k0 = (kind === 'rise' ? (seg.endFrame - 16) * 2 : (seg.firstFrame - 10) * 2) - 20
+  const k1 = (kind === 'rise' ? (seg.endFrame + 4) * 2 : (seg.firstFrame + 16) * 2) + 20
+  const shot = (k: number) => { const at = k / 2; return film.shotAt(at, (at + spanMid()) / cfg.fps) }
+  const res: number[] = []
+  let prev = shot(k0)
+  for (let k = k0; k < k1; k++) {
+    const next = shot(k + 1)
+    const focal = 540 / Math.tan((prev.camera.vfov * Math.PI) / 360)
+    const s0 = new THREE.Vector3(0, 0, -1).applyQuaternion(prev.skyQuaternion).applyQuaternion(prev.skyTurn.clone().invert())
+    const v = s0.clone().applyQuaternion(next.skyTurn).applyQuaternion(next.skyQuaternion.clone().invert())
+    res.push(RES(Math.atan2(Math.hypot(v.x, v.y), -v.z) * focal))
+    prev = next
+  }
+  let worst = 0, at = 0
+  for (let i = 20; i < res.length - 20; i++) {
+    const rest = [...res.slice(i - 8, i), ...res.slice(i + 1, i + 9)].sort((x, y) => x - y)
+    const pop = res[i]! / Math.max((rest[7]! + rest[8]!) / 2, 0.25)
+    if (pop > worst) { worst = pop; at = k0 + i }
+  }
+  return { value: worst, k: at }
+}
+
 function measure(law: Law): Score {
   params.handover = { ...(params.handover ?? {}), [kind]: { ...own, pace: law.pace, turn: law.turn, liftPower: law.liftPower } }
   try {
@@ -51,6 +80,9 @@ function measure(law: Law): Score {
         parts.push(name + '@' + r + ' ' + step.toFixed(4) + ' at ' + (j.worstStep?.frame ?? '-') + ' back ' + back.toFixed(3))
       }
     }
+    const sp = starPop(film)
+    total = Math.max(total, 0.95 * (sp.value - 1) / (POP - 1))
+    parts.push('pop ' + sp.value.toFixed(3) + ' at ' + sp.k / 2)
     return { total: total + (faults > 0 && total < 1 ? 1 : 0), faults, line: parts.join(' | ') }
   } catch (e) {
     return { total: Number.POSITIVE_INFINITY, faults: 99, line: 'refused: ' + (e as Error).message.slice(0, 160) }
@@ -86,7 +118,7 @@ for (const bell of ['pace', 'turn']) {
   grid[bell + '.corner'] = range(0.05, 0.5, 0.05)
   for (const side of ['rise', 'fall']) for (const i of [0, 1]) grid[bell + '.' + side + '.' + i] = range(0.05, 0.95, 0.05)
 }
-const keys = Object.keys(grid)
+const keys = a.keys ? String(a.keys).split(',') : Object.keys(grid)
 let law: Law = a.start ? (JSON.parse(a.start) as Law) : copy(plan.eyeLaw(kind))
 let best = measure(law)
 const show = (s: Score): string => s.total.toFixed(3) + ' of the limits, faults ' + s.faults + ': ' + s.line

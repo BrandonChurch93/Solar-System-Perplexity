@@ -169,6 +169,9 @@ export const createSet: SetFactory = async (ctx) => {
       const local = flowTime(state.time)
       const gu = globe.material.uniforms
       ;(gu.uPlace!.value as THREE.Vector4).w = own ? low(height, scene.ground) : 0
+      const bare = own ? (1 - low(height, scene.limbTable.from)) * low(height, state.segment.kind === 'dive' ? scene.limbTable.to.dive : scene.limbTable.to.rise) : 0
+      gu.uLimbAmount!.value = 1 - (1 - scene.limbTable.least) * bare
+      ;(gu.uLimbDark!.value as THREE.Vector3).set(scene.limbTable.dark.depth * bare, 1 / scene.limbTable.dark.edge, scene.limbTable.dark.power)
       ;(gu.uGrade!.value as THREE.Vector3).set(Math.pow(r[0]!, share), Math.pow(r[1]!, share), Math.pow(r[2]!, share))
       gu.uFlowT!.value = THREE.MathUtils.degToRad(look.flow.bandDegPerSecond) * local
       gu.uSwirlT!.value = THREE.MathUtils.degToRad(look.flow.swirlDegPerSecond) * local

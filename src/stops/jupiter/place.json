@@ -42,18 +42,18 @@
         "corner": 0.05,
         "corners": {
           "fall": [
-            0.45,
+            0.4,
             0.05
           ],
           "rise": [
             0.05,
-            0.65
+            0.55
           ]
         }
       },
       "turn": {
-        "rise": 0.425,
-        "fall": 0.375,
+        "rise": 0.45,
+        "fall": 0.55,
         "corner": 0.35,
         "corners": {
           "fall": [
@@ -61,14 +61,14 @@
             0.05
           ],
           "rise": [
-            0.05,
-            0.6
+            0.3,
+            0.05
           ]
         }
       },
       "liftPower": 1.375
     },
-    "note": "The change of view sits at the seams of the surface view (frames 3059 and 3240), so the whole dive and the whole rise are drawn by the globe's group, which holds the deck's own program (scene). No place picture, no sky frames, no limb reach: nothing of the change of view runs on the film's clock. The camera of both moves is the engine's one move (plan E; jupiter is off handover.ownPath in config/showcase.json): one glide from the hold, or to the pose after the rise, to the surface view's own seam pose carried at its velocity. pace, turn and liftPower are that move's law for this stop (StopPlan.eyeLaw): the bell of the height, the bell of the eye's direction and the power of the lift, found for the dive with npx tsx tools/law.ts --stop jupiter --kind dive, and for the rise with npx tsx assets-src/jupiter/deck/law.ts --tries 5000 --rounds 4 --seed 11, the same search held against the judge of npm run smooth itself at whole frames and at the capture rate. Both are inside the limits of the path judge: the largest step of the dive is 0.065 and of the rise 0.076 of the mean a film frame, against 0.08."
+    "note": "The change of view sits at the seams of the surface view (frames 3059 and 3240), so the whole dive and the whole rise are drawn by the globe's group, which holds the deck's own program (scene). No place picture, no sky frames, no limb reach: nothing of the change of view runs on the film's clock. The camera of both moves is the engine's one move (plan E; jupiter is off handover.ownPath in config/showcase.json): one glide from the hold, or to the pose after the rise, to the surface view's own seam pose carried at its velocity. pace, turn and liftPower are that move's law for this stop (StopPlan.eyeLaw): the bell of the height, the bell of the eye's direction and the power of the lift, found for the dive with npx tsx tools/law.ts --stop jupiter --kind dive, and for the rise with npx tsx assets-src/jupiter/deck/law.ts --kind rise --pop 1.06 --tries 3000 --seed 11, the same search held against the judge of npm run smooth itself at whole frames and at the capture rate and against a model of the stars' pop in the last frames of the move (the way of the sky on screen from one capture frame to the next over the median of its neighbours), so the rise ends without a jolt of the sky. Both are inside the limits of the path judge: the largest step of the dive is 0.065 and of the rise 0.078 of the mean a film frame, against 0.08."
   },
   "solved": {
     "local": 2.4095937488607793,
@@ -164,6 +164,29 @@
       0.0416,
       3.2
     ],
-    "halo": 3.2
+    "halo": 3.2,
+    "limbTable": {
+      "note": "The hold's limb table (limb) lifts the light of the globe toward its limb. From near that reads as a white band, and where the dark sky enters the frame beside it the level of the picture steps. In this stop's own dive and rise the table's share falls to least while the height rises through from, and comes back while it rises through to (the dive and the rise have their own heights; the judged frames 2997 and 3296 lie at and above the second height of their move and keep the hold's limb). All heights in radii, weights smooth in the logarithm of the height. dark: where the table is off the body is darkened toward its limb as a ball of cloud is, by depth times (1 - cosine / edge) to the power, the cosine taken between the ray and the ground's normal and the share of the table's absence as the weight.",
+      "least": 0,
+      "from": [
+        0.09,
+        0.3
+      ],
+      "to": {
+        "dive": [
+          0.5,
+          1.15
+        ],
+        "rise": [
+          0.5,
+          2.3
+        ]
+      },
+      "dark": {
+        "depth": 0.75,
+        "edge": 0.7,
+        "power": 1.0
+      }
+    }
   }
 }

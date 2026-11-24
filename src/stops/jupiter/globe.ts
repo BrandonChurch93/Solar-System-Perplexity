@@ -132,6 +132,7 @@ uniform float uJet[${JET_KNOTS}];
 uniform vec3 uNight;
 uniform vec4 uNightRef;
 uniform float uLimbAmount;
+uniform vec3 uLimbDark;
 uniform vec2 uLimbSoft;
 uniform vec3 uLimbLit;
 uniform vec2 uShadeKnee;
@@ -465,6 +466,7 @@ ${PATCH_LEVELS}
   vec3 at;
   float tau = hazeDepth(dir, true, at);
   col = col * exp(-tau * uExtinction) + hazeLight(n, dir) * (1.0 - exp(-tau)) * (1.0 - uShadowHaze.x * umbra);
+  for (int k = 0; k < (uLimbDark.x > 0.0 ? 1 : 0); k++) col *= 1.0 - inside * uLimbDark.x * pow(1.0 - clamp(mu * uLimbDark.y, 0.0, 1.0), uLimbDark.z);
   col += uNightRim.rgb * dusk * pow(1.0 - mu, uNightRim.w);
   float cover = inside + (1.0 - inside) * air;
   col *= mix(min(1.0, uEdge.w / max(dot(col, vec3(0.2126, 0.7152, 0.0722)), 1e-5)), 1.0, inside);
@@ -534,7 +536,7 @@ export class Globe {
         uLimb: { value: o.limb.map((c) => new THREE.Vector3(c[0], c[1], c[2])) },
         uJet: { value: o.jet.slice() },
         uNight: { value: new THREE.Vector3().fromArray(o.night) }, uNightRef: { value: new THREE.Vector4().fromArray(o.nightAlbedo) },
-        uLimbAmount: { value: 1 }, uLimbLit: { value: new THREE.Vector3().fromArray(o.limbLit) }, uLimbSoft: { value: new THREE.Vector2(o.edge.soft[0], Math.max(Math.log2(Math.max(o.mapWidth, 1) / o.edge.soft[1]), 0)) }, uShadeKnee: { value: new THREE.Vector2().fromArray(o.shadeKnee) },
+        uLimbAmount: { value: 1 }, uLimbDark: { value: new THREE.Vector3(0, 1, 1) }, uLimbLit: { value: new THREE.Vector3().fromArray(o.limbLit) }, uLimbSoft: { value: new THREE.Vector2(o.edge.soft[0], Math.max(Math.log2(Math.max(o.mapWidth, 1) / o.edge.soft[1]), 0)) }, uShadeKnee: { value: new THREE.Vector2().fromArray(o.shadeKnee) },
         uMoon: { value: new THREE.Vector4(0, 0, 0, 0) }, uShadow: { value: new THREE.Vector3().fromArray(o.shadow) }, uShadowFade: { value: new THREE.Vector2().fromArray(o.shadowFade) }, uShadowTip: { value: new THREE.Vector4().fromArray(o.shadowTip ?? [o.shadow[0], o.shadow[1], 1, 2]) }, uShadowToe: { value: new THREE.Vector3().fromArray(o.shadowToe ?? [1, 2, 0]) }, uShadowTipScale: { value: 0 }, uShadowHaze: { value: new THREE.Vector2().fromArray(o.shadowHaze) }, uShadowAt: { value: new THREE.Vector4(0, 0, 0, 0) }, uNightRim: { value: new THREE.Vector4(o.nightRim.glow[0], o.nightRim.glow[1], o.nightRim.glow[2], o.nightRim.power) }, uNightAir: { value: new THREE.Vector3(o.nightRim.from, o.nightRim.to, o.nightRim.air) }, uNightOut: { value: new THREE.Vector2(o.nightRim.out, o.nightRim.bulge) }, uLitEdge: { value: new THREE.Vector4().fromArray(o.litEdge) }, uShadowSun: { value: new THREE.Vector3(1, 0, 0) },
         uSunMap: { value: this.sunMap },
         uFlowT: { value: 0 }, uSwirlT: { value: 0 }, uWispT: { value: 0 },

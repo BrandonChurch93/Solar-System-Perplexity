@@ -538,6 +538,9 @@
   },
   "above": {
     "note": "How the ground looks from above the air, so the far field of the surface view's scene is the globe's far field at the handover. Knots lie evenly in the square root of the sine of the angle between the ray and the ground (0 at the horizon, 1 straight down). gain: the light of the ground is multiplied by it. air: light added on top, in the scene's own units before the exposure. Both act by the weight of the air read from the camera's height (place.json scene.air: nothing at and under its first height, so frames 3060 to 3239 do not change). Measured at frame 3024 on stills of both sides: the globe alone (beauty/side=orbit/noplace) over the scene, medians per bin of the sine; under a sine of 0.2 the spread of the globe no longer follows the scene, so there the rest is added light.",
+    "evenNote": "even: the share of the mix between the look under the air and the look from above that is taken in the logarithm of the light (1: the same ratio of light for the same step of the weight, so the far ground does not turn pale in the lowest tenth of the weight; 0: the straight mix). At a weight of 0 and of 1 the picture is the same either way. floor: the least light that enters the logarithm.",
+    "even": 1.0,
+    "floor": 1e-05,
     "gain": [
       [
         3.8,
