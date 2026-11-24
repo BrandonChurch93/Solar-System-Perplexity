@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T13:16:34.952Z",
- "head": "884ff04d25faf8a6d5ea32479edab3d2f153b48f",
- "note": "884ff04d (third commit's state, on the merge of main 4661bee6; proof running). Frame 60 draft: share by band 0.1 .. 0.9 : 0.191 0.235 0.171 0.125 0.089 0.060 0.040 0.031 0.022 / dark (under 0.15) 0.224 | body (0.15 to 0.55) 0.620 | pale (0.65 to 0.85) 0.071 | white (over 0.85) 0.024 / brightest 15 percent: half width 4.8 px, 5383 shapes | fine detail 0.0657 | mean 0.323; distance 0.041. Red: tests on the merge not read yet; cells still read as pebbles with gaps, fine detail 0.066 against 0.037; region light two readings by pixel size (MAIL 668)",
+ "pushed": "2026-11-24T13:39:39.040Z",
+ "head": "413128b0df8460fbf57e82a50bc87045e1557477",
+ "note": "13:41 head 413128b0 = item 1 on the merge of main 2bc36ce6 (tests 485 passed in 49 files, tsc 0). Frame 60 draft keeps the bytes of the t15 trial: share by band 0.1 .. 0.9 : 0.191 0.235 0.171 0.125 0.089 0.060 0.040 0.031 0.022 / dark (under 0.15) 0.224 | body (0.15 to 0.55) 0.620 | pale (0.65 to 0.85) 0.071 | white (over 0.85) 0.024 / brightest 15 percent: half width 4.8 px, 5383 shapes | fine detail 0.0657 | mean 0.323. 247 and 270 keep their bytes. Red by eye: at three to one the cells stand apart with wide dark feet; trials on the lane and the rim run now, the proof chain after them.",
  "looks": [
+  {
+   "time": "2026-11-24T13:39:38.432Z",
+   "file": "20261124133938432-note-zoom-pair-m16.jpg",
+   "source": "../../../../tmp/zoom-pair-m16.jpg",
+   "kind": "note",
+   "label": "frame 60 at three to one, the approved left, head 413128b0 right: the cells still stand apart as stones with wide dark feet, the approved's touch",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T13:39:37.813Z",
+   "file": "20261124133937813-note-m16-ball.jpg",
+   "source": "../../../../tmp/m16-ball.jpg",
+   "kind": "note",
+   "label": "head 413128b0 on main 2bc36ce6: the rise at 197, 205, 213, 221, 229, 237, draft",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T13:16:34.324Z",
    "file": "20261124131634324-note-t15-60-half.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/pair-t9.jpg",
    "kind": "note",
    "label": "trial t9 of the cells (not committed): approved beside frame 60 draft at one to one, box x 560 y 600, 800 by 440",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T12:05:49.543Z",
-   "file": "20261124120549543-note-frozen-189.jpg",
-   "source": "../../../../tmp/frozen-189.jpg",
-   "kind": "note",
-   "label": "frame 189 as it is beside frame 189 with the life held at the time of frame 181 (measurement of MAIL 655, not committed)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T11:37:56.291Z",
-   "file": "20261124113756291-note-s9-g.jpg",
-   "source": "../../../../tmp/s9-g.jpg",
-   "kind": "note",
-   "label": "7f4e02c1 rise draft every frame, sheet g 256 to 269",
    "stop": "sun"
   }
  ]
