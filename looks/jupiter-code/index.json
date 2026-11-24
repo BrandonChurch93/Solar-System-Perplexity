@@ -1,9 +1,33 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T21:13:05.560Z",
+ "pushed": "2026-11-24T21:35:40.208Z",
  "head": "18c4bd32b46191358b9e6b341528188ffe884d7b",
- "note": "21:14 UTC, round 2 state frozen for the smooth report (running, about 80 minutes): one Sun, deck program from 3.2 radii, no weight by height on tone or rim, eye of the storm rigid, rise law searched again, Io's shadow edge soft. Known red: far ground of 3150 under the limb",
+ "note": "21:36 UTC round 2 of 3: dive frames of the running smooth report (one place in one light); the rise follows with the pull back",
  "looks": [
+  {
+   "time": "2026-11-24T21:35:38.781Z",
+   "file": "20261124213538781-note-s-dive-b.jpg",
+   "source": "../work/r5/s-dive-b.jpg",
+   "kind": "note",
+   "label": "round 2 dive 3014 to 3023 every frame, smooth run frames at half size (unfinished)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T21:35:37.504Z",
+   "file": "20261124213537504-note-s-dive-a.jpg",
+   "source": "../work/r5/s-dive-a.jpg",
+   "kind": "note",
+   "label": "round 2 dive 2996 to 3016 step 2, smooth run frames at half size (unfinished)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T21:35:36.095Z",
+   "file": "20261124213536095-note-s-dive-in.jpg",
+   "source": "../work/r5/s-dive-in.jpg",
+   "kind": "note",
+   "label": "round 2 dive 2966 to 2996 step 2, crop x 640 to 1280 y 240 to 720 at full size, smooth run frames (unfinished): the place comes in over the pale zone 2980 to 2988",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-24T21:13:04.801Z",
    "file": "20261124211304801-note-crops-3150-r2.jpg",
@@ -194,30 +218,6 @@
    "source": "../work/r3/look-pair-3150.jpg",
    "kind": "note",
    "label": "close view: approved image (left) beside frame 3150 of head f62f610 (right); round 2 list item 1 not built yet",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T19:22:36.059Z",
-   "file": "20261124192236059-note-near-plate-r2t1.jpg",
-   "source": "../work/r3/near-plate-r2t1.jpg",
-   "kind": "note",
-   "label": "19:20 take 1 joined to the guide (the guide above 1 unit, the take below): the pair test with the globe reads 0.21 (limit 0.45, the shipped plate 1.10)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T19:22:34.707Z",
-   "file": "20261124192234707-note-near-r2-t1.jpg",
-   "source": "../work/r3/near-r2-t1.jpg",
-   "kind": "note",
-   "label": "19:18 near take 1 of round 2 on that guide (not yet kept: big billows, a straight ridge at the fan's left edge)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T19:22:33.094Z",
-   "file": "20261124192233094-note-near-in-2.jpg",
-   "source": "../work/r3/near-in-2.jpg",
-   "kind": "note",
-   "label": "19:14 new guide of the near plate: the globe's own picture above 1 unit, the view's detail in the fan, nothing cleared",
    "stop": "jupiter"
   }
  ]
