@@ -1,9 +1,25 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T03:54:28.039Z",
- "head": "eafbd89d2545bb29d9bd51bf81cd70966dce02b3",
- "note": "star lift by height: before and after sheets of five rises, merged tree frames of Mercury and Jupiter; sides of Mercury rendering",
+ "pushed": "2026-11-24T04:18:05.768Z",
+ "head": "2b9c652b51c54ceb8e25bfaa7033d71843306da2",
+ "note": "lift by height is in (2b9c652b); now each builder's forced line and law set for the one move, searched with tools/law.ts",
  "looks": [
+  {
+   "time": "2026-11-24T04:18:04.190Z",
+   "file": "20261124041804190-note-m-jupiter-full.jpg",
+   "source": "../../../../tmp/lift/m-jupiter-full.png",
+   "kind": "note",
+   "label": "Jupiter rise on the merged tree with the stars lift by height, draft tier, full frames",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T04:18:03.129Z",
+   "file": "20261124041803129-note-mba-jupiter-sky.jpg",
+   "source": "../../../../tmp/lift/mba-jupiter-sky.png",
+   "kind": "note",
+   "label": "Jupiter rise 3275 to 3281 at the draft tier: main above, the stars lift by height below. The grey veil 3277 to 3280 is on both: the stop's own sky",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-24T03:54:27.421Z",
    "file": "20261124035427421-note-m-jupiter-sky.jpg",
@@ -54,22 +70,6 @@
    "kind": "note",
    "label": "star lift by height, Jupiter sky crop before and after, draft",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T03:54:23.322Z",
-   "file": "20261124035423322-note-ba-venus-sky.jpg",
-   "source": "../../../../tmp/lift/ba-venus-sky.png",
-   "kind": "note",
-   "label": "star lift by height, Venus sky crop before and after, draft",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T03:54:21.866Z",
-   "file": "20261124035421866-note-ba-earth.jpg",
-   "source": "../../../../tmp/lift/ba-earth.png",
-   "kind": "note",
-   "label": "star lift by height, Earth rise before and after, draft",
-   "stop": "earth"
   }
  ]
 }
