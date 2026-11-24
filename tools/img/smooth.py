@@ -215,23 +215,24 @@ def blocks(d, cols, rows, share=0.0):
     return out
 
 
-def span(i, n, window):
-    """The window round i: window neighbours when the row is long enough, moved inward at both ends."""
-    lo = max(min(i - window // 2, n - 1 - window), 0)
-    return lo, min(lo + window, n - 1)
+def span(i, n, window, lead=0, tail=0):
+    """The window round i: window neighbours when the row is long enough, moved inward at both ends. A row that is drawn with lead frames
+    of context before its first frame and tail after its last has its ends that much further out."""
+    lo = max(min(i - window // 2, n - 1 + tail - window), -lead)
+    return lo, min(lo + window, n - 1 + tail)
 
 
-def near(i, n, window, first=0, total=None):
+def near(i, n, window, first=0, total=None, lead=0, tail=0):
     """The window round i as places in a list of n that starts at place first of a row of total: the window is the whole row's."""
-    lo, hi = span(i + first, n if total is None else total, window)
+    lo, hi = span(i + first, n if total is None else total, window, lead, tail)
     if lo < first or hi - first > n - 1:
         raise SystemExit('smooth.py: the slice does not hold the window round frame %d of the row' % (i + first))
     return lo - first, hi - first
 
 
-def around(values, i, window, first=0, total=None):
+def around(values, i, window, first=0, total=None, lead=0, tail=0):
     """The median of the values in the window round i, i itself left out."""
-    lo, hi = near(i, len(values), window, first, total)
+    lo, hi = near(i, len(values), window, first, total, lead, tail)
     picked = [values[j] for j in range(lo, hi + 1) if j != i and values[j] is not None]
     return float(np.median(picked)) if picked else None
 
@@ -259,6 +260,9 @@ def pictures(job):
     start = int(job.get('first', 0))
     total = int(job.get('total', n))
     own = job.get('own') or [start, start + n]
+    lead = int(job.get('lead', 0))
+    tail = int(job.get('tail', 0))
+    judged = lambda i: 0 <= i + start < total
     fw = [None] * n
     bw = [None] * n
     residual = [None] * n
@@ -287,7 +291,7 @@ def pictures(job):
             sure[i] = blocks(d, cols, rows, BLOCK_SHARE)
     step = [None] * n
     for i in range(1, n - 1):
-        if i in marks or (i + 1) in marks:
+        if i in marks or (i + 1) in marks or not (judged(i - 1) and judged(i + 1)):
             continue
         step[i] = abs(levels[i] - (levels[i - 1] + levels[i + 1]) / 2)
     pop = [None] * n
@@ -298,7 +302,7 @@ def pictures(job):
     where = [None] * n
 
     def ratio(stack, i):
-        lo, hi = near(i, n, window, start, total)
+        lo, hi = near(i, n, window, start, total, lead, tail)
         rest = [stack[j] for j in range(lo, hi + 1) if j != i and stack[j] is not None]
         if not rest or not np.isfinite(np.stack(rest)).any():
             return None
@@ -307,16 +311,16 @@ def pictures(job):
             return stack[i] / np.maximum(np.nanmedian(np.stack(rest), axis=0), floor)
 
     for i in range(n):
-        if residual[i] is None or not own[0] <= i + start < own[1]:
+        if residual[i] is None or not own[0] <= i + start < own[1] or not judged(i + 1):
             continue
-        m = around(residual, i, window, start, total)
+        m = around(residual, i, window, start, total, lead, tail)
         if m is None:
             continue
         base[i] = m
         plain[i] = pop[i] = residual[i] / max(m, floor)
         cells = ratio(grids, i)
         if agree:
-            masked[i] = carried[i] / max(around(carried, i, window, start, total), floor)
+            masked[i] = carried[i] / max(around(carried, i, window, start, total, lead, tail), floor)
             pop[i] = min(plain[i], masked[i])
             other = ratio(sure, i)
             cells = None if cells is None or other is None else np.minimum(cells, other)
@@ -333,7 +337,7 @@ def pictures(job):
     weaveShare = [None] * n
     if reach > 0:
         for i in range(n - reach):
-            if not own[0] <= i + start < own[1] or any(fw[j] is None for j in range(i, i + reach)):
+            if not own[0] <= i + start < own[1] or not judged(i + reach) or any(fw[j] is None for j in range(i, i + reach)):
                 continue
             first, last = (body(poses[j], frames[j].shape, sigma) if poses[j] else None for j in (i, i + reach))
             d, later, ok = change(frames, fw, bw, i, reach, sigma, first, last)
@@ -341,6 +345,9 @@ def pictures(job):
             spot[i] = [int(round(at[0] / scale)), int(round(at[1] / scale))] if at else None
             weave[i], at, weaveShare[i] = patterned(pattern(frames[i].astype(np.float32), later, ok, wide / 5, wide, low))
             weaveAt[i] = [int(round(at[0] / scale)), int(round(at[1] / scale))] if at else None
+    for i in range(n):
+        if not judged(i + 1):
+            residual[i] = moved[i] = unsure[i] = None
     return {'level': levels, 'levelStep': step, 'residual': residual, 'base': base, 'popAll': plain, 'popCarried': masked, 'pop': pop, 'motionPx': moved, 'unsure': unsure, 'popBlock': block, 'popBlockAt': where, 'grid': [cols, rows],
             'change': shift, 'changeTop': top, 'changeAt': spot, 'changeShare': judged, 'changeFrames': reach,
             'pattern': weave, 'patternAt': weaveAt, 'patternShare': weaveShare}

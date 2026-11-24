@@ -10,7 +10,7 @@ import { FilmDirector } from '../src/director/film'
 import { sideAt } from '../src/director/handover'
 import { plans } from '../src/director/plans'
 import { SEAM_OWN, SEAM_REACH, curves, eyeCurves, landingCurves, planeHit, ringPlane, sampleLanding, sampleLeave, sampleSeam, sampleWindow, seen, type SeamWindow } from '../tools/smooth/camera'
-import { missing, partOwn, popSpan, sliceName, sliceNeed } from '../tools/smooth/slice'
+import { missing, partOwn, popContext, popSpan, sliceName, sliceNeed } from '../tools/smooth/slice'
 import { changeNote, judgeCurve, judgeLanding, judgeLeave, judgeSeam, longestGap, parityFrames, peakRows, position, shown, table } from '../tools/smooth/path'
 
 const limits = { maxStep: 0.08, maxRebound: 0.03, seamFrames: 2 }
@@ -612,6 +612,33 @@ describe('one move in slices', () => {
     expect(sliceNeed({ first: 220, end: 228 }, total, window, reach)).toEqual([195, 227])
     expect(sliceNeed({ first: 0, end: 4 }, total, window, reach)).toEqual([0, 33])
     expect(sliceNeed({ first: 0, end: total }, total, window, reach)).toEqual([0, total - 1])
+  })
+
+  it('has the window of the median round every frame, not moved inward, where half a window of context is drawn at each end', () => {
+    for (let i = 0; i < total; i++) expect(popSpan(i, total, window, 16, 16)).toEqual([i - 16, i + 16])
+    expect(popSpan(0, total, window, 6, 16)).toEqual([-6, 26])
+    expect(popSpan(227, total, window, 16, 0)).toEqual([195, 227])
+    expect(popContext(1878, 2100, 9000, 16)).toEqual([8, 8])
+    expect(popContext(0, 210, 9000, 16)).toEqual([0, 8])
+    expect(popContext(8790, 8997, 9000, 16)).toEqual([8, 3])
+  })
+
+  it('draws the context with the slices that own the ends of the window, and gives every slice the frames the whole run reads for its rows', () => {
+    expect(sliceNeed({ first: 0, end: total }, total, window, reach, 16, 16)).toEqual([-16, total + 15])
+    expect(sliceNeed({ first: 0, end: 57 }, total, window, reach, 16, 16)).toEqual([-16, 73])
+    expect(sliceNeed({ first: 57, end: 114 }, total, window, reach, 16, 16)).toEqual([41, 130])
+    expect(sliceNeed({ first: 171, end: 228 }, total, window, reach, 16, 16)).toEqual([155, total + 15])
+    for (const of of [1, 3, 4, 8, 40]) {
+      for (let part = 1; part <= of; part++) {
+        const own = partOwn(part, of, total)
+        const [lo, hi] = sliceNeed(own, total, window, reach, 16, 16)
+        const has = (i: number): boolean => i < -16 || i > total + 15 || (i >= lo && i <= hi)
+        for (let i = own.first; i < own.end; i++) {
+          const [a, b] = popSpan(i, total, window, 16, 16)
+          expect([i - 1, i + 1, a, b + 1, i + reach].every(has)).toBe(true)
+        }
+      }
+    }
   })
 
   it('names a part by its number and a run of frames by its capture frames', () => {
