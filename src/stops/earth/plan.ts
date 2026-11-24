@@ -8,7 +8,7 @@ import fit from './fit.json'
 import placeJson from './place.json'
 import { side, twin } from './place'
 
-export interface Leg { ease: number[]; over: number[]; aim: number[]; turn: number[] }
+export interface Leg { ease: number[]; over: number[]; aim: number[]; turn: number[]; swing?: { deg: number; headingDeg: number; at: number[] }; bank?: { deg: number; at: number[] } }
 export interface Path { handover: NonNullable<MoveParams['handover']>; dive: Leg; rise: Leg; rewind: number }
 
 export const path: Path = placeJson.path
@@ -89,7 +89,7 @@ export class Plan extends StopPlan {
 
   pace(kind: 'dive' | 'rise', time: number): number {
     const h = 0.25 / config.fps
-    const at = (t: number): Pose => (kind === 'dive' ? this.divePose(t, 'orbit') : this.risePose(t, 'orbit'))
+    const at = (t: number): Pose => this.eye(kind, t, 'orbit')
     return Math.abs(size(at(time + h)) - size(at(time - h))) / (2 * h * config.fps)
   }
 
@@ -129,20 +129,39 @@ export class Plan extends StopPlan {
     const b = anchor.position.dot(axis)
     const place = anchor.position.clone().addScaledVector(axis, -b - Math.sqrt(Math.max(b * b - anchor.position.lengthSq() + 1, 0)))
     const height = (anchor.position.length() - 1) * Math.exp(lift)
-    const position = slerpDir(anchor.position.clone().normalize(), far.position.clone().normalize(), smoother(ramp(leg.over[0]!, leg.over[1]!, k))).multiplyScalar(1 + height)
+    const over = slerpDir(anchor.position.clone().normalize(), far.position.clone().normalize(), smoother(ramp(leg.over[0]!, leg.over[1]!, k)))
+    const sw = leg.swing
+    if (sw) {
+      const n = place.clone().normalize()
+      const go = axis.clone().addScaledVector(n, -axis.dot(n)).normalize().applyAxisAngle(n, -THREE.MathUtils.degToRad(sw.headingDeg))
+      const share = (at: number): number => 1 / (1 + Math.exp(-l.total * (at - sw.at[1]!)))
+      const out = (Math.max(share(k) - share(sw.at[0]!), 0) / (1 - share(sw.at[0]!))) * smoother(ramp(sw.at[0]!, sw.at[1]!, k)) * (1 - smoother(ramp(sw.at[2]!, 1, x / l.frames)))
+      const carry = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3().crossVectors(n, go).normalize(), THREE.MathUtils.degToRad(sw.deg) * out)
+      over.applyQuaternion(carry)
+      place.applyQuaternion(carry)
+    }
+    const position = over.multiplyScalar(1 + height)
     const target = position.clone().add(slerpDir(place.sub(position).normalize(), forward(far.quaternion), smoother(ramp(leg.aim[0]!, leg.aim[1]!, k))))
     const up = slerpDir(new THREE.Vector3(0, 1, 0).applyQuaternion(anchor.quaternion), new THREE.Vector3(0, 1, 0).applyQuaternion(far.quaternion), smoother(ramp(leg.turn[0]!, leg.turn[1]!, k)))
-    return { position, quaternion: lookAt(position, target, up), vfov: mix(anchor.vfov, far.vfov, smoother(k)) }
+    const quaternion = lookAt(position, target, up)
+    const bk = leg.bank
+    if (bk) quaternion.multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), THREE.MathUtils.degToRad(bk.deg) * smoother(ramp(bk.at[0]!, bk.at[1]!, x / l.frames)) * (1 - smoother(ramp(bk.at[1]!, bk.at[2]!, x / l.frames)))))
+    return { position, quaternion, vfov: mix(anchor.vfov, far.vfov, smoother(k)) }
+  }
+
+  private route(kind: 'dive' | 'rise', time: number): Pose {
+    const at = this.handoverTime(kind)
+    return (kind === 'dive' ? time >= at : time <= at) ? this.twin(this.low(time), time) : this.fly(kind, time)
   }
 
   override divePose(time: number, view: ViewKind): Pose {
     if (view === 'terrain') return this.low(time)
-    return time >= this.handoverTime('dive') ? this.twin(this.low(time), time) : this.fly('dive', time)
+    return this.route('dive', time)
   }
 
   override risePose(time: number, view: ViewKind): Pose {
     if (view === 'terrain') return this.low(time)
-    return time <= this.handoverTime('rise') ? this.twin(this.low(time), time) : this.fly('rise', time)
+    return this.route('rise', time)
   }
 
   private down(kind: 'dive' | 'rise', time: number): Pose {
