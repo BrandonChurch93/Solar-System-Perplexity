@@ -95,8 +95,11 @@ approved in sectors of ten degrees): a negative `gain` leaves a patch creamier t
 it, a positive one takes it nearer white. They move with the body, go with the exposure and are zero at
 burn 0, so no patch shows at the handover or in the Sun stop's own views.
 The knot of the left limb is three lights along the limb (four degrees apart, so the white zone runs along
-the limb and is not a round bloom) with a wide weak patch on the face behind them; only the middle one
-carries rays. `knot.clump` gathers the rays into uneven groups and bends them: strength of the grouping,
+the limb and is not a round bloom) with a wide weak patch on the face behind them. The middle one carries
+the tuft (short rays kept to a narrow cone), the one at 193 a few long thin streamers of low gain and a long
+`reach`, so the light between the body and Mercury is strands with dark between them and less of it is the
+even light of the lens (`glare.wide` 0.8). `burn.limb` is kept weak and wide (0.5 over an eighth of a
+radius), so the limb whitens softly and is not a white band. `knot.clump` gathers the rays into uneven groups and bends them: strength of the grouping,
 the scale of the groups against `fine`, and the bend of a ray's direction with its distance from the knot.
 `burn.white` is the colour the burnt face rolls off to, and `glare.colour` the lens light round the body;
 both were read off the same image (the face keeps blue near 0.9 of red, the glare is paler than the gas).
