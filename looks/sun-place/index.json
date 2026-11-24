@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T04:27:16.082Z",
+ "pushed": "2026-11-24T04:50:46.278Z",
  "head": "79cac426b6601d34e33d91d1fefdd26269c566ea",
- "note": "505 first pass trial d2, not right yet. sun-near f60: bands 0.125 0.200 0.177 0.165 0.141 0.089 0.038 0.004 0.000; dark 0.187 body 0.682 pale 0.042 white 0.000; half width 7.9 px; distance 0.112. G17 median 0.99 lower quarter 0.63; blur 40 px ground 0.0572 whole 0.0373",
+ "note": "505 points 3 to 6, trial d12 (uncommitted). sun-near f60: bands 0.147 0.173 0.187 0.162 0.122 0.073 0.036 0.023 0.017; dark 0.206 body 0.644 pale 0.059 white 0.017; half width 4.3 px; distance 0.099. G17 median 1.39 lower quarter 1.15; blur 40 px ground 0.0394 whole 0.0302",
  "looks": [
+  {
+   "time": "2026-11-24T04:50:45.712Z",
+   "file": "20261124045045712-note-d12-near-pair.jpg",
+   "source": "out/work/sun/convect/d12-near-pair.jpg",
+   "kind": "note",
+   "label": "f60 draft, near ground pair, approved left, mine right (trial d12, uncommitted)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T04:50:45.179Z",
+   "file": "20261124045045179-note-d12-near11.jpg",
+   "source": "out/work/sun/convect/d12-near11.jpg",
+   "kind": "note",
+   "label": "f60 draft, the sun-near box at one to one, approved left, mine right (trial d12, uncommitted): bulbs with a graded flank and threads up the flank; still wrong: threads too even and white, cells pointed, creases thinner than approved",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T04:27:15.402Z",
    "file": "20261124042715402-note-d2-near-pair.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/c77-near-60.jpg",
    "kind": "note",
    "label": "c77 frames 60 to 63 near ground at one to one (draft)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T03:22:40.032Z",
-   "file": "20261124032240032-note-c77-event.jpg",
-   "source": "../../../../tmp/c77-event.jpg",
-   "kind": "note",
-   "label": "c77 frames 56 to 67 same box: cells emptied over 1.2 s, no step",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T03:22:39.449Z",
-   "file": "20261124032239449-note-c76-event.jpg",
-   "source": "../../../../tmp/c76-event.jpg",
-   "kind": "note",
-   "label": "c76 frames 56 to 63 at 1.5 to one: the pop found (a cell closes between 59 and 60), before the cure",
    "stop": "sun"
   }
  ]
