@@ -213,3 +213,29 @@ describe('the dim of the sky while the Sun comes into the frame of a travel', ()
     }
   })
 })
+
+describe('the way out of the hold of the Sun', () => {
+  const film = new FilmDirector(plans)
+  const leg = config.segments.find((s) => s.stop === config.stopIds[0] && s.kind === 'travel')!
+  const place = (p: number): THREE.Vector3 => {
+    const shot = film.shotAt(Math.floor(p), p / config.fps)
+    return shot.camera.position.clone().sub(shot.sets.find((s) => s.id === leg.stop)?.origin ?? film.frames[0]!.origin)
+  }
+  const h = 0.05
+  const far = place(leg.firstFrame).length()
+  const push = (p: number): THREE.Vector3 => place(p + h).add(place(p - h)).addScaledVector(place(p), -2).multiplyScalar(1 / (h * h * far))
+
+  it('has no step in the acceleration of the camera from the hold to the end of the pull', () => {
+    let last = push(leg.firstFrame - 1)
+    for (let p = leg.firstFrame - 1 + h; p < leg.firstFrame + 0.45 * leg.frames; p += h) {
+      const now = push(p)
+      expect(now.distanceTo(last), 'frame ' + p.toFixed(2)).toBeLessThan(1e-4)
+      last = now
+    }
+  })
+
+  it('does not come nearer to the Sun and ends the pull where it always did', () => {
+    for (let p = leg.firstFrame; p < leg.firstFrame + 0.45 * leg.frames; p += 0.25) expect(place(p + 0.25).length(), 'frame ' + p).toBeGreaterThanOrEqual(place(p).length() - 1e-5 * far)
+    expect(place(leg.firstFrame + 0.43 * leg.frames).length() / far).toBeCloseTo(6.2546 / 4.5741, 3)
+  })
+})

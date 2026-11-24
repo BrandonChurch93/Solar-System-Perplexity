@@ -28,7 +28,7 @@ const APPROACH_START = 0.2
 const APPROACH_POWER = 2.5
 const SWING_FROM = 0.3
 const CLEAR_DEG = 3
-const SUN_PULL_FROM = 0.2
+const SUN_PULL_FROM = 0.12
 const SUN_PULL_END = 0.42
 const SUN_APPROACH_START = 0.42
 export const LOOKBACK = { phaseDeg: 148, azimuthDeg: 127, distance: 8.6, sun: [0.59, 0.3] as [number, number], sunPerSecond: [-0.02, 0.005] as [number, number], settle: 4.8, hand: 0.1, lineDeg: 195, vfov: 34, glare: 4, flare: 0.35, sky: [0, 35, -5] as [number, number, number], skyExposure: 0.36, skyAnchor: { aimDeg: 14, rollDeg: 13 }, glide: { turn: 0.375, phase: 0.425, pull: 0.3, aim: 0.375 } }
@@ -467,9 +467,9 @@ export class FilmDirector implements Director {
     const to = this.toWorld(index + 1, this.approachLocal(index + 1, x, time, shape))
     const start = this.toWorld(index + 1, this.approachLocal(index + 1, 0, time, shape))
     if (index === 0) {
-      const g = easeInOut(ramp(SUN_PULL_FROM, SUN_PULL_END, u))
+      const g = smoother(ramp(SUN_PULL_FROM, SUN_PULL_END, u))
       const radial = this.frames[0]!.origin.clone().addScaledVector(this.sunWorld, -this.sunStart * Math.pow(this.sunSwap / this.sunStart, g))
-      from.position.lerp(radial, smooth(u / 0.12))
+      from.position.lerp(radial, smoother(u / SUN_PULL_END))
     }
     const position = to.position.clone().addScaledVector(from.position.clone().sub(start.position), shape.settleLeft(x))
     const slide = this.slide[index] ?? 0
