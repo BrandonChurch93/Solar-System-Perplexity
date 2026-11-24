@@ -1,9 +1,73 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-24T06:16:28.604Z",
- "head": "63f62b9785e5ce3fe0e651e08d95a07287ea8c44",
- "note": "06:17 the two places the pattern number is red at, as the eye sees them: the ground and the plates are two pictures",
+ "pushed": "2026-11-24T06:33:09.005Z",
+ "head": "ec362b2fde45d476f5d9d8418e6e040c7b45694e",
+ "note": "06:34 named head ec362b2f on main f6ce51a5: parity panel of the whole smooth run; the pattern reds are the two crop sheets of 06:17",
  "looks": [
+  {
+   "time": "2026-11-24T06:32:13.216Z",
+   "file": "20261124063213216-frame-f01542.jpg",
+   "source": "out/work/venus/place/same/i1/f01542.png",
+   "kind": "frame",
+   "label": "venus.rise frame 1542, draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "frame": 1542,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e840cb2d5bf404e5"
+  },
+  {
+   "time": "2026-11-24T06:31:23.711Z",
+   "file": "20261124063123711-frame-f01605.jpg",
+   "source": "out/work/venus/place/same/i1/f01605.png",
+   "kind": "frame",
+   "label": "venus.travel frame 1605, draft tier",
+   "stop": "venus",
+   "segment": "venus.travel",
+   "frame": 1605,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e840cb2d5bf404e5"
+  },
+  {
+   "time": "2026-11-24T06:30:21.170Z",
+   "file": "20261124063021170-frame-f01350.jpg",
+   "source": "out/work/venus/place/same/i1/f01350.png",
+   "kind": "frame",
+   "label": "venus.terrain frame 1350, draft tier",
+   "stop": "venus",
+   "segment": "venus.terrain",
+   "frame": 1350,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e840cb2d5bf404e5"
+  },
+  {
+   "time": "2026-11-24T06:30:07.691Z",
+   "file": "20261124063007691-note-venus-parity.jpg",
+   "source": "out/work/smooth/venus-parity.png",
+   "kind": "note",
+   "label": "smooth parity panel on 3e1fa361: 16 by 9, uhd scaled down, the difference times 8; green (mean 1.892 at 1586)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T06:29:34.104Z",
+   "file": "20261124062934104-frame-f01110.jpg",
+   "source": "out/work/venus/place/same/i1/f01110.png",
+   "kind": "frame",
+   "label": "venus.hold frame 1110, draft tier",
+   "stop": "venus",
+   "segment": "venus.hold",
+   "frame": 1110,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e840cb2d5bf404e5"
+  },
   {
    "time": "2026-11-24T06:16:27.265Z",
    "file": "20261124061627265-note-c1539-ll.jpg",
@@ -33,46 +97,6 @@
    "format": "16x9",
    "diag": "nograin",
    "job": "measure"
-  },
-  {
-   "time": "2026-11-24T05:50:09.916Z",
-   "file": "20261124055009916-note-venus-rise-pops.jpg",
-   "source": "out/work/smooth/venus-rise-pops.png",
-   "kind": "note",
-   "label": "smooth panel rise-pops, pictures part of the whole run on the tree of chain G (main 8fb9ba9b merged)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T05:50:09.209Z",
-   "file": "20261124055009209-note-venus-dive-pops.jpg",
-   "source": "out/work/smooth/venus-dive-pops.png",
-   "kind": "note",
-   "label": "smooth panel dive-pops, pictures part of the whole run on the tree of chain G (main 8fb9ba9b merged)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T05:50:08.535Z",
-   "file": "20261124055008535-note-venus-rise-changes.jpg",
-   "source": "out/work/smooth/venus-rise-changes.png",
-   "kind": "note",
-   "label": "smooth panel rise-changes, pictures part of the whole run on the tree of chain G (main 8fb9ba9b merged)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T05:50:07.504Z",
-   "file": "20261124055007504-note-venus-dive-changes.jpg",
-   "source": "out/work/smooth/venus-dive-changes.png",
-   "kind": "note",
-   "label": "smooth panel dive-changes, pictures part of the whole run on the tree of chain G (main 8fb9ba9b merged)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T05:28:33.913Z",
-   "file": "20261124052833913-note-c1543-top.jpg",
-   "source": "../../../../tmp/v/hg/c1543-top.jpg",
-   "kind": "note",
-   "label": "rise 1543 to 1553, top right at full size, draft, tree of chain G on main 8fb9ba9b",
-   "stop": "venus"
   }
  ]
 }
