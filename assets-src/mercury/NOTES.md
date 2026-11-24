@@ -2451,3 +2451,33 @@ What the third commit should do first: decide on 615. Either a plate 1 whose con
 MAIL 587: "The approved look is the bar: where a judged frame would get worse against its approved image, leave it and name what stays red." Beside the approved image (`references/approved/mercury-hero.png`) the final of 615 with `hold` [15.5, 17.5] shows the disc as a bright rough spot on the terminator with a dark notch, at the size of the frame. Worse. And the two picture lines of the report stay red in that state as well (742 to 749 and 977 to 988, the strip under the limb), so it buys no green line. So `hold` is null in own.json (`assets.ts` passes undefined, `uPlaceHold.z` 0): plate 1 comes in by its texels to a pixel as on the first commit. Everything measured above with `hold` on stays true for that state and is in the looks, for the ruling on the third commit.
 
 npm test ran on the merged tree with `hold` on: 48 files, 443 of 443 passed. After it only `hold` went to null with its cast in `assets.ts` (tsc clean); the suite was not run again for lack of time before 10:15.
+
+## 10:07 UTC: second NAMED sent: 400c5c91e549460480aa6b61f883607103460ae5
+
+Pushed to agent/mercury-place (ls-remote shows it), main 2008483c merged in (merge commit 30e7b244). State: `hold` null. Sent in the mail, in MAIL 508 order:
+- Gate: "PASS G11  every asset has a row or a recipe", "PASS G15  at most 2 sets per frame; finished stops: mercury/web 347 MB, mercury/full 1386 MB". Smooth path on the commit: green, "No number of the path is over its limit." for dive and rise. Pictures and parity not run whole.
+- Named state measured: final 615 sha256 e3ff13e8... and 870 ec487ea7... (both main's reference, `out/work/mercury/place/fin3` and `fin2`); dive 704 to 728 at rate 2 draft (`out/work/mercury/place/e3`): pattern at most 0.45 (705 + 1/2 and 706, at the place), 709 to 728 at most 0.40. So the 1.21 at 717 of the first commit was the old plate 1 against plate 2, and it is cured by the new plate 1 alone. Not rendered in the named state: 700 to 703, 729 to 779, the whole rise, 1016.
+- Tool lines: dive 0.25, 0.02, 0.02 (exit 0); rise plate 2 to 3r 0.70 OVER (named red; in the picture 3r comes in by plate 2's own law), 3r to 4r 0.01.
+- Named red, worst first: (a) the strip under the limb, two grounds, dive 734 to 749 and rise 977 to 988 + 1/2 (1.39 at 982 + 1/2); (b) the place is not one ground from the hold on (`hold` built, measured, off because of 615); (c) the sky by the clock 736 to 759 and 978 to 1001; (d) the rise pair 2 to 3r; (e) the suite not run again after `hold` went to null.
+- Net size minus 0.207 MB against main.
+
+## 10:05 UTC: MAIL 629 (the far Sun and my files), verbatim
+
+"MAIL 629 from the Builder (/root) to travel_builder, sun_builder and mercury_builder. The far Sun and your files. Nothing to do now; read it so the next merge does not surprise you.
+
+belt_builder's far Sun (src/space/farsun, third named commit d263ad28 on agent/farsun) goes forward as it stands: one body in depth for the Sun seen from afar, from the Sun's leaving through Mercury's stop, in place of the three makers of today (the Sun set's leaving look, the swap by time at 488 to 499 + 1/2, Mercury's plate of the Sun). It is the cure for Brandon's words that the Sun sitting in the sky looks flat.
+Its wiring touches lines in your files: travel_builder src/core/types.ts (4 lines), src/director/film.ts (36) and src/space/sky.ts (16); sun_builder src/stops/sun/set.ts (21); mercury_builder src/stops/mercury/set.ts (2). The lines are written out per owner in assets-src/farsun/wiring/ on that commit (travel.patch, sun.patch, mercury.patch, each with a note of what the lines do).
+I merge them three way at the take, since each of you has a commit in flight. MEASURED: all five files merge clean onto main with the travel's carry. Order: the carry first (tc1 on the machines), then the far Sun's tree is cut, checked on the machines and taken. I send you the sha.
+From that sha on the lines are yours: merge main before your next commit. If you name a commit that was cut before it, I merge your file three way at your take and send you any conflict; so do not rewrite the regions the patches touch without telling me.
+sun_builder: the Sun's leaving (frames after 270) changes with it; your named commit 19ca786c is judged on its own check as it stands. mercury_builder: 615 and 870 change at the final tier (the Sun in the frame); they are shown beside the approved images in your round, and your own second commit is read on main as it is when you name it."
+
+What it means for me: do not rewrite the two lines of `src/stops/mercury/set.ts` that `assets-src/farsun/wiring/mercury.patch` touches (they are about the Sun's plate; see the patch on agent/farsun d263ad28 before touching `sunPlate.update` or its gain). After the far Sun is on main, 615 and 870 no longer equal the bytes of MAIL 546; merge main before the third commit and take main's new reference then. The sky by height (MAIL 613) touches the Sun plate's gain (`plate = 1 - skyShare`): look at the patch first.
+
+## Plan for the third commit (last), in order
+
+1. The suite on the named tree (it was not run after `hold` went to null): run `npm test` first, alone.
+2. The sky by height (MAIL 613): `skyShare(seg, time)` in `plan.ts` from `this.eyeHeight(time)`, `skyFrames: 0` on both sides of `handover`; ends fitted to the heights at 736 and 760 (dive) and 978 and 1002 (rise) so that the picture stays near today's; check with rate 2 renders 730 to 762 and 975 to 1004 and with `npm run -s handover -- --stop mercury --kind dive|rise --tier draft --only sides`.
+3. The strip under the limb (3a of the mail): the far ground of the set from the map's relief beyond the disc, or the globe's relief carried under the limb. This is what keeps both picture lines red (1.57 and 1.39).
+4. The place in the hold (3b): only with a plate that holds the look at 615 against `references/approved/mercury-hero.png`; the bar is the side by side at the size of the frame.
+5. The rise pair 2 to 3r (0.70): one picture for 3r and 4r, or a smaller level 2 of the rise, inside G15 (1400 MB, now 1386).
+6. Before naming: `PRE <sha> pictures` to /root (MAIL 545), since the whole smooth takes about 60 minutes here.
