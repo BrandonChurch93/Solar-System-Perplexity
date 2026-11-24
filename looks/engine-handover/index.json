@@ -1,9 +1,17 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T02:18:49.837Z",
- "head": "b46810f6714cfd4e2b9f318097db5c6180c2533b",
- "note": "the carry is in; the start of the rise of Mars stepped through at full size; next the lift of the stars by height",
+ "pushed": "2026-11-24T02:57:27.603Z",
+ "head": "000b43ae32bf88f9583af8a0e78897045c4a23e2",
+ "note": "two corners a flank for the bells of the one move (Venus), merged main 3efc31d; next the stars lift by height",
  "looks": [
+  {
+   "time": "2026-11-24T02:57:26.980Z",
+   "file": "20261124025726980-note-venus-corners-curves.jpg",
+   "source": "../view/venus-corners-curves.png",
+   "kind": "note",
+   "label": "Venus rise forced onto the one move: rate, turn and picture speed over their means and their steps, one corner a flank against two (engine measure, scratch)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T02:18:42.294Z",
    "file": "20261124021842294-note-carry-rise-fore.jpg",
@@ -61,13 +69,6 @@
    "kind": "note",
    "label": "Mars rise on the new law, across T 2687, draft: the close sheet's border enters from T+1 (place picture, plan F's to cure)",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T01:13:40.426Z",
-   "file": "20261124011340426-note-sheet-4.jpg",
-   "source": "../../../../tmp/law/sheet-4.png",
-   "kind": "note",
-   "label": "Mars rise on the new law (eye's direction on its own bell, lift in the height), draft, frames 2732 to 2747"
   }
  ]
 }
