@@ -3,7 +3,7 @@ import { DIAG_GLSL, diagUniform, gradUniform } from '../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../post/chain'
 import { implicitUniform } from '../core/texel'
 import { EQUIRECT_GLSL } from '../space/sky'
-import { hazeGlsl, hazeUniforms, setHazeGlow, type HazeParams } from './haze'
+import { GROUND_AIR_GLSL, hazeGlsl, hazeUniforms, setHazeGlow, type HazeParams } from './haze'
 import { setHazeAir, type GlobeAir } from './air'
 import { ReliefCap, type CapOptions } from './cap'
 
@@ -32,6 +32,7 @@ export interface PatchSet {
   own?: boolean[]
   ownGain?: boolean
   fadeMinor?: boolean
+  centresDeg?: [number, number][]
 }
 
 export interface StormParams {
@@ -100,12 +101,12 @@ export function patchSlots(levels: number): number {
 
 const patchSamplers = (slots: number): string => Array.from({ length: slots }, (_, i) => 'uniform sampler2D uPatch' + i + ';').join('\n')
 
-export interface PatchShader { slots: number; own: boolean; gain: boolean; minor: boolean; glow: boolean; cut?: boolean; cap?: boolean; capLight?: boolean }
+export interface PatchShader { slots: number; own: boolean; gain: boolean; minor: boolean; glow: boolean; cut?: boolean; cap?: boolean; capLight?: boolean; centres?: boolean }
 
 const patchRead = (i: number): string => `textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb`
 
 const patchLevels = (o: PatchShader): string => Array.from({ length: o.slots }, (_, i) => `    if (uPatchCount > ${i}.5) {
-      vec2 q = g * uPatchScale[${i}];
+      vec2 q = ${o.centres ? `(g - uPatchCentre[${i}])` : 'g'} * uPatchScale[${i}];
       float w = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, ${o.minor ? 'fine' : 'parent'}));
       ${o.own ? `if (w > 0.0) {
         vec3 t = ${patchRead(i)};
@@ -131,7 +132,8 @@ uniform sampler2D uStorm;
 ${patchSamplers(o.slots)}
 uniform float uPatchScale[${o.slots}];
 uniform float uPatchSize[${o.slots}];
-uniform float uPatchNear[${o.slots}];${o.own ? `
+uniform float uPatchNear[${o.slots}];${o.centres ? `
+uniform vec2 uPatchCentre[${o.slots}];` : ''}${o.own ? `
 uniform float uPatchOwn[${o.slots}];` : ''}${o.gain ? `
 uniform vec3 uOwnGain;` : ''}${o.minor ? `
 uniform float uPatchAniso[${o.slots}];
@@ -187,18 +189,7 @@ out vec4 outColor;
 ${EQUIRECT_GLSL}
 ${INVERSE_FILMIC_GLSL}
 ${DIAG_GLSL}
-${hazeGlsl(o.glow)}${o.cap ? `
-float capDepth(vec3 dir, vec3 up, float hp) {
-  float r = length(uCam);
-  float ca = dot(dir, uCam / r);
-  float cb = dot(dir, up);
-  float da = hazeDensity(r - 1.0, uHazeH);
-  float db = exp(-hp / uHazeH);
-  if (ca >= 0.0) return max(uHazeTau * (da * hazeCh(ca, uHazeH) - db * hazeCh(cb, uHazeH)), 0.0);
-  if (cb <= 0.0) return max(uHazeTau * (db * hazeCh(-cb, uHazeH) - da * hazeCh(-ca, uHazeH)), 0.0);
-  float rt = r * sqrt(max(1.0 - ca * ca, 0.0));
-  return max(uHazeTau * (2.0 * hazeDensity(rt - 1.0, uHazeH) * hazeCh(0.0, uHazeH) - da * hazeCh(-ca, uHazeH) - db * hazeCh(cb, uHazeH)), 0.0);
-}` : ''}
+${hazeGlsl(o.glow)}${o.cap ? GROUND_AIR_GLSL : ''}
 vec3 spinY(vec3 d, float a) {
   float c = cos(a), s = sin(a);
   return vec3(c * d.x - s * d.z, d.y, s * d.x + c * d.z);
@@ -285,7 +276,7 @@ ${patchLevels(o)}
   }
   vec3 col = lin * shade * uTint;${o.own ? `
   if (own > 0.0) col = mix(col, inverseFilmic(ownSum / own)${o.gain ? ' * uOwnGain' : ''}${o.capLight ? ' * (1.0 + clamp((dot(normalize(n + nc * uCapLight.y), uSunW) - ndl0) / max(ndl0 + uWrap, 0.06), -0.85, 1.6))' : ''}, own);` : ''}${o.cap ? `
-  float tau = capDepth(dir, n, vCapH);` : `
+  float tau = airDepth(length(uCam) - 1.0, dot(dir, normalize(uCam)), vCapH, dot(dir, n), uHazeH, uHazeTau);` : `
   vec3 at;
   float tau = hazeDepth(dir, true, at);`}
   col = col * exp(-tau * uExtinction) + hazeLight(n, dir) * (1.0 - exp(-tau));
@@ -347,11 +338,13 @@ export class Planet {
     const gain = p?.ownGain === true
     if (gain && !own) throw new Error('ownGain needs an own level')
     const minor = p?.fadeMinor === true
+    if (p?.centresDeg && p.centresDeg.length !== p.textures.length) throw new Error('centresDeg needs one entry per patch level')
+    const centres = p?.centresDeg !== undefined
     const aniso = (t: THREE.Texture | undefined): number => Math.max(t?.anisotropy ?? 1, 1)
     const spot = p?.spot.clone().normalize() ?? new THREE.Vector3(0, 0, 1)
     const east = new THREE.Vector3(0, 1, 0).cross(spot).normalize()
     const north = spot.clone().cross(east)
-    const text: PatchShader = { slots, own, gain, minor, glow: o.haze.glow === true }
+    const text: PatchShader = { slots, own, gain, minor, glow: o.haze.glow === true, ...(centres ? { centres: true } : {}) }
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
       vertexShader: VERT,
@@ -374,6 +367,7 @@ export class Planet {
         uPatchNear: { value: levels.map((i) => ((p?.widthsDeg[i] ?? 360) <= (p?.nearDeg ?? 0) ? 1 : 0)) },
         uPatchCount: { value: p?.textures.length ?? 0 },
         ...(own ? { uPatchOwn: { value: levels.map((i) => (p?.own?.[i] ? 1 : 0)) } } : {}),
+        ...(centres ? { uPatchCentre: { value: levels.map((i) => new THREE.Vector2(Math.tan(THREE.MathUtils.degToRad(p?.centresDeg?.[i]?.[0] ?? 0)), Math.tan(THREE.MathUtils.degToRad(p?.centresDeg?.[i]?.[1] ?? 0)))) } } : {}),
         ...(gain ? { uOwnGain: { value: new THREE.Vector3(1, 1, 1) } } : {}),
         ...(minor ? { uPatchAniso: { value: levels.map((i) => aniso(p?.textures[i])) }, uMapAniso: { value: aniso(o.map) } } : {}),
         uFeather: { value: p?.feather ?? 0.12 }, uPatchFade: { value: new THREE.Vector2(p?.fade[0] ?? 1.1, p?.fade[1] ?? 1.7) },

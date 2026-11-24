@@ -19,7 +19,7 @@ export interface CapOptions {
   fade?: [number, number]
   reachDeg?: number
   fine?: number
-  light?: { relief: number; own: number }
+  light?: { relief: number; own: number; from?: number }
 }
 
 export const CAP_PATCHES = 64
@@ -136,7 +136,7 @@ const levelRead = (j: number, mask: boolean): string => `  {
     if (w > 0.0) {
       float lod = log2(max(max(foot, cell) * uCapScale[${j}] * uCapSize[${j}], 1.0));
       float t = uCapLow[${j}] + capRead(uCapH${j}, vec2(q.x + 0.5, 0.5 - q.y), lod) * uCapSpan[${j}];${mask ? `
-      t -= sink * textureLod(uCapM${j}, q + 0.5, lod).r;` : ''}
+      if (sink > 0.0) t -= sink * textureLod(uCapM${j}, q + 0.5, lod).r;` : ''}
       h = mix(h, t, w);
     }
   }`
@@ -188,11 +188,11 @@ float capRead(highp usampler2D t, vec2 uv, float lod) {
   if (f > 0.0) v = mix(v, capFlat(t, uv, int(min(float(a) + 1.0, top))), f);
   return v;
 }
-float capHeight(vec2 g, float foot, float cell) {
+float capRaw(vec2 g, float foot, float cell, float sunk) {
   float h = 0.0;
-  float sink = uCapSink.x * (1.0 - smoothstep(0.8 * uCapSink.y, uCapSink.y, length(g - uCapFoot)));
+  float sink = sunk * uCapSink.x * (1.0 - smoothstep(0.8 * uCapSink.y, uCapSink.y, length(g - uCapFoot)));
 ${masks.map((m, j) => levelRead(j, m)).join('\n')}
-  return h * (1.0 - smoothstep(uCapBorder.x, uCapBorder.y, length(g))) * uCapOn;
+  return h;
 }
 void main() {
   int k = int(aCell.z + 0.5);
@@ -205,11 +205,11 @@ void main() {
   float c = cos(uSpin), s = sin(uSpin);
   vec3 local = vec3(c * dm.x + s * dm.z, dm.y, c * dm.z - s * dm.x);
   float foot = uCapPixel * length((modelMatrix * vec4(local, 1.0)).xyz);
-  float h = capHeight(g, foot, cell);
+  float h = capRaw(g, foot, cell, 1.0) * (1.0 - smoothstep(uCapBorder.x, uCapBorder.y, length(g))) * uCapOn;
   vCapH = h;${normal ? `
   float e = 0.5 * max(foot, cell);
-  float hx = (capHeight(g + vec2(e, 0.0), foot, cell) - capHeight(g - vec2(e, 0.0), foot, cell)) / (2.0 * e);
-  float hy = (capHeight(g + vec2(0.0, e), foot, cell) - capHeight(g - vec2(0.0, e), foot, cell)) / (2.0 * e);
+  float hx = (capRaw(g + vec2(e, 0.0), foot, cell, 0.0) - capRaw(g - vec2(e, 0.0), foot, cell, 0.0)) / (2.0 * e);
+  float hy = (capRaw(g + vec2(0.0, e), foot, cell, 0.0) - capRaw(g - vec2(0.0, e), foot, cell, 0.0)) / (2.0 * e);
   float il = 1.0 / length(uSpotN + uSpotE * g.x + uSpotU * g.y);
   vec3 tx = (uSpotE - dm * dot(dm, uSpotE)) * il;
   vec3 ty = (uSpotU - dm * dot(dm, uSpotU)) * il;
@@ -238,6 +238,7 @@ export class ReliefCap {
   private readonly fine: number
   private readonly top: number
   private finest = -1
+  private readonly lit: number | undefined
 
   constructor(fragmentShader: string, shared: Record<string, THREE.IUniform>, o: CapOptions) {
     const levels = o.levels
@@ -249,6 +250,8 @@ export class ReliefCap {
     if (!(o.border[1] > o.border[0])) throw new Error('the border of a cap is [inner, outer]')
     if (o.cells % CAP_PATCHES !== 0) throw new Error('the cells of a cap are a multiple of ' + CAP_PATCHES)
     this.from = o.from
+    if (o.light?.from !== undefined && !(o.light.from > o.from[0])) throw new Error('a cap is lit from a height above its band')
+    this.lit = o.light?.from
     this.gridsDeg = capGrids(levels.map((l) => l.widthDeg), o.reachDeg ?? levels[0]!.widthDeg / 2)
     const scales = this.gridsDeg.map(scaleOf)
     const skirts = scales.length - levels.length
@@ -340,9 +343,10 @@ export class ReliefCap {
     const on = this.share(height)
     ;(this.material.uniforms.uCapFoot!.value as THREE.Vector2).copy(foot)
     this.material.uniforms.uCapOn!.value = on
-    this.mesh.visible = on > 0
-    if (on > 0) this.draw(this.fine > 0 ? capFinest(this.cellG, this.halfG, this.fine, this.material.uniforms.uCapPixel!.value as number, Math.max(height - this.top, 0), foot.x, foot.y) : this.gridsDeg.length - 1)
-    return on > 0
+    const drawn = on > 0 || (this.lit !== undefined && height < this.lit)
+    this.mesh.visible = drawn
+    if (drawn) this.draw(this.fine > 0 ? capFinest(this.cellG, this.halfG, this.fine, this.material.uniforms.uCapPixel!.value as number, Math.max(height - this.top, 0), foot.x, foot.y) : this.gridsDeg.length - 1)
+    return drawn
   }
 
   setSink(depth: number, radius: number): void {

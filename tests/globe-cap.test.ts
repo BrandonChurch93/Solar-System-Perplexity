@@ -35,7 +35,7 @@ describe('the relief cap of the globe', () => {
     const capText = on.cap!.material.fragmentShader
     expect(capText).toBe(planetFrag({ slots: 6, own: false, gain: false, minor: false, glow: false, cap: true }))
     expect(capText).toContain('in float vCapH;')
-    expect(capText).toContain('float tau = capDepth(dir, n, vCapH);')
+    expect(capText).toContain('float tau = airDepth(length(uCam) - 1.0, dot(dir, normalize(uCam)), vCapH, dot(dir, n), uHazeH, uHazeTau);')
     expect(capText).not.toContain('hazeDepth(dir, true, at)')
     expect(capText).not.toContain('vCapN')
     expect(capText).not.toContain('uCapLight')
@@ -234,7 +234,7 @@ it('knows the foot of the eye in the frame of its plates, whatever the turn of t
   it('takes the normal of its own heights only when a stop sets `light`, with the two strengths as numbers of the stop', () => {
     const plain = planet(options())
     const lit = planet(options({ light: { relief: 0.8, own: 0.4 } }))
-    const reads = (text: string): number => text.slice(text.indexOf('void main()')).split('capHeight(').length - 1
+    const reads = (text: string): number => text.slice(text.indexOf('void main()')).split('capRaw(').length - 1
     expect(reads(plain.cap!.material.vertexShader)).toBe(1)
     expect(reads(lit.cap!.material.vertexShader)).toBe(5)
     expect(plain.cap!.material.vertexShader).not.toContain('vCapN')
@@ -251,6 +251,31 @@ it('knows the foot of the eye in the frame of its plates, whatever the turn of t
     expect(lit.material.uniforms.uCapLight).toBeUndefined()
     plain.dispose()
     lit.dispose()
+  })
+
+  it('is drawn from the top of its band, or level above it from a height the stop names for its light; the relief still comes in by the band', () => {
+    const eye = (p: Planet, height: number): void => p.update(new THREE.Vector3(0, 0, 1 + height), new THREE.Vector3(1, 0, 0), 0, 1, 1)
+    const band = planet(options({ light: { relief: 1, own: 1 } }))
+    const far = planet(options({ light: { relief: 1, own: 1, from: 40 } }))
+    const always = planet(options({ light: { relief: 1, own: 1, from: Infinity } }))
+    const read = (p: Planet): [boolean, number, number] => [p.cap!.mesh.visible, p.cap!.material.uniforms.uCapOn!.value as number, p.material.uniforms.uCapCut!.value as number]
+    for (const p of [band, far, always]) eye(p, 50)
+    expect(read(band)).toEqual([false, 0, 0])
+    expect(read(far)).toEqual([false, 0, 0])
+    expect(read(always)).toEqual([true, 0, always.cap!.cut])
+    for (const p of [band, far, always]) eye(p, 3)
+    expect(read(band)).toEqual([false, 0, 0])
+    expect(read(far)).toEqual([true, 0, far.cap!.cut])
+    expect(read(always)).toEqual([true, 0, always.cap!.cut])
+    for (const p of [band, far, always]) eye(p, Math.sqrt(2 * 1.2))
+    for (const p of [band, far, always]) expect(read(p)[1]).toBeCloseTo(0.5, 12)
+    for (const p of [band, far, always]) eye(p, 0.5)
+    for (const p of [band, far, always]) expect(read(p)).toEqual([true, 1, p.cap!.cut])
+    expect(() => planet(options({ light: { relief: 1, own: 1, from: 2 } }))).toThrow('above its band')
+    for (const p of [band, far, always]) expect(Object.keys(p.cap!.material.uniforms).filter((k) => k.startsWith('uCapLi'))).toEqual(['uCapLight'])
+    band.dispose()
+    far.dispose()
+    always.dispose()
   })
 
   it('reads the heights in the vertex shader only, by the pixel footprint as an angle and not by a format', () => {
@@ -333,7 +358,7 @@ async function shot(o) {
     map, mapWidth: 8, height, heightWidth: 2048,
     light: { wrap: 0.2, power: 1, gain: 1, night: [0, 0, 0], sun: [0.2, 0.15, 0.1], relief: 0, reliefNear: 0, limb: 0 },
     haze: o.haze ?? { scaleHeight: 0.01, depth: 0, day: [0, 0, 0], twilight: [0, 0, 0], strength: 0, extinction: 1, forward: 0, top: 1 },
-    patches: { textures, widthsDeg: o.levels.map((l) => l.widthDeg), spot: new THREE.Vector3(0, 0, 1), feather: 0.01, fade: [1, 2], nearDeg: 0, own: o.levels.map(() => o.own ?? true) },
+    patches: { textures, widthsDeg: o.levels.map((l) => l.widthDeg), spot: new THREE.Vector3(0, 0, 1), feather: 0.01, fade: [1, 2], nearDeg: 0, own: o.levels.map(() => o.own ?? true), ...(o.centresDeg ? { centresDeg: o.centresDeg } : {}) },
     ...(levels.length ? { cap: { levels, border: o.border, from: o.from, cells: o.cells, pixel: o.pixel, ...(o.reachDeg ? { reachDeg: o.reachDeg } : {}), ...(o.light ? { light: o.light } : {}) } } : {}),
   })
   const cam = new THREE.PerspectiveCamera(o.vfov, o.width / o.height, o.near, 10)
@@ -371,7 +396,7 @@ window.cap = { shot }
 interface Box { north: [number, number]; east: [number, number]; value: number }
 interface HeightDef { size: number; widthDeg: number; low: number; high: number; base: number; boxes: Box[] }
 interface HazeDef { scaleHeight: number; depth: number; day: [number, number, number]; twilight: [number, number, number]; strength: number; extinction: number; forward: number; top: number }
-interface CapShot { light?: { relief: number; own: number }; haze?: HazeDef; sun?: [number, number, number]; own?: boolean; map: [number, number, number]; levels: { rgb: [number, number, number]; size: number; widthDeg: number }[]; heights?: HeightDef[]; border: [number, number]; from: [number, number]; cells: number; pixel: number; reachDeg?: number; vfov: number; width: number; height: number; near: number; position: number[]; up: number[]; target: number[] }
+interface CapShot { centresDeg?: [number, number][]; light?: { relief: number; own: number; from?: number }; haze?: HazeDef; sun?: [number, number, number]; own?: boolean; map: [number, number, number]; levels: { rgb: [number, number, number]; size: number; widthDeg: number }[]; heights?: HeightDef[]; border: [number, number]; from: [number, number]; cells: number; pixel: number; reachDeg?: number; vfov: number; width: number; height: number; near: number; position: number[]; up: number[]; target: number[] }
 interface CapRead { pixels: number[]; bytes: number; drawn: boolean; triangles: number }
 
 const filmicInverse = (v: number): number => {
@@ -553,6 +578,50 @@ describe.skipIf(!have)('the relief cap in a WebGL2 browser', () => {
       expect(Math.min(...lit.slice(14, 21))).toBeLessThan(0.8)
       for (const i of [0, 5, 10, 23, 24, 25, 26, 27, 39, 44, 49]) expect(Math.abs(lit[i]! - 1)).toBeLessThan(0.01)
       for (const v of other) expect(Math.abs(v - 1)).toBeLessThan(0.01)
+    }
+    expect(errors).toEqual([])
+  }, 240000)
+
+  it('lights the level ground above the band by its heights when the stop gives the light a height of its own, and moves no pixel of the silhouette', async () => {
+    const mesa: HeightDef = { ...flatLevel(12), boxes: [{ north: [-1.5, 1.5], east: [-1.5, 1.5], value: 16384 }] }
+    const view: CapShot = { ...top, vfov: 10, from: [1, 0.5], sun: [1, 0, 1], levels: [{ rgb: [128, 128, 128], size: 8, widthDeg: 30 }] }
+    const row = (r: CapRead): number[] => Array.from({ length: 50 }, (_, i) => px(r, view, 23 + i, 48)[1]!)
+    const off = await call(view)
+    const band = await call({ ...view, heights: [mesa], light: { relief: 1, own: 1 } })
+    expect(band.drawn).toBe(false)
+    expect(band.pixels).toEqual(off.pixels)
+    const lit = await call({ ...view, heights: [mesa], light: { relief: 1, own: 1, from: 5 } })
+    expect(lit.drawn).toBe(true)
+    const ratio = row(lit).map((v, i) => v / row(off)[i]!)
+    expect(Math.max(...ratio.slice(29, 36))).toBeGreaterThan(1.1)
+    expect(Math.min(...ratio.slice(14, 21))).toBeLessThan(0.8)
+    for (const i of [0, 5, 10, 23, 24, 25, 26, 27, 39, 44, 49]) expect(Math.abs(ratio[i]! - 1)).toBeLessThan(0.01)
+    for (let i = 3; i < off.pixels.length; i += 4) expect(lit.pixels[i]).toBe(off.pixels[i])
+    const close = await call({ ...view, from: [8, 4], heights: [mesa], light: { relief: 1, own: 1 } })
+    const near = row(close).map((v, i) => v / row(off)[i]!)
+    expect(Math.abs(Math.max(...near.slice(29, 36)) - Math.max(...ratio.slice(29, 36)))).toBeLessThan(0.05)
+    expect(errors).toEqual([])
+  }, 240000)
+
+  it('moves the square of a colour level by its centre, east and north in the plane of the spot, on the sphere and on the cap alike', async () => {
+    const view: CapShot = { ...top, vfov: 10 }
+    const at = (r: CapRead, eastDeg: number, northDeg: number): number[] => px(r, view, Math.round(48 + (Math.sin(rad(eastDeg)) / (3 - Math.cos(rad(eastDeg))) / Math.tan(rad(5))) * 48), Math.round(48 + (Math.sin(rad(northDeg)) / (3 - Math.cos(rad(northDeg))) / Math.tan(rad(5))) * 48))
+    const centred = await call(view)
+    expect(is(at(centred, 0, 0), GREEN)).toBe(true)
+    expect(is(at(centred, 2, 0), GREEN)).toBe(true)
+    expect(is(at(centred, 4.5, 0), RED)).toBe(true)
+    for (const heights of [undefined, [flatLevel(12)]]) {
+      const east = await call({ ...view, centresDeg: [[0, 0], [3, 0]], ...(heights ? { heights } : {}) })
+      expect(east.drawn).toBe(heights !== undefined)
+      expect(is(at(east, -1.5, 0), RED)).toBe(true)
+      expect(is(at(east, 1.5, 0), GREEN)).toBe(true)
+      expect(is(at(east, 4.5, 0), GREEN)).toBe(true)
+      expect(is(at(east, 3, 2), GREEN)).toBe(true)
+      expect(is(at(east, 3, 4), RED)).toBe(true)
+      const north = await call({ ...view, centresDeg: [[0, 0], [0, 3]], ...(heights ? { heights } : {}) })
+      expect(is(at(north, 0, 4.5), GREEN)).toBe(true)
+      expect(is(at(north, 0, -1.5), RED)).toBe(true)
+      expect(is(at(north, 4.5, 0), RED)).toBe(true)
     }
     expect(errors).toEqual([])
   }, 240000)

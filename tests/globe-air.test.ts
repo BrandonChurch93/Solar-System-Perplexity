@@ -2,8 +2,8 @@ import { createHash } from 'node:crypto'
 import * as THREE from 'three'
 import { describe, expect, it } from 'vitest'
 import { hazeAir, setHazeAir, type GlobeAir } from '../src/bodies/air'
-import { HazeShell, hazeUniforms, type HazeParams } from '../src/bodies/haze'
-import { Planet } from '../src/bodies/planet'
+import { GROUND_AIR_GLSL, HazeShell, airDepth, hazeUniforms, type HazeParams } from '../src/bodies/haze'
+import { Planet, planetFrag } from '../src/bodies/planet'
 import * as look from '../src/stops/mars/look'
 
 const hash = (text: string): string => createHash('sha256').update(text).digest('hex')
@@ -96,5 +96,51 @@ describe('the air of the globe', () => {
     ;(u.uHazeDay!.value as THREE.Vector3).x = 9
     expect(air.day).toEqual([0.4, 0.3, 0.2])
     expect(() => setHazeAir({}, air)).toThrow('no haze')
+  })
+
+  it('measures the air to a point by one law: it grows with the distance, is the globe\'s own depth where the point lies on the datum and stays between 0.8 and 1.6 of the integral of the density along the ray', () => {
+    const H = 0.003
+    const point = (ha: number, ca: number, L: number): [number, number] => {
+      const sa = Math.sqrt(1 - ca * ca)
+      const rb = Math.hypot(sa * L, 1 + ha + ca * L)
+      return [rb - 1, (sa * sa * L + ca * (1 + ha + ca * L)) / rb]
+    }
+    const integral = (ha: number, ca: number, L: number): number => {
+      const sa = Math.sqrt(1 - ca * ca)
+      const n = 4000
+      let sum = 0
+      for (let i = 0; i < n; i++) {
+        const t = ((i + 0.5) / n) * L
+        sum += Math.exp(-(Math.hypot(sa * t, 1 + ha + ca * t) - 1) / H)
+      }
+      return (sum * L) / n / H
+    }
+    let low = Infinity
+    let high = 0
+    for (const ha of [0.0005, 0.002, 0.01]) {
+      for (const ca of [-1, -0.3, -0.05, -0.01, 0, 0.01, 0.05, 0.3]) {
+        let last = 0
+        for (let k = 0; k <= 40; k++) {
+          const L = 1e-5 * 10 ** (k / 10)
+          const [hb, cb] = point(ha, ca, L)
+          if (hb < -0.003) break
+          const tau = airDepth(ha, ca, hb, cb, H, 1)
+          expect(tau).toBeGreaterThanOrEqual(last)
+          last = tau
+          low = Math.min(low, tau / integral(ha, ca, L))
+          high = Math.max(high, tau / integral(ha, ca, L))
+        }
+      }
+    }
+    expect(low).toBeGreaterThan(0.8)
+    expect(high).toBeLessThan(1.6)
+    const k = Math.sqrt(1.5707963 / H)
+    expect(airDepth(1.5, -1, 0, -1, H, 0.7)).toBeCloseTo(0.7 * (1 / (1 + 1 / k) - Math.exp(-1.5 / H) / (1 + 1 / k)), 12)
+    expect(airDepth(1.5, -1, -0.002, -1, H, 1) / airDepth(1.5, -1, 0, -1, H, 1)).toBeCloseTo(Math.exp(0.002 / H), 6)
+    expect(GROUND_AIR_GLSL).toContain('float airDepth(float ha, float ca, float hb, float cb, float scaleHeight, float depth)')
+    expect(GROUND_AIR_GLSL).toContain('float airDepthTo(vec3 eye, vec3 point, float scaleHeight, float depth)')
+    expect(GROUND_AIR_GLSL).toContain('vec3 airOver(vec3 col, float tau, float extinction, vec3 up, vec3 dir)')
+    expect(planetFrag({ slots: 0, own: false, gain: false, minor: false, glow: false })).not.toContain('airDepth')
+    expect(planetFrag({ slots: 0, own: false, gain: false, minor: false, glow: false, cap: true })).toContain(GROUND_AIR_GLSL)
   })
 })

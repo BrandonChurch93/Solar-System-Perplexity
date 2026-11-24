@@ -133,9 +133,11 @@ Type: `SetContext.texture` takes `TextureOptions` from `src/core/types.ts` (owne
 +export interface TextureOptions { srgb?: boolean; mips?: boolean; repeat?: boolean; mirror?: boolean; anisotropy?: number; flipY?: boolean; linear?: boolean; channels?: 1 }
 ```
 
-## 4. A centre per patch level
+## 4. A centre per patch level (`centresDeg`)
 
-Not built. The Mars builder measured that it would save 18 MB, not a level.
+`patches.centresDeg: [[east, north], ...]`, one pair per level, degrees. The plate of a level stays gnomonic about `patches.spot`, north up; its square is moved in that plane by the tangent of the two angles: it spans centre - tan(width / 2) to centre + tan(width / 2) on each axis, in the plane's unit (tangent of the angle from the spot). Asked by the Mars builder for the corners of the frame the eye's foot leaves soft (MAIL 454 item 4). The text gets `uniform vec2 uPatchCentre[slots];` and reads `(g - uPatchCentre[i])` where it read `g`; with those two taken out it is the text without the option, and a stop that gives no centres keeps its text (`81b01893...`). No sampler. The cap draws the planet's text, so the colour follows there too. The heights of a cap stay centred on the spot (its grids are one lattice about it).
+
+Measured (`tests/globe-levels.test.ts`, `tests/globe-cap.test.ts`): a level 6 degrees wide with centre 3 east shows from 0 to 6 east and from 3 south to 3 north, with centre 3 north the same turned, on the sphere and on the cap.
 
 ## 5. Haze glow about a direction of the stop (`glow`)
 
@@ -243,8 +245,28 @@ What it draws:
 
 - Grids by pixel footprint (`fine`, default 1): a grid is drawn only while the cells of its parent are larger than `fine` pixels (of `pixel`, an angle) at the nearest ground the eye can see in it; the finest grid drawn is drawn whole. The eye's height less the highest `high` of the levels and the distance of its foot from the grid's square decide, nothing else. `fine: 0` draws every grid always. Why: triangles far under a pixel give wrong screen derivatives in the fragment text (the renderer snaps vertices to a sixteenth of a pixel), seen on Mars as a noisy square over the finest levels from 2.4 radii down to about 0.1. With `fine: 1` the cells of the finest grid drawn lie between about 0.45 and 1 pixel of the 1080 row format, twice that at 2160 rows; `fine: 0.5` halves them.
 
-- Light of its own heights (`light: { relief, own }`, two numbers of the stop, also `cap.setLight(relief, own)` per frame; MAIL 431 item 3). The vertex shader takes the normal of the height pyramid at the vertex: central differences of the same read that places the vertex, over half the larger of pixel footprint and cell to each side, with the tangents of the gnomonic direction written out (no differences of positions). It goes to the fragment text as a varying. `relief` (1 is the true normal) adds the difference between that normal and the ball's to the normal the lit levels are shaded with: same Sun, wrap, curve and night as the ball. `own` multiplies the colour of the own levels by 1 + lift, the lift the same law gives that normal against the ball's (limits -0.85 and 1.6 as for the wrap relief), for plates that carry painted light. The relief normal comes in with the relief (the heights are multiplied by the share of the band and the border), and is the ball's where the heights are level. Without `light` the cap has no such varying, no uniform and four height reads a vertex fewer. No cast shadow.
-- Haze to its own surface (always with the cap, no number): the height of the vertex goes to the fragment text, and the haze depth is measured along the view ray from the eye to the point at that height over the datum, not to the ball. Three cases: the eye looks up at the point; the ray descends at both ends (at height 0 this is the ground formula of the ball); the ray passes its lowest point between the two. The density at the point is exp(-height / scale height), not held at the datum's, so ground under the datum has more air over it.
+- Light of its own heights (`light: { relief, own, from? }`, numbers of the stop; `cap.setLight(relief, own)` per frame; MAIL 431 item 3, MAIL 454 item 2). The vertex shader takes the normal of the height pyramid at the vertex: central differences of the same read that places the vertex, over half the larger of pixel footprint and cell to each side, with the tangents of the gnomonic direction written out (no differences of positions). It goes to the fragment text as a varying. `relief` (1 is the true normal) adds the difference between that normal and the ball's to the normal the lit levels are shaded with: same Sun, wrap, curve and night as the ball. `own` multiplies the scene value of the own levels by 1 + lift, lift = clamp((nc.s - n0.s) / max(n0.s + wrap, 0.06), -0.85, 1.6), nc the heights' normal, n0 the ball's (the law of the wrap relief), for plates that carry no slope light of their own. The normal is that of the heights as baked: at full wherever the cap is drawn, not multiplied by the share of the band, not by the border, and without the sink. Only the displacement comes in by the band.
+- `light.from` (a height of the eye in radii, above the band's top; `Infinity` is allowed): the cap is drawn from that height down, level above the band, lit by its heights at full. Without it the cap is drawn from the band's top as before. For a stop whose plates have no slope light, so that the ground is lit the same from the hold down. Cost: the cap's vertex work in every frame under that height.
+- Without `light` the cap has no such varying, no uniform and four height reads a vertex fewer.
+- Haze to its own surface (always with the cap, no number): the height of the vertex as drawn goes to the fragment text, and the haze depth is measured along the view ray from the eye to the point at that height over the datum, not to the ball, by `airDepth` of the chunk below. The density at a height is exp(-height / scale height) at both ends, not held at the datum's, so ground under the datum has more air over it.
+
+### One air to the ground (`GROUND_AIR_GLSL`, MAIL 454 item 3)
+
+`src/bodies/haze.ts` exports a chunk for any material that draws ground under the air of a body, the cap and a stop's close view alike. It goes after the haze text (`hazeGlsl(glow)` or `HAZE_GLSL`), whose uniforms and `hazeCh`, `hazeLight` it uses:
+
+```
+float airDepth(float ha, float ca, float hb, float cb, float scaleHeight, float depth)
+float airDepthTo(vec3 eye, vec3 point, float scaleHeight, float depth)
+vec3  airOver(vec3 col, float tau, float extinction, vec3 up, vec3 dir)
+```
+
+- `airDepth`: optical depth along the straight ray from the eye to a point of the ground. `ha`, `hb`: heights of the eye and of the point over the datum, in radii of the body (negative under the datum). `ca`, `cb`: cosine between the ray's direction (eye to point) and the local up at the eye and at the point. `scaleHeight`, `depth`: `uHazeH`, `uHazeTau`, the `scaleHeight` and `depth` of `Air.haze`. Three cases: the ray rises at the eye; it descends at both ends; it passes its lowest point between them.
+- `airDepthTo`: the same from two positions measured from the body's centre in radii. In float32 the direction of a point nearer than about 1e-5 radii is coarse; a close view that has heights and cosines of its own calls `airDepth`.
+- `airOver`: the colour seen through that air: `col * exp(-tau * extinction) + hazeLight(up, dir) * (1 - exp(-tau))`, `up` the local up at the point, `dir` the ray's direction, `extinction` the `uExtinction` of `Air.haze`.
+- A material takes its uniforms from `hazeUniforms(params)` plus `uExtinction`, writes them per frame with `setHazeAir(material.uniforms, shot.air.haze)`, and sets `uSunW` (and `uCam` if it uses it).
+- `airDepth(ha, ca, hb, cb, scaleHeight, depth)` is also exported as a TypeScript function with the same lines, for a stop's tools.
+- It is the ball's own law: with the point on the datum it is the depth the planet's text gives the ground. The planet's text for a stop without a cap does not hold the chunk.
+- Measured against the integral of exp(-h / H) along the ray on the sphere (H 0.003, eye 0.0005, 0.002 and 0.01 radii up, rays from straight down to 17 degrees up, distances 1e-5 to 0.1 radii): the depth grows with the distance in every case and lies between 0.84 and 1.57 of the integral: 0.96 straight down, 0.90 at 17 degrees down or up, 0.87 at 3 degrees, 1.2 to 1.4 at half a degree, 1.57 for a level ray at short range, 1.0 to 1.1 at 0.1 radii. The spread is the Chapman term of the ball (`hazeCh`), kept so that the ball and the ground agree; a change of it would change every hold.
 
 Off: a planet without `cap` keeps its text (`81b01893...`, own `813ceb84...`), has no child mesh and no uniform with `Cap` in its name. The text of the sphere of a planet with a cap is the text it had before these two; only the cap's own text differs.
 
@@ -252,7 +274,7 @@ Not there yet: no cast shadow (advice to a stop: multiply it into the colour pla
 
 Other owners: `src/core/caps.ts` needs `MAX_VERTEX_TEXTURE_IMAGE_UNITS: 10` and `MAX_COMBINED_TEXTURE_IMAGE_UNITS: 26` (on agent/engine-handover 051a2226). `SetContext` in `src/core/types.ts` is not changed: `heightTexture` is a function beside the loader and finds the set's counter through the context, also through a copy of it (`{ ...ctx }`).
 
-Measured on the synthetic height (`tests/globe-cap.test.ts`, 10 tests in node and 8 in the harness browser, pictures of 96 to 192 pixels, float target):
+Measured on the synthetic height (`tests/globe-cap.test.ts`, 11 tests in node and 10 in the harness browser, pictures of 96 to 192 pixels, float target):
 
 - Every height 0, eye above the spot: no pixel differs from the globe without a cap by more than 1e-6. Eye 0.02 radii up looking along the ground: under 1 percent of the values differ by more than 1e-4.
 - Eye above the band: the picture equals the picture of a globe without the option value for value, the triangle count is the sphere's, and the set's bytes rise by exactly the heights with their mips.
@@ -261,6 +283,7 @@ Measured on the synthetic height (`tests/globe-cap.test.ts`, 10 tests in node an
 - Rim: a bump inside the border seen from four sides at 0.01 radii, with and without a skirt of 20 degrees: every pixel the sphere covered is covered.
 - Pixel as an angle: a ridge one texel wide has its crest at the same share of the picture height at 96 and at 192 rows (within one row of 96); with a pixel 400 times wider it stands less than 0.6 as tall.
 - Light: a mesa 0.01 radii tall seen from above, Sun 45 degrees up in the east. Without `light` no pixel of the row through it differs from the level ground. With the strength of its kind at 1 (own levels: `own`; lit levels: `relief`) the east wall is brighter than without by more than 10 percent, the west wall darker by more than 20 percent, the level ground and the mesa's top within 1 percent; with only the other strength at 1 every pixel of the row is within 1 percent of the picture without `light`.
+- Light above the band (`light.from`): the same mesa with the eye above the band. Without `from` the cap is not drawn and the picture is the globe's value for value. With `from` above the eye the walls are lit as below the band (east over 10 percent brighter, west over 20 percent darker, within 0.05 of the ratio below the band), the level ground within 1 percent, and the cover of every pixel is the globe's.
 - Haze: a globe with haze (scale height 0.01, depth 0.4) seen from above. Every height 0: no value differs from the globe without a cap by more than 2e-5. A pit 0.02 radii deep is more than 1.5 times as bright in the haze as the datum beside it, a mesa 0.02 tall less than half as bright, the datum itself within 1 percent.
 
 ### Measured on Mars (plan of `agent/mars-place` 632d7441, first bake c49c7dd5, set wired in a scratch worktree only)
@@ -328,3 +351,4 @@ Draft stills `out/work/stills/f%05d-16x9-draft-full.png`, sha256, frames 360 (su
 - Merge of main 65fb91d (e8283808, the capture rate): the same 14 draft frames with the options off are byte equal to the 14 of e28f9c95. `npx tsc --noEmit` clean, `npx vitest run` 256 green (33 files), `vite build` clean (run by the still tool).
 - Cap on Mars's heights baked again (section 8, last part): drafts 2409 to 2449, one still at 3840 by 2160, the gap measured again.
 - Merge of main 94be42ed and 4d7175f6 (69ac8b40, plan E's one move). Swap of sphere for cap measured in the film's terms: it stays (section 8). Light of the cap's own heights (`light`) and haze to its own surface (MAIL 431 item 3). Proof with the options off on the merge with these changes in the tree: the 14 draft frames; 13 are byte equal to the 14 of e8283808, frame 2427 (changed by main's plan E) is byte equal to 2427 rendered at main 4d7175f6 (`4d85b04d...`). `npx tsc --noEmit` clean, `npx vitest run` 291 passed, 0 failed, 1 todo of main's (37 files), `vite build` clean (run by the still tool).
+- MAIL 454: the light at full wherever the cap is drawn and from a height the stop names (`light.from`); the air to the ground as one exported chunk (`GROUND_AIR_GLSL`), used by the cap; a centre per colour level (`centresDeg`, section 4).
