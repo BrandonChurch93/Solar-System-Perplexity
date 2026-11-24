@@ -49,6 +49,7 @@ uniform vec4 uCvThread;
 uniform vec4 uCvWarpMore;
 uniform vec4 uCvGap;
 uniform vec4 uCvBend;
+uniform vec4 uCvSpotMore;
 uniform vec4 uCvStream;
 uniform float uCvTime;
 vec3 cvH3(vec3 p) {
@@ -239,11 +240,16 @@ vec4 cvSpot(vec2 p, float t, out vec4 fibre) {
   vec2 q = vec2(atan(d.y, d.x) * uCvBend.w / 6.2831853, away * uCvFibre.z + t * uCvStream.x);
   // no fibre is straight: the chart sways a little along the fibres' length
   q.x += uCvBend.x * (vnoise(vec3(u * uCvBend.z + 1.1, away * uCvBend.y - t * 0.03)) - 0.5);
+  q.x += uCvSpotMore.z * away;
   float e;
   vec2 ge;
   vec2 rel;
   vec3 own;
   cvDiagram(q, t, uCvBend.w, e, ge, rel, own);
+  // every fibre is as long as it likes: its outer end lies at a place of its own, so the spot has no rim
+  float reach = outer * (1.0 - uCvSpotMore.x * fract(own.y * 7.31 + 0.37));
+  inside = 1.0 - smoothstep(reach * 0.88, reach * 1.02, r);
+  if (inside <= 0.0) return vec4(0.0, 0.0, rs, 0.0);
   float way = cvWay(length(rel), e * uCvCell.x);
   float umbra = 1.0 + 0.4 * uCvFibre.w * lobes;
   // every fibre ends over the umbra at a place of its own, with a round head
@@ -318,6 +324,7 @@ uniform vec4 uCvSheen;
 uniform vec4 uCvGrain;
 uniform vec4 uCvRim;
 uniform vec4 uCvFall;
+uniform vec4 uCvGlass;
 uniform vec4 uCvUmbra;
 uniform vec4 uCvFibreLook;
 uniform vec4 uCvVeil;
@@ -411,15 +418,20 @@ void main() {
   float muFlat = clamp(dot(dir, toEye), 0.0, 1.0);
 
   // heat of the cells: dark lanes, a bright middle while the cell is young, a dark dip when it is old
-  float body = (1.0 - exp(-e / uCvHeat.x)) * mix(uCvSteep.x, 1.0, pow(cap, uCvSteep.y));
+  // the side of a bulb is seen as a tall band: it goes from the dark of the lane at its foot to the full light at
+  // its shoulder by its own height, so the band is a slope of light and not a wall of one colour
+  float body = (1.0 - exp(-e / uCvHeat.x)) * mix(uCvSteep.x, 1.0, smoothstep(0.0, uCvSteep.y, cap));
   float young = 1.0 - smoothstep(0.0, 0.45, own.x);
   float top = uCvTone.y * (1.0 - uCvTone.z + 2.0 * uCvTone.z * own.y) * (1.0 + uCvHeat.z * young - uCvHeat.w * old);
   top *= 1.0 + uCvTone.w * exp(-r2 / (uCvHeat.y * uCvHeat.y)) * (1.0 - 2.2 * old);
+  // a grown cell is a skin over the hot gas: its middle is seen through the most of it and is the darker part, the
+  // shoulder where the skin turns down to the lane is the brightest; a young cell is still all bright
+  top *= 1.0 - uCvGlass.x * smoothstep(0.1, uCvGlass.w, own.x) * (1.0 - smoothstep(uCvGlass.y, uCvGlass.z, way));
   top *= 1.0 + uCvGrain.x * 2.0 * (petal.x - 0.4) * fine;
   // the threads are seen by the dark between them: little on the top, deep on the side where the plasma runs down
   // (a thread is drawn only where a pixel is narrower than it: farther off the locks merge into their mean)
   float threads = 1.0 - smoothstep(uCvGloss.y, uCvGloss.z, foot);
-  top *= 1.0 + mix(-uCvThread.w * (0.1 + 0.9 * way * way) * 0.45, 0.25 * max(petal.y - 1.0, 0.0) - uCvThread.w * (0.1 + 0.9 * way * way) * (1.0 - min(petal.y, 1.0)), threads) * fine;
+  top *= 1.0 + mix(-uCvThread.w * (0.1 + 0.9 * way * way) * 0.45, uCvMesh.w * max(petal.y - 1.0, 0.0) - uCvThread.w * (0.1 + 0.9 * way * way) * (1.0 - min(petal.y, 1.0)), threads) * fine;
   top *= 1.0 + uCvGrain.w * (vnoise(vec3(g / L * uCvGrain.y, t * uCvGrain.z + own.y * 5.0)) + 0.6 * vnoise(vec3(g / L * uCvGrain.y * 3.7 + 9.1, t * uCvGrain.z * 1.6 + own.y * 3.0)) - 0.8) * fine;
   float lum = uCvTone.x + (top - uCvTone.x) * body;
   lum = mix(uCvFar.z, lum, mix(uCvFar.w, 1.0, fine));
@@ -433,7 +445,7 @@ void main() {
   float head = exp(-pow((fibre.y - 0.45) / uCvUmbra.y, 2.0));
   float pen = uCvUmbra.z * (uCvFibreLook.x + (1.0 - uCvFibreLook.x) * pow(spot.w, uCvFibreLook.w)) * (0.5 + 0.6 * run + 0.5 * fine2 * fibre.x) * (0.7 + 0.6 * fibre.z) * (1.0 + uCvUmbra.w * head) * mix(1.0, 0.8, smoothstep(1.0, 2.2, rs));
   float floorL = uCvUmbra.x * (0.6 + 0.8 * vnoise(vec3(g * 22.0, t * 0.15)));
-  lum = mix(lum, mix(floorL, pen, smoothstep(0.0, 0.25, fibre.y)), spot.x);
+  lum = mix(lum, mix(floorL, pen, smoothstep(uCvSpotMore.y, uCvSpotMore.y + 0.25, fibre.y)), spot.x);
 
   // light leaves the hot gas along its own normal: a level top is the brightest, a steep side is darker on every
   // side of the bulb, and a face turned to the eye is a little brighter than one turned away
@@ -451,6 +463,8 @@ void main() {
   lum += (uCvRim.x * rim + uCvShade.w * body * sheen * (1.0 - spot.x)) * fine;
 
   vec3 shown = texture(uRamp, vec2(clamp(lum, 0.0, 1.0), 0.5)).rgb;
+  // below the ramp's darkest class the lanes and the pit go on toward black
+  shown *= 1.0 - uCvFall.z * (1.0 - smoothstep(0.0, uCvFall.w, lum));
   vec3 col = inverseFilmic(grade(shown, 0.0));
   // a thin glowing layer over the ground: the longer the way through it, the more of it
   float through = 1.0 / max(muFlat, 0.02);
@@ -558,8 +572,9 @@ export class Surface {
         uCvPit: { value: new THREE.Vector4(s.drop[0]!, s.drop[1]!, s.wall[0]!, s.wall[1]!) },
         uCvFibre: { value: new THREE.Vector4(s.fibres.count, s.fibres.height, s.fibres.along, s.ragged) },
         uCvBend: { value: new THREE.Vector4(s.fibres.bend[0]!, s.fibres.bend[1]!, s.fibres.bend[2]!, s.fibres.round) },
+        uCvSpotMore: { value: new THREE.Vector4(s.uneven, s.fibres.headFrom, s.fibres.twist, 0) },
         uCvStream: { value: new THREE.Vector4(s.fibres.stream, s.fibres.ends, s.fibres.headLong, s.fibres.power) },
-        uCvMesh: { value: new THREE.Vector4(m.real[0]!, m.real[1]!, 1, 0) },
+        uCvMesh: { value: new THREE.Vector4(m.real[0]!, m.real[1]!, 1, l.streak) },
         uCvKeep: { value: 1 },
         uCvHeat: { value: new THREE.Vector4(l.lane, l.middleWide, l.young, l.old) },
         uCvTone: { value: new THREE.Vector4(l.dark, l.top, l.spread, l.middle) },
@@ -573,7 +588,8 @@ export class Surface {
         uCvWarpMore: { value: new THREE.Vector4(c.warp.fine[0]!, c.warp.fine[1]!, c.warp.fine[2]!, c.sizes) },
         uCvGap: { value: new THREE.Vector4(c.gap.width, c.gap.scale, c.gap.vary, c.lumps.crease) },
         uCvPetalMore: { value: new THREE.Vector4(c.lumps.scale[1]!, c.lumps.turn[1]!, c.lumps.speed[1]!, c.dome.dimple) },
-        uCvFall: { value: new THREE.Vector4(l.fall.amount, l.fall.power, 0, 0) },
+        uCvGlass: { value: new THREE.Vector4(l.glass.amount, l.glass.from, l.glass.to, l.glass.grown) },
+        uCvFall: { value: new THREE.Vector4(l.fall.amount, l.fall.power, l.deep.amount, l.deep.below) },
         uCvRim: { value: new THREE.Vector4(l.rim.amount, l.rim.at, l.rim.wide, l.rim.facing) },
         uCvUmbra: { value: new THREE.Vector4(s.floor, s.fibres.head, s.fibres.level, s.fibres.edge) },
         uCvFibreLook: { value: new THREE.Vector4(s.fibres.gap, s.fibres.grains, s.fibres.speed, s.fibres.cut) },

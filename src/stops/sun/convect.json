@@ -120,18 +120,18 @@
   ],
   "parts": 0.6,
   "laneIn": 0.6,
-  "round": 36,
+  "round": 60,
   "dome": {
    "height": 0.0,
    "full": 0.35,
-   "bulge": 0.036,
+   "bulge": 0.044,
    "power": 2,
    "dimple": 0.006,
    "sink": 0.5,
-   "edge": 0.5
+   "edge": 0.6
   },
   "warp": {
-   "amount": 0.3,
+   "amount": 0.55,
    "scale": 0.7,
    "rate": 0.06,
    "fine": [
@@ -154,7 +154,7 @@
    "vary": 0.8
   },
   "lumps": {
-   "height": 0.006,
+   "height": 0.01,
    "scale": [
     4.5,
     10
@@ -170,16 +170,16 @@
    "crease": 0.03
   },
   "thread": {
-   "round": 20,
+   "round": 34,
    "out": 9,
    "speed": 0.9,
    "off": 0.1
   },
-  "sizes": 0.2
+  "sizes": 0.5
  },
  "spot": {
   "umbra": 1.0,
-  "penumbra": 2.9,
+  "penumbra": 3.1,
   "drop": [
    0.035,
    0.03
@@ -188,11 +188,11 @@
    0.75,
    1.2
   ],
-  "ragged": 0.3,
+  "ragged": 0.5,
   "floor": 0.02,
   "fibres": {
    "level": 0.42,
-   "edge": 0.8,
+   "edge": 1.4,
    "head": 0.3,
    "count": 19.3,
    "height": 0.014,
@@ -202,16 +202,19 @@
    "gap": 0.06,
    "cut": 0.6,
    "bend": [
-    0.3,
-    1.8,
+    2.5,
+    2.5,
     2.3
    ],
    "round": 96,
    "stream": 0.05,
-   "ends": 0.4,
-   "headLong": 0.35,
-   "power": 2.4
-  }
+   "ends": 0.7,
+   "headLong": 0.25,
+   "power": 2.4,
+   "headFrom": 0.1,
+   "twist": 2.0
+  },
+  "uneven": 0.3
  },
  "mesh": {
   "step": 0.008,
@@ -229,12 +232,12 @@
   "coarse": 0.03
  },
  "light": {
-  "lane": 0.005,
+  "lane": 0.0015,
   "middleWide": 0.25,
   "young": 0.25,
   "old": 0.55,
-  "dark": 0.045,
-  "top": 0.41,
+  "dark": 0.075,
+  "top": 0.4,
   "spread": 0.3,
   "middle": 0.15,
   "limb": 0.85,
@@ -242,7 +245,7 @@
    0.75,
    1.3
   ],
-  "glint": 0.45,
+  "glint": 0.4,
   "veil": {
    "amount": 0.02,
    "level": 1.0,
@@ -256,7 +259,7 @@
   "far": {
    "from": 0.25,
    "to": 1.2,
-   "level": 0.42,
+   "level": 0.55,
    "keep": 0.75
   },
   "petal": 0.9,
@@ -266,18 +269,18 @@
    "amount": 0.35
   },
   "rim": {
-   "amount": 0.08,
+   "amount": 0.0,
    "at": 0.006,
    "wide": 0.004,
    "facing": 1.4
   },
-  "thread": 0.6,
+  "thread": 0.5,
   "flank": [
-   0.75,
-   0.5
+   0.0,
+   0.2
   ],
   "steep": [
-   0.6,
+   0.95,
    0.45,
    0.95
   ],
@@ -287,16 +290,27 @@
     1,
     0.5
    ],
-   "power": 24
+   "power": 40
   },
   "threadFar": [
    0.004,
    0.014
   ],
   "fall": {
-   "amount": 0.4,
+   "amount": 0.15,
    "power": 3
-  }
+  },
+  "deep": {
+   "amount": 0.25,
+   "below": 0.12
+  },
+  "glass": {
+   "amount": 0.72,
+   "from": 0.1,
+   "to": 0.9,
+   "grown": 0.4
+  },
+  "streak": 0.9
  },
  "jets": {
   "count": 48000,
@@ -306,9 +320,9 @@
    9.5
   ],
   "segments": 6,
-  "length": 0.2,
+  "length": 0.13,
   "width": 0.013,
-  "gain": 0.8,
+  "gain": 0.55,
   "period": [
    2.5,
    5
@@ -332,12 +346,12 @@
  },
  "glow": {
   "tight": [
-   0.55,
-   0.05
+   0.35,
+   0.035
   ],
   "wide": [
-   0.1,
-   0.18
+   0.07,
+   0.14
   ],
   "turn": 0.22,
   "tint": [
