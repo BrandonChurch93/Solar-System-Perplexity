@@ -21,6 +21,7 @@ import { Belt } from '../space/belt/belt'
 import { Dust } from '../space/dust'
 import { Sky } from '../space/sky'
 import { implicitUniform } from './texel'
+import { setFrame } from './frame'
 import type { SkyAims } from '../space/aim'
 import { Cover, coverReaches } from '../terrain/cover'
 import type { Relief } from '../terrain/relief'
@@ -146,6 +147,7 @@ export class Engine {
   private applySize(): void {
     const { width, height } = this.format
     this.renderer.setSize(width, height, false)
+    setFrame(height, config.raw.formats.master.height)
     this.canvas.style.aspectRatio = width + ' / ' + height
     this.sampleTarget.dispose()
     this.accumulator.dispose()

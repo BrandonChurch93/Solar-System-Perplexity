@@ -332,6 +332,19 @@ Review tier, capture rate 2, 1920 by 1080, 16 samples a frame, heights of f95c36
 
 Not closed: by the measure the gap is under one pixel with `cells` = 2 `size` and under half a pixel only with 3 `size`; no march in the fragment text. The sink is not driven on Mars (numbers of handover_engineer). No picture at the final tier from here. Seen in the pictures and not the cap's: a thin straight crest north of the close ground (the bake, named by its builder), plates softer than the first set.
 
+## 9. The frame factor (NOTE 501): a fade reads an angle, not a pixel
+
+The fault: the colour levels of a globe come in by the texels of the parent a pixel (`uPatchFade`, 1.1 to 1.7, against `gd * scale * size` from `dFdx` and `dFdy`). A pixel of uhd is half as large as one of 16 by 9, so at uhd every level came in at twice the height, at preview at half.
+
+- `src/core/frame.ts`: `frameUniform` (one object for the whole film, `{ value }`, usable as a uniform `uFrame`) and `setFrame(height, master)`. The engine writes it where it sets the size of the drawing buffer (`applySize`): the height of the format over the height of the master, 1 at 16 by 9, 2 at uhd, 0.5 at preview. It is the engine's format, not `view.format`: in the pass that draws a place picture `view.format` is the layout's, larger by the picture's scale, and a factor taken from it would change that picture at 16 by 9.
+- `Planet.update` writes `uPatchFade` as the stop's two numbers over the factor. smoothstep(a, b, x * f) is smoothstep(a / f, b / f, x), so no text changes and at 16 by 9 the two numbers are the stop's own bits. The text hashes of the globe stand. The cap draws with the globe's uniforms and follows.
+- Not touched, because it only picks a mip or is a diagnostic: `textureGrad` gradients (`uGrad`), `diagTexelsDir`, `drawn`, the texel plan of `src/core/texel.ts`.
+- Already an angle: the cap (`pixel` is a number of the stop, an angle; its grids, its level choice and `uCapFade` read `pixel * distance`).
+- `FarPoint` (every stop draws its body as a point from afar with it): the core of the point was 0.9 square pixels of the buffer whatever the format, and the gain read min(radius in buffer pixels, 1). Now the radius is taken in pixels of the master, and above 16 by 9 the core is widened by the factor squared (through `uWide`, which the text already has), so the point has the same angle and the same light at uhd. Under 16 by 9 the core stays a pixel's (a core of half a pixel would fall between the pixels). At 16 by 9 every uniform has the value of before.
+- Seen and left, not mine or not in use: `src/bodies/standin.ts` (imported by nothing; line width by `fwidth`, a radius threshold in pixels); `src/core/place.ts` (the weight of a place picture falls by picture texels a frame pixel times the picture's scale; the picture is drawn at the format's size times that scale, so the ratio is the same in every format as long as the scale is; if the edge limit of `caps.ts` gives uhd a smaller scale than 16 by 9 the two differ: the engine's to check); `src/post/chain.ts` (sharpening one pixel wide, grain by the pixel) and `src/space` (dust has its own `height / 1080`).
+
+Measured (`tests/globe-frame.test.ts`, 4 tests in node; `tests/globe-cap.test.ts`, one more in the harness browser): a level whose parent has 1.3 texels a row at 96 rows shows 0.73 of the finer level in the middle; at 192 rows with the factor 2 the same within 0.02, without the factor 1.0; at 48 rows with the factor 0.5 the same within 0.03, without it 0.0.
+
 ## Proof with the options off
 
 Draft stills `out/work/stills/f%05d-16x9-draft-full.png`, sha256, frames 360 (sun.hold), 615 (mercury.hold), 717 (mercury.dive), 1185 (venus.hold), 1857 (earth.dive), 2325 (mars.hold), 2427 (mars.dive), 2997 (jupiter.dive), 3465 (saturn.hold), 4035 (uranus.hold), 4707 (neptune.dive). The references were rendered at `412d2d09` before any change. The runs are named in the log below.
