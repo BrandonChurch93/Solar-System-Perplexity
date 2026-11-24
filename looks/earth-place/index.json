@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T15:44:39.396Z",
+ "pushed": "2026-11-24T15:59:09.535Z",
  "head": "f7ab197acd05bea7317f6e576894f818484ae09a",
- "note": "bank tries 3 and 4, both bad: marched puffs read as blocks, flat bank is blown white with hard edges; next a soft toned bank",
+ "note": "bank try 7 (flat cover field from code, tint by angle): draft pairs, not proved, white streaks at far left 1882 to 1890 still wrong",
  "looks": [
+  {
+   "time": "2026-11-24T15:59:08.934Z",
+   "file": "20261124155908934-note-pairs-1.jpg",
+   "source": "../../../../tmp/gl/s11/d7/pairs-1.jpg",
+   "kind": "note",
+   "label": "bank try 7 draft: 1882 1886 1890 before left, bank right; white streaks left at far left are a fault",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T15:59:08.327Z",
+   "file": "20261124155908327-note-pairs-0.jpg",
+   "source": "../../../../tmp/gl/s11/d7/pairs-0.jpg",
+   "kind": "note",
+   "label": "bank try 7 draft: 1857 1870 1878 before left, bank right",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T15:59:07.661Z",
+   "file": "20261124155907661-note-hold.jpg",
+   "source": "../../../../tmp/gl/s11/d7/hold.png",
+   "kind": "note",
+   "label": "bank try 7 draft, hold 1755: kept final left, draft with bank right, x3",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T15:44:38.749Z",
    "file": "20261124154438749-note-hold.jpg",
@@ -74,30 +98,6 @@
    "source": "../../../../tmp/gl/s9/T-rise-zoom.jpg",
    "kind": "note",
    "label": "rise change of view enlarged 2098 to 2103: limb soft to 2100, streaks from 2101",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T14:11:28.935Z",
-   "file": "20261124141128935-note-rise-mid-c.jpg",
-   "source": "../../../../tmp/gl/s9/rise-mid-c.jpg",
-   "kind": "note",
-   "label": "rise 2136 to 2147 draft on the merge",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T14:11:27.658Z",
-   "file": "20261124141127658-note-rise-mid-b.jpg",
-   "source": "../../../../tmp/gl/s9/rise-mid-b.jpg",
-   "kind": "note",
-   "label": "rise 2116 to 2135 draft on the merge",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T13:56:39.387Z",
-   "file": "20261124135639387-note-T-dive-third.jpg",
-   "source": "../../../../tmp/gl/s9/T-dive-third.jpg",
-   "kind": "note",
-   "label": "third tree, dive T frames 1909 to 1923 (change of view between 1918 and 1919)",
    "stop": "earth"
   }
  ]
