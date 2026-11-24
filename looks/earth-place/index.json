@@ -1,9 +1,55 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T01:04:45.832Z",
+ "pushed": "2026-11-24T01:19:34.807Z",
  "head": "52a96ba2115a00a7972e15242b109c3f54720c12",
- "note": "step 3 trial: far cap by body depth, white patches at 2099 gone, towers keep their tone at 2118; final frames rendering",
+ "note": "step 3 final frames: towers as bodies, strips with a foot marked, 2010 pair; checks running",
  "looks": [
+  {
+   "time": "2026-11-24T01:19:33.833Z",
+   "file": "20261124011933833-note-pair-2010.jpg",
+   "source": "../../../../tmp/gl/s3/pair-2010.jpg",
+   "kind": "note",
+   "label": "step 3: 2010 against step 1 with three marks, whole frame mean 0.003, largest 2 code values",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T01:19:32.866Z",
+   "file": "20261124011932866-note-f-e.jpg",
+   "source": "../../../../tmp/gl/s3/f-e.jpg",
+   "kind": "note",
+   "label": "step 3: every frame 2114 to 2122 of the rise",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T01:19:31.857Z",
+   "file": "20261124011931857-note-strip-rise.jpg",
+   "source": "../../../../tmp/gl/s3/strip-rise.jpg",
+   "kind": "note",
+   "label": "step 3: the same foot, a second apart, surface view into the rise (2071, 2101, 2131; at 2131 the place has handed over to the globe)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T01:19:30.899Z",
+   "file": "20261124011930899-note-strip-dive.jpg",
+   "source": "../../../../tmp/gl/s3/strip-dive.jpg",
+   "kind": "note",
+   "label": "step 3: one tower foot marked on the sea, a second apart, dive into the surface view (1889, 1919, 1949)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T01:15:34.926Z",
+   "file": "20261124011534926-job-frame-01830.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "earth.dive frame 1830, draft tier, texels view, from the running g13 job",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1830,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "g13"
+  },
   {
    "time": "2026-11-24T01:04:26.379Z",
    "file": "20261124010426379-note-d3-2118.jpg",
@@ -26,46 +72,6 @@
    "source": "../../../../tmp/gl/s3/c3-follow-rise.jpg",
    "kind": "note",
    "label": "step 3 trial c2, not committed: one tower followed through frames 2114 to 2122 (zoom 3), its tone holds while the place blends into the globe by height",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T00:56:45.847Z",
-   "file": "20261124005645847-note-dbg-dots.jpg",
-   "source": "../../../../tmp/gl/s3/dbg-dots.jpg",
-   "kind": "note",
-   "label": "step 3 trial c2, a fault found on consecutive frames, not committed: single white pixels that show for one frame (top row frame 1904, bottom row frame 2099, zoom 6); all = c2, nonear = near cap hidden (the far cap shows as lines one pixel wide past the near rim), nofar = far cap hidden, unlit = far cap with the picture's shade",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T00:30:33.205Z",
-   "file": "20261124003033205-note-strip-rise.jpg",
-   "source": "../../../../tmp/gl/s3/strip-rise.jpg",
-   "kind": "note",
-   "label": "step 3 trial, not committed: frames 2080 2110 2140, a second apart, the same tower foot marked",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T00:30:32.602Z",
-   "file": "20261124003032602-note-strip-dive.jpg",
-   "source": "../../../../tmp/gl/s3/strip-dive.jpg",
-   "kind": "note",
-   "label": "step 3 trial, not committed: frames 1880 1910 1940, a second apart, one tower foot marked (projected from the world point); 1880 is above the height where the close ground shows",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T00:30:31.997Z",
-   "file": "20261124003031997-note-c2-z2118.jpg",
-   "source": "../../../../tmp/gl/pw/c2-z2118.jpg",
-   "kind": "note",
-   "label": "step 3 trial c2, not committed: zoom of frame 2118; left step 1 (46fe41ce, tower pale where the glint came through), middle b5 (dark line on the far rim), right c2 (far cap lit by the scene Sun)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T00:05:29.163Z",
-   "file": "20261124000529163-note-shadow-dir.jpg",
-   "source": "../../../../tmp/gl/s3/shadow-dir.jpg",
-   "kind": "note",
-   "label": "approved close image: painted shadow direction found at each tower foot (green) against the direction the scene Sun casts at 2010 (red)",
    "stop": "earth"
   }
  ]
