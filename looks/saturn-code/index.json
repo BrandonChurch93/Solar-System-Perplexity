@@ -1,9 +1,37 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T20:45:14.242Z",
+ "pushed": "2026-11-24T21:07:49.575Z",
  "head": "290448a5de4742df6fb551dc46652f3e34e8a588",
- "note": "round 2 list, items 1 and 2: pose, inner ring into the planet, foot band, ring tone by radius, fine grains; proofs running",
+ "note": "round 2 list items 1 and 2 at 3720: the tree the proofs run on now (3465 keeps its bytes)",
  "looks": [
+  {
+   "time": "2026-11-24T21:07:48.586Z",
+   "file": "20261124210748586-note-c_ll_r54.jpg",
+   "source": "../../../../tmp/v/t18/c_ll_r54.png",
+   "kind": "note",
+   "label": "3720 lower left at full size, approved left: outer ring with fine grains; still darker and greyer than the approved, rows of grains show at the bottom edge"
+  },
+  {
+   "time": "2026-11-24T21:07:47.531Z",
+   "file": "20261124210747531-note-c_near_r54.jpg",
+   "source": "../../../../tmp/v/t18/c_near_r54.png",
+   "kind": "note",
+   "label": "3720 near field at full size, approved left: matte finely grained ring, clean dark gap, no moonlets"
+  },
+  {
+   "time": "2026-11-24T21:07:46.293Z",
+   "file": "20261124210746293-note-c_foot2_r54.jpg",
+   "source": "../../../../tmp/v/t18/c_foot2_r54.png",
+   "kind": "note",
+   "label": "crop of the foot of the globe at 3720, 1.5 times, approved left: ring matter runs into the planet, no sky between ring and globe, soft dust band on the globe's foot"
+  },
+  {
+   "time": "2026-11-24T21:07:45.263Z",
+   "file": "20261124210745263-note-pair_r54.jpg",
+   "source": "../../../../tmp/v/t18/pair_r54.png",
+   "kind": "note",
+   "label": "3720 beside the approved image (left), full frame, final tier with grain: pose solved again, inner ring matter into the planet, dust band at the globe's foot, ring tone by radius, matte fine grains, no moonlets"
+  },
   {
    "time": "2026-11-24T20:45:13.567Z",
    "file": "20261124204513567-note-c_near_in8.jpg",
@@ -31,34 +59,6 @@
    "source": "../../../../tmp/v/t18/c_foot2_in4.png",
    "kind": "note",
    "label": "crop of the foot of the globe at 3720, 1.5 times (approved left): dust runs into the planet, no sky between ring and globe"
-  },
-  {
-   "time": "2026-11-24T20:19:18.988Z",
-   "file": "20261124201918988-note-pair_in4.jpg",
-   "source": "../../../../tmp/v/t18/pair_in4.png",
-   "kind": "note",
-   "label": "3720 beside the approved image (left): inner dust as the stuff of the thin inner ring, darker by the low view on the far side, foot band"
-  },
-  {
-   "time": "2026-11-24T20:09:08.134Z",
-   "file": "20261124200908134-note-pair_in3.jpg",
-   "source": "../../../../tmp/v/t18/pair_in3.png",
-   "kind": "note",
-   "label": "3720 beside the approved image (left): pose solved again, inner dust and foot band, ring tone by radius first try, no moonlets"
-  },
-  {
-   "time": "2026-11-24T19:49:55.994Z",
-   "file": "20261124194955994-note-pair_pg.jpg",
-   "source": "../../../../tmp/v/t17/pair_pg.png",
-   "kind": "note",
-   "label": "3720 with the new pose (g) beside the approved close (left approved, right film, no grain, final tier): the globe and the left horizon lie on the approved now; the hole, the foot band, the colours and the grains are still to do"
-  },
-  {
-   "time": "2026-11-24T19:22:46.726Z",
-   "file": "20261124192246726-note-look_3720_t10_pair.jpg",
-   "source": "../../../../tmp/v/t17/look_3720_t10_pair.png",
-   "kind": "note",
-   "label": "3720 beside the approved close (left approved, right the tree before round 44's list): start of the new pose work"
   }
  ]
 }
