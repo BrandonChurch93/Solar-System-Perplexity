@@ -105,7 +105,9 @@ export const createSet: SetFactory = async (ctx) => {
         terrain.quaternion.copy(carry).multiply(plan.toGlobe)
         terrain.scale.setScalar(1 / stage.radius)
         terrain.position.copy(inGlobe).applyQuaternion(carry)
-        backdropTerrain.mesh.quaternion.copy(plan.toGlobe)
+        // the surface view's sky rides with its ground on the globe's side as it does on the close side: the two sides
+        // show the same sky at the change of view, wherever the frame holds sky there
+        backdropTerrain.mesh.quaternion.copy(carry).multiply(plan.toGlobe)
       } else {
         terrain.quaternion.identity()
         terrain.scale.setScalar(1)

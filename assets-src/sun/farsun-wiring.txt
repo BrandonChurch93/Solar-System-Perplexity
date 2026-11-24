@@ -13,3 +13,6 @@ take this branch's file and apply the patch.
 Checked 24 Nov 07:26 UTC on a scratch tree (this branch at b3572b5f, plus every other file of git diff b0b87889 b3489b63,
 plus this patch): npx tsc --noEmit exit 0; without src/space/farsun/ exit 1 (cannot find module). Not checked: tests, any
 picture. The Sun's travel 450 to 539 changes with it (the leave knobs are out, the far Sun's pass is drawn over the globe).
+
+After the cure of the sky at T (one line of set.ts, above the fourth hunk) the patch still applies: git apply --check exit 0.
+tsc with the far Sun was not run again after that cure.
