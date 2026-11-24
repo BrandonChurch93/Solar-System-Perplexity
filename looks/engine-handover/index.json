@@ -1,9 +1,23 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T00:05:51.298Z",
+ "pushed": "2026-11-24T00:33:51.437Z",
  "head": "6d260fb8a34c0e2469f726853662dbeb4b09cb8e",
- "note": "Phobos at the start of the Mars dive measured (shutter and colour map, not the lens); next the speed of the picture on the one move",
+ "note": "near bodies in the sample count (mail 411): Mars 2411 review with the moon named, 128 samples against 21",
  "looks": [
+  {
+   "time": "2026-11-24T00:33:49.947Z",
+   "file": "20261124003349947-note-near-2411-full.jpg",
+   "source": "../../../../tmp/nb/near-2411-full.png",
+   "kind": "note",
+   "label": "Mars 2411 review whole frame at half size: 21 samples (6d260fb) against 128 samples (moon named); the planet keeps its picture"
+  },
+  {
+   "time": "2026-11-24T00:33:48.839Z",
+   "file": "20261124003348839-note-near-2411-moon.jpg",
+   "source": "../../../../tmp/nb/near-2411-moon.png",
+   "kind": "note",
+   "label": "Mars 2411 review, the moon at the right edge at 2x: 21 samples as on 6d260fb (separate copies) against 128 samples with the moon named to the motion measure (near bodies, mail 411)"
+  },
   {
    "time": "2026-11-24T00:05:50.606Z",
    "file": "20261124000550606-note-review-moon.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/e7/rise-sheet-2.png",
    "kind": "note",
    "label": "E move, Mars rise on the one eye, draft tier, sheet 2 of 0 to 5 (frames 2668 to 2747); patch of other ground lower right from 2691 is the place picture"
-  },
-  {
-   "time": "2026-11-23T23:42:23.849Z",
-   "file": "20261123234223849-note-rise-sheet-1.jpg",
-   "source": "../../../../tmp/e7/rise-sheet-1.png",
-   "kind": "note",
-   "label": "E move, Mars rise on the one eye, draft tier, sheet 1 of 0 to 5 (frames 2668 to 2747); patch of other ground lower right from 2691 is the place picture"
-  },
-  {
-   "time": "2026-11-23T23:42:23.255Z",
-   "file": "20261123234223255-note-rise-sheet-0.jpg",
-   "source": "../../../../tmp/e7/rise-sheet-0.png",
-   "kind": "note",
-   "label": "E move, Mars rise on the one eye, draft tier, sheet 0 of 0 to 5 (frames 2668 to 2747); patch of other ground lower right from 2691 is the place picture"
   }
  ]
 }
