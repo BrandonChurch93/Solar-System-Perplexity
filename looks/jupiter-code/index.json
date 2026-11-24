@@ -1,9 +1,67 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T16:36:46.375Z",
- "head": "77a100c6e636a98f334e03c8c5cedc83da20f3c0",
- "note": "16:38 UTC: main ed003c70 merged by hand; draft frames and the finals of 2895 and 3150 changed bytes on the merge with my folders untouched; the cause is being read now",
+ "pushed": "2026-11-24T16:59:05.287Z",
+ "head": "e2d28f3861d586e04dd33196480b9d3cb430bd40",
+ "note": "the merge of main ed003c70: the sky of the dive stands elsewhere, hold and surface keep their picture",
  "looks": [
+  {
+   "time": "2026-11-24T16:59:04.703Z",
+   "file": "20261124165904703-note-dn-right.jpg",
+   "source": "../work/t/dn-right.jpg",
+   "kind": "note",
+   "label": "dive 2987 to 3001, right 480 px lifted: merge of main top, old world bottom",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T16:59:04.142Z",
+   "file": "20261124165904142-note-n2997-pair.jpg",
+   "source": "../work/t/n2997-pair.jpg",
+   "kind": "note",
+   "label": "2997 final: named bytes left, merge of main ed003c70 right; only the sky differs",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T16:49:25.198Z",
+   "file": "20261124164925198-frame-bN-3296.jpg",
+   "source": "out/work/jupiter/final/bN-3296.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3296, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3296,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
+  {
+   "time": "2026-11-24T16:46:48.530Z",
+   "file": "20261124164648530-frame-bN-2997.jpg",
+   "source": "out/work/jupiter/final/bN-2997.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 2997, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 2997,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
+  {
+   "time": "2026-11-24T16:40:18.617Z",
+   "file": "20261124164018617-frame-bW-2895.jpg",
+   "source": "out/work/jupiter/final/bW-2895.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2895, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "97c721d03c19099d"
+  },
   {
    "time": "2026-11-24T16:36:45.637Z",
    "file": "20261124163645637-note-m12-sky.jpg",
@@ -29,20 +87,6 @@
    "stop": "jupiter",
    "segment": "jupiter.terrain",
    "frame": 3150,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
-  },
-  {
-   "time": "2026-11-24T16:31:21.049Z",
-   "file": "20261124163121049-frame-bN-2895.jpg",
-   "source": "out/work/jupiter/final/bN-2895.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2895, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
@@ -174,38 +218,6 @@
    "source": "../work/ff/pat-ideal-vs-Rm-6523.jpg",
    "kind": "note",
    "label": "rise 3261 + 1/2: top a rigid sequence (one picture carried by the sphere), bottom the film; the measure reads 0.70 and 0.69",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T15:25:19.480Z",
-   "file": "20261124152519480-note-cmp2-fore.jpg",
-   "source": "../work/ff/cmp2-fore.jpg",
-   "kind": "note",
-   "label": "FAULT the ground of the fore plate: left the approved view laid back (yellow the approved frame, red the wide canvas), right the plate as shipped; between yellow and red they are two pictures of one ground",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T15:25:18.775Z",
-   "file": "20261124152518775-note-pmap-v5-3253.jpg",
-   "source": "../work/ff/pmap-v5-3253.jpg",
-   "kind": "note",
-   "label": "STUDY plates alone, 3253 against 3261 carried back: over 0.45 (red outline) only at the top left under the bright air and in the lower left corner",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T15:25:18.044Z",
-   "file": "20261124152518044-note-pat-v6.jpg",
-   "source": "../work/ff/pat-v6.jpg",
-   "kind": "note",
-   "label": "STUDY rise rows 3251 to 3255 with the approved view never given up: 0.50 0.50 0.49 0.45 0.45; the most is at the right far field and the lower left corner",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T15:25:17.422Z",
-   "file": "20261124152517422-note-pat-v5.jpg",
-   "source": "../work/ff/pat-v5.jpg",
-   "kind": "note",
-   "label": "STUDY rise rows 3251 to 3255 with the plates alone (no approved view drawn): the pattern port reads 0.45 0.46 0.52 0.49 0.45, limit 0.45; frame, frame 8 later carried back, pattern map",
    "stop": "jupiter"
   }
  ]
