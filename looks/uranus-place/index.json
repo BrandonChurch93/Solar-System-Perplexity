@@ -1,9 +1,45 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-24T12:53:56.694Z",
- "head": "1527ad8dec0d1fd5caff2ce4e37aadcb88b55fb1",
- "note": "12:54 UTC, head 1527ad8d on main 738dfa3a pushed 12:47, report on the second NAMED came 12:49; drawing the seam rows of the pattern at rate 2 on this commit (dive 4172 to 4199, rise 4380 to 4400)",
+ "pushed": "2026-11-24T13:23:42.483Z",
+ "head": "9cb93f98891fcd0ec51a8231f75078ba3ef05014",
+ "note": "13:25 UTC, main c8888d57 merged as 9cb93f98 (engine take), not pushed yet. No picture changed since 0ac434b6. Pattern chart: red leaves the seams (dive from 4184, rise 4380 to 4394), stays in the middle of both moves (dive 1.30 at 4165, rise 1.45 at 4401). Rise pop with a whole window 1.17 at 4408 + 1/2, under 1.2. Finals 4035 and 4290 on the engine tree equal to the byte. Tests, finals 4137 and 4436, gate, parity running on the engine tree.",
  "looks": [
+  {
+   "time": "2026-11-24T13:23:41.315Z",
+   "file": "20261124132341315-note-pattern-rows.jpg",
+   "source": "../../../../tmp/tm/pattern-rows.png",
+   "kind": "note",
+   "label": "Uranus third commit, pattern rows of the dive and the rise against the machines' rows of the second NAMED (MAIL 666). Grey: machines on b5874a22. Blue: this commit by the judge before main 62ff7be6. Red: this commit by the judge on main. Solid rate 2, dotted whole frames at rate 1. Drafts of 0ac434b6 and 1527ad8d; rise 4412 + 1/2 to 4420 drawn on the engine tree 9cb93f98 (main c8888d57). Limit 0.45.",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T13:20:09.136Z",
+   "file": "20261124132009136-frame-f4290.jpg",
+   "source": "out/work/u/n4/f4290.png",
+   "kind": "frame",
+   "label": "uranus.terrain frame 4290, final tier",
+   "stop": "uranus",
+   "segment": "uranus.terrain",
+   "frame": 4290,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "bfe554c9c4ef0dd5"
+  },
+  {
+   "time": "2026-11-24T13:18:18.209Z",
+   "file": "20261124131818209-frame-f4035.jpg",
+   "source": "out/work/u/n4/f4035.png",
+   "kind": "frame",
+   "label": "uranus.hold frame 4035, final tier",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "bfe554c9c4ef0dd5"
+  },
   {
    "time": "2026-11-24T12:17:20.710Z",
    "file": "20261124121720710-note-f4436-three.jpg",
@@ -21,34 +57,6 @@
    "stop": "uranus",
    "segment": "uranus.rise",
    "frame": 4436,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "898f8450e3270276"
-  },
-  {
-   "time": "2026-11-24T12:13:05.205Z",
-   "file": "20261124121305205-frame-f4290.jpg",
-   "source": "out/work/u/n3m/f4290.png",
-   "kind": "frame",
-   "label": "uranus.terrain frame 4290, final tier",
-   "stop": "uranus",
-   "segment": "uranus.terrain",
-   "frame": 4290,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "898f8450e3270276"
-  },
-  {
-   "time": "2026-11-24T12:11:16.583Z",
-   "file": "20261124121116583-frame-f4035.jpg",
-   "source": "out/work/u/n3m/f4035.png",
-   "kind": "frame",
-   "label": "uranus.hold frame 4035, final tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
@@ -308,14 +316,6 @@
    "source": "../../../../tmp/tm/law-globe.jpg",
    "kind": "note",
    "label": "4137 4152 4396 drafts: top law as pushed b5874a22, middle smooth law and rebaked plates 0ac434b6, bottom difference times 4 (main c2c49133)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T11:11:25.683Z",
-   "file": "20261124111125683-note-law-terrain.jpg",
-   "source": "../../../../tmp/tm/law-terrain.jpg",
-   "kind": "note",
-   "label": "surface view 4200 4290 4379 drafts: top law as pushed b5874a22, middle smooth law and rebaked plates 0ac434b6, bottom difference times 4 (main c2c49133)",
    "stop": "uranus"
   }
  ]
