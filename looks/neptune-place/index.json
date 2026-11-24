@@ -1,9 +1,17 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T05:38:38.496Z",
+ "pushed": "2026-11-24T05:42:42.908Z",
  "head": "5f6fcd959c3bbedec88cd4ab42e39417a50beead",
- "note": "the two sides at T equal (dive 0.09, rise 0.80 of 255, stars only); 4860 beside the kept still and the approved image, G17 median 1.002 p25 0.789; the tool's parity runs on this tree",
+ "note": "4860 limb measured against the approved image: the faults of MAIL 484 stand, numbers in the notebook; parity of the tool is rendering its uhd frames",
  "looks": [
+  {
+   "time": "2026-11-24T05:42:41.415Z",
+   "file": "20261124054241415-note-limb-4860.jpg",
+   "source": "../../../../tmp/limb-4860.jpg",
+   "kind": "note",
+   "label": "4860 limb and storm, twice size: approved image, mine (16 by 9 draft, tree of the named commit), kept still. Mine: limb 5 to 9 rows of 540 too high, band white and straight where the approved is light blue and broken, no blue line over it, storm a clean disc, ridge a few heaps",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T05:38:36.968Z",
    "file": "20261124053836968-note-pair-4860-draft.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/s-R1-4974.jpg",
    "kind": "note",
    "label": "R1 rise on the one move, every frame from 4974, preview draft (T 4956)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T05:14:29.558Z",
-   "file": "20261124051429558-note-s-R1-4962.jpg",
-   "source": "../../../../tmp/s-R1-4962.jpg",
-   "kind": "note",
-   "label": "R1 rise on the one move, every frame from 4962, preview draft (T 4956)",
    "stop": "neptune"
   }
  ]
