@@ -11,7 +11,7 @@ import { setCapture, spanMid } from '../src/core/clock'
 import type { Pose } from '../src/core/types'
 import { plans } from '../src/director/plans'
 import { LANDING_FROM, MIN_POINTS, carriedCamera, curves, landingCurves, ringPlane, sampleLanding, sampleWindow, sphereHit, type Kind, type Plane, type Ring } from './smooth/camera'
-import { LANDING_FLOOR, LANDING_LATE, LANDING_SHOWN, judgeCurve, judgeLanding, longestGap, position, shown, table, type CurveResult, type Fault, type LandingResult, type Row } from './smooth/path'
+import { LANDING_FLOOR, LANDING_LATE, LANDING_SHOWN, judgeCurve, judgeLanding, longestGap, parityFrames, position, shown, table, type CurveResult, type Fault, type LandingResult, type Row } from './smooth/path'
 
 // The measures of a smooth dive and rise (kit/PROGRESS.md, second review note of 2026-11-23, plan I). One stop.
 //   npm run smooth -- --stop ID [--kind dive|rise|landing] [--only path,pictures,place,parity,counts] [--rate N] [--calibrate] [--ring picture|ground]
@@ -39,7 +39,8 @@ import { LANDING_FLOOR, LANDING_LATE, LANDING_SHOWN, judgeCurve, judgeLanding, l
 //           place window and the dissolve to one after them: the steps of level and colour on the body as npm run handover counts them, and
 //           the level step and the pop score of the pictures part. What the place picture covers is seen here. Limits in smooth.place.
 // parity    the same film frame drawn at the first format of smooth.parity.formats and scaled down, against the frame drawn at the second (the
-//           film's): a few frames of the dive, the surface view and the rise (smooth.parity.at, shares of the segment). What a stop holds in
+//           film's): a few frames of the hold, the dive, the surface view, the rise and the travel that leaves the stop (smooth.parity.at,
+//           shares of the segment; the hold and the travel only in a run without --kind). What a stop, the sky or the dust holds in
 //           pixels of the drawn format shows here as a difference.
 // counts    the work the graphics card is given per picture, as the page counts it (showcase.counts(): programs linked, texture uploads, buffers
 //           made): every capture frame of the stop from its first segment to the end of its travel, in order on one fresh page, draft tier at the
@@ -211,6 +212,7 @@ async function drop(): Promise<void> {
 }
 
 async function open(fmt: string): Promise<Session> {
+  hashes ??= ensureBuild()
   const s = await openCapture({ dist: DIST, format: fmt, assets: 'full', diag: 'beauty', query: rate > 1 ? '&rate=' + rate : '' })
   sessionFormat = fmt
   const known = await s.page.evaluate(() => (window as unknown as { showcase: { info(): { rate?: number } } }).showcase.info().rate)
@@ -498,13 +500,7 @@ async function parityPart(): Promise<PartResult & Partial<ParityOut>> {
   const small = cfg.formats[filmId]!
   const factor = big.width / small.width
   if (!Number.isInteger(factor) || factor < 2 || big.height !== small.height * factor) return { measured: false, pass: false, why: ['parity: NOT MEASURED, ' + bigId + ' is not a whole multiple of ' + filmId] }
-  const wanted: { segment: string; kind: string; share: number; frame: number }[] = []
-  for (const kind of ['dive', 'terrain', 'rise'] as const) {
-    if (kind !== 'terrain' && !kinds.includes(kind)) continue
-    const seg = cfg.segments.find((s) => s.stop === stop && s.kind === kind)
-    if (!seg) continue
-    for (const share of P.at[kind]) wanted.push({ segment: seg.id, kind, share, frame: Math.min(seg.firstFrame + Math.round(share * (seg.endFrame - seg.firstFrame)), seg.endFrame - 1) })
-  }
+  const wanted = parityFrames(cfg.segments, stop!, P.at, kinds, !a.kind)
   const seconds: Record<string, number | null> = {}
   const files: Record<string, string[]> = {}
   for (const fmt of [filmId, bigId]) {
