@@ -47,7 +47,7 @@ function swapOf(kind: 'dive' | 'rise', sunTerrain: THREE.Vector3, fwd: THREE.Vec
   const at = plan.coverCenter(kind === 'dive' ? plan.seg.dive! : plan.seg.rise)
   const tiny = 1e-6
   const dt = timing[kind].span / config.fps
-  const shot = (t: number): Pose => (kind === 'dive' ? plan.dive(t) : plan.rise(t)).pose
+  const shot = (t: number): Pose => plan.eyeShot(kind, t).pose
   const o = shot(kind === 'dive' ? at - tiny : at)
   const g = shot(kind === 'dive' ? at : at - tiny)
   const o2 = shot(kind === 'dive' ? at - tiny - dt : at + dt)
@@ -129,7 +129,7 @@ export const createSet: SetFactory = async (ctx) => {
     const time = handoverOf(plan.id, kind)?.time ?? (kind === 'dive' ? plan.seg.dive!.end : plan.seg.rise.start)
     const hit = eyesAtT[kind]
     if (hit && hit.time === time) return hit.eye
-    const pose = kind === 'dive' ? plan.divePose(time, 'orbit') : plan.risePose(time, 'orbit')
+    const pose = plan.eye(kind, time, 'orbit')
     const eye = pose.position.clone().applyQuaternion(plan.turn(time).multiply(plan.terrainFrame).invert()).multiplyScalar(deck.radius)
     eyesAtT[kind] = { time, eye }
     return eye
@@ -140,7 +140,7 @@ export const createSet: SetFactory = async (ctx) => {
     const time = handoverOf(plan.id, kind)?.time ?? (kind === 'dive' ? plan.seg.dive!.end : plan.seg.rise.start)
     const hit = bodyEyes[kind]
     if (hit && hit.time === time) return hit.eye
-    const pose = kind === 'dive' ? plan.divePose(time, 'orbit') : plan.risePose(time, 'orbit')
+    const pose = plan.eye(kind, time, 'orbit')
     const eye = pose.position.clone().applyQuaternion(plan.turn(time).multiply(globeTurn).invert())
     bodyEyes[kind] = { time, eye }
     return eye
@@ -280,7 +280,7 @@ export const createSet: SetFactory = async (ctx) => {
         airRight.copy(sw.right).applyQuaternion(localBack)
         const high = Math.max(localP.length() - 1, 1e-6)
         const low = sw.height * Math.pow(high / sw.height, timing.slow)
-        const after = Math.max((kind === 'dive' ? plan.dive(state.time + config.shutterFraction / config.fps) : plan.rise(state.time + config.shutterFraction / config.fps)).pose.position.length() - 1, 1e-6)
+        const after = Math.max(plan.eyeShot(kind === 'dive' ? 'dive' : 'rise', state.time + config.shutterFraction / config.fps).pose.position.length() - 1, 1e-6)
         eye.copy(localP).normalize().multiplyScalar(1 + low)
         const air = Math.pow(1 - released, look.veil.sunFade)
         veil.update(view.camera, view.format.width, view.format.height, centre, eye, Math.min(Math.abs(Math.log(after / high)) / timing.rush, 1), Math.asin(1 / (1 + low)) / Math.asin(1 / (1 + high)), localQ, thick, released, sw, sunCam, air, airFwd, airRight, gain, gain * look.relief.air.gain * (1 + look.veil.sunLift * air), vignette, 0)
@@ -301,8 +301,8 @@ export const createSet: SetFactory = async (ctx) => {
       if (view.samples > 1 && state.segment.stop === plan.id && (kind === 'dive' || kind === 'rise') && thick < look.motion.hidden) {
         // One sample's share of the shutter that is open: the engine may keep only a share of the film's shutter in a dive or a rise (E6, view.shutter).
         const dt = config.shutterFraction * (view.shutter ?? 1) / (view.samples * config.fps)
-        const a = kind === 'dive' ? plan.dive(state.time) : plan.rise(state.time)
-        const b = kind === 'dive' ? plan.dive(state.time + dt) : plan.rise(state.time + dt)
+        const a = plan.eyeShot(kind, state.time)
+        const b = plan.eyeShot(kind, state.time + dt)
         if (a.view === 'orbit' && b.view === 'orbit') {
           const px = slide(a.pose, b.pose, view.format.width, view.format.height)
           if (px > look.motion.from) taps = Math.min(Math.ceil(px / look.motion.step), look.motion.most)

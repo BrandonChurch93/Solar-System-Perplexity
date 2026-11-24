@@ -97,7 +97,7 @@ class VenusPlan extends StopPlan {
     return { position: close.position.clone().sub(deck.centre).divideScalar(deck.radius).applyQuaternion(rot), quaternion: rot.clone().multiply(close.quaternion), vfov: close.vfov }
   }
 
-  untwin(globe: Pose, time: number): Pose {
+  override untwin(globe: Pose, time: number): Pose {
     const back = this.turn(time).multiply(this.terrainFrame).invert()
     return { position: globe.position.clone().applyQuaternion(back).multiplyScalar(deck.radius).add(deck.centre), quaternion: back.clone().multiply(globe.quaternion), vfov: globe.vfov }
   }
@@ -106,8 +106,9 @@ class VenusPlan extends StopPlan {
     return anchorBody.clone().applyQuaternion(new THREE.Quaternion().fromArray(fit.globe.quaternion)).applyQuaternion(this.turn(time))
   }
 
-  // The one steady move is the film's dive and rise once the stop has opted in to the handover (params.handover);
-  // until then the film keeps the old path under its cover, and the check tools ask for the new one by the probe.
+  // The film's dive and rise are the engine's one move (plan E, StopPlan.eye): the stop is not named in handover.ownPath of the config.
+  // The move of this stop's own below (divePose, risePose, move.json dive and rise, path.ts) is the fallback: it is flown only when the
+  // stop is named in that list again, and the check tools of assets-src/venus/place ask for it by the probe.
   private get steady(): boolean {
     return this.handsOver || probe()?.path === true
   }
@@ -137,20 +138,15 @@ class VenusPlan extends StopPlan {
     return { on: pr?.on ?? (mine ? 1 : 0), near: pr?.on === undefined, dusk: pr?.dusk ?? (mine ? below(height, place.dusk.heights) : 0) }
   }
 
-  // The height of the film's camera over the cloud tops (radii) at a time of the dive or the rise, on the globe side.
-  private heightAt(seg: Segment, time: number): number {
-    return (seg.kind === 'dive' ? this.divePose(time, 'orbit') : this.risePose(time, 'orbit')).position.length() - 1
-  }
-
   // The engine's three sky schedules of the globe side, by the height of the camera (plates.json, sky).
   override skyShare(seg: Segment, time: number): SkyShares | null {
     if (seg.stop !== this.id || (seg.kind !== 'dive' && seg.kind !== 'rise')) return null
-    return { low: below(this.heightAt(seg, time), place.sky.low) }
+    return { low: below(this.eyeHeight(time), place.sky.low) }
   }
 
   override skyCarryShare(seg: Segment, time: number): number | null {
     if (seg.stop !== this.id || (seg.kind !== 'dive' && seg.kind !== 'rise')) return null
-    return below(this.heightAt(seg, time), place.sky.carry, smoother)
+    return below(this.eyeHeight(time), place.sky.carry, smoother)
   }
 
   // The engine opens the stars of a rise over the time from the handover to the end of the rise. It is given the time that stands for the
@@ -159,8 +155,8 @@ class VenusPlan extends StopPlan {
     const hand = seg.stop === this.id && seg.kind === 'rise' ? handoverOf(this.id, 'rise') : null
     if (!hand) return null
     const from = Math.log(place.sky.lift)
-    const to = Math.log(this.risePose(seg.end, 'orbit').position.length() - 1)
-    const share = Math.min(Math.max((Math.log(Math.max(this.heightAt(seg, time), 1e-4)) - from) / (to - from), 0), 1)
+    const to = Math.log(this.eye('rise', seg.end, 'orbit').position.length() - 1)
+    const share = Math.min(Math.max((Math.log(Math.max(this.eyeHeight(time), 1e-4)) - from) / (to - from), 0), 1)
     return hand.time + (seg.end - hand.time) * share
   }
 
