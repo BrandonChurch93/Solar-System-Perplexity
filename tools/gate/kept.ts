@@ -51,7 +51,12 @@ export function toolHash(root: string, entry: string): string {
   return h.digest('hex').slice(0, 16)
 }
 
-export interface Build { engineHash: string; stopHashes: Record<string, string>; format: string; tier: string; assets: string; tool: string }
+export function pinnedBrowser(root: string): string {
+  const r = read(join(root, 'config/webgl-caps.json'))
+  return typeof r?.browser === 'string' ? r.browser.replace(/^Chrome for Testing /, '') : ''
+}
+
+export interface Build { engineHash: string; stopHashes: Record<string, string>; format: string; tier: string; assets: string; tool: string; browser: string }
 export interface Kept { why: string; machine: string; lines: string[] }
 
 const same = (x: unknown, y: unknown): boolean => JSON.stringify(x) === JSON.stringify(y)
@@ -66,6 +71,9 @@ function buildFault(r: Record<string, unknown>, want: Build): string {
   if (off) return 'the record is of another stop hash of ' + off + ' (' + String(had[off]) + ' against ' + String(want.stopHashes[off]) + ')'
   for (const key of ['format', 'tier', 'assets'] as const) if (r[key] !== want[key]) return 'the record is of another ' + (key === 'assets' ? 'asset set' : key) + ' (' + String(r[key]) + ' against ' + want[key] + ')'
   if (r.tool !== want.tool) return 'the record is of another state of the tool (' + String(r.tool) + ' against ' + want.tool + ')'
+  if (!text(want.browser)) return 'this tree pins no browser version in config/webgl-caps.json'
+  if (!text(r.browser)) return 'the record names no browser'
+  if (r.browser !== want.browser) return 'the record is of another browser (' + r.browser + ' against ' + want.browser + ', the version this tree pins)'
   if (!text(r.machine)) return 'the record names no machine'
   return ''
 }
