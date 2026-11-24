@@ -1,8 +1,8 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T00:53:21.929Z",
+ "pushed": "2026-11-24T00:53:35.067Z",
  "head": "11ab125d2955dbea8df2f36ca43a5f12298b812f",
- "note": "G13 corner: a repeating function tile over level 4 where no viewpoint saw the ground; soft share 754 to 763 now 0 at 1920 and at 3840 (texels view). Dive pace peak moved so 704 holds 0.52 of the mean.",
+ "note": "G13 corner cure, fine function tile; dive pace peak moved",
  "looks": [
   {
    "time": "2026-11-24T00:53:21.204Z",
