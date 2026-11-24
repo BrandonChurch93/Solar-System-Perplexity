@@ -132,6 +132,45 @@ describe('the one air, the mix of the knots', () => {
     expect(() => resolveAir([bare[0]!, { height: 0.002, haze }], 'mars')).toThrow(/names haze, which the highest knot does not/)
   })
 
+  it('carries the glow of a haze that names one, colour and power mixed like every other number, and none where the highest knot names none', () => {
+    const colour: [number, number, number] = [1.6, 1.12, 0.72]
+    const high = 0.0145
+    const low = 0.0066
+    const knots: AirKnot[] = [{ ...top, height: high, haze: { ...haze, glow: [0, 0, 0], glowPower: 12 } }, { height: low, haze: { glow: colour, glowPower: 3 } }]
+    const [a, b] = resolveAir(knots)
+    expect(a!.haze).toEqual({ ...haze, glow: [0, 0, 0], glowPower: 12 })
+    expect(b!.haze).toEqual({ ...haze, glow: colour, glowPower: 3 })
+    expect('glow' in b!.shell!).toBe(false)
+    expect('glowPower' in b!.shell!).toBe(false)
+    // A weight of the old kind, 1 less the smooth step of the share of the logarithm of the height between a low and a high height, is
+    // this mix between two knots at those heights.
+    for (const h of [0.014, 0.012, 0.0098, 0.008, 0.0067]) {
+      const x = (Math.log(h) - Math.log(low)) / (Math.log(high) - Math.log(low))
+      const near = 1 - x * x * (3 - 2 * x)
+      const air = airAt(knots, h)!
+      air.haze!.glow!.forEach((v, i) => expect(v).toBeCloseTo(colour[i]! * near, 12))
+      expect(air.haze!.glowPower).toBeCloseTo(12 + (3 - 12) * near, 12)
+      expect(air.haze!.depth).toBe(haze.depth)
+      expect(air.shell).toEqual({ ...haze, depth: 0.2 })
+    }
+    expect(Object.isFrozen(airAt(knots, 1)!.haze!.glow)).toBe(true)
+    // With a glow on the shell too, each part holds its own.
+    const both: AirKnot[] = [{ ...top, haze: { ...haze, glow: [1, 0, 0], glowPower: 12 }, shell: { ...haze, glow: [0, 1, 0], glowPower: 3 } }, { height: 0.002, haze: { glow: [0, 0, 0] }, shell: { glowPower: 5 } }]
+    const mid = airAt(both, Math.sqrt(0.02 * 0.002))!
+    expect(mid.haze!.glow![0]).toBeCloseTo(0.5, 12)
+    expect(mid.haze!.glowPower).toBe(12)
+    expect(mid.shell!.glow).toEqual([0, 1, 0])
+    expect(mid.shell!.glowPower).toBeCloseTo(4, 12)
+    expect(mid.shell!.depth).toBe(haze.depth)
+    // There at every height or at none, and whole.
+    expect(() => resolveAir([top, { height: 0.002, haze: { glow: colour, glowPower: 3 } }], 'mars')).toThrow(/mars: the haze of knot 1 of its air names a glow, which the highest knot does not/)
+    expect(() => resolveAir([top, { height: 0.002, shell: { glowPower: 3 } }], 'mars')).toThrow(/the shell of knot 1 of its air names a glow, which the highest knot does not/)
+    expect(() => resolveAir([{ ...top, haze: { ...haze, glow: colour } }], 'mars')).toThrow(/the haze of knot 0 of its air must name glowPower above 0 with its glow/)
+    expect(() => resolveAir([{ ...top, haze: { ...haze, glow: colour, glowPower: 0 } }], 'mars')).toThrow(/must name glowPower above 0/)
+    expect(() => resolveAir([{ ...top, haze: { ...haze, glowPower: 3 } }], 'mars')).toThrow(/must name glow as three numbers/)
+    expect(() => resolveAir([{ ...top, haze: { ...haze, glow: [1, 2] as unknown as [number, number, number], glowPower: 3 } }], 'mars')).toThrow(/must name glow as three numbers/)
+  })
+
   it('refuses knots out of order, a height of 0, a name it does not hold, a number left open and a haze that is not whole', () => {
     expect(() => resolveAir([], 'mars')).toThrow(/at least one knot/)
     expect(() => resolveAir([top, { height: 0.03 }], 'mars')).toThrow(/run from the highest down, and knot 1 of its air at 0.03 is not under the knot before it at 0.02/)

@@ -94,8 +94,10 @@ export interface PlaceState {
 // it is written anywhere.
 export type Rgb = [number, number, number]
 
-// The haze of a body as its globe and its shell take it (planet.setAir and haze.setAir of src/bodies).
-export interface HazeAir { depth: number; scaleHeight: number; day: Rgb; twilight: Rgb; night: Rgb; edge: [number, number]; strength: number; extinction: number; forward: number }
+// The haze of a body as its globe and its shell take it (planet.setAir and haze.setAir of src/bodies). glow and glowPower are the colour and
+// the power of the glow round a direction of the stop's own, for a haze whose text carries the glow (hazeGlsl(true)): both or neither, and
+// like every part of the air there at every height or at none. The direction is the stop's, fixed on the body, and no number of the height.
+export interface HazeAir { depth: number; scaleHeight: number; day: Rgb; twilight: Rgb; night: Rgb; edge: [number, number]; strength: number; extinction: number; forward: number; glow?: Rgb; glowPower?: number }
 
 export interface Air {
   // The height this air stands for, in radii of the body: the height asked for between the knots, the knot's own at and beyond either end.

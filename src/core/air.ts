@@ -8,17 +8,17 @@ import type { Air, AirKnot, HazeAir, Rgb } from './types'
 // s = u * u * (3 - 2 * u) the value is a + (b - a) * s, plus, where there are more than two knots, the term of the slope a middle knot is
 // passed with. That slope is the one of a monotone cubic (the weighted harmonic mean of the two secants, 0 where they differ in sign and
 // 0 at both ends), so a value that only falls or only rises through the knots does so at every height, without a rest at a middle knot
-// and without a turn back. Colours and the fields of haze and shell go number by number.
+// and without a turn back. Colours and the fields of haze and shell go number by number, the glow of a haze that names one with them.
 //
 // Nothing here reads a clock or a frame: the same knots and the same height give the same air whichever way the lens passes.
 
 const NUMBERS = ['exposure', 'sky', 'stars', 'sunRadius', 'glare'] as const
 const HAZE_NUMBERS = ['depth', 'scaleHeight', 'strength', 'extinction', 'forward'] as const
 const HAZE_COLOURS = ['day', 'twilight', 'night'] as const
-const HAZE_KEYS: readonly string[] = [...HAZE_NUMBERS, ...HAZE_COLOURS, 'edge']
+const HAZE_KEYS: readonly string[] = [...HAZE_NUMBERS, ...HAZE_COLOURS, 'edge', 'glow', 'glowPower']
 const KEYS: readonly string[] = ['height', ...NUMBERS, 'limb', 'tint', 'haze', 'shell']
 
-interface Parts { limb: boolean; tint: boolean; haze: boolean; shell: boolean }
+interface Parts { limb: boolean; tint: boolean; haze: boolean; shell: boolean; hazeGlow: boolean; shellGlow: boolean }
 interface Laid { airs: Air[]; parts: Parts; x: number[]; rows: number[][]; slopes: number[][] }
 
 const finite = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v)
@@ -29,11 +29,19 @@ function hazeOf(name: string, at: string, given: Partial<HazeAir> | undefined, a
   if (given === undefined) return above
   if (typeof given !== 'object' || given === null) throw new Error(name + ': ' + at + ' must be a set of haze values')
   for (const key of Object.keys(given)) if (!HAZE_KEYS.includes(key)) throw new Error(name + ': ' + at + ' names ' + key + ', which a haze does not hold')
+  if (above && above.glow === undefined && (given.glow !== undefined || given.glowPower !== undefined)) throw new Error(name + ': ' + at + ' names a glow, which the highest knot does not: a part of the air is there at every height or at none')
   const out = { ...(above ?? {}), ...given } as HazeAir
   for (const key of HAZE_NUMBERS) if (!finite(out[key])) throw new Error(name + ': ' + at + ' must name ' + key + ' as a number')
   for (const key of HAZE_COLOURS) if (!triple(out[key])) throw new Error(name + ': ' + at + ' must name ' + key + ' as three numbers')
   if (!pair(out.edge)) throw new Error(name + ': ' + at + ' must name edge as two numbers')
-  return { depth: out.depth, scaleHeight: out.scaleHeight, day: [...out.day], twilight: [...out.twilight], night: [...out.night], edge: [...out.edge], strength: out.strength, extinction: out.extinction, forward: out.forward }
+  const whole: HazeAir = { depth: out.depth, scaleHeight: out.scaleHeight, day: [...out.day], twilight: [...out.twilight], night: [...out.night], edge: [...out.edge], strength: out.strength, extinction: out.extinction, forward: out.forward }
+  if (out.glow !== undefined || out.glowPower !== undefined) {
+    if (!triple(out.glow)) throw new Error(name + ': ' + at + ' must name glow as three numbers')
+    if (!(finite(out.glowPower) && out.glowPower > 0)) throw new Error(name + ': ' + at + ' must name glowPower above 0 with its glow')
+    whole.glow = [...out.glow]
+    whole.glowPower = out.glowPower
+  }
+  return whole
 }
 
 // The knots of a stop as whole airs, highest first: every knot filled from the knot above it, and refused where the knots are out of
@@ -79,12 +87,20 @@ export function resolveAir(knots: AirKnot[], name = 'the air'): Air[] {
   return out
 }
 
-const hazeRow = (h: HazeAir): number[] => [h.depth, h.scaleHeight, h.strength, h.extinction, h.forward, ...h.day, ...h.twilight, ...h.night, ...h.edge]
-const hazeFrom = (v: number[], i: number): HazeAir => ({
-  depth: v[i]!, scaleHeight: v[i + 1]!, strength: v[i + 2]!, extinction: v[i + 3]!, forward: v[i + 4]!,
-  day: [v[i + 5]!, v[i + 6]!, v[i + 7]!], twilight: [v[i + 8]!, v[i + 9]!, v[i + 10]!], night: [v[i + 11]!, v[i + 12]!, v[i + 13]!], edge: [v[i + 14]!, v[i + 15]!],
-})
 const HAZE_ROW = 16
+const GLOW_ROW = 4
+const hazeRow = (h: HazeAir): number[] => [h.depth, h.scaleHeight, h.strength, h.extinction, h.forward, ...h.day, ...h.twilight, ...h.night, ...h.edge, ...(h.glow ? [...h.glow, h.glowPower!] : [])]
+const hazeFrom = (v: number[], i: number, glow: boolean): HazeAir => {
+  const h: HazeAir = {
+    depth: v[i]!, scaleHeight: v[i + 1]!, strength: v[i + 2]!, extinction: v[i + 3]!, forward: v[i + 4]!,
+    day: [v[i + 5]!, v[i + 6]!, v[i + 7]!], twilight: [v[i + 8]!, v[i + 9]!, v[i + 10]!], night: [v[i + 11]!, v[i + 12]!, v[i + 13]!], edge: [v[i + 14]!, v[i + 15]!],
+  }
+  if (glow) {
+    h.glow = [v[i + HAZE_ROW]!, v[i + HAZE_ROW + 1]!, v[i + HAZE_ROW + 2]!]
+    h.glowPower = v[i + HAZE_ROW + 3]!
+  }
+  return h
+}
 
 function rowOf(a: Air): number[] {
   const v: number[] = [a.exposure, a.sky, a.stars, a.sunRadius, a.glare]
@@ -104,10 +120,10 @@ function airOf(height: number, share: number, v: number[], parts: Parts): Air {
     i += 3
   }
   if (parts.haze) {
-    a.haze = hazeFrom(v, i)
-    i += HAZE_ROW
+    a.haze = hazeFrom(v, i, parts.hazeGlow)
+    i += HAZE_ROW + (parts.hazeGlow ? GLOW_ROW : 0)
   }
-  if (parts.shell) a.shell = hazeFrom(v, i)
+  if (parts.shell) a.shell = hazeFrom(v, i, parts.shellGlow)
   return a
 }
 
@@ -115,6 +131,7 @@ function frozen(a: Air): Air {
   for (const h of [a.haze, a.shell]) {
     if (!h) continue
     for (const key of [...HAZE_COLOURS, 'edge'] as const) Object.freeze(h[key])
+    if (h.glow) Object.freeze(h.glow)
     Object.freeze(h)
   }
   if (a.tint) Object.freeze(a.tint)
@@ -124,7 +141,7 @@ function frozen(a: Air): Air {
 function lay(knots: AirKnot[], name: string): Laid {
   const airs = resolveAir(knots, name).map(frozen)
   const first = airs[0]!
-  const parts: Parts = { limb: first.limb !== undefined, tint: !!first.tint, haze: !!first.haze, shell: !!first.shell }
+  const parts: Parts = { limb: first.limb !== undefined, tint: !!first.tint, haze: !!first.haze, shell: !!first.shell, hazeGlow: !!first.haze?.glow, shellGlow: !!first.shell?.glow }
   const x = airs.map((a) => -Math.log(a.height))
   const rows = airs.map(rowOf)
   const n = airs.length
