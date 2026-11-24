@@ -16,7 +16,6 @@ export const globe: GlobeLook = {
   ringShadowHero: 0.25,
   ringSoft: [0.003, 0.012],
   ringSlant: 1.7,
-  drift: 0.2,
   nightFloor: 0.012,
   hazeShadow: 0.8,
   rim: [3.1, 3.4, 1.8, 0.15],
