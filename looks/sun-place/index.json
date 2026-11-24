@@ -1,9 +1,31 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T15:39:36.442Z",
+ "pushed": "2026-11-24T15:59:43.535Z",
  "head": "a5b15421d272cc21b4edfb8977a28a7ab5424436",
- "note": "a5b15421 handover draft: pass (side difference at T, flow gap at T, every frame), largest step mean level 2.87 into 217; rise 180 to 269 seen in sheets, no jump or pop at sheet size. Frame 60 draft: dark 0.190, body 0.663, pale 0.062, white 0.022; half width 4.6 px, 4439 shapes, fine detail 0.0595, mean 0.334; distance 0.062",
+ "note": "a5b15421 proof: handover pass, pictures green (pop 1.18 at 244, limit 1.2; pattern 0.27 at 192), path green, G11 and G15 pass, 360 final keeps c279687d; final tier 60, 0, 90 render now. Frame 60 draft: dark 0.190, body 0.663, pale 0.062, white 0.022; half width 4.6 px, 4439 shapes, fine detail 0.0595, mean 0.334; distance 0.062",
  "looks": [
+  {
+   "time": "2026-11-24T15:59:42.315Z",
+   "file": "20261124155942315-note-run18.jpg",
+   "source": "../../../../tmp/run18.jpg",
+   "kind": "note",
+   "label": "a5b15421 draft, 60 to 68 consecutive, crop 700 760 480 270 at one to one: each cell keeps its shape and its fibres from frame to frame, no pop seen",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T15:47:34.324Z",
+   "file": "20261124154734324-job-frame-00231.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "sun.rise frame 231, draft tier, texels view, from the running g13 job",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 231,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "g13"
+  },
   {
    "time": "2026-11-24T15:39:35.324Z",
    "file": "20261124153935324-note-r18-h.jpg",
@@ -51,30 +73,6 @@
    "kind": "note",
    "label": "a5b15421 rise, draft, every frame 202 to 213 (the handover tool's frames)",
    "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T15:39:00.961Z",
-   "file": "20261124153900961-sheet-sun-rise-draft-after.jpg",
-   "source": "out/work/handover/sun-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "sun rise, every frame 217 to 228 (after T, frame 216), draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "first": 217,
-   "last": 228,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T15:38:59.098Z",
-   "file": "20261124153859098-sheet-sun-rise-draft-before.jpg",
-   "source": "out/work/handover/sun-rise-draft-before.png",
-   "kind": "sheet",
-   "label": "sun rise, every frame 204 to 215 (before T, frame 216), draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "first": 204,
-   "last": 215,
-   "tier": "draft"
   }
  ]
 }
