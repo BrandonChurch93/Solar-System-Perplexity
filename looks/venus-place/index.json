@@ -1,9 +1,25 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-24T14:55:16.764Z",
- "head": "7c1dfe17b970546eebab68476ae47fca1c0126aa",
- "note": "chain W on merge plus H3: handover pass, path green, pictures red dive 0.57 at 1322, rise 0.51 at 1542 and 0.65 at 1575, gate lines pass, tests running",
+ "pushed": "2026-11-24T15:19:34.980Z",
+ "head": "97c902c48bfad4ddcaba05f5c34b94f2acac621f",
+ "note": "97c902c4 pushed (limb glow on the ground, on main 2bc36ce6): dive red 0.57 at 1322, rise 0.51 and 0.65; now finding the cause of each by trials",
  "looks": [
+  {
+   "time": "2026-11-24T15:19:33.595Z",
+   "file": "20261124151933595-note-changes.jpg",
+   "source": "../../../../tmp/v/abx/W/w1566/changes.jpg",
+   "kind": "note",
+   "label": "Commit 97c902c4, rise pattern panels 1566 and 1575 of the measure of main 2bc36ce6",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T15:19:32.328Z",
+   "file": "20261124151932328-note-rise1575-W.jpg",
+   "source": "../../../../tmp/v/rise1575-W.jpg",
+   "kind": "note",
+   "label": "Commit 97c902c4, rise 1573 to 1583, the lower middle of the frame carried along: the plates' cloud cells give way to the globe's own map there, the place of the 0.65",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T14:55:16.029Z",
    "file": "20261124145516029-note-chg-rise-W.jpg",
@@ -51,30 +67,6 @@
    "kind": "note",
    "label": "Chain W, not committed yet: dive 1308 to 1323. The sky and the Sun's glow come in from 1313, a pale band under the limb from 1320",
    "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T14:16:26.814Z",
-   "file": "20261124141626814-sheet-venus-rise-top.jpg",
-   "source": "out/work/handover/venus-rise-top.png",
-   "kind": "sheet",
-   "label": "venus rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 1539), place picture off, draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1539,
-   "last": 1604,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T14:15:30.292Z",
-   "file": "20261124141530292-sheet-venus-rise-draft-after.jpg",
-   "source": "out/work/handover/venus-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "venus rise, every frame 1540 to 1551 (after T, frame 1539), draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1540,
-   "last": 1551,
-   "tier": "draft"
   }
  ]
 }
