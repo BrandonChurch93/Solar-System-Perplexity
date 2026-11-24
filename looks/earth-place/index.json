@@ -1,9 +1,74 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T01:19:34.807Z",
+ "pushed": "2026-11-24T01:44:59.919Z",
  "head": "52a96ba2115a00a7972e15242b109c3f54720c12",
- "note": "step 3 final frames: towers as bodies, strips with a foot marked, 2010 pair; checks running",
+ "note": "step 3 final frames measured, G13 0 of 115 over 2 percent, packing the relief fields to pay for the body field (mail 450), handover report running",
  "looks": [
+  {
+   "time": "2026-11-24T01:44:58.841Z",
+   "file": "20261124014458841-note-z-all.jpg",
+   "source": "../../../../tmp/gl/s3/z-all.jpg",
+   "kind": "note",
+   "label": "step 3 still wrong: pale line beside one corner tower 2097 to 2102",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T01:44:58.041Z",
+   "file": "20261124014458041-note-strip-rise.jpg",
+   "source": "../../../../tmp/gl/s3/strip-rise.jpg",
+   "kind": "note",
+   "label": "step 3 final: painted shadow fixed to its tower foot, frames 2071 2101 2131",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T01:40:02.666Z",
+   "file": "20261124014002666-sheet-earth-dive-draft-before.jpg",
+   "source": "out/work/handover/earth-dive-draft-before.png",
+   "kind": "sheet",
+   "label": "earth dive, every frame 1907 to 1918 (before T, frame 1919), draft tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "first": 1907,
+   "last": 1918,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T01:38:42.266Z",
+   "file": "20261124013842266-sheet-earth-dive-draft-across.jpg",
+   "source": "out/work/handover/earth-dive-draft-across.png",
+   "kind": "sheet",
+   "label": "earth dive, every frame 1913 to 1919 (across T, frame 1919), draft tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "first": 1913,
+   "last": 1919,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T01:37:15.626Z",
+   "file": "20261124013715626-compare-earth-dive-under.jpg",
+   "source": "out/work/handover/earth-dive-under.png",
+   "kind": "compare",
+   "label": "earth dive, the globe side at T (frame 1919) with the place picture, alone, and their difference times 4",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1919,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T01:25:36.565Z",
+   "file": "20261124012536565-job-frame-01914.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "earth.dive frame 1914, draft tier, texels view, from the running g13 job",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1914,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "g13"
+  },
   {
    "time": "2026-11-24T01:19:33.833Z",
    "file": "20261124011933833-note-pair-2010.jpg",
@@ -18,60 +83,6 @@
    "source": "../../../../tmp/gl/s3/f-e.jpg",
    "kind": "note",
    "label": "step 3: every frame 2114 to 2122 of the rise",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T01:19:31.857Z",
-   "file": "20261124011931857-note-strip-rise.jpg",
-   "source": "../../../../tmp/gl/s3/strip-rise.jpg",
-   "kind": "note",
-   "label": "step 3: the same foot, a second apart, surface view into the rise (2071, 2101, 2131; at 2131 the place has handed over to the globe)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T01:19:30.899Z",
-   "file": "20261124011930899-note-strip-dive.jpg",
-   "source": "../../../../tmp/gl/s3/strip-dive.jpg",
-   "kind": "note",
-   "label": "step 3: one tower foot marked on the sea, a second apart, dive into the surface view (1889, 1919, 1949)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T01:15:34.926Z",
-   "file": "20261124011534926-job-frame-01830.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "earth.dive frame 1830, draft tier, texels view, from the running g13 job",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1830,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "g13"
-  },
-  {
-   "time": "2026-11-24T01:04:26.379Z",
-   "file": "20261124010426379-note-d3-2118.jpg",
-   "source": "../../../../tmp/gl/s3/d3-2118.jpg",
-   "kind": "note",
-   "label": "step 3 trial, frame 2118 x5: step 1 above (glint shows through the towers), two trials below",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T01:04:25.756Z",
-   "file": "20261124010425756-note-d3-2099.jpg",
-   "source": "../../../../tmp/gl/s3/d3-2099.jpg",
-   "kind": "note",
-   "label": "step 3 trial, frame 2099 corner x4: step 1 above, far cap lit (white patches, dropped) middle, far cap by body depth below",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T00:56:46.830Z",
-   "file": "20261124005646830-note-c3-follow-rise.jpg",
-   "source": "../../../../tmp/gl/s3/c3-follow-rise.jpg",
-   "kind": "note",
-   "label": "step 3 trial c2, not committed: one tower followed through frames 2114 to 2122 (zoom 3), its tone holds while the place blends into the globe by height",
    "stop": "earth"
   }
  ]
