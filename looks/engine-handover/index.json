@@ -1,9 +1,35 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T16:45:12.275Z",
+ "pushed": "2026-11-24T17:08:29.182Z",
  "head": "46e6a5606c9d9e80d335737a691ae27c49933b41",
- "note": "weights test: its span made in memory on main ed003c70 (one test file), chain running; Neptune dive renders for the table of mail 682",
+ "note": "Neptune's rise is rendering for the table of mail 682 (dive done, passes every frame; 4716 to 4728 changes its look); the pattern rig is running the exchange cases at 16 to 128 px for the answer on the judge's patch; weights test cure 156c5c36 delivered",
  "looks": [
+  {
+   "time": "2026-11-24T17:08:27.846Z",
+   "file": "20261124170827846-note-neptune-rise-first.jpg",
+   "source": "out/work/inplace/looks/neptune-rise-first.jpg",
+   "kind": "note",
+   "label": "Neptune rise, first frames 4950 to 4960 as they render (drafts, old tree), for the table of mail 682",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T17:08:25.971Z",
+   "file": "20261124170825971-note-neptune-dive-4712-4740.jpg",
+   "source": "out/work/inplace/looks/neptune-dive-4712-4740.jpg",
+   "kind": "note",
+   "label": "Neptune dive 4712 to 4740, drafts on my tree as it was before the merge: the globe's deep blue turns to the place's paler blue between 4716 and 4728 (the report's steps come when the rise is in)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T16:47:53.153Z",
+   "file": "20261124164753153-compare-neptune-dive-step-in-place.jpg",
+   "source": "out/work/handover/neptune-dive-step-in-place.png",
+   "kind": "compare",
+   "label": "neptune dive, the largest step of the level in place (2.02): frame 4707, frame 4708, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "neptune",
+   "segment": "neptune.dive",
+   "frame": 4708
+  },
   {
    "time": "2026-11-24T16:11:05.818Z",
    "file": "20261124161105818-note-neptune-dive-4704-4734.jpg",
@@ -51,31 +77,6 @@
    "stop": "mars",
    "segment": "mars.dive",
    "frame": 2440
-  },
-  {
-   "time": "2026-11-24T15:31:25.015Z",
-   "file": "20261124153125015-note-earth-rise-2116-2131.jpg",
-   "source": "out/work/inplace/sheets/earth-rise-2116-2131.png",
-   "kind": "note",
-   "label": "Earth as on main, rise 2116 to 2131, consecutive drafts: the bright veil over the ocean thins as the eye climbs; mean of the body 7.5 into 2124, in place 5.42",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T15:31:23.960Z",
-   "file": "20261124153123960-note-ju3x-rise-3276-3295.jpg",
-   "source": "out/work/inplace/sheets/ju3x-rise-3276-3295.png",
-   "kind": "note",
-   "label": "Jupiter third with its exposure by height taken out for one scratch run (ju3x), rise 3276 to 3295, consecutive drafts: no dimming; the mean of the body steps by 10.21 into 3288, in place by 0.02"
-  },
-  {
-   "time": "2026-11-24T15:30:10.048Z",
-   "file": "20261124153010048-compare-ju3x-rise-step-in-place.jpg",
-   "source": "out/work/handover/ju3x-rise-step-in-place.png",
-   "kind": "compare",
-   "label": "jupiter rise, the largest step of the level in place (2.72): frame 3257, frame 3258, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3258
   }
  ]
 }
