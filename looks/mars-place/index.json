@@ -1,71 +1,71 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T00:15:25.522Z",
+ "pushed": "2026-11-24T01:04:17.202Z",
  "head": "f95c36066d14cca26db2ae192f3c036da4c683a6",
- "note": "heights v3 on f95c3606: walls are slopes (largest step 2.00 texel widths at every level); stills on plan E's curve; still wrong: black strait, thin dark line on the straight north edge of the seen ground",
+ "note": "01:30 look: tool stills on plan E with the new canyon plates; canyon west of the spot does not read yet, mound and streaks remain",
  "looks": [
   {
-   "time": "2026-11-24T00:15:24.953Z",
-   "file": "20261124001524953-note-e1-sheet.jpg",
-   "source": "out/work/place/see/e1-sheet.jpg",
+   "time": "2026-11-24T01:04:16.638Z",
+   "file": "20261124010416638-note-c07-take1-v.jpg",
+   "source": "out/work/place/c07-take1-v.jpg",
    "kind": "note",
-   "label": "tool stills on plan E's curve (6d260fb), place picture off, heights v3: dive 2439 2452 2461 2471 2475 (heights of the old 2427 to 2454) and rise 2713 2703 2697 2690 2688; country alone and with the close view over it. The levels beyond 8.5 degrees are drawn unlit by this tool",
+   "label": "new asset c07 take 1 beside its lead",
    "stop": "mars"
   },
   {
-   "time": "2026-11-24T00:15:24.340Z",
-   "file": "20261124001524340-note-c5-shade.jpg",
-   "source": "out/work/place/country/c5-shade.jpg",
+   "time": "2026-11-24T01:04:16.094Z",
+   "file": "20261124010416094-note-c16-take1-v.jpg",
+   "source": "out/work/place/c16-take1-v.jpg",
    "kind": "note",
-   "label": "height pyramid v3 (commit f95c3606): every slope held under 2.0, five levels shaded by the film Sun, seen ground outlined",
+   "label": "new asset c16 take 1 beside its lead",
    "stop": "mars"
   },
   {
-   "time": "2026-11-23T23:59:01.447Z",
-   "file": "20261123235901447-note-v1-sheet.jpg",
-   "source": "out/work/place/see/v1-sheet.jpg",
+   "time": "2026-11-24T01:04:15.550Z",
+   "file": "20261124010415550-note-c38-take1-v.jpg",
+   "source": "out/work/place/c38-take1-v.jpg",
    "kind": "note",
-   "label": "tool stills, old curve, place picture off: dive 2427 2436 2442 2448 2454 (left pair) and the rise frames of the same heights (right pair); country alone and with the close view laid over; heights v2 with the canyon colour by code",
+   "label": "new asset c38 take 1 beside its lead",
    "stop": "mars"
   },
   {
-   "time": "2026-11-23T23:52:58.801Z",
-   "file": "20261123235258801-note-c4-shade.jpg",
-   "source": "out/work/place/country2/c4-shade.jpg",
+   "time": "2026-11-24T01:04:15.009Z",
+   "file": "20261124010415009-note-plates12.jpg",
+   "source": "out/work/place/see/plates12.jpg",
    "kind": "note",
-   "label": "height pyramid v2, five levels shaded by the film Sun, seen ground outlined",
+   "label": "plates of 3.8, 1.6, 0.7, 0.3 degrees: above bake 11 painted by code, below bake 12 from the new assets c38, c16, c07, c03",
    "stop": "mars"
   },
   {
-   "time": "2026-11-23T23:52:57.766Z",
-   "file": "20261123235257766-note-paint-0.3.jpg",
-   "source": "out/work/place/country/paint-0.3.jpg",
+   "time": "2026-11-24T01:04:14.476Z",
+   "file": "20261124010414476-note-c12471.jpg",
+   "source": "out/work/place/see/c12471.png",
    "kind": "note",
-   "label": "plate 0.3 deg before and after the canyon colour painted by code from the measured table (heights v2)",
+   "label": "tool still 2471, country alone, bake 12: the canyon west of the spot reads as a black slot in a cliff, the ground in front falls away",
    "stop": "mars"
   },
   {
-   "time": "2026-11-23T23:52:56.688Z",
-   "file": "20261123235256688-note-paint-0.7.jpg",
-   "source": "out/work/place/country/paint-0.7.jpg",
+   "time": "2026-11-24T01:04:13.911Z",
+   "file": "20261124010413911-note-c12452.jpg",
+   "source": "out/work/place/see/c12452.png",
    "kind": "note",
-   "label": "plate 0.7 deg before and after the canyon colour painted by code from the measured table (heights v2)",
+   "label": "tool still 2452, country alone, bake 12: the place reads as a hollow in a mound, the slopes carry streaked colour",
    "stop": "mars"
   },
   {
-   "time": "2026-11-23T23:52:55.542Z",
-   "file": "20261123235255542-note-paint-1.6.jpg",
-   "source": "out/work/place/country/paint-1.6.jpg",
+   "time": "2026-11-24T01:04:13.333Z",
+   "file": "20261124010413333-note-c12439-both.jpg",
+   "source": "out/work/place/see/c12439-both.png",
    "kind": "note",
-   "label": "plate 1.6 deg before and after the canyon colour painted by code from the measured table (heights v2)",
+   "label": "tool still 2439 with the close view: the pale wedge is the close view's far ground in its own haze, the blotches are the country standing through it",
    "stop": "mars"
   },
   {
-   "time": "2026-11-23T23:52:54.110Z",
-   "file": "20261123235254110-note-paint-3.8.jpg",
-   "source": "out/work/place/country/paint-3.8.jpg",
+   "time": "2026-11-24T01:04:12.474Z",
+   "file": "20261124010412474-note-c1-sheet.jpg",
+   "source": "out/work/place/see/c1-sheet.jpg",
    "kind": "note",
-   "label": "plate 3.8 deg before and after the canyon colour painted by code from the measured table (heights v2)",
+   "label": "tool stills on plan E's curve, bake 12 (new canyon plates on heights v3): 2439 2452 2461 2471 2475 and rise 2713 2703 2697 2690 2688; left of each pair country alone, right with the close view; tool draws all levels unlit, no air",
    "stop": "mars"
   }
  ]
