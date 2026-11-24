@@ -76,7 +76,7 @@ export class Plan extends StopPlan {
     return this.cruise(time)
   }
 
-  private untwin(pose: Pose, time: number): Pose {
+  override untwin(pose: Pose, time: number): Pose {
     const a = this.anchor
     const back = this.drawn(time).invert()
     const frame = a.frame.clone().invert()

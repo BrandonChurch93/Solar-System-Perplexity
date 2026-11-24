@@ -324,10 +324,11 @@ export const createSet: SetFactory = async (ctx) => {
       }
       paint(globe, state.time, diving, rising, look.under.sink * shows, distance, offAxis, light, rimSun, glareSun, kick.fromArray(look.light.line.dir).applyQuaternion(state.rotation), spin(state.time), gain, state.weight, Math.min(holdRadius / Math.max(radiusPx / view.format.height, 1e-6), 1), shot.post.vignette, aspect)
       globe.mesh.visible = radiusPx > 0.6 && state.weight > 0
+      const open = view.shutterSeconds ?? config.shutterFraction / config.fps
       const fast = view.samples > 1 && (diving || rising)
       const at = (t: number) => (kind === 'dive' ? plan.dive(t) : plan.rise(t))
       const now = fast ? at(state.time) : null
-      const before = fast ? at(state.time - (config.shutterFraction * (view.shutter ?? 1)) / (view.samples * config.fps)) : null
+      const before = fast ? at(state.time - (open * (view.shutter ?? 1)) / view.samples) : null
       const moving = now?.view === 'orbit' && before?.view === 'orbit'
       const jitter = moving ? samplesFor(view.samples)[view.sample] : undefined
       globe.smear(view.camera, moving ? now.pose : null, moving ? before.pose : null, look.smear, jitter?.jitterX ?? 0, jitter?.jitterY ?? 0, view.samples)
@@ -345,7 +346,7 @@ export const createSet: SetFactory = async (ctx) => {
       const beneath = arriving ? Math.pow(shot.sets.find((s) => s.id === state.segment.stop)?.weight ?? 0, look.hide.power) : 0
       const lift = arriving ? (Math.max(smooth(ramp(0.25, 0.8, look.hide.gone)) - shown, 0) * (1 - beneath)) / Math.max(shown, 1e-4) : 0
       sunPlate.update(sunAim.copy(state.rotation).multiply(holdCam).premultiply(diving || rising ? sunTurn : sunTurn.identity()), gain * shown * look.sun.gain * breath * plate, shot.post.vignette, aspect, shrink, surface, still, hide, hide * (1 - beneath), look.hide.rate, hide * lift)
-      const then = leaving && view.samples > 1 && shown > 0 ? film.shotAt(shot.frame, state.time - config.shutterFraction / (view.samples * config.fps)) : null
+      const then = leaving && view.samples > 1 && shown > 0 ? film.shotAt(shot.frame, state.time - open / view.samples) : null
       sunPlate.smear(view.camera.quaternion, tanHalf, then ? then.camera.quaternion : null, then ? Math.tan(THREE.MathUtils.degToRad(then.camera.vfov) / 2) : tanHalf, then ? sunWas.copy(then.sets.find((s) => s.id === plan.id)?.rotation ?? state.rotation).multiply(holdCam) : sunAim, view.format.height, look.leaveStep, look.leaveSoft)
       let limbLeft = 1
       let limbRight = 1
