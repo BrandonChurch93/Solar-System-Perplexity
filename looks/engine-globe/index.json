@@ -1,9 +1,17 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-24T16:23:59.053Z",
+ "pushed": "2026-11-24T16:44:45.553Z",
  "head": "82c4701120bb988a39869222c9e760472feb43f9",
- "note": "TASK 697: the pattern measure reads a rigid rise as a change where the carried frame is enlarged 3 times or more; panels before and after a trial correction",
+ "note": "TASK 697: made proofs of the correction of the pattern measure at shrink 4. Rigid 0.17 before, 0.01 after; whole exchange 1.37 before, 1.15 after (seed 697; 1.15 to 1.56 over seven seeds); a half dissolve at shrink 4 reads 0.37 to 0.68 over seven seeds, so it can fall under 0.45. Not final.",
  "looks": [
+  {
+   "time": "2026-11-24T16:44:43.102Z",
+   "file": "20261124164443102-note-made-rise4.jpg",
+   "source": "../m697/made-rise4.png",
+   "kind": "note",
+   "label": "TASK 697 made rise by 4, per row: first frame, last frame carried back, pattern before, pattern after (root of area, nearest half step). Rows: nothing changes, a disc exchanged, the whole ground exchanged",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-24T16:23:55.353Z",
    "file": "20261124162355353-note-pair-jurigid.jpg",
@@ -58,14 +66,6 @@
    "source": "out/work/m591/h-changes.png",
    "kind": "note",
    "label": "run h one texture, levels, air, no cap: 1.46",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T11:13:51.856Z",
-   "file": "20261124111351856-note-c-changes.jpg",
-   "source": "out/work/m591/c-changes.png",
-   "kind": "note",
-   "label": "run c the film as it is: 1.27, 18 of 18 starts over 0.45",
    "stop": "mars"
   }
  ]
