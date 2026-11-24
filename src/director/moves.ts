@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { config, type Segment } from '../config'
-import type { CoverHorizon, Pose, ViewKind } from '../core/types'
+import type { CoverHorizon, NearBody, Pose, ViewKind } from '../core/types'
 import { handoverOf, oneMoveForced, sideAt, type HandoverParams, type Sidestep, type SkyShares } from './handover'
 import { bellShare, bellStep, checkFlanks, paceLimits, type Flanks } from './pace'
 import { coverFrames, coverWindow, setCoverWindow, setHandover, withoutHandover, type CoverTimings } from './timeline'
@@ -45,9 +45,15 @@ export interface MoveParams {
   coverRush?: { speed: number; reach: number; billow: [number, number, number]; streak: [number, number, number]; contrast: [number, number] }
   spinDegPerSecond: number
   moonDegPerSecond: number
+  // The near bodies the stop names to the motion measure (StopPlan.nearBodies): the centre at the middle of the hold in the frame of the globe and
+  // the radius of the sphere that holds the body, in radii. The body goes round the stop's axis by degPerSecond, by moonDegPerSecond where
+  // that is not given. Not set: the stop names no body and every frame keeps its sample count.
+  near?: NearParams[]
   tint: [number, number, number]
   skyAim?: { orbit?: [number, number, number]; terrain?: [number, number, number] }
 }
+
+export interface NearParams { centre: [number, number, number]; radius: number; degPerSecond?: number }
 
 export interface SegmentTimes { hold: Segment; dive?: Segment; terrain: Segment; rise: Segment; travel?: Segment }
 
@@ -146,7 +152,7 @@ export class StopPlan {
   private readonly targets: Target[] = []
   private readonly coasts: Coast[] = []
   private readonly leans: Lean[] = []
-  private readonly paces: { key: string; flanks: Flanks }[] = []
+  private readonly paces: { key: string; law: { pace: Flanks; turn: Flanks; liftPower: number } }[] = []
   private readonly swings: { key: string; angle: number }[] = []
 
   constructor(id: string, fit: Fit, p: MoveParams) {
@@ -384,7 +390,9 @@ export class StopPlan {
   // one: the engine's one move. The swing is then the one measured where the move leaves the far end and it is given back by the share of
   // the move, not measured again at every time: a far end that stands near the zenith of the place changes its azimuth fast while it hardly
   // moves, and a swing that followed it was a second motion under the glide.
-  private glide(kind: 'dive' | 'rise', time: number, far: Pose, low: Pose, share: number, turn: number, at: number, one?: { swing: number }): Pose {
+  // liftPower (the one move only): the height runs with the lift of the eye's direction, the sine of its elevation over the ground of the
+  // place, raised to that power: ln(height / lift^power) follows the share instead of ln(height). See eyeLaw.
+  private glide(kind: 'dive' | 'rise', time: number, far: Pose, low: Pose, share: number, turn: number, at: number, one?: { swing: number; liftPower: number }): Pose {
     if (share <= 0 && turn <= 0) return far
     if (share >= 1 && turn >= 1) return low
     const { centre, ahead } = this.target(kind, at, time)
@@ -398,9 +406,11 @@ export class StopPlan {
     const back = new THREE.Quaternion().setFromAxisAngle(centre, -swing)
     const a = seen(swing ? { position: far.position.clone().applyQuaternion(back), quaternion: back.clone().multiply(far.quaternion), vfov: far.vfov } : far)
     const b = seen(low)
-    const h = Math.exp(mix(Math.log(Math.max(a.h, 1e-9)), Math.log(Math.max(b.h, 1e-9)), share))
     const out = slerpDir(a.out, b.out, turn)
     const lift = centre.dot(out)
+    const power = one ? one.liftPower : 0
+    const lifted = (x: number): number => Math.pow(Math.max(x, 1e-9), power)
+    const h = power > 0 ? Math.exp(mix(Math.log(Math.max(a.h, 1e-9) / lifted(centre.dot(a.out))), Math.log(Math.max(b.h, 1e-9) / lifted(centre.dot(b.out))), share)) * lifted(lift) : Math.exp(mix(Math.log(Math.max(a.h, 1e-9)), Math.log(Math.max(b.h, 1e-9)), share))
     const range = (h * (2 + h)) / (lift + Math.sqrt(lift * lift + h * (2 + h)))
     const position = centre.clone().addScaledVector(out, range)
     const upright = one ? turn : path.level ? smooth(turn / path.levelBy) : turn
@@ -559,27 +569,49 @@ export class StopPlan {
     return { position: globe.position.clone().sub(zero.position).applyQuaternion(back).multiplyScalar(1 / unit.position.distanceTo(zero.position)), quaternion: back.multiply(globe.quaternion), vfov: globe.vfov }
   }
 
-  // The flanks of the pace of a dive or a rise on the one move: the engine's (handover.pace) with what the stop sets of its own. Flanks
-  // too short for the segment are refused here, where the number is read: the steepest slope of the bell may not pass the step the
+  // The law of a dive or a rise on the one move, three things. pace: the flanks of the bell the height runs on. turn: the flanks of the
+  // bell the eye's direction from the place and the camera's uprightness run on. liftPower: the height runs with the lift of that
+  // direction (the sine of the eye's elevation over the ground of the place) to this power, so ln(height / lift^power) follows the bell.
+  // Why three: the picture at the place moves by the change of ln(height) less one and a half times the change of ln(lift), so an eye
+  // that swings up from low over the ground opens the ground while it climbs, and on one share for all the speed of the picture was
+  // steeper than the rate of fall by the growth of that term (the rise of Mars: 0.097 of the mean a frame where the rate had 0.073).
+  // With a power between 0 and 1.5 the rate and the speed share the term, and with flanks of its own the turn is gentle where the eye is
+  // low and the term is large.
+  // Each is the stop's own (handover.KIND of its params) where it sets one, else the film's for that kind (handover.KIND of the config)
+  // where it has one, else handover.pace for both bells and 0 for the power: one share and the height alone, the move as it was.
+  // Flanks too short for the segment are refused here, where the number is read: the steepest slope of a bell may not pass the step the
   // harness allows from one film frame to the next (smooth.path.maxStep).
-  eyeFlanks(kind: 'dive' | 'rise'): Flanks {
+  eyeLaw(kind: 'dive' | 'rise'): { pace: Flanks; turn: Flanks; liftPower: number } {
     const seg = kind === 'dive' ? this.seg.dive : this.seg.rise
     if (!seg) throw new Error(this.id + ' has no ' + kind)
-    const own = this.p.handover?.[kind]?.pace
-    const base = config.raw.handover.pace
-    const key = kind + '|' + JSON.stringify(own ?? null) + '|' + base.rise + '|' + base.fall + '|' + base.corner
+    const own = this.p.handover?.[kind]
+    const film = config.raw.handover[kind] as { pace?: Flanks; turn?: Flanks; liftPower?: number }
+    const base = film.pace ?? config.raw.handover.pace
+    const key = kind + '|' + JSON.stringify([own?.pace ?? null, own?.turn ?? null, own?.liftPower ?? null, base, film.turn ?? null, film.liftPower ?? null])
     let hit = this.paces.find((p) => p.key === key)
     if (!hit) {
-      const flanks: Flanks = { rise: own?.rise ?? base.rise, fall: own?.fall ?? base.fall, corner: own?.corner ?? base.corner }
-      checkFlanks(flanks, 'the ' + kind + ' of ' + this.id)
-      const step = bellStep(flanks, seg.frames)
       const limit = paceLimits().maxStep
-      if (step > limit) throw new Error('the ' + kind + ' of ' + this.id + ': with flanks of ' + flanks.rise + ' and ' + flanks.fall + ' and a corner of ' + flanks.corner + ' the rate changes by ' + step.toFixed(4) + ' of its mean from one film frame to the next, the limit is ' + limit)
-      hit = { key, flanks }
+      const checked = (flanks: Flanks, what: string): Flanks => {
+        checkFlanks(flanks, 'the ' + kind + ' of ' + this.id)
+        const step = bellStep(flanks, seg.frames)
+        if (step > limit) throw new Error('the ' + kind + ' of ' + this.id + ': with flanks of ' + flanks.rise + ' and ' + flanks.fall + ' and a corner of ' + flanks.corner + ' the ' + what + ' changes by ' + step.toFixed(4) + ' of its mean from one film frame to the next, the limit is ' + limit)
+        return flanks
+      }
+      const pace = checked({ rise: own?.pace?.rise ?? base.rise, fall: own?.pace?.fall ?? base.fall, corner: own?.pace?.corner ?? base.corner }, 'rate')
+      const from = film.turn ?? pace
+      const turn = own?.turn || film.turn ? checked({ rise: own?.turn?.rise ?? from.rise, fall: own?.turn?.fall ?? from.fall, corner: own?.turn?.corner ?? from.corner }, 'turn') : pace
+      const liftPower = own?.liftPower ?? film.liftPower ?? 0
+      if (!(liftPower >= 0 && liftPower <= 2)) throw new Error('the ' + kind + ' of ' + this.id + ': liftPower must lie between 0 and 2')
+      hit = { key, law: { pace, turn, liftPower } }
       if (this.paces.length > 8) this.paces.length = 0
       this.paces.push(hit)
     }
-    return hit.flanks
+    return hit.law
+  }
+
+  // The flanks of the pace of a dive or a rise on the one move (eyeLaw).
+  eyeFlanks(kind: 'dive' | 'rise'): Flanks {
+    return this.eyeLaw(kind).pace
   }
 
   private eyeSeamTime(kind: 'dive' | 'rise'): number {
@@ -651,9 +683,11 @@ export class StopPlan {
     const far = dive ? this.hold(time - this.seg.hold.start) : this.after(time)
     if (x <= 0) return far
     if (x >= 1) return this.twin(this.terrain(time - this.seg.terrain.start), time)
-    const share = bellShare(x, this.eyeFlanks(kind))
+    const law = this.eyeLaw(kind)
+    const share = bellShare(x, law.pace)
+    const turn = law.turn === law.pace ? share : bellShare(x, law.turn)
     const seam = this.eyeSeamTime(kind)
-    return this.glide(kind, time, this.sidestep(kind, far, x, seam, time), this.twin(this.eyeCoast(kind, time), time), share, share, seam, { swing: this.eyeSwing(kind) })
+    return this.glide(kind, time, this.sidestep(kind, far, x, seam, time), this.twin(this.eyeCoast(kind, time), time), share, turn, seam, { swing: this.eyeSwing(kind), liftPower: law.liftPower })
   }
 
   private coverFractions(seg: Segment): { first: number; center: number; last: number } {
@@ -661,6 +695,16 @@ export class StopPlan {
     const h = seg.kind === 'dive' || seg.kind === 'rise' ? handoverOf(this.id, seg.kind) : null
     const center = h ? (h.time * config.fps - seg.firstFrame) / seg.frames : (w.centerFrame - seg.firstFrame) / seg.frames
     return { first: (w.firstFrame - seg.firstFrame) / seg.frames, center, last: (w.lastFrame + 1 - seg.firstFrame) / seg.frames }
+  }
+
+  // The near bodies of the stop at a time, for the motion measure of a frame: the sample count follows the fastest of them that is in the
+  // frame (core/motion nearMotion), so a moon that crosses the picture far faster than the planet behind it is drawn as one clean smear. None
+  // by default. A stop names them in its params (near), or gives this method itself where its body moves by another rule than a turn about
+  // the stop's axis. The answer is a function of the time alone.
+  nearBodies(time: number): NearBody[] {
+    const named = this.p.near
+    if (!named || !named.length) return []
+    return named.map((n) => ({ centre: v3(n.centre).applyAxisAngle(this.axis, THREE.MathUtils.degToRad(n.degPerSecond ?? this.p.moonDegPerSecond) * (time - this.holdMid)), radius: n.radius }))
   }
 
   skyGain(_time: number): number {

@@ -13,14 +13,12 @@ import { Sheet } from './sheet'
 import { shotMatrix } from './shot'
 import holdLight from './hold-light.json'
 import iceJson from './ice.json'
-import * as keptLook from './kept/look'
 import lightJson from './light.json'
 import ringsJson from './rings.json'
 import shadowJson from './shadow.json'
 import sheetJson from './sheet.json'
 import skimJson from './skim.json'
 import skyJson from './sky.json'
-import { Streak } from './streak'
 import { Titan } from './titan'
 
 export const createModel: SetFactory = async (ctx) => {
@@ -56,9 +54,6 @@ export const createModel: SetFactory = async (ctx) => {
   const grains = new Grains(sheet.uniforms, ice, iceJson.orbit.syncRadius)
   tilt.add(grains.points)
 
-  const streak = new Streak(look.streak)
-  world.add(streak.mesh)
-
   const moonFit = fit.moons![0]!
   const titan = new Titan(moonFit.radius * look.titan.size, look.titan)
   body.add(titan.mesh)
@@ -66,11 +61,16 @@ export const createModel: SetFactory = async (ctx) => {
   const far = new FarPoint()
   body.add(far.points)
 
+  // One sky for the stop: the film's own star field. The one picture of a sky is that of the hold, the hero's
+  // own; it stands in the film's field where the hero saw it and shows by where the lens is: whole on the path
+  // of the hold, less with the distance of the lens from that path, gone before the engine changes the view
+  // (plan.heroSky). Before the hold the engine alone brings it in.
+  plan.skyProof()
   const sky: SkyPatch[] = []
   for (const [view, def] of Object.entries(skyJson)) {
     const wide = 1 + 2 * def.margin
     const t = Math.tan(THREE.MathUtils.degToRad(def.vfovDeg) / 2) * wide
-    sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, mips: false, anisotropy: 1 }), aim: new THREE.Quaternion(), tan: [t * 16 / 9, t], gain: def.gain, add: def.add, ring: def.ring as [number, number, number, number], edge: def.margin / wide, weight: () => look.patchShow })
+    sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, mips: false, anisotropy: 1 }), aim: new THREE.Quaternion(), tan: [t * 16 / 9, t], gain: def.gain, add: def.add, ring: def.ring as [number, number, number, number], edge: def.margin / wide, weight: (time) => (time < plan.seg.hold.start ? look.patchShow : look.patchShow * plan.heroSky(time)) })
   }
 
   const toTerrain = plan.terrainFrame.clone().invert()
@@ -97,11 +97,11 @@ export const createModel: SetFactory = async (ctx) => {
   const tintThin = new THREE.Vector3().fromArray(tune.tint.near.thin)
   const logLo = Math.log(tune.heights[0]!)
   const logHi = Math.log(tune.heights[1]!)
-  // the far look: through the window of the dive in which the kept set still draws a share of the takes the
-  // model shows the rings as the kept set does; from the window's end it goes over to its own light
-  const dive = plan.seg.dive!
-  const farFrom = dive.start + skimJson.handover.kept.far[0]! * (dive.end - dive.start)
-  const farTo = dive.start + skimJson.handover.kept.far[1]! * (dive.end - dive.start)
+  // the far look: above the upper height of skim.json handover.kept.far the model shows the rings as the kept
+  // set does; under the lower it shows them in its own light; between the two, by the logarithm of the height
+  // of the lens over the ring plane, the one goes over to the other, the same way down and up
+  const farLo = Math.log(skimJson.handover.kept.far[0]!)
+  const farHi = Math.log(skimJson.handover.kept.far[1]!)
   const shadowTurn = new THREE.Quaternion().setFromUnitVectors(plan.lightDir.clone().applyQuaternion(toTilt).normalize(), new THREE.Vector3().fromArray(shadowJson.local).normalize())
   const shadowL = new THREE.Vector3()
   const spinRate = THREE.MathUtils.degToRad(plan.p.spinDegPerSecond)
@@ -134,12 +134,15 @@ export const createModel: SetFactory = async (ctx) => {
       const lit = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0
       light.copy(plan.lightDir).applyQuaternion(total).lerp(shot.sun.dir, lit).normalize()
       sunL.copy(light).applyQuaternion(toRing)
-      const farW = state.time < dive.end ? 1 - smooth((state.time - farFrom) / (farTo - farFrom)) : 0
+      const logHeight = Math.log(Math.max(Math.abs(camL.y), 1e-3))
+      const farW = smooth((logHeight - farLo) / (farHi - farLo))
       // how near the lens is to the sheet (0 in the hold, 1 in the skim); nothing of it shows with the far look
-      const close = (1 - smooth((Math.log(Math.max(Math.abs(camL.y), 1e-3)) - logLo) / (logHi - logLo))) * (1 - farW)
+      const close = (1 - smooth((logHeight - logLo) / (logHi - logLo))) * (1 - farW)
       // the globe has one look from far to near: this share of its near settings shows (skim.json light.globeNear)
       const closeGlobe = close * tune.globeNear
-      poseW.value = 1 - smooth((camL.distanceTo(heroL) - tune.heroRange[0]!) / (tune.heroRange[1]! - tune.heroRange[0]!))
+      // the look of the hold (the hero's light on the globe, its limb, its shade and its streak) belongs to the
+      // kept set, which draws wherever the lens is near the hero pose in the film; the model never shows it
+      poseW.value = 0
       camS.set(camL.x, camL.y / polar, camL.z)
       sunS.set(sunL.x, sunL.y / polar, sunL.z).normalize()
       const gain = 1 / shot.post.exposure
@@ -179,8 +182,10 @@ export const createModel: SetFactory = async (ctx) => {
       const half = Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2)
       const focal = view.format.height / 2 / half
       ice.set(plan.spin(state.time), close, focal)
-      // one take of the frame: how far the lens moves and the orbits turn while its shutter is open
-      const take = config.shutterFraction / config.fps / Math.max(view.samples, 1)
+      // one take of the frame: how far the lens moves and the orbits turn while its shutter is open. The shutter
+      // is that of the frame being drawn (view.shutterSeconds: the film's at the capture rate 1, shorter at a
+      // higher capture rate) times the share of it the frame keeps in a dive or a rise (view.shutter)
+      const take = ((view.shutterSeconds ?? config.shutterFraction / config.fps) * (view.shutter ?? 1)) / Math.max(view.samples, 1)
       moved.copy(plan.flight(state.time + take / 2).position).sub(plan.flight(state.time - take / 2).position).applyQuaternion(toTilt)
       ice.move.set(moved.x, moved.y, moved.z, (plan.spin(state.time + take / 2) - plan.spin(state.time - take / 2)) / (2 * Math.PI)).multiplyScalar(close)
       lens.quaternion.copy(toRing).multiply(view.camera.quaternion)
@@ -197,7 +202,7 @@ export const createModel: SetFactory = async (ctx) => {
       field.set(close)
       field.far(farW, Math.max(farW, 1 - closeGlobe))
       sheet.set(close)
-      sheet.far(shadowL.copy(sunL).applyQuaternion(shadowTurn).normalize(), state.time < plan.seg.hold.end ? 0 : 1 - poseW.value, smooth((state.time - plan.seg.hold.end) / keptLook.rings.shadeSolid[1]), spinRate, elapsed)
+      sheet.far(shadowL.copy(sunL).applyQuaternion(shadowTurn).normalize(), 1 - poseW.value, 1, spinRate, elapsed)
       ;(ru.uFlatten!.value as THREE.Vector4).set(tune.flatten.pivot, THREE.MathUtils.lerp(tune.flatten.power[0]!, tune.flatten.power[1]!, close), tune.flatten.width, tune.flatten.reach)
       ;(ru.uEven!.value as THREE.Vector3).set(THREE.MathUtils.lerp(tune.flatten.bands[0]!, tune.flatten.bands[1]!, close), tune.flatten.bandReach, tune.flatten.band)
       ;(ru.uTintDense!.value as THREE.Vector3).fromArray(tune.tint.far.dense).lerp(tintDense, close)
@@ -206,12 +211,6 @@ export const createModel: SetFactory = async (ctx) => {
       ru.uWeight!.value = state.weight
       ru.uVignette!.value = shot.post.vignette
       ru.uAspect!.value = aspect
-
-      const ku = streak.material.uniforms
-      const tan = Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2)
-      ;(ku.uTan!.value as THREE.Vector2).set(tan * view.format.width / view.format.height, tan)
-      ku.uGain!.value = gain * state.weight * poseW.value * look.streak.gain * (1 - smooth((state.time - plan.seg.hold.end) / look.streak.fade))
-      streak.mesh.visible = inOrbit && poseW.value > 0
 
       turn.setFromAxisAngle(plan.axis, THREE.MathUtils.degToRad(plan.p.moonDegPerSecond) * elapsed)
       titan.mesh.position.copy(moonHome).applyQuaternion(turn)
@@ -224,7 +223,7 @@ export const createModel: SetFactory = async (ctx) => {
       tu.uGain!.value = gain * state.weight
 
       const distance = centre.length()
-      const radiusPx = (1 / Math.max(distance, 1)) / tan * (view.format.height / 2)
+      const radiusPx = (1 / Math.max(distance, 1)) / half * (view.format.height / 2)
       const visible = radiusPx > 0.6
       tilt.visible = visible
       titan.mesh.visible = visible
@@ -236,7 +235,6 @@ export const createModel: SetFactory = async (ctx) => {
       sheet.dispose()
       grains.dispose()
       titan.dispose()
-      streak.dispose()
       far.dispose()
     },
   }
