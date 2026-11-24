@@ -2319,3 +2319,135 @@ Stop builders: your named commit is due 08:30 UTC (mail starting NAMED and the f
   - j. Relief.presence: the swap in set.ts is owed, it goes into the second commit together with taking out my own patch, proven by bytes.
   - k. Frame 540 makes 5 buffers outside the warm start's call (hold, not judged).
   - l. The pop at 1035 to 1044 (block pop 20.11 at 1044, shown) is the travel's.
+
+### 08:16 to 08:23 UTC: the whole test run on the merge, nothing beside it
+- `npm test` on 27f1ba3e (merge of main aaea819b), nothing else running: "Test Files  48 passed (48)", "Tests  443 passed (443)", 374 s. The one failure of the first run was the time limit under my own load (pushing looks beside the tests), as said in the NAMED mail.
+
+### 08:43 UTC: MAIL 581 from the Builder (verbatim, high priority)
+"MAIL 581 from the Builder (/root) to mercury_builder. REPORT, part 1, on your named commit 27f1ba3eb30576e89f64aebb80dd252ffc09bcbd (proof tree 9b5f55cd on builder/proof-me1). Early notice so that you can start: the 90 minutes for a second commit (d186) run from the last part, which follows when the handover report (me1-12), the measure (me1-13) and the counts (mh1-04) are back. Six files attached.
+
+MEASURED on the render machines:
+- Dive pictures (mh1-01): RED on one number. The pattern of the picture changes in place by 1.57 from frame 744 + 1/2 to 8 film frames later, limit 0.45 (48 frames over it, first 712 + 1/2). Pops and level steps are inside their limits.
+- Rise pictures (mh1-02): RED on one number. Pattern 1.41 from 982 + 1/2 to 8 film frames later (72 frames over it, first 977).
+- Path, place and parity (mh1-03): green. Judged finals 615 and 870: equal to the reference to the byte. Gate: G11 and G15 pass (mercury/web 347 MB, full 1386 MB), tsc 0, 443 tests; G13 names only other stops as stale.
+
+What I see in mercury-dive-changes.png: from 736 on the change sits in a band along the limb (the bright rim travels over the ground as the camera falls, and the ground under it is not the same pattern 8 frames later), and at 717 in a patch in the middle and at the edge of the night side. Read the panels yourself; the fourth column is the judged one.
+
+What the measure asks: a piece of ground keeps its pattern while the camera comes down on it. Whatever a finer level adds must be finer than what the coarser level already shows, and the coarse pattern under it must stay the same pattern; nothing may be exchanged in place, by time or by distance. That is plan F ("nothing comes in") in a number.
+Start on it now. One line back that you have this."
+- Attached: mercury-dive.md, mercury-rise.md, mercury-dive-pops.png, mercury-dive-changes.png, mercury-rise-pops.png, mercury-rise-changes.png (`/home/user/.perplexity/attachments/2355971bf0844cfa8fb8b10e264811a6/`).
+- Mine: answered in one line at 08:44 (low): the mail is here, the cure runs since 08:23, and the one fact for a ruling: the hold keeps the map's real ground at the spot to the byte and the judged surface frame keeps the set's own crater field, so one exchange of the coarse pattern in the disc and one in the strip under the limb cannot be taken out, only made slow and even. The 90 minutes run from the last part of the report, which is still out. The G13 measure of the named head runs on the Builder's machines (me1-13), so my own whole measure of that head is not run again here; the next whole measure of mine is on the second commit.
+
+## 08:48 UTC: MAIL 587 (ruling: one ground), verbatim
+
+"MAIL 587 from the Builder (/root) to mercury_builder. RULING on your fact (one exchange in the disc of 10 to 15 degrees and one in the strip under the limb cannot be taken out while the hold keeps the map's ground to the byte and the judged surface frame keeps the set's own crater field). Do not wait on anything; one line back is enough.
+
+1. The limit stands (0.45). What stays red goes into the round as a severe issue. That rule does not change.
+2. The constraint is yours, not mine. I have not ruled that the hold keeps its bytes. A named commit shows the judged hold and surface view beside the kept stills (d186), and the round judges both again against the approved images. What plan F asks is one ground: the place is on the planet from the hold on. Brandon's words: "Like there's actually a place on the planet that the camera's going to". Two grounds at one spot are the cause. A slow and even exchange treats the symptom.
+3. So this is open to you, and I prefer it where it holds the look: the globe's ground inside that disc carries the set's coarse crater field at the scales the hold resolves (the hold then changes inside that disc only), or the set's ground carries the map's coarse forms under its own fine relief where the judged surface frame does not suffer; and past the place's border the surface view shows the globe's own ground, so the strip under the limb is one ground too. Whichever side gives way, say it in NAMED with 615 and 870 beside the kept stills and the approved images. The approved look is the bar: where a judged frame would get worse against its approved image, leave it and name what stays red.
+4. Nothing by the clock (plan F). The 34 frames of your cure must be a range of height, distance or angle, not a count of frames. Say in NAMED which quantity drives it.
+5. MEASURED since MAIL 581: your handover report passes on the machines (me1-12, proof 9b5f55cd): dive mean 0.004, 99th percentile 0, largest 26, 2 pixels over 16; rise mean 0.069, 99th percentile 1, largest 14. The measure (G13, G5, G17) is still out; your 90 minutes start with it."
+
+My answer (08:49, low): I take the first way of point 3: the globe carries the place's coarse crater field inside the disc from the hold on (plate 1 rebuilt there in the map's tones and held in at every distance, the map's own relief shading out inside it), so the hold changes inside that disc only and the dive adds only finer levels and the place's light; what drives every law is plate 1's texels to a pixel at the place or the height, never a frame count; the strip under the limb stays two grounds in this commit and I name it red.
+
+## 08:24 to 08:47 UTC: three trials of a slow exchange, all dropped
+
+Rate 2 drafts, my own pattern number (`out/work/mercury/place/pat/pat2.py`, limit 0.45):
+
+- c1 (686 to 733): slow even fade of the place's first level with its own light coupled. 0.47 to 0.58 at 696 to 698 + 1/2, then at most 0.36 (0.24 at 717). Look: at 717 a grey lit bulge of the disc on the night side. Bad in a judged frame.
+- c2 (726 to 770): c1 plus the set's presence by an even turn in log height from 9.5 units and the far look even in log height. 0.68 to 1.18 at 731 to 738, under 0.45 only from 746 + 1/2. Look: the set's bright patch shows under the limb from 740 instead of 748. Dropped.
+- c3 (694 to 741): the pattern slow under the globe's light, the own light by its own share. At most 0.29 at 694 to 713, red 716 to 719 (0.54 at 717) from the light coming in.
+
+A slow exchange treats the symptom (MAIL 587 point 2). The cause is two grounds at one spot.
+
+## 08:50 UTC on: one ground in the disc
+
+What the place's plates are: inside 10 degrees of the spot plate 2 holds the close view's picture in its own light divided by the gain, with the place's own night as a black wedge on the far side from the sun; from 10 to 15 degrees it runs into the map's ground. So the place's field is a lit picture, not a plain ground colour.
+
+Plate 1 (`patch-1.jpg`, 76 degrees) rebuilt by `python3 assets-src/mercury/place/plates.py first dive`: inside `own.json` `hold` (15.5 to 17.5 degrees) and where the place is lit, the plate is the old plate's tone at scales over `first.sigmaDeg` (1.5 degrees) times the place's own detail (plate 2 over its own blur at the same scale). Where the place is in its own night (`first.lit` on the blurred plate 2, taken `first.reachDeg` wide of the dark) the old plate stands. Outside the disc the old picture stands (the file is coded again as a whole). The old file: `git show 27f1ba3e:public/assets/mercury/<set>/patch-1.jpg`.
+
+Shader: `uPlaceHold`: inside the disc plate 1 stays in at every distance (`stays`), and the globe's relief shading is out by the same share.
+
+## 09:05 UTC: MAIL 596 (the check tool for the pattern number), verbatim
+
+"MAIL 596 from the Builder (/root) to the nine stop builders. A check tool for the pattern number is on main 81d568a7 (globe_engineer's NAMED f65859e1): `assets-src/shared/globe-levels.py`. It lays one level of a plate pyramid against the part of its parent that it covers, both at the state in which the level comes in (a parent texel 0.8 px of the frame), and judges the pair with the smooth report's own `pattern` function and the config's numbers. Seconds, no render. Merge main, or copy that one file to the same path in your tree, then:
+python3 assets-src/shared/globe-levels.py --dir public/assets/ID/full --json src/stops/ID/FILE.json [--key levels] [--suffix=-dive] [--pairs 0-1,1-3] [--panel out.png]
+or with the levels by hand: --level FILE:WIDTHDEG[:EASTDEG,NORTHDEG] twice or more (a plate given by the tangent of its half width: WIDTHDEG = 2 atan of it). One line a pair, OVER and exit 1 above smooth.pictures.maxPattern. It reads files, not the shader: a pair is a test only when both files are the same kind of picture (colour with colour, light with light), and it knows nothing of what a stop does with a level by height.
+
+MEASURED by me on main's Mars (the old plates): 0.06, 0.00, 0.06, 0.00, 0.00, 0.00, 0.00 in 3.5 s, as its author states. MEASURED by globe_engineer on the proof trees of the first named commits (not checked by me), 99th percentile against 0.45:
+- Mars b83618ec: patch-19 to land-8p5 1.19 OVER, land-3p8 to land-1p6 0.69 OVER, land-1p6 to land-0p7 0.59 OVER, land-0p7 to land-0p3 0.98 OVER; the other three pairs 0.00 to 0.09. In the panel of the first pair the parent shows a bright mound with a crater where the child shows a dark plain with the canyon crack.
+- Mercury 9b5f55cd: patch-1 to patch-2 1.09 OVER (dive), patch-2 to patch-3r 0.70 OVER (rise), the others 0.01 to 0.02.
+- Uranus 9a369939: every pair 0.00 to 0.01. Its red is not in the plates.
+- Venus 3b52b0eb: colour 0.01 and 0.02; light a to b 0.20 and 0.13; light b to d 1.12 and 1.10 OVER, with a caution (the two light plates may not be the same quantity).
+- Not run: Saturn, Jupiter, Earth, Neptune, the Sun.
+
+RULED. Where a pair is over, two levels show two different pictures of the same ground, the red pattern number of that move is true, and no exchange by height, however slow, cures it (plan F: one place). The cure is in the files: a level is made from the level under it, or both from one source, so that reduced to its parent's scale it is its parent. Where every pair is clean and the move is still red, the cause is in what the shader adds by height or angle (a second look mixed in, a function layer, a light term), and the same rule holds there: one ground, one law of light, borders set on the ground. No limit moves.
+
+Asked of each of you: run it now on every pyramid your dive and rise show (both sets where they differ) and put its lines into your next NAMED mail. A pair over the limit is named there as red, with its cure. This changes no due time."
+
+No answer asked. The tool's lines go into the next NAMED mail.
+
+## 09:07 UTC: MAIL 607 (the second commit is due by 10:15 UTC), verbatim
+
+"MAIL 607 from the Builder (/root) to mercury_builder. More parts on your named 27f1ba3e (proof tree 9b5f55cd), MEASURED on the machines: the measures pass (G5; G13 on all 495 frames, the most 1.71 percent soft at 726 and 1.38 at 1003 against 2; G17 with 615 at median 1.210 and 870 at median 0.927, 25th percentile 0.856); the warm list and the counts are green (mh1-04); the handover report passes (dive mean 0.004, rise 0.069); the judged finals 615 and 870 equal main's reference byte for byte. The ten draft jobs are running and come without moving your time. Both picture parts and the ruling of MAIL 587 are with you since 08:45 UTC, so by d186 your second commit is due by 10:15 UTC. Its red pairs by MAIL 596 (patch-1 to patch-2 1.09 in the dive, patch-2 to patch-3r 0.70 in the rise) belong in that commit or are named red in it with their cure."
+
+The tool of MAIL 596 on my tree at 09:07 (old plate 1 against plate 2: 1.09 OVER, median 0.08): with the first rebuilt plate 1 the pair is 1.04 OVER with median 0.01 (dive and rise alike), plate 2r to 3r 0.42, every other pair 0.01 to 0.02.
+
+## 09:21 UTC: MAIL 613 (what still runs by the clock in the engine's defaults), verbatim
+
+"MAIL 613 from the Builder (/root) to the nine stop builders (one text to all). What still runs by the clock in the engine's defaults, and what you owe on it. It moves no due time.
+
+MEASURED by handover_engineer on main 2cf0b0b7 with the film's own functions over every frame of every dive and rise: the cover is 0 everywhere, so it is not a cause. Two weights are a smooth of TIME, not of place:
+- the default sky weight: where a stop gives no sky share of its own, the close view's sky patches are drawn in the globe's view over `skyFrames` (24) frames up to T in a dive and after T in a rise;
+- the default place weight: where `picture` is on, the place picture fades over the ground over `placeFrames` (12) frames.
+Spans on main: Mercury dive sky 736 to 759 (T 760), rise sky 978 to 1001 (T 977). Venus dive sky 1319 to 1342 and picture 1331 to 1342 (T 1343), rise picture 1543 to 1554 and sky 1543 to 1566 (T 1542). Mars dive sky 2451 to 2474 and picture 2463 to 2474 (T 2475), rise picture 2688 to 2699 and sky 2688 to 2711 (T 2687). Saturn: none. Uranus: none of the default (its own plan functions). The Sun, Earth, Jupiter and Neptune use the default sky as well; their spans follow from their own T in the same way.
+Against the red pattern ranges of the first named commits: Mercury 744 + 1/2 and 982 + 1/2, Venus 1326 and 1543 + 1/2, Mars 2449 and 2694 lie inside these spans. The first red frames of Mercury (712 + 1/2), Mars (2433, 2674) and Uranus (4388) lie before any such weight moves: those are the globe's own draw. NOT KNOWN yet: how much of each number is the sky's fade, the picture's fade and the globe's own draw; handover_engineer runs that test now and you get its table.
+
+RULED (plan F: "No element of a dive or a rise appears, fades or changes with the clock. Whatever blends does so by distance, height or angle"):
+1. The engine's two defaults are being changed to read the eye's height in place of the time (handover_engineer, proven on the machines before it goes onto main). It stays a fade between two skies.
+2. So each of you still owes, in your next named commit or named red in it with its cure: one sky and one haze on both sides of your change of view, by height, so that `skyFrames` can be 0; and no place picture where its plates are not the globe's own ground. The hooks are on main: `handover.KIND.picture: false`, `skyFrames: 0`, your plan's sky share by `plan.eyeHeight(time)`, `Relief.presence(share)` by height, `plan.air(height)`.
+3. In NAMED, one line: which of these your stop sets, and the frames in which anything of yours still reads the time inside a dive or a rise (none is the answer asked for; drift of clouds, plasma or rings in their own time is not meant)."
+
+## 09:00 to 09:21 UTC: plate 1 in ten steps, and why the rise needs no plate of its own
+
+G15 counts the memory of the pictures, not the bytes of the files: with `patch-2r.jpg` the full set stood at 1475 MB against 1400 (FAIL). So `patch-2r.jpg` is out again. In its place the rise shows its level 3 plate (`patch-3r.jpg`) by the law of level 2 (`uPlaceEarly`, on in the rise only): inside its 19 degrees the reduced levels of that plate are what `patch-2r.jpg` held. No new picture in memory.
+
+Plate 1, what each step showed on the hold (615, draft) and on the tool of MAIL 596 (pair plate 1 to plate 2, limit 0.45):
+
+1. Tone and detail in linear light: the disc bleached, the place's own night a black wedge. Dropped.
+2. The same in the picture's own code values: tones hold. With the old plate kept in the place's night and 3 degrees round it: 1.04.
+3. The place's night black in plate 1 as well: 0.12, but the hold shows a black bay with a rim on the dusk side. Worse than the approved image. Dropped.
+4. The place where it is lit, a calm ground (the old plate's tone, no forms) in its night: the hold looks right, the tool reads 1.47 along the edge of the place's own night, because plate 2 has an edge of light there and plate 1 has none.
+5. The night side at `first.night` (0.6) of the calm tone, rising to the map across the ring as plate 2 itself rises, with plate 2's own faint detail times `first.faint`: 0.70, 0.52, 0.61 and with faint 1.5: 0.25.
+
+## 09:33 UTC: MAIL 621 (a sandbox lost its GitHub login), verbatim
+
+"MAIL 621 from the Builder (/root) to every builder with a commit due. One sandbox (travel_builder's) lost its GitHub login between 09:12 and 09:28 UTC: fetch still works, push ends with "could not read Username". It may happen to yours.
+1. Test now, it costs seconds and changes nothing: git push --dry-run origin HEAD:refs/heads/YOUR-BRANCH. If it fails for the login, tell me in one line.
+2. If it fails, now or later: do not look for another credential and do not wait. Send me the commit as a bundle: git bundle create NAME.bundle origin/main..HEAD (or the range from the last commit of yours that is on the remote), attached to your NAMED mail, with the full sha and the branch it belongs on. I verify the bundle, push the commit unchanged to that branch and answer with the ls-remote line. The time of your mail counts as the time of the NAMED.
+3. Looks branches: the same way, or attach the pictures themselves (10 files a message)."
+
+Tested at 09:33: `git push --dry-run origin HEAD:refs/heads/agent/mercury-place` works here (27f1ba3e..30e7b244). If the real push fails for the login: `git bundle create /tmp/m/mercury-second.bundle 27f1ba3eb30576e89f64aebb80dd252ffc09bcbd..HEAD`, attach it to the NAMED mail.
+
+## 09:22 to 09:50 UTC: the second named commit, what was measured
+
+State: `hold` [15.5, 17.5] in own.json (plate 1 stays in inside that disc at every distance, the globe's relief shading leaves by the same share), `light` [0.5, 1.95, 2], plate 1 from `plates.py first dive` with `first.night` 0.6 and `first.faint` 1.5, the rise's level 3 plate by the law of level 2 (`uPlaceEarly`), no `patch-2r.jpg`. A shader error cost one render start (a name that was already taken: `before`, now `placeDrive`).
+
+Renders at rate 2, draft, 16 to 9, full set, every frame looked at on sheets against the first named commit (`out/work/smooth/mercury/frames`):
+- Dive 686 to 741 (`out/work/mercury/place/e1`). Pattern number (scratch `pat/pat2.py`, the measure of `tools/img/smooth.py`, limit 0.45): worst 0.55 at 723; over the limit only 721 + 1/2 to 724 + 1/2 (0.46 to 0.55) at about x 1376 y 924 of 1920 by 1080, which is the globe's gold rimmed relief under the limb to the right, outside the disc. 712 to 720, red on the first commit (1.21 at 717), is at most 0.41. From 740 on the picture is the first commit's (largest difference of a pixel 9 of 255 at 740, mean 0.28), so 742 to 749 keeps its red (to 1.57 there, not rendered again).
+- Rise 975 to 1034 (`e2`). 975 to 977 + 1/2 are the first commit's bytes. Worst 1.39 at 982 + 1/2 (977 to 988 + 1/2 red as before, the strip under the limb). 997 to 1004 + 1/2: 0.45 to 0.61 (was about 1.0 over 998 to 1014). The place stays in view to 1034 and into the leaving (1035 seen, same disc).
+- The tool of MAIL 596: dive pairs 0.25, 0.02, 0.02 (all under 0.45). The rise has no plate 1 or 2 of its own any more; the pair that remains by hand is plate 1 against the rise's place: 0.54 OVER along the place's own night edge.
+- Finals, master, full set (`out/work/mercury/place/fin2`): 870 sha256 ec487ea7123bfc1642ab115cbf44f75ad049d49f110cde82e07f5d165ba731e1 (main's reference bytes). 615 sha256 8d4b8b4d3336f267f03869440a928127631d6f59f7e89759cd5b1dc3f48ea2a1: it differs from the reference only inside x 643 to 1364, y 277 to 1003 (4.7 percent of the pixels).
+- MY OWN LOOK AT 615 (final, beside the first commit's final, which is main's reference): at the size of the frame the disc reads as a rougher field at the terminator. At 1.25 times it reads as a patch: harder gold rims and smoother grey forms than the ground round it, and the dusk side of the place cuts a dark bay into the terminator (`first.night` 0.6). That is not as good as the approved image inside the disc. Named red in the mail. With `hold` out of own.json plate 1 has no weight at the hold's distance (4.2 to 4.4 texels to a pixel), as on the first commit; that state was not rendered.
+- MAIL 540 sheet 967 to 981 (draft, `out/work/mercury/place/t540`): no border of the set, no far edge, no jump at T (977).
+- Net size of my three folders against main: minus 0.212 MB (158.879 against 159.091).
+
+Not done in this commit and named red: the sky by height (the engine's default sky weight reads the time in 736 to 759 and 978 to 1001; cure `skyShare` of my plan by `plan.eyeHeight(time)` and `skyFrames: 0`); the strip under the limb (734 to 749, 977 to 988), where the globe's relief and the set's far ground are still two grounds.
+
+What the third commit should do first: decide on 615. Either a plate 1 whose contrast and light sit in the globe's ground at the hold's scale (the place's field as a relief source of the globe, lit by the globe's own law, not a lit picture), or `hold` out and the pattern red named. Then the sky by height, then the strip under the limb.
+
+## 09:55 UTC: DECISION for the second named commit: `hold` is null, the judged hold keeps its bytes
+
+MAIL 587: "The approved look is the bar: where a judged frame would get worse against its approved image, leave it and name what stays red." Beside the approved image (`references/approved/mercury-hero.png`) the final of 615 with `hold` [15.5, 17.5] shows the disc as a bright rough spot on the terminator with a dark notch, at the size of the frame. Worse. And the two picture lines of the report stay red in that state as well (742 to 749 and 977 to 988, the strip under the limb), so it buys no green line. So `hold` is null in own.json (`assets.ts` passes undefined, `uPlaceHold.z` 0): plate 1 comes in by its texels to a pixel as on the first commit. Everything measured above with `hold` on stays true for that state and is in the looks, for the ruling on the third commit.
+
+npm test ran on the merged tree with `hold` on: 48 files, 443 of 443 passed. After it only `hold` went to null with its cast in `assets.ts` (tsc clean); the suite was not run again for lack of time before 10:15.

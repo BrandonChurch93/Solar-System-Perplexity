@@ -395,5 +395,18 @@
    ]
   ],
   "bandShare": 0.35
+ },
+ "first": {
+  "old": "27f1ba3e",
+  "widthDeg": 76,
+  "sigmaDeg": 1.5,
+  "top": 4,
+  "lit": [0.2, 0.32],
+  "night": 0.6,
+  "faint": 1.5,
+  "rimDeg": 0.8,
+  "edgeDeg": 0.8,
+  "inside": 0.95,
+  "floor": 0.02
  }
 }

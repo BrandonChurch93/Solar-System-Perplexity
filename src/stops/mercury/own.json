@@ -1,9 +1,15 @@
 {
-  "about": "The levels of the patch pyramid from index `from` on are plates of the place. Inside `deg` (inner, outer, degrees from the spot) they carry their own light: the ground as the close view shows it at the handover, laid back and repainted by assets-src/mercury/place, before the lift and knee of the carry. There the plate holds that picture divided by `gain`.",
+  "about": "`hold` (inner, outer, degrees from the spot) is the disc inside which the first level of the patch pyramid stays in at every distance while the globe's own relief shading stays out, so that the place is one ground from the hold on (that level holds the coarse crater field of the place in the map's tones, assets-src/mercury/place/plates.py first). It is null in this state: with 15.5 and 17.5 degrees (built and measured) the judged hold frame showed the disc as a patch against the approved image, so the hold is left as it is and the first level comes in by its texels to a pixel. The levels from index `from` on are plates of the place. Inside `deg` (inner, outer, degrees from the spot) they carry their own light: the ground as the close view shows it at the handover, laid back and repainted by assets-src/mercury/place, before the lift and knee of the carry. There the plate holds that picture divided by `gain`. That light comes in by `light`: from `light[1]` thin texels of the level before to a pixel down to `light[0]`, smooth in the logarithm of the texels, to the power `light[2]`; until then the plate's ground stands under the globe's light.",
   "from": 1,
   "deg": [
     10,
     15
   ],
-  "gain": 0.5
+  "gain": 0.5,
+  "light": [
+    0.5,
+    1.95,
+    2
+  ],
+  "hold": null
 }

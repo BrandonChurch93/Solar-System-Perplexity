@@ -35,7 +35,7 @@ How it is drawn (`src/stops/mercury/globe.ts`, values `look.ts` key `fine`): onl
 
 Checks: `out/work/mercury/place/fine/tile-view.jpg` (two by two periods, no seam), the texels view of 754 to 763 (`DIAG=texels`), the frames 754 to 763 beside the frames before.
 
-## Plates of the place: patch-2.jpg, patch-3.jpg, patch-4.jpg (dive) and patch-3r.jpg, patch-4r.jpg (rise)
+## Plates of the place: patch-2.jpg, patch-3.jpg, patch-4.jpg (dive), patch-3r.jpg, patch-4r.jpg (rise) and the place in patch-1.jpg
 
 Files, each in both sets (`<set>` is `full` at 4096 x 4096 and `web` at 2048 x 2048), all made by the steps of this section:
 
@@ -44,6 +44,7 @@ Files, each in both sets (`<set>` is `full` at 4096 x 4096 and `web` at 2048 x 2
 - `public/assets/mercury/<set>/patch-4.jpg`: plate of the place for the dive, 9.5 deg wide (steps 1 to 5, 7; generation in step 4)
 - `public/assets/mercury/<set>/patch-3r.jpg`: plate of the place for the rise, 19 deg wide (steps 1 to 3 with `rise`, then 6 and 7 over the level 3 of the dive; no generation of its own, no takes)
 - `public/assets/mercury/<set>/patch-4r.jpg`: plate of the place for the rise, 9.5 deg wide (steps 1 to 3 with `rise`, then 6 and 7 over the level 4 of the dive; no generation of its own, no takes)
+- `public/assets/mercury/<set>/patch-1.jpg`: the first level of the pyramid, 76 deg wide, with the place in it: `python3 assets-src/mercury/place/plates.py first dive` (numbers under `first` in `plates.json`, radii from `hold` and `deg` in `src/stops/mercury/own.json`; reads `out/work/mercury/place/old/full-patch-1.jpg` and `web-patch-1.jpg`, which are `git show 27f1ba3e:public/assets/mercury/<set>/patch-1.jpg`, and the installed `patch-2.jpg`; run after `plates.py install`; no generation, no takes). Inside `hold` (15.5 to 17.5 deg from the spot) the plate is the old plate's tone at scales over `first.sigmaDeg` times the detail of `patch-2.jpg` (the plate over its own blur at that scale, taken on its lit side only), in the picture's own code values. On the side of the place's own night (the straight edge the script finds and prints) it is that calm tone times `first.night`, rising to the old plate across the ring as `patch-2.jpg` itself rises, with the faint detail of `patch-2.jpg` times `first.faint`. Outside `hold` the old picture stands; the file is coded again as a whole. With it the globe shows one ground at the place from the hold on, and `patch-2.jpg` reduced to this level's scale is this level (`python3 assets-src/shared/globe-levels.py`, 0.25 against 0.45; 1.09 before).
 
 The three deepest levels of the patch pyramid (38, 19 and 9.5 deg wide about the spot) are plates of the place: the ground of the close view at the handover, laid back onto the sphere, in the close view's own light inside 10 deg of the spot (ring feather to 15 deg, `src/stops/mercury/own.json`). Outside the ring level 2 is the old level. The dive uses `patch-2`, `patch-3`, `patch-4`; the rise binds `patch-3r` and `patch-4r` to the same two samplers (the same levels seen from the handover of the rise, because the relief of the close view shifts fine detail by 18 texels of level 4 in the median between the two views).
 
