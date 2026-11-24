@@ -4551,3 +4551,100 @@ PLAN OF T8, predicted from the instruments (sim16a.py, sim16b.py; A and B ring b
 3. item 18, the dusk of the globe by the lens's height.
 All of it by the share of the grade (the lens's height), in both scenes alike; share 0 keeps the bytes.
 Looks pushed: 17:01 (4f2375e1), 17:29 (a2bdd921).
+
+## 2026-11-24, 19:19 UTC: MAIL 720 (my number), ROUND 44 RESULT and the list for ROUND 2 OF 3, verbatim
+
+"ROUND 44 RESULT and your list for ROUND 2 OF 3. From the Builder (/root), 19:19 UTC, 2026-11-24.
+
+Round 44 judged Saturn on main 57695be (stop hash ba66c76da083da6f) with 30 fresh critics on the frames at the final tier. MEASURED: R1 match 5, R3 surface 5 (parts 5 and 6), R4 motion 8, R2 film jury FAIL (0 of 10 votes for "a frame from a top-budget film" on 3465 and 3720 against 4 of 10 on the two approved images), R8 pass, G5 G13 G17 green, the motion report green. 3 severe, 10 major issues. The pass bar is R1, R3, R4 at 9 with no severe or major open, R2 and R8 pass.
+
+The whole record is on main (7d52b3e0, fetch it shallow): scorecards/round-044/ with SUMMARY.md, R1.json, R3.json, R4.json, jurors.txt and key.json, which maps the critics' neutral file names to frames. Read all of it. Every issue there is yours unless it is named below as someone else's. Attached are ten of the pictures the critics had: r44-R1-pair-03-a (the approved close image) and r44-R1-pair-03-b (your 3720), r44-R1-pair-04-a and -b (their native size crops), and six of the surface critics' crop sheets (r44-R3-image-02, 03, 06, 07, 08, 10; the key says which frame each shows).
+
+YOUR LIST, causes first:
+1. SEVERE, R1: the close view is not the approved shot. At 3720 the globe is bigger, lower and further right and runs off the right edge; the left ring horizon is higher and more curved; between the inner ring and the globe lies a black gap with stars, where the approved image has dark inner ring material running into the planet and the shadow band of the rings across the lower globe. Solve the pose of the close view again against the approved image (globe size and place, the ring horizon's height and curve) and give the ring model its dark inner part and its shadow on the globe. This list lifts d196 for frame 3720: the judged surface frame changes because the critic asks for it. The hold 3465 must not get worse.
+2. MAJOR, R1 R3 R4 and three jurors: the near ring field. Bright moonlets and boulders that the approved image does not have, read as smooth pills and disc sprites, as "instanced rocks on a flat striped plane". The approved image has a matte, finely grained surface in cooler grey, lilac and pink. The motion critic misses fine grains to track. The field becomes very many fine irregular grains with depth, their own orbital speed and blur, no moonlets, and the ring colours are measured from the approved image by radius.
+3. MAJOR, R1 R3: the globe in the close view is too orange and too busy, with a broad brown terminator and painted ribbons at native size. The approved image is pale cream with a grey blue band near the top limb, calm bands with a few ovals, and a tight terminator that falls to near black.
+4. MAJOR, R3 R1: edges at native size in 3465, 3567 and 3720: the sunlit limb in steps with a detached, doubled orange glow edge across the inner ring gap; the outer ring edge and the thin ringlets in steps with a bright doubled rim; one straight pale seam across the ring bands; the large moon with a stepped limb, no haze and plastic bands; a scalloped rim at the dark limb. The same steps are named on Uranus in round 45, so engine_profiler looks for the engine's part in them now. Whatever of it lies in your own shaders (an edge decided per pixel with no filter width, a seam where two parameter ranges meet) is yours: find it and say what you found.
+5. SEVERE, R3: the sky behind the dive at 3567, soft orange and white blobs under sharp points, ending in a hard ellipse at the inner ring edge. The hard end is the ring's and is yours. The blobs are the shared sky and go to its owner, not to you.
+
+WHAT STAYS: motion passed at 8 with one minor issue and the motion report is green. Keep the dive's and the rise's paths wherever the new pose allows it. Where the new pose moves the end of the dive and the start of the rise, the report must be green again on the commit you name: run `npm run smooth -- --stop saturn` yourself before you name it. Plans F and G stand: nothing appears or changes with the clock, the ring plane is real 3D from code, no picture is stretched. The cost of a frame is no limit.
+
+HOW TO NAME (d186): a mail that starts NAMED with the full sha on agent/saturn-code, with main merged in, saying what changed by file, your own numbers (the report's lines, G13, G17 at 3465 and 3720, the sha of the judged frames before and after), and what is not cured. I prove it on the machines (take check and motion report). Green: it is taken and round 2 starts at once. Red: your next commit within 90 minutes. Two rounds remain for Saturn in this note, so a commit that cures 1 and 2 well is worth more than one that touches all five lightly. Send a look of 3720 beside the approved image to agent/saturn-code-looks after each of your steps, at least every 30 minutes, and a mail starting PART when the new pose stands. First named commit by 22:30 UTC with what is cured by then; say at once if something needs longer and why.
+
+No em dashes and no exclamation points in anything you write into the repo."
+
+Attachments (in /home/user/.perplexity/attachments/e5a1da98b2bb475fab3ba0599df69b5a/): r44-R1-pair-03-a.png, -b.png,
+r44-R1-pair-04-a.png, -b.png, r44-R3-image-02, 03, 06, 07, 08, 10 .png.
+
+STATE WHEN IT CAME (19:19 UTC): head bc97f0c pushed; the working tree holds T10, not committed: T8 (the tone of the
+rings by the height of the lens), item 18 (the dusk of the globe by the height), item 19 (R3a: dark grooves at the
+edges of the two widest octaves in the thin rings near the sheet, near.groove.dark 2.0), item 20 (the day edge of
+the haze by the height, light.halo.day [0.1, 0.9]). Final tier, engine of ed003c7: T10 3465 4077873a (the bytes of
+the named tree), T10 3720 no grain 5457aced. The heading trial (38 degrees left of the view axis in place of 28):
+crisper near rings, but the dive's path goes red and a search of 400 generations ends at 1.008 of the limit
+(/tmp/v/t17/opt_dive_d38.log); dropped. Looks pushed 18:50 (3d93e729).
+
+## 2026-11-24, 20:15 UTC: MAIL 729 from the Builder (verbatim)
+
+"MAIL 729 from the Builder (/root), 20:15 UTC. Your part mail of 20:08 is read. Rulings:
+1. The pose: keep the limb and the left ring horizon as fitted and close the foot with ring material by the lens's height (dark inner dust into the planet, the shadow band across the foot), none of it in the hold. That is what the critic of round 44 named as missing ("dark C-ring material runs into the planet, and the ring plane casts a shadow band across the globe"), so it is a cure and not a patch, as long as it is ring matter in the ring plane with depth and not a dark shape on the screen. Show 3720 beside the approved image at full size with a crop of the foot in your looks.
+2. Item 5, the hard ellipse where the sky's blobs end at the inner ring edge at 3567: the hold is lifted for it. You may change the far look's floor alpha at the inner edge although 3465 changes its bytes, under one condition: 3465 at the final tier before and after, side by side at full size with a crop of the inner ring edge, in your looks before you name, and the hold no worse against its approved image (its match had minor issues only: small dark specks on the outer ring, a little less sparkle grain, the dark limb below the shadow a little bright). If the cure costs the hold anything you can see, say so and I rule again.
+3. Everything else as mail of the round: first named commit by 22:30 UTC, the picture report run by you before you name, NAMED with the full sha."
+
+PART mail sent 20:08 UTC (pose (g), path scaled 0.8, path check green, foot cannot be fitted by a pose).
+
+## 2026-11-24, 20:36 UTC: round 2 list of mail 720, what stands in the tree (before the proofs)
+
+State after a compaction: read this entry first, then mail 720 and mail 729 above.
+
+Owed entries, short:
+- T8 to T10, items 18 to 20 and the heading trial are in the tree as they were at 19:19 (field.ts, ringfine.json,
+  the path's heading 28 degrees left). Looks pushed 17:50, 18:13, 18:50, 19:22, 19:50, 20:19.
+- Open list (my numbering, next free 21): 16 to 20 as before. The round's own list is 1 to 5 (mail 720).
+
+Item 1 of the round (the pose), done in the tree:
+- skim.json pose, fitted again by assets-src/saturn/code/pose_fit2.py (limb, horizon, gap, night, foot):
+  azimuth 8.62, foot 2.688, height 0.3618, yaw 21.18, tilt 8.68, roll -9.54, vfov 41.77. Left of the limb in
+  pixels of 1920 by the ray's angle: 80:-15 85:-10 90:-6 95:-2 100:0 105:+3 110:+4 115:+4 120:+5 125:+5 130:+4
+  135:+3 140:+2 145:-1 150:-4 155:-9 160:-11 165:-12 (rms 6.6); horizon rms 6.0, within 5 from x 4 to 836.
+- Fact: the foot of the lit globe of the approved image lies 55 to 65 px above the model's equator line at
+  x 1040 to 1140. No pose of a flat plane round a globe fits limb, horizon and foot together. Ruling of mail
+  729: keep limb and horizon, close the foot with ring matter by the lens's height.
+- Path: forward 1.2008, side -0.6385 (0.8 of the path before: the lens is lower and its lens longer). Dive
+  paces searched again (out/scratch/opt7.ts with SKYM=0: the search's old constant 1.063 was its own sky
+  margin), rise paces as before. Path check green, 0 RED, at 20:00.
+- skim.json inner: dust inside the inner rim (sheet.ts sheetInner, sheetBands): depth 0.3 at the rim, 0.6 at
+  the globe, in plateaus; its light is that of the thin inner ring at radius 1.33 (share 0.9 at the rim, 0.12
+  by the globe, falling between radii 1.16 and 1.07): bright ring matter down to about 1.16, then dark into
+  the planet, as the approved image has it (measured there at x 1250: lit globe to y 578, dark band 590 to
+  655 at scene light 0.09 to 0.15, bright rings from 664). Comes by nearness to the power 0.5, none in the
+  hold. Far look weight: no far look inward of the rim (wfar).
+- inner.foot: a layer of dust with a soft thickness round the plane in front of the foot of the globe
+  (globe.ts and kept/globe.ts, uDust, uDustInk; the haze shell of both too, so no glow lies over it):
+  depth 4.0, heights 0.03 to 0.055, ink 0.095 0.088 0.074, by gradeShare of the height (grade.ts dustAt).
+- light.grade.low: the thin inner ring darker where the view runs low over the plane (cosine 0.2, power 6,
+  least 0.04, inward of 1.35, none outward of 1.75), by the share of the grade: the far side of the inner
+  ring by the globe goes dark as in the approved image.
+
+Item 2 of the round (near ring field), in the tree:
+- grains.json presence 1, 0, 0: no pebbles and no chunks, so no moonlets and no boulders.
+- light.grade.radial: the tone of the rings by radius, 70 knots from 1.03 by 0.02, measured from the
+  approved image by assets-src/saturn/code/ring_radial.py (grade.ts iceZone; sheet far look, near look,
+  kept rings, grains). Before: approved luma nearly flat 0.25 to 0.33 from 1.25 to 1.95, film 0.05 to 0.12
+  at 1.25 to 1.47 and 0.2 to 0.5 in the dense ring.
+- ice.json sand.near 1.0, 2.5: the sand of the sheet (in the plane, on its orbit, swept by the shutter)
+  now has strength near the sheet too (ice.ts), by nearness; exact in the hold.
+- grains.json sand level: size 0.001 to 0.0022, pixels 1.8 to 3.2, gain 0.5: about 420000 grains at most
+  (frame 3746, capacity 900000; out/scratch/count.ts), where there were 96 at 3720 with the new pose. A
+  first try with size 0.0013 to 0.003, pixels 1.6 to 3.0, gain 0.7 read as a bed of white gravel (720000
+  grains, 4 minutes a frame): dropped.
+- Still wrong, seen at full size in the last render (3720, final tier, no grain, sha df312836...): white
+  grains stand on the dark gap; the grain of the field is coarser than the approved's matte sand; the
+  globe's shadow on the rings is black where the approved shows grey ringlets in it.
+
+Not touched in this commit: item 3 (globe paler, calmer, tighter terminator), item 4 (edges; found so far:
+the haze shell's glow lay over the dust of one pass and not the other, cured with the dust band in the
+shell), item 5 (the hard end of the sky at the inner ring edge at 3567: the far look's floor alpha at the
+rim; the hold is lifted for it by mail 729 with a before and after of 3465 in the looks; not done yet).
+
+Renders of this step (3720, final tier, no grain), in /tmp/v/t17: in1 to in8; pairs in /tmp/v/t18/pair_inN.png.

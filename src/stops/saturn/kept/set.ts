@@ -4,7 +4,7 @@ import { bufferFrame } from '../../../core/frame'
 import type { SetFactory } from '../../../core/types'
 import { smooth } from '../../../director/rig'
 import { Globe, Shell } from './globe'
-import { gradeShare } from '../grade'
+import { duskAt, dustAt, gradeShare, hazeDayAt } from '../grade'
 import { Ice } from './ice'
 import * as look from './look'
 import { plan } from './plan'
@@ -75,6 +75,8 @@ export const createKept: SetFactory = async (ctx) => {
   }
   const globe = new Globe(map, (map.image as unknown as { width: number }).width, table, patch, lights, look.globe, look.haze, profile, polar)
   const shell = new Shell(look.shell, look.globe, profile, polar, look.shellReach)
+  // the edge of the day of the haze as the shell was built with it: its look in the hold (grade.ts hazeDayAt)
+  const hazeDayFar = (shell.material.uniforms.uHazeEdge!.value as THREE.Vector2).clone()
   const layoutCamera = new THREE.PerspectiveCamera(layoutJson.vfovDeg, layoutJson.width / layoutJson.height, 0.01, 100)
   layoutCamera.position.copy(plan.skimPosition).addScaledVector(plan.skimForward, -layoutJson.back).applyQuaternion(toTilt)
   layoutCamera.quaternion.copy(toTilt).multiply(plan.skimQuaternion)
@@ -225,6 +227,10 @@ export const createKept: SetFactory = async (ctx) => {
       gu.uWeight!.value = state.weight
       gu.uVignette!.value = shot.post.vignette
       gu.uAspect!.value = aspect
+      duskAt(camL.y, gu.uDusk!.value as THREE.Vector4, gu.uDuskGrey!.value as THREE.Vector2)
+      dustAt(camL.y, gu.uDust!.value as THREE.Vector4)
+      dustAt(camL.y, su.uDust!.value as THREE.Vector4)
+      hazeDayAt(camL.y, hazeDayFar, su.uHazeEdge!.value as THREE.Vector2)
       ;(su.uCam!.value as THREE.Vector3).copy(camS)
       ;(su.uSunW!.value as THREE.Vector3).copy(sunS)
       ;(su.uSunL!.value as THREE.Vector3).copy(sunL)

@@ -3,6 +3,7 @@ import { DIAG_GLSL } from '../../diagnostics/diag'
 import { RING_FIELD_GLSL } from './field'
 import { bufferFrame } from '../../core/frame'
 import { GRAIN_LEVELS, ICE_GLSL, pcg, type Ice } from './ice'
+import { ICE_GRADE_GLSL } from './grade'
 import { GLOBE_SHADOW_GLSL, SHEET_AT_GLSL, SHEET_LAW_GLSL, SHEET_OUTER_GLSL, sheetDepth } from './sheet'
 import spec from './grains.json'
 import model from './ringfield.json'
@@ -58,6 +59,7 @@ ${ICE_GLSL}
 ${SHEET_OUTER_GLSL}
 ${SHEET_LAW_GLSL}
 ${SHEET_AT_GLSL}
+${ICE_GRADE_GLSL}
 // One ball of the grain: where its centre lies along and across the way of the grain over the screen, and
 // its radius, in pixels. k is the number of the ball, apart how far the balls stand apart (0: all in the
 // middle, the grain is round), radius the radius of the grain in pixels, e the direction of the way.
@@ -123,10 +125,14 @@ void main() {
   lit *= mix(1.0, exp(-left / mu0), below);
   alpha *= mix(1.0, exp(-left / mu), below);
   float bright = mix(uOuter2.w * sheetLaw(0.0, mu, mu0, deg), lum / max(ringSat(tau * uRfLight.x), 1e-6) * law, counted);
+  // the thin zones by the view, as the sheet they lie in (grade.ts); nothing of it at the heights of the hold
+  for (int j = 0; j < (uGrade.x > 0.0 ? 1 : 0); j++) bright *= mix(1.0, iceView(mu, r), counted);
   bright *= 1.0 + uGrainLift[level] * grainShown(level, dist);
   uint seed = uint(aGrain.w * 16777216.0);
   vec3 own = ringBits(ringPcg(seed + 11u));
   vec3 col = mix(tone, vec3(1.0), look.z) * under * (bright * (1.0 + mu / mu0) * lit * look.w * (1.0 + uGrainLit.w * (own.x * 2.0 - 1.0)));
+  // the tone of the rings by radius, as the sheet the grain lies in (grade.ts)
+  for (int j = 0; j < (uGrade.x > 0.0 ? 1 : 0); j++) col *= mix(vec3(1.0), iceZone(r, mu), counted);
   vec2 vq = clip.xy / clip.w * 0.5 * vec2(uAspect, 1.0);
   col *= uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   // the way of the grain over the screen during one take, in pixels: it rides its orbit and the lens moves

@@ -4,6 +4,7 @@ import { DIAG_GLSL, diagUniform, gradUniform } from '../../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../../post/chain'
 import { EQUIRECT_GLSL } from '../../../space/sky'
 import { RING_PROFILE_GLSL } from './profile'
+import skimJson from '../skim.json'
 
 export interface GlobeLook {
   curve: number[][]
@@ -92,6 +93,10 @@ uniform vec3 uTerm;
 uniform sampler2D uTable;
 uniform sampler2D uTableC;
 uniform float uNightFloor;
+uniform vec4 uDusk;
+uniform vec2 uDuskGrey;
+uniform vec4 uDust;
+uniform vec3 uDustInk;
 uniform int uProbe;
 uniform sampler2D uPatch;
 uniform vec4 uPatchBox;
@@ -181,7 +186,9 @@ void main() {
   float shadow = 1.0 - uRingShadow * ringShadowAt(P, uSunL, uRingSoft, uGrad);
   vec3 light = mix(curveAt(ndl) * tableAt(uTable, ndl, lat), curveCloseAt(ndl) * tableAt(uTableC, ndl, lat), uClose);
   vec3 night = min(light, vec3(uNightFloor));
-  vec3 lit = (light - night) * shadow * mix(1.0, pow(max(mu, 1e-3), uLimb.y), uLimb.x) + night;
+  // near the ring plane the terminator is narrower and the night darker: the dusk by the height of the lens
+  // (none in the hold, where the factors are one and the frame keeps its bytes)
+  vec3 lit = (light - night) * shadow * mix(1.0, pow(max(mu, 1e-3), uLimb.y), uLimb.x) * mix(1.0, smoothstep(uDusk.x, uDusk.y, ndl), uDusk.z) + night * uDusk.w;
   for (int k = 0; k < (uFine.w > 0.0 ? 1 : 0); k++) {
     vec3 mid = inverseFilmic(equirectGrad(uMap, d, uFine.x).rgb);
     vec3 lw = vec3(0.2126, 0.7152, 0.0722);
@@ -190,11 +197,19 @@ void main() {
     albedo *= mix(1.0, min(pow(clamp(dot(albedo, lw) / lm, 0.5, 2.0), power - 1.0), uFineTop), uFine.w * (1.0 - pw));
   }
   vec3 col = mix(soft, albedo, smoothstep(-0.25, 0.1, ndl)) * lit * uTint;
+  for (int k = 0; k < (uDuskGrey.x > 0.0 ? 1 : 0); k++) col = mix(col, vec3(dot(col, vec3(0.2126, 0.7152, 0.0722))), uDuskGrey.x * pow(1.0 - smoothstep(uDusk.x, uDusk.y, ndl), uDuskGrey.y));
   col += uRim.rgb * exp(-mu * mu / (uRim.w * uRim.w)) * pow(max(ndl, 0.0), uRimPower) * shadow;
   col += uRimNight.rgb * exp(-mu / uRimNight.w);
   vec3 at;
   float tau = hazeDepth(dirS, true, at);
   col = col * exp(-tau * uExtinction) + hazeLight(p, dirS) * (1.0 - exp(-tau)) * mix(1.0, shadow, uHazeShadow);
+  // near the sheet the dust inside the inner rim of the rings stands in front of the foot of the globe: a layer
+  // with a soft thickness on both sides of the plane that takes the light of the globe behind it and returns
+  // a little of the Sun's (grade.ts dustAt; none in the hold)
+  for (int k = 0; k < (uDust.x > 0.0 ? 1 : 0); k++) {
+    float through = exp(-uDust.x * (1.0 - smoothstep(uDust.y, uDust.z, abs(P.y))));
+    col = col * through + uDustInk * ((1.0 - through) * smoothstep(uDusk.x, uDusk.y, ndl));
+  }
   col *= mix(1.0, smoothstep(-0.03, 0.0, p.y), uClose);
   for (int k = 0; k < (uHoldW > 0.0 ? 1 : 0); k++) col *= shotLight(uHoldLight, uHoldM, uHoldCam, uHoldW, P, nL);
   for (int k = 0; k < (uSkimW > 0.0 ? 1 : 0); k++) col *= shotLight(uSkimLight, uSkimM, uSkimCam, uSkimW, P, nL);
@@ -226,7 +241,7 @@ export class Globe {
       glslVersion: THREE.GLSL3, vertexShader: VERT, fragmentShader: FRAG,
       uniforms: {
         ...hazeUniforms(haze), ...profile,
-        uMap: { value: map }, uTable: { value: table }, uTableC: { value: patch.table }, uNightFloor: { value: look.nightFloor }, uMapWidth: { value: mapWidth }, uGrad: gradUniform, uDiag: diagUniform,
+        uMap: { value: map }, uTable: { value: table }, uTableC: { value: patch.table }, uNightFloor: { value: look.nightFloor }, uDusk: { value: new THREE.Vector4(0, 1, 0, 1) }, uDuskGrey: { value: new THREE.Vector2(0, 1) }, uDust: { value: new THREE.Vector4(0, 0, 1, 0) }, uDustInk: { value: new THREE.Vector3().fromArray(skimJson.inner.foot.ink) }, uMapWidth: { value: mapWidth }, uGrad: gradUniform, uDiag: diagUniform,
         uSpin: { value: 0 }, uSunL: { value: new THREE.Vector3(1, 0, 0) }, uPolar: { value: polar },
         uCurve: { value: curveUniform(look.curve) }, uCurveC: { value: curveUniform(look.closeCurve) }, uLightL: { value: new THREE.Vector3(1, 0, 0) }, uLimb: { value: new THREE.Vector2().fromArray(look.limb) },
         uGain: { value: 1 }, uWeight: { value: 1 }, uTint: { value: new THREE.Vector3(1, 1, 1) }, uExtinction: { value: haze.extinction },
@@ -265,6 +280,7 @@ uniform vec3 uSunL;
 uniform float uPolar;
 uniform float uRingShadow;
 uniform vec3 uRingSoft;
+uniform vec4 uDust;
 uniform vec4 uGlowNorth;
 uniform vec4 uGlowPole;
 uniform vec4 uGlowWide;
@@ -295,7 +311,11 @@ void main() {
   float tight = mix(1.0, uGlowNorth.z, north) * mix(1.0, uGlowPole.z, north * pole);
   vec3 Pa = vec3(at.x, at.y * uPolar, at.z);
   float shadow = 1.0 - uRingShadow * ringShadowAt(Pa, uSunL, uRingSoft, 1.0);
-  outColor = vec4((hazeLight(at, dir) * (1.0 - exp(-tau)) * tight + wide) * shadow * uGain * mix(1.0, smoothstep(-0.03, 0.02, at.y), uClose), 0.0);
+  // near the sheet the dust in front of the foot of the globe stands in front of the haze of its limb too
+  // (grade.ts dustAt; none in the hold)
+  float through = 1.0;
+  for (int k = 0; k < (uDust.x > 0.0 ? 1 : 0); k++) through = exp(-uDust.x * (1.0 - smoothstep(uDust.y, uDust.z, abs(Pa.y))));
+  outColor = vec4((hazeLight(at, dir) * (1.0 - exp(-tau)) * tight + wide) * shadow * uGain * mix(1.0, smoothstep(-0.03, 0.02, at.y), uClose) * through, 0.0);
   if (under || uDiag >= 2) discard;
 }`
 
@@ -310,7 +330,7 @@ export class Shell {
         ...hazeUniforms(haze), ...profile, uGain: { value: 1 }, uDiag: diagUniform, uSunL: { value: new THREE.Vector3(1, 0, 0) }, uPolar: { value: polar },
         uRingShadow: { value: look.ringShadow }, uRingSoft: { value: new THREE.Vector3(look.ringSoft[0], look.ringSoft[1], look.ringSlant) },
         uLimbFit: { value: look.limbFit }, uLimbLat: { value: new THREE.Vector2().fromArray(look.limbLat) }, uLimbW: { value: 0 }, uInflate: { value: 1 },
-        uGlowNorth: { value: new THREE.Vector4().fromArray(look.glowNorth) }, uGlowPole: { value: new THREE.Vector4().fromArray(look.glowPole) }, uGlowWide: { value: new THREE.Vector4().fromArray(look.glowWide) }, uGlowCap: { value: new THREE.Vector3().fromArray(look.glowCap) },
+        uDust: { value: new THREE.Vector4(0, 0, 1, 0) }, uGlowNorth: { value: new THREE.Vector4().fromArray(look.glowNorth) }, uGlowPole: { value: new THREE.Vector4().fromArray(look.glowPole) }, uGlowWide: { value: new THREE.Vector4().fromArray(look.glowWide) }, uGlowCap: { value: new THREE.Vector3().fromArray(look.glowCap) },
       },
       side: THREE.BackSide, blending: THREE.AdditiveBlending, premultipliedAlpha: true, transparent: true, depthWrite: false, depthTest: false,
     })

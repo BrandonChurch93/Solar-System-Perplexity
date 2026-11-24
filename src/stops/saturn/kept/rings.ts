@@ -484,7 +484,7 @@ void main() {
     texels = mix(texels, sqrt(max(dot(tx, tx), dot(ty, ty))), wIn);
   }
   // the grade of the rings by the height of the lens (grade.ts); nothing of it runs at the heights of the hold
-  for (int k = 0; k < (uGrade.x > 0.0 ? 1 : 0); k++) col = iceGrade(col, rq);
+  for (int k = 0; k < (uGrade.x > 0.0 ? 1 : 0); k++) col = iceGrade(col, rq) * iceView(mu, rq) * iceZone(rq, mu);
 
   float eo = uEdge.y + uOuterFit.w;
   float nearRim = smoothstep(uRimAz.x, uRimAz.y, azd) * (1.0 - smoothstep(uRimAz.z, uRimAz.w, azd));

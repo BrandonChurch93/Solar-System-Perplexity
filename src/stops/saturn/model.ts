@@ -6,7 +6,7 @@ import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { smooth } from '../../director/rig'
 import { ringField } from './field'
 import { Globe, Shell } from './globe'
-import { gradeShare } from './grade'
+import { duskAt, dustAt, gradeShare, hazeDayAt } from './grade'
 import { Grains, type Lens } from './grains'
 import { iceField } from './ice'
 import * as look from './look'
@@ -47,6 +47,8 @@ export const createModel: SetFactory = async (ctx) => {
   const hold = { texture: await ctx.dataTexture(base + holdLight.file, holdLight.width, holdLight.height, 4), matrix: heroM, camera: heroL, weight: poseW }
   const globe = new Globe(map, (map.image as unknown as { width: number }).width, table, hold, look.globe, look.haze, field.uniforms, polar)
   const shell = new Shell(look.shell, look.globe, field.uniforms, polar, look.shellReach)
+  // the edge of the day of the haze as the shell was built with it: its look in the hold (grade.ts hazeDayAt)
+  const hazeDayFar = (shell.material.uniforms.uHazeEdge!.value as THREE.Vector2).clone()
   const ice = iceField()
   const sheet = new Sheet(field, ice, polar)
   tilt.add(globe.mesh, shell.mesh, sheet.group)
@@ -181,8 +183,10 @@ export const createModel: SetFactory = async (ctx) => {
       ;(su.uSunL!.value as THREE.Vector3).copy(sunL)
       su.uGain!.value = globeGain * state.weight * THREE.MathUtils.lerp(tune.halo.gain[0]!, tune.halo.gain[1]!, closeGlobe)
       su.uHazeH!.value = look.shell.scaleHeight * THREE.MathUtils.lerp(tune.halo.height[0]!, tune.halo.height[1]!, closeGlobe)
-      ;(gu.uDusk!.value as THREE.Vector4).set(tune.dusk.from, tune.dusk.to, THREE.MathUtils.lerp(tune.dusk.amount[0]!, tune.dusk.amount[1]!, closeGlobe), THREE.MathUtils.lerp(tune.dusk.night[0]!, tune.dusk.night[1]!, closeGlobe))
-      gu.uDuskGrey!.value = THREE.MathUtils.lerp(tune.dusk.grey[0]!, tune.dusk.grey[1]!, closeGlobe)
+      duskAt(camL.y, gu.uDusk!.value as THREE.Vector4, gu.uDuskGrey!.value as THREE.Vector2)
+      dustAt(camL.y, gu.uDust!.value as THREE.Vector4)
+      dustAt(camL.y, su.uDust!.value as THREE.Vector4)
+      hazeDayAt(camL.y, hazeDayFar, su.uHazeEdge!.value as THREE.Vector2)
 
       const half = Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2)
       const focal = view.format.height / 2 / half
