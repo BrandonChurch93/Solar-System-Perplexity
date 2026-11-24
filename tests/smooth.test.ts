@@ -1,7 +1,7 @@
 import { execFileSync } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
 import * as THREE from 'three'
-import { describe, expect, it } from 'vitest'
+import { beforeAll, describe, expect, it } from 'vitest'
 import { config } from '../src/config'
 import { captureRate, setCapture, spanMid } from '../src/core/clock'
 import type { Pose } from '../src/core/types'
@@ -406,8 +406,48 @@ interface Made {
   patterns: { judged: number; far: number; same: MadePair[]; unrelated: MadePair[]; dissolve: MadePair[]; moved: number; slope: { now: number; before: number }; slopeUnrelated: { now: number; before: number }; veil: { now: number; before: number } }
   bodies: { sphere: [number, number]; roundDiffers: number; flat: [number, number]; turned: [number, number]; outside: number; sky: number }
 }
+interface MadePops { residual: (number | null)[]; before: (number | null)[]; now: (number | null)[]; differ: string[]; apart: number; rows: number; spans: number[][] }
 let madeReply: Made | null = null
+const madeNeeds = [1, 2, 3].map((part) => {
+  const own = partOwn(part, 3, 40)
+  return [[own.first, own.end], sliceNeed(own, 40, 32, 16, 16, 16)]
+})
 const made = (): Made => (madeReply ??= JSON.parse(execFileSync('python3', [fileURLToPath(new URL('../tools/smooth/made.py', import.meta.url))], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 1 << 24 })) as Made)
+
+describe('the pop score at the two ends of a window, on a made run whose residual falls steadily with no spike', () => {
+  let p: MadePops
+  beforeAll(() => {
+    p = (JSON.parse(execFileSync('python3', [fileURLToPath(new URL('../tools/smooth/made.py', import.meta.url)), JSON.stringify(madeNeeds)], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 1 << 24 })) as { pops: MadePops }).pops
+  }, 240_000)
+
+  it('has the window of the median where the image measure has it', () => {
+    expect(p.spans.length).toBe(704)
+    for (const [i, n, window, lead, tail, lo, hi] of p.spans) expect(popSpan(i!, n!, window!, lead, tail)).toEqual([lo, hi])
+  })
+
+  it('read the first frames over the limit when the median was one sided, and reads every frame near 1 with the context drawn', () => {
+    const residual = p.residual.slice(0, 39) as number[]
+    for (let i = 1; i < residual.length; i++) expect(residual[i]!).toBeLessThan(residual[i - 1]! * 1.02)
+    expect(p.before[0]!).toBeGreaterThan(1.2)
+    expect(p.before[38]!).toBeLessThan(0.8)
+    for (const v of p.now.slice(0, 39)) {
+      expect(v!).toBeGreaterThan(0.95)
+      expect(v!).toBeLessThan(1.05)
+    }
+    expect(p.now[39]).toBeNull()
+    expect(p.before[39]).toBeNull()
+  })
+
+  it('moves the pop columns only, and no row whose window of 32 frames lay inside the judged frames before', () => {
+    expect(p.differ).toEqual(['base', 'pop', 'popAll', 'popBlock', 'popBlockAt', 'popCarried'])
+    for (let i = 16; i <= 22; i++) expect(p.now[i]).toBe(p.before[i])
+  })
+
+  it('gives in three slices the rows of the whole run, in every column', () => {
+    expect(p.rows).toBe(40)
+    expect(p.apart).toBe(0)
+  })
+})
 
 describe('the pattern measure on made pictures, a judged area with a limb, a frame edge and a hole', () => {
   it('reads the same pattern at contrast 2, 3, 5 and 10 under 0.01', () => {

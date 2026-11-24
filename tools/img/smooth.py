@@ -262,7 +262,7 @@ def pictures(job):
     own = job.get('own') or [start, start + n]
     lead = int(job.get('lead', 0))
     tail = int(job.get('tail', 0))
-    judged = lambda i: 0 <= i + start < total
+    inside = lambda i: 0 <= i + start < total
     fw = [None] * n
     bw = [None] * n
     residual = [None] * n
@@ -291,7 +291,7 @@ def pictures(job):
             sure[i] = blocks(d, cols, rows, BLOCK_SHARE)
     step = [None] * n
     for i in range(1, n - 1):
-        if i in marks or (i + 1) in marks or not (judged(i - 1) and judged(i + 1)):
+        if i in marks or (i + 1) in marks or not (inside(i - 1) and inside(i + 1)):
             continue
         step[i] = abs(levels[i] - (levels[i - 1] + levels[i + 1]) / 2)
     pop = [None] * n
@@ -311,7 +311,7 @@ def pictures(job):
             return stack[i] / np.maximum(np.nanmedian(np.stack(rest), axis=0), floor)
 
     for i in range(n):
-        if residual[i] is None or not own[0] <= i + start < own[1] or not judged(i + 1):
+        if residual[i] is None or not own[0] <= i + start < own[1] or not inside(i + 1):
             continue
         m = around(residual, i, window, start, total, lead, tail)
         if m is None:
@@ -337,7 +337,7 @@ def pictures(job):
     weaveShare = [None] * n
     if reach > 0:
         for i in range(n - reach):
-            if not own[0] <= i + start < own[1] or not judged(i + reach) or any(fw[j] is None for j in range(i, i + reach)):
+            if not own[0] <= i + start < own[1] or not inside(i + reach) or any(fw[j] is None for j in range(i, i + reach)):
                 continue
             first, last = (body(poses[j], frames[j].shape, sigma) if poses[j] else None for j in (i, i + reach))
             d, later, ok = change(frames, fw, bw, i, reach, sigma, first, last)
@@ -346,7 +346,7 @@ def pictures(job):
             weave[i], at, weaveShare[i] = patterned(pattern(frames[i].astype(np.float32), later, ok, wide / 5, wide, low))
             weaveAt[i] = [int(round(at[0] / scale)), int(round(at[1] / scale))] if at else None
     for i in range(n):
-        if not judged(i + 1):
+        if not inside(i + 1):
             residual[i] = moved[i] = unsure[i] = None
     return {'level': levels, 'levelStep': step, 'residual': residual, 'base': base, 'popAll': plain, 'popCarried': masked, 'pop': pop, 'motionPx': moved, 'unsure': unsure, 'popBlock': block, 'popBlockAt': where, 'grid': [cols, rows],
             'change': shift, 'changeTop': top, 'changeAt': spot, 'changeShare': judged, 'changeFrames': reach,
