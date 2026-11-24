@@ -1,0 +1,63 @@
+{
+ "critic": "R4",
+ "score": 6,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-06.png",
+   "where": "far left edge, mid-frame, frames 1544-1550 (rise cover)",
+   "what": "a bright, sharp-edged white cloud fragment appears at the left border and stays pinned there while the rest of the view moves, so the edge of a terrain layer comes into frame",
+   "fix": "overscan the terrain plate or layer so its border never comes into frame during the cover, or mask or feather the layer edge"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-06.png",
+   "where": "horizon band, frames 1547-1550",
+   "what": "during the cover the globe render dissolves over the terrain view, which gives two limbs at once: an orange-brown rim sitting above a pale horizon, with a cold blue strip between them. It reads as two pictures cross-fading, not one move",
+   "fix": "match the terrain horizon curvature and atmosphere color to the globe limb before the blend, or drive both from one camera so the limbs line up through the cover"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "planet surface, frames 1292-1317 (dive)",
+   "what": "the descent ground smears into directional streaks and stretched texels, with blocky upscaled cloud relief. It looks like a stretched texture, not motion blur over real relief",
+   "fix": "load higher-resolution surface detail as the camera closes in, and use true per-pixel motion blur in place of the stretched sampling"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "planet surface, frames 1557-1577 (rise)",
+   "what": "same as in the dive: the terrain stretches and swims in long smeared streaks, the cloud relief turns into blocky stippling, and the low-detail texture shows as the camera pulls away",
+   "fix": "use the same fix as the dive: higher-resolution surface detail at close range and proper motion blur"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-01.png",
+   "where": "night side of the disc, lower right and right limb, all hold frames",
+   "what": "stars and pink Milky Way specks show through the planet's dark side, and a small bright point appears and disappears at different places near the right limb from frame to frame (1124, 1137, 1151, 1218, 1232, 1245). The globe reads as see-through, and the points pop",
+   "fix": "make the planet fully opaque over the starfield. If the bright point is meant to be a moon, give it a continuous orbit; if not, remove it"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-02.png",
+   "where": "sky, frames 1284-1317",
+   "what": "the starfield and Milky Way fade to flat black during the dive and then return at full strength by 1317-1325, a visible exposure jump in the sky",
+   "fix": "keep the sky exposure continuous through the dive, or ramp it over many more frames"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-05.png",
+   "where": "whole frame, 1550 to 1557",
+   "what": "a large change of framing between neighboring samples: the horizon, sun and sky are gone within about 7 frames and the view tilts down sharply. The pull-out lacks an eased start",
+   "fix": "ease the pitch-down and climb out over a longer ramp so the move starts with mass"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "terrain view, frames 1350-1529",
+   "what": "parallax is weak: the near clouds and the horizon drift almost together, and the sun and horizon stay fixed, so depth comes mostly from the clouds changing shape",
+   "fix": "add a slow forward or lateral camera move so the near cloud tops slide visibly against the horizon"
+  }
+ ]
+}
