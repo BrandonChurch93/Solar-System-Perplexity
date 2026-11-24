@@ -451,6 +451,12 @@ MAIL 416 point 3, work and findings (2026-11-24, commit 56478329; files touched:
   - uranus dive 0.77@4138, 1.39, 1.21, 1.21@4175, 5.57@4167, 95.0@4171; rise 0.21@4391, 1.52, 1.67, 1.52@4400, 28.33@4465, 90.0@4397
   - neptune dive 0.26@4744, 1.33, 1.31, 1.30@4716, 7.89@4745, 75.6@4743
 
+State at 01:05 my clock (2026-11-24): the report on MAIL 416 point 3 is SENT (a to e, table of seven stops, proposal maxPop 1.2, no limit for the block pop, maxChange 20 with the plain word that every frozen move but Saturn's is red on it). Still owed: jupiter and neptune rise once the small frames of sms1-06 and sms1-09 arrive (place, `all.py jupiter neptune`, view jupiter dive 2975 and rise 3249, neptune rise), then one more mail. The two pop numbers and maxChange go into the config only after the Builder's word, in a commit of their own.
+- MAIL 437: main 94be42ed holds the capture rate, Venus, the travels' seam cure v1, Uranus step 1 and plan E's one move (only Mars is on it). Merged (88f0ec6a), tests 36 files 284 passed. To fetch for a merge: `git fetch --deepen 40 origin main` (a plain `--depth 1` fetch cuts the history and the merge refuses).
+- Fractional frames (b1fe9317, 25a51b9a): `tools/smooth/camera.ts` and `tools/smooth.ts` ask the carried camera at k / rate, the middle of the shutter is `spanMid()` of `src/core/clock.ts` after `setCapture(rate)`. Test at rate 2 in `tests/smooth.test.ts`; the camera of the one move is `plan.eye('dive', time, view)`, not `divePose`.
+- Proof at rate 2 running: in `hw`, `npm run smooth -- --stop mars --kind dive --only path,pictures --calibrate`, log `scratch/logs/r2-mars-dive.log`.
+- Counters: not on main yet as far as I was told; READY harness is named only after them.
+
 ## Not covered
 
 - No run at the final or review tier, so the cost model (4.3 s per sample, a fast frame four times a slow one) is not checked against a real worker; `--sample-seconds` moves it.
