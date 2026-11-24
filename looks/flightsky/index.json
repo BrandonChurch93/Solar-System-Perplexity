@@ -1,29 +1,64 @@
 {
  "folder": "flightsky",
- "pushed": "2026-11-24T05:03:46.269Z",
- "head": "5f630624fedcafcb70cb1cee411ab47e5b59651e",
- "note": "MAIL 513: uranus rise 4436 draft, uhd crop x 600 y 120 960 by 540 before and after, and the 16 by 9 crop x 300 y 60 480 by 270 scaled up twice",
+ "pushed": "2026-11-24T21:50:03.401Z",
+ "head": "2f73dfe279ff78f32c64465cc18b354862af9012",
+ "note": "MAIL 732: the Milky Way at a stop, before and after",
  "looks": [
   {
-   "time": "2026-11-24T05:03:45.054Z",
-   "file": "20261124050345054-note-stars-4436-16x9-twice.jpg",
-   "source": "../scratch/stars-4436-16x9-twice.png",
+   "time": "2026-11-24T21:40:58.389Z",
+   "file": "20261124214058389-note-3866-pair-half.jpg",
+   "source": "../scratch/m732/3866-pair-half.png",
    "kind": "note",
-   "label": "stars 4436 16 by 9 same crop scaled up twice"
+   "label": "m732 3866 half size, before left, after right"
   },
   {
-   "time": "2026-11-24T05:03:44.057Z",
-   "file": "20261124050344057-note-stars-4436-uhd-after.jpg",
-   "source": "../scratch/stars-4436-uhd-after.png",
+   "time": "2026-11-24T21:40:55.834Z",
+   "file": "20261124214055834-note-2726-after.jpg",
+   "source": "../scratch/m732/2726-after.png",
    "kind": "note",
-   "label": "stars 4436 uhd one to one after MAIL 513"
+   "label": "m732 2726 full after"
   },
   {
-   "time": "2026-11-24T05:03:42.666Z",
-   "file": "20261124050342666-note-stars-4436-uhd-before.jpg",
-   "source": "../scratch/stars-4436-uhd-before.png",
+   "time": "2026-11-24T21:40:53.386Z",
+   "file": "20261124214053386-note-2726-before.jpg",
+   "source": "../scratch/m732/2726-before.png",
    "kind": "note",
-   "label": "stars 4436 uhd one to one before MAIL 513 (main 8fb9ba9b)"
+   "label": "m732 2726 full before"
+  },
+  {
+   "time": "2026-11-24T21:40:51.129Z",
+   "file": "20261124214051129-note-3567-after.jpg",
+   "source": "../scratch/m732/3567-after.png",
+   "kind": "note",
+   "label": "m732 3567 full after"
+  },
+  {
+   "time": "2026-11-24T21:40:48.548Z",
+   "file": "20261124214048548-note-3567-before.jpg",
+   "source": "../scratch/m732/3567-before.png",
+   "kind": "note",
+   "label": "m732 3567 full before"
+  },
+  {
+   "time": "2026-11-24T21:40:46.438Z",
+   "file": "20261124214046438-note-3866-pair-crop.jpg",
+   "source": "../scratch/m732/3866-pair-crop.png",
+   "kind": "note",
+   "label": "m732 3866 crop one to one, before left, after right"
+  },
+  {
+   "time": "2026-11-24T21:40:43.572Z",
+   "file": "20261124214043572-note-2726-pair-crop.jpg",
+   "source": "../scratch/m732/2726-pair-crop.png",
+   "kind": "note",
+   "label": "m732 2726 crop one to one, before left, after right"
+  },
+  {
+   "time": "2026-11-24T21:40:40.831Z",
+   "file": "20261124214040831-note-3567-pair-crop.jpg",
+   "source": "../scratch/m732/3567-pair-crop.png",
+   "kind": "note",
+   "label": "m732 3567 crop one to one, before left, after right"
   }
  ]
 }
