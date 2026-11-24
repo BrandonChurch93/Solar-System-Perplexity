@@ -1,9 +1,17 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T13:10:12.190Z",
+ "pushed": "2026-11-24T13:49:30.757Z",
  "head": "c2d46ba56f2436c39d4f9c7ca1e9089fe07ac162",
- "note": "trial: the scene's far look is the globe's own map by the same shader lines; upper dive one picture, exchange moved under 0.18 radii (red, named)",
+ "note": "13:49 UTC trial: the far look of the scene is the globe's map under the globe's grade, the place comes in by one law of height; reds named in the label",
  "looks": [
+  {
+   "time": "2026-11-24T13:49:21.328Z",
+   "file": "20261124134921328-note-look-f4.jpg",
+   "source": "out/work/nep/weave/look-f4.jpg",
+   "kind": "note",
+   "label": "TRIAL, not committed. Top: pushed head, the exchange between 4724 and 4732. Middle: the scene's far look is the globe's own map read by the globe's own lines and graded by the globe's own fall, and the place's own picture comes in over it round one fixed spot of ground by one law of the eye's height (0.9 to 0.036 radii). The globe's storm now stays to 4724 and the eye and streamers grow in under it. RED, named: by my proxy (not the tool) pairs 8 apart read 0.39, 0.39, 0.68, 0.99 at 4716, 4724, 4732, 4740 against the limit 0.45 (head 0.71, 1.12, 0.22, 0.54); the white band of the map leaves over the dark near deck and reads lilac at 4740; cyan dabs of the map by the limb at 4860. Bottom: 4860 beside the approved image, G17 at preview draft median 1.331, p25 0.772 (head 1.286, 0.615). About 9 to 25 s a draft frame at preview.",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T13:10:03.126Z",
    "file": "20261124131003126-note-look-f1-4860.jpg",
@@ -58,14 +66,6 @@
    "source": "out/work/nep/cost/look-1149.jpg",
    "kind": "note",
    "label": "4860 beside the approved, 16 by 9 draft, work in progress: far field veil rebuilt (white torn arc, blue thin haze inside it), limb blue by the angle of view, limb glow at 0.58. G17 0.934 and 0.545. 95 s the frame alone.",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T11:27:03.742Z",
-   "file": "20261124112703742-note-look-1128.jpg",
-   "source": "out/work/nep/cost/look-1128.jpg",
-   "kind": "note",
-   "label": "Neptune 4860 work in progress over the approved image (preview draft): the far sheet rebuilt as a thin torn sheet outside an oval round the storm, limb lowered to the deck",
    "stop": "neptune"
   }
  ]
