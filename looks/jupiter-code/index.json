@@ -1,53 +1,45 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T01:52:40.298Z",
+ "pushed": "2026-11-24T02:06:59.936Z",
  "head": "c14973491a79c375ce299f41635d3bad6c9720f4",
- "note": "MAIL 427: the hold sky made even, old against new at 2895 final, 2819, 2980 and 2990 draft; a faint fixed pattern in the dark sky is in both (MAIL 448, not cured yet)",
+ "note": "MAIL 427 beat cure as it will be committed: curve, final 2895 and 2997 old against new",
  "looks": [
   {
-   "time": "2026-11-24T01:52:39.432Z",
-   "file": "20261124015239432-note-travel2819-old-new.jpg",
-   "source": "../work/m427/travel2819-old-new.jpg",
+   "time": "2026-11-24T02:06:59.374Z",
+   "file": "20261124020659374-note-final2997-old-q97-left.jpg",
+   "source": "../work/m427/final2997-old-q97-left.jpg",
    "kind": "note",
-   "label": "arrival 2819 draft, crop at full size: left as on main, right with the even sky",
+   "label": "final 2997, left strip x 0 to 300: on main, with the cure, difference times 12 (only stars in the corners change)",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-24T01:52:38.590Z",
-   "file": "20261124015238590-note-dive2990-old-new.jpg",
-   "source": "../work/m427/dive2990-old-new.jpg",
+   "time": "2026-11-24T02:06:58.837Z",
+   "file": "20261124020658837-note-final2895-old-q97-3x.jpg",
+   "source": "../work/m427/final2895-old-q97-3x.jpg",
    "kind": "note",
-   "label": "dive 2990 draft, crop at full size: left as on main, right with the even sky and mip levels off",
+   "label": "final 2895 at 3 times size, two places in the sky: on main (left), with the cure (right)",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-24T01:52:37.852Z",
-   "file": "20261124015237852-note-dive2980-old-new.jpg",
-   "source": "../work/m427/dive2980-old-new.jpg",
+   "time": "2026-11-24T02:06:58.298Z",
+   "file": "20261124020658298-note-final2895-old-q97.jpg",
+   "source": "../work/m427/final2895-old-q97.jpg",
    "kind": "note",
-   "label": "dive 2980 draft, crop at full size: left as on main, right with the even sky and mip levels off",
+   "label": "final 2895, sky right of the planet: on main (left), with the cure as committed (right)",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-24T01:52:36.997Z",
-   "file": "20261124015236997-note-lossy-q97-model.jpg",
-   "source": "../work/m427/lossy-q97-model.jpg",
+   "time": "2026-11-24T02:06:57.725Z",
+   "file": "20261124020657725-note-hold-curve-cure.jpg",
+   "source": "../work/m427/hold-curve-cure.png",
    "kind": "note",
-   "label": "the even hold sky, lossless against the shipped lossy file, 3 times size and 3 times exposure",
+   "label": "hold, capture rate 2, change per capture frame: before the cure and with it (draft, captures 5760 to 5819)",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-24T01:52:36.184Z",
-   "file": "20261124015236184-note-final2895-old-new.jpg",
-   "source": "../work/m427/final2895-old-new.jpg",
-   "kind": "note",
-   "label": "hold 2895 final tier, crop x 1240 to 1920, y 180 to 660: left the sky as on main, right the even sky (trial with the lossless file)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T01:46:16.468Z",
-   "file": "20261124014616468-frame-f02997.jpg",
-   "source": "out/work/jupiter/frames/evoldf/f02997.png",
+   "time": "2026-11-24T02:05:36.443Z",
+   "file": "20261124020536443-frame-f02997.jpg",
+   "source": "out/work/jupiter/frames/mgf/f02997.png",
    "kind": "frame",
    "label": "jupiter.dive frame 2997, final tier",
    "stop": "jupiter",
@@ -56,12 +48,12 @@
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "30385d6e31de94ff"
+   "engine": "1713279836e7e8c8"
   },
   {
-   "time": "2026-11-24T01:42:24.357Z",
-   "file": "20261124014224357-frame-f02895.jpg",
-   "source": "out/work/jupiter/frames/evoldf/f02895.png",
+   "time": "2026-11-24T02:01:50.089Z",
+   "file": "20261124020150089-frame-f02895.jpg",
+   "source": "out/work/jupiter/frames/mgf/f02895.png",
    "kind": "frame",
    "label": "jupiter.hold frame 2895, final tier",
    "stop": "jupiter",
@@ -70,21 +62,35 @@
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "30385d6e31de94ff"
+   "engine": "1713279836e7e8c8"
   },
   {
-   "time": "2026-11-24T01:40:52.101Z",
-   "file": "20261124014052101-frame-f03296.jpg",
-   "source": "out/work/jupiter/frames/evoldd/f03296.png",
+   "time": "2026-11-24T01:57:26.867Z",
+   "file": "20261124015726867-frame-f03240.jpg",
+   "source": "out/work/jupiter/frames/mgd/f03240.png",
    "kind": "frame",
-   "label": "jupiter.rise frame 3296, draft tier",
+   "label": "jupiter.rise frame 3240, draft tier",
    "stop": "jupiter",
    "segment": "jupiter.rise",
-   "frame": 3296,
+   "frame": 3240,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "30385d6e31de94ff"
+   "engine": "1713279836e7e8c8"
+  },
+  {
+   "time": "2026-11-24T01:55:47.921Z",
+   "file": "20261124015547921-frame-f02785.jpg",
+   "source": "out/work/jupiter/frames/mgd/f02785.png",
+   "kind": "frame",
+   "label": "mars.travel frame 2785, draft tier",
+   "stop": "mars",
+   "segment": "mars.travel",
+   "frame": 2785,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1713279836e7e8c8"
   }
  ]
 }
