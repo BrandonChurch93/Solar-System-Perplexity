@@ -4452,3 +4452,41 @@ WHAT I TAKE FROM IT FOR THE NEXT TRIAL (T8), in this order, each by height and i
    with a mild power), G17 measured with every step;
 3. the spread of hue in the thin zones (the pivot of sim9, clamped).
 Looks pushed: 15:36 (fea14fd1), 16:11 (c1284c8b).
+
+## 2026-11-24, 16:25 to 17:00 VM: proof job r50 on trial T7e is green on every line
+
+r50 = the working tree of trial T7e (grade.ts with the toe of the thin zones, one ceiling on the far look and
+the near light, the loss of colour) on the engine of 66de92e, all through the harness, in /tmp/v/r50:
+- G5 pass, G17 pass: 3465 median 1.054 (71 tiles), 3720 median 0.877 (62 tiles; named 0.945).
+- Handover picture parts: all six lines pass, dive T 3589 side difference max 1, flow gap 0.008 px.
+- Dive pictures (draft, rate 2, 228 frames): green. Level step 0.02 at 3576 (limit 1.3; named 0.01), pop 1.04
+  from 3640 (limit 1.2; named 1.04 from 3578), pattern 0.29 from 3601, most at pixel 1748, 952 (limit 0.45;
+  named 0.21 from 3596 + 1/2), change in place 16.6 from 3599 + 1/2 (named 15.8). So the grade coming in by
+  height costs 0.08 of the pattern measure: item 10 is worse by that much with T7e.
+- Rise pictures: green. Level step 0.05 at 3875 + 1/2, pop 1.15 from 3872 + 1/2, pattern 0.25 from 3820 + 1/2
+  (named 0.24), change in place 22.0 from 3873: as named within 0.01.
+- G13: 0 of 83 frames over 0.02 soft. Path: green (the same numbers as named: the grade does not touch the
+  flight). Parity: green, largest mean difference 2.818 at 3720 (limit 12), at one 8th 1.334 (limit 3.2), block
+  level -6.563 at 3866 (limit 12), whole frame -1.206 at 3720 (limit 2.2).
+- Gate G11 and G15 pass (saturn/web 274 MB, saturn/full 747 MB). tsc clean on the merge 501914c with T7e.
+I looked at the dive's and the rise's panels of changes and the dive's panel of pops: nothing new against the
+named commit except the ring going from the warm cream of the hold to the grey cream of the skim between 3588
+and 3620, which is the grade by height.
+
+A MECHANISM I HAD NOT COUNTED (read in sheet.ts and ice.ts, not yet measured): near the lens the grains carry
+grains.json share 0.15 of the sheet's optical depth where the counted levels show whole; the sheet is thinner
+by that much and lies in the shade of the grains (exp(-taken / mu0)). In a thin zone the light follows the
+depth, so the sheet loses 15 percent and the shade more, and the grains have to give it back as bodies (their
+gain is 0.7). If they do not, this is the reason the A ring sinks toward the lens (rows 950 to 1080: 0.379
+against the approved's 0.437) while the dense ring does not. Instrument renders running at 16:57 (far look
+alone, near light alone, near light alone with share 0) to measure it before any number is turned.
+
+A FIT OF THE DENSE RING BY PERCENTILES (the clean outer B zone, display values of T7e taken back through the
+film curve and the ceiling to the light before it, then a gain g and a ceiling C applied and the film curve
+again): the light before the ceiling at the percentiles 10, 25, 50, 75, 90, 95 is 0.22, 0.31, 0.48, 0.90, 2.0,
+5.6; the approved's, through the same curve, is 0.21, 0.28, 0.37, 0.50, 0.66, 0.80. So the bright half of my
+ringlets is spread 4.2 times over the median in light where the approved's lanes are spread 1.8 times: the
+flat top under the ceiling is the kept picture's near white ringlets, taken back through the film curve. A
+gain alone moves the median (g 0.85: 0.717 against 0.715) and leaves the top (p90 0.875 against 0.835, p10
+0.522 against 0.556); only a power under 1 above the median narrows it, and that costs G17 (sim14).
+Looks pushed: 16:32 (5524cb35).
