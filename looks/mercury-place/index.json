@@ -1,9 +1,57 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T22:45:04.332Z",
+ "pushed": "2026-11-24T23:07:31.603Z",
  "head": "15d489e9e70ff9fb2c598d02ba7fb0288f6d799e",
- "note": "main's 717 against b0; b0's exchange back in the round 2 state; the dot of MAIL 782",
+ "note": "b0 by the real pixel (3840 capture shows the web timing), round 2 tree by the frame factor: one picture at both sizes; b0 web set against full set",
  "looks": [
+  {
+   "time": "2026-11-24T23:07:30.167Z",
+   "file": "20261124230730167-note-b0-web-full.jpg",
+   "source": "out/work/mercury/place/sheets/b0-web-full.jpg",
+   "kind": "note",
+   "label": "b0 dive 699 to 729: web set on top, full set below",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T23:07:28.860Z",
+   "file": "20261124230728860-note-par-615c.jpg",
+   "source": "out/work/mercury/place/sheets/par-615c.jpg",
+   "kind": "note",
+   "label": "615 at 1 to 1: b0 on top (3840 scaled, 1920), round 2 tree below",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T23:07:27.617Z",
+   "file": "20261124230727617-note-par-a1-615.jpg",
+   "source": "out/work/mercury/place/sheets/par-a1-615.jpg",
+   "kind": "note",
+   "label": "format parity par-a1-615: 3840 scaled beside 1920, full set, draft",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T23:07:26.459Z",
+   "file": "20261124230726459-note-par-b0-615.jpg",
+   "source": "out/work/mercury/place/sheets/par-b0-615.jpg",
+   "kind": "note",
+   "label": "format parity par-b0-615: 3840 scaled beside 1920, full set, draft",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T23:07:25.251Z",
+   "file": "20261124230725251-note-par-a1-717.jpg",
+   "source": "out/work/mercury/place/sheets/par-a1-717.jpg",
+   "kind": "note",
+   "label": "format parity par-a1-717: 3840 scaled beside 1920, full set, draft",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T23:07:24.094Z",
+   "file": "20261124230724094-note-par-b0-717.jpg",
+   "source": "out/work/mercury/place/sheets/par-b0-717.jpg",
+   "kind": "note",
+   "label": "format parity par-b0-717: 3840 scaled beside 1920, full set, draft",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T22:45:03.109Z",
    "file": "20261124224503109-note-h615-dot.jpg",
@@ -18,54 +66,6 @@
    "source": "out/work/mercury/place/sheets/b0-a1.jpg",
    "kind": "note",
    "label": "717, 721 + 1/2, 726, 730 + 1/2, 735: b0b87889 on top, the round 2 state below (b0's plate 1 and exchange back, far Sun of the film): the same ground",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T22:45:01.312Z",
-   "file": "20261124224501312-note-b0-main-717.jpg",
-   "source": "out/work/mercury/place/sheets/b0-main-717.jpg",
-   "kind": "note",
-   "label": "717 draft: build b0b87889 on top, main 7346c598 below: the soft pale disc in the crisp map is on main",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T22:23:24.449Z",
-   "file": "20261124222324449-note-b0-pair-e.jpg",
-   "source": "out/work/mercury/place/sheets/b0-pair-e.jpg",
-   "kind": "note",
-   "label": "dive 722 to 732 every second frame: b0b87889 on top, this tree below",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T22:23:23.854Z",
-   "file": "20261124222323854-note-b0-pair-d.jpg",
-   "source": "out/work/mercury/place/sheets/b0-pair-d.jpg",
-   "kind": "note",
-   "label": "dive 710 to 720 every second frame: b0b87889 on top, this tree below",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T22:23:23.048Z",
-   "file": "20261124222323048-note-b0-pair-717.jpg",
-   "source": "out/work/mercury/place/sheets/b0-pair-717.jpg",
-   "kind": "note",
-   "label": "dive 717, crop: build b0b87889 on top, this tree below (scratch, far Sun off)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T21:59:50.127Z",
-   "file": "20261124215950127-note-t2-b.jpg",
-   "source": "out/work/mercury/place/sheets/t2-b.jpg",
-   "kind": "note",
-   "label": "rise about T with the true far Sun, draft, frames 973 + 1/2 to 980 + 1/2",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T21:59:48.620Z",
-   "file": "20261124215948620-note-t2-a.jpg",
-   "source": "out/work/mercury/place/sheets/t2-a.jpg",
-   "kind": "note",
-   "label": "rise about T (976 + 1/2) with the true far Sun, draft, merged build with the pull back, frames 966 + 1/2 to 973 + 1/2",
    "stop": "mercury"
   }
  ]
