@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T05:43:03.394Z",
+ "pushed": "2026-11-24T05:43:27.205Z",
  "head": "7c885d343d584d08dacf6688e4bfed29e0fc604c",
- "note": "bend in the surface view from 876: seam eye line 1.024 at the rise, 870 final bytes kept; terrain frames at draft, rise frames rendering",
+ "note": "bend in the surface view from 876: seam eye line 1.024 at the rise (limit 0.87), 870 final bytes kept; rise frames rendering",
  "looks": [
+  {
+   "time": "2026-11-24T05:43:26.059Z",
+   "file": "20261124054326059-note-v955.jpg",
+   "source": "out/work/mercury/place/bt/v955.jpg",
+   "kind": "note",
+   "label": "surface view with the bend at 955, 5 frames before the seam (draft)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T05:43:25.035Z",
+   "file": "20261124054325035-note-sheet.jpg",
+   "source": "out/work/mercury/place/bt/sheet.jpg",
+   "kind": "note",
+   "label": "surface view with the bend, every 3rd frame 877 to 958, then 959 and 960 (draft): one ground, no hole, no border",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T04:43:36.183Z",
    "file": "20261124044336183-note-pd-984-991.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/mercury/place/quad/whole-986-996.jpg",
    "kind": "note",
    "label": "mercury rise 986 to 996 before the mend: pale quad at the lower left corner, band craters at the left",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T03:19:00.018Z",
-   "file": "20261124031900018-note-over.jpg",
-   "source": "out/work/mercury/place/quad/over.jpg",
-   "kind": "note",
-   "label": "c7248b33 frames with the edges of the rise's place (green), the wide picture's box (blue) and its weight (red)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T03:18:58.700Z",
-   "file": "20261124031858700-note-left-984-989.jpg",
-   "source": "out/work/mercury/place/quad/left-984-989.jpg",
-   "kind": "note",
-   "label": "c7248b33 frames 984 to 989, left part, every frame: the pale quad and the band's craters entering at the left (before the mend)",
    "stop": "mercury"
   }
  ]
