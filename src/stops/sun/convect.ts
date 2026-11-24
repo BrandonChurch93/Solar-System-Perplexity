@@ -38,6 +38,7 @@ uniform vec4 uCvLife;
 uniform vec4 uCvGrow;
 uniform vec4 uCvLane;
 uniform vec4 uCvDome;
+uniform vec4 uCvGloss;
 uniform vec4 uCvWarp;
 uniform vec4 uCvSpot;
 uniform vec4 uCvPit;
@@ -47,20 +48,19 @@ uniform vec4 uCvPetalMore;
 uniform vec4 uCvThread;
 uniform vec4 uCvWarpMore;
 uniform vec4 uCvGap;
+uniform vec4 uCvBend;
+uniform vec4 uCvStream;
 uniform float uCvTime;
 vec3 cvH3(vec3 p) {
   p = fract(p * vec3(0.1031, 0.1030, 0.0973));
   p += dot(p, p.yxz + 33.33);
   return fract((p.xxy + p.yxx) * p.zyx);
 }
-// The cells at ground point p (stage units) and time t (seconds).
-// e: distance to the nearest lane, ge: its gradient (both in stage units), rel: p minus the cell's own middle in
-// lattice units, own: x the age of the cell's life from 0 to 1, y a number of its own, z its weight.
-void cvCells(vec2 p, float t, out float e, out vec2 ge, out vec2 rel, out vec3 own) {
-  float L = uCvCell.x;
-  vec2 q = p / L;
-  q += uCvWarp.x * (vec2(vnoise(vec3(q * uCvWarp.y, t * uCvWarp.z)), vnoise(vec3(q.yx * uCvWarp.y + 31.7, t * uCvWarp.z + 7.3))) - 0.5);
-  q += uCvWarpMore.x * (vec2(vnoise(vec3(q * uCvWarpMore.y + 13.1, t * uCvWarpMore.z)), vnoise(vec3(q.yx * uCvWarpMore.y + 57.9, t * uCvWarpMore.z + 3.1))) - 0.5);
+// The diagram of the cells at q (lattice units) and time t (seconds). wrap: the lattice repeats after so many
+// squares along x (0: it does not repeat).
+// e: distance to the nearest lane and ge: its gradient (lattice units), rel: q minus the cell's own middle,
+// own: x the age of the cell's life from 0 to 1, y a number of its own, z its weight.
+void cvDiagram(vec2 q, float t, float wrap, out float e, out vec2 ge, out vec2 rel, out vec3 own) {
   vec2 base = floor(q);
   vec2 sp[36];
   float so[36];
@@ -73,14 +73,15 @@ void cvCells(vec2 p, float t, out float e, out vec2 ge, out vec2 rel, out vec3 o
   for (int j = -1; j <= 1; j++) {
     for (int i = -1; i <= 1; i++) {
       vec2 id = base + vec2(float(i), float(j));
-      vec3 hc = cvH3(vec3(id, 3.1));
+      vec2 hid = vec2(wrap > 0.0 ? mod(id.x, wrap) : id.x, id.y);
+      vec3 hc = cvH3(vec3(hid, 3.1));
       float period = mix(uCvLife.x, uCvLife.y, hc.y);
       for (int s = 0; s < 2; s++) {
         float life = t / period + hc.x + 0.5 * float(s);
         float nth = floor(life);
         float x = life - nth;
-        vec3 h1 = cvH3(vec3(id, nth * 2.0 + float(s) + 11.7));
-        vec3 h2 = cvH3(vec3(id.yx + 37.2, nth * 2.0 + float(s) + 5.3));
+        vec3 h1 = cvH3(vec3(hid, nth * 2.0 + float(s) + 11.7));
+        vec3 h2 = cvH3(vec3(hid.yx + 37.2, nth * 2.0 + float(s) + 5.3));
         vec2 c = id + 0.5 + uCvCell.y * (h1.xy - 0.5) + uCvWarp.w * (h2.yz - 0.5) * (x - 0.5);
         float ang = 6.2831853 * h1.z;
         vec2 u = vec2(cos(ang), sin(ang));
@@ -91,7 +92,8 @@ void cvCells(vec2 p, float t, out float e, out vec2 ge, out vec2 rel, out vec3 o
         float w = smoothstep(0.0, uCvLife.w, x) * (1.0 - smoothstep(1.0 - uCvLife.w, 1.0, x));
         float grown = clamp(x / uCvGrow.x, 0.0, 1.0);
         float left = clamp((1.0 - x) / uCvGrow.y, 0.0, 1.0);
-        float o = uCvCell.z * (pow(1.0 - grown, uCvGrow.z) + pow(1.0 - left, uCvGrow.z)) + uCvGrow.w * (2.0 - smoothstep(0.0, 0.06, x) - smoothstep(0.0, 0.06, 1.0 - x));
+        // cells are of many sizes: each has a share of its own in the diagram for the whole of its life
+        float o = uCvWarpMore.w * (fract(h1.x * 13.7 + h1.y * 5.3) - 0.5) + uCvCell.z * (pow(1.0 - grown, uCvGrow.z) + pow(1.0 - left, uCvGrow.z)) + uCvGrow.w * (2.0 - smoothstep(0.0, 0.06, x) - smoothstep(0.0, 0.06, 1.0 - x));
         float m = smoothstep(0.3, 0.55, x) * parts;
         for (int k = 0; k < 2; k++) {
           vec2 at = c + u * (apart * (k == 0 ? 1.0 : -1.0));
@@ -137,11 +139,26 @@ void cvCells(vec2 p, float t, out float e, out vec2 ge, out vec2 rel, out vec3 o
     acc += wt;
     gacc += wt * gj;
   }
-  float gap = uCvGap.x * (1.0 - uCvGap.z + 2.0 * uCvGap.z * vnoise(vec3(p * uCvGap.y, 1.7 + t * uCvGap.w)));
-  e = max(max(-log(max(acc, 1e-30)) / sharp, 0.0) * L - gap, 0.0);
+  e = max(-log(max(acc, 1e-30)) / sharp, 0.0);
   ge = gacc / max(acc, 1e-30);
   own = si[bi];
   rel = q - s1 - uCvLane.y * vec2(cos(own.y * 40.0), sin(own.y * 40.0)) * own.z;
+}
+// The chart of the ground's cells: lattice units, and it wanders a little so no lane is straight.
+vec2 cvChart(vec2 p, float t) {
+  vec2 q = p / uCvCell.x;
+  q += uCvWarp.x * (vec2(vnoise(vec3(q * uCvWarp.y, t * uCvWarp.z)), vnoise(vec3(q.yx * uCvWarp.y + 31.7, t * uCvWarp.z + 7.3))) - 0.5);
+  q += uCvWarpMore.x * (vec2(vnoise(vec3(q * uCvWarpMore.y + 13.1, t * uCvWarpMore.z)), vnoise(vec3(q.yx * uCvWarpMore.y + 57.9, t * uCvWarpMore.z + 3.1))) - 0.5);
+  return q;
+}
+// The cells at ground point p (stage units) and time t (seconds): the diagram in a chart that wanders a little.
+// e: distance to the nearest lane (stage units), ge: its gradient, rel: p minus the cell's own middle in lattice
+// units, own: as in the diagram.
+void cvCells(vec2 p, float t, out float e, out vec2 ge, out vec2 rel, out vec3 own) {
+  float L = uCvCell.x;
+  cvDiagram(cvChart(p, t), t, 0.0, e, ge, rel, own);
+  float gap = uCvGap.x * (1.0 - uCvGap.z + 2.0 * uCvGap.z * vnoise(vec3(p * uCvGap.y, 1.7 + t * 0.05)));
+  e = max(e * L - gap, 0.0);
 }
 // A pattern carried outward from the cell's middle. Two takes of it, half a turn apart: each is carried for one
 // turn and then begins again nearer the middle, and it has no weight at the moment it begins again.
@@ -162,53 +179,81 @@ float cvCarried(vec2 rel, float r, vec2 u, float key, float t, float scale, floa
 }
 // Plasma that runs outward in a cell. x: the lumps of the cell's top (they are relief too): round tops with
 // creases between them, carried outward. y: fine threads fixed in angle round the middle that travel out.
+float cvLumps(vec2 rel, float key, float t) {
+  float r = length(rel);
+  vec2 u = r > 1e-5 ? rel / r : vec2(1.0, 0.0);
+  float a1 = 2.0 * cvCarried(rel, r, u, key, t, uCvPetal.y, uCvPetal.z, uCvPetal.w) - 1.0;
+  float a2 = 2.0 * cvCarried(rel, r, u, key + 0.37, t, uCvPetalMore.x, uCvPetalMore.y, uCvPetalMore.z) - 1.0;
+  float l1 = min(sqrt(a1 * a1 + uCvGap.w), 1.0);
+  float l2 = min(sqrt(a2 * a2 + uCvGap.w), 1.0);
+  return 0.65 * l1 * (2.0 - l1) + 0.35 * l2 * (2.0 - l2);
+}
 vec2 cvPetal(vec2 rel, float key, float t) {
   float r = length(rel);
   vec2 u = r > 1e-5 ? rel / r : vec2(1.0, 0.0);
-  float l1 = min(abs(2.0 * cvCarried(rel, r, u, key, t, uCvPetal.y, uCvPetal.z, uCvPetal.w) - 1.0), 1.0);
-  float l2 = min(abs(2.0 * cvCarried(rel, r, u, key + 0.37, t, uCvPetalMore.x, uCvPetalMore.y, uCvPetalMore.z) - 1.0), 1.0);
   float n3 = vnoise(vec3(u * uCvThread.x, r * uCvThread.y - t * uCvThread.z) + vec3(key * 41.0, 9.0, 0.0));
-  float thread = 1.0 - abs(2.0 * n3 - 1.0);
+  // the threads stand in locks: a few broad strands of many fine ones, with dark gaps between the locks
+  float n4 = vnoise(vec3(u * uCvThread.x * 0.4 + 5.7, r * uCvThread.y * 0.5 - t * uCvThread.z * 0.7) + vec3(key * 23.0, 3.0, 0.0));
+  float thread = (1.0 - abs(2.0 * n3 - 1.0)) * smoothstep(0.2, 0.7, n4) * 1.35;
   float open = smoothstep(0.02, 0.14, r);
-  return vec2(0.65 * l1 * (2.0 - l1) + 0.35 * l2 * (2.0 - l2), mix(0.35, thread * thread, open));
+  return vec2(cvLumps(rel, key, t), mix(0.35, thread * thread, open));
 }
-float cvLane(float e) {
-  return 1.0 - exp(-e / uCvDome.y);
+// The share of the way from the cell's middle (0) to its lane (1) at a place r lattice units from the middle and e
+// stage units from the lane. It is the same for a small cell and a wide one, so every cell is a whole bulb.
+float cvWay(float r, float e) {
+  return r / (r + e / uCvCell.x + 1e-5);
 }
 // Height of the cells over the ball at p (stage units), with the parts the colour needs.
 float cvDome(vec2 p, float t, out float e, out vec2 ge, out vec2 rel, out vec3 own, out vec2 petal) {
   cvCells(p, t, e, ge, rel, own);
   float r2 = dot(rel, rel);
-  float tall = uCvDome.x * (0.6 + 0.8 * own.y) * mix(0.55, 1.0, own.z);
-  float lane = cvLane(e);
+  float r = sqrt(r2);
+  float way = cvWay(r, e);
+  // a bulb: round over the middle, steep where it meets the lane; a wide cell stands taller than a small one
+  // a blown skin: round on top, and it meets the lane steeply (the edge power below 1 does that)
+  float cap = pow(max(1.0 - pow(way, uCvDome.w), 0.0), uCvGloss.w);
+  float size = clamp((r + e / uCvCell.x) / uCvDome.y, 0.35, 1.5);
+  float tall = uCvDome.z * size * (0.7 + 0.6 * own.y) * mix(0.5, 1.0, own.z) + uCvDome.x;
   petal = cvPetal(rel, own.y, t);
   float old = smoothstep(0.5, 1.0, own.x);
-  return (tall + uCvPetal.x * (petal.x - 0.4)) * lane + uCvDome.z * own.z * exp(-r2 / (uCvDome.w * uCvDome.w)) - uCvPetalMore.w * old * exp(-r2 / 0.02) - uCvDome.x * uCvLane.x;
+  return (tall + uCvPetal.x * (petal.x - 0.4)) * cap - uCvPetalMore.w * old * exp(-r2 / 0.02) * cap - uCvDome.z * uCvLane.x;
 }
-// The fibres of the penumbra: long in the direction of the spot's middle, many round it.
-float cvFibre(vec2 u, float rs) {
-  float n = vnoise(vec3(u * uCvFibre.x, rs * uCvFibre.z));
-  float n2 = vnoise(vec3(u * uCvFibre.x * 2.3 + 3.1, rs * uCvFibre.z * 1.9 + 7.7));
-  float ridge = 1.0 - abs(2.0 * n - 1.0);
-  float ridge2 = 1.0 - abs(2.0 * n2 - 1.0);
-  return 0.6 * ridge * ridge + 0.4 * ridge2 * ridge2;
-}
-// The sunspot at ground point p: x how much of the place is the spot (1 inside the penumbra), y the height of its
-// funnel (stage units), z the distance from its middle over the umbra's radius, w the fibre there.
-vec4 cvSpot(vec2 p) {
+// The sunspot at ground point p. Returned: x how much of the place is the spot (1 inside the penumbra), y the
+// height of its funnel with the fibres on it (stage units), z the distance from its middle over the umbra's radius,
+// w the height of the fibre's body there from 0 (the dark between fibres) to 1 (its crest).
+// fibre: x the share of the way from the fibre's middle to its edge, y how far the place is past the fibre's own
+// end over the umbra (0 at the end, 1 well outside), z a number of the fibre's own, w its age from 0 to 1.
+// The fibres are cells of the same kind as the ground's, in a chart of angle and distance round the spot: each is
+// long toward the spot's middle, is born and swallowed like a cell, and the whole chart streams toward the umbra.
+vec4 cvSpot(vec2 p, float t, out vec4 fibre) {
   vec2 d = p - uCvSpot.xy;
   float r = length(d);
   vec2 u = r > 1e-5 ? d / r : vec2(1.0, 0.0);
   float rs = r / uCvSpot.z;
-  float fib = cvFibre(u, rs);
-  float lobes = vnoise(vec3(u * 1.3 + 4.7, 0.5)) - 0.5;
-  float outer = uCvSpot.w * (1.0 + uCvFibre.w * (lobes + 1.3 * (fib - 0.4)));
+  float lobes = vnoise(vec3(u * 1.3 + 4.7, 0.5)) + 0.5 * vnoise(vec3(u * 3.1 + 1.9, 2.5)) - 0.75;
+  float outer = uCvSpot.w * (1.0 + uCvFibre.w * lobes);
   float inside = 1.0 - smoothstep(outer * 0.8, outer * 1.04, r);
-  float umbra = uCvSpot.z * (1.0 + 0.4 * uCvFibre.w * lobes);
-  float fall = 1.0 - smoothstep(umbra, outer, r);
-  float pit = 1.0 - smoothstep(umbra * uCvPit.z, umbra * uCvPit.w, r);
-  float h = -uCvPit.x * fall - uCvPit.y * pit + uCvFibre.y * (fib - 0.4) * (1.0 - pit);
-  return vec4(inside, h, rs, fib);
+  fibre = vec4(1.0, 0.0, 0.5, 0.5);
+  if (inside <= 0.0) return vec4(0.0, 0.0, rs, 0.0);
+  float away = log(max(rs, 0.05));
+  vec2 q = vec2(atan(d.y, d.x) * uCvBend.w / 6.2831853, away * uCvFibre.z + t * uCvStream.x);
+  // no fibre is straight: the chart sways a little along the fibres' length
+  q.x += uCvBend.x * (vnoise(vec3(u * uCvBend.z + 1.1, away * uCvBend.y - t * 0.03)) - 0.5);
+  float e;
+  vec2 ge;
+  vec2 rel;
+  vec3 own;
+  cvDiagram(q, t, uCvBend.w, e, ge, rel, own);
+  float way = cvWay(length(rel), e * uCvCell.x);
+  float umbra = 1.0 + 0.4 * uCvFibre.w * lobes;
+  // every fibre ends over the umbra at a place of its own, with a round head
+  float past = clamp((rs - umbra * (1.0 + uCvStream.y * (own.y - 0.5))) / uCvStream.z, 0.0, 1.0);
+  float body = (1.0 - pow(way, uCvStream.w)) * sqrt(past) * mix(0.5, 1.0, own.z);
+  fibre = vec4(way, past, own.y, own.x);
+  float fall = 1.0 - smoothstep(umbra * uCvSpot.z, outer, r);
+  float pit = 1.0 - smoothstep(umbra * uCvSpot.z * uCvPit.z, umbra * uCvSpot.z * uCvPit.w, r);
+  float h = -uCvPit.x * fall - uCvPit.y * pit + uCvFibre.y * (0.6 + 0.8 * own.y) * body;
+  return vec4(inside, h, rs, body);
 }
 // Height of the ground over the ball at p (stage units).
 float cvHeight(vec2 p, float t) {
@@ -218,7 +263,8 @@ float cvHeight(vec2 p, float t) {
   vec3 own;
   vec2 petal;
   float dome = cvDome(p, t, e, ge, rel, own, petal);
-  vec4 spot = cvSpot(p);
+  vec4 fibre;
+  vec4 spot = cvSpot(p, t, fibre);
   return mix(dome, spot.y, spot.x);
 }`
 
@@ -233,12 +279,14 @@ ${STAGE_GLSL}
 ${NOISE_GLSL}
 ${CONVECT_GLSL}
 void main() {
-  // the mesh lies still on the ground: rings round the point under the stage's camera, close together near it
-  float arc = uCvMesh.x * (exp(uCvMesh.y * position.x) - 1.0);
+  // the mesh lies still on the ground: rings round the point under the stage's camera
+  float arc = position.x;
   vec2 g = arc * vec2(cos(position.y), sin(position.y));
   float alpha = arc / ST_RADIUS;
   vec3 dir = -ST_DOWN * cos(alpha) + sin(alpha) * (ST_RIGHT * cos(position.y) + ST_FWD * sin(position.y));
-  float h = cvHeight(g, uCvTime);
+  // the relief is real as far as the rings are close enough to carry it; beyond, the ground is the ball itself
+  float real = 1.0 - smoothstep(uCvMesh.x, uCvMesh.y, arc);
+  float h = real > 0.0 ? cvHeight(g, uCvTime) * real : 0.0;
   vec3 p = ST_CENTRE + dir * (ST_RADIUS + h * uCvMesh.z);
   vG = g;
   vPos = p;
@@ -265,14 +313,18 @@ uniform float uAspect;
 uniform vec4 uCvHeat;
 uniform vec4 uCvTone;
 uniform vec4 uCvShade;
+uniform vec4 uCvSteep;
+uniform vec4 uCvSheen;
 uniform vec4 uCvGrain;
 uniform vec4 uCvRim;
+uniform vec4 uCvFall;
 uniform vec4 uCvUmbra;
 uniform vec4 uCvFibreLook;
 uniform vec4 uCvVeil;
 uniform vec3 uCvVeilTint;
 uniform vec4 uCvFar;
 uniform vec4 uCvMesh;
+uniform float uCvKeep;
 in vec2 vG;
 in vec3 vPos;
 in vec3 vView;
@@ -301,7 +353,8 @@ void main() {
   vec3 own;
   vec2 petal;
   float dome = cvDome(g, t, e, ge, rel, own, petal);
-  vec4 spot = cvSpot(g);
+  vec4 fibre;
+  vec4 spot = cvSpot(g, t, fibre);
   float L = uCvCell.x;
   float foot = max(length(dFdx(g)), length(dFdy(g)));
   float fine = 1.0 - smoothstep(uCvFar.x * L, uCvFar.y * L, foot);
@@ -309,16 +362,39 @@ void main() {
   float r2 = dot(rel, rel);
   float r = sqrt(r2);
   float old = smoothstep(0.5, 1.0, own.x);
-  float tall = uCvDome.x * (0.6 + 0.8 * own.y) * mix(0.55, 1.0, own.z);
-  float lane = cvLane(e);
-  vec2 slope = ge * (step(1e-6, e) * (1.0 - lane) / uCvDome.y * (tall + uCvPetal.x * (petal.x - 0.4)));
-  slope += (rel / L) * (2.0 * uCvPetalMore.w * old * exp(-r2 / 0.02) / 0.02 - 2.0 * uCvDome.z * own.z * exp(-r2 / (uCvDome.w * uCvDome.w)) / (uCvDome.w * uCvDome.w));
-  float pe = 0.012;
-  slope += vec2(cvPetal(rel + vec2(pe, 0.0), own.y, t).x - petal.x, cvPetal(rel + vec2(0.0, pe), own.y, t).x - petal.x) * (uCvPetal.x * lane / (pe * L));
+  float way = cvWay(r, e);
+  // a blown skin: round on top, and it meets the lane steeply (the edge power below 1 does that)
+  float cap = pow(max(1.0 - pow(way, uCvDome.w), 0.0), uCvGloss.w);
+  vec2 slope;
+  {
+    // the height's own derivative in the diagram's frame, carried to the ground through the chart's wander (two
+    // more looks at the chart and at the lumps, none at the cells)
+    float eL = e / L;
+    float sum = r + eL + 1e-5;
+    float on = step(1e-7, e);
+    vec2 gr = r > 1e-5 ? rel / r : vec2(0.0);
+    vec2 gway = (eL * gr - r * ge * on) / (sum * sum);
+    float dcap = -uCvGloss.w * uCvDome.w * pow(way, uCvDome.w - 1.0) * pow(max(1.0 - pow(way, uCvDome.w), 0.03), uCvGloss.w - 1.0);
+    float sz = (r + eL) / uCvDome.y;
+    float mine = (0.7 + 0.6 * own.y) * mix(0.5, 1.0, own.z);
+    float tall = uCvDome.z * clamp(sz, 0.35, 1.5) * mine + uCvDome.x;
+    float dtall = (sz > 0.35 && sz < 1.5) ? uCvDome.z * mine / uCvDome.y : 0.0;
+    float lump = uCvPetal.x * (petal.x - 0.4);
+    float dip = uCvPetalMore.w * old * exp(-r2 / 0.02);
+    float pe = 0.012;
+    vec2 glump = vec2(cvLumps(rel + vec2(pe, 0.0), own.y, t) - petal.x, cvLumps(rel + vec2(0.0, pe), own.y, t) - petal.x) / pe;
+    vec2 gq = dtall * cap * (gr + ge * on) + (tall + lump - dip) * dcap * gway + uCvPetal.x * cap * glump + dip * cap * rel / 0.01;
+    float je = max(0.5 * foot, 0.002);
+    vec2 q0 = cvChart(g, t);
+    vec2 qx = (cvChart(g + vec2(je, 0.0), t) - q0) / je;
+    vec2 qy = (cvChart(g + vec2(0.0, je), t) - q0) / je;
+    slope = vec2(dot(gq, qx), dot(gq, qy));
+  }
   for (int k = 0; k < (spot.x > 0.0 ? 1 : 0); k++) {
-    float eps = 0.003;
-    vec4 sx = cvSpot(g + vec2(eps, 0.0));
-    vec4 sy = cvSpot(g + vec2(0.0, eps));
+    float eps = max(foot, 0.003);
+    vec4 other;
+    vec4 sx = cvSpot(g + vec2(eps, 0.0), t, other);
+    vec4 sy = cvSpot(g + vec2(0.0, eps), t, other);
     float f0 = spot.x * (spot.y - dome);
     slope = slope * (1.0 - spot.x) + vec2(sx.x * (sx.y - dome) - f0, sy.x * (sy.y - dome) - f0) / eps;
   }
@@ -335,36 +411,50 @@ void main() {
   float muFlat = clamp(dot(dir, toEye), 0.0, 1.0);
 
   // heat of the cells: dark lanes, a bright middle while the cell is young, a dark dip when it is old
-  float body = 1.0 - exp(-e / uCvHeat.x);
+  float body = (1.0 - exp(-e / uCvHeat.x)) * mix(uCvSteep.x, 1.0, pow(cap, uCvSteep.y));
   float young = 1.0 - smoothstep(0.0, 0.45, own.x);
   float top = uCvTone.y * (1.0 - uCvTone.z + 2.0 * uCvTone.z * own.y) * (1.0 + uCvHeat.z * young - uCvHeat.w * old);
   top *= 1.0 + uCvTone.w * exp(-r2 / (uCvHeat.y * uCvHeat.y)) * (1.0 - 2.2 * old);
-  top *= 1.0 + (uCvGrain.x * 2.0 * (petal.x - 0.4) + uCvThread.w * (petal.y - 0.35)) * fine;
+  top *= 1.0 + uCvGrain.x * 2.0 * (petal.x - 0.4) * fine;
+  // the threads are seen by the dark between them: little on the top, deep on the side where the plasma runs down
+  // (a thread is drawn only where a pixel is narrower than it: farther off the locks merge into their mean)
+  float threads = 1.0 - smoothstep(uCvGloss.y, uCvGloss.z, foot);
+  top *= 1.0 + mix(-uCvThread.w * (0.1 + 0.9 * way * way) * 0.45, 0.25 * max(petal.y - 1.0, 0.0) - uCvThread.w * (0.1 + 0.9 * way * way) * (1.0 - min(petal.y, 1.0)), threads) * fine;
   top *= 1.0 + uCvGrain.w * (vnoise(vec3(g / L * uCvGrain.y, t * uCvGrain.z + own.y * 5.0)) + 0.6 * vnoise(vec3(g / L * uCvGrain.y * 3.7 + 9.1, t * uCvGrain.z * 1.6 + own.y * 3.0)) - 0.8) * fine;
   float lum = uCvTone.x + (top - uCvTone.x) * body;
   lum = mix(uCvFar.z, lum, mix(uCvFar.w, 1.0, fine));
 
-  // the sunspot: fibres with grains that run toward the umbra, the dark floor
+  // the sunspot: fibres with bodies, grains that run toward the umbra along them, a bright head where each ends
+  // over the dark floor
   float rs = spot.z;
   vec2 su = normalize(g - uCvSpot.xy + vec2(1e-6, 0.0));
   float run = vnoise(vec3(su * uCvFibre.x * 1.7 + 1.7, rs * uCvFibreLook.y + t * uCvFibreLook.z));
-  float lip = 1.0 + uCvUmbra.w * (spot.w - 0.4);
-  float head = exp(-pow((rs - lip) / uCvUmbra.y, 2.0));
-  float pen = uCvUmbra.z * (uCvFibreLook.x + (1.0 - uCvFibreLook.x) * smoothstep(0.15, uCvFibreLook.w, spot.w)) * (0.55 + 0.9 * run) * (1.0 + head) * mix(1.0, 0.8, smoothstep(1.0, 2.2, rs));
+  float fine2 = vnoise(vec3(su * uCvFibre.x * 4.3 + 5.1, rs * uCvFibreLook.y * 0.4 + t * uCvFibreLook.z * 0.5));
+  float head = exp(-pow((fibre.y - 0.45) / uCvUmbra.y, 2.0));
+  float pen = uCvUmbra.z * (uCvFibreLook.x + (1.0 - uCvFibreLook.x) * pow(spot.w, uCvFibreLook.w)) * (0.5 + 0.6 * run + 0.5 * fine2 * fibre.x) * (0.7 + 0.6 * fibre.z) * (1.0 + uCvUmbra.w * head) * mix(1.0, 0.8, smoothstep(1.0, 2.2, rs));
   float floorL = uCvUmbra.x * (0.6 + 0.8 * vnoise(vec3(g * 22.0, t * 0.15)));
-  lum = mix(lum, mix(floorL, pen, smoothstep(lip * 0.94, lip * 1.08, rs)), spot.x);
+  lum = mix(lum, mix(floorL, pen, smoothstep(0.0, 0.25, fibre.y)), spot.x);
 
-  // light leaves the hot gas along its own normal: a face turned to the eye is brighter than one turned away
+  // light leaves the hot gas along its own normal: a level top is the brightest, a steep side is darker on every
+  // side of the bulb, and a face turned to the eye is a little brighter than one turned away
   float limb = (1.0 - uCvShade.x + uCvShade.x * mu) / (1.0 - uCvShade.x + uCvShade.x * muFlat);
-  lum *= mix(1.0, clamp(limb, uCvShade.y, uCvShade.z), fine);
+  float faced = clamp((limb - uCvShade.y) / (uCvShade.z - uCvShade.y), 0.0, 1.0);
+  float level = smoothstep(uCvSteep.z, uCvSteep.w, dot(normal, dir));
+  float shade = (uCvShade.y + (uCvShade.z - uCvShade.y) * faced * faced * (3.0 - 2.0 * faced)) * mix(uCvSheen.w, 1.0, level);
+  lum *= mix(1.0, shade, fine * (1.0 - spot.x)) * mix(1.0, uCvShade.y + (uCvShade.z - uCvShade.y) * faced * faced * (3.0 - 2.0 * faced), fine * spot.x);
+  // the light falls toward the limb: the flatter the ball itself is seen, the less of the deep hot gas shows
+  lum *= 1.0 - uCvFall.x * pow(1.0 - muFlat, uCvFall.y);
   float rim = exp(-pow((e - uCvRim.y) / uCvRim.z, 2.0)) * smoothstep(1.0, uCvRim.w, limb) * (1.0 - spot.x);
-  lum += (uCvRim.x * rim + uCvShade.w * body * pow(mu, 6.0) * (1.0 - spot.x)) * fine;
+  // the gloss of the bulbs: a sheen where the surface lies between the eye and the far light
+  vec3 lightDir = normalize(ST_RIGHT * uCvSheen.x + ST_FWD * uCvSheen.y - ST_DOWN * uCvSheen.z);
+  float sheen = pow(max(dot(normal, normalize(toEye + lightDir)), 0.0), uCvGloss.x);
+  lum += (uCvRim.x * rim + uCvShade.w * body * sheen * (1.0 - spot.x)) * fine;
 
   vec3 shown = texture(uRamp, vec2(clamp(lum, 0.0, 1.0), 0.5)).rgb;
   vec3 col = inverseFilmic(grade(shown, 0.0));
   // a thin glowing layer over the ground: the longer the way through it, the more of it
-  float way = 1.0 / max(muFlat, 0.02);
-  float veil = 1.0 - exp(-uCvVeil.x * (way - 1.0));
+  float through = 1.0 / max(muFlat, 0.02);
+  float veil = 1.0 - exp(-uCvVeil.x * (through - 1.0));
   col = mix(col, inverseFilmic(grade(uCvVeilTint, 0.0)) * uCvVeil.y, clamp(veil, 0.0, uCvVeil.z));
 
   vec3 here = vPos;
@@ -382,7 +472,9 @@ void main() {
   }
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
-  outColor = diagOut(vec4(col, 1.0), 1.0, 1.0, vec3(0.9, 0.5, 0.1), vec2(0.0), length(vView));
+  // seen from the globe's side the ground gives way to the globe's own face by the eye's height alone
+  if (uCvKeep <= 0.0 || (uDiag >= 2 && uCvKeep < 0.5)) discard;
+  outColor = diagOut(vec4(col, uCvKeep), 1.0, 1.0, vec3(0.9, 0.5, 0.1), vec2(0.0), length(vView));
 }`
 
 const srgbToLinear = (v: number): number => (v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4))
@@ -424,9 +516,14 @@ function rampTexture(): THREE.DataTexture {
 type Shared = Record<string, THREE.IUniform>
 
 export class Surface {
-  readonly mesh: THREE.Mesh
+  readonly mesh: THREE.Group
   readonly material: THREE.ShaderMaterial
+  /** The same ground seen from the globe's side: it is laid over the globe's own face and may be thin. */
+  private readonly laid: THREE.ShaderMaterial
   private readonly ramp: THREE.DataTexture
+  private readonly pieces: { mesh: THREE.Mesh; mid: THREE.Vector3; wide: number }[] = []
+  private readonly towards = new THREE.Vector3()
+  private readonly over: number
 
   /** shared: the uniforms of the lights that the opening throws on the ground, kept by the old ground. */
   constructor(shared: Shared) {
@@ -455,21 +552,28 @@ export class Surface {
         uCvLife: { value: new THREE.Vector4(c.life[0]!, c.life[1]!, c.parts, c.ripe) },
         uCvGrow: { value: new THREE.Vector4(c.grow[0]!, c.grow[1]!, c.grow[2]!, c.empty) },
         uCvLane: { value: new THREE.Vector4(c.dome.sink, c.thread.off, c.laneIn, c.round) },
-        uCvDome: { value: new THREE.Vector4(c.dome.height, c.dome.shoulder, c.dome.bulge, c.dome.bulgeWide) },
+        uCvDome: { value: new THREE.Vector4(c.dome.height, c.dome.full, c.dome.bulge, c.dome.power) },
         uCvWarp: { value: new THREE.Vector4(c.warp.amount, c.warp.scale, c.warp.rate, c.wander) },
         uCvSpot: { value: new THREE.Vector4(at[0], at[1], umbra, umbra * s.penumbra) },
         uCvPit: { value: new THREE.Vector4(s.drop[0]!, s.drop[1]!, s.wall[0]!, s.wall[1]!) },
         uCvFibre: { value: new THREE.Vector4(s.fibres.count, s.fibres.height, s.fibres.along, s.ragged) },
-        uCvMesh: { value: new THREE.Vector4(m.near, Math.log(1 + (THREE.MathUtils.degToRad(m.capDeg) * stage.radius) / m.near), 1, 0) },
+        uCvBend: { value: new THREE.Vector4(s.fibres.bend[0]!, s.fibres.bend[1]!, s.fibres.bend[2]!, s.fibres.round) },
+        uCvStream: { value: new THREE.Vector4(s.fibres.stream, s.fibres.ends, s.fibres.headLong, s.fibres.power) },
+        uCvMesh: { value: new THREE.Vector4(m.real[0]!, m.real[1]!, 1, 0) },
+        uCvKeep: { value: 1 },
         uCvHeat: { value: new THREE.Vector4(l.lane, l.middleWide, l.young, l.old) },
         uCvTone: { value: new THREE.Vector4(l.dark, l.top, l.spread, l.middle) },
         uCvShade: { value: new THREE.Vector4(l.limb, l.shade[0]!, l.shade[1]!, l.glint) },
+        uCvSteep: { value: new THREE.Vector4(l.flank[0]!, l.flank[1]!, l.steep[1]!, l.steep[2]!) },
+        uCvSheen: { value: new THREE.Vector4(l.sheen.from[0]!, l.sheen.from[1]!, l.sheen.from[2]!, l.steep[0]!) },
+        uCvGloss: { value: new THREE.Vector4(l.sheen.power, l.threadFar[0]!, l.threadFar[1]!, c.dome.edge) },
         uCvGrain: { value: new THREE.Vector4(l.petal, l.boil.scale, l.boil.rate, l.boil.amount) },
         uCvPetal: { value: new THREE.Vector4(c.lumps.height, c.lumps.scale[0]!, c.lumps.turn[0]!, c.lumps.speed[0]!) },
         uCvThread: { value: new THREE.Vector4(c.thread.round, c.thread.out, c.thread.speed, l.thread) },
-        uCvWarpMore: { value: new THREE.Vector4(c.warp.fine[0]!, c.warp.fine[1]!, c.warp.fine[2]!, 0) },
-        uCvGap: { value: new THREE.Vector4(c.gap.width, c.gap.scale, c.gap.vary, c.gap.rate) },
+        uCvWarpMore: { value: new THREE.Vector4(c.warp.fine[0]!, c.warp.fine[1]!, c.warp.fine[2]!, c.sizes) },
+        uCvGap: { value: new THREE.Vector4(c.gap.width, c.gap.scale, c.gap.vary, c.lumps.crease) },
         uCvPetalMore: { value: new THREE.Vector4(c.lumps.scale[1]!, c.lumps.turn[1]!, c.lumps.speed[1]!, c.dome.dimple) },
+        uCvFall: { value: new THREE.Vector4(l.fall.amount, l.fall.power, 0, 0) },
         uCvRim: { value: new THREE.Vector4(l.rim.amount, l.rim.at, l.rim.wide, l.rim.facing) },
         uCvUmbra: { value: new THREE.Vector4(s.floor, s.fibres.head, s.fibres.level, s.fibres.edge) },
         uCvFibreLook: { value: new THREE.Vector4(s.fibres.gap, s.fibres.grains, s.fibres.speed, s.fibres.cut) },
@@ -478,25 +582,36 @@ export class Surface {
         uCvFar: { value: new THREE.Vector4(l.far.from, l.far.to, l.far.level, l.far.keep) },
       },
     })
-    const rings = m.rings
-    const sectors = m.sectors
-    const positions = new Float32Array((rings + 1) * sectors * 3)
-    for (let i = 0; i <= rings; i++) {
-      for (let j = 0; j < sectors; j++) {
-        const k = (i * sectors + j) * 3
-        positions[k] = i / rings
-        positions[k + 1] = (j / sectors) * Math.PI * 2
-        positions[k + 2] = 0
-      }
+    // Rings round the point under the stage's camera. Their spacing follows what a pixel covers on the ground from the
+    // stage's own eye, 1 unit up: the finest step out to m.fineTo, then wider as 1 plus the arc squared up to m.coarse
+    // (a few rings to a cell), kept as far as the relief is real; beyond that m.tail rings, each a fixed share wider
+    // than the last, out to the cap.
+    const arcs = [0]
+    while (arcs[arcs.length - 1]! < m.real[1]!) {
+      const a = arcs[arcs.length - 1]!
+      arcs.push(a + Math.min(m.coarse, m.step * Math.max(1, (1 + a * a) / (1 + m.fineTo * m.fineTo))))
     }
-    const index = new Uint32Array(rings * sectors * 6)
+    const reach = THREE.MathUtils.degToRad(m.capDeg) * stage.radius - arcs[arcs.length - 1]!
+    let low = 1
+    let high = 1.2
+    const sum = (g: number): number => (m.coarse * g * (Math.pow(g, m.tail) - 1)) / (g - 1)
+    for (let k = 0; k < 60; k++) {
+      const mid = (low + high) / 2
+      if (sum(mid) < reach) low = mid
+      else high = mid
+    }
+    for (let i = 1; i <= m.tail; i++) arcs.push(arcs[arcs.length - 1]! + m.coarse * Math.pow(low, i))
+    // The mesh is cut in pieces (bands of rings by wedges of sectors) that share their edges exactly; a piece that
+    // lies outside the picture or behind the horizon is not drawn. Which pieces are drawn follows from the eye alone.
+    const per = m.sectors / m.wedges
+    const index = new Uint16Array(m.band * per * 6)
     let n = 0
-    for (let i = 0; i < rings; i++) {
-      for (let j = 0; j < sectors; j++) {
-        const a = i * sectors + j
-        const b = i * sectors + ((j + 1) % sectors)
-        const cc = a + sectors
-        const d = b + sectors
+    for (let i = 0; i < m.band; i++) {
+      for (let j = 0; j < per; j++) {
+        const a = i * (per + 1) + j
+        const b = a + 1
+        const cc = a + per + 1
+        const d = cc + 1
         index[n++] = a
         index[n++] = cc
         index[n++] = b
@@ -505,21 +620,65 @@ export class Surface {
         index[n++] = d
       }
     }
-    const geometry = new THREE.BufferGeometry()
-    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
-    geometry.setIndex(new THREE.BufferAttribute(index, 1))
+    const faces = new THREE.BufferAttribute(index, 1)
+    const up = stage.down.clone().negate()
+    const fwd = new THREE.Vector3(0, 0, -1).addScaledVector(stage.down, stage.down.z).normalize()
+    const right = fwd.clone().cross(up).normalize()
+    const onBall = (arc: number, turn: number): THREE.Vector3 => {
+      const alpha = arc / stage.radius
+      return up.clone().multiplyScalar(Math.cos(alpha)).addScaledVector(right, Math.sin(alpha) * Math.cos(turn)).addScaledVector(fwd, Math.sin(alpha) * Math.sin(turn))
+    }
     this.material.side = THREE.DoubleSide
-    this.mesh = new THREE.Mesh(geometry, this.material)
-    this.mesh.frustumCulled = false
+    this.laid = new THREE.ShaderMaterial({ glslVersion: THREE.GLSL3, vertexShader: VERT, fragmentShader: FRAG, uniforms: this.material.uniforms, transparent: true, side: THREE.DoubleSide })
+    this.mesh = new THREE.Group()
+    this.mesh.renderOrder = -6
+    for (let i0 = 0; i0 < arcs.length - 1; i0 += m.band) {
+      for (let w = 0; w < m.wedges; w++) {
+        const positions = new Float32Array((m.band + 1) * (per + 1) * 3)
+        for (let i = 0; i <= m.band; i++) {
+          for (let j = 0; j <= per; j++) {
+            const k = (i * (per + 1) + j) * 3
+            positions[k] = arcs[Math.min(i0 + i, arcs.length - 1)]!
+            positions[k + 1] = (((w * per + j) % m.sectors) / m.sectors) * Math.PI * 2
+            positions[k + 2] = 0
+          }
+        }
+        const geometry = new THREE.BufferGeometry()
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+        geometry.setIndex(faces)
+        const a0 = arcs[i0]!
+        const a1 = arcs[Math.min(i0 + m.band, arcs.length - 1)]!
+        const mid = onBall((a0 + a1) / 2, ((w + 0.5) * per / m.sectors) * Math.PI * 2)
+        let wide = 0
+        for (const a of [a0, a1]) for (const t of [w, w + 0.5, w + 1]) wide = Math.max(wide, mid.angleTo(onBall(a, ((t * per) / m.sectors) * Math.PI * 2)))
+        geometry.boundingSphere = new THREE.Sphere(stage.centre.clone().addScaledVector(mid, stage.radius), 2 * stage.radius * Math.sin(wide / 2) + m.relief)
+        const piece = new THREE.Mesh(geometry, this.material)
+        piece.renderOrder = -6
+        this.mesh.add(piece)
+        this.pieces.push({ mesh: piece, mid, wide })
+      }
+    }
+    this.over = Math.acos(stage.radius / (stage.radius + m.relief))
   }
 
-  update(time: number): void {
+  /** eye: the eye in the stage's own frame. keep: how much of the ground is drawn over what lies under it (1 in the
+   * close view; on the globe's side it falls with the eye's height). onGlobe: the ground lies on the globe. */
+  update(time: number, eye: THREE.Vector3, keep = 1, onGlobe = false): void {
     this.material.uniforms.uCvTime!.value = time
+    this.material.uniforms.uCvKeep!.value = keep
+    this.mesh.visible = keep > 0
+    const material = onGlobe ? this.laid : this.material
+    for (const piece of this.pieces) piece.mesh.material = material
+    const from = this.towards.copy(eye).sub(stage.centre)
+    const horizon = Math.acos(Math.min(stage.radius / from.length(), 1)) + this.over
+    from.normalize()
+    for (const piece of this.pieces) piece.mesh.visible = piece.mid.angleTo(from) - piece.wide < horizon
   }
 
   dispose(): void {
-    this.mesh.geometry.dispose()
+    for (const piece of this.pieces) piece.mesh.geometry.dispose()
     this.material.dispose()
+    this.laid.dispose()
     this.ramp.dispose()
   }
 }

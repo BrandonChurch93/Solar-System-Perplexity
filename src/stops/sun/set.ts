@@ -138,13 +138,14 @@ export const createSet: SetFactory = async (ctx) => {
         const erupt = loops.erupt(since, open)
         ground.update(eye, t, gain, vignette, aspect, fringe.lod(view.camera.fov, view.format.height), 0, open, since, look.opening.feet.ground * open * 0.5 * (feet[0] + feet[1]) + calm * loops.lit(since), look.opening.surge.ground * surge[3], look.opening.surge.kick * surge[2], look.opening.erupt.flash.ground * erupt[2] + loops.shell(since, open), look.opening.erupt.flash.veil * erupt[2], look.opening.feet.ground * open * 0.5 * (feet[0] + feet[1]))
         lifeFormat(ground.material.uniforms, view.format.height)
-        surface.mesh.visible = !placing
-        ground.mesh.visible = placing
-        surface.update(t)
+        // the ground from functions is the same on both sides of the rise: on the globe's side it lies on the globe
+        // and gives way to the globe's own face by the eye's height
+        ground.mesh.visible = false
+        surface.update(t, eye, placing ? 1 - above(by.surface) : 1, placing)
         ground.material.uniforms.uFieldFine!.value.x = rising ? above(by.field) : 0
         fringe.update(eye, t, gain, vignette, aspect, view.camera.fov, view.format.height, 1 - above(by.fringe))
-        fringe.mesh.visible = placing
-        jets.update(t, placing ? 0 : 1 - above(by.fringe))
+        fringe.mesh.visible = false
+        jets.update(t, 1 - above(by.fringe))
         const strands = 1 - above(by.loops)
         loops.mesh.visible = strands > 0
         loops.trim(above(by.strands))
@@ -153,7 +154,10 @@ export const createSet: SetFactory = async (ctx) => {
       }
       const elapsed = state.time - plan.holdMid
       const spin = plan.spin(state.time)
-      globe.place(placing ? 1 : 0, 1 - above(by.tidy), 1 - above(by.corona), 1 - above(by.spot))
+      globe.place(0, 1 - above(by.tidy), 1 - above(by.corona), 1 - above(by.spot))
+      // while the ground lies on the globe its lanes and its spot reach under the globe's ball: the ball is drawn
+      // first and leaves the depth to the ground (the ground covers all of the ball that can be seen from there)
+      globe.material.depthWrite = !(placing && above(by.surface) < 1)
       const glow = above(by.corona)
       const leaving = kind === 'travel'
       const going = leaving ? even(state.u, look.leave.over) : 0
