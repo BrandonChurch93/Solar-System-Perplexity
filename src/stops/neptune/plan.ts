@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { config } from '../../config'
+import { config, type Segment } from '../../config'
 import type { Pose, ViewKind } from '../../core/types'
 import { StopPlan, type Fit, type MoveParams } from '../../director/moves'
 import { drift, lookAt } from '../../director/rig'
@@ -19,7 +19,7 @@ export const params: MoveParams = {
   light: { exposure: 1, skyExposure: 0.65, sunRadiusDeg: 0.14, sunGlare: 0.6, flare: 0 },
   skyAim: { orbit: [25.78793, 56.89437, -50.63077], terrain: [180, -12, 40] },
   cover: [0.27, 0.43, 0.8],
-  handover: { dive: { at: move.dive.at, picture: false }, rise: { at: move.rise.at, picture: false } },
+  handover: { dive: { at: move.dive.at, picture: false, skyFrames: 0, ...move.one.dive }, rise: { at: move.rise.at, picture: false, skyFrames: 0, ...move.one.rise } },
   spinDegPerSecond: 1.3,
   moonDegPerSecond: 0.3,
   tint: [0.3, 0.5, 1],
@@ -141,6 +141,29 @@ class NeptunePlan extends StopPlan {
   override risePose(time: number, view: ViewKind): Pose {
     const pose = this.flown('rise', time)
     return view === 'orbit' ? this.spun(pose, time) : this.toClose(pose)
+  }
+
+  // The sky on the globe side by the eye's height, never by the clock (move.json, sky.height): the sky of the hold stays on the Sun while
+  // the Sun and the sky are in the frame; between the two heights, where the globe fills the frame but for one corner, it turns to the
+  // sky of the close view (dive). The same law holds between two frames of the film and at any rate of capture.
+  private skyLow(kind: 'dive' | 'rise', time: number): number {
+    const high = this.eye(kind, time, 'orbit').position.length() - 1
+    return 1 - smooth(Math.log(Math.max(high, 1e-6) / move.sky.height[1]!) / Math.log(move.sky.height[0]! / move.sky.height[1]!))
+  }
+
+  // The share of the close view's sky layer on the globe side: by the same height law when sky.own is set, else the engine's (with
+  // skyFrames 0 that one changes in one frame at the change of view).
+  override skyShare(seg: Segment, time: number): { low: number } | null {
+    return move.sky.own && (seg.kind === 'dive' || seg.kind === 'rise') ? { low: this.skyLow(seg.kind, time) } : null
+  }
+
+  override skyCarryShare(seg: Segment, time: number): number | null {
+    return seg.kind === 'dive' ? this.skyLow('dive', time) : null
+  }
+
+  // The rise keeps the engine's law for the turn until the engine turns the sky by height.
+  override skyTurnShare(seg: Segment, time: number): number | null {
+    return seg.kind === 'dive' ? this.skyLow('dive', time) : super.skyTurnShare(seg, time)
   }
 
   override hold(tRel: number): Pose {
