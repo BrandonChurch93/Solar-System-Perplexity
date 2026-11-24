@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T21:27:04.755Z",
- "head": "867215d0918c11d1eb56183c056552bcb0c1b870",
- "note": "bad: the calm zone's rim is a straight line 10 degrees long that cuts clouds, relief and shadows; cure tried in Python reads as cloud (proto-a), not built yet",
+ "pushed": "2026-11-24T21:48:46.197Z",
+ "head": "540ce50cfcb53ae354eefb8b5d0336a464e94928",
+ "note": "rim cure of the calm zone tried on the plate raster (east, south), pull back of the rise at draft 2164 to 2179; levels build runs",
  "looks": [
+  {
+   "time": "2026-11-24T21:48:45.252Z",
+   "file": "20261124214845252-note-ta-a.jpg",
+   "source": "../../../../tmp/gl/s18/ta-a.jpg",
+   "kind": "note",
+   "label": "draft 2164 to 2179 with the pull back speed 1.0 over 0.5 and land 30: the rise's end and the first frames of the travel",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T21:48:44.615Z",
+   "file": "20261124214844615-note-rim-south.jpg",
+   "source": "../../../../tmp/gl/s18/rim-south.jpg",
+   "kind": "note",
+   "label": "the same, south rim in three strips: flat cloud tops and the straight start of the drawn relief are gone",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T21:48:43.564Z",
+   "file": "20261124214843564-note-rim-east.jpg",
+   "source": "../../../../tmp/gl/s18/rim-east.jpg",
+   "kind": "note",
+   "label": "plate raster after the near sea with the rim cure, east rim in three strips, native size: the clouds end on their own lumps, no straight cut (before: the look rim-east of 21:27)",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T21:27:04.200Z",
    "file": "20261124212704200-note-rim-east.jpg",
@@ -74,30 +98,6 @@
    "source": "../../../../tmp/gl/s15/n4-far-b.jpg",
    "kind": "note",
    "label": "1f3e0bd5: far zone native 2118 to 2129 (the lift of MAIL 719)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T19:59:04.271Z",
-   "file": "20261124195904271-note-t1-far-b.jpg",
-   "source": "../../../../tmp/gl/s15/t1-far-b.jpg",
-   "kind": "note",
-   "label": "worktree T: far zone native 2118 to 2129, deck's far edge and the map's puffs show",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T19:59:03.069Z",
-   "file": "20261124195903069-note-t1-far-a.jpg",
-   "source": "../../../../tmp/gl/s15/t1-far-a.jpg",
-   "kind": "note",
-   "label": "worktree T: far zone native 2106 to 2117",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T19:46:38.030Z",
-   "file": "20261124194638030-note-t1-rise-centre.jpg",
-   "source": "../../../../tmp/gl/s15/t1-rise-centre.jpg",
-   "kind": "note",
-   "label": "trial T (haze on a share of its own by height), draft, not committed: t1-rise-centre",
    "stop": "earth"
   }
  ]
