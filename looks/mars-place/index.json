@@ -1,9 +1,49 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T20:07:22.123Z",
+ "pushed": "2026-11-24T20:27:13.919Z",
  "head": "024eaa6dd045f918b610a6c0276af3515b5c82b9",
- "note": "need measure not used; exchange 3 (patch-19 to land-8p5) cured in the files by landunder.py, 1.37 to 0.27 in the level judge; rendering the candidate",
+ "note": "round 2 item 1: country round the place from takes led by the laid ground; test renders running",
  "looks": [
+  {
+   "time": "2026-11-24T20:27:12.994Z",
+   "file": "20261124202712994-note-r38-take.jpg",
+   "source": "out/work/place/see/r38-take.jpg",
+   "kind": "note",
+   "label": "take r38 (3.8 degrees)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T20:27:12.285Z",
+   "file": "20261124202712285-note-e0-plates.jpg",
+   "source": "out/work/place/see/e0-plates.jpg",
+   "kind": "note",
+   "label": "test e0: plates 0.3, 0.7, 1.6 degrees with the takes round the laid ground",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T20:27:11.332Z",
+   "file": "20261124202711332-note-c1-way.jpg",
+   "source": "out/work/place/see/c1-way.jpg",
+   "kind": "note",
+   "label": "test c1 (short lay, landunder): 2434 to 2476, 2687 to 2696: one country to 2462, still a plain that turns into canyon land at 2468",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T20:27:10.562Z",
+   "file": "20261124202710562-note-d0-HR.jpg",
+   "source": "out/work/place/see/d0-HR.jpg",
+   "kind": "note",
+   "label": "test: globe ground alone (left) against close meshes alone (right) at 2450, 2456, 2462, 2466: the meshes from above are a slab with straight sides",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T20:27:09.408Z",
+   "file": "20261124202709408-note-takes-r.jpg",
+   "source": "out/work/place/see/takes-r.jpg",
+   "kind": "note",
+   "label": "takes of round 2: leads (left) and takes, top row r16 lead, r16 take, r07 lead; bottom row r03 lead, r03 take, r07 take",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T20:07:21.470Z",
    "file": "20261124200721470-note-b5-keep-1p6.jpg",
@@ -26,46 +66,6 @@
    "source": "out/work/place/see/grid-2468-corners.jpg",
    "kind": "note",
    "label": "what the lower corners of 2468 are: a grid on the plates (0.02 degrees): made sand south east of the spot, a dark made hill north of it",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T20:07:19.345Z",
-   "file": "20261124200719345-note-b5-above.jpg",
-   "source": "out/work/place/see/b5-above.jpg",
-   "kind": "note",
-   "label": "test, not committed: b5 from above 2438 to 2462, 2696 against the committed frames: fan, striped bar and dark blade of the far lay",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T20:07:18.440Z",
-   "file": "20261124200718440-note-b5-low.jpg",
-   "source": "out/work/place/see/b5-low.jpg",
-   "kind": "note",
-   "label": "test, not committed: b5 plates at 2468 to 2476, 2687, 2690 with b4 and the committed 2474: corners not cured",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T19:24:01.412Z",
-   "file": "20261124192401412-note-b5-plates.jpg",
-   "source": "out/work/place/see/b5-plates.jpg",
-   "kind": "note",
-   "label": "b5 plates, new skirt toned from the laid ground, not rendered yet",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T19:24:00.569Z",
-   "file": "20261124192400569-note-lr-b4.jpg",
-   "source": "out/work/place/see/lr-b4.jpg",
-   "kind": "note",
-   "label": "b4 lower right corner: near black canyon floor behind a hump",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T19:23:59.951Z",
-   "file": "20261124192359951-note-ll-b4.jpg",
-   "source": "out/work/place/see/ll-b4.jpg",
-   "kind": "note",
-   "label": "b4 lower left corner 2468 to 2476: straight apron edge with fringe",
    "stop": "mars"
   }
  ]
