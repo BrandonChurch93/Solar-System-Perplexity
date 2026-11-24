@@ -1,9 +1,25 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T21:20:05.625Z",
+ "pushed": "2026-11-24T21:46:29.206Z",
  "head": "79ade56611076a9e7916cd518409a37651d88994",
- "note": "item 739 proven on drafts (only 4501 to 4529 move); next the blur law of mail 727 point 3",
+ "note": "blur law (mail 727 point 3): final tier frames as they are render now (Mars 2702 takes about an hour); reading drafts and plan numbers meanwhile",
  "looks": [
+  {
+   "time": "2026-11-24T21:46:28.207Z",
+   "file": "20261124214628207-note-mars-draft-2.jpg",
+   "source": "../../../../tmp/law/mars-draft-2.jpg",
+   "kind": "note",
+   "label": "blur law, first reading: Mars drafts (ONE sample) 2427 and 2436, lower right at full size: the strokes of the canyon walls are in one sample",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T21:46:27.220Z",
+   "file": "20261124214627220-note-mars-draft-1.jpg",
+   "source": "../../../../tmp/law/mars-draft-1.jpg",
+   "kind": "note",
+   "label": "blur law, first reading: Mars drafts (ONE sample, no shutter) 2427, 2436 (dive), 2702, 2706 (rise), whole frames",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T21:19:54.815Z",
    "file": "20261124211954815-note-dim-sheet-2.jpg",
@@ -61,21 +77,6 @@
    "kind": "note",
    "label": "Mars dive 2405 and 2413 at full size by the camera's own map: Phobos is carried as if it were ground",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T20:52:59.419Z",
-   "file": "20261124205259419-note-way2-mars3-dive-2405.jpg",
-   "source": "out/work/cure/way2-mars3-dive-2405.jpg",
-   "kind": "note",
-   "label": "Mars dive pair 2405, 2413 read three ways: Phobos before the disc, the camera's map alone reads 1.469",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T20:52:58.699Z",
-   "file": "20261124205258699-note-way2-ju3-rise-3288.jpg",
-   "source": "out/work/cure/way2-ju3-rise-3288.jpg",
-   "kind": "note",
-   "label": "Jupiter rise pair 3288, 3296 read three ways: a moon before the disc, the camera's map alone reads it as ground"
   }
  ]
 }
