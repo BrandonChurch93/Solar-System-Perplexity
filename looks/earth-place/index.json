@@ -1,9 +1,57 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T17:58:46.287Z",
- "head": "5109a2a512a0b8939758dd2b47de794a87a8e663",
- "note": "far zone red taken apart: detail by angle is the larger part; rise red 2112 to 2127; standing plate puffs in Python only",
+ "pushed": "2026-11-24T18:29:17.094Z",
+ "head": "fff4e3ab3e56a09be2550515aae0230140d67321",
+ "note": "trial v1: one law by height for veil and detail; rise in place 3.82 at 2136 (was 2.76 at 2120), pattern red moved to the top end; not kept as is, law being reshaped",
  "looks": [
+  {
+   "time": "2026-11-24T18:29:16.480Z",
+   "file": "20261124182916480-note-c1.jpg",
+   "source": "../../../../tmp/gl/s14/w/c1.jpg",
+   "kind": "note",
+   "label": "sketch W, deck as standing sheets, Python only: slabs and holes, dropped",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T18:29:15.908Z",
+   "file": "20261124182915908-note-rise-n4-2112-2131.jpg",
+   "source": "../../../../tmp/gl/s14/rise-n4-2112-2131.jpg",
+   "kind": "note",
+   "label": "1f3e0bd5 rise 2112 to 2131 every frame: the veil lifts 2119 to 2127 (MAIL 719)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T18:29:15.327Z",
+   "file": "20261124182915327-note-v1-dive-centre.jpg",
+   "source": "../../../../tmp/gl/s14/v1-dive-centre.jpg",
+   "kind": "note",
+   "label": "trial v1 (top) against 1f3e0bd5 (bottom), native crop at frame centre 1866 to 1876",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T18:29:14.589Z",
+   "file": "20261124182914589-note-v1-dive-a.jpg",
+   "source": "../../../../tmp/gl/s14/v1-dive-a.jpg",
+   "kind": "note",
+   "label": "trial v1, dive 1866 to 1896 every second frame: haze patch and streak come in 1870 to 1880",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T18:29:13.982Z",
+   "file": "20261124182913982-note-v1-rise-b.jpg",
+   "source": "../../../../tmp/gl/s14/v1-rise-b.jpg",
+   "kind": "note",
+   "label": "trial v1, rise 2124 to 2139 every frame: haze thins slower, patch still reads as laid on the map",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T18:29:13.364Z",
+   "file": "20261124182913364-note-v1-rise-a.jpg",
+   "source": "../../../../tmp/gl/s14/v1-rise-a.jpg",
+   "kind": "note",
+   "label": "trial v1, one law by height, rise 2108 to 2123 every frame (draft)",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T17:58:45.591Z",
    "file": "20261124175845591-note-pmap-rise.jpg",
@@ -50,54 +98,6 @@
    "source": "../../../../tmp/gl/s12/r1a.jpg",
    "kind": "note",
    "label": "Standing puffs trial r1, Python only, no veil, no grade, no render: noise heights painted by the close picture's projection. Read: hard paper cutouts, a sharp wedge of blue specks at the hold. Not good.",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T17:19:43.767Z",
-   "file": "20261124171943767-note-diag-far.jpg",
-   "source": "../../../../tmp/gl/s11/diag-far.jpg",
-   "kind": "note",
-   "label": "Far band 1886 to 1894, draft: as it is, lay back detail off, veil off. The island with its puffs goes and the lay back's deck comes, by angle. This is the exchange the pattern measure reads (to 1.12 at 1890).",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T17:19:43.152Z",
-   "file": "20261124171943152-note-y2-look.jpg",
-   "source": "../../../../tmp/gl/s11/y2-look.jpg",
-   "kind": "note",
-   "label": "Y2 trial, Python only, no render: plate, plate plus a bank whose cover is the close picture's own deck mask, the lay back. Read: a dense fan with radial streaks that ends at once on its west side and hides the west half of Cuba. Fails condition (b). Dropped.",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T17:10:11.178Z",
-   "file": "20261124171011178-note-pmap-bank.jpg",
-   "source": "../../../../tmp/gl/s11/pmap-bank.jpg",
-   "kind": "note",
-   "label": "bank try 8, rate 2 pattern maps 1878 1880 1884 1887 1890: the bank adds red in the middle at 1878 and 1880 (0.69, 0.64; 0.44, 0.45 before) and changes nothing at the upper left band (1.12 at 1890 as before). The measure speaks against try 8.",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T16:38:46.451Z",
-   "file": "20261124163846451-note-sheet-out.jpg",
-   "source": "../../../../tmp/gl/s11/a2/sheet-out.jpg",
-   "kind": "note",
-   "label": "bank on, travel out 2175 to 2250 every 6th (draft)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T16:38:45.415Z",
-   "file": "20261124163845415-note-sheet-arr.jpg",
-   "source": "../../../../tmp/gl/s11/a2/sheet-arr.jpg",
-   "kind": "note",
-   "label": "bank on, arrival 1605 to 1679 every 6th (draft)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T16:38:44.412Z",
-   "file": "20261124163844412-note-zone-edges.jpg",
-   "source": "../../../../tmp/gl/s11/a2/zone-edges.png",
-   "kind": "note",
-   "label": "bank on, zone times 2: arrival 1665 1671 1677 1679, travel out 2175 2181 (draft)",
    "stop": "earth"
   }
  ]
