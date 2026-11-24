@@ -1,9 +1,25 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T14:59:39.044Z",
+ "pushed": "2026-11-24T15:23:17.426Z",
  "head": "f7ab197acd05bea7317f6e576894f818484ae09a",
- "note": "baseline before the bank: pattern map of the dive middle, red in the far zone (1.12 at 1890); rise end window like with like reads pop 1.09, pattern 0.38",
+ "note": "bank first try in the shader: white popcorn, too crisp and too white against the lay back's deck, not good yet",
  "looks": [
+  {
+   "time": "2026-11-24T15:23:16.472Z",
+   "file": "20261124152316472-note-hold-pair.jpg",
+   "source": "../../../../tmp/gl/s11/hold-pair.png",
+   "kind": "note",
+   "label": "bank first try at the hold 1755: kept final | draft with the bank, zone times 3",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T15:23:15.664Z",
+   "file": "20261124152315664-note-dive-pairs-a.jpg",
+   "source": "../../../../tmp/gl/s11/dive-pairs-a.jpg",
+   "kind": "note",
+   "label": "bank first try, draft: 1870 1880 1886, before | with the bank",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T14:59:38.379Z",
    "file": "20261124145938379-note-pmap-base.jpg",
@@ -82,22 +98,6 @@
    "source": "../../../../tmp/gl/s9/dive-look-b.jpg",
    "kind": "note",
    "label": "third tree, dive 1846 to 1860, look and lights by nearness",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T13:35:57.463Z",
-   "file": "20261124133557463-note-pair-2156.jpg",
-   "source": "../../../../tmp/gl/s9/pair-2156.jpg",
-   "kind": "note",
-   "label": "2156 final before and after: far look share 0.8768, mean 0.297, 2272 pixels over 8 at the upper right limb",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T13:35:56.852Z",
-   "file": "20261124133556852-note-pair-1857-crop.jpg",
-   "source": "../../../../tmp/gl/s9/pair-1857-crop.jpg",
-   "kind": "note",
-   "label": "1857 final before and after: night lights by nearness, mean 0.060, 3629 pixels over 8 on the night side",
    "stop": "earth"
   }
  ]
