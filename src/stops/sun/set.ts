@@ -114,7 +114,7 @@ export const createSet: SetFactory = async (ctx) => {
       }
       const gain = 1 / shot.post.exposure
       const aspect = view.format.width / view.format.height
-      setFormat(view.format.height, view.place ? config.raw.handover.place.scale : 1)
+      setFormat()
       const vignette = shot.post.vignette
       eye.copy(world.position).negate().applyQuaternion(turn.copy(world.quaternion).invert())
       if (placing) eye.applyQuaternion(turn.copy(carry).invert()).applyQuaternion(plan.toStage).multiplyScalar(stage.radius).add(stage.centre)
