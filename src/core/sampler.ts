@@ -1,4 +1,5 @@
 import { config, type SegmentKind } from '../config'
+import { captureRate, shutterSpan } from './clock'
 
 export interface Sample { jitterX: number; jitterY: number; timeOffset: number; weight: number }
 
@@ -19,7 +20,7 @@ export function samplesFor(count: number, shutter = 1): Sample[] {
   for (let i = 0; i < count; i++) {
     const jx = count === 1 ? 0 : ((0.5 + A1 * (i + 1)) % 1) - 0.5
     const jy = count === 1 ? 0 : ((0.5 + A2 * (i + 1)) % 1) - 0.5
-    const timeOffset = shutter === 1 ? ((i + 0.5) / count) * config.shutterFraction : shutterOffset((i + 0.5) / count, shutter)
+    const timeOffset = shutter === 1 ? ((i + 0.5) / count) * shutterSpan() : shutterOffset((i + 0.5) / count, shutter)
     out.push({ jitterX: jx, jitterY: jy, timeOffset, weight: 1 / count })
   }
   return out
@@ -27,12 +28,14 @@ export function samplesFor(count: number, shutter = 1): Sample[] {
 
 // The time inside a frame, in frames, of the position 0 to 1 inside a shutter that keeps the given share of the film's shutter around its middle.
 export function shutterOffset(position: number, shutter: number): number {
-  return (0.5 + (position - 0.5) * shutter) * config.shutterFraction
+  return (0.5 + (position - 0.5) * shutter) * shutterSpan()
 }
 
 // The way back: the position 0 to 1 inside the shortened shutter of a time inside a frame, in frames.
 export function shutterPosition(offset: number, shutter: number): number {
-  return shutter === 1 ? offset / config.shutterFraction : 0.5 + (offset / config.shutterFraction - 0.5) / shutter
+  const rate = captureRate()
+  const own = rate === 1 ? offset : offset - Math.floor(offset * rate + 1e-9) / rate
+  return shutter === 1 ? own / shutterSpan() : 0.5 + (own / shutterSpan() - 0.5) / shutter
 }
 
 export function shutterMid(): number {
