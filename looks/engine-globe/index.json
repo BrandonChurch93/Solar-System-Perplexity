@@ -1,9 +1,33 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-24T18:05:45.425Z",
+ "pushed": "2026-11-24T18:08:24.928Z",
  "head": "eb2975a63357c7d6b5c253f77fb205f28f158b13",
- "note": "MAIL 710, the cure that keeps the band: two real rises with the map as a picture. Not final: the band stated is being changed from the middle one to the widest",
+ "note": "MAIL 710: real pairs read as on main, with the cure, and from the nearer frame, with the map as a picture. The second row of a dive is main's reading unchanged (its title will say so)",
  "looks": [
+  {
+   "time": "2026-11-24T18:08:23.803Z",
+   "file": "20261124180823803-note-six-ve1282.jpg",
+   "source": "../m710/six-ve1282.png",
+   "kind": "note",
+   "label": "Venus dive 1282 + 1/2 as on main 1.012, the same with the cure, read on the nearer frame 0.245; last column the map",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T18:08:22.916Z",
+   "file": "20261124180822916-note-six-me746.jpg",
+   "source": "../m710/six-me746.png",
+   "kind": "note",
+   "label": "Mercury dive 746 + 1/2 as on main 1.019, the same with the cure, read on the nearer frame 0.251; last column the map",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T18:08:22.064Z",
+   "file": "20261124180822064-note-six-ne4696.jpg",
+   "source": "../m710/six-ne4696.png",
+   "kind": "note",
+   "label": "Neptune dive 4696 as on main 0.716, the same with the cure, read on the nearer frame 0.450; last column the map",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T18:05:44.278Z",
    "file": "20261124180544278-note-six-ju3261.jpg",
@@ -43,30 +67,6 @@
    "kind": "note",
    "label": "Mars dive on proof-mt3 1483daf1, film frames 2466 2468 2470 2472 2474, whole frame above and the lower left corner at full size below: globe ground gives way to the close set over the whole frame, straight edge of the close set in the lower corners",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T17:16:46.528Z",
-   "file": "20261124171646528-note-pair-ne4723.jpg",
-   "source": "../m697/pair-ne4723.png",
-   "kind": "note",
-   "label": "Neptune dive 4723 round pixel 740, 580, twice enlarged: first frame, the later frame carried back, the pattern",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T17:16:45.444Z",
-   "file": "20261124171645444-note-ne4723-both.jpg",
-   "source": "../m697/ne4723-both.png",
-   "kind": "note",
-   "label": "Neptune dive 4723 and 4731, the two frames of the row: the globe's broad white streaks in the first, the place picture (spiral, crisp ridges) alone in the second. 1.12 before and after the patch, 0.46 of the judged area over 0.45; rigid through the same poses 0.07 to 0.10",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T17:14:11.979Z",
-   "file": "20261124171411979-note-ne4696-both.jpg",
-   "source": "../m697/ne4696-both.png",
-   "kind": "note",
-   "label": "Neptune dive 4696 and 4704, the two frames of the row",
-   "stop": "neptune"
   }
  ]
 }
