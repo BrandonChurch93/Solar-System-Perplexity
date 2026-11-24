@@ -8,7 +8,7 @@ import { defaultPost } from '../post/chain'
 import { StopPlan, easeInOut, type OrbitShot } from './moves'
 import { arc, drift, forward, lookAt, lookbackLight, mix, ramp, slerpDir, smooth, smoother } from './rig'
 import { coverWindow, segmentAtFrame } from './timeline'
-import { handoverFrame, handoverOf, horizonWeight, placeWeight, shutterScales, skyTurnWeight, skyWeight, topForced } from './handover'
+import { eyeHeightAt, eyeHeights, handoverFrame, handoverOf, horizonWeight, noSkyForced, placeWeight, shutterScales, skyTurnWeight, skyWeight, topForced } from './handover'
 import skyFrame from '../space/skyframe.json'
 import world from './world.json'
 import { aimAt, type SkyAims } from '../space/aim'
@@ -82,6 +82,13 @@ export class FilmDirector implements Director {
   // E6: the share of the film's shutter a frame keeps, as this film's own shots measure it. The film that is asked for a shot hands it to the
   // handover, where a sample takes its side by its position inside the shutter that is open.
   private readonly shutterOf = (frame: number): number => shutterScale(this, frame)
+  // The height of the globe camera of a stop's dive or rise over the unit sphere of its body, in radii: what the engine's sky weight and
+  // place weight read (handover.ts, eyeHeights). It names the view, so it never comes back through the side of a sample.
+  private readonly eyeOf = (stop: string, kind: 'dive' | 'rise', time: number): number => {
+    const p = this.plans[config.stopIds.indexOf(stop)]
+    if (!p) throw new Error('no plan of this film flies ' + stop)
+    return p.eyeShot(kind, time, 'orbit').pose.position.length() - 1
+  }
   private lookbackUp = new THREE.Vector3()
   private lookbackSun = new THREE.Vector3()
   private lookbackSide = new THREE.Vector3()
@@ -91,6 +98,7 @@ export class FilmDirector implements Director {
 
   constructor(plans: StopPlan[]) {
     shutterScales(this.shutterOf)
+    eyeHeights(this.eyeOf)
     this.plans = plans
     this.frames.push({ rotation: new THREE.Quaternion(), origin: new THREE.Vector3() })
     this.approach.push(new THREE.Vector3(0, 0, -1))
@@ -601,6 +609,7 @@ export class FilmDirector implements Director {
 
   shotAt(frame: number, time: number, forced?: ViewKind): Shot {
     shutterScales(this.shutterOf)
+    eyeHeights(this.eyeOf)
     const segment = segmentAtFrame(frame)
     const u = (time - segment.start) / (segment.end - segment.start)
     const post = defaultPost()
@@ -807,8 +816,11 @@ export class FilmDirector implements Director {
         const turned = carry ?? skyTurnWeight(segment, time)
         const own = p.skyShare(segment, time)
         if (own && !(own.low >= 0 && own.low <= 1 && (own.high === undefined || (own.high >= 0 && own.high <= 1)))) throw new Error(p.id + ': skyShare must give low and high from 0 to 1')
-        skyShare = own ? own.low : skyWeight(segment, time)
-        if (own && own.high !== undefined) skyShareHigh = own.high
+        // The height of the eye at this sample, asked once where a weight of the engine reads it (on the far side of T), for both.
+        const far = dive ? time < hand.firstFrame / config.fps : time >= (hand.lastFrame + 1) / config.fps
+        const eye = far && ((!own && !noSkyForced() && hand.skyFrames > 0) || hand.picture) ? eyeHeightAt(segment, time) : undefined
+        skyShare = noSkyForced() ? 0 : own ? own.low : skyWeight(segment, time, eye)
+        if (own && own.high !== undefined && !noSkyForced()) skyShareHigh = own.high
         if (hand.skyFloor && skyShare > 0) skyFloor = this.skyFloorOf(index, kind, hand.time)
         skyGlow = mix(1, p.p.light.terrainSkyGlow ?? 1, skyShare)
         const low = this.sky.turns[p.id] ?? NO_TURN
@@ -823,7 +835,7 @@ export class FilmDirector implements Director {
           const qt = f.rotation.clone().multiply(p.twin(close, tc).quaternion)
           skyCarry = new THREE.Quaternion().slerp(qc.multiply(qt.invert()), turned)
         }
-        const weight = placeWeight(segment, time)
+        const weight = placeWeight(segment, time, eye)
         const horizon = horizonWeight(hand, weight, skyShare)
         if ((weight > 0 || (horizon ?? 0) > 0) && hand.picture) {
           const tw = inSet(s, p.twin(p.closePose(kind, hand.time), time))
