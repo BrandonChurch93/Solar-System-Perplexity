@@ -139,7 +139,7 @@ export class SunPlan extends StopPlan {
   // centre, and the glide runs faster by place.bend.speed, both by one share that comes in smoothly until the end
   // of the surface view and stays whole after it (the rise coasts on along this path). So the eye flies level
   // where the rise takes it, at no loss of speed over its height. Returned: the seconds the share has summed to.
-  private bend(tRel: number): number {
+  private lifted(tRel: number): number {
     const from = place.bend.from
     if (tRel <= from) return 0
     const wide = this.seg.terrain.end - this.seg.terrain.start - from
@@ -151,7 +151,7 @@ export class SunPlan extends StopPlan {
     const dur = this.seg.terrain.end - this.seg.terrain.start
     const pivot = config.shutterFraction / (2 * config.fps * dur)
     const g = this.p.terrain.gather ?? 0
-    const bend = this.bend(tRel)
+    const bend = this.lifted(tRel)
     const u = climb.ease.speed * (this.run(tRel) + place.bend.speed * bend - this.run(dur * (0.5 + pivot)))
     const c = u + pivot + g * pivot * pivot
     const lin = g === 0 ? c : (-1 + Math.sqrt(Math.max(1 + 4 * g * c, 0))) / (2 * g)
