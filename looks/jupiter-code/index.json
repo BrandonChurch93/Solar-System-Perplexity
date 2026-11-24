@@ -1,9 +1,109 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T22:55:08.501Z",
- "head": "5f3565032784c723e137d07da505bb17e1ec4adf",
- "note": "round 2, second commit in work: place moved onto the hero's own oval at Sun 33.1 degrees; hold pair unfinished",
+ "pushed": "2026-11-24T23:18:55.766Z",
+ "head": "a1d978797b22b212f8a4c85e6466785bd16127a0",
+ "note": "23:20 UTC: place on the hero's own oval; pairs of 2895 and 3150 at the final tier; draft sheets of the first run. Unfinished: lower left of the rise, crisp rings round the storm in the hold",
  "looks": [
+  {
+   "time": "2026-11-24T23:18:55.036Z",
+   "file": "20261124231855036-note-pair-3150-final.jpg",
+   "source": "../work/r6/pair-3150-final.jpg",
+   "kind": "note",
+   "label": "3150 final: approved image left, new right (mean difference 7.974, first named commit 7.849)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T23:18:53.934Z",
+   "file": "20261124231853934-note-pair-2895-final-1to1.jpg",
+   "source": "../work/r6/pair-2895-final-1to1.png",
+   "kind": "note",
+   "label": "2895 final at 1 to 1: kept left, new right",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T23:18:53.019Z",
+   "file": "20261124231853019-note-pair-2895-final-6x.jpg",
+   "source": "../work/r6/pair-2895-final-6x.png",
+   "kind": "note",
+   "label": "2895 final at 6 to 1: kept left, new right. The rings round the storm are crisper than the hero's own: mine to cure",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T23:18:51.879Z",
+   "file": "20261124231851879-note-pair-2895-final-whole.jpg",
+   "source": "../work/r6/pair-2895-final-whole.jpg",
+   "kind": "note",
+   "label": "2895 final whole: kept left, new right",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T23:18:50.701Z",
+   "file": "20261124231850701-note-map-2895-changed.jpg",
+   "source": "../work/r6/map-2895-changed.png",
+   "kind": "note",
+   "label": "2895 final, kept against new: where bytes differ (the disc, and a halo of 1 level)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T23:18:49.389Z",
+   "file": "20261124231849389-note-move-three-b.jpg",
+   "source": "../work/r6/move-three-b.jpg",
+   "kind": "note",
+   "label": "plates alone: the storm's dark side ends as a soft shadow, paint, the same at every height",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T23:18:48.104Z",
+   "file": "20261124231848104-note-x1-rise-b.jpg",
+   "source": "../work/r6/x1-rise-b.jpg",
+   "kind": "note",
+   "label": "draft, first run before the soft shadow: rise 3274 to 3296, the storm is the dark eye of the hero's oval",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T23:18:46.839Z",
+   "file": "20261124231846839-note-x1-rise-a.jpg",
+   "source": "../work/r6/x1-rise-a.jpg",
+   "kind": "note",
+   "label": "draft, first run before the soft shadow: rise low, the lower left is NOT cured",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T23:18:46.020Z",
+   "file": "20261124231846020-note-x1-dive.jpg",
+   "source": "../work/r6/x1-dive.jpg",
+   "kind": "note",
+   "label": "draft, first run before the soft shadow: dive 2983 to 3056 on the hero's own oval",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T23:16:35.645Z",
+   "file": "20261124231635645-frame-r3-3150.jpg",
+   "source": "out/work/jupiter/final/r3-3150.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3150, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "13d9cc752b1d9c4e"
+  },
+  {
+   "time": "2026-11-24T23:12:57.643Z",
+   "file": "20261124231257643-frame-r3-2895.jpg",
+   "source": "out/work/jupiter/final/r3-2895.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2895, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "13d9cc752b1d9c4e"
+  },
   {
    "time": "2026-11-24T22:55:07.753Z",
    "file": "20261124225507753-note-pair-3150-x1.jpg",
@@ -106,94 +206,6 @@
    "source": "../work/r5/s-rise-g.jpg",
    "kind": "note",
    "label": "rise 3302 to 3313, every frame, draft, half size",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T22:24:51.640Z",
-   "file": "20261124222451640-note-s-rise-f.jpg",
-   "source": "../work/r5/s-rise-f.jpg",
-   "kind": "note",
-   "label": "rise 3290 to 3301, every frame, draft, half size",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T22:24:50.924Z",
-   "file": "20261124222450924-note-s-rise-e.jpg",
-   "source": "../work/r5/s-rise-e.jpg",
-   "kind": "note",
-   "label": "rise 3278 to 3289, every frame, draft, half size",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T22:15:41.444Z",
-   "file": "20261124221541444-note-limb-crops.jpg",
-   "source": "../work/r5/limb-crops.jpg",
-   "kind": "note",
-   "label": "dive 3018 to 3040, the limb strip at full size: where my own dive reading is red",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T22:15:39.727Z",
-   "file": "20261124221539727-note-full-3261.jpg",
-   "source": "../work/r5/full-3261.jpg",
-   "kind": "note",
-   "label": "rise 3261 draft, whole frame",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T22:15:30.471Z",
-   "file": "20261124221530471-note-rs-bot-1.jpg",
-   "source": "../work/r5/rs-bot-1.jpg",
-   "kind": "note",
-   "label": "rise 3248 to 3254, bottom rows at full size: pale puffs enter from below (red, mine)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T22:15:28.821Z",
-   "file": "20261124221528821-note-rs-top-1.jpg",
-   "source": "../work/r5/rs-top-1.jpg",
-   "kind": "note",
-   "label": "rise 3246 to 3251, top rows at full size: the limb through the change of view",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T22:15:18.913Z",
-   "file": "20261124221518913-note-s-rise-b.jpg",
-   "source": "../work/r5/s-rise-b.jpg",
-   "kind": "note",
-   "label": "rise 3246 to 3257, every frame, draft",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T22:15:17.301Z",
-   "file": "20261124221517301-note-s-rise-c.jpg",
-   "source": "../work/r5/s-rise-c.jpg",
-   "kind": "note",
-   "label": "rise 3258 to 3265, every frame, draft",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T22:15:06.923Z",
-   "file": "20261124221506923-note-s-rise-d.jpg",
-   "source": "../work/r5/s-rise-d.jpg",
-   "kind": "note",
-   "label": "rise 3266 to 3277, every frame, draft, half size",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T22:15:06.075Z",
-   "file": "20261124221506075-note-full-3274.jpg",
-   "source": "../work/r5/full-3274.jpg",
-   "kind": "note",
-   "label": "rise 3274 draft, whole frame: the place stands as an island on the plain globe (red, mine)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T21:57:39.771Z",
-   "file": "20261124215739771-note-s-rise-a.jpg",
-   "source": "../work/r5/s-rise-a.jpg",
-   "kind": "note",
-   "label": "round 2 rise on the merged tree with the pull back, 3236 to 3245 every frame at half size (run in progress, 3246 on follows)",
    "stop": "jupiter"
   }
  ]
