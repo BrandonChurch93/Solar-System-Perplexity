@@ -1,9 +1,17 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T01:44:59.919Z",
- "head": "52a96ba2115a00a7972e15242b109c3f54720c12",
- "note": "step 3 final frames measured, G13 0 of 115 over 2 percent, packing the relief fields to pay for the body field (mail 450), handover report running",
+ "pushed": "2026-11-24T02:12:46.697Z",
+ "head": "3a6b18447c9e495e006c1f7210ec2df4fe2085dc",
+ "note": "step 3 pushed (3a6b1844, not ready); trial of the rim rule cures the pale line at the corner tower; finer mesh rendering",
  "looks": [
+  {
+   "time": "2026-11-24T02:12:45.844Z",
+   "file": "20261124021245844-note-e2-corner2.jpg",
+   "source": "../../../../tmp/gl/s3/e2-corner2.jpg",
+   "kind": "note",
+   "label": "corner tower at 2099, 12 times: step 1, step 3 as committed (pale line and dark gap at the rim), trial with both caps meeting at the rim",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T01:44:58.841Z",
    "file": "20261124014458841-note-z-all.jpg",
@@ -75,14 +83,6 @@
    "source": "../../../../tmp/gl/s3/pair-2010.jpg",
    "kind": "note",
    "label": "step 3: 2010 against step 1 with three marks, whole frame mean 0.003, largest 2 code values",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T01:19:32.866Z",
-   "file": "20261124011932866-note-f-e.jpg",
-   "source": "../../../../tmp/gl/s3/f-e.jpg",
-   "kind": "note",
-   "label": "step 3: every frame 2114 to 2122 of the rise",
    "stop": "earth"
   }
  ]
