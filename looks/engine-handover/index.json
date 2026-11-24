@@ -1,82 +1,71 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T22:06:40.833Z",
+ "pushed": "2026-11-24T22:32:05.119Z",
  "head": "79ade56611076a9e7916cd518409a37651d88994",
- "note": "blur law: the frames as they are render at the final tier (Mars 2702 takes an hour); the window of the shutter is written, not yet rendered; Mars's roll measured",
+ "note": "blur law: final tier of the named frames as they are (2702, 3024); the law's tests green in its own tree; presenceEdge for Mars being tested",
  "looks": [
   {
-   "time": "2026-11-24T22:06:39.850Z",
-   "file": "20261124220639850-note-mars-roll.jpg",
-   "source": "../../../../tmp/law/mars-roll.jpg",
+   "time": "2026-11-24T22:31:59.980Z",
+   "file": "20261124223159980-note-3024-b.jpg",
+   "source": "../../../../tmp/law/v/3024-b.jpg",
    "kind": "note",
-   "label": "Mars as it is (drafts): the dive 2400 to 2416 with north up, the rise 2724 to 2744 with north to the right: the plan's rise.level keeps the place's horizon level up the whole rise",
-   "stop": "mars"
+   "label": "3024 final as it is, middle and lower right at full size"
   },
   {
-   "time": "2026-11-24T21:46:28.207Z",
-   "file": "20261124214628207-note-mars-draft-2.jpg",
-   "source": "../../../../tmp/law/mars-draft-2.jpg",
+   "time": "2026-11-24T22:31:58.804Z",
+   "file": "20261124223158804-note-3024-a.jpg",
+   "source": "../../../../tmp/law/v/3024-a.jpg",
    "kind": "note",
-   "label": "blur law, first reading: Mars drafts (ONE sample) 2427 and 2436, lower right at full size: the strokes of the canyon walls are in one sample",
-   "stop": "mars"
+   "label": "3024 final as it is, upper right and upper left at full size"
   },
   {
-   "time": "2026-11-24T21:46:27.220Z",
-   "file": "20261124214627220-note-mars-draft-1.jpg",
-   "source": "../../../../tmp/law/mars-draft-1.jpg",
+   "time": "2026-11-24T22:31:57.505Z",
+   "file": "20261124223157505-note-3024-whole.jpg",
+   "source": "../../../../tmp/law/v/3024-whole.jpg",
    "kind": "note",
-   "label": "blur law, first reading: Mars drafts (ONE sample, no shutter) 2427, 2436 (dive), 2702, 2706 (rise), whole frames",
-   "stop": "mars"
+   "label": "3024 final tier as it is (71 samples, 42.5 px in view at the shutter floor 0.5)"
   },
   {
-   "time": "2026-11-24T21:19:54.815Z",
-   "file": "20261124211954815-note-dim-sheet-2.jpg",
-   "source": "out/work/dim-sheet-2.jpg",
+   "time": "2026-11-24T22:31:56.632Z",
+   "file": "20261124223156632-note-2702-mid.jpg",
+   "source": "../../../../tmp/law/v/2702-mid.jpg",
    "kind": "note",
-   "label": "item 739: 4517 and 4512 before beside after, the upper right at full size (the Sun comes in; the sky's level 0.480 to 0.588 at 4517)"
+   "label": "2702 final as it is against draft, middle at full size"
   },
   {
-   "time": "2026-11-24T21:19:54.231Z",
-   "file": "20261124211954231-note-dim-sheet-1.jpg",
-   "source": "out/work/dim-sheet-1.jpg",
+   "time": "2026-11-24T22:31:55.516Z",
+   "file": "20261124223155516-note-2702-lr.jpg",
+   "source": "../../../../tmp/law/v/2702-lr.jpg",
    "kind": "note",
-   "label": "item 739, the dim of the sky by the Sun's place alone: uranus.travel 4503, 4509, 4515, 4517, 4521, 4527 at the draft tier, before (1924a104) beside after (79ade566)"
+   "label": "2702 final as it is against draft, lower right at full size"
   },
   {
-   "time": "2026-11-24T21:18:46.040Z",
-   "file": "20261124211846040-frame-f01057.jpg",
-   "source": "out/work/dim-after/f01057.png",
+   "time": "2026-11-24T22:31:54.314Z",
+   "file": "20261124223154314-note-2702-ll.jpg",
+   "source": "../../../../tmp/law/v/2702-ll.jpg",
+   "kind": "note",
+   "label": "2702 final as it is against draft, lower left at full size"
+  },
+  {
+   "time": "2026-11-24T22:31:53.237Z",
+   "file": "20261124223153237-note-2702-whole.jpg",
+   "source": "../../../../tmp/law/v/2702-whole.jpg",
+   "kind": "note",
+   "label": "2702 final tier as it is (151 samples, 90.1 px in view at the shutter floor 0.5), beside its draft"
+  },
+  {
+   "time": "2026-11-24T22:28:56.253Z",
+   "file": "20261124222856253-frame-f03024.jpg",
+   "source": "out/work/blur/before/f03024.png",
    "kind": "frame",
-   "label": "mercury.travel frame 1057, draft tier",
-   "stop": "mercury",
-   "segment": "mercury.travel",
-   "frame": 1057,
-   "tier": "draft",
+   "label": "jupiter.dive frame 3024, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 3024,
+   "tier": "final",
    "format": "16x9",
    "diag": "beauty",
    "engine": "03b89560bc9f479b"
-  },
-  {
-   "time": "2026-11-24T21:17:06.862Z",
-   "file": "20261124211706862-frame-f04523.jpg",
-   "source": "out/work/seq/4498-4530/f04523.png",
-   "kind": "frame",
-   "label": "uranus.travel frame 4523, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.travel",
-   "frame": 4523,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "03b89560bc9f479b"
-  },
-  {
-   "time": "2026-11-24T20:53:01.196Z",
-   "file": "20261124205301196-note-way2-mars3-dive-2460.jpg",
-   "source": "out/work/cure/way2-mars3-dive-2460.jpg",
-   "kind": "note",
-   "label": "Mars dive pair 2460, 2468 read three ways: relief near the lens stands off the sphere, the camera's map alone reads 1.320",
-   "stop": "mars"
   }
  ]
 }
