@@ -41,6 +41,7 @@
     "shots": "tsx tools/shots.ts",
     "handover": "tsx tools/handover.ts",
     "smooth": "tsx tools/smooth.ts",
+    "capture": "tsx tools/capture.ts",
     "warm": "tsx tools/warmcheck.ts"
   },
   "dependencies": {
