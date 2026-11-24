@@ -12,7 +12,7 @@ import { handoverFrame, handoverOf, horizonWeight, placeWeight, shutterScales, s
 import skyFrame from '../space/skyframe.json'
 import world from './world.json'
 import { aimAt, type SkyAims } from '../space/aim'
-import { TravelShape, inFrame } from '../space/travel/path'
+import { TravelShape, inFrame, outsideFrame } from '../space/travel/path'
 import { discShare, openSky } from '../space/travel/open'
 
 const NO_TURN = new THREE.Quaternion()
@@ -45,7 +45,7 @@ const SUN_LEAVE = 0.55
 const SUN_SWAP: [number, number] = [0.42, SUN_LEAVE]
 const SUN_GLOW_FROM = 0.06
 const SUN_HAND = { span: [0.25, 0.8] as [number, number], last: 0.6, reach: 2, behind: 1000 }
-const SUN_DIM = { level: 0.25, window: 0.4, taps: 6, back: [0.8, 1] as [number, number] }
+const SUN_DIM = { level: 0.25, nearDeg: [-16, 14] as [number, number], back: [0.8, 1] as [number, number] }
 const RETREAT_DUST = 0.045
 const LOCK_PX: [number, number] = [3, 40]
 const PLACE_TIE = 1e-6
@@ -443,7 +443,7 @@ export class FilmDirector implements Director {
     const hold = this.toWorld(index + 1, b.hold(time - b.seg.hold.start))
     const full = this.sizeOf(index, hold)
     const small = this.small[index]!
-    const want = (small + (full - small) * smoother(t)) * Math.tan(THREE.MathUtils.degToRad(pose.vfov) / 2)
+    const want = (small + (full - small) * shape.arrive(t)) * Math.tan(THREE.MathUtils.degToRad(pose.vfov) / 2)
     const ray = pose.position.clone().sub(body).normalize()
     if (shape.look.pin[1] <= 0) {
       const hero = hold.position.clone().sub(body).normalize().applyQuaternion(hold.quaternion.clone().invert()).applyQuaternion(pose.quaternion)
@@ -541,12 +541,11 @@ export class FilmDirector implements Director {
   private sunSeen(index: number, time: number): number {
     const seg = this.plans[index]!.seg.travel!
     const master = config.formats[config.formatKeys.master]!
-    let sum = 0
-    for (let k = -SUN_DIM.taps; k <= SUN_DIM.taps; k++) {
-      const pose = this.travelCamera(index, Math.min(Math.max(time + (k / SUN_DIM.taps) * SUN_DIM.window, seg.start), seg.end))
-      if (inFrame(pose.quaternion, pose.vfov, master.width / master.height, this.sunWorld, 0, 0)) sum++
+    const near = (at: number): number => {
+      const pose = this.travelCamera(index, at)
+      return ramp(SUN_DIM.nearDeg[0], SUN_DIM.nearDeg[1], -THREE.MathUtils.radToDeg(outsideFrame(pose.quaternion, pose.vfov, master.width / master.height, this.sunWorld)))
     }
-    return sum / (2 * SUN_DIM.taps + 1)
+    return Math.max(near(time) - near(seg.start), 0)
   }
 
   private brightNear(index: number, time: number): number {

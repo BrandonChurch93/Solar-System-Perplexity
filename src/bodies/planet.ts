@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { DIAG_GLSL, diagUniform, gradUniform } from '../diagnostics/diag'
+import { bufferFrame } from '../core/frame'
 import { INVERSE_FILMIC_GLSL } from '../post/chain'
 import { implicitUniform } from '../core/texel'
 import { EQUIRECT_GLSL } from '../space/sky'
@@ -321,9 +322,11 @@ export class Planet {
   private readonly worldToBody = new THREE.Matrix3()
   private readonly eye = new THREE.Vector3()
   private readonly foot = new THREE.Vector2()
+  private readonly fade: [number, number]
 
   constructor(o: PlanetOptions) {
     const p = o.patches
+    this.fade = [p?.fade[0] ?? 1.1, p?.fade[1] ?? 1.7]
     const g = o.grazing
     const tex = (i: number): THREE.Texture | null => p?.textures[i] ?? p?.textures[0] ?? null
     const scale = (i: number): number => {
@@ -370,7 +373,7 @@ export class Planet {
         ...(centres ? { uPatchCentre: { value: levels.map((i) => new THREE.Vector2(Math.tan(THREE.MathUtils.degToRad(p?.centresDeg?.[i]?.[0] ?? 0)), Math.tan(THREE.MathUtils.degToRad(p?.centresDeg?.[i]?.[1] ?? 0)))) } } : {}),
         ...(gain ? { uOwnGain: { value: new THREE.Vector3(1, 1, 1) } } : {}),
         ...(minor ? { uPatchAniso: { value: levels.map((i) => aniso(p?.textures[i])) }, uMapAniso: { value: aniso(o.map) } } : {}),
-        uFeather: { value: p?.feather ?? 0.12 }, uPatchFade: { value: new THREE.Vector2(p?.fade[0] ?? 1.1, p?.fade[1] ?? 1.7) },
+        uFeather: { value: p?.feather ?? 0.12 }, uPatchFade: { value: new THREE.Vector2(this.fade[0], this.fade[1]) },
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
         uStormAxis: { value: o.storm?.axis.clone().normalize() ?? new THREE.Vector3(0, 1, 0) },
         uStormRadius: { value: o.storm?.radius ?? 1 }, uStormAngle: { value: 0 }, uHasStorm: { value: o.storm ? 1 : 0 },
@@ -398,6 +401,8 @@ export class Planet {
     const u = this.material.uniforms
     ;(u.uCam!.value as THREE.Vector3).copy(camera)
     ;(u.uSunW!.value as THREE.Vector3).copy(sun)
+    const frame = bufferFrame()
+    ;(u.uPatchFade!.value as THREE.Vector2).set(this.fade[0] / frame, this.fade[1] / frame)
     u.uSpin!.value = spin
     u.uGain!.value = gain
     u.uWeight!.value = weight
