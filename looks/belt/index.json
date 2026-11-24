@@ -1,9 +1,23 @@
 {
  "folder": "belt",
- "pushed": "2026-11-24T21:18:22.082Z",
+ "pushed": "2026-11-24T21:48:05.413Z",
  "head": "a3df7524897a79e1520dc79b13e179fd2254d726",
- "note": "far Sun: oval cured at 1027 and 1040, face and limb tries at 615",
+ "note": "far Sun: face and limb at 615, oval cured; checks running",
  "looks": [
+  {
+   "time": "2026-11-24T21:48:03.682Z",
+   "file": "20261124214803682-note-L2a.jpg",
+   "source": "../../../../tmp/farsun/out/L2a.jpg",
+   "kind": "note",
+   "label": "the look now, whole frames 520, 580, 720, 1027: one body, no wedge, no oval"
+  },
+  {
+   "time": "2026-11-24T21:48:01.623Z",
+   "file": "20261124214801623-note-pair615-box-draft.jpg",
+   "source": "../../../../tmp/farsun/out/pair615-box-draft.jpg",
+   "kind": "note",
+   "label": "615 box, draft tier: approved left, the look now right (firmer limb, mottle to the limb; blur 4.40)"
+  },
   {
    "time": "2026-11-24T21:18:20.244Z",
    "file": "20261124211820244-note-fc_u2.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/farsun/out/w2a.jpg",
    "kind": "note",
    "label": "520, 580, 720, 615 whole frames, draft: no wedge"
-  },
-  {
-   "time": "2026-11-24T19:53:10.876Z",
-   "file": "20261124195310876-note-far3_w2.jpg",
-   "source": "../../../../tmp/farsun/out/far3_w2.jpg",
-   "kind": "note",
-   "label": "615, 1027, 1047 at native size: the marched hair at every angle"
-  },
-  {
-   "time": "2026-11-24T19:53:10.104Z",
-   "file": "20261124195310104-note-pair615-final-limb-18.jpg",
-   "source": "../../../../tmp/farsun/out/pair615-final-limb-18.jpg",
-   "kind": "note",
-   "label": "615 final tier, the left limb: approved left, a3df7524 right"
   }
  ]
 }
