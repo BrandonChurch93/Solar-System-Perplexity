@@ -1,9 +1,41 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T05:14:32.050Z",
+ "pushed": "2026-11-24T05:19:45.552Z",
  "head": "61e3be043daeb15d4a4de5d1699f79d7a02dc23f",
- "note": "rise on the one move 4950 to 4985 every frame: no step at T 4956, one pull back; seam tool on my tree: dive 1.010, rise 0.942 at 4950 (one capture frame)",
+ "note": "rise on the one move whole, 4950 to 5024 every frame looked at: one pull back, no pop (change from frame to frame even); two forms 4986 to 4990 as listed",
  "looks": [
+  {
+   "time": "2026-11-24T05:19:44.235Z",
+   "file": "20261124051944235-note-s-R1-5022.jpg",
+   "source": "../../../../tmp/s-R1-5022.jpg",
+   "kind": "note",
+   "label": "R1 rise on the one move, every frame from 5022, preview draft",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T05:19:43.083Z",
+   "file": "20261124051943083-note-s-R1-5010.jpg",
+   "source": "../../../../tmp/s-R1-5010.jpg",
+   "kind": "note",
+   "label": "R1 rise on the one move, every frame from 5010, preview draft",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T05:19:42.021Z",
+   "file": "20261124051942021-note-s-R1-4998.jpg",
+   "source": "../../../../tmp/s-R1-4998.jpg",
+   "kind": "note",
+   "label": "R1 rise on the one move, every frame from 4998, preview draft",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T05:19:40.845Z",
+   "file": "20261124051940845-note-s-R1-4986.jpg",
+   "source": "../../../../tmp/s-R1-4986.jpg",
+   "kind": "note",
+   "label": "R1 rise on the one move, every frame from 4986, preview draft",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T05:14:30.775Z",
    "file": "20261124051430775-note-s-R1-4974.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/s-W1-4764.jpg",
    "kind": "note",
    "label": "Dive on the one move, every frame from 4764 (preview draft, not committed yet)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T04:53:25.389Z",
-   "file": "20261124045325389-note-s-W1-4752.jpg",
-   "source": "../../../../tmp/s-W1-4752.jpg",
-   "kind": "note",
-   "label": "Dive on the one move, every frame from 4752 (preview draft, not committed yet)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T04:53:24.272Z",
-   "file": "20261124045324272-note-s-W1-4740.jpg",
-   "source": "../../../../tmp/s-W1-4740.jpg",
-   "kind": "note",
-   "label": "Dive on the one move, every frame from 4740 (preview draft, not committed yet)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T04:53:23.113Z",
-   "file": "20261124045323113-note-s-W1-4728.jpg",
-   "source": "../../../../tmp/s-W1-4728.jpg",
-   "kind": "note",
-   "label": "Dive on the one move, every frame from 4728 (preview draft, not committed yet)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T04:53:21.812Z",
-   "file": "20261124045321812-note-s-W1-4716.jpg",
-   "source": "../../../../tmp/s-W1-4716.jpg",
-   "kind": "note",
-   "label": "Dive on the one move, every frame from 4716 (preview draft, not committed yet)",
    "stop": "neptune"
   }
  ]
