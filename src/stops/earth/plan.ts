@@ -33,6 +33,7 @@ export const params: MoveParams = {
 interface Law { frames: number; total: number; at: (x: number) => number; rate: (x: number) => number }
 
 const STEPS = 64
+const END_STEPS = 8
 
 function shape(u: number, c: number): number {
   const x = Math.min(Math.max(u, 0), 1)
@@ -50,20 +51,21 @@ function area(u: number, c: number): number {
   return x - 0.5 + (h * (1 - x) * (1 - x) * (1 - x)) / (6 * c)
 }
 
-function law(frames: number, ease: number[], round: number[], total: number, last: number): Law {
+function law(frames: number, ease: number[], round: number[], total: number, last: number, slope = 0): Law {
   const a = ease[0]!
   const b = ease[1]!
   const ca = round[0]!
   const cb = round[1]!
-  const cruise = (total - 0.5 * last * b) / (frames - 0.5 * (a + b))
-  const rate = (x: number): number => (x < a ? cruise * shape(x / a, ca) : cruise + (last - cruise) * shape((x - (frames - b)) / b, cb))
+  const cruise = (total - 0.5 * last * b + (slope * b * b) / 12) / (frames - 0.5 * (a + b))
+  const tail = (x: number): number => Math.min(Math.max((x - (frames - b)) / b, 0), 1)
+  const rate = (x: number): number => (x < a ? cruise * shape(x / a, ca) : cruise + (last - cruise) * shape((x - (frames - b)) / b, cb) + slope * (x - frames) * tail(x) * tail(x))
   const at = (x: number): number => {
     if (x <= 0) return 0
     if (x >= frames) return total + last * (x - frames)
     const head = cruise * a * area(x / a, ca)
     const body = cruise * Math.max(x - a, 0)
-    const tail = (last - cruise) * b * area((x - (frames - b)) / b, cb)
-    return head + body + tail
+    const u = tail(x)
+    return head + body + (last - cruise) * b * area((x - (frames - b)) / b, cb) - slope * b * b * u * u * u * (1 / 3 - u / 4)
   }
   return { frames, total, at, rate }
 }
@@ -125,7 +127,12 @@ export class Plan extends StopPlan {
     const sign = kind === 'dive' ? -1 : 1
     const h = 0.5 / fps
     const lift = (t: number): number => Math.log((this.far(kind, t).position.length() - 1) / (this.twin(this.low(t), t).position.length() - 1))
-    const made = law(Math.abs(end - at) * fps, this.way[kind].ease, this.way[kind].round, lift(end), (sign * (lift(end + h) - lift(end - h))) / (2 * h * fps))
+    const pulled = kind === 'rise' && this.pullBack(end - h) > 0
+    const d = h / END_STEPS
+    const step = d * fps
+    const made = pulled
+      ? law(Math.abs(end - at) * fps, this.way[kind].ease, this.way[kind].round, lift(end), (3 * lift(end) - 4 * lift(end - d) + lift(end - 2 * d)) / (2 * step), (lift(end) - 2 * lift(end - d) + lift(end - 2 * d)) / (step * step))
+      : law(Math.abs(end - at) * fps, this.way[kind].ease, this.way[kind].round, lift(end), (sign * (lift(end + h) - lift(end - h))) / (2 * h * fps))
     this.laws[kind] = made
     return made
   }
