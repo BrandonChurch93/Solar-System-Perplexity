@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T13:09:49.586Z",
- "head": "dbdf9911fefccf503c36b6b061732cec14e72fe4",
- "note": "third tree in proof: pop at 1918 + 1/2 reads 1.158 by my measure (machines 1.21), rise pattern 2156 to 2161 reads 0.25 to 0.26 (machines 0.42 to 0.60), pattern red in the far zone stays",
+ "pushed": "2026-11-24T13:35:58.906Z",
+ "head": "16a5b9934f69072bf8c29e80bf3afdf4a4e5ba52",
+ "note": "third tree: 1755 and 2010 keep their bytes, 1857 and 2156 changed on purpose (pairs); merged main 2bc36ce6, eight draft frames byte equal across the merge, 446 tests pass without the browser files; mid frames and parity still running",
  "looks": [
+  {
+   "time": "2026-11-24T13:35:58.089Z",
+   "file": "20261124133558089-note-dive-look-b.jpg",
+   "source": "../../../../tmp/gl/s9/dive-look-b.jpg",
+   "kind": "note",
+   "label": "third tree, dive 1846 to 1860, look and lights by nearness",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T13:35:57.463Z",
+   "file": "20261124133557463-note-pair-2156.jpg",
+   "source": "../../../../tmp/gl/s9/pair-2156.jpg",
+   "kind": "note",
+   "label": "2156 final before and after: far look share 0.8768, mean 0.297, 2272 pixels over 8 at the upper right limb",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T13:35:56.852Z",
+   "file": "20261124133556852-note-pair-1857-crop.jpg",
+   "source": "../../../../tmp/gl/s9/pair-1857-crop.jpg",
+   "kind": "note",
+   "label": "1857 final before and after: night lights by nearness, mean 0.060, 3629 pixels over 8 on the night side",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T13:09:48.708Z",
    "file": "20261124130948708-note-rise-look-b.jpg",
@@ -74,30 +98,6 @@
    "source": "../../../../tmp/gl/s8/dive-high.jpg",
    "kind": "note",
    "label": "named tree, dive 1840, 1848, 1856, 1864 at draft",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T11:03:11.336Z",
-   "file": "20261124110311336-note-plates.jpg",
-   "source": "../../../../tmp/gl/s8/plates.jpg",
-   "kind": "note",
-   "label": "the plate (left, far zone is the hold's ground: sea, Cuba) against the low look (right); the pair the level check calls 1.27",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T11:03:10.359Z",
-   "file": "20261124110310359-note-lay-look.jpg",
-   "source": "../../../../tmp/gl/s8/lay-look.jpg",
-   "kind": "note",
-   "label": "far zone: the close picture laid back on the ground (left, cover outlined) against the repaint; past 6 degrees it shows a cloud deck",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T10:37:20.838Z",
-   "file": "20261124103720838-note-dive-r2-b.jpg",
-   "source": "../../../../tmp/gl/s8/dive-r2-b.jpg",
-   "kind": "note",
-   "label": "dive this tree second half",
    "stop": "earth"
   }
  ]
