@@ -280,7 +280,8 @@ const checks: Record<string, () => Promise<Result> | Result> = {
   },
   G3: () => {
     const r = run('npx', ['tsx', 'tools/determinism.ts'])
-    return { id: 'G3', pass: r.ok, note: r.out.trim().split('\n').slice(-6).join('; ') }
+    const w = run('npx', ['tsx', 'tools/warmcheck.ts', '--self'])
+    return { id: 'G3', pass: r.ok && w.ok, note: r.out.trim().split('\n').slice(-6).concat(w.out.trim().split('\n').slice(-4)).join('; ') }
   },
   G4: async () => {
     ensureBuild()
