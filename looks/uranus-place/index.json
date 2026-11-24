@@ -1,9 +1,25 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-24T10:18:33.656Z",
+ "pushed": "2026-11-24T10:53:38.330Z",
  "head": "b5874a22954aeaebbe80136cb33b083d30a1f261",
- "note": "NAMED b5874a22 on main c2c49133: the dive's sky after the cure 4138 to 4164, judged 4137 final, the band and the flat light run of the pattern",
+ "note": "b5874a22 on main c2c49133: pattern cause taken apart (light table ridges, white tops), cure in work",
  "looks": [
+  {
+   "time": "2026-11-24T10:53:37.679Z",
+   "file": "20261124105337679-note-plates-cmp.jpg",
+   "source": "../../../../tmp/relaw/plates-cmp.jpg",
+   "kind": "note",
+   "label": "place plates 1 to 3 on b5874a22, and with the bands of the old light table laid on the ground, difference times 4",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T10:53:36.863Z",
+   "file": "20261124105336863-note-cmp-8808.jpg",
+   "source": "../../../../tmp/tm/cmp-8808.png",
+   "kind": "note",
+   "label": "pattern cause, rise 4404 against 4412 on b5874a22: rows as pushed, smooth law, tops and cover and light share off, light flat; columns 4404, 4412 carried by flows, by the camera, pattern by flows, by the camera",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-24T10:17:53.549Z",
    "file": "20261124101753549-frame-m4137.jpg",
@@ -272,30 +288,6 @@
    "segment": "uranus.rise",
    "first": 4391,
    "last": 4454,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T07:09:09.644Z",
-   "file": "20261124070909644-sheet-uranus-rise-draft-after.jpg",
-   "source": "out/work/handover/uranus-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "uranus rise, every frame 4392 to 4403 (after T, frame 4391), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "first": 4392,
-   "last": 4403,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T07:09:07.933Z",
-   "file": "20261124070907933-sheet-uranus-rise-draft-before.jpg",
-   "source": "out/work/handover/uranus-rise-draft-before.png",
-   "kind": "sheet",
-   "label": "uranus rise, every frame 4380 to 4390 (before T, frame 4391), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "first": 4380,
-   "last": 4390,
    "tier": "draft"
   }
  ]
