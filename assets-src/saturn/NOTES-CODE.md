@@ -2694,3 +2694,29 @@ a speckle of sand and a mix of grey, pink and tan at 3 to 12 px; the film has so
 /tmp/v/r29/g17_tiles_3720.png, g17_left_3720.png. The plan: step 2 (ringlets, sand and grains resolving by
 footprint) with the function's fine octaves as narrow dark gaps in the A ring and the sand as a speckle that
 is in the picture at 3 to 12 px, and the same crispness for the far ring across the globe.
+
+## 03:30 VM: head 010d5ee pushed ((a), sky cure, (d), parity cure, dashed line cure, merge of main b2ebc62)
+
+- Commit 081c441 holds (d) (mail 374 d, mail 385), the footprint scale (parity) and the seam cure of the arc.
+  Merge 010d5eece98181c153aca730c208705b8759fc69 of main b2ebc62 (the engine's one air d179, the retreat's light
+  law d178, counters and warm start d176, d177): no conflict, nothing of main's touches my folders. Pushed.
+- On the merge: tsc exit 0; vitest 39 files, 322 tests pass; handover --only path: "saturn.dive every frame:
+  pass", "saturn.rise every frame: pass"; smooth --only path: "VERDICT: green. No number is over its limit."
+- Size (decimal MB, git ls-tree -r -l, my three folders): head 74.734 (179 files), main b2ebc62 74.821 (178
+  files): net minus 0.087 MB.
+- The hold at final with the seam cure (/tmp/v/r29/sf_3465.png) against the final of 3e9ee2f
+  (/tmp/v/r28/v3_final_3465.png): 2768 pixels differ, largest 10 levels, 613 by more than 2, all in the box
+  2,482 to 767,1079 (the arc of the dashes). Against the approved hero: plain 5.525, blurred 2.239 (3e9ee2f
+  5.526, 2.239; the kept still 5.502, 2.234).
+- The frames after the rise (3894, 3895, 3896 at draft) are byte equal before and after all of this, and they
+  are drawn by the model (no arc term): so the dashed line was never in the rows 3891 + 1/2 to 3896 of the
+  pop measure. It was in the hold and in the dive up to the change of scene.
+- The path table of the smooth report shows what those rows are: my rise ends at 3884 at speed 0.031 of the
+  mean, the travel leg stands almost still from 3885 to 3888 (0.009, 0.006) and then picks up from 3889:
+  0.026, 0.071, 0.165, 0.329, 0.588, 0.963, 1.472, 2.126 at 3896 (steps 0.094 to 0.654, starred, in the
+  neighbour and not judged). The measure of 3888 has 0.42 left with 0.11 px of motion, of 3895 + 1/2 1.55 with
+  7.1 px; the pop is that over the median of 8 frames to either side (0.93), which spans the standstill.
+  What is left sits on the stars beside the rim and the limb (the measured motion follows the body there, the
+  stars move otherwise) and in lines along the ringlets. My own pair 3895 to 3896 (whole frame, draft): left
+  1.869, carried 1.276, motion 14.1 px.
+- The tool still floors a fractional frame number (3895.5 gives 3895's bytes), so half frames need seq.
