@@ -1,9 +1,25 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-24T11:13:55.338Z",
+ "pushed": "2026-11-24T16:23:59.053Z",
  "head": "82c4701120bb988a39869222c9e760472feb43f9",
- "note": "MAIL 591 and 630: what is red in Mars dive at 2449 is the globe ground haze over a plain with little detail (m green 0.24, h 1.46, film 1.27); main reads 0.12. Head 82c47011: cap ground turned by cos and sin of the page, exactSpin option; no film picture of that yet.",
+ "note": "TASK 697: the pattern measure reads a rigid rise as a change where the carried frame is enlarged 3 times or more; panels before and after a trial correction",
  "looks": [
+  {
+   "time": "2026-11-24T16:23:55.353Z",
+   "file": "20261124162355353-note-pair-jurigid.jpg",
+   "source": "../m697/pair-jurigid.png",
+   "kind": "note",
+   "label": "TASK 697: jupiter_coder's rigid carry of the same row, nothing changes in place: before 0.70, after 0.03",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T16:23:49.140Z",
+   "file": "20261124162349140-note-pair-ju3261.jpg",
+   "source": "../m697/pair-ju3261.png",
+   "kind": "note",
+   "label": "TASK 697: Jupiter rise 3261 + 1/2, the official change panel before (0.69) and after (0.10) the trial correction of the pattern measure",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-24T11:13:54.603Z",
    "file": "20261124111354603-note-ms1-levels.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/m591/c-changes.png",
    "kind": "note",
    "label": "run c the film as it is: 1.27, 18 of 18 starts over 0.45",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T11:13:51.161Z",
-   "file": "20261124111351161-note-m591-c-frames.jpg",
-   "source": "../../../../tmp/m591-c-frames.png",
-   "kind": "note",
-   "label": "mars dive 2449 and 2457 on the named tree b83618ec: reads 1.27",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T11:13:50.418Z",
-   "file": "20261124111350418-note-m591-main-frames.jpg",
-   "source": "../../../../tmp/m591-main-frames.png",
-   "kind": "note",
-   "label": "mars dive 2449 and 2457 on main b0035c5c: reads 0.12",
    "stop": "mars"
   }
  ]
