@@ -4112,3 +4112,68 @@ is in the picture at 3 to 12 px, and the same crispness for the far ring across 
   uncovers held down until the air starts. Looks: shade_c.png, gap_x5.png.
 - LOOKS pushed 12:47 (5d78e230): dive changes and pops panels with the new judge, item 15 at full size and
   with the levels times 5. Next by 13:17.
+- OWN RUNS ON THE NAMED TREES WITH THE NEW JUDGE, THE REST (f057cf9, /tmp/v/r47), all green, so no mail (MAIL 662):
+  - rise pictures (13:01): "VERDICT: green. No number is over its limit." Largest level step 0.05 at 3875 + 1/2
+    (limit 1.3); largest pop 1.15 from 3872 + 1/2 to the next (limit 1.2); pop of one block 12.03 from 3896,
+    block column 10 row 7, shown, not judged (the travel's take off, the same number as on 91d6247); largest
+    change in place 22.0 from 3873, shown, not judged; largest change of the pattern alone 0.24 from 3820 + 1/2
+    at pixel 1228, 848 (limit 0.45; the judge before the border cure read 0.25 at 3821 + 1/2); the ground
+    beside it 3798 to 3809 + 1/2: change 10.6, pattern 0.16. Panels looked at: pops and changes, as before.
+  - the handover tool's parts (13:02, draft, sides, flow, path), as printed: "saturn.dive side difference at T:
+    pass", "saturn.dive flow gap at T: pass", "saturn.dive every frame: pass", "saturn.rise side difference at
+    T: pass", "saturn.rise flow gap at T: pass", "saturn.rise every frame: pass". Dive T 3589: side difference
+    max 1, flow gap largest 0.008 px a frame. Rise T 3852: side difference max 1, flow gap largest 0.045 px a
+    frame. The tool's shutter lines for the rise: 31 of 75 frames run with a shortened shutter, the shortest
+    0.6181 at 3840; frame 3866 has the full shutter, blur most 11.21 px, blur centre 5.45, blur edge 10.83
+    (the cap is 14 px).
+  - G13 (13:06): "PASS G13 saturn: 0 of 83 frames over 0.02 soft (every 6th frame)".
+- LOOKS pushed 13:02 (aec04fbe, 8 looks): 3720 beside the approved and the kept still, its lower left beside
+  the approved's, the dive every third frame (two sheets), the rise panels. Next by 13:32.
+- ITEM 15, THE SKY THROUGH THE DIVE, NUMBERS (out/scratch/skycourse.ts; r47 draft frames): the hold is flown at
+  heights 2.228 (3390) to 2.414 (3541) over the ring plane, so the air of the stop (sky.heights upper 2.2)
+  cannot start before the lens is under the hold's lowest height; it starts at 3562. The hold's sky picture
+  has the share 0.937 at 3550, 0.583 at 3562, 0.160 at 3574, 0 from 3586; the gain of the film's field
+  (skyGain) is 0.996 at 3562, 0.835 at 3574, 0.626 at 3586, 0.170 from 3625. So between about 3555 and 3595
+  the film's warm field shows at up to about 0.8 of its open exposure and then sinks: mean rgb of the top
+  left box (0, 0 to 500, 160 of the 1920 frame) 21, 33, 41 at 3538 (the hold's blue), 45, 41, 36 at 3568
+  (warm, the brightest), 18, 20, 23 at 3586, 7, 11, 16 at 3628. The kept still at 3567 has 32, 36, 37 in the
+  same box. A sky whose tone goes blue, warm, dark in three seconds; every part of it by distance or height.
+  Possible cure, not tried: the air of the stop follows the union of the height and of the distance from the
+  hold's path (air = low + (1 - low) * (1 - hero)), so the hold's sky hands to the skim's sky and the film's
+  field never comes up between; the price is the judged frame 3567, whose sky would be darker and evener
+  than the kept still's.
+- ITEM 16, WHAT THE SMEAR AT 3866 IS MADE OF (out/scratch/smearsplit.ts; shutterFraction 0.5): in the lower
+  left the move of a ring point while the shutter is open is, lens moving with the aim held against aim
+  turning with the lens held: pixel 100, 1000: (6.8, -2.4) and (-4.7, -2.8), together (2.1, -5.2), across the
+  ringlets 5.5 px; pixel 400, 1050: (3.6, -2.7) and (-4.3, -2.9), across 4.8 px; pixel 1000, 1050: (-1.8,
+  -2.1) and (-4.2, -3.0), across 5.4 px. At 3874: across 7.4 px at 100, 1000 with the aim turning only 0.05
+  degrees. So the smear is the lens pulling away at 2.35 radii a second, not the turn of the aim; nothing in
+  the look can take it out. It stands for the round as named.
+- ITEM 17, THE RING AT 3720 AGAINST THE APPROVED, MEASURED (tool /tmp/v/t17/pal.py: the box 0, 380 to 960, 1080
+  of the 1920 frame, pixels over 0.12 luminance; bands by the percentile of the luminance):
+  - approved: luminance mean 0.511, 10th, 50th, 90th, 99th percentile 0.242, 0.505, 0.777, 0.912, share of
+    white pixels 0.0003; red over green and blue over green by band: darks 1.044, 0.932; low 1.085, 0.900;
+    mids 1.115, 0.892; high 1.118, 0.891; bright 1.098, 0.907; top 1.070, 0.924.
+  - named: mean 0.563, percentiles 0.287, 0.568, 0.837, 0.977, white 0.0083; darks 1.118, 0.912; low 1.129,
+    0.894; mids 1.133, 0.884; high 1.121, 0.880; bright 1.081, 0.887; top 1.018, 0.941.
+  - the kept still reads as the approved (0.512; 0.252, 0.502, 0.777, 0.887).
+  - by region: the near A ring (lower left): approved luminance 0.453 (5th and 95th percentile 0.193, 0.735),
+    contrast under 31 px 0.144, under 5 px 0.106; named 0.506 (0.301, 0.696), contrast 0.088 and 0.056. The B
+    ring: approved 0.630, contrast 0.121 and 0.093; named 0.652, 0.111 and 0.083. The lit globe and the sky
+    are close (globe 215, 191, 148 against 224, 191, 144; sky 7, 10, 15 against 8, 12, 17).
+  So mine is a tenth brighter on the ring, its highlights clip to yellow white at the outer edge of the B
+  ring, its dark ringlets are brown where the approved has grey, and the near A ring has about 0.6 of the
+  approved's ringlet contrast (the film's shutter, 9.03 px at 3720, takes part of it).
+  - WHY: at 3720 the lens is 0.396 over the plane and the nearest ring in frame is 0.67 to 1.06 away. The
+    model's own light shows only within handover.kept.reach (0.6 to 1.3 from the lens, by the logarithm): its
+    share is 0.9 at the bottom edge, 0.6 at row 900, 0.35 at row 800 and under 0.1 above row 700. The rest of
+    the frame is the far look, the hero's ring profile with the hero's tone. So the palette of the skim is
+    the hero's, and the near numbers of skim.json light reach only the bottom rows.
+  - TRIAL t1 (final 3720, light.rings near 0.85 to 0.77): mean 0.558, percentiles 0.279, 0.562, 0.834, 0.976:
+    one hundredth. The gain of the model's own light alone does not carry it.
+  - PLAN for the round, if the palette is named: a tone of the sheet near the lens (level, the depth of the
+    darks, their grey) that holds for the far look and the model's own light alike, weighted by the distance
+    from the lens and by the height (nothing of it above the heights where the kept set draws, so the dive's
+    handover, the hold and the travel keep their bytes); numbers in skim.json. To be tried and measured here.
+- OWED PROOFS STARTED 13:14 (/tmp/v/r48, the worktree at f057cf9): the review tier frames 3581 to 3597 and 3844
+  to 3860 (every frame across both handovers), then 3567 at the final tier for the pair with the kept still.
