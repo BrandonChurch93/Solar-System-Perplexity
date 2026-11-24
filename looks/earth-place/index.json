@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T17:19:51.958Z",
+ "pushed": "2026-11-24T17:36:06.992Z",
  "head": "7f7a7fe24d7412be6d3fd691bb77f74bbde934c5",
- "note": "Y: try 8 measured not a cure, Y2 (deck mask as cover) fails the hold on sight, dropped; fallback state stays pushed",
+ "note": "Y: standing puffs tried in Python only (r1, r4), mechanics work, look not good yet; rate 2 pictures of the rise's middle running on the fallback tree",
  "looks": [
+  {
+   "time": "2026-11-24T17:36:06.154Z",
+   "file": "20261124173606154-note-r4c.jpg",
+   "source": "../../../../tmp/gl/s12/r4c.jpg",
+   "kind": "note",
+   "label": "Standing puffs trial r4, Python only, no veil, no grade, no render: 1890 1894 1898. Read: the lay back by angle covers the puffs on the plate, what is left is a band of same sized white flakes past the plate's far edge. Not good.",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T17:36:04.768Z",
+   "file": "20261124173604768-note-r4a.jpg",
+   "source": "../../../../tmp/gl/s12/r4a.jpg",
+   "kind": "note",
+   "label": "Standing puffs trial r4, Python only, no veil, no grade, no render: clusters of hemispheres from code, hold and 1866 1874. Read: a dense fan of evenly spaced white dots with a clear wedge outline far past the plate. Not the hero's cloud. Not good.",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T17:36:03.753Z",
+   "file": "20261124173603753-note-r1a.jpg",
+   "source": "../../../../tmp/gl/s12/r1a.jpg",
+   "kind": "note",
+   "label": "Standing puffs trial r1, Python only, no veil, no grade, no render: noise heights painted by the close picture's projection. Read: hard paper cutouts, a sharp wedge of blue specks at the hold. Not good.",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T17:19:43.767Z",
    "file": "20261124171943767-note-diag-far.jpg",
@@ -74,30 +98,6 @@
    "source": "../../../../tmp/gl/s11/a1/z2.jpg",
    "kind": "note",
    "label": "bank try 8 draft, dive 1876 to 1881 consecutive: the white mass greys into the deck, grey bands at its lower edge",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T16:12:02.663Z",
-   "file": "20261124161202663-note-pairs-1.jpg",
-   "source": "../../../../tmp/gl/s11/d8/pairs-1.jpg",
-   "kind": "note",
-   "label": "bank try 8 draft: 1880 1882 1884 before left, bank right",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T16:12:01.881Z",
-   "file": "20261124161201881-note-native.jpg",
-   "source": "../../../../tmp/gl/s11/d8/native.jpg",
-   "kind": "note",
-   "label": "bank try 8 draft, native crops 1866 1870 1874 1878",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T16:12:01.260Z",
-   "file": "20261124161201260-note-ctx2.jpg",
-   "source": "../../../../tmp/gl/s11/f8/ctx2.png",
-   "kind": "note",
-   "label": "bank try 8, 1755 final: kept above, new below, x2 on the Gulf; 12326 px differ, 4883 of them outside the accepted box by 1 level (bloom)",
    "stop": "earth"
   }
  ]
