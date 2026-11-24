@@ -7,8 +7,9 @@ import { applyProbe, parseProbe, probeString } from '../src/diagnostics/probe'
 import { FilmDirector } from '../src/director/film'
 import { forceOneMove, oneMoveForced } from '../src/director/handover'
 import { StopPlan, type MoveParams } from '../src/director/moves'
-import { bellStep, paceLimits, paceOf } from '../src/director/pace'
+import { bellStep, paceLimits } from '../src/director/pace'
 import { plans } from '../src/director/plans'
+import { paceOf } from '../tools/lib/pace'
 import { COVERED, coveredPlan, filmWith, restorePlans } from './lib/covered'
 
 // Plan E: the engine's one move. One eye from the far end to the surface view, on one bell shaped rate, drawn by both views.
