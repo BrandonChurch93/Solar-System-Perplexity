@@ -3452,3 +3452,17 @@ Still wrong after the third named commit:
 9. The tones of the plates under the ground (`flay.py`) were not measured again after the laying; the plate files were encoded once more from decoded JPEG; `LIMB.edgePx 2` and the veil's `edgePx 1.5` are counted in pixels; step 4 not done.
 10. G13 counted on 24 frames only on this state.
 11. The change of view takes the one frame of T (`dissolveFrames` 1): the one thing of mine inside a move that goes by the time.
+
+## NAMED sent 10:23: third named commit 8d8eba9eb74fe286fa236347479c5250217d88ae (read this first after a compaction)
+
+- Pushed 10:16 to agent/venus-place, ls-remote gave the same sha. The mail carried the numbers of the three sections before this one, the level check lines, the line of MAIL 613, the bytes and the list of what is still wrong. Due time was 10:47 UTC (MAIL 610).
+- Net of the three folders against origin main c2c49133: main 162,075,453 bytes, the commit 162,728,419, plus 652,966 bytes: 396,253 the plates (yes of MAIL 615), 256,713 text, of which 223,774 stood in the second named commit and 32,939 came with the third.
+- Main at 10:16 was c2c49133 (fetched with depth 1). Outside my folders it differs from my tree by tools, tests, notes, `src/terrain/relief.ts` (the eye of a scaled relief of the engine's class; Venus does not use that class, its ground is `CloudRelief` in `src/stops/venus/relief.ts`) and the one line of `config/showcase.json` (venus on `handover.ownPath` on main, off on my tree, as in the proof tree of MAIL 593). The commit stands on main be1de182; no merge (MAIL 575). My smooth numbers come from the tool on my tree; main's `tools/smooth.ts` and `tools/img/smooth.py` have changed since and were not run here.
+
+Run after the commit, 10:16 to 10:21 (script `/tmp/v/x3.sh`, tree put back, nothing of it committed): the rise with `ground.release` set to [1000, 3000], so that nothing is let go by height inside the frame of T. `out/work/venus/place/pat.ts --from 1540 --to 1560` (the pattern number of the report, reach 8 film frames, rows 1540 to 1552 + 1/2):
+- at most 0.52 at 1542; 3 rows over the limit (0.52, 0.49, 0.47 at 1542, 1542 + 1/2, 1543); 0.22 to 0.35 from 1543 + 1/2 on, 0.22 to 0.26 at 1550 + 1/2 to 1552 + 1/2.
+- The commit reads on the same rows up to 1.15, 21 rows over (16 of them the first hump), 0.47 to 0.65 at 1550 + 1/2 to 1552 + 1/2.
+- So the first hump of the rise is the release: proved. It is no cure as it stands: seen at 1548, 1552, 1556, 1560 of that run, the footprint of the frame of T shows from 1556 on as a pale patch on the globe with a dark slab at its right edge (look "test only" of 10:22).
+- Not run: the same for the dive (1319 + 1/2 to 1323 + 1/2), and the rows after 1552 + 1/2 of the rise.
+
+What to do next, in this order, if a round follows: (1) the ground inside the frame of T held without the release and its footprint cured where it shows (the pale far deck and the slab at the right edge are the tones of T's line of sight seen from above: the law of `tone` and `ground.lay` there), then the pattern of 1540 to 1560 measured again; (2) the far band under the limb laid from the ground; (3) the plates of the place and the globe's own map one picture under `show.heights`.
