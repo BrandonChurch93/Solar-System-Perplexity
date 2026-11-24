@@ -1,9 +1,55 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T18:30:53.993Z",
- "head": "f8df0291a2bb00cfd1a334312d5a9d576bbb253c",
- "note": "18:46 UTC. Trial on paper for rulings 1 and 3: the plates keep the globe's oval at coarse scale and take the surface view's detail; no take spent yet. Rise pictures of the head still render.",
+ "pushed": "2026-11-24T18:57:31.485Z",
+ "head": "25cacafff31c0267fa245dd60376f13ac9cd9cf1",
+ "note": "18:57 UTC: rise of the head as the base; what 3150 reads from the plates, tested before the plates are rebuilt",
  "looks": [
+  {
+   "time": "2026-11-24T18:57:30.928Z",
+   "file": "20261124185730928-note-diff-D-3150.jpg",
+   "source": "../work/dep/diff-D-3150.jpg",
+   "kind": "note",
+   "label": "Test: 3150 drawn with a flat tone file and its difference times 16: the haze light reads the tone",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T18:57:30.385Z",
+   "file": "20261124185730385-note-diff-A-3150.jpg",
+   "source": "../work/dep/diff-A-3150.jpg",
+   "kind": "note",
+   "label": "Test: 3150 drawn with the mid plate mirrored (left) and its difference times 16 (right): the haze light and the strip under the limb read the mid plate",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T18:57:29.831Z",
+   "file": "20261124185729831-note-ru-b.jpg",
+   "source": "../work/r3/ru-b.jpg",
+   "kind": "note",
+   "label": "Rise 3279 to 3285 by half frames: the limb enters at 3281 + 1/2, where the level step now reads 1.86 (limit 1.3) with the exposure table out",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T18:57:29.127Z",
+   "file": "20261124185729127-note-ru-a.jpg",
+   "source": "../work/r3/ru-a.jpg",
+   "kind": "note",
+   "label": "Rise on head 25cacaf (still sky, flat exposure), frames 3247 to 3283, draft: the base for rulings 3 and 1; known wrong: pale ring by 3259, paint from 3263, blot at the place to 3283",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T18:56:44.010Z",
+   "file": "20261124185644010-frame-f03060.jpg",
+   "source": "out/work/jupiter/frames/depE/f03060.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3060, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3060,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
   {
    "time": "2026-11-24T18:30:52.500Z",
    "file": "20261124183052500-note-cand-near.jpg",
@@ -73,20 +119,6 @@
    "stop": "jupiter",
    "segment": "jupiter.hold",
    "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
-  },
-  {
-   "time": "2026-11-24T18:04:19.501Z",
-   "file": "20261124180419501-frame-bU-3150.jpg",
-   "source": "out/work/jupiter/final/bU-3150.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3150, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
@@ -186,38 +218,6 @@
    "source": "../work/sky/DdDs-sky-lift.png",
    "kind": "note",
    "label": "3033 and 3045 upper right quarter, level times 3, left the dive's report frames kept at 11:20 UTC (tree a90e29f), right the working tree: a dark band without stars over the limb with a straight end, in both",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T17:24:39.936Z",
-   "file": "20261124172439936-note-bS-3150.jpg",
-   "source": "out/work/jupiter/final/bS-3150.png",
-   "kind": "note",
-   "label": "3150 final, working tree with the sky that stands still: 71712 pixels differ from the merge by 1 level, 56 by more, at most 7; mean abs to the approved image 7.0307 in both",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T17:24:39.230Z",
-   "file": "20261124172439230-note-Ds-b.jpg",
-   "source": "../work/sky/Ds-b.jpg",
-   "kind": "note",
-   "label": "dive 3025 to 3061 draft, working tree with the sky that stands still",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T17:24:38.584Z",
-   "file": "20261124172438584-note-Dn-a.jpg",
-   "source": "../work/sky/Dn-a.jpg",
-   "kind": "note",
-   "label": "dive 2987 to 3013 draft on the merge e2d28f3, the sky as round 46 sees it (sweep 143.6 degrees)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T17:24:37.784Z",
-   "file": "20261124172437784-note-Ds-a.jpg",
-   "source": "../work/sky/Ds-a.jpg",
-   "kind": "note",
-   "label": "dive 2987 to 3021 draft, working tree: no terrain aim and the surface frame is the globe's, the sky stands still",
    "stop": "jupiter"
   }
  ]
