@@ -1,9 +1,25 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-24T10:22:42.577Z",
- "head": "8d8eba9eb74fe286fa236347479c5250217d88ae",
- "note": "third named commit 8d8eba9e; test sheet of the rise without the release (not committed)",
+ "pushed": "2026-11-24T10:41:17.691Z",
+ "head": "1e682e0123ac856ff8931fecdd6bc3b297d942af",
+ "note": "after the third named commit: test of the near ground kept whole inside the frame of T (not committed)",
  "looks": [
+  {
+   "time": "2026-11-24T10:41:16.770Z",
+   "file": "20261124104116770-note-x4b.jpg",
+   "source": "../../../../tmp/v/x4b.jpg",
+   "kind": "note",
+   "label": "same test: rise 1552, 1556, 1568, 1572; the tower group keeps its lit crests to 1564, the pale patch of the far deck with a blue tint stands at 1552 to 1560, shadow slab right of it",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T10:41:16.117Z",
+   "file": "20261124104116117-note-x4a.jpg",
+   "source": "../../../../tmp/v/x4a.jpg",
+   "kind": "note",
+   "label": "test, not committed: rise 1544, 1548, 1560, 1564 with the near ground of the frame of T kept whole at every height (far ground let go by height as before); pattern rows 1547 to 1567 + 1/2 at most 0.41 (commit up to 0.74), most 0.65 at 1546 on the limb at the right",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T10:22:41.961Z",
    "file": "20261124102241961-note-x3sheet.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/pat1/rise16/changes.png",
    "kind": "note",
    "label": "rise, pattern over 8 frames at the humps: 0.74 at 1554 + 1/2 one blob at pixel 604, 724; 0.81 at 1575 spread along the limb and the lower edge",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T09:53:15.536Z",
-   "file": "20261124095315536-note-risecrop2-U.jpg",
-   "source": "../../../../tmp/v/risecrop2-U.jpg",
-   "kind": "note",
-   "label": "rise 1547 to 1549 + 1/2, crop x 160 to 660, y 540 to 920: the lit crests at the lower left of the tower group go out as the release lets the ground go",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T09:53:14.775Z",
-   "file": "20261124095314775-note-changes.jpg",
-   "source": "../../../../tmp/v/pat1/rise/changes.png",
-   "kind": "note",
-   "label": "same frames, pattern over one film frame: quiet to 1545, 0.30 at 1546 + 1/2 at the limb, 0.38 at 1548 lower left, quiet from 1550",
    "stop": "venus"
   }
  ]
