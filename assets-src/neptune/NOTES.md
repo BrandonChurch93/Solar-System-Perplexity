@@ -3668,3 +3668,52 @@ to 4956, and 4956 against 4957) are in R1 and T1, looked at, in the looks.
 - Net size of my three folders in this commit: 82.52 MB in 202 files against main's 94.35 MB in 200 files, 11.83 MB less
   (public/assets/neptune 77.08 against 90.03; src/stops/neptune 0.28 against 0.20; assets-src/neptune 5.16 against 4.12, of
   which this notebook is 0.87).
+
+## 05:53 to 06:01 VM. Commit 5be84b7f pushed; the 4860 final taken off the chain; parity early on four pairs
+
+- 05:53: commit 5be84b7fb28985ac839b03dfee915c21cf74a0b8 pushed to agent/neptune-place (30df610d..5be84b7f, a plain fast
+  forward), on the merge aa03b001 of main c65e474c. It is the whole state: the one move, the ring by height, bufferFrame().
+- chain4 (4860 at the final tier after the parity) taken off again before it began. Reason, measured: the Builder's job np2-01
+  took 48 minutes on a machine with four cores for the final tier of the two judged frames, a 16 by 9 draft of 4860 takes 100
+  s here alone; the final would hold the renderer from about 06:20 past 07:00, and those are the minutes in which the faults
+  of 4860 can be worked on at the draft tier. So for point (d) of MAIL 508 the surface view comes as the pair at 16 by 9 draft
+  (look 2aac9ee3) with the line what changed and why, and the final of 4860 is in the job text. Named as such in the mail.
+- Parity early, the tool's own measure on the tool's frames, fourth pair: 4748 mean 2.121, coarse 1.168, block 5.819, level
+  0.650. All four so far under the limits (mean 12, coarse 3.2, block 12, level 2.2). The panel of the four pairs looked at
+  (/tmp/par-own.jpg): the two formats are one picture to the eye; the difference times 8 is dim, most in the storm's fine
+  streaks at 4725 and 4748 and in the streaks of the limb band at 4748. 4725 shows the listed fault of the two forms (the
+  map's storm with its white streak beside the scene's ridge), the same in both formats.
+- Looks: 6aa625c1 (05:42, the limb of 4860 against the approved image, twice size), 74b52853 (06:00, the parity panel).
+
+## 06:01 to 06:12 VM. The tool's parity is green; a slip with the fetch and its repair; main c797cdc8 merged
+
+- npm run smooth -- --stop neptune --only parity ended 06:11:08, exit 0: "smooth neptune: green." Its report (copy
+  out/work/nep/next/smooth-parity-mine.md, panel smooth-parity-mine.png, both halves of the panel looked at) names commit
+  5be84b7f, the tree it rendered:
+  "VERDICT: green. No number is over its limit."
+  "Largest mean difference: 2.477 at frame 4860 (neptune.terrain), limit 12."
+  "Largest mean difference at one 8th of the size (what is left when the fine grain is averaged away): 1.617 at frame 4860
+  (neptune.terrain), limit 3.2."
+  "Largest level difference of one block (a grid of 16 by 9): 5.819 at frame 4748 (neptune.dive), limit 12."
+  "Largest level difference of the whole frame: 1.196 at frame 4860 (neptune.terrain), limit 2.2."
+  Rows (mean, coarse mean, block level, level): 4605 1.204, 0.329, -1.686, -0.238 | 4703 1.217, 0.368, -1.634, -0.269 |
+  4725 1.800, 0.879, 4.893, 0.579 | 4748 2.121, 1.168, 5.819, 0.650 | 4860 2.477, 1.617, 5.465, 1.196 | 4969 2.079, 1.169,
+  5.009, 0.487 | 4988 1.450, 0.595, 2.574, 0.061 | 5006 1.442, 0.550, -2.700, -0.478.
+  So 4725 reads coarse 0.879 and block 4.893 on my tree against main's 4.994 and 27.740 (MAIL 538). "Seconds a rendered frame
+  on space-sandbox 4x Intel(R) Xeon(R) Processor @ 2.90GHz: 16x9 70.52, uhd 253.42."
+  What the panel shows: the two formats are one picture to the eye in all eight rows. The difference times 8 is dim; it sits
+  in the fine streaks of the storm and of the limb band (4725 to 4969) and in the stars (4988, 5006: the star field, which is
+  the sky's, not mine). The close scene is 1.2 of 255 brighter at uhd (4860), under the limit of 2.2; named in my list.
+- A slip of mine at 06:01: I fetched main with --depth 1 as MAIL 520 words it. In this clone that made the new tip c797cdc8 a
+  root without a parent, so a merge would have found no common base. Seen at once (git log showed no parent). Repair: the one
+  line c797cdc8 taken out of .git/shallow again (its parent c65e474c and all below it were already here), then git log walks
+  c797cdc8, c65e474c, 3060b725 and the merge base with my head is c65e474c. Nothing was merged in between. From now on the
+  plain fetch (git fetch origin main), which has worked all night.
+- Main c797cdc8 (05:55, kit/PROGRESS.md only: status 216) merged as bea18a64, with the trailer.
+- On that head, in the repo itself: npm run smooth -- --stop neptune --only path: "smooth neptune: green", report "Commit
+  bea18a64e68ee25c431c4c60705be28efb5e77f1 ... VERDICT: green. No number is over its limit." Dive (T at 4758): rate step 0.059
+  at 4760, turn 0.060 at 4712, speed 0.060 over 8 at 4692; at rate 2 0.059, 0.061, 0.061 over 8. Rise (T at 4956): rate 0.066
+  at 5023, turn 0.064 at 4957, speed 0.068 over 5 at 5022, fall before the largest value 0.018 over 8; at rate 2 0.066, 0.066,
+  0.069 over 5, fall 0.021 over 8. Limits: step 0.08, fall or climb 0.03. The seam tool at rate 2 as before: dive lowest 1.010
+  at 4769 + 1/2, never against the surface view's way; rise lowest 0.942 at 4950, goes against the surface view's way from
+  4951 + 1/2 with 3.492. tsc clean.
