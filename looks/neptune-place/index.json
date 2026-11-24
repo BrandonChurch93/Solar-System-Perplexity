@@ -1,9 +1,17 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T02:43:50.024Z",
+ "pushed": "2026-11-24T03:07:21.614Z",
  "head": "85312d1ba89d4fbb4811dc70dc8f5b02871b7c43",
- "note": "4860 after mail 473, draft N13 beside the approved image (work in progress, not committed)",
+ "note": "4860 after mail 484, draft T5 over the approved image (work in progress, not committed)",
  "looks": [
+  {
+   "time": "2026-11-24T03:07:20.958Z",
+   "file": "20261124030720958-note-q-T5.jpg",
+   "source": "../../../../tmp/q-T5.jpg",
+   "kind": "note",
+   "label": "4860 draft T5 (above, not committed) over the approved image, after mail 484: the ridge a chain of heaps with fibres (ridge pixels median 162 against 153, share of the box 15.3 against 14.6 percent), storm with a graded rim and a black blue floor, limb haze narrower with streaks in it, second streamer thin and long, low haze cut to a third so the near deck is darker. Still wrong: heaps too chunky and white, shadow beside the ridge faint, rings round the storm too many",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T02:43:49.348Z",
    "file": "20261124024349348-note-d-N13.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/d-N5.jpg",
    "kind": "note",
    "label": "4860 draft N5 (left) beside the approved image: one main ridge of strands, storm with fine rings, bands in the far field, streaked deck",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T01:48:23.481Z",
-   "file": "20261124014823481-note-v-r1.jpg",
-   "source": "../../../../tmp/v-r1.jpg",
-   "kind": "note",
-   "label": "Rise on commit 85312d1b, a sample of twelve frames 4950 to 5006, preview draft: one layout from the surface view up to the planet; every frame follows with the next commit",
    "stop": "neptune"
   }
  ]
