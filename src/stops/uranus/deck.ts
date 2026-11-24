@@ -249,6 +249,20 @@ void main() {
   if (uDiag >= 2 && uFade < 0.5) discard;
 }`
 
+const COVER_VERT = (far: boolean): string => 'invariant gl_Position;\n' + VERT.replace('vClip = gl_Position.xyw;', 'vClip = gl_Position.xyw;' + (far ? '\n  gl_Position.z = gl_Position.w;' : ''))
+
+const COVER_DEPTH = /* glsl */ `
+precision highp float;
+out vec4 outColor;
+void main() {
+  outColor = vec4(0.0);
+}`
+
+const COVER_FRAG = FRAG.replace('uniform float uFade;', 'uniform float uFade;\nuniform vec2 uBorder;').replace(`  outColor = vec4(o.rgb, uDiag >= 2 ? 1.0 : uFade);
+  if (uDiag >= 2 && uFade < 0.5) discard;`, `  float cover = uFade * (1.0 - smoothstep(uBorder.x, uBorder.y, acos(clamp(dot(n, uUp), -1.0, 1.0))));
+  outColor = vec4(o.rgb, uDiag >= 2 ? 1.0 : cover);
+  if (uDiag >= 2 && cover < 0.5) discard;`)
+
 const HALO_VERT = /* glsl */ `
 out vec3 vDir;
 out vec3 vClip;
@@ -347,6 +361,9 @@ export class Deck {
   readonly haze: Glow
   readonly material: THREE.ShaderMaterial
   readonly overlayMaterial: THREE.ShaderMaterial
+  readonly cover = new THREE.Group()
+  readonly coverMaterial: THREE.ShaderMaterial
+  private readonly coverDepth: THREE.ShaderMaterial[]
   private readonly centre = new THREE.Vector3().fromArray(deckJson.centre)
   private readonly unbloom: number
 
@@ -441,6 +458,39 @@ export class Deck {
     this.overlay.visible = false
     this.haze = new Glow(t.halo, 2000)
     this.group.add(this.mesh, this.overlay, this.haze.mesh)
+    this.coverDepth = [true, false].map((far) => new THREE.ShaderMaterial({
+      glslVersion: THREE.GLSL3,
+      vertexShader: COVER_VERT(far),
+      fragmentShader: COVER_DEPTH,
+      uniforms: this.material.uniforms,
+      side: THREE.FrontSide,
+      transparent: true,
+      colorWrite: false,
+      depthWrite: true,
+      depthFunc: far ? THREE.AlwaysDepth : THREE.LessDepth,
+    }))
+    this.coverMaterial = new THREE.ShaderMaterial({
+      glslVersion: THREE.GLSL3,
+      vertexShader: COVER_VERT(false),
+      fragmentShader: COVER_FRAG,
+      uniforms: { ...this.material.uniforms, uFade: { value: 0 }, uBorder: { value: new THREE.Vector2(4, 5) } },
+      side: THREE.FrontSide,
+      transparent: true,
+      depthWrite: false,
+      depthFunc: THREE.LessEqualDepth,
+      blending: THREE.CustomBlending,
+      blendSrc: THREE.SrcAlphaFactor,
+      blendDst: THREE.OneMinusSrcAlphaFactor,
+      blendSrcAlpha: THREE.ZeroFactor,
+      blendDstAlpha: THREE.OneFactor,
+    })
+    ;[...this.coverDepth, this.coverMaterial].forEach((m, i) => {
+      const mesh = new THREE.Mesh(geometry, m)
+      mesh.frustumCulled = false
+      mesh.renderOrder = 4 + i * 0.25
+      this.cover.add(mesh)
+    })
+    this.cover.visible = false
   }
 
   update(camera: THREE.Vector3, elapsed: number, gain: number, vignette: number, aspect: number, fade = 1, bloom = 0, lens: [number, number] = [1, 1]): void {
@@ -458,10 +508,18 @@ export class Deck {
     this.haze.update(camera, this.centre, deckJson.radius, gain * fade, vignette, aspect)
   }
 
+  spread(weight: number, border: [number, number]): void {
+    this.coverMaterial.uniforms.uFade!.value = weight
+    ;(this.coverMaterial.uniforms.uBorder!.value as THREE.Vector2).set(border[0], border[1])
+    this.cover.visible = weight > 0
+  }
+
   dispose(): void {
     this.mesh.geometry.dispose()
     this.haze.dispose()
     this.material.dispose()
     this.overlayMaterial.dispose()
+    this.coverMaterial.dispose()
+    for (const m of this.coverDepth) m.dispose()
   }
 }

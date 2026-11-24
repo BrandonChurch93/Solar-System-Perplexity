@@ -114,6 +114,7 @@ Files:
 - `public/assets/jupiter/<set>/deck-image-range.bin` (16 bit, the range the fit camera saw along every ray of the wide canvas; full at half, web at a quarter of the canvas per side)
 - `public/assets/jupiter/<set>/deck-view-color.png` (full 8192 x 3200, web 4096 x 1600, RGBA: the picture laid on the heights in a chart that matches the view of the fit camera, alpha the texel length)
 - `public/assets/jupiter/<set>/deck-tone.bin` (256 square, 3 blocks, 16 bit, both sets: the tone of the approved view over the ground)
+- `public/assets/jupiter/<set>/deck-calm.bin` (256 square, 3 blocks, 16 bit, both sets: from above only, the cold area east of the storm led to the hue of its surround and the storm's shade carried on past its straight end)
 
 Sources: `references/approved/jupiter-close.jpg` (never edited), the wide canvas `assets-src/jupiter/relief/canvas-wide.jpg` (a copy of `deck-wide.jpg` of the section "Terrain deck" above) and the core `assets-src/jupiter/relief/core.jpg` (the approved image at twice its size, steps 2 and 11 of that section), the globe's own imagery (`wrap-color.jpg` and the dive patches).
 
@@ -133,7 +134,8 @@ Sources: `references/approved/jupiter-close.jpg` (never edited), the wide canvas
 10. Bake. `python3 assets-src/jupiter/deck/bake.py` writes the four plates (RGBA, the globe's coding of plate times grade, alpha a roughness from the plate's own band energy) and the three height maps (image heights where trusted, the near plate's relief elsewhere, slopes limited to `tool.slopeMax`, relief faded from `tool.reliefFade` units), and `deck-fields.json`.
 11. Image fields. `python3 assets-src/jupiter/deck/image.py` writes `deck-image-wide.jpg` and `deck-image-core.jpg` (JPEG quality `image.quality`, no chroma subsampling) and `deck-image-range.bin`, so a point the fit camera saw takes its colour from the picture at the pixel where that camera saw it. `python3 assets-src/jupiter/deck/view.py` writes `deck-view-color.png` for the ground that camera did not see or saw too steeply (`view` in `deck.json`: hidden zones are carried over from their borders).
 12. Tone field. `python3 assets-src/jupiter/plates/tone.py` writes `deck-tone.bin` (`tone` in `deck.json`): the approved view laid on the ground over the plates, both blurred, carried out smoothly past the seen ground and led back to 1.
-13. Measured tables, no picture written: `python3 assets-src/jupiter/deck/air.py` (the air between camera and deck, `deck.json` `air`), `deck/limb.py` (the glow over the limb, `limb`), `deck/lift.py` (the air weight over time in the dive and the rise, `air.lift`), `deck/pace.py` (`place.json` `pace`).
+13. Calm field. `python3 assets-src/jupiter/plates/calm.py` writes `deck-calm.bin` (`calm` in `deck.json`) from the finished plates and `deck-tone.bin`, and a before and after picture from straight above to `out/work/jupiter/calm/calm.jpg`.
+14. Measured tables, no picture written: `python3 assets-src/jupiter/deck/air.py` (the air between camera and deck, `deck.json` `air`), `deck/limb.py` (the glow over the limb, `limb`), `deck/lift.py` (the air weight over time in the dive and the rise, `air.lift`), `deck/pace.py` (`place.json` `pace`).
 
 Checks: frame 3150 at the draft tier against the approved image (mean absolute difference 4.56 of 255 at the first build of the plates; G17 median sharpness ratio 1.010); `assets-src/jupiter/deck/texels.ts` (G13) and `npm run handover -- --stop jupiter` on the dive and the rise.
 

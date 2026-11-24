@@ -176,6 +176,7 @@ uniform vec3 uPlateGrade;
 uniform sampler2D uTone;
 uniform vec4 uToneBox;
 uniform vec3 uToneLift;
+uniform vec4 uCalmBox;
 uniform vec4 uDetail;
 uniform vec4 uDetailLook;
 uniform float uDetailTone;
@@ -344,8 +345,10 @@ ${PATCH_LEVELS}
       vec3 fineSum = vec3(0.0);
       for (int i = 0; i < (on > 0.0 ? taps : 0); i++) fineSum += made(c + axis * (major * ((float(i) + 0.5) / float(taps) - 0.5)), cut, least);
       float shade = clamp(1.0 + on * max(plate.a, uDetailLook.z) * (uDetail.y * fineSum.z - uDetailTone * dot(fineSum.xy, sunAz)) / float(taps), 1.0 - uDetailLook.w, 1.0 + uDetailLook.w);
-      vec2 tv = clamp(vec2(c.x - uToneBox.x, uToneBox.y - c.y) * uToneBox.z + 0.5, uToneLift.z, 1.0 - uToneLift.z);
-      vec3 tone = mix(vec3(1.0), uToneBox.w * vec3(texture(uTone, vec2(tv.x, tv.y / 3.0)).r, texture(uTone, vec2(tv.x, (tv.y + 1.0) / 3.0)).r, texture(uTone, vec2(tv.x, (tv.y + 2.0) / 3.0)).r), high);
+      vec2 tv = clamp(vec2(c.x - uToneBox.x, uToneBox.y - c.y) * uToneBox.z + 0.5, uToneLift.z, 1.0 - uToneLift.z) * vec2(0.5, 1.0);
+      vec2 cv = clamp(vec2(c.x - uCalmBox.x, uCalmBox.y - c.y) * uCalmBox.z + 0.5, uToneLift.z, 1.0 - uToneLift.z) * vec2(0.5, 1.0) + vec2(0.5, 0.0);
+      vec3 calm = uCalmBox.w * vec3(texture(uTone, vec2(cv.x, cv.y / 3.0)).r, texture(uTone, vec2(cv.x, (cv.y + 1.0) / 3.0)).r, texture(uTone, vec2(cv.x, (cv.y + 2.0) / 3.0)).r);
+      vec3 tone = mix(vec3(1.0), uToneBox.w * vec3(texture(uTone, vec2(tv.x, tv.y / 3.0)).r, texture(uTone, vec2(tv.x, (tv.y + 1.0) / 3.0)).r, texture(uTone, vec2(tv.x, (tv.y + 2.0) / 3.0)).r) * calm, high);
       lin = mix(lin, inverseFilmic(plate.rgb) * uPlateGrade * tone * shade, placed);
       texels = mix(texels, max(foot / size, on * 2.0 * span / (uGrad * 1.6 * least)), step(0.5, placed));
     }
@@ -470,7 +473,7 @@ export class Globe {
         uPlateFore: o.place.uniforms.uPlateFore!, uPlateNear: o.place.uniforms.uPlateNear!, uPlateMid: o.place.uniforms.uPlateMid!, uPlateFar: o.place.uniforms.uPlateFar!,
         uPlateBoxFore: o.place.uniforms.uFore!, uPlateBoxNear: o.place.uniforms.uNear!, uPlateBoxMid: o.place.uniforms.uMid!, uPlateBoxFar: o.place.uniforms.uFar!,
         uPlateTexel: o.place.uniforms.uTexel!, uPlateJoin: o.place.uniforms.uJoin!,
-        uTone: o.place.uniforms.uTone!, uToneBox: o.place.uniforms.uToneBox!, uToneLift: o.place.uniforms.uToneLift!,
+        uTone: o.place.uniforms.uTone!, uToneBox: o.place.uniforms.uToneBox!, uToneLift: o.place.uniforms.uToneLift!, uCalmBox: o.place.uniforms.uCalmBox!,
         uDetail: o.place.uniforms.uDetail!, uDetailLook: o.place.uniforms.uDetailLook!, uDetailTone: o.place.uniforms.uDetailTone!, uDetailHigh: o.place.uniforms.uDetailHigh!, uFoot: o.place.uniforms.uFoot!, uSunAz: o.place.uniforms.uSunAz!, uStorm: o.place.uniforms.uStorm!, uStormTurn: o.place.uniforms.uStormTurn!, uEddy: o.place.uniforms.uEddy!, uEddyTurn: o.place.uniforms.uEddyTurn!, uSeam: o.place.uniforms.uSeam!,
         uPlateGrade: { value: new THREE.Vector3(1 / o.place.grade[0]!, 1 / o.place.grade[1]!, 1 / o.place.grade[2]!) },
         uPlaceN: { value: new THREE.Vector3().fromArray(o.place.n) }, uPlaceE: { value: new THREE.Vector3().fromArray(o.place.e) }, uPlaceU: { value: new THREE.Vector3().fromArray(o.place.u) },
