@@ -1,9 +1,37 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T08:51:46.579Z",
+ "pushed": "2026-11-24T09:10:16.811Z",
  "head": "1e4bfd4e46d236e0032fc1f045cc954c58511d41",
- "note": "second commit in proof: one border for the globe shadow (dive and rise pattern cured), pole and take off pops explained with pictures",
+ "note": "second commit proofs: path and parity green, finals equal to the byte, rise pictures running; pairs against the first named commit",
  "looks": [
+  {
+   "time": "2026-11-24T09:10:15.844Z",
+   "file": "20261124091015844-note-3720_beside_approved_small.jpg",
+   "source": "../../../../tmp/v/r41/3720_beside_approved_small.png",
+   "kind": "note",
+   "label": "3720 final beside the approved close image (approved left, film right)"
+  },
+  {
+   "time": "2026-11-24T09:10:14.837Z",
+   "file": "20261124091014837-note-pair_3630.jpg",
+   "source": "../../../../tmp/v/r41/pair_3630.png",
+   "kind": "note",
+   "label": "3630 surface view, draft: first named commit left, second right (the shaded far ring right of the globe)"
+  },
+  {
+   "time": "2026-11-24T09:10:14.148Z",
+   "file": "20261124091014148-note-pair_3573.jpg",
+   "source": "../../../../tmp/v/r41/pair_3573.png",
+   "kind": "note",
+   "label": "3573 dive, draft: first named commit left, second right (one border for the globe shadow)"
+  },
+  {
+   "time": "2026-11-24T09:10:12.974Z",
+   "file": "20261124091012974-note-pair_3885.jpg",
+   "source": "../../../../tmp/v/r41/pair_3885.png",
+   "kind": "note",
+   "label": "3885 way out, draft: first named commit left, second right (the shaded ring solid from its inner edge, one crisp shadow border)"
+  },
   {
    "time": "2026-11-24T08:51:32.694Z",
    "file": "20261124085132694-note-pop3895_crop.jpg",
@@ -31,34 +59,6 @@
    "source": "../../../../tmp/v/r40/gapA_dive.png",
    "kind": "note",
    "label": "dive 3580 3586 3592 3598 at draft: named commit above, one border for the globe shadow below"
-  },
-  {
-   "time": "2026-11-24T08:51:28.680Z",
-   "file": "20261124085128680-note-gapA_rise.jpg",
-   "source": "../../../../tmp/v/r40/gapA_rise.png",
-   "kind": "note",
-   "label": "rise 3859 3863 3867 3871 at draft: named commit above, shadow border as one crisp line below (stars no longer show through the shaded C ring)"
-  },
-  {
-   "time": "2026-11-24T08:21:37.222Z",
-   "file": "20261124082137222-note-pat3863_new.jpg",
-   "source": "../../../../tmp/v/r40/pat3863_new.png",
-   "kind": "note",
-   "label": "rise 3863 with the straight lift: where the pattern measure is still over"
-  },
-  {
-   "time": "2026-11-24T08:21:36.209Z",
-   "file": "20261124082136209-note-gap_new_3859_3863_3867_3871.jpg",
-   "source": "../../../../tmp/v/r40/gap_new_3859_3863_3867_3871.png",
-   "kind": "note",
-   "label": "rise 3859, 3863, 3867, 3871 with the straight lift: the star cloud seen through the shaded C ring"
-  },
-  {
-   "time": "2026-11-24T08:21:35.570Z",
-   "file": "20261124082135570-note-pat3561_old.jpg",
-   "source": "../../../../tmp/v/r40/pat3561_old.png",
-   "kind": "note",
-   "label": "dive 3561 on the named commit: where the pattern measure is over"
   }
  ]
 }
