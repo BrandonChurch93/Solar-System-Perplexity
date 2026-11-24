@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T06:53:27.275Z",
+ "pushed": "2026-11-24T07:06:38.118Z",
  "head": "d5db35dc247537a0bf755469ca9ea1607d2d05e8",
- "note": "whole smooth runs on d5db35dc; dive limb strip and band tone sheets, both known reds",
+ "note": "pattern red located by frame while the whole smooth runs: limb strip 734 to 748 (1.57), place disc 713 to 720 (1.21); not cured in the commit to be named",
  "looks": [
+  {
+   "time": "2026-11-24T07:06:37.212Z",
+   "file": "20261124070637212-note-m1.jpg",
+   "source": "out/work/mercury/place/pat/m1.jpg",
+   "kind": "note",
+   "label": "the same for 692, 706, 713, 723: a spot on the night side, then the disc of the place where plate 1 and plate 2 come in",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T07:06:36.396Z",
+   "file": "20261124070636396-note-m2.jpg",
+   "source": "out/work/mercury/place/pat/m2.jpg",
+   "kind": "note",
+   "label": "pattern red in the dive, where: frame, frame 8 later carried back, difference, pattern change (white is 1) for 734, 738, 742, 747: all of it in the strip under the limb, where the gold rimmed far ground turns pale and the surface set comes in (747 to 759)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T06:53:26.044Z",
    "file": "20261124065326044-note-sheet.jpg",
@@ -53,22 +69,6 @@
    "source": "out/work/mercury/place/b3/r1.jpg",
    "kind": "note",
    "label": "MAIL 540: every frame 967 to 981 at draft with the bend and the rise mixed back to the old leg by 1014 (T is 977): no border of the set, the far edge is the limb, no jump of place at T; from 977 the picture is a little softer and the far strip under the limb is the stretched place picture, as before the bend",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T06:16:14.272Z",
-   "file": "20261124061614272-note-pyr.jpg",
-   "source": "out/work/mercury/place/sm/pyr.jpg",
-   "kind": "note",
-   "label": "pattern red, cause: each level of the place pyramid against its parent (parent, child, where their detail differs at 8 to 40 and 16 to 80 parent texels); rows: map to plate 1, 1 to 2, 2 to 3, 3 to 4, 2 to 3r, 3r to 4r, 3 to 3r, 4 to 4r",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T06:16:13.634Z",
-   "file": "20261124061613634-note-t1.jpg",
-   "source": "out/work/mercury/place/b2/t1.jpg",
-   "kind": "note",
-   "label": "second bend: surface view 877 to 906, every frame, draft",
    "stop": "mercury"
   }
  ]
