@@ -4056,3 +4056,59 @@ is in the picture at 3 to 12 px, and the same crispness for the far ring across 
   new judge started 12:27 (/tmp/v/r47): dive pictures, rise pictures, the handover tool's picture parts, G13.
   I mail only if one of them is red (MAIL 520: only NAMED, a blocker, or an answer asked for).
 - LOOKS pushed 12:14 (parity panel) and 12:27 (3866 beside the kept still, whole and lower left). Next by 12:57.
+- MAIL 662 (about 12:38 UTC), the receipt of the third NAMED, in the Builder's words: "NAMED
+  2d54c492140ab79ed2c20004e8129ed2302647bf on agent/saturn-code is verified on the remote: 21 files, all
+  inside your three folders. saturn stays in handover.ownPath." Its proof tree is
+  26f5ed3a27b2f0a68b3135b509916e5ccf754430 on builder/proof-sa3, built on the engine's proof tree d6b4b8e8
+  ("the tree main becomes with the engine take") with the five harness files of main 62ff7be6 laid in. 27
+  jobs out since 12:29; slice 1 of the dive is green. "This commit is your third. By d186 it goes into
+  Saturn's round as it stands; red measures, if any, go in as severe issues." Frame 3866 "goes into the
+  round named as your item 16." "Do not start a fourth commit. Mail me only if your own runs show G13 red,
+  the handover's picture parts red or the dive's pictures red on 2d54c492. Keep pushing looks to your looks
+  branch. Round work follows after the round's critics."
+  So: nothing is pushed to agent/saturn-code until the round's work is ordered (this notebook is kept and
+  committed here, and goes out with the round's fix); looks go on every 30 minutes; fixes are prepared and
+  measured here, not pushed.
+- OWN RUNS ON THE NAMED TREES WITH THE NEW JUDGE (f057cf9 = 2d54c49 plus main 62ff7be plus notes; /tmp/v/r47):
+  - path (12:30, on 22aa54e): "VERDICT: green. No number is over its limit.", equal from line 5 on to
+    91d6247's report.
+  - dive pictures (12:46): "VERDICT: green. No number is over its limit." Largest level step 0.01 at 3576
+    (limit 1.3); largest pop 1.04 from 3578 to the next (limit 1.2); pop of one block 2.14 from 3629 + 1/2,
+    block column 9 row 7, shown, not judged; largest change in place 15.8 from 3606 to 8 film frames later
+    at pixel 1736, 660, shown, not judged; largest change of the pattern alone 0.21 from 3596 + 1/2 at
+    pixel 1212, 760 (limit 0.45; the judge before the border cure read 0.41 at 3565 at the pole); the
+    ground beside it 3630 to 3641 + 1/2: change 8.0, pattern 0.10. Panels looked at: pops and changes.
+  - rise pictures, the handover tool's picture parts and G13 follow in the same job.
+- MEASURED AFTER THE NAMED, not mailed (only reds are mailed now):
+  - the shutter at 3866 (out/scratch/smear3866.ts): the lens moves 2.354 radii a second (height 2.294,
+    5.091 from the centre); points of the near ring in the lower left move 1.8 to 7.9 px while the shutter
+    is open (5.6 px at pixel 100, 1000 and at 400, 1050, of it 5.5 and 4.8 across the ringlets; 7.9 px at
+    1000, 1050). Lens speed 1.686 at 3840, 1.977 at 3852, 2.174 at 3859, 2.421 at 3874, 2.339 at 3882.
+    Every cure of item 16 that I can see is a slower or a bent path, which MAIL 311 forbids without a ruling.
+  - the palette of the lit ring at 3720, lower left crop, against the approved close image: approved mean
+    rgb 152.7, 138.3, 124.3 (luminance 0.550, saturation 0.185, hue 10th, 50th, 90th percentile 21, 31, 50);
+    mine 167.1, 150.2, 133.6 (0.599, 0.203, hue 23, 29, 38). Mine is about 9 percent brighter with a
+    narrower range of hues; by eye the approved has a gritty grain and pink and slate bands, mine reads
+    smoother with single bodies. Picture /tmp/v/r45/3720_beside_approved.png. Goes on the list as item 17.
+  - main's d219 (kit/PROGRESS.md at 62ff7be): the engine's option handover.rise.pullBack { speed, over, from }
+    is named, off by default, to be taken after rounds 41 and 42; each stop's builder sets its own value in
+    its round's fix; smooth.path.minLeave is not set (proposal 0.07 of the slower end). My own carry
+    (handover.rise.carry 2.2) gives 2.2000 radii a second along the way out and a rest line of 0.375.
+- LIST ITEM 15 LOOKED AT AGAIN on the dive's draft frames of r47 (3538 to 3560 every frame, crop of the gap
+  between globe and ring at full size, and the same with the levels times 5). Two things happen there, both
+  by the place of the lens and neither by the clock:
+  (a) the inner zone of the shaded sheet (the first 50 px outward of its inner edge) is see through in the
+      hold, as in the kept hero, and turns solid while the lens comes 0.116 radii nearer to the globe than
+      at the end of the hold (kept/set.ts dove over look.rings.shadeSolid[1]): its level falls from about
+      21 to 10 of 255 between 3546 and 3558 and the sheet's inner edge shows as an arc from 3548 on;
+  (b) the picture of the sky of the hold leaves with the distance from the hold's path (weight 0.984 at
+      3546, 0.941 at 3550, 0.801 at 3556, 0.667 at 3560, 0 at 3585) and the film's own field comes up
+      under it: in the gap a red cluster and a dozen stars show from 3546 on, and the open sky at the top
+      right turns from the hold's blue white band to the film's warm one by 3570.
+  The air of the stop (sky.heights) starts only at 3562, so the stars that show first are at the full
+  exposure of the open sky. Possible cures for the round, none tried yet: the sheet solid in the hold too
+  (changes the hold by about 10 of 255 in a zone of 60 by 250 px and shows the arc there, needs a ruling
+  because the hold's bytes change); the solid over a longer distance (a slower slide); the stars the hold
+  uncovers held down until the air starts. Looks: shade_c.png, gap_x5.png.
+- LOOKS pushed 12:47 (5d78e230): dive changes and pops panels with the new judge, item 15 at full size and
+  with the levels times 5. Next by 13:17.
