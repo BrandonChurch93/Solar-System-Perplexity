@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { DIAG_GLSL } from '../../diagnostics/diag'
 import { RING_FIELD_GLSL } from './field'
+import { bufferFrame } from '../../core/frame'
 import { GRAIN_LEVELS, ICE_GLSL, pcg, type Ice } from './ice'
 import { GLOBE_SHADOW_GLSL, SHEET_AT_GLSL, SHEET_LAW_GLSL, SHEET_OUTER_GLSL, sheetDepth } from './sheet'
 import spec from './grains.json'
@@ -22,6 +23,7 @@ export interface Lens { position: THREE.Vector3; quaternion: THREE.Quaternion; t
 const VERT = /* glsl */ `
 precision highp float;
 precision highp int;
+in vec3 aPlace;
 in vec4 aGrain;
 uniform vec3 uCamL;
 uniform float uPolar;
@@ -34,7 +36,7 @@ uniform float uSat;
 uniform vec3 uTintDense;
 uniform vec3 uTintThin;
 uniform vec3 uFloor;
-uniform vec4 uGrainView;
+uniform vec3 uGrainView;
 uniform vec4 uGrainLook[${GRAIN_LEVELS}];
 uniform vec4 uGrainLit;
 uniform vec4 uGrainShape;
@@ -43,12 +45,13 @@ uniform vec4 uGrainFoot;
 uniform float uGrainMean[9];
 uniform float uGrainLift[${GRAIN_LEVELS}];
 flat out vec4 vTone;
-flat out vec4 vWay;
+flat out vec3 vWay;
 flat out vec4 vSun;
 flat out vec3 vLobe0;
 flat out vec3 vLobe1;
 flat out vec3 vLobe2;
-flat out vec4 vMore;
+flat out vec2 vMore;
+out vec2 vAt;
 ${RING_FIELD_GLSL}
 ${GLOBE_SHADOW_GLSL}
 ${ICE_GLSL}
@@ -67,7 +70,7 @@ vec3 grainLobe(int k, uint seed, float apart, float turned, float radius, vec2 e
   return vec3(dot(c, e), e.x * c.y - e.y * c.x, rad * radius);
 }
 void main() {
-  vec3 pos = position;
+  vec3 pos = aPlace;
   vec3 ray = pos - uCamL;
   float dist = max(length(ray), 1e-6);
   vec3 dir = ray / dist;
@@ -89,13 +92,14 @@ void main() {
   vec2 fd = ray.xz / max(length(ray.xz), 1e-6);
   float pixel = dist / uGrainView.x * length(vec2(dot(er, fd) / mu, er.x * fd.y - er.y * fd.x));
   float fp = max(ringFootprint(pixel, uGrad), uGrainFoot.x * aGrain.x);
+  float fpl = max(ringFootprint(ringLookPixel(pixel), uGrad), uGrainFoot.x * aGrain.x);
   float tau;
   float lum;
   float thin;
   vec4 ink;
   vec3 tint;
   vec2 zone;
-  sheetAt(q, r, fp, tau, lum, thin, ink, tint, zone);
+  sheetAt(q, r, fp, fpl, tau, lum, thin, ink, tint, zone);
   float spokes = iceSpokes(r, atan(q.y, q.x) / 6.2831853);
   lum *= exp(spokes * uIceOrbit.z);
   lum *= pow(clamp(zone.y / uFlatten.x, 1.0 / uFlatten.w, uFlatten.w), uFlatten.y * (1.0 - thin));
@@ -148,32 +152,30 @@ void main() {
   float knot = clamp(sun.z * 0.5 + 0.5, 0.0, 1.0) * 8.0;
   int k0 = min(int(knot), 7);
   vSun = vec4(dot(sun.xy, e), e.x * sun.y - e.y * sun.x, sun.z, 1.0 / max(mix(uGrainMean[k0], uGrainMean[k0 + 1], knot - float(k0)), 1e-3));
-  // the point that holds the grain and its way. A point whose middle is off the frame is drawn from the
-  // edge of the frame, as large as it takes to hold what of the grain is in frame.
-  float size = min(2.0 * radius + far + 3.0, uGrainView.w);
+  // the square that holds the grain and its way: two triangles that face the lens, at the depth of the middle
+  // of the grain, as large as the grain is (no limit of a card is in it). position is the corner of the square
+  // (-1 or 1 across and up), vAt the pixel from the middle of the grain.
+  float size = 2.0 * radius + far + 3.0;
   vec2 c = clip.xy / clip.w * uGrainView.yz;
-  vec2 lim = uGrainView.yz - 1.0;
-  vec2 cc = clamp(c, -lim, lim);
-  vec2 off = c - cc;
-  float past = max(abs(off.x), abs(off.y));
-  bool drawn = alpha > 0.004 && clip.w > 0.0 && past < 0.5 * size;
-  gl_Position = drawn ? vec4(cc / uGrainView.yz * clip.w, clip.z, clip.w) : vec4(2.0, 2.0, 2.0, 1.0);
-  gl_PointSize = drawn ? min(size + 2.0 * past, uGrainView.w) : 1.0;
+  bool drawn = alpha > 0.004 && clip.w > 0.0 && all(lessThan(abs(c), uGrainView.yz + 0.5 * size));
+  vAt = position.xy * (0.5 * size);
+  gl_Position = drawn ? vec4((c + vAt) / uGrainView.yz * clip.w, clip.z, clip.w) : vec4(2.0, 2.0, 2.0, 1.0);
   vTone = vec4(col, alpha);
-  vWay = vec4(e, max(far, 0.05), gl_PointSize);
-  vMore = vec4(off, apart > 0.0 ? 3.0 : 1.0, length(mv.xyz));
+  vWay = vec3(e, max(far, 0.05));
+  vMore = vec2(apart > 0.0 ? 3.0 : 1.0, length(mv.xyz));
 }`
 
 const FRAG = /* glsl */ `
 precision highp float;
 precision highp int;
 flat in vec4 vTone;
-flat in vec4 vWay;
+flat in vec3 vWay;
 flat in vec4 vSun;
 flat in vec3 vLobe0;
 flat in vec3 vLobe1;
 flat in vec3 vLobe2;
-flat in vec4 vMore;
+flat in vec2 vMore;
+in vec2 vAt;
 uniform vec4 uGrainLit;
 uniform vec3 uGrainLayer;
 out vec4 outColor;
@@ -204,11 +206,10 @@ float grainBall(vec3 lobe, vec2 p, float way, inout vec3 normals) {
   return cover;
 }
 void main() {
-  vec2 at = (gl_PointCoord - 0.5) * vec2(vWay.w, -vWay.w) - vMore.xy;
-  vec2 p = vec2(dot(at, vWay.xy), vWay.x * at.y - vWay.y * at.x);
+  vec2 p = vec2(dot(vAt, vWay.xy), vWay.x * vAt.y - vWay.y * vAt.x);
   vec3 normals = vec3(0.0);
   float cover = grainBall(vLobe0, p, vWay.z, normals);
-  for (int k = 0; k < (vMore.z > 1.5 ? 1 : 0); k++) {
+  for (int k = 0; k < (vMore.x > 1.5 ? 1 : 0); k++) {
     cover = max(cover, grainBall(vLobe1, p, vWay.z, normals));
     cover = max(cover, grainBall(vLobe2, p, vWay.z, normals));
   }
@@ -219,7 +220,7 @@ void main() {
   float rim = 1.0 - n.z;
   float light = (uGrainLit.x + direct + uGrainLit.z * rim * rim * max(-vSun.z, 0.0)) * vSun.w;
   float alpha = vTone.a * min(cover, 1.0);
-  outColor = diagOut(vec4(vTone.rgb * (light * alpha), alpha), 0.0, 0.0, uGrainLayer, vec2(0.0), vMore.w);
+  outColor = diagOut(vec4(vTone.rgb * (light * alpha), alpha), 0.0, 0.0, uGrainLayer, vec2(0.0), vMore.y);
   if (alpha < 0.002 || (uDiag >= 2 && alpha < 0.5)) discard;
 }`
 
@@ -258,19 +259,23 @@ const TAU = 2 * Math.PI
 const BUCKETS = 4096
 
 export class Grains {
-  readonly points: THREE.Points
+  // every grain is a square of two triangles that faces the lens, one instance of the same four corners: no
+  // grain is a point, so no limit of a card on the size of points is in the picture
+  readonly mesh: THREE.Mesh
   // how many grains the last take drew
   drawn = 0
-  private readonly geometry = new THREE.BufferGeometry()
+  private readonly geometry = new THREE.InstancedBufferGeometry()
   private readonly material: THREE.ShaderMaterial
-  private readonly place: THREE.BufferAttribute
-  private readonly grain: THREE.BufferAttribute
+  private readonly place: THREE.InstancedBufferAttribute
+  private readonly grain: THREE.InstancedBufferAttribute
   private readonly found: Float32Array
   private readonly keys: Uint16Array
   private readonly counts = new Uint32Array(BUCKETS)
   private readonly rows: Rows[] = []
   private readonly refs: number[]
-  private readonly view = new THREE.Vector4(1000, 960, 540, spec.largestPoint)
+  private readonly view = new THREE.Vector3(1000, 960, 540)
+  private readonly looks: THREE.Vector4[]
+  private readonly shape: THREE.Vector4
   private readonly right = new THREE.Vector3()
   private readonly up = new THREE.Vector3()
   private readonly fwd = new THREE.Vector3()
@@ -302,49 +307,59 @@ export class Grains {
     })
     this.found = new Float32Array(spec.capacity * 7)
     this.keys = new Uint16Array(spec.capacity)
-    this.place = new THREE.BufferAttribute(new Float32Array(spec.capacity * 3), 3)
-    this.grain = new THREE.BufferAttribute(new Float32Array(spec.capacity * 4), 4)
+    this.place = new THREE.InstancedBufferAttribute(new Float32Array(spec.capacity * 3), 3)
+    this.grain = new THREE.InstancedBufferAttribute(new Float32Array(spec.capacity * 4), 4)
     this.place.setUsage(THREE.DynamicDrawUsage)
     this.grain.setUsage(THREE.DynamicDrawUsage)
-    this.geometry.setAttribute('position', this.place)
+    this.geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array([-1, -1, 0, 1, -1, 0, -1, 1, 0, 1, 1, 0]), 3))
+    this.geometry.setIndex([0, 1, 2, 2, 1, 3])
+    this.geometry.setAttribute('aPlace', this.place)
     this.geometry.setAttribute('aGrain', this.grain)
-    this.geometry.setDrawRange(0, 0)
+    this.geometry.instanceCount = 0
     const b = spec.lobes
     const lit = spec.light
+    this.looks = l.name.map((_, k) => new THREE.Vector4(l.largest[k]![0], l.largest[k]![1], l.white[k], l.gain[k]))
+    this.shape = new THREE.Vector4(b.pixels[0], b.pixels[1], Math.sqrt(ice.levels[0]!.fill), 0)
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3, vertexShader: VERT, fragmentShader: FRAG,
       uniforms: {
         ...shared,
         uGrainView: { value: this.view },
-        uGrainLook: { value: l.name.map((_, k) => new THREE.Vector4(l.largest[k]![0], l.largest[k]![1], l.white[k], l.gain[k])) },
+        uGrainLook: { value: this.looks },
         uGrainLit: { value: new THREE.Vector4(lit.ambient, lit.wrap, lit.through, lit.spread) },
         uGrainShape: { value: new THREE.Vector4(b.spread, b.first, b.radius[0], b.radius[1]! - b.radius[0]!) },
-        uGrainShape2: { value: new THREE.Vector4(b.pixels[0], b.pixels[1], Math.sqrt(ice.levels[0]!.fill), 0) },
+        uGrainShape2: { value: this.shape },
         uGrainFoot: { value: new THREE.Vector4(spec.foot, spec.soft, lit.layer, b.tumble) },
         uGrainMean: { value: lightMeans() },
         uGrainLift: { value: l.lift.slice() },
         uGrainLayer: { value: new THREE.Vector3().fromArray(spec.layer) },
       },
-      transparent: true, depthWrite: false, depthTest: true, premultipliedAlpha: true,
+      transparent: true, depthWrite: false, depthTest: true, premultipliedAlpha: true, side: THREE.DoubleSide,
       blending: THREE.CustomBlending, blendEquation: THREE.AddEquation, blendSrc: THREE.OneFactor, blendDst: THREE.OneMinusSrcAlphaFactor, blendSrcAlpha: THREE.OneFactor, blendDstAlpha: THREE.OneMinusSrcAlphaFactor,
     })
-    this.points = new THREE.Points(this.geometry, this.material)
-    this.points.frustumCulled = false
-    this.points.renderOrder = 7
-    this.points.visible = false
+    this.mesh = new THREE.Mesh(this.geometry, this.material)
+    this.mesh.frustumCulled = false
+    this.mesh.renderOrder = 7
+    this.mesh.visible = false
   }
 
   // The grains of one take: every grain that can show in the view of the lens, from the farthest to the
   // nearest. focal: the focal length in pixels; width and height of the picture in pixels; near: how near the
   // lens is to the sheet (0 in the hold: no grains).
   set(focal: number, width: number, height: number, near: number, lens: Lens): void {
-    this.view.set(focal, width / 2, height / 2, spec.largestPoint)
-    this.points.visible = near > 0
+    this.view.set(focal, width / 2, height / 2)
+    // the limits of the look are shares of the height of the frame, written as pixels of the master: in pixels
+    // of this frame by the film's own factor
+    const scale = bufferFrame()
+    const l = spec.levels
+    this.looks.forEach((look, k) => look.set(l.largest[k]![0]! * scale, l.largest[k]![1]! * scale, look.z, look.w))
+    this.shape.set(spec.lobes.pixels[0]! * scale, spec.lobes.pixels[1]! * scale, this.shape.z, 0)
+    this.mesh.visible = near > 0
     if (near <= 0) {
       this.drawn = 0
+      this.geometry.instanceCount = 0
       return
     }
-    const l = spec.levels
     const cam = lens.position
     const right = this.right.set(1, 0, 0).applyQuaternion(lens.quaternion)
     const up = this.up.set(0, 1, 0).applyQuaternion(lens.quaternion)
@@ -360,7 +375,7 @@ export class Grains {
     // distances are sorted by their logarithm between these two
     const nearest = 0.02
     let farthest = nearest * 2
-    for (let k = 0; k < l.name.length; k++) farthest = Math.max(farthest, Math.min((this.refs[k]! * focal) / l.pixels[k]![0]!, l.reach[k]![1]!))
+    for (let k = 0; k < l.name.length; k++) farthest = Math.max(farthest, Math.min((this.refs[k]! * focal) / (l.pixels[k]![0]! * scale), l.reach[k]![1]!))
     const toKey = (BUCKETS - 1) / Math.log(farthest / nearest)
     let n = 0
     for (let k = 0; k < l.name.length && n < spec.capacity; k++) {
@@ -374,7 +389,7 @@ export class Grains {
       const tallFar = l.heightFar[k]! - 1
       const highest = tall * l.heightFar[k]!
       // no grain of the level shows further than this
-      const reach = Math.min((this.refs[k]! * focal) / l.pixels[k]![0]!, l.reach[k]![1]!)
+      const reach = Math.min((this.refs[k]! * focal) / (l.pixels[k]![0]! * scale), l.reach[k]![1]!)
       const low = Math.max(Math.abs(cam.y) - highest, 0)
       const flatReach = Math.sqrt(Math.max(reach * reach - low * low, 0))
       const room = highest + cell + 2 * hi + lens.slack
@@ -478,7 +493,7 @@ export class Grains {
     this.grain.clearUpdateRanges()
     this.grain.addUpdateRange(0, n * 4)
     this.grain.needsUpdate = true
-    this.geometry.setDrawRange(0, n)
+    this.geometry.instanceCount = n
     this.drawn = n
   }
 
