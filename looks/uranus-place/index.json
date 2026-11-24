@@ -1,9 +1,45 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-24T13:23:42.483Z",
- "head": "9cb93f98891fcd0ec51a8231f75078ba3ef05014",
- "note": "13:25 UTC, main c8888d57 merged as 9cb93f98 (engine take), not pushed yet. No picture changed since 0ac434b6. Pattern chart: red leaves the seams (dive from 4184, rise 4380 to 4394), stays in the middle of both moves (dive 1.30 at 4165, rise 1.45 at 4401). Rise pop with a whole window 1.17 at 4408 + 1/2, under 1.2. Finals 4035 and 4290 on the engine tree equal to the byte. Tests, finals 4137 and 4436, gate, parity running on the engine tree.",
+ "pushed": "2026-11-24T13:44:55.445Z",
+ "head": "cb7efafc8535fcd3e48c177047c78c56deb47937",
+ "note": "13:46 UTC. Third NAMED cb7efafc pushed 13:44 on main 2bc36ce6 (engine take merged). On the engine tree: finals 4035, 4290, 4137, 4436 keep their bytes; tests 49 files 485 pass; gate, parity, path green. Still red: pattern in the middle of both moves (dive 1.30 at 4165, rise 1.45 at 4401), dive pop 1.71 at 4144 + 1/2. Rise pop 1.17, under 1.2.",
  "looks": [
+  {
+   "time": "2026-11-24T13:44:54.495Z",
+   "file": "20261124134454495-note-pattern-rows.jpg",
+   "source": "../../../../tmp/tm/pattern-rows.png",
+   "kind": "note",
+   "label": "Uranus third NAMED cb7efafc (main 2bc36ce6): pattern rows of the dive and the rise against the machines' rows of the second NAMED (MAIL 666). Grey: machines on b5874a22. Blue: this commit by the judge before main 62ff7be6. Red: this commit by the judge on main. Solid rate 2 (dive 4134 to 4191, rise 4380 to 4412), dotted whole frames at rate 1. Limit 0.45.",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T13:37:01.553Z",
+   "file": "20261124133701553-frame-f4436.jpg",
+   "source": "out/work/u/n4/f4436.png",
+   "kind": "frame",
+   "label": "uranus.rise frame 4436, final tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4436,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "bfe554c9c4ef0dd5"
+  },
+  {
+   "time": "2026-11-24T13:32:52.954Z",
+   "file": "20261124133252954-frame-f4137.jpg",
+   "source": "out/work/u/n4/f4137.png",
+   "kind": "frame",
+   "label": "uranus.dive frame 4137, final tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4137,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "bfe554c9c4ef0dd5"
+  },
   {
    "time": "2026-11-24T13:23:41.315Z",
    "file": "20261124132341315-note-pattern-rows.jpg",
@@ -49,40 +85,12 @@
    "stop": "uranus"
   },
   {
-   "time": "2026-11-24T12:17:09.176Z",
-   "file": "20261124121709176-frame-f4436.jpg",
-   "source": "out/work/u/n3/f4436.png",
-   "kind": "frame",
-   "label": "uranus.rise frame 4436, final tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4436,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "898f8450e3270276"
-  },
-  {
    "time": "2026-11-24T12:10:59.443Z",
    "file": "20261124121059443-note-f4137-three.jpg",
    "source": "../../../../tmp/tm/f4137-three.jpg",
    "kind": "note",
    "label": "judged 4137 final: second NAMED b5874a22, third commit (drawn on f403f27b = 0ac434b6 merged with main 36970ce3), difference times 8: only the place changes (1.48 percent of the pixels, mean 0.049 of 255)",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T12:10:21.070Z",
-   "file": "20261124121021070-frame-f4137.jpg",
-   "source": "out/work/u/n3/f4137.png",
-   "kind": "frame",
-   "label": "uranus.dive frame 4137, final tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4137,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "898f8450e3270276"
   },
   {
    "time": "2026-11-24T12:02:00.260Z",
@@ -309,14 +317,6 @@
    "segment": "uranus.dive",
    "frame": 4186,
    "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T11:11:26.307Z",
-   "file": "20261124111126307-note-law-globe.jpg",
-   "source": "../../../../tmp/tm/law-globe.jpg",
-   "kind": "note",
-   "label": "4137 4152 4396 drafts: top law as pushed b5874a22, middle smooth law and rebaked plates 0ac434b6, bottom difference times 4 (main c2c49133)",
-   "stop": "uranus"
   }
  ]
 }
