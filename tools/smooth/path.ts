@@ -10,7 +10,9 @@ export interface Fault { curve: string; rule: 'step' | 'halfStep' | 'climbAfterP
 
 // A curve that is a mean over points (the speed of the picture: ground points on a ring round the place). values[i] holds what every point gave
 // at capture frame k0 + i, null where a point has no ground under it. A step and a rebound compare the mean over one fixed set of points, the
-// points that have a value in every frame they compare, so the curve never steps because the count of its points changed. A step over fewer
+// points that have a value in every frame they compare, so the curve never steps because the count of its points changed. A rebound is a
+// valley on one such set: the curve falls and climbs again by at least as much, both read on the points that live from its one side to its
+// other; it is a fall before the largest value when its lowest frame lies before it and a climb after it otherwise. A step over fewer
 // than min points is shown and not judged; points counts those steps.
 export interface Members { values: ((number | null)[] | null)[]; min: number }
 
@@ -148,22 +150,34 @@ export function judgeCurve(name: string, unit: string, raw: (number | null)[], k
   let climb: Mark = { k: -1, frame: -1, value: 0 }
   let fall: Mark = { k: -1, frame: -1, value: 0 }
   if (peak && members) {
-    const pairs = (first: number, end: number, sign: number): Mark => {
-      let most: Mark = { k: -1, frame: -1, value: 0 }
-      for (let m = first; m < end; m++) {
-        let set = live(m)
-        for (let n = m + 1; n < end && set.length >= members.min; n++) {
-          const there = live(n)
-          set = set.filter((j) => there.includes(j))
-          if (set.length < members.min) break
-          const d = sign * (meanOf(n, set) - meanOf(m, set))
-          if (d > most.value) most = { k: n, frame: frameOf(n), value: d, points: set.length }
+    const top = peak.k
+    for (let m = own.first; m < own.end; m++) {
+      let set = live(m)
+      let left = 0
+      let low: { k: number; value: number } | null = null
+      let size = -1
+      for (let n = m + 1; n < own.end; n++) {
+        const there = live(n)
+        set = set.filter((j) => there.includes(j))
+        if (set.length < members.min) break
+        if (set.length !== size) {
+          size = set.length
+          left = meanOf(m, set)
+          low = null
+          for (let b = m + 1; b < n; b++) {
+            const v = meanOf(b, set)
+            if (!low || v < low.value) low = { k: b, value: v }
+          }
         }
+        const right = meanOf(n, set)
+        if (low) {
+          const depth = Math.min(left, right) - low.value
+          if (low.k < top && depth > fall.value) fall = { k: low.k, frame: frameOf(low.k), value: depth, points: set.length }
+          if (low.k >= top && depth > climb.value) climb = { k: n, frame: frameOf(n), value: depth, points: set.length }
+        }
+        if (!low || right < low.value) low = { k: n, value: right }
       }
-      return most
     }
-    fall = pairs(own.first, peak.k, -1)
-    climb = pairs(peak.k, own.end, 1)
   } else if (peak) {
     let high = -Infinity
     for (let k = own.first; k < peak.k; k++) {

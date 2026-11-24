@@ -149,6 +149,23 @@ describe('a curve that is a mean over points', () => {
     expect(real.climbAfterPeak.frame).toBe(74)
   })
 
+  it('does not read the fall of a wider set after its own largest value as a fall before the largest value', () => {
+    const six = (i: number): number => 1 + 0.6 * Math.sin((Math.PI * (i + 0.5)) / 100) ** 2
+    const two = (i: number): number => six(i) + 2 * Math.exp(-(((i - 20) / 12) ** 2))
+    const values = Array.from({ length: 100 }, (_, i) => Array.from({ length: 8 }, (_, j) => (j < 6 ? six(i) : i < 40 ? two(i) : null)))
+    const mean8 = (i: number): number => (6 * six(i) + 2 * two(i)) / 8
+    expect(mean8(22)).toBeGreaterThan(mean8(39) + 0.1)
+    const r = judgeCurve('speed', 'px', plain(values), 0, 1, { first: 0, end: 100 }, { ...limits, maxStep: 9 }, 0, { values, min: 4 })
+    expect(r.peak!.frame).toBeGreaterThan(45)
+    expect(r.peak!.points).toBe(6)
+    expect(r.faults).toEqual([])
+    expect(r.fallBeforePeak.value).toBeLessThan(0.001)
+    const dent = values.map((row, i) => row.map((v) => (v !== null && i >= 60 && i < 64 ? v * 0.9 : v)))
+    const real = judgeCurve('speed', 'px', plain(dent), 0, 1, { first: 0, end: 100 }, { ...limits, maxStep: 9 }, 0, { values: dent, min: 4 })
+    expect(rules(real)).toEqual(['climbAfterPeak'])
+    expect(real.climbAfterPeak.points).toBe(6)
+  })
+
   it('shows and does not judge a row with fewer than five points, and counts those rows', () => {
     const values = rows(100, (i) => (i >= 40 && i < 43 ? [0, 1, 2, 3] : []))
     const r = judgeCurve('speed', 'px', plain(values), 0, 1, { first: 0, end: 100 }, limits, 0, { values, min: 5 })
