@@ -287,13 +287,24 @@ describe('the pace of the one move', () => {
       if (!film.turn) expect(law.turn).toBe(law.pace)
       expect(plain.eyeLaw(kind)).toBe(law)
     }
-    // The film's law of the rise is the one Mars flies; the dive has none of its own.
+    // The film's law of the rise names all three; the dive has no turn and no lift of its own.
     const rise = config.raw.handover.rise as Side
     expect(rise.pace && rise.turn && rise.liftPower! > 0).toBeTruthy()
     expect((config.raw.handover.dive as Side).turn).toBeUndefined()
     expect((config.raw.handover.dive as Side).liftPower).toBeUndefined()
-    expect(mars.eyeLaw('rise')).toEqual({ pace: rise.pace, turn: rise.turn, liftPower: rise.liftPower })
-    expect(mars.eyeLaw('dive')).toEqual({ pace: base, turn: base, liftPower: 0 })
+    // A stop of the film on the one move (Mars) flies the same rule, whatever its params name today: each bell field by field its own,
+    // else the film's for that side, and corners only where the stop itself names them.
+    type Named = { rise?: number; fall?: number; corner?: number; corners?: unknown }
+    const flanks = (own: Named | undefined, from: { rise: number; fall: number; corner: number }): Named => ({ rise: own?.rise ?? from.rise, fall: own?.fall ?? from.fall, corner: own?.corner ?? from.corner, ...(own?.corners ? { corners: own.corners } : {}) })
+    for (const kind of kinds) {
+      const film = config.raw.handover[kind] as Side
+      const own = (mars.p.handover?.[kind] ?? {}) as { pace?: Named; turn?: Named; liftPower?: number }
+      const pace = flanks(own.pace, film.pace ?? base)
+      const turn = own.turn || film.turn ? flanks(own.turn, film.turn ?? (pace as { rise: number; fall: number; corner: number })) : pace
+      expect(mars.eyeLaw(kind)).toEqual({ pace, turn, liftPower: own.liftPower ?? film.liftPower ?? 0 })
+    }
+    expect(plain.eyeLaw('rise')).toEqual({ pace: rise.pace, turn: rise.turn, liftPower: rise.liftPower })
+    expect(plain.eyeLaw('dive')).toEqual({ pace: base, turn: base, liftPower: 0 })
     // The stop's own, field by field: what it does not name it takes from the film's law of that side.
     const own = coveredPlan(handover({ turn: { fall: 0.5 }, liftPower: 0.3 }, { turn: { rise: 0.4 }, liftPower: 0 }))
     expect(own.eyeLaw('dive')).toEqual({ pace: base, turn: { rise: base.rise, fall: 0.5, corner: base.corner }, liftPower: 0.3 })

@@ -236,3 +236,40 @@ export function curves(w: Window, plan: StopPlan, width: number, height: number,
   })
   return out
 }
+
+// The seam of a dive or a rise with the surface view: the eye against the near ground. SEAM_REACH film frames to each side of the seam;
+// own is the span of capture frames whose step lies inside the surface view within SEAM_OWN film frames of the seam.
+export const SEAM_REACH = 16
+export const SEAM_OWN = 2
+
+export interface SeamWindow { kind: Kind; seg: Segment; seam: number; rate: number; k0: number; samples: Sample[]; own: { first: number; end: number } }
+
+export function sampleSeam(cfg: Config, film: FilmDirector, plan: StopPlan, kind: Kind, rate: number): SeamWindow | null {
+  const seg = cfg.segments.find((s) => s.stop === plan.id && s.kind === kind)
+  if (!seg) return null
+  const seam = kind === 'dive' ? seg.endFrame : seg.firstFrame
+  const own = kind === 'dive' ? { first: seam * rate + 1, end: (seam + SEAM_OWN) * rate } : { first: (seam - SEAM_OWN) * rate + 1, end: seam * rate }
+  return { kind, seg, seam, rate, ...samplesOf(cfg, film, plan, rate, Math.max(seam - SEAM_REACH, 0), Math.min(seam + SEAM_REACH, cfg.frameCount)), own }
+}
+
+export interface EyeCurves { own: number | null; speed: (number | null)[]; along: (number | null)[] }
+
+// What the eye did from capture frame k - 1 to k against the ground as the stop's twin holds it (as tools/seam.ts reads it): its way over its own height above the ground
+// (the unit sphere, or the plane of the rings), per film frame, over the same number of the surface view next to the seam (own, the mean of
+// its SEAM_OWN film frames at the seam). along is the part of that way in the direction the surface view itself moves in: under 0 the eye
+// goes back.
+export function eyeCurves(w: SeamWindow, plan: StopPlan, ground: Plane | null = null): EyeCurves {
+  const fixed = (s: Sample): THREE.Vector3 => plan.twin(plan.untwin(s.pose, s.time), plan.seg.terrain.start).position.clone()
+  const high = (s: Sample): number => (ground ? Math.abs(s.pose.position.dot(ground.normal)) : s.height)
+  const ways: (THREE.Vector3 | null)[] = w.samples.map((s, i) => {
+    const prev = i > 0 && w.samples[i - 1]!.k === s.k - 1 ? w.samples[i - 1]! : null
+    const h = prev ? (high(prev) + high(s)) / 2 : 0
+    return prev && high(prev) > 0 && high(s) > 0 ? fixed(s).sub(fixed(prev)).multiplyScalar(w.rate / h) : null
+  })
+  const mine = ways.filter((v, i): v is THREE.Vector3 => v !== null && w.k0 + i >= w.own.first && w.k0 + i <= w.own.end)
+  const own = mine.length ? mine.reduce((n, v) => n + v.length(), 0) / mine.length : null
+  const dir = mine.reduce((n, v) => n.add(v), new THREE.Vector3())
+  if (own === null || own < 1e-12 || dir.lengthSq() < 1e-24) return { own, speed: ways.map(() => null), along: ways.map(() => null) }
+  dir.normalize()
+  return { own, speed: ways.map((v) => (v ? v.length() / own : null)), along: ways.map((v) => (v ? v.dot(dir) / own : null)) }
+}
