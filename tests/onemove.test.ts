@@ -56,10 +56,10 @@ describe('the one move of the engine', () => {
     expect(oneMoveForced()).toBe(false)
   })
 
-  it('cannot be replaced by the class of a stop: none of them defines the eye, its shot, its height, its flanks or the switch', () => {
+  it('cannot be replaced by the class of a stop: none of them defines the eye, its shot, its height, its law, its flanks or the switch', () => {
     for (const p of plans) {
       for (let proto = Object.getPrototypeOf(p) as object | null; proto && proto !== StopPlan.prototype; proto = Object.getPrototypeOf(proto) as object | null) {
-        for (const name of ['eye', 'eyeShot', 'eyeHeight', 'eyeFlanks', 'engineMove', 'eyeOrbit', 'eyeCoast', 'eyeSeam', 'eyeSwing', 'eyeSeamTime', 'glide', 'closePose']) expect(Object.prototype.hasOwnProperty.call(proto, name), p.id + ' defines ' + name).toBe(false)
+        for (const name of ['eye', 'eyeShot', 'eyeHeight', 'eyeLaw', 'eyeFlanks', 'engineMove', 'eyeOrbit', 'eyeCoast', 'eyeSeam', 'eyeSwing', 'eyeSeamTime', 'glide', 'closePose']) expect(Object.prototype.hasOwnProperty.call(proto, name), p.id + ' defines ' + name).toBe(false)
       }
     }
   })
@@ -150,47 +150,47 @@ describe('the pace of the one move', () => {
     }
   })
 
-  it('holds the fall and the turn of the rise of Mars to the limits at whole and half frames, and the speed of the picture up to the travel', () => {
-    const limits = paceLimits()
+  // Before the law of the rise (eyeLaw: the eye's direction on a bell of its own and the lift of that direction in the height) the speed of
+  // the picture changed by 0.097 of the mean at 2695 and by 0.089 at 2726 against a limit of 0.08, on a rate of fall that held 0.073: the
+  // eye swings up from low over the ground while it climbs, and the ground at the place opens faster than the height grows.
+  it('holds the rise of Mars to the limits of the harness at whole and half frames and across both seams: climb, turn and the speed of the picture', () => {
     for (const rate of [1, 2]) {
       const pace = paceOf(film, mars, 'rise', rate)!
-      expect(pace.curves.fall.faults).toEqual([])
-      expect(pace.curves.turn.faults).toEqual([])
-      // The speed of the picture rises once and falls once.
-      expect(pace.curves.speed.climbAfterPeak.value).toBeLessThanOrEqual(limits.maxRebound)
-      expect(pace.curves.speed.fallBeforePeak.value).toBeLessThanOrEqual(limits.maxRebound)
+      expect(pace.faults).toEqual([])
+      expect(pace.ok).toBe(true)
     }
   })
 
-  // Measured 0.097 of the mean at 2695 and 0.089 at 2726 against a limit of 0.08: the eye passes over the zenith of the place on its way
-  // up, and the picture at the place moves slower than the height climbs while the eye stands low over it.
-  it.todo('holds the speed of the picture of the rise of Mars to the step limit inside the move')
-
-  it('carries the fall of the height on the bell alone for every stop but Saturn, whose close view stands radii above its body', () => {
+  it('carries the fall of the height on the bell alone where the law has no lift in it, for every stop but Saturn, whose close view stands radii above its body', () => {
     forceOneMove(true)
     const all = new FilmDirector(plans)
+    let seen = 0
     for (const p of handing) {
       if (p.id === 'saturn') continue
       for (const kind of kinds) {
+        if (!p.seg[kind] || p.eyeLaw(kind).liftPower !== 0) continue
         const pace = paceOf(all, p, kind)
         if (!pace) continue
+        seen++
         expect(pace.curves.fall.faults, p.id + ' ' + kind).toEqual([])
         // The steepest change of the fall is that of the bell, within a tenth.
         expect(pace.curves.fall.worstStep!.value).toBeLessThan(bellStep(p.eyeFlanks(kind), p.seg[kind]!.frames) * 1.1 + 0.002)
       }
     }
+    expect(seen).toBeGreaterThan(0)
   })
 
-  it('reads its flanks from handover.pace and from the stop, and refuses flanks too short for the segment where the number is read', () => {
+  it('reads its flanks from handover.pace, from the film\'s own for that side and from the stop, and refuses flanks too short for the segment where the number is read', () => {
     const base = config.raw.handover.pace
+    const side = (kind: 'dive' | 'rise'): { rise: number; fall: number; corner: number } => (config.raw.handover[kind] as { pace?: { rise: number; fall: number; corner: number } }).pace ?? base
     const plain = coveredPlan(handover({}, {}))
-    for (const kind of kinds) expect(plain.eyeFlanks(kind)).toEqual({ rise: base.rise, fall: base.fall, corner: base.corner })
+    for (const kind of kinds) expect(plain.eyeFlanks(kind)).toEqual({ rise: side(kind).rise, fall: side(kind).fall, corner: side(kind).corner })
     const set = coveredPlan(handover({ pace: { rise: 0.5, fall: 0.35 } }, { pace: { corner: 0.1 } }))
-    expect(set.eyeFlanks('dive')).toEqual({ rise: 0.5, fall: 0.35, corner: base.corner })
-    expect(set.eyeFlanks('rise')).toEqual({ rise: base.rise, fall: base.fall, corner: 0.1 })
+    expect(set.eyeFlanks('dive')).toEqual({ rise: 0.5, fall: 0.35, corner: side('dive').corner })
+    expect(set.eyeFlanks('rise')).toEqual({ rise: side('rise').rise, fall: side('rise').fall, corner: 0.1 })
     const steep = coveredPlan(handover({ pace: { rise: 0.15, fall: 0.15 } }, {}))
-    expect(bellStep({ rise: 0.15, fall: 0.15, corner: base.corner }, steep.seg.dive!.frames)).toBeGreaterThan(paceLimits().maxStep)
-    expect(() => steep.eyeFlanks('dive')).toThrow(/the limit is/)
+    expect(bellStep({ rise: 0.15, fall: 0.15, corner: side('dive').corner }, steep.seg.dive!.frames)).toBeGreaterThan(paceLimits().maxStep)
+    expect(() => steep.eyeFlanks('dive')).toThrow(/the rate changes by .* the limit is/)
     expect(() => steep.eye('dive', steep.seg.dive!.start + 1, 'orbit')).toThrow(/the limit is/)
     expect(() => coveredPlan(handover({ pace: { rise: 0.7, fall: 0.5 } }, {})).eyeFlanks('dive')).toThrow()
     // The film's own flanks and the list of stops on a path of their own are checked with the film's other numbers.
@@ -207,6 +207,106 @@ describe('the pace of the one move', () => {
     const gone = JSON.parse(JSON.stringify(raw)) as typeof raw
     delete (gone.handover as { pace?: unknown }).pace
     expect(() => buildConfig(gone)).toThrow(/missing key handover.pace/)
+  })
+
+  it('has one law for a side, three things: the bell of the height, the bell of the eye\'s direction and the power of the lift, each the stop\'s, else the film\'s for that side, else handover.pace and no lift', () => {
+    const base = config.raw.handover.pace
+    type Side = { pace?: { rise: number; fall: number; corner: number }; turn?: { rise: number; fall: number; corner: number }; liftPower?: number }
+    const plain = coveredPlan(handover({}, {}))
+    for (const kind of kinds) {
+      const film = config.raw.handover[kind] as Side
+      const law = plain.eyeLaw(kind)
+      expect(law.pace).toEqual(film.pace ?? base)
+      expect(law.turn).toEqual(film.turn ?? film.pace ?? base)
+      expect(law.liftPower).toBe(film.liftPower ?? 0)
+      // Where neither the film nor the stop names a turn there is one share for the height and the direction, not two that happen to agree.
+      if (!film.turn) expect(law.turn).toBe(law.pace)
+      expect(plain.eyeLaw(kind)).toBe(law)
+    }
+    // The film's law of the rise is the one Mars flies; the dive has none of its own.
+    const rise = config.raw.handover.rise as Side
+    expect(rise.pace && rise.turn && rise.liftPower! > 0).toBeTruthy()
+    expect((config.raw.handover.dive as Side).turn).toBeUndefined()
+    expect((config.raw.handover.dive as Side).liftPower).toBeUndefined()
+    expect(mars.eyeLaw('rise')).toEqual({ pace: rise.pace, turn: rise.turn, liftPower: rise.liftPower })
+    expect(mars.eyeLaw('dive')).toEqual({ pace: base, turn: base, liftPower: 0 })
+    // The stop's own, field by field: what it does not name it takes from the film's law of that side.
+    const own = coveredPlan(handover({ turn: { fall: 0.5 }, liftPower: 0.3 }, { turn: { rise: 0.4 }, liftPower: 0 }))
+    expect(own.eyeLaw('dive')).toEqual({ pace: base, turn: { rise: base.rise, fall: 0.5, corner: base.corner }, liftPower: 0.3 })
+    expect(own.eyeLaw('rise')).toEqual({ pace: rise.pace, turn: { rise: 0.4, fall: rise.turn!.fall, corner: rise.turn!.corner }, liftPower: 0 })
+    // Refused where the number is read: a turn too steep for the segment, a power out of range.
+    const steep = coveredPlan(handover({ turn: { rise: 0.15, fall: 0.15 } }, {}))
+    expect(() => steep.eyeLaw('dive')).toThrow(/the turn changes by .* the limit is/)
+    expect(() => steep.eye('dive', steep.seg.dive!.start + 1, 'orbit')).toThrow(/the limit is/)
+    expect(() => coveredPlan(handover({ turn: { rise: 0.7, fall: 0.5 } }, {})).eyeLaw('dive')).toThrow()
+    for (const bad of [-0.1, 2.5, Number.NaN]) expect(() => coveredPlan(handover({}, { liftPower: bad })).eyeLaw('rise')).toThrow(/liftPower/)
+    // And with the film's other numbers.
+    for (const name of ['pace', 'turn'] as const) {
+      for (const bad of [{ rise: 0, fall: 0.4, corner: 0.2 }, { rise: 0.6, fall: 0.5, corner: 0.2 }, { rise: 0.4, fall: 0.4, corner: 0 }, { rise: 0.4, fall: 0.4, corner: 0.6 }]) {
+        const off = JSON.parse(JSON.stringify(raw)) as typeof raw
+        ;(off.handover.rise as Side)[name] = bad
+        expect(() => buildConfig(off)).toThrow(new RegExp('handover.rise.' + name))
+        ;(off.handover.rise as Side)[name] = (raw.handover.rise as Side)[name]
+        ;(off.handover.dive as Side)[name] = bad
+        expect(() => buildConfig(off)).toThrow(new RegExp('handover.dive.' + name))
+      }
+    }
+    for (const bad of [-0.1, 2.5]) {
+      const off = JSON.parse(JSON.stringify(raw)) as typeof raw
+      ;(off.handover.rise as Side).liftPower = bad
+      expect(() => buildConfig(off)).toThrow(/handover.rise.liftPower/)
+    }
+    const bare = JSON.parse(JSON.stringify(raw)) as typeof raw
+    for (const name of ['pace', 'turn', 'liftPower'] as const) delete (bare.handover.rise as Side)[name]
+    expect(() => buildConfig(bare)).not.toThrow()
+  })
+
+  it('is the move as it was where a stop names the old law: the bell of handover.pace for both and no lift give the pose of one share to the last bit', () => {
+    const base = config.raw.handover.pace
+    const flanks = { rise: base.rise, fall: base.fall, corner: base.corner }
+    const plain = coveredPlan(handover({}, {}))
+    const named = coveredPlan(handover({ pace: flanks, turn: flanks, liftPower: 0 }, {}))
+    expect(named.eyeLaw('dive').turn).not.toBe(named.eyeLaw('dive').pace)
+    const s = plain.seg.dive!
+    for (const t of times(s.firstFrame, s.endFrame, 0.5)) {
+      expect(JSON.stringify(named.eye('dive', t, 'orbit'))).toBe(JSON.stringify(plain.eye('dive', t, 'orbit')))
+      expect(JSON.stringify(named.eye('dive', t, 'terrain'))).toBe(JSON.stringify(plain.eye('dive', t, 'terrain')))
+    }
+  })
+
+  it('carries the lift of the eye in the height and nowhere else: the direction from the place is that of no lift, the height differs by the lift to the power, and both ends stay', () => {
+    const flanks = { rise: 0.42, fall: 0.49, corner: 0.05 }
+    const turn = { rise: 0.38, fall: 0.59, corner: 0.05 }
+    const none = coveredPlan(handover({}, { pace: flanks, turn, liftPower: 0 }))
+    const half = coveredPlan(handover({}, { pace: flanks, turn, liftPower: 0.5 }))
+    const full = coveredPlan(handover({}, { pace: flanks, turn, liftPower: 1 }))
+    const s = none.seg.rise
+    const from = (plan: StopPlan, t: number): { out: THREE.Vector3; h: number; q: THREE.Quaternion } => {
+      const eye = plan.eye('rise', t, 'orbit')
+      return { out: eye.position.clone().sub(plan.place('rise', t)).normalize(), h: high(eye), q: eye.quaternion }
+    }
+    let moved = 0
+    for (const t of times(s.firstFrame, s.endFrame, 1.5)) {
+      const a = from(none, t)
+      const b = from(half, t)
+      const c = from(full, t)
+      // One direction from the place and one uprightness for the three: the lift changes how far out the eye stands, not where it looks from.
+      expect(THREE.MathUtils.radToDeg(a.out.angleTo(b.out))).toBeLessThan(1e-4)
+      expect(THREE.MathUtils.radToDeg(a.out.angleTo(c.out))).toBeLessThan(1e-4)
+      // The height over the height of no lift is one number to the power: the log of it at power 1 is twice the log at a half.
+      const lb = Math.log(b.h / a.h)
+      const lc = Math.log(c.h / a.h)
+      expect(Math.abs(lc - 2 * lb)).toBeLessThan(1e-6 + 1e-6 * Math.abs(lc))
+      moved = Math.max(moved, Math.abs(lc))
+    }
+    expect(moved).toBeGreaterThan(0.05)
+    // At both ends of the segment the three stand where the neighbours stand.
+    for (const t of [s.start + 1e-7, s.end - 1e-7]) {
+      const a = none.eye('rise', t, 'orbit')
+      const c = full.eye('rise', t, 'orbit')
+      expect(c.position.distanceTo(a.position) / Math.max(high(a), 1e-6)).toBeLessThan(1e-4)
+      expect(deg(c.quaternion, a.quaternion)).toBeLessThan(1e-4)
+    }
   })
 
   it('steps aside by the share of the time of the segment: at rest in the far pose, complete at its share, and nothing of it left at the surface', () => {
