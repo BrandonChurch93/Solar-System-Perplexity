@@ -1,9 +1,33 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T16:26:59.844Z",
- "head": "237668930f531e871ff6c5b12d432f39dbe36043",
- "note": "Point 4 of MAIL 688, trial not committed: the grade of the fall as one text; lilac at 4720 and warm specks at 4988 go, deck blue stays (control without the grade beside it). RED named: 4860 is not the same picture drawn alone and drawn after dive frames (thin line of bands by the limb), cause being sought. Still red by my proxies: rise 4988 0.49, hump 4696. About 12 s a preview draft frame, 25 to 32 s at the surface.",
+ "pushed": "2026-11-24T16:49:20.541Z",
+ "head": "4d3df9346abfc2549a3294d6e8552d5a3b0a4118",
+ "note": "Point 4 of MAIL 688. Found and committed (4d3df934, not pushed yet): 4860 drawn alone was not 4860 drawn in order at preview and 4K, one uniform of the map was set from orbit only. Grade of the fall as one text: warm specks and lilac gone, trial. Named, not cured: bright azure streaks of the map read cyan against the graded vortex; rise 4988 by my proxy 0.49 before this, being measured again; hump 4696. About 12 s a preview draft frame, 25 to 32 s at the surface.",
  "looks": [
+  {
+   "time": "2026-11-24T16:49:19.516Z",
+   "file": "20261124164919516-note-b1-limb-right.jpg",
+   "source": "out/work/nep/weave/b1-limb-right.jpg",
+   "kind": "note",
+   "label": "The limb on the right, 4732 to 4752: rows 1 and 3 as pushed (scene's border 16 to 26 degrees), rows 2 and 4 the control without the border: the same picture, so the border does not draw it. The white band of the map by the limb sets under the horizon between 4736 and 4744 as the eye sinks from 0.116 to 0.063 radii",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T16:49:18.778Z",
+   "file": "20261124164918778-note-g3-crops.jpg",
+   "source": "out/work/nep/weave/g3-crops.jpg",
+   "kind": "note",
+   "label": "The grade of the fall as one text (trial, not committed): left as pushed, middle now, right the control without the grade. The grade drew the orange specks and the lilac (each channel raised to its own power, off the line too); now red and blue go no further from the line than the green's level carries them, the deck's blue is to the bit what it was. 4988 night side and limb cloud, 4720 bands, 4707, 4860 far band",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T16:49:18.076Z",
+   "file": "20261124164918076-note-look-g3-4860.jpg",
+   "source": "out/work/nep/weave/look-g3-4860.jpg",
+   "kind": "note",
+   "label": "4860: approved, named commit b8a38cbe, now (all three drawn in order). G17 at preview draft median 1.382, p25 0.741 (named 1.331, 0.772). Lower three eighths the named picture to 5 levels; the far field moved: cyan dab and hard white patch gone, long white bands of the map by the limb, a small pale cyan streak left of centre remains",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T16:26:42.420Z",
    "file": "20261124162642420-note-g2-crops.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/nep/weave/look-q3-dive.jpg",
    "kind": "note",
    "label": "TRIAL not committed, the dive 4696 to 4760: the place's own picture comes in over the globe's map from 2.0 radii by the eye's height alone (the map's share falls evenly with the logarithm of the height to 0.156 radii, then as the height to the power 1.15). My flow proxy (not the report), pairs 8 apart, limit 0.45: 4716 0.34, 4720 0.06, 4724 0.13, 4728 0.16, 4732 0.20, 4736 0.23, 4740 0.34, 4744 0.29, 4748 0.30, 4752 0.27, 4756 0.26. Pose proxy higher up: 4688 0.27, 4696 0.65 RED (the hump at the limb, not touched yet), 4704 0.28, 4712 0.22. Seen and not cured yet: lilac on the white bands at the upper left 4716 to 4736, cyan specks by the comma, warm specks on the night side at 4707 to 4716.",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T15:31:44.780Z",
-   "file": "20261124153144780-note-look-p23-4860.jpg",
-   "source": "out/work/nep/weave/look-p23-4860.jpg",
-   "kind": "note",
-   "label": "4860 beside the approved, the place moved 2.3 across the band (commit a9839f02, pushed). G17 median 1.382, p25 0.741. Near picture within 1.9 levels of the named commit; far field by the limb moved. Not rendered again since, the law leaves the place whole at this height.",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T15:31:43.553Z",
-   "file": "20261124153143553-note-look-q2-dive.jpg",
-   "source": "out/work/nep/weave/look-q2-dive.jpg",
-   "kind": "note",
-   "label": "TRIAL not committed: the place's own picture comes in by height from 2.0 radii (even law to 0.036). 4696 to 4748. My flow proxy: 0.06 to 0.30 at 4716 to 4736, RED 0.46 at 4740 and 0.53 at 4744 (the last of the map leaves the smooth plain in 12 frames). A two part law is rendering now.",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T14:58:01.302Z",
-   "file": "20261124145801302-note-p23-a.jpg",
-   "source": "out/work/nep/weave/p23-a.jpg",
-   "kind": "note",
-   "label": "The place moved 2.3 units across the band (uncommitted): 4724, 4732, 4740, 4748, 4756, 4860 at preview draft",
    "stop": "neptune"
   }
  ]
