@@ -38,11 +38,17 @@ def read(lines, phase):
 
 
 def count(lines, phase, stop, note=None):
-    """The round a stop starts now: k, the round of the note; the note (the one stated, else the latest that has begun); whether the line
-    names the note (not while the phase knows one note only); whether it is the stop's first round of the phase at all."""
+    """The round a stop starts now: k, the round of the note; the note; whether the line names the note (not while the phase knows one
+    note only); whether it is the stop's first round of the phase at all. While the phase knows one note it need not be stated. As soon
+    as it knows more, the note must be stated: the stops do not all go on in the same note. A note is one that has begun, or the next."""
     rows, begins = read(lines, phase)
     latest = max([1] + list(begins))
+    choices = ', '.join(WORDS[:latest + 1][:-1]) + ' or ' + WORDS[latest] if latest < len(WORDS) else ', '.join(WORDS)
+    if note is None and latest > 1:
+        raise ValueError('Phase %d knows %d notes: state the note of this round of %s with --note %s' % (phase, latest, stop, choices))
     note = note or latest
+    if note > latest + 1:
+        raise ValueError('Phase %d knows %d note%s: --note %s' % (phase, latest, '' if latest == 1 else 's', choices))
     own = [r for r in rows if r[1] == stop]
     return {'k': len([r for r in own if r[2] == note]) + 1, 'note': note, 'named': note > 1 or latest > 1, 'first': not own}
 
