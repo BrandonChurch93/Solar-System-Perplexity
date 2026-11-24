@@ -1,9 +1,57 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T10:09:46.336Z",
- "head": "ade4386b7fbb87b0d435b157c8b7c9ba67ff63b8",
- "note": "second commit ade4386b",
+ "pushed": "2026-11-24T10:37:21.919Z",
+ "head": "b0a84557d5e645f4a182ec8b88dbdab37eeec4d8",
+ "note": "second named tree: rise frames 2106 to 2148 seen; plate still reads as laid on the map 2121 to 2136; memory walk in texel view running",
  "looks": [
+  {
+   "time": "2026-11-24T10:37:20.838Z",
+   "file": "20261124103720838-note-dive-r2-b.jpg",
+   "source": "../../../../tmp/gl/s8/dive-r2-b.jpg",
+   "kind": "note",
+   "label": "dive this tree second half",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T10:37:19.583Z",
+   "file": "20261124103719583-note-T-rise-r2-sheet.jpg",
+   "source": "../../../../tmp/gl/s8/T-rise-r2-sheet.jpg",
+   "kind": "note",
+   "label": "rise change of view this tree",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T10:37:18.540Z",
+   "file": "20261124103718540-note-rise-r2-e.jpg",
+   "source": "../../../../tmp/gl/s8/rise-r2-e.jpg",
+   "kind": "note",
+   "label": "rise 2136 to 2148 this tree",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T10:37:17.352Z",
+   "file": "20261124103717352-note-rise-r2-c.jpg",
+   "source": "../../../../tmp/gl/s8/rise-r2-c.jpg",
+   "kind": "note",
+   "label": "rise 2127 to 2135 this tree",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T10:37:16.315Z",
+   "file": "20261124103716315-note-rise-r2-b.jpg",
+   "source": "../../../../tmp/gl/s8/rise-r2-b.jpg",
+   "kind": "note",
+   "label": "rise 2118 to 2126 this tree",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T10:37:15.038Z",
+   "file": "20261124103715038-note-rise-r2-a.jpg",
+   "source": "../../../../tmp/gl/s8/rise-r2-a.jpg",
+   "kind": "note",
+   "label": "rise 2106 to 2117 this tree",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T10:09:36.312Z",
    "file": "20261124100936312-note-sky-ab.jpg",
@@ -50,54 +98,6 @@
    "source": "../../../../tmp/gl/s8/lv-low-full.png",
    "kind": "note",
    "label": "level check, named tree: plate against the low look, 1.27 over",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T09:34:09.759Z",
-   "file": "20261124093409759-note-kb1-pmap.jpg",
-   "source": "../../../../tmp/gl/s8/kb1-pmap.jpg",
-   "kind": "note",
-   "label": "trial b1, where the pattern still changes 1882 to 1890 (far field under the limb)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T09:34:08.550Z",
-   "file": "20261124093408550-note-v0-b1.jpg",
-   "source": "../../../../tmp/gl/s8/v0-b1.jpg",
-   "kind": "note",
-   "label": "one ground in the files against trial b1, 1870 and 1890",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T09:34:07.320Z",
-   "file": "20261124093407320-note-vA-above.jpg",
-   "source": "../../../../tmp/gl/s8/vA-above.jpg",
-   "kind": "note",
-   "label": "trial vA from above 1864 to 1876: ground on the globe at every angle, dark blob and blue wedge, not taken",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T08:51:36.035Z",
-   "file": "20261124085136035-note-pl-low-700.jpg",
-   "source": "../../../../tmp/gl/s7/pl-low-700.jpg",
-   "kind": "note",
-   "label": "plate repaint (left) against lay back (right, window not placed exactly): the far part that is exchanged",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T08:51:34.925Z",
-   "file": "20261124085134925-note-pmap-dive.jpg",
-   "source": "../../../../tmp/gl/s7/pmap-dive.jpg",
-   "kind": "note",
-   "label": "named tree 571f42dc: pattern change in place, dive 1884 1890 1896 against 8 later (draft, own estimate)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T08:30:06.580Z",
-   "file": "20261124083006580-note-pair2010.jpg",
-   "source": "../../../../tmp/gl/s7/pair2010.jpg",
-   "kind": "note",
-   "label": "earth 571f42dc pair2010 draft",
    "stop": "earth"
   }
  ]
