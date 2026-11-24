@@ -5,6 +5,7 @@ import { FilmDirector } from '../src/director/film'
 import { eyeHeightAt, eyeHeights, type Handover, handoverOf, placeWeight, skyWeight } from '../src/director/handover'
 import type { StopPlan } from '../src/director/moves'
 import { plans } from '../src/director/plans'
+import { coveredPlan, filmWith, restorePlans } from './lib/covered'
 
 // The engine's own two weights of a dive and a rise (the share of the close view's sky on the globe side, the weight of the place picture)
 // read the height of the eye and never the clock. The clock's laws, as they stood, are written out here: the two ends of each span must
@@ -32,26 +33,41 @@ const clockPlace = (seg: Segment, h: Handover, time: number): number => {
   return time < full ? 1 : smooth((to - time) / (to - full))
 }
 interface Span { plan: StopPlan; kind: 'dive' | 'rise'; seg: Segment; h: Handover; full: number; farSky: number; farPlace: number; own: boolean }
+// The span of a plan's dive or rise as the handover in force gives it, or null where the plan has no such move or does not hand over.
+const spanOf = (plan: StopPlan, kind: 'dive' | 'rise'): Span | null => {
+  const seg = plan.seg[kind]
+  const h = seg && plan.handsOver ? handoverOf(plan.id, kind) : null
+  if (!seg || !h) return null
+  const full = kind === 'dive' ? h.firstFrame / fps : (h.lastFrame + 1) / fps
+  const farSky = kind === 'dive' ? Math.max(full - h.skyFrames / fps, seg.start) : Math.min(full + h.skyFrames / fps, seg.end)
+  return { plan, kind, seg, h, full, farSky, farPlace: kind === 'dive' ? h.placeFirstFrame / fps : (h.placeLastFrame + 1) / fps, own: plan.skyShare(seg, (seg.start + seg.end) / 2) !== null }
+}
 const spans: Span[] = []
 for (const plan of plans) {
   for (const kind of ['dive', 'rise'] as const) {
-    const seg = plan.seg[kind]
-    const h = seg && plan.handsOver ? handoverOf(plan.id, kind) : null
-    if (!seg || !h) continue
-    const full = kind === 'dive' ? h.firstFrame / fps : (h.lastFrame + 1) / fps
-    const farSky = kind === 'dive' ? Math.max(full - h.skyFrames / fps, seg.start) : Math.min(full + h.skyFrames / fps, seg.end)
-    spans.push({ plan, kind, seg, h, full, farSky, farPlace: kind === 'dive' ? h.placeFirstFrame / fps : (h.placeLastFrame + 1) / fps, own: plan.skyShare(seg, (seg.start + seg.end) / 2) !== null })
+    const s = spanOf(plan, kind)
+    if (s) spans.push(s)
   }
 }
 const high = (s: Span, time: number): number => s.plan.eyeShot(s.kind, time, 'orbit').pose.position.length() - 1
 const beforeT = (s: Span, time: number): boolean => (s.kind === 'dive' ? time < s.full : time >= s.full)
-const theFilm = (): FilmDirector => new FilmDirector(plans)
+// A plan made in memory (tried) has its handover in force in the place of a stop's own. The film is asked with every stop's own in
+// force again.
+let made = false
+const theFilm = (): FilmDirector => {
+  if (made) restorePlans()
+  made = false
+  return new FilmDirector(plans)
+}
 // The span the laws are tried on with eyes made up here: a dive that leaves both weights to the engine, with the sky over 24 frames and
-// the picture over 12 before T (the numbers the made up heights are written for). It is picked by what it has, never by its name: a
-// stop may take its sky or its picture into its own hands at any time, as Venus did.
+// the picture over 12 before T (the numbers the made up heights are written for). It is made in memory and is no span of the film: the
+// plan the tests keep for themselves (lib/covered.ts: the engine's own class on a fit and parameters that no stop can change) with a
+// handover written here, in force from here to the next theFilm(). A stop may take its sky or its picture into its own hands or give
+// its sky another span at any time, as Venus did, and these laws are tried all the same.
 const tried = (): Span => {
-  const s = spans.find((x) => x.kind === 'dive' && !x.own && x.h.picture && x.h.skyFrames === 24 && x.h.firstFrame - x.h.placeFirstFrame === 12)
-  if (!s) throw new Error('no dive of the film leaves a sky over 24 frames and a picture over 12 to the engine any more: these tests need a span made in memory')
+  made = true
+  const s = spanOf(coveredPlan({ handover: { dive: { skyFrames: 24, placeFrames: 12, picture: true } } }), 'dive')
+  if (!s || s.own || !s.h.picture || s.h.skyFrames !== 24 || s.h.firstFrame - s.h.placeFirstFrame !== 12) throw new Error('the span made in memory does not leave a sky over 24 frames and a picture over 12 before T to the engine')
   return s
 }
 
@@ -245,7 +261,8 @@ describe('the weights of a dive and a rise by the height of the eye', () => {
     expect(() => skyWeight(s.seg, inside)).toThrow(/lower at T than where the span begins/)
     eyeHeights((_stop, _kind, time) => (time >= s.full ? -0.001 : 0.05))
     expect(() => placeWeight(s.seg, inside)).toThrow(/over the body/)
-    theFilm()
+    // a film that flies the plan of the span says how to ask again
+    filmWith(s.plan)
     expect(skyWeight(s.seg, inside)).toBeGreaterThan(0)
     expect(skyWeight(s.seg, inside)).toBeLessThan(1)
   })
