@@ -36,24 +36,24 @@ The film runs 03:00.000, 5400 frames at 30 frames per second, with no sound. Tim
 | `earth.travel` | start of travel | 01:12.500 | 00:01:12:15 | 2175 | Music builds from the first frame toward the next hold. |
 | `mars.hold` | start of hold | 01:15.000 | 00:01:15:00 | 2250 | Music lands on the first frame and carries the hold. |
 | `mars.dive` | start of dive | 01:20.000 | 00:01:20:00 | 2400 | The rush of the dive: a rising rush of air from the first frame that peaks at the handover. |
-| `mars.dive` | the handover | 01:22.508 | 00:01:22:15 | 2475 | The peak of the rush. The view changes in frame 2475 with no cover: the place stays in view. |
+| `mars.dive` | the handover | 01:22.575 | 00:01:22:17 | 2477 | The peak of the rush. The view changes in frame 2477 with no cover: the place stays in view. |
 | `mars.terrain` | start of terrain | 01:23.000 | 00:01:23:00 | 2490 | The hush: music drops to a quiet bed on the first frame, under a soft air tone. |
 | `mars.rise` | start of rise | 01:29.000 | 00:01:29:00 | 2670 | A shorter rush that peaks at the handover and opens out after it. |
-| `mars.rise` | the handover | 01:29.575 | 00:01:29:17 | 2687 | The peak of the rush. The view changes in frame 2687 with no cover: the place stays in view. |
+| `mars.rise` | the handover | 01:29.375 | 00:01:29:11 | 2681 | The peak of the rush. The view changes in frame 2681 with no cover: the place stays in view. |
 | `mars.travel` | start of travel | 01:31.500 | 00:01:31:15 | 2745 | Music builds from the first frame toward the next hold. A few rocks pass close to the lens: one low pass for each. |
 | `jupiter.hold` | start of hold | 01:34.000 | 00:01:34:00 | 2820 | Music lands on the first frame and carries the hold. |
 | `jupiter.dive` | start of dive | 01:39.000 | 00:01:39:00 | 2970 | The rush of the dive: a rising rush of air from the first frame that peaks at the handover. |
-| `jupiter.dive` | the handover | 01:40.808 | 00:01:40:24 | 3024 | The peak of the rush. The view changes in frame 3024 with no cover: the place stays in view. |
+| `jupiter.dive` | the handover | 01:41.975 | 00:01:41:29 | 3059 | The peak of the rush. The view changes in frame 3059 with no cover: the place stays in view. |
 | `jupiter.terrain` | start of terrain | 01:42.000 | 00:01:42:00 | 3060 | The hush: music drops to a quiet bed on the first frame, under a soft air tone. |
 | `jupiter.rise` | start of rise | 01:48.000 | 00:01:48:00 | 3240 | A shorter rush that peaks at the handover and opens out after it. |
-| `jupiter.rise` | the handover | 01:49.008 | 00:01:49:00 | 3270 | The peak of the rush. The view changes in frame 3270 with no cover: the place stays in view. |
+| `jupiter.rise` | the handover | 01:48.008 | 00:01:48:00 | 3240 | The peak of the rush. The view changes in frame 3240 with no cover: the place stays in view. |
 | `jupiter.travel` | start of travel | 01:50.500 | 00:01:50:15 | 3315 | Music builds from the first frame toward the next hold. |
 | `saturn.hold` | start of hold | 01:53.000 | 00:01:53:00 | 3390 | Music lands on the first frame and carries the hold. |
 | `saturn.dive` | start of dive | 01:58.000 | 00:01:58:00 | 3540 | The rush of the dive: a rising rush of air from the first frame that peaks at the handover. |
 | `saturn.dive` | the handover | 01:59.642 | 00:01:59:19 | 3589 | The peak of the rush. The view changes in frame 3589 with no cover: the place stays in view. |
 | `saturn.terrain` | start of terrain | 02:01.000 | 00:02:01:00 | 3630 | The hush: music drops to a quiet bed on the first frame, under a soft air tone. |
 | `saturn.rise` | start of rise | 02:07.000 | 00:02:07:00 | 3810 | A shorter rush that peaks at the handover and opens out after it. |
-| `saturn.rise` | the handover | 02:08.675 | 00:02:08:20 | 3860 | The peak of the rush. The view changes in frame 3860 with no cover: the place stays in view. |
+| `saturn.rise` | the handover | 02:08.408 | 00:02:08:12 | 3852 | The peak of the rush. The view changes in frame 3852 with no cover: the place stays in view. |
 | `saturn.travel` | start of travel | 02:09.500 | 00:02:09:15 | 3885 | Music builds from the first frame toward the next hold. |
 | `uranus.hold` | start of hold | 02:12.000 | 00:02:12:00 | 3960 | Music lands on the first frame and carries the hold. |
 | `uranus.dive` | start of dive | 02:17.000 | 00:02:17:00 | 4110 | The rush of the dive: a rising rush of air from the first frame that peaks at the handover. |
@@ -79,7 +79,7 @@ The film runs 03:00.000, 5400 frames at 30 frames per second, with no sound. Tim
 - Music builds through every travel, from its first frame to the first frame of the next hold: 00:15.000 to 00:18.000, 00:34.500 to 00:37.000, 00:53.500 to 00:56.000, 01:12.500 to 01:15.000, 01:31.500 to 01:34.000, 01:50.500 to 01:53.000, 02:09.500 to 02:12.000, 02:28.500 to 02:31.000.
 - Music lands on the first frame of every hold: 00:09.000 sun, 00:18.000 mercury, 00:37.000 venus, 00:56.000 earth, 01:15.000 mars, 01:34.000 jupiter, 01:53.000 saturn, 02:12.000 uranus, 02:31.000 neptune.
 - Music drops to a quiet bed for every terrain view, the hush: 00:00.000 to 00:06.000, 00:26.000 to 00:32.000, 00:45.000 to 00:51.000, 01:04.000 to 01:10.000, 01:23.000 to 01:29.000, 01:42.000 to 01:48.000, 02:01.000 to 02:07.000, 02:20.000 to 02:26.000, 02:39.000 to 02:45.000.
-- A rush of air peaks at every handover: 00:07.208, 00:25.342, 00:32.575, 00:44.775, 00:51.308, 01:03.975, 01:10.008, 01:22.508, 01:29.575, 01:40.808, 01:49.008, 01:59.642, 02:08.675, 02:19.542, 02:26.375, 02:38.608, 02:45.208.
+- A rush of air peaks at every handover: 00:07.208, 00:25.342, 00:32.575, 00:44.775, 00:51.308, 01:03.975, 01:10.008, 01:22.575, 01:29.375, 01:41.975, 01:48.008, 01:59.642, 02:08.408, 02:19.542, 02:26.375, 02:38.608, 02:45.208.
 - The ending: music lands for the last time at 02:51.500, the start of the lookback, and fades with the picture from 02:57.500 to silence at 03:00.000.
 
 ## The clips
@@ -116,24 +116,24 @@ A clip is cut from the same frames as the film. Its cues are the film's cues cou
 | `earth` | | end of the clip | 00:16.500 | 495 | 01:12.500 |
 | `mars` | `mars.hold` | start of hold | 00:00.000 | 0 | 01:15.000 |
 | `mars` | `mars.dive` | start of dive | 00:05.000 | 150 | 01:20.000 |
-| `mars` | `mars.dive` | the handover | 00:07.508 | 225 | 01:22.508 |
+| `mars` | `mars.dive` | the handover | 00:07.575 | 227 | 01:22.575 |
 | `mars` | `mars.terrain` | start of terrain | 00:08.000 | 240 | 01:23.000 |
 | `mars` | `mars.rise` | start of rise | 00:14.000 | 420 | 01:29.000 |
-| `mars` | `mars.rise` | the handover | 00:14.575 | 437 | 01:29.575 |
+| `mars` | `mars.rise` | the handover | 00:14.375 | 431 | 01:29.375 |
 | `mars` | | end of the clip | 00:16.500 | 495 | 01:31.500 |
 | `jupiter` | `jupiter.hold` | start of hold | 00:00.000 | 0 | 01:34.000 |
 | `jupiter` | `jupiter.dive` | start of dive | 00:05.000 | 150 | 01:39.000 |
-| `jupiter` | `jupiter.dive` | the handover | 00:06.808 | 204 | 01:40.808 |
+| `jupiter` | `jupiter.dive` | the handover | 00:07.975 | 239 | 01:41.975 |
 | `jupiter` | `jupiter.terrain` | start of terrain | 00:08.000 | 240 | 01:42.000 |
 | `jupiter` | `jupiter.rise` | start of rise | 00:14.000 | 420 | 01:48.000 |
-| `jupiter` | `jupiter.rise` | the handover | 00:15.008 | 450 | 01:49.008 |
+| `jupiter` | `jupiter.rise` | the handover | 00:14.008 | 420 | 01:48.008 |
 | `jupiter` | | end of the clip | 00:16.500 | 495 | 01:50.500 |
 | `saturn` | `saturn.hold` | start of hold | 00:00.000 | 0 | 01:53.000 |
 | `saturn` | `saturn.dive` | start of dive | 00:05.000 | 150 | 01:58.000 |
 | `saturn` | `saturn.dive` | the handover | 00:06.642 | 199 | 01:59.642 |
 | `saturn` | `saturn.terrain` | start of terrain | 00:08.000 | 240 | 02:01.000 |
 | `saturn` | `saturn.rise` | start of rise | 00:14.000 | 420 | 02:07.000 |
-| `saturn` | `saturn.rise` | the handover | 00:15.675 | 470 | 02:08.675 |
+| `saturn` | `saturn.rise` | the handover | 00:15.408 | 462 | 02:08.408 |
 | `saturn` | | end of the clip | 00:16.500 | 495 | 02:09.500 |
 | `uranus` | `uranus.hold` | start of hold | 00:00.000 | 0 | 02:12.000 |
 | `uranus` | `uranus.dive` | start of dive | 00:05.000 | 150 | 02:17.000 |
@@ -206,22 +206,22 @@ The clip's cues inside each post, after the cut:
 | `earth` | `earth.rise` | the handover | 00:18.675 | 560 |
 | `mars` | `mars.hold` | start of hold | 00:04.633 | 139 |
 | `mars` | `mars.dive` | start of dive | 00:09.633 | 289 |
-| `mars` | `mars.dive` | the handover | 00:12.142 | 364 |
+| `mars` | `mars.dive` | the handover | 00:12.208 | 366 |
 | `mars` | `mars.terrain` | start of terrain | 00:12.633 | 379 |
 | `mars` | `mars.rise` | start of rise | 00:18.633 | 559 |
-| `mars` | `mars.rise` | the handover | 00:19.208 | 576 |
+| `mars` | `mars.rise` | the handover | 00:19.008 | 570 |
 | `jupiter` | `jupiter.hold` | start of hold | 00:04.767 | 143 |
 | `jupiter` | `jupiter.dive` | start of dive | 00:09.767 | 293 |
-| `jupiter` | `jupiter.dive` | the handover | 00:11.575 | 347 |
+| `jupiter` | `jupiter.dive` | the handover | 00:12.742 | 382 |
 | `jupiter` | `jupiter.terrain` | start of terrain | 00:12.767 | 383 |
 | `jupiter` | `jupiter.rise` | start of rise | 00:18.767 | 563 |
-| `jupiter` | `jupiter.rise` | the handover | 00:19.775 | 593 |
+| `jupiter` | `jupiter.rise` | the handover | 00:18.775 | 563 |
 | `saturn` | `saturn.hold` | start of hold | 00:04.733 | 142 |
 | `saturn` | `saturn.dive` | start of dive | 00:09.733 | 292 |
 | `saturn` | `saturn.dive` | the handover | 00:11.375 | 341 |
 | `saturn` | `saturn.terrain` | start of terrain | 00:12.733 | 382 |
 | `saturn` | `saturn.rise` | start of rise | 00:18.733 | 562 |
-| `saturn` | `saturn.rise` | the handover | 00:20.408 | 612 |
+| `saturn` | `saturn.rise` | the handover | 00:20.142 | 604 |
 | `uranus` | `uranus.hold` | start of hold | 00:04.733 | 142 |
 | `uranus` | `uranus.dive` | start of dive | 00:09.733 | 292 |
 | `uranus` | `uranus.dive` | the handover | 00:12.275 | 368 |
