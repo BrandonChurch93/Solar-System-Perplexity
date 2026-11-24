@@ -1,9 +1,17 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T06:55:48.099Z",
+ "pushed": "2026-11-24T07:20:46.347Z",
  "head": "4ef110160bc7abc71a57ab53fed01687b48e9ef0",
- "note": "no new picture: the presence is named (4ef11016); now the judge's eye line goes into the plan check and the law search (two of my seven sets are green on the curves and red on the eye)",
+ "note": "tools only: the judge's eye line in the plan check and the law search, the seam tool reads the plane of the rings; green sets for the Earth rise and the Uranus rise on the one move; proof of the tools commit running",
  "looks": [
+  {
+   "time": "2026-11-24T07:20:45.270Z",
+   "file": "20261124072045270-note-eye-earth-uranus-rise.jpg",
+   "source": "out/work/looks-extra/eye-earth-uranus-rise.png",
+   "kind": "note",
+   "label": "the eye across the seam of the Earth rise and the Uranus rise, forced onto the one move: the film's law, the withdrawn set, the green set, the judge's limit 0.87",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T06:26:53.641Z",
    "file": "20261124062653641-note-sheet-mercury.jpg",
@@ -56,13 +64,6 @@
    "kind": "note",
    "label": "Mars's own tree dd1ddb9c (its bend, no place picture), draft, rise frames 2685 to 2690: the border of the close set stands in the frame from 2683 to 2687, and 2687 to 2688 (the change of view) is a cut between two pictures that differ",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T05:25:18.408Z",
-   "file": "20261124052518408-note-before-2.jpg",
-   "source": "../../../../tmp/bend/before-2.png",
-   "kind": "note",
-   "label": "the same tree without a bend, frames 2678 to 2686: the ground fills the frame to 2686 (the eye stopped at 2671)"
   }
  ]
 }
