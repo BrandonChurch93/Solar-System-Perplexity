@@ -1,9 +1,17 @@
 {
  "folder": "venus",
- "pushed": "2026-11-24T20:52:49.843Z",
+ "pushed": "2026-11-24T21:17:41.910Z",
  "head": "43cbe72e6fb5a134d6f8e122bc78809ab5716ff7",
- "note": "state C (air by its own heights, dive pop cured to 1.18): the three rise pairs of MAIL 749; merge of batch tip 1924a104 done, pull back in work",
+ "note": "on the batch tip 1924a104 with handover.rise.pullBack speed 1.0 over 0.2 from 0.6: leave line 0.193 (limit 0.07) by the path; smooth rise rendering now",
  "looks": [
+  {
+   "time": "2026-11-24T21:17:41.291Z",
+   "file": "20261124211741291-note-pair-1548-1556.jpg",
+   "source": "../../../../tmp/v/c/pair-1548-1556.jpg",
+   "kind": "note",
+   "label": "rise 1548 against 1556, state C draft: the far deck comes out of the pale air band (MAIL 749 pair)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T20:52:49.202Z",
    "file": "20261124205249202-note-pair-1575-1583.jpg",
@@ -75,16 +83,6 @@
    "first": 1533,
    "last": 1544,
    "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T20:37:51.839Z",
-   "file": "20261124203751839-compare-venus-rise-step-in-place.jpg",
-   "source": "out/work/handover/venus-rise-step-in-place.png",
-   "kind": "compare",
-   "label": "venus rise, the largest step of the level in place (4.27): frame 1572, frame 1573, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "frame": 1573
   }
  ]
 }
