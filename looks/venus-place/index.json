@@ -1,9 +1,33 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-24T14:27:14.309Z",
+ "pushed": "2026-11-24T14:55:16.764Z",
  "head": "7c1dfe17b970546eebab68476ae47fca1c0126aa",
- "note": "Chain W on the merge with main 2bc36ce6, limb glow laid on the ground: all 11 sheets of the two moves viewed; three of them here",
+ "note": "chain W on merge plus H3: handover pass, path green, pictures red dive 0.57 at 1322, rise 0.51 at 1542 and 0.65 at 1575, gate lines pass, tests running",
  "looks": [
+  {
+   "time": "2026-11-24T14:55:16.029Z",
+   "file": "20261124145516029-note-chg-rise-W.jpg",
+   "source": "../../../../tmp/v/chg-rise-W.jpg",
+   "kind": "note",
+   "label": "H3 on the merge, rise pattern panel of the new measure",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T14:55:14.913Z",
+   "file": "20261124145514913-note-chg-dive-W.jpg",
+   "source": "../../../../tmp/v/chg-dive-W.jpg",
+   "kind": "note",
+   "label": "H3 on the merge, dive pattern panel of the new measure, most 0.57 at 1322",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T14:55:13.909Z",
+   "file": "20261124145513909-note-far-dive-W2.jpg",
+   "source": "../../../../tmp/v/far-dive-W2.jpg",
+   "kind": "note",
+   "label": "H3 on the merge, dive 1320 to 1330 upper right: the far band of the plates goes pale under the haze",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T14:27:13.454Z",
    "file": "20261124142713454-note-s1578.jpg",
@@ -50,41 +74,6 @@
    "segment": "venus.rise",
    "first": 1540,
    "last": 1551,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T14:15:28.411Z",
-   "file": "20261124141528411-sheet-venus-rise-draft-before.jpg",
-   "source": "out/work/handover/venus-rise-draft-before.png",
-   "kind": "sheet",
-   "label": "venus rise, every frame 1530 to 1538 (before T, frame 1539), draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1530,
-   "last": 1538,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T14:15:26.745Z",
-   "file": "20261124141526745-sheet-venus-rise-draft-across.jpg",
-   "source": "out/work/handover/venus-rise-draft-across.png",
-   "kind": "sheet",
-   "label": "venus rise, every frame 1533 to 1544 (across T, frame 1539), draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1533,
-   "last": 1544,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T14:09:42.833Z",
-   "file": "20261124140942833-compare-venus-rise-sides.jpg",
-   "source": "out/work/handover/venus-rise-sides.png",
-   "kind": "compare",
-   "label": "venus rise, both sides at T (frame 1539) and their difference times 8",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "frame": 1539,
    "tier": "draft"
   }
  ]
