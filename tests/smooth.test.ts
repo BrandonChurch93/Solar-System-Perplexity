@@ -7,8 +7,8 @@ import { shutterMid } from '../src/core/sampler'
 import { FilmDirector } from '../src/director/film'
 import { sideAt } from '../src/director/handover'
 import { plans } from '../src/director/plans'
-import { curves, landingCurves, planeHit, ringPlane, sampleLanding, sampleWindow, seen } from '../tools/smooth/camera'
-import { judgeCurve, judgeLanding, longestGap, parityFrames, position, shown, table } from '../tools/smooth/path'
+import { SEAM_OWN, SEAM_REACH, curves, eyeCurves, landingCurves, planeHit, ringPlane, sampleLanding, sampleSeam, sampleWindow, seen, type SeamWindow } from '../tools/smooth/camera'
+import { judgeCurve, judgeLanding, judgeSeam, longestGap, parityFrames, position, shown, table } from '../tools/smooth/path'
 
 const limits = { maxStep: 0.08, maxRebound: 0.03, seamFrames: 2 }
 const bell = (n: number, edge = 0): number[] => Array.from({ length: n }, (_, i) => edge + 1 - Math.cos((2 * Math.PI * (i + 0.5)) / n))
@@ -414,5 +414,66 @@ describe('the frames of the parity part', () => {
     const legs = config.stopIds.flatMap((id) => parityFrames(config.segments, id, at, ['dive', 'rise'], true).filter((r) => r.kind === 'travel').map((r) => r.segment))
     expect(legs).toEqual(config.segments.filter((s) => s.kind === 'travel').map((s) => s.id))
     expect(parityFrames(config.segments, 'sun', at, ['dive', 'rise'], true).map((r) => r.kind)).toEqual(['hold', 'terrain', 'rise', 'rise', 'rise', 'travel'])
+  })
+})
+
+describe('the eye against the near ground at the seam with the surface view', () => {
+  type P = { position: THREE.Vector3; quaternion: THREE.Quaternion; vfov: number }
+  const still = { twin: (p: P) => p, untwin: (p: P) => p, seg: { terrain: { start: 0 } } } as unknown as (typeof plans)[number]
+  const made = (ways: number[]): SeamWindow => {
+    let h = 1
+    const heights = [h, ...ways.map((v) => (h = h * (1 - v)))]
+    const samples = heights.map((height, i) => ({ k: 100 + i, frame: Math.floor((100 + i) / 2), time: (100 + i) / 60, segment: 'x.terrain', side: 'terrain' as const, pose: { position: new THREE.Vector3(0, 1 + height, 0), quaternion: new THREE.Quaternion(), vfov: 40 }, height }))
+    return { kind: 'rise', seg: config.segments[0]!, seam: 54, rate: 2, k0: 100, samples, own: { first: 101, end: 104 } }
+  }
+  it('reads 1 where the eye goes on as the surface view does, a dip where it stops and a negative part where it goes back', () => {
+    const c = eyeCurves(made([0.01, 0.01, 0.01, 0.01, 0.01, 0.004, 0, -0.006, -0.02]), still)
+    expect(c.speed[0]).toBeNull()
+    for (const i of [1, 2, 3, 4, 5]) expect(c.speed[i]!).toBeCloseTo(1, 6)
+    expect(c.speed[6]!).toBeCloseTo(0.4, 2)
+    expect(c.speed[7]!).toBeCloseTo(0, 6)
+    expect(c.speed[8]!).toBeCloseTo(0.6, 2)
+    expect(c.along[8]!).toBeCloseTo(-0.6, 2)
+    expect(c.along[9]!).toBeLessThan(-1.9)
+    const r = judgeSeam(c.speed, c.along, 100, 2, 0.5)
+    expect(r.lowest).toEqual({ value: c.speed[7], k: 107 })
+    expect(r.inMove).toBeNull()
+    expect(judgeSeam(c.speed, c.along, 100, 2, 0.5, { first: 108, end: 109 }).inMove).toEqual({ value: c.speed[8], k: 108 })
+    expect(r.back!.k).toBe(109)
+    expect(r.step!.k).toBe(109)
+    expect(r.fault!.rule).toBe('eye')
+    expect(r.fault!.text).toContain('at frame 53 + 1/2, limit 0.5')
+    expect(judgeSeam(c.speed, c.along, 100, 2, null).fault).toBeNull()
+    expect(judgeSeam(c.speed.slice(0, 6), c.along.slice(0, 6), 100, 2, 0.5).fault).toBeNull()
+  })
+  it('takes the ground as the twin of the stop holds it: an eye that stands over a turning place does not move', () => {
+    const turn = (t: number): THREE.Quaternion => new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), t)
+    const turning = { twin: (p: P) => p, untwin: (p: P, t: number) => ({ ...p, position: p.position.clone().applyQuaternion(turn(t).invert()) }), seg: { terrain: { start: 0 } } } as unknown as (typeof plans)[number]
+    const w = made([0.01, 0.01, 0.01, 0.01, 0.01, 0.01])
+    for (const s of w.samples) s.pose.position.applyQuaternion(turn(s.time))
+    const c = eyeCurves(w, turning)
+    for (const i of [1, 2, 3, 4, 5, 6]) expect(c.speed[i]!).toBeCloseTo(1, 6)
+  })
+  it('samples every seam of the film: 17 seams, the reach to each side, the surface view next to the seam as its own', () => {
+    const film = new FilmDirector(plans)
+    let seams = 0
+    for (const plan of plans) {
+      for (const kind of ['dive', 'rise'] as const) {
+        const w = sampleSeam(config, film, plan, kind, 2)
+        if (!w) continue
+        seams++
+        expect(w.seam).toBe(kind === 'dive' ? w.seg.endFrame : w.seg.firstFrame)
+        expect(w.samples[0]!.k).toBe((w.seam - SEAM_REACH) * 2 - 1)
+        expect(w.samples[w.samples.length - 1]!.k).toBe((w.seam + SEAM_REACH) * 2 - 1)
+        const own = w.samples.filter((s) => s.k >= w.own.first - 1 && s.k <= w.own.end)
+        expect(own.filter((s) => s.segment !== plan.id + '.terrain').map((s) => s.k)).toEqual(kind === 'rise' ? [w.seam * 2] : [])
+        expect(own.length).toBe(SEAM_OWN * 2 + 1)
+        const c = eyeCurves(w, plan, ringPlane(plan))
+        expect(c.own!).toBeGreaterThan(0)
+        const mine = c.speed.filter((_, i) => w.k0 + i >= w.own.first && w.k0 + i <= w.own.end) as number[]
+        expect(mine.reduce((n, v) => n + v, 0) / mine.length).toBeCloseTo(1, 9)
+      }
+    }
+    expect(seams).toBe(17)
   })
 })

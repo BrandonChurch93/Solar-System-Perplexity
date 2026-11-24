@@ -3,6 +3,7 @@ import { config, type Segment } from '../config'
 import { airAt } from '../core/air'
 import type { Air, AirKnot, CoverHorizon, NearBody, Pose, ViewKind } from '../core/types'
 import { handoverOf, oneMoveForced, sideAt, type HandoverParams, type Sidestep, type SkyShares } from './handover'
+import { Bend, type BendShape } from './bend'
 import { bellShare, bellStep, checkFlanks, paceLimits, type Flanks } from './pace'
 import { coverFrames, coverWindow, setCoverWindow, setHandover, withoutHandover, type CoverTimings } from './timeline'
 import { blendPose, ease, lookAt, mix, ramp, slerpDir, smooth, smoother } from './rig'
@@ -25,7 +26,7 @@ export interface MoveParams {
   hold: { orbitDeg: number; axis: [number, number, number]; push: number }
   spot: { x: number; y: number; on?: 'globe' | 'rings' }
   dive: { headingDeg: number; altitude: number; back: number; ahead: number; bow: number; rollDeg: number; swoop?: boolean; surge?: Surge; level?: number }
-  terrain: { vfov: number; gather?: number; forward: number; rise: number; side: number; yawDeg: number; pitchDeg: number; entryHeight: number; entryBack: number; entryPitchDeg: number; entryYawDeg?: number; entryRollDeg?: number; entryDipDeg?: number; exitHeight: number; exitForward: number; exitPitchDeg: number; exitDipDeg?: number; horizonDeg?: number; dipDeg?: number; rollDeg?: number; ground?: number }
+  terrain: { vfov: number; gather?: number; forward: number; rise: number; side: number; yawDeg: number; pitchDeg: number; entryHeight: number; entryBack: number; entryPitchDeg: number; entryYawDeg?: number; entryRollDeg?: number; entryDipDeg?: number; exitHeight: number; exitForward: number; exitPitchDeg: number; exitDipDeg?: number; horizonDeg?: number; dipDeg?: number; rollDeg?: number; ground?: number; bend?: BendShape & { frames: number } }
   rise: { azimuthDeg: number; elevationDeg: number; distance: number; offset: [number, number]; driftSpeed: number; rollDeg: number; ahead?: number; hug?: number; tilt?: number; settle?: number; level?: boolean; pan?: number; gentle?: boolean; from?: number }
   travel: { turnDeg: number; side: number; turnEnd?: number; start?: number }
   arrive?: { swingDeg: number; axis: [number, number, number]; power?: number; from?: number; offset?: [number, number] }
@@ -161,6 +162,7 @@ export class StopPlan {
   private readonly swings: { key: string; angle: number }[] = []
   private airs: { from: AirKnot[]; knots: AirKnot[] } | null = null
   private lifts: { from: number; to: number; power: number } | null = null
+  private bent: { key: number[]; bend: Bend } | null = null
 
   constructor(id: string, fit: Fit, p: MoveParams) {
     this.id = id
@@ -245,7 +247,53 @@ export class StopPlan {
     return { position: this.holdPos.clone().applyQuaternion(q).multiplyScalar(1 + this.p.hold.push * u), quaternion: q, vfov: this.fit.vfovDeg }
   }
 
+  // The surface view. A stop that names terrain.bend flies the last frames of it on a bend (bend.ts): from that many film frames before
+  // its end the eye leaves the straight line, keeps the share of its height it flies a second and turns its way as the stop says; the lens
+  // stays the straight path's own. A stop that names none flies the straight path, to the bit as before.
   terrain(tRel: number): Pose {
+    const pose = this.straight(tRel)
+    if (!this.p.terrain.bend) return pose
+    const bend = this.bend()
+    return tRel > bend.time ? { position: bend.position(tRel), quaternion: pose.quaternion, vfov: pose.vfov } : pose
+  }
+
+  private bend(): Bend {
+    const t = this.p.terrain
+    const shape = t.bend!
+    const key = [shape.frames, shape.acrossDeg[0], shape.acrossDeg[1], shape.turnDeg, t.side, t.rise, t.forward, t.gather ?? 0, this.seg.terrain.start, this.seg.terrain.end]
+    if (!this.bent || this.bent.key.some((x, i) => x !== key[i])) {
+      const dur = this.seg.terrain.end - this.seg.terrain.start
+      const span = shape.frames / config.fps
+      if (!(shape.frames > 0) || !(span < dur)) throw new Error(this.id + ': frames of terrain.bend must be above 0 and under the length of the surface view')
+      if (!key.every((x) => Number.isFinite(x))) throw new Error(this.id + ': terrain.bend needs frames, acrossDeg (azimuth and elevation) and turnDeg as numbers')
+      const time = dur - span
+      const position = this.straight(time).position
+      // The straight path is a line run on one curve of time, so its velocity is the line times the slope of that curve.
+      const velocity = new THREE.Vector3(t.side, t.rise, -t.forward).multiplyScalar((1 + 2 * (t.gather ?? 0) * (time / dur - 0.5)) / dur)
+      const ground = this.closeGround(position, this.seg.terrain.start + time)
+      const carry = config.raw.handover.carry as { stepsPerFrame: number }
+      try {
+        this.bent = { key, bend: new Bend({ time, span, position, velocity, up: ground.up, height: ground.height, step: 1 / (config.fps * carry.stepsPerFrame) }, shape) }
+      } catch (e) {
+        throw new Error(this.id + ': ' + (e as Error).message)
+      }
+    }
+    return this.bent!.bend
+  }
+
+  // The ground under a point of the close view: its up as a unit vector and the point's height above the unit sphere, in the close view's
+  // own frame and units, read through the twin and back, so a stop with a twin of its own is read on that.
+  closeGround(position: THREE.Vector3, time: number): { up: THREE.Vector3; height: number } {
+    const vfov = this.p.terrain.vfov
+    const globe = this.twin({ position, quaternion: new THREE.Quaternion(), vfov }, time)
+    const radius = globe.position.length()
+    const lifted = this.untwin({ position: globe.position.clone().multiplyScalar((2 * radius - 1) / radius), quaternion: globe.quaternion, vfov }, time)
+    const up = lifted.position.sub(position)
+    const height = up.length()
+    return { up: height > 0 ? up.multiplyScalar(1 / height) : this.closeUp().up, height: radius > 1 ? height : 0 }
+  }
+
+  private straight(tRel: number): Pose {
     const t = this.p.terrain
     const dur = this.seg.terrain.end - this.seg.terrain.start
     const lin = tRel / dur - 0.5
@@ -788,11 +836,32 @@ export class StopPlan {
     const far = dive ? this.hold(time - this.seg.hold.start) : this.after(time)
     if (x <= 0) return far
     if (x >= 1) return this.twin(this.terrain(time - this.seg.terrain.start), time)
+    return this.eyeGlide(kind, time, x, far, this.eyeCoast(kind, time))
+  }
+
+  // The one move between its far end and a near end given in the close view's frame.
+  private eyeGlide(kind: 'dive' | 'rise', time: number, x: number, far: Pose, low: Pose): Pose {
     const law = this.eyeLaw(kind)
     const share = bellShare(x, law.pace)
     const turn = law.turn === law.pace ? share : bellShare(x, law.turn)
     const seam = this.eyeSeamTime(kind)
-    return this.glide(kind, time, this.sidestep(kind, far, x, seam, time), this.twin(this.eyeCoast(kind, time), time), share, turn, seam, { swing: this.eyeSwing(kind), liftPower: law.liftPower })
+    return this.glide(kind, time, this.sidestep(kind, far, x, seam, time), this.twin(low, time), share, turn, seam, { swing: this.eyeSwing(kind), liftPower: law.liftPower })
+  }
+
+  // The way the one move alone takes the eye from the seam with the surface view: the surface view held at rest in its pose at the seam,
+  // and the eye one film frame on the move's side of it. A unit vector in the close view's frame that points away from the seam. A
+  // surface view that leaves (or enters) along this line, at the speed it has, meets the move without a dent (ruling d196); nothing in
+  // the picture reads it: it is a measure for the stop that shapes its surface view (tools/seam.ts prints it).
+  eyeFirstWay(kind: 'dive' | 'rise'): THREE.Vector3 {
+    const seg = kind === 'dive' ? this.seg.dive : this.seg.rise
+    if (!seg) throw new Error(this.id + ' has no ' + kind)
+    const dive = kind === 'dive'
+    const c = this.eyeSeam(kind)
+    const rest: Pose = { position: c.position, quaternion: c.quaternion, vfov: c.vfov }
+    const time = this.eyeSeamTime(kind) + (dive ? -1 : 1) / config.fps
+    const x = dive ? (time - seg.start) / (seg.end - seg.start) : (seg.end - time) / (seg.end - seg.start)
+    const far = dive ? this.hold(time - this.seg.hold.start) : this.after(time)
+    return this.untwin(this.eyeGlide(kind, time, x, far, rest), time).position.sub(rest.position).normalize()
   }
 
   private coverFractions(seg: Segment): { first: number; center: number; last: number } {
