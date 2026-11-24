@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { config, type Segment } from '../config'
-import type { CoverHorizon, Pose, ViewKind } from '../core/types'
+import type { CoverHorizon, NearBody, Pose, ViewKind } from '../core/types'
 import { handoverOf, oneMoveForced, sideAt, type HandoverParams, type Sidestep, type SkyShares } from './handover'
 import { bellShare, bellStep, checkFlanks, paceLimits, type Flanks } from './pace'
 import { coverFrames, coverWindow, setCoverWindow, setHandover, withoutHandover, type CoverTimings } from './timeline'
@@ -45,9 +45,15 @@ export interface MoveParams {
   coverRush?: { speed: number; reach: number; billow: [number, number, number]; streak: [number, number, number]; contrast: [number, number] }
   spinDegPerSecond: number
   moonDegPerSecond: number
+  // The near bodies the stop names to the motion measure (StopPlan.nearBodies): the centre at the middle of the hold in the frame of the globe and
+  // the radius of the sphere that holds the body, in radii. The body goes round the stop's axis by degPerSecond, by moonDegPerSecond where
+  // that is not given. Not set: the stop names no body and every frame keeps its sample count.
+  near?: NearParams[]
   tint: [number, number, number]
   skyAim?: { orbit?: [number, number, number]; terrain?: [number, number, number] }
 }
+
+export interface NearParams { centre: [number, number, number]; radius: number; degPerSecond?: number }
 
 export interface SegmentTimes { hold: Segment; dive?: Segment; terrain: Segment; rise: Segment; travel?: Segment }
 
@@ -661,6 +667,16 @@ export class StopPlan {
     const h = seg.kind === 'dive' || seg.kind === 'rise' ? handoverOf(this.id, seg.kind) : null
     const center = h ? (h.time * config.fps - seg.firstFrame) / seg.frames : (w.centerFrame - seg.firstFrame) / seg.frames
     return { first: (w.firstFrame - seg.firstFrame) / seg.frames, center, last: (w.lastFrame + 1 - seg.firstFrame) / seg.frames }
+  }
+
+  // The near bodies of the stop at a time, for the motion measure of a frame: the sample count follows the fastest of them that is in the
+  // frame (core/motion nearMotion), so a moon that crosses the picture far faster than the planet behind it is drawn as one clean smear. None
+  // by default. A stop names them in its params (near), or gives this method itself where its body moves by another rule than a turn about
+  // the stop's axis. The answer is a function of the time alone.
+  nearBodies(time: number): NearBody[] {
+    const named = this.p.near
+    if (!named || !named.length) return []
+    return named.map((n) => ({ centre: v3(n.centre).applyAxisAngle(this.axis, THREE.MathUtils.degToRad(n.degPerSecond ?? this.p.moonDegPerSecond) * (time - this.holdMid)), radius: n.radius }))
   }
 
   skyGain(_time: number): number {

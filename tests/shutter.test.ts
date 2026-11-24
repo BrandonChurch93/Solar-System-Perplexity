@@ -20,6 +20,10 @@ numbers.minShutter = 0
 const CAP = kept.maxBlurPx > 0 ? kept.maxBlurPx : 6
 numbers.maxBlurPx = CAP
 const inFile = { ...kept, maxBlurPx: CAP, minShutter: 0 }
+// And without the near bodies a stop may name to the motion measure: they raise the count of a frame past what the cap leaves and have their
+// own tests (tests/near.test.ts).
+const named = plans.map((p) => p.p.near)
+plans.forEach((p) => { delete p.p.near })
 const SIDES: ViewKind[] = ['orbit', 'terrain']
 const moving = config.segments.filter((s) => (s.kind === 'dive' || s.kind === 'rise') && handoverOf(s.stop, s.kind) !== null)
 const hands = (frame: number): boolean => moving.includes(segmentAtFrame(frame))
@@ -36,6 +40,9 @@ const motionOf = (frame: number, from: number, to: number): number => {
 afterAll(() => {
   Object.assign(numbers, kept)
   forceSide(null)
+  plans.forEach((p, i) => {
+    if (named[i] !== undefined) p.p.near = named[i]
+  })
 })
 
 describe('the samples of a shutter that keeps a share of the film\'s shutter', () => {
