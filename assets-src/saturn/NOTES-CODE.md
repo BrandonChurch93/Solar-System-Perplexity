@@ -3815,3 +3815,49 @@ is in the picture at 3 to 12 px, and the same crispness for the far ring across 
   percentile over the judged pixels, so it turns on whether the halo is more than 1 percent of them. At 3817
   the judged share is 0.27 of the frame (0.62 at 3802), so 1 percent is a smaller patch than on the old
   flight: this place may read worse. The judge's whole rise window decides.
+
+### 10:30 to 10:50 UTC: the rise's pictures on the PRE, MAIL 638, a correction
+
+- HANDOVER PATH on 68b4561 (10:33, /tmp/v/r44/handover_path.log): "saturn.dive every frame: pass",
+  "saturn.rise every frame: pass". The handover's picture parts (sides, flow) are not run yet.
+- RISE PICTURES on 68b4561, the judge's whole window 3798 to 3896 + 1/2 (/tmp/v/r44/saturn-rise.md):
+  "VERDICT: red. 1 number over the limit or not measured." "RED pop score 1.59 from frame 3895 + 1/2 to the
+  next, limit 1.2 (11 frames over it, first 3891)": the travel's take off after its rest (ruled in MAIL 624:
+  nothing to do until the carry is on main). Inside the rise the largest pop is 1.17 at 3873 and 3873 + 1/2.
+  "Largest change of the pattern alone: 0.35 from frame 3871 to 8 film frames later, most at pixel 1304, 792
+  ..., limit 0.45." GREEN: the old red of 3807 + 1/2 (0.55) is gone on this flight; the entry of the far ring
+  reads 0.21 at 3818 + 1/2. Largest level step 0.05 at 3896 (limit 1.3). Change in place 30.1 from 3868,
+  shown. Ground beside it: change 11.8, pattern 0.16.
+  - Looked at: rise_a (3798 to 3813), rise_b (3816 to 3840), rise_c (3844 to 3884), rise_d (3885 to 3895 +
+    1/2), 3828 and 3866 at full size, the judge's changes panel. Nothing new: the ring comes out behind the
+    night limb at 3819, the moon rises over the limb at 3836, 3866 is rich; the rest 3885 to 3888 and the
+    take off stand as before. Looks pushed 10:48.
+- MAIL 638 (10:45 UTC). PRE 68b4561 received: proof tree e79f126d1e68587958f48228b26c239c8d6dc141 on
+  builder/proof-sn3 (main 1c3da4b2 with my three folders, 21 files differ inside them, none outside), queued
+  behind about 110 jobs (sn3 01 to 10 engine drafts, 11 finals, 12 handover, 13 measure, 15 gate; ss3 01 dive
+  pictures, 02 rise, 03 path place parity, 04 warm list and counts). "If your NAMED differs from the PRE by
+  notes only, give the tree hashes of src/stops/saturn and public/assets/saturn of both in NAMED and the PRE's
+  results stand for it; nothing runs twice." My 3720_beside_approved.png goes to the critics as it is.
+  The machines on 1e4bfd4 (proof c546f20f): 102 of 115 drafts keep main's bytes, 11 differ inside dive,
+  surface view and rise, 2 outside (3352, 3465); finals 3465 and 3720 differ from the reference finals; G13
+  pass (0 of 495 frames over 0.02 soft), G5 pass, G17 FAIL 0.683; G11, G15 pass, tsc 0, 449 tests; smooth
+  path, place, parity green; dive pictures red (pattern 0.53 at 3561, 16 capture frames over, first 3560);
+  rise pictures red (pop 1.59 at 3895 + 1/2, pattern 0.55 at 3807 + 1/2).
+  "DUE: your third NAMED 20 minutes after the PRE's numbers reach you, and at 13:00 UTC at the latest with
+  whatever is back by then. It goes into Saturn's round as it stands." "No answer needed."
+- CORRECTION MAILED 10:47 (low priority): MAIL 638 read my PRE's "3465: equal to the byte" as against the
+  reference PNG of MAIL 546. It was against my own commit 1e4bfd4. 3465 at final is sha256 f4b3a395 on
+  2ab7243, 1e4bfd4 and 68b4561; the reference is 21f107a6; measured again now: 32.2 percent of the pixels
+  differ, 10.3 percent by more than 1 level, 0.08 percent by more than 4, largest 22, mean 0.325 of 255
+  (0.77 on the dark sky, 0.09 on the lit parts): the hold's sky without the baked grain (mail 448) and the
+  map rigid on the globe (ruling (a)), as named in the first NAMED, item (d). LESSON: say against WHAT a
+  frame is equal, every time.
+- MAIN IS 1c3da4b2 now (not asked to merge; read only): 02249f1 adds the REST LINE to the path part of the
+  smooth report (tools/smooth/path.ts judgeLeave, camera.ts sampleLeave): at the seam from a rise into its
+  travel, reachFrames film frames to each side, the lowest speed of the fastest point of the body's edge
+  (px a film frame, from the path alone) over the smaller of that speed at the two ends of the window;
+  "Judged against smooth.path.minLeave once the config has it; shown until then." kit/PROGRESS.md d211 (11):
+  "A rise and the travel after it are one flight: through the seam the speed falls once and rises once and
+  never comes to rest." The travel's carry is proven, its take is next; then a limit for the rest line.
+  For my rise that is items 2 and 12: it ends near rest at 3884 by its own pace. Nothing to do until the
+  Builder sends the carry's sha (MAIL 624).
