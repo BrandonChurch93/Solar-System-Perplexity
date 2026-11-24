@@ -1,9 +1,33 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T09:47:27.896Z",
+ "pushed": "2026-11-24T10:28:20.556Z",
  "head": "01075e03b1ffce03e1b0c36fb0e16b904c42808f",
- "note": "4860 n2: the storm's arms wind into the eye (was a flat dark ellipse); still wrong: arms too clean, hard dark shadow bits under the streamers; 41.9 s a draft frame",
+ "note": "third commit, final state: 4860 over the approved, storm zoom, rise star sheet. 22 to 23.6 s a draft frame",
  "looks": [
+  {
+   "time": "2026-11-24T10:28:19.963Z",
+   "file": "20261124102819963-note-st-all.jpg",
+   "source": "../../../../tmp/st-all.jpg",
+   "kind": "note",
+   "label": "Rise 4996 to 5024 with the third star law (by the eye's angle, not the clock): stars, ring and moon steady, no way back",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T10:28:19.397Z",
+   "file": "20261124102819397-note-storm-p7.jpg",
+   "source": "../../../../tmp/storm-p7.jpg",
+   "kind": "note",
+   "label": "4860 storm at three times size, mine (top) over the approved (bottom). No ruled rings; eye smaller and more of a pinwheel than the approved; fine comb lines at the right rim",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T10:28:18.701Z",
+   "file": "20261124102818701-note-q-p7.jpg",
+   "source": "../../../../tmp/q-p7.jpg",
+   "kind": "note",
+   "label": "4860 final state of the third commit (top) over the approved image (bottom), preview draft. G17 median 1.286, lower quarter 0.615 at preview; 0.934 and 0.549 at 16 by 9 draft. 22.0 to 23.6 s a draft frame",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T09:47:27.319Z",
    "file": "20261124094727319-note-storm-n2.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/z-m2.jpg",
    "kind": "note",
    "label": "the same at twice the size: the storm and the limb. Known: spokes inside the eye, the band under the limb has no structure and is 20 to 40 levels too bright",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T09:00:04.480Z",
-   "file": "20261124090004480-note-q-m2.jpg",
-   "source": "../../../../tmp/q-m2.jpg",
-   "kind": "note",
-   "label": "4860 draft over the approved image. Third commit in work: the deck's short octaves are lumps and curl, no streaks at every size; no ruled rings; veil thins upward. G17 preview draft median 1.411 p25 1.041. 42 s a draft frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T08:35:44.799Z",
-   "file": "20261124083544799-note-d-held.jpg",
-   "source": "../../../../tmp/d-held.jpg",
-   "kind": "note",
-   "label": "4860 at the final tier, preview, 16 samples: fd95089a (860.8 s) | 0b9017c0 (376.0 s) | difference times 32: mean under 0.0005 levels, worst block 0.013, largest pixel 4, 0.06 percent of the pixels differ",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T08:35:44.253Z",
-   "file": "20261124083544253-note-d-after.jpg",
-   "source": "../../../../tmp/d-after.jpg",
-   "kind": "note",
-   "label": "4860 of 0b9017c0 at preview draft beside the approved image: 22.0 s a draft frame after the first (before 52.7 s), G17 median 1.308 p25 0.821 on the preview file, 1.002 and 0.790 at 16 by 9 draft",
    "stop": "neptune"
   }
  ]
