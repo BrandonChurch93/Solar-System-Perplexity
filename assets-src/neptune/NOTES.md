@@ -3717,3 +3717,387 @@ to 4956, and 4956 against 4957) are in R1 and T1, looked at, in the looks.
   0.069 over 5, fall 0.021 over 8. Limits: step 0.08, fall or climb 0.03. The seam tool at rate 2 as before: dive lowest 1.010
   at 4769 + 1/2, never against the surface view's way; rise lowest 0.942 at 4950, goes against the surface view's way from
   4951 + 1/2 with 3.492. tsc clean.
+
+## 06:16 VM. The NAMED mail to the Builder, as sent (high priority), word for word
+
+NAMED fd95089a27ad1e2a7aa296b36cff561b3de9f77a
+Branch agent/neptune-place, on the merge of main c797cdc8. Notebook assets-src/neptune/NOTES.md (every mail word for word, lab log to 06:12 UTC).
+
+(a) Dive and rise are each one move: the word "neptune" is off handover.ownPath (config/showcase.json, handover_engineer's block, allowed by him 04:14, named in the commit message); his keys in src/stops/neptune/move.json block "one"; change of view at 4758 and 4956. Every frame of the dive (4680 to 4769) and of the rise (4950 to 5024) rendered at the preview draft and looked at: no pop, no jump at the change of view (sheets and the two sides at T on agent/neptune-place-looks, head 612b00e4).
+(b) Nothing comes in by the clock: the place picture is off in both moves (lay 0 with the scene from code); the last thing by the segment's share, the ring's solid near part in the rise, now goes by the eye's height (look.ts ring.solid.height 0.031 to 0.165 radii).
+(c) NOTE 501: the four pixel terms take their factor from bufferFrame(). Proof: 16 by 9 draft hashes equal before and after at 4605, 4700, 4715, 5000, 5006; parity of the tool below.
+(d) 4605 final 16 by 9: e298dab13c199dcc16ce99bcb1615c651eeec238f247dc0d94ad3a50dd2710a8, main's bytes. 4860: not equal and not meant to be: the scene from code stands where the kept still has the place plate (your MAILS 453 and 484). The pair at 16 by 9 draft beside the kept still and the approved image is in the looks (2aac9ee3): mean difference 22.94 of 255, level 70.51 against 66.79. Its final is NOT rendered here (48 min on a machine by np2-01; the minutes go to its faults); it is in the job text.
+(e) Net size of my three folders: 82.52 MB in 202 files against main's 94.35 MB in 200, 11.83 MB less.
+
+SMOOTH, my own lines.
+path: "smooth neptune: green", "VERDICT: green. No number is over its limit." Dive: rate step 0.059 at 4760, turn 0.060 at 4712, speed 0.060 over 8 at 4692. Rise: rate 0.066 at 5023, turn 0.064 at 4957, speed 0.068 over 5 at 5022, fall before the largest 0.018 (rate 2: 0.021 of 0.03).
+eye line (tools/seam.ts --stop neptune --rate 2, limit 0.87): "neptune dive, seam 4770 (the one move): ... lowest 1.010 at 4769 + 1/2 | never against the surface view's way"; "neptune rise, seam 4950 (the one move): ... lowest 0.942 at 4950 | goes against the surface view's way from 4951 + 1/2 with 3.492". Green, but not the 1.080 of your table and of the engineer's line: those read main, which flies my old own path. On the one move the rise leaves across the surface view's way; no key alone lifts it with the path green (scan in the notebook). No bend named, 3aa0a862 not merged, no engine file carried.
+pictures: NOT RUN here (426 draft frames at 16 by 9; at the 75 s a frame of the parity's eight that is about nine hours on this renderer). In its place every frame of both moves looked at, see (a). It is in the job text.
+parity (uhd against 16 by 9, 8 frames): "VERDICT: green. No number is over its limit." "Largest mean difference: 2.477 at frame 4860", "at one 8th of the size ... 1.617 at frame 4860", "Largest level difference of one block ... 5.819 at frame 4748", "of the whole frame: 1.196 at frame 4860". For MAIL 538: 4725 reads coarse 0.879 and block 4.893 on my tree (main 4.994 and 27.740). Run on the tree of 5be84b7f; the head differs from it by the notebook and kit/PROGRESS.md only. Panel in the looks (612b00e4), looked at.
+handover --only path: "neptune.dive every frame: pass", "neptune.rise every frame: pass" (longest blur dive 23.83 px at 4741, rise 45.56 px at 4972).
+take check on the head: G11 PASS, G15 PASS (neptune/web 350 MB, neptune/full 1393 MB); tsc clean; vitest 398 of 398. One breach I cannot mend: the merge 105da414, already under 30df610d in the pushed history, has no trailer.
+
+FRAMES THAT CHANGE OUTSIDE DIVE AND RISE: 4770 to 4949, the surface view, which is the scene from code; its camera is main's to the last digit (poses printed at 4770, 4800, 4860, 4900, 4949). Nothing else: equal bytes with main at 16 by 9 draft at 4529 1e392bb0, 4605 5ae18138, 4679 05b07273, 5025 3dbe6ef2 (four frames measured, the rest by the code).
+
+STILL WRONG, worst first.
+1. 4860 against the approved image, MAIL 484's five faults stand: ridge a few chunky heaps; limb band white, broad and straight (measured: my limb 5 to 9 rows of 540 above the approved, 204 219 231 where the approved is 148 188 221, no blue line over it); storm a clean disc; deck without mottling; second streamer chunky. G17 at 16 by 9 draft: median 1.002, p25 0.789, 75 tiles. Look 6aa625c1 (limb and storm at twice size).
+2. Two forms where the map gives way to the scene by height: dive 4720 to 4734, rise 4986 to 4990. The cure is your B (scene inside the fan from the hold's height down); patch written, not in this commit, since it changes 4605 and you judge that pair first.
+3. The veil from above is a grey slab with a straight edge and a stepped west end (dive from 4719, rise from 4966).
+4. The rise's sky stands without stars about 4976 to 4983 (close sky gone by 4977, the engine's stars from 4984, both by height). Cure would be own light.skyLift heights, on your word.
+5. Rise seam 0.942 with the turn against the surface view's way at 4951 + 1/2 (green by d198). A bend of the surface view's last frames would cure it; I take the engine's bend after it is on main.
+6. Rise blur 45.56 px at 4972 (not mine to cure, MAIL 311). Close scene a little brighter at the larger format (level 1.196 of 255 at 4860, limit 2.2). Small bright flecks on the night side 4987 to 5003 (main's look).
+7. Old code not retired: plan.ts flown, paced and the pose overrides; move.json rampIn, rampOut, arc; closeup.ts laid and lay; the place plates in public. The retreat's look still reads state.u (main's).
+
+JOB TEXT for fd95089a27ad1e2a7aa296b36cff561b3de9f77a: npm run smooth -- --stop neptune (every kind, pictures above all); G17 at 4605 and 4860 at final; finals 4605, 4707, 4860, 5006 at 16 by 9 with sha256 (4605 should be e298dab1).
+Seconds a draft frame here: preview 16 to 60 (rise 20 in the mean); 16 by 9 from 4 (hold) to 190 (4860); uhd 253 in the mean of the parity's eight, 16 by 9 70.5.
+I go on with 1 in MAIL 484's order, then 2.
+
+Also measured for it at 06:15: the surface view's camera (plan.terrain at 4770, 4800, 4860, 4900, 4949; position, quaternion and
+lens printed to full precision by /tmp/pose.ts in the scratch copy of my tree and in the tree with main's code) is the same to
+the last digit. So the higher limb of my 4860 is the scene's (the veil over the deck), not the camera's.
+
+## MAIL 545 from the Builder (/root), 06:18 UTC, high priority, word for word (the two "less than" signs arrived as &lt;)
+
+MAIL 545 from the Builder (/root), 06:18 UTC, to every builder. Main is f6ce51a55b2fe2816cb80df8a68fd2b3584bec94. Merge it by merge (never rebase, never force) before you name a commit.
+ON MAIN NOW, proven together on the render machines (115 drafts: the 80 outside the sky's lift ranges and 450 to 539 are main's bytes; 18 judged finals: 14 the kept stills, 60, 2895, 3150 and 3720 main's own):
+1. The sky's new swap (fb501fc4): the band follows the lift, the stars lead. Frames where 0 < skyStars < 1 changed bytes. At 60 pictures a second Saturn's rise lost its dip in brightness near 3875.
+2. One quintic pull at the start of sun.travel (797d3361): every frame 450 to 539 changed bytes.
+3. The smooth report's eye line (07148aa6) with `smooth.path.minEye` 0.87 in the config. Red on main as it stands: Mars rise 0.351 at 2672, Uranus rise 0.435, Saturn rise 0.536, Venus dive 0.791, Mercury rise 0.821.
+4. The warm list (73b3f046). No stop writes `src/core/warm.json` (d197); I replace your piece at your take.
+5. The bend (3aa0a862), off by default: `MoveParams.terrain.bend = { frames, acrossDeg, turnDeg }`, `plan.closeGround`, `plan.eyeFirstWay`; read `assets-src/shared/HANDOVER-NOTES.md`. After bending, render every frame from 10 before T to 4 after at draft, put the sheet in your looks and say in the NAMED mail what is in them (MAIL 540).
+6. `tools/round.py` with the smooth judging (100143fb): a round's pass bar now needs a green smooth report; each RED line is one severe issue of your stop.
+COMING in the next take, about 06:45 UTC, I mail again when it is on main:
+a. The sample offsets less their own mean (c2aaa84d). Draft pictures do not change. Every review and final picture moves as a whole by 0.09 px to the left and 0.035 px up (MEASURED on 14 judged finals), so from then on no final equals a kept still to the byte. With that mail each stop builder gets its two judged frames as PNG made on the new pattern: compare to those.
+b. The plan check of a move on the judge's own functions (191dded2), tools only. Seen through it, the one move with the film's law at rate 2 is green for sun rise, mercury both, earth dive, mars both, jupiter dive, and red for venus both, earth rise, jupiter rise, saturn both, uranus both, neptune both; handover_engineer searches sets for those and sends one only to a builder that leaves ownPath or asks.
+DEADLINES, unchanged: NAMED and the full sha by 07:00 UTC, or by 08:30 UTC if you need the bend. A commit named late is taken as it stands at the deadline (the newest head that builds and passes the tests).
+OFFER: a render machine makes the full smooth report of any head in about 140 minutes, or one part of it sooner. Mail PRE, the full sha and the parts you want (path, pictures, parity, counts). It does not count against your three named commits.
+No answer needed.
+FOR YOU: NAMED fd95089a is received at 06:15 UTC, your first named commit. I stack your three folders and the ownPath change onto this main myself (the proof tree), so do not merge again for that commit; the machines run your job text next. I answer with the report.
+
+What follows (06:19 VM): fd95089a is my first named commit, received 06:15. I do not merge for it. For the NEXT commit I merge
+main f6ce51a5 first (it carries the sky's swap: the rise's frames where the stars come in change, so fault 4 of my list, the
+sky without stars at 4976 to 4983, must be looked at again on it; and the eye line in the path part, which will print my rise
+at 0.942). Point b: with the film's own law the one move is red for Neptune on both sides; my tree does not fly the film's law
+but the engineer's keys for Neptune (move.json, block "one"), which are green in the path part; when the plan check 191dded2
+is on main I run it on my keys. The rise's turn against the surface view's way is the open point where the bend of point 5
+belongs. No PRE mail now: the machines run my job text. I go on with 4860.
+
+## 06:17 to 06:28 VM. Fault 2 of 4860 (the limb band) measured by the column, T12 to T14; a correction of my NAMED list
+
+Method: `/tmp/prof.py X NAMES` reads the column at x of 960 by 540 (mean over 13 columns) at set rows above and below the row
+where the APPROVED image crosses luma 110 (its limb), for the approved image and my preview drafts. All numbers are R/G/B of 255.
+
+CORRECTION of point 1 in my NAMED mail ("limb 5 to 9 rows above the approved one"): that number came from a row threshold which
+the glow over my limb fooled. By the column the steep rise sits 2 to 4 rows above the approved one in T11 (the named state). The
+real faults were two: the glow over the limb about twice too bright and too red (10 rows over the limb: mine 47/73/115, approved
+17/50/81), and under the limb a white band of 14 rows (195 to 213 / 212 to 225 / 227 to 235) where the approved image has an even
+light blue (150 to 167 / 190 to 199 / 222 to 227) that comes in over about 7 rows through a saturated blue (46/112/160, 84/146/191).
+I tell the Builder in the next mail.
+
+| take | veil height | veil depth | veil light | haze low | haze high | seconds | what it gave |
+|---|---|---|---|---|---|---|---|
+| T11 (named) | 0.030 to 0.045 | 0.08 | 0.226, 0.305, 0.407 | 0.008, colour 0.22, 0.38, 0.7 | 0.003, colour 0.1, 0.25, 0.7 | | white band, glow twice too bright |
+| T12 | 0.006 to 0.018 | 0.045 | 0.15, 0.245, 0.38 | 0.014 | as T11 | 72.6 | limb unmoved; far field too dark and too narrow (far right 105/145/183 against 166/195/221) |
+| T13 | 0.006 to 0.018 | 0.08 | 0.10, 0.195, 0.345 | 0.008, colour 0.1, 0.33, 0.7 | 0.0015, colour 0.03, 0.25, 0.7 | 72.8 | glow right (10 rows over: 25/59/100); band only 8 rows, then 95/149/193: too dark under it |
+| T14 | 0.024 to 0.036 | 0.08 | 0.105, 0.183, 0.345 | as T13 | as T13 | 71.9 | band 158 to 168 / 198 to 207 / 226 to 231 over 14 rows (the approved level), hard upper edge 3 rows too high, far field under it 94 to 120 / 142 to 165 / 189 to 205 against 147 to 193 / 187 to 209 / 221 to 227 |
+
+What the numbers say. (a) The glow of T14 fits the approved one when rows are counted from each picture's OWN pale edge: linear
+blue 0.231, 0.133, 0.063, 0.031 at 3, 7, 13, 21 rows over the edge against 0.244, 0.134, 0.065, 0.028 of the approved image
+(which is the sum of two falls, 0.20 with 3 rows and 0.23 with 10 rows). So the air is right now and stays. (b) The veil is one
+even sheet: a depth that makes the far deck pale (0.08 and more) makes its top a hard edge at the limb, because the path along
+the limb through an even sheet is long at once. The approved edge comes in over about 7 rows. Cure in my own shader: the sheet
+thins upward by a power (`fan.veil.fall`, weight per layer, the sum keeps the whole depth), so the far deck keeps its depth and
+the limb has no edge. One row of 540 at the horizon (9.2 units) is 0.009 units of height.
+
+## MAIL 546 from the Builder (/root), 06:37 UTC, high priority, word for word
+
+MAIL 546 from the Builder (/root), 06:37 UTC, to every builder. Main is b0b87889e1af276ed3b9543373ac1346744925dc. Merge it by merge (never rebase, never force) before you name a commit. A commit named on the main of MAIL 545 is still taken, I stack it, but its final hashes will not be the ones the machines get.
+ON MAIN NOW, on top of MAIL 545:
+1. The centred sample pattern (c2aaa84d): the sample offsets of the review and final tiers less their own mean. Draft pictures are unchanged to the byte (115 of 115, MEASURED). Review and final pictures move as a whole by 0.09 px to the left and 0.035 px up and nothing else (MEASURED on 18 judged finals; against main's own PNG the mean difference is 0.43 to 0.90 of 255 and the mean brightness is equal). So no final equals a kept still to the byte any more, and "the kept bytes" is no longer a test of a judged frame. The kept stills are taken again at each stop's round.
+2. The plan check of a move now lives in tools/lib/pace.ts, on the judge's own functions (191dded2). src/director/pace.ts keeps the bell and the limits only. tools/law.ts and tools/seam.ts read the new file. If a test or a tool of yours imports the plan check from src/director/pace.ts, change the import (grep for director/pace) or tsc fails after the merge.
+The two pieces together run on the machines now as one more check (drafts against main's 115, finals against the 18 new ones); I mail at once if it finds a difference.
+Deadlines unchanged: NAMED and the full sha by 07:00 UTC, or by 08:30 UTC with the bend. No answer needed.
+FOR YOU: attached are your two judged frames as PNG (hold 4605 and surface view 4860, 16 by 9, final tier), made on the machines on main's engine with the new pattern and nothing of your stop changed. Where your stop leaves a judged frame alone, your final must give these bytes: 4605 sha256 6f5065ab3d32afcc4931d14b02f1ae211f48ea7d5ea0c8309eeb598e41dfaef0, 4860 sha256 5f456aac1c7f1ca27d4b8fe704d9c0b510164089015480c5e52ce9170823cd95. Your named fd95089a runs on the machines on the main before this one, where 4605 is e298dab1 as you say; a second commit is read against these. Where you change a judged frame on purpose, say so in the NAMED mail as before.
+
+(Two attachments, copied to `out/work/nep/judged/`: f04605-16x9-final-full.png and f04860-16x9-final-full.png.)
+
+What follows (06:38 VM): the next named commit merges main b0b87889 first. 4605 I leave alone, so its final must give 6f5065ab
+(until B changes the hold on purpose, which goes to the Builder's eye first). 4860 I change on purpose (the faults of MAIL 484),
+so its final will not give 5f456aac and the NAMED mail says so. I grep my folders for director/pace before the merge.
+
+## 06:28 to 06:40 VM. The veil thins upward (T15 to T17); a fault found in it: the deck's relief cut its lowest layer
+
+| take | veil | haze | seconds | what it gave (column at x 760 of 960, rows from the approved limb) |
+|---|---|---|---|---|
+| T15 | height 0 to 0.04, 5 layers, a weight per layer (power 3), depth 0.12, light 0.115, 0.185, 0.335 | as T13 | 70.7 | ramp softer (3 rows before the limb 89/140/184), but hard ribbons and a dark gap 10 to 24 rows under the limb (67 to 89 red) |
+| T16 | the same with the density read at two points of each part (no weight per layer), contrast 1.5, share 0.6, light 0.094, 0.159, 0.313 | as T13 | 71.5 | the gap stays (83 to 103 red), the thin lines stay |
+| T17 | depth 0.25 | as T13 | 72.1 | far right 147/184/218 against 166/195/221, far mid 128/168/206 against 117/157/194; thin dark lines with steps stay |
+
+Looked at (the limb at three times, `/tmp/limb-T15.jpg` to T17): thin dark lines parallel to the limb, each a staircase at one
+sample a pixel. The column at x 700 of T17 shows plateaus of 3 to 5 rows with jumps between them (179 to 136, 106 to 154,
+150 to 101 red), T14 has none. CAUSE (read in the code, not yet proven by a picture): since T15 the sheet starts at height 0;
+`veilDepth` took a layer's whole part or nothing by "ta before the end of the ray", and the ray ends on the deck's RELIEF,
+which stands over the lowest layer's middle in places, so the layer that holds half the depth (power 3) fell out along the
+deck's streaks. CURE (T18): each part is cut at the end of the ray (down: from the top of the layer to its underside or to the
+deck; up: from the underside on) and the density is read at two points of the cut part.
+
+Looks pushed 06:38 (f1bf00e7): T17 beside the approved image and its limb at three times, the fault named in the label.
+G17 of T17 (preview draft): median 1.359, p25 0.846, 74 tiles.
+
+## 06:40 to 06:46 VM. T18 and T19: the cause is proven; the veil is read as far as the smooth deck
+
+T18 (each part cut at the end of the ray, depth 0.18; 71.8 s): the stepped lines are GONE (limb at three times,
+`/tmp/limb-T18.jpg`; column at x 700 without plateaus), so the cause named above is proven by the picture. What stayed: one
+step of 173 to 138 red at the row where the deck begins, and the dark gap 10 to 24 rows under the limb (102 to 113 red).
+Why: `deck.relief` is 0.05, the rolls of the deck stand as high as the whole sheet (0 to 0.04), so near the horizon a ray ends
+on a roll before it has crossed the dense underside, and a sheet that is thick at its underside is hidden in the rolls.
+
+T19 (71.8 s): the sheet is read as far as the SMOOTH deck where a ray ends on a roll (haze among the rolls as much as over
+them; `veilDepth` takes "through" in place of the ray's end), height 0 to 0.07, depth 0.18. Far right 155/191/222 against
+166/195/221, far mid 131/170/207 against 117/157/194, no step, no gap, no line. Looked at (`/tmp/q-T19.jpg`): the far deck is
+now an even pale field WITHOUT the white streaks of the approved image, and the limb's edge stands 6 rows above the
+approved one (the top of a sheet 0.07 high). So: lower top (0.05), less depth (0.12) and the bands of the sheet stronger
+(contrast 2.2, share 0.85), T20.
+
+## 06:46 to 06:50 VM. T20 (the limb band stands), then fault 1, the ridge: T21
+
+T20 (height 0 to 0.05, depth 0.12, contrast 2.2, share 0.85; 71.3 s): far right 130/171/210 (approved 166/195/221), far mid
+111/152/195 (117/157/194). Column at x 760: 3 rows over the approved limb 111/160/201, then 163 to 175 red for 8 rows, then
+159, 147, 130, 133, 122 at 10, 16, 24, 32, 40 rows under it (approved 160, 147, 167, 174, 193). Looked at: a bright line, a
+narrow pale band, soft streaks under it that fade into the blue deck. The glow over the limb reads 26/60/103 at 10 rows
+(approved 17/50/81) and fits the approved fall counted from its own edge. Depth set to 0.15 (between T19 and T20). STILL
+WRONG at the limb: the white streaks of the approved far field are stronger than mine; the edge stands about 3 rows above
+the approved one (the rolls of the deck are 0.05 high and the eye sees their crests as the limb).
+
+The ridge (MAIL 484 fault 1: lower the density, break the outline, widen the fringe, then the shadow). T21 (preview draft,
+79.1 s): first streamer halfWidth 0.05 to 0.075, thick 0.14 to 0.11; soft 0.3 to 0.42 (density is the square: about half);
+erode 1.3 to 1.45; gain 0.72 to 0.76; leeThin 0.3 to 0.4; NEW key cirrus.leeSun 1.8 (the trail toward the Sun, which was as
+narrow as the crest, so fibres stood on one side only). Looked at (`/tmp/q-T21.jpg`): the ridge is a chain of small torn
+heaps with fibres on both sides now, about 1.5 times as broad; too much of it is loose flecks at the left; one smooth heap
+is left right of the middle (there the body is narrower than the longest wavelength of the tearing noise: wide 1.8 to 0.2
+makes the near end a fifth); the shadow is nearly gone with the density (box 22/37/63 against 6/23/43).
+T22 (16 by 9 draft, the fine wavelengths are in it): wide 1.6 to 0.6, thick 0.09, erode 1.38, soft 0.38, NEW key cirrus.cast
+1.8 (the shadow's depth against the cloud's own: the fibres finer than castWave are not in the shadow's taps).
+
+## MAIL 560 from the Builder (/root), 06:57 UTC, high priority, word for word
+
+MAIL 560 from the Builder (/root), 06:57 UTC. Check ne1 of your named fd95089a: 104 of 115 drafts back, every one outside Neptune equal to main's; G11 and G15 pass, tsc 0, tests green; the dive final 4707 and the rise final 5006 are back as PNG (shown in status 218); the judged final 4860 has been drawing for over 26 minutes on its machine and is not back, nor are the handover report, the measure and the smooth report. handover_engineer measured your commit on its tree: path part green, plan check dive 0.761 and 0.42 of the limits, rise 0.865 and 0.70, eye rise 0.942 at 4950. It also has sets with wider margins, to go under handover.dive and handover.rise of your params. Dive (0.732, 0.63, eye 1.00): {"pace":{"rise":0.5,"fall":0.5,"corner":0.25,"corners":{"fall":[0.05,0.3],"rise":[0.05,0.35]}},"turn":{"rise":0.425,"fall":0.575,"corner":0.15,"corners":{"rise":[0.05,0.2],"fall":[0.25,0.2]}},"liftPower":0.625}. Rise (0.818, 0.69, eye 0.96): {"pace":{"rise":0.525,"fall":0.425,"corner":0.05,"corners":{"fall":[0.05,0.15],"rise":[0.05,0.2]}},"turn":{"rise":0.4,"fall":0.6,"corner":0.1,"corners":{"fall":[0.1,0.6],"rise":[0.05,0.05]}},"liftPower":0.25}. A set holds for the surface view and the hold it was found on (handover_engineer's head 4ef11016 on main 77845940, your stop forced onto the one move). If you changed either, read the move again in 2 seconds: npx tsx tools/law.ts --stop ID --kind KIND --tries 0 --rounds 0 --rate 2, and npm run smooth -- --stop ID --only path for the eye line. Take it only if it is better than what you fly now; it does not move your deadline. One question, answer in one line: how many minutes does 4860 take at the final tier on your machine, and what makes it slow (samples, steps of the deck, the storm)?
+
+## 06:53 to 07:09 VM. T22 and T23 looked at; MAIL 560's question measured and answered; looks pushed
+
+- T22 (16 by 9 draft of 4860, 224.5 s): the ridge is a chain of torn pieces with fibres on both sides, about 1.5 times as broad as
+  in the named state. Wrong: the chain is broken into loose curls with dark gaps between them (the approved band has one body
+  through its whole length, heaps on a spine, fibres at both sides); too many small loose flecks at the upper left; one smooth
+  heap right of the middle; the shadow under it weak.
+- T23 = T22 with erode 1.38 to 1.25, soft 0.38 to 0.3, sigma 60 to 34, gain 0.76 to 0.8, cast 1.8 to 3.0, lumpShare 0.3 to 0.2
+  (16 by 9 draft, 236.0 s; config kept as `out/work/nep/deep/deep-T23.json`). Looked at (`/tmp/q-T23.jpg`, `/tmp/ridge-T23.jpg`):
+  the shadow is there now, dark patches on the deck at the lower right of the ridge. The body is a little more whole than T22
+  but still reads as curls of smoke, not as a band of heaps: against the approved it is too thin (about 100 rows of 490 at the
+  upper left against 130), too broken, and its fibres are sharp curls where the approved has fine straight combed fibres.
+  Own G17 at draft: median 0.964, p25 0.615, 75 tiles (named state 1.002 and 0.789).
+  Also seen in the pair: the second streamer is a short white blob with a dark detached piece under it (its shadow as a hard
+  shape); the storm is a disc of rings with an edge; the near deck is streaks, not mottled. Faults 3, 4, 5 untouched so far.
+- MAIL 560's question. The sample count, read with `out/work/nep/plan/plan.ts` (tools/lib/samples.ts planOf): 4860 final 16
+  samples (raw motion 0.841 px, terrain is no fast kind); 4605 final 16 (0.403 px); 4707 final 64 (raw 36.48 px, shutter 0.5,
+  seen 18.24); 5006 final 64 (raw 53.74 px, shutter 0.5, seen 26.87); review: 4, 31, 4, 45.
+- The cost of one sample, part by part (`out/work/nep/deep/cost.sh`, preview draft, tree T23, two frames a process, the second
+  has no compile in it; first frame, second frame):
+  K0 whole: 78.0 s, 59.9 s.
+  K1 steps.cirrus 420 to 1 (no march through the cirrus): 33.0 s, 13.6 s.
+  K2 also steps.cast 48 to 1 (no shadow taps from the deck through the cirrus): 25.2 s, 5.6 s.
+  K3 K2 and deck octaves 12 to 3: 24.3 s, 4.4 s.
+  K4 K2 and steps.deck 200 to 50: 24.4 s, 5.2 s.
+  So of the 59.9 s: the cirrus march 46.3 s (77 percent), its shadow on the deck 8.0 s (13 percent), the rest 5.6 s (deck,
+  storm, veil, sky), of which the deck's octaves are 1.2 s and its steps 0.4 s. The compile is 18 to 20 s a process.
+  The 16 by 9 draft of T23 (236 s the first frame) is 3.6 times the preview's second frame.
+- The answer as sent to /root (high, 07:08 UTC), word for word:
+
+ANSWER to MAIL 560 from neptune_builder, 07:08 UTC. 4860 at final on my machine: about 25 min, COMPUTED, not rendered at final here: 16 samples (the base count; terrain is no fast kind and the picture moves 0.84 px a frame, read with tools/lib/samples.ts) times 80 to 100 s a sample (the 16 by 9 draft of the named state on this VM, 4 cores, software GL); your np2-01 ran the two judged finals about 1.4 times slower than this VM, so I expect 35 to 40 min there. What makes it slow is one sample, not the count, and in it the cirrus, not the deck or the storm: measured just now at preview draft on my work tree with parts switched off (second frame of a process, no compile in it): whole 59.9 s; without the march through the cirrus 13.6 s; also without the 48 shadow taps from the deck up through the cirrus 5.6 s; also deck octaves 12 to 3: 4.4 s; deck steps 200 to 50: 5.2 s. So the cirrus march is 77 percent, its shadow on the deck 13 percent, deck with storm, veil and sky under 10 percent. For your planning: my uncommitted work tree (wider trail of the ridge) takes 236 s for the 16 by 9 draft of 4860 against 100 s at fd95089a; I bring that back toward the named commit's cost before I name a second commit and say its seconds in that mail. The two handover sets: read, I try them on my tree with law.ts and the path part and take them only where they are better.
+
+  Weak points of that answer, for the record: the 1.4 comes from one job (np2-01, 48 min for the two judged finals of
+  9087f008, against 16 times (102.7 + 22.8) s = 33 min computed here), and the job may have held more than the two finals.
+  PROMISED in it: the second commit's cost near the named one's, with its seconds; the two handover sets tried.
+- Looks pushed 07:08, agent/neptune-place-looks 0050826f (T23 pair and the ridge crop, own G17, the fault named).
+
+## 07:09 to 07:17 VM. The cost of the cirrus: where it goes, and a first cut that changes no pixel
+
+- K5 (T23 with steps.light 9 to 1): 69.5 s, 49.6 s (K0: 78.0, 59.9). So the nine taps toward the Sun are about 11.6 s of the
+  59.9 (19 percent); the march itself (the bound, the bend, the body and the tearing noise at each step inside a streamer's
+  room) is about 35 s (58 percent). The cost is the count of steps inside the rooms, not the light.
+- What made T22 and T23 cost 2.4 times the named state (diff of deep-T11.json and deep-T23.json): the ridge's near end 4.5
+  times as wide (wide 1.8, 0.2 of 0.05 against 1.6, 0.6 of 0.075), leeSun 1.8 on every streamer (the room toward the Sun 4.3
+  widths against 2.5), sigma 60 to 34 (a ray goes farther through cloud before it is spent).
+- CUT 1, in the shader (`cirrusFar`, with `fanIn`, the fan's signed distance that `fanOf` now reads): a streamer of the globe's
+  own map (where: map, streamers 4 and 5) has no density inside the fan, but its room was marched there step by step (bend
+  and body at each step, to find nothing). Its room now ends at the fan's border (less the bend's reach, the same 0.75 of
+  `bent` the room's own sides use). K6 = T23 with it: 70.9 s, 50.7 s (K0: 78.0, 59.9), and 0 of 518,400 pixels differ from K0
+  at 4860 and at 4861. 15 percent off the frame, no pixel moved. tsc clean.
+- Not done, with the reason: leaving a step early inside the room by the octaves' largest possible rest (the gain of 0.8 an
+  octave leaves too much rest to prove anything before the last octaves); longer steps in thin cloud (the finest wavelength
+  the cirrus keeps is one step long, so longer steps are coarser fibres). Left for later: the bend in three parts with the
+  room tested after each (my estimate 8 percent, not measured).
+- Mask measure of the ridge (`/tmp/ridgestat.py`, kept as `out/work/nep/deep/ridgestat.py`): region x 0 to 0.62, y 0.28 to
+  0.78 of the frame at 960 by 540, cloud = saturation under 0.38 and luma over 60. Approved: cloud 23.07 percent (bright over
+  170: 7.54, mid 10.18, dim 5.35), cloud rows a column mean 62.3, by sixth of the width 17.5, 31.9, 29.2, 16.6, 19.2, 24.1.
+  T11 (the named state): 20.22 (8.18, 9.89, 2.15), 54.6, by sixth 22.0, 24.1, 21.4, 18.5, 16.5, 18.9.
+  T23: 19.70 (6.52, 10.33, 2.85), 53.2, by sixth 20.6, 24.9, 19.6, 19.0, 19.9, 14.1.
+  Read with the masks side by side (`/tmp/mask.jpg`): the approved band keeps its breadth along its whole length and has one
+  white core with a grey halo and dim fibres on both sides; mine tapers toward the near end, its white is in strands with
+  holes, and it has half the dim fibres. So: the near end wider, the core whole, more thin trail.
+- T24 (preview, running): ridge wide 1.6, 0.6 to 1.5, 1.0; core 0.1 to 0.3; erode 1.25 to 1.1; leeSun 1.8 to 1.4; leeThin 0.4
+  to 0.5. Storm (fault 3): wall 0.3, 1.0 to 0.2, 1.25; depth 0.045 to 0.03; ragged 0.5 to 0.8; dark 0.5 to 0.7; rings 0.25 to
+  0.12; collar 1.0, 1.9, 0.32, 0.25 to 1.0, 2.2, 0.26, 0.7; arms pitch 6 to 4, light 0.12 to 0.2. Deck (fault 4): contrast
+  1.2 to 0.9; wisp light 0.3 to 0.18 and far 0.5 to 1.6 (the far field keeps its streaks, the middle field loses half).
+
+## 07:17 to 07:29 VM. T24 to T26 at preview draft (69 to 74 s a frame): the ridge whole, the storm and the deck by numbers
+
+- Tools kept in `out/work/nep/deep/`: `ridgestat.py` (cloud mask of the ridge's region), `boxes.py` (mean colour, soft and fine
+  spread in boxes), `storm.py` (green along the row y 0.455 to 0.485 and the column x 0.52 to 0.56 through the eye, and mean
+  colours of eight boxes), all against the approved image at 960 by 540.
+- T24 (settings in the entry above). Ridge: one body of heaps now, fibres on both sides, a dark shadow at its lower right.
+  Cloud 25.42 percent (bright 10.36, mid 10.74, dim 4.32; approved 23.07: 7.54, 10.18, 5.35), by sixth 23.5, 30.6, 28.7, 25.8,
+  27.7, 16.2 (approved 17.5, 31.9, 29.2, 16.6, 19.2, 24.1): too much white, the near sixth too thin. Storm: a soft dark stain,
+  the disc's edge gone, but its surroundings far too dark.
+- T25 = T24 with the ridge's line longer (u to 3.0, v to -0.187, bow -0.244: the same curve as before over the old length)
+  and wide 1.3, 0.8; the second streamer from u -2.0, halfWidth 0.025, lumpShare 0.3; cast 3.0 to 2.2; deck gain 0.6 to 0.5.
+  Ridge cloud 23.22 percent (9.15, 10.36, 3.71), by sixth 21.8, 27.3, 24.9, 23.6, 24.6, 17.2. The second streamer came out as
+  a long snake that starts 100 px too far left (the bend of 0.05 is twice its half width).
+  MEASURED, and it shows T24 and T25 went the wrong way on the storm and the deck (green of 255; approved, T23, T25):
+  eye centre 28, 23, 21; eye left (x 0.44 to 0.48) 61, 22, 21; right of storm 101, 83, 43; right mid 122, 87, 70; above storm
+  132, 126, 114; left of storm 76, 86, 48; below storm 79, 93, 52.
+  Row through the eye, approved: 56 57 67 85 102 82 55 30 25 26 31 60 86 121 149 153 140 134 180 205; T23: 105 83 77 88 56 23
+  22 23 23 23 23 22 25 51 79 95 92 92 113 139. So the approved eye is dark (under 40) over 0.085 of the frame's width and
+  0.05 of its height; mine over 0.175 and 0.10: the eye was twice too large. Right of it the approved is 121 to 153, mine 51
+  to 95.
+- T26 = T25 with: storm eye 0.42 to 0.25, wall back to 0.3, 1.0, ragged 0.5, dark 0.55, rings 0.15, collar 0.6, 1.3, 0.4, 0.5,
+  arms pitch 6, light 0.15; deck contrast 1.0, level 0.56, gain 0.55, near 0.1 to 0.8 (WRONG, see below), west -2.6, -0.2,
+  0.2, wisp light 0.22; second streamer line -1.5, 1.3, 1.61, 1.475 and a NEW KEY `bend` on every streamer (the share of the
+  bend of the line it takes; the shader's `cirrusBody` reads each streamer at its own mix of the straight and the bent place;
+  0.35 for the second, 1 for the others).
+  Row: 71 65 71 104 106 68 32 29 24 24 26 40 79 114 108 111 96 89 130 158: the eye has the approved size and the left side
+  fits. Column, approved: 144 129 131 130 130 132 72 37 26 26 52 97 102 84 66 64 65 87 141 171; T26: 123 86 59 65 94 101 68 29
+  25 26 38 109 105 116 106 92 63 55 111 132. Wrong: a pale disc of rings round the eye with an outer edge (the collar ending
+  at 1.3), a dark ring beyond it above the storm (83 against 132), too pale below (107 against 79), and right mid 59 against
+  122: the near drop reaching v 0.8 darkens the deck between the ridge and the storm, which the approved has pale. The near
+  drop belongs below the ridge only (v under 0.1), as it was.
+  Second streamer: a straight thin white line with a thin dark line under it. Too even; the approved one is ragged.
+  Ridge 23.76 percent (8.35, 9.47, 5.94), by sixth 21.9, 28.4, 26.2, 25.1, 25.1, 16.0.
+- T27 (running): collar 1.0, 1.9, 0.36, 0.5; level 0.5; near back to -0.9, 0.1; west -3.2, -0.6, 0.15; second streamer
+  halfWidth 0.03, lumpShare 0.45, bend 0.5.
+
+## MAIL 572 from the Builder (/root), 07:29 UTC, word for word
+
+MAIL 572 from the Builder (/root), 07:29 UTC, to every stop builder and engine agent. MAIN IS NOW 8b2c538f62b5f63f910d1c62cd96fbf78f06560c. It holds take C (be1de182): handover_engineer's Relief.presence (src/terrain/relief.ts, tests/relief.test.ts, tests/relief-gl.test.ts) and sky_builder's pixel factor swap (src/space/sky.ts), plus travel_builder's and globe_engineer's notes. MEASURED on the render machines as check eq1: 115 of 115 drafts equal the reference and 18 of 18 judged finals equal work/p6/ref-finals-sj1.txt, so no picture of yours moves with it. Take check here: build, 437 of 437 tests in 47 files, tsc, G11, cues, shots, all clean. Take B is now proven whole as well (tb1: 115 of 115 drafts, 18 of 18 finals).
+Coming within about 20 minutes as take D: handover_engineer's 0869e6c1, tools and tests only (tools/law.ts, tools/lib/pace.ts, tools/seam.ts, tools/lib/seam.ts, tests/pace.test.ts, tests/seam.test.ts). It changes no file the film is built from. One thing you will see: the seam tool names a step by the frame it ends on, as the smooth report does.
+Stop builders: your named commit is due 08:30 UTC (mail starting NAMED and the full sha, pushed to your branch). A commit on an older main is taken as long as it touches only your three folders; say which main it stands on. Do not wait for a report that is still out. Fetch main with --depth 1 only. If your disk is short, handover_engineer has a script that removes packs whose objects all stand elsewhere (4.2 GB freed there, no object lost); ask it for /tmp/slim.py.
+
+Read as: my second named commit is due 08:30 UTC. Plan: picture frozen by 07:50, then merge, checks, sheets, mail by 08:25.
+
+## MAIL 573 from the Builder (/root), 07:30 UTC, word for word
+
+MAIL 573 from the Builder (/root), 07:30 UTC. FIRST RESULTS OF YOUR NAMED COMMIT fd95089a ON THE MACHINES (proof tree 0cc88b08 on builder/proof-ne1), and one fault that cannot wait for the rest: ITS COST.
+MEASURED, take check so far: 115 of 115 drafts back; 104 equal main's; 10 differ inside your dive and rise (4707, 4726, 4730, 4745, 4756, 4970, 4974, 4981, 4985, 5006); 4860 differs, which is your own surface view with the picture retired, so it counts as yours; none differ outside your piece. Final 4605 equals the reference to the byte. Final 4860 is attached beside the approved image (approved left, yours right).
+MEASURED, cost on 4 core machines: final 4860 took 3078.7 s at 16 samples (4605 took 76.7 s). The rise's pictures run at 3 minutes 17 s a draft frame at rate 2 (render_14, steady, 100 percent CPU, no wait on disk). The G13 measure fell to about one frame a minute after frame 210 and has several hours left. At this cost the smooth report of one move takes about half a day and the record round cannot render your 870 frames in any sane time. Time is not a limit on the look, but a commit whose report cannot come back is not provable, so I count the cost as a red result of this commit NOW: your second commit is due within 90 minutes of this mail, by 09:00 UTC (mail starting NAMED and the full sha, based on main 8b2c538f62b5f63f910d1c62cd96fbf78f06560c).
+WHAT THE SECOND COMMIT MUST DO: cut the cost of the surface view and of the moves by at least 5 times at both tiers WITH THE PICTURE HELD. Not a cheaper look: the same scene made with less waste. You said the cirrus march is 77 percent of a sample; the places to win without changing what is seen are the march's bounds (enter and leave the cirrus shell by geometry, not by stepping through empty air), an early stop when the ray is opaque, skipping empty cells from a coarse density read once, and step counts that follow the pixel footprint. Prove the picture is held: your own 4860 at the final tier before and after, mean difference and largest block difference in your mail, and the seconds a frame at draft and final on your VM before and after.
+MY LOOK AT 4860 (not a critic's, they judge it in your round): the storm reads as a dark hole with hard ruled rings rather than a deep eye in cloud; the bands read as streaks of motion blur with no cloud structure between them; the bright band under the limb is flat white. The cirrus has body and is the best part. The approved image has soft, layered cloud with small structure everywhere and a storm that is dark but textured. Bring whatever of that you can into the second commit without leaving the cost aim.
+The rest of ne1 (handover report, measure, warm list, the smooth parts ns1) keeps running on the first commit and I forward what comes back.
+(attached: neptune-4860-pair.jpg, the approved image left, the final 4860 of fd95089a right)
+
+## 07:31 to 07:45 VM. The cost: what the march pays for, and the plan
+
+- The second commit is due 09:00 UTC on main 8b2c538f. Aim: the surface view and the moves 5 times cheaper at both tiers, the
+  picture held, proved on 4860 at the final tier before and after.
+- T27 (collar 1.0, 1.9, 0.36, 0.5; level 0.5; near back to 0.1; west -3.2, -0.6, 0.15) at preview draft, 69.8 s: row through the
+  eye 103 84 82 110 108 69 33 30 25 25 27 39 74 109 104 108 104 110 146 167; boxes (green): eye left 41 (approved 61), right of
+  storm 115 (101), right mid 103 (122), above storm 117 (132), left of storm 86 (76), below storm 114 (79). The collar's edge is
+  gone; the rings stay ruled (they are streaks 12 times as long as broad, 5 degrees off the circle: deck.spiral across 2.2, along
+  0.4, pitch 6). Ridge cloud 22.55 percent (9.91, 10.23, 2.42). Own G17 on the preview file: median 1.304, p25 0.775. Looks
+  pushed 07:28 (1c511c8f). T24 to T27 change the cirrus rooms (halfWidth 0.075, wide 1.3 and 0.8, leeSun 1.4) and cost 2.4
+  times the named commit at 16 by 9; the Builder calls the named commit's cirrus the best part. So the cirrus of the named
+  commit STAYS, and the saved trees T24 to T27 are in `out/work/nep/deep/deep-T2x.json` and `out/work/nep/cost/deep.T27.ts`.
+- BEFORE, the named commit's shader and json, preview draft, one process (the first frame has the compile in it): 4860 72.0 s,
+  4861 52.7 s, 4745 (dive) 29.6 s, 4985 (rise) 14.1 s. Its 4860 at the final tier, preview, runs from 07:42 (16 samples).
+- What a step pays: the march goes in steps of 0.2 percent of the distance (420 at most) through every streamer's room. The room
+  is the body widened by the largest bend (0.75 of 0.166 across, 0.42 of it in height), so most steps in it lie outside every
+  body, and each pays the room test twice, the bend (9 noise reads), the body, and inside a body the tearing noise (2 reads an
+  octave) before it knows that it is empty. By the cost split of 07:08 only about 4 steps in 100 find cloud.
+- What I build (file `out/work/nep/cost/deep.A.ts`, the named shader plus these, nothing else):
+  1. the march reads the room once a step (the density no longer tests it again): the same answer;
+  2. the body gives the distance of the bent place from the nearest body (away), and the march goes on by a share of it
+     (steps.cirrusSkip) before it reads again, on the same fixed distances from the eye: the same answer wherever the bend does
+     not fold a body into the way that was passed; measured below;
+  3. the tearing noise stops reading octaves when those still to come cannot lift it to what a heap or a fibre needs at that
+     place (need, from the body and the crest): the same answer to the bit, since the density is 0 either way;
+  4. the taps toward the Sun and the taps of the shadow on the deck pass the empty air between rooms by the room's bound instead
+     of testing every tap: the same answer;
+  5. the taps toward the Sun stop past an optical depth of steps.lightDeep (14: the light left is under 0.0005 of the Sun's).
+
+## MAIL 575 from the Builder (/root), 07:45 UTC, word for word
+
+MAIL 575 from the Builder (/root), 07:45 UTC. Main is aaea819b3ec05f04742fdb6f55ccb032327aed47: take D, handover_engineer's tools of 0869e6c1 (tools/law.ts, tools/lib/pace.ts, tools/seam.ts, tools/lib/seam.ts, their tests, the handover notes). Nothing under src, config, public or package.json changed, so no hash moves and no picture changes; no merge is needed for a named commit, a proof tree takes a stop's three folders onto main as before. The deadlines of MAIL 572 stand (named commits by 08:30 UTC; Venus by 08:56, Neptune by 09:00, the far Sun by 08:15). Mars is named (b9c472dc); its proof tree is b83618ec9dae61747a935935623e546640ec6991 on builder/proof-ms1 and its checks are out. No answer is needed.
+
+## 07:54 UTC: cost round, the log
+
+- Looks pushed 07:53 (710f66bd): the named commit's 4860 at preview draft beside the approved image, the before of this round
+  (G17 median 1.308, p25 0.821 on the preview file).
+- Point 6 of the build, a measured one and off unless it pays: where the noise ate a body, the march passes one more step for
+  every steps.cirrusNear[0] the noise is short of what a heap or a fibre needs, steps.cirrusNear[1] at most.
+- Tools of the round: `out/work/nep/cost/run.sh NAME CODE JSON FRAMES [TIER] [FORMAT]` and `out/work/nep/cost/diff.py A B`
+  (mean, p99, max, level, coarse at one eighth, the worst block of a 16 by 9 grid, the share of pixels that differ at all).
+- BEFORE at the final tier (the named commit's shader and json, 4860, preview, 16 samples): 860.8 s. File
+  `out/work/nep/cost/b-final/f4860.png`.
+- a1 (`deep.A.ts`, points 1 to 5, cirrusSkip 0.3), preview draft: 4860 59.9 s, 4861 39.9 s, 4745 24.1 s, 4985 10.0 s. Every
+  frame equals the before to the bit (0 differing pixels). So the skip of 0.3 passes no cloud, and the cut is 1.32 times only.
+- Where a1's 39.9 s go (one frame alone costs 20 s of compile more): march off 10.6 s (deck 4.8, shadow taps 5.8), light taps
+  8.1 s, the march without them 21.2 s.
+- b1 (`deep.B.ts`: the place inside a room but outside the body's bell also gives its distance from the bell; the shadow taps and
+  the light taps pass empty room by the same bound; cirrusSkip 0.6): 4861 29.6 s, 4745 17.6 s, 4985 8.7 s. Against the before:
+  4860 and 4861 differ in 0.05 percent of the pixels by 8 levels at most; 4745 in 0.03 percent, one place by 48; 4985 not at all.
+- A thought about the machine. The renderer is a software one that runs four pixels at a time under masks. If it runs the body
+  of a loop once before it tests it (I believe it does), then `continue` and a loop of no turns save nothing by themselves: every
+  loop nested in the march is paid once a step even where the step is passed. So the cost is the count of the outer loop's turns
+  times what stands in its body. That changes what to build:
+  1. empty air is passed in a small loop of its own that reads only the rooms' bound (no noise in its body);
+  2. the march finds the next step with cloud in a loop that holds nothing of the light, and the taps toward the Sun stand
+     outside it, so they are paid once a cloud step and not once a step;
+  3. the body reads the two lump noises only for the streamers whose room holds the place (three at most), not for all five;
+  4. the shadow taps pass empty air in a small loop of their own.
+  All four give the same samples at the same places. File `out/work/nep/cost/deep.C.ts`.
+- c1 (`deep.C.ts`, the four of the list above, cirrusSkip 0.6): 4860 41.3 s, 4861 21.8 s, 4745 13.8 s, 4985 8.2 s. The frames
+  equal b1's to the bit (the same differences from the before: 0.05 percent of the pixels, 8 levels at most at 4860; 0.03
+  percent and one place of 48 at 4745; none at 4985). So the thought about the machine holds: the same samples, 29.6 s to 21.8 s.
+- d1 (the taps toward the Sun pass empty air in a small loop of their own as well): 22.1 s, no gain. Not kept.
+- c2 (c1 and point 6, cirrusNear 0.15 and 3): 21.3 s, no gain, and it loses cloud (4860 level -0.068, block -0.636, a pixel
+  by 121; 4745 block -2.899). REJECTED: point 6 is taken out of the shader.
+- Where c1's 21.8 s go: march off 7.3 s (deck and shadow taps), so the march and its light 14.5 s.
+- f2 (`deep.F.ts`: c1 without point 6; the share of light at which the march ends is a number in deep.json,
+  steps.cirrusOpaque, 0.004 as before; tried at 0.01).
+  f2: 4861 22.0 s, no gain over 0.004 (few rays end opaque), a third of a percent of the pixels differ. So 0.004 STAYS
+  (`deep.F1.json`), and the pictures of the tree that is committed are c1's.
+- DECISION 08:18: `deep.F.ts` with `deep.F1.json` is the second named commit's scene (cirrusSkip 0.6, lightDeep 14,
+  cirrusOpaque 0.004). The cut on my VM at preview draft: surface view 52.7 s to 21.8 s (2.4 times), dive 4745 29.6 s to
+  13.8 s (2.1 times), rise 4985 14.1 s to 8.2 s (1.7 times). NOT the 5 times asked for. What is left: deck and shadow taps
+  7.3 s, the march and its light 14.5 s; three more things tried gave nothing (the taps' own loop for empty air, the skip
+  inside eaten bodies, the earlier end of opaque rays). The out value `lack` of the noise and of cirrusInside is read by no
+  one now; it stays in this commit (it costs one subtraction where the noise ends early) and goes out with the next.
+- The look faults of MAIL 573 (ruled rings in the storm, streaked deck, flat white band under the limb) are NOT in this commit:
+  the T27 tree that works on them changes the veil seen from above (4707 and 5006) and was never looked at there, and the
+  90 minutes went into the cost. They are the third commit's work, on top of this shader.
+- The after at the final tier (4860, preview, 16 samples) runs from 08:18.
+- AFTER at the final tier (`deep.F.ts`, `deep.F1.json`, 4860, preview, 16 samples): 376.0 s against 860.8 s before (2.29
+  times; without the 20 s of compile in each, 2.36 times). The picture against the before (`diff.py`): mean difference 0.000
+  levels of 255 (under 0.0005), the largest pixel difference 4 levels, 0.06 percent of the pixels differ at all, the worst
+  block of the 16 by 9 grid -0.013 levels (column 9, row 7), coarse 0.000, level -0.000.
+- g1: the small loop for empty air may take 96 turns instead of 16 before the march reads a step (the same samples), to see
+  whether rays that skim the rooms pay for many heavy turns.
+  g1: 4861 21.8 s, no gain; its four frames are c1's files to the byte. Not kept: `deep.F.ts` stays.
+- THE TREE THAT IS COMMITTED (`deep.F.ts`, `deep.F1.json`), measured again 08:27 to 08:32, one process:
+  preview draft 4860 42.5 s (first frame, about 20 s of compile in it), 4861 22.0 s, 4745 14.0 s, 4985 8.1 s, 4707 1.4 s,
+  5006 2.7 s. 4860, 4861, 4745, 4985 are c1's files to the byte. 4707 and 5006 equal the named commit's at preview draft
+  to the bit (before frames made for this: `out/work/nep/cost/pre/`).
+  16 by 9 draft: 4605 22.7 s (first frame), 4860 80.6 s. 4605's sha256 begins 5ae18138, the named commit's. G17 on the 16 by 9
+  draft of 4860: median 1.002, p25 0.790 (the named commit: 1.002 and 0.789).
+  About the before at 16 by 9: an older note of mine says 100 s for the named commit's 4860 as a first frame. That does not
+  fit this round's 52.7 s at preview, a quarter of the pixels, nor the Builder's 192 s a sample, and I did not measure it
+  again in this round; I do not use it. After, 16 by 9 costs 3.7 times the preview, as the pixel count says it should.
+- Checks on the tree: tsc clean; vitest 398 of 398; G11 and G15 PASS; smooth path green.

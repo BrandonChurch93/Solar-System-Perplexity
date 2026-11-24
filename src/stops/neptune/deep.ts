@@ -69,6 +69,7 @@ uniform vec4 uCirrusMake;
 uniform vec4 uCirrusBody;
 uniform vec4 uCirrusWarp;
 uniform vec4 uCirrusStep;
+uniform vec4 uCirrusSkip;
 uniform vec4 uCirrusBend;
 uniform vec3 uCirrusBillow;
 uniform vec4 uCirrusFringe;
@@ -298,23 +299,45 @@ float deckHeight(vec2 uv, vec2 least, float t, out vec4 parts, out float finest)
 // side away from the Sun, where it trails widest, and a share of that (uCirrusFringe.y) on the side toward the Sun. crest (out): the
 // body without that trail, as narrow on the side away from the Sun as toward it: what the heaps stand in. low (out): 1 in the lower
 // part of the body, where the fibres trail (uCirrusFringe.z to w, shares of its thickness, over which they end upward).
-float cirrusBody(vec3 p, float t, out float lee, out float crest, out float low) {
+float cirrusBody(vec3 p, float t, out float lee, out float crest, out float low, out float away) {
   float best = 0.0;
+  away = 1e3;
   lee = 0.0;
   crest = 0.0;
   low = 0.0;
   float ride = uCirrusWind.x * t;
+  // First which streamers' rooms hold the place (cheap), then the body of each of those and of no other: three at most.
+  int holds = 0;
+  ivec3 which = ivec3(0);
   for (int i = 0; i < ${STREAMERS}; i++) {
+    vec4 line = uStreamLine[i];
+    vec4 body = uStreamBody[i];
+    float z = (p.z - body.y) / body.z;
+    float along = (p.x - ride - line.x) / (line.y - line.x);
+    float ac = clamp(along, 0.0, 1.0);
+    float off = p.y - mix(line.z, line.w, ac) - uStreamWide[i].z * 4.0 * ac * (1.0 - ac);
+    float semi = body.x * mix(uStreamWide[i].x, uStreamWide[i].y, ac);
+    // away: how far the bent place stands outside the room of the nearest streamer (0 inside one); the march passes empty room by it.
+    float dy = max(off - 2.53 * semi, -off - (2.23 * uCirrusMake.z + 0.3) * semi) * uStreamWide[i].w;
+    bool outside = z <= 0.0 || z >= 1.05 || along <= 0.0 || along >= 1.0 || off > 2.53 * semi || off < -(2.23 * uCirrusMake.z + 0.3) * semi;
+    if (outside) {
+      away = min(away, max(max(max(dy, max(body.y - p.z, p.z - body.y - 1.05 * body.z)), max(line.x + ride - p.x, p.x - ride - line.y)), 0.0));
+    } else {
+      if (holds == 0) which.x = i;
+      if (holds == 1) which.y = i;
+      if (holds == 2) which.z = i;
+      holds++;
+    }
+  }
+  for (int c = 0; c < min(holds, 3); c++) {
+    int i = c == 0 ? which.x : (c == 1 ? which.y : which.z);
     vec4 line = uStreamLine[i];
     vec4 body = uStreamBody[i];
     vec4 make = uStreamMake[i];
     float z = (p.z - body.y) / body.z;
-    if (z <= 0.0 || z >= 1.05) continue;
     float along = (p.x - ride - line.x) / (line.y - line.x);
-    if (along <= 0.0 || along >= 1.0) continue;
     float off = p.y - mix(line.z, line.w, along) - uStreamWide[i].z * 4.0 * along * (1.0 - along);
     float semi = body.x * mix(uStreamWide[i].x, uStreamWide[i].y, along);
-    if (off > 2.53 * semi || off < -(2.23 * uCirrusMake.z + 0.3) * semi) continue;
     float ends = smoothstep(0.0, make.x / (line.y - line.x), along) * (1.0 - smoothstep(1.0 - make.x / (line.y - line.x), 1.0, along));
     float lump = vnoise(vec3((p.x - ride) / make.y + make.w, make.w * 1.7, 0.5));
     float lump2 = vnoise(vec3((p.x - ride) / (make.y * 0.37) + make.w * 2.3, make.w, 3.5));
@@ -325,6 +348,10 @@ float cirrusBody(vec3 p, float t, out float lee, out float crest, out float low)
     float across = y / (width * mix(1.0, uCirrusMake.z, side));
     float up = smoothstep(0.0, 0.3, z) * (1.0 - smoothstep(0.55 + 0.4 * lump, 1.05, z));
     float e = strength * exp(-across * across) * up - uCirrusStep.w;
+    // Inside the room but outside the body: the body ends where its bell falls under the floor, edge widths from its middle line
+    // (at its full height; lower and higher it is narrower), and the place stands this far outside that.
+    float edge = sqrt(max(log(max(strength, 1e-6) / (uCirrusStep.w + 0.002)), 0.0));
+    away = min(away, e > 0.002 ? 0.0 : max(abs(across) - edge, 0.0) * width * mix(1.0, uCirrusMake.z, side) * uStreamWide[i].w);
     if (e > best) {
       best = e;
       lee = mix(uCirrusFringe.y, 1.0, side) * smoothstep(0.0, 1.0, abs(across));
@@ -332,6 +359,7 @@ float cirrusBody(vec3 p, float t, out float lee, out float crest, out float low)
       low = 1.0 - smoothstep(uCirrusFringe.z, uCirrusFringe.w, z);
     }
   }
+  away = max(away, 0.0);
   return best;
 }
 // How far a point is at least from the room any streamer can fill (0 inside it). The room: where the body stands over its floor
@@ -375,7 +403,8 @@ vec3 cirrusBend(vec3 p, float least, float t) {
 // The noise that tears the cirrus, 0 to 1: octaves in rows across the wind as on the deck (rows by rowY, the place before the bend),
 // drawn out along the sweep and upward. On the crest every octave keeps heaps between creases, so the body billows like cumulus;
 // on the side away from the Sun (lee) the finer ones are drawn out far and keep ridges, so it frays into fibres.
-float cirrusNoise(vec3 q, float rowY, float lee, float least, float t, int most, out float finest) {
+float cirrusNoise(vec3 q, float rowY, float lee, float least, float t, int most, float need, out float finest, out float lack) {
+  lack = 0.0;
   float sum = 0.0;
   float amp = 1.0;
   float lam = uCirrusWave.x;
@@ -408,25 +437,49 @@ float cirrusNoise(vec3 q, float rowY, float lee, float least, float t, int most,
     finest = lam;
     amp *= uCirrusWave.w;
     lam *= 0.5;
+    // What the octaves still to come can add at most (half their weights): where even that leaves the noise under what any cloud
+    // needs here, there is none, and the rest is not read. The same answer as reading them all. lack (out): how far short it is.
+    float top = 0.5 + (sum + 0.5 * amp / (1.0 - uCirrusWave.w)) * (1.0 - uCirrusWave.w) * 2.2;
+    if (top < need - 1e-4) {
+      lack = need - top;
+      return 0.0;
+    }
   }
   return clamp(0.5 + sum * (1.0 - uCirrusWave.w) * 2.2, 0.0, 1.0);
 }
-float cirrusDensity(vec3 p, float least, float t, int most, out float finest) {
+// cirrusInside: the density at a place the caller knows to lie in a streamer's room (cirrusFar is 0 there). away (out): how far
+// the bent place stands outside every body. lack (out): inside a body that the noise has eaten, how far the noise is short of
+// what a heap or a fibre needs there (0 where there is cloud, and where no noise could make any).
+float cirrusInside(vec3 p, float least, float t, int most, out float finest, out float away, out float lack) {
   finest = least;
-  if (cirrusFar(p, t) > 0.0) return 0.0;
+  lack = 0.0;
   vec3 q = cirrusBend(p, least, t);
   float lee;
   float crest;
   float low;
-  float body = cirrusBody(q, t, lee, crest, low);
+  float body = cirrusBody(q, t, lee, crest, low, away);
   if (body <= 0.002) return 0.0;
+  // The lowest noise at which a heap or a fibre stands here (see below): under it the place is empty whatever the noise reads.
+  float needHeap = crest > 0.0 ? 1.0 - crest / (uCirrusMake.x * (1.0 - uCirrusBend.z * crest)) : 2.0;
+  float needFibre = uCirrusBillow.z * smoothstep(0.0, 0.5, lee) * low > 0.0 ? 1.0 - body / (uCirrusMake.x * (1.0 + uCirrusBend.w)) : 2.0;
+  float need = min(needHeap, needFibre);
+  if (need > 1.0) return 0.0;
   // Inside the crest every octave is a heap; the fibres begin where the crest ends.
-  float n = cirrusNoise(q, p.y, smoothstep(0.25, 0.7, lee), least, t, most, finest);
+  float n = cirrusNoise(q, p.y, smoothstep(0.25, 0.7, lee), least, t, most, need > 0.0 ? need : -2.0, finest, lack);
   // The crest: heaps with an outline, as tall as they are broad, so the side away from the Sun stands in its own shade.
   float heap = clamp((crest - uCirrusMake.x * (1.0 - n) * (1.0 - uCirrusBend.z * crest)) / uCirrusMake.y, 0.0, 3.0);
   // The fringe: fibres blown off the crest, thin enough to see the deck through; widest on the side away from the Sun.
   float fibre = clamp((body - uCirrusMake.x * (1.0 + uCirrusBend.w) * (1.0 - n)) / uCirrusFringe.x, 0.0, 1.0);
-  return max(heap * heap / 3.0, uCirrusBillow.z * fibre * smoothstep(0.0, 0.5, lee) * low);
+  float made = max(heap * heap / 3.0, uCirrusBillow.z * fibre * smoothstep(0.0, 0.5, lee) * low);
+  lack = made > 0.0 ? 0.0 : (lack > 0.0 ? lack : max(need - n, 0.0));
+  return made;
+}
+float cirrusDensity(vec3 p, float least, float t, int most, out float finest) {
+  finest = least;
+  if (cirrusFar(p, t) > 0.0) return 0.0;
+  float away;
+  float lack;
+  return cirrusInside(p, least, t, most, finest, away, lack);
 }
 // Air. erfcx by the form of Ren and MacKenzie; column: the air over a point at height h along a line that leaves it at cosine mu (0 or
 // more) to the vertical, for a layer with scale height H, per unit of density at height 0.
@@ -537,11 +590,26 @@ void main() {
     }
     // The cirrus between it and the Sun.
     float veil = 0.0;
-    for (int i = 0; i < int(uLightMake.z); i++) {
+    float castGap = (uShell.y - uShell.x) / max(sunUp, 0.05) / uLightMake.z;
+    int casts = int(uLightMake.z);
+    for (int i = 0; i < casts; i++) {
+      // Taps in empty air read nothing, and neither do the taps nearer to them than the nearest room is: they are passed here,
+      // by the rooms' bound alone.
+      for (int hop = 0; hop < 12; hop++) {
+        if (i >= casts) break;
+        float hiHop = mix(uShell.x, uShell.y, (float(i) + 0.5) / uLightMake.z);
+        float far = cirrusFar(bandOf(q + uSun * ((hiHop - g.z) / max(sunUp, 0.05))), t);
+        if (far <= 0.0) break;
+        i += 1 + int(0.9 * far / castGap);
+      }
+      if (i >= casts) break;
       float hi = mix(uShell.x, uShell.y, (float(i) + 0.5) / uLightMake.z);
-      float s = (hi - g.z) / max(sunUp, 0.05);
-      vec3 gs = bandOf(q + uSun * s);
-      veil += cirrusDensity(gs, max(2.0 * fp, uCirrusWind.z), t, 5, f1);
+      vec3 gs = bandOf(q + uSun * ((hi - g.z) / max(sunUp, 0.05)));
+      float away;
+      float lack;
+      float thick = cirrusInside(gs, max(2.0 * fp, uCirrusWind.z), t, 5, f1, away, lack);
+      veil += thick;
+      if (thick <= 0.0) i += int(uCirrusSkip.x * away / castGap);
     }
     veil *= (uShell.y - uShell.x) / max(sunUp, 0.05) / uLightMake.z;
     float lit;
@@ -580,31 +648,66 @@ void main() {
     float phase = mix(1.0, (1.0 - uLight.z * uLight.z) / pow(1.0 + uLight.z * uLight.z - 2.0 * uLight.z * sunView, 1.5), uLight.y);
     // Steps are a share of the distance and stand at fixed distances from the eye; empty room is passed by its bound.
     float ts = max(ta, 1e-3);
-    for (int i = 0; i < int(uCirrusBody.y); i++) {
-      if (ts >= tb) break;
-      float far = cirrusFar(bandOf(oc + rd * ts), t);
-      if (far > uCirrusStep.x * ts) {
-        ts += 0.9 * far;
-        continue;
+    int spent = 0;
+    for (int hit = 0; hit < int(uCirrusBody.y); hit++) {
+      // The next step that has cloud is found in a loop of its own, which reads nothing of the light: empty air is passed by the
+      // rooms' bound (reading no noise at all), empty room by the body's bound.
+      float rho = 0.0;
+      float tg = 0.0;
+      float len = 0.0;
+      float least = 0.0;
+      float fin = 1.0;
+      vec3 q = oc;
+      vec3 g = vec3(0.0);
+      for (int i = 0; i < int(uCirrusBody.y); i++) {
+        if (ts >= tb || spent >= int(uCirrusBody.y)) break;
+        spent++;
+        for (int hop = 0; hop < 16; hop++) {
+          float far = cirrusFar(bandOf(oc + rd * ts), t);
+          if (far <= uCirrusStep.x * ts) break;
+          ts += 0.9 * far;
+          if (ts >= tb) break;
+        }
+        if (ts >= tb) break;
+        float k = ceil(log(ts) / uCirrusStep.x);
+        tg = exp(k * uCirrusStep.x);
+        len = tg * uCirrusStep.x;
+        ts = exp((k + 0.5) * uCirrusStep.x);
+        if (tg >= tb) break;
+        q = oc + rd * tg;
+        g = bandOf(q);
+        least = max(2.0 * tg * pix, uCirrusWind.w * len);
+        float away;
+        float lack;
+        rho = cirrusInside(g, least, t, int(uCirrusBody.z), fin, away, lack);
+        if (rho > 0.0) break;
+        // Outside every body the next steps are empty as well: the bent place cannot reach a body sooner than its distance from it
+        // times uCirrusSkip.x (the bend can fold the way, so this is a share of it and not the whole).
+        ts = max(ts, tg + uCirrusSkip.x * away);
       }
-      float k = ceil(log(ts) / uCirrusStep.x);
-      float tg = exp(k * uCirrusStep.x);
-      float len = tg * uCirrusStep.x;
-      ts = exp((k + 0.5) * uCirrusStep.x);
-      if (tg >= tb) break;
-      vec3 q = oc + rd * tg;
-      vec3 g = bandOf(q);
-      float least = max(2.0 * tg * pix, uCirrusWind.w * len);
-      float fin;
-      float rho = cirrusDensity(g, least, t, int(uCirrusBody.z), fin);
-      if (rho <= 0.0) continue;
+      if (rho <= 0.0) break;
       float toward = 0.0;
       float s = 0.0;
+      float clearTo = 0.0;
       for (int j = 0; j < int(uCirrusStep.z); j++) {
         float ds = uCirrusStep.y * pow(uSpiral.z, float(j));
         s += ds;
+        float sm = s - 0.5 * ds;
+        if (sm < clearTo) continue;
+        vec3 gt = bandOf(q + uSun * sm);
+        float farTap = cirrusFar(gt, t);
+        if (farTap > 0.0) {
+          clearTo = sm + 0.9 * farTap;
+          continue;
+        }
         float f2;
-        toward += ds * cirrusDensity(bandOf(q + uSun * (s - 0.5 * ds)), max(least, uSpiral.w * ds), t, 6, f2);
+        float a2;
+        float l2;
+        float tapRho = cirrusInside(gt, max(least, uSpiral.w * ds), t, 6, f2, a2, l2);
+        toward += ds * tapRho;
+        if (tapRho <= 0.0) clearTo = sm + uCirrusSkip.x * a2;
+        // Deeper than this no light of the Sun comes through that the picture could show.
+        if (uCirrusBody.x * toward > uCirrusSkip.y) break;
       }
       float depth = uCirrusBody.x * toward;
       float lit = phase * exp(-depth) + uCirrusDeep.x * exp(-uCirrusDeep.y * depth) + uCirrusDeep.z * exp(-uCirrusDeep.w * depth);
@@ -615,7 +718,7 @@ void main() {
       cloudWeight += cloudClear * a;
       cloudClear *= 1.0 - a;
       cloudFinest = fin;
-      if (cloudClear < 0.004) break;
+      if (cloudClear < uCirrusSkip.z) break;
     }
   }
   float tMean = cloudWeight > 0.0 ? tCloud / cloudWeight : 0.0;
@@ -790,7 +893,7 @@ export class Deep {
         uCirrusBend: { value: v4(ci.warpNext[0]!, ci.warpNext[1]!, ci.core, ci.leeErode) },
         uCirrusBillow: { value: new THREE.Vector3(ci.billow[0], ci.billow[1], ci.leeThin) }, uCirrusFringe: { value: v4(ci.fringe[0]!, ci.fringe[1]!, ci.fringe[2]!, ci.fringe[3]!) }, uFarStreak: { value: v3(d.wisp.far) }, uWest: { value: v3(d.west) },
         uCirrusDeep: { value: v4(l.deep[0]!, l.deep[1]!, l.deep[2]!, l.deep[3]!) },
-        uCirrusStep: { value: v4(look.steps.cirrusShare, look.steps.lightStep, look.steps.light, ci.floor) },
+        uCirrusStep: { value: v4(look.steps.cirrusShare, look.steps.lightStep, look.steps.light, ci.floor) }, uCirrusSkip: { value: v4(look.steps.cirrusSkip, look.steps.lightDeep, look.steps.cirrusOpaque, 0) },
         uBand: { value: v4(0, 0, d.band[0]!, d.vortex.warp) },
         uVortex: { value: v4(d.vortex.at[0]!, d.vortex.at[1]!, 1 / d.vortex.semi[0]!, 1 / d.vortex.semi[1]!) },
         uVortexRim: { value: v4(d.vortex.rim[0]!, d.vortex.rim[1]!, d.vortex.south[0]!, d.vortex.south[1]!) },
