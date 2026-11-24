@@ -3861,3 +3861,66 @@ is in the picture at 3 to 12 px, and the same crispness for the far ring across 
   never comes to rest." The travel's carry is proven, its take is next; then a limit for the rest line.
   For my rise that is items 2 and 12: it ends near rest at 3884 by its own pace. Nothing to do until the
   Builder sends the carry's sha (MAIL 624).
+
+### 10:50 to 11:30 UTC: the PRE proven whole here, the carry on main, a rise that ends with speed
+
+- THE PRE 68b4561 IS PROVEN WHOLE HERE (job done 11:11, all in /tmp/v/r44) but for the handover's picture
+  parts:
+  - parity (smooth_parity.md): "VERDICT: green. No number is over its limit." mean 2.785 at 3720 (limit 12),
+    coarse 1.257 at 3720 (3.2), block level -6.722 at 3848 (12), level -1.125 at 3720 (2.2).
+  - dive pictures (saturn-dive.md, the judge's whole window): "VERDICT: green. No number is over its limit."
+    "Largest level step: 0.01 at frame 3576 ..., limit 1.3." "Largest pop score: 1.04 from frame 3578 to the
+    next, limit 1.2." "Largest change of the pattern alone: 0.41 from frame 3565 to 8 film frames later, most
+    at pixel 1100, 180 ..., limit 0.45." (at the pole, the judge's round body; thin). Change in place 15.7
+    from 3606 + 1/2, shown. Sheets dive_a to dive_d, bend.png (the owed sheet 3562 to 3588), shade.png (item
+    15) and the changes panel looked at: continuous; the moon goes behind the limb at about 3610 to 3614.
+  - head sample against 1e4bfd4 (/tmp/v/r41/head): 3330, 3350, 3370, 3389, 3390, 3420, 3465, 3510, 3539,
+    3885, 3890, 3900, 3922, 3950, 3959, 3960 equal to the byte; 3573, 3576, 3630, 3660, 3720, 3780, 3809,
+    3842, 3852, 3859 differ (inside the dive, the surface view and the rise).
+- MAIN IS bdd47cf NOW, MERGED 11:21 (5863ae0). 5420365 on it is the take of the travel's carry
+  (travel_builder 5d54f36c), status 229: "the carry is on main". The interface (assets-src/travel/NOTES.md):
+  place as today on riseEnd; a stated speed above the drift along the rise's own line; the rise may end in the
+  middle of its brake (the travel carries the acceleration on); it does not speed up at the end nor switch
+  its law in the last 1/300 s; turn of the sky and vfov at rest as today; eyeShot('rise', t, 'orbit') valid
+  to the end. film.ts carryOf(i): one sided velocity at the rise's end minus the exit's drift, and the
+  acceleration, h = 1/600 s; under 0.02 radii a second no carry; the carried speed decays over 0.4 s.
+  kit d216: smooth.path.minLeave is set once the seven rest lines are read from this main.
+- THE RISE ENDS WITH SPEED NOW (items 2 and 12, MAIL 624 ruling 2). Tried in the scratch tree ct first.
+  - plan.ts law(..., gain): the end rate of the three measures of the place (reach, climb, round) is the way
+    out's own rate times gain; rising() gives 1 + handover.rise.carry / driftSpeed. The place at the end is
+    the same; the turn of the camera and the field of view arrive at rest as before. The dive is untouched
+    (gain 1).
+  - skim.json handover.rise.carry 2.2 (planet radii a second over the drift) and the four paces of the rise
+    fitted again (out/scratch/opt7.ts with the rest line and the brake at the end among its aims): reach peak
+    [0.438, 0.605] round [0.391, 0.375, 0.232, 0]; climb [0.331, 0.331] / [0.343, 0.362, 0.076, 0.397]; round
+    [0.4, 0.405] / [0.237, 0.183, 0.131, 0.4]; view [0.421, 0.423] / [0.03, 0.039, 0.105, 0.255].
+  - skim.json sky.lift.power 0.5 to 1. With the old power the level of the sky (the flight's stars by the
+    height) ran evenly over the frames only because the lens came to rest; with speed left at the end it
+    stopped with a slope at 3885: the judge read a level step 0.21 at 3885 on the first trial (limit 1.3) and
+    the level of the right part of the frame rose by 0.7 a frame up to 3885 and was flat after. With the
+    power 1 the level is a smooth step of the height itself: the same part now rises by 0.65, 0.54, 0.35,
+    0.10, 0.00 a frame from 3882 to 3886.
+  - MEASURED in the repo on the merge (path, 11:25): "VERDICT: green. No number is over its limit." Rest
+    line: "lowest 3.36 at frame 3889, against 8.96 at frame 3873 and 34.77 at frame 3896 + 1/2 at the ends of
+    the window. The lowest is 0.375 of the slower end, no limit yet, shown and not judged." (the PRE: 0.026.)
+    Steps at rate 2: rate 0.046 at 3815 + 1/2, turn 0.073 at 3838 + 1/2, speed 0.070 over 8 at 3839 + 1/2
+    (limit 0.08; the PRE: 0.074, 0.071, 0.079). Seam at 3810: "Lowest 1.00 at frame 3794, limit 0.87; inside
+    the rise itself 1.01 at frame 3810 + 1/2. Largest step from one capture frame to the next 0.05 at frame
+    3815, shown."
+  - The speed of the lens through the seam (out/scratch/seamout.ts, radii a second): 2.337 at 3882, 2.319 at
+    3883, 2.299 at 3884, 2.277 at 3885, 2.264 at 3885 + 1/2, 2.244 at 3886, 2.159 at 3887; its change
+    -0.54, -0.56, -0.61, -0.65, -0.78, -1.23, -3.06 radii a second squared: it brakes through the end and does
+    not speed up there (the first trial sped up by 0.74 at 3885: the reach pace runs in the logarithm of the
+    distance; the fit now has the brake at the end among its aims).
+  - A slice of the judge's pictures across the seam on the trial (capture frames 7770 to 7793, the paces of
+    the first trial with the power 1): "VERDICT: green", "Largest pop score: 1.07 from frame 3895 + 1/2 to
+    the next, limit 1.2." (the PRE: 1.59, red), "Largest level step: 0.02 at frame 3892 + 1/2", pattern 0.13
+    at 3888. Sheet /tmp/v/ct_seam_b.png (3877 to 3896 + 1/2, every third capture frame) looked at: the globe
+    draws back through the seam at one pace, nothing rests, nothing jumps. The whole window with the final
+    paces is in the proof of the commit.
+  - tsc clean; tests/pass.test.ts, smooth.test.ts, onemove.test.ts pass on the merge with it (85 tests).
+  - WHAT CHANGES against the PRE: the frames of the rise (3810 to 3884, new paces; 3866 is a judged frame and
+    changes on purpose) and the frames of the travel after it from 3885 on while the carried speed decays
+    (0.4 s) and as far as the engine's slide of the leaving body is solved anew. The hold, the dive and the
+    surface view keep the PRE's code and numbers.
+  - FALLBACK: the PRE 68b45619c9b8a49e33e17639a44504a39e29e2a7 stays nameable as it is.

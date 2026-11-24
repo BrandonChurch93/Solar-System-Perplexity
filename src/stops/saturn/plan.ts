@@ -244,8 +244,11 @@ export class SaturnPlan extends StopPlan {
   // rate in the motion after, so the move meets both without a step in speed: the distance to the globe's
   // surface (reach), the height over the ring plane (climb), the angle of the foot of the lens round the
   // globe (round) and the turn of the camera with its field of view (view). The numbers of each pace are in
-  // skim.json handover.
-  private law(from: (time: number) => Pose, to: (time: number) => Pose, seg: { start: number; end: number }, d: Paces): Law {
+  // skim.json handover. gain is the share of the motion after's own rate with which the three measures of the
+  // place arrive (1: at its rate; the rise arrives faster by handover.rise.carry over the drift of the way out,
+  // on that drift's own line, and the travel of the engine takes that speed over, so the picture does not come
+  // to rest between the rise and the travel). The turn of the camera and the field of view arrive at rest.
+  private law(from: (time: number) => Pose, to: (time: number) => Pose, seg: { start: number; end: number }, d: Paces, gain = 1): Law {
     const n = this.ringNormal
     const e1 = this.skimPosition.clone().addScaledVector(n, -this.skimPosition.dot(n)).normalize()
     const e2 = new THREE.Vector3().crossVectors(n, e1)
@@ -254,7 +257,7 @@ export class SaturnPlan extends StopPlan {
     const near = (v: number): number => Math.atan2(Math.sin(v), Math.cos(v))
     const pace = (f: (p: THREE.Vector3) => number, wrap: boolean, k: PaceOf): [number, Pace] => {
       const s0 = f(from(seg.start + e).position) - f(from(seg.start - e).position)
-      const s1 = f(to(seg.end + e).position) - f(to(seg.end - e).position)
+      const s1 = (f(to(seg.end + e).position) - f(to(seg.end - e).position)) * gain
       const first = f(from(seg.start).position)
       const total = f(to(seg.end).position) - first
       return [first, new Pace(((wrap ? near(s0) : s0) / (2 * e)) * dur, ((wrap ? near(s1) : s1) / (2 * e)) * dur, wrap ? near(total) : total, k.peak, k.round)]
@@ -286,7 +289,7 @@ export class SaturnPlan extends StopPlan {
   }
 
   private rising(): Law {
-    return (this.riseLaw ??= this.law((t) => this.skimAt(t), (t) => this.after(t), this.seg.rise, skimJson.handover.rise))
+    return (this.riseLaw ??= this.law((t) => this.skimAt(t), (t) => this.after(t), this.seg.rise, skimJson.handover.rise, 1 + skimJson.handover.rise.carry / this.p.rise.driftSpeed))
   }
 
   // How much of the turn of the dive is done at a time (0 in the hold, 1 in the skim), and of the rise.
@@ -396,9 +399,10 @@ export class SaturnPlan extends StopPlan {
   // The stars of the flight: the engine brings them in through the rise, from its change of view to the end of
   // the rise, and reads how far by a time. That time is given here by the height of the lens over the ring plane
   // and not by the clock. liftAt is their level as a function of the height alone: a smooth step of
-  // 1 - (1 - share)^power, share the way between the two heights of skim.json sky.lift. The lens climbs ever
-  // slower toward the end of the rise (the height left goes with the square of the time left), so with the
-  // power one half the level runs evenly over the frames of the climb. The lower height lies over every height
+  // 1 - (1 - share)^power, share the way between the two heights of skim.json sky.lift. The lens leaves the
+  // rise with speed (handover.rise.carry) and climbs on through its end, so with the power 1 the level is a
+  // smooth step of the height itself and is whole, with no slope left, at the upper height: no kink of the
+  // level of the sky where the travel takes the flight over. The lower height lies over every height
   // of the hold and of the dive (skyProof), so it is one function of the height on both sides of the skim: none
   // of them at any height the lens has on the way down.
   liftAt(height: number): number {
