@@ -1,71 +1,83 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T11:29:12.323Z",
+ "pushed": "2026-11-24T11:37:57.427Z",
  "head": "7f4e02c1699e026506d39401b7cb58107cb0b64c",
- "note": "7f4e02c1 proof running, sheets 180 to 227 seen: no jump at T, no pop seen at this size; the function ground stands as a paler field of cells in the orange map from 216 on (red). Frame 60 draft sun-near unchanged since the last look: dark (under 0.15) 0.238 | body (0.15 to 0.55) 0.520 | pale (0.65 to 0.85) 0.111 | white (over 0.85) 0.059; brightest 15 percent: half width 11.0 px, 2904 shapes | fine detail 0.0552 | mean 0.366; distance 0.112.",
+ "note": "7f4e02c1 handover at draft: side difference at T pass, flow gap at T pass, every frame pass (level 2.47 into 217, colour 2.7 into 234). Every frame 180 to 269 seen. Red to my eye: at 228 to 236 the function ground is a pale cream mosaic of cells where 19ca786c showed the orange map (soft by G13); see the G13 sheet. Frame 60 draft sun-near: dark (under 0.15) 0.238 | body (0.15 to 0.55) 0.520 | pale (0.65 to 0.85) 0.111 | white (over 0.85) 0.059; brightest 15 percent: half width 11.0 px, 2904 shapes | fine detail 0.0552 | mean 0.366; distance 0.112.",
  "looks": [
+  {
+   "time": "2026-11-24T11:37:56.291Z",
+   "file": "20261124113756291-note-s9-g.jpg",
+   "source": "../../../../tmp/s9-g.jpg",
+   "kind": "note",
+   "label": "7f4e02c1 rise draft every frame, sheet g 256 to 269",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T11:37:55.139Z",
+   "file": "20261124113755139-note-s9-f.jpg",
+   "source": "../../../../tmp/s9-f.jpg",
+   "kind": "note",
+   "label": "7f4e02c1 rise draft every frame, sheet f 240 to 255",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T11:37:54.014Z",
+   "file": "20261124113754014-note-s9-e.jpg",
+   "source": "../../../../tmp/s9-e.jpg",
+   "kind": "note",
+   "label": "7f4e02c1 rise draft every frame, sheet e 228 to 239",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T11:37:52.837Z",
+   "file": "20261124113752837-note-g13-before-after.jpg",
+   "source": "../../../../tmp/g13-before-after.jpg",
+   "kind": "note",
+   "label": "G13 (MAIL 639): 231 to 235 enlarged 2 times, before (19ca786c, left) and after (7f4e02c1, middle); right, the whole frame with the soft pixels of G13 in red, before and after",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T11:37:13.399Z",
+   "file": "20261124113713399-sheet-sun-rise-draft-after.jpg",
+   "source": "out/work/handover/sun-rise-draft-after.png",
+   "kind": "sheet",
+   "label": "sun rise, every frame 217 to 228 (after T, frame 216), draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "first": 217,
+   "last": 228,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T11:37:11.583Z",
+   "file": "20261124113711583-sheet-sun-rise-draft-before.jpg",
+   "source": "out/work/handover/sun-rise-draft-before.png",
+   "kind": "sheet",
+   "label": "sun rise, every frame 204 to 215 (before T, frame 216), draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "first": 204,
+   "last": 215,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T11:37:09.730Z",
+   "file": "20261124113709730-sheet-sun-rise-draft-across.jpg",
+   "source": "out/work/handover/sun-rise-draft-across.png",
+   "kind": "sheet",
+   "label": "sun rise, every frame 210 to 221 (across T, frame 216), draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "first": 210,
+   "last": 221,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-24T11:29:11.237Z",
    "file": "20261124112911237-note-s9-d.jpg",
    "source": "../../../../tmp/s9-d.jpg",
    "kind": "note",
    "label": "7f4e02c1 rise draft every frame, sheet d 216 to 227 (T at 216)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T11:29:10.371Z",
-   "file": "20261124112910371-note-s9-c.jpg",
-   "source": "../../../../tmp/s9-c.jpg",
-   "kind": "note",
-   "label": "7f4e02c1 rise draft every frame, sheet c 204 to 215",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T11:29:09.544Z",
-   "file": "20261124112909544-note-s9-b.jpg",
-   "source": "../../../../tmp/s9-b.jpg",
-   "kind": "note",
-   "label": "7f4e02c1 rise draft every frame, sheet b 192 to 203",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T11:29:08.708Z",
-   "file": "20261124112908708-note-s9-a.jpg",
-   "source": "../../../../tmp/s9-a.jpg",
-   "kind": "note",
-   "label": "7f4e02c1 rise draft every frame, sheet a 180 to 191",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T11:09:41.456Z",
-   "file": "20261124110941456-note-c5-229-241.jpg",
-   "source": "../../../../tmp/c5-229-241.jpg",
-   "kind": "note",
-   "label": "7f4e02c1 draft 229, 233, 237, 241: the function ground shows as a paler field of cells on the ball until about 237",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T11:09:40.320Z",
-   "file": "20261124110940320-note-g13-before-after.jpg",
-   "source": "../../../../tmp/g13-before-after.jpg",
-   "kind": "note",
-   "label": "G13: 231 to 235 enlarged, before (19ca786c) and after (7f4e02c1, 233 only so far; the others follow), soft pixels in red on the right",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T11:09:39.312Z",
-   "file": "20261124110939312-note-c1-60.jpg",
-   "source": "../../../../tmp/c1-60.jpg",
-   "kind": "note",
-   "label": "trial c1, not committed: the strong law of the rise at every height, frame 60 (distance 0.258, white 0.219)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T11:09:38.193Z",
-   "file": "20261124110938193-note-c4-60.jpg",
-   "source": "../../../../tmp/c4-60.jpg",
-   "kind": "note",
-   "label": "7f4e02c1 frame 60 draft, whole frame: each cell takes the light of the map at its own middle",
    "stop": "sun"
   }
  ]
