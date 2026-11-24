@@ -1,9 +1,36 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T15:01:13.440Z",
+ "pushed": "2026-11-24T15:20:14.756Z",
  "head": "a5b15421d272cc21b4edfb8977a28a7ab5424436",
- "note": "a5b15421 (MAIL 683 material, config only), frame 60 draft: dark 0.190, body 0.663, pale 0.062, white 0.022; brightest 15 percent half width 4.6 px, 4439 shapes, fine detail 0.0595, mean 0.334; distance 0.062. Proof chain runs since 15:01",
+ "note": "a5b15421 proof runs (tests 485 passed in 49 files, tsc 0 lines, warm clean); rise 180 to 201 seen, no jump at sheet size. Frame 60 draft: dark 0.190, body 0.663, pale 0.062, white 0.022; half width 4.6 px, 4439 shapes, fine detail 0.0595, mean 0.334; distance 0.062",
  "looks": [
+  {
+   "time": "2026-11-24T15:20:13.505Z",
+   "file": "20261124152013505-note-r18-b.jpg",
+   "source": "../../../../tmp/r18-b.jpg",
+   "kind": "note",
+   "label": "a5b15421 rise, draft, every frame 192 to 201",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T15:20:12.448Z",
+   "file": "20261124152012448-note-r18-a.jpg",
+   "source": "../../../../tmp/r18-a.jpg",
+   "kind": "note",
+   "label": "a5b15421 rise, draft, every frame 180 to 191 (the handover tool's frames)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T15:12:09.331Z",
+   "file": "20261124151209331-compare-sun-rise-sides.jpg",
+   "source": "out/work/handover/sun-rise-sides.png",
+   "kind": "compare",
+   "label": "sun rise, both sides at T (frame 216) and their difference times 8",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 216,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-24T15:01:11.632Z",
    "file": "20261124150111632-note-p1-ball.jpg",
@@ -42,30 +69,6 @@
    "source": "../../../../tmp/p1-60.jpg",
    "kind": "note",
    "label": "a5b15421, frame 60 draft at one to one, left approved, right mine: cells touch, fibres from a dark middle to the rim, penumbra curves; still plates between crisp cracks, harder and finer than the approved",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T14:41:19.533Z",
-   "file": "20261124144119533-note-e-spot.jpg",
-   "source": "../../../../tmp/e-spot.jpg",
-   "kind": "note",
-   "label": "penumbra trials (not committed), frame 60 draft: approved, e1 as at head, e2 and e3 with fewer, broader, curved fibres",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T14:41:18.871Z",
-   "file": "20261124144118871-note-e-zoom.jpg",
-   "source": "../../../../tmp/e-zoom.jpg",
-   "kind": "note",
-   "label": "trial e1 (not committed), frame 60 draft at two to one, left mine, right approved: rim zones hot, middles dark, cells touch; still plates with glassy streaks, fibres not radial yet",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T14:20:27.952Z",
-   "file": "20261124142027952-note-z1-rise-a.jpg",
-   "source": "../../../../tmp/z1-rise-a.jpg",
-   "kind": "note",
-   "label": "head 1154099e: every frame 180 to 201 of the rise, draft (the chain was stopped at 202 for MAIL 683)",
    "stop": "sun"
   }
  ]
