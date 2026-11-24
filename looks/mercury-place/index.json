@@ -1,9 +1,33 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T20:50:28.646Z",
+ "pushed": "2026-11-24T21:08:22.732Z",
  "head": "befb5f47996cb9ff4b6ffb6df289ed9cc2b1fe80",
- "note": "20:50 whole measure of the one structure: ordered ranges green, own list reds dive 719 to 723 (0.60) and rise 996 to 1015 (0.93); sky card remnant out (reach.py), 615 changes only inside 1.66 Sun radii",
+ "note": "dive red 719 to 723 is in the map alone at the limb (open, not a pair of levels); proof render of the handovers with the true far Sun is running",
  "looks": [
+  {
+   "time": "2026-11-24T21:06:19.130Z",
+   "file": "20261124210619130-note-d19-crop.jpg",
+   "source": "../../../../tmp/m/d19-crop.jpg",
+   "kind": "note",
+   "label": "dive 719 to 731, all levels, the same crop",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T21:06:18.534Z",
+   "file": "20261124210618534-note-x3-crop.jpg",
+   "source": "../../../../tmp/m/x3-crop.jpg",
+   "kind": "note",
+   "label": "dive 719 to 731, the map alone, crop at the worst pixel: the same craters growing",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T21:06:17.869Z",
+   "file": "20261124210617869-note-chg-x3.jpg",
+   "source": "../../../../tmp/m/chg-x3.jpg",
+   "kind": "note",
+   "label": "dive 722 against 730, the map alone (no levels): the red sits at the limb in the corner of the judged region",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T20:50:28.058Z",
    "file": "20261124205028058-note-d722-crop.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/m/e20-a.jpg",
    "kind": "note",
    "label": "e20 rise 1003 on, one structure, far Sun off: the grey place ground turns into the gold map (own list, two laws of light)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T20:50:25.039Z",
-   "file": "20261124205025039-note-e19-7.jpg",
-   "source": "../../../../tmp/m/e19-7.jpg",
-   "kind": "note",
-   "label": "e19 dive 730 to 735 + 1/2, one structure, far Sun off (measure only), draft rate 2",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T20:50:24.477Z",
-   "file": "20261124205024477-note-e19-6.jpg",
-   "source": "../../../../tmp/m/e19-6.jpg",
-   "kind": "note",
-   "label": "e19 dive 724 to 729 + 1/2, one structure, far Sun off (measure only), draft rate 2",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T20:50:23.909Z",
-   "file": "20261124205023909-note-e19-5.jpg",
-   "source": "../../../../tmp/m/e19-5.jpg",
-   "kind": "note",
-   "label": "e19 dive 718 to 723 + 1/2, one structure, far Sun off (measure only), draft rate 2",
    "stop": "mercury"
   }
  ]
