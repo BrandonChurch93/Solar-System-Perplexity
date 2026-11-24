@@ -118,12 +118,12 @@ const SAMPLERS = Array.from({ length: MAX_LEVELS }, (_, i) => 'uniform sampler2D
 // ended (the corners of the widest plate's square), so the view called ground sharp that only the globe's own levels drew.
 const weights = (shownFrom: number): string => Array.from({ length: MAX_LEVELS }, (_, i) => i < shownFrom ? `    if (uPatchCount > ${i}.5) {
       vec2 q = g * uPatchScale[${i}];
-      w${i} = front * smoothstep(0.5, 0.5 - uFeatherOwn, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent));
+      w${i} = front * smoothstep(0.5, 0.5 - uFeatherOwn, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent * uLine));
       parent = gd * uPatchScale[${i}] * uPatchSize[${i}];
       texels = mix(texels, parent, step(0.5, w${i}));
     }` : `    if (uPatchCount > ${i}.5) {
       vec2 q = (g - uPatchOff[${i}]) * uPatchScale[${i}];
-      w${i} = shown * front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y)))${i === shownFrom ? '' : ' * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent))'};
+      w${i} = shown * front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y)))${i === shownFrom ? '' : ' * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent * uLine))'};
       parent = gd * uPatchScale[${i}] * uPatchSize[${i}];
       t${i} = parent;
     }`).join('\n')
@@ -148,6 +148,7 @@ uniform float uPatchCount;
 uniform float uFeather;
 uniform float uFeatherOwn;
 uniform vec2 uPatchFade;
+uniform float uLine;
 uniform vec3 uSpotN;
 uniform vec3 uSpotE;
 uniform vec3 uSpotU;
@@ -555,7 +556,7 @@ export class NeptunePlanet {
         ...Object.fromEntries(levels.map((i) => ['uPatch' + i, { value: tex(i) }])),
         uPatchScale: { value: levels.map(scale) }, uPatchSize: { value: levels.map(size) },
         uPatchCount: { value: p?.textures.length ?? 0 },
-        uFeather: { value: p?.feather ?? 0.12 }, uFeatherOwn: { value: p?.featherOwn ?? p?.feather ?? 0.12 }, uPatchFade: { value: new THREE.Vector2(p?.fade[0] ?? 1.1, p?.fade[1] ?? 1.7) },
+        uFeather: { value: p?.feather ?? 0.12 }, uFeatherOwn: { value: p?.featherOwn ?? p?.feather ?? 0.12 }, uPatchFade: { value: new THREE.Vector2(p?.fade[0] ?? 1.1, p?.fade[1] ?? 1.7) }, uLine: { value: 1 },
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
         uPlace: { value: new THREE.Vector3(Math.cos(THREE.MathUtils.degToRad(p?.clearDeg?.[0] ?? 0)), Math.cos(THREE.MathUtils.degToRad(p?.clearDeg?.[1] ?? 1)), 0) },
         uPatchOff: { value: levels.map(offset) }, uShown: { value: 0 }, uTone: { value: p?.tone ?? o.map }, uToneAmt: { value: 0 }, uVivid: { value: new THREE.Vector2(p?.vivid?.[0] ?? 1e9, p?.vivid?.[1] ?? 2e9) }, uCirrusPx: { value: 0 }, uHomeN: { value: p?.home ?? new THREE.Vector3(0, 0, 1) }, uPlain: { value: new THREE.Vector3(Math.cos(THREE.MathUtils.degToRad(p?.plainDeg?.[0] ?? 0)), Math.cos(THREE.MathUtils.degToRad(p?.plainDeg?.[1] ?? 1)), 0) },

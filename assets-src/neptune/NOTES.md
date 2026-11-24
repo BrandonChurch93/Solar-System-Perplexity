@@ -2732,3 +2732,493 @@ What follows: the hold's sky patch is rebuilt from a glow input rendered with th
 - L4: 4860 beside the approved image, `/tmp/d-L4.jpg`.
 - M9: 4605 at master draft has the bytes of M8 and of main (sha256 5ae1813832a77f85...), with the new uniforms in the globe's shader.
 - Still wrong, by eye: the deck of the scene reads as long streaks from mid heights (4723 to 4740) where the map is mottled; the bow is a thin hooked line with a lump at its end; the shadow of the main streamer is one wide dark band; the eye of the storm has little inner form; a small upright spike stands on the main streamer near its west end (4756 to 4766).
+
+## Milestone mail to /root (sent 01:42 VM, high priority), in short
+
+Not READY. Branch agent/neptune-place, commit 85312d1ba89d4fbb4811dc70dc8f5b02871b7c43 on top of the merge of main 79199f35. Named in it: the layout fit (deck.vortex, the bow and the far rim band as streamers), the cobalt cure, sky.own true; the looks 68696014 (four sheets of the dive, every frame 4707 to 4769; 4860 beside the approved image; the plan view); 4605 at main's bytes (5ae1813832a77f85); the official G17 of 9087f008 (4860 median 1.087, p25 0.606), none yet on 85312d1b; 15 to 35 s a preview draft frame; tsc, vitest 268 pass, G11 PASS; smooth path red on the own path with its last lines; size net minus 11.98 MB against main; how 4860 moved (far field); still wrong a to f (a: the map's broad streak against the thin streamer and its shadow, with the question whether a thin sheet may come into the near field of 4860; b: streaky deck from mid heights; c: the bow thin with a lump; d: shadow band, fibres, eye; e: the rise not rendered on this commit; f: the grain in sky-hold.webp goes into the round candidate); the job text (measure G17 and 4605 at draft and final on 85312d1b).
+
+## MAIL 453 from the Builder (arrived 01:47 VM, high priority, word for word)
+
+MAIL 453 from the Builder (/root) to neptune_builder, on 85312d1b. Seen: the pair of 4860 and the dive sheet from 4723.
+1. Which picture gives way. The judged frame 4860 is held to its approved image, not to the map. The scene has two parts: what the surface view's eye sees over its 180 frames (the fan), and what only the dive and the rise see from above. Outside the fan the scene is fitted to the map, as you did. Inside the fan the scene is what the approved image shows, and there the map gives way: it is made from the scene's own function seen from above (the same streamers, deck and light), as uranus_builder does for its deck, joined to the old map over a border by distance. Then there is no place left where the two differ in form.
+2. Your question a: keep 4860's near field, no sheet into it. The long streak of the map inside the fan becomes the scene's streamer with its shadow seen from above. Before that bake, give the main streamer the body the approved image has: a broad ridge of billows, brilliant white with soft blue shade, about a third as broad as the storm's well is wide, not a thin line with a hard shadow. From above it is then a broad streak again, and the hold reads as before.
+3. 4605 may change its bytes for this, inside the storm only. Condition: 4605 at the final tier beside the approved hold image reads as the same picture (the storm, its streaks and their places). Send that pair with the commit; I look at it and it is judged in the round.
+4. The far field of 4860 that moved: where it left the approved image it goes back, by point 1 (the map gives way inside the fan).
+5. What decides the likeness of 4860 more than any fitting, by the pair (form only, since it is a preview): your streamers are thin lines where the approved image has thick ridges; the storm's well is small and shallow where the approved one is wide with ringed walls; the picture is grey navy where the approved one is saturated blue with bright bands between the storm and the horizon. These are your faults b to d and they come first, with point 2.
+6. The dive 4723 to 4731, the broad streak that goes while the shadow comes: cured by points 1 and 2, not by a longer blend.
+7. Machine: np3-01 on render_04 runs G17 on 85312d1b and 4605 at draft and final against main's bytes; the logs come to you. The sky patch without the grain goes with your candidate, as you say.
+8. Next word at 02:45 or with the next look, whichever is first: the rise on this commit and the main streamer's body at 4860 beside the approved image.
+
+## Mail from globe_engineer (arrived 01:47 VM, low priority, word for word)
+
+globe_engineer to the stop builders, the air of the globe (plan F). One note, no answer needed.
+The three lines a stop adds in its update, when it wants its limb, tint and haze to follow the height of the lens and not the clock or the view:
+  if (shot.air) {
+    planet.setAir(shot.air)                              // writes uLimb, uTint and the ground haze, each only if the air holds it
+    if (shot.air.shell) shell.setAir(shot.air.shell)     // a HazeShell
+  }
+A stop with a material of its own that includes the haze text (hazeUniforms): if (shot.air?.haze) setHazeAir(material.uniforms, shot.air.haze), from src/bodies/air.ts.
+And it takes out its own lines that change limb, tint or haze by view, segment or time.
+The knots are the stop's params: air: [{ height, limb, tint, haze: { all nine fields }, shell: { ... } }, { height: lower, haze: { depth: 1.8 } }, ...], highest first, a lower knot names only what differs. Make the highest knot from today's numbers of the hold (hazeAir(look.haze) gives the nine fields with the shader's defaults): at and above its height the engine hands that knot through untouched, so the hold keeps its bytes. No air in the params: shot.air is absent and nothing is written.
+Where it is: the setters are on agent/engine-globe abf28ac5 (src/bodies/air.ts, planet.setAir, HazeShell.setAir); shot.air, Air and AirKnot are on agent/engine-handover dddef05 (src/core/types.ts, src/core/air.ts). NEITHER IS ON MAIN YET. Do not wire it before the Builder says both are; this note is so the three lines are ready. No shader text changes and no uniform is added by it: a stop that does not call the setters keeps every byte.
+Notebook: assets-src/shared/GLOBE-NOTES.md section 7 on agent/engine-globe.
+
+What follows from MAIL 453 (the order of work):
+1. the rise on 85312d1b as looks (r1, a sample of twelve frames, is rendered);
+2. the main streamer's body at 4860: a broad ridge of billows, brilliant white with soft blue shade, about a third as broad as the storm's well is wide; the storm's well wide with ringed walls; the picture a saturated blue with bright bands between the storm and the horizon; the far field of 4860 back to the approved image;
+3. the fan measured (what the surface view's eye sees over its 180 frames, in the scene's coordinates); inside it the scene is the approved image's, outside it the map's;
+4. inside the fan the map gives way to the scene's own function seen from above, joined to the old map over a border by distance; 4605 may change inside the storm only, with the pair 4605 at final beside the approved hold image.
+From globe_engineer's note: nothing to wire until the Builder says both branches are on main.
+
+## MAIL 457 from the Builder (arrived 01:49 VM, high priority, word for word)
+
+MAIL 457 from the Builder (/root) to neptune_builder: a correction of MAIL 453. I named the streamers wrongly there (I wrote thin where they are thick). Points 1, 3, 4, 6, 7, 8 stand. Points 2 and 5 are replaced by this, read from your pair of 4860 (draft left, approved right):
+A. Streamers. Yours are three solid, opaque, hard edged white bands of even width and equal weight; they read as paint laid on the deck. The approved image has ONE main streamer in the near field: a torn ridge of fibres and billows with soft edges, parts one sees through, a soft blue shade side, uneven in width, thinning out toward the right; behind it only thin faint ones near the storm and at the far right. So: one main ridge, made of many fine strands rather than one solid body, edges that fray into the deck, its density uneven along its length; the other two much smaller and fainter. Not broader, and not solid.
+B. The storm. Yours is a large smooth dark oval near the middle of the frame. The approved one is smaller in the frame and farther right, a dark core with a soft pale rim and fine rings; it does not dominate the near field.
+C. The far field and the limb. Yours is a flat dark blue up to a thin limb line. The approved has pale bright bands from the middle distance on and a broad bright haze at the limb. This is point 4 of 453 and stays first.
+D. The deck's grain. The approved deck is finely streaked along the flow everywhere, also in the dark near field; yours is smooth.
+E. For the bake of point 1 (the map made from the scene's function inside the fan): the main ridge from above is then a broad frayed streak, as the map has it now, so the hold should keep its reading; the condition of point 3 stands.
+Sorry for the wrong word. Next word as in 453: 02:45 or with the next look.
+
+What follows from MAIL 457 (replaces item 2 of the list above), in order:
+C. far field and limb first: pale bright bands from the middle distance on, a broad bright haze at the limb;
+A. one main ridge of many fine strands, frayed edges, parts one sees through, soft blue shade side, uneven width, thinning toward the right; the other streamers much smaller and fainter;
+B. the storm smaller in the frame and farther right: dark core, soft pale rim, fine rings;
+D. the deck finely streaked along the flow everywhere, also in the dark near field.
+01:50 VM: the rise on 85312d1b, every frame 4950 to 5024 at preview draft, renders in a second work tree (/tmp/c-wt, the commit's own files) into out/work/nep/deep/r2, so the main tree is free for the edits.
+
+## The fan, measured (24 Nov 01:55 VM)
+
+Tool: out/work/nep/fan/fan.ts (scratch): for every frame 4770 to 4949 the plan's surface pose, a grid of 33 by 19 rays through the frame, each met with the smooth deck and turned into the scene's (u, v). Result:
+- the eye stands over u 0.39 (4770) to u -0.38 (4949), v -2.01 to -1.90, height 0.970 to 1.033 units; 4860: over (0.00, -1.95), height 1.000;
+- the frame's middle meets the deck at (-0.98, 0.35) in 4770, (-1.36, 0.65) in 4860, (-1.74, 0.96) in 4949;
+- the footprint is a wedge: its left edge runs at 148 to 150 degrees from the u axis (toward v), its right edge at 89 to 94 degrees; fitted over all frames with every point inside: left edge through (-0.07, -2.08) at 151 degrees, right edge through (0.39, -1.97) at 86 degrees. The horizon is 9.2 units from the eye, cirrus at 0.26 over the deck shows to about 14.
+- These numbers are deep.json fan (left, right, margin 0.2, far 13.3 along the middle line at 118 degrees, border 1.6).
+
+The approved close image in the scene's coordinates (out/work/nep/fan/pix.ts: a pixel of the image at 1430 by 804 to (u, v) of the smooth deck by 4860's pose):
+- the storm's dark core: middle (-1.39, 1.04); left (-1.87, 0.72), right (-1.03, 1.23), near (-1.27, 0.69), far (-1.54, 1.39): about 0.98 long and 0.75 across, so a radius of 0.4 to 0.5. The scene's storm stands at (-1.45, 0.98), eye 0.46: the place and size were right; what made mine "large" was the shadow of the second streamer (it began at u -2.0, west of the storm, and its shadow fell into the well) and the dark wall ring out to r 0.7.
+- the second streamer of the image begins right of the storm: ground point (-1.36, 2.07), which for a streamer 0.09 over the deck is (-1.17, 1.52); so its line now begins at u -1.25.
+- the pale far deck sets in along a line v + 0.235 u = 1.5 (points (-0.02, 1.48), (-0.81, 1.64), (-1.42, 1.77), (-2.21, 2.01), (-3.18, 2.25), (-4.43, 2.52)) and is brightest from v 3.1 to 3.4 on; west of u -5 the far deck is not pale (the limb at the left is thin and dark).
+- the main streamer's spine on the ground: (-3.04, 0.19), (-2.46, 0.26), (-1.66, 0.01), (-1.22, 0.03), (-0.81, -0.02), (-0.50, 0.04), (-0.22, 0.10), (0.00, 0.07); its breadth on the ground with its height: 0.6 at u -2.7, 0.58 at u -1.75, 0.28 at u -1.0, 0.19 at u -0.5 and at u -0.07.
+- colours of the approved image (display values, boxes of the picture at 960 by 540): near deck lower left 3 15 31; lit deck right of the storm 43 86 132; the eye 10 34 65; far right 166 195 221; far middle 117 157 194; far left 24 59 95; the streamer's shadow 6 23 43.
+
+Edits under way (02:00 VM, not committed): deep.json fan and its weight in deep.ts (fanOf); the pale deck inside the fan in bands (fanBands) joined to the map's layout by the fan's weight; the bow and the far rim band are streamers of the map only (where: map) and end at the fan's border; the main streamer as strands; the storm with tighter rings and a shallower well; the deck's thin streaks everywhere. Draft frames N1, N2 and on in out/work/nep/deep.
+The rise on 85312d1b: frames 4950 to 4960 are rendered (39 to 62 s a frame so near the deck); the render was stopped at 01:59 to keep one render at a time and goes on after the first drafts of 4860.
+
+## 01:59 to 02:12 VM. Lab log: 4860 after MAIL 457, drafts N1 to N5 (work tree on 85312d1b, not committed)
+
+Each is frame 4860 at preview draft, 55 to 70 s a frame, beside `references/approved/neptune-close.jpg`. The rise of 85312d1b was
+stopped for them (one render process) and went on at 02:09.
+
+- N1. Main streamer torn harder (erode up, core 0), second streamer moved to begin right of the storm, storm with arms. Seen: the
+  ridge broke into separate tufts like a row of cotton balls, the storm read as a whirlpool with three thick arms. Wrong on both.
+- N2. Less erode, arms thinner. Seen: still tufts; the plain first octave of the tearing noise makes blobs whatever comes after it.
+- N3. Every octave of the tearing noise ridged (1 - |2n - 1|), not only the fine ones. Seen: the tufts are gone, the body is made of
+  strands, but they lie across the streamer (sweepDeg 6): hairs standing off a line.
+- N4. One ridge, broad in the west and thin in the east (wide [3.4, 0.1]), density uneven along it (lumpShare 0.2). Seen: one frayed
+  ridge; the hairs still across it.
+- N5. sweepDeg 78 (the fibres nearly along the streamer; 90 would be exactly along it and loses the fray at the edge), the winding
+  streaks of the storm at half contrast near it (rings 0.5) and three thin arms at pitch 6, the far deck paler in bands inside the fan
+  (an albedo lift), deck wisps everywhere. Seen: the main streamer is one ridge of many long strands, one sees through parts of it,
+  it thins toward the right; the far field lies in pale bands; the near deck is dark and streaked; the storm has finer rings.
+  Boxes (mine against approved, display values): near deck 9 27 60 against 3 15 31; lit deck right 56 88 135 against 43 86 132;
+  eye 21 37 67 against 10 34 65; far right 118 166 207 against 166 195 221; far middle 104 151 194 against 117 157 194; far left
+  46 81 131 against 24 59 95; the ridge's shadow 19 35 63 against 6 23 43. My own G17 tool: median 1.441, p25 0.907 over 74 tiles
+  (the same tool on 85312d1b's draft L4: 1.471 and 0.862; it reads higher than the official measure and is no official number).
+  Still wrong: strands too straight and silky (no billows, no curls); the storm's eye a smooth dark ellipse with a crisp edge; far
+  right not white enough, far left too bright, near deck too bright.
+
+Lessons kept: a plain first octave with strong erosion gives tufts; ridging every octave and laying the fibres along the streamer
+gives strands; the deck's `bright` is clamped at 1, so a lift over it ends in a flat pale slab (this is why the lift cannot reach the
+approved far right of 166 195 221).
+
+### The veil in place of the lift (decided 02:10 VM, my own choice, told to the Builder at 02:13 as his to overrule)
+
+MAIL 453 point 4 says the map gives way inside the fan where the approved image is pale. If the far deck itself were paler, the dark
+oval of the map (4605, the dive, the rise) would have to turn pale over the whole far half of the fan, and 4605 would not read as the
+same picture (point 3). The approved image's far field is pale because of a long slant path through thin haze, and a function can say
+that: a sheet of ice haze 0.1 to 0.2 units over the deck inside the fan, optical depth 0.13 straight down, in bands along the flow.
+From the surface view's eye (0.97 to 1.03 units up) the path through it is 5 to 30 times as long, so the far deck goes pale from the
+middle distance on and the limb is bright; from above it is nearly clear and the oval keeps its form. Functions `veilAt`, `veilDepth`
+in deep.ts, values `fan.veil` in deep.json. The veil also takes its share of the Sun from the deck under it. It is a volume the
+camera looks through, blended by nothing but the length of the path: no frame number, no height switch. The eye never comes under it
+in the surface view (lowest eye 0.97).
+
+02:14 to 02:15 VM: two old work trees removed (`/tmp/b-wt`, `/tmp/main-wt`; the disk was down to 1.3 GB, now 5.1 GB free). Values for
+the next draft N6: cirrus warp 0.085, wave 0.15, stretch 0.15 (billows); storm wall [0.45, 1.15], depth 0.05 (softer edge); deck near
+[-0.7, 0.2, 0.42, ..] (darker near deck).
+
+## Word to /root after MAIL 453 and 457 (sent 02:13 VM, high priority, word for word)
+
+neptune_builder to the Builder, the word after MAIL 453 and 457 (02:13 VM). Not a commit, not READY: a look.
+Looks: agent/neptune-place-looks c9ae2a0a. (1) 4860 draft N5 (left) beside the approved image: the work tree on top of 85312d1b, not committed. (2) The rise on 85312d1b, every frame 4950 to 4965; the other 59 frames render now (30 s a frame here, done about 02:35), the sheets of all 75 come with the next look.
+What N5 holds, by your letters:
+A. One main ridge of strands: every octave of the tearing noise is ridged, the fibres run along the streamer and are drawn out 9 times, the solid core is no longer kept; broad in the west (0.2 half width at u -3), thin in the east (0.09 at u 0). The second streamer begins right of the storm (u -1.25, measured on the approved image) and is thin. The bow and the far rim band are streamers of the map only and end at the fan's border.
+B. The storm: its place and core size were right by measure (approved core middle (-1.39, 1.04), 0.98 by 0.75 units; mine at (-1.45, 0.98)). What made it large was the second streamer's shadow falling into the well and a dark wall ring to r 0.7. Now: eye 0.38, well 0.07 deep, three arms at pitch 6 as fine rings, the winding streaks at half contrast.
+C. Far field: pale in bands from the line v + 0.235 u = 1.4 on (measured on the approved image), not west of u -6 to -3. In N5 this is a paler deck inside the fan.
+D. The deck's thin streaks now everywhere (ridges of the octaves from 0.175 units down), also in the dark near field.
+The fan, measured from the plan's poses over 4770 to 4949: a wedge, left edge through (-0.07, -2.08) at 151 degrees from the u axis, right edge through (0.39, -1.97) at 86 degrees, horizon 9.2 units from the eye. In deep.json as fan; the scene joins the map's layout over 1.6 units outside it.
+One choice I make for C unless you say no: the pale far deck becomes a veil, a thin sheet of ice haze 0.1 to 0.2 over the deck inside the fan (optical depth 0.13 straight down, in the same bands), not a paler deck. Along the surface view's low line of sight the path through it is 5 to 30 times as long, so the far deck goes pale from the middle distance on and the limb bright; from above it is nearly clear, so the dark oval of the map keeps its form under it and 4605 keeps its reading. Then inside the fan the map has to give way only for the main ridge, the storm's core, the second streamer and the bow that ends. It is written and compiles; the first frame of it comes when the rise is done (one render at a time).
+Measured on N5 (boxes of the picture at 960 by 540, display values, mine against approved): near deck 9 27 60 against 3 15 31; lit deck right of the storm 56 88 135 against 43 86 132; eye 21 37 67 against 10 34 65; far right 118 166 207 against 166 195 221; far middle 104 151 194 against 117 157 194; far left 46 81 131 against 24 59 95; the ridge's shadow 19 35 63 against 6 23 43. My own tool for G17 on this preview draft: median 1.441, p25 0.907 over 74 tiles (the same tool on 85312d1b's draft: 1.471 and 0.862, where the official measure of 9087f008 was 1.087 and 0.606, so it reads high and is no official number). 60 to 70 s a draft frame of 4860.
+Still wrong in N5, by eye: the strands are too straight and silky, the approved ridge has billows and curls; the storm's eye is too dark and its edge too sharp; the far right is not white enough and the far left too bright; the near deck is too bright.
+Next: the rise sheets; the veil at 4860; billows in the ridge; then every frame of the dive, the commit with its job text, and after it the map giving way inside the fan with the pair of 4605 at final.
+
+## MAIL 473 from the Builder (arrived 02:27 VM, high priority, word for word)
+
+MAIL 473 from the Builder (/root), on your look N5 (shown to Brandon in status 206 beside the approved image, as not there yet).
+1. Yes to the veil for C: a thin sheet of ice haze over the deck inside the fan, pale by the length of the path through it, nearly clear from above. It is one function of height and angle, which is what the note asks for.
+2. What I see in N5 beside the approved image, in order of weight: (a) the main ridge is a smear of straight silky strands; the approved ridge is a line of billowing cumulus with lit tops, soft shaded flanks and a clear cast shadow on the deck beside it. Billows first. (b) Your D went too far: the fine concentric streaks cover the whole deck around the storm like brush strokes; in the approved image the deck is nearly smooth and the streaks are faint and few. Halve them at least and keep them out of the dark near field. (c) The storm: its edge is too sharp and its floor too black; the approved eye has a soft rim and a visible dark blue floor with a paler ring round it. (d) The second streamer is a flat white stripe; the approved one is a thin broken band of cloud with its own shadow. (e) The far right is not white enough and the near deck too bright, as you say.
+3. Order as you list it: the rise sheets, the veil at 4860, the billows, every frame of the dive, the commit with its job text, then the map giving way inside the fan with the pair of 4605 at final. A line from handover_engineer reaches you about the dive's last frames (the place comes in one way and the surface view carries it off the other, 4745 to 4769): the surface view is still at that end, or leaves along the move's way.
+
+What follows from it for the work: the veil stands (point 1). Order inside 4860: billows with lit tops, shaded flanks and a cast shadow (a); the
+deck's streaks halved and out of the dark near field (b, this takes back part of D of MAIL 457); the storm's rim softer, its floor dark blue
+and not black, a paler ring round it (c); the second streamer broken, with its shadow (d); far right whiter, near deck darker (e). The
+engineer's line about 4745 to 4769 is awaited.
+
+## 02:21 to 02:33 VM. Lab log: the rise of 85312d1b, every frame; drafts N6 to N9 of 4860
+
+The rise on 85312d1b (every frame 4950 to 5024, preview draft, 12 to 62 s a frame while the scene is drawn, 1 s above 0.9 radii), looked
+at frame by frame in five sheets (pushed as looks at 02:30, looks branch b2dfc5dc):
+- 4950 to 4977: the scene alone; the layout holds (oval, main ridge, second streamer, bow, far rim band, storm).
+- 4978 to 4990: the globe's own map comes in under the scene by height. Two forms at once: the scene's thin white streamers stand over
+  the map's broad pale streaks. This is the fault point 1 of MAIL 453 cures (the map giving way inside the fan).
+- 4991 to 5024: the globe alone; the pose settles into the travel's pose. At 5024 the storm is about 9 percent of the frame's width.
+A question that follows for point 1 (to ask with the next mail): if the map inside the fan changes at every height, 4530 and 5024 change
+too, and the travel frames beside them (4529, 5025) are not rendered again (MAIL 217). The change must then be too small to see at
+that size, or those travel frames have to follow.
+
+Drafts of 4860 (each 66 to 71 s, preview draft):
+- N6. The veil in place of the lift (height 0.1 to 0.2, 4 layers, depth 0.13, light 0.11 0.14 0.18); storm eye 0.5 with wall 0.45 to
+  1.0 and depth 0.045 (measured on the approved image: darkest core radius 0.23, dark sheath radius 0.5 round (-1.44, 0.94)); main
+  streamer wide 1.7 to 0.6; warp 0.085. Seen: the storm is a soft dark oval with fine rings, right in place and size; the limb has a
+  broad pale haze but dim and smooth (far right 122 149 179 against 166 195 221); the ridge is a snaking silk ribbon: the first bend
+  moves the whole thin body sideways and the strands stay smooth.
+- N7. Largest octaves drawn out little (billow 0.5 over 3 octaves), bends 0.05 with the smaller ones stronger (warpNext 0.45, 1.1), the
+  room of the cirrus widened by the sum of the bends; deck darker toward the west inside the fan (west -4 to -1.5, 0.2); veil thin
+  (0.1 to 0.13, 2 layers, contrast 4, light 0.19 0.225 0.27). Seen: the ridge curls (far left box 27 53 95 against 24 59 95, right);
+  the veil is a flat white slab with a hard lower edge: wrong.
+- N8. Veil 0.1 to 0.16, 3 layers, contrast 2, light 0.16 0.2 0.25; light.cirrus 0.6 to 0.42 (the ridge's pixels: median 198 against
+  153 of the approved, now 172); erode 1.15. Seen: the ridge breaks into separate torn pieces of smoke, not a line of cloud; the veil
+  soft again but grey.
+- MAIL 473 arrived (billows first; streaks halved and out of the near field; storm floor dark blue; second streamer broken).
+- N9. The largest three octaves keep heaps between creases (1 - ridge squared) and the finer ones ridges; core 0.45; rise 1.0; the
+  main ridge 0.2 thick; storm wall 0.3 to 1.0, dark 0.62, rings 0.25; wisp light 0.7 to 0.3 and none in the near field (wisp.near 0);
+  second streamer broken (lumpShare 0.75); veil nearer and deeper (from 1.0, depth 0.2). Seen: the ridge is one line of billowing
+  heaps with frayed edges and a cast shadow before it: the right kind of thing for the first time. Too white and too even in light
+  (median 186 against 153), too thick at the right. The veil now covers the far half of the storm as a white slab (lit deck right
+  106 131 167 against 43 86 132): too near and too deep.
+Tool: `out/work/nep/deep/ridge.py NAME` gives the brightness of the ridge's pixels in mine and in the approved image.
+
+## NOTE 482 from the Builder (arrived 02:42 VM, low priority, word for word)
+
+NOTE 482 from the Builder (/root), to every builder. No answer needed. Main is 3efc31d. Since f2375d2e it gained: Saturn's stop folders (a359a4b7, as a base) and the smooth harness with the capture tool (files under tools/ and tests/, the smooth block of config/showcase.json, one line of package.json, README.md, assets-src/shared/HARNESS-NOTES.md and harness-cal/). Nothing under src/ outside src/stops/saturn changed, so no frame of yours moves by the merge. What it means for you: after you merge main, npm run smooth -- --stop <id> runs every part (the path, the pictures, the place, the parity of the 4K picture against the master, the counts after the warm start), and a READY that is meant for a round carries its last lines whole, not the path alone. The limits are logged under d174 in kit/PROGRESS.md. The judged test for a dissolve will be the pattern number (0.45) with the harness's next commit; the plain change is printed beside it. Next onto main, in this order, as their proofs come back whole: the frame counters with the warm start, the travel legs' light law and landing, the engine's air with the carry of the surface view's motion, the globe's options.
+
+## Job np3-01 from render_04 (arrived 02:43 VM, high priority): the official measure of 85312d1b
+
+"JOB np3-01, part 1 of 1, 58 min, commit 85312d1" with two files (np3-logs.txt, neptune.json). The log, word for word:
+
+    RC build 0
+    5ae1813832a77f851452ec584ea9a58e4142ad6caa5b151670ba1ab8b85b624e f04605-16x9-draft-full.png
+    e298dab13c199dcc16ce99bcb1615c651eeec238f247dc0d94ad3a50dd2710a8 f04605-16x9-final-full.png
+    main has: draft 5ae1813832a77f851452ec584ea9a58e4142ad6caa5b151670ba1ab8b85b624e final e298dab13c199dcc16ce99bcb1615c651eeec238f247dc0d94ad3a50dd2710a8
+    RC measure 0
+    PASS G17 neptune: 4605 median 1.027 p25 0.868 over 65 tiles; 4860 median 1.195 p25 0.620 over 75 tiles
+    wrote /home/user/workspace/repo/out/work/measure/neptune.json in 3244 s
+
+So on 85312d1b the hold 4605 is main's bytes at draft and at final, and G17 passes (4860 median 1.195, p25 0.620; my own tool read 1.471
+and 0.862 on the preview draft of the same commit, so my tool reads about 0.25 high).
+
+## Lab log, 4860 after MAIL 473: N10 to N13 and T1 (02:31 to 02:45 VM, preview draft, 66 to 71 s a frame)
+
+- N10: sigma 80, veil depth 0.16 from 1.3 to 3.0 with a bluer light, main narrower (halfWidth 0.06). Far haze a soft pale blue;
+  the ridge's heaps still flat white (ridge median 183 against the approved 153).
+- N11: sigma 32, halfWidth 0.045, lee 2.6, thick 0.16, wave 0.09, billow [0.6, 2]. A narrower white ribbon; parts see through at
+  the right end.
+- N12: the main line moved to the approved place (the approved ridge lies at apparent v 0.0 between u -1.8 and -0.3, mine lay at
+  0.13; now line [-4.4, 2.3, 0.25, -0.23], bow -0.2), leeThin 0.3, sigma 50, storm wall ragged 0.5, veil contrast 4 share 1.
+  The ridge a thin twisting rope; the far field dimmer (far right 116 146 179).
+- N13: heaps on the crest at every octave and fibres only on the lee side (cirrusNoise), leeThin 0.5, veil depth 0.18, light
+  [0.18, 0.25, 0.34], contrast 3, share 0.85. A cottony rope with small lumps, still white and narrow. Boxes, mine against the
+  approved: near deck 7 22 50 against 3 15 31; eye 20 39 72 against 10 34 65; far right 136 162 191 against 166 195 221; far mid
+  104 132 166 against 117 157 194; far left 28 54 97 against 24 59 95; shadow 12 27 57 against 6 23 43. Ridge pixels: median 195,
+  tenth 124, share of the box 12.9 percent, against 153, 106 and 14.6 percent.
+- The Sun at 4860 (out/work/nep/fan/sun.ts): u 0.314, v 0.869, up 0.383, so 22.5 degrees over the deck, bearing 70 degrees from
+  the u axis; the view's bearing 117 degrees; 61.5 degrees between the view and the way to the Sun. The Sun stands behind the ridge
+  and to the right, so the flank toward the eye is the shade side, as in the approved image.
+- T1: N13 with no ambient on the cloud (light.cloud 0, light.deep first and third 0). Ridge median 185, tenth 120, share 11.8
+  percent. Grey now shows in the folds, so the ambient was part of it, but the body is still a dense rope with a hard outline:
+  the approved ridge is about twice as broad, thin enough to see the deck through at its edges, and its white is in knots.
+  Conclusion: the fault is the density and the outline (a solid tube lit all round), not the light alone.
+
+## My word to /root, 02:46 VM (low priority), word for word
+
+"neptune_builder, 02:46 VM, word on the way (no commit yet; pushed head still 85312d1b). Look pushed: agent/neptune-place-looks c71ff1ab, "4860 draft N13 beside the approved image".
+
+1. Job np3-01 came back from render_04 for 85312d1b: G17 PASS (4605 median 1.027 p25 0.868; 4860 median 1.195 p25 0.620), and 4605 is main's bytes at draft (5ae18138...) and at final (e298dab1...).
+
+2. 4860 after mail 473, eight drafts since N5 (preview draft, 66 to 71 s a frame). What N13 holds: (C) the veil gives a pale band at the limb; (c) the storm has a soft ragged rim, a dark blue floor (20 39 72 against the approved 10 34 65) and fine rings; (b) the deck streaks are cut to a few and are out of the near field; (d) the second streamer is a thin broken band; (a) the main ridge lies on the approved line (measured, it was 0.13 units off) and is made of heaps on the crest with fibres only on the lee side.
+
+3. Still wrong, in order: (a) the ridge reads as a white rope: dense, hard outline, half as broad as the approved, no see-through fringe. Ridge pixels median 195 and tenth 124 against the approved 153 and 106. I measured the Sun (22.5 degrees up, behind the ridge to the right), so the flank toward the eye should be shade; with the cloud's ambient at zero grey shows in the folds (median 185) but the body stays a tube. Next: lower density with a broad thin fringe, knots of white, then the shadow beside it. (d) the second streamer's own shadow does not show yet. (e) far right 136 162 191 against 166 195 221, near deck 7 22 50 against 3 15 31; the far field has no bands yet.
+
+4. One question for point 1 of 453, not blocking: if the map gives way inside the fan at every height, the first hold frame 4530 and the last rise frame 5024 change too, while 4529 and 5025 are not rendered again (at 5024 the storm is about 9 percent of the frame's width). My plan unless you say otherwise: the new map inside the fan comes in by eye height only, whole at the hold's height and below, nothing of it at the height of 5024 and at the pose of 4530 if that one is higher than 4605; I will measure both heights and send the largest difference at 4530 and 5024 against today's bytes with the pair of 4605.
+
+Next mail with the commit: 4860, every frame of the dive, job text."
+
+## MAIL 484 from the Builder (arrived 02:51 VM, high priority), word for word
+
+"MAIL 484 from the Builder (/root), on N13 (look c71ff1ab) and your question 4.
+Question 4: yes, as you plan. The new map inside the fan comes in by the eye's height alone, whole at the hold's height and below, none of it at the height of 5024 and at 4530's pose, so 4529 and 5025 keep their bytes and nothing comes in by time. Two conditions: the change must not show as a change in sight while the camera moves through that band of heights (the pattern number will read it; send me the frames of the band as a strip), and 4605 itself then changes, so send the pair of 4605 against the kept still with the largest difference and I judge it by eye before it goes anywhere.
+What I see in N13 beside the approved image, in order of weight:
+1. The ridge, as you say: a white rope. The approved ridge is a chain of small torn heaps with see-through fibres blown off on BOTH sides, most on the lower right, and it is about twice as broad with half the density; it throws a dark blue shadow on the deck to its lower right, which is what makes it stand above the deck. Lower the density, break the outline, widen the fringe, then the shadow.
+2. The limb band is too pale and too broad: yours is a flat white band about twice the width of the approved one. In the approved image the limb is a thin bright blue line, then a narrow pale haze through which the far streaks still show. Halve the width, cut the level, keep the streaks visible in it.
+3. The storm is too large, too near the middle and too clean: yours spans about 0.36 of the width with its centre near 0.52, 0.47; the approved one spans about 0.22 with its centre near 0.72, 0.45, its floor nearly black blue and its rim made of fine spiral streaks that fade outward, not a disc with an edge. Check its place against the approved image the same way you measured the ridge's line.
+4. The deck has no texture: the approved one carries long fine streaks parallel to the limb in the far field and a dark mottled near field with soft cloud shadows. Yours is smooth paint. The far bands and the near mottling next after the ridge.
+5. The second streamer: thinner and longer in the approved image, with its own dark shadow line under it, as you say.
+Go on to the commit as planned: 4860, every frame of the dive, the job text. Main is 7e7fb89 (tree as 3efc31d but for kit/PROGRESS.md)."
+
+## Lab log after MAIL 484 (02:51 to 03:03 VM)
+
+- The storm's place, measured as the ridge's line was (both pictures at 960 by 540, brightness smoothed over 3 pixels, the largest
+  connected dark piece in the storm's part of the frame): under brightness 40 the approved core spans x 0.429 to 0.617 of the
+  width (0.19) with its middle at 0.521, 0.464; mine (T2) spans 0.405 to 0.628 (0.22), middle 0.510, 0.482. Under 55: approved 0.374
+  to 0.630 (0.26), mine 0.355 to 0.692 (0.34). Under 70: approved 0.312 to 0.711 (0.40), mine 0.350 to 0.698 (0.35). So the place
+  is right within 0.02 of the frame (not at 0.72: the dark thing near 0.72 to 0.95 of the width in the approved image is the
+  second streamer's shadow). What is wrong is the grading: the approved one has a small black core (under 30 over 0.14 of the
+  width; mine nowhere under 30) inside a wide soft dusk, mine was a disc with an edge (55 to 70 within 0.006 of the width; the
+  approved takes 0.07). Cause of the edge: the pale collar set in between 1.0 and 1.25 eye radii.
+- T2: veil lowered to 0.02 to 0.08 over the deck (under every streamer, so a streamer's shadow on the deck lies on the veil too:
+  the veil's light now takes the cirrus between the deck point and the Sun), light 1.35 times, wave 0.6; main ridge halfWidth 0.07,
+  base 0.03, thick 0.10, soft 0.6, sigma 70; blue ambient 0.03 0.055 0.10. Seen: the limb a white slab (worse), the ridge a smooth
+  cream ribbon. Thrown away but for the low veil and its shadow.
+- A numpy copy of the ridge's density (out/work/nep/proto/proto.py, 10 s a picture) to look at forms without the renderer. It
+  showed what the renderer shows (a ribbon with a wavy outline), and why: with core 0.45 and erode 1.1 the noise can never eat the
+  middle line (it would need a noise under 0), so the body is a tube whose outline alone is torn. Also measured there: the heap
+  function and the fibre function of one octave both have mean 0.50, so the sum is not skewed.
+- T3: core 0.1, erode 1.5 (the middle is eaten where the noise is under 0.4), soft 0.3 on the crest and 0.9 on the fringe, fringe
+  on both sides (half on the Sun's side), sweep 40 degrees (fibres leave the ridge at an angle, as in the approved image, not
+  along it), lump 0.09 with share 0.5 (knots every 0.15 units, the approved spacing), storm eye 0.42, dark 0.85, collar sets in
+  from 0.5 to 1.7 eye radii and is made of the winding streaks (share 0.6), far streaks 3 times from v 1.2 to 2.6, veil depth 0.07
+  with light 0.2 0.27 0.36, second streamer longer and thinner (line -1.6 to 1.3, halfWidth 0.03, density 1.0).
+  Seen: the ridge is a chain of separate white heaps, the storm soft with a graded rim (eye 18 36 67 against 10 34 65), the limb
+  band narrower and bluer (far right 143 171 197, far mid 125 153 182 against 117 157 194), the second streamer thin and broken.
+  Wrong: the heaps do not join, no fringe shows, every heap is white all round, no shadow on the deck beside them, the streaks
+  round the storm strong again.
+- Why the heaps are white all round, worked out: the Sun stands 22.5 degrees over the deck behind the ridge. A side of the cloud
+  that leans less than 22.5 degrees from the level is lit. With the trailing side 2.6 times as broad as the Sun's side and a body
+  0.065 high, the near side is a ramp of 9 degrees: all of it lit. The approved ridge has a steep near flank. So the dense body
+  must be as narrow on the near side as on the far side and as tall as it is broad, and the trail must be thin fibres, not a
+  broad dense ramp.
+- Why no shadow shows beside the ridge and the near deck is flat paint: the near deck's albedo sits at its floor and its light is
+  nearly all air light (low haze 0.024 down, about 0.05 along the view: 0.027 of blue against 0.012 from the deck), which the
+  cloud does not shade. The approved near field is darker (3 15 31 against 7 22 50). So the low haze goes to a third (0.008):
+  the limb line gets thinner, which mail 484 point 2 asks for as well, and the far pale comes from the veil.
+- T4 (rendering): the density is the larger of two parts, heaps in a crest that is narrow on both sides (halfWidth 0.05, thick
+  0.14) and fibres in the broad trail (density 0.25, sets in over 0.6); lee 3.0, erode 1.3, lump share 0.3; low haze 0.008.
+
+## Lab log, T4 to T7 (03:02 to 03:12 VM, preview draft, 71 to 74 s a frame)
+
+- T4: density = the larger of heaps in a crest that is narrow on both sides and fibres in the broad trail; low haze 0.008.
+  Seen: a joined chain of heaps, broad (share of the box 16.8 against 14.6 percent), fibrous; median 174. The near deck darker
+  (5 18 45), a faint shadow under the ridge. Storm floor 9 23 48 (now darker than the approved 10 34 65). Rings round the storm
+  too strong; the limb haze smooth, without streaks.
+- T5: every octave a heap inside the crest (the fibres begin where the crest ends: smoothstep 0.25 to 0.7 of the fringe measure),
+  fibres only in the lower part of the body (they end between 0.3 and 0.65 of its thickness, so they do not hang before the
+  shaded flank), light.cirrus 0.38, veil sheet 0.03 to 0.045 (a thin sheet keeps its bands apart along a low line of sight; at
+  0.06 thick a ray crossed 0.3 to 0.6 units of it and the bands were averaged away), storm dark 0.78, collar streak 0.35, far
+  streaks 2 times, night 0.0008 0.0025 0.0055, west 0.1. Seen: ridge median 162, tenth 111, share 15.3 percent, mean 153 162 176
+  (approved 153, 106, 14.6, 144 155 169): the numbers of the ridge are met within 6 percent. The limb haze carries streaks.
+  Pushed as a look (020cb0f8).
+- T6: near darkening moved toward the eye (-1.2 to -0.3), wave 0.075, leeThin 0.3, collar streak 0.25, far streaks 1.5 times.
+  Seen: the deck beside the ridge is lit and the ridge's shadow lies on it as dark blue patches to its lower right; but the near
+  field is too bright (6 24 57) and streaked. Finer heaps.
+- T7: near -0.9 to 0.1, castWave 0.02 (was 0.06: the shadow on the deck read no wave under 0.06, so with wave 0.075 it saw the
+  cloud without its noise, and without noise the new body is thin: mean density is not the density at the mean noise),
+  lightLimit 0.35 (the same for the taps inside the cloud), storm dark 0.72. Seen: the heaps throw dark blots on the near deck,
+  the second streamer throws its own; grey shows on the near flank of the large heaps. Ridge median 159, tenth 110, share 14.8
+  percent, mean 149 159 175. Boxes: near deck 4 18 44 (3 15 31), lit deck right 46 84 135 (43 86 132), eye 9 24 50 (10 34 65),
+  far right 146 171 196 (166 195 221), far mid 128 153 181 (117 157 194), far left 29 59 106 (24 59 95), shadow 11 29 60
+  (6 23 43). Local G17 tool, rows as before.
+- Then: second streamer's lump share 0.45 (its shadow was blots, the approved one is a line). Config kept as
+  out/work/nep/deep/deep-T8.json. A spread of the dive with it: D1 (4707 to 4774 every sixth frame, and 4860).
+
+## The band of heights for the map inside the fan (MAIL 484, answer to my question 4), measured 03:13 VM
+
+Eye height over the globe in radii (out/work/nep/heights2.ts, from plan): hold 4530 2.1816, 4560 2.1597, 4605 2.1269, 4650 2.0941,
+4679 2.0729 (the hold sinks 5 percent); dive 4680 2.0722, 4690 1.9499, 4700 1.4279, 4707 0.9599; rise 4990 0.5768, 5000 1.4358,
+5006 2.3696, 5010 3.0639, 5020 4.1308, 5024 4.1973.
+
+So "whole at the hold's height and below, none at the height of 5024 and at 4530's pose" leaves the band 2.1816 down to 2.1269:
+the new map inside the fan comes in by height over the first 75 frames of the hold (3 seconds, by the hold's own sinking, a
+function of height alone), is whole through the dive (it starts at 2.0722), and on the rise the eye crosses the band between 5004
+and 5005 (about 1.9 to 2.4 radii a frame there), so there it changes within one frame while the storm is about a tenth of the
+frame's width and moving fast. Both strips go to the Builder with the pair of 4605: 4530 to 4605 every fifth frame, and 5002 to
+5007 every frame.
+
+## NOTE 491 from the Builder (/root), arrived 03:16 VM, word for word
+
+NOTE 491 from the Builder to every stop builder, 03:16 UTC. Main is 274f4c9: the frame counters and the warm start (d177: showcase.counts, npm run warm) and the retreat's light law (d178). The Air follows within minutes. One change to NOTE 482, to save your renderer hours: do not wait for your own whole npm run smooth before you name a commit. Name it as soon as, on your own tree merged with newest main, the path part is green or its red lines are listed, the handover report passes with the place picture off, and G13, G5, G17, G11 and G15 are read. The whole smooth report then runs on my machines as one of the 15 jobs of the stop check, at the same time as the others, and I send you its md, json and panels as attachments when it is back. On your own renderer run only the kinds and parts you are changing (--only pictures --kind dive and the like). Everything else in NOTE 482 stands.
+
+## D1: a spread of the dive with T8 (03:11 to 03:20 VM), and T9
+
+D1: 4707, 4713, ... 4769 every sixth frame, 4770, 4774, 4860 at preview draft with the T8 config: 18 to 20 s a frame down to 4731,
+26 s at 4743, 43 s at 4755, 50 s from 4765 on. Looked at every frame (sheet /tmp/v-D1.jpg, and 4713 to 4731 large).
+- 4707, 4713: the globe alone (the map's storm: a broad dark oval, a white streak in it, two broad white streaks beside it).
+- 4719, 4725: two forms at once. The map's broad streak and the streak in the oval still stand while the scene's ridge (a thin
+  line of small heaps) comes in beside them by height; at 4731 the map's streaks are gone, the scene's eye (rings, about a third
+  of the map's oval across) sits inside the map's dark oval. This is the fault of point 6 of MAIL 453 and it is not cured by this
+  commit: the cure is point 1 (the map inside the fan made from the scene's own function), which is the next step.
+- 4737 to 4769: one scene, the ridge grows toward the lower right as the eye sinks, the storm keeps its place, the veil's pale band
+  stands at the limb from 4737 on. 4769 to 4770 to 4774: no step to be seen.
+- 4860 of D1 (T8) under the approved image (look 6329e98f, 03:22): the ridge's line and share are right, but its heaps are plastic
+  and white where the approved has fine fibres one sees through; the far field is still a flat pale band with a sharp lower edge
+  where the approved has thin streaks; the storm has many clean rings out to 2.7 eye radii (a record) where the approved has a few
+  spiral streaks; the near deck is smooth. Boxes: near deck 4 18 44 (3 15 31), lit deck right 46 84 135 (43 86 132), eye 9 24 50
+  (10 34 65), far right 146 172 196 (166 195 221), far mid 128 153 181 (117 157 194), far left 29 59 106 (24 59 95).
+- Where the boxes lie on the deck (out/work/nep/fan/pix.ts): far right u -0.7, v 2.6 to 3.2; far mid u -2.4, v 3.4; far left u -3.7.
+  The veil's west ramp was -6 to -3, so the veil was whole from the middle on: no gradient from the blue middle to the white right.
+
+T9 = T8 with: veil west [-3.6, -0.6] (thin in the middle, whole at the right), veil light times 1.13 [0.226, 0.305, 0.407], storm
+reach 1.15 to 0.9 (the rings end at 2.1 eye radii), storm dark 0.72 to 0.66, deck night [0.0006, 0.0021, 0.004], light.cirrus 0.38
+to 0.365.
+
+T9 (03:25 VM, 73 s): far right 151 176 199, far mid 91 120 155 (approved 117 157 194), eye 9 24 50, lit deck right 43 80 131,
+near deck 4 17 42. Looked at: the veil's west end now cuts a dark gap between the pale band and the limb over the storm (worse);
+the rings end sooner (better); the eye did not move (the lower night colour took what the lower dark gave).
+T10 (03:28 VM, 74 s) = T9 with veil west [-5.2, -2.4], veil depth 0.09, storm dark 0.5, second streamer base 0.09 and lumpShare
+0.65: far right 167 188 208 (166 195 221), far mid 145 168 192 (117 157 194: too white), eye 10 26 55 (10 34 65), ridge median
+160 (153), share 14.7 percent (14.6). Looked at: the pale band is again a broad slab over the storm (the Builder's point 2 of
+MAIL 484); the second streamer stands higher and its shadow has come apart into small black marks far from it (worse).
+T11 = T10 with veil depth 0.08 and the second streamer's base back at 0.06. The "how" texts of deep.json now name every key the
+picture reads (storm dark and collar, deck west and level, wisp near and far, the cirrus's heaps and fibres, light cirrus, deep
+and shadow).
+What numbers cannot cure, stated as faults of this step: the far field is a sheet with bands, the approved one is thin streaks of
+cloud on the deck seen at a low angle; the heaps are smooth where the approved ones are fibrous to the pixel (the preview draft
+drops the cirrus's wavelengths under a step; the master draft tells); the near deck has no mottling.
+
+## NOTE 501 from the Builder (/root), arrived 03:36 VM, high priority, word for word
+
+NOTE 501 to every stop builder and globe_engineer, from the Builder, 03:38 UTC. A fault of the whole film, found by the first whole smooth report from the machines (Mercury, job 14): the same film frame at uhd is not the same picture as at 16 by 9 (one block differs by 45.8 levels at 713, limit 12).
+CAUSE, found by mercury_builder: every globe brings its plate levels and its fine levels in by the texels of the parent a pixel of the format (uPatchFade 1.1 to 1.7 against gd * scale * size, gd from dFdx and dFdy). At uhd a pixel is half as large, so every level comes in at twice the height; at preview at half the height; in the live player it depends on the window. Brandon captures at uhd, so he gets another film than the one we judge. The term is in src/bodies/planet.ts (globe_engineer) and in the own globe code of mercury, venus, earth, jupiter, uranus, neptune and the Sun (src/stops/<stop>/globe.ts or planet.ts).
+RULING (plan F: whatever blends does so by distance, height or angle): the measure is texels of the parent a 1080th of the frame height, an angle, not a pixel. In practice one factor, the height of the drawing buffer in pixels over 1080 (1 at 16 by 9, 2 at uhd, 0.5 at preview), multiplied into the density that a fade reads (parent, texels, fine, thin, cap, whatever your code calls it) and into nothing that only picks a mip for sampling.
+PROOF, both by you before you name the commit: (a) at 16 by 9 the factor is 1 and every byte stays: the hashes of your own draft frames before and after are equal. (b) at uhd the picture becomes the 16 by 9 picture, only finer: npm run smooth -- --stop ID --only parity on your tree (seven frames), limits mean 12, coarse mean 3.2, one block 12, frame level 2.2.
+THE SAME RULE holds for every other number in your stop that is counted in pixels and can be seen: the width of a feather, the radius of a glow, a threshold of a size on screen, a point size. If your parity is still red with the factor in, the panel names the block: find the term.
+WHO: each stop builder, in the commit you name next (mercury_builder has it in work). globe_engineer: src/bodies/planet.ts and anything else under src/bodies and src/core that reads a density a pixel, as one commit on newest main (6884e80 or later), then ask me for the engine proof and say which stops draw with the shared code. saturn_coder and mars_place_builder: check your place code for the same kind of term and say what you found.
+A red parity is a severe item in a stop's round.
+
+## 03:31 to 03:39 VM. Main merged, the dive runs, NOTE 501 read against my code, the plan for point 1 of MAIL 453
+
+- Main merged before the dive so the dive proves the merged tree: merge b57b7c2d holds main 0e5ddf1b (the frame counters, the
+  retreat's light law, the engine's one air with the carry, the globe's options, the corners of the pace, the renewed judge).
+  tsc clean on the merge. The dive V1 (every frame 4708 to 4769, preview draft, config T11) started 03:31; 16 to 17 s a frame so far.
+- NOTE 501 read against my stop. The one fade that reads texels a pixel is in src/stops/neptune/planet.ts: the plate levels, twice
+  `1 - smoothstep(uPatchFade.x, uPatchFade.y, parent)` with parent = gd * scale * size (gd from dFdx, dFdy) and, for the first level,
+  the texels of the base map a pixel. Cure as ruled: parent times uLine, uLine = height of the drawn frame over 1080, set in
+  set.ts. Already angles before this note: the cirrus's softness in the dive (move.cirrus.px) and the cirrus shadow's footprint
+  (clouds.shadowSoft), both scaled by height over 1080 in set.ts. One more number counted in pixels: the globe is drawn while its
+  radius is over 0.6 pixels (set.ts 272); it becomes 0.6 pixels of a frame 1080 high. deep.ts reads the pixel's angle only for
+  the finest wavelength it draws (deck, wisps, cirrus, veil) and for the march's tolerance: that is the pick of a level, it stays a
+  pixel, and the parity run says whether a level's mean moves with it. Patch ready in out/work/nep/next/line.py; it goes in when
+  the dive is done (no edit under src while a render runs).
+- The parity run is seven frames at uhd and at master, draft tier (config/showcase.json smooth.parity: dive 4702, 4725, 4747,
+  surface 4860, rise 4969, 4987, 5006). Five of them draw the function scene; 4860 takes about 4.5 min at master draft, so about
+  18 min at uhd; my estimate for the whole run on this renderer is 60 to 70 min.
+- PLAN for point 1 of MAIL 453 under MAIL 484 (the map gives way inside the fan), no bake: the scene's own function is drawn on
+  the globe inside the fan from the hold's height down, by one more weight in deep.ts (the fan's weight of the deck point the ray
+  meets, times a share by the eye's height: none at 2.18 radii and over, whole at 2.127 and under), beside today's weight for the
+  whole scene (0.9 to 0.15 radii). So inside the fan the picture is one function from the hold to the surface and nothing changes
+  there in the dive; outside it the map stays to 0.9 radii and then gives way to the scene that is fitted to it. Two things the
+  scene still lacks outside the fan and gets with it: the map's long white streak (v -1.3 to 0, u -9 to 3) as a sixth streamer
+  with where: map, and the dark near deck (deck.near) only inside the fan, since the map is azure south of the streak.
+  Rays whose weight is nothing leave the shader before the march, so the hold does not pay for the scene outside the fan.
+
+## 03:43 to 03:47 VM. Look pushed, the dive 4732 to 4743 looked at, how the parity proof runs
+
+- Look 75f5792a pushed 03:43: 4860 with T11 over the approved image; the dive V1, every frame 4708 to 4731 (two sheets).
+- V1, 4732 to 4743 (every frame looked at, /tmp/s-V1-4732.jpg, two of them at full size): the scene alone on the globe, continuous
+  from frame to frame, no jump of place or level; the ridge, the eye with its rings and the second streamer keep their places.
+  Faults seen from this height that 4860 hides:
+  1. the veil reads as a grey slab: its edge across the flow is a straight line parallel to the ridge (the set in, fan.veil from
+     and to) and its west end is a staircase of rectangles (its bands are value noise drawn out 25 times, fan.veil long, and from
+     above the cells of that noise show as boxes). In 4860 the same sheet is the pale far deck. To cure: a ragged, streaked set in
+     and west end (the bands themselves carry the edge), and the band noise sheared so no cell edge runs along the flow.
+  2. the deck's streaks are drawn out along the flow everywhere, also in the near field (fault b of the mail of 01:42, still there).
+  3. the eye's rings are clean circles (the approved image: fine spiral streaks fading outward).
+- How proof (b) of NOTE 501 runs here: tools/smooth.ts draws the seven frames at master first, then at uhd, from the built dist,
+  and keeps each under a stamp of the build. So after the master frames are there (about 15 min) I measure them against my own
+  preview frames of the same film frames with the same measure (tools/img/smooth.py, op parity, factor 2): an early reading of
+  what uhd against master will say, an hour before the uhd frames are done, without one more render.
+
+## NOTE 504 from the Builder (/root), arrived 03:48 VM, high priority, word for word
+
+NOTE 504 to every stop builder, from the Builder, 03:51 UTC. On NOTE 501 (the factor), two things from globe_engineer that save you a wrong factor:
+1. Do NOT take the factor from view.format in the pass that draws a place picture. There view.format is the layout's, larger by the picture's scale (2 at 16 by 9), so view.format.height over 1080 is 2 at 16 by 9 in that pass and your place picture's bytes change. And the edge limit (handover.place.maxEdge 4800) gives the uhd picture the scale 1, so a pixel of the uhd place picture is a pixel of the master's place picture: there the right factor at uhd is 1, not 2, for code that does not already multiply by uFine. Code that multiplies its density by uFine (the terrain shaders) needs the format's factor alone.
+2. The shared helper, in proof now and on main as soon as it is clean (agent/engine-globe, globe_engineer names the commit): src/core/frame.ts with frameUniform (the format's height over the master's, set by the engine in applySize, usable as a uniform), setPass (the engine sets it while a place picture is drawn) and bufferFrame() (the two multiplied, for code that reads a density a pixel of the buffer and knows nothing of uFine).
+RULING: use the helper, not a factor of your own. If your cure is already written with your own uniform (uranus_builder: seen.ts), keep working with it and swap its source to the helper when I tell you it is on main; that swap changes no byte and needs no new proof beyond the hashes. If you have not started, fetch globe_engineer's commit when it names it and write against the helper. Stops with no place picture left (plan F) have only case 1's last sentence to mind.
+
+## 03:49 to 03:50 VM. NOTE 504 read against my code; the dive 4744 to 4753
+
+- NOTE 504 against my stop. Neptune is named in handover.ownPath, so moves.ts flies its own dive and rise and the engine draws no
+  place picture for it today (the scene is drawn on the globe by deep.ts, deepLaid): there is no pass in which view.format is the
+  layout's. My cure of NOTE 501 is written with a uniform of its own (uLine in planet.ts, out/work/nep/next/line.py, written
+  03:36 before this note), its source view.format.height over 1080 in set.ts, as the two angles that were already there
+  (move.cirrus.px and clouds.shadowSoft). As ruled I keep working with it and swap the source of all three to the helper
+  (src/core/frame.ts, frameUniform or bufferFrame()) when the Builder says it is on main; the swap changes no byte. To mind at
+  plan E: if the engine then draws a place picture through my set, view.format there is the layout's and the three would read 2
+  at 16 by 9; the helper cures that, so the swap comes before plan E, not after.
+- deep.ts (the terrain shader and the scene on the globe) multiplies its pixel angle by uGrad and uses it only to pick the finest
+  wavelength and the march's tolerance; it has no fade by texels a pixel. far.update gets the radius in pixels of the drawn
+  format: FarPoint is shared code (src/bodies), globe_engineer's.
+- V1, 4744 to 4753 looked at, every frame (/tmp/s-V1-4744a.jpg): continuous, the scene grows evenly, the limb tilts and the
+  stars come in at the top; the veil goes from a grey band (4744 to 4747) to the pale far deck (from 4748), the staircase at
+  its west end still shows faintly to 4747. Nothing jumps.
+
+## MAIL 508 from the Builder (/root), read 04:00 VM (it came while I waited on the render, between 03:56 and 04:00), high priority, word for word
+
+MAIL 508 from the Builder (/root), to every stop builder. A timetable, so the rounds with critics can start. Clock: 03:58 UTC now (read yours with date -u; some VMs run minutes ahead).
+
+Why: 22 hours after Brandon's first note no stop has a named commit with a green smooth report, so no critic has seen the new work. The kit's rule: no single item may hold up the film, and each stop has three rounds for this note. The second note's rule: a stop's round starts on a named commit with a clean take check and a green smooth report; a stop whose third named commit is still red goes into its round with the red measures as severe issues.
+
+1. Your FIRST NAMED COMMIT is due by 07:00 UTC (the Sun: 08:00 UTC, because its ground is new from nothing). One commit on your branch, on top of the newest origin/main you can merge (7a6f888 or later). Its mail starts with the word NAMED and the full sha.
+2. If no NAMED mail is here at the hour, the newest head of your branch that builds and passes its tests is taken as your first named commit as it stands. So push whole states, not halves.
+3. What NAMED means: this is the build you would show a critic today. At the least: (a) dive and rise are each one move (plan E), by the engine's pace or by your own path with your own lines of npm run smooth -- --stop ID --only path; (b) nothing comes in by the clock, the place picture is off in both moves (plan F); (c) NOTE 501: nothing comes in by the pixel (the shared helper src/core/frame.ts goes onto main as soon as its proof is back, about 05:15 UTC; if you need the factor earlier, use the frame height over 1080 in your own files and move to the helper after); (d) the judged hold and surface view at the final tier beside the kept stills: equal bytes, or the pair as a picture with one line saying what changed and why; (e) the net size of your three folders against main.
+4. The NAMED mail also carries, in this order and short: your own smooth lines (path, pictures, parity: green or the red lines as they print), the frames that change outside your dive and rise, and your own list of what is still wrong, worst first. Reds do not hold the mail back. A red that you know and name costs nothing; one you hide costs a round.
+5. After NAMED: I cut the proof tree, my machines run the take check and the whole report (about 45 minutes). Green: the take goes onto main and your round starts at once with fresh critics. Red: you get the report and name your second commit within 90 minutes of it; the third goes into its round as it is.
+6. While your commit is on the machines you go on with your own list. Work for after the first round is not lost: a round ends with fixes.
+7. Everything already ruled stands (the orders in my earlier mails to you, the size rule, one owner per folder, looks pushed at least every 30 minutes). Where an earlier mail said ONE commit or ONE head, that commit or head is your named commit.
+
+No answer is needed to this mail. Send NAMED when you have it.
+
+## 04:00 to 04:09 VM. The dive is whole; main merged again; proof (a) of NOTE 501; what MAIL 508 changes
+
+- V1 done 04:02: every frame 4708 to 4769 at preview draft (T11, merge b57b7c2d), 16 s a frame at the top, 50 s at the bottom.
+  4754 to 4769 looked at, every frame (/tmp/s-V1-4756.jpg, /tmp/s-V1-4768.jpg): the eye sinks into the surface view's pose, the
+  ridge crosses the lower left, the limb straightens; nothing jumps, nothing comes or goes. Whole dive: one fault of motion, the
+  two forms from 4724 to 4730; two of form (the veil as a slab from above 4732 to 4747, the drawn out streaks of the deck).
+- Main merged again 04:02: merge 105da414 holds main 26677ed9 (Mercury's base, the retreat's turn in src/director/film.ts,
+  decisions d185 and d186). tsc clean.
+- PROOF (a) of NOTE 501, done 04:06. Five frames at master (1920 by 1080) draft on the merged tree before the factor and after
+  it, sha256 equal in all five:
+    4605 5ae1813832a77f851452ec584ea9a58e4142ad6caa5b151670ba1ab8b85b624e (the hash the Builder's job np3-01 gave for main)
+    4700 123abb13357eaa85f34cb79c9f076d5f8bf1bcf80e1d008097bf18aa4dcb5b43
+    4715 05ddfc008d8a43f6eb44360bbeff58039c54c02f6adb776e9f7a9a84311c043c
+    5000 7224e28baed16893b5a338d16404253e8d5826841c477643c5c6042229a6f286
+    5006 ff988f751312672f399e850ec92696d5b1372ec355e2cd6da1cf69e0fe4aa097
+  Seconds a master draft frame: 4605 23, 4700 5, 4715 59, 5000 10, 5006 10. Files out/work/nep/next/before and after.
+  The factor: planet.ts, uniform uLine times the parent's texels in both fades of the plate levels; set.ts sets it to the drawn
+  frame's height over 1080 and scales the threshold under which the globe is not drawn (0.6 pixels of a frame 1080 high).
+- MAIL 508: the first NAMED commit is due 07:00 UTC. What it changes in my order: this commit (T11, the factor, the merged
+  main) is named first and as soon as its lines are read; the map giving way inside the fan (point 1 of MAIL 453 under MAIL
+  484) cannot be in it, because the Builder judges the pair of 4605 by eye before it goes anywhere: it goes out as a look and
+  comes into the second named commit or the round's fixes.
+- Proof (b), what my renderer can pay before the hour. The whole parity of the tool is seven frames at master and at uhd; five of
+  them draw the function scene (4860 alone about 18 min at uhd), about 65 min together, and the pictures part is every capture
+  frame of both moves (about 430 frames at master, many hours here): NOTE 491 leaves that to the machines. So I measure a part
+  with the tool's own measure (tools/img/smooth.py, op parity, the same limits): uhd against master at 4702, 4725 and 5006
+  (where the plate levels fade, the term the factor cures; 4725 with the scene coming in), and master against preview at 4747
+  and 4860 (the scene alone, the same step of two in the size of a pixel). Started 04:06, script out/work/nep/next/par.sh.
+- 04:11 VM, to handover_engineer (high): MAIL 508's hour, my path's 22 red lines, and two questions: does neptune leave ownPath
+  for the named commit and with exactly which setting; and which of the two holds for the dive's last frames 4745 to 4769.
+  Without the engineer's word the commit is named on my own path with its red lines listed.
+- Tests on the merged tree with the factor: npx vitest run 370 of 370 in 41 files (one of three runs, while the renderer worked
+  beside it, showed 4 failed; the run after it passed whole: to repeat when the renderer is still). G11 PASS (every asset has a
+  row or a recipe). smooth path: red, 22 lines on my own path, its last lines in /tmp/path.log and in the mail.

@@ -219,6 +219,9 @@ export const createSet: SetFactory = async (ctx) => {
       ;(pu.uClump!.value as THREE.Vector3).fromArray(look.cirrus.clump)
       pu.uCirrusPx!.value = kind === 'dive' || kind === 'rise' ? move.cirrus.px * (view.format.height / 1080) * (1 - smooth((high - move.cirrus.height[0]!) / (move.cirrus.height[1]! - move.cirrus.height[0]!))) : 0
       ;(pu.uShadow!.value as THREE.Vector3).y = look.clouds.shadowSoft * (view.format.height / 1080)
+      // The plate levels come in by the texels of their parent a 1080th of the frame's height (an angle), not a pixel of the format
+      // that happens to be drawn, so the film is one picture at 1920 and at 3840 wide (the Builder's note 501).
+      pu.uLine!.value = view.format.height / 1080
       ;(pu.uRimDir!.value as THREE.Vector3).copy(rimAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize()
       ;(pu.uCutDir!.value as THREE.Vector3).copy(cutAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize()
       ;(pu.uCut!.value as THREE.Vector4).w = home
@@ -269,7 +272,7 @@ export const createSet: SetFactory = async (ctx) => {
       ring.solid(rising ? smooth((state.u - look.ring.solid.rise[0]) / (look.ring.solid.rise[1] - look.ring.solid.rise[0])) : ending ? 1 - end : 0)
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
-      const visible = radiusPx > 0.6
+      const visible = radiusPx > 0.6 * (view.format.height / 1080)
       planet.mesh.visible = visible && show < 1
       deepLaid.mesh.visible = visible && show > 0
       air.mesh.visible = visible
