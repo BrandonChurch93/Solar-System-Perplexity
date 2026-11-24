@@ -1,9 +1,41 @@
 {
  "folder": "venus",
- "pushed": "2026-11-24T22:33:25.799Z",
+ "pushed": "2026-11-24T22:56:30.110Z",
  "head": "a7f38721691403c340c6edc614dfd57b3bf0cd9a",
- "note": "MAIL 769: the dive of main b0b87889 rendered at 60 frames a second for the comparison; this commit's dive is rendering",
+ "note": "MAIL 788: the dive of b0b87889 beside a7f38721 at equal eye height; b0 is the better picture from 0.3 radii down (no pale band on the limb, no straight borders of T)",
  "looks": [
+  {
+   "time": "2026-11-24T22:56:29.186Z",
+   "file": "20261124225629186-note-y1317-limb.jpg",
+   "source": "../../../../tmp/v/cmp/y1317-limb.jpg",
+   "kind": "note",
+   "label": "dive 1317 limb at 1 to 1, b0b87889 left, a7f38721 right, pale band along the limb in the right one",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T22:56:28.202Z",
+   "file": "20261124225628202-note-y1329-r.jpg",
+   "source": "../../../../tmp/v/cmp/y1329-r.jpg",
+   "kind": "note",
+   "label": "dive 1329 right side at 1 to 1, b0b87889 left, a7f38721 right, straight borders of the frame of T in the right one",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T22:56:27.048Z",
+   "file": "20261124225627048-note-dive-0.3-0.22.jpg",
+   "source": "../../../../tmp/v/cmp/eq/dive-0.3-0.22.jpg",
+   "kind": "note",
+   "label": "dive at equal eye height 0.30 and 0.22 radii, b0b87889 left, a7f38721 right",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T22:56:25.966Z",
+   "file": "20261124225625966-note-dive-0.092-0.07.jpg",
+   "source": "../../../../tmp/v/cmp/eq/dive-0.092-0.07.jpg",
+   "kind": "note",
+   "label": "dive at equal eye height 0.09 and 0.07 radii, b0b87889 left, a7f38721 right",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T22:33:24.528Z",
    "file": "20261124223324528-note-base-dive-changes.jpg",
@@ -39,52 +71,6 @@
    "first": 1539,
    "last": 1604,
    "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T21:54:13.812Z",
-   "file": "20261124215413812-sheet-venus-rise-draft-after.jpg",
-   "source": "out/work/handover/venus-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "venus rise, every frame 1540 to 1551 (after T, frame 1539), draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1540,
-   "last": 1551,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T21:54:11.987Z",
-   "file": "20261124215411987-sheet-venus-rise-draft-before.jpg",
-   "source": "out/work/handover/venus-rise-draft-before.png",
-   "kind": "sheet",
-   "label": "venus rise, every frame 1530 to 1538 (before T, frame 1539), draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1530,
-   "last": 1538,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T21:54:10.425Z",
-   "file": "20261124215410425-sheet-venus-rise-draft-across.jpg",
-   "source": "out/work/handover/venus-rise-draft-across.png",
-   "kind": "sheet",
-   "label": "venus rise, every frame 1533 to 1544 (across T, frame 1539), draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1533,
-   "last": 1544,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T21:54:08.634Z",
-   "file": "20261124215408634-compare-venus-rise-step-in-place.jpg",
-   "source": "out/work/handover/venus-rise-step-in-place.png",
-   "kind": "compare",
-   "label": "venus rise, the largest step of the level in place (4.27): frame 1572, frame 1573, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "frame": 1573
   }
  ]
 }
