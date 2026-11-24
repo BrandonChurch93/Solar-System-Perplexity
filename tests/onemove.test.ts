@@ -325,6 +325,40 @@ describe('the pace of the one move', () => {
     expect(() => buildConfig(bare)).not.toThrow()
   })
 
+  it('takes two corners a flank from the stop, for the bell that names them, and both ends of the move stay where they were', () => {
+    const corners = { rise: [0.6, 0.1] as [number, number], fall: [0.05, 0.2] as [number, number] }
+    const pace = { rise: 0.55, fall: 0.4, corner: 0.2 }
+    const turn = { rise: 0.475, fall: 0.5, corner: 0.2 }
+    const plain = coveredPlan(handover({}, { pace, turn, liftPower: 0 }))
+    const set = coveredPlan(handover({}, { pace: { ...pace, corners }, turn: { ...turn, corners: { fall: [0.3, 0.05] } }, liftPower: 0 }))
+    const law = set.eyeLaw('rise')
+    expect(law.pace).toEqual({ ...pace, corners })
+    expect(law.turn).toEqual({ ...turn, corners: { fall: [0.3, 0.05] } })
+    // A bell that names none keeps its three numbers and no fourth: the dive of the same stop, and the stop without the option.
+    expect(Object.keys(set.eyeLaw('dive').pace).sort()).toEqual(['corner', 'fall', 'rise'])
+    expect(Object.keys(plain.eyeLaw('rise').pace).sort()).toEqual(['corner', 'fall', 'rise'])
+    // Where no turn is named and the film has none for the side, the direction rides the bell of the height, corners and all.
+    const dive = coveredPlan(handover({ pace: { corners: { rise: [0.3, 0.1] } } }, {})).eyeLaw('dive')
+    expect(dive.turn).toBe(dive.pace)
+    expect(dive.pace.corners).toEqual({ rise: [0.3, 0.1] })
+    // The ends are the neighbours' whatever the bell; between them the eye is elsewhere.
+    const s = plain.seg.rise
+    for (const view of ['orbit', 'terrain'] as const) {
+      for (const t of [s.start, s.end]) {
+        const a = plain.eye('rise', t, view)
+        const b = set.eye('rise', t, view)
+        expect(a.position.distanceTo(b.position)).toBeLessThan(1e-9)
+        expect(deg(a.quaternion, b.quaternion)).toBeLessThan(1e-6)
+      }
+    }
+    const mid = (s.start + s.end) / 2
+    expect(Math.abs(Math.log(high(set.eye('rise', mid, 'orbit')) / high(plain.eye('rise', mid, 'orbit'))))).toBeGreaterThan(0.01)
+    // Refused where the number is read: corners that make a flank too steep for the segment, corners that leave a flank no room.
+    expect(() => coveredPlan(handover({}, { pace: { rise: 0.3, fall: 0.3, corner: 0.2, corners: { rise: [0.9, 0.1] } } })).eyeLaw('rise')).toThrow(/the limit is/)
+    expect(() => coveredPlan(handover({}, { pace: { corners: { rise: [0.7, 0.6] } } })).eyeLaw('rise')).toThrow(/two corners of the rise flank/)
+    expect(() => coveredPlan(handover({}, { turn: { corners: { fall: [0.5, 0] } } })).eyeLaw('rise')).toThrow(/two corners of the fall flank/)
+  })
+
   it('is the move as it was where a stop names the old law: the bell of handover.pace for both and no lift give the pose of one share to the last bit', () => {
     const base = config.raw.handover.pace
     const flanks = { rise: base.rise, fall: base.fall, corner: base.corner }
