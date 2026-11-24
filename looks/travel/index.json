@@ -1,9 +1,46 @@
 {
  "folder": "travel",
- "pushed": "2026-11-23T23:19:37.982Z",
- "head": "eea6c795d1fc1e507ee9ce1e589fcda98d70aa77",
- "note": "travel seams eea6c795: slide starts and planet arrives with no acceleration step; draft frames of mars.travel and the retreat",
+ "pushed": "2026-11-24T00:57:50.562Z",
+ "head": "10c96f39f81f8a56013ce68dce772373367b6d0d",
+ "note": "Mars leaving, 61 capture frames before and after the seam cure, and the 495 difference",
  "looks": [
+  {
+   "time": "2026-11-24T00:57:49.593Z",
+   "file": "20261124005749593-note-f495-difference.jpg",
+   "source": "../../../../tmp/sheets/f495-difference.png",
+   "kind": "note",
+   "label": "Film 495 at rate 2, draft: after the cure and its difference from before, 8 times"
+  },
+  {
+   "time": "2026-11-24T00:57:48.869Z",
+   "file": "20261124005748869-note-crop-rock.jpg",
+   "source": "../../../../tmp/sheets/crop-rock.jpg",
+   "kind": "note",
+   "label": "Belt rock at full size, capture 5524 5528 5532 5536, before above, after below"
+  },
+  {
+   "time": "2026-11-24T00:57:48.131Z",
+   "file": "20261124005748131-note-crop-limb.jpg",
+   "source": "../../../../tmp/sheets/crop-limb.jpg",
+   "kind": "note",
+   "label": "Mars limb at full size, capture 5516 5520 5524 5528, before above, after below"
+  },
+  {
+   "time": "2026-11-24T00:57:47.038Z",
+   "file": "20261124005747038-note-mars-start-after.jpg",
+   "source": "../../../../tmp/sheets/mars-start-after.jpg",
+   "kind": "note",
+   "label": "Mars leaves, film 2745 to 2775 at rate 2, draft, after the cure (travel seams)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T00:57:44.126Z",
+   "file": "20261124005744126-note-mars-start-before.jpg",
+   "source": "../../../../tmp/sheets/mars-start-before.jpg",
+   "kind": "note",
+   "label": "Mars leaves, film 2745 to 2775 at rate 2, draft, before the cure (main 65fb91d)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-23T23:19:36.957Z",
    "file": "20261123231936957-note-seam-slide-sheet.jpg",
@@ -34,76 +71,6 @@
    "stop": "jupiter",
    "segment": "jupiter.travel",
    "frame": 3382,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "job": "film"
-  },
-  {
-   "time": "2026-11-23T00:19:24.347Z",
-   "file": "20261123001924347-job-frame-05340.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "ending.fade frame 5340, final tier, from the running film job",
-   "stop": "ending",
-   "segment": "ending.fade",
-   "frame": 5340,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "job": "film"
-  },
-  {
-   "time": "2026-11-23T00:00:29.738Z",
-   "file": "20261123000029738-job-frame-04471.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "uranus.travel frame 4471, final tier, from the running film job",
-   "stop": "uranus",
-   "segment": "uranus.travel",
-   "frame": 4471,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "job": "film"
-  },
-  {
-   "time": "2026-11-22T23:51:09.661Z",
-   "file": "20261122235109661-job-frame-04765.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "neptune.dive frame 4765, final tier, from the running film job",
-   "stop": "neptune",
-   "segment": "neptune.dive",
-   "frame": 4765,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "job": "film"
-  },
-  {
-   "time": "2026-11-22T22:59:33.330Z",
-   "file": "20261122225933330-job-frame-04429.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "uranus.rise frame 4429, final tier, from the running film job",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4429,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "job": "film"
-  },
-  {
-   "time": "2026-11-22T22:36:45.287Z",
-   "file": "20261122223645287-job-frame-04319.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "uranus.terrain frame 4319, final tier, from the running film job",
-   "stop": "uranus",
-   "segment": "uranus.terrain",
-   "frame": 4319,
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
