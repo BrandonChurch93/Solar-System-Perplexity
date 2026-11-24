@@ -4359,3 +4359,96 @@ changed against T7d.
   approved's pink and blue grey ringlets are not in my ring.
 - Pictures: /tmp/v/t17/t7e_three.png (approved, named, trial), t7e_left.png (approved beside the trial, the
   left half at full size).
+
+## 2026-11-24, 15:30 to 16:25 VM: T7e in motion and in proof, MAIL 703, main ed003c7 merged here, the tone by material
+
+STATE: the trial T7e (the grade of the rings by height, grade.ts, skim.json light.grade toe 0.5, ceiling 1.0)
+is still only in the working tree. Backups: /tmp/v/t17/t7e.diff, grade.ts.t7e. Branch head here 501914c (the
+merge of main ed003c7, local, not pushed); remote head of the branch 22aa54e; NAMED stays 2d54c49.
+
+MAIL 703 (16:21): take batch 3 is on main (ed003c70) with my third commit 2d54c492; round 44 (Saturn) runs on
+it; the critics' issues come when the round closes. Standing from it: merge main before the next commit (merge,
+never rebase, never force); work on my branch only, on what my own report and looks still show red or wrong,
+each change by height, distance or angle and never by the clock, the judged hold and surface frames keeping
+their bytes unless I say exactly what changed; do not name a commit until asked for the round 2 build; no
+answer needed unless main breaks my branch.
+- Done: origin main ed003c7 merged as 501914c. Outside my folders 186 files came in. In my folders only the
+  notebook differed: main holds the notebook of the named commit (byte equal to 2d54c492's), every line of it
+  is in mine (0 lines only there, 324 only here), so the conflict was settled by keeping mine. Trees after the
+  merge: src/stops/saturn 7f13c953 and public/assets/saturn 75fa372a, the named ones. package.json and the
+  lock did not change against 66de92e. Tests on the merge: still to run (after the proof job, not beside it).
+
+T7e IN MOTION, draft, every 6th frame and the frames around the largest steps (d8 against the named frames n7
+and d0; lit mean of 255): the dive differs by 0 up to 3562, 0.05 at 3568, 0.24 at 3574, 0.67 at 3580, 1.47 at
+3586, 3.20 at 3592, 6.09 at 3598, 9.42 at 3604, 12.06 at 3610, 13.75 at 3616, 14.54 at 3622, 14.59 at 3628 (all
+darker). Largest step of the mean from frame to frame 0.626 at 3599 (named 0.431 at 3578), of the median 1.218
+at 3598 (named 0.709 at 3598); largest change of step 0.188 at 3582 (named 0.197 at 3582). The rise differs by
+4.42 at 3808, 5.97 at 3820, 4.43 at 3832, 2.44 at 3838, 0.78 at 3844, 0.15 at 3850, 0 from 3862; largest step
+0.979 at 3861 (named 0.980 at 3861: the flight's own). Sheets and full size pairs (dive 3598, 3602, 3606, 3612;
+rise 3836, 3838, 3840) looked at: one picture, the ringlets hold their places, the tone sinks evenly.
+T7e FINALS: 3465 (sha f4b3a395) and 3866 (sha 29ee4549) are byte equal to the named finals; 3567 (sha 3e8148e7)
+differs from the named final by 1 of 255 in 8.2 percent of the pixels and by 2 or more in none (the share of
+the grade is 0.005 there). So with T7e the judged hold keeps its bytes, the judged surface frame 3720 changes
+on purpose, the judged dive frame changes by one level at most and the judged rise frame keeps its bytes.
+
+PROOF JOB r50 on the T7e working tree (job_t.sh, started 15:58:30, engine of 66de92e): so far
+- G5 pass; G17 pass: 3465 median 1.054, p25 0.918 over 71 tiles; 3720 median 0.877, p25 0.483 over 62 tiles
+  (named 0.945; limit 0.8).
+- handover parts sides, flow, path: all six lines pass; dive T 3589 side difference max 1, flow gap 0.008 px a
+  frame; the table of the dive is the named one.
+- the pictures of the dive and of the rise, G13, path, parity and the gate are still running.
+
+A CORRECTION OF MY OWN READING. I wrote that the dense ring's lanes stand out too much at 3720 (patch x 700 to
+1000, y 650 to 800: sd 0.118 against 0.089). That patch is not one material in my frame: its upper right
+corner lies at ring radius 1.4 (my inner B ring and C ring, tone 0.57 to 0.62), where the approved shows bright
+ring all over. By octave bands the whole excess of that patch is in the tone wider than 32 px (0.0438 against
+0.0080). In a clean zone (my radius 1.62 to 1.92, x 560 to 1300, y over 640, the approved bright there) the
+numbers are: approved mean 0.703, sd 0.113, percentiles 1, 10, 50, 90, 95, 99: 0.373, 0.556, 0.715, 0.835,
+0.865, 0.931; T7e 0.736, 0.115, 0.475, 0.567, 0.749, 0.880, 0.892, 0.902; named 0.772, 0.133, 0.492, 0.583,
+0.777, 0.949, 0.969, 0.987. Bands 0 to 1, 1 to 2, 2 to 4, 4 to 8, 8 to 16 px: approved 0.0661, 0.0330,
+0.0264, 0.0159, 0.0100; T7e 0.0668, 0.0329, 0.0201, 0.0207, 0.0163. Colour over luma: approved 1.089, 0.986,
+0.878; T7e 1.083, 0.987, 0.882. So in the dense ring T7e has the approved's contrast and colour; what is left
+is the level (0.03 over from the median up) and a flat top (the brightest tenth sits under the ceiling at 0.88
+to 0.90, where the approved runs on from 0.835 to 0.931).
+
+THE COMPOSITIONS DIFFER, so a box fixed on the frame mixes materials. The division by row (centre x / width in
+px, rows 640, 700, 760, 820, 880, 940, 1000, 1060): approved 322/137, 407/107, 479/125, 560/148, 649/169,
+744/193, 845/217, 940/228; mine 384/83, 447/95, 526/108, 619/122, 724/137, 839/152, 964/169, 1098/187. Mine
+lies 40 to 160 px to the right and is 20 to 60 px narrower. The camera of 3720 is ruled (d196, to the byte), so
+this stays. Tool for the tone by material, each picture cut by its own division: /tmp/v/t17/matzones.py.
+- A ring, rows 640 to 800, 800 to 950, 950 to 1080, mean: approved 0.430, 0.438, 0.437; T7e 0.424, 0.412,
+  0.379; named 0.547, 0.484, 0.410. Colour over luma, far rows: approved 1.070, 0.988, 0.913; T7e 1.075,
+  0.985, 0.926. So the far A ring fits; toward the lens my A ring sinks by 0.045 where the approved stays level.
+- At one ring radius the near rows are darker than the far rows (T7e, radius: far, middle, near rows): 2.07:
+  0.54, 0.54, 0.49; 2.17: 0.39, 0.38, 0.34; 2.25: 0.47, 0.44, 0.41; 2.27: 0.52, 0.48, 0.44 (named 2.17: 0.53,
+  0.46, 0.37). The share of the far look in those rows is 0.8 to 0.9, 0.4 to 0.5 and 0.1 to 0.2. So the near
+  light of the thin zones is still 10 to 35 percent under the far tone in light: ruling (c) is not yet met in
+  full there. The near light's level is light.rings near 0.85 times the thin tint (luma 0.907).
+- B ring, same rows, mean: approved 0.704, 0.695, 0.662; T7e 0.747, 0.730, 0.689; named 0.781, 0.767, 0.724.
+
+SIMULATORS (predictions from the named and T7d finals without grain; G17 comes out about 0.03 high; the top
+twentieth of the dense ring is not to be trusted: those pixels are clipped in the named final and under the
+ceiling in T7d, so their light is not known):
+- sim6, a grade of the whole frame: an exposure of 0.75 fits the ring's mean but leaves the dense ring's top
+  white (0.948 against 0.846), darkens the near corner (0.380 against 0.462) and the globe (0.725; the
+  approved's globe patch 0.823, mine 0.785); a ceiling on the whole frame fails G17 (0.739). This is the
+  measured reason the grade acts on the rings by zone and not on the whole frame; to be said when reporting.
+- sim11 to sim13, an evening of the dense ring by the light of a lane (the profile at a wider footprint, by
+  ring radius): with a lane of 0.01 radii, pivot 0.40, power 1 the bands of 4 to 16 px come to the approved's
+  (0.0158, 0.0098) and G17 rises to 1.04 (38 tiles), the median fits (0.716), but the brightest tenth stays at
+  the ceiling (0.88 to 0.90) and the fine bands rise (0.0791, 0.0389). The radial light of the outer B ring at
+  0.02 radii is level within a tenth (0.42 to 0.52): there are no broad lanes to even, the contrast is in
+  ringlets of 0.005 radii.
+- sim14, a shoulder by a power above a pivot in the dense ring: a fit of the median and the 90th percentile
+  (pivot 0.33, power 0.4) takes G17 to 0.82 with 31 tiles, the limit. Any curve that takes the dense ring to the
+  approved's distribution takes fine energy from the tiles that carry the median of G17.
+- sim9, colour by a pivot in the thin zones: gives the approved's spread of hue in the lanes at k 1.4, with a
+  yellow line at the division's edge unless the difference is clamped.
+
+WHAT I TAKE FROM IT FOR THE NEXT TRIAL (T8), in this order, each by height and in both scenes alike:
+1. the near light of the thin zones up to the far tone (light.rings or the thin tint), so the A ring holds
+   its level toward the lens as in the approved (rows 950 to 1080: 0.379 against 0.437);
+2. the dense ring 0.03 down from the median up without a flat top (a gain with a higher ceiling, or a shoulder
+   with a mild power), G17 measured with every step;
+3. the spread of hue in the thin zones (the pivot of sim9, clamped).
+Looks pushed: 15:36 (fea14fd1), 16:11 (c1284c8b).
