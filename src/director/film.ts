@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { config, type Segment } from '../config'
+import { spanMid } from '../core/clock'
 import type { Director } from '../core/engine'
 import { shutterScale } from '../core/motion'
 import type { CoverState, PlaceState, Pose, SetState, Shot, SkyFloor, SunState, ViewKind } from '../core/types'
@@ -7,7 +8,7 @@ import { defaultPost } from '../post/chain'
 import { StopPlan, easeInOut, type OrbitShot } from './moves'
 import { arc, drift, forward, lookAt, mix, ramp, slerpDir, smooth, smoother } from './rig'
 import { coverWindow, segmentAtFrame } from './timeline'
-import { handoverFrame, handoverOf, placeWeight, shutterScales, skyTurnWeight, skyWeight, topForced } from './handover'
+import { handoverFrame, handoverOf, horizonWeight, placeWeight, shutterScales, skyTurnWeight, skyWeight, topForced } from './handover'
 import skyFrame from '../space/skyframe.json'
 import world from './world.json'
 import { aimAt, type SkyAims } from '../space/aim'
@@ -442,7 +443,7 @@ export class FilmDirector implements Director {
     const hold = this.toWorld(index + 1, b.hold(time - b.seg.hold.start))
     const full = this.sizeOf(index, hold)
     const small = this.small[index]!
-    const want = (small + (full - small) * t * t * (3 - 2 * t)) * Math.tan(THREE.MathUtils.degToRad(pose.vfov) / 2)
+    const want = (small + (full - small) * smoother(t)) * Math.tan(THREE.MathUtils.degToRad(pose.vfov) / 2)
     const ray = pose.position.clone().sub(body).normalize()
     if (shape.look.pin[1] <= 0) {
       const hero = hold.position.clone().sub(body).normalize().applyQuaternion(hold.quaternion.clone().invert()).applyQuaternion(pose.quaternion)
@@ -591,7 +592,7 @@ export class FilmDirector implements Director {
     if (!(share > 0)) return null
     const c = p.coverCenter(seg)
     const at = seg.kind === 'dive' ? c : c - 1e-6
-    const low = seg.kind === 'dive' ? p.dive(at) : p.rise(at)
+    const low = p.eyeShot(seg.kind, at)
     if (low.view !== 'terrain') return null
     const q = this.frames[index]!.rotation.clone().multiply(p.turn(at)).multiply(p.terrainFrame).multiply(low.pose.quaternion).multiply(drift(at))
     const place = this.sunWorld.clone().applyQuaternion(q.invert())
@@ -632,7 +633,7 @@ export class FilmDirector implements Director {
       const rotation = view === 'terrain' ? f.rotation.clone().multiply(p.turn(time)).multiply(p.terrainFrame) : f.rotation.clone()
       const origin = view === 'terrain' ? p.spot.clone().applyQuaternion(p.turn(time)).applyQuaternion(f.rotation).add(f.origin) : f.origin.clone()
       const turns = view === 'orbit' && p.handsOver && p.id === segment.stop && (segment.kind === 'dive' || segment.kind === 'rise')
-      return { id: p.id, origin, rotation, time, local: time - p.firstSegment.start, segment, u, weight, view, ground: p.ground, ...(turns ? { turn: p.turn(time) } : {}) }
+      return { id: p.id, origin, rotation, time, local: time - p.firstSegment.start, segment, u, weight, view, height: 0, ground: p.ground, ...(turns ? { turn: p.turn(time) } : {}) }
     }
     const inSet = (s: SetState, p: Pose): Pose => ({ position: p.position.clone().applyQuaternion(s.rotation).add(s.origin), quaternion: s.rotation.clone().multiply(p.quaternion), vfov: p.vfov })
 
@@ -653,7 +654,7 @@ export class FilmDirector implements Director {
         const end = this.lookbackPlace(time)
         const g = LOOKBACK.glide
         const w = glide(u, g.aim)
-        const lit = p.lightDir.clone().lerp(this.lookbackSun, smooth(u * g.light)).normalize()
+        const lit = p.lightDir.clone().lerp(this.lookbackSun, smoother(Math.min(u * g.light, 1))).normalize()
         const phase = mix(a.position.angleTo(p.lightDir), end.phase, glide(u, g.phase))
         const position = this.nightSide(phase, end.azimuth * glide(u, g.turn), a.position.length() * Math.pow(end.distance / a.position.length(), glide(u, g.pull)), lit)
         const track = (x: THREE.Vector3): THREE.Quaternion => lookAt(x, new THREE.Vector3(), this.lookbackSun)
@@ -697,7 +698,7 @@ export class FilmDirector implements Director {
       if (index === 0) sunWeight = smooth(ramp(SUN_GLOW_FROM, this.sunSwapSpan[1], u))
       const arriving = state(index + 1, 'orbit')
       if (index > 0 && this.shapes[index]!.look.pin[1] > 0) farLight = Math.pow(smooth(ramp(this.lit[index]!, this.lit[index]! + FAR_LIGHT.frames / ((segment.end - segment.start) * config.fps), u)), FAR_LIGHT.power)
-      const midTime = (frame + config.shutterFraction * 0.5) / config.fps
+      const midTime = (frame + spanMid()) / config.fps
       if (Math.abs(time - midTime) > 1e-9) {
         const to = arriving.origin.clone().sub(position)
         const px = (Math.asin(Math.min(1 / to.length(), 1)) / THREE.MathUtils.degToRad(pose.vfov)) * 1080
@@ -743,7 +744,7 @@ export class FilmDirector implements Director {
         local = p.terrain(time - segment.start)
         view = 'terrain'
       } else {
-        const r: OrbitShot = forced ? { pose: segment.kind === 'dive' ? p.divePose(time, forced) : p.risePose(time, forced), view: forced } : segment.kind === 'dive' ? p.dive(time) : p.rise(time)
+        const r: OrbitShot = p.eyeShot(segment.kind === 'dive' ? 'dive' : 'rise', time, forced)
         local = r.pose
         view = r.view
         if (view === 'orbit' && topForced()) local = p.topDown(segment.kind === 'dive' ? 'dive' : 'rise', time, local)
@@ -823,10 +824,12 @@ export class FilmDirector implements Director {
           skyCarry = new THREE.Quaternion().slerp(qc.multiply(qt.invert()), turned)
         }
         const weight = placeWeight(segment, time)
-        if (weight > 0 && hand.picture) {
+        const horizon = horizonWeight(hand, weight, skyShare)
+        if ((weight > 0 || (horizon ?? 0) > 0) && hand.picture) {
           const tw = inSet(s, p.twin(p.closePose(kind, hand.time), time))
           tw.quaternion.multiply(drift(hand.time))
-          place = { stop: p.id, kind, weight, frame: handoverFrame(hand), time: hand.time, live: hand.live, twin: tw, centre: s.origin.clone(), radius: 1, scale: hand.place.scale, margin: hand.place.margin, matte: hand.place.matte, valid: hand.place.valid, lens: hand.place.lens, seen: hand.place.seen, maxEnlarge: hand.place.maxEnlarge, enlargeSoft: hand.place.enlargeSoft, limbReachDeg: hand.place.limbReachDeg, limbHoldDeg: hand.place.limbHoldDeg, edgeIn: hand.place.edgeIn, toneIn: hand.place.toneIn }
+          place = { stop: p.id, kind, weight, frame: handoverFrame(hand), time: hand.time, live: hand.live, twin: tw, centre: s.origin.clone(), radius: 1, scale: hand.place.scale, margin: hand.place.margin, matte: hand.place.matte, valid: hand.place.valid, lens: hand.place.lens, seen: hand.place.seen, maxEnlarge: hand.place.maxEnlarge, enlargeSoft: hand.place.enlargeSoft, limbReachDeg: hand.place.limbReachDeg, limbHoldDeg: hand.place.limbHoldDeg, limbLap: hand.place.limbLap, edgeIn: hand.place.edgeIn, toneIn: hand.place.toneIn }
+          if (horizon !== undefined) place.horizon = horizon
         }
       }
       if (segment.kind === 'dive' || segment.kind === 'rise') {
@@ -860,6 +863,7 @@ export class FilmDirector implements Director {
       if (gain !== 1) light = { ...light, sky: light.sky * gain }
     }
 
+    for (const s of sets) s.height = this.heightOver(s, pose)
     pose.quaternion.multiply(drift(time))
     if (cover.amount > 0) light = { ...light, sky: light.sky * this.plans[index]!.skyUnderCover(cover.amount, time) }
     post.exposure = light.exposure
@@ -871,6 +875,15 @@ export class FilmDirector implements Director {
     if (skyFloor) out.skyFloor = skyFloor
     if (place) out.place = place
     return out
+  }
+
+  // The height of the camera above the unit sphere of a set's body, in radii: the same number whichever view draws the body. The close view's
+  // camera is taken through the twin of its stop.
+  private heightOver(s: SetState, camera: Pose): number {
+    const rel = camera.position.clone().sub(s.origin)
+    if (s.view !== 'terrain') return rel.length() - 1
+    const p = this.plans[config.stopIds.indexOf(s.id)]!
+    return p.twin({ position: rel.applyQuaternion(s.rotation.clone().invert()), quaternion: new THREE.Quaternion(), vfov: camera.vfov }, s.time).position.length() - 1
   }
 
   private skyFloorOf(index: number, kind: 'dive' | 'rise', time: number): SkyFloor | null {
@@ -912,6 +925,7 @@ export class FilmDirector implements Director {
     }
     base.camera = { position: local.position.applyQuaternion(s.rotation).add(s.origin), quaternion: s.rotation.clone().multiply(local.quaternion), vfov: local.vfov }
     base.skyQuaternion = base.camera.quaternion.clone()
+    s.height = this.heightOver(s, base.camera)
     base.frame = frame
     base.time = c.time
     if (c.view === 'orbit') base.near = Math.min(Math.max(0.02 * Math.abs(local.position.length() - 1), 0.0004), 1)

@@ -1,0 +1,744 @@
+{
+ "chunks": [
+  {
+   "text": "[Sun surface]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor tonality",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers",
+    "instrumental only",
+    "vast modern space film score",
+    "great production quality",
+    "very quiet opening, pianissimo",
+    "low string drone with warm synth pad",
+    "soft shimmering texture",
+    "no percussion",
+    "sound begins at once"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "drums",
+    "loud percussion",
+    "full orchestra tutti"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Sun rise]",
+   "duration_ms": 3000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor tonality",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers",
+    "instrumental only",
+    "gentle rising swell",
+    "strings slowly climbing over a synth riser",
+    "still quiet"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "drums",
+    "loud percussion",
+    "full orchestra tutti"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Sun revealed]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor tonality",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers",
+    "instrumental only",
+    "soft warm chord lands on the first beat",
+    "first statement of a slow noble theme",
+    "horns, strings and soft sub bass, mezzo piano",
+    "calm and majestic"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Travel to Mercury]",
+   "duration_ms": 3000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor tonality",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers",
+    "instrumental only",
+    "rising build",
+    "crescendo into the next section",
+    "string figures with a brightening arpeggiator",
+    "low drum roll growing"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Mercury arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor tonality",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers",
+    "instrumental only",
+    "sudden lift on the first beat",
+    "big downbeat chord",
+    "bright celesta with a glinting synth arpeggio",
+    "strings swell and pulsing bass",
+    "mezzo forte, the first lift",
+    "the slow main theme returns, broad",
+    "sense of arrival and scale"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Mercury surface]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor tonality",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers",
+    "instrumental only",
+    "sudden drop to a hushed quiet bed",
+    "very quiet, pianissimo",
+    "solo piano notes in long reverb",
+    "soft glassy synth pad",
+    "sparse and intimate",
+    "suspended and floating"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "drums",
+    "loud percussion",
+    "full orchestra tutti"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Rise from Mercury]",
+   "duration_ms": 5000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor tonality",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers",
+    "instrumental only",
+    "rising build",
+    "crescendo into the next section",
+    "climbing strings over a brightening arpeggiator",
+    "forward motion"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Venus arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor tonality",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers",
+    "instrumental only",
+    "sudden lift on the first beat",
+    "big downbeat chord",
+    "lush strings with thick warm synth pads",
+    "hazy golden harmony",
+    "mezzo forte, fuller than before",
+    "the slow main theme returns, broad",
+    "sense of arrival and scale"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Venus surface]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor tonality",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers",
+    "instrumental only",
+    "sudden drop to a hushed quiet bed",
+    "very quiet, pianissimo",
+    "muted tremolo strings over a soft drone",
+    "sparse and intimate",
+    "suspended and floating"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "drums",
+    "loud percussion",
+    "full orchestra tutti"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Rise from Venus]",
+   "duration_ms": 5000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor tonality",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers",
+    "instrumental only",
+    "rising build",
+    "crescendo into the next section",
+    "climbing strings over a brightening arpeggiator",
+    "forward motion"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Earth arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor tonality",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers",
+    "instrumental only",
+    "sudden lift on the first beat",
+    "big downbeat chord",
+    "warm hopeful string melody over a soft synth pulse",
+    "noble horns",
+    "forte, warm and hopeful",
+    "the slow main theme returns, broad",
+    "sense of arrival and scale"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Earth surface]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor tonality",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers",
+    "instrumental only",
+    "sudden drop to a hushed quiet bed",
+    "very quiet, pianissimo",
+    "solo cello with felt piano and a warm pad",
+    "sparse and intimate",
+    "suspended and floating"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "drums",
+    "loud percussion",
+    "full orchestra tutti"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Rise from Earth]",
+   "duration_ms": 5000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor tonality",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers",
+    "instrumental only",
+    "rising build",
+    "crescendo into the next section",
+    "climbing strings over a brightening arpeggiator",
+    "forward motion"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Mars arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor tonality",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers",
+    "instrumental only",
+    "sudden lift on the first beat",
+    "big downbeat chord",
+    "bold brass over a driving synth bass ostinato",
+    "hybrid cinematic drums",
+    "forte, bold and strong",
+    "the slow main theme returns, broad",
+    "sense of arrival and scale"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Mars surface]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor tonality",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers",
+    "instrumental only",
+    "sudden drop to a hushed quiet bed",
+    "very quiet, pianissimo",
+    "quiet low string ostinato with a pulsing sub",
+    "dry and tense",
+    "sparse and intimate",
+    "suspended and floating"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "drums",
+    "loud percussion",
+    "full orchestra tutti"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Rise from Mars]",
+   "duration_ms": 5000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor tonality",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers",
+    "instrumental only",
+    "rising build",
+    "crescendo into the next section",
+    "climbing strings over a brightening arpeggiator",
+    "forward motion"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Jupiter arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor tonality",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers",
+    "instrumental only",
+    "sudden lift on the first beat",
+    "big downbeat chord",
+    "massive low brass with huge sub bass",
+    "giant cinematic drum hits",
+    "fortissimo, massive",
+    "the slow main theme returns, broad",
+    "sense of arrival and scale"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Jupiter surface]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor tonality",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers",
+    "instrumental only",
+    "sudden drop to a hushed quiet bed",
+    "very quiet, pianissimo",
+    "deep rumbling drone of contrabasses and sub",
+    "slow swirling textures",
+    "sparse and intimate",
+    "suspended and floating"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "drums",
+    "loud percussion",
+    "full orchestra tutti"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Rise from Jupiter]",
+   "duration_ms": 5000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor tonality",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers",
+    "instrumental only",
+    "rising build",
+    "crescendo into the next section",
+    "climbing strings over a brightening arpeggiator",
+    "forward motion"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Saturn arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor tonality",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers",
+    "instrumental only",
+    "sudden lift on the first beat",
+    "big downbeat chord",
+    "elegant sweeping strings with a shimmering arpeggiator",
+    "harp and bells",
+    "forte, grand and elegant",
+    "the slow main theme returns, broad",
+    "sense of arrival and scale"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Saturn surface]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor tonality",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers",
+    "instrumental only",
+    "sudden drop to a hushed quiet bed",
+    "very quiet, pianissimo",
+    "glassy string harmonics and bell synth",
+    "delicate",
+    "sparse and intimate",
+    "suspended and floating"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "drums",
+    "loud percussion",
+    "full orchestra tutti"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Rise from Saturn]",
+   "duration_ms": 5000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor tonality",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers",
+    "instrumental only",
+    "rising build",
+    "crescendo into the next section",
+    "climbing strings over a brightening arpeggiator",
+    "forward motion"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Uranus arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor tonality",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers",
+    "instrumental only",
+    "sudden lift on the first beat",
+    "big downbeat chord",
+    "cold open fifths in strings with icy synth textures",
+    "mysterious",
+    "forte, cold and wide",
+    "the slow main theme returns, broad",
+    "sense of arrival and scale"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Uranus surface]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor tonality",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers",
+    "instrumental only",
+    "sudden drop to a hushed quiet bed",
+    "very quiet, pianissimo",
+    "frozen thin pad with a solo clarinet",
+    "sparse and intimate",
+    "suspended and floating"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "drums",
+    "loud percussion",
+    "full orchestra tutti"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Rise from Uranus]",
+   "duration_ms": 5000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor tonality",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers",
+    "instrumental only",
+    "rising build",
+    "crescendo into the next section",
+    "climbing strings over a brightening arpeggiator",
+    "forward motion"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Neptune arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor tonality",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers",
+    "instrumental only",
+    "sudden lift on the first beat",
+    "big downbeat chord",
+    "deep dark brass with bass synth waves",
+    "powerful slow chords and hybrid drums",
+    "fortissimo, the strongest arrival so far",
+    "the slow main theme returns, broad",
+    "sense of arrival and scale"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Neptune surface]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "60 BPM",
+    "D minor tonality",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers",
+    "instrumental only",
+    "sudden drop to a hushed quiet bed",
+    "very quiet, pianissimo",
+    "very low drone",
+    "distant solo horn with synth shimmer",
+    "sparse and intimate",
+    "suspended and floating"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "drums",
+    "loud percussion",
+    "full orchestra tutti"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Rise and pull back past Neptune]",
+   "duration_ms": 6500,
+   "positive_styles": [
+    "60 BPM",
+    "D minor tonality",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers",
+    "instrumental only",
+    "the biggest build of the whole piece",
+    "long crescendo",
+    "full orchestra and synths rising",
+    "drum rolls and risers swelling",
+    "soaring upward strings",
+    "pulling back and widening"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Looking back]",
+   "duration_ms": 8500,
+   "positive_styles": [
+    "60 BPM",
+    "hybrid orchestral electronic film score",
+    "strings and brass with analog synthesizers",
+    "instrumental only",
+    "D major resolution",
+    "the biggest swell of the whole piece lands on the first beat",
+    "full orchestra and synths tutti, triple forte",
+    "broad triumphant main theme",
+    "towering brass, soaring strings and deep sub bass",
+    "final chord held, thinning to one held note",
+    "slow fade to silence"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  }
+ ]
+}

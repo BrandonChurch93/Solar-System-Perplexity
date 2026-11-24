@@ -37,6 +37,17 @@
     }
   ],
   "lightNote": "Memory (gate G15, at most 1400 MB for the full set): a plate of 4096 with all its channels counts 89.5 MB, one channel 22.4 MB. A level with `colour` holds its light alone in one channel and takes its colour from the plate of the level named there, which covers it. The channel is the light of the level (luminance, weights 0.2126, 0.7152, 0.0722) over the light of that plate at the same ground point, not a display value, with `most` at the top of the range; the film shows that plate times the channel. So the forms of every level are held at full size, the colour of a, b and d at 1 in 1.7, 3.4 and 1.8 of it, and where a level is seen far smaller than it is held the picture goes to its colour plate, which is filtered in light as before (a channel of display values lost the small bright tops there: at 16 texels to a pixel 1.2 display values in the mean against 0.4 this way). Measured on the plates as 8 bit display values, the picture put together from the files against the full plate: assets-src/venus/place/tlay.py split, numbers in assets-src/venus/RECIPE.md.",
+  "wide": {
+    "note": "The wide ring (level v, assets-src/venus/place/wide.py): the forms of the place carried on round level w, a plate about the same centre, one channel. It is drawn only as forms over the globe's own colour (tone.live) and never as it is, so it holds no colour and no tone of its own. rim: the share of the half width over which it eases out, from the inscribed circle inward; formsDeg: the border follows its own cloud forms, drawn inward by up to forms (share of the plate width) where the plate is brighter at the first scale than at the second (degrees of arc at the centre). own: how much of the globe's own fine cloud forms stays under the ring (0: the ring lies on the globe's smoothed colour alone, so the globe's swirls dissolve as the ring comes in; 1: on the globe as it is, which showed hairlines between the towers; at 0.5 the lit cells of the globe stay in place from 1272 to 1283 and from 1588 to 1596 while the towers come and go, seen on native crops).",
+    "tag": "v",
+    "file": "place3-v.jpg",
+    "widthDeg": 90.0,
+    "size": 8192,
+    "rim": 0.44,
+    "forms": 0.08,
+    "formsDeg": [0.9, 7.0],
+    "own": 0.5
+  },
   "feather": 0.06,
   "fade": [
     1.02,
@@ -63,21 +74,12 @@
     "look": [0.06, 6, 9]
   },
   "tone": {
-    "note": "The look of the place from above (assets-src/venus/place/tlay.py tone, files place3-tone-<kind>.bin: size by size texels of four floats over the extent of level a, rows from south to north). The plates hold the tones of the close view at T: the far deck pale under its haze, the near towers dark against the Sun. Seen from above those tones are a pale fan over a dark hollow. So from above the light of the plates (the display value taken back through the film curve) is changed in contrast and in level: its luminance (not below floor) is raised to a power and multiplied by a factor per channel, and of its own colour the share 1 - colour is kept (the rest is the colour of the globe's own look there, which the factor carries): the map holds the factor in its first three values and the power in the fourth. They take the mean of the logarithm of the light about every point (at sigmaDeg) to that of the globe's own look there (build.py base), and the spread of its forms smaller than fineDeg to contrast (the spread measured in the ring of towers of level a), the power within power; eased to no change between edge (shares of the half width of the map). They are used in full where the line of sight at a ground point is far from the line of sight of the camera at T, and not at all where the cosine between the two is above cos[1] (cos[0]: where they are in full, curve: the power of the ramp between); and only above the heights (radii, eased in the logarithm: no change below the lower one). At T the plates show as they are.",
-    "files": {"dive": "place3-tone-dive.bin", "rise": "place3-tone-rise.bin"},
-    "size": 256,
-    "widthDeg": 24.0,
-    "sigmaDeg": 1.0,
-    "fineDeg": 0.35,
-    "floor": 0.002,
-    "colour": 0.8,
-    "contrast": 0.55,
-    "contrastNote": "0.55 and not 0.4: with the short shutter of the dive and the rise the place field is seen sharp from above, and at 0.4 its fine forms were flat mud between crisp ridges (frames 1284 to 1295, 1580 to 1590). Measured on the draft frames, spread of the luminance in the crop x 610 to 1310, y 380 to 1080: 1287 25.1 to 28.6, 1586 22.3 to 24.3.",
-    "power": [0.4, 3.0],
-    "edge": [0.72, 0.92],
+    "note": "The look of the place from above. The plates hold the tones of the close view at T: the far deck pale under its haze, the near towers dark against the Sun. Those tones belong to the line of sight of T. Seen from another direction the place is a region of the globe's cloud deck: there the plates give their forms alone, over the globe's own colour as it is lit in that frame (live). The plates show as they are stored by a share that is 1 at T. cos, curve: the share by the cosine of the angle between the line of sight at a ground point and the line of sight of the camera at T, none below cos[0], full above cos[1], the ramp between to the power curve. air: the share is multiplied by the ratio of the sine of the elevation of the camera at T above that ground point to the sine of the elevation of the camera now, not above 1, to this power: the air on a line of sight goes with one over that sine, so the pale haze of the far deck comes in as the camera sinks to the height of T and not while it still stands steep over that deck. heights: the share is none above the upper height and unchanged below the lower one (radii, eased in the logarithm). Until the commit before this one a map per handover (place3-tone-dive.bin, place3-tone-rise.bin, made by tlay.py tone) carried a fixed power and factor instead of live; it gave a dark olive field about the place wherever the globe is lit otherwise than in the one view the map was fitted to, and is taken out.",
     "cos": [0.5, 0.995],
     "curve": 1.5,
-    "heights": [0.1, 0.6]
+    "air": 1.0,
+    "heights": [0.1, 0.6],
+    "live": {"sigmaDeg": 1.4, "contrast": 1.0, "colour": 0.35, "gain": 1.0, "most": 8.0}
   },
 
   "dusk": {

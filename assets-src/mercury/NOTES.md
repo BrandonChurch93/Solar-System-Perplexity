@@ -1331,3 +1331,292 @@ Seen by me in your sheet ho-dive-draft-across of a42801fb: in frames 738 to 742 
   3. Final tier (`f5`): 870 sha256 f21304904ac2430637472d42113654e0f78810c9f20df32344f2a6d498735e18, 615 sha256 bbff01933eb0ebadebd2f423227e7aa588de9905435ce7d28faad0fbe378c815: both the bytes of the kept stills.
 - Build clean, tsc clean, npm test 162 of 162 on the merge.
 - Open, named by the Builder in mail 286: 738 to 742 the place picture shows as a four sided patch with an edge on the left and below. Plan: (a) the land matte of the engine (`StopSet.placeMatte`) when it is on main: a grey picture per kind, made by code from the forms of the place picture (rims and shadow edges), so the picture ends along land; (b) the band tone follows the place further out (dusk of the band only away from the place edge, plates laid in `out/work`, not installed yet).
+- 14:57 committed 63dd08bc (alphaOne, notes) on the merge b9f1ff3f of main 7f7d7b45, pushed. 14:58 sent to /root: "READY mercury 63dd08bc" with the proofs of mail 286, a to d of mail 275, frames changed since 08c4bb47 (698 to 743, 991 to 1025), takes, and the open list (four sided patch 738 to 743 and 991 to 993; arc 996 to 1000; far wash 728 to 731 and 993 to 997; double limb 990 to 993; comma strokes 716 to 730 and 1000 to 1010; pale patch 714 to 721 and 1004 to 1012; far field change 993 to 998; big craters not carried inside 11 deg; G13 margin at 713; glow pace 995 to 1001). Not proven and said so: harness measure on this commit, review tier handover.
+- Next: item 1 (band tone at the place edge, then placeMatte when on main), item 4 (crater field beyond 13 deg).
+
+## 23 Nov 15:00 to 15:15 UTC: after READY, main merged again (mails 283, 289)
+
+MAIL 283 from the Builder, about 14:37 UTC, verbatim:
+"your trees lack the globe engine commit of 13:40 UTC (3d61ec53...). A READY commit must build and pass on a merge of newest main (mail 275 point d). Before your READY line: git fetch origin main, git merge origin/main (merge, never rebase), npm run build, npm test, and draft hashes of your kept frames again. Its options are off unless a stop turns them on, so your frames should keep their bytes; tell me if one does not. READY by 15:30 UTC stands."
+
+MAIL 289 from the Builder, 15:10 UTC, the parts for Mercury, verbatim:
+"Main is e4782fe (plus a status commit). New on it since f8bc034e: (1) the last engine piece for the handover, from agent/engine-handover 73b8dca5: config.handover.place.limbReachDeg (0 film wide, a stop asks for it per kind) and limbHoldDeg, StopSet.placeMatte { dive, rise } (off unless your set gives one), a top down harness view, the handover tools; notes in assets-src/shared/HANDOVER-NOTES.md. (2) alphaOne on a relief layer (the alpha loads as one channel, a quarter of its memory, off unless set).
+One thing to check when you merge it: StopPlan now has a public method named above (the top down view of the harness). If your plan class has a member of that name, rename yours. Mercury had one.
+Merge origin/main before you name your READY commit. READY times stand: 15:30 UTC, Jupiter and Saturn 16:30 UTC. A commit I take is checked as main plus your three folders on twelve render machines, so what you send must build there.
+The engineer's report now prints a number "under the place picture" (the globe alone against the globe with the picture at T). It is a warning, not a gate. Bring it down: it says how far your plates are from your picture, and that is what shows as a patch with straight sides before T.
+Mercury: READY 63dd08bc received. Your private method above in plan.ts is renamed to aloft in my tree (five places, no pixel changes); do the same on your branch. The check of main plus your folders runs (builder/take-mercury 3d2b0476)."
+
+- 15:00 the `u * dusk` test (dusk of the band only away from the place edge): at most 4 codes of change, since the dusk is near zero at the place. Dropped, plates not installed.
+- 15:03 the land matte read in HANDOVER-NOTES: it must be 1 inside the frame at T, so it can shape only the margin of my place picture (`valid` 0.03, 0.03, 0.05, 0.125 of the frame: about 58 px left and right, 54 below, 135 above). The straight edge of 738 to 743 is the frame of T itself. So the cure is first the plate ground beside it (tone and forms), then a matte inside the margin.
+- 15:05 edge statistics on plate level 4 (`out/work/mercury/place/tools/edgestat.py 4`), within 0.3 deg of the place edge. Linear mean inside against outside: left 0.0585 against 0.0453, bottom 0.0969 against 0.0676 (the band matched the mean of the log, so it is 23 to 30 percent darker in linear mean). Deviation of the log per octave (1 to 64 px at 430 px a degree): bottom inside 0.165 0.172 0.189 0.197 0.209 0.260 0.241, outside 0.182 0.188 0.203 0.204 0.188 0.136 0.113. The band lacks the large forms (0.07 deg and up) and the highlights.
+- 15:10 merged main 4357cbb0 (ffbf9692). `private above` in plan.ts renamed to `aloft` (five places). tsc clean, build clean, npm test 168 of 168. Draft (`out/work/mercury/place/c6`): 615, 689, 780, 870, 959, 1035 0 px against `base/`; 717, 738, 744, 990, 1000, 1016 0 px against 63dd08bc (`c5`).
+- In work, not committed: `band.py` matches the crater field beside the place to the picture per octave (`matchDeg`, `matchGain`, `matchFadeDeg`, `matchWindowDeg`, `baseLinear` in plates.json).
+
+## 23 Nov 15:15 to 16:00 UTC: Mercury taken onto main (mail 293), the four sided patch
+
+MAIL 290 from the Builder, 15:14 UTC, the parts for Mercury, verbatim:
+"Main is 5eba228. The engine's top down view of the harness is now StopPlan.topDown, not StopPlan.above. So a plan member of yours named above is fine as it is: do not rename it, and if you already renamed it, leave your rename, both build. Merge origin/main (5eba228) before you name a READY commit. Mercury: I take plan.ts as you sent it in 63dd08bc, with above."
+
+MAIL 293 from the Builder, 15:36 UTC, the parts for Mercury, verbatim:
+"MAIN is 0eae595. Two things landed since mail 290:
+1. Mercury's dive and rise without a cover are on main (d410b74), the first stop taken. Its check on twelve machines: 105 of 115 reference frames keep their bytes, the ten that differ lie in its dive and rise, both kept frames byte equal, handover report passes.
+2. The engine has a new setting, proven on twelve machines to change no frame while unused (0eae595): a stop may feather the border of its place picture from the inside, per side and per move. In the plan: handover: { dive: { place: { edgeIn: [left, right, bottom, top] } } }, each a share of the picture, 0 is off. The harness takes in=L,R,B,T for a trial. Use it where your place picture ends in a straight line because picture and globe do not agree at the border; it does not cure a picture that differs from the globe in its middle. The handover tool now prints a warning "under the place picture" (no gate). Tests are 170 of 170 on main. Notes: assets-src/shared/HANDOVER-NOTES.md.
+Merge main 0eae595 before your next named commit. Nothing outside your three folders, as before.
+HOW IT GOES ON for every stop: the commit you named READY is checked on the machines (reference frames, kept frames at the final tier, handover report, then G15 here). Green: it goes onto main and the stop's first round starts with fresh critics. Your own list of what is still wrong goes into that round beside what the critics name. Keep working on your list meanwhile and name the next commit when a cure is rendered and proven; it is taken as the fix of the round.
+mercury_builder: taken, as above. Round 37 is yours and starts with the gate run as soon as Uranus is on main too. Work on your five points from main 0eae595."
+
+Also from handover_engineer (15:20, low): `edgeIn` explained, `npm run still -- --frame N --tier draft --diag "beauty/in=0.4,0.4,0.4,0.25"`; on Mars 0.4, 0.4, 0.4, 0.25 took the straight sides away.
+
+- 15:14 merged main 5eba2289 (6618cfc5, pushed). 15:37 merged main 0eae595e (97427e10; NOTES and plan.ts conflicts taken from my side, main's copy of my folders is 63dd08bc).
+- The four sided patch, what it is (looks of 15:22): with `beauty/noplace` the plates alone show no straight edge at 741. The edge is the border of the place picture: the sharp picture ends on the frame of T plus 3 percent, and the plate beside it was the crater field (softer, flatter, 23 to 30 percent darker in linear mean). Also the level picture L had a pale streak inside the border, from its old feather into the old ground.
+- Cure by code in `band.py` (no takes), values in `plates.json` `band`:
+  1. Tone and forms of the crater field beside the place (`baseLinear` 1: the low tone is the log of the linear mean; `matchDeg`, `matchGain`, `matchFadeDeg`, `matchWindowDeg`: each octave of the field is gained toward the deviation of the picture near the place). After it, level 4, within 0.3 deg of the border: linear mean inside against outside, left 0.0588 against 0.0635, bottom 0.0958 against 0.0916.
+  2. `spill`: the plates continue the place picture past its border. Inside the border (`ownDeg` 0.2 to 0.4 deg) the plate takes the laid picture itself, not the level picture. Outside: a mirror of the picture across the border in the first `mirrorDeg` (0.12 deg), then the picture moved outward by `shiftDeg` (1 deg) along the side's normal (sides found from the field at the deepest level), fading into the crater field over `fadeDeg` (0.3 to 0.9 deg). A mirror alone (tried first, 0.3 to 0.9 deg) left a spine with chevrons along the border in 740 to 742.
+  3. `edgeIn: [0.4, 0.4, 0.4, 0.25]` on both kinds in `plan.ts` (the engine option of main 0eae595e).
+- Draft frames 736 to 743 and 991 to 996 looked at for each variant (`out/work/mercury/place/d3`, `ei2`, `d4`): the patch no longer reads as four sided. Frames 744 and 990 keep their bytes.
+
+## MAIL 304 (16:57 UTC, from the Builder, verbatim)
+
+MAIL 304 from the Builder to mercury_builder and earth_builder, 16:57 UTC. From handover_engineer, on why the globe alone differs from the place picture by 13 to 15.5 levels at your handovers (limit 6, a warning) and what shows of it. His words:
+"Part is a setting, part can be the engine, the rest is plates. Setting: neither Mercury nor Earth sets edgeIn (on main since 0eae595). Mercury's four sided outline at 738 to 741 is the picture's valid rectangle with the film's narrow feather; with edgeIn (Mars uses 0.4, 0.4, 0.4, 0.25) the sides become a ramp that reaches in while the weight is low and draws back by T. Engine: a tone difference shows as an outline or an island because the picture brings its broad tone and its detail in with one weight. I can split the two: the detail keeps today's weight and edges, the broad tone of the picture is led over to the tone of the plates toward the picture's rim while the weight is under 1, and the correction is zero at T. Off unless a stop asks. It can not make the tone change inside the window smaller, only take its edge away: at T the picture has its own tone over the whole frame, so plates 15 levels off still turn the frame within 12 frames. Mercury's far field going pale and flat from 993: its rise sets maxEnlarge 1.2, which cuts the picture there, so that is the plates alone showing (or the rise path: on Mars fromDive made the cut needless)."
+What I ask of each of you, inside your own folders, beside what you are on:
+1. Set edgeIn for your dive and rise and look at the frames of the place window with the blur off (npm run handover -- --stop ID --tier draft --only sheets,under). Mercury: 738 to 741 is the test. Earth: the same test in 1907 to 1919 and 2100 to 2112.
+2. The plates themselves are yours: bring the globe alone closer to the picture where it is cheap (broad tone first, it is what turns the frame inside 12 frames). The number is "under the place picture" in the handover report; under 6 takes the warning away.
+3. Mercury: try the rise with fromDive (as Mars does) in place of maxEnlarge 1.2 and look at 993 to 995.
+The tone split in the engine is being built now and will be offered to you when it is proven; do not wait for it. Your round 1 lists (fresh critics, measures, my own list) follow when the rounds close, about 18:00 UTC. Name a commit only when G5, G13 on every frame, G17, G11 and the handover tool with every part are green on it.
+
+## 16:00 to 17:10 UTC: the four sided patch 738 to 743, cause and cure by code
+
+Cause (measured with `--diag beauty/noplace`, `beauty/mask`, `beauty/picture` and tools `where.py`, `edgeprof.py`, `frameedge.py`): the terrain itself ends close to the T frame. In frame px beyond the T frame: left 37 (near) to 69 (far), right 46 to 50, bottom 19 at column 20, 30 at 200, 48 at 500, 67 at 800, 110 at 1400. The terrain darkens over its last 32 to 40 source px. The old field of the plates (border 160 source px) ended at about the T frame, so under the margin of the place picture the plate carried other ground than the picture, and the feather of the engine blended unlike ground along a straight line: the outline.
+
+Cure, all in my folders:
+- `mosaic.py`, `plates.py`, `plates.json mask.borderPx` 64: the field of the plates reaches to 64 source px before the terrain end (24 gave a dark line, the terrain is dark there).
+- `plan.ts` dive `valid` [0.004, 0.004, 0.0045, 0.125] (8, 8, 5 px outside the T frame, inside the field everywhere), `edgeIn` [0.4, 0.4, 0.4, 0.25] on dive and rise.
+- `band.py spill`: outside the field the plate takes ground copied from 1 degree further in (whole px shift, so it stays as sharp as its source; the bilinear shift before made it 35 percent softer by the Laplacian), led over to the picture at the junction by a membrane in a gamma 2.4 space (capped, short reach) with the first px exact.
+- `band.py seam` and `kept`: the junction between the picture and the copied ground is no longer the straight field edge. A minimum cut (scipy maximum_flow on the px graph) between the field edge and the outer edge of the place picture (T frame plus `keepPx`) picks the line where picture and copy differ least. Found at level 4, saved as `seam-<kind>.npy`, used by all levels (band.py now lays the levels from 4 down).
+
+Variants looked at and dropped: mirror at the edge (a spine with chevrons), crossfade of the plate into the picture margin (seam still at 743), border 24 (dark line), bilinear shift (soft copy), seam at half resolution (a dotted chain along the staircase), exact first 6 px (coloured comb).
+
+Limits that stay: on the left and right side of the T frame the room for the seam is only 13 to 45 frame px (the tiles and the terrain end there), so the seam can dodge small forms only. At the far left the field ends with the cover of the tiles (lay weight), not with the terrain.
+
+Memory: band.py with all levels in one process is killed (8 GB machine); run `band.py lay 4`, `lay 3`, `lay 2`, `rise 4`, `rise 3` as separate processes, level 4 first (it writes the seam).
+
+## MAIL 306 from /root, 17:45 UTC (verbatim, binding)
+
+Round 37 (Mercury, round 1 of 3) is with its critics on main 9972260 (your commit as it stands on main). The first answers are in. Start on them now; the rest of the list follows when the round closes. Critics' words, with the frames from the key:
+
+R4 motion, score 4:
+1. SEVERE. Sheet across the dive handover, frames 739 to 743, lower left and centre: "a second misregistered terrain plate shows through as a hard-edged rectangle with doubled crater rims and a doubled limb line; the cover reads as two images laid over each other, not one move". What I see on the same sheet (review tier): at 739 to 742 the place picture is a sharp four sided patch, and the ground round it is paler and smeared into radial streaks; from 743 on it is one clean picture. So the ground round the place does not hold up (stretched plate, not repainted, S2 of cut/HANDOVER.md) and the limit of the place picture is a straight edge inside the frame. Both have to go: the ground round the place as sharp and as dark as the place itself, and no straight limit in frame at any weight.
+2. MAJOR. Dive sheet, frames 730 to 739, top of frame: "the sun pops in above the horizon and the horizon swings from a limb at the right to a wide arc across the top; direction and composition jump within the cover".
+3. MAJOR. Rise sheet, frames 994 to 1000 and 1021 to 1027: "the sun disappears and the horizon tilt flips between 994 and 1000; between 1021 and 1027 the globe shrinks sharply, the sun moves, and a Milky Way band pops in at upper left".
+4. MAJOR. Sheet across the rise handover, frames 990 to 996, horizon and ground: "the horizon doubles into two parallel lines and exposure lifts to a flat washed grey; the ground smears into streaky ghost copies instead of a smooth directional blur".
+5. MAJOR. Dive sheet, frames 706 to 722, crater field: "crater rims break into stepped bright copies with colored speckle, so the blur ghosts instead of smearing smoothly; the texture looks like it is being zoomed as a flat image".
+6. minor. Terrain 829 to 973: "small white dash specks sit inside the crater's black shadow and move from frame to frame, which reads as crawling noise".
+7. minor. Terrain 926 to 959: "the starburst rays change length and strength noticeably while the camera barely moves".
+8. minor. Terrain overall: "the near ground and the horizon have only weak parallax, so the view reads close to a slow pan over a single surface". The terrain segment is not yours to change in this note unless the cure is free of risk for frame 870; leave it.
+
+R3 surface, part 1 (frames 615 and 717), score 6:
+9. MAJOR. Judged dive frame 717, left half, upper left and lower left: "directional smear turns crater rims into streaks across about half the flyby". Fix asked: "shorten the blur so those native crops keep closed crater rims". Read with 5: at 706 to 722 the image moves too fast for its shutter or the plates of that height are too coarse; say which after you measure (raw motion in px at 717 at the centre and the edge, texels per pixel there).
+10. minor. 717, upper right limb: "a warm halo and a streaked fringe sit on the airless edge".
+11. minor. 615, lower left starfield: "a chromatic smear sits among the stars, with faint aperture ghosts on the night side". The hold is not yours to change.
+
+R1 match, score 9, pass: two minor notes on 870 and 615 (micro detail slightly softer than the approved image in the lower foreground, night limb blacks slightly crushed). No action.
+
+My own from the sheets: far field pale and flat at 993 to 995; dive frames 722 and 730 smeared toward the edges.
+
+What I need from you: a fix commit for round 2 of 3 on agent/mercury-place that cures 1 to 5 and 9 at the cause, merged with origin/main, with your proof as before (finals 615 and 870 keep the bytes of the kept stills, hold and terrain untouched, the handover report, measure, and review tier sheets of 730 to 750 and 985 to 1000 that you have looked at frame by frame). Say plainly what is still wrong. Do not wait for the rest of the list to start.
+
+## MAIL 308 from /root, 17:51 UTC (verbatim, binding; added to mail 306)
+
+Round 37, one more answer. Add it to mail 306.
+
+R3 surface, part 2 (frames 870 and 1016), score 4:
+12. SEVERE. Judged rise frame 1016, upper left lit face through the centre left terminator: "Most of the globe is smeared into long directional streaks. Crater rims break into offset horizontal strips on the left, while round craters remain legible at center-right." Fix asked: "Check the globe at a frozen pose to distinguish texture distortion from blur. Correct any projection stretch, then shorten the blur or render it with enough temporal samples to retain continuous crater rims."
+13. MAJOR. 1016, lower shadowed globe and the shadow transition: "Rectangular and diamond-shaped swatches and isolated bright dashes sit over an otherwise smooth dark surface, giving the terminator a patchy, tiled appearance." Fix asked: "Remove the block-shaped discontinuities in the shadow-side render and blend the terminator continuously while preserving faint, coherent surface detail."
+14. minor. 870, near field crater rim and ridges: "Parts of the nearest terrain look soft and smeared despite hard, nearly white rim highlights and point glints." Not yours to change in this note.
+
+Read 12 with 5 and 9: do what the critic says first, the frozen pose (shutter closed) at 717 and 1016, so you know whether the streaks are the texture or the shutter, and say which with the numbers. "Offset horizontal strips" on the left reads like the shutter samples showing as copies, so also say how many samples the frame got and how far the edge moves in px.
+
+## MAIL 311 from /root, 18:03 UTC, to every stop builder (verbatim, binding)
+
+Decision d129, engine part E6 (handover_engineer builds it now).
+
+What: in the dives and rises of a stop that opted in, the shutter of a frame is shortened so that the motion across it is at most 6 px at the point of the frame that moves most (config handover.maxBlurPx), eased back to the full shutter over the last 12 frames of a rise. Every other frame of the film keeps the full shutter.
+
+Why: the critics of rounds 37 and 40 score the judged dive and rise frames as smear, severe (Earth 1857 "extreme radial zoom blur and low resolution stretching, blocky stepped streaks", Earth 2156 "dragged into parallel streaks and do not hold detail at native size", Mercury 1016 "smeared into long directional streaks"). The motion across the full shutter is 25 to 80 px there, because one steady move changes scale by 6 to 14 percent a frame. The path cannot be slower, so the shutter is shorter.
+
+What it means for you:
+1. Do not slow or bend your path to get less blur and do not build a blur cure of your own.
+2. From the next round your judged dive and rise frames (Sun 247; Mercury 717, 1016; Venus 1287, 1586; Earth 1857, 2156; Mars 2427, 2726; Jupiter 2997, 3296; Saturn 3567, 3866; Uranus 4137, 4436; Neptune 4707, 5006) and every frame of the motion sheets are nearly as sharp as your draft frames. Every fault the blur hid will be seen: plate edges, a level that pops, thin texture, clouds as blobs, the place picture as a patch, a halo at the limb. Look at those two frames at the draft tier at native size (crops of about 700 px, not the whole frame resized) and put what you find on your list, worst first.
+3. Nothing to merge yet. I tell you when E6 is on main.
+No answer needed.
+
+## MAIL 314 from /root, 18:08 UTC (verbatim, binding)
+
+Round 37 (Mercury round 1 of 3, the build with no cover) is closed: R1 9 (pass), R3 4 (part 1: 6, part 2: 4), R4 4, R2 pass (5 of 10 against the control's 5 of 10), R8 pass, measures green. 2 severe, 6 major, 8 minor. The pass bar does not hold. Two rounds are left; round 2 starts when the engine's capped shutter (E6) is on main and you have named a commit that I have checked.
+
+The full list with every critic's words, the file and the frames is on main: read it with
+  git fetch --depth 1 origin main && git show origin/main:scorecards/round-037/SUMMARY.md
+(R1.json, R3.json, R4.json and jurors.txt lie beside it). Read all 16 issues and the jurors' words. Below is how I order them and what I saw myself; where my words and a critic's differ, the critic's words count.
+
+Not yours, the engine's (E6, mails 310 and 311): issues 1 and 3 (the smear on 1016 and 717) and most of issue 8 (stepped bright copies 706 to 722). One line is yours in it: your set smears the globe per sample over the full shutter's step (src/stops/mercury/set.ts line 254). handover_engineer adds the shutter's scale to the view a set receives (view.shutter) and sends you the line; take it when its commit is named, nothing before.
+
+Yours, worst first:
+1. Issue 2, severe, frames 739 to 743: "a second misregistered terrain plate shows through as a hard-edged rectangle with doubled crater rims and a doubled limb line; the cover reads as two images laid over each other, not one move". I see it too: a pale four sided outline from 738 to 741. The place picture must not have an edge that can be seen and must lie exactly on the relief under it: same craters in the same spots on both levels at every frame they share, edge feathered into the globe over a wide band, same tone and same contrast on both sides of the band. Prove it on draft frames 736 to 745 at native size with the plate's outline drawn over a second copy.
+2. Issue 7, major, frames 990 to 996: "the horizon doubles into two parallel lines and exposure lifts to a flat washed grey; the ground smears into streaky ghost copies". I see the far field pale and flat from 993 to 995. One horizon, one exposure across the handover of the rise.
+3. Issue 5, major, frames 730 to 739: "the sun pops in above the horizon and the horizon swings from a limb at the right to a wide arc across the top". Issue 6, major, frames 994 to 1000 and 1021 to 1027: "the sun disappears and the horizon tilt flips between 994 and 1000; between 1021 and 1027 the globe shrinks sharply, the sun moves, and a Milky Way band pops in at upper left". The camera's turn has to be one steady move through both segments: the Sun enters and leaves the frame over many frames at a steady pace, the horizon's tilt never changes sign, the pull back has no frame where the globe's size steps. Print per frame the Sun's place in the frame, the horizon's tilt and the globe's size and their largest step, before and after.
+4. Issue 4, major, frame 1016, shadow side: "Rectangular and diamond-shaped swatches and isolated bright dashes sit over an otherwise smooth dark surface, giving the terminator a patchy, tiled appearance." These are the edges of your detail levels in the dark. No level may end in an edge that shows on the night side either.
+5. What is left of issue 8 once the shutter is short: "the texture looks like it is being zoomed as a flat image" and "stream the higher-detail terrain in early so the dive does not upscale a low-res texture". Print texels per pixel at the frame centre and at the four edges for 706, 717, 722 and 730 and bring the finer level in before the coarse one falls under 1 texel per pixel.
+6. Minor issues 9 to 16. Take those that lie in the dive, the rise or the moving parts of the terrain view (11 warm halo and streaked fringe on the airless limb at 717, 14 specks that crawl in the crater's shadow, 15 starburst rays that change length from 926 to 959). Issues 9, 10, 12, 13 and 16 touch the judged hold 615 and terrain 870, where the match critic gave 9: change them only if the frame stays as close to its approved image as it is now, and say which you left.
+
+Jurors (R2 passes, so nothing is owed, but they point at the same places): terrain "swirled, smeared crater walls and implausible crater shapes", "ray craters rendered like upward-shooting 3D splash spikes alongside scattered wet-looking specular glints".
+
+Rules as before: only your folders; the hold 540 to 689 and the terrain frames outside the handover windows keep their bytes unless an item above names them; never tune one critic's item at the cost of another; a cure is proved on the frames, not on the report alone. When the handover report passes with every part and you have looked at 700 to 779 and 960 to 1034 frame by frame at draft, send READY with the commit, one line per item (cured, better, or left with the reason) and what you still see yourself.
+
+## 17:10 to 18:50 UTC, work on mail 314 (not committed yet)
+
+Mail from handover_engineer (18:46): E6 is on agent/engine-handover 1a777a3, /root says when to take it. My one line for set.ts (the globe smear, line 254), to take only with E6:
+  const before = fast ? at(state.time - (config.shutterFraction * (view.shutter ?? 1)) / (view.samples * config.fps)) : null
+Least share on Mercury 0.084 at 737, 0.067 at 1003.
+
+Found:
+- Two Suns, each rigid with its sky. Plate Sun (hold) at (1979,134) at 690, runs left along the top, steps to 83 px a frame by 703, covered by the globe 705 to 714. Glare Sun (terrain's) comes down from the top: (727,-318) at 730, (552,-6) at 737, (535,26) at 743, about 55 px a frame to 733; its amount ramps 0 at 721 to 0.22 at 743 (look.glare.span.dive 24). The pop the critic names is the amount ramp on top of the approach: first rays 731, burst 735, core at the edge 736.
+- Rise: glare Sun leaves by the top 993 to 1003, amount 0.22 to 0 at 1011. Plate Sun and the Milky Way sweep in from the left 1017 to 1030, 105 to 124 px a frame, brake over the last ten frames.
+- Steady numbers before (tools/turn.ts json piped to tools/steady.py): dive largest sky step 80.2 px, largest change of the step 22.3, largest change of the tilt step 1.29 deg, tilt sign changes 1 (hook to -94.0 at 701), largest change of the size ratio 0.0101, rate over mean 1.21. Rise 86.1, 26.6, 1.98, 1 (hook to -92.6 at 1025), 0.0122, 1.25.
+- Path values tried: easeFar 20 and 22 with blend[0] 0.3 made the hooks larger. blend[0] 0 with easeFar 18 (dive) and 22 (rise): dive 63.6, 8.2, 0.38, 1 (hook 4 deg, to -83.7 at 701), 0.0063, 1.27; rise 65.5, 7.2, 0.64, 0, 0.0068, 1.42. Pose at 717: globe 1394 to 1290 px; at 1016: 1030 to 825 px. Frames from 737 on and to 996 keep their pose within 1 px.
+- Doubled horizon of the rise 991 to 996: the band between the picture's horizon and the true limb (10, 22, 34 px) is the globe alone, painted by the flat far wash (look.far.flat 0.6, about 137 grey) while the picture's far strip is 160 to 196. With flat 0 the band is dark streaks of the base map at grazing angle. The pale slab top left at 741 to 743 is the same wash left of the picture's left edge.
+- Limb reach probe (DIAG=beauty/limb=0.5 and 2): one soft horizon, only a thin grey line left. To adopt as place.limbReachDeg.
+- Night side at 1016 (tmp/n1016-10.jpg, 10 times gain): pale dashes and curls on the dark, and faint square steps: item 4.
+
+## MAIL 326 from /root, 18:53 UTC, to every builder (verbatim, binding)
+
+Mail 326 from the Builder (/root), 18:53 UTC. To every builder. Three things, then carry on.
+
+1. Main is fdf97b84de6f3e33e10a906f8f82e2c81fe9b32a. New on it: the engine's fromDive files (no frame of any stop changed: 115 of 115 draft frames equal, proven) and the harness with --place-window on every pack command. Merge it into your branch before your next commit (git fetch --depth 1 origin main; git merge FETCH_HEAD; never rebase, never force).
+
+2. New rule, from now on, before you name any commit to me as READY: on your own tree run
+   npm run gate -- --phase 6 --only G11,G15 --g15-stops <your stop>
+and put the two lines that start with PASS or FAIL into your mail, word for word. A commit without two PASS lines is not READY. Reason: a commit went through a twelve machine check today and then failed G15 (memory: web 483 of 450 MB, full 1903 of 1400 MB) and G11 (plates named by a pattern in RECIPE.md). The limits live in config/showcase.json; read them there. A red gate is fixed in your folder; it is never a reason to shrink what the picture shows without telling me what was given up.
+
+3. The capped shutter (E6) is NOT on main yet. It is on agent/engine-handover 1a777a3b746d40351878e1258f4f13be20edeeb3 (handover.maxBlurPx 6, handover.blurEaseFrames 12). I am rendering trial clips of three dives at 6 and at 14 now and set the number once, on moving pictures. Do not copy engine files into your folder and do not set your own shutter until I write that E6 is on main. Until then keep working on the faults you already have; the place picture, the flow across T and the far field do not depend on the number.
+
+No answer needed unless one of the three stops you.
+
+## 18:50 to 19:05 UTC, decisions for mail 314 (in the working tree, not committed)
+
+- Item 3, path: look.path dive { easeFar 18, blend [0, 0.25] }, rise { easeFar 22, blend [0, 0.25] }. Frame 1035 keeps its bytes (0 px against base). The tilt hook left in the dive is 4 deg at 701 while the globe is a whole disc in frame (its centre moves 73 px left, 1 px up); from 702 the tilt step never changes sign. Rise: no sign change.
+- Item 3, Sun: look.glare.span 44 and 44 (were 24 and 22), so the glare is close to full while its Sun is still out of frame and it comes in and leaves by the camera's turn alone. Seen on 726 to 738: rays from 730, burst 734, core 736; before the rays started at 732.
+- Item 2 and the doubled limb line of item 1, cause seen at native size (tmp/hz990.jpg, tmp/hz743.jpg, tmp/limbcmp993.jpg): the place pass lays the picture over the live sky where the picture's own cover is partial (src/core/place.ts: sky * (1 - a) + picture), so the soft horizon rows of the terrain picture show as a dark line under the band of globe that lies between the picture's horizon and the camera's limb. limbReachDeg does not cure it on Mercury: it fills the band with the picture's horizon row, which is that dark row.
+- Cure being built: (a) a land matte per kind (StopSet.placeMatte) that leaves the picture's horizon rows to the globe: assets-src/mercury/place/matte.py from an alpha dump of the picture (DIAG=ungraded/dump=X,Y,alpha, nine windows a kind at draft, frame 742 and 992; values in plates.json "matte"); (b) the far wash of the globe keeps the relief of the ground and takes the tone of the picture's far strip (globe.ts uFarRelief: wash colour times (lum / ref) ^ power; look.far.relief).
+- Item 4 plan: on the night side the plates give way to the plain map (globe.ts uNightPlain, look.light.nightPlain), 0 at the hold's height so 615 keeps its bytes.
+
+## 19:05 to 19:15 UTC
+
+- Alpha dump done (18 windows, out/work/mercury/place/e1/ad and ar). The place picture is not 5760 x 3240: with plan.ts valid margins and scale 2 it is 3872 x 2440 for the dive (margins 8, 8, 5, 135 px at draft) and 4072 x 2538 for the rise (58, 58, 54, 135). Windows past that size come back black. matte.py now crops the mosaic to plates.json matte.picture and keeps only the largest solid piece (the dump adds the lens glare at the top of every window, a spike in the first matte).
+- Dive picture: ground edge rows 677 to 1424 of 2440 (horizon from frame row 204 at the left to 577 at the right at draft). Rise: 775 to 1578 of 2538.
+- Applied: globe.ts uNightPlain and nightPlain(), set.ts placeMatte (place-matte-dive.png, place-matte-rise.png, full and web), look.far colour [0.278, 0.26, 0.234] sunLevel 1.5 relief [0.08, 0.4], look.light.nightPlain { height [2.2, 3.4], range [-0.06, 0.04] }, look.light.rim.fade [-46, -30] (the warm rim falls to rim.after over frames 698 to 714 of the dive, minor issue 11). Build 19:14, test frames in e2.
+- Looks pushed 19:14 (3 added).
+
+## MAIL 333 from /root, 19:27 UTC (verbatim)
+
+Mail 333 from the Builder (/root), 19:27 UTC, to mercury_builder, earth_builder, uranus_builder, neptune_builder, mars_place_builder. Render machines are free now and a take check does not depend on the shutter decision (it proves only that frames outside your dive and rise keep their bytes). If you hold a commit that is better than what main has for your stop and that you would stand behind in a round, send it now in one short mail: the sha (merged with main c8b4c8b or newer: git fetch --depth 1 origin main; git merge FETCH_HEAD), the two lines of npm run gate -- --phase 6 --only G11,G15 --g15-stops <your stop> word for word, and in three lines what it cures and what is still wrong. If your work is in the middle of something, say so in one line and carry on; nothing is lost, the next sha is taken the same way. The shutter (E6) follows on main separately; do not wait for it and do not build around it. Mars: your take also needs the globe engineer's ownGain change (agent/engine-globe e62c658f); say whether your sha needs anything else from an engine branch.
+
+Answered 19:28 (low priority): in the middle, nothing new to take yet; the next sha comes merged with the newest main and with the two gate lines.
+
+## 19:15 to 19:55 UTC, far field tone and the land matte
+
+- Kept frames with the e2 build (615 689 780 870 959 1035 against out/work/mercury/place/base): 0 px different on every one.
+- Far field measured with out/work/mercury/place/tools/farprof.py (picture against the bare globe, per band of px under the limb). The bare globe equals the picture beyond about 110 px (dive) and 150 px (rise) under the limb. The picture's pale zone follows frame px under the limb, not the cosine of the view angle, so the wash in globe.ts now runs on inLimb (angle under the limb in frame tangent units) with look.far.under { dive [0.05, 0.125], rise [0.1, 0.155] }, colour [0.289, 0.26, 0.225], sunLevel 2.6. Measured after (e5): 741 globe against picture within 2.4 levels in every band from 2 to 260 px; 992 within 3.4 except 60 to 80 px (9.8 under).
+- A fixed land matte (full from the first place frame to T) gave one horizon from 991 but failed the sides check (dive mean 1.891 p99 58, rise mean 2.127 p99 77): the picture at T must be whole. Cure: the matte moves. src/stops/mercury/matte.ts (720 x 405 grey picture written per frame), matte.json (per column the share of picture height of the ground edge, from matte.py), look.matte { rows 405, band [0.014, 0.04], frames 2 }: amount 0 at T, full two frames from T. The PNG mattes are gone (no new asset). Sides after: dive mean 0.2 p99 2, rise mean 0.182 p99 3, both pass.
+- What the frames show (tmp/e5-nA.png, e5-nZ.png, e5-tZ.png, e5-ly.png): one horizon and one tone from 992 on and up to 742. Still wrong: the terrain view itself carries a pale band with a dark scalloped line at its horizon from about 980 to 990 and 744 to 756 (the wide ground layer seen from high up, DIAG=layers blue). At 743 and 991 that band is half shown, so a viewer who steps can name 743 and 991 as the frames where the horizon changes look.
+- Disk: the handover tool refuses under 3 GB free. Deleted most of d10, dy, e3, c6, e2/np0, out/work/mercury/tiles, the handover tool's frames, the pip cache. 4.6 GB free at 19:44.
+
+## 19:55 to 20:06 UTC
+
+- Kept frames with the moving matte build (e5/k): 615 689 780 870 959 1035 all 0 px against base.
+- Item 5 numbers, DIAG=texels at draft (tools/texat.py; the picture clamps at 2.00): 706 centre 2.00, left 1.48, right sky, top 2.00, bottom 1.58, lowest 1 percent 1.28, share under 1.0: 0. 717: 2.00, 2.00, sky, 1.97, 2.00, lowest 1.49, share 0. 722: 2.00, 1.79, sky, sky, 1.64, lowest 1.49, share 0.0004. 730: 1.84, 2.00, sky, sky, 1.56, lowest 1.50, share 0. A finer level starts at 1.95 texels per pixel of its parent and is whole at 1.02 (assets.ts fade), so no level is under 1 before the next is whole. Nothing changed for item 5.
+- Item 3 tables after (tmp/sun-after.txt, tmp/steady-after.txt, tools/sunsum.py). Sun within 100 px of the frame: dive 690 to 743, largest step 83.4 to 68.1 px, largest change of step 23.6 to 9.0 px; rise 1007 to 1034, largest step 123.3 to 115.2 px, largest change of step 28.6 to 11.5 px. Glare on the dive now grows over 33 frames (711 to 743), before 18.
+- Night side at five and six times gain (tmp/e5-n1016-x6.jpg, e5-night.png, e5-night2.jpg): 1016 smooth, a few lit rims at the terminator. 717 still has a black wedge along the terminator beside the blue night fill (it was there before; the night plain is only part way in at that height) and pale curved rims in the dark at the lower left.
+- The two mercuryTrace lines are out of set.ts.
+- Merged main 32c488ab (fetch with depth 30; depth 1 gave "unrelated histories"). tsc and build green. npm test: one test fails, tests/place.test.ts line 713 allows place.edgeIn only for Mars. Request sent to handover_engineer 20:05 to let Mercury ask too. No commit can be named green on tests until that is on main.
+- handover_engineer, 20:10 UTC: the test no longer names a stop (edgeIn and toneIn lines hold every stop against its own plan). Commit 0b054d1 on agent/engine-handover (test file only), head f7f0b7c has main b6c86a3 merged. Not on main yet; /root takes it. Until then: say to /root that my one red test is this line and is cured by 0b054d1; green can be shown on a scratch merge.
+
+## MAIL 340 from /root, 20:30 UTC (verbatim, binding; "nothing to answer")
+
+"1. Main is a9ed9a0 (the tree of 42b1585c). New on it since 20:00 UTC: Saturn's surface view from code (32c488ab), Jupiter's surface view from code (9838e122), the test line that lets any stop set place.edgeIn in its own plan (bc2e4c41, asked by Mercury), the globe engineer's change of the own gain (42b1585c: the gain now multiplies the scene value; no stop on main sets it). Merge origin main into your branch before you name a commit; never rebase, never force. 2. The shutter of the dives and rises is set (decision d140 in kit/PROGRESS.md): handover.maxBlurPx 14 with handover.minShutter 0.5. ... the draft tier does not change at all. It comes onto main after its proof on machines, in about 40 minutes; I write when it is there. Do not add blur, softness or a cover of your own to hide a fault at the handover: what the half shutter no longer hides has to be cured in the plates and the path. 3. What Brandon asked for stays the measure of every dive and rise, word for word: "the goal would be to make it seamless. Like there's actually a place on the planet that the camera's going to." The place has to be in the picture early (as detail on the globe well before the handover, not a patch that arrives in the last frames), it has to agree with the globe around it in tone, and the camera has to travel to it in one move. When your commit is ready write READY with the full sha and your gate lines (tsc, tests, G11, G15 web and full, G13 on every frame of the dive and rise, the handover report verdict with every part). I prove it on twelve machines and take it; the next round of your stop starts on main with the shutter."
+
+## 20:06 to 20:45 UTC, item 1: what the hard edged block at 738 to 741 is
+
+- 20:15 every dive and rise frame at draft (`f1`, state before `lean`), all looked at. One move in both. Dive handover at 744 not nameable at sheet size. Rise: far field pale and flat from 990 to 999 (item 2 only better), a darker streak below the limb at the upper left 997 to 999, Milky Way comes in over 1019 to 1024.
+- Slip, 20:27: `git checkout src/stops/mercury/look.ts` to undo a test edit wiped the uncommitted look.ts. Restored from the built bundle in dist and checked against it (segment identical). Rule for me: never `git checkout` a file with uncommitted work, edit test values back by hand.
+- Outline proof at native size (`f1/ol`, `tools/outline.py`, `tools/olcrop.py`): the outline of the place picture is not seen in the beauty on any side at 736 to 743. The block at the right of the frame (1520 to 1720 x 600 to 960 at 738) lies outside what the picture adds: it is in the globe alone (`DIAG=beauty/noplace`, `g3`), and main has it too.
+- Patch feather 0.25 (`g1`) and the wide photo feather (`g2`): no change to the block. Both back to their values.
+- The block has two edges with two causes (`tools/spot.ts`, `tools/reproj.py`, `tools/fan.py`, `tools/fanview.py`, `h1/fv738.jpg`):
+  1. Top edge, first cause: levels 1 and finer faded out by texel density along the view, so in the grazing far ground the baked levels ended in a line and the pale base globe stood behind it. Cure in code: `lean` (assets.ts patches `lean: 1`, globe.ts `uPatchLean`): levels 1 and finer fade by the parent's density across the view (minor singular value), level 0 as before. Kept frames 615 689 780 870 959 1035: 0 px against `base` (`g4/k`).
+  2. Top edge, second cause, and the right edge: the field of the laid back picture in the plates. The right edge is the side of the field (the T frame's footprint plus 64 source px): `band.py spill` copies the picture outward only where the lay is stretched under 3 to 4.5, so in the far part of the field the picture stood against the crater field with a 1.5 px step. The top edge is the far end of the field: the picture went out over stretch 5.5 to 8, about 30 frame px at 738.
+- Cure in the plates, by code, no takes (`plates.json band.spill`): `elong` [5.5, 8] (the copy runs along the whole side), `farElong` [3.5, 8] (the picture goes over into the crater field across about 230 frame px at 738), and the copy no longer lies under the picture inside the field (it was a second, moved picture under the far ramp: ghost forms).
+
+## 20:45 to 21:45 UTC, plates join, and what the handover frames 743 to 744 and 990 to 991 still showed
+
+- `h1/a` (spill without `join`): kept frames 0 px, the hard block edge is gone at 734 to 742 right and left. A faint straight junction line was left at the left of the frame at 738 to 740 (`h1/left-738-x2.jpg`).
+- `join` added to `plates.json band.spill` (`elong [3.0, 4.5], deg 0.4, softDeg 0.2`): in the stretched part of the lay the picture dissolves into the copy over 0.4 deg inside the edge and the membrane is off there. `h1/b`: kept frames 0 px. Looked at `h1/jl738x2.jpg` and `h1/jr.jpg`: the straight line at the left is nearly gone, the price is a softer band at the right at 738 and 740 (the copy is softer than the picture). Kept.
+- The old plates the pipeline needs were restored with `git show 1e492e92:public/assets/mercury/full/patch-N.jpg` into `out/work/mercury/place/old/`.
+- Main's 42b1585c touches `src/bodies/planet.ts` only; Mercury's own `globe.ts` does not use it.
+- Wrong guess, proven wrong on frames: the pale band at the far edge of the terrain view at 975 to 990 is not the wide photo in the globe shader (`close.wide.over` 0 changed nothing, `h1/v2`; the globe is not drawn in the terrain view at all). It is the far end of the wide relief (`under`, `DIAG=layers` blue): the wide picture's own far plain, its drawn dark horizon line and the streaked rows above it.
+- Measured on `f1` and `h1/c`, `h1/np` (`DIAG=beauty/noplace`), limb row at x 1000, 1400, 1700 at draft:
+  - Dive: 742 281 385 495, 743 275 379 494, 744 (terrain) 273 377 483, 745 267 370 474. Step 743 to 744: 2 px between steps of 6 to 9.
+  - Rise: 989 311 416 522, 990 (terrain) 323 429 537, 991 323 429 538, 992 333 440 552. Step 990 to 991: 0 to 1 px between steps of 12 to 15 and 10 to 14.
+  - Cause: the terrain camera is at height 1.0 to 1.3 units in 780 to 959 and at 2.15 (744) and 2.28 (990) at the handovers; the wide picture was made from height 2.0. Above that the far end of the wide relief comes into view and lies under the sphere's limb (5 px at 744, 10 to 14 px at 990). The globe's limb is the sphere's.
+  - Sky strip 4 to 16 px above the limb at x 1000: 990 (40, 41, 39), 991 (25, 29, 30); 743 (34, 36, 35), 744 (44, 44, 42). Cause: the terrain view's limb halo (`Limb`), which the globe view does not have.
+- Cures, both in my folder, both exact no-ops in 780 to 959 and in the hold (kept frames 0 px, `h1/d`, `h1/f`):
+  1. `look.halo { dive [0, 33], rise [-30, 0] }`: the terrain halo's gain runs from 0 at the handover to 1 over 33 frames after the dive handover and from 1 to 0 over the 30 frames before the rise handover. Sky strip after: 743 (32, 34, 34), 744 (34, 35, 35); 990 (26, 29, 30), 991 (25, 29, 30).
+  2. `look.limb { sink { dive 0.081, rise 0.163 }, frames { dive 8, rise 12 } }` (terrain units, through the globe's own `uSink`, `globe.near(0, sunk / closeRadius)`): the globe's limb sinks onto the terrain's limb over the 8 frames before the dive handover and comes back over the 12 frames after the rise handover. Limb rows after (`h1/e`, frames 8 on both): dive 741 291 396 509, 742 285 390 500, 743 280 385 494, 744 273 377 483 (steps 5 to 11); rise 990 323 429 537, 991 333 440 549, 992 341 448 561, 993 348 457 573 (steps 8 to 12).
+- Still wrong at 990 to 991 after both: the 40 px under the limb go in one frame from the terrain's far band (pale, wavy edge, two dark stretched craters, pink ruled lines) to the globe's far wash (pale, fine streaks). The far band of the terrain view is the wide relief seen from above the height it was made for; a true cure draws the sphere's far ground in the terrain view near the handovers or builds the far plates from the wide picture's far rows without stretch.
+- 21:40: `limb.frames.rise` 12 (`h1/f`, kept frames 615 689 780 870 959 1035 at 0 px). Limb row steps at x 1000, 1400, 1700 from 989 on: 12 13 15 (990), 10 11 12 (991), 8 9 13, 8 10 13, 7 10 15, 5 10 16, 3 11 21. Sheets 988 to 1004 looked at frame by frame: one horizon, one move, 990 to 991 not nameable at sheet size. Looks pushed 21:41 (d918148a).
+- `matte.frames` stays 2: a slower matte was not tried again, the stretched horizon rows of the picture were the reason for 2.
+- Disk: deleted `f1`, `e5`, `g4` and the test renders `h1/a`, `h1/v1`, `h1/v2`, `h1/np`, `h1/ly`. 3.5 GB free.
+
+### 21:41 to 21:50 UTC: the step committed, main merged, proof chain started
+- Commit 426d9283 (plates, lean, far wash, night plain, rim fade, moving matte, halo fade, limb sink, path values), then merge of main eddf917d as 309fb7ff. Main still has no `minShutter` (E6 not there), the engineer's line in set.ts is not taken.
+- After the merge: tsc clean, build done, draft 615 689 780 870 959 1035 at 0 px against `base` (`m1`).
+- Disk held over 3 GB: `/tmp/distsave`, `h1/b`, `h1/d`, `h1/e`, three sky work arrays and two relief work arrays deleted, `git prune-packed` and `git prune` (141 MB of blobs no ref reached).
+- Running: `m1` = draft 690 to 779 and 960 to 1034, every frame, for the frame by frame look, the outline proof and the tables of items 3 and 5.
+- `m1` (merged state 309fb7ff, draft, every frame 690 to 779 and 960 to 1035): sheets of 8 at 400 px per frame in `m1/sheets` (`d692` to `d772`, `r960` to `r1032`), every frame looked at; 997 to 1000 also at 800 px, 738 and 739 at native size in three crops (`n739a` to `c`).
+  - Dive: one move from the whole disc to the crater. The place is a grey field with the crater's shadow from 711 on. No four sided outline and no doubled rim at 736 to 743 at native size; left of about x 130 at 738 the ground is softer (coarser level, long ovals), right of the bright crater at x over 1650 it is smoother. 743 to 744 cannot be named at sheet size.
+  - Still wrong in the dive: from 711 to 722 the field around the place is neutral grey while the globe around it is golden with blue tints, so the place reads as a field of its own tone that grows (the same on the rise, 1005 to 1014).
+  - Rise: one horizon and one limb line through 984 to 1000. The far ground under the limb stays pale and flat from 984 to 999 (no jump in it now, but it is still the weakest part of item 2). 996 to 1000 the ground at the lower right is stretched and soft. A pale patch with a pink and green tint lies on the ground left of centre at 997 to 1000 (lens ghost of the glare while it fades).
+  - Sun enters over 1016 to 1022, the Milky Way band slides in at the upper left from 1020, no step in the globe's size.
+- `tools/turn.ts json` gives a table byte for byte the same as `tmp/turn-after.json`: the camera, the Sun's place, the tilt and the size have not changed since the item 3 tables were made. The tilt itself stays negative through the dive (minus 79.7 to minus 11.2) and the rise; its step changes sign once in the dive, at 702, while the globe is a whole disc near the centre (a 4 degree back turn over 692 to 701).
+
+### MAIL 350 from the Builder (/root), 22:16 UTC (binding, word for word)
+1. E6 (capped shutter) is on main: 1ce3137125360e48c107dce6a95a431b815b4a15. Merge origin main.
+2. A SECOND REVIEW NOTE from Brandon (about 21:50 UTC, after watching main 291a78b live) sets the work from here. Read on main, all of it: the section "Second review note of 2026-11-23" in kit/PROGRESS.md and his words under decision d147. In short: E one pace through each move, no dent at the change of view. F one scene through the change of view, nothing comes in by time (blends only by distance, height or angle), the close ground drawn on the globe from the height where it first shows, relief real where it can be seen, the place picture retired. G no surface view is a picture that is pushed, bent or rippled. H he captures the film himself at 3840 by 2160 and 60 frames a second, frame by frame, so every motion must hold between frames (nothing snaps to a whole frame, no state from frame to frame) and the cost of drawing a frame is no limit. The timetable of 22:00 and 22:45 is void; no round is spent on a build made before the note; three rounds per stop for it.
+
+YOUR STOP. His words: "transitioning from mercury's planetary view to the surface view has some lag as well". Measured by the machines' report on main: the view changes at 744 (dive) and 990 (rise), at 0.035 radii over the ground; the largest change of the rate of fall in one frame is 0.16 of the mean; under the place picture the globe differs from the close view by 13.0 (dive) and 14.6 (rise) of 255 against a line of 6. So the globe near the place is not the close view's ground, and the place picture that covers the difference for 12 frames is what reads as the stall and the swap. What the note asks of Mercury: the crater field of the close view is real relief on the globe from the height where craters first show (rims that hide what is behind them, shadows cast by the same Sun), the same ground all the way down, no picture or mesh coming in by time. The pace of the engine's descent is being rebuilt by handover_engineer; say whether any of the dent comes from your own plan. Your READY of about 23:00: say in your answer what in it serves this note and name it only if it does.
+
+By 22:50 UTC, one short mail, while you work: (a) is any part of the surface view a picture that is moved; (b) what is drawn on the globe side under 0.05 radii in the dive and the rise, where it is flat, what comes in by time (frames and knob); (c) what you build for F, in order, with the hour of the first looks; (d) anything that depends on whole frames. Looks every 30 minutes as before.
+
+## MAIL 361 from the Builder, 22:30 UTC (verbatim)
+
+MAIL 361 from the Builder (/root), 22:30 UTC, beside mail 350. Two things from travel_builder's search of main for what does not hold at the capture rate (60 frames a second, twice the film's): (1) `src/stops/mercury/set.ts` 254 and 272 take the blur step from `shutterFraction / (view.samples * fps)` and call `shotAt(shot.frame, ...)`: at rate 2 that is the film's shutter and not the drawn frame's, twice too long. travel_builder gives a helper with its first commit (about 23:45 UTC): the drawn frame's shutter in seconds, on the view or the shot, the same bytes at rate 1. Use it there as soon as it is on main. (2) `src/stops/mercury/pace.ts` 40 and 51 floor into a table: check that the value is joined between its knots so it holds at half frames, and say so in your answer. Also: the Sun in your sky. Your plate `src/stops/mercury/sunplate.ts` is the bright flat disc beside Mercury from frame 500; Brandon calls the Sun flat as it comes to sit in the sky. belt_builder builds one far Sun for the travel, your sky and the later stops (a real sphere with a darker limb, a readable surface, corona and prominences with depth) in `src/space/farsun/` and will write to you; the line in your set that draws the plate becomes a call of it when it is ready. Keep working on the ground.
+
+## Answer sent to /root at 22:22 UTC by the sandbox clock (the mail says 22:36, which was a guess and wrong), to mails 350 and 361, in short
+
+- (a) nothing in the surface view is shifted by time; it is one picture on a mesh from its own depth, flown by a real camera; behind rims it stretches (996 to 1000).
+- (b) globe side under 0.05 radii is one flat sphere with plates; by time: engine place picture and sky, my matte, limb sink, carry grade, glare span, rim spill fade, night shoulder; close side: halo.
+- Dent is from my own plan (path in plan.ts): onset 697 to 702, plateau 742 to 745 and drop at 746, rise stall 991 to 992, steps at 996 and 1025.
+- (c) order promised: 1 picture off baseline (22:50), 2 relief meshes on the globe at true place and scale with border on the ground (23:45), 3 sphere under and round the meshes on the close side, 780 and 959 keep bytes (00:45), 4 every time knob by height or Sun angle (01:15), 5 one rate curve inside plan E (01:45).
+- (d) set.ts 264 and 282 wait for travel_builder's helper; pace.ts tables are dead code (only `curve` is used), to remove; plan.ts 54 is a constant; sunplate tap count.
+- The step 426d9283 is not named for a round; pushed as base.
+
+## MAIL 366 from the Builder, 22:30 UTC by its clock (verbatim; the sandbox clock read 22:24)
+
+MAIL 366 from the Builder (/root), 22:30 UTC by the clock here. Your answer to mails 350 and 361 is accepted with one change of order: the pace comes first, not last. His words on Mercury are about lag, the dent is in your own plan and you have its numbers (0.16 to 0.19 at 697 to 702, 0.145 down at 746, the stall at 991 to 992, 0.176 at 996, 0.177 at 1025), so one rate curve over 690 to 780 and 959 to 1035 inside the limits (step at most 0.08 of the mean from one film frame to the next, no rebound over 0.03, the same across both seams, at whole and half frames; the turn and the picture speed likewise) is your next commit, by about 23:30 UTC, measured with your own report; `npm run smooth` confirms it later. Then 2, 3 and 4 as you wrote them.
+Other points:
+1. Push 426d9283 now as the base. I run its proof on my machines (it costs you nothing) and put it onto main if clean, as work that is better than main; it is not a round candidate, as you say. Send me the full sha when it is pushed.
+2. The stretch behind rims once the camera leaves the picture's viewpoint (996 to 1000) is part of G for you: what one viewpoint did not see must come from functions or from a second view, not from stretched texels. Put it after step 3 and say how you fill it.
+3. Any value in pixels of the format in your folders becomes an angle or a share of the frame height, so the picture at 3840 wide is the picture at 1920 wide (Brandon captures at 3840 by 2160). List what you find.
+4. Long measures run on my machines: send the job text with each commit you want measured.
+Looks 22:50 as you say.
+
+Order of work from here: pace first (one rate curve, commit by 23:30 Builder clock), then 2, 3, 4, then the fill behind rims, and the list of pixel values.

@@ -524,11 +524,15 @@ def main():
     src = Source()
     globe = Globe()
     half0 = PLATES['halfTan']
+    halves = PLATES.get('halfTans') or [half0 / 2 ** i for i in range(PLATES['levels'])]
+    only = int(sys.argv[sys.argv.index('--only') + 1]) if '--only' in sys.argv else 0
     pyr = pyramid(fan(src))
     levels = []
     for i in range(PLATES['levels']):
-        half = half0 / 2 ** i
-        cache = WORK + 'laid-%d-%d.npz' % (i + 1, size)
+        half = halves[i]
+        if only and i + 1 != only:
+            continue
+        cache = WORK + ('laid-%d-%d.npz' % (i + 1, size) if half == half0 / 2 ** i else 'laid-%d-%d-%g.npz' % (i + 1, size, half))
         if '--reuse' in sys.argv and os.path.exists(cache):
             z = np.load(cache)
             a, seen = z['a'], z['seen']
@@ -542,12 +546,24 @@ def main():
         print('level', i + 1, 'half tan', half, 'texel units', round(2 * half / size * R, 5), 'mean albedo', fixed.reshape(-1, 3).mean(0).round(3).tolist(), 'seen share', round(float((seen > 0.5).mean()), 3), 'detail rms', round(float(d.std()), 4), flush=True)
         del a, seen, d
 
-    q = np.abs((np.arange(size // 2) + 0.5) / (size // 2) - 0.5)
-    inner = smoothstep(0.5, 0.5 - PLATES['feather'], np.maximum(q[None, :], q[:, None]))[..., None].astype(np.float32)
+    if only:
+        img = Image.fromarray(encode(levels[0]))
+        img.resize((1024, 1024), Image.LANCZOS).save(WORK + 'only-%d.jpg' % only, quality=90)
+        if write:
+            img.save(PUB + 'place-%d.jpg' % only, quality=93, subsampling=0)
+            img.resize((size // 2, size // 2), Image.LANCZOS).save(WEB + 'place-%d.jpg' % only, quality=92, subsampling=0)
+            table = json.load(open('src/stops/uranus/plates.json'))
+            table['levels'][only - 1]['halfTan'] = halves[only - 1]
+            json.dump(table, open('src/stops/uranus/plates.json', 'w'), indent=1)
+        return
+
     for i in range(len(levels) - 1, 0, -1):
-        lo = size // 4
-        small = cv2.resize(levels[i], (size // 2, size // 2), interpolation=cv2.INTER_AREA)
-        levels[i - 1][lo:lo + size // 2, lo:lo + size // 2] += (small - levels[i - 1][lo:lo + size // 2, lo:lo + size // 2]) * inner
+        n = int(round(size * halves[i] / halves[i - 1] / 2)) * 2
+        lo = (size - n) // 2
+        q = np.abs((np.arange(n) + 0.5) / n - 0.5)
+        inner = smoothstep(0.5, 0.5 - PLATES['feather'], np.maximum(q[None, :], q[:, None]))[..., None].astype(np.float32)
+        small = cv2.resize(levels[i], (n, n), interpolation=cv2.INTER_AREA)
+        levels[i - 1][lo:lo + n, lo:lo + n] += (small - levels[i - 1][lo:lo + n, lo:lo + n]) * inner
 
     tops = tops_map(gain, levels[0])
     fs = PLATES['fieldSize']
@@ -572,8 +588,8 @@ def main():
     for i, a in enumerate(levels):
         sheet.paste(Image.fromarray(encode(a)).resize((1024, 1024), Image.LANCZOS), (1024 * i, 0))
         small = cv2.resize(a, (1024, 1024), interpolation=cv2.INTER_AREA)
-        lit, m = far_look(small, half0 / 2 ** i)
-        gx, gy = grid(half0 / 2 ** i, 1024, 0, 1024)
+        lit, m = far_look(small, halves[i])
+        gx, gy = grid(halves[i], 1024, 0, 1024)
         under = globe.albedo(globe.band(dirs(gx, gy)), len(globe.levels))
         both = under + (lit - under) * m[..., None]
         sheet.paste(Image.fromarray((np.clip(geo.display(both * PLATES['previewGain']), 0, 1) * 255 + 0.5).astype(np.uint8)), (1024 * i, 1024))
@@ -594,7 +610,7 @@ def main():
 
     json.dump({
         'n': N0.tolist(), 'e': E0.tolist(), 'u': U0.tolist(),
-        'levels': [{'file': 'place-1.png' if i == 0 else 'place-%d.jpg' % (i + 1), 'halfTan': half0 / 2 ** i} for i in range(len(levels))],
+        'levels': [{'file': 'place-1.png' if i == 0 else 'place-%d.jpg' % (i + 1), 'halfTan': halves[i]} for i in range(len(levels))],
         'aMax': DECK['aMax'], 'feather': PLATES['feather'], 'field': {'file': 'place-field.bin', 'size': fs}, 'clockRef': REF, 'aimUnits': PLATES['aimUnits'] - PLATES['aheadUnits'],
     }, open('src/stops/uranus/plates.json', 'w'), indent=1)
 
