@@ -162,7 +162,7 @@ uniform float uCapOn;
 uniform vec3 uSpotN;
 uniform vec3 uSpotE;
 uniform vec3 uSpotU;
-uniform float uSpin;
+uniform vec2 uSpinTurn;
 out vec3 vLocal;
 out vec3 vWorldN;
 out vec3 vPos;
@@ -202,7 +202,7 @@ void main() {
   float cell = 1.0 / (uCapCells * uCapGrid[k]);
   cell = mix(cell, 1.0 / (uCapCells * uCapGrid[max(k - 1, 0)]), smoothstep(uCapEdge.x, uCapEdge.y, max(abs(q.x), abs(q.y))));
   vec3 dm = normalize(uSpotN + uSpotE * g.x + uSpotU * g.y);
-  float c = cos(uSpin), s = sin(uSpin);
+  float c = uSpinTurn.x, s = uSpinTurn.y;
   vec3 local = vec3(c * dm.x + s * dm.z, dm.y, c * dm.z - s * dm.x);
   float foot = uCapPixel * length((modelMatrix * vec4(local, 1.0)).xyz);
   float h = capRaw(g, foot, cell, 1.0) * (1.0 - smoothstep(uCapBorder.x, uCapBorder.y, length(g))) * uCapOn;
