@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T03:07:21.614Z",
+ "pushed": "2026-11-24T03:22:38.715Z",
  "head": "85312d1ba89d4fbb4811dc70dc8f5b02871b7c43",
- "note": "4860 after mail 484, draft T5 over the approved image (work in progress, not committed)",
+ "note": "4860 T8 under the approved image, and a spread of the dive with it; not committed yet",
  "looks": [
+  {
+   "time": "2026-11-24T03:22:38.144Z",
+   "file": "20261124032238144-note-v-D1.jpg",
+   "source": "../../../../tmp/v-D1.jpg",
+   "kind": "note",
+   "label": "dive spread T8: 4707 to 4769 every sixth frame, 4770, 4774, 4860 (preview draft)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T03:22:37.594Z",
+   "file": "20261124032237594-note-d1-pair.jpg",
+   "source": "../../../../tmp/d1-pair.jpg",
+   "kind": "note",
+   "label": "4860 draft T8 (below) under the approved image (above), work tree on 85312d1b",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T03:07:20.958Z",
    "file": "20261124030720958-note-q-T5.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/s-r2-4966.jpg",
    "kind": "note",
    "label": "the rise on 85312d1b, every frame 4966 to 4981: the scene holds its layout; from 4978 the globe's own map comes in under it by height",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T02:12:36.190Z",
-   "file": "20261124021236190-note-s-r2-4950.jpg",
-   "source": "../../../../tmp/s-r2-4950.jpg",
-   "kind": "note",
-   "label": "the rise on 85312d1b, every frame 4950 to 4965 (the rest renders)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T02:12:34.949Z",
-   "file": "20261124021234949-note-d-N5.jpg",
-   "source": "../../../../tmp/d-N5.jpg",
-   "kind": "note",
-   "label": "4860 draft N5 (left) beside the approved image: one main ridge of strands, storm with fine rings, bands in the far field, streaked deck",
    "stop": "neptune"
   }
  ]
