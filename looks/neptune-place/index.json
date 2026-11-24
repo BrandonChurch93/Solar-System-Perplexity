@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T11:49:10.096Z",
- "head": "e7bbd54cf6158f171ca49f9ca39a87fa12821b9d",
- "note": "Neptune 4860 work in progress: far field and limb against the approved, not committed",
+ "pushed": "2026-11-24T12:15:50.047Z",
+ "head": "10f6b0bfdd7828f7514cf85b7656f109f7f2d6ec",
+ "note": "MAIL 654: main merged (10f6b0bf); the dive's exchange measured pair by pair on my head with the report's pattern function, three humps, the large one is the map's cirrus leaving and the scene's streamers and eye coming in between 0.5 and 0.15 radii",
  "looks": [
+  {
+   "time": "2026-11-24T12:15:49.397Z",
+   "file": "20261124121549397-note-look-1149.jpg",
+   "source": "out/work/nep/cost/look-1149.jpg",
+   "kind": "note",
+   "label": "4860 beside the approved image, the same pair as at 11:49: the far field work X5 (parked in work files, not committed, while the dive's exchange of MAIL 654 comes first). G17 at 16 by 9 draft: X5 0.934 / 0.545, committed head 0.934 / 0.549. 34 s a draft frame at 16 by 9 over the stop, 4860 alone 96 s.",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T12:15:39.045Z",
+   "file": "20261124121539045-note-look-dive-pairs.jpg",
+   "source": "out/work/nep/weave/look-dive-pairs.jpg",
+   "kind": "note",
+   "label": "Dive, my head 10f6b0bf, pairs 8 frames apart (4708, 4712, 4716, 4720, 4723, 4727, 4740): earlier frame, later one carried back on the sphere, pattern change (white is 1). Pattern by the report's function: 0.44, 0.69, 0.71, 1.15, 1.18, 0.96, 0.54 against 0.45. Preview draft, 1.4 s a frame above 0.9 radii, 9 to 14 s with the scene.",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T11:48:54.950Z",
    "file": "20261124114854950-note-look-1149.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/st-all.jpg",
    "kind": "note",
    "label": "Rise 4996 to 5024 with the third star law (by the eye's angle, not the clock): stars, ring and moon steady, no way back",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T10:28:19.397Z",
-   "file": "20261124102819397-note-storm-p7.jpg",
-   "source": "../../../../tmp/storm-p7.jpg",
-   "kind": "note",
-   "label": "4860 storm at three times size, mine (top) over the approved (bottom). No ruled rings; eye smaller and more of a pinwheel than the approved; fine comb lines at the right rim",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T10:28:18.701Z",
-   "file": "20261124102818701-note-q-p7.jpg",
-   "source": "../../../../tmp/q-p7.jpg",
-   "kind": "note",
-   "label": "4860 final state of the third commit (top) over the approved image (bottom), preview draft. G17 median 1.286, lower quarter 0.615 at preview; 0.934 and 0.549 at 16 by 9 draft. 22.0 to 23.6 s a draft frame",
    "stop": "neptune"
   }
  ]
