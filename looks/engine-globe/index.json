@@ -1,60 +1,44 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-24T01:32:45.408Z",
- "head": "69ac8b40fb3d27c2e6468a75d29d0fed69f45edf",
- "note": "Cap of Mars on heights v3 (f95c3606), scratch wiring, draft tier. New: the normal of the cap's own heights (light: relief, own; shown at 1, 1 on plates that still carry painted light) and the haze depth to the cap's own surface (the canyon floor, down to 0.0022 radii under the datum, gets more air: 2448 brighter by a mean of 8.6 of 255). Light 1,1 changes 2448 by a mean of 1.2 (3.6 percent of pixels over 8) and 2430 by 1.65. Draft time at 2448: 68 s without light, 113 s with. No cast shadow. Swap at the band's top with the new code: against the old cap frame 0.06 percent of pixels by 1 of 255.",
+ "pushed": "2026-11-24T02:43:19.029Z",
+ "head": "abe760fdaee4927d8f2627d4c887271710c5790f",
+ "note": "light.from on Mars (scratch tree, draft): with from Infinity the cap is drawn level from the hold down and lit by its heights; against no from the hold 2325 differs by mean 0.08 of 255 (largest 64, at the canyon walls), 2400 by mean 0.07, 2409 (in the band) by nothing. The hold is the approved picture, so Mars must keep from under the hold or send the pair to the Builder.",
  "looks": [
   {
-   "time": "2026-11-24T01:32:44.433Z",
-   "file": "20261124013244433-note-light-tri-2447-2449.jpg",
-   "source": "out/work/t2/light-tri-2447-2449.png",
+   "time": "2026-11-24T02:43:18.336Z",
+   "file": "20261124024318336-note-lf-f2400.jpg",
+   "source": "out/work/t2/lf-f2400.png",
    "kind": "note",
-   "label": "Mars 2447, 2448, 2449 draft, light 1,1 and haze to own surface",
+   "label": "Mars 2400 draft above the band, light.from Infinity",
    "stop": "mars"
   },
   {
-   "time": "2026-11-24T01:32:43.393Z",
-   "file": "20261124013243393-note-light-pair-2430.jpg",
-   "source": "out/work/t2/light-pair-2430.png",
+   "time": "2026-11-24T02:43:17.799Z",
+   "file": "20261124024317799-note-lfrom-d.jpg",
+   "source": "out/work/t2/lfrom-d.png",
    "kind": "note",
-   "label": "Mars 2430 draft: no light option (left), light 1,1 (right)",
+   "label": "Mars hold 2325: difference x40 between light.from Infinity and no from (mean 0.08 of 255, largest 64, 12 percent of pixels, 0.01 percent over 8)",
    "stop": "mars"
   },
   {
-   "time": "2026-11-24T01:32:42.286Z",
-   "file": "20261124013242286-note-light-crop-2448.jpg",
-   "source": "out/work/t2/light-crop-2448.png",
+   "time": "2026-11-24T02:43:17.226Z",
+   "file": "20261124024317226-note-lfrom-canyon-2325.jpg",
+   "source": "out/work/t2/lfrom-canyon-2325.png",
    "kind": "note",
-   "label": "Mars 2448 draft one to one: no light option (left), light 1,1 (right)",
+   "label": "Mars hold 2325 canyon crop x4: left cap not drawn (no from), right light.from Infinity",
    "stop": "mars"
   },
   {
-   "time": "2026-11-24T01:32:41.400Z",
-   "file": "20261124013241400-note-light-pair-2448.jpg",
-   "source": "out/work/t2/light-pair-2448.png",
+   "time": "2026-11-24T02:43:16.521Z",
+   "file": "20261124024316521-note-lf-f2325.jpg",
+   "source": "out/work/t2/lf-f2325.png",
    "kind": "note",
-   "label": "Mars 2448 draft, cap with haze to own surface: no light option (left), light 1,1 (right)",
+   "label": "Mars hold 2325 draft, scratch tree (heights v3), cap light 1,1 with light.from Infinity: cap drawn level at the hold and lit by its heights",
    "stop": "mars"
   },
   {
-   "time": "2026-11-24T01:32:35.672Z",
-   "file": "20261124013235672-note-haze-pair-2448.jpg",
-   "source": "out/work/t2/haze-pair-2448.png",
-   "kind": "note",
-   "label": "Mars 2448 draft, cap: haze to the ball (left) and to the cap's own surface (right)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T01:10:34.982Z",
-   "file": "20261124011034982-note-swap-sheet.jpg",
-   "source": "out/work/swap/swap-sheet.png",
-   "kind": "note",
-   "label": "swap of sphere for cap, review tier rate 2: k4803 (sphere), k4804 with cap, k4804 without cap, their difference times 16",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T00:44:36.306Z",
-   "file": "20261124004436306-still-f04707-16x9-draft-full.jpg",
+   "time": "2026-11-24T02:37:00.232Z",
+   "file": "20261124023700232-still-f04707-16x9-draft-full.jpg",
    "source": "out/work/stills/f04707-16x9-draft-full.png",
    "kind": "still",
    "label": "neptune.dive frame 4707, draft tier",
@@ -64,11 +48,11 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "082b6361de0d98e9"
+   "engine": "899945f0da896e5c"
   },
   {
-   "time": "2026-11-24T00:43:55.360Z",
-   "file": "20261124004355360-still-f02997-16x9-draft-full.jpg",
+   "time": "2026-11-24T02:36:18.133Z",
+   "file": "20261124023618133-still-f02997-16x9-draft-full.jpg",
    "source": "out/work/stills/f02997-16x9-draft-full.png",
    "kind": "still",
    "label": "jupiter.dive frame 2997, draft tier",
@@ -78,25 +62,11 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "082b6361de0d98e9"
+   "engine": "899945f0da896e5c"
   },
   {
-   "time": "2026-11-24T00:43:25.946Z",
-   "file": "20261124004325946-still-f02427-16x9-draft-full.jpg",
-   "source": "out/work/stills/f02427-16x9-draft-full.png",
-   "kind": "still",
-   "label": "mars.dive frame 2427, draft tier",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2427,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "082b6361de0d98e9"
-  },
-  {
-   "time": "2026-11-24T00:42:55.673Z",
-   "file": "20261124004255673-still-f01857-16x9-draft-full.jpg",
+   "time": "2026-11-24T02:35:48.547Z",
+   "file": "20261124023548547-still-f01857-16x9-draft-full.jpg",
    "source": "out/work/stills/f01857-16x9-draft-full.png",
    "kind": "still",
    "label": "earth.dive frame 1857, draft tier",
@@ -106,11 +76,11 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "082b6361de0d98e9"
+   "engine": "899945f0da896e5c"
   },
   {
-   "time": "2026-11-24T00:42:20.401Z",
-   "file": "20261124004220401-still-f00717-16x9-draft-full.jpg",
+   "time": "2026-11-24T02:35:11.356Z",
+   "file": "20261124023511356-still-f00717-16x9-draft-full.jpg",
    "source": "out/work/stills/f00717-16x9-draft-full.png",
    "kind": "still",
    "label": "mercury.dive frame 717, draft tier",
@@ -120,11 +90,11 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "082b6361de0d98e9"
+   "engine": "899945f0da896e5c"
   },
   {
-   "time": "2026-11-24T00:41:48.447Z",
-   "file": "20261124004148447-still-f04605-16x9-draft-full.jpg",
+   "time": "2026-11-24T02:34:38.167Z",
+   "file": "20261124023438167-still-f04605-16x9-draft-full.jpg",
    "source": "out/work/stills/f04605-16x9-draft-full.png",
    "kind": "still",
    "label": "neptune.hold frame 4605, draft tier",
@@ -134,7 +104,49 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "082b6361de0d98e9"
+   "engine": "899945f0da896e5c"
+  },
+  {
+   "time": "2026-11-24T02:34:04.848Z",
+   "file": "20261124023404848-still-f04035-16x9-draft-full.jpg",
+   "source": "out/work/stills/f04035-16x9-draft-full.png",
+   "kind": "still",
+   "label": "uranus.hold frame 4035, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "899945f0da896e5c"
+  },
+  {
+   "time": "2026-11-24T02:33:35.120Z",
+   "file": "20261124023335120-still-f03465-16x9-draft-full.jpg",
+   "source": "out/work/stills/f03465-16x9-draft-full.png",
+   "kind": "still",
+   "label": "saturn.hold frame 3465, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.hold",
+   "frame": 3465,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "899945f0da896e5c"
+  },
+  {
+   "time": "2026-11-24T02:33:07.055Z",
+   "file": "20261124023307055-still-f02895-16x9-draft-full.jpg",
+   "source": "out/work/stills/f02895-16x9-draft-full.png",
+   "kind": "still",
+   "label": "jupiter.hold frame 2895, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "899945f0da896e5c"
   }
  ]
 }
