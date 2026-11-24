@@ -1,9 +1,73 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T02:06:59.936Z",
- "head": "c14973491a79c375ce299f41635d3bad6c9720f4",
- "note": "MAIL 427 beat cure as it will be committed: curve, final 2895 and 2997 old against new",
+ "pushed": "2026-11-24T02:34:30.093Z",
+ "head": "f2375d2eed681be8fb2580464477ade7c4720a01",
+ "note": "02:36 UTC. Cure of the hold's beat committed and pushed (57d663b99, head 77ccb4e22 on main f2375d2ee); reported. HEAD in this record is a local proof tree (the cure picked alone onto main), its draft, final and capture renders are running. Next: the grain cure of the hold sky (MAIL 448).",
  "looks": [
+  {
+   "time": "2026-11-24T02:34:28.702Z",
+   "file": "20261124023428702-note-hold-curve-cure.jpg",
+   "source": "../work/m427/hold-curve-cure.png",
+   "kind": "note",
+   "label": "MAIL 427, the hold at capture rate 2: change between capture frames before the cure and with the committed cure 57d663b99",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T02:34:12.947Z",
+   "file": "20261124023412947-frame-f03059.jpg",
+   "source": "out/work/jupiter/frames/cmo/f03059.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 3059, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 3059,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "3cf61f9941bc58c9"
+  },
+  {
+   "time": "2026-11-24T02:32:40.047Z",
+   "file": "20261124023240047-frame-f02789.jpg",
+   "source": "out/work/jupiter/frames/cmo/f02789.png",
+   "kind": "frame",
+   "label": "mars.travel frame 2789, draft tier",
+   "stop": "mars",
+   "segment": "mars.travel",
+   "frame": 2789,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "3cf61f9941bc58c9"
+  },
+  {
+   "time": "2026-11-24T02:18:38.325Z",
+   "file": "20261124021838325-frame-f02895.jpg",
+   "source": "out/work/jupiter/frames/m2f/f02895.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2895, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "3cf61f9941bc58c9"
+  },
+  {
+   "time": "2026-11-24T02:12:12.898Z",
+   "file": "20261124021212898-frame-f03240.jpg",
+   "source": "out/work/jupiter/frames/m2d/f03240.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3240, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3240,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "3cf61f9941bc58c9"
+  },
   {
    "time": "2026-11-24T02:06:59.374Z",
    "file": "20261124020659374-note-final2997-old-q97-left.jpg",
@@ -27,70 +91,6 @@
    "kind": "note",
    "label": "final 2895, sky right of the planet: on main (left), with the cure as committed (right)",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T02:06:57.725Z",
-   "file": "20261124020657725-note-hold-curve-cure.jpg",
-   "source": "../work/m427/hold-curve-cure.png",
-   "kind": "note",
-   "label": "hold, capture rate 2, change per capture frame: before the cure and with it (draft, captures 5760 to 5819)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T02:05:36.443Z",
-   "file": "20261124020536443-frame-f02997.jpg",
-   "source": "out/work/jupiter/frames/mgf/f02997.png",
-   "kind": "frame",
-   "label": "jupiter.dive frame 2997, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 2997,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1713279836e7e8c8"
-  },
-  {
-   "time": "2026-11-24T02:01:50.089Z",
-   "file": "20261124020150089-frame-f02895.jpg",
-   "source": "out/work/jupiter/frames/mgf/f02895.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2895, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1713279836e7e8c8"
-  },
-  {
-   "time": "2026-11-24T01:57:26.867Z",
-   "file": "20261124015726867-frame-f03240.jpg",
-   "source": "out/work/jupiter/frames/mgd/f03240.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3240, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3240,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1713279836e7e8c8"
-  },
-  {
-   "time": "2026-11-24T01:55:47.921Z",
-   "file": "20261124015547921-frame-f02785.jpg",
-   "source": "out/work/jupiter/frames/mgd/f02785.png",
-   "kind": "frame",
-   "label": "mars.travel frame 2785, draft tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "frame": 2785,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1713279836e7e8c8"
   }
  ]
 }
