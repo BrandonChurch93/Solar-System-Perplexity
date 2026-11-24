@@ -63,8 +63,6 @@ const SEEDED: Cell[] = Array.from({ length: 12 }, (_, i) => ({
 
 export const cells: Cell[] = [...PAINTED, { lon: 32.04, lat: 54.69, radiusDeg: 1.6, painted: false, period: 2.3, at: 39.5, gain: 0.9, seed: 0 }, ...SEEDED]
 
-export const leave = { seconds: 0.5 }
-
 export const shade = { far: 0.8, grad: 16, cap: 2.5 }
 
 export const bloom = { hide: [0.12, 0.6, 0.9] as [number, number, number] }

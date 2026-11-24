@@ -73,6 +73,7 @@ export interface PlanetOptions {
   storm?: StormParams
   segments?: number
   cap?: CapOptions
+  exactSpin?: boolean
 }
 
 const VERT = /* glsl */ `
@@ -102,7 +103,7 @@ export function patchSlots(levels: number): number {
 
 const patchSamplers = (slots: number): string => Array.from({ length: slots }, (_, i) => 'uniform sampler2D uPatch' + i + ';').join('\n')
 
-export interface PatchShader { slots: number; own: boolean; gain: boolean; minor: boolean; glow: boolean; cut?: boolean; cap?: boolean; capLight?: boolean; centres?: boolean }
+export interface PatchShader { slots: number; own: boolean; gain: boolean; minor: boolean; glow: boolean; cut?: boolean; cap?: boolean; capLight?: boolean; centres?: boolean; turn?: boolean }
 
 const patchRead = (i: number): string => `textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb`
 
@@ -153,7 +154,7 @@ uniform float uHasStorm;
 uniform float uMapWidth;
 uniform float uGrad;
 uniform float uHeightStep;
-uniform float uSpin;
+${o.turn ? 'uniform vec2 uSpinTurn;' : 'uniform float uSpin;'}
 uniform float uGain;
 uniform float uWeight;
 uniform vec3 uTint;
@@ -191,10 +192,12 @@ ${EQUIRECT_GLSL}
 ${INVERSE_FILMIC_GLSL}
 ${DIAG_GLSL}
 ${hazeGlsl(o.glow)}${o.cap ? GROUND_AIR_GLSL : ''}
-vec3 spinY(vec3 d, float a) {
+${o.turn ? `vec3 spinBy(vec3 d, vec2 t) {
+  return vec3(t.x * d.x - t.y * d.z, d.y, t.y * d.x + t.x * d.z);
+}` : `vec3 spinY(vec3 d, float a) {
   float c = cos(a), s = sin(a);
   return vec3(c * d.x - s * d.z, d.y, s * d.x + c * d.z);
-}
+}`}
 float heightAt(vec3 d) {
   float u = atan(d.x, d.z) / (2.0 * PI) + 0.5;
   float v = asin(clamp(d.y, -1.0, 1.0)) / PI + 0.5;
@@ -210,7 +213,7 @@ vec3 curveAt(float ndl) {
   return mix(uCurve[i], uCurve[i + 1], x - float(i));
 }
 void main() {
-  vec3 d = spinY(normalize(vLocal), uSpin);
+  vec3 d = ${o.turn ? 'spinBy(normalize(vLocal), uSpinTurn)' : 'spinY(normalize(vLocal), uSpin)'};
   vec3 dc = d;
   float flow = 0.0;
   if (uHasStorm > 0.5) {
@@ -261,7 +264,7 @@ ${patchLevels(o)}
   float hE = heightAt(normalize(d + east * e)) - heightAt(normalize(d - east * e));
   float hN = heightAt(normalize(d + north * e)) - heightAt(normalize(d - north * e));
   vec3 slope = (east * hE + north * hN) / (2.0 * e);
-  vec3 slopeW = uBodyToWorld * spinY(slope, -uSpin);
+  vec3 slopeW = uBodyToWorld * ${o.turn ? 'spinBy(slope, vec2(uSpinTurn.x, -uSpinTurn.y))' : 'spinY(slope, -uSpin)'};
   float strength = mix(uRelief, uReliefNear, near) * (1.0 - detail);
   vec3 np = normalize(n - slopeW * strength);${o.capLight ? `
   vec3 nc = normalize(vCapN) - n;
@@ -347,7 +350,7 @@ export class Planet {
     const spot = p?.spot.clone().normalize() ?? new THREE.Vector3(0, 0, 1)
     const east = new THREE.Vector3(0, 1, 0).cross(spot).normalize()
     const north = spot.clone().cross(east)
-    const text: PatchShader = { slots, own, gain, minor, glow: o.haze.glow === true, ...(centres ? { centres: true } : {}) }
+    const text: PatchShader = { slots, own, gain, minor, glow: o.haze.glow === true, ...(centres ? { centres: true } : {}), ...(o.exactSpin ? { turn: true } : {}) }
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
       vertexShader: VERT,
@@ -378,7 +381,7 @@ export class Planet {
         uStormAxis: { value: o.storm?.axis.clone().normalize() ?? new THREE.Vector3(0, 1, 0) },
         uStormRadius: { value: o.storm?.radius ?? 1 }, uStormAngle: { value: 0 }, uHasStorm: { value: o.storm ? 1 : 0 },
         uMapWidth: { value: o.mapWidth }, uHeightStep: { value: (2 * Math.PI) / o.heightWidth },
-        uSpin: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
+        uSpin: { value: 0 }, uSpinTurn: { value: new THREE.Vector2(1, 0) }, uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
         uWrap: { value: o.light.wrap }, uCurve: { value: curve(o.light) }, uNight: { value: new THREE.Vector3().fromArray(o.light.night) },
         uNightFlat: { value: new THREE.Vector3().fromArray(o.light.nightFlat ?? [0, 0, 0]) },
         uRelief: { value: o.light.relief }, uReliefNear: { value: o.light.reliefNear }, uLimb: { value: o.light.limb },
@@ -404,6 +407,7 @@ export class Planet {
     const frame = bufferFrame()
     ;(u.uPatchFade!.value as THREE.Vector2).set(this.fade[0] / frame, this.fade[1] / frame)
     u.uSpin!.value = spin
+    ;(u.uSpinTurn!.value as THREE.Vector2).set(Math.cos(spin), Math.sin(spin))
     u.uGain!.value = gain
     u.uWeight!.value = weight
     this.mesh.updateWorldMatrix(true, false)
