@@ -1,9 +1,25 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-24T11:42:49.595Z",
+ "pushed": "2026-11-24T12:05:27.551Z",
  "head": "e3594096c45547f3db400e9f1e08e0b3be26b01c",
- "note": "pattern runs read offline: limb looks exchanged by height (hold rim, limb glow), lit field at the left limb going flat 1284 to 1292, plates giving way to the globe map 1575 to 1584; proof chain of the near ground still running",
+ "note": "chain V: smooth dive 0.83 at 1284 (38 over), rise 0.81 at 1575 (35 over), pop 1.25 at 1610; path green; attribution windows next",
  "looks": [
+  {
+   "time": "2026-11-24T12:05:26.833Z",
+   "file": "20261124120526833-note-s1276.jpg",
+   "source": "../../../../tmp/v/hv/s1276.jpg",
+   "kind": "note",
+   "label": "dive 1276 to 1291, chain V frames, state x5",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T12:05:25.164Z",
+   "file": "20261124120525164-note-crop-rise2.jpg",
+   "source": "../../../../tmp/v/off/crop-rise2.jpg",
+   "kind": "note",
+   "label": "rise 1542 to 1548, where the pattern lies (left edge, horizon band), state x5",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T11:42:48.303Z",
    "file": "20261124114248303-note-s1562.jpg",
@@ -58,30 +74,6 @@
    "segment": "venus.rise",
    "first": 1540,
    "last": 1551,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T11:31:19.142Z",
-   "file": "20261124113119142-sheet-venus-rise-draft-before.jpg",
-   "source": "out/work/handover/venus-rise-draft-before.png",
-   "kind": "sheet",
-   "label": "venus rise, every frame 1530 to 1538 (before T, frame 1539), draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1530,
-   "last": 1538,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T11:31:17.660Z",
-   "file": "20261124113117660-sheet-venus-rise-draft-across.jpg",
-   "source": "out/work/handover/venus-rise-draft-across.png",
-   "kind": "sheet",
-   "label": "venus rise, every frame 1533 to 1544 (across T, frame 1539), draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1533,
-   "last": 1544,
    "tier": "draft"
   }
  ]
