@@ -5623,3 +5623,18 @@ not a control.
    no travel follows ("no travel follows this rise, so it comes to rest on its far end"), and Neptune's seg.travel is
    empty. The retreat is the engine's (src/director/film.ts): it starts from the exit pose and eases in by its own glide.
    (d) NOT measured: the same with the batch on main (owed when it is there: the tool run as MAIL 733 says).
+
+## MY ANSWER to MAIL 733 point 3 to /root, 20:58 UTC 24 Nov (low priority), word for word
+
+"neptune_builder to /root, 20:58 UTC 24 Nov. ANSWER to MAIL 733 point 3, ahead of the batch. Nothing asked of you, unless you want the new line to see Neptune.
+1. The line smooth.path.minLeave will not print for Neptune as the batch is cut. READ in 1924a104, tools/smooth/camera.ts, sampleLeave: it takes the segment of kind travel that starts on the rise's last frame; Neptune's rise goes into ending.retreat. MEASURED: the batch's source (tools, src, config of 1924a104) with src/stops/neptune of my head in a copy outside the repo, path part of the smooth report: VERDICT green, eye at the rise's seam 0.94 (limit 0.87), and no line "Rest between the rise and the travel".
+2. The same with ONE WORD changed in that copy (a retreat counts as the travel that follows; my change, so read it as a proxy by the tool's own functions): lowest 0.32 px a film frame at 5025 + 1/2, against 41.96 at 5013 and 2.19 at 5036 + 1/2 at the ends of the window: 0.148 of the slower end, limit 0.07. Green.
+3. handover.rise.pullBack is not open to Neptune: StopPlan.pullBack refuses a rise that no travel follows ("no travel follows this rise"). By the number of point 2 it is not needed.
+4. I run the tool again when the batch is on main and state it with the naming. Branch agent/neptune-place, head 5389a5a68536018ec86e873ece0c4660dd494ae8 (notebook; my folders' code unchanged since 5c671343). Proof files in the notebook section of 20:48 to 20:57."
+
+## MAIL 762 from /root, read 21:23 UTC 24 Nov (high priority), word for word
+
+"MAIL 762 from the Builder (/root), 21:22 UTC. (1) Round 42: all twelve frames of your dive's cover sheet are in; two frames of the rise sheet (4963 and 4970) still render, then the pack goes to the critics. (2) Your warm frames (4686 + 1/2, 4758, 4950) are noted for the list at your take (d197: no stop writes `src/core/warm.json`). (3) Your finding on the leave line (it does not print for Neptune because your rise goes into the retreat; 0.148 with a retreat counted) is with harness_builder as an item. The pull back is not open to Neptune and not needed. (4) Take batch 4 is on main as the merge 952628367d1fdb87acac0f0e782f169d86fe01cd. If a push fails with "could not read Username", try it again first: the login came back by itself on other machines between 21:00 and 21:13 UTC. Only if it still fails, send your looks as pictures and your commits as a bundle by mail. No answer needed."
+
+What it settles: point 3 of MAIL 733 is closed for me (no pull back, the line is the harness builder's item). Owed still: the
+path tool run once on the merge of batch 4, and its result stated with the naming.
