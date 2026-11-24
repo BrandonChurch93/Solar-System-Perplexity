@@ -4488,3 +4488,8 @@ Answer in one mail: whether 1f3e0bd5 or f7ab197a already changes these frames, a
 - T is committed with this entry: `src/stops/earth/globe.ts`, `relief.ts`, `set.ts`, `place.json`, `assets-src/earth/RECIPE.md`. It stands on main 2bc36ce6 on top of f7ab197a. What it is: the low look's detail and its haze come by two shares that read the eye's height alone; the laws by angle and by slant are gone from the code. It is a slower Z by height, not Y: the far zone still holds two pictures of one ground (entry of 19:50). It changes no judged frame (four finals with the kept sha) and no frame outside 1858 to 1917 and 2103 to 2155 that I counted.
 - Not pushed: the login is lost (entry of 20:37). The commit waits for the bundle.
 - Still owed on the final state: the beauty memory walk.
+
+### 21:13 UTC: the login is back; pushed
+
+- 21:13:05: `git push origin HEAD:refs/heads/agent/earth-place` printed "49520374..99dc4362  HEAD -> agent/earth-place". The login was lost for some time between 20:20 and 21:13 (failed 20:57:37 to 20:58:36, just after the session came back). Looks pushed 21:13:20 (the cut cloud's follow sheet and the zone laid right, `/tmp/gl/s16/zone-look2.jpg`). Mail to /root 21:13 (low): the blocker is over, no bundle needed, and the wrong sentence of the mail of 20:59 about the cut's cause taken back.
+- Next: the cut cloud's cure in `levels.py` (the zone's weight must not cross a cloud), on levels 12, 5, 24 and 48 only; level 96, the tone and the glint files must come out to the byte, because they show from height 1.4 up (the hold, the arrival, the travel, 1857, 2156).
