@@ -8,7 +8,7 @@ import fit from './fit.json'
 import placeJson from './place.json'
 import { side, twin } from './place'
 
-export interface Leg { ease: number[]; over: number[]; aim: number[]; turn: number[]; swing?: { deg: number; headingDeg: number; at: number[] }; bank?: { deg: number; at: number[] } }
+export interface Leg { ease: number[]; round: number[]; over: number[]; aim: number[]; turn: number[]; swing?: { deg: number; headingDeg: number; at: number[] }; bank?: { deg: number; at: number[] } }
 export interface Path { handover: NonNullable<MoveParams['handover']>; dive: Leg; rise: Leg; rewind: number }
 
 export const path: Path = placeJson.path
@@ -32,23 +32,35 @@ export const params: MoveParams = {
 
 interface Law { frames: number; total: number; at: (x: number) => number; rate: (x: number) => number }
 
-function area(u: number): number {
+function shape(u: number, c: number): number {
   const x = Math.min(Math.max(u, 0), 1)
-  const x4 = x * x * x * x
-  return x4 * (x * x - 3 * x + 2.5)
+  const h = 1 / (1 - c)
+  if (x < c) return (h * x * x) / (2 * c)
+  if (x <= 1 - c) return h * (x - c / 2)
+  return 1 - (h * (1 - x) * (1 - x)) / (2 * c)
 }
 
-function law(frames: number, ease: number[], total: number, last: number): Law {
+function area(u: number, c: number): number {
+  const x = Math.min(Math.max(u, 0), 1)
+  const h = 1 / (1 - c)
+  if (x < c) return (h * x * x * x) / (6 * c)
+  if (x <= 1 - c) return (h * c * c) / 6 + (h * (x - c) * x) / 2
+  return x - 0.5 + (h * (1 - x) * (1 - x) * (1 - x)) / (6 * c)
+}
+
+function law(frames: number, ease: number[], round: number[], total: number, last: number): Law {
   const a = ease[0]!
   const b = ease[1]!
+  const ca = round[0]!
+  const cb = round[1]!
   const cruise = (total - 0.5 * last * b) / (frames - 0.5 * (a + b))
-  const rate = (x: number): number => (x < a ? cruise * smoother(x / a) : cruise + (last - cruise) * smoother((x - (frames - b)) / b))
+  const rate = (x: number): number => (x < a ? cruise * shape(x / a, ca) : cruise + (last - cruise) * shape((x - (frames - b)) / b, cb))
   const at = (x: number): number => {
     if (x <= 0) return 0
     if (x >= frames) return total + last * (x - frames)
-    const head = cruise * a * area(x / a)
+    const head = cruise * a * area(x / a, ca)
     const body = cruise * Math.max(x - a, 0)
-    const tail = (last - cruise) * b * area((x - (frames - b)) / b)
+    const tail = (last - cruise) * b * area((x - (frames - b)) / b, cb)
     return head + body + tail
   }
   return { frames, total, at, rate }
@@ -111,7 +123,7 @@ export class Plan extends StopPlan {
     const sign = kind === 'dive' ? -1 : 1
     const h = 0.5 / fps
     const lift = (t: number): number => Math.log((this.far(kind, t).position.length() - 1) / (this.twin(this.low(t), t).position.length() - 1))
-    const made = law(Math.abs(end - at) * fps, this.way[kind].ease, lift(end), (sign * (lift(end + h) - lift(end - h))) / (2 * h * fps))
+    const made = law(Math.abs(end - at) * fps, this.way[kind].ease, this.way[kind].round, lift(end), (sign * (lift(end + h) - lift(end - h))) / (2 * h * fps))
     this.laws[kind] = made
     return made
   }

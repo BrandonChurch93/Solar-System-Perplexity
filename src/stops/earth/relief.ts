@@ -4,6 +4,7 @@ import type { RenderView, SetContext } from '../../core/types'
 import { DIAG_GLSL, biasUniform, diagUniform, fineUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { NOISE_GLSL } from '../../terrain/relief'
+import { VEIL_GLSL } from './globe'
 
 type Box = [number, number, number, number]
 
@@ -29,7 +30,7 @@ export interface GroundLook {
   plain: [number, number]
 }
 
-export interface GroundOnGlobe { angleDeg: number[]; farDeg: number[]; rim: number[] }
+export interface GroundOnGlobe { angleDeg: number[]; farDeg: number[]; rim: number[]; veil: { map: THREE.Texture; slant: { power: number; reach: number; least: number }; plane: THREE.Matrix3; fromDeg: number[] } }
 
 function unpack(buffer: ArrayBuffer, size: number, file: string): Float32Array {
   const count = new Uint32Array(buffer, 0, 1)[0]!
@@ -120,6 +121,10 @@ uniform vec4 uSea;
 uniform vec4 uShow;
 uniform vec4 uReach;
 uniform vec4 uCanvas;
+uniform sampler2D uVeil;
+uniform vec3 uVeilSlant;
+uniform mat3 uVeilPlane;
+uniform vec2 uVeilFrom;
 in vec2 vImage;
 in vec2 vUv;
 in vec3 vView;
@@ -131,6 +136,20 @@ out vec4 outColor;
 ${INVERSE_FILMIC_GLSL}
 ${DIAG_GLSL}
 ${NOISE_GLSL}
+${VEIL_GLSL}
+vec4 thin(vec4 c) {
+  if (uShow.x <= 0.0 || c.a <= 0.0) return c;
+  vec3 ray = normalize(vLocal);
+  float along = dot(ray, uSea.xyz);
+  float reach = dot(uSea.xyz, uSea.xyz) - uSea.w * uSea.w;
+  float under = along * along - reach;
+  vec3 at = ray * (under > 0.0 ? along - sqrt(under) : sqrt(reach));
+  vec3 up = normalize(at - uSea.xyz);
+  vec3 q = uVeilPlane * up;
+  vec3 haze = textureLod(uVeil, q.xy / max(q.z, 0.05) + 0.5, 0.0).rgb;
+  float less = (1.0 - slantSeen(uVeilSlant, dot(normalize(-at), up), dot(normalize(uEye - at), up))) * (1.0 - smoothstep(uVeilFrom.x, uVeilFrom.y, dot(up, normalize(-uSea.xyz))));
+  return vec4(fromCode(clamp(toCode(c.rgb / c.a) - less * haze, 0.0, 1.0)) * c.a, c.a);
+}
 float shown() {
   if (uShow.x <= 0.0) return 1.0;
   vec3 up = vLocal - uSea.xyz;
@@ -181,8 +200,8 @@ void main() {
   float fold = uFold * (1.0 - exp(-over / uFold));
   vec2 at = uv - vec2(0.0, (over + fold) / uBox.w);
   vec2 run = vec2(min(0.3 * over, 40.0) / uBox.z, 0.0);
-  vec3 texel = textureGrad(uColor, at, dFdx(vUv) * uGrad + run, dFdy(vUv) * uGrad).rgb;
-  vec3 wide = textureGrad(uColor, at, dFdx(vUv) * (uPlain.y * uFine) + run, dFdy(vUv) * (uPlain.y * uFine)).rgb;
+  vec3 texel = thin(vec4(textureGrad(uColor, at, dFdx(vUv) * uGrad + run, dFdy(vUv) * uGrad).rgb, 1.0)).rgb;
+  vec3 wide = thin(vec4(textureGrad(uColor, at, dFdx(vUv) * (uPlain.y * uFine) + run, dFdy(vUv) * (uPlain.y * uFine)).rgb, 1.0)).rgb;
   float fall = exp(min(vImage.y - uTop.x, 0.0) / uTop.y);
   vec3 col = inverseFilmic(texel) * fall;
   vec3 soft = inverseFilmic(wide) * fall;
@@ -227,8 +246,8 @@ void main() {
       gy = vec2(-e.y, e.x) * minor / uSize;
     }
   }
-  vec4 texel = textureGrad(uColor, uv, gx, gy);
-  vec4 wide = textureGrad(uColor, uv, dFdx(vUv) * (uPlain.y * uFine), dFdy(vUv) * (uPlain.y * uFine));
+  vec4 texel = thin(textureGrad(uColor, uv, gx, gy));
+  vec4 wide = thin(textureGrad(uColor, uv, dFdx(vUv) * (uPlain.y * uFine), dFdy(vUv) * (uPlain.y * uFine)));
   if (uEdge.y > uEdge.x) texel *= smoothstep(uEdge.x, uEdge.y, texel.a) / max(texel.a, 1e-4) * (uThin > 0.0 ? 1.0 - exp(-vHalf / uThin) : 1.0);
   float sun = 0.0;
   if (uLit.a > 0.0) {
@@ -340,7 +359,8 @@ export class Ground {
           uDrift: { value: new THREE.Vector2() }, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uOwnLens: { value: 0 }, uFrame: { value: new THREE.Vector4(1, 1, 0, 0) },
           uLayer: { value: new THREE.Vector3().fromArray(tint) }, uDiag: diagUniform, uGrad: gradUniform, uFine: fineUniform, uPerLine: frameUniform, uBias: biasUniform,
           uEye: { value: new THREE.Vector3() }, uSea: { value: new THREE.Vector4(centre.x, centre.y, centre.z, def.radius) }, uLock: { value: new THREE.Vector2().fromArray(look.lock) },
-          uShow: { value: new THREE.Vector4(0, 0, cos(globe.angleDeg[0]!), cos(globe.angleDeg[1]!)) }, uReach: { value: new THREE.Vector4(cos(globe.farDeg[1]!), cos(globe.farDeg[0]!), globe.rim[0]!, globe.rim[1]!) }, uCanvas: { value: new THREE.Vector4().fromArray(def.ground.box) }, ...extra,
+          uShow: { value: new THREE.Vector4(0, 0, cos(globe.angleDeg[0]!), cos(globe.angleDeg[1]!)) }, uReach: { value: new THREE.Vector4(cos(globe.farDeg[1]!), cos(globe.farDeg[0]!), globe.rim[0]!, globe.rim[1]!) }, uCanvas: { value: new THREE.Vector4().fromArray(def.ground.box) },
+          uVeil: { value: globe.veil.map }, uVeilSlant: { value: new THREE.Vector3(globe.veil.slant.power, globe.veil.slant.reach, globe.veil.slant.least) }, uVeilPlane: { value: globe.veil.plane }, uVeilFrom: { value: new THREE.Vector2(cos(globe.veil.fromDeg[1]!), cos(globe.veil.fromDeg[0]!)) }, ...extra,
         },
         transparent: true,
         blending: THREE.CustomBlending,

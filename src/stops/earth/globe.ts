@@ -61,6 +61,17 @@ void main() {
 
 export const MAX_PATCHES = 6
 
+export const VEIL_GLSL = /* glsl */ `
+vec3 toCode(vec3 c) {
+  return mix(12.92 * c, 1.055 * pow(max(c, vec3(0.0031308)), vec3(1.0 / 2.4)) - 0.055, step(vec3(0.0031308), c));
+}
+vec3 fromCode(vec3 c) {
+  return mix(c / 12.92, pow((max(c, vec3(0.04045)) + 0.055) / 1.055, vec3(2.4)), step(vec3(0.04045), c));
+}
+float slantSeen(vec3 law, float from, float to) {
+  return min(1.0, pow(law.y * max(from, law.z) / max(to, law.z), law.x));
+}`
+
 const PATCH_SAMPLERS = Array.from({ length: MAX_PATCHES }, (_, i) => 'uniform sampler2D uPatch' + i + ';').join('\n')
 
 const PATCH_LEVELS = Array.from({ length: MAX_PATCHES }, (_, i) => `    if (uPatchCount > ${i}.5) {
@@ -216,12 +227,7 @@ vec3 cloudDir(vec3 d) {
   float lat = asin(clamp(t.y, -1.0, 1.0));
   return spinY(t, -uDrift * cos(3.0 * lat) * uFlow);
 }
-vec3 toCode(vec3 c) {
-  return mix(12.92 * c, 1.055 * pow(max(c, vec3(0.0031308)), vec3(1.0 / 2.4)) - 0.055, step(vec3(0.0031308), c));
-}
-vec3 fromCode(vec3 c) {
-  return mix(c / 12.92, pow((max(c, vec3(0.04045)) + 0.055) / 1.055, vec3(2.4)), step(vec3(0.04045), c));
-}
+${VEIL_GLSL}
 float ramp(vec2 e, float x) {
   float t = clamp((x - e.x) / (e.y - e.x), 0.0, 1.0);
   return t * t * (3.0 - 2.0 * t);
@@ -316,7 +322,7 @@ ${PATCH_LEVELS}
       float veilOn = uLowLook * frontH * smoothstep(0.5, 0.5 - uLowVeilWin.y, max(abs(veilAt.x), abs(veilAt.y)));
       for (int j = 0; j < (veilOn > 0.0 ? 1 : 0); j++) {
         vec4 haze = textureLod(uLowVeil, veilAt + 0.5, 0.0);
-        float veilSeen = min(1.0, pow(uLowVeilSlant.y * max(dot(normalize(uTwinEye - d), d), uLowVeilSlant.z) / max(dot(normalize(uEyeBody - d), d), uLowVeilSlant.z), uLowVeilSlant.x));
+        float veilSeen = slantSeen(uLowVeilSlant, dot(normalize(uTwinEye - d), d), dot(normalize(uEyeBody - d), d));
         float veilOwn = lowHere * haze.a;
         albedo = fromCode(clamp(toCode(albedo) + (veilOn * veilSeen * (1.0 - veilOwn) + lowOn * (veilSeen - near) * veilOwn) * haze.rgb, 0.0, 1.0));
       }
