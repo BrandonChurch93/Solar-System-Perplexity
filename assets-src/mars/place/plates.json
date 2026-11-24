@@ -113,25 +113,25 @@
    {
     "widthDeg": 0.3,
     "look": "out/work/place/plate/p0.3.png",
-    "file": "place-0p3.jpg",
+    "file": "canyon-0p3.jpg",
     "size": 3277
    },
    {
     "widthDeg": 0.7,
     "look": "out/work/place/plate/p0.7.png",
-    "file": "place-0p7.jpg",
+    "file": "canyon-0p7.jpg",
     "size": 3277
    },
    {
     "widthDeg": 1.6,
     "look": "out/work/place/plate/p1.6.png",
-    "file": "place-1p6.jpg",
+    "file": "canyon-1p6.jpg",
     "size": 3686
    },
    {
     "widthDeg": 3.8,
     "look": "out/work/place/plate/p3.8.png",
-    "file": "place-3p8.jpg",
+    "file": "canyon-3p8.jpg",
     "size": 4096
    },
    {
@@ -204,7 +204,7 @@
    },
    {
     "widthDeg": 3.8,
-    "picture": "public/assets/mars/full/place-3p8.jpg"
+    "picture": "public/assets/mars/full/canyon-3p8.jpg"
    },
    {
     "widthDeg": 1.6,
@@ -359,6 +359,29 @@
    "cellShare": 0.08,
    "seed": 31
   },
-  "slopeMost": 2.0
+  "slopeMost": 2.0,
+  "reach": {
+   "note": "The ground about the place that the close view draws, by the eye's height (radii), highest first; read by the engine as a monotone curve over the log of the height, flat above the top knot and below the bottom one; written into country.json by countrybake.py. Measured on plan E's curve (agent/engine-handover 6d260fb; out/work/place/reach.py, reach2.py): a texel of the colour plates covers more than one film pixel (3840 wide) at the nearest ground in frame from 0.035 radii down in the ring beyond 0.70 degrees (plate 3.8, 54.9 m a texel), from 0.0145 in 0.31 to 0.70 (plate 1.6, 25.7 m), from 0.0066 in 0.13 to 0.31 (plate 0.7, 12.6 m), from 0.0026 inside 0.13 (plate 0.3, 5.4 m), and never more than 2.4 before T. The close view's ground is a sheet seen from the picture's eye; the angle at the ground between the film eye and that eye is 27 to 33 degrees at 0.035 radii, 21 to 23 at 0.0104, 16 to 19 at 0.0065, 4 to 6 at T in the dive, and in the rise 29 to 34 at 0.016, 18 to 21 at 0.0061. The seen ground reaches 0.70 degrees from the place.",
+   "knots": [
+    {
+     "height": 0.0145,
+     "deg": 0.0
+    },
+    {
+     "height": 0.0098,
+     "deg": 0.31
+    },
+    {
+     "height": 0.0066,
+     "deg": 0.75
+    }
+   ]
+  },
+  "lead": {
+   "note": "canyonlead.py: the shade of the heights laid on the painted canyon in the lead of a take. low, high: the gain where the ground faces away from the Sun and where it faces it (a level floor has the mean of the two); blurDeg: the heights are smoothed to this scale before the shade is taken.",
+   "low": 0.55,
+   "high": 1.9,
+   "blurDeg": 0.002
+  }
  }
 }

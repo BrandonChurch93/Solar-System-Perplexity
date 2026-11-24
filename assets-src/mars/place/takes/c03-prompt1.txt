@@ -1,0 +1,17 @@
+Image 1 is a square, straight down (nadir) orbital photograph of the inside of a great canyon on Mars in low evening light, north at the top, about 18 km across. It is a soft enlargement of a smaller picture: every form is in the right place, but it lacks the fine detail a photograph at this scale has.
+
+What it shows, from top to bottom: the high ground north of the canyon along the top; the sunlit north wall, a band of stepped cliffs of layered rock with spurs, gullies and talus aprons; the dim canyon floor across the middle with rubble and low hummocks; the south wall below it, in shadow, with its cliffs and gullies; the high ground south of the canyon along the bottom; darker shadowed ground at the right edge.
+
+Image 2 is an oblique aerial photograph taken low over the same land, looking east south east. It shows the rock at close range: cliffs of layered rock in thin horizontal bands, ledges, buttresses, gullies, talus, boulders, rubble on the floor.
+
+Task: redraw image 1 as one seamless, sharp nadir orbital photograph with the same framing, the same scale and north at the top.
+
+1. Every cliff, spur, gully, apron, hummock and patch of light and shade stays where it is, with its size, its brightness and its colour. Nothing moves, nothing is added at the scale of the forms that are there.
+
+2. Add what the enlargement lacks, at the scale of this picture (one pixel is about 14 m): the strata of the walls as many thin bands that follow each wall along its length, ledges and small cliffs, rills down the talus, boulder fields at the foot of the walls, small scarps and cracked ground on the floor, wind ripples in the dust of the hollows.
+
+3. No smear, no blur, no streaks, no flat cells, no bright outlines, no etched look. No pure black: the darkest shadow still shows ground. No mist, no cloud, no smoke, no water.
+
+4. No fan, no pleats, no long parallel lines, nothing that radiates from one point. No round pits, no fields of craters.
+
+Light: a low Sun in the south south east, soft long shadows falling toward the north north west, the same everywhere. A photograph from orbit: no horizon, no sky, no text, no border, no vignette.

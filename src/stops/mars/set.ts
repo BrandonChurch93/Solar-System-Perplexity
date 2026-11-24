@@ -81,6 +81,11 @@ export const createSet: SetFactory = async (ctx) => {
   const moonHome = new THREE.Vector3().fromArray(phobos.center)
   const moonHold = new THREE.Quaternion().fromArray(phobos.holdQuaternion)
   const tumbleAxis = new THREE.Vector3().fromArray(phobos.tumbleAxis).normalize()
+  // the baked lit side of the moon is the hero's light as the hold's eye saw it: it goes with the angle at the moon
+  // between the eye and that eye, in the moon's own frame (phobos.json lit), and the moon's own light takes over
+  const moonHoldEye = plan.hold(plan.holdMid - plan.seg.hold.start).position.clone().sub(moonHome).applyQuaternion(moonHold.clone().invert()).normalize()
+  const moonEye = new THREE.Vector3()
+  const moonTurn = new THREE.Quaternion()
 
   const far = new FarPoint()
   orbit.add(far.points)
@@ -241,6 +246,8 @@ export const createSet: SetFactory = async (ctx) => {
       moon.mesh.position.copy(moonHome).applyQuaternion(turn)
       moon.mesh.quaternion.setFromAxisAngle(tumbleAxis, THREE.MathUtils.degToRad(look.moon.tumbleDegPerSecond) * elapsed).multiply(moonHold)
       moonWorld.copy(state.rotation).multiply(moon.mesh.quaternion)
+      moonEye.copy(camera).applyQuaternion(moonTurn.copy(state.rotation).invert()).sub(moon.mesh.position).applyQuaternion(moonTurn.copy(moon.mesh.quaternion).invert()).normalize()
+      moon.material.uniforms.uLitOn!.value = 1 - smooth((THREE.MathUtils.radToDeg(moonEye.angleTo(moonHoldEye)) - phobos.lit.fromDeg) / (phobos.lit.toDeg - phobos.lit.fromDeg))
       bounce.copy(moon.mesh.position).negate().normalize().applyQuaternion(state.rotation)
       moonLight.fromArray(look.moon.sunBias).applyQuaternion(state.rotation).add(light).normalize()
       moon.update(moonLight, bounce, moonWorld, gain * state.weight, shot.post.vignette, view.format.width / view.format.height)
