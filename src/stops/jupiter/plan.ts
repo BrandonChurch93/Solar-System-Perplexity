@@ -18,7 +18,6 @@ export const params: MoveParams = {
   rise: { azimuthDeg: 44, elevationDeg: -12, distance: 5.6, offset: [0.34, 0.1], driftSpeed: 0.08, rollDeg: -6, ahead: 0.03, hug: 1.7, settle: 2, tilt: 0.5 },
   travel: { turnDeg: 74, side: 1 },
   arrive: { swingDeg: 46, axis: [0.2, 1, 0], power: 2.9, offset: [0.7, -0.15] },
-  skyAim: { terrain: [0, -21.8, 31] },
   light: { exposure: 1, skyExposure: 0.5, terrainSkyGlow: 0.35, skyLow: [0.045, 1.0, 0], sunRadiusDeg: 0.5, sunGlare: 0.75, flare: 0.18 },
   cover: [0.42, 0.34, 0.26],
   handover: place.handover as unknown as HandoverParams,
@@ -241,6 +240,11 @@ export function heightTable(knots: number[][]): (height: number) => number {
 }
 
 export class JupiterPlan extends StopPlan {
+  constructor(id: string, f: Fit, p: MoveParams) {
+    super(id, f, p)
+    this.terrainFrame.copy(toGlobe)
+  }
+
   override spin(time: number): number {
     const dive = this.seg.dive!
     const land = this.seg.terrain
