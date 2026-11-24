@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-24T19:49:14.625Z",
+ "pushed": "2026-11-24T20:07:44.764Z",
  "head": "8b7994375d9917b14ff91634a36c266dc1d1c35c",
- "note": "pop of the dive cured on a slice (1.31 to 1.18), pattern 0.47 one frame over; whole proof chain running",
+ "note": "whole dive on the state in work: pop 1.18 none over, pattern 0.47 one frame over; rise run in work",
  "looks": [
+  {
+   "time": "2026-11-24T20:07:44.040Z",
+   "file": "20261124200744040-note-dive-changes-Cw.jpg",
+   "source": "../../../../tmp/v/c/dive-changes-Cw.jpg",
+   "kind": "note",
+   "label": "whole dive, same state: changes; pattern 0.47 at 1311, one frame over 0.45 (the far ground going under the air at the limb); largest change in place 75.6 (110.2 on the named commit)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T20:07:43.427Z",
+   "file": "20261124200743427-note-dive-pops-Cw.jpg",
+   "source": "../../../../tmp/v/c/dive-pops-Cw.jpg",
+   "kind": "note",
+   "label": "whole dive, mu 0.10 and the air's heights 0.035 to 0.4: the four largest pops; 1.18 at the most, none over 1.2 (1.31, 9 over on the named commit)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T19:49:04.239Z",
    "file": "20261124194904239-note-dive-changes-C.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/c/hazeH-dive.jpg",
    "kind": "note",
    "label": "cure in trial for the dive pop: air.haze.heights 0.035 to 0.4 (the air on the line of sight comes in from 1302 on, a thin rim at the limb that widens); slice 1313 to 1323 green, pop 1.17 at 1316 at the most (1.31 on the named commit)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T18:58:13.628Z",
-   "file": "20261124185813628-note-dive-changes-X.jpg",
-   "source": "../../../../tmp/v/c/dive-changes-X.jpg",
-   "kind": "note",
-   "label": "dive smooth pictures on the named commit: pattern 0.46 at 1311, 3 over (0.57 at 1322, 12 over before)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T18:58:13.012Z",
-   "file": "20261124185813012-note-dive-pops-X.jpg",
-   "source": "../../../../tmp/v/c/dive-pops-X.jpg",
-   "kind": "note",
-   "label": "dive smooth pictures on the named commit 8b799437: new red, pop 1.31 at 1318 + 1/2, 9 over (1316 to 1320); what is left shows a grey band along the limb: the air on the line of sight at mu 0.12 coming in by height",
    "stop": "venus"
   }
  ]
