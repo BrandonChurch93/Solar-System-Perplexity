@@ -1,60 +1,44 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-24T04:27:42.548Z",
- "head": "cfc12a2094b1f946ecddf8b08d2231009fb2e751",
- "note": "04:28 merged main with the carry: dive sheets 1292 to 1349, rise sides at T before (5.409) and after the release (0.027); proof chain G running",
+ "pushed": "2026-11-24T05:03:49.529Z",
+ "head": "63f62b9785e5ce3fe0e651e08d95a07287ea8c44",
+ "note": "Dive 1292 to 1349 on the tree for the NAMED commit (main 8fb9ba9b merged): one place getting nearer, warm tool 0 frames did work",
  "looks": [
   {
-   "time": "2026-11-24T04:27:41.628Z",
-   "file": "20261124042741628-note-venus-rise-sides.jpg",
-   "source": "out/work/handover/venus-rise-sides.png",
+   "time": "2026-11-24T05:03:48.777Z",
+   "file": "20261124050348777-note-s1340.jpg",
+   "source": "../../../../tmp/v/hg2/s1340.jpg",
    "kind": "note",
-   "label": "venus rise, both sides at T after ground.release: mean 0.027",
+   "label": "dive 1340 on, main 8fb9ba9b merged, ground on the globe, release, dry draws",
    "stop": "venus"
   },
   {
-   "time": "2026-11-24T04:27:40.882Z",
-   "file": "20261124042740882-note-r1537.jpg",
-   "source": "../../../../tmp/v/hfp/r1537.jpg",
+   "time": "2026-11-24T05:03:47.820Z",
+   "file": "20261124050347820-note-s1324.jpg",
+   "source": "../../../../tmp/v/hg2/s1324.jpg",
    "kind": "note",
-   "label": "venus rise 1538 to 1541 BEFORE the cure: the globe side at 1540 is softer than the surface side at 1539 (sides at T mean 5.409), cured by ground.release, sides now 0.027",
+   "label": "dive 1324 on, main 8fb9ba9b merged, ground on the globe, release, dry draws",
    "stop": "venus"
   },
   {
-   "time": "2026-11-24T04:27:40.160Z",
-   "file": "20261124042740160-note-s1340.jpg",
-   "source": "../../../../tmp/v/hfp/s1340.jpg",
+   "time": "2026-11-24T05:03:46.692Z",
+   "file": "20261124050346692-note-s1308.jpg",
+   "source": "../../../../tmp/v/hg2/s1308.jpg",
    "kind": "note",
-   "label": "venus dive on merged main with the carry, draft, frames from 1340, ground on the globe from 1293, working tree before the release at T",
+   "label": "dive 1308 on, main 8fb9ba9b merged, ground on the globe, release, dry draws",
    "stop": "venus"
   },
   {
-   "time": "2026-11-24T04:27:39.430Z",
-   "file": "20261124042739430-note-s1324.jpg",
-   "source": "../../../../tmp/v/hfp/s1324.jpg",
+   "time": "2026-11-24T05:03:45.940Z",
+   "file": "20261124050345940-note-s1292.jpg",
+   "source": "../../../../tmp/v/hg2/s1292.jpg",
    "kind": "note",
-   "label": "venus dive on merged main with the carry, draft, frames from 1324, ground on the globe from 1293, working tree before the release at T",
+   "label": "dive 1292 on, main 8fb9ba9b merged, ground on the globe, release, dry draws",
    "stop": "venus"
   },
   {
-   "time": "2026-11-24T04:27:38.610Z",
-   "file": "20261124042738610-note-s1308.jpg",
-   "source": "../../../../tmp/v/hfp/s1308.jpg",
-   "kind": "note",
-   "label": "venus dive on merged main with the carry, draft, frames from 1308, ground on the globe from 1293, working tree before the release at T",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T04:27:37.830Z",
-   "file": "20261124042737830-note-s1292.jpg",
-   "source": "../../../../tmp/v/hfp/s1292.jpg",
-   "kind": "note",
-   "label": "venus dive on merged main with the carry, draft, frames from 1292, ground on the globe from 1293, working tree before the release at T",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T04:26:58.068Z",
-   "file": "20261124042658068-compare-venus-rise-sides.jpg",
+   "time": "2026-11-24T04:58:49.755Z",
+   "file": "20261124045849755-compare-venus-rise-sides.jpg",
    "source": "out/work/handover/venus-rise-sides.png",
    "kind": "compare",
    "label": "venus rise, both sides at T (frame 1539) and their difference times 8",
@@ -64,14 +48,39 @@
    "tier": "draft"
   },
   {
-   "time": "2026-11-24T04:26:49.695Z",
-   "file": "20261124042649695-compare-venus-dive-sides.jpg",
-   "source": "out/work/handover/venus-dive-sides.png",
-   "kind": "compare",
-   "label": "venus dive, both sides at T (frame 1343) and their difference times 8",
+   "time": "2026-11-24T04:58:41.103Z",
+   "file": "20261124045841103-sheet-venus-dive-top.jpg",
+   "source": "out/work/handover/venus-dive-top.png",
+   "kind": "sheet",
+   "label": "venus dive, the globe side alone from straight above the place, 12 frames from the far end to T (frame 1343), place picture off, draft tier",
    "stop": "venus",
    "segment": "venus.dive",
-   "frame": 1343,
+   "first": 1260,
+   "last": 1343,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T04:57:47.070Z",
+   "file": "20261124045747070-sheet-venus-dive-draft-after.jpg",
+   "source": "out/work/handover/venus-dive-draft-after.png",
+   "kind": "sheet",
+   "label": "venus dive, every frame 1344 to 1349 (after T, frame 1343), draft tier",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "first": 1344,
+   "last": 1349,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T04:57:45.815Z",
+   "file": "20261124045745815-sheet-venus-dive-draft-before.jpg",
+   "source": "out/work/handover/venus-dive-draft-before.png",
+   "kind": "sheet",
+   "label": "venus dive, every frame 1331 to 1342 (before T, frame 1343), draft tier",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "first": 1331,
+   "last": 1342,
    "tier": "draft"
   }
  ]
