@@ -380,6 +380,20 @@ export function longestGap(has: boolean[]): { first: number; last: number } | nu
   return out
 }
 
+// The rows of the panel of changes: the two largest changes of the pattern, then the largest changes in place up to four rows, none within apart capture frames of another.
+// A row can have a pattern and no change in place: the two are judged from different shares of the frame.
+export function peakRows<T extends { k: number; change: number | null; pattern: number | null }>(rows: T[], apart: number): T[] {
+  const peaks: T[] = []
+  const free = (row: T): boolean => peaks.every((q) => Math.abs(q.k - row.k) >= apart)
+  for (const row of rows.filter((x) => x.pattern !== null).sort((x, y) => y.pattern! - x.pattern!)) if (peaks.length < 2 && free(row)) peaks.push(row)
+  for (const row of rows.filter((x) => x.change !== null).sort((x, y) => y.change! - x.change!)) if (peaks.length < 4 && free(row)) peaks.push(row)
+  return peaks.sort((x, y) => x.k - y.k)
+}
+
+export function changeNote(row: { change: number | null; pattern: number | null }): string {
+  return 'change ' + (row.change === null ? 'not measured' : row.change.toFixed(1)) + ', pattern ' + (row.pattern === null ? 'not measured' : row.pattern.toFixed(2))
+}
+
 export function position(k: number, rate: number): string {
   const whole = Math.floor(k / rate)
   const part = k - whole * rate
