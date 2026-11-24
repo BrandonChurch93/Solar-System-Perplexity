@@ -1,75 +1,80 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T15:20:14.756Z",
+ "pushed": "2026-11-24T15:39:36.442Z",
  "head": "a5b15421d272cc21b4edfb8977a28a7ab5424436",
- "note": "a5b15421 proof runs (tests 485 passed in 49 files, tsc 0 lines, warm clean); rise 180 to 201 seen, no jump at sheet size. Frame 60 draft: dark 0.190, body 0.663, pale 0.062, white 0.022; half width 4.6 px, 4439 shapes, fine detail 0.0595, mean 0.334; distance 0.062",
+ "note": "a5b15421 handover draft: pass (side difference at T, flow gap at T, every frame), largest step mean level 2.87 into 217; rise 180 to 269 seen in sheets, no jump or pop at sheet size. Frame 60 draft: dark 0.190, body 0.663, pale 0.062, white 0.022; half width 4.6 px, 4439 shapes, fine detail 0.0595, mean 0.334; distance 0.062",
  "looks": [
   {
-   "time": "2026-11-24T15:20:13.505Z",
-   "file": "20261124152013505-note-r18-b.jpg",
-   "source": "../../../../tmp/r18-b.jpg",
+   "time": "2026-11-24T15:39:35.324Z",
+   "file": "20261124153935324-note-r18-h.jpg",
+   "source": "../../../../tmp/r18-h.jpg",
    "kind": "note",
-   "label": "a5b15421 rise, draft, every frame 192 to 201",
+   "label": "a5b15421 rise, draft, every frame 258 to 269 (the handover tool's frames)",
    "stop": "sun"
   },
   {
-   "time": "2026-11-24T15:20:12.448Z",
-   "file": "20261124152012448-note-r18-a.jpg",
-   "source": "../../../../tmp/r18-a.jpg",
+   "time": "2026-11-24T15:39:34.141Z",
+   "file": "20261124153934141-note-r18-g.jpg",
+   "source": "../../../../tmp/r18-g.jpg",
    "kind": "note",
-   "label": "a5b15421 rise, draft, every frame 180 to 191 (the handover tool's frames)",
+   "label": "a5b15421 rise, draft, every frame 246 to 257 (the handover tool's frames)",
    "stop": "sun"
   },
   {
-   "time": "2026-11-24T15:12:09.331Z",
-   "file": "20261124151209331-compare-sun-rise-sides.jpg",
-   "source": "out/work/handover/sun-rise-sides.png",
-   "kind": "compare",
-   "label": "sun rise, both sides at T (frame 216) and their difference times 8",
+   "time": "2026-11-24T15:39:32.733Z",
+   "file": "20261124153932733-note-r18-f.jpg",
+   "source": "../../../../tmp/r18-f.jpg",
+   "kind": "note",
+   "label": "a5b15421 rise, draft, every frame 234 to 245 (the handover tool's frames)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T15:39:31.515Z",
+   "file": "20261124153931515-note-r18-e.jpg",
+   "source": "../../../../tmp/r18-e.jpg",
+   "kind": "note",
+   "label": "a5b15421 rise, draft, every frame 226 to 233 (the handover tool's frames)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T15:39:30.355Z",
+   "file": "20261124153930355-note-r18-d.jpg",
+   "source": "../../../../tmp/r18-d.jpg",
+   "kind": "note",
+   "label": "a5b15421 rise, draft, every frame 214 to 225 (the handover tool's frames)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T15:39:29.266Z",
+   "file": "20261124153929266-note-r18-c.jpg",
+   "source": "../../../../tmp/r18-c.jpg",
+   "kind": "note",
+   "label": "a5b15421 rise, draft, every frame 202 to 213 (the handover tool's frames)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T15:39:00.961Z",
+   "file": "20261124153900961-sheet-sun-rise-draft-after.jpg",
+   "source": "out/work/handover/sun-rise-draft-after.png",
+   "kind": "sheet",
+   "label": "sun rise, every frame 217 to 228 (after T, frame 216), draft tier",
    "stop": "sun",
    "segment": "sun.rise",
-   "frame": 216,
+   "first": 217,
+   "last": 228,
    "tier": "draft"
   },
   {
-   "time": "2026-11-24T15:01:11.632Z",
-   "file": "20261124150111632-note-p1-ball.jpg",
-   "source": "../../../../tmp/p1-ball.jpg",
-   "kind": "note",
-   "label": "a5b15421 draft, 213 and 229 at half size (247 keeps c2292292, 270 equals the kept draft)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T15:01:10.399Z",
-   "file": "20261124150110399-note-p1-whole.jpg",
-   "source": "../../../../tmp/p1-whole.jpg",
-   "kind": "note",
-   "label": "a5b15421 draft, whole frames at half size: approved, 60, 0, 90",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T15:01:09.324Z",
-   "file": "20261124150109324-note-p1-spot.jpg",
-   "source": "../../../../tmp/p1-spot.jpg",
-   "kind": "note",
-   "label": "a5b15421, frame 60 draft, the spot at one to one, left approved, right mine: fewer, broader, curved fibres; the border to the cells is still seen",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T15:01:08.500Z",
-   "file": "20261124150108500-note-p1-zoom.jpg",
-   "source": "../../../../tmp/p1-zoom.jpg",
-   "kind": "note",
-   "label": "a5b15421, frame 60 draft at two to one (crop 700 760 480 270), left mine, right approved",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T15:01:07.189Z",
-   "file": "20261124150107189-note-p1-60.jpg",
-   "source": "../../../../tmp/p1-60.jpg",
-   "kind": "note",
-   "label": "a5b15421, frame 60 draft at one to one, left approved, right mine: cells touch, fibres from a dark middle to the rim, penumbra curves; still plates between crisp cracks, harder and finer than the approved",
-   "stop": "sun"
+   "time": "2026-11-24T15:38:59.098Z",
+   "file": "20261124153859098-sheet-sun-rise-draft-before.jpg",
+   "source": "out/work/handover/sun-rise-draft-before.png",
+   "kind": "sheet",
+   "label": "sun rise, every frame 204 to 215 (before T, frame 216), draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "first": 204,
+   "last": 215,
+   "tier": "draft"
   }
  ]
 }
