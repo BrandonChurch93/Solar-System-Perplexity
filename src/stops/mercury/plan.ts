@@ -33,7 +33,7 @@ export const params: MoveParams = {
 
 interface Leg { lo: number; hi: number; top: number; from: number; rates: [number, number, number]; round: number; near: number; far: number; place: THREE.Vector3; pose: Pose; out: THREE.Vector3; seen: THREE.Vector3; outRate: THREE.Vector3; seenRate: THREE.Vector3; turn: THREE.Vector3 }
 
-interface Bend { ua: number; uj: number; a: [number, number]; ta: number; te: number; lead: number; arc: number; v: number; gain: number; jolt: number }
+interface Curve { ua: number; uj: number; a: [number, number]; ta: number; te: number; lead: number; arc: number; v: number; gain: number; jolt: number }
 
 function smoother(x: number): number {
   const t = Math.min(Math.max(x, 0), 1)
@@ -75,7 +75,7 @@ function swell(x: number, lo: number, top: number, hi: number, a: number, p: num
 export class Plan extends StopPlan {
   private anchored: Anchor | null = null
   private readonly legs: { dive?: Leg; rise?: Leg; straight?: Leg } = {}
-  private bent: Bend | null = null
+  private curved: Curve | null = null
 
   constructor(p: MoveParams = params, private readonly near = close, private readonly fly = flight, private readonly way = path) {
     super('mercury', fit as Fit, p)
@@ -87,8 +87,8 @@ export class Plan extends StopPlan {
     return (2 * (frame - pivot)) / seg.frames
   }
 
-  private get bend(): Bend {
-    if (this.bent) return this.bent
+  private get curve(): Curve {
+    if (this.curved) return this.curved
     const k = this.fly.bend
     const A = this.fly.travel / (2 + (2 * this.fly.gather) / 3)
     const g = this.fly.gather
@@ -110,7 +110,7 @@ export class Plan extends StopPlan {
     const gain = (2 * A * g * ua * va[0] + 2 * S * va[1]) / v
     const T = us - ua
     const jolt = (lead + arc - v * T - 0.5 * gain * T * T) / (T * T * T)
-    return (this.bent = { ua, uj: this.span(k.from + k.join), a, ta, te, lead, arc, v, gain, jolt })
+    return (this.curved = { ua, uj: this.span(k.from + k.join), a, ta, te, lead, arc, v, gain, jolt })
   }
 
   private cruise(time: number, bent = true): Pose {
@@ -120,7 +120,7 @@ export class Plan extends StopPlan {
     const u = this.span(f)
     let along = (this.fly.travel / (2 + (2 * this.fly.gather) / 3)) * (u + (this.fly.gather * u * u * u) / 3)
     let up = this.fly.swoop * u * u
-    const k = this.bend
+    const k = this.curve
     if (bent && u > k.ua) {
       const tau = u - k.ua
       const s = k.v * tau + 0.5 * k.gain * tau * tau + k.jolt * tau * tau * tau
