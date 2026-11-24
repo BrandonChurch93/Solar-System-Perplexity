@@ -1,5 +1,5 @@
 import type { ViewKind } from '../core/types'
-import { forceLimbSky, forceOneMove, forceSide, forceTop } from '../director/handover'
+import { forceLimbSky, forceNoSky, forceOneMove, forceSide, forceTop } from '../director/handover'
 
 // dump: the place picture itself, one frame sized window of it at a time and one picture pixel per frame pixel, for tools that lay it back onto the
 // body. x and y are the window's top left corner in picture pixels. 'image' is the picture's scene value through the film curve (no sky, no lens,
@@ -21,7 +21,9 @@ export interface PlaceDump { x: number; y: number; what: 'image' | 'alpha' }
 // still lists. The look a builder takes before it deletes its stop from that list.
 // lap: the share of the radius by which the ground of the globe lies under its sphere at the limb, over it when negative
 // (handover.place.limbLap), in place of the stop's own or the film's; it is read only with a horizon on the clock of the sky.
-export interface Probe { view: string; side: ViewKind | null; shut: boolean; time: number | null; place: boolean; mask: boolean; picture: boolean; top: boolean; dump?: PlaceDump; limb?: number; edgeIn?: [number, number, number, number]; toneIn?: [number, number, number, number]; limbSky?: boolean; lap?: number; oneMove?: boolean }
+// nosky: the globe side of a dive or a rise without the sky of the close view: its share stays 0, for a stop that gives its own share too. What
+// the fade of the sky adds to a picture or to a number of the judge is seen against it.
+export interface Probe { view: string; side: ViewKind | null; shut: boolean; time: number | null; place: boolean; mask: boolean; picture: boolean; top: boolean; dump?: PlaceDump; limb?: number; edgeIn?: [number, number, number, number]; toneIn?: [number, number, number, number]; limbSky?: boolean; lap?: number; oneMove?: boolean; noSky?: boolean }
 
 export function parseProbe(diag: string): Probe {
   const parts = diag.split('/').map((s) => s.trim()).filter((s) => s.length > 0)
@@ -43,6 +45,7 @@ export function parseProbe(diag: string): Probe {
     else if (key === 'lap' && value !== undefined && value !== '' && Number(value) > -0.01 && Number(value) < 0.01) out.lap = Number(value)
     else if (key === 'limbsky' && (value === undefined || value === 'on' || value === 'off')) out.limbSky = value !== 'off'
     else if (key === 'onemove' && value === undefined) out.oneMove = true
+    else if (key === 'nosky' && value === undefined) out.noSky = true
     else if (key === 'dump' && value !== undefined) {
       const [x, y, what] = value.split(',')
       if (!Number.isInteger(Number(x)) || !Number.isInteger(Number(y)) || (what !== 'image' && what !== 'alpha')) throw new Error('unknown diagnostic option ' + part)
@@ -58,6 +61,7 @@ export function applyProbe(p: Probe | null): void {
   forceTop(p ? p.top : false)
   forceLimbSky(p ? p.limbSky ?? null : null)
   forceOneMove(p ? p.oneMove === true : false)
+  forceNoSky(p ? p.noSky === true : false)
 }
 
 export function probeString(p: Partial<Probe>): string {
@@ -73,6 +77,7 @@ export function probeString(p: Partial<Probe>): string {
   if (p.toneIn !== undefined) parts.push('tone=' + p.toneIn.join(','))
   if (p.limbSky !== undefined) parts.push(p.limbSky ? 'limbsky' : 'limbsky=off')
   if (p.oneMove) parts.push('onemove')
+  if (p.noSky) parts.push('nosky')
   if (p.lap !== undefined) parts.push('lap=' + p.lap)
   if (p.dump) parts.push('dump=' + p.dump.x + ',' + p.dump.y + ',' + p.dump.what)
   else if (p.picture) parts.push('picture')

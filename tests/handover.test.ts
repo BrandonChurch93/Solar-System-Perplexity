@@ -15,6 +15,9 @@ import { cuesOf, swapOf } from '../tools/lib/cues'
 import { detailFrames, sheetFrames } from '../tools/lib/render'
 import { COVERED, coveredPlan, filmWith, restorePlans } from './lib/covered'
 
+// The tests that make the plan of every frame of every dive and rise take seconds, more beside the tests of the other files.
+const LONG = 60000
+
 const fps = config.fps
 const seg = (stop: string, kind: string): Segment => config.segments.find((s) => s.stop === stop && s.kind === kind)!
 const dive = seg('mars', 'dive')
@@ -112,7 +115,7 @@ describe('a stop that did not opt in', () => {
       for (const o of [0, shutterMid(), 0.4]) expect(flat(after.shotAt(f, (f + o) / fps))).toBe(shotsBefore[f + ':' + o])
     }
     off()
-  })
+  }, LONG)
 })
 
 describe('a stop that opted in', () => {
@@ -250,7 +253,9 @@ describe('a stop that opted in', () => {
     expect(shutterThreshold(0.5)).toBeCloseTo(0.472, 5)
   })
   it('raises the place weight to 1 at the dissolve of a dive and lets it fall after the dissolve of a rise', () => {
-    opt({ dive: { placeFrames: 10, dissolveFrames: 2 }, rise: { placeFrames: 10, dissolveFrames: 2 } })
+    // the weight reads the height of the eye of the film that was made last, so the plan flies in a film
+    const plan = opt({ dive: { placeFrames: 10, dissolveFrames: 2 }, rise: { placeFrames: 10, dissolveFrames: 2 } })
+    withMars(plan)
     const d = handoverOf('mars', 'dive')!
     const r = handoverOf('mars', 'rise')!
     expect(placeWeight(dive, (d.placeFirstFrame - 0.01) / fps)).toBe(0)
@@ -262,14 +267,26 @@ describe('a stop that opted in', () => {
     expect(placeWeight(rise, r.firstFrame / fps)).toBe(1)
     expect(placeWeight(rise, (r.lastFrame + 1) / fps)).toBe(1)
     expect(placeWeight(rise, (r.placeLastFrame + 1) / fps)).toBe(0)
+    // between the far end of the window and T it is a smooth step of the logarithm of the eye's height, in the dive and in the rise
+    const smooth = (t: number): number => Math.min(Math.max(t, 0), 1) ** 2 * (3 - 2 * Math.min(Math.max(t, 0), 1))
+    const high = (kind: 'dive' | 'rise', time: number): number => Math.log(plan.eyeShot(kind, time, 'orbit').pose.position.length() - 1)
     let last = 0
     for (let f = d.placeFirstFrame; f <= d.firstFrame; f += 0.25) {
       const w = placeWeight(dive, f / fps)
       expect(w).toBeGreaterThanOrEqual(last)
       last = w
-      expect(placeWeight(rise, (r.placeLastFrame + 1 - (f - d.placeFirstFrame)) / fps)).toBeCloseTo(w, 9)
+      const far = high('dive', d.placeFirstFrame / fps)
+      if (f < d.firstFrame) expect(w).toBeCloseTo(smooth((far - high('dive', f / fps)) / (far - high('dive', d.firstFrame / fps))), 12)
     }
     expect(last).toBe(1)
+    for (let f = r.lastFrame + 1; f <= r.placeLastFrame + 1; f += 0.25) {
+      const w = placeWeight(rise, f / fps)
+      expect(w).toBeLessThanOrEqual(last)
+      last = w
+      const far = high('rise', (r.placeLastFrame + 1) / fps)
+      expect(w).toBeCloseTo(smooth((far - high('rise', f / fps)) / (far - high('rise', (r.lastFrame + 1) / fps))), 12)
+    }
+    expect(last).toBe(0)
     expect(placeWeight(seg('mars', 'hold'), seg('mars', 'hold').start + 1)).toBe(0)
     for (const q of others) if (q.seg.dive && !q.handsOver) for (let f = q.seg.dive.firstFrame; f < q.seg.dive.endFrame; f++) expect(placeWeight(q.seg.dive, (f + 0.25) / fps)).toBe(0)
     off()
