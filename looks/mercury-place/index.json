@@ -1,71 +1,71 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T12:26:18.066Z",
- "head": "e3a28761f7c61e478e62cd1e7d5b4bc4a0b5cfcb",
- "note": "third commit: cause found (set's far ground against the globe's ring of the place), set now ends on the ground at 3 to 4.5 degrees; dive 0.92 at 747 from 1.57; final proof renders running",
+ "pushed": "2026-11-24T13:07:07.656Z",
+ "head": "041b3ba072bf359407d1ccfb7112520ab6aa7633",
+ "note": "third named 041b3ba0: no step at T in dive or rise (far look by the lens axis), dive 0.92 at 747 from 1.57, rise 964 to 972 newly 0.64, sheets z4 and zt are the named state",
  "looks": [
   {
-   "time": "2026-11-24T12:26:17.401Z",
-   "file": "20261124122617401-note-z1-Tc.jpg",
-   "source": "../../../../tmp/m/z1-Tc.jpg",
+   "time": "2026-11-24T12:58:27.312Z",
+   "file": "20261124125827312-note-zt-T.jpg",
+   "source": "../../../../tmp/m/zt-T.jpg",
    "kind": "note",
-   "label": "758 to 762 limb crops with the limb not sunk: bright line and dark strip from 760, so the sink is kept",
+   "label": "NAMED state, rise 965 to 980 every frame: the set's far ground gives way to the globe's pale far band by the eye's height (969 to 975), no border, no jump at T",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-24T12:26:16.771Z",
-   "file": "20261124122616771-note-z1-T.jpg",
-   "source": "../../../../tmp/m/z1-T.jpg",
+   "time": "2026-11-24T12:58:26.170Z",
+   "file": "20261124125826170-note-zt-Tc.jpg",
+   "source": "../../../../tmp/m/zt-Tc.jpg",
    "kind": "note",
-   "label": "dive 750 to 764 every frame (limb not sunk: a step at the limb at 760, not kept)",
+   "label": "NAMED state, rise limb crops 975 to 980 across T (977.25): one pale band on both sides, no step",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-24T12:26:16.186Z",
-   "file": "20261124122616186-note-z1-band.jpg",
-   "source": "../../../../tmp/m/z1-band.jpg",
+   "time": "2026-11-24T12:53:47.002Z",
+   "file": "20261124125347002-note-z4-low.jpg",
+   "source": "../../../../tmp/m/z4-low.jpg",
    "kind": "note",
-   "label": "limb band 742 to 754 at full size, border 3 to 4.5",
+   "label": "NAMED state, dive 765 to 779 every frame: the set's far ground comes in by the eye's height, no border of the set",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-24T12:26:15.636Z",
-   "file": "20261124122615636-note-chg-x5.jpg",
-   "source": "../../../../tmp/m/chg-x5.jpg",
+   "time": "2026-11-24T12:53:45.868Z",
+   "file": "20261124125345868-note-z4-T.jpg",
+   "source": "../../../../tmp/m/z4-T.jpg",
    "kind": "note",
-   "label": "border 3 to 4.5: change panels 742 and 747, what is left sits at the limb",
+   "label": "NAMED state, dive 756 to 764 every frame (750 to 755 are in the z1 sheet, same state on the globe side)",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-24T12:26:15.046Z",
-   "file": "20261124122615046-note-x5-full.jpg",
-   "source": "../../../../tmp/m/x5-full.jpg",
+   "time": "2026-11-24T12:53:44.886Z",
+   "file": "20261124125344886-note-z4-Tc.jpg",
+   "source": "../../../../tmp/m/z4-Tc.jpg",
    "kind": "note",
-   "label": "border 3 to 4.5 degrees, dive 742 to 755: the globe's own ground under the limb",
+   "label": "NAMED state, limb crops 758 to 766 across T (760): one pale band under the limb on both sides, no line, no dark strip",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-24T12:26:14.308Z",
-   "file": "20261124122614308-note-y-law.jpg",
-   "source": "../../../../tmp/m/y-law.jpg",
+   "time": "2026-11-24T12:46:42.452Z",
+   "file": "20261124124642452-note-z3-Tc.jpg",
+   "source": "../../../../tmp/m/z3-Tc.jpg",
    "kind": "note",
-   "label": "752.5 tests: f border at 3 to 4 degrees, g law by angle tight, h border 6 to 7: the glow is the set's far ground inside the border",
+   "label": "759, 759.5 (globe) and 760, 760.5 (surface view) after the cure: the far look of the globe now reads the lens axis, same pale band on both sides",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-24T11:35:49.429Z",
-   "file": "20261124113549429-note-y-layers.jpg",
-   "source": "../../../../tmp/m/y-layers.jpg",
+   "time": "2026-11-24T12:46:41.783Z",
+   "file": "20261124124641783-note-z2-Tdiff.jpg",
+   "source": "../../../../tmp/m/z2-Tdiff.jpg",
    "kind": "note",
-   "label": "752.5 by layers: a all, b no rim, c wide relief only, d close relief only, e globe alone: the white glow under the limb is the wide relief's far ground",
+   "label": "759.5 and 760 with change panels: left the move alone (759 to 759.5), right the step at T, a band along the whole limb",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-24T11:17:10.928Z",
-   "file": "20261124111710928-note-x1-x0.jpg",
-   "source": "../../../../tmp/m/x1-x0.jpg",
+   "time": "2026-11-24T12:46:40.663Z",
+   "file": "20261124124640663-note-z2-Tc.jpg",
+   "source": "../../../../tmp/m/z2-Tc.jpg",
    "kind": "note",
-   "label": "752.5 with the set (left) and globe alone (right), difference below",
+   "label": "758 to 761 with the limb sunk again: the step at 760 is still there, so the sink was not its cause",
    "stop": "mercury"
   }
  ]
