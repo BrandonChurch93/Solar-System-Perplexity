@@ -1,9 +1,31 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T22:07:47.671Z",
+ "pushed": "2026-11-24T22:32:39.429Z",
  "head": "38591789c340058ad8cc55ca9d84ae3550aa9336",
- "note": "r54 rise RED too (pattern 0.70 at 3822.5): same two causes as the dive; coding slower height laws for the tone table and the dust plate",
+ "note": "dive slice green after the cure (pattern 0.28, was 0.54); rise slice still red at the foot (0.67); foot dust put on the plate's height law, full proof job r55 renders",
  "looks": [
+  {
+   "time": "2026-11-24T22:32:38.755Z",
+   "file": "20261124223238755-note-foot4.jpg",
+   "source": "../../../../tmp/v/t20/foot4.png",
+   "kind": "note",
+   "label": "the globe's foot at native size, 3828.5, 3832.5, 3836.5, 3840.5 (first cure): the dust band on the globe thins too fast in the climb"
+  },
+  {
+   "time": "2026-11-24T22:32:38.154Z",
+   "file": "20261124223238154-note-saturn-rise-k7640-7690-changes.jpg",
+   "source": "../../../../tmp/v/t20/saturn-rise-k7640-7690-changes.png",
+   "kind": "note",
+   "label": "rise slice 3820 to 3845 after the first cure: first episode 0.70 to 0.29, second still RED 0.67 at 3832.5 at the globe's foot (the foot dust band on the globe by the grade's share); second cure renders now",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-24T22:32:37.516Z",
+   "file": "20261124223237516-note-rise_pair.jpg",
+   "source": "../../../../tmp/v/t20/rise_pair.png",
+   "kind": "note",
+   "label": "rise 3822.5 (top) and 3830.5 (bottom): left the red tree r54, right the dust inside the rim on its slower law by height (slice on main 7026711); the plate no longer swaps in 8 frames"
+  },
   {
    "time": "2026-11-24T22:07:47.060Z",
    "file": "20261124220747060-note-rise6.jpg",
@@ -39,29 +61,6 @@
    "source": "../../../../tmp/v/t18/pairfull_r54.png",
    "kind": "note",
    "label": "3720 final tier beside the approved image, both at full size (approved left)"
-  },
-  {
-   "time": "2026-11-24T21:46:16.331Z",
-   "file": "20261124214616331-note-dive_foot4.jpg",
-   "source": "../../../../tmp/v/t18/dive_foot4.png",
-   "kind": "note",
-   "label": "r54 dive at native size, the foot at 3589, 3597, 3606.5, 3614.5: the dust inside the inner rim fills the gap as a pale plate within 8 frames (the cause of the red)"
-  },
-  {
-   "time": "2026-11-24T21:46:15.344Z",
-   "file": "20261124214615344-note-saturn-dive-pops.jpg",
-   "source": "../../../../tmp/v/r54/saturn-dive-pops.png",
-   "kind": "note",
-   "label": "r54 dive, pops sheet: largest pop 1.07, limit 1.2",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-24T21:46:12.270Z",
-   "file": "20261124214612270-note-saturn-dive-changes.jpg",
-   "source": "../../../../tmp/v/r54/saturn-dive-changes.png",
-   "kind": "note",
-   "label": "r54 dive, changes sheet: the pattern is red, 0.54 against 0.45 at 3588 to 3593 and 3605 to 3608",
-   "stop": "saturn"
   }
  ]
 }
