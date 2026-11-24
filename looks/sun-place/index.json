@@ -1,9 +1,49 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T23:19:10.008Z",
- "head": "faeea78babada5abc9cc9468d4cc7a473b6253ab",
- "note": "23:21 UTC, the state of commit 1 (MAIL 773 points 1, 2, 3, 5), not yet committed: the ground is a marched slab of gas, lit from within. Pairs beside the approved at 1 to 1 for 0, 60, 90; 60 to 64 consecutive (whole frames, not yet half frames); the rise 217 to 240. Still wrong: cells rounder and looser than the approved, fine detail 0.0205 against 0.0373, a stipple on the brightest tops that changes from frame to frame, upright streaks on near flanks at 75, penumbra soft and hatched, a wide flat band under the horizon. Frame 60:  share by band 0.1 .. 0.9 : 0.177 0.237 0.197 0.138 0.101 0.058 0.033 0.027 0.018 dark (under 0.15) 0.191 | body (0.15 to 0.55) 0.674 | pale (0.65 to 0.85) 0.060 | white (over 0.85) 0.018 brightest 15 percent: half width 12.5 px, 855 shapes | fine detail 0.0205 | mean 0.325 ",
+ "pushed": "2026-11-24T23:39:31.468Z",
+ "head": "10116834abcd186836d36fe60e421649369e1dfa",
+ "note": "23:40 UTC commit 1 of the third note (32b71390, the slab) with its d253 pairs: size holds to 2.354 of 255, the sets differ by 3.867 and move the far ground's light; pairs at 60 a second still owed",
  "looks": [
+  {
+   "time": "2026-11-24T23:39:30.437Z",
+   "file": "20261124233930437-note-d253-diffs.jpg",
+   "source": "../../../../tmp/v/d253-diffs.jpg",
+   "kind": "note",
+   "label": "d253: the differences times 4, half size. Left: 1080 against 2160 halved (edges and fine lines). Right: web against full: the far ground differs in level, which is the region's light counted in the set's own texels: (b) does not hold yet",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T23:39:29.522Z",
+   "file": "20261124233929522-note-d253-set-pair.jpg",
+   "source": "../../../../tmp/v/d253-set-pair.jpg",
+   "kind": "note",
+   "label": "d253 (b): frame 60 at 1920 by 1080 in the web set (left) and the full set (right), 1 to 1 crop; mean difference of the whole frames 3.867 of 255",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T23:39:28.592Z",
+   "file": "20261124233928592-note-d253-size-pair.jpg",
+   "source": "../../../../tmp/v/d253-size-pair.jpg",
+   "kind": "note",
+   "label": "d253 (a): frame 60 drawn at 1920 by 1080 (left) and at 3840 by 2160 halved (right), full set, 1 to 1 crop; mean difference of the whole frames 2.354 of 255",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T23:39:27.676Z",
+   "file": "20261124233927676-note-c1-60-spot.jpg",
+   "source": "../../../../tmp/v/c1-60-spot.jpg",
+   "kind": "note",
+   "label": "32b71390 frame 60, the spot beside the approved at 1 to 1: the penumbra is soft and hatched, ragged at its outer end",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T23:39:26.153Z",
+   "file": "20261124233926153-note-c1-60-p1.jpg",
+   "source": "../../../../tmp/v/c1-60-p1.jpg",
+   "kind": "note",
+   "label": "32b71390 frame 60 (draft, bytes b059c9677c9e51af) beside the approved close image at 1 to 1. sun-near.py: share by band 0.1 .. 0.9 : 0.177 0.237 0.197 0.138 0.101 0.058 0.033 0.027 0.018 / dark (under 0.15) 0.191 | body (0.15 to 0.55) 0.674 | pale (0.65 to 0.85) 0.060 | white (over 0.85) 0.018 / brightest 15 percent: half width 12.5 px, 855 shapes | fine detail 0.0205 | mean 0.325",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T23:19:09.436Z",
    "file": "20261124231909436-note-c1-00217-whole.jpg",
@@ -26,46 +66,6 @@
    "source": "../../../../tmp/v/c1-60-75.jpg",
    "kind": "note",
    "label": "frames 60 and 75 at 3x, the same box of the picture (not the same ground)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T23:19:07.755Z",
-   "file": "20261124231907755-note-c1-consec.jpg",
-   "source": "../../../../tmp/v/c1-consec.jpg",
-   "kind": "note",
-   "label": "frames 60 to 64, consecutive whole frames at 2x, one box of the picture; last: the difference of 60 and 61 times 4",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T23:19:07.189Z",
-   "file": "20261124231907189-note-c1-90-p1.jpg",
-   "source": "../../../../tmp/v/c1-90-p1.jpg",
-   "kind": "note",
-   "label": "frame 90, approved (of frame 60) left, slab right, 1 to 1",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T23:19:06.590Z",
-   "file": "20261124231906590-note-c1-0-p1.jpg",
-   "source": "../../../../tmp/v/c1-0-p1.jpg",
-   "kind": "note",
-   "label": "frame 0, approved (of frame 60) left, slab right, 1 to 1",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T23:19:06.021Z",
-   "file": "20261124231906021-note-c1-60-p3.jpg",
-   "source": "../../../../tmp/v/c1-60-p3.jpg",
-   "kind": "note",
-   "label": "frame 60, the horizon on the left, approved left, slab right, 1 to 1",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T23:19:05.448Z",
-   "file": "20261124231905448-note-c1-60-p2.jpg",
-   "source": "../../../../tmp/v/c1-60-p2.jpg",
-   "kind": "note",
-   "label": "frame 60, right of the spot, approved left, slab right, 1 to 1",
    "stop": "sun"
   }
  ]
