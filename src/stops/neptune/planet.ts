@@ -138,6 +138,133 @@ const fetches = (shownFrom: number): string => Array.from({ length: MAX_LEVELS }
   texels = mix(texels, t${i}, step(0.5, gShown.a) * (1.0 - counted));
   counted = max(counted, step(0.5, gShown.a));`).join('\n')
 
+// The globe's own map as functions: the turn of the deck and of the cloud layer, and the reading of the wrap and of the levels round the
+// place at a direction of the body. The globe draws with them, and the scene from code (deep.ts) reads the same map by the same lines, so
+// what the scene shows from afar is the globe's own picture and no second one. MAP_UNIFORMS: the uniforms these lines read.
+export const mapGlsl = (shownFrom: number): string => /* glsl */ `vec4 gShown;
+vec2 gToneUv;
+vec3 spinY(vec3 d, float a) {
+  float c = cos(a), s = sin(a);
+  return vec3(c * d.x - s * d.z, d.y, s * d.x + c * d.z);
+}
+vec3 turnAbout(vec3 d, vec3 axis, float a) {
+  float c = cos(a), s = sin(a);
+  return d * c + cross(axis, d) * s + axis * dot(axis, d) * (1.0 - c);
+}
+vec3 knot(vec3 k[${KNOTS}], float ndl) {
+  float x = clamp(ndl * 0.5 + 0.5, 0.0, 1.0) * ${KNOTS - 1}.0;
+  int i = int(min(floor(x), ${KNOTS - 2}.0));
+  return mix(k[i], k[i + 1], x - float(i));
+}
+float stormTurn(vec3 d) {
+  float ang = acos(clamp(dot(d, uStormAxis), -1.0, 1.0)) / uStormRadius;
+  return uStormAngle / (1.0 + ang * ang * ang * ang);
+}
+vec3 deckDir(vec3 p) {
+  vec3 d = spinY(p, uSpin);
+  return turnAbout(d, uStormAxis, stormTurn(d));
+}
+vec3 cloudDir(vec3 p) {
+  float lat = asin(clamp(p.y, -1.0, 1.0));
+  vec3 d = spinY(p, uSpin + uStream * (1.0 + uShear.x * sin(lat * uShear.y)));
+  return turnAbout(d, uStormAxis, stormTurn(d));
+}
+vec3 bend(vec3 d, float a) {
+  float c0 = sqrt(max(1.0 - d.y * d.y, 1e-6));
+  float y1 = clamp(d.y + a * c0, -1.0, 1.0);
+  float s = sqrt(max(1.0 - y1 * y1, 0.0)) / c0;
+  return vec3(d.x * s, y1, d.z * s);
+}
+float endHash(vec2 p) {
+  uvec2 q = uvec2(p);
+  uint h = q.x * 1664525u + q.y * 22695477u + 1013904223u;
+  h ^= h >> 16u;
+  h *= 2246822519u;
+  h ^= h >> 13u;
+  h *= 3266489917u;
+  h ^= h >> 16u;
+  return float(h >> 8u) / 16777216.0;
+}
+vec4 layerAt(vec3 dd, float soft, float shown, out float texels) {
+  float u = atan(dd.x, dd.z) / (2.0 * PI) + 0.5;
+  float v = asin(clamp(dd.y, -1.0, 1.0)) / PI + 0.5;
+  float u2 = fract(u + 0.5) - 0.5;
+  vec2 mx = vec2(abs(dFdx(u)) < abs(dFdx(u2)) ? dFdx(u) : dFdx(u2), dFdx(v)) * uGrad * soft;
+  vec2 my = vec2(abs(dFdy(u)) < abs(dFdy(u2)) ? dFdy(u) : dFdy(u2), dFdy(v)) * uGrad * soft;
+  texels = diagTexelsDir(dd, uMapWidth);
+  float dn = dot(dd, uSpotN);
+  vec2 g = vec2(dot(dd, uSpotE), dot(dd, uSpotU)) / max(dn, 0.05);
+  vec2 gx = dFdx(g);
+  vec2 gy = dFdy(g);
+  float gd = sqrt(max(dot(gx, gx), dot(gy, gy)));
+  gx *= uGrad * soft;
+  gy *= uGrad * soft;
+  float front = step(0.3, dn);
+  float parent = texels;
+${Array.from({ length: MAX_LEVELS }, (_, i) => '  float w' + i + ' = 0.0;\n  float t' + i + ' = 0.0;').join('\n')}
+${weights(shownFrom)}
+  float rest = 1.0;
+  float counted = 0.0;
+  vec4 c = vec4(0.0);
+  gShown = vec4(0.0);
+  gToneUv = (g - uPatchOff[${Math.min(shownFrom, MAX_LEVELS - 1)}]) * uPatchScale[${Math.min(shownFrom, MAX_LEVELS - 1)}] + 0.5;
+${fetches(shownFrom)}
+  for (int k = 0; k < (rest > 0.0 ? 1 : 0); k++) {
+    vec4 base = textureGrad(uMap, vec2(u, v), mx, my);
+    vec2 hq = (vec2(u, v) - uHoldBox.xy) * uHoldBox.zw;
+    float hw = uHold.x * step(0.0, min(min(hq.x, hq.y), min(1.0 - hq.x, 1.0 - hq.y)));
+    for (int j = 0; j < (hw > 0.0 ? 1 : 0); j++) {
+      vec4 held = textureGrad(uHoldMap, hq, mx * uHoldBox.zw, my * uHoldBox.zw);
+      base = mix(base, vec4(held.rgb, held.a * uHold.y), hw);
+    }
+    for (int j = 0; j < (uEnd.x > 0.0 ? 1 : 0); j++) {
+      vec2 mq = (vec2(u, v) - uMendBox.xy) * uMendBox.zw;
+      vec4 mend = textureGrad(uMendMap, mq, mx * uMendBox.zw, my * uMendBox.zw);
+      base.rgb = mix(base.rgb, mend.rgb, uEnd.x * mend.a * step(0.0, min(min(mq.x, mq.y), min(1.0 - mq.x, 1.0 - mq.y))));
+    }
+    c += rest * base;
+  }
+  return c;
+}`
+
+export const MAP_UNIFORMS = ['uMap', 'uMapWidth', 'uGrad', 'uSpotN', 'uSpotE', 'uSpotU', 'uPatchCount', 'uPatchScale', 'uPatchSize', 'uFeather', 'uFeatherOwn', 'uPatchFade', 'uLine', 'uPatchOff', 'uHoldMap', 'uHoldBox', 'uHold', 'uMendMap', 'uMendBox', 'uEnd', 'uSpin', 'uStream', 'uShear', 'uStormAxis', 'uStormRadius', 'uStormAngle', 'uCloudHeight', 'uCloudSoft', 'uCirrusPx', 'uFarMap', 'uCirrus', 'uClump', 'uCode', ...Array.from({ length: MAX_LEVELS }, (_, i) => 'uPatch' + i)]
+export const MAP_DECL = /* glsl */ `
+uniform sampler2D uMap;
+${SAMPLERS}
+uniform float uPatchScale[${MAX_LEVELS}];
+uniform float uPatchSize[${MAX_LEVELS}];
+uniform float uPatchCount;
+uniform float uFeather;
+uniform float uFeatherOwn;
+uniform vec2 uPatchFade;
+uniform float uLine;
+uniform vec3 uSpotN;
+uniform vec3 uSpotE;
+uniform vec3 uSpotU;
+uniform vec2 uPatchOff[${MAX_LEVELS}];
+uniform float uMapWidth;
+uniform float uGrad;
+uniform float uCode;
+uniform float uSpin;
+uniform float uStream;
+uniform vec2 uShear;
+uniform vec3 uStormAxis;
+uniform float uStormRadius;
+uniform float uStormAngle;
+uniform float uCloudHeight;
+uniform float uCloudSoft;
+uniform sampler2D uHoldMap;
+uniform vec4 uHoldBox;
+uniform vec2 uHold;
+uniform sampler2D uMendMap;
+uniform vec4 uMendBox;
+uniform sampler2D uFarMap;
+uniform vec4 uCirrus;
+uniform vec3 uClump;
+uniform vec3 uEnd;
+uniform float uCirrusPx;
+`
+
 const frag = (shownFrom: number): string => /* glsl */ `
 precision highp float;
 uniform sampler2D uMap;
@@ -257,91 +384,7 @@ ${EQUIRECT_GLSL}
 ${DIAG_GLSL}
 ${AIR_GLSL}
 ${INVERSE_FILMIC_GLSL}
-vec4 gShown;
-vec2 gToneUv;
-vec3 spinY(vec3 d, float a) {
-  float c = cos(a), s = sin(a);
-  return vec3(c * d.x - s * d.z, d.y, s * d.x + c * d.z);
-}
-vec3 turnAbout(vec3 d, vec3 axis, float a) {
-  float c = cos(a), s = sin(a);
-  return d * c + cross(axis, d) * s + axis * dot(axis, d) * (1.0 - c);
-}
-vec3 knot(vec3 k[${KNOTS}], float ndl) {
-  float x = clamp(ndl * 0.5 + 0.5, 0.0, 1.0) * ${KNOTS - 1}.0;
-  int i = int(min(floor(x), ${KNOTS - 2}.0));
-  return mix(k[i], k[i + 1], x - float(i));
-}
-float stormTurn(vec3 d) {
-  float ang = acos(clamp(dot(d, uStormAxis), -1.0, 1.0)) / uStormRadius;
-  return uStormAngle / (1.0 + ang * ang * ang * ang);
-}
-vec3 deckDir(vec3 p) {
-  vec3 d = spinY(p, uSpin);
-  return turnAbout(d, uStormAxis, stormTurn(d));
-}
-vec3 cloudDir(vec3 p) {
-  float lat = asin(clamp(p.y, -1.0, 1.0));
-  vec3 d = spinY(p, uSpin + uStream * (1.0 + uShear.x * sin(lat * uShear.y)));
-  return turnAbout(d, uStormAxis, stormTurn(d));
-}
-vec3 bend(vec3 d, float a) {
-  float c0 = sqrt(max(1.0 - d.y * d.y, 1e-6));
-  float y1 = clamp(d.y + a * c0, -1.0, 1.0);
-  float s = sqrt(max(1.0 - y1 * y1, 0.0)) / c0;
-  return vec3(d.x * s, y1, d.z * s);
-}
-float endHash(vec2 p) {
-  uvec2 q = uvec2(p);
-  uint h = q.x * 1664525u + q.y * 22695477u + 1013904223u;
-  h ^= h >> 16u;
-  h *= 2246822519u;
-  h ^= h >> 13u;
-  h *= 3266489917u;
-  h ^= h >> 16u;
-  return float(h >> 8u) / 16777216.0;
-}
-vec4 layerAt(vec3 dd, float soft, float shown, out float texels) {
-  float u = atan(dd.x, dd.z) / (2.0 * PI) + 0.5;
-  float v = asin(clamp(dd.y, -1.0, 1.0)) / PI + 0.5;
-  float u2 = fract(u + 0.5) - 0.5;
-  vec2 mx = vec2(abs(dFdx(u)) < abs(dFdx(u2)) ? dFdx(u) : dFdx(u2), dFdx(v)) * uGrad * soft;
-  vec2 my = vec2(abs(dFdy(u)) < abs(dFdy(u2)) ? dFdy(u) : dFdy(u2), dFdy(v)) * uGrad * soft;
-  texels = diagTexelsDir(dd, uMapWidth);
-  float dn = dot(dd, uSpotN);
-  vec2 g = vec2(dot(dd, uSpotE), dot(dd, uSpotU)) / max(dn, 0.05);
-  vec2 gx = dFdx(g);
-  vec2 gy = dFdy(g);
-  float gd = sqrt(max(dot(gx, gx), dot(gy, gy)));
-  gx *= uGrad * soft;
-  gy *= uGrad * soft;
-  float front = step(0.3, dn);
-  float parent = texels;
-${Array.from({ length: MAX_LEVELS }, (_, i) => '  float w' + i + ' = 0.0;\n  float t' + i + ' = 0.0;').join('\n')}
-${weights(shownFrom)}
-  float rest = 1.0;
-  float counted = 0.0;
-  vec4 c = vec4(0.0);
-  gShown = vec4(0.0);
-  gToneUv = (g - uPatchOff[${Math.min(shownFrom, MAX_LEVELS - 1)}]) * uPatchScale[${Math.min(shownFrom, MAX_LEVELS - 1)}] + 0.5;
-${fetches(shownFrom)}
-  for (int k = 0; k < (rest > 0.0 ? 1 : 0); k++) {
-    vec4 base = textureGrad(uMap, vec2(u, v), mx, my);
-    vec2 hq = (vec2(u, v) - uHoldBox.xy) * uHoldBox.zw;
-    float hw = uHold.x * step(0.0, min(min(hq.x, hq.y), min(1.0 - hq.x, 1.0 - hq.y)));
-    for (int j = 0; j < (hw > 0.0 ? 1 : 0); j++) {
-      vec4 held = textureGrad(uHoldMap, hq, mx * uHoldBox.zw, my * uHoldBox.zw);
-      base = mix(base, vec4(held.rgb, held.a * uHold.y), hw);
-    }
-    for (int j = 0; j < (uEnd.x > 0.0 ? 1 : 0); j++) {
-      vec2 mq = (vec2(u, v) - uMendBox.xy) * uMendBox.zw;
-      vec4 mend = textureGrad(uMendMap, mq, mx * uMendBox.zw, my * uMendBox.zw);
-      base.rgb = mix(base.rgb, mend.rgb, uEnd.x * mend.a * step(0.0, min(min(mq.x, mq.y), min(1.0 - mq.x, 1.0 - mq.y))));
-    }
-    c += rest * base;
-  }
-  return c;
-}
+${mapGlsl(shownFrom)}
 void main() {
   vec3 p = normalize(vLocal);
   vec3 n = normalize(vWorldN);
