@@ -2419,3 +2419,123 @@ A ring in both tables at the same radius).
   tint, haze: { nine fields }, shell: { ... } }, { height: lower, haze: { depth: 1.8 } }, ...], highest first;
   the highest knot from today's numbers of the hold (hazeAir(look.haze)), so the hold keeps its bytes. Not on
   main yet (agent/engine-globe abf28ac5, agent/engine-handover dddef05). Do not wire before the Builder says.
+
+## 2026-11-24, 01:45 to 02:00 VM: try 3 named (a359a4b), main 2dfaf06 merged (21915d7), the report
+
+- Merge 21915d7 of main 2dfaf06 (kit/PROGRESS.md only: decisions d165 to d168 and the jobs line), then commit
+  a359a4b7677331c3c6d08df3cd7146a92e13b3f6 "Saturn: try 3 of the pace, a level top; the flight's stars by one
+  function of the height", pushed to agent/saturn-code. Every check of the section above was run again on the
+  commit and gave the same lines (logs /tmp/v/r27/c_tsc, c_vitest, c_smooth, c_handover, c_gate).
+- Decisions read on main: d165 smooth's picture limits are maxPop 1.2 and a change in place of at most 20
+  (Saturn's two moves read under it; the tool still owes "Saturn's rings count as the body"); handover_engineer
+  is ordered to make the engine's star lift one function of the height on both sides for every stop, so the
+  hook plan.skyLiftAt may become the engine's; d168 sky_builder's table lists Saturn's hold patch as carrying
+  grain.
+- Size against main (mail 450): my three folders are 71.355 MiB at a359a4b against 73.262 MiB on main, minus
+  1.91 MiB (sky-terrain.webp went out with step 1).
+- Report mailed to /root (high, five pictures): the commit, the four commands (npm run measure -- --stop
+  saturn; npm run handover -- --stop saturn --tier draft --only sides,flow,path,sheets; npm run gate -- --phase
+  6 --only G11,G15 --g15-stops saturn; npm run smooth -- --stop saturn --only path), the lines of both judges,
+  the answers to items 2 to 5 of mail 439, what was not run on the VM, and the open list with a new point 9
+  (the engine's sky is not monotone in the lift: its mean falls by 1.9 between a lift of 0.27 and 0.44, frames
+  3874 and 3875).
+- Open list as mailed, numbering kept: 1 globe near the lens; 2 end of the rise (one fall from the level top
+  3862 to 3884, to judge on a review clip); 3 moon (cut by the globe's limb 3596 to 3600 at draft, no pop seen,
+  not checked at review); 4 stars through the shaded rings; 5 sawtooth wedge through the Cassini division 3630
+  to 3690; 6 fit at 3720; 7 ring tone slides with height 3840 to 3864; 8 draft and review differ in the rise; 9
+  the engine's sky dip at 3874, 3875.
+
+## 2026-11-24, 02:00 VM on: ruling (a) of mail 374, the map rigid on the globe
+
+What the ruling asks: "The globe's map stays rigid on its ellipsoid: take the slide of the bands by latitude
+(look.globe.drift) off the map and put motion on the function streaks only."
+
+As built (working tree on a359a4b):
+- src/stops/saturn/globe.ts (the model's globe): the map is read at spinY(p, uSpin), one turn of the whole body;
+  the slide by latitude, uDrift times zonal(lat), is added to the longitude of bandFine only (the fine streaks
+  from functions, drawn near the lens). The flow view of the diagnostics gives 0 for the globe's map.
+- src/stops/saturn/kept/globe.ts, kept/look.ts, kept/set.ts (the kept set of the hold and the far view): zonal
+  and uDrift are gone; the map is read at spinY(p, uSpin). The kept set draws no function streaks, so nothing
+  slides in it.
+- look.globe.drift (0.2 degrees a second at the fastest latitudes) stays in src/stops/saturn/look.ts as the
+  speed of the streaks.
+- The slide was counted from the middle of the hold (elapsed = time - plan.holdMid), so 3465 keeps its bytes;
+  every other frame of the stop that shows the globe changes by the slide that is no longer there (at most 0.2
+  degrees a second times the seconds from 3465: 0.5 degrees at 3390 and 3539, 1.7 degrees at 3720, 2.8 degrees
+  at 3884).
+
+Measured (drafts against a359a4b, files /tmp/v/r28/a_FRAME.png; finals /tmp/v/r28/af_3720.png and
+/tmp/v/r27/final_3720.png):
+- 3465 does not keep its bytes to the last level: 4795 pixels of the globe change by 1 level at draft (the order
+  of the sums in the shader); at final 0.5 percent of the pixels of body, rings and moon by 1 level, none by
+  more.
+- 3390: 237277 pixels, largest 33, 1351 over 8 levels. 3539: 260977, largest 40, 1362 over 8. 3567: 281088,
+  largest 43. 3720: 544208, largest 88, 53324 over 8, mean difference 1.08. 3866: 333287, largest 103, 26703
+  over 8. Same character everywhere; the storms sit a few pixels along their bands.
+- 3720 at final against the approved close (herocmp, g17grid): plain 34.812, blurred 27.846, G17 median 0.691,
+  25th percentile 0.326, 62 tiles; before (a359a4b) 34.811, 27.845, 0.690, 0.326. No loss.
+  The same on the draft stills: 33.984, 27.101, G17 0.575, 0.275; before 33.983, 27.100, 0.575, 0.275 (these are
+  the numbers of way A in the section of step 1: they were draft stills; final stills read 0.83 higher plain
+  and 0.12 higher in the G17 median, with the same tool).
+- Pictures: /tmp/v/r28/cmp_3720_globe.png (globe crop, before over after), /tmp/v/r28/cmp_3720_close.png
+  (approved, before, after), both in the looks.
+- Not looked at yet on consecutive frames: the streaks sliding over the rigid map near the lens (0.2 degrees a
+  second is about 0.1 px a frame at the middle of the globe in the skim).
+
+## 2026-11-24, 02:10 to 02:35 VM: the sky picture of the hold without the grain of its glow input (mail 448)
+
+- The fault: public/assets/saturn/<set>/sky-hold.webp is the hero minus the film's own glow; the glow input of
+  the first build was a still of 3465 with the grain on, so the picture carried the negative of that frame's
+  grain. Measured on the kept picture: -0.106 against the grain pattern of 3465 in the hero's own sky, 0.00
+  against 3464, 3465.5, 3466.
+- The inputs of the first build (the fill take, halo-only.png, the round 2 file) are on no machine and not in
+  git. So the picture cannot be built again from nothing; assets-src/saturn/sky/glow.py builds again only what
+  the glow enters. Inputs rendered here: 3465 at final with orbit.gain 0 in src/stops/saturn/sky.json, once as
+  it is (/tmp/v/r28/glow_grain.png: this is the first input again, it gives the kept file back exactly on 0.90
+  of the far dark sky and within 1 level on 0.987) and once with --diag nograin (/tmp/v/r28/glow_nograin.png).
+- Three versions, the third is kept:
+  1. new = kept + own share x (second run - first run). Film: 3465 dark sky +0.006 (kept -0.083).
+  2. the same, and in the calm far sky (where the first run gives the kept picture back on the mean of a 41 px
+     box within half a level) the second run as it is, so stars at the limit of the split carry no grain.
+     Same film number; the files get smaller.
+  3. the same, and the mean of the change over a Gaussian of 16 px is taken out again (weighted by the sky's
+     own share), so the level of the kept picture stays. Versions 1 and 2 had a level difference of 0.24 to
+     0.36 of a level rms at 6 px in the far sky and -0.14, -0.09, -0.09 near the body; version 3 has 0.12 and
+     -0.04.
+- Numbers of version 3. Files: full 2157496 bytes (was 2258846), web 713644 (was 739504): 127210 bytes less.
+  Picture against the grain of 3465 in the hero's own sky 0.001, level 16.24 (16.26). Film, draft, --diag
+  nograin, sky_builder's graincorr.py: 3464 dark sky -0.001, whole -0.000, blocks -0.011 to +0.011; 3465
+  +0.006, +0.001, -0.012 to +0.009; 3466 -0.001, -0.000, -0.008 to +0.011. The kept picture at 3465: -0.083,
+  -0.016, -0.076 to +0.006. By region at 3465 (/tmp/v/r28/corrmap.py): calm far sky -0.002 (kept -0.150), own
+  sky where the first run does not give the kept picture back +0.030 (kept -0.188), mixed +0.054 (kept
+  -0.109), no share of the picture +0.003 (the same in both). So near the body the cure takes out a little
+  more than the kept picture carried: my glow of today is not the first glow there.
+- 3465 at final against the kept still (/tmp/v/r28/holdcmp.py, kept_final_3465.png is main's build): far dark
+  sky changed 0.856 of the pixels, mean -0.022, -0.020, -0.040, mean difference 0.839, 99.9th percentile 5,
+  largest 21, 20 pixels over 8 levels; own sky nearer the body mean -0.04, 0.902 changed, largest 12; body,
+  rings and moon 0.0045 changed, all by 1 level (ruling (a)). Against the approved hero: plain 5.526, blurred
+  2.239; the kept still 5.502, 2.234.
+- The 20 pixels over 8 levels are faint points at the limit of the star split (peaks of about 20 of 255 in
+  blue) that fell on the other side of it. Stars over 40 levels in the far dark sky of the picture: hero
+  4890, kept 5100, new 4950.
+- Left in: faint bands along the body where the film's glow crosses the hero's sky in one colour (the cut at
+  black, which the grain had lifted): 99th percentile of the difference blurred over 6 px 0.42 of a level near
+  the body, 0.38 in the far sky.
+- RECIPE.md: two lines added to the sky-hold section (the glow input is taken with --diag nograin; checks).
+
+## 2026-11-24, 02:28 VM: mail 466
+
+- a359a4b7: the byte proof is whole and clean (115 drafts, 11 differ, all inside Saturn's segments; 3465 at
+  final is the kept still; G11, G15 pass; tsc clean; vitest 37 files 302). The dive's handover report: sides
+  at T 0, flow gap 0.016 px, pose gap 0. Measures and smooth still out. The take onto main runs as a base; no
+  round starts on it.
+- Point 3 accepted (the patch leaves by distance from the hold's path, the lift is one function of height).
+  Points 4 and 6 (the sky at 3720: orange clusters left, near black right, where the approved image has an
+  even field of faint blue white stars) are cured through the stop's look of the engine's sky with
+  sky_builder, not with a pasted patch. Not mine to touch.
+- Owed, in this order: ruling (a) with the sky-hold cure, then (d), then steps 2, 3 and 5.
+- handover_engineer's finding: on Saturn the place is on the rings and the eye never comes nearer than 3.3
+  radii over the body, so the path measure's ground points lie on the body's sphere, not on the ring plane; the
+  judge is corrected before a set is searched for Saturn. "Until then do not tune the path to the report's
+  speed lines."
+- After the take: 60 frames a second clips of the dive and the rise are rendered and shown.

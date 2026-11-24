@@ -217,7 +217,6 @@ export const createKept: SetFactory = async (ctx) => {
       gu.uSpin!.value = plan.spin(state.time)
       gu.uRingShadow!.value = look.globe.ringShadow * THREE.MathUtils.lerp(1, look.globe.ringShadowHero, poseW.value)
       su.uRingShadow!.value = gu.uRingShadow!.value
-      gu.uDrift!.value = THREE.MathUtils.degToRad(look.globe.drift) * elapsed
       gu.uGain!.value = gain
       gu.uWeight!.value = state.weight
       gu.uVignette!.value = shot.post.vignette
