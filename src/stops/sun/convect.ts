@@ -49,6 +49,8 @@ uniform vec4 uCvThread;
 uniform vec4 uCvWarpMore;
 uniform vec4 uCvGap;
 uniform vec4 uCvBend;
+uniform vec4 uCvAboveMore;
+uniform vec4 uCvSwallow;
 uniform vec4 uCvPatch;
 uniform vec4 uCvTight;
 uniform vec4 uCvCurl;
@@ -97,7 +99,9 @@ void cvDiagram(vec2 q, float t, float wrap, out float e, out vec2 ge, out vec2 r
         float grown = clamp(x / uCvGrow.x, 0.0, 1.0);
         float left = clamp((1.0 - x) / uCvGrow.y, 0.0, 1.0);
         // cells are of many sizes: each has a share of its own in the diagram for the whole of its life
-        float o = uCvWarpMore.w * (fract(h1.x * 13.7 + h1.y * 5.3) - 0.5) + uCvCell.z * (pow(1.0 - grown, uCvGrow.z) + pow(1.0 - left, uCvGrow.z)) + uCvGrow.w * (2.0 - smoothstep(0.0, 0.06, x) - smoothstep(0.0, 0.06, 1.0 - x));
+        // (a cell is emptied and filled over a span of seconds, not over a share of its life: a short life must
+        // not close in a frame or two. The share falls to nil with no slope where the cell is whole)
+        float o = uCvWarpMore.w * (fract(h1.x * 13.7 + h1.y * 5.3) - 0.5) + uCvCell.z * (pow(1.0 - grown, uCvGrow.z) + pow(1.0 - left, uCvGrow.z)) + uCvGrow.w * (pow(1.0 - clamp(x * period / uCvSwallow.x, 0.0, 1.0), uCvSwallow.y) + pow(1.0 - clamp((1.0 - x) * period / uCvSwallow.x, 0.0, 1.0), uCvSwallow.y));
         float m = smoothstep(0.3, 0.55, x) * parts;
         for (int k = 0; k < 2; k++) {
           vec2 at = c + u * (apart * (k == 0 ? 1.0 : -1.0));
@@ -259,7 +263,7 @@ vec4 cvSpot(vec2 p, float t, out vec4 fibre) {
   float away = log(max(rs, 0.05));
   vec2 q = vec2(atan(d.y, d.x) * uCvBend.w / 6.2831853, away * uCvFibre.z + t * uCvStream.x);
   // no fibre is straight: the chart sways a little along the fibres' length
-  q.x += uCvBend.x * (vnoise(vec3(u * uCvBend.z + 1.1, away * uCvBend.y - t * 0.03)) - 0.5);
+  q.x += uCvBend.x * (vnoise(vec3(u * uCvBend.z + 1.1, away * uCvBend.y - t * uCvAboveMore.w)) - 0.5);
   q.x += uCvSpotMore.z * away;
   float e;
   vec2 ge;
@@ -360,6 +364,8 @@ uniform vec4 uCvGlass;
 uniform vec4 uCvSkin;
 uniform vec4 uCvFlankFar;
 uniform vec4 uCvLimbTint;
+uniform vec4 uCvView;
+uniform vec4 uCvAbove;
 uniform vec4 uCvFarMore;
 uniform vec4 uCvPoints;
 uniform vec4 uCvThreadIn;
@@ -477,21 +483,28 @@ void main() {
   // its shoulder by its own height, so the band is a slope of light and not a wall of one colour
   // (seen flat, far off, a bulb shows its side alone: there the dark foot is the lowest part only, or the far ground
   // would be all foot)
+  // seen from above a cell is a granule (a bright body that falls off softly into a dark lane); seen low and from
+  // near it is a skin of dark glass with a bright rim. The one gives way to the other by the eye's height over the
+  // ball and the angle the ball itself is seen at, never by time
+  float eyeHigh = smoothstep(log(uCvAbove.x), log(uCvAbove.y), log(max(length(uCam - ST_CENTRE) / ST_RADIUS - 1.0, 1e-4)));
+  float lowView = 1.0 - eyeHigh * smoothstep(uCvView.x, uCvView.y, muFlat);
   float lowFoot = uCvSteep.y * mix(uCvFlankFar.x, 1.0, smoothstep(uCvFlankFar.y, uCvFlankFar.z, muFlat));
-  float body = (1.0 - exp(-e / uCvHeat.x)) * mix(uCvSteep.x, 1.0, smoothstep(0.0, lowFoot, cap));
+  float body = (1.0 - exp(-e / mix(uCvAbove.z, uCvHeat.x, lowView))) * mix(uCvSteep.x, 1.0, smoothstep(0.0, lowFoot, cap));
   float young = 1.0 - smoothstep(0.0, 0.45, own.x);
-  float top = uCvTone.y * (1.0 - uCvTone.z + 2.0 * uCvTone.z * own.y) * (1.0 + uCvHeat.z * young - uCvHeat.w * old);
+  float spreadNow = uCvTone.z * mix(uCvAboveMore.x, 1.0, lowView);
+  float top = uCvTone.y * mix(uCvAboveMore.z, 1.0, lowView) * (1.0 - spreadNow + 2.0 * spreadNow * own.y) * mix(mix(uCvAbove.w, 1.0, cap), 1.0, lowView) * (1.0 + uCvHeat.z * young - uCvHeat.w * old);
   top *= 1.0 + uCvTone.w * exp(-r2 / (uCvHeat.y * uCvHeat.y)) * (1.0 - 2.2 * old);
   // a grown cell is a skin over the hot gas: its middle is seen through the most of it and is the darker part, the
   // shoulder where the skin turns down to the lane is the brightest; a young cell is still all bright
-  top *= 1.0 - uCvGlass.x * smoothstep(0.1, uCvGlass.w, own.x) * (1.0 - smoothstep(uCvGlass.y, uCvGlass.z, way));
+  top *= 1.0 - uCvGlass.x * mix(uCvView.z, 1.0, lowView) * smoothstep(0.1, uCvGlass.w, own.x) * (1.0 - smoothstep(uCvGlass.y, uCvGlass.z, way));
   top *= 1.0 + uCvGrain.x * 2.0 * (petal.x - 0.4) * fine;
   // the inside of a cell is no even light: broad areas of it are hotter, others cooler, and the flow carries them
   // (the heat of the upwelling: the gas is hottest where it rises, in the inside of the cell, and cools on its way
   // out; the line where it has cooled is no ring, the flow carries tongues of the hot gas outward, and the light
   // falls off into the lane beyond it)
   float heat = 1.0 - smoothstep(uCvPatch.y, uCvPatch.z, uCvFlankFar.w * way + uCvPatch.x * (2.0 * cvPatch(rel, own.y, t) - 1.0));
-  top *= mix(1.0, mix(uCvThreadIn.z, 1.0, heat), fine);
+  // (a few hot glints in a dark inside: where the gas is hottest the light is uCvThreadIn.w times the cell's own)
+  top *= mix(1.0, mix(uCvThreadIn.z, mix(uCvAboveMore.y, uCvThreadIn.w, lowView), heat), fine);
   // the threads are seen by the dark between them: little on the top, deep on the side where the plasma runs down
   // (a thread is drawn only where a pixel is narrower than it: farther off the locks merge into their mean)
   float threads = 1.0 - smoothstep(uCvGloss.y, uCvGloss.z, footC);
@@ -527,7 +540,7 @@ void main() {
   // the gloss of the bulbs: a sheen where the surface lies between the eye and the far light
   vec3 lightDir = normalize(ST_RIGHT * uCvSheen.x + ST_FWD * uCvSheen.y - ST_DOWN * uCvSheen.z);
   float sheen = pow(max(dot(normal, normalize(toEye + lightDir)), 0.0), uCvGloss.x);
-  lum += (uCvRim.x * rim + uCvShade.w * body * sheen * (1.0 - spot.x)) * fine;
+  lum += (uCvRim.x * mix(uCvView.w, 1.0, lowView) * rim + uCvShade.w * body * sheen * (1.0 - spot.x)) * fine;
 
   // the skin of a bulb glows: where it is seen along itself (the far shoulder of every bulb, and all of the far
   // ground) the way through it is long and it is brighter; seen straight on it is the thinnest
@@ -664,13 +677,17 @@ export class Surface {
         uCvWarpMore: { value: new THREE.Vector4(c.warp.fine[0]!, c.warp.fine[1]!, c.warp.fine[2]!, c.sizes) },
         uCvGap: { value: new THREE.Vector4(c.gap.width, c.gap.scale, c.gap.vary, c.lumps.crease) },
         uCvPetalMore: { value: new THREE.Vector4(c.lumps.scale[1]!, c.lumps.turn[1]!, c.lumps.speed[1]!, c.dome.dimple) },
-        uCvThreadIn: { value: new THREE.Vector4(l.threadIn[0]!, l.threadIn[1]!, l.patch.low, 0) },
+        uCvThreadIn: { value: new THREE.Vector4(l.threadIn[0]!, l.threadIn[1]!, l.patch.low, l.patch.hot) },
         uCvCurl: { value: new THREE.Vector4(c.thread.curl[0]!, c.thread.curl[1]!, c.thread.curl[2]!, c.thread.locks) },
         uCvPoints: { value: new THREE.Vector4(l.points.amount, l.points.within, l.points.few, l.points.scale) },
         uCvTight: { value: new THREE.Vector4(c.tight.from, c.tight.power, c.tight.knee, c.thread.thin) },
         uCvFarMore: { value: new THREE.Vector4(l.far.mottle, l.far.wave, l.far.band[0]!, l.far.band[1]!) },
         uCvPatch: { value: new THREE.Vector4(l.patch.amount, l.patch.band[0]!, l.patch.band[1]!, l.patch.scale) },
         uCvFlankFar: { value: new THREE.Vector4(l.flankFar[0]!, l.flankFar[1]!, l.flankFar[2]!, l.patch.edge) },
+        uCvView: { value: new THREE.Vector4(l.view.band[0]!, l.view.band[1]!, l.view.glass, l.view.rim) },
+        uCvAbove: { value: new THREE.Vector4(l.view.heights[0]!, l.view.heights[1]!, l.view.lane, l.view.cap) },
+        uCvAboveMore: { value: new THREE.Vector4(l.view.spread, l.view.hot, l.view.gain, s.fibres.sway) },
+        uCvSwallow: { value: new THREE.Vector4(c.swallow[0]!, c.swallow[1]!, 0, 0) },
         uCvLimbTint: { value: new THREE.Vector4(l.limbTint[0]!, l.limbTint[1]!, l.limbTint[2]!, l.limbTint[3]!) },
         uCvSkin: { value: new THREE.Vector4(l.skin[0]!, l.skin[1]!, l.knee[0]!, l.knee[1]!) },
         uCvGlass: { value: new THREE.Vector4(l.glass.amount, l.glass.from, l.glass.to, l.glass.grown) },

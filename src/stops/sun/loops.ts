@@ -683,6 +683,22 @@ export class Loops {
     return [lifted, after > 0 ? gone : 0, t > 0 ? (t / e.flash.peak) * Math.exp(1 - t / e.flash.peak) * (1 - Math.exp(-t * t / (e.flash.ease * e.flash.ease))) * gone : 0]
   }
 
+  /**
+   * The flash of the eruption as the ground under it takes it. The same light as the flare's own flash, but it comes
+   * up over arcade.flash.ground seconds: the flare's flash rises inside one film frame, and on the wide ground that
+   * was a step of the whole picture from one frame to the next.
+   */
+  flashGround(since: number, open: number): number {
+    const e = this.knots?.erupt
+    const g = this.knots?.surge
+    if (!e || !g || open <= 0 || since >= g.end) return 0
+    const x = Math.min(Math.max((since - g.end + g.settle) / g.settle, 0), 1)
+    const gone = open * (1 - x * x * (3 - 2 * x))
+    const t = since - e.flash.at
+    const ease = arcade.flash.ground
+    return t > 0 ? arcade.flash.gain * (t / e.flash.peak) * Math.exp(1 - t / e.flash.peak) * (1 - Math.exp((-t * t) / (ease * ease))) * gone : 0
+  }
+
   /** The swing of the ringing arcade at this time, as the two parts of one wave (shares of the distance between the feet). */
   ring(since: number): [number, number] {
     const r = arcade.ring
