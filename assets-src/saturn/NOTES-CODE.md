@@ -3336,3 +3336,78 @@ is in the picture at 3 to 12 px, and the same crispness for the far ring across 
   with the far end at 1.4, so the pose weight stays 0 through the rise) to measure what the returning pose
   weight puts into the picture, then job W on c8ca94e as planned. The scratch tree holds a copy of the head;
   nothing of the test is in the repo.
+
+### 06:55 to 07:10 UTC: the dive's pictures on 589fd9a, the pose weight closed, main bae3d4d
+
+- DIVE PICTURES on 589fd9a (/tmp/v/r36/saturn-dive.md, done 07:06): "VERDICT: red. 1 number over the limit or
+  not measured." "RED the pattern of the picture changes in place by 0.56 from frame 3580 to 8 film frames
+  later, limit 0.45 (20 frames over it, first 3560)". Largest level step 0.02 at 3562 + 1/2 (limit 1.3),
+  largest pop 1.09 at 3563 (limit 1.2). Change in place 24.0 from 3594 at 1804, 680, shown, not judged.
+  The 20 capture frames over the limit:
+  - 3560 to 3567 + 1/2 (16 frames, 0.454 to 0.532) at 1120 to 1136, 232 to 260: the top limb at the pole. The
+    pose weight is 1 until 3565 (posew.ts), so nothing of the hold's look changes there; the film's star cloud
+    slides in behind the limb while the hold's sky leaves by distance. Earlier measure with my copy of the
+    judge's functions: with the flow of the body alone the pattern reads p99 0.201 against 0.529.
+  - 3580, 3580 + 1/2, 3581 (0.556, 0.498, 0.523) at 1700 to 1724, 1004 to 1060: the tip of the globe's shadow
+    on the ring at the bottom right corner. Cause found in the kept look: the border of the shadow goes from
+    penumbra [0.978, 0.994, 0.006] to penumbraAway [0.95, 1.02, 0.03] with 1 less the pose weight
+    (kept/set.ts soft), and the pose weight falls 0.648 to 0.245 from 3580 to 3588 (distance to the hero pose
+    1.000 to 1.277): the border widens in place, most at the tip (the third number grows along the shadow).
+    A blend by distance, yet a change in place. Cure to try after NAMED: one border for the kept set through
+    the whole dive (the model takes the picture at 3597 to 3603).
+  - 3587 + 1/2 (0.459) at 1268, 828: not looked at yet (the shadow's border on the ring near the globe; the
+    comb along the border that I saw at 3587 to 3590 lies there).
+- THE RETURNING POSE WEIGHT IS CLOSED, MEASURED: frames 3854 and 3859 at draft in the scratch tree are equal
+  to the byte with heroRange [0.6, 1.6] (weight 0.032, 0.065) and with [0.6, 1.4] (weight 0): /tmp/v/r38/a
+  and b, stop hashes 47699bc6 and e9e49ffd. The kept set is not drawn after the dive (set.ts: alone 'model'
+  from the end of the hold's share on), so its pose weight shows nowhere in the rise. Off the list.
+- So the rise's pattern red (3858 + 1/2 to 3863 + 1/2 at 1240 to 1331, 1008 to 1079 by my copy of the judge's
+  map, /tmp/v/r36/pat3859.png) is the model's own: the star cloud shows through the inner ring where the
+  globe's shadow lies on it, and the stars slide against the ring. Cure to try after NAMED: how much of the
+  sky the model lets through the shaded inner ring.
+- DARK SINGLE PIXELS just inside the top limb at the pole, draft, 3570 to 3577 (/tmp/v/r36/dive_limb.png and
+  limb_px.png): 3 to 7 pixels a frame, 25 to 40 percent under their neighbours, other pixels in each frame.
+  The kept set draws there; my change to kept/globe.ts is only the drift taken out. 3573 and 3576 are in the
+  sample of job W for the head and for main, to see if main has them.
+- MAIN is bae3d4d at 06:58 (kit/PROGRESS.md only, status 218 and d202, d203). d202: "a stop's round starts on
+  a named commit whose take check is clean and whose smooth report is green, a third named commit goes into
+  its round as it stands". d203: Venus named with its pictures red (pattern 1.27 and 1.37). Four engine
+  pieces were named 06:40 to 06:49 (Relief.presence off by default; the sky's pixel factor from
+  src/core/frame.ts; two more) and wait for a take: main may move again before I name. I merge the newest
+  main right before the NAMED mail and say which proof ran on which tree.
+- JOB W runs on c8ca94e since 07:07:43 (/tmp/v/r37.log). Looks pushed 07:09.
+
+### 07:10 to 07:17 UTC: the two judged finals against the Builder's PNGs, path and parity on c8ca94e
+
+- MAIN is 09d64d7 at 07:10 (b0b8788 plus kit/PROGRESS.md only). My pushed head 3af4dfc is on c8ca94e (merge of
+  b0b8788); take check 0 files outside my three folders; net size -0.013 MB.
+- FINAL 3465 on c8ca94e: sha256 f4b3a39598b5e761fa1c45c9c3cf19836a621e6aa70a95453c64bbb654a2a963 against the
+  Builder's 21f107a6 (MAIL 546). Changed on purpose. 32.2 percent of the pixels differ, 10.4 percent by more
+  than 1 level, 0.08 percent by more than 4, one pixel by more than 16 (1880, 265). Mean difference 0.325 of
+  255, blurred 0.033. Lit body and rings (33 percent of the frame): 0.61 percent of the pixels, all by 1
+  level, mean level equal 163.331 (the map rigid on the globe, ruling (a)). The rest is the sky: the hold's
+  sky picture without the baked grain (mail 448), sky mean 14.000 against 14.001.
+  Pair /tmp/v/r37/pair_3465.jpg.
+- FINAL 3720 on c8ca94e: sha256 408729eb246dbe02ee7ee02ee0a52d004671faad01f005fdea018cac09bed0d5 against the
+  Builder's 6c4e4e10. Changed on purpose in two places. 66.5 percent of the pixels differ, 12.3 percent by
+  more than 4 levels, 0.8 percent by more than 16; mean 1.306, blurred 0.392.
+  - sky upper left (0 to 700, 0 to 300): mean 11.36 to 12.26, blurred green +0.96, blue +1.52, 14.3 percent
+    over 4 levels: the sky look sky_builder asked for (the warm star cloud gives way to an even field).
+  - globe (1100 to 1800, 200 to 700): mean level equal 139.54, blurred 0.00, 42.5 percent of the pixels over
+    4 levels: detail displaced, main's map still drifts by latitude, mine is rigid on the globe (ruling (a)).
+  - near ring plane (0 to 1920, 760 to 1080): mean difference 0.56, 0.2 percent over 4, level equal 136.10.
+  Pair /tmp/v/r37/pair_3720.jpg, difference times 8 /tmp/v/r37/diff_3720_x8.png. The camera at 3720 is
+  main's to the bit (samecam.ts).
+- PATH on c8ca94e (/tmp/v/r37/smooth_path.md): "VERDICT: green. No number is over its limit." Dive: "Lowest
+  1.00 at frame 3634, limit 0.87; inside the dive itself 1.00 at frame 3630. Largest step from one capture
+  frame to the next 0.02 at frame 3620, shown." Rise: "Lowest 1.00 at frame 3794, limit 0.87; inside the rise
+  itself 1.07 at frame 3810 + 1/2. Largest step from one capture frame to the next 0.10 at frame 3811, shown."
+- PARITY on c8ca94e (/tmp/v/r37/smooth_parity.md, done 07:15): "VERDICT: green. No number is over its limit."
+  Largest mean 2.557 at 3720 (limit 12), coarse 1.044 at 3720 (limit 3.2), block -4.631 at 3720 (limit 12),
+  level -0.960 at 3720 (limit 2.2). The nine rows are the same numbers as on 589fd9a. Main's 4K reds (MAIL
+  538: coarse 3.226 at 3563, block -22.068 at 3720) read 0.694 and -4.631 here.
+- THE DIVE'S TWO LATE PATTERN PLACES by my copy of the judge's map (/tmp/v/r36/pat_dive_two.png):
+  - 3580: a strip along the border of the globe's shadow on the far ring, 1680 to 1779, 936 to 1079 (6112
+    pixels over 0.45, largest 0.686 at 1724, 1060): the border of the shadow widening with the pose weight.
+  - 3587 + 1/2: a half disc on the dark globe just above the near edge of the ring, 1224 to 1331, 780 to 839
+    (4368 pixels, largest 0.714 at 1268, 828). Not explained yet.
