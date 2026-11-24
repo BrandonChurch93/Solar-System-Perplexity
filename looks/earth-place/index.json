@@ -1,9 +1,25 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T14:11:30.945Z",
- "head": "1f3e0bd543622d99bb2ae9aa343a75fd84c16d76",
- "note": "third commit 1f3e0bd5 on main 2bc36ce6: rise middle looked at, limb changes at 2101 enlarged, travel frames 2175 on change with main's carry, parity running",
+ "pushed": "2026-11-24T14:39:40.165Z",
+ "head": "dc683f9cb87eeac376113d0922680e8aa45ae30c",
+ "note": "rise ends on the travel's speed (carry none, path green); Y ruled as (2), bank at the hold: work starts",
  "looks": [
+  {
+   "time": "2026-11-24T14:39:39.107Z",
+   "file": "20261124143939107-note-dive-far.jpg",
+   "source": "../../../../tmp/gl/s10/dive-far.jpg",
+   "kind": "note",
+   "label": "far zone as named (Z), dive 1876 to 1910, third tree: the ground that Y is to make one",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T14:39:37.802Z",
+   "file": "20261124143937802-note-rise-end.jpg",
+   "source": "../../../../tmp/gl/s10/rise-end.jpg",
+   "kind": "note",
+   "label": "rise end 2154 to 2176, 2180, 2190 with the turn share landing on the travel's speed (draft)",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T14:11:29.866Z",
    "file": "20261124141129866-note-T-rise-zoom.jpg",
@@ -82,22 +98,6 @@
    "source": "../../../../tmp/gl/s9/rise-look-b.jpg",
    "kind": "note",
    "label": "third tree, rise 2163 to 2174",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T13:09:48.111Z",
-   "file": "20261124130948111-note-rise-look-a.jpg",
-   "source": "../../../../tmp/gl/s9/rise-look-a.jpg",
-   "kind": "note",
-   "label": "third tree, rise 2148 to 2163, look by nearness spread",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T13:09:47.444Z",
-   "file": "20261124130947444-note-T-dive-n3.jpg",
-   "source": "../../../../tmp/gl/s9/T-dive-n3.jpg",
-   "kind": "note",
-   "label": "third tree, dive T 1911 to 1926, rate 2 capture, picture false, rim 0.65",
    "stop": "earth"
   }
  ]
