@@ -202,7 +202,7 @@ export const createModel: SetFactory = async (ctx) => {
       ;(ru.uSunL!.value as THREE.Vector3).copy(sunL)
       ;(ru.uShade!.value as THREE.Vector4).z = THREE.MathUtils.lerp(sheetJson.gain[0]!, sheetJson.gain[1]!, close) * THREE.MathUtils.lerp(tune.rings[0]!, tune.rings[1]!, close)
       ru.uSat!.value = THREE.MathUtils.lerp(tune.ringSaturation[0]!, tune.ringSaturation[1]!, close)
-      field.set(close)
+      field.set(close, foot)
       field.far(farW, Math.max(farW, 1 - closeGlobe))
       sheet.set(close)
       sheet.far(shadowL.copy(sunL).applyQuaternion(shadowTurn).normalize(), 1 - poseW.value, 1, spinRate, elapsed)

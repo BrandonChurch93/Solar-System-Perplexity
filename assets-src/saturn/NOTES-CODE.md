@@ -2720,3 +2720,67 @@ is in the picture at 3 to 12 px, and the same crispness for the far ring across 
   stars move otherwise) and in lines along the ringlets. My own pair 3895 to 3896 (whole frame, draft): left
   1.869, carried 1.276, motion 14.1 px.
 - The tool still floors a fractional frame number (3895.5 gives 3895's bytes), so half frames need seq.
+
+## 03:32 to 03:50 VM: main 6884e80 merged (7825f77), note 501, why 3720 loses fine detail, the pop at 3815
+
+- Job M: the pair 3895, 3896 at final: left 1.969, carried 1.323, motion 13.92 px (draft 1.869, 1.276,
+  14.10): the same at both tiers, so the end rows are not a matter of the draft tier.
+- Drafts 3813 to 3818, what is left of each pair after the motion is taken out (my tool, a quarter size):
+  3813 3.356, 3814 3.424, 3815 3.766, 3816 3.586, 3817 3.269, motion 4.87, 5.25, 6.36, 7.81, 8.77 px. By
+  blocks (16 by 9) it sits in the near sheet at lower left (7 to 12 levels) and patchy on the globe's streaks
+  at upper right (1 to 4.4). Full size crops of the lower left (/tmp/v/r29/pop3815_crops.png): nothing comes
+  in or snaps, the ringlets soften from 3814 to 3817 as the lens picks up speed (the slide of the lens during
+  one take filters them, ice.json sweep 1). The lens: flat move a frame 6.2e-3 radii at 3809, 3.0e-3 at 3814,
+  3.7e-3 at 3816, 9.1e-3 at 3820; the height turns from falling 1.2e-3 a frame to rising 3.7e-3 at 3816.
+  So the pop at 3815 + 1/2 is the corner of my own pace at the start of the rise, the same place as the red
+  speed line below (3814 to 3816). Its cure is the pace, not a picture.
+- Main moved to 6884e80 (the globe's options d180, the corners of the pace and the law tool d181, the judge
+  of the smooth report renewed d182, the retreat's turn d183). Merged: 7825f77, no conflict. On the merge: tsc
+  exit 0; vitest 41 files, 370 tests pass; handover --only path: "saturn.dive every frame: pass",
+  "saturn.rise every frame: pass". smooth --only path with the renewed judge (the speed is now a mean over 8
+  ground points round the place, on the ring plane where the globe does not hide it, as mail 466 said it would
+  be corrected): "smooth saturn: red, 11 over the limit or not measured":
+  dive, whole frames: speed changes by 0.089 of the mean (over 6 points) in 5 steps from 3618 to 3622, most at
+  3621, limit 0.08; climbs again by 0.045 after its largest value (3589), up to 3629, limit 0.03. Rate 2: 0.089
+  in 10 steps from 3617 + 1/2 to 3622; climbs again by 0.051 up to 3629 + 1/2.
+  rise, whole frames: 0.085 in 2 steps from 3815 to 3816; 0.099 in 14 steps from 3870 to 3883, most at 3877;
+  falls by 0.090 before its largest value (3864), lowest at 3834. Rate 2: 0.086 in 5 steps from 3814 to 3816;
+  0.085 in 2 steps at 3862 to 3862 + 1/2; 0.100 in 29 steps from 3869 + 1/2 to 3883 + 1/2; falls by 0.100,
+  lowest at 3836 + 1/2. Rate and turn are inside their limits in both moves. On b2ebc62 with the old judge the
+  same path was green. Mail 466 held the path back until the judge was corrected; it now is, so these lines
+  are mine: the pace of my own path (plan.ts Pace, skim.json) at four corners.
+- NOTE 501 (03:38 UTC, to every stop builder): the same film frame at uhd is not the same picture as at 16 by
+  9 because fades read texels a pixel of the format. Ruling: the measure is an angle (a 1080th of the frame
+  height); one factor, buffer height over 1080, into every density that a fade reads and into nothing that
+  only picks a mip. The same for every number counted in pixels that can be seen. Proof by the builder: (a)
+  hashes of the own draft frames at 16 by 9 equal before and after; (b) npm run smooth -- --stop ID --only
+  parity (seven frames; limits mean 12, coarse mean 3.2, one block 12, frame level 2.2). saturn_coder: check
+  the place code for the same kind of term and say what was found.
+  What I found: 081c441 already carries the factor (ice.ts pixelScale, format height over grains.json frame)
+  through the kept set and the model: the weights of the polar and inner ring maps (the cause of mail 483
+  B.4), sparkle, glint, grain cells, edge widths of globe and moon, fine detail and night blur of the globe,
+  sand layers, grain limits. One term was left: ringfine.json near.wide (a ringlet from 2.5 to 7.5 footprints
+  wide on screen is drawn stronger, from 12 to 36 it loses hue and its bright side), counted in pixels of the
+  format. Cure: the pixel part of that footprint is the pixel of the look's frame (field.ts uRfFoot,
+  ringLookPixel; sheet.ts and grains.ts pass it as fpl); the part from the slide of the lens during a take is
+  the same in every format and stays. Checked: 3720 and 3829 at 1080 draft byte equal before and after; 3829
+  at uhd changes in 120792 pixels, largest 11; parity of 3829 (mean, level, coarse, block) 2.706 -0.823 1.093
+  -7.846 before, 2.700 -0.819 1.089 -7.846 after; 3720 at uhd does not change at all (see the next point).
+  Terms that stay by pixel because they are the band limit of the format (an octave is drawn where it is
+  wider than a pixel and counts by its mean where it is not): the ladder's seen, the edge and line filters
+  (area true), the sand's size pick, the globe's band octaves (skim.json globeFine.pixels).
+  Left in the parity panels after that: one arc of blocks where the uhd picture is darker by 2 to 6 levels
+  (the worst block is 7,4 at 3720 and at 3829), along the bright limb and the ring edge: reads as the glow of
+  the engine's bloom (a fixed count of halvings, so half as wide at uhd). Not found in my folder.
+- Why 3720 loses its fine detail (G17, mail 483 A), measured on the path (out/scratch/slide.ts): in the skim
+  the lens flies along its own view, and the view is within 22 degrees of the radius: at 3720 it moves 9.2e-3
+  radii a frame along the plane, 8.5e-3 of that straight across the ringlets (foot radius 3.55 at 3630, 2.59
+  at 3720, 1.98 at 3809), and sinks 1.7e-3. With the film's shutter of half a frame every point of the sheet
+  slides 4.3e-3 radii across the ringlets while the shutter is open, in every take set. At the bottom edge a
+  pixel is about 1e-3 radii, mid frame 7e-3: so every ringlet from 1.3 to about 6 px wide in the lower third
+  is smeared by the shutter (4.6 px of blur at the bottom edge, 0.6 px mid frame). That is why the uhd draft
+  of 3720 did not change with near.wide: no octave of the ladder under 0.006 radii is drawn at all there (the
+  draft filters with the whole slide, the final tier adds its 16 takes to the same smear). The approved close
+  is a still: hairlines of 2 to 6 px all over the lower left. G17's band is 3 to 12 px, so the near tiles
+  lose by the shutter first, whatever the model holds. Not yet measured: the same final still with the shutter
+  closed (the engine has no switch for a still; it would need config.shutterFraction in a scratch tree).

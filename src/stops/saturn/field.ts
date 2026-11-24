@@ -32,6 +32,7 @@ uniform vec4 uRfGrooveFit;
 uniform vec4 uRfWide;
 uniform vec4 uRfWideFit;
 uniform float uRfWideDark;
+uniform float uRfFoot;
 uniform vec4 uRfBunch;
 uniform vec4 uRfLine;
 uniform vec4 uRfRough[2];
@@ -151,8 +152,10 @@ vec3 ringOctave(float x, uint seed, float f, float lanes, out vec2 hue, out floa
 // The finer structure: a ladder of octaves, each seen only where it is wider than the pixel. side is the
 // cosine between the radius and the Sun's direction on the plane: slopes that face the Sun are brighter.
 // thin is ringThin(r): the dense and the thin rings have their own strengths per octave. tint is the factor on
-// the colour of the ice that the ringlets at this radius carry.
-void ringFine(float r, float fp, float amp, float thin, float side, inout float tau, inout float lum, out vec3 tint) {
+// the colour of the ice that the ringlets at this radius carry. fpl is the footprint that the widths on screen
+// of the near look are counted in (ringLookPixel): the pixel of the frame the look was set on, so that a
+// frame of any size draws the same ringlets stronger.
+void ringFine(float r, float fp, float fpl, float amp, float thin, float side, inout float tau, inout float lum, out vec3 tint) {
   float wave = uRfFine.x;
   float kl = 1.0;
   float kt = 1.0;
@@ -171,7 +174,7 @@ void ringFine(float r, float fp, float amp, float thin, float side, inout float 
       // near the sheet a ringlet that is many footprints wide on screen is drawn stronger, with a crisper edge
       // and less hue of its own (uRfWide, nothing of it in the hold): the picture then has ringlets at every
       // width on screen, as a sheet with structure at every scale has, and no broad bands of pastel colour
-      float wide = float(o) <= uRfWaveFit.w ? 0.0 : smoothstep(uRfWide.x, uRfWide.y, wave / fp);
+      float wide = float(o) <= uRfWaveFit.w ? 0.0 : smoothstep(uRfWide.x, uRfWide.y, wave / fpl);
       vec3 q = ringOctave(r / wave + float(o) * uRfAmp.w, uint(o) + 1u, max(uRfMore[o].x - (uRfMore[o].x - uRfWideFit.x) * (wide * uRfWideFit.y), uRfGrooveFit.w * fp / wave), lanes, h, b);
       float held = smoothstep(uRfBunch.x, uRfBunch.y, bunch);
       vec4 span = float(o) < uRfLine.w ? uRfRough[0] : uRfRough[1];
@@ -184,7 +187,7 @@ void ringFine(float r, float fp, float amp, float thin, float side, inout float 
       float et = e * uRfAmp.y;
       float l = g * mix(a.z * uRfBunch.z, uRfMore[o].y * uRfBunch.w, thin);
       float mean = mix(1.0 / 6.0, uRfAmp.x, lanes);
-      float wider = float(o) <= uRfWaveFit.w ? 0.0 : smoothstep(uRfWideFit.z, uRfWideFit.w, wave / fp);
+      float wider = float(o) <= uRfWaveFit.w ? 0.0 : smoothstep(uRfWideFit.z, uRfWideFit.w, wave / fpl);
       kl *= exp(e * q.x + g * a.y * side * q.y + l * q.z * (q.z > 0.0 ? uRfGrooveFit.y : uRfGrooveFit.x) - uRfWideDark * wider * g * (0.5 + 0.5 * q.x)) / ((1.0 + e * e * (mean + e * e / 120.0)) * (1.0 + l * uRfGrooveFit.z));
       kt *= exp(et * q.x + l * q.z * uRfLine.x) / (1.0 + et * et * (mean + et * et / 120.0));
       // a ringlet has a hue of its own, and a brighter one is warmer
@@ -212,6 +215,11 @@ void ringFine(float r, float fp, float amp, float thin, float side, inout float 
 // the footprint the ladder is filtered with: the pixel's, however many samples a frame takes, down to a floor
 float ringFootprint(float pixel, float grad) {
   return pixel * max(grad, uRfFine.z);
+}
+// the pixel of the drawn frame as a pixel of the frame the look was set on (grains.json frame): what a width
+// on screen that the look names in pixels is counted in, an angle and not a pixel of the format
+float ringLookPixel(float pixel) {
+  return pixel * uRfFoot;
 }
 float ringSat(float x) {
   return x < 1e-3 ? x : 1.0 - exp(-x);
@@ -242,7 +250,7 @@ function meanSmoothstep(from: number): number {
   return sum / n
 }
 
-export interface RingField { uniforms: Record<string, THREE.IUniform>; texture: THREE.DataTexture; finest: number; set(near: number): void; far(weight: number, onGlobe: number): void }
+export interface RingField { uniforms: Record<string, THREE.IUniform>; texture: THREE.DataTexture; finest: number; set(near: number, foot?: number): void; far(weight: number, onGlobe: number): void }
 
 // profile: the radial profile of the kept ring picture (rings.bin), key: which of its sets
 export function ringField(ctx: SetContext, profile: THREE.DataTexture, key: 'full' | 'web'): RingField {
@@ -279,8 +287,13 @@ export function ringField(ctx: SetContext, profile: THREE.DataTexture, key: 'ful
   const wideDark = { value: 0 }
   const wideFit = new THREE.Vector4(near.wide.edge, 0, near.wide.hueFrom, near.wide.hueTo)
   const mix = THREE.MathUtils.lerp
-  // the strengths of the ladder for a camera this near the sheet (0 in the hold, 1 in the skim)
-  const set = (t: number): void => {
+  // the strengths of the ladder for a camera this near the sheet (0 in the hold, 1 in the skim). foot: the
+  // pixels of the drawn frame in one pixel of the frame the look was set on (ice.ts pixelScale), so that the
+  // widths on screen from which a ringlet is drawn stronger (near.wide, in footprints) are angles, the same
+  // in a frame of any size
+  const footU = { value: 1 }
+  const set = (t: number, foot = 1): void => {
+    footU.value = foot
     for (const o of octaves) {
       oct[o]!.set(mix(fine.level.dense[o]!, near.level.dense[o]!, t), fine.slope[o]!, mix(groove.strength[o]!, near.groove.strength[o]!, t), mix(fine.level.thin[o]!, near.level.thin[o]!, t))
       tint[o]!.set(mix(fine.hue.dense.warm[o]!, near.hue.dense.warm[o]!, t), mix(fine.hue.dense.pink[o]!, near.hue.dense.pink[o]!, t), mix(fine.hue.thin.warm[o]!, near.hue.thin.warm[o]!, t), mix(fine.hue.thin.pink[o]!, near.hue.thin.pink[o]!, t))
@@ -331,6 +344,7 @@ export function ringField(ctx: SetContext, profile: THREE.DataTexture, key: 'ful
       uRfWide: { value: wide },
       uRfWideFit: { value: wideFit },
       uRfWideDark: wideDark,
+      uRfFoot: footU,
       uRfBunch: { value: new THREE.Vector4(fine.bunch[0], fine.bunch[1], groove.dense, groove.thin) },
       uRfLine: { value: new THREE.Vector4(groove.open, fine.jitter[0], fine.jitter[1], fine.even.from) },
       uRfRough: { value: rough },

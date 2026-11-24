@@ -91,13 +91,14 @@ void main() {
   vec2 fd = ray.xz / max(length(ray.xz), 1e-6);
   float pixel = dist / uGrainView.x * length(vec2(dot(er, fd) / mu, er.x * fd.y - er.y * fd.x));
   float fp = max(ringFootprint(pixel, uGrad), uGrainFoot.x * aGrain.x);
+  float fpl = max(ringFootprint(ringLookPixel(pixel), uGrad), uGrainFoot.x * aGrain.x);
   float tau;
   float lum;
   float thin;
   vec4 ink;
   vec3 tint;
   vec2 zone;
-  sheetAt(q, r, fp, tau, lum, thin, ink, tint, zone);
+  sheetAt(q, r, fp, fpl, tau, lum, thin, ink, tint, zone);
   float spokes = iceSpokes(r, atan(q.y, q.x) / 6.2831853);
   lum *= exp(spokes * uIceOrbit.z);
   lum *= pow(clamp(zone.y / uFlatten.x, 1.0 / uFlatten.w, uFlatten.w), uFlatten.y * (1.0 - thin));

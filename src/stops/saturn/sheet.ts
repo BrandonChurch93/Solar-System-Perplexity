@@ -93,7 +93,7 @@ export const SHEET_AT_GLSL = /* glsl */ `
 uniform vec3 uSunL;
 uniform vec4 uFlatten;
 uniform vec3 uEven;
-void sheetAt(vec2 q, float r, float fp, out float tau, out float lum, out float thin, out vec4 ink, out vec3 tint, out vec2 wide) {
+void sheetAt(vec2 q, float r, float fp, float fpl, out float tau, out float lum, out float thin, out vec4 ink, out vec3 tint, out vec2 wide) {
   vec2 knots = ringKnots(r, fp);
   wide = ringKnots(r, uFlatten.z);
   float rc = sheetInkRadius(r);
@@ -109,7 +109,7 @@ void sheetAt(vec2 q, float r, float fp, out float tau, out float lum, out float 
   knots += vec2(more, sheetOuterLum(more));
   tau = knots.x;
   lum = knots.y;
-  ringFine(r, fp, ink.a, thin, dot(q / r, normalize(uSunL.xz)), tau, lum, tint);
+  ringFine(r, fp, fpl, ink.a, thin, dot(q / r, normalize(uSunL.xz)), tau, lum, tint);
 }`
 
 // The far look of the sheet: the sheet as the set of the kept build draws it once its picture of the hold has
@@ -246,6 +246,7 @@ void main() {
   // during one take the pixel's point slides over the ice: the ringlets are filtered by the pixel and by that
   vec2 sweep = iceSweep(q, r, ray);
   float fp = ringFootprint(length(vec2(pixel, sweep.x * uIceFit.x)), uGrad);
+  float fpl = ringFootprint(length(vec2(ringLookPixel(pixel), sweep.x * uIceFit.x)), uGrad);
   vec3 cs = vec3(uCamL.x, uCamL.y / uPolar, uCamL.z);
   vec3 ds = vec3(ray.x, ray.y / uPolar, ray.z);
   bool front = -dot(cs, ds) > dot(ds, ds);
@@ -281,7 +282,7 @@ void main() {
     vec4 ink;
     vec3 tint;
     vec2 wide;
-    sheetAt(q, r, fp, tau, lum, thin, ink, tint, wide);
+    sheetAt(q, r, fp, fpl, tau, lum, thin, ink, tint, wide);
     float turn = atan(q.y, q.x) / 6.2831853;
     // the spokes show only near the sheet
     float spokes = 0.0;
