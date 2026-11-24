@@ -1,9 +1,41 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T02:30:12.484Z",
- "head": "8eeab2c9122f0dd376e609fbc058b5f6dd25231f",
- "note": "c61 uncommitted cells and spot; sd1 seams at 213 to 218 and their cure; sd1 236 to 242",
+ "pushed": "2026-11-24T02:52:13.197Z",
+ "head": "7b1a4e5f2ad150b781e681fc9633ce503ccd2346",
+ "note": "7b1a4e5f c72: cells as dark amber glass with bright rims, far ground gold, seam cure; from above still tiles with outlines",
  "looks": [
+  {
+   "time": "2026-11-24T02:52:12.631Z",
+   "file": "20261124025212631-note-c72-oneone-222.jpg",
+   "source": "out/work/sun/convect/c72-oneone-222.jpg",
+   "kind": "note",
+   "label": "7b1a4e5f one to one, draft: frame 222 at the spot and below it (dark tiles with drawn bright outlines, a fault)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T02:52:12.067Z",
+   "file": "20261124025212067-note-c72-oneone-60-215.jpg",
+   "source": "out/work/sun/convect/c72-oneone-60-215.jpg",
+   "kind": "note",
+   "label": "7b1a4e5f one to one, draft: frame 60 spot (left, zigzag left of the umbra still there), frame 215 spot (right, no seam)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T02:49:21.803Z",
+   "file": "20261124024921803-note-c72-spot-pair.jpg",
+   "source": "out/work/sun/convect/c72-spot-pair.jpg",
+   "kind": "note",
+   "label": "c72 commit 7b1a4e5f frame 60 spot, approved left, mine right, draft",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T02:49:21.237Z",
+   "file": "20261124024921237-note-c72-near-pair.jpg",
+   "source": "out/work/sun/convect/c72-near-pair.jpg",
+   "kind": "note",
+   "label": "c72 commit 7b1a4e5f frame 60 near, approved left, mine right, draft",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T02:30:11.861Z",
    "file": "20261124023011861-note-look-sd1-b236.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/look-c61-spot.jpg",
    "kind": "note",
    "label": "c61 frame 60 draft, spot one to one: approved left, mine right. Fibres finer (240 round) and uneven; still a comb, no bright heads, fibres do not curl",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T02:30:09.687Z",
-   "file": "20261124023009687-note-look-c61-near.jpg",
-   "source": "../../../../tmp/look-c61-near.jpg",
-   "kind": "note",
-   "label": "c61 frame 60 draft, near ground one to one: approved left, mine right. Uncommitted. Smaller cells (lattice 0.11), heat falls off into the lane, whites 95 and 99 at 0.784 and 0.836 (approved 0.783 0.876), blur 40 px 0.041 ground. Still wrong: stones with dark gaps, no glass, no bright rims, far ground orange",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T02:08:59.207Z",
-   "file": "20261124020859207-note-look-sd1-51.jpg",
-   "source": "../../../../tmp/look-sd1-51.jpg",
-   "kind": "note",
-   "label": "job sd1 (commit 8eeab2c9, the c43 state) frames 51 to 62 from the Builder's machines; frames 0 to 107 and 189 to 215 are in, 0 to 107 looked at small, no pop over 1.05 of its neighbours in 27 to 107",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T02:08:58.670Z",
-   "file": "20261124020858670-note-look-c54-whole.jpg",
-   "source": "../../../../tmp/look-c54-whole.jpg",
-   "kind": "note",
-   "label": "c54 frame 60 draft whole: approved left, mine right. G17 median 1.09 lower quarter 0.84, blur 40 px 0.041 ground 0.032 whole. Far ground still orange pebbles, not fine gold grain",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T02:08:58.060Z",
-   "file": "20261124020858060-note-look-c54-near.jpg",
-   "source": "../../../../tmp/look-c54-near.jpg",
-   "kind": "note",
-   "label": "c54 frame 60 draft, near ground one to one: approved left, mine right. Uncommitted. Pillows pressed together, heat falls off into the lane, thin lanes. Still wrong: reads as loaves, no glass, cells too large and alike, penumbra a comb",
    "stop": "sun"
   }
  ]
