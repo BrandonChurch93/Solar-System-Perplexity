@@ -1,9 +1,9 @@
 import { execFileSync } from 'node:child_process'
-import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { DIST, ROOT, WORK, args, ensureBuild, formatId, loadConfig, machineId, requireDisk } from './lib/common'
 import { openCapture, renderPng, type Session } from './lib/browser'
-import type { Hashes } from './lib/hashes'
+import { computeHashes, type Hashes } from './lib/hashes'
 import { json, padFrame } from './lib/render'
 import { FilmDirector } from '../src/director/film'
 import { handoverFrame, handoverOf } from '../src/director/handover'
@@ -11,8 +11,11 @@ import { setCapture, spanMid } from '../src/core/clock'
 import type { Pose } from '../src/core/types'
 import { plans } from '../src/director/plans'
 import { LANDING_FROM, MIN_POINTS, SEAM_OWN, SEAM_REACH, carriedCamera, curves, eyeCurves, landingCurves, ringPlane, sampleLanding, sampleLeave, sampleSeam, sampleWindow, sphereHit, type Kind, type Plane, type Ring } from './smooth/camera'
+import { IN_PLACE } from './lib/steps'
+import { placeReadings } from './smooth/place'
 import { missing, partOwn, popContext, sliceName, sliceNeed, type Span } from './smooth/slice'
-import { LANDING_FLOOR, LANDING_LATE, LANDING_SHOWN, changeNote, judgeCurve, judgeLanding, judgeLeave, judgeSeam, longestGap, parityFrames, peakRows, position, shown, table, type CurveResult, type Fault, type LandingResult, type LeaveResult, type Row, type SeamResult } from './smooth/path'
+import { MOVES, PIECES, buildFault, differ, gather, gatherFaults, pieceStem, runFacts, type Facts, type Given } from './smooth/whole'
+import { LANDING_FLOOR, LANDING_LATE, LANDING_SHOWN, changeNote, judgeCurve, judgeLanding, judgeLeave, judgeSeam, longestGap, minLeaveOf, parityFrames, peakRows, position, shown, table, type CurveResult, type Fault, type LandingResult, type LeaveResult, type Row, type SeamResult } from './smooth/path'
 
 // The measures of a smooth dive and rise (kit/PROGRESS.md, second review note of 2026-11-23, plan I). One stop.
 //   npm run smooth -- --stop ID [--kind dive|rise|landing] [--only path,pictures,place,parity,counts] [--rate N] [--calibrate] [--ring picture|ground]
@@ -28,7 +31,7 @@ import { LANDING_FLOOR, LANDING_LATE, LANDING_SHOWN, changeNote, judgeCurve, jud
 //           part along the surface view's own direction of motion are shown. At the seam from a rise into the travel that leaves the stop
 //           (smooth.reachFrames film frames to each side, at the capture rate): the lowest speed of the fastest point of the body's edge over
 //           the smaller of that speed at the two ends of the window; near 0 the picture comes to rest between the rise and the travel.
-//           Judged against smooth.path.minLeave once the config has it; shown until then.
+//           Judged against smooth.path.minLeave: a reading under it is red in the path part.
 // pictures  from draft frames, every frame of the dive and of the rise and smooth.reachFrames film frames into each neighbour (capture frames once
 //           the page knows a rate, whole film frames until then): the step of the frame's level against the line through its two neighbours,
 //           and the pop score: what is left of the difference between a frame and the next once the motion between them is taken out, over the
@@ -60,6 +63,14 @@ import { LANDING_FLOOR, LANDING_LATE, LANDING_SHOWN, changeNote, judgeCurve, jud
 //           <stop>-<kind>-pIofN.md, .json and its own panels. --kind dive|rise --only pictures --join [FOLDER] reads every such .json of the
 //           move in the folder (out/work/smooth by default), renders nothing and writes <stop>-<kind>.md and .json as the whole run does,
 //           judged by the limits the parts carry; it names the frames no part owns and exits 2 then.
+//           The whole report from several machines: --join [PATHS] with neither --kind nor --only reads every .json of the folders and files
+//           named (a comma list; out/work/smooth by default), takes each by what it holds (the slices of the pictures of both moves, and
+//           the path, the place, the parity and the counts from runs with --only or --part, the place also one file a move), opens no
+//           browser and writes <stop>.json and .md as the whole run does. It refuses files that are not one run or not this build (commit,
+//           engine hash, stop hash, rate, limits; --commit SHA names the commit of the parts when the join runs at another), names every
+//           part that is missing or there twice and writes nothing then (exit 2). The report says which machine wrote which part.
+//           --part path,place,parity,counts (one or more) is --only with a file name of its own, <stop>-part-<names>.json and .md, so that
+//           two runs in one folder do not write over each other; --part place --kind dive|rise writes <stop>-<kind>-part-place.
 // Everything is written to out/work/smooth/<stop>.json and .md (<stop>-<kind> when --kind is given). Exit 1 when a number is over its limit in config smooth, or when a part that was
 // asked for could not be measured. --calibrate writes every number and exits 0: the run that sets the limits.
 
@@ -72,7 +83,12 @@ if (!stop || !cfg.stopIds.includes(stop)) {
 }
 const PARTS = ['path', 'pictures', 'place', 'parity', 'counts']
 const landing = a.kind === 'landing'
-const only = a.only ? a.only.split(',') : landing ? ['path'] : PARTS
+const piece = a.part !== undefined && a.part.split(',').every((p) => PIECES.includes(p)) ? PIECES.filter((p) => a.part!.split(',').includes(p)) : null
+if (piece && (a.only !== undefined || a.frames !== undefined || a.join !== undefined || landing || (a.kind !== undefined && piece.join() !== 'place'))) {
+  console.error('smooth: a part file is --part with one or more of ' + PIECES.join(', ') + ' (the place alone also with --kind dive|rise): no --only, --frames, --join')
+  process.exit(2)
+}
+const only = piece ?? (a.only ? a.only.split(',') : landing ? ['path'] : PARTS)
 for (const p of only) {
   if (!PARTS.includes(p)) {
     console.error('smooth: --only takes ' + PARTS.join(', '))
@@ -90,20 +106,21 @@ if (landing && only.some((p) => p !== 'path')) {
 }
 const calibrate = a.calibrate === 'true'
 const dir = join(WORK, 'smooth')
-const partOf = a.part === undefined ? null : /^(\d+)\/(\d+)$/.exec(a.part)
+const partOf = a.part === undefined || piece ? null : /^(\d+)\/(\d+)$/.exec(a.part)
 const framesOf = a.frames === undefined ? null : /^(\d+)-(\d+)$/.exec(a.frames)
-const sliced = a.part !== undefined || a.frames !== undefined
+const sliced = (a.part !== undefined && !piece) || a.frames !== undefined
 const joining = a.join !== undefined
-if (sliced || joining) {
+const whole = joining && !sliced && a.kind === undefined && a.only === undefined
+if ((sliced || joining) && !whole) {
   const one = kinds.length === 1 && a.kind !== undefined && only.length === 1 && only[0] === 'pictures'
   const part = partOf ? [Number(partOf[1]), Number(partOf[2])] : null
   const span = framesOf ? [Number(framesOf[1]), Number(framesOf[2])] : null
-  if (!one || (sliced && joining) || (a.part !== undefined && a.frames !== undefined) || (a.part !== undefined && (!part || part[0]! < 1 || part[0]! > part[1]!)) || (a.frames !== undefined && (!span || span[0]! > span[1]!))) {
-    console.error('smooth: a slice is --kind dive|rise --only pictures with --part I/N or --frames A-B (capture frames, both included); the join is --kind dive|rise --only pictures --join [FOLDER]')
+  if (!one || (sliced && joining) || (a.part !== undefined && a.frames !== undefined) || (a.part !== undefined && !piece && (!part || part[0]! < 1 || part[0]! > part[1]!)) || (a.frames !== undefined && (!span || span[0]! > span[1]!))) {
+    console.error('smooth: a slice is --kind dive|rise --only pictures with --part I/N or --frames A-B (capture frames, both included); the join of one move is --kind dive|rise --only pictures --join [FOLDER], the join of the whole report is --join [FOLDER] with neither --kind nor --only')
     process.exit(2)
   }
 }
-const joined = joining ? readParts(a.join === 'true' ? dir : a.join!) : null
+const joined = joining && !whole ? readParts(a.join === 'true' ? dir : a.join!, a.kind!) : null
 const S = joined ? joined.limits : cfg.raw.smooth
 const rate = joined ? joined.rate : a.rate ? Number(a.rate) : cfg.raw.smooth.rate
 if (!Number.isInteger(rate) || rate < 1) {
@@ -117,7 +134,9 @@ if (ring !== 'picture' && ring !== 'ground') {
 }
 const master = cfg.formats[cfg.formatKeys.master]!
 const sliceTag = partOf ? sliceName(Number(partOf[1]), Number(partOf[2]), 0, 0) : framesOf ? sliceName(null, null, Number(framesOf[1]), Number(framesOf[2])) : ''
-const stem = stop + (a.kind ? '-' + a.kind : '') + (sliceTag ? '-' + sliceTag : '')
+const base = stop + (a.kind ? '-' + a.kind : '')
+const stem = piece ? pieceStem(stop, a.kind ?? null, piece) : base + (sliceTag ? '-' + sliceTag : '')
+const started = Date.now()
 mkdirSync(dir, { recursive: true })
 
 const plan = plans.find((p) => p.id === stop)!
@@ -129,7 +148,7 @@ interface PartResult { measured: boolean; pass: boolean; why: string[]; note?: s
 interface PathRun { rate: number; curves: CurveResult[] }
 interface PathKind { segment: string; firstFrame: number; endFrame: number; frameT: number | null; window: [number, number]; runs: PathRun[]; rows: Row[]; sides: string[]; heights: (number | null)[]; faults: Fault[]; eye: (SeamResult & { seam: number; own: number | null }) | null; leave?: LeaveResult & { seam: number; into: string; reach: number } }
 
-const MIN_LEAVE: number | null = (S.path as { minLeave?: number | null }).minLeave ?? null
+const MIN_LEAVE: number | null = joined ? (S.path as { minLeave?: number | null }).minLeave ?? null : minLeaveOf(cfg.raw.smooth.path)
 
 const UNITS: ['fall' | 'turn' | 'speed', string, string, number | null][] = [
   ['fall', 'rate', 'log of the height a film frame', null],
@@ -414,15 +433,22 @@ interface PartFile { name: string; machine: string; slice: SliceInfo & { rendere
 interface Joined { folder: string; files: PartFile[]; limits: typeof cfg.raw.smooth; rate: number; commit: string; engineHash: string | null; stopHash: string | null; machine: string; tier: string; note?: string }
 
 // The parts of one move as the slices wrote them. They are one run only if they agree in everything that sets a number.
-function readParts(folder: string): Joined {
-  const kind = a.kind!
+interface SliceFile { stop: string; commit: string; engineHash: string | null; stopHash: string | null; machine: string; rate: number; kinds: string[]; only: string[]; limits: typeof cfg.raw.smooth; slice?: PartFile['slice']; parts: { pictures?: PicturesPart } }
+
+function readParts(folder: string, kind: string): Joined {
+  const names = existsSync(folder) ? readdirSync(folder).filter((f) => new RegExp('^' + stop + '-' + kind + '-(p\\d+of\\d+|k\\d+-\\d+)\\.json$').test(f)).sort((x, y) => x.localeCompare(y, 'en', { numeric: true })) : []
+  if (names.length === 0) {
+    console.error('smooth: no part of the ' + kind + ' of ' + stop + ' in ' + folder + ' (' + stop + '-' + kind + '-pIofN.json)')
+    process.exit(2)
+  }
+  return readSlices(folder, kind, names.map((name) => ({ name, j: JSON.parse(readFileSync(join(folder, name), 'utf8')) as SliceFile })))
+}
+
+function readSlices(folder: string, kind: string, read: { name: string; j: SliceFile }[]): Joined {
   const fail = (text: string): never => {
     console.error('smooth: ' + text)
     process.exit(2)
   }
-  const names = existsSync(folder) ? readdirSync(folder).filter((f) => new RegExp('^' + stop + '-' + kind + '-(p\\d+of\\d+|k\\d+-\\d+)\\.json$').test(f)).sort((x, y) => x.localeCompare(y, 'en', { numeric: true })) : []
-  if (names.length === 0) fail('no part of the ' + kind + ' of ' + stop + ' in ' + folder + ' (' + stop + '-' + kind + '-pIofN.json)')
-  const read = names.map((name) => ({ name, j: JSON.parse(readFileSync(join(folder, name), 'utf8')) as { stop: string; commit: string; engineHash: string | null; stopHash: string | null; machine: string; rate: number; kinds: string[]; only: string[]; limits: typeof cfg.raw.smooth; slice?: PartFile['slice']; parts: { pictures?: PicturesPart } } }))
   const facts = (x: (typeof read)[number]): [string, unknown][] => {
     const p = x.j.parts.pictures
     const k = p?.kinds[kind]
@@ -444,8 +470,7 @@ function readParts(folder: string): Joined {
 }
 
 // The report of the whole move from its parts: every row as its part wrote it, everything else read off the rows as the whole run reads it.
-function joinPart(j: Joined): PicturesPart {
-  const kind = kinds[0]!
+function joinPart(j: Joined, kind: Kind): PicturesPart {
   const base = j.files[0]!.kind
   const r = base.rate
   const first = base.window[0]
@@ -487,6 +512,98 @@ function joinPart(j: Joined): PicturesPart {
   ]
   const out = kindOf({ id: base.segment, firstFrame: base.firstFrame, endFrame: base.endFrame }, first, base.window[1] + 1, r, total, rows, sums, null, null, { ...(base.context ? { context: base.context } : {}), tail })
   return { measured: true, pass: sums.why.length === 0, why: sums.why.map((w) => kind + ': ' + w), kinds: { [kind]: out }, ...rest }
+}
+
+interface Whole { parts: Record<string, PartResult>; commit: string; engineHash: string | null; stopHash: string | null; machine: string; files: Record<string, unknown>[]; slices: [Kind, Joined][]; same: string[] }
+
+function joinWhole(given: string[]): Whole {
+  const fail = (lines: string[]): never => {
+    for (const l of lines) console.error('smooth: ' + l)
+    process.exit(2)
+  }
+  const files: Given[] = []
+  for (const g of given) {
+    if (!existsSync(g)) fail(['--join: there is no ' + g])
+    const list = statSync(g).isDirectory() ? readdirSync(g).filter((f) => f.endsWith('.json')).map((f) => join(g, f)) : [g]
+    for (const file of list) {
+      let j: unknown = null
+      try {
+        j = JSON.parse(readFileSync(file, 'utf8'))
+      } catch {
+        j = null
+      }
+      files.push({ file, j })
+    }
+  }
+  const found = gather(stop!, files)
+  const moves = (MOVES as Kind[]).filter((k) => cfg.segments.some((s) => s.stop === stop && s.kind === k))
+  if (moves.length === 0) fail([stop + ' has no dive and no rise: there is no report to join'])
+  const head = given.join(', ') + ' does not hold the whole report of ' + stop + ':'
+  const faults = gatherFaults(stop!, found, moves)
+  if (faults.length > 0) fail([head, ...faults.map((f) => '  ' + f), ...found.ignored.map((x) => '  not taken: ' + x.file + ' (' + x.why + ')')])
+  const slices: [Kind, Joined][] = moves.map((kind) => [kind, readSlices(given.join(', '), kind, found.slices[kind]!.map((x) => ({ name: x.file, j: x.j as SliceFile })))])
+  const holders = PIECES.flatMap((piece) => found.holders[piece]!.map((h) => ({ piece, ...h })))
+  const runs: { file: string; facts: Facts }[] = [...holders.map((h) => ({ file: h.file, facts: runFacts(h.j) })), ...slices.map(([, j]) => ({ file: j.files[0]!.name + '.json', facts: runFacts(j) }))]
+  for (const x of runs.slice(1)) {
+    const d = differ(x.facts, runs[0]!.facts)
+    if (d) fail([x.file + ' and ' + runs[0]!.file + ' differ in the ' + d + ': the parts of one report are made at one commit'])
+  }
+  const h = computeHashes(ROOT)
+  const bad = buildFault(runs[0]!.facts, runFacts({ commit: commit(), engineHash: h.engine, stopHash: h.stops[stop!] ?? null, rate, limits: cfg.raw.smooth }), a.commit)
+  if (bad) fail([bad])
+  const kindsOut: Record<string, PictureKind | null> = {}
+  const why: string[] = []
+  const lost: string[] = []
+  let seconds = 0
+  let drawn = 0
+  let rest: { tier: string; rate: number; note?: string } | null = null
+  for (const kind of kinds) {
+    const j = slices.find(([k]) => k === kind)?.[1]
+    kindsOut[kind] = null
+    if (!j) continue
+    const p = joinPart(j, kind)
+    if (!p.measured) {
+      lost.push(...p.why)
+      continue
+    }
+    const mine = { tier: p.tier, rate: p.rate, ...(p.note ? { note: p.note } : {}) }
+    if (rest && JSON.stringify(rest) !== JSON.stringify(mine)) fail(['the pictures of the ' + kind + ' and of the ' + slices[0]![0] + ' differ in the tier, the rate of the page or the note (' + JSON.stringify(mine) + ' against ' + JSON.stringify(rest) + ')'])
+    rest ??= mine
+    kindsOut[kind] = p.kinds[kind]!
+    why.push(...p.why)
+    for (const x of j.files) {
+      seconds += x.slice.seconds
+      drawn += x.slice.rendered
+    }
+  }
+  if (lost.length > 0) fail([head, ...lost.map((l) => '  ' + l)])
+  const { note, ...tierRate } = rest!
+  const pictures: PicturesPart = { measured: true, pass: why.length === 0, why, kinds: kindsOut, ...tierRate, secondsAFrame: drawn > 0 ? Number((seconds / drawn).toFixed(2)) : null, ...(note ? { note } : {}) }
+  const of = (piece: string): PartResult => {
+    const have = found.holders[piece]!
+    if (have[0]!.kind === null) return have[0]!.j.parts![piece] as PartResult
+    const both: Record<string, unknown> = {}
+    const red: string[] = []
+    for (const kind of MOVES) {
+      const p = have.find((x) => x.kind === kind)?.j.parts![piece]
+      both[kind] = p?.kinds?.[kind] ?? null
+      red.push(...(p?.why ?? []))
+    }
+    return { measured: true, pass: red.length === 0, why: red, kinds: both } as PartResult
+  }
+  const short = (file: string): string => (file.endsWith('.json') ? file.slice(0, -'.json'.length) : file)
+  const entry = (x: (typeof holders)[number]): Record<string, unknown> => ({ file: short(x.file), machine: x.j.machine, holds: x.piece, ...(x.kind ? { kind: x.kind } : {}), ...(x.j.seconds === undefined ? {} : { seconds: x.j.seconds }) })
+  const list = [
+    ...holders.filter((x) => x.piece === 'path').map(entry),
+    ...slices.flatMap(([kind, j]) => j.files.map((x) => ({ file: x.name, machine: x.machine, holds: 'pictures', kind, ...x.slice }))),
+    ...holders.filter((x) => x.piece !== 'path').map(entry),
+  ]
+  const f = runs[0]!.facts
+  return {
+    parts: { path: of('path'), pictures, place: of('place'), parity: of('parity'), counts: of('counts') },
+    commit: f[0]![1] as string, engineHash: f[1]![1] as string | null, stopHash: f[2]![1] as string | null,
+    machine: [...new Set(list.map((x) => String(x.machine)))].join(', '), files: list, slices, same: found.same,
+  }
 }
 
 async function picturesPart(): Promise<PicturesPart> {
@@ -539,8 +656,9 @@ function bodyGrid(p: Pose): number[][] {
 
 interface SideNumbers { mean: number; p50: number; p99: number; p999: number; max: number; shareOver16: number }
 interface BodyNumbers { level: number; colour: number[]; bodyShare: number; bodyLevel: number; bodyColour: number[]; flatShare: number; contrast: number }
-interface PlaceRow { k: number; frame: number; level: number; bodyShare: number; bodyLevel: number; bodyLevelStep: number | null; bodyColourStep: number | null; levelStep: number | null; pop: number | null; popBlock: number | null }
-interface PlaceKind { segment: string; frameT: number; window: [number, number]; frames: [number, number]; rate: number; sides: (SideNumbers & { panel: string }) | null; rows: PlaceRow[]; bodyLevelStep: Most | null; bodyColourStep: Most | null; levelStep: Most | null; pop: Most | null; note?: string; why: string[] }
+interface PlaceRow { k: number; frame: number; level: number; bodyShare: number; bodyLevel: number; bodyLevelStep: number | null; bodyColourStep: number | null; seen?: number | null; placeLevelStep?: number | null; placeColourStep?: number | null; levelStep: number | null; pop: number | null; popBlock: number | null }
+interface PlaceSeen { share: number; level: Most | null; colour: Most | null; least: { k: number; share: number } | null; read: number; unread: number; unreadLevel: Most | null; unreadColour: Most | null; would: string[] }
+interface PlaceKind { segment: string; frameT: number; window: [number, number]; frames: [number, number]; rate: number; sides: (SideNumbers & { panel: string }) | null; rows: PlaceRow[]; bodyLevelStep: Most | null; bodyColourStep: Most | null; inPlace?: PlaceSeen; levelStep: Most | null; pop: Most | null; note?: string; why: string[] }
 
 async function placeOf(kind: Kind): Promise<PlaceKind | null> {
   const seg = cfg.segments.find((s) => s.stop === stop && s.kind === kind)
@@ -567,22 +685,36 @@ async function placeOf(kind: Kind): Promise<PlaceKind | null> {
   const sides = handoverMeasure<SideNumbers>({ op: 'sides', close, globe, difference: stem + '-place-difference.png', panel: stem + '-place-sides.png', gain: L.differenceGain, limit: cfg.raw.critics.maxImageLongEdgePx })
   const paths: string[] = []
   const bodies: number[][][] = []
+  const poses: { position: number[]; quaternion: number[]; vfov: number; turn: number[] }[] = []
   for (const k of ks) {
     paths.push(await still(k, 'draft', 'beauty/noplace'))
-    bodies.push(bodyGrid(carriedCamera(film, plan, stop!, k / r, (k / r + spanMid()) / cfg.fps).pose))
+    const time = (k / r + spanMid()) / cfg.fps
+    const pose = carriedCamera(film, plan, stop!, k / r, time).pose
+    bodies.push(bodyGrid(pose))
+    poses.push({ position: pose.position.toArray(), quaternion: pose.quaternion.toArray(), vfov: pose.vfov, turn: plan.turn(time).toArray() })
   }
   const body = handoverMeasure<BodyNumbers[]>({ op: 'frames', paths, bodies, floor: L.flatFloor })
+  const seenOf = L as typeof L & { inPlaceScale?: number; inPlaceShare?: number }
+  const share = seenOf.inPlaceShare ?? IN_PLACE.share
+  const laid = handoverMeasure<({ seen: number; level: number; colour: number[] } | null)[]>({ op: 'inPlace', paths, poses, scale: seenOf.inPlaceScale ?? IN_PLACE.scale })
+  const both = placeReadings(ks.map((k, i) => ({ k, ...body[i]!, inPlace: laid[i] ?? null })), { bodyShare: L.bodyShare, levelStep: P.levelStep, colourStep: P.colourStep, inPlaceShare: share })
   const pic = measure<PictureNumbers>({ op: 'pictures', paths, scale: S.pictures.flowScale, window: S.pictures.popWindow * r, floor: S.pictures.popFloor, grid: S.pictures.grid })
   const rows: PlaceRow[] = ks.map((k, i) => {
     const b = body[i]!
-    const p = body[i - 1]
-    const seen = p !== undefined && Math.min(b.bodyShare, p.bodyShare) >= L.bodyShare
-    return {
-      k, frame: Math.floor(k / r), level: b.level, bodyShare: b.bodyShare, bodyLevel: b.bodyLevel,
-      bodyLevelStep: seen ? Math.abs(b.bodyLevel - p.bodyLevel) : null, bodyColourStep: seen ? Math.max(...b.bodyColour.map((v, j) => Math.abs(v - p.bodyColour[j]!))) : null,
-      levelStep: pic.levelStep[i] ?? null, pop: pic.pop[i] ?? null, popBlock: pic.popBlock[i] ?? null,
-    }
+    return { k, frame: Math.floor(k / r), level: b.level, bodyShare: b.bodyShare, bodyLevel: b.bodyLevel, ...both.pairs[i]!, levelStep: pic.levelStep[i] ?? null, pop: pic.pop[i] ?? null, popBlock: pic.popBlock[i] ?? null }
   })
+  const top = (m: { frame: number; step: number }): Most | null => (m.frame < 0 ? null : { k: m.frame, frame: Math.floor(m.frame / r), value: m.step })
+  const n = both.inPlace
+  const would: string[] = []
+  const hold = (m: Most | null, max: number, text: string, note = ''): void => {
+    if (m && m.value > max) would.push(text + ' steps by ' + shown(m.value, 2, max) + ' into frame ' + position(m.k, r) + note + ', limit ' + max)
+  }
+  const unreadNote = ' (a frame that shares too little ground with the one before to be read in place)'
+  hold(top(n.level), P.levelStep, 'the level of the ground two frames both show')
+  hold(top(n.colour), P.colourStep, 'the colour of the ground two frames both show')
+  hold(top(n.unreadLevel), P.levelStep, 'the mean level of the body', unreadNote)
+  hold(top(n.unreadColour), P.colourStep, 'the mean colour of the body', unreadNote)
+  const inPlace: PlaceSeen = { share, level: top(n.level), colour: top(n.colour), least: n.least.frame < 0 ? null : { k: n.least.frame, share: n.least.share }, read: n.read, unread: n.unread, unreadLevel: top(n.unreadLevel), unreadColour: top(n.unreadColour), would }
   const most = (key: 'bodyLevelStep' | 'bodyColourStep' | 'levelStep' | 'pop'): Most | null => {
     let out: Most | null = null
     for (const row of rows) {
@@ -602,7 +734,7 @@ async function placeOf(kind: Kind): Promise<PlaceKind | null> {
   judge(found.bodyLevelStep?.value, lim(P.levelStep), 'the mean level of the body steps by ' + shown(found.bodyLevelStep?.value ?? 0, 2, P.levelStep) + ' into frame ' + position(found.bodyLevelStep?.k ?? 0, r))
   judge(found.bodyColourStep?.value, lim(P.colourStep), 'the mean colour of the body steps by ' + shown(found.bodyColourStep?.value ?? 0, 2, P.colourStep) + ' into frame ' + position(found.bodyColourStep?.k ?? 0, r))
   judge(found.pop?.value, lim(P.maxPop), 'pop score ' + shown(found.pop?.value ?? 0, 2, P.maxPop) + ' from frame ' + position(found.pop?.k ?? 0, r) + ' to the next')
-  return { segment: seg.id, frameT, window: [h.placeFirstFrame, h.placeLastFrame], frames: [first, last], rate: r, sides: { mean: sides.mean, p50: sides.p50, p99: sides.p99, p999: sides.p999, max: sides.max, shareOver16: sides.shareOver16, panel: stem + '-place-sides.png' }, rows, ...found, why }
+  return { segment: seg.id, frameT, window: [h.placeFirstFrame, h.placeLastFrame], frames: [first, last], rate: r, sides: { mean: sides.mean, p50: sides.p50, p99: sides.p99, p999: sides.p999, max: sides.max, shareOver16: sides.shareOver16, panel: stem + '-place-sides.png' }, rows, ...found, inPlace, why }
 }
 
 async function placePart(): Promise<PartResult & { kinds: Record<string, PlaceKind | null> }> {
@@ -627,10 +759,15 @@ function placeText(kind: Kind, p: PlaceKind | null): string[] {
   if (!p.sides) return lines
   lines.push('Both sides at T, the globe side without the place picture (display values 0 to 255): mean difference ' + shown(p.sides.mean, 3, P.sideMean) + ' (' + lim(P.sideMean, H.sideMean) + '), 99th percentile ' + p.sides.p99 + ' (' + lim(P.sideP99, H.sideP99) + '), 99.9th ' + p.sides.p999 + ', max ' + p.sides.max + ', ' + (p.sides.shareOver16 * 100).toFixed(2) + ' percent of pixels over 16. Picture: ' + p.sides.panel.slice(ROOT.length + 1))
   if (p.bodyLevelStep) lines.push('Largest step between two frames on the body: mean level ' + shown(p.bodyLevelStep.value, 2, P.levelStep) + ' into frame ' + position(p.bodyLevelStep.k, p.rate) + ' (' + lim(P.levelStep, H.levelStep) + ')' + (p.bodyColourStep ? ', mean colour ' + shown(p.bodyColourStep.value, 2, P.colourStep) + ' into frame ' + position(p.bodyColourStep.k, p.rate) + ' (' + lim(P.colourStep, H.colourStep) + ')' : '') + '.')
+  if (p.inPlace) {
+    const n = p.inPlace
+    const at = (m: Most | null, max: number): string => (m ? shown(m.value, 2, max) + ' into frame ' + position(m.k, p.rate) : 'none')
+    lines.push('The same step in place, on the ground both frames show (tools/img/handover.py, op inPlace; shown, not judged): level ' + at(n.level, P.levelStep) + ', colour ' + at(n.colour, P.colourStep) + '. ' + n.read + ' of ' + (n.read + n.unread) + ' pairs are read in place: the frame before shows at least ' + n.share + ' of the frame\'s body' + (n.least ? ' (least ' + n.least.share.toFixed(3) + ' into frame ' + position(n.least.k, p.rate) + ')' : '') + (n.unread ? '; the largest steps of the ' + n.unread + ' that are not, on the mean of the body: level ' + at(n.unreadLevel, P.levelStep) + ', colour ' + at(n.unreadColour, P.colourStep) : '') + '. Held to the same limits it would ' + (n.would.length ? 'be red: ' + n.would.join('; ') : 'pass') + '.')
+  }
   if (p.levelStep) lines.push('Largest level step of the whole frame against the middle of its two neighbours: ' + p.levelStep.value.toFixed(2) + ' at frame ' + position(p.levelStep.k, p.rate) + '.')
   if (p.pop) lines.push('Largest pop score: ' + shown(p.pop.value, 2, P.maxPop) + ' from frame ' + position(p.pop.k, p.rate) + ' to the next (' + (P.maxPop === null ? 'no limit yet, not judged' : 'limit ' + P.maxPop) + ').')
-  lines.push('', '| frame | level | body share | body level | body level step | body colour step | level step | pop | pop of one block |', '|---|---|---|---|---|---|---|---|---|')
-  for (const row of p.rows) lines.push('| ' + [position(row.k, p.rate) + (row.k === p.frameT * p.rate ? ' T' : ''), row.level.toFixed(2), row.bodyShare.toFixed(3), row.bodyLevel.toFixed(2), cell(row.bodyLevelStep, 2), cell(row.bodyColourStep, 2), cell(row.levelStep, 2), cell(row.pop, 2), cell(row.popBlock, 2)].join(' | ') + ' |')
+  lines.push('', '| frame | level | body share | body level | body level step | body colour step | seen in the frame before | level step in place | colour step in place | level step | pop | pop of one block |', '|---|---|---|---|---|---|---|---|---|---|---|---|')
+  for (const row of p.rows) lines.push('| ' + [position(row.k, p.rate) + (row.k === p.frameT * p.rate ? ' T' : ''), row.level.toFixed(2), row.bodyShare.toFixed(3), row.bodyLevel.toFixed(2), cell(row.bodyLevelStep, 2), cell(row.bodyColourStep, 2), cell(row.seen, 3), cell(row.placeLevelStep, 2), cell(row.placeColourStep, 2), cell(row.levelStep, 2), cell(row.pop, 2), cell(row.popBlock, 2)].join(' | ') + ' |')
   lines.push('')
   return lines
 }
@@ -660,7 +797,7 @@ async function parityPart(): Promise<PartResult & Partial<ParityOut>> {
     }
     seconds[fmt] = rendered > before[0]! ? Number(((renderSeconds - before[1]!) / (rendered - before[0]!)).toFixed(2)) : null
   }
-  const panel = join(dir, stem + '-parity.png')
+  const panel = join(dir, base + '-parity.png')
   const n = measure<ParityNumbers[]>({
     op: 'parity', coarse: P.coarse, grid: S.pictures.grid, output: panel, gain: 8, limit: cfg.raw.critics.maxImageLongEdgePx,
     pairs: wanted.map((w, i) => ({ big: files[bigId]![i]!, film: files[filmId]![i]!, label: stop + ' ' + w.segment + ' frame ' + w.frame + ': ' + filmId + ', ' + bigId + ' scaled down by ' + factor + ', the difference times 8' })),
@@ -914,10 +1051,9 @@ function commit(): string {
   }
 }
 
-async function main(): Promise<void> {
-  const parts: Record<string, PartResult> = {}
+async function measureParts(parts: Record<string, PartResult>): Promise<void> {
   if (only.includes('path')) parts.path = pathPart()
-  if (only.includes('pictures') && joined) parts.pictures = joinPart(joined)
+  if (only.includes('pictures') && joined) parts.pictures = joinPart(joined, kinds[0]!)
   else if (only.includes('pictures')) {
     requireDisk(cfg)
     try {
@@ -950,12 +1086,27 @@ async function main(): Promise<void> {
       await drop()
     }
   }
+}
+
+async function main(): Promise<void> {
+  const all = whole ? joinWhole(a.join === 'true' ? [dir] : a.join!.split(',')) : null
+  const parts: Record<string, PartResult> = all ? all.parts : {}
+  if (!all) await measureParts(parts)
+  if (piece) hashes ??= computeHashes(ROOT)
   const why = Object.values(parts).flatMap((p) => p.why)
   const pass = why.length === 0
-  const made = joined ? { commit: joined.commit, engineHash: joined.engineHash, stopHash: joined.stopHash, machine: joined.machine } : { commit: commit(), engineHash: hashes?.engine ?? null, stopHash: hashes?.stops[stop!] ?? null, machine: machineId() }
-  const out = { stop, ...made, rate, calibrate, kinds, only, limits: S, pass, why, parts, ...(slice ? { slice: { ...slice, rendered, seconds: Number(renderSeconds.toFixed(2)) } } : {}), ...(joined ? { joined: joined.files.map((x) => ({ file: x.name, machine: x.machine, ...x.slice })) } : {}) }
+  const made = all ? { commit: all.commit, engineHash: all.engineHash, stopHash: all.stopHash, machine: all.machine } : joined ? { commit: joined.commit, engineHash: joined.engineHash, stopHash: joined.stopHash, machine: joined.machine } : { commit: commit(), engineHash: hashes?.engine ?? null, stopHash: hashes?.stops[stop!] ?? null, machine: machineId() }
+  const took = Number(((Date.now() - started) / 1000).toFixed(1))
+  const out = { stop, ...made, rate, calibrate, kinds, only, limits: S, pass, why, parts, ...(slice ? { slice: { ...slice, rendered, seconds: Number(renderSeconds.toFixed(2)) } } : {}), ...(joining ? {} : { seconds: took }), ...(joined ? { joined: joined.files.map((x) => ({ file: x.name, machine: x.machine, ...x.slice })) } : {}), ...(all ? { joined: all.files } : {}) }
   json(join(dir, stem + '.json'), out)
   const lines = ['# smooth: ' + stop, '', 'Commit ' + out.commit + '. Capture rate ' + rate + '. Parts: ' + only.join(', ') + '.' + (calibrate ? ' A calibration run: every number is written, the exit code is 0.' : ''), '']
+  if (piece) lines.push('A part file of the report of ' + stop + ' (--part ' + piece.join(',') + (a.kind ? ' --kind ' + a.kind : '') + '), written in ' + took + ' s on ' + made.machine + '. The verdict here is of this part alone: the report of the stop is the join of all its parts (--join).', '')
+  if (all) {
+    const who = (x: Record<string, unknown>): string => String(x.file) + ' (' + String(x.machine) + ')'
+    const by = (holds: string, kind?: string): string => all.files.filter((x) => x.holds === holds && (kind === undefined || x.kind === kind)).map(who).join(', ')
+    lines.push('Joined from the files of ' + new Set(all.files.map((x) => x.machine)).size + ' machine(s), nothing is rendered, measured or counted here. The path: ' + by('path') + '. The pictures: ' + all.slices.map(([kind]) => 'the ' + kind + ' ' + by('pictures', kind)).join('; ') + '. The place: ' + by('place') + '. The parity: ' + by('parity') + '. The counts: ' + by('counts') + '.', '')
+    for (const t of all.same) console.log('smooth ' + stop + ': ' + t)
+  }
   lines.push(pass ? 'VERDICT: green. No number is over its limit.' : 'VERDICT: red. ' + why.length + ' number' + (why.length === 1 ? '' : 's') + ' over the limit or not measured.', '')
   for (const [name, p] of Object.entries(parts)) {
     lines.push('## ' + name, '')
@@ -969,6 +1120,7 @@ async function main(): Promise<void> {
     if (name === 'pictures') {
       const pp = p as Awaited<ReturnType<typeof picturesPart>>
       lines.push('Tier ' + pp.tier + ', rate ' + pp.rate + (pp.secondsAFrame === null ? ', every frame was already rendered' : ', ' + pp.secondsAFrame + ' s a rendered frame on ' + made.machine) + '.', '')
+      for (const [kind, j] of all ? all.slices : []) lines.push('The ' + kind + ' is joined from ' + j.files.length + ' part' + (j.files.length === 1 ? '' : 's') + ': ' + j.files.map((x) => x.name + ' (capture frames ' + x.slice.own[0] + ' to ' + x.slice.own[1] + ', ' + x.machine + ')').join(', ') + '.', '')
       if (joined) lines.push('Joined from ' + joined.files.length + ' part' + (joined.files.length === 1 ? '' : 's') + ', nothing is rendered here: ' + joined.files.map((x) => x.name + ' (capture frames ' + x.slice.own[0] + ' to ' + x.slice.own[1] + ', ' + x.machine + ')').join(', ') + '.', '')
       for (const kind of kinds) lines.push(...picturesText(kind, pp.kinds[kind] ?? null))
     }
@@ -977,6 +1129,7 @@ async function main(): Promise<void> {
     if (name === 'place') for (const kind of kinds) lines.push(...placeText(kind, (p as Awaited<ReturnType<typeof placePart>>).kinds[kind] ?? null))
   }
   writeFileSync(join(dir, stem + '.md'), lines.join('\n'))
+  if (piece) console.log('smooth ' + stop + ': the part file of ' + piece.join(', ') + (a.kind ? ' of the ' + a.kind : '') + ' in ' + took + ' s')
   console.log('smooth ' + stop + ': ' + (pass ? 'green' : 'red, ' + why.length + ' over the limit or not measured') + '. ' + join('out/work/smooth', stem + '.md'))
   for (const w of why.slice(0, 12)) console.log('  ' + w)
   if (why.length > 12) console.log('  and ' + (why.length - 12) + ' more, see the report')

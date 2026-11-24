@@ -5,7 +5,7 @@ import { FilmDirector } from '../src/director/film'
 import { forceOneMove } from '../src/director/handover'
 import { plans } from '../src/director/plans'
 import { eyeOf } from './lib/pace'
-import { seamOf, type SeamKind } from './lib/seam'
+import { AT_SPEED, farEndOf, seamOf, type SeamKind } from './lib/seam'
 import { SEAM_REACH } from './smooth/camera'
 import { position } from './smooth/path'
 
@@ -36,6 +36,16 @@ import { position } from './smooth/path'
 // Under the line of a rise on the one move: the way the move alone takes the eye out of the seam, and the terrain.bend that ends on it.
 // For a stop that bends its surface view by its own code (no terrain.bend in its params) that line is read at the seam, on the way the
 // surface view has there after its bend: the degrees it names are what is left to turn.
+// Under a rise that a travel follows, two lines on its far end (MAIL 602: a rise and the travel after it are one flight, the picture
+// may not come to rest between them), read by tools/lib/seam.ts farEndOf:
+//   as the travel reads it: how far the rise's own last pose lies from the pose the travel starts on; the eye's speed at the end, its
+//   excess over the drift and the angle of that excess to the drift's line; whether the travel carries the excess; whether the eye
+//   brakes or speeds up there (it may brake or coast, it may not speed up) and its acceleration across its way; the turn of the
+//   camera and the change of its angle of view (both at rest);
+//   as the judge reads the picture (the rest line of npm run smooth, at its rate and reach): the fastest point of the body's edge in
+//   pixels a film frame, its lowest against its two ends; and the body's centre: where it is slowest, how far its way turns through
+//   the window, and the sharpest turn between two capture frames that both have speed. A turn at speed is a bend the eye sees.
+// A stop asks for a far end that is not at rest with handover.rise.pullBack of its params (StopPlan.pullBack).
 // Nothing is written and nothing is judged here: the judge is npm run smooth, whose eye line this prints.
 
 type Kind = SeamKind
@@ -86,6 +96,27 @@ function judged(plan: (typeof plans)[number], kind: Kind): string {
   return 'the judge, ' + SEAM_REACH + ' film frames to each side: lowest ' + low.value.toFixed(3) + ' at ' + position(low.k, rate) + inside + (e.limit === null ? ', no limit set' : ', at least ' + e.limit + ': ' + (e.fault ? 'RED' : 'GREEN'))
 }
 
+// The far end of a rise that a travel follows: the travel's reading and the picture's (tools/lib/seam.ts farEndOf).
+function farEnd(plan: (typeof plans)[number]): string[] {
+  const r = farEndOf(film, plan, { rate })
+  if (!r) return []
+  const at = (x: { value: number; f: number } | null): string => (x ? x.value.toFixed(2) + ' at ' + label(x.f) : 'not read')
+  const pull = plan.p.handover?.rise?.pullBack
+  const out = [
+    '  far end, seam ' + r.seam + ' into the travel' + (pull ? ', pullBack ' + JSON.stringify(pull) : ', no pullBack') + ', as the travel reads it (step 1/' + Math.round(1 / r.step) + ' s' + (r.carryKnown ? '' : ', the numbers agreed with its builder: this tree has no CARRY') + '): the rise ends ' + r.gap.toExponential(1) + ' radii from the pose the travel starts on, ' + r.height.toFixed(3) + ' over the body' +
+      ' | the eye flies ' + r.speed.toFixed(4) + ' radii a second, ' + r.excess.toFixed(4) + ' over the drift (' + r.drift.toFixed(4) + ')' + (r.offLine === null ? '' : ', ' + r.offLine.toFixed(2) + ' degrees off its line') + ': ' + (r.carried ? 'the travel carries it' : 'at rest on the drift, nothing to carry') + ' (from ' + r.from + ')' +
+      ' | ' + (Math.abs(r.along) < 1e-6 ? 'coasts' : r.along < 0 ? 'brakes by ' + (-r.along).toFixed(3) : (r.carried ? 'SPEEDS UP by ' : 'speeds up by ') + r.along.toFixed(3)) + ' radii/s2 along its way, ' + r.across.toFixed(3) + ' across' +
+      ' | camera: turn ' + r.turn.toFixed(4) + ' deg/s, angle of view ' + r.vfov.toFixed(4) + ' deg/s',
+  ]
+  out.push(
+    '  the picture, ' + r.rest.reach + ' film frames to each side at rate ' + r.rest.rate + ' (the rest line of the judge): the fastest point of the body\'s edge, px a film frame: lowest ' + at(r.rest.lowest) + ', ' + at(r.rest.first) + ' and ' + at(r.rest.last) + ' at the ends' + (r.rest.over === null ? '' : ': the lowest is ' + r.rest.over.toFixed(3) + ' of the slower end') +
+      (r.centre ? ' | the body\'s centre: slowest ' + at(r.centre.slowest) + (r.centre.turned === null ? '' : ', its way turns ' + r.centre.turned.toFixed(1) + ' degrees from the first step to the last') + ', sharpest turn between two capture frames at speed (' + AT_SPEED + ' px a film frame and more): ' + (r.centre.sharpest ? r.centre.sharpest.value.toFixed(1) + ' degrees at ' + label(r.centre.sharpest.f) + ', where it moves ' + r.centre.sharpest.speed.toFixed(2) : 'none at speed') : ''),
+  )
+  if (r.asked !== null && r.reached === false)
+    out.push('  THE PULL BACK DOES NOT REACH THIS RISE: it states ' + r.asked + ' radii a second over the drift and the travel reads ' + r.excess.toFixed(4) + '. The path of this rise does not follow the far end the engine moves through its last moments: let it end on after(time) with the far end\'s own speed, not on exitPose(time) and not on a law that reads the far end only for its place.')
+  return out
+}
+
 function seam(stop: string, kind: Kind): string[] {
   const plan = plans.find((p) => p.id === stop)!
   const r = seamOf(film, plan, kind, { rate, frames, before })!
@@ -101,6 +132,7 @@ function seam(stop: string, kind: Kind): string[] {
       ' | ' + judged(plan, kind),
   )
   if (kind === 'rise' && plan.engineMove) out.push(advice(plan))
+  if (kind === 'rise') out.push(...farEnd(plan))
   if (a.rows === 'true') {
     out.push('  frame        speed/height   over own   along      up     across   turn deg   height')
     for (const row of r.rows) out.push('  ' + label(row.f).padEnd(12) + ' ' + row.speed.toFixed(5).padStart(10) + ' ' + (r.still ? '' : (row.speed / r.own).toFixed(3)).padStart(10) + ' ' + row.along.toFixed(3).padStart(8) + ' ' + row.up.toFixed(3).padStart(8) + ' ' + row.across.toFixed(3).padStart(8) + ' ' + row.turn.toFixed(4).padStart(9) + '   ' + row.height.toExponential(3) + (row.inMove ? '' : '  surface view'))

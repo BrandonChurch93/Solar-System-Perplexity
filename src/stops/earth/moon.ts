@@ -95,9 +95,11 @@ export class Moon {
   private readonly inverse = new THREE.Quaternion()
   private readonly turn = new THREE.Quaternion()
   private readonly lift: number
+  private readonly edge: number
 
   constructor(look: MoonLook, map: THREE.Texture, lit: THREE.Texture) {
     this.lift = look.lift
+    this.edge = look.edge
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
       vertexShader: VERT,
@@ -127,8 +129,9 @@ export class Moon {
     this.inverse.copy(this.mesh.quaternion).invert()
   }
 
-  update(sunLocal: THREE.Vector3, axis: THREE.Vector3, angle: number, gain: number, vignette: number, aspect: number): void {
+  update(sunLocal: THREE.Vector3, axis: THREE.Vector3, angle: number, gain: number, vignette: number, aspect: number, perLine: number): void {
     const u = this.material.uniforms
+    ;(u.uRound!.value as THREE.Vector2).y = this.edge * perLine
     this.mesh.position.copy(this.home).applyQuaternion(this.turn.setFromAxisAngle(axis, angle))
     ;(u.uSun!.value as THREE.Vector3).copy(sunLocal).applyQuaternion(this.inverse)
     u.uGain!.value = gain * this.lift
