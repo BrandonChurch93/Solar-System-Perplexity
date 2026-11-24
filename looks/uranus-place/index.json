@@ -1,9 +1,71 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-24T17:13:58.151Z",
- "head": "b238e1cadf349d6dbcf848d3c898759a828b9d5e",
- "note": "main 4752aa1e: handover rise frames of the merge b238e1ca; handover six lines pass; storm goes out 4437 to 4442 by distance, still red",
+ "pushed": "2026-11-24T17:37:22.607Z",
+ "head": "7ad5778f4a2cc4eac5f21d13ff3d1acae84ab1cd",
+ "note": "7ad5778f on main 73c2117e: tops proved, storm still comes in 4116 to 4124 and goes out 4437 to 4442 (named red, next step)",
  "looks": [
+  {
+   "time": "2026-11-24T17:37:21.996Z",
+   "file": "20261124173721996-note-hold3.jpg",
+   "source": "../../../../tmp/tf/hold3.jpg",
+   "kind": "note",
+   "label": "Approved hero, judged 4035 final and draft 4112 before the storm comes in, 7ad5778f on main 73c2117e",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T17:37:21.408Z",
+   "file": "20261124173721408-note-hr-c.jpg",
+   "source": "../../../../tmp/tf/hr-c.jpg",
+   "kind": "note",
+   "label": "Tops as a light of the ground, 7ad5778f on main 73c2117e, rise handover frames draft, sheet hr-c",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T17:37:20.831Z",
+   "file": "20261124173720831-note-hr-a.jpg",
+   "source": "../../../../tmp/tf/hr-a.jpg",
+   "kind": "note",
+   "label": "Tops as a light of the ground, 7ad5778f on main 73c2117e, rise handover frames draft, sheet hr-a",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T17:37:20.273Z",
+   "file": "20261124173720273-note-hd-f.jpg",
+   "source": "../../../../tmp/tf/hd-f.jpg",
+   "kind": "note",
+   "label": "Tops as a light of the ground, 7ad5778f on main 73c2117e, dive handover frames draft, sheet hd-f",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T17:37:19.492Z",
+   "file": "20261124173719492-note-hd-c.jpg",
+   "source": "../../../../tmp/tf/hd-c.jpg",
+   "kind": "note",
+   "label": "Tops as a light of the ground, 7ad5778f on main 73c2117e, dive handover frames draft, sheet hd-c",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T17:37:18.705Z",
+   "file": "20261124173718705-note-hd-b.jpg",
+   "source": "../../../../tmp/tf/hd-b.jpg",
+   "kind": "note",
+   "label": "Tops as a light of the ground, 7ad5778f on main 73c2117e, dive handover frames draft, sheet hd-b",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T17:14:02.361Z",
+   "file": "20261124171402361-job-frame-04199.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.dive frame 4199, draft tier, texels view, from the running g13 job",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4199,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "g13"
+  },
   {
    "time": "2026-11-24T17:13:56.868Z",
    "file": "20261124171356868-note-hr-e.jpg",
@@ -27,20 +89,6 @@
    "kind": "note",
    "label": "rise 4395 to 4409, every frame, draft, b238e1ca on main 4752aa1e: the white of the tops comes up by view angle, no step; soft white at the left edge 4402 to 4409 is the storm ring passing near the eye",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T17:04:01.328Z",
-   "file": "20261124170401328-job-frame-04110.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "uranus.dive frame 4110, draft tier, texels view, from the running g13 job",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4110,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "g13"
   },
   {
    "time": "2026-11-24T17:03:33.186Z",
@@ -261,54 +309,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "1db409b8ada90e29"
-  },
-  {
-   "time": "2026-11-24T16:14:33.406Z",
-   "file": "20261124161433406-note-k3-rsheet-c.jpg",
-   "source": "../../../../tmp/k3-rsheet-c.png",
-   "kind": "note",
-   "label": "Form F rise 4412 to 4420, every frame, capture drafts (tree of eb994477, drawn on main 2bc36ce6)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T16:14:32.470Z",
-   "file": "20261124161432470-note-k3-rsheet-b.jpg",
-   "source": "../../../../tmp/k3-rsheet-b.png",
-   "kind": "note",
-   "label": "Form F rise 4396 to 4411, every frame, capture drafts: the tops come up with the view angle (tree of eb994477, drawn on main 2bc36ce6)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T16:02:11.655Z",
-   "file": "20261124160211655-note-tmw-8322.jpg",
-   "source": "../../../../tmp/tmw-8322.png",
-   "kind": "note",
-   "label": "Form F, 4161 against 4169 carried back by the true cameras (left, middle) and where the pattern is over 0.45 (right): the limb's band of the light law closing over the ground, none on the storm (main 2bc36ce6, uncommitted)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T15:50:44.196Z",
-   "file": "20261124155044196-note-k3-sheet-c.jpg",
-   "source": "../../../../tmp/k3-sheet-c.png",
-   "kind": "note",
-   "label": "Form F dive 4166 to 4181, every frame: the tops thin with the view angle, none left by 4184 (main 2bc36ce6)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T15:50:42.886Z",
-   "file": "20261124155042886-note-k3-sheet-b.jpg",
-   "source": "../../../../tmp/k3-sheet-b.png",
-   "kind": "note",
-   "label": "Form F dive 4150 to 4165, every frame, capture drafts (on c4d2507f plus uncommitted, main 2bc36ce6)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T15:37:13.167Z",
-   "file": "20261124153713167-note-k3b-4176.jpg",
-   "source": "../../../../tmp/k3b-4176.png",
-   "kind": "note",
-   "label": "4176 draft, third NAMED code over form F, main 2bc36ce6, uncommitted",
-   "stop": "uranus"
   }
  ]
 }
