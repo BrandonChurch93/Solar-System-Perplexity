@@ -1,9 +1,17 @@
 {
  "folder": "venus",
- "pushed": "2026-11-24T22:03:12.769Z",
+ "pushed": "2026-11-24T22:33:25.799Z",
  "head": "a7f38721691403c340c6edc614dfd57b3bf0cd9a",
- "note": "pull back at the far end of the rise: seam stills before and with it, frames 1585 to 1604; commit a7f38721",
+ "note": "MAIL 769: the dive of main b0b87889 rendered at 60 frames a second for the comparison; this commit's dive is rendering",
  "looks": [
+  {
+   "time": "2026-11-24T22:33:24.528Z",
+   "file": "20261124223324528-note-base-dive-changes.jpg",
+   "source": "../../../../tmp/v/base-dive-changes.png",
+   "kind": "note",
+   "label": "venus dive of main b0b87889 (the build of 06:36 UTC), its own smooth report at rate 2: pattern 0.82 at 1332 + 1/2, 17 over; largest pop 1.11",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T22:03:11.943Z",
    "file": "20261124220311943-note-e1585-1604.jpg",
@@ -77,18 +85,6 @@
    "stop": "venus",
    "segment": "venus.rise",
    "frame": 1573
-  },
-  {
-   "time": "2026-11-24T21:48:18.653Z",
-   "file": "20261124214818653-sheet-venus-dive-top.jpg",
-   "source": "out/work/handover/venus-dive-top.png",
-   "kind": "sheet",
-   "label": "venus dive, the globe side alone from straight above the place, 12 frames from the far end to T (frame 1343), place picture off, draft tier",
-   "stop": "venus",
-   "segment": "venus.dive",
-   "first": 1260,
-   "last": 1343,
-   "tier": "draft"
   }
  ]
 }
