@@ -1,9 +1,17 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T07:17:44.444Z",
- "head": "b3572b5f96d7fab0806e3a865d7ed3fe0d39893b",
- "note": "b3572b5f: the rise on the one move, the surface view on the engine's bend, path part green; MAIL 540's sheet 206 to 220: no border, limb is the far edge, no jump at T after the corona and the far sky were set to come in above T's height. Look as in 640c4c59 (frame 60 draft: bands 0.190 0.185 0.156 0.130 0.106 0.077 0.053 0.045 0.025; dark 0.221 body 0.578 pale 0.097 white 0.026; half width 6.0 px, 3378 shapes; G17 median 1.19; blur 40 px ground 0.0546)",
+ "pushed": "2026-11-24T07:33:55.159Z",
+ "head": "ccf6df7162acf1cc68cccf791c70cca1842b94e1",
+ "note": "head ccf6df71 = b3572b5f merged with main 8b2c538f. Frame 60 final tier, sun-near: share by band 0.173 0.187 0.156 0.131 0.108 0.080 0.058 0.050 0.023 | dark 0.206 body 0.583 pale 0.108 white 0.023 | half width 6.1 px, 2113 shapes; distance 0.061. G17 median 1.335, lower quarter 1.121. Blur 40 px: ground 0.0521, whole 0.0348. Hold 360 final equals the kept bytes (c279687d). Pair of frame 60 beside the kept still added; the cells still read as polished stones",
  "looks": [
+  {
+   "time": "2026-11-24T07:33:53.252Z",
+   "file": "20261124073353252-note-pair60-final.jpg",
+   "source": "../../../../tmp/pair60-final.jpg",
+   "kind": "note",
+   "label": "frame 60 at the final tier, head b3572b5f: left the kept still of main (sha256 8dd81351), right mine (sha256 c71a8b3d); below the near ground one to one. Changed on purpose: the ground of MAILS 505 and 547 (cells with height in place of the flat ground). My eye: mine still reads as polished stones",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T07:17:42.885Z",
    "file": "20261124071742885-note-e1-s6.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/par225.jpg",
    "kind": "note",
    "label": "parity red at 225: film, uhd scaled down, difference times 4 (mean 13.09, limit 12; the ring where a cell is 2 to 8 px)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T05:54:34.609Z",
-   "file": "20261124055434609-note-b1-sheet.jpg",
-   "source": "../../../../tmp/b1-sheet.jpg",
-   "kind": "note",
-   "label": "rise with the bend, draft, frames 120 to 247 (head d0ee5fc2)",
    "stop": "sun"
   }
  ]
