@@ -1,9 +1,17 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T21:46:29.206Z",
+ "pushed": "2026-11-24T22:06:40.833Z",
  "head": "79ade56611076a9e7916cd518409a37651d88994",
- "note": "blur law (mail 727 point 3): final tier frames as they are render now (Mars 2702 takes about an hour); reading drafts and plan numbers meanwhile",
+ "note": "blur law: the frames as they are render at the final tier (Mars 2702 takes an hour); the window of the shutter is written, not yet rendered; Mars's roll measured",
  "looks": [
+  {
+   "time": "2026-11-24T22:06:39.850Z",
+   "file": "20261124220639850-note-mars-roll.jpg",
+   "source": "../../../../tmp/law/mars-roll.jpg",
+   "kind": "note",
+   "label": "Mars as it is (drafts): the dive 2400 to 2416 with north up, the rise 2724 to 2744 with north to the right: the plan's rise.level keeps the place's horizon level up the whole rise",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T21:46:28.207Z",
    "file": "20261124214628207-note-mars-draft-2.jpg",
@@ -68,14 +76,6 @@
    "source": "out/work/cure/way2-mars3-dive-2460.jpg",
    "kind": "note",
    "label": "Mars dive pair 2460, 2468 read three ways: relief near the lens stands off the sphere, the camera's map alone reads 1.320",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T20:53:00.084Z",
-   "file": "20261124205300084-note-back2-mars3-2405.jpg",
-   "source": "out/work/cure/back2-mars3-2405.jpg",
-   "kind": "note",
-   "label": "Mars dive 2405 and 2413 at full size by the camera's own map: Phobos is carried as if it were ground",
    "stop": "mars"
   }
  ]
