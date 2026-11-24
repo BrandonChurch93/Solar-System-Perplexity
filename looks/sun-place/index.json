@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T12:50:57.782Z",
- "head": "6474733ee8d90a2500af4ed116db3d67a04955c3",
- "note": "trial t13 on 6474733e, config only, not committed. Frame 60 draft: share by band 0.1 .. 0.9 : 0.192 0.219 0.174 0.130 0.095 0.063 0.040 0.031 0.020 / dark (under 0.15) 0.225 | body (0.15 to 0.55) 0.618 | pale (0.65 to 0.85) 0.070 | white (over 0.85) 0.022 / brightest 15 percent: half width 4.8 px, 5476 shapes | fine detail 0.0645 | mean 0.326; distance 0.040. Red: nothing proved on this tree yet; cells still read as pebbles with too much fine thread (fine detail 0.065 against 0.037); region light still two readings by pixel size",
+ "pushed": "2026-11-24T13:16:34.952Z",
+ "head": "884ff04d25faf8a6d5ea32479edab3d2f153b48f",
+ "note": "884ff04d (third commit's state, on the merge of main 4661bee6; proof running). Frame 60 draft: share by band 0.1 .. 0.9 : 0.191 0.235 0.171 0.125 0.089 0.060 0.040 0.031 0.022 / dark (under 0.15) 0.224 | body (0.15 to 0.55) 0.620 | pale (0.65 to 0.85) 0.071 | white (over 0.85) 0.024 / brightest 15 percent: half width 4.8 px, 5383 shapes | fine detail 0.0657 | mean 0.323; distance 0.041. Red: tests on the merge not read yet; cells still read as pebbles with gaps, fine detail 0.066 against 0.037; region light two readings by pixel size (MAIL 668)",
  "looks": [
+  {
+   "time": "2026-11-24T13:16:34.324Z",
+   "file": "20261124131634324-note-t15-60-half.jpg",
+   "source": "../../../../tmp/t15-60-half.jpg",
+   "kind": "note",
+   "label": "frame 60 whole at half size: approved left, 884ff04d draft right",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T13:16:33.508Z",
+   "file": "20261124131633508-note-pair-t15.jpg",
+   "source": "../../../../tmp/pair-t15.jpg",
+   "kind": "note",
+   "label": "frame 60 draft, one to one: approved left, 884ff04d right",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T12:50:57.062Z",
    "file": "20261124125057062-note-t13-ball.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/s9-g.jpg",
    "kind": "note",
    "label": "7f4e02c1 rise draft every frame, sheet g 256 to 269",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T11:37:55.139Z",
-   "file": "20261124113755139-note-s9-f.jpg",
-   "source": "../../../../tmp/s9-f.jpg",
-   "kind": "note",
-   "label": "7f4e02c1 rise draft every frame, sheet f 240 to 255",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T11:37:54.014Z",
-   "file": "20261124113754014-note-s9-e.jpg",
-   "source": "../../../../tmp/s9-e.jpg",
-   "kind": "note",
-   "label": "7f4e02c1 rise draft every frame, sheet e 228 to 239",
    "stop": "sun"
   }
  ]
