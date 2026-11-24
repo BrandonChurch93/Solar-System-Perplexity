@@ -23,6 +23,7 @@ export interface AirLook {
   nightGlow: number[]
   nightAt: number[]
   nightSide: number[]
+  nightRim: number[]
   lineEnd: number[]
 }
 
@@ -65,6 +66,7 @@ uniform vec2 uNightLine;
 uniform vec4 uNightGlow;
 uniform vec2 uNightAt;
 uniform vec2 uNightSide;
+uniform vec2 uNightRim;
 uniform vec2 uLineEnd;
 uniform float uFree;
 uniform vec4 uMist;
@@ -96,9 +98,10 @@ void main() {
   vec3 night = uNightGlow.rgb * (mix(max(held.a - 0.125, 0.0) * uNightLine.x, uNightLine.y * dusk, uFree) * shell);
   vec3 curtain = aurora(at, h, uAway);
   if (h < 0.0) {
-    vec3 rim = mix(held.rgb * held.rgb * 4.0, mix(uRimNight, uRim, smoothstep(0.42, 0.68, x)), uPhysical);
+    float dark = uAway * (1.0 - smoothstep(0.42, 0.68, x));
+    vec3 rim = mix(held.rgb * held.rgb * 4.0, mix(uRimNight, uRim, smoothstep(0.42, 0.68, x)), max(uPhysical, dark * uNightRim.x));
     float hw = h / uInnerWide.x;
-    float cover = exp(h / uInner.x) * uInner.y + exp(-hw * hw) * uInnerWide.y;
+    float cover = exp(h / uInner.x) * uInner.y + exp(-hw * hw) * uInnerWide.y * (1.0 - dark * uNightRim.y);
     outColor = vec4((rim * cover + line + night + curtain) * lens, cover);
   } else {
     float up = b > 0.0 ? 1.0 : clamp(1.0 + b / r, 0.0, 1.0);
@@ -137,7 +140,7 @@ export class Air {
         uInner: { value: new THREE.Vector2(p.inner, p.innerStrength) },
         uInnerWide: { value: new THREE.Vector2().fromArray(p.innerWide) },
         uTop: { value: p.top },
-        uGain: { value: 1 }, uWide: { value: 1 }, uMist: { value: new THREE.Vector4(0, 0, 0, 1) }, uFog: { value: new THREE.Vector3() }, uAway: { value: 0 }, uFree: { value: 0 }, uNightLine: { value: new THREE.Vector2().fromArray(p.nightLine) }, uNightGlow: { value: new THREE.Vector4().fromArray(p.nightGlow) }, uNightAt: { value: new THREE.Vector2().fromArray(p.nightAt) }, uNightSide: { value: new THREE.Vector2().fromArray(p.nightSide) }, uLineEnd: { value: new THREE.Vector2().fromArray(p.lineEnd) }, uLineAway: { value: new THREE.Vector2(p.lineAway[0], p.lineAway[1]) }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
+        uGain: { value: 1 }, uWide: { value: 1 }, uMist: { value: new THREE.Vector4(0, 0, 0, 1) }, uFog: { value: new THREE.Vector3() }, uAway: { value: 0 }, uFree: { value: 0 }, uNightLine: { value: new THREE.Vector2().fromArray(p.nightLine) }, uNightGlow: { value: new THREE.Vector4().fromArray(p.nightGlow) }, uNightAt: { value: new THREE.Vector2().fromArray(p.nightAt) }, uNightSide: { value: new THREE.Vector2().fromArray(p.nightSide) }, uNightRim: { value: new THREE.Vector2().fromArray(p.nightRim) }, uLineEnd: { value: new THREE.Vector2().fromArray(p.lineEnd) }, uLineAway: { value: new THREE.Vector2(p.lineAway[0], p.lineAway[1]) }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
         uDiag: diag,
         ...curtain.uniforms,
       },

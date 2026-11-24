@@ -4,6 +4,7 @@ import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { GRADE_GLSL } from './grade'
 import { STAGE_GLSL, stage } from './stage'
 import arcade from './arcade.json'
+import { formatUniform } from './format'
 
 export interface LoopsLook {
   grid: [number, number]
@@ -48,6 +49,7 @@ uniform sampler2D uMap;
 uniform sampler2D uNoise;
 uniform int uDiag;
 uniform float uGrad;
+uniform float uFormat;
 uniform float uGain;
 uniform float uVignette;
 uniform float uAspect;
@@ -210,7 +212,7 @@ float stream(float high, float x, float span, float t, vec4 layer, vec4 speeds) 
   float w = sin(3.14159265 * (y - lane));
   w *= w;
   float c = w * clumps(lane, x, span, t, layer, speeds) + (1.0 - w) * clumps(floor(y + 0.5) + 0.31, x, span, t, layer, speeds);
-  return mix(1.0, speeds.x + speeds.w * c, 1.0 - smoothstep(0.35, 0.8, fwidth(y)));
+  return mix(1.0, speeds.x + speeds.w * c, 1.0 - smoothstep(0.35, 0.8, fwidth(y) * uFormat));
 }
 // A few strands lead, thick and bright, and the many others are faint (mail 250): 1 on a leading lane.
 // Lanes are equal steps of the height of a strand's top, two sets half a lane apart as in the flow.
@@ -222,7 +224,7 @@ float leading(float high) {
   float lane = floor(y);
   float w = sin(3.14159265 * (y - lane));
   w *= w;
-  return mix(w * leadPick(lane) + (1.0 - w) * leadPick(floor(y + 0.5) + 0.31), uLead.y, smoothstep(0.35, 0.8, fwidth(y)));
+  return mix(w * leadPick(lane) + (1.0 - w) * leadPick(floor(y + 0.5) + 0.31), uLead.y, smoothstep(0.35, 0.8, fwidth(y) * uFormat));
 }
 // How bright the drop is that left the top of its lane at this time: the rain comes in gusts.
 // race: the knots that the release sends down both legs (mail 327 point 2); they leave in one volley of their own.
@@ -243,7 +245,7 @@ float rainFall(float arc, float s, float t, float lanes, float seed, vec4 fall, 
   float x = arc * lanes + seed;
   float lane = floor(x);
   float fx = x - lane;
-  float win = smoothstep(0.0, 0.3, fx) * (1.0 - smoothstep(0.7, 1.0, fx)) * (1.0 - smoothstep(0.35, 0.8, fwidth(x)));
+  float win = smoothstep(0.0, 0.3, fx) * (1.0 - smoothstep(0.7, 1.0, fx)) * (1.0 - smoothstep(0.35, 0.8, fwidth(x) * uFormat));
   float h1 = lh(lane, seed + side * 11.0);
   float h2 = lh(lane, seed + 2.3 + side * 11.0);
   float period = mix(more.x, more.y, h1);
@@ -544,7 +546,7 @@ export class Loops {
       vertexShader: VERT,
       fragmentShader: frag(knots !== undefined),
       uniforms: {
-        uMap: { value: map }, uGrade: { value: grade }, uNoise: { value: noiseTexture(noise(256), 256) }, uDiag: diagUniform, uGrad: gradUniform,
+        uMap: { value: map }, uGrade: { value: grade }, uNoise: { value: noiseTexture(noise(256), 256) }, uDiag: diagUniform, uGrad: gradUniform, uFormat: formatUniform,
         uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTime: { value: 0 },
         uBox: { value: new THREE.Vector4(box[0], box[1], box[2], box[3]) },
         uFeet: { value: new THREE.Vector4(ta.x, ta.y, tb.x, tb.y) },
@@ -681,6 +683,22 @@ export class Loops {
     const lifted = e.top * (1 - Math.exp(-thrown * thrown / (1 + thrown)))
     const t = since - e.flash.at
     return [lifted, after > 0 ? gone : 0, t > 0 ? (t / e.flash.peak) * Math.exp(1 - t / e.flash.peak) * (1 - Math.exp(-t * t / (e.flash.ease * e.flash.ease))) * gone : 0]
+  }
+
+  /**
+   * The flash of the eruption as the ground under it takes it. The same light as the flare's own flash, but it comes
+   * up over arcade.flash.ground seconds: the flare's flash rises inside one film frame, and on the wide ground that
+   * was a step of the whole picture from one frame to the next.
+   */
+  flashGround(since: number, open: number): number {
+    const e = this.knots?.erupt
+    const g = this.knots?.surge
+    if (!e || !g || open <= 0 || since >= g.end) return 0
+    const x = Math.min(Math.max((since - g.end + g.settle) / g.settle, 0), 1)
+    const gone = open * (1 - x * x * (3 - 2 * x))
+    const t = since - e.flash.at
+    const ease = arcade.flash.ground
+    return t > 0 ? arcade.flash.gain * (t / e.flash.peak) * Math.exp(1 - t / e.flash.peak) * (1 - Math.exp((-t * t) / (ease * ease))) * gone : 0
   }
 
   /** The swing of the ringing arcade at this time, as the two parts of one wave (shares of the distance between the feet). */

@@ -1,0 +1,120 @@
+{
+ "critic": "R3",
+ "score": 6,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "tiles B–E and H–I, especially the moon and right-hand cloud belts",
+      "what": "The moon's surface markings dissolve into directional smears, and much of the globe goes soft while adjacent stars stay sharp.",
+      "fix": "Reduce the directional blur and resolve the moon and cloud textures at the close-up scale rather than sharpening the smeared render."
+     },
+     {
+      "severity": "major",
+      "file": "image-07.png",
+      "where": "tiles K, L and P, orange cloud belt and pale ridges above the Great Red Spot",
+      "what": "The clouds read as embossed or glossy solid material: tight bright outlines and dark grooves exaggerate the relief, and some of the brightest ridges break into colored, blocky fringes.",
+      "fix": "Reduce the hard relief and specular response, use broader scattering across cloud layers, and supersample the high-contrast filaments."
+     },
+     {
+      "severity": "major",
+      "file": "image-03.png",
+      "where": "tile O, directly to the lower right of the moon",
+      "what": "The nearly uniform black oval appears to start at the moon's silhouette, with an edge that stays comparatively hard until the tip. It looks more like a drop shadow attached to the moon than a shadow projected onto Jupiter's curved cloud deck.",
+      "fix": "Project the shadow onto the globe from the moon's actual scene position and use an area light to give the umbra and penumbra a consistent falloff."
+     },
+     {
+      "severity": "minor",
+      "file": "image-08.png",
+      "where": "tile T, lower-left sunlit limb",
+      "what": "A broad cream-colored bloom bleaches the cloud detail just inside the limb and leaves a diffuse halo outside it.",
+      "fix": "Dial back bloom and separate the atmospheric scattering from the surface exposure so both the rim and nearby cloud detail remain legible."
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "lower third and lower right (crops S, T, V, W, D, I, E)",
+      "what": "the foreground cloud deck goes to soft, smeared mush at native size: streaky brush-like swirls with no structure and a few bright clumps of cloud dropped in. It reads as painted and airbrushed, not as close-up cloud tops",
+      "fix": "add real detail to the near clouds (billows, shadowed cells, fine wisps) and lift the shadows a little so the detail shows, or crop or fade the muddy lower band"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "storm vortex, center left (crops A, B, F, K)",
+      "what": "the storm's spiral is made of repeated, evenly spaced strokes that look like oil paint or swirled plastic. The bands look like brushwork, not turbulent cloud",
+      "fix": "break up the regular spiral strokes with chaotic eddies and varied scale, and reduce the sharpening and the glossy highlights"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "lower middle and right (crops E, U, V)",
+      "what": "the patches of glowing cyan-blue speckle look like a glitter or noise overlay pasted onto the dark clouds. They do not match the lighting and look like an artifact",
+      "fix": "remove the blue glow patches, or replace them with lightning that is lit properly and lights the cloud around it"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "upper left limb and horizon (crops J, B, G)",
+      "what": "the haze near the horizon is blown out to a flat cream wash with no detail, and the far clouds turn into a blurry smear",
+      "fix": "pull the highlights back near the horizon and keep some layered detail in the haze at the limb"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "limb on the right (crops C, H, L, Q, R)",
+      "what": "the blue atmosphere band is a smooth, uniform line of even width with a fairly hard outer edge, like a gradient laid over the image",
+      "fix": "vary the thickness of the limb glow and soften its outer edge into space"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "moon at right center (crops C, P, Q)",
+      "what": "the moon is a small, soft, plastic-looking ball with smeared, Jupiter-like streaks and no surface features. Its crisp edge and strong light look pasted onto the planet's dark terminator",
+      "fix": "give the moon a sharp surface map of its own at native size (a volcanic or cratered surface), and match its lighting, edge softness and scale to the scene"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "Great Red Spot and band detail (crops A, P, K)",
+      "what": "the Red Spot is oversaturated, with painterly concentric strokes, and the band turbulence is soft and smudged at native size, like an airbrushed illustration",
+      "fix": "lower the saturation of the spot, add the fine filament and eddy detail of real Jupiter imagery, and sharpen the turbulence in the bands"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "left limb (crops H, J, O)",
+      "what": "the bright halo at the limb is a thick, evenly bright glow, so the edge of the disk looks burned and slightly doubled",
+      "fix": "make the limb glow thinner and fainter, and let it fade out gradually"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "below the night-side limb (crops E, V, U)",
+      "what": "a faint blue haze patch sits behind the dark limb and ends against it along a hard curve, so the planet looks cut out over a backdrop",
+      "fix": "remove the haze or blend it naturally, and soften the edge of the dark limb against it"
+     }
+    ]
+   }
+  }
+ ]
+}
