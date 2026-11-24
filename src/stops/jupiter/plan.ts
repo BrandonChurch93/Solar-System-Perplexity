@@ -95,7 +95,8 @@ function bendOf(): Bend {
   const from = half
   const end = f.seconds / 2 - half
   const lens = new THREE.Vector3(0, 0, 1)
-  const heading = Math.atan2(lens.dot(left0), lens.dot(ahead0))
+  const way = Math.atan2(lens.dot(left0), lens.dot(ahead0))
+  const heading = b.through * way < 0 ? way + b.through * 2 * Math.PI : way
   const climb = Math.asin(lens.dot(up0))
   const tiny = half / 64
   const speedFrom = (pushed(from) - pushed(from - tiny)) / tiny
@@ -146,7 +147,7 @@ export function flight(seconds: number, vfov: number): Pose {
   const f = deck.flight
   const turned = seconds > bend.from
   const along = turned ? bent(seconds, 0) : pushed(seconds)
-  const behind = Math.max(-along, 0) / -pushed(-f.seconds / 2)
+  const behind = turned ? 0 : Math.max(-along, 0) / -pushed(-f.seconds / 2)
   const high = relief.radius + 1 + f.startAbove * Math.pow(behind, f.sinkPower) + (turned ? bent(seconds, 2) : 0)
   const up = up0.clone().multiplyScalar(relief.radius + 1).addScaledVector(ahead0, along)
   if (turned) up.addScaledVector(left0, bent(seconds, 1))
