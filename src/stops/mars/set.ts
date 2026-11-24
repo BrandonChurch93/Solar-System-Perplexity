@@ -18,6 +18,7 @@ import { handoverOf } from '../../director/handover'
 import { heightTexture } from '../../core/sets'
 import country from './country.json'
 import capJson from './cap.json'
+import closeJson from './close.json'
 
 function direction(lonDeg: number, latDeg: number): THREE.Vector3 {
   const lon = THREE.MathUtils.degToRad(lonDeg)
@@ -101,6 +102,25 @@ export const createSet: SetFactory = async (ctx) => {
 
   const ground = await Relief.load(lean, base, reliefDefs[key], look.relief)
   terrain.add(ground.group)
+  // the share of the close view's ground is the set's to give (close.json): asked once here so its shader is built with the others
+  ground.presence(1)
+  // In the globe's scene the close ground stands in front of the globe's own ground of the same place (the cap), which holds a made
+  // ground where the close view's eye saw none: the depth is cleared between the close view's air and its meshes, so the meshes are
+  // tested against each other only and the air, tested against the globe, lies on the sky alone. The whole of it is drawn after the
+  // globe's halo, glint and shell: the thin rim of the far mesh writes depth and would cut the shell at the limb behind it.
+  // The close view itself keeps its order.
+  const closeAir = ground.group.children.find((o) => o.renderOrder === -1) as THREE.Mesh | undefined
+  const closeDepth = new THREE.Mesh(new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(new Float32Array(9), 3)), new THREE.MeshBasicMaterial({ colorWrite: false, depthTest: false, depthWrite: false, transparent: true }))
+  closeDepth.frustumCulled = false
+  closeDepth.renderOrder = -0.5
+  closeDepth.visible = false
+  closeDepth.onBeforeRender = (renderer) => renderer.clearDepth()
+  ground.group.add(closeDepth)
+  const closeScene = (on: boolean): void => {
+    closeDepth.visible = on
+    ground.group.renderOrder = on ? 10 : 0
+    if (closeAir) (closeAir.material as THREE.Material).depthTest = on
+  }
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
 
   const tintLow = new THREE.Vector3().fromArray(look.descent.tint)
@@ -165,6 +185,11 @@ export const createSet: SetFactory = async (ctx) => {
       terrain.visible = !inOrbit
       const gain = 1 / shot.post.exposure
       if (!inOrbit) {
+        terrain.position.set(0, 0, 0)
+        terrain.quaternion.identity()
+        terrain.scale.setScalar(1)
+        closeScene(false)
+        ground.presence(1)
         ground.update(state.time - terrainMid, gain, shot.post.vignette, view)
         return
       }
@@ -257,6 +282,22 @@ export const createSet: SetFactory = async (ctx) => {
       bounce.copy(moon.mesh.position).negate().normalize().applyQuaternion(state.rotation)
       moonLight.fromArray(look.moon.sunBias).applyQuaternion(state.rotation).add(light).normalize()
       moon.update(moonLight, bounce, moonWorld, gain * state.weight, shot.post.vignette, view.format.width / view.format.height)
+      // the close view's own ground in the globe's scene (close.json): at its true place through the twin, there by the eye's height
+      const moving = !ending && state.segment.stop === plan.id && (state.segment.kind === 'dive' || state.segment.kind === 'rise')
+      const c = closeJson.presence
+      const there = moving ? 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-5)) - Math.log(c.low)) / (Math.log(c.high) - Math.log(c.low))) : 0
+      terrain.visible = there > 0
+      // the globe's own air leaves as the close view's air comes: one share by the height
+      shell.material.uniforms.uGain!.value = gain * state.weight * (1 - there)
+      if (there > 0) {
+        const f = plan.twinFrame(state.time)
+        terrain.position.copy(f.origin)
+        terrain.quaternion.copy(f.rotation)
+        terrain.scale.setScalar(f.scale)
+        closeScene(true)
+        ground.presence(there)
+        ground.update(state.time - terrainMid, gain, shot.post.vignette, view)
+      }
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
       const visible = radiusPx > 0.6
