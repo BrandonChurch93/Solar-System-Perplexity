@@ -2,6 +2,8 @@ import * as THREE from 'three'
 import { FarPoint } from '../../bodies/farpoint'
 import type { SetFactory } from '../../core/types'
 import { config } from '../../config'
+import { Surface } from './convect'
+import { Jets } from './jets'
 import { Corona } from './corona'
 import { Fringe } from './fringe'
 import { SunGlobe } from './globe'
@@ -14,6 +16,7 @@ import { opening, plan } from './plan'
 import { Prominences } from './prominence'
 import { SkyCard } from './skycard'
 import { lifeCalm, lifeCalmAt, lifeFormat } from './life'
+import { formatUniform, setFormat } from './format'
 import { stage } from './stage'
 
 export const createSet: SetFactory = async (ctx) => {
@@ -58,7 +61,9 @@ export const createSet: SetFactory = async (ctx) => {
   const fringe = new Fringe(plate, await ctx.texture(base + look.files.haze, { srgb: true, anisotropy: 1 }), look.fringe)
   const loops = new Loops(await ctx.texture(base + look.files.loops, { srgb: true, anisotropy: 8 }), grade, (data, size) => ctx.floatTexture(data, size, size, true), look.loops, opening.on ? look.opening : undefined)
   const backdropTerrain = new SkyCard(await ctx.texture(base + look.skyTerrain.file, { srgb: true, mips: false, anisotropy: 1 }), look.skyTerrain)
-  terrain.add(ground.mesh, fringe.mesh, loops.mesh)
+  const surface = new Surface(ground.material.uniforms, map, mapToStage)
+  const jets = new Jets(ground.material.uniforms)
+  terrain.add(ground.mesh, surface.mesh, fringe.mesh, jets.glow, jets.mesh, loops.mesh)
   world.add(backdropTerrain.mesh)
   const inGlobe = stage.centre.clone().multiplyScalar(-1 / stage.radius).applyQuaternion(plan.toGlobe)
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2 + config.shutterFraction / (2 * config.fps)
@@ -100,7 +105,9 @@ export const createSet: SetFactory = async (ctx) => {
         terrain.quaternion.copy(carry).multiply(plan.toGlobe)
         terrain.scale.setScalar(1 / stage.radius)
         terrain.position.copy(inGlobe).applyQuaternion(carry)
-        backdropTerrain.mesh.quaternion.copy(plan.toGlobe)
+        // the surface view's sky rides with its ground on the globe's side as it does on the close side: the two sides
+        // show the same sky at the change of view, wherever the frame holds sky there
+        backdropTerrain.mesh.quaternion.copy(carry).multiply(plan.toGlobe)
       } else {
         terrain.quaternion.identity()
         terrain.scale.setScalar(1)
@@ -109,6 +116,7 @@ export const createSet: SetFactory = async (ctx) => {
       }
       const gain = 1 / shot.post.exposure
       const aspect = view.format.width / view.format.height
+      setFormat()
       const vignette = shot.post.vignette
       eye.copy(world.position).negate().applyQuaternion(turn.copy(world.quaternion).invert())
       if (placing) eye.applyQuaternion(turn.copy(carry).invert()).applyQuaternion(plan.toStage).multiplyScalar(stage.radius).add(stage.centre)
@@ -131,11 +139,16 @@ export const createSet: SetFactory = async (ctx) => {
         const calm = lifeCalm(ground.material.uniforms, t)
         const feet = loops.pulse(since)
         const surge = loops.surge(since, open)
-        const erupt = loops.erupt(since, open)
-        ground.update(eye, t, gain, vignette, aspect, fringe.lod(view.camera.fov, view.format.height), 0, open, since, look.opening.feet.ground * open * 0.5 * (feet[0] + feet[1]) + calm * loops.lit(since), look.opening.surge.ground * surge[3], look.opening.surge.kick * surge[2], look.opening.erupt.flash.ground * erupt[2] + loops.shell(since, open), look.opening.erupt.flash.veil * erupt[2], look.opening.feet.ground * open * 0.5 * (feet[0] + feet[1]))
+        ground.update(eye, t, gain, vignette, aspect, fringe.lod(view.camera.fov, view.format.height), 0, open, since, look.opening.feet.ground * open * 0.5 * (feet[0] + feet[1]) + calm * loops.lit(since), look.opening.surge.ground * surge[3], look.opening.surge.kick * surge[2], look.opening.erupt.flash.ground * loops.flashGround(since, open) + loops.shell(since, open), look.opening.erupt.flash.veil * loops.flashGround(since, open), look.opening.feet.ground * open * 0.5 * (feet[0] + feet[1]))
         lifeFormat(ground.material.uniforms, view.format.height)
+        // the ground from functions is the same on both sides of the rise: on the globe's side it lies on the globe
+        // and gives way to the globe's own face by the eye's height
+        ground.mesh.visible = false
+        surface.update(t, eye, placing ? 1 - above(by.surface) : 1, placing)
         ground.material.uniforms.uFieldFine!.value.x = rising ? above(by.field) : 0
         fringe.update(eye, t, gain, vignette, aspect, view.camera.fov, view.format.height, 1 - above(by.fringe))
+        fringe.mesh.visible = false
+        jets.update(t, 1 - above(by.fringe))
         const strands = 1 - above(by.loops)
         loops.mesh.visible = strands > 0
         loops.trim(above(by.strands))
@@ -144,7 +157,10 @@ export const createSet: SetFactory = async (ctx) => {
       }
       const elapsed = state.time - plan.holdMid
       const spin = plan.spin(state.time)
-      globe.place(placing ? 1 : 0, 1 - above(by.tidy), 1 - above(by.corona), 1 - above(by.spot))
+      globe.place(0, 1 - above(by.tidy), 1 - above(by.corona), 1 - above(by.spot))
+      // while the ground lies on the globe its lanes and its spot reach under the globe's ball: the ball is drawn
+      // first and leaves the depth to the ground (the ground covers all of the ball that can be seen from there)
+      globe.material.depthWrite = !(placing && above(by.surface) < 1)
       const glow = above(by.corona)
       const leaving = kind === 'travel'
       const going = leaving ? even(state.u, look.leave.over) : 0
@@ -216,7 +232,9 @@ export const createSet: SetFactory = async (ctx) => {
       prominences.update(elapsed, spin, gain * open, vignette, aspect, glow * state.weight, burn.set(burnt, look.leave.burn.wide, look.leave.burn.level, look.leave.burn.cover), hot)
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
-      const visible = radiusPx > 0.6
+      // (the size on screen that the far Sun is drawn from is counted in 1080ths of the frame height, by the same
+      // factor that the fades read)
+      const visible = radiusPx / formatUniform.value > 0.6
       globe.mesh.visible = visible
       corona.mesh.visible = visible
       prominences.mesh.visible = visible
@@ -230,6 +248,8 @@ export const createSet: SetFactory = async (ctx) => {
       backdrop.dispose()
       backdropTerrain.dispose()
       ground.dispose()
+      surface.dispose()
+      jets.dispose()
       fringe.dispose()
       loops.dispose()
     },

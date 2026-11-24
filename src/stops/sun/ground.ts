@@ -5,6 +5,7 @@ import { NOISE_GLSL } from '../../terrain/relief'
 import { APRON_GLSL } from './apron'
 import { GRADE_GLSL } from './grade'
 import { LIFE_GLSL, lifeUniforms, type LifeMaps } from './life'
+import { formatUniform } from './format'
 import { STAGE_GLSL, stage } from './stage'
 import fieldData from './field.json'
 import lifeData from './life.json'
@@ -78,6 +79,7 @@ vec3 thrown(vec3 base, vec3 lit) {
 }
 uniform vec2 uSize;
 uniform float uGrad;
+uniform float uFormat;
 uniform float uGain;
 uniform float uVignette;
 uniform float uAspect;
@@ -188,7 +190,7 @@ void main() {
   float texF = diagTexels(uvF * uFieldSize.y);
   // a finer level of the field where the camera of the rise comes so near that the field would be enlarged:
   // the field's own fine structure at a smaller size, as a ratio over its own soft copy
-  float finer = uFieldFine.x * (1.0 - smoothstep(uFieldFine.y, uFieldFine.z, texF));
+  float finer = uFieldFine.x * (1.0 - smoothstep(uFieldFine.y, uFieldFine.z, texF * uFormat));
   float texels = bare > 0.5 ? texF * mix(1.0, uFieldFine.w, step(0.5, finer)) : mix(diagTexels(uv * uSize), diagTexels(uvB * uApronSize), step(0.5, w));
   vec3 rel = here - uSpot;
   vec3 up = cross(uSpotE, uSpotN);
@@ -346,7 +348,7 @@ export class Ground {
         uInflow: { value: new THREE.Vector4(look.inflow.amount, look.inflow.waves, umbra * look.inflow.inner, umbra * look.inflow.outer) },
         uInflowRate: { value: new THREE.Vector2(look.inflow.rate, look.inflow.rate * 1.7) },
         uCam: { value: new THREE.Vector3() }, uExact: { value: 0 }, uSightTurn: { value: new THREE.Matrix3() }, uPort: { value: new THREE.Vector4(0, 0, 1, 1) }, uBand: { value: new THREE.Vector2(-THREE.MathUtils.degToRad(look.band[0]), -THREE.MathUtils.degToRad(look.band[1])) }, uLod: { value: 0 }, uSpot: { value: spot }, uSpotE: { value: spotE }, uSpotN: { value: spotN }, uShow: { value: new THREE.Vector2(1, 1) }, uMixed: { value: 0 },
-        uDiag: diagUniform, uGrad: gradUniform,
+        uDiag: diagUniform, uGrad: gradUniform, uFormat: formatUniform,
       },
     })
     if (seethe) {
