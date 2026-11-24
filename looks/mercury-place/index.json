@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T00:53:35.067Z",
- "head": "11ab125d2955dbea8df2f36ca43a5f12298b812f",
- "note": "G13 corner cure, fine function tile; dive pace peak moved",
+ "pushed": "2026-11-24T01:20:16.819Z",
+ "head": "c6bbaf6be2a2b9365830f4673441748fa0205660",
+ "note": "c6bbaf6b on main 11c4350e: smooth green, gate G11 G15 pass, kept frames 0 px; handover report running",
  "looks": [
+  {
+   "time": "2026-11-24T01:20:16.065Z",
+   "file": "20261124012016065-note-r1.jpg",
+   "source": "out/work/mercury/place/f5/r1.jpg",
+   "kind": "note",
+   "label": "c6bbaf6b rise 975 to 986, T at 977",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T01:20:15.242Z",
+   "file": "20261124012015242-note-d2.jpg",
+   "source": "out/work/mercury/place/f5/d2.jpg",
+   "kind": "note",
+   "label": "c6bbaf6b dive 754 to 765, T at 760, finer ground in the lower left corner, place picture off",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T00:53:21.204Z",
    "file": "20261124005321204-note-z760.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/mercury/place/m3/sheet-d2.jpg",
    "kind": "note",
    "label": "mercury step 2 and 4 draft, place picture off, meshes drawn in the globe view by height, sheet d2",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T00:12:33.250Z",
-   "file": "20261124001233250-note-sheet-d1.jpg",
-   "source": "out/work/mercury/place/m3/sheet-d1.jpg",
-   "kind": "note",
-   "label": "mercury step 2 and 4 draft, place picture off, meshes drawn in the globe view by height, sheet d1",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T23:47:11.306Z",
-   "file": "20261123234711306-note-sheet-r.jpg",
-   "source": "out/work/mercury/place/s2/sheet-r.jpg",
-   "kind": "note",
-   "label": "11ab125d rise 965 to 980 every frame: open fault, pale band at the limb from 978 (the change of view)",
    "stop": "mercury"
   }
  ]
