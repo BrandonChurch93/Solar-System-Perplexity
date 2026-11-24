@@ -5467,7 +5467,7 @@ MAIL 733 from the Builder (/root), 20:17 UTC, 2026-11-24. State of your stop.
 3. Coming with take batch 4 (on main within about an hour): a new line of the smooth report, smooth.path.minLeave 0.07: a rise must leave the surface view at a speed of at least 0.07 of the move's mean. Six of seven rises measured are red on it. Yours is not measured yet; measure it with npm run smooth -- --stop neptune --only path once the batch is on main and use the engine's handover.rise.pullBack if it is red.
 Go on with your round 2 work meanwhile; your looks every 30 minutes as before.
 
-## 20:10 to 20:24 UTC: main 07693d93 merged (fd6ba678), tests on the merge, main moved again
+## 20:10 to 20:23 UTC: main 07693d93 merged (fd6ba678), tests on the merge, main moved again
 
 1. Main 07693d93 (20:01 UTC) against the last merge holds only kit/PROGRESS.md and the scorecards of rounds 43 to 46, no
    code and nothing of my folders. Merged by a merge commit: fd6ba678b3ddcf3e960997e692c60ea6843325d7 (20:13 UTC).
@@ -5485,3 +5485,60 @@ Go on with your round 2 work meanwhile; your looks every 30 minutes as before.
 5. MAIL 733 (above) asks an answer: what is made at 4708 beside the sphere of the laid deep, what the 3 programs and 15
    buffers of 4950 are, and whether anything is made anew later. Measured next, with the tool's own counter
    (tools/lib/makers.ts), on the present state.
+
+## 20:23 to 20:40 UTC: MAIL 733 point 2 measured: what the dive and the rise make on the card, and where
+
+HOW. A work file (out/work/nep/made/made.ts, not in git) that opens the capture page as tools/warmcheck.ts does, cold (no
+warm start), one fresh page, preview draft, and draws a list of film positions in film order, whole and half frames (rate
+2). The numbers are the page's own counter (showcase.counts(), src/core/counts.ts) and the names are the tool's namer
+(tools/lib/makers.ts: every linkProgram with its uniforms, every bufferData with its bytes). Present state, e988e159 (code
+of 5c671343, main 07693d93 merged). Two runs, each from the hold 4530:
+  coarse (48 pictures, 9.9 minutes): 4680, 4690, 4700, 4706, 4707, 4707 + 1/2, 4708, 4708 + 1/2, 4709, every fourth frame
+  4712 to 4768, 4769, 4769 + 1/2, 4770, 4771, 4860, 4949, 4949 + 1/2, 4950, 4950 + 1/2, 4951, 4952, 4956, every tenth 4960
+  to 5020, 5024, 5024 + 1/2, 5025, 5030;
+  fine (31 pictures, 4.1 minutes): every half frame 4680 to 4690 and 4756 to 4760.
+
+MEASURED (logs out/work/nep/made/coarse.log, fine.log and the .jsonl beside them):
+1. 4686 + 1/2: 1 program, 5 buffers. The program has 137 uniforms (uCentre uCam uRadius uE0 uE1 uAxis uSun uFarSun uTime
+   uPix uGrad ...): the scene's own shader of deep.ts. The buffers are 4 (397836 bytes twice, 265224, 390144: positions,
+   normals and uv of 257 by 129 points and their index) and 1 vertex array: the sphere of the laid deep
+   (deep.ts line 1051, SphereGeometry(radius + h.top, 256, 128)). It is the first draw of the laid deep. Before the law
+   from 2.0 radii (MAIL 688 point 3) the laid deep first showed at 0.9 radii, frame 4708; now it shows from 2.0 radii,
+   which the eye passes between 4686 and 4686 + 1/2. At 4708 nothing is made now.
+2. 4758: 5 buffers, no program. 4 buffers (150156 twice, 100104, 145920: 129 by 97 points) and 1 vertex array: the
+   sphere of the surface view's own deep (the same line, not laid: 128, 96). It is drawn first when the engine's place
+   picture starts, 12 frames before the seam (config handover.placeFrames 12: 4758 to 4769). It links nothing because the
+   laid deep and the surface view draw with one shader text, so the card's program of point 1 serves both.
+3. 4950: 3 programs, 15 buffers, none of my stop. The programs carry uFlightDust, uFlightLight, uStripStar; uTerrainStars,
+   uNamedStars (25 more than the star program of the hold); uDeepLaw, uDeepCalm, uDeepSize. Those names stand only in
+   src/space/sky.ts: the strip, the flight stars and the deep field of the shared sky, three point clouds (12 buffers of
+   1.4 to 9.1 MB and 3 vertex arrays), which src/core/engine.ts sets (setFlightStars, setFlightBand) and the sky shows
+   with the sky of the travel that leaves. On a page that begins at my hold their first draw is the first picture of the
+   rise.
+4. Nothing is made anew later. No picture after each of the three did any work: 34 further pictures of the dive, 5 of the
+   surface view (4770, 4771, 4860, 4949, 4949 + 1/2), 13 of the rise. In the code every mesh and material of the stop is
+   made once when the set is built (set.ts lines 104 to 113, and the constructors) and disposed only in the set's dispose;
+   nothing in an update makes a geometry or a material.
+5. Beside these, in my cold runs only: 4680 makes 1 texture and 1 frame buffer (960 by 540, float: the engine's, the
+   machine's report does not show it, so its warm start has it), and 5025 (ending.retreat) links 1 program and makes 6
+   buffers with uFlow0, uFlow1, uGlint (src/space/dust.ts, the travel's dust; not asked).
+6. What the proof np42-02 read on 32a8d00 (first at 4708, 10 buffers in 2 pictures, 1 program): the same two things with
+   the laid deep still first shown at 0.9 radii, STATED from the code, not measured on that tree (I do not hold it).
+
+MAIL 733 point 3, as far as it can be read now. `npm run smooth -- --stop neptune --only path` on the present state
+(20:38, 2 s, out/work/nep/made/path-fd6b.md): "VERDICT: green. No number is over its limit"; the eye at the seam of the
+rise 0.94 at 4950 + 1/2 (limit 0.87). The report of the present main prints no line for the rest between the rise and the
+travel at this stop (my rise is followed by ending.retreat). Its table shows the speed over the mean of the move at 0.052
+at 5024 and 0.021 at 5025 to 5027, so I expect that line red here; that is an expectation, not the line's number. It is
+measured when take batch 4 is on main, and handover.rise.pullBack comes with it.
+
+## MY ANSWER to MAIL 733 point 2 to /root, 20:40 UTC 24 Nov (high priority), word for word
+
+ANSWER to MAIL 733 point 2 from neptune_builder, 20:40 UTC. MEASURED on my VM on the present state (agent/neptune-place e988e159f02905c3bfe44fa4cd7833afeee8e262: the code of 5c671343 with main 07693d93 merged, tests 554 of 554), with the page's own counter and the tool's namer (tools/lib/makers.ts), cold, one fresh page from the hold 4530, preview draft, 48 and 31 pictures in film order with half frames round each find.
+
+1. Beside the sphere at 4708: only the one program. It is the scene's own shader (src/stops/neptune/deep.ts, 137 uniforms), linked at the first draw of the laid deep. The 5 buffers are that sphere: 4 buffers (positions, normals, uv, index of 257 by 129 points) and 1 vertex array.
+2. The second picture of the dive is 4758: 5 buffers and no program. It is the sphere of 129 by 97 points of the surface view's own deep (the same line of deep.ts, not laid), first drawn when the engine's place picture starts 12 frames before the seam (handover.placeFrames). It links nothing: it draws with the program of point 1.
+3. 4950: none of it is my stop's. The 3 programs and 15 buffers are the three point clouds of the shared sky (src/space/sky.ts: the strip, the flight stars and the deep field; uniforms uStripStar and uFlightDust, uTerrainStars and uNamedStars, uDeepLaw; 12 buffers of 1.4 to 9.1 MB and 3 vertex arrays), which src/core/engine.ts sets and the sky shows with the sky of the travel that leaves. On a page that begins at my hold their first draw is the first picture of the rise.
+4. Made anew later: nothing. No later picture did any work (34 further pictures of the dive, 5 of the surface view, 13 of the rise), and in the code every mesh and material of the stop is made once when the set is built and disposed only with the set.
+5. THE FRAME HAS MOVED on the present state: with the law from 2.0 radii (MAIL 688 point 3) the laid deep is first drawn at 4686 + 1/2 (1 program and 5 buffers there, nothing at 4708). The warm list at my take needs 4686 + 1/2, 4758 and 4950, not 4708. What np42-02 read on 32a8d00 I state from the code, I did not measure that tree.
+6. Point 3: the path part on the present main is green here (2 s) and prints no line for the rest between my rise and ending.retreat yet. Its table shows the speed at 0.052 of the move's mean at 5024 and 0.021 at 5025 to 5027, so I expect the new line red; measured when batch 4 is on main, then handover.rise.pullBack.
