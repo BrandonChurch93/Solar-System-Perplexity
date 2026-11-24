@@ -67,8 +67,21 @@ describe('the slide of a travel', () => {
     }
   })
 
-  it('has the spread start on Uranus alone', () => {
-    for (const { id, look } of looks) expect(look.passStart[1] > look.passStart[0], id).toBe(id === 'uranus')
+  it('has the spread start on four legs and each is the old curve to the bit when its span is [0, 0]', () => {
+    const set: Record<string, [number, number]> = { mercury: [0.03, 1], venus: [0.03, 1], jupiter: [0, 1], uranus: [0.07, 1] }
+    for (const { id, look } of looks) {
+      expect(look.passStart, id).toEqual(set[id] ?? [0, 0])
+      if (!set[id]) continue
+      const off = new TravelShape(id, { passStart: [0, 0] })
+      const on = new TravelShape(id)
+      const old = passCurve(look.passPower, look.passKnee, look.passLead, look.passRound)
+      for (let k = 0; k <= 150; k++) {
+        const u = k / 150
+        expect(off.pass(u), id + ' at ' + u).toBe(old(u / look.passBy))
+        if (u >= look.passBy) expect(on.pass(u), id + ' at ' + u).toBe(off.pass(u))
+      }
+      expect(on.pass(look.passBy / 2), id).not.toBe(off.pass(look.passBy / 2))
+    }
   })
 })
 
