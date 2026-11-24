@@ -13,7 +13,7 @@ export const globe = {
   sharp: [0.3, 0.8] as [number, number],
   wrapSoft: 2.2,
   soft: 0,
-  diveSoft: [0.16, 2.3, 4.55] as [number, number, number],
+  diveSoft: [0, 2.3, 4.55] as [number, number, number],
   away: 1,
   awayShade: 1,
 }
