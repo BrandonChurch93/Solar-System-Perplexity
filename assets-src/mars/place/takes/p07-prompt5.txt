@@ -1,0 +1,17 @@
+Image 1 is a square, straight down (nadir) orbital photograph of canyon land on Mars in low evening light, north at the top, about 41 km across. The middle of it and its right edge are right and must stay: the dark, soft, shadowed ground in the middle (rounded spurs, swales and rubble with gentle shading), the lit cliff with its pale puff of dust right of the middle, and the sunlit pale mesa along the right edge. The rest is damaged: across the left half and along the top and the bottom the ground is drawn like a flat map, as dark flat cells with thin bright outlines and bright crest lines, like cracked mud or an etching.
+
+Image 2 is an oblique aerial photograph taken low over the same land, looking east south east. The dark ground along its bottom edge is the ground of the left half of image 1, seen from low: shadowed slopes of layered rock, rounded spurs, talus and rubble, with soft shading and no outlines.
+
+Task: redraw image 1 as one seamless nadir orbital photograph with the same framing, the same scale and north at the top.
+
+1. The middle and the right edge stay as they are, every light and dark patch where it is.
+
+2. The damaged ground: keep its broad layout, every larger ridge, spur, scarp and hollow stays where it is and keeps its size. Turn the line drawing into real ground with volume, exactly the kind of ground that lies in the middle of image 1: rounded ridges and spurs with a slightly lighter side toward the Sun and a darker side away from it, gentle swales between them, talus aprons, scattered boulders and rubble on the low ground, faint strata on the slopes. The relief is carried by soft gradients of dark brown and rust, never by bright lines.
+
+3. No bright outlines, no bright crest lines, no thin pale veins, no flat cells, no cracked mud, no net of lines, no etched look. No pure black holes: the hollows are dark but the ground in them can be made out.
+
+4. The redrawn ground is as dark and as low in contrast as the middle of image 1, and it runs into the middle without a seam, a frame or an edge, as one piece of land under one light. Nobody can tell that a square was laid into the middle.
+
+5. No fan, no pleats, no herringbone, no long parallel or curved lines. Nothing may radiate from one point like the spokes of a wheel. No round pits, no fields of craters, no dots. No mist, no cloud, no smoke in the redrawn ground.
+
+Light: a low Sun in the south south east, soft long shadows falling toward the north north west, the same everywhere. A photograph from orbit: no horizon, no sky, no text, no border, no vignette.

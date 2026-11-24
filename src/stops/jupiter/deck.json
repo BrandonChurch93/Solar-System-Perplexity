@@ -83,7 +83,7 @@
     "azimuthDeg": 130
   },
   "look": {
-    "note": "Numbers of the shader in clouds.ts. shell: lowest and highest height of the layer the march runs in. march: slack added to the slope of the ray when a step is sized by the height over the ground, least step in pixel footprints, a hit counts under this many footprints, most steps. detail: the function detail is a field of rounded tops made per wave length (cells with one seeded top each, each wave turned against the last): the largest wave in units, how much a top is brighter than the crease beside it, a wave may be this many pixels of the canvas at most (the scale the laid back image resolves at that spot, the mean of across and along its view), and this many pixel footprints at least. detailLook: the height a top stands over the mean, power by which a wave's slope falls with its length, least roughness, most change of brightness. detailTone: how much a slope toward the Sun's azimuth lights a top. detailHigh: from above (by the weight of tone.lift) the least wave is this many pixel footprints instead of detail[3], so the function holds a full texel a pixel where a plate is enlarged; the globe draws the same function on the plates of the place. foot: least cosine between ray and ground in the footprint, the footprint is cut into taps when it is longer than this times its width, most taps. blend: share of a height map's half width where it starts to give way to the next and where it ends. join: the same for the plates. trust: the image field is shown fully while the smear of a texel across the pixel's footprint is under trust[0] footprints and not at all over trust[1]; trust[2] = 1 takes the image field away (a check of the plates alone). stretch: a texel may be enlarged this many times before the lookup is widened, most change of tone the plates' own detail may add to a widened lookup (1 = none), most widening, least sine between the fit camera's ray and the ground. anisotropy: taps of the texture filter.",
+    "note": "Numbers of the shader in clouds.ts. shell: lowest and highest height of the layer the march runs in. march: slack added to the slope of the ray when a step is sized by the height over the ground, least step in pixel footprints, a hit counts under this many footprints, most steps. detail: the function detail is a field of rounded tops made per wave length (cells with one seeded top each, each wave turned against the last): the largest wave in units, how much a top is brighter than the crease beside it, a wave may be this many pixels of the canvas at most (the scale the laid back image resolves at that spot, the mean of across and along its view), and this many pixel footprints at least. detailLook: the height a top stands over the mean, power by which a wave's slope falls with its length, least roughness, most change of brightness. detailTone: how much a slope toward the Sun's azimuth lights a top. detailHigh: from above (by the weight of tone.lift) the least wave is this many pixel footprints instead of detail[3], so the function holds a full texel a pixel where a plate is enlarged; the globe draws the same function on the plates of the place. foot: least cosine between ray and ground in the footprint, the footprint is cut into taps when it is longer than this times its width, most taps. blend: share of a height map's half width where it starts to give way to the next and where it ends. join: the same for the plates. trust: the image field is shown fully while the smear of a texel across the footprint of a 1080th of the frame height (a pixel of the 16 by 9 master, whatever the format) is under trust[0] such footprints and not at all over trust[1]; trust[2] = 1 takes the image field away (a check of the plates alone). stretch: a texel may be enlarged this many times before the lookup is widened, most change of tone the plates' own detail may add to a widened lookup (1 = none), most widening, least sine between the fit camera's ray and the ground. anisotropy: taps of the texture filter.",
     "shell": [
       -0.45,
       0.4
@@ -136,7 +136,7 @@
     "detailHigh": 1.2
   },
   "air": {
-    "note": "The air between the camera and the deck, measured by deck/air.py on the approved view: for the plates, which hold the deck as it is from straight above, it gives the share of their light that comes through (by the sine of the angle between the ray and the ground) and the light the air adds (by that sine and by the turn of the ray away from the Sun's azimuth, mirrored). sinRange: the sines of the first and last knot, spaced by ratio. knots: count over the sine, count over the turn from 0 to 180 degrees. clear: between these sines the air ends, so a steep ray sees the plates as they are. minTexels: texels of the view chart a cell needs. smooth: blur of the added light in cells. lift: the weight by which the air is gone, over the time outside the surface view: per kind (dive, rise) knots of [seconds before the surface view begins or after it ends, weight], joined by a curve that never turns back; the weight is 1 from the handover frame outward and exactly 0 inside the surface view, so from far above the plates show as the globe shows them and the air of the approved view comes in as the camera sinks into it. The knots are solved by assets-src/jupiter/deck/lift.py from levels measured with the weight held at 1 and at 0 (lift-measure.json), so the mean level of the body steps as evenly as it can between the handover and the surface view: where the dark ground under the storm comes into the frame by itself (3039 to 3044, 3255 to 3261) the weight nearly waits. Before, the weight followed the camera's height and the widest steps were 6.2 and 5.9 a frame.",
+    "note": "The air between the camera and the deck, measured by deck/air.py on the approved view: for the plates, which hold the deck as it is from straight above, it gives the share of their light that comes through (by the sine of the angle between the ray and the ground) and the light the air adds (by that sine and by the turn of the ray away from the Sun's azimuth, mirrored). sinRange: the sines of the first and last knot, spaced by ratio. knots: count over the sine, count over the turn from 0 to 180 degrees. clear: between these sines the air ends, so a steep ray sees the plates as they are. minTexels: texels of the view chart a cell needs. smooth: blur of the added light in cells. The weight by which the air is gone is not kept here any more: it is read from the camera's height (place.json scene.air), exactly 0 at every height of the surface view, so from far above the plates show as the globe shows them and the air of the approved view comes in as the camera sinks into it. assets-src/jupiter/deck/lift.py and lift-measure.json are the history of the weight solved by film time (the largest level step was 4.84 a frame then).",
     "sinRange": [
       0.002,
       0.4
@@ -150,298 +150,23 @@
       0.3
     ],
     "minTexels": 200,
-    "smooth": 0.8,
-    "lift": {
-      "dive": [
-        [
-          0.0,
-          0.0
-        ],
-        [
-          0.025,
-          0.00627
-        ],
-        [
-          0.05833,
-          0.01543
-        ],
-        [
-          0.09167,
-          0.03059
-        ],
-        [
-          0.125,
-          0.05186
-        ],
-        [
-          0.15833,
-          0.06991
-        ],
-        [
-          0.19167,
-          0.0888
-        ],
-        [
-          0.225,
-          0.11118
-        ],
-        [
-          0.25833,
-          0.13594
-        ],
-        [
-          0.29167,
-          0.16367
-        ],
-        [
-          0.325,
-          0.19611
-        ],
-        [
-          0.35833,
-          0.23452
-        ],
-        [
-          0.39167,
-          0.27916
-        ],
-        [
-          0.425,
-          0.32771
-        ],
-        [
-          0.45833,
-          0.3764
-        ],
-        [
-          0.49167,
-          0.42135
-        ],
-        [
-          0.525,
-          0.45974
-        ],
-        [
-          0.55833,
-          0.48908
-        ],
-        [
-          0.59167,
-          0.50918
-        ],
-        [
-          0.625,
-          0.52181
-        ],
-        [
-          0.65833,
-          0.53047
-        ],
-        [
-          0.69167,
-          0.54012
-        ],
-        [
-          0.725,
-          0.55489
-        ],
-        [
-          0.75833,
-          0.5781
-        ],
-        [
-          0.79167,
-          0.60911
-        ],
-        [
-          0.825,
-          0.64664
-        ],
-        [
-          0.85833,
-          0.68922
-        ],
-        [
-          0.89167,
-          0.73396
-        ],
-        [
-          0.925,
-          0.7793
-        ],
-        [
-          0.95833,
-          0.82181
-        ],
-        [
-          0.99167,
-          0.86032
-        ],
-        [
-          1.025,
-          0.89424
-        ],
-        [
-          1.05833,
-          0.92408
-        ],
-        [
-          1.09167,
-          0.95028
-        ],
-        [
-          1.125,
-          0.97272
-        ],
-        [
-          1.15833,
-          0.99003
-        ],
-        [
-          1.18333,
-          1.0
-        ]
-      ],
-      "rise": [
-        [
-          0.0,
-          0.0
-        ],
-        [
-          0.00833,
-          0.00524
-        ],
-        [
-          0.04167,
-          0.01181
-        ],
-        [
-          0.075,
-          0.02201
-        ],
-        [
-          0.10833,
-          0.03528
-        ],
-        [
-          0.14167,
-          0.05141
-        ],
-        [
-          0.175,
-          0.06553
-        ],
-        [
-          0.20833,
-          0.08133
-        ],
-        [
-          0.24167,
-          0.10452
-        ],
-        [
-          0.275,
-          0.13895
-        ],
-        [
-          0.30833,
-          0.18636
-        ],
-        [
-          0.34167,
-          0.24496
-        ],
-        [
-          0.375,
-          0.31384
-        ],
-        [
-          0.40833,
-          0.39067
-        ],
-        [
-          0.44167,
-          0.47063
-        ],
-        [
-          0.475,
-          0.54866
-        ],
-        [
-          0.50833,
-          0.61865
-        ],
-        [
-          0.54167,
-          0.67576
-        ],
-        [
-          0.575,
-          0.71914
-        ],
-        [
-          0.60833,
-          0.7496
-        ],
-        [
-          0.64167,
-          0.772
-        ],
-        [
-          0.675,
-          0.79138
-        ],
-        [
-          0.70833,
-          0.81087
-        ],
-        [
-          0.74167,
-          0.83368
-        ],
-        [
-          0.775,
-          0.86242
-        ],
-        [
-          0.80833,
-          0.89443
-        ],
-        [
-          0.84167,
-          0.92537
-        ],
-        [
-          0.875,
-          0.9531
-        ],
-        [
-          0.90833,
-          0.97407
-        ],
-        [
-          0.94167,
-          0.98785
-        ],
-        [
-          0.975,
-          0.996
-        ],
-        [
-          1.0,
-          1.0
-        ]
-      ]
-    }
+    "smooth": 0.8
   },
   "flight": {
-    "note": "The flight of the surface view. seconds: its length. The camera passes the pose of the approved image at the middle. Forward speed over the ground goes from startUnitsPerSecond to endUnitsPerSecond with the power of the elapsed share. Before the middle it also comes down: startAbove units higher at the start, falling with the sinkPower of the share of the way still to go, so it stays near the bottom plane of the approved view and little ground shows that the image never saw. ease: after the middle the way is cut short, by units at the end of the surface view, where the speed is unitsPerSecond less; the cut is given back over backSeconds under the pull back of the rise, so the pose at the rise's handover is the same as without it. The reason is what the picture holds, not blur: flown the whole way, the pale collar south west of the storm comes under the camera about twice as large as the approved image holds it and reads as a soft wash; the eased flight ends before that. exposureStops: knots [seconds from the middle, stops] of the exposure of the surface view, read through a monotone curve. They are fitted to the measured mean level of the frame so that it stays level from frame 3120 to 3225 while sunlit cloud fills more of the frame. The first knot is the exposure the dive hands over with, the last the one the globe takes at the rise's handover.",
+    "note": "The flight of the surface view: one flight that takes the dive's motion at its first frame and hands the rise its motion at its last. seconds: its length. The camera passes the pose of the approved image at the middle. Up to the middle the forward speed over the ground goes from startUnitsPerSecond with the power of the elapsed share (endUnitsPerSecond is what that law would reach at the end), and the camera comes down: startAbove units higher at the start, falling with the sinkPower of the share of the way still to go, so it stays near the bottom plane of the approved view and little ground shows that the image never saw. bend: from the end of the judged middle frame's own shutter the push bends into a track across and on into a pull back up the lens's own line, which is the line the rise leaves along. The heading of the flight turns from straight ahead to straight back along the lens, through the right where through is -1 and through the left where it is 1 (to the right the eye stays over ground the approved image saw until the rise has lifted it; to the left the frame's bottom left corner left that ground four frames after the seam, while the eye was still low), on a smooth step that has no turn at either end, and the climb comes in with that step raised to climbPower, so the track across stays level and the camera lifts only as it pulls back. The speed over the camera's own height rises in a straight line from what the middle frame has to endPerSecond, so it never falls. The way is summed once in steps of 1 over stepsPerSecond and read between them through a cubic with the true speeds, so it holds at any fraction of a frame; beyondSeconds is how far past the seam the table reaches, straight on. ease: units and unitsPerSecond are the old cut of the way; they act only inside the shutter of the judged middle frame, so that frame's camera stays what it was to the byte. exposureStops: knots [seconds from the middle, stops] of the exposure of the surface view, read through a monotone curve. They are fitted to the measured mean level of the frame so that it stays level while sunlit cloud fills more or less of the frame. The first knot is the exposure the dive hands over with, the last the one the globe takes at the rise's handover.",
     "seconds": 6,
     "startUnitsPerSecond": 0.12,
     "endUnitsPerSecond": 0.3,
     "power": 1,
     "startAbove": 0.32,
     "sinkPower": 2,
+    "bend": {
+      "through": -1,
+      "climbPower": 2,
+      "endPerSecond": 0.3,
+      "stepsPerSecond": 96,
+      "beyondSeconds": 0.5
+    },
     "exposureStops": [
       [
         -3,
@@ -494,8 +219,7 @@
     ],
     "ease": {
       "units": 0.3,
-      "unitsPerSecond": 0.2,
-      "backSeconds": 1.0
+      "unitsPerSecond": 0.2
     }
   },
   "view": {
@@ -564,7 +288,7 @@
     "fadeFrom": 0.75
   },
   "plates": {
-    "note": "Top down plates of the place, made from the approved close image by assets-src/jupiter/plates (recipe in assets-src/jupiter/RECIPE.md). Units and chart as the maps; size and pixels are x then y. They hold albedo in the globe's coding (values above white kept), so the globe shows them as the deepest levels of its patches. order: the order in which the plates are made. parents: the plate a canvas is enlarged from; without one the canvas starts from the globe's own albedo at the place, with the flow frozen as in place.json (globeBlurPx: how soft that is in plate pixels). inset: a finished finer plate laid into the canvas at its own place. grade: one colour, the median over the laid back image within gradeRadius units of the vortex of the close image over the globe's albedo, both at a scale of gradeScale units. The plates are the close image divided by it, so they sit on the globe at the globe's own brightness and hue, and the surface view multiplies it back in as one exposure that changes with time alone. useBlur: the laid back image is used where its own blur along the view is under useBlur[0] units, and not at all over useBlur[1]; beyond, near the image's horizon, the globe's own structure stays. flatten: from flatten[0] to flatten[1] units of ground distance from the close camera the laid back image gives up its tone above a scale of flatten[2] units to the globe's, because there its tone is the haze of a low view, not the cloud. carry: outside the laid back image the canvas carries the image's tone on from the border (measured at a scale of carry[0] units) and lets it go over carry[1] units. free: outside the laid back image the repaint is tied to the canvas at a scale that grows by this many pixels of blur per pixel of distance from the border. softPx: plate pixels of blur per unit of the image's own blur along the view, which marks unresolved parts as unfinished for the repaint. parentBlurPx: the blur of a level enlarged from the level above. clear: the globe's own structure is taken away within clear[0] units of the vortex (fading out to clear[1]) by a blur of clear[2] units, so the repaint closes the storm of the close image all the way round and the globe's small oval, which is that storm seen from far, does not stand beside it. bandPx: width and blur, in plate pixels, of the unfinished band along the border of the laid back image. finishedPx: blur under which the canvas is kept as it is. lock: the repaint keeps its own structure below lock[0] times the canvas blur (at least lock[1], at most lock[2] pixels) and takes the canvas above. lockGain: strength of the repaint's own structure. hiddenError: fixed point error of the lay back, in units, over which a place counts as hidden from the close image. feather: width of the join in units. nest: the near plate keeps its own repaint inside nest[0] units from its centre and is the mid plate beyond nest[1], measured with the power norm nestPower (a rounded square); the mid plate is the near plate made smaller inside the same shape.",
+    "note": "Top down plates of the place, made from the approved close image by assets-src/jupiter/plates (recipe in assets-src/jupiter/RECIPE.md). Units and chart as the maps; size and pixels are x then y. They hold albedo in the globe's coding (values above white kept), so the globe shows them as the deepest levels of its patches. order: the order in which the plates are made. parents: the plate a canvas is enlarged from; without one the canvas starts from the globe's own albedo at the place, with the flow frozen as in place.json (globeBlurPx: how soft that is in plate pixels). inset: a finished finer plate laid into the canvas at its own place. grade: one colour, the median over the laid back image within gradeRadius units of the vortex of the close image over the globe's albedo, both at a scale of gradeScale units. The plates are the close image divided by it, so they sit on the globe at the globe's own brightness and hue, and the surface view multiplies it back in as one exposure that changes with time alone. useBlur: the laid back image is used where its own blur along the view is under useBlur[0] units, and not at all over useBlur[1]; beyond, near the image's horizon, the globe's own structure stays. flatten: from flatten[0] to flatten[1] units of ground distance from the close camera the laid back image gives up its tone above a scale of flatten[2] units to the globe's, because there its tone is the haze of a low view, not the cloud. carry: outside the laid back image the canvas carries the image's tone on from the border (measured at a scale of carry[0] units) and lets it go over carry[1] units. free: outside the laid back image the repaint is tied to the canvas at a scale that grows by this many pixels of blur per pixel of distance from the border. softPx: plate pixels of blur per unit of the image's own blur along the view, which marks unresolved parts as unfinished for the repaint. parentBlurPx: the blur of a level enlarged from the level above. clear: the globe's own structure is taken away within clear[0] units of the vortex (fading out to clear[1]) by a blur of clear[2] units, so the repaint closes the storm of the close image all the way round and the globe's small oval, which is that storm seen from far, does not stand beside it. bandPx: width and blur, in plate pixels, of the unfinished band along the border of the laid back image. finishedPx: blur under which the canvas is kept as it is. lock: the repaint keeps its own structure below lock[0] times the canvas blur (at least lock[1], at most lock[2] pixels) and takes the canvas above. lockGain: strength of the repaint's own structure. hiddenError: fixed point error of the lay back, in units, over which a place counts as hidden from the close image. feather: width of the join in units. nest: the near plate keeps its own repaint inside nest[0] units from its centre and is the mid plate beyond nest[1], measured with the power norm nestPower (a rounded square); the mid plate is the near plate made smaller inside the same shape. upward: assets-src/jupiter/plates/upward.py takes the place as the plates show it from above (fore, near and mid plate nested as the globe nests them) and writes it, reduced by area to the texel of a level above the mid plate, into the levels named in levels: far is the far plate (in the plates' coding), wrap is the globe's wrap and patches are its three patches (there divided by the grade, times the tone and calm fields, as the globe shows the plates). Only far is written. The wrap and the patches keep the globe's own small oval, which is what the approved hero shows at the place, so the hold keeps its picture, and the globe's picture and the plates are still two pictures of the place. border: full within the first distance in units from the vortex, none from the second. marginDeg: how far past the border the tool looks for texels.",
     "fore": {
       "centre": [
         0,
@@ -681,10 +405,20 @@
         2048,
         2048
       ]
+    },
+    "upward": {
+      "levels": [
+        "far"
+      ],
+      "border": [
+        16.5,
+        23.5
+      ],
+      "marginDeg": 1.0
     }
   },
   "image": {
-    "note": "The fit camera looks its own picture up: a point of the deck that the fit camera saw takes its colour from the canvas at the pixel where that camera saw it (deck/image.py writes the canvas, the core at twice its scale for the approved image, and the range the fit camera saw along every ray), so the frame at the fit pose is the approved image, and from any other pose every point keeps the colour it had. A point the fit camera did not see (farther along its ray than the stored range) takes the fill of the view chart. rangeShrink: canvas pixels per stored range, for the full and the web set. rangeLog2: the least and the greatest stored range as powers of two. hidden: a point counts as seen while it lies less than hidden[0] of the stored range beyond it, and as unseen from hidden[1]. sharpen: the footprint of a lookup in the canvas is taken this many times its true size. quality: of the stored pictures. march: slack, least step and hit distance in stored pixels, most steps, of the tool march. reach: units from the point under the fit camera beyond which the deck is the smooth sphere. steep: a point the fit camera saw so steeply that one pixel of the canvas is drawn over more than steep[0] pixels of the frame passes to the fill of the view chart, fully from steep[1] on; below that the canvas is shown as it is and the shader's own detail fills the scale it lacks.",
+    "note": "The fit camera looks its own picture up: a point of the deck that the fit camera saw takes its colour from the canvas at the pixel where that camera saw it (deck/image.py writes the canvas, the core at twice its scale for the approved image, and the range the fit camera saw along every ray), so the frame at the fit pose is the approved image, and from any other pose every point keeps the colour it had. A point the fit camera did not see (farther along its ray than the stored range) takes the fill of the view chart. rangeShrink: canvas pixels per stored range, for the full and the web set. rangeLog2: the least and the greatest stored range as powers of two. hidden: a point counts as seen while it lies less than hidden[0] of the stored range beyond it, and as unseen from hidden[1]. sharpen: the footprint of a lookup in the canvas is taken this many times its true size. quality: of the stored pictures. march: slack, least step and hit distance in stored pixels, most steps, of the tool march. reach: units from the point under the fit camera beyond which the deck is the smooth sphere. steep: a point the fit camera saw so steeply that one pixel of the canvas is drawn over more than steep[0] 1080ths of the frame height (pixels of the 16 by 9 master, whatever the format) passes to the fill of the view chart, fully from steep[1] on; below that the canvas is shown as it is and the shader's own detail fills the scale it lacks.",
     "rangeShrink": {
       "full": 2,
       "web": 4
@@ -813,7 +547,10 @@
     }
   },
   "above": {
-    "note": "How the ground looks from above the air, so the far field of the surface view's scene is the globe's far field at the handover. Knots lie evenly in the square root of the sine of the angle between the ray and the ground (0 at the horizon, 1 straight down). gain: the light of the ground is multiplied by it. air: light added on top, in the scene's own units before the exposure. Both act by the weight of air.lift (nothing under its first height, so frames 3060 to 3239 do not change). Measured at frame 3024 on stills of both sides: the globe alone (beauty/side=orbit/noplace) over the scene, medians per bin of the sine; under a sine of 0.2 the spread of the globe no longer follows the scene, so there the rest is added light.",
+    "note": "How the ground looks from above the air, so the far field of the surface view's scene is the globe's far field at the handover. Knots lie evenly in the square root of the sine of the angle between the ray and the ground (0 at the horizon, 1 straight down). gain: the light of the ground is multiplied by it. air: light added on top, in the scene's own units before the exposure. Both act by the weight of the air read from the camera's height (place.json scene.air: nothing at and under its first height, so frames 3060 to 3239 do not change). Measured at frame 3024 on stills of both sides: the globe alone (beauty/side=orbit/noplace) over the scene, medians per bin of the sine; under a sine of 0.2 the spread of the globe no longer follows the scene, so there the rest is added light.",
+    "evenNote": "even: the share of the mix between the look under the air and the look from above that is taken in the logarithm of the light (1: the same ratio of light for the same step of the weight, so the far ground does not turn pale in the lowest tenth of the weight; 0: the straight mix). At a weight of 0 and of 1 the picture is the same either way. floor: the least light that enters the logarithm.",
+    "even": 1.0,
+    "floor": 1e-05,
     "gain": [
       [
         3.8,
@@ -930,7 +667,7 @@
     ]
   },
   "life": {
-    "note": "What moves in the surface view while the camera flies (mail 230). Every motion is a rigid turn or a rigid drift of a function of the ground point, set by time alone; no field is dragged through a flow and no picture is scrolled. storm: the vortex turns about centre (chart units, the middle of the red disc on the near plate) as a rigid body inside coreUnits, less and less out to rimUnits, where the ground stands still. Heights, colours, the image lookup and the function detail all read the same turned ground point, so the relief turns with its colour. The turn is boundDeg times tanh(degPerSecond times seconds from the middle of the surface view over boundDeg): degPerSecond counter clockwise seen from above at the middle (frame 3150, where the turn is zero and the picture is the approved one), never more than boundDeg either way. Wind up: in the 180 frames the core turns 5.08 degrees either way, so two radii differ by at most 10.16 degrees, spread over the 3.4 units from core to rim; the largest shear of the approved shapes is 0.13 either way. The globe draws the plates of the place with the same turn, so both sides of a handover agree. rings (mail 345): a vortex reads as turning when its parts turn at different rates, so inside the core the ground is cut into rings about the same centre that outrun one another. Each ring adds its own turn to everything inside the inner one of its two edgeUnits, falling to nothing by a smoothstep at the outer one, in the same bounded form (boundDeg times tanh(degPerSecond times seconds over boundDeg)). The rates add inward: at the middle the eye turns 10 degrees a second, the next rings 8, 6 and 4, the ground outside the last seam the 2 of the core. In the 180 frames each ring gains 5.08 degrees either way on the one outside it, the eye 20.3 on the ground outside the seams. The shear is meant to be seen and lies only inside the four seams (0.14, 0.18, 0.22 and 0.35 units wide, laid on the dark gaps between the cloud walls where there is little to stretch): at the two ends of the surface view it reaches 0.41, 0.60, 0.73 and 0.65 at the middle radius of the seams, which is past the 0.13 that mail 230 allowed for the core and is the price of the visible turn; between the seams every ring is rigid and its shapes keep their form. eddies: small vortices of the picture turn about their own centres (chart units as stored, carried round by the storm) in the same form: rigid inside coreUnits, still at rimUnits, degPerSecond at the middle (negative is clockwise), never more than boundDeg; in the 180 frames 6.34 degrees either way, the rim four cores out, largest shear 0.14. haze: two thin rigid sheets of cloud at heightUnits over the datum (both above the relief, which stays within about 0.1), one on each side of the storm (side -1 south, 1 north of the line through the storm centre along the jet; a sheet begins between its two edgeUnits from that line and ends between its two reachUnits from the centre), drifting along the jet at unitsPerSecond (east is positive; the two go opposite ways, as the jets on the two sides of an anticyclone do). The density of a sheet is a function of its own point: banks (bankUnits, warp) made of fibres along the jet (fibreUnits, fibreOctaves, fibreShare, fibreWarp), value noise in octaves (lacunarity, octaveGain, octaveShift, warpSeed, octaveFade by the pixel footprint), cover the two thresholds, footprint the fade where a pixel is wider than the fibres. A sheet lightens what lies behind it by depth over the cosine of the view (at least minCosine) with the low passed colour of its ground (lightBlurUnits) times glow, so it takes the tone of its ground; that light is weighted by forward [g, gain] as min(gain x ((1 - g) / sqrt(1 + g x g - 2 g c))^3, 1), c being the cosine between the view ray and the direction to the Sun, so thin cloud shows where one looks toward the Sun and nearly vanishes where one looks down on it (measured: without the weight the south sheet lay as a pale mist band over the foreground at 3060 to 3135); on the deck it lays a shadow of shadowDepth where the Sun's ray (sunElevationDeg) passes through it, tinted by shadowTint, displaced by the height between sheet and ground, fading over softUnits where the ground reaches the sheet. Both count only where the ground is sunlit (lit: thresholds on the warmth of the low passed ground). flash: lightning inside the dark blue cloud. At each site (at in chart units as stored, radiusUnits) an envelope e = sum of strength x u x exp(1 - u) runs, u being the time since an event over riseSeconds. Two things follow from it. The cold pixels (cold: thresholds on blue against red, the sum of the two never taken below core.floor so that the black of the plate does not switch the mask; bright: thresholds on luminance, darker pixels take the share surround) are multiplied by exp(gain x e x exp(-q)), q being the squared distance over radiusUnits squared. And light is added: glow x e x (exp(-q x core.tight) + core.spill x exp(-q)) x the square root of the luminance of the pixel, a small bright heart with a wide faint spill that keeps the forms of the cloud it lights. The events [seconds from the middle, strength] were drawn once from seed and are listed, so the light is a function of time alone; a glow needs riseSeconds (about 4 frames) to its peak and fades over about 20, so nothing strobes; no event is alight at the middle (frame 3150) or at a handover. proof.cameraHeld: true holds the camera of the surface view at the pose of frame 3150 while time runs, for the life only sheet; false in the film.",
+    "note": "What moves in the surface view while the camera flies (mail 230). Every motion is a rigid turn or a rigid drift of a function of the ground point, set by time alone; no field is dragged through a flow and no picture is scrolled. storm: the vortex turns about centre (chart units, the middle of the red disc on the near plate) as a rigid body inside coreUnits, less and less out to rimUnits, where the ground stands still. Heights, colours, the image lookup and the function detail all read the same turned ground point, so the relief turns with its colour. The turn is boundDeg times tanh(degPerSecond times seconds from the middle of the surface view over boundDeg): degPerSecond counter clockwise seen from above at the middle (frame 3150, where the turn is zero and the picture is the approved one), never more than boundDeg either way. Wind up: in the 180 frames the core turns 5.08 degrees either way, so two radii differ by at most 10.16 degrees, spread over the 3.4 units from core to rim; the largest shear of the approved shapes is 0.13 either way. The globe draws the plates of the place with the same turn, so both sides of a handover agree. rings (mail 345): a vortex reads as turning when its parts turn at different rates, so inside the core the ground is cut into rings about the same centre that outrun one another. Each ring adds its own turn to everything inside the inner one of its two edgeUnits, falling to nothing by a smoothstep at the outer one, in the same bounded form (boundDeg times tanh(degPerSecond times seconds over boundDeg)). The rates add inward: at the middle the eye turns 10 degrees a second, the next rings 8, 6 and 4, the ground outside the last seam the 2 of the core. In the 180 frames each ring gains 5.08 degrees either way on the one outside it, the eye 20.3 on the ground outside the seams. The shear is meant to be seen and lies only inside the four seams (0.14, 0.18, 0.22 and 0.35 units wide, laid on the dark gaps between the cloud walls where there is little to stretch): at the two ends of the surface view it reaches 0.41, 0.60, 0.73 and 0.65 at the middle radius of the seams, which is past the 0.13 that mail 230 allowed for the core and is the price of the visible turn; between the seams every ring is rigid and its shapes keep their form. eddies: small vortices of the picture turn about their own centres (chart units as stored, carried round by the storm) in the same form: rigid inside coreUnits, still at rimUnits, degPerSecond at the middle (negative is clockwise), never more than boundDeg; in the 180 frames 6.34 degrees either way, the rim four cores out, largest shear 0.14. haze: two thin rigid sheets of cloud at heightUnits over the datum (both above the relief, which stays within about 0.1), one on each side of the storm (side -1 south, 1 north of the line through the storm centre along the jet; a sheet begins between its two edgeUnits from that line and ends between its two reachUnits from the centre), drifting along the jet at unitsPerSecond (east is positive; the two go opposite ways, as the jets on the two sides of an anticyclone do). The density of a sheet is a function of its own point: banks (bankUnits, warp) made of fibres along the jet (fibreUnits, fibreOctaves, fibreShare, fibreWarp), value noise in octaves (lacunarity, octaveGain, octaveShift, warpSeed, octaveFade by the pixel footprint), cover the two thresholds, footprint the fade where a 1080th of the frame height (a pixel of the 16 by 9 master, whatever the format) is wider than the fibres. A sheet lightens what lies behind it by depth over the cosine of the view (at least minCosine) with the low passed colour of its ground (lightBlurUnits) times glow, so it takes the tone of its ground; that light is weighted by forward [g, gain] as min(gain x ((1 - g) / sqrt(1 + g x g - 2 g c))^3, 1), c being the cosine between the view ray and the direction to the Sun, so thin cloud shows where one looks toward the Sun and nearly vanishes where one looks down on it (measured: without the weight the south sheet lay as a pale mist band over the foreground at 3060 to 3135); on the deck it lays a shadow of shadowDepth where the Sun's ray (sunElevationDeg) passes through it, tinted by shadowTint, displaced by the height between sheet and ground, fading over softUnits where the ground reaches the sheet. Both count only where the ground is sunlit (lit: thresholds on the warmth of the low passed ground). flash: lightning inside the dark blue cloud. At each site (at in chart units as stored, radiusUnits) an envelope e = sum of strength x u x exp(1 - u) runs, u being the time since an event over riseSeconds. Two things follow from it. The cold pixels (cold: thresholds on blue against red, the sum of the two never taken below core.floor so that the black of the plate does not switch the mask; bright: thresholds on luminance, darker pixels take the share surround) are multiplied by exp(gain x e x exp(-q)), q being the squared distance over radiusUnits squared. And light is added: glow x e x (exp(-q x core.tight) + core.spill x exp(-q)) x the square root of the luminance of the pixel, a small bright heart with a wide faint spill that keeps the forms of the cloud it lights. The events [seconds from the middle, strength] were drawn once from seed and are listed, so the light is a function of time alone; a glow needs riseSeconds (about 4 frames) to its peak and fades over about 20, so nothing strobes; no event is alight at the middle (frame 3150) or at a handover. proof.cameraHeld: true holds the camera of the surface view at the pose of frame 3150 while time runs, for the life only sheet; false in the film.",
     "storm": {
       "centre": [
         -0.25,
