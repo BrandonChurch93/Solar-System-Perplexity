@@ -1,9 +1,17 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-24T13:13:17.364Z",
+ "pushed": "2026-11-24T13:44:35.969Z",
  "head": "80033a732012e484fa7fecd4b44bb5c3a03d7a95",
- "note": "Trial of the limb glow laid on the ground: the seams at 1260 and 1605 as stills, the dive 1276 to 1312; not measured yet by the pattern part",
+ "note": "Limb glow laid on the ground: the report's pattern measure on windows reads none over 0.45 from 1262 to 1319 (base 0.83 at 1284); left are 1320, 1542 to 1546 and 1575. Trial, not a commit",
  "looks": [
+  {
+   "time": "2026-11-24T13:44:34.084Z",
+   "file": "20261124134434084-note-h3-a.jpg",
+   "source": "../../../../tmp/v/h3-a.jpg",
+   "kind": "note",
+   "label": "Trial, not a commit: the glow of the limb on the ground, no height in its weight. Stills 1296 to 1320 of the dive and 1564, 1568, 1572 of the rise, draft",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T13:13:16.490Z",
    "file": "20261124131316490-note-h1-b.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/v/hv/s1276.jpg",
    "kind": "note",
    "label": "dive 1276 to 1291, chain V frames, state x5",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T12:05:25.164Z",
-   "file": "20261124120525164-note-crop-rise2.jpg",
-   "source": "../../../../tmp/v/off/crop-rise2.jpg",
-   "kind": "note",
-   "label": "rise 1542 to 1548, where the pattern lies (left edge, horizon band), state x5",
    "stop": "venus"
   }
  ]
