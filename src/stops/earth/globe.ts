@@ -7,6 +7,7 @@ export interface GlobePatches {
   textures: THREE.Texture[]
   widthsDeg: number[]
   windows?: ({ raster: number; size: number; offset: number[] } | undefined)[]
+  made?: number[]
   spot: THREE.Vector3
   feather: number
   fade: [number, number]
@@ -79,7 +80,7 @@ const PATCH_LEVELS = Array.from({ length: MAX_PATCHES }, (_, i) => `    if (uPat
       w = max(w, ${i === 0 ? 'early' : '0.0'});
       for (int k = 0; k < (w > 0.0 ? 1 : 0); k++) albedo = mix(albedo, textureGrad(uPatch${i}, q + 0.5, mix(gx, hx, at) * uPatchScale[${i}], mix(gy, hy, at) * uPatchScale[${i}]).rgb, w);
       float dens${i} = mix(gd, hd, at) * uPatchScale[${i}] * uPatchSize[${i}];
-      shown = mix(shown, dens${i}, w);
+      shown = mix(shown, mix(gl, hl, at) * uPatchScale[${i}] * uPatchSize[${i}] * uPatchReal[${i}], w);
       texels = mix(texels, dens${i}, step(0.5, w));
       baked = max(baked, w);
       laid += w - laid * w;
@@ -93,6 +94,7 @@ uniform sampler2D uEmissive;
 ${PATCH_SAMPLERS}
 uniform float uPatchScale[${MAX_PATCHES}];
 uniform float uPatchSize[${MAX_PATCHES}];
+uniform float uPatchReal[${MAX_PATCHES}];
 uniform vec2 uPatchShift[${MAX_PATCHES}];
 uniform float uPatchCount;
 uniform float uFeather;
@@ -243,6 +245,9 @@ float noise(vec2 p) {
   f = f * f * (3.0 - 2.0 * f);
   return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), f.x), mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x), f.y);
 }
+float shortAxis(float p, float q, float r) {
+  return sqrt(max(0.5 * (p + q - sqrt((p - q) * (p - q) + 4.0 * r * r)), 0.0));
+}
 void main() {
   vec3 d = spinY(normalize(vLocal), uSpin);
   vec3 n = uBodyToWorld * normalize(vLocal);
@@ -286,6 +291,7 @@ void main() {
     vec2 gx = dFdx(g);
     vec2 gy = dFdy(g);
     float gd = sqrt(max(dot(gx, gx), dot(gy, gy)));
+    float gl = shortAxis(dot(gx, gx), dot(gy, gy), dot(gx, gy));
     gx *= uGrad;
     gy *= uGrad;
     float front = step(0.3, dn);
@@ -294,10 +300,13 @@ void main() {
     vec2 hx = dFdx(h);
     vec2 hy = dFdy(h);
     float hd = sqrt(max(dot(hx, hx), dot(hy, hy)));
+    float hl = shortAxis(dot(hx, hx), dot(hy, hy), dot(hx, hy));
     hx *= uGrad;
     hy *= uGrad;
     float frontH = step(0.3, hn);
-    float shown = texels;
+    vec3 wx = dFdx(d);
+    vec3 wy = dFdy(d);
+    float shown = shortAxis(dot(wx, wx), dot(wy, wy), dot(wx, wy)) * uMapWidth / 6.283185307;
     float laid = 0.0;
     vec2 qp = h * uPlaceScale;
     float inside = frontH * smoothstep(0.5, 0.5 - uFeather, max(abs(qp.x), abs(qp.y)));
@@ -438,6 +447,11 @@ export class Globe {
       return win ? new THREE.Vector2(win.offset[0]!, win.offset[1]!).divideScalar(win.raster * plane(i)) : new THREE.Vector2()
     }
     const size = (i: number): number => (p?.textures[i]?.image as unknown as { width: number } | undefined)?.width ?? 1
+    const real = (i: number): number => {
+      const made = p?.made?.[i]
+      const win = p?.windows?.[i]
+      return made ? Math.min(1, made * (win ? win.size / win.raster : 1) / size(i)) : 1
+    }
     const levels = Array.from({ length: MAX_PATCHES }, (_, i) => i)
     if ((p?.textures.length ?? 0) > MAX_PATCHES) throw new Error('too many patch levels')
     const spot = p?.spot.clone().normalize() ?? new THREE.Vector3(0, 0, 1)
@@ -456,7 +470,7 @@ export class Globe {
       uniforms: {
         uMap: { value: o.map }, uCloud: { value: o.cloud }, uEmissive: { value: o.emissive }, uFar: { value: o.far }, uFarCloud: { value: o.farCloud }, uRise: { value: 0 }, uLights: { value: 1 }, uFine: { value: new THREE.Vector4().fromArray(l.away.fine) }, uFarRing: { value: new THREE.Vector3().fromArray(l.away.far.ring) },
         ...Object.fromEntries(levels.map((i) => ['uPatch' + i, { value: tex(i) }])),
-        uPatchScale: { value: levels.map(scale) }, uPatchSize: { value: levels.map(size) }, uPatchShift: { value: levels.map(shift) },
+        uPatchScale: { value: levels.map(scale) }, uPatchSize: { value: levels.map(size) }, uPatchReal: { value: levels.map(real) }, uPatchShift: { value: levels.map(shift) },
         uPatchCount: { value: p?.textures.length ?? 0 },
         uFeather: { value: p?.feather ?? 0.12 }, uPatchFade: { value: new THREE.Vector2(p?.fade[0] ?? 1.1, p?.fade[1] ?? 1.7) }, uPerLine: { value: 1 },
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
