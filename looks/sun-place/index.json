@@ -1,9 +1,28 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T16:35:42.069Z",
+ "pushed": "2026-11-24T16:58:00.643Z",
  "head": "1f74d5c96f950b69c01732786b0d9eae60a2a4c2",
- "note": "NAMED 1f74d5c9 (third) on main ed003c70. Frame 60 draft: share by band 0.165 0.215 0.193 0.151 0.104 0.063 0.035 0.027 0.020 | dark 0.190 body 0.663 pale 0.062 white 0.022 | half width 4.6 px, 4439 shapes, fine detail 0.0595, mean 0.334; distance 0.062. Tests on the merge 550 of 553, three red in shared tests/weights.test.ts",
+ "note": "1f74d5c9 named at 16:36; the new main's handover and pictures run on it now. Frame 60 draft: share by band 0.165 0.215 0.193 0.151 0.104 0.063 0.035 0.027 0.020 | dark 0.190 body 0.663 pale 0.062 white 0.022 | half width 4.6 px, 4439 shapes, fine detail 0.0595, mean 0.334",
  "looks": [
+  {
+   "time": "2026-11-24T16:57:59.649Z",
+   "file": "20261124165759649-note-h20-sides.jpg",
+   "source": "../../../../tmp/h20-sides.jpg",
+   "kind": "note",
+   "label": "1f74d5c9, the two sides at T by the new main's handover tool (the run is still going)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T16:37:43.189Z",
+   "file": "20261124163743189-compare-sun-rise-sides.jpg",
+   "source": "out/work/handover/sun-rise-sides.png",
+   "kind": "compare",
+   "label": "sun rise, both sides at T (frame 216) and their difference times 8",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 216,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-24T16:35:41.330Z",
    "file": "20261124163541330-note-f19-60-a.jpg",
@@ -50,22 +69,6 @@
    "source": "../../../../tmp/f18-60-whole.jpg",
    "kind": "note",
    "label": "a5b15421 final tier, frame 60 whole at half size, left approved, right mine",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T16:18:35.392Z",
-   "file": "20261124161835392-note-f18-60-b.jpg",
-   "source": "../../../../tmp/f18-60-b.jpg",
-   "kind": "note",
-   "label": "a5b15421 final tier, frame 60, the spot at one to one (crop 700 440 800 350), left approved, right mine",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T16:18:34.785Z",
-   "file": "20261124161834785-note-f18-60-a.jpg",
-   "source": "../../../../tmp/f18-60-a.jpg",
-   "kind": "note",
-   "label": "a5b15421 final tier, frame 60 at one to one (crop 560 600 800 440), left approved, right mine",
    "stop": "sun"
   }
  ]
