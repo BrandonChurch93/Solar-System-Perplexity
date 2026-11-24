@@ -28,7 +28,7 @@ const CLEAR_DEG = 3
 const SUN_PULL_FROM = 0.2
 const SUN_PULL_END = 0.42
 const SUN_APPROACH_START = 0.42
-export const LOOKBACK = { phaseDeg: 148, azimuthDeg: 127, distance: 8.6, sun: [0.59, 0.3] as [number, number], sunPerSecond: [-0.02, 0.005] as [number, number], settle: 4.8, hand: 0.1, lineDeg: 195, vfov: 34, glare: 4, flare: 0.35, sky: [0, 35, -5] as [number, number, number], skyExposure: 0.36, skyAnchor: { aimDeg: 14, rollDeg: 13 }, glide: { turn: 0.5, phase: 0.4, pull: 0.3, aim: 0.3 } }
+export const LOOKBACK = { phaseDeg: 148, azimuthDeg: 127, distance: 8.6, sun: [0.59, 0.3] as [number, number], sunPerSecond: [-0.02, 0.005] as [number, number], settle: 4.8, hand: 0.1, lineDeg: 195, vfov: 34, glare: 4, flare: 0.35, sky: [0, 35, -5] as [number, number, number], skyExposure: 0.36, skyAnchor: { aimDeg: 14, rollDeg: 13 }, glide: { turn: 0.375, phase: 0.425, pull: 0.3, aim: 0.375 } }
 const basis = (first: THREE.Vector3, toward: THREE.Vector3): THREE.Quaternion => {
   const x = first.clone().normalize()
   const y = toward.clone().addScaledVector(x, -toward.dot(x)).normalize()
@@ -443,7 +443,7 @@ export class FilmDirector implements Director {
     const hold = this.toWorld(index + 1, b.hold(time - b.seg.hold.start))
     const full = this.sizeOf(index, hold)
     const small = this.small[index]!
-    const want = (small + (full - small) * smoother(t)) * Math.tan(THREE.MathUtils.degToRad(pose.vfov) / 2)
+    const want = (small + (full - small) * shape.arrive(t)) * Math.tan(THREE.MathUtils.degToRad(pose.vfov) / 2)
     const ray = pose.position.clone().sub(body).normalize()
     if (shape.look.pin[1] <= 0) {
       const hero = hold.position.clone().sub(body).normalize().applyQuaternion(hold.quaternion.clone().invert()).applyQuaternion(pose.quaternion)
