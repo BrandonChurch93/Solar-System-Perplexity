@@ -193,7 +193,7 @@ describe('the camera of a move, sampled', () => {
       expect(s.frame).toBe((k - 1) / 2)
       expect(s.time).toBeCloseTo(time, 12)
       const side = sideAt(w.seg, time)
-      const own = side === 'orbit' ? plan.divePose(time, 'orbit') : plan.twin(plan.divePose(time, 'terrain'), time)
+      const own = side === 'orbit' ? plan.eye('dive', time, 'orbit') : plan.twin(plan.eye('dive', time, 'terrain'), time)
       expect(s.side).toBe(side)
       expect(s.pose.position.distanceTo(own.position)).toBeLessThan(1e-6 * (1 + own.position.length()))
     }
