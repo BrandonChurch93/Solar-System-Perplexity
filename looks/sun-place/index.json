@@ -1,9 +1,49 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T22:28:41.100Z",
+ "pushed": "2026-11-24T22:53:35.040Z",
  "head": "faeea78babada5abc9cc9468d4cc7a473b6253ab",
- "note": "22:32 UTC head faeea78b: rise every third frame 180 to 269 and skin trials za at 60, all solids; plan for the gas follows by mail. sun-near frame 60 of head: share by band 0.165 0.215 0.193 0.151 0.104 0.063 0.035 0.027 0.020; dark 0.190 body 0.663 pale 0.062 white 0.022; brightest 15 percent half width 4.6 px, 4439 shapes, fine detail 0.0595, mean 0.334; distance 0.062",
+ "note": "22:54 UTC, MAIL 773 commit 1 in work, nothing committed: the ground as a marched slab of gas lit from within (no light direction, no highlight, no shade in it). Trials s2 to s4 of frame 60 beside the approved at 1 to 1. Seen: glowing lumps with threads inside, far cells melt into a bright band; still wrong: cells stand apart as lumps and are not packed, penumbra dark and smeared with a comb at its rim, a dark line on the horizon. s4c frame 60:  share by band 0.1 .. 0.9 : 0.288 0.238 0.168 0.114 0.069 0.043 0.026 0.022 0.011 dark (under 0.15) 0.309 | body (0.15 to 0.55) 0.590 | pale (0.65 to 0.85) 0.047 | white (over 0.85) 0.012 brightest 15 percent: half width 10.3 px, 1682 shapes | fine detail 0.0319 | mean 0.279 ",
  "looks": [
+  {
+   "time": "2026-11-24T22:53:04.224Z",
+   "file": "20261124225304224-note-s2-p1.jpg",
+   "source": "../../../../tmp/v/s2-p1.jpg",
+   "kind": "note",
+   "label": "frame 60, the first slab trials s2a and s2c (22:43), for the way it came",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T22:53:03.651Z",
+   "file": "20261124225303651-note-s4c-whole.jpg",
+   "source": "../../../../tmp/v/s4c-whole.jpg",
+   "kind": "note",
+   "label": "frame 60 whole, slab trial s4c, two thirds size",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T22:53:03.115Z",
+   "file": "20261124225303115-note-s4a-p1.jpg",
+   "source": "../../../../tmp/v/s4a-p1.jpg",
+   "kind": "note",
+   "label": "frame 60, approved left, slab trial s4a (hotter) right, 1 to 1",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T22:53:02.576Z",
+   "file": "20261124225302576-note-s4c-spot.jpg",
+   "source": "../../../../tmp/v/s4c-spot.jpg",
+   "kind": "note",
+   "label": "frame 60, the spot, approved left, slab trial s4c right, 1 to 1",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T22:53:02.011Z",
+   "file": "20261124225302011-note-s4c-p1.jpg",
+   "source": "../../../../tmp/v/s4c-p1.jpg",
+   "kind": "note",
+   "label": "frame 60, approved left, trial s4c of the marched slab right, 1 to 1 (not committed).  share by band 0.1 .. 0.9 : 0.288 0.238 0.168 0.114 0.069 0.043 0.026 0.022 0.011 dark (under 0.15) 0.309 | body (0.15 to 0.55) 0.590 | pale (0.65 to 0.85) 0.047 | white (over 0.85) 0.012 brightest 15 percent: half width 10.3 px, 1682 shapes | fine detail 0.0319 | mean 0.279 ",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T22:28:40.540Z",
    "file": "20261124222840540-note-rise0-spot.jpg",
@@ -26,46 +66,6 @@
    "source": "../../../../tmp/v/rise0-2.jpg",
    "kind": "note",
    "label": "head faeea78b rise, every third frame 252 to 269, draft",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T22:28:38.710Z",
-   "file": "20261124222838710-note-rise0-1.jpg",
-   "source": "../../../../tmp/v/rise0-1.jpg",
-   "kind": "note",
-   "label": "head faeea78b rise, every third frame 216 to 249, draft",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T22:28:38.146Z",
-   "file": "20261124222838146-note-rise0-0.jpg",
-   "source": "../../../../tmp/v/rise0-0.jpg",
-   "kind": "note",
-   "label": "head faeea78b rise, every third frame 180 to 213, draft",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T22:28:37.591Z",
-   "file": "20261124222837591-note-zb-p1.jpg",
-   "source": "../../../../tmp/v/zb-p1.jpg",
-   "kind": "note",
-   "label": "skin trials za4 to za6 (light by height, no shade) at frame 60 beside the approved: loaves",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T22:28:37.040Z",
-   "file": "20261124222837040-note-za-p1.jpg",
-   "source": "../../../../tmp/v/za-p1.jpg",
-   "kind": "note",
-   "label": "skin trials za1 to za3 at frame 60 beside the approved, one to one: all read as solids",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T22:28:36.491Z",
-   "file": "20261124222836491-note-j21-pair-60.jpg",
-   "source": "../../../../tmp/v/j21-pair-60.jpg",
-   "kind": "note",
-   "label": "head faeea78b frame 60 beside the approved, one to one",
    "stop": "sun"
   }
  ]
