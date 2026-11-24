@@ -1,20 +1,20 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T02:29:01.957Z",
- "head": "b6d8018ff527f1162294afca34518b437417317a",
- "note": "760 corner before and after the shell runs the globe's spin",
+ "pushed": "2026-11-24T02:55:29.292Z",
+ "head": "c7248b335c792aa8b5b1a65baa4ad82bfb093d4e",
+ "note": "cause of the pale quad at 985 to 990, in the plate",
  "looks": [
   {
-   "time": "2026-11-24T02:26:16.863Z",
-   "file": "20261124022616863-note-s7-760-crop.jpg",
-   "source": "out/work/mercury/place/tmp/s7-760-crop.png",
+   "time": "2026-11-24T02:55:27.703Z",
+   "file": "20261124025527703-note-look.jpg",
+   "source": "out/work/mercury/place/quad/look.jpg",
    "kind": "note",
-   "label": "760 lower left corner, twice the size: before, after the shell runs the globe's spin (same craters, moved 0.68 px), difference times 4",
+   "label": "pale quad of the rise plate (level 4): top row the rise lay, the rise plate with the quad, the dive ground; bottom row lay weight, the rise's place, 1 over stretch. The quad lies outside the rise's place: toned dive ground where the mirrored fringe has no source, hard edge",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-24T02:16:26.518Z",
-   "file": "20261124021626518-compare-mercury-rise-sides.jpg",
+   "time": "2026-11-24T02:34:41.996Z",
+   "file": "20261124023441996-compare-mercury-rise-sides.jpg",
    "source": "out/work/handover/mercury-rise-sides.png",
    "kind": "compare",
    "label": "mercury rise, both sides at T (frame 977) and their difference times 8",
@@ -24,8 +24,8 @@
    "tier": "draft"
   },
   {
-   "time": "2026-11-24T02:15:37.548Z",
-   "file": "20261124021537548-compare-mercury-dive-sides.jpg",
+   "time": "2026-11-24T02:33:59.439Z",
+   "file": "20261124023359439-compare-mercury-dive-sides.jpg",
    "source": "out/work/handover/mercury-dive-sides.png",
    "kind": "compare",
    "label": "mercury dive, both sides at T (frame 760) and their difference times 8",
@@ -33,6 +33,14 @@
    "segment": "mercury.dive",
    "frame": 760,
    "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T02:26:16.863Z",
+   "file": "20261124022616863-note-s7-760-crop.jpg",
+   "source": "out/work/mercury/place/tmp/s7-760-crop.png",
+   "kind": "note",
+   "label": "760 lower left corner, twice the size: before, after the shell runs the globe's spin (same craters, moved 0.68 px), difference times 4",
+   "stop": "mercury"
   },
   {
    "time": "2026-11-24T02:07:25.972Z",
@@ -76,18 +84,6 @@
    "segment": "mercury.dive",
    "first": 748,
    "last": 759,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T01:33:42.854Z",
-   "file": "20261124013342854-sheet-mercury-dive-draft-across.jpg",
-   "source": "out/work/handover/mercury-dive-draft-across.png",
-   "kind": "sheet",
-   "label": "mercury dive, every frame 754 to 765 (across T, frame 760), draft tier",
-   "stop": "mercury",
-   "segment": "mercury.dive",
-   "first": 754,
-   "last": 765,
    "tier": "draft"
   }
  ]
