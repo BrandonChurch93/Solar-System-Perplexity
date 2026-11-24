@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T13:56:40.199Z",
- "head": "0eb8bc5f92abe18553e562a7a43b39249b55f16b",
- "note": "merged main 2bc36ce6: frames byte equal across the merge, 446 tests pass; path red new on this main at 2175 + 1/2 and 2176 (the engine's carry of the rise's end speed, 0.0405 over its 0.02); far zone pattern red stands",
+ "pushed": "2026-11-24T14:11:30.945Z",
+ "head": "1f3e0bd543622d99bb2ae9aa343a75fd84c16d76",
+ "note": "third commit 1f3e0bd5 on main 2bc36ce6: rise middle looked at, limb changes at 2101 enlarged, travel frames 2175 on change with main's carry, parity running",
  "looks": [
+  {
+   "time": "2026-11-24T14:11:29.866Z",
+   "file": "20261124141129866-note-T-rise-zoom.jpg",
+   "source": "../../../../tmp/gl/s9/T-rise-zoom.jpg",
+   "kind": "note",
+   "label": "rise change of view enlarged 2098 to 2103: limb soft to 2100, streaks from 2101",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T14:11:28.935Z",
+   "file": "20261124141128935-note-rise-mid-c.jpg",
+   "source": "../../../../tmp/gl/s9/rise-mid-c.jpg",
+   "kind": "note",
+   "label": "rise 2136 to 2147 draft on the merge",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T14:11:27.658Z",
+   "file": "20261124141127658-note-rise-mid-b.jpg",
+   "source": "../../../../tmp/gl/s9/rise-mid-b.jpg",
+   "kind": "note",
+   "label": "rise 2116 to 2135 draft on the merge",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T13:56:39.387Z",
    "file": "20261124135639387-note-T-dive-third.jpg",
@@ -74,30 +98,6 @@
    "source": "../../../../tmp/gl/s9/T-dive-n3.jpg",
    "kind": "note",
    "label": "third tree, dive T 1911 to 1926, rate 2 capture, picture false, rim 0.65",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T12:47:33.890Z",
-   "file": "20261124124733890-note-zoom-v.jpg",
-   "source": "../../../../tmp/gl/s9/zoom-v.jpg",
-   "kind": "note",
-   "label": "limb at the dive's T, draft, enlarged 4 times: today's globe side 1918, trial rim colour 0.65 (k3), trial with the line halved (k4), surface side 1920; the globe side keeps a hard edge, trials go on",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T12:11:54.879Z",
-   "file": "20261124121154879-note-r2-limb-zoom.jpg",
-   "source": "../../../../tmp/gl/s9/r2-limb-zoom.jpg",
-   "kind": "note",
-   "label": "second named tree, draft rate 2, limb zoom 1918 globe side against 1920 surface side: the step at T sits in the air's inner rim",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T11:54:09.864Z",
-   "file": "20261124115409864-note-r2-limb-zoom.jpg",
-   "source": "../../../../tmp/gl/s9/r2-limb-zoom.jpg",
-   "kind": "note",
-   "label": "second named tree, draft 1917 to 1920 at three columns, limb enlarged 3 times: globe side has a hard cyan rim line, surface side none (the step at T, named red)",
    "stop": "earth"
   }
  ]
