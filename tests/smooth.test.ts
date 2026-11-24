@@ -8,7 +8,7 @@ import { FilmDirector } from '../src/director/film'
 import { sideAt } from '../src/director/handover'
 import { plans } from '../src/director/plans'
 import { curves, landingCurves, planeHit, ringPlane, sampleLanding, sampleWindow, seen } from '../tools/smooth/camera'
-import { judgeCurve, judgeLanding, longestGap, position, shown, table } from '../tools/smooth/path'
+import { judgeCurve, judgeLanding, longestGap, parityFrames, position, shown, table } from '../tools/smooth/path'
 
 const limits = { maxStep: 0.08, maxRebound: 0.03, seamFrames: 2 }
 const bell = (n: number, edge = 0): number[] => Array.from({ length: n }, (_, i) => edge + 1 - Math.cos((2 * Math.PI * (i + 0.5)) / n))
@@ -147,6 +147,23 @@ describe('a curve that is a mean over points', () => {
     expect(rules(real)).toEqual(['climbAfterPeak'])
     expect(real.climbAfterPeak.points).toBe(8)
     expect(real.climbAfterPeak.frame).toBe(74)
+  })
+
+  it('does not read the fall of a wider set after its own largest value as a fall before the largest value', () => {
+    const six = (i: number): number => 1 + 0.6 * Math.sin((Math.PI * (i + 0.5)) / 100) ** 2
+    const two = (i: number): number => six(i) + 2 * Math.exp(-(((i - 20) / 12) ** 2))
+    const values = Array.from({ length: 100 }, (_, i) => Array.from({ length: 8 }, (_, j) => (j < 6 ? six(i) : i < 40 ? two(i) : null)))
+    const mean8 = (i: number): number => (6 * six(i) + 2 * two(i)) / 8
+    expect(mean8(22)).toBeGreaterThan(mean8(39) + 0.1)
+    const r = judgeCurve('speed', 'px', plain(values), 0, 1, { first: 0, end: 100 }, { ...limits, maxStep: 9 }, 0, { values, min: 4 })
+    expect(r.peak!.frame).toBeGreaterThan(45)
+    expect(r.peak!.points).toBe(6)
+    expect(r.faults).toEqual([])
+    expect(r.fallBeforePeak.value).toBeLessThan(0.001)
+    const dent = values.map((row, i) => row.map((v) => (v !== null && i >= 60 && i < 64 ? v * 0.9 : v)))
+    const real = judgeCurve('speed', 'px', plain(dent), 0, 1, { first: 0, end: 100 }, { ...limits, maxStep: 9 }, 0, { values: dent, min: 4 })
+    expect(rules(real)).toEqual(['climbAfterPeak'])
+    expect(real.climbAfterPeak.points).toBe(6)
   })
 
   it('shows and does not judge a row with fewer than five points, and counts those rows', () => {
@@ -378,5 +395,24 @@ describe('the longest run of rows without a value', () => {
   it('is the first of the longest runs', () => {
     expect(longestGap([true, false, true, false, false, true, false, false])).toEqual({ first: 3, last: 4 })
     expect(longestGap([false, false, false])).toEqual({ first: 0, last: 2 })
+  })
+})
+
+describe('the frames of the parity part', () => {
+  const at = { hold: [0.5], dive: [0.25, 0.5, 0.75], terrain: [0.5], rise: [0.25, 0.5, 0.75], travel: [0.5] }
+  it('reads the hold and the travel that leaves the stop in a whole run', () => {
+    const rows = parityFrames(config.segments, 'mercury', at, ['dive', 'rise'], true)
+    expect(rows.map((r) => r.segment)).toEqual(['mercury.hold', 'mercury.dive', 'mercury.dive', 'mercury.dive', 'mercury.terrain', 'mercury.rise', 'mercury.rise', 'mercury.rise', 'mercury.travel'])
+    expect(rows[0]!.frame).toBe(615)
+    expect(rows[8]!.frame).toBe(1073)
+  })
+  it('leaves them out of a run of one move and where the config names no share', () => {
+    expect(parityFrames(config.segments, 'mercury', at, ['dive'], false).map((r) => r.kind)).toEqual(['dive', 'dive', 'dive', 'terrain'])
+    expect(parityFrames(config.segments, 'mercury', { dive: [0.5], terrain: [0.5], rise: [0.5] }, ['dive', 'rise'], true).map((r) => r.kind)).toEqual(['dive', 'terrain', 'rise'])
+  })
+  it('reads every travel leg once over the nine stops and no travel after the last', () => {
+    const legs = config.stopIds.flatMap((id) => parityFrames(config.segments, id, at, ['dive', 'rise'], true).filter((r) => r.kind === 'travel').map((r) => r.segment))
+    expect(legs).toEqual(config.segments.filter((s) => s.kind === 'travel').map((s) => s.id))
+    expect(parityFrames(config.segments, 'sun', at, ['dive', 'rise'], true).map((r) => r.kind)).toEqual(['hold', 'terrain', 'rise', 'rise', 'rise', 'travel'])
   })
 })
