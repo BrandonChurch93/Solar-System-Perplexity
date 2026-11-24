@@ -3,6 +3,8 @@ import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import fit from './close.json'
 import frame from './closeup.json'
 import look from './deep.json'
+import patches from './patches.json'
+import { MAP_DECL, MAP_UNIFORMS, mapGlsl } from './planet'
 
 // The surface view of Neptune as one scene made by functions: a cloud deck with height (rolls, the storm as a bowl with walls and arms),
 // cirrus as a volume above it that is marched and lit by a march toward the Sun (the same density casts the shadow on the deck), a wind
@@ -10,6 +12,9 @@ import look from './deep.json'
 // is drawn out, and air whose density falls with height. No picture is read. Every number is in deep.json.
 
 const STREAMERS = look.cirrus.streamers.length
+// The globe's own map in this scene: the same lines of shader as the globe draws with (planet.ts, mapGlsl), its uniforms under names
+// with a G so that none meets a name of the scene, and the same uniform objects, so both read one state.
+const globe = (text: string): string => text.replace(/\bu([A-Z])/g, 'uG$1')
 
 const VERT = /* glsl */ `
 uniform vec3 uCentre;
@@ -106,12 +111,20 @@ uniform vec3 uSkyLight;
 uniform vec3 uCloudLight;
 uniform vec4 uLightMake;
 uniform vec3 uThrough;
-in vec3 vPos;
+uniform mat3 uToBody;
+uniform vec4 uFar;
+uniform vec3 uFarTone;
+uniform vec3 uFarPower;
+uniform vec3 uFarHigh;
+uniform vec4 uFarFall;
+uniform vec3 uFarCloud;
+${globe(MAP_DECL)}in vec3 vPos;
 in vec3 vClip;
 out vec4 outColor;
 ${DIAG_GLSL}
 
 const float PI = 3.14159265358979;
+${globe(mapGlsl(patches.place.shownFrom))}
 // The thin bright streaks of the deck at the place deckField was last asked about (0 to about 1): the ridges of its finer octaves.
 float gWisp = 0.0;
 
@@ -549,6 +562,74 @@ void main() {
   float t = uTime;
   float sunView = dot(rd, uSun);
 
+  // The far look: the globe's own map where the ray meets the smooth planet, read by the globe's own lines (its deck as the albedo
+  // under the globe's own curve of light, its cloud layer as a sheet with the shadow the globe gives it). How much of it a pixel shows
+  // is a matter of the ground and of the eye's height, never of the clock. The ground: the scene's own deck and cirrus stand round
+  // the place (whole within uFar.x units of it on the ground, none beyond uFar.y), so no point of the ground changes its picture
+  // because the eye moves over it. The height: from above the place shows the map alone, and the scene's own picture comes in over
+  // it by the logarithm of the eye's height, one law from uFarHigh.x to uFarHigh.y radii (divided by the share the whole scene has
+  // over the globe, uShow, so that the two do not multiply). The law is the one whose odds (the scene's own share against the map's)
+  // are a power of the height: every step of the fall then changes the odds by one factor, at its ends as in its middle, and no
+  // step carries the last of one picture out or the first of the other in at once. uFarHigh.z is the share at which it is cut off.
+  float dSphere = uRadius * uRadius - rt2;
+  float tFar = dSphere > 0.0 ? -b - sqrt(dSphere) : max(-b, 0.0);
+  vec3 farUp = normalize(oc + rd * tFar);
+  float highNow = max((length(oc) - uRadius) / uRadius, 1e-6);
+  float oddsEnd = log((1.0 - uFarHigh.z) / uFarHigh.z);
+  float nearRaw = 1.0 / (1.0 + exp(oddsEnd * (2.0 * log(highNow / uFarHigh.y) / log(uFarHigh.x / uFarHigh.y) - 1.0)));
+  float nearAll = clamp((nearRaw - uFarHigh.z) / (1.0 - 2.0 * uFarHigh.z), 0.0, 1.0);
+  float nearGround = 1.0 - smoothstep(uFar.x, uFar.y, uRadius * length(farUp - uPlaceUp));
+  float farW = uFar.z > 1.5 ? 1.0 : uFar.z * (1.0 - min(nearAll / max(uShow, 1e-6), 1.0) * nearGround);
+  float rSheet = uRadius * (1.0 + uGCloudHeight);
+  float dSheet = rSheet * rSheet - rt2;
+  vec3 sheetUp = normalize(oc + rd * (dSheet > 0.0 ? -b - sqrt(dSheet) : max(-b, 0.0)));
+  vec3 farLook = vec3(0.0);
+  {
+    vec3 pb = uToBody * farUp;
+    vec3 sunB = uToBody * uSun;
+    float ndlFar = dot(farUp, uSun);
+    float tx;
+    vec3 dd = deckDir(pb);
+    vec3 dcl = cloudDir(uToBody * sheetUp);
+    float reach = uGCloudHeight / max(ndlFar, uGShadow.z);
+    vec3 dsa = cloudDir(normalize(pb + sunB * reach));
+    vec3 dsb = cloudDir(normalize(pb + sunB * reach * 1.6));
+    float keep = 1.0;
+    float deepen = 1.0;
+    vec2 cq = vec2(atan(dcl.x, dcl.z) / (2.0 * PI) + 0.5, asin(clamp(dcl.y, -1.0, 1.0)) / PI + 0.5);
+    float cq2 = fract(cq.x + 0.5) - 0.5;
+    vec2 cx = vec2(abs(dFdx(cq.x)) < abs(dFdx(cq2)) ? dFdx(cq.x) : dFdx(cq2), dFdx(cq.y)) * uGGrad;
+    vec2 cy = vec2(abs(dFdy(cq.x)) < abs(dFdy(cq2)) ? dFdy(cq.x) : dFdy(cq2), dFdy(cq.y)) * uGGrad;
+    for (int k = 0; k < (uGCirrus.x > 0.0 ? 1 : 0); k++) {
+      float turn = uGCirrus.x * uGCirrus.y * (textureGrad(uGFarMap, cq, cx, cy).g * (255.0 / 127.0) - 1.0) * sqrt(max(1.0 - dcl.y * dcl.y, 0.0));
+      dcl = bend(dcl, turn);
+      dsa = bend(dsa, turn);
+      dsb = bend(dsb, turn);
+      vec4 far = textureGrad(uGFarMap, cq + vec2(0.0, turn / PI), cx, cy);
+      keep = mix(1.0, far.r * smoothstep(uGClump.x, uGClump.y, far.b) * mix(uGCirrus.w, 1.0, smoothstep(uGClump.y, uGClump.z, far.b)), uGCirrus.x);
+      deepen = 1.0 + uGCirrus.x * uGCirrus.z * (1.0 - smoothstep(0.9, 1.0, far.b));
+    }
+    vec3 mapDeck = layerAt(dd, 1.0, 0.0, tx).rgb / uGCode;
+    float mapCloud = layerAt(dcl, max(uGCloudSoft, uGCirrusPx), 0.0, tx).a;
+    float mapShadow = 0.6 * min(layerAt(dsa, uGShadow.y, 0.0, tx).a, 1.0) + 0.4 * min(layerAt(dsb, uGShadow.y * 1.8, 0.0, tx).a, 1.0);
+    for (int k = 0; k < (uGCirrus.x > 0.0 ? 1 : 0); k++) {
+      mapCloud *= keep;
+      mapShadow = min(mapShadow * keep * deepen, 1.0);
+    }
+    float ndlSheet = dot(sheetUp, uSun);
+    vec3 deckFar = mapDeck * knot(uGDeck, ndlFar) * (1.0 - uGShadow.x * mapShadow * smoothstep(0.0, 0.2, ndlFar) * (1.0 - min(mapCloud, 1.0)));
+    farLook = mix(uFarTone * pow(max(deckFar * uGTint, vec3(0.0)), uFarPower), uFarCloud * knot(uGCloud, ndlSheet) * uGTint, mapCloud * smoothstep(-0.09, -0.03, ndlSheet));
+    // The globe's own grade of the fall at its full strength (planet.ts, the same lines; deep.json, globe.fall), on the colour as the
+    // film shows it: the globe is graded by the height, the scene by the rest of the way (uFallPower here), so the far look stands
+    // at every height where the globe's own picture stands, and at the ground at the navy the grade ends in.
+    vec3 fallFar = max(farLook * uGain, vec3(0.0)) / uFallPivot;
+    vec3 fallenFar = mix(pow(fallFar, uFarFall.xyz), fallFar, smoothstep(0.6, 1.2, fallFar)) * uFallPivot;
+    float fallFarMost = uFarFall.w * fallenFar.g + 1e-5;
+    float fallFarOver = fallenFar.b / fallFarMost;
+    fallenFar.b = fallFarMost * (fallFarOver < 0.75 ? fallFarOver : 0.75 + 0.25 * (1.0 - exp(-(fallFarOver - 0.75) / 0.25)));
+    farLook = fallenFar / max(uGain, 1e-6);
+  }
+
   // The deck: a march down onto its relief.
   float topR = uRadius + uBounds.x;
   float botR = uRadius - uBounds.y;
@@ -563,7 +644,7 @@ void main() {
   float tEnd = dBot > 0.0 ? -b - sqrt(dBot) : -b + sqrt(max(dTop, 0.0));
   vec4 parts = vec4(0.0);
   float finest = 1.0;
-  for (int once = 0; once < (dTop > 0.0 && tEnd > 0.0 ? 1 : 0); once++) {
+  for (int once = 0; once < (dTop > 0.0 && tEnd > 0.0 && farW < 1.0 ? 1 : 0); once++) {
     float td = tGo;
     float f = 1.0;
     for (int i = 0; i < int(uLightMake.x); i++) {
@@ -581,8 +662,13 @@ void main() {
     deckHit = deckHit || (td <= tEnd && f < 0.03);
     tDeck = td;
   }
+  // Where only the far look shows, the deck is the smooth planet and nothing of the code is asked.
+  if (farW >= 1.0 && dSphere > 0.0 && tFar > 0.0) {
+    deckHit = true;
+    tDeck = tFar;
+  }
   vec3 deckUp = vec3(0.0, 1.0, 0.0);
-  for (int once = 0; once < (deckHit ? 1 : 0); once++) {
+  for (int once = 0; once < (deckHit && farW < 1.0 ? 1 : 0); once++) {
     vec3 q = oc + rd * tDeck;
     vec3 g = bandOf(q);
     vec3 up = normalize(q);
@@ -657,6 +743,15 @@ void main() {
     deckLight = albedo * (sunHere * ndl * shade * (exp(-under) + uThrough.x * exp(-uThrough.y * under)) / (1.0 + uThrough.x) + uSkyLight * (0.5 + 0.5 * dot(nrm, up)) * hollow);
   }
 
+  // The far look takes the deck's place by its weight, under the scene's own air.
+  for (int once = 0; once < (deckHit && farW > 0.0 ? 1 : 0); once++) {
+    vec3 q = oc + rd * tDeck;
+    float lit;
+    float airSun = uHazeLow.x / uHazeLow.y * toSun(q, uHazeLow.y, lit) + uHazeHigh.x / uHazeHigh.y * toSun(q, uHazeHigh.y, lit);
+    deckLight = mix(deckLight, farLook * exp(-airSun) * lit, farW);
+    deckUnder *= 1.0 - farW;
+  }
+
   // The cirrus: a march through its shell, each step lit by taps toward the Sun.
   vec3 cloud = vec3(0.0);
   float cloudClear = 1.0;
@@ -666,7 +761,7 @@ void main() {
   float outR = uRadius + uShell.y;
   float inR = uRadius + uShell.x;
   float dOut = outR * outR - rt2;
-  for (int once = 0; once < (dOut > 0.0 ? 1 : 0); once++) {
+  for (int once = 0; once < (dOut > 0.0 && farW < 1.0 ? 1 : 0); once++) {
     float camR = length(oc);
     float ta = camR > outR ? -b - sqrt(dOut) : 0.0;
     float dIn = inR * inR - rt2;
@@ -748,6 +843,11 @@ void main() {
       if (cloudClear < uCirrusSkip.z) break;
     }
   }
+  // The scene's own cirrus stands only near: far, the map's sheet is the cloud.
+  cloud *= 1.0 - farW;
+  cloudWeight *= 1.0 - farW;
+  tCloud *= 1.0 - farW;
+  cloudClear = mix(cloudClear, 1.0, farW);
   float tMean = cloudWeight > 0.0 ? tCloud / cloudWeight : 0.0;
 
   // The air: what it takes between the camera and each thing, and what it scatters toward the camera from the Sun.
@@ -794,7 +894,7 @@ void main() {
   }
   // The veil over the deck inside the fan: what it lets through of the deck and what it scatters of the Sun, most toward the Sun.
   // It lies low on the deck, under the cirrus, so the shadow a streamer casts on the deck lies on it too.
-  float veilClear = exp(-veilDepth(oc, rd, b, rt2, !deckHit, pix, t));
+  float veilClear = farW < 1.0 ? mix(exp(-veilDepth(oc, rd, b, rt2, !deckHit, pix, t)), 1.0, farW) : 1.0;
   vec3 veilLight = uLight.x * uVeilLight * (exp(-deckUnder) + uThrough.x * exp(-uThrough.y * deckUnder)) / (1.0 + uThrough.x) * mix(1.0, (1.0 - uLight.z * uLight.z) / pow(1.0 + uLight.z * uLight.z - 2.0 * uLight.z * sunView, 1.5), uLight.y);
   vec3 airAfter = max(air - airBefore, 0.0);
   vec3 col = airBefore + clearCloud * cloud + cloudClear * (airAfter + clearDeck * (veilClear * deckLight + (1.0 - veilClear) * veilLight));
@@ -854,8 +954,10 @@ export class Deep {
   readonly up: THREE.Vector3
   private readonly seat = new THREE.Vector3()
   private readonly back = new THREE.Quaternion()
+  private readonly turned = new THREE.Matrix4()
 
-  constructor(readonly laid = false) {
+  // map: the globe's own uniforms (planet.ts), read here by the same objects.
+  constructor(readonly laid: boolean, map: Record<string, THREE.IUniform>) {
     const radius = fit.radius
     this.up = new THREE.Vector3().fromArray(fit.nadir).negate()
     this.centre = new THREE.Vector3().fromArray(fit.nadir).multiplyScalar(radius + 1)
@@ -946,6 +1048,9 @@ export class Deep {
         uLight: { value: v4(l.sun, l.forward[0]!, l.forward[1]!, l.wrap) },
         uSkyLight: { value: v3(l.sky) }, uCloudLight: { value: v3(l.cloud) },
         uLightMake: { value: v4(look.steps.deck, look.steps.shade, look.steps.cast, l.shadow) }, uThrough: { value: new THREE.Vector3(l.through[0], l.through[1], ci.cast ?? 1) },
+        uToBody: { value: new THREE.Matrix3() },
+        uFar: { value: v4(look.far.distance[0]!, look.far.distance[1]!, look.far.on, 0) }, uFarHigh: { value: new THREE.Vector3(look.far.height[0]!, look.far.height[1]!, look.far.tail) }, uFarFall: { value: v4(look.globe.fall.power[0]!, look.globe.fall.power[1]!, look.globe.fall.power[2]!, look.globe.fall.blue) }, uFarTone: { value: v3(look.far.tone) }, uFarPower: { value: v3(look.far.power) }, uFarCloud: { value: v3(look.far.cloud) },
+        ...Object.fromEntries(MAP_UNIFORMS.map((name) => [globe(name), map[name]!])),
         uDiag: diagUniform,
       },
     })
@@ -961,8 +1066,10 @@ export class Deep {
 
   // camera: the eye in the frame of the close scene. sun: the direction to the Sun in that frame. time: seconds from the middle of the
   // surface view. pixel: the angle one pixel of the frame covers, in radians.
-  update(camera: THREE.Vector3, sun: THREE.Vector3, time: number, pixel: number, gain: number, vignette: number, aspect: number): void {
+  // body: the turn from this scene's frame to the globe's own (the body the map lies on).
+  update(camera: THREE.Vector3, sun: THREE.Vector3, time: number, pixel: number, gain: number, vignette: number, aspect: number, body: THREE.Quaternion): void {
     const u = this.material.uniforms
+    ;(u.uToBody!.value as THREE.Matrix3).setFromMatrix4(this.turned.makeRotationFromQuaternion(body))
     ;(u.uCam!.value as THREE.Vector3).copy(camera)
     ;(u.uSun!.value as THREE.Vector3).copy(sun).normalize()
     u.uTime!.value = time
