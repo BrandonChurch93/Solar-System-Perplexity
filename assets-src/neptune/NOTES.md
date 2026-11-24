@@ -2639,3 +2639,96 @@ What follows: main is at 4c3a5e51 (00:37 VM) and does not hold 6d260fb. I do not
 ## Milestone mail to /root (sent 00:38 VM, high priority), in short
 
 Step 2 committed, not READY: branch agent/neptune-place, 9087f00859214c58f7f9a2f747bfa89da4a4a4b4; tsc, vitest 236 of 236, G11 PASS, smooth path red on the own path. Named in it: what is drawn (scene on the globe by the logarithm of height 0.9 to 0.15 radii, border 16 to 26 degrees, one grade by height, sky turn by height), the looks d907d5b6, the measured seconds per frame and tones, the faults (1 sky.own false until main holds 6d260fb; 2 the hold's map and the approved close image are two layouts at the place, with the proposed cure: fit the scene's large layout to the map from above, 4605 keeps its bytes; 3 cobalt at 4716 to 4720 and 4992, 4707 darker in the shadows; 4 streaky from mid heights, shadow one band, cirrus fibres, eye, the rise's sky turn), the pixel values of point 3, the job text for G17 on the commit and the bytes of 4605. Promised: own G17 reading of 4860, faults 2 and 3, dive looks 4707 to 4769 by 02:00 UTC.
+
+## MAIL 429 from the Builder (arrived 00:53 VM, high priority, word for word)
+
+MAIL 429 from the Builder (/root) to neptune_builder. Step 2 read, looks v-g8 and d-N1 shown to Brandon in status 201 as unfinished.
+1. RULING on your fault 2 (the hold's map and the scene are not one layout): yes, cure it as you propose. The scene's large layout is fitted to the map from above: the map's vortex becomes the scene's wide dark zone, band and dark zone stand where the map has them. 4605 keeps its bytes. 4860 may move in its far field; it is judged again beside the approved image in your round. One place on the planet is the point of Brandon's note, so the structure must be continuous from 0.9 to 0.15 radii, not only the tone.
+2. Plan E's move 6d260fb goes onto main within the half hour. I mail every builder when it is there; flip sky.own then.
+3. Your job is out on a render machine (np2-01, commit 9087f008): the G17 measure, and frame 4605 at draft and at final against main's bytes. The measure comes straight to you from the machine; I get the hashes and tell you.
+4. Faults 3 and 4 as you list them; the looks at 02:00.
+5. The retreat's light: when travel's one law lookbackLight is on main I order one line in your set.ts (import lookbackLight from '../../director/rig'; line 151 becomes lookbackLight(state.u)). Not before.
+
+## MAIL 435 from the Builder (arrived 00:56 VM, low priority, word for word)
+
+MAIL 435 from the Builder (/root) to neptune_builder. MEASURED on my machine (np2-01, commit 9087f008): frame 4605 at draft and at final both have main's bytes (draft 5ae1813832a77f85, final e298dab13c199dcc, the kept still). The G17 measure of the same job is running and comes straight to you.
+
+## MAIL 436 from the Builder (arrived 00:58 VM, low priority, word for word)
+
+MAIL 436 from the Builder (/root) to neptune_builder. MEASURED on my machine (np1-01, your commit 31c1000c, the deep set on, final tier): PASS G17 neptune: 4605 median 1.027 p25 0.868 over 65 tiles; 4860 median 1.087 p25 0.612 over 75 tiles (limit 0.8 on the median). The json and the log are attached. This is for your record only; the measure of 9087f008 (np2-01) comes to you straight from render_39.
+
+(Attachments: neptune.json and np1-logs.txt, kept outside the repo.)
+
+## 00:38 to 00:58 VM. Step 2 measured on my side, the map laid out in the scene's coordinates
+
+- M8 (master draft of 9087f008; 4605, 4707, 4860, each looked at): 4860 takes 102.7 s a frame, 4605 22.8 s (first frame of the process). My own reading of the G17 measure on 4860 (`out/work/nep/deep/g17.py`): median 0.932, p25 0.547 over 75 tiles (was 0.929 and 0.523 before step 2). The Builder's machine reads 1.087 and 0.612 at the final tier for 31c1000c (MAIL 436).
+- 4605 of M8 has the same bytes as 4605 of 31c1000c (`cmp`, silent). The Builder's machine says the same against main at draft and at final (MAIL 435).
+- 4707 is not what it was before step 2 (`/tmp/v-4707ab.jpg`, left before, right now): the place plates are off, so the map's own vortex with its white bow stands where the plates' spiral stood; the grade by height darkens the shadows (means of the frame 47.6 96.2 145.5 before, 43.0 79.5 124.7 now); the flare of the Sun in the sky plate is in the frame at the right edge, because the carry of the sky reads the height now and before it ran on the clock from the first frame of the dive.
+- TOOL: `deep.json globe.grid` 2 and 3 write u and v of the deck under each pixel into the layers view. With it the globe's own picture is laid out in the scene's coordinates (`out/work/nep/deep/plan.py`, passes td1): `/tmp/plan-td1-4706.jpg` (before the grade bites) and `/tmp/plan-td1-4720.jpg`, 40 pixels a unit, u to the right from -14 to 14, v up from -10 to 10, with the scene's marks (storm, main streamer, the footprint of 4860).
+- MEASURED, the map in the scene's coordinates:
+  - the dark vortex: whole oval about u -5.7 to 6.3, v 0 to 5 (its core, luminance under 30 at 4720, u -2 to 4, v 0.5 to 4.5); far rim at v 5, near rim at v 0; the west side is broken by the bow.
+  - the bright bow: from (-3.9, 3.25) through (-3, 1.5) to (-1, 0.5), west and south of the scene's storm (-1.45, 0.98).
+  - the long white streak: v -1.3 to 0 for u -3 to 3, rising to (-9, 1.5) in the west, falling to (3, -1.7) in the east; the scene's main streamer (v 0, u -4.4 to 2.3) lies on its upper edge.
+  - the band of cirrus on the far rim: v 5.2 to 7 (brightest 6 to 6.5), u -6 to 9. Azure beyond v 7.5 and east of u 7. South of v -2 darker toward the terminator.
+  - the camera of 4860: over (0, -1.95); middle of the frame on (-1.36, 0.64), bottom middle (-0.6, -0.64), left middle (-2.13, -0.47), right middle (-0.15, 3.07).
+- WHERE THE SCENE DIFFERS (the fault 2 of my milestone mail, now in numbers): the scene's pale zone begins at v 2.2 to 3.4, the map's vortex is dark to v 5; the scene's dark zone is a half plane (every u under v 2.2), the map is azure all round the oval; the scene has no bow and no cirrus on the far rim; the main streamer is thin where the map's streak is 1.3 units broad.
+- RULING (MAIL 429): fit the scene's large layout to the map from above. In work.
+
+## MAIL 437 from the Builder (arrived 01:03 VM, high priority, word for word)
+
+MAIL 437 from the Builder (/root) to every builder. Main is at 94be42ed77bf4468a83f30aee634185d27b29e88 and now holds, in this order: the capture rate (65fb91d), Venus 9f96846f, the travels' seam cure v1, Uranus step 1 (1d5f6b61) and plan E's one move (engine 6d260fb8). Only Mars is on the one move; every other stop opts in with its own commit. Merge origin main into your branch at your next commit (merge, never rebase), run your tests on the merge, and name commits only on top of it from now on. The draft reference of main changed only for Mars's ten frames 2427, 2444, 2448, 2455, 2459, 2690, 2694, 2701, 2705 and 2726; every other frame of the film keeps its bytes. If you were waiting for plan E to be on main, this is the word. No answer is needed.
+
+What follows for me: at the next commit, merge main (94be42ed), set `move.json sky.own` true (the test line the engineer named is in 6d260fb8), run the tests on the merge.
+
+## 00:58 to 01:16 VM. The layout of the scene fitted to the map from above (MAIL 429, ruling 1)
+
+- The map measured in numbers (luminance of the globe's own picture at 4706, laid out in the scene's coordinates, blocks of 0.8 by 0.4 units): the dark core (under 45) is u -2 to 4, v 0.5 to 4.5; the far rim falls between v 4.5 and 5.0 for u -2 to 6 (44 to 68 against 110 to 159); west of the bow a darker lobe goes on to u -8 at v 2 to 3.5; east the dark ends softly from u 4 to 7; the band of cirrus on the far rim is 180 to 217 at v 5.5 to 7 over u -6 to 9; the bow is 161 at (-3, 1.5), 179 at (-2, 1), 105 at (-4, 2.5).
+- BUILT in `deep.ts`, values in `deep.json`:
+  - `deck.vortex` (at 0.5, 2.6; semi 6.5 by 2.3; rim 0.9 to 1.04 of the oval; warp 0.12; south 0.3 to 2.0): the pale deck no longer begins at a line across the band (v 2.2 to 3.4, every u) but outside the dark oval of the map, its rim moved by the deck's own structure; south of the oval no pale (the map has none there). `deck.band` holds now only the lift and where it ends.
+  - cirrus streamers can run as an arc (`bow`: how far the middle stands off the straight line; the bound of the empty room is scaled by the steepest slope). Fourth streamer: the bright bow of the map west of the storm, through (-3.9, 3.2), (-3, 1.7), (-2.2, 1.0), ending 0.56 units short of the storm's middle so it does not stand before the eye in 4860. Fifth: the band of cirrus on the far rim, v 6.15 to 6.35 over u -7.5 to 10.5.
+  - the first three streamers, the storm, the near dark deck are as they were.
+- L1, L2, L3 (4860, preview draft, beside the approved image) and l1, l2, l3 (frames of the dive from above, each looked at): the dark oval, the pale deck beyond its far rim, the band on the far rim and the bow stand in the scene where the map has them, so from 4715 to 4740 one layout is seen through the change of picture. 4860: the far field is the dark oval up to the pale rim and the band of cirrus at the horizon (was: a pale band from the middle distance on); the bow comes in from the horizon at the upper left; the near and the middle field (main streamer, its shadow, the storm, the far streamer) are as before.
+- NOT cured by this: the map's long streak is 1.3 units broad, the scene has a thin streamer on its upper edge and the streamer's shadow where the map is white. A broad sheet there would lie over the near field of 4860, which must hold. Named to /root.
+- FAULT 3 of my list, the cobalt at 4716 to 4720: the grade's powers draw a deep blue of the map (blue over its pivot higher than green over its) out to a bright cobalt. CURE `deep.json globe.fall.blue` 3.0: the graded blue of the globe keeps at most that many times its green at the low height (the limit is 3 over the share of the grade, so none at the hold), with a soft knee from 0.75 of the limit; the pale band (1.84) is not touched. Seen at 4718 (l3): the specks are navy.
+- Main merged (79199f35, holds 94be42ed and the engine's one move): merge 2c87fb73. `move.json sky.own` true (tests/place.test.ts line 456 on main takes the plan's own share). tsc clean, vitest 35 files 268 tests pass (1 todo), "PASS G11  every asset has a row or a recipe". smooth path on the own path: red as before, last lines "dive: rate 2, speed: climbs again by 0.372 of the mean after its largest value (frame 4712), up to frame 4750, limit 0.03", "rise: whole frames, rate: changes by 0.172 of the mean over one film frame in 8 steps from frame 4953 to 4960, most at 4956, limit 0.08", "rise: whole frames, turn: changes by 0.232 of the mean over one film frame in 9 steps from frame 4952 to 4960, most at 4956, limit 0.08", "and 10 more, see the report".
+- Looks pushed 01:08 VM (ec528257): the plan view, 4707 before and after step 2, L1 and l1 as unfinished.
+- Running: l4, every frame 4707 to 4769 at preview draft, then L4 (4860).
+
+## Mail from sky_builder (arrived 01:21 VM, low priority, word for word)
+
+From sky_builder, copy of a trace for the Builder (MAIL 426). No action until the Builder decides; the film is frozen.
+Finding: `public/assets/neptune/{full,web}/sky-hold.webp` carries the negative of the post grain of film frame 4605. `assets-src/neptune/sky/patch.py hold` lines 300 to 302 (`g = scene(glow)`, `sky = max(a - g, 0)`) subtract a film frame rendered with the sky off but with grain and dither on. The post grain is a hash of pixel and frame number only (`src/post/chain.ts` 126 to 131, `uFrame = frame % 4096`), so at frame 4605 the live grain partly cancels against the patch.
+Numbers (draft, rate 2): grain applied at k9210 against the scene without grain in the dark sky: -0.125 (k9209 -0.036, k9211 -0.001, both on the beauty). Fine noise of the dark sky: 2.241, 2.094, 2.392 for k9209 to k9211. Whole picture step change dips to 2.043 and 2.012 from 2.078, all of it in the top rows and the left and right columns of the frame.
+Cure, if the Builder asks for it: render the glow input with `--diag nograin` and rebuild the patch. That changes the bytes of every frame that shows the patch. My judgement: below sight, leave it, note it in the recipe.
+
+What follows: nothing until the Builder decides. If the patch is rebuilt, 4605 changes its bytes, which is the Builder's call (the frame is approved).
+
+## MAIL 450 from the Builder (arrived 01:25 VM, low priority, word for word)
+
+MAIL 450 from the Builder (/root) to every builder with assets. Size, a machine check (G12): main's tracked tree is 2961 MB of 3000 (1e9 bytes per GB), so 39 MB are left for the whole film. From now on: (1) every asset that comes in is paid for by one that goes out in the same commit (superseded plates, takes and leads first; nothing under references/ is touched); (2) every READY mail says the net MB of your folders against main; (3) growth needs my word before the commit, with the number. No answer is needed to this mail.
+
+What follows: the function scene brings no asset. When the old thrown picture and the place plates are retired, their files go out (a gain). Every milestone mail names the net MB of my folders against main.
+
+## Mail from sky_builder, follow up to MAIL 448 (arrived 01:38 VM, low priority, word for word)
+
+MAIL 448 follow up from sky_builder for Neptune. sky-hold.webp HAS IT: -0.096 at 4605 (strongest block -0.149; -0.125 measured with the applied grain), -0.001 at 4605.5. sky-terrain.webp is clean: 0.000 at 4860, 0.000 at 4860.5. Recipe line: assets-src/neptune/RECIPE.md line 41 (glow-only.png, "a review still of frame 4605 rendered with sky.json gain 0"), render it with --diag nograin; it enters at sky/patch.py lines 300 to 302.
+
+Ruling of MAIL 448 (the Builder, relayed once, by me). The fault is cured at the cause, not left: the glow input of every sky patch is rendered with the nograin view (--diag nograin) or smoothed as the Venus and Uranus hold recipes do, and the recipe says so. It is low priority and never holds up a candidate: put it into the next commit of your own that changes the bytes of your hold or dive anyway (for a terrain patch I read that as its terrain frames), at the latest into your round candidate. With that commit send the Builder: (a) the judged frame at final against the kept still: in the dark sky the difference must be grain only, give the mean and the largest value there, and say that body, rings and limb are byte equal or differ by at most one level; (b) the correlation number for the judged frame again, it must be at the level of its neighbours (0.00, every block within 0.02). The tool is attached (graincorr.py, it will also be in assets-src/flightsky/ on agent/flightsky): `npm run still -- --frame N --tier draft --diag nograin --out a.png`, the same for N + 1 into b.png, then `python3 graincorr.py N a.png N+1 b.png`. Or mail me the commit hash and I measure it. Numbers below are: correlation of the frame's own post grain with the fine pattern of the scene without grain, dark sky (level under 16), judged frame, then one half frame beside it; draft, main 7152f39.
+
+(Attachment graincorr.py kept at `out/work/nep/graincorr.py`, outside git.)
+
+What follows: the hold's sky patch is rebuilt from a glow input rendered with the nograin view, in the round candidate at the latest and not in the commit of this hour: MAIL 429 holds 4605 to its bytes for the layout step, and the patch changes them. It goes with its own proof (a) and (b). TO DO, open.
+
+## Job np2-01 from render_39 (arrived 01:40 VM, high priority): the official measure of 9087f008
+
+"JOB np2-01, part 1 of 1, 48 min, commit 9087f00" with np2-logs.txt and neptune.json. Its lines: "PASS G17 neptune: 4605 median 1.027 p25 0.868 over 65 tiles; 4860 median 1.087 p25 0.606 over 75 tiles" (final tier, nograin view, limit 0.8 on the median); 4605 draft 5ae1813832a77f851452ec584ea9a58e4142ad6caa5b151670ba1ab8b85b624e and final e298dab13c199dcc16ce99bcb1615c651eeec238f247dc0d94ad3a50dd2710a8, both equal to main's.
+
+## 01:16 to 01:41 VM. The dive with the fitted layout, every frame
+
+- l4: every frame 4707 to 4769 at preview draft (960 by 540, 1 sample), 14.9 to 35.5 s a frame (15 s on the globe alone high up, 35 s near the deck), 21 minutes for the 63 frames. Sheets `/tmp/s-l4-4707.jpg`, `-4723`, `-4739`, `-4755`, every frame looked at.
+  - 4707 to 4714: the hold's planet, the grade sets in; the cobalt specks of step 2 are navy.
+  - 4715 to 4730: the scene comes in over the map by height. The dark oval, its pale far rim, the band of cirrus on the rim and the bow keep their places; the map's bow (broad) hands to the scene's bow (thin) at 4722 to 4728; the map's broad streak hands to the scene's thin streamer with its shadow at 4724 to 4731, and that is the place where the two still differ in form.
+  - 4731 to 4769: the scene alone, one move down to the pose of the surface view; the stars come in from 4743 by height; 4757 beside 4758 one picture (`sky.own` true).
+- L4: 4860 beside the approved image, `/tmp/d-L4.jpg`.
+- M9: 4605 at master draft has the bytes of M8 and of main (sha256 5ae1813832a77f85...), with the new uniforms in the globe's shader.
+- Still wrong, by eye: the deck of the scene reads as long streaks from mid heights (4723 to 4740) where the map is mottled; the bow is a thin hooked line with a lump at its end; the shadow of the main streamer is one wide dark band; the eye of the storm has little inner form; a small upright spike stands on the main streamer near its west end (4756 to 4766).

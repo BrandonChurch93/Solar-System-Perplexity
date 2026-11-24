@@ -202,6 +202,7 @@ export const createSet: SetFactory = async (ctx) => {
       }
       ;(pu.uFallPivot!.value as THREE.Vector3).fromArray(deepLook.globe.fall.pivot)
       ;(pu.uFallPower!.value as THREE.Vector3).copy(fallGlobePower)
+      pu.uFallBlue!.value = deepLook.globe.fall.blue / Math.max(fall, 1e-4)
       if (show > 0) {
         laySeat.copy(camera).applyQuaternion(layBack.copy(state.rotation).invert())
         deepLaid.update(deepLaid.lay(laySeat, plan.laid(state.time), show, fallScenePower), deepSun.copy(plan.lightDir).applyQuaternion(layBack.copy(plan.laid(state.time)).invert()), state.time - terrainMid, 2 * Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) / view.format.height, gain * state.weight, lens, view.format.width / view.format.height)

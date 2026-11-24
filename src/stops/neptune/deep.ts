@@ -75,6 +75,8 @@ uniform vec4 uBand;
 uniform vec4 uWisp;
 uniform vec4 uNear;
 uniform vec4 uZoneEnd;
+uniform vec4 uVortex;
+uniform vec4 uVortexRim;
 uniform vec4 uDeckFine;
 uniform vec4 uHazeLow;
 uniform vec4 uHazeHigh;
@@ -230,8 +232,8 @@ float deckHeight(vec2 uv, vec2 least, float t, out vec4 parts, out float finest)
   parts = vec4(field, arm * armShare, eye, r);
   return -uBowl.x * eye + uArms.z * armShare * arm + uDeckWave.z * field * (1.0 - 0.6 * eye);
 }
-// Cirrus. The body of each streamer is a line along the band with a width, an underside and a thickness, thick and thin along its
-// length; it rides the cirrus wind whole. lee (out): 1 on the side away from the Sun, where it trails.
+// Cirrus. The body of each streamer is a line along the band (bowed across it by bow at its middle) with a width, an underside and a
+// thickness, thick and thin along its length; it rides the cirrus wind whole. lee (out): 1 on the side away from the Sun, where it trails.
 float cirrusBody(vec3 p, float t, out float lee) {
   float best = 0.0;
   lee = 0.0;
@@ -244,7 +246,7 @@ float cirrusBody(vec3 p, float t, out float lee) {
     if (z <= 0.0 || z >= 1.05) continue;
     float along = (p.x - ride - line.x) / (line.y - line.x);
     if (along <= 0.0 || along >= 1.0) continue;
-    float off = p.y - mix(line.z, line.w, along);
+    float off = p.y - mix(line.z, line.w, along) - uStreamWide[i].z * 4.0 * along * (1.0 - along);
     float semi = body.x * mix(uStreamWide[i].x, uStreamWide[i].y, along);
     if (off > 2.53 * semi || off < -(2.23 * uCirrusMake.z + 0.3) * semi) continue;
     float ends = smoothstep(0.0, make.x / (line.y - line.x), along) * (1.0 - smoothstep(1.0 - make.x / (line.y - line.x), 1.0, along));
@@ -273,9 +275,9 @@ float cirrusFar(vec3 p, float t) {
     vec4 line = uStreamLine[i];
     vec4 body = uStreamBody[i];
     float along = clamp((p.x - ride - line.x) / (line.y - line.x), 0.0, 1.0);
-    float off = p.y - mix(line.z, line.w, along);
+    float off = p.y - mix(line.z, line.w, along) - uStreamWide[i].z * 4.0 * along * (1.0 - along);
     float semi = body.x * mix(uStreamWide[i].x, uStreamWide[i].y, along);
-    float dy = max(off - 2.53 * semi, -off - (2.23 * uCirrusMake.z + 0.3) * semi) - 1.5 * uCirrusWarp.x;
+    float dy = max(off - 2.53 * semi, -off - (2.23 * uCirrusMake.z + 0.3) * semi) * uStreamWide[i].w - 1.5 * uCirrusWarp.x;
     float dz = max(body.y - p.z, p.z - body.y - 1.05 * body.z) - 0.85 * uCirrusWarp.x;
     float dx = max(line.x + ride - p.x, p.x - ride - line.y);
     best = min(best, max(max(dy, dz), dx));
@@ -465,7 +467,7 @@ void main() {
     float lit;
     float airSun = uHazeLow.x / uHazeLow.y * toSun(q, uHazeLow.y, lit) + uHazeHigh.x / uHazeHigh.y * toSun(q, uHazeHigh.y, lit);
     vec3 sunHere = vec3(uLight.x * exp(-airSun) * lit);
-    float bright = clamp((uDeckTone.y - uNear.z * (1.0 - smoothstep(uNear.x, uNear.y, g.y)) * smoothstep(uZoneEnd.x, uZoneEnd.y, g.y) + uBand.z * smoothstep(uBand.x, uBand.y, g.y) * (1.0 - smoothstep(uZoneEnd.z, uZoneEnd.w, g.y)) + uDeckTone.x * p0.x + uWisp.w * (wisp - uDeckFine.y) * smoothstep(uDeckFine.z, uDeckFine.w, p0.x) + uCollar.z * (smoothstep(uBowl.z, uBowl.z * 1.25, p0.w / uStorm.z) * (1.0 - smoothstep(uCollar.x, uCollar.y, p0.w))) + uArmMake.y * p0.y) * (1.0 - uDeckTone.z * p0.z), 0.0, 1.0);
+    float bright = clamp((uDeckTone.y - uNear.z * (1.0 - smoothstep(uNear.x, uNear.y, g.y)) * smoothstep(uZoneEnd.x, uZoneEnd.y, g.y) + uBand.z * smoothstep(uVortexRim.x, uVortexRim.y, length((g.xy - uVortex.xy) * uVortex.zw) + uBand.w * p0.x) * smoothstep(uVortexRim.z, uVortexRim.w, g.y) * (1.0 - smoothstep(uZoneEnd.z, uZoneEnd.w, g.y)) + uDeckTone.x * p0.x + uWisp.w * (wisp - uDeckFine.y) * smoothstep(uDeckFine.z, uDeckFine.w, p0.x) + uCollar.z * (smoothstep(uBowl.z, uBowl.z * 1.25, p0.w / uStorm.z) * (1.0 - smoothstep(uCollar.x, uCollar.y, p0.w))) + uArmMake.y * p0.y) * (1.0 - uDeckTone.z * p0.z), 0.0, 1.0);
     vec3 albedo = bright < 0.5 ? mix(uNight, uBlue, bright * 2.0) : mix(uBlue, uPale, bright * 2.0 - 1.0);
     float hollow = clamp(1.0 + 2.5 * min(h0, 0.0), 0.3, 1.0);
     float under = uCirrusBody.x * veil;
@@ -597,6 +599,12 @@ void main() {
   float made = cloudClear < 0.5 ? cloudFinest : deckFinest;
   float texels = deckHit || cloudClear < 0.5 ? 4.0 * tSeen * uPix / max(made, 1e-6) : 0.0;
   vec3 layer = mix(vec3(0.95, 0.95, 0.9), deckHit ? vec3(0.1, 0.3, 0.85) : vec3(0.05, 0.1, 0.3), cloudClear);
+  // The same tool for measures: grid 2 writes u, grid 3 writes v of the deck under each pixel into the layers view (48 units over two bytes).
+  if (uGridShow > 1.5) {
+    vec3 gm = bandOf(oc + rd * tDeck);
+    float gx = clamp((uGridShow > 2.5 ? gm.y : gm.x) / 48.0 + 0.5, 0.0, 1.0) * 255.0;
+    layer = vec3(floor(gx) / 255.0, fract(gx), deckHit ? 1.0 : 0.0);
+  }
   // The grade of the fall (deep.json, globe.fall): none where the power is 1, so the hold keeps its bytes.
   if (any(notEqual(uFallPower, vec3(1.0)))) {
     vec3 fallX = max(col, vec3(0.0)) / uFallPivot;
@@ -675,7 +683,7 @@ export class Deep {
         uShell: { value: new THREE.Vector2(ci.shell[0], ci.shell[1]) },
         uStreamLine: { value: ci.streamers.map((x) => v4(x.line[0]!, x.line[1]!, x.line[2]!, x.line[3]!)) },
         uStreamBody: { value: ci.streamers.map((x) => v4(x.halfWidth, x.base, x.thick, x.density)) },
-        uStreamWide: { value: ci.streamers.map((x) => v4(x.wide[0]!, x.wide[1]!, 0, 0)) },
+        uStreamWide: { value: ci.streamers.map((x) => v4(x.wide[0]!, x.wide[1]!, x.bow, x.bow === 0 ? 1 : 1 / Math.hypot(1, (Math.abs(x.line[3]! - x.line[2]!) + 4 * Math.abs(x.bow)) / (x.line[1]! - x.line[0]!)))) },
         uStreamMake: { value: ci.streamers.map((x) => v4(x.ends, x.lump, x.lumpShare, x.seed)) },
         uCirrusWave: { value: v4(ci.wave, ci.stretch, ci.rise, ci.gain) },
         uCirrusMake: { value: v4(ci.erode, ci.soft, ci.lee, ci.life) },
@@ -684,9 +692,11 @@ export class Deep {
         uCirrusBend: { value: v4(ci.warpNext[0]!, ci.warpNext[1]!, ci.core, ci.leeErode) },
         uCirrusDeep: { value: v4(l.deep[0]!, l.deep[1]!, l.deep[2]!, l.deep[3]!) },
         uCirrusStep: { value: v4(look.steps.cirrusShare, look.steps.lightStep, look.steps.light, ci.floor) },
-        uBand: { value: v4(d.band[0]!, d.band[1]!, d.band[2]!, 0) },
+        uBand: { value: v4(0, 0, d.band[0]!, d.vortex.warp) },
+        uVortex: { value: v4(d.vortex.at[0]!, d.vortex.at[1]!, 1 / d.vortex.semi[0]!, 1 / d.vortex.semi[1]!) },
+        uVortexRim: { value: v4(d.vortex.rim[0]!, d.vortex.rim[1]!, d.vortex.south[0]!, d.vortex.south[1]!) },
         uNear: { value: v4(d.near[0]!, d.near[1]!, d.near[2]!, 0) },
-        uZoneEnd: { value: v4(d.near[3]!, d.near[4]!, d.band[3]!, d.band[4]!) },
+        uZoneEnd: { value: v4(d.near[3]!, d.near[4]!, d.band[1]!, d.band[2]!) },
         uWisp: { value: v4(d.wisp.from, d.wisp.power, d.wisp.gain, d.wisp.light) },
         uDeckFine: { value: v4(d.limit, d.wisp.mean, d.wisp.where[0]!, d.wisp.where[1]!) },
         uHazeLow: { value: v4(h.low.depth, h.low.scale, 0, 0) }, uHazeHigh: { value: v4(h.high.depth, h.high.scale, 0, 0) },
