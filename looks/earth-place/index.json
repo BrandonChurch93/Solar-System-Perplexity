@@ -1,9 +1,41 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T19:46:38.796Z",
- "head": "3ee4c777137099f746f585cd24a347c5870286f1",
- "note": "trial T: detail and haze on two shares by the eye's height; rise in place level -2.26 into 2137 draft, flat ground class -3.9 to -4.2; dive +1.8 a frame; proof runs next",
+ "pushed": "2026-11-24T19:59:07.985Z",
+ "head": "374e8ec03c529ff31ffe52e9d0b532b1e235e9d1",
+ "note": "T far zone at native size: haze even, but deck against map still reads as two pictures of one ground (bad, item 1 stands)",
  "looks": [
+  {
+   "time": "2026-11-24T19:59:06.703Z",
+   "file": "20261124195906703-note-t1-dive-far.jpg",
+   "source": "../../../../tmp/gl/s15/t1-dive-far.jpg",
+   "kind": "note",
+   "label": "worktree T: far zone native, dive 1886 to 1908 every second",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T19:59:05.517Z",
+   "file": "20261124195905517-note-n4-far-b.jpg",
+   "source": "../../../../tmp/gl/s15/n4-far-b.jpg",
+   "kind": "note",
+   "label": "1f3e0bd5: far zone native 2118 to 2129 (the lift of MAIL 719)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T19:59:04.271Z",
+   "file": "20261124195904271-note-t1-far-b.jpg",
+   "source": "../../../../tmp/gl/s15/t1-far-b.jpg",
+   "kind": "note",
+   "label": "worktree T: far zone native 2118 to 2129, deck's far edge and the map's puffs show",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T19:59:03.069Z",
+   "file": "20261124195903069-note-t1-far-a.jpg",
+   "source": "../../../../tmp/gl/s15/t1-far-a.jpg",
+   "kind": "note",
+   "label": "worktree T: far zone native 2106 to 2117",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T19:46:38.030Z",
    "file": "20261124194638030-note-t1-rise-centre.jpg",
@@ -66,38 +98,6 @@
    "source": "../../../../tmp/gl/s14/v3-rise-c.jpg",
    "kind": "note",
    "label": "trial v3 rise 2136 to 2150 every frame, draft, not committed",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T19:16:49.024Z",
-   "file": "20261124191649024-note-v3-rise-b.jpg",
-   "source": "../../../../tmp/gl/s14/v3-rise-b.jpg",
-   "kind": "note",
-   "label": "trial v3 rise 2120 to 2135 every frame, draft, not committed",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T18:57:15.706Z",
-   "file": "20261124185715706-note-v2-dive-b.jpg",
-   "source": "../../../../tmp/gl/s14/v2-dive-b.jpg",
-   "kind": "note",
-   "label": "trial v2 (weight by height only, logistic in ln height), draft: v2-dive-b",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T18:57:15.125Z",
-   "file": "20261124185715125-note-v2-dive-a.jpg",
-   "source": "../../../../tmp/gl/s14/v2-dive-a.jpg",
-   "kind": "note",
-   "label": "trial v2 (weight by height only, logistic in ln height), draft: v2-dive-a",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T18:57:14.558Z",
-   "file": "20261124185714558-note-v2-rise-c.jpg",
-   "source": "../../../../tmp/gl/s14/v2-rise-c.jpg",
-   "kind": "note",
-   "label": "trial v2 (weight by height only, logistic in ln height), draft: v2-rise-c",
    "stop": "earth"
   }
  ]
