@@ -1,6 +1,10 @@
 import { lookbackLight, smooth, smoother, softSmooth } from '../src/director/rig'
+import * as THREE from 'three'
 import { describe, expect, it } from 'vitest'
-import { landing, passCurve, TRAVEL, TravelShape, travelLook } from '../src/space/travel/path'
+import { config } from '../src/config'
+import { FilmDirector } from '../src/director/film'
+import { plans } from '../src/director/plans'
+import { inFrame, landing, outsideFrame, passCurve, TRAVEL, TravelShape, travelLook } from '../src/space/travel/path'
 
 const looks = ['base', ...Object.keys(TRAVEL)].map((id) => ({ id, look: travelLook(id) }))
 
@@ -167,6 +171,45 @@ describe('the landing of a travel', () => {
       const off = shapeOf(id, { land: 0 })
       const on = shapeOf(id)
       for (const u of [0, 0.1, 0.33, 0.5, 0.66]) expect(on.pan(u), id).toBe(off.pan(u))
+    }
+  })
+})
+
+describe('the dim of the sky while the Sun comes into the frame of a travel', () => {
+  const film = new FilmDirector(plans)
+  const level = (p: number): number => film.shotAt(Math.floor(p), p / config.fps).skyExposure
+  const legs = config.segments.filter((s) => s.kind === 'travel')
+
+  it('is nothing at the first instant of every leg, wherever the Sun stands in the frame', () => {
+    const seen = film as unknown as { sunSeen(index: number, time: number): number }
+    legs.forEach((seg, index) => {
+      if (index > 0) expect(seen.sunSeen(index, seg.firstFrame / config.fps)).toBe(0)
+    })
+  })
+
+  it('leaves the level of the sky without a step out of the rise and into the hold', () => {
+    for (const seg of legs) {
+      for (const seam of [seg.firstFrame, seg.endFrame]) {
+        const before = level(seam - 0.25)
+        expect(Math.abs(level(seam) - before) / before).toBeLessThan(0.002)
+        expect(Math.abs(level(seam + 0.25) - before) / before).toBeLessThan(0.002)
+      }
+    }
+  })
+
+  it('follows the place of the Sun in the frame and has no stairs', () => {
+    const mercury = legs.find((s) => s.id === 'mercury.travel')!
+    for (let p = mercury.firstFrame; p < mercury.endFrame - 0.5; p += 0.5) expect(Math.abs(level(p + 0.5) - level(p)) / level(p)).toBeLessThan(0.005)
+    const uranus = legs.find((s) => s.id === 'uranus.travel')!
+    for (let p = uranus.firstFrame; p < uranus.endFrame - 0.25; p += 0.25) expect(level(p + 0.25)).toBeGreaterThanOrEqual(level(p) - 1e-9)
+  })
+
+  it('measures the same edge of the frame as inFrame', () => {
+    const to = new THREE.Vector3(0.3, -0.2, -1)
+    for (let k = 0; k < 40; k++) {
+      const q = new THREE.Quaternion().setFromEuler(new THREE.Euler(0.03 * k - 0.6, 0.05 * k - 1, 0.01 * k))
+      expect(inFrame(q, 30, 16 / 9, to, 0, 0)).toBe(outsideFrame(q, 30, 16 / 9, to) < 0)
+      expect(inFrame(q, 30, 16 / 9, to, 0, 3)).toBe(THREE.MathUtils.radToDeg(outsideFrame(q, 30, 16 / 9, to)) < 3)
     }
   })
 })
