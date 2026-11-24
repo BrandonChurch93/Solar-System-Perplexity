@@ -1,9 +1,33 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-24T03:11:41.933Z",
+ "pushed": "2026-11-24T03:27:26.001Z",
  "head": "b4a3c0818616e8767a64a61d783481d0dda48881",
- "note": "Sun core from one read; step 3 first try of the ground from higher up, edges wrong",
+ "note": "Venus step 3 try 3 (working tree, not committed): ground on the globe from 0.3 radii, dive 1304 to 1343",
  "looks": [
+  {
+   "time": "2026-11-24T03:27:25.259Z",
+   "file": "20261124032725259-note-g3-big1.jpg",
+   "source": "../../../../tmp/v/g3-big1.jpg",
+   "kind": "note",
+   "label": "Venus step 3 try 3, working tree, draft, 1314 1317 1320 1323 larger",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T03:27:24.704Z",
+   "file": "20261124032724704-note-g3-sheet2.jpg",
+   "source": "../../../../tmp/v/g3-sheet2.jpg",
+   "kind": "note",
+   "label": "Venus step 3 try 3, working tree, draft, dive 1332 to 1343 (T is 1343): one place getting nearer; not yet checked against the surface side at T by numbers",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T03:27:24.122Z",
+   "file": "20261124032724122-note-g3-sheet.jpg",
+   "source": "../../../../tmp/v/g3-sheet.jpg",
+   "kind": "note",
+   "label": "Venus step 3 try 3, working tree, draft, dive 1304 to 1329 every third frame: the close ground drawn on the globe from the height where it first shows (deck by scale against the frame, matte by cloud forms). Wrong: plates beside the ground paler and olive, dark slab upper right 1314 to 1323 is plate content, limb band right",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T03:11:41.321Z",
    "file": "20261124031141321-note-g1-sheet2.jpg",
@@ -55,36 +79,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "3479eb0af72c0bd3"
-  },
-  {
-   "time": "2026-11-24T02:55:49.191Z",
-   "file": "20261124025549191-frame-f01262.jpg",
-   "source": "out/work/venus/place/same/e4/f01262.png",
-   "kind": "frame",
-   "label": "venus.dive frame 1262, draft tier",
-   "stop": "venus",
-   "segment": "venus.dive",
-   "frame": 1262,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "3479eb0af72c0bd3"
-  },
-  {
-   "time": "2026-11-24T02:47:36.489Z",
-   "file": "20261124024736489-note-n1.jpg",
-   "source": "../../../../tmp/v/n1.jpg",
-   "kind": "note",
-   "label": "dive 1326 to 1336, every second frame at half size: plates, then the ground comes in from 1333 (still wrong, step 3)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T02:47:35.465Z",
-   "file": "20261124024735465-note-s1300.jpg",
-   "source": "../../../../tmp/v/hes2/s1300.jpg",
-   "kind": "note",
-   "label": "dive on the one move with the sidestep, frames 1300 to 1319, draft",
-   "stop": "venus"
   }
  ]
 }
