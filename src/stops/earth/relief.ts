@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { frameUniform } from '../../core/frame'
 import type { RenderView, SetContext } from '../../core/types'
 import { DIAG_GLSL, biasUniform, diagUniform, fineUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
@@ -112,6 +113,7 @@ uniform vec4 uFrame;
 uniform vec3 uLayer;
 uniform float uGrad;
 uniform float uFine;
+uniform float uPerLine;
 uniform float uBias;
 uniform vec3 uEye;
 uniform vec4 uSea;
@@ -185,7 +187,7 @@ void main() {
   vec3 col = inverseFilmic(texel) * fall;
   vec3 soft = inverseFilmic(wide) * fall;
   vec2 g = vLocal.xz * uShimmer.y;
-  float fine = 1.0 - smoothstep(0.35, 1.0, max(fwidth(g.x), fwidth(g.y)) * uFine);
+  float fine = 1.0 - smoothstep(0.35, 1.0, max(fwidth(g.x), fwidth(g.y)) * uFine * uPerLine);
   float sparkle = 0.6 * (vnoise(vec3(g, uShimmer.z + 7.3)) - vnoise(vec3(g, 7.3))) + 0.4 * (vnoise(vec3(g * 2.3 + 4.1, uShimmer.z * 1.7 + 3.1)) - vnoise(vec3(g * 2.3 + 4.1, 3.1)));
   float glint = 1.0 + uShimmer.x * m.r * fine * sparkle * 2.0;
   col = clear(col * glint * uGain * lens(), soft * glint * uGain * lens(), 1.0);
@@ -336,7 +338,7 @@ export class Ground {
           uColor: { value: color }, uMasks: { value: masks }, uLow: { value: low }, uBloom: { value: 0 }, uPlain: { value: new THREE.Vector2(look.plain[0], look.plain[1]) }, uSize: { value: new THREE.Vector2(size.width, size.height) },
           uBox: { value: new THREE.Vector4().fromArray(box) }, uMaskBox: { value: new THREE.Vector4().fromArray(maskBox) }, uImage: { value: new THREE.Vector2(W, H) },
           uDrift: { value: new THREE.Vector2() }, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uOwnLens: { value: 0 }, uFrame: { value: new THREE.Vector4(1, 1, 0, 0) },
-          uLayer: { value: new THREE.Vector3().fromArray(tint) }, uDiag: diagUniform, uGrad: gradUniform, uFine: fineUniform, uBias: biasUniform,
+          uLayer: { value: new THREE.Vector3().fromArray(tint) }, uDiag: diagUniform, uGrad: gradUniform, uFine: fineUniform, uPerLine: frameUniform, uBias: biasUniform,
           uEye: { value: new THREE.Vector3() }, uSea: { value: new THREE.Vector4(centre.x, centre.y, centre.z, def.radius) }, uLock: { value: new THREE.Vector2().fromArray(look.lock) },
           uShow: { value: new THREE.Vector4(0, 0, cos(globe.angleDeg[0]!), cos(globe.angleDeg[1]!)) }, uReach: { value: new THREE.Vector4(cos(globe.farDeg[1]!), cos(globe.farDeg[0]!), globe.rim[0]!, globe.rim[1]!) }, uCanvas: { value: new THREE.Vector4().fromArray(def.ground.box) }, ...extra,
         },

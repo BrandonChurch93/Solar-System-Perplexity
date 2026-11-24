@@ -235,6 +235,22 @@ def open_sea(img, spec):
     return (1 - cloud) * step(spec['blue'][0], spec['blue'][1], img[..., 0:1] - img[..., 2:3])
 
 
+def near_sea(img, w, spec, per):
+    from calm import land_of, SPEC as CALM
+    lo = img.min(axis=2)
+    cloud = step(spec['grey'][0], spec['grey'][1], lo / np.maximum(img.max(axis=2), 1)) * step(spec['bright'][0], spec['bright'][1], lo)
+    k = 2 * int(round(spec['growDeg'] * per)) + 1
+    cloud = cv2.dilate((cloud > 0.05).astype(np.uint8), cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (k, k))).astype(np.float32)
+    k = 2 * int(round(spec['landDeg'] * per)) + 1
+    land = land_of(img, {**CALM, **CALM['plate']}, CALM['dotPx']['12'])
+    land = cv2.GaussianBlur(cv2.dilate(land, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (k, k))), (0, 0), spec['landDeg'] * per / 2)
+    sea = (1 - cloud) * (1 - land)
+    s = spec['sigmaDeg'] * per
+    tone = cv2.GaussianBlur(img * sea[..., None], (0, 0), s) / np.maximum(cv2.GaussianBlur(sea, (0, 0), s), spec['least'])[..., None]
+    print('near sea: share of the plate', round(float(w.mean()), 4), 'of it cloud', round(float((cloud[..., None] * w).sum() / w.sum()), 3), 'land', round(float((land[..., None] * w).sum() / w.sum()), 3), flush=True)
+    return img * (1 - w) + (img * land[..., None] + tone * (1 - land[..., None])) * w
+
+
 def field():
     spec = MEND['field']
     colour = np.load(WORK / 'field-colour.npy').astype(np.float32)
@@ -355,6 +371,11 @@ def main():
     g12 = g12 * (1 - wd) + graded(back * r + far * (1 - r), sea) * wd
     print('plate, share that gives way to the hold', round(float(wd.mean()), 4), flush=True)
     del far, back, r, wd, dens
+    nr = cv2.imread(str(WORK / 'field-near.png'), 0).astype(np.float32) / 255
+    nr, ok = rep(nr, Win(P, MEND['field']['widthDeg'], nr.shape[0]), whole, signed=True)
+    wipe = MEND['field']['density']['ring']['wipe']
+    g12 = near_sea(g12, step(wipe[0], wipe[1], np.clip(nr, 0, 1) * ok)[..., None], MEND['nearSea'], size / deg)
+    del nr, ok
     fl = field()
     lay12 = cv2.imread(str(WORK / 'q12-lay.png')).astype(np.float32)
     fs = MEND['field']

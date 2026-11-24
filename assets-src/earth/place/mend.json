@@ -194,7 +194,7 @@
   "blendPx": 32
  },
  "field": {
-  "how": "The far cloud of the place as bodies. Four generated top down pictures of a cumulus field over open sea (takes/field-t1..4.png, prompt-field.txt) are cut into cloud bodies. Alpha is the darkest channel between cloud[0] and the brightest value within rimPx (at least cloud[1]), so a rim beside bright cloud is a soft edge and a shaded flank is solid; a soft edge takes the colour of the bright cloud beside it (bleed: sigma px, power of the weight). glint: per take the half axes in px of an ellipse about the upper left corner where the take shows a sun glint; bodies with more than 0.3 of their area inside are dropped, and out to pale[0] times the ellipse the alpha limits rise to pale[1] and pale[2] so the pale sea is not taken for cloud. Bodies that touch the edge of a take are dropped. The cast shadow is the ratio of the sea to its lit level (shadow). Each take is turned so that its shadows run along the shadow of the Sun at the plate centre, reduced by scale, and used as it is and mirrored about that line. The bodies are laid on a raster of widthDeg about the plate centre, once per entry of sizes (the reduction of the takes and the share of the density that size takes: share[0] where the density is under share[2], share[1] where it is over share[3]), on a jittered grid of step tile widths; a body stays with the chance (density times share) to the power. The density is described in density.how. Shadows fall on the ground and, by onCloud, on bodies laid before. levels.py lays the field over every level and the plate: under it the plate gives way to the hold's own levels (12 degrees where that reaches, 24 beyond, calmed, through seaGain) by the density and by the far ramp of the block far, so the repaint of the far zone with its soft cloud and its dotted land is not used, the ground takes the shadows, and the bodies take white, the per channel ratio of the bright cloud (darkest channel over white.bright) of the lay back within white.nearDeg of the point under the twin camera to the bright cloud of the field, kept inside white.limit. In the low plate the lay back keeps its tones and takes the detail of the field: what the plate with the field differs by from its own blur over low.sigmaDeg, where the blurred alpha passes low.alpha and the lay back is cloud (low.cloud).",
+  "how": "The far cloud of the place as bodies. Four generated top down pictures of a cumulus field over open sea (takes/field-t1..4.png, prompt-field.txt) are cut into cloud bodies. Alpha is the darkest channel between cloud[0] and the brightest value within rimPx (at least cloud[1]), so a rim beside bright cloud is a soft edge and a shaded flank is solid; a soft edge takes the colour of the bright cloud beside it (bleed: sigma px, power of the weight). glint: per take the half axes in px of an ellipse about the upper left corner where the take shows a sun glint; bodies with more than 0.3 of their area inside are dropped, and out to pale[0] times the ellipse the alpha limits rise to pale[1] and pale[2] so the pale sea is not taken for cloud. Bodies that touch the edge of a take are dropped. The cast shadow is the ratio of the sea to its lit level (shadow). Each take is turned so that its shadows run along the shadow of the Sun at the plate centre, reduced by scale, and used as it is and mirrored about that line. The bodies are laid on a raster of widthDeg about the plate centre, once per entry of sizes (the reduction of the takes and the share of the density that size takes: share[0] where the density is under share[2], share[1] where it is over share[3]), on a jittered grid of step tile widths; a body stays with the chance (density times share) to the power. A body whose bright tenth stays under veil.bright (the darkest channel at veil.tenth of its solid part, in code values of the take) is a veil or a cloud in the shade of another: it stays only where the density is over veil.dense, among lit bodies, because alone on the sea it reads as a flat grey patch (in the four takes these bodies are 8 to 10 percent of the cloud area and 48 to 77 percent of the bodies by count). Every kept body is also trimmed to its cloud. A core is a connected part of the solid matte that is bright (darkest channel from veil.bright) and opaque (matte from veil.alpha[1]). Within veil.reach[0] times the square root of a core's area a pixel stays whole (cores are counted in size classes of 4, 8, 16 px and so on, a pixel takes the nearest core of each class by that class's size); from veil.reach[1] it stays by its matte alone: none where the matte, blurred over veil.sigmaPx px, is under veil.alpha[0], whole from veil.alpha[1]. Measured on the four takes: 12 to 15 percent of the solid matte goes, 0.03 to 2.2 percent of the pixels whose darkest channel is over 170, and 31 to 37 percent of the lit bodies of 20 to 300 px lose over half of their pixels. What goes is the pale sea that a take shows between its clouds and the thin cell deck of take 4, which the matte takes for cloud at a share of about 0.4 to 0.65 and which read as flat grey sheets beside the white clouds of the field (frame 1889); an opaque flank of a tower stays. The density is described in density.how. A body takes the take's shadow along the line from it down the Sun's way (reachPx), in the share that kept bodies have among all bodies standing up Sun of the point: both are counted along the Sun's line between span[0] and span[1] times the take's measured shadow offset (measured on take 3 at scale 0.7: the shadows of bodies of 1600 to 6400 px lie between 0.55 and 1.4 of the offset, those of larger bodies between 0.3 and 2), and the bodies dropped at a take's edge or in its glint count as not kept. Where every body is kept the shadows are the take's own; a thin field shows no shadow without its cloud. Shadows fall on the ground and, by onCloud, on bodies laid before. levels.py lays the field over every level and the plate: under it the plate gives way to the hold's own levels (12 degrees where that reaches, 24 beyond, calmed, through seaGain) by the density and by the far ramp of the block far, so the repaint of the far zone with its soft cloud and its dotted land is not used, the ground takes the shadows, and the bodies take white, the per channel ratio of the bright cloud (darkest channel over white.bright) of the lay back within white.nearDeg of the point under the twin camera to the bright cloud of the field, kept inside white.limit. In the low plate the lay back keeps its tones and takes the detail of the field: what the plate with the field differs by from its own blur over low.sigmaDeg, where the blurred alpha passes low.alpha and the lay back is cloud (low.cloud).",
   "takes": [
    "takes/field-t1.png",
    "takes/field-t2.png",
@@ -233,10 +233,28 @@
    "fillPx": 4,
    "softPx": 1.0,
    "reachPx": 220,
-   "onCloud": 0.25
+   "onCloud": 0.25,
+   "span": [
+    0.25,
+    2.0
+   ]
+  },
+  "veil": {
+   "tenth": 0.9,
+   "bright": 130,
+   "dense": 0.5,
+   "sigmaPx": 2,
+   "alpha": [
+    0.55,
+    0.8
+   ],
+   "reach": [
+    0.15,
+    0.3
+   ]
   },
   "density": {
-   "how": "Where the bodies lie, as a chance from 0 to 1 on size px over widthDeg, from a seeded generator. The core is the ground the close image covers (the lay back, its edge softened by edgeDeg) further than far degrees of arc from the point under the twin camera; the near limit of far is pushed outward by up to farVary[1] degrees by a noise of farVary[0] degrees, so it is no arc. Round the core the field thins out over reachDeg degrees times exp(vary[1] times a noise of vary[0] degrees), so its outline follows no line of the core. Groups: a sum of noises (grain: sigma in degrees and weight) plus a lift that runs from lift[0] outside to lift[1] in the core (gamma) and is raised over land (land[0], by the envelope to the power land[1]; land is the land of the hold's 48 degree level by calm.py, blurred by landDeg), through cut. The groups thin to open where the lay back shows neither cloud (darkest channel through cloud after a blur of cloudDeg) nor land; outside the lay back's cover its cloud is carried on from the cover's edge over spreadDeg degrees, so the field does not change along that edge. wide is a thin scatter of small groups over the whole raster (its own grain, cut, top chance, land weight). The whole field ends between wide.edgeDeg[0] and wide.edgeDeg[1] degrees from the raster's rim, varied by edgeVary degrees with no variation at the rim itself, and deck.py drops every body that the raster's edge would cut. Outside the lay back's cover no body lies where the hold's map has cloud of its own (base: darkest channel of the hold's 48 degree level through base.cloud after a blur of base.deg degrees), so a sharp body never stands on a soft cloud of the far map.",
+   "how": "Where the bodies lie, as a chance from 0 to 1 on size px over widthDeg, from a seeded generator. The core is the ground the close image covers (the lay back, its edge softened by edgeDeg) further than far degrees of arc from the point under the twin camera; the near limit of far is pushed outward by up to farVary[1] degrees by a noise of farVary[0] degrees, so it is no arc. Round the core the field thins out over reachDeg degrees times exp(vary[1] times a noise of vary[0] degrees), so its outline follows no line of the core. Groups: a sum of noises (grain: sigma in degrees and weight) plus a lift that runs from lift[0] outside to lift[1] in the core (gamma) and is raised over land (land[0], by the envelope to the power land[1]; land is the land of the hold's 48 degree level by calm.py, blurred by landDeg), through cut. The groups thin to open where the lay back shows neither cloud (darkest channel through cloud after a blur of cloudDeg) nor land; outside the lay back's cover its cloud is carried on from the cover's edge over spreadDeg degrees, so the field does not change along that edge. wide is a thin scatter of small groups over the whole raster (its own grain, cut, top chance, land weight). The whole field ends between wide.edgeDeg[0] and wide.edgeDeg[1] degrees from the raster's rim, varied by edgeVary degrees with no variation at the rim itself, and deck.py drops every body that the raster's edge would cut. Outside the lay back's cover no body lies where the hold's map has cloud of its own (base: darkest channel of the hold's 48 degree level through base.cloud after a blur of base.deg degrees), so a sharp body never stands on a soft cloud of the far map. ring: nearer to the point under the twin camera than the far limit and outside the lay back's cover the bodies go on at the lay back's own cloud share, so the cloud of the close view does not stop at the edge of its picture. The share is the part of the lay back whose darkest channel is over ring.cloud, as a mean over shareDeg degrees carried outward from the cover's edge; the chance is (share over top) to the power 1 over power, the inverse of what the field lays (measured on the field of deck9.log: cover top times chance to the power; cover 0.014, 0.053, 0.075, 0.107, 0.154, 0.219, 0.242, 0.319, 0.382, 0.419 for a chance of 0.15, 0.25 and so on in tenths to 0.85, then 0.935 and 1). The calm zone is that ring and the ground within calmDeg degrees (varied like reachDeg) of the cover and of the ring, outside the cover, where the plate is fully laid into the levels (its footprint weight through ring.plate). There levels.py wipes the plate's own cloud and calms its sea (nearSea), fully where the zone's weight is over wipe[1], and only from there on may a body lie where the plate had cloud of its own. deck.py writes the zone's weight to field-near.png.",
    "size": 2048,
    "seed": 5,
    "far": [
@@ -326,6 +344,21 @@
      170
     ],
     "deg": 0.3
+   },
+   "ring": {
+    "cloud": 110,
+    "shareDeg": 1.0,
+    "top": 0.42,
+    "power": 1.6,
+    "calmDeg": 3.0,
+    "plate": [
+     0.8,
+     1.0
+    ],
+    "wipe": [
+     0.0,
+     0.5
+    ]
    }
   },
   "step": 0.55,
@@ -582,5 +615,20 @@
    "blendDeg": 0.75
   },
   "spreadDeg": 1.5
+ },
+ "nearSea": {
+  "how": "The sea of the plate in the calm zone of field.density.ring (weight field-near.png through field.density.ring.wipe). The plate there is the hold's map or its repaint: the sea floor is drawn as relief and the cloud is soft and lit from above, which beside the close view reads as a map. In the zone the sea is its own mean over sigmaDeg degrees, taken over sea alone: not over cloud (grey: darkest channel over the brightest, bright: the darkest channel in code values, both must pass, widened by growDeg degrees) and not over land (calm.py with the plate's values, widened by landDeg degrees). Land stays as it is. The broad tone of the sea is kept, so nothing steps at the zone's edge; the field's bodies and their shadows are laid on after it.",
+  "grey": [
+   0.4,
+   0.6
+  ],
+  "bright": [
+   50,
+   90
+  ],
+  "growDeg": 0.1,
+  "sigmaDeg": 0.3,
+  "landDeg": 0.05,
+  "least": 0.02
  }
 }
