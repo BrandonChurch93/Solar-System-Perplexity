@@ -3472,3 +3472,70 @@ is in the picture at 3 to 12 px, and the same crispness for the far ring across 
 - JOB W was stopped after its two samples (head c8ca94e and main b0b8788, /tmp/v/r37/head and main); the
   job on the merged head runs from /tmp/v/chain3.sh, log /tmp/v/r39.log, outputs /tmp/v/r39: finals, path,
   parity, gate, sample, vitest, handover, G13.
+
+### 07:38 to 08:00 UTC: proofs on the merged head, the first NAMED mail, what the second commit shall cure
+
+- FIRST NAMED COMMIT: 2ab7243b7cb5e5e5f741ae6a763952e15a1f5b22 (the notebook commit on the merge 086fcbd of main
+  8b2c538). The NAMED mail went to /root at 07:57 UTC, high, with 10 pictures. Its text is /tmp/v/mail/named.md.
+  The Builder's report on it starts a clock: the second named commit is due within 90 minutes of that report
+  (MAIL 508); the third goes into its round as it stands.
+- MAIL 575 (07:45): main is aaea819b3ec05f04742fdb6f55ccb032327aed47, take D, tools only. "Nothing under src,
+  config, public or package.json changed, so no hash moves and no picture changes; no merge is needed for a
+  named commit". My head stands on 8b2c538 and the mail says so.
+- PROOFS ON 2ab7243 (worktree /home/user/workspace/mainref, outputs /tmp/v/r39):
+  - tsc 0, build 0, vitest exit 0 (47 files, 437 tests).
+  - Take check: 21 files differ from main 8b2c538, 0 outside my three folders.
+  - Net size against main: assets-src/saturn +0.106 MB, public/assets/saturn -0.127 MB, src/stops/saturn
+    +0.015 MB, net -0.006 MB.
+  - Finals: 3465 sha256 f4b3a39598b5e761fa1c45c9c3cf19836a621e6aa70a95453c64bbb654a2a963, 3720 sha256
+    408729eb246dbe02ee7ee02ee0a52d004671faad01f005fdea018cac09bed0d5, both equal to those of c8ca94e, both
+    changed on purpose against the Builder's PNGs of MAIL 546 (pairs /tmp/v/r37/pair_3465.jpg, pair_3720.jpg).
+  - Path: "VERDICT: green. No number is over its limit." The report is the one of c8ca94e line for line.
+  - Parity: "VERDICT: green. No number is over its limit." Largest mean 2.557, coarse 1.044, block -4.631,
+    level -0.960, all at 3720; 3563 coarse 0.694 (main's 4K reds of MAIL 538 were 3.226 and -22.068).
+  - Gate: "PASS G11  every asset has a row or a recipe" and "PASS G15  at most 2 sets per frame; finished
+    stops: saturn/web 274 MB, saturn/full 747 MB".
+  - Handover (draft, sides, flow, path): "saturn.dive side difference at T: pass", "saturn.dive flow gap at T:
+    pass", "saturn.dive every frame: pass", "saturn.rise side difference at T: pass", "saturn.rise flow gap at
+    T: pass", "saturn.rise every frame: pass". Side difference at T in both moves: mean 0, max 1.
+  - G13 (every 6th frame, 08:00): "PASS G13 saturn: 0 of 83 frames over 0.02 soft (every 6th frame); worst
+    frame 3390 0.00%, frame 3396 0.00%, frame 3402 0.00%".
+  - 26 draft frames equal to the byte to those of c8ca94e. Stop hash 47699bc6d1834c03 (the hash of the pictures
+    runs on 589fd9a), engine hash 12ba5366b28777b2.
+  - The pictures of both moves were NOT run again on this head; they stand on 589fd9a with the same stop hash.
+- SAMPLE OF MY HEAD AGAINST MAIN (draft, /tmp/v/r37/head and /tmp/v/r37/main, 26 frames): equal bytes at 3330,
+  3922, 3950, 3959, 3960; 3350 0.01 percent of the pixels; 3370 14 percent; 3389 to 3539 32 to 37 percent, mean
+  0.46 to 0.54 of 255; 3630 to 3720 63 to 66 percent, mean 1.67 to 1.98; 3780 and 3809 are the bend (mean 66.8
+  and 89.9); 3885 to 3900 15 to 20 percent, on the globe (the rigid map) with a faint lattice on the rings
+  (/tmp/v/r39/s3885_head_main_diff.jpg).
+- FORWARD SHARE of the lens' way along its own view (out/scratch/fwd.ts): 1.000 from 3630 to 3729, 0.947 at
+  3740, 0.655 at 3750, 0.153 at 3760, -0.397 at 3770, -0.815 at 3780, -0.974 at 3790, -0.933 at 3808. Height
+  0.581 at 3632, 0.395 at 3720, 0.350 at 3760, 0.4925 at 3808. Speed 9.345e-3 radii a frame at 3720. So the
+  last 70 frames of the surface view do not fly forward: that is the bend d196 asks for, and it is against
+  the brief's "clear forward movement and depth through all 180 frames". Mailed as item 11 for a ruling.
+- DARK SINGLE PIXELS inside the top limb at the pole (draft 3570 to 3577, 3 to 7 a frame): main's 3573 and
+  3576 have them too (/tmp/v/r37/limb_head_main.png). So they come from the kept set, not from my model.
+  Item 14.
+- COURSES OF THE TWO SKY BLENDS, computed from the path (out/scratch/skydump.ts, /tmp/v/r38/skydump.json), the
+  largest share that goes inside 8 film frames:
+  - hero sky (dive): now 0.297 at 3560; straight course, same power 0.75: 0.203 at 3556 + 1/2.
+  - lift (rise), frames 3859 to 3867 and 3863 to 3871: now 0.415 and 0.402; straight with power 0.5: 0.301 and
+    0.276 (largest 0.324 at the start, end rate 0.031 a frame); power 0.45: 0.285 and 0.268; power 0.4: 0.266
+    and 0.258 (end rate 0.047 a frame, a harder stop at 3884).
+- THE OPEN LIST AS MAILED, worst first, old numbers kept: 10 the three pattern reds; 6 G17 at 3720 (the film's
+  shutter at the skim's pace, needs a ruling); 12 pop 1.21 at 3875 (the near ring leaving over the bottom
+  edge, x 720 to 1080); 11 the last 70 frames of the surface view do not fly forward; 1 the globe near the
+  lens 3808 to 3836; 4 stars through the shaded C ring; 2 the near rest at 3884; 13 the rise picks up its
+  speed inside one frame at 3810; 14 dark limb pixels; 5 sawtooth wedge 3630 to 3690; 7 ring tone slides 3840
+  to 3864; 3 the moon cut by the limb 3596 to 3600. 8 and 9 are closed.
+- PLAN FOR THE SECOND NAMED COMMIT (all in the scratch tree /home/user/workspace/rt, tsc 0, not rendered):
+  1. One shadow border: kept/look.ts penumbraAway = penumbra [0.978, 0.994, 0.006]. Check the 3720 draft
+     bytes against /tmp/v/r39/head/f03720.png (the globe's shadow border is out of frame there).
+  2. Hero sky course straight: plan.ts heroSky mix(gone, smooth(gone), k.round), skim.json sky.hero.round 0.
+  3. Lift course straight: plan.ts liftAt mix(level, smooth(level), k.round), sky.lift.round 0, power 0.5 or
+     0.45.
+  Test first with film shutter stills in rt (/tmp/v/job_y.sh DIR FRAMES, half frames allowed) and my copy of
+  the judge's pattern map (/tmp/v/patmap3.py K0 K1 /tmp/v/r38/poses.json OUT, run in mainref, K = 2 x frame).
+  Then copy into the repo, commit locally, run job W with "keepframes dive rise path parity finals gate
+  vitest", check the two finals (3465 must stay f4b3a395..., 3720 must stay 408729eb... unless a cure moves
+  them on purpose), merge the newest main by the plumbing recipe, push whole.
