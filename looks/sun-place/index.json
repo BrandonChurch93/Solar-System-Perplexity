@@ -1,9 +1,41 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T09:56:49.958Z",
+ "pushed": "2026-11-24T10:19:35.704Z",
  "head": "868c6c33e442a7078a4e6d6c8dd91dd5ebf5fd12",
- "note": "commit 868c6c33 (pushed, not named, proof running): the ground takes the wide light and dark of the globe map at the place on the ball, near and far reading by footprint; arcade, corona and sky by longer heights; sky share by height, skyFrames 0; cell swaps slower. My gauge of the pattern (limit 0.45), pairs 8 frames apart from 217, 221, 225, 233, trial w5: 0.234, 0.185, 0.135, 0.058 (named head 0.517, 1.083 at 220, 1.254, 0.082); surface pair 171 to 179: 0.487 before, 0.313 with the slower swaps. w5-rise.jpg: 217, 221, 225, 229, 233, 241. cal.jpg: function ground alone (left) and globe face alone (right) at 221 and 229: one pattern, the globe redder and about 20 levels brighter, not cured. Frame 60 draft w5 sun-near: dark (under 0.15) 0.206 | body (0.15 to 0.55) 0.571 | pale (0.65 to 0.85) 0.107 | white (over 0.85) 0.035; brightest 15 percent: half width 6.2 px, 3653 shapes | fine detail 0.0580 | mean 0.364; distance 0.065. Still wrong: cells read as stones (MAIL 547 look work not started), pop and every frame level not measured yet on this commit",
+ "note": "868c6c33 (not named yet), handover draft frames 180 to 229, every frame. My gauge, pattern over 8 frames (limit 0.45): 180 0.429, 187 0.504 (one cell swap near the camera, red), 195 0.390, 203 0.345, 209 0.384, 213 0.411, 217 0.241, 221 0.181 (named head 217 0.517, 221 1.083, 225 1.254). Pop at rate 1 largest 1.100 at 190 (limit 1.2), level step largest 0.46 at 229. New fault found: 208 to 216 reads 0.425 against 0.296 on the named head, bottom rows, because the wide tone changes its reading by footprint as the camera rises. Still wrong: cells read as polished pebbles, function ground paler than the globe face around it at 218 to 225. Frame 60 draft (trial w5, same values as the commit but far level 0.18), sun-near: dark (under 0.15) 0.206 | body (0.15 to 0.55) 0.571 | pale (0.65 to 0.85) 0.107 | white (over 0.85) 0.035 ; brightest 15 percent: half width 6.2 px, 3653 shapes | fine detail 0.0580 | mean 0.364 ; distance 0.065. Aims of MAIL 505 missed.",
  "looks": [
+  {
+   "time": "2026-11-24T10:19:34.581Z",
+   "file": "20261124101934581-note-s8-d.jpg",
+   "source": "../../../../tmp/s8-d.jpg",
+   "kind": "note",
+   "label": "868c6c33 rise draft every frame, sheet d",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T10:19:33.526Z",
+   "file": "20261124101933526-note-s8-c.jpg",
+   "source": "../../../../tmp/s8-c.jpg",
+   "kind": "note",
+   "label": "868c6c33 rise draft every frame, sheet c",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T10:19:32.683Z",
+   "file": "20261124101932683-note-s8-b.jpg",
+   "source": "../../../../tmp/s8-b.jpg",
+   "kind": "note",
+   "label": "868c6c33 rise draft every frame, sheet b",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T10:19:31.628Z",
+   "file": "20261124101931628-note-s8-a.jpg",
+   "source": "../../../../tmp/s8-a.jpg",
+   "kind": "note",
+   "label": "868c6c33 rise draft every frame, sheet a",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T09:56:49.110Z",
    "file": "20261124095649110-note-x1-171.jpg",
@@ -35,41 +67,6 @@
    "kind": "note",
    "label": "cal.jpg: one ground, commit 868c6c33 or its last trial",
    "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T09:56:45.165Z",
-   "file": "20261124095645165-note-w5-60-whole.jpg",
-   "source": "../../../../tmp/w5-60-whole.jpg",
-   "kind": "note",
-   "label": "w5-60-whole.jpg: one ground, commit 868c6c33 or its last trial",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T09:56:43.992Z",
-   "file": "20261124095643992-note-w5-60-pair.jpg",
-   "source": "../../../../tmp/w5-60-pair.jpg",
-   "kind": "note",
-   "label": "w5-60-pair.jpg: one ground, commit 868c6c33 or its last trial",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T09:56:42.765Z",
-   "file": "20261124095642765-note-w5-rise.jpg",
-   "source": "../../../../tmp/w5-rise.jpg",
-   "kind": "note",
-   "label": "w5-rise.jpg: one ground, commit 868c6c33 or its last trial",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T09:56:27.279Z",
-   "file": "20261124095627279-compare-sun-rise-sides.jpg",
-   "source": "out/work/handover/sun-rise-sides.png",
-   "kind": "compare",
-   "label": "sun rise, both sides at T (frame 216) and their difference times 8",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "frame": 216,
-   "tier": "draft"
   }
  ]
 }
