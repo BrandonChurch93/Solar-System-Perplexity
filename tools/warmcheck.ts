@@ -13,7 +13,7 @@ import { judgedFrames, segmentAtFrame } from '../src/director/timeline'
 // Exit 1, with the frames and what they made, when a frame of a dive, a surface view, a rise or a travel made a program, uploaded a texture or made
 // a buffer. A piece starts at the first frame of a hold (or at frame 0), where the player is warm. --player takes the live page and the web assets
 // instead of the capture page. --cold leaves the warm start out and only lists. --write adds every frame outside a hold that did work to
-// src/core/warm.json and exits 0: run it, then run again without it. --reset first takes the frames first..last out of the list, for a stop that
+// src/core/warm.json as it is found and exits 0: run it, then run again without it. --reset first takes the frames first..last out of the list, for a stop that
 // was rebuilt. Every line goes to out/work/warm/<label>.jsonl.
 //   npm run warm -- --stills LABEL [--frames 100,200-210] [--format ID]
 // The proof that a warm draw changes no pixel: before each still every warm frame that is due is drawn, and the hash of the still is compared with
@@ -136,6 +136,7 @@ writeFileSync(file, '')
 const s = await open(first)
 const bad: string[] = []
 const found: number[] = []
+const before = listed().frames.length
 const t0 = Date.now()
 let sets = 0
 let peak = 0
@@ -176,7 +177,13 @@ try {
       console.log(line)
       for (const m of c.made) console.log('  ' + m)
       if (guarded.includes(seg.kind)) bad.push(line)
-      if (seg.kind !== 'hold') found.push(f)
+      if (seg.kind !== 'hold') {
+        found.push(f)
+        if (write) {
+          const was = listed()
+          list(was.recipe, [...new Set([...was.frames, f])].sort((x, y) => x - y))
+        }
+      }
     }
     if ((i - first * rate) % 300 === 299) console.log('at ' + f + ', ' + ((Date.now() - t0) / 1000).toFixed(0) + ' s')
   }
@@ -186,10 +193,7 @@ try {
 console.log('frames ' + first + '..' + last + ' at ' + rate + ' pictures a film frame, ' + format + ', tier ' + tier + (player ? ', the player\'s path' : ', the capture path') + (cold ? ', cold' : ', warm start') + ': ' + bad.length + ' frames of a dive, surface view, rise or travel did work, ' + ((Date.now() - t0) / 60000).toFixed(1) + ' minutes')
 console.log('at most ' + sets + ' sets loaded at a frame, peak ' + (peak / 1e6).toFixed(0) + ' MB of textures')
 if (write) {
-  const was = listed()
-  const frames = [...new Set([...was.frames, ...found])].sort((x, y) => x - y)
-  list(was.recipe, frames)
-  console.log('src/core/warm.json: ' + was.frames.length + ' frames before, ' + frames.length + ' now')
+  console.log('src/core/warm.json: ' + before + ' frames before, ' + listed().frames.length + ' now, ' + found.length + ' found by this run')
 } else if (!cold && bad.length > 0) {
   for (const line of bad) console.error('FAIL ' + line)
   process.exit(1)
