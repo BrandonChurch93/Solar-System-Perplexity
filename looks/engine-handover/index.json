@@ -1,9 +1,41 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T12:48:41.305Z",
- "head": "40cd0e8c6d18cd12f4c9ccc267970d2f101c31b4",
- "note": "Mars seam at capture rate 2 with and without the pull back: 141 draft frames each, clips at 60 pictures a second, limb steps a capture frame",
+ "pushed": "2026-11-24T13:04:35.598Z",
+ "head": "fd96f0ffe34352da676613e5654afc68b9a9daaf",
+ "note": "the body step read in place (on the ground two frames both show): prototype panels on main's Jupiter rise, the report tool renders the same rise now",
  "looks": [
+  {
+   "time": "2026-11-24T13:04:29.212Z",
+   "file": "20261124130429212-note-jupiter-rise-3305.jpg",
+   "source": "out/work/inplace/panels/jupiter-rise-3305.png",
+   "kind": "note",
+   "label": "jupiter rise (main's), the step in place, prototype: frame 3304, frame 3305, the ground that is new in it in magenta, and the change on the ground both show times 8",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T13:04:27.895Z",
+   "file": "20261124130427895-note-jupiter-rise-3288.jpg",
+   "source": "out/work/inplace/panels/jupiter-rise-3288.png",
+   "kind": "note",
+   "label": "jupiter rise (main's), the step in place, prototype: frame 3287, frame 3288, the ground that is new in it in magenta, and the change on the ground both show times 8",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T13:04:26.649Z",
+   "file": "20261124130426649-note-jupiter-rise-3281.jpg",
+   "source": "out/work/inplace/panels/jupiter-rise-3281.png",
+   "kind": "note",
+   "label": "jupiter rise (main's), the step in place, prototype: frame 3280, frame 3281, the ground that is new in it in magenta, and the change on the ground both show times 8",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T13:04:25.314Z",
+   "file": "20261124130425314-note-jupiter-rise-3250.jpg",
+   "source": "out/work/inplace/panels/jupiter-rise-3250.png",
+   "kind": "note",
+   "label": "jupiter rise (main's), the step in place, prototype: frame 3249, frame 3250, the ground that is new in it in magenta, and the change on the ground both show times 8",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-24T12:48:40.570Z",
    "file": "20261124124840570-note-check-sbs.jpg",
@@ -31,34 +63,6 @@
    "source": "out/work/h602/c60-sheet-5496.png",
    "kind": "note",
    "label": "Mars after the seam at capture rate 2 with the pull back, capture frames 5496 to 5507 = film 2748 to 2753.5, draft"
-  },
-  {
-   "time": "2026-11-24T12:36:46.510Z",
-   "file": "20261124123646510-note-c60-sheet-5484.jpg",
-   "source": "out/work/h602/c60-sheet-5484.png",
-   "kind": "note",
-   "label": "Mars seam 2745 at capture rate 2 with the pull back (scratch 1.77 over 0.8 from 1.9), capture frames 5484 to 5495 = film 2742 to 2747.5, draft"
-  },
-  {
-   "time": "2026-11-24T12:18:12.077Z",
-   "file": "20261124121812077-note-d19-pair-b.jpg",
-   "source": "out/work/h602/d19-pair-b.png",
-   "kind": "note",
-   "label": "MAIL 602 scratch, Mars rise: plain (top) against the pull back 1.77 over 0.8 from 1.9 (bottom) at 2722, 2730, 2737, 2744, draft tier: the eye flies lower in mid rise (16 percent at 2730) and ends on the same pose"
-  },
-  {
-   "time": "2026-11-24T12:18:11.353Z",
-   "file": "20261124121811353-note-d19-pair-a.jpg",
-   "source": "out/work/h602/d19-pair-a.png",
-   "kind": "note",
-   "label": "MAIL 602 scratch, Mars rise: plain (top) against the pull back 1.77 over 0.8 from 1.9 (bottom) at 2692, 2700, 2708, 2715, draft tier"
-  },
-  {
-   "time": "2026-11-24T12:18:10.742Z",
-   "file": "20261124121810742-note-limb-steps-pictures.jpg",
-   "source": "out/work/h602/limb-steps-pictures.png",
-   "kind": "note",
-   "label": "MAIL 602, limb of Mars measured on the drafts, plain rise against the pull back 1.77 over 0.8 from 1.9: plain stands 0 to 2 px a frame over 2743 to 2749, pulled never under 6 px at the right limb"
   }
  ]
 }
