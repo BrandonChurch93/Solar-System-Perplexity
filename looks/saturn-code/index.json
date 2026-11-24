@@ -1,9 +1,16 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T04:19:06.700Z",
- "head": "a4dec17ce5c80a442d17947c97531d8155615ae3",
- "note": "3720 with the shutter closed reads G17 1.131 against 0.685; curing the pace of the rise against the renewed path judge",
+ "pushed": "2026-11-24T04:32:38.733Z",
+ "head": "23cb30efa0f10f2aa37dc75452290f81d923f85a",
+ "note": "pace of dive and rise cured against the renewed path judge (head 23cb30e, smooth path green); pictures, parity, gate and the judged stills render now",
  "looks": [
+  {
+   "time": "2026-11-24T04:32:37.961Z",
+   "file": "20261124043237961-note-job_s_3856.jpg",
+   "source": "../../../../tmp/v/r31/job_s_3856.png",
+   "kind": "note",
+   "label": "3856 draft with the change of view of the rise at 3852 and at 3860, and their difference times 16: the same picture (largest 5 levels in 1382 pixels)"
+  },
   {
    "time": "2026-11-24T04:18:54.729Z",
    "file": "20261124041854729-note-shutter_3720.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/v/r29/g17_left_draft_3720.png",
    "kind": "note",
    "label": "3720 lower left, approved beside the draft: soft bands where the approved has hairlines"
-  },
-  {
-   "time": "2026-11-24T03:45:19.765Z",
-   "file": "20261124034519765-note-g17_left_3720.jpg",
-   "source": "../../../../tmp/v/r29/g17_left_3720.png",
-   "kind": "note",
-   "label": "3720 lower left, approved beside the final still"
   }
  ]
 }
