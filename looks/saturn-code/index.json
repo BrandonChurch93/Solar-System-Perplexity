@@ -1,9 +1,37 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T13:52:40.410Z",
+ "pushed": "2026-11-24T14:16:58.935Z",
  "head": "41cac1f4db60e27b5f7ba958dac5ec055882cf16",
- "note": "named trees keep their bytes on the merged main (3465 and 3720 finals equal); item 17 trials at 3720: the far look's tone in the skim, by the lens' height",
+ "note": "item 17 (the ring at 3720 against the approved): local trials, not committed; the tone by height slid in the dive, so it now comes by distance from the lens",
  "looks": [
+  {
+   "time": "2026-11-24T14:16:58.129Z",
+   "file": "20261124141658129-note-t5_three.jpg",
+   "source": "../../../../tmp/v/t17/t5_three.png",
+   "kind": "note",
+   "label": "item 17 trial 5 at 3720 final: approved (top), named (middle), trial (bottom): the same tone, now by the distance from the lens only (1.0 to 1.5 radii), so the far part keeps the tone of the hold"
+  },
+  {
+   "time": "2026-11-24T14:16:57.465Z",
+   "file": "20261124141657465-note-d0_sheet_a.jpg",
+   "source": "../../../../tmp/v/t17/d0_sheet_a.png",
+   "kind": "note",
+   "label": "the same frames 3606 to 3630 on the named trees, for comparison: the wide view holds its tone"
+  },
+  {
+   "time": "2026-11-24T14:16:56.791Z",
+   "file": "20261124141656791-note-d4_sheet_a.jpg",
+   "source": "../../../../tmp/v/t17/d4_sheet_a.png",
+   "kind": "note",
+   "label": "item 17 trial 4, dive 3606 to 3630 every third frame, draft: BAD, the A ring turns from tan to grey in the wide view while nothing comes nearer (a tone that slides by height); this driver is dropped"
+  },
+  {
+   "time": "2026-11-24T14:16:56.110Z",
+   "file": "20261124141656110-note-t4_three.jpg",
+   "source": "../../../../tmp/v/t17/t4_three.png",
+   "kind": "note",
+   "label": "item 17 trial 4 at 3720 final, rows 380 to 1080: approved close image (top), named (middle), trial (bottom): thin zones darker with more ringlet contrast, a ceiling on the brightest ice, less colour; right as a still, but its share came by the height of the lens"
+  },
   {
    "time": "2026-11-24T13:52:33.995Z",
    "file": "20261124135233995-note-t2_three.jpg",
@@ -31,36 +59,6 @@
    "source": "../../../../tmp/v/t17/pair_t1.png",
    "kind": "note",
    "label": "item 17 trial t1 at 3720 final, lower left: the gain of the model's own light 0.85 to 0.77 changes the mean by one hundredth; the far look carries the frame"
-  },
-  {
-   "time": "2026-11-24T13:26:29.431Z",
-   "file": "20261124132629431-note-rev_dive_whole.jpg",
-   "source": "../../../../tmp/v/r48/rev_dive_whole.png",
-   "kind": "note",
-   "label": "review tier, every frame 3586 to 3591 across the dive handover (T 3589), the named trees: level steps -0.76, -0.77, -0.75, -0.73, -0.70, no step at T"
-  },
-  {
-   "time": "2026-11-24T13:02:08.613Z",
-   "file": "20261124130208613-note-saturn-rise-changes.jpg",
-   "source": "../../../../tmp/v/r47/saturn-rise-changes.png",
-   "kind": "note",
-   "label": "rise pictures with the new judge: pattern 0.24 at 3820 + 1/2 (limit 0.45)",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-24T13:02:07.679Z",
-   "file": "20261124130207679-note-saturn-rise-pops.jpg",
-   "source": "../../../../tmp/v/r47/saturn-rise-pops.png",
-   "kind": "note",
-   "label": "rise pictures with the new judge on the named trees: green, largest pop 1.15 at 3872 + 1/2 (limit 1.2)",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-24T13:02:06.939Z",
-   "file": "20261124130206939-note-dive_b.jpg",
-   "source": "../../../../tmp/v/r47/dive_b.png",
-   "kind": "note",
-   "label": "dive 3576 to 3609 every third frame, draft, named trees: the warm field leaves again with the height"
   }
  ]
 }
