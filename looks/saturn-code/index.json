@@ -1,9 +1,31 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T21:46:18.533Z",
+ "pushed": "2026-11-24T22:07:47.671Z",
  "head": "38591789c340058ad8cc55ca9d84ae3550aa9336",
- "note": "proof job r54: path, G5, G17 green; the dive's pattern line RED by the bright dust inside the rim; cure in work",
+ "note": "r54 rise RED too (pattern 0.70 at 3822.5): same two causes as the dive; coding slower height laws for the tone table and the dust plate",
  "looks": [
+  {
+   "time": "2026-11-24T22:07:47.060Z",
+   "file": "20261124220747060-note-rise6.jpg",
+   "source": "../../../../tmp/v/t18/rise6.png",
+   "kind": "note",
+   "label": "rise 3810 to 3850 every 8: the dust plate at the foot leaves between 3826 and 3834 (cause 2), cure in work"
+  },
+  {
+   "time": "2026-11-24T22:07:46.442Z",
+   "file": "20261124220746442-note-ep1d.jpg",
+   "source": "../../../../tmp/v/t18/ep1d.png",
+   "kind": "note",
+   "label": "cause 1 of the dive red: C ring over the globe 3588 to 3598 at twice native size, tone table by radius comes in by height too fast"
+  },
+  {
+   "time": "2026-11-24T22:07:45.841Z",
+   "file": "20261124220745841-note-saturn-rise-changes.jpg",
+   "source": "../../../../tmp/v/r54/saturn-rise-changes.png",
+   "kind": "note",
+   "label": "r54 rise changes sheet: RED pattern 0.70 from 3822.5 (limit 0.45), the dust plate and the tone table swap by height in the fast climb; cure in work",
+   "stop": "saturn"
+  },
   {
    "time": "2026-11-24T21:46:17.807Z",
    "file": "20261124214617807-note-c_footn_r54.jpg",
@@ -40,27 +62,6 @@
    "kind": "note",
    "label": "r54 dive, changes sheet: the pattern is red, 0.54 against 0.45 at 3588 to 3593 and 3605 to 3608",
    "stop": "saturn"
-  },
-  {
-   "time": "2026-11-24T21:22:29.021Z",
-   "file": "20261124212229021-note-c_foot1_r54.jpg",
-   "source": "../../../../tmp/v/t18/c_foot1_r54.png",
-   "kind": "note",
-   "label": "3720 final on the proof tree at native size, the foot, approved left: the film's foot band is a soft brown shade where the approved has a dark grey band with a crisp upper edge, and the dust inside the rim is grain where the approved has streaks"
-  },
-  {
-   "time": "2026-11-24T21:22:28.207Z",
-   "file": "20261124212228207-note-c_globe_r54.jpg",
-   "source": "../../../../tmp/v/t18/c_globe_r54.png",
-   "kind": "note",
-   "label": "3720 final on the proof tree, globe, approved left: the film's belts are more orange, its top band is cream where the approved is grey blue (item 3, not cured)"
-  },
-  {
-   "time": "2026-11-24T21:07:48.586Z",
-   "file": "20261124210748586-note-c_ll_r54.jpg",
-   "source": "../../../../tmp/v/t18/c_ll_r54.png",
-   "kind": "note",
-   "label": "3720 lower left at full size, approved left: outer ring with fine grains; still darker and greyer than the approved, rows of grains show at the bottom edge"
   }
  ]
 }
