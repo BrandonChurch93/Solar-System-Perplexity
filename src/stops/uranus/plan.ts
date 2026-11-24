@@ -1,12 +1,12 @@
 import * as THREE from 'three'
 import { config, type Segment } from '../../config'
 import type { CoverHorizon, Pose, ViewKind } from '../../core/types'
-import { handoverOf, sideAt } from '../../director/handover'
+import { handoverOf, sideAt, skyWeight } from '../../director/handover'
 import { StopPlan, type Fit, type MoveParams, type OrbitShot } from '../../director/moves'
 import { forward, lookAt, mix, ramp, smooth } from '../../director/rig'
 import deck from './deck.json'
 import fit from './fit.json'
-import { haze, shape, show } from './look'
+import { haze, place as low, shape, show } from './look'
 import path from './path.json'
 import place from './place.json'
 import plates from './plates.json'
@@ -15,12 +15,12 @@ export const params: MoveParams = {
   hold: { orbitDeg: 6, axis: [0.2, 1, 0], push: -0.03 },
   spot: { x: 0.5574, y: 0.6721 },
   dive: { headingDeg: 53.784, altitude: 0.02623, back: 0.07, ahead: 0.14, bow: 0.2, rollDeg: 7, swoop: true },
-  handover: { dive: { at: path.dive.at }, rise: { at: path.rise.at } },
+  handover: { dive: { at: path.dive.at, placeFrames: 0, skyFrames: low.patch.dive[0] + low.patch.dive[1] }, rise: { at: path.rise.at, placeFrames: 2, skyFrames: low.patch.rise[0] + low.patch.rise[1] } },
   terrain: { vfov: 60, forward: 3.2, rise: 0.7107, side: 0.15, yawDeg: 1.5, pitchDeg: -0.5, entryHeight: 1.14, entryBack: 1.26, entryPitchDeg: 6, exitHeight: 2.4, exitForward: 1.3, exitPitchDeg: 10, horizonDeg: 2.874, dipDeg: 9.9055, rollDeg: 14.03 },
   rise: { azimuthDeg: 30, elevationDeg: -30, distance: 6.8, offset: [0.3, -0.32], driftSpeed: 0.08, rollDeg: -25, ahead: 0.03, hug: 1.7, settle: 5, level: true, pan: 0.3 },
   travel: { turnDeg: 66, side: 1 },
   arrive: { swingDeg: 0, axis: [0, 1, 0], offset: [-0.5, 0.3] },
-  light: { exposure: 1, skyExposure: 0.6, skyLow: [0.04, 0.6, 0.3], sunRadiusDeg: 0.2, sunGlare: 0.65, flare: 0 },
+  light: { exposure: 1, skyExposure: 0.6, sunRadiusDeg: 0.2, sunGlare: 0.65, flare: 0 },
   cover: [0.2, 0.5, 0.58],
   coverLow: [0.035, 0.15, 0.2],
   coverTerrain: [0.2, 0.58, 0.7],
@@ -131,8 +131,22 @@ export class UranusPlan extends StopPlan {
     if (seg.kind !== 'dive' && seg.kind !== 'rise') return null
     const h = handoverOf(this.id, seg.kind)
     if (!h) return super.skyTurnShare(seg, time)
-    if (seg.kind === 'dive') return smooth(ramp(seg.start, (h.firstFrame - h.skyFrames) / config.fps, time))
-    return 1 - smooth(ramp((h.lastFrame + 1 + h.skyFrames) / config.fps, seg.end, time))
+    if (seg.kind === 'dive') return smooth(ramp(seg.start, (h.firstFrame - low.patch.turn[0]) / config.fps, time))
+    return 1 - smooth(ramp((h.lastFrame + 1 + low.patch.turn[1]) / config.fps, seg.end, time))
+  }
+
+  patchWeight(time: number, view: ViewKind): number {
+    const seg = time < this.seg.rise!.start ? this.seg.dive! : this.seg.rise!
+    if (time < seg.start || time >= seg.end) return 1
+    const kind = seg.kind as 'dive' | 'rise'
+    const h = handoverOf(this.id, kind)
+    const share = skyWeight(seg, time)
+    if (!h || share <= 0) return 1
+    const [hold, fade] = low.patch[kind]
+    const fps = config.fps
+    const want = kind === 'dive' ? smooth(ramp((h.firstFrame - hold - fade) / fps, (h.firstFrame - hold) / fps, time)) : 1 - smooth(ramp((h.lastFrame + 1 + hold) / fps, (h.lastFrame + 1 + hold + fade) / fps, time))
+    if (view === 'terrain') return want / share
+    return share < 1 ? (1 - want) / (1 - share) : 0
   }
 
   unseat(pose: Pose, time: number): Pose {
