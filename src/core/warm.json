@@ -1,4 +1,4 @@
 {
   "recipe": "The frames the warm start draws before a hold ends (src/core/warm.ts). Made by tools/warmcheck.ts, one piece per stop from the first frame of its hold: npm run warm -- --write --reset --first F --last L, then --write with --rate 2 and with --player, then the same without --write, which fails when this list is stale. See README.md, The live player.",
-  "frames": [702, 732, 742, 743, 991, 992, 1035, 1061, 1063, 1299, 1331, 1543, 1627, 1631, 1907, 2101, 2200, 2203]
+  "frames": [0, 1, 217, 450, 452, 473, 486, 502, 702, 732, 742, 743, 991, 992, 1035, 1061, 1063, 1064, 1299, 1331, 1543, 1627, 1631, 1907, 2101, 2200, 2203]
 }
