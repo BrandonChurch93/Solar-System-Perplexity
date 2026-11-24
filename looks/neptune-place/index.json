@@ -1,8 +1,8 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T14:58:01.904Z",
+ "pushed": "2026-11-24T14:58:10.943Z",
  "head": "6dd99c59c32c226f4f55db0bde4ddbd826ff752c",
- "note": "Place moved 2.3 units across the band so scene tones lie on map tones: reads as one place seen closer, no lilac. Reds named: my pose proxy 0.56 at 4724, 0.83 at 4732 (band texture into smooth plain); 1.24, 1.53 at 4740, 4748 were the cloud sheet sliding over the deck by the limb (carried on the sheet 0.57, 0.67). 4605 same bytes. 8 to 25 s a draft frame at preview.",
+ "note": "Place moved 2.3 units across the band: one place seen closer. Reds named in the labels.",
  "looks": [
   {
    "time": "2026-11-24T14:58:01.302Z",
