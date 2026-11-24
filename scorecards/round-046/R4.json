@@ -1,0 +1,63 @@
+{
+ "critic": "R4",
+ "score": 3,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-02.png",
+   "where": "frames 3010-3043, center and upper-right limb",
+   "what": "the dive cover is a naked ghost crossfade between incompatible views: a dark storm vortex and diagonal twilight horizon with stars fade directly over Jupiter's bright sunlit face, creating double horizons, semi-transparent ghost clouds, and an abrupt drop in exposure and color temperature",
+   "fix": "steer the 3D dive camera to approach the storm near the terminator at a matching grazing angle and exposure, and pass through opaque cloud or haze cover so neither horizon nor cloud deck ghosts through the other"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-05.png",
+   "where": "frames 3253-3280, center and upper-right limb",
+   "what": "the rise cover repeats the double-exposure dissolve in reverse, ghosting flat sunlit globe bands directly through the 3D storm vortex and diagonal twilight limb instead of flying continuously out through cloud cover",
+   "fix": "match camera pitch, horizon line, and exposure between the terrain exit and 3D globe ascent, hiding the handoff inside an opaque cloud layer moving past the lens"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-05.png",
+   "where": "frames 3280-3314, full frame",
+   "what": "camera speed, solar phase, and starfield jump violently on exit: between 3280 and 3287 the view snaps from a full-frame sunlit close-up to a wide globe whose terminator sweeps across Io to under 50% lit while the bright Milky Way backdrop seen in hold/dive (sheet-01.png) disappears into plain black sky",
+   "fix": "ease the pull-back deceleration smoothly and return to the same solar phase angle, Io shadow geometry, and Milky Way background orientation established in hold and dive"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-04.png",
+   "where": "frames 3060-3239, central storm vortex and upper-right horizon",
+   "what": "near clouds and the frozen upper-right horizon do not move against each other for depth parallax; instead an accumulating 2D swirl warp stretches, shears, and swims the storm eye to nearly twice its initial width-to-height ratio by frame 3239",
+   "fix": "introduce real multi-plane or 3D camera parallax between the near cloud deck and planetary limb, and replace the accumulating 2D image warp with non-stretching flow"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "frames 2994-3035, globe bands, right limb, and Io",
+   "what": "rapid inward zoom (2994-3010) stays razor-sharp without smooth radial motion blur, while 3019-3035 breaks into separate ghosted cloud and limb edges across the blend",
+   "fix": "render smooth shutter-integrated radial motion blur during peak descent speed and eliminate overlapping double-image edges"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "frames 3260-3294, globe limb, cloud bands, and Io",
+   "what": "high-velocity pull-out frames (especially 3280-3294 where the disc contracts over 180 pixels in 14 frames) have crisp unblurred edges, while 3260-3274 shows separate ghost copies of cloud structures",
+   "fix": "apply smooth radial motion blur across the fast ascent and remove crossfade ghosting"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "frames 3048-3059, full sheet and lower-left/right-limb edges",
+   "what": "the cover sheet stops at frame 3059 without crossing into terrain (3060+) or spanning the main 3002-3048 cover transition, and frames 3048-3055 show lower-left cloud puffs and a brighter secondary right limb fading out in place",
+   "fix": "render consecutive frames straddling both sides of the actual dive-to-terrain cover handoff and replace stationary alpha-fading clouds with physical pass-through motion"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-06.png",
+   "where": "frames 3240-3251, full sheet and lower-left/right-limb edges",
+   "what": "the cover sheet starts at frame 3240 without including preceding terrain frames (<=3239) or spanning the main 3251-3287 cover transition, while frames 3244-3251 dissolve in stationary lower-left cloud puffs and a mismatched bright right-limb wedge",
+   "fix": "render consecutive frames straddling both sides of the actual terrain-to-rise cover handoff and remove stationary alpha dissolves at the foreground and limb"
+  }
+ ]
+}
