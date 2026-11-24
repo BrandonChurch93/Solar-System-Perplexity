@@ -1,9 +1,74 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T10:44:55.846Z",
- "head": "868c6c33e442a7078a4e6d6c8dd91dd5ebf5fd12",
- "note": "868c6c33 measured whole (draft, rate 1): handover three lines pass (body level step 2.91 into 225, was 6.06), pictures level step 0.46, pop 1.11, pattern RED 0.50 at 205 (rows over: 187, 194, 205, 206; rows 216 to 229 now 0.29 to 0.08). Sheets e, f, g: every frame 230 to 269, nothing wrong seen; 245 to 269 keep their bytes. Cause of the red: the map tone read by two readings mixed by pixel size (a change by height), and cells filled in place. Trial c3 (not committed): each cell takes the map light at its own middle by one law, only the tone wider than 48 texels is weaker from close by; filling law slower. My gauge 205 0.328 (was 0.597), 213 0.213 (0.411), 217 0.131, 221 0.183, 187 0.176 (0.504). Bad in c3: frame 60 further from the approved, some cells too dark. Frame 60 draft c3, sun-near: dark (under 0.15) 0.267 | body (0.15 to 0.55) 0.496 | pale (0.65 to 0.85) 0.107 | white (over 0.85) 0.059 ; brightest 15 percent: half width 11.2 px, 2820 shapes | fine detail 0.0539 | mean 0.355 ; distance 0.133. Aims of MAIL 505 missed, cells still read as pebbles.",
+ "pushed": "2026-11-24T11:09:42.379Z",
+ "head": "7f4e02c1699e026506d39401b7cb58107cb0b64c",
+ "note": "7f4e02c1 pushed, not named yet, proof running. Frame 60 draft sun-near: dark (under 0.15) 0.238 | body (0.15 to 0.55) 0.520 | pale (0.65 to 0.85) 0.111 | white (over 0.85) 0.059; brightest 15 percent: half width 11.0 px, 2904 shapes | fine detail 0.0552 | mean 0.366; distance 0.112. G13 by the gate's count, draft: 231 to 236 at 0.11 percent or under (19ca786c: 232 20.42, 233 13.79, 234 6.19). Red: aims of MAIL 505 missed, cells read as stones, function ground paler than the map round it at 225 to 237.",
  "looks": [
+  {
+   "time": "2026-11-24T11:09:41.456Z",
+   "file": "20261124110941456-note-c5-229-241.jpg",
+   "source": "../../../../tmp/c5-229-241.jpg",
+   "kind": "note",
+   "label": "7f4e02c1 draft 229, 233, 237, 241: the function ground shows as a paler field of cells on the ball until about 237",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T11:09:40.320Z",
+   "file": "20261124110940320-note-g13-before-after.jpg",
+   "source": "../../../../tmp/g13-before-after.jpg",
+   "kind": "note",
+   "label": "G13: 231 to 235 enlarged, before (19ca786c) and after (7f4e02c1, 233 only so far; the others follow), soft pixels in red on the right",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T11:09:39.312Z",
+   "file": "20261124110939312-note-c1-60.jpg",
+   "source": "../../../../tmp/c1-60.jpg",
+   "kind": "note",
+   "label": "trial c1, not committed: the strong law of the rise at every height, frame 60 (distance 0.258, white 0.219)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T11:09:38.193Z",
+   "file": "20261124110938193-note-c4-60.jpg",
+   "source": "../../../../tmp/c4-60.jpg",
+   "kind": "note",
+   "label": "7f4e02c1 frame 60 draft, whole frame: each cell takes the light of the map at its own middle",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T11:09:37.061Z",
+   "file": "20261124110937061-note-pair60-9.jpg",
+   "source": "../../../../tmp/pair60-9.jpg",
+   "kind": "note",
+   "label": "7f4e02c1 frame 60 draft at one to one: approved (left, reduced to 1920) and mine (right), box x 480 to 1440, y 560 to 1080",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T11:09:19.896Z",
+   "file": "20261124110919896-compare-sun-rise-sides.jpg",
+   "source": "out/work/handover/sun-rise-sides.png",
+   "kind": "compare",
+   "label": "sun rise, both sides at T (frame 216) and their difference times 8",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 216,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T11:06:09.096Z",
+   "file": "20261124110609096-job-frame-00231.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "sun.rise frame 231, draft tier, texels view, from the running g13 job",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 231,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "g13"
+  },
   {
    "time": "2026-11-24T10:44:54.499Z",
    "file": "20261124104454499-note-c3-229.jpg",
@@ -11,66 +76,6 @@
    "kind": "note",
    "label": "trial c3 frame 229",
    "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T10:44:53.250Z",
-   "file": "20261124104453250-note-c3-217.jpg",
-   "source": "../../../../tmp/c3-217.jpg",
-   "kind": "note",
-   "label": "trial c3 frame 217",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T10:44:52.257Z",
-   "file": "20261124104452257-note-c3-60.jpg",
-   "source": "../../../../tmp/c3-60.jpg",
-   "kind": "note",
-   "label": "trial c3 frame 60: each cell takes the map light at its own middle",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T10:44:51.122Z",
-   "file": "20261124104451122-note-changes8.jpg",
-   "source": "../../../../tmp/changes8.jpg",
-   "kind": "note",
-   "label": "868c6c33 smooth pictures rate 1: largest changes (red 0.50 at 205)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T10:44:49.868Z",
-   "file": "20261124104449868-note-s8-g.jpg",
-   "source": "../../../../tmp/s8-g.jpg",
-   "kind": "note",
-   "label": "868c6c33 rise draft every frame, sheet g 256 to 269",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T10:44:48.655Z",
-   "file": "20261124104448655-note-s8-f.jpg",
-   "source": "../../../../tmp/s8-f.jpg",
-   "kind": "note",
-   "label": "868c6c33 rise draft every frame, sheet f 242 to 255",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T10:44:47.428Z",
-   "file": "20261124104447428-note-s8-e.jpg",
-   "source": "../../../../tmp/s8-e.jpg",
-   "kind": "note",
-   "label": "868c6c33 rise draft every frame, sheet e 230 to 241",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T10:23:43.226Z",
-   "file": "20261124102343226-sheet-sun-rise-draft-after.jpg",
-   "source": "out/work/handover/sun-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "sun rise, every frame 217 to 228 (after T, frame 216), draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "first": 217,
-   "last": 228,
-   "tier": "draft"
   }
  ]
 }
