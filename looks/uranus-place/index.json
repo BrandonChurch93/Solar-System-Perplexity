@@ -1,9 +1,65 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-24T07:17:42.035Z",
- "head": "53152d5fa9b1be958fcb0660e239969b916e9d97",
- "note": "53152d5f on main b0b87889: finals 4290 pair against main (changed on purpose), 4436 final, rise sheets",
+ "pushed": "2026-11-24T08:14:45.205Z",
+ "head": "a7c2c0784c9caa622a7cae0bbadc63d40ddb9137",
+ "note": "NAMED a7c2c078 on main be1de182 sent 08:16: path green, parity green, pictures red (pattern both moves, dive pop 4141 to 4145), one test over its 5 s clock in the full run",
  "looks": [
+  {
+   "time": "2026-11-24T07:48:03.758Z",
+   "file": "20261124074803758-frame-e-4035.jpg",
+   "source": "out/work/u/one/e-4035.png",
+   "kind": "frame",
+   "label": "uranus.hold frame 4035, final tier",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "12ba5366b28777b2"
+  },
+  {
+   "time": "2026-11-24T07:39:16.451Z",
+   "file": "20261124073916451-job-frame-04035.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.hold frame 4035, final tier, nograin view, from the running measure job",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-24T07:33:46.934Z",
+   "file": "20261124073346934-job-frame-04392.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.rise frame 4392, draft tier, texels view, from the running g13 job",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4392,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "g13"
+  },
+  {
+   "time": "2026-11-24T07:23:43.065Z",
+   "file": "20261124072343065-job-frame-04110.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.dive frame 4110, draft tier, texels view, from the running g13 job",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4110,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "g13"
+  },
   {
    "time": "2026-11-24T07:17:36.173Z",
    "file": "20261124071736173-note-d-4436.jpg",
@@ -41,20 +97,6 @@
    "kind": "note",
    "label": "4290 final: main b0b87889 (left) against 53152d5f (right), whole and full size at the horizon. Changed on purpose: the horizon line of the one place and the sky patch without grain",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T07:13:02.416Z",
-   "file": "20261124071302416-frame-d-4035.jpg",
-   "source": "out/work/u/one/d-4035.png",
-   "kind": "frame",
-   "label": "uranus.hold frame 4035, final tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "05fc48a851c30441"
   },
   {
    "time": "2026-11-24T07:12:09.332Z",
@@ -253,20 +295,6 @@
    "tier": "draft"
   },
   {
-   "time": "2026-11-24T06:19:27.725Z",
-   "file": "20261124061927725-job-frame-04110.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "uranus.dive frame 4110, draft tier, texels view, from the running g13 job",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4110,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "g13"
-  },
-  {
    "time": "2026-11-24T06:10:44.236Z",
    "file": "20261124061044236-note-bq-low.jpg",
    "source": "../../../../tmp/bq-low.png",
@@ -288,22 +316,6 @@
    "source": "../../../../tmp/bq-4356.png",
    "kind": "note",
    "label": "head 145020cd on main 3060b725, draft, surface view frames from 4356 (12 a sheet; the bend runs 4294 to 4379)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T06:10:40.810Z",
-   "file": "20261124061040810-note-bq-4344.jpg",
-   "source": "../../../../tmp/bq-4344.png",
-   "kind": "note",
-   "label": "head 145020cd on main 3060b725, draft, surface view frames from 4344 (12 a sheet; the bend runs 4294 to 4379)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T06:10:39.668Z",
-   "file": "20261124061039668-note-bq-4332.jpg",
-   "source": "../../../../tmp/bq-4332.png",
-   "kind": "note",
-   "label": "head 145020cd on main 3060b725, draft, surface view frames from 4332 (12 a sheet; the bend runs 4294 to 4379)",
    "stop": "uranus"
   }
  ]
