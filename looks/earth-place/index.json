@@ -1,9 +1,41 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T04:07:04.070Z",
+ "pushed": "2026-11-24T04:33:26.486Z",
  "head": "f17274e705de4b7f527945333d364d3d8b559305",
- "note": "step 4 second pass on 34 frames: calm sea and ring field outside the close view; flat grey sheets beside some white clouds traced to pale sea in the takes, cure in work",
+ "note": "step 4: field matte rule cures the grey sheets on the takes, assets rebuilding; rise level step measured, a wider angle tested and not taken",
  "looks": [
+  {
+   "time": "2026-11-24T04:33:25.722Z",
+   "file": "20261124043325722-note-x45-sheet.jpg",
+   "source": "../../../../tmp/gl/s4/x45-sheet.jpg",
+   "kind": "note",
+   "label": "test only, not taken: low look angle 45 to 10 degrees instead of 35 to 10; level step 5.94 but the ground shows as a dark oval at 2130 to 2133",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T04:33:25.115Z",
+   "file": "20261124043325115-note-rise-step.jpg",
+   "source": "../../../../tmp/gl/s4/rise-step.jpg",
+   "kind": "note",
+   "label": "rise 2119 to 2131 before the new field (s4b): the close look gives way by angle over these frames, body level steps over 6 a frame at 2122 to 2125",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T04:33:24.558Z",
+   "file": "20261124043324558-note-where17-1889.jpg",
+   "source": "../../../../tmp/gl/s4/where17-1889.jpg",
+   "kind": "note",
+   "label": "step 4, the field at the two grey sheets of frame 1889 after the rule (deck17), remnants at the lower right of the left tile",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T04:33:23.619Z",
+   "file": "20261124043323619-note-hem5.jpg",
+   "source": "../../../../tmp/gl/s4/hem5.jpg",
+   "kind": "note",
+   "label": "step 4, field matte rule on the four takes: take, matte before, matte after (pale sea and thin cell deck go, cores keep a rim)",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T04:07:03.463Z",
    "file": "20261124040703463-note-sheet-s4b-rise.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/gl/s4/field13-near.jpg",
    "kind": "note",
    "label": "step 4: the ring field beside the close view (cover red) with the shadow share rule and without veil bodies",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T03:45:53.518Z",
-   "file": "20261124034553518-note-ab-rise2.jpg",
-   "source": "../../../../tmp/gl/s4/ab-rise2.jpg",
-   "kind": "note",
-   "label": "step 4, 2121 and 2125 whole frames, draft: before (left) and after (right), first pass",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T03:45:52.544Z",
-   "file": "20261124034552544-note-ab-1889-left.jpg",
-   "source": "../../../../tmp/gl/s4/ab-1889-left.jpg",
-   "kind": "note",
-   "label": "step 4, 1889 left border at full size, draft: before and after (first pass)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T03:45:51.148Z",
-   "file": "20261124034551148-note-ab-1889-right.jpg",
-   "source": "../../../../tmp/gl/s4/ab-1889-right.jpg",
-   "kind": "note",
-   "label": "step 4, 1889 right border at full size, draft: before (f17274e7) and after the calm near sea and the ring field (first pass, grey veil bodies still in it)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T03:22:46.167Z",
-   "file": "20261124032246167-note-c-1889-left.jpg",
-   "source": "../../../../tmp/gl/s4/c-1889-left.jpg",
-   "kind": "note",
-   "label": "step 4 before: 1889 left border at full size (f17274e7)",
    "stop": "earth"
   }
  ]
