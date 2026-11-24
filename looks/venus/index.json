@@ -1,9 +1,17 @@
 {
  "folder": "venus",
- "pushed": "2026-11-24T18:08:36.357Z",
+ "pushed": "2026-11-24T18:36:32.902Z",
  "head": "ad1d6a92ff1ce256f6e9392ddf6e80ac8445be36",
- "note": "proofs on the merge: handover pass on both, path green, gate pass, 1440 equal, 1185 differs by at most 2 of 255 in 1275 px; vitest and smooth pictures running",
+ "note": "MAIL 707: rise smooth pictures on the commit tree; dive smooth running",
  "looks": [
+  {
+   "time": "2026-11-24T18:36:32.001Z",
+   "file": "20261124183632001-note-rise-changes-X.jpg",
+   "source": "../../../../tmp/v/c/rise-changes-X.jpg",
+   "kind": "note",
+   "label": "rise smooth pictures on the commit of MAIL 707: pattern 0.76 at 1608 + 1/2, 20 over, first 1542; 1547 + 1/2 reads 0.61 (0.45 before the haze change); pop 1.28 at 1610 + 1/2, same picture (left 1.04), median of the new tool 0.81 against 0.83",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T18:08:35.312Z",
    "file": "20261124180835312-note-s1324.jpg",
@@ -75,16 +83,6 @@
    "first": 1533,
    "last": 1544,
    "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T18:00:05.188Z",
-   "file": "20261124180005188-compare-venus-rise-step-in-place.jpg",
-   "source": "out/work/handover/venus-rise-step-in-place.png",
-   "kind": "compare",
-   "label": "venus rise, the largest step of the level in place (4.27): frame 1572, frame 1573, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "frame": 1573
   }
  ]
 }
