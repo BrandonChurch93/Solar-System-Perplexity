@@ -1,71 +1,71 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T22:08:23.445Z",
+ "pushed": "2026-11-24T22:28:41.100Z",
  "head": "faeea78babada5abc9cc9468d4cc7a473b6253ab",
- "note": "22:08 UTC after MAIL 764, trial yz1 on faeea78b, not committed: the cells take their light by the angle of sight (bright where seen into, dark at the apparent edge), lanes 0.02 wide. Still cushions of leather, not plasma; penumbra a comb; at 217 the place is a brown paved disc in the pale map. sun-near 60: bands 0.236 0.193 0.161 0.119 0.082 0.056 0.036 0.031 0.018 | dark 0.303 body 0.555 pale 0.067 white 0.019 | half width 6.9 px, 2579 shapes, fine detail 0.0497, mean 0.299 | distance 0.097",
+ "note": "22:32 UTC head faeea78b: rise every third frame 180 to 269 and skin trials za at 60, all solids; plan for the gas follows by mail. sun-near frame 60 of head: share by band 0.165 0.215 0.193 0.151 0.104 0.063 0.035 0.027 0.020; dark 0.190 body 0.663 pale 0.062 white 0.022; brightest 15 percent half width 4.6 px, 4439 shapes, fine detail 0.0595, mean 0.334; distance 0.062",
  "looks": [
   {
-   "time": "2026-11-24T22:08:22.848Z",
-   "file": "20261124220822848-note-yy-p1.jpg",
-   "source": "../../../../tmp/v/yy-p1.jpg",
+   "time": "2026-11-24T22:28:40.540Z",
+   "file": "20261124222840540-note-rise0-spot.jpg",
+   "source": "../../../../tmp/v/rise0-spot.jpg",
    "kind": "note",
-   "label": "frame 60, three trials of the law of sight angle (yy1 to yy3) beside the approved (top left), one to one",
+   "label": "head rise at native size: 228 to 240, the map and the grain of the cells in it",
    "stop": "sun"
   },
   {
-   "time": "2026-11-24T22:08:22.257Z",
-   "file": "20261124220822257-note-yz1-pair-60s.jpg",
-   "source": "../../../../tmp/v/yz1-pair-60s.jpg",
+   "time": "2026-11-24T22:28:40.002Z",
+   "file": "20261124222840002-note-rise0-edge.jpg",
+   "source": "../../../../tmp/v/rise0-edge.jpg",
    "kind": "note",
-   "label": "frame 60, the spot and the left foot, trial yz1: approved left, mine right, one to one",
+   "label": "head rise at native size: 207, 213, 219, 225 round the place",
    "stop": "sun"
   },
   {
-   "time": "2026-11-24T22:08:21.667Z",
-   "file": "20261124220821667-note-yz1-217-240.jpg",
-   "source": "../../../../tmp/v/yz1-217-240.jpg",
+   "time": "2026-11-24T22:28:39.447Z",
+   "file": "20261124222839447-note-rise0-2.jpg",
+   "source": "../../../../tmp/v/rise0-2.jpg",
    "kind": "note",
-   "label": "frames 217 and 240, trial yz1 (uncommitted), whole frames small",
+   "label": "head faeea78b rise, every third frame 252 to 269, draft",
    "stop": "sun"
   },
   {
-   "time": "2026-11-24T22:08:21.088Z",
-   "file": "20261124220821088-note-yz1-pair-90.jpg",
-   "source": "../../../../tmp/v/yz1-pair-90.jpg",
+   "time": "2026-11-24T22:28:38.710Z",
+   "file": "20261124222838710-note-rise0-1.jpg",
+   "source": "../../../../tmp/v/rise0-1.jpg",
    "kind": "note",
-   "label": "frame 90, trial yz1 (uncommitted): approved left, mine right, one to one",
+   "label": "head faeea78b rise, every third frame 216 to 249, draft",
    "stop": "sun"
   },
   {
-   "time": "2026-11-24T22:08:20.527Z",
-   "file": "20261124220820527-note-yz1-pair-60.jpg",
-   "source": "../../../../tmp/v/yz1-pair-60.jpg",
+   "time": "2026-11-24T22:28:38.146Z",
+   "file": "20261124222838146-note-rise0-0.jpg",
+   "source": "../../../../tmp/v/rise0-0.jpg",
    "kind": "note",
-   "label": "frame 60, trial yz1 (uncommitted): approved left, mine right, one to one",
+   "label": "head faeea78b rise, every third frame 180 to 213, draft",
    "stop": "sun"
   },
   {
-   "time": "2026-11-24T22:08:19.943Z",
-   "file": "20261124220819943-note-yz1-pair-0.jpg",
-   "source": "../../../../tmp/v/yz1-pair-0.jpg",
+   "time": "2026-11-24T22:28:37.591Z",
+   "file": "20261124222837591-note-zb-p1.jpg",
+   "source": "../../../../tmp/v/zb-p1.jpg",
    "kind": "note",
-   "label": "frame 0, trial yz1 (uncommitted): approved left, mine right, one to one",
+   "label": "skin trials za4 to za6 (light by height, no shade) at frame 60 beside the approved: loaves",
    "stop": "sun"
   },
   {
-   "time": "2026-11-24T21:48:26.980Z",
-   "file": "20261124214826980-note-yu1-p1.jpg",
-   "source": "../../../../tmp/v/yu1-p1.jpg",
+   "time": "2026-11-24T22:28:37.040Z",
+   "file": "20261124222837040-note-za-p1.jpg",
+   "source": "../../../../tmp/v/za-p1.jpg",
    "kind": "note",
-   "label": "frame 60 draft, trial yu1 (uncommitted: flowers nearly off by my own setting, mottled tops), one to one: approved left, ours right",
+   "label": "skin trials za1 to za3 at frame 60 beside the approved, one to one: all read as solids",
    "stop": "sun"
   },
   {
-   "time": "2026-11-24T21:48:26.426Z",
-   "file": "20261124214826426-note-yu2-p1.jpg",
-   "source": "../../../../tmp/v/yu2-p1.jpg",
+   "time": "2026-11-24T22:28:36.491Z",
+   "file": "20261124222836491-note-j21-pair-60.jpg",
+   "source": "../../../../tmp/v/j21-pair-60.jpg",
    "kind": "note",
-   "label": "frame 60 draft, trial yu2 (uncommitted: flowers off, a dark foot under every bulb, strong threads from the middle), one to one: approved left, ours right",
+   "label": "head faeea78b frame 60 beside the approved, one to one",
    "stop": "sun"
   }
  ]
