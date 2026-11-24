@@ -2784,3 +2784,118 @@ is in the picture at 3 to 12 px, and the same crispness for the far ring across 
   is a still: hairlines of 2 to 6 px all over the lower left. G17's band is 3 to 12 px, so the near tiles
   lose by the shutter first, whatever the model holds. Not yet measured: the same final still with the shutter
   closed (the engine has no switch for a still; it would need config.shutterFraction in a scratch tree).
+
+## 03:50 to 04:20 VM: NOTE 504, the head 9467fee, the gate, the parity, mail 483 B.2 by calculation
+
+- NOTE 504 (03:51 UTC): the factor is not to be taken from view.format in a pass that draws a place picture
+  (that pass has its own buffer); code that multiplies its density by uFine needs the format's factor alone.
+  The shared helper is src/core/frame.ts (frameUniform, setPass, bufferFrame), in proof on agent/engine-globe,
+  not on main yet. Ruling: use the helper; a cure already written with its own uniform stays and swaps its
+  source when the Builder says the helper is on main (no byte changes then, no new proof beyond the hashes).
+  Saturn has no place picture (plan F), so only that last sentence matters here: my factor is
+  pixelScale(view.format.height) (ice.ts), to be swapped to the helper on the Builder's word.
+- Main moved to 4fb3788 (Mercury's base, d184). Merged: 9467fee9857f4fdcfdf1d1e63b8f990694e6bf21, no
+  conflict, pushed 03:50. On the merge: tsc exit 0; vitest 41 files, 370 tests pass; handover --only path:
+  "saturn.dive every frame: pass", "saturn.rise every frame: pass"; smooth --only path: the same 11 red speed
+  lines as on 7825f77, word for word (the section above).
+- The gate on 9467fee (worktree mainref): "PASS G11  every asset has a row or a recipe", "PASS G15  at most 2
+  sets per frame; finished stops: saturn/web 274 MB, saturn/full 747 MB".
+- npm run smooth -- --stop saturn --only parity on 9467fee (seven frames, draft, 16 by 9 against uhd):
+  "smooth saturn: green". Largest mean difference 3.024 at 3866 (limit 12); at one 8th of the size 1.767 at
+  3866 (limit 3.2); one block -9.127 at 3866, block 5,2 (limit 12); whole frame -1.685 at 3866 (limit 2.2).
+  The rows (mean, level, coarse mean, block level, block): 3563 2.090 -1.107 1.185 -4.265 7,1; 3585 2.217
+  -1.195 1.384 -8.382 6,2; 3608 2.226 -0.881 1.017 -5.723 7,4; 3720 2.663 -1.100 1.178 -6.286 7,4; 3829 2.709
+  -0.835 1.097 -7.847 7,4; 3848 2.444 -1.080 1.177 -7.657 5,5; 3866 3.024 -1.685 1.767 -9.127 5,2. Picture:
+  /tmp/v/r29/parity_official_9467fee.png. What is left in the panels: the stars (finer at uhd), fine lines
+  along the ringlets, a glow along the limb and the ring edge.
+- Size of my three folders at 9467fee: 74.744 MB in 179 files, main 74.821 MB in 178 files: net minus 0.077
+  MB (git ls-tree -r -l over src/stops/saturn, assets-src/saturn, public/assets/saturn).
+- The smear of the shutter at 3720, measured on the path (out/scratch/smear.ts; vfov 48, shutter 0.5),
+  replaces the estimate in the section above (4.6 px at the bottom edge, 0.6 px mid frame). How far a point
+  of the sheet slides across the ringlets while the shutter is open, in pixels of the 1080 frame: at x 240:
+  7.6 at the bottom edge, 5.2 at y 900, 3.8 at y 760, 2.9 at y 640; at x 960: 3.7, 1.9, 0.9, 0.3; at x 1680:
+  2.1 at the bottom, 0.3 at y 760. 3660 and 3780 are nearly the same. So the lower left third, where the
+  approved close holds its hairlines of 2 to 6 px and where G17 loses 13 tiles, is smeared by 3 to 8 px.
+- Mail 483 B.2, by calculation on the path (out/scratch/b2.ts), not yet looked at on my own carried frames:
+  Dive, pixel (1844, 980) at 3594 + 1/2: the ring plane at radius 1.954 (the outer edge of the B ring at the
+  Cassini division), 3.17 radii from the lens. From 3594 + 1/2 to 3602 + 1/2 the lens sinks from height 1.218
+  to 0.981, the share of takes of the model goes from 0 to 0.464, the far look at that point stays 1.000 (it
+  lies farther than handover.kept.reach 1.3) and close stays 0. So it is NOT the near light coming in (what I
+  first thought). What changes there in those frames: the kept set's layout goes from the hero's to the plain
+  profile by pose (done at height about 1.05), and from height 1.03 the kept set gives way to the model. The
+  next row of the judge's sheet (3602 + 1/2 to 3610 + 1/2, change 20.1): height 0.981 to 0.789, share of the
+  model 0.464 to 1, far look by height 1 to 0.685, close 0 to 0.266; at the pixel (radius 2.027, the outer
+  border of the division, 2.69 radii away) the far look by distance stays 1.000. Both rows sit on the borders
+  of the Cassini division: an edge between bright and dark that lies at a slightly different place in the two
+  tables shows as a change in place. That is mail 439 point 5, my step 2 (the same radius in both tables).
+  Rise, pixel (1300, 904) at 3824: the ring plane at radius 1.296 (the C ring), 0.83 radii from the lens, with
+  the globe behind it at 1.19. From 3824 to 3832 the lens climbs from height 0.343 to 0.532; close stays 1,
+  closeGlobe is 0 (light.globeNear is 0, so the globe's settings do not slide: my first reading was wrong);
+  the far look at that ring point goes from 0.381 to 0.861 as its distance grows from 0.830 to 1.084 radii
+  (handover.kept.reach 0.6 to 1.3). So this one is the near light of the sheet giving way to the far look by
+  distance, on the thin inner ring in front of the globe: a tone that slides through the frame. Step 2 as
+  ruled in mail 374 (one look of the ring per pixel, the near light in the mean equal to the far tone).
+
+## 04:08 to 04:50 VM: mails 508 and 511, main merged twice, 3720 with the shutter closed, the pace cured
+
+- MAIL 508 (03:58 UTC, the timetable): the first NAMED commit is due by 07:00 UTC, one commit on my branch on
+  top of the newest origin/main that can be merged (7a6f888 or later); its mail starts with the word NAMED and
+  the full sha. With no NAMED mail at the hour the newest head that builds and passes its tests is taken as it
+  stands, so push whole states. NAMED means the build I would show a critic today: (a) dive and rise each one
+  move by my own path with my own lines of npm run smooth -- --stop saturn --only path; (b) nothing by the
+  clock, the place picture off in both moves; (c) note 501, nothing by the pixel; (d) the judged hold and
+  surface view at the final tier beside the kept stills, equal bytes or the pair with one line on what changed
+  and why; (e) the net size of my three folders against main. The mail carries, in this order: my smooth lines
+  (path, pictures, parity), the frames that change outside my dive and rise, my list of what is still wrong,
+  worst first. Reds do not hold the mail back; a hidden red costs a round. After NAMED the Builder cuts the
+  proof tree and runs the take check and the whole report (about 45 minutes); red means a second commit within
+  90 minutes. ONE commit or ONE head in earlier mails means the named commit.
+- MAIL 511: main at f5a51b3 (d187): the judge reads a rebound over ring points as a valley on one set of points
+  (my rise then read fall 0.127 over 5 points at whole frames, 0.136 at rate 2); parity gets two more rows a
+  stop (the hold at its middle, the leg that leaves the stop at its middle), same four limits; src/core/frame.ts
+  is not on main yet, keep my own factor until the Builder writes that it is, then swap in a commit with
+  nothing else; G17 at 3720 stays the open measure, the NAMED mail with the cause by tiles is the place.
+- globe_engineer (04:16): the frame factor is on agent/engine-globe dace4ba6, not on main: frameUniform (format
+  height over the master's) and bufferFrame() for a place picture; do not take the factor from view.format in
+  a place picture. Saturn draws no place picture, so only the swap of the source is left, on the Builder's word.
+- Main merged twice, no conflict: 26677ed (the timetable, d186) as ceafef8 and f5a51b3 (d187) as a4dec17.
+- Job Q on 9467fee (worktree): "PASS G5 saturn: 3465 hold invalid 0 coverage 0.514; 3567 dive invalid 0
+  coverage 0.525; 3720 terrain invalid 0 coverage 0.725; 3866 rise invalid 0 coverage 0.428"; "FAIL G17 saturn:
+  3465 median 1.055 p25 0.919 over 71 tiles; 3720 median 0.685 p25 0.325 over 62 tiles"; "PASS G13 saturn: 0 of
+  83 frames over 0.02 soft (every 6th frame); worst frame 3390 0.00%, frame 3396 0.00%, frame 3402 0.00%".
+- 3720 with the shutter closed (job R, scratch tree only, config film.shutterDegrees 1.8 in place of 180, never
+  committed): final tier, no grain, 16 takes, 108.9 s. tools/measure/g17.py against the approved close: median
+  1.131, p25 0.541 over 62 tiles; the measure's own final of the same commit with the film's shutter: median
+  0.685, p25 0.325. So the fine detail of the model is there and passes; what G17 loses at 3720 is the smear of
+  the film's shutter at the pace of the skim (the table of the section before: 3 to 8 px across the ringlets in
+  the lower left third). The worst tiles left with the shutter closed: 11,5 (0.014) and 10,5 (0.041) at the
+  right edge (layout: the approved has ring there, mine the globe's shadow side), 5,1 (0.162), 8,4 (0.172),
+  7,4 (0.194). Picture in the looks: /tmp/v/r30/shutter_3720.png (film shutter, closed shutter, approved; the
+  lower left quarter of each at full size). Mail 311 forbids slowing or bending the path against blur and a
+  blur cure of my own, so this needs the Builder's ruling (judge G17 on a still with the shutter closed, or
+  take the red as the price of the film's shutter).
+- The pace against the renewed judge (f5a51b3). My scratch judge (out/scratch/sm.ts) reads the tool's numbers
+  to three places. The search (out/scratch/opt7.ts: a soft largest value over every step near the limit, both
+  rebounds and the handover's rate rule, minimised by a diagonal evolution strategy; about 35 paths a second):
+  - Dive: green as found before the merge: largest step 0.066 (rate), 0.067 (turn, speed) of the mean, climb
+    after the top 0.006; cost 0.832 of the limits.
+  - Rise with the change of view at 3860 (rise.at 0.667): no path of this family under 1.016. Why: the
+    handover's rate rule (no frame over 2 times the mean rate from the change of view to the last frame) makes
+    the rate stay at its top until 3860 and fall inside 24 frames; the speed of the picture at the place falls
+    with it (1.22 times the rate's slope, because the lens also narrows its field from 48 to 30 degrees while
+    it still turns: at 3862 the turn alone moves the picture 15.8 px a frame, the lens's own move 14.0), and
+    the way up cannot be steeper than 0.08 either. All three sit on their limits at once.
+  - The change of view is a number of mine (skim.json handover.rise.at; the engine's own default is 0.4). With
+    rise.at 0.56 (the change at 3852 + 1/4) the rate may begin to fall at 3855: cost 0.933. Rate: step 0.072,
+    top 1.746 of the mean from 3842 to 3855; turn: step 0.070, top 1.86 at 3842; speed: step 0.074 (0.075 at
+    rate 2), tops 1.289 at 3829 and 1.553 at 3859, not measured 3838 to 3853 (under 5 ring points); no fall
+    before a top and no climb after one; the handover's rule: fastest frame 1.84 times the mean (limit 2).
+  - Where the place is: below the frame for most of the rise (spot y 1184 at 3808, 1474 at 3832, 1092 at 3862,
+    852 at 3884), so the judge's ring sits at the bottom edge of the picture (out/scratch/spot.ts).
+  - In skim.json now: dive reach peak [0.262, 0.688] round [0.03, 0.112, 0.189, 0.073]; climb [0.663, 0.663],
+    [0.089, 0.085, 0.215, 0.084]; round [0.539, 0.645], [0.06, 0.332, 0.234, 0.03]; view [0.432, 0.444], [0.069,
+    0.191, 0.053, 0.03]. Rise at 0.56: reach [0.424, 0.592], [0.038, 0.073, 0.048, 0.058]; climb 0.244, [0.03,
+    0.118, 0.03]; round 0.495, [0.397, 0.104, 0.03]; view 0.411, [0.031, 0.092, 0.03].
+  - On the working tree (a4dec17 plus these numbers): tsc exit 0; vitest 41 files, 374 tests pass; handover
+    --only path: "saturn.dive every frame: pass", "saturn.rise every frame: pass"; smooth --only path: "smooth
+    saturn: green".
