@@ -1,9 +1,60 @@
 {
  "folder": "venus",
- "pushed": "2026-11-24T23:25:38.321Z",
- "head": "a7f38721691403c340c6edc614dfd57b3bf0cd9a",
- "note": "MAIL 788: states between b0b87889, main and the named commit at dive 1308, 1317, 1335",
+ "pushed": "2026-11-24T23:56:47.468Z",
+ "head": "6142ea087329a79c65ac10bc841ed21a62fdeb37",
+ "note": "MAIL 802 cure on 6142ea08: pairs of sets and sizes at 1299 and 1323 after the cure",
  "looks": [
+  {
+   "time": "2026-11-24T23:56:46.428Z",
+   "file": "20261124235646428-note-n802-1299-ungraded-block.jpg",
+   "source": "../../../../tmp/v/cmp/st/n802-1299-ungraded-block.jpg",
+   "kind": "note",
+   "label": "MAIL 802, 1299 without the post chain at the limb: 1920 wide left, 3840 wide right",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T23:56:45.286Z",
+   "file": "20261124235645286-note-n802-1323.jpg",
+   "source": "../../../../tmp/v/cmp/st/n802-1323.jpg",
+   "kind": "note",
+   "label": "MAIL 802 after the cure, 1323: sets at 1920, sets at 3840, sizes full, sizes web, differences times 8",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T23:56:44.427Z",
+   "file": "20261124235644427-note-n802-1299.jpg",
+   "source": "../../../../tmp/v/cmp/st/n802-1299.jpg",
+   "kind": "note",
+   "label": "MAIL 802 after the cure, 1299: sets at 1920, sets at 3840, sizes full, sizes web, differences times 8",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T23:45:32.034Z",
+   "file": "20261124234532034-note-d802-1299.jpg",
+   "source": "../../../../tmp/v/cmp/st/d802-1299.jpg",
+   "kind": "note",
+   "label": "MAIL 802, dive 1299 before the cure, differences times 8: top full against web at both sizes, bottom master against 3840 wide in both sets",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T23:45:31.425Z",
+   "file": "20261124234531425-note-c802-1299-tl.jpg",
+   "source": "../../../../tmp/v/cmp/st/c802-1299-tl.jpg",
+   "kind": "note",
+   "label": "MAIL 802, dive 1299 upper left, before the cure: master, 3840 wide reduced, master in the web set; lower row times 3: the glow past the limb is wider at the master size",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T23:39:32.776Z",
+   "file": "20261124233932776-compare-venus-dive-sides.jpg",
+   "source": "out/work/handover/venus-dive-sides.png",
+   "kind": "compare",
+   "label": "venus dive, both sides at T (frame 1343) and their difference times 8",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "frame": 1343,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-24T23:25:27.414Z",
    "file": "20261124232527414-note-q1308.jpg",
@@ -18,54 +69,6 @@
    "source": "../../../../tmp/v/cmp/st/q1335.jpg",
    "kind": "note",
    "label": "dive 1335: b0b87889, main, 5e14f1f2, named; the frame of T shows as straight lines lower right in all but b0",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T23:25:25.600Z",
-   "file": "20261124232525600-note-four1317-top.jpg",
-   "source": "../../../../tmp/v/cmp/st/four1317-top.jpg",
-   "kind": "note",
-   "label": "dive 1317 top of frame, from the top: b0b87889, main, named a7f38721, in hand",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T23:25:24.447Z",
-   "file": "20261124232524447-note-f1317.jpg",
-   "source": "../../../../tmp/v/cmp/st/f1317.jpg",
-   "kind": "note",
-   "label": "dive 1317 in every state from main to the named commit: the pale limb band came with 28d713f6",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T22:56:29.186Z",
-   "file": "20261124225629186-note-y1317-limb.jpg",
-   "source": "../../../../tmp/v/cmp/y1317-limb.jpg",
-   "kind": "note",
-   "label": "dive 1317 limb at 1 to 1, b0b87889 left, a7f38721 right, pale band along the limb in the right one",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T22:56:28.202Z",
-   "file": "20261124225628202-note-y1329-r.jpg",
-   "source": "../../../../tmp/v/cmp/y1329-r.jpg",
-   "kind": "note",
-   "label": "dive 1329 right side at 1 to 1, b0b87889 left, a7f38721 right, straight borders of the frame of T in the right one",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T22:56:27.048Z",
-   "file": "20261124225627048-note-dive-0.3-0.22.jpg",
-   "source": "../../../../tmp/v/cmp/eq/dive-0.3-0.22.jpg",
-   "kind": "note",
-   "label": "dive at equal eye height 0.30 and 0.22 radii, b0b87889 left, a7f38721 right",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T22:56:25.966Z",
-   "file": "20261124225625966-note-dive-0.092-0.07.jpg",
-   "source": "../../../../tmp/v/cmp/eq/dive-0.092-0.07.jpg",
-   "kind": "note",
-   "label": "dive at equal eye height 0.09 and 0.07 radii, b0b87889 left, a7f38721 right",
    "stop": "venus"
   }
  ]
