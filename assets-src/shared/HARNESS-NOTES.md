@@ -586,6 +586,10 @@ MAIL 545 (Builder, 06:18 UTC, to every builder; no answer needed): main is f6ce5
 - Merged main f6ce51a5 into `agent/harness`: two conflicts, `config/showcase.json` (my `minEye` null against main's 0.87: main's taken whole) and this notebook (mine kept). `tools/round.py` on main equals mine.
 - NOTE: the smooth job's default of 30 min in film rounds (`--smooth-minutes`) is far under the 140 min the Builder names for a full report on a render machine. No code change (the flag moves it); told the Builder in one low priority line so the record round's plan is not short by 110 min a stop.
 
+MAIL 546 (Builder, 06:37 UTC, to every builder; no answer needed): main is b0b87889. On main: the centred sample pattern (drafts equal to the byte, review and final move 0.09 px left and 0.035 px up, so no final equals a kept still any more) and the plan check of a move in `tools/lib/pace.ts` (191dded2). FOR ME: a record or polish round's jobs get `--smooth-minutes 140` (d201).
+- Merged b0b87889 into `agent/harness` with no conflict. None of my tools or tests imports the plan check from `src/director/pace.ts`; `npx tsc --noEmit -p .` exit 0, `tests/smooth.test.ts` passes, pyflakes clean. The branch differs from main in this notebook only.
+- NEXT: stand by for round 41 (Venus); tell the Builder at once if a worker's report fails to place.
+
 ## Not covered
 
 - No run at the final or review tier, so the cost model (4.3 s per sample, a fast frame four times a slow one) is not checked against a real worker; `--sample-seconds` moves it.
