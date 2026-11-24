@@ -1,9 +1,37 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T08:01:57.326Z",
+ "pushed": "2026-11-24T08:27:39.253Z",
  "head": "08fae295f4b4178be7ea4ad88e0983d5bffb800e",
- "note": "first named commit 2ab7243 mailed; now testing three cures for the pattern reds (one shadow border, straight sky courses) at the judge's rate in a scratch tree",
+ "note": "named commit is on the machines; testing the cures of the pattern reds at the judge's rate: shadow border, shade of the C ring solid from its inner edge",
  "looks": [
+  {
+   "time": "2026-11-24T08:21:37.222Z",
+   "file": "20261124082137222-note-pat3863_new.jpg",
+   "source": "../../../../tmp/v/r40/pat3863_new.png",
+   "kind": "note",
+   "label": "rise 3863 with the straight lift: where the pattern measure is still over"
+  },
+  {
+   "time": "2026-11-24T08:21:36.209Z",
+   "file": "20261124082136209-note-gap_new_3859_3863_3867_3871.jpg",
+   "source": "../../../../tmp/v/r40/gap_new_3859_3863_3867_3871.png",
+   "kind": "note",
+   "label": "rise 3859, 3863, 3867, 3871 with the straight lift: the star cloud seen through the shaded C ring"
+  },
+  {
+   "time": "2026-11-24T08:21:35.570Z",
+   "file": "20261124082135570-note-pat3561_old.jpg",
+   "source": "../../../../tmp/v/r40/pat3561_old.png",
+   "kind": "note",
+   "label": "dive 3561 on the named commit: where the pattern measure is over"
+  },
+  {
+   "time": "2026-11-24T08:21:34.604Z",
+   "file": "20261124082134604-note-mask_pole_3561.jpg",
+   "source": "../../../../tmp/v/r40/mask_pole_3561.png",
+   "kind": "note",
+   "label": "dive 3561, red: what the judge counts as body (unit sphere less 20 px) that is not on the drawn, flattened globe less the same margin; the pattern red of the dive at the pole sits there"
+  },
   {
    "time": "2026-11-24T08:01:40.929Z",
    "file": "20261124080140929-note-s3885_head_main_diff.jpg",
@@ -31,34 +59,6 @@
    "source": "../../../../tmp/v/r39/final_3720.png",
    "kind": "note",
    "label": "saturn 3720 surface view, final tier, head 2ab7243 on main 8b2c538 (equal bytes to the final of c8ca94e)"
-  },
-  {
-   "time": "2026-11-24T07:46:34.572Z",
-   "file": "20261124074634572-note-final_3465.jpg",
-   "source": "../../../../tmp/v/r39/final_3465.png",
-   "kind": "note",
-   "label": "saturn 3465 hold, final tier, head 2ab7243 on main 8b2c538 (equal bytes to the final of c8ca94e)"
-  },
-  {
-   "time": "2026-11-24T07:25:36.237Z",
-   "file": "20261124072536237-note-dive_layout.jpg",
-   "source": "../../../../tmp/v/r36/dive_layout.png",
-   "kind": "note",
-   "label": "dive 3572 to 3628, eight frames, whole frame"
-  },
-  {
-   "time": "2026-11-24T07:25:35.294Z",
-   "file": "20261124072535294-note-dive_right.jpg",
-   "source": "../../../../tmp/v/r36/dive_right.png",
-   "kind": "note",
-   "label": "dive 3580, 3588, 3596, 3600, 3604, 3612 right of the globe: the shade on the far ring and the sky in the gap"
-  },
-  {
-   "time": "2026-11-24T07:25:34.623Z",
-   "file": "20261124072534623-note-dive_3587_x3.jpg",
-   "source": "../../../../tmp/v/r36/dive_3587_x3.png",
-   "kind": "note",
-   "label": "dive 3587 + 1/2, 3591 + 1/2, 3595 + 1/2 at 1160 to 1400, 740 to 880, times 3: the ring's inner edge before the dark globe"
   }
  ]
 }
