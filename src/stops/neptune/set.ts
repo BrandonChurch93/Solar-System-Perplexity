@@ -211,6 +211,8 @@ export const createSet: SetFactory = async (ctx) => {
       const line = 1 - smooth((look.lineFade[0] - high) / (look.lineFade[0] - look.lineFade[1]))
       const kind = state.segment.kind
       const show = deepLook.on && !ending ? 1 - smooth(Math.log(Math.max(high, 1e-6) / deepLook.globe.height[1]!) / Math.log(deepLook.globe.height[0]! / deepLook.globe.height[1]!)) : 0
+      // The place's own picture begins above the scene as a whole (deep.json far.height, by the eye's height alone): the scene is drawn from there.
+      const placed = deepLook.on && deepLook.far.on === 1 && !ending && high < deepLook.far.height[0]!
       const lay = ending || deepLook.on ? 0 : kind === 'dive' ? smooth((state.u - closeLook.lay.dive[0]!) / (closeLook.lay.dive[1]! - closeLook.lay.dive[0]!)) : kind === 'rise' ? 1 - smooth((state.u - closeLook.lay.rise[0]!) / (closeLook.lay.rise[1]! - closeLook.lay.rise[0]!)) : kind === 'terrain' ? 1 : 0
       const settle = ending ? 0 : 1 - smooth((high - closeLook.lay.settle[1]!) / (closeLook.lay.settle[0]! - closeLook.lay.settle[1]!))
       const limb = ending ? 0 : 1 - smooth(Math.log(Math.max(high, 1e-6) / closeLook.lay.glow[1]!) / Math.log(closeLook.lay.glow[0]! / closeLook.lay.glow[1]!))
@@ -234,7 +236,7 @@ export const createSet: SetFactory = async (ctx) => {
       ;(pu.uFallPivot!.value as THREE.Vector3).fromArray(deepLook.globe.fall.pivot)
       ;(pu.uFallPower!.value as THREE.Vector3).copy(fallGlobePower)
       pu.uFallBlue!.value = deepLook.globe.fall.blue / Math.max(fall, 1e-4)
-      if (show > 0) {
+      if (show > 0 || placed) {
         laySeat.copy(camera).applyQuaternion(layBack.copy(state.rotation).invert())
         deepLaid.update(deepLaid.lay(laySeat, plan.laid(state.time), show, fallScenePower), deepSun.copy(plan.lightDir).applyQuaternion(layBack.copy(plan.laid(state.time)).invert()), state.time - terrainMid, 2 * Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) / view.format.height, gain * state.weight, lens, view.format.width / view.format.height, toBody.copy(bodyBack).multiply(plan.laid(state.time)))
       }
@@ -307,7 +309,7 @@ export const createSet: SetFactory = async (ctx) => {
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
       const visible = radiusPx > 0.6 * bufferFrame()
       planet.mesh.visible = visible && show < 1
-      deepLaid.mesh.visible = visible && show > 0
+      deepLaid.mesh.visible = visible && (show > 0 || placed)
       air.mesh.visible = visible
       triton.mesh.visible = visible
       ring.mesh.visible = visible

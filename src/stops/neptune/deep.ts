@@ -116,7 +116,8 @@ uniform mat3 uToBody;
 uniform vec4 uFar;
 uniform vec3 uFarTone;
 uniform vec3 uFarPower;
-uniform vec3 uFarHigh;
+uniform vec4 uFarHigh;
+uniform vec2 uFarLaw;
 uniform vec4 uFarFall;
 uniform vec3 uFarCloud;
 ${globe(MAP_DECL)}in vec3 vPos;
@@ -568,19 +569,23 @@ void main() {
   // is a matter of the ground and of the eye's height, never of the clock. The ground: the scene's own deck and cirrus stand round
   // the place (whole within uFar.x units of it on the ground, none beyond uFar.y), so no point of the ground changes its picture
   // because the eye moves over it. The height: from above the place shows the map alone, and the scene's own picture comes in over
-  // it by the logarithm of the eye's height, one law from uFarHigh.x to uFarHigh.y radii (divided by the share the whole scene has
-  // over the globe, uShow, so that the two do not multiply). The law is the one whose odds (the scene's own share against the map's)
-  // are a power of the height: every step of the fall then changes the odds by one factor, at its ends as in its middle, and no
-  // step carries the last of one picture out or the first of the other in at once. uFarHigh.z is the share at which it is cut off.
+  // it by the eye's height, one law (deep.json, far): from uFarHigh.x radii the map's share of the place falls evenly with the
+  // logarithm of the height (uFarLaw.x a unit of it) down to the knee, uFarHigh.y, and from there as a power of the height
+  // (uFarLaw.y), the two meeting with one slope; the last of it goes between uFarHigh.z and uFarHigh.w. own is the share of the
+  // pixel the place's own picture has by the ground and the height. whole is the share the scene has over the globe: uShow, the
+  // scene as a whole (its air, its limb, the map as its far look; deep.json globe.height), and above the height where that begins
+  // the place's own share alone, so that the place's own picture can begin as high as the storm is first seen as a shape.
   float dSphere = uRadius * uRadius - rt2;
   float tFar = dSphere > 0.0 ? -b - sqrt(dSphere) : max(-b, 0.0);
   vec3 farUp = normalize(oc + rd * tFar);
   float highNow = max((length(oc) - uRadius) / uRadius, 1e-6);
-  float oddsEnd = log((1.0 - uFarHigh.z) / uFarHigh.z);
-  float nearRaw = 1.0 / (1.0 + exp(oddsEnd * (2.0 * log(highNow / uFarHigh.y) / log(uFarHigh.x / uFarHigh.y) - 1.0)));
-  float nearAll = clamp((nearRaw - uFarHigh.z) / (1.0 - 2.0 * uFarHigh.z), 0.0, 1.0);
+  float mapShare = highNow > uFarHigh.y ? 1.0 - uFarLaw.x * log(uFarHigh.x / highNow) : (uFarLaw.x / uFarLaw.y) * pow(highNow / uFarHigh.y, uFarLaw.y);
+  float nearAll = 1.0 - clamp(mapShare, 0.0, 1.0) * clamp((highNow - uFarHigh.w) / (uFarHigh.z - uFarHigh.w), 0.0, 1.0);
   float nearGround = 1.0 - smoothstep(uFar.x, uFar.y, uRadius * length(farUp - uPlaceUp));
-  float farW = uFar.z > 1.5 ? 1.0 : uFar.z * (1.0 - min(nearAll / max(uShow, 1e-6), 1.0) * nearGround);
+  float own = uFar.z > 0.5 && uFar.z < 1.5 ? nearAll * nearGround : 0.0;
+  float whole = max(uShow, own);
+  // Where the scene has no share of the pixel the map alone is asked, which costs nothing of the code.
+  float farW = uFar.z > 1.5 || whole <= 0.0 ? 1.0 : uFar.z * (1.0 - min(own / whole, 1.0));
   float rSheet = uRadius * (1.0 + uGCloudHeight);
   float dSheet = rSheet * rSheet - rt2;
   vec3 sheetUp = normalize(oc + rd * (dSheet > 0.0 ? -b - sqrt(dSheet) : max(-b, 0.0)));
@@ -931,7 +936,7 @@ void main() {
     vec3 fallX = max(col, vec3(0.0)) / uFallPivot;
     col = mix(pow(fallX, uFallPower), fallX, smoothstep(0.6, 1.2, fallX)) * uFallPivot;
   }
-  outColor = diagOut(vec4(col, alpha) * (uShow * inside), texels, deckHit || cloudClear < 0.5 ? 1.0 : 0.0, layer, vec2(0.0), min(tSeen, 4000.0));
+  outColor = diagOut(vec4(col, alpha) * (whole * inside), texels, deckHit || cloudClear < 0.5 ? 1.0 : 0.0, layer, vec2(0.0), min(tSeen, 4000.0));
 }`
 
 const v4 = (a: number, b: number, c: number, d: number): THREE.Vector4 => new THREE.Vector4(a, b, c, d)
@@ -1040,7 +1045,7 @@ export class Deep {
         uSkyLight: { value: v3(l.sky) }, uCloudLight: { value: v3(l.cloud) },
         uLightMake: { value: v4(look.steps.deck, look.steps.shade, look.steps.cast, l.shadow) }, uThrough: { value: new THREE.Vector3(l.through[0], l.through[1], ci.cast ?? 1) },
         uToBody: { value: new THREE.Matrix3() },
-        uFar: { value: v4(look.far.distance[0]!, look.far.distance[1]!, look.far.on, 0) }, uFarHigh: { value: new THREE.Vector3(look.far.height[0]!, look.far.height[1]!, look.far.tail) }, uFarFall: { value: v4(look.globe.fall.power[0]!, look.globe.fall.power[1]!, look.globe.fall.power[2]!, look.globe.fall.blue) }, uFarTone: { value: v3(look.far.tone) }, uFarPower: { value: v3(look.far.power) }, uFarCloud: { value: v3(look.far.cloud) },
+        uFar: { value: v4(look.far.distance[0]!, look.far.distance[1]!, look.far.on, 0) }, uFarHigh: { value: v4(look.far.height[0]!, look.far.knee, look.far.last, look.far.height[1]!) }, uFarLaw: { value: new THREE.Vector2(1 / (1 / look.far.tailPower + Math.log(look.far.height[0]! / look.far.knee)), look.far.tailPower) }, uFarFall: { value: v4(look.globe.fall.power[0]!, look.globe.fall.power[1]!, look.globe.fall.power[2]!, look.globe.fall.blue) }, uFarTone: { value: v3(look.far.tone) }, uFarPower: { value: v3(look.far.power) }, uFarCloud: { value: v3(look.far.cloud) },
         ...Object.fromEntries(MAP_UNIFORMS.map((name) => [globe(name), map[name]!])),
         uDiag: diagUniform,
       },
