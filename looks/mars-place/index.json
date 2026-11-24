@@ -1,9 +1,57 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T20:38:45.181Z",
- "head": "024eaa6dd045f918b610a6c0276af3515b5c82b9",
- "note": "round 2 item 1, test state e0: plates hold the laid close ground and takes of the same land from above; 2427, 2689, 2726 of this state not rendered yet",
+ "pushed": "2026-11-24T20:54:15.374Z",
+ "head": "b7508fd590015f68e62098bcf5ba35cf81011421",
+ "note": "e1 plates: 2427 2469 2689 2726 and sheets of the change of view; rise path under work (north up at the rise end)",
  "looks": [
+  {
+   "time": "2026-11-24T20:54:14.781Z",
+   "file": "20261124205414781-note-e1-c.jpg",
+   "source": "out/work/place/see/e1-c.jpg",
+   "kind": "note",
+   "label": "e1 2473 2689 2690 2696 draft, one sheet",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T20:54:14.230Z",
+   "file": "20261124205414230-note-e1-b.jpg",
+   "source": "out/work/place/see/e1-b.jpg",
+   "kind": "note",
+   "label": "e1 dive 2462 2466 2468 2471 draft, one sheet",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T20:54:13.548Z",
+   "file": "20261124205413548-note-f2726.jpg",
+   "source": "out/work/place/cl/e1r/f2726.png",
+   "kind": "note",
+   "label": "e1 2726 draft: plates hold the close view's own ground and the country round it (before the rise path change)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T20:54:12.878Z",
+   "file": "20261124205412878-note-f2689.jpg",
+   "source": "out/work/place/cl/e1r/f2689.png",
+   "kind": "note",
+   "label": "e1 2689 draft: plates hold the close view's own ground and the country round it (before the rise path change)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T20:54:12.124Z",
+   "file": "20261124205412124-note-f2469.jpg",
+   "source": "out/work/place/cl/e1r/f2469.png",
+   "kind": "note",
+   "label": "e1 2469 draft: plates hold the close view's own ground and the country round it (before the rise path change)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T20:54:11.358Z",
+   "file": "20261124205411358-note-f2427.jpg",
+   "source": "out/work/place/cl/e1r/f2427.png",
+   "kind": "note",
+   "label": "e1 2427 draft: plates hold the close view's own ground and the country round it (before the rise path change)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T20:38:44.517Z",
    "file": "20261124203844517-note-e0-plates.jpg",
@@ -18,54 +66,6 @@
    "source": "out/work/place/see/e0-a.jpg",
    "kind": "note",
    "label": "2440 2445 2450 2456 state e0",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T20:38:43.202Z",
-   "file": "20261124203843202-note-e0-b.jpg",
-   "source": "out/work/place/see/e0-b.jpg",
-   "kind": "note",
-   "label": "2462 2466 2468 state e0, beside c1 at 2468",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T20:38:42.568Z",
-   "file": "20261124203842568-note-e0-c.jpg",
-   "source": "out/work/place/see/e0-c.jpg",
-   "kind": "note",
-   "label": "2469 2471 2474 state e0, beside c1 at 2471",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T20:38:41.536Z",
-   "file": "20261124203841536-note-f2469.jpg",
-   "source": "out/work/place/cl/e0r/f2469.png",
-   "kind": "note",
-   "label": "2469 draft, test state e0 (country round the place from takes seen from above, takes not yet enlarged)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T20:27:12.994Z",
-   "file": "20261124202712994-note-r38-take.jpg",
-   "source": "out/work/place/see/r38-take.jpg",
-   "kind": "note",
-   "label": "take r38 (3.8 degrees)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T20:27:12.285Z",
-   "file": "20261124202712285-note-e0-plates.jpg",
-   "source": "out/work/place/see/e0-plates.jpg",
-   "kind": "note",
-   "label": "test e0: plates 0.3, 0.7, 1.6 degrees with the takes round the laid ground",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T20:27:11.332Z",
-   "file": "20261124202711332-note-c1-way.jpg",
-   "source": "out/work/place/see/c1-way.jpg",
-   "kind": "note",
-   "label": "test c1 (short lay, landunder): 2434 to 2476, 2687 to 2696: one country to 2462, still a plain that turns into canyon land at 2468",
    "stop": "mars"
   }
  ]
