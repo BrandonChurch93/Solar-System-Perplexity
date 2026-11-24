@@ -1,0 +1,120 @@
+{
+ "critic": "R3",
+ "score": 5,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-06.png",
+      "where": "Milky Way sky and inner ring gap (crops B, E, H of image-05.png; also image-07.png crops J, K, Q)",
+      "what": "the Milky Way background is a blurry, diagonally stretched low-resolution texture whose stars are large soft orange and white blobs mixed beneath sharp 1-pixel point stars, and in crop E the bright blob cluster stops in a hard elliptical cutoff at the inner C-ring edge",
+      "fix": "replace the low-resolution equirectangular skybox with native-sharp starfield rendering, and give the inner C-ring a gradual optical-depth falloff so background stars attenuate smoothly"
+     },
+     {
+      "severity": "major",
+      "file": "image-02.png",
+      "where": "lower-left sunlit limb and inner C-ring gap (crop G; also image-03.png crop P and image-07.png crop O)",
+      "what": "a detached, doubled orange glow edge curves out from Saturn's lower-left limb across the dark inner ring gap while the sunlit limb silhouette itself is visibly stair-stepped",
+      "fix": "remove the clipped outer atmosphere shell or post-glow boundary, use a continuous volumetric limb falloff, and anti-alias the planet limb with higher supersampling"
+     },
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "outer left A-ring edge and thin outer ringlets (crop F; also image-02.png crop F, image-03.png crop O, image-07.png crop N, and image-08.png crop S)",
+      "what": "the outer ring edge and thin Encke and F-ring ringlets break into jagged stair-stepped pixels, with a bright cyan-white doubled rim halo along the outer A-ring boundary",
+      "fix": "apply anisotropic radial filtering and higher multisample anti-aliasing on the ring plane, and eliminate the bright edge-fringe shader artifact on the outer A-ring"
+     },
+     {
+      "severity": "major",
+      "file": "image-08.png",
+      "where": "lower-left outer A-ring between Cassini division and Encke gap (crop S; also image-06.png crop D, image-02.png crop D, and image-04.png crop U)",
+      "what": "a straight pale radial seam cuts perpendicular across the concentric ring bands where the ring texture wraps",
+      "fix": "make any angular ring modulation seamless across the 0-to-1 UV wrap or evaluate ring bands purely from radial distance without an angular UV seam"
+     },
+     {
+      "severity": "major",
+      "file": "image-03.png",
+      "where": "upper-right orange moon (crop M of image-01.png; also image-07.png crop L of image-05.png)",
+      "what": "the moon's sunlit limb is a hard, jagged stair-stepped pixel edge with no atmospheric haze falloff, and its surface has smooth airbrushed band shading that looks plastic",
+      "fix": "anti-alias the moon silhouette and render Titan's soft optical haze layer with subtler, less airbrushed surface shading"
+     },
+     {
+      "severity": "minor",
+      "file": "image-07.png",
+      "where": "lower-right dark ring-lit limb of Saturn (crop P; also image-03.png crop Q)",
+      "what": "an uneven, scalloped blue-grey rim halo outlines the dark lower-right globe edge with a hard outer cutoff over the rings, and the faintly lit nightside clouds show coarse color blotching and banding",
+      "fix": "compute dark-limb atmosphere scattering on high-subdivision geometry in 16-bit or 32-bit float with dithering, and fix the compositing falloff where the dark limb overlaps the rings"
+     },
+     {
+      "severity": "minor",
+      "file": "image-04.png",
+      "where": "lower-right dark sky and upper-left sky corner of image-01.png (crops W and X, and image-03.png crop J)",
+      "what": "stray horizontal blue-grey flare bands streak across the dark lower-right sky well below the sunlit globe, and the upper-left corner haze shows subtle gradient banding",
+      "fix": "remove unmotivated horizontal flare bars and dither subtle sky gradients before 8-bit output"
+     },
+     {
+      "severity": "minor",
+      "file": "image-03.png",
+      "where": "north polar cap and upper-left sunlit limb (crops K and L; also image-07.png crops J and K)",
+      "what": "the center of the blue north polar vortex shows fine noisy pixel stippling from polar convergence, the bright upper-left limb is slightly stair-stepped beneath a thin uniform rim line, and background stars shine undimmed beside the sunlit limb in image-07.png crop J",
+      "fix": "remap the polar cap in polar coordinates to avoid pole stippling, anti-alias and soften the upper sunlit limb, and attenuate faint background stars inside bright limb glare"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-10.png",
+      "where": "ring crops D, G, and A",
+      "what": "ring debris reads as smooth pills and disc sprites, not irregular ice, and the same props show in image-09.png and image-12.png",
+      "fix": "replace the sprites with irregular ice chunks that sit in the ring plane, vary in size, and share the ring's blur"
+     },
+     {
+      "severity": "major",
+      "file": "image-10.png",
+      "where": "panel C upper cloud deck",
+      "what": "at native size the clouds are soft painted noise and laminar ribbons, with the same painted bands in image-11.png panels L and M",
+      "fix": "add fine shear and convective detail so the bands stay sharp in a native crop"
+     },
+     {
+      "severity": "minor",
+      "file": "image-15.png",
+      "where": "panel P mid-latitude bands",
+      "what": "the streaks go soft and brushed at native size, and panel A in image-14.png does the same",
+      "fix": "carry the finer turbulence from the lit limb through the mid-latitude bands"
+     },
+     {
+      "severity": "minor",
+      "file": "image-15.png",
+      "where": "panel K polar hood",
+      "what": "the hood is a stack of perfectly circular bands, a mild mapping tell, though the pole is not pinched",
+      "fix": "break the circles with irregular storm texture so the hood is not a set of perfect rings"
+     },
+     {
+      "severity": "minor",
+      "file": "image-10.png",
+      "where": "tight ring curves in panels F and H",
+      "what": "high-contrast ring edges show mild stair-stepping",
+      "fix": "antialias the ring edges so the curves do not step at native size"
+     }
+    ]
+   }
+  }
+ ]
+}

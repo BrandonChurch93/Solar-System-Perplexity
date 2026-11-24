@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import type { SetFactory } from '../../core/types'
 import { isRaw } from '../../diagnostics/diag'
 import { smooth } from '../../director/rig'
+import { nameSkyLook } from '../../space/sky'
 import fit from './fit.json'
 import { createKept } from './kept/set'
 import { createModel } from './model'
@@ -79,6 +80,7 @@ export const createSet: SetFactory = async (ctx) => {
       toRing.copy(total).multiply(tilt).invert()
       eye.copy(centre).negate().applyQuaternion(toRing)
       const low = plan.lowAt(eye.y)
+      if (low > 0 && !isRaw(view.diag)) nameSkyLook(plan.id, { ...skimJson.sky.look, stars: plan.starsAt(low) }, low)
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
       const lit = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0
       sun.copy(plan.lightDir).applyQuaternion(total).lerp(shot.sun.dir, lit).normalize().applyQuaternion(toRing)

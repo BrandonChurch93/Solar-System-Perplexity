@@ -1,0 +1,35 @@
+{
+ "critic": "R1",
+ "score": 8,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "tile C (upper right sun halo and background starfield)",
+   "what": "faint stars embedded inside the outer solar bloom and atmospheric haze are blurred and washed out, with roughly half the faint pinpoint stars no longer visible compared to -a",
+   "fix": "preserve the high-frequency faint star points over the upper-right solar bloom instead of smoothing them into the glare"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "tile C and tile E (upper-right and lower-right dark-side planetary limb)",
+   "what": "the sunlit rim along the dark-side limb has a slightly thicker, more saturated orange band with a ~1 px outward shift and a slightly harder inner step",
+   "fix": "tighten the limb alignment by 1 px and soften the orange rim transition to match the smoother pale-gold falloff in -a"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "tile A and tile I (cloud bands and lower-right lightning storm)",
+   "what": "fine fibrous cloud striations and high-frequency pixel micro-contrast are slightly softened (gradient sharpness drops by ~8%), and the purple-white lightning filaments are slightly more diffuse",
+   "fix": "reduce spatial smoothing or upscaling blur on the planet disc so the cloud textures and lightning bolts retain crisp native-pixel detail"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "tiles A, B, F, and H (cloud tops and horizon limb)",
+   "what": "the terrain and horizon are shifted upward by ~1 px with slightly more pixelated stair-stepping along diagonal sunlit cloud rims",
+   "fix": "align vertical framing to the exact pixel grid of -a and use cleaner anti-aliased resampling along the high-contrast cloud edges"
+  }
+ ]
+}

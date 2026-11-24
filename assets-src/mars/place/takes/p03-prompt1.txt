@@ -1,0 +1,17 @@
+Image 1 is a square, straight down (nadir) orbital photograph of canyon land on Mars at dusk light, north at the top, about 18 km across. It is dark on purpose: the whole square lies in the long shadow of a mesa. Its right third is right and must stay. Its left two thirds are damaged: the ground there is drawn like a flat map, as dark flat cells with thin bright outlines and bright crest lines, like cracked mud or a line drawing.
+
+Image 2 is an oblique aerial photograph taken low over the same land, looking east south east. The dark ground along its bottom edge is the same ground as the left part of image 1, seen from low: shadowed slopes of layered rock, rounded spurs, talus and rubble, with soft shading and no outlines.
+
+Task: redraw image 1 as one seamless nadir orbital photograph with the same framing, the same scale, the same darkness and north at the top.
+
+1. The right third stays as it is, every light and dark patch where it is.
+
+2. The left two thirds: keep the broad layout, every larger ridge, spur and hollow stays where it is and keeps its size. Turn the line drawing into real ground with volume, as in the bottom of image 2: rounded ridges and spurs with a slightly lighter side toward the Sun and a darker side away from it, gentle swales between them, talus aprons, scattered boulders and rubble on the low ground, faint strata on the slopes. The relief is carried by soft gradients of dark brown and rust, never by bright lines.
+
+3. No bright outlines, no bright crest lines, no thin pale veins, no flat cells, no cracked mud, no net of lines. No pure black holes either: the hollows are dark but the ground in them can be made out.
+
+4. The left part is as dark and as low in contrast as the dark ground of the right third next to it, and it joins that ground without a seam or an edge, as one piece of land under one light. Nobody can tell where the two parts met.
+
+5. No fan, no pleats, no herringbone, no long parallel or curved lines. Nothing may radiate from one point like the spokes of a wheel. No round pits, no fields of craters, no dots. No mist, no cloud, no smoke in the left part.
+
+Light: a low Sun in the south south east, soft long shadows falling toward the north north west, the same everywhere. A photograph from orbit: no horizon, no sky, no text, no border, no vignette.

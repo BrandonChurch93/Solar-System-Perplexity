@@ -4,9 +4,12 @@ import { captureRate, setCapture, shutterAsked } from '../src/core/clock'
 import { FilmDirector } from '../src/director/film'
 import { bellPeak, bellRate, bellShare, bellStep, checkFlanks, flank, flankArea, flankAreaOf, flankOf, flankWhole, paceLimits, type Flanks } from '../src/director/pace'
 import { plans } from '../src/director/plans'
-import { paceOf } from '../tools/lib/pace'
-import { MIN_POINTS, curves, ringPlane, sampleWindow } from '../tools/smooth/camera'
-import { judgeCurve } from '../tools/smooth/path'
+import { eyeOf, paceOf } from '../tools/lib/pace'
+import { MIN_POINTS, SEAM_REACH, curves, eyeCurves, ringPlane, sampleSeam, sampleWindow } from '../tools/smooth/camera'
+import { judgeCurve, judgeSeam } from '../tools/smooth/path'
+
+// The tests that make the plan of every frame of every dive and rise take seconds, more beside the tests of the other files.
+const LONG = 60000
 
 // Plan E, the measure. The bell is the one rate curve of a dive and a rise; paceOf is the plan check: the judge's own functions
 // (npm run smooth, the path part) on the film's own camera.
@@ -226,6 +229,48 @@ describe('the plan check of a move', () => {
       }
     }
     expect(moves).toBe(34)
+  }, LONG)
+
+  it('reads the eye at the seam with the surface view as the judge does: its curves, its lowest on both sides and inside the move, and what is named', () => {
+    const min: number | null = config.raw.smooth.path.minEye ?? null
+    let seams = 0
+    for (const plan of plans) {
+      for (const kind of ['dive', 'rise'] as const) {
+        for (const rate of [1, limits.rate]) {
+          const eye = eyeOf(film, plan, kind, rate)
+          // The eye line as tools/smooth.ts takes it (pathOf).
+          const sw = sampleSeam(config, film, plan, kind, rate)
+          if (!sw) {
+            expect(eye).toBeNull()
+            continue
+          }
+          seams++
+          const ec = eyeCurves(sw, plan, ringPlane(plan))
+          const j = judgeSeam(ec.speed, ec.along, sw.k0, rate, min, kind === 'dive' ? { first: sw.k0, end: sw.seam * rate } : { first: sw.seam * rate + 1, end: (sw.seam + SEAM_REACH) * rate })
+          expect(eye, plan.id + ' ' + kind + ' at rate ' + rate).toEqual({ seam: sw.seam, own: ec.own, limit: min, ...j })
+        }
+      }
+    }
+    expect(seams).toBe(34)
+  })
+
+  it('names an eye that falls under the limit it is given, by the frame of its lowest speed, and none where there is no limit', () => {
+    const mars = plans.find((p) => p.id === 'mars')!
+    for (const kind of ['dive', 'rise'] as const) {
+      const high = eyeOf(film, mars, kind, limits.rate, 1e6)!
+      expect(high.lowest).not.toBeNull()
+      expect(high.fault).not.toBeNull()
+      expect(high.fault!.rule).toBe('eye')
+      expect(high.fault!.k).toBe(high.lowest!.k)
+      expect(high.fault!.limit).toBe(1e6)
+      expect(high.limit).toBe(1e6)
+      expect(eyeOf(film, mars, kind, limits.rate, 0)!.fault).toBeNull()
+      const none = eyeOf(film, mars, kind, limits.rate, null)!
+      expect(none.fault).toBeNull()
+      expect(none.lowest).toEqual(high.lowest)
+      expect(none.inMove).toEqual(high.inMove)
+    }
+    expect(eyeOf(film, plans[0]!, 'dive')).toBeNull()
   })
 
   it('compares the speed of the picture on one fixed set of ring points: the judge has every point of the ring, and needs five that have ground', () => {
@@ -254,6 +299,13 @@ describe('the plan check of a move', () => {
     expect(shutterAsked()).toBe(90)
     paceOf(film, plans[0]!, 'dive', 2)
     expect(captureRate()).toBe(4)
+    eyeOf(film, mars, 'rise', 2)
+    expect(captureRate()).toBe(4)
+    expect(shutterAsked()).toBe(90)
+    setCapture(1)
+    eyeOf(film, mars, 'dive', 2)
+    expect(captureRate()).toBe(1)
+    expect(shutterAsked()).toBeNull()
   })
 
   it('reads the fall, the turn and the speed of every dive and rise of the film at whole and half frames', () => {
