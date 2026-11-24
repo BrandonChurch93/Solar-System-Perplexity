@@ -5542,3 +5542,84 @@ ANSWER to MAIL 733 point 2 from neptune_builder, 20:40 UTC. MEASURED on my VM on
 4. Made anew later: nothing. No later picture did any work (34 further pictures of the dive, 5 of the surface view, 13 of the rise), and in the code every mesh and material of the stop is made once when the set is built and disposed only with the set.
 5. THE FRAME HAS MOVED on the present state: with the law from 2.0 radii (MAIL 688 point 3) the laid deep is first drawn at 4686 + 1/2 (1 program and 5 buffers there, nothing at 4708). The warm list at my take needs 4686 + 1/2, 4758 and 4950, not 4708. What np42-02 read on 32a8d00 I state from the code, I did not measure that tree.
 6. Point 3: the path part on the present main is green here (2 s) and prints no line for the rest between my rise and ending.retreat yet. Its table shows the speed at 0.052 of the move's mean at 5024 and 0.021 at 5025 to 5027, so I expect the new line red; measured when batch 4 is on main, then handover.rise.pullBack.
+
+## 20:40 to 20:48 UTC: what my proxy read as red in the rise at 4984 and 4988 is the cloud sheet sliding over the deck (parallax), proven by the sphere the pair is carried on
+
+WHY I LOOKED AGAIN. The red of the rise at 4984 and 4988 stood as "the globe's own map, named, not cured" (16:05 to 17:15,
+point 11). A named red needs its cause, and "fields of small cloud that resolve into dots" was a reading of the picture,
+not a control.
+
+1. CONTROL l2 (the finest of the globe's three own levels, patch-40, taken out of patches.json for the render; four
+   frames, 55 s; the file put back from a copy, tree clean): by poses 4984 0.53 to 0.43, 4988 0.48 to 0.46. So the level
+   that comes in between 0.75 and 0.34 radii carries a tenth at 4984 and nothing at 4988. Not the cause.
+2. SEEN on the proxy's own sheet for 4988 (out/work/nep/made/g3d-4988.jpg): the hot places are islands round the white
+   specks on the dark ground at the lower left (15.1 and 11.7 degrees from the place). Elsewhere that ground is not judged
+   (no detail over the floor).
+3. THE CONTROL THAT DECIDES: the sphere on which the later frame is carried back (WEAVE_SHELL of weave.py, a tool for
+   causes). The globe's cloud sheet stands 0.004 radii over the deck (look.ts clouds.height) and its shadow lies on the
+   deck. Same two frames, nothing rendered anew (dir g3d):
+     radius 1.000 (the deck, what the proxy does):  4984 0.53, 4988 0.48
+     radius 1.002:                                  4984 0.30, 4988 0.25
+     radius 1.004 (the sheet):                      4984 0.37, 4988 0.26
+     radius 1.006:                                  4984 0.69, 4988 0.39
+   A minimum between the deck and the sheet, rising again above the sheet: that is the mark of a layer at that height.
+   On the sheet's own sphere the islands round the specks are dark (shell-4988.jpg, looked at). So what the proxy read
+   as a change of pattern is the cloud sheet sliding over the deck as the eye climbs from 0.34 to 0.75 radii and the
+   angle of view to that ground changes: one place seen in depth, not a second picture.
+4. THE OTHER PAIRS on the three spheres (1, 1.002, 1.004): 4688 0.27, 0.28, 0.28; 4696 0.65, 0.64, 0.62 (the hump is the
+   limb, not this); 4704 0.28 all; 4712 0.22, 0.24, 0.45; 4992 0.37, 0.36, 0.35; 4996 0.27, 0.27, 0.26. Above 0.5 radii
+   the sphere does not matter.
+5. WHAT THIS IS AND IS NOT. It is my proxy by poses, at 480 px wide, with the tool's pattern() and the config's numbers;
+   it is not the report. The report carries a pair along its optical flows, and a flow follows what it sees: where
+   only the specks have detail it should follow the sheet, where sheet and deck both have detail one of them slides.
+   My flow proxy read 4984 0.30 and 4988 0.54 with flows that agree on about half of the body, so it does not decide.
+   I name it so: by my proxy on the deck 0.53 and 0.48, on the sheet 0.37 and 0.26; UNKNOWN what the report reads.
+   I do not lower the sheet to move a number: its height is what makes the clouds stand over the deck in the hold and
+   the dive.
+6. A thought I did not follow: a floor of the cloud's footprint on the ground (so that small clouds stay soft as the eye
+   nears). The report measures at 480 px wide in a band of 8 to 40 px of 1920, the specks are smaller than that band,
+   and the control of point 3 leaves nothing for it to cure in the number. It would be a change of look only.
+7. A FAULT OF MINE WITH THE CLOCK, named: the head of this section first read "20:41 to 20:52" and the two looks pushed
+   with it carry "20:53 UTC" in their labels. The clock read 20:48:12 when I wrote them: I wrote the times before I read
+   it. The head is corrected here; the labels on the looks branch stand as pushed (7c444bed, 8 looks, pushed at 20:48 UTC)
+   and are 5 minutes ahead of the truth.
+8. Point 11 of the section of 16:05 to 17:15 ("fields of small cloud ... resolve into hard bits as the eye nears") was a
+   reading of the picture without a control and is replaced by point 3 here.
+
+## 20:48 to 20:57 UTC: the end of the rise looked at (5018 to 5045); MAIL 733 point 3 measured ahead on the batch's own code: the new line does not see Neptune's rise, and with one word changed it reads 0.148 (limit 0.07)
+
+1. MAIN is at 9b46d64c (20:36 UTC; against 07693d93 only kit/PROGRESS.md: d244, d245, status 258). Not merged yet: it comes
+   in with the next commit. Read there: take batch 4 is not on main yet, it stands as branch agent/engine-handover-b4
+   (1924a104, the handover engineer's test commit on harness-b4 b51550ff); two machines run its tests and gate. Six of seven
+   rises read red on the new line (Mercury 0.012, Venus 0.017, Earth 0.066, Mars 0.008, Jupiter 0.024, Uranus 0.005; Saturn
+   0.375). Round 42 still waits for 9 tiles.
+2. THE END OF THE RISE AND THE FIRST FRAMES OF THE RETREAT, 29 frames 5018 to 5046 in film order (dir end, preview draft, 72 s,
+   2.5 s a frame: far frames are cheap). Every frame looked at (end-0.jpg, end-1.jpg, and the storm alone 5030 to 5045 in
+   end-storm4.jpg): one globe, the storm one picture that travels with the globe; no patch comes or goes; the rings and
+   Triton stand. Nothing to name by the eye.
+   THE POP AT 5036 (the report's finished part on main reads 1.29 there, limit 1.2; ruled a fault of the window's end in
+   MAIL 654, not proven either way). My measure, not the report: the tool's own pictures() (tools/img/smooth.py) on these
+   29 whole film frames at 480 px wide, so that 5036 has neighbours on both sides: pop 5030 1.00, 5031 1.02, 5032 1.00,
+   5033 1.04, 5034 1.03, 5035 1.03, 5036 0.99, 5037 0.99; the largest of the row 1.05 at 5020. The residual falls to 0.77
+   at 5024 and 5025 (the picture nearly at rest) and is 1.9 to 2.0 from 5029 on. So with a median of both sides nothing
+   pops there; a one sided median that reaches back into the rest reads the travel's first frames against the stand.
+   STATED as my proxy at whole film frames; the report reads capture frames.
+3. THE PATH THROUGH THE SEAM 5025 (assets-src/neptune/check/weave.ts, the camera as the report takes it): the eye flies
+   5.40 radii a second at 5010, 0.50 at 5024, 0.136 at 5025, 0.102 at 5026 (the lowest: the drift, rise.driftSpeed 0.1),
+   0.120 at 5027, 0.36 at 5030, 1.2 at 5036. The body's edge shrinks by 0.27 px of 1920 a frame at 5026.
+4. THE NEW LINE (smooth.path.minLeave 0.07), read on the batch's own code before it is on main. How: the source of
+   1924a104 (tools, src, config) laid out as a copy outside the repo (/tmp/b4, 4.6 MB, node_modules and the assets linked),
+   with src/stops/neptune of this branch's head put in place of the batch's; nothing of the repo touched.
+   (a) The tool as cut: npx tsx tools/smooth.ts --stop neptune --only path: "VERDICT: green", eye at the rise's seam 0.94
+   (limit 0.87), and NO line "Rest between the rise and the travel" for Neptune (path-b4-tool.md). Cause, read in
+   tools/smooth/camera.ts, sampleLeave: it takes the segment of kind travel that starts on the rise's last frame; Neptune's
+   rise goes into ending.retreat (kind retreat), so the window is null and the line is neither printed nor judged.
+   (b) The same with ONE WORD CHANGED in the copy (a retreat counts as the travel that follows; my change, a proxy, named):
+   "Rest between the rise and the travel (the seam into ending.retreat at film frame 5025, 12 film frames to each side,
+   read at rate 2) ... lowest 0.32 at frame 5025 + 1/2, against 41.96 at frame 5013 and 2.19 at frame 5036 + 1/2 at the
+   ends of the window. The lowest is 0.148 of the slower end, limit 0.07." Verdict green (path-b4-retreat.md).
+   So by the tool's own functions Neptune's rise leaves at 0.148 of the slower end: over the floor, twice.
+   (c) THE CURE WOULD NOT BE OPEN TO ME ANYWAY: StopPlan.pullBack (src/director/moves.ts of the batch) refuses a rise that
+   no travel follows ("no travel follows this rise, so it comes to rest on its far end"), and Neptune's seg.travel is
+   empty. The retreat is the engine's (src/director/film.ts): it starts from the exit pose and eases in by its own glide.
+   (d) NOT measured: the same with the batch on main (owed when it is there: the tool run as MAIL 733 says).
