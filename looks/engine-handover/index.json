@@ -1,80 +1,64 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T11:59:12.042Z",
- "head": "c45ed6654c8a416750672e03cc2c2d7b392cdea8",
- "note": "MAIL 602: the pull back takes an optional third number from, so the surface view and T stay to the bit; chart of the price on Mars; chain running on main 36970ce3 merged",
+ "pushed": "2026-11-24T12:18:12.769Z",
+ "head": "c9e75312dea1e89e6fb38135aab36b967db3962d",
+ "note": "MAIL 602: 73 drafts of Mars 2684 to 2756 with the pull back 1.77 over 0.8 from 1.9 and the same frames plain; 2684 to 2687 are the same bytes; the disc no longer stands at the seam",
  "looks": [
   {
-   "time": "2026-11-24T11:59:00.063Z",
-   "file": "20261124115900063-note-price-mars.jpg",
-   "source": "out/work/h602/price-mars.png",
+   "time": "2026-11-24T12:18:12.077Z",
+   "file": "20261124121812077-note-d19-pair-b.jpg",
+   "source": "out/work/h602/d19-pair-b.png",
    "kind": "note",
-   "label": "MAIL 602, the pull back with the optional from: height of the eye of the Mars rise against the plain rise (percent) and how far the far end stands back; before from the rise is to the bit",
-   "stop": "mars"
+   "label": "MAIL 602 scratch, Mars rise: plain (top) against the pull back 1.77 over 0.8 from 1.9 (bottom) at 2722, 2730, 2737, 2744, draft tier: the eye flies lower in mid rise (16 percent at 2730) and ends on the same pose"
   },
   {
-   "time": "2026-11-24T11:30:17.227Z",
-   "file": "20261124113017227-note-rest-line-by-speed.jpg",
-   "source": "out/work/h602/rest-line-by-speed.png",
+   "time": "2026-11-24T12:18:11.353Z",
+   "file": "20261124121811353-note-d19-pair-a.jpg",
+   "source": "out/work/h602/d19-pair-a.png",
    "kind": "note",
-   "label": "MAIL 602 pull back, Mars seam 2745: the limb's fastest point and the centre, px a film frame, today against 1.2, 1.77 and 3.2 radii a second (from the path, carry laid)"
+   "label": "MAIL 602 scratch, Mars rise: plain (top) against the pull back 1.77 over 0.8 from 1.9 (bottom) at 2692, 2700, 2708, 2715, draft tier"
   },
   {
-   "time": "2026-11-24T11:15:31.614Z",
-   "file": "20261124111531614-note-b32-limb-low.jpg",
-   "source": "out/work/h602/b32-limb-low.png",
+   "time": "2026-11-24T12:18:10.742Z",
+   "file": "20261124121810742-note-limb-steps-pictures.jpg",
+   "source": "out/work/h602/limb-steps-pictures.png",
    "kind": "note",
-   "label": "MAIL 602 scratch, lower left limb 2743 to 2748 through the seam 2745"
+   "label": "MAIL 602, limb of Mars measured on the drafts, plain rise against the pull back 1.77 over 0.8 from 1.9: plain stands 0 to 2 px a frame over 2743 to 2749, pulled never under 6 px at the right limb"
   },
   {
-   "time": "2026-11-24T11:15:30.984Z",
-   "file": "20261124111530984-note-b32-limb-right.jpg",
-   "source": "out/work/h602/b32-limb-right.png",
+   "time": "2026-11-24T12:14:42.719Z",
+   "file": "20261124121442719-note-d19-limb-right.jpg",
+   "source": "out/work/h602/d19-limb-right.png",
    "kind": "note",
-   "label": "MAIL 602 scratch, right limb at full size 2743 to 2748 through the seam 2745: limb goes in every frame, stars stand still, no doubled edge"
+   "label": "MAIL 602 scratch, Mars 2740 to 2751 with the pull back 1.77 over 0.8 from 1.9, right limb at full size: one edge, it moves left in every frame (8 8 7 6 6 6 6 9 10 px), stars stand from 2744"
   },
   {
-   "time": "2026-11-24T11:15:30.132Z",
-   "file": "20261124111530132-note-b32-sheet.jpg",
-   "source": "out/work/h602/b32-sheet.png",
+   "time": "2026-11-24T12:14:41.518Z",
+   "file": "20261124121441518-note-d19-sheet-2744.jpg",
+   "source": "out/work/h602/d19-sheet-2744.png",
    "kind": "note",
-   "label": "MAIL 602 scratch, Mars rise into travel 2738 to 2756, draft, pull back speed 3.2 over 1.25 (uncommitted value) with the travel carry laid: the disc never rests, right limb steps 24 22 19 17 15 12 12 11 10 9 10 10 13 15 21 26 px"
+   "label": "MAIL 602 scratch, Mars rise and seam into the travel with the pull back 1.77 over 0.8 from 1.9 (value in the built dist only), draft tier, consecutive frames from 2744"
   },
   {
-   "time": "2026-11-24T11:13:54.025Z",
-   "file": "20261124111354025-frame-f2756.jpg",
-   "source": "out/work/h602/b32/f2756.png",
-   "kind": "frame",
-   "label": "mars.travel frame 2756, draft tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "frame": 2756,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "26944c1d4801399d"
-  },
-  {
-   "time": "2026-11-24T11:04:52.745Z",
-   "file": "20261124110452745-frame-f2744.jpg",
-   "source": "out/work/h602/b32/f2744.png",
-   "kind": "frame",
-   "label": "mars.rise frame 2744, draft tier",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "frame": 2744,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "26944c1d4801399d"
-  },
-  {
-   "time": "2026-11-24T10:54:54.806Z",
-   "file": "20261124105454806-note-mars-leave-out.jpg",
-   "source": "out/work/h602/mars-leave-out.png",
+   "time": "2026-11-24T12:14:40.141Z",
+   "file": "20261124121440141-note-d19-sheet-2732.jpg",
+   "source": "out/work/h602/d19-sheet-2732.png",
    "kind": "note",
-   "label": "MAIL 602 scratch: Mars, the seam from the rise into the travel with pace.out of the one move and the travel carry laid: speed of the edge, way of the centre, growth of the radius (px a film frame, rate 2)",
-   "stop": "mars"
+   "label": "MAIL 602 scratch, Mars rise and seam into the travel with the pull back 1.77 over 0.8 from 1.9 (value in the built dist only), draft tier, consecutive frames from 2732"
+  },
+  {
+   "time": "2026-11-24T12:14:39.282Z",
+   "file": "20261124121439282-note-d19-sheet-2720.jpg",
+   "source": "out/work/h602/d19-sheet-2720.png",
+   "kind": "note",
+   "label": "MAIL 602 scratch, Mars rise and seam into the travel with the pull back 1.77 over 0.8 from 1.9 (value in the built dist only), draft tier, consecutive frames from 2720"
+  },
+  {
+   "time": "2026-11-24T12:14:38.240Z",
+   "file": "20261124121438240-note-d19-sheet-2708.jpg",
+   "source": "out/work/h602/d19-sheet-2708.png",
+   "kind": "note",
+   "label": "MAIL 602 scratch, Mars rise and seam into the travel with the pull back 1.77 over 0.8 from 1.9 (value in the built dist only), draft tier, consecutive frames from 2708"
   }
  ]
 }
