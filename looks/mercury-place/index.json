@@ -1,9 +1,33 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T10:05:43.971Z",
- "head": "400c5c91e549460480aa6b61f883607103460ae5",
- "note": "named state 400c5c91: dive 704 to 728, pattern at most 0.45; 615 and 870 main's bytes",
+ "pushed": "2026-11-24T10:42:25.582Z",
+ "head": "4dbfcc25f1bed94982b4afa215683c13c7008cf8",
+ "note": "third commit work: strip under the limb diagnosed (set skirt and far look), border of the set on the ground being built",
  "looks": [
+  {
+   "time": "2026-11-24T10:42:24.796Z",
+   "file": "20261124104224796-note-limb-v4.jpg",
+   "source": "../../../../tmp/m/limb-v4.jpg",
+   "kind": "note",
+   "label": "diagnosis: set off, far look off, 744.5 to 758: the globe's own ground under the limb, one ground",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T10:42:24.189Z",
+   "file": "20261124104224189-note-limb-v2.jpg",
+   "source": "../../../../tmp/m/limb-v2.jpg",
+   "kind": "note",
+   "label": "diagnosis: set off, far look on, 742.5 to 758: the far look pales the map's craters",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T10:42:23.364Z",
+   "file": "20261124104223364-note-limb-v0.jpg",
+   "source": "../../../../tmp/m/limb-v0.jpg",
+   "kind": "note",
+   "label": "third commit, strip under the limb, dive 740.5 to 756.5 step 2, second named state: set skirt covers the band from 748",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T10:05:43.320Z",
    "file": "20261124100543320-note-e3-c.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/m/t540-second.jpg",
    "kind": "note",
    "label": "MAIL 540 sheet, rise 967 to 981 every frame, draft, T 977, second commit",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T09:49:31.476Z",
-   "file": "20261124094931476-note-615-pair.jpg",
-   "source": "../../../../tmp/m/615-pair.jpg",
-   "kind": "note",
-   "label": "615 final at 1.25 times: reference left, second commit right. The disc reads as a patch here (harder gold rims, a dark bay at the terminator): named red",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T09:49:30.565Z",
-   "file": "20261124094930565-note-615-three.jpg",
-   "source": "../../../../tmp/m/615-three.jpg",
-   "kind": "note",
-   "label": "615 final: kept still, first named commit (main's reference bytes), second commit; whole frame above, the disc below",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T09:43:56.782Z",
-   "file": "20261124094356782-note-e2-d.jpg",
-   "source": "../../../../tmp/m/e2-d.jpg",
-   "kind": "note",
-   "label": "rise 1016 to 1034 every frame, draft, second commit",
    "stop": "mercury"
   }
  ]
