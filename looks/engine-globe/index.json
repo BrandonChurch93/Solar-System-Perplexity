@@ -1,9 +1,49 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-24T01:10:53.618Z",
+ "pushed": "2026-11-24T01:32:45.408Z",
  "head": "69ac8b40fb3d27c2e6468a75d29d0fed69f45edf",
- "note": "Swap of the sphere for the cap at the top of the band (2.4 radii), review tier, capture rate 2, 1920 by 1080. Change into the swap frame 8.918 (mean of 255), without the cap 8.924; with against without the cap in the swap frame 0.031, largest 15, 0.05 percent of pixels over 2. The swap is 0.35 percent of the change the film makes in that step. It stays.",
+ "note": "Cap of Mars on heights v3 (f95c3606), scratch wiring, draft tier. New: the normal of the cap's own heights (light: relief, own; shown at 1, 1 on plates that still carry painted light) and the haze depth to the cap's own surface (the canyon floor, down to 0.0022 radii under the datum, gets more air: 2448 brighter by a mean of 8.6 of 255). Light 1,1 changes 2448 by a mean of 1.2 (3.6 percent of pixels over 8) and 2430 by 1.65. Draft time at 2448: 68 s without light, 113 s with. No cast shadow. Swap at the band's top with the new code: against the old cap frame 0.06 percent of pixels by 1 of 255.",
  "looks": [
+  {
+   "time": "2026-11-24T01:32:44.433Z",
+   "file": "20261124013244433-note-light-tri-2447-2449.jpg",
+   "source": "out/work/t2/light-tri-2447-2449.png",
+   "kind": "note",
+   "label": "Mars 2447, 2448, 2449 draft, light 1,1 and haze to own surface",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T01:32:43.393Z",
+   "file": "20261124013243393-note-light-pair-2430.jpg",
+   "source": "out/work/t2/light-pair-2430.png",
+   "kind": "note",
+   "label": "Mars 2430 draft: no light option (left), light 1,1 (right)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T01:32:42.286Z",
+   "file": "20261124013242286-note-light-crop-2448.jpg",
+   "source": "out/work/t2/light-crop-2448.png",
+   "kind": "note",
+   "label": "Mars 2448 draft one to one: no light option (left), light 1,1 (right)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T01:32:41.400Z",
+   "file": "20261124013241400-note-light-pair-2448.jpg",
+   "source": "out/work/t2/light-pair-2448.png",
+   "kind": "note",
+   "label": "Mars 2448 draft, cap with haze to own surface: no light option (left), light 1,1 (right)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T01:32:35.672Z",
+   "file": "20261124013235672-note-haze-pair-2448.jpg",
+   "source": "out/work/t2/haze-pair-2448.png",
+   "kind": "note",
+   "label": "Mars 2448 draft, cap: haze to the ball (left) and to the cap's own surface (right)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T01:10:34.982Z",
    "file": "20261124011034982-note-swap-sheet.jpg",
@@ -91,76 +131,6 @@
    "stop": "neptune",
    "segment": "neptune.hold",
    "frame": 4605,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "082b6361de0d98e9"
-  },
-  {
-   "time": "2026-11-24T00:41:15.517Z",
-   "file": "20261124004115517-still-f04035-16x9-draft-full.jpg",
-   "source": "out/work/stills/f04035-16x9-draft-full.png",
-   "kind": "still",
-   "label": "uranus.hold frame 4035, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "082b6361de0d98e9"
-  },
-  {
-   "time": "2026-11-24T00:40:46.373Z",
-   "file": "20261124004046373-still-f03465-16x9-draft-full.jpg",
-   "source": "out/work/stills/f03465-16x9-draft-full.png",
-   "kind": "still",
-   "label": "saturn.hold frame 3465, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.hold",
-   "frame": 3465,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "082b6361de0d98e9"
-  },
-  {
-   "time": "2026-11-24T00:40:18.811Z",
-   "file": "20261124004018811-still-f02895-16x9-draft-full.jpg",
-   "source": "out/work/stills/f02895-16x9-draft-full.png",
-   "kind": "still",
-   "label": "jupiter.hold frame 2895, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "082b6361de0d98e9"
-  },
-  {
-   "time": "2026-11-24T00:39:50.003Z",
-   "file": "20261124003950003-still-f02325-16x9-draft-full.jpg",
-   "source": "out/work/stills/f02325-16x9-draft-full.png",
-   "kind": "still",
-   "label": "mars.hold frame 2325, draft tier",
-   "stop": "mars",
-   "segment": "mars.hold",
-   "frame": 2325,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "082b6361de0d98e9"
-  },
-  {
-   "time": "2026-11-24T00:39:13.765Z",
-   "file": "20261124003913765-still-f01755-16x9-draft-full.jpg",
-   "source": "out/work/stills/f01755-16x9-draft-full.png",
-   "kind": "still",
-   "label": "earth.hold frame 1755, draft tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1755,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
