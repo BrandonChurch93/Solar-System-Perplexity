@@ -3145,3 +3145,107 @@ is in the picture at 3 to 12 px, and the same crispness for the far ring across 
   yet. Decision at about 06:30 by a trial at draft (3720's sky box against the approved image: mean 7.7,
   10.8, 15.4, p99 29.3, share over 40 0.0049; the dive from 3596 and the rise to 3840 for a swell; parity).
   If it is not clean by then, the NAMED commit goes without it and it is the first thing after.
+
+### 05:55 to 06:05 UTC: what the two red picture lines of the rise are made of (read from saturn-rise.json)
+
+- d199 on main c65e474 (only kit/PROGRESS.md against 5014624): a red smooth report breaks the pass bar of its
+  round, each RED line is one severe issue of the stop in the scorecard, in the report's own words. So the
+  red lines are to be cured where the cure is mine and true, and named with their cause where it is not.
+- THE POP LINE, rows of the report (residual, the window's base, motion in px per half frame):
+  3856 2.21, 2.21, 11.4; 3864 2.51, 2.42, 8.5; 3870 2.49, 2.51, 5.7; 3872 2.73, 2.42, 4.9; 3874 2.89, 2.32, 4.6;
+  3875 2.86, 2.32, 3.8; 3877 2.48, 2.32, 3.2; 3880 1.60, 1.61, 1.66; 3882 0.96, 0.95, 0.71; 3884 0.46, 0.94,
+  0.16; 3886 0.42, 0.94, 0.12; 3888 0.42, 0.94, 0.11; 3889 0.56, 0.93, 0.26; 3890 0.81, 0.93, 0.63; 3891 1.07,
+  0.81, 1.27; 3892 1.33, 0.81, 2.32; 3893 1.45, 0.81, 3.80; 3894 1.39, 0.81, 4.38; 3895 1.37, 0.81, 6.57;
+  3895 + 1/2 1.55, 0.81, 7.12; 3896 1.47, 0.81, 7.86.
+  Two things. (1) 3873 to 3875 (1.21, 1.22): the leftover rises while the motion falls. It is the engine's
+  sky changing its band from the stop's look to the flight's between a lift of 0.27 and 0.44 (the entry
+  "Sky level in the rise" above: the sky's mean falls by 1.9 while it does). sky_builder's fb501fc changes
+  3867 to 3884; measured again on the merge. (2) 3891 to 3896, in saturn.travel: the picture is at rest from
+  3884 to 3888 (0.11 to 0.16 px per half frame; my rise lands there over 28 frames, 11.4 px at 3856 to 0.16
+  at 3884) and the travel leg then takes it from 0.26 px at 3889 to 7.86 px at 3896. The leftover goes with
+  it from 0.42 at rest to 1.47; at the same motion it is lower there than in my rise (1.47 at 7.86 px at
+  3896 against 1.79 at 7.87 px at 3820 and 2.26 at 7.9 px at 3866). The score is over the limit because the
+  window's median still holds the rest. What is left sits on the ring's outer rim where it crosses the dense
+  star field (stars covered and uncovered as the rim passes them), along the ringlets, and on the star field
+  seen through the thin inner ring (looks: "smooth pictures rise on e3df591"). The onset of the travel leg
+  is not mine (mail 387: do not shape the rise against the travel's step); named in the mail with these
+  numbers.
+- THE PATTERN LINE at 3858 to 3863, looked at again with the judge's own picture at three times the size
+  and the frames at eight times the gain: the band of changed pattern runs along the right border of the
+  bright star cloud that shows through the thin inner ring in the globe's shadow, strongest at the bottom
+  edge (1240 to 1320, 1000 to 1075). The shadowed ring beside it is 11.6, 15.8, 20.2 with ringlets of 2
+  levels and holds no stars (the B ring lets none through); the ring lets light through by its optical
+  depth over the cosine of the view (sheet.ts, alpha = 1 - exp(-tau / mu)), which is right. The judge's
+  window is 40 px wide, so the cloud sliding behind the ring (two true layers) fills it. Not a blend.
+- COUNTS: the page has a counter now (src/capture/frame.ts), but the warm list (src/core/warm.json, the
+  engine's, "made again at the freeze", d177) holds frames up to 2203 only, none of Saturn's. The counts
+  part of the smooth report is not run here (1140 pictures) and is not mine to cure; said in the mail.
+- CORRECTION of the pattern line's cause, by the judge's own code run on the frames of the report
+  (/tmp/v/patmap.py: tools/img/smooth.py change and pattern over the chain of 17 half frames, without the
+  body mask; looks: "the judge's pattern change 3859 to 3867 laid over 3859" and "3808 to 3816 laid over
+  3808"). 3859: the pixels over 0.45 on the body are one patch at 1180 to 1310, 1020 to 1080: the star
+  cloud seen through the thin inner ring where it meets the bottom edge of the frame; the same cloud higher
+  up, seen through the same ring, reads under 0.3. From 3863 the near lit ring comes into the frame at that
+  edge. 3808: one patch at 1840 to 1919, 564 to 687, at the right edge of the frame on the night limb,
+  where the far ring's lit piece comes in from 3806 + 1/2. So both are places next to a frame edge where a
+  lit ring enters within the 8 frames, not a look replaced in place; the sliding of the cloud behind the
+  ring alone (the paragraph above) does not reach the limit. Named in the mail with the two pictures.
+
+### 06:05 to 06:22 UTC: the dive's pattern line, the sky look, MAIL 545, the merge of main f6ce51a
+
+- DIVE PICTURES on e3df591 (/tmp/v/r34/saturn-dive.md, .json, the two panels): "dive: the pattern of the
+  picture changes in place by 0.53 from frame 3561 to 8 film frames later, limit 0.45 (18 frames over it,
+  first 3560)". Level step 0.02 at 3562, pop 1.09 at 3563 (green), change in place 23.6 from 3594 at 1804,
+  680 (shown, not judged), ground beside: change 6.4, pattern 0.04. By frame: 0.18 at 3548, 0.38 at 3558,
+  0.475 at 3560, 0.529 at 3561, 0.45 at 3568, 0.29 at 3572, all at 1124 to 1148, 228 to 268; then one frame
+  of 0.508 at 3581 at 1704, 992 (0.376 at 3582, 0.21 at 3580).
+- THE JUDGE JUDGES THE BODY ONLY (tools/img/smooth.py body: the unit sphere and the rings of the pose, less
+  20 px). My earlier maps (/tmp/v/patmap.py) had no body mask. /tmp/v/patmap2.py takes the poses
+  (out/scratch/poses.ts K..., the judge's carriedCamera) and gives the judge's numbers: 3561: p99 0.529 at
+  1124, 236 (the judge's own); 3859: 0.545 at 1240, 1076, patch 1240 to 1335, 1000 to 1079; 3808: 0.48 at
+  1916, 664, patch 1820 to 1919, 568 to 767. So the two causes named for the rise stand with the mask.
+- CAUSE OF 3560 to 3568 (the globe's north pole under the top limb): the flow, not the globe. The film's
+  dense star field lies right behind the top limb there and moves against the globe (the sky turns with the
+  lens, the globe comes nearer; the hold's sky picture is leaving by distance, 0.68 of it at 3560, 0.38 at
+  3568, and uncovers that field). Over the chain of 16 half frames the flow carries the limb's bright rim
+  into the judged body over the dark pole (looks: "dive 3561 to 3569 at the pole, the judge's own steps":
+  the carried limb is warped). PROOF (/tmp/v/patmask.py): the same measure with the flow taken on the body
+  alone (sky set to zero in the pictures the flow sees, the pattern taken on the true pictures): p99 0.201
+  (as judged 0.529), pole box p99 0.32 (as judged 1.09). The pose weight of the kept set (the hero's light)
+  is still 1.000 up to 3565 (out/scratch/posew.ts: farthest in the hold 0.3505, heroRange 0.6 to 1.6: it
+  falls from 3566 to 3598), and the air comes in from 3562 (low 0.024 at 3564), so no look of the globe is
+  replaced in those frames; the eye's latitude falls 1.3 degrees in the 8 frames (4.5 percent of
+  foreshortening at the pole).
+- CAUSE OF 3581 (one frame): the tip of the lit wedge where the border of the globe's shadow crosses the
+  ring, at the bottom edge of the frame (patch 1692 to 1767, 932 to 1079). With the flow on the body alone
+  the whole body's p99 is 0.147 (as judged 0.485) but the patch keeps 0.66: there the kept set's own look
+  of the shade gives way by the pose weight (0.6 at 3581, 0.2 at 3589: the hero's baked light to the
+  computed shadow) while the tip leaves the frame. Small and real; in the list.
+- SEEN ON THE WAY: (1) single dark pixels along the globe's top limb from 3570 to 3576 at draft (looks:
+  "top limb 3568 to 3576 at six times"); to be looked at on the final tier. (2) The stars seen through the
+  ring gap under the wedge change between 3588 + 1/2 and 3589 (the engine's change of view) on e3df591;
+  looked at again on the merged head.
+- TRIAL Q (fb501fc's sky files and my sky look over e3df591, /tmp/v/r35): parity green on every row: 3465
+  mean 1.690 level -0.632 coarse 0.732 block -3.883; 3563 1.736, -0.589, 0.694, -4.391; 3585 1.663, -0.385,
+  0.629, -3.311; 3608 1.990, -0.526, 0.684, -4.578; 3720 2.558, -0.959, 1.043, -4.631; 3829 2.132, -0.544,
+  0.663, -4.517; 3848 2.017, -0.463, 0.598, -4.618; 3866 2.252, -0.534, 0.710, -4.279; 3923 1.560, -0.026,
+  0.235, 0.498. Sky box of the trial's dive frames (0 to 700, 0 to 300, mean red): 16.5 at 3596, 12.2,
+  9.6, 8.5, 8.3 at 3628, 8.3 at 3660, 8.4 at 3720: falls all the way, no swell (head: 16.0 to 7.7).
+- THE SKY LOOK IS IN (sky_builder's request, main holds fb501fc now). Sky of 3720, box 0 to 700 by 0 to
+  300, display values: approved mean 7.0, 10.2, 14.7, median 6, 9, 13, p99 36, p99.9 98; head before mean
+  7.8, 11.0, 15.2, median 6, 10, 14, p99 33, p99.9 125 (warm clusters at the left, the right half bare);
+  look stars 8 cap 0.5: 8.4, 12.4, 17.0, median 7, 11, 16, p99 42, p99.9 65 (an even dust, no bright star);
+  look stars 5.5 cap 0.9: 8.0, 12.0, 16.7, median 7, 11, 16, p99 41, p99.9 80: an even field with bright
+  and faint stars, the nearest of the three to the approved (looks: "sky of 3720 ... four"). Taken: skim.json
+  sky.look { look 0, even 1, stars 5.5, cap 0.9 }, weight low (the air's own course by height), the gain on
+  the way by plan.starsAt. Still off: the floor is 1, 2, 3 values over the approved (the even field's many
+  faint stars); the veil's colour could take that up, not before the named commit.
+- MAIL 545 (06:18): main is f6ce51a55b2fe2816cb80df8a68fd2b3584bec94 (sky swap fb501fc4, quintic pull at
+  sun.travel, the eye line with smooth.path.minEye 0.87, the warm list, the engine's bend off by default,
+  tools/round.py with the smooth judging: each RED line is one severe issue). Coming about 06:45: the sample
+  offsets less their own mean (c2aaa84d: draft pictures do not change, every review and final picture moves
+  0.09 px left and 0.035 px up, so no final equals a kept still to the byte; each builder gets its two
+  judged frames as PNG on the new pattern to compare with) and a plan check (tools only). NAMED by 08:30
+  for a stop that bends. Offer: PRE, the full sha and parts for a render machine (about 140 minutes whole).
+- MERGED f6ce51a as b99e8b6 (no conflict, nothing of main in my folders). The engine's StopPlan has a
+  private bend() now, so my plan's private field bend is ownBend (the only change the merge needed).

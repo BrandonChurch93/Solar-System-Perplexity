@@ -163,7 +163,7 @@ export class SaturnPlan extends StopPlan {
     return this.skimPosition.clone().addScaledVector(this.skimForward, path.forward * along).addScaledVector(this.skimRight, path.side * along).addScaledVector(this.ringNormal, skimJson.pose.height * (fall - 1))
   }
 
-  private bend: { c: number; lift0: number; ahead: THREE.Vector3; across: THREE.Vector3; start: THREE.Vector3; turn: Pace; lift: Pace; nodes: [number, number, number][] } | null = null
+  private ownBend: { c: number; lift0: number; ahead: THREE.Vector3; across: THREE.Vector3; start: THREE.Vector3; turn: Pace; lift: Pace; nodes: [number, number, number][] } | null = null
 
   // The end of the skim (ruling d196). The skim pushes at the globe and the way out lies behind the lens, so
   // the lens would have to stop and turn back where the rise begins. Instead the way of the lens bends over
@@ -182,22 +182,22 @@ export class SaturnPlan extends StopPlan {
     const b = path.bend
     const span = b.to - b.from
     const rad = THREE.MathUtils.degToRad
-    if (!this.bend) {
+    if (!this.ownBend) {
       const k = Math.log(path.descent)
       const h0 = skimJson.pose.height
       // the velocity of the straight skim over its height: the same at every time
       const flat = this.skimForward.clone().multiplyScalar(path.forward).addScaledVector(this.skimRight, path.side).multiplyScalar(k === 0 ? 1 / h0 : k / (2 * Math.sinh(k / 2) * h0))
       const c = Math.hypot(flat.length(), k)
       const ahead = flat.clone().normalize()
-      this.bend = { c, lift0: Math.asin(-k / c), ahead, across: new THREE.Vector3().crossVectors(ahead, this.ringNormal).normalize(), start: this.skimStraight(b.from), turn: new Pace(0, 0, 1, b.turn.peak, b.turn.round), lift: new Pace(0, 0, 1, b.lift.peak, b.lift.round), nodes: [] }
+      this.ownBend = { c, lift0: Math.asin(-k / c), ahead, across: new THREE.Vector3().crossVectors(ahead, this.ringNormal).normalize(), start: this.skimStraight(b.from), turn: new Pace(0, 0, 1, b.turn.peak, b.turn.round), lift: new Pace(0, 0, 1, b.lift.peak, b.lift.round), nodes: [] }
       let at: [number, number, number] = [Math.log(h0) - k * b.from, 0, 0]
-      this.bend.nodes.push(at)
+      this.ownBend.nodes.push(at)
       for (let i = 0; i < b.steps; i++) {
         at = this.bendStep(at, i / b.steps, 1 / b.steps)
-        this.bend.nodes.push(at)
+        this.ownBend.nodes.push(at)
       }
     }
-    const B = this.bend
+    const B = this.ownBend
     const s = Math.min((u - b.from) / span, 1)
     const i = Math.min(Math.floor(s * b.steps), b.steps - 1)
     let [logHeight, x, y] = this.bendStep(B.nodes[i]!, i / b.steps, s - i / b.steps)
@@ -219,7 +219,7 @@ export class SaturnPlan extends StopPlan {
   // the way ahead and the way across) over the share ds.
   private bendStep(from: [number, number, number], s: number, ds: number): [number, number, number] {
     const b = skimJson.path.bend
-    const B = this.bend!
+    const B = this.ownBend!
     const span = b.to - b.from
     const rad = THREE.MathUtils.degToRad
     const rate = (at: number, logHeight: number): [number, number, number] => {
@@ -380,6 +380,17 @@ export class SaturnPlan extends StopPlan {
 
   override skyGain(time: number): number {
     return mix(1, skimJson.sky.near, this.low(time))
+  }
+
+  // The look of the sky of the skim (skim.json sky.look: the even field of the approved close image) is named
+  // to the engine's sky with the weight low, so it is whole at the skim and none of it is left at the heights of
+  // the hold. The engine's gain on the stars is 1 + (stars - 1) * weight and the air of the stop leaves skyGain
+  // of their exposure; with the gain of the look as it stands their product would swell between the two heights
+  // and fall back. The gain named here lets the level of a faint star on the picture run straight in low from 1
+  // at the upper height to look.stars * near at the skim: one way down, the same way up, and no swell between.
+  starsAt(low: number): number {
+    const near = skimJson.sky.near
+    return low > 0 ? 1 + (mix(1, skimJson.sky.look.stars * near, low) / mix(1, near, low) - 1) / low : 1
   }
 
   // The stars of the flight: the engine brings them in through the rise, from its change of view to the end of
