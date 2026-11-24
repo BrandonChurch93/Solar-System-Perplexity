@@ -1,9 +1,41 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T00:37:36.012Z",
- "head": "9087f00859214c58f7f9a2f747bfa89da4a4a4b4",
- "note": "9087f008 step 2 committed: scene on the globe by height; dive and rise sheets with sky.own true; the T sheet shows the star step with sky.own false as committed (cure waits for 6d260fb on main)",
+ "pushed": "2026-11-24T01:07:58.985Z",
+ "head": "2c87fb73f5d7cbbaab2cf699b8cea4edf67fd289",
+ "note": "layout fit to the map from above, first try, unfinished (mail 429)",
  "looks": [
+  {
+   "time": "2026-11-24T01:07:58.376Z",
+   "file": "20261124010758376-note-v-l1.jpg",
+   "source": "../../../../tmp/v-l1.jpg",
+   "kind": "note",
+   "label": "UNFINISHED, layout fit first try (uncommitted): dive 4707 4715 4720 4725 4730 4740 4750 4758, preview draft. The scene's dark oval, far rim band and bow stand where the map has them; faults: bow a stub, far rim band thin, deck streaky from mid heights, cobalt at 4715 to 4720",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T01:07:57.813Z",
+   "file": "20261124010757813-note-d-L1.jpg",
+   "source": "../../../../tmp/d-L1.jpg",
+   "kind": "note",
+   "label": "UNFINISHED, layout fit first try (uncommitted): 4860 preview draft beside the approved image. The dark zone is now the oval of the map's vortex, the pale deck begins at its far rim; new: cirrus band on the far rim (at the horizon) and the bow west of the storm (a stub, being reworked)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T01:07:57.260Z",
+   "file": "20261124010757260-note-v-4707ab.jpg",
+   "source": "../../../../tmp/v-4707ab.jpg",
+   "kind": "note",
+   "label": "4707 master draft, left before step 2 (31c1000c), right step 2 (9087f008): plates off, grade by height, the Sun's flare of the sky plate now in frame at the right edge",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T01:07:56.676Z",
+   "file": "20261124010756676-note-plan-td1-4706.jpg",
+   "source": "../../../../tmp/plan-td1-4706.jpg",
+   "kind": "note",
+   "label": "TOOL, not a film frame: the globe's own map at frame 4706 laid out in the surface scene's coordinates (40 px a unit, u right, v up); red circle the scene's storm, white line its main streamer, green the footprint of 4860. The measure for the layout fit of mail 429",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T00:37:10.106Z",
    "file": "20261124003710106-note-v-g8.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/v-g5.jpg",
    "kind": "note",
    "label": "neptune dive 4716 to 4769, scene on the globe by height, sky.own true (preview draft)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T00:14:41.012Z",
-   "file": "20261124001441012-note-v-g3.jpg",
-   "source": "../../../../tmp/v-g3.jpg",
-   "kind": "note",
-   "label": "STEP 2 g3: function scene on the globe by height 0.9 to 0.15 radii, one grade of the fall by height on globe and scene, border on the ground 16 to 26 degrees; plates and place picture off (preview draft, 00:12 VM; globe too blue at 4716 to 4720, in work)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T23:57:35.673Z",
-   "file": "20261123235735673-note-v-g1.jpg",
-   "source": "../../../../tmp/v-g1.jpg",
-   "kind": "note",
-   "label": "STEP 2 FIRST GO: the function scene on the globe, in by the logarithm of height 1.9 to 0.3 radii, place picture and plates off (preview draft, unfinished: two pictures cross at 4715, no haze at the limb)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T23:48:11.670Z",
-   "file": "20261123234811670-note-m-r1.jpg",
-   "source": "../../../../tmp/m-r1.jpg",
-   "kind": "note",
-   "label": "deep.ts frames 4859 to 4862 preview draft, crop at twice the size, near streamer (state r, 23:34 VM)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T23:48:11.118Z",
-   "file": "20261123234811118-note-m-r0.jpg",
-   "source": "../../../../tmp/m-r0.jpg",
-   "kind": "note",
-   "label": "deep.ts frames 4859 to 4862 preview draft, crop at twice the size, storm and far streamer (state r, 23:34 VM)",
    "stop": "neptune"
   }
  ]
