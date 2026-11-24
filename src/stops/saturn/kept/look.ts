@@ -2,6 +2,7 @@ import type { HazeParams } from '../../../bodies/haze'
 import closeFitted from '../closeCurve.json'
 import closeGlobe from '../closeGlobe.json'
 import fitted from '../curve.json'
+import sheetLook from '../sheet.json'
 import type { GlobeLook } from './globe'
 import type { IceLook } from './ice'
 import type { RingLook } from './rings'
@@ -16,7 +17,6 @@ export const globe: GlobeLook = {
   ringShadowHero: 0.25,
   ringSoft: [0.003, 0.012],
   ringSlant: 1.7,
-  drift: 0.2,
   nightFloor: 0.012,
   hazeShadow: 0.8,
   rim: [3.1, 3.4, 1.8, 0.15],
@@ -71,7 +71,7 @@ export const rings: RingLook = {
   floorAlpha: 0.93,
   floorRamp: [1.2458, 1.5],
   penumbra: [0.978, 0.994, 0.006],
-  penumbraAway: [0.95, 1.02, 0.03],
+  penumbraAway: [0.978, 0.994, 0.006],
   penumbraFar: [1.5, 0.05],
   inner: [112, 128, 0, 0],
   over: [0.03, 1.38, 0.985, 1.46],
@@ -91,6 +91,7 @@ export const rings: RingLook = {
   shadeGrey: [0.3, 0.85],
   innerDark: [0.7, 1.45, 1.62, 0.5],
   shadeSolid: [0.995, 0.116],
+  shadeRamp: [sheetLook.shadow.solid[0]!, sheetLook.shadow.solid[1]!],
   sparkle: 1.6,
   sparkleTint: [1, 0.9, 0.8],
   sparkleCell: 0.005,

@@ -1,0 +1,76 @@
+{
+  "note": "The heights of the country round the place, coarse to fine (assets-src/mars/place/country.py, countrybake.py). Square gnomonic plates about patches.spot, north up, the frame of the colour plates of the same width. height: raw little endian uint16, row major, row 0 at the north edge; radii over the unit sphere = low + v / 65535 * (high - low). In a band of edgeShare of its width at its border each level is the next coarser one; the outermost is 0 on its edge. seen: 255 where the ground is the close view's own mesh; its heights are as they are except that no slope is steeper than slopeMost (plates.json, country), so that no two neighbours of a level differ by more than slopeMost texel widths.",
+  "edgeShare": 0.12,
+  "reachNote": "The ground about the place that the close view draws, by the eye's height (radii), highest first; read by the engine as a monotone curve over the log of the height, flat above the top knot and below the bottom one; written into country.json by countrybake.py. Measured on plan E's curve (agent/engine-handover 6d260fb; out/work/place/reach.py, reach2.py): a texel of the colour plates covers more than one film pixel (3840 wide) at the nearest ground in frame from 0.035 radii down in the ring beyond 0.70 degrees (plate 3.8, 54.9 m a texel), from 0.0145 in 0.31 to 0.70 (plate 1.6, 25.7 m), from 0.0066 in 0.13 to 0.31 (plate 0.7, 12.6 m), from 0.0026 inside 0.13 (plate 0.3, 5.4 m), and never more than 2.4 before T. The close view's ground is a sheet seen from the picture's eye; the angle at the ground between the film eye and that eye is 27 to 33 degrees at 0.035 radii, 21 to 23 at 0.0104, 16 to 19 at 0.0065, 4 to 6 at T in the dive, and in the rise 29 to 34 at 0.016, 18 to 21 at 0.0061. The seen ground reaches 0.70 degrees from the place.",
+  "reach": [
+    {
+      "height": 0.0145,
+      "deg": 0.0
+    },
+    {
+      "height": 0.0098,
+      "deg": 0.31
+    },
+    {
+      "height": 0.0066,
+      "deg": 0.75
+    }
+  ],
+  "levels": [
+    {
+      "height": "country-8p5.bin",
+      "seen": "country-8p5-seen.png",
+      "widthDeg": 8.5,
+      "size": {
+        "full": 2048,
+        "web": 1024
+      },
+      "low": -0.00204,
+      "high": 0.00032
+    },
+    {
+      "height": "country-3p8.bin",
+      "seen": "country-3p8-seen.png",
+      "widthDeg": 3.8,
+      "size": {
+        "full": 2048,
+        "web": 1024
+      },
+      "low": -0.0021,
+      "high": 0.00032
+    },
+    {
+      "height": "country-1p6.bin",
+      "seen": "country-1p6-seen.png",
+      "widthDeg": 1.6,
+      "size": {
+        "full": 2048,
+        "web": 1024
+      },
+      "low": -0.0021,
+      "high": 0.00032
+    },
+    {
+      "height": "country-0p7.bin",
+      "seen": "country-0p7-seen.png",
+      "widthDeg": 0.7,
+      "size": {
+        "full": 2048,
+        "web": 1024
+      },
+      "low": -0.00208,
+      "high": 0.00025
+    },
+    {
+      "height": "country-0p3.bin",
+      "seen": "country-0p3-seen.png",
+      "widthDeg": 0.3,
+      "size": {
+        "full": 2048,
+        "web": 1024
+      },
+      "low": -0.00206,
+      "high": -1e-05
+    }
+  ]
+}

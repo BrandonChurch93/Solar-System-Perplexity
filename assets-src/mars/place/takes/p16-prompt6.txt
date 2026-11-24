@@ -1,0 +1,17 @@
+Image 1 is a square, straight down (nadir) orbital photograph of canyon land on Mars in low evening light, north at the top, about 95 km across. Its middle and its right part are right and must stay: the dark, soft, shadowed ground in the middle (rounded spurs, swales and rubble with gentle shading), the lit cliff with a pale puff of dust just right of the middle, and the pale sunlit plain with its dark mesas on the right. The rest is damaged: across the left third, along the top and along the bottom the ground is drawn like a flat map, as black holes and dark flat cells with thin bright outlines, like cracked mud or an etching, and the dark middle sits in it like a square tile.
+
+Image 2 is an oblique aerial photograph taken low over the same land, looking east south east. It shows what this land is made of: shadowed slopes of layered rock, rounded spurs, talus and rubble, mesas with soft shaded sides, and no outlines anywhere.
+
+Task: redraw image 1 as one seamless nadir orbital photograph with the same framing, the same scale and north at the top.
+
+1. The middle and the right part stay as they are, every light and dark patch where it is.
+
+2. The damaged ground: keep its broad layout, every larger ridge, mesa, scarp and valley stays where it is and keeps its size. Turn the etching into real ground with volume, exactly the kind of ground that lies in the middle of image 1: rounded ridges and spurs with a slightly lighter side toward the Sun and a darker side away from it, gentle swales between them, talus aprons, rubble on the low ground, faint strata on the slopes. The relief is carried by soft gradients of brown and rust, never by bright lines and never by black holes.
+
+3. No bright outlines, no bright crest lines, no thin pale veins, no flat cells, no cracked mud, no net of lines, no etched look. No pure black holes: a hollow is a soft shadow in which the ground can still be made out.
+
+4. The dark of the middle is the long shadow of high ground. It ends along forms of the land: along ridge crests, spurs and irregular shadow edges, and it thins out toward the west, the north and the south over a wide belt of half shadow. Its outline is never a square, never a straight line and never a frame. Nobody can tell that a square was laid into the middle.
+
+5. No fan, no pleats, no herringbone, no long parallel or curved lines. Nothing may radiate from one point like the spokes of a wheel, also not in the corners. No round pits, no fields of craters, no dots. No mist, no cloud, no smoke in the redrawn ground.
+
+Light: a low Sun in the south south east, soft long shadows falling toward the north north west, the same everywhere. A photograph from orbit: no horizon, no sky, no text, no border, no vignette.
