@@ -5,6 +5,7 @@ import { NOISE_GLSL } from '../../terrain/relief'
 import { GRADE_GLSL } from './grade'
 import { STAGE_GLSL, stage } from './stage'
 import data from './convect.json'
+import { formatUniform } from './format'
 
 /**
  * The close ground of the Sun as a convecting surface made by functions of a ground point and of time. No picture
@@ -51,6 +52,7 @@ uniform vec4 uCvGap;
 uniform vec4 uCvBend;
 uniform vec4 uCvAboveMore;
 uniform vec4 uCvSwallow;
+uniform float uFormat;
 uniform vec4 uCvPatch;
 uniform vec4 uCvTight;
 uniform vec4 uCvCurl;
@@ -374,6 +376,7 @@ uniform vec4 uCvFibreLook;
 uniform vec4 uCvVeil;
 uniform vec3 uCvVeilTint;
 uniform vec4 uCvFar;
+uniform vec4 uCvFlat;
 uniform vec4 uCvMesh;
 uniform float uCvKeep;
 in vec2 vG;
@@ -415,9 +418,15 @@ void main() {
   // drawn only where a pixel is narrower than it
   // (the root of what a pixel covers both ways: a far cell seen flat is many pixels wide and few deep, and it is
   // drawn while their product holds it)
-  float footM = sqrt(footX * footY);
+  // (what fades reads the size in 1080ths of the frame height, not in pixels of the format: uFormat is the
+  // format's height over 1080. The steps of the lookups below keep the pixel itself, foot)
+  float footM = sqrt(footX * footY) * uFormat;
   float footC = footM * cvTight(g);
-  float fine = 1.0 - smoothstep(uCvFar.x * L, uCvFar.y * L, footC);
+  // (the long side of what a pixel covers: toward the limb a cell is many pixels wide and under a pixel deep, one
+  // sample a pixel then draws grain, so the cell gives way by that side too, between uCvFlat.x and uCvFlat.y cells
+  // a pixel)
+  float footL = foot * uFormat * cvTight(g);
+  float fine = (1.0 - smoothstep(uCvFar.x * L, uCvFar.y * L, footC)) * (1.0 - smoothstep(uCvFlat.x * L, uCvFlat.y * L, footL));
   float mottle = 0.0;
   for (int k = 0; k < 5; k++) {
     float lam = L * uCvFarMore.y * exp2(float(k));
@@ -489,7 +498,11 @@ void main() {
   float eyeHigh = smoothstep(log(uCvAbove.x), log(uCvAbove.y), log(max(length(uCam - ST_CENTRE) / ST_RADIUS - 1.0, 1e-4)));
   float lowView = 1.0 - eyeHigh * smoothstep(uCvView.x, uCvView.y, muFlat);
   float lowFoot = uCvSteep.y * mix(uCvFlankFar.x, 1.0, smoothstep(uCvFlankFar.y, uCvFlankFar.z, muFlat));
-  float body = (1.0 - exp(-e / mix(uCvAbove.z, uCvHeat.x, lowView))) * mix(uCvSteep.x, 1.0, smoothstep(0.0, lowFoot, cap));
+  // (a lane narrower than a pixel is drawn as wide as the pixel and weaker by the same share, so it keeps the light
+  // it takes and one sample a pixel draws no grain of it: uCvFlat.z pixels)
+  float laneW = mix(uCvAbove.z, uCvHeat.x, lowView);
+  float laneE = max(laneW, uCvFlat.z * footC);
+  float body = (1.0 - laneW / laneE * exp(-e / laneE)) * mix(uCvSteep.x, 1.0, smoothstep(0.0, lowFoot, cap));
   float young = 1.0 - smoothstep(0.0, 0.45, own.x);
   float spreadNow = uCvTone.z * mix(uCvAboveMore.x, 1.0, lowView);
   float top = uCvTone.y * mix(uCvAboveMore.z, 1.0, lowView) * (1.0 - spreadNow + 2.0 * spreadNow * own.y) * mix(mix(uCvAbove.w, 1.0, cap), 1.0, lowView) * (1.0 + uCvHeat.z * young - uCvHeat.w * old);
@@ -648,7 +661,7 @@ export class Surface {
       fragmentShader: FRAG,
       uniforms: {
         ...uniforms,
-        uDiag: diagUniform,
+        uDiag: diagUniform, uFormat: formatUniform,
         uRamp: { value: this.ramp },
         uCvTime: { value: 0 },
         uCvCell: { value: new THREE.Vector4(c.lattice, c.jitter, c.yield, c.apart) },
@@ -698,6 +711,7 @@ export class Surface {
         uCvVeil: { value: new THREE.Vector4(l.veil.amount, l.veil.level, l.veil.most, l.veil.from) },
         uCvVeilTint: { value: new THREE.Vector3().fromArray((l.veil.tint as number[]).map(srgbToLinear)) },
         uCvFar: { value: new THREE.Vector4(l.far.from, l.far.to, l.far.level, l.far.keep) },
+        uCvFlat: { value: new THREE.Vector4(l.far.flat[0]!, l.far.flat[1]!, l.far.lane, 0) },
       },
     })
     // Rings round the point under the stage's camera. Their spacing follows what a pixel covers on the ground from the

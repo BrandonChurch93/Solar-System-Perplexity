@@ -16,6 +16,7 @@ import { opening, plan } from './plan'
 import { Prominences } from './prominence'
 import { SkyCard } from './skycard'
 import { lifeCalm, lifeCalmAt, lifeFormat } from './life'
+import { formatUniform, setFormat } from './format'
 import { stage } from './stage'
 
 export const createSet: SetFactory = async (ctx) => {
@@ -113,6 +114,7 @@ export const createSet: SetFactory = async (ctx) => {
       }
       const gain = 1 / shot.post.exposure
       const aspect = view.format.width / view.format.height
+      setFormat(view.format.height, view.place ? config.raw.handover.place.scale : 1)
       const vignette = shot.post.vignette
       eye.copy(world.position).negate().applyQuaternion(turn.copy(world.quaternion).invert())
       if (placing) eye.applyQuaternion(turn.copy(carry).invert()).applyQuaternion(plan.toStage).multiplyScalar(stage.radius).add(stage.centre)
@@ -228,7 +230,9 @@ export const createSet: SetFactory = async (ctx) => {
       prominences.update(elapsed, spin, gain * open, vignette, aspect, glow * state.weight, burn.set(burnt, look.leave.burn.wide, look.leave.burn.level, look.leave.burn.cover), hot)
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
-      const visible = radiusPx > 0.6
+      // (the size on screen that the far Sun is drawn from is counted in 1080ths of the frame height, by the same
+      // factor that the fades read)
+      const visible = radiusPx / formatUniform.value > 0.6
       globe.mesh.visible = visible
       corona.mesh.visible = visible
       prominences.mesh.visible = visible
