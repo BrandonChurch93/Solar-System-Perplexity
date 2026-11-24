@@ -1,71 +1,71 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T20:39:49.398Z",
+ "pushed": "2026-11-24T20:50:28.646Z",
  "head": "befb5f47996cb9ff4b6ffb6df289ed9cc2b1fe80",
- "note": "whole measure of the one structure: dive worst 0.60 at 722 (own list), rise worst 0.93 at 1009 (own list), the three ordered ranges under 0.36; sky card remnant cut and seen at 615",
+ "note": "20:50 whole measure of the one structure: ordered ranges green, own list reds dive 719 to 723 (0.60) and rise 996 to 1015 (0.93); sky card remnant out (reach.py), 615 changes only inside 1.66 Sun radii",
  "looks": [
   {
-   "time": "2026-11-24T20:39:48.813Z",
-   "file": "20261124203948813-note-h615-mark.jpg",
+   "time": "2026-11-24T20:50:28.058Z",
+   "file": "20261124205028058-note-d722-crop.jpg",
+   "source": "../../../../tmp/m/d722-crop.jpg",
+   "kind": "note",
+   "label": "dive 719 to 731 at (1120..1620, 640..1080), far Sun off: own list red 719 + 1/2 to 723 (0.60)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T20:50:27.503Z",
+   "file": "20261124205027503-note-h615-mark.jpg",
    "source": "../../../../tmp/m/h615-mark.png",
    "kind": "note",
-   "label": "615 draft at the mark (frame 1545 to 1845, 383 to 683, twice size): before and after, the orange mark under the far Sun's loop is out",
+   "label": "615 draft at belt_builder's mark (1695, 533), 4 times, card before and after, final form of reach.py",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-24T20:39:48.210Z",
-   "file": "20261124203948210-note-h615-card.jpg",
-   "source": "../../../../tmp/m/h615-card.png",
+   "time": "2026-11-24T20:50:26.922Z",
+   "file": "20261124205026922-note-h615-left.jpg",
+   "source": "../../../../tmp/m/h615-left.png",
    "kind": "note",
-   "label": "615 draft, far Sun on: card before, card after, difference times 16: outside 1.66 Sun radii 932 pixels by 1 code",
+   "label": "615 draft at the far Sun's left limb, card before and after reach.py: the old Sun's plumes and the orange dash are out",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-24T20:39:47.650Z",
-   "file": "20261124203947650-note-reach-mark.jpg",
-   "source": "out/work/mercury/reach-mark.png",
+   "time": "2026-11-24T20:50:26.166Z",
+   "file": "20261124205026166-note-e20-z.jpg",
+   "source": "../../../../tmp/m/e20-z.jpg",
    "kind": "note",
-   "label": "sky card at 2839, 983, 300 px native: before, after (top as shipped, bottom at 4 times gain)",
+   "label": "e20 rise to 1018, far Sun off",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-24T20:39:46.922Z",
-   "file": "20261124203946922-note-reach-check.jpg",
-   "source": "out/work/mercury/reach-check.jpg",
+   "time": "2026-11-24T20:50:25.615Z",
+   "file": "20261124205025615-note-e20-a.jpg",
+   "source": "../../../../tmp/m/e20-a.jpg",
    "kind": "note",
-   "label": "sky card remnant, the cut as it now stands: card at 4 times gain before and after (inside 1.3 Sun radii only the dark floor and the cool round stars, warm ground filled from the sky round it, long specks out)",
+   "label": "e20 rise 1003 on, one structure, far Sun off: the grey place ground turns into the gold map (own list, two laws of light)",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-24T20:05:04.994Z",
-   "file": "20261124200504994-note-reach-check.jpg",
-   "source": "out/work/mercury/reach-check.jpg",
+   "time": "2026-11-24T20:50:25.039Z",
+   "file": "20261124205025039-note-e19-7.jpg",
+   "source": "../../../../tmp/m/e19-7.jpg",
    "kind": "note",
-   "label": "sky card remnant, dry run of the cut: before and after, fill too plain, not kept",
+   "label": "e19 dive 730 to 735 + 1/2, one structure, far Sun off (measure only), draft rate 2",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-24T20:05:04.380Z",
-   "file": "20261124200504380-note-e18-b.jpg",
-   "source": "../../../../tmp/m/e18-b.jpg",
+   "time": "2026-11-24T20:50:24.477Z",
+   "file": "20261124205024477-note-e19-6.jpg",
+   "source": "../../../../tmp/m/e19-6.jpg",
    "kind": "note",
-   "label": "one structure, dive e18-b, far Sun off (measure only)",
+   "label": "e19 dive 724 to 729 + 1/2, one structure, far Sun off (measure only), draft rate 2",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-24T20:05:03.782Z",
-   "file": "20261124200503782-note-e18-a.jpg",
-   "source": "../../../../tmp/m/e18-a.jpg",
+   "time": "2026-11-24T20:50:23.909Z",
+   "file": "20261124205023909-note-e19-5.jpg",
+   "source": "../../../../tmp/m/e19-5.jpg",
    "kind": "note",
-   "label": "one structure, dive e18-a, far Sun off (measure only)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T20:05:03.174Z",
-   "file": "20261124200503174-note-e17-b.jpg",
-   "source": "../../../../tmp/m/e17-b.jpg",
-   "kind": "note",
-   "label": "one structure, rise e17-b, far Sun off (measure only)",
+   "label": "e19 dive 718 to 723 + 1/2, one structure, far Sun off (measure only), draft rate 2",
    "stop": "mercury"
   }
  ]
