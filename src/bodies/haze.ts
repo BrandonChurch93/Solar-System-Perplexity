@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { hazeHidden, keepTriangles, type Trim } from './trim'
+import { setHazeAir, type HazeAir } from './air'
 
 interface HazeCore {
   scaleHeight: number
@@ -77,6 +78,36 @@ vec3 hazeLight(vec3 at, vec3 dir) {
   float tw = smoothstep(-0.42, -0.04, ndl) * (1.0 - smoothstep(-0.04, 0.36, ndl));
   return ((uHazeDay * day * day + uHazeTwilight * tw) * hazeForward(dir) + uHazeNight) * uHazeStrength;
 }`
+
+export const GROUND_AIR_GLSL = /* glsl */ `
+float airDepth(float ha, float ca, float hb, float cb, float scaleHeight, float depth) {
+  float da = exp(-ha / scaleHeight);
+  float db = exp(-hb / scaleHeight);
+  if (ca >= 0.0) return max(depth * (da * hazeCh(ca, scaleHeight) - db * hazeCh(cb, scaleHeight)), 0.0);
+  if (cb <= 0.0) return max(depth * (db * hazeCh(-cb, scaleHeight) - da * hazeCh(-ca, scaleHeight)), 0.0);
+  float ht = (1.0 + ha) * sqrt(max(1.0 - ca * ca, 0.0)) - 1.0;
+  return max(depth * (2.0 * exp(-ht / scaleHeight) * hazeCh(0.0, scaleHeight) - da * hazeCh(-ca, scaleHeight) - db * hazeCh(cb, scaleHeight)), 0.0);
+}
+float airDepthTo(vec3 eye, vec3 point, float scaleHeight, float depth) {
+  float ra = length(eye);
+  float rb = length(point);
+  vec3 dir = normalize(point - eye);
+  return airDepth(ra - 1.0, dot(dir, eye) / ra, rb - 1.0, dot(dir, point) / rb, scaleHeight, depth);
+}
+vec3 airOver(vec3 col, float tau, float extinction, vec3 up, vec3 dir) {
+  return col * exp(-tau * extinction) + hazeLight(up, dir) * (1.0 - exp(-tau));
+}`
+
+const ch = (c: number, scaleHeight: number): number => 1 / (Math.max(c, 0) + 1 / Math.sqrt(1.5707963 / scaleHeight))
+
+export function airDepth(ha: number, ca: number, hb: number, cb: number, scaleHeight: number, depth: number): number {
+  const da = Math.exp(-ha / scaleHeight)
+  const db = Math.exp(-hb / scaleHeight)
+  if (ca >= 0) return Math.max(depth * (da * ch(ca, scaleHeight) - db * ch(cb, scaleHeight)), 0)
+  if (cb <= 0) return Math.max(depth * (db * ch(-cb, scaleHeight) - da * ch(-ca, scaleHeight)), 0)
+  const ht = (1 + ha) * Math.sqrt(Math.max(1 - ca * ca, 0)) - 1
+  return Math.max(depth * (2 * Math.exp(-ht / scaleHeight) * ch(0, scaleHeight) - da * ch(-ca, scaleHeight) - db * ch(cb, scaleHeight)), 0)
+}
 
 const GLOW_FROM = 'uniform float uHazeForward;'
 const LIGHT_FROM = 'hazeForward(dir) + uHazeNight) * uHazeStrength;'
@@ -203,6 +234,10 @@ export class HazeShell implements Trim {
 
   show(): void {
     this.mesh.geometry = this.full
+  }
+
+  setAir(air: HazeAir): void {
+    setHazeAir(this.material.uniforms, air)
   }
 
   setGlow(direction: THREE.Vector3, colour: [number, number, number], power: number): void {
