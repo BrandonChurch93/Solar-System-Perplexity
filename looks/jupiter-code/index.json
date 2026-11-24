@@ -1,29 +1,67 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T01:30:29.409Z",
- "head": "a998eca2f90811e1b60a7e3c589a2545e13d6ed7",
- "note": "MAIL 427 cure B3 in the tree, not committed",
+ "pushed": "2026-11-24T01:52:40.298Z",
+ "head": "c14973491a79c375ce299f41635d3bad6c9720f4",
+ "note": "MAIL 427: the hold sky made even, old against new at 2895 final, 2819, 2980 and 2990 draft; a faint fixed pattern in the dark sky is in both (MAIL 448, not cured yet)",
  "looks": [
   {
-   "time": "2026-11-24T01:30:18.665Z",
-   "file": "20261124013018665-note-draft2895-old-new.jpg",
-   "source": "../work/m427/draft2895-old-new.jpg",
+   "time": "2026-11-24T01:52:39.432Z",
+   "file": "20261124015239432-note-travel2819-old-new.jpg",
+   "source": "../work/m427/travel2819-old-new.jpg",
    "kind": "note",
-   "label": "2895 draft, right of the planet at full size: left as on main, right with the cure (draft only; the final pair follows)",
+   "label": "arrival 2819 draft, crop at full size: left as on main, right with the even sky",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-24T01:30:17.368Z",
-   "file": "20261124013017368-note-hold-curves.jpg",
-   "source": "../work/m427/hold-curves.png",
+   "time": "2026-11-24T01:52:38.590Z",
+   "file": "20261124015238590-note-dive2990-old-new.jpg",
+   "source": "../work/m427/dive2990-old-new.jpg",
    "kind": "note",
-   "label": "hold, change per capture frame at rate 2 draft: red as on main, green the cure B3 (worst 0.8 percent off the mean of three, was 15.0)",
+   "label": "dive 2990 draft, crop at full size: left as on main, right with the even sky and mip levels off",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-24T01:29:35.234Z",
-   "file": "20261124012935234-frame-f02895.jpg",
-   "source": "out/work/jupiter/frames/evnewf/f02895.png",
+   "time": "2026-11-24T01:52:37.852Z",
+   "file": "20261124015237852-note-dive2980-old-new.jpg",
+   "source": "../work/m427/dive2980-old-new.jpg",
+   "kind": "note",
+   "label": "dive 2980 draft, crop at full size: left as on main, right with the even sky and mip levels off",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T01:52:36.997Z",
+   "file": "20261124015236997-note-lossy-q97-model.jpg",
+   "source": "../work/m427/lossy-q97-model.jpg",
+   "kind": "note",
+   "label": "the even hold sky, lossless against the shipped lossy file, 3 times size and 3 times exposure",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T01:52:36.184Z",
+   "file": "20261124015236184-note-final2895-old-new.jpg",
+   "source": "../work/m427/final2895-old-new.jpg",
+   "kind": "note",
+   "label": "hold 2895 final tier, crop x 1240 to 1920, y 180 to 660: left the sky as on main, right the even sky (trial with the lossless file)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T01:46:16.468Z",
+   "file": "20261124014616468-frame-f02997.jpg",
+   "source": "out/work/jupiter/frames/evoldf/f02997.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 2997, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 2997,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "30385d6e31de94ff"
+  },
+  {
+   "time": "2026-11-24T01:42:24.357Z",
+   "file": "20261124014224357-frame-f02895.jpg",
+   "source": "out/work/jupiter/frames/evoldf/f02895.png",
    "kind": "frame",
    "label": "jupiter.hold frame 2895, final tier",
    "stop": "jupiter",
@@ -35,9 +73,9 @@
    "engine": "30385d6e31de94ff"
   },
   {
-   "time": "2026-11-24T01:22:00.871Z",
-   "file": "20261124012200871-frame-f03296.jpg",
-   "source": "out/work/jupiter/frames/evnewd/f03296.png",
+   "time": "2026-11-24T01:40:52.101Z",
+   "file": "20261124014052101-frame-f03296.jpg",
+   "source": "out/work/jupiter/frames/evoldd/f03296.png",
    "kind": "frame",
    "label": "jupiter.rise frame 3296, draft tier",
    "stop": "jupiter",
@@ -47,50 +85,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "30385d6e31de94ff"
-  },
-  {
-   "time": "2026-11-24T01:20:20.176Z",
-   "file": "20261124012020176-frame-f03059.jpg",
-   "source": "out/work/jupiter/frames/evnewd/f03059.png",
-   "kind": "frame",
-   "label": "jupiter.dive frame 3059, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 3059,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "30385d6e31de94ff"
-  },
-  {
-   "time": "2026-11-24T01:17:54.695Z",
-   "file": "20261124011754695-frame-f02805.jpg",
-   "source": "out/work/jupiter/frames/evnewd/f02805.png",
-   "kind": "frame",
-   "label": "mars.travel frame 2805, draft tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "frame": 2805,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "30385d6e31de94ff"
-  },
-  {
-   "time": "2026-11-24T01:05:45.503Z",
-   "file": "20261124010545503-note-hold0-diff-5789-5790.jpg",
-   "source": "../work/m427/hold0-diff-5789-5790.jpg",
-   "kind": "note",
-   "label": "MAIL 427 hold beat: steps into 5789 (2.49) and 5790 (1.97) at 12 times; the planet is still, the stars of the sky patch are what beats",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T01:05:44.891Z",
-   "file": "20261124010544891-note-hold0-curve.jpg",
-   "source": "../work/m427/hold0-curve.png",
-   "kind": "note",
-   "label": "MAIL 427 hold beat: my run of the proof gives the Builder's curve (draft, rate 2, captures 5760 to 5819)",
-   "stop": "jupiter"
   }
  ]
 }
