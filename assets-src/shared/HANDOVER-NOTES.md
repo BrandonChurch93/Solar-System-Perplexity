@@ -878,6 +878,30 @@ Read this file first after a compaction, then the task mail, then `cut/HANDOVER.
 - LESSON: a python edit of this notebook that cuts between two marks must look for the second mark AFTER the first (`s.index(b, a)`) and inside `## Next`: "Standing:" also stands in a log entry, and the first try doubled 200 lines (seen in the numstat of the commit before the push, made again from the commit before).
 - LESSON: `( ... ) > /dev/null 2>&1 &` is not the detached form: the vitest it started ran on and I started a second one beside it (both killed, run again). Only `(set -m; bash SCRIPT > LOG 2>&1 &)`, and `pgrep` before every start.
 
+### 14:25 to 15:00 (24 Nov), MAIL 682 IN WORK: the NAMED for fe074825 sent, Jupiter's third read both ways, THE PLANTED STEPS
+
+- NAMED SENT to /root at 14:23 (high): head fe074825d069c4a941e60c42455615a7d6effe48 on f3b505a9, the five files, the chain (511 of 511), Jupiter's rise as on main (5.42 into 3301 | 4.07 into 3281), and that the table of MAIL 682 needs 1410 drafts at full size, one process, one to three hours, the answer in one mail. Two pictures attached.
+- THE FRAME TIMES ARE LONGER THAN I SAID: Jupiter's third takes 13 to 20 s a draft in its close frames (3020 to 3059, 3240 to 3270) and 2 to 6 s on the globe. `ju3` ran 14:21 to 14:50 (165 frames, 28 minutes).
+- JUPITER'S THIRD (proof tree 062c4d01 laid over my tree, tree hashes checked equal, put back after the run, `git status` clean in src, config, public), `out/work/handover/ju3.json`, draft tier, full size, the mean of the body | in place:
+  - DIVE 2970 to 3059 (T 3059): level 5.80 into 3038, colour 6.25 into 3039 | 1.49 into 3036, colour 1.78; least seen 0.996; no pair unread. 3033 to 3041: the mean falls 4.9 to 5.8 a frame, the ground both frames show changes by -1.0 to -1.5: the night side takes more of the frame as the eye turns. Both pass.
+  - RISE 3240 to 3314 (T 3240, every frame on the globe side): level 4.97 into 3293, colour 6.16 | 5.95 into 3285 (limit 6), colour 6.10 into 3281; least seen 0.765 (3275); no pair unread. In place: -4.8 to -5.6 a frame into 3279 to 3281 and +4.4 to +5.95 into 3283 to 3288: THE EXPOSURE BY HEIGHT, read as what it is, a change of the light on ground that both frames show, while the mean of the body reads -0.7 to -3.5 on the same frames (the opening frame and the exposure cancel there, which is what it was laid for). Both pass, in place by 0.05.
+  - Pictures looked at: `ju3-rise-step-in-place.png` (3284 to 3285: the whole shared ground lighter), `ju3-rise-step-body.png` (3292 to 3293: grey, a strip of new ground at the top and right), `ju3-dive-step-body.png` (3037 to 3038), sheets `out/work/inplace/sheets/ju3-rise-3276-3295.png` (the picture dims from 3276 to 3284 and comes back by 3291: the pump is plain on consecutive frames) and `jupiter-main-rise-3276-3295.png`.
+- THE PLANTED STEPS (MAIL 682 point 3), on the kept drafts of Jupiter's rise as on main, every frame from the named one on changed, read by the tool as committed (`/tmp/law/ip/plants.sh`, `plants2.sh`, `plant.py SRC DST FRAME GAIN lin|lev`; reports `out/work/handover/plant-open-*.json`, `plant-still-*.json`). lin = the picture decoded to linear light, times the gain, encoded again; lev = the display values times the gain. Step of the mean of the body | step in place:
+  - THE PAIR 3300 to 3301, WHERE THE FRAME MOVES OFF LIT GROUND (as rendered: -5.42 | +0.26; ground level 84; seen 0.984):
+    - 3 percent more light: -4.30 | +1.39 (the planted part +1.12 | +1.13)
+    - 6 percent more light: -3.14 | +2.56 (+2.28 | +2.30)
+    - 3 percent on the display values: -3.00 | +2.71 (+2.42 | +2.45)
+    - 6 percent on the display values: -0.57 | +5.15 (+4.85 | +4.89)
+    - 20 percent more light: +1.97 | +7.70: the mean of the body PASSES (its worst step of the rise is then 5.28 into 3307), in place FAILS (7.70, limit 6).
+    - 8 percent on the display values: +1.07 | +6.80: the mean of the body PASSES, in place FAILS.
+    - 3 percent LESS light: -6.56 | -0.90: the mean of the body FAILS (6.56, limit 6), in place passes.
+  - THE PAIR 3313 to 3314, WHERE NOTHING MOVES (as rendered: -0.25 | +0.01; ground level 41; seen 1.0):
+    - 3 percent more light: +0.27 | +0.54 (planted +0.52 | +0.53); 6 percent: +0.89 | +1.16 (+1.14 | +1.15); 3 percent on the display values: +0.85 | +1.13 (+1.10 | +1.12); 6 percent: +2.02 | +2.31 (+2.27 | +2.30).
+  - SO: both readings read a planted step at the same size (within 0.04). The mean of the body adds the frame's own move to it: where the frame moves off lit ground it passes a step of 20 percent more light and fails on 3 percent less. In place reads the planted step alone. Neither planted step of 3 or 6 percent reaches the limit 6 on its own in either reading: at ground level 84 six levels are about 16 percent of the light.
+- WHY THE MEAN FALLS WHERE NO NEW GROUND COMES IN (Jupiter's rise as on main, 3309 to 3314: seen 1.0, new ground 0, the mean still falls by up to 4.0 a frame): lit ground LEAVES the frame or takes less of the disc as the eye swings to the night side. The reading in place is taken on the ground of this frame that the frame before shows, so ground that leaves is out of it as well.
+- Disk: planted frame folders and `out/work/h602/d19p` deleted (reports and pair pictures kept); 6.3 GB free at 14:59. `ju3/frames` (691 MB) goes when the disk asks.
+- Looks 14:31 (looks branch a084baf6).
+
 ## E as built (23:45), the engine's one move
 
 - Switches: `handover.ownPath` (my config block): the stops that keep the path of their own class. Today all but mars. A builder takes its name off in its own commit. `--diag onemove` (probe.ts, `forceOneMove`) draws any stop on E without touching the config; the scene word carries `|onemove` so the caches do not mix.
