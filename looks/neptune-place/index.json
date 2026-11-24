@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T07:53:14.490Z",
- "head": "fd95089a27ad1e2a7aa296b36cff561b3de9f77a",
- "note": "07:53 cost round (MAIL 573): before timings taken on fd95089a (draft 4860 52.7 s, dive 4745 29.6 s, rise 4985 14.1 s; final 16 samples running); empty-room skipping, early noise stop and tap bounds written, measured next",
+ "pushed": "2026-11-24T08:35:45.345Z",
+ "head": "0b9017c01a9403f9d76cee578d342bfd10384386",
+ "note": "08:36 second named commit 0b9017c0: cost of the cirrus march cut 2.4 times with the picture held (preview draft 52.7 s to 22.0 s, final 860.8 s to 376.0 s); the aim of 5 times is not reached; look faults of MAIL 573 not in it",
  "looks": [
+  {
+   "time": "2026-11-24T08:35:44.799Z",
+   "file": "20261124083544799-note-d-held.jpg",
+   "source": "../../../../tmp/d-held.jpg",
+   "kind": "note",
+   "label": "4860 at the final tier, preview, 16 samples: fd95089a (860.8 s) | 0b9017c0 (376.0 s) | difference times 32: mean under 0.0005 levels, worst block 0.013, largest pixel 4, 0.06 percent of the pixels differ",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T08:35:44.253Z",
+   "file": "20261124083544253-note-d-after.jpg",
+   "source": "../../../../tmp/d-after.jpg",
+   "kind": "note",
+   "label": "4860 of 0b9017c0 at preview draft beside the approved image: 22.0 s a draft frame after the first (before 52.7 s), G17 median 1.308 p25 0.821 on the preview file, 1.002 and 0.790 at 16 by 9 draft",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T07:53:13.175Z",
    "file": "20261124075313175-note-d-before.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/look-T17-pair.jpg",
    "kind": "note",
    "label": "4860 preview draft T17 (above) beside the approved image (below): limb band work, veil thins upward",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T06:14:28.401Z",
-   "file": "20261124061428401-note-par-tool.jpg",
-   "source": "../../../../tmp/par-tool.jpg",
-   "kind": "note",
-   "label": "npm run smooth --only parity on 5be84b7f, the tool's panel: 16 by 9 | uhd scaled down | difference times 8, frames 4605, 4703, 4725, 4748, 4860, 4969, 4988, 5006. VERDICT green: mean 2.477, coarse 1.617, block 5.819, level 1.196 at most (limits 12, 3.2, 12, 2.2)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T06:00:41.273Z",
-   "file": "20261124060041273-note-par-own.jpg",
-   "source": "../../../../tmp/par-own.jpg",
-   "kind": "note",
-   "label": "Parity early, commit 5be84b7f: 16 by 9 | uhd scaled down | difference times 8, frames 4605, 4703, 4725, 4748 (the tool's own measure on the tool's frames): 4725 coarse 0.879, block 4.893 (main 4.994, 27.740); 4748 coarse 1.168, block 5.819",
    "stop": "neptune"
   }
  ]
