@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T13:02:27.063Z",
- "head": "5dadc068bbfc401416c14cf3b4c537e089539e97",
- "note": "named trees with the new judge: dive and rise pictures green; looking at 3720 against the approved (item 17) and the sky through the dive (item 15); handover parts and G13 still running",
+ "pushed": "2026-11-24T13:26:30.793Z",
+ "head": "66de92e88b18a3e3932a1443632da9d772a406cc",
+ "note": "named trees confirmed green on my runs; review tier across the dive handover; item 17 (palette of 3720) under trial, local only",
  "looks": [
+  {
+   "time": "2026-11-24T13:26:30.100Z",
+   "file": "20261124132630100-note-pair_t1.jpg",
+   "source": "../../../../tmp/v/t17/pair_t1.png",
+   "kind": "note",
+   "label": "item 17 trial t1 at 3720 final, lower left: the gain of the model's own light 0.85 to 0.77 changes the mean by one hundredth; the far look carries the frame"
+  },
+  {
+   "time": "2026-11-24T13:26:29.431Z",
+   "file": "20261124132629431-note-rev_dive_whole.jpg",
+   "source": "../../../../tmp/v/r48/rev_dive_whole.png",
+   "kind": "note",
+   "label": "review tier, every frame 3586 to 3591 across the dive handover (T 3589), the named trees: level steps -0.76, -0.77, -0.75, -0.73, -0.70, no step at T"
+  },
   {
    "time": "2026-11-24T13:02:08.613Z",
    "file": "20261124130208613-note-saturn-rise-changes.jpg",
@@ -47,20 +61,6 @@
    "source": "../../../../tmp/v/r47/3720_three.png",
    "kind": "note",
    "label": "3720 final: approved close image (top), kept still (middle), named trees (bottom); list item 17, the ring reads brighter and whiter than the approved"
-  },
-  {
-   "time": "2026-11-24T12:46:57.336Z",
-   "file": "20261124124657336-note-gap_x5.jpg",
-   "source": "../../../../tmp/v/r47/gap_x5.png",
-   "kind": "note",
-   "label": "list item 15, levels times 5, 3540 to 3560 every 4th: the inner zone of the shaded sheet turns from see through to solid over 0.116 radii of approach, the gap fills with the film's stars"
-  },
-  {
-   "time": "2026-11-24T12:46:56.291Z",
-   "file": "20261124124656291-note-shade_c.jpg",
-   "source": "../../../../tmp/v/r47/shade_c.png",
-   "kind": "note",
-   "label": "list item 15 at full size, 3546 to 3549: the stars of the film's field come up in the gap between globe and ring as the hold's sky leaves by distance"
   }
  ]
 }
