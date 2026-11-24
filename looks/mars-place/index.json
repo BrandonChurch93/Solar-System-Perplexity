@@ -1,9 +1,41 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T07:07:55.755Z",
+ "pushed": "2026-11-24T07:29:56.007Z",
  "head": "b9c472dcb3c21b8ad6db203bd2872116352421e0",
- "note": "b9c472dc pushed (main b0b87889 merged, proofs green). Cure of the cut at T in work: aprons of the close set into the country; first run had a fault in the finest levels, second run is building",
+ "note": "cure A of the cut at T, v2 stills: nearer at T, worse from above; v3 and v4 rendering",
  "looks": [
+  {
+   "time": "2026-11-24T07:29:54.987Z",
+   "file": "20261124072954987-note-B-crop.jpg",
+   "source": "out/work/place/see/B-crop.jpg",
+   "kind": "note",
+   "label": "cure A v2 (not committed): B-crop, country holds the close view's aprons",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T07:29:54.186Z",
+   "file": "20261124072954186-note-Bw.jpg",
+   "source": "out/work/place/see/Bw.jpg",
+   "kind": "note",
+   "label": "cure A v2 (not committed): Bw, country holds the close view's aprons",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T07:29:53.416Z",
+   "file": "20261124072953416-note-B2.jpg",
+   "source": "out/work/place/see/B2.jpg",
+   "kind": "note",
+   "label": "cure A v2 (not committed): B2, country holds the close view's aprons",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T07:29:52.248Z",
+   "file": "20261124072952248-note-B1.jpg",
+   "source": "out/work/place/see/B1.jpg",
+   "kind": "note",
+   "label": "cure A v2 (not committed): B1, country holds the close view's aprons",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T07:07:54.157Z",
    "file": "20261124070754157-note-c2a.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/place/see/T-all.jpg",
    "kind": "note",
    "label": "T-all",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T06:34:48.440Z",
-   "file": "20261124063448440-note-w.jpg",
-   "source": "out/work/place/see/w.jpg",
-   "kind": "note",
-   "label": "w",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T06:22:25.634Z",
-   "file": "20261124062225634-note-pair-v3.jpg",
-   "source": "out/work/place/see/pair-v3.jpg",
-   "kind": "note",
-   "label": "bake 36: fore ground tone of the made ground about the spot; v2 against v3 at 2474, 2476, 2477, 2682, 2681, 2460, 2700",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T06:22:24.521Z",
-   "file": "20261124062224521-note-topmap.jpg",
-   "source": "out/work/place/see/topmap.jpg",
-   "kind": "note",
-   "label": "country heights 0.3 and 0.7 degrees from above: green the ground the picture saw, dots the film eye at T (red dive, blue rise), lines the frame's footprint",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T06:22:23.611Z",
-   "file": "20261124062223611-note-crop2477.jpg",
-   "source": "out/work/place/see/crop2477.jpg",
-   "kind": "note",
-   "label": "dive T 2477, globe side above the close side: the globe has made ground where the close view shows its margins and aprons",
    "stop": "mars"
   }
  ]
