@@ -1,9 +1,41 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T14:28:22.343Z",
+ "pushed": "2026-11-24T15:00:52.359Z",
  "head": "b8c0def04b45940b252ab06e35b40a4a8796b913",
- "note": "exchange 1 cure in work: plates laid from the close ground, pattern between the two grounds falls, from above still a patch",
+ "note": "apron ground into the country's heights (test), it3 thrown away; lay runs again on the new heights",
  "looks": [
+  {
+   "time": "2026-11-24T15:00:51.760Z",
+   "file": "20261124150051760-note-look-0.7.jpg",
+   "source": "out/work/place/ap/look-0.7.jpg",
+   "kind": "note",
+   "label": "country heights 0.7 deg with the apron ground (blue) added",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T15:00:51.176Z",
+   "file": "20261124150051176-note-T-frames.jpg",
+   "source": "out/work/place/see/T-frames.jpg",
+   "kind": "note",
+   "label": "frames about T, globe side and surface side",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T15:00:50.609Z",
+   "file": "20261124150050609-note-aprons-above.jpg",
+   "source": "out/work/place/see/aprons-above.jpg",
+   "kind": "note",
+   "label": "the close ground's aprons from above, heights (new option of heights.py)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T15:00:49.900Z",
+   "file": "20261124150049900-note-it3-dive.jpg",
+   "source": "out/work/place/see/it3-dive.jpg",
+   "kind": "note",
+   "label": "test it3 from above 2440 to 2462 and 2694 (thrown away: fan lines wrong)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T14:28:21.720Z",
    "file": "20261124142821720-note-pc.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/place/see/it1-dive.jpg",
    "kind": "note",
    "label": "test it1 from above, dive 2440 to 2462 and rise 2694: the lay reads as a patch",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T14:28:18.861Z",
-   "file": "20261124142818861-note-it2-HR.jpg",
-   "source": "out/work/place/see/it2-HR.jpg",
-   "kind": "note",
-   "label": "test it2: the same after the second pass",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T14:28:18.020Z",
-   "file": "20261124142818020-note-it1-HR.jpg",
-   "source": "out/work/place/see/it1-HR.jpg",
-   "kind": "note",
-   "label": "test it1: globe ground alone against close ground alone after the first lay, 2466 2470 2686",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T13:43:24.375Z",
-   "file": "20261124134324375-note-lay-vs-plate.jpg",
-   "source": "out/work/place/see/lay-vs-plate.jpg",
-   "kind": "note",
-   "label": "the picture laid back against the baked plate: they agree only near the foot",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T13:43:23.752Z",
-   "file": "20261124134323752-note-pat-pairs.jpg",
-   "source": "out/work/place/see/pat-pairs.jpg",
-   "kind": "note",
-   "label": "pattern measure between globe ground alone and close ground alone at 2466, 2470, 2686, 2476",
    "stop": "mars"
   }
  ]
