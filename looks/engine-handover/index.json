@@ -1,9 +1,58 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T10:55:05.723Z",
+ "pushed": "2026-11-24T11:15:32.262Z",
  "head": "8fd084dc09b9ff9fdb646df916db8967daa85298",
- "note": "2(b) named (weights by height); now the far end of the rise (MAIL 602): pace.out measured on Mars with the carry laid, plot of the seam",
+ "note": "MAIL 602: the far end of the rise not at rest (pull back along the exit line), scratch drafts on Mars through the seam into the travel",
  "looks": [
+  {
+   "time": "2026-11-24T11:15:31.614Z",
+   "file": "20261124111531614-note-b32-limb-low.jpg",
+   "source": "out/work/h602/b32-limb-low.png",
+   "kind": "note",
+   "label": "MAIL 602 scratch, lower left limb 2743 to 2748 through the seam 2745"
+  },
+  {
+   "time": "2026-11-24T11:15:30.984Z",
+   "file": "20261124111530984-note-b32-limb-right.jpg",
+   "source": "out/work/h602/b32-limb-right.png",
+   "kind": "note",
+   "label": "MAIL 602 scratch, right limb at full size 2743 to 2748 through the seam 2745: limb goes in every frame, stars stand still, no doubled edge"
+  },
+  {
+   "time": "2026-11-24T11:15:30.132Z",
+   "file": "20261124111530132-note-b32-sheet.jpg",
+   "source": "out/work/h602/b32-sheet.png",
+   "kind": "note",
+   "label": "MAIL 602 scratch, Mars rise into travel 2738 to 2756, draft, pull back speed 3.2 over 1.25 (uncommitted value) with the travel carry laid: the disc never rests, right limb steps 24 22 19 17 15 12 12 11 10 9 10 10 13 15 21 26 px"
+  },
+  {
+   "time": "2026-11-24T11:13:54.025Z",
+   "file": "20261124111354025-frame-f2756.jpg",
+   "source": "out/work/h602/b32/f2756.png",
+   "kind": "frame",
+   "label": "mars.travel frame 2756, draft tier",
+   "stop": "mars",
+   "segment": "mars.travel",
+   "frame": 2756,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "26944c1d4801399d"
+  },
+  {
+   "time": "2026-11-24T11:04:52.745Z",
+   "file": "20261124110452745-frame-f2744.jpg",
+   "source": "out/work/h602/b32/f2744.png",
+   "kind": "frame",
+   "label": "mars.rise frame 2744, draft tier",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "frame": 2744,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "26944c1d4801399d"
+  },
   {
    "time": "2026-11-24T10:54:54.806Z",
    "file": "20261124105454806-note-mars-leave-out.jpg",
@@ -27,49 +76,6 @@
    "kind": "note",
    "label": "same frames, top band left half at full size: the far ground goes from land under cloud (globe) to white haze (place picture) in 1908 to 1910, a doubled limb line in 1909 and 1910",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T10:32:10.867Z",
-   "file": "20261124103210867-note-earth-dive-1905-1912.jpg",
-   "source": "out/work/h611/earth-dive-1905-1912.png",
-   "kind": "note",
-   "label": "2(b) weights by height, Earth dive 1905 to 1912 at draft: the place picture comes in over 1907 to 1911 (weights 0.03, 0.20, 0.46, 0.69, 0.85; by the clock it took until 1918)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T10:30:56.250Z",
-   "file": "20261124103056250-frame-earth-f01912.jpg",
-   "source": "out/work/h611/earth-f01912.png",
-   "kind": "frame",
-   "label": "earth.dive frame 1912, draft tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1912,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "467590c403570240"
-  },
-  {
-   "time": "2026-11-24T09:57:45.447Z",
-   "file": "20261124095745447-note-pairs-611-2a.jpg",
-   "source": "out/work/pat/pairs-611-2a.png",
-   "kind": "note",
-   "label": "MAIL 611 2a: the judge's pattern on three pairs as on main, with the sky weight at 0 and with the picture off (frame, later frame carried back, difference times 6, pattern change)"
-  },
-  {
-   "time": "2026-11-24T09:25:03.070Z",
-   "file": "20261124092503070-note-crop-texels.jpg",
-   "source": "../../../../tmp/law/capmarch/crop-texels.png",
-   "kind": "note",
-   "label": "Mars 2477 globe side, texels view at full size"
-  },
-  {
-   "time": "2026-11-24T09:25:02.494Z",
-   "file": "20261124092502494-note-pred-dive.jpg",
-   "source": "../../../../tmp/law/capmarch/pred-dive.png",
-   "kind": "note",
-   "label": "Mars 2477: the ground predicted from the plates and bins, marched from the plan's eye, against the renders"
   }
  ]
 }
