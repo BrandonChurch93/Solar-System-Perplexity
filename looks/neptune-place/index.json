@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T12:45:24.185Z",
- "head": "b88c4cbfcd8b688cf8b641beb2e8b5d55b62d981",
- "note": "12:45 dive humps split: limb line and the scene's hard edged deck in the dark corner; next the map's cirrus into the scene by the globe's own function",
+ "pushed": "2026-11-24T13:10:03.701Z",
+ "head": "c2d46ba56f2436c39d4f9c7ca1e9089fe07ac162",
+ "note": "trial: the scene's far look is the globe's own map by the same shader lines; upper dive one picture, exchange moved under 0.18 radii (red, named)",
  "looks": [
+  {
+   "time": "2026-11-24T13:10:03.126Z",
+   "file": "20261124131003126-note-look-f1-4860.jpg",
+   "source": "out/work/nep/weave/look-f1-4860.jpg",
+   "kind": "note",
+   "label": "TRIAL, not committed: 4860 left the approved image, middle the committed scene, right the trial (far field is the globe's map). G17 at preview draft: committed 1.286 / 0.615, trial 1.205 / 0.687; row 3 (far field) committed 0.13 0.15 0.56 0.38 0.20, trial 0.39 0.93 2.69 1.19 0.70. Tone of the far map not yet fitted. About 25 s a preview draft frame.",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T13:10:02.548Z",
+   "file": "20261124131002548-note-look-f1-dive.jpg",
+   "source": "out/work/nep/weave/look-f1-dive.jpg",
+   "kind": "note",
+   "label": "TRIAL, not committed: the scene reads the globe's own map as its far look (by the eye's distance, 8 to 3 units). Dive 4720, 4728, 4736 / 4740, 4744, 4752, preview draft, 9.2 s a frame. My proxy of the pattern: 4704 to 4724 now 0.14 to 0.33 (head 0.70 to 1.18); the exchange moved down: 4736 1.18, 4740 1.26, 4744 1.32, 4748 1.01. RED, named.",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T12:45:14.343Z",
    "file": "20261124124514343-note-look-1149.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/nep/cost/look-1128.jpg",
    "kind": "note",
    "label": "Neptune 4860 work in progress over the approved image (preview draft): the far sheet rebuilt as a thin torn sheet outside an oval round the storm, limb lowered to the deck",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T10:59:44.225Z",
-   "file": "20261124105944225-note-neptune-parity.jpg",
-   "source": "out/work/smooth/neptune-parity.png",
-   "kind": "note",
-   "label": "The tool's parity on the named commit's src (810c58a7 = 835c9574 in src): green. Largest mean 1.818, coarse 1.012, block 3.784, level 0.625, all at 4860 (limits 12, 3.2, 12, 2.2). 16 by 9 draft 34 s a frame in the mean, uhd 121 s",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T10:37:32.843Z",
-   "file": "20261124103732843-note-rise-a.jpg",
-   "source": "../../../../tmp/rise-a.jpg",
-   "kind": "note",
-   "label": "Named commit 835c9574, the rise from the change of view: 4956 to 4971. 4956 to 4957 7.94, then 8.35, 8.76",
    "stop": "neptune"
   }
  ]
