@@ -1,9 +1,25 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-24T04:20:06.417Z",
- "head": "ce61ea1e80d190e182da7b342f7cb0ce067ff945",
- "note": "Frame factor (NOTE 501): Mars parity before (main 26677ed9) and after (dace4ba6). Both green. The largest numbers stand at 2580 terrain, the same in both; the change is seen on five of seven frames, most at 2726 (mean 1.54 to 1.19).",
+ "pushed": "2026-11-24T04:35:14.827Z",
+ "head": "6d9510aae5057945cc5084c6801f5564010b5c7e",
+ "note": "Frame factor at the hold: mean 2.01 to 1.31, largest coarse 28.4 to 6.2. What is left at 2783 travel is the stars, not the globe.",
  "looks": [
+  {
+   "time": "2026-11-24T04:35:14.235Z",
+   "file": "20261124043514235-note-mars-parity-before.jpg",
+   "source": "../../../../tmp/mars-parity-before.png",
+   "kind": "note",
+   "label": "Mars parity with the hold, main e7fc53a2 without the frame factor: band of difference at the hold and at 2726",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T04:35:13.357Z",
+   "file": "20261124043513357-note-mars-parity-after.jpg",
+   "source": "../../../../tmp/mars-parity-after.png",
+   "kind": "note",
+   "label": "Mars parity with the hold, frame factor in (merge 88ba5871): the band at the hold is gone",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T04:20:05.801Z",
    "file": "20261124042005801-note-mars-parity-main.jpg",
@@ -127,34 +143,6 @@
    "stop": "neptune",
    "segment": "neptune.hold",
    "frame": 4605,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "2adcc41a83011b6b"
-  },
-  {
-   "time": "2026-11-24T03:54:07.385Z",
-   "file": "20261124035407385-still-f04035-16x9-draft-full.jpg",
-   "source": "out/work/stills/f04035-16x9-draft-full.png",
-   "kind": "still",
-   "label": "uranus.hold frame 4035, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "2adcc41a83011b6b"
-  },
-  {
-   "time": "2026-11-24T03:53:38.340Z",
-   "file": "20261124035338340-still-f03465-16x9-draft-full.jpg",
-   "source": "out/work/stills/f03465-16x9-draft-full.png",
-   "kind": "still",
-   "label": "saturn.hold frame 3465, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.hold",
-   "frame": 3465,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
