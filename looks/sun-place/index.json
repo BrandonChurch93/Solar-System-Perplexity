@@ -1,9 +1,17 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T03:53:30.643Z",
- "head": "8965475b527771c580584a8d9527badbbc0e0648",
- "note": "NOTE 501 factor in (16 by 9 bytes equal on 8 frames), parity red only by mean at 225 (12.81 of 12): grain of the draft in far cells",
+ "pushed": "2026-11-24T04:27:16.082Z",
+ "head": "79cac426b6601d34e33d91d1fefdd26269c566ea",
+ "note": "505 first pass trial d2, not right yet. sun-near f60: bands 0.125 0.200 0.177 0.165 0.141 0.089 0.038 0.004 0.000; dark 0.187 body 0.682 pale 0.042 white 0.000; half width 7.9 px; distance 0.112. G17 median 0.99 lower quarter 0.63; blur 40 px ground 0.0572 whole 0.0373",
  "looks": [
+  {
+   "time": "2026-11-24T04:27:15.402Z",
+   "file": "20261124042715402-note-d2-near-pair.jpg",
+   "source": "out/work/sun/convect/d2-near-pair.jpg",
+   "kind": "note",
+   "label": "f60 draft, 505 first pass trial d2 (uncommitted): approved left, mine right. Not right yet: flat plates, crisp cracks, threads faint",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T03:53:30.076Z",
    "file": "20261124035330076-note-par-225-far.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/c76-event.jpg",
    "kind": "note",
    "label": "c76 frames 56 to 63 at 1.5 to one: the pop found (a cell closes between 59 and 60), before the cure",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T02:52:12.631Z",
-   "file": "20261124025212631-note-c72-oneone-222.jpg",
-   "source": "out/work/sun/convect/c72-oneone-222.jpg",
-   "kind": "note",
-   "label": "7b1a4e5f one to one, draft: frame 222 at the spot and below it (dark tiles with drawn bright outlines, a fault)",
    "stop": "sun"
   }
  ]
