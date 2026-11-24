@@ -231,7 +231,7 @@ export function joinUnits(job: Job, units: Unit[], out: string, extra: Record<st
   const ready = units.filter((u) => chunkReady(job, u))
   if (ready.length === 0) throw new Error('no chunks with matching records to join')
   const recs = ready.map((u) => readRecord(chunkFile(job, u))!)
-  concatCopy(ready.map((u) => chunkFile(job, u)), out, true)
+  const timing = concatCopy(ready.map((u) => chunkFile(job, u)), out, true)
   const g5 = recs.flatMap((r) => (r.extra?.g5 as G5Frame[]) ?? [])
   const frameCount = ready.reduce((n, u) => n + u.end - u.first, 0)
   const p = probeVideo(out)
@@ -245,7 +245,7 @@ export function joinUnits(job: Job, units: Unit[], out: string, extra: Record<st
     machine: machines.join(', '),
     first: ready[0]!.first,
     last: ready[ready.length - 1]!.end - 1,
-    extra: { frameCount, segments: ready.map((u) => u.id), missing: gaps, machines, g5: { frames: g5, failed: g5Failed(job.cfg, g5) }, encode: recs[0]!.extra?.encode, probe: p, ...extra },
+    extra: { frameCount, segments: ready.map((u) => u.id), missing: gaps, machines, g5: { frames: g5, failed: g5Failed(job.cfg, g5) }, encode: recs[0]!.extra?.encode, probe: p, timing: { evenDecodeTimes: true, packetsRewritten: timing.fixed, reorderFrames: timing.delay }, ...extra },
   }
   writeRecord(out, rec)
   return rec

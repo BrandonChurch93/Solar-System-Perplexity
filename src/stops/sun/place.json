@@ -1,0 +1,162 @@
+{
+  "source": "references/approved/sun-close.jpg",
+  "measured": "The limb of the approved close image is a conic in the picture. With the lens of the terrain view (vfov below, 16:9) every limb point is a ray from the camera, and the rays of a sphere limb lie on a cone round the nadir. assets-src/sun/terrain/fit.py fitted that cone to the limb read from two clean takes registered to the approved image (the direction of the nadir and the half angle, src/stops/sun/terrain.json down and alphaDeg). The half angle gives the dip and the height: dip = 90 - alpha, height = 1 / cos(dip) - 1. Pitch and roll are the angles of the camera axes to the nadir. The spot is the centre of the umbra (terrain.json spot), its ray met with the sphere. Heading: the far direction through the spot is the north of the globe at the spot (dive.headingDeg 0), so the aim has the bearing below. assets-src/sun/place/limb.py reads the limb again from the approved image itself and gives the residual below; assets-src/sun/place/solve.ts wrote this file.",
+  "frame": 90,
+  "vfovDeg": 55,
+  "aspect": 1.777778,
+  "heightRadii": 0.048481,
+  "dipDeg": 17.4916,
+  "limbHalfAngleDeg": 72.5084,
+  "pitchDeg": -20.5617,
+  "rollDeg": 1.1723,
+  "headingDeg": -0.0817,
+  "nadirToSpotDeg": 6.1167,
+  "spotBearingDeg": 2.9578,
+  "limbResidual": {
+    "columns": 69,
+    "medianPx": 11.38,
+    "rmsPx": 30.79,
+    "imageHeightPx": 1584,
+    "note": "the fitted limb lies on the top of the bright fringe; the photosphere edge between the loop feet sits about 2 percent of the frame height under it"
+  },
+  "stage": {
+    "radius": 20.6267,
+    "centre": [
+      -0.442461,
+      -20.244132,
+      -7.595623
+    ],
+    "spot": [
+      0.107366,
+      -0.27776,
+      -2.447574
+    ],
+    "toBody": [
+      0.52156164,
+      0.09735748,
+      -0.05269083,
+      0.84600157
+    ],
+    "note": "a stage point p is the body point toBody * (p - centre) / radius; body axes are the world axes of the orbit view at the middle of the hold, the globe turns about its axis from there"
+  },
+  "globe": {
+    "spot": [
+      0.23800208,
+      0.21349373,
+      0.94751013
+    ],
+    "north": [
+      -0.0520111,
+      0.97694443,
+      -0.20706139
+    ],
+    "mapSpot": [
+      0.23879979,
+      0.21355341,
+      0.94729594
+    ],
+    "mapNorth": [
+      -0.05218545,
+      0.97693139,
+      -0.20707907
+    ],
+    "patchNorthOffDeg": 0.0009,
+    "note": "spot and north in body axes; mapSpot and mapNorth in the axes of the globe map (the mesh turned back by its fit), where the patch levels are laid: east = Y x mapSpot, north = mapSpot x east"
+  },
+  "plates": {
+    "keepStretch": [
+      3,
+      6
+    ],
+    "featherDeg": 0.25,
+    "matchDeg": 1.5,
+    "feather": 0.12,
+    "fade": [
+      1.1,
+      1.7
+    ],
+    "levels": []
+  },
+  "twin": {
+    "position": [
+      0.24851743,
+      0.11356079,
+      1.0122525
+    ],
+    "quaternion": [
+      0.52156164,
+      0.09735748,
+      -0.05269083,
+      0.84600157
+    ],
+    "vfovDeg": 55,
+    "note": "the camera of the approved image on the unit sphere, body axes; the terrain view passes through it at frame 90"
+  },
+  "onGlobe": {
+    "capDeg": [
+      36,
+      44
+    ],
+    "fade": [
+      1.1,
+      1.7
+    ],
+    "lowLod": 3,
+    "note": "the globe draws the ground function of the close view itself round the place: inside capDeg of the stage nadir, while the globe map is enlarged (fade, map texels per pixel across the view). heights are camera heights in radii, each a smooth step in log height during the rise: tidy is where the close tone gives way to the map's own tone under the same cells; spot is where the close sunspot itself (inside spotKeep, stage units from its centre) gives way to the knot of the map; strands is where the faint haze between the loop strands and the spray outside the arcade are trimmed (loopsCut) and loops where the arcade leaves; fringe, corona and sky are where the fringe leaves and the corona, the prominences, the rim and the far sky come in, all inside the span in which the frame holds no sky; haze is where the low haze over the ground thins out, gone before the side changes; lowLod is the mip step that splits a close texture into cells and tone",
+    "heights": {
+      "tidy": [
+        0.3,
+        1.5
+      ],
+      "fringe": [
+        0.19,
+        0.48
+      ],
+      "loops": [
+        0.22,
+        0.6
+      ],
+      "corona": [
+        0.19,
+        0.48
+      ],
+      "sky": [
+        0.19,
+        0.48
+      ],
+      "strands": [
+        0.06,
+        0.3
+      ],
+      "spot": [
+        2.2,
+        3.45
+      ],
+      "field": [
+        0.07,
+        0.11
+      ],
+      "haze": [
+        0.07,
+        0.17
+      ]
+    },
+    "loopsCut": 0.12,
+    "spotKeep": [
+      0.6,
+      1.3
+    ]
+  },
+  "rise": {
+    "at": 0.4,
+    "dissolveFrames": 1,
+    "placeFrames": 12,
+    "picture": false,
+    "easeIn": 0.1556,
+    "easeOut": 0.1778,
+    "coast": 4,
+    "steps": 2048,
+    "note": "the rise is one path in the frame of the turning globe: height runs in equal ratios from the close glide (coasting to rest over coast seconds, carried with the globe) to the hold run back in time, rate eased over the first easeIn and the last easeOut of the segment; the direction from the centre turns in step with height, the camera keeps the spot by a look at it and turns from the close framing to the hold framing with the same progress, the lens too. at, dissolveFrames and placeFrames are the handover times of cut/HANDOVER.md E1: T sits where the frame is all photosphere, so no sky is in the picture when the side changes",
+    "turn": 2
+  }
+}

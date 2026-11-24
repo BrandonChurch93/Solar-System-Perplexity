@@ -1,0 +1,49 @@
+{
+ "critic": "R1",
+ "score": 8,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-01-b.png",
+   "where": "upper right sun core",
+   "what": "a dark grey crescent-shaped hole cuts into the upper-right side of the saturated white sun disc",
+   "fix": "restore a solid, clipped pure-white core across the center of the sun with smooth radial glare falloff and no dark cutout pixels"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "right and lower-right limb glow (crops E, G, I; also visible in pair-01-b.png)",
+   "what": "the inner limb brightens into a second parallel cyan arc at the lower right, the outer detached haze shell is wider and softer, and the dark atmospheric gap is opaque so background stars visible inside the shell in -a are lost",
+   "fix": "darken the inner planet edge before the detached outer cyan shell so only one crisp thin outer haze arc appears, and make the dark gap semi-transparent so faint background stars show through"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "upper limb atmosphere (crops C and F; also visible in pair-01-b.png)",
+   "what": "the outer cyan atmospheric glow extends slightly higher and more unevenly into the Milky Way dust lane, softening the limb line and veiling faint stars near the edge",
+   "fix": "tighten and even out the upper-limb atmospheric falloff so it stays crisp and lets stars sit cleanly right above the limb"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "upper-left moon (also crop B of pair-02-b.png)",
+   "what": "the moon sits roughly 5 pixels lower relative to the starfield and planet, and its terminator shadow edge is softer with less crisp crater-rim contrast",
+   "fix": "nudge the moon upward ~5 pixels to match -a's placement and sharpen the grazing crater relief along the terminator"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "lower-left ring and night-side limb (crop D; also visible in pair-01-b.png)",
+   "what": "the two soft cyan ring-arc knots in -a become thinner continuous streaks, a darker curved shadow band cuts across the night hemisphere above the ring, and several faint background stars near the ring are missing",
+   "fix": "break the lower-left ring brightness back into soft localized cyan arc knots, smooth the night-side deep-navy gradient, and restore the faint background stars around the ring"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "central dark storm eye (crop A; also pair-03-b.png)",
+   "what": "lighter blue concentric swirl striations inside the oval eye lift the darkest center slightly compared with -a's smoother, deeper navy-black void",
+   "fix": "deepen and smooth the innermost vortex core blacks/navies so internal striations stay barely perceptible as in -a"
+  }
+ ]
+}

@@ -1,0 +1,28 @@
+{
+ "critic": "R4",
+ "score": 6,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "frames 3010–3035, globe-to-terrain cover",
+   "what": "In the supplied samples, the bright curved limb sweeps toward the upper right, then gives way to a horizon sloping down to the right. The storm loses definition in the beige blur and reappears under a darker cloud deck, so the handoff reads more like a change of camera orientation and exposure than a continuous dive.",
+   "fix": "Match the projected limb and storm track on both sides of the cover, ease the camera roll through it, and carry exposure and atmospheric falloff across the handoff."
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "end of the supplied pack at frame 3059",
+   "what": "The pack shows the hold, dive and first terrain views, but no dedicated terrain or rise sheet and no consecutive-frame cover sheet. The sampled frames cannot establish terrain parallax, the return flight, or frame-level continuity across the cover.",
+   "fix": "Supply review-tier terrain and rise contact sheets and consecutive frames across every cover, including the globe-to-terrain handoff."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "frames 2901–2969, moon and the dark shape immediately to its right",
+   "what": "The dark shape lengthens while staying visually attached to the moon, making the two read as a moon with a trailing smear rather than a moon moving in front of a separate cloud deck.",
+   "fix": "Make the projected shadow read on the cloud deck: separate its screen-space contact with the moon where the geometry allows, and soften its edge where it stretches across the clouds."
+  }
+ ]
+}

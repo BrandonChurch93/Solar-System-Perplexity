@@ -1,0 +1,34 @@
+{
+ "engineHash": "247ebad7e038ce06",
+ "stopHashes": {
+  "earth": "2b75dbd9c40c8387"
+ },
+ "format": "16x9",
+ "tier": "review",
+ "assets": "full",
+ "diag": "beauty",
+ "browser": "147.0.7727.15",
+ "machine": "space-sandbox 2x Intel(R) Xeon(R) Processor @ 2.90GHz",
+ "first": 2100,
+ "last": 2174,
+ "extra": {
+  "frames": [
+   2100,
+   2107,
+   2113,
+   2120,
+   2127,
+   2134,
+   2140,
+   2147,
+   2154,
+   2161,
+   2167,
+   2174
+  ],
+  "kind": "sheet",
+  "segment": "earth.rise",
+  "signature": "[\"06ad66341b503de8606da463744dfb07c946d7f5847cba550d0b0379b2a69445\",[\"58d1489d68482c1f0210c6f0edd039fe2ff60fafd16501b6e750981824b90735\",92]]",
+  "quality": 92
+ }
+}

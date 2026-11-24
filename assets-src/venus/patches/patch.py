@@ -94,7 +94,8 @@ if __name__ == '__main__':
         imgs = [read(work / f'{t}-4096.png') for t in tags]
         for i in range(len(tags) - 2, -1, -1):
             imgs[i] = nest(imgs[i], widths[i], imgs[i + 1], widths[i + 1])
-        for t, img in zip(tags, imgs):
+        # Only the two widest levels are files of the film (memory, gate G15): c and d stay nested in the centre of b.
+        for t, img in list(zip(tags, imgs))[:2]:
             write(public / 'full' / f'patch-{t}.jpg', img)
             write(public / 'web' / f'patch-{t}.jpg', cv2.resize(img, (2048, 2048), interpolation=cv2.INTER_AREA))
 

@@ -1,0 +1,131 @@
+{
+ "critic": "R3",
+ "score": 7.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-04.png",
+      "where": "near tiles S-V; the same photosphere in image-01, image-02 D-G, image-05, image-06 D and I, and image-08 S-V",
+      "what": "granule crests carry a glassy clearcoat highlight, so the surface reads as resin or caramel rather than self-luminous plasma",
+      "fix": "shade granules as emissive turbulent plasma and remove the wet specular"
+     },
+     {
+      "severity": "minor",
+      "file": "image-08.png",
+      "where": "lower half of tiles S and V",
+      "what": "near-field granules are dragged into diagonal streaks instead of staying irregular cells",
+      "fix": "drop the anisotropic pull so near cells stay isotropic"
+     },
+     {
+      "severity": "minor",
+      "file": "image-04.png",
+      "where": "tile V, center and lower right",
+      "what": "cell interiors carry one diagonal brushed grain rather than convective lanes",
+      "fix": "break the uniform diagonal striations so brightness follows the cell boundaries"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-12.png",
+      "where": "Foreground granules in crops S–W, especially T and U",
+      "what": "The granules have smooth, bulbous gold centers with similar white highlights and deep dark rims. Fine detail drops out across the centers while the rims stay sharp, making the surface read as polished metal rather than luminous plasma.",
+      "fix": "Break up the highlights with finer emissive structure, vary the cell shapes and rim contrast, and preserve texture in the brightest centers."
+     },
+     {
+      "severity": "major",
+      "file": "image-10.png",
+      "where": "Central sunspot and its near and right edges in crops A, E and G",
+      "what": "The nearly featureless black center is ringed by long, uniformly dragged streaks. The abrupt shift from rounded granules to radial streaks reads as a distorted patch around a cutout.",
+      "fix": "Retain faint detail in the dark core and blend in shorter, less uniformly aligned penumbral filaments at the boundary with the granules."
+     },
+     {
+      "severity": "minor",
+      "file": "image-14.png",
+      "where": "Sunspots in crops A and F",
+      "what": "Several spots use similar tight, flower-like spokes around a dark center, making separate active regions look like variants of the same texture stamp.",
+      "fix": "Vary spot shape, filament spacing and flow direction from one active region to the next."
+     },
+     {
+      "severity": "minor",
+      "file": "image-16.png",
+      "where": "Lower limb and corona in crops U and V",
+      "what": "A narrow, almost continuous orange outline separates the sharply textured disk from broad pale streaks. The abrupt change in detail makes the corona look like a separate blur layer in these crops.",
+      "fix": "Vary rim brightness and width, and carry finer strands across the transition from the disk into the diffuse corona."
+     }
+    ]
+   }
+  },
+  {
+   "part": 3,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-17.png",
+      "where": "sunspots across the disc (crops A, D, F, G, K, P, Q)",
+      "what": "every sunspot uses the same daisy-like dark core with radial petal filaments, so the same motif visibly repeats 6-8 times and reads as a stamped texture rather than varied umbra/penumbra structure",
+      "fix": "vary sunspot size, shape and penumbra structure; use irregular, asymmetric umbrae and groups instead of one radial rosette repeated"
+     },
+     {
+      "severity": "major",
+      "file": "image-17.png",
+      "where": "corona around the whole limb (crops B, C, E, K, L, U, V, W)",
+      "what": "coronal rays are uniform, evenly spaced, soft airbrushed streaks that fan out like a painted starburst; the radial fan looks like a brush effect, not structured streamers",
+      "fix": "build the corona from a few uneven helmet streamers and plumes with varied length, brightness and falloff, and let it fade more gradually into the sky"
+     },
+     {
+      "severity": "minor",
+      "file": "image-17.png",
+      "where": "disc edge, all limb crops",
+      "what": "the limb is bright right to the edge with a crisp cut-out outline against the glow; no limb darkening, so the sphere reads as a flat textured cutout",
+      "fix": "add limb darkening toward the edge and a soft transition between the photosphere and the chromosphere/glow"
+     },
+     {
+      "severity": "minor",
+      "file": "image-17.png",
+      "where": "granulation, centre disc (crops A, Q)",
+      "what": "the surface texture is an even, high-contrast mottled noise with the same scale everywhere, slightly over-sharpened and busy at native size",
+      "fix": "reduce micro-contrast, add scale variation between quiet sun and active regions, and fade texture detail toward the limb"
+     },
+     {
+      "severity": "minor",
+      "file": "image-17.png",
+      "where": "lower limb, crop V left side",
+      "what": "a small paler, washed-out mottled patch on the lower edge of the disc does not match the surrounding texture",
+      "fix": "blend that region into the surrounding granulation"
+     },
+     {
+      "severity": "minor",
+      "file": "image-17.png",
+      "where": "prominences left and right limb (crops C, D, M, O)",
+      "what": "prominence loops are thin red brush strokes with similar curling shapes on both sides, some floating detached in the corona",
+      "fix": "give prominences varied, thicker plasma structure anchored to the limb and vary their shapes"
+     }
+    ]
+   }
+  }
+ ]
+}

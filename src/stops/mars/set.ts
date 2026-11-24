@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { HazeShell } from '../../bodies/haze'
 import { MoonBody } from '../../bodies/moonbody'
 import { Planet } from '../../bodies/planet'
-import type { SetContext, SetFactory, SkyPatch, ViewKind } from '../../core/types'
+import type { SetContext, SetFactory, SkyPatch, TextureOptions, ViewKind } from '../../core/types'
 import { diagUniform } from '../../diagnostics/diag'
 import { smooth } from '../../director/rig'
 import { FarPoint } from '../../bodies/farpoint'
@@ -13,6 +13,8 @@ import phobos from './phobos.json'
 import { plan } from './plan'
 import skyFrame from '../../space/skyframe.json'
 import skyJson from './sky.json'
+import nearJson from './near.json'
+import { handoverOf } from '../../director/handover'
 
 function direction(lonDeg: number, latDeg: number): THREE.Vector3 {
   const lon = THREE.MathUtils.degToRad(lonDeg)
@@ -42,20 +44,23 @@ export const createSet: SetFactory = async (ctx) => {
   world.add(orbit, terrain)
 
   const sizes = wrap.sets[key]
+  const single = (file: string, options: TextureOptions): TextureOptions => (patches.oneChannel.includes(file) ? ({ ...options, channels: 1 } as TextureOptions) : options)
+  const lean: SetContext = { ...ctx, texture: (path, options = {}) => ctx.texture(path, single(path.slice(path.lastIndexOf('/') + 1), options)) }
   const map = await ctx.texture(base + 'wrap-color.jpg', { srgb: true, anisotropy: 16, repeat: true })
-  const stormMask = await ctx.texture(base + 'wrap-storm.png', { srgb: false, repeat: true })
+  const stormMask = await lean.texture(base + 'wrap-storm.png', { srgb: false, repeat: true })
   const wrapHeight = ctx.floatTexture(await heights(ctx, base + 'wrap-height.bin', sizes.height[0], sizes.height[1]), sizes.height[0], sizes.height[1], true)
   const patchTextures: THREE.Texture[] = []
   for (const level of patches.levels) patchTextures.push(await ctx.texture(base + level.file, { srgb: true, anisotropy: 16 }))
 
   const planet = new Planet({
-    map, mapWidth: (map.image as unknown as { width: number }).width, height: wrapHeight, heightWidth: sizes.height[0], light: look.light, haze: look.haze, grazing: look.grazing,
-    patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: patches.fade, nearDeg: patches.nearDeg },
+    map, mapWidth: (map.image as unknown as { width: number }).width, height: wrapHeight, heightWidth: sizes.height[0], light: look.light, haze: { ...look.haze, glow: true }, grazing: look.grazing,
+    patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: patches.fade, nearDeg: patches.nearDeg,
+      ...(patches.levels.some((l) => l.own) ? { own: patches.levels.map((l) => l.own === true), ownGain: true } : {}), ...(patches.fadeMinor ? { fadeMinor: true } : {}) },
     storm: { mask: stormMask, axis: direction(wrap.storm.lon, wrap.storm.lat), radius: THREE.MathUtils.degToRad(wrap.storm.radiusDeg) },
   })
   planet.mesh.quaternion.fromArray(fit.globe.quaternion)
   planet.mesh.scale.fromArray(fit.globe.scale)
-  const shell = new HazeShell(look.shellHaze, diagUniform)
+  const shell = new HazeShell({ ...look.shellHaze, glow: true }, diagUniform)
   const halo = new HazeShell(look.haloHaze, diagUniform)
   halo.mesh.renderOrder = 4
   const glint = new HazeShell(look.glintHaze, diagUniform)
@@ -66,7 +71,7 @@ export const createSet: SetFactory = async (ctx) => {
   const moonHeights = await heights(ctx, base + 'phobos-height.bin', moonSizes.heightSize[0]!, moonSizes.heightSize[1]!)
   const moonMap = await ctx.texture(base + 'phobos-color.jpg', { srgb: true, anisotropy: 16, repeat: true })
   const moonLit = await ctx.texture(base + 'phobos-lit.jpg', { srgb: true, anisotropy: 16, repeat: true })
-  const moonLitMask = await ctx.texture(base + 'phobos-lit-mask.png', { srgb: false, repeat: true })
+  const moonLitMask = await lean.texture(base + 'phobos-lit-mask.png', { srgb: false, repeat: true })
   const moon = new MoonBody({
     lit: { map: moonLit, mask: moonLitMask },
     map: moonMap, mapWidth: moonSizes.colorSize[0]!, height: ctx.floatTexture(moonHeights, moonSizes.heightSize[0]!, moonSizes.heightSize[1]!, true), heights: moonHeights,
@@ -80,7 +85,7 @@ export const createSet: SetFactory = async (ctx) => {
   const far = new FarPoint()
   orbit.add(far.points)
 
-  const ground = await Relief.load(ctx, base, reliefDefs[key], look.relief)
+  const ground = await Relief.load(lean, base, reliefDefs[key], look.relief)
   terrain.add(ground.group)
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
 
@@ -90,6 +95,27 @@ export const createSet: SetFactory = async (ctx) => {
   const shellTwilightLow = new THREE.Vector3().fromArray(look.descent.shellTwilight)
   const edgeLow = new THREE.Vector2().fromArray(look.descent.edge)
   const edge = new THREE.Vector2()
+  // the glow of the close view's low Sun, as a direction in the stop's frame: from the twin of the dive at T
+  const glowGround = new THREE.Vector3(1, 0, 0)
+  const glowShell = new THREE.Vector3(1, 0, 0)
+  const glowWorld = new THREE.Vector3()
+  const ownGain: [number, number, number] = [1, 1, 1]
+  const hasOwn = patches.levels.some((l) => l.own)
+  const diveT = handoverOf(plan.id, 'dive')?.time
+  if (diveT !== undefined) {
+    const twin = plan.twin(plan.closePose('dive', diveT), diveT)
+    const up = twin.position.clone().normalize()
+    const ahead = new THREE.Vector3(0, 0, -1).applyQuaternion(twin.quaternion)
+    ahead.addScaledVector(up, -ahead.dot(up)).normalize()
+    const right = new THREE.Vector3().crossVectors(ahead, up)
+    const aim = (out: THREE.Vector3, lobe: { rightDeg: number; upDeg: number }): void => {
+      const a = THREE.MathUtils.degToRad(lobe.rightDeg)
+      const e = THREE.MathUtils.degToRad(lobe.upDeg)
+      out.copy(ahead).multiplyScalar(Math.cos(a)).addScaledVector(right, Math.sin(a)).multiplyScalar(Math.cos(e)).addScaledVector(up, Math.sin(e)).normalize()
+    }
+    aim(glowGround, nearJson.glow.ground)
+    aim(glowShell, nearJson.glow.shell)
+  }
   const light = new THREE.Vector3()
   const glow = new THREE.Vector3()
   const holdPose = plan.hold(plan.holdMid - plan.seg.hold.start)
@@ -115,10 +141,14 @@ export const createSet: SetFactory = async (ctx) => {
     sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, mips: false, anisotropy: 1 }), aim: new THREE.Quaternion().fromArray(skyFrame.patches.mars[view as ViewKind]), tan: [t * 16 / 9, t], gain: def.gain, add: def.add, ring: def.ring as [number, number, number, number], edge: def.margin / wide, unfold: def.unfold as [number, number] })
   }
 
+  // the land matte of the dive's place picture: 1 keeps the picture, its edge follows forms of the land (assets-src/mars/place/matte.py)
+  const placeMatte = { dive: await ctx.texture(base + 'place-matte-dive.png', { srgb: false, channels: 1 }) }
+
   return {
     id: plan.id,
     world,
     sky,
+    placeMatte,
     update: (state, shot, view) => {
       const inOrbit = state.view === 'orbit'
       orbit.visible = inOrbit && state.weight > 0
@@ -159,6 +189,38 @@ export const createSet: SetFactory = async (ctx) => {
       edge.set(look.haze.dayFrom ?? -0.16, look.haze.dayTo ?? 0.34).lerp(edgeLow, low)
       ;(pu.uHazeEdge!.value as THREE.Vector2).copy(edge)
       ;(su.uHazeEdge!.value as THREE.Vector2).set(look.shellHaze.dayFrom ?? -0.16, look.shellHaze.dayTo ?? 0.34).lerp(edgeLow, low)
+      const n = nearJson
+      const near = ending || diveT === undefined ? 0 : 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-5)) - Math.log(n.low)) / (Math.log(n.high) - Math.log(n.low)))
+      const mix = (v: THREE.Vector3, by: number[]): void => { v.set(v.x * (1 + (by[0]! - 1) * near), v.y * (1 + (by[1]! - 1) * near), v.z * (1 + (by[2]! - 1) * near)) }
+      mix(pu.uTint!.value as THREE.Vector3, n.tint)
+      mix(pu.uHazeDay!.value as THREE.Vector3, n.hazeDay)
+      mix(su.uHazeDay!.value as THREE.Vector3, n.shellDay)
+      mix(su.uHazeTwilight!.value as THREE.Vector3, n.shellTwilight)
+      pu.uHazeTau!.value *= 1 + (n.hazeDepth - 1) * near
+      su.uHazeTau!.value *= 1 + (n.shellDepth - 1) * near
+      su.uHazeH!.value *= 1 + (n.shellScaleHeight - 1) * near
+      pu.uHazeH!.value = look.haze.scaleHeight * (1 + (n.hazeScaleHeight - 1) * near)
+      const gg = n.glow.ground
+      const gs = n.glow.shell
+      planet.setGlow(glowWorld.copy(glowGround).applyQuaternion(state.rotation), [gg.colour[0]! * near, gg.colour[1]! * near, gg.colour[2]! * near], gg.power)
+      shell.setGlow(glowWorld.copy(glowShell).applyQuaternion(state.rotation), [gs.colour[0]! * near, gs.colour[1]! * near, gs.colour[2]! * near], gs.power)
+      // the own levels carry the look of the place at T; on the way down the lit levels round them change with the
+      // descent look, and the close view of the rise is lit brighter than that of the dive: a gain by height
+      const table = state.time > terrainMid ? n.ownGain.rise : n.ownGain.dive
+      const height = Math.log(Math.max(camera.length() - 1, 1e-5))
+      ownGain[0] = ownGain[1] = ownGain[2] = 1
+      if (!ending && diveT !== undefined) {
+        let i = 0
+        while (i < table.length - 2 && height < Math.log(table[i + 1]!.height)) i++
+        const a = table[i]!
+        const b = table[i + 1]!
+        const k = Math.min(Math.max((Math.log(a.height) - height) / (Math.log(a.height) - Math.log(b.height)), 0), 1)
+        // a lit level is multiplied with the descent tint, 1 high up and descent.tint near the ground, where the plates
+        // were made: the own levels follow it by tintFollow
+        // and the tint of near.json the same way: the plates hold the look at the height of the place picture
+        for (let c = 0; c < 3; c++) ownGain[c] = (a.gain[c]! + (b.gain[c]! - a.gain[c]!) * k) * (1 + n.ownGain.tintFollow * ((1 + (d.tint[c]! - 1) * low) / d.tint[c]! - 1)) * ((1 + (n.tint[c]! - 1) * near) / n.tint[c]!)
+      }
+      if (hasOwn) planet.setOwnGain(ownGain)
       planet.update(camera, light, plan.spin(state.time), gain, state.weight)
       pu.uVignette!.value = shot.post.vignette * (1 - low)
       pu.uAspect!.value = view.format.width / view.format.height

@@ -1,8 +1,8 @@
 {
- "engineHash": "be043ade04a7ab6e",
+ "engineHash": "247ebad7e038ce06",
  "stopHashes": {
-  "sun": "ad6304ab49e38c96",
-  "mercury": "78fa01ed802d26ad"
+  "sun": "078d8530e996c8b2",
+  "mercury": "3264078c6b99b4d5"
  },
  "format": "16x9",
  "tier": "review",
@@ -29,7 +29,7 @@
   ],
   "kind": "sheet",
   "segment": "sun.travel",
-  "signature": "[\"537e3baf9cc6a22392444286cce202a86032f7e70d054e7351454b1c1e93ad06\",[\"58d1489d68482c1f0210c6f0edd039fe2ff60fafd16501b6e750981824b90735\",92]]",
+  "signature": "[\"cbaaaea7b7331d22387fa11a15b233eef394f759c322735869f336963cb8fedd\",[\"58d1489d68482c1f0210c6f0edd039fe2ff60fafd16501b6e750981824b90735\",92]]",
   "quality": 92
  }
 }

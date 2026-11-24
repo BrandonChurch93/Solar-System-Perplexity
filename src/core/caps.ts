@@ -10,13 +10,16 @@ export function needs(assets: string, formatId: string): Needs {
   const format = config.formats[formatId]
   if (!set || !format) throw new Error('unknown asset set or format')
   const edge = Math.max(format.width, format.height)
+  const picture = Math.ceil(edge * (1 + config.raw.handover.place.maxShare)) + 2
   return {
     extensions: REQUIRED_EXTENSIONS,
     optional: OPTIONAL_EXTENSIONS,
     limits: {
-      MAX_TEXTURE_SIZE: Math.max(set.wrapMapWidth, set.reliefWidth, set.skyWidth, edge),
-      MAX_RENDERBUFFER_SIZE: edge,
+      MAX_TEXTURE_SIZE: Math.max(set.wrapMapWidth, set.reliefWidth, set.skyWidth, picture),
+      MAX_RENDERBUFFER_SIZE: picture,
       MAX_TEXTURE_IMAGE_UNITS: 16,
+      MAX_VERTEX_TEXTURE_IMAGE_UNITS: 10,
+      MAX_COMBINED_TEXTURE_IMAGE_UNITS: 26,
       MAX_VERTEX_ATTRIBS: 8,
     },
   }

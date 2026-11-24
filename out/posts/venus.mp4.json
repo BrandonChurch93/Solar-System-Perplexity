@@ -1,0 +1,64 @@
+{
+ "engineHash": "247ebad7e038ce06",
+ "stopHashes": {
+  "sun": "078d8530e996c8b2",
+  "mercury": "3264078c6b99b4d5",
+  "venus": "54d2208ee58b3ad9",
+  "earth": "2b75dbd9c40c8387",
+  "mars": "2e6bd53c2517a02a",
+  "jupiter": "e92e46df4195fb6b",
+  "saturn": "47a787cd7f78408c",
+  "uranus": "a5dd9ab65ef9c8db",
+  "neptune": "091f37a616e0d16e"
+ },
+ "format": "16x9",
+ "tier": "final",
+ "assets": "full",
+ "diag": "beauty",
+ "browser": "147.0.7727.15",
+ "machine": "space-sandbox 4x Intel(R) Xeon(R) Processor @ 2.90GHz",
+ "extra": {
+  "kind": "post",
+  "stop": "venus",
+  "frames": {
+   "intro": 140,
+   "clip": 495,
+   "post": 635
+  },
+  "joinedWithoutEncoding": true,
+  "proof": "every decoded frame of the post has the hash of the same frame of the intro or the clip, and every frame time is kept",
+  "pictureParameterSets": "differ, each travels in its own part of the stream as between the parts of a clip",
+  "sha256": "47c6adaf6ad16ff867ad7924cbf0658c4c43063bd15866dcf4c39a8337f046eb",
+  "cutSeconds": 4.6667,
+  "durationSeconds": 21.1667,
+  "intro": {
+   "file": "out/work/posts/intro-venus.mp4",
+   "sha256": "be688b581d275f00b321aeb3bf30357cb258e1b2b46b92c699be9160fa5329eb",
+   "prompt": "Give me a hyperrealistic Venus using three.js",
+   "firstKeySeconds": 0.8333,
+   "lastKeySeconds": 3.0333,
+   "submitSeconds": 4.6333
+  },
+  "clip": {
+   "file": "out/work/clips/venus.mp4",
+   "sha256": "9047ae17e39e59dd266bf3d5618d4f40b1ca080e4d858d1fe4ae58882e05d685",
+   "first": 1110,
+   "last": 1604
+  },
+  "probe": {
+   "frames": 635,
+   "width": 1920,
+   "height": 1080,
+   "fps": "30/1",
+   "codec": "h264",
+   "profile": "High",
+   "pixFmt": "yuv420p",
+   "colorSpace": "bt709",
+   "colorRange": "tv",
+   "durationSeconds": 21.166667
+  },
+  "seconds": 36.307,
+  "date": "2026-11-23T05:44:46.298Z",
+  "signature": "[\"47c6adaf6ad16ff867ad7924cbf0658c4c43063bd15866dcf4c39a8337f046eb\",\"copy\"]"
+ }
+}

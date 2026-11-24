@@ -1,0 +1,22 @@
+reviewer_1307|R2|image-02.png|claude_opus_5_5|b — confidence 55. The biggest factor: it's a clean, generic, well-lit Saturn render with no context, in the familiar "planet with rings against a starfield" composition that stock-photo sites sell in bulk. It's too polished for amateur art (d) and too fine-detailed for a real-time web demo (e). There's also no narrative framing or UI to suggest a film or game frame (a). The rings are stylised and the composition is dramatic, which points away from a textbook illustration (c). My second choice would be (a).
+reviewer_1308|R2|image-02.png|gpt_6_2_sol|a, 66/100. The low, sweeping camera angle makes the rings dominate the foreground like a cinematic establishing shot.
+reviewer_1309|R2|image-02.png|gemini_4_carbon|e, 75 — The combination of mathematically exact 3D ring geometry with real-time shader artifacts, specifically the undersampled aliasing/stipple noise across the thin procedural ringlets and the sharp transparency-clipping seam where the ring mesh cuts off the planet's Fresnel atmosphere glow.
+reviewer_1310|R2|image-02.png|kimi_k3|Answer: (a) — a frame from a top-budget film or AAA game cinematic. Confidence: 60. Most influential factor: the cinematic staging and post-processing — a low camera skimming the ring plane with the planet filling the frame, photoreal fine-grained ring detail, atmospheric limb glow at the terminator, and a subtle film grain/color grade — a level of polish and deliberate composition beyond typical stock, textbook, demo, or amateur output.
+reviewer_1311|R2|image-02.png|grok_4_7|b, 71, isolated generic beauty shot with neutral color and no scene, lens, or interface cues
+reviewer_1312|R2|image-04.png|claude_opus_5_5|Answer: b (stock image). Confidence: 55. Main factor: it's a polished, generic "Saturn in space" hero shot with dramatic lighting, a starfield, and a moon placed in a corner, the kind of image made for licensing. But the rings don't sit concentric around the planet, and the ring shadow and occlusion are physically wrong. That rules out (c) a textbook picture and makes (a) a high-budget film or game cinematic less likely. It's polished enough that it could plausibly be (d), amateur generated art, instead.
+reviewer_1313|R2|image-04.png|gpt_6_2_sol|e, 69/100: the geometrically precise shadow cast across the finely banded rings looks like a procedural 3D render.
+reviewer_1314|R2|image-04.png|gemini_4_carbon|(e) — Confidence: 82. The one thing that most influenced my answer is the combination of mathematically exact 3D sphere-and-ring geometry with real-time procedural shader traits (GLSL-style procedural noise cloud swirls on Saturn and purely radial 1D procedural ring bands with subtle shader aliasing, rather than photographic NASA textures or AI-warped ellipses).
+reviewer_1315|R2|image-04.png|kimi_k3|A, 85, the photoreal cinematic lighting and dramatic wide-screen composition most suggest a top-budget film or AAA game cinematic.
+reviewer_1316|R2|image-04.png|grok_4_7|(b) 74. The idealized hero-shot composition — stars behind a well-exposed planet, a companion moon, and a subtle lens flare — is the signature of a commercial space stock render, not a film frame, textbook figure, or real-time demo.
+reviewer_1317|R8|image-04.png|claude_sonnet_5_5|Jupiter. The image also shows its moon Io and Io's shadow, and the Great Red Spot is visible.
+reviewer_1318|R8|image-04.png|gpt_6_2_sol|Jupiter
+reviewer_1319|R8|image-04.png|gemini_4_carbon|Jupiter
+reviewer_1320|R8|image-06.png|claude_sonnet_5_5|Neptune. The image shows a blue planet with a Great Dark Spot-style storm and faint rings, with a pale moon (likely Triton) at upper left.
+reviewer_1321|R8|image-06.png|gpt_6_2_sol|Neptune. Deep blue with a prominent dark storm, faint rings, and a Triton-like moon.
+reviewer_1322|R8|image-06.png|gemini_4_carbon|Neptune
+reviewer_1323|R8|image-07.png|claude_sonnet_5_5|The image shows the Sun. It has sunspots, prominences and a corona.
+reviewer_1324|R8|image-07.png|gpt_6_2_sol|The Sun
+reviewer_1325|R8|image-07.png|gemini_4_carbon|The Sun
+reviewer_1326|R8|image-08.png|claude_sonnet_5_5|Earth. The image shows the planet centered on the Americas, with the Moon at the upper right.
+reviewer_1327|R8|image-08.png|gpt_6_2_sol|Earth
+reviewer_1328|R8|image-08.png|gemini_4_carbon|Earth

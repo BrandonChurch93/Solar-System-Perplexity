@@ -1,0 +1,120 @@
+{
+ "critic": "R3",
+ "score": 3.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 3,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-05.png",
+      "where": "ring system above the limb (crops A, C, F, G in image-06.png; crops J, O in image-07.png)",
+      "what": "thin ringlets wobble in crooked waves, fork into Y-branches, cross over adjacent strands, stop in mid-air above the bright limb, and show stair-stepped pixel aliasing along the brightest ring",
+      "fix": "render the rings from true concentric 3D elliptical geometry with clean anti-aliasing and proper occultation behind the planet and atmosphere"
+     },
+     {
+      "severity": "severe",
+      "file": "image-01.png",
+      "where": "ring arcs on upper left, lower left, and right side over the Milky Way (crops B, D, E, F, G in image-02.png; crops J, O, Q in image-03.png; crop T in image-04.png)",
+      "what": "inner ringlets wiggle, split, and break into noisy dotted scratches, the right-side ring bundle dissolves and vanishes mid-sky inside the Milky Way, the lower-left rings pinch abruptly into the limb, and the bright outer ring is stair-stepped",
+      "fix": "replace painted/diffused ring lines with continuous, anti-aliased 3D concentric ring geometry that maintains consistent orbital curvature and opacity across the background"
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "planet cloud deck across the disk and near the limb (crops A, D, H in image-06.png; crops N, O in image-07.png; crops S, T, U in image-08.png)",
+      "what": "the surface looks airbrushed and smeared like painted brushstrokes running diagonally into the horizon without spherical foreshortening, with a blurry speckled white smudge in crop U",
+      "fix": "project sharp, high-resolution zonal cloud bands and storm detail onto true spherical UVs so features foreshorten naturally toward the limb"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "dark-side right and bottom limb and sunlit lower-left limb (crops C, D, E in image-02.png; crops O, P in image-03.png; crop U in image-04.png)",
+      "what": "the shadowed hemisphere is filled with flat noisy teal bounded by a hard, stair-stepped bright cyan rim against space, while the sunlit lower-left limb has a jagged edge and an inner doubled cyan line",
+      "fix": "darken the unlit hemisphere realistically, remove the bright cutout rim on the night limb, and use smooth anti-aliased atmospheric scattering along the sunlit limb"
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "sunlit planet limb curve (crops A, E in image-06.png; crops S, V in image-08.png)",
+      "what": "the horizon edge shows visible stair-stepped pixelation and a doubled bright-and-cyan inner band just inside the atmospheric glow",
+      "fix": "anti-alias the planetary silhouette at supersampled resolution and use a single continuous radial atmospheric falloff without a doubled inner rim"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "Milky Way band and lower-left starfield (crops E, F, H in image-02.png; crop Q in image-03.png; crops S, V, W in image-04.png)",
+      "what": "Milky Way stars are soft fuzzy blobs and clumped smears over blotchy painterly dust, and corner stars in crop S are diagonally elongated with red-blue color fringing",
+      "fix": "use a crisp, high-resolution starfield and nebula plate with clean point-spread star profiles free of clumped blobs and corner chromatic smear"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "upper-left and upper-right moons (crops B, C in image-02.png; crops J, L in image-03.png)",
+      "what": "both moons have jagged stair-stepped limbs and soft blobbed painterly surfaces, and the upper-right moon has a stray orange-brown smudge detached from its lower-right dark limb",
+      "fix": "render the moons as clean anti-aliased 3D spheres with sharp surface relief, consistent lighting, and no stray halo smudges on the dark limb"
+     },
+     {
+      "severity": "minor",
+      "file": "image-05.png",
+      "where": "dark sky between the right limb and the rings (crop E in image-06.png; crops P, Q in image-07.png; crop V in image-08.png)",
+      "what": "faint stray curved and diagonal ghost streaks float disconnected in empty black space",
+      "fix": "clean up the sky background and remove stray floating streaks outside the ring plane"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "dark sky below the lower-left limb (crop D in image-02.png; top edge of crops S, T in image-04.png)",
+      "what": "a muddy rainbow-colored smudge patch and a tiny stray streak sit in open space",
+      "fix": "remove the blotchy chromatic smudge and stray streak from the lower-left starfield"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-12.png",
+      "where": "tile V, lit clouds along the bottom",
+      "what": "the streaks are smeared along one diagonal and look airbrushed, with no small eddies",
+      "fix": "break the flow into eddies and add fine cloud detail that is not stretched along the streak"
+     },
+     {
+      "severity": "major",
+      "file": "image-10.png",
+      "where": "tile E, center and lower cloud deck",
+      "what": "the same soft directional smudge, so the deck reads painted rather than turbulent",
+      "fix": "add high-frequency cloud structure and vary the streak direction"
+     },
+     {
+      "severity": "minor",
+      "file": "image-14.png",
+      "where": "tile E, lit face of the disk",
+      "what": "the atmosphere is broad, smooth vertical streaks and low on storm detail",
+      "fix": "add storm-scale texture and ease the uniform vertical stretch"
+     },
+     {
+      "severity": "minor",
+      "file": "image-10.png",
+      "where": "tile E, upper right, thinnest bright ring arcs",
+      "what": "those thin arcs stair-step against the sky",
+      "fix": "widen the ring filter so the brightest strands stay smooth on a curve"
+     }
+    ]
+   }
+  }
+ ]
+}

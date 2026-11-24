@@ -1,4 +1,6 @@
 import apronJson from './aprons.json'
+import placeJson from './place.json'
+import platesJson from './plates.json'
 import reliefJson from './relief.json'
 import type { CloudReliefDef } from './relief'
 import wrapJson from './wrap.json'
@@ -12,15 +14,43 @@ export const wrap = {
   bolt: { lon: wrapJson.bolt.lon, lat: wrapJson.bolt.lat, widthDeg: wrapJson.bolt.widthDeg },
 }
 
+// Two levels. The two deeper ones (28 and 14 deg about the old spot) left the set for the memory limit of gate G15: they showed in
+// the lower left corner of frames 1291 to 1307 only, where the camera does not go, and G13 holds without them.
 export const patches = {
   levels: [
     { file: 'patch-a.jpg', widthDeg: 90 },
     { file: 'patch-b.jpg', widthDeg: 53.13010235 },
-    { file: 'patch-c.jpg', widthDeg: 28.07248694 },
-    { file: 'patch-d.jpg', widthDeg: 14.2500327 },
   ] as { file: string; widthDeg: number }[],
   feather: 0.12,
   fade: [1.02, 1.5] as [number, number],
+}
+
+const ahead = (platesJson.aheadDeg * Math.PI) / 180
+const under = placeJson.place.under.direction
+const heading = placeJson.place.heading
+
+export const place = {
+  // The levels made again for each handover (assets-src/venus/place/tlay.py) have one picture for the dive and one for the rise.
+  // colourOf: the index of the level whose plate gives the colour of a level that holds its light alone (plates.json, lightNote), or -1.
+  // most: the light of such a level over the light of that plate at the top of its channel.
+  levels: (platesJson.levels as { tag: string; file: string; widthDeg: number; colour?: string; most?: number }[]).map((l) => {
+    const twice = platesJson.atT.tags.includes(l.tag)
+    const colourOf = l.colour ? platesJson.levels.findIndex((x) => x.tag === l.colour) : -1
+    if (l.colour && (colourOf < 0 || 'colour' in platesJson.levels[colourOf]!)) throw new Error('plates.json: level ' + l.tag + ' needs a level with its own colour')
+    if (l.colour && (l.most ?? 0) <= 0) throw new Error('plates.json: level ' + l.tag + ' needs most')
+    return { tag: l.tag, file: l.file, widthDeg: l.widthDeg, colourOf, most: l.most ?? 1, dive: twice ? l.file.replace('.jpg', '-dive.jpg') : l.file, rise: twice ? l.file.replace('.jpg', '-rise.jpg') : l.file }
+  }),
+  wide: { file: platesJson.wide.file, widthDeg: platesJson.wide.widthDeg, rim: platesJson.wide.rim, forms: platesJson.wide.forms, formsDeg: platesJson.wide.formsDeg as [number, number], own: platesJson.wide.own },
+  rim: platesJson.rim,
+  forms: platesJson.forms.look as [number, number, number],
+  tone: { cos: platesJson.tone.cos as [number, number], power: platesJson.tone.curve, air: platesJson.tone.air, heights: platesJson.tone.heights as [number, number], live: platesJson.tone.live },
+  air: { heights: platesJson.air.heights as [number, number], sunHeights: platesJson.air.sun.heights as [number, number], haze: platesJson.air.haze },
+  centre: [0, 1, 2].map((i) => under[i]! * Math.cos(ahead) + heading[i]! * Math.sin(ahead)) as [number, number, number],
+  feather: platesJson.feather,
+  fade: platesJson.fade as [number, number],
+  heading: heading as [number, number, number],
+  show: { heights: platesJson.show.heights as [number, number] },
+  dusk: { gain: platesJson.dusk.gain, hue: platesJson.dusk.hue, limbHeights: platesJson.dusk.limbHeights as [number, number], tint: platesJson.dusk.tint as [number, number, number], dive: platesJson.dusk.dive as [number, number], rise: platesJson.dusk.rise as [number, number] },
 }
 
 const TINTS: [number, number, number][] = [[0.85, 0.3, 0.25], [0.3, 0.75, 0.35], [0.9, 0.75, 0.2], [0.4, 0.5, 0.9]]
@@ -43,6 +73,7 @@ function reliefDef(key: 'full' | 'web'): CloudReliefDef {
     masks: 'relief-masks.png',
     maskBox: box(reliefJson.masks.box),
     air: 'relief-air.png',
+    airSun: { file: platesJson.air.sun.file, limbFile: platesJson.air.sun.limbFile, atDeg: platesJson.air.sun.atDeg as [number, number], boxDeg: platesJson.air.sun.boxDeg as [number, number, number] },
   }
 }
 

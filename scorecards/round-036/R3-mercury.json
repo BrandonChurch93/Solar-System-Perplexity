@@ -1,0 +1,120 @@
+{
+ "critic": "R3",
+ "score": 6.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-07.png",
+      "where": "crop M, upper third of the gap between the globe and the Sun",
+      "what": "A straight horizontal cutoff divides the nearly black sky above from the speckled, hazier sky below. It reads as the edge of a rectangular background layer and is visible in the full frame in image-05.png.",
+      "fix": "Extend the star field across the gap and blend its luminance and haze continuously so there is no hard mask boundary."
+     },
+     {
+      "severity": "minor",
+      "file": "image-08.png",
+      "where": "crop V, lower crescent just inside the limb",
+      "what": "The crater rims and ridges smear into elongated, shiny streaks near the limb, while the neighboring terrain is much sharper.",
+      "fix": "Check the surface projection and grazing-angle texture filtering, then rebalance normal-map contrast so crater rims stay distinct without looking embossed."
+     },
+     {
+      "severity": "minor",
+      "file": "image-03.png",
+      "where": "crops M and N, bright solar photosphere",
+      "what": "Large near-white patches wash out the fine photosphere texture, leaving the brightest parts looking smooth against the more textured gold areas.",
+      "fix": "Use a gentler highlight rolloff to retain granulation while keeping the corona bright."
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "crop D, lower-left star field and adjacent night side",
+      "what": "An isolated cream-colored blur and a row of faint polygonal ghosts stand out against the pinpoint stars and sharply defined globe.",
+      "fix": "Reduce the opacity and size of the lens ghosts or remove the isolated bright reflection so it does not read as a stray object."
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "inside the large shadowed crater, centre right (crops A, Q at about 732-1000, 324-560)",
+      "what": "two small bright white shapes sit inside the black shadow. They have no relief or shadow and look like stray debris or pasted objects, not terrain",
+      "fix": "remove the bright specks from the shadowed crater floor, or let them take the shadow so they read as lit peaks"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "east wall and floor of the large crater (crops E, F, R, W)",
+      "what": "the wall terraces form tight concentric swirl lines, like brush strokes or a twirl filter, and look painted rather than eroded rock",
+      "fix": "replace the swirled striations with broken terraces, slump blocks and uneven scarps at varied spacing"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "lit limb of Mercury, upper right (crops C, K, P)",
+      "what": "a warm orange halo hugs the bright limb, which an airless body should not have. It reads as a glow added to the layer edge",
+      "fix": "remove the rim glow so the limb meets space with a clean edge; leave only the lens bloom from the Sun as a separate, wider effect"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "mid and foreground plains (crops O, T, U, V, X)",
+      "what": "coloured and white single-pixel glints are sprinkled over the regolith and read as glitter or noise, not grains in the sunlight",
+      "fix": "remove or desaturate the speckle highlights and keep the specular response of the regolith low"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "far terrain toward the limb (crops B, C, I, J, K, L)",
+      "what": "craters near the horizon get soft and smeared, with a stretched, wiped look rather than detail that shrinks with distance",
+      "fix": "raise texture or mip detail at grazing angles (anisotropic filtering) so the distant craters stay crisp"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "bright ray crater, upper left centre (crops B, K)",
+      "what": "the starburst rays are thin, even white spikes and look like a stamped sprite rather than ejecta deposits",
+      "fix": "vary the length, width and fade of the rays and blend them into the surrounding albedo"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "Sun disc and corona, right edge (crops C, L, M, Q, R)",
+      "what": "the disc is a flat cream colour with no limb darkening, and the filaments of the corona and the prominence look smeared and painted",
+      "fix": "add limb darkening and granulation at native scale, and give the filaments of the corona and the prominence sharper, structured edges"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "Milky Way band, left (crops G, H, N)",
+      "what": "the dust lanes have a noisy, clumped texture with dense clusters of uniform dots, which looks like a procedural fill",
+      "fix": "use a smoother gradient for the dust and vary star density and size so it doesn't look stamped"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "night side of Mercury against the stars, lower half (crops D, T, U)",
+      "what": "where the dark disc cuts off the stars the boundary is soft and almost straight in places, so the edge of the sphere is hard to read",
+      "fix": "keep the occluding edge of the disc sharp and round against the starfield"
+     }
+    ]
+   }
+  }
+ ]
+}

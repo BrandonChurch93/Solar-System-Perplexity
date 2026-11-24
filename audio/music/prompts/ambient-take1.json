@@ -1,0 +1,785 @@
+{
+ "chunks": [
+  {
+   "text": "[Sun surface]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor tonality",
+    "ambient electronic",
+    "analog synthesizers",
+    "wide stereo space",
+    "instrumental only",
+    "vast and weightless space film score",
+    "great production quality",
+    "very quiet opening",
+    "warm low analog drone",
+    "slow shimmering granular texture",
+    "no beat",
+    "sound begins at once"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "drums",
+    "beat",
+    "loud bass"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Sun rise]",
+   "duration_ms": 3000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor tonality",
+    "ambient electronic",
+    "analog synthesizers",
+    "wide stereo space",
+    "instrumental only",
+    "gentle rising swell",
+    "filter slowly opening",
+    "soft noise riser",
+    "still quiet"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "drums",
+    "beat",
+    "loud bass"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Sun revealed]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor tonality",
+    "ambient electronic",
+    "analog synthesizers",
+    "wide stereo space",
+    "instrumental only",
+    "soft warm chord lands on the first beat",
+    "first statement of a slow simple motif",
+    "wide pad and soft sub bass, moderate level",
+    "calm and weightless"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Travel to Mercury]",
+   "duration_ms": 3000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor tonality",
+    "ambient electronic",
+    "analog synthesizers",
+    "wide stereo space",
+    "instrumental only",
+    "rising build",
+    "crescendo into the next section",
+    "arpeggiator fading in and brightening",
+    "riser growing"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Mercury arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor tonality",
+    "ambient electronic",
+    "analog synthesizers",
+    "wide stereo space",
+    "instrumental only",
+    "sudden lift on the first beat",
+    "big downbeat chord",
+    "bright glinting arpeggiator",
+    "crystalline bell synths",
+    "pulsing bass enters",
+    "mezzo forte, the first lift",
+    "the slow main theme returns, broad",
+    "sense of arrival and scale"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Mercury surface]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor tonality",
+    "ambient electronic",
+    "analog synthesizers",
+    "wide stereo space",
+    "instrumental only",
+    "sudden drop to a hushed quiet bed",
+    "very quiet, pianissimo",
+    "thin glassy pad",
+    "sparse bell tones with long delay",
+    "sparse and intimate",
+    "suspended and floating"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "drums",
+    "beat",
+    "loud bass"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Rise from Mercury]",
+   "duration_ms": 5000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor tonality",
+    "ambient electronic",
+    "analog synthesizers",
+    "wide stereo space",
+    "instrumental only",
+    "rising build",
+    "crescendo into the next section",
+    "arpeggiator returns and filter opens",
+    "forward motion"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Venus arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor tonality",
+    "ambient electronic",
+    "analog synthesizers",
+    "wide stereo space",
+    "instrumental only",
+    "sudden lift on the first beat",
+    "big downbeat chord",
+    "lush thick detuned pads",
+    "hazy warm saturation",
+    "slow pulsing bass",
+    "mezzo forte, fuller than before",
+    "the slow main theme returns, broad",
+    "sense of arrival and scale"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Venus surface]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor tonality",
+    "ambient electronic",
+    "analog synthesizers",
+    "wide stereo space",
+    "instrumental only",
+    "sudden drop to a hushed quiet bed",
+    "very quiet, pianissimo",
+    "dense soft drone",
+    "slow filtered noise swells",
+    "sparse and intimate",
+    "suspended and floating"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "drums",
+    "beat",
+    "loud bass"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Rise from Venus]",
+   "duration_ms": 5000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor tonality",
+    "ambient electronic",
+    "analog synthesizers",
+    "wide stereo space",
+    "instrumental only",
+    "rising build",
+    "crescendo into the next section",
+    "arpeggiator returns and filter opens",
+    "forward motion"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Earth arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor tonality",
+    "ambient electronic",
+    "analog synthesizers",
+    "wide stereo space",
+    "instrumental only",
+    "sudden lift on the first beat",
+    "big downbeat chord",
+    "warm hopeful chord progression",
+    "soft melodic lead synth",
+    "gentle pulsing arpeggio",
+    "forte, warm and hopeful",
+    "the slow main theme returns, broad",
+    "sense of arrival and scale"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Earth surface]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor tonality",
+    "ambient electronic",
+    "analog synthesizers",
+    "wide stereo space",
+    "instrumental only",
+    "sudden drop to a hushed quiet bed",
+    "very quiet, pianissimo",
+    "soft electric piano tones in reverb",
+    "warm pad",
+    "sparse and intimate",
+    "suspended and floating"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "drums",
+    "beat",
+    "loud bass"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Rise from Earth]",
+   "duration_ms": 5000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor tonality",
+    "ambient electronic",
+    "analog synthesizers",
+    "wide stereo space",
+    "instrumental only",
+    "rising build",
+    "crescendo into the next section",
+    "arpeggiator returns and filter opens",
+    "forward motion"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Mars arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor tonality",
+    "ambient electronic",
+    "analog synthesizers",
+    "wide stereo space",
+    "instrumental only",
+    "sudden lift on the first beat",
+    "big downbeat chord",
+    "bold driving bass sequence",
+    "gritty analog arpeggio",
+    "punchy electronic drums",
+    "forte, bold and strong",
+    "the slow main theme returns, broad",
+    "sense of arrival and scale"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Mars surface]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor tonality",
+    "ambient electronic",
+    "analog synthesizers",
+    "wide stereo space",
+    "instrumental only",
+    "sudden drop to a hushed quiet bed",
+    "very quiet, pianissimo",
+    "low pulsing drone",
+    "dry sparse sequence",
+    "sparse and intimate",
+    "suspended and floating"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "drums",
+    "beat",
+    "loud bass"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Rise from Mars]",
+   "duration_ms": 5000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor tonality",
+    "ambient electronic",
+    "analog synthesizers",
+    "wide stereo space",
+    "instrumental only",
+    "rising build",
+    "crescendo into the next section",
+    "arpeggiator returns and filter opens",
+    "forward motion"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Jupiter arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor tonality",
+    "ambient electronic",
+    "analog synthesizers",
+    "wide stereo space",
+    "instrumental only",
+    "sudden lift on the first beat",
+    "big downbeat chord",
+    "massive sub bass and huge wide pads",
+    "slow heavy electronic drums",
+    "towering chords",
+    "fortissimo, massive",
+    "the slow main theme returns, broad",
+    "sense of arrival and scale"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Jupiter surface]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor tonality",
+    "ambient electronic",
+    "analog synthesizers",
+    "wide stereo space",
+    "instrumental only",
+    "sudden drop to a hushed quiet bed",
+    "very quiet, pianissimo",
+    "deep rumbling sub drone",
+    "slow swirling filtered textures",
+    "sparse and intimate",
+    "suspended and floating"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "drums",
+    "beat",
+    "loud bass"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Rise from Jupiter]",
+   "duration_ms": 5000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor tonality",
+    "ambient electronic",
+    "analog synthesizers",
+    "wide stereo space",
+    "instrumental only",
+    "rising build",
+    "crescendo into the next section",
+    "arpeggiator returns and filter opens",
+    "forward motion"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Saturn arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor tonality",
+    "ambient electronic",
+    "analog synthesizers",
+    "wide stereo space",
+    "instrumental only",
+    "sudden lift on the first beat",
+    "big downbeat chord",
+    "elegant shimmering arpeggios",
+    "wide glittering pads",
+    "smooth pulsing bass",
+    "forte, grand and elegant",
+    "the slow main theme returns, broad",
+    "sense of arrival and scale"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Saturn surface]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor tonality",
+    "ambient electronic",
+    "analog synthesizers",
+    "wide stereo space",
+    "instrumental only",
+    "sudden drop to a hushed quiet bed",
+    "very quiet, pianissimo",
+    "glassy bell tones",
+    "delicate high shimmer",
+    "sparse and intimate",
+    "suspended and floating"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "drums",
+    "beat",
+    "loud bass"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Rise from Saturn]",
+   "duration_ms": 5000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor tonality",
+    "ambient electronic",
+    "analog synthesizers",
+    "wide stereo space",
+    "instrumental only",
+    "rising build",
+    "crescendo into the next section",
+    "arpeggiator returns and filter opens",
+    "forward motion"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Uranus arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor tonality",
+    "ambient electronic",
+    "analog synthesizers",
+    "wide stereo space",
+    "instrumental only",
+    "sudden lift on the first beat",
+    "big downbeat chord",
+    "cold wide detuned pads",
+    "icy digital textures",
+    "mysterious slow arpeggio",
+    "forte, cold and wide",
+    "the slow main theme returns, broad",
+    "sense of arrival and scale"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Uranus surface]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor tonality",
+    "ambient electronic",
+    "analog synthesizers",
+    "wide stereo space",
+    "instrumental only",
+    "sudden drop to a hushed quiet bed",
+    "very quiet, pianissimo",
+    "frozen thin drone",
+    "distant sine tones",
+    "sparse and intimate",
+    "suspended and floating"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "drums",
+    "beat",
+    "loud bass"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Rise from Uranus]",
+   "duration_ms": 5000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor tonality",
+    "ambient electronic",
+    "analog synthesizers",
+    "wide stereo space",
+    "instrumental only",
+    "rising build",
+    "crescendo into the next section",
+    "arpeggiator returns and filter opens",
+    "forward motion"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Neptune arrival]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor tonality",
+    "ambient electronic",
+    "analog synthesizers",
+    "wide stereo space",
+    "instrumental only",
+    "sudden lift on the first beat",
+    "big downbeat chord",
+    "deep dark bass waves",
+    "powerful slow chords",
+    "heavy pulse",
+    "fortissimo, the strongest arrival so far",
+    "the slow main theme returns, broad",
+    "sense of arrival and scale"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Neptune surface]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor tonality",
+    "ambient electronic",
+    "analog synthesizers",
+    "wide stereo space",
+    "instrumental only",
+    "sudden drop to a hushed quiet bed",
+    "very quiet, pianissimo",
+    "very low dark drone",
+    "distant lonely lead tone",
+    "sparse and intimate",
+    "suspended and floating"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "drums",
+    "beat",
+    "loud bass"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Rise and pull back past Neptune]",
+   "duration_ms": 6500,
+   "positive_styles": [
+    "120 BPM",
+    "D minor tonality",
+    "ambient electronic",
+    "analog synthesizers",
+    "wide stereo space",
+    "instrumental only",
+    "the biggest build of the whole piece",
+    "long crescendo",
+    "every layer rising",
+    "huge riser and opening filters",
+    "soaring lead line",
+    "pulling back and widening"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Looking back]",
+   "duration_ms": 8500,
+   "positive_styles": [
+    "120 BPM",
+    "ambient electronic",
+    "analog synthesizers",
+    "wide stereo space",
+    "instrumental only",
+    "D major resolution",
+    "the biggest swell of the whole piece lands on the first beat",
+    "widest wall of synth pads at full level",
+    "broad soaring lead theme",
+    "deep sub bass and bright shimmer",
+    "final chord held, thinning to one held tone",
+    "slow fade to silence"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  }
+ ]
+}

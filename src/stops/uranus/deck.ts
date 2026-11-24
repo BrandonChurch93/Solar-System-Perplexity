@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
+import { DIAG_GLSL, diagUniform, fineUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import deckJson from './deck.json'
 import nearJson from './deck-near.json'
@@ -95,6 +95,8 @@ uniform float uVignette;
 uniform float uAspect;
 uniform float uFade;
 uniform float uGrad;
+uniform float uFine;
+uniform vec2 uLens;
 uniform float uSharp;
 uniform float uBloom;
 uniform vec4 uDetail;
@@ -153,7 +155,7 @@ float cloudAt(vec2 g, float wide) {
   float group = 0.62 * soft(gr + 0.37) + 0.38 * soft(mat2(0.8, 0.6, -0.6, 0.8) * gr * 2.3 + 7.1);
   vec2 uv = g * uCloudA.y * vec2(uCloudD.y, 1.0);
   vec2 fit = vec2(1.0, 1.0 - 2.0 * uCloudD.x);
-  float t = textureGrad(uCloud, vec2(uv.x, uCloudD.x + fract(uv.y) * fit.y), dFdx(uv) * fit * wide, dFdy(uv) * fit * wide).r;
+  float t = textureGrad(uCloud, vec2(uv.x, uCloudD.x + fract(uv.y) * fit.y), dFdx(uv) * fit * (wide * uFine), dFdy(uv) * fit * (wide * uFine)).r;
   return t * smoothstep(uCloudC.z, uCloudC.w, t) * smoothstep(uCloudC.x, uCloudC.y, group);
 }
 void main() {
@@ -182,7 +184,7 @@ void main() {
   float plateT = diagTexels(uvT * uColorSize);
   vec2 uvN = (uvT - uNearWin.xy) / (uNearWin.zw - uNearWin.xy);
   vec2 eN = min(uvN, 1.0 - uvN);
-  float wN = smoothstep(0.0, uNearMix.z, min(eN.x, eN.y)) * (1.0 - smoothstep(uNearMix.x, uNearMix.y, plateT));
+  float wN = smoothstep(0.0, uNearMix.z, min(eN.x, eN.y)) * (1.0 - smoothstep(uNearMix.x, uNearMix.y, plateT * uFine));
   for (int k = 0; k < (wN > 0.0 ? 1 : 0); k++) {
     vec2 nx = cx / (uNearWin.zw - uNearWin.xy);
     vec2 ny = cy / (uNearWin.zw - uNearWin.xy);
@@ -208,16 +210,16 @@ void main() {
   vec3 aS = s * s * uAMax;
   vec2 nd = vClip.xy / vClip.z;
   vec2 unit = uBase.x * vec2(uAspect, 1.0) / (uWin.zw - uWin.xy);
-  vec2 ka = dFdx(uvT) / max(abs(dFdx(nd.x)), 1e-9) / unit;
-  vec2 kb = dFdy(uvT) / max(abs(dFdy(nd.y)), 1e-9) / unit;
+  vec2 ka = dFdx(uvT) / max(abs(dFdx(nd.x)), 1e-9) / unit * uLens.x;
+  vec2 kb = dFdy(uvT) / max(abs(dFdy(nd.y)), 1e-9) / unit * uLens.y;
   float sq = dot(ka, ka) + dot(kb, kb);
   float dt = ka.x * kb.y - ka.y * kb.x;
   float thin = sqrt(max(0.5 * (sq - sqrt(max(sq * sq - 4.0 * dt * dt, 0.0))), 0.0));
-  float farT = sqrt(max(dot(gx * uFarSize, gx * uFarSize), dot(gy * uFarSize, gy * uFarSize))) / max(abs(dFdy(nd.y)) * 540.0, 1e-9);
+  float farT = sqrt(max(dot(gx * uFarSize, gx * uFarSize), dot(gy * uFarSize, gy * uFarSize))) / max(abs(dFdy(nd.y)) * 540.0, 1e-9) * uLens.y;
   float wD = mix(1.0 - smoothstep(uBase.z, uBase.w, farT), 1.0 - smoothstep(uBase.z, uBase.w, thin), wT);
   vec3 rel = pa - uCentre;
   vec2 g = vec2(dot(rel, uF0) * uFlowDir.y + dot(rel, uR0) * uFlowDir.x, dot(rel, uF0) * uFlowDir.x - dot(rel, uR0) * uFlowDir.y) * vec2(0.55, 1.0) * uDetail.w;
-  float fw = max(length(dFdx(g)), length(dFdy(g)));
+  float fw = max(length(dFdx(g)), length(dFdy(g))) * uFine;
   float c0 = billow(g, fw);
   float c1 = billow(g + uSunG * 0.1, fw);
   float fl = smoothstep(0.08, 0.3, c0) * (1.0 - smoothstep(0.12, 0.35, fw * 4.0)) * smoothstep(0.5, 0.85, soft(g * 4.0 + 5.0));
@@ -269,6 +271,7 @@ uniform vec3 uR0;
 uniform float uGain;
 uniform float uVignette;
 uniform float uAspect;
+uniform float uUnder;
 uniform int uDiag;
 in vec3 vDir;
 in vec3 vClip;
@@ -283,8 +286,57 @@ void main() {
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = vec4(col, 0.0);
-  if (uDiag >= 2 || eps <= 0.0) discard;
+  if (uDiag >= 2 || eps <= -uUnder) discard;
 }`
+
+export class Glow {
+  readonly mesh: THREE.Mesh
+  readonly material: THREE.ShaderMaterial
+
+  constructor(halo: THREE.Texture, reach: number) {
+    const j = deckJson
+    this.material = new THREE.ShaderMaterial({
+      glslVersion: THREE.GLSL3,
+      vertexShader: HALO_VERT,
+      fragmentShader: HALO_FRAG,
+      uniforms: {
+        uHalo: { value: halo }, uHaloSize: { value: new THREE.Vector2().fromArray(j.haloSize) }, uNadir: { value: new THREE.Vector3(0, -1, 0) }, uAlpha: { value: 1.4 }, uEpsMax: { value: j.epsMax }, uPsiMax: { value: j.psiMax },
+        uF0: { value: new THREE.Vector3().fromArray(j.f0) }, uR0: { value: new THREE.Vector3().fromArray(j.r0) }, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uUnder: { value: 0 }, uDiag: diagUniform,
+      },
+      side: THREE.BackSide,
+      blending: THREE.AdditiveBlending,
+      premultipliedAlpha: true,
+      transparent: true,
+      depthWrite: false,
+    })
+    this.mesh = new THREE.Mesh(new THREE.SphereGeometry(reach, 96, 48), this.material)
+    this.mesh.renderOrder = 7
+    this.mesh.frustumCulled = false
+  }
+
+  turn(q: THREE.Quaternion): void {
+    const u = this.material.uniforms
+    ;(u.uF0!.value as THREE.Vector3).fromArray(deckJson.f0).applyQuaternion(q)
+    ;(u.uR0!.value as THREE.Vector3).fromArray(deckJson.r0).applyQuaternion(q)
+  }
+
+  update(camera: THREE.Vector3, centre: THREE.Vector3, radius: number, gain: number, vignette: number, aspect: number): void {
+    const u = this.material.uniforms
+    this.mesh.position.copy(camera)
+    const to = (u.uNadir!.value as THREE.Vector3).copy(centre).sub(camera)
+    const dist = to.length()
+    to.divideScalar(dist)
+    u.uAlpha!.value = Math.asin(Math.min(radius / dist, 1))
+    u.uGain!.value = gain
+    u.uVignette!.value = vignette
+    u.uAspect!.value = aspect
+  }
+
+  dispose(): void {
+    this.mesh.geometry.dispose()
+    this.material.dispose()
+  }
+}
 
 export interface DeckTextures { color: THREE.Texture; near: THREE.Texture; cloud: THREE.Texture; far: THREE.Texture; height: THREE.Texture; light: THREE.Texture; halo: THREE.Texture }
 
@@ -292,10 +344,9 @@ export class Deck {
   readonly group = new THREE.Group()
   readonly mesh: THREE.Mesh
   readonly overlay: THREE.Mesh
-  readonly haze: THREE.Mesh
+  readonly haze: Glow
   readonly material: THREE.ShaderMaterial
   readonly overlayMaterial: THREE.ShaderMaterial
-  readonly hazeMaterial: THREE.ShaderMaterial
   private readonly centre = new THREE.Vector3().fromArray(deckJson.centre)
   private readonly unbloom: number
 
@@ -322,7 +373,7 @@ export class Deck {
         uHeight: { value: t.height }, uLift: { value: look.lift }, uColor: { value: t.color }, uFar: { value: t.far }, uLight: { value: t.light },
         uLightSize: { value: new THREE.Vector2().fromArray(j.lightSize) }, uColorSize: { value: new THREE.Vector2().fromArray(j.imageSize[key]) }, uFarSize: { value: new THREE.Vector2().fromArray(j.farSize[key]) },
         uWin: { value: new THREE.Vector4().fromArray(j.window) }, uCamL: { value: new THREE.Vector3() }, uLimb: { value: new THREE.Vector2().fromArray(look.limb) }, uEdge: { value: look.edge }, uInset: { value: new THREE.Vector2().fromArray(look.inset) }, uAMax: { value: j.aMax }, uEps: { value: j.eps },
-        uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uFade: { value: 1 }, uDiag: diagUniform, uGrad: gradUniform, uSharp: { value: look.sharp }, uBloom: { value: 0 },
+        uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uFade: { value: 1 }, uDiag: diagUniform, uGrad: gradUniform, uFine: fineUniform, uLens: { value: new THREE.Vector2(1, 1) }, uSharp: { value: look.sharp }, uBloom: { value: 0 },
         uDetail: { value: new THREE.Vector4(look.detail.tone, look.detail.relief, look.detail.fleck, look.detail.scale) },
         uBase: { value: new THREE.Vector4(Math.tan(THREE.MathUtils.degToRad(j.vfovDeg) / 2), 0, look.detail.stretch[0], look.detail.stretch[1]) },
         uSunG: { value: sunG },
@@ -388,28 +439,13 @@ export class Deck {
     this.overlay.frustumCulled = false
     this.overlay.renderOrder = 6
     this.overlay.visible = false
-    this.hazeMaterial = new THREE.ShaderMaterial({
-      glslVersion: THREE.GLSL3,
-      vertexShader: HALO_VERT,
-      fragmentShader: HALO_FRAG,
-      uniforms: {
-        uHalo: { value: t.halo }, uHaloSize: { value: new THREE.Vector2().fromArray(j.haloSize) }, uNadir: { value: new THREE.Vector3(0, -1, 0) }, uAlpha: { value: 1.4 }, uEpsMax: { value: j.epsMax }, uPsiMax: { value: j.psiMax },
-        uF0: { value: f0 }, uR0: { value: r0 }, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diagUniform,
-      },
-      side: THREE.BackSide,
-      blending: THREE.AdditiveBlending,
-      premultipliedAlpha: true,
-      transparent: true,
-      depthWrite: false,
-    })
-    this.haze = new THREE.Mesh(new THREE.SphereGeometry(2000, 96, 48), this.hazeMaterial)
-    this.haze.renderOrder = 7
-    this.haze.frustumCulled = false
-    this.group.add(this.mesh, this.overlay, this.haze)
+    this.haze = new Glow(t.halo, 2000)
+    this.group.add(this.mesh, this.overlay, this.haze.mesh)
   }
 
-  update(camera: THREE.Vector3, elapsed: number, gain: number, vignette: number, aspect: number, fade = 1, bloom = 0): void {
+  update(camera: THREE.Vector3, elapsed: number, gain: number, vignette: number, aspect: number, fade = 1, bloom = 0, lens: [number, number] = [1, 1]): void {
     const u = this.material.uniforms
+    ;(u.uLens!.value as THREE.Vector2).set(lens[0], lens[1])
     u.uBloom!.value = this.unbloom * bloom / (1 - bloom)
     ;(u.uCamL!.value as THREE.Vector3).copy(camera)
     u.uTime!.value = elapsed
@@ -419,22 +455,13 @@ export class Deck {
     this.mesh.visible = fade >= 1
     this.overlay.visible = fade > 0 && fade < 1
     this.overlayMaterial.uniforms.uFade!.value = fade
-    const h = this.hazeMaterial.uniforms
-    this.haze.position.copy(camera)
-    const to = this.centre.clone().sub(camera)
-    const dist = to.length()
-    ;(h.uNadir!.value as THREE.Vector3).copy(to).divideScalar(dist)
-    h.uAlpha!.value = Math.asin(Math.min(deckJson.radius / dist, 1))
-    h.uGain!.value = gain * fade
-    h.uVignette!.value = vignette
-    h.uAspect!.value = aspect
+    this.haze.update(camera, this.centre, deckJson.radius, gain * fade, vignette, aspect)
   }
 
   dispose(): void {
     this.mesh.geometry.dispose()
-    this.haze.geometry.dispose()
+    this.haze.dispose()
     this.material.dispose()
     this.overlayMaterial.dispose()
-    this.hazeMaterial.dispose()
   }
 }

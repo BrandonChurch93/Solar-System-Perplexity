@@ -1,0 +1,795 @@
+{
+ "chunks": [
+  {
+   "text": "[Intro]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic ambient electronic",
+    "analog synthesizers",
+    "lush wide pads",
+    "instrumental only",
+    "great production quality",
+    "wide stereo space",
+    "soft opening",
+    "starts at once with a warm low synth drone",
+    "gentle shimmering texture",
+    "no beat",
+    "low energy"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "loud",
+    "drums",
+    "fade in"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Intro Swell]",
+   "duration_ms": 3000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic ambient electronic",
+    "analog synthesizers",
+    "lush wide pads",
+    "instrumental only",
+    "gentle swell",
+    "filter slowly opening",
+    "soft riser",
+    "growing"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "medium"
+  },
+  {
+   "text": "[Theme]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic ambient electronic",
+    "analog synthesizers",
+    "lush wide pads",
+    "instrumental only",
+    "warm simple motif enters",
+    "wide pad and soft sub bass",
+    "moderate level",
+    "calm and weightless",
+    "medium energy"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Build Up]",
+   "duration_ms": 3000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic ambient electronic",
+    "analog synthesizers",
+    "lush wide pads",
+    "instrumental only",
+    "crescendo",
+    "arpeggio fading in",
+    "riser",
+    "building tension",
+    "getting louder"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Mercury Drop]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic ambient electronic",
+    "analog synthesizers",
+    "lush wide pads",
+    "instrumental only",
+    "loud and powerful",
+    "high energy",
+    "huge synth chord and deep sub bass hit on the first beat",
+    "bright glinting arpeggios and crystalline bells",
+    "bright arpeggio and steady pulse",
+    "wide and majestic"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "sparse"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Mercury Breakdown]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic ambient electronic",
+    "analog synthesizers",
+    "lush wide pads",
+    "instrumental only",
+    "soft and gentle",
+    "low energy",
+    "thin texture, no beat",
+    "soft glassy pad and sparse bell tones",
+    "warm pad continues quietly",
+    "calm and floating"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "loud",
+    "drums",
+    "heavy bass"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Build Up To Venus]",
+   "duration_ms": 5000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic ambient electronic",
+    "analog synthesizers",
+    "lush wide pads",
+    "instrumental only",
+    "crescendo",
+    "filter opening and rising arpeggio",
+    "riser and snare roll",
+    "building tension",
+    "getting louder into the next section"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Venus Drop]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic ambient electronic",
+    "analog synthesizers",
+    "lush wide pads",
+    "instrumental only",
+    "loud and powerful",
+    "high energy",
+    "huge synth chord and deep sub bass hit on the first beat",
+    "lush thick detuned pads, warm and full",
+    "bright arpeggio and steady pulse",
+    "wide and majestic"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "sparse"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Venus Breakdown]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic ambient electronic",
+    "analog synthesizers",
+    "lush wide pads",
+    "instrumental only",
+    "soft and gentle",
+    "low energy",
+    "thin texture, no beat",
+    "soft dense drone with slow swells",
+    "warm pad continues quietly",
+    "calm and floating"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "loud",
+    "drums",
+    "heavy bass"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Build Up To Earth]",
+   "duration_ms": 5000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic ambient electronic",
+    "analog synthesizers",
+    "lush wide pads",
+    "instrumental only",
+    "crescendo",
+    "filter opening and rising arpeggio",
+    "riser and snare roll",
+    "building tension",
+    "getting louder into the next section"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Earth Drop]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic ambient electronic",
+    "analog synthesizers",
+    "lush wide pads",
+    "instrumental only",
+    "loud and powerful",
+    "high energy",
+    "huge synth chord and deep sub bass hit on the first beat",
+    "warm hopeful chords and a singing lead synth",
+    "bright arpeggio and steady pulse",
+    "wide and majestic"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "sparse"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Earth Breakdown]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic ambient electronic",
+    "analog synthesizers",
+    "lush wide pads",
+    "instrumental only",
+    "soft and gentle",
+    "low energy",
+    "thin texture, no beat",
+    "soft electric piano tones over a warm pad",
+    "warm pad continues quietly",
+    "calm and floating"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "loud",
+    "drums",
+    "heavy bass"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Build Up To Mars]",
+   "duration_ms": 5000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic ambient electronic",
+    "analog synthesizers",
+    "lush wide pads",
+    "instrumental only",
+    "crescendo",
+    "filter opening and rising arpeggio",
+    "riser and snare roll",
+    "building tension",
+    "getting louder into the next section"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Mars Drop]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic ambient electronic",
+    "analog synthesizers",
+    "lush wide pads",
+    "instrumental only",
+    "loud and powerful",
+    "high energy",
+    "huge synth chord and deep sub bass hit on the first beat",
+    "driving bass sequence, gritty arpeggio, punchy drums",
+    "bright arpeggio and steady pulse",
+    "wide and majestic"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "sparse"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Mars Breakdown]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic ambient electronic",
+    "analog synthesizers",
+    "lush wide pads",
+    "instrumental only",
+    "soft and gentle",
+    "low energy",
+    "thin texture, no beat",
+    "soft pulsing drone and a dry sparse sequence",
+    "warm pad continues quietly",
+    "calm and floating"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "loud",
+    "drums",
+    "heavy bass"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Build Up To Jupiter]",
+   "duration_ms": 5000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic ambient electronic",
+    "analog synthesizers",
+    "lush wide pads",
+    "instrumental only",
+    "crescendo",
+    "filter opening and rising arpeggio",
+    "riser and snare roll",
+    "building tension",
+    "getting louder into the next section"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Jupiter Drop]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic ambient electronic",
+    "analog synthesizers",
+    "lush wide pads",
+    "instrumental only",
+    "loud and powerful",
+    "high energy",
+    "huge synth chord and deep sub bass hit on the first beat",
+    "massive sub bass, towering chords, heavy slow drums",
+    "bright arpeggio and steady pulse",
+    "wide and majestic"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "sparse"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Jupiter Breakdown]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic ambient electronic",
+    "analog synthesizers",
+    "lush wide pads",
+    "instrumental only",
+    "soft and gentle",
+    "low energy",
+    "thin texture, no beat",
+    "soft deep sub drone and slow swirling textures",
+    "warm pad continues quietly",
+    "calm and floating"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "loud",
+    "drums",
+    "heavy bass"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Build Up To Saturn]",
+   "duration_ms": 5000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic ambient electronic",
+    "analog synthesizers",
+    "lush wide pads",
+    "instrumental only",
+    "crescendo",
+    "filter opening and rising arpeggio",
+    "riser and snare roll",
+    "building tension",
+    "getting louder into the next section"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Saturn Drop]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic ambient electronic",
+    "analog synthesizers",
+    "lush wide pads",
+    "instrumental only",
+    "loud and powerful",
+    "high energy",
+    "huge synth chord and deep sub bass hit on the first beat",
+    "grand shimmering arpeggios and glittering wide pads",
+    "bright arpeggio and steady pulse",
+    "wide and majestic"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "sparse"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Saturn Breakdown]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic ambient electronic",
+    "analog synthesizers",
+    "lush wide pads",
+    "instrumental only",
+    "soft and gentle",
+    "low energy",
+    "thin texture, no beat",
+    "soft glassy bell tones and a delicate shimmer",
+    "warm pad continues quietly",
+    "calm and floating"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "loud",
+    "drums",
+    "heavy bass"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Build Up To Uranus]",
+   "duration_ms": 5000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic ambient electronic",
+    "analog synthesizers",
+    "lush wide pads",
+    "instrumental only",
+    "crescendo",
+    "filter opening and rising arpeggio",
+    "riser and snare roll",
+    "building tension",
+    "getting louder into the next section"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Uranus Drop]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic ambient electronic",
+    "analog synthesizers",
+    "lush wide pads",
+    "instrumental only",
+    "loud and powerful",
+    "high energy",
+    "huge synth chord and deep sub bass hit on the first beat",
+    "icy bright digital textures over powerful wide chords",
+    "bright arpeggio and steady pulse",
+    "wide and majestic"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "sparse"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Uranus Breakdown]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic ambient electronic",
+    "analog synthesizers",
+    "lush wide pads",
+    "instrumental only",
+    "soft and gentle",
+    "low energy",
+    "thin texture, no beat",
+    "soft thin drone and clear sine tones",
+    "warm pad continues quietly",
+    "calm and floating"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "loud",
+    "drums",
+    "heavy bass"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Build Up To Neptune]",
+   "duration_ms": 5000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic ambient electronic",
+    "analog synthesizers",
+    "lush wide pads",
+    "instrumental only",
+    "crescendo",
+    "filter opening and rising arpeggio",
+    "riser and snare roll",
+    "building tension",
+    "getting louder into the next section"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Neptune Drop]",
+   "duration_ms": 8000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic ambient electronic",
+    "analog synthesizers",
+    "lush wide pads",
+    "instrumental only",
+    "loud and powerful",
+    "high energy",
+    "huge synth chord and deep sub bass hit on the first beat",
+    "dark heavy bass waves, powerful slow chords, immense",
+    "bright arpeggio and steady pulse",
+    "wide and majestic"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "sparse"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Neptune Breakdown]",
+   "duration_ms": 6000,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic ambient electronic",
+    "analog synthesizers",
+    "lush wide pads",
+    "instrumental only",
+    "soft and gentle",
+    "low energy",
+    "thin texture, no beat",
+    "soft low dark drone and a lonely lead tone",
+    "warm pad continues quietly",
+    "calm and floating"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "loud",
+    "drums",
+    "heavy bass"
+   ],
+   "context_adherence": "low"
+  },
+  {
+   "text": "[Final Build Up]",
+   "duration_ms": 6500,
+   "positive_styles": [
+    "120 BPM",
+    "D minor",
+    "cinematic ambient electronic",
+    "analog synthesizers",
+    "lush wide pads",
+    "instrumental only",
+    "huge crescendo",
+    "the biggest build of the piece",
+    "all layers rising",
+    "long riser and opening filters",
+    "soaring lead line",
+    "getting louder and louder"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "text": "[Final Drop]",
+   "duration_ms": 8500,
+   "positive_styles": [
+    "120 BPM",
+    "cinematic ambient electronic",
+    "analog synthesizers",
+    "lush wide pads",
+    "instrumental only",
+    "D major",
+    "the loudest moment of the whole piece",
+    "very high energy",
+    "massive wall of synth chords and deep sub bass",
+    "soaring lead melody and bright arpeggios",
+    "steady strong pulse",
+    "sustained at full power to the very end"
+   ],
+   "negative_styles": [
+    "vocals",
+    "singing",
+    "choir",
+    "lyrics",
+    "spoken word",
+    "quiet",
+    "soft",
+    "sparse",
+    "fade out"
+   ],
+   "context_adherence": "low"
+  }
+ ]
+}

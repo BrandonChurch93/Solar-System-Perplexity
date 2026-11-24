@@ -1,0 +1,63 @@
+{
+ "critic": "R3",
+ "score": 5,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "image-02.png",
+   "where": "lower-right and upper-right planet limb (tiles C, E, F, G, I; also image-01.png, image-03.png tiles K, L, R, and image-04.png tile W)",
+   "what": "the atmosphere forms a detached bright cyan shell line separated from the globe by a dark trough, creating a stark doubled edge round the limb",
+   "fix": "integrate volumetric atmospheric scattering continuously from the globe surface outward with a smooth radial density falloff instead of an offset rim shell"
+  },
+  {
+   "severity": "major",
+   "file": "image-06.png",
+   "where": "ring system across tiles A, C, D, F (also image-05.png, image-07.png tiles M, O, R, and image-08.png tile S)",
+   "what": "the rings are filled with blurry, clumpy cellular noise blobs stretched along the arcs rather than fine concentric icy ringlets and dust bands",
+   "fix": "replace the coarse 2D blotchy noise map on the ring plane with high-frequency radial ringlet profiles and fine subpixel particle grain"
+  },
+  {
+   "severity": "major",
+   "file": "image-03.png",
+   "where": "center-right edge of the solar core in tile M (also image-01.png upper right sun)",
+   "what": "a dark crescent-shaped pit sits directly inside the bright white disk of the sun",
+   "fix": "fix shader clamping or remove the occluding artifact in the sun core so luminance peaks smoothly at the center"
+  },
+  {
+   "severity": "major",
+   "file": "image-02.png",
+   "where": "atmospheric haze just above the top limb in tile F (also image-03.png tiles K and L)",
+   "what": "blotchy, frond-like noise patches protrude upward from the limb glow against the Milky Way backdrop",
+   "fix": "remove procedural noise modulation from the outer atmospheric glow so the limb haze fades cleanly into space"
+  },
+  {
+   "severity": "major",
+   "file": "image-06.png",
+   "where": "upper-left sunlit planet limb in tiles B and I, and moon limb in tile G (also image-07.png tiles J, K and image-03.png tile J)",
+   "what": "visible 1-pixel stair-stepping and hard aliased cutout edges appear along the bright planet limb and moon silhouettes",
+   "fix": "increase supersampling/anti-aliasing on sphere silhouettes and add subtle atmospheric or micro-limb softening"
+  },
+  {
+   "severity": "minor",
+   "file": "image-06.png",
+   "where": "white cloud streaks and storm rim in tiles B and H (also image-07.png tile J and image-02.png tile A)",
+   "what": "bright cloud wisps and the storm collar show blocky, pixelated texels alongside diagonally smeared cloud texture",
+   "fix": "use a higher-resolution cloud map or procedural detail pass so cloud filaments stay crisp at native crop scale"
+  },
+  {
+   "severity": "minor",
+   "file": "image-02.png",
+   "where": "Milky Way dust bands in tiles B, C, F (also image-03.png tiles K, M)",
+   "what": "the background nebula texture looks soft and blocky with pixelated color noise next to crisp 1-pixel foreground stars",
+   "fix": "use a higher-resolution, denoised skybox plate matched to native output resolution"
+  },
+  {
+   "severity": "minor",
+   "file": "image-08.png",
+   "where": "planet shadow boundary across the upper-left rings in tile S (also image-05.png)",
+   "what": "the planet shadow cuts across the rings in a razor-hard curve with no penumbra",
+   "fix": "soften the planetary shadow edge on the rings slightly to account for finite solar angular size and ring scattering"
+  }
+ ]
+}

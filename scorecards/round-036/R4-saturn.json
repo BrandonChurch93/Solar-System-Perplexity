@@ -1,0 +1,28 @@
+{
+ "critic": "R4",
+ "score": 8,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "upper right, frames 3390-3539",
+   "what": "the moon drifts about a tenth of the frame across the locked hold while the globe and the stars stay put",
+   "fix": "slow the moon to a near-still drift, or move the stars with it if the camera is meant to be creeping"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-02.png",
+   "where": "ring edges, frames 3605-3629",
+   "what": "the fast part of the dive stays razor sharp instead of a smooth blur",
+   "fix": "add directional blur on the ring edges once the dive is moving, matching the rise"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "full frame, frames 3390-3539",
+   "what": "exposure creeps up in a straight line across the hold, sky and globe together",
+   "fix": "hold the grade still for the length of the hold"
+  }
+ ]
+}

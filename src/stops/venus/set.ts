@@ -3,8 +3,9 @@ import { config } from '../../config'
 import { FarPoint } from '../../bodies/farpoint'
 import type { Pose, SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { diagUniform } from '../../diagnostics/diag'
+import { handoverOf } from '../../director/handover'
 import { smooth } from '../../director/rig'
-import { patches, relief as reliefDefs, wrap } from './assets'
+import { patches, place, relief as reliefDefs, wrap } from './assets'
 import { Globe } from './globe'
 import * as look from './look'
 import { deck, plan, veil as timing } from './plan'
@@ -79,6 +80,17 @@ export const createSet: SetFactory = async (ctx) => {
   const boltMap = await ctx.texture(base + 'bolt.jpg', { srgb: true })
   const patchTextures: THREE.Texture[] = []
   for (const level of patches.levels) patchTextures.push(await ctx.texture(base + level.file, { srgb: true, anisotropy: 16 }))
+  // The plates of the place: one set for the dive and one for the rise (the close side as it stands at the T of each).
+  const placeTextures: THREE.Texture[] = []
+  const placeRise: THREE.Texture[] = []
+  for (const level of place.levels) {
+    // A level that holds its light alone is one channel of display values; the globe shader takes them back to light itself.
+    const kind = level.colourOf < 0 ? { srgb: true, anisotropy: 16 } : { srgb: false, channels: 1 as const, anisotropy: 16 }
+    const dive = await ctx.texture(base + level.dive, kind)
+    placeTextures.push(dive)
+    placeRise.push(level.rise === level.dive ? dive : await ctx.texture(base + level.rise, kind))
+  }
+  const wideTexture = await ctx.texture(base + place.wide.file, { srgb: false, channels: 1 as const, anisotropy: 16 })
   const limbMap = await ctx.dataTexture(base + look.limb.file, LIMB.azimuth + 1, LIMB.half * 4, 4)
   const globeTurn = new THREE.Quaternion().fromArray(fit.globe.quaternion)
   const holdBack = globeTurn.clone().invert()
@@ -87,12 +99,15 @@ export const createSet: SetFactory = async (ctx) => {
   const holdRim = new HoldRim(await ctx.dataTexture(base + look.hold.rim.file, look.hold.rim.cols + 1, look.hold.rim.inside + look.hold.rim.outside, 4), holdCam, look.hold.near)
   const spotBody = plan.spot.clone().applyQuaternion(globeTurn.clone().invert())
 
+  const ground = await CloudRelief.load(ctx, base, reliefDefs[key], look.relief)
   const globe = new Globe({
     map, mapWidth: wrap.sets[key].color[0], curve: look.curve, haze: look.haze, limb: limbMap, graze: look.graze, lift: look.lift, shade: look.shade, mauve: look.mauve, weave: { ...look.weave, lod: Math.log2(wrap.sets[key].color[0] / look.weave.base), camera: new THREE.Vector3().fromArray(fit.camera.position).applyQuaternion(globeTurn.clone().invert()) },
     rim: holdRim,
     hold: { ...look.hold, map: holdMap, right: new THREE.Vector3(1, 0, 0).applyQuaternion(holdBack), up: new THREE.Vector3(0, 1, 0).applyQuaternion(holdBack), forward: new THREE.Vector3(0, 0, -1).applyQuaternion(holdBack), centre: [-holdCam.x / holdCam.z, -holdCam.y / holdCam.z], half: look.hold.margin / Math.sqrt(holdCam.lengthSq() - 1), lod: Math.log2(wrap.sets[key].color[0] / look.hold.base) },
     swirl: { axis: direction(look.swirl.lon, look.swirl.lat), wideDeg: look.swirl.wideDeg },
     patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: spotBody, feather: patches.feather, fade: patches.fade },
+    air: { deck: ground.deck!.colours, deckSpanDeg: look.relief.air.deckSpanDeg },
+    place: { textures: placeTextures, rim: place.rim, widthsDeg: place.levels.map((l) => l.widthDeg), centre: new THREE.Vector3().fromArray(place.centre), feather: place.feather, fade: place.fade, forms: place.forms, tone: place.tone, wide: { ...place.wide, texture: wideTexture } },
     flow: { map: flowMap, strength: look.drift.strength, shadow: look.drift.shadow, shadowOffset: look.drift.shadowOffset },
     bolts: { map: boltMap, center: direction(wrap.bolt.lon, wrap.bolt.lat), widthDeg: wrap.bolt.widthDeg, gain: 1, color: look.boltColor, cells: look.cells.map((c) => ({ dir: direction(c.lon, c.lat), radiusDeg: c.radiusDeg, painted: c.painted })) },
   })
@@ -102,11 +117,38 @@ export const createSet: SetFactory = async (ctx) => {
   const far = new FarPoint()
   orbit.add(globe.mesh, rim.mesh, far.points)
 
-  const ground = await CloudRelief.load(ctx, base, reliefDefs[key], look.relief)
   terrain.add(ground.group)
+  orbit.add(ground.globeDome)
+  const airTurn = new THREE.Quaternion()
+  const airBack = new THREE.Quaternion()
+  const hazeTurn = new THREE.Quaternion()
+  const airEye = new THREE.Vector3()
+  // The globe camera at the T of each handover, in the close scene from the centre of its deck sphere.
+  const eyesAtT: Partial<Record<'dive' | 'rise', { time: number; eye: THREE.Vector3 }>> = {}
+  const eyeAtT = (kind: 'dive' | 'rise'): THREE.Vector3 => {
+    const time = handoverOf(plan.id, kind)?.time ?? (kind === 'dive' ? plan.seg.dive!.end : plan.seg.rise.start)
+    const hit = eyesAtT[kind]
+    if (hit && hit.time === time) return hit.eye
+    const pose = kind === 'dive' ? plan.divePose(time, 'orbit') : plan.risePose(time, 'orbit')
+    const eye = pose.position.clone().applyQuaternion(plan.turn(time).multiply(plan.terrainFrame).invert()).multiplyScalar(deck.radius)
+    eyesAtT[kind] = { time, eye }
+    return eye
+  }
+  // The same camera in the body fixed frame of the globe, the frame of the plates of the place (as assets-src/venus/place/tcam.ts).
+  const bodyEyes: Partial<Record<'dive' | 'rise', { time: number; eye: THREE.Vector3 }>> = {}
+  const bodyEyeAtT = (kind: 'dive' | 'rise'): THREE.Vector3 => {
+    const time = handoverOf(plan.id, kind)?.time ?? (kind === 'dive' ? plan.seg.dive!.end : plan.seg.rise.start)
+    const hit = bodyEyes[kind]
+    if (hit && hit.time === time) return hit.eye
+    const pose = kind === 'dive' ? plan.divePose(time, 'orbit') : plan.risePose(time, 'orbit')
+    const eye = pose.position.clone().applyQuaternion(plan.turn(time).multiply(globeTurn).invert())
+    bodyEyes[kind] = { time, eye }
+    return eye
+  }
   const carry = { ...ground.carry!, soft: look.veil.sunSoft, tint: look.veil.sunTint }
-  const clouds = await ctx.texture(base + look.veil.file, { srgb: true, anisotropy: 1, repeat: true })
-  const veil = new Veil(look.veil, clouds, carry, diagUniform)
+  // The cover veil is never drawn any more (plan.veilAmount is 0 and plan.release is 1 on every frame of both moves), so its cloud
+  // picture is not loaded: the sheet keeps a texture it never shows.
+  const veil = new Veil(look.veil, map, carry, diagUniform)
   const sunTerrain = new THREE.Vector3(look.veil.sun[0], look.veil.sun[1], -1).normalize()
   const swaps = { dive: swapOf('dive', sunTerrain, carry.fwd, carry.right), rise: swapOf('rise', sunTerrain, carry.fwd, carry.right) }
   ;(globe.material.uniforms.uCarry!.value as THREE.Vector4).set(look.veil.grade.keep, look.veil.grade.gamma, look.veil.grade.pivot, look.veil.grade.gain)
@@ -189,8 +231,38 @@ export const createSet: SetFactory = async (ctx) => {
       for (let i = 0; i < amps.length; i++) amps[i] = ending ? 0 : look.flash(look.cells[i]!, state.time) * (1 - left)
       const gu = globe.material.uniforms
       ;(gu.uTint!.value as THREE.Vector3).set(1, 1, 1).lerp(tintLow, low)
-      const vignette = shot.post.vignette * (1 - low)
+      // The air of the place on the globe side: the close side's own dome, seen from the globe camera, in below the heights of plates.json.
+      const ah = place.air.heights
+      const airOn = covering ? 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-4)) - Math.log(ah[0])) / (Math.log(ah[1]) - Math.log(ah[0]))) : 0
+      const sh = place.air.sunHeights
+      const sunOn = covering ? 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-4)) - Math.log(sh[0])) / (Math.log(sh[1]) - Math.log(sh[0]))) : 0
+      airTurn.copy(plan.turn(state.time)).multiply(plan.terrainFrame)
+      airEye.copy(localP).applyQuaternion(airBack.copy(airTurn).invert()).multiplyScalar(deck.radius)
+      ground.updateGlobe(airEye, eyeAtT(state.time > terrainMid ? 'rise' : 'dive'), airTurn, airOn * state.weight, sunOn * state.weight, gain, shot.post.vignette, view, shot.sun.dir)
+      const vignette = shot.post.vignette * (1 - low * (1 - airOn))
+      hazeTurn.copy(state.rotation).multiply(airTurn)
+      ;(gu.uAirFwd!.value as THREE.Vector3).copy(ground.deck!.fwd).applyQuaternion(hazeTurn)
+      ;(gu.uAirRight!.value as THREE.Vector3).copy(ground.deck!.right).applyQuaternion(hazeTurn)
+      const hz = place.air.haze
+      ;(gu.uAirHaze!.value as THREE.Vector4).set(hz.most * airOn, hz.mu, hz.gain, THREE.MathUtils.degToRad(look.relief.air.deckSpanDeg))
       gu.uCarryOn!.value = 1 - released
+      const pl = plan.placeLook(state.segment, state.time)
+      const duskGain = Math.pow(place.dusk.gain, pl.dusk)
+      // The weight of the place grows with nearness, from the first frame of the dive on, and is gone in the rise before the travel.
+      const height = Math.log(Math.max(camera.length() - 1, 1e-4))
+      const byHeight = (h: [number, number]): number => 1 - smooth((height - Math.log(h[0])) / (Math.log(h[1]) - Math.log(h[0])))
+      gu.uPlaceOn!.value = pl.near ? pl.on * byHeight(place.show.heights) : pl.on
+      const after = state.time > terrainMid
+      for (let i = 0; i < placeTextures.length; i++) gu['uPlace' + i]!.value = (after ? placeRise : placeTextures)[i]
+      ;(gu.uToneEye!.value as THREE.Vector3).copy(bodyEyeAtT(after ? 'rise' : 'dive'))
+      ;(gu.uToneLook!.value as THREE.Vector4).y = byHeight(place.tone.heights)
+      ;(gu.uDusk!.value as THREE.Vector4).set(duskGain * Math.pow(place.dusk.tint[0], pl.dusk), duskGain * Math.pow(place.dusk.tint[1], pl.dusk), duskGain * Math.pow(place.dusk.tint[2], pl.dusk), duskGain / place.dusk.gain)
+      // The plates hold the light of the place at the full gain and the full tint,
+      // so they are drawn with the share of both that the globe has now: the place and the globe about it keep one colour at every exposure.
+      // The fourth value: how far the colour of the plates is taken from their display value and not from their light (dusk.hue times
+      // the share by which they are drawn dimmer than they are held), so a dimmed highlight does not turn red.
+      const placeDusk = place.dusk.tint.map((t) => Math.pow(t, pl.dusk - 1) * duskGain / place.dusk.gain) as [number, number, number]
+      ;(gu.uPlaceDusk!.value as THREE.Vector4).set(placeDusk[0], placeDusk[1], placeDusk[2], Math.min(Math.max(place.dusk.hue * (1 - (0.2126 * placeDusk[0] + 0.7152 * placeDusk[1] + 0.0722 * placeDusk[2])), 0), 1))
       ;(gu.uHoldLook!.value as THREE.Vector4).x = ending ? 0 : look.hold.weight
       ;(gu.uSwirl!.value as THREE.Vector4).w = state.time > terrainMid ? THREE.MathUtils.degToRad(look.swirl.deg) : 0
       gu.uWeaveLit!.value = state.time > terrainMid ? look.weave.rise.lit : look.weave.lit
@@ -212,7 +284,9 @@ export const createSet: SetFactory = async (ctx) => {
       limbFrame(camera, light, limbS, limbT)
       gu.uVignette!.value = vignette
       gu.uAspect!.value = aspect
-      gu.uLimbK!.value = look.limb.gain * (1 - low)
+      const lh = place.dusk.limbHeights
+      const limbK = look.limb.gain * (1 - low) * (covering ? smooth((Math.log(Math.max(camera.length() - 1, 1e-4)) - Math.log(lh[0])) / (Math.log(lh[1]) - Math.log(lh[0]))) : 1)
+      gu.uLimbK!.value = limbK
       gu.uLimbFar!.value = left
       ;(gu.uLimbS!.value as THREE.Vector3).copy(limbS)
       ;(gu.uLimbT!.value as THREE.Vector3).copy(limbT)
@@ -220,7 +294,8 @@ export const createSet: SetFactory = async (ctx) => {
       let taps = 0
       let smear = 1
       if (view.samples > 1 && state.segment.stop === plan.id && (kind === 'dive' || kind === 'rise') && thick < look.motion.hidden) {
-        const dt = config.shutterFraction / (view.samples * config.fps)
+        // One sample's share of the shutter that is open: the engine may keep only a share of the film's shutter in a dive or a rise (E6, view.shutter).
+        const dt = config.shutterFraction * (view.shutter ?? 1) / (view.samples * config.fps)
         const a = kind === 'dive' ? plan.dive(state.time) : plan.rise(state.time)
         const b = kind === 'dive' ? plan.dive(state.time + dt) : plan.rise(state.time + dt)
         if (a.view === 'orbit' && b.view === 'orbit') {
@@ -239,7 +314,7 @@ export const createSet: SetFactory = async (ctx) => {
       globe.motion(taps, smear, camera, shot.camera.quaternion, shift, turn, zoom, view.camera.view?.offsetX ?? 0, view.camera.view?.offsetY ?? 0)
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
-      rim.update(camera, limbS, limbT, gain * state.weight * look.limb.gain * (1 - low), vignette, aspect, Math.min(LIMB.edgePx / radiusPx, 0.02), left)
+      rim.update(camera, limbS, limbT, gain * state.weight * limbK, vignette, aspect, Math.min(LIMB.edgePx / radiusPx, 0.02), left)
       holdRim.update(camera, state.rotation, ending ? 0 : look.hold.weight * (1 - left))
       const visible = radiusPx > 0.6
       globe.mesh.visible = visible

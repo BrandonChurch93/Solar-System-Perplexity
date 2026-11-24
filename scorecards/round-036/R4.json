@@ -1,0 +1,57 @@
+{
+ "critic": "R4",
+ "score": 6.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R4",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "sheet-02.png",
+      "where": "frames 1062 to 1069",
+      "what": "the sun and the milky way drop out and a sharp backlit planet is already centered in a new dark field; exposure does not carry and no blur joins the two frames",
+      "fix": "make that cover one eased move, keep the milky way and exposure continuous, and leave a directional blur across the whip"
+     },
+     {
+      "severity": "major",
+      "file": "sheet-02.png",
+      "where": "top-right limb of the sun, frame 1055",
+      "what": "the exiting planet cuts the sun as a hard black circle, falling from the disk to black in one or two pixels, while the same limb is a smooth streak seven frames earlier",
+      "fix": "blur the occluder with the same shutter so the bite is one soft streak, not a hard matte"
+     },
+     {
+      "severity": "minor",
+      "file": "sheet-01.png",
+      "where": "frame numbers on every sheet",
+      "what": "samples step 7 to 11 frames, so the pack has no consecutive frames across a cover",
+      "fix": "add a contact sheet of consecutive frames across each cover"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R4",
+    "score": 9,
+    "pass": true,
+    "issues": [
+     {
+      "severity": "minor",
+      "file": "sheet-10.png",
+      "where": "frames 5145–5324, dark storm and cloud bands near the top of the blue globe",
+      "what": "The globe drifts slightly relative to the stars, but the storm and cloud bands appear nearly fixed on the disk, making the closing hold feel a little like a still image.",
+      "fix": "Carry a subtle, continuous globe rotation or cloud drift through the hold and into the fade, independent of the camera drift."
+     }
+    ]
+   }
+  }
+ ]
+}

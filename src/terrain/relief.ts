@@ -1,12 +1,13 @@
 import * as THREE from 'three'
 import type { RenderView, SetContext } from '../core/types'
-import { DIAG_GLSL, diagUniform, gradUniform } from '../diagnostics/diag'
+import { DIAG_GLSL, biasUniform, diagUniform, fineUniform, gradUniform } from '../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../post/chain'
 import { MAX_MARK, reach, reachNeeded, uniformCells } from './shield'
 
 export interface ReliefLayerDef {
   color: string
   alpha?: string
+  alphaOne?: boolean
   dist: string
   box: [number, number, number, number]
   distSize: [number, number]
@@ -140,6 +141,8 @@ uniform float uVignette;
 uniform float uAspect;
 uniform vec3 uLayer;
 uniform float uGrad;
+uniform float uFine;
+uniform float uBias;
 uniform vec3 uUpL;
 uniform vec4 uValley;
 uniform vec4 uValleyFlow;
@@ -192,11 +195,11 @@ float valleyDensity(vec3 p) {
 }
 void main() {
   vec2 mq = (vImage - uMaskBox.xy) / uMaskBox.zw;
-  vec3 m = texture(uMasks, vec2(mq.x, 1.0 - mq.y)).rgb;
+  vec3 m = texture(uMasks, vec2(mq.x, 1.0 - mq.y), uBias).rgb;
   vec2 shift = uMist * m.r + uDust * m.g;
   vec2 uv = vUv - vec2(shift.x, -shift.y) * uToLayer;
   vec4 texel = textureGrad(uColor, uv, dFdx(vUv) * uGrad, dFdy(vUv) * uGrad);
-  float alpha = uHasAlpha > 0.5 ? texture(uAlpha, vUv).r : texel.a;
+  float alpha = uHasAlpha > 0.5 ? texture(uAlpha, vUv, uBias).r : texel.a;
 #ifdef RELIEF_APRON
   vec2 source = vec2(vUv.x, 1.0 - vUv.y) * uSize;
   vec2 sx = dFdx(source);
@@ -212,7 +215,7 @@ void main() {
     texel = textureGrad(uApron, apronUV(apronPixel(apronColorSource(source - shift * uToLayer * uSize), source)), ax * uGrad, ay * uGrad);
     vec2 px = (apronPixel(source + sx, source) - p) / uApronSize * vec2(1.0, -1.0);
     vec2 py = (apronPixel(source + sy, source) - p) / uApronSize * vec2(1.0, -1.0);
-    alpha = textureGrad(uApron, apronUV(p), px, py).a;
+    alpha = textureGrad(uApron, apronUV(p), px * uFine, py * uFine).a;
   }
 #endif
   float texels = diagTexels(uv * uSize);
@@ -512,7 +515,7 @@ export class Relief {
       const l = def.layers[k]!
       const color = await ctx.texture(base + l.color, { srgb: true, anisotropy: 8 })
       const alphaMips = !motion.apron?.baseAlphaNoMips.some((id) => l.alpha === `relief-${id}-alpha.png`)
-      const alpha = l.alpha ? await ctx.texture(base + l.alpha, { srgb: false, anisotropy: 4, mips: alphaMips }) : null
+      const alpha = l.alpha ? await ctx.texture(base + l.alpha, l.alphaOne ? { srgb: false, anisotropy: 4, mips: alphaMips, channels: 1 } : { srgb: false, anisotropy: 4, mips: alphaMips }) : null
       const dist = new Float32Array(await ctx.buffer(base + l.dist))
       const [dw, dh] = l.distSize
       if (dist.length !== dw * dh) throw new Error('relief distance size mismatch: ' + l.dist)
@@ -638,7 +641,7 @@ export class Relief {
           uColor: { value: color }, uAlpha: { value: alpha ?? color }, uMasks: { value: masks }, uHasAlpha: { value: alpha ? 1 : 0 },
           uSize: { value: new THREE.Vector2(size.width, size.height) }, uMaskBox: { value: new THREE.Vector4(def.maskBox[0] / W, def.maskBox[1] / H, def.maskBox[2] / W, def.maskBox[3] / H) }, uToLayer: { value: new THREE.Vector2(W / bw, H / bh) },
           uMist: { value: new THREE.Vector2() }, uDust: { value: new THREE.Vector2() }, uGain: { value: 1 }, uVignette: { value: 0 },
-          uAspect: { value: 16 / 9 }, uLayer: { value: new THREE.Vector3().fromArray(l.tint) }, uDiag: diagUniform, uGrad: gradUniform,
+          uAspect: { value: 16 / 9 }, uLayer: { value: new THREE.Vector3().fromArray(l.tint) }, uDiag: diagUniform, uGrad: gradUniform, uFine: fineUniform, uBias: biasUniform,
           uUpL: { value: new THREE.Vector3(0, Math.cos(rad(motion.pitchDeg ?? 0)), Math.sin(rad(motion.pitchDeg ?? 0))) }, uValley: { value: new THREE.Vector4(0, 1, 0, 0) }, uValleyFlow: { value: new THREE.Vector4(1, 0, 0, 0) }, uValleyShape: { value: new THREE.Vector4(1, 1, 0, 1) }, uValleyColor: { value: new THREE.Vector3() },
         },
         transparent: true,

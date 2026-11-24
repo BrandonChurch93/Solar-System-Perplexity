@@ -1,0 +1,85 @@
+{
+ "critic": "R3",
+ "score": 7.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 8,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "minor",
+      "file": "image-04.png",
+      "where": "cell V, southern cloud bands",
+      "what": "the far decks are softer and more uniform than the near storm, a mild airbrushed read",
+      "fix": "keep filament-scale detail in the southern and far clouds so they match the storm crop"
+     },
+     {
+      "severity": "minor",
+      "file": "image-08.png",
+      "where": "cell V, southern bands of the closer frame",
+      "what": "the same far surface stays smooth, with streaks that do not break up",
+      "fix": "use the same high-frequency breakup as the near storm"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "lower-left night-side ring arcs and the thin outer arcs",
+      "what": "the dim arcs lose their lanes, and the thinnest ones step slightly against space",
+      "fix": "hold ringlet contrast on the dim arcs and soften only the outer edge"
+     },
+     {
+      "severity": "minor",
+      "file": "image-05.png",
+      "where": "right-edge ring remnant",
+      "what": "the only visible ring reads as a faint soft streak rather than lanes",
+      "fix": "carry the same ringlet structure into this frame so the arc does not dissolve"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-16.png",
+      "where": "crop S, lower globe edge where it crosses the foreground rings",
+      "what": "The globe silhouette meets the near rings in a pointed black notch, with a second dark sliver between the strands. The abrupt junction makes the layers look cut out.",
+      "fix": "Rework the globe and ring occlusion at the crossing so the silhouette stays smoothly curved and the near ring strands remain continuous over it."
+     },
+     {
+      "severity": "major",
+      "file": "image-14.png",
+      "where": "crops B and H, broad sunlit blue globe into the terminator",
+      "what": "Large areas of blue texture and thin cloud wisps smear in the same diagonal direction, leaving a brushed, stretched surface between the sharper cloud clusters.",
+      "fix": "Reduce the directional stretch and introduce finer, irregular structure at several scales on the globe and in the cloud layer."
+     },
+     {
+      "severity": "minor",
+      "file": "image-12.png",
+      "where": "crops S and T, dark lower foreground beneath the cloud bank",
+      "what": "The cloud shadows resolve into broad, blurry blue streaks, and a few isolated sharp white points read like stars superimposed on the surface.",
+      "fix": "Preserve some low-contrast texture inside the shadow bands and remove the isolated white specks unless they are tied to a visible cloud feature."
+     },
+     {
+      "severity": "minor",
+      "file": "image-15.png",
+      "where": "crop K, lit face and terminator of the moon",
+      "what": "The lit face is softly mottled, with little distinct relief, and the wide, smooth terminator gives the moon an airbrushed finish.",
+      "fix": "Add subtle, resolved lunar relief and let it modulate the terminator without hardening the entire shadow edge."
+     }
+    ]
+   }
+  }
+ ]
+}

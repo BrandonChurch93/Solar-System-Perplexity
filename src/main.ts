@@ -1,6 +1,7 @@
 import { config } from './config'
 import { Engine } from './core/engine'
 import { installShowcase } from './capture/frame'
+import { setCapture } from './core/clock'
 import { mountExport } from './capture/export'
 import type { ViewKind } from './core/types'
 import { FilmDirector } from './director/film'
@@ -15,6 +16,9 @@ const offline = mode === 'capture' || mode === 'export'
 const formatId = params.get('format') ?? config.formatKeys.master
 const assets = params.get('assets') ?? (offline ? 'full' : 'web')
 const tier = params.get('tier') ?? 'draft'
+const rate = Number(params.get('rate') ?? 1)
+const shutter = params.get('shutter')
+if (offline) setCapture(rate, shutter === null ? null : Number(shutter))
 
 document.body.classList.add(mode)
 const engine = new Engine(formatId, assets)

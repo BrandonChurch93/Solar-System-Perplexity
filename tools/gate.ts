@@ -2,7 +2,7 @@ import { execFileSync, spawnSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
 import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
-import { DIST, ROOT, WORK, args, ensureBuild, loadConfig, readRecord } from './lib/common'
+import { DIST, ROOT, WORK, args, ensureBuild, linkDist, loadConfig, readRecord } from './lib/common'
 import { openCapture, renderPng } from './lib/browser'
 import { decodePng } from './lib/frames'
 import { decodeFramePng, psnrPng } from './lib/encode'
@@ -270,6 +270,7 @@ const checks: Record<string, () => Promise<Result> | Result> = {
   },
   G1: () => {
     const r = run('npm', ['run', 'build', '--silent'])
+    if (r.ok) linkDist()
     return { id: 'G1', pass: r.ok, note: r.ok ? 'build clean' : r.out.slice(-600) }
   },
   G2: () => {

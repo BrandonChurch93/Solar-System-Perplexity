@@ -3,11 +3,13 @@ import { HAZE_GLSL, hazeUniforms, type HazeParams } from '../../bodies/haze'
 import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { EQUIRECT_GLSL } from '../../space/sky'
-import { wrap } from './assets'
+import { place as placeDef, wrap } from './assets'
 import holdJson from './hold.json'
 import { HOLD_RIM_GLSL, LIMB, LIMB_GLSL, type HoldRim } from './rim'
 
-export const MAX_PATCHES = 6
+// Sixteen samplers is all a browser has to give a fragment shader: six of the globe, these two, five place plates and the wide ring of the place.
+// Two are left.
+export const MAX_PATCHES = 2
 export const MAX_CELLS = 16
 
 export interface GlobePatches {
@@ -16,6 +18,26 @@ export interface GlobePatches {
   spot: THREE.Vector3
   feather: number
   fade: [number, number]
+}
+
+export const PLACE_LEVELS = 5
+if (placeDef.levels.length !== PLACE_LEVELS) throw new Error('the globe shader is written for ' + PLACE_LEVELS + ' levels of the place')
+
+export interface GlobePlace {
+  textures: THREE.Texture[]
+  rim: number
+  widthsDeg: number[]
+  centre: THREE.Vector3
+  feather: number
+  fade: [number, number]
+  // The border of the widest plate follows its own cloud forms: amount (share of the plate width) and the two mip levels whose ratio gives the forms.
+  forms: [number, number, number]
+  // The wide ring (plates.json, wide): one channel of forms about the same centre, drawn over the globe's own colour.
+  wide: { texture: THREE.Texture; widthDeg: number; rim: number; forms: number; formsDeg: [number, number]; own: number }
+  // The look of the place from above (plates.json, tone): the light of the plates, not below floor, raised to the power of the tone map
+  // times its factor, less so the nearer the line of sight is to the one of the camera at T. widthDeg: the width of the map; cos: the
+  // cosines between which that nearness goes from 0 to 1; power: the curve of that ramp.
+  tone: { cos: [number, number]; power: number; air: number; live: { sigmaDeg: number; contrast: number; colour: number; gain: number; most: number } }
 }
 
 export interface GlobeFlow {
@@ -40,6 +62,8 @@ export interface GlobeOptions {
   curve: number[][]
   haze: HazeParams
   patches: GlobePatches
+  place: GlobePlace
+  air: { deck: THREE.Vector3[]; deckSpanDeg: number }
   flow: GlobeFlow
   bolts: GlobeBolts
   limb: THREE.Texture
@@ -83,6 +107,36 @@ const PATCH_LEVELS = Array.from({ length: MAX_PATCHES }, (_, i) => `    if (uPat
       near = max(near, w * step(${i}.5, 2.0));
     }`).join('\n')
 
+const PLACE_SAMPLERS = Array.from({ length: PLACE_LEVELS }, (_, i) => 'uniform sampler2D uPlace' + i + ';').join('\n')
+
+// A level with colourOf holds its light alone, as a share of the light of the plate of the level colourOf at the same ground point
+// (plates.json, lightNote): the film shows that plate times the channel. That plate was sampled just before where it shows; where
+// it does not, it is sampled here.
+const COLOUR_GIVERS = [...new Set(placeDef.levels.map((l) => l.colourOf).filter((j) => j >= 0))]
+const PLACE_COLOURS = COLOUR_GIVERS.map((j) => `    vec3 hue${j} = vec3(0.0);\n    float got${j} = 0.0;`).join('\n')
+const placeSample = (i: number): string => `textureGrad(uPlace${i}, pg * uPlaceScale[${i}] + 0.5, pgx * uPlaceScale[${i}] * uGrad, pgy * uPlaceScale[${i}] * uGrad)`
+const placeColour = (i: number): string => {
+  const j = placeDef.levels[i]?.colourOf ?? -1
+  if (j < 0) return `vec3 c = ${placeSample(i)}.rgb;${COLOUR_GIVERS.includes(i) ? `\n        hue${i} = c;\n        got${i} = 1.0;` : ''}`
+  return `for (int m = 0; m < (got${j} < 0.5 ? 1 : 0); m++) {
+          hue${j} = ${placeSample(j)}.rgb;
+          got${j} = 1.0;
+        }
+        vec3 c = (hue${j} + 1e-4) * (${placeSample(i)}.r * ${placeDef.levels[i]!.most.toFixed(4)});`
+}
+
+const PLACE_GLSL = Array.from({ length: PLACE_LEVELS }, (_, i) => `    {
+      vec2 q = pg * uPlaceScale[${i}];
+      float w = ${i > 0 ? 'smoothstep(0.5, 0.5 - uPlaceLook.x, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPlaceLook.y, uPlaceLook.z, parentPlace))' : 'smoothstep(0.5, 0.5 - uPlaceLook.w, length(q) + uPlaceForms.x * clamp(0.5 + dot(textureLod(uPlace0, q + 0.5, uPlaceForms.y).rgb, vec3(0.2126, 0.7152, 0.0722)) / max(dot(textureLod(uPlace0, q + 0.5, uPlaceForms.z).rgb, vec3(0.2126, 0.7152, 0.0722)), 1e-3) - 1.0, 0.0, 1.0))'};
+      for (int k = 0; k < (w > 0.0 ? 1 : 0); k++) {
+        ${placeColour(i)}
+        laid = laid * (1.0 - w) + c * w;
+        cover = cover * (1.0 - w) + w;
+        placeTexels = mix(placeTexels, pgd * uPlaceScale[${i}] * uPlaceSize[${i}], w);
+      }
+      parentPlace = pgd * uPlaceScale[${i}] * uPlaceSize[${i}];
+    }`).join('\n')
+
 const TAP_LEVELS = Array.from({ length: MAX_PATCHES }, (_, i) => `    for (int k = 0; k < (wl[${i}] > 0.0 ? 1 : 0); k++) a = mix(a, textureGrad(uPatch${i}, gm * uPatchScale[${i}] + 0.5, major * uPatchScale[${i}], minor * uPatchScale[${i}]).rgb, wl[${i}]);`).join('\n')
 
 const FRAG = /* glsl */ `
@@ -94,6 +148,29 @@ ${PATCH_SAMPLERS}
 uniform float uPatchScale[${MAX_PATCHES}];
 uniform float uPatchSize[${MAX_PATCHES}];
 uniform float uPatchCount;
+${PLACE_SAMPLERS}
+uniform vec3 uPlaceN;
+uniform vec3 uPlaceE;
+uniform vec3 uPlaceU;
+uniform float uPlaceScale[${PLACE_LEVELS}];
+uniform float uPlaceSize[${PLACE_LEVELS}];
+uniform vec4 uPlaceLook;
+uniform vec3 uPlaceForms;
+uniform float uPlaceOn;
+uniform vec3 uToneEye;
+uniform vec4 uToneLook;
+uniform float uTonePower;
+uniform vec4 uDusk;
+uniform vec4 uPlaceDusk;
+uniform vec4 uLive;
+uniform vec3 uLiveLook;
+uniform sampler2D uWide;
+uniform vec4 uWideLook;
+uniform vec4 uWideForms;
+uniform vec3 uAirDeck[10];
+uniform vec3 uAirFwd;
+uniform vec3 uAirRight;
+uniform vec4 uAirHaze;
 uniform float uFeather;
 uniform vec2 uPatchFade;
 uniform vec3 uSpotN;
@@ -192,6 +269,7 @@ void stretch(vec2 jx, vec2 jy, vec2 along, out vec2 major, out vec2 minor) {
   major = (jx * mh.x + jy * mh.y) * clamp(len, 1.0, 24.0);
   minor = jy * mh.x - jx * mh.y;
 }
+
 vec3 curveAt(float ndl) {
   float x = clamp(ndl * 0.5 + 0.5, 0.0, 1.0) * 32.0;
   int i = int(min(floor(x), 31.0));
@@ -288,6 +366,15 @@ ${TAP_LEVELS}
     lin.b *= mix(1.0, uMauve.z / max(pink, 1e-3), uLimbFar * smoothstep(uMauve.x, uMauve.y, pink));
   }
   vec3 col = lin * curveAt(ndl) * veil * uTint;
+  // The globe's own colour as it is lit in this frame, without the forms of its map smaller than uLive.y and without the drift of its
+  // flow: the place seen from above is a region of this cloud deck, so its tone and its colour are these (plates.json, tone.live). It goes
+  // through the same air, limb light and exposure as the globe below.
+  vec3 under = col;
+  for (int pass = 0; pass < (uPlaceOn > 0.0 ? 1 : 0); pass++) {
+    vec3 wideMap = textureLod(uMap, lonLat(dc), uLive.y).rgb;
+    float wideLift = max(textureLod(uFlow, lonLat(dc), uLiveLook.y).g - uLift.x, 0.0) * uLift.y * smoothstep(uLift.z, uLift.w, max(wideMap.r, max(wideMap.g, wideMap.b)));
+    under = wideMap * wideMap * ${wrap.top.toFixed(1)} * exp2(wideLift) * curveAt(ndl) * uTint;
+  }
   for (int pass = 0; pass < (uShade.x * uLimbFar > 0.0 ? 1 : 0); pass++) {
     vec3 wide = equirectGrad(uMap, dc, max(uShade.y, grad)).rgb;
     float ratio = dot(albedo * albedo, vec3(0.2126, 0.7152, 0.0722)) / max(dot(wide * wide, vec3(0.2126, 0.7152, 0.0722)), 1e-4);
@@ -334,14 +421,17 @@ ${TAP_LEVELS}
       glow += uCellAmp[i].y > 0.5 ? painted * uCellAmp[i].x * smoothstep(1.0, 0.8, x) : uBoltColor * uCellAmp[i].x * core * core * lit * night;
     }
     col += glow;
+    under += glow;
   }
   vec3 at;
   float tau = hazeDepth(dir, true, at);
   col = col * exp(-tau * uExtinction) + hazeLight(n, dir) * (1.0 - exp(-tau));
+  for (int pass = 0; pass < (uPlaceOn > 0.0 ? 1 : 0); pass++) under = under * exp(-tau * uExtinction) + hazeLight(n, dir) * (1.0 - exp(-tau));
   float b = sqrt(max(1.0 - mu * mu, 0.0));
   if (b > ${(1 - LIMB.inside).toFixed(3)}) {
     vec4 lg = limbGlow(normalize(n + dir * mu), b) * uLimbK;
-    col = col * (1.0 - lg.a) + max(lg.rgb, 0.0);
+    col = col * (1.0 - lg.a) + max(lg.rgb, 0.0) / uDusk.xyz;
+    under = under * (1.0 - lg.a) + max(lg.rgb, 0.0) / uDusk.xyz;
   }
   vec3 past = uCam - dir * dot(uCam, dir);
   for (int pass = 0; pass < (uHoldRimMap.w > 0.0 && b > ${(holdJson.rim.from - 0.02).toFixed(3)} ? 1 : 0); pass++) fine *= holdRim(past, false);
@@ -349,6 +439,73 @@ ${TAP_LEVELS}
   for (int k = 0; k < (uCarryOn > 0.0 ? 1 : 0); k++) {
     float cl = max(dot(col, vec3(0.2126, 0.7152, 0.0722)), 1e-5);
     col = mix(col, mix(vec3(cl), col, uCarry.x) * pow(cl / uCarry.z, uCarry.y - 1.0) * uCarry.w * uCarryTint, uCarryOn);
+    float ul = max(dot(under, vec3(0.2126, 0.7152, 0.0722)), 1e-5);
+    under = mix(under, mix(vec3(ul), under, uCarry.x) * pow(ul / uCarry.z, uCarry.y - 1.0) * uCarry.w * uCarryTint, uCarryOn);
+  }
+  col *= uDusk.xyz;
+  under *= uDusk.xyz;
+  vec3 dp = spinY(onSphere(uCamObj, normalize(vLocal - uCamObj)), uSpin);
+  float pn = dot(dp, uPlaceN);
+  vec2 pg = vec2(dot(dp, uPlaceE), dot(dp, uPlaceU)) / max(pn, 0.05);
+  vec2 pgx = dFdx(pg);
+  vec2 pgy = dFdy(pg);
+  float pgd = sqrt(max(dot(pgx, pgx), dot(pgy, pgy)));
+  for (int pass = 0; pass < (uPlaceOn > 0.0 && pn > 0.3 ? 1 : 0); pass++) {
+    // The wide ring (plates.json, wide): the forms of the place carried on round its widest plate, as light over that colour. Its
+    // border follows its own cloud forms and eases out over uWideLook.y.
+    for (int ring = 0; ring < (uWideLook.x > 0.0 ? 1 : 0); ring++) {
+      vec2 q = pg * uWideLook.x;
+      float m = uPlaceOn * smoothstep(0.5, 0.5 - uWideLook.y, length(q) + uWideForms.x * clamp(0.5 + textureLod(uWide, q + 0.5, uWideForms.y).r / max(textureLod(uWide, q + 0.5, uWideForms.z).r, 1e-3) - 1.0, 0.0, 1.0));
+      for (int k = 0; k < (m > 0.0 ? 1 : 0); k++) {
+        float ringOwn = inverseFilmic(vec3(textureGrad(uWide, q + 0.5, pgx * uWideLook.x * uGrad, pgy * uWideLook.x * uGrad).r)).r;
+        float ringLow = inverseFilmic(vec3(textureLod(uWide, q + 0.5, uWideLook.z).r)).r;
+        col = mix(col, under * pow(max(col, vec3(1e-5)) / max(under, vec3(1e-5)), vec3(uWideForms.w)) * (uLiveLook.x * pow(clamp(ringOwn / max(ringLow, 1e-5), 1.0 / uLiveLook.z, uLiveLook.z), uLive.z)), m);
+        texels = mix(texels, pgd * uWideLook.x * uWideLook.w, m);
+      }
+    }
+    vec3 laid = vec3(0.0);
+    float cover = 0.0;
+    float parentPlace = 0.0;
+    float placeTexels = texels;
+${PLACE_COLOURS}
+${PLACE_GLSL}
+    for (int k = 0; k < (cover > 0.0 ? 1 : 0); k++) {
+      // From above the place has the tones of the globe about it. The tones of the close view (the far deck pale under its haze, the near
+      // towers dark against the Sun) belong to the line of sight of the close view: they come in as the line of sight nears the one of T.
+      vec3 own = inverseFilmic(laid / cover);
+      vec3 light = own;
+      // Drawn dimmer than they are held, the bright parts of the plates would turn red: in scene light a highlight that the film curve
+      // pressed has far more colour than it shows. So by the share uPlaceDusk.w the colour is that of the display value, at the luminance
+      // of the light. At the handover the share is 0 and the plates show as they are.
+      vec3 shown = laid / cover;
+      light = mix(light, shown * (dot(light, vec3(0.2126, 0.7152, 0.0722)) / max(dot(shown, vec3(0.2126, 0.7152, 0.0722)), 1e-5)), uPlaceDusk.w);
+      // How far the camera sees a ground point as the camera at T does (same): by the angle between the two lines of sight, and by the air
+      // on the line of sight, which goes with one over the sine of the camera's elevation above the ground point. The pale haze over the far
+      // deck of the close view belongs to the low line of sight of T; a camera that stands steeper over that deck sees less air there.
+      vec3 toEye = normalize(spinY(uCamObj, uSpin) - dp);
+      vec3 toT = normalize(uToneEye - dp);
+      float same = pow(clamp((dot(toEye, toT) - uToneLook.z) / (uToneLook.w - uToneLook.z), 0.0, 1.0), uTonePower) * uToneLook.y * pow(clamp(dot(toT, dp) / max(dot(toEye, dp), 1e-4), 0.0, 1.0), uToneLook.x);
+      vec3 seen = light * uPlaceDusk.xyz;
+      for (int t = 0; t < (same < 1.0 ? 1 : 0); t++) {
+        // From above the plates give the forms alone, over the globe's own colour (under): their light over their own light at the
+        // same scale (the widest plate at the mip level uLive.x), the luminance to the power uLive.z and the colour to the power uLive.w.
+        vec3 low = inverseFilmic(textureLod(uPlace0, pg * uPlaceScale[0] + 0.5, uLive.x).rgb);
+        float lowLum = max(dot(low, vec3(0.2126, 0.7152, 0.0722)), 1e-5);
+        float ownLum = max(dot(own, vec3(0.2126, 0.7152, 0.0722)), 1e-5);
+        vec3 hue = clamp((own / ownLum) / max(low / lowLum, vec3(1e-3)), vec3(0.25), vec3(4.0));
+        seen = mix(under * (uLiveLook.x * pow(clamp(ownLum / lowLum, 1.0 / uLiveLook.z, uLiveLook.z), uLive.z)) * pow(hue, vec3(uLive.w)), seen, same);
+      }
+      col = mix(col, seen, cover * uPlaceOn);
+      texels = mix(texels, placeTexels, uPlaceOn);
+    }
+  }
+  for (int pass = 0; pass < (uAirHaze.x > 0.0 ? 1 : 0); pass++) {
+    vec3 airUp = normalize(uCam);
+    vec3 level = dir - airUp * dot(dir, airUp);
+    float az = atan(dot(level, uAirRight), dot(level, uAirFwd));
+    float at = (1.0 - abs(mod(az / uAirHaze.w * 0.5 + 0.5, 2.0) - 1.0)) * 9.0;
+    int i = int(min(floor(at), 8.0));
+    col = mix(col, inverseFilmic(mix(uAirDeck[i], uAirDeck[i + 1], at - float(i))) * uAirHaze.z * uDusk.w, uAirHaze.x * exp(-mu / uAirHaze.y));
   }
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
@@ -387,6 +544,10 @@ export class Globe {
     }
     const [spot, east, north] = frame(p.spot)
     const [bn, be, bu] = frame(o.bolts.center)
+    const [placeN, placeE, placeU] = frame(o.place.centre)
+    const wideSize = (o.place.wide.texture.image as unknown as { width: number } | undefined)?.width ?? 1
+    const wideScale = 1 / (2 * Math.tan(THREE.MathUtils.degToRad(o.place.wide.widthDeg) / 2))
+    const widePerDeg = THREE.MathUtils.degToRad(1) * wideSize * wideScale
     this.count = o.bolts.cells.length
     this.cells = levels.concat(Array.from({ length: MAX_CELLS - MAX_PATCHES }, (_, i) => i + MAX_PATCHES)).map((i) => {
       const c = o.bolts.cells[i]
@@ -405,6 +566,23 @@ export class Globe {
         uPatchCount: { value: p.textures.length },
         uFeather: { value: p.feather }, uPatchFade: { value: new THREE.Vector2(p.fade[0], p.fade[1]) },
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
+        ...Object.fromEntries(Array.from({ length: PLACE_LEVELS }, (_, i) => ['uPlace' + i, { value: o.place.textures[i] ?? o.place.textures[0] ?? o.map }])),
+        uPlaceN: { value: placeN }, uPlaceE: { value: placeE }, uPlaceU: { value: placeU },
+        uPlaceScale: { value: Array.from({ length: PLACE_LEVELS }, (_, i) => 1 / (2 * Math.tan(THREE.MathUtils.degToRad(o.place.widthsDeg[i] ?? 90) / 2))) },
+        uPlaceSize: { value: Array.from({ length: PLACE_LEVELS }, (_, i) => (o.place.textures[i]?.image as unknown as { width: number } | undefined)?.width ?? 1) },
+        uPlaceLook: { value: new THREE.Vector4(o.place.feather, o.place.fade[0], o.place.fade[1], o.place.rim * 0.5) },
+        uPlaceForms: { value: new THREE.Vector3(o.place.forms[0], o.place.forms[1], o.place.forms[2]) },
+        uPlaceOn: { value: 0 },
+        uToneEye: { value: new THREE.Vector3(0, 0, 5) },
+        uToneLook: { value: new THREE.Vector4(o.place.tone.air, 1, o.place.tone.cos[0], o.place.tone.cos[1]) },
+        uTonePower: { value: o.place.tone.power },
+        uAirDeck: { value: o.air.deck }, uAirFwd: { value: new THREE.Vector3(0, 0, -1) }, uAirRight: { value: new THREE.Vector3(1, 0, 0) }, uAirHaze: { value: new THREE.Vector4(0, 0.05, 1, THREE.MathUtils.degToRad(o.air.deckSpanDeg)) },
+        uDusk: { value: new THREE.Vector4(1, 1, 1, 1) }, uPlaceDusk: { value: new THREE.Vector4(1, 1, 1, 0) },
+        uLive: { value: new THREE.Vector4(Math.log2(Math.max(THREE.MathUtils.degToRad(o.place.tone.live.sigmaDeg) * ((o.place.textures[0]?.image as unknown as { width: number } | undefined)?.width ?? 1) / (2 * Math.tan(THREE.MathUtils.degToRad(o.place.widthsDeg[0] ?? 90) / 2)), 1)), Math.log2(Math.max(o.place.tone.live.sigmaDeg * o.mapWidth / 360, 1)), o.place.tone.live.contrast, o.place.tone.live.colour) },
+        uLiveLook: { value: new THREE.Vector3(o.place.tone.live.gain, Math.log2(Math.max(o.place.tone.live.sigmaDeg * ((o.flow.map.image as unknown as { width: number } | undefined)?.width ?? 1) / 360, 1)), o.place.tone.live.most) },
+        uWide: { value: o.place.wide.texture },
+        uWideLook: { value: new THREE.Vector4(wideScale, o.place.wide.rim * 0.5, Math.log2(Math.max(o.place.tone.live.sigmaDeg * widePerDeg, 1)), wideSize) },
+        uWideForms: { value: new THREE.Vector4(o.place.wide.forms, Math.log2(Math.max(o.place.wide.formsDeg[0] * widePerDeg, 1)), Math.log2(Math.max(o.place.wide.formsDeg[1] * widePerDeg, 1)), o.place.wide.own) },
         uMapWidth: { value: o.mapWidth },
         uSpin: { value: 0 }, uGain: { value: 1 }, uCarry: { value: new THREE.Vector4(1, 1, 1, 1) }, uCarryTint: { value: new THREE.Vector3(1, 1, 1) }, uCarryOn: { value: 0 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
         uCurve: { value: o.curve.map((c) => new THREE.Vector3(c[0], c[1], c[2])) },

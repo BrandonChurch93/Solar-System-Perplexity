@@ -1,7 +1,9 @@
 import * as THREE from 'three'
 import { config, type Segment } from '../config'
-import type { CoverHorizon, Pose } from '../core/types'
-import { coverWindow, setCoverWindow, type CoverTimings } from './timeline'
+import type { CoverHorizon, Pose, ViewKind } from '../core/types'
+import { handoverOf, oneMoveForced, sideAt, type HandoverParams, type Sidestep, type SkyShares } from './handover'
+import { bellShare, bellStep, checkFlanks, paceLimits, type Flanks } from './pace'
+import { coverFrames, coverWindow, setCoverWindow, setHandover, withoutHandover, type CoverTimings } from './timeline'
 import { blendPose, ease, lookAt, mix, ramp, slerpDir, smooth, smoother } from './rig'
 
 export interface FitMoon { id: string; position: number[]; radius: number }
@@ -36,6 +38,7 @@ export interface MoveParams {
   coverEdgeRise?: [number, number]
   coverHides?: number
   coverWindow?: CoverTimings
+  handover?: HandoverParams
   skyTurnEase?: { dive?: boolean; rise?: boolean }
   coverShell?: [number, number]
   coverSea?: { centre: [number, number, number]; radius: number; edge: [number, number] }
@@ -49,6 +52,12 @@ export interface MoveParams {
 export interface SegmentTimes { hold: Segment; dive?: Segment; terrain: Segment; rise: Segment; travel?: Segment }
 
 export interface OrbitShot { pose: Pose; view: 'orbit' | 'terrain' }
+
+export interface TwinFrame { rotation: THREE.Quaternion; origin: THREE.Vector3; scale: number }
+
+interface Target { key: string; centre: THREE.Vector3; ahead: THREE.Vector3 }
+interface Coast { key: string; position: THREE.Vector3; velocity: THREE.Vector3; quaternion: THREE.Quaternion; spin: THREE.Vector3; vfov: number }
+interface Lean { key: string; front: boolean }
 
 const Y = new THREE.Vector3(0, 1, 0)
 const SURGE_STEPS = 2048
@@ -106,6 +115,14 @@ const easeOut = ease('power3.out')
 const easeRise = ease('sine.out')
 const easeInOut = ease('power2.inOut')
 
+export function trapeze(x: number, rise: number, fall: number): number {
+  const k = Math.min(Math.max(x, 0), 1)
+  const area = (y: number): number => (y >= 1 ? y - 0.5 : y * y * y - 0.5 * y * y * y * y)
+  const total = 1 - 0.5 * rise - 0.5 * fall
+  const done = k <= 1 - fall ? (rise > 0 ? rise * area(k / rise) : k) : total - fall * area((1 - k) / fall)
+  return done / total
+}
+
 function v3(a: number[]): THREE.Vector3 {
   return new THREE.Vector3(a[0], a[1], a[2])
 }
@@ -124,14 +141,20 @@ export class StopPlan {
   readonly lightDir: THREE.Vector3
   readonly axis: THREE.Vector3
   readonly holdMid: number
-  readonly risePose: Pose
+  readonly riseEnd: Pose
   readonly riseOut: THREE.Vector3
+  private readonly targets: Target[] = []
+  private readonly coasts: Coast[] = []
+  private readonly leans: Lean[] = []
+  private readonly paces: { key: string; flanks: Flanks }[] = []
+  private readonly swings: { key: string; angle: number }[] = []
 
   constructor(id: string, fit: Fit, p: MoveParams) {
     this.id = id
     this.fit = fit
     this.p = p
     setCoverWindow(id, p.coverWindow)
+    setHandover(id, p.handover)
     const find = (kind: string): Segment | undefined => config.segments.find((s) => s.stop === id && s.kind === kind)
     const hold = find('hold')
     const terrain = find('terrain')
@@ -173,9 +196,9 @@ export class StopPlan {
     const q0 = lookAt(pos, new THREE.Vector3(), Y, p.rise.rollDeg)
     const half = Math.tan(THREE.MathUtils.degToRad(fit.vfovDeg) / 2) * p.rise.distance
     const target = new THREE.Vector3(-p.rise.offset[0] * half * fit.aspect, -p.rise.offset[1] * half, 0).applyQuaternion(q0)
-    this.risePose = { position: pos, quaternion: lookAt(pos, target, Y, p.rise.rollDeg), vfov: fit.vfovDeg }
+    this.riseEnd = { position: pos, quaternion: lookAt(pos, target, Y, p.rise.rollDeg), vfov: fit.vfovDeg }
     this.riseOut = dir
-    if (p.rise.level) this.risePose.quaternion = this.climb(pos, this.heading.clone().applyQuaternion(this.turn(rise.end)), 1)
+    if (p.rise.level) this.riseEnd.quaternion = this.climb(pos, this.heading.clone().applyQuaternion(this.turn(rise.end)), 1)
   }
 
   turn(time: number): THREE.Quaternion {
@@ -241,13 +264,403 @@ export class StopPlan {
   }
 
   exit(tRel: number): Pose {
-    const r = this.risePose
+    const r = this.riseEnd
     return { position: r.position.clone().addScaledVector(this.riseOut, this.p.rise.driftSpeed * tRel), quaternion: r.quaternion.clone(), vfov: r.vfov }
   }
 
+  get handsOver(): boolean {
+    return this.p.handover !== undefined
+  }
+
+  coverBare(seg: Segment | undefined): boolean {
+    if (!seg) return false
+    return withoutHandover(this.id, () => !!coverWindow(seg) && this.coverAmount(seg, this.coverCenter(seg)) === 0)
+  }
+
+  closeUp(): { up: THREE.Vector3; dip: number } {
+    const t = this.p.terrain
+    const dip = THREE.MathUtils.degToRad(t.dipDeg ?? 2)
+    const tilt = THREE.MathUtils.degToRad(t.horizonDeg ?? 0) + dip
+    const up = new THREE.Vector3(0, Math.cos(tilt), Math.sin(tilt))
+    if (t.rollDeg) up.applyAxisAngle(new THREE.Vector3(0, 0, 1), -THREE.MathUtils.degToRad(t.rollDeg))
+    return { up, dip }
+  }
+
+  twinFrame(time: number): TwinFrame {
+    const { up, dip } = this.closeUp()
+    const rho = this.ground / (1 / Math.cos(dip) - 1)
+    const tq = this.turn(time)
+    const rotation = tq.clone().multiply(this.terrainFrame).multiply(new THREE.Quaternion().setFromUnitVectors(up, Y))
+    const origin = this.normal.clone().applyQuaternion(tq).multiplyScalar(1 + this.ground / rho)
+    return { rotation, origin, scale: 1 / rho }
+  }
+
+  twin(local: Pose, time: number): Pose {
+    const f = this.twinFrame(time)
+    return { position: local.position.clone().multiplyScalar(f.scale).applyQuaternion(f.rotation).add(f.origin), quaternion: f.rotation.clone().multiply(local.quaternion), vfov: local.vfov }
+  }
+
+  closePose(kind: 'dive' | 'rise', time: number): Pose {
+    return this.eye(kind, time, 'terrain')
+  }
+
+  // The place the camera goes down to and comes up from, and the heading it flies there: the point of the ground the close view looks at,
+  // no farther than a share of the way to its horizon. On a path of the stop's own it is taken from the close pose at T. On the engine's
+  // one move (plan E) it is taken from the surface view's own pose at the seam, so it does not move when T moves.
+  private target(kind: 'dive' | 'rise', at: number, time: number): { centre: THREE.Vector3; ahead: THREE.Vector3 } {
+    const one = this.engineMove
+    if (one) at = this.eyeSeamTime(kind)
+    const key = (one ? 'seam|' : '') + kind + '|' + at
+    let hit = this.targets.find((t) => t.key === key)
+    if (!hit) {
+      const tw = one ? this.twin(this.terrain(at - this.seg.terrain.start), at) : this.twin(this.closePose(kind, at), at)
+      const eye = tw.position
+      const dir = new THREE.Vector3(0, 0, -1).applyQuaternion(tw.quaternion)
+      const out = eye.clone().normalize()
+      const level = dir.clone().addScaledVector(out, -dir.dot(out))
+      if (level.lengthSq() < 1e-12) level.copy(this.heading).applyQuaternion(this.turn(at)).addScaledVector(out, -this.heading.clone().applyQuaternion(this.turn(at)).dot(out))
+      level.normalize()
+      const b = eye.dot(dir)
+      const c = eye.lengthSq() - 1
+      const disc = b * b - c
+      const reach = Math.acos(Math.min(1 / eye.length(), 1)) * config.raw.handover.descent.targetReach
+      let arc = reach
+      if (disc > 0 && b < 0) {
+        const p = eye.clone().addScaledVector(dir, c / (-b + Math.sqrt(disc))).normalize()
+        arc = Math.min(Math.acos(Math.min(Math.max(p.dot(out), -1), 1)), reach)
+      }
+      const centre = out.clone().multiplyScalar(Math.cos(arc)).addScaledVector(level, Math.sin(arc))
+      const ahead = level.clone().multiplyScalar(Math.cos(arc)).addScaledVector(out, -Math.sin(arc))
+      const back = this.turn(at).invert()
+      hit = { key, centre: centre.applyQuaternion(back), ahead: ahead.applyQuaternion(back) }
+      if (this.targets.length > 8) this.targets.length = 0
+      this.targets.push(hit)
+    }
+    const tq = this.turn(time)
+    return { centre: hit.centre.clone().applyQuaternion(tq), ahead: hit.ahead.clone().applyQuaternion(tq) }
+  }
+
+  place(kind: 'dive' | 'rise', time: number): THREE.Vector3 {
+    const seg = kind === 'dive' ? this.seg.dive : this.seg.rise
+    if (!seg) throw new Error(this.id + ' has no ' + kind)
+    return this.target(kind, this.coverCenter(seg), time).centre
+  }
+
+  // The harness's top down view: a camera straight above the place at the height and with the field of the given pose, looking down, the close
+  // side's heading up in the picture. It turns with the body, so a sheet of it shows one place coming closer.
+  topDown(kind: 'dive' | 'rise', time: number, pose: Pose): Pose {
+    const seg = kind === 'dive' ? this.seg.dive : this.seg.rise
+    if (!seg) throw new Error(this.id + ' has no ' + kind)
+    const t = this.target(kind, this.coverCenter(seg), time)
+    const position = t.centre.clone().multiplyScalar(pose.position.length())
+    return { position, quaternion: lookAt(position, new THREE.Vector3(0, 0, 0), t.ahead), vfov: pose.vfov }
+  }
+
+  handoverPath(kind: 'dive' | 'rise'): { rise: number; fall: number; turnRise: number; turnFall: number; level: boolean; levelBy: number; sidestep?: Sidestep } {
+    const base = kind === 'dive' ? config.raw.handover.descent : config.raw.handover.ascent
+    const own = this.p.handover?.[kind]?.path
+    const out = { rise: own?.rise ?? base.rise, fall: own?.fall ?? base.fall, turnRise: own?.turnRise ?? base.turnRise, turnFall: own?.turnFall ?? base.turnFall, level: own?.level ?? base.level, levelBy: own?.levelBy ?? base.levelBy, sidestep: own?.sidestep }
+    if (!(out.rise >= 0) || !(out.fall > 0) || !(out.rise + out.fall <= 1) || !(out.turnRise >= 0) || !(out.turnFall > 0) || !(out.turnRise + out.turnFall <= 1) || !(out.levelBy > 0 && out.levelBy <= 1)) throw new Error('the handover path of ' + this.id + ' needs rise and turnRise of 0 or more, fall and turnFall above 0, each pair adding up to at most 1, and levelBy above 0 and at most 1')
+    const s = out.sidestep
+    if (s && (!Number.isFinite(s.right) || !Number.isFinite(s.up) || !(s.by > 0 && s.by <= 1))) throw new Error('the sidestep of ' + this.id + ' needs right and up in radii and by above 0 and at most 1')
+    return out
+  }
+
+  private sidestep(kind: 'dive' | 'rise', far: Pose, x: number, at: number, time: number): Pose {
+    const s = this.handoverPath(kind).sidestep
+    const w = s ? smoother(x / s.by) : 0
+    if (!s || w <= 0) return far
+    const { centre } = this.target(kind, at, time)
+    const rel = far.position.clone().sub(centre)
+    const range = rel.length()
+    const move = new THREE.Vector3(s.right, s.up, 0).applyQuaternion(far.quaternion)
+    move.addScaledVector(rel, -move.dot(rel) / (range * range))
+    const amount = move.length()
+    if (amount < 1e-12 || range < 1e-9) return far
+    const q = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3().crossVectors(rel, move).normalize(), (amount / range) * w)
+    return { position: centre.clone().add(rel.applyQuaternion(q)), quaternion: q.clone().multiply(far.quaternion), vfov: far.vfov }
+  }
+
+  // one: the engine's one move. The swing is then the one measured where the move leaves the far end and it is given back by the share of
+  // the move, not measured again at every time: a far end that stands near the zenith of the place changes its azimuth fast while it hardly
+  // moves, and a swing that followed it was a second motion under the glide.
+  private glide(kind: 'dive' | 'rise', time: number, far: Pose, low: Pose, share: number, turn: number, at: number, one?: { swing: number }): Pose {
+    if (share <= 0 && turn <= 0) return far
+    if (share >= 1 && turn >= 1) return low
+    const { centre, ahead } = this.target(kind, at, time)
+    const seen = (p: Pose): { h: number; out: THREE.Vector3; rel: THREE.Quaternion } => {
+      const out = p.position.clone().sub(centre)
+      const look = lookAt(p.position, centre, ahead)
+      return { h: p.position.length() - 1, out: out.normalize(), rel: look.invert().multiply(p.quaternion) }
+    }
+    const path = this.handoverPath(kind)
+    const swing = one ? one.swing : path.level ? this.swing(kind, at, far, centre, ahead) : 0
+    const back = new THREE.Quaternion().setFromAxisAngle(centre, -swing)
+    const a = seen(swing ? { position: far.position.clone().applyQuaternion(back), quaternion: back.clone().multiply(far.quaternion), vfov: far.vfov } : far)
+    const b = seen(low)
+    const h = Math.exp(mix(Math.log(Math.max(a.h, 1e-9)), Math.log(Math.max(b.h, 1e-9)), share))
+    const out = slerpDir(a.out, b.out, turn)
+    const lift = centre.dot(out)
+    const range = (h * (2 + h)) / (lift + Math.sqrt(lift * lift + h * (2 + h)))
+    const position = centre.clone().addScaledVector(out, range)
+    const upright = one ? turn : path.level ? smooth(turn / path.levelBy) : turn
+    const quaternion = lookAt(position, centre, ahead).multiply(a.rel.slerp(b.rel, upright))
+    if (swing) {
+      const on = new THREE.Quaternion().setFromAxisAngle(centre, swing * (1 - upright))
+      position.applyQuaternion(on)
+      quaternion.premultiply(on)
+    }
+    return { position, quaternion, vfov: mix(far.vfov, low.vfov, share) }
+  }
+
+  private swing(kind: 'dive' | 'rise', at: number, far: Pose, centre: THREE.Vector3, ahead: THREE.Vector3): number {
+    const upright = this.unrolled(far, centre, ahead)
+    const side = new THREE.Vector3().crossVectors(centre, ahead)
+    const rel = far.position.clone().sub(centre)
+    const along = rel.dot(ahead)
+    const across = rel.dot(side)
+    const [from, to] = config.raw.handover.zenithDeg as [number, number]
+    const weight = smooth((THREE.MathUtils.radToDeg(Math.atan2(Math.hypot(along, across), rel.dot(centre))) - from) / (to - from))
+    if (weight <= 0) return upright
+    const azimuth = Math.atan2(across, along)
+    const key = (this.engineMove ? 'seam|' : '') + kind + '|' + at
+    let hit = this.leans.find((l) => l.key === key)
+    if (!hit) {
+      const end = kind === 'dive' ? this.seg.dive!.start : this.seg.rise.end
+      const pose = kind === 'dive' ? this.hold(end - this.seg.hold.start) : this.after(end)
+      const t = this.target(kind, at, end)
+      const off = pose.position.clone().sub(t.centre)
+      hit = { key, front: Math.cos(this.unrolled(pose, t.centre, t.ahead) - Math.atan2(off.dot(new THREE.Vector3().crossVectors(t.centre, t.ahead)), off.dot(t.ahead))) > 0 }
+      if (this.leans.length > 8) this.leans.length = 0
+      this.leans.push(hit)
+    }
+    const flat = (hit.front ? azimuth : azimuth - Math.PI) - upright
+    return upright + weight * Math.atan2(Math.sin(flat), Math.cos(flat))
+  }
+
+  private unrolled(far: Pose, centre: THREE.Vector3, ahead: THREE.Vector3): number {
+    const look = lookAt(far.position, centre, ahead)
+    const rel = look.clone().invert().multiply(far.quaternion)
+    const twist = 2 * Math.atan2(rel.z, rel.w)
+    const right = new THREE.Vector3(1, 0, 0).applyQuaternion(look)
+    const up = new THREE.Vector3(0, 1, 0).applyQuaternion(look)
+    const side = new THREE.Vector3().crossVectors(centre, ahead)
+    const gx = -Math.sin(twist)
+    const gy = Math.cos(twist)
+    const ax = ahead.dot(right)
+    const ay = ahead.dot(up)
+    const bx = side.dot(right)
+    const by = side.dot(up)
+    const angle = Math.atan2(-(ax * gy - ay * gx), bx * gy - by * gx)
+    const along = (Math.cos(angle) * ax + Math.sin(angle) * bx) * gx + (Math.cos(angle) * ay + Math.sin(angle) * by) * gy
+    const turnBy = along >= 0 ? angle : angle + Math.PI
+    return Math.atan2(Math.sin(turnBy), Math.cos(turnBy))
+  }
+
+  coast(kind: 'dive' | 'rise', time: number): Pose {
+    const h = handoverOf(this.id, kind)!
+    const key = kind + '|' + h.time
+    let hit = this.coasts.find((c) => c.key === key)
+    if (!hit) {
+      const step = config.shutterFraction / (4 * config.fps)
+      const at = this.closePose(kind, h.time)
+      const a = this.closePose(kind, h.time - step)
+      const b = this.closePose(kind, h.time + step)
+      const turned = a.quaternion.clone().invert().multiply(b.quaternion)
+      if (turned.w < 0) turned.set(-turned.x, -turned.y, -turned.z, -turned.w)
+      const half = Math.hypot(turned.x, turned.y, turned.z)
+      const angle = 2 * Math.atan2(half, turned.w)
+      const spin = new THREE.Vector3(turned.x, turned.y, turned.z).multiplyScalar(half > 1e-12 ? angle / half / (2 * step) : 0)
+      hit = { key, position: at.position.clone(), velocity: b.position.clone().sub(a.position).multiplyScalar(1 / (2 * step)), quaternion: at.quaternion.clone(), spin, vfov: at.vfov }
+      if (this.coasts.length > 8) this.coasts.length = 0
+      this.coasts.push(hit)
+    }
+    const span = config.raw.handover.coastFrames / config.fps
+    const reach = span > 0 ? span * Math.tanh((time - h.time) / span) : 0
+    const rate = hit.spin.length()
+    const turn = rate > 1e-12 ? new THREE.Quaternion().setFromAxisAngle(hit.spin.clone().multiplyScalar(1 / rate), rate * reach) : new THREE.Quaternion()
+    return { position: hit.position.clone().addScaledVector(hit.velocity, reach), quaternion: hit.quaternion.clone().multiply(turn), vfov: hit.vfov }
+  }
+
+  private descent(time: number): Pose {
+    const seg = this.seg.dive!
+    const h = handoverOf(this.id, 'dive')!
+    if (time >= h.time) return this.twin(this.diveTerrain(time), time)
+    const d = this.handoverPath('dive')
+    const x = (time - seg.start) / (h.time - seg.start)
+    return this.glide('dive', time, this.sidestep('dive', this.hold(time - this.seg.hold.start), x, h.time, time), this.twin(this.coast('dive', time), time), trapeze(x, d.rise, d.fall), trapeze(x, d.turnRise, d.turnFall), h.time)
+  }
+
+  private ascent(time: number): Pose {
+    const seg = this.seg.rise
+    const h = handoverOf(this.id, 'rise')!
+    if (time <= h.time) return this.twin(this.risePose(time, 'terrain'), time)
+    const d = this.handoverPath('rise')
+    const x = (seg.end - time) / (seg.end - h.time)
+    return this.glide('rise', time, this.sidestep('rise', this.after(time), x, h.time, time), this.twin(this.coast('rise', time), time), trapeze(x, d.rise, d.fall), trapeze(x, d.turnRise, d.turnFall), h.time)
+  }
+
+  // Plan E, the engine's one move. A dive and a rise are one glide over the whole segment between the two poses the film stands on at its
+  // ends: the hold (or the drift out of the stop) at the far end, the surface view's own pose at the near end. One share, the integral of
+  // one bell shaped rate (pace.ts), carries the logarithm of the height, the direction from the place, the attitude and the lens, so the
+  // fall, the turn of the camera and the speed of the picture rise once and fall once together. Both ends move on at their own speed under
+  // the glide (the hold goes on turning, the surface view is carried back from the seam at its own velocity), and the bell has no rate at
+  // either end: the move leaves and meets its neighbours with their speed and direction.
+  // There is one eye. The globe draws it as it stands, the close view draws the same eye taken back through the twin, so the moment the
+  // picture changes sides (T, handover.dive.at and handover.rise.at) moves nothing on the path.
+  // It is the default of every stop that hands over. A stop named in handover.ownPath keeps the path of its own class until its builder
+  // takes the name off the list. What a stop on the one move may still set: its two ends (hold, terrain, rise.distance and the like), its
+  // place (spot), at, path.sidestep, path.level and the flanks of the pace (handover.dive.pace, handover.rise.pace). What is not read on the
+  // one move: terrain.entry* and terrain.exit*, path.rise, fall, turnRise, turnFall, levelBy and fromDive, and a class's own divePose,
+  // risePose, dive and rise.
+  get engineMove(): boolean {
+    return this.handsOver && (oneMoveForced() || !(config.raw.handover.ownPath as string[]).includes(this.id))
+  }
+
+  // The camera of a dive or a rise in the given view. On the one move both views are the one eye; on a path of the stop's own they are
+  // its divePose and risePose.
+  eye(kind: 'dive' | 'rise', time: number, view: ViewKind): Pose {
+    if (!this.engineMove) return kind === 'dive' ? this.divePose(time, view) : this.risePose(time, view)
+    const globe = this.eyeOrbit(kind, time)
+    return view === 'orbit' ? globe : this.untwin(globe, time)
+  }
+
+  // The camera of a dive or a rise with the view the film draws at that time, or with the view the caller forces.
+  eyeShot(kind: 'dive' | 'rise', time: number, forced?: ViewKind): OrbitShot {
+    if (!this.engineMove) return forced ? { pose: kind === 'dive' ? this.divePose(time, forced) : this.risePose(time, forced), view: forced } : kind === 'dive' ? this.dive(time) : this.rise(time)
+    const seg = kind === 'dive' ? this.seg.dive : this.seg.rise
+    if (!seg) throw new Error(this.id + ' has no ' + kind)
+    const view = forced ?? sideAt(seg, time)
+    return { pose: this.eye(kind, time, view), view }
+  }
+
+  // The height of the eye above the unit sphere of the body, in radii, at a time of this stop's hold, dive, surface view or rise. On the
+  // one move it is one number for both views; on a path of the stop's own it is the height of the view the film draws.
+  eyeHeight(time: number): number {
+    const high = (p: Pose): number => p.position.length() - 1
+    const { dive, terrain, rise } = this.seg
+    if (time >= terrain.start && time < terrain.end) return high(this.twin(this.terrain(time - terrain.start), time))
+    for (const [kind, seg] of [['dive', dive], ['rise', rise]] as const) {
+      if (!seg || time < seg.start || time >= seg.end) continue
+      if (this.engineMove) return high(this.eyeOrbit(kind, time))
+      const shot = this.eyeShot(kind, time)
+      return high(shot.view === 'terrain' ? this.twin(shot.pose, time) : shot.pose)
+    }
+    return high(this.riseIntoHold || time < terrain.start ? this.hold(time - this.seg.hold.start) : this.exitPose(time))
+  }
+
+  // The close view's pose of a camera at the globe: the twin undone. The twin of the engine is a turn, a scale and a shift, and so are
+  // those of the stops as far as they are measured here, so three poses through the twin give them back. A stop whose twin is anything
+  // else gives the plan an untwin of its own.
+  untwin(globe: Pose, time: number): Pose {
+    const zero = this.twin({ position: new THREE.Vector3(), quaternion: new THREE.Quaternion(), vfov: globe.vfov }, time)
+    const unit = this.twin({ position: new THREE.Vector3(1, 0, 0), quaternion: new THREE.Quaternion(), vfov: globe.vfov }, time)
+    const back = zero.quaternion.clone().invert()
+    return { position: globe.position.clone().sub(zero.position).applyQuaternion(back).multiplyScalar(1 / unit.position.distanceTo(zero.position)), quaternion: back.multiply(globe.quaternion), vfov: globe.vfov }
+  }
+
+  // The flanks of the pace of a dive or a rise on the one move: the engine's (handover.pace) with what the stop sets of its own. Flanks
+  // too short for the segment are refused here, where the number is read: the steepest slope of the bell may not pass the step the
+  // harness allows from one film frame to the next (smooth.path.maxStep).
+  eyeFlanks(kind: 'dive' | 'rise'): Flanks {
+    const seg = kind === 'dive' ? this.seg.dive : this.seg.rise
+    if (!seg) throw new Error(this.id + ' has no ' + kind)
+    const own = this.p.handover?.[kind]?.pace
+    const base = config.raw.handover.pace
+    const key = kind + '|' + JSON.stringify(own ?? null) + '|' + base.rise + '|' + base.fall + '|' + base.corner
+    let hit = this.paces.find((p) => p.key === key)
+    if (!hit) {
+      const flanks: Flanks = { rise: own?.rise ?? base.rise, fall: own?.fall ?? base.fall, corner: own?.corner ?? base.corner }
+      checkFlanks(flanks, 'the ' + kind + ' of ' + this.id)
+      const step = bellStep(flanks, seg.frames)
+      const limit = paceLimits().maxStep
+      if (step > limit) throw new Error('the ' + kind + ' of ' + this.id + ': with flanks of ' + flanks.rise + ' and ' + flanks.fall + ' and a corner of ' + flanks.corner + ' the rate changes by ' + step.toFixed(4) + ' of its mean from one film frame to the next, the limit is ' + limit)
+      hit = { key, flanks }
+      if (this.paces.length > 8) this.paces.length = 0
+      this.paces.push(hit)
+    }
+    return hit.flanks
+  }
+
+  private eyeSeamTime(kind: 'dive' | 'rise'): number {
+    return kind === 'dive' ? this.seg.terrain.start : this.seg.terrain.end
+  }
+
+  // The surface view's own pose at the seam, and how it moves there. The velocity and the spin are taken from inside the surface view
+  // alone (a one sided difference over three poses), so a stop's terrain need not be defined beyond its own segment.
+  private eyeSeam(kind: 'dive' | 'rise'): Coast {
+    const key = 'seam|' + kind
+    let hit = this.coasts.find((c) => c.key === key)
+    if (!hit) {
+      const sign = kind === 'dive' ? 1 : -1
+      const step = (sign * config.shutterFraction) / (4 * config.fps)
+      const from = this.eyeSeamTime(kind) - this.seg.terrain.start
+      const at = this.terrain(from)
+      const a = this.terrain(from + step)
+      const b = this.terrain(from + 2 * step)
+      const turned = (p: Pose): THREE.Vector3 => {
+        const q = at.quaternion.clone().invert().multiply(p.quaternion)
+        if (q.w < 0) q.set(-q.x, -q.y, -q.z, -q.w)
+        const half = Math.hypot(q.x, q.y, q.z)
+        return new THREE.Vector3(q.x, q.y, q.z).multiplyScalar(half > 1e-12 ? (2 * Math.atan2(half, q.w)) / half : 0)
+      }
+      const velocity = at.position.clone().multiplyScalar(-3).addScaledVector(a.position, 4).addScaledVector(b.position, -1).multiplyScalar(1 / (2 * step))
+      const spin = turned(a).multiplyScalar(4).addScaledVector(turned(b), -1).multiplyScalar(1 / (2 * step))
+      hit = { key, position: at.position.clone(), velocity, quaternion: at.quaternion.clone(), spin, vfov: at.vfov }
+      if (this.coasts.length > 8) this.coasts.length = 0
+      this.coasts.push(hit)
+    }
+    return hit
+  }
+
+  // The near end of the one move: the surface view's pose at the seam carried on beyond the seam at the velocity and the spin it has there,
+  // no farther than handover.coastFrames of that motion, so the end the glide lands on is already moving as the surface view will.
+  private eyeCoast(kind: 'dive' | 'rise', time: number): Pose {
+    const c = this.eyeSeam(kind)
+    const span = config.raw.handover.coastFrames / config.fps
+    const reach = span > 0 ? span * Math.tanh((time - this.eyeSeamTime(kind)) / span) : 0
+    const rate = c.spin.length()
+    const turn = rate > 1e-12 ? new THREE.Quaternion().setFromAxisAngle(c.spin.clone().multiplyScalar(1 / rate), rate * reach) : new THREE.Quaternion()
+    return { position: c.position.clone().addScaledVector(c.velocity, reach), quaternion: c.quaternion.clone().multiply(turn), vfov: c.vfov }
+  }
+
+  // The swing of the one move: how far the far end stands round the place from the vertical plane the close view flies in, measured once,
+  // where the move leaves the far end (the last pose of the hold, the first of the drift out). 0 for a stop that sets path.level false.
+  private eyeSwing(kind: 'dive' | 'rise'): number {
+    if (!this.handoverPath(kind).level) return 0
+    const key = 'seam|' + kind
+    let hit = this.swings.find((w) => w.key === key)
+    if (!hit) {
+      const end = kind === 'dive' ? this.seg.dive!.start : this.seg.rise.end
+      const far = kind === 'dive' ? this.hold(end - this.seg.hold.start) : this.after(end)
+      const seam = this.eyeSeamTime(kind)
+      const { centre, ahead } = this.target(kind, seam, end)
+      hit = { key, angle: this.swing(kind, seam, far, centre, ahead) }
+      if (this.swings.length > 8) this.swings.length = 0
+      this.swings.push(hit)
+    }
+    return hit.angle
+  }
+
+  // The one eye at the globe.
+  private eyeOrbit(kind: 'dive' | 'rise', time: number): Pose {
+    const seg = kind === 'dive' ? this.seg.dive : this.seg.rise
+    if (!seg) throw new Error(this.id + ' has no ' + kind)
+    const dive = kind === 'dive'
+    const x = dive ? (time - seg.start) / (seg.end - seg.start) : (seg.end - time) / (seg.end - seg.start)
+    const far = dive ? this.hold(time - this.seg.hold.start) : this.after(time)
+    if (x <= 0) return far
+    if (x >= 1) return this.twin(this.terrain(time - this.seg.terrain.start), time)
+    const share = bellShare(x, this.eyeFlanks(kind))
+    const seam = this.eyeSeamTime(kind)
+    return this.glide(kind, time, this.sidestep(kind, far, x, seam, time), this.twin(this.eyeCoast(kind, time), time), share, share, seam, { swing: this.eyeSwing(kind) })
+  }
+
   private coverFractions(seg: Segment): { first: number; center: number; last: number } {
-    const w = coverWindow(seg)!
-    return { first: (w.firstFrame - seg.firstFrame) / seg.frames, center: (w.centerFrame - seg.firstFrame) / seg.frames, last: (w.lastFrame + 1 - seg.firstFrame) / seg.frames }
+    const w = coverFrames(seg)!
+    const h = seg.kind === 'dive' || seg.kind === 'rise' ? handoverOf(this.id, seg.kind) : null
+    const center = h ? (h.time * config.fps - seg.firstFrame) / seg.frames : (w.centerFrame - seg.firstFrame) / seg.frames
+    return { first: (w.firstFrame - seg.firstFrame) / seg.frames, center, last: (w.lastFrame + 1 - seg.firstFrame) / seg.frames }
   }
 
   skyGain(_time: number): number {
@@ -260,6 +673,27 @@ export class StopPlan {
 
   coverHidden(_seg: Segment, _time: number): number | undefined {
     return undefined
+  }
+
+  // Three schedules of the sky on the globe side of a dive or rise that hands over run on the film's clock. A stop whose path runs at a pace of
+  // its own may give each of them itself. Every one returns null by default, and then the engine's own schedule is taken.
+
+  // The share of each sky layer: low is the weight of the sky of the close view (it also sets the floor, the glow and the exposure the sky
+  // takes from the close view), high the weight of the sky of the globe view. Null leaves both to the engine: low is skyWeight of the
+  // handover, high is 1 minus low in a dive and 0 in a rise. A stop may give low alone.
+  skyShare(_seg: Segment, _time: number): SkyShares | null {
+    return null
+  }
+
+  // The weight, 0 to 1, of the carry: how far the sky has turned from the globe view's frame to the close view's (the carry of the stars and
+  // the turn towards the low turn). Null: skyTurnWeight of the handover.
+  skyCarryShare(_seg: Segment, _time: number): number | null {
+    return null
+  }
+
+  // The time the star lift of a rise is read at, in seconds of the film. Null: the time of the shot.
+  skyLiftAt(_seg: Segment, _time: number): number | null {
+    return null
   }
 
   skyTurnShare(seg: Segment, time: number): number | null {
@@ -303,7 +737,8 @@ export class StopPlan {
   }
 
   coverCenter(seg: Segment): number {
-    return coverWindow(seg)!.centerFrame / config.fps
+    const h = seg.kind === 'dive' || seg.kind === 'rise' ? handoverOf(this.id, seg.kind) : null
+    return h ? h.time : coverFrames(seg)!.centerFrame / config.fps
   }
 
   horizon(view: 'orbit' | 'terrain', local: Pose): CoverHorizon {
@@ -401,13 +836,24 @@ export class StopPlan {
   }
 
   dive(time: number): OrbitShot {
+    const view = sideAt(this.seg.dive!, time)
+    return { pose: this.divePose(time, view), view }
+  }
+
+  rise(time: number): OrbitShot {
+    const view = sideAt(this.seg.rise, time)
+    return { pose: this.risePose(time, view), view }
+  }
+
+  divePose(time: number, view: ViewKind): Pose {
     const seg = this.seg.dive!
     const dur = seg.end - seg.start
     const u = (time - seg.start) / dur
     const f = this.coverFractions(seg)
-    if (time >= this.coverCenter(seg)) return { pose: this.diveTerrain(time), view: 'terrain' }
+    if (view === 'terrain') return this.diveTerrain(time)
+    if (this.handsOver) return this.descent(time)
     const held = this.hold(time - this.seg.hold.start)
-    if (this.p.dive.swoop) return { pose: blendPose(held, this.swoop(time), smooth(u / 0.22)), view: 'orbit' }
+    if (this.p.dive.swoop) return blendPose(held, this.swoop(time), smooth(u / 0.22))
     const start = this.hold(this.seg.hold.end - this.seg.hold.start)
     const e = easeIn(ramp(0, f.last, u))
     const d = this.p.dive
@@ -425,25 +871,48 @@ export class StopPlan {
     const target = far.lerp(spot.clone().addScaledVector(heading, d.ahead), smooth(e * 1.4))
     const up = slerpDir(Y.clone().applyQuaternion(start.quaternion), normal, smooth(e * 1.2))
     const path: Pose = { position, quaternion: lookAt(position, target, up, d.rollDeg * Math.sin(Math.PI * e)), vfov: mix(start.vfov, this.p.terrain.vfov, smooth(e)) }
-    return { pose: blendPose(held, path, smooth(u / 0.3)), view: 'orbit' }
+    return blendPose(held, path, smooth(u / 0.3))
   }
 
-  rise(time: number): OrbitShot {
+  // The close view of a rise that leaves from the eye of the dive (handover.rise.path.fromDive, off unless the stop asks): the stop's own close
+  // path is led over to the close pose the dive handed over at, complete at the T of the rise and carried on beyond it at the same rate, so the
+  // coast and the glide after T go on in the direction the camera was moving. Without the option the pose comes back untouched.
+  private fromDive(own: Pose, time: number): Pose {
+    const power = this.p.handover?.rise?.path?.fromDive
+    if (power === undefined) return own
+    const h = handoverOf(this.id, 'rise')
+    const d = handoverOf(this.id, 'dive')
+    if (!h || !d) return own
+    const start = this.seg.rise.start
+    const s = (time - start) / (h.time - start)
+    if (!(s > 0)) return own
+    const w = Math.pow(s, power)
+    const to = this.divePose(d.time, 'terrain')
+    const turn = own.quaternion.clone().invert().multiply(to.quaternion)
+    if (turn.w < 0) turn.set(-turn.x, -turn.y, -turn.z, -turn.w)
+    const half = Math.hypot(turn.x, turn.y, turn.z)
+    const angle = 2 * Math.atan2(half, turn.w)
+    const quaternion = own.quaternion.clone()
+    if (half > 1e-12) quaternion.multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(turn.x, turn.y, turn.z).multiplyScalar(1 / half), angle * w))
+    return { position: own.position.clone().lerp(to.position, w), quaternion, vfov: own.vfov + (to.vfov - own.vfov) * Math.min(w, 1) }
+  }
+
+  risePose(time: number, view: ViewKind): Pose {
     const seg = this.seg.rise
     const dur = seg.end - seg.start
     const u = (time - seg.start) / dur
     const f = this.coverFractions(seg)
     const t = this.p.terrain
-    if (time < this.coverCenter(seg)) {
+    if (view === 'terrain') {
       const base = this.terrain(time - this.seg.terrain.start)
       const g = Math.pow(ramp(0, f.last, u), 2.2)
-      const pose: Pose = {
+      return this.fromDive({
         position: base.position.clone().add(new THREE.Vector3(0, t.exitHeight * g, -t.exitForward * g)),
         quaternion: base.quaternion.clone().multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), THREE.MathUtils.degToRad(t.exitPitchDeg) * g)),
         vfov: t.vfov,
-      }
-      return { pose, view: 'terrain' }
+      }, time)
     }
+    if (this.handsOver) return this.ascent(time)
     const settle = this.p.rise.settle
     const x = ramp(f.center, 1, u)
     const e = settle ? 1 - Math.pow(1 - x, settle) * (this.p.rise.gentle ? 1 + settle * x : 1) : easeRise(ramp(f.first, 1, u))
@@ -478,7 +947,7 @@ export class StopPlan {
       const level0 = lookAt(position, position.clone().add(aim), out.clone().add(level).normalize(), t.rollDeg ?? 0)
       path.quaternion = level0.slerp(path.quaternion, smoother(since / tilt))
     }
-    return { pose: blendPose(path, this.after(time), smooth(ramp(0.6, 1, u))), view: 'orbit' }
+    return blendPose(path, this.after(time), smooth(ramp(0.6, 1, u)))
   }
 
   exitPose(time: number): Pose {

@@ -1,0 +1,35 @@
+{
+ "critic": "R4",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "frames 1879–1895, on either side of the central sun reflection",
+   "what": "The dark coastal shapes fade under the brighter oblique view instead of tracking cleanly into it. The overlapping geography makes the descent read as a blend between views rather than a single flight.",
+   "fix": "Align the coastlines and cloud shadows in the same 3D camera move before blending, and carry the same light and exposure through the transition."
+  },
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "frames 2120–2154, from the Caribbean to the full globe",
+   "what": "The rise looks like the dive played backward. The framing retraces the same landmarks, and the Cuban coastline and the large Pacific cloud spiral reappear in essentially the same configuration.",
+   "fix": "Give the climb a different heading or bank and keep clouds moving forward in time so the ascent reads as a continuation rather than a rewind."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-02.png",
+   "where": "frames 1854–1879, bright cloud edges around the Gulf and Caribbean",
+   "what": "Some bright cloud details break into short, separated marks along the zoom direction instead of reading as one smooth streak.",
+   "fix": "Use more temporal samples along the camera path and check bright cloud edges at the fastest point of the dive."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "frames 1680–1829, the Pacific cloud spiral west of Mexico",
+   "what": "The hold shows slight globe drift, but the prominent cloud spiral appears pinned to the surface throughout.",
+   "fix": "Add subtle cloud advection independent of globe rotation while keeping the star field stable."
+  }
+ ]
+}

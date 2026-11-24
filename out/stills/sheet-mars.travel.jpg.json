@@ -1,15 +1,15 @@
 {
- "engineHash": "be043ade04a7ab6e",
+ "engineHash": "247ebad7e038ce06",
  "stopHashes": {
   "mars": "2e6bd53c2517a02a",
-  "jupiter": "bf3a6fa3f51a1e4d"
+  "jupiter": "e92e46df4195fb6b"
  },
  "format": "16x9",
  "tier": "review",
  "assets": "full",
  "diag": "beauty",
  "browser": "147.0.7727.15",
- "machine": "space-sandbox 4x Intel(R) Xeon(R) Processor @ 2.90GHz",
+ "machine": "space-sandbox 2x Intel(R) Xeon(R) Processor @ 2.90GHz",
  "first": 2745,
  "last": 2819,
  "extra": {
@@ -29,7 +29,7 @@
   ],
   "kind": "sheet",
   "segment": "mars.travel",
-  "signature": "[\"46743a9a23e78d21870e4650c0da6ffc39396176aecabda3d73a598820bf1ae3\",[\"58d1489d68482c1f0210c6f0edd039fe2ff60fafd16501b6e750981824b90735\",92]]",
+  "signature": "[\"30d30eb9d9f3e7f3294638c8e990c8abe5b5aefe67bcde0089e267e978d885b2\",[\"58d1489d68482c1f0210c6f0edd039fe2ff60fafd16501b6e750981824b90735\",92]]",
   "quality": 92
  }
 }

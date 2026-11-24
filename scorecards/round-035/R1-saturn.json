@@ -1,0 +1,91 @@
+{
+ "critic": "R1",
+ "score": 6,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "upper limb",
+   "what": "the atmospheric glow stops in a hard line. The plate ramps from about 17 to 40 over the 8 pixels outside the limb; the frame stays near sky level, then jumps to a hotter, warmer rim (about 166 versus 138 just inside). The sunlit limb also sits about 3 pixels too far in.",
+   "fix": "widen and soften the falloff, extend the haze outward, cool and dim the rim, and move the sunlit limb back out about 3 pixels"
+  },
+  {
+   "severity": "major",
+   "file": "pair-04-b.png",
+   "where": "panel C, upper limb",
+   "what": "same hard short glow and hotter rim, now obvious at native crop size",
+   "fix": "widen and soften the atmospheric falloff and cool the rim to match panel C of the plate"
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "left and lower ring plane",
+   "what": "fine ringlet grooves are softer and the dark gaps are filled in. Local groove contrast is down about a quarter (peak-to-trough about 77 to 59). Band positions still match.",
+   "fix": "deepen the dark gaps and restore fine ringlet contrast; do not blur the rings"
+  },
+  {
+   "severity": "major",
+   "file": "pair-04-b.png",
+   "where": "panels D and G, ring grooves",
+   "what": "native crops of the ring plane lose the same groove depth. Panel G is the worst (high-frequency energy about 21 percent down); panel D is softer by about 13 percent.",
+   "fix": "restore ringlet contrast and the black of the gaps in panels D and G"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "upper limb of the disk",
+   "what": "the bright rim sits about 2 pixels inside the plate and the haze just outside it is dimmer. The rim highlight that peaks near 166 on the plate arrives later and lower.",
+   "fix": "push the limb rim outward about 2 pixels and restore the bright haze outside it"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "shadow edge on the rings",
+   "what": "the planet's shadow line on the rings sits 1 pixel too low, all along the boundary",
+   "fix": "move the shadow edge up 1 pixel"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "outer ring edge, right side",
+   "what": "the bright outer edge extends about 2 pixels too far out",
+   "fix": "pull the outer edge in about 2 pixels"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "rings crossing the dark limb",
+   "what": "the bright ring onset starts about 2 pixels too far left, so the rings bite further across the silhouette",
+   "fix": "shift that ring edge right about 2 pixels"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "sunlit ring plane",
+   "what": "the lit rings run about 3 luma too bright and the bright edges are hotter. The planet interior matches.",
+   "fix": "drop ring brightness a few luma and ease the hot edges"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "sky",
+   "what": "the darkest sky is deeper and a little less blue than the plate (black floor about 3.6 versus 5.1)",
+   "fix": "lift the black floor and restore the faint blue cast"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "panel E, shadow on the rings; panel H, outer edge; panel C, rings on the dark limb",
+   "what": "the hold crops show the same 1 to 2 pixel edge misses: shadow line low, outer edge long, ring onset too far across the limb",
+   "fix": "move the shadow edge up 1 pixel, pull the outer edge in about 2 pixels, and shift the limb-crossing ring edge right about 2 pixels"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "panels B, D, F, and G, sunlit rings",
+   "what": "those ring crops are about 2 luma too bright, with hotter edges",
+   "fix": "drop the ring brightness a few luma to match the plate crops"
+  }
+ ]
+}

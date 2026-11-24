@@ -1,0 +1,28 @@
+{
+ "critic": "R4",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-06.png",
+   "where": "Frames 4407–4411, left half of the horizon",
+   "what": "The soft diagonal band drops and washes out as a tighter, more curved limb takes over. The bright point above it keeps a smooth track, making the horizon change read as a reveal of a second view rather than one continuous ascent.",
+   "fix": "Match the limb position, tangent and motion through the overlap; let depth-based haze clear progressively over the same moving horizon."
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "Frames 4142–4159, ring arcs and upper limb",
+   "what": "The ring apex swings out toward the right while the galactic band swings back into the top of frame, and both are lost almost immediately in the cyan cover. The sampled poses read as a whip into the cover rather than a weighted approach.",
+   "fix": "Spread the roll and pitch over more frames and carry the same angular motion into the cover. Review the full-speed render with a finer frame strip through this turn."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-03.png",
+   "where": "Frames 4159–4170, diagonal cyan cloud band",
+   "what": "The outline stays nearly pinned to the same screen diagonal while the mottled detail beneath it changes. The cover reads more like a changing veil than something the camera passes through.",
+   "fix": "Give the foreground haze visible drift relative to the distant limb while keeping its opacity high enough to hide the transition."
+  }
+ ]
+}

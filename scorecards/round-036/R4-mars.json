@@ -1,0 +1,63 @@
+{
+ "critic": "R4",
+ "score": 5,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "frames 2457-2460, whole frame",
+   "what": "the dive does not land as one move: sharp terrain fades in under the blurred haze as a separate layer, with a vertical streak of radial blur still on top in 2458. The camera then stops dead, since 2460 to 2489 is the same framing with no deceleration after a high-speed plunge",
+   "fix": "carry the camera's forward and downward motion through the cover into the terrain shot, ease it out over 20 to 30 frames, and fade out the radial blur together with the speed instead of cross-dissolving two layers"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "frames 2710-2744, the globe",
+   "what": "the planet seen on the rise is not the same view the dive left. The polar cap is now at lower left, not the top. The lighting comes from a different direction, and the globe is darker and much less saturated than in the hold (sheet-01). It reads as a different planet or a flipped texture, not the same place seen again",
+   "fix": "match the globe's orientation, rotation phase, sun direction and exposure to the hold and dive frames, so the rise pulls back from the same spot the dive entered"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-06.png",
+   "where": "frames 2704-2706, centre and lower half",
+   "what": "the jump from haze to orbit happens in two frames, and the globe surface fades in under the haze as a second layer. The surface texture at this distance is smeared and low resolution: the canyon features stretch into blurry ridges, also visible in sheet-05 2710",
+   "fix": "spread the exit from haze to orbit over more frames with a single continuous climb, and use a higher-resolution surface texture, or blur it based on distance, for the close limb view"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-06.png",
+   "where": "frames 2697-2703",
+   "what": "about seven frames of almost unchanged featureless haze. The camera seems to stall in the middle of the climb, so speed drops and then jumps again at 2704",
+   "fix": "keep the climb speed continuous through the haze layer, and shorten the haze or let it visibly stream past"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "frames 2451-2454, the bright limb band",
+   "what": "the limb arc swings from the upper right corner to a level horizontal band in about three frames. The camera's pitch and roll snap rather than ease, which is a jump in direction",
+   "fix": "spread the pitch-up from looking down at the globe to looking at the horizon across the whole dive, with eased angular velocity"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-02.png",
+   "where": "frames 2408-2424, Phobos",
+   "what": "the moon jumps from mid-frame to a huge blurred shape cut off by the bottom edge in 8 frames, then is gone. The fly-by reads as a pop, not a pass",
+   "fix": "time the close pass of the moon over more frames, or move it out of the dive path earlier so it leaves smoothly"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "frames 2490-2669, foreground cliff vs far horizon",
+   "what": "near cliff and far rim shift almost together, so the terrain reads close to a 2D push-in with weak parallax. The dust patches in the valleys do not drift, so there is no visible life in the terrain view",
+   "fix": "add a lateral or downward camera move so foreground and horizon separate clearly, and animate slow dust or haze drift in the valleys"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-05.png",
+   "where": "frames 2669-2670 boundary and 2690-2697",
+   "what": "the terrain framing grows noticeably between sheets and then dives into haze within about 7 frames. The start of the rise is abrupt, with no eased lift-off",
+   "fix": "ease the camera into the rise over 15 to 20 frames before it enters the haze"
+  }
+ ]
+}

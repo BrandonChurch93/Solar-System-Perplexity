@@ -1,0 +1,15 @@
+Image 1 is a square, straight down (nadir) orbital photograph of canyon land on Mars, north at the top, about 41 km across. Its left half is right in form: a maze of flat topped mesas, spurs and winding troughs. Its right half is damaged: it is smeared into streaks, blurred, and has white puffs in it.
+
+Image 2 is an oblique aerial photograph taken low over the same land, looking east south east. It shows the true look of the rock: dark brown and rust layered rock, flat topped mesas with cliffs, strata on the slopes, rubble and landslide lobes on the canyon floors, a low Sun.
+
+Task: redraw image 1 as one sharp, seamless nadir orbital photograph with the same framing, the same scale and north at the top.
+
+1. The left half: keep every mesa, spur and trough exactly where it is, with its outline and its size. Draw it sharper, with strata on the slopes, talus and rubble, as fine as the rock in image 2.
+
+2. The right half: keep its broad layout of light and dark, and turn it into real land seen from straight above. The bright ochre streaks become the sunlit flat top of a mesa with a sharp, winding cliff edge. The black and dark brown smear becomes a deep canyon floor in the shadow of that mesa, with boulders, rubble and landslide lobes that can be made out in the shade. The white puffs become small patches of pale sunlit sand on the canyon floor with sharp edges. The pale ground at the right edge becomes a sharp sunlit plateau with small ravines.
+
+3. No streaks, no blur, no smoke, no mist, no cloud, no soft patches anywhere. The land of the right half joins the land of the left half without a seam, as one piece of land under one light.
+
+4. Every cliff is seen from straight above as a thin winding band, never as a tall face. No fan, no pleats, no herringbone, no long parallel or curved lines. Nothing may radiate from one point like the spokes of a wheel. No round pits, no fields of craters, no dots.
+
+Light: a low Sun in the south south east, long shadows falling toward the north north west, the same everywhere. A photograph from orbit: no horizon, no sky, no text, no border, no vignette.
