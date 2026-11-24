@@ -87,6 +87,11 @@
    0
   ]
  },
+ "bend": {
+  "heading": [0.52, 0.66, 0.85, 0.99],
+  "turnDeg": 180,
+  "side": 1
+ },
  "corner": 0.1,
  "anchorSteps": 3
 }
