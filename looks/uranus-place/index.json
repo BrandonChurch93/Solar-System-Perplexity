@@ -1,9 +1,53 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-24T08:14:45.205Z",
- "head": "a7c2c0784c9caa622a7cae0bbadc63d40ddb9137",
- "note": "NAMED a7c2c078 on main be1de182 sent 08:16: path green, parity green, pictures red (pattern both moves, dive pop 4141 to 4145), one test over its 5 s clock in the full run",
+ "pushed": "2026-11-24T08:53:12.901Z",
+ "head": "b754378d0bcbc29cf08fda8419310b3da9f30541",
+ "note": "b754378d on main b0035c5c: memo commit merged, 443 tests green; pattern red work begins, the white tops are the first suspect",
  "looks": [
+  {
+   "time": "2026-11-24T08:53:12.117Z",
+   "file": "20261124085312117-note-close4.jpg",
+   "source": "../../../../tmp/close4.png",
+   "kind": "note",
+   "label": "main b0035c5c: 4290 final of main beside rise drafts 4380 4384 4388",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T08:53:11.357Z",
+   "file": "20261124085311357-note-rise8.jpg",
+   "source": "../../../../tmp/rise8.png",
+   "kind": "note",
+   "label": "53152d5f code on main b0035c5c: rise drafts 4388 4392 4396 4400 4404 4408 4412 4420, white tops arrive 4404 to 4412",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T08:38:08.867Z",
+   "file": "20261124083808867-frame-m-4436-final.jpg",
+   "source": "out/work/u/memo/m-4436-final.png",
+   "kind": "frame",
+   "label": "uranus.rise frame 4436, final tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4436,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "12ba5366b28777b2"
+  },
+  {
+   "time": "2026-11-24T08:32:49.820Z",
+   "file": "20261124083249820-frame-m-4186.jpg",
+   "source": "out/work/u/memo/m-4186.png",
+   "kind": "frame",
+   "label": "uranus.dive frame 4186, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4186,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "12ba5366b28777b2"
+  },
   {
    "time": "2026-11-24T07:48:03.758Z",
    "file": "20261124074803758-frame-e-4035.jpg",
@@ -67,20 +111,6 @@
    "kind": "note",
    "label": "4436 final on 53152d5f (main b0b87889): the judged frame of the rise, camera equal to main's to the bit",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T07:17:01.348Z",
-   "file": "20261124071701348-frame-d-4436.jpg",
-   "source": "out/work/u/one/d-4436.png",
-   "kind": "frame",
-   "label": "uranus.rise frame 4436, final tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4436,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "05fc48a851c30441"
   },
   {
    "time": "2026-11-24T07:14:34.230Z",
@@ -293,30 +323,6 @@
    "segment": "uranus.dive",
    "frame": 4186,
    "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T06:10:44.236Z",
-   "file": "20261124061044236-note-bq-low.jpg",
-   "source": "../../../../tmp/bq-low.png",
-   "kind": "note",
-   "label": "head 145020cd, draft, lower left quarter at full size: 4340, 4350, 4360, 4370, 4379 and 4385 (the curl of cloud that comes in from below as the eye pulls back)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T06:10:43.016Z",
-   "file": "20261124061043016-note-bq-4368.jpg",
-   "source": "../../../../tmp/bq-4368.png",
-   "kind": "note",
-   "label": "head 145020cd on main 3060b725, draft, surface view frames from 4368 (12 a sheet; the bend runs 4294 to 4379)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T06:10:41.954Z",
-   "file": "20261124061041954-note-bq-4356.jpg",
-   "source": "../../../../tmp/bq-4356.png",
-   "kind": "note",
-   "label": "head 145020cd on main 3060b725, draft, surface view frames from 4356 (12 a sheet; the bend runs 4294 to 4379)",
-   "stop": "uranus"
   }
  ]
 }
