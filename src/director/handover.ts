@@ -48,7 +48,9 @@ let forced: ViewKind | null = null
 let above = false
 let horizon: boolean | null = null
 let oneMove = false
+let skyOff = false
 let shutterOf: ((frame: number) => number) | null = null
+let eyeOf: EyeHeight | null = null
 
 function smooth(t: number): number {
   const x = Math.min(Math.max(t, 0), 1)
@@ -131,30 +133,99 @@ export function shutterScales(of: ((frame: number) => number) | null): void {
   shutterOf = of
 }
 
-export function placeWeight(seg: Segment, time: number): number {
+// PLAN F for the engine's own two weights: the share of the close view's sky on the globe side (skyWeight) and the weight of the place
+// picture (placeWeight) read the height of the eye and never the clock. Each is a smooth step of the logarithm of the height of the globe
+// camera over the unit sphere of the body, between the height the stop's path has where the span of frames begins (skyFrames, placeFrames:
+// the far end) and the height it has at the frame of T. The frames only name the two heights. At the far end and at T the weight is what
+// the clock gave, and between them it is the same at every pace and at every fraction of a frame: an eye that holds its height holds the
+// weight, and one that comes back up takes it back. Where the segment ends inside the span (a sky span longer than its dive or rise) the
+// far end is the end of the segment, and the weight there is the clock's.
+// The eye is the globe camera of the stop's path whatever side the harness forces. It is a pose of the director, which this module can not
+// ask for, so the film that was asked for a shot last says how (eyeHeights), as it does for the capped shutter. A stop that gives its own
+// share (StopPlan.skyShare), has no span (skyFrames 0) or no picture is not asked for a height and is not touched by this.
+// The two ends of a span are asked once for a film and kept with its eye: a film is made for the paths its plans have when it is made
+// (its legs are read from them once, too), and three poses a weight made every shot of a dive or a rise cost twice what it did. A
+// change of the forced one move or of a stop's handover asks them again. The height at the time of the sample is asked every time, or
+// given by the caller that has it.
+export type EyeHeight = (stop: string, kind: 'dive' | 'rise', time: number) => number
+
+const spanEnds = new WeakMap<EyeHeight, Map<string, [number, number]>>()
+
+export function eyeHeights(of: EyeHeight | null): void {
+  eyeOf = of
+}
+
+// The height of the eye a weight would ask for at that time: for a caller that asks for both weights of one sample and gives it to both.
+export function eyeHeightAt(seg: Segment, time: number): number | undefined {
+  return eyeOf && (seg.kind === 'dive' || seg.kind === 'rise') ? eyeOf(seg.stop, seg.kind, time) : undefined
+}
+
+// The share of a span at the height the eye has at a time: base at the height of the far end, 1 at the height of T, on a straight line
+// in the logarithm of the height between them and beyond the far end, down to 0.
+function heightShare(seg: Segment, what: string, farTime: number, nearTime: number, base: number, time: number, eye?: number): number {
+  if (!eyeOf) throw new Error('the ' + what + ' of ' + seg.id + ' goes by the height of the eye, and no film has said how to ask for it (eyeHeights)')
+  const kind = seg.kind as 'dive' | 'rise'
+  let ends = spanEnds.get(eyeOf)
+  if (!ends) {
+    ends = new Map()
+    spanEnds.set(eyeOf, ends)
+  }
+  const key = seg.id + '|' + farTime + '|' + nearTime + '|' + (oneMove ? 1 : 0) + '|' + handoverChanges()
+  let hit = ends.get(key)
+  if (!hit) {
+    const far = eyeOf(seg.stop, kind, farTime)
+    const near = eyeOf(seg.stop, kind, nearTime)
+    if (!(near > 0) || !(far > near)) throw new Error('the ' + what + ' of ' + seg.id + ' goes by the height of the eye, which must be over the body and lower at T than where the span begins (it is ' + near + ' radii at T and ' + far + ' where the span begins): the stop gives a share of its own, or no span')
+    if (ends.size > 64) ends.clear()
+    hit = [far, near]
+    ends.set(key, hit)
+  }
+  const [far, near] = hit
+  const height = time === farTime ? far : (eye ?? eyeOf(seg.stop, kind, time))
+  if (!(height > 0)) return 1
+  return smooth(base + ((1 - base) * (Math.log(far) - Math.log(height))) / (Math.log(far) - Math.log(near)))
+}
+
+// eye: the height of the eye at that time, for a caller that has it (eyeHeightAt); the weight asks for it otherwise.
+export function placeWeight(seg: Segment, time: number, eye?: number): number {
   if (seg.kind !== 'dive' && seg.kind !== 'rise') return 0
   const h = handoverOf(seg.stop, seg.kind)
-  if (!h) return 0
+  if (!h || !h.picture) return 0
   const fps = config.fps
   const from = h.placeFirstFrame / fps
   const to = (h.placeLastFrame + 1) / fps
-  if (time < from || time >= to) return 0
-  if (seg.kind === 'dive') return time >= h.firstFrame / fps ? 1 : smooth((time - from) / (h.firstFrame / fps - from))
+  // The side of T is the handover itself: the picture stands whole in the frame of T, and it is gone where the close view has the frame.
+  if (seg.kind === 'dive') {
+    const full = h.firstFrame / fps
+    if (time >= to) return 0
+    if (time >= full) return 1
+    return full > from ? heightShare(seg, 'place picture', from, full, 0, time, eye) : 0
+  }
   const full = (h.lastFrame + 1) / fps
-  return time < full ? 1 : smooth((to - time) / (to - full))
+  if (time < from) return 0
+  if (time < full) return 1
+  return to > full ? heightShare(seg, 'place picture', to, full, 0, time, eye) : 0
 }
 
-export function skyWeight(seg: Segment, time: number): number {
+export function skyWeight(seg: Segment, time: number, eye?: number): number {
   if (seg.kind !== 'dive' && seg.kind !== 'rise') return 0
   const h = handoverOf(seg.stop, seg.kind)
   if (!h) return 0
   const fps = config.fps
   if (seg.kind === 'dive') {
     const full = h.firstFrame / fps
-    return time >= full ? 1 : h.skyFrames > 0 ? smooth((time - full) / (h.skyFrames / fps) + 1) : 0
+    if (time >= full) return 1
+    if (!(h.skyFrames > 0)) return 0
+    const span = h.skyFrames / fps
+    const far = Math.max(full - span, seg.start)
+    return far < full ? heightShare(seg, 'sky', far, full, (far - full) / span + 1, time, eye) : 0
   }
   const full = (h.lastFrame + 1) / fps
-  return time < full ? 1 : h.skyFrames > 0 ? smooth(1 - (time - full) / (h.skyFrames / fps)) : 0
+  if (time < full) return 1
+  if (!(h.skyFrames > 0)) return 0
+  const span = h.skyFrames / fps
+  const far = Math.min(full + span, seg.end)
+  return far > full ? heightShare(seg, 'sky', far, full, 1 - (far - full) / span, time, eye) : 0
 }
 
 // The weight of the horizon of the place picture (limbSky): the share of the close view's sky, never under the weight of the picture.
@@ -202,6 +273,17 @@ export function forceOneMove(on: boolean): void {
 
 export function oneMoveForced(): boolean {
   return oneMove
+}
+
+// The globe side without the sky of the close view (--diag nosky): the share of that sky stays 0 up to T in a dive and from T on in a rise, for a
+// stop that gives its own share too. What the fade of the sky adds to a picture or to a number of the judge is seen against it. For the
+// harness only, like forceSide.
+export function forceNoSky(on: boolean): void {
+  skyOff = on
+}
+
+export function noSkyForced(): boolean {
+  return skyOff
 }
 
 // What the harness has forced, as one word: whoever keeps a measure of the film's own path (the capped shutter) drops it when this changes.
