@@ -4101,3 +4101,52 @@ MAIL 575 from the Builder (/root), 07:45 UTC. Main is aaea819b3ec05f04742fdb6f55
   fit this round's 52.7 s at preview, a quarter of the pixels, nor the Builder's 192 s a sample, and I did not measure it
   again in this round; I do not use it. After, 16 by 9 costs 3.7 times the preview, as the pixel count says it should.
 - Checks on the tree: tsc clean; vitest 398 of 398; G11 and G15 PASS; smooth path green.
+
+## My second NAMED mail to the Builder (/root), 08:37 UTC (VM clock), word for word
+
+NAMED 0b9017c01a9403f9d76cee578d342bfd10384386
+Branch agent/neptune-place, pushed 08:35 UTC (VM clock). It stands on main c797cdc865c8489d84acb2ebb6168df66f7e50c6 (my last merge), not on 8b2c538f: no merge, by MAILS 572 and 575. Against fd95089a it changes three files, all in my folders: src/stops/neptune/deep.ts, src/stops/neptune/deep.json, assets-src/neptune/NOTES.md. No asset, no path, no move, no config.
+
+RED, KNOWN AND NAMED: THE COST AIM IS NOT REACHED. The cut is 2.4 times at the surface view, 2.1 at the dive, 1.7 at the rise. Not 5.
+
+SECONDS ON MY VM (4 cores, one process, preview format 960 by 540; a run's first frame carries about 20 s of compile, so the later frames are the net ones), before fd95089a, after 0b9017c0:
+- draft, surface view 4861: 52.7 s to 22.0 s. 4860 as first frame: 72.0 s to 42.5 s.
+- draft, dive 4745: 29.6 s to 14.0 s. Draft, rise 4985: 14.1 s to 8.1 s.
+- final, 4860, 16 samples: 860.8 s to 376.0 s (2.29 times; 2.36 without the compile).
+- 16 by 9 draft 4860 after: 80.6 s (3.7 times the preview, as the pixel count says). I have no sound before at 16 by 9 from this round and give none.
+
+PICTURE HELD. 4860 at the final tier, preview, 16 samples, before and after, in levels of 255 (tool out/work/nep/cost/diff.py, not in git): mean difference under 0.0005 (prints 0.000), largest block difference 0.013 (16 by 9 grid of blocks, column 9, row 7), largest single pixel 4, 0.06 percent of the pixels differ at all. Preview drafts: 4860 and 4861 differ in 0.05 percent of the pixels by 8 at most; 4745 in 0.03 percent, one place by 48; 4985, 4707 and 5006 equal to the bit. 4605 untouched (16 by 9 draft sha256 begins 5ae18138, as on fd95089a; its final not rendered in this round). So the only judged frame that moves is 4860, by the above. The look pair is in the looks, head 4203e96c: before, after, difference times 32.
+
+WHAT WAS DONE (everything reads the same samples at the same places except the one share named in point 3):
+1. The march finds the next step with cloud in a loop of its own; the taps toward the Sun stand outside it, paid once a cloud step.
+2. Empty air is passed by the rooms' bound in a small loop that reads no noise, in the march and in the shadow taps.
+3. Empty room is passed by the distance of the bent place from the body's bell times steps.cirrusSkip, 0.6. Measured, not proved: at 0.3 every frame was equal to the bit, at 0.6 the differences are the ones above.
+4. The body reads its two lump noises only for the streamers whose room holds the place, not for all five.
+5. The tearing noise stops reading octaves that cannot make cloud there; the room is tested once a step; the taps stop past optical depth 14.
+
+WHAT I FOUND ABOUT THE MACHINE, of use to other stops: the software renderer seems to run a loop's body once before it tests it, four pixels together under masks. So continue, an early return and a loop of no turns save nothing by themselves: every loop nested in a march is paid once a step even where the step is passed. Moving work out of the marching loop is what paid (29.6 s to 21.8 s with the same samples to the byte). I infer this from the timings; I did not read the renderer.
+
+TRIED, NO GAIN, NOT IN: a loop of their own for the taps in empty air (22.1 s); skipping inside bodies the noise has eaten (21.3 s and it lost cloud, block 2.9 at 4745); ending opaque rays at 0.01 instead of 0.004 (22.0 s); 96 instead of 16 turns of the empty air loop (21.8 s).
+
+WHERE THE REST GOES at 4861: deck and shadow taps 7.3 s, the march and its light 14.5 s. I do not know a further cut that keeps the samples. The next lever is the step itself (steps.cirrusShare 0.002 of the distance, 9 taps a cloud step), which changes the picture; I did not touch it.
+
+NOT IN THIS COMMIT: your three look faults at 4860 (ruled rings in the storm, streaked deck, flat white band under the limb). My tree for them changes the veil as seen in 4707 and 5006 and I have not looked at it there; the 90 minutes went to the cost. It is the third commit's work on top of this shader.
+
+OTHER REDS AND OPEN POINTS:
+- Parity not measured on this head (on fd95089a: mean 2.477, coarse 1.617, block 5.819, level 1.196). The drafts differ from fd95089a's by under 0.002 mean, so I expect no move; a PRE on this sha would say.
+- Seam not run again: path and move.json are unchanged (fd95089a: dive 1.010, rise 0.942). Handover sets of MAIL 560 not taken: both green, gain 0.03 to 0.05 of the limit, the dive's second number worse (0.63 against 0.42), and they would change 4707 and 5006.
+- An unused out value (lack) is left in the noise and in cirrusInside; it goes out with the next commit.
+- CORRECTION to point 1 of my first NAMED list: "limb 5 to 9 rows above the approved one" was a threshold fooled by the glow. By the column it is 2 to 4 rows. The real faults there: the glow twice too bright and too red, a white band of 14 rows.
+- Known breach, unchanged: merge 105da414 has no trailer.
+
+CHECKS on 0b9017c0: tsc clean; vitest 398 of 398; G11 PASS, G15 PASS; npm run smooth -- --stop neptune --only path, last line "smooth neptune: green. out/work/smooth/neptune.md"; G17 on the 16 by 9 draft of 4860 median 1.002, p25 0.790. Net size of my three folders 82.58 MB against main's 94.35 MB, 11.77 MB less.
+
+## 08:38 UTC: after the mail
+
+- Looks pushed 08:35 (4203e96c): the after pair beside the approved image, and before, after, difference times 32 of the final.
+- One thing in the mail I must hold myself to: "seems to run a loop's body once before it tests it" is an inference from four
+  timings (a1 to b1 to c1 to d1), not a reading of the renderer. The next round should test it directly with a shader that
+  differs in nothing else.
+- Next (third commit, the last): the look faults at 4860 on top of this shader (the T27 tree, `out/work/nep/cost/deep.new.ts`
+  needs the cuts of `deep.F.ts` carried over; its veil must be looked at in 4707 and 5006 first), the unused `lack` out, and
+  any further cost that keeps the samples.
