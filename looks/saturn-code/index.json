@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T16:32:30.192Z",
- "head": "a34beaa7aa01d46e0831505446a0024625ec5e5b",
- "note": "trial T7e proofs: G5 and G17 pass, handover parts pass, dive pictures green (level step 0.02, pop 1.04, pattern 0.29); rise pictures, G13, path and parity running; zone statistics for the next trial",
+ "pushed": "2026-11-24T17:01:46.080Z",
+ "head": "8e735db2e4e48719933c955e7dc05732ab4f8451",
+ "note": "trial T7e: every proof line green (G13 0 of 83, path, parity 2.818 at 3720, gate); now the near light against the far look by instrument renders, for the next trial",
  "looks": [
+  {
+   "time": "2026-11-24T17:01:45.334Z",
+   "file": "20261124170145334-note-r50_dive_pops.jpg",
+   "source": "../../../../tmp/v/t17/r50_dive_pops.png",
+   "kind": "note",
+   "label": "dive of trial T7e (draft, rate 2): the four largest pops, 1.02 to 1.04 (limit 1.2)"
+  },
+  {
+   "time": "2026-11-24T17:01:44.263Z",
+   "file": "20261124170144263-note-r50_rise_changes.jpg",
+   "source": "../../../../tmp/v/t17/r50_rise_changes.png",
+   "kind": "note",
+   "label": "rise of trial T7e (draft, rate 2): the largest changes in place and of the pattern; pattern 0.25 at 3820 + 1/2 (named commit 0.24, limit 0.45)"
+  },
   {
    "time": "2026-11-24T16:32:28.876Z",
    "file": "20261124163228876-note-r50_dive_changes.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/v/t17/d8_rise_3838.png",
    "kind": "note",
    "label": "item 17 trial T7e, rise frames 3838 and 3839 at full size, lower left"
-  },
-  {
-   "time": "2026-11-24T15:36:10.423Z",
-   "file": "20261124153610423-note-d8_dive_3602.jpg",
-   "source": "../../../../tmp/v/t17/d8_dive_3602.png",
-   "kind": "note",
-   "label": "item 17 trial T7e, dive frames 3602 and 3603 at full size, lower left"
-  },
-  {
-   "time": "2026-11-24T15:36:09.286Z",
-   "file": "20261124153609286-note-d8_sheet_rise.jpg",
-   "source": "../../../../tmp/v/t17/d8_sheet_rise.png",
-   "kind": "note",
-   "label": "item 17 trial T7e, rise at draft, every fourth frame 3808 to 3868"
   }
  ]
 }
