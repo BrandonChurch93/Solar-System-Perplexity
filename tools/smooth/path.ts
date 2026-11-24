@@ -6,7 +6,7 @@ export interface Span { first: number; end: number }
 
 export interface CurveLimits { maxStep: number; maxRebound: number; seamFrames: number }
 
-export interface Fault { curve: string; rule: 'step' | 'halfStep' | 'climbAfterPeak' | 'fallBeforePeak' | 'mean' | 'seam' | 'halfSeam' | 'lateBrake' | 'brakeGrows' | 'letGo' | 'hump' | 'dip'; k: number; frame: number; value: number; limit: number; first?: number; last?: number; count?: number; points?: number; text: string }
+export interface Fault { curve: string; rule: 'step' | 'halfStep' | 'climbAfterPeak' | 'fallBeforePeak' | 'mean' | 'seam' | 'halfSeam' | 'lateBrake' | 'brakeGrows' | 'letGo' | 'hump' | 'dip' | 'eye' | 'rest'; k: number; frame: number; value: number; limit: number; first?: number; last?: number; count?: number; points?: number; text: string }
 
 // A curve that is a mean over points (the speed of the picture: ground points on a ring round the place). values[i] holds what every point gave
 // at capture frame k0 + i, null where a point has no ground under it. A step and a rebound compare the mean over one fixed set of points, the
@@ -421,4 +421,56 @@ export function parityFrames(segments: { id: string; stop: string; kind: string;
     for (const share of at[kind] ?? []) out.push({ segment: seg.id, kind, share, frame: Math.min(seg.firstFrame + Math.round(share * (seg.endFrame - seg.firstFrame)), seg.endFrame - 1) })
   }
   return out
+}
+
+export interface LeaveResult { rate: number; k0: number; speed: (number | null)[]; lowest: { value: number; k: number } | null; first: { value: number; k: number } | null; last: { value: number; k: number } | null; over: number | null; fault: Fault | null }
+
+// The picture round the seam from a rise into its travel: the lowest speed, the speeds at the two ends of the window, and the lowest over the
+// smaller of those two. A rise and its travel are one flight: the speed falls once and rises once and does not come to rest. Judged: the
+// lowest over the slower end against min.
+export function judgeLeave(speed: (number | null)[], k0: number, rate: number, min: number | null): LeaveResult {
+  let lowest: LeaveResult['lowest'] = null
+  let first: LeaveResult['first'] = null
+  let last: LeaveResult['last'] = null
+  speed.forEach((v, i) => {
+    if (v === null) return
+    if (!lowest || v < lowest.value) lowest = { value: v, k: k0 + i }
+    first ??= { value: v, k: k0 + i }
+    last = { value: v, k: k0 + i }
+  })
+  const low = lowest as LeaveResult['lowest']
+  const a = first as LeaveResult['first']
+  const b = last as LeaveResult['last']
+  const end = a && b ? Math.min(a.value, b.value) : null
+  const over = low && end !== null && end > 0 ? low.value / end : null
+  const fault: Fault | null = low && over !== null && min !== null && over < min
+    ? { curve: 'rest', rule: 'rest', k: low.k, frame: Math.floor(low.k / rate), value: over, limit: min, text: 'rest: the picture comes to rest between the rise and the travel: the fastest point of the body\'s edge moves ' + low.value.toFixed(2) + ' px a film frame at frame ' + position(low.k, rate) + ', ' + shown(over, 3, min) + ' of the slower end of the window, limit ' + min }
+    : null
+  return { rate, k0, speed, lowest: low, first: a, last: b, over, fault }
+}
+
+export interface SeamResult { rate: number; k0: number; speed: (number | null)[]; along: (number | null)[]; lowest: { value: number; k: number } | null; inMove: { value: number; k: number } | null; step: { value: number; k: number } | null; back: { value: number; k: number } | null; fault: Fault | null }
+
+// The eye against the near ground round a seam with the surface view: the lowest speed (over the surface view's own) and its frame, the lowest
+// inside the move itself (move, the span of its steps), the largest step from one capture frame to the next, the lowest part along the
+// surface view's own direction. Judged: the lowest speed against min.
+export function judgeSeam(speed: (number | null)[], along: (number | null)[], k0: number, rate: number, min: number | null, move: { first: number; end: number } | null = null): SeamResult {
+  let lowest: SeamResult['lowest'] = null
+  let inMove: SeamResult['inMove'] = null
+  let step: SeamResult['step'] = null
+  let back: SeamResult['back'] = null
+  speed.forEach((v, i) => {
+    if (v === null) return
+    if (!lowest || v < lowest.value) lowest = { value: v, k: k0 + i }
+    if (move && k0 + i >= move.first && k0 + i <= move.end && (!inMove || v < inMove.value)) inMove = { value: v, k: k0 + i }
+    const before = i > 0 ? speed[i - 1]! : null
+    if (before !== null && (!step || Math.abs(v - before) > step.value)) step = { value: Math.abs(v - before), k: k0 + i }
+    const a = along[i] ?? null
+    if (a !== null && (!back || a < back.value)) back = { value: a, k: k0 + i }
+  })
+  const low = lowest as SeamResult['lowest']
+  const fault: Fault | null = low && min !== null && low.value < min
+    ? { curve: 'eye', rule: 'eye', k: low.k, frame: Math.floor(low.k / rate), value: low.value, limit: min, text: 'eye: the speed of the eye over its height falls to ' + shown(low.value, 3, min) + ' of the surface view\'s own at frame ' + position(low.k, rate) + ', limit ' + min }
+    : null
+  return { rate, k0, speed, along, lowest: low, inMove, step, back, fault }
 }

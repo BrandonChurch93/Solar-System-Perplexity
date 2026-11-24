@@ -7,8 +7,9 @@ import { shutterMid } from '../src/core/sampler'
 import { FilmDirector } from '../src/director/film'
 import { sideAt } from '../src/director/handover'
 import { plans } from '../src/director/plans'
-import { curves, landingCurves, planeHit, ringPlane, sampleLanding, sampleWindow, seen } from '../tools/smooth/camera'
-import { judgeCurve, judgeLanding, longestGap, parityFrames, position, shown, table } from '../tools/smooth/path'
+import { SEAM_OWN, SEAM_REACH, curves, eyeCurves, landingCurves, planeHit, ringPlane, sampleLanding, sampleLeave, sampleSeam, sampleWindow, seen, type SeamWindow } from '../tools/smooth/camera'
+import { missing, partOwn, popSpan, sliceName, sliceNeed } from '../tools/smooth/slice'
+import { judgeCurve, judgeLanding, judgeLeave, judgeSeam, longestGap, parityFrames, position, shown, table } from '../tools/smooth/path'
 
 const limits = { maxStep: 0.08, maxRebound: 0.03, seamFrames: 2 }
 const bell = (n: number, edge = 0): number[] => Array.from({ length: n }, (_, i) => edge + 1 - Math.cos((2 * Math.PI * (i + 0.5)) / n))
@@ -414,5 +415,177 @@ describe('the frames of the parity part', () => {
     const legs = config.stopIds.flatMap((id) => parityFrames(config.segments, id, at, ['dive', 'rise'], true).filter((r) => r.kind === 'travel').map((r) => r.segment))
     expect(legs).toEqual(config.segments.filter((s) => s.kind === 'travel').map((s) => s.id))
     expect(parityFrames(config.segments, 'sun', at, ['dive', 'rise'], true).map((r) => r.kind)).toEqual(['hold', 'terrain', 'rise', 'rise', 'rise', 'travel'])
+  })
+})
+
+describe('the eye against the near ground at the seam with the surface view', () => {
+  type P = { position: THREE.Vector3; quaternion: THREE.Quaternion; vfov: number }
+  const still = { twin: (p: P) => p, untwin: (p: P) => p, seg: { terrain: { start: 0 } } } as unknown as (typeof plans)[number]
+  const made = (ways: number[]): SeamWindow => {
+    let h = 1
+    const heights = [h, ...ways.map((v) => (h = h * (1 - v)))]
+    const samples = heights.map((height, i) => ({ k: 100 + i, frame: Math.floor((100 + i) / 2), time: (100 + i) / 60, segment: 'x.terrain', side: 'terrain' as const, pose: { position: new THREE.Vector3(0, 1 + height, 0), quaternion: new THREE.Quaternion(), vfov: 40 }, height }))
+    return { kind: 'rise', seg: config.segments[0]!, seam: 54, rate: 2, k0: 100, samples, own: { first: 101, end: 104 } }
+  }
+  it('reads 1 where the eye goes on as the surface view does, a dip where it stops and a negative part where it goes back', () => {
+    const c = eyeCurves(made([0.01, 0.01, 0.01, 0.01, 0.01, 0.004, 0, -0.006, -0.02]), still)
+    expect(c.speed[0]).toBeNull()
+    for (const i of [1, 2, 3, 4, 5]) expect(c.speed[i]!).toBeCloseTo(1, 6)
+    expect(c.speed[6]!).toBeCloseTo(0.4, 2)
+    expect(c.speed[7]!).toBeCloseTo(0, 6)
+    expect(c.speed[8]!).toBeCloseTo(0.6, 2)
+    expect(c.along[8]!).toBeCloseTo(-0.6, 2)
+    expect(c.along[9]!).toBeLessThan(-1.9)
+    const r = judgeSeam(c.speed, c.along, 100, 2, 0.5)
+    expect(r.lowest).toEqual({ value: c.speed[7], k: 107 })
+    expect(r.inMove).toBeNull()
+    expect(judgeSeam(c.speed, c.along, 100, 2, 0.5, { first: 108, end: 109 }).inMove).toEqual({ value: c.speed[8], k: 108 })
+    expect(r.back!.k).toBe(109)
+    expect(r.step!.k).toBe(109)
+    expect(r.fault!.rule).toBe('eye')
+    expect(r.fault!.text).toContain('at frame 53 + 1/2, limit 0.5')
+    expect(judgeSeam(c.speed, c.along, 100, 2, null).fault).toBeNull()
+    expect(judgeSeam(c.speed.slice(0, 6), c.along.slice(0, 6), 100, 2, 0.5).fault).toBeNull()
+  })
+  it('takes the ground as the twin of the stop holds it: an eye that stands over a turning place does not move', () => {
+    const turn = (t: number): THREE.Quaternion => new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), t)
+    const turning = { twin: (p: P) => p, untwin: (p: P, t: number) => ({ ...p, position: p.position.clone().applyQuaternion(turn(t).invert()) }), seg: { terrain: { start: 0 } } } as unknown as (typeof plans)[number]
+    const w = made([0.01, 0.01, 0.01, 0.01, 0.01, 0.01])
+    for (const s of w.samples) s.pose.position.applyQuaternion(turn(s.time))
+    const c = eyeCurves(w, turning)
+    for (const i of [1, 2, 3, 4, 5, 6]) expect(c.speed[i]!).toBeCloseTo(1, 6)
+  })
+  it('samples every seam of the film: 17 seams, the reach to each side, the surface view next to the seam as its own', () => {
+    const film = new FilmDirector(plans)
+    let seams = 0
+    for (const plan of plans) {
+      for (const kind of ['dive', 'rise'] as const) {
+        const w = sampleSeam(config, film, plan, kind, 2)
+        if (!w) continue
+        seams++
+        expect(w.seam).toBe(kind === 'dive' ? w.seg.endFrame : w.seg.firstFrame)
+        expect(w.samples[0]!.k).toBe((w.seam - SEAM_REACH) * 2 - 1)
+        expect(w.samples[w.samples.length - 1]!.k).toBe((w.seam + SEAM_REACH) * 2 - 1)
+        const own = w.samples.filter((s) => s.k >= w.own.first - 1 && s.k <= w.own.end)
+        expect(own.filter((s) => s.segment !== plan.id + '.terrain').map((s) => s.k)).toEqual(kind === 'rise' ? [w.seam * 2] : [])
+        expect(own.length).toBe(SEAM_OWN * 2 + 1)
+        const c = eyeCurves(w, plan, ringPlane(plan))
+        expect(c.own!).toBeGreaterThan(0)
+        const mine = c.speed.filter((_, i) => w.k0 + i >= w.own.first && w.k0 + i <= w.own.end) as number[]
+        expect(mine.reduce((n, v) => n + v, 0) / mine.length).toBeCloseTo(1, 9)
+      }
+    }
+    expect(seams).toBe(17)
+  })
+})
+
+describe('one move in slices', () => {
+  const total = 228
+  const window = 32
+  const reach = 16
+
+  it('places the window of the median as the image measure does: round the frame, moved inward at both ends', () => {
+    expect(popSpan(100, total, window)).toEqual([84, 116])
+    expect(popSpan(0, total, window)).toEqual([0, 32])
+    expect(popSpan(10, total, window)).toEqual([0, 32])
+    expect(popSpan(227, total, window)).toEqual([195, 227])
+    expect(popSpan(220, total, window)).toEqual([195, 227])
+    expect(popSpan(4, 10, window)).toEqual([0, 9])
+  })
+
+  it('gives every frame of the window to exactly one part', () => {
+    for (const of of [1, 2, 4, 7, 8, 40]) {
+      const owners = new Array<number>(total).fill(0)
+      for (let part = 1; part <= of; part++) {
+        const own = partOwn(part, of, total)
+        for (let i = own.first; i < own.end; i++) owners[i]!++
+      }
+      expect(owners.every((n) => n === 1)).toBe(true)
+    }
+    expect(partOwn(2, 4, total)).toEqual({ first: 57, end: 114 })
+  })
+
+  it('holds for each of its frames both neighbours, the window of the median with the frame after it, and the frame the change is measured against', () => {
+    for (const of of [1, 3, 4, 8, 40]) {
+      for (let part = 1; part <= of; part++) {
+        const own = partOwn(part, of, total)
+        const [lo, hi] = sliceNeed(own, total, window, reach)
+        const has = (i: number): boolean => i < 0 || i > total - 1 || (i >= lo && i <= hi)
+        for (let i = own.first; i < own.end; i++) {
+          const [a, b] = popSpan(i, total, window)
+          expect([i - 1, i + 1, a, b + 1, i + reach].every(has)).toBe(true)
+        }
+        expect(lo).toBeGreaterThanOrEqual(0)
+        expect(hi).toBeLessThanOrEqual(total - 1)
+      }
+    }
+  })
+
+  it('reaches 16 frames back and 17 on inside the window, and to the window of the median at its two ends', () => {
+    expect(sliceNeed({ first: 57, end: 114 }, total, window, reach)).toEqual([41, 130])
+    expect(sliceNeed({ first: 0, end: 57 }, total, window, reach)).toEqual([0, 73])
+    expect(sliceNeed({ first: 171, end: 228 }, total, window, reach)).toEqual([155, 227])
+    expect(sliceNeed({ first: 220, end: 228 }, total, window, reach)).toEqual([195, 227])
+    expect(sliceNeed({ first: 0, end: 4 }, total, window, reach)).toEqual([0, 33])
+    expect(sliceNeed({ first: 0, end: total }, total, window, reach)).toEqual([0, total - 1])
+  })
+
+  it('names a part by its number and a run of frames by its capture frames', () => {
+    expect(sliceName(3, 8, 0, 0)).toBe('p3of8')
+    expect(sliceName(null, null, 1380, 1436)).toBe('k1380-1436')
+  })
+
+  it('finds the runs of frames that no part owns', () => {
+    expect(missing([{ first: 0, end: 57 }, { first: 114, end: 171 }], total)).toEqual([{ first: 57, end: 114 }, { first: 171, end: 228 }])
+    expect(missing([{ first: 0, end: 120 }, { first: 100, end: 228 }], total)).toEqual([])
+    expect(missing([], 3)).toEqual([{ first: 0, end: 3 }])
+  })
+})
+
+describe('the picture between a rise and the travel that leaves the stop', () => {
+  const flight = (low: number): number[] => Array.from({ length: 49 }, (_, i) => low + (40 - low) * Math.abs(i - 24) / 24 + (i > 24 ? (i - 24) * 2 : 0))
+
+  it('reads the lowest speed over the slower of the two ends of the window', () => {
+    const r = judgeLeave([null, ...flight(20)], 99, 2, null)
+    expect(r.first).toEqual({ value: 40, k: 100 })
+    expect(r.last).toEqual({ value: 88, k: 148 })
+    expect(r.lowest).toEqual({ value: 20, k: 124 })
+    expect(r.over).toBeCloseTo(0.5, 12)
+    expect(r.fault).toBeNull()
+  })
+
+  it('shows a rest and does not judge it while there is no limit, and names it once there is one', () => {
+    const speed = [null, ...flight(0.25)]
+    expect(judgeLeave(speed, 99, 2, null).over).toBeCloseTo(0.00625, 12)
+    expect(judgeLeave(speed, 99, 2, null).fault).toBeNull()
+    const f = judgeLeave(speed, 99, 2, 0.3).fault!
+    expect(f.rule).toBe('rest')
+    expect(f.frame).toBe(62)
+    expect(f.text).toBe('rest: the picture comes to rest between the rise and the travel: the fastest point of the body\'s edge moves 0.25 px a film frame at frame 62, 0.006 of the slower end of the window, limit 0.3')
+    expect(judgeLeave([null, ...flight(20)], 99, 2, 0.3).fault).toBeNull()
+  })
+
+  it('is not measured where the path gives no speed', () => {
+    const r = judgeLeave([null, null, null], 0, 2, 0.3)
+    expect(r.over).toBeNull()
+    expect(r.fault).toBeNull()
+  })
+
+  it('is sampled at the seven seams from a rise into a travel: not at the first stop, whose travel follows its hold, and not at the last', () => {
+    const film = new FilmDirector(plans)
+    const reach = config.raw.smooth.reachFrames
+    const seams: string[] = []
+    for (const plan of plans) {
+      const w = sampleLeave(config, film, plan, 2, reach)
+      if (!w) continue
+      seams.push(plan.id)
+      expect(w.seam).toBe(w.rise.endFrame)
+      expect(w.travel.firstFrame).toBe(w.seam)
+      expect(w.samples[0]!.k).toBe((w.seam - reach) * 2 - 1)
+      expect(w.samples[w.samples.length - 1]!.k).toBe((w.seam + reach) * 2 - 1)
+      expect(w.samples.filter((s) => s.k >= w.seam * 2).every((s) => s.segment === w.travel.id)).toBe(true)
+      expect(w.samples.filter((s) => s.k < w.seam * 2).every((s) => s.segment === w.rise.id)).toBe(true)
+    }
+    expect(seams).toEqual(plans.slice(1, -1).map((p) => p.id))
   })
 })

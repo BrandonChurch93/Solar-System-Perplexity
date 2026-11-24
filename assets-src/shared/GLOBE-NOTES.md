@@ -346,6 +346,14 @@ The fault: the colour levels of a globe come in by the texels of the parent a pi
 
 Measured (`tests/globe-frame.test.ts`, 5 tests in node; `tests/globe-cap.test.ts`, one more in the harness browser): a level whose parent has 1.3 texels a row at 96 rows shows 0.73 of the finer level in the middle; at 192 rows with the factor 2 the same within 0.02, without the factor 1.0; at 48 rows with the factor 0.5 the same within 0.03, without it 0.0.
 
+## 10. Check of a plate pyramid: does a level show its parent's picture (`globe-levels.py`, MAIL 584)
+
+The smooth report judges the pattern that changes in place (a frame against the frame 8 later carried back, both reduced to their detail between 8 and 40 px, limit 0.45). A level that comes in adds to that number whatever it does not share with its parent in that band. `assets-src/shared/globe-levels.py` reads it from the files alone, in seconds, with the report's own function (`pattern` of `tools/img/smooth.py`) and the report's numbers from the config: each level against the part of its parent that it covers, both reduced to the state in which the level comes in (a parent texel 0.8 px of the frame, `--texel`).
+
+`python3 assets-src/shared/globe-levels.py --dir public/assets/ID/full --json src/stops/ID/FILE.json [--key levels] [--suffix -dive] [--pairs 0-1,1-3] [--panel out.png]`, or the levels by hand: `--level FILE:WIDTHDEG[:EASTDEG,NORTHDEG]` twice or more. One line a pair; the exit code is 1 when a pair is over the limit. The panel shows parent, child and the judged pattern (white is 1). A pair is a test only when both files are the same kind of picture (colour with colour).
+
+Measured on main b0035c5c: Mars's eight levels 0.06, 0.00, 0.06, 0.00, 0.00, 0.00, 0.00; Uranus's three patches 0.00, 0.00. Controls on Mars's patch-42 and patch-19: the child's width given as 21 in place of 19 degrees 1.51; the child moved 0.3 degrees east 1.08; an unrelated child (place-0p3) 1.41.
+
 ## Proof with the options off
 
 Draft stills `out/work/stills/f%05d-16x9-draft-full.png`, sha256, frames 360 (sun.hold), 615 (mercury.hold), 717 (mercury.dive), 1185 (venus.hold), 1857 (earth.dive), 2325 (mars.hold), 2427 (mars.dive), 2997 (jupiter.dive), 3465 (saturn.hold), 4035 (uranus.hold), 4707 (neptune.dive). The references were rendered at `412d2d09` before any change. The runs are named in the log below.
@@ -370,3 +378,18 @@ Draft stills `out/work/stills/f%05d-16x9-draft-full.png`, sha256, frames 360 (su
 - `light.from` on Mars, scratch tree (heights v3, light 1,1), draft: with `from` Infinity the hold 2325 differs from the picture without `from` by mean 0.08 of 255, largest 64 (the canyon's walls), 12 percent of the pixels, 0.01 percent by more than 8; frame 2400 above the band by mean 0.07; frame 2409 in the band by nothing. The hold took 28.6 s against 19.5 s. The hold is the approved picture, so the stop keeps `from` under the hold's height or sends the pair to the Builder (MAIL 454 item 2, iii).
 - Proof of the commit named to the Builder (1e36be06, and its merge with main f2375d2e, abe760fd): tsc clean, the whole suite 316 passed and 0 failed on the merge, build made; 20 draft frames with the options off equal to main's (14 frames of nine stops, Mars 2401 to 2406; 2997 against main f2375d2e, which changed it).
 - A second Sun for the cap's own light was asked and ruled out (MAIL 462): the cap lights with the globe's Sun.
+- The frame factor (section 9, NOTE 501). Commits d788d85c (the factor) and 73f4aa6e (the scale of a place picture against the master's), merged with main 26677ed9 as dace4ba6. On 73f4aa6e: `npx vitest run` 376 passed, 0 failed; 20 draft frames at 16 by 9: 360, 615, 1185, 1755, 2325, 2895, 3465, 4035, 4605, 717, 1857, 2997, 4707 byte equal to the same frames of abe760fd (before the change), Mars 2401 to 2406 and 2427 byte equal to the same rendered at main 6884e808, which had changed them. On dace4ba6: tsc clean, 376 passed, build made; 615 and 717 equal to main 26677ed9, 2325 and 2427 equal to 73f4aa6e.
+- `npm run smooth -- --stop mars --only parity` (uhd scaled down by 2 against 16 by 9, draft, levels of 255), main 26677ed9 against dace4ba6. Both green. Mean, 99th percentile, largest coarse difference, block level:
+  - 2423 dive: 1.286, 4.6, 18.25, -1.813 to 1.255, 4.5, 18.25, -1.816
+  - 2445 dive: 1.393, 5.9, 3.61, -0.903 to 1.284, 4.5, 3.47, -1.051
+  - 2468 dive: 1.316, 5.1, 5.46, -0.965 to 1.310, 5.0, 5.46, -0.965
+  - 2580 terrain: 1.552, 9.3, 8.23, -2.046, the same after (the place picture has the master's pixels at uhd, so its factor is 1)
+  - 2689 rise: 1.353, 6.2, 5.16, -1.431, the same after
+  - 2708 rise: 1.475, 7.0, 3.87, -1.394 to 1.310, 5.0, 3.58, -1.360
+  - 2726 rise: 1.540, 8.8, 31.23, -1.633 to 1.188, 4.0, 13.66, -0.855
+  The four numbers the limits read (mean 1.552, coarse mean 0.549, block -2.046, level -0.508) stand at 2580 before and after. Mars was inside the limits before the change; the change is seen on five of the seven frames, most at 2726. Seconds a draft frame at uhd 18.9 before, 22.0 after (one run each).
+- Merge of main e7fc53a2 (88ba5871; the parity now reads the hold and the leaving leg, nine frames). Mars parity again, main e7fc53a2 against the merge, both green. Mean, 99th percentile, largest coarse difference, block level:
+  - 2325 hold: 2.014, 16.5, 28.38, 3.250 to 1.305, 6.1, 6.24, -1.270. In the difference picture the band of Valles Marineris, where a plate level came in earlier at uhd, is gone.
+  - 2783 travel: 1.919, 20.9, 32.65, -2.806 to 1.918, 20.9, 32.65, -2.806; level -0.98, fine detail 1.755. The difference picture shows the stars (`src/space`, not this folder) and faintly the moon's fine detail. The largest pixel fell from 210 to 169.
+  - The seven frames between as in the entry above, to the digit.
+  The largest numbers before: mean 2.014 and block 3.250 at the hold; after: mean 1.918, coarse mean 1.024, block -2.806, level -0.980, all at 2783.

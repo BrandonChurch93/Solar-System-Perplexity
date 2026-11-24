@@ -72,7 +72,7 @@ export interface LandingCurves { sky: (number | null)[]; centre: (number | null)
 
 // What changed from capture frame k - 1 to k in the picture, in pixels a film frame: sky, the turn of the camera (what the stars do); centre,
 // the way of the centre of the arriving body; edge, the growth of its radius; limb, centre and edge together, the fastest point of its edge.
-export function landingCurves(w: LandingWindow, width: number, height: number): LandingCurves {
+export function landingCurves(w: Pick<LandingWindow, 'samples' | 'rate'>, width: number, height: number): LandingCurves {
   const out: LandingCurves = { sky: [], centre: [], edge: [], limb: [] }
   const focal = (p: Pose): number => height / 2 / Math.tan((p.vfov * RAD) / 2)
   const radius = (p: Pose): number | null => (p.position.lengthSq() > 1 ? focal(p) / Math.sqrt(p.position.lengthSq() - 1) : null)
@@ -98,6 +98,18 @@ export function landingCurves(w: LandingWindow, width: number, height: number): 
     out.limb.push(centre !== null && edge !== null ? centre + edge : null)
   })
   return out
+}
+
+// The seam from a rise into the travel that leaves the stop: reachFrames film frames to each side, in the camera of the stop. A rise that is
+// followed by anything else (the first stop's, the last stop's) has none.
+export interface LeaveWindow { rise: Segment; travel: Segment; seam: number; rate: number; k0: number; samples: Sample[] }
+
+export function sampleLeave(cfg: Config, film: FilmDirector, plan: StopPlan, rate: number, reachFrames: number): LeaveWindow | null {
+  const rise = cfg.segments.find((s) => s.stop === plan.id && s.kind === 'rise')
+  const travel = rise ? cfg.segments.find((s) => s.kind === 'travel' && s.firstFrame === rise.endFrame) : undefined
+  if (!rise || !travel) return null
+  const seam = rise.endFrame
+  return { rise, travel, seam, rate, ...samplesOf(cfg, film, plan, rate, Math.max(seam - reachFrames, 0), Math.min(seam + reachFrames, cfg.frameCount)) }
 }
 
 export function project(p: Pose, point: THREE.Vector3, width: number, height: number): { x: number; y: number; front: boolean } {
@@ -235,4 +247,41 @@ export function curves(w: Window, plan: StopPlan, width: number, height: number,
     out.speed.push(got.length >= MIN_POINTS ? got.reduce((n, v) => n + v, 0) / got.length : null)
   })
   return out
+}
+
+// The seam of a dive or a rise with the surface view: the eye against the near ground. SEAM_REACH film frames to each side of the seam;
+// own is the span of capture frames whose step lies inside the surface view within SEAM_OWN film frames of the seam.
+export const SEAM_REACH = 16
+export const SEAM_OWN = 2
+
+export interface SeamWindow { kind: Kind; seg: Segment; seam: number; rate: number; k0: number; samples: Sample[]; own: { first: number; end: number } }
+
+export function sampleSeam(cfg: Config, film: FilmDirector, plan: StopPlan, kind: Kind, rate: number): SeamWindow | null {
+  const seg = cfg.segments.find((s) => s.stop === plan.id && s.kind === kind)
+  if (!seg) return null
+  const seam = kind === 'dive' ? seg.endFrame : seg.firstFrame
+  const own = kind === 'dive' ? { first: seam * rate + 1, end: (seam + SEAM_OWN) * rate } : { first: (seam - SEAM_OWN) * rate + 1, end: seam * rate }
+  return { kind, seg, seam, rate, ...samplesOf(cfg, film, plan, rate, Math.max(seam - SEAM_REACH, 0), Math.min(seam + SEAM_REACH, cfg.frameCount)), own }
+}
+
+export interface EyeCurves { own: number | null; speed: (number | null)[]; along: (number | null)[] }
+
+// What the eye did from capture frame k - 1 to k against the ground as the stop's twin holds it (as tools/seam.ts reads it): its way over its own height above the ground
+// (the unit sphere, or the plane of the rings), per film frame, over the same number of the surface view next to the seam (own, the mean of
+// its SEAM_OWN film frames at the seam). along is the part of that way in the direction the surface view itself moves in: under 0 the eye
+// goes back.
+export function eyeCurves(w: SeamWindow, plan: StopPlan, ground: Plane | null = null): EyeCurves {
+  const fixed = (s: Sample): THREE.Vector3 => plan.twin(plan.untwin(s.pose, s.time), plan.seg.terrain.start).position.clone()
+  const high = (s: Sample): number => (ground ? Math.abs(s.pose.position.dot(ground.normal)) : s.height)
+  const ways: (THREE.Vector3 | null)[] = w.samples.map((s, i) => {
+    const prev = i > 0 && w.samples[i - 1]!.k === s.k - 1 ? w.samples[i - 1]! : null
+    const h = prev ? (high(prev) + high(s)) / 2 : 0
+    return prev && high(prev) > 0 && high(s) > 0 ? fixed(s).sub(fixed(prev)).multiplyScalar(w.rate / h) : null
+  })
+  const mine = ways.filter((v, i): v is THREE.Vector3 => v !== null && w.k0 + i >= w.own.first && w.k0 + i <= w.own.end)
+  const own = mine.length ? mine.reduce((n, v) => n + v.length(), 0) / mine.length : null
+  const dir = mine.reduce((n, v) => n.add(v), new THREE.Vector3())
+  if (own === null || own < 1e-12 || dir.lengthSq() < 1e-24) return { own, speed: ways.map(() => null), along: ways.map(() => null) }
+  dir.normalize()
+  return { own, speed: ways.map((v) => (v ? v.length() / own : null)), along: ways.map((v) => (v ? v.dot(dir) / own : null)) }
 }

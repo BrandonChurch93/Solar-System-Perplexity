@@ -12,7 +12,7 @@ import { handoverFrame, handoverOf, horizonWeight, placeWeight, shutterScales, s
 import skyFrame from '../space/skyframe.json'
 import world from './world.json'
 import { aimAt, type SkyAims } from '../space/aim'
-import { TravelShape, inFrame, outsideFrame } from '../space/travel/path'
+import { CARRY, TravelShape, carryBend, carryWay, inFrame, outsideFrame, travelLook } from '../space/travel/path'
 import { discShare, openSky } from '../space/travel/open'
 
 const NO_TURN = new THREE.Quaternion()
@@ -25,7 +25,7 @@ const APPROACH_START = 0.2
 const APPROACH_POWER = 2.5
 const SWING_FROM = 0.3
 const CLEAR_DEG = 3
-const SUN_PULL_FROM = 0.2
+const SUN_PULL_FROM = 0.12
 const SUN_PULL_END = 0.42
 const SUN_APPROACH_START = 0.42
 export const LOOKBACK = { phaseDeg: 148, azimuthDeg: 127, distance: 8.6, sun: [0.59, 0.3] as [number, number], sunPerSecond: [-0.02, 0.005] as [number, number], settle: 4.8, hand: 0.1, lineDeg: 195, vfov: 34, glare: 4, flare: 0.35, sky: [0, 35, -5] as [number, number, number], skyExposure: 0.36, skyAnchor: { aimDeg: 14, rollDeg: 13 }, glide: { turn: 0.375, phase: 0.425, pull: 0.3, aim: 0.375 } }
@@ -72,6 +72,7 @@ export class FilmDirector implements Director {
   private readonly clear: number[] = [0]
   private readonly slide: number[] = []
   private readonly shapes: TravelShape[] = []
+  private readonly carries: ({ speed: THREE.Vector3; rate: THREE.Vector3; span: number } | null | undefined)[] = []
   private readonly lit: number[] = []
   private readonly sunHand: number[] = []
   private readonly small: number[] = []
@@ -333,7 +334,7 @@ export class FilmDirector implements Director {
     const seg = this.plans[i]!.seg.travel!
     const master = config.formats[config.formatKeys.master]!
     const time = seg.start + u * (seg.end - seg.start)
-    const from = this.toWorld(i, this.leaving(i, time))
+    const from = this.toWorld(i, this.carried(i, time))
     const moved = this.approach[i + 1]!.clone().multiplyScalar(slide * shape.pass(u))
     return this.leavingThings(i, time).some((t) => inFrame(from.quaternion, from.vfov, master.width / master.height, t.to.sub(moved), t.radius, shape.look.clearDeg))
   }
@@ -358,7 +359,7 @@ export class FilmDirector implements Director {
 
   leavingThings(i: number, time: number): { name: string; to: THREE.Vector3; radius: number }[] {
     const a = this.plans[i]!
-    const from = this.toWorld(i, this.leaving(i, time))
+    const from = this.toWorld(i, this.carried(i, time))
     const f = this.frames[i]!
     const at = (p: THREE.Vector3): THREE.Vector3 => p.applyQuaternion(f.rotation).add(f.origin).sub(from.position)
     const out = [{ name: a.id, to: at(new THREE.Vector3()), radius: Math.max(1, a.fit.rings?.outer ?? 0) }]
@@ -371,9 +372,32 @@ export class FilmDirector implements Director {
     return { position: p.position.clone().applyQuaternion(f.rotation).add(f.origin), quaternion: f.rotation.clone().multiply(p.quaternion), vfov: p.vfov }
   }
 
+  private carryOf(i: number): { speed: THREE.Vector3; rate: THREE.Vector3; span: number } | null {
+    const known = this.carries[i]
+    if (known !== undefined) return known
+    const p = this.plans[i]!
+    const end = p.seg.rise.end
+    const h = CARRY.step
+    const p0 = p.exitPose(end).position
+    const p1 = p.eyeShot('rise', end - h, 'orbit').pose.position
+    const p2 = p.eyeShot('rise', end - 2 * h, 'orbit').pose.position
+    const speed = p0.clone().multiplyScalar(3).addScaledVector(p1, -4).add(p2).multiplyScalar(1 / (2 * h)).sub(p.exitPose(end + h).position.sub(p0).multiplyScalar(1 / h))
+    const rate = p0.clone().addScaledVector(p1, -2).add(p2).multiplyScalar(1 / (h * h))
+    return (this.carries[i] = speed.length() < CARRY.from ? null : { speed, rate, span: travelLook(p.id).carry })
+  }
+
   private leaving(i: number, time: number): Pose {
     const p = this.plans[i]!
     return i === 0 ? p.hold(time - p.seg.hold.start) : p.exitPose(time)
+  }
+
+  private carried(i: number, time: number): Pose {
+    const pose = this.leaving(i, time)
+    const c = i > 0 ? this.carryOf(i) : null
+    if (!c) return pose
+    const s = (time - this.plans[i]!.seg.rise.end) / c.span
+    pose.position.addScaledVector(c.speed, c.span * carryWay(s)).addScaledVector(c.rate, c.span * c.span * carryBend(s))
+    return pose
   }
 
   private place(i: number): void {
@@ -457,15 +481,15 @@ export class FilmDirector implements Director {
   private travelPath(index: number, time: number): Pose {
     const seg = this.plans[index]!.seg.travel!
     const u = (time - seg.start) / (seg.end - seg.start)
-    const from = this.toWorld(index, this.leaving(index, time))
+    const from = this.toWorld(index, this.carried(index, time))
     const shape = this.shapes[index]!
     const x = ramp(this.clear[index + 1]!, 1, u)
     const to = this.toWorld(index + 1, this.approachLocal(index + 1, x, time, shape))
     const start = this.toWorld(index + 1, this.approachLocal(index + 1, 0, time, shape))
     if (index === 0) {
-      const g = easeInOut(ramp(SUN_PULL_FROM, SUN_PULL_END, u))
+      const g = smoother(ramp(SUN_PULL_FROM, SUN_PULL_END, u))
       const radial = this.frames[0]!.origin.clone().addScaledVector(this.sunWorld, -this.sunStart * Math.pow(this.sunSwap / this.sunStart, g))
-      from.position.lerp(radial, smooth(u / 0.12))
+      from.position.lerp(radial, smoother(u / SUN_PULL_END))
     }
     const position = to.position.clone().addScaledVector(from.position.clone().sub(start.position), shape.settleLeft(x))
     const slide = this.slide[index] ?? 0
