@@ -1,9 +1,41 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T23:47:11.897Z",
+ "pushed": "2026-11-24T00:12:35.535Z",
  "head": "11ab125d2955dbea8df2f36ca43a5f12298b812f",
- "note": "11ab125d step 3 pushed: sphere under the relief in the close view, kept frames 0 px; open: step at 977 to 978 in the rise",
+ "note": "step 2 and 4 draft: place picture off, relief meshes in the globe view by height, knobs by height; rise seam 977 to 978 steps -0.44 level (was +4.1); pale patch 985 to 989 still wrong",
  "looks": [
+  {
+   "time": "2026-11-24T00:12:34.962Z",
+   "file": "20261124001234962-note-sheet-r2.jpg",
+   "source": "out/work/mercury/place/m3/sheet-r2.jpg",
+   "kind": "note",
+   "label": "mercury step 2 and 4 draft, place picture off, meshes drawn in the globe view by height, sheet r2",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T00:12:34.425Z",
+   "file": "20261124001234425-note-sheet-r1.jpg",
+   "source": "out/work/mercury/place/m3/sheet-r1.jpg",
+   "kind": "note",
+   "label": "mercury step 2 and 4 draft, place picture off, meshes drawn in the globe view by height, sheet r1",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T00:12:33.876Z",
+   "file": "20261124001233876-note-sheet-d2.jpg",
+   "source": "out/work/mercury/place/m3/sheet-d2.jpg",
+   "kind": "note",
+   "label": "mercury step 2 and 4 draft, place picture off, meshes drawn in the globe view by height, sheet d2",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T00:12:33.250Z",
+   "file": "20261124001233250-note-sheet-d1.jpg",
+   "source": "out/work/mercury/place/m3/sheet-d1.jpg",
+   "kind": "note",
+   "label": "mercury step 2 and 4 draft, place picture off, meshes drawn in the globe view by height, sheet d1",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-23T23:47:11.306Z",
    "file": "20261123234711306-note-sheet-r.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/mercury/place/s1/horizon6.png",
    "kind": "note",
    "label": "open fault: thin second contour at the horizon 761 to 766 (old, new, orbit side)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T23:32:45.627Z",
-   "file": "20261123233245627-note-crop-sides.jpg",
-   "source": "out/work/mercury/place/s1/crop-sides.jpg",
-   "kind": "note",
-   "label": "same frame drawn both ways, orbit side and close side, 757 760 764 771",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T23:32:44.896Z",
-   "file": "20261123233244896-note-sheet-a.jpg",
-   "source": "out/work/mercury/place/s1/sheet-a.jpg",
-   "kind": "note",
-   "label": "step 3 draft: sphere under and round the relief in the close view, 756 to 779 and rise",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T23:05:45.934Z",
-   "file": "20261123230545934-note-sheet-r2.jpg",
-   "source": "out/work/mercury/place/p3/sheet-r2.jpg",
-   "kind": "note",
-   "label": "pace step, rise 993 to 1035 every frame",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T23:05:45.241Z",
-   "file": "20261123230545241-note-sheet-r1.jpg",
-   "source": "out/work/mercury/place/p3/sheet-r1.jpg",
-   "kind": "note",
-   "label": "pace step, rise 958 to 992 every frame, T at 977",
    "stop": "mercury"
   }
  ]
