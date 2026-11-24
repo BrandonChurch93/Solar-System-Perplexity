@@ -1,9 +1,25 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-24T17:14:13.615Z",
+ "pushed": "2026-11-24T17:16:47.644Z",
  "head": "eb2975a63357c7d6b5c253f77fb205f28f158b13",
- "note": "TASK 697 commit eb2975a6. Dives stay red and are in the picture: all of the reading lies within 130 px (Neptune) and 205 px (Mercury) of the limb, in the band that rides with the limb while the ground passes under it.",
+ "note": "TASK 697: Neptune dive 4723 is a true exchange over the whole ground: the place picture comes in over the globe's picture and they do not show the same clouds.",
  "looks": [
+  {
+   "time": "2026-11-24T17:16:46.528Z",
+   "file": "20261124171646528-note-pair-ne4723.jpg",
+   "source": "../m697/pair-ne4723.png",
+   "kind": "note",
+   "label": "Neptune dive 4723 round pixel 740, 580, twice enlarged: first frame, the later frame carried back, the pattern",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T17:16:45.444Z",
+   "file": "20261124171645444-note-ne4723-both.jpg",
+   "source": "../m697/ne4723-both.png",
+   "kind": "note",
+   "label": "Neptune dive 4723 and 4731, the two frames of the row: the globe's broad white streaks in the first, the place picture (spiral, crisp ridges) alone in the second. 1.12 before and after the patch, 0.46 of the judged area over 0.45; rigid through the same poses 0.07 to 0.10",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T17:14:11.979Z",
    "file": "20261124171411979-note-ne4696-both.jpg",
@@ -50,22 +66,6 @@
    "source": "../m697/made-rise4.png",
    "kind": "note",
    "label": "TASK 697 made rise by 4, per row: first frame, last frame carried back, pattern before, pattern after (root of area, nearest half step). Rows: nothing changes, a disc exchanged, the whole ground exchanged",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T16:23:55.353Z",
-   "file": "20261124162355353-note-pair-jurigid.jpg",
-   "source": "../m697/pair-jurigid.png",
-   "kind": "note",
-   "label": "TASK 697: jupiter_coder's rigid carry of the same row, nothing changes in place: before 0.70, after 0.03",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T16:23:49.140Z",
-   "file": "20261124162349140-note-pair-ju3261.jpg",
-   "source": "../m697/pair-ju3261.png",
-   "kind": "note",
-   "label": "TASK 697: Jupiter rise 3261 + 1/2, the official change panel before (0.69) and after (0.10) the trial correction of the pattern measure",
    "stop": "jupiter"
   }
  ]
