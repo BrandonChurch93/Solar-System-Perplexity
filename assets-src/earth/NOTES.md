@@ -4442,3 +4442,29 @@ Answer in one mail: whether 1f3e0bd5 or f7ab197a already changes these frames, a
 - CAUSE: not found yet. A first reading (the east edge of the calm zone of `near_sea`) was wrong and is taken back here: MEASURED with the tool's own functions at a quarter size (`/tmp/gl/s16/zone.py`, look `/tmp/gl/s16/zone-look.jpg`), the zone's weight is 1.0 from x 704 to 920 on row 585, so the line at 778 lies inside the zone, not on its edge. Inside the zone everything that is not land should be the sea's own mean; west of the line it is, east of the line the hold map's cloud and drawn sea floor are still there. Also ruled out by a look or a count: the field of `deck.py` (its cover has only small puffs there, `/tmp/gl/s16/cut-look.jpg`), the repaint itself (`q12-g.png` has other clouds there and its inside mask is 0, `/tmp/gl/s16/stage-look.jpg`). Three wipe discs of `mend.json` lie just above the line (x 3020 to 3121, y 1987 to 2168 of the 4096 plate). To find the stage that draws the line the build has to be run with a dump after each step; that needs the memory the renders use now, so it waits for a free slot.
 - Not cured in this state. What a cure may cost: a new build of the levels. `patch-96.jpg` shows at the hold, so it cannot change (1755 to the byte); the levels 12, 5, 24 and 48 could, to be proved by 1755's sha. Not started; it goes on my list as named.
 - Disk 3.0 GB free at the chain's start (20:12:25).
+
+### 20:17 to 20:37 UTC: T's rate 2 pictures of the dive's middle, MEASURED
+
+- Rate 2 run of the dive's middle on T ended 20:36:57 (`/tmp/gl/s15/pics-divemid.log`, state line "divemid 0 1472s 20:36:57", "window 1858 to 1910, 106 draft frames at rate 2"). As printed:
+  - "pop over 1.2: " (none). "pop 1860 + 1/2: 1.04 | 1862 + 1/2: 1.04 | 1889 + 1/2: 1.04 ...", "popAll 1862 + 1/2: 1.07 ...".
+  - "pattern over 0.45: " (none). "pattern 1879 + 1/2: 0.40 | 1879: 0.40 | 1880: 0.40 | 1878 + 1/2: 0.39 | 1880 + 1/2: 0.39 | 1881: 0.37 | 1878: 0.36 | 1882: 0.36".
+  - "levelStep 1878: 0.20 | 1863: 0.19 ..." (limit 1.3).
+  - By frame: 0.14 to 0.25 from 1858 to 1876, 0.27 to 0.40 from 1876 + 1/2 to 1882 (highest "1879 0.40 at 208,292", "1880 0.40 at 176,240", the left of the frame), 0.32 to 0.36 at the top border from 1882 to 1885, 0.21 to 0.33 from 1886 to 1902 + 1/2 (in the far zone "1895 + 1/2 0.33 at 868,120", "1896 0.33 at 860,124").
+- Against f7ab197a by the same tool (`/tmp/gl/s10/pics-divemid.log`, window 1876 to 1904): there the pattern was over 0.45 from 1881 + 1/2 to 1894, highest 1.12 at 1890 at 772,164. In T the same frames read 0.21 to 0.36.
+- So by this measure both middles are clean of the far zone's red in T. What the eye still sees there is in the entry of 19:50.
+- The chain goes on with the frames outside, the four finals and the checks.
+
+### 20:37 to 21:00 UTC: frames outside and the four finals on T, MEASURED; the GitHub login is lost (MAIL 621 case)
+
+- The session stopped and came back at about 20:57 UTC; the chain had run on by itself.
+- MEASURED, draft frames outside my legs on T (`/tmp/gl/s15/o1`, state line "outside 0 85s 20:38:22"), pixels that differ: 1679 against 1f3e0bd5's 0; 1829 against 1f3e0bd5's 0 and against f7ab197a's 0; 2174, 2175, 2176 against f7ab197a's 0 each. (1830 has no kept frame to count against.)
+- MEASURED, the four judged frames at the final tier on T, state lines as written:
+  - "final-1755 0 81s 20:39:43 ab7cfd53903f36457e433cdd4d37258ca4d385209b64559ee608e97404642c35" (the kept one)
+  - "final-1857 0 376s 20:45:59 1d9f9ba8070d5536e3423c2a567de7db5ec0803763b41421ce52d763add4cd3f" (the kept one)
+  - "final-2010 0 249s 20:50:08 c3956984becfdc01fa55550ed3b2d085d18370c0e270101ede0f4280b44a2798" (the kept one)
+  - "final-2156 0 379s 20:56:27 2878a5d8dcf1d36182b76c3aecc0c919fe2fc156649af20b199d9190ad1730d2" (the kept one)
+  So T changes none of the four judged frames.
+- Path: state line "path 0 2s 20:56:29", `/tmp/gl/s15/smooth-path.log`: "smooth earth: green. out/work/smooth/earth.md".
+- 20:57:37: the looks push printed "push of agent/earth-place-looks failed three times". By hand: `git push --dry-run origin a205c887...:refs/heads/agent/earth-place-looks` prints "fatal: could not read Username for 'https://github.com': No such device or address" (three tries, 20:58:00 to 20:58:36); `git ls-remote` still answers (agent/earth-place 49520374, agent/earth-place-looks a205c887 of 19:59:11). That is the case of MAIL 621. I look for no other credential.
+- 20:59 UTC, mail to /root (high), as MAIL 621 items 1 and 3 rule: the login is lost between 20:20 (last good push 49520374) and 20:57; the three looks attached as pictures (`/tmp/gl/s15/t1-border.jpg`, `t1-2131-lr2x.jpg`, `/tmp/gl/s16/zone-look.jpg`) with their one lines (bad: the cut cloud); commits from now stay local and go as a bundle with the round 2 NAMED (range 49520374..HEAD), sooner if asked.
+- From now the looks go to /root as attached pictures, at least every 30 minutes of working time, low priority so that they wake nobody.
