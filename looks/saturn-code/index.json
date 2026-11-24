@@ -1,72 +1,64 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T01:13:12.773Z",
+ "pushed": "2026-11-24T01:30:23.358Z",
  "head": "b85c30e64993059df757c243964755d7ab2485b3",
- "note": "try 3 of the pace: a level top for the rate of fall and climb so both judges read green; curves before and after, pictures follow",
+ "note": "try 3 of the pace with a level top: both judges green on the VM, every frame of the dive at draft; the rise renders",
  "looks": [
   {
-   "time": "2026-11-24T01:13:12.155Z",
-   "file": "20261124011312155-note-pace_try3.jpg",
-   "source": "../../../../tmp/v/p3/pace_try3.png",
+   "time": "2026-11-24T01:30:22.424Z",
+   "file": "20261124013022424-note-pace_rise_v.jpg",
+   "source": "../../../../tmp/v/p3/pace_rise_v.png",
    "kind": "note",
-   "label": "saturn pace try 3: the three curves of the judge, ac0b732 grey, level top of the reach red (not final)"
+   "label": "try 3: rate, turn and speed of the dive and the rise over the mean of the move, candidates beside ac0b732 (grey)"
   },
   {
-   "time": "2026-11-24T00:46:18.764Z",
-   "file": "20261124004618764-note-bend_right.jpg",
-   "source": "../../../../tmp/v/tr/bend_right.png",
+   "time": "2026-11-24T01:30:21.544Z",
+   "file": "20261124013021544-note-dive_s8.jpg",
+   "source": "../../../../tmp/v/r27/dive_s8.png",
    "kind": "note",
-   "label": "traced ring edges at full size, right of the ring, every second frame 3576 to 3598"
+   "label": "try 3 of the pace (level top), draft, every frame of the dive 3624 to 3632"
   },
   {
-   "time": "2026-11-24T00:46:18.132Z",
-   "file": "20261124004618132-note-bend_left.jpg",
-   "source": "../../../../tmp/v/tr/bend_left.png",
+   "time": "2026-11-24T01:30:20.788Z",
+   "file": "20261124013020788-note-dive_s7.jpg",
+   "source": "../../../../tmp/v/r27/dive_s7.png",
    "kind": "note",
-   "label": "traced ring edges at full size, near left of the ring, every second frame 3576 to 3598"
+   "label": "try 3 of the pace (level top), draft, every frame of the dive 3612 to 3623"
   },
   {
-   "time": "2026-11-24T00:46:17.489Z",
-   "file": "20261124004617489-note-bend_whole_3.jpg",
-   "source": "../../../../tmp/v/tr/bend_whole_3.png",
+   "time": "2026-11-24T01:30:19.528Z",
+   "file": "20261124013019528-note-dive_s6.jpg",
+   "source": "../../../../tmp/v/r27/dive_s6.png",
    "kind": "note",
-   "label": "traced ring edges, every second frame, bend_whole_3: cyan lines are true circles of the rigid plane at the edges of the kept layout"
+   "label": "try 3 of the pace (level top), draft, every frame of the dive 3600 to 3611"
   },
   {
-   "time": "2026-11-24T00:46:16.864Z",
-   "file": "20261124004616864-note-bend_whole_2.jpg",
-   "source": "../../../../tmp/v/tr/bend_whole_2.png",
+   "time": "2026-11-24T01:30:18.513Z",
+   "file": "20261124013018513-note-dive_s5.jpg",
+   "source": "../../../../tmp/v/r27/dive_s5.png",
    "kind": "note",
-   "label": "traced ring edges, every second frame, bend_whole_2: cyan lines are true circles of the rigid plane at the edges of the kept layout"
+   "label": "try 3 of the pace (level top), draft, every frame of the dive 3588 to 3599"
   },
   {
-   "time": "2026-11-24T00:46:16.235Z",
-   "file": "20261124004616235-note-bend_whole_1.jpg",
-   "source": "../../../../tmp/v/tr/bend_whole_1.png",
+   "time": "2026-11-24T01:30:17.363Z",
+   "file": "20261124013017363-note-dive_s4.jpg",
+   "source": "../../../../tmp/v/r27/dive_s4.png",
    "kind": "note",
-   "label": "traced ring edges, every second frame, bend_whole_1: cyan lines are true circles of the rigid plane at the edges of the kept layout"
+   "label": "try 3 of the pace (level top), draft, every frame of the dive 3576 to 3587"
   },
   {
-   "time": "2026-11-24T00:39:44.306Z",
-   "file": "20261124003944306-compare-saturn-rise-sides.jpg",
-   "source": "out/work/handover/saturn-rise-sides.png",
-   "kind": "compare",
-   "label": "saturn rise, both sides at T (frame 3860) and their difference times 8",
-   "stop": "saturn",
-   "segment": "saturn.rise",
-   "frame": 3860,
-   "tier": "draft"
+   "time": "2026-11-24T01:30:16.405Z",
+   "file": "20261124013016405-note-dive_s3.jpg",
+   "source": "../../../../tmp/v/r27/dive_s3.png",
+   "kind": "note",
+   "label": "try 3 of the pace (level top), draft, every frame of the dive 3564 to 3575"
   },
   {
-   "time": "2026-11-24T00:39:35.487Z",
-   "file": "20261124003935487-compare-saturn-dive-sides.jpg",
-   "source": "out/work/handover/saturn-dive-sides.png",
-   "kind": "compare",
-   "label": "saturn dive, both sides at T (frame 3589) and their difference times 8",
-   "stop": "saturn",
-   "segment": "saturn.dive",
-   "frame": 3589,
-   "tier": "draft"
+   "time": "2026-11-24T01:30:15.461Z",
+   "file": "20261124013015461-note-dive_s2.jpg",
+   "source": "../../../../tmp/v/r27/dive_s2.png",
+   "kind": "note",
+   "label": "try 3 of the pace (level top), draft, every frame of the dive 3552 to 3563"
   }
  ]
 }
