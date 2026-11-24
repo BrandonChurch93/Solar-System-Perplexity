@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T02:29:46.008Z",
- "head": "a359a4b7677331c3c6d08df3cd7146a92e13b3f6",
- "note": "ruling (a): map rigid, drift on the function streaks only; sky picture of the hold rebuilt without the grain of its glow input (mail 448); checks running, quads next",
+ "pushed": "2026-11-24T02:47:45.827Z",
+ "head": "3e9ee2f814cf49faefffac83ee9fc61b2cc54626",
+ "note": "ruling a and the sky cure pushed as 3e9ee2f; now the grains as squares and their limits as shares of the frame height",
  "looks": [
+  {
+   "time": "2026-11-24T02:47:45.190Z",
+   "file": "20261124024745190-note-outside_diff.jpg",
+   "source": "../../../../tmp/v/r28/outside_diff.png",
+   "kind": "note",
+   "label": "ruling a and sky cure: a359a4b against now at 3360, 3380, 3890, 3900 (difference times 16)"
+  },
+  {
+   "time": "2026-11-24T02:47:44.527Z",
+   "file": "20261124024744527-note-globe_3716_3725.jpg",
+   "source": "../../../../tmp/v/r28/globe_3716_3725.png",
+   "kind": "note",
+   "label": "ruling a: globe at full size 3716, 3720, 3725 draft and the difference times 8"
+  },
   {
    "time": "2026-11-24T02:29:45.403Z",
    "file": "20261124022945403-note-skydiff_3465.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/v/r27/sky_e1.png",
    "kind": "note",
    "label": "sky at full size, even course, 3867 to 3875: the flight's stars by height, at most 0.0865 a frame"
-  },
-  {
-   "time": "2026-11-24T01:42:05.400Z",
-   "file": "20261124014205400-note-sky_c2.jpg",
-   "source": "../../../../tmp/v/r27/sky_c2.png",
-   "kind": "note",
-   "label": "sky at full size 3872 to 3877, same"
-  },
-  {
-   "time": "2026-11-24T01:42:04.417Z",
-   "file": "20261124014204417-note-sky_c1.jpg",
-   "source": "../../../../tmp/v/r27/sky_c1.png",
-   "kind": "note",
-   "label": "sky at full size 3866 to 3871, lift [2.42, 2.92] power 1.5: stars come in at up to 0.171 a frame"
   }
  ]
 }
