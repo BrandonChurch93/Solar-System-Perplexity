@@ -1,71 +1,71 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T20:54:15.374Z",
- "head": "b7508fd590015f68e62098bcf5ba35cf81011421",
- "note": "e1 plates: 2427 2469 2689 2726 and sheets of the change of view; rise path under work (north up at the rise end)",
+ "pushed": "2026-11-24T21:33:16.199Z",
+ "head": "9feabec0ea981bbedebf558a968d4a024ed7dea6",
+ "note": "round 2 state B: one canyon scene through T, rise ends north up, later stops hash equal; border of the close ground still in frame at 2683 to 2686",
  "looks": [
   {
-   "time": "2026-11-24T20:54:14.781Z",
-   "file": "20261124205414781-note-e1-c.jpg",
-   "source": "out/work/place/see/e1-c.jpg",
+   "time": "2026-11-24T21:33:15.567Z",
+   "file": "20261124213315567-note-r2-dive.jpg",
+   "source": "out/work/place/see/r2-dive.jpg",
    "kind": "note",
-   "label": "e1 2473 2689 2690 2696 draft, one sheet",
+   "label": "Dive draft one sample 2427 to 2440, the strokes of the lower right are in the ground itself",
    "stop": "mars"
   },
   {
-   "time": "2026-11-24T20:54:14.230Z",
-   "file": "20261124205414230-note-e1-b.jpg",
-   "source": "out/work/place/see/e1-b.jpg",
+   "time": "2026-11-24T21:33:14.994Z",
+   "file": "20261124213314994-note-r2-rise3.jpg",
+   "source": "out/work/place/see/r2-rise3.jpg",
    "kind": "note",
-   "label": "e1 dive 2462 2466 2468 2471 draft, one sheet",
+   "label": "Rise end and travel draft 2732 to 2810, planet low with the bottom cut",
    "stop": "mars"
   },
   {
-   "time": "2026-11-24T20:54:13.548Z",
-   "file": "20261124205413548-note-f2726.jpg",
-   "source": "out/work/place/cl/e1r/f2726.png",
+   "time": "2026-11-24T21:33:14.426Z",
+   "file": "20261124213314426-note-r2-rise2.jpg",
+   "source": "out/work/place/see/r2-rise2.jpg",
    "kind": "note",
-   "label": "e1 2726 draft: plates hold the close view's own ground and the country round it (before the rise path change)",
+   "label": "Rise draft 2704 to 2726, the disc comes out north up",
    "stop": "mars"
   },
   {
-   "time": "2026-11-24T20:54:12.878Z",
-   "file": "20261124205412878-note-f2689.jpg",
-   "source": "out/work/place/cl/e1r/f2689.png",
+   "time": "2026-11-24T21:33:13.816Z",
+   "file": "20261124213313816-note-r2-rise1.jpg",
+   "source": "out/work/place/see/r2-rise1.jpg",
    "kind": "note",
-   "label": "e1 2689 draft: plates hold the close view's own ground and the country round it (before the rise path change)",
+   "label": "Rise draft 2683 to 2700, north up end. Wrong: border of the close ground at the right edge of 2683 and 2686, dark dome lower right 2686 and 2689, blade at the left 2696 and 2700",
    "stop": "mars"
   },
   {
-   "time": "2026-11-24T20:54:12.124Z",
-   "file": "20261124205412124-note-f2469.jpg",
-   "source": "out/work/place/cl/e1r/f2469.png",
+   "time": "2026-11-24T21:33:13.004Z",
+   "file": "20261124213313004-note-r2-new.jpg",
+   "source": "out/work/place/see/r2-new.jpg",
    "kind": "note",
-   "label": "e1 2469 draft: plates hold the close view's own ground and the country round it (before the rise path change)",
+   "label": "Round 2 state B draft: 2427, 2469, 2689, 2726",
    "stop": "mars"
   },
   {
-   "time": "2026-11-24T20:54:11.358Z",
-   "file": "20261124205411358-note-f2427.jpg",
-   "source": "out/work/place/cl/e1r/f2427.png",
+   "time": "2026-11-24T21:01:56.668Z",
+   "file": "20261124210156668-note-r1-c.jpg",
+   "source": "out/work/place/see/r1-c.jpg",
    "kind": "note",
-   "label": "e1 2427 draft: plates hold the close view's own ground and the country round it (before the rise path change)",
+   "label": "2752 2760 new against 2726 2760 committed: the travel after the rise changes with the rise end (open: later stops' placement)",
    "stop": "mars"
   },
   {
-   "time": "2026-11-24T20:38:44.517Z",
-   "file": "20261124203844517-note-e0-plates.jpg",
-   "source": "out/work/place/see/e0-plates.jpg",
+   "time": "2026-11-24T21:01:56.081Z",
+   "file": "20261124210156081-note-r1-b.jpg",
+   "source": "out/work/place/see/r1-b.jpg",
    "kind": "note",
-   "label": "plates 0.3 0.7 1.6 of state e0 from straight above (laid ground is shards from above; holds only seen at a slant)",
+   "label": "rise 2716 to 2744, draft, north up rise end: the disc unrolls while in view (to be judged)",
    "stop": "mars"
   },
   {
-   "time": "2026-11-24T20:38:43.827Z",
-   "file": "20261124203843827-note-e0-a.jpg",
-   "source": "out/work/place/see/e0-a.jpg",
+   "time": "2026-11-24T21:01:55.512Z",
+   "file": "20261124210155512-note-r1-a.jpg",
+   "source": "out/work/place/see/r1-a.jpg",
    "kind": "note",
-   "label": "2440 2445 2450 2456 state e0",
+   "label": "rise 2683 to 2712 every third or fourth frame, draft, north up rise end",
    "stop": "mars"
   }
  ]
