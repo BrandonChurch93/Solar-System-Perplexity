@@ -1,9 +1,17 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T11:37:57.427Z",
- "head": "7f4e02c1699e026506d39401b7cb58107cb0b64c",
- "note": "7f4e02c1 handover at draft: side difference at T pass, flow gap at T pass, every frame pass (level 2.47 into 217, colour 2.7 into 234). Every frame 180 to 269 seen. Red to my eye: at 228 to 236 the function ground is a pale cream mosaic of cells where 19ca786c showed the orange map (soft by G13); see the G13 sheet. Frame 60 draft sun-near: dark (under 0.15) 0.238 | body (0.15 to 0.55) 0.520 | pale (0.65 to 0.85) 0.111 | white (over 0.85) 0.059; brightest 15 percent: half width 11.0 px, 2904 shapes | fine detail 0.0552 | mean 0.366; distance 0.112.",
+ "pushed": "2026-11-24T12:05:50.833Z",
+ "head": "6474733ee8d90a2500af4ed116db3d67a04955c3",
+ "note": "12:06 UTC. Head 6474733e (second NAMED). Measuring for MAIL 655: pairs 181 to 213 by the tool's own job, as they are and with the life held at the time of frame 181 (frames 181 to 221 rendering, frame 181 held equals frame 181 as it is byte for byte). Frame 60 draft sun-near: share by band 0.1 .. 0.9 : 0.203 0.187 0.139 0.105 0.088 0.072 0.055 0.056 0.054 | dark (under 0.15) 0.238, body (0.15 to 0.55) 0.520, pale (0.65 to 0.85) 0.111, white (over 0.85) 0.059 | brightest 15 percent: half width 11.0 px, 2904 shapes, fine detail 0.0552, mean 0.366; distance 0.112. Red: cells read as stones, cream and white tops, pale field on the ball 225 to 237; next the cells look by the order of MAIL 657.",
  "looks": [
+  {
+   "time": "2026-11-24T12:05:49.543Z",
+   "file": "20261124120549543-note-frozen-189.jpg",
+   "source": "../../../../tmp/frozen-189.jpg",
+   "kind": "note",
+   "label": "frame 189 as it is beside frame 189 with the life held at the time of frame 181 (measurement of MAIL 655, not committed)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T11:37:56.291Z",
    "file": "20261124113756291-note-s9-g.jpg",
@@ -71,14 +79,6 @@
    "first": 210,
    "last": 221,
    "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T11:29:11.237Z",
-   "file": "20261124112911237-note-s9-d.jpg",
-   "source": "../../../../tmp/s9-d.jpg",
-   "kind": "note",
-   "label": "7f4e02c1 rise draft every frame, sheet d 216 to 227 (T at 216)",
-   "stop": "sun"
   }
  ]
 }
