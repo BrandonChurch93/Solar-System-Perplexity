@@ -82,7 +82,10 @@ uniform vec4 uFringe;
 uniform vec4 uFringeShape;
 uniform vec3 uFringeColour;
 uniform vec4 uFringeLobe;
-uniform vec2 uFringeLobeBy;
+uniform vec3 uFringeLobeBy;
+uniform vec4 uFringeFan;
+uniform float uHaloEdge;
+uniform float uChromoBurn;
 uniform int uParts;
 in vec2 vNdc;
 out vec4 outColor;
@@ -179,7 +182,7 @@ vec3 burnWhite(vec3 x) {
   return mix(x, vec3(l), uDesat.z * smoothstep(uDesat.x, uDesat.y, l));
 }
 vec3 shoulder(vec3 x) {
-  return uWhite * (vec3(1.0) - exp(-x / uWhite));
+  return uWhite * x / (x + uWhite);
 }
 float loopGas(vec3 q, int i, float soft, out float heat) {
   vec3 mid = uLoopMid[i];
@@ -253,7 +256,7 @@ void main() {
     }
     for (int j = 0; j < (uWear < 1.0 || uMapOn <= 0.0 ? 1 : 0); j++) {
       float share = uMapOn > 0.0 ? 1.0 - uWear : 1.0;
-      body += share * inverseFilmic(shoulder(burnWhite(whiteLook(d, mu, pixel / max(mu, 0.2)) * (uBright * dim))));
+      body += share * inverseFilmic(shoulder(whiteLook(d, mu, pixel / max(mu, 0.2)) * (uBright * dim)));
     }
     col = body * cover;
     alpha = cover;
@@ -268,7 +271,7 @@ void main() {
     float path = (sqrt(max(top * top - near2, 0.0)) - sqrt(max(1.0 - near2, 0.0))) * through * ahead;
     vec3 tangent = spinY(normalize(ro + rd * (-b)), uSpin);
     float spic = 1.0 + uSpicules.y * (vnoise(tangent * uSpicules.x + vec3(0.0, uTime * 0.6, 0.0)) - 0.5) * 2.0;
-    gas += burnWhite(uChromoColour * (uBurn.x * uChromo.y * path / max(uChromo.x, 1e-4) * 0.05 * max(spic, 0.0)));
+    gas += burnWhite(uChromoColour * (pow(uBurn.x, uChromoBurn) * uChromo.y * path / max(uChromo.x, 1e-4) * 0.05 * max(spic, 0.0)));
     int steps = int(uCorona.x);
     float dt = (end - t0) / float(steps);
     vec3 sum = vec3(0.0);
@@ -322,16 +325,22 @@ void main() {
     int steps = int(uFringe.x);
     float dt = max(s1 - s0, 0.0) / float(steps);
     float sum = 0.0;
+    vec3 cell = floor(spinY(normalize(ro + rd * (-b)), uSpin) * 2048.0);
+    float offset = fract(sin(dot(cell, vec3(12.9898, 78.233, 37.719))) * 43758.5453);
     for (int i = 0; i < steps; i++) {
-      vec3 q = ro + rd * (s0 + (float(i) + 0.5) * dt);
+      vec3 q = ro + rd * (s0 + (float(i) + offset) * dt);
       float r = length(q);
       vec3 sd = spinY(q / r, uSpin);
       float up = max(r - 1.0, 0.0);
+      float fade = 1.0 - smoothstep(0.5 * (uFringe.y - 1.0), uFringe.y - 1.0, up);
       float lobe = exp(-(1.0 - dot(sd, uFringeLobe.xyz)) * uFringeLobe.w);
       float tall = mix(uFringeShape.x, uFringeShape.y, pow(vnoise(sd * 6.0 + 5.0), 2.0)) * (1.0 + uFringeLobeBy.y * lobe);
       vec3 bent = sd + (vec3(vnoise(sd * 9.0 + 1.0), vnoise(sd * 9.0 + 4.0), vnoise(sd * 9.0 + 7.0)) - 0.5) * (up * uFringeShape.w);
       float spike = 40.0 * pow(vnoise(bent * uFringeShape.z), 8.0) + 24.0 * pow(vnoise(bent * (uFringeShape.z * 2.7) + 3.0), 8.0);
-      sum += exp(-up / tall) * spike * (1.0 + uFringeLobeBy.x * lobe) * step(1.0, r);
+      vec3 foot = normalize(sd - (sd - uFringeLobe.xyz) * min(up * uFringeFan.x, 0.8));
+      float strand = pow(vnoise(foot * uFringeFan.y), uFringeFan.z) + 0.5 * pow(vnoise(foot * (uFringeFan.y * 2.3) + 2.0), uFringeFan.z);
+      float root = exp(-(1.0 - dot(foot, uFringeLobe.xyz)) * uFringeLobe.w);
+      sum += (exp(-up / tall) * spike * (1.0 + uFringeLobeBy.x * lobe) + uFringeFan.w * root * strand * exp(-up / uFringeLobeBy.z)) * (fade * step(1.0, r));
     }
     gas += burnWhite(uFringeColour * (sum * dt * uFringe.z * uBurn.x));
   }
@@ -343,7 +352,7 @@ void main() {
     float o = max(x, 1.0) - 1.0;
     float inside = 1.0 - smoothstep(0.6, 1.0, x);
     float glow = uGlare.x * (exp(-o * uGlare.z) + uGlare.w / (1.0 + o * o * 1.5)) * (1.0 - uGlareInside * inside) * ahead;
-    col += (uGlareColour * glow + (uIrrColour * (uBurn.y * exp(-o * o * uBurn.z * uBurn.z)) + uHaloColour * (uHalo.x * exp(-o * uHalo.y))) * ((1.0 - uGlareInside * inside) * ahead)) * ((1.0 - uWear) * dim);
+    col += (uGlareColour * glow + (uIrrColour * (uBurn.y * exp(-o * o * uBurn.z * uBurn.z)) + uHaloColour * (uHalo.x * exp(-o * uHalo.y))) * ((1.0 - cover) * smoothstep(uHaloEdge, 1.0, x) * ahead)) * ((1.0 - uWear) * dim);
   }
   col *= lens * uOpacity;
   outColor = vec4(col, alpha * uOpacity);

@@ -63,27 +63,36 @@ halo `glow * exp(-(fall * x)^2)` with x the distance from the limb in disc radii
 and zero at burn 0.
 
 `tight`, `tightFall` and `tightColour` are a second, narrow term of the same light,
-`tight * exp(-tightFall * x)`, which carries the white over the limb so the edge of the body does not show
-at burn 1; it is zero at burn 0 like the first. `white` is the ceiling of the shoulder at burn 1 (the
-ceiling at burn 0 is `body.ceiling`): the burnt face clips to this near white and not to the hold's orange.
-`desat` is the range of luminance, before the shoulder, over which a colour loses its hue toward white, as a
-film does when every layer is full, in the measure of the burn (none at burn 0, so the loops keep the
-hold's red at the handover): it is one function for the face, the chromosphere, the loops and the
-fringe, so a loop that is as bright as the face burns to the same pale gold. The limb law still holds under
-it, which leaves the cream at the limb. The corona does not take the exposure: it stays at times 1.
+`tight * exp(-tightFall * x)`; it is zero at burn 0 like the first. Both are light outside the body only:
+they are weighted by one minus the body's cover of the pixel (and by `edge`), so they never lie over the
+limb and the limb law is seen to the edge. `white` is the ceiling of the shoulder. The shoulder is
+`white * x / (x + white)` for each colour apart: it presses the contrast of the surface evenly and never
+clips it, so at full exposure the red is full, the green nearly, and the blue still carries the whole
+surface. That is the soft warm mottle of the burnt face, and the limb, darker by the limb law, stays warm.
+`body.bright` is the body's own gain at the near and the far end of the wear.
+`desat` is the range of luminance over which a gas colour loses its hue toward white, as a film does when
+every layer is full, in the measure of the burn (none at burn 0, so the loops keep the hold's red at the
+handover): it is one function for the chromosphere, the loops and the fringe. The face does not take it.
+`chromosphere.burn` is the power of the gas exposure the chromosphere takes, under 1 so the thin shell does
+not draw a white line round the burnt limb. The corona does not take the exposure: it stays at times 1.
 `hide` is the range, in disc radii from the centre, over which the pass covers what is drawn behind it once
 the burn passes one half: nothing behind a burnt Sun is seen through its light.
 
 ## The fringe (look.json, `fringe`)
 
 A dim layer of fine flames all round the limb, part of the same body: it is marched in the body's frame
-between the surface and `top` radii, its flames stand where a value noise of the direction on the sphere is
-high (`scale`), lean with height (`lean`) and fall off with the height over `height` (low and high places).
+between the surface and `top` radii in `steps` steps (128: fewer draw bands; each ray starts its steps at an
+offset hashed from the place on the sphere nearest to it, so the offset turns with the body and does not
+sit on the screen), its flames stand where a value noise of the direction on the sphere is high (`scale`),
+lean with height (`lean`), fall off with the height over `height` (low and high places) and fade to nothing
+over the upper half of the shell.
 It takes the same exposure as the loops, and it belongs to the far look: its strength goes with one minus
 the wear, like the body's own white heat, so it is absent at the start of the handover (the proof at frame
 472) and whole from `wear[1]` on. `lobe` is one place on the sphere (`at` as for the loops, `width` in
 degrees) where the flames are `gain` times stronger and `tall` times taller: the active region at the left
-limb of the approved Mercury image.
+limb of the approved Mercury image. From it stand thin strands (`strands` their strength, `fine` their
+count across a radian, `sharp` their thinness, `reach` their height scale in radii) that spread with height
+(`fan`): each point of a strand is read at the foot it comes from, nearer the middle of the region.
 
 ## The rule at frame 615
 
