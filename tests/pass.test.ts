@@ -1,3 +1,4 @@
+import { lookbackLight, smooth, softSmooth } from '../src/director/rig'
 import { describe, expect, it } from 'vitest'
 import { passCurve, TRAVEL, travelLook } from '../src/space/travel/path'
 
@@ -37,6 +38,22 @@ describe('the slide of a travel', () => {
         expect(acc[i]!, id + ' at ' + i).toBeGreaterThan(-1e-6)
         if (i > 0) expect(Math.abs(acc[i]! - acc[i - 1]!), id + ' at ' + i).toBeLessThan(0.03 * most)
       }
+    }
+  })
+})
+
+describe('softSmooth', () => {
+  it('is smooth to the bit from the lead on and starts with no acceleration', () => {
+    for (let x = 0.3; x <= 1.2; x += 0.0173) expect(softSmooth(x, 0.3)).toBe(smooth(x))
+    const h = 1e-3
+    expect((softSmooth(2 * h, 0.3) - 2 * softSmooth(h, 0.3)) / (h * h)).toBeLessThan(0.4)
+    expect((smooth(2 * h) - 2 * smooth(h)) / (h * h)).toBeGreaterThan(5.9)
+    for (let u = 0.2; u <= 1; u += 0.0131) expect(lookbackLight(u)).toBe(smooth(u * 1.5))
+    let last = 0
+    for (let x = h; x <= 1; x += h) {
+      const v = softSmooth(x, 0.3)
+      expect(v).toBeGreaterThanOrEqual(last)
+      last = v
     }
   })
 })
