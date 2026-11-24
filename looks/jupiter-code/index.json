@@ -1,9 +1,73 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T13:46:06.097Z",
- "head": "1989c731cc114288c8cdfb8daf6b74260368d3c7",
- "note": "13:46 UTC: main 2bc36ce6 merged by hand (depth 1 leaves no merge base); on the merge build 0, 485 tests pass, path and parity green, ten draft frames keep their bytes; finals 2895 and 3150 render now",
+ "pushed": "2026-11-24T14:08:12.423Z",
+ "head": "1e27d9c26eeaa9c6823ba87bae3373c57bd20311",
+ "note": "MAIL 680 taken: far field first; batch on the merge is rendering the rise",
  "looks": [
+  {
+   "time": "2026-11-24T14:08:05.314Z",
+   "file": "20261124140805314-note-riseP-first.jpg",
+   "source": "../work/ff/riseP-first.jpg",
+   "kind": "note",
+   "label": "rise, first frames of the run on the merge (3236 to 3245), base for the far field cure",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T13:57:12.474Z",
+   "file": "20261124135712474-frame-bM-2997.jpg",
+   "source": "out/work/jupiter/final/bM-2997.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 2997, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 2997,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "4f0c621e3acbf836"
+  },
+  {
+   "time": "2026-11-24T13:53:18.543Z",
+   "file": "20261124135318543-frame-bM-3296.jpg",
+   "source": "out/work/jupiter/final/bM-3296.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3296, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3296,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "4f0c621e3acbf836"
+  },
+  {
+   "time": "2026-11-24T13:49:57.674Z",
+   "file": "20261124134957674-frame-bM-3150.jpg",
+   "source": "out/work/jupiter/final/bM-3150.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3150, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "4f0c621e3acbf836"
+  },
+  {
+   "time": "2026-11-24T13:46:33.825Z",
+   "file": "20261124134633825-frame-bM-2895.jpg",
+   "source": "out/work/jupiter/final/bM-2895.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2895, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "4f0c621e3acbf836"
+  },
   {
    "time": "2026-11-24T13:46:04.927Z",
    "file": "20261124134604927-note-k006560.jpg",
@@ -51,34 +115,6 @@
    "kind": "note",
    "label": "Rise 3270 to 3284: the exposure table of the commit and three tables tried on its kept frames, not rendered: pop and level",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T13:21:37.230Z",
-   "file": "20261124132137230-frame-bF-2997.jpg",
-   "source": "out/work/jupiter/final/bF-2997.png",
-   "kind": "frame",
-   "label": "jupiter.dive frame 2997, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 2997,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "5a18fcdc5a929484"
-  },
-  {
-   "time": "2026-11-24T13:17:29.900Z",
-   "file": "20261124131729900-frame-bF-3296.jpg",
-   "source": "out/work/jupiter/final/bF-3296.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3296, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3296,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "5a18fcdc5a929484"
   },
   {
    "time": "2026-11-24T13:12:55.959Z",
@@ -194,30 +230,6 @@
    "source": "../work/named3/sheets/rise-3282-3293.jpg",
    "kind": "note",
    "label": "a90e29f rise, every whole frame 3282 to 3293 at draft: plates give way to the globe picture (0.52 to 1.3 radii), the blot shrinks to the globe's dark oval, the exposure by height is at its least at 3281",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T12:19:17.983Z",
-   "file": "20261124121917983-note-rise-3270-3281.jpg",
-   "source": "../work/named3/sheets/rise-3270-3281.jpg",
-   "kind": "note",
-   "label": "a90e29f rise, every whole frame 3270 to 3281 at draft (from the pictures run): the plates from above, the blue black blot at the place, the plates read as paint",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T12:18:41.437Z",
-   "file": "20261124121841437-note-pat-F-rise-b.jpg",
-   "source": "../work/named3/pat-F-rise-b.jpg",
-   "kind": "note",
-   "label": "a90e29f rise, my port of the pattern measure, rows 3272 + 1/2 to 3274 + 1/2 (to 0.55): one spot at the left edge where ground enters the frame",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T12:18:40.476Z",
-   "file": "20261124121840476-note-pat-F-rise-a.jpg",
-   "source": "../work/named3/pat-F-rise-a.jpg",
-   "kind": "note",
-   "label": "a90e29f rise, my port of the pattern measure, rows 3281 + 1/2 to 3287 + 1/2 (0.47 to 0.54, 1.2 to 2.7 percent of the judged body over 0.45): the white cells sit at the limb, with one limb law by angle in every frame",
    "stop": "jupiter"
   }
  ]
