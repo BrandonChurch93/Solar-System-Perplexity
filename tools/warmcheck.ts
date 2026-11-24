@@ -11,7 +11,7 @@ import { judgedFrames, segmentAtFrame } from '../src/director/timeline'
 // Draws the frames first..last in film order the way the player does: showcase.ahead (loads and warm draws), showcase.renderFrame, showcase.counts.
 // --rate 2 draws the half frames too, as a display faster than the film asks for them.
 // Exit 1, with the frames and what they made, when a frame of a dive, a surface view, a rise or a travel made a program, uploaded a texture or made
-// a buffer. A piece starts at the first frame of a hold (or at frame 0), where the player is warm. --player takes the live page and the web assets
+// a buffer, or when the warm start itself did such work before one of them (after the first frame of the run). A piece starts at the first frame of a hold (or at frame 0), where the player is warm. --player takes the live page and the web assets
 // instead of the capture page. --cold leaves the warm start out and only lists. --write adds every frame outside a hold that did work to
 // src/core/warm.json as it is found and exits 0: run it, then run again without it. --reset first takes the frames first..last out of the list, for a stop that
 // was rebuilt. Every line goes to out/work/warm/<label>.jsonl.
@@ -20,7 +20,7 @@ import { judgedFrames, segmentAtFrame } from '../src/director/timeline'
 // out/work/samebytes/LABEL/hashes.json (tools/samebytes.ts makes it from the same frames without the warm start). Exit 1 on any difference.
 //   npm run warm -- --self
 // The same proof in a small form, with nothing to prepare (gate G3): three frames of the first stop with a dive and frames in the list, each drawn on a fresh page and
-// drawn again on another page after the warm start and after the other frames. Exit 1 on any difference.
+// drawn again on another page after the warm start and after the other frames. Exit 1 on any difference. The last line says so when no warm draw was made.
 
 interface Counts { programs: number; textures: number; buffers: number }
 interface Api { memory(): { peakBytes: number; loaded: string[] }; png(): Promise<string>; setRate(rate: number): void; ahead(frame: number, tier: string, all?: boolean): Promise<number>; renderFrame(frame: number, tier: string): Promise<void>; counts(): Counts }
@@ -78,14 +78,16 @@ async function self(): Promise<never> {
   }
   const s = await open(frames[0]!)
   let differ = 0
+  let drawn = 0
   for (const [i, f] of frames.entries()) {
     const r = await still(s.page, f, true, [of('terrain'), ...frames.filter((x) => x !== f).reverse()])
+    drawn += r.drawn
     const same = r.hash === cold[i]
     if (!same) differ++
     console.log('frame ' + f + ' ' + (same ? 'identical' : 'DIFFERENT') + ' ' + cold[i]!.slice(0, 16) + ' ' + r.hash.slice(0, 16) + ' after ' + r.drawn + ' warm draws and 3 other frames')
   }
   await s.close()
-  console.log(differ === 0 ? 'warm: pass' : 'warm: FAIL')
+  console.log(differ > 0 ? 'warm: FAIL' : drawn > 0 ? 'warm: pass' : 'warm: pass, but no warm draw was made (the list holds no frame of ' + dive.stop + '), so nothing was proven')
   process.exit(differ === 0 ? 0 : 1)
 }
 
@@ -184,6 +186,12 @@ try {
           list(was.recipe, [...new Set([...was.frames, f])].sort((x, y) => x - y))
         }
       }
+    }
+    const early = i > first * rate && c.before.programs + c.before.textures + c.before.buffers > 0
+    if (early && guarded.includes(seg.kind)) {
+      const line = 'frame ' + f + ' ' + seg.id + ': the warm start made programs ' + c.before.programs + ', textures ' + c.before.textures + ', buffers ' + c.before.buffers
+      console.log(line)
+      bad.push(line)
     }
     if ((i - first * rate) % 300 === 299) console.log('at ' + f + ', ' + ((Date.now() - t0) / 1000).toFixed(0) + ' s')
   }
