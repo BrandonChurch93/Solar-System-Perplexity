@@ -4035,3 +4035,24 @@ is in the picture at 3 to 12 px, and the same crispness for the far ring across 
   7  the ring's tone slides with the height 3840 to 3864.
   3  the moon cut by the limb about 3610 to 3614 (it leaves, it does not fade).
   4, 8 and 9 are closed.
+- ON THE NAMED HEAD 2d54c49 itself (/tmp/v/r46): path "VERDICT: green. No number is over its limit.", equal
+  from line 5 on to 91d6247's; tsc exit 0; parity (12:21) green with the same four numbers; finals 3465
+  (12:23) and 3720 (12:25) with the same two sha256 as on 91d6247 and on the PRE.
+- THIRD AND LAST NAMED MAILED 12:26 UTC (high): 2d54c492140ab79ed2c20004e8129ed2302647bf, branch
+  agent/saturn-code, pushed and read back with git ls-remote. The mail is kept in /tmp/v/mail/named3_sent.md.
+  In MAIL 508's order: the smooth lines (path, rise pictures, parity green as printed; the dive pictures
+  named as NOT run on this state, with the PRE's green lines and why the dive cannot have changed), the
+  frames that change outside my dive and rise (against the PRE: the travel 3885 to 3959 through main's
+  carry, with sizes; against main: the far view 3352 and 3465, the surface view, the travel), the judged
+  frames (3465 and 3720 as bytes against the PRE; 3866 changes on purpose, shown beside the kept still with
+  what I see: the near ring at the lower left softened by the shutter), G5 and G17, the gate lines word for
+  word, tests, the list worst first with the new item 16, what was not run. Attached: 3866 beside the kept
+  still (full and half size), its lower left beside the kept still's, the rise's pops and changes panels,
+  the seam sheet 3878 to 3896, the parity panel. Said in the mail: main had moved to 62ff7be (the judge's
+  border cure and the globe's body), not merged in the named head, so my smooth lines are read with the
+  judge before it.
+- AFTER THE NAMED: main 62ff7be merged as f057cf9 (tools/smooth.ts, tools/smooth/path.ts, tools/smooth/made.py,
+  tools/img/smooth.py, tests/smooth.test.ts, notes; my two picture trees unchanged). Job on f057cf9 with the
+  new judge started 12:27 (/tmp/v/r47): dive pictures, rise pictures, the handover tool's picture parts, G13.
+  I mail only if one of them is red (MAIL 520: only NAMED, a blocker, or an answer asked for).
+- LOOKS pushed 12:14 (parity panel) and 12:27 (3866 beside the kept still, whole and lower left). Next by 12:57.
