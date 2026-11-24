@@ -1,71 +1,93 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T01:20:16.819Z",
+ "pushed": "2026-11-24T02:07:26.606Z",
  "head": "c6bbaf6be2a2b9365830f4673441748fa0205660",
- "note": "c6bbaf6b on main 11c4350e: smooth green, gate G11 G15 pass, kept frames 0 px; handover report running",
+ "note": "dive side difference traced: the spin's cos and sin in the globe shader are 1e-4 off on this renderer; cure is to pass them from the plan",
  "looks": [
+  {
+   "time": "2026-11-24T02:07:25.972Z",
+   "file": "20261124020725972-note-sides760b.jpg",
+   "source": "out/work/mercury/place/tmp/sides760b.png",
+   "kind": "note",
+   "label": "mercury dive, both sides at T (760), lower left corner, and their difference times 8: globe is 0.5 texel of level 4 off the shell; cause found, the renderer's cos in the globe's spin is 1e-4 off",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T01:47:03.097Z",
+   "file": "20261124014703097-compare-mercury-dive-sides.jpg",
+   "source": "out/work/handover/mercury-dive-sides.png",
+   "kind": "compare",
+   "label": "mercury dive, both sides at T (frame 760) and their difference times 8",
+   "stop": "mercury",
+   "segment": "mercury.dive",
+   "frame": 760,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T01:35:38.336Z",
+   "file": "20261124013538336-compare-mercury-rise-sides.jpg",
+   "source": "out/work/handover/mercury-rise-sides.png",
+   "kind": "compare",
+   "label": "mercury rise, both sides at T (frame 977) and their difference times 8",
+   "stop": "mercury",
+   "segment": "mercury.rise",
+   "frame": 977,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T01:35:15.221Z",
+   "file": "20261124013515221-sheet-mercury-dive-top.jpg",
+   "source": "out/work/handover/mercury-dive-top.png",
+   "kind": "sheet",
+   "label": "mercury dive, the globe side alone from straight above the place, 12 frames from the far end to T (frame 760), place picture off, draft tier",
+   "stop": "mercury",
+   "segment": "mercury.dive",
+   "first": 690,
+   "last": 760,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T01:33:46.617Z",
+   "file": "20261124013346617-sheet-mercury-dive-draft-after.jpg",
+   "source": "out/work/handover/mercury-dive-draft-after.png",
+   "kind": "sheet",
+   "label": "mercury dive, every frame 761 to 772 (after T, frame 760), draft tier",
+   "stop": "mercury",
+   "segment": "mercury.dive",
+   "first": 761,
+   "last": 772,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T01:33:44.783Z",
+   "file": "20261124013344783-sheet-mercury-dive-draft-before.jpg",
+   "source": "out/work/handover/mercury-dive-draft-before.png",
+   "kind": "sheet",
+   "label": "mercury dive, every frame 748 to 759 (before T, frame 760), draft tier",
+   "stop": "mercury",
+   "segment": "mercury.dive",
+   "first": 748,
+   "last": 759,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T01:33:42.854Z",
+   "file": "20261124013342854-sheet-mercury-dive-draft-across.jpg",
+   "source": "out/work/handover/mercury-dive-draft-across.png",
+   "kind": "sheet",
+   "label": "mercury dive, every frame 754 to 765 (across T, frame 760), draft tier",
+   "stop": "mercury",
+   "segment": "mercury.dive",
+   "first": 754,
+   "last": 765,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-24T01:20:16.065Z",
    "file": "20261124012016065-note-r1.jpg",
    "source": "out/work/mercury/place/f5/r1.jpg",
    "kind": "note",
    "label": "c6bbaf6b rise 975 to 986, T at 977",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T01:20:15.242Z",
-   "file": "20261124012015242-note-d2.jpg",
-   "source": "out/work/mercury/place/f5/d2.jpg",
-   "kind": "note",
-   "label": "c6bbaf6b dive 754 to 765, T at 760, finer ground in the lower left corner, place picture off",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T00:53:21.204Z",
-   "file": "20261124005321204-note-z760.jpg",
-   "source": "out/work/mercury/place/f3/z760.jpg",
-   "kind": "note",
-   "label": "760 lower left at 1.5 times: before above, with the fine function tile below (draft)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T00:53:20.575Z",
-   "file": "20261124005320575-note-z757.jpg",
-   "source": "out/work/mercury/place/f3/z757.jpg",
-   "kind": "note",
-   "label": "757 lower left at 1.5 times: before above, with the fine function tile below (draft)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T00:34:41.373Z",
-   "file": "20261124003441373-note-quad.jpg",
-   "source": "out/work/mercury/place/tmp/quad.jpg",
-   "kind": "note",
-   "label": "Fault traced, not cured yet: left the dive plate patch-4, right the rise plate patch-4r, same ground; the pale four sided patch in the rise plate is what shows at 985 to 989",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T00:12:34.962Z",
-   "file": "20261124001234962-note-sheet-r2.jpg",
-   "source": "out/work/mercury/place/m3/sheet-r2.jpg",
-   "kind": "note",
-   "label": "mercury step 2 and 4 draft, place picture off, meshes drawn in the globe view by height, sheet r2",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T00:12:34.425Z",
-   "file": "20261124001234425-note-sheet-r1.jpg",
-   "source": "out/work/mercury/place/m3/sheet-r1.jpg",
-   "kind": "note",
-   "label": "mercury step 2 and 4 draft, place picture off, meshes drawn in the globe view by height, sheet r1",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T00:12:33.876Z",
-   "file": "20261124001233876-note-sheet-d2.jpg",
-   "source": "out/work/mercury/place/m3/sheet-d2.jpg",
-   "kind": "note",
-   "label": "mercury step 2 and 4 draft, place picture off, meshes drawn in the globe view by height, sheet d2",
    "stop": "mercury"
   }
  ]
