@@ -1,31 +1,23 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T02:22:32.388Z",
+ "pushed": "2026-11-24T02:36:17.815Z",
  "head": "ca34efc45024a3645ced72b868e24088a28d0938",
- "note": "engine stills with the relief cap: country lit from its heights, cast shadow baked; two Suns found (globe 313 deg, close image 175 deg)",
+ "note": "heights v8 on the engine (old bearing) and the map with the bearings for the turn of MAIL 461",
  "looks": [
   {
-   "time": "2026-11-24T02:22:31.756Z",
-   "file": "20261124022231756-note-i-sheet.jpg",
-   "source": "out/work/place/see/i-sheet.jpg",
+   "time": "2026-11-24T02:36:17.217Z",
+   "file": "20261124023617217-note-map19-crops.jpg",
+   "source": "out/work/place/see/map19-crops.jpg",
    "kind": "note",
-   "label": "ENGINE with the cap (scratch tree, relit plates, heights v7): 2439 2452 2471 2700 2713 lit by the close image's Sun; last tile: 2452 lit by the globe's Sun (wrong walls)",
+   "label": "the globe's map at the place (patch-19, centre 19 and 8.5 degrees) with the Sun by the globe (yellow 310), the camera now (green 100) and after a turn (magenta 240, pink 255)",
    "stop": "mars"
   },
   {
-   "time": "2026-11-24T02:04:13.927Z",
-   "file": "20261124020413927-note-f52452-lit.jpg",
-   "source": "out/work/place/see/f52452-lit.png",
+   "time": "2026-11-24T02:36:16.385Z",
+   "file": "20261124023616385-note-j-sheet.jpg",
+   "source": "out/work/place/see/j-sheet.jpg",
    "kind": "note",
-   "label": "2452 as the cap lights the relit country (preview, not the engine)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T02:04:13.130Z",
-   "file": "20261124020413130-note-f5-sheet.jpg",
-   "source": "out/work/place/see/f5-sheet.jpg",
-   "kind": "note",
-   "label": "country relit by code, heights v7: plates alone, heights alone, as the cap lights it, with the close view; 2439 2452 2471 (preview by mesh, not the engine)",
+   "label": "engine draft stills j (heights v8: relaxed membrane, craters, rock layers; still the close image's Sun, scratch) at 2439 2452 2471 2700 2713",
    "stop": "mars"
   }
  ]
