@@ -4201,3 +4201,98 @@ CORRECTION to my 08:41 answer, from neptune_builder. Two sentences of mine about
 WHAT STANDS, and all that may go to the other builders: one step that moved the nine light taps out of the search loop, together with three other changes, took 29.6 s to 21.8 s on the same samples. Which of the four did it I did not separate. No rule about the renderer follows from it.
 No answer needed. I am on the third commit.
 
+
+## MAIL 596 from the Builder (/root), 09:04 UTC, high priority, to the nine stop builders, word for word
+
+MAIL 596 from the Builder (/root) to the nine stop builders. A check tool for the pattern number is on main 81d568a7 (globe_engineer's NAMED f65859e1): `assets-src/shared/globe-levels.py`. It lays one level of a plate pyramid against the part of its parent that it covers, both at the state in which the level comes in (a parent texel 0.8 px of the frame), and judges the pair with the smooth report's own `pattern` function and the config's numbers. Seconds, no render. Merge main, or copy that one file to the same path in your tree, then:
+python3 assets-src/shared/globe-levels.py --dir public/assets/ID/full --json src/stops/ID/FILE.json [--key levels] [--suffix=-dive] [--pairs 0-1,1-3] [--panel out.png]
+or with the levels by hand: --level FILE:WIDTHDEG[:EASTDEG,NORTHDEG] twice or more (a plate given by the tangent of its half width: WIDTHDEG = 2 atan of it). One line a pair, OVER and exit 1 above smooth.pictures.maxPattern. It reads files, not the shader: a pair is a test only when both files are the same kind of picture (colour with colour, light with light), and it knows nothing of what a stop does with a level by height.
+
+MEASURED by me on main's Mars (the old plates): 0.06, 0.00, 0.06, 0.00, 0.00, 0.00, 0.00 in 3.5 s, as its author states. MEASURED by globe_engineer on the proof trees of the first named commits (not checked by me), 99th percentile against 0.45:
+- Mars b83618ec: patch-19 to land-8p5 1.19 OVER, land-3p8 to land-1p6 0.69 OVER, land-1p6 to land-0p7 0.59 OVER, land-0p7 to land-0p3 0.98 OVER; the other three pairs 0.00 to 0.09. In the panel of the first pair the parent shows a bright mound with a crater where the child shows a dark plain with the canyon crack.
+- Mercury 9b5f55cd: patch-1 to patch-2 1.09 OVER (dive), patch-2 to patch-3r 0.70 OVER (rise), the others 0.01 to 0.02.
+- Uranus 9a369939: every pair 0.00 to 0.01. Its red is not in the plates.
+- Venus 3b52b0eb: colour 0.01 and 0.02; light a to b 0.20 and 0.13; light b to d 1.12 and 1.10 OVER, with a caution (the two light plates may not be the same quantity).
+- Not run: Saturn, Jupiter, Earth, Neptune, the Sun.
+
+RULED. Where a pair is over, two levels show two different pictures of the same ground, the red pattern number of that move is true, and no exchange by height, however slow, cures it (plan F: one place). The cure is in the files: a level is made from the level under it, or both from one source, so that reduced to its parent's scale it is its parent. Where every pair is clean and the move is still red, the cause is in what the shader adds by height or angle (a second look mixed in, a function layer, a light term), and the same rule holds there: one ground, one law of light, borders set on the ground. No limit moves.
+
+Asked of each of you: run it now on every pyramid your dive and rise show (both sets where they differ) and put its lines into your next NAMED mail. A pair over the limit is named there as red, with its cure. This changes no due time.
+
+## 09:05 UTC: MAIL 596 run on my plates
+
+- Tool copied from main 81d568a7 to out/work/globe-levels.py (not in git). patches.json names its levels by offsetDeg, not by
+  centreDeg, so the levels are given by hand:
+  python3 out/work/globe-levels.py --dir public/assets/neptune/full --level patch-96.webp:96 --level patch-64.webp:64
+  --level patch-40.webp:40 --level place-26.webp:26 --level place-16.webp:16:0,-1.5 --level place-10.webp:10:1,-1.5
+  --level place-6.webp:6:1.6,-2.8 --level place-3.5.webp:3.5:2,-3.2 --panel out/work/nep/levels.png
+- MEASURED, 99th percentile against 0.45: patch-96 to patch-64 0.00; patch-64 to patch-40 0.03; patch-40 to place-26 1.16 OVER
+  (median 0.15); place-26 to place-16 0.35; place-16 to place-10 0.19; place-10 to place-6 0.69 OVER (48 percent of the worst
+  1 percent in the outer tenth); place-6 to place-3.5 0.20.
+- READ IN CODE, not rendered: with deep.json on true, set.ts sets lay to 0, and uShown and uPlace.z are set to lay, so the shown
+  plates (levels 3 to 7, the place files) are not drawn in the film. The film's pyramid is patch-96, 64, 40: both pairs clean.
+  patch-40 to place-26 lays a map plate against a shown plate of the close look, which is not the same kind of picture. What
+  comes in by height is the deep scene laid on the globe (deepLaid, shown by the logarithm of the eye's height, deep.json
+  globe.height 0.9 to 0.15, border 16 to 26 degrees): a function layer in the ruling's words. I have no pattern number of my
+  moves yet. The panel out/work/nep/levels.png is not looked at yet.
+
+## MAIL 605 from the Builder (/root), about 09:06 UTC, high priority, word for word
+
+MAIL 605 from the Builder (/root) to neptune_builder. Four jobs on your FIRST named commit (proof tree 0cc88b08) never came back and were withdrawn at 09:02 UTC, since your second commit supersedes it: the handover report and the measure (both out since 06:20 UTC, 160 minutes against about 30 on other stops), the unsplit smooth report (its first command, `warm --write --reset`, stood at the log line "frame 4758 neptune.dive" from 07:07 UTC on, with the render process at about 390 percent CPU) and the dive's pictures (out since 07:07 UTC). The drafts, the finals and path, place and parity of that commit did come back. The same parts of your second commit (d69fdb28) went out between 08:40 and 08:46 UTC and are not back yet.
+NOT KNOWN: what stalls. Asked now, on your own machine and on the second commit: the time of one frame each of (a) the warm list's own render at 4758 (the counts' format and tier, preview and draft), (b) the `texels` view at 4758 at the draft tier in the master format, (c) one frame of the handover report at 4758 at its review tier with the place picture off; and whether any of the three compiles a program for minutes or runs a loop whose length grows with the format or the view. A frame that takes minutes is a bug of the stop however it looks: Brandon steps every frame at 3840 by 2160 (plan H), and no machine check of yours can be read until it returns. Answer in one message with the three times, before anything else.
+
+## MAIL 609 from the Builder (/root), about 09:09 UTC, high priority, word for word (two files attached: neptune.md, neptune-parity.png, copied to out/work/nep/m609/)
+
+MAIL 609 from the Builder (/root) to neptune_builder. First smooth part on your second named 0b9017c0 (proof tree d69fdb28), MEASURED on the machines (nt2-03: path, place, parity). The path is RED on 22 lines, in both moves, and the reds sit at your change of view and in the last third of each move:
+Dive (4680 to 4769, T at 4758):
+- rate: changes by 0.096 of the mean over one film frame from 4755 to 4764, most at 4759 (limit 0.08);
+- turn: 0.099 (whole frames) and 0.100 (rate 2) from 4751 to 4761, most at 4755;
+- speed at the place: 0.122 from 4755 to 4762, most at 4760; 0.081 at 4695 to 4697; and it climbs again by 0.379 of the mean after its largest value (4712), up to 4750 (limit 0.03): two humps where the plan asks one.
+Rise (T at 4956):
+- rate: 0.172 over one film frame from 4953 to 4960, most at 4956, and 0.087 from one capture frame to the next at 4956;
+- turn: 0.232 from 4952 to 4960, most at 4956, and 0.117 from one capture frame to the next at 4955 + 1/2;
+- speed at the place: 0.131 at 4955, 0.095 at 5010 to 5018 (most 5014), and it falls by 0.045 (whole frames) and 0.058 (rate 2) before its largest value (5000), lowest at 4952.
+Place: your stop draws no place picture, nothing to switch off. Parity is in the attached file.
+This is the pace Brandon named for Neptune ("in and out of the planetary view"), so the path is first in your third commit: one law for the whole move, no step at T, one hump of speed. The gate of this commit passed (G11, G15, tsc 0, 443 tests; G13 stale for Earth only). The two picture parts, the handover report, the measure and the drafts are out; your 90 minutes for the third start when the last picture part is with you. MAIL 605 (the three times at 4758) stays first.
+Attached: the path report.
+
+## 09:06 to 09:18 UTC: MAIL 605 measured, the log
+
+- src put back to the second commit (deep.ts and deep.json from out/work/nep/cost/deep.F.ts and deep.F1.json; cmp equal, git
+  status clean).
+- (a) npx tsx tools/warmcheck.ts --first 4756 --last 4760 --label nep605a (no --write; preview, draft, capture path), 09:08:15
+  to 09:10:31. out/work/warm/nep605a.jsonl, ms per frame: 4756 40092 (programs 10, textures 19, buffers 43), 4757 20174,
+  4758 20051, 4759 19322, 4760 19773. The printed log has lines for 4756, 4757, 4758 only: a line is printed only for a frame
+  that did work. Exit 1 with "3 frames of a dive, surface view, rise or travel did work" (the warm list holds no frame of
+  mine; I write none, MAIL 545).
+- (b) frames.ts --frames 4757,4758,4759 --tier draft --format master --diag texels, 09:10:53 to 09:14:44: 86.8 s, 66.2 s,
+  66.3 s, 1 sample each. The G13 line of each: soft 61.9, 62.9, 63.7 percent, mean 0.94, 0.93, 0.92, OVER. Not looked into
+  yet.
+- Review tier samples from the engine's framePlan (out/work/nep/m605/plan.ts, in node): 4740 40, 4746 34, 4750 29, 4752 26,
+  4754 24, 4756 24, 4757 24, 4758 24 (raw 21.1 px, seen 14.0, shutter 0.665, split true), 4759 20, 4760 18, 4762 16, 4764 16,
+  4769 16, 4950 16, 4956 24 (split true), 4960 37, 4970 72.
+- (c) frames.ts --frames 4758 --tier review --format master --diag beauty/noplace started 09:16:19. Not back when the answer
+  went out.
+- Loops of deep.ts read (grep of every for): lengths are deep.json steps (deck 200, shade 10, cirrus 420 at most, light 9),
+  the hop loops 16 and 12, the streamer count, and the octave loops, which end at what one pixel covers.
+
+## My answer to MAIL 605, 09:18 UTC (VM clock), high priority, word for word
+
+ANSWER to MAIL 605 from neptune_builder, 09:18 UTC. All on my VM (Chrome, software renderer, 4 cores), tree = second named commit 0b9017c0 (src equal to head, checked by cmp and git status), dist built from it.
+
+MEASURED
+(a) Warm list's own render, `npx tsx tools/warmcheck.ts --first 4756 --last 4760` (preview, draft, capture path, no --write): 4756 40.1 s (first frame of the run: programs 10, textures 19, buffers 43), 4757 20.2 s, 4758 20.1 s, 4759 19.3 s, 4760 19.8 s. The tool prints a line only for a frame that did work: my log also ends with "frame 4758 neptune.dive: programs 0, textures 0, buffers 5", and 4759 and 4760 were rendered after it without a line (they are in the jsonl with their ms).
+(b) `texels` view, draft, master format: 4757 86.8 s (first frame of the run), 4758 66.2 s, 4759 66.3 s, 1 sample each.
+(c) Handover frame 4758, review tier, master format, `beauty/noplace`: NOT MEASURED YET. It renders since 09:16:19. Measured so far: the engine's framePlan gives this frame 24 samples at the review tier (raw 21.1 px, shutter 0.665, inside the dissolve window). INFERRED: 24 samples at about 66 s is about 26 minutes. I mail the measured time in one line when it returns.
+Review tier samples by the same function: 4740 40, 4746 34, 4750 29, 4752 26, 4754 to 4758 24, 4759 20, 4760 18, 4762 to 4769 16, 4950 16, 4956 24, 4960 37, 4970 72.
+
+YOUR TWO QUESTIONS
+- A compile of minutes: no on my VM. The first frame of a run carries about 20 s of compile and loading in (a) and in (b) (40.1 against 20.2 s, 86.8 against 66.2 s). Not known for your machines.
+- A loop that grows with the format or the view: READ IN CODE, not measured: every loop length of deep.ts is a number of deep.json (deck 200, shade 10, cirrus at most 420, light 9, hops 16 and 12), none reads the format or the view. The octave loops of deck and cirrus end at what one pixel covers, so a doubled format reads at most one octave more. Measured beside it: 4 times the pixels cost 3.3 times the seconds (20.1 to 66.2).
+
+WHAT FOLLOWS (inferred, not proven on your machines): nothing hangs, the jobs are slow by frame cost times samples.
+- The warm run is silent after 4758 because no later frame of the stop does new work. It then walks every frame to the end of its range, on my VM about 22 s a terrain frame and 8 to 20 s a rise frame at preview draft on this commit: more than an hour without a line. The first commit cost more a frame.
+- The handover report and the measure render their sheets at the review tier in the master format: 16 to 72 samples a frame at about 66 s a sample is 18 to 80 minutes a frame here, hours for a sheet of 12. The tool takes `--tier draft` (1 sample, about 66 s a frame).
+- At 3840 by 2160 a draft frame of the surface view is then about 4 minutes on a software renderer (inferred from the same ratio; 4860 took about 18 minutes there before the cost cut). By your sentence in MAIL 605 that is a bug of the stop; MAIL 579 ruling 1 accepted the cost and forbade a cut that costs picture. I do not cut cost unless you rule it; order of the third commit as I hold it: path (MAIL 609), then the look of 4860 (MAIL 579).
+
+MAIL 609 is read. The path was green on my tree (main c797cdc8) and I have not yet run it on the newer main: that is my next step, no render needed.
