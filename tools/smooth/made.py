@@ -145,8 +145,119 @@ def pops(needs):
             'differ': differ, 'apart': apart, 'rows': len(parts), 'spans': spans}
 
 
+MOVE = {'frames': 16, 'world': 4, 'level': 110.0, 'contrast': 14.0, 'film': 4, 'edge': 3.0}
+MOVES = [('rise', 1, 20), ('rise', 1, 80), ('rise', 1.3, 20), ('rise', 1.3, 80), ('rise', 2, 20), ('rise', 3, 20), ('rise', 4, 5), ('rise', 4, 10), ('rise', 4, 20), ('rise', 4, 40),
+         ('rise', 6, 20), ('rise', 8, 20), ('rise soft', 3, 20), ('rise soft', 4, 20), ('dive', 1.3, 20), ('dive', 3, 20), ('dive', 4, 20), ('pan', 1, 20), ('pan', 1, 80)]
+SWAPS = [('rise', 1, 20), ('rise', 1.3, 20), ('rise', 2, 20), ('rise', 3, 20), ('rise', 4, 20), ('rise', 8, 20), ('rise soft', 3, 20), ('rise soft', 4, 20), ('dive', 4, 20), ('pan', 1, 20)]
+HALVES = [('rise', 1, 20), ('rise', 2, 20), ('rise', 3, 20), ('rise', 4, 20), ('dive', 4, 20)]
+PARTS = [('rise', 1, 20, 16), ('rise', 1, 20, 32), ('rise', 3, 20, 16), ('rise', 3, 20, 32), ('rise', 4, 20, 16), ('rise', 4, 20, 32)]
+SEEDS = (697, 1, 2, 3, 4, 5, 6)
+
+
+def ground(rng):
+    """A ground with detail at every width from 1 to 64 px, MOVE['world'] times the frame each way."""
+    shape = (SHAPE[0] * MOVE['world'], SHAPE[1] * MOVE['world'])
+    g = sum(s * cv2.GaussianBlur(rng.standard_normal(shape).astype(np.float32), (0, 0), s) for s in (1, 2, 4, 8, 16, 32, 64))
+    return MOVE['level'] + MOVE['contrast'] * g / g.std()
+
+
+def patch(one, other, radius):
+    """The ground one with the ground other in a disc at its middle, of a radius in px of the ground, a soft edge."""
+    ys, xs = np.mgrid[0:one.shape[0], 0:one.shape[1]]
+    m = np.clip((radius - np.hypot(xs - (one.shape[1] - 1) / 2, ys - (one.shape[0] - 1) / 2)) / MOVE['edge'] + 0.5, 0, 1).astype(np.float32)
+    return one * (1 - m) + other * m
+
+
+def view(world, zoom, across):
+    """The frame that shows the middle of the world at a zoom, moved across by px: reduced by area means, enlarged by Lanczos, mirrored beyond
+    the edge of the world. Nothing in it but the world."""
+    if zoom < 1:
+        world = cv2.resize(world, (int(round(world.shape[1] * zoom)), int(round(world.shape[0] * zoom))), interpolation=cv2.INTER_AREA)
+        zoom = 1
+    h, w = SHAPE
+    m = np.array([[zoom, 0, (w - 1) / 2 - zoom * (world.shape[1] - 1) / 2 + across], [0, zoom, (h - 1) / 2 - zoom * (world.shape[0] - 1) / 2]])
+    return cv2.warpAffine(world, m, (w, h), flags=cv2.INTER_LANCZOS4, borderMode=cv2.BORDER_REFLECT_101)
+
+
+def move(rng, way, ratio, speed, worlds):
+    """17 capture frames of a camera over a ground in which nothing changes (one world) or over one ground that is exchanged for another, cross
+    faded over the frames (two worlds). rise: the picture shrinks ratio times, the closest frame at the sharpness of the world; rise soft: the
+    same with the farthest frame at the sharpness of the world, so the closer ones are enlargements; dive: the rise run backwards; pan: no
+    shrink. speed: px of the film a capture frame, across. The frames are the quarter size ones the measure works on."""
+    n = MOVE['frames']
+    zooms = [ratio ** (-j / n) if way != 'rise soft' else ratio ** (1 - j / n) for j in range(n + 1)]
+    order = range(n, -1, -1) if way == 'dive' else range(n + 1)
+    frames = []
+    for at, j in enumerate(order):
+        shown = [view(w, zooms[j], speed / MOVE['film'] * j) for w in worlds]
+        f = shown[0] if len(shown) == 1 else (1 - at / n) * shown[0] + at / n * shown[1]
+        frames.append(np.clip(f + GRAIN * rng.standard_normal(SHAPE).astype(np.float32), 0, 255).astype(np.float32))
+    return frames
+
+
+def carry(frames):
+    """A made move read as the pictures part reads a row: the first frame against the last one carried back along the flows. before: the widths
+    of the pattern as they stood, the same everywhere; now: the widths follow the enlargement of the carried frame."""
+    n = len(frames) - 1
+    fw = [S.motion(frames[j], frames[j + 1]) for j in range(n)]
+    bw = [S.motion(frames[j + 1], frames[j]) for j in range(n)]
+    d, moved, ok, way = S.change(frames, fw, bw, 0, n, WIDE / 2)
+    grown = S.enlarged(*way, ok, WIDE)
+    p0, p1 = S.pattern(frames[0], moved, ok, FINE, WIDE, FLOOR), S.matched(frames[0], moved, ok, FINE, WIDE, FLOOR, grown)
+    was, now = S.patterned(p0), S.patterned(p1)
+    return {'before': was[0], 'now': now[0], 'shareBefore': was[2], 'share': now[2], 'same': bool(np.array_equal(p0, p1, equal_nan=True)),
+            'grown': float(np.median(grown[ok])) if ok.any() else None, 'p': p1, 'z': grown, 'ok': ok}
+
+
+def carries():
+    import tempfile
+    from PIL import Image
+    rng = np.random.default_rng(697)
+    one, other = ground(rng), ground(rng)
+    half = (one + other) / 2
+    plain = lambda r: {k: v for k, v in r.items() if k not in ('p', 'z', 'ok')}
+    out = {'rigid': [{'way': way, 'zoom': ratio, 'speed': speed, **plain(carry(move(rng, way, ratio, speed, [one])))} for way, ratio, speed in MOVES],
+           'exchange': [{'way': way, 'zoom': ratio, 'speed': speed, **plain(carry(move(rng, way, ratio, speed, [one, other])))} for way, ratio, speed in SWAPS],
+           'half': [{'way': way, 'zoom': ratio, 'speed': speed, **plain(carry(move(rng, way, ratio, speed, [one, half])))} for way, ratio, speed in HALVES], 'part': []}
+    ys, xs = np.mgrid[0:SHAPE[0], 0:SHAPE[1]]
+    for way, ratio, speed, radius in PARTS:
+        r = carry(move(rng, way, ratio, speed, [one, patch(one, other, radius * ratio)]))
+        disc = np.hypot(xs - (SHAPE[1] - 1) / 2, ys - (SHAPE[0] - 1) / 2) < radius * ratio
+        judged = np.isfinite(r['p'])
+        out['part'].append({'way': way, 'zoom': ratio, 'speed': speed, 'radius': radius, **plain(r), 'inside': float(np.median(r['z'][r['ok'] & disc])),
+                            'outside': float(np.median(r['z'][r['ok'] & ~disc])), 'over': float((r['p'][judged & disc] > 0.45).mean()) if (judged & disc).any() else None})
+    with tempfile.TemporaryDirectory() as folder:
+        def through(worlds):
+            paths = []
+            for j, f in enumerate(move(rng, 'rise', 4, 20, worlds)):
+                g = np.rint(f).astype(np.uint8)
+                paths.append(os.path.join(folder, '%02d.png' % j))
+                Image.fromarray(np.stack([g, g, g], axis=2)).save(paths[-1])
+            n = S.pictures({'paths': paths, 'scale': 1, 'window': 32, 'floor': 0.25, 'grid': [16, 9], 'changeFrames': MOVE['frames'], 'changeBlur': WIDE / 2, 'patternPx': WIDE, 'patternFloor': FLOOR})
+            return n['pattern'][0]
+        out['through'] = {'rigid': through([one]), 'exchange': through([one, other])}
+    return out
+
+
+def spread():
+    """The whole ground exchanged and dissolved half way under a shrink by 3 and by 4, at seven seeds: how far one draw is from the next."""
+    out = {'seeds': list(SEEDS), 'exchange': {'3': [], '4': []}, 'half': {'3': [], '4': []}}
+    for seed in SEEDS:
+        rng = np.random.default_rng(seed)
+        one, other = ground(rng), ground(rng)
+        for ratio in (3, 4):
+            for name, later in (('exchange', other), ('half', (one + other) / 2)):
+                r = carry(move(rng, 'rise', ratio, 20, [one, later]))
+                out[name][str(ratio)].append({'before': r['before'], 'now': r['now']})
+    return out
+
+
 if __name__ == '__main__':
-    if len(sys.argv) > 1:
+    if len(sys.argv) > 1 and sys.argv[1] == 'carried':
+        json.dump({'carried': carries()}, sys.stdout)
+    elif len(sys.argv) > 1 and sys.argv[1] == 'spread':
+        json.dump({'spread': spread()}, sys.stdout)
+    elif len(sys.argv) > 1:
         json.dump({'pops': pops(json.loads(sys.argv[1]))}, sys.stdout)
     else:
         json.dump({'patterns': patterns(), 'bodies': bodies()}, sys.stdout)

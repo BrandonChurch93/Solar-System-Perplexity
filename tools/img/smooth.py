@@ -14,6 +14,9 @@ AGREE_PX2 = 0.5
 JUDGED_SHARE = 0.1
 BLOCK_SHARE = 0.5
 PATTERN_SHARE = 0.02
+PATTERN_STEPS = 2
+PATTERN_TOP = 8
+SLOPE_SHARE = 0.05
 PLANE_RIDGE = 1e-3
 
 
@@ -138,7 +141,33 @@ def change(frames, fw, bw, i, n, sigma, first=None, last=None):
     weight = cv2.GaussianBlur(ok.astype(np.float32), (0, 0), sigma)
     d = cv2.GaussianBlur((moved - frames[i].astype(np.float32)) * ok, (0, 0), sigma) / np.maximum(weight, 1e-6)
     d[weight < 0.5] = np.nan
-    return d, moved, ok
+    return d, moved, ok, (mx, my)
+
+
+def enlarged(mx, my, ok, wide):
+    """How many times larger the carried frame is drawn than it was, per pixel: the root of the area a pixel of the carrying map mx, my covers,
+    turned over, from the slopes of the map averaged over the wide window of the judged area. A frame that is carried back onto a closer one
+    is enlarged, and with it the error of its place, which the flows know to about one pixel of the frame they carry. 1 where the area has no
+    slope to read."""
+    across = np.zeros(ok.shape, np.float32)
+    down = np.zeros(ok.shape, np.float32)
+    across[:, 1:-1] = ok[:, 2:] & ok[:, :-2]
+    down[1:-1, :] = ok[2:, :] & ok[:-2, :]
+    soft = lambda x: cv2.GaussianBlur(x, (0, 0), wide)
+    wx, wy = soft(across), soft(down)
+
+    def slopes(m):
+        dx = np.zeros(ok.shape, np.float32)
+        dy = np.zeros(ok.shape, np.float32)
+        dx[:, 1:-1] = (m[:, 2:] - m[:, :-2]) / 2
+        dy[1:-1, :] = (m[2:, :] - m[:-2, :]) / 2
+        return soft(dx * across) / np.maximum(wx, 1e-6), soft(dy * down) / np.maximum(wy, 1e-6)
+
+    a, b = slopes(mx)
+    c, d = slopes(my)
+    grown = 1 / np.sqrt(np.maximum(np.abs(a * d - b * c), 1e-6))
+    grown[(wx < SLOPE_SHARE) | (wy < SLOPE_SHARE)] = 1
+    return grown
 
 
 def leaning(okf, fine, wide):
@@ -179,6 +208,19 @@ def pattern(a, b, ok, fine, wide, floor):
     cb = np.sqrt(np.maximum(soft(db * db, wide) / far, 0))
     p = 1 - (soft(da * db, wide) / far) / np.maximum(ca * cb, 1e-6)
     p[~(ok & (soft(okf, wide) >= 0.5) & (ca > floor) & (cb > floor))] = np.nan
+    return p
+
+
+def matched(a, b, ok, fine, wide, floor, grown):
+    """The pattern of a against b, a frame carried onto it, at the widths the carried frame can hold: where b is drawn grown times larger than it
+    was, both widths are that many times as wide, in steps of PATTERN_STEPS to a doubling, the nearest step, up to PATTERN_TOP times. Under the
+    first half step, and so wherever b is not enlarged, this is pattern(a, b, ok, fine, wide, floor) to the bit."""
+    top = int(round(PATTERN_STEPS * np.log2(PATTERN_TOP)))
+    step = np.clip(np.rint(PATTERN_STEPS * np.log2(np.maximum(grown, 1))), 0, top).astype(int)
+    p = np.full(a.shape, np.nan, np.float32)
+    for k in np.unique(step[ok]):
+        here = step == k
+        p[here] = pattern(a, b, ok, fine * 2 ** (k / PATTERN_STEPS), wide * 2 ** (k / PATTERN_STEPS), floor)[here]
     return p
 
 
@@ -340,10 +382,10 @@ def pictures(job):
             if not own[0] <= i + start < own[1] or not inside(i + reach) or any(fw[j] is None for j in range(i, i + reach)):
                 continue
             first, last = (body(poses[j], frames[j].shape, sigma) if poses[j] else None for j in (i, i + reach))
-            d, later, ok = change(frames, fw, bw, i, reach, sigma, first, last)
+            d, later, ok, way = change(frames, fw, bw, i, reach, sigma, first, last)
             shift[i], top[i], at, judged[i] = changed(d)
             spot[i] = [int(round(at[0] / scale)), int(round(at[1] / scale))] if at else None
-            weave[i], at, weaveShare[i] = patterned(pattern(frames[i].astype(np.float32), later, ok, wide / 5, wide, low))
+            weave[i], at, weaveShare[i] = patterned(matched(frames[i].astype(np.float32), later, ok, wide / 5, wide, low, enlarged(*way, ok, wide)))
             weaveAt[i] = [int(round(at[0] / scale)), int(round(at[1] / scale))] if at else None
     for i in range(n):
         if not inside(i + 1):
@@ -368,14 +410,14 @@ def changes(job):
         fw = [motion(frames[i], frames[i + 1]) for i in range(n)]
         bw = [motion(frames[i + 1], frames[i]) for i in range(n)]
         first, last = (body(q, frames[0].shape, sigma) if q else None for q in item.get('poses') or [None, None])
-        d, moved, ok = change(frames, fw, bw, 0, n, sigma, first, last)
+        d, moved, ok, way = change(frames, fw, bw, 0, n, sigma, first, last)
         size = (frames[0].shape[1], frames[0].shape[0])
         ca = np.asarray(Image.open(item['paths'][0]).convert('RGB').resize(size, Image.LANCZOS))
         back = np.clip(moved, 0, 255).astype(np.uint8)
         back[~ok] = 0
         cb = np.repeat(back[..., None], 3, axis=2)
         dd = np.repeat(np.clip(np.abs(np.nan_to_num(d)) * gain, 0, 255).astype(np.uint8)[..., None], 3, axis=2)
-        p = pattern(frames[0].astype(np.float32), moved, ok, wide / 5, wide, low)
+        p = matched(frames[0].astype(np.float32), moved, ok, wide / 5, wide, low, enlarged(*way, ok, wide))
         pp = np.repeat(np.clip(np.nan_to_num(p) * 255, 0, 255).astype(np.uint8)[..., None], 3, axis=2)
         rows.append((item['label'], np.concatenate([ca, cb, dd, pp], axis=1)))
     if not rows:

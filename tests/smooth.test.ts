@@ -487,6 +487,99 @@ describe('the pattern measure on made pictures, a judged area with a limb, a fra
   })
 })
 
+interface MadeMove { way: string; zoom: number; speed: number; before: number | null; now: number | null; shareBefore: number; share: number; same: boolean; grown: number | null }
+interface MadePart extends MadeMove { radius: number; inside: number; outside: number; over: number | null }
+interface MadeCarried { rigid: MadeMove[]; exchange: MadeMove[]; half: MadeMove[]; part: MadePart[]; through: { rigid: number; exchange: number } }
+interface MadeDraw { before: number; now: number }
+interface MadeSpread { seeds: number[]; exchange: Record<'3' | '4', MadeDraw[]>; half: Record<'3' | '4', MadeDraw[]> }
+
+describe('the pattern measure on made moves, the later frame carried back along its flows onto the earlier one', () => {
+  let c: MadeCarried
+  let s: MadeSpread
+  const limit = config.raw.smooth.pictures.maxPattern
+  const run = (what: string): string => execFileSync('python3', [fileURLToPath(new URL('../tools/smooth/made.py', import.meta.url)), what], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 1 << 24 })
+  beforeAll(() => {
+    c = (JSON.parse(run('carried')) as { carried: MadeCarried }).carried
+    s = (JSON.parse(run('spread')) as { spread: MadeSpread }).spread
+  }, 900_000)
+  const rises = (): MadeMove[] => c.rigid.filter((x) => x.way === 'rise' && x.speed === 20)
+  const all = (): MadeMove[] => [...c.rigid, ...c.exchange, ...c.half, ...c.part]
+  const median = (v: number[]): number => [...v].sort((a, b) => a - b)[Math.floor(v.length / 2)]!
+
+  it('reads a ground in which nothing changes under 0.1 at every speed and every shrink, rising and diving, whichever end is the sharp one', () => {
+    expect(c.rigid.map((x) => x.speed).filter((v, i, a) => a.indexOf(v) === i).sort((a, b) => a - b)).toEqual([5, 10, 20, 40, 80])
+    expect(rises().map((x) => x.zoom)).toEqual([1, 1.3, 2, 3, 4, 6, 8])
+    expect(c.rigid.filter((x) => x.way === 'rise soft').map((x) => x.zoom)).toEqual([3, 4])
+    expect(c.rigid.length).toBe(19)
+    for (const x of c.rigid) {
+      expect(x.share).toBeGreaterThan(0.02)
+      expect(x.now!).toBeLessThan(0.1)
+    }
+  })
+
+  it('read the same ground higher the more the picture shrinks, and over the limit at 8 times, before the widths followed the carried frame', () => {
+    const before = rises().map((x) => x.before!)
+    for (let i = 1; i < before.length; i++) expect(before[i]!).toBeGreaterThan(before[i - 1]!)
+    expect(before[before.length - 1]!).toBeGreaterThan(limit)
+    expect(c.rigid.find((x) => x.way === 'rise soft' && x.zoom === 4)!.before!).toBeGreaterThan(0.1)
+  })
+
+  it('reads from the flows how many times the carried frame is enlarged, within a tenth', () => {
+    for (const x of rises()) expect(Math.abs(x.grown! / x.zoom - 1)).toBeLessThan(0.1)
+    for (const x of c.rigid.filter((y) => y.way === 'dive')) expect(Math.abs(x.grown! * x.zoom - 1)).toBeLessThan(0.1)
+  })
+
+  it('is the measure as it stood, every pixel of it, where the carried frame is not enlarged: no shrink, a pan, a dive', () => {
+    const still = all().filter((x) => x.way === 'dive' || x.way === 'pan' || x.zoom === 1)
+    expect(still.length).toBe(14)
+    for (const x of still) {
+      expect(x.same).toBe(true)
+      expect(x.now).toBe(x.before)
+      expect(x.share).toBe(x.shareBefore)
+    }
+  })
+
+  it('judges as much of the frame as before under every made shrink, within 0.002', () => {
+    for (const x of all()) expect(Math.abs(x.share - x.shareBefore)).toBeLessThan(0.002)
+  })
+
+  it('reads a ground exchanged for another under the same move over 1, an unrelated pattern, at every shrink', () => {
+    expect(c.exchange.filter((x) => x.way === 'rise').map((x) => x.zoom)).toEqual([1, 1.3, 2, 3, 4, 8])
+    for (const x of c.exchange) expect(x.now!).toBeGreaterThan(x.way === 'rise' ? 1 : 2 * limit)
+  })
+
+  it('reads the exchange under a shrink by 3 and by 4, the middle one of seven seeds, no lower than the made swap without a move, and no draw under 1', () => {
+    const today = Math.min(...made().patterns.unrelated.map((x) => x.now))
+    expect(s.seeds).toEqual([697, 1, 2, 3, 4, 5, 6])
+    for (const z of ['3', '4'] as const) {
+      expect(median(s.exchange[z].map((x) => x.now))).toBeGreaterThanOrEqual(today)
+      for (const x of s.exchange[z]) expect(x.now).toBeGreaterThan(1)
+    }
+  })
+
+  it('reads a dissolve half way under a shrink by 3 and by 4 at 0.5, the middle one of seven seeds, within 0.05; one draw can read under the limit', () => {
+    for (const z of ['3', '4'] as const) {
+      const now = s.half[z].map((x) => x.now)
+      expect(Math.abs(median(now) - 0.5)).toBeLessThan(0.05)
+      expect(Math.min(...now)).toBeGreaterThan(0.3)
+      expect(Math.min(...now)).toBeLessThan(limit)
+    }
+  })
+
+  it('reads the enlargement the same inside a part of the ground that is exchanged and beside it, and the part over the limit under a shrink by 3 and by 4', () => {
+    expect(c.part.map((x) => [x.zoom, x.radius])).toEqual([[1, 16], [1, 32], [3, 16], [3, 32], [4, 16], [4, 32]])
+    for (const x of c.part) {
+      expect(Math.abs(x.inside / x.outside - 1)).toBeLessThan(0.03)
+      if (x.zoom > 1) expect(x.now!).toBeGreaterThan(limit)
+    }
+  })
+
+  it('reads both through the pictures part, from files', () => {
+    expect(c.through.rigid).toBeLessThan(0.1)
+    expect(c.through.exchange).toBeGreaterThan(1)
+  })
+})
+
 describe('the body of a globe that the stop draws flattened', () => {
   it('is the unit sphere where the globe has the scale 1, however it is turned', () => {
     const b = made().bodies
