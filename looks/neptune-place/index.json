@@ -1,9 +1,41 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T22:26:09.367Z",
- "head": "94c9310154551482458bbf3263779859379e0eb1",
- "note": "22:26 UTC. Found: the web set's patch levels had a black deck (my bake); cured in the tree. Cause of the exchange in the rise shown by the control map alone. Plan sent to the Builder",
+ "pushed": "2026-11-24T23:13:07.765Z",
+ "head": "6d271fc4044f6e7891677cb9a78f6d329ad4a811",
+ "note": "23:15 web cure named; one field trial: map as the deck at every height, scene detail and objects on it by place",
  "looks": [
+  {
+   "time": "2026-11-24T23:13:06.508Z",
+   "file": "20261124231306508-note-obj-4605-11.jpg",
+   "source": "out/work/nep/weave/obj-4605-11.png",
+   "kind": "note",
+   "label": "22:35 TRIAL the scene's own picture at full weight at the hold as it stood: a pale foreign disc, 1 to 1 (hero | head | trial)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T23:13:05.660Z",
+   "file": "20261124231305660-note-of1-4605.jpg",
+   "source": "out/work/nep/weave/of1-4605.png",
+   "kind": "note",
+   "label": "23:10 TRIAL one field, step 1: 4605 at 1 to 1, hero | head | trial with the objects at full strength at the hold; a white glow at the spiral and a dark chunk are faults to cure",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T23:13:04.856Z",
+   "file": "20261124231304856-note-of1-4860.jpg",
+   "source": "out/work/nep/weave/of1-4860.jpg",
+   "kind": "note",
+   "label": "23:10 TRIAL one field, step 1 (not kept yet): approved close | 4860 head | 4860 with the map as the deck and the scene's detail on it; G17 of the 1920 files head 0.977 and 0.638, trial 1.382 and 0.944; too blue, white sheet at the horizon; 82 s per draft frame",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T23:13:03.746Z",
+   "file": "20261124231303746-note-wf3-4860-5006.jpg",
+   "source": "out/work/nep/weave/wf3-4860-5006.jpg",
+   "kind": "note",
+   "label": "23:05 web set cured beside the full set, 4860 and 5006, draft 1920 (web | full); 4860 takes 91 s web, 102 s full",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T22:26:01.838Z",
    "file": "20261124222601838-note-c-mapA-storm.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/nep/weave/one-4860.jpg",
    "kind": "note",
    "label": "4860: approved | main (G17 1.382 / 0.741) | trial, the globe map alone down to the foot (not kept). Draft, preview, 20 s a frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T21:44:00.159Z",
-   "file": "20261124214400159-note-ev-rise-4962.jpg",
-   "source": "out/work/nep/weave/ev-rise-4962.jpg",
-   "kind": "note",
-   "label": "21:44 UTC: rise, every frame 4962 to 4973 on the merge (preview draft), looked at: the surface view goes away evenly, one streamer, nothing comes or goes between two frames",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T21:43:59.616Z",
-   "file": "20261124214359616-note-look-m4-4860.jpg",
-   "source": "out/work/nep/weave/look-m4-4860.jpg",
-   "kind": "note",
-   "label": "21:44 UTC: 4860 beside the approved image on the merge of take batch 4 (651b9adb): the bytes of before the merge; G17 1.382 / 0.741; 7.4 s a preview draft frame on the mean, 24.7 s this one",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T21:14:59.475Z",
-   "file": "20261124211459475-note-ev-dive-4704.jpg",
-   "source": "out/work/nep/weave/ev-dive-4704.jpg",
-   "kind": "note",
-   "label": "21:15 UTC: dive, every frame 4704 to 4715 (present state, preview draft), looked at: one storm growing evenly, the deck goes to navy by the height; white specks of small cloud on the dim side, named",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T21:14:58.152Z",
-   "file": "20261124211458152-note-look-rev-4860.jpg",
-   "source": "out/work/nep/weave/look-rev-4860.jpg",
-   "kind": "note",
-   "label": "21:15 UTC: 4860 at REVIEW tier (16 by 9, 4 samples, 5.7 min) beside the approved image, present state (my folders' code unchanged since 5c671343); G17 on this frame median 1.164, p25 0.694 (preview draft 1.382 / 0.741); 7.4 s a preview draft frame",
    "stop": "neptune"
   }
  ]
