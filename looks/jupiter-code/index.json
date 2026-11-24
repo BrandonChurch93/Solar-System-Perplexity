@@ -1,9 +1,63 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T00:23:47.213Z",
+ "pushed": "2026-11-24T00:42:24.271Z",
  "head": "a998eca2f90811e1b60a7e3c589a2545e13d6ed7",
- "note": "step 5 begins: measuring the painting from above; no function picture yet",
+ "note": "Step 5 (mail 413) in work, no frames yet: the painting kept only as a blur of 0.3 units (no streak can be followed in it), the rings the functions will turn on, and a test of 3150 through the plate branch alone. The crease lower left in the blurred view is the rim of what the view saw, being cured in the tool. Next: the functions in the shader, then 3090, 3150, 3210.",
  "looks": [
+  {
+   "time": "2026-11-24T00:42:23.696Z",
+   "file": "20261124004223696-note-s5-ell-a.jpg",
+   "source": "../work/f/s5-ell-a.jpg",
+   "kind": "note",
+   "label": "step 5: the rings the functions turn on (0.5, 1.15, 1.7, 2.4, 3.2 units), drawn over the painting from above",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T00:42:23.167Z",
+   "file": "20261124004223167-note-s5-height-low.jpg",
+   "source": "../work/f/s5-height-low.jpg",
+   "kind": "note",
+   "label": "step 5: the painting's relief blurred by 0.3 units, the broad height the functions stand on",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T00:42:22.640Z",
+   "file": "20261124004222640-note-s5-view-low.jpg",
+   "source": "../work/f/s5-view-low.jpg",
+   "kind": "note",
+   "label": "step 5: the approved view laid on the ground and blurred by 0.3 units; the crease lower left is the rim of what the view saw and is being cured in the tool",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T00:42:22.111Z",
+   "file": "20261124004222111-note-s5-plate-low.jpg",
+   "source": "../work/f/s5-plate-low.jpg",
+   "kind": "note",
+   "label": "step 5: the painting as the storm keeps it, blurred by 0.3 units (64 km), seen from above, 8.8 units wide",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T00:42:21.543Z",
+   "file": "20261124004221543-note-s5t0-vs-p2z.jpg",
+   "source": "../work/f/s5t0-vs-p2z.jpg",
+   "kind": "note",
+   "label": "step 5 test: 3150 draft through the plate branch alone (left) beside the approved view branch (right)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T00:25:36.646Z",
+   "file": "20261124002536646-frame-f03150.jpg",
+   "source": "out/work/jupiter/frames/s5t0/f03150.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3150, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "30385d6e31de94ff"
+  },
   {
    "time": "2026-11-24T00:23:46.641Z",
    "file": "20261124002346641-note-s5-top-h.jpg",
@@ -18,28 +72,6 @@
    "source": "../work/f/s5-top.jpg",
    "kind": "note",
    "label": "step 5 start: the painting of the storm seen from straight above (what will be blurred to broad colour)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T00:04:51.212Z",
-   "file": "20261124000451212-frame-f03150.jpg",
-   "source": "out/work/jupiter/frames/p2z/f03150.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3150, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "94288983d3b2cf97"
-  },
-  {
-   "time": "2026-11-24T00:04:37.995Z",
-   "file": "20261124000437995-note-s5-rigid-vs-shear.jpg",
-   "source": "../work/f/s5-rigid-vs-shear.jpg",
-   "kind": "note",
-   "label": "step 5 test from above on the storm painting: rigid rings with blended seams double the streaks, shear bends them",
    "stop": "jupiter"
   }
  ]
