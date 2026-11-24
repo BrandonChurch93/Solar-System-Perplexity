@@ -7,19 +7,12 @@ import { build } from 'vite'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { DIAG_GLSL, DIAG_VIEWS, RANGE_LOW, RANGE_OCTAVES, isRaw, rangeOf, setDiag } from '../src/diagnostics/diag'
 import { CHROME, CHROME_FLAGS } from '../tools/lib/browser'
+import { RANGE_BRANCH as BRANCH, RANGE_NUMBERS as NUMBERS, frozen } from './globe-frozen'
 
 const ROOT = resolve(__dirname, '..')
 const at = (path: string): string => JSON.stringify(resolve(ROOT, path))
 const TOP = 16777214
 
-const BRANCH = `  if (uDiag == 6) {
-    float n = 1.0 + floor(clamp((log2(max(viewDepth, 1e-30)) - RANGE_LOW) / RANGE_OCTAVES, 0.0, 1.0) * 16777214.0);
-    float high = floor(n / 65536.0);
-    float mid = floor((n - high * 65536.0) / 256.0);
-    return vec4(high / 255.0, mid / 255.0, (n - high * 65536.0 - mid * 256.0) / 255.0, 1.0);
-  }
-`
-const NUMBERS = '\nconst float RANGE_LOW = -20.0;\nconst float RANGE_OCTAVES = 32.0;'
 
 function packed(d: number): [number, number, number] {
   const n = 1 + Math.floor(Math.min(Math.max((Math.log2(Math.max(d, 1e-30)) - RANGE_LOW) / RANGE_OCTAVES, 0), 1) * TOP)
@@ -35,7 +28,7 @@ describe('the range view', () => {
     expect(setDiag('beauty')).toBe(0)
     expect(DIAG_GLSL.split(BRANCH).length - 1).toBe(1)
     expect(DIAG_GLSL.split(NUMBERS).length - 1).toBe(1)
-    const before = DIAG_GLSL.replace(BRANCH, '').replace(NUMBERS, '')
+    const before = frozen(DIAG_GLSL)
     expect(createHash('sha256').update(before).digest('hex')).toBe('3612ad39e16854bc7dbf37914d235b37731b13c5673dc61a815d8b563935ead8')
     expect(DIAG_GLSL.indexOf(BRANCH)).toBeGreaterThan(DIAG_GLSL.indexOf('if (uDiag == 5)'))
     expect(DIAG_GLSL.endsWith(BRANCH + '  return beauty;\n}')).toBe(true)
