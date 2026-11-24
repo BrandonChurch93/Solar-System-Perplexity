@@ -3054,3 +3054,94 @@ is in the picture at 3 to 12 px, and the same crispness for the far ring across 
   the speed share grow over the last second of the bend, so the rise has less to add.
 - The last three seconds of the skim no longer push forward: they track across and pull back (ruling d196).
   This stands against "clear forward movement through all 180 frames" of the first brief: named in the mail.
+
+### 05:28 to 05:40 UTC: e3df591 pushed, MAIL 534, the proofs of the bend are rendering
+
+- PUSHED: e3df591ce360c5cb373f3fcfafe5d221ef260ae5 on agent/saturn-code (the bend and the rise's paces), on
+  387ba2c (merge of main 5014624). Looks pushed 05:28 (the two bend sheets and 3810).
+- MAIL 534 (05:27, d198, main 3060b72: only kit/PROGRESS.md against 5014624): smooth.path.minEye is 0.87. At
+  the end of each dive and the start of each rise, over 16 film frames either side of the seam at rate 2, the
+  way of the eye over its own height above the ground never falls under 0.87 of the surface view's own (the
+  mean of its 2 film frames next to the seam). Judged in the path part of npm run smooth (harness_builder's
+  07148aa6, on the machines, not on main yet; until then npx tsx tools/seam.ts --rate 2 gives the same number
+  inside the move). Saturn rise on main 0.536 at 3814 (the judge takes the height above the ring plane
+  there). The window reaches 16 film frames into the surface view: a bend that buys the seam by slowing the
+  eye later in the surface view is red by the same line. So a gain of the speed share over the last 16 frames
+  of the bend may be 1 over 0.87 at most (1.149): the cure named in the entry before this one ("let the speed
+  share grow over the last second of the bend") can add no more than that; a larger gain has to be spread
+  over the whole bend (1.149 every 16 frames is 2.15 over 88 frames). Red by this line at the named commit is
+  a severe issue of its round. Time to name: 08:30 UTC for Saturn.
+- THE LONG JOB (/tmp/v/job_z.sh SHA OUT, detached, log /tmp/v/r34/job.log) runs in the worktree mainref on
+  e3df591 from 05:28: smooth pictures rise, parity, pictures dive, path, the gate, measure G5 and G17, the
+  two final stills, G13 every sixth frame, the handover (sides, flow, path). Reports are copied to /tmp/v/r34
+  after every step. A draft frame at rate 2 takes about 4 s.
+- SEEN while it renders (rate 2, 3800 to 3812, /tmp/v/r34/seam_a.jpg and edge_a.jpg): the far ring's lit
+  piece beyond the dark limb comes in at the right edge of the frame from 3806 + 1/2 and grows as the eye
+  pulls back; it comes in by the edge, not by a blend.
+- NET SIZE of the three folders against main at e3df591 (git ls-tree -r -l): assets-src/saturn plus 0.072
+  MB, public/assets/saturn minus 0.127 MB, src/stops/saturn plus 0.013 MB: net minus 0.042 MB.
+
+### 05:40 to 05:55 UTC: the rise's pictures on e3df591, parity on my tree, mails 538 and 540, the sky look
+
+- MAIL 538 (05:34, no answer needed): a 4K check of main's stops with the sky's star cure. Saturn on main:
+  coarse 3.226 at 3563 and block -22.068 at 3720; its travel level at 3923 is cured (-0.024 from -3.168).
+  "These are main's stops, not your trees. If your tree already cures yours, say so in the NAMED mail with
+  the number." Main gets 156ed6f9, fb501fc4, 797d3361 and 07148aa6 within the hour if the check is clean;
+  the new main sha comes by mail.
+- MAIL 540 (05:42): the engine's bend is handover_engineer's 3aa0a862 on agent/engine-handover, off by
+  default, on main about 06:45 if clean. I do not need it (my path is my own, handover.ownPath). The risk
+  for every stop that bends: after the bend render every frame from 10 before T to 4 after at the draft
+  tier, put the sheet in the looks and say in the NAMED mail what is in them (the set's border, the far edge
+  of the ground, a jump at T). The same at the dive's end for a stop that changes its landing (mine did
+  not). Judged frames keep their camera to the byte.
+- handover_engineer (05:42 and 05:47): main's rise dents to 0.54, the cure is the bend in my path; 3720 must
+  not change; a warning from Mars: once the eye no longer stops, the whole early rise is further along at
+  every frame, so look at the last close frames before the change of view and at the two sides at T. On my
+  tree T is 3852 (main: 3860).
+- THE T SHEET (looks: "the rise with the bend, draft, every frame 3842 to 3856"): no border of a set, no far
+  edge of the plane, no jump at 3852. Frame to frame mean difference 11.70, 11.75, 11.78, 11.79 across T.
+- THE EYE LINE on my tree (out/scratch/eye.ts, the judge's rule with the height over the ring plane, rate 2,
+  16 film frames either side): rise own 0.02368, lowest 1.000 at 3794; dive lowest 1.000 at 3639 + 1/2.
+- SMOOTH PICTURES RISE on e3df591 (198 draft frames; /tmp/v/r34/smooth_pic_rise.md and the two pictures):
+  "smooth saturn: red, 2 over the limit or not measured."
+  "rise: pop score 1.63 from frame 3895 + 1/2 to the next, limit 1.2 (12 frames over it, first 3874)"
+  "rise: the pattern of the picture changes in place by 0.55 from frame 3859 to 8 film frames later, limit
+  0.45 (6 frames over it, first 3808)"
+  Largest level step 0.09 at 3865 + 1/2 (limit 1.3). Largest change in place 26.3 from 3868 + 1/2 at pixel
+  1196, 728 (shown, not judged). Ground beside: change 10.5, pattern 0.16.
+  Pops over 1.2: 3874 1.21 and 3875 1.22 (the engine's sky dip, sky_builder's fb501fc is its cure), then
+  3891 1.27, 3891 + 1/2 1.38, 3892 1.40, 3892 + 1/2 1.27, 3893 1.21, 3894 1.34, 3894 + 1/2 1.38, 3895 1.40,
+  3895 + 1/2 1.63, 3896 1.59: all in saturn.travel after my rise.
+  Pattern over 0.45, six frames: 3808 0.48 (largest at pixel 1916, 664: the far ring's lit piece coming in
+  at the right frame edge; one pair, the neighbours are 0.21 and 0.14); 3858, 3858 + 1/2, 3859, 3859 + 1/2
+  0.50 to 0.55 (largest at pixels 1240 to 1316, 1056 to 1076) and 3863 0.451 (1224, 1020). Looked at in a
+  crop at twice the size (looks: "rise 3859 to 3867 every second frame, crop at the globe's lower right"):
+  the place is the thin inner ring (C ring) right of the globe's lower limb, inside the globe's shadow. The
+  ring itself is dark there, so the detail in that place is the film's star field and its bright band seen
+  through the ring, and it slides against the ring as the eye rises: two true layers, one seen through the
+  other. The judge carries the ring's place back along the flow and finds another piece of sky behind it.
+  Nothing is replaced in place there by a blend. Named in the mail, not cured: a cure would be to hide the
+  sky behind a ring that lets light through, which is false.
+- PARITY on e3df591 (/tmp/v/r34/smooth_parity.md): "smooth saturn: red, 1 over the limit or not measured."
+  "parity: level difference of the whole frame -3.168 at frame 3923 (saturn.travel), limit 2.2 (2 frames
+  over it)". Rows (mean, level, coarse, block): 3465 1.690, -0.632, 0.732, -3.883; 3563 2.097, -1.120, 1.196,
+  -4.718; 3585 2.220, -1.178, 1.386, -8.081; 3608 2.179, -0.866, 0.996, -5.626; 3720 2.651, -1.100, 1.176,
+  -6.282; 3829 2.473, -1.062, 1.153, -7.101; 3848 3.161, -2.026, 2.096, -9.624; 3866 4.129, -3.000, 3.060,
+  -10.025 (block 13,7); 3923 3.841, -3.168, 3.171, -11.687. So my tree cures main's two (3563 coarse 1.196
+  against 3.226, 3720 block -6.282 against -22.068). The second frame over the limit is 3866, in my rise:
+  level -3.000 (it was -1.685 on 23cb30e). Its worst block is the lower right, the open sky with the bright
+  band; with the bend the rise is further along at 3866, so more of the frame is the engine's open sky,
+  whose stars are dimmer at 4K (the same cause as 3923, which sky_builder's star cure brings to -0.024).
+  To be measured again on the merge with main once fb501fc is on it.
+- THE SKY LOOK (sky_builder's fb501fc, not on main yet): nameSkyLook(id, { look, band, map, stars, even,
+  cap }, weight), read and forgotten every picture. The star gain is 1 + (stars - 1) * weight; even takes
+  the crowding of the stars into the bright band out by the weight; cap is a ceiling on a star's level, mixed
+  in by the weight. With weight = plan.lowAt(height) and the look as sky_builder gave it (look 0, even 1,
+  stars 8, cap 0.5) the level of a faint star, gain times the air's share of the exposure (skyGain, 0.17 at
+  the skim), would be 1 at the heights of the hold, 2.6 half way and 1.36 at the skim: a swell on the way
+  down and on the way up. Prepared in the scratch tree rt (repo at e3df591 with fb501fc's three engine
+  files laid over it): plan.starsAt(low) names the gain that lets that level run straight in low from 1 to
+  stars * near, and set.ts names { ...sky.look, stars: plan.starsAt(low) } with the weight low. Not rendered
+  yet. Decision at about 06:30 by a trial at draft (3720's sky box against the approved image: mean 7.7,
+  10.8, 15.4, p99 29.3, share over 40 0.0049; the dive from 3596 and the rise to 3840 for a swell; parity).
+  If it is not clean by then, the NAMED commit goes without it and it is the first thing after.
