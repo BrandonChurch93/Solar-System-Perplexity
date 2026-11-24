@@ -30,7 +30,8 @@
    8,
    11
   ],
-  "blurPx": 4
+  "blurPx": 4,
+  "borderPx": 64
  },
  "sets": {
   "dive": {
@@ -157,7 +158,96 @@
   "fadeDeg": [
    12.3,
    12.95
-  ]
+  ],
+  "baseLinear": 1.0,
+  "matchDeg": [
+   0.01,
+   0.02,
+   0.04,
+   0.08,
+   0.16,
+   0.32
+  ],
+  "matchWindowDeg": 0.4,
+  "matchGain": [
+   0.7,
+   2.2
+  ],
+  "matchFadeDeg": 3.0,
+  "spill": {
+   "fadeDeg": [
+    0.3,
+    0.9
+   ],
+   "elong": [
+    5.5,
+    8.0
+   ],
+   "normalDeg": 0.02,
+   "ownDeg": [
+    0.3,
+    0.5
+   ],
+   "shiftDeg": 1.0,
+   "sideSoftDeg": 10,
+   "sideBinSoft": 3,
+   "sideShare": 0.02,
+   "shellPx": 3,
+   "gamma": 2.4,
+   "floor": 0.02,
+   "hold": 4,
+   "coarsestPx": 8,
+   "stepPx": 1.5,
+   "nearPx": [
+    1,
+    3
+   ],
+   "cap": 0.08,
+   "reachDeg": [
+    0.1,
+    0.4
+   ],
+   "frame": {
+    "vfovDeg": 60,
+    "size": [
+     1920,
+     1080
+    ]
+   },
+   "keepPx": {
+    "dive": [
+     12,
+     12,
+     9,
+     141
+    ],
+    "rise": [
+     64,
+     64,
+     60,
+     141
+    ]
+   },
+   "seam": {
+    "step": 1,
+    "scale": 1000,
+    "length": 2,
+    "softPx": 1.5,
+    "roomDeg": 0.3
+   },
+   "farElong": [
+    3.5,
+    8.0
+   ],
+   "join": {
+    "elong": [
+     3.0,
+     4.5
+    ],
+    "deg": 0.4,
+    "softDeg": 0.2
+   }
+  }
  },
  "craters": {
   "seed": 11,
@@ -217,5 +307,29 @@
     0.15
    ]
   ]
+ },
+ "matte": {
+  "window": [
+   1920,
+   1080
+  ],
+  "frame": {
+   "dive": 742,
+   "rise": 992
+  },
+  "solid": 0.98,
+  "reachPx": 24,
+  "picture": {
+   "dive": [
+    3872,
+    2440
+   ],
+   "rise": [
+    4072,
+    2538
+   ]
+  },
+  "columns": 720,
+  "out": "src/stops/mercury/matte.json"
  }
 }

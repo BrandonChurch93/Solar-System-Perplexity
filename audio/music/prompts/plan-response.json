@@ -1,0 +1,144 @@
+{
+ "chunks": [
+  {
+   "text": "[Opening Over the Sun]",
+   "duration_ms": 20000,
+   "positive_styles": [
+    "60 BPM",
+    "slow cinematic orchestral intro",
+    "bare low strings and soft contrabassoon",
+    "distant French horn atmosphere",
+    "D minor tonality",
+    "very quiet dynamic opening",
+    "wide concert hall reverb",
+    "long restrained phrases",
+    "immense gravitational calm",
+    "instrumental only"
+   ],
+   "negative_styles": [],
+   "context_adherence": "high",
+   "conditioning_ref": null,
+   "condition_strength": null
+  },
+  {
+   "text": "[Mercury Arrival]",
+   "duration_ms": 15000,
+   "positive_styles": [
+    "60 BPM",
+    "light orchestral lift",
+    "short string figures",
+    "plucked harp accents",
+    "ticking percussion detail",
+    "D minor tonality",
+    "slightly brighter orchestration",
+    "still intimate and hushed",
+    "quick planetary reveal",
+    "instrumental only"
+   ],
+   "negative_styles": [],
+   "context_adherence": "high",
+   "conditioning_ref": null,
+   "condition_strength": null
+  },
+  {
+   "text": "[Venus Veil]",
+   "duration_ms": 15000,
+   "positive_styles": [
+    "60 BPM",
+    "smoky orchestral texture",
+    "low brass swells",
+    "muted tremolo strings",
+    "soft cymbal shimmer",
+    "D minor tonality",
+    "dense but restrained harmony",
+    "camera-close atmospheric passage",
+    "subtle rise into the next planet",
+    "instrumental only"
+   ],
+   "negative_styles": [],
+   "context_adherence": "high",
+   "conditioning_ref": null,
+   "condition_strength": null
+  },
+  {
+   "text": "[Earth and Mars]",
+   "duration_ms": 30000,
+   "positive_styles": [
+    "60 BPM",
+    "mid-register string melody",
+    "gentle French horn countermelody",
+    "warm woodwind color",
+    "grounded orchestral pulse",
+    "D minor tonality",
+    "hushed surface-level bed between swells",
+    "slightly broader emotional contour",
+    "clear planetary arrival lift",
+    "instrumental only"
+   ],
+   "negative_styles": [],
+   "context_adherence": "high",
+   "conditioning_ref": null,
+   "condition_strength": null
+  },
+  {
+   "text": "[Jupiter and Saturn]",
+   "duration_ms": 35000,
+   "positive_styles": [
+    "60 BPM",
+    "fuller orchestral expansion",
+    "broad low brass",
+    "richer string layers",
+    "timpani foundation",
+    "D minor tonality",
+    "majestic planetary scale",
+    "slow rotational momentum",
+    "largest dynamic rise so far",
+    "instrumental only"
+   ],
+   "negative_styles": [],
+   "context_adherence": "high",
+   "conditioning_ref": null,
+   "condition_strength": null
+  },
+  {
+   "text": "[Uranus and Neptune]",
+   "duration_ms": 30000,
+   "positive_styles": [
+    "60 BPM",
+    "cooler orchestral color palette",
+    "high string shimmer",
+    "deep bass support",
+    "sustained horn chords",
+    "D minor tonality",
+    "quiet bed over distant surfaces",
+    "expansive outer-system perspective",
+    "pre-climax tension and lift",
+    "instrumental only"
+   ],
+   "negative_styles": [],
+   "context_adherence": "high",
+   "conditioning_ref": null,
+   "condition_strength": null
+  },
+  {
+   "text": "[Final Pullback]",
+   "duration_ms": 35000,
+   "positive_styles": [
+    "60 BPM",
+    "largest orchestral swell",
+    "full string choir without voices",
+    "heroic brass bloom",
+    "towering timpani and cymbal rise",
+    "D major resolution",
+    "wide panoramic ending",
+    "slow thinning into one held note",
+    "final celestial release",
+    "instrumental only"
+   ],
+   "negative_styles": [],
+   "context_adherence": "high",
+   "conditioning_ref": null,
+   "condition_strength": null
+  }
+ ]
+}
