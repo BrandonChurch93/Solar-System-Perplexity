@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T23:40:14.092Z",
+ "pushed": "2026-11-24T23:47:32.378Z",
  "head": "38591789c340058ad8cc55ca9d84ae3550aa9336",
- "note": "dark inner zone at 3720 in the tree; d253 measured at 3567 and 3612: ring levels by the real pixel differ between 1920 and 3840, cure in work (frame factor on every width in pixels), then the whole proof",
+ "note": "d253: frame factor on every ring level and feather counted in pixels (13 places); 3612 size pair 2.47 to 1.63, cells over 12: 55 to 0; 1920 bytes equal; whole proof r56 runs on this tree",
  "looks": [
+  {
+   "time": "2026-11-24T23:47:31.191Z",
+   "file": "20261124234731191-note-e3567_sets.jpg",
+   "source": "../../../../tmp/v/t21/e3567_sets.png",
+   "kind": "note",
+   "label": "d253, 3567 crop x 640 to 1140, y 680 to 1080: full set, web set, difference times 4: one picture, the web set softer; no patch at another moment"
+  },
+  {
+   "time": "2026-11-24T23:47:30.181Z",
+   "file": "20261124234730181-note-e3567_c1.jpg",
+   "source": "../../../../tmp/v/t21/e3567_c1.png",
+   "kind": "note",
+   "label": "d253, 3567 crop x 300 to 800, y 250 to 650: 1920, 3840 halved, difference times 8: the same ringlets in the same places; the kept takes are sharper at 3840 and the gap by the globe is warmer at 1920 (the film's bloom)"
+  },
+  {
+   "time": "2026-11-24T23:47:29.206Z",
+   "file": "20261124234729206-note-e3612_all.jpg",
+   "source": "../../../../tmp/v/t21/e3612_all.png",
+   "kind": "note",
+   "label": "d253 after the cure, 3612 at 1920 and its difference to 3840 halved, times 8: mean 1.63 (was 2.47), cells over 12 of 20736: 0 (was 55); what is left is the ringlets' edges, the film's grain and a warm halo by the lit limb (the film's bloom, not mine)"
+  },
   {
    "time": "2026-11-24T23:40:13.482Z",
    "file": "20261124234013482-note-d3612_all.jpg",
@@ -39,27 +60,6 @@
    "kind": "note",
    "label": "report sheet of the dive on main 7026711 plus the tree of 22:32: green, pattern 0.33 at 3576",
    "stop": "saturn"
-  },
-  {
-   "time": "2026-11-24T22:58:50.158Z",
-   "file": "20261124225850158-note-r55_rise_changes.jpg",
-   "source": "../../../../tmp/v/t20/r55_rise_changes.png",
-   "kind": "note",
-   "label": "r55 rise, the report's changes sheet"
-  },
-  {
-   "time": "2026-11-24T22:58:49.175Z",
-   "file": "20261124225849175-note-rise_3808_3832.jpg",
-   "source": "../../../../tmp/v/t20/rise_3808_3832.png",
-   "kind": "note",
-   "label": "rise 3808, 3816, 3824, 3832, crop x 900 to 1860, y 640 to 1080: the dust inside the inner rim thins by the height of the lens (proof run r55, rise pattern 0.46 at 3816 + 1/2 against the limit 0.45, red by 0.01)"
-  },
-  {
-   "time": "2026-11-24T22:32:38.755Z",
-   "file": "20261124223238755-note-foot4.jpg",
-   "source": "../../../../tmp/v/t20/foot4.png",
-   "kind": "note",
-   "label": "the globe's foot at native size, 3828.5, 3832.5, 3836.5, 3840.5 (first cure): the dust band on the globe thins too fast in the climb"
   }
  ]
 }
