@@ -1,9 +1,33 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T02:58:46.083Z",
+ "pushed": "2026-11-24T03:23:53.335Z",
  "head": "77ccb4e224937362825f920e5bbf8477373b27c8",
- "note": "Pictures of the scratch proof a7b14ec18 (main f2375d2ee plus the pick of 57d663b99), not of the branch head: drafts 2980 and 2990 old sky file against new. Last picture: dry run for MAIL 448, nothing committed.",
+ "note": "03:28 UTC, tree 77ccb4e22 plus uncommitted work on MAIL 448 (the grain baked into the hold sky). Three work pictures of the glow input, good and bad. The READY for the beat cure alone went out 03:01.",
  "looks": [
+  {
+   "time": "2026-11-24T03:23:52.723Z",
+   "file": "20261124032352723-note-g448-change-low-stepless.jpg",
+   "source": "out/work/view/g448-change-low-stepless.png",
+   "kind": "note",
+   "label": "MAIL 448, work in progress, FIRST TRY (smoothing alone), bad: change of the web sky patch, low pass, 150 times around plus 0.7 of a level. The dark arc at the left and the dark blob at the top margin are the ring error of the picture before; being cured",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T03:23:52.165Z",
+   "file": "20261124032352165-note-g448-settled-minus-stepless-x200.jpg",
+   "source": "out/work/view/g448-settled-minus-stepless-x200.png",
+   "kind": "note",
+   "label": "MAIL 448, work in progress: right column minus middle column of the picture before, 200 times around grey: what smoothing alone gets wrong (up to 0.45 of a level, a ring)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T03:23:51.495Z",
+   "file": "20261124032351495-note-g448-tail-x100.jpg",
+   "source": "out/work/view/g448-tail-x100.png",
+   "kind": "note",
+   "label": "MAIL 448, work in progress, not committed: the glow of frame 2895 alone at 100 times, left limb. Left: the nograin render (8 bit steps). Middle: steps smoothed within half a level (plateaus stay). Right: the value inside each half level read from the film render of the same frame with the engine's own grain and dither taken out pixel by pixel (fits the film render in 98 to 100 percent of the pixels of the tail)",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-24T02:58:45.528Z",
    "file": "20261124025845528-note-dry-web-diff-x16-small.jpg",
@@ -46,48 +70,6 @@
    "segment": "jupiter.dive",
    "frame": 2997,
    "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "3cf61f9941bc58c9"
-  },
-  {
-   "time": "2026-11-24T02:49:24.746Z",
-   "file": "20261124024924746-frame-f02895.jpg",
-   "source": "out/work/jupiter/frames/cmnf/f02895.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2895, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "3cf61f9941bc58c9"
-  },
-  {
-   "time": "2026-11-24T02:48:07.151Z",
-   "file": "20261124024807151-frame-f03315.jpg",
-   "source": "out/work/jupiter/frames/cmn/f03315.png",
-   "kind": "frame",
-   "label": "jupiter.travel frame 3315, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.travel",
-   "frame": 3315,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "3cf61f9941bc58c9"
-  },
-  {
-   "time": "2026-11-24T02:45:46.506Z",
-   "file": "20261124024546506-frame-f02789.jpg",
-   "source": "out/work/jupiter/frames/cmn/f02789.png",
-   "kind": "frame",
-   "label": "mars.travel frame 2789, draft tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "frame": 2789,
-   "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
    "engine": "3cf61f9941bc58c9"
