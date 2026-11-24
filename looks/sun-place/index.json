@@ -1,9 +1,49 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T14:41:20.336Z",
- "head": "1154099e249a95910f3ec137c6b7886323e15c71",
- "note": "MAIL 683 work, trial e1 frame 60 draft: dark 0.209, body 0.630, pale 0.071, white 0.021; brightest 15 percent half width 5.4 px, 3416 shapes, fine detail 0.0557, mean 0.335; distance 0.044. Not right yet: plates with glassy streaks, penumbra trials e2 e3",
+ "pushed": "2026-11-24T15:01:13.440Z",
+ "head": "a5b15421d272cc21b4edfb8977a28a7ab5424436",
+ "note": "a5b15421 (MAIL 683 material, config only), frame 60 draft: dark 0.190, body 0.663, pale 0.062, white 0.022; brightest 15 percent half width 4.6 px, 4439 shapes, fine detail 0.0595, mean 0.334; distance 0.062. Proof chain runs since 15:01",
  "looks": [
+  {
+   "time": "2026-11-24T15:01:11.632Z",
+   "file": "20261124150111632-note-p1-ball.jpg",
+   "source": "../../../../tmp/p1-ball.jpg",
+   "kind": "note",
+   "label": "a5b15421 draft, 213 and 229 at half size (247 keeps c2292292, 270 equals the kept draft)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T15:01:10.399Z",
+   "file": "20261124150110399-note-p1-whole.jpg",
+   "source": "../../../../tmp/p1-whole.jpg",
+   "kind": "note",
+   "label": "a5b15421 draft, whole frames at half size: approved, 60, 0, 90",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T15:01:09.324Z",
+   "file": "20261124150109324-note-p1-spot.jpg",
+   "source": "../../../../tmp/p1-spot.jpg",
+   "kind": "note",
+   "label": "a5b15421, frame 60 draft, the spot at one to one, left approved, right mine: fewer, broader, curved fibres; the border to the cells is still seen",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T15:01:08.500Z",
+   "file": "20261124150108500-note-p1-zoom.jpg",
+   "source": "../../../../tmp/p1-zoom.jpg",
+   "kind": "note",
+   "label": "a5b15421, frame 60 draft at two to one (crop 700 760 480 270), left mine, right approved",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T15:01:07.189Z",
+   "file": "20261124150107189-note-p1-60.jpg",
+   "source": "../../../../tmp/p1-60.jpg",
+   "kind": "note",
+   "label": "a5b15421, frame 60 draft at one to one, left approved, right mine: cells touch, fibres from a dark middle to the rim, penumbra curves; still plates between crisp cracks, harder and finer than the approved",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T14:41:19.533Z",
    "file": "20261124144119533-note-e-spot.jpg",
@@ -26,49 +66,6 @@
    "source": "../../../../tmp/z1-rise-a.jpg",
    "kind": "note",
    "label": "head 1154099e: every frame 180 to 201 of the rise, draft (the chain was stopped at 202 for MAIL 683)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T14:10:14.200Z",
-   "file": "20261124141014200-compare-sun-rise-sides.jpg",
-   "source": "out/work/handover/sun-rise-sides.png",
-   "kind": "compare",
-   "label": "sun rise, both sides at T (frame 216) and their difference times 8",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "frame": 216,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T13:59:22.356Z",
-   "file": "20261124135922356-note-z1b-ball.jpg",
-   "source": "../../../../tmp/z1b-ball.jpg",
-   "kind": "note",
-   "label": "head 1154099e: the rise at 197, 205, 213, 221, 229, 237, draft",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T13:59:21.431Z",
-   "file": "20261124135921431-note-whole-pair-z1.jpg",
-   "source": "../../../../tmp/whole-pair-z1.jpg",
-   "kind": "note",
-   "label": "frame 60 whole at half size, the approved left, head 1154099e right, draft",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T13:59:20.361Z",
-   "file": "20261124135920361-note-pair-z1b.jpg",
-   "source": "../../../../tmp/pair-z1b.jpg",
-   "kind": "note",
-   "label": "frame 60 at one to one, the approved left, head 1154099e right, draft",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T13:59:19.298Z",
-   "file": "20261124135919298-note-zoom-pair-z1.jpg",
-   "source": "../../../../tmp/zoom-pair-z1.jpg",
-   "kind": "note",
-   "label": "frame 60 at three to one, the approved left, head 1154099e right: the cells touch along thin creases",
    "stop": "sun"
   }
  ]
