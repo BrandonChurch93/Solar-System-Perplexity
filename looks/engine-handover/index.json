@@ -1,9 +1,16 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T02:02:07.976Z",
- "head": "916737f6f58bd4e057d4f2954c4543e71d8fc46a",
- "note": "the carry of the surface view's motion (05e307e): Mars dive and rise seams at draft, both handover reports pass",
+ "pushed": "2026-11-24T02:18:42.968Z",
+ "head": "b46810f6714cfd4e2b9f318097db5c6180c2533b",
+ "note": "the carry is in; the start of the rise of Mars stepped through at full size; next the lift of the stars by height",
  "looks": [
+  {
+   "time": "2026-11-24T02:18:42.294Z",
+   "file": "20261124021842294-note-carry-rise-fore.jpg",
+   "source": "../view/carry-rise-fore.png",
+   "kind": "note",
+   "label": "Mars rise start with the carry, crops of the foreground 2669 to 2674 at full size, draft tier"
+  },
   {
    "time": "2026-11-24T01:55:44.597Z",
    "file": "20261124015544597-compare-carry-dive-dive-sides.jpg",
@@ -61,13 +68,6 @@
    "source": "../../../../tmp/law/sheet-4.png",
    "kind": "note",
    "label": "Mars rise on the new law (eye's direction on its own bell, lift in the height), draft, frames 2732 to 2747"
-  },
-  {
-   "time": "2026-11-24T01:13:39.804Z",
-   "file": "20261124011339804-note-sheet-3.jpg",
-   "source": "../../../../tmp/law/sheet-3.png",
-   "kind": "note",
-   "label": "Mars rise on the new law (eye's direction on its own bell, lift in the height), draft, frames 2716 to 2731"
   }
  ]
 }
