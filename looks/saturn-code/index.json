@@ -1,9 +1,44 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T09:45:50.147Z",
- "head": "cc9c47bb313114061aec16b74d328ea62785931a",
- "note": "second NAMED sent 09:45 UTC; next: the flight for G17 at 3720 and the 3807 red",
+ "pushed": "2026-11-24T10:02:51.054Z",
+ "head": "d07e2b453fc32afdab00ff3ec3b084e232ff452f",
+ "note": "new flight for G17 at 3720: the skim heads 28 degrees left of its view axis, same pose at the middle of the shutter; proofs running on d07e2b4",
  "looks": [
+  {
+   "time": "2026-11-24T10:02:45.774Z",
+   "file": "20261124100245774-note-g17_pair_lowleft.jpg",
+   "source": "../../../../tmp/v/r42/g17_pair_lowleft.png",
+   "kind": "note",
+   "label": "lower left of 3720 at full size: film as named, film on the new flight, approved"
+  },
+  {
+   "time": "2026-11-24T10:02:44.448Z",
+   "file": "20261124100244448-note-g17_d28.jpg",
+   "source": "../../../../tmp/v/r42/g17_d28.png",
+   "kind": "note",
+   "label": "final 3720 without grain on the new flight: G17 median 0.945 (was 0.683), limit 0.8"
+  },
+  {
+   "time": "2026-11-24T10:02:43.346Z",
+   "file": "20261124100243346-note-d28b_sheet_b.jpg",
+   "source": "../../../../tmp/v/r42/d28b_sheet_b.png",
+   "kind": "note",
+   "label": "new flight, every second draft frame 3728 to 3760"
+  },
+  {
+   "time": "2026-11-24T10:02:42.369Z",
+   "file": "20261124100242369-note-d28b_sheet_a.jpg",
+   "source": "../../../../tmp/v/r42/d28b_sheet_a.png",
+   "kind": "note",
+   "label": "new flight, consecutive draft frames 3716 to 3726 and 3728"
+  },
+  {
+   "time": "2026-11-24T10:02:41.248Z",
+   "file": "20261124100241248-note-d28_sheet.jpg",
+   "source": "../../../../tmp/v/r42/d28_sheet.png",
+   "kind": "note",
+   "label": "draft sheet of the new flight (skim heads 28 degrees left of the view axis): 3567 to 3866"
+  },
   {
    "time": "2026-11-24T09:45:40.791Z",
    "file": "20261124094540791-note-saturn-dive-pops.jpg",
@@ -26,43 +61,6 @@
    "source": "../../../../tmp/v/r41/shade_3538_3556.png",
    "kind": "note",
    "label": "item 15: the ring's shade between hold and dive, every second frame 3538 to 3556"
-  },
-  {
-   "time": "2026-11-24T09:39:10.160Z",
-   "file": "20261124093910160-note-patmap_3807h.jpg",
-   "source": "../../../../tmp/v/r41/patmap_3807h.png",
-   "kind": "note",
-   "label": "rise 3807 + 1/2: the patch of the judge's pattern red (0.55) at the right frame edge, both frames as compared"
-  },
-  {
-   "time": "2026-11-24T09:27:36.114Z",
-   "file": "20261124092736114-note-saturn-rise-changes.jpg",
-   "source": "../../../../tmp/v/r41/saturn-rise-changes.png",
-   "kind": "note",
-   "label": "second commit 1e4bfd4, the judge's own rise changes: pattern 0.55 at 3807 + 1/2 at the right edge (new red), 3859 now 0.11",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-24T09:27:34.918Z",
-   "file": "20261124092734918-note-saturn-rise-pops.jpg",
-   "source": "../../../../tmp/v/r41/saturn-rise-pops.png",
-   "kind": "note",
-   "label": "second commit 1e4bfd4, the judge's own rise pops: 3892 to 3896 in the travel's take off, pop 1.59 at 3895 + 1/2",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-24T09:27:33.731Z",
-   "file": "20261124092733731-note-rise3807_edge.jpg",
-   "source": "../../../../tmp/v/r41/rise3807_edge.png",
-   "kind": "note",
-   "label": "second commit 1e4bfd4, rise: frames 3806, 3807, 3807 + 1/2, 3808, 3809, 3811, 3813, 3815 + 1/2 at the right edge (x 1560 to 1920, y 440 to 780, twice size): the lit far ring comes into the frame at 3807, where the judge reads pattern 0.55"
-  },
-  {
-   "time": "2026-11-24T09:10:15.844Z",
-   "file": "20261124091015844-note-3720_beside_approved_small.jpg",
-   "source": "../../../../tmp/v/r41/3720_beside_approved_small.png",
-   "kind": "note",
-   "label": "3720 final beside the approved close image (approved left, film right)"
   }
  ]
 }
