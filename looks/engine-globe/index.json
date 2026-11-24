@@ -1,9 +1,57 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-24T18:08:24.928Z",
- "head": "eb2975a63357c7d6b5c253f77fb205f28f158b13",
- "note": "MAIL 710: real pairs read as on main, with the cure, and from the nearer frame, with the map as a picture. The second row of a dive is main's reading unchanged (its title will say so)",
+ "pushed": "2026-11-24T18:22:39.392Z",
+ "head": "86c315611dc7e248d9a596256999572823660f0d",
+ "note": "MAIL 710 at 86c31561: the four real pairs of bar (6) with the two frames, the carried picture, the pattern and the map, and two crops of what stays red in Venus rise 1543",
  "looks": [
+  {
+   "time": "2026-11-24T18:22:38.718Z",
+   "file": "20261124182238718-note-six-ne4696.jpg",
+   "source": "../m710/six-ne4696.png",
+   "kind": "note",
+   "label": "Neptune dive 4696 at 86c31561: main 0.716 kept, on the nearer frame 0.450",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T18:22:38.089Z",
+   "file": "20261124182238089-note-six-me746.jpg",
+   "source": "../m710/six-me746.png",
+   "kind": "note",
+   "label": "Mercury dive 746 + 1/2 at 86c31561: main 1.019 kept, on the nearer frame 0.251",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T18:22:37.433Z",
+   "file": "20261124182237433-note-six-ve1543.jpg",
+   "source": "../m710/six-ve1543.png",
+   "kind": "note",
+   "label": "Venus rise 1543 at 86c31561: main 1.151, onward with the cure 0.593, on the later frame 0.764; last column the map",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T18:22:36.685Z",
+   "file": "20261124182236685-note-six-ju3261.jpg",
+   "source": "../m710/six-ju3261.png",
+   "kind": "note",
+   "label": "Jupiter rise 3261 + 1/2 at 86c31561: main 0.690, with the cure 0.272, band 11.1 px at its place; last column the map",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T18:22:36.142Z",
+   "file": "20261124182236142-note-crop-ve1543-back.jpg",
+   "source": "../m710/crop-ve1543-back.png",
+   "kind": "note",
+   "label": "Venus rise 1543 under the horizon, read on the later frame: later frame, first frame carried onto it from its full size, the pattern. Fine speckle in the later frame, smooth haze in the first",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T18:22:35.553Z",
+   "file": "20261124182235553-note-crop-ve1543-onward.jpg",
+   "source": "../m710/crop-ve1543-onward.png",
+   "kind": "note",
+   "label": "Venus rise 1543, lower left, quarter size enlarged 6 times: first frame, later frame carried as on main, carried with the cure, the pattern. Small bright clumps in the first, smooth streaks in the later one",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T18:08:23.803Z",
    "file": "20261124180823803-note-six-ve1282.jpg",
@@ -19,54 +67,6 @@
    "kind": "note",
    "label": "Mercury dive 746 + 1/2 as on main 1.019, the same with the cure, read on the nearer frame 0.251; last column the map",
    "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T18:08:22.064Z",
-   "file": "20261124180822064-note-six-ne4696.jpg",
-   "source": "../m710/six-ne4696.png",
-   "kind": "note",
-   "label": "Neptune dive 4696 as on main 0.716, the same with the cure, read on the nearer frame 0.450; last column the map",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T18:05:44.278Z",
-   "file": "20261124180544278-note-six-ju3261.jpg",
-   "source": "../m710/six-ju3261.png",
-   "kind": "note",
-   "label": "Jupiter rise 3261 + 1/2 read as on main 0.690, with the cure 0.272; last column the map",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T18:05:43.019Z",
-   "file": "20261124180543019-note-six-ve1543.jpg",
-   "source": "../m710/six-ve1543.png",
-   "kind": "note",
-   "label": "Venus rise 1543 read as on main, with the cure, and on the later frame; last column the map",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T17:54:40.489Z",
-   "file": "20261124175440489-note-six-ju3261.jpg",
-   "source": "../m710/six-ju3261.png",
-   "kind": "note",
-   "label": "MAIL 710, the cure that keeps the band, Jupiter rise 3261 + 1/2 on proof-ju3: as on main 0.69; later frame carried from its finer picture and the way set right by one more flow 0.27; a small red spot stays at the bottom edge",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T17:26:57.161Z",
-   "file": "20261124172657161-note-panel-ma2466-after.jpg",
-   "source": "../m697/panel-ma2466-after.png",
-   "kind": "note",
-   "label": "Mars dive 2466 change panel with the patch: 1.290 at 900, 872 (1.294 before), stays red",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T17:26:55.774Z",
-   "file": "20261124172655774-note-ma2466-five.jpg",
-   "source": "../m697/ma2466-five.png",
-   "kind": "note",
-   "label": "Mars dive on proof-mt3 1483daf1, film frames 2466 2468 2470 2472 2474, whole frame above and the lower left corner at full size below: globe ground gives way to the close set over the whole frame, straight edge of the close set in the lower corners",
-   "stop": "mars"
   }
  ]
 }
