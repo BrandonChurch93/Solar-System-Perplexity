@@ -1,6 +1,6 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T01:05:46.158Z",
+ "pushed": "2026-11-24T01:05:55.256Z",
  "head": "a998eca2f90811e1b60a7e3c589a2545e13d6ed7",
  "note": "MAIL 427: the hold's beat is in the sky patch (one texel per film pixel, bilinear taps), not in the clouds; cure in work",
  "looks": [
