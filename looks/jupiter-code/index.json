@@ -1,9 +1,25 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T13:21:59.277Z",
- "head": "5054d98ba26944b288d3eefe1c59512eaca96470",
- "note": "13:22 UTC: third state as it stands; finals 3296 and 2997 of it; the exposure tables tried on kept frames and not taken (the body's level sags and returns)",
+ "pushed": "2026-11-24T13:46:06.097Z",
+ "head": "1989c731cc114288c8cdfb8daf6b74260368d3c7",
+ "note": "13:46 UTC: main 2bc36ce6 merged by hand (depth 1 leaves no merge base); on the merge build 0, 485 tests pass, path and parity green, ten draft frames keep their bytes; finals 2895 and 3150 render now",
  "looks": [
+  {
+   "time": "2026-11-24T13:46:04.927Z",
+   "file": "20261124134604927-note-k006560.jpg",
+   "source": "out/work/jupiter/frames/M1/k006560.png",
+   "kind": "note",
+   "label": "On the merge: draft frame 3280 of the rise at rate 2; its sha256 is the one of the same frame before the merge (ten of ten frames keep their bytes)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T13:46:03.604Z",
+   "file": "20261124134603604-note-jupiter-parity.jpg",
+   "source": "out/work/logs/n4/jupiter-parity.png",
+   "kind": "note",
+   "label": "On the merge of main 2bc36ce6 (the engine take): the parity sheet, green, the same numbers as before the merge",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-24T13:21:58.690Z",
    "file": "20261124132158690-note-strip-ctl-b10.jpg",
@@ -202,22 +218,6 @@
    "source": "../work/named3/pat-F-rise-a.jpg",
    "kind": "note",
    "label": "a90e29f rise, my port of the pattern measure, rows 3281 + 1/2 to 3287 + 1/2 (0.47 to 0.54, 1.2 to 2.7 percent of the judged body over 0.45): the white cells sit at the limb, with one limb law by angle in every frame",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T12:18:39.614Z",
-   "file": "20261124121839614-note-F-rise-pops.jpg",
-   "source": "../work/named3/F-rise-pops.png",
-   "kind": "note",
-   "label": "a90e29f rise, the report's own picture: the four largest pops, 1.19 at 3278 against the limit 1.2 (what is left is the fine structure of the band above the storm)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T12:18:38.611Z",
-   "file": "20261124121838611-note-F-rise-changes.jpg",
-   "source": "../work/named3/F-rise-changes.png",
-   "kind": "note",
-   "label": "a90e29f rise, the report's own picture: the two largest changes of the pattern (0.76 at 3251 + 1/2 far field at the horizon, 0.66 at 3261 + 1/2) and the largest changes in place; red, 48 rows over 0.45",
    "stop": "jupiter"
   }
  ]
