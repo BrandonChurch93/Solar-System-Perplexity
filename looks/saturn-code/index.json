@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T16:11:40.980Z",
- "head": "f90f86a71a878e901ebbdcf8a0ac19237adafe4e",
- "note": "Saturn item 17: trial T7e of the ring grade by height at 3720 beside the approved close, with a simulated colour pivot; proofs of the trial are running; nothing new on the branch",
+ "pushed": "2026-11-24T16:32:30.192Z",
+ "head": "a34beaa7aa01d46e0831505446a0024625ec5e5b",
+ "note": "trial T7e proofs: G5 and G17 pass, handover parts pass, dive pictures green (level step 0.02, pop 1.04, pattern 0.29); rise pictures, G13, path and parity running; zone statistics for the next trial",
  "looks": [
+  {
+   "time": "2026-11-24T16:32:28.876Z",
+   "file": "20261124163228876-note-r50_dive_changes.jpg",
+   "source": "../../../../tmp/v/t17/r50_dive_changes.png",
+   "kind": "note",
+   "label": "dive of trial T7e (draft, rate 2): the largest changes in place and of the pattern; pattern 0.29 at 3601 (named commit 0.21, limit 0.45), the grade by height comes in from 3588 to 3620"
+  },
+  {
+   "time": "2026-11-24T16:32:27.696Z",
+   "file": "20261124163227696-note-matzones_masks.jpg",
+   "source": "../../../../tmp/v/t17/matzones_masks.png",
+   "kind": "note",
+   "label": "3720 final, trial T7e (right) beside the approved close (left): the zones the tone is measured in, A ring green, B ring red, each picture cut by its own division"
+  },
   {
    "time": "2026-11-24T16:11:34.794Z",
    "file": "20261124161134794-note-v_sim9_ll.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/v/t17/d8_sheet_rise.png",
    "kind": "note",
    "label": "item 17 trial T7e, rise at draft, every fourth frame 3808 to 3868"
-  },
-  {
-   "time": "2026-11-24T15:36:08.281Z",
-   "file": "20261124153608281-note-d8_sheet_dive.jpg",
-   "source": "../../../../tmp/v/t17/d8_sheet_dive.png",
-   "kind": "note",
-   "label": "item 17 trial T7e, dive at draft, every fifth frame 3560 to 3630"
-  },
-  {
-   "time": "2026-11-24T15:36:07.222Z",
-   "file": "20261124153607222-note-t7e_left.jpg",
-   "source": "../../../../tmp/v/t17/t7e_left.png",
-   "kind": "note",
-   "label": "item 17 trial T7e, frame 3720 final, left half beside the approved close"
   }
  ]
 }
