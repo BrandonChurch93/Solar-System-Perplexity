@@ -1,9 +1,50 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-24T00:07:10.352Z",
+ "pushed": "2026-11-24T00:22:31.751Z",
  "head": "1d5f6b61d07cf99d1981b7022af3eb7a2ddf883c",
- "note": "step 2 (not committed yet) on 1d5f6b61, main 1f0ff294: every dive frame 4110 to 4199 looked at, picture off, no step seen at 4186; rise renders now",
+ "note": "step 2 rise sheets, picture off, on 1d5f6b61 (main 1f0ff294); report and G13 still running",
  "looks": [
+  {
+   "time": "2026-11-24T00:22:30.791Z",
+   "file": "20261124002230791-note-s2r-4404.jpg",
+   "source": "../../../../tmp/s2r-4404.png",
+   "kind": "note",
+   "label": "step 2 worktree on 1d5f6b61 (main 1f0ff294), picture off: rise 4404 to 4415, every frame; the white tops of the globe arrive 4404 to 4408 (step 4 cures)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T00:22:29.522Z",
+   "file": "20261124002229522-note-s2r-4392.jpg",
+   "source": "../../../../tmp/s2r-4392.png",
+   "kind": "note",
+   "label": "step 2 worktree on 1d5f6b61 (main 1f0ff294), picture off: rise 4392 to 4403, every frame; the deck leaves by height 4400 to 4403",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T00:12:36.639Z",
+   "file": "20261124001236639-compare-uranus-dive-sides.jpg",
+   "source": "out/work/handover/uranus-dive-sides.png",
+   "kind": "compare",
+   "label": "uranus dive, both sides at T (frame 4186) and their difference times 8",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4186,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T00:11:08.884Z",
+   "file": "20261124001108884-frame-f04446.jpg",
+   "source": "out/work/seq/4380-4454/f04446.png",
+   "kind": "frame",
+   "label": "uranus.rise frame 4446, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4446,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "94288983d3b2cf97"
+  },
   {
    "time": "2026-11-24T00:07:09.011Z",
    "file": "20261124000709011-note-s2d-4182.jpg",
@@ -34,50 +75,6 @@
    "source": "../../../../tmp/s2d-4134.png",
    "kind": "note",
    "label": "step 2 worktree on 1d5f6b61, main 1f0ff294: dive frames from 4134, 12 in a row, picture off, cover drawn on the globe by height",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T00:06:17.596Z",
-   "file": "20261124000617596-frame-f04399.jpg",
-   "source": "out/work/seq/4380-4454/f04399.png",
-   "kind": "frame",
-   "label": "uranus.rise frame 4399, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4399,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "94288983d3b2cf97"
-  },
-  {
-   "time": "2026-11-24T00:02:40.261Z",
-   "file": "20261124000240261-frame-f04196.jpg",
-   "source": "out/work/seq/4110-4199/f04196.png",
-   "kind": "frame",
-   "label": "uranus.dive frame 4196, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4196,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "94288983d3b2cf97"
-  },
-  {
-   "time": "2026-11-23T23:48:06.178Z",
-   "file": "20261123234806178-note-c2-rise-a.jpg",
-   "source": "../../../../tmp/c2-rise-a.png",
-   "kind": "note",
-   "label": "step 2 scratch, rise frames 4390, 4392, 4396, 4400, 4404, 4408 (row by row): the deck goes by height, the white tops of the globe still arrive between 4400 and 4408 (step 4 ends that)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T23:48:05.572Z",
-   "file": "20261123234805572-note-c2-T4390.jpg",
-   "source": "../../../../tmp/c2-T4390.png",
-   "kind": "note",
-   "label": "step 2 scratch (step 1 5b24c132 plus step 2, main 6965ded8) rise 4390, place picture off: globe side with the deck drawn on it, close side, difference times 8 about grey. Mean 0.003, p99 0, largest 4 (step 1: 2.55 and 18.7)",
    "stop": "uranus"
   }
  ]
