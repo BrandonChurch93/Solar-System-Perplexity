@@ -891,3 +891,5 @@ State when this came: agent/travel-pin = 32a0d67, 8319d7e (pinned earth, pinEase
 - Build of the light head: exit 0 (in the worktree /tmp/wt-light; its dist removed after).
 - DISK: the root disk is 25 GB and a worktree is 2.8 GB plus 1.3 GB for a dist. Two worktrees at once filled it (ENOSPC in the first light build). Keep one worktree at most, remove its dist after a build, remove old render folders (/tmp/far-try1 removed; /tmp/far-before and /tmp/far-try2 are the landing's before and after, 444 MB each).
 - Worktree /tmp/wt-light (agent/travel-light) stays until the light law is on main, then `git worktree remove --force /tmp/wt-light`.
+- 01:58 UTC: answer to MAIL 458 sent (light head 44dab6e2 on agent/travel-light, merge head 2fc7ced0 on agent/travel-polish, the rise's law meets no line of mine as text; the Uranus start 4458 to 4465 waits for "rise's law is on main"). Look pushed (landing sheet, looks branch db2620f3).
+- WAITING FOR: the Builder's proof of the light head; his word on the landing's hump (a `fall` number to render, or take as is); "rise's law is on main" for the Uranus start; belt_builder's far Sun for sun.travel's start.
