@@ -1,9 +1,25 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T06:34:50.280Z",
- "head": "5bb6ec10e2b6fb4dfdb8feadd9eb0284304ef332",
- "note": "5bb6ec10 pushed: T on 2477 and 2681, tests and gates green; aprons of the close set read in python against the engine at 2477",
+ "pushed": "2026-11-24T07:07:55.755Z",
+ "head": "b9c472dcb3c21b8ad6db203bd2872116352421e0",
+ "note": "b9c472dc pushed (main b0b87889 merged, proofs green). Cure of the cut at T in work: aprons of the close set into the country; first run had a fault in the finest levels, second run is building",
  "looks": [
+  {
+   "time": "2026-11-24T07:07:54.157Z",
+   "file": "20261124070754157-note-c2a.jpg",
+   "source": "out/work/place/see/c2a.jpg",
+   "kind": "note",
+   "label": "country heights with the aprons, from above, 8.5, 3.8, 1.6 degrees",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T07:07:52.794Z",
+   "file": "20261124070752794-note-A1.jpg",
+   "source": "out/work/place/see/A1.jpg",
+   "kind": "note",
+   "label": "first run of the country with the aprons (levels 1.6 to 0.3 faulty, found and cured): 2476 globe before, 2476 and 2474 globe with aprons, 2477 close",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T06:34:49.724Z",
    "file": "20261124063449724-note-ap2477.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/place/see/crop2477.jpg",
    "kind": "note",
    "label": "dive T 2477, globe side above the close side: the globe has made ground where the close view shows its margins and aprons",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T06:22:22.650Z",
-   "file": "20261124062222650-note-sides-v3.jpg",
-   "source": "out/work/place/see/sides-v3.jpg",
-   "kind": "note",
-   "label": "both sides at T with the same camera, dive 2477 and rise 2681: close left, globe right",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T06:22:21.791Z",
-   "file": "20261124062221791-note-T-rise-2.jpg",
-   "source": "out/work/place/see/T-rise-2.jpg",
-   "kind": "note",
-   "label": "rise 2680, 2681 (T, close), 2682 to 2685 (globe): the change of view is a cut; no border of the close set in 2681",
    "stop": "mars"
   }
  ]
