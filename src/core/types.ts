@@ -22,6 +22,10 @@ export interface SunState { dir: THREE.Vector3; color: THREE.Color; intensity: n
 
 export type ViewKind = 'orbit' | 'terrain'
 
+// A body a stop names to the motion measure: a moon that passes close to the camera. centre is its centre in the frame of the stop's globe (the
+// set's origin and rotation, without the turn of the surface), radius the radius of the sphere that holds it, in radii of the stop's body.
+export interface NearBody { centre: THREE.Vector3; radius: number }
+
 export interface SetState {
   id: string
   origin: THREE.Vector3
@@ -39,6 +43,9 @@ export interface SetState {
   // The turn of the body's surface at this time, in the set's own frame. Given on the globe side of a dive and a rise of a stop that opted in,
   // where the camera follows the turning place: raw motion then tracks points that turn with the body.
   turn?: THREE.Quaternion
+  // The near bodies the stop names at this time (StopPlan.nearBodies), on the globe side only and only where it names any: the sample count of a
+  // frame follows the fastest of them that is in the frame (core/motion nearMotion). Nothing else reads them.
+  near?: NearBody[]
 }
 
 export interface CoverHorizon { normal: [number, number]; offset: number; soft: number }
