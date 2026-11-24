@@ -276,6 +276,9 @@ void main() {
 //   are let go there by the height of the camera (uLet.x, set.ts: 1 above the heights of release, none at T). Outside the frame of T
 //   nothing is let go, and the ground near the camera of T (uFrustum.zw) gives way to the plates over a wider margin (to uLet.z half
 //   frames outside, by its forms as well) or over the border of the outline, whichever leaves more of it.
+// - uKeep, the near ground: where the camera of T sees a point of the ground from above, at a sine of its elevation over uKeep.y, uTrue
+//   and uSkin take nothing out, at any height of the camera and on both sides of the frame of T; under uKeep.x they hold as told above.
+//   It is the ground that keeps its relief (uFlat), so its crests do not go out by height while the flat plate under it stands.
 // - uFrustum.zw, the far ground outside the frame of T: from above the far deck is drawn larger than it was stored, so uTrue would take it
 //   out and bring it back as the eye moves. Outside the frame of T it is left to the plates for good: the ground is whole where the camera
 //   of T sees a point from above at a sine of elevation over uFrustum.w and gone under uFrustum.z (its forms move the limit by uLet.y).
@@ -350,7 +353,8 @@ const TRUE_GLSL = /* glsl */ `
   float outT = (max(abs(frameT.x), abs(frameT.y)) - 1.0) * (1.0 + uLet.y * (1.0 - 2.0 * form));
   float inT = seenT.z < 0.0 ? 1.0 - smoothstep(uFrustum.x, uFrustum.y, outT) : 0.0;
   float aroundT = seenT.z < 0.0 ? 1.0 - smoothstep(uFrustum.x, uLet.z, outT) : 0.0;
-  float let = mix(1.0, uLet.x, inT);
+  float keeps = smoothstep(uKeep.x, uKeep.y, dot(-normalize(fromT), normalize(radial)));
+  float let = max(mix(1.0, uLet.x, inT) * (1.0 - keeps), 1e-6);
   float deck = smoothstep(uTrue.x * let, uTrue.y * let, closeScale(vModel, uEye + centre, face, uLens.y, projectionMatrix[1][1]));
   vec2 at = vImage * vec2(uSway.z, 1.0);
   float perHeight = 2.0 / max(abs(dFdy(vClip.y / vClip.z)), 1e-9);
@@ -391,7 +395,7 @@ const TONE_GLSL = /* glsl */ `
   }
 `
 const FRAG_GLOBE = ([
-  ['uniform float uGain;', 'uniform float uGain;\nuniform float uWeight;\nuniform vec2 uDepth;\nuniform vec2 uTrue;\nuniform vec2 uSkin;\nuniform vec2 uTall;\nuniform vec3 uOutline;\nuniform vec4 uMatte;\nuniform vec3 uEye;\nuniform vec3 uEyeT;\nuniform mat3 uAxesT;\nuniform vec2 uLensT;\nuniform vec4 uFrustum;\nuniform vec3 uLet;\nuniform vec4 uToneLook;\nuniform vec4 uToneLive;\nuniform vec4 uToneUnder;\nuniform sampler2D uBroad;\nuniform vec4 uBroadBox;\nuniform vec4 uRim;\nuniform mat4 projectionMatrix;' + CLOSE_GLSL],
+  ['uniform float uGain;', 'uniform float uGain;\nuniform float uWeight;\nuniform vec2 uDepth;\nuniform vec2 uTrue;\nuniform vec2 uSkin;\nuniform vec2 uTall;\nuniform vec3 uOutline;\nuniform vec4 uMatte;\nuniform vec3 uEye;\nuniform vec3 uEyeT;\nuniform mat3 uAxesT;\nuniform vec2 uLensT;\nuniform vec4 uFrustum;\nuniform vec3 uLet;\nuniform vec2 uKeep;\nuniform vec4 uToneLook;\nuniform vec4 uToneLive;\nuniform vec4 uToneUnder;\nuniform sampler2D uBroad;\nuniform vec4 uBroadBox;\nuniform vec4 uRim;\nuniform mat4 projectionMatrix;' + CLOSE_GLSL],
   ['in float vRim;', 'in float vRim;\nin vec3 vModel;\nin float vFlat;'],
   ['  float texels = diagTexels(uv * uSize);', TRUE_GLSL + '  float texels = diagTexels(uv * uSize);'],
   ['  vec3 col = inverseFilmic(texel.rgb) * uGain * vig;', '  vec3 col = inverseFilmic(texel.rgb) * uGain * vig;' + TONE_GLSL],
@@ -433,8 +437,8 @@ const GLOBE_DEPTH: [number, number] = [0.02, 4000]
 // by covers it. true, skin, tall, matte: where the ground is true from the eye and how its border gives way (uTrue, uSkin, uTall, uMatte above).
 // held: the share of true and skin that holds inside the frame of T at this height (uLet.x). atT: the axes of the camera of T in the close
 // scene and the tangent of half its field. frustum: the margin of that frame (uFrustum.xy) and the wider one of the near ground (uLet.z). near: the far limit outside it and the share of
-// the forms (uFrustum.zw, uLet.y). flat: where the ground lies flat on the deck (uFlat).
-export interface GroundShare { weight: number; under: number; band: [number, number]; true: [number, number]; skin: [number, number]; tall: [number, number]; held: number; atT: { axes: THREE.Matrix3; tan: number }; frustum: [number, number, number]; near: [number, number, number]; flat: [number, number, number, number]; matte: [number, number, number, number]; tone: { look: [number, number, number, number]; power: number; broad: number; most: number; contrast: number; under: [number, number, number]; colour: number } }
+// the forms (uFrustum.zw, uLet.y). flat: where the ground lies flat on the deck (uFlat). keep: the near ground that true and skin leave whole (uKeep).
+export interface GroundShare { weight: number; under: number; band: [number, number]; true: [number, number]; skin: [number, number]; tall: [number, number]; held: number; keep: [number, number]; atT: { axes: THREE.Matrix3; tan: number }; frustum: [number, number, number]; near: [number, number, number]; flat: [number, number, number, number]; matte: [number, number, number, number]; tone: { look: [number, number, number, number]; power: number; broad: number; most: number; contrast: number; under: [number, number, number]; colour: number } }
 
 const BLEND = {
   transparent: true,
@@ -640,6 +644,7 @@ export class CloudRelief {
       own.uFrustum = { value: new THREE.Vector4(0, 1, -2, -1) }
       own.uLet = { value: new THREE.Vector3(1, 0, 1) }
       own.uFlat = { value: new THREE.Vector4(-2, -1, -3, -4) }
+      own.uKeep = { value: new THREE.Vector2(2, 3) }
       own.uToneLook = { value: new THREE.Vector4(1, 1, 0, 1) }
       own.uToneLive = { value: new THREE.Vector4(1, 0, 1, 1) }
       own.uToneUnder = { value: new THREE.Vector4(1, 1, 1, 0) }
@@ -761,6 +766,7 @@ export class CloudRelief {
       ;(l.material.uniforms.uFrustum!.value as THREE.Vector4).set(share.frustum[0], share.frustum[1], share.near[0], share.near[1])
       ;(l.material.uniforms.uLet!.value as THREE.Vector3).set(share.held, share.near[2], share.frustum[2])
       ;(l.material.uniforms.uFlat!.value as THREE.Vector4).fromArray(share.flat)
+      ;(l.material.uniforms.uKeep!.value as THREE.Vector2).fromArray(share.keep)
       ;(l.material.uniforms.uToneLook!.value as THREE.Vector4).fromArray(share.tone.look)
       ;(l.material.uniforms.uToneLive!.value as THREE.Vector4).set(share.tone.power, Math.log2(Math.max(share.tone.broad * this.broadPx[n]!, 1)), share.tone.most, share.tone.contrast)
       ;(l.material.uniforms.uToneUnder!.value as THREE.Vector4).set(share.tone.under[0], share.tone.under[1], share.tone.under[2], share.tone.colour)

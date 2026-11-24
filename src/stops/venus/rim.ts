@@ -9,6 +9,8 @@ uniform sampler2D uLimb;
 uniform vec3 uLimbS;
 uniform vec3 uLimbT;
 uniform float uLimbFar;
+uniform float uLimbHeld;
+uniform vec3 uLimbEye;
 vec4 limbAt(vec3 at, float row) {
   float phi = atan(dot(at, uLimbT), dot(at, uLimbS));
   float u = ((phi / 6.2831853 + 0.5) * ${LIMB.azimuth}.0 + 0.5) / ${LIMB.azimuth + 1}.0;
@@ -21,6 +23,10 @@ vec4 limbGlow(vec3 at, float b) {
 }
 vec4 limbEdge(vec3 at) {
   return limbAt(at, ${LIMB.half}.0 - 0.5);
+}
+// The glow on the body alone: at b 1 and over it is the row of the limb itself, never a row of the glow beside the body.
+vec4 limbInside(vec3 at, float b) {
+  return limbAt(at, ${LIMB.half}.0 - 0.5 - sqrt(clamp((1.0 - b) / ${LIMB.inside.toFixed(3)}, 0.0, 1.0)) * ${LIMB.half - 1}.0);
 }`
 
 const R = holdJson.rim
@@ -104,10 +110,25 @@ void main() {
   float b = length(p);
   vec3 at = p / b;
   b = max(b, 1.0);
-  vec3 glow = max(limbGlow(at, b).rgb, 0.0);
+  vec3 gat = at;
+  float keep = 1.0;
+  // In a dive and a rise the glow lies on the ground where the far end of the move sees it (set.ts): beside the body it has the share
+  // of its light that the ground at the limb holds, and it is read where that ground lies for the eye of the far end.
+  for (int fix = 0; fix < (uLimbHeld > 0.5 ? 1 : 0); fix++) {
+    float cd = length(uCam);
+    vec3 c = uCam / cd;
+    vec3 tp = c / cd + normalize(at - c * dot(at, c)) * sqrt(max(1.0 - 1.0 / (cd * cd), 0.0));
+    vec3 hd = normalize(tp - uLimbEye);
+    float hc = dot(tp, hd);
+    float gb = hc > 0.0 ? 1.0 : sqrt(max(1.0 - hc * hc, 0.0));
+    gat = normalize(tp - hd * hc);
+    vec3 here = gb > ${(1 - LIMB.inside).toFixed(3)} ? max(limbInside(gat, gb).rgb, 0.0) : vec3(0.0);
+    keep = clamp(dot(here, vec3(0.2126, 0.7152, 0.0722)) / max(dot(max(limbEdge(gat).rgb, 0.0), vec3(0.2126, 0.7152, 0.0722)), 1e-6), 0.0, 1.0);
+  }
+  vec3 glow = max(limbGlow(gat, b).rgb, 0.0) * keep;
   float t = clamp((b - 1.0) / uEdge, 0.0, 1.0);
   for (int k = 0; k < (t < 1.0 ? 1 : 0); k++) {
-    vec3 m = mix(shown(max(limbEdge(at).rgb, 0.0)), shown(glow), t * t * (3.0 - 2.0 * t));
+    vec3 m = mix(shown(max(limbEdge(gat).rgb, 0.0) * keep), shown(glow), t * t * (3.0 - 2.0 * t));
     glow = inverseFilmic(m * m);
   }
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
@@ -140,7 +161,7 @@ export class Rim {
       fragmentShader: FRAG,
       uniforms: {
         uCam: { value: new THREE.Vector3(0, 0, 3) }, uLimb: { value: lut }, uLimbS: { value: new THREE.Vector3(1, 0, 0) }, uLimbT: { value: new THREE.Vector3(0, 1, 0) },
-        uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uEdge: { value: 0.003 }, uLimbFar: { value: 0 }, uHide: { value: new THREE.Vector3().fromArray(hide) }, uDiag: diag,
+        uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uEdge: { value: 0.003 }, uLimbFar: { value: 0 }, uLimbHeld: { value: 0 }, uLimbEye: { value: new THREE.Vector3(0, 0, 3) }, uHide: { value: new THREE.Vector3().fromArray(hide) }, uDiag: diag,
         ...hold.uniforms,
       },
       side: THREE.BackSide,
@@ -157,7 +178,7 @@ export class Rim {
     this.mesh.renderOrder = 6
   }
 
-  update(camera: THREE.Vector3, s: THREE.Vector3, t: THREE.Vector3, gain: number, vignette: number, aspect: number, edge: number, far: number): void {
+  update(camera: THREE.Vector3, s: THREE.Vector3, t: THREE.Vector3, gain: number, vignette: number, aspect: number, edge: number, far: number, held: THREE.Vector3 | null): void {
     const u = this.material.uniforms
     ;(u.uCam!.value as THREE.Vector3).copy(camera)
     ;(u.uLimbS!.value as THREE.Vector3).copy(s)
@@ -167,6 +188,8 @@ export class Rim {
     u.uAspect!.value = aspect
     u.uEdge!.value = edge
     u.uLimbFar!.value = far
+    u.uLimbHeld!.value = held ? 1 : 0
+    if (held) (u.uLimbEye!.value as THREE.Vector3).copy(held)
   }
 
   dispose(): void {

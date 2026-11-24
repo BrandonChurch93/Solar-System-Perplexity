@@ -183,6 +183,19 @@ export const createSet: SetFactory = async (ctx) => {
   const tintLow = new THREE.Vector3().fromArray(look.descent.tint)
   const light = new THREE.Vector3()
   const limbS = new THREE.Vector3()
+  const limbEye = new THREE.Vector3()
+  const limbTurn = new THREE.Quaternion()
+  // The glow of the limb in a dive and a rise: the eye of the far end of the move (the first frame of the dive, the end of the rise) in
+  // the frame of the ground, with the frame of its limb. The glow is read for that eye, so it lies on the ground and moves with it.
+  const limbHeld = (['dive', 'rise'] as const).map((move) => {
+    const at = move === 'dive' ? plan.seg.dive!.start : plan.seg.rise.end
+    const back = plan.turn(at).invert()
+    const eye = plan.eyeShot(move, at, 'orbit').pose.position.clone().applyQuaternion(back)
+    const s = new THREE.Vector3()
+    const t = new THREE.Vector3()
+    limbFrame(eye, plan.lightDir.clone().applyQuaternion(back), s, t)
+    return { eye, s, t }
+  })
   const limbT = new THREE.Vector3()
   const camera = new THREE.Vector3()
   const amps: number[] = look.cells.map(() => 0)
@@ -272,8 +285,10 @@ export const createSet: SetFactory = async (ctx) => {
       const groundTone = { look: [place.tone.air, toneShare, place.tone.cos[0], place.tone.cos[1]] as [number, number, number, number], power: place.tone.power, broad: place.ground.tone.broad, most: place.tone.live.most, contrast: place.tone.live.contrast, colour: place.tone.live.colour, under: underAt.map((v, i) => v * Math.pow(place.dusk.gain * place.dusk.tint[i]!, groundPl.dusk - 1)) as [number, number, number] }
       // Inside the frame of T true and skin hold in full above the heights of ground.release and are let go at T, where the globe side is
       // the surface view. The border of the ground and its far limit outside that frame stand still (plates.json, ground.frustum).
+      // The near ground, which the camera of T sees from above (ground.keep), keeps all of its picture at every height, so no crest of
+      // it goes out by height while the flat plate stands.
       const held = Math.max(1 - below((camera.length() - 1) / heightT, place.ground.release), 1e-6)
-      const share = { weight: covering ? below(camera.length() - 1, place.ground.heights) * state.weight : 0, under: covering ? below(camera.length() - 1, place.ground.bandHeights) * state.weight : 0, band: place.ground.band, true: place.ground.true as [number, number], skin: place.ground.skin as [number, number], tall: place.ground.tall, held, atT: camAtT(state.time > terrainMid ? 'rise' : 'dive'), frustum: [place.ground.frustum.margin[0]!, place.ground.frustum.margin[1]!, place.ground.frustum.wide] as [number, number, number], near: [place.ground.frustum.near[0]!, place.ground.frustum.near[1]!, place.ground.frustum.forms] as [number, number, number], flat: [place.ground.flat.sinElevation[0]!, place.ground.flat.sinElevation[1]!, place.ground.flat.horizon[1]!, place.ground.flat.horizon[0]!] as [number, number, number, number], matte: [place.ground.matte.width, place.ground.matte.forms, place.ground.matte.level, place.ground.matte.scale] as [number, number, number, number], tone: groundTone }
+      const share = { weight: covering ? below(camera.length() - 1, place.ground.heights) * state.weight : 0, under: covering ? below(camera.length() - 1, place.ground.bandHeights) * state.weight : 0, band: place.ground.band, true: place.ground.true as [number, number], skin: place.ground.skin as [number, number], tall: place.ground.tall, held, keep: place.ground.keep, atT: camAtT(state.time > terrainMid ? 'rise' : 'dive'), frustum: [place.ground.frustum.margin[0]!, place.ground.frustum.margin[1]!, place.ground.frustum.wide] as [number, number, number], near: [place.ground.frustum.near[0]!, place.ground.frustum.near[1]!, place.ground.frustum.forms] as [number, number, number], flat: [place.ground.flat.sinElevation[0]!, place.ground.flat.sinElevation[1]!, place.ground.flat.horizon[1]!, place.ground.flat.horizon[0]!] as [number, number, number, number], matte: [place.ground.matte.width, place.ground.matte.forms, place.ground.matte.level, place.ground.matte.scale] as [number, number, number, number], tone: groundTone }
       ground.updateGround(share, state.time - terrainMid, airEye, eyeAtT(state.time > terrainMid ? 'rise' : 'dive'), airTurn, deck.centre, gain, shot.post.vignette, view, shot.sun.dir, own)
       const vignette = shot.post.vignette * (1 - low * (1 - airOn))
       hazeTurn.copy(state.rotation).multiply(airTurn)
@@ -317,13 +332,20 @@ export const createSet: SetFactory = async (ctx) => {
         veil.update(view.camera, view.format.width, view.format.height, centre, eye, Math.min(Math.abs(Math.log(after / high)) / timing.rush, 1), Math.asin(1 / (1 + low)) / Math.asin(1 / (1 + high)), localQ, thick, released, sw, sunCam, air, airFwd, airRight, gain, gain * look.relief.air.gain * (1 + look.veil.sunLift * air), vignette, 0)
       } else veil.hide()
       const aspect = view.format.width / view.format.height
-      limbFrame(camera, light, limbS, limbT)
+      const heldLimb = covering ? limbHeld[kind === 'dive' ? 0 : 1]! : null
+      if (heldLimb) {
+        limbTurn.copy(state.rotation).multiply(plan.turn(state.time))
+        limbEye.copy(heldLimb.eye).applyQuaternion(limbTurn)
+        limbS.copy(heldLimb.s).applyQuaternion(limbTurn)
+        limbT.copy(heldLimb.t).applyQuaternion(limbTurn)
+      } else limbFrame(camera, light, limbS, limbT)
       gu.uVignette!.value = vignette
       gu.uAspect!.value = aspect
-      const lh = place.dusk.limbHeights
-      const limbK = look.limb.gain * (1 - low) * (covering ? smooth((Math.log(Math.max(camera.length() - 1, 1e-4)) - Math.log(lh[0])) / (Math.log(lh[1]) - Math.log(lh[0]))) : 1)
+      const limbK = look.limb.gain * (heldLimb ? 1 : 1 - low)
       gu.uLimbK!.value = limbK
       gu.uLimbFar!.value = left
+      gu.uLimbHeld!.value = heldLimb ? 1 : 0
+      if (heldLimb) (gu.uLimbEye!.value as THREE.Vector3).copy(limbEye)
       ;(gu.uLimbS!.value as THREE.Vector3).copy(limbS)
       ;(gu.uLimbT!.value as THREE.Vector3).copy(limbT)
       globe.update(camera, light, state.rotation, plan.spin(state.time), THREE.MathUtils.degToRad(look.drift.bandDegPerSecond) * elapsed, THREE.MathUtils.degToRad(look.drift.flowDegPerSecond) * flowing, amps, gain, state.weight)
@@ -350,7 +372,7 @@ export const createSet: SetFactory = async (ctx) => {
       globe.motion(taps, smear, camera, shot.camera.quaternion, shift, turn, zoom, view.camera.view?.offsetX ?? 0, view.camera.view?.offsetY ?? 0)
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
-      rim.update(camera, limbS, limbT, gain * state.weight * limbK, vignette, aspect, Math.min(LIMB.edgePx / radiusPx, 0.02), left)
+      rim.update(camera, limbS, limbT, gain * state.weight * limbK, vignette, aspect, Math.min(LIMB.edgePx / radiusPx, 0.02), left, heldLimb ? limbEye : null)
       holdRim.update(camera, state.rotation, ending ? 0 : look.hold.weight * (1 - left))
       const visible = radiusPx > 0.6
       globe.mesh.visible = visible
