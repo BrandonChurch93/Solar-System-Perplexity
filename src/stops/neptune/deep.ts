@@ -4,7 +4,7 @@ import fit from './close.json'
 import look from './deep.json'
 import patches from './patches.json'
 import { ground, placeTurn } from './band'
-import { MAP_DECL, MAP_UNIFORMS, mapGlsl } from './planet'
+import { FALL_GLSL, MAP_DECL, MAP_UNIFORMS, mapGlsl } from './planet'
 
 // The surface view of Neptune as one scene made by functions: a cloud deck with height (rolls, the storm as a bowl with walls and arms),
 // cirrus as a volume above it that is marched and lit by a march toward the Sun (the same density casts the shadow on the deck), a wind
@@ -127,7 +127,7 @@ ${DIAG_GLSL}
 
 const float PI = 3.14159265358979;
 ${globe(mapGlsl(patches.place.shownFrom))}
-// The thin bright streaks of the deck at the place deckField was last asked about (0 to about 1): the ridges of its finer octaves.
+${FALL_GLSL}// The thin bright streaks of the deck at the place deckField was last asked about (0 to about 1): the ridges of its finer octaves.
 float gWisp = 0.0;
 
 float hash3(ivec3 p) {
@@ -625,15 +625,13 @@ void main() {
     float ndlSheet = dot(sheetUp, uFarSun);
     vec3 deckFar = mapDeck * knot(uGDeck, ndlFar) * (1.0 - uGShadow.x * mapShadow * smoothstep(0.0, 0.2, ndlFar) * (1.0 - min(mapCloud, 1.0)));
     farLook = mix(uFarTone * pow(max(deckFar * uGTint, vec3(0.0)), uFarPower), uFarCloud * knot(uGCloud, ndlSheet) * uGTint, mapCloud * smoothstep(-0.09, -0.03, ndlSheet));
-    // The globe's own grade of the fall at its full strength (planet.ts, the same lines; deep.json, globe.fall), on the colour as the
-    // film shows it: the globe is graded by the height, the scene by the rest of the way (uFallPower here), so the far look stands
-    // at every height where the globe's own picture stands, and at the ground at the navy the grade ends in.
-    vec3 fallFar = max(farLook * uGain, vec3(0.0)) / uFallPivot;
-    vec3 fallenFar = mix(pow(fallFar, uFarFall.xyz), fallFar, smoothstep(0.6, 1.2, fallFar)) * uFallPivot;
-    float fallFarMost = uFarFall.w * fallenFar.g + 1e-5;
-    float fallFarOver = fallenFar.b / fallFarMost;
-    fallenFar.b = fallFarMost * (fallFarOver < 0.75 ? fallFarOver : 0.75 + 0.25 * (1.0 - exp(-(fallFarOver - 0.75) / 0.25)));
-    farLook = fallenFar / max(uGain, 1e-6);
+    // The globe's own grade of the fall (planet.ts, FALL_GLSL, the one text of it; deep.json, globe.fall), on the colour as the film
+    // shows it and at the strength the globe has at this height: uFarFall holds the full powers in xyz and the most blue at this
+    // height in w, uFallPower the globe's power at this height over the full one. The end of this shader raises every channel to
+    // uFallPower (the scene is made at the full grade), so that is undone here beforehand: the far look leaves this shader as the
+    // globe's own picture of the map at every height, and at the ground at the navy the grade ends in.
+    vec3 fallFar = fallGrade(farLook * uGain, uFallPivot, uFarFall.xyz * uFallPower, uFarFall.w) / uFallPivot;
+    farLook = mix(pow(fallFar, 1.0 / uFallPower), fallFar, smoothstep(0.6, 1.2, fallFar)) * uFallPivot / max(uGain, 1e-6);
   }
 
   // The deck: a march down onto its relief.
@@ -1079,11 +1077,16 @@ export class Deep {
   }
 
   // On the globe (the laid scene only): turn is the turn from the close scene to the stop's frame, camera the eye in the stop's frame
-  // in radii, show how much of the scene is drawn (a function of the eye's height, never of time), power the grade of the fall at this height (under the pivot of deep.json globe.fall a channel is drawn as pivot times (colour over pivot) to the power). Returns the eye in the close scene.
-  lay(camera: THREE.Vector3, turn: THREE.Quaternion, show: number, power: THREE.Vector3): THREE.Vector3 {
+  // in radii, show how much of the scene is drawn (a function of the eye's height, never of time). power: what is left of the grade
+  // of the fall at this height, as the power the end of the shader raises a channel to under the pivot (deep.json globe.fall): the
+  // scene is made at the grade's full strength, the globe is graded by the height, so this is the globe's power at this height over
+  // the full one, 1 at the ground. blueMost: the most blue the globe's grade keeps at this height (planet.ts, FALL_GLSL). Returns
+  // the eye in the close scene.
+  lay(camera: THREE.Vector3, turn: THREE.Quaternion, show: number, power: THREE.Vector3, blueMost: number): THREE.Vector3 {
     this.mesh.quaternion.copy(turn)
     this.material.uniforms.uShow!.value = show
     ;(this.material.uniforms.uFallPower!.value as THREE.Vector3).copy(power)
+    ;(this.material.uniforms.uFarFall!.value as THREE.Vector4).w = blueMost
     return this.seat.copy(camera).applyQuaternion(this.back.copy(turn).invert()).multiplyScalar(fit.radius).add(this.centre)
   }
 

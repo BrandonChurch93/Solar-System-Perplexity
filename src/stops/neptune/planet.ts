@@ -141,6 +141,34 @@ const fetches = (shownFrom: number): string => Array.from({ length: MAX_LEVELS }
 // The globe's own map as functions: the turn of the deck and of the cloud layer, and the reading of the wrap and of the levels round the
 // place at a direction of the body. The globe draws with them, and the scene from code (deep.ts) reads the same map by the same lines, so
 // what the scene shows from afar is the globe's own picture and no second one. MAP_UNIFORMS: the uniforms these lines read.
+// The grade of the fall (deep.json, globe.fall), one text for the globe and for the far look of the scene (deep.ts). A colour on
+// the line from black to the pivot is drawn as pivot times (colour over pivot) to the power, channel by channel, unchanged over
+// the pivot. A colour off that line was drawn so too, and its distance from the line was raised to the powers with it: the dim
+// white cloud of the night side and of the twilight came out orange and lilac (its red stands over the red of the pivot and was
+// left, its green and blue were taken down). So the level of a colour is its green over the pivot's, and red and blue go no
+// further from the line toward white and warm than that level carries them: red is the smaller of its own channel's value and
+// the colour times what the grade does at that level, blue the larger. A colour bluer than the line (red under it, blue over
+// it: the deck) is drawn channel by channel as it was, to the bit. A white keeps its hue: what the grade does at a level
+// differs by channel for the pivot's own red against blue and for bluer, and is the green's for a neutral colour and for
+// warmer. blueMost: the most blue the graded colour keeps as a multiple of its green, with a soft knee (the pale band stands
+// far under it and is not touched).
+export const FALL_GLSL = /* glsl */ `vec3 fallGrade(vec3 colour, vec3 pivot, vec3 power, float blueMost) {
+  vec3 c = max(colour, vec3(0.0));
+  vec3 x = c / pivot;
+  vec3 own = pivot * mix(pow(x, power), x, smoothstep(0.6, 1.2, x));
+  float level = max(x.g, 1e-6);
+  vec3 by = max(mix(pow(vec3(level), power), vec3(level), smoothstep(0.6, 1.2, level)) / level, vec3(1e-9));
+  float whiteAt = pivot.b / pivot.r;
+  float hue = clamp((whiteAt - x.r / max(x.b, 1e-6)) / max(whiteAt - 1.0, 1e-6), 0.0, 1.0);
+  vec3 led = c * pow(by, vec3(hue)) * pow(by.g, 1.0 - hue);
+  vec3 graded = vec3(min(led.r, own.r), own.g, max(led.b, own.b));
+  float most = blueMost * graded.g + 1e-5;
+  float over = graded.b / most;
+  graded.b = most * (over < 0.75 ? over : 0.75 + 0.25 * (1.0 - exp(-(over - 0.75) / 0.25)));
+  return graded;
+}
+`
+
 export const mapGlsl = (shownFrom: number): string => /* glsl */ `vec4 gShown;
 vec2 gToneUv;
 vec3 spinY(vec3 d, float a) {
@@ -389,7 +417,7 @@ ${DIAG_GLSL}
 ${AIR_GLSL}
 ${INVERSE_FILMIC_GLSL}
 ${mapGlsl(shownFrom)}
-void main() {
+${FALL_GLSL}void main() {
   vec3 p = normalize(vLocal);
   vec3 n = normalize(vWorldN);
   vec3 dir = normalize(vPos);
@@ -551,13 +579,7 @@ void main() {
   float moved = uStream + stormTurn(spinY(p, uSpin)) * 4.0;
   // The grade of the fall (deep.json, globe.fall): none where the power is 1, so the hold keeps its bytes.
   if (any(notEqual(uFallPower, vec3(1.0)))) {
-    vec3 fallX = max(col, vec3(0.0)) / uFallPivot;
-    col = mix(pow(fallX, uFallPower), fallX, smoothstep(0.6, 1.2, fallX)) * uFallPivot;
-    // The powers draw a blue of the map out to cobalt: the graded blue keeps at most uFallBlue times its green, with a soft knee
-    // (the pale band stands far under it and is not touched).
-    float fallMost = uFallBlue * col.g + 1e-5;
-    float fallOver = col.b / fallMost;
-    col.b = fallMost * (fallOver < 0.75 ? fallOver : 0.75 + 0.25 * (1.0 - exp(-(fallOver - 0.75) / 0.25)));
+    col = fallGrade(col, uFallPivot, uFallPower, uFallBlue);
   }
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, mix(vec3(0.1, 0.3, 0.9), vec3(0.95, 0.95, 0.9), min(alpha, 1.0)), vec2(moved * 8.0 * min(alpha, 1.0), shadow), length(vView));
 }`

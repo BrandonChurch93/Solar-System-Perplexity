@@ -239,7 +239,7 @@ export const createSet: SetFactory = async (ctx) => {
       pu.uFallBlue!.value = deepLook.globe.fall.blue / Math.max(fall, 1e-4)
       if (show > 0 || placed) {
         laySeat.copy(camera).applyQuaternion(layBack.copy(state.rotation).invert())
-        deepLaid.update(deepLaid.lay(laySeat, plan.laid(state.time), show, fallScenePower), deepSun.copy(plan.lightDir).applyQuaternion(layBack.copy(plan.laid(state.time)).invert()), state.time - terrainMid, 2 * Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) / view.format.height, gain * state.weight, lens, view.format.width / view.format.height, toBody.copy(bodyBack).multiply(plan.laid(state.time)))
+        deepLaid.update(deepLaid.lay(laySeat, plan.laid(state.time), show, fallScenePower, pu.uFallBlue!.value as number), deepSun.copy(plan.lightDir).applyQuaternion(layBack.copy(plan.laid(state.time)).invert()), state.time - terrainMid, 2 * Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) / view.format.height, gain * state.weight, lens, view.format.width / view.format.height, toBody.copy(bodyBack).multiply(plan.laid(state.time)))
       }
       const thin = ending ? 1 : smooth(Math.sqrt(high * (high + 2)) / look.airThin.reach)
       const moving = kind === 'dive' || kind === 'rise' ? 1 - smooth((high - move.near.height[0]!) / (move.near.height[1]! - move.near.height[0]!)) : 0
