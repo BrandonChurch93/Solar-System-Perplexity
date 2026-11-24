@@ -52,7 +52,7 @@ export const place = {
   show: { heights: platesJson.show.heights as [number, number] },
   dusk: { gain: platesJson.dusk.gain, hue: platesJson.dusk.hue, limbHeights: platesJson.dusk.limbHeights as [number, number], tint: platesJson.dusk.tint as [number, number, number], heights: platesJson.dusk.heights as [number, number] },
   leave: { heights: platesJson.leave.heights as [number, number] },
-  ground: { heights: platesJson.ground.heights as [number, number], foot: { share: platesJson.ground.foot.share, over: platesJson.ground.foot.over as [number, number] }, band: [(platesJson.ground.bandDeg[0]! * Math.PI) / 180, (platesJson.ground.bandDeg[1]! * Math.PI) / 180] as [number, number] },
+  ground: { heights: platesJson.ground.heights as [number, number], bandHeights: platesJson.ground.bandHeights as [number, number], true: platesJson.ground.true as [number, number], skin: platesJson.ground.skin as [number, number], tall: platesJson.ground.tall as [number, number], release: platesJson.ground.release as [number, number], matte: { ...platesJson.ground.matte, over: platesJson.ground.matte.over as [number, number] }, band: [(platesJson.ground.bandDeg[0]! * Math.PI) / 180, (platesJson.ground.bandDeg[1]! * Math.PI) / 180] as [number, number], tone: { broad: platesJson.ground.tone.broad, under: platesJson.ground.tone.under as Record<'dive' | 'rise', [number, number, number]> } },
   sky: { low: platesJson.sky.low as [number, number], carry: platesJson.sky.carry as [number, number], lift: platesJson.sky.lift },
 }
 
@@ -76,7 +76,7 @@ function reliefDef(key: 'full' | 'web'): CloudReliefDef {
     masks: 'relief-masks.png',
     maskBox: box(reliefJson.masks.box),
     air: 'relief-air.png',
-    airSun: { file: platesJson.air.sun.file, limbFile: platesJson.air.sun.limbFile, atDeg: platesJson.air.sun.atDeg as [number, number], boxDeg: platesJson.air.sun.boxDeg as [number, number, number], exactBelow: platesJson.air.sun.exactBelow as [number, number] },
+    airSun: { file: platesJson.air.sun.file, limbFile: platesJson.air.sun.limbFile, atDeg: platesJson.air.sun.atDeg as [number, number], boxDeg: platesJson.air.sun.boxDeg as [number, number, number], exactCoreDeg: platesJson.air.sun.exactCoreDeg as [number, number], exactUnderDeg: platesJson.air.sun.exactUnderDeg },
   }
 }
 

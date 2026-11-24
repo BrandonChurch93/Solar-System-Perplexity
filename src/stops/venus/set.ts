@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { config } from '../../config'
+import { bufferFrame } from '../../core/frame'
 import { FarPoint } from '../../bodies/farpoint'
 import type { Pose, SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { diagUniform } from '../../diagnostics/diag'
@@ -190,8 +191,12 @@ export const createSet: SetFactory = async (ctx) => {
     sky,
     update: (state, shot, view) => {
       const inOrbit = state.view === 'orbit'
+      // On the globe side of the stop's own hold, dive and rise the surface view is drawn dry, and so is what the globe side shows later:
+      // every program and buffer of the stop is made in the hold, none in a move (relief.ts, dryable).
+      const own = state.segment.stop === plan.id && state.segment.kind !== 'travel'
       orbit.visible = inOrbit && state.weight > 0
-      terrain.visible = !inOrbit
+      terrain.visible = !inOrbit || own
+      ground.dry(inOrbit)
       const gain = 1 / shot.post.exposure
       const kind = state.segment.kind
       const covering = state.segment.stop === plan.id && (kind === 'dive' || kind === 'rise')
@@ -231,6 +236,9 @@ export const createSet: SetFactory = async (ctx) => {
       const left = ending ? 0 : state.time > terrainMid ? 1 : below(camera.length() - 1, place.leave.heights, smooth)
       for (let i = 0; i < amps.length; i++) amps[i] = ending ? 0 : look.flash(look.cells[i]!, state.time) * (1 - left)
       const gu = globe.material.uniforms
+      // What is counted in pixels of the buffer is scaled by the engine's measure of the frame (src/core/frame.ts): buffer pixels a
+      // master pixel. The globe's fades read it as uFrame (frameUniform).
+      const frameScale = bufferFrame()
       ;(gu.uTint!.value as THREE.Vector3).set(1, 1, 1).lerp(tintLow, low)
       // The air of the place on the globe side: the close side's own dome, seen from the globe camera, in below the heights of plates.json.
       const ah = place.air.heights
@@ -239,11 +247,20 @@ export const createSet: SetFactory = async (ctx) => {
       const sunOn = covering ? 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-4)) - Math.log(sh[0])) / (Math.log(sh[1]) - Math.log(sh[0]))) : 0
       airTurn.copy(plan.turn(state.time)).multiply(plan.terrainFrame)
       airEye.copy(localP).applyQuaternion(airBack.copy(airTurn).invert()).multiplyScalar(deck.radius)
-      ground.updateGlobe(airEye, eyeAtT(state.time > terrainMid ? 'rise' : 'dive'), airTurn, airOn * state.weight, sunOn * state.weight, covering ? below(camera.length() - 1, place.air.exactHeights) : 0, gain, shot.post.vignette, view, shot.sun.dir)
+      ground.updateGlobe(airEye, eyeAtT(state.time > terrainMid ? 'rise' : 'dive'), airTurn, airOn * state.weight, sunOn * state.weight, covering ? below(camera.length() - 1, place.air.exactHeights) : 0, gain, shot.post.vignette, view, shot.sun.dir, own)
       // The ground of the close side itself, in below the heights of plates.json (ground): at the handover the globe side is the close side's scene.
       const heightT = eyeAtT(state.time > terrainMid ? 'rise' : 'dive').length() / deck.radius - 1
-      const share = { weight: covering ? below(camera.length() - 1, place.ground.heights) * state.weight : 0, foot: place.ground.foot.share * (1 - below((camera.length() - 1) / heightT, place.ground.foot.over)), band: place.ground.band }
-      ground.updateGround(share, state.time - terrainMid, airEye, eyeAtT(state.time > terrainMid ? 'rise' : 'dive'), airTurn, deck.centre, gain, shot.post.vignette, view, shot.sun.dir)
+      // The tones of the ground by the law of the plates (plates.json, tone): the share of its stored tones by the height of the camera, and
+      // the globe's colour at the place (ground.tone.under, as it stands at the near end of dusk.heights) at the exposure of this height.
+      const groundPl = plan.placeLook(state.segment, camera.length() - 1)
+      const groundHeight = Math.log(Math.max(camera.length() - 1, 1e-4))
+      const toneShare = 1 - smooth((groundHeight - Math.log(place.tone.heights[0])) / (Math.log(place.tone.heights[1]) - Math.log(place.tone.heights[0])))
+      const underAt = place.ground.tone.under[state.time > terrainMid ? 'rise' : 'dive']
+      const groundTone = { look: [place.tone.air, toneShare, place.tone.cos[0], place.tone.cos[1]] as [number, number, number, number], power: place.tone.power, broad: place.ground.tone.broad, most: place.tone.live.most, contrast: place.tone.live.contrast, colour: place.tone.live.colour, under: underAt.map((v, i) => v * Math.pow(place.dusk.gain * place.dusk.tint[i]!, groundPl.dusk - 1)) as [number, number, number] }
+      // true and skin hold in full above the heights of ground.release and are let go at T, where the globe side is the surface view.
+      const held = Math.max(1 - below((camera.length() - 1) / heightT, place.ground.release), 1e-6)
+      const share = { weight: covering ? below(camera.length() - 1, place.ground.heights) * state.weight : 0, under: covering ? below(camera.length() - 1, place.ground.bandHeights) * state.weight : 0, band: place.ground.band, true: [place.ground.true[0] * held, place.ground.true[1] * held] as [number, number], skin: [place.ground.skin[0] * held, place.ground.skin[1] * held] as [number, number], tall: place.ground.tall, matte: [place.ground.matte.width * (1 - below((camera.length() - 1) / heightT, place.ground.matte.over)), place.ground.matte.forms, place.ground.matte.level, place.ground.matte.scale] as [number, number, number, number], tone: groundTone }
+      ground.updateGround(share, state.time - terrainMid, airEye, eyeAtT(state.time > terrainMid ? 'rise' : 'dive'), airTurn, deck.centre, gain, shot.post.vignette, view, shot.sun.dir, own)
       const vignette = shot.post.vignette * (1 - low * (1 - airOn))
       hazeTurn.copy(state.rotation).multiply(airTurn)
       ;(gu.uAirFwd!.value as THREE.Vector3).copy(ground.deck!.fwd).applyQuaternion(hazeTurn)
@@ -305,8 +322,8 @@ export const createSet: SetFactory = async (ctx) => {
         const b = plan.eyeShot(kind, state.time + dt)
         if (a.view === 'orbit' && b.view === 'orbit') {
           const px = slide(a.pose, b.pose, view.format.width, view.format.height)
-          if (px > look.motion.from) taps = Math.min(Math.ceil(px / look.motion.step), look.motion.most)
-          const scale = view.format.height / config.formats[config.formatKeys.master]!.height
+          const scale = frameScale
+          if (px / scale > look.motion.from) taps = Math.min(Math.ceil(px / look.motion.step), look.motion.most)
           smear = 1 + Math.min(Math.max((px * view.samples / scale - look.motion.smear.from) * look.motion.smear.share, 0), look.motion.smear.most) * scale
           if (taps > 0) {
             turnBack.copy(a.pose.quaternion).invert()

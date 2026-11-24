@@ -52,6 +52,18 @@ export const bank = { roll: 1288, pitch: 1302 }
 
 export const drift = { bend: -0.6 }
 
+export const settle = moveJson.settle as { frames: number; to: number }
+
+/** The surface view's own time (seconds from the start of its segment) at a time of the film: equal until `settle.frames` before
+ * the end of the segment, then its pace comes down along a smooth step to the share `settle.to` and stays there. */
+export const settled = (tRel: number, span: number): number => {
+  const d = settle.frames / config.fps
+  const x = (tRel - (span - d)) / d
+  if (x <= 0) return tRel
+  const c = Math.min(x, 1)
+  return span - d + d * (c - (1 - settle.to) * (c * c * c - 0.5 * c * c * c * c) + settle.to * Math.max(x - 1, 0))
+}
+
 const hermite = (x: number, a: number, da: number, b: number, db: number): number => {
   const t = Math.min(Math.max(x, 0), 1)
   const t2 = t * t
@@ -226,9 +238,13 @@ class VenusPlan extends StopPlan {
     return super.rise(time)
   }
 
+  // The surface view's drift comes down before the rise lifts off (move.json, settle): the camera's own time runs slower over the
+  // last frames of the segment. A function of the time alone; no frame before the first of those frames changes.
   override terrain(tRel: number): Pose {
-    const pose = super.terrain(tRel)
-    const u = tRel / (this.seg.terrain.end - this.seg.terrain.start) - 0.5
+    const span = this.seg.terrain.end - this.seg.terrain.start
+    const own = settled(tRel, span)
+    const pose = super.terrain(own)
+    const u = own / span - 0.5
     pose.position.x += drift.bend * u * u
     return pose
   }
