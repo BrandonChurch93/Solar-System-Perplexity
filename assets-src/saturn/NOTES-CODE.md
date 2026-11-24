@@ -3760,3 +3760,34 @@ is in the picture at 3 to 12 px, and the same crispness for the far ring across 
   - STILL TO DO ON IT: read the judge's rise and dive reports over the WHOLE windows; the entry of the far ring
     beside the night limb at the right frame edge (3807 + 1/2 on the old flight, about 3812 to 3820 on this
     one); then mail PRE (or the third NAMED when the report on 1e4bfd4 names a due time).
+- MAIL 624 (10:05 UTC), receipt of the second NAMED 1e4bfd4. Proof tree c546f20f on builder/proof-sn2 (main
+  cd8355dd with my folders). The verdict mail comes when its handover, measure and gate parts are in; my 90
+  minutes for the THIRD commit run from that mail. Ruled:
+  1. Dive pattern 0.53 at 3561 (body mask): a bug of the judge, with harness_builder (MAIL 623). "Send
+     harness_builder your patch for body() directly. Do not spend your third commit on this number until its
+     answer is in." DONE 10:10: /tmp/v/patch/body.patch (poseOf hands fit.globe when its scale is not 1, 1, 1;
+     body() takes ray and camera into the globe's frame over its scale; old lines unchanged with no globe)
+     mailed to /root/harness_builder with mask_pole_3561.png. Checked: applies on main da59c441; 0 px differ
+     from main's body with no globe named and 0 px from my scan's flattened body with it, on 12 poses.
+  2. Rise pop 1.59 at 3895 + 1/2: the rest between rise and travel; the travel's carry (5d54f36c on
+     agent/travel-carry) is in its engine check; once on main "a rise may end with speed and the travel takes
+     it over". The Builder sends the sha and assets-src/travel/NOTES.md. "Until then: nothing to do on it."
+  3. Rise pattern 0.55 at 3807 + 1/2: "yours. Say what changes there."
+  G17: the flight that heads 28 degrees left is ALLOWED as the cure of a red measure: "send the PRE with 3720
+  at the final tier beside the approved close image and the G17 number. It must stay one flight (dive, surface
+  view, rise) and the seam lines must stay green."
+  "main is now da59c441 (the relief fix cd8355dd and the slice tool). Merge it."
+- DONE 10:07: cff62ce (note of the bend reworded: the way ends on the heading it ended on; at 3810 the new
+  way stands 0.12 radii from the old), then MERGE of main da59c441: head
+  68b45619c9b8a49e33e17639a44504a39e29e2a7, pushed. 21 files differ from that main, all in my folders. The
+  merge brings src/terrain/relief.ts (my stop does not import it), tools (smooth.py: slices only, the whole
+  window run is the same function), tests. The proof job on d07e2b4 was stopped at 57 rise frames (kept in
+  /tmp/v/r43/rise_part) and started again on the merged head: /tmp/v/job_w.sh 68b4561 /tmp/v/r44 "path g17
+  finals gate vitest rise parity dive head" (log /tmp/v/r44w.log).
+  - Path on 68b4561: "VERDICT: green. No number is over its limit." (/tmp/v/r44/smooth_path.md), the same
+    numbers as in rt. THIN: rise speed step 0.079 over 8 at 3883 at rate 2 (0.078 at whole frames), limit 0.08.
+  - Partial scan of the new flight's rise (patscan2.py on /tmp/v/r43/rise_part, k 7596 to 7652, the judge's
+    body, poses /tmp/v/r43/poses_all.json = new flight, all k 7056 to 7800): 3798 to 3818 largest pattern
+    0.211 at 3811 + 1/2; the place moves to the right frame edge at 3817 (0.155, 0.153, 0.183 at [1888 to 1896,
+    532 to 552]): the entry of the far ring beside the night limb is at about 3817 on this flight. Numbers
+    past 3818 need the whole window.
