@@ -82,6 +82,7 @@ uniform vec3 uSunColor;
 uniform float uSunRadius;
 uniform float uSunGlare;
 uniform vec2 uSunSmall;
+uniform float uPixel;
 uniform vec4 uSunPoint;
 uniform float uTerrainBand;
 uniform vec3 uBandClean;
@@ -256,7 +257,7 @@ void main() {
     float ar = ax * (1.0 + uFlightFeather.x * clamp((uFlightFeather.y - fv.x) * uFlightFeather.z, 0.0, 1.0));
     float fz = 1.0 - smoothstep(uFlightEdge.x, uFlightEdge.y, ar + uFlightRough.x * fv.y * smoothstep(0.0, 0.5 * uFlightEdge.x, ar) + uFlightEdge.z * (fv.x - 1.0));
     float fz0 = 1.0 - smoothstep(uFlightEdge.x, uFlightEdge.y, ax + uFlightEdge.z * (fv.x - 1.0));
-    highp uint hs = uint(gl_FragCoord.x) * 0x85EBCA77u ^ uint(gl_FragCoord.y) * 0xC2B2AE3Du;
+    highp uint hs = uint(gl_FragCoord.x / uPixel) * 0x85EBCA77u ^ uint(gl_FragCoord.y / uPixel) * 0xC2B2AE3Du;
     hs ^= hs >> 15;
     hs *= 0x2C1B3C6Du;
     hs ^= hs >> 12;
@@ -325,7 +326,7 @@ void main() {
       }
     }
     vec2 vq = (vUv - 0.5) * vec2(uLens.y, 1.0);
-    highp uint h = uint(gl_FragCoord.x) * 0x9E3779B1u ^ uint(gl_FragCoord.y) * 0x85EBCA77u;
+    highp uint h = uint(gl_FragCoord.x / uPixel) * 0x9E3779B1u ^ uint(gl_FragCoord.y / uPixel) * 0x85EBCA77u;
     h ^= h >> 15;
     h *= 0x2C1B3C6Du;
     h ^= h >> 12;
@@ -447,17 +448,19 @@ in vec3 vColor;
 in float vSize;
 uniform float uCore;
 uniform float uHalo;
+uniform float uPixel;
 uniform vec4 uStarLaw;
 out vec4 outColor;
 void main() {
-  vec2 p = (gl_PointCoord - 0.5) * vSize;
+  float size = vSize / uPixel;
+  vec2 p = (gl_PointCoord - 0.5) * size;
   float r2 = dot(p, p);
   float core = exp(-r2 / uCore);
-  float glow = uHalo * exp(-r2 / (0.035 * vSize * vSize));
+  float glow = uHalo * exp(-r2 / (0.035 * size * size));
   outColor = vec4(vColor * (core + glow), 0.0);
   for (int k = 0; k < (uStarLaw.w > 0.0 ? 1 : 0); k++) {
     float over = max(max(vColor.r, max(vColor.g, vColor.b)) / uStarLaw.x, 1.0);
-    float edge = clamp(1.0 - 4.0 * r2 / (vSize * vSize), 0.0, 1.0);
+    float edge = clamp(1.0 - 4.0 * r2 / (size * size), 0.0, 1.0);
     outColor.rgb = mix(outColor.rgb, vColor * (core * pow(over, -uStarLaw.y) + uStarLaw.z * edge * edge / (1.0 + r2)), uStarLaw.w);
   }
 }`
@@ -695,7 +698,7 @@ export class Sky {
     const st = skyFrame.stars
     this.pass = new Pass(SKY_FRAG, {
       uImplicit: implicitUniform, uSky: { value: null }, uInvProj: { value: new THREE.Matrix4() }, uRot: { value: this.rot }, uTint: { value: new THREE.Vector3().fromArray(skyFrame.grade.tint) }, uFloor: { value: new THREE.Vector3().fromArray(skyFrame.grade.floor) }, uGamma: { value: skyFrame.grade.gamma }, uBand: { value: null }, uGal: { value: galactic() }, uBandMap: { value: bandMap() }, uBandWiden: { value: 1 / skyFrame.band.widen }, uBandFadeEnd: { value: skyFrame.band.fadeEnd }, uBandGrade: { value: new THREE.Vector4(skyFrame.band.gain, skyFrame.band.gamma, skyFrame.band.regionRef, skyFrame.band.offGain) }, uBandTint: { value: new THREE.Vector4(skyFrame.band.tint[0], skyFrame.band.tint[1], skyFrame.band.tint[2], skyFrame.band.saturation) }, uFrame: { value: new THREE.Matrix3().setFromMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion())) }, uExposure: { value: 1 },
-      uSunDir: { value: new THREE.Vector3(0, 0, 1) }, uSunColor: { value: new THREE.Vector3(1, 1, 1) }, uSunRadius: { value: 0.01 }, uSunGlare: { value: 0 }, uSunSmall: { value: new THREE.Vector2() }, uSunPoint: { value: new THREE.Vector4(1, 1, 0, 1) }, uGlow: { value: 1 }, uTerrainBand: { value: skyFrame.band.terrainGain }, uBandClean: { value: new THREE.Vector3(skyFrame.band.cleanRadius, skyFrame.band.cleanKeep, skyFrame.band.cleanBlur) },
+      uSunDir: { value: new THREE.Vector3(0, 0, 1) }, uSunColor: { value: new THREE.Vector3(1, 1, 1) }, uSunRadius: { value: 0.01 }, uSunGlare: { value: 0 }, uSunSmall: { value: new THREE.Vector2() }, uPixel: { value: 1 }, uSunPoint: { value: new THREE.Vector4(1, 1, 0, 1) }, uGlow: { value: 1 }, uTerrainBand: { value: skyFrame.band.terrainGain }, uBandClean: { value: new THREE.Vector3(skyFrame.band.cleanRadius, skyFrame.band.cleanKeep, skyFrame.band.cleanBlur) },
       uLens: { value: new THREE.Vector2(0, 16 / 9) }, uPatchA: { value: this.blank }, uPatchB: { value: this.blank }, uPatchM: { value: this.patchM }, uPatchLens: { value: this.patchLens }, uPatchRing: { value: this.patchRing }, uPatchMode: { value: this.patchMode }, uPatchFold: { value: this.patchFold },
       uBandGlow: { value: this.blank }, uFlightStrip: { value: new THREE.Vector3() }, uFlightEdge: { value: new THREE.Vector3(0, 1, 0) }, uFlightFeather: { value: new THREE.Vector4(0, 1, 1, 0) }, uFlightRough: { value: new THREE.Vector2() }, uFlightDetail: { value: new THREE.Vector4() }, uFlightLane: { value: new THREE.Vector4(1, 2, 0, 0) }, uFlightFill: { value: new THREE.Vector4() }, uFlightOctave: { value: new THREE.Vector3(2, 0.5, 0.5) }, uFlightKnee: { value: new THREE.Vector2(1, 1) }, uFlightRim: { value: new THREE.Vector4() }, uFlightWarm: { value: new THREE.Vector4() }, uFlightSpread: { value: new THREE.Vector3() }, uFlightNoise: { value: this.noise },
       uFlightMap: { value: this.blank }, uFlightGlow: { value: new THREE.Vector4() }, uFlightHaze: { value: new THREE.Vector4() }, uFlightBandWidth: { value: 1 }, uFlightOff: { value: new THREE.Vector3(1, 1, 1) }, uFlightDust: { value: new THREE.Vector3(1, 1, 1) }, uFlightLight: { value: new THREE.Vector3(1, 1, 1) }, uFlightBand: { value: new THREE.Vector4(0, 1, 0, 1) }, uFlightLook: { value: new THREE.Vector2(0, 1) }, uFlightVeil: { value: new THREE.Vector4() }, uFlightVeilWarm: { value: new THREE.Vector4() },
@@ -1060,6 +1063,7 @@ export class Sky {
     const far = this.stripDef
     const small = far && sun.glare > 0 && sun.angularRadius * perRad < far.sun.radiusPx ? THREE.MathUtils.smoothstep(sun.glare, far.sun.glare[0]!, far.sun.glare[1]!) : 0
     ;(u.uSunSmall!.value as THREE.Vector2).set(small, perRad)
+    u.uPixel!.value = height / 1080
     this.v3.copy(sun.dir).applyQuaternion(this.q2.copy(skyQuaternion).invert())
     const ahead = this.v3.z < 0
     this.v3.applyMatrix4(camera.projectionMatrix)
