@@ -1,11 +1,13 @@
 import * as THREE from 'three'
-import { config } from '../../config'
-import { mix, slerpDir } from '../../director/rig'
+import { config, type Segment } from '../../config'
+import type { SkyShares } from '../../director/handover'
+import { mix, ramp, slerpDir } from '../../director/rig'
 import type { Pose, ViewKind } from '../../core/types'
 import { StopPlan, type Fit, type MoveParams } from '../../director/moves'
 import { anchor, closeAhead, closeRadius, closeUp, type Anchor } from './close'
 import fit from './fit.json'
-import { close, flight, path, spinRest } from './look'
+import skyTurn from './skyturn.json'
+import { close, flight, path, sky, spinRest } from './look'
 
 const shareOf = (kind: 'dive' | 'rise'): number => {
   const seg = config.segments.find((x) => x.stop === 'mercury' && x.kind === kind)!
@@ -21,7 +23,7 @@ export const params: MoveParams = {
   travel: { turnDeg: 78, side: 1 },
   arrive: { swingDeg: 0, axis: [0, 1, 0], offset: [0.5, -0.1] },
   light: { exposure: 1, skyExposure: 0.25, sunRadiusDeg: 9.2, sunGlare: 0.012, flare: 1 },
-  handover: { dive: { at: shareOf('dive'), picture: false, place: { valid: [0.004, 0.004, 0.0045, 0.125], seen: 1, maxEnlarge: 3, enlargeSoft: 0.95, edgeIn: [0.4, 0.4, 0.4, 0.25] } }, rise: { at: shareOf('rise'), picture: false, place: { valid: [0.03, 0.03, 0.05, 0.125], seen: 1, maxEnlarge: 1.2, enlargeSoft: 0.4, edgeIn: [0.4, 0.4, 0.4, 0.25] } } },
+  handover: { dive: { at: shareOf('dive'), picture: false, skyFrames: 0, place: { valid: [0.004, 0.004, 0.0045, 0.125], seen: 1, maxEnlarge: 3, enlargeSoft: 0.95, edgeIn: [0.4, 0.4, 0.4, 0.25] } }, rise: { at: shareOf('rise'), picture: false, skyFrames: 0, place: { valid: [0.03, 0.03, 0.05, 0.125], seen: 1, maxEnlarge: 1.2, enlargeSoft: 0.4, edgeIn: [0.4, 0.4, 0.4, 0.25] } } },
   cover: [1, 0.95, 0.86],
   coverEdge: [4, 4],
   coverHides: 0,
@@ -32,6 +34,27 @@ export const params: MoveParams = {
 }
 
 interface Leg { lo: number; hi: number; top: number; from: number; rates: [number, number, number]; round: number; near: number; far: number; place: THREE.Vector3; pose: Pose; out: THREE.Vector3; seen: THREE.Vector3; outRate: THREE.Vector3; seenRate: THREE.Vector3; turn: THREE.Vector3 }
+
+interface Curve { ua: number; uj: number; a: [number, number]; ta: number; te: number; lead: number; arc: number; v: number; gain: number; jolt: number }
+
+function smoother(x: number): number {
+  const t = Math.min(Math.max(x, 0), 1)
+  return t * t * t * (t * (6 * t - 15) + 10)
+}
+
+function swept(ta: number, te: number, p: number, n: number, skew: number): [number, number] {
+  const h = p / n
+  let x = 0
+  let y = 0
+  for (let i = 0; i <= n; i++) {
+    const w = i === 0 || i === n ? 1 : i % 2 === 1 ? 4 : 2
+    const q = 1 - Math.pow(1 - i * h, skew)
+    const t = ta + (te - ta) * q * q * (3 - 2 * q)
+    x += w * Math.cos(t)
+    y += w * Math.sin(t)
+  }
+  return [(x * h) / 3, (y * h) / 3]
+}
 
 function eased(x: number, b: number): number {
   if (x <= 0) return 0
@@ -53,21 +76,64 @@ function swell(x: number, lo: number, top: number, hi: number, a: number, p: num
 
 export class Plan extends StopPlan {
   private anchored: Anchor | null = null
-  private readonly legs: { dive?: Leg; rise?: Leg } = {}
+  private readonly legs: { dive?: Leg; rise?: Leg; straight?: Leg } = {}
+  private curved: Curve | null = null
 
   constructor(p: MoveParams = params, private readonly near = close, private readonly fly = flight, private readonly way = path) {
     super('mercury', fit as Fit, p)
   }
 
-  private cruise(time: number): Pose {
-    const f = time * config.fps
+  private span(frame: number): number {
     const seg = this.seg.terrain
     const pivot = seg.firstFrame + Math.floor((config.raw.judged.fractions as Record<string, number>).terrain! * seg.frames + 1e-9) + config.shutterFraction / 2
+    return (2 * (frame - pivot)) / seg.frames
+  }
+
+  private get curve(): Curve {
+    if (this.curved) return this.curved
+    const k = this.fly.bend
+    const A = this.fly.travel / (2 + (2 * this.fly.gather) / 3)
+    const g = this.fly.gather
+    const S = this.fly.swoop
+    const ua = this.span(k.from)
+    const us = this.span(this.seg.terrain.end * config.fps)
+    const a: [number, number] = [A * (ua + (g * ua * ua * ua) / 3), S * ua * ua]
+    const va: [number, number] = [A * (1 + g * ua * ua), 2 * S * ua]
+    const v = Math.hypot(va[0], va[1])
+    const ta = Math.atan2(va[1], va[0])
+    const lens = new THREE.Vector3(0, 0, -1)
+    const te = Math.atan2(lens.dot(closeUp), lens.dot(closeAhead)) + THREE.MathUtils.degToRad(k.endDeg)
+    const c = swept(ta, te, 1, k.steps, k.skew)
+    const dx = A * (us + (g * us * us * us) / 3) - a[0]
+    const dy = S * us * us - a[1]
+    const det = Math.cos(ta) * c[1] - Math.sin(ta) * c[0]
+    const lead = (dx * c[1] - dy * c[0]) / det
+    const arc = (Math.cos(ta) * dy - Math.sin(ta) * dx) / det
+    const gain = (2 * A * g * ua * va[0] + 2 * S * va[1]) / v
+    const T = us - ua
+    const jolt = (lead + arc - v * T - 0.5 * gain * T * T) / (T * T * T)
+    return (this.curved = { ua, uj: this.span(k.from + k.join), a, ta, te, lead, arc, v, gain, jolt })
+  }
+
+  private cruise(time: number, bent = true): Pose {
+    const f = time * config.fps
     const x = this.fly.lift
     const b = Math.pow(Math.max(1 - (x.at - f) / x.frames, 0), x.power)
-    const u = (2 * (f - pivot)) / seg.frames
-    const along = (this.fly.travel / (2 + (2 * this.fly.gather) / 3)) * (u + (this.fly.gather * u * u * u) / 3) + x.forward * b
-    return { position: closeAhead.clone().multiplyScalar(along).addScaledVector(closeUp, this.fly.swoop * u * u + x.height * b), quaternion: new THREE.Quaternion(), vfov: this.p.terrain.vfov }
+    const u = this.span(f)
+    let along = (this.fly.travel / (2 + (2 * this.fly.gather) / 3)) * (u + (this.fly.gather * u * u * u) / 3)
+    let up = this.fly.swoop * u * u
+    const k = this.curve
+    if (bent && u > k.ua) {
+      const tau = u - k.ua
+      const s = k.v * tau + 0.5 * k.gain * tau * tau + k.jolt * tau * tau * tau
+      const q = swept(k.ta, k.te, Math.min(Math.max((s - k.lead) / k.arc, 0), 1), this.fly.bend.steps, this.fly.bend.skew)
+      const straight = Math.min(s, k.lead)
+      const past = Math.max(s - k.lead - k.arc, 0)
+      const w = smoother((u - k.ua) / (k.uj - k.ua))
+      along += (k.a[0] + Math.cos(k.ta) * straight + k.arc * q[0] + Math.cos(k.te) * past - along) * w
+      up += (k.a[1] + Math.sin(k.ta) * straight + k.arc * q[1] + Math.sin(k.te) * past - up) * w
+    }
+    return { position: closeAhead.clone().multiplyScalar(along + x.forward * b).addScaledVector(closeUp, up + x.height * b), quaternion: new THREE.Quaternion(), vfov: this.p.terrain.vfov }
   }
 
   low(time: number): Pose {
@@ -85,6 +151,25 @@ export class Plan extends StopPlan {
 
   override terrain(tRel: number): Pose {
     return this.low(tRel + this.seg.terrain.start)
+  }
+
+  override skyShare(seg: Segment, time: number): SkyShares | null {
+    if (seg.stop !== this.id || (seg.kind !== 'dive' && seg.kind !== 'rise')) return null
+    return { low: 1 - smoother(ramp(Math.log(sky.height[0]), Math.log(sky.height[1]), Math.log(this.path(seg.kind, time).position.length() - 1))) }
+  }
+
+  override skyCarryShare(seg: Segment, time: number): number | null {
+    if (seg.stop !== this.id || (seg.kind !== 'dive' && seg.kind !== 'rise')) return null
+    const c = skyTurn[seg.kind]
+    const s = c.shares
+    const k = Math.min(Math.max((Math.log(this.path(seg.kind, time).position.length() - 1) - c.from) / (c.to - c.from), 0), 1) * (s.length - 1)
+    const i = Math.min(Math.floor(k), s.length - 2)
+    const f = k - i
+    const p0 = s[Math.max(i - 1, 0)]!
+    const p1 = s[i]!
+    const p2 = s[i + 1]!
+    const p3 = s[Math.min(i + 2, s.length - 1)]!
+    return Math.min(Math.max(0.5 * (2 * p1 + (p2 - p0) * f + (2 * p0 - 5 * p1 + 4 * p2 - p3) * f * f + (3 * p1 - p0 - 3 * p2 + p3) * f * f * f), 0), 1)
   }
 
   override twin(local: Pose, time: number): Pose {
@@ -110,8 +195,8 @@ export class Plan extends StopPlan {
     return this.turn(time - spinRest * this.rested(time))
   }
 
-  private onGround(time: number): Pose {
-    const low = this.cruise(time)
+  private onGround(time: number, bent = true): Pose {
+    const low = this.cruise(time, bent)
     const a = this.anchor
     return { position: a.origin.clone().addScaledVector(low.position.clone().applyQuaternion(a.frame), 1 / closeRadius), quaternion: a.frame.clone().multiply(low.quaternion), vfov: low.vfov }
   }
@@ -122,8 +207,9 @@ export class Plan extends StopPlan {
     return { position: pose.position.clone().applyQuaternion(g), quaternion: g.multiply(pose.quaternion), vfov: pose.vfov }
   }
 
-  private leg(kind: 'dive' | 'rise'): Leg {
-    const kept = this.legs[kind]
+  private leg(kind: 'dive' | 'rise', bent = true): Leg {
+    const key = bent ? kind : 'straight'
+    const kept = this.legs[key]
     if (kept) return kept
     const fps = config.fps
     const seg = kind === 'dive' ? this.seg.dive! : this.seg.rise
@@ -131,15 +217,15 @@ export class Plan extends StopPlan {
     const near = kind === 'dive' ? this.seg.terrain.start : this.seg.terrain.end
     const far = kind === 'dive' ? seg.start : seg.end
     const e = 1e-3 / fps
-    const pose = this.onGround(near)
+    const pose = this.onGround(near, bent)
     const ray = new THREE.Vector3(0, 0, -1).applyQuaternion(pose.quaternion)
     const along = -pose.position.dot(ray)
     const place = pose.position.clone().addScaledVector(ray, along - Math.sqrt(Math.max(along * along - pose.position.lengthSq() + 1, 0)))
     const height = (p: Pose): number => Math.log(p.position.length() - 1)
     const out = (p: Pose): THREE.Vector3 => p.position.clone().sub(place).normalize()
     const seen = (p: Pose): THREE.Vector3 => place.clone().sub(p.position).applyQuaternion(p.quaternion.clone().invert()).normalize()
-    const before = this.onGround(near - e)
-    const after = this.onGround(near + e)
+    const before = this.onGround(near - e, bent)
+    const after = this.onGround(near + e, bent)
     const d = after.quaternion.clone().multiply(before.quaternion.clone().invert())
     if (d.w < 0) d.set(-d.x, -d.y, -d.z, -d.w)
     const sin = Math.sqrt(Math.max(1 - d.w * d.w, 0))
@@ -154,7 +240,7 @@ export class Plan extends StopPlan {
     const from = kind === 'dive' ? height(this.aloft(kind, far)) : height(pose)
     const to = kind === 'dive' ? height(pose) : height(this.aloft(kind, far))
     const most = (2 * (to - from) - first * (top - lo) - last * (hi - top)) / (hi - lo)
-    return (this.legs[kind] = {
+    return (this.legs[key] = {
       lo, hi, top, from, rates: [first, most, last], round: w.round, near, far, place, pose,
       out: out(pose), seen: seen(pose), outRate: out(after).sub(out(before)).divideScalar(2 * e), seenRate: seen(after).sub(seen(before)).divideScalar(2 * e), turn,
     })
@@ -165,7 +251,16 @@ export class Plan extends StopPlan {
   }
 
   private path(kind: 'dive' | 'rise', time: number): Pose {
-    const l = this.leg(kind)
+    if (kind === 'dive') return this.ride(kind, time, this.leg(kind))
+    const end = this.seg.terrain.end
+    const w = 1 - smoother((time - end) / (this.fly.bend.until / config.fps - end))
+    const plain = this.ride(kind, time, this.leg(kind, false))
+    if (w <= 0) return plain
+    const bent = this.ride(kind, time, this.leg(kind))
+    return { position: plain.position.lerp(bent.position, w), quaternion: plain.quaternion.slerp(bent.quaternion, w), vfov: mix(plain.vfov, bent.vfov, w) }
+  }
+
+  private ride(kind: 'dive' | 'rise', time: number, l: Leg): Pose {
     const w = this.way[kind]
     const t = Math.min(Math.max(time, l.lo), l.hi)
     const high = this.aloft(kind, t)

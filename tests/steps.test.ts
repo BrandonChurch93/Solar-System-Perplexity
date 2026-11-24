@@ -1,10 +1,11 @@
 import { describe, expect, it } from 'vitest'
+import { config } from '../src/config'
 import { IN_PLACE, frameSteps, type StepLimits, type StepRow } from '../tools/lib/steps'
 
 // The steps between two frames of a dive or a rise (tools/lib/steps.ts): on the mean of the body, and in place on the ground both frames show.
 
 // The limits of the film (handover.limits), the same for both readings.
-const LIMITS: StepLimits = { bodyShare: 0.05, levelStep: 6, colourStep: 8, flatShare: 0.6, inPlaceShare: IN_PLACE.share, inPlace: false }
+const LIMITS: StepLimits = { bodyShare: 0.05, levelStep: 5, colourStep: 8, flatShare: 0.6, inPlaceShare: IN_PLACE.share, inPlace: false }
 const IN_PLACE_LIMITS: StepLimits = { ...LIMITS, inPlace: true }
 
 function row(frame: number, bodyLevel: number, inPlace?: { seen: number; level: number }, more: Partial<StepRow> = {}): StepRow {
@@ -23,7 +24,7 @@ const wash = [row(20, 70), row(21, 71, { seen: 0.8, level: 1 }), row(22, 73.4, {
 describe('the steps between two frames', () => {
   it('are judged on the mean of the body, to the letter as before, where the reading in place is not the judged one', () => {
     const s = frameSteps(opens, LIMITS)
-    expect(s.why).toEqual(['the mean level of the body steps by 7 into frame 12, limit 6'])
+    expect(s.why).toEqual(['the mean level of the body steps by 7 into frame 12, limit 5'])
     expect(s.level).toEqual({ frame: 12, step: 7 })
     expect(s.colour).toEqual({ frame: 12, step: 7 })
     expect(s.whole).toEqual({ frame: 12, step: 3.5 })
@@ -36,8 +37,8 @@ describe('the steps between two frames', () => {
 
   it('tell what each reading would rule, whichever is judged', () => {
     for (const limits of [LIMITS, IN_PLACE_LIMITS]) {
-      expect(frameSteps(opens, limits).fails).toEqual({ body: ['the mean level of the body steps by 7 into frame 12, limit 6'], inPlace: [] })
-      expect(frameSteps(wash, limits).fails).toEqual({ body: [], inPlace: ['the level of the ground two frames both show steps by 6.5 into frame 22, limit 6'] })
+      expect(frameSteps(opens, limits).fails).toEqual({ body: ['the mean level of the body steps by 7 into frame 12, limit 5'], inPlace: [] })
+      expect(frameSteps(wash, limits).fails).toEqual({ body: [], inPlace: ['the level of the ground two frames both show steps by 6.5 into frame 22, limit 5'] })
     }
   })
 
@@ -52,7 +53,7 @@ describe('the steps between two frames', () => {
   it('and a change of the look that the mean of the body hides is one', () => {
     const s = frameSteps(wash, IN_PLACE_LIMITS)
     expect(s.level.step).toBeCloseTo(2.4, 9)
-    expect(s.why).toEqual(['the level of the ground two frames both show steps by 6.5 into frame 22, limit 6'])
+    expect(s.why).toEqual(['the level of the ground two frames both show steps by 6.5 into frame 22, limit 5'])
     const colour = wash.map((r) => (r.frame === 22 ? { ...r, inPlace: { seen: 0.75, level: 2, colour: [9, 1, -1] } } : r))
     expect(frameSteps(colour, IN_PLACE_LIMITS).why).toEqual(['the colour of the ground two frames both show steps by 9 into frame 22, limit 8'])
   })
@@ -64,8 +65,8 @@ describe('the steps between two frames', () => {
     const s = frameSteps(lit, IN_PLACE_LIMITS)
     expect(s.level.step).toBeCloseTo(6.4, 9)
     expect(s.inPlace.level).toEqual({ frame: 42, step: 6.4 })
-    expect(s.fails.body).toEqual(['the mean level of the body steps by 6.4 into frame 42, limit 6'])
-    expect(s.fails.inPlace).toEqual(['the level of the ground two frames both show steps by 6.4 into frame 42, limit 6'])
+    expect(s.fails.body).toEqual(['the mean level of the body steps by 6.4 into frame 42, limit 5'])
+    expect(s.fails.inPlace).toEqual(['the level of the ground two frames both show steps by 6.4 into frame 42, limit 5'])
   })
 
   it('catch in place a step of the light that a frame opening on darker ground hides in the mean of the body', () => {
@@ -74,7 +75,7 @@ describe('the steps between two frames', () => {
     const s = frameSteps(hidden, LIMITS)
     expect(s.why).toEqual([])
     expect(s.fails.body).toEqual([])
-    expect(s.fails.inPlace).toEqual(['the level of the ground two frames both show steps by 6.4 into frame 52, limit 6'])
+    expect(s.fails.inPlace).toEqual(['the level of the ground two frames both show steps by 6.4 into frame 52, limit 5'])
     expect(frameSteps(hidden, IN_PLACE_LIMITS).why).toEqual(s.fails.inPlace)
   })
 
@@ -87,7 +88,7 @@ describe('the steps between two frames', () => {
     expect(s.inPlace.level).toEqual({ frame: 11, step: 0.2 })
     expect(s.inPlace.least).toEqual({ frame: 12, share: 0.33 })
     expect(s.why).toEqual([
-      'the mean level of the body steps by 9.5 into frame 13 (a frame that shares too little ground with the one before to be read in place), limit 6',
+      'the mean level of the body steps by 9.5 into frame 13 (a frame that shares too little ground with the one before to be read in place), limit 5',
       'the mean colour of the body steps by 9.5 into frame 13 (a frame that shares too little ground with the one before to be read in place), limit 8',
     ])
     // The share is the limit's: with a third allowed, frame 12 is read in place again.
@@ -110,10 +111,16 @@ describe('the steps between two frames', () => {
   it('judge the flat share of the body in both readings', () => {
     const flat = opens.map((r) => (r.frame === 13 ? { ...r, flatShare: 0.71 } : r))
     expect(frameSteps(flat, IN_PLACE_LIMITS).why).toEqual(['frame 13 has 71 percent of the body flat, limit 60'])
-    expect(frameSteps(flat, LIMITS).why).toEqual(['the mean level of the body steps by 7 into frame 12, limit 6', 'frame 13 has 71 percent of the body flat, limit 60'])
+    expect(frameSteps(flat, LIMITS).why).toEqual(['the mean level of the body steps by 7 into frame 12, limit 5', 'frame 13 has 71 percent of the body flat, limit 60'])
   })
 
-  it('read the pictures at a quarter of their size, ask for half of the body in both frames, and leave the mean of the body the judged reading', () => {
-    expect(IN_PLACE).toEqual({ scale: 0.25, share: 0.5, judged: false })
+  it('read the pictures at a quarter of their size, ask for half of the body in both frames, and judge the step in place', () => {
+    expect(IN_PLACE).toEqual({ scale: 0.25, share: 0.5, judged: true })
+  })
+
+  it('are held to the limits of the film, which these cases use: 5 levels of the level, 8 of the colour', () => {
+    const film = config.raw.handover.limits
+    expect([film.levelStep, film.colourStep]).toEqual([5, 8])
+    expect([LIMITS.levelStep, LIMITS.colourStep]).toEqual([film.levelStep, film.colourStep])
   })
 })
