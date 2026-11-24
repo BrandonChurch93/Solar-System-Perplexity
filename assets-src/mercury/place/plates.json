@@ -331,5 +331,38 @@
   },
   "columns": 720,
   "out": "src/stops/mercury/matte.json"
+ },
+ "fine": {
+  "file": "fine.png",
+  "seed": 23,
+  "period": 2048,
+  "ss": 2,
+  "pad": 128,
+  "guardShare": 0.03125,
+  "top": 3.0,
+  "cover": 0.06,
+  "radiusPx": [
+   1.5,
+   9
+  ],
+  "rough": [
+   [
+    26,
+    0.05
+   ],
+   [
+    11,
+    0.05
+   ],
+   [
+    5,
+    0.04
+   ],
+   [
+    2.5,
+    0.03
+   ]
+  ],
+  "bandShare": 0.35
  }
 }

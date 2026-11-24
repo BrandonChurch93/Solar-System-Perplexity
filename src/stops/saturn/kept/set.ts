@@ -58,6 +58,7 @@ export const createKept: SetFactory = async (ctx) => {
   const heroL = heroPose.position.clone().applyQuaternion(toTilt)
   const heroM = shotMatrix(heroL, toTilt.clone().multiply(heroPose.quaternion), heroPose.vfov, 16 / 9)
   const poseW = { value: 0 }
+  const holdEndFar = plan.hold(plan.seg.hold.end - plan.seg.hold.start).position.length()
   const polarW = { value: 0 }
   const skimL = plan.skimPosition.clone().applyQuaternion(toTilt)
   const skimM = shotMatrix(skimL, toTilt.clone().multiply(plan.skimQuaternion), plan.p.terrain.vfov, 16 / 9)
@@ -173,9 +174,14 @@ export const createKept: SetFactory = async (ctx) => {
       close.value = 1 - smooth((Math.log(Math.max(Math.abs(camL.y), 1e-3)) - logLo) / (logHi - logLo))
       poseW.value = 1 - smooth((camL.distanceTo(heroL) - look.heroRange[0]) / (look.heroRange[1] - look.heroRange[0]))
       polarW.value = Math.max(smooth((Math.abs(camL.y) - look.polarHeight[0]) / (look.polarHeight[1] - look.polarHeight[0])), smooth((camL.length() - look.polarFar[0]) / (look.polarFar[1] - look.polarFar[0]))) * look.polarShow
-      // in the dive this set stays the far picture: the model takes the picture over before the lens is near,
-      // so what this set shows only near the sheet (the close layout, the skim's haze, the ice) is held out
-      const near = state.time > plan.seg.hold.end ? window.close : 1
+      // this set stays the far picture: the model takes the picture over before the lens is near, so what this
+      // set shows only near the sheet (the close layout, the skim's haze, the ice) is held out. None of it shows
+      // at the heights and distances of the approach and the hold.
+      const near = window.close
+      // how far the lens has come nearer to the globe than it is at the end of the hold: the hold's own look of
+      // the shade and the streak ends over this distance (look.rings.shadeSolid, look.streak.fade), by the
+      // place of the lens and not by the clock
+      const dove = holdEndFar - camL.length()
       close.value *= near
       const away = camL.distanceTo(skimL)
       gate.value = 1 - smooth((away - look.detailRange[0]) / (look.detailRange[1] - look.detailRange[0]))
@@ -228,8 +234,8 @@ export const createKept: SetFactory = async (ctx) => {
       ru.uGain!.value = gain
       ru.uLimbW!.value = gu.uLimbW!.value
       ru.uWeight!.value = state.weight
-      ;(ru.uSolid!.value as THREE.Vector2).x = smooth((state.time - plan.seg.hold.end) / look.rings.shadeSolid[1])
-      const soft = state.time < plan.seg.hold.end ? 0 : (1 - poseW.value) * (1 - close.value)
+      ;(ru.uSolid!.value as THREE.Vector2).x = smooth(dove / look.rings.shadeSolid[1])
+      const soft = smooth(dove / look.rings.shadeSolid[1]) * (1 - poseW.value) * (1 - close.value)
       ;(ru.uPenumbra!.value as THREE.Vector3).set(THREE.MathUtils.lerp(look.rings.penumbra[0], look.rings.penumbraAway[0], soft), THREE.MathUtils.lerp(look.rings.penumbra[1], look.rings.penumbraAway[1], soft), THREE.MathUtils.lerp(look.rings.penumbra[2], look.rings.penumbraAway[2], soft))
       ru.uTime!.value = elapsed
       ru.uSpinRate!.value = spinRate
@@ -268,7 +274,7 @@ export const createKept: SetFactory = async (ctx) => {
       const ku = streak.material.uniforms
       const half = Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2)
       ;(ku.uTan!.value as THREE.Vector2).set(half * view.format.width / view.format.height, half)
-      ku.uGain!.value = gain * state.weight * poseW.value * look.streak.gain * (1 - smooth((state.time - plan.seg.hold.end) / look.streak.fade))
+      ku.uGain!.value = gain * state.weight * poseW.value * look.streak.gain * (1 - smooth(dove / look.streak.fade))
       streak.mesh.visible = inOrbit && poseW.value > 0
 
       turn.setFromAxisAngle(plan.axis, THREE.MathUtils.degToRad(plan.p.moonDegPerSecond) * elapsed)
