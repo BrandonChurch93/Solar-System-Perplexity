@@ -11,7 +11,7 @@ import { sideAt } from '../src/director/handover'
 import { plans } from '../src/director/plans'
 import { SEAM_OWN, SEAM_REACH, curves, eyeCurves, landingCurves, planeHit, ringPlane, sampleLanding, sampleLeave, sampleSeam, sampleWindow, seen, type SeamWindow } from '../tools/smooth/camera'
 import { missing, partOwn, popContext, popSpan, sliceName, sliceNeed } from '../tools/smooth/slice'
-import { buildFault, differ, folderFaults, pieceFault, pieceStem, runFacts, sortFolder } from '../tools/smooth/whole'
+import { buildFault, differ, gather, gatherFaults, pieceStem, roleOf, runFacts, type Given } from '../tools/smooth/whole'
 import { changeNote, judgeCurve, judgeLanding, judgeLeave, judgeSeam, longestGap, parityFrames, peakRows, position, shown, table } from '../tools/smooth/path'
 
 const limits = { maxStep: 0.08, maxRebound: 0.03, seamFrames: 2 }
@@ -743,87 +743,122 @@ describe('the picture between a rise and the travel that leaves the stop', () =>
 })
 
 describe('the report of a stop from the files of several machines', () => {
-  const full = ['venus-part-path.json', 'venus-part-place.json', 'venus-part-parity.json', 'venus-part-counts.json', 'venus-dive-p1of2.json', 'venus-dive-p2of2.json', 'venus-rise-p1of1.json']
+  const run = { stop: 'venus', commit: 'abc', engineHash: 'e1', stopHash: 's1', machine: 'm1', rate: 2, limits: { rate: 2, pictures: { maxPattern: 0.45 } } }
+  const held = (only: string[], over: object = {}): object => ({ ...run, kinds: ['dive', 'rise'], only, parts: Object.fromEntries(only.map((p) => [p, { measured: true, pass: true, why: [], n: p.length }])), ...over })
+  const slice = (kind: string, over: object = {}): object => ({ ...run, kinds: [kind], only: ['pictures'], slice: { name: 'p1of2' }, parts: { pictures: { measured: true } }, ...over })
   const moves = ['dive', 'rise']
+  const asSent: Given[] = [
+    { file: 'a/venus.json', j: held(['path', 'place', 'parity']) },
+    { file: 'b/venus.json', j: held(['counts'], { machine: 'm2' }) },
+    { file: 'c/venus-dive-p2of2.json', j: slice('dive') },
+    { file: 'c/venus-dive-p1of2.json', j: slice('dive') },
+    { file: 'c/venus-rise-p1of1.json', j: slice('rise') },
+  ]
 
-  it('names a part file by the stop, the move and the part', () => {
-    expect(pieceStem('venus', null, 'counts')).toBe('venus-part-counts')
-    expect(pieceStem('venus', 'rise', 'place')).toBe('venus-rise-part-place')
+  it('names a part file by the stop, the move and the parts', () => {
+    expect(pieceStem('venus', null, ['counts'])).toBe('venus-part-counts')
+    expect(pieceStem('venus', null, ['path', 'place', 'parity'])).toBe('venus-part-path-place-parity')
+    expect(pieceStem('venus', 'rise', ['place'])).toBe('venus-rise-part-place')
   })
 
-  it('sorts a folder into the slices of each move and the part files, and leaves every other file alone', () => {
-    const found = sortFolder('venus', [...full, 'venus.json', 'venus-dive.json', 'venus-landing.json', 'venus-dive-p10of12.json', 'venus-dive-p9of12.json', 'venus-dive-k2500-2510.json', 'venus-part-path.md', 'mars-part-path.json', 'venus-part-pictures.json', 'venus-rise-part-place.json', 'venus-dive-p1of2-pops.png'])
-    expect(found.slices.dive).toEqual(['venus-dive-k2500-2510.json', 'venus-dive-p1of2.json', 'venus-dive-p2of2.json', 'venus-dive-p9of12.json', 'venus-dive-p10of12.json'])
-    expect(found.slices.rise).toEqual(['venus-rise-p1of1.json'])
-    expect(found.pieces.map((p) => p.file + ':' + p.piece + ':' + p.kind)).toEqual(['venus-part-counts.json:counts:null', 'venus-part-parity.json:parity:null', 'venus-part-path.json:path:null', 'venus-part-place.json:place:null', 'venus-rise-part-place.json:place:rise'])
+  it('takes a file by what it holds, not by its name', () => {
+    expect(roleOf('venus', held(['path', 'place', 'parity']))).toEqual({ is: 'parts', holds: ['path', 'place', 'parity'], kind: null })
+    expect(roleOf('venus', held(['counts']))).toEqual({ is: 'parts', holds: ['counts'], kind: null })
+    expect(roleOf('venus', held(['place'], { kinds: ['rise'] }))).toEqual({ is: 'parts', holds: ['place'], kind: 'rise' })
+    expect(roleOf('venus', slice('dive'))).toEqual({ is: 'slice', kind: 'dive' })
   })
 
-  it('finds nothing wrong in a whole folder, with the place in one file or in one a move', () => {
-    expect(folderFaults('venus', sortFolder('venus', full), moves)).toEqual([])
-    const split = [...full.filter((f) => f !== 'venus-part-place.json'), 'venus-dive-part-place.json', 'venus-rise-part-place.json']
-    expect(folderFaults('venus', sortFolder('venus', split), moves)).toEqual([])
+  it('leaves alone what is no part of the report: another stop, a whole or joined report, the landing, one move of the path', () => {
+    const why = (j: unknown): string => {
+      const r = roleOf('venus', j)
+      return r.is === 'other' ? r.why : 'TAKEN'
+    }
+    expect(why(null)).toBe('not a report')
+    expect(why([1])).toBe('not a report')
+    expect(why(held(['counts'], { stop: 'mars' }))).toBe('not a report of venus')
+    expect(why(held(['path', 'pictures', 'place', 'parity', 'counts']))).toBe('a report with the pictures of one run')
+    expect(why(held(['path', 'place', 'parity', 'counts'], { joined: [] }))).toBe('a joined report')
+    expect(why({ ...(slice('dive') as object), joined: [] })).toBe('a joined report')
+    expect(why(held(['path'], { kinds: [] }))).toBe('the landing')
+    expect(why(held(['path', 'place'], { kinds: ['dive'] }))).toContain('one move alone')
+    expect(why(held(['counts'], { parts: {} }))).toBe('not a report')
+    expect(why(held(['counts', 'sound']))).toBe('not a report')
+    expect(why(slice('dive', { only: ['place'] }))).toContain('a slice of something else')
+  })
+
+  it('gathers the files as the machines send them back, two of them with the same name', () => {
+    const g = gather('venus', asSent)
+    expect(g.slices.dive!.map((x) => x.file)).toEqual(['c/venus-dive-p1of2.json', 'c/venus-dive-p2of2.json'])
+    expect(g.slices.rise!.map((x) => x.file)).toEqual(['c/venus-rise-p1of1.json'])
+    expect(Object.fromEntries(Object.entries(g.holders).map(([k, v]) => [k, v.map((h) => h.file)]))).toEqual({ path: ['a/venus.json'], place: ['a/venus.json'], parity: ['a/venus.json'], counts: ['b/venus.json'] })
+    expect(gatherFaults('venus', g, moves)).toEqual([])
+    expect(g.ignored).toEqual([])
+  })
+
+  it('sorts the slices by their number and notes what it does not take', () => {
+    const g = gather('venus', [...asSent, { file: 'c/venus-dive-p10of12.json', j: slice('dive') }, { file: 'c/venus-dive-p9of12.json', j: slice('dive') }, { file: 'c/venus.json', j: held(['path', 'pictures', 'place', 'parity', 'counts']) }, { file: 'c/mars.json', j: held(['counts'], { stop: 'mars' }) }, { file: 'c/broken.json', j: null }])
+    expect(g.slices.dive!.map((x) => x.file)).toEqual(['c/venus-dive-p1of2.json', 'c/venus-dive-p2of2.json', 'c/venus-dive-p9of12.json', 'c/venus-dive-p10of12.json'])
+    expect(g.ignored).toEqual([{ file: 'c/venus.json', why: 'a report with the pictures of one run' }])
   })
 
   it('names every part that is missing, with the command that writes it', () => {
-    const faults = folderFaults('venus', sortFolder('venus', ['venus-part-path.json', 'venus-dive-p1of2.json']), moves)
-    expect(faults).toHaveLength(4)
-    expect(faults[0]).toContain('missing: the place (venus-part-place.json, npm run smooth -- --stop venus --part place')
-    expect(faults[1]).toBe('missing: the parity (venus-part-parity.json, npm run smooth -- --stop venus --part parity)')
-    expect(faults[2]).toBe('missing: the counts (venus-part-counts.json, npm run smooth -- --stop venus --part counts)')
-    expect(faults[3]).toBe('missing: the pictures of the rise (venus-rise-pIofN.json, npm run smooth -- --stop venus --kind rise --only pictures --part I/N)')
-    expect(folderFaults('venus', sortFolder('venus', []), moves)).toHaveLength(6)
+    const faults = gatherFaults('venus', gather('venus', [asSent[1]!, asSent[2]!]), moves)
+    expect(faults).toEqual([
+      'missing: the path (npm run smooth -- --stop venus --part path, or a run with --only that holds it)',
+      'missing: the place (npm run smooth -- --stop venus --part place, or a run with --only that holds it)',
+      'missing: the parity (npm run smooth -- --stop venus --part parity, or a run with --only that holds it)',
+      'missing: the pictures of the rise (npm run smooth -- --stop venus --kind rise --only pictures --part I/N)',
+    ])
+    expect(gatherFaults('venus', gather('venus', []), moves)).toHaveLength(6)
   })
 
   it('asks for no pictures of a move the stop does not have', () => {
-    expect(folderFaults('sun', sortFolder('sun', ['sun-part-path.json', 'sun-part-place.json', 'sun-part-parity.json', 'sun-part-counts.json', 'sun-rise-p1of1.json']), ['rise'])).toEqual([])
+    const g = gather('sun', [{ file: 'sun.json', j: held(['path', 'place', 'parity', 'counts'], { stop: 'sun' }) }, { file: 'sun-rise-p1of1.json', j: slice('rise', { stop: 'sun' }) }])
+    expect(gatherFaults('sun', g, ['rise'])).toEqual([])
   })
 
-  it('refuses the place twice, one move of the place alone, and a move on a part of the whole stop', () => {
-    const twice = folderFaults('venus', sortFolder('venus', [...full, 'venus-dive-part-place.json']), moves)
-    expect(twice).toEqual(['twice: the place is in venus-part-place.json and in venus-dive-part-place.json'])
-    const half = folderFaults('venus', sortFolder('venus', [...full.filter((f) => f !== 'venus-part-place.json'), 'venus-dive-part-place.json']), moves)
-    expect(half).toEqual(['missing: the place of the rise (venus-rise-part-place.json, npm run smooth -- --stop venus --part place --kind rise)'])
-    const kind = folderFaults('venus', sortFolder('venus', [...full, 'venus-dive-part-counts.json']), moves)
-    expect(kind).toEqual(['venus-dive-part-counts.json: the counts is one part of the whole stop, it has no --kind'])
+  it('takes the place from one file a move, and names the move that is missing', () => {
+    const rest: Given[] = [{ file: 'a.json', j: held(['path', 'parity', 'counts']) }, ...asSent.slice(2)]
+    const dive = { file: 'venus-dive-part-place.json', j: held(['place'], { kinds: ['dive'] }) }
+    const rise = { file: 'venus-rise-part-place.json', j: held(['place'], { kinds: ['rise'] }) }
+    expect(gatherFaults('venus', gather('venus', [...rest, dive, rise]), moves)).toEqual([])
+    expect(gatherFaults('venus', gather('venus', [...rest, dive]), moves)).toEqual(['missing: the place of the rise (npm run smooth -- --stop venus --part place --kind rise)'])
+    expect(gatherFaults('venus', gather('venus', [...asSent, dive]), moves)).toEqual(['twice: the place is in a/venus.json, venus-dive-part-place.json with other numbers or from another run'])
   })
 
-  const file = (over: object = {}): Parameters<typeof pieceFault>[2] => ({ stop: 'venus', commit: 'abc', engineHash: 'e1', stopHash: 's1', machine: 'm', rate: 2, kinds: ['dive', 'rise'], only: ['counts'], limits: { rate: 2, pictures: { maxPattern: 0.45 } }, piece: { name: 'counts', seconds: 3 }, parts: { counts: { measured: true } }, ...over })
-
-  it('takes a part file only when it is what its name says', () => {
-    const name = { file: 'venus-part-counts.json', piece: 'counts', kind: null }
-    expect(pieceFault('venus', name, file())).toBe('')
-    expect(pieceFault('venus', name, file({ stop: 'mars' }))).toContain('is not the part file of the counts of venus')
-    expect(pieceFault('venus', name, file({ piece: undefined }))).not.toBe('')
-    expect(pieceFault('venus', name, file({ only: ['path', 'pictures', 'place', 'parity', 'counts'] }))).not.toBe('')
-    expect(pieceFault('venus', name, file({ kinds: ['dive'] }))).not.toBe('')
-    expect(pieceFault('venus', name, file({ parts: { parity: { measured: true } } }))).not.toBe('')
-    expect(pieceFault('venus', name, file({ parts: { counts: { measured: false } } }))).toBe('')
-    const place = { file: 'venus-rise-part-place.json', piece: 'place', kind: 'rise' }
-    expect(pieceFault('venus', place, file({ only: ['place'], kinds: ['rise'], piece: { name: 'place', seconds: 1 }, parts: { place: { measured: true } } }))).toBe('')
-    expect(pieceFault('venus', place, file({ only: ['place'], piece: { name: 'place', seconds: 1 }, parts: { place: { measured: true } } }))).toContain('--part place --kind rise')
+  it('takes once what two files hold alike from one run of one machine, and refuses a part there twice in any other way', () => {
+    const copy = gather('venus', [...asSent, { file: 'tar/venus.json', j: held(['path', 'place', 'parity']) }])
+    expect(gatherFaults('venus', copy, moves)).toEqual([])
+    expect(copy.same).toEqual(['the path of tar/venus.json is the path of a/venus.json once more: taken once', 'the place of tar/venus.json is the place of a/venus.json once more: taken once', 'the parity of tar/venus.json is the parity of a/venus.json once more: taken once'])
+    const other = (over: object): string[] => gatherFaults('venus', gather('venus', [...asSent, { file: 'z.json', j: held(['counts'], over) }]), moves)
+    expect(other({ machine: 'm2' })).toEqual([])
+    expect(other({ machine: 'm3' })).toEqual(['twice: the counts is in b/venus.json, z.json with other numbers or from another run'])
+    expect(other({ machine: 'm2', commit: 'abd' })).toHaveLength(1)
+    expect(other({ machine: 'm2', parts: { counts: { measured: true, pass: false, why: ['x'] } } })).toHaveLength(1)
   })
 
   it('finds the first fact in which two files are not one run', () => {
-    const a = runFacts(file())
-    expect(differ(a, runFacts(file({ machine: 'another' })))).toBeNull()
-    expect(differ(runFacts(file({ commit: 'abd' })), a)).toBe('commit ("abd" against "abc")')
-    expect(differ(runFacts(file({ engineHash: 'e2' })), a)).toBe('engine hash ("e2" against "e1")')
-    expect(differ(runFacts(file({ stopHash: 's2' })), a)).toBe('stop hash ("s2" against "s1")')
-    expect(differ(runFacts(file({ rate: 1 })), a)).toBe('capture rate (1 against 2)')
-    expect(differ(runFacts(file({ limits: { rate: 2, pictures: { maxPattern: 0.5 } } })), a)).toContain('limits')
+    const a = runFacts(run)
+    const elsewhere = { ...run, machine: 'another' }
+    expect(differ(a, runFacts(elsewhere))).toBeNull()
+    expect(differ(runFacts({ ...run, commit: 'abd' }), a)).toBe('commit ("abd" against "abc")')
+    expect(differ(runFacts({ ...run, engineHash: 'e2' }), a)).toBe('engine hash ("e2" against "e1")')
+    expect(differ(runFacts({ ...run, engineHash: null }), a)).toBe('engine hash (null against "e1")')
+    expect(differ(runFacts({ ...run, stopHash: 's2' }), a)).toBe('stop hash ("s2" against "s1")')
+    expect(differ(runFacts({ ...run, rate: 1 }), a)).toBe('capture rate (1 against 2)')
+    expect(differ(runFacts({ ...run, limits: { rate: 2, pictures: { maxPattern: 0.5 } } }), a)).toContain('limits')
   })
 
   it('refuses files of another build than the tree that joins them, and takes a named commit', () => {
-    const parts = runFacts(file())
-    expect(buildFault(parts, runFacts(file()))).toBe('')
-    expect(buildFault(parts, runFacts(file({ commit: 'fff' })))).toContain('the parts and this tree differ in the commit ("abc" against "fff")')
-    expect(buildFault(parts, runFacts(file({ commit: 'fff' })))).toContain('--commit abc')
-    expect(buildFault(parts, runFacts(file({ commit: 'fff' })), 'abc')).toBe('')
-    expect(buildFault(parts, runFacts(file({ commit: 'fff' })), 'abd')).toBe('the parts are of commit abc, --commit names abd')
-    expect(buildFault(parts, runFacts(file({ commit: 'fff', engineHash: 'e2' })), 'abc')).toContain('differ in the engine hash')
-    expect(buildFault(parts, runFacts(file({ stopHash: 's2' })))).toContain('differ in the stop hash')
-    expect(buildFault(parts, runFacts(file({ rate: 1 })))).toContain('differ in the capture rate')
-    expect(buildFault(parts, runFacts(file({ limits: { rate: 2, pictures: { maxPattern: 0.5 } } })))).toContain('differ in the limits')
-    expect(buildFault(runFacts(file({ commit: 'abc with changes that are not committed' })), runFacts(file()))).toContain('differ in the commit')
+    const parts = runFacts(run)
+    expect(buildFault(parts, runFacts(run))).toBe('')
+    expect(buildFault(parts, runFacts({ ...run, commit: 'fff' }))).toBe('the parts and this tree differ in the commit ("abc" against "fff"): join at that commit, or name it with --commit abc')
+    expect(buildFault(parts, runFacts({ ...run, commit: 'fff' }), 'abc')).toBe('')
+    expect(buildFault(parts, runFacts({ ...run, commit: 'fff' }), 'abd')).toBe('the parts are of commit abc, --commit names abd')
+    expect(buildFault(parts, runFacts({ ...run, commit: 'fff', engineHash: 'e2' }), 'abc')).toContain('differ in the engine hash')
+    expect(buildFault(parts, runFacts({ ...run, stopHash: 's2' }))).toContain('differ in the stop hash')
+    expect(buildFault(parts, runFacts({ ...run, rate: 1 }))).toContain('differ in the capture rate')
+    expect(buildFault(parts, runFacts({ ...run, limits: { rate: 2, pictures: { maxPattern: 0.5 } } }))).toContain('differ in the limits')
+    expect(buildFault(runFacts({ ...run, commit: 'abc with changes that are not committed' }), runFacts(run))).toContain('differ in the commit')
   })
 })

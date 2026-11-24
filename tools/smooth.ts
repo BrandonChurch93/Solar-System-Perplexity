@@ -1,5 +1,5 @@
 import { execFileSync } from 'node:child_process'
-import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { DIST, ROOT, WORK, args, ensureBuild, formatId, loadConfig, machineId, requireDisk } from './lib/common'
 import { openCapture, renderPng, type Session } from './lib/browser'
@@ -12,7 +12,7 @@ import type { Pose } from '../src/core/types'
 import { plans } from '../src/director/plans'
 import { LANDING_FROM, MIN_POINTS, SEAM_OWN, SEAM_REACH, carriedCamera, curves, eyeCurves, landingCurves, ringPlane, sampleLanding, sampleLeave, sampleSeam, sampleWindow, sphereHit, type Kind, type Plane, type Ring } from './smooth/camera'
 import { missing, partOwn, popContext, sliceName, sliceNeed, type Span } from './smooth/slice'
-import { MOVES, PIECES, buildFault, differ, folderFaults, pieceFault, pieceStem, runFacts, sortFolder, type Facts, type PieceFile } from './smooth/whole'
+import { MOVES, PIECES, buildFault, differ, gather, gatherFaults, pieceStem, runFacts, type Facts, type Given } from './smooth/whole'
 import { LANDING_FLOOR, LANDING_LATE, LANDING_SHOWN, changeNote, judgeCurve, judgeLanding, judgeLeave, judgeSeam, longestGap, parityFrames, peakRows, position, shown, table, type CurveResult, type Fault, type LandingResult, type LeaveResult, type Row, type SeamResult } from './smooth/path'
 
 // The measures of a smooth dive and rise (kit/PROGRESS.md, second review note of 2026-11-23, plan I). One stop.
@@ -61,12 +61,14 @@ import { LANDING_FLOOR, LANDING_LATE, LANDING_SHOWN, changeNote, judgeCurve, jud
 //           <stop>-<kind>-pIofN.md, .json and its own panels. --kind dive|rise --only pictures --join [FOLDER] reads every such .json of the
 //           move in the folder (out/work/smooth by default), renders nothing and writes <stop>-<kind>.md and .json as the whole run does,
 //           judged by the limits the parts carry; it names the frames no part owns and exits 2 then.
-//           The whole report from several machines: --part path|place|parity|counts measures that part alone and writes the part file
-//           <stop>-part-<name>.json and .md (the place also for one move, --part place --kind dive|rise: <stop>-<kind>-part-place). --join
-//           [FOLDER] with neither --kind nor --only reads these and the slices of the pictures of both moves, opens no browser and writes
-//           <stop>.json and .md as the whole run does; it refuses files that are not one run or not this build (commit, engine hash, stop
-//           hash, rate, limits; --commit SHA names the commit of the parts when the join runs at another), names every part that is missing
-//           or there twice and writes nothing then (exit 2). The report says which machine wrote which part.
+//           The whole report from several machines: --join [PATHS] with neither --kind nor --only reads every .json of the folders and files
+//           named (a comma list; out/work/smooth by default), takes each by what it holds (the slices of the pictures of both moves, and
+//           the path, the place, the parity and the counts from runs with --only or --part, the place also one file a move), opens no
+//           browser and writes <stop>.json and .md as the whole run does. It refuses files that are not one run or not this build (commit,
+//           engine hash, stop hash, rate, limits; --commit SHA names the commit of the parts when the join runs at another), names every
+//           part that is missing or there twice and writes nothing then (exit 2). The report says which machine wrote which part.
+//           --part path,place,parity,counts (one or more) is --only with a file name of its own, <stop>-part-<names>.json and .md, so that
+//           two runs in one folder do not write over each other; --part place --kind dive|rise writes <stop>-<kind>-part-place.
 // Everything is written to out/work/smooth/<stop>.json and .md (<stop>-<kind> when --kind is given). Exit 1 when a number is over its limit in config smooth, or when a part that was
 // asked for could not be measured. --calibrate writes every number and exits 0: the run that sets the limits.
 
@@ -79,12 +81,12 @@ if (!stop || !cfg.stopIds.includes(stop)) {
 }
 const PARTS = ['path', 'pictures', 'place', 'parity', 'counts']
 const landing = a.kind === 'landing'
-const piece = a.part !== undefined && PIECES.includes(a.part) ? a.part : null
-if (piece && (a.only !== undefined || a.frames !== undefined || a.join !== undefined || landing || (a.kind !== undefined && piece !== 'place'))) {
-  console.error('smooth: a part file is --part ' + PIECES.join('|') + ' alone (the place also with --kind dive|rise): no --only, --frames, --join')
+const piece = a.part !== undefined && a.part.split(',').every((p) => PIECES.includes(p)) ? PIECES.filter((p) => a.part!.split(',').includes(p)) : null
+if (piece && (a.only !== undefined || a.frames !== undefined || a.join !== undefined || landing || (a.kind !== undefined && piece.join() !== 'place'))) {
+  console.error('smooth: a part file is --part with one or more of ' + PIECES.join(', ') + ' (the place alone also with --kind dive|rise): no --only, --frames, --join')
   process.exit(2)
 }
-const only = piece ? [piece] : a.only ? a.only.split(',') : landing ? ['path'] : PARTS
+const only = piece ?? (a.only ? a.only.split(',') : landing ? ['path'] : PARTS)
 for (const p of only) {
   if (!PARTS.includes(p)) {
     console.error('smooth: --only takes ' + PARTS.join(', '))
@@ -429,14 +431,22 @@ interface PartFile { name: string; machine: string; slice: SliceInfo & { rendere
 interface Joined { folder: string; files: PartFile[]; limits: typeof cfg.raw.smooth; rate: number; commit: string; engineHash: string | null; stopHash: string | null; machine: string; tier: string; note?: string }
 
 // The parts of one move as the slices wrote them. They are one run only if they agree in everything that sets a number.
+interface SliceFile { stop: string; commit: string; engineHash: string | null; stopHash: string | null; machine: string; rate: number; kinds: string[]; only: string[]; limits: typeof cfg.raw.smooth; slice?: PartFile['slice']; parts: { pictures?: PicturesPart } }
+
 function readParts(folder: string, kind: string): Joined {
+  const names = existsSync(folder) ? readdirSync(folder).filter((f) => new RegExp('^' + stop + '-' + kind + '-(p\\d+of\\d+|k\\d+-\\d+)\\.json$').test(f)).sort((x, y) => x.localeCompare(y, 'en', { numeric: true })) : []
+  if (names.length === 0) {
+    console.error('smooth: no part of the ' + kind + ' of ' + stop + ' in ' + folder + ' (' + stop + '-' + kind + '-pIofN.json)')
+    process.exit(2)
+  }
+  return readSlices(folder, kind, names.map((name) => ({ name, j: JSON.parse(readFileSync(join(folder, name), 'utf8')) as SliceFile })))
+}
+
+function readSlices(folder: string, kind: string, read: { name: string; j: SliceFile }[]): Joined {
   const fail = (text: string): never => {
     console.error('smooth: ' + text)
     process.exit(2)
   }
-  const names = existsSync(folder) ? readdirSync(folder).filter((f) => new RegExp('^' + stop + '-' + kind + '-(p\\d+of\\d+|k\\d+-\\d+)\\.json$').test(f)).sort((x, y) => x.localeCompare(y, 'en', { numeric: true })) : []
-  if (names.length === 0) fail('no part of the ' + kind + ' of ' + stop + ' in ' + folder + ' (' + stop + '-' + kind + '-pIofN.json)')
-  const read = names.map((name) => ({ name, j: JSON.parse(readFileSync(join(folder, name), 'utf8')) as { stop: string; commit: string; engineHash: string | null; stopHash: string | null; machine: string; rate: number; kinds: string[]; only: string[]; limits: typeof cfg.raw.smooth; slice?: PartFile['slice']; parts: { pictures?: PicturesPart } } }))
   const facts = (x: (typeof read)[number]): [string, unknown][] => {
     const p = x.j.parts.pictures
     const k = p?.kinds[kind]
@@ -502,25 +512,36 @@ function joinPart(j: Joined, kind: Kind): PicturesPart {
   return { measured: true, pass: sums.why.length === 0, why: sums.why.map((w) => kind + ': ' + w), kinds: { [kind]: out }, ...rest }
 }
 
-interface Whole { parts: Record<string, PartResult>; commit: string; engineHash: string | null; stopHash: string | null; machine: string; files: Record<string, unknown>[]; slices: [Kind, Joined][] }
+interface Whole { parts: Record<string, PartResult>; commit: string; engineHash: string | null; stopHash: string | null; machine: string; files: Record<string, unknown>[]; slices: [Kind, Joined][]; same: string[] }
 
-function joinWhole(folder: string): Whole {
+function joinWhole(given: string[]): Whole {
   const fail = (lines: string[]): never => {
     for (const l of lines) console.error('smooth: ' + l)
     process.exit(2)
   }
-  const found = sortFolder(stop!, existsSync(folder) ? readdirSync(folder) : [])
+  const files: Given[] = []
+  for (const g of given) {
+    if (!existsSync(g)) fail(['--join: there is no ' + g])
+    const list = statSync(g).isDirectory() ? readdirSync(g).filter((f) => f.endsWith('.json')).map((f) => join(g, f)) : [g]
+    for (const file of list) {
+      let j: unknown = null
+      try {
+        j = JSON.parse(readFileSync(file, 'utf8'))
+      } catch {
+        j = null
+      }
+      files.push({ file, j })
+    }
+  }
+  const found = gather(stop!, files)
   const moves = (MOVES as Kind[]).filter((k) => cfg.segments.some((s) => s.stop === stop && s.kind === k))
   if (moves.length === 0) fail([stop + ' has no dive and no rise: there is no report to join'])
-  const faults = folderFaults(stop!, found, moves)
-  if (faults.length > 0) fail([folder + ' does not hold the whole report of ' + stop + ':', ...faults.map((f) => '  ' + f)])
-  const pieces = found.pieces.map((name) => ({ name, j: JSON.parse(readFileSync(join(folder, name.file), 'utf8')) as PieceFile & { parts: Record<string, PartResult & { kinds?: Record<string, unknown> }> } }))
-  for (const p of pieces) {
-    const bad = pieceFault(stop!, p.name, p.j)
-    if (bad) fail([bad])
-  }
-  const slices: [Kind, Joined][] = moves.map((kind) => [kind, readParts(folder, kind)])
-  const runs: { file: string; facts: Facts }[] = [...pieces.map((p) => ({ file: p.name.file, facts: runFacts(p.j) })), ...slices.map(([, j]) => ({ file: j.files[0]!.name + '.json', facts: [...runFacts(j)] }))]
+  const head = given.join(', ') + ' does not hold the whole report of ' + stop + ':'
+  const faults = gatherFaults(stop!, found, moves)
+  if (faults.length > 0) fail([head, ...faults.map((f) => '  ' + f), ...found.ignored.map((x) => '  not taken: ' + x.file + ' (' + x.why + ')')])
+  const slices: [Kind, Joined][] = moves.map((kind) => [kind, readSlices(given.join(', '), kind, found.slices[kind]!.map((x) => ({ name: x.file, j: x.j as SliceFile })))])
+  const holders = PIECES.flatMap((piece) => found.holders[piece]!.map((h) => ({ piece, ...h })))
+  const runs: { file: string; facts: Facts }[] = [...holders.map((h) => ({ file: h.file, facts: runFacts(h.j) })), ...slices.map(([, j]) => ({ file: j.files[0]!.name + '.json', facts: runFacts(j) }))]
   for (const x of runs.slice(1)) {
     const d = differ(x.facts, runs[0]!.facts)
     if (d) fail([x.file + ' and ' + runs[0]!.file + ' differ in the ' + d + ': the parts of one report are made at one commit'])
@@ -553,35 +574,33 @@ function joinWhole(folder: string): Whole {
       drawn += x.slice.rendered
     }
   }
-  if (lost.length > 0) fail([folder + ' does not hold the whole report of ' + stop + ':', ...lost.map((l) => '  ' + l)])
+  if (lost.length > 0) fail([head, ...lost.map((l) => '  ' + l)])
   const { note, ...tierRate } = rest!
   const pictures: PicturesPart = { measured: true, pass: why.length === 0, why, kinds: kindsOut, ...tierRate, secondsAFrame: drawn > 0 ? Number((seconds / drawn).toFixed(2)) : null, ...(note ? { note } : {}) }
-  const of = (name: string, kind: string | null = null): (typeof pieces)[number] | undefined => pieces.find((p) => p.name.piece === name && p.name.kind === kind)
-  let place: PartResult
-  if (of('place')) place = of('place')!.j.parts.place!
-  else {
+  const of = (piece: string): PartResult => {
+    const have = found.holders[piece]!
+    if (have[0]!.kind === null) return have[0]!.j.parts![piece] as PartResult
     const both: Record<string, unknown> = {}
     const red: string[] = []
     for (const kind of MOVES) {
-      const p = of('place', kind)!.j.parts.place!
+      const p = have.find((x) => x.kind === kind)!.j.parts![piece]!
       both[kind] = p.kinds?.[kind] ?? null
-      red.push(...p.why)
+      red.push(...(p.why ?? []))
     }
-    place = { measured: true, pass: red.length === 0, why: red, kinds: both } as PartResult
+    return { measured: true, pass: red.length === 0, why: red, kinds: both } as PartResult
   }
-  const entry = (p: (typeof pieces)[number]): Record<string, unknown> => ({ file: p.name.file.slice(0, -'.json'.length), machine: p.j.machine, holds: p.name.piece, ...(p.name.kind ? { kind: p.name.kind } : {}), seconds: p.j.piece!.seconds })
-  const files = [
-    entry(of('path')!),
+  const short = (file: string): string => (file.endsWith('.json') ? file.slice(0, -'.json'.length) : file)
+  const entry = (x: (typeof holders)[number]): Record<string, unknown> => ({ file: short(x.file), machine: x.j.machine, holds: x.piece, ...(x.kind ? { kind: x.kind } : {}), ...(x.j.seconds === undefined ? {} : { seconds: x.j.seconds }) })
+  const list = [
+    ...holders.filter((x) => x.piece === 'path').map(entry),
     ...slices.flatMap(([kind, j]) => j.files.map((x) => ({ file: x.name, machine: x.machine, holds: 'pictures', kind, ...x.slice }))),
-    ...pieces.filter((p) => p.name.piece === 'place').map(entry),
-    entry(of('parity')!),
-    entry(of('counts')!),
+    ...holders.filter((x) => x.piece !== 'path').map(entry),
   ]
   const f = runs[0]!.facts
   return {
-    parts: { path: of('path')!.j.parts.path!, pictures, place, parity: of('parity')!.j.parts.parity!, counts: of('counts')!.j.parts.counts! },
+    parts: { path: of('path'), pictures, place: of('place'), parity: of('parity'), counts: of('counts') },
     commit: f[0]![1] as string, engineHash: f[1]![1] as string | null, stopHash: f[2]![1] as string | null,
-    machine: [...new Set(files.map((x) => String(x.machine)))].join(', '), files, slices,
+    machine: [...new Set(list.map((x) => String(x.machine)))].join(', '), files: list, slices, same: found.same,
   }
 }
 
@@ -1048,7 +1067,7 @@ async function measureParts(parts: Record<string, PartResult>): Promise<void> {
 }
 
 async function main(): Promise<void> {
-  const all = whole ? joinWhole(a.join === 'true' ? dir : a.join!) : null
+  const all = whole ? joinWhole(a.join === 'true' ? [dir] : a.join!.split(',')) : null
   const parts: Record<string, PartResult> = all ? all.parts : {}
   if (!all) await measureParts(parts)
   if (piece) hashes ??= computeHashes(ROOT)
@@ -1056,14 +1075,15 @@ async function main(): Promise<void> {
   const pass = why.length === 0
   const made = all ? { commit: all.commit, engineHash: all.engineHash, stopHash: all.stopHash, machine: all.machine } : joined ? { commit: joined.commit, engineHash: joined.engineHash, stopHash: joined.stopHash, machine: joined.machine } : { commit: commit(), engineHash: hashes?.engine ?? null, stopHash: hashes?.stops[stop!] ?? null, machine: machineId() }
   const took = Number(((Date.now() - started) / 1000).toFixed(1))
-  const out = { stop, ...made, rate, calibrate, kinds, only, limits: S, pass, why, parts, ...(slice ? { slice: { ...slice, rendered, seconds: Number(renderSeconds.toFixed(2)) } } : {}), ...(piece ? { piece: { name: piece, seconds: took } } : {}), ...(joined ? { joined: joined.files.map((x) => ({ file: x.name, machine: x.machine, ...x.slice })) } : {}), ...(all ? { joined: all.files } : {}) }
+  const out = { stop, ...made, rate, calibrate, kinds, only, limits: S, pass, why, parts, ...(slice ? { slice: { ...slice, rendered, seconds: Number(renderSeconds.toFixed(2)) } } : {}), ...(joining ? {} : { seconds: took }), ...(joined ? { joined: joined.files.map((x) => ({ file: x.name, machine: x.machine, ...x.slice })) } : {}), ...(all ? { joined: all.files } : {}) }
   json(join(dir, stem + '.json'), out)
   const lines = ['# smooth: ' + stop, '', 'Commit ' + out.commit + '. Capture rate ' + rate + '. Parts: ' + only.join(', ') + '.' + (calibrate ? ' A calibration run: every number is written, the exit code is 0.' : ''), '']
-  if (piece) lines.push('A part file of the report of ' + stop + ' (--part ' + piece + (a.kind ? ' --kind ' + a.kind : '') + '), written in ' + took + ' s on ' + made.machine + '. The verdict here is of this part alone: the report of the stop is the join of all its parts (--join).', '')
+  if (piece) lines.push('A part file of the report of ' + stop + ' (--part ' + piece.join(',') + (a.kind ? ' --kind ' + a.kind : '') + '), written in ' + took + ' s on ' + made.machine + '. The verdict here is of this part alone: the report of the stop is the join of all its parts (--join).', '')
   if (all) {
     const who = (x: Record<string, unknown>): string => String(x.file) + ' (' + String(x.machine) + ')'
     const by = (holds: string, kind?: string): string => all.files.filter((x) => x.holds === holds && (kind === undefined || x.kind === kind)).map(who).join(', ')
-    lines.push('Joined from ' + all.files.length + ' files, nothing is rendered, measured or counted here. The path: ' + by('path') + '. The pictures: ' + all.slices.map(([kind]) => 'the ' + kind + ' ' + by('pictures', kind)).join('; ') + '. The place: ' + by('place') + '. The parity: ' + by('parity') + '. The counts: ' + by('counts') + '.', '')
+    lines.push('Joined from the files of ' + new Set(all.files.map((x) => x.machine)).size + ' machine(s), nothing is rendered, measured or counted here. The path: ' + by('path') + '. The pictures: ' + all.slices.map(([kind]) => 'the ' + kind + ' ' + by('pictures', kind)).join('; ') + '. The place: ' + by('place') + '. The parity: ' + by('parity') + '. The counts: ' + by('counts') + '.', '')
+    for (const t of all.same) console.log('smooth ' + stop + ': ' + t)
   }
   lines.push(pass ? 'VERDICT: green. No number is over its limit.' : 'VERDICT: red. ' + why.length + ' number' + (why.length === 1 ? '' : 's') + ' over the limit or not measured.', '')
   for (const [name, p] of Object.entries(parts)) {
@@ -1087,7 +1107,7 @@ async function main(): Promise<void> {
     if (name === 'place') for (const kind of kinds) lines.push(...placeText(kind, (p as Awaited<ReturnType<typeof placePart>>).kinds[kind] ?? null))
   }
   writeFileSync(join(dir, stem + '.md'), lines.join('\n'))
-  if (piece) console.log('smooth ' + stop + ': the part file of the ' + piece + (a.kind ? ' of the ' + a.kind : '') + ' in ' + took + ' s')
+  if (piece) console.log('smooth ' + stop + ': the part file of ' + piece.join(', ') + (a.kind ? ' of the ' + a.kind : '') + ' in ' + took + ' s')
   console.log('smooth ' + stop + ': ' + (pass ? 'green' : 'red, ' + why.length + ' over the limit or not measured') + '. ' + join('out/work/smooth', stem + '.md'))
   for (const w of why.slice(0, 12)) console.log('  ' + w)
   if (why.length > 12) console.log('  and ' + (why.length - 12) + ' more, see the report')
