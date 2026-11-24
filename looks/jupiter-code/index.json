@@ -1,9 +1,33 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T11:46:52.042Z",
- "head": "9194becaca42bceb19d43612f7f48a60b86f14c2",
- "note": "Third state a90e29f (hold's limb at every height, exposure by height in the rise, storm in the far plate). Finals 2895 and 3150 keep their bytes, path green, parity green. Both seams every frame at draft: no jump at T that I can name. Still wrong and named: the place (globe's oval against the plates' storm) in 3001 to 3005 and 3283 to 3288; the cream bank bottom left in 3050 to 3055. Pictures runs of rise and dive are rendering.",
+ "pushed": "2026-11-24T12:06:37.581Z",
+ "head": "1f19ea89b419dd6b725aefb92bd362f5f456d532",
+ "note": "Third state a90e29f, proofs still rendering (rise pictures, then dive). New: the rise 3278 to 3289 whole, the level check's red pair as a picture, the limb at 3283. Seen and named: the place changes from blot to oval at 3283 to 3285, the plates' island is greyer than the globe round it.",
  "looks": [
+  {
+   "time": "2026-11-24T12:06:36.834Z",
+   "file": "20261124120636834-note-limb-3283.jpg",
+   "source": "../work/named3/limb-3283.jpg",
+   "kind": "note",
+   "label": "a90e29f pixel state, 3283 and 3291 whole, and the limb bottom left at full size (the pattern measure is over 0.45 there in 3282 to 3284)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T12:06:35.637Z",
+   "file": "20261124120635637-note-globe-mid-pair.jpg",
+   "source": "../work/named3/globe-mid-pair.jpg",
+   "kind": "note",
+   "label": "the red pair of the level check as a picture: the globe's own lookups on the mid plate's ground (left), the mid plate (right); the tool reads 1.10 over 0.45",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T12:06:34.315Z",
+   "file": "20261124120634315-note-rise-3278-3289.jpg",
+   "source": "../work/named3/sheets/rise-3278-3289.jpg",
+   "kind": "note",
+   "label": "a90e29f pixel state (trial E3), rise 3278 to 3289 whole at draft: limb enters 3281, Io 3286, the place turns from the plates' blot to the globe's oval at 3283 to 3285, the plates' island is greyer than the globe round it",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-24T11:46:46.130Z",
    "file": "20261124114646130-note-place-dive-strip.jpg",
@@ -182,42 +206,6 @@
    "source": "../work/named2/pat-g1.jpg",
    "kind": "note",
    "label": "second named head, rise 3247 to 3270: frame, detail, pattern change of pairs 8 frames apart (white is over 0.45)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T10:16:57.433Z",
-   "file": "20261124101657433-job-frame-03260.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "jupiter.rise frame 3260, draft tier, texels view, from the running measure job",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3260,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-24T10:06:54.649Z",
-   "file": "20261124100654649-job-frame-02820.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "jupiter.hold frame 2820, draft tier, texels view, from the running measure job",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2820,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-24T09:59:57.823Z",
-   "file": "20261124095957823-note-pat-rise.jpg",
-   "source": "../work/named2/pat-rise.jpg",
-   "kind": "note",
-   "label": "ba2d0b1 pattern maps of the three red groups of the rise: 3250 + 1/2, 3273, 3283 (frame, later frame carried back, pattern)",
    "stop": "jupiter"
   }
  ]
