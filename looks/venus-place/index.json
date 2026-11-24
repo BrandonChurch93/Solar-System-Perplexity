@@ -1,9 +1,25 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-24T06:55:37.804Z",
+ "pushed": "2026-11-24T07:22:13.085Z",
  "head": "2cf336a3b54978bdb4f8cd858488a4f3aa649ed7",
- "note": "After NAMED 2cf336a3: item 1 taken apart at 1326 and 1334",
+ "note": "item 1 measured: plates alone pattern 0.25, border by height 1.27, release 0.85; next the border fixed in space",
  "looks": [
+  {
+   "time": "2026-11-24T07:22:12.485Z",
+   "file": "20261124072212485-note-band.jpg",
+   "source": "../../../../tmp/v/p1/band.png",
+   "kind": "note",
+   "label": "where the frame sees the ground against its outline (red near the outline, blue and pink the aprons): T of the dive, 1334, 1326, 1318; T of the rise, 1547, 1553, 1559",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T07:22:11.876Z",
+   "file": "20261124072211876-note-pairs.jpg",
+   "source": "../../../../tmp/v/p1/pairs.jpg",
+   "kind": "note",
+   "label": "dive 1320 and 1328, 1326 and 1334, 1332 and 1340 as named: the ground spreads over the flat plates by height (pattern 1.27)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T06:55:29.378Z",
    "file": "20261124065529378-note-q1334.jpg",
@@ -68,28 +84,6 @@
    "source": "out/work/smooth/venus-parity.png",
    "kind": "note",
    "label": "smooth parity panel on 3e1fa361: 16 by 9, uhd scaled down, the difference times 8; green (mean 1.892 at 1586)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T06:29:34.104Z",
-   "file": "20261124062934104-frame-f01110.jpg",
-   "source": "out/work/venus/place/same/i1/f01110.png",
-   "kind": "frame",
-   "label": "venus.hold frame 1110, draft tier",
-   "stop": "venus",
-   "segment": "venus.hold",
-   "frame": 1110,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e840cb2d5bf404e5"
-  },
-  {
-   "time": "2026-11-24T06:16:27.265Z",
-   "file": "20261124061627265-note-c1539-ll.jpg",
-   "source": "../../../../tmp/v/hg/c1539-ll.jpg",
-   "kind": "note",
-   "label": "rise 1539 to 1551, lower left at three quarters size: the pale plates come back where the dark ground was (the pattern red, 1.37 at 1543 + 1/2)",
    "stop": "venus"
   }
  ]
