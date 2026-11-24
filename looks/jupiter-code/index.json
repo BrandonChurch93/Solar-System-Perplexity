@@ -1,9 +1,49 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T15:55:49.121Z",
- "head": "632f1d3298485c99ae786f725fb68f19fa427c3e",
- "note": "ruling 3: series 3 read (air and relief are not the cause at the top left), the plate chains looked at; nothing built yet",
+ "pushed": "2026-11-24T16:12:21.605Z",
+ "head": "b41cdd1ddb4dfb49dbedd9a6c641fd0b7c8b7dd9",
+ "note": "16:15 UTC ruling 3: studies before the build (wide canvas laid back on near and fore, the base rise frames); nothing under src or public changed",
  "looks": [
+  {
+   "time": "2026-11-24T16:12:19.024Z",
+   "file": "20261124161219024-note-near-chain.jpg",
+   "source": "../work/ff/near-chain.jpg",
+   "kind": "note",
+   "label": "near plate today: guide, take, plate, wedge (the ring of towers is the take's)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T16:12:18.446Z",
+   "file": "20261124161218446-note-rm-b.jpg",
+   "source": "../work/ff/rm-b.jpg",
+   "kind": "note",
+   "label": "rise on the named bytes: 3247, 3253, 3259, 3265, 3271, 3278 (base of every reading)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T16:12:17.902Z",
+   "file": "20261124161217902-note-wide-canvas.jpg",
+   "source": "../work/ff/wide-canvas.jpg",
+   "kind": "note",
+   "label": "ruling 3 study: the wide canvas (the view's source)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T16:12:17.349Z",
+   "file": "20261124161217349-note-lay-fore.jpg",
+   "source": "../work/ff/lay-fore.jpg",
+   "kind": "note",
+   "label": "ruling 3 study: the wide canvas laid back on the fore plate's extent",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T16:12:16.705Z",
+   "file": "20261124161216705-note-lay-near.jpg",
+   "source": "../work/ff/lay-near.jpg",
+   "kind": "note",
+   "label": "ruling 3 study: the wide canvas laid back on the near plate's extent (purple: not seen)",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-24T15:55:48.559Z",
    "file": "20261124155548559-note-mid-chain.jpg",
@@ -154,46 +194,6 @@
    "source": "../work/ff/g-rh.jpg",
    "kind": "note",
    "label": "FAULT rise 3251.5 against 3259.5 carried by the ground, right far field: the view's dusk, then the plate's white zone in day",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T14:46:33.603Z",
-   "file": "20261124144633603-note-cand-a-right.jpg",
-   "source": "../work/ff/cand-a-right.jpg",
-   "kind": "note",
-   "label": "FAULT, first candidate of the far field made from the view (left the mid plate today, right the candidate, top down, 20 units wide): a fan of radial streaks with colour fringes. Not kept",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T14:46:32.978Z",
-   "file": "20261124144632978-note-gpat-v1.jpg",
-   "source": "../work/ff/gpat-v1.jpg",
-   "kind": "note",
-   "label": "Plates alone, pairs 3247, 3251, 3255 against 8 frames later carried by the ground: 0.58, 0.51, 0.49 by my strict reading (the named bytes 0.73, 0.72, 0.79). Red outlines are over 0.45",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T14:46:31.609Z",
-   "file": "20261124144631609-note-v1-vs-base.jpg",
-   "source": "../work/ff/v1-vs-base.jpg",
-   "kind": "note",
-   "label": "Rise 3247 and 3255: left the named bytes, right the plates alone (no canvas drawn). FAULT read from it: the far field is dusk in the canvas and day in the plates, so the exchange is a change of light and of pattern",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T14:22:30.985Z",
-   "file": "20261124142230985-note-g-bl.jpg",
-   "source": "../work/ff/g-bl.jpg",
-   "kind": "note",
-   "label": "same pair, bottom left near the eye: dark cumulus of the wide canvas at 3251 + 1/2, the plate's smooth bank at 3259 + 1/2. FAULT, the cream bank",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T14:22:30.300Z",
-   "file": "20261124142230300-note-g-tl.jpg",
-   "source": "../work/ff/g-tl.jpg",
-   "kind": "note",
-   "label": "same pair, left far field: the view's cream cumulus at 3251 + 1/2, the plate smeared tan with other streaks at 3259 + 1/2. FAULT",
    "stop": "jupiter"
   }
  ]
