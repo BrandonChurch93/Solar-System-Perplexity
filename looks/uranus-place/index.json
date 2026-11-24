@@ -1,9 +1,23 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-24T06:01:57.865Z",
+ "pushed": "2026-11-24T06:02:22.501Z",
  "head": "145020cd09eaac15c98ec90552b562cf9df683ff",
- "note": "head 145020cd on main 3060b725: handover pass on both moves with the bend; rise 4380 to 4454 and dive 4158 to 4181, every frame",
+ "note": "head 145020cd on main 3060b725: handover pass on both moves with the bend; rise 4380 to 4454 (10 before T to 4 after: sheets 4380 and 4392, larger 4388 to 4395), dive 4158 to 4181, 4290 final beside the kept still",
  "looks": [
+  {
+   "time": "2026-11-24T06:02:20.539Z",
+   "file": "20261124060220539-frame-f04308.jpg",
+   "source": "out/work/seq/4284-4379/f04308.png",
+   "kind": "frame",
+   "label": "uranus.terrain frame 4308, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.terrain",
+   "frame": 4308,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7122c119266e5aee"
+  },
   {
    "time": "2026-11-24T06:01:51.585Z",
    "file": "20261124060151585-note-bd-4170.jpg",
@@ -53,20 +67,6 @@
    "stop": "uranus"
   },
   {
-   "time": "2026-11-24T06:01:34.558Z",
-   "file": "20261124060134558-frame-f04300.jpg",
-   "source": "out/work/seq/4284-4379/f04300.png",
-   "kind": "frame",
-   "label": "uranus.terrain frame 4300, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.terrain",
-   "frame": 4300,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7122c119266e5aee"
-  },
-  {
    "time": "2026-11-24T05:59:25.417Z",
    "file": "20261124055925417-sheet-uranus-rise-top.jpg",
    "source": "out/work/handover/uranus-rise-top.png",
@@ -77,6 +77,222 @@
    "first": 4391,
    "last": 4454,
    "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T05:58:19.232Z",
+   "file": "20261124055819232-sheet-uranus-rise-draft-after.jpg",
+   "source": "out/work/handover/uranus-rise-draft-after.png",
+   "kind": "sheet",
+   "label": "uranus rise, every frame 4392 to 4403 (after T, frame 4391), draft tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "first": 4392,
+   "last": 4403,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T05:58:17.484Z",
+   "file": "20261124055817484-sheet-uranus-rise-draft-before.jpg",
+   "source": "out/work/handover/uranus-rise-draft-before.png",
+   "kind": "sheet",
+   "label": "uranus rise, every frame 4380 to 4390 (before T, frame 4391), draft tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "first": 4380,
+   "last": 4390,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T05:58:15.802Z",
+   "file": "20261124055815802-sheet-uranus-rise-draft-across.jpg",
+   "source": "out/work/handover/uranus-rise-draft-across.png",
+   "kind": "sheet",
+   "label": "uranus rise, every frame 4385 to 4396 (across T, frame 4391), draft tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "first": 4385,
+   "last": 4396,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T05:57:29.779Z",
+   "file": "20261124055729779-note-bt3.jpg",
+   "source": "../../../../tmp/bt3.png",
+   "kind": "note",
+   "label": "head 145020cd, draft, 4392 to 4395 larger",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T05:57:28.550Z",
+   "file": "20261124055728550-note-bt2.jpg",
+   "source": "../../../../tmp/bt2.png",
+   "kind": "note",
+   "label": "head 145020cd, draft, 4388 to 4391 larger",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T05:57:27.531Z",
+   "file": "20261124055727531-note-br-4392.jpg",
+   "source": "../../../../tmp/br-4392.png",
+   "kind": "note",
+   "label": "head 145020cd on main 3060b725, draft, rise frames 4392 to 4403 (after the change of view)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T05:57:26.732Z",
+   "file": "20261124055726732-note-br-4380.jpg",
+   "source": "../../../../tmp/br-4380.png",
+   "kind": "note",
+   "label": "head 145020cd on main 3060b725, draft, rise frames 4380 to 4391 (the close view before the change of view at 4391): no border of the set, the deck reaches the horizon",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T05:50:23.102Z",
+   "file": "20261124055023102-compare-uranus-rise-sides.jpg",
+   "source": "out/work/handover/uranus-rise-sides.png",
+   "kind": "compare",
+   "label": "uranus rise, both sides at T (frame 4391) and their difference times 8",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4391,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T05:50:05.885Z",
+   "file": "20261124055005885-sheet-uranus-dive-top.jpg",
+   "source": "out/work/handover/uranus-dive-top.png",
+   "kind": "sheet",
+   "label": "uranus dive, the globe side alone from straight above the place, 12 frames from the far end to T (frame 4186), place picture off, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "first": 4110,
+   "last": 4186,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T05:49:17.672Z",
+   "file": "20261124054917672-sheet-uranus-dive-draft-after.jpg",
+   "source": "out/work/handover/uranus-dive-draft-after.png",
+   "kind": "sheet",
+   "label": "uranus dive, every frame 4187 to 4198 (after T, frame 4186), draft tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "first": 4187,
+   "last": 4198,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T05:49:15.943Z",
+   "file": "20261124054915943-sheet-uranus-dive-draft-before.jpg",
+   "source": "out/work/handover/uranus-dive-draft-before.png",
+   "kind": "sheet",
+   "label": "uranus dive, every frame 4174 to 4185 (before T, frame 4186), draft tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "first": 4174,
+   "last": 4185,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T05:49:14.182Z",
+   "file": "20261124054914182-sheet-uranus-dive-draft-across.jpg",
+   "source": "out/work/handover/uranus-dive-draft-across.png",
+   "kind": "sheet",
+   "label": "uranus dive, every frame 4180 to 4191 (across T, frame 4186), draft tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "first": 4180,
+   "last": 4191,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T05:39:06.294Z",
+   "file": "20261124053906294-compare-uranus-dive-sides.jpg",
+   "source": "out/work/handover/uranus-dive-sides.png",
+   "kind": "compare",
+   "label": "uranus dive, both sides at T (frame 4186) and their difference times 8",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4186,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T05:38:55.995Z",
+   "file": "20261124053855995-note-skya-crop.jpg",
+   "source": "../../../../tmp/skya-crop.png",
+   "kind": "note",
+   "label": "4290 final, right end of the horizon times two: kept still, one place, one place with the sky made again without grain",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T05:38:54.809Z",
+   "file": "20261124053854809-note-pair-4290.jpg",
+   "source": "../../../../tmp/pair-4290.png",
+   "kind": "note",
+   "label": "4290 final: the kept still (left) and head 145020cd (right): one place at the horizon and the terrain sky without grain",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T05:21:37.904Z",
+   "file": "20261124052137904-note-sr-4410.jpg",
+   "source": "../../../../tmp/sr-4410.png",
+   "kind": "note",
+   "label": "one place c320c4af on main 85f27df2, draft, frames from 4410 (12 a sheet)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T05:21:35.883Z",
+   "file": "20261124052135883-note-sr-4398.jpg",
+   "source": "../../../../tmp/sr-4398.png",
+   "kind": "note",
+   "label": "one place c320c4af on main 85f27df2, draft, frames from 4398 (12 a sheet)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T05:21:34.327Z",
+   "file": "20261124052134327-note-sr-4386.jpg",
+   "source": "../../../../tmp/sr-4386.png",
+   "kind": "note",
+   "label": "one place c320c4af on main 85f27df2, draft, frames from 4386 (12 a sheet)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T05:21:32.439Z",
+   "file": "20261124052132439-note-sd-4182.jpg",
+   "source": "../../../../tmp/sd-4182.png",
+   "kind": "note",
+   "label": "one place c320c4af on main 85f27df2, draft, frames from 4182 (12 a sheet)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T05:21:30.799Z",
+   "file": "20261124052130799-note-sd-4170.jpg",
+   "source": "../../../../tmp/sd-4170.png",
+   "kind": "note",
+   "label": "one place c320c4af on main 85f27df2, draft, frames from 4170 (12 a sheet)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T05:21:29.370Z",
+   "file": "20261124052129370-note-sd-4158.jpg",
+   "source": "../../../../tmp/sd-4158.png",
+   "kind": "note",
+   "label": "one place c320c4af on main 85f27df2, draft, frames from 4158 (12 a sheet)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T05:20:13.761Z",
+   "file": "20261124052013761-frame-final-4035.jpg",
+   "source": "out/work/u/one/final-4035.png",
+   "kind": "frame",
+   "label": "uranus.hold frame 4035, final tier",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7122c119266e5aee"
   }
  ]
 }
