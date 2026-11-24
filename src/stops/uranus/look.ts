@@ -57,7 +57,7 @@ export const arrival = { rings: [-18, 10] as [number, number] }
 
 export const departing = { rings: [0.3, 5.5, 0.25] as [number, number, number] }
 
-export const veil: VeilLook = { normal: [-0.1989, -0.6042, 0.7716], range: [1.08, 1.84], max: 0.04, dive: [0.05, 0.17] }
+export const veil: VeilLook = { normal: [-0.1989, -0.6042, 0.7716], range: [1.08, 1.84], max: 0.04, dive: [2.3, 4.3] }
 
 export const deckRings: RingLook = {
   color: [0.78, 1.0, 1.08],
@@ -121,7 +121,7 @@ export const deck: DeckLook = {
   cloud: { height: 0.4, tile: 0.7, stretch: 1.4, group: 1.2, cover: [0.44, 0.6], curve: [0.14, 0.45], drift: 0.03, gain: 1.5, shade: 0.35, reach: [0.3, 0.62], tint: [2.16, 1.92, 1.8], lit: [0.02, 0.12] },
 }
 
-export const place = { light: { up: [0.08, 0.8] as [number, number], down: [0.02, 0.08] as [number, number], soft: 1 }, steep: [0.7, 0.9] as [number, number], tops: { sun: [-0.2, 0.2] as [number, number], seen: [0.06, 0.3] as [number, number], white: [2.4, 2.2, 1.95] as [number, number, number], shell: [0.02, 0.0005] as [number, number], climb: 0.13, eye: [0.6, 1.4] as [number, number], fine: [3, 0.002] as [number, number] }, plates: { dive: [3.2, 4.55] as [number, number], rise: [1.5, 4.5] as [number, number] }, rim: { span: [3.2, 4.55] as [number, number], near: [0.75, 1.3] as [number, number], feather: 0.3, wave: 0.08 }, sky: [0.2, 0.7] as [number, number], patch: { dive: [34, 10] as [number, number], rise: [20, 24] as [number, number], turn: [28, 24] as [number, number] }, under: 0.003, arcs: { dive: [1, 2] as [number, number] }, onSky: [0.97, 1] as [number, number], rings: { dive: [0.2, 0.8] as [number, number] }, ringMove: { span: [0.022, 1.2] as [number, number], match: [1.0, 1.56] as [number, number], arch: [0.45, 1] as [number, number], spread: [0.02, 0.9] as [number, number], hoops: { arch: [0.8952, 0.9081, 1.0001] as [number, number, number], rings: [1.29, 1.3526, 1.5601] as [number, number, number] }, show: 0.012, hand: [1.2, 2.4] as [number, number] }, fixedEye: false }
+export const place = { light: { up: [0.08, 0.8] as [number, number], down: [0.02, 0.08] as [number, number], soft: 1 }, steep: [0.7, 0.9] as [number, number], tops: { sun: [-0.2, 0.2] as [number, number], seen: [0.06, 0.3] as [number, number], white: [2.4, 2.2, 1.95] as [number, number, number], shell: [0.02, 0.0005] as [number, number], climb: 0.13, eye: [0.6, 1.4] as [number, number], fine: [3, 0.002] as [number, number] }, plates: { dive: [3.2, 4.55] as [number, number], rise: [1.5, 4.5] as [number, number] }, rim: { span: [3.2, 4.55] as [number, number], near: [0.75, 1.3] as [number, number], feather: 0.3, wave: 0.08 }, sky: [0.2, 0.7] as [number, number], skyPicture: [0.25, 1.5] as [number, number], skyTurn: [0.2, 4.55] as [number, number], lift: 0.03, round: [0.7, 4.55] as [number, number], under: 0.003, deck: { span: [0.04, 0.12] as [number, number], border: [0.42, 0.56] as [number, number] }, arcs: { dive: [1, 2] as [number, number] }, onSky: [0.97, 1] as [number, number], rings: { dive: [0.2, 0.8] as [number, number] }, ringMove: { span: [0.022, 1.2] as [number, number], match: [1.0, 1.56] as [number, number], arch: [0.45, 1] as [number, number], spread: [0.02, 0.9] as [number, number], hoops: { arch: [0.8952, 0.9081, 1.0001] as [number, number, number], rings: [1.29, 1.3526, 1.5601] as [number, number, number] }, show: 0.012, hand: [1.2, 2.4] as [number, number] }, fixedEye: false }
 
 export const near = { tint: [1, 1, 1] as [number, number, number], halo: 0.6, span: [0.12, 1] as [number, number] }
 
