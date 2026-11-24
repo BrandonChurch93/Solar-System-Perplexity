@@ -1,9 +1,25 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-24T12:05:38.779Z",
- "head": "e3594096c45547f3db400e9f1e08e0b3be26b01c",
- "note": "same",
+ "pushed": "2026-11-24T12:31:36.590Z",
+ "head": "80033a732012e484fa7fecd4b44bb5c3a03d7a95",
+ "note": "80033a73 pushed; the dive's limb humps 1270 to 1293 traced to the glow of the limb (0.83 to 0.19 with it off); cure being tried",
  "looks": [
+  {
+   "time": "2026-11-24T12:31:35.925Z",
+   "file": "20261124123135925-note-venus-dive-changes-V.jpg",
+   "source": "../../../../tmp/v/venus-dive-changes-V.png",
+   "kind": "note",
+   "label": "venus dive changes panel on 80033a73",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T12:31:35.297Z",
+   "file": "20261124123135297-note-pairs.jpg",
+   "source": "../../../../tmp/v/abx/X-limb0/pairs/pairs.jpg",
+   "kind": "note",
+   "label": "venus pairs with the glow of the limb off, dive and rise (experiment, not a commit)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T12:05:26.833Z",
    "file": "20261124120526833-note-s1276.jpg",
@@ -51,30 +67,6 @@
    "kind": "note",
    "label": "dive: frame, frame 8 later carried back, band of both, pattern, at 1278 right limb, 1282 and 1284 upper left limb, 1292 upper right limb (offline, my mask)",
    "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T11:32:14.777Z",
-   "file": "20261124113214777-sheet-venus-rise-top.jpg",
-   "source": "out/work/handover/venus-rise-top.png",
-   "kind": "sheet",
-   "label": "venus rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 1539), place picture off, draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1539,
-   "last": 1604,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T11:31:20.920Z",
-   "file": "20261124113120920-sheet-venus-rise-draft-after.jpg",
-   "source": "out/work/handover/venus-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "venus rise, every frame 1540 to 1551 (after T, frame 1539), draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1540,
-   "last": 1551,
-   "tier": "draft"
   }
  ]
 }
