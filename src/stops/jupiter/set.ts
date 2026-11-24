@@ -58,6 +58,7 @@ export const createSet: SetFactory = async (ctx) => {
   })
   globe.mesh.quaternion.fromArray(fit.globe.quaternion)
   const shells = look.shells.map((p) => new HazeShell(p, diagUniform))
+  const haloFar = Math.sqrt((1 + place.scene.halo) ** 2 - 1)
   orbit.add(globe.mesh, ...shells.map((s) => s.mesh))
 
   const ioMap = await ctx.texture(base + 'io-color.jpg', { srgb: true, anisotropy: 16, repeat: true })
@@ -194,14 +195,19 @@ export const createSet: SetFactory = async (ctx) => {
       toPlanet.copy(ioWorld).negate().normalize()
       io.update(moonLight, toPlanet, eclipse, gain * state.weight, shot.post.vignette, view.format.width / view.format.height, ioCentre.copy(world.position).add(ioWorld), world.position)
       glowDir.copy(glowHome).applyQuaternion(state.rotation).lerp(light, lit).normalize()
-      for (const s of shells) {
-        const su = s.material.uniforms
+      const distance = world.position.length()
+      const halo = Math.min(Math.sqrt(Math.max(distance * distance - 1, 0)) / haloFar, 1)
+      for (let i = 0; i < shells.length; i++) {
+        const su = shells[i]!.material.uniforms
+        const sp = look.shells[i]!
         ;(su.uCam!.value as THREE.Vector3).copy(camera)
         ;(su.uSunW!.value as THREE.Vector3).copy(glowDir)
         ;(su.uCoreSun!.value as THREE.Vector3).copy(glowDir)
+        su.uHazeH!.value = sp.scaleHeight * halo
+        su.uHazeTau!.value = sp.depth * Math.sqrt(halo)
+        su.uCoreHeight!.value = (sp.core?.scaleHeight ?? 0) * halo
         su.uGain!.value = gain * state.weight * (1 - limbShare)
       }
-      const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
       const visible = radiusPx / frame > 0.6
       globe.mesh.visible = visible && !proof.glowAlone
