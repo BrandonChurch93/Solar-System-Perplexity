@@ -1,86 +1,56 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-24T02:43:27.342Z",
- "head": "abe760fdaee4927d8f2627d4c887271710c5790f",
- "note": "light.from on Mars, scratch tree, draft: hold 2325 differs from no from by mean 0.08 of 255, largest 64 at the canyon walls; 2400 by 0.07; 2409 in the band by nothing.",
+ "pushed": "2026-11-24T04:20:06.417Z",
+ "head": "ce61ea1e80d190e182da7b342f7cb0ce067ff945",
+ "note": "Frame factor (NOTE 501): Mars parity before (main 26677ed9) and after (dace4ba6). Both green. The largest numbers stand at 2580 terrain, the same in both; the change is seen on five of seven frames, most at 2726 (mean 1.54 to 1.19).",
  "looks": [
   {
-   "time": "2026-11-24T02:43:18.336Z",
-   "file": "20261124024318336-note-lf-f2400.jpg",
-   "source": "out/work/t2/lf-f2400.png",
+   "time": "2026-11-24T04:20:05.801Z",
+   "file": "20261124042005801-note-mars-parity-main.jpg",
+   "source": "../../../../tmp/mars-parity-main.png",
    "kind": "note",
-   "label": "Mars 2400 draft above the band, light.from Infinity",
+   "label": "Mars parity, uhd against 16 by 9, main 26677ed9 before the frame factor: green too",
    "stop": "mars"
   },
   {
-   "time": "2026-11-24T02:43:17.799Z",
-   "file": "20261124024317799-note-lfrom-d.jpg",
-   "source": "out/work/t2/lfrom-d.png",
+   "time": "2026-11-24T04:20:04.945Z",
+   "file": "20261124042004945-note-mars-parity.jpg",
+   "source": "out/work/smooth/mars-parity.png",
    "kind": "note",
-   "label": "Mars hold 2325: difference x40 between light.from Infinity and no from (mean 0.08 of 255, largest 64, 12 percent of pixels, 0.01 percent over 8)",
+   "label": "Mars parity, uhd against 16 by 9, on dace4ba6 with the frame factor: green",
    "stop": "mars"
   },
   {
-   "time": "2026-11-24T02:43:17.226Z",
-   "file": "20261124024317226-note-lfrom-canyon-2325.jpg",
-   "source": "out/work/t2/lfrom-canyon-2325.png",
-   "kind": "note",
-   "label": "Mars hold 2325 canyon crop x4: left cap not drawn (no from), right light.from Infinity",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T02:43:16.521Z",
-   "file": "20261124024316521-note-lf-f2325.jpg",
-   "source": "out/work/t2/lf-f2325.png",
-   "kind": "note",
-   "label": "Mars hold 2325 draft, scratch tree (heights v3), cap light 1,1 with light.from Infinity: cap drawn level at the hold and lit by its heights",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T02:37:00.232Z",
-   "file": "20261124023700232-still-f04707-16x9-draft-full.jpg",
-   "source": "out/work/stills/f04707-16x9-draft-full.png",
+   "time": "2026-11-24T04:06:55.898Z",
+   "file": "20261124040655898-still-f02427-16x9-draft-full.jpg",
+   "source": "out/work/stills/f02427-16x9-draft-full.png",
    "kind": "still",
-   "label": "neptune.dive frame 4707, draft tier",
-   "stop": "neptune",
-   "segment": "neptune.dive",
-   "frame": 4707,
+   "label": "mars.dive frame 2427, draft tier",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2427,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "899945f0da896e5c"
+   "engine": "2adcc41a83011b6b"
   },
   {
-   "time": "2026-11-24T02:36:18.133Z",
-   "file": "20261124023618133-still-f02997-16x9-draft-full.jpg",
-   "source": "out/work/stills/f02997-16x9-draft-full.png",
+   "time": "2026-11-24T04:06:22.824Z",
+   "file": "20261124040622824-still-f02325-16x9-draft-full.jpg",
+   "source": "out/work/stills/f02325-16x9-draft-full.png",
    "kind": "still",
-   "label": "jupiter.dive frame 2997, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 2997,
+   "label": "mars.hold frame 2325, draft tier",
+   "stop": "mars",
+   "segment": "mars.hold",
+   "frame": 2325,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "899945f0da896e5c"
+   "engine": "2adcc41a83011b6b"
   },
   {
-   "time": "2026-11-24T02:35:48.547Z",
-   "file": "20261124023548547-still-f01857-16x9-draft-full.jpg",
-   "source": "out/work/stills/f01857-16x9-draft-full.png",
-   "kind": "still",
-   "label": "earth.dive frame 1857, draft tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1857,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "899945f0da896e5c"
-  },
-  {
-   "time": "2026-11-24T02:35:11.356Z",
-   "file": "20261124023511356-still-f00717-16x9-draft-full.jpg",
+   "time": "2026-11-24T04:05:47.736Z",
+   "file": "20261124040547736-still-f00717-16x9-draft-full.jpg",
    "source": "out/work/stills/f00717-16x9-draft-full.png",
    "kind": "still",
    "label": "mercury.dive frame 717, draft tier",
@@ -90,11 +60,67 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "899945f0da896e5c"
+   "engine": "2adcc41a83011b6b"
   },
   {
-   "time": "2026-11-24T02:34:38.167Z",
-   "file": "20261124023438167-still-f04605-16x9-draft-full.jpg",
+   "time": "2026-11-24T04:05:09.103Z",
+   "file": "20261124040509103-still-f00615-16x9-draft-full.jpg",
+   "source": "out/work/stills/f00615-16x9-draft-full.png",
+   "kind": "still",
+   "label": "mercury.hold frame 615, draft tier",
+   "stop": "mercury",
+   "segment": "mercury.hold",
+   "frame": 615,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "2adcc41a83011b6b"
+  },
+  {
+   "time": "2026-11-24T03:57:01.704Z",
+   "file": "20261124035701704-still-f04707-16x9-draft-full.jpg",
+   "source": "out/work/stills/f04707-16x9-draft-full.png",
+   "kind": "still",
+   "label": "neptune.dive frame 4707, draft tier",
+   "stop": "neptune",
+   "segment": "neptune.dive",
+   "frame": 4707,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "2adcc41a83011b6b"
+  },
+  {
+   "time": "2026-11-24T03:56:18.802Z",
+   "file": "20261124035618802-still-f02997-16x9-draft-full.jpg",
+   "source": "out/work/stills/f02997-16x9-draft-full.png",
+   "kind": "still",
+   "label": "jupiter.dive frame 2997, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 2997,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "2adcc41a83011b6b"
+  },
+  {
+   "time": "2026-11-24T03:55:49.064Z",
+   "file": "20261124035549064-still-f01857-16x9-draft-full.jpg",
+   "source": "out/work/stills/f01857-16x9-draft-full.png",
+   "kind": "still",
+   "label": "earth.dive frame 1857, draft tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1857,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "2adcc41a83011b6b"
+  },
+  {
+   "time": "2026-11-24T03:54:40.253Z",
+   "file": "20261124035440253-still-f04605-16x9-draft-full.jpg",
    "source": "out/work/stills/f04605-16x9-draft-full.png",
    "kind": "still",
    "label": "neptune.hold frame 4605, draft tier",
@@ -104,11 +130,11 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "899945f0da896e5c"
+   "engine": "2adcc41a83011b6b"
   },
   {
-   "time": "2026-11-24T02:34:04.848Z",
-   "file": "20261124023404848-still-f04035-16x9-draft-full.jpg",
+   "time": "2026-11-24T03:54:07.385Z",
+   "file": "20261124035407385-still-f04035-16x9-draft-full.jpg",
    "source": "out/work/stills/f04035-16x9-draft-full.png",
    "kind": "still",
    "label": "uranus.hold frame 4035, draft tier",
@@ -118,11 +144,11 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "899945f0da896e5c"
+   "engine": "2adcc41a83011b6b"
   },
   {
-   "time": "2026-11-24T02:33:35.120Z",
-   "file": "20261124023335120-still-f03465-16x9-draft-full.jpg",
+   "time": "2026-11-24T03:53:38.340Z",
+   "file": "20261124035338340-still-f03465-16x9-draft-full.jpg",
    "source": "out/work/stills/f03465-16x9-draft-full.png",
    "kind": "still",
    "label": "saturn.hold frame 3465, draft tier",
@@ -132,21 +158,7 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "899945f0da896e5c"
-  },
-  {
-   "time": "2026-11-24T02:33:07.055Z",
-   "file": "20261124023307055-still-f02895-16x9-draft-full.jpg",
-   "source": "out/work/stills/f02895-16x9-draft-full.png",
-   "kind": "still",
-   "label": "jupiter.hold frame 2895, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "899945f0da896e5c"
+   "engine": "2adcc41a83011b6b"
   }
  ]
 }
