@@ -1,9 +1,33 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T18:03:19.763Z",
- "head": "caf22249f564c52db5536fb0fa9c9bbf9f0430dc",
- "note": "mail 717: the take of the reading in place is one commit made beside the render, its chain runs when Saturn's drafts are read; Saturn's dive drafts so far",
+ "pushed": "2026-11-24T18:18:06.871Z",
+ "head": "2f1028ee7a80de891e8aef03312652c1dddf8606",
+ "note": "Saturn read both ways on the merged tree: 1.16 and 1.36 by the mean of the body, 0.27 and 0.34 in place; the take of mail 717 is named (2f1028ee); Mars's third renders",
  "looks": [
+  {
+   "time": "2026-11-24T18:18:05.802Z",
+   "file": "20261124181805802-note-rise-T.jpg",
+   "source": "out/work/inplace/saturn/rise-T.jpg",
+   "kind": "note",
+   "label": "saturn rise across T (3852 place side, 3853 globe side), drafts, consecutive frames 3850 to 3855, crop at 0.52: in place the level moves 0.19 to 0.27 a frame, 0.26 into 3853"
+  },
+  {
+   "time": "2026-11-24T18:18:05.005Z",
+   "file": "20261124181805005-note-dive-T.jpg",
+   "source": "out/work/inplace/saturn/dive-T.jpg",
+   "kind": "note",
+   "label": "saturn dive across T (3588 globe side, 3589 place side), drafts, consecutive frames 3586 to 3591, crop at 0.62: in place the level moves 0.20 to 0.23 a frame, 0.22 into 3589"
+  },
+  {
+   "time": "2026-11-24T18:06:30.199Z",
+   "file": "20261124180630199-compare-saturn-rise-step-in-place.jpg",
+   "source": "out/work/handover/saturn-rise-step-in-place.png",
+   "kind": "compare",
+   "label": "saturn rise, the largest step of the level in place (0.34): frame 3846, frame 3847, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "saturn",
+   "segment": "saturn.rise",
+   "frame": 3847
+  },
   {
    "time": "2026-11-24T18:03:18.759Z",
    "file": "20261124180318759-note-dive-b.jpg",
@@ -43,31 +67,6 @@
    "kind": "note",
    "label": "Neptune rise into 5001: worst step in place, level 3.83, colour 6.64 (limits 6 and 8), a wash over all the kept ground",
    "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T17:38:51.651Z",
-   "file": "20261124173851651-note-neptune-rise-4994-5006.jpg",
-   "source": "out/work/inplace/mail/neptune-rise-4994-5006.jpg",
-   "kind": "note",
-   "label": "Neptune rise 4994 to 5006, drafts: the ground both frames show gets lighter by 3.1 to 3.8 a frame and bluer by up to 6.6 into 4998 to 5003; the mean of the body reads 0.6 to 1.7",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T17:37:28.238Z",
-   "file": "20261124173728238-compare-neptune-rise-step-in-place.jpg",
-   "source": "out/work/handover/neptune-rise-step-in-place.png",
-   "kind": "compare",
-   "label": "neptune rise, the largest step of the level in place (3.83): frame 5000, frame 5001, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "neptune",
-   "segment": "neptune.rise",
-   "frame": 5001
-  },
-  {
-   "time": "2026-11-24T17:23:56.355Z",
-   "file": "20261124172356355-note-pattern-rig-z3-s32.jpg",
-   "source": "out/work/inplace/looks/pattern-rig-z3-s32.png",
-   "kind": "note",
-   "label": "PLANTED, a rig, not the film: the same rise, the whole exchange of all detail under 32 px. As on main 1.11, with the widths times the enlargement 0.44 (limit 0.45)"
   }
  ]
 }
