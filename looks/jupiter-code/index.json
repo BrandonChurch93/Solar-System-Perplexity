@@ -1,9 +1,83 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T20:32:15.528Z",
+ "pushed": "2026-11-24T20:50:58.993Z",
  "head": "18c4bd32b46191358b9e6b341528188ffe884d7b",
- "note": "round 2 of 3, work in progress 20:33 UTC: one Sun over the place (32 degrees), exposure by height removed; experiment with one program from 3.2 radii",
+ "note": "20:52 UTC, round 2 work in progress, state D1: one Sun over the place (32 degrees), the deck program draws the ground from 3.2 radii down, no exposure or tone by height; rise law and sky floor are being set now",
  "looks": [
+  {
+   "time": "2026-11-24T20:50:58.268Z",
+   "file": "20261124205058268-note-e3.jpg",
+   "source": "../work/r5/e3.jpg",
+   "kind": "note",
+   "label": "D1 draft rise: 3246, 3252, 3256, 3268 (tan band above the limb at 3268 is the sky plate under its horizon, being cut now)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T20:50:57.623Z",
+   "file": "20261124205057623-note-e2.jpg",
+   "source": "../work/r5/e2.jpg",
+   "kind": "note",
+   "label": "D1 draft dive: 3024, 3040, 3050, 3056 (no second limb, no band by height)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T20:50:56.988Z",
+   "file": "20261124205056988-note-e1.jpg",
+   "source": "../work/r5/e1.jpg",
+   "kind": "note",
+   "label": "D1 draft: 3060, 3150, 3239 (eye keeps its shape), 2997, 3012, 3024",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T20:50:56.303Z",
+   "file": "20261124205056303-note-pair-3150-D1.jpg",
+   "source": "../work/r5/pair-3150-D1.jpg",
+   "kind": "note",
+   "label": "3150 draft, approved image left, state D1 right (deck program in one light, plates toned at every height)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T20:48:40.999Z",
+   "file": "20261124204840999-frame-f03284.jpg",
+   "source": "out/work/jupiter/frames/E1/f03284.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3284, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3284,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
+  {
+   "time": "2026-11-24T20:47:48.403Z",
+   "file": "20261124204748403-frame-f03150.jpg",
+   "source": "out/work/jupiter/frames/E1/f03150.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3150, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
+  {
+   "time": "2026-11-24T20:42:27.960Z",
+   "file": "20261124204227960-frame-f03050.jpg",
+   "source": "out/work/jupiter/frames/D1/f03050.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 3050, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 3050,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
   {
    "time": "2026-11-24T20:32:14.926Z",
    "file": "20261124203214926-note-c1.jpg",
@@ -43,48 +117,6 @@
    "kind": "note",
    "label": "r2 draft A1 3150: approved image left, frame right (one Sun at 32 degrees, no exposure by height)",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T20:28:29.344Z",
-   "file": "20261124202829344-frame-f02997.jpg",
-   "source": "out/work/jupiter/frames/C1/f02997.png",
-   "kind": "frame",
-   "label": "jupiter.dive frame 2997, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 2997,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
-  },
-  {
-   "time": "2026-11-24T20:27:40.502Z",
-   "file": "20261124202740502-frame-f03150.jpg",
-   "source": "out/work/jupiter/frames/C1/f03150.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3150, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
-  },
-  {
-   "time": "2026-11-24T20:21:39.885Z",
-   "file": "20261124202139885-frame-f03256.jpg",
-   "source": "out/work/jupiter/frames/A1/f03256.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3256, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3256,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
   },
   {
    "time": "2026-11-24T19:47:11.918Z",
@@ -180,44 +212,6 @@
    "source": "../work/r3/Rm-above.jpg",
    "kind": "note",
    "label": "rise 3264 to 3296 of the old base, from above: the pale ring of towers the near take invented",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T18:19:23.099Z",
-   "file": "20261124181923099-note-near-globe-vs-view.jpg",
-   "source": "../work/r3/near-globe-vs-view.jpg",
-   "kind": "note",
-   "label": "ruling 3: the globe's albedo over the near plate, the surface view laid back on the ground, the same blurred, their ratio (nine stops: the far light is the air's, not the ground's)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T18:19:21.971Z",
-   "file": "20261124181921971-note-globe-vs-midnest.jpg",
-   "source": "../work/r3/globe-vs-midnest.jpg",
-   "kind": "note",
-   "label": "ruling 1 and 3: left the globe's own picture at the storm over 61 units (circles 5, 10, 16.5 units), right the shipped mid plate: two pictures of one ground",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T18:05:17.035Z",
-   "file": "20261124180517035-frame-bU-2895.jpg",
-   "source": "out/work/jupiter/final/bU-2895.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2895, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
-  },
-  {
-   "time": "2026-11-24T18:02:17.582Z",
-   "file": "20261124180217582-note-t1-tone-x3.jpg",
-   "source": "../work/r3/t1-tone-x3.png",
-   "kind": "note",
-   "label": "Ruling 3, rejected: the tone field carried out to 17 units bakes the air into the ground (white bloom, dark fan). Panels: view laid back, plates, plates times tone, tone",
    "stop": "jupiter"
   }
  ]
