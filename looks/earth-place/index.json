@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T12:47:34.621Z",
+ "pushed": "2026-11-24T13:09:49.586Z",
  "head": "dbdf9911fefccf503c36b6b061732cec14e72fe4",
- "note": "12:48 third commit patch on frames: T frames byte equal at draft rate 1; limb colour trials running; texel walk and four finals on one page flat",
+ "note": "third tree in proof: pop at 1918 + 1/2 reads 1.158 by my measure (machines 1.21), rise pattern 2156 to 2161 reads 0.25 to 0.26 (machines 0.42 to 0.60), pattern red in the far zone stays",
  "looks": [
+  {
+   "time": "2026-11-24T13:09:48.708Z",
+   "file": "20261124130948708-note-rise-look-b.jpg",
+   "source": "../../../../tmp/gl/s9/rise-look-b.jpg",
+   "kind": "note",
+   "label": "third tree, rise 2163 to 2174",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T13:09:48.111Z",
+   "file": "20261124130948111-note-rise-look-a.jpg",
+   "source": "../../../../tmp/gl/s9/rise-look-a.jpg",
+   "kind": "note",
+   "label": "third tree, rise 2148 to 2163, look by nearness spread",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T13:09:47.444Z",
+   "file": "20261124130947444-note-T-dive-n3.jpg",
+   "source": "../../../../tmp/gl/s9/T-dive-n3.jpg",
+   "kind": "note",
+   "label": "third tree, dive T 1911 to 1926, rate 2 capture, picture false, rim 0.65",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T12:47:33.890Z",
    "file": "20261124124733890-note-zoom-v.jpg",
@@ -74,30 +98,6 @@
    "source": "../../../../tmp/gl/s8/dive-r2-b.jpg",
    "kind": "note",
    "label": "dive this tree second half",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T10:37:19.583Z",
-   "file": "20261124103719583-note-T-rise-r2-sheet.jpg",
-   "source": "../../../../tmp/gl/s8/T-rise-r2-sheet.jpg",
-   "kind": "note",
-   "label": "rise change of view this tree",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T10:37:18.540Z",
-   "file": "20261124103718540-note-rise-r2-e.jpg",
-   "source": "../../../../tmp/gl/s8/rise-r2-e.jpg",
-   "kind": "note",
-   "label": "rise 2136 to 2148 this tree",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T10:37:17.352Z",
-   "file": "20261124103717352-note-rise-r2-c.jpg",
-   "source": "../../../../tmp/gl/s8/rise-r2-c.jpg",
-   "kind": "note",
-   "label": "rise 2127 to 2135 this tree",
    "stop": "earth"
   }
  ]
