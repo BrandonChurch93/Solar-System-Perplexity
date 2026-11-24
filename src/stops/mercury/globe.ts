@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { frameUniform } from '../../core/frame'
 import type { Pose } from '../../core/types'
 import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
@@ -39,7 +40,7 @@ export interface GlobePatches {
   fade: [number, number]
   lean: number
   nearDeg: number
-  place?: { from: number; ownDeg: [number, number]; gain: number }
+  place?: { from: number; ownDeg: [number, number]; gain: number; fade?: [number, number]; light?: [number, number, number]; hold?: [number, number] }
 }
 
 export interface GlobeOptions {
@@ -82,7 +83,14 @@ const PATCH_SAMPLERS = Array.from({ length: MAX_PATCHES }, (_, i) => 'uniform sa
 
 const PATCH_LEVELS = Array.from({ length: MAX_PATCHES }, (_, i) => `    if (uPatchCount > ${i}.5) {
       vec2 q = g * uPatchScale[${i}];
-      float w = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(${i === 0 ? 'mix(uPatchFade.x, uMend.w, mend)' : 'uPatchFade.x'}, uPatchFade.y, ${i === 0 ? 'parent' : 'mix(parent, thin, uPatchLean)'}));
+      float first = step(abs(${i}.0 - uPlaceFrom), 0.25);
+      float turn = 1.5707963 * clamp((uPlaceFade.y - mix(parent, thin, uPatchLean)) / (uPlaceFade.y - uPlaceFade.x), 0.0, 1.0);
+      float edge = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y)));
+      float drive = mix(mix(parent, thin, uPatchLean), placeDrive, uPlaceEarly * step(abs(${i}.0 - uPlaceFrom - 1.0), 0.25));
+      placeDrive = mix(placeDrive, drive, first);
+${i === 0 ? '      stays = uPlaceHold.z * (1.0 - smoothstep(uPlaceHold.x, uPlaceHold.y, ring));\n' : ''}      float w = edge * mix(${i === 0 ? 'max(1.0 - smoothstep(mix(uPatchFade.x, uMend.w, mend), uPatchFade.y, parent), stays)' : '1.0 - smoothstep(uPatchFade.x, uPatchFade.y, drive)'}, sin(turn) / (sin(turn) + cos(turn)), first * uPlaceFade.z);
+      float lightTurn = smoothstep(0.0, 1.0, (log(uPlaceLight.y) - log(max(mix(parent, thin, uPatchLean), 1e-6))) / (log(uPlaceLight.y) - log(uPlaceLight.x)));
+      shone = mix(shone, edge * pow(lightTurn, uPlaceLight.z), first);
       vec3 tx = albedo;
       float tw = 0.0;
       for (int k = 0; k < (uSmear > 0.0 ? 0 : 1); k++) {
@@ -95,14 +103,13 @@ const PATCH_LEVELS = Array.from({ length: MAX_PATCHES }, (_, i) => `    if (uPat
         tx = streak(uPatch${i}, q + 0.5, sx * uPatchScale[${i}], sy * uPatchScale[${i}], along, lat);
         tw = w;
       }
-      float first = step(abs(${i}.0 - uPlaceFrom), 0.25);
       under = mix(under, albedo, first);
       albedo = mix(albedo, tx, tw);
       own = mix(own, tx, step(uPlaceFrom, ${i}.25) * mix(tw, 1.0, first));
       placed = mix(placed, tw, first);
-      parent = gd * uPatchScale[${i}] * uPatchSize[${i}];
-      thin = gl * uPatchScale[${i}] * uPatchSize[${i}];
-      texels = mix(texels, parent, step(0.5, w));
+      parent = gd * uPatchScale[${i}] * uPatchSize[${i}] * uFrame;
+      thin = gl * uPatchScale[${i}] * uPatchSize[${i}] * uFrame;
+      texels = mix(texels, gd * uPatchScale[${i}] * uPatchSize[${i}], step(0.5, w));
       near = max(near, w * uPatchNear[${i}]);
     }`).join('\n')
 
@@ -129,8 +136,8 @@ const FINE = Array.from({ length: FINE_LEVELS }, (_, i) => `    {
       for (int k = 0; k < (wf > 0.0 && uSmear <= 0.0 ? 1 : 0); k++) fv = textureGrad(uFineMap, fu, gx * fb, gy * fb).r * uFine.y;
       for (int k = 0; k < (wf > 0.0 && uSmear > 0.0 ? 1 : 0); k++) fv = streak(uFineMap, fu, sx * fb, sy * fb, along, lat).r * uFine.y;
       fine *= mix(1.0, fv, wf);
-      parent = fd;
-      thin = fl;
+      parent = fd * uFrame;
+      thin = fl * uFrame;
       texels = mix(texels, fd, step(0.5, wf));
     }`).join('\n')
 
@@ -180,6 +187,10 @@ uniform vec4 uNightSoft;
 uniform vec3 uCarry;
 uniform vec4 uPlace;
 uniform float uPlaceFrom;
+uniform vec3 uPlaceFade;
+uniform vec3 uPlaceLight;
+uniform vec3 uPlaceHold;
+uniform float uPlaceEarly;
 uniform sampler2D uClose;
 uniform mat3 uCloseCam;
 uniform vec3 uCloseUp;
@@ -212,6 +223,7 @@ uniform vec2 uWash;
 uniform vec4 uFar;
 uniform vec4 uFarSun;
 uniform vec3 uFarDir;
+uniform vec3 uFarAxis;
 uniform vec3 uFarColor;
 uniform vec2 uFarLit;
 uniform vec2 uFarRelief;
@@ -246,6 +258,7 @@ uniform vec3 uCenter;
 uniform vec3 uSunW;
 uniform float uVignette;
 uniform float uAspect;
+uniform float uFrame;
 uniform mat4 uPrev;
 uniform float uSmear;
 uniform vec3 uJitter;
@@ -395,6 +408,9 @@ void main() {
   vec3 own = vec3(0.0);
   vec3 under = vec3(0.0);
   float placed = 0.0;
+  float shone = 0.0;
+  float stays = 0.0;
+  float placeDrive = 0.0;
   float ring = 0.0;
   if (uPatchCount > 0.5) {
     float inv = 1.0 / max(dn, 0.05);
@@ -411,8 +427,8 @@ void main() {
     gx *= uGrad;
     gy *= uGrad;
     float front = step(0.3, dn);
-    float parent = texels;
-    float thin = texels;
+    float parent = texels * uFrame;
+    float thin = texels * uFrame;
     float mend = 1.0 - smoothstep(0.55 * uMend.z, uMend.z, length(g - uMend.xy));
 ${PATCH_LEVELS}
 ${FINE}
@@ -439,7 +455,7 @@ ${FINE}
   vec3 slopeW = uBodyToWorld * spinY(slope, -uSpin);
   float ndl0 = dot(n, uSunW);
   float dusk = 1.0 - smoothstep(uReliefRange.x, uReliefRange.y, ndl0);
-  float strength = mix(mix(uRelief.z, uRelief.x, dusk), uRelief.y, near) * smoothstep(0.0, 0.12, mu);
+  float strength = mix(mix(uRelief.z, uRelief.x, dusk), uRelief.y, near) * smoothstep(0.0, 0.12, mu) * (1.0 - stays);
   vec3 np = normalize(n - slopeW * strength);
   float ndl = dot(np, uSunW);
   float lift = clamp((ndl - ndl0) / max(ndl0 + uWrap, 0.06), uLift.x, uLift.y);
@@ -451,9 +467,10 @@ ${FINE}
   vec3 lit = max(curveAt(ndl0) - uNight, vec3(0.0)) * mix(vec3(1.0), limbAt(mu) * brim, toward) * (1.0 + lift);
   fine = mix(1.0, fine, mix(uFineShade.z, 1.0, smoothstep(uFineShade.x, uFineShade.y, dot(albedo, vec3(0.2126, 0.7152, 0.0722)))));
   vec3 ground = inverseFilmic(albedo) * fine;
-  float pm = placed * uPlace.y * (1.0 - smoothstep(uPlace.z, uPlace.w, ring));
+  float inRing = placed * uPlace.y * (1.0 - smoothstep(uPlace.z, uPlace.w, ring));
+  float pm = inRing * min(1.0, shone / max(placed, 1e-4));
   vec3 baked = vec3(0.0);
-  for (int k = 0; k < (pm > 0.0 ? 1 : 0); k++) {
+  for (int k = 0; k < (inRing > 0.0 ? 1 : 0); k++) {
     baked = inverseFilmic(own) * fine;
     ground = mix(inverseFilmic(under) * fine, baked, (placed - pm) / max(1.0 - pm, 1e-4));
   }
@@ -476,7 +493,7 @@ ${FINE}
   wash *= min(1.0, uWash.y / max(wash.r, max(wash.g, wash.b)));
   col *= mix(vec3(1.0), wash, uWash.x);
   float fs = exp(-acos(clamp(dot(ray, uFarDir), -1.0, 1.0)) / uFarSun.x);
-  float inLimb = (asin(min(1.0 / length(oc), 1.0)) - asin(min(s / length(oc), 1.0))) / max(ray.z * ray.z, 1e-4);
+  float inLimb = (asin(min(1.0 / length(oc), 1.0)) - asin(min(s / length(oc), 1.0))) / max(dot(ray, uFarAxis) * dot(ray, uFarAxis), 1e-4);
   float fw = uFar.x * uFarSun.z * (1.0 - smoothstep(uFar.y, uFar.z, inLimb / (1.0 + uFar.w * fs))) * smoothstep(uFarLit.x, uFarLit.y, ndl0);
   col = mix(col, uFarColor * (1.0 + uFarSun.w * fs) * pow(max(dot(col, vec3(0.2126, 0.7152, 0.0722)), 1e-4) / uFarRelief.x, uFarRelief.y), fw);
 ${CLOSE_DRAWS}
@@ -548,17 +565,17 @@ export class Globe {
         uFeather: { value: p?.feather ?? 0.12 }, uPatchLean: { value: p?.lean ?? 0 }, uPatchFade: { value: new THREE.Vector2(p?.fade[0] ?? 1.1, p?.fade[1] ?? 1.7) }, uMend: { value: new THREE.Vector4(1000, 1000, 1, 0) },
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
         uMapWidth: { value: o.mapWidth }, uHeightStep: { value: (2 * Math.PI) / o.heightWidth },
-        uSpin: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uShow: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
+        uSpin: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uShow: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uFrame: frameUniform, uTint: { value: new THREE.Vector3(1, 1, 1) },
         uWrap: { value: l.wrap }, uCurve: { value: l.curve.map((k) => new THREE.Vector3(k[0], k[1], k[2])) }, uLimb: { value: l.limb.map((k) => new THREE.Vector3(k[0], k[1], k[2])) }, uLimbTo: { value: l.limbTo }, uNight: { value: new THREE.Vector3().fromArray(l.night) }, uNightDim: { value: 1 },
         uRelief: { value: new THREE.Vector4(l.relief, l.reliefNear, l.reliefDay, 0) }, uNightFlat: { value: new THREE.Vector4(l.nightFlat, l.nightDetail, l.nightVeil, l.nightVeilFrom) }, uNightSoft: { value: new THREE.Vector4(l.nightSoft[0], l.nightSoft[1], l.nightSoft[2], l.nightSoft[3]) }, uDusk: { value: new THREE.Vector4().fromArray(l.dusk.range) }, uDuskFrom: { value: l.dusk.from }, uReliefRange: { value: new THREE.Vector2().fromArray(l.reliefRange) }, uSil: { value: new THREE.Vector3(0, l.silhouette.floor, l.silhouette.taps) }, uSilWide: { value: new THREE.Vector2().fromArray(l.silhouette.wide) },
         uEdge: { value: l.edge },
         uRimColor: { value: new THREE.Vector3().fromArray(l.rim.color) },
         uRimWide: { value: new THREE.Vector2(l.rim.nearGain, l.rim.wideGain) }, uRimNear: { value: new THREE.Vector3().fromArray(l.rim.nearTint) }, uRimLobe: { value: new THREE.Vector3().fromArray(l.rim.lobe) }, uRimSpill: { value: 1 }, uRimDir: { value: new THREE.Vector3(1, 0, 0) }, uGlareW: { value: new THREE.Vector3(1, 0, 0) }, uGlareGate: { value: new THREE.Vector3().fromArray(l.glareGate) }, uGlareLens: { value: 1 }, uRimWidth: { value: new THREE.Vector2(l.rim.width, l.rim.wide) }, uLine: { value: new THREE.Vector4(l.line.gain, l.line.width[0], l.line.width[1], l.line.dip) }, uLineDip: { value: new THREE.Vector4(l.line.dipWidth[0], l.line.dipWidth[1], l.line.dipSun[0], l.line.dipSun[1]) }, uLineW: { value: new THREE.Vector3(1, 0, 0) }, uLineSide: { value: new THREE.Vector2().fromArray(l.line.side) }, uLineSun: { value: new THREE.Vector4().fromArray(l.line.sun) }, uLineTight: { value: new THREE.Vector3().fromArray(l.line.dipTight) },
         uBodyToWorld: { value: this.bodyToWorld }, uCenter: { value: this.center }, uSunW: { value: new THREE.Vector3(1, 0, 0) },
-        uCarry: { value: new THREE.Vector3(1, 0, 0) }, uPlace: { value: new THREE.Vector4(1, 0, Math.tan(THREE.MathUtils.degToRad(p?.place?.ownDeg[0] ?? 1)), Math.tan(THREE.MathUtils.degToRad(p?.place?.ownDeg[1] ?? 2))) }, uPlaceFrom: { value: p?.place?.from ?? MAX_PATCHES }, uShoulder: { value: new THREE.Vector2(l.shoulder.from, 0) },
+        uCarry: { value: new THREE.Vector3(1, 0, 0) }, uPlace: { value: new THREE.Vector4(1, 0, Math.tan(THREE.MathUtils.degToRad(p?.place?.ownDeg[0] ?? 1)), Math.tan(THREE.MathUtils.degToRad(p?.place?.ownDeg[1] ?? 2))) }, uPlaceFrom: { value: p?.place?.from ?? MAX_PATCHES }, uPlaceFade: { value: new THREE.Vector3(p?.place?.fade?.[0] ?? 1, p?.place?.fade?.[1] ?? 2, p?.place?.fade ? 1 : 0) }, uPlaceEarly: { value: 0 }, uPlaceHold: { value: new THREE.Vector3(p?.place?.hold ? Math.tan(THREE.MathUtils.degToRad(p.place.hold[0])) : 1, p?.place?.hold ? Math.tan(THREE.MathUtils.degToRad(p.place.hold[1])) : 2, p?.place?.hold ? 1 : 0) }, uPlaceLight: { value: new THREE.Vector3(p?.place?.light?.[0] ?? 1e6, p?.place?.light?.[1] ?? 2e6, p?.place?.light?.[2] ?? 1) }, uShoulder: { value: new THREE.Vector2(l.shoulder.from, 0) },
         uClose: { value: o.map }, uCloseCam: { value: new THREE.Matrix3() }, uCloseUp: { value: new THREE.Vector3(0, 1, 0) }, uCloseLens: { value: new THREE.Vector4(1, 1, 0, 0) }, uCloseBox: { value: new THREE.Vector4(0, 0, 1, 1) }, uCloseFade: { value: new THREE.Vector4(1, 2, 0.1, 0) }, uCloseSize: { value: new THREE.Vector2(1, 1) }, uCloseW: { value: 0 },
         uWide: { value: o.map }, uWideAlpha: { value: o.map }, uWideCam: { value: new THREE.Matrix3() }, uWideEye: { value: new THREE.Vector3(0, 2, 0) }, uWideLens: { value: new THREE.Vector3(1, 0, 0) }, uWideBox: { value: new THREE.Vector4(0, 0, 1, 1) }, uWideOver: { value: new THREE.Vector2(0, 0) }, uWideDrop: { value: new THREE.Vector4(0, 1, 2, 1e6) }, uWideDown: { value: new THREE.Vector3(0, -1, 0) }, uWideHold: { value: new THREE.Vector3(1e6, 0, 1) }, uWideCap: { value: new THREE.Vector4(0, 1, 2, 1) }, uWideLow: { value: 0.03 }, uWideFade: { value: new THREE.Vector4(0.1, 1, 2, 0.5) }, uWideSize: { value: new THREE.Vector2(1, 1) }, uSink: { value: 0 },
-        uFar: { value: new THREE.Vector4(0, 0, 1, 1) }, uFarSun: { value: new THREE.Vector4(0, 1, 1, 1) }, uFarDir: { value: new THREE.Vector3(0, 0, 1) }, uFarColor: { value: new THREE.Vector3(1, 1, 1) }, uFarLit: { value: new THREE.Vector2(0, 1) }, uFarRelief: { value: new THREE.Vector2(1, 0) }, uNightPlain: { value: new THREE.Vector3(0, -1, 0) },
+        uFar: { value: new THREE.Vector4(0, 0, 1, 1) }, uFarSun: { value: new THREE.Vector4(0, 1, 1, 1) }, uFarAxis: { value: new THREE.Vector3(0, 0, 1) }, uFarDir: { value: new THREE.Vector3(0, 0, 1) }, uFarColor: { value: new THREE.Vector3(1, 1, 1) }, uFarLit: { value: new THREE.Vector2(0, 1) }, uFarRelief: { value: new THREE.Vector2(1, 0) }, uNightPlain: { value: new THREE.Vector3(0, -1, 0) },
         uHazeSun: { value: new THREE.Vector3(0, 0, 1) }, uHazeGain: { value: Array.from({ length: 17 }, () => new THREE.Vector3(1, 1, 1)) }, uHazeSpan: { value: new THREE.Vector4(0, 1, 0, 1) }, uHazeCut: { value: new THREE.Vector3(0, 1, 0) }, uHazeCalm: { value: new THREE.Vector3(0, 1, 0) }, uWash: { value: new THREE.Vector2(0, 1) }, uLift: { value: new THREE.Vector2(-0.85, 1.6) }, uKnee: { value: new THREE.Vector2(1, 0) },
         uPrev: { value: new THREE.Matrix4() }, uSmear: { value: 0 }, uJitter: { value: new THREE.Vector3() }, uPlain: { value: new THREE.Vector3(1, 1, 1) }, uDiag: diagUniform, uGrad: gradUniform,
       },
@@ -571,8 +588,9 @@ export class Globe {
     ;(this.material.uniforms.uCarry!.value as THREE.Vector3).set(lift, knee, grey)
   }
 
-  plates(levels: readonly number[], textures: readonly THREE.Texture[]): void {
+  plates(levels: readonly number[], textures: readonly THREE.Texture[], early = false): void {
     levels.forEach((level, i) => { this.material.uniforms['uPatch' + level]!.value = textures[i]! })
+    this.material.uniforms.uPlaceEarly!.value = early ? 1 : 0
   }
 
   place(gain: number, on: number): void {
@@ -662,6 +680,10 @@ export class Globe {
     ;(u.uFarColor!.value as THREE.Vector3).fromArray(o.color)
     ;(u.uFarLit!.value as THREE.Vector2).fromArray(o.lit)
     ;(u.uFarRelief!.value as THREE.Vector2).fromArray(o.relief)
+  }
+
+  lens(axis: THREE.Vector3): void {
+    ;(this.material.uniforms.uFarAxis!.value as THREE.Vector3).copy(axis)
   }
 
   wash(amount: number, cap: number): void {
