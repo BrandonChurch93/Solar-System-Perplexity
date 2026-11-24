@@ -1,25 +1,60 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T14:31:46.631Z",
- "head": "fe074825d069c4a941e60c42455615a7d6effe48",
- "note": "MAIL 682: rendering the drafts of every stop's dive and rise at full size to read the body step both ways (mean of the body, in place); Jupiter's third first",
+ "pushed": "2026-11-24T15:11:44.488Z",
+ "head": "3e939cccc0874f53148a1fad1c0e15ff3e26f321",
+ "note": "MAIL 682: the body step read in place beside the mean of the body; Jupiter third both ways; plant-* reports are PLANTED exposure steps on kept drafts, not film frames; Earth rendering, seven stops to go",
  "looks": [
+  {
+   "time": "2026-11-24T15:11:38.045Z",
+   "file": "20261124151138045-note-jupiter-main-rise-3276-3295.jpg",
+   "source": "out/work/inplace/sheets/jupiter-main-rise-3276-3295.png",
+   "kind": "note",
+   "label": "Jupiter as on main, rise 3276 to 3295, consecutive drafts, for comparison with the third",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T15:11:36.409Z",
+   "file": "20261124151136409-note-ju3-rise-3276-3295.jpg",
+   "source": "out/work/inplace/sheets/ju3-rise-3276-3295.png",
+   "kind": "note",
+   "label": "Jupiter third, rise 3276 to 3295, consecutive drafts: the exposure by height dims the picture and brings it back"
+  },
+  {
+   "time": "2026-11-24T15:08:10.880Z",
+   "file": "20261124150810880-compare-earth-dive-step-in-place.jpg",
+   "source": "out/work/handover/earth-dive-step-in-place.png",
+   "kind": "compare",
+   "label": "earth dive, the largest step of the level in place (2.24): frame 1887, frame 1888, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1888
+  },
+  {
+   "time": "2026-11-24T14:57:45.070Z",
+   "file": "20261124145745070-compare-plant-open-lev8-rise-step-in-place.jpg",
+   "source": "out/work/handover/plant-open-lev8-rise-step-in-place.png",
+   "kind": "compare",
+   "label": "jupiter rise, the largest step of the level in place (6.8): frame 3300, frame 3301, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3301
+  },
+  {
+   "time": "2026-11-24T14:37:05.017Z",
+   "file": "20261124143705017-compare-ju3-dive-step-in-place.jpg",
+   "source": "out/work/handover/ju3-dive-step-in-place.png",
+   "kind": "compare",
+   "label": "jupiter dive, the largest step of the level in place (1.49): frame 3035, frame 3036, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 3036
+  },
   {
    "time": "2026-11-24T14:31:44.927Z",
    "file": "20261124143144927-note-ju3-dive-so-far.jpg",
    "source": "out/work/inplace/sheets/ju3-dive-so-far.png",
    "kind": "note",
    "label": "MAIL 682, the table of every stop: Jupiter's third (proof tree 062c4d01) laid over my tree, drafts of its dive at full size, every sixth frame so far"
-  },
-  {
-   "time": "2026-11-24T14:10:24.298Z",
-   "file": "20261124141024298-compare-pv-jupiter-rise-step-in-place.jpg",
-   "source": "out/work/handover/pv-jupiter-rise-step-in-place.png",
-   "kind": "compare",
-   "label": "jupiter rise, the largest step of the level in place (4.03): frame 3280, frame 3281, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3281
   },
   {
    "time": "2026-11-24T13:26:31.387Z",
@@ -36,40 +71,6 @@
    "kind": "note",
    "label": "mars rise (main's, plain), the step in place, prototype: frame 2709, frame 2710, the ground that is new in it in magenta, and the change on the ground both show times 8",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T13:26:30.048Z",
-   "file": "20261124132630048-note-mars-rise-2700.jpg",
-   "source": "out/work/inplace/panels/mars-rise-2700.png",
-   "kind": "note",
-   "label": "mars rise (main's, plain), the step in place, prototype: frame 2699, frame 2700, the ground that is new in it in magenta, and the change on the ground both show times 8",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T13:23:59.780Z",
-   "file": "20261124132359780-compare-earth-rise-step-body.jpg",
-   "source": "out/work/handover/earth-rise-step-body.png",
-   "kind": "compare",
-   "label": "earth rise, the largest step of the mean level of the body (7.5): frame 2123, frame 2124, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2124
-  },
-  {
-   "time": "2026-11-24T13:04:29.212Z",
-   "file": "20261124130429212-note-jupiter-rise-3305.jpg",
-   "source": "out/work/inplace/panels/jupiter-rise-3305.png",
-   "kind": "note",
-   "label": "jupiter rise (main's), the step in place, prototype: frame 3304, frame 3305, the ground that is new in it in magenta, and the change on the ground both show times 8",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T13:04:27.895Z",
-   "file": "20261124130427895-note-jupiter-rise-3288.jpg",
-   "source": "out/work/inplace/panels/jupiter-rise-3288.png",
-   "kind": "note",
-   "label": "jupiter rise (main's), the step in place, prototype: frame 3287, frame 3288, the ground that is new in it in magenta, and the change on the ground both show times 8",
-   "stop": "jupiter"
   }
  ]
 }
