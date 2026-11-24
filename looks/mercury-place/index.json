@@ -1,9 +1,33 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T05:43:27.205Z",
+ "pushed": "2026-11-24T06:16:14.916Z",
  "head": "7c885d343d584d08dacf6688e4bfed29e0fc604c",
- "note": "bend in the surface view from 876: seam eye line 1.024 at the rise (limit 0.87), 870 final bytes kept; rise frames rendering",
+ "note": "second bend of the surface view (end 140, skew 1.7): seam tool rise lowest 1.025 at 960, pop on rate 2 frames 1.067; terrain 877 to 964 looked at frame by frame, no hole, no border; pattern still red, cause panel added",
  "looks": [
+  {
+   "time": "2026-11-24T06:16:14.272Z",
+   "file": "20261124061614272-note-pyr.jpg",
+   "source": "out/work/mercury/place/sm/pyr.jpg",
+   "kind": "note",
+   "label": "pattern red, cause: each level of the place pyramid against its parent (parent, child, where their detail differs at 8 to 40 and 16 to 80 parent texels); rows: map to plate 1, 1 to 2, 2 to 3, 3 to 4, 2 to 3r, 3r to 4r, 3 to 3r, 4 to 4r",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T06:16:13.634Z",
+   "file": "20261124061613634-note-t1.jpg",
+   "source": "out/work/mercury/place/b2/t1.jpg",
+   "kind": "note",
+   "label": "second bend: surface view 877 to 906, every frame, draft",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T06:16:12.883Z",
+   "file": "20261124061612883-note-t3.jpg",
+   "source": "out/work/mercury/place/b2/t3.jpg",
+   "kind": "note",
+   "label": "second bend (end 140, skew 1.7): surface view 937 to 964, every frame, draft",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T05:43:26.059Z",
    "file": "20261124054326059-note-v955.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/mercury/place/par/mercury-parity.png",
    "kind": "note",
    "label": "parity panel on my tree with the frame height factor: green, what is left is sky",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T04:08:25.561Z",
-   "file": "20261124040825561-note-cmp-986.jpg",
-   "source": "out/work/mercury/place/quad/cmp-986.jpg",
-   "kind": "note",
-   "label": "986 left part, c7248b33 beside the mended rise plates",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T04:08:24.515Z",
-   "file": "20261124040824515-note-cmp-989.jpg",
-   "source": "out/work/mercury/place/quad/cmp-989.jpg",
-   "kind": "note",
-   "label": "989 left part, c7248b33 beside the mended rise plates: the pale quad is gone",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T03:41:47.342Z",
-   "file": "20261124034147342-note-whole-986-996.jpg",
-   "source": "out/work/mercury/place/quad/whole-986-996.jpg",
-   "kind": "note",
-   "label": "mercury rise 986 to 996 before the mend: pale quad at the lower left corner, band craters at the left",
    "stop": "mercury"
   }
  ]
