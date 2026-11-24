@@ -1,9 +1,33 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-24T09:34:21.799Z",
+ "pushed": "2026-11-24T09:41:41.554Z",
  "head": "b0ff729f1a4b2723fc090317a824e1ea709b0f20",
- "note": "sky cure of the dive under way (main 2008483c merged): baseline sheet, E23 band, E4 flat light pattern 0.44",
+ "note": "b0ff729f on main 2008483c: the dive's sky after the cure, every frame 4138 to 4164; pop by my run 1.69 at 4144.5, 7 capture frames over 1.2 (was 1.70, 10); still red",
  "looks": [
+  {
+   "time": "2026-11-24T09:41:40.790Z",
+   "file": "20261124094140790-note-a2-c.jpg",
+   "source": "../../../../tmp/a2-c.png",
+   "kind": "note",
+   "label": "dive 4154 to 4164 after the sky cure, b0ff729f on main 2008483c, draft: exchange and turn end at 0.2 R (4160), then the low sun's glow and the arcs come in",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T09:41:39.772Z",
+   "file": "20261124094139772-note-a2-b.jpg",
+   "source": "../../../../tmp/a2-b.png",
+   "kind": "note",
+   "label": "dive 4145.5 to 4153 after the sky cure, b0ff729f on main 2008483c, draft: the core goes behind the limb by 4150, the exchange of the two painted skies starts there in dark sky",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T09:41:38.943Z",
+   "file": "20261124094138943-note-a2-a.jpg",
+   "source": "../../../../tmp/a2-a.png",
+   "kind": "note",
+   "label": "dive 4138 to 4145 at capture rate 2 after the sky cure, b0ff729f on main 2008483c, draft: the galaxy core crosses the left strip alone, no second sky on it",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-24T09:34:20.881Z",
    "file": "20261124093420881-note-band-e23.jpg",
@@ -276,41 +300,6 @@
    "segment": "uranus.rise",
    "first": 4385,
    "last": 4396,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T07:01:20.243Z",
-   "file": "20261124070120243-compare-uranus-rise-sides.jpg",
-   "source": "out/work/handover/uranus-rise-sides.png",
-   "kind": "compare",
-   "label": "uranus rise, both sides at T (frame 4391) and their difference times 8",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4391,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T07:01:02.943Z",
-   "file": "20261124070102943-sheet-uranus-dive-top.jpg",
-   "source": "out/work/handover/uranus-dive-top.png",
-   "kind": "sheet",
-   "label": "uranus dive, the globe side alone from straight above the place, 12 frames from the far end to T (frame 4186), place picture off, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "first": 4110,
-   "last": 4186,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T07:00:15.807Z",
-   "file": "20261124070015807-sheet-uranus-dive-draft-after.jpg",
-   "source": "out/work/handover/uranus-dive-draft-after.png",
-   "kind": "sheet",
-   "label": "uranus dive, every frame 4187 to 4198 (after T, frame 4186), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "first": 4187,
-   "last": 4198,
    "tier": "draft"
   }
  ]
