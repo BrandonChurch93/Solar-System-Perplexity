@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T14:37:21.969Z",
- "head": "b8a38cbe7be49c70b1e86c1f6851cf002068941f",
- "note": "RED named: the scene is the map's storm with the tones reversed across the first streamer; opposites exchange at any speed. Next: the place moved 2.3 units across the band so dark lies on dark and white on white, as a trial of one number first. Parity of b8a38cbe is rendering.",
+ "pushed": "2026-11-24T14:58:01.904Z",
+ "head": "6dd99c59c32c226f4f55db0bde4ddbd826ff752c",
+ "note": "Place moved 2.3 units across the band so scene tones lie on map tones: reads as one place seen closer, no lilac. Reds named: my pose proxy 0.56 at 4724, 0.83 at 4732 (band texture into smooth plain); 1.24, 1.53 at 4740, 4748 were the cloud sheet sliding over the deck by the limb (carried on the sheet 0.57, 0.67). 4605 same bytes. 8 to 25 s a draft frame at preview.",
  "looks": [
+  {
+   "time": "2026-11-24T14:58:01.302Z",
+   "file": "20261124145801302-note-p23-a.jpg",
+   "source": "out/work/nep/weave/p23-a.jpg",
+   "kind": "note",
+   "label": "The place moved 2.3 units across the band (uncommitted): 4724, 4732, 4740, 4748, 4756, 4860 at preview draft",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-24T14:58:00.568Z",
+   "file": "20261124145800568-note-look-p23-4860.jpg",
+   "source": "out/work/nep/weave/look-p23-4860.jpg",
+   "kind": "note",
+   "label": "4860: moved place (across 2.3) | approved | committed b8a38cbe. G17 median 1.382 (was 1.331). Near picture stays; far field by the limb moved",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T14:37:20.605Z",
    "file": "20261124143720605-note-look-fork.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/nep/cost/look-1149.jpg",
    "kind": "note",
    "label": "4860 beside the approved image, unchanged since 11:49: 16 by 9 draft, G17 median 0.934, 25th percentile 0.549, 34 s a draft frame. Not touched in this half hour; the work is on the dive's exchange (MAIL 654).",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T12:45:13.635Z",
-   "file": "20261124124513635-note-look-humps.jpg",
-   "source": "out/work/nep/weave/look-humps.jpg",
-   "kind": "note",
-   "label": "Dive, the two smaller humps of the pattern measure split by cause (draft, 1.4 s a frame above 0.9 radii, 9 to 14 s with the scene). Left pair: 4696 and 4704 carried back, at the limb: the 0.76 of the report sits on the later frame's limb line, with 40 px more margin inside the limb my pair measure falls from 0.60 to 0.25. Right: the dark corner of 4712 times 8: the scene's deck comes in as a hard edged blue patch over the map's night side, that is the hump at 4704 to 4713. Both named, neither cured yet.",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T12:15:49.397Z",
-   "file": "20261124121549397-note-look-1149.jpg",
-   "source": "out/work/nep/cost/look-1149.jpg",
-   "kind": "note",
-   "label": "4860 beside the approved image, the same pair as at 11:49: the far field work X5 (parked in work files, not committed, while the dive's exchange of MAIL 654 comes first). G17 at 16 by 9 draft: X5 0.934 / 0.545, committed head 0.934 / 0.549. 34 s a draft frame at 16 by 9 over the stop, 4860 alone 96 s.",
    "stop": "neptune"
   }
  ]
