@@ -1,9 +1,17 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T07:08:05.706Z",
+ "pushed": "2026-11-24T07:28:39.715Z",
  "head": "fd95089a27ad1e2a7aa296b36cff561b3de9f77a",
- "note": "T23 4860 beside the approved image, own G17 at draft median 0.964 p25 0.615 over 75 tiles, 236 s the frame; ridge now torn heaps with fibres on both sides and a shadow, but too broken and too thin against the approved band; storm, deck and second streamer not yet touched",
+ "note": "T27 preview draft, 69.8 s: storm eye the approved size, collar still ringed; ridge cloud 22.6 pct (approved 23.1) but smoke not fibres; deck boxes within 20 of approved except below storm",
  "looks": [
+  {
+   "time": "2026-11-24T07:28:39.096Z",
+   "file": "20261124072839096-note-d-T27.jpg",
+   "source": "../../../../tmp/d-T27.jpg",
+   "kind": "note",
+   "label": "T27 preview draft 4860 (left) beside the approved image: eye size right, rings too even, ridge too smooth",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T07:08:05.116Z",
    "file": "20261124070805116-note-ridge-T23.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/limb-4860.jpg",
    "kind": "note",
    "label": "4860 limb and storm, twice size: approved image, mine (16 by 9 draft, tree of the named commit), kept still. Mine: limb 5 to 9 rows of 540 too high, band white and straight where the approved is light blue and broken, no blue line over it, storm a clean disc, ridge a few heaps",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T05:38:36.968Z",
-   "file": "20261124053836968-note-pair-4860-draft.jpg",
-   "source": "../../../../tmp/pair-4860-draft.jpg",
-   "kind": "note",
-   "label": "4860 on this tree (16 by 9, draft tier) beside the kept still and the approved image; G17 median 1.002, p25 0.789, 75 tiles",
    "stop": "neptune"
   }
  ]
