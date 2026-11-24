@@ -19,7 +19,7 @@ ensureBuild()
 mkdirSync(dir, { recursive: true })
 const held: { session?: Session } = {}
 for (const frame of list) {
-  const { png, seconds } = await renderPngFresh(() => openCapture({ dist: DIST, format: formatId(cfg, a.format), assets: 'full', diag }), held, frame, tier)
+  const { png, seconds } = await renderPngFresh(() => openCapture({ dist: DIST, format: formatId(cfg, a.format), assets: a.assets === 'web' ? 'web' : 'full', diag }), held, frame, tier)
   const file = join(dir, 'f' + String(frame).padStart(5, '0') + (diag === 'beauty' ? '' : '-' + diag) + '.png')
   writeFileSync(file, png)
   console.log(file + ' ' + seconds.toFixed(1) + 's')

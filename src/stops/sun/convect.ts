@@ -59,7 +59,6 @@ uniform vec4 uCvGap;
 uniform vec4 uCvBend;
 uniform vec4 uCvAboveMore;
 uniform vec4 uCvSwallow;
-uniform float uFormat;
 uniform vec4 uCvLine;
 uniform vec4 uCvPatch;
 uniform vec4 uCvTight;
@@ -629,7 +628,9 @@ void main() {
   vec4 fibre;
   vec4 spot = cvSpot(g, t, fibre);
   float L = uCvCell.x;
-  // (uCvThreadFar.z: texels of this buffer to a pixel of the picture, each way)
+  // (uCvThreadFar.z: texels of this buffer to a pixel of the 16 by 9 master, each way. The buffer is as large in
+  // every format, so what is counted here is counted in 1080ths of the frame height and a frame of any size is the
+  // same picture)
   float footX = length(dFdx(g)) * uCvThreadFar.z;
   float footY = length(dFdy(g)) * uCvThreadFar.z;
   float foot = max(footX, footY);
@@ -638,14 +639,14 @@ void main() {
   // drawn only where a pixel is narrower than it
   // (the root of what a pixel covers both ways: a far cell seen flat is many pixels wide and few deep, and it is
   // drawn while their product holds it)
-  // (what fades reads the size in 1080ths of the frame height, not in pixels of the format: uFormat is the
-  // format's height over 1080; a texel of this buffer is a pixel of the picture)
-  float footM = sqrt(footX * footY) * uFormat;
+  // (what fades reads the size in 1080ths of the frame height, not in pixels of the format: the buffer has the
+  // master's pixels in every format, see above)
+  float footM = sqrt(footX * footY);
   float footC = footM * cvTight(g);
   // (the long side of what a pixel covers: toward the limb a cell is many pixels wide and under a pixel deep, one
   // sample a pixel then draws grain, so the cell gives way by that side too, between uCvFlat.x and uCvFlat.y cells
   // a pixel)
-  float footL = foot * uFormat * cvTight(g);
+  float footL = foot * cvTight(g);
   float fine = (1.0 - smoothstep(uCvFar.x * L, uCvFar.y * L, footC)) * (1.0 - smoothstep(uCvFlat.x * L, uCvFlat.y * L, footL)) * met;
   float mottle = 0.0;
   for (int k = 0; k < 5; k++) {
@@ -701,7 +702,7 @@ void main() {
     vec2 mdy = vec2(abs(dFdy(muv.x)) < abs(dFdy(mAlt)) ? dFdy(muv.x) : dFdy(mAlt), dFdy(muv.y)) * uCvThreadFar.z;
     float lenX = max(length(mdx * uCvWideMore.yz), 1e-6);
     float lenY = max(length(mdy * uCvWideMore.yz), 1e-6);
-    float wideFoot = sqrt(lenX * lenY) * uFormat;
+    float wideFoot = sqrt(lenX * lenY);
     float cellLum = dot(textureGrad(uCvMap, muvC, mdx * max(1.0, uCvWideMore.x / lenX), mdy * max(1.0, uCvWideMore.x / lenY)).rgb, vec3(0.3, 0.5, 0.2));
     float regionLum = dot(textureGrad(uCvMap, muv, mdx * max(1.0, uCvWideBand.z / lenX), mdy * max(1.0, uCvWideBand.z / lenY)).rgb, vec3(0.3, 0.5, 0.2));
     float cellTone = clamp(pow(cellLum / max(regionLum, 1e-3), uCvWideCell.w), uCvWideCell.y, uCvWideCell.z);
@@ -822,7 +823,7 @@ export class Surface {
       fragmentShader: FRAG,
       uniforms: {
         ...uniforms,
-        uDiag: diagUniform, uFormat: formatUniform,
+        uDiag: diagUniform,
         uRamp: { value: this.ramp },
         uCvTime: { value: 0 },
         uCvCell: { value: new THREE.Vector4(c.lattice, c.jitter, c.yield, c.apart) },
@@ -1039,13 +1040,17 @@ export class Surface {
     const target = renderer.getRenderTarget()
     if (target) this.size.set(target.width, target.height)
     else renderer.getDrawingBufferSize(this.size)
-    const w = Math.ceil(this.size.x * margin * fine)
-    const h = Math.ceil(this.size.y * margin * fine)
+    // (the buffer is counted in pixels of the 16 by 9 master, not of the format: it is as large for a frame of any
+    // size, and the picture is the same)
+    const wide = this.size.x / formatUniform.value
+    const high = this.size.y / formatUniform.value
+    const w = Math.ceil(wide * margin * fine)
+    const h = Math.ceil(high * margin * fine)
     if (this.baked.width !== w || this.baked.height !== h) this.baked.setSize(w, h)
     // from the stage's own frame to the picture, and to the buffer (the same look, margin wider each way)
     this.toClip.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse).multiply(this.mesh.matrixWorld)
     ;(u.uCvClip!.value as THREE.Matrix4).copy(this.toClip)
-    this.wider.makeScale(this.size.x * fine / w, this.size.y * fine / h, 1)
+    this.wider.makeScale((wide * fine) / w, (high * fine) / h, 1)
     this.toBake.multiplyMatrices(this.wider, this.toClip)
     ;(u.uCvBake!.value as THREE.Matrix4).copy(this.toBake)
     // the eye in the stage's frame, and the ray of every place of the buffer
