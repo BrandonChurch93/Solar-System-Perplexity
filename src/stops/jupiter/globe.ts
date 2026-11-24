@@ -4,6 +4,7 @@ import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { EQUIRECT_GLSL } from '../../space/sky'
 import { ABOVE_GLSL, CALM_GLSL, DETAIL_GLSL, STORED_GLSL } from './clouds'
+import { frameUniform } from './frame'
 import { PALL_GLSL, pallUniforms } from './pall'
 
 export const CURVE_KNOTS = 33
@@ -93,7 +94,7 @@ const PATCH_SAMPLERS = Array.from({ length: MAX_PATCHES }, (_, i) => 'uniform sa
 
 const PATCH_LEVELS = Array.from({ length: MAX_PATCHES }, (_, i) => `    if (uPatchCount > ${i}.5) {
       vec2 q = g * uPatchScale[${i}];
-      float w = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent));
+      float w = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent * uFrame));
       if (w > 0.0) albedo = mix(albedo, textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb, w);
       parent = gd * uPatchScale[${i}] * uPatchSize[${i}];
       texels = mix(texels, parent, step(0.5, w));
@@ -114,6 +115,7 @@ uniform vec3 uPatchE;
 uniform vec3 uPatchU;
 uniform float uFeather;
 uniform vec2 uPatchFade;
+uniform float uFrame;
 uniform vec3 uSpotN;
 uniform vec3 uSpotE;
 uniform vec3 uSpotU;
@@ -444,7 +446,7 @@ ${PATCH_LEVELS}
   vec2 toSun = vec2(dot(sunT, east) / max(cos(lat), 0.25) / (2.0 * PI) * uWispShape.x, dot(sunT, north) * uWispShape.y) * uWispShadow.y;
   vec2 fine = textureGrad(uWisp, wuv, wdx * uGrad, wdy * uGrad).rg;
   float body = fine.r + (fine.g - 0.5) * uWispShadow.w;
-  float shade2 = textureGrad(uWisp, wuv + toSun, wdx * uWispShadow.z, wdy * uWispShadow.z).r;
+  float shade2 = textureGrad(uWisp, wuv + toSun, wdx * (uWispShadow.z * uFrame), wdy * (uWispShadow.z * uFrame)).r;
   float wisp = ((body - 0.5) * uWispShape.z - (shade2 - 0.5) * uWispShadow.x) * max(steady, fl.z * 0.6) * calm;
   lin *= max(1.0 + wisp * (1.0 - soft) * (1.0 - placed), 0.0);
   vec3 direct = curveAt(ndl) * mix(vec3(1.0), limbAt(mu), uLimbAmount * mix(uLimbLit.x, 1.0, smoothstep(uLimbLit.y, uLimbLit.z, ndl)));
@@ -455,7 +457,7 @@ ${PATCH_LEVELS}
     vec3 hd = spinY(uToBody * normalize(n - dir * (uVeil.y / max(mu, 0.3))), uSpin);
     float hlon = atan(hd.x, hd.z) / (2.0 * PI);
     float hlat = asin(clamp(hd.y, -1.0, 1.0)) / (2.0 * PI) * uVeil.z;
-    float hl = log2(max(vfoot * 2048.0 / (2.0 * PI), 1e-6));
+    float hl = log2(max(vfoot * uFrame * 2048.0 / (2.0 * PI), 1e-6));
     float hv = 0.6 * textureLod(uWisp, vec2(hlon * 4.0 + uVeil.w, hlat), hl + 3.0).r + 0.4 * textureLod(uWisp, vec2(hlon * 12.0 - 2.0 * uVeil.w, hlat * 3.0) + 0.37, hl + 4.2).r;
     float ha = 1.0 - exp(-uVeil.x * (0.35 + 1.3 * smoothstep(0.3, 0.7, hv)) / max(mu, 0.25));
     col = mix(col, uVeilColor * knee(direct) * uTint, ha);
@@ -552,7 +554,7 @@ export class Globe {
         uPlaceN: { value: new THREE.Vector3().fromArray(o.place.n) }, uPlaceE: { value: new THREE.Vector3().fromArray(o.place.e) }, uPlaceU: { value: new THREE.Vector3().fromArray(o.place.u) },
         uPlace: { value: new THREE.Vector4(o.place.radius, 0, 0, 0) },
         uGrade: { value: new THREE.Vector3(1, 1, 1) },
-        uDiag: diagUniform, uGrad: gradUniform,
+        uDiag: diagUniform, uGrad: gradUniform, uFrame: frameUniform,
         ...pallUniforms(o.pallShell),
       },
       transparent: true,

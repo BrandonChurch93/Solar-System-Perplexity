@@ -10,6 +10,7 @@ import { Globe } from './globe'
 import { Io } from './io'
 import * as look from './look'
 import fields from './deck-fields.json'
+import { setFrame } from './frame'
 import place from './place.json'
 import { chartAxes, chartEye, closeHeight, eddyTurn, exposed, exposure, flashNow, hazeDrift, low, lowEven, plan, ringTurn, stormTurn } from './plan'
 import proof from './proof.json'
@@ -118,6 +119,7 @@ export const createSet: SetFactory = async (ctx) => {
     world,
     sky,
     update: (state, shot, view) => {
+      const frame = setFrame(view)
       const inOrbit = state.view === 'orbit'
       orbit.visible = inOrbit && state.weight > 0
       terrain.visible = !inOrbit
@@ -201,7 +203,7 @@ export const createSet: SetFactory = async (ctx) => {
       }
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
-      const visible = radiusPx > 0.6
+      const visible = radiusPx / frame > 0.6
       globe.mesh.visible = visible && !proof.glowAlone
       for (const s of shells) s.mesh.visible = visible
       io.mesh.visible = visible && !proof.glowAlone

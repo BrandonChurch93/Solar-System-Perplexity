@@ -3,6 +3,7 @@ import type { RenderView, SetContext } from '../../core/types'
 import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import deck from './deck.json'
 import fields from './deck-fields.json'
+import { frameUniform } from './frame'
 import place from './place.json'
 
 const OCTAVES = 10
@@ -169,6 +170,7 @@ uniform vec2 uShell;
 uniform vec4 uMarch;
 uniform float uPixel;
 uniform float uGrad;
+uniform float uFrame;
 uniform vec4 uDetail;
 uniform vec4 uDetailLook;
 uniform float uDetailTone;
@@ -292,7 +294,7 @@ vec4 seenAt(vec3 p, vec3 D, vec3 n, float foot, vec2 dx, vec2 dy, out vec2 size,
     float far = max(max(texelFetch(uImageRange, clamp(low, ivec2(0), most), 0).r, texelFetch(uImageRange, clamp(low + ivec2(1, 0), ivec2(0), most), 0).r), max(texelFetch(uImageRange, clamp(low + ivec2(0, 1), ivec2(0), most), 0).r, texelFetch(uImageRange, clamp(low + ivec2(1, 1), ivec2(0), most), 0).r));
     float shown = far > 0.99998 ? 1.0 : 1.0 - smoothstep(uRangeCode.z, uRangeCode.w, range * exp2(-uRangeCode.x - far * uRangeCode.y) - 1.0);
     float own = range / (uFitWindow.x * max(abs(dot(fit, n)), 1e-3));
-    shown *= 1.0 - smoothstep(uSteep.x, uSteep.y, own * turned);
+    shown *= 1.0 - smoothstep(uSteep.x, uSteep.y, own * turned / uFrame);
     for (int j = 0; j < (shown > 0.0 ? 1 : 0); j++) {
       float open = uRangeShape.w * clamp((1.0 + own * turned) / uStretch.x, 1.0, uStretch.z);
       vec3 qx = uFitAxes * vec3(dx, -dot(n.xy, dx) / n.z);
@@ -305,7 +307,7 @@ vec4 seenAt(vec3 p, vec3 D, vec3 n, float foot, vec2 dx, vec2 dy, out vec2 size,
       c.rgb = mix(c.rgb, picture, shown);
     }
   }
-  return vec4(unfilm(c.rgb), inside ? edge * (1.0 - uTrust.z) * (1.0 - smoothstep(uTrust.x, uTrust.y, smear)) : 0.0);
+  return vec4(unfilm(c.rgb), inside ? edge * (1.0 - uTrust.z) * (1.0 - smoothstep(uTrust.x, uTrust.y, smear / uFrame)) : 0.0);
 }
 ${STORED_GLSL}vec4 plateAt(vec2 g, vec2 dx, vec2 dy, out float size) {
   vec2 f = abs(g - uFore.xy) * (2.0 * uFore.zw);
@@ -339,7 +341,7 @@ float layered(vec2 p, int octaves, float size) {
 float hazeAt(vec2 g, int k, float foot) {
   vec2 o = g - uStorm.xy;
   float across = dot(o, uJet.zw);
-  float w = smoothstep(uHazeSpan[k].x, uHazeSpan[k].y, uHazeBand[k].y * across) * (1.0 - smoothstep(uHazeSpan[k].z, uHazeSpan[k].w, length(o))) * (1.0 - smoothstep(uHazeFine.y, uHazeFine.z, foot / uHazeFibre.y));
+  float w = smoothstep(uHazeSpan[k].x, uHazeSpan[k].y, uHazeBand[k].y * across) * (1.0 - smoothstep(uHazeSpan[k].z, uHazeSpan[k].w, length(o))) * (1.0 - smoothstep(uHazeFine.y, uHazeFine.z, foot * uFrame / uHazeFibre.y));
   float dense = 0.0;
   for (int i = 0; i < (w > 0.0 ? 1 : 0); i++) {
     vec2 at = vec2(dot(o, uJet.xy) - uHazeBand[k].z, across);
@@ -719,7 +721,7 @@ export class CloudDeck {
       uHazeGlow: { value: new THREE.Vector3().fromArray(hz.glow) },
       uHazeShade: { value: new THREE.Vector3().fromArray(hz.shadowTint) },
       uOwn: { value: 0 }, uEye: { value: new THREE.Vector3() }, uAxes: { value: new THREE.Matrix3() }, uLayer: { value: new THREE.Vector3(1, 1, 0) }, uToChart: { value: new THREE.Matrix3() },
-      uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diagUniform, uGrad: gradUniform,
+      uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diagUniform, uGrad: gradUniform, uFrame: frameUniform,
     })
     return new CloudDeck(uniforms)
   }
