@@ -125,6 +125,70 @@ describe('the one move of the engine', () => {
     }
   })
 
+  it('carries the surface view\'s own motion out of the seam and lets it go by the share of the move still to do, with no count of frames in it', () => {
+    forceOneMove(true)
+    const dt = 1e-4
+    for (const p of handing) {
+      for (const kind of kinds) {
+        const s = p.seg[kind]
+        if (!s) continue
+        // The eye leaves the seam at the velocity the surface view has there, each taken from its own side of the seam.
+        const seam = kind === 'dive' ? s.end : s.start
+        const into = kind === 'dive' ? -1 : 1
+        const ground = (t: number): Pose => p.twin(p.terrain(t - p.seg.terrain.start), t)
+        const at = ground(seam)
+        const surface = at.position.clone().sub(ground(seam - into * dt).position).multiplyScalar(into / dt)
+        const eye = p.eye(kind, seam + into * dt, 'orbit').position.clone().sub(at.position).multiplyScalar(into / dt)
+        expect(eye.distanceTo(surface), p.id + ' ' + kind).toBeLessThan(0.02 * surface.length() + 1e-3 * high(at))
+      }
+    }
+    // No count of frames: the span of the paths of the stops' own is not read by the one move.
+    const sample = (): Pose[] => kinds.flatMap((kind) => times(mars.seg[kind]!.firstFrame, mars.seg[kind]!.endFrame, 7.5).map((t) => mars.eye(kind, t, 'orbit')))
+    const h = config.raw.handover as { coastFrames: number; carry: { power: number; stepsPerFrame: number } }
+    const kept = { coastFrames: h.coastFrames, power: h.carry.power }
+    const as = sample()
+    try {
+      h.coastFrames = 30
+      const other = sample()
+      as.forEach((a, i) => {
+        expect(other[i]!.position.toArray()).toEqual(a.position.toArray())
+        expect(other[i]!.quaternion.toArray()).toEqual(a.quaternion.toArray())
+      })
+      // The power is read: with another the near end stands elsewhere inside the move, and both ends stay.
+      h.carry.power = 0.5
+      const more = sample()
+      expect(Math.max(...as.map((a, i) => a.position.distanceTo(more[i]!.position) / high(a)))).toBeGreaterThan(1e-4)
+      for (const kind of kinds) {
+        const seg = mars.seg[kind]!
+        const far = kind === 'dive' ? mars.hold(seg.start - mars.seg.hold.start) : mars.after(seg.end)
+        expect(mars.eye(kind, kind === 'dive' ? seg.start : seg.end, 'orbit').position.distanceTo(far.position)).toBeLessThan(1e-9)
+      }
+    } finally {
+      h.coastFrames = kept.coastFrames
+      h.carry.power = kept.power
+    }
+    // It holds at fractions of a frame: over the first frames from the seam the eye's step changes by a small share from one sixty
+    // fourth of a frame to the next, at the times the sums are taken and between them.
+    for (const kind of kinds) {
+      const seg = mars.seg[kind]!
+      const seam = kind === 'dive' ? seg.end : seg.start
+      const into = kind === 'dive' ? -1 : 1
+      const at = (i: number): THREE.Vector3 => mars.eye(kind, seam + (into * i) / (64 * fps), 'orbit').position
+      let worst = 0
+      for (let i = 1; i < 64 * 6; i++) {
+        const a = at(i).sub(at(i - 1))
+        const b = at(i + 1).sub(at(i))
+        worst = Math.max(worst, a.distanceTo(b) / Math.max(a.length(), b.length()))
+      }
+      expect(worst, kind).toBeLessThan(0.05)
+    }
+    for (const bad of [{ power: -1, stepsPerFrame: 8 }, { power: 9, stepsPerFrame: 8 }, { power: 2, stepsPerFrame: 0 }, { power: 2, stepsPerFrame: 2.5 }]) {
+      const off = JSON.parse(JSON.stringify(raw)) as typeof raw
+      off.handover.carry = bad
+      expect(() => buildConfig(off)).toThrow(/handover.carry/)
+    }
+  })
+
   it('undoes the twin of every stop: a camera of the globe taken into the close view and back stands where it stood', () => {
     for (const p of handing) {
       const t = p.seg.terrain.start + 0.37

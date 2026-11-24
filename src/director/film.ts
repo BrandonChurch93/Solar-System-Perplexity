@@ -870,7 +870,11 @@ export class FilmDirector implements Director {
     post.exposure = light.exposure
     post.flare = flare
     const sun: SunState = { dir: this.sunWorld.clone(), color: SUN_COLOR, intensity: 3, angularRadius: light.radius, glare: light.glare * sunWeight }
-    const out: Shot = { frame, time, segment, u, camera: pose, skyQuaternion: skyCarry ? skyCarry.multiply(pose.quaternion) : pose.quaternion.clone(), skyExposure: light.sky, skyGlow, skyTurn, skyStars, skyPatch, skyLook, near, far, sun, sets, post, cover, dust, farLight }
+    const out: Shot = { frame, time, segment, u, camera: pose, skyQuaternion: skyCarry ? skyCarry.multiply(pose.quaternion) : pose.quaternion.clone(), skyExposure: light.sky, skyGlow, skyTurn, skyStars, skyPatch, skyLook, near, far, sun, sets, post, cover, dust, farLight, pixel: (2 * Math.tan(THREE.MathUtils.degToRad(pose.vfov) / 2)) / config.raw.formats.master.height }
+    // PLAN F, the one air: by the height of the lens over the stop's own body, in every segment the stop draws that body alone.
+    const own = index >= 0 && (segment.kind === 'hold' || segment.kind === 'dive' || segment.kind === 'terrain' || segment.kind === 'rise') ? sets.find((s) => s.id === segment.stop) : undefined
+    const air = own ? this.plans[index]!.air(own.height) : null
+    if (air) out.air = air
     if (skyShare !== undefined) out.skyShare = skyShare
     if (skyShareHigh !== undefined) out.skyShareHigh = skyShareHigh
     if (skyFloor) out.skyFloor = skyFloor
