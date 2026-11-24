@@ -1,9 +1,61 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T17:38:37.610Z",
- "head": "e2d28f3861d586e04dd33196480b9d3cb430bd40",
- "note": "17:38 UTC. Sky that stands still (MAIL 708), working tree, not committed yet: sweep of the sky between the views of 2895 and 3150 75.90 degrees (merge 143.6), dive 1.00, 1.28, 1.38, 1.48, 1.94 degrees a frame at 2990, 2996, 2998, 3000, 3010; finals 2997 and 3296 differ from the merge in the sky only (on the sphere by one level near the limb). Own red with its cause: the band without stars over the limb at 3255 to 3266 and 3029 to 3041 is the surface sky plate under its painted horizon.",
+ "pushed": "2026-11-24T18:02:18.802Z",
+ "head": "5e0f209940652fc459f781ca14255616e46c8b9e",
+ "note": "18:06 UTC. Sky stands still (commit 4695edb), exposure by height out (5e0f209, MAIL 720). Judged finals and the rise and dive reports of that head are rendering. Ruling 3 step 2 in work: near plate from the wide canvas.",
  "looks": [
+  {
+   "time": "2026-11-24T18:02:17.582Z",
+   "file": "20261124180217582-note-t1-tone-x3.jpg",
+   "source": "../work/r3/t1-tone-x3.png",
+   "kind": "note",
+   "label": "Ruling 3, rejected: the tone field carried out to 17 units bakes the air into the ground (white bloom, dark fan). Panels: view laid back, plates, plates times tone, tone",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T18:02:16.469Z",
+   "file": "20261124180216469-note-near-guide-new.jpg",
+   "source": "../work/r3/near-guide-new.png",
+   "kind": "note",
+   "label": "Ruling 3 step 2: new guide of the near plate, the wide canvas laid back from above (not a film frame). The fan is the ground the view saw; the tan below is unseen ground",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T18:02:15.055Z",
+   "file": "20261124180215055-note-Rb-a.jpg",
+   "source": "../work/r3/Rb-a.jpg",
+   "kind": "note",
+   "label": "Rise 3247 to 3259 on the merge (before the exposure change): dark aprons at lower left give way to pale puffs at 3253, the right far field turns from dusk to bright streaks. This is ruling 3's red as the eye sees it",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T17:40:53.928Z",
+   "file": "20261124174053928-frame-bT-2895.jpg",
+   "source": "out/work/jupiter/final/bT-2895.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2895, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
+  {
+   "time": "2026-11-24T17:39:53.262Z",
+   "file": "20261124173953262-frame-bT-3150.jpg",
+   "source": "out/work/jupiter/final/bT-3150.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3150, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1db409b8ada90e29"
+  },
   {
    "time": "2026-11-24T17:38:25.525Z",
    "file": "20261124173825525-note-Rt-band4.jpg",
@@ -137,34 +189,6 @@
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-24T17:15:40.913Z",
-   "file": "20261124171540913-frame-bS-2895.jpg",
-   "source": "out/work/jupiter/final/bS-2895.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2895, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
-  },
-  {
-   "time": "2026-11-24T17:14:41.603Z",
-   "file": "20261124171441603-frame-bS-3150.jpg",
-   "source": "out/work/jupiter/final/bS-3150.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3150, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1db409b8ada90e29"
-  },
-  {
    "time": "2026-11-24T16:59:04.703Z",
    "file": "20261124165904703-note-dn-right.jpg",
    "source": "../work/t/dn-right.jpg",
@@ -194,30 +218,6 @@
    "source": "../work/t/m12.jpg",
    "kind": "note",
    "label": "Draft frames 2990, 3000, 3010, 3280 before (left) and after (middle) the merge of main ed003c70, difference times 8 (right): my folders are the same, the bytes are not",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T16:12:19.024Z",
-   "file": "20261124161219024-note-near-chain.jpg",
-   "source": "../work/ff/near-chain.jpg",
-   "kind": "note",
-   "label": "near plate today: guide, take, plate, wedge (the ring of towers is the take's)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T16:12:18.446Z",
-   "file": "20261124161218446-note-rm-b.jpg",
-   "source": "../work/ff/rm-b.jpg",
-   "kind": "note",
-   "label": "rise on the named bytes: 3247, 3253, 3259, 3265, 3271, 3278 (base of every reading)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T16:12:17.902Z",
-   "file": "20261124161217902-note-wide-canvas.jpg",
-   "source": "../work/ff/wide-canvas.jpg",
-   "kind": "note",
-   "label": "ruling 3 study: the wide canvas (the view's source)",
    "stop": "jupiter"
   }
  ]
