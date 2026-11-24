@@ -1,9 +1,25 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T12:19:22.054Z",
- "head": "3d70367f5a8ec40eadce74ee377b3927c2872c8c",
- "note": "third state a90e29f: the rise's pictures report is in (red on the pattern only, 48 rows; level step 0.42, pop 1.19, body by my port 4.72 and 5.79), its own pictures, my port's pictures of the limb rows, every whole frame 3270 to 3314; the dive's report is rendering",
+ "pushed": "2026-11-24T12:39:15.394Z",
+ "head": "5054d98ba26944b288d3eefe1c59512eaca96470",
+ "note": "a90e29f: the fall of the body level in the rise measured in place: it is the frame opening on darker ground, not a change of look; the dive pictures part still renders",
  "looks": [
+  {
+   "time": "2026-11-24T12:39:14.179Z",
+   "file": "20261124123914179-note-body-3292.jpg",
+   "source": "../work/named3/body-3292.jpg",
+   "kind": "note",
+   "label": "rise 3291, 3292 the same: globe alone, body mean falls 6.86, in place +0.41; the new ground is the night side and the rim",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T12:39:12.960Z",
+   "file": "20261124123912960-note-body-3288.jpg",
+   "source": "../work/named3/body-3288.jpg",
+   "kind": "note",
+   "label": "rise 3287, 3288 with the exposure by height taken out, third panel: the ground that is new in 3288 in magenta; the body mean falls 9.68, the ground seen in both changes in place by +0.46",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-24T12:19:21.096Z",
    "file": "20261124121921096-note-rise-3306-3314.jpg",
@@ -185,22 +201,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "5a18fcdc5a929484"
-  },
-  {
-   "time": "2026-11-24T11:22:50.067Z",
-   "file": "20261124112250067-note-pat-C1-rise.jpg",
-   "source": "../work/named3/pat-C1-rise.jpg",
-   "kind": "note",
-   "label": "pattern 3280 to 3284 against 8 frames later on the frames of the full cure: over 0.45 only at the limb bottom left (1.7 to 2.5 percent of the judged body)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T11:22:48.881Z",
-   "file": "20261124112248881-note-place-rise-test.jpg",
-   "source": "../work/named3/place-rise-test.jpg",
-   "kind": "note",
-   "label": "the pattern measure at the place (ring): 3280 and 3281 against 8 frames later, 0.75 and 0.79 on 0.46 percent of the judged body",
-   "stop": "jupiter"
   }
  ]
 }
