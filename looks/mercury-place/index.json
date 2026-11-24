@@ -1,9 +1,17 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T03:19:01.049Z",
- "head": "c7248b335c792aa8b5b1a65baa4ad82bfb093d4e",
- "note": "03:19 UTC: causes of the quad, the craters at the left and the brightening found; mend of the quad in work",
+ "pushed": "2026-11-24T03:41:49.195Z",
+ "head": "e345480ca8263e43c531fd91f07967f98c27df4b",
+ "note": "parity cause found and cured in code (levels came in by texels a pixel of the format, now a 1080th of the frame height); 12 master frames keep their bytes; band mend building",
  "looks": [
+  {
+   "time": "2026-11-24T03:41:47.342Z",
+   "file": "20261124034147342-note-whole-986-996.jpg",
+   "source": "out/work/mercury/place/quad/whole-986-996.jpg",
+   "kind": "note",
+   "label": "mercury rise 986 to 996 before the mend: pale quad at the lower left corner, band craters at the left",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T03:19:00.018Z",
    "file": "20261124031900018-note-over.jpg",
@@ -65,18 +73,6 @@
    "kind": "note",
    "label": "mercury dive, both sides at T (760), lower left corner, and their difference times 8: globe is 0.5 texel of level 4 off the shell; cause found, the renderer's cos in the globe's spin is 1e-4 off",
    "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T01:35:15.221Z",
-   "file": "20261124013515221-sheet-mercury-dive-top.jpg",
-   "source": "out/work/handover/mercury-dive-top.png",
-   "kind": "sheet",
-   "label": "mercury dive, the globe side alone from straight above the place, 12 frames from the far end to T (frame 760), place picture off, draft tier",
-   "stop": "mercury",
-   "segment": "mercury.dive",
-   "first": 690,
-   "last": 760,
-   "tier": "draft"
   }
  ]
 }
