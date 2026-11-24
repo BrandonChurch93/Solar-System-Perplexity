@@ -1,9 +1,17 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T20:09:30.975Z",
- "head": "5c6713431897c545503f5490b29c72757f052704",
- "note": "parity green on the present state 5c671343; state unchanged since 17:48; reds named as before (my proxies: rise 4988 0.54 by flows, hump 4696 0.65 by poses at the right limb; white specks, lilac, the map's azure streak); 37 s a 16 by 9 draft frame and 125 s a uhd one in the tool's run, 7.4 s a preview draft frame",
+ "pushed": "2026-11-24T20:23:50.117Z",
+ "head": "e988e159f02905c3bfe44fa4cd7833afeee8e262",
+ "note": "20:25 UTC: main 07693d93 merged (fd6ba678), tests 554 of 554, pushed e988e159; MAIL 733 point 2 being measured (what 4708 and 4950 make on the card); reds named as before: rise pattern 4984 and 4988 by my proxy, hump 4696 at the limb, white specks of the dim side",
  "looks": [
+  {
+   "time": "2026-11-24T20:23:43.641Z",
+   "file": "20261124202343641-note-look-h0-4860.jpg",
+   "source": "out/work/nep/weave/look-h0-4860.jpg",
+   "kind": "note",
+   "label": "20:24 UTC: 4860 beside the approved image, present state (code of 5c671343, merged with main 07693d93 as fd6ba678, tests 554 of 554); G17 1.382 / 0.741; 7.4 s a preview draft frame",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T20:09:30.373Z",
    "file": "20261124200930373-note-look-h0-4860.jpg",
@@ -58,14 +66,6 @@
    "source": "out/work/nep/weave/last24-1.jpg",
    "kind": "note",
    "label": "the last 24 frames of the dive (MAIL 688 point 3), 4754 to 4761 every frame: left the named b8a38cbe (before the place moved), right the present 5c671343. The near picture (cloud wall, vortex, plain) is the same frame by frame; the far field by the limb is another piece of the map, 3 degrees on",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T19:45:26.095Z",
-   "file": "20261124194526095-note-last24-0.jpg",
-   "source": "out/work/nep/weave/last24-0.jpg",
-   "kind": "note",
-   "label": "the last 24 frames of the dive (MAIL 688 point 3), 4746 to 4753 every frame: left the named b8a38cbe (before the place moved), right the present 5c671343. The near picture (cloud wall, vortex, plain) is the same frame by frame; the far field by the limb is another piece of the map, 3 degrees on",
    "stop": "neptune"
   }
  ]
