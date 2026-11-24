@@ -1,79 +1,45 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T00:04:43.897Z",
- "head": "505d1ea911cb3c7e747de1f57d4a98b6718c691b",
- "note": "Step 2 (one scene, place picture off, weights by camera height) at draft, the rise 3239 to 3302 every frame. No frame falls out; 3239 to 3241 read as one scene (mean difference 3.91, 4.17, 4.52). Still wrong: level step 6.36 into 3273 (limit 6) and 5.50 into 3268 where the deck's program gives way to the globe's plates; body level falls up to 13.3 a frame at 3289 to 3297 as the night side comes into view on the one move; plates look more embossed than the globe round them at 3272 to 3282. Last picture: the step 5 test, a painting cannot turn at different rates without bending or doubling, so the turn will come from functions and the painting stays rigid. Not committed yet, proof render of the frames that must keep their bytes is running.",
+ "pushed": "2026-11-24T00:23:47.213Z",
+ "head": "a998eca2f90811e1b60a7e3c589a2545e13d6ed7",
+ "note": "step 5 begins: measuring the painting from above; no function picture yet",
  "looks": [
+  {
+   "time": "2026-11-24T00:23:46.641Z",
+   "file": "20261124002346641-note-s5-top-h.jpg",
+   "source": "../work/f/s5-top-h.jpg",
+   "kind": "note",
+   "label": "step 5 start: the painting's stored relief from above (to be replaced by the functions' relief)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T00:23:46.027Z",
+   "file": "20261124002346027-note-s5-top.jpg",
+   "source": "../work/f/s5-top.jpg",
+   "kind": "note",
+   "label": "step 5 start: the painting of the storm seen from straight above (what will be blurred to broad colour)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T00:04:51.212Z",
+   "file": "20261124000451212-frame-f03150.jpg",
+   "source": "out/work/jupiter/frames/p2z/f03150.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3150, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "94288983d3b2cf97"
+  },
   {
    "time": "2026-11-24T00:04:37.995Z",
    "file": "20261124000437995-note-s5-rigid-vs-shear.jpg",
    "source": "../work/f/s5-rigid-vs-shear.jpg",
    "kind": "note",
    "label": "step 5 test from above on the storm painting: rigid rings with blended seams double the streaks, shear bends them",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T00:04:37.184Z",
-   "file": "20261124000437184-note-p2r-dif-3239-3240.jpg",
-   "source": "../work/f/p2r-dif-3239-3240.jpg",
-   "kind": "note",
-   "label": "rise seam 3239 against 3240 and their difference (mean 3.91)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T00:04:36.533Z",
-   "file": "20261124000436533-note-p2r-3270-75.jpg",
-   "source": "../work/f/p2r-3270-75.jpg",
-   "kind": "note",
-   "label": "rise 3270 to 3275 larger: the deck's program gives way to the globe's plates by height",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T00:04:35.685Z",
-   "file": "20261124000435685-note-p2r-5.jpg",
-   "source": "../work/f/p2r-5.jpg",
-   "kind": "note",
-   "label": "rise, one scene, 3299 to 3302",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T00:04:34.526Z",
-   "file": "20261124000434526-note-p2r-4.jpg",
-   "source": "../work/f/p2r-4.jpg",
-   "kind": "note",
-   "label": "rise, one scene, 3287 to 3298 (night side comes in, body level falls up to 13 a frame)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T00:04:33.274Z",
-   "file": "20261124000433274-note-p2r-3.jpg",
-   "source": "../work/f/p2r-3.jpg",
-   "kind": "note",
-   "label": "rise, one scene, 3275 to 3286",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T00:04:32.168Z",
-   "file": "20261124000432168-note-p2r-2.jpg",
-   "source": "../work/f/p2r-2.jpg",
-   "kind": "note",
-   "label": "rise, one scene, 3263 to 3274 (level step 5.50 into 3268, 6.36 into 3273)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T00:04:30.977Z",
-   "file": "20261124000430977-note-p2r-1.jpg",
-   "source": "../work/f/p2r-1.jpg",
-   "kind": "note",
-   "label": "rise, one scene, 3251 to 3262",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T00:04:30.058Z",
-   "file": "20261124000430058-note-p2r-0.jpg",
-   "source": "../work/f/p2r-0.jpg",
-   "kind": "note",
-   "label": "rise, one scene (step 2), draft, frames 3239 to 3250, every frame",
    "stop": "jupiter"
   }
  ]
