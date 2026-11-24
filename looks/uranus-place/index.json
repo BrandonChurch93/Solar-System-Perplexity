@@ -1,9 +1,58 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-24T01:38:10.125Z",
+ "pushed": "2026-11-24T01:57:16.522Z",
  "head": "ce78f05b3ce86ec9c616ea9b5a112d656deb120b",
- "note": "diagnosis for mail 446 a: globe against deck cover at 4170 and 4150, and the plates against the deck's function from above; pace chain still proving",
+ "note": "dive pace sheets 4158 to 4193 (tree ce78f05b plus the dive pace, main 79199f35); one place work in progress",
  "looks": [
+  {
+   "time": "2026-11-24T01:57:15.095Z",
+   "file": "20261124015715095-note-P-4182.jpg",
+   "source": "../../../../tmp/P-4182.png",
+   "kind": "note",
+   "label": "dive pace sheet from 4182, tree ce78f05b plus the dive pace, main 79199f35",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T01:57:14.078Z",
+   "file": "20261124015714078-note-P-4170.jpg",
+   "source": "../../../../tmp/P-4170.png",
+   "kind": "note",
+   "label": "dive pace sheet from 4170, tree ce78f05b plus the dive pace, main 79199f35",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T01:57:12.889Z",
+   "file": "20261124015712889-note-P-4158.jpg",
+   "source": "../../../../tmp/P-4158.png",
+   "kind": "note",
+   "label": "dive pace sheet from 4158, tree ce78f05b plus the dive pace, main 79199f35",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-24T01:47:33.011Z",
+   "file": "20261124014733011-compare-uranus-dive-sides.jpg",
+   "source": "out/work/handover/uranus-dive-sides.png",
+   "kind": "compare",
+   "label": "uranus dive, both sides at T (frame 4186) and their difference times 8",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4186,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T01:44:08.621Z",
+   "file": "20261124014408621-frame-f04198.jpg",
+   "source": "out/work/seq/4110-4199/f04198.png",
+   "kind": "frame",
+   "label": "uranus.dive frame 4198, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4198,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1713279836e7e8c8"
+  },
   {
    "time": "2026-11-24T01:38:08.840Z",
    "file": "20261124013808840-note-deckfun.jpg",
@@ -27,76 +76,6 @@
    "kind": "note",
    "label": "4170 draft, left the globe alone, right the deck cover forced full (diagnosis for mail 446 a); tree ce78f05b plus scratch, main 79199f35",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T01:37:27.183Z",
-   "file": "20261124013727183-frame-f04169.jpg",
-   "source": "out/work/seq/4110-4199/f04169.png",
-   "kind": "frame",
-   "label": "uranus.dive frame 4169, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4169,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1713279836e7e8c8"
-  },
-  {
-   "time": "2026-11-24T01:27:14.703Z",
-   "file": "20261124012714703-frame-f04104.jpg",
-   "source": "out/work/seq/3930-4109/f04104.png",
-   "kind": "frame",
-   "label": "uranus.hold frame 4104, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4104,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1713279836e7e8c8"
-  },
-  {
-   "time": "2026-11-24T01:21:54.191Z",
-   "file": "20261124012154191-frame-f03952.jpg",
-   "source": "out/work/seq/3930-4109/f03952.png",
-   "kind": "frame",
-   "label": "saturn.travel frame 3952, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.travel",
-   "frame": 3952,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1713279836e7e8c8"
-  },
-  {
-   "time": "2026-11-24T01:18:16.004Z",
-   "file": "20261124011816004-frame-f04470.jpg",
-   "source": "out/work/seq/4455-4484/f04470.png",
-   "kind": "frame",
-   "label": "uranus.travel frame 4470, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.travel",
-   "frame": 4470,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1713279836e7e8c8"
-  },
-  {
-   "time": "2026-11-24T01:14:57.812Z",
-   "file": "20261124011457812-frame-f04376.jpg",
-   "source": "out/work/seq/4376-4379/f04376.png",
-   "kind": "frame",
-   "label": "uranus.terrain frame 4376, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.terrain",
-   "frame": 4376,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1713279836e7e8c8"
   }
  ]
 }
