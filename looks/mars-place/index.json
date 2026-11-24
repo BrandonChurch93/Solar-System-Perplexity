@@ -1,9 +1,33 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T07:33:03.897Z",
+ "pushed": "2026-11-24T07:49:40.868Z",
  "head": "b9c472dcb3c21b8ad6db203bd2872116352421e0",
- "note": "cure A v3: same rock at T on both sides, but pale straight lines, streaks at the foot, a glowing patch: not named",
+ "note": "cure A v5: both sides one ground at T (2476 against 2477, 2682 against 2681); from above a dark wedge with straight sides, being cured",
  "looks": [
+  {
+   "time": "2026-11-24T07:49:40.254Z",
+   "file": "20261124074940254-note-F3.jpg",
+   "source": "out/work/place/see/F3.jpg",
+   "kind": "note",
+   "label": "cure A v5 (not committed): F3; pale slivers gone, straight fan border still there from above and at 2470",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T07:49:39.643Z",
+   "file": "20261124074939643-note-F2.jpg",
+   "source": "out/work/place/see/F2.jpg",
+   "kind": "note",
+   "label": "cure A v5 (not committed): F2; pale slivers gone, straight fan border still there from above and at 2470",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T07:49:38.794Z",
+   "file": "20261124074938794-note-F1.jpg",
+   "source": "out/work/place/see/F1.jpg",
+   "kind": "note",
+   "label": "cure A v5 (not committed): F1; pale slivers gone, straight fan border still there from above and at 2470",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T07:33:03.006Z",
    "file": "20261124073303006-note-C-crop.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/place/see/Bw.jpg",
    "kind": "note",
    "label": "cure A v2 (not committed): Bw, country holds the close view's aprons",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T07:29:53.416Z",
-   "file": "20261124072953416-note-B2.jpg",
-   "source": "out/work/place/see/B2.jpg",
-   "kind": "note",
-   "label": "cure A v2 (not committed): B2, country holds the close view's aprons",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T07:29:52.248Z",
-   "file": "20261124072952248-note-B1.jpg",
-   "source": "out/work/place/see/B1.jpg",
-   "kind": "note",
-   "label": "cure A v2 (not committed): B1, country holds the close view's aprons",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T07:07:54.157Z",
-   "file": "20261124070754157-note-c2a.jpg",
-   "source": "out/work/place/see/c2a.jpg",
-   "kind": "note",
-   "label": "country heights with the aprons, from above, 8.5, 3.8, 1.6 degrees",
    "stop": "mars"
   }
  ]
