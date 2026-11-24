@@ -1,9 +1,49 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T19:15:07.642Z",
+ "pushed": "2026-11-24T19:46:16.987Z",
  "head": "befb5f47996cb9ff4b6ffb6df289ed9cc2b1fe80",
- "note": "19:15 structure D (two draws of the globe, cut over the set, whole under the near field): 961 far weight 0 against 0.0001 differs by 1 code at most; rise 960 to 998 rendered, dive rendering, measure next",
+ "note": "19:46 structure D measured on scratch frames: rise 958 to 990 at most 0.28, dive 742 to 773 at most 0.20 (limit 0.45), no pop at either handover; now one structure everywhere the set shows (rendering); sky card remnant mapped",
  "looks": [
+  {
+   "time": "2026-11-24T19:46:16.298Z",
+   "file": "20261124194616298-note-card-reach.jpg",
+   "source": "../../../../tmp/m/card-reach.png",
+   "kind": "note",
+   "label": "sky-hold.webp at 4 times gain round the approved Sun, circles at 1, 1.3, 1.5, 1.8 Sun radii, approved frame in magenta",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T19:46:15.609Z",
+   "file": "20261124194615609-note-h615-sun.jpg",
+   "source": "../../../../tmp/m/h615-sun.png",
+   "kind": "note",
+   "label": "615 draft, far Sun on (left) and off by scratch (right): what the sky card still holds of the approved Sun (disc noise, fringe, filaments, plumes); round 2 item of MAIL 692 and 713",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T19:46:14.880Z",
+   "file": "20261124194614880-note-du-1964.jpg",
+   "source": "../../../../tmp/m/du-1964.jpg",
+   "kind": "note",
+   "label": "982: globe over the set (left) against the commit's one draw under (middle), difference times 6 (right): the two sets of the terrain show through each other in the ring when each is cut by itself; one structure from now on",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T19:30:56.346Z",
+   "file": "20261124193056346-note-e16-b.jpg",
+   "source": "../../../../tmp/m/e16-b.jpg",
+   "kind": "note",
+   "label": "structure D dive 762 to 781, every frame, scratch frames without the far Sun",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T19:30:55.702Z",
+   "file": "20261124193055702-note-e16-a.jpg",
+   "source": "../../../../tmp/m/e16-a.jpg",
+   "kind": "note",
+   "label": "structure D dive 742 to 761, every frame, scratch frames without the far Sun",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T19:15:06.456Z",
    "file": "20261124191506456-note-e15-b.jpg",
@@ -26,46 +66,6 @@
    "source": "../../../../tmp/m/gap2-970-976-762.jpg",
    "kind": "note",
    "label": "same at 970, 976, 762: below the handover only the limb strip beyond the set's ridge is open (and the near edge at 762)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T18:54:55.414Z",
-   "file": "20261124185455414-note-gap2-982-983-756-757-758-759.jpg",
-   "source": "../../../../tmp/m/gap2-982-983-756-757-758-759.jpg",
-   "kind": "note",
-   "label": "set over the whole globe, set alone, difference at 982, 983, 756 to 759: the set's near and side edges are in the frame there, the globe under it must stay whole",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T18:25:58.584Z",
-   "file": "20261124182558584-note-w961-crop.jpg",
-   "source": "../../../../tmp/m/w961-crop.png",
-   "kind": "note",
-   "label": "961 native crops, left far weight 0, right 0.0001 with the shell whole under the set: the globe's limb stands 8 to 12 px over the set's ridge and pops in; not kept, the strip must come in by the weight",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T18:25:57.974Z",
-   "file": "20261124182557974-note-v967-weights.jpg",
-   "source": "../../../../tmp/m/v967-weights.jpg",
-   "kind": "note",
-   "label": "967 by weight, display dissolve (0, 0.25, 0.5, 0.75, 0.9, 1): even level, no coloured streaks",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T18:04:02.783Z",
-   "file": "20261124180402783-note-u967-weights.jpg",
-   "source": "../../../../tmp/m/u967-weights.jpg",
-   "kind": "note",
-   "label": "967 under the limb, stills at six weights of the shell over the set (measure only, no far Sun)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T17:37:51.447Z",
-   "file": "20261124173751447-note-s976-far.jpg",
-   "source": "../../../../tmp/m/s976-far.jpg",
-   "kind": "note",
-   "label": "s976: 976 set alone against shell; 980 and 990 from above with the border off: the set's far ground cannot be the globe's ground",
    "stop": "mercury"
   }
  ]
