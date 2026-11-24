@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T07:12:03.164Z",
- "head": "6c75f48fb312931c651aff99d28ed4e6cea6fb24",
- "note": "landing at half frames from the smooth run; rise frames rendering; path with the engine's bend tried in scratch, not rendered",
+ "pushed": "2026-11-24T07:28:42.984Z",
+ "head": "3a80ff40b8a33d6c31147071fcbbb467fabee6b2",
+ "note": "new path with the engine's bend: path part green, first frames of both moves; all frames rendering",
  "looks": [
+  {
+   "time": "2026-11-24T07:28:41.811Z",
+   "file": "20261124072841811-note-n2130.jpg",
+   "source": "../../../../tmp/gl/s7/n2130.jpg",
+   "kind": "note",
+   "label": "new path, rise 2130, draft: the place is a darker oval with a border one can follow (known fault)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T07:28:40.420Z",
+   "file": "20261124072840420-note-sample-dive.jpg",
+   "source": "../../../../tmp/gl/s7/sample-dive.jpg",
+   "kind": "note",
+   "label": "new path, dive 1840 1860 1870 1880 1890 1900 1910, draft, same tree",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T07:28:38.743Z",
+   "file": "20261124072838743-note-sample-rise.jpg",
+   "source": "../../../../tmp/gl/s7/sample-rise.jpg",
+   "kind": "note",
+   "label": "new path with the engine's bend, rise every tenth frame 2100 to 2170, draft, tree 3a80ff40 plus plan.ts and place.json not yet committed",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T07:12:02.389Z",
    "file": "20261124071202389-note-half-land.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/gl/s5/T-dive-top.jpg",
    "kind": "note",
    "label": "dive about T, top two fifths at full size beside the difference times 4: a line along the limb at 1918 against 1919",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T06:14:13.788Z",
-   "file": "20261124061413788-note-T-rise.jpg",
-   "source": "../../../../tmp/gl/s5/T-rise.jpg",
-   "kind": "note",
-   "label": "rise, 10 before T to 4 after (2090 to 2104), draft, a6c484d6: the change of view is into 2101",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T06:14:13.142Z",
-   "file": "20261124061413142-note-T-dive.jpg",
-   "source": "../../../../tmp/gl/s5/T-dive.jpg",
-   "kind": "note",
-   "label": "dive, 10 before T to 4 after (1909 to 1923), draft, a6c484d6: the change of view is into 1919",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T06:14:12.507Z",
-   "file": "20261124061412507-note-d-1912.jpg",
-   "source": "../../../../tmp/gl/s5/d-1912.jpg",
-   "kind": "note",
-   "label": "dive from 1912, draft, a6c484d6, every frame",
    "stop": "earth"
   }
  ]
