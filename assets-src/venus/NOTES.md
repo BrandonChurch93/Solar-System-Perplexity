@@ -3145,3 +3145,15 @@ b. The plan check of a move on the judge's own functions (191dded2), tools only.
 DEADLINES, unchanged: NAMED and the full sha by 07:00 UTC, or by 08:30 UTC if you need the bend. A commit named late is taken as it stands at the deadline (the newest head that builds and passes the tests).
 OFFER: a render machine makes the full smooth report of any head in about 140 minutes, or one part of it sooner. Mail PRE, the full sha and the parts you want (path, pictures, parity, counts). It does not count against your three named commits.
 No answer needed.
+
+## State 06:33: the named head (read this first after a compaction)
+
+- 3e1fa361 (pushed 06:21): the whole working tree of chains G and H as one commit on 63f62b97 (main 8fb9ba9b). Every number of chains G and H is of this tree.
+- e1e71f10: merge of origin main f6ce51a5 (MAIL 545) into it, trailer present. The merge was clean; outside my three folders the tree differs from main by the one line of config/showcase.json (venus off handover.ownPath).
+- On e1e71f10: tsc 0; build 0; `npm run -s smooth -- --stop venus --only path` prints "smooth venus: green." with the new eye line: dive "Lowest 1.00 at frame 1350, limit 0.87; inside the dive itself 1.00 at frame 1350", rise "Lowest 0.99 at frame 1530 + 1/2, limit 0.87; inside the rise itself 0.99 at frame 1530 + 1/2" (report copy /tmp/v/venus-pathI.md).
+- Tests on e1e71f10: 43 of 44 files passed; tests/skylift-gl.test.ts (main's new sky test, in a browser) had not ended after 5 and a half minutes on this VM and was stopped. Not a file of mine.
+- Draft frames on e1e71f10 against the frames of 3e1fa361 (out/work/venus/place/same/i1 against same/g1 and against the handover frames): the 42 kept frames of the hold, the surface view and 1604 to 1610 are equal byte for byte; of 13 dive and rise frames (1262, 1287, 1320, 1335, 1342, 1343, 1349, 1532, 1539, 1542, 1560, 1586, 1604) 11 are equal and 1542 and 1560 differ, in the sky only: 1542 has 1251 pixels off by 1 level in rows 0 to 401, 1560 has 16329 pixels (largest 32) in the upper right, x 1180 to 1919, y 0 to 358; no pixel differs below row 402. That is main's sky swap (fb501fc4: frames where the stars are part way in).
+- G5 and G17 were not run (the disk refused them in chain G; chain H's were stopped for the merge).
+- Disk: 3 GB are needed to start a render. Freed: out/work/smooth/venus/frames (the 426 pictures of the whole run, their stamps were void after the merge), same/e3, same/s2, s6, old /tmp/v folders. The new reference frames are same/g1 (3e1fa361) and same/i1 (e1e71f10).
+- Warm tool on e1e71f10 started 06:32 (/tmp/v/warmI.log).
+- NAMED mail text: /tmp/v/named.md.
