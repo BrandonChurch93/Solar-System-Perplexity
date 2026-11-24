@@ -208,8 +208,10 @@ void main() {
   float mu = clamp(dot(nL, -dirL), 0.0, 1.0);
   float ndl = dot(nL, uLightL) - uTerm.x * smoothstep(uTerm.y, uTerm.z, p.y);
   float lat = asin(clamp(p.y, -1.0, 1.0));
+  // the map is rigid on the globe and turns with it as one body; the slide along the bands by latitude (the
+  // winds) moves the fine streaks from functions only, never the map
   float drift = uDrift * zonal(lat);
-  vec3 d = spinY(p, uSpin + drift);
+  vec3 d = spinY(p, uSpin);
   vec3 albedo = inverseFilmic(equirectGrad(uMap, d, uGrad).rgb);
   vec3 soft = inverseFilmic(equirectGrad(uMap, d, uNightBlur).rgb);
   float texels = diagTexelsDir(p, uMapWidth);
@@ -226,7 +228,7 @@ void main() {
     bandNear = 1.0 - smoothstep(uBandFine.y, uBandFine.z, log(max(length(p - uCam), 1e-6)));
     float drawn = 0.0;
     // toward the terminator the low sun sets the relief of the cloud tops off more strongly
-    albedo *= exp(bandFine(atan(d.z, d.x), lat, bandRate, drawn) * bandNear * (1.0 + uBandRelief.x * (1.0 - smoothstep(uBandRelief.y, uBandRelief.z, ndl))) * uBandTint);
+    albedo *= exp(bandFine(atan(d.z, d.x) + drift, lat, bandRate, drawn) * bandNear * (1.0 + uBandRelief.x * (1.0 - smoothstep(uBandRelief.y, uBandRelief.z, ndl))) * uBandTint);
     texels = max(texels, bandNear >= 1.0 ? drawn : 0.0);
   }
   for (int k = 0; k < (uProbe >= 5 ? 1 : 0); k++) {
@@ -269,7 +271,7 @@ void main() {
   }
   float dl = uLimbW > 0.0 ? limbAt((uCam + dirS * along) / max(rt, 1e-4), uPolar, uSunL) : 0.0;
   float cover = uDiag >= 2 ? 1.0 : clamp((1.0 + dl - rt) / (uEdgePx * length(vec2(dFdx(rt), dFdy(rt)))), 0.0, 1.0);
-  outColor = diagOut(vec4(col * cover * mix(cover, 1.0, uEdgeLin), cover), texels, 1.0, layer, vec2(drift * 8.0, 0.0), length(vView));
+  outColor = diagOut(vec4(col * cover * mix(cover, 1.0, uEdgeLin), cover), texels, 1.0, layer, vec2(0.0), length(vView));
   if (uLimbW > 0.0 && rt >= 1.0 + dl) discard;
 }`
 

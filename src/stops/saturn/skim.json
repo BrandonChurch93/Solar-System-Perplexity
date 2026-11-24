@@ -11,12 +11,44 @@
     "vfov": 48
   },
   "path": {
-    "note": "travel over the whole skim: forward is the length of the way along the view axis on the plane; descent is the height at the start over the height at the end. The height falls by the same share in every frame and the speed over the plane goes with the height, so the sheet passes under the lens at the same number of pixels a frame all the way; side is the travel sideways, yawDeg and pitchDeg the turn of the camera over the skim.",
+    "note": "travel over the whole skim: forward is the length of the way along the view axis on the plane that the straight skim has over its whole time; descent is the height at the start over the height at the end. The height falls by the same share in every frame and the speed over the plane goes with the height, so the sheet passes under the lens at the same number of pixels a frame, all the way to the bend (bend, below), where the direction of the way turns and the rule of the speed stays; side is the travel sideways, yawDeg and pitchDeg the turn of the camera over the skim.",
     "forward": 1.7,
     "descent": 2.2,
     "side": 0,
     "yawDeg": 0,
-    "pitchDeg": 0
+    "pitchDeg": 0,
+    "bend": {
+      "note": "the end of the skim (ruling d196): the way of the lens bends from the push at the globe into a track across the plane and on into the pull back, so the rise takes its motion and the lens never stops and turns back. from and to: the shares of the skim, from its middle, between which the direction turns (the judged frame is the middle, its take ends at 0.0014; 0.0111 is two frames past it, 0.489 two frames before the end of the skim). turnDeg: the turn of the heading over the plane toward the right of the lens, where the globe is. liftDeg: the angle of the way to the plane at the end (it starts at the descent of the skim, 10.7 degrees down). turn and lift: the pace of each (plan.ts Pace: the shares of the bend between which its rate is level, and the shares over which its turns are rounded). steps: the steps the way is summed in. All the way the speed of the lens is the same share of its height over the plane as in the straight skim.",
+      "from": 0.0111,
+      "to": 0.489,
+      "turnDeg": 190,
+      "liftDeg": 30,
+      "turn": {
+        "peak": [
+          0.3,
+          0.7
+        ],
+        "round": [
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      },
+      "lift": {
+        "peak": [
+          0.5,
+          0.8
+        ],
+        "round": [
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      },
+      "steps": 256
+    }
   },
   "light": {
     "note": "exposure of the globe and of the rings and how much of its colour the ice keeps, first in the hold and then in the skim, blended by the logarithm of the camera's height between the two heights (the lower height is the skim); the strengths of the ladder of ringlets are blended the same way (ringfine.json near). tint: the factor on the colour of the dense and of the thin rings, far in the hold and near in the skim: both approved images have the thin rings brighter and less red than the model's ink, and the close has its dense rings a little darker. halo: the factor on the scale height and on the brightness of the glow outside the globe's limb. dusk: on the globe the light between these two cosines of the Sun's angle is cut down by a smooth step, by this amount, so the terminator is narrower near the sheet as in the approved close; dusk.night is the factor on the floor of light the night side keeps. dusk.grey: how far the night side is grey rather than the colour of the clouds in the last red light. flatten: the brightness of the dense rings averaged over width radii, over pivot (no further from 1 than reach times or one over reach), is raised to power: near the sheet the broad zones are evener, as in the approved close. flatten.bands: the power on the brightness of a band of the dense rings (the model averaged over band radii) over that of its zone (averaged over width), far and near, counted no further from 1 than bandReach times: near the sheet the bands stand out less from their zone, as in the approved close; ringlets narrower than a band keep their contrast.",
@@ -147,55 +179,55 @@
     }
   },
   "handover": {
-    "note": "the dive and the rise: one flight through one world, no picture is swapped and no cover is drawn. at: the share of the dive or the rise at which the engine changes from the view in the frame of the globe to the view in the frame of the skim (both show the same world from the same lens); The sky does not follow that change nor any clock (sky below). Each move (the dive, the rise) is one move in four measures, each with one pace (plan.ts Pace): the rate of the measure goes from its rate in the motion before the move up to one largest value and down to its rate in the motion after it, by a steady change a frame on both sides; peak is the share of the move at which the rate turns at the top, or two shares between which the rate stays level at its largest value (a level top), and round the share of the move over which each of its turns is rounded: one share for all turns, or one for each turn in order (three with one peak: the start, the top, the end; four with a level top: the start, the two ends of the level, the end). reach: the distance of the lens to the globe's surface (its logarithm). climb: the height over the ring plane (its logarithm); in the rise it turns before the reach, so the lens lifts off the plane before it draws back. round: the angle of the foot of the lens round the globe. view: the turn of the camera from the one motion's to the other's, and the field of view with it. place.ahead: the place the tool watches is the point of the ring plane this far ahead of the foot of the lens at the middle of the skim.",
+    "note": "the dive and the rise: one flight through one world, no picture is swapped and no cover is drawn. at: the share of the dive or the rise at which the engine changes from the view in the frame of the globe to the view in the frame of the skim (both show the same world from the same lens); The sky does not follow that change nor any clock (sky below). Each move (the dive, the rise) is one move in four measures, each with one pace (plan.ts Pace): the rate of the measure goes from its rate in the motion before the move up to one largest value and down to its rate in the motion after it, by a steady change a frame on both sides; peak is the share of the move at which the rate turns at the top, or two shares between which the rate stays level at its largest value (a level top), and round the share of the move over which each of its turns is rounded: one share for all turns, or one for each turn in order (three with one peak: the start, the top, the end; four with a level top: the start, the two ends of the level, the end). reach: the distance of the lens to the globe's surface (its logarithm). climb: the height over the ring plane (its logarithm); in the rise it turns before the reach: the lens, which draws back from the end of the skim on (path.bend), lifts off the plane first and then draws back faster. round: the angle of the foot of the lens round the globe. view: the turn of the camera from the one motion's to the other's, and the field of view with it. place.ahead: the place the tool watches is the point of the ring plane this far ahead of the foot of the lens at the middle of the skim.",
     "dive": {
       "at": 0.55,
       "reach": {
         "peak": [
-          0.248,
-          0.655
+          0.262,
+          0.688
         ],
         "round": [
           0.03,
-          0.086,
-          0.177,
-          0.03
+          0.112,
+          0.189,
+          0.073
         ]
       },
       "climb": {
         "peak": [
-          0.679,
-          0.746
+          0.663,
+          0.663
         ],
         "round": [
-          0.088,
-          0.161,
-          0.163,
-          0.154
+          0.089,
+          0.085,
+          0.215,
+          0.084
         ]
       },
       "round": {
         "peak": [
-          0.549,
-          0.664
+          0.539,
+          0.645
         ],
         "round": [
-          0.071,
-          0.211,
-          0.126,
+          0.06,
+          0.332,
+          0.234,
           0.03
         ]
       },
       "view": {
         "peak": [
-          0.428,
-          0.448
+          0.432,
+          0.444
         ],
         "round": [
-          0.087,
-          0.155,
-          0.105,
-          0.063
+          0.069,
+          0.191,
+          0.053,
+          0.03
         ]
       }
     },
@@ -224,45 +256,59 @@
       ],
       "close": 0,
       "view": 0.43,
+      "seam": 2,
+      "seamNote": "the thin line outside the outer edge (the look's arc) is drawn at a footprint of at most this many times the footprint of the true radius of the plane, and only inside the span of the profile. At the reach of the profile the hero's shape ends, so the bent radius jumps there and the frame to frame measure of the footprint was huge on the pixel pairs that lie across that jump: the arc then read the coarsest level of the profile and drew a line of dashes there that moved with the pixel grid from frame to frame. Elsewhere the footprint is as before",
       "alone": "",
       "aloneNote": "for the proof of the handing over only: kept or model draws that scene alone in every take from the hold's end on; empty in the film"
     },
     "rise": {
-      "at": 0.667,
+      "at": 0.56,
       "reach": {
         "peak": [
-          0.364,
-          0.691
+          0.369,
+          0.534
         ],
         "round": [
-          0.03,
-          0.075,
-          0.04,
-          0.03
+          0.481,
+          0.481,
+          0.125,
+          0.031
         ]
       },
       "climb": {
-        "peak": 0.267,
+        "peak": [
+          0.239,
+          0.256
+        ],
         "round": [
-          0.036,
-          0.093,
-          0.03
+          0.412,
+          0.421,
+          0.049,
+          0.56
         ]
       },
       "round": {
-        "peak": 0.562,
+        "peak": [
+          0.281,
+          0.291
+        ],
         "round": [
-          0.24,
-          0.09,
-          0.118
+          0.382,
+          0.092,
+          0.136,
+          0.537
         ]
       },
       "view": {
-        "peak": 0.438,
+        "peak": [
+          0.432,
+          0.572
+        ],
         "round": [
-          0.095,
-          0.091,
-          0.03
+          0.03,
+          0.089,
+          0.053,
+          0.174
         ]
       }
     },
@@ -305,7 +351,7 @@
     "seed": 4127
   },
   "sky": {
-    "note": "one sky for the stop: the film's own star field, in the far view and in the skim alike, and nothing of it follows the clock. hero: the picture of the sky of the hold belongs to the path the lens flies in the hold; it shows in full on that path and leaves with the distance of the lens from it (planet radii, to the nearest point of the path): none of it is left from the distance reach on, and between it falls by a smooth step of the distance over reach to the power power, which spreads the fall evenly over the first part of the dive; slack is the distance under which the lens counts as on the path and chords the number of chords the path is measured with. So it is gone before the engine changes the view and never comes back in the rise (plan.ts skyProof stops the build if a path breaks that). heights: the two heights of the lens over the ring plane (planet radii, by the logarithm, the lower is the skim) between which the air of the stop comes in, the same way down and up, and power the power on its course between them (under 1: it comes in early below the upper height, so the stars the picture of the hold uncovers are dimmed as they show, and settles at the lower; the upper height lies under every height of the hold, plan.ts skyProof stops the build if it does not): near is the share of the exposure of the stars that is left at the lower height (extinction), lift: the stars of the flight (the many faint stars of the film's open sky, which the engine brings in through the rise after its change of view) come in by the height of the lens over the ring plane and not by the clock: their level is a smooth step of 1 - (1 - share)^lift.power, share the way between the two heights of lift.heights (planet radii); the lens climbs ever slower toward the end of the rise, so with the power one half the level runs evenly over the frames of the climb (plan.ts skyLiftAt undoes the engine's own course so that this is the level shown); the lower height lies over every height at which the hold and the dive are flown, so it is one function of the height going down and coming up (none of them at any height of the hold or of the dive, none at the same heights in the rise), and over the height of the lens at the engine's change of view in the rise; the upper lies under its height at the end of the rise (plan.ts skyProof stops the build if not). glow the faint light of the fine dust over the plane that lies under the stars there (veil.ts): color in linear light at the exposure of the stop, plane how much brighter it is along the ring plane than high over it, fall the sine of the angle over the plane at which that gain has fallen to 1 over e. halo: the light of the lit globe thrown forward by that dust, a wide soft glow round the lit limb: color at the limb, fallDeg the angle from the limb at which it has fallen to 1 over e, lit the two cosines of the angle between the nearest limb and the Sun between which it comes in (none at the dark limb).",
+    "note": "one sky for the stop: the film's own star field, in the far view and in the skim alike, and nothing of it follows the clock. hero: the picture of the sky of the hold belongs to the path the lens flies in the hold; it shows in full on that path and leaves with the distance of the lens from it (planet radii, to the nearest point of the path): none of it is left from the distance reach on, and between it falls by a smooth step of the distance over reach to the power power, which spreads the fall evenly over the first part of the dive; slack is the distance under which the lens counts as on the path and chords the number of chords the path is measured with. So it is gone before the engine changes the view and never comes back in the rise (plan.ts skyProof stops the build if a path breaks that). heights: the two heights of the lens over the ring plane (planet radii, by the logarithm, the lower is the skim) between which the air of the stop comes in, the same way down and up, and power the power on its course between them (under 1: it comes in early below the upper height, so the stars the picture of the hold uncovers are dimmed as they show, and settles at the lower; the upper height lies under every height of the hold, plan.ts skyProof stops the build if it does not): near is the share of the exposure of the stars that is left at the lower height (extinction), lift: the stars of the flight (the many faint stars of the film's open sky, which the engine brings in through the rise after its change of view) come in by the height of the lens over the ring plane and not by the clock: their level is a smooth step of 1 - (1 - share)^lift.power, share the way between the two heights of lift.heights (planet radii); the lens climbs ever slower toward the end of the rise, so with the power one half the level runs evenly over the frames of the climb (plan.ts skyLiftAt undoes the engine's own course so that this is the level shown); the lower height lies over every height at which the hold and the dive are flown, so it is one function of the height going down and coming up (none of them at any height of the hold or of the dive, none at the same heights in the rise), and over the height of the lens at the engine's change of view in the rise; the upper lies under its height at the end of the rise (plan.ts skyProof stops the build if not). glow the faint light of the fine dust over the plane that lies under the stars there (veil.ts): color in linear light at the exposure of the stop, plane how much brighter it is along the ring plane than high over it, fall the sine of the angle over the plane at which that gain has fallen to 1 over e. halo: the light of the lit globe thrown forward by that dust, a wide soft glow round the lit limb: color at the limb, fallDeg the angle from the limb at which it has fallen to 1 over e, lit the two cosines of the angle between the nearest limb and the Sun between which it comes in (none at the dark limb). look: the look of the sky of the skim, named to the engine's sky (src/space/sky.ts nameSkyLook) every time the set is drawn, with the weight of the air of the stop (all of it at the lower of heights, none at the upper, so it is one function of the height going down and coming up and nothing of it follows the clock): look the look of the band of the sky (0 the plain one), even how far the crowding of the stars gives way to one even field (1 all the way: the field of the approved close image), stars the gain on the stars at the skim against the open sky (the air leaves near of their exposure, so their level at the skim is stars times near; plan.ts starsAt names the gain on the way so that the level of a faint star runs straight between the two heights and does not swell), cap the brightness no star goes over at the skim.",
     "hero": {
       "reach": 1.2,
       "power": 0.75,
@@ -324,6 +370,12 @@
         2.9377
       ],
       "power": 0.5
+    },
+    "look": {
+      "look": 0,
+      "even": 1,
+      "stars": 5.5,
+      "cap": 0.9
     },
     "glow": {
       "color": [
