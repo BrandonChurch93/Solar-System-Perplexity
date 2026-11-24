@@ -28,7 +28,7 @@ export interface GlobeLight {
   glareLens: [number, number]
   nightAfter: number
   nightPlain: { height: [number, number]; range: [number, number] }
-  shoulder: { from: number; strength: number; frames: [number, number] }
+  shoulder: { from: number; strength: number; height: [number, number] }
 }
 
 export interface GlobePatches {
@@ -49,7 +49,21 @@ export interface GlobeOptions {
   heightWidth: number
   light: GlobeLight
   patches?: GlobePatches
+  fine?: GlobeFine
 }
+
+export interface GlobeFine {
+  texture: THREE.Texture
+  period: number
+  guardShare: number
+  top: number
+  shift: readonly [number, number]
+  edge: readonly [number, number]
+  blur: readonly [number, number]
+  shade: readonly [number, number, number]
+}
+
+export const FINE_LEVELS = 2
 
 export const SHELL = 1.3
 export const MAX_PATCHES = 6
@@ -103,6 +117,23 @@ const CLOSE_DRAWS = [['uWide', 'uvw', 'axw', 'ayw', 'ww', 'uWideSize', '\n    fo
     texels = mix(texels, sqrt(max(dot(tx, tx), dot(ty, ty))), step(0.5, ${w}));
   }`).join('\n')
 
+const FINE = Array.from({ length: FINE_LEVELS }, (_, i) => `    {
+      float wf = uFine.x * front * unseen * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, mix(parent, thin, uPatchLean)));
+      float fd = gd * uFineScale[${i}] * uFineSize;
+      float fl = gl * uFineScale[${i}] * uFineSize;
+      wf *= 1.0 - smoothstep(uFineBlur.x, uFineBlur.y, sm * fd);
+      vec2 fq = g * uFineScale[${i}] + uFineShift * ${i}.0;
+      vec2 fu = vec2(fq.x, uFineBand.x + fract(fq.y) * uFineBand.y);
+      vec2 fb = vec2(uFineScale[${i}], uFineScale[${i}] * uFineBand.y);
+      float fv = 1.0;
+      for (int k = 0; k < (wf > 0.0 && uSmear <= 0.0 ? 1 : 0); k++) fv = textureGrad(uFineMap, fu, gx * fb, gy * fb).r * uFine.y;
+      for (int k = 0; k < (wf > 0.0 && uSmear > 0.0 ? 1 : 0); k++) fv = streak(uFineMap, fu, sx * fb, sy * fb, along, lat).r * uFine.y;
+      fine *= mix(1.0, fv, wf);
+      parent = fd;
+      thin = fl;
+      texels = mix(texels, fd, step(0.5, wf));
+    }`).join('\n')
+
 const FRAG = /* glsl */ `
 precision highp float;
 uniform sampler2D uMap;
@@ -112,6 +143,15 @@ uniform float uPatchScale[${MAX_PATCHES}];
 uniform float uPatchSize[${MAX_PATCHES}];
 uniform float uPatchNear[${MAX_PATCHES}];
 uniform float uPatchCount;
+uniform sampler2D uFineMap;
+uniform vec2 uFine;
+uniform float uFineScale[${FINE_LEVELS}];
+uniform float uFineSize;
+uniform vec2 uFineShift;
+uniform vec2 uFineBand;
+uniform vec2 uFineEdge;
+uniform vec2 uFineBlur;
+uniform vec3 uFineShade;
 uniform float uFeather;
 uniform vec2 uPatchFade;
 uniform float uPatchLean;
@@ -339,6 +379,8 @@ void main() {
   float ww = uCloseW * step(0.02, -wp.z) * smoothstep(0.0, 1.0, min(min(qw.x + uWideOver.x, 1.0 - qw.x), min(qw.y, 1.0 - qw.y + uWideOver.x)) / uWideFade.x) * (1.0 - smoothstep(uWideFade.y, uWideFade.z, reach)) * clearOf;
   for (int k = 0; k < (ww > 0.0 ? 1 : 0); k++) ww *= smoothstep(uWideFade.w, 1.0, textureGrad(uWideAlpha, uvw, axw, ayw).r);
   bool bare = max(wc, ww) < 1.0;
+  float unseen = (1.0 - step(0.02, qc.z) * smoothstep(0.0, uFineEdge.x, min(min(qc.x, 1.0 - qc.x), min(qc.y, 1.0 - qc.y)))) * (1.0 - step(0.02, -wp.z) * smoothstep(0.0, uFineEdge.y, min(min(qw.x, 1.0 - qw.x), min(qw.y, 1.0 - qw.y))));
+  float fine = 1.0;
   float wu = atan(d.x, d.z) / (2.0 * PI) + 0.5;
   float wv = asin(clamp(d.y, -1.0, 1.0)) / PI + 0.5;
   float wu2 = fract(wu + 0.5) - 0.5;
@@ -373,6 +415,7 @@ void main() {
     float thin = texels;
     float mend = 1.0 - smoothstep(0.55 * uMend.z, uMend.z, length(g - uMend.xy));
 ${PATCH_LEVELS}
+${FINE}
   }
   vec3 east = cross(vec3(0.0, 1.0, 0.0), d);
   float el = length(east);
@@ -406,12 +449,13 @@ ${PATCH_LEVELS}
   float tight = mix(1.0, uLineTight.z, smoothstep(uLineTight.x, uLineTight.y, ndl0));
   float brim = (1.0 - uLine.w * max(smoothstep(uLineDip.z, uLineDip.w, ndl0), side) * (1.0 - smoothstep(uLineDip.x * tight, uLineDip.y * tight, inn))) * (1.0 + uLine.x * kick * (1.0 - smoothstep(uLine.y, uLine.z, inn)));
   vec3 lit = max(curveAt(ndl0) - uNight, vec3(0.0)) * mix(vec3(1.0), limbAt(mu) * brim, toward) * (1.0 + lift);
-  vec3 ground = inverseFilmic(albedo);
+  fine = mix(1.0, fine, mix(uFineShade.z, 1.0, smoothstep(uFineShade.x, uFineShade.y, dot(albedo, vec3(0.2126, 0.7152, 0.0722)))));
+  vec3 ground = inverseFilmic(albedo) * fine;
   float pm = placed * uPlace.y * (1.0 - smoothstep(uPlace.z, uPlace.w, ring));
   vec3 baked = vec3(0.0);
   for (int k = 0; k < (pm > 0.0 ? 1 : 0); k++) {
-    baked = inverseFilmic(own);
-    ground = mix(inverseFilmic(under), baked, (placed - pm) / max(1.0 - pm, 1e-4));
+    baked = inverseFilmic(own) * fine;
+    ground = mix(inverseFilmic(under) * fine, baked, (placed - pm) / max(1.0 - pm, 1e-4));
   }
   float band = smoothstep(uDusk.x, uDusk.y, ndl0) * (1.0 - smoothstep(uDusk.z, uDusk.w, ndl0));
   vec3 calm = ground;
@@ -459,6 +503,7 @@ export class Globe {
 
   constructor(o: GlobeOptions) {
     const p = o.patches
+    const f = o.fine
     const l = o.light
     this.edge = l.edge
     this.rim = [l.rim.width, l.rim.wide]
@@ -495,6 +540,11 @@ export class Globe {
         uPatchScale: { value: levels.map(scale) }, uPatchSize: { value: levels.map(size) },
         uPatchNear: { value: levels.map((i) => ((p?.widthsDeg[i] ?? 360) <= (p?.nearDeg ?? 0) ? 1 : 0)) },
         uPatchCount: { value: p?.textures.length ?? 0 },
+        uFineMap: { value: f?.texture ?? o.map }, uFine: { value: new THREE.Vector2(f && p ? 1 : 0, f?.top ?? 1) },
+        uFineScale: { value: Array.from({ length: FINE_LEVELS }, (_, i) => (f && p ? (2 ** (i + 1) * scale(p.textures.length - 1) * size(p.textures.length - 1)) / f.period : 1)) },
+        uFineSize: { value: f?.period ?? 1 }, uFineShift: { value: new THREE.Vector2(f?.shift[0] ?? 0, f?.shift[1] ?? 0) },
+        uFineBand: { value: new THREE.Vector2((f?.guardShare ?? 0) / (1 + 2 * (f?.guardShare ?? 0)), 1 / (1 + 2 * (f?.guardShare ?? 0))) },
+        uFineEdge: { value: new THREE.Vector2(f?.edge[0] ?? 1, f?.edge[1] ?? 1) }, uFineBlur: { value: new THREE.Vector2(f?.blur[0] ?? 1, f?.blur[1] ?? 2) }, uFineShade: { value: new THREE.Vector3(f?.shade[0] ?? 0, f?.shade[1] ?? 1, f?.shade[2] ?? 1) },
         uFeather: { value: p?.feather ?? 0.12 }, uPatchLean: { value: p?.lean ?? 0 }, uPatchFade: { value: new THREE.Vector2(p?.fade[0] ?? 1.1, p?.fade[1] ?? 1.7) }, uMend: { value: new THREE.Vector4(1000, 1000, 1, 0) },
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
         uMapWidth: { value: o.mapWidth }, uHeightStep: { value: (2 * Math.PI) / o.heightWidth },

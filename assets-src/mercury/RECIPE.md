@@ -20,6 +20,21 @@ Stand-ins for the Phase 2 blockout. Each is replaced when the stop is built.
 - Take kept: the only one.
 - Checks: the judged `terrain` frame lines up with the approved close image in `npm run compare`.
 
+## Fine ground of the place: fine.png
+
+Files, both sets: `public/assets/mercury/full/fine.png` (2048 wide, 2176 high) and `public/assets/mercury/web/fine.png` (1024 wide, 1088 high), one channel, 8 bit. Values written beside them: `src/stops/mercury/fine.json`. No generation, no takes: the picture is a function.
+
+What it is: the ground finer than the finest plate (level 4, 9.5 deg over 4096 texels), where no viewpoint saw it. A repeating square of small craters and rough ground, lit by the Sun of the place (7.03 deg high at the spot, the same direction as the plates), stored as the share of the light of flat ground (1.0 is flat ground, `top` 3.0 is white in the file). The globe multiplies its ground by it, twice: once at twice the texels of level 4 and once at four times, each coming in by the texels a pixel of the level before it (`patches.fade`), never by time, and only where the meshes of the close view do not cover the ground. One period is 2.38 deg (2.56 close units) at the first scale.
+
+All values: `assets-src/mercury/place/plates.json`, key `fine`. Work files: `out/work/mercury/place/fine/` (not committed).
+
+1. `python3 assets-src/mercury/place/fine.py tile`: rough ground in four bands (periodic, by filtered noise, seed 23), then craters from a power law population (radius 1.5 to 9 texels, cover 0.06; rough ground 0.05, 0.05, 0.04, 0.03 in the four bands), each stamped with `craters.py`'s own crater on a field that repeats, built at twice the size and lit with cast shadows by `craters.py`'s `shade`. It prints the step across the wrap against the step beside it (they must be alike: 0.0769 and 0.0819 for columns, 0.0591 and 0.0615 for rows). Printed by the bake in use: craters 17801, stamps 22995, mean 1.0008, share under 0.3 0.0122, percentiles 1, 50, 99: 0.232, 0.999, 1.759. The first bake (cover 0.16, radius to 11, rough 0.2, 0.2, 0.18, 0.15) read coarse and dark on the frames at 757 and was dropped.
+2. `python3 assets-src/mercury/place/fine.py write`: both sets, with the guard rows above and below (the loader repeats a picture only sideways, so the first and last 1/32 of the period are written again beyond the far edge and the shader reads the middle).
+
+How it is drawn (`src/stops/mercury/globe.ts`, values `look.ts` key `fine`): only outside the box of the close picture and the box of the wide picture (feather 0.03 of the box), strength 0.3 in the plate's shadows (plate value 0.05 to 0.22), gone where one period falls under 16 to 48 samples of the smear. File sizes: full 2328104 bytes, web 649571 bytes.
+
+Checks: `out/work/mercury/place/fine/tile-view.jpg` (two by two periods, no seam), the texels view of 754 to 763 (`DIAG=texels`), the frames 754 to 763 beside the frames before.
+
 ## Plates of the place: patch-2.jpg, patch-3.jpg, patch-4.jpg (dive) and patch-3r.jpg, patch-4r.jpg (rise)
 
 Files, each in both sets (`<set>` is `full` at 4096 x 4096 and `web` at 2048 x 2048), all made by the steps of this section:

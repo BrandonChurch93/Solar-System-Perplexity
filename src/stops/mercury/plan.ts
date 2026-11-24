@@ -21,7 +21,7 @@ export const params: MoveParams = {
   travel: { turnDeg: 78, side: 1 },
   arrive: { swingDeg: 0, axis: [0, 1, 0], offset: [0.5, -0.1] },
   light: { exposure: 1, skyExposure: 0.25, sunRadiusDeg: 9.2, sunGlare: 0.012, flare: 1 },
-  handover: { dive: { at: shareOf('dive'), place: { valid: [0.004, 0.004, 0.0045, 0.125], seen: 1, maxEnlarge: 3, enlargeSoft: 0.95, edgeIn: [0.4, 0.4, 0.4, 0.25] } }, rise: { at: shareOf('rise'), place: { valid: [0.03, 0.03, 0.05, 0.125], seen: 1, maxEnlarge: 1.2, enlargeSoft: 0.4, edgeIn: [0.4, 0.4, 0.4, 0.25] } } },
+  handover: { dive: { at: shareOf('dive'), picture: false, place: { valid: [0.004, 0.004, 0.0045, 0.125], seen: 1, maxEnlarge: 3, enlargeSoft: 0.95, edgeIn: [0.4, 0.4, 0.4, 0.25] } }, rise: { at: shareOf('rise'), picture: false, place: { valid: [0.03, 0.03, 0.05, 0.125], seen: 1, maxEnlarge: 1.2, enlargeSoft: 0.4, edgeIn: [0.4, 0.4, 0.4, 0.25] } } },
   cover: [1, 0.95, 0.86],
   coverEdge: [4, 4],
   coverHides: 0,
