@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T02:55:29.292Z",
+ "pushed": "2026-11-24T03:19:01.049Z",
  "head": "c7248b335c792aa8b5b1a65baa4ad82bfb093d4e",
- "note": "cause of the pale quad at 985 to 990, in the plate",
+ "note": "03:19 UTC: causes of the quad, the craters at the left and the brightening found; mend of the quad in work",
  "looks": [
+  {
+   "time": "2026-11-24T03:19:00.018Z",
+   "file": "20261124031900018-note-over.jpg",
+   "source": "out/work/mercury/place/quad/over.jpg",
+   "kind": "note",
+   "label": "c7248b33 frames with the edges of the rise's place (green), the wide picture's box (blue) and its weight (red)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-24T03:18:58.700Z",
+   "file": "20261124031858700-note-left-984-989.jpg",
+   "source": "out/work/mercury/place/quad/left-984-989.jpg",
+   "kind": "note",
+   "label": "c7248b33 frames 984 to 989, left part, every frame: the pale quad and the band's craters entering at the left (before the mend)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T02:55:27.703Z",
    "file": "20261124025527703-note-look.jpg",
@@ -60,30 +76,6 @@
    "segment": "mercury.dive",
    "first": 690,
    "last": 760,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T01:33:46.617Z",
-   "file": "20261124013346617-sheet-mercury-dive-draft-after.jpg",
-   "source": "out/work/handover/mercury-dive-draft-after.png",
-   "kind": "sheet",
-   "label": "mercury dive, every frame 761 to 772 (after T, frame 760), draft tier",
-   "stop": "mercury",
-   "segment": "mercury.dive",
-   "first": 761,
-   "last": 772,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T01:33:44.783Z",
-   "file": "20261124013344783-sheet-mercury-dive-draft-before.jpg",
-   "source": "out/work/handover/mercury-dive-draft-before.png",
-   "kind": "sheet",
-   "label": "mercury dive, every frame 748 to 759 (before T, frame 760), draft tier",
-   "stop": "mercury",
-   "segment": "mercury.dive",
-   "first": 748,
-   "last": 759,
    "tier": "draft"
   }
  ]
