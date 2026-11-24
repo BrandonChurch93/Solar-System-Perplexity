@@ -145,118 +145,100 @@ def pops(needs):
             'differ': differ, 'apart': apart, 'rows': len(parts), 'spans': spans}
 
 
-MOVE = {'frames': 16, 'world': 4, 'level': 110.0, 'contrast': 14.0, 'film': 4, 'edge': 3.0}
-MOVES = [('rise', 1, 20), ('rise', 1, 80), ('rise', 1.3, 20), ('rise', 1.3, 80), ('rise', 2, 20), ('rise', 3, 20), ('rise', 4, 5), ('rise', 4, 10), ('rise', 4, 20), ('rise', 4, 40),
-         ('rise', 6, 20), ('rise', 8, 20), ('rise soft', 3, 20), ('rise soft', 4, 20), ('dive', 1.3, 20), ('dive', 3, 20), ('dive', 4, 20), ('pan', 1, 20), ('pan', 1, 80)]
-SWAPS = [('rise', 1, 20), ('rise', 1.3, 20), ('rise', 2, 20), ('rise', 3, 20), ('rise', 4, 20), ('rise', 8, 20), ('rise soft', 3, 20), ('rise soft', 4, 20), ('dive', 4, 20), ('pan', 1, 20)]
-HALVES = [('rise', 1, 20), ('rise', 2, 20), ('rise', 3, 20), ('rise', 4, 20), ('dive', 4, 20)]
-PARTS = [('rise', 1, 20, 16), ('rise', 1, 20, 32), ('rise', 3, 20, 16), ('rise', 3, 20, 32), ('rise', 4, 20, 16), ('rise', 4, 20, 32)]
-SEEDS = (697, 1, 2, 3, 4, 5, 6)
+FILM = {'shape': (540, 960), 'scale': 0.25, 'frames': 16, 'level': 110.0, 'contrast': 16.0, 'grain': 1.24, 'blur': 20.0, 'wide': 40.0}
+ZOOMS = (2, 3, 3.7, 4.4, 5.3)
+WIDTHS = (16, 32, 64)
+WEIGHTS = {'none': lambda t: t * 0, 'whole': lambda t: t, 'half': lambda t: 0.25 + t / 2, 'cut': lambda t: (t > 0.5) * 1.0}
 
 
 def ground(rng):
-    """A ground with detail at every width from 1 to 64 px, MOVE['world'] times the frame each way."""
-    shape = (SHAPE[0] * MOVE['world'], SHAPE[1] * MOVE['world'])
-    g = sum(s * cv2.GaussianBlur(rng.standard_normal(shape).astype(np.float32), (0, 0), s) for s in (1, 2, 4, 8, 16, 32, 64))
-    return MOVE['level'] + MOVE['contrast'] * g / g.std()
+    """A ground with detail at every width from 1 to 64 px, twice the frame each way."""
+    shape = (FILM['shape'][0] * 2, FILM['shape'][1] * 2)
+    g = sum(s ** 0.5 * cv2.GaussianBlur(rng.standard_normal(shape).astype(np.float32), (0, 0), s) for s in (0.5, 1, 2, 4, 8, 16, 32, 64))
+    return FILM['level'] + FILM['contrast'] * g / g.std()
 
 
-def patch(one, other, radius):
-    """The ground one with the ground other in a disc at its middle, of a radius in px of the ground, a soft edge."""
-    ys, xs = np.mgrid[0:one.shape[0], 0:one.shape[1]]
-    m = np.clip((radius - np.hypot(xs - (one.shape[1] - 1) / 2, ys - (one.shape[0] - 1) / 2)) / MOVE['edge'] + 0.5, 0, 1).astype(np.float32)
-    return one * (1 - m) + other * m
+def exchanged(one, other, width):
+    """The ground one with all its detail finer than the width replaced by that of the ground other."""
+    low = lambda x: cv2.GaussianBlur(x, (0, 0), width)
+    return low(one) + other - low(other)
 
 
-def view(world, zoom, across):
-    """The frame that shows the middle of the world at a zoom, moved across by px: reduced by area means, enlarged by Lanczos, mirrored beyond
+def shot(world, shrink, across):
+    """The frame, at the full size, that shows the middle of the world shrunk and moved across by px: reduced by area means, mirrored beyond
     the edge of the world. Nothing in it but the world."""
-    if zoom < 1:
-        world = cv2.resize(world, (int(round(world.shape[1] * zoom)), int(round(world.shape[0] * zoom))), interpolation=cv2.INTER_AREA)
-        zoom = 1
-    h, w = SHAPE
-    m = np.array([[zoom, 0, (w - 1) / 2 - zoom * (world.shape[1] - 1) / 2 + across], [0, zoom, (h - 1) / 2 - zoom * (world.shape[0] - 1) / 2]])
-    return cv2.warpAffine(world, m, (w, h), flags=cv2.INTER_LANCZOS4, borderMode=cv2.BORDER_REFLECT_101)
+    if shrink > 1:
+        world = cv2.resize(world, (int(round(world.shape[1] / shrink)), int(round(world.shape[0] / shrink))), interpolation=cv2.INTER_AREA)
+    h, w = FILM['shape']
+    m = np.array([[1, 0, (w - 1) / 2 - (world.shape[1] - 1) / 2 + across], [0, 1, (h - 1) / 2 - (world.shape[0] - 1) / 2]])
+    return cv2.warpAffine(world, m, (w, h), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT_101)
 
 
-def move(rng, way, ratio, speed, worlds):
-    """17 capture frames of a camera over a ground in which nothing changes (one world) or over one ground that is exchanged for another, cross
-    faded over the frames (two worlds). rise: the picture shrinks ratio times, the closest frame at the sharpness of the world; rise soft: the
-    same with the farthest frame at the sharpness of the world, so the closer ones are enlargements; dive: the rise run backwards; pan: no
-    shrink. speed: px of the film a capture frame, across. The frames are the quarter size ones the measure works on."""
-    n = MOVE['frames']
-    zooms = [ratio ** (-j / n) if way != 'rise soft' else ratio ** (1 - j / n) for j in range(n + 1)]
-    order = range(n, -1, -1) if way == 'dive' else range(n + 1)
-    frames = []
-    for at, j in enumerate(order):
-        shown = [view(w, zooms[j], speed / MOVE['film'] * j) for w in worlds]
-        f = shown[0] if len(shown) == 1 else (1 - at / n) * shown[0] + at / n * shown[1]
-        frames.append(np.clip(f + GRAIN * rng.standard_normal(SHAPE).astype(np.float32), 0, 255).astype(np.float32))
-    return frames
+def film(rng, way, shrink, speed, one, other, weight):
+    """17 capture frames at the full size of a camera over the ground one, which gives way to the ground other by the weight (a function of
+    the share of the window that has passed). rise: the picture shrinks, the first frame is the nearest and shows the ground at its own
+    sharpness; dive: the rise run backwards, the exchange still onward in time. speed: px of the film a capture frame, across."""
+    n = FILM['frames']
+    weights = WEIGHTS[weight](np.arange(n + 1) / n)
+    out = []
+    for at in range(n + 1):
+        j = n - at if way == 'dive' else at
+        a, b = (shot(w, shrink ** (j / n), speed * j) if w is not None else 0 for w in (one, other if weights[at] > 0 else None))
+        f = (1 - weights[at]) * a + weights[at] * b
+        out.append(np.clip(f + FILM['grain'] * rng.standard_normal(FILM['shape']).astype(np.float32), 0, 255).astype(np.float64))
+    return out
 
 
-def carry(frames):
-    """A made move read as the pictures part reads a row: the first frame against the last one carried back along the flows. before: the widths
-    of the pattern as they stood, the same everywhere; now: the widths follow the enlargement of the carried frame."""
+def judged(full):
+    """A made film read as the pictures part reads a row: its first frame against its last. main: the measure as it stood, the later frame
+    carried back from the reduced picture; now: the reading of the pair on the nearer of its frames."""
+    scale, sigma, wide = FILM['scale'], FILM['blur'] * FILM['scale'], FILM['wide'] * FILM['scale']
+    frames = [S.small(f, scale) for f in full]
     n = len(frames) - 1
     fw = [S.motion(frames[j], frames[j + 1]) for j in range(n)]
     bw = [S.motion(frames[j + 1], frames[j]) for j in range(n)]
-    d, moved, ok, way = S.change(frames, fw, bw, 0, n, WIDE / 2)
-    grown = S.enlarged(*way, ok, WIDE)
-    p0, p1 = S.pattern(frames[0], moved, ok, FINE, WIDE, FLOOR), S.matched(frames[0], moved, ok, FINE, WIDE, FLOOR, grown)
-    was, now = S.patterned(p0), S.patterned(p1)
-    return {'before': was[0], 'now': now[0], 'shareBefore': was[2], 'share': now[2], 'same': bool(np.array_equal(p0, p1, equal_nan=True)),
-            'grown': float(np.median(grown[ok])) if ok.any() else None, 'p': p1, 'z': grown, 'ok': ok}
+    way = S.carry(fw, bw, 0, n)
+    d, moved, ok = S.change(frames, fw, bw, 0, n, sigma, None, None, way)
+    p = S.pattern(frames[0].astype(np.float32), moved, ok, wide / 5, wide, FLOOR)
+    main = S.patterned(p)
+    onward, back = S.readings(frames, fw, bw, 0, n, scale, sigma, wide, FLOOR, None, None, lambda j: full[j], way, moved)
+    now, at, share, band = S.reading(onward, back, scale)
+    grown = S.enlarged(way[0], way[1], ok, wide)
+    return {'main': main[0], 'mainShare': main[2], 'now': now, 'share': share, 'band': band, 'onward': S.patterned(onward[0])[0], 'back': S.patterned(back[0])[0] if back else None,
+            'same': bool(np.array_equal(p, onward[0], equal_nan=True)), 'grown': float(np.median(grown[ok])) if ok.any() else None}
 
 
 def carries():
     import tempfile
     from PIL import Image
-    rng = np.random.default_rng(697)
+    rng = np.random.default_rng(710)
     one, other = ground(rng), ground(rng)
-    half = (one + other) / 2
-    plain = lambda r: {k: v for k, v in r.items() if k not in ('p', 'z', 'ok')}
-    out = {'rigid': [{'way': way, 'zoom': ratio, 'speed': speed, **plain(carry(move(rng, way, ratio, speed, [one])))} for way, ratio, speed in MOVES],
-           'exchange': [{'way': way, 'zoom': ratio, 'speed': speed, **plain(carry(move(rng, way, ratio, speed, [one, other])))} for way, ratio, speed in SWAPS],
-           'half': [{'way': way, 'zoom': ratio, 'speed': speed, **plain(carry(move(rng, way, ratio, speed, [one, half])))} for way, ratio, speed in HALVES], 'part': []}
-    ys, xs = np.mgrid[0:SHAPE[0], 0:SHAPE[1]]
-    for way, ratio, speed, radius in PARTS:
-        r = carry(move(rng, way, ratio, speed, [one, patch(one, other, radius * ratio)]))
-        disc = np.hypot(xs - (SHAPE[1] - 1) / 2, ys - (SHAPE[0] - 1) / 2) < radius * ratio
-        judged = np.isfinite(r['p'])
-        out['part'].append({'way': way, 'zoom': ratio, 'speed': speed, 'radius': radius, **plain(r), 'inside': float(np.median(r['z'][r['ok'] & disc])),
-                            'outside': float(np.median(r['z'][r['ok'] & ~disc])), 'over': float((r['p'][judged & disc] > 0.45).mean()) if (judged & disc).any() else None})
+    swaps = {w: exchanged(one, other, w) for w in WIDTHS}
+    out = {'rigid': [], 'exchange': [], 'still': []}
+    for way in ('rise', 'dive'):
+        for z in ZOOMS:
+            out['rigid'].append({'way': way, 'zoom': z, **judged(film(rng, way, z, 0, one, None, 'none'))})
+            for w in WIDTHS:
+                for weight in ('whole',) + (('half',) if way == 'rise' else ()) + (('cut',) if w == WIDTHS[0] else ()):
+                    out['exchange'].append({'way': way, 'zoom': z, 'width': w, 'weight': weight, **judged(film(rng, way, z, 0, one, swaps[w], weight))})
+    for speed, weight in ((0, 'none'), (8, 'none'), (32, 'none'), (0, 'whole'), (8, 'whole'), (0, 'half'), (0, 'cut')):
+        out['still'].append({'speed': speed, 'weight': weight, **judged(film(rng, 'rise', 1, speed, one, swaps[32], weight))})
     with tempfile.TemporaryDirectory() as folder:
-        def through(worlds):
+        def through(way, later, weight):
             paths = []
-            for j, f in enumerate(move(rng, 'rise', 4, 20, worlds)):
+            for j, f in enumerate(film(rng, way, 4.4, 0, one, later, weight)):
                 g = np.rint(f).astype(np.uint8)
                 paths.append(os.path.join(folder, '%02d.png' % j))
                 Image.fromarray(np.stack([g, g, g], axis=2)).save(paths[-1])
-            n = S.pictures({'paths': paths, 'scale': 1, 'window': 32, 'floor': 0.25, 'grid': [16, 9], 'changeFrames': MOVE['frames'], 'changeBlur': WIDE / 2, 'patternPx': WIDE, 'patternFloor': FLOOR})
-            return n['pattern'][0]
-        out['through'] = {'rigid': through([one]), 'exchange': through([one, other])}
-    return out
-
-
-def spread():
-    """The whole ground exchanged and dissolved half way under a shrink by 3 and by 4, at seven seeds: how far one draw is from the next."""
-    out = {'seeds': list(SEEDS), 'exchange': {'3': [], '4': []}, 'half': {'3': [], '4': []}}
-    for seed in SEEDS:
-        rng = np.random.default_rng(seed)
-        one, other = ground(rng), ground(rng)
-        for ratio in (3, 4):
-            for name, later in (('exchange', other), ('half', (one + other) / 2)):
-                r = carry(move(rng, 'rise', ratio, 20, [one, later]))
-                out[name][str(ratio)].append({'before': r['before'], 'now': r['now']})
+            n = S.pictures({'paths': paths, 'scale': FILM['scale'], 'window': 32, 'floor': 0.25, 'grid': [16, 9], 'changeFrames': FILM['frames'], 'changeBlur': FILM['blur'], 'patternPx': FILM['wide'], 'patternFloor': FLOOR})
+            return {'pattern': n['pattern'][0], 'band': n['patternBand'][0], 'at': n['patternAt'][0]}
+        out['through'] = {'rise': through('rise', None, 'none'), 'dive': through('dive', None, 'none'), 'riseExchange': through('rise', swaps[16], 'whole'), 'diveExchange': through('dive', swaps[16], 'whole')}
     return out
 
 
 if __name__ == '__main__':
     if len(sys.argv) > 1 and sys.argv[1] == 'carried':
         json.dump({'carried': carries()}, sys.stdout)
-    elif len(sys.argv) > 1 and sys.argv[1] == 'spread':
-        json.dump({'spread': spread()}, sys.stdout)
     elif len(sys.argv) > 1:
         json.dump({'pops': pops(json.loads(sys.argv[1]))}, sys.stdout)
     else:

@@ -425,7 +425,7 @@ Measured (`tests/globe-cap.test.ts`, a green square 0.02 degrees wide on a flat 
 
 `exactSpin` moves bytes of every frame of the stop that sets it (the colours shift by the amounts above, far under a pixel from orbit). The other way to the same end, inside a stop: the turn in the mesh's quaternion and a spin of 0 handed to `update`; at spin 0 the renderer's pair is exact. `src/bodies/globe.ts` and `src/bodies/standin.ts` still turn by the renderer's pair (far views); not changed.
 
-## 12. The floor of the pattern measure in a rise (TASK 697, MAIL 704): a patch for `tools/img/smooth.py`
+## 12. The floor of the pattern measure in a rise (TASK 697, MAIL 704, MAIL 710): the cure that keeps the band, for `tools/img/smooth.py`
 
 Not a globe option. The measure belongs to harness_builder; this is the proof and the patch asked of this notebook. Limit 0.45, the statement of the measure and every key of `smooth.pictures` stand as they were. MEASURED, STATED and UNKNOWN are kept apart; a number without a word is MEASURED here, draft tier, rate 2, with the tool's own functions.
 
@@ -433,88 +433,95 @@ Not a globe option. The measure belongs to harness_builder; this is the proof an
 
 `change()` chains 16 flows of the quarter size frames and carries the later frame back onto the earlier one. On rigid sequences made from Jupiter's frame k 6539 (nothing changes in place) the chain ends 0.6 to 1.0 quarter px beside the true place in the later frame (median; 99th percentile 2 to 3). Where the later frame shows the ground z times smaller, the way back enlarges that error z times: 0.8, 1.4, 2.5, 3.4, 5.3, 7.5 quarter px at z 1.3, 2, 3, 4, 6, 8, against a fine width of 2. Reading of the same sequences: 0.09, 0.13, 0.25, 0.42, 0.73, 1.17 with the chain; 0.00, 0.00, 0.02, 0.05, 0.17, 0.35 with the true map; 0.000 to 0.004 with the true map and the later frame at full size. Speed alone (0 to 80 px a capture frame at z 1 to 2) reads 0.18 or less; dives read 0.05 or less; the reading is the same whichever end of the sequence is the sharp one.
 
-### The patch
+### What was not taken (d236)
 
-- `change()` also returns the map it carried along.
-- `enlarged(mx, my, ok, wide)`: how many times larger the carried frame is drawn, per pixel.
-- `matched(a, b, ok, fine, wide, floor, grown)`: `pattern()` at both widths times the enlargement, in half steps of a doubling, the nearest step, at most 8 times. Under the first half step (1.19) it is `pattern()` to the bit.
-- `pictures()` and `changes()` call `matched`.
+The first patch (eb2975a6) made both widths of the detail as many times wider as the carried frame is enlarged. It cured the floor and hid an exchange of detail finer than 8 px times the enlargement (handover_engineer's rig: a whole exchange at 16 px read 0.10, 0.09, 0.09 at z 2, 3, 3.7, a cut 0.08). `matched` is gone again.
 
-STATED: what is judged is the detail of 8 to 40 px of whichever of the two frames draws the ground smaller.
+### The cure
 
-### a. Where the enlargement comes from
+The widths stay 8 and 40 px. What changes is the picture the farther frame is carried from, and which frame the pair is read on.
 
-From the slopes of the chained map (central differences where both neighbours are judged), each averaged by a Gaussian of the wide width (10 quarter px, 40 film px) over the judged area, then the determinant. Never the raw local derivative. Not the poses: in Mercury's dive 746 + 1/2 (`builder/proof-me3` 93607f34) the map of the poses on the unit sphere lies a median 2.65 quarter px beside the flows over the whole judged area (90th percentile 5.3), in a smooth field, so the poses of that tree do not hold the whole move.
+- `carry(fw, bw, i, n, first, last, back)`: the map of the chain as `change()` made it, or the same chain run the other way (`back`), which carries frame i onto frame i + n. `change()` takes the map as `way` and returns its three values as before.
+- `enlarged(mx, my, ok, wide)`: how many times larger the carried frame is drawn, per pixel, from the slopes of the map averaged over the wide width.
+- `finer(full, scale, mx, my, step, levels)`: the carried frame taken from a picture `2^(step / 2)` times finer than the quarter size, reduced from the full size frame by area, the full size at most.
+- `sharper(a, moved, full, scale, mx, my, ok, grown, sigma)`: where the carried frame is enlarged by 1.19 or more it is carried again from the finer picture of the nearest half step, and the map is set right by `SETTLE_ROUNDS` (3) rounds of one more flow between frame a and the carried picture, at the finest scale of the flow, smoothed over the change blur (5 quarter px). Where the frame is not enlarged the carried picture is `moved` to the bit.
+- `readings(...)`: the onward reading (frame i against frame i + n carried back, cured when the carried frame is enlarged on the whole, median 1 or more) and, where frame i + n is the nearer one (the frame carried back is drawn smaller than 0.84), a second reading from the other end: frame i + n against frame i carried onto it from its finer picture, on the pixels where that one is enlarged by 1.19 or more.
+- `reading(onward, back, scale)`: the number of the pair is the larger of the two 99th percentiles, with its place in frame i, the share judged, and the band at that place.
+- `band(grown, scale, fine)`: the width in px of the nearer frame under which the window read nothing. 8 px where the carried frame is as large as it was or comes from a finer picture; beyond an enlargement of 4 the full size of the farther frame is not fine enough and the band is 8 times a quarter of the enlargement (10.6 px at 5.3); where the carried frame is drawn smaller (a dive read on its first frame) 8 px divided by that.
+- `pictures()` gives `patternBand` beside `pattern`; `tools/smooth.ts` prints it in the why of a pattern red, in the line of the largest change of the pattern, and as a column `band px` of the table. `changes()` shows the cured carried picture and, when there is one, a second row for the reading on the later frame.
 
-The enlargement read inside a part of the ground that is exchanged, against beside it:
+STATED: with no enlargement and no shrink over 1.19 nothing of this runs, and every pixel of the pattern is main's. In a pair that dives on the whole the onward reading is left as main has it, so a dive never reads less than on main; it reads more where the reading on the nearer frame is larger.
 
-| sequence | inside | beside |
-|---|---|---|
-| made ground, shrink 3, disc of 16 and 32 quarter px of the later frame | 3.00, 3.00 | 2.99, 2.99 |
-| made ground, shrink 4, the same | 3.98, 4.00 | 3.99, 3.98 |
-| Jupiter's frame, Neptune's frame faded in inside a disc, shrink 3 | 2.95 to 3.03 | 3.00 to 3.02 |
-| the same, shrink 4 | 3.99 to 4.05 | 3.99 to 4.04 |
+Tried and left (MEASURED on the rig's Mars map): one round of the default flow leaves a clean rise at 0.40 at z 4.4 and 0.53 to 0.58 at 5.3; a flow at the finest scale that is not smoothed follows the exchange and reads a cut at z 2 as 0.44; widths that grow by z / 4 beyond 4 lower the exchanges at 5.3.
 
-So an exchange does not widen its own window. It is still read lower than before, because the windows are wider everywhere in the rise. A true exchange inside a rigid rise, before and after the patch:
+### The rig's cases (handover_engineer's `rig.py`, Mars `wrap-color.jpg`, 1920 by 1080, 17 capture frames; read by `readings()` and `reading()`)
 
-| sequence | radius of the disc in the later frame, film px | before | after |
-|---|---|---|---|
-| made, shrink 3 | 64, 128 | 0.91, 1.26 | 0.59, 0.93 |
-| made, shrink 4 | 64, 128 | 0.99, 1.29 | 0.50, 0.91 |
-| Jupiter into Neptune, shrink 3 | 60, 87, 133, 180 | 1.10, 1.16, 1.28, 1.30 | 0.62, 0.66, 0.91, 1.10 |
-| Jupiter into Neptune, shrink 4 | 45, 65, 100, 135 | 1.09, 1.15, 1.28, 1.32 | 0.35, 0.40, 0.74, 1.06 |
-| Jupiter into Neptune, shrink 2 | 65, 90, 130, 200 | 1.00, 1.09, 1.17, 1.27 | 0.86, 0.91, 0.97, 1.12 |
-| the same pair, no shrink (the measure as it stands) | 65, 87, 130, 180 | 0.39, 0.71, 1.01, 1.09 | the same |
+Each cell: main, then the cure. Main is `m697/old/smooth.py`, the text of ed003c70. Rise:
 
-What goes under the limit: at shrink 4 a disc of 65 film px or less in the later frame (260 px, a tenth of the frame, in the earlier one) reads 0.40 and 0.35. With no shrink the measure as it stands reads a disc of 65 px at 0.39. STATED: after the patch an exchange counts by its size in the frame that draws it smaller.
+| case | z 2 | z 3 | z 3.7 | z 4.4 | z 5.3 |
+|---|---|---|---|---|---|
+| nothing exchanged, the first ground | 0.120, 0.012 | 0.337, 0.050 | 0.470, 0.072 | 0.700, 0.080 | 0.857, 0.100 |
+| nothing exchanged, the second ground | 0.167, 0.019 | 0.558, 0.086 | 0.616, 0.107 | 0.801, 0.099 | 0.911, 0.145 |
+| whole exchange, 16 px | 0.617, 0.553 | 0.825, 0.688 | 0.914, 0.765 | 0.954, 0.778 | 0.990, 0.835 |
+| whole exchange, 32 px | 1.030, 0.807 | 1.106, 0.956 | 1.212, 0.961 | 1.224, 0.960 | 1.168, 0.891 |
+| whole exchange, 64 px | 1.359, 0.971 | 1.339, 1.076 | 1.288, 1.043 | 1.286, 1.056 | 1.248, 1.030 |
+| whole exchange, 128 px | 1.440, 0.924 | 1.429, 1.117 | 1.391, 1.144 | 1.312, 1.091 | 1.300, 1.065 |
+| cut in one frame, 16 px | 0.617, 0.521 | 0.778, 0.712 | 0.933, 0.736 | 0.933, 0.872 | 0.970, 0.823 |
+| first half, 16 px | 0.248, 0.228 | 0.528, 0.424 | 0.582, 0.456 | 0.721, 0.437 | 0.860, 0.515 |
+| second half, 16 px | 0.213, 0.207 | 0.490, 0.244 | 0.613, 0.310 | 0.791, 0.400 | 0.875, 0.293 |
+| middle half, 16 px | 0.223, 0.227 | 0.502, 0.328 | 0.533, 0.363 | 0.727, 0.357 | 0.835, 0.390 |
+| middle half, 32 px | 0.419, 0.411 | 0.573, 0.495 | 0.670, 0.573 | 0.746, 0.587 | 0.834, 0.519 |
+| middle half, 64 px | 0.629, 0.617 | 0.674, 0.625 | 0.722, 0.638 | 0.815, 0.660 | 0.880, 0.615 |
 
-### b. One number for a stretch that differs by axis
+Dive (main judges 25, 11, 7, 5 and 3 percent of the frame at z 2 to 5.3; the reading on the nearer frame judges 96 to 100 percent):
 
-The root of the area ratio (1 over the root of the determinant of the slopes). Three choices on the same sequences:
+| case | z 2 | z 3 | z 3.7 | z 4.4 | z 5.3 |
+|---|---|---|---|---|---|
+| nothing exchanged, the first ground | 0.016, 0.016 | 0.029, 0.050 | 0.028, 0.072 | 0.037, 0.080 | 0.121, 0.121 |
+| nothing exchanged, the second ground | 0.030, 0.030 | 0.051, 0.086 | 0.054, 0.107 | 0.087, 0.099 | 0.220, 0.220 |
+| whole exchange, 16 px | 0.096, 0.598 | 0.099, 0.758 | 0.118, 0.757 | 0.079, 0.857 | 0.204, 0.812 |
+| whole exchange, 32 px | 0.389, 0.805 | 0.424, 1.010 | 0.431, 0.961 | 0.254, 0.955 | 0.248, 0.921 |
+| whole exchange, 64 px | 1.109, 1.109 | 0.859, 1.081 | 0.921, 1.064 | 0.616, 1.012 | 0.562, 1.007 |
+| whole exchange, 128 px | 1.384, 1.384 | 1.175, 1.175 | 1.172, 1.172 | 0.926, 1.061 | 0.897, 1.046 |
+| cut in one frame, 16 px | 0.098, 0.563 | 0.088, 0.851 | 0.110, 0.797 | 0.107, 0.869 | 0.182, 0.801 |
+| first half, 16 px | 0.031, 0.244 | 0.038, 0.418 | 0.049, 0.451 | 0.031, 0.479 | 0.073, 0.468 |
+| second half, 16 px | 0.038, 0.219 | 0.075, 0.323 | 0.087, 0.384 | 0.092, 0.350 | 0.085, 0.357 |
+| middle half, 16 px | 0.030, 0.282 | 0.060, 0.375 | 0.058, 0.406 | 0.057, 0.396 | 0.179, 0.370 |
+| middle half, 32 px | 0.115, 0.445 | 0.152, 0.516 | 0.193, 0.573 | 0.078, 0.587 | 0.206, 0.533 |
+| middle half, 64 px | 0.378, 0.625 | 0.308, 0.662 | 0.341, 0.662 | 0.191, 0.671 | 0.232, 0.593 |
 
-| sequence | before | larger stretch | root of the area | smaller stretch |
-|---|---|---|---|---|
-| Jupiter 3261 + 1/2, the film | 0.690 | 0.106 | 0.110 | 0.135 |
-| the same row, rigid (jupiter_coder's frames) | 0.696 | 0.046 | 0.051 | 0.080 |
-| rigid, shrinks down the frame only, by 2, 3, 4, 6 | 0.11, 0.20, 0.34, 0.69 | 0.03, 0.03, 0.03, 0.03 | 0.07, 0.09, 0.10, 0.14 | 0.11, 0.20, 0.34, 0.69 |
-| disc exchanged (an earlier run of the kind of a), shrink 3, 260 and 180 px in the earlier frame | 1.21, 1.07 | 0.60, 0.53 | 0.69, 0.65 | 0.80, 0.75 |
-| disc exchanged, shrink 4, the same | 1.21, 1.09 | 0.37, 0.29 | 0.40, 0.34 | 0.60, 0.55 |
+- Bar (2): nothing exchanged reads 0.145 at most in a rise and 0.220 at most in a dive (that one is main's own reading on 3 percent of the frame at z 5.3; the reading on the nearer frame is 0.145 at most). Room under 0.45: 0.23.
+- Bar (3): a whole exchange at 16, 32, 64 and 128 px reads 0.553 at the least in a rise (z 2, 16 px; main 0.617) and 0.598 in a dive (z 2, 16 px; main 0.096). A cut in one frame reads 0.521 at the least in a rise (z 2; main 0.617) and 0.563 in a dive (main 0.098). Room over 0.45: 0.07.
+- Half an exchange at 16 px reads 0.21 to 0.52 in a rise and 0.22 to 0.48 in a dive; the middle half at 32 px 0.41 to 0.59, at 64 px 0.59 to 0.67. Not run: first and second half at 32 and 64 px, any half at 128 px.
+- Six of the cases run again with the code as committed give the same pattern values to the digit. The band column was not kept from this run: it printed the middle band, the tool prints the band at the place.
+- The cure took 0.2 to 0.4 s a pair on a free machine (1.1 s at most beside two other jobs), plus 0.12 s to read one full size frame; a row is read once or twice.
 
-The smaller stretch cures nothing where the picture shrinks along one axis only. The root of the area leaves 0.14 on a rigid shrink by 6 along one axis (over 0.1, under the limit).
+### The made proofs (`tools/smooth/made.py carried`, seed 710; `tests/smooth.test.ts`, eleven tests)
 
-### c. The judged area
+Full size frames 960 by 540 of a ground with detail at every width, 17 capture frames, read at a quarter. Shrink 2, 3, 3.7, 4.4, 5.3.
 
-The border test `soft(ok, wide) >= 0.5` and the border model run at the wider widths. Lost: pixels judged before and not after, as a share of the judged area. Each known red is one row here (17 capture frames); no row lost its pattern.
+1. Nothing changes, rise: main 0.169, 0.281, 0.301, 0.471, 0.552; now 0.016, 0.028, 0.051, 0.052, 0.077. Dive: main 0.076, 0.157, 0.226, 0.200, none (it judges 24, 10, 6, 4 and 1 percent); on the nearer frame 0.016, 0.028, 0.055, 0.044, 0.078; the pair reads the larger, 0.076, 0.157, 0.226, 0.200, 0.078.
+2. Whole exchange at 16, 32, 64 px, rise: main 0.82 to 1.36; now 0.69 to 0.75 at 16 px, 0.91 to 1.01 at 32 px, 0.91 to 1.09 at 64 px. Dive at 16 px: main 0.335, 0.216, 0.204, 0.345, none; now 0.717, 0.749, 0.742, 0.809, 0.719. At 32 px now 0.94 to 1.09, at 64 px 1.00 to 1.28.
+3. Cut in one frame at 16 px, rise: main 0.80 to 0.93, now 0.69 to 0.82. Dive: main 0.496, 0.253, 0.242, 0.263, none; now 0.706, 0.803, 0.785, 0.761, 0.782.
+4. Half an exchange, rise: 0.33 to 0.36 at 16 px, 0.61 to 0.64 at 32 px, 0.71 to 0.72 at 64 px.
+5. No shrink (still, pans of 8 and 32 px, exchanged, half, cut): every pixel of the pattern equal to main's, the number and the judged share equal, no second reading. Every dive case: the onward pattern equal to main's in every pixel.
+6. The band at the place of the reading: 8.0 px to z 3.7; 8.0 to 9.5 at 4.4; 9.2 to 11.5 at 5.3; 15.8, 23.9, 29.7, 35.0 px where a dive's number is main's reading on the first frame (z 2 to 4.4). The enlargement read from the flows lies within a tenth of the shrink.
+7. Through `pictures()` from files at z 4.4: rise 0.048, dive 0.228 (main's reading, band 34.9 px), rise with a whole exchange 0.711, dive with a whole exchange 0.763.
 
-| sequence | judged share before | after | lost | gained |
-|---|---|---|---|---|
-| Jupiter rise 3261 + 1/2, film | 0.8896 | 0.8896 | 0 | 0 |
-| the same row, rigid | 0.8977 | 0.8977 | 0 | 0 |
-| Mercury dive 746 + 1/2, film | 0.4440 | 0.4440 | 0.00023 | 0.00003 |
-| Neptune dive 4696, film | 0.4050 | 0.4050 | 0 | 0 |
-| every made move (40) | | | under 0.002 | |
+### Real frames (looks `six-<tag>`: the two frames, the carried picture, the pattern, the map as a grid over the enlargement)
 
-UNKNOWN: the count of rows lost over a whole report, and any green report; none was run whole. The rises with a limb in the frame (Mercury, Venus) are rendering and follow in the log.
+| row | tree | main | onward now | on the later frame | reads | band at the place | enlargement 1st, 50th, 99th percentile |
+|---|---|---|---|---|---|---|---|
+| Jupiter rise 3261 + 1/2 | `builder/proof-ju3` 062c4d01 | 0.690 at 300, 1076 | 0.272 | 0.116 on 2.6 percent | 0.272 at 316, 1072 | 11.1 px | 0.83, 2.30, 5.29 |
+| Mercury dive 746 + 1/2 | `builder/proof-me3` 93607f34 | 1.019 at 924, 64 | equal to main | 0.251 on 60 percent | 1.019 at 924, 64 | 8.0 px | 0.48, 0.80, 1.18 |
+| Neptune dive 4696 | main 2bc36ce6 | 0.716 at 628, 136 | equal to main | 0.450 on 52 percent | 0.716 at 628, 136 | 8.0 px | 0.68, 0.78, 1.05 |
+| Venus rise 1543 | main 2bc36ce6 | 1.151 at 240, 744 | 0.593 | 0.764 on 3.7 percent | 0.764 at 159, 355 | 8.0 px | 0.80, 1.41, 2.12 |
+| Venus dive 1282 + 1/2 | main 2bc36ce6 | 1.012 at 612, 132 | equal to main | 0.245 on 58 percent | 1.012 at 612, 132 | 8.0 px | 0.57, 0.72, 1.44 |
 
-### The made proofs (`tools/smooth/made.py carried` and `spread`, seed 697; `tests/smooth.test.ts`, ten new tests)
-
-A ground with detail at every width from 1 to 64 px, 17 capture frames, 20 film px a capture frame across unless said.
-
-1. Rigid, the same pattern. Shrink 1, 1.3, 2, 3, 4, 6, 8: before 0.003, 0.034, 0.043, 0.089, 0.170, 0.351, 0.572; after 0.003, 0.016, 0.010, 0.011, 0.013, 0.022, 0.031. Shrink 4 at 5, 10, 40 px: before 0.189, 0.198, 0.187; after 0.014, 0.014, 0.015. The far end sharp, shrink 3 and 4: before 0.069, 0.116; after 0.016, 0.010. Through `pictures()` from files, shrink 4: 0.013.
-2. The whole ground exchanged for an unrelated one under the same shrink. At seed 697, shrink 1, 1.3, 2, 3, 4, 8: before 1.47, 1.47, 1.42, 1.39, 1.37, 1.39; after 1.47, 1.44, 1.36, 1.21, 1.15, 1.10. The far end sharp, shrink 3 and 4: 1.34 and 1.44. Seven seeds (697, 1 to 6), shrink 3: 1.21, 1.42, 1.43, 1.37, 1.32, 1.55, 1.28; shrink 4: 1.14, 1.37, 1.35, 1.32, 1.37, 1.56, 1.20. The made swap of today reads 1.27 to 1.40. The middle one of seven is no lower (1.37, 1.35); two draws of seven at shrink 4 (1.14, 1.20) and one at shrink 3 (1.21) are lower than 1.27. No draw is under 1.
-3. A dissolve half way. Seven seeds, shrink 3: 0.48, 0.58, 0.50, 0.47, 0.63, 0.60, 0.40; shrink 4: 0.38, 0.61, 0.50, 0.43, 0.53, 0.68, 0.37; before the patch 0.55 to 0.70. The middle one is 0.50 at both. One draw of seven at shrink 3 and three at shrink 4 read under 0.45. STATED: the mean of the pattern does not move with the width; its 99th percentile is taken over fewer windows the wider they are, so one draw lies further from the next.
-4. No shrink. Every pixel of the pattern is equal to the bit, and so every number, in the 14 made moves without enlargement (shrink 1, pans at 20 and 80 px, dives by 1.3, 3, 4; rigid, exchanged, dissolved, disc). What moves in the film: Neptune's dive 4696 is equal to the digit (no pixel enlarged over 1.19). In Mercury's dive 746 + 1/2 the far ground under the limb is drawn 1.19 times larger or more on the way back on 0.007 of the body, takes the first half step there, and the reading goes from 1.0187 at pixel 924, 64 to 1.0159 at 944, 72.
-
-### The known reds, before and after
-
-| red | tree | before | after | stays red |
-|---|---|---|---|---|
-| Jupiter rise 3261 + 1/2 | `builder/proof-ju3` 062c4d01 | 0.690 at 300, 1076 | 0.110 at 1460, 208 | no |
-| the same row, rigid (jupiter_coder) | | 0.696 | 0.051 | no |
-| Mercury dive 746 + 1/2 | `builder/proof-me3` 93607f34 | 1.019 at 924, 64 | 1.016 at 944, 72 | yes |
-| Neptune dive 4696 | main 2bc36ce6 | 0.716 at 628, 136 | 0.716 at 628, 136 | yes |
-
-In Jupiter's row the carried frame is enlarged a median 2.30 times, 5.29 at the 99th percentile; where it read over 0.45 before, 3.6 to 5.4 times. Not yet measured (rendering, they follow in the log): Jupiter rise 3255, Mercury rise 981 + 1/2 and 1009, Neptune dive 4723, Mars dive 2466, Venus dive 1282 + 1/2 and rise 1543.
+- Jupiter 3261 + 1/2 goes green: over 0.45 on 0.041 of the judged area on main, 0.001 with the cure (one spot at the bottom edge). No judged pixel is lost in any of the five rows.
+- The three dives keep main's number: the red lies in the band under the limb, where the far ground is not enlarged in either frame. On the nearer frame the rest of the ground reads 0.25, 0.45 and 0.25.
+- Venus 1543 stays red. Onward, lower left of the frame (crop `crop-ve1543-onward`): the first frame has small bright clumps there, the later frame smooth streaks, carried from the quarter size and from the finer picture alike. On the later frame, at the far ground under the horizon (crop `crop-ve1543-back`): the later frame has fine speckle where the first frame has smooth haze. STATED: both are a change of the picture in place, not the floor. UNKNOWN which layer of the stop draws either.
+- Not read with the cure: Jupiter rise 3255, Neptune dive 4723, Mars dive 2466 (frames deleted for disk), Mercury rises 981 + 1/2 and 1009 (render stopped unfinished). UNKNOWN: any whole report; none was run.
 
 ### The dives: what changes in place (a finding, nothing changed in a stop's folder)
 
@@ -536,13 +543,20 @@ Seen in the crops (looks `pair-me746`, `pair-ne4696`): what changes in place is 
 - Neptune 4696: the rim of the air at the upper left limb of the whole globe. The place of the reading (628, 136) lies 34 px inside the limb in the first frame and 27 px inside it 8 film frames later, at 552, 32 of that frame, 32 px from its top edge. The rim is a bright blue band about 40 px wide with a dark line inside it; the cloud wisps of the ground pass under it. UNKNOWN which part of the air draws the dark line.
 - Mercury 746 + 1/2: the light along the limb. In the first frame bright arcs and streaks along the limb over the far ground; 8 film frames later that ground lies 25 px from the limb under a smooth bright band. UNKNOWN which of the stop's layers that are tied to the limb draws it (`rim`, `limb`, `silhouette`, `spill`, `haze` in `src/stops/mercury/set.ts`); the pyramid and the place picture are not what is seen there.
 
-### What it costs
 
-One `pattern()` per half step present in the row, at most seven.
+More rows, read with the first patch (the cure was not run on them):
 
-### Wording for `tools/smooth.ts` (owner: harness_builder, not in this commit)
+- Mars dive 2466 (`builder/proof-mt3` 1483daf1): 1.294 at 900, 872; judged 0.42; 0.53 of the judged area over 0.45, spread over the whole ground; rigid through its poses 0.25 and 0.24. Over film frames 2466 to 2474 the globe's ground (smooth dune like land round the canyon) gives way to the close set (crisp layered cliffs) over the whole frame, half way at 2470; a straight edge of the close set stands in the lower left corner (pale wedge) and the lower right (dark wedge) at 2472 and 2474. Looks `ma2466-five`, `ma2466-both`, `pair-ma2466`.
+- Neptune dive 4723: 1.116 at 740, 580; judged 0.41; 0.46 of the judged area over 0.45, not at the limb; rigid 0.07 and 0.10. The whole ground is exchanged: the globe's broad white cloud streaks for the place picture (dark storm, spiral, ridge clouds).
+- Jupiter rise 3255: 0.623 at 1540, 392 on main, 0.552 with the first patch; its first frame laid on the body read 0.562 and 0.284; over 0.45 mostly within 160 px of the limb.
+- Venus dive 1282 + 1/2: 1.012 at 612, 132, in the band under the limb at the top of the frame, as in Mercury's and Neptune's dives. UNKNOWN what draws it; no crop of the limb was made.
 
-In the head comment after "a new texture in full.": "Where the later frame is enlarged on its way back (a rise), the two widths of the detail are that many times as wide: the flows know the place of its detail to about one of its own pixels." In `picturesText`, after "only where both have detail over <floor>": "; where the later picture is enlarged on its way back both widths are that many times as wide".
+### What is still wrong
+
+- Beyond z 5.3 nothing was measured. The full size of the farther frame is the finest picture there is; beyond 4 the band widens with the enlargement and the report says so.
+- The enlargement at one place lies up to 13 percent beside the true one in the made films, so the band printed beyond z 4 does as well.
+- A dive is read twice and its number is the larger. Where main's reading of the first frame stands, the band printed is that of main's window at that place (8 px times the shrink there), and the reading on the nearer frame is not printed beside it.
+- The second reading leaves out the ground that is not enlarged by 1.19 in the nearer frame; there the pair is read as on main.
 
 ## Proof with the options off
 
@@ -586,3 +600,4 @@ Draft stills `out/work/stills/f%05d-16x9-draft-full.png`, sha256, frames 360 (su
 - MAIL 591: the named-tree table of `globe-levels.py` and what is red in Mars's dive at 2449 (section 10, two new parts). Runs a to o and j on b83618ec in a scratch tree, the judge's own tool; nothing of it is in the repository's code.
 - Merged main 1c3da4b2 (6ecaad26). The turn of the body (section 11): the cap's vertex program turns by `uSpinTurn` from the page, and `exactSpin` gives the same pair to the fragment of the globe and of the cap. `npx vitest run`: 461 tests green, two new in `tests/globe-cap.test.ts` (one of text, one in the harness browser; the browser test fails on the old vertex program with widths 40 and 38 for 46). Options off: the 11 draft stills of the proof list, rendered at 6ecaad26 and at this tree, are byte equal, 11 of 11. Not rendered: a film frame with a cap (no stop on main draws one), and a frame with `exactSpin` on.
 - TASK 697, MAIL 704: merged main ed003c70 (226eec4e). Section 12: the pattern measure follows the enlargement of the carried frame (`enlarged`, `matched` in `tools/img/smooth.py`), made proofs in `tools/smooth/made.py` (`carried`, `spread`) and ten new tests in `tests/smooth.test.ts`. Nothing in `src/` is touched, so the frames of every stop stand. `npx vitest run` on the merge with the patch: 564 tests, 561 green; the three red ones are in `tests/weights.test.ts` ("no dive of the film leaves a sky over 24 frames and a picture over 12 to the engine any more") and are red on main ed003c70 alone as well (that file run in a clean tree: 6 of 9). `tests/smooth.test.ts` 68 of 68 in 156 s on a loaded machine, `tests/globe-cap.test.ts` 24 of 24 in the whole run.
+- MAIL 710 (d236): the first patch not taken; the cure that keeps the band (section 12, rewritten). Merged main dfdc58cf. `tools/img/smooth.py` (`carry`, `finer`, `sharper`, `band`, `readings`, `reading`; `matched` removed), `tools/smooth.ts` (`patternBand` printed), `tools/smooth/made.py` (`carried` on full size films), `tests/smooth.test.ts`. Nothing in `src/` is touched, so the frames of every stop stand.

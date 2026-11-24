@@ -487,96 +487,122 @@ describe('the pattern measure on made pictures, a judged area with a limb, a fra
   })
 })
 
-interface MadeMove { way: string; zoom: number; speed: number; before: number | null; now: number | null; shareBefore: number; share: number; same: boolean; grown: number | null }
-interface MadePart extends MadeMove { radius: number; inside: number; outside: number; over: number | null }
-interface MadeCarried { rigid: MadeMove[]; exchange: MadeMove[]; half: MadeMove[]; part: MadePart[]; through: { rigid: number; exchange: number } }
-interface MadeDraw { before: number; now: number }
-interface MadeSpread { seeds: number[]; exchange: Record<'3' | '4', MadeDraw[]>; half: Record<'3' | '4', MadeDraw[]> }
+interface MadeRead { main: number | null; mainShare: number; now: number | null; share: number | null; band: number | null; onward: number | null; back: number | null; same: boolean; grown: number | null }
+interface MadeRigid extends MadeRead { way: 'rise' | 'dive'; zoom: number }
+interface MadeExchange extends MadeRigid { width: number; weight: 'whole' | 'half' | 'cut' }
+interface MadeStill extends MadeRead { speed: number; weight: string }
+interface MadeThrough { pattern: number | null; band: number | null; at: [number, number] | null }
+interface MadeCarried { rigid: MadeRigid[]; exchange: MadeExchange[]; still: MadeStill[]; through: Record<'rise' | 'dive' | 'riseExchange' | 'diveExchange', MadeThrough> }
 
-describe('the pattern measure on made moves, the later frame carried back along its flows onto the earlier one', () => {
+describe('the pattern measure on made films at the full size, the pair read on the nearer of its two frames', () => {
   let c: MadeCarried
-  let s: MadeSpread
   const limit = config.raw.smooth.pictures.maxPattern
-  const run = (what: string): string => execFileSync('python3', [fileURLToPath(new URL('../tools/smooth/made.py', import.meta.url)), what], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 1 << 24 })
+  const zooms = [2, 3, 3.7, 4.4, 5.3]
   beforeAll(() => {
-    c = (JSON.parse(run('carried')) as { carried: MadeCarried }).carried
-    s = (JSON.parse(run('spread')) as { spread: MadeSpread }).spread
+    c = (JSON.parse(execFileSync('python3', [fileURLToPath(new URL('../tools/smooth/made.py', import.meta.url)), 'carried'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 1 << 24 })) as { carried: MadeCarried }).carried
   }, 900_000)
-  const rises = (): MadeMove[] => c.rigid.filter((x) => x.way === 'rise' && x.speed === 20)
-  const all = (): MadeMove[] => [...c.rigid, ...c.exchange, ...c.half, ...c.part]
-  const median = (v: number[]): number => [...v].sort((a, b) => a - b)[Math.floor(v.length / 2)]!
+  const rigid = (way: string): MadeRigid[] => c.rigid.filter((x) => x.way === way)
+  const exchange = (way: string, weight: string): MadeExchange[] => c.exchange.filter((x) => x.way === way && x.weight === weight)
 
-  it('reads a ground in which nothing changes under 0.1 at every speed and every shrink, rising and diving, whichever end is the sharp one', () => {
-    expect(c.rigid.map((x) => x.speed).filter((v, i, a) => a.indexOf(v) === i).sort((a, b) => a - b)).toEqual([5, 10, 20, 40, 80])
-    expect(rises().map((x) => x.zoom)).toEqual([1, 1.3, 2, 3, 4, 6, 8])
-    expect(c.rigid.filter((x) => x.way === 'rise soft').map((x) => x.zoom)).toEqual([3, 4])
-    expect(c.rigid.length).toBe(19)
-    for (const x of c.rigid) {
-      expect(x.share).toBeGreaterThan(0.02)
-      expect(x.now!).toBeLessThan(0.1)
+  it('reads a ground in which nothing changes under 0.15 on the nearer frame, rising and diving, at every shrink up to 5.3', () => {
+    expect(rigid('rise').map((x) => x.zoom)).toEqual(zooms)
+    expect(rigid('dive').map((x) => x.zoom)).toEqual(zooms)
+    for (const x of rigid('rise')) {
+      expect(x.share!).toBeGreaterThan(0.9)
+      expect(x.now!).toBeLessThan(0.15)
+    }
+    for (const x of rigid('dive')) expect(x.back!).toBeLessThan(0.15)
+  })
+
+  it('reads the diving ground in which nothing changes under 0.3: what the first frame read as the measure stood, on the part it could judge', () => {
+    for (const x of rigid('dive')) {
+      expect(x.now!).toBeLessThan(0.3)
+      expect(x.now).toBe(Math.max(x.main ?? 0, x.back!))
     }
   })
 
-  it('read the same ground higher the more the picture shrinks, and over the limit at 8 times, before the widths followed the carried frame', () => {
-    const before = rises().map((x) => x.before!)
-    for (let i = 1; i < before.length; i++) expect(before[i]!).toBeGreaterThan(before[i - 1]!)
-    expect(before[before.length - 1]!).toBeGreaterThan(limit)
-    expect(c.rigid.find((x) => x.way === 'rise soft' && x.zoom === 4)!.before!).toBeGreaterThan(0.1)
+  it('read the rising ground higher the more it shrinks, over the limit at 5.3, as long as the later frame was carried from the reduced picture', () => {
+    const main = rigid('rise').map((x) => x.main!)
+    for (let i = 1; i < main.length; i++) expect(main[i]!).toBeGreaterThan(main[i - 1]!)
+    expect(main[main.length - 1]!).toBeGreaterThan(limit)
   })
 
   it('reads from the flows how many times the carried frame is enlarged, within a tenth', () => {
-    for (const x of rises()) expect(Math.abs(x.grown! / x.zoom - 1)).toBeLessThan(0.1)
-    for (const x of c.rigid.filter((y) => y.way === 'dive')) expect(Math.abs(x.grown! * x.zoom - 1)).toBeLessThan(0.1)
+    for (const x of rigid('rise')) expect(Math.abs(x.grown! / x.zoom - 1)).toBeLessThan(0.1)
+    for (const x of rigid('dive')) expect(Math.abs(x.grown! * x.zoom - 1)).toBeLessThan(0.1)
   })
 
-  it('is the measure as it stood, every pixel of it, where the carried frame is not enlarged: no shrink, a pan, a dive', () => {
-    const still = all().filter((x) => x.way === 'dive' || x.way === 'pan' || x.zoom === 1)
-    expect(still.length).toBe(14)
-    for (const x of still) {
+  it('reads all detail finer than 16, 32 and 64 px exchanged over the window, and cut in one frame, over the limit at every shrink, rising and diving', () => {
+    for (const way of ['rise', 'dive']) {
+      expect(exchange(way, 'whole').map((x) => [x.zoom, x.width])).toEqual(zooms.flatMap((z) => [16, 32, 64].map((w) => [z, w])))
+      expect(exchange(way, 'cut').map((x) => [x.zoom, x.width])).toEqual(zooms.map((z) => [z, 16]))
+      for (const x of [...exchange(way, 'whole'), ...exchange(way, 'cut')]) expect(x.now!).toBeGreaterThan(limit)
+    }
+  })
+
+  it('reads the exchange of the finest detail in a dive only on the later frame: on the first one, as it stood, it reads under the limit or nothing', () => {
+    for (const x of exchange('dive', 'whole').filter((y) => y.width === 16)) {
+      expect(x.main ?? 0).toBeLessThan(limit)
+      expect(x.back!).toBeGreaterThan(limit)
+      expect(x.now).toBe(x.back)
+    }
+  })
+
+  it('reads half an exchange under the whole one, and higher the wider the detail that is exchanged', () => {
+    for (const z of zooms) {
+      const half = [16, 32, 64].map((w) => exchange('rise', 'half').find((x) => x.zoom === z && x.width === w)!.now!)
+      const whole = [16, 32, 64].map((w) => exchange('rise', 'whole').find((x) => x.zoom === z && x.width === w)!.now!)
+      for (let i = 0; i < 3; i++) expect(half[i]!).toBeLessThan(whole[i]!)
+      expect(half[0]!).toBeLessThan(half[1]!)
+      expect(half[1]!).toBeLessThan(half[2]!)
+      expect(half[2]!).toBeGreaterThan(limit)
+    }
+  })
+
+  it('is the measure as it stood, every pixel of it, without a shrink: still, panned, exchanged, cut', () => {
+    expect(c.still.map((x) => [x.speed, x.weight])).toEqual([[0, 'none'], [8, 'none'], [32, 'none'], [0, 'whole'], [8, 'whole'], [0, 'half'], [0, 'cut']])
+    for (const x of c.still) {
       expect(x.same).toBe(true)
-      expect(x.now).toBe(x.before)
-      expect(x.share).toBe(x.shareBefore)
+      expect(x.now).toBe(x.main)
+      expect(x.share).toBe(x.mainShare)
+      expect(x.back).toBeNull()
+      expect(Math.abs(x.band! - 8)).toBeLessThan(0.25)
     }
   })
 
-  it('judges as much of the frame as before under every made shrink, within 0.002', () => {
-    for (const x of all()) expect(Math.abs(x.share - x.shareBefore)).toBeLessThan(0.002)
-  })
-
-  it('reads a ground exchanged for another under the same move over 1, an unrelated pattern, at every shrink', () => {
-    expect(c.exchange.filter((x) => x.way === 'rise').map((x) => x.zoom)).toEqual([1, 1.3, 2, 3, 4, 8])
-    for (const x of c.exchange) expect(x.now!).toBeGreaterThan(x.way === 'rise' ? 1 : 2 * limit)
-  })
-
-  it('reads the exchange under a shrink by 3 and by 4, the middle one of seven seeds, no lower than the made swap without a move, and no draw under 1', () => {
-    const today = Math.min(...made().patterns.unrelated.map((x) => x.now))
-    expect(s.seeds).toEqual([697, 1, 2, 3, 4, 5, 6])
-    for (const z of ['3', '4'] as const) {
-      expect(median(s.exchange[z].map((x) => x.now))).toBeGreaterThanOrEqual(today)
-      for (const x of s.exchange[z]) expect(x.now).toBeGreaterThan(1)
+  it('leaves the first frame of a dive as the measure stood, every pixel of it, and never reads the pair lower', () => {
+    for (const x of [...rigid('dive'), ...c.exchange.filter((y) => y.way === 'dive')]) {
+      expect(x.same).toBe(true)
+      expect(x.onward).toBe(x.main)
+      if (x.main !== null) expect(x.now!).toBeGreaterThanOrEqual(x.main)
     }
   })
 
-  it('reads a dissolve half way under a shrink by 3 and by 4 at 0.5, the middle one of seven seeds, within 0.05; one draw can read under the limit', () => {
-    for (const z of ['3', '4'] as const) {
-      const now = s.half[z].map((x) => x.now)
-      expect(Math.abs(median(now) - 0.5)).toBeLessThan(0.05)
-      expect(Math.min(...now)).toBeGreaterThan(0.3)
-      expect(Math.min(...now)).toBeLessThan(limit)
+  it('names the band of each reading at its place: 8 px of the nearer frame while the full size of the farther one is fine enough, a quarter of the shrink times that beyond, and the shrink times 8 px where a dive is read on its first frame', () => {
+    for (const x of [...c.rigid, ...c.exchange]) {
+      const first = x.way === 'dive' && x.now === x.onward
+      const most = first ? 8 * x.zoom : 8 * Math.max(1, x.zoom / 4)
+      expect(x.band!).toBeGreaterThan(7.99)
+      expect(Math.abs(x.band! / most - 1)).toBeLessThan(first ? 0.1 : 0.2)
     }
+    expect(c.exchange.filter((x) => x.way === 'dive' && x.now === x.back).length).toBeGreaterThanOrEqual(15)
   })
 
-  it('reads the enlargement the same inside a part of the ground that is exchanged and beside it, and the part over the limit under a shrink by 3 and by 4', () => {
-    expect(c.part.map((x) => [x.zoom, x.radius])).toEqual([[1, 16], [1, 32], [3, 16], [3, 32], [4, 16], [4, 32]])
-    for (const x of c.part) {
-      expect(Math.abs(x.inside / x.outside - 1)).toBeLessThan(0.03)
-      if (x.zoom > 1) expect(x.now!).toBeGreaterThan(limit)
+  it('reads the same through the pictures part, from files, and gives the band there', () => {
+    expect(c.through.rise.pattern!).toBeLessThan(0.15)
+    expect(c.through.dive.pattern!).toBeLessThan(0.3)
+    expect(c.through.riseExchange.pattern!).toBeGreaterThan(limit)
+    expect(c.through.diveExchange.pattern!).toBeGreaterThan(limit)
+    expect(Math.abs(c.through.dive.band! / (8 * 4.4) - 1)).toBeLessThan(0.1)
+    for (const x of [c.through.rise, c.through.riseExchange, c.through.diveExchange]) {
+      expect(x.band!).toBeGreaterThan(7.99)
+      expect(x.band!).toBeLessThan(10.6)
     }
-  })
-
-  it('reads both through the pictures part, from files', () => {
-    expect(c.through.rigid).toBeLessThan(0.1)
-    expect(c.through.exchange).toBeGreaterThan(1)
+    for (const x of Object.values(c.through)) {
+      expect(x.at![0]).toBeGreaterThanOrEqual(0)
+      expect(x.at![0]).toBeLessThan(960)
+      expect(x.at![1]).toBeLessThan(540)
+    }
   })
 })
 
