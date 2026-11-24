@@ -271,6 +271,7 @@ uniform vec3 uR0;
 uniform float uGain;
 uniform float uVignette;
 uniform float uAspect;
+uniform float uUnder;
 uniform int uDiag;
 in vec3 vDir;
 in vec3 vClip;
@@ -285,7 +286,7 @@ void main() {
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = vec4(col, 0.0);
-  if (uDiag >= 2 || eps <= 0.0) discard;
+  if (uDiag >= 2 || eps <= -uUnder) discard;
 }`
 
 export class Glow {
@@ -300,7 +301,7 @@ export class Glow {
       fragmentShader: HALO_FRAG,
       uniforms: {
         uHalo: { value: halo }, uHaloSize: { value: new THREE.Vector2().fromArray(j.haloSize) }, uNadir: { value: new THREE.Vector3(0, -1, 0) }, uAlpha: { value: 1.4 }, uEpsMax: { value: j.epsMax }, uPsiMax: { value: j.psiMax },
-        uF0: { value: new THREE.Vector3().fromArray(j.f0) }, uR0: { value: new THREE.Vector3().fromArray(j.r0) }, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diagUniform,
+        uF0: { value: new THREE.Vector3().fromArray(j.f0) }, uR0: { value: new THREE.Vector3().fromArray(j.r0) }, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uUnder: { value: 0 }, uDiag: diagUniform,
       },
       side: THREE.BackSide,
       blending: THREE.AdditiveBlending,

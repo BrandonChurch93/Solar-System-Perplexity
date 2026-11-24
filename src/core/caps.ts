@@ -18,6 +18,8 @@ export function needs(assets: string, formatId: string): Needs {
       MAX_TEXTURE_SIZE: Math.max(set.wrapMapWidth, set.reliefWidth, set.skyWidth, picture),
       MAX_RENDERBUFFER_SIZE: picture,
       MAX_TEXTURE_IMAGE_UNITS: 16,
+      MAX_VERTEX_TEXTURE_IMAGE_UNITS: 10,
+      MAX_COMBINED_TEXTURE_IMAGE_UNITS: 26,
       MAX_VERTEX_ATTRIBS: 8,
     },
   }

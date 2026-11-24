@@ -2,7 +2,8 @@ import * as THREE from 'three'
 import { config, type Segment } from '../config'
 import { forcedWord, handoverOf, type Handover } from '../director/handover'
 import { handoverChanges, segmentAtFrame } from '../director/timeline'
-import { sampleCount, shutterMid, shutterOffset } from './sampler'
+import { clockStamp, shutterSpan, spanMid, wholeFrame } from './clock'
+import { sampleCount, shutterOffset } from './sampler'
 import type { SetState, Shot, ViewKind } from './types'
 
 export interface ShotSource { shotAt(frame: number, time: number, side?: ViewKind): Shot }
@@ -106,8 +107,8 @@ const REFINE = 2
 // the dissolve window on both sides, the larger one. The sides are named there, so this never asks which side a time takes.
 function motionOver(source: ShotSource, frame: number, split: boolean, from: number, to: number): number {
   const at = (offset: number, side?: ViewKind): Shot => source.shotAt(frame, (frame + offset) / config.fps, side)
-  if (split) return Math.max(...SIDES.map((side) => rawMotion(at(from, side), at(shutterMid(), side), at(to, side))))
-  return rawMotion(at(from), at(shutterMid()), at(to))
+  if (split) return Math.max(...SIDES.map((side) => rawMotion(at(from, side), at(spanMid(), side), at(to, side))))
+  return rawMotion(at(from), at(spanMid()), at(to))
 }
 
 // E6, the capped shutter (decision d129). One steady move of a factor of a hundred in ninety frames changes scale by 6 to 14 percent a frame, so
@@ -125,9 +126,10 @@ function motionOver(source: ShotSource, frame: number, split: boolean, from: num
 // the sample count follows the blur that results. A frame that is not capped keeps its full shutter, so the seams stay as they are.
 interface Cap { stamp: string; raw: Map<number, number>; scale: Map<number, number> }
 const caps = new WeakMap<ShotSource, Cap>()
+const CAP_KEPT = 1 << 15
 
 function capOf(source: ShotSource): Cap {
-  const stamp = handoverChanges() + '|' + config.raw.handover.maxBlurPx + '|' + config.raw.handover.blurEaseFrames + '|' + config.raw.handover.minShutter + '|' + forcedWord()
+  const stamp = handoverChanges() + '|' + config.raw.handover.maxBlurPx + '|' + config.raw.handover.blurEaseFrames + '|' + config.raw.handover.minShutter + '|' + forcedWord() + '|' + clockStamp()
   let cap = caps.get(source)
   if (!cap || cap.stamp !== stamp) {
     cap = { stamp, raw: new Map(), scale: new Map() }
@@ -136,10 +138,15 @@ function capOf(source: ShotSource): Cap {
   return cap
 }
 
+function inWindow(frame: number, h: Handover): boolean {
+  const whole = wholeFrame(frame)
+  return whole >= h.firstFrame && whole <= h.lastFrame
+}
+
 function fullMotion(cap: Cap, source: ShotSource, frame: number, h: Handover): number {
   let raw = cap.raw.get(frame)
   if (raw === undefined) {
-    raw = motionOver(source, frame, frame >= h.firstFrame && frame <= h.lastFrame, 0, config.shutterFraction)
+    raw = motionOver(source, frame, inWindow(frame, h), 0, shutterSpan())
     cap.raw.set(frame, raw)
   }
   return raw
@@ -181,6 +188,10 @@ export function shutterScale(source: ShotSource, frame: number): number {
   const cap = capOf(source)
   let scale = cap.scale.get(frame)
   if (scale === undefined) {
+    if (cap.scale.size >= CAP_KEPT) {
+      cap.scale.clear()
+      cap.raw.clear()
+    }
     const raw = fullMotion(cap, source, frame, own.h)
     const allowed = blurAllowed(source, frame)
     scale = 1
@@ -189,7 +200,7 @@ export function shutterScale(source: ShotSource, frame: number): number {
       // Where a move starts or ends inside the shutter the motion is not even across it, and allowed / raw alone leaves a little more or less than
       // the allowed blur (3.6 percent more at the worst frame of the film). So the share is corrected by what is measured across the shortened
       // shutter itself.
-      const split = frame >= own.h.firstFrame && frame <= own.h.lastFrame
+      const split = inWindow(frame, own.h)
       for (let i = 0; i < REFINE; i++) {
         const left = motionOver(source, frame, split, shutterOffset(0, scale), shutterOffset(1, scale))
         if (!(left > 0)) break
@@ -210,15 +221,15 @@ export function framePlan(source: ShotSource, frame: number, tier: string): Fram
   const at = (offset: number, side?: ViewKind): Shot => source.shotAt(frame, (frame + offset) / config.fps, side)
   const h = segment.kind === 'dive' || segment.kind === 'rise' ? handoverOf(segment.stop, segment.kind) : null
   if (h) {
-    const split = frame >= h.firstFrame && frame <= h.lastFrame
-    const raw = motionOver(source, frame, split, 0, config.shutterFraction)
+    const split = inWindow(frame, h)
+    const raw = motionOver(source, frame, split, 0, shutterSpan())
     const shutter = shutterScale(source, frame)
     const left = shutter === 1 ? raw : motionOver(source, frame, split, shutterOffset(0, shutter), shutterOffset(1, shutter))
-    const seen = split ? left : left * seenShare(at(shutterMid()))
+    const seen = split ? left : left * seenShare(at(spanMid()))
     return { samples: cap <= base ? base : samplesNeeded(base, cap, seen), raw, seen, soft: 0, split, shutter }
   }
-  const mid = at(shutterMid())
-  const raw = rawMotion(at(0), mid, at(config.shutterFraction))
+  const mid = at(spanMid())
+  const raw = rawMotion(at(0), mid, at(shutterSpan()))
   const seen = raw * seenShare(mid)
   return { samples: cap <= base ? base : samplesNeeded(base, cap, seen), raw, seen, soft: softness(raw), split: false, shutter: 1 }
 }
