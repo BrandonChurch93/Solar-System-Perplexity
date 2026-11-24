@@ -1,9 +1,33 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-24T15:46:39.173Z",
- "head": "97c902c48bfad4ddcaba05f5c34b94f2acac621f",
- "note": "trials on 97c902c4: band off, haze off, show late, fine tone; the far red is the two looks of the plates meeting at the edge of the frame of T; the 0.65 of the rise is the show mix in the dark",
+ "pushed": "2026-11-24T16:10:37.419Z",
+ "head": "61f2fba5fb4a8583507f7b697b2ec483428f0ba9",
+ "note": "far zone trial on the dive: wedge edge softer, 12 capture frames over the pattern limit down to 8, not committed",
  "looks": [
+  {
+   "time": "2026-11-24T16:10:36.792Z",
+   "file": "20261124161036792-note-far-vs-w-2.jpg",
+   "source": "../../../../tmp/v/far-vs-w-2.jpg",
+   "kind": "note",
+   "label": "Trial of the far zone cure, 1330 and 1334: left as committed, right with the step of light carried round",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T16:10:36.187Z",
+   "file": "20261124161036187-note-far-vs-w-1.jpg",
+   "source": "../../../../tmp/v/far-vs-w-1.jpg",
+   "kind": "note",
+   "label": "Trial of the far zone cure, 1322 and 1326: left as committed, right with the step of light carried round",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T16:10:35.302Z",
+   "file": "20261124161035302-note-tframe.jpg",
+   "source": "../../../../tmp/v/tframe.jpg",
+   "kind": "note",
+   "label": "The frame of the surface camera laid on the ground at 1322: its right border is the straight wedge edge",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T15:46:38.554Z",
    "file": "20261124154638554-note-looks2-a.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/v/chg-rise-W.jpg",
    "kind": "note",
    "label": "H3 on the merge, rise pattern panel of the new measure",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T14:55:14.913Z",
-   "file": "20261124145514913-note-chg-dive-W.jpg",
-   "source": "../../../../tmp/v/chg-dive-W.jpg",
-   "kind": "note",
-   "label": "H3 on the merge, dive pattern panel of the new measure, most 0.57 at 1322",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T14:55:13.909Z",
-   "file": "20261124145513909-note-far-dive-W2.jpg",
-   "source": "../../../../tmp/v/far-dive-W2.jpg",
-   "kind": "note",
-   "label": "H3 on the merge, dive 1320 to 1330 upper right: the far band of the plates goes pale under the haze",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T14:27:13.454Z",
-   "file": "20261124142713454-note-s1578.jpg",
-   "source": "../../../../tmp/v/hw/s1578.jpg",
-   "kind": "note",
-   "label": "Chain W: rise 1578 to 1593. The glow of the limb comes over the horizon with its ground",
    "stop": "venus"
   }
  ]
