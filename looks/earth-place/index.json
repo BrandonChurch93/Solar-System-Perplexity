@@ -1,9 +1,57 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T19:16:52.313Z",
- "head": "771717afb203199cfaab2e2b196a0da197e01e8f",
- "note": "trial v3: one weight by height, softer law; rise in place level -2.44 into 2130 draft; flat ground class -4.54; next a veil weight of its own",
+ "pushed": "2026-11-24T19:46:38.796Z",
+ "head": "3ee4c777137099f746f585cd24a347c5870286f1",
+ "note": "trial T: detail and haze on two shares by the eye's height; rise in place level -2.26 into 2137 draft, flat ground class -3.9 to -4.2; dive +1.8 a frame; proof runs next",
  "looks": [
+  {
+   "time": "2026-11-24T19:46:38.030Z",
+   "file": "20261124194638030-note-t1-rise-centre.jpg",
+   "source": "../../../../tmp/gl/s15/t1-rise-centre.jpg",
+   "kind": "note",
+   "label": "trial T (haze on a share of its own by height), draft, not committed: t1-rise-centre",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T19:46:37.425Z",
+   "file": "20261124194637425-note-t1-dive-b.jpg",
+   "source": "../../../../tmp/gl/s15/t1-dive-b.jpg",
+   "kind": "note",
+   "label": "trial T (haze on a share of its own by height), draft, not committed: t1-dive-b",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T19:46:36.800Z",
+   "file": "20261124194636800-note-t1-dive-a.jpg",
+   "source": "../../../../tmp/gl/s15/t1-dive-a.jpg",
+   "kind": "note",
+   "label": "trial T (haze on a share of its own by height), draft, not committed: t1-dive-a",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T19:46:36.208Z",
+   "file": "20261124194636208-note-t1-rise-c.jpg",
+   "source": "../../../../tmp/gl/s15/t1-rise-c.jpg",
+   "kind": "note",
+   "label": "trial T (haze on a share of its own by height), draft, not committed: t1-rise-c",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T19:46:35.618Z",
+   "file": "20261124194635618-note-t1-rise-b.jpg",
+   "source": "../../../../tmp/gl/s15/t1-rise-b.jpg",
+   "kind": "note",
+   "label": "trial T (haze on a share of its own by height), draft, not committed: t1-rise-b",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T19:46:35.006Z",
+   "file": "20261124194635006-note-t1-rise-a.jpg",
+   "source": "../../../../tmp/gl/s15/t1-rise-a.jpg",
+   "kind": "note",
+   "label": "trial T (haze on a share of its own by height), draft, not committed: t1-rise-a",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T19:16:51.355Z",
    "file": "20261124191651355-note-v2-dive-centre.jpg",
@@ -50,54 +98,6 @@
    "source": "../../../../tmp/gl/s14/v2-rise-c.jpg",
    "kind": "note",
    "label": "trial v2 (weight by height only, logistic in ln height), draft: v2-rise-c",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T18:57:13.925Z",
-   "file": "20261124185713925-note-v2-rise-b.jpg",
-   "source": "../../../../tmp/gl/s14/v2-rise-b.jpg",
-   "kind": "note",
-   "label": "trial v2 (weight by height only, logistic in ln height), draft: v2-rise-b",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T18:57:13.191Z",
-   "file": "20261124185713191-note-v2-rise-a.jpg",
-   "source": "../../../../tmp/gl/s14/v2-rise-a.jpg",
-   "kind": "note",
-   "label": "trial v2 (weight by height only, logistic in ln height), draft: v2-rise-a",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T18:29:16.480Z",
-   "file": "20261124182916480-note-c1.jpg",
-   "source": "../../../../tmp/gl/s14/w/c1.jpg",
-   "kind": "note",
-   "label": "sketch W, deck as standing sheets, Python only: slabs and holes, dropped",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T18:29:15.908Z",
-   "file": "20261124182915908-note-rise-n4-2112-2131.jpg",
-   "source": "../../../../tmp/gl/s14/rise-n4-2112-2131.jpg",
-   "kind": "note",
-   "label": "1f3e0bd5 rise 2112 to 2131 every frame: the veil lifts 2119 to 2127 (MAIL 719)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T18:29:15.327Z",
-   "file": "20261124182915327-note-v1-dive-centre.jpg",
-   "source": "../../../../tmp/gl/s14/v1-dive-centre.jpg",
-   "kind": "note",
-   "label": "trial v1 (top) against 1f3e0bd5 (bottom), native crop at frame centre 1866 to 1876",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T18:29:14.589Z",
-   "file": "20261124182914589-note-v1-dive-a.jpg",
-   "source": "../../../../tmp/gl/s14/v1-dive-a.jpg",
-   "kind": "note",
-   "label": "trial v1, dive 1866 to 1896 every second frame: haze patch and streak come in 1870 to 1880",
    "stop": "earth"
   }
  ]
