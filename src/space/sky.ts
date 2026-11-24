@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { bufferFrame } from '../core/frame'
 import { Pass } from '../core/pass'
 import { stream } from '../core/random'
 import { tileRects, type Tiles } from '../core/tiles'
@@ -939,7 +940,7 @@ export class Sky {
   private orderStars(camera: THREE.PerspectiveCamera, height: number, aspect: number, tiles: Tiles | null): void {
     const m = this.starView.setFromMatrix4(this.m4.makeRotationFromQuaternion(this.q.copy(camera.quaternion).invert().multiply(this.stars.quaternion))).elements
     const p = camera.projectionMatrix.elements
-    const half = STAR_MAX_SIZE * 0.5 * height / 1080 + STAR_CULL_PAD_PX
+    const half = STAR_MAX_SIZE * 0.5 * bufferFrame() + STAR_CULL_PAD_PX
     const limX = 1 + (half + Math.ceil(Math.abs(p[8]!) * height * aspect * 0.5)) * 2 / (height * aspect)
     const limY = 1 + (half + Math.ceil(Math.abs(p[9]!) * height * 0.5)) * 2 / height
     const key = this.starKey
@@ -1103,7 +1104,7 @@ export class Sky {
     const far = this.stripDef
     const small = far && sun.glare > 0 && sun.angularRadius * perRad < far.sun.radiusPx ? THREE.MathUtils.smoothstep(sun.glare, far.sun.glare[0]!, far.sun.glare[1]!) : 0
     ;(u.uSunSmall!.value as THREE.Vector2).set(small, perRad)
-    u.uPixel!.value = height / 1080
+    u.uPixel!.value = bufferFrame()
     this.v3.copy(sun.dir).applyQuaternion(this.q2.copy(skyQuaternion).invert())
     const ahead = this.v3.z < 0
     this.v3.applyMatrix4(camera.projectionMatrix)
@@ -1131,7 +1132,7 @@ export class Sky {
     su.uSky!.value = this.texture
     su.uBand!.value = this.band
     su.uHasSky!.value = this.texture ? 1 : 0
-    su.uPixel!.value = height / 1080
+    su.uPixel!.value = bufferFrame()
     su.uExposure!.value = exposure
     su.uGlow!.value = glow
     su.uHalo!.value = swap > 0 ? STAR_HALO + (this.flightHalo.value - STAR_HALO) * swap : STAR_HALO
@@ -1139,20 +1140,20 @@ export class Sky {
     su.uPatchB!.value = this.patchTex[1]
     this.stars.geometry = this.cull ? this.starCulled : this.starPlain
     const fu = (this.flight.material as THREE.ShaderMaterial).uniforms
-    fu.uPixel!.value = height / 1080
+    fu.uPixel!.value = bufferFrame()
     fu.uExposure!.value = this.flightLevel
     fu.uPatchA!.value = this.patchTex[0]
     fu.uPatchB!.value = this.patchTex[1]
     this.flight.visible = this.flightLevel > 0 && this.flight.geometry.hasAttribute('position')
     const du = (this.deep.material as THREE.ShaderMaterial).uniforms
-    du.uPixel!.value = height / 1080
+    du.uPixel!.value = bufferFrame()
     du.uExposure!.value = this.flightLift * this.deepLevel
     ;(du.uLens!.value as THREE.Vector3).set(vignette, aspect, this.deepLens)
     du.uPatchA!.value = this.patchTex[0]
     du.uPatchB!.value = this.patchTex[1]
     this.deep.visible = this.flightLift > 0 && this.deepLevel > 0 && this.deep.geometry.hasAttribute('position')
     const tu = (this.strip.material as THREE.ShaderMaterial).uniforms
-    tu.uPixel!.value = height / 1080
+    tu.uPixel!.value = bufferFrame()
     tu.uExposure!.value = exposure * glow * flightSwap(swap, this.stripDef ? this.stripDef.stars.lead : 1)
     tu.uLift!.value = this.flightLift
     tu.uSky!.value = this.texture
