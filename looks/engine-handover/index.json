@@ -1,9 +1,54 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T05:02:14.366Z",
- "head": "aff3760a7357b74f9669c40058848630129cbfbe",
- "note": "seam tool committed (f2a9ec57): the d196 dent table on the drawn camera; Earth has no dent, Saturn's rise measured; next Mars's bend numbers",
+ "pushed": "2026-11-24T05:34:06.624Z",
+ "head": "558db828149fa63f3fc84af90852fe009eb5913a",
+ "note": "the bend: an engine option proven on Mars (lowest 1.05, judge green); Mars's own tree read: its bend holds (1.025), but its close set's border shows 2683 to 2687 and the change of view at 2688 is a cut",
  "looks": [
+  {
+   "time": "2026-11-24T05:34:05.967Z",
+   "file": "20261124053405967-note-mars-7.jpg",
+   "source": "../../../../tmp/bend/mars-7.png",
+   "kind": "note",
+   "label": "Mars's own tree dd1ddb9c, draft, frames 2667 to 2675: its bend through the seam at 2670, no frame stands out",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T05:34:05.343Z",
+   "file": "20261124053405343-note-mars-8.jpg",
+   "source": "../../../../tmp/bend/mars-8.png",
+   "kind": "note",
+   "label": "Mars's own tree dd1ddb9c, draft, rise frames 2676 to 2684: the pale wedge enters at 2683",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T05:34:04.671Z",
+   "file": "20261124053404671-note-mars-T.jpg",
+   "source": "../../../../tmp/bend/mars-T.png",
+   "kind": "note",
+   "label": "Mars's own tree dd1ddb9c (its bend, no place picture), draft, rise frames 2685 to 2690: the border of the close set stands in the frame from 2683 to 2687, and 2687 to 2688 (the change of view) is a cut between two pictures that differ",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T05:25:18.408Z",
+   "file": "20261124052518408-note-before-2.jpg",
+   "source": "../../../../tmp/bend/before-2.png",
+   "kind": "note",
+   "label": "the same tree without a bend, frames 2678 to 2686: the ground fills the frame to 2686 (the eye stopped at 2671)"
+  },
+  {
+   "time": "2026-11-24T05:25:17.390Z",
+   "file": "20261124052517390-note-after-8.jpg",
+   "source": "../../../../tmp/bend/after-8.png",
+   "kind": "note",
+   "label": "the same, frames 2678 to 2686: the eye no longer stops, so the rise is further along and from 2682 the border of the close set stands in the frame (pale wedge)"
+  },
+  {
+   "time": "2026-11-24T05:25:16.706Z",
+   "file": "20261124052516706-note-after-7.jpg",
+   "source": "../../../../tmp/bend/after-7.png",
+   "kind": "note",
+   "label": "the engine bend on Mars's tree of 04:37 (60 frames, track to the right, turn 170), draft, frames 2669 to 2677: the seam at 2670, no frame stands out"
+  },
   {
    "time": "2026-11-24T05:02:13.672Z",
    "file": "20261124050213672-note-seam-all.jpg",
@@ -18,57 +63,6 @@
    "kind": "note",
    "label": "MAIL 518: the eye's speed over its height across the seam into Mars's rise, rate 2, three trees (a chart, no render)",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T04:18:04.190Z",
-   "file": "20261124041804190-note-m-jupiter-full.jpg",
-   "source": "../../../../tmp/lift/m-jupiter-full.png",
-   "kind": "note",
-   "label": "Jupiter rise on the merged tree with the stars lift by height, draft tier, full frames",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T04:18:03.129Z",
-   "file": "20261124041803129-note-mba-jupiter-sky.jpg",
-   "source": "../../../../tmp/lift/mba-jupiter-sky.png",
-   "kind": "note",
-   "label": "Jupiter rise 3275 to 3281 at the draft tier: main above, the stars lift by height below. The grey veil 3277 to 3280 is on both: the stop's own sky",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T03:54:27.421Z",
-   "file": "20261124035427421-note-m-jupiter-sky.jpg",
-   "source": "../../../../tmp/lift/m-jupiter-sky.png",
-   "kind": "note",
-   "label": "star lift by height on the merged tree, Jupiter sky crop consecutive 3270 to 3283, draft",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T03:54:27.396Z",
-   "file": "20261124035427396-compare-liftmerged-mercury-rise-sides.jpg",
-   "source": "out/work/handover/liftmerged-mercury-rise-sides.png",
-   "kind": "compare",
-   "label": "mercury rise, both sides at T (frame 977) and their difference times 8",
-   "stop": "mercury",
-   "segment": "mercury.rise",
-   "frame": 977,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T03:54:26.846Z",
-   "file": "20261124035426846-note-m-mercury-run.jpg",
-   "source": "../../../../tmp/lift/m-mercury-run.png",
-   "kind": "note",
-   "label": "star lift by height on the merged tree, Mercury consecutive 996 to 1002, draft",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T03:54:26.231Z",
-   "file": "20261124035426231-note-m-mercury.jpg",
-   "source": "../../../../tmp/lift/m-mercury.png",
-   "kind": "note",
-   "label": "star lift by height on the merged tree, Mercury rise on its new base 984 to 1026 every 6, draft",
-   "stop": "mercury"
   }
  ]
 }
