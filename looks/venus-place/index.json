@@ -1,9 +1,25 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-24T05:20:31.623Z",
+ "pushed": "2026-11-24T05:28:34.644Z",
  "head": "63f62b9785e5ce3fe0e651e08d95a07287ea8c44",
- "note": "Rise 1530 to 1604 every frame on the tree for the NAMED commit; finals 1185 and 1440 equal bytes to the kept stills; G13 view dive worst 0.75 percent, rise 0.04 percent",
+ "note": "05:33 chain G: the top of the frame round T in both moves at full size; smooth whole still running",
  "looks": [
+  {
+   "time": "2026-11-24T05:28:33.913Z",
+   "file": "20261124052833913-note-c1543-top.jpg",
+   "source": "../../../../tmp/v/hg/c1543-top.jpg",
+   "kind": "note",
+   "label": "rise 1543 to 1553, top right at full size, draft, tree of chain G on main 8fb9ba9b",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T05:28:32.992Z",
+   "file": "20261124052832992-note-c1336-top.jpg",
+   "source": "../../../../tmp/v/hg/c1336-top.jpg",
+   "kind": "note",
+   "label": "dive 1336 to 1342, top right at full size, draft, tree of chain G on main 8fb9ba9b",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T05:20:30.674Z",
    "file": "20261124052030674-note-c1604.jpg",
@@ -51,34 +67,6 @@
    "kind": "note",
    "label": "rise 1530 on, main 8fb9ba9b merged, corners wired, ground on the globe",
    "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T05:19:15.368Z",
-   "file": "20261124051915368-frame-f01605.jpg",
-   "source": "out/work/venus/place/same/g1/f01605.png",
-   "kind": "frame",
-   "label": "venus.travel frame 1605, draft tier",
-   "stop": "venus",
-   "segment": "venus.travel",
-   "frame": 1605,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "fd4d9ed09bb2cc10"
-  },
-  {
-   "time": "2026-11-24T05:18:12.385Z",
-   "file": "20261124051812385-frame-f01350.jpg",
-   "source": "out/work/venus/place/same/g1/f01350.png",
-   "kind": "frame",
-   "label": "venus.terrain frame 1350, draft tier",
-   "stop": "venus",
-   "segment": "venus.terrain",
-   "frame": 1350,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "fd4d9ed09bb2cc10"
   }
  ]
 }
