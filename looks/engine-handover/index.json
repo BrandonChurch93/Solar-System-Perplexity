@@ -1,9 +1,19 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T13:26:32.054Z",
- "head": "df37b40843257e1ed26c5aef8953b2ce30113314",
- "note": "the body step in place: the report tool's pictures of the worst pairs on main's Jupiter rise and Earth rise, prototype panels on Mars; main merged, the chain runs",
+ "pushed": "2026-11-24T13:48:25.233Z",
+ "head": "f3b505a90d06dc1f8f05526572c37efeb41a1d30",
+ "note": "The body step in place as a tools only commit: Jupiter's rise run again on the merged main, the same numbers (body's mean 5.42 into 3301, in place 4.07 into 3281); the two pair pictures",
  "looks": [
+  {
+   "time": "2026-11-24T13:47:54.327Z",
+   "file": "20261124134754327-compare-jupiter-rise-step-in-place.jpg",
+   "source": "out/work/handover/jupiter-rise-step-in-place.png",
+   "kind": "compare",
+   "label": "jupiter rise, the largest step of the level in place (4.07): frame 3280, frame 3281, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3281
+  },
   {
    "time": "2026-11-24T13:26:31.387Z",
    "file": "20261124132631387-note-mars-rise-2713.jpg",
@@ -37,16 +47,6 @@
    "stop": "earth",
    "segment": "earth.rise",
    "frame": 2124
-  },
-  {
-   "time": "2026-11-24T13:14:10.703Z",
-   "file": "20261124131410703-compare-jupiter-rise-step-in-place.jpg",
-   "source": "out/work/handover/jupiter-rise-step-in-place.png",
-   "kind": "compare",
-   "label": "jupiter rise, the largest step of the level in place (4.07): frame 3280, frame 3281, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3281
   },
   {
    "time": "2026-11-24T13:04:29.212Z",
