@@ -1,9 +1,16 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T18:50:08.983Z",
+ "pushed": "2026-11-24T19:22:47.340Z",
  "head": "bc97f0c337218f40b3a0f8b3f0c54a426627d036",
- "note": "item 19 (fine dark grain of the near rings): the shutter's part measured by heading, the field's part by dark grooves at the wide octaves; item 20 (the limb haze) in trial",
+ "note": "round 44 list read: solving the pose of 3720 again against the approved close, then the dark inner ring and the fine grain field",
  "looks": [
+  {
+   "time": "2026-11-24T19:22:46.726Z",
+   "file": "20261124192246726-note-look_3720_t10_pair.jpg",
+   "source": "../../../../tmp/v/t17/look_3720_t10_pair.png",
+   "kind": "note",
+   "label": "3720 beside the approved close (left approved, right the tree before round 44's list): start of the new pose work"
+  },
   {
    "time": "2026-11-24T18:50:08.389Z",
    "file": "20261124185008389-note-b9c_r2.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/v/t17/w9c_ur.png",
    "kind": "note",
    "label": "3720 globe, approved left, trial T9c right: item 18, the night side is dark now and the terminator narrower; the limb halo is still orange and wide (item 20)"
-  },
-  {
-   "time": "2026-11-24T17:50:05.153Z",
-   "file": "20261124175005153-note-w9g_ur.jpg",
-   "source": "../../../../tmp/v/t17/w9g_ur.png",
-   "kind": "note",
-   "label": "3720 globe upper right at full size: approved left, film right; night side brown 26,19,12 against 11,12,12 and a wider terminator (item 18, in work); the globe larger and further right (camera of 3720, needs a ruling)"
   }
  ]
 }
