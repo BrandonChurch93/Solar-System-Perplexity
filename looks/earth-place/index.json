@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T23:35:20.880Z",
- "head": "811a508940b4e42d05de0ace894ea0e19aeaeb99",
- "note": "811a5089: draft rise 2100 to 2176 and dive 1892 to 1915 every frame; the place still arrives as a region by height (K4 not built); hold 0 px with the d253 edit",
+ "pushed": "2026-11-24T23:51:15.232Z",
+ "head": "d00366598a0f0e83b0e47f6a8671cabe3355b9b3",
+ "note": "d0036659 named: level rule counts the full set in both sets; web against full 2155 mean 0.88; sizes differ at the place up to 7.91 in local mean, named",
  "looks": [
+  {
+   "time": "2026-11-24T23:51:14.315Z",
+   "file": "20261124235114315-note-sg-sizes-1866.jpg",
+   "source": "../../../../tmp/gl/s21/sg-sizes-1866.jpg",
+   "kind": "note",
+   "label": "1866 signed difference of the sizes, blur 8 px, times 16: blots at the place up to 7.91",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T23:51:13.549Z",
+   "file": "20261124235113549-note-sets-2155.jpg",
+   "source": "../../../../tmp/gl/s21/sets-2155.jpg",
+   "kind": "note",
+   "label": "2155 web left, full right, draft, d0036659: mean difference 0.88 (was 4.97 on wf1)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-24T23:51:12.565Z",
+   "file": "20261124235112565-note-d253-1866.jpg",
+   "source": "../../../../tmp/gl/s21/d253-1866.jpg",
+   "kind": "note",
+   "label": "d253: dive frame 1866 in both sets at both sizes, draft, d0036659",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T23:35:20.304Z",
    "file": "20261124233520304-note-sh-1904-1915.jpg",
@@ -74,30 +98,6 @@
    "source": "../../../../tmp/gl/s20/sh-1880-1891.jpg",
    "kind": "note",
    "label": "811a5089 draft dive 1880-1891, every frame",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T23:15:44.462Z",
-   "file": "20261124231544462-note-sh-1868-1879.jpg",
-   "source": "../../../../tmp/gl/s20/sh-1868-1879.jpg",
-   "kind": "note",
-   "label": "811a5089 draft dive 1868-1879, every frame",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T23:15:43.366Z",
-   "file": "20261124231543366-note-sh-1830-1843.jpg",
-   "source": "../../../../tmp/gl/s20/sh-1830-1843.jpg",
-   "kind": "note",
-   "label": "811a5089 draft dive 1830-1843, every frame",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T22:53:44.408Z",
-   "file": "20261124225344408-note-sh-d1.jpg",
-   "source": "../../../../tmp/gl/s20/sh-d1.jpg",
-   "kind": "note",
-   "label": "ten dive frames with the new level rule, draft tier",
    "stop": "earth"
   }
  ]
