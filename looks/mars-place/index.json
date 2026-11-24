@@ -1,9 +1,41 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-24T11:31:27.279Z",
- "head": "770a9b777d3499770dc458994c2ee24c501d0213",
- "note": "Third commit 770a9b77 pushed and NAMED sent: turn by height, plates made from the level under them, thinner ground haze; dissolve between two looks and G13 still red",
+ "pushed": "2026-11-24T13:43:25.029Z",
+ "head": "b8c0def04b45940b252ab06e35b40a4a8796b913",
+ "note": "diagnosis of the exchange between plates and close ground, before the plate cure",
  "looks": [
+  {
+   "time": "2026-11-24T13:43:24.375Z",
+   "file": "20261124134324375-note-lay-vs-plate.jpg",
+   "source": "out/work/place/see/lay-vs-plate.jpg",
+   "kind": "note",
+   "label": "the picture laid back against the baked plate: they agree only near the foot",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T13:43:23.752Z",
+   "file": "20261124134323752-note-pat-pairs.jpg",
+   "source": "out/work/place/see/pat-pairs.jpg",
+   "kind": "note",
+   "label": "pattern measure between globe ground alone and close ground alone at 2466, 2470, 2686, 2476",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T13:43:23.135Z",
+   "file": "20261124134323135-note-pair-2462.jpg",
+   "source": "out/work/place/see/pair-2462.jpg",
+   "kind": "note",
+   "label": "dive 2462: the close ground alone from higher up smears, so the cure is in the plates",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-24T13:43:22.072Z",
+   "file": "20261124134322072-note-pair-2466.jpg",
+   "source": "out/work/place/see/pair-2466.jpg",
+   "kind": "note",
+   "label": "exchange 1 at dive 2466: globe ground alone (left) against close ground alone (right), same camera",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T11:23:23.263Z",
    "file": "20261124112323263-compare-mars-rise-sides.jpg",
@@ -40,38 +72,6 @@
    "source": "out/work/place/see/Q-cap-rise.png",
    "kind": "note",
    "label": "Proof 49, rise 2692, 2694, 2698, 2702, 2706, 2712, 2720, draft: the place and its canyon stay one picture while they shrink (plates made from the level under them); pale bar in the canyon's shade at 2692 and 2694; the place reads as a small canyon in a plain",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T11:20:27.436Z",
-   "file": "20261124112027436-note-Q-cap-dive.jpg",
-   "source": "out/work/place/see/Q-cap-dive.png",
-   "kind": "note",
-   "label": "Proof 49, dive 2440, 2452, 2460, 2464, 2466, draft, the globe's own ground above the band: one canyon through the levels; straight pale shapes in the canyon's shade at 2460 to 2466 (the made aprons), haze thinner than before near the ground",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T11:16:28.730Z",
-   "file": "20261124111628730-note-Q-2412.jpg",
-   "source": "out/work/place/see/Q-2412.png",
-   "kind": "note",
-   "label": "Dive 2411, 2412, 2413, draft: the level step the report reads at 2412 + 1/2 (1.32, limit 1.3) is Phobos leaving the frame at the right edge within two frames (mean level 69.53, 68.51, 68.83); nothing of the ground changes",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T11:16:11.478Z",
-   "file": "20261124111611478-note-Q-rise-c.jpg",
-   "source": "out/work/place/see/Q-rise-c.png",
-   "kind": "note",
-   "label": "Proof 49, rise 2686 to 2690, draft: the fan's borders lower left (pale block) and right (dark) at 2686 to 2688, the dissolve by height 2687 to 2689 with one mesa in one place, 2690 the cap alone with a pale bar in the canyon's shade at the foot of the frame",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T11:16:10.521Z",
-   "file": "20261124111610521-note-Q-rise-b.jpg",
-   "source": "out/work/place/see/Q-rise-b.png",
-   "kind": "note",
-   "label": "Proof 49, rise 2680 to 2685 (T 2681 to 4 after), draft: no jump from 2681 to 2682; dark corner lower right at 2684 and 2685 (the fan's border)",
    "stop": "mars"
   }
  ]
