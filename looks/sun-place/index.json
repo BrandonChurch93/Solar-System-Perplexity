@@ -1,9 +1,49 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T02:52:13.197Z",
+ "pushed": "2026-11-24T03:22:42.293Z",
  "head": "7b1a4e5f2ad150b781e681fc9633ce503ccd2346",
- "note": "7b1a4e5f c72: cells as dark amber glass with bright rims, far ground gold, seam cure; from above still tiles with outlines",
+ "note": "03:23 view law, emitter, no fan, pop at 20 cured, a pop of short lives found and cured; cells still pale buns beside the approved",
  "looks": [
+  {
+   "time": "2026-11-24T03:22:41.681Z",
+   "file": "20261124032241681-note-c76-222.jpg",
+   "source": "../../../../tmp/c76-222.jpg",
+   "kind": "note",
+   "label": "c76 frame 222 at one to one: granules from above, no net",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T03:22:41.144Z",
+   "file": "20261124032241144-note-c79-near-pair.jpg",
+   "source": "out/work/sun/convect/c79-near-pair.jpg",
+   "kind": "note",
+   "label": "approved (left) and c79 frame 60 (right), near ground at one to one",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T03:22:40.590Z",
+   "file": "20261124032240590-note-c77-near-60.jpg",
+   "source": "../../../../tmp/c77-near-60.jpg",
+   "kind": "note",
+   "label": "c77 frames 60 to 63 near ground at one to one (draft)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T03:22:40.032Z",
+   "file": "20261124032240032-note-c77-event.jpg",
+   "source": "../../../../tmp/c77-event.jpg",
+   "kind": "note",
+   "label": "c77 frames 56 to 67 same box: cells emptied over 1.2 s, no step",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T03:22:39.449Z",
+   "file": "20261124032239449-note-c76-event.jpg",
+   "source": "../../../../tmp/c76-event.jpg",
+   "kind": "note",
+   "label": "c76 frames 56 to 63 at 1.5 to one: the pop found (a cell closes between 59 and 60), before the cure",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T02:52:12.631Z",
    "file": "20261124025212631-note-c72-oneone-222.jpg",
@@ -26,46 +66,6 @@
    "source": "out/work/sun/convect/c72-spot-pair.jpg",
    "kind": "note",
    "label": "c72 commit 7b1a4e5f frame 60 spot, approved left, mine right, draft",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T02:49:21.237Z",
-   "file": "20261124024921237-note-c72-near-pair.jpg",
-   "source": "out/work/sun/convect/c72-near-pair.jpg",
-   "kind": "note",
-   "label": "c72 commit 7b1a4e5f frame 60 near, approved left, mine right, draft",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T02:30:11.861Z",
-   "file": "20261124023011861-note-look-sd1-b236.jpg",
-   "source": "../../../../tmp/look-sd1-b236.jpg",
-   "kind": "note",
-   "label": "job sd1 (8eeab2c9) frames 236 to 242: my ground gives way to the globe's face by height; the fine cells soften over six frames",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T02:30:11.323Z",
-   "file": "20261124023011323-note-look-c61-seams.jpg",
-   "source": "../../../../tmp/look-c61-seams.jpg",
-   "kind": "note",
-   "label": "frame 215 enlarged 3 times, left sd1 (8eeab2c9), right c61 (uncommitted): the seam was the fibres' own height on a mesh whose rings are wider than a fibre; in c61 the mesh carries the funnel and the fibres' relief is in the light",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T02:30:10.787Z",
-   "file": "20261124023010787-note-look-sd1-six213.jpg",
-   "source": "../../../../tmp/look-sd1-six213.jpg",
-   "kind": "note",
-   "label": "job sd1 (8eeab2c9) frames 213 to 218 one to one at the spot: straight seams run through the penumbra left and right of the umbra, and from above the ground is paving with black cracks",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T02:30:10.250Z",
-   "file": "20261124023010250-note-look-c61-spot.jpg",
-   "source": "../../../../tmp/look-c61-spot.jpg",
-   "kind": "note",
-   "label": "c61 frame 60 draft, spot one to one: approved left, mine right. Fibres finer (240 round) and uneven; still a comb, no bright heads, fibres do not curl",
    "stop": "sun"
   }
  ]
