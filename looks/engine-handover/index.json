@@ -1,9 +1,49 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-24T15:31:26.205Z",
- "head": "3e939cccc0874f53148a1fad1c0e15ff3e26f321",
- "note": "MAIL 682: Earth read both ways (rise 7.5 by the mean, 5.42 in place), the case row ju3x read (10.21 by the mean, 2.72 in place); Mars rendering, six stops to go",
+ "pushed": "2026-11-24T15:55:48.530Z",
+ "head": "5b38b9ead6a50ef4b3ca4a80c5c7367edbd7f24d",
+ "note": "MAIL 682: Mars and Venus read both ways (all four moves pass both ways; Venus in place 3.3 and 3.8, a change of the look by height the mean of the body reads smaller); Neptune rendering, four stops to go",
  "looks": [
+  {
+   "time": "2026-11-24T15:53:08.963Z",
+   "file": "20261124155308963-compare-venus-rise-step-in-place.jpg",
+   "source": "out/work/handover/venus-rise-step-in-place.png",
+   "kind": "compare",
+   "label": "venus rise, the largest step of the level in place (3.78): frame 1575, frame 1576, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "frame": 1576
+  },
+  {
+   "time": "2026-11-24T15:47:22.295Z",
+   "file": "20261124154722295-compare-venus-dive-step-in-place.jpg",
+   "source": "out/work/handover/venus-dive-step-in-place.png",
+   "kind": "compare",
+   "label": "venus dive, the largest step of the level in place (3.3): frame 1289, frame 1290, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "frame": 1290
+  },
+  {
+   "time": "2026-11-24T15:39:56.392Z",
+   "file": "20261124153956392-compare-mars-rise-step-in-place.jpg",
+   "source": "out/work/handover/mars-rise-step-in-place.png",
+   "kind": "compare",
+   "label": "mars rise, the largest step of the level in place (4.63): frame 2709, frame 2710, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "frame": 2710
+  },
+  {
+   "time": "2026-11-24T15:36:10.586Z",
+   "file": "20261124153610586-compare-mars-dive-step-body.jpg",
+   "source": "out/work/handover/mars-dive-step-body.png",
+   "kind": "compare",
+   "label": "mars dive, the largest step of the mean level of the body (3.12): frame 2439, frame 2440, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2440
+  },
   {
    "time": "2026-11-24T15:31:25.015Z",
    "file": "20261124153125015-note-earth-rise-2116-2131.jpg",
@@ -38,41 +78,6 @@
    "stop": "earth",
    "segment": "earth.rise",
    "frame": 2124
-  },
-  {
-   "time": "2026-11-24T15:11:38.045Z",
-   "file": "20261124151138045-note-jupiter-main-rise-3276-3295.jpg",
-   "source": "out/work/inplace/sheets/jupiter-main-rise-3276-3295.png",
-   "kind": "note",
-   "label": "Jupiter as on main, rise 3276 to 3295, consecutive drafts, for comparison with the third",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T15:11:36.409Z",
-   "file": "20261124151136409-note-ju3-rise-3276-3295.jpg",
-   "source": "out/work/inplace/sheets/ju3-rise-3276-3295.png",
-   "kind": "note",
-   "label": "Jupiter third, rise 3276 to 3295, consecutive drafts: the exposure by height dims the picture and brings it back"
-  },
-  {
-   "time": "2026-11-24T15:08:10.880Z",
-   "file": "20261124150810880-compare-earth-dive-step-in-place.jpg",
-   "source": "out/work/handover/earth-dive-step-in-place.png",
-   "kind": "compare",
-   "label": "earth dive, the largest step of the level in place (2.24): frame 1887, frame 1888, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1888
-  },
-  {
-   "time": "2026-11-24T14:37:05.017Z",
-   "file": "20261124143705017-compare-ju3-dive-step-in-place.jpg",
-   "source": "out/work/handover/ju3-dive-step-in-place.png",
-   "kind": "compare",
-   "label": "jupiter dive, the largest step of the level in place (1.49): frame 3035, frame 3036, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 3036
   }
  ]
 }
