@@ -1,9 +1,36 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-24T11:04:23.485Z",
- "head": "1e682e0123ac856ff8931fecdd6bc3b297d942af",
- "note": "Rise 1540 to 1575 with the near ground kept whole at every height (not committed): pattern at most 0.65 (limb, far zone) where the commit reads 1.15; left edge 0.48; third hump 0.61; dive far band 0.78 unchanged",
+ "pushed": "2026-11-24T11:22:53.777Z",
+ "head": "e3594096c45547f3db400e9f1e08e0b3be26b01c",
+ "note": "release kept on merged main, proof chain running; far zone preview without a draw",
  "looks": [
+  {
+   "time": "2026-11-24T11:22:52.743Z",
+   "file": "20261124112252743-note-x5lay.jpg",
+   "source": "../../../../tmp/v/x5lay.jpg",
+   "kind": "note",
+   "label": "layers view 1540 to 1552 with the kept release: the border of the ground comes into the frame from the left",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T11:22:51.520Z",
+   "file": "20261124112251520-note-e1-sheet.jpg",
+   "source": "../../../../tmp/v/far/e1-sheet.jpg",
+   "kind": "note",
+   "label": "far zone of the rise plates seen from 1546, 1550, 1556, unshaded preview: left as committed, right laid from the picture of T down to sine 0.04 to 0.08 (not drawn yet)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T11:17:38.304Z",
+   "file": "20261124111738304-compare-venus-dive-sides.jpg",
+   "source": "out/work/handover/venus-dive-sides.png",
+   "kind": "compare",
+   "label": "venus dive, both sides at T (frame 1343) and their difference times 8",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "frame": 1343,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-24T11:04:22.899Z",
    "file": "20261124110422899-note-x5left.jpg",
@@ -42,30 +69,6 @@
    "source": "../../../../tmp/v/x4b.jpg",
    "kind": "note",
    "label": "same test: rise 1552, 1556, 1568, 1572; the tower group keeps its lit crests to 1564, the pale patch of the far deck with a blue tint stands at 1552 to 1560, shadow slab right of it",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T10:41:16.117Z",
-   "file": "20261124104116117-note-x4a.jpg",
-   "source": "../../../../tmp/v/x4a.jpg",
-   "kind": "note",
-   "label": "test, not committed: rise 1544, 1548, 1560, 1564 with the near ground of the frame of T kept whole at every height (far ground let go by height as before); pattern rows 1547 to 1567 + 1/2 at most 0.41 (commit up to 0.74), most 0.65 at 1546 on the limb at the right",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T10:22:41.961Z",
-   "file": "20261124102241961-note-x3sheet.jpg",
-   "source": "../../../../tmp/v/x3sheet.jpg",
-   "kind": "note",
-   "label": "test only, not committed: rise 1548, 1552, 1556, 1560 with nothing let go by height inside the frame of T; pattern at most 0.52 in place of 1.15, but the frame of T shows as a pale patch with a dark slab at its right edge",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T10:07:47.299Z",
-   "file": "20261124100747299-note-s1562.jpg",
-   "source": "../../../../tmp/v/hu/s1562.jpg",
-   "kind": "note",
-   "label": "third commit state: draft frames 1562 to 1577",
    "stop": "venus"
   }
  ]
