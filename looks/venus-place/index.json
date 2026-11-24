@@ -1,9 +1,42 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-24T02:03:25.331Z",
+ "pushed": "2026-11-24T02:25:26.920Z",
  "head": "2241c43f0e5932bfca1c5fcd52a5d6e31bbd5a85",
- "note": "Venus on the one move, draft: G13 red on 7 dive frames of this path, rise speed red, not a candidate yet",
+ "note": "venus (a): dive stepped aside so the plates hold G13; second proof run in work; rise speed still red; not a candidate yet",
  "looks": [
+  {
+   "time": "2026-11-24T02:25:26.029Z",
+   "file": "20261124022526029-note-step.jpg",
+   "source": "../../../../tmp/v/step.jpg",
+   "kind": "note",
+   "label": "dive on the one move, nine frames 1294 to 1326: upper row straight line (G13 red on 7 frames), lower row stepped aside right 2 up -2 (soft share at most 0.65 percent)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-24T02:23:59.703Z",
+   "file": "20261124022359703-compare-venus-dive-sides.jpg",
+   "source": "out/work/handover/venus-dive-sides.png",
+   "kind": "compare",
+   "label": "venus dive, both sides at T (frame 1343) and their difference times 8",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "frame": 1343,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T02:22:05.140Z",
+   "file": "20261124022205140-frame-f01272.jpg",
+   "source": "out/work/venus/place/same/e2/f01272.png",
+   "kind": "frame",
+   "label": "venus.dive frame 1272, draft tier",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "frame": 1272,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "28ccd3f078f479b6"
+  },
   {
    "time": "2026-11-24T02:03:13.575Z",
    "file": "20261124020313575-note-look9.jpg",
@@ -55,20 +88,6 @@
    "engine": "28ccd3f078f479b6"
   },
   {
-   "time": "2026-11-24T01:41:29.262Z",
-   "file": "20261124014129262-frame-f01342.jpg",
-   "source": "out/work/venus/place/same/e1/f01342.png",
-   "kind": "frame",
-   "label": "venus.dive frame 1342, draft tier",
-   "stop": "venus",
-   "segment": "venus.dive",
-   "frame": 1342,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "28ccd3f078f479b6"
-  },
-  {
    "time": "2026-11-24T01:40:40.615Z",
    "file": "20261124014040615-frame-f01605.jpg",
    "source": "out/work/venus/place/same/e1/f01605.png",
@@ -77,34 +96,6 @@
    "stop": "venus",
    "segment": "venus.travel",
    "frame": 1605,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "28ccd3f078f479b6"
-  },
-  {
-   "time": "2026-11-24T01:39:37.852Z",
-   "file": "20261124013937852-frame-f01350.jpg",
-   "source": "out/work/venus/place/same/e1/f01350.png",
-   "kind": "frame",
-   "label": "venus.terrain frame 1350, draft tier",
-   "stop": "venus",
-   "segment": "venus.terrain",
-   "frame": 1350,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "28ccd3f078f479b6"
-  },
-  {
-   "time": "2026-11-24T01:38:51.553Z",
-   "file": "20261124013851553-frame-f01110.jpg",
-   "source": "out/work/venus/place/same/e1/f01110.png",
-   "kind": "frame",
-   "label": "venus.hold frame 1110, draft tier",
-   "stop": "venus",
-   "segment": "venus.hold",
-   "frame": 1110,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
