@@ -1,68 +1,28 @@
 {
  "folder": "venus",
- "pushed": "2026-11-24T21:39:50.896Z",
- "head": "39dcfabad2ccc23b7e21d4f5bd95a555ed758fc5",
- "note": "pull back in: leave line 0.193 (limit 0.07); smooth on the tip: rise pop 1.21 at 1610 + 1/2 and pattern 0.72 at 1608 + 1/2 (travel frames), 0.65 at 1575, 0.62 at 1547 + 1/2; dive pattern 0.47 at 1311, pop 1.18; handover rendering",
+ "pushed": "2026-11-24T22:03:12.769Z",
+ "head": "a7f38721691403c340c6edc614dfd57b3bf0cd9a",
+ "note": "pull back at the far end of the rise: seam stills before and with it, frames 1585 to 1604; commit a7f38721",
  "looks": [
   {
-   "time": "2026-11-24T21:39:50.235Z",
-   "file": "20261124213950235-note-r1608-1620.jpg",
-   "source": "../../../../tmp/v/shD/r1608-1620.jpg",
+   "time": "2026-11-24T22:03:11.943Z",
+   "file": "20261124220311943-note-e1585-1604.jpg",
+   "source": "../../../../tmp/v/shD/e1585-1604.jpg",
    "kind": "note",
-   "label": "travel 1608 to 1620 after the rise with the pull back, draft",
+   "label": "rise 1585 to 1604 with the pull back, handover run, draft",
    "stop": "venus"
   },
   {
-   "time": "2026-11-24T21:39:49.611Z",
-   "file": "20261124213949611-note-r1596-1607.jpg",
-   "source": "../../../../tmp/v/shD/r1596-1607.jpg",
+   "time": "2026-11-24T22:03:10.988Z",
+   "file": "20261124220310988-note-seam-XE.jpg",
+   "source": "../../../../tmp/v/shD/seam-XE.jpg",
    "kind": "note",
-   "label": "rise into the travel 1596 to 1607, draft, with the pull back: the disc gets smaller at every frame through the seam 1605",
+   "label": "seam 1604 1605 1612, above before, below with the pull back",
    "stop": "venus"
   },
   {
-   "time": "2026-11-24T21:39:48.761Z",
-   "file": "20261124213948761-note-r1584-1595.jpg",
-   "source": "../../../../tmp/v/shD/r1584-1595.jpg",
-   "kind": "note",
-   "label": "rise 1584 to 1595, draft, batch tip with the pull back (speed 1.0, over 0.2, from 0.6): every film frame",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T21:17:41.291Z",
-   "file": "20261124211741291-note-pair-1548-1556.jpg",
-   "source": "../../../../tmp/v/c/pair-1548-1556.jpg",
-   "kind": "note",
-   "label": "rise 1548 against 1556, state C draft: the far deck comes out of the pale air band (MAIL 749 pair)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T20:52:49.202Z",
-   "file": "20261124205249202-note-pair-1575-1583.jpg",
-   "source": "../../../../tmp/v/c/pair-1575-1583.jpg",
-   "kind": "note",
-   "label": "rise pair-1575-1583, state C draft: the pairs MAIL 749 asks about",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T20:52:48.581Z",
-   "file": "20261124205248581-note-pair-1547-1555.jpg",
-   "source": "../../../../tmp/v/c/pair-1547-1555.jpg",
-   "kind": "note",
-   "label": "rise pair-1547-1555, state C draft: the pairs MAIL 749 asks about",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T20:52:47.974Z",
-   "file": "20261124205247974-note-pair-1542-1550.jpg",
-   "source": "../../../../tmp/v/c/pair-1542-1550.jpg",
-   "kind": "note",
-   "label": "rise pair-1542-1550, state C draft: the pairs MAIL 749 asks about",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T20:38:52.562Z",
-   "file": "20261124203852562-sheet-venus-rise-top.jpg",
+   "time": "2026-11-24T21:55:08.061Z",
+   "file": "20261124215508061-sheet-venus-rise-top.jpg",
    "source": "out/work/handover/venus-rise-top.png",
    "kind": "sheet",
    "label": "venus rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 1539), place picture off, draft tier",
@@ -70,6 +30,64 @@
    "segment": "venus.rise",
    "first": 1539,
    "last": 1604,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T21:54:13.812Z",
+   "file": "20261124215413812-sheet-venus-rise-draft-after.jpg",
+   "source": "out/work/handover/venus-rise-draft-after.png",
+   "kind": "sheet",
+   "label": "venus rise, every frame 1540 to 1551 (after T, frame 1539), draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "first": 1540,
+   "last": 1551,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T21:54:11.987Z",
+   "file": "20261124215411987-sheet-venus-rise-draft-before.jpg",
+   "source": "out/work/handover/venus-rise-draft-before.png",
+   "kind": "sheet",
+   "label": "venus rise, every frame 1530 to 1538 (before T, frame 1539), draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "first": 1530,
+   "last": 1538,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T21:54:10.425Z",
+   "file": "20261124215410425-sheet-venus-rise-draft-across.jpg",
+   "source": "out/work/handover/venus-rise-draft-across.png",
+   "kind": "sheet",
+   "label": "venus rise, every frame 1533 to 1544 (across T, frame 1539), draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "first": 1533,
+   "last": 1544,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-24T21:54:08.634Z",
+   "file": "20261124215408634-compare-venus-rise-step-in-place.jpg",
+   "source": "out/work/handover/venus-rise-step-in-place.png",
+   "kind": "compare",
+   "label": "venus rise, the largest step of the level in place (4.27): frame 1572, frame 1573, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "frame": 1573
+  },
+  {
+   "time": "2026-11-24T21:48:18.653Z",
+   "file": "20261124214818653-sheet-venus-dive-top.jpg",
+   "source": "out/work/handover/venus-dive-top.png",
+   "kind": "sheet",
+   "label": "venus dive, the globe side alone from straight above the place, 12 frames from the far end to T (frame 1343), place picture off, draft tier",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "first": 1260,
+   "last": 1343,
    "tier": "draft"
   }
  ]
