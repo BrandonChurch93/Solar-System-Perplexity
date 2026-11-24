@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T12:31:41.782Z",
+ "pushed": "2026-11-24T12:50:57.782Z",
  "head": "6474733ee8d90a2500af4ed116db3d67a04955c3",
- "note": "12:32 UTC. Head 6474733e. Third commit, point 1 of MAIL 657, trial t9 in the tree (config only): one look of the cell at every height (light.view.heights out of reach), domes 0.03 with edge 0.8 and power 2, lattice 0.12, lanes 0.0035, spread 0.4, cell range 0.85 to 1.2, threads on the tops, middle darker toward a bright shoulder. Frame 60 draft sun-near: share by band 0.1 .. 0.9 : 0.134 0.259 0.208 0.143 0.094 0.059 0.034 0.021 0.015 | dark (under 0.15) 0.166, body (0.15 to 0.55) 0.703, pale (0.65 to 0.85) 0.055, white (over 0.85) 0.017 | brightest 15 percent: half width 3.2 px, 6706 shapes, fine detail 0.0664, mean 0.323; distance 0.091. Red: flatter than the approved (too little deep dark, shoulders not bright enough), caps with a regular fan read as mushrooms; the ball 216 to 237 and the pattern not yet looked at with it. MAIL 655 answered at 12:20: pairs 181 to 213 on 7f4e02c1 largest 0.317 as they are, 0.294 with the life held.",
+ "note": "trial t13 on 6474733e, config only, not committed. Frame 60 draft: share by band 0.1 .. 0.9 : 0.192 0.219 0.174 0.130 0.095 0.063 0.040 0.031 0.020 / dark (under 0.15) 0.225 | body (0.15 to 0.55) 0.618 | pale (0.65 to 0.85) 0.070 | white (over 0.85) 0.022 / brightest 15 percent: half width 4.8 px, 5476 shapes | fine detail 0.0645 | mean 0.326; distance 0.040. Red: nothing proved on this tree yet; cells still read as pebbles with too much fine thread (fine detail 0.065 against 0.037); region light still two readings by pixel size",
  "looks": [
+  {
+   "time": "2026-11-24T12:50:57.062Z",
+   "file": "20261124125057062-note-t13-ball.jpg",
+   "source": "../../../../tmp/t13-ball.jpg",
+   "kind": "note",
+   "label": "trial t13 draft at half size: 205, 213, 221, 229, 237; last cell is 229 of 7f4e02c1",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T12:50:56.528Z",
+   "file": "20261124125056528-note-t13-229-crop.jpg",
+   "source": "../../../../tmp/t13-229-crop.jpg",
+   "kind": "note",
+   "label": "frame 229 draft, one to one crop, trial t13: the field of cells on the ball",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-24T12:50:55.971Z",
+   "file": "20261124125055971-note-pair-t13.jpg",
+   "source": "../../../../tmp/pair-t13.jpg",
+   "kind": "note",
+   "label": "frame 60 draft, one to one: approved left, trial t13 right (uncommitted config)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T12:31:41.214Z",
    "file": "20261124123141214-note-pair-t9.jpg",
@@ -43,38 +67,6 @@
    "kind": "note",
    "label": "7f4e02c1 rise draft every frame, sheet e 228 to 239",
    "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T11:37:52.837Z",
-   "file": "20261124113752837-note-g13-before-after.jpg",
-   "source": "../../../../tmp/g13-before-after.jpg",
-   "kind": "note",
-   "label": "G13 (MAIL 639): 231 to 235 enlarged 2 times, before (19ca786c, left) and after (7f4e02c1, middle); right, the whole frame with the soft pixels of G13 in red, before and after",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T11:37:13.399Z",
-   "file": "20261124113713399-sheet-sun-rise-draft-after.jpg",
-   "source": "out/work/handover/sun-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "sun rise, every frame 217 to 228 (after T, frame 216), draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "first": 217,
-   "last": 228,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T11:37:11.583Z",
-   "file": "20261124113711583-sheet-sun-rise-draft-before.jpg",
-   "source": "out/work/handover/sun-rise-draft-before.png",
-   "kind": "sheet",
-   "label": "sun rise, every frame 204 to 215 (before T, frame 216), draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "first": 204,
-   "last": 215,
-   "tier": "draft"
   }
  ]
 }
