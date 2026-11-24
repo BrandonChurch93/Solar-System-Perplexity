@@ -1,9 +1,57 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T05:50:00.747Z",
+ "pushed": "2026-11-24T06:10:29.426Z",
  "head": "68780bfd06d6ba1d796c819be3c19df0db80f94f",
- "note": "Tree 68780bf (the bend of the surface view into the pull back, the rise's law found on the judge; on main 3060b72). Path green, parity green (block -7.685 at 3038). Finals of 2895 and 3150 beside the kept stills. Pictures part of the rise is rendering now.",
+ "note": "06:15 UTC, head 68780bf. T of the rise (3230 to 3244, every frame) is clean: no border of the set, no far edge, no jump at 3240. Worst thing found: from 3243 + 1/2 the nearest cloud bank of the plates comes into the bottom left corner, pale, flat and soft this close (60 px at 3244, 460 px at 3248), passing by about 3258. Not cured yet; the bend takes the eye 0.43 units to the left, toward that bank. Pictures part of the rise is rendering.",
  "looks": [
+  {
+   "time": "2026-11-24T06:10:28.051Z",
+   "file": "20261124061028051-note-bendview.jpg",
+   "source": "../work/seam/bendview.jpg",
+   "kind": "note",
+   "label": "Draft, the surface view after the judged frame, head 68780bf: 3150, 3180, 3210, 3228, 3237, 3239 (the push bends into a track to the left and on into the pull back)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T06:04:25.304Z",
+   "file": "20261124060425304-note-rise-s1.jpg",
+   "source": "../work/seam/rise-s1.jpg",
+   "kind": "note",
+   "label": "Draft, every film frame 3241 to 3248 of the rise, head 68780bf (pale wedge in the bottom left corner from 3244)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T06:04:24.132Z",
+   "file": "20261124060424132-note-rise-bl1.jpg",
+   "source": "../work/seam/rise-bl1.jpg",
+   "kind": "note",
+   "label": "Draft at full size, bottom left corner, 3243 to 3248, head 68780bf: the nearest cloud bank of the plates and soft ground beside it come into the corner from 3243 + 1/2 (60 px at 3244, 460 px at 3248), flat and soft this close. Not cured.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T05:59:01.550Z",
+   "file": "20261124055901550-note-T-rise-c2.jpg",
+   "source": "../work/seam/T-rise-c2.jpg",
+   "kind": "note",
+   "label": "Draft at full size, bottom left: 3239 beside 3240, head 68780bf",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T05:59:00.446Z",
+   "file": "20261124055900446-note-T-rise-c3.jpg",
+   "source": "../work/seam/T-rise-c3.jpg",
+   "kind": "note",
+   "label": "Draft at full size, top left: 3239 (surface view) beside 3240 (first frame of the rise), head 68780bf",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-24T05:58:59.152Z",
+   "file": "20261124055859152-note-T-rise-a.jpg",
+   "source": "../work/seam/T-rise-a.jpg",
+   "kind": "note",
+   "label": "Draft, every film frame 3230 to 3244 across the change of view of the rise (T 3240), head 68780bf: no border of the set, no far edge of the ground, no jump at T (frame to frame mean absolute change 3.74, 3.73, 3.74 across it)",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-24T05:49:59.438Z",
    "file": "20261124054959438-note-jupiter-parity.jpg",
@@ -18,72 +66,6 @@
    "source": "../work/seam/pair-2895-kept-new.jpg",
    "kind": "note",
    "label": "judged 2895 at final: kept still left, head 68780bf right (sha 90e92669, the hold sky of MAIL 448)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T05:49:57.003Z",
-   "file": "20261124054957003-note-pair-3150-storm.jpg",
-   "source": "../work/seam/pair-3150-storm.jpg",
-   "kind": "note",
-   "label": "judged 3150 at final, the storm at full size: kept still left, head 68780bf right",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T05:49:56.134Z",
-   "file": "20261124054956134-note-pair-3150-kept-new.jpg",
-   "source": "../work/seam/pair-3150-kept-new.jpg",
-   "kind": "note",
-   "label": "judged 3150 at final: kept still (left, the frozen build of 23 November) against head 68780bf (right); same camera, the surface view is built from code",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T05:48:44.137Z",
-   "file": "20261124054844137-frame-bB-3150.jpg",
-   "source": "out/work/jupiter/final/bB-3150.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3150, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "3da6c690cf58b2c3"
-  },
-  {
-   "time": "2026-11-24T05:45:20.269Z",
-   "file": "20261124054520269-frame-bB-2895.jpg",
-   "source": "out/work/jupiter/final/bB-2895.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2895, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "3da6c690cf58b2c3"
-  },
-  {
-   "time": "2026-11-24T05:34:52.085Z",
-   "file": "20261124053452085-frame-f03286.jpg",
-   "source": "out/work/jupiter/frames/b3/f03286.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3286, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3286,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "3da6c690cf58b2c3"
-  },
-  {
-   "time": "2026-11-24T05:23:06.334Z",
-   "file": "20261124052306334-note-b1-d.jpg",
-   "source": "../work/seam/b1-d.jpg",
-   "kind": "note",
-   "label": "Draft, the seam of the rise with the bend: 3237, 3239, 3240 to 3244 (rise still on the law before the new search)",
    "stop": "jupiter"
   }
  ]
