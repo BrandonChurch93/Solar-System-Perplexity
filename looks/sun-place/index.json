@@ -1,9 +1,17 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T18:13:07.669Z",
+ "pushed": "2026-11-24T18:38:03.898Z",
  "head": "404a7f06c4439436a06972a472e15098457ef42d",
- "note": "round 2, item 1 in work (head 404a7f06 unchanged, trials only); frame 60 draft of trial k1: share by band 0.115 0.199 0.203 0.158 0.115 0.077 0.050 0.035 0.026 / dark 0.141 body 0.671 pale 0.087 white 0.026 / brightest 15 percent half width 3.3 px, 3835 shapes, fine detail 0.0688, mean 0.368; distance 0.109",
+ "note": "sun 60 round 2, still wrong: reads as scored bread rolls, strokes too even, creases not dark and soft enough. q1 sun-near: bands 0.113 0.199 0.241 0.166 0.110 0.070 0.038 0.025 0.010; dark 0.140 body 0.716 pale 0.063 white 0.011; half width 4.4 px, 3220 shapes, fine detail 0.0568, mean 0.343; distance 0.122. Correction to the note of 11afa6db: the band line given for k1 was wrong, measured 0.116 0.190 0.196 0.162 0.123 0.075 0.048 0.038 0.025",
  "looks": [
+  {
+   "time": "2026-11-24T18:38:03.257Z",
+   "file": "20261124183803257-note-zq.jpg",
+   "source": "../../../../tmp/rd/zq.jpg",
+   "kind": "note",
+   "label": "sun 60 draft, round 2 trials q1 q2 q3 (uncommitted) at two times beside the approved: round corners of the bulbs, pits between them, flowers of bright strokes at the pits",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T18:13:06.998Z",
    "file": "20261124181306998-note-pk.jpg",
@@ -73,14 +81,6 @@
    "stop": "sun",
    "segment": "sun.rise",
    "frame": 239
-  },
-  {
-   "time": "2026-11-24T16:57:59.649Z",
-   "file": "20261124165759649-note-h20-sides.jpg",
-   "source": "../../../../tmp/h20-sides.jpg",
-   "kind": "note",
-   "label": "1f74d5c9, the two sides at T by the new main's handover tool (the run is still going)",
-   "stop": "sun"
   }
  ]
 }
