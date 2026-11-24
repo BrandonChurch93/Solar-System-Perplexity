@@ -60,6 +60,7 @@ uniform float uLayCore;
 uniform float uLayDeck;
 uniform float uLayGround;
 uniform vec3 uLayBox;
+uniform vec2 uLayAgree;
 uniform mat3 uLaySpot;
 uniform vec4 uLayTone;
 uniform sampler2D uLayToneMap;
@@ -236,7 +237,10 @@ void main() {
     float ground = uLayDeck * uLayGround * whole * max(max(nearZone, honest), uLayGlow);
     vec2 inCloud = smoothstep(vec2(0.0), vec2(uLayCloud.x), vec2(min(xyCloud.x - uLayBox.x, uLayBox.y - xyCloud.x), xyCloud.y - uLayBox.z));
     float cloudNear = smoothstep(uLayCloud.w, uLayCloud.z, dot(normalize(oc + rd * (tHit >= 0.0 ? tHit : -b)), uHome.xyz));
-    float ac = cloudAlpha * max(max(uLayDeck * whole * honest, uLay.x * inCloud.x * inCloud.y * cloudNear), uLayGlow);
+    vec3 qc = oc + rd * (tHit >= 0.0 ? tHit : -b);
+    vec3 nc = normalize(qc);
+    float agree = 1.0 - smoothstep(uLayAgree.x, uLayAgree.y, dot(-rd, nc) / max(dot(normalize(-(qc + uCentre)), nc), 1e-3));
+    float ac = cloudAlpha * max(max(uLayDeck * whole * honest, uLay.x * inCloud.x * inCloud.y * cloudNear * agree), uLayGlow);
     float under = 1.0 - sqrt(max(rt2, 0.0)) / uRadius;
     float line = deckHit ? uLaySky * (1.0 - smoothstep(uLayLimb.x, uLayLimb.y, under)) : 0.0;
     vec3 upNow = normalize(oc);
@@ -345,7 +349,7 @@ export class Closeup {
         uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uBloomWide: { value: maps.bloom }, uBloomPre: { value: new THREE.Vector3(0, look.bloomPre[1], look.bloomPre[0]) },
         uFineMap: { value: maps.fine }, uFine: { value: new THREE.Vector2(look.fine[0], look.fine[1]) }, uDiag: diagUniform,
         uLay: { value: new THREE.Vector4(0, Math.cos(THREE.MathUtils.degToRad(look.lay.nearDeg[1]!)), Math.cos(THREE.MathUtils.degToRad(look.lay.nearDeg[0]!)), look.lay.edge[0]!) },
-        uLayFit: { value: new THREE.Vector4(look.lay.graze[0], look.lay.graze[1], look.lay.texels[0], look.lay.texels[1]) }, uLayGlow: { value: 0 }, uLaySky: { value: 0 }, uLayLimb: { value: new THREE.Vector3(look.lay.limb[0], look.lay.limb[1], Math.cos(Math.acos(radius / (radius + 1)) - look.sightMargin)) }, uLayRef: { value: new THREE.Vector3(0, 1, 0) }, uLayCore: { value: look.lay.coreEdge }, uLayGround: { value: 1 }, uLayDeck: { value: 0 }, uLayBox: { value: new THREE.Vector3().fromArray(look.lay.cloudBox) }, uLaySpot: { value: new THREE.Matrix3() }, uLayTone: { value: new THREE.Vector4(0, 0, 1, 0) }, uLayToneMap: { value: maps.tone ?? maps.glow }, uLayGrade: { value: new THREE.Vector4(1, 1, 1, 1) }, uLaySat: { value: 1 }, uLayCloud: { value: new THREE.Vector4(look.lay.cloudEdge, look.lay.edgeRange, Math.cos(THREE.MathUtils.degToRad(look.lay.cloudDeg[0]!)), Math.cos(THREE.MathUtils.degToRad(look.lay.cloudDeg[1]!))) },
+        uLayFit: { value: new THREE.Vector4(look.lay.graze[0], look.lay.graze[1], look.lay.texels[0], look.lay.texels[1]) }, uLayGlow: { value: 0 }, uLaySky: { value: 0 }, uLayLimb: { value: new THREE.Vector3(look.lay.limb[0], look.lay.limb[1], Math.cos(Math.acos(radius / (radius + 1)) - look.sightMargin)) }, uLayRef: { value: new THREE.Vector3(0, 1, 0) }, uLayCore: { value: look.lay.coreEdge }, uLayGround: { value: 1 }, uLayDeck: { value: 0 }, uLayBox: { value: new THREE.Vector3().fromArray(look.lay.cloudBox) }, uLayAgree: { value: new THREE.Vector2().fromArray(look.lay.cloudAgree) }, uLaySpot: { value: new THREE.Matrix3() }, uLayTone: { value: new THREE.Vector4(0, 0, 1, 0) }, uLayToneMap: { value: maps.tone ?? maps.glow }, uLayGrade: { value: new THREE.Vector4(1, 1, 1, 1) }, uLaySat: { value: 1 }, uLayCloud: { value: new THREE.Vector4(look.lay.cloudEdge, look.lay.edgeRange, Math.cos(THREE.MathUtils.degToRad(look.lay.cloudDeg[0]!)), Math.cos(THREE.MathUtils.degToRad(look.lay.cloudDeg[1]!))) },
       },
     })
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(radius * (1 + look.glowTop), laid ? 256 : 96, laid ? 128 : 64), this.material)

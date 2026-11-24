@@ -14,6 +14,7 @@ AGREE_PX2 = 0.5
 JUDGED_SHARE = 0.1
 BLOCK_SHARE = 0.5
 PATTERN_SHARE = 0.02
+PLANE_RIDGE = 1e-3
 
 
 def grey(path):
@@ -78,7 +79,8 @@ def left(a, b, f=None, g=None, agree=True):
 
 def body(pose, shape, margin):
     """Where the frame shows the body: the pixels whose ray meets the unit sphere of the stop, or its rings in front of it when the pose names them
-    (rings: normal, inner, outer), less a margin at the edge. pose: p, q (x, y, z, w), vfov."""
+    (rings: normal, inner, outer), less a margin at the edge. pose: p, q (x, y, z, w), vfov. When the pose names the globe (globe: quaternion,
+    scale) the body is the unit sphere scaled along the axes of the globe's own frame, as the stop draws it."""
     h, w = shape
     k = h / 2 / np.tan(np.radians(pose['vfov']) / 2)
     xs, ys = places(shape)
@@ -88,9 +90,25 @@ def body(pose, shape, margin):
     t = 2 * np.cross(u, v)
     ray = v + pose['q'][3] * t + np.cross(u, t)
     p = np.array(pose['p'], dtype=np.float64)
-    near = -(ray @ p)
-    disc = near * near - p @ p + 1
-    front = near - np.sqrt(np.maximum(disc, 0))
+    globe = pose.get('globe')
+    if globe:
+        gq = np.array(globe['quaternion'], dtype=np.float64)
+        gs = np.array(globe['scale'], dtype=np.float64)
+
+        def own(x):
+            """A direction or a point of the stop in the globe's own frame, its scale taken out: there the body is the unit sphere."""
+            t = 2 * np.cross(-gq[:3], x)
+            return (x + gq[3] * t + np.cross(-gq[:3], t)) / gs
+
+        rs, ps = own(ray), own(p)
+        along = (rs * rs).sum(-1)
+        near = -(rs @ ps)
+        disc = near * near - along * (ps @ ps - 1)
+        front = (near - np.sqrt(np.maximum(disc, 0))) / along
+    else:
+        near = -(ray @ p)
+        disc = near * near - p @ p + 1
+        front = near - np.sqrt(np.maximum(disc, 0))
     hit = (disc > 0) & (front > 0)
     rings = pose.get('rings')
     if rings:
@@ -123,15 +141,40 @@ def change(frames, fw, bw, i, n, sigma, first=None, last=None):
     return d, moved, ok
 
 
+def leaning(okf, fine, wide):
+    """What the two windows of the detail read of a level that only slopes, where the border of the judged area cuts them: cut windows have their
+    middles at different places, and a slope read over that distance is no detail. Gives the function of a picture: the plane through its level
+    in the wide window, times the way from the middle of the wide window to the middle of the fine one. 0 where no border cuts the windows."""
+    o = okf.astype(np.float64)
+    soft = lambda x, s: cv2.GaussianBlur(x, (0, 0), s)
+    near, far = np.maximum(soft(o, fine), 1e-9), np.maximum(soft(o, wide), 1e-9)
+    ys, xs = np.mgrid[0:o.shape[0], 0:o.shape[1]] / wide
+    mean = lambda x: soft(x * o, wide) / far
+    mx, my = mean(xs), mean(ys)
+    sxx, sxy, syy = mean(xs * xs) - mx * mx + PLANE_RIDGE, mean(xs * ys) - mx * my, mean(ys * ys) - my * my + PLANE_RIDGE
+    det = sxx * syy - sxy * sxy
+    wx, wy = soft(xs * o, fine) / near - mx, soft(ys * o, fine) / near - my
+
+    def lean(x):
+        x = x.astype(np.float64)
+        m = mean(x)
+        sx, sy = mean(xs * x) - mx * m, mean(ys * x) - my * m
+        return (((syy * sx - sxy * sy) * wx + (sxx * sy - sxy * sx) * wy) / det).astype(np.float32)
+
+    return lean
+
+
 def pattern(a, b, ok, fine, wide, floor):
     """How far the pattern of b is from the pattern of a, per pixel: 0 the same pattern, 1 an unrelated one, 2 the reverse.
-    Both are reduced to their detail between the two widths (the local mean taken out) and divided by their local contrast,
-    so a veil that lifts the level and lowers the contrast counts little. Only where both have detail over the floor."""
+    Both are reduced to their detail between the two widths (the local mean taken out, and at a border the slope of the level, see leaning)
+    and divided by their local contrast, so a veil that lifts the level and lowers the contrast counts little. Only where both have detail
+    over the floor."""
     okf = ok.astype(np.float32)
     soft = lambda x, s: cv2.GaussianBlur(x.astype(np.float32), (0, 0), s)
     near, far = np.maximum(soft(okf, fine), 1e-6), np.maximum(soft(okf, wide), 1e-6)
-    da = (soft(a * okf, fine) / near - soft(a * okf, wide) / far) * okf
-    db = (soft(b * okf, fine) / near - soft(b * okf, wide) / far) * okf
+    lean = leaning(okf, fine, wide)
+    da = (soft(a * okf, fine) / near - soft(a * okf, wide) / far - lean(a)) * okf
+    db = (soft(b * okf, fine) / near - soft(b * okf, wide) / far - lean(b)) * okf
     ca = np.sqrt(np.maximum(soft(da * da, wide) / far, 0))
     cb = np.sqrt(np.maximum(soft(db * db, wide) / far, 0))
     p = 1 - (soft(da * db, wide) / far) / np.maximum(ca * cb, 1e-6)
@@ -178,9 +221,17 @@ def span(i, n, window):
     return lo, min(lo + window, n - 1)
 
 
-def around(values, i, window):
+def near(i, n, window, first=0, total=None):
+    """The window round i as places in a list of n that starts at place first of a row of total: the window is the whole row's."""
+    lo, hi = span(i + first, n if total is None else total, window)
+    if lo < first or hi - first > n - 1:
+        raise SystemExit('smooth.py: the slice does not hold the window round frame %d of the row' % (i + first))
+    return lo - first, hi - first
+
+
+def around(values, i, window, first=0, total=None):
     """The median of the values in the window round i, i itself left out."""
-    lo, hi = span(i, len(values), window)
+    lo, hi = near(i, len(values), window, first, total)
     picked = [values[j] for j in range(lo, hi + 1) if j != i and values[j] is not None]
     return float(np.median(picked)) if picked else None
 
@@ -205,6 +256,9 @@ def pictures(job):
         levels.append(float(g.mean()))
         frames.append(small(g, scale))
     n = len(paths)
+    start = int(job.get('first', 0))
+    total = int(job.get('total', n))
+    own = job.get('own') or [start, start + n]
     fw = [None] * n
     bw = [None] * n
     residual = [None] * n
@@ -244,7 +298,7 @@ def pictures(job):
     where = [None] * n
 
     def ratio(stack, i):
-        lo, hi = span(i, n, window)
+        lo, hi = near(i, n, window, start, total)
         rest = [stack[j] for j in range(lo, hi + 1) if j != i and stack[j] is not None]
         if not rest or not np.isfinite(np.stack(rest)).any():
             return None
@@ -253,16 +307,16 @@ def pictures(job):
             return stack[i] / np.maximum(np.nanmedian(np.stack(rest), axis=0), floor)
 
     for i in range(n):
-        if residual[i] is None:
+        if residual[i] is None or not own[0] <= i + start < own[1]:
             continue
-        m = around(residual, i, window)
+        m = around(residual, i, window, start, total)
         if m is None:
             continue
         base[i] = m
         plain[i] = pop[i] = residual[i] / max(m, floor)
         cells = ratio(grids, i)
         if agree:
-            masked[i] = carried[i] / max(around(carried, i, window), floor)
+            masked[i] = carried[i] / max(around(carried, i, window, start, total), floor)
             pop[i] = min(plain[i], masked[i])
             other = ratio(sure, i)
             cells = None if cells is None or other is None else np.minimum(cells, other)
@@ -279,7 +333,7 @@ def pictures(job):
     weaveShare = [None] * n
     if reach > 0:
         for i in range(n - reach):
-            if any(fw[j] is None for j in range(i, i + reach)):
+            if not own[0] <= i + start < own[1] or any(fw[j] is None for j in range(i, i + reach)):
                 continue
             first, last = (body(poses[j], frames[j].shape, sigma) if poses[j] else None for j in (i, i + reach))
             d, later, ok = change(frames, fw, bw, i, reach, sigma, first, last)

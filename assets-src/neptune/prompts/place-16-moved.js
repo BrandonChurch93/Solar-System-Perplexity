@@ -1,0 +1,10 @@
+// The 16 degree plate after it was moved 1.5 degrees south (23 Nov 15:50 VM, patches.json offsetDeg [0, -1.5]): the take for the
+// square as it lies now. Only its fine band is used, and only on the ground the first kept take (take 2, painted for the square
+// at [0, 0]) does not reach: the southern 1.5 degrees. Input: out/work/nep/s2/guide16.png from
+// `python3 assets-src/neptune/place/shown.py guide 16`. Same wording as place-fine.js, the tool's default model, 1:1.
+// One take per run; the take number goes into the file name. Take 3 of the 16 degree plate in this phase.
+const width = '16';
+const take = 3;
+const prompt = `Image 1 is a soft, enlarged picture looking straight down on the cloud tops inside a giant dark storm on the planet Neptune: deep blue and dark navy cloud deck combed into long curved streaks that wind round the small round dark eye of the storm, with paler blue threads between them. Redraw exactly this picture as a razor sharp, very high resolution photograph taken by a spacecraft camera pointing straight down. Keep every shape where it is: the same curves, the same position and size of every streak, patch and dark area, the same colours and the same brightness everywhere. Do not move, zoom or crop anything. Only add fine real detail inside what is already there: the streaks become thousands of thin crisp wind combed filaments that run along the direction the streaks already run, with fine striations, delicate ripples and small soft billows between them, darker threads in the dark areas and thin threads of paler blue in the lighter ones. Even flat light, no cast shadows, no white clouds added, no vignette, no horizon, no stars, no lens effects, no grain, no painterly brush marks, no noise. Square image, the cloud deck fills the whole frame edge to edge. No text, no border.`;
+const r = await tools.generate_image({ prompt, filename: 'repo/out/work/nep/s2/takes/place' + width + '-t' + take, aspect_ratio: '1:1', images: ['repo/out/work/nep/s2/guide' + width + '.png'] });
+text(JSON.stringify(r.paths ?? r));

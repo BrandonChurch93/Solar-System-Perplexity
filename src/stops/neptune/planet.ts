@@ -61,11 +61,13 @@ export interface PatchSet {
   widthsDeg: number[]
   spot: THREE.Vector3
   feather: number
+  featherOwn?: number
   fade: [number, number]
   clearDeg?: [number, number]
   shownFrom?: number
   home?: THREE.Vector3
   plainDeg?: [number, number]
+  vivid?: [number, number]
   offsetsDeg?: [number, number][]
   tone?: THREE.Texture
 }
@@ -110,16 +112,20 @@ void main() {
 
 const SAMPLERS = Array.from({ length: MAX_LEVELS }, (_, i) => 'uniform sampler2D uPatch' + i + ';').join('\n')
 
+// The texel count of the texels view (diag only, no colour depends on it). A level of the globe's own pyramid counts where its weight is
+// at least a half. A shown plate counts by what is drawn of it, its weight times its alpha, summed from the deepest plate up: the plate at
+// which half of the pixel is reached sets the count. Until 23 Nov 15:50 a shown plate counted by its weight alone, also where its alpha had
+// ended (the corners of the widest plate's square), so the view called ground sharp that only the globe's own levels drew.
 const weights = (shownFrom: number): string => Array.from({ length: MAX_LEVELS }, (_, i) => i < shownFrom ? `    if (uPatchCount > ${i}.5) {
       vec2 q = g * uPatchScale[${i}];
-      w${i} = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent));
+      w${i} = front * smoothstep(0.5, 0.5 - uFeatherOwn, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent * uLine));
       parent = gd * uPatchScale[${i}] * uPatchSize[${i}];
       texels = mix(texels, parent, step(0.5, w${i}));
     }` : `    if (uPatchCount > ${i}.5) {
       vec2 q = (g - uPatchOff[${i}]) * uPatchScale[${i}];
-      w${i} = shown * front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y)))${i === shownFrom ? '' : ' * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent))'};
+      w${i} = shown * front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y)))${i === shownFrom ? '' : ' * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent * uLine))'};
       parent = gd * uPatchScale[${i}] * uPatchSize[${i}];
-      texels = mix(texels, parent, step(0.5, w${i}));
+      t${i} = parent;
     }`).join('\n')
 
 const fetches = (shownFrom: number): string => Array.from({ length: MAX_LEVELS }, (_, n) => MAX_LEVELS - 1 - n).map((i) => i < shownFrom ? `  float k${i} = w${i} * rest;
@@ -128,7 +134,9 @@ const fetches = (shownFrom: number): string => Array.from({ length: MAX_LEVELS }
   for (int k = 0; k < (k${i} > 0.0 ? 1 : 0); k++) {
     vec4 plate = textureGrad(uPatch${i}, (g - uPatchOff[${i}]) * uPatchScale[${i}] + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]);
     gShown += vec4(plate.rgb, 1.0) * (k${i} * plate.a);
-  }`).join('\n')
+  }
+  texels = mix(texels, t${i}, step(0.5, gShown.a) * (1.0 - counted));
+  counted = max(counted, step(0.5, gShown.a));`).join('\n')
 
 const frag = (shownFrom: number): string => /* glsl */ `
 precision highp float;
@@ -138,7 +146,9 @@ uniform float uPatchScale[${MAX_LEVELS}];
 uniform float uPatchSize[${MAX_LEVELS}];
 uniform float uPatchCount;
 uniform float uFeather;
+uniform float uFeatherOwn;
 uniform vec2 uPatchFade;
+uniform float uLine;
 uniform vec3 uSpotN;
 uniform vec3 uSpotE;
 uniform vec3 uSpotU;
@@ -169,6 +179,9 @@ uniform vec3 uCloud[${KNOTS}];
 uniform float uExtinction;
 uniform mat3 uBodyToWorld;
 uniform float uVignette;
+uniform vec3 uFallPivot;
+uniform vec3 uFallPower;
+uniform float uFallBlue;
 uniform float uAspect;
 uniform vec3 uRim;
 uniform vec3 uRimShape;
@@ -230,6 +243,10 @@ uniform vec4 uNearTint;
 uniform vec3 uNearFall;
 uniform vec2 uMelt;
 uniform vec4 uNight;
+uniform vec2 uVivid;
+uniform vec4 uDistant;
+uniform float uCirrusPx;
+uniform vec4 uDistantAir;
 in vec3 vClip;
 in vec3 vLocal;
 in vec3 vWorldN;
@@ -300,9 +317,10 @@ vec4 layerAt(vec3 dd, float soft, float shown, out float texels) {
   gy *= uGrad * soft;
   float front = step(0.3, dn);
   float parent = texels;
-${Array.from({ length: MAX_LEVELS }, (_, i) => '  float w' + i + ' = 0.0;').join('\n')}
+${Array.from({ length: MAX_LEVELS }, (_, i) => '  float w' + i + ' = 0.0;\n  float t' + i + ' = 0.0;').join('\n')}
 ${weights(shownFrom)}
   float rest = 1.0;
+  float counted = 0.0;
   vec4 c = vec4(0.0);
   gShown = vec4(0.0);
   gToneUv = (g - uPatchOff[${Math.min(shownFrom, MAX_LEVELS - 1)}]) * uPatchScale[${Math.min(shownFrom, MAX_LEVELS - 1)}] + 0.5;
@@ -365,7 +383,8 @@ void main() {
     keep = mix(1.0, far.r * smoothstep(uClump.x, uClump.y, far.b) * mix(uCirrus.w, 1.0, smoothstep(uClump.y, uClump.z, far.b)), uCirrus.x);
     deepen = 1.0 + uCirrus.x * uCirrus.z * (1.0 - smoothstep(0.9, 1.0, far.b));
   }
-  float alpha = layerAt(dcl, uCloudSoft, 0.0, texelsCloud).a * (1.0 - placed);
+  float softCloud = max(uCloudSoft, uCirrusPx);
+  float alpha = layerAt(dcl, softCloud, 0.0, texelsCloud).a * (1.0 - placed);
   float shadow = 0.6 * min(layerAt(dsa, uShadow.y, 0.0, texelsShadow).a, 1.0) + 0.4 * min(layerAt(dsb, uShadow.y * 1.8, 0.0, texelsShadow).a, 1.0);
   for (int k = 0; k < (uCirrus.x > 0.0 ? 1 : 0); k++) {
     alpha *= keep;
@@ -413,10 +432,18 @@ void main() {
   for (int k = 0; k < (shown.a > 0.0 ? 1 : 0); k++) {
     vec3 plate = min(shown.rgb / shown.a * exp2(uToneAmt * (textureLod(uTone, toneUv, 0.0).rgb - 0.5)), vec3(0.98));
     vec3 seen = inverseFilmic(plate) / (uNearTint.rgb * uNear.y);
-    deck = mix(deck, mix(vec3(dot(seen, vec3(0.3, 0.5, 0.2))), seen, 1.0 / uNear.w) / uTint, shown.a);
+    float grey = dot(seen, vec3(0.3, 0.5, 0.2));
+    float want = (grey - min(seen.r, min(seen.g, seen.b))) / max(grey, 1e-5) * mix(1.0 / uNear.w, 1.0, uNear.x);
+    float got = uVivid.x + (uVivid.y - uVivid.x) * (1.0 - exp(-max(want - uVivid.x, 0.0) / (uVivid.y - uVivid.x)));
+    deck = mix(deck, mix(vec3(grey), seen, (want > uVivid.x ? got / want : 1.0) / uNear.w) / uTint, shown.a);
   }
   float ndlc = dot(normalize(uBodyToWorld * pc), uSunW) + uEnd.x * uEndCresc.x;
   vec3 col = mix(deck, knot(uCloud, ndlc), alpha * smoothstep(-0.09, -0.03, ndlc)) * uTint;
+  for (int k = 0; k < (uDistant.x > 0.0 ? 1 : 0); k++) {
+    vec4 coarse = textureLod(uMap, fq, uDistant.w);
+    vec3 soft = mix(coarse.rgb / uCode * knot(uDeck, ndd), knot(uCloud, ndlc), min(coarse.a, 1.0) * (1.0 - placed) * keep * smoothstep(-0.09, -0.03, ndlc)) * uTint;
+    col = mix(col, mix(soft, uDistantAir.rgb * knot(uCloud, ndlc) * uTint, uDistantAir.a), uDistant.x * (1.0 - smoothstep(uDistant.y, uDistant.z, mu)));
+  }
   for (int k = 0; k < (uNear.x > 0.0 ? 1 : 0); k++) {
     vec3 nearCol = mix(vec3(dot(col, vec3(0.3, 0.5, 0.2))), col, uNear.w);
     float far = length(uCam);
@@ -475,6 +502,16 @@ void main() {
     col = max(col + uEnd.x * uEndStruct.w * uWeight * (endHash(gl_FragCoord.xy) - 0.5), vec3(0.0));
   }
   float moved = uStream + stormTurn(spinY(p, uSpin)) * 4.0;
+  // The grade of the fall (deep.json, globe.fall): none where the power is 1, so the hold keeps its bytes.
+  if (any(notEqual(uFallPower, vec3(1.0)))) {
+    vec3 fallX = max(col, vec3(0.0)) / uFallPivot;
+    col = mix(pow(fallX, uFallPower), fallX, smoothstep(0.6, 1.2, fallX)) * uFallPivot;
+    // The powers draw a blue of the map out to cobalt: the graded blue keeps at most uFallBlue times its green, with a soft knee
+    // (the pale band stands far under it and is not touched).
+    float fallMost = uFallBlue * col.g + 1e-5;
+    float fallOver = col.b / fallMost;
+    col.b = fallMost * (fallOver < 0.75 ? fallOver : 0.75 + 0.25 * (1.0 - exp(-(fallOver - 0.75) / 0.25)));
+  }
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, mix(vec3(0.1, 0.3, 0.9), vec3(0.95, 0.95, 0.9), min(alpha, 1.0)), vec2(moved * 8.0 * min(alpha, 1.0), shadow), length(vView));
 }`
 
@@ -519,14 +556,14 @@ export class NeptunePlanet {
         ...Object.fromEntries(levels.map((i) => ['uPatch' + i, { value: tex(i) }])),
         uPatchScale: { value: levels.map(scale) }, uPatchSize: { value: levels.map(size) },
         uPatchCount: { value: p?.textures.length ?? 0 },
-        uFeather: { value: p?.feather ?? 0.12 }, uPatchFade: { value: new THREE.Vector2(p?.fade[0] ?? 1.1, p?.fade[1] ?? 1.7) },
+        uFeather: { value: p?.feather ?? 0.12 }, uFeatherOwn: { value: p?.featherOwn ?? p?.feather ?? 0.12 }, uPatchFade: { value: new THREE.Vector2(p?.fade[0] ?? 1.1, p?.fade[1] ?? 1.7) }, uLine: { value: 1 },
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
         uPlace: { value: new THREE.Vector3(Math.cos(THREE.MathUtils.degToRad(p?.clearDeg?.[0] ?? 0)), Math.cos(THREE.MathUtils.degToRad(p?.clearDeg?.[1] ?? 1)), 0) },
-        uPatchOff: { value: levels.map(offset) }, uShown: { value: 0 }, uTone: { value: p?.tone ?? o.map }, uToneAmt: { value: 0 }, uHomeN: { value: p?.home ?? new THREE.Vector3(0, 0, 1) }, uPlain: { value: new THREE.Vector3(Math.cos(THREE.MathUtils.degToRad(p?.plainDeg?.[0] ?? 0)), Math.cos(THREE.MathUtils.degToRad(p?.plainDeg?.[1] ?? 1)), 0) },
+        uPatchOff: { value: levels.map(offset) }, uShown: { value: 0 }, uTone: { value: p?.tone ?? o.map }, uToneAmt: { value: 0 }, uVivid: { value: new THREE.Vector2(p?.vivid?.[0] ?? 1e9, p?.vivid?.[1] ?? 2e9) }, uCirrusPx: { value: 0 }, uHomeN: { value: p?.home ?? new THREE.Vector3(0, 0, 1) }, uPlain: { value: new THREE.Vector3(Math.cos(THREE.MathUtils.degToRad(p?.plainDeg?.[0] ?? 0)), Math.cos(THREE.MathUtils.degToRad(p?.plainDeg?.[1] ?? 1)), 0) },
         uSpin: { value: 0 }, uStream: { value: 0 }, uShear: { value: new THREE.Vector2(o.clouds.shear, o.clouds.shearBands) },
         uStormAxis: { value: o.storm.axis.clone().normalize() }, uStormRadius: { value: THREE.MathUtils.degToRad(o.storm.radiusDeg) }, uStormAngle: { value: 0 },
         uCloudHeight: { value: o.clouds.height }, uCloudSoft: { value: o.clouds.soft }, uShadow: { value: new THREE.Vector3(o.clouds.shadow, o.clouds.shadowSoft, 0.12) },
-        uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
+        uGain: { value: 1 }, uWeight: { value: 1 }, uFallPivot: { value: new THREE.Vector3(1, 1, 1) }, uFallPower: { value: new THREE.Vector3(1, 1, 1) }, uFallBlue: { value: 1e6 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
         uDeck: { value: knots(o.deck) }, uCloud: { value: knots(o.cloud) },
         uExtinction: { value: o.air.extinction },
         uRim: { value: new THREE.Vector3().fromArray(l.rim) }, uRimShape: { value: new THREE.Vector3(l.rimWidth, l.rimFrom, l.rimTo) }, uRimDir: { value: new THREE.Vector3(1, 0, 0) },
@@ -538,7 +575,7 @@ export class NeptunePlanet {
         uCut: { value: new THREE.Vector4(l.cut, l.cutMu[0], l.cutMu[1], 0) }, uCutEdge: { value: new THREE.Vector2(l.cutFrom, l.cutTo) }, uCutDir: { value: new THREE.Vector3(1, 0, 0) },
         uLimbDark: { value: new THREE.Vector3(l.dark, l.darkMu[0], l.darkMu[1]) }, uDarkEdge: { value: new THREE.Vector2(l.darkFrom, l.darkTo) }, uDarkDir: { value: new THREE.Vector3(1, 0, 0) },
         uVeil: { value: new THREE.Vector4(l.veil[0], l.veil[1], l.veil[2], l.veilAmount) }, uVeilMu: { value: new THREE.Vector2().fromArray(l.veilMu) }, uVeilSun: { value: new THREE.Vector3().fromArray(l.veilSun) }, uVeilDir: { value: new THREE.Vector3(1, 0, 0) },
-        uTwi: { value: new THREE.Vector3().fromArray(l.twilight) }, uTwiSun: { value: new THREE.Vector4().fromArray(l.twilightSun) }, uAirShade: { value: new THREE.Vector4(l.shade[0], l.shade[1], l.shade[2], 1) }, uAirGround: { value: 1 },
+        uTwi: { value: new THREE.Vector3().fromArray(l.twilight) }, uTwiSun: { value: new THREE.Vector4().fromArray(l.twilightSun) }, uAirShade: { value: new THREE.Vector4(l.shade[0], l.shade[1], l.shade[2], 1) }, uAirGround: { value: 1 }, uDistant: { value: new THREE.Vector4(0, 0.1, 0.5, 4) }, uDistantAir: { value: new THREE.Vector4(1, 1, 1, 0) },
         uForward: { value: new THREE.Vector3().fromArray(l.forward) }, uForwardShape: { value: new THREE.Vector2(l.forwardWidth, l.forwardPower) },
         uNear: { value: new THREE.Vector4(0, 1, o.near.power, o.near.saturation) }, uNearTint: { value: new THREE.Vector4(o.near.tint[0], o.near.tint[1], o.near.tint[2], o.near.pivot) }, uNearFall: { value: new THREE.Vector3(0, 1, 1) },
         uField: { value: o.field.texture }, uFieldRange: { value: new THREE.Vector4(o.field.muMax, o.field.ndlMin, o.field.width, o.field.span) }, uFieldSide: { value: new THREE.Vector4(1, 0, 0, 0) }, uMelt: { value: new THREE.Vector2(l.melt[0], l.melt[2]) }, uNight: { value: new THREE.Vector4(0, o.night.edge[0], o.night.edge[1], Math.log2(o.mapWidth / o.night.texels)) },
