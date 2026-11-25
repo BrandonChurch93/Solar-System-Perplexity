@@ -1,9 +1,55 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-24T23:41:26.397Z",
+ "pushed": "2026-11-25T00:20:48.256Z",
  "head": "a1d978797b22b212f8a4c85e6466785bd16127a0",
- "note": "23:41 UTC: place on the hero's oval; leave, rise low, d253 stills; the hold pair; work on MAIL 807 (a) to (d) has begun, nothing of it in these pictures yet",
+ "note": "00:21 UTC: storm in the hold now goes through the wrap's point spread; deck presence by relief depth over the pixel's foot; height laws of the limb next",
  "looks": [
+  {
+   "time": "2026-11-25T00:20:47.671Z",
+   "file": "20261125002047671-note-pair-3150-final.jpg",
+   "source": "../work/r6/pair-3150-final.jpg",
+   "kind": "note",
+   "label": "close view 3150 beside the approved image (match 7.97, unchanged since 23:18)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T00:20:47.051Z",
+   "file": "20261125002047051-note-nodeck-check.jpg",
+   "source": "../work/r7/nodeck-check.png",
+   "kind": "note",
+   "label": "dive 2983, 2990, 2997 with the deck and with the deck off: the storm stands on the same spot in both",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T00:20:46.477Z",
+   "file": "20261125002046477-note-pair-2895-final-1to1.jpg",
+   "source": "../work/r7/pair-2895-final-1to1.png",
+   "kind": "note",
+   "label": "hold 2895 at 1 to 1: kept still left, now right (unfinished)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T00:20:45.888Z",
+   "file": "20261125002045888-note-pair-2895-final-6x.jpg",
+   "source": "../work/r7/pair-2895-final-6x.png",
+   "kind": "note",
+   "label": "hold 2895 round the place at 6 times: kept still left, now right (storm through the wrap's own point spread, unfinished)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T00:09:26.133Z",
+   "file": "20261125000926133-frame-r5-2895.jpg",
+   "source": "out/work/jupiter/final/r5-2895.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2895, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "13d9cc752b1d9c4e"
+  },
   {
    "time": "2026-11-24T23:41:25.810Z",
    "file": "20261124234125810-note-pair-3150-final.jpg",
@@ -71,20 +117,6 @@
    "frame": 3012,
    "tier": "draft",
    "format": "uhd",
-   "diag": "beauty",
-   "engine": "13d9cc752b1d9c4e"
-  },
-  {
-   "time": "2026-11-24T23:26:26.605Z",
-   "file": "20261124232626605-frame-r4-2895.jpg",
-   "source": "out/work/jupiter/final/r4-2895.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2895, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
    "diag": "beauty",
    "engine": "13d9cc752b1d9c4e"
   },
@@ -180,38 +212,6 @@
    "source": "../work/r6/pair-3150-x1.jpg",
    "kind": "note",
    "label": "UNFINISHED 3150 at the new place: approved image left, draft right",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T22:55:07.062Z",
-   "file": "20261124225507062-note-pair-2895-x1-crop.jpg",
-   "source": "../work/r6/pair-2895-x1-crop.jpg",
-   "kind": "note",
-   "label": "UNFINISHED hold 2895 at 2 to 1 round the new place: kept still left, place written into the hero right (reads as a dark blob, not yet an oval storm)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T22:55:06.152Z",
-   "file": "20261124225506152-note-po-pair-a.jpg",
-   "source": "../work/r6/po-pair-a.jpg",
-   "kind": "note",
-   "label": "rise 3250 to 3256: named state beside the plates alone, the lower left smear is the plates' own paint",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T22:55:05.018Z",
-   "file": "20261124225505018-note-oval-zoom.jpg",
-   "source": "../work/r6/oval-zoom.jpg",
-   "kind": "note",
-   "label": "survey: the hero's pale spiral oval east of the red storm, Sun 33.1 degrees, the new place",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T22:55:03.832Z",
-   "file": "20261124225503832-note-survey.jpg",
-   "source": "../work/r6/survey.jpg",
-   "kind": "note",
-   "label": "survey: Sun height over the hero map, ring of 32 degrees",
    "stop": "jupiter"
   }
  ]
