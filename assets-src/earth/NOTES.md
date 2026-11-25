@@ -5654,3 +5654,28 @@ Mail to /root at 16:03: the correction (cause found, the model sheets, the cures
 REQUEST to /root/handover_engineer at 16:04 (shared code): in `src/core/sampler.ts`, `samplesFor(count, shutter)`, for shutter < 1 only: keep jitter and timeOffset, give sample i the weight w(p) / sum of w with p = (i + 0.5) / count and w(p) = 1 - abs(2 p - 1); at shutter === 1 nothing changes. Variants named: (b2) the same over a span 1.41 times as wide; (a) a lower `handover.minShutter`. Proof offered: earth 1857 and 2156 at final at 1 to 1 beside today's once a sha is named.
 
 Disk: "2596M" free at 16:01; old trial pictures over 500 kB in /tmp/gl/k11 to k14 and /tmp/gl/ho deleted: "3459M".
+
+### 16:08 UTC: MAIL 1183 received (verbatim)
+
+MAIL 1183 from the Builder (/root), 16:09 UTC. To earth_builder, on NAMED caaa727d (not whole) and your answer on A.
+
+1. A: the cause stands as you measured it. I looked at both sheets: the box along the measured motion makes the blocks (3.52 levels from the render against 16.06 for the closed frame). RULED: (b1), soft ends over the same open span, is asked of the handover engineer for the third cut. The frame decides, not the model: his finals of 1857 and 2156 with (b1) and with (b2) beside today's, and one fast frame each of two other stops. Not (a): a shorter box keeps the hard ends. Not (c).
+2. caaa727d does not go into the second cut of 17:00: by your own measure 1755 falls in the wedge against the hero (25.13 against main's 15.95) and 2010's far band is not the approved shot (d296).
+3. B and C at the hold (the lights on daylit land, the aurora) are the approved hero's own. The hold is not touched. No change there.
+4. ORDER for your next name, due 19:15 for the third cut. First what a viewer sees load in, because Brandon's third note names it at your stop ("there is like a moment where things load in"): your item 5 (the place reads as a disc from 1866 to 1895 and 2124 to 2136: lighter ground with an outline, a fringe of specks, towers that end on an arc) and your item 10 (the towers arriving in place, 1886 to 1893). By d253 nothing of the place may come or go with the clock, and the place may not be told from the globe by an outline. Then ruling 3 (the wedge's cover down until 1755 in the wedge reads no worse than main's), the height of small bodies for the band, and deck's own wedge pass so that only the wedge changes. Both lines whole by the tool before you name.
+5. If item 5 cannot be whole by 19:15, name what stands with its frames and say what is left; the third cut takes what is green.
+
+### 16:04 to 16:10 UTC: ruling 3 measured on trials (not built): the wedge's cover at half and at a quarter, 1755 at final
+
+Candidates by `/tmp/gl/k15/cand.py`, rendered by `/tmp/gl/k15/trial.sh` (1755 final, 69 s each, tree restored after), measured by `/tmp/gl/k15/m1755b.py`. Files `/tmp/gl/k15/final-1755-{half,quarter,caaa727d}.png`.
+
+- Half: "px that differ 14839 by more than 1: 6694 by more than 2: 5400 largest 205"; wedge region 12586 px: "share of light px hero 0.0509, main 0.0648, ee321270 0.0658, now 0.1179; mean difference from the hero main 16.07, ee321270 15.23, now 21.15".
+- A quarter: "px that differ 11419 by more than 1: 4913 by more than 2: 3823 largest 205"; wedge region 10950 px: "share of light px hero 0.0491, main 0.0634, ee321270 0.0637, now 0.0924; mean difference from the hero main 16.13, ee321270 15.29, now 18.80".
+- Whole (caaa727d): 25.13 against main's 15.95.
+- Outside 13.5 degrees every changed px by 1 level in all three; disc 0 to 5 degrees: now 14.40 and 14.41 against main's 14.49.
+
+Reading: the mean difference from the hero falls with the cover but at a quarter it is still 18.80 against main's 16.13. "No worse than main's" is not reached at a quarter. Not measured below a quarter.
+
+### 16:10 UTC: plan for MAIL 1183 item 4
+
+Order as ruled: item 5 (the disc) and item 10 (towers arriving in place) first, then ruling 3, the height of small bodies, deck's wedge pass. Tool written for item 5: `out/work/earth/place/tmp/rings.ts LIST FRAMES` projects the rings of the place (degrees from its centre) into a dive or rise frame; `/tmp/gl/k15/ringview.py` draws them over the cached draft frames. First look at 1885 with the rings: the lighter, hazier ground with towers ends near the 5 degree ring (red) and the 4.2 ring (yellow); the speck fringe lies between 5 and 6.4 and outward.
