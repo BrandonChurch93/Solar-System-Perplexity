@@ -1,77 +1,71 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T10:20:43.256Z",
+ "pushed": "2026-11-25T10:44:35.776Z",
  "head": "22820b17727af6c3ac68996bfceebac0aca83c2a",
- "note": "far wall facets traced to the paint of the 0.7 degree plate",
+ "note": "wall law trials 1 and 2 and a repaint from a heights sketch: none adopted; reader's pattern red read on its own sheet: top strip of the frame, not the far wall",
  "looks": [
   {
-   "time": "2026-11-25T10:20:42.672Z",
-   "file": "20261125102042672-note-plate-0p7.jpg",
-   "source": "out/work/place/k6/plate-0p7.jpg",
+   "time": "2026-11-25T10:44:35.219Z",
+   "file": "20261125104435219-note-wall-2692.jpg",
+   "source": "out/work/place/k9/wall-2692.jpg",
    "kind": "note",
-   "label": "the 0.7 degree plate whole: a slanted painting, not a top view",
+   "label": "2692 far wall 1 to 1: state against wall law trial 2",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T10:20:42.137Z",
-   "file": "20261125102042137-note-Y2692-half.jpg",
-   "source": "out/work/place/k6/Y2692-half.jpg",
+   "time": "2026-11-25T10:44:34.661Z",
+   "file": "20261125104434661-note-native-2692.jpg",
+   "source": "out/work/place/k9/native-2692.jpg",
    "kind": "note",
-   "label": "2692 with the plates tinted: 0.3 red, 0.7 green, 1.6 blue, 3.8 yellow (control)",
+   "label": "2692 native pair: state against wall law trial 2 (walls lit from the heights, layers; body kept): shadowed walls smooth and dark, not adopted",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T10:20:41.575Z",
-   "file": "20261125102041575-note-facet-paint.jpg",
-   "source": "out/work/place/k6/facet-paint.jpg",
+   "time": "2026-11-25T10:39:38.910Z",
+   "file": "20261125103938910-note-see-0p7-1to1.jpg",
+   "source": "out/work/place/k9/see-0p7-1to1.jpg",
    "kind": "note",
-   "label": "facets at 2692: as it stands and with the 0.7 degree plate low passed (control): the facets are painted in the plate",
+   "label": "0.7 deg plate 1 to 1, take against wall law trial 2: etched contour lines, synthetic",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T10:06:21.378Z",
-   "file": "20261125100621378-note-facet-2692-lift.jpg",
-   "source": "out/work/place/k6/facet-2692-lift.jpg",
+   "time": "2026-11-25T10:39:38.356Z",
+   "file": "20261125103938356-note-see-0p7.jpg",
+   "source": "out/work/place/k9/see-0p7.jpg",
    "kind": "note",
-   "label": "facets at 2692: set on and set held off (1 to 1, lifted 2.2): alike",
+   "label": "0.7 deg plate, take against wall law trial 2 (walls lit from heights, layers, gullies), seen from above",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T10:06:20.816Z",
-   "file": "20261125100620816-note-facet-ctl.jpg",
-   "source": "out/work/place/k6/facet-ctl.jpg",
+   "time": "2026-11-25T10:39:37.748Z",
+   "file": "20261125103937748-note-lead-take-03.jpg",
+   "source": "out/work/place/k9/lead-take-03.jpg",
    "kind": "note",
-   "label": "facets on the far wall at 2692: as it stands, detail not wired, cells 2048 (1 to 1, lifted 2.2): alike",
+   "label": "lead with walls sketched from the heights and the image tool's take: tool painted an oblique canyon again, thrown away",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T09:51:06.551Z",
-   "file": "20261125095106551-compare-mars-rise-sides.jpg",
-   "source": "out/work/handover/mars-rise-sides.png",
-   "kind": "compare",
-   "label": "mars rise, both sides at T (frame 2681) and their difference times 8",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "frame": 2681,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-25T09:50:33.528Z",
-   "file": "20261125095033528-compare-mars-dive-sides.jpg",
-   "source": "out/work/handover/mars-dive-sides.png",
-   "kind": "compare",
-   "label": "mars dive, both sides at T (frame 2477) and their difference times 8",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2477,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-25T09:40:57.710Z",
-   "file": "20261125094057710-note-native-2.jpg",
-   "source": "out/work/place/k7/native-2.jpg",
+   "time": "2026-11-25T10:39:37.147Z",
+   "file": "20261125103937147-note-two-bodies-0p7.jpg",
+   "source": "out/work/place/k8/two-bodies-0p7.jpg",
    "kind": "note",
-   "label": "8.5 level repainted, before (9cb92e38) and after: native-2",
+   "label": "0.7 deg plate beside the light of its own heights: two bodies on the walls",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T10:39:36.545Z",
+   "file": "20261125103936545-note-two-bodies-0p3.jpg",
+   "source": "out/work/place/k8/two-bodies-0p3.jpg",
+   "kind": "note",
+   "label": "0.3 deg plate beside the light of its own heights: paint has a boulder plain where the heights have a wall",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T10:39:35.988Z",
+   "file": "20261125103935988-note-native-2458.jpg",
+   "source": "out/work/place/k8/native-2458.jpg",
+   "kind": "note",
+   "label": "2458 native pair: old 8.5 state against wall law trial 1 (smooth walls, not adopted)",
    "stop": "mars"
   }
  ]
