@@ -1,9 +1,17 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T21:51:39.494Z",
+ "pushed": "2026-11-25T22:10:39.622Z",
  "head": "336de354d612f66480cfd58abbd8c8eeaa0835f3",
- "note": "Cure of the surface view, step 1 in the making: the guide chart is built (cut 0.08 units); flow and code detail follow; first 3150 on the new ground by 23:45 UTC",
+ "note": "First 3150 on the new ground at draft, as it is: flow, guide and code detail; light and shadows not yet built",
  "looks": [
+  {
+   "time": "2026-11-25T22:10:38.787Z",
+   "file": "20261125221038787-note-a-3150.jpg",
+   "source": "../work/r23/t/a-3150.png",
+   "kind": "note",
+   "label": "3150 at draft, first state of the new ground: no eye, the guide (cut 0.08 units), the flow, code detail carried in three ages of wound coordinates. Light still as before, no slopes, no shadows",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T21:51:38.701Z",
    "file": "20261125215138701-note-noeye-3150.jpg",
@@ -186,14 +194,6 @@
    "source": "../work/r15/p1-3150.jpg",
    "kind": "note",
    "label": "jupiter 3150 final on 1c5b75fa, the named bytes",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T19:07:27.002Z",
-   "file": "20261125190727002-note-rise-b-d.jpg",
-   "source": "../work/r15/sheets/rise-b-d.jpg",
-   "kind": "note",
-   "label": "jupiter rise 3300 to 3308 and a half on 1c5b75fa, every drawn frame",
    "stop": "jupiter"
   }
  ]
