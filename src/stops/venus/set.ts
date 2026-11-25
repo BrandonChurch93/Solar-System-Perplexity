@@ -10,7 +10,7 @@ import { patches, place, relief as reliefDefs, wrap } from './assets'
 import { Globe } from './globe'
 import * as look from './look'
 import { below, deck, plan, veil as timing } from './plan'
-import { CloudRelief } from './relief'
+import { CloudRelief, dryable } from './relief'
 import { HoldRim, LIMB, Rim, limbFrame } from './rim'
 import skyJson from './sky.json'
 import { Veil } from './veil'
@@ -112,6 +112,8 @@ export const createSet: SetFactory = async (ctx) => {
     flow: { map: flowMap, strength: look.drift.strength, shadow: look.drift.shadow, shadowOffset: look.drift.shadowOffset },
     bolts: { map: boltMap, center: direction(wrap.bolt.lon, wrap.bolt.lat), widthDeg: wrap.bolt.widthDeg, gain: 1, color: look.boltColor, cells: look.cells.map((c) => ({ dir: direction(c.lon, c.lat), radiusDeg: c.radiusDeg, painted: c.painted })) },
   })
+  // The hold's picture over the close side (globe.ts, over) is made in the hold as the ground is: drawn dry out of a move.
+  dryable(globe.over)
   globe.mesh.quaternion.copy(globeTurn)
   globe.mesh.scale.fromArray(fit.globe.scale)
   const rim = new Rim(limbMap, look.limb.radius, diagUniform, look.bloom.hide, holdRim)
@@ -278,7 +280,8 @@ export const createSet: SetFactory = async (ctx) => {
       airTurn.copy(plan.turn(state.time)).multiply(plan.terrainFrame)
       airEye.copy(localP).applyQuaternion(airBack.copy(airTurn).invert()).multiplyScalar(deck.radius)
       ground.updateGlobe(airEye, eyeAtT(state.time > terrainMid ? 'rise' : 'dive'), airTurn, covering ? state.weight : 0, place.air.field, sunOn * state.weight, covering ? below(camera.length() - 1, place.air.exactHeights) : 0, gain, shot.post.vignette, view, shot.sun.dir, own)
-      // The ground of the close side itself, in below the heights of plates.json (ground): at the handover the globe side is the close side's scene.
+      // The ground of the close side itself: at the handover the globe side is the close side's scene. In both moves it stands whole on
+      // the plates, and the hold's picture goes over both by the share it still has (globe.ts, uOver). No height is read.
       const heightT = eyeAtT(state.time > terrainMid ? 'rise' : 'dive').length() / deck.radius - 1
       // The tones of the ground by the law of the plates (plates.json, tone): the share of its stored tones goes by the angle and the air
       // alone (no height of the camera is read), over the globe's colour at the place (ground.tone.under, as it stands at the near end of
@@ -291,7 +294,7 @@ export const createSet: SetFactory = async (ctx) => {
       // The near ground, which the camera of T sees from above (ground.keep), keeps all of its picture at every height, so no crest of
       // it goes out by height while the flat plate stands.
       const held = Math.max(1 - below((camera.length() - 1) / heightT, place.ground.release), 1e-6)
-      const share = { weight: covering ? below(camera.length() - 1, place.ground.heights) * state.weight : 0, under: covering ? below(camera.length() - 1, place.ground.bandHeights) * state.weight : 0, band: place.ground.band, true: place.ground.true as [number, number], skin: place.ground.skin as [number, number], tall: place.ground.tall, held, keep: place.ground.keep, atT: camAtT(state.time > terrainMid ? 'rise' : 'dive'), frustum: [place.ground.frustum.margin[0]!, place.ground.frustum.margin[1]!, place.ground.frustum.wide] as [number, number, number], near: [place.ground.frustum.near[0]!, place.ground.frustum.near[1]!, place.ground.frustum.forms] as [number, number, number], flat: [place.ground.flat.sinElevation[0]!, place.ground.flat.sinElevation[1]!, place.ground.flat.horizon[1]!, place.ground.flat.horizon[0]!] as [number, number, number, number], matte: [place.ground.matte.width, place.ground.matte.forms, place.ground.matte.level, place.ground.matte.scale] as [number, number, number, number], tone: groundTone }
+      const share = { weight: covering ? state.weight : 0, under: covering ? below(camera.length() - 1, place.ground.bandHeights) * state.weight : 0, band: place.ground.band, true: place.ground.true as [number, number], skin: place.ground.skin as [number, number], tall: place.ground.tall, held, keep: place.ground.keep, atT: camAtT(state.time > terrainMid ? 'rise' : 'dive'), frustum: [place.ground.frustum.margin[0]!, place.ground.frustum.margin[1]!, place.ground.frustum.wide] as [number, number, number], near: [place.ground.frustum.near[0]!, place.ground.frustum.near[1]!, place.ground.frustum.forms] as [number, number, number], flat: [place.ground.flat.sinElevation[0]!, place.ground.flat.sinElevation[1]!, place.ground.flat.horizon[1]!, place.ground.flat.horizon[0]!] as [number, number, number, number], matte: [place.ground.matte.width, place.ground.matte.forms, place.ground.matte.level, place.ground.matte.scale] as [number, number, number, number], tone: groundTone }
       ground.updateGround(share, state.time - terrainMid, airEye, eyeAtT(state.time > terrainMid ? 'rise' : 'dive'), airTurn, deck.centre, gain, shot.post.vignette, view, shot.sun.dir, own)
       const vignette = shot.post.vignette * (1 - low * (1 - lensOn))
       hazeTurn.copy(state.rotation).multiply(airTurn)
@@ -307,6 +310,11 @@ export const createSet: SetFactory = async (ctx) => {
       // ground point and by place, read through the footprint of the pixel on the deck (globe.ts, show). The angle of a pixel of the
       // master frame at the middle of the frame, and how many of those a pixel of this buffer is.
       gu.uPlaceOn!.value = pl.on
+      // One exchange at a pixel (globe.ts, uOver): in a move the globe lays the plates whole under the ground and its mesh over draws
+      // the hold's picture over both by the share it still has. Out of a move the globe is as it was and the mesh over is dry.
+      gu.uOver!.value = covering ? 1 : 0
+      globe.over.visible = covering || own
+      globe.over.userData.dry = !covering
       const pixelAngle = 2 * Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) / view.format.height
       ;(gu.uFoot!.value as THREE.Vector3).x = pixelAngle * frameScale
       ;(gu.uFoot!.value as THREE.Vector3).z = 1 / frameScale

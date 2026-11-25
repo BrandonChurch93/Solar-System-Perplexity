@@ -180,6 +180,7 @@ uniform vec2 uDisc;
 uniform float uShowMap;
 uniform vec3 uToneEye;
 uniform vec3 uHeldEye;
+uniform float uOver;
 uniform vec4 uToneLook;
 uniform float uTonePower;
 uniform vec4 uDusk;
@@ -516,6 +517,7 @@ ${TAP_LEVELS}
   vec2 pgx = (vec2(dot(gMaj, uPlaceE), dot(gMaj, uPlaceU)) - pg * dot(gMaj, uPlaceN)) / pnn;
   vec2 pgy = (vec2(dot(gMin, uPlaceE), dot(gMin, uPlaceU)) - pg * dot(gMin, uPlaceN)) / pnn;
   float pgd = sqrt(max(dot(pgx, pgx), dot(pgy, pgy)));
+  float heldShare = 0.0;
   for (int pass = 0; pass < (uPlaceOn > 0.0 && pn > 0.3 ? 1 : 0); pass++) {
     // Two approved pictures show this ground: the hold picture from the eyes of the hold and the close picture from the eye of T
     // (uToneEye). They do not show the same forms (proofs D1 and D2 in the notes: the plates seen from the hold are not the hold
@@ -542,6 +544,13 @@ ${TAP_LEVELS}
         texels = mix(texels, pgd * uFoot.z * uWideLook.x * uWideLook.w, m * arrive);
       }
     }
+    // One exchange at a pixel (uOver). In a move the close side is laid whole: the plates here at their full share wherever any of
+    // them has come (uOver 1), and the ground of the surface view over them (relief.ts). The hold's picture is then drawn over the
+    // whole of it by the share it still has, 1 - arrive (uOver 2, the mesh over): the same picture as the plates alone give by arrive
+    // where no ground stands, and under the ground no second, flat picture of what the ground shows in relief. The air below and
+    // the gain are the same in both, so the sum is the sum under them. Out of a move uOver is 0 and nothing here differs.
+    heldShare = 1.0 - arrive;
+    if (uOver > 1.5) break;
     vec3 laid = vec3(0.0);
     float cover = 0.0;
     float parentPlace = 0.0;
@@ -591,7 +600,7 @@ ${PLACE_GLSL}
         seen *= clamp(aboveForms * lowLum / ownLum, 1.0 / uLiveLook.z, uLiveLook.z);
         seen = mix(above, seen, same);
       }
-      col = mix(col, seen, cover * uPlaceOn * arrive);
+      col = mix(col, seen, cover * uPlaceOn * (uOver > 0.5 ? 1.0 : arrive));
       texels = mix(texels, placeTexels, uPlaceOn * arrive);
     }
   }
@@ -614,11 +623,20 @@ ${PLACE_GLSL}
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.9, 0.75, 0.3), vec2(drift + uDrift.y * band, 0.0) * 8.0, length(vView));
   if (dot(past, past) >= 1.0) discard;
+  if (uOver > 1.5) {
+    if (heldShare <= 0.0 || uDiag >= 2) discard;
+    outColor.a = heldShare;
+  }
 }`
+
+// The place of the mesh over in the order of the globe side: after every layer of the ground (relief.ts, 7 and up).
+const OVER_ORDER = 40
 
 export class Globe {
   readonly mesh: THREE.Mesh
   readonly material: THREE.ShaderMaterial
+  // The hold's picture over the close side in a move (FRAG, uOver): the same sphere and the same uniforms, drawn after the ground.
+  readonly over: THREE.Mesh
   private readonly cells: THREE.Vector4[]
   private readonly amps: THREE.Vector2[]
   private readonly inverse = new THREE.Quaternion()
@@ -695,6 +713,7 @@ export class Globe {
         uDisc: { value: new THREE.Vector2(Math.tan(THREE.MathUtils.degToRad(o.place.show.discDeg[0])), Math.tan(THREE.MathUtils.degToRad(o.place.show.discDeg[1]))) },
         uToneEye: { value: new THREE.Vector3(0, 0, 5) },
         uHeldEye: { value: new THREE.Vector3(0, 0, 5) },
+        uOver: { value: 0 },
         uToneLook: { value: new THREE.Vector4(o.place.tone.air, 0, o.place.tone.cos[0], o.place.tone.cos[1]) },
         uTonePower: { value: o.place.tone.power },
         uAirDeck: { value: o.air.deck }, uAirFwd: { value: new THREE.Vector3(0, 0, -1) }, uAirRight: { value: new THREE.Vector3(1, 0, 0) }, uAirHaze: { value: new THREE.Vector4(0, 0.05, 1, THREE.MathUtils.degToRad(o.air.deckSpanDeg)) }, uAirField: { value: new THREE.Vector3(1e3, 2e3, 1) },
@@ -729,6 +748,10 @@ export class Globe {
     })
     const seg = o.segments ?? 320
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1 / Math.cos(Math.PI / seg) + 2e-4, seg, seg / 2), this.material)
+    this.over = new THREE.Mesh(this.mesh.geometry, new THREE.ShaderMaterial({ glslVersion: THREE.GLSL3, vertexShader: VERT, fragmentShader: FRAG, uniforms: { ...this.material.uniforms, uOver: { value: 2 } }, transparent: true, depthTest: false, depthWrite: false }))
+    this.over.renderOrder = OVER_ORDER
+    this.over.visible = false
+    this.mesh.add(this.over)
   }
 
   update(camera: THREE.Vector3, sun: THREE.Vector3, world: THREE.Quaternion, spin: number, drift: number, flow: number, amps: number[], gain: number, weight: number): void {
@@ -772,5 +795,6 @@ export class Globe {
   dispose(): void {
     this.mesh.geometry.dispose()
     this.material.dispose()
+    ;(this.over.material as THREE.Material).dispose()
   }
 }

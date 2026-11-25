@@ -258,7 +258,10 @@ void main() {
 // The same ground on the globe side (plan F: one scene through the change of view). The meshes of the close side hang in the globe's
 // scene at the globe's scale, by the similarity of the plan, so from the camera of the handover they are the close side's picture, point for
 // point, and from any other eye they are the same towers seen from there. Swaps against the close side's own shaders: the eye is given
-// (as for the dome); the weight (by the height of the camera, set.ts) scales the alpha. The picture of the close view lies on these meshes
+// (as for the dome); the weight scales the alpha. In both moves the ground stands whole on the plates, which then hold the close
+// picture whole as well: the two are the close side, one picture. The hold's picture goes over the whole of it by the share it still
+// has at each point (globe.ts, uOver and the mesh over), so the close picture has one carrier at a pixel and no part of the ground
+// comes by the height of the camera. The picture of the close view lies on these meshes
 // as the close view's own camera saw it, so from another eye a part of it is drawn larger than it was seen. The ground is drawn only where
 // it is true from this eye, by angle and distance alone, no clock:
 // - uTrue, the deck: the smaller scale of the picture of the close view against the frame at this point (frame heights of the close image
@@ -413,7 +416,7 @@ interface Layer { mesh: THREE.Mesh; material: THREE.ShaderMaterial }
 // around the one draw). What a dive, a surface view or a rise shows first is drawn dry from the first frame of the hold on, so no picture
 // of a move has anything left to make (plan H): mesh.userData.dry says when.
 const NO_BOX = new THREE.Vector4(0, 0, 0, 0)
-function dryable(mesh: THREE.Mesh): void {
+export function dryable(mesh: THREE.Mesh): void {
   const box = new THREE.Vector4()
   let test = false
   mesh.onBeforeRender = (renderer) => {
