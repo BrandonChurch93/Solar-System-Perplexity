@@ -1,9 +1,77 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T06:37:57.244Z",
+ "pushed": "2026-11-25T06:58:25.239Z",
  "head": "b79d375ebfc18ad36f3c18260c8830c707952f22",
- "note": "06:39 UTC: second named commit of round 2 is b79d375e (red by my own run: pattern line in both moves, level of 3287 + 1/2); experiment shows the air table as the cause of most of it; next: another law of the air",
+ "note": "round 2, third commit in work: experiments on the air's law (which part of the veil the pattern reading counts); nothing committed yet",
  "looks": [
+  {
+   "time": "2026-11-25T06:58:24.623Z",
+   "file": "20261125065824623-note-trio-3150.jpg",
+   "source": "../work/r10/trio-3150.jpg",
+   "kind": "note",
+   "label": "3150: approved close image, this commit at final tier, kept still of the first named commit",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T06:58:24.187Z",
+   "file": "20261125065824187-frame-a2-3260.jpg",
+   "source": "out/work/jupiter/p1/a2-3260.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3260, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3260,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
+  {
+   "time": "2026-11-25T06:58:24.008Z",
+   "file": "20261125065824008-note-hz-3037.jpg",
+   "source": "../work/r11/hz-3037.jpg",
+   "kind": "note",
+   "label": "frame 3037, right half of the horizon at full size, top to bottom: as named, air off, weaker air, added light only",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T06:58:23.238Z",
+   "file": "20261125065823238-note-e1f-dive.jpg",
+   "source": "../work/r11/e1f-dive.png",
+   "kind": "note",
+   "label": "experiment, not committed: the same pair with a weaker air (at least 0.7 of the ground comes through): 1.09 on the earlier frame, 0.42 on the later",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T06:58:22.344Z",
+   "file": "20261125065822344-note-a3-dive.jpg",
+   "source": "../work/r11/a3-dive.png",
+   "kind": "note",
+   "label": "experiment, not committed: the same pair with every ray coming through whole and only the added light left: the reading on the earlier frame stays 1.81, so the added light near the horizon is the cause on the dive",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T06:58:21.151Z",
+   "file": "20261125065821151-note-asis-dive.jpg",
+   "source": "../work/r11/asis-dive.png",
+   "kind": "note",
+   "label": "dive 3029 against 3037 as named (b79d375e): left the two frames, middle the later one carried onto the earlier and back, right where the pattern reads changed (white is over the limit)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T06:57:02.696Z",
+   "file": "20261125065702696-frame-a2-3037.jpg",
+   "source": "out/work/jupiter/p1/a2-3037.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 3037, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 3037,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
   {
    "time": "2026-11-25T06:37:56.666Z",
    "file": "20261125063756666-note-trio-3150.jpg",
@@ -29,34 +97,6 @@
    "stop": "jupiter",
    "segment": "jupiter.terrain",
    "frame": 3150,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
-  },
-  {
-   "time": "2026-11-25T06:34:49.124Z",
-   "file": "20261125063449124-frame-v0-3260.jpg",
-   "source": "out/work/jupiter/p1/v0-3260.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3260, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3260,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
-  },
-  {
-   "time": "2026-11-25T06:33:28.287Z",
-   "file": "20261125063328287-frame-v0-3037.jpg",
-   "source": "out/work/jupiter/p1/v0-3037.png",
-   "kind": "frame",
-   "label": "jupiter.dive frame 3037, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 3037,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
@@ -197,52 +237,6 @@
    "first": 3047,
    "last": 3058,
    "tier": "draft"
-  },
-  {
-   "time": "2026-11-25T05:49:43.333Z",
-   "file": "20261125054943333-sheet-jupiter-dive-draft-across.jpg",
-   "source": "out/work/handover/jupiter-dive-draft-across.png",
-   "kind": "sheet",
-   "label": "jupiter dive, every frame 3053 to 3059 (across T, frame 3059), draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "first": 3053,
-   "last": 3059,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-25T05:49:42.042Z",
-   "file": "20261125054942042-compare-jupiter-dive-step-in-place.jpg",
-   "source": "out/work/handover/jupiter-dive-step-in-place.png",
-   "kind": "compare",
-   "label": "jupiter dive, the largest step of the level in place (0.93): frame 3004, frame 3005, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 3005
-  },
-  {
-   "time": "2026-11-25T05:36:17.975Z",
-   "file": "20261125053617975-note-trio-3150.jpg",
-   "source": "../work/r10/trio-3150.jpg",
-   "kind": "note",
-   "label": "3150 final beside the approved image and the kept still (match 7.358 at the round's size, round 46 6.578)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T05:36:17.374Z",
-   "file": "20261125053617374-note-storm-equal.jpg",
-   "source": "../work/r9/storm-equal.png",
-   "kind": "note",
-   "label": "the storm on equal ground, 2895 to 3024, frames of e41572b",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T05:36:16.811Z",
-   "file": "20261125053616811-note-jupiter-rise-k6500-6506-changes.jpg",
-   "source": "../work/r10/slices/jupiter-rise-k6500-6506-changes.png",
-   "kind": "note",
-   "label": "rise 3250 to 3253 on the merge, the tool's change picture (rows equal to the whole run)",
-   "stop": "jupiter"
   }
  ]
 }
