@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T04:36:35.844Z",
+ "pushed": "2026-11-25T04:58:35.870Z",
  "head": "7755294aa70875d7406a3a89a2a51744cbb9a8ac",
- "note": "round 44 item 2 in work: near field zones and finer grains; items 1 and 3 stand in the tree, not yet committed",
+ "note": "item 2 near field: wide lanes only from octave 5, octaves 2 to 4 soft near the lens; next the commit of item 5 with the foot, wedge and globe",
  "looks": [
+  {
+   "time": "2026-11-25T04:58:35.254Z",
+   "file": "20261125045835254-note-g5_ll.jpg",
+   "source": "../../../../tmp/v/x/g5_ll.png",
+   "kind": "note",
+   "label": "3720 lower left at native size, approved above, tree g5 below (review tier)"
+  },
+  {
+   "time": "2026-11-25T04:58:34.660Z",
+   "file": "20261125045834660-note-g5_low.jpg",
+   "source": "../../../../tmp/v/x/g5_low.png",
+   "kind": "note",
+   "label": "3720 lower half, approved above, tree g5 below (review tier): wide soft lanes from octave 5 on, octaves 2 to 4 as lanes near the lens"
+  },
   {
    "time": "2026-11-25T04:36:35.256Z",
    "file": "20261125043635256-note-g3_ll.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/v/x/n5_foot2.png",
    "kind": "note",
    "label": "saturn-code 3720 trial n5 foot at 2x (top approved, bottom mine, mine 78 rows lower): a hard diagonal step in the dust is a fault of this trial (twilight not continuous at the terminator plane), being cured"
-  },
-  {
-   "time": "2026-11-25T03:45:10.624Z",
-   "file": "20261125034510624-note-n5_whole.jpg",
-   "source": "../../../../tmp/v/x/n5_whole.png",
-   "kind": "note",
-   "label": "saturn-code 3720 draft trial n5 under the approved image (top approved, bottom mine): foot layer thinner, dust twilight"
-  },
-  {
-   "time": "2026-11-25T03:21:47.506Z",
-   "file": "20261125032147506-note-n4_foot.jpg",
-   "source": "../../../../tmp/v/x/n4_foot.png",
-   "kind": "note",
-   "label": "3720 foot at full size, approved (left) beside trial n4 (right, draft tier): still a hard line at the foot and the band too narrow and too green"
   }
  ]
 }
