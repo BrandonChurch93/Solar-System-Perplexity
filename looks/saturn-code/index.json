@@ -1,9 +1,44 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T21:52:38.956Z",
- "head": "5e76dd25bb2efd5f2727e9312f00020927cd73c4",
- "note": "ring edge reader proven on frames (model reads under 1 px off true circles); today's dive read: 28 px at the outer edge, leaving over 3572 to 3590; trial stills wait for the render slot",
+ "pushed": "2026-11-25T22:27:07.931Z",
+ "head": "266b299ff64a59160e9bc4be3d599e26d3800529",
+ "note": "rigid body trial: three stills at 3465 (as now, shapes off with light kept, light off); chain renders the dive of C",
  "looks": [
+  {
+   "time": "2026-11-25T22:27:07.277Z",
+   "file": "20261125222707277-note-globe_rigid_now.jpg",
+   "source": "../../../../tmp/v/rigid/globe_rigid_now.png",
+   "kind": "note",
+   "label": "cloud tops against the rigid map at 3530, 3600, 3640, 1 to 1"
+  },
+  {
+   "time": "2026-11-25T22:27:06.609Z",
+   "file": "20261125222706609-note-three_3465_crops.jpg",
+   "source": "../../../../tmp/v/rigid/three_3465_crops.png",
+   "kind": "note",
+   "label": "3465 at 1 to 1: approved, as now, B, C at the left ansa, the right ansa and the globe"
+  },
+  {
+   "time": "2026-11-25T22:27:05.987Z",
+   "file": "20261125222705987-note-three_3465_C.jpg",
+   "source": "../../../../tmp/v/rigid/three_3465_C.jpg",
+   "kind": "note",
+   "label": "3465 final, trial C: rigid and hold light off, d296 12.2529"
+  },
+  {
+   "time": "2026-11-25T22:27:05.390Z",
+   "file": "20261125222705390-note-three_3465_B.jpg",
+   "source": "../../../../tmp/v/rigid/three_3465_B.jpg",
+   "kind": "note",
+   "label": "3465 final, trial B: rings and limb rigid (pose shapes off), hold light kept at every frame, d296 11.9745"
+  },
+  {
+   "time": "2026-11-25T22:27:04.772Z",
+   "file": "20261125222704772-note-three_3465_now.jpg",
+   "source": "../../../../tmp/v/rigid/three_3465_now.jpg",
+   "kind": "note",
+   "label": "3465 final, as now (tree under proof), d296 4.7669"
+  },
   {
    "time": "2026-11-25T21:52:37.442Z",
    "file": "20261125215237442-note-edges_dive_now.jpg",
@@ -24,41 +59,6 @@
    "source": "../../../../tmp/v/warp/approved_hero_true_circles_3465.jpg",
    "kind": "note",
    "label": "warp study: the approved hero with true circles (green: 1.53, 1.948, 2.3394 radii) and the true limb (blue) through the lens of 3465"
-  },
-  {
-   "time": "2026-11-25T21:03:27.703Z",
-   "file": "20261125210327703-note-rise_3862.jpg",
-   "source": "../../../../tmp/v/pf/sheets/rise_3862.jpg",
-   "kind": "note",
-   "label": "proof of the tree to be named: rise 3862 to 3873, every frame (draft)"
-  },
-  {
-   "time": "2026-11-25T21:03:26.518Z",
-   "file": "20261125210326518-note-rise_3826.jpg",
-   "source": "../../../../tmp/v/pf/sheets/rise_3826.jpg",
-   "kind": "note",
-   "label": "proof of the tree to be named: rise 3826 to 3837, every frame (draft)"
-  },
-  {
-   "time": "2026-11-25T20:47:47.651Z",
-   "file": "20261125204747651-note-ov_3465_right.jpg",
-   "source": "../../../../tmp/v/warp/ov_3465_right.png",
-   "kind": "note",
-   "label": "warp study: hold 3465 of the tree, right, 2 times: green true circles, red the drawn radius of the hero fit (up to 30 px off in the shade)"
-  },
-  {
-   "time": "2026-11-25T20:47:46.569Z",
-   "file": "20261125204746569-note-ov_3465_left.jpg",
-   "source": "../../../../tmp/v/warp/ov_3465_left.png",
-   "kind": "note",
-   "label": "warp study: hold 3465 of the tree, left, 2 times: green true circles (2.27, 2.03, 1.95, 1.53), red where the kept set draws them, blue the true limb"
-  },
-  {
-   "time": "2026-11-25T20:29:25.211Z",
-   "file": "20261125202925211-note-final_3720.jpg",
-   "source": "../../../../tmp/v/g17/f2/final_3720.png",
-   "kind": "note",
-   "label": "3720 final on the tree under proof: no sheet, amplitude by radius; 28.5419, G17 1.0022"
   }
  ]
 }
