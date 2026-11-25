@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T11:16:20.175Z",
+ "pushed": "2026-11-25T11:41:00.058Z",
  "head": "e6428c506544b946a205a4b3467a32fe1edc0119",
- "note": "named e6428c50; frame 60 by sun-near: dark 0.249 body 0.609 pale 0.073 white 0.016; half width 8.1 px, 542 shapes; fine detail 0.0287; mean 0.310; distance 0.081",
+ "note": "arcade as bodies in space, first take (uncommitted, on e6428c50): about 640 fixed strands with depth, plasma carried along them at a steady speed, no opening event; frames 0 33 49 65 90 179. Frame 60 near lines: dark 0.249 body 0.609 pale 0.073 white 0.016; half width 8.1 px, 542 shapes; fine detail 0.0287, mean 0.310; distance 0.081",
  "looks": [
+  {
+   "time": "2026-11-25T11:40:59.507Z",
+   "file": "20261125114059507-note-a4-90-pair.jpg",
+   "source": "../../../../tmp/v/a4-90-pair.jpg",
+   "kind": "note",
+   "label": "frame 90: approved left, arcade as bodies right (uncommitted)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T11:40:58.922Z",
+   "file": "20261125114058922-note-a4-six.jpg",
+   "source": "../../../../tmp/v/a4-six.jpg",
+   "kind": "note",
+   "label": "arcade as bodies in space, first take, draft frames 0 33 49 65 90 179 (uncommitted)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T11:16:19.606Z",
    "file": "20261125111619606-note-wrap-place.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/c5c-229.jpg",
    "kind": "note",
    "label": "commit 5, frame 229",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T10:49:45.734Z",
-   "file": "20261125104945734-note-c5c-p1.jpg",
-   "source": "../../../../tmp/v/c5c-p1.jpg",
-   "kind": "note",
-   "label": "commit 5, 168 + 1/2 to 182 + 1/2, every film frame",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T10:49:44.439Z",
-   "file": "20261125104944439-note-c5c-p2.jpg",
-   "source": "../../../../tmp/v/c5c-p2.jpg",
-   "kind": "note",
-   "label": "commit 5, 218 + 1/2 to 226 + 1/2, every film frame",
    "stop": "sun"
   }
  ]
