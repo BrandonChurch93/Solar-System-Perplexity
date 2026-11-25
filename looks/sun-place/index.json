@@ -1,71 +1,71 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T14:50:35.611Z",
- "head": "f906d2ecd83bde72e38eb6e9df302f3d2d3aa478",
- "note": "way up sheet w1, worst pair 437 to 453 named with changes panel, controls d1 d2; lab df86fc7a being joined now. Frame 60 not redrawn since k2: dark 0.177 body 0.561 pale 0.108 white 0.072 | half width 4.6 px, 1992 shapes, fine 0.0606, mean 0.397 | distance 0.074",
+ "pushed": "2026-11-25T15:33:53.262Z",
+ "head": "ee85a184d8a313eb38a35279d32380d71b2b5634",
+ "note": "15:35 UTC, tree ee85a184 (eccae657 ground joined, one sky, sky turn by height, on main baf5473f), harness reading 380 to 470 running. Frame 60: dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404 | distance 0.145 (df86: 0.089). 360 final same bytes as f906d2ec, match 11.9804.",
  "looks": [
   {
-   "time": "2026-11-25T14:50:34.867Z",
-   "file": "20261125145034867-note-d2-pair.jpg",
-   "source": "../../../../tmp/v/d2-pair.jpg",
+   "time": "2026-11-25T15:33:52.396Z",
+   "file": "20261125153352396-note-r3-stills.jpg",
+   "source": "../../../../tmp/v/r3-stills.jpg",
    "kind": "note",
-   "label": "tint trial d2 not kept: top standing, bottom lab ground alone tinted, 226 236 246",
+   "label": "frames 0, 60, 90, 247 at draft with the lab's eccae657 ground, one sky, sky turn by height",
    "stop": "sun"
   },
   {
-   "time": "2026-11-25T14:50:34.097Z",
-   "file": "20261125145034097-note-d1-pair.jpg",
-   "source": "../../../../tmp/v/d1-pair.jpg",
+   "time": "2026-11-25T15:33:51.664Z",
+   "file": "20261125153351664-note-r3c-pair400.jpg",
+   "source": "../../../../tmp/v/r3c-pair400.png",
    "kind": "note",
-   "label": "control d1: top standing, bottom lab ground never leaving, 226 236 246",
+   "label": "captures 400 and 416 with eccae657: my reader's 0.690 lies in the arcade above the limb, not on the ground",
    "stop": "sun"
   },
   {
-   "time": "2026-11-25T14:50:33.419Z",
-   "file": "20261125145033419-note-k2c-crops.jpg",
-   "source": "../../../../tmp/v/k2c-crops.png",
+   "time": "2026-11-25T15:33:50.909Z",
+   "file": "20261125153350909-note-r2c-pair.jpg",
+   "source": "../../../../tmp/v/r2c-pair.png",
    "kind": "note",
-   "label": "worst pair crops at the worst place and inside the field",
+   "label": "captures 437 and 453 with df86: carried pair and pattern map, 0.294 by my reader",
    "stop": "sun"
   },
   {
-   "time": "2026-11-25T14:50:32.791Z",
-   "file": "20261125145032791-note-k2c-pair.jpg",
-   "source": "../../../../tmp/v/k2c-pair.png",
+   "time": "2026-11-25T15:33:50.093Z",
+   "file": "20261125153350093-note-ga-b.jpg",
+   "source": "../../../../tmp/v/ga-b.jpg",
    "kind": "note",
-   "label": "worst pair changes panel: 437, 453 carried back, pattern map with worst place boxed",
+   "label": "corona sheet a: full share, 236 to 261",
    "stop": "sun"
   },
   {
-   "time": "2026-11-25T14:50:32.130Z",
-   "file": "20261125145032130-note-k2c-ends.jpg",
-   "source": "../../../../tmp/v/k2c-ends.jpg",
+   "time": "2026-11-25T15:33:49.215Z",
+   "file": "20261125153349215-note-ga-a.jpg",
+   "source": "../../../../tmp/v/ga-a.jpg",
    "kind": "note",
-   "label": "worst pair of the rise on f906d2ec: captures 218.5 and 226.5, pattern 0.778",
+   "label": "corona sheet a: rays and prominences at full share at every height, 196 to 231 (not drawn before the change of view at 205)",
    "stop": "sun"
   },
   {
-   "time": "2026-11-25T14:50:31.440Z",
-   "file": "20261125145031440-note-w1-b.jpg",
-   "source": "../../../../tmp/v/w1-b.jpg",
+   "time": "2026-11-25T15:33:48.303Z",
+   "file": "20261125153348303-note-c1-sky.jpg",
+   "source": "../../../../tmp/v/c1-sky.jpg",
    "kind": "note",
-   "label": "way up as it stands (f906d2ec with one sky), draft: 231 to 261 every 5th and 247",
+   "label": "sky turn by the clock (above) and by the eye's height (below), 221 to 256, preview",
    "stop": "sun"
   },
   {
-   "time": "2026-11-25T14:50:30.731Z",
-   "file": "20261125145030731-note-w1-a.jpg",
-   "source": "../../../../tmp/v/w1-a.jpg",
+   "time": "2026-11-25T15:33:47.229Z",
+   "file": "20261125153347229-note-w2-b.jpg",
+   "source": "../../../../tmp/v/w2-b.jpg",
    "kind": "note",
-   "label": "way up as it stands (f906d2ec with one sky), draft: 196 to 226 every 5th",
+   "label": "way up 236 to 261, the lab's df86 ground (trial), draft",
    "stop": "sun"
   },
   {
-   "time": "2026-11-25T14:25:34.928Z",
-   "file": "20261125142534928-note-n1-b.jpg",
-   "source": "../../../../tmp/v/n1-b.jpg",
+   "time": "2026-11-25T15:33:46.514Z",
+   "file": "20261125153346514-note-w2-a.jpg",
+   "source": "../../../../tmp/v/w2-a.jpg",
    "kind": "note",
-   "label": "way up n1, preview: 244 248 252 256 260 264 269 270",
+   "label": "way up 196 to 231, the lab's df86 ground (trial), draft",
    "stop": "sun"
   }
  ]
