@@ -1,13 +1,13 @@
 import { execFileSync } from 'node:child_process'
-import { mkdtempSync, rmSync } from 'node:fs'
+import { mkdtempSync, readFileSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { apart, shownRows } from '../tools/smooth/maps'
+import { BLOOM, apart, glowPx, look, mapFaults, shownRows, worded } from '../tools/smooth/maps'
 
 interface Reading { value: number | null; at: [number, number] | null; share: number; on: number; by: { map: number; sky: number; flow: number } | null; rule: string | null; left: number | null; bulk: number | null; apart: number | null; no: string | null; refused: number | null; body: number | null; sky: number | null }
-interface SkyFlow { value: number | null; share: number; far: number | null; farShare: number; limb: (number | null)[]; covered: number; coveredOnBody: number }
+interface SkyFlow { value: number | null; share: number; far: number | null; farShare: number; none: [number | null, number | null]; limb: (number | null)[]; covered: number; coveredOnBody: number }
 interface Way { clean: Reading; exchange: Reading; untold: Reading }
 interface Made {
   rise: Way
@@ -132,7 +132,8 @@ describe('the pattern of a pair read by the camera\'s own map, on made bodies wi
     expect(made.skyFlow.clean.farShare).toBeGreaterThan(0.02)
     expect(made.skyFlow.clean.farShare).toBeLessThanOrEqual(made.skyFlow.clean.share)
     expect(made.skyFlow.clean.far!).toBeLessThan(0.283)
-    expect(made.skyFlow.clean.limb[0]!).toBeCloseTo(0.15 * (135 / 2 / Math.tan(Math.PI / 9)) / Math.sqrt(25 - 1), 6)
+    expect(made.skyFlow.clean.limb).toEqual([6, null])
+    expect(made.skyFlow.clean.none).toEqual([null, null])
   })
 
   it('gives the reading on the bodies and the reading off them beside the row\'s own', () => {
@@ -198,5 +199,49 @@ describe('the rows where the two readers fall on different sides of their limits
     expect(apart([no(1, 0.2), no(2, 0.3), no(3, 0.9), no(4, null)], 0.45, 0.3)).toEqual([{ first: 1, last: 2, rows: 2, k: 1, main: 0.2, map: Number.POSITIVE_INFINITY, red: 'map', no: 'two grounds' }])
     expect(shownRows([row(1, 0.5, 0.2), row(2, 0.7, 0.1), no(3, 0.2), row(4, 0.6, 0.6)], 0.45, 0.45, 2).map((r) => r.k)).toEqual([3, 4])
     expect(shownRows([no(1, 0.2), no(2, null)], 0.45, 0.45, 6).map((r) => r.k)).toEqual([1])
+  })
+})
+
+describe('what the map\'s reader judges and what it hands to the eye', () => {
+  const row = (k: number, more: object): { k: number; pattern: number | null } => ({ k, pattern: 0.9, ...more })
+
+  it('takes the glow\'s reach from the film\'s bloom and not from a free number', () => {
+    const chain = readFileSync(fileURLToPath(new URL('../src/post/chain.ts', import.meta.url)), 'utf8')
+    expect(Number(/const LEVELS = (\d+)/.exec(chain)![1])).toBe(BLOOM.levels)
+    expect(chain).toContain('vec2 t = uTexel * uRadius;')
+    expect(glowPx(1)).toBe(128)
+    expect(glowPx(0.5)).toBe(64)
+  })
+
+  it('marks a row LOOK where the sky off every body is over the limit and the sky far from the limbs is not', () => {
+    expect(look(row(1, { patternMapSky: 0.63, patternMapSkyFar: 0.18 }), 0.45)).toBe(true)
+    expect(look(row(1, { patternMapSky: 0.63, patternMapSkyFar: null }), 0.45)).toBe(true)
+    expect(look(row(1, { patternMapSky: 0.63, patternMapSkyFar: 0.5 }), 0.45)).toBe(false)
+    expect(look(row(1, { patternMapSky: 0.4, patternMapSkyFar: 0.18 }), 0.45)).toBe(false)
+    expect(look(row(1, { patternMapSky: null, patternMapSkyFar: null }), 0.45)).toBe(false)
+    expect(look(row(1, { patternMapSky: 0.63, patternMapSkyFar: 0.18 }), null)).toBe(false)
+  })
+
+  it('finds the body and the far sky red over the limit, a refusal red by its reason, and nothing where the reader has no word', () => {
+    const rows = [
+      row(1, { patternMap: 0.3, patternMapBody: 0.1, patternMapSky: 0.63, patternMapSkyFar: 0.18 }),
+      row(2, { patternMap: 0.3, patternMapBody: 0.5, patternMapSky: 0.2, patternMapSkyFar: 0.1 }),
+      row(3, { patternMap: 0.3, patternMapBody: 0.7, patternMapSky: 0.2, patternMapSkyFar: 0.1 }),
+      row(4, { patternMap: 0.6, patternMapBody: null, patternMapSky: 0.6, patternMapSkyFar: 0.6 }),
+      row(5, { patternMap: null, patternMapNo: 'two grounds', patternMapRefused: 0.8 }),
+      row(6, { patternMap: null, patternMapNo: 'two grounds', patternMapRefused: 0.9, patternMapSkyFar: 0.2 }),
+      row(7, { patternMap: null, patternMapNo: 'the range does not carry the pattern', patternMapRefused: null }),
+      row(8, { patternMap: null }),
+      row(9, {}),
+    ]
+    expect(mapFaults(rows, 0.45)).toEqual([
+      { kind: 'body', rows: 3, first: 2, k: 3, value: 0.7 },
+      { kind: 'far', rows: 1, first: 4, k: 4, value: 0.6 },
+      { kind: 'refused', rows: 2, first: 5, k: 6, value: 0.9, no: 'two grounds' },
+      { kind: 'refused', rows: 1, first: 7, k: 7, value: null, no: 'the range does not carry the pattern' },
+    ])
+    expect(mapFaults(rows, null).map((f) => f.kind)).toEqual(['refused', 'refused'])
+    expect(mapFaults([rows[0]!], 0.45)).toEqual([])
+    expect(rows.map((r) => worded(r))).toEqual([true, true, true, true, true, true, true, false, false])
   })
 })

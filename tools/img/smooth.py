@@ -354,21 +354,10 @@ def pictures(job):
             'pattern': weave, 'patternAt': weaveAt, 'patternShare': weaveShare}
 
 
-SKY_FAR = 0.15
-
-
-def limb_px(pose, shape):
-    """How many pixels SKY_FAR of the radius of the pose's largest body spans in a picture of the shape; none where the lens stands on or in
-    a body, 0 where the pose names no body."""
-    reach = 0.0
-    k = shape[0] / 2 / np.tan(np.radians(pose['vfov']) / 2)
-    for body in pose.get('bodies') or []:
-        r = float(max(body.get('scale') or [1]))
-        d = float(np.linalg.norm(np.array(body['place'], dtype=np.float64) - np.array(pose['p'], dtype=np.float64)))
-        if d <= r:
-            return None
-        reach = max(reach, SKY_FAR * k * r / np.sqrt(d * d - r * r))
-    return reach
+def glow_px(pose, scale):
+    """How far the glow of a body reaches over the sky beside it, in pixels of the picture reduced by scale: the pose's own number (glow, in
+    pixels of the frame, which the tool derives from the bloom of the film), none where the pose has none."""
+    return None if pose is None or pose.get('glow') is None else float(pose['glow']) * scale
 
 
 def unbodied(frames, fw, bw, i, n, a, b, rim, margin, wide, floor, reach=(None, None)):
@@ -376,8 +365,8 @@ def unbodied(frames, fw, bw, i, n, a, b, rim, margin, wide, floor, reach=(None, 
     the flows, where every flow on the way agrees with its way back, the pattern read over all of that, and of it the pixels off the bodies.
     a and b: the bodies of the two frames by their depth pictures. Sky that the later frame's bodies cover is not counted, nor the rim of
     either depth picture. Gives the 99th percentile and the share of the frame counted (no number under PATTERN_SHARE of the frame), the
-    same two for the pixels farther from every body than reach px in both frames (none where a reach is none), and the pattern, where it is
-    counted and where it is counted far."""
+    same two for the pixels farther from every body than reach px in both frames, the later frame's carried back (none where a reach is
+    none), and the pattern, where it is counted and where it is counted far."""
     xs, ys = places(frames[i].shape)
     mx, my = xs, ys
     ok = np.ones(frames[i].shape, bool)
@@ -424,7 +413,7 @@ def mapped(job, paths, frames, poses, scale, margin, wide, floor, reach, fw, bw,
         keys['patternMapBulk'][i], keys['patternMapApart'][i], keys['patternMapNo'][i], keys['patternMapRefused'][i] = out['bulk'], out['apart'], out['no'], out['refused']
         keys['patternMapBody'][i], keys['patternMapSkyTurn'][i] = out['body'], out['sky']
         if all(fw[j] is not None and bw[j] is not None for j in range(i, i + reach)):
-            sky = unbodied(frames, fw, bw, i, reach, solid(frame(i)), solid(frame(i + reach)), C.rim, margin, wide, floor, (limb_px(frame(i)['pose'], frames[i].shape), limb_px(frame(i + reach)['pose'], frames[i].shape)))
+            sky = unbodied(frames, fw, bw, i, reach, solid(frame(i)), solid(frame(i + reach)), C.rim, margin, wide, floor, (glow_px(poses[i], scale), glow_px(poses[i + reach], scale)))
             keys['patternMapSky'][i], keys['patternMapSkyShare'][i], keys['patternMapSkyFar'][i], keys['patternMapSkyFarShare'][i] = sky['value'], sky['share'], sky['far'], sky['farShare']
     keys['patternMapLimits'] = {'bulkPx': C.BULK_PX, 'apart': C.APART}
     return keys
@@ -435,7 +424,7 @@ def maps(job):
     it by the map and the flow, their difference times 4, the rule of each pixel (green the map, blue the sky, orange the flow, black not
     judged), the change of their pattern (white is 1). The label of a row ends with its reading. With the frames between the two (between)
     a seventh: the change of the pattern off every body by the flow alone, on the first frame (white is 1, the bodies grey, a blue cast
-    within SKY_FAR of a body's radius of a limb)."""
+    within the reach of a body's glow)."""
     import carry as C
     scale = job.get('scale', 0.25)
     margin = float(job.get('changeBlur', 20)) * scale
@@ -459,7 +448,7 @@ def maps(job):
             fw = [motion(frames[j], frames[j + 1]) for j in range(n)]
             bw = [motion(frames[j + 1], frames[j]) for j in range(n)]
             solid = lambda f: (f['which'] > 0) & np.isfinite(f['depth']) & (f['depth'] > 0)
-            sky = unbodied(frames, fw, bw, 0, n, solid(sides[0]), solid(sides[1]), C.rim, margin, wide, low, (limb_px(sides[0]['pose'], frames[0].shape), limb_px(sides[1]['pose'], frames[0].shape)))
+            sky = unbodied(frames, fw, bw, 0, n, solid(sides[0]), solid(sides[1]), C.rim, margin, wide, low, (glow_px(item['poses'][0], scale), glow_px(item['poses'][1], scale)))
             shown = np.repeat(np.clip(np.where(sky['off'], np.nan_to_num(sky['p']), 0) * 255, 0, 255).astype(np.uint8)[..., None], 3, axis=2)
             shown[~sky['off'] & solid(sides[0])] = (40, 40, 40)
             if sky['offFar'] is not None:
@@ -586,6 +575,63 @@ def write_sheet(rows, output, limit):
     return list(sheet.size)
 
 
+def look(job):
+    """The sheet of one pair whose sky reads over the limit while the sky far from the limbs does not: the first frame, the later frame and
+    the first frame dimmed, all cut to the column of the frame that holds most of the marked pixels, at the frame's own pixels. Marked red:
+    where the change of the pattern off every body, by the flow alone, is over the limit. Lines: light blue the body by the depth picture,
+    green the edge of what is counted, blue the edge of what counts as far from the limbs. between: the frame paths of the pair's stretch."""
+    import carry as C
+    scale, wide, low, limit = job['scale'], job['patternPx'] * job['scale'], job.get('patternFloor', 1.0), job['limit']
+    margin = job['changeBlur'] * scale
+    frames = [small(grey(path), scale) for path in job['between']]
+    n = len(frames) - 1
+    fw = [motion(frames[j], frames[j + 1]) for j in range(n)]
+    bw = [motion(frames[j + 1], frames[j]) for j in range(n)]
+    solid = []
+    for j in (0, 1):
+        depth, which, _ = C.source(C.told(job['poses'][j]), frames[0].shape, (job.get('depths') or [None, None])[j])
+        solid.append((which > 0) & np.isfinite(depth) & (depth > 0))
+    sky = unbodied(frames, fw, bw, 0, n, solid[0], solid[1], C.rim, margin, wide, low, (glow_px(job['poses'][0], scale), glow_px(job['poses'][1], scale)))
+    first, later = (np.asarray(Image.open(job['between'][j]).convert('RGB')) for j in (0, n))
+    h, w = first.shape[:2]
+    up = lambda m: cv2.resize(m.astype(np.uint8), (w, h), interpolation=cv2.INTER_NEAREST) > 0
+    over = up(sky['off'] & (np.nan_to_num(sky['p']) > limit))
+    width = min(job.get('column', 460), w)
+    x0 = int(np.argmax(np.convolve(over.sum(axis=0).astype(np.float64), np.ones(width), 'valid')))
+    ys = np.where(over[:, x0:x0 + width].any(axis=1))[0]
+    y0, y1 = (max(0, int(ys.min()) - 60), min(h, int(ys.max()) + 60)) if len(ys) else (0, h)
+    tall = min(h, 520)
+    if y1 - y0 < tall:
+        y0 = max(0, min(h - tall, (y0 + y1) // 2 - tall // 2))
+        y1 = y0 + tall
+    cut = lambda img: img[y0:y1, x0:x0 + width]
+    mark = (cut(first).astype(np.float32) * 0.6).astype(np.uint8)
+    red = cut(over)
+    mark[red] = (0.4 * mark[red] + 0.6 * np.array([255, 0, 0])).astype(np.uint8)
+    for mask, colour in ((up(solid[0]), (0, 255, 255)), (up(sky['off']), (0, 200, 0))) + (((up(sky['offFar']), (0, 120, 255)),) if sky['offFar'] is not None else ()):
+        cv2.drawContours(mark, cv2.findContours(np.ascontiguousarray(cut(mask)).astype(np.uint8), cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE)[0], -1, colour, 1)
+    gap = np.full((y1 - y0, 6, 3), 30, np.uint8)
+    row = np.concatenate([cut(first), gap, cut(later), gap, mark], axis=1)
+    inside = float(red.sum() / max(1, over.sum()))
+    lines = [job.get('label', ''),
+             'cut x %d to %d, y %d to %d of %d by %d, the frame\'s own pixels: the first frame, the later frame, the first frame dimmed' % (x0, x0 + width, y0, y1, w, h),
+             'red: the change of the pattern off every body, by the flow alone, over %s (%d percent of all such pixels of the frame lie in this cut)' % (limit, round(100 * inside)),
+             'light blue the body by the depth picture, green the edge of what is counted, blue the edge of what counts as far from the limbs']
+    pad = 18
+    sheet = Image.new('RGB', (row.shape[1], row.shape[0] + pad * len(lines) + 8), (16, 16, 16))
+    draw = ImageDraw.Draw(sheet)
+    f = font(13)
+    for j, line in enumerate(lines):
+        draw.text((6, 4 + pad * j), line, fill=(235, 235, 235), font=f)
+    sheet.paste(Image.fromarray(row), (0, pad * len(lines) + 8))
+    edge = job.get('longEdge')
+    if edge and max(sheet.size) > edge:
+        k = edge / max(sheet.size)
+        sheet = sheet.resize((max(int(sheet.size[0] * k), 1), max(int(sheet.size[1] * k), 1)), Image.LANCZOS)
+    sheet.save(job['output'], quality=92)
+    return {'size': list(sheet.size), 'cut': [x0, y0, x0 + width, y1], 'inside': inside, 'value': sky['value'], 'share': sky['share'], 'far': sky['far'], 'farShare': sky['farShare']}
+
+
 def main():
     job = json.load(sys.stdin)
     op = job.get('op')
@@ -597,6 +643,8 @@ def main():
         out = changes(job)
     elif op == 'maps':
         out = maps(job)
+    elif op == 'look':
+        out = look(job)
     elif op == 'parity':
         out = parity(job)
     else:

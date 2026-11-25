@@ -1,4 +1,4 @@
-export interface Read { k: number; pattern: number | null; patternMap?: number | null; patternMapNo?: string | null; patternMapBody?: number | null }
+export interface Read { k: number; pattern: number | null; patternMap?: number | null; patternMapNo?: string | null; patternMapBody?: number | null; patternMapRefused?: number | null; patternMapSky?: number | null; patternMapSkyFar?: number | null }
 
 // The number of a row under the map's reader: the reading on the bodies where the row has one, the whole frame's where it has none.
 export const mapOf = (row: Read): number | null | undefined => row.patternMapBody ?? row.patternMap
@@ -47,4 +47,41 @@ export function shownRows<T extends Read>(rows: T[], max: number | null, mapMax:
     ks.add(run.k)
   }
   return rows.filter((row) => ks.has(row.k))
+}
+
+// The film's bloom (src/post/chain.ts): the buffer is halved levels times, and the widest level is laid back with a tent of one of its texels
+// either way, read between texels: its light reaches texels texels of that level from where it starts. Counted in pixels of the buffer, which
+// the picture of a frame is one to one, whatever the frame factor.
+export const BLOOM = { levels: 6, texels: 2 }
+
+// How far the glow of a body reaches over the sky beside it, in pixels of the frame: the reach of the bloom's widest level at that radius.
+export const glowPx = (bloomRadius: number): number => BLOOM.texels * 2 ** BLOOM.levels * bloomRadius
+
+// The map's reader has a word on a row: a number or a refusal.
+export const worded = (row: Read): boolean => row.patternMap !== undefined && ((row.patternMapNo ?? null) !== null || (mapOf(row) ?? null) !== null)
+
+// A row to look at: the sky off every body reads over the limit and the sky far from the limbs does not.
+export const look = (row: Read, max: number | null): boolean => max !== null && (row.patternMapSky ?? null) !== null && row.patternMapSky! > max && !((row.patternMapSkyFar ?? null) !== null && row.patternMapSkyFar! > max)
+
+export interface MapFault { kind: 'body' | 'far' | 'refused'; rows: number; first: number; k: number; value: number | null; no?: string }
+
+// What the map's reader finds red: the pattern on the body (the whole frame's where no body holds enough of it) over the limit, the pattern
+// of the sky far from the limbs over the limit, and every refusal by its reason. Of each the count of rows, the first and the largest.
+export function mapFaults<T extends Read>(rows: T[], max: number | null): MapFault[] {
+  const out: MapFault[] = []
+  const most = (kind: 'body' | 'far', of: (row: T) => number | null | undefined): void => {
+    if (max === null) return
+    const bad = rows.filter((row) => (of(row) ?? null) !== null && of(row)! > max)
+    if (bad.length === 0) return
+    const top = bad.reduce((x, y) => (of(y)! > of(x)! ? y : x))
+    out.push({ kind, rows: bad.length, first: bad[0]!.k, k: top.k, value: of(top)! })
+  }
+  most('body', (row) => (row.patternMap === undefined || row.patternMapNo ? null : mapOf(row)))
+  most('far', (row) => row.patternMapSkyFar)
+  for (const no of [...new Set(rows.filter((row) => row.patternMapNo).map((row) => row.patternMapNo!))]) {
+    const bad = rows.filter((row) => row.patternMapNo === no)
+    const top = bad.reduce((x, y) => ((y.patternMapRefused ?? -1) > (x.patternMapRefused ?? -1) ? y : x))
+    out.push({ kind: 'refused', rows: bad.length, first: bad[0]!.k, k: top.k, value: top.patternMapRefused ?? null, no })
+  }
+  return out
 }
