@@ -1,9 +1,17 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-25T09:54:17.162Z",
+ "pushed": "2026-11-25T10:21:21.725Z",
  "head": "d69b8640fb1f481dbb58cf26cb831f3bd2ecd392",
- "note": "MAIL 1005 in work. Measured on the base frames: at the limb the reader's chained flows are 9 px off the way of the sphere; carried by the sphere the same pair reads 0.20 where the reader reads 0.72. Controls of the map still rendering",
+ "note": "MAIL 1005 measurement only, nothing built: at Mercury's lower right limb the reader reads 0.5 to 0.77 with its own flows, 0.54 to 0.68 on one picture foreshortened where nothing changes, and 0.04 to 0.25 when the real pair is carried by the sphere. Softer map controls do not lower it.",
  "looks": [
+  {
+   "time": "2026-11-25T10:21:21.134Z",
+   "file": "20261125102121134-note-chart-limb.jpg",
+   "source": "../m1005/chart-limb.png",
+   "kind": "note",
+   "label": "MAIL 1005 Mercury dive limb 716 to 726: reader with its flows against the same pair carried by the sphere",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T09:54:15.587Z",
    "file": "20261125095415587-note-limb-722.jpg",
@@ -58,14 +66,6 @@
    "source": "../m835/cap-cost.png",
    "kind": "note",
    "label": "Mars cap at draft, 2464 and 2472: where the seconds go, and what one change would leave (scratch, no commit)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T05:54:47.494Z",
-   "file": "20261125055447494-note-bounds-result.jpg",
-   "source": "../m835/bounds-result.png",
-   "kind": "note",
-   "label": "Cap sift, bounds of the height per patch: bytes equal, no seconds gained, not taken",
    "stop": "mars"
   }
  ]
