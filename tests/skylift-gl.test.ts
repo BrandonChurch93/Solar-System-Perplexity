@@ -125,7 +125,41 @@ function named(view, look, weight) {
   return { plain, told, once, cleared }
 }
 
-window.skylift = { load, walk, named }
+function terrain(view, shares, low) {
+  const camera = new THREE.PerspectiveCamera(view.vfov, W / H, 0.1, 100)
+  const q = new THREE.Quaternion().fromArray(view.q)
+  const turn = new THREE.Quaternion().fromArray(view.turn)
+  sky.setFrame(new THREE.Quaternion().fromArray(view.frame))
+  sky.setPatches([])
+  sky.setBandLook(view.look)
+  sky.setStarLift(0, open.starLevel / view.exposure, open.flightStars.level)
+  const kept = new Float32Array(W * H * 4)
+  const shoot = (weight, glow) => {
+    sky.setTerrain(weight)
+    renderer.setRenderTarget(target)
+    renderer.clear(true, true, true)
+    sky.render(renderer, target, camera, q, view.exposure, glow, turn, H, sun, 0.45, W / H, null)
+    renderer.readRenderTargetPixels(target, 0, 0, W, H, out)
+    let mean = 0
+    for (let i = 0; i < W * H; i++) mean += filmic(0.2126 * out[i * 4] + 0.7152 * out[i * 4 + 1] + 0.0722 * out[i * 4 + 2])
+    return mean / (W * H)
+  }
+  const differ = () => { let n = 0; for (let i = 0; i < W * H * 4; i++) if (out[i] !== kept[i]) n++; return n }
+  const high = shoot(null, 1)
+  kept.set(out)
+  shoot(0, 1)
+  const orbit = differ()
+  const ground = shoot(null, low)
+  kept.set(out)
+  shoot(1, low)
+  const surface = differ()
+  const means = shares.map((s) => shoot(s, 1 + (low - 1) * s))
+  sky.setTerrain(null)
+  renderer.setRenderTarget(null)
+  return { high, ground, orbit, surface, means }
+}
+
+window.skylift = { load, walk, named, terrain }
 `
 
 const FRAME = [0.883493, -0.063783, 0.25535, 0.387516]
@@ -247,5 +281,18 @@ describe.skipIf(!have)('the sky of the film under the lift of the stars in a Web
     const half = await run({ stars: 3 }, 0.5)
     expect(half.told[0]!).toBeGreaterThan(stars.plain[0]!)
     expect(half.told[0]!).toBeLessThan(stars.told[0]!)
+  }, 300000)
+
+  it('brings the law of the sky seen from a surface in by the share of that sky, with no step where the share begins', async () => {
+    const view = { ...VIEWS[0]!, frame: FRAME, look: 1 }
+    const shares = [0, 0.0005, 0.001, 0.0013, 0.0014, 0.002, 0.005, ...Array.from({ length: 20 }, (_, k) => (k + 1) / 20)]
+    type Run = { high: number; ground: number; orbit: number; surface: number; means: number[] }
+    const run = await page.evaluate(([v, list, low]) => (window as unknown as { skylift: { terrain(v: unknown, list: number[], low: number): Run } }).skylift.terrain(v, list, low), [view, shares, 0.25] as [unknown, number[], number])
+    if (process.env.SKYLIFT_PRINT) console.log(JSON.stringify(run))
+    expect(run.orbit).toBe(0)
+    expect(run.surface).toBe(0)
+    expect(run.means[0]!).toBe(run.high)
+    expect(run.means[shares.length - 1]!).toBe(run.ground)
+    for (let k = 1; k < shares.length; k++) expect(Math.abs(run.means[k]! - run.means[k - 1]!)).toBeLessThan(run.high * Math.max(1.5 * (shares[k]! - shares[k - 1]!), 0.002))
   }, 300000)
 })
