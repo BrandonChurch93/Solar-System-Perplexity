@@ -1,71 +1,71 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T06:55:31.810Z",
+ "pushed": "2026-11-25T07:09:37.223Z",
  "head": "2931e023cd473fb9b2ecc0367b88bba6a4ba0b0e",
- "note": "way C state F drafts beside the mark at 717 to 741, whole frame and 1 to 1, with its named fault at 733 to 741",
+ "note": "way C state F as it will be pushed: 725 to 741 beside the mark, whole frame and 1 to 1, the fault at 731 to 745 named",
  "looks": [
+  {
+   "time": "2026-11-25T07:09:36.376Z",
+   "file": "20261125070936376-note-cj-1450-s.jpg",
+   "source": "../../../../tmp/m/cj-1450-s.png",
+   "kind": "note",
+   "label": "DRAFT, the state as pushed, 725, 1 to 1 beside the mark: where the mark shows the grey disc of the place, the hero's ground goes on (dusk, golden rims, faint night ground) and carries the place's small craters",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T07:09:35.026Z",
+   "file": "20261125070935026-note-cj-1474-s.jpg",
+   "source": "../../../../tmp/m/cj-1474-s.png",
+   "kind": "note",
+   "label": "DRAFT, the state as pushed (way C state F), 737, 1 to 1 beside the mark (b0b87889). The worst of it, named: soft pale patches of the hero's rim highlights with a little colour at their edges on the crisp ground, about 731 to 745",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T07:02:34.306Z",
+   "file": "20261125070234306-note-ci-1458-s.jpg",
+   "source": "../../../../tmp/m/ci-1458-s.png",
+   "kind": "note",
+   "label": "DRAFT, state F (mix as powers) at 729, 1 to 1 beside the mark: no grey disc, the hero's ground goes on with the place's small craters crisp in it; one cyan glint of the hero's own map in the night ground at x 556, y 818",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T07:02:33.629Z",
+   "file": "20261125070233629-note-ci-1466-s.jpg",
+   "source": "../../../../tmp/m/ci-1466-s.png",
+   "kind": "note",
+   "label": "DRAFT, state F at 733, 1 to 1: straight mix by height (left) against the mix as powers (right); the highlights lose contrast evenly",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T07:02:32.898Z",
+   "file": "20261125070232898-note-ci-1482-s.jpg",
+   "source": "../../../../tmp/m/ci-1482-s.png",
+   "kind": "note",
+   "label": "DRAFT, state F (mix as powers) at 741, 1 to 1 beside the mark: the pale patches are faint",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T07:02:31.627Z",
+   "file": "20261125070231627-note-ci-1474-s.jpg",
+   "source": "../../../../tmp/m/ci-1474-s.png",
+   "kind": "note",
+   "label": "DRAFT, state F (mix as powers) at 737, 1 to 1 beside the mark. Named fault, the worst of the state: the hero's rim highlights, past their texels, lie on the crisp ground as soft pale patches with a little colour at their edges, from about 731 to 745. The mark is clean here",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T07:02:30.618Z",
+   "file": "20261125070230618-note-ci-full-b.jpg",
+   "source": "../../../../tmp/m/ci-full-b.jpg",
+   "kind": "note",
+   "label": "DRAFT, not a final: dive 733 and 741 whole frame. The mark (b0b87889), 9fc760b3, way C state F with the mix as powers: this is the state to be named. 741 is close to the mark; 733 stands in the hero's light with the place's craters in it",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T06:55:18.115Z",
    "file": "20261125065518115-note-ch-1482-s.jpg",
    "source": "../../../../tmp/m/ch-1482-s.png",
    "kind": "note",
    "label": "DRAFT, state F at 741, 1 to 1 beside the mark. Named fault, the worst of F: the hero's rim highlights lie on the crisp ground as soft pale blots with colour fringes (share 0.2, gone by 754). The mark is clean here",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T06:55:16.866Z",
-   "file": "20261125065516866-note-ch-1466-s.jpg",
-   "source": "../../../../tmp/m/ch-1466-s.png",
-   "kind": "note",
-   "label": "DRAFT, state F at 733, 1 to 1 beside the mark: crisp craters, the hero's rims over them begin to go soft",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T06:55:15.677Z",
-   "file": "20261125065515677-note-ch-1450-s.jpg",
-   "source": "../../../../tmp/m/ch-1450-s.png",
-   "kind": "note",
-   "label": "DRAFT, state F at 725, 1 to 1 beside the mark: the hero's ground goes on (dusk, golden rims), the place's small craters crisp in it",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T06:55:14.546Z",
-   "file": "20261125065514546-note-ch-full-741.jpg",
-   "source": "../../../../tmp/m/ch-full-741.jpg",
-   "kind": "note",
-   "label": "DRAFT, not a final: dive 741 whole frame, the mark, 9fc760b3, state F. Named fault of F: pale streaks on the left, the hero's rim highlights enlarged past their texels at a share of 0.2",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T06:55:13.348Z",
-   "file": "20261125065513348-note-ch-full-a.jpg",
-   "source": "../../../../tmp/m/ch-full-a.jpg",
-   "kind": "note",
-   "label": "DRAFT, not a final: dive 717, 725, 733 whole frame. Left the build b0b87889 (the mark), middle 9fc760b3 (relief step, not named), right way C state F: one ground, the place's fine craters come by their texels as detail on the hero's own lit ground, the craters' bodies and the place's light come by the eye's height (717 to 754). 717 is the mark; no grey disc at 725",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T06:29:43.800Z",
-   "file": "20261125062943800-note-ce-1466-s.jpg",
-   "source": "../../../../tmp/m/ce-1466-s.png",
-   "kind": "note",
-   "label": "DRAFT, state E at 733, 1 to 1 beside the mark: the place's craters crisp, the hero's golden rims still over them as soft light. Named fault: those rims are soft here",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T06:29:42.519Z",
-   "file": "20261125062942519-note-cd-1466-s.jpg",
-   "source": "../../../../tmp/m/cd-1466-s.png",
-   "kind": "note",
-   "label": "DRAFT, state D at 733, 1 to 1 beside the mark: the hero's ground far past its texels with the place's craters as a ghost. This is why D is not taken",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T06:29:41.246Z",
-   "file": "20261125062941246-note-ce-full-733.jpg",
-   "source": "../../../../tmp/m/ce-full-733.jpg",
-   "kind": "note",
-   "label": "DRAFT, not a final: dive 733 whole frame. The mark, state D, state E. On the mark the place is a grey ground from 725 on; on E it stays in the hero's light and turns to its own by 749",
    "stop": "mercury"
   }
  ]
