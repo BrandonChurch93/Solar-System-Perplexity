@@ -1,9 +1,41 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T11:23:53.222Z",
- "head": "45590da315c5d242180950c644cdeefbd29cde74",
- "note": "way C: the warm tint at 615 cured by the map's colour law by distance; the first pit measured against the ring crater",
+ "pushed": "2026-11-25T12:14:24.411Z",
+ "head": "58c6e8e750c53c4f94fae18b2597a100ea2d14de",
+ "note": "way C 58c6e8e7: dive 712 to 722 and rise 1010 to 1020 on the tree; rise red 0.64 at 1012 as take b9, dive green by whole frames",
  "looks": [
+  {
+   "time": "2026-11-25T12:14:22.916Z",
+   "file": "20261125121422916-note-h-dive-b.jpg",
+   "source": "../../../../tmp/m/h-dive-b.png",
+   "kind": "note",
+   "label": "dive 718, 720, 722 at 1 to 1: way C s9 without the colour law left, the tree 58c6e8e7 right (equal by hash from 722)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T12:14:21.559Z",
+   "file": "20261125121421559-note-h-dive-a.jpg",
+   "source": "../../../../tmp/m/h-dive-a.png",
+   "kind": "note",
+   "label": "dive 712, 714, 716 at 1 to 1: way C s9 without the colour law left, the tree 58c6e8e7 right",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T12:14:20.292Z",
+   "file": "20261125121420292-note-h-rise-b.jpg",
+   "source": "../../../../tmp/m/h-rise-b.png",
+   "kind": "note",
+   "label": "rise 1016, 1018, 1020 at 1 to 1 on the tree 58c6e8e7",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T12:14:18.934Z",
+   "file": "20261125121418934-note-h-rise-a.jpg",
+   "source": "../../../../tmp/m/h-rise-a.png",
+   "kind": "note",
+   "label": "rise 1010, 1012, 1014 at 1 to 1 on the tree 58c6e8e7 (the first level leaves, the map comes: reader 0.64 at 1012, as take b9)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T11:23:51.771Z",
    "file": "20261125112351771-note-pit-zoom-h.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/m/h-615-zoom.png",
    "kind": "note",
    "label": "615 at times 7: approved hero, main, way C take s9, way C with the map's colour by distance (the tint gone)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T11:00:30.344Z",
-   "file": "20261125110030344-note-map-a-s9.jpg",
-   "source": "../../../../tmp/m/map-a-s9.png",
-   "kind": "note",
-   "label": "the textures round the spot: the map (the hero at the hold), the old first level, take s9's first level",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T11:00:29.072Z",
-   "file": "20261125110029072-note-pit-zoom-s9.jpg",
-   "source": "../../../../tmp/m/pit-zoom-s9.png",
-   "kind": "note",
-   "label": "615 times 14 with pixel ticks: main, way C take s9, the approved hero; the first pit against the hero's ring crater",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T10:48:56.737Z",
-   "file": "20261125104856737-note-arr-s9-b.jpg",
-   "source": "../../../../tmp/m/arr-s9-b.png",
-   "kind": "note",
-   "label": "718 and 720 at 1 to 1 round pixel 728, 844: the mark left, way C take s9 right",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T10:48:55.598Z",
-   "file": "20261125104855598-note-arr-s9-a.jpg",
-   "source": "../../../../tmp/m/arr-s9-a.png",
-   "kind": "note",
-   "label": "714 and 716 at 1 to 1 round pixel 728, 844: the mark left, way C take s9 right",
    "stop": "mercury"
   }
  ]
