@@ -58,8 +58,13 @@ Both are spans of the camera's distance from the Sun's centre, never times. The 
 distance in solar radii (just above the Sun stop's own views, so those keep worn 1 and the globe whole).
 The second is a share of the way, by the logarithm of the distance, from there to the film's swap distance:
 one over the sine of `plan.light.sunRadiusDeg` of the first stop after the Sun, read from that stop's plan
-in `share.ts` (`swapDistance`, the same number as `sunSwap` of `src/director/film.ts`). No distance of a
-stop is written in this folder: when the plan's radius changes both spans follow it.
+in `share.ts` (`swapDistance`, the same number as `sunSwap` of `src/director/film.ts`). The far end is
+never a typed distance: when the plan's radius changes both spans follow it, and `spans` never puts an end
+beyond the swap distance. The near end, 4.62, is still typed: it stands at the distance of the Sun stop's
+last view (4.6208, MEASURED), which the film works out (`sunStart`) and does not hand to this folder.
+`tests/farsun-share.test.ts` holds it: the swap distance is the film's, both ends stand at or before the
+swap distance of every stop, the wear is 0 wherever the globe's share is 0, and the share and the burn
+have no step at any sixteenth of a frame of the way out of the Sun.
 
 Over `handover` the hold's globe gives way to the far Sun; over `wear` the far Sun goes from the hold's own
 law (the same map, grade, limb factor and motion as `src/stops/sun/globe.ts`) to its own. The wear is
@@ -323,7 +328,9 @@ section are taken on the larger sphere with the zones on the approved circle.
 
 MEASURED on the merged tree, draft tier, one page: 615, 690, 1034 and 1035 drawn after a frame of the Sun
 stop (its set in memory) and each on a fresh page are the same bytes; 539, 540, 1034 and 1035 show the
-burnt white Sun, where the old spans drew the Sun stop's map on it while that set was loaded.
+burnt white Sun, where the old spans drew the Sun stop's map on it while that set was loaded. MEASURED
+from the film: at 499, 499 + 1/2 and 500 the share is 1 and the burn 0.2000 (the old spans: 0.9278 and
+0.0203 up to 499 + 1/2, then 1 and 0.2000).
 
 How the look moved from the small sphere to the large one (S is 339.62 / 443.7, 0.7654):
 
@@ -353,7 +360,8 @@ MEASURED at 615 on the larger sphere, the zones on the approved circle, the box 
 700, blur 12 px. The look of af2fab0c drawn unchanged on the larger sphere: 15.06 in the box. Placed and
 scaled by the rules above and nothing else: 7.65. This look, draft tier: 4.83 in the box, 7.98 plain; by
 zone the face 3.9, the limb 2.8, the gas from 1.0 to 1.1 radii 7.3, from 1.1 to 1.3 7.7, from 1.3 to 1.6
-4.6, beyond 1.6 2.9 (bounds 5, 5 and 8). The aim of 4.0 is not met. What is left, by sector
+4.6, beyond 1.6 2.9 (bounds 5, 5 and 8). Final tier: 4.83 in the box, 8.05 plain, the zones the same to
+a tenth. The aim of 4.0 is not met. What is left, by sector
 (position angle from the right, clockwise, the approved image minus this look, blur 12 px): the gas from
 1.1 to 1.2 radii at 130 to 145 is 11 levels of red short; the first tenth outside the limb at 145 to 160
 is 12 levels of blue short; from 1.2 to 1.6 radii at 145 to 160 the look is 5 to 8 levels too bright;

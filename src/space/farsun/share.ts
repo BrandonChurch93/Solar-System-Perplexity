@@ -10,10 +10,13 @@ const forced = typeof location !== 'undefined' ? new URLSearchParams(location.se
 
 export const swapDistance = 1 / Math.sin((params.light.sunRadiusDeg * Math.PI) / 180)
 
-const reach = (span: number[]): number => span[0]! * Math.pow(swapDistance / span[0]!, span[1]!)
+export function spans(swap: number): { handover: [number, number]; wear: [number, number] } {
+  const reach = (span: number[]): number => Math.min(span[0]! * Math.pow(swap / span[0]!, span[1]!), swap)
+  return { handover: [look.handover[0]!, reach(look.handover)], wear: [look.wear[0]!, reach(look.wear)] }
+}
 
-export const handoverSpan: [number, number] = [look.handover[0]!, reach(look.handover)]
-export const wearSpan: [number, number] = [look.wear[0]!, reach(look.wear)]
+export const handoverSpan = spans(swapDistance).handover
+export const wearSpan = spans(swapDistance).wear
 
 export function globeShare(distance: number): number {
   if (forced === 'globe') return 1
