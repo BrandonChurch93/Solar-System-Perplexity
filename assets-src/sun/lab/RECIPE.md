@@ -23,6 +23,9 @@ One file is baked, in two sizes: the far twin of the ground for the globe (FAR-T
   (mu 1), no gas, no haze, no flare light, the large tone of the globe's map on, clock at 0. Parameters:
   src/stops/sun/lab/lab.json, far.level and far.tone. The files are a pure function of lab.json, the table of the
   life and the globe's map (public/assets/sun/full/wrap-color.jpg).
+  Take kept (d7, 16:42 UTC 25 Nov): baked at the turned anchor, which is far.level.axes together with the turned
+  numbers of src/stops/sun/place.json (stage.toBody, globe.spot, north, mapSpot, mapNorth, twin), taken from
+  agent/sun-place f906d2ec. The umbra sits in the middle of the picture. Full 1,715,215 bytes, web 490,030.
 - The table of the life alone, measured without a picture: `npx tsx assets-src/sun/lab/spans.ts`.
 - The reader of a clip (largest and mean change of the pattern between pictures):
   `npx tsx assets-src/sun/lab/reader.ts --dir FOLDER --hold 0`.

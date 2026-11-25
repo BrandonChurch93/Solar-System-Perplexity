@@ -661,3 +661,31 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   one, so a bake with turned axes on my branch would put the umbra 0.7 degrees off the middle. PLAN: bake in a
   worktree of f906d2ec (/home/user/workspace/place, node_modules linked) with my lab folders laid over it, and read
   frame 90 and the run there too. Whole run d4 on my own branch started 16:18 (twin of h14 still).
+- 16:20 to 16:36 UTC, d5 (commit 9ddb0705, pushed, not named): beads (knots of hotter gas that ride outward on the
+  strands, fibre.beads [0.45, 9]). MEASURED: whole run d4 on my branch (old anchor, twin of h14) largest 0.360 at
+  capture 398 at [0, 536], mean 0.190, 75 pairs, limit 0.45. spans.ts: cells over the size that shows (224 ends):
+  half of the largest ground to nothing in at least 16 film frames (1 percent 18, 5 percent 19, quartile 22, median
+  31); all ends (1049): least 1, 1 percent 3, median 25; largest share lost in 8 film frames for showing cells:
+  median 0.18, 95 percent 0.27, most 0.34; whole lives seen (216): least 60, median 82, most 170 film frames.
+  flow.py (grain's radial drift by correlation, px a film frame): d4 21 cells mean 0.069 (SE 0.065), share outward
+  0.71; d5 30 cells mean 0.046 (SE 0.070), median 0.110, share outward 0.70. NOT conclusive. STATED from code: grain
+  speed 0.3 (1 - r / 1.3) dome radii a second.
+- 16:37 UTC: bake in the place tree (worktree /home/user/workspace/place at f906d2ec, local only, never pushed)
+  with my lab folders laid over: frame 90 there gave near percentiles 0.255 0.431 0.62 0.792 0.922 0.988, the same
+  as my branch gives once place.json carries the turned anchor. So I took the anchor numbers of f906d2ec into my
+  branch's src/stops/sun/place.json (stage.toBody, globe.spot, north, mapSpot, mapNorth, patchNorthOffDeg,
+  twin.position, twin.quaternion, onGlobe.heights.surface, onGlobe.away; backup v/place-old.json). This is an edit
+  outside my folders and goes in every NAMED mail.
+- 16:40 UTC, d7: curve refit at the turned anchor: frame 90 near percentiles 0.243 0.396 0.58 0.757 0.906 0.957
+  (approved 0.231 0.404 0.58 0.761 0.906 0.965). Twin rebaked at the turned anchor: full 1,715,215 bytes, web
+  490,030. Whole run 380 to 470 and hold 700 to 732 started 16:42:46 (v/rise-d7.txt, v/hold-d7.txt).
+- 16:50 UTC, SEEN on v/form-d7.jpg (approved lower third over d7, 1 to 1): cells read as swollen pads with strands
+  from a dimple, no longer flakes; WRONG: the pads float apart on a wide dark floor (gaps 30 to 60 px, approved 10
+  to 25 px and packed), the right of the frame (x over 1400) and the middle distance are dark red brown and flat
+  (same in d4 and h20, so not the turned anchor; the tone of the place from the globe's map, far.tone), the
+  penumbra's strands reach into the lower third as wavy hair. Cause of the gaps by the code: the heat falls by a
+  round law (heat.round 0.95: zero at rho 0.73) times a gaussian blotch (heat.wide 1.8) so the corners between
+  three cells and the rims are cold. Next: wide up, round down a little, then the tone's lower bound.
+- 16:54 UTC, MEASURED d7 (turned anchor, twin rebaked): whole run 380 to 470: largest 0.406 at capture 398 at
+  [0, 536], mean 0.206, 75 pairs, limit 0.45; pair 416 now 0.213 (h20 0.446), the hump 419 to 429 stands at 0.31 to
+  0.39. Hold 700 to 732: largest 0.006, mean 0.005.
