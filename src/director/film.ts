@@ -14,7 +14,7 @@ import world from './world.json'
 import { aimAt, type SkyAims } from '../space/aim'
 import { CARRY, TravelShape, WORLD_ANSWER, WORLD_CORNER, WORLD_MISS, carryBend, carryWay, inFrame, outsideFrame, travelLook, worldCosts, worldLead } from '../space/travel/path'
 import { discShare, openSky } from '../space/travel/open'
-import { globeShare, wearShare } from '../space/farsun/share'
+import { globeShare, sunStartsAt, wearShare } from '../space/farsun/share'
 import farLook from '../space/farsun/look.json'
 import sunFit from '../stops/sun/fit.json'
 
@@ -511,6 +511,7 @@ export class FilmDirector implements Director {
     if (i === 0) {
       this.sunWorld.copy(from.position).sub(this.frames[0]!.origin).normalize().negate()
       this.sunStart = from.position.distanceTo(this.frames[0]!.origin)
+      sunStartsAt(this.sunStart)
       this.sunSwap = 1 / Math.sin(THREE.MathUtils.degToRad(b.p.light.sunRadiusDeg))
     }
     const r0 = arc(b.sunDir, this.sunWorld)
