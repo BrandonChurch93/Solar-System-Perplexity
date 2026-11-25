@@ -1,9 +1,17 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T03:02:29.647Z",
- "head": "402543f6c2a83bf32572e1341952f4e369d68900",
- "note": "third commit in work: rise sheet 4380 to 4403 first; pop panel 4141 to 4146; fixed angle trial; 4436 pair",
+ "pushed": "2026-11-25T03:12:33.436Z",
+ "head": "aaace72a250018b60fcc6755739ae146e57ed085",
+ "note": "third commit aaace72a: rise sheets 4380 to 4403 and 4404 to 4426 first; pop panel 4141 to 4146; fixed angle trial; 4436 pair",
  "looks": [
+  {
+   "time": "2026-11-25T03:10:59.748Z",
+   "file": "20261125031059748-note-rise3-b.jpg",
+   "source": "../../../../tmp/parC/rise3-b.jpg",
+   "kind": "note",
+   "label": "rise 4404 to 4426 at draft, every whole frame, third commit's tree (frames with the patch of MAIL 863)",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T03:02:28.307Z",
    "file": "20261125030228307-note-rise3-a.jpg",
@@ -277,14 +285,6 @@
    "format": "16x9",
    "diag": "nograin",
    "job": "measure"
-  },
-  {
-   "time": "2026-11-25T00:09:51.825Z",
-   "file": "20261125000951825-note-rise-2.jpg",
-   "source": "../../../../tmp/parA/rise-2.jpg",
-   "kind": "note",
-   "label": "rise 4440 to 4454 every frame, draft, second commit (open: the hoops are brighter than the hold's rings)",
-   "stop": "uranus"
   }
  ]
 }
