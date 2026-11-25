@@ -384,6 +384,7 @@ export class Relief {
   private readonly eyeScale = { value: 1 }
   private scaled = false
   private edged = false
+  private edgeAir = true
   private readonly edgeSide = { value: new THREE.Vector4(0, 1, 1, 0) }
   private readonly edgeOver = { value: new THREE.Vector4(0, 0, 0, 0) }
   private readonly edgeFar = { value: new THREE.Vector3(1, 1, 1) }
@@ -604,8 +605,13 @@ export class Relief {
   // (the two shares multiply). Off until a set calls it: a relief that never does keeps its shaders to the letter and draws as before.
   // The first call gives the materials the shader with the edge, which is a new program: call it once where the set is built. Inside
   // the feather the relief is no shield, so what lies behind it there is drawn; one feather inside it is the shield it was.
-  presenceEdge(feather: readonly [number, number, number, number]): void {
+  // The air: it ends with the ground unless the set says { air: false }. Then the ground layers end at the sides and the air stays whole:
+  // it keeps its shaders to the letter and draws as it did before the edge, for a set whose picture behind the relief has no air of its
+  // own to show beyond the side. The choice belongs to the programs, so the first call makes it; a later call may leave it out, and one
+  // that names the other choice throws.
+  presenceEdge(feather: readonly [number, number, number, number], options: { air?: boolean } = {}): void {
     if (feather.length !== 4 || !feather.every((f) => f >= 0 && Number.isFinite(f))) throw new Error('the edge of a relief is four feathers of 0 or more pixels (left, right, bottom, top), not ' + JSON.stringify(feather))
+    if (this.edged && options.air !== undefined && options.air !== this.edgeAir) throw new Error('the air of the edge of a relief is chosen by the first call, where the set is built: here it ' + (this.edgeAir ? 'ends with the ground' : 'stays whole'))
     const [W, H] = this.def.imageSize
     const boxes = this.def.layers.map((l) => l.box)
     const x0 = Math.min(...boxes.map((b) => b[0]))
@@ -616,6 +622,7 @@ export class Relief {
     this.edgeOver.value.set(feather[0] > 0 ? W / feather[0] : 0, feather[1] > 0 ? W / feather[1] : 0, feather[2] > 0 ? H / feather[2] : 0, feather[3] > 0 ? H / feather[3] : 0)
     if (!this.edged) {
       this.edged = true
+      this.edgeAir = options.air !== false
       const th = Math.tan(rad(this.def.vfovDeg) / 2)
       this.edgeFar.value.set(this.far, 1 / (th * W / H), 1 / th)
       for (const l of this.layers) {
@@ -624,7 +631,7 @@ export class Relief {
         l.material.uniforms.uEdgeOver = this.edgeOver
         l.material.needsUpdate = true
       }
-      if (this.air) {
+      if (this.air && this.edgeAir) {
         const m = this.air.material
         m.fragmentShader = withEdge(m.fragmentShader, AIR_LIT)
         m.vertexShader = withEdgeEye(m.vertexShader)

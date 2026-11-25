@@ -331,6 +331,52 @@ describe('the edge of a relief', () => {
     }
   })
 
+  it('leaves the air whole when the set says so: the layers get the edge, the air keeps its shaders and its uniforms to the letter', async () => {
+    const plain = materials(await Relief.load(ctx, '', def, motion(true)))
+    const r = await Relief.load(ctx, '', def, motion(true))
+    const all = materials(r)
+    const versions = all.map((m) => m.version)
+    r.presenceEdge([0, 8, 4, 0], { air: false })
+    const ground = all.find((_, i) => litOf(plain[i]!) !== AIR_LIT)!
+    let airs = 0
+    all.forEach((m, i) => {
+      if (litOf(plain[i]!) === AIR_LIT) {
+        airs++
+        expect(m.fragmentShader).toBe(plain[i]!.fragmentShader)
+        expect(m.vertexShader).toBe(plain[i]!.vertexShader)
+        expect(Object.keys(m.uniforms).sort()).toEqual(Object.keys(plain[i]!.uniforms).sort())
+        expect(m.version).toBe(versions[i])
+      } else {
+        expect(m.fragmentShader).toBe(withEdge(plain[i]!.fragmentShader, LIT))
+        expect(m.uniforms.uEdgeSide).toBe(ground.uniforms.uEdgeSide)
+        expect(m.version).toBe(versions[i]! + 1)
+      }
+    })
+    expect(airs).toBe(1)
+    // The numbers and the shield are those of the edge that ends the air too.
+    const both = await Relief.load(ctx, '', def, motion(true))
+    both.presenceEdge([0, 8, 4, 0])
+    expect((ground.uniforms.uEdgeSide!.value as THREE.Vector4).toArray()).toEqual((materials(both).find((m) => m.uniforms.uEdgeSide)!.uniforms.uEdgeSide!.value as THREE.Vector4).toArray())
+    expect((ground.uniforms.uEdgeOver!.value as THREE.Vector4).toArray()).toEqual((materials(both).find((m) => m.uniforms.uEdgeOver)!.uniforms.uEdgeOver!.value as THREE.Vector4).toArray())
+    expect(grids(r).map((g) => Array.from(g.inside!))).toEqual(grids(both).map((g) => Array.from(g.inside!)))
+    // The choice is the first call's: a later call may leave it out or name it again, and changes numbers only.
+    const texts = all.map((m) => m.fragmentShader + m.vertexShader)
+    r.presenceEdge([4, 2, 1, 8])
+    r.presenceEdge([4, 2, 1, 8], { air: false })
+    r.presenceEdge([0, 0, 0, 0], {})
+    all.forEach((m, i) => expect(m.fragmentShader + m.vertexShader).toBe(texts[i]))
+    // The other choice is another program: it throws, and leaves the numbers as they were.
+    const before = (ground.uniforms.uEdgeOver!.value as THREE.Vector4).toArray()
+    expect(() => r.presenceEdge([16, 16, 16, 16], { air: true })).toThrow(/chosen by the first call.*stays whole/)
+    expect((ground.uniforms.uEdgeOver!.value as THREE.Vector4).toArray()).toEqual(before)
+    expect(() => both.presenceEdge([16, 16, 16, 16], { air: false })).toThrow(/chosen by the first call.*ends with the ground/)
+    both.presenceEdge([16, 16, 16, 16], { air: true })
+    // A relief without air takes either word and has nothing to leave whole.
+    const bare = await Relief.load(ctx, '', def, motion(false))
+    bare.presenceEdge([0, 8, 4, 0], { air: false })
+    for (const m of materials(bare)) expect(m.fragmentShader.includes('edgeShare(vImage)')).toBe(true)
+  })
+
   it('takes its sides from the boxes of all layers together, margins and all', async () => {
     const r = await Relief.load(ctx, '', wide, motion(true))
     r.presenceEdge([4, 8, 2, 0])

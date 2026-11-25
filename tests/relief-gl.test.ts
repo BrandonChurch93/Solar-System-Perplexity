@@ -34,7 +34,7 @@ async function shot(o) {
   }
   const relief = await Relief.load(ctx, '', o.def, o.motion)
   if (o.presence !== null) relief.presence(o.presence)
-  if (o.edge) relief.presenceEdge(o.edge)
+  if (o.edge) relief.presenceEdge(o.edge, o.wholeAir ? { air: false } : {})
   const s = o.scale ?? 1
   const eye = o.eye ?? [0, 0, 0]
   if (o.early) relief.update(0, 1, 0, { format: { width: o.width, height: o.height } })
@@ -70,7 +70,7 @@ async function shot(o) {
 window.relief = { shot }
 `
 
-interface Shot { def: object; motion: object; files: Record<string, number[]>; dist: Record<string, number>; presence: number | null; drawn: boolean; width: number; height: number; back: [number, number, number]; scale?: number; eye?: [number, number, number]; early?: boolean; edge?: [number, number, number, number]; sizes?: Record<string, number> }
+interface Shot { wholeAir?: boolean; def: object; motion: object; files: Record<string, number[]>; dist: Record<string, number>; presence: number | null; drawn: boolean; width: number; height: number; back: [number, number, number]; scale?: number; eye?: [number, number, number]; early?: boolean; edge?: [number, number, number, number]; sizes?: Record<string, number> }
 
 const W = 32
 const H = 16
@@ -144,10 +144,10 @@ describe.skipIf(!have)('the presence of a relief in a WebGL2 browser', () => {
   const errors: string[] = []
   const shoot = async (o: Shot): Promise<number[]> => {
     const out = await page.evaluate((x) => (window as unknown as { relief: { shot(o: unknown): Promise<{ pixels: number[]; texts: number; eyes: number; edges: number }> } }).relief.shot(x), o)
-    expect(out.edges).toBe(o.edge ? (o.def as { layers: object[] }).layers.length + ('air' in o.motion ? 1 : 0) : 0)
+    expect(out.edges).toBe(o.edge ? (o.def as { layers: object[] }).layers.length + ('air' in o.motion && !o.wholeAir ? 1 : 0) : 0)
     expect(out.texts).toBe(o.presence === null ? 0 : (o.def as { layers: object[] }).layers.length + ('air' in o.motion ? 1 : 0))
     // The air of a relief with an edge has the lens in its vertex shader too (where its ray meets the far distance).
-    expect(out.eyes).toBe(((o.scale ?? 1) !== 1 && !o.early ? (o.def as { layers: object[] }).layers.length : 0) + (o.edge && 'air' in o.motion ? 1 : 0))
+    expect(out.eyes).toBe(((o.scale ?? 1) !== 1 && !o.early ? (o.def as { layers: object[] }).layers.length : 0) + (o.edge && 'air' in o.motion && !o.wholeAir ? 1 : 0))
     return out.pixels
   }
 
@@ -308,6 +308,38 @@ describe.skipIf(!have)('the presence of a relief in a WebGL2 browser', () => {
     }
     expect(between).toBeGreaterThan(20)
     expect(worst).toBeLessThan(WORST_AIR)
+    expect(errors).toEqual([])
+  }, 120000)
+
+  it('with the air left whole the layers end at the side and the air is the air of the relief that never asked, to the bit', async () => {
+    const plain = await shoot(aired)
+    const ended = await shoot({ ...aired, edge: RIGHT })
+    const got = await shoot({ ...aired, edge: RIGHT, wholeAir: true })
+    let aside = 0
+    let faded = 0
+    for (let y = 0; y < H; y++) {
+      for (let x = 0; x < W; x++) {
+        const g = pixel(got, x, y)
+        const p = pixel(plain, x, y)
+        const e = pixel(ended, x, y)
+        const layer = x >= 7 && x <= 24 && y >= 3 && y <= 12
+        // Outside the layer the frame shows the air alone: all of it, also beyond the side, where the edge that ends the air leaves none.
+        if (!layer) {
+          expect(g).toEqual(p)
+          if (x >= 24) {
+            aside++
+            expect(Math.abs(g[0]! - e[0]!)).toBeGreaterThan(0.01)
+          }
+        } else if (x < 16) expect(g).toEqual(p)
+        else if (x > 17 && x < 23 && y > 3 && y < 12) {
+          // Inside the feather the layer is on its way out, over the whole air: the pixel has left the picture with the layer.
+          faded++
+          expect(Math.abs(g[0]! - p[0]!) + Math.abs(g[1]! - p[1]!) + Math.abs(g[2]! - p[2]!)).toBeGreaterThan(0.001)
+        }
+      }
+    }
+    expect(aside).toBeGreaterThan(50)
+    expect(faded).toBeGreaterThan(20)
     expect(errors).toEqual([])
   }, 120000)
 
