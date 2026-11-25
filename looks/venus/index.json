@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T09:25:18.118Z",
+ "pushed": "2026-11-25T09:47:43.356Z",
  "head": "86ce0513ce71a8054b4be143f8edc3d7ccc4c1fd",
- "note": "third state in work: the place arrives by distance, the hold at 1185 and 1259 equal to before to the byte at draft",
+ "note": "third state in work: place arrives by the pixel on the ground, hold equal to before to the byte, soft patch at 1284 still wrong",
  "looks": [
+  {
+   "time": "2026-11-25T09:47:42.215Z",
+   "file": "20261125094742215-note-a3-1284.jpg",
+   "source": "../../../../tmp/v/sh/a3-1284.jpg",
+   "kind": "note",
+   "label": "dive 1284 at 1 to 1 round the place: first state, pair 0.0113 to 0.034, pair 0.063 to 0.095 (soft patch in the middle, still wrong)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T09:47:41.139Z",
+   "file": "20261125094741139-note-a3-cmp.jpg",
+   "source": "../../../../tmp/v/sh/a3-cmp.jpg",
+   "kind": "note",
+   "label": "dive 1278 1284 1290: before, first state, third state with the place arriving by the pixel on the ground 0.063 to 0.095 deg",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-25T09:25:16.981Z",
    "file": "20261125092516981-note-ar-cmp-rise.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/sh/r0-rise-ul.jpg",
    "kind": "note",
    "label": "the same crop on the tree of 8adf0940 (before the one ground)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T08:26:50.006Z",
-   "file": "20261125082650006-note-q6-rise-ul.jpg",
-   "source": "../../../../tmp/v/sh/q6-rise-ul.jpg",
-   "kind": "note",
-   "label": "rise 1542 to 1556 upper left under the limb, state 86237abe: the far deck goes from smooth air to a field of lumps",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T07:54:26.626Z",
-   "file": "20261125075426626-note-q6-vs-b0-1274-82.jpg",
-   "source": "../../../../tmp/v/sh/q6-vs-b0-1274-82.jpg",
-   "kind": "note",
-   "label": "dive 1274 1278 1282 lower right limb, tree before (top) and 86237abe (bottom): the same pale smear and rim in both",
    "stop": "venus"
   }
  ]
