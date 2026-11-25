@@ -1605,3 +1605,21 @@ Plan: (A) h with the start found from geometry, mercury leg only; (B) hand over 
 - The config key travel.sky.arriveFrom is unused now (config/ is not mine): tell the Builder.
 - The hand over proofs of 12:56 (/tmp/t-legs) were rendered before 8702e93a: the body's place and the point law are the same, the sky's lift differs a little in the late frames. Say so.
 - Running since 13:23: final tier 1064 to 1068 from wt-exp at the tip, /tmp/t-final, log /tmp/t-final.log (ends PROOFDONE final). Then: globe-lean and globe-cull alone, full vitest (json reporter, /tmp/vitest-exp2.json), build, shaderaudit against /tmp/sa-base.txt, crops, bundles, state 14:00, NAMED by 15:00.
+
+### 13:46 UTC, 25 Nov: final tier at master is far too slow here; order changed
+- The final tier started 13:23 with --rate 2 --format master gave no frame in 22 minutes (chrome at 373 percent of 4 cores). Killed 13:45. Two faults of mine: (1) --rate 2 is the 60 fps capture (k = 2 x film frame), its shutter is half the film's. The film's shutter is rate 1: `--frames 1064,1065,1066,1067,1068` with no --rate (file names k01064.png and so on). (2) The earlier finals (570 to 887 s a frame, 64 to 98 samples) were PREVIEW size; master has four times the pixels.
+- Order now: full vitest alone (started 13:45, /tmp/vitest-exp2.json, log ends VITESTDONE), build, then the final tier at rate 1 master, frames in the order 1066, 1067, 1065, 1068, 1064, one render at a time. What is not done by 14:55 follows the NAMED; say the cost a frame as measured.
+- Command for the Builder's machines: `npx tsx assets-src/travel/capture-proof.ts --frames 1064,1065,1066,1067,1068 --tier final --format master --out DIR --label final`.
+
+### 14:00 UTC, 25 Nov: STATE sent; the one red of the full run cured (92cf8139)
+- Full vitest on 91357ee7 (13:45 to 13:57, alone): 833 of 834. Red: pass.test "never takes the level down under a Sun that comes into the frame to stay" timed out, 5497 ms under load (alone 3574 ms green). Cause mine: comingOpen read the camera 17 more times a shot. The two globe tests were green in that run.
+- Cure 92cf813931f75d1ea57245059cbe82741dbc5e40 (film.ts): bright returns [Sun share, lit share], brightNear makes one pass of the 17 taps and keeps the last (index, time) result, so a shot reads the camera 17 times as on the base. Shot hashes of all 5400 frames equal to 91357ee7's (0 differ). The test alone: 2333 ms, 40 of 40. Build green, shaderaudit same bytes.
+- STATE mailed at 14:00 (seven points: lift, hand over, changed frames, the test's leg said plainly, the red, the final tier blocker with the command, the notebook merge).
+- Running: full vitest on 92cf8139 (/tmp/vitest-exp3.json, log ends VITESTDONE). Then final tier rate 1 master: `--frames 1066,1067,1065,1068,1064 --tier final --format master --out /tmp/t-final --label final` in wt-exp, log /tmp/t-final.log.
+
+### 14:11 UTC, 25 Nov: full vitest green on 92cf8139; final tier at rate 1 master running
+- Full vitest on 92cf813931f75d1ea57245059cbe82741dbc5e40, alone, 13:59 to 14:10: 834 of 834 in 259 files. Build green 13:59. Shaderaudit same bytes (6973). Net bytes of my files over 6ce0447f: +4266 (film.ts 2953, farpoint.ts 686, path.ts 306, pass.test.ts 225, types.ts 73, engine.ts 23).
+- Origin by ls-remote at 14:10: agent/travel-b10 c776ab20 (my commits sit on it, no merge needed), agent/travel 95a091a2, main 50387ada (moved at 14:09, 6ce0447f is in it; the batch branch is the base, not main).
+- Code bundle: out-travel/travel-b10-92cf8139.bundle (5111 bytes, six commits over c776ab20, verified).
+- Final tier started 14:10 from wt-exp at 92cf8139: frames 1066, 1067, 1065, 1068, 1064, rate 1, master, /tmp/t-final (files k01066.png and so on), log /tmp/t-final.log. No vitest while it runs.
+- NAMED due 15:00: send at 14:55 with what is rendered. Attach: both bundles, item173/legs-handover.md/.png, legs-handover-4x.jpg, leg0-asis-new-4x.jpg, final crops. Say: the 59 proof frames were rendered at 48a0b940 (before 8702e93a); shot hashes say which frames differ (sky lift only).
