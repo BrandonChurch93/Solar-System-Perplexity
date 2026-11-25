@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T16:25:57.184Z",
+ "pushed": "2026-11-25T16:37:07.391Z",
  "head": "485d5807546cb45e3e66e3de6679c5b1bc182e50",
- "note": "toward the ninth: where the 5.5 against main lie at 4860 (right plain 5.2, sky 1.8); trials on the far plain's level; G17 0.544 proxy; 28 s a preview frame",
+ "note": "4860 against main: the right plain's level and the limb band are the 5.5; trials on the low air and the veil",
  "looks": [
+  {
+   "time": "2026-11-25T16:37:06.774Z",
+   "file": "20261125163706774-note-three-appr-main-tip.jpg",
+   "source": "../../../../tmp/three-appr-main-tip.jpg",
+   "kind": "note",
+   "label": "4860: approved (top), main (middle), tip (bottom); G17 of the tip 0.544/0.194; 90.7 s a draft frame at 1920",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T16:37:06.190Z",
+   "file": "20261125163706190-note-pm-P0-Q1-Q2-Q3.jpg",
+   "source": "../../../../tmp/pm-P0-Q1-Q2-Q3.jpg",
+   "kind": "note",
+   "label": "4860 preview: approved, main, tip P0, trials Q1 to Q3 (low air's own light, hole at the eye); G17 of the tip 0.544/0.194; 64 s a draft preview frame",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T16:25:55.911Z",
    "file": "20261125162555911-note-plain-2x.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/m1-sun.jpg",
    "kind": "note",
    "label": "4605 at x 1560 to 1860, y 40 to 270: approved, before the merge, on the merge. The far Sun stands in its place (1716, 153; approved 1709, 158) as the engine's small disc, without the approved's spiked flare; the sky round it is gold brown and dense, the approved's blue grey and sparse. Main's new band (take batch 10) made it dimmer and finer",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T15:25:08.089Z",
-   "file": "20261125152508089-note-v-six.jpg",
-   "source": "../../../../tmp/v-six.jpg",
-   "kind": "note",
-   "label": "the veil's first try, NOT taken: one even pale line, a drawn stroke",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T15:25:06.810Z",
-   "file": "20261125152506810-note-v2-six.jpg",
-   "source": "../../../../tmp/v2-six.jpg",
-   "kind": "note",
-   "label": "the third streamer as a thin veil by the slant path law (MAIL 1126 point 4): 4968, 4972, 4976 upper left at 2 times, before above, after below: the row of flecks is gone, a faint veil with threads stands there. The pieces at the bank's end (first streamer's tail) are NOT cured. 28 s a preview frame",
    "stop": "neptune"
   }
  ]
