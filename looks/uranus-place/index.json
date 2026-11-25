@@ -1,9 +1,41 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T23:16:08.423Z",
- "head": "c6d698667a691dfb1c8cb7d4d5e4f70c062e2cc4",
- "note": "4290 final band of the rim trial beside B1 and approved; the upright lines at 4407 at 3x",
+ "pushed": "2026-11-25T23:39:46.528Z",
+ "head": "2583f12968484aaa2d8659d2907ff8ecbdc5e697",
+ "note": "upright lines in the rise: cause is the terrain picture's texels longer than a pixel, cured in 2583f129 (draft proof, finals rendering)",
  "looks": [
+  {
+   "time": "2026-11-25T23:39:45.888Z",
+   "file": "20261125233945888-note-main-final-4407-crop.jpg",
+   "source": "../../../../tmp/n63/main-final-4407-crop.png",
+   "kind": "note",
+   "label": "main 555fe096 final tier 4407, the panel's crop 1 to 1: no upright lines",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T23:39:45.318Z",
+   "file": "20261125233945318-note-full-4407.jpg",
+   "source": "../../../../tmp/n64/full-4407.jpg",
+   "kind": "note",
+   "label": "4407 draft full frame: B1 above, the cure 2583f129 below",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T23:39:44.660Z",
+   "file": "20261125233944660-note-mid-4399-2x.jpg",
+   "source": "../../../../tmp/n64/mid-4399-2x.png",
+   "kind": "note",
+   "label": "4399 draft at 2x: B1, cure long 1 to 2, long 1.5 to 3 (soft streaks stay low left, as on main)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T23:39:43.960Z",
+   "file": "20261125233943960-note-lines-4407-3x.jpg",
+   "source": "../../../../tmp/n64/lines-4407-3x.png",
+   "kind": "note",
+   "label": "4407 draft at 3x: main, B1 (upright lines), cure long 1 to 2, long 1.5 to 3",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T23:16:07.045Z",
    "file": "20261125231607045-note-lines-b1-4407-3x.jpg",
@@ -216,38 +248,6 @@
    "source": "../../../../tmp/n59/name-4186.jpg",
    "kind": "note",
    "label": "B1 6a0e74bb final 4186 beside main fd52cf33 final 4186, horizon crops at full size",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T20:23:13.675Z",
-   "file": "20261125202313675-note-b1-final-4186-half.jpg",
-   "source": "../../../../tmp/n59/b1-final-4186-half.jpg",
-   "kind": "note",
-   "label": "B1 6a0e74bb final 4186, half size",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T20:23:12.703Z",
-   "file": "20261125202312703-note-b1-dive-hand.jpg",
-   "source": "../../../../tmp/n59/b1-dive-hand.jpg",
-   "kind": "note",
-   "label": "B1 draft dive handover 4183 to 4188, crop",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T20:23:11.574Z",
-   "file": "20261125202311574-note-name-4290.jpg",
-   "source": "../../../../tmp/n59/name-4290.jpg",
-   "kind": "note",
-   "label": "B1 6a0e74bb final 4290 beside main and the name, horizon crops",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T20:11:35.839Z",
-   "file": "20261125201135839-note-p-A1-8302.jpg",
-   "source": "../../../../tmp/n59/p-A1-8302.jpg",
-   "kind": "note",
-   "label": "estimate by arithmetic on pictures, not a render: the rim as added light of the air, dive read from 4151: 0.77 (name 0.98, rim off 0.45)",
    "stop": "uranus"
   }
  ]
