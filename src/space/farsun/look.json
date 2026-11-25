@@ -64,7 +64,7 @@
     "limb": 0.8,
     "floor": [
       0.03,
-      0.7
+      0.8
     ]
   },
   "chromosphere": {
@@ -128,11 +128,11 @@
     "flow": 0.05,
     "burn": -0.3,
     "thin": 0.6,
-    "broken": 0.8,
+    "broken": 0.5,
     "pale": [
       1.0,
-      0.72,
-      0.38
+      0.56,
+      0.2
     ],
     "paleBy": 0.85
   },
@@ -142,13 +142,14 @@
       0.027
     ],
     "tight": 2.4,
-    "wide": 0.8,
+    "wide": 0.6,
     "colour": [
       1.0,
       0.88,
       0.77
     ],
-    "inside": 0.92
+    "inside": 0.92,
+    "end": 4
   },
   "loops": [
     {
@@ -249,9 +250,19 @@
       "height": 0.24,
       "width": 0.009,
       "lean": 0.2,
-      "gain": 0.04,
+      "gain": 0.05,
       "burn": 1.25,
-      "ragged": 0.8
+      "ragged": 0.3,
+      "rope": [
+        0.25,
+        0.05,
+        5
+      ],
+      "sheath": [
+        0.015,
+        2.6,
+        90
+      ]
     },
     {
       "at": [
@@ -263,9 +274,33 @@
       "height": 0.22,
       "width": 0.008,
       "lean": -0.2,
-      "gain": 0.045,
+      "gain": 0,
       "burn": 1.25,
-      "ragged": 0.8
+      "ragged": 0.3
+    },
+    {
+      "at": [
+        245,
+        2.5
+      ],
+      "span": 19,
+      "turn": 32,
+      "height": 0.23,
+      "width": 0.0075,
+      "lean": 0.1,
+      "gain": 0.042,
+      "burn": 1.25,
+      "ragged": 0.3,
+      "rope": [
+        0.3,
+        0.04,
+        7
+      ],
+      "sheath": [
+        0.015,
+        2.6,
+        90
+      ]
     }
   ],
   "spinAt": 0.225,
@@ -277,28 +312,28 @@
     "split": 0.2,
     "gain": 22,
     "gas": 1.0,
-    "glow": 0.06,
-    "fall": 2.4,
+    "glow": 0.055,
+    "fall": 1.6,
     "colour": [
       1.0,
-      0.62,
-      0.25
+      0.66,
+      0.33
     ],
     "hide": [
       1.1,
       1.4
     ],
-    "tight": 2.0,
-    "tightFall": 20.0,
+    "tight": 1.0,
+    "tightFall": 30,
     "tightColour": [
-      1.0,
-      0.5,
+      1,
+      0.55,
       0.24
     ],
     "white": [
       0.99,
-      0.975,
-      0.905
+      0.985,
+      0.95
     ],
     "desat": [
       2.0,
@@ -306,17 +341,25 @@
     ],
     "edge": 0.97,
     "keep": {
-      "gain": 0.12,
+      "gain": 0.042,
       "tint": [
-        0.5,
-        1.0,
-        0.3
+        0.7,
+        1.6,
+        3.4
       ],
-      "top": 1.2
+      "top": 1.15,
+      "floor": 0.88,
+      "coarse": [
+        0.8,
+        14,
+        0.5
+      ],
+      "soft": 1.0
     },
     "limb": [
-      0.5,
-      8
+      0.85,
+      8,
+      1.6
     ]
   },
   "fringe": {
@@ -356,7 +399,7 @@
         "reach": 0.1,
         "strands": 0,
         "knot": [
-          6,
+          8,
           6,
           0.07
         ]
@@ -372,7 +415,7 @@
         "reach": 0.1,
         "strands": 0,
         "knot": [
-          14,
+          19,
           8,
           0.06
         ]
@@ -388,25 +431,29 @@
         "reach": 0.1,
         "strands": 20,
         "knot": [
-          14,
+          19,
           5,
           0.07
+        ],
+        "hair": [
+          96.0,
+          0.0816
         ]
       },
       {
         "at": [
-          266,
+          264,
           8.5
         ],
         "width": 5,
-        "gain": 10,
+        "gain": 1.5,
         "tall": -0.4,
-        "reach": 0.03,
+        "reach": 0.045,
         "strands": 200,
         "knot": [
-          58,
+          25,
           6,
-          0.058
+          0.05
         ]
       },
       {
@@ -418,7 +465,7 @@
         "gain": 0,
         "tall": 0,
         "reach": 0.3,
-        "strands": 2
+        "strands": 1.5
       },
       {
         "at": [
@@ -439,12 +486,16 @@
         "width": 12,
         "gain": 0,
         "tall": 0,
-        "reach": 0.2,
+        "reach": 0.05,
         "strands": 0,
         "knot": [
           0.08,
           12,
           0.6
+        ],
+        "hair": [
+          128,
+          0.1
         ]
       },
       {
@@ -462,7 +513,160 @@
           9,
           0.2
         ]
+      },
+      {
+        "at": [
+          200,
+          -3
+        ],
+        "width": 10,
+        "gain": 0,
+        "tall": 0,
+        "reach": 0.05,
+        "strands": 0,
+        "hair": [
+          128,
+          0.09
+        ]
+      },
+      {
+        "at": [
+          229,
+          2
+        ],
+        "width": 10,
+        "gain": 0,
+        "tall": 0,
+        "reach": 0.05,
+        "strands": 0,
+        "hair": [
+          40,
+          0.0544
+        ],
+        "knot": [
+          10,
+          3,
+          0.07
+        ]
+      },
+      {
+        "at": [
+          259,
+          9
+        ],
+        "width": 8,
+        "gain": 0,
+        "tall": 0,
+        "reach": 0.15,
+        "strands": 0,
+        "hair": [
+          90,
+          0.14
+        ]
+      },
+      {
+        "at": [
+          274,
+          9
+        ],
+        "width": 8,
+        "gain": 0,
+        "tall": 0,
+        "reach": 0.05,
+        "strands": 60,
+        "knot": [
+          20,
+          7,
+          0.05
+        ],
+        "hair": [
+          90,
+          0.14
+        ]
+      },
+      {
+        "at": [
+          272,
+          9
+        ],
+        "width": 6,
+        "gain": 0,
+        "tall": 0,
+        "reach": 0.05,
+        "strands": 0,
+        "knot": [
+          0.5,
+          6,
+          0.15
+        ]
+      },
+      {
+        "at": [
+          252,
+          9
+        ],
+        "width": 6,
+        "gain": 0,
+        "tall": 0,
+        "reach": 0.05,
+        "strands": 0,
+        "knot": [
+          0.5,
+          6,
+          0.15
+        ]
+      },
+      {
+        "at": [
+          242,
+          3
+        ],
+        "width": 10,
+        "gain": 0,
+        "tall": 0,
+        "reach": 0.05,
+        "strands": 0,
+        "hair": [
+          -0.95,
+          0
+        ]
       }
+    ],
+    "spike": [
+      22,
+      14,
+      8
+    ],
+    "hair": {
+      "at": [
+        -180,
+        77
+      ],
+      "steps": 200,
+      "top": 0.2,
+      "way": -0.8,
+      "fine": 27,
+      "sharp": 20,
+      "thick": 0.85,
+      "fan": 1.2,
+      "curl": [
+        2.0,
+        5,
+        3
+      ],
+      "all": [
+        185,
+        0.075
+      ],
+      "tuft": [
+        0.45,
+        0.6,
+        2.0
+      ]
+    },
+    "way": [
+      -1.0,
+      0
     ]
   },
   "plage": {
@@ -493,23 +697,32 @@
           "radius": 0.6,
           "cone": 0.65
         },
-        "out": 0.45
+        "out": 0.3,
+        "limb": [
+          0.2,
+          3
+        ]
       },
       {
         "at": [
-          260,
+          243,
           9
         ],
         "width": 0.04,
-        "gain": 1.5,
+        "gain": 0,
         "edge": 1,
         "rays": {
-          "gain": 50,
-          "fine": 8,
-          "sharp": 5,
-          "reach": 0.035,
-          "radius": 0.45,
-          "cone": 0.55
+          "gain": 2500,
+          "fine": 16,
+          "sharp": 1.6,
+          "reach": 0.2,
+          "radius": 0.6,
+          "cone": 1.23,
+          "axis": [
+            318,
+            12
+          ],
+          "from": 0.85
         }
       },
       {
@@ -590,7 +803,7 @@
           56.3
         ],
         "width": 0.15,
-        "gain": 0.55,
+        "gain": 0.385,
         "edge": 1,
         "out": 0,
         "rays": {
@@ -608,7 +821,7 @@
           48
         ],
         "width": 0.4,
-        "gain": 0.5,
+        "gain": 0.35,
         "edge": 1,
         "out": 0,
         "rays": {
@@ -644,7 +857,7 @@
           21.5
         ],
         "width": 0.12,
-        "gain": 0.4,
+        "gain": 0.28,
         "edge": 1,
         "out": 0,
         "rays": {
@@ -672,7 +885,11 @@
           "radius": 0.3,
           "cone": 0
         },
-        "out": 0.45
+        "out": 0.3,
+        "limb": [
+          0.2,
+          3
+        ]
       },
       {
         "at": [
@@ -683,14 +900,18 @@
         "gain": 2.5,
         "edge": 1,
         "rays": {
-          "gain": 5,
+          "gain": 2.5,
           "fine": 6,
           "sharp": 8,
           "reach": 0.25,
           "radius": 0.9,
           "cone": 0.45
         },
-        "out": 0.45
+        "out": 0.3,
+        "limb": [
+          0.2,
+          3
+        ]
       },
       {
         "at": [
@@ -698,7 +919,7 @@
           24
         ],
         "width": 0.2,
-        "gain": 0.6,
+        "gain": 0.21,
         "edge": 1,
         "out": 0,
         "rays": {
@@ -709,12 +930,583 @@
           "radius": 0.3,
           "cone": 0
         }
+      },
+      {
+        "at": [
+          153.9,
+          61.6
+        ],
+        "width": 0.15,
+        "gain": -0.68,
+        "edge": 1,
+        "out": 0,
+        "rays": {
+          "gain": 0,
+          "fine": 20,
+          "sharp": 8,
+          "reach": 0.05,
+          "radius": 0.3,
+          "cone": 0
+        }
+      },
+      {
+        "at": [
+          -147.9,
+          80.3
+        ],
+        "width": 0.08,
+        "gain": 0.56,
+        "edge": 1,
+        "out": 0,
+        "rays": {
+          "gain": 0,
+          "fine": 20,
+          "sharp": 8,
+          "reach": 0.05,
+          "radius": 0.3,
+          "cone": 0
+        }
+      },
+      {
+        "at": [
+          -106,
+          66.9
+        ],
+        "width": 0.15,
+        "gain": -0.44,
+        "edge": 1,
+        "out": 0,
+        "rays": {
+          "gain": 0,
+          "fine": 20,
+          "sharp": 8,
+          "reach": 0.05,
+          "radius": 0.3,
+          "cone": 0
+        }
+      },
+      {
+        "at": [
+          -115.8,
+          55.7
+        ],
+        "width": 0.08,
+        "gain": 0.56,
+        "edge": 1,
+        "out": 0,
+        "rays": {
+          "gain": 0,
+          "fine": 20,
+          "sharp": 8,
+          "reach": 0.05,
+          "radius": 0.3,
+          "cone": 0
+        }
+      },
+      {
+        "at": [
+          173.3,
+          31.2
+        ],
+        "width": 0.11,
+        "gain": -0.86,
+        "edge": 1,
+        "out": 0,
+        "rays": {
+          "gain": 0,
+          "fine": 20,
+          "sharp": 8,
+          "reach": 0.05,
+          "radius": 0.3,
+          "cone": 0
+        }
+      },
+      {
+        "at": [
+          152.1,
+          54.6
+        ],
+        "width": 0.08,
+        "gain": -0.44,
+        "edge": 1,
+        "out": 0,
+        "rays": {
+          "gain": 0,
+          "fine": 20,
+          "sharp": 8,
+          "reach": 0.05,
+          "radius": 0.3,
+          "cone": 0
+        }
+      },
+      {
+        "at": [
+          -149.7,
+          69.1
+        ],
+        "width": 0.08,
+        "gain": -0.73,
+        "edge": 1,
+        "out": 0,
+        "rays": {
+          "gain": 0,
+          "fine": 20,
+          "sharp": 8,
+          "reach": 0.05,
+          "radius": 0.3,
+          "cone": 0
+        }
+      },
+      {
+        "at": [
+          142.2,
+          66
+        ],
+        "width": 0.08,
+        "gain": -0.94,
+        "edge": 1,
+        "out": 0,
+        "rays": {
+          "gain": 0,
+          "fine": 20,
+          "sharp": 8,
+          "reach": 0.05,
+          "radius": 0.3,
+          "cone": 0
+        }
+      },
+      {
+        "at": [
+          171.8,
+          66.4
+        ],
+        "width": 0.08,
+        "gain": -0.79,
+        "edge": 1,
+        "out": 0,
+        "rays": {
+          "gain": 0,
+          "fine": 20,
+          "sharp": 8,
+          "reach": 0.05,
+          "radius": 0.3,
+          "cone": 0
+        }
+      },
+      {
+        "at": [
+          124.6,
+          78.6
+        ],
+        "width": 0.08,
+        "gain": 0.406,
+        "edge": 1,
+        "out": 0,
+        "rays": {
+          "gain": 0,
+          "fine": 20,
+          "sharp": 8,
+          "reach": 0.05,
+          "radius": 0.3,
+          "cone": 0
+        }
+      },
+      {
+        "at": [
+          -153.3,
+          57
+        ],
+        "width": 0.08,
+        "gain": -1.09,
+        "edge": 1,
+        "out": 0,
+        "rays": {
+          "gain": 0,
+          "fine": 20,
+          "sharp": 8,
+          "reach": 0.05,
+          "radius": 0.3,
+          "cone": 0
+        }
+      },
+      {
+        "at": [
+          -173.7,
+          76
+        ],
+        "width": 0.15,
+        "gain": 0.266,
+        "edge": 1,
+        "out": 0,
+        "rays": {
+          "gain": 0,
+          "fine": 20,
+          "sharp": 8,
+          "reach": 0.05,
+          "radius": 0.3,
+          "cone": 0
+        }
+      },
+      {
+        "at": [
+          -167.7,
+          36.4
+        ],
+        "width": 0.15,
+        "gain": -1.1,
+        "edge": 1,
+        "out": 0,
+        "rays": {
+          "gain": 0,
+          "fine": 20,
+          "sharp": 8,
+          "reach": 0.05,
+          "radius": 0.3,
+          "cone": 0
+        }
+      },
+      {
+        "at": [
+          -119.1,
+          36.5
+        ],
+        "width": 0.08,
+        "gain": -0.47,
+        "edge": 1,
+        "out": 0,
+        "rays": {
+          "gain": 0,
+          "fine": 20,
+          "sharp": 8,
+          "reach": 0.05,
+          "radius": 0.3,
+          "cone": 0
+        }
+      },
+      {
+        "at": [
+          -115.8,
+          45.7
+        ],
+        "width": 0.08,
+        "gain": 0.28,
+        "edge": 1,
+        "out": 0,
+        "rays": {
+          "gain": 0,
+          "fine": 20,
+          "sharp": 8,
+          "reach": 0.05,
+          "radius": 0.3,
+          "cone": 0
+        }
+      },
+      {
+        "at": [
+          173.2,
+          50.8
+        ],
+        "width": 0.08,
+        "gain": -0.7,
+        "edge": 1,
+        "out": 0,
+        "rays": {
+          "gain": 0,
+          "fine": 20,
+          "sharp": 8,
+          "reach": 0.05,
+          "radius": 0.3,
+          "cone": 0
+        }
+      },
+      {
+        "at": [
+          -174.6,
+          41
+        ],
+        "width": 0.28,
+        "gain": 0.406,
+        "edge": 1,
+        "out": 0,
+        "rays": {
+          "gain": 0,
+          "fine": 20,
+          "sharp": 8,
+          "reach": 0.05,
+          "radius": 0.3,
+          "cone": 0
+        }
+      },
+      {
+        "at": [
+          151.9,
+          54.4
+        ],
+        "width": 0.08,
+        "gain": -0.18,
+        "edge": 1,
+        "out": 0,
+        "rays": {
+          "gain": 0,
+          "fine": 20,
+          "sharp": 8,
+          "reach": 0.05,
+          "radius": 0.3,
+          "cone": 0
+        }
+      },
+      {
+        "at": [
+          151.2,
+          62.3
+        ],
+        "width": 0.08,
+        "gain": 0.315,
+        "edge": 1,
+        "out": 0,
+        "rays": {
+          "gain": 0,
+          "fine": 20,
+          "sharp": 8,
+          "reach": 0.05,
+          "radius": 0.3,
+          "cone": 0
+        }
+      },
+      {
+        "at": [
+          160.1,
+          83.3
+        ],
+        "width": 0.08,
+        "gain": -0.74,
+        "edge": 1,
+        "out": 0,
+        "rays": {
+          "gain": 0,
+          "fine": 20,
+          "sharp": 8,
+          "reach": 0.05,
+          "radius": 0.3,
+          "cone": 0
+        }
+      },
+      {
+        "at": [
+          151.5,
+          55.5
+        ],
+        "width": 0.08,
+        "gain": -0.1,
+        "edge": 1,
+        "out": 0,
+        "rays": {
+          "gain": 0,
+          "fine": 20,
+          "sharp": 8,
+          "reach": 0.05,
+          "radius": 0.3,
+          "cone": 0
+        }
+      },
+      {
+        "at": [
+          164.1,
+          29.5
+        ],
+        "width": 0.08,
+        "gain": -0.41,
+        "edge": 1,
+        "out": 0,
+        "rays": {
+          "gain": 0,
+          "fine": 20,
+          "sharp": 8,
+          "reach": 0.05,
+          "radius": 0.3,
+          "cone": 0
+        }
+      },
+      {
+        "at": [
+          -101.5,
+          74.8
+        ],
+        "width": 0.08,
+        "gain": -0.45,
+        "edge": 1,
+        "out": 0,
+        "rays": {
+          "gain": 0,
+          "fine": 20,
+          "sharp": 8,
+          "reach": 0.05,
+          "radius": 0.3,
+          "cone": 0
+        }
+      },
+      {
+        "at": [
+          -150.8,
+          69.5
+        ],
+        "width": 0.08,
+        "gain": -0.23,
+        "edge": 1,
+        "out": 0,
+        "rays": {
+          "gain": 0,
+          "fine": 20,
+          "sharp": 8,
+          "reach": 0.05,
+          "radius": 0.3,
+          "cone": 0
+        }
+      },
+      {
+        "at": [
+          174,
+          61.6
+        ],
+        "width": 0.08,
+        "gain": 0.329,
+        "edge": 1,
+        "out": 0,
+        "rays": {
+          "gain": 0,
+          "fine": 20,
+          "sharp": 8,
+          "reach": 0.05,
+          "radius": 0.3,
+          "cone": 0
+        }
+      },
+      {
+        "at": [
+          189,
+          8
+        ],
+        "width": 0.35,
+        "gain": 0.1,
+        "edge": 1,
+        "out": 1,
+        "body": 0,
+        "rays": {
+          "gain": 0,
+          "fine": 20,
+          "sharp": 8,
+          "reach": 0.05,
+          "radius": 0.3,
+          "cone": 0
+        },
+        "limb": [
+          0.2,
+          3
+        ]
+      },
+      {
+        "at": [
+          -178.8,
+          52.1
+        ],
+        "width": 0.15,
+        "gain": -0.52,
+        "edge": 1,
+        "out": 0,
+        "rays": {
+          "gain": 0,
+          "fine": 20,
+          "sharp": 8,
+          "reach": 0.05,
+          "radius": 0.3,
+          "cone": 0
+        }
+      },
+      {
+        "at": [
+          151.6,
+          54.9
+        ],
+        "width": 0.08,
+        "gain": -0.12,
+        "edge": 1,
+        "out": 0,
+        "rays": {
+          "gain": 0,
+          "fine": 20,
+          "sharp": 8,
+          "reach": 0.05,
+          "radius": 0.3,
+          "cone": 0
+        }
+      },
+      {
+        "at": [
+          178.8,
+          42.5
+        ],
+        "width": 0.08,
+        "gain": -1.1,
+        "edge": 1,
+        "out": 0,
+        "rays": {
+          "gain": 0,
+          "fine": 20,
+          "sharp": 8,
+          "reach": 0.05,
+          "radius": 0.3,
+          "cone": 0
+        }
+      },
+      {
+        "at": [
+          164.2,
+          54.3
+        ],
+        "width": 0.08,
+        "gain": 0.343,
+        "edge": 1,
+        "out": 0,
+        "rays": {
+          "gain": 0,
+          "fine": 20,
+          "sharp": 8,
+          "reach": 0.05,
+          "radius": 0.3,
+          "cone": 0
+        }
+      },
+      {
+        "at": [
+          257,
+          9
+        ],
+        "width": 0.04,
+        "gain": 0,
+        "edge": 1,
+        "rays": {
+          "gain": 1000,
+          "fine": 16,
+          "sharp": 1.6,
+          "reach": 0.15,
+          "radius": 0.42,
+          "cone": 1.23,
+          "axis": [
+            318,
+            12
+          ],
+          "from": 0.85
+        }
       }
     ],
     "clump": [
       1.0,
       0.2,
       1.5
+    ],
+    "shade": [
+      0.5,
+      1.4
     ]
   }
 }
