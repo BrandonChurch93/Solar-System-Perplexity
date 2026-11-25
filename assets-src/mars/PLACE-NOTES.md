@@ -1460,3 +1460,50 @@ r43-dive-change.png, r43-rise-sheet.png, r43-rise-change.png, r43-2427*.png, r43
   the own smooth report of dive and rise are in. Main is now 5179b435 (kit/PROGRESS.md alone on top of 579400e9).
 - Looks pushed 04:37 (f94e355b): the cap commit beside main at native size, 2420, 2440, 2456, 2464 (both halves), 2470, 2474, the
   glow before and after at 2448, the rise at 2688.
+
+### 24 November, 04:40 to 05:05 UTC (proof on the merged state, every frame looked at)
+
+- State 86808e7d (4a64cc87, main 579400e9 and 5179b435 merged, agent/engine-globe 7b482c07 merged, the detail hook wired).
+  Proof run detached (out/work/place/proof56.sh, one render process). tsc clean. Gate: "PASS G11  every asset has a row or a
+  recipe", "PASS G15  at most 2 sets per frame; finished stops: mars/web 418 MB, mars/full 1400 MB". Final 2325 sha256
+  da436cb070cbe093656e333aacb46bdc00cffc446d11581d06b25e873aa99db1, final 2580 equal by bytes to the kept final. Sides at T,
+  draft: dive mean 0.008, 99th 0, 99.9th 2, largest 13; rise mean 0.006, 99th 0, 99.9th 2, largest 6.
+- Px in view (tools/samples.ts, final): dive largest 47.7 at 2456, over 14 on 2419 to 2479; rise largest 65.8 at 2701, over 14
+  on 2676 to 2726.
+- smooth --only path on 86808e7d: green. Dive: rate step 0.057 at 2410, turn 0.065 at 2419, speed 0.063 at 2415 (limit 0.08).
+  Rise: rate 0.078 at 2674, turn 0.077 at 2743, speed 0.068 at 2702; beyond the seam 0.732 at 2756 (the travel, shown, not
+  judged). Pictures and parity of smooth not run on this machine (MAIL 357 and 491).
+- Every frame 2467 to 2481 at draft, mean difference frame to frame: 12.67, 12.64, 12.09, 11.66, 11.55, 11.42, 11.26, 10.87,
+  10.29, (2476 to 2477) 9.69, 9.14, 8.61, 8.14, 7.67. No jump at T. Seen: 2467 to 2472 a dark slab at the right edge and a
+  stepped or twisted dark band top right (the east side of the close set, MAIL 771 not met), sand at the lower edge, drawn out
+  strokes lower left; 2473 to 2475 the slab shrinks to the lower right corner; 2476 to 2481 clean.
+- Strip every third frame 2400 to 2487 and the crops, each looked at at native size:
+  2420 beside main: the same, the crack a little darker. Relief reads as shading only.
+  2440 beside main: more grain, a red glow upper left, still a sheet with one crack and a small dark piece at its bend (MAIL
+  870 not cured).
+  2456: the dark island with a hard straight border; ground left of it grainy and pitted.
+  2460 beside main: the picture's floor as a dark sheet with a torn foot, a straight border, the cap's own wall behind it.
+  2464: the east sheet with a straight side and a doubled wall; strokes at the lower edge.
+  2468: stepped dark band top right, dark slab lower right. 2472: twisted dark streak, dark wedge at the right edge.
+  2474: nearly clean, a small dark triangle at the right edge. 2480 beside main: the same to the eye.
+  No blue or white streak in 2456 to 2474 (MAIL 850); what stands on the plates of 0.7 and 0.3 degrees are drawn out strokes.
+- The rise, 2681 to 2744: 2684 clean; 2688 slab at right, sand at the lower edge; 2692 and 2696 the island with its border;
+  2700 to 2707 the red glow (hot share 0.0058, 0.0055, 0.0028). 2707 to 2712 (MAIL 839): frame to frame mean 11.10, 12.13,
+  11.81, 12.62, 13.39, no jump in the mean; between 2707 and 2708 the glow goes out in one frame (hot share 0.0028 to 0.0004),
+  from 2709 the globe's clouds cover the upper right, the dark piece turns into a grey blot. The glow's going out is not
+  traced; the cap draws a grid only while its parent's cells are wider than cap.fine pixels (capFinest), so a grid leaving
+  there, and with it the finer normal of the lift, is the likely cause. Not a clock.
+- 2745 on this state (without travel_builder's bank 2b91ffd7): equal to 2744 but for the move (mean 2.40); the globe stands
+  low, a disc about 920 px across with its top at about 380, so about 220 px of it under the lower edge. As on 88d4f309.
+- Main moved to 64c4ccb4 (kit/PROGRESS.md alone); merged with the NAMED commit.
+- Looks pushed 04:56 (d0922e18): strips, crops beside main, natives 2456 to 2474.
+
+### 24 November, 05:05 to 05:10 UTC (units on the merge, one red cured)
+
+- vitest (tap) on 86808e7d: 936 lines ok, one test not ok: tests/globe-pose.test.ts "names the near bodies of a plan that
+  hands no further bodies by their place alone, in the orbit view alone". Cause: the cap commit 4a64cc87 added drawnBodies to
+  plan.ts (Phobos named with its turn for the pose record of tools/smooth/pose.ts); main's test uses Mars as the plan that
+  hands none. No pixel path reads the hook. Cure in my folder: plan.ts back to its state before 4a64cc87 (the hook out). The
+  test alone after it: 9 passed. tsc clean. handover_engineer told before the commit. The stop's hooks are now two:
+  ground.presenceLaw (law.ts) and cap.detail (detail.ts).
+- globe-levels on both sets: every pair under 0.45 (the largest patch-19 to land-8p5: 0.33 full, 0.31 web).
