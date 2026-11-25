@@ -4,8 +4,8 @@ import { chromium, type Browser, type Page } from 'playwright-core'
 import { build } from 'vite'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { CHROME, CHROME_FLAGS } from '../tools/lib/browser'
-import { airLaw, airLawDepth, airLawDepthOut, airLawFactor, airLawFactorSeen, type AirVec } from '../src/terrain/air'
-import { airLawPoint, type ReliefAirLaw } from '../src/terrain/relief'
+import { airLaw, airLawDepth, airLawDepthOut, airLawFactor, airLawFactorSeen, airLawGather, airLawGatherOut, airLawHeld, airLawSeen, type AirVec } from '../src/terrain/air'
+import { airLawKnots, airLawPoint, type ReliefAirLaw } from '../src/terrain/relief'
 
 // The relief under the air law in a WebGL2 browser (ReliefMotion.airLaw): the pixels, read back as floats and held against the twins of
 // src/terrain/air.ts. A small relief of one flat picture at one distance, with or without sky around it, is drawn over a flat back
@@ -77,6 +77,12 @@ const H = 16
 const VFOV = 40
 // The planet of the set: a ball of 50 under a picture's eye half a unit over it, level lens. The scale height is one unit.
 const LAW: ReliefAirLaw = { light: [0.31, 0.52, 0.08], density: 12, scaleHeight: 0.02, radius: 50, eyeHeight: 0.5 }
+// The same air with its light by height: whole from a scale height and a half over the datum, falling to three tenths a scale height
+// under it. The picture's points stand from two scale heights under the datum to two and a half over it.
+const KNOTS: ReliefAirLaw = { ...LAW, knots: [[-1, 0.3], [0.5, 0.7], [1.5, 1]] }
+// The numbers of a place as large as the film's: a ball of 972.27 under an eye one unit over it, a scale height of a thousandth of
+// the radius, the knots a scale height and a half and a scale height apart. What the shader's 32 bit keeps of heights that small.
+const LARGE: ReliefAirLaw = { light: [0.31, 0.52, 0.08], density: 200, scaleHeight: 0.001, radius: 972.27, eyeHeight: 1, knots: [[-1, 0.3], [0.5, 0.7], [1.5, 1]] }
 const PITCH = 0
 const FAR = 6
 const whole: Shot = {
@@ -338,4 +344,110 @@ describe.skipIf(!have)('the air law of a relief in a WebGL2 browser', () => {
     expect(ground).toBeGreaterThan(30)
     expect(errors).toEqual([])
   }, 120000)
+
+  it('the light by height: from the picture own eye the picture comes back, for any numbers and any knots', async () => {
+    const plain = await shoot(whole)
+    let worst = 0
+    for (const law of [KNOTS, { ...KNOTS, density: 300, light: [3, 0.01, 0.5] as [number, number, number] }, { ...KNOTS, density: 40, scaleHeight: 0.004, eyeHeight: -0.2, knots: [[-0.6, 0.1], [0.4, 1.6]] as [number, number][] }, { ...KNOTS, density: 2, scaleHeight: 0.1, knots: [[-2, 0], [0, 0.5], [3, 1]] as [number, number][] }]) {
+      const drawn = await shoot(lawful(whole, law))
+      for (let i = 0; i < plain.length; i++) worst = Math.max(worst, Math.abs(drawn[i]! - plain[i]!) / Math.max(Math.abs(plain[i]!), 1e-3))
+    }
+    console.log('AIR-GL the light by height, from the picture own eye, four sets of numbers and knots: worst share off the plain picture ' + worst.toExponential(3))
+    expect(worst).toBeLessThan(1e-5)
+    expect(errors).toEqual([])
+  }, 120000)
+
+  it('the light by height: from another eye a pixel is the plain pixel through the law with what the two paths gather, and the sky is what the path out gathers', async () => {
+    const light = (gain: number): AirVec => [KNOTS.light[0] * gain, KNOTS.light[1] * gain, KNOTS.light[2] * gain]
+    const layer = (plain: number[], distance: number, x: number, y: number, eye: AirVec, law: ReliefAirLaw, gain: number): { colour: [number, number, number]; moved: number } => {
+      const knots = airLawKnots(law)!
+      const d = ray(x, y)
+      const point = airLawPoint([eye[0] + d[0] * distance, eye[1] + d[1] * distance, eye[2] + d[2] * distance], law, PITCH)
+      const a = airLawPoint(eye, law, PITCH)
+      const was = airLawPoint([0, 0, 0], law, PITCH)
+      const depth = airLawDepth(a, point, law.scaleHeight)
+      const seen = airLawDepth(was, point, law.scaleHeight)
+      const now = airLawGather(a, point, law.scaleHeight, law.density, knots.heights, knots.shares)
+      const held = airLawHeld(airLawGather(was, point, law.scaleHeight, law.density, knots.heights, knots.shares), seen, law.density, law.least ?? 0)
+      const factor = airLawFactorSeen(depth, seen, law.density, law.least ?? 0)
+      // how far the light by height moves the pixel off the law with one light: the test must see the knots at work
+      const flat = airLaw([plain[0]!, plain[1]!, plain[2]!], light(gain), factor)
+      const colour = airLawSeen([plain[0]!, plain[1]!, plain[2]!], light(gain), factor, now, held)
+      return { colour, moved: Math.max(Math.abs(colour[0] - flat[0]), Math.abs(colour[1] - flat[1]), Math.abs(colour[2] - flat[2])) }
+    }
+    let worst = 0
+    let share = 0
+    let moved = 0
+    let count = 0
+    let large = 0
+    for (const [eye, gain] of [[[0.8, 0.6, 1.5], 1], [[-1.2, 3, 4], 2], [[0.4, -0.3, -2.5], 1], [[0, 14, 30], 1]] as [[number, number, number], number][]) {
+      for (const law of [KNOTS, { ...KNOTS, least: 0.6 }, LARGE, { ...LARGE, least: 0.5 }]) {
+        const plain = await shoot({ ...whole, eye, gain })
+        const depth = await shoot({ ...whole, eye, gain, diag: 'depth', back: [0, 0, 0] })
+        const drawn = await shoot({ ...lawful(whole, law), eye, gain })
+        for (let y = 0; y < H; y++) {
+          for (let x = 0; x < W; x++) {
+            const p = pixel(plain, x, y)
+            if (pixel(depth, x, y)[0]! <= 0 || p[3]! < 1) continue
+            const distance = distanceOf(pixel(depth, x, y)[0]!)
+            const want = layer(p, distance, x, y, eye, law, gain)
+            const got = pixel(drawn, x, y)
+            const room = SHIFTS.map(([i, j]) => layer(p, distance, x + i, y + j, eye, law, gain).colour)
+            for (let c = 0; c < 3; c++) {
+              const off = Math.abs(got[c]! - want.colour[c]!)
+              worst = Math.max(worst, off)
+              if (law.radius === LARGE.radius) large = Math.max(large, off)
+              share = Math.max(share, off / (FLOAT + Math.max(...room.map((r) => Math.abs(r[c]! - want.colour[c]!)))))
+            }
+            moved = Math.max(moved, want.moved)
+            count++
+          }
+        }
+      }
+    }
+    console.log('AIR-GL the light by height from four other eyes, two sets of numbers, with and without a least: ' + count + ' pixels, the knots move a pixel by up to ' + moved.toFixed(3) + ', worst off the twin ' + worst.toExponential(3) + ' (with the radius ' + LARGE.radius + ': ' + large.toExponential(3) + '), ' + share.toFixed(3) + ' of what the ray moved by ' + SHIFT + ' of a pixel changes')
+    expect(count).toBeGreaterThan(3000)
+    expect(moved).toBeGreaterThan(0.02)
+    expect(share).toBeLessThan(1)
+    expect(worst).toBeLessThan(0.01)
+    // the sky around a patch: the back times the factor of the whole path plus the light times what that path gathers
+    let skyWorst = 0
+    let skyShare = 0
+    let skyMoved = 0
+    let sky = 0
+    for (const [eye, gain, law] of [[[0, 0, 0], 1, KNOTS], [[2, 1.5, 3], 2, KNOTS], [[-1, 9, 0], 1, KNOTS], [[0, 60, 10], 1, KNOTS], [[0.5, -0.3, 1], 1, KNOTS], [[0, 0, 0], 1, LARGE], [[2, 1.5, 3], 2, LARGE], [[-1, 9, 0], 1, LARGE], [[0.5, -0.3, 1], 1, LARGE]] as [[number, number, number], number, ReliefAirLaw][]) {
+      const knots = airLawKnots(law)!
+      const depth = await shoot({ ...patch, eye, gain, diag: 'depth', back: [0, 0, 0] })
+      const drawn = await shoot({ ...lawful(patch, law), eye, gain })
+      const a = airLawPoint(eye, law, PITCH)
+      const want = (d: AirVec): [number, number, number] => {
+        const f = airLawFactor(airLawDepthOut(a, d, law.scaleHeight), law.density)
+        const g = airLawGatherOut(a, d, law.scaleHeight, law.density, knots.heights, knots.shares)
+        skyMoved = Math.max(skyMoved, 1 - f - g)
+        return [patch.back[0] * f + law.light[0] * gain * g, patch.back[1] * f + law.light[1] * gain * g, patch.back[2] * f + law.light[2] * gain * g]
+      }
+      for (let y = 0; y < H; y++) {
+        for (let x = 0; x < W; x++) {
+          let ground = false
+          for (let j = -1; j <= 1; j++) for (let i = -1; i <= 1; i++) if (x + i >= 0 && x + i < W && y + j >= 0 && y + j < H && pixel(depth, x + i, y + j)[0]! > 0) ground = true
+          if (ground) continue
+          const w = want(ray(x, y))
+          const got = pixel(drawn, x, y)
+          const room = SHIFTS.map(([i, j]) => want(ray(x + i, y + j)))
+          for (let c = 0; c < 3; c++) {
+            const off = Math.abs(got[c]! - w[c]!)
+            skyWorst = Math.max(skyWorst, off)
+            skyShare = Math.max(skyShare, off / (FLOAT + Math.max(...room.map((r) => Math.abs(r[c]! - w[c]!)))))
+          }
+          sky++
+        }
+      }
+    }
+    console.log('AIR-GL the light by height, the sky from nine eyes, two sets of numbers: ' + sky + ' pixels, the knots take up to ' + skyMoved.toFixed(3) + ' of the light off a path, worst off the twin ' + skyWorst.toExponential(3) + ', ' + skyShare.toFixed(3) + ' of what the ray moved by ' + SHIFT + ' of a pixel changes')
+    expect(sky).toBeGreaterThan(2400)
+    expect(skyMoved).toBeGreaterThan(0.1)
+    expect(skyShare).toBeLessThan(1)
+    expect(skyWorst).toBeLessThan(0.01)
+    expect(errors).toEqual([])
+  }, 360000)
 })

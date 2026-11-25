@@ -4,7 +4,7 @@ import { frameUniform } from '../core/frame'
 import { DIAG_GLSL, biasUniform, diagUniform, fineUniform, gradUniform } from '../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../post/chain'
 import { MAX_MARK, reach, reachNeeded, uniformCells } from './shield'
-import { AIR_LAW_GLSL, AIR_LAW_SCALE_HEIGHT } from './air'
+import { AIR_LAW_GLSL, AIR_LAW_KNOTS_GLSL, AIR_LAW_SCALE_HEIGHT, type AirKnots } from './air'
 
 export interface ReliefLayerDef {
   color: string
@@ -43,8 +43,10 @@ export interface ReliefAir {
 // The air law for a set (src/terrain/air.ts): the three numbers, the same as on the globe, and where the planet lies in the relief's
 // frame. radius is the radius of the datum and eyeHeight the height of the picture's eye over it, both in the relief's unit; up is the
 // relief's own (pitchDeg). scaleHeight is in radii, like on the globe. least: what the layers' texels hold of their air at the least
-// (airLawFactorSeen), 0 where it is left out.
-export interface ReliefAirLaw { light: [number, number, number]; density: number; scaleHeight: number; radius: number; eyeHeight: number; least?: number }
+// (airLawFactorSeen), 0 where it is left out. knots: the air's light by height, two or three [height over the datum in the relief's
+// unit, share of the light], rising; straight lines between them, held under the lowest and over the highest. Left out: one light at
+// every height.
+export interface ReliefAirLaw { light: [number, number, number]; density: number; scaleHeight: number; radius: number; eyeHeight: number; least?: number; knots?: [number, number][] }
 
 export interface ReliefValley { top: number; soft: number; strength: number; color: [number, number, number]; wind: [number, number]; speed: number; scale: number; stretch: number; churn: number; mask: [number, number]; cut: [number, number] }
 
@@ -445,17 +447,28 @@ export function withEyeScale(source: string): string {
 // dim by the same factor. A sight line that enters the ball has the depth of its whole chord, so the band closes under the horizon
 // without a step. The dome's old terms (by the angle, by the clock) are not drawn. The sky's air is drawn once: a set that stands in a
 // scene whose globe draws its own shell under the law gives its own air the share 0 there (presence).
+// The light by height (ReliefAirLaw.knots): each stretch of air shines with the share of its own height, so a path gathers its light
+// stretch by stretch (airLawGather) and the layers take what the present path gathers less the factor times what the picture's path
+// gathered (airLawSeen, airLawHeld); the dome takes what the path out gathers. From the picture's eye the two paths are one path and
+// the picture comes back as before. Without knots no word of this is in a shader: the second chunk (AIR_LAW_KNOTS_GLSL) is not taken.
 // Not asked: the shaders above to the letter.
 export const AIR_LAW_UNIFORMS = /* glsl */ `
 uniform vec4 uAirCentre;
 uniform vec3 uAirLight;
 uniform vec3 uAirNumbers;`
+export const AIR_LAW_KNOT_UNIFORMS = /* glsl */ `
+uniform vec3 uAirHeights;
+uniform vec3 uAirShares;`
 const SOLID = 'if (uDiag >= 2 && alpha < 0.5) discard;'
+// The least step between two knots of the light by height, in radii.
+export const AIR_LAW_KNOT_LEAST = 1e-5
 export const AIR_LAW_LAYER = 'vec3 airPoint = (vLocal - uAirCentre.xyz) * uAirCentre.w;\n  col = airLaw(col, uAirLight * uGain * vig, airLawFactorSeen(airLawDepth((vEye - uAirCentre.xyz) * uAirCentre.w, airPoint, uAirNumbers.y), airLawDepth(-uAirCentre.xyz * uAirCentre.w, airPoint, uAirNumbers.y), uAirNumbers.x, uAirNumbers.z));\n  '
 
-export function withAirLaw(source: string): string {
+export const AIR_LAW_LAYER_KNOTS = 'vec3 airPoint = (vLocal - uAirCentre.xyz) * uAirCentre.w;\n  vec3 airEye = (vEye - uAirCentre.xyz) * uAirCentre.w;\n  vec3 airWas = -uAirCentre.xyz * uAirCentre.w;\n  float airSeen = airLawDepth(airWas, airPoint, uAirNumbers.y);\n  col = airLawSeen(col, uAirLight * uGain * vig, airLawFactorSeen(airLawDepth(airEye, airPoint, uAirNumbers.y), airSeen, uAirNumbers.x, uAirNumbers.z), airLawGather(airEye, airPoint, uAirNumbers.y, uAirNumbers.x, uAirHeights, uAirShares), airLawHeld(airLawGather(airWas, airPoint, uAirNumbers.y, uAirNumbers.x, uAirHeights, uAirShares), airSeen, uAirNumbers.x, uAirNumbers.z));\n  '
+
+export function withAirLaw(source: string, knots = false): string {
   if (source.split(MAIN).length !== 2 || source.split(SOLID).length !== 2 || source.includes('uAirCentre')) throw new Error('the relief shader has no single place for the air law')
-  return source.replace(MAIN, AIR_LAW_UNIFORMS.slice(1) + AIR_LAW_GLSL + '\n' + MAIN).replace(SOLID, AIR_LAW_LAYER + SOLID)
+  return source.replace(MAIN, AIR_LAW_UNIFORMS.slice(1) + (knots ? AIR_LAW_KNOT_UNIFORMS : '') + AIR_LAW_GLSL + (knots ? AIR_LAW_KNOTS_GLSL : '') + '\n' + MAIN).replace(SOLID, (knots ? AIR_LAW_LAYER_KNOTS : AIR_LAW_LAYER) + SOLID)
 }
 
 export const AIR_LAW_VERT = AIR_VERT.replace(AIR_DIR_OUT, AIR_DIR_OUT + '\nout vec3 vAirEye;\nuniform float uAirEyeScale;').replace(AIR_DIR, AIR_DIR + '\n  vAirEye = -transpose(mat3(modelViewMatrix)) * modelViewMatrix[3].xyz * uAirEyeScale;')
@@ -480,6 +493,28 @@ void main() {
   outColor = vec4(glow * uGain * vig, cut);
 }`
 
+// The dome with the light by height: the light times what the whole path out gathers; the cover is the same.
+const AIR_LAW_GLOW = 'vec3 glow = uAirLight * cut;'
+export const AIR_LAW_FRAG_KNOTS = AIR_LAW_FRAG.replace(AIR_LAW_UNIFORMS, AIR_LAW_UNIFORMS + AIR_LAW_KNOT_UNIFORMS).replace(AIR_LAW_GLSL, AIR_LAW_GLSL + AIR_LAW_KNOTS_GLSL).replace(AIR_LAW_GLOW, 'vec3 glow = uAirLight * airLawGatherOut((vAirEye - uAirCentre.xyz) * uAirCentre.w, d, uAirNumbers.y, uAirNumbers.x, uAirHeights, uAirShares);')
+
+// The knots of a relief's air law as the chunk takes them: three heights in radii over the datum and three shares. Two knots are given
+// a third one step higher with the upper share. null where the law has one light at every height.
+export function airLawKnots(law: ReliefAirLaw): { heights: AirKnots; shares: AirKnots } | null {
+  const knots = law.knots
+  if (knots === undefined) return null
+  const good = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v)
+  const bad = (): Error => new Error('the knots of the air law of a relief are two or three [height, share] with rising heights and shares of 0 or more, not ' + JSON.stringify(knots))
+  if (!(Array.isArray(knots) && (knots.length === 2 || knots.length === 3) && knots.every((k) => Array.isArray(k) && k.length === 2 && good(k[0]) && good(k[1]) && k[1] >= 0))) throw bad()
+  const h = knots.map((k) => k[0] / law.radius)
+  const v = knots.map((k) => k[1])
+  for (let i = 1; i < h.length; i++) if (!(h[i]! - h[i - 1]! >= AIR_LAW_KNOT_LEAST)) throw bad()
+  if (h.length === 2) {
+    h.push(h[1]! + (h[1]! - h[0]!))
+    v.push(v[1]!)
+  }
+  return { heights: [h[0]!, h[1]!, h[2]!], shares: [v[0]!, v[1]!, v[2]!] }
+}
+
 // The planet's centre in the relief's frame and one over its radius: what the shader's uAirCentre holds.
 export function airLawCentre(law: ReliefAirLaw, pitchDeg: number): [number, number, number, number] {
   const far = -(law.radius + law.eyeHeight)
@@ -503,10 +538,12 @@ function airLawUniforms(law: ReliefAirLaw, pitchDeg: number): Record<string, THR
   if (!good(law.eyeHeight)) throw new Error('the eye height of the air law of a relief is a length in the unit of the relief, not ' + law.eyeHeight)
   const least = law.least ?? 0
   if (!(good(least) && least >= 0 && least <= 1)) throw new Error('the least of the air law of a relief is a share from 0 to 1, not ' + law.least)
+  const knots = airLawKnots(law)
   return {
     uAirCentre: { value: new THREE.Vector4().fromArray(airLawCentre(law, pitchDeg)) },
     uAirLight: { value: new THREE.Vector3().fromArray(law.light) },
     uAirNumbers: { value: new THREE.Vector3(law.density, law.scaleHeight, least) },
+    ...(knots ? { uAirHeights: { value: new THREE.Vector3().fromArray(knots.heights) }, uAirShares: { value: new THREE.Vector3().fromArray(knots.shares) } } : {}),
   }
 }
 
@@ -921,7 +958,7 @@ export class Relief {
       const material = new THREE.ShaderMaterial({
         glslVersion: THREE.GLSL3,
         vertexShader: AIR_LAW_VERT,
-        fragmentShader: AIR_LAW_FRAG,
+        fragmentShader: law.uAirHeights ? AIR_LAW_FRAG_KNOTS : AIR_LAW_FRAG,
         uniforms: { ...law, uAirEyeScale: r.eyeScale, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diagUniform },
         transparent: true,
         blending: THREE.CustomBlending,
@@ -1087,7 +1124,7 @@ export class Relief {
         glslVersion: THREE.GLSL3,
         ...(apronTexture ? { defines: { RELIEF_APRON: 1 } } : {}),
         vertexShader: VERT,
-        fragmentShader: law ? withAirLaw(FRAG) : FRAG,
+        fragmentShader: law ? withAirLaw(FRAG, !!law.uAirHeights) : FRAG,
         uniforms: {
           ...(law ?? {}),
           ...(apron && apronTexture && apronSize ? {
