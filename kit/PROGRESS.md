@@ -6,7 +6,7 @@ The Builder's memory. Read this first in every task. Update it before every comm
 
 - Current phase: 6 · Polish and deliver
 - Current stop: none. All nine stops are finished (Phase 4 gate, 00:52 UTC on 2026-11-22). Phase 5 is done: its three whole film rounds 30, 31 and 32 ran to the limit of three, round 32 closed at 11:55 UTC and its build is kept as the best of the three (main 4365a0f0, engine hash be043ade04a7ab6e: R5 7, R6 6, R7 6, R2 pass, R3 4, R4 6; 1 severe and 21 major, written under open items 79 to 100), and the Phase 5 gate held at 12:23 UTC with the preview film of that build in `out/preview.mp4`. Phase 6 step 1 runs: three polish rounds (33, 34, 35) on the open items, worst first, each judged only on the frames its batch touched. Round 33 closed at 15:26 UTC with 95 answers (13 severe, 97 major; motion better at Jupiter, Saturn, Mercury, Neptune and the Sun, so its build is the base of round 34). Round 34 closed at 17:40 UTC with 59 answers (10 severe, 80 major, written under open items 109 to 129; the opening at phone size passes with 9, compression 8, the whole film 6; motion at Mercury 3 and Earth 4, and the film's motion critic names two sky pops that are the camera's turn). Round 35, the last polish round, is cut at 18:30 UTC from take outs and small proven things, with at most one larger cure per stop as its own commit; then the best build of rounds 32 to 35 is frozen, and the record round, the sandbox master, the nine clips, the nine posts and the gauntlet follow
-- Current round: open: 52 (mercury), 53 (venus), 54 (uranus), 55 (earth). The next round is 56. Round numbers are global; rounds of different stops run at the same time, each written here when it starts
+- Current round: open: 52 (mercury), 54 (uranus), 55 (earth). The next round is 56. Round numbers are global; rounds of different stops run at the same time, each written here when it starts
 - Next critic name: reviewer_2047
 - Blocked: no
 - Review notes in force: three, of 05:57 UTC and of about 21:50 UTC on 2026-11-23 and of about 21:25 UTC on 2026-11-24. The second is the section "Second review note of 2026-11-23" (plans E to I), the third the section "Third review note of 2026-11-24" (plans J to N); together they set the work from here
@@ -14,7 +14,7 @@ The Builder's memory. Read this first in every task. Update it before every comm
 - Mars review: approved
 
 "Mars review" is one of `not reached`, `waiting` or `approved`. `AGENTS.md` says what each means.
-- Last push: status 312, d300
+- Last push: round 53 closed (venus)
 
 ## Review note of 2026-11-23
 
@@ -220,7 +220,7 @@ State is one of `not started`, `stand-in`, `in progress` or `finished`. A finish
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | sun | in progress | 1 | 5 | pass | 4 | 4 | pass | 46 to 53 |
 | mercury | in progress | 2 | 8 | pass | 3 | 8 | pass | 69 to 78 |
-| venus | in progress | 2 | 8 | pass | 5 | 6 | pass | 28 to 32 |
+| venus | in progress | 2 | 9 | pass | 5 | 5 | pass | 28 to 32 |
 | earth | in progress | 1 | 9 | pass | 3 | 8 | pass | 54 to 61 |
 | mars | in progress | 1 | 9 | pass | 4 | 4 | pass | 6 to 15 |
 | jupiter | in progress | 1 | 6 | pass | 6 | 3 | pass | 33 to 37 |
@@ -1449,7 +1449,7 @@ One entry per long job while it runs: the command, the frame range, the log file
 
 Work for the review note of 2026-11-23, started 06:40 UTC, each agent on its own VM. The spec is `cut/HANDOVER.md`; who owns what and its state is the table "State" in the section "Review note of 2026-11-23"; looks arrive on `agent/<branch folder>-looks`. Fresh agents: `handover_engineer`, `jupiter_coder`, `saturn_coder`. Builders taken up again: `sun_builder`, `mercury_builder`, `venus_builder`, `earth_builder`, `uranus_builder`, `neptune_builder`. If a task starts and one of these is not alive, start a fresh agent for its part with `cut/HANDOVER.md`, `assets-src/shared/STOP-AGENT.md` and the stop's notebook. The draft tier reference of the 47 judged frames on the Builder's own VM finished at 07:28 UTC and the engine's proof on render_01 to render_12 (JOB e1proof) came back at 08:00 UTC; nothing of the note runs on the Builder's VM or on a render machine at 08:02 UTC.
 
-Jobs out at 13:47 UTC, 2026-11-25, 36 machines busy, 0 jobs waiting (none). By check name, part and machine: fs5 04 on render_30; hl1 01 on render_09, 02 on render_31, 03 on render_19, 04 on render_29, 05 on render_36, 06 on render_28, 07 on render_20, 08 on render_11, 09 on render_33, 10 on render_26, 11 on render_13, 12 on render_27, 13 on render_04, 14 on render_08, 15 on render_38, 16 on render_32, 17 on render_03, 18 on render_21, 19 on render_40, 20 on render_39, 21 on render_25; n1p 01 on render_10, 02 on render_05, 03 on render_17, 04 on render_37, 05 on render_14, 06 on render_34; nq4 04 on render_07, 05 on render_23, 10 on render_06; r52 03 on render_02, 04 on render_18, 05 on render_15; tk13 01 on render_01, 02 on render_35.
+Jobs out at 13:59 UTC, 2026-11-25, 22 machines busy, 0 jobs waiting (none). By check name, part and machine: fs5 04 on render_30; hl1 03 on render_19, 04 on render_29, 05 on render_36, 06 on render_28, 12 on render_27, 13 on render_04, 14 on render_08, 15 on render_38, 16 on render_32, 17 on render_03, 19 on render_40, 20 on render_39; n1p 01 on render_10, 02 on render_05, 04 on render_37, 05 on render_14; nq4 04 on render_07, 05 on render_23, 10 on render_06; r52 03 on render_02, 04 on render_18.
 
 
 
@@ -1542,7 +1542,7 @@ One line per round, written when the round starts: number, phase, stop. Scores a
 - Round 50, Phase 6, sun, round 1 of 3 of the third note (round 49 was its round of the second note). Started 2026-11-25 04:14 UTC. Judged on main at 579400e. Measures not green. R1 5, R2 pass, R3 4, R4 4, R8 pass. 7 severe, 17 major. Next: see the summary `scorecards/round-050/`.
 - Round 51, Phase 6, saturn, round 2 of 3. Started 2026-11-25 04:14 UTC. Judged on main at 579400e. Measures G5, G13 and G17 green; the smooth report was not placed at the close (its four picture slices sj2 01 to 04 green on render machines, landing green, counts still running), which the round tool writes as not measured. The whole smooth report of the build was joined at 09:23 UTC on 2026-11-25 from the machines' parts (path, place, parity; the pictures of both moves in four slices; counts), is green and is placed after the close as `scorecards/round-051/smooth-saturn.md` and `.json`. R1 7, R2 fail (0 of 10 against 4 of 10), R3 4, R4 8, R8 pass. 2 severe, 11 major. Closed 07:24 UTC. Next: Saturn round 3 of 3 on a commit named by saturn_coder (d186) that cures, causes first: the inner ring and its crossing of the globe (both severe issues: the bright patch of sky between globe and inner ring at 3567, the puck on a glossy table with its mirror picture and seam at 3720), the globe's light (the straight soft boundary of day and night, the lumpy dark limb), the coarse near ring field and the wide main division at 3720, the blocky lower globe, stars on top of opaque rings at 3866; the whole list is the summary `scorecards/round-051/`.
 - Round 52, Phase 6, mercury, round 2 of 3 of the second note (round 37 was its round of the first note). Started 2026-11-25 10:38 UTC.
-- Round 53, Phase 6, venus, round 2 of 3 of the second note. Started 2026-11-25 10:38 UTC.
+- Round 53, Phase 6, venus, round 2 of 3 of the second note. Started 2026-11-25 10:38 UTC. Judged on main at 9d59e69. Measures not green. R1 9, R2 pass, R3 5, R4 5, R8 pass. 4 severe, 10 major. Next: see the summary `scorecards/round-053/`.
 - Round 54, Phase 6, uranus, round 2 of 3 of the second note (round 38 was its round of the first note). Started 2026-11-25 10:38 UTC.
 - Round 55, Phase 6, earth, round 1 of 3 of the third note (round 47 was its round of the second note, round 40 of the first). Started 2026-11-25 10:38 UTC.
 

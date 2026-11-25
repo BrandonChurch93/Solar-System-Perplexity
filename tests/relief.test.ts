@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { describe, expect, it } from 'vitest'
 import type { RenderView, SetContext } from '../src/core/types'
 import { frameUniform } from '../src/core/frame'
-import { DETAIL_GLSL, EDGE_AIR_GLSL, EDGE_GLSL, LAW_GLSL, Relief, detailShareAt, edgeShareAt, lawUniforms, withDetail, withEdge, withEdgeEye, withEyeScale, withLaw, withPresence, type ReliefAir, type ReliefDef, type ReliefMotion } from '../src/terrain/relief'
+import { EDGE_AIR_GLSL, EDGE_GLSL, LAW_GLSL, Relief, edgeShareAt, lawUniforms, withEdge, withEdgeEye, withEyeScale, withLaw, withPresence, type ReliefAir, type ReliefDef, type ReliefMotion } from '../src/terrain/relief'
 
 // The presence of a relief (Relief.presence): off until a set asks, then the same shader with its premultiplied output times a share,
 // and no shield under 1. The pixels are tests/relief-gl.test.ts.
@@ -564,197 +564,12 @@ describe('the presence of the air of a relief apart from its layers', () => {
   })
 })
 
-// The share of a relief by the eye (Relief.presenceDetail): off until a set asks, then the layers' shader with its premultiplied output
-// times a share by the size of the picture's own texel on the screen. The pixels are tests/relief-gl.test.ts.
-
-const MAIN = 'void main() {'
-const VIG = 'vec2 q = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);'
-
-describe('the share of a relief by the eye', () => {
-  it('is off until a set asks: no share by the eye in any shader, no uniform', async () => {
-    for (const withAir of [false, true]) {
-      const r = await Relief.load(ctx, '', def, motion(withAir))
-      for (const m of materials(r)) {
-        expect(m.fragmentShader.includes('detail')).toBe(false)
-        expect(m.fragmentShader.includes('uFrame')).toBe(false)
-        expect(m.uniforms.uDetailRange).toBeUndefined()
-        expect(m.uniforms.uDetailSize).toBeUndefined()
-        expect(m.uniforms.uFrame).toBeUndefined()
-      }
-    }
-  })
-
-  it('the first call gives every layer the shader with the share, one range and one size for all and the frame factor of the engine, and leaves the air to the letter; later calls change numbers only', async () => {
-    const plain = materials(await Relief.load(ctx, '', def, motion(true)))
-    const r = await Relief.load(ctx, '', def, motion(true))
-    const all = materials(r)
-    const versions = all.map((m) => m.version)
-    r.presenceDetail([0.6, 1.4])
-    const layers = all.filter((m) => m.fragmentShader.includes(LIT))
-    expect(layers.length).toBe(2)
-    all.forEach((m, i) => {
-      const before = plain[i]!
-      expect(m.vertexShader).toBe(before.vertexShader)
-      if (litOf(before) === AIR_LIT) {
-        expect(m.fragmentShader).toBe(before.fragmentShader)
-        expect(m.version).toBe(versions[i])
-        expect(Object.keys(m.uniforms)).toEqual(Object.keys(before.uniforms))
-        return
-      }
-      expect(m.fragmentShader).toBe(withDetail(before.fragmentShader))
-      expect(m.fragmentShader.includes(DETAIL_GLSL)).toBe(true)
-      expect(m.fragmentShader.includes(LIT + ' * detail')).toBe(true)
-      expect(m.fragmentShader.includes(MAIN + '\n  float detail = detailShare(vImage);')).toBe(true)
-      expect(m.fragmentShader.includes('if (detail <= 0.0) discard;\n  ' + VIG)).toBe(true)
-      expect(m.version).toBe(versions[i]! + 1)
-      expect(m.uniforms.uDetailRange).toBe(layers[0]!.uniforms.uDetailRange)
-      expect(m.uniforms.uDetailSize).toBe(layers[0]!.uniforms.uDetailSize)
-      expect(m.uniforms.uFrame).toBe(frameUniform)
-      expect((m.uniforms.uDetailRange!.value as THREE.Vector2).toArray()).toEqual([0.6, 1.4])
-      expect((m.uniforms.uDetailSize!.value as THREE.Vector2).toArray()).toEqual([32, 16])
-    })
-    const texts = all.map((m) => m.fragmentShader)
-    const made = all.map((m) => m.version)
-    r.presenceDetail([1, 3], { size: [5632, 3168] })
-    r.presenceDetail([0, 0.5])
-    for (const m of layers) {
-      expect((m.uniforms.uDetailRange!.value as THREE.Vector2).toArray()).toEqual([0, 0.5])
-      expect((m.uniforms.uDetailSize!.value as THREE.Vector2).toArray()).toEqual([5632, 3168])
-    }
-    r.presenceDetail(null)
-    for (const m of layers) expect((m.uniforms.uDetailRange!.value as THREE.Vector2).toArray()).toEqual([0, 0])
-    expect(all.map((m) => m.fragmentShader)).toEqual(texts)
-    expect(all.map((m) => m.version)).toEqual(made)
-  })
-
-  it('refuses a range that is none and a size that is none and changes nothing by it', async () => {
-    const r = await Relief.load(ctx, '', def, motion(true))
-    const texts = materials(r).map((m) => m.fragmentShader)
-    for (const bad of [[1, 1], [2, 1], [-0.1, 1], [0, Number.POSITIVE_INFINITY], [Number.NaN, 1], [0, Number.NaN], [1], [1, 2, 3]]) {
-      expect(() => r.presenceDetail(bad as unknown as [number, number])).toThrow(/whole at or under a texel size and gone at or over a larger one/)
-    }
-    for (const bad of [[0, 16], [32, -1], [Number.NaN, 16], [32, Number.POSITIVE_INFINITY], [32]]) {
-      expect(() => r.presenceDetail([1, 2], { size: bad as unknown as [number, number] })).toThrow(/two numbers of pixels above 0/)
-    }
-    expect(materials(r).map((m) => m.fragmentShader)).toEqual(texts)
-    r.presenceDetail([1, 2])
-    expect(() => r.presenceDetail([3, 2])).toThrow(/whole at or under/)
-    expect((materials(r).find((m) => m.uniforms.uDetailRange)!.uniforms.uDetailRange!.value as THREE.Vector2).toArray()).toEqual([1, 2])
-  })
-
-  it('is no shield while a range stands, and the shield it was when the share is held at 1', async () => {
-    const r = await Relief.load(ctx, '', def, motion(false))
-    let asked = 0
-    const renderer = { getContext: () => { asked++; throw new Error('the shield reads its alpha') } } as unknown as THREE.WebGLRenderer
-    const camera = new THREE.PerspectiveCamera(40, 2, 0.1, 100)
-    r.presenceDetail([0.5, 1.5])
-    expect(r.screen(renderer, camera, 32, 16, 8)).toBe(false)
-    r.presence(1)
-    expect(r.screen(renderer, camera, 32, 16, 8)).toBe(false)
-    expect(asked).toBe(0)
-    r.presenceDetail(null)
-    expect(() => r.screen(renderer, camera, 32, 16, 8)).toThrow(/the shield reads its alpha/)
-    expect(asked).toBe(1)
-  })
-
-  it('goes with a presence and with an edge in any order: the shares multiply, and each shader is made once', async () => {
-    const orders = [['detail', 'presence', 'edge'], ['presence', 'edge', 'detail'], ['edge', 'detail', 'presence'], ['edge', 'presence', 'detail'], ['detail', 'edge', 'presence']]
-    for (const order of orders) {
-      const r = await Relief.load(ctx, '', def, motion(true))
-      for (const step of order) {
-        if (step === 'detail') r.presenceDetail([0.5, 1.5])
-        if (step === 'presence') r.presence(0.5, { air: 0.75 })
-        if (step === 'edge') r.presenceEdge([4, 4, 4, 0], { air: false })
-      }
-      const parts: Record<string, string> = { detail: ' * detail', presence: ' * uPresence', edge: ' * edgeShare(vImage)' }
-      for (const m of materials(r)) {
-        if (m.fragmentShader.includes(AIR_LIT)) {
-          expect(m.fragmentShader.includes(AIR_LIT + ' * uPresence')).toBe(true)
-          expect(m.fragmentShader.includes('detail')).toBe(false)
-          expect(m.uniforms.uPresence!.value).toBe(0.75)
-          continue
-        }
-        expect(m.fragmentShader.includes(LIT + [...order].reverse().map((step) => parts[step]).join(''))).toBe(true)
-        expect(m.fragmentShader.split('float detail = detailShare(vImage);').length).toBe(2)
-        expect(m.fragmentShader.includes('if (alpha < 0.004 || edgeShare(vImage) <= 0.0) discard;')).toBe(true)
-        expect(m.fragmentShader.includes('if (detail <= 0.0) discard;')).toBe(true)
-        expect(m.uniforms.uPresence!.value).toBe(0.5)
-        expect(m.uniforms.uEdgeSide).toBeDefined()
-        expect(m.uniforms.uDetailRange).toBeDefined()
-      }
-    }
-  })
-
-  it('the share is whole at or under the first size, gone at or over the second and a half midway, by the longest side of a texel in pixels of the master', () => {
-    // From the picture's own eye a picture of 5632 by 3168 on a frame of 1920 by 1080 has 2.9333 texels a pixel: a texel is 0.3409 pixels.
-    const own: [[number, number], [number, number]] = [[5632 / 1920, 0], [0, -3168 / 1080]]
-    expect(detailShareAt(own[0], own[1], [0.5, 1.5])).toBe(1)
-    expect(detailShareAt(own[0], own[1], [0.1, 0.3])).toBe(0)
-    expect(detailShareAt(own[0], own[1], [0.3409, 1])).toBeCloseTo(1, 6)
-    // Twice as near the texel is twice as long: 0.6818 pixels.
-    const near: [[number, number], [number, number]] = [[5632 / 3840, 0], [0, -3168 / 2160]]
-    expect(detailShareAt(near[0], near[1], [0.5, 1.5])).toBeCloseTo(1 - ((t) => t * t * (3 - 2 * t))(0.6818181818 - 0.5), 9)
-    expect(detailShareAt([1, 0], [0, 1], [0.5, 1.5])).toBeCloseTo(0.5, 12)
-    expect(detailShareAt([1, 0], [0, 1], [1, 2])).toBe(1)
-    expect(detailShareAt([1, 0], [0, 1], [0.5, 1])).toBe(0)
-    // The worst direction counts: a ground seen flat, four times shorter in one direction, has a texel four pixels long, whatever the turn.
-    for (const deg of [0, 17, 45, 90, 133]) {
-      const c = Math.cos(deg * Math.PI / 180)
-      const s = Math.sin(deg * Math.PI / 180)
-      const tx: [number, number] = [c * 1, s * 0.25]
-      const ty: [number, number] = [-s * 1, c * 0.25]
-      expect(detailShareAt(tx, ty, [3.5, 4.5])).toBeCloseTo(0.5, 9)
-      expect(detailShareAt(tx, ty, [1, 4])).toBeCloseTo(0, 9)
-      expect(detailShareAt(tx, ty, [4.0001, 8])).toBe(1)
-      // The turn of the picture on the screen does not count either.
-      expect(detailShareAt([c, s * 0.25].map((v) => -v) as [number, number], ty, [3.5, 4.5])).toBeCloseTo(0.5, 9)
-    }
-    // A sheet seen edge on has no texel across it: gone.
-    expect(detailShareAt([1, 0], [2, 0], [0.5, 100])).toBe(0)
-    expect(detailShareAt([0, 0], [0, 0], [0.5, 100])).toBe(0)
-    // Never rises with the size of the texel.
-    let last = 1
-    for (let k = 0; k <= 200; k++) {
-      const size = 0.2 + k * 0.01
-      const share = detailShareAt([1 / size, 0], [0, 1 / size], [0.6, 1.8])
-      expect(share).toBeLessThanOrEqual(last)
-      last = share
-    }
-    expect(last).toBe(0)
-  })
-
-  it('counts in pixels of the master: in a frame of twice the height, and in a place picture of twice the scale, the same texel has the same share', () => {
-    const master = detailShareAt([1.25, 0], [0, -1.25], [0.5, 1.5])
-    expect(master).toBeGreaterThan(0)
-    expect(master).toBeLessThan(1)
-    expect(detailShareAt([0.625, 0], [0, -0.625], [0.5, 1.5], 2)).toBeCloseTo(master, 12)
-    expect(detailShareAt([0.3125, 0], [0, -0.3125], [0.5, 1.5], 4)).toBeCloseTo(master, 12)
-    expect(detailShareAt([0.625, 0], [0, -0.625], [0.5, 1.5])).not.toBeCloseTo(master, 3)
-    // A range held at 1 is 1 whatever the texel.
-    expect(detailShareAt([0, 0], [0, 0], [0, 0])).toBe(1)
-    expect(DETAIL_GLSL.includes('det / big * uFrame * uFine')).toBe(true)
-    expect(DETAIL_GLSL.includes('if (uDetailRange.y <= 0.0) return 1.0;')).toBe(true)
-  })
-
-  it('the shader with the share needs one place for it and refuses none or two', () => {
-    const one = 'precision highp float;\nin vec2 vImage;\nout vec4 outColor;\nvoid main() {\n  if (alpha < 0.004) discard;\n  ' + VIG + '\n  outColor = vec4(col * alpha, alpha);\n}'
-    const made = withDetail(one)
-    expect(made).toBe('precision highp float;\nin vec2 vImage;' + DETAIL_GLSL + '\nout vec4 outColor;\nvoid main() {\n  float detail = detailShare(vImage);\n  if (alpha < 0.004) discard;\n  if (detail <= 0.0) discard;\n  ' + VIG + '\n  outColor = vec4(col * alpha, alpha) * detail;\n}')
-    expect(() => withDetail(one.replace(LIT, 'vec4(1.0)'))).toThrow(/no single place/)
-    expect(() => withDetail(one + ' vec4(col * alpha, alpha)')).toThrow(/no single place/)
-    expect(() => withDetail(one.replace('in vec2 vImage;', ''))).toThrow(/no single place/)
-    expect(() => withDetail(one.replace(VIG, ''))).toThrow(/no single place/)
-    expect(() => withDetail(one + '\nvoid main() {')).toThrow(/no single place/)
-    expect(() => withDetail(made)).toThrow(/no single place/)
-    // The share is read before the first branch of the shader, so its derivatives are whole.
-    expect(made.indexOf('float detail = detailShare(vImage);')).toBeLessThan(made.indexOf('discard'))
-  })
-})
-
 // The law of a stop on its relief (Relief.presenceLaw): off until a set asks, then the layers' shader with its premultiplied output
 // times a share the stop's own GLSL gives by the ground point, the eye and the place in the picture. The pixels are
 // tests/relief-gl.test.ts.
 
+const MAIN = 'void main() {'
+const VIG = 'vec2 q = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);'
 const LAW = 'uniform float uLawNear;\nuniform vec2 uLawRange;\nfloat lawSide(vec3 P) { return length(P) / uLawNear; }\nfloat lawShare(vec3 P, vec3 E, vec2 image) {\n  return 1.0 - smoothstep(uLawRange.x, uLawRange.y, lawSide(P) * uLawFocal / distance(P, E));\n}'
 const lawGiven = (): Record<string, THREE.IUniform> => ({ uLawNear: { value: 2743.568 }, uLawRange: { value: new THREE.Vector2(1, 3) } })
 const lens = (fov: number, height: number, placeScale?: number): RenderView => ({ format: { width: height * 2, height }, camera: { fov }, ...(placeScale ? { placeScale } : {}) }) as unknown as RenderView
@@ -872,15 +687,12 @@ describe('the law of a stop on its relief', () => {
     whole = true
     expect(() => r.screen(renderer, camera, 32, 16, 8)).toThrow(/the shield reads its alpha/)
     expect([asked, said]).toEqual([1, 3])
-    // A presence under 1 or a range by the eye is no shield whatever the law says.
+    // A presence under 1 is no shield whatever the law says.
     const other = await made()
     other.presence(0.5)
     expect(other.screen(renderer, camera, 32, 16, 8)).toBe(false)
-    other.presence(1)
-    other.presenceDetail([1, 3])
-    expect(other.screen(renderer, camera, 32, 16, 8)).toBe(false)
     expect(asked).toBe(1)
-    other.presenceDetail(null)
+    other.presence(1)
     expect(() => other.screen(renderer, camera, 32, 16, 8)).toThrow(/the shield reads its alpha/)
     expect(asked).toBe(2)
     // Whole is the word true and nothing like it.
@@ -924,35 +736,30 @@ describe('the law of a stop on its relief', () => {
     expect(() => bare.update(0, 1, 0, { format: { width: 1920, height: 1080 } } as unknown as RenderView)).not.toThrow()
   })
 
-  it('goes with a presence, an edge and the share by the eye in any order: the shares multiply, and both are read before the first branch', async () => {
-    const orders = [['law', 'detail', 'presence', 'edge'], ['presence', 'edge', 'detail', 'law'], ['edge', 'law', 'presence', 'detail'], ['detail', 'law', 'edge', 'presence']]
+  it('goes with a presence and an edge in any order: the shares multiply, and the law is read before the first branch', async () => {
+    const orders = [['law', 'presence', 'edge'], ['presence', 'edge', 'law'], ['edge', 'law', 'presence'], ['law', 'edge', 'presence'], ['presence', 'law', 'edge'], ['edge', 'presence', 'law']]
     for (const order of orders) {
       const r = await Relief.load(ctx, '', def, motion(true))
       for (const step of order) {
         if (step === 'law') r.presenceLaw(LAW, lawGiven())
-        if (step === 'detail') r.presenceDetail([0.5, 1.5])
         if (step === 'presence') r.presence(0.5, { air: 0.75 })
         if (step === 'edge') r.presenceEdge([4, 4, 4, 0], { air: false })
       }
-      const parts: Record<string, string> = { law: ' * reliefLaw', detail: ' * detail', presence: ' * uPresence', edge: ' * edgeShare(vImage)' }
+      const parts: Record<string, string> = { law: ' * reliefLaw', presence: ' * uPresence', edge: ' * edgeShare(vImage)' }
       for (const m of materials(r)) {
         if (m.fragmentShader.includes(AIR_LIT)) {
           expect(m.fragmentShader.includes('law')).toBe(false)
           expect(m.fragmentShader.includes('Law')).toBe(false)
-          expect(m.fragmentShader.includes('detail')).toBe(false)
           continue
         }
         const text = m.fragmentShader
         expect(text.includes(LIT + [...order].reverse().map((step) => parts[step]).join(''))).toBe(true)
         expect(text.split('float reliefLaw = clamp(lawShare(vLocal, vEye, vImage), 0.0, 1.0);').length).toBe(2)
-        expect(text.split('float detail = detailShare(vImage);').length).toBe(2)
         const first = text.indexOf('discard', text.indexOf(MAIN))
         expect(text.indexOf('float reliefLaw = clamp(')).toBeLessThan(first)
-        expect(text.indexOf('float detail = detailShare(')).toBeLessThan(first)
         expect(text.indexOf('float reliefLaw = clamp(')).toBeGreaterThan(text.indexOf(MAIN))
         expect(text.indexOf('float lawShare(')).toBeLessThan(text.indexOf(MAIN))
         expect(text.includes('if (reliefLaw <= 0.0) discard;')).toBe(true)
-        expect(text.includes('if (detail <= 0.0) discard;')).toBe(true)
       }
     }
   })

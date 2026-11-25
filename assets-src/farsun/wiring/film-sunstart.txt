@@ -1,0 +1,7 @@
+# Far Sun wiring for the film (src/director/film.ts), asked in MAIL 886 item 1.
+# The film hands the distance of the Sun stop's last view (sunStart) to the far Sun, so the near end of the
+#   handover and of the wear is the film's own number and not a typed one. Until this hunk is applied the
+#   far Sun starts from the typed stand-in `sunStart` of look.json, and tests/farsun-share.test.ts holds that typed
+#   number within 0.005 of the film's sunStart.
+# After it is applied `sunStart` in look.json is dead and goes out; both ends of `handover` and `wear`
+#   are shares of the way from that distance to the swap distance.
