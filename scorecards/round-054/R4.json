@@ -1,0 +1,28 @@
+{
+ "critic": "R4",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "frames 4126-4183 across stars, left moon, rings, planet limb, and storm clouds",
+   "what": "fast dive and pitch-up motion has no shutter motion blur at all, leaving stars as 1-pixel pinpoints and thin rings and moon edges razor-sharp during 20-35 px/frame movement so fast motion strobes instead of blurring smoothly",
+   "fix": "enable continuous camera and object motion blur with enough temporal subsamples along the shutter interval so fast edges and point stars streak smoothly without discrete ghost copies"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "frames 4393-4447 across sun, concentric rings, stars, moon, and receding globe",
+   "what": "rapid climb and pullback from terrain to space renders with zero motion blur, keeping thin ring arcs, stars, and cloud details pin-sharp across 25-45 px/frame displacements",
+   "fix": "apply smooth continuous shutter motion blur across the rise segment matching camera angular and radial velocity"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-03.png",
+   "where": "upper concentric ring arcs across consecutive frames 4180-4191 (and matching ring arcs in sheet-01.png and sheet-06.png)",
+   "what": "1-pixel-thin bright ringlets stair-step and modulate in peak pixel brightness by ~20-25% from frame to frame as the curved arcs cross pixel rows, causing fine-line shimmer",
+   "fix": "supersample or pre-filter thin ring features in screen space with a slightly wider antialiased filter kernel so subpixel ring motion holds steady brightness"
+  }
+ ]
+}

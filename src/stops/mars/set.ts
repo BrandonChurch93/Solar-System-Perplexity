@@ -313,9 +313,6 @@ export const createSet: SetFactory = async (ctx) => {
       else (pu.uGrazingRange!.value as THREE.Vector2).copy(grazingHold.range)
       // the lit side of the veil lies on the ground: it turns with the body from where it stood at T of the dive
       if (veil) (pu.uGrazingSun!.value as THREE.Vector3).copy(veilLight).applyAxisAngle(plan.axis, plan.spin(state.time) - veilSpin).applyQuaternion(state.rotation)
-      // CONTROL d, never merged: the air held off over the frames 2454 to 2473 (ground haze, grazing veil, shell, the set's air)
-      const ctlAir = state.time * 30 >= 2454 && state.time * 30 < 2474
-      if (ctlAir) { pu.uHazeTau!.value = 0; su.uHazeTau!.value = 0; shape.x = 0 }
       const gg = n.glow.ground
       const gs = n.glow.shell
       planet.setGlow(glowWorld.copy(glowGround).applyQuaternion(state.rotation), [gg.colour[0]! * near, gg.colour[1]! * near, gg.colour[2]! * near], gg.power)
@@ -377,7 +374,7 @@ export const createSet: SetFactory = async (ctx) => {
       const there = moving ? 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-5)) - Math.log(c.low)) / (Math.log(c.high) - Math.log(c.low))) : 0
       terrain.visible = moving
       // the globe's own air leaves as the close view's air comes: one share by the height
-      shell.material.uniforms.uGain!.value = ctlAir ? 0 : gain * state.weight * (1 - there)
+      shell.material.uniforms.uGain!.value = gain * state.weight * (1 - there)
       if (moving) {
         const f = plan.twinFrame(state.time)
         terrain.position.copy(f.origin)
@@ -389,7 +386,7 @@ export const createSet: SetFactory = async (ctx) => {
         lawAir.value.w = closeJson.law.need.on ? plateTexel / f.scale : 0
         lawTone.value.fromArray(ownGain)
         lawEye.value.copy(state.segment.kind === 'dive' ? takenDive : takenRise)
-        ground.presence(1, { air: ctlAir ? 0 : there })
+        ground.presence(1, { air: there })
         ground.update(state.time - terrainMid, gain, shot.post.vignette, view)
       }
       const distance = world.position.length()

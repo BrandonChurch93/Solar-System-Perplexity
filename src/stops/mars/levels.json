@@ -10,5 +10,5 @@
     {"file": "land-0p3.jpg", "full": 2176, "widthDeg": 0.3, "own": true}
   ],
   "fadeMinor": true,
-  "oneChannel": ["wrap-storm.png", "phobos-lit-mask.png", "relief-L0-alpha.png", "relief-L1-alpha.png", "relief-L2-alpha.png"]
+  "oneChannel": ["wrap-storm.png", "phobos-lit-mask.png", "relief-L0-alpha.png", "relief-L1-alpha.png", "relief-L2-alpha.png", "relief-C0-alpha.png", "relief-C1-alpha.png", "relief-C2-alpha.png", "relief-C3-alpha.png"]
 }

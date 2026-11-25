@@ -1,0 +1,166 @@
+{
+ "critic": "R3",
+ "score": 4,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "crop A, dark sunspot below the arch; also visible in image-03.png crop P and image-07.png crop Q",
+      "what": "The surrounding granules stretch into long, smooth spokes that pinch into a nearly featureless black oval with a serrated edge. The abrupt change in texture scale makes the spot look like a radial warp.",
+      "fix": "Replace the radial stretch with irregular penumbral filaments of varied lengths and orientations. Retain fine texture in the umbra and break up the transition to normal granulation."
+     },
+     {
+      "severity": "major",
+      "file": "image-08.png",
+      "where": "foreground crops T through W; also visible in image-04.png crops S through V",
+      "what": "Large granules look like inflated metallic cushions, with blurred centers, deep dark grooves, and repeated comb-like striations on their glossy rims.",
+      "fix": "Reduce the apparent relief and gloss, vary the granule shapes and border profiles, and replace the repeated rim striations with finer, irregular luminance detail."
+     },
+     {
+      "severity": "minor",
+      "file": "image-07.png",
+      "where": "crops P and Q, where the erupting loops meet the surface; also visible in image-02.png crop A",
+      "what": "The footpoints clip into solid white cores fringed by dense, pixel-like speckles with abrupt edges against the softer surface.",
+      "fix": "Preserve detail in the bright cores, antialias the finest filaments, and taper the scattered highlights into the surrounding granulation."
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "crops G through I, along the distant limb; also visible in image-06.png crops H and I",
+      "what": "A nearly continuous row of similarly sized orange needles sits on a narrow bright strip, making the limb read as a bristled cutout.",
+      "fix": "Vary the density, angle, length, and opacity of the limb filaments, and blend their bases into the surface glow."
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 4,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-13.png",
+      "where": "lower third of the globe and the lower-left and lower-right prominences (crops S, T, U, V in image-16)",
+      "what": "the surface and prominences are smeared into directional streaks, like a motion or zoom blur; granulation turns into mush and the prominence loops are doubled and ghosted with no fine structure",
+      "fix": "re-render the lower hemisphere at full resolution with no blur pass; keep granulation crisp to the limb and give the prominences sharp filament detail"
+     },
+     {
+      "severity": "severe",
+      "file": "image-09.png",
+      "where": "near foreground terrain, bottom band (crops S, T, U, V, W in image-12)",
+      "what": "the granules read as glossy, airbrushed plastic blobs with streaky brush-like highlights and smeared edges; at native size the texture is soft with no real cell detail",
+      "fix": "replace with a sharper granulation texture with bright cell centres and dark intergranular lanes, matte emissive shading and no specular gloss"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "around the two loop footpoints (crops G, O, Q in image-10/11)",
+      "what": "each footpoint sits on a visible oval patch with a ragged, noisy outline and a different texture from the surrounding surface; the edge of the patch is plain to see",
+      "fix": "blend the plage patch into the surface with a wide soft falloff and matching texture scale"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "sunspot and penumbra, centre (crops A, P)",
+      "what": "the penumbra is a radial smear of stretched granules pointing to the spot, which looks like texture pinching toward a point rather than penumbral filaments; the umbra is a flat black hole",
+      "fix": "model the penumbra as fine radial filaments with a clear umbra/penumbra boundary and some umbral dots, and stop the base texture stretching toward the centre"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "limb along the whole horizon (crops H, I, N, Q, R)",
+      "what": "the spicules are hair- or grass-like spikes of the same size sitting on a hard horizon line; they look like a fur shader and repeat evenly",
+      "fix": "make spicules finer, more varied and semi-transparent, fading into a soft chromosphere glow rather than a hard edge"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "globe surface, mid disc (crops A, D, G, O, P)",
+      "what": "the granulation is soft and blotchy at native size, with an overall soft-painted look and inconsistent detail; sunspots are smudges",
+      "fix": "raise texture resolution and sharpen the mid-disc detail; add limb darkening consistent with the surface"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "corona around the limb (crops B, F, J, K, N, Q)",
+      "what": "the coronal streamers are uniform white brush strokes that end abruptly in places and give a halo-like painted ring around the disc",
+      "fix": "vary streamer length and brightness and let them fade smoothly into the sky"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "loop arcs (crops C, F, K)",
+      "what": "the loops are drawn as sparkler-like spark streaks with dots falling off them; they read as a particle effect more than plasma",
+      "fix": "make the loops coherent glowing flux tubes with fine strands instead of spark trails"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "sky, upper corners (crops B, I, L)",
+      "what": "the nebula background is muddy brown and smudged, with some stars as soft blobs",
+      "fix": "use a cleaner star field with point-like stars and a subtler galactic band"
+     }
+    ]
+   }
+  },
+  {
+   "part": 3,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-19.png",
+      "where": "top limb crop L and right limb crop R",
+      "what": "corona rays are straight, evenly fanned shafts, like a radial streak filter",
+      "fix": "bend the rays and vary their length and brightness so they are not a uniform fan"
+     },
+     {
+      "severity": "major",
+      "file": "image-18.png",
+      "where": "prominence loops in crops C and D",
+      "what": "filaments read as combed hair or flat ribbons with soft, even edges",
+      "fix": "break strand thickness and density so the loops do not look like alpha cards"
+     },
+     {
+      "severity": "major",
+      "file": "image-17.png",
+      "where": "corona around the whole limb",
+      "what": "the same straight radial streaks wrap the disk and give the silhouette away",
+      "fix": "replace the uniform fan with irregular, braided streamers"
+     },
+     {
+      "severity": "minor",
+      "file": "image-20.png",
+      "where": "bottom limb crops U and V",
+      "what": "spicules sit like a comb on a smooth circular edge",
+      "fix": "roughen the photosphere silhouette and jitter the spicule lengths"
+     },
+     {
+      "severity": "minor",
+      "file": "image-18.png",
+      "where": "disk crop A",
+      "what": "granulation curls in repeated brushstroke whorls around the pores",
+      "fix": "vary cell size and swirl direction so the surface does not look painted"
+     }
+    ]
+   }
+  }
+ ]
+}

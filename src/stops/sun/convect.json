@@ -115,12 +115,12 @@
   "yield": 0.5,
   "apart": 0.2,
   "life": [
-   3.5,
-   6
+   7,
+   12
   ],
   "parts": 0.6,
   "laneIn": 0.6,
-  "round": 40,
+  "round": 30,
   "dome": {
    "height": 0.0,
    "full": 0.5,
@@ -169,7 +169,7 @@
    "crease": 0.03
   },
   "thread": {
-   "round": 15,
+   "round": 10,
    "out": 2.5,
    "speed": 0.9,
    "off": 0.1,
@@ -178,13 +178,14 @@
     3.0,
     0.05
    ],
-   "thin": 1.6,
-   "locks": 0.8
+   "thin": 2.0,
+   "locks": 0.8,
+   "ride": 1
   },
   "sizes": 0.5,
   "tight": {
    "from": 2.6,
-   "power": 1.1,
+   "power": 0.4,
    "knee": 3.0
   },
   "swallow": [
@@ -208,51 +209,60 @@
   }
  },
  "spot": {
-  "umbra": 0.85,
-  "penumbra": 3.8,
+  "umbra": 1.15,
+  "penumbra": 2.1,
   "drop": [
    0.012,
-   0.035
+   0.022
   ],
   "wall": [
-   0.65,
-   1.45
+   0.9,
+   1.15
   ],
   "ragged": 0.5,
   "floor": 0.02,
   "fibres": {
-   "level": 1.25,
-   "edge": 0.6,
+   "level": 0.85,
+   "edge": 1.5,
    "head": 0.3,
-   "count": 19.3,
-   "height": 0.009,
-   "along": 2.0,
-   "grains": 3,
-   "speed": 0.5,
    "gap": 2.0,
-   "cut": 1.3,
-   "bend": [
-    6,
-    1.2,
-    2.0
-   ],
-   "round": 180,
-   "stream": 0.05,
-   "ends": 0.7,
-   "headLong": 0.25,
-   "power": 2.4,
    "headFrom": 0.1,
-   "twist": 2.6,
-   "real": 0,
-   "sway": 0.35,
-   "endsDeep": 0.5
+   "ends": 0.6,
+   "headLong": 0.25,
+   "endsDeep": 0.15,
+   "endsAt": 1.0,
+   "cools": 0.2
   },
-  "uneven": 0.3,
   "pull": {
    "from": 0.9,
    "share": 0.04,
    "sharp": 5,
    "turn": 0.15
+  },
+  "strands": {
+   "note": "the fibres of the sunspot, by place: long strands toward its middle. count: how many lie round the lip, in the field's measure (about 6 strands to 1); along: how soon a strand changes along its way (per umbra radius); lean: how far the strands turn and lean off the straight way in; thin: how thin a strand is against the dark beside it; dark and light: the light left between two strands and the light of a strand's middle, times the cell's own; reach: umbra radii from the middle inside which the strands are whole and beyond which there are none; relief: how high a strand stands over the gap beside it (stage units); flat: the share of a bulb's height gone where the strands are whole; far: the share of a strand's width that a pixel covers across it where the strand begins to merge into the mean, and where it has merged; rate: how fast bends and bright stretches travel along a strand; grains: the length of the bright stretches (per umbra radius); floor: the share of the strands' lie that shows on the wall and the floor; cell: the share of the cell's own light and dark left where the strands are whole; tone: the one tone the strands stand on there; locks: the light left to a strand in the gap between two locks",
+   "count": 30,
+   "along": 1.4,
+   "lean": 0.22,
+   "thin": 4,
+   "dark": 0.25,
+   "light": 3.0,
+   "reach": [
+    1.4,
+    2.2
+   ],
+   "relief": 0.002,
+   "flat": 0.7,
+   "far": [
+    0.35,
+    0.9
+   ],
+   "rate": 0.12,
+   "grains": 5,
+   "floor": 1.5,
+   "cell": 0.35,
+   "tone": 0.6,
+   "locks": 0.4
   }
  },
  "mesh": {
@@ -277,13 +287,13 @@
   "top": 0.62,
   "spread": 0.4,
   "veil": {
-   "amount": 0.045,
+   "amount": 0.028,
    "level": 0.5,
    "most": 0.7,
    "tint": [
     0.98,
-    0.83,
-    0.46
+    0.72,
+    0.32
    ],
    "from": 2.0
   },
@@ -299,8 +309,8 @@
     0.6
    ],
    "flat": [
-    0.35,
-    1.0
+    0.38,
+    1.05
    ],
    "lane": 0.5,
    "foot": [
@@ -309,9 +319,11 @@
    ]
   },
   "boil": {
-   "scale": 5.0,
+   "scale": 9,
    "rate": 0.5,
-   "amount": 0.5
+   "amount": 0.8,
+   "borne": 1,
+   "round": 0.35
   },
   "fall": {
    "amount": 0.07,
@@ -322,9 +334,9 @@
    "below": 0.12
   },
   "points": {
-   "amount": 1.0,
-   "within": 0.003,
-   "few": 0.8,
+   "amount": 2.5,
+   "within": 0.01,
+   "few": 0.7,
    "scale": 22,
    "drift": 0.08
   },
@@ -344,12 +356,20 @@
    "power": 0.5,
    "most": 1.2,
    "texels": 2,
-   "note": "the light and dark of the globe own map under the cells, at the place on the ball where the globe shows it (the ground is the globe own ground). Two parts. cell: each cell takes the map light at its own middle over the map mean round it (region, texels of the map wide), by one law at every height and distance: share is how far the sample is drawn from the point to the middle of its cell (1: each cell one light), power how it is read, least and most its bounds. The region part, that mean: amount is the share of it the ground takes, level the light of the map that leaves the ground as it is, power how it is read, most the most it adds, where a pixel is small on the ground; far is the same four where a pixel holds the map as the globe shows it, band the texels of the map to a pixel (in 1080ths of the frame height) between which the one gives way to the other. texels: the least width of a sample in texels of the map",
+   "note": "the light and dark of the globe own map under the cells, at the place on the ball where the globe shows it (the ground is the globe own ground). Two parts. cell: each cell takes the map light at its own middle over the map mean round it (region, texels of the map wide), by one law at every height and distance: share is how far the sample is drawn from the point to the middle of its cell (1: each cell one light), power how it is read, least and most its bounds. The region part, that mean: amount is the share of it the ground takes, level the light of the map that leaves the ground as it is, power how it is read, most the most it adds, where a pixel is small on the ground; far is the same four where a pixel holds the map as the globe shows it, band the texels of the map to a pixel (in 1080ths of the frame height) between which the one gives way to the other. texels: the least width of a sample in texels of the map. cell.open: where a pixel holds between over[0] and over[1] texels of the map, the cell part's bounds open from least and most above to these, so the far ground carries the map's light and dark in the same place as the globe's face before it gives way to it",
    "cell": {
     "share": 1.0,
     "least": 0.85,
     "most": 1.2,
-    "power": 0.75
+    "power": 0.75,
+    "open": {
+     "over": [
+      0.6,
+      1.6
+     ],
+     "least": 0.45,
+     "most": 2.2
+    }
    },
    "far": {
     "amount": 1.0,
@@ -366,50 +386,52 @@
   "well": {
    "out": 10,
    "fall": 1.0,
-   "tongue": 0.6,
+   "tongue": 0.9,
    "scale": 6,
-   "note": "the heat of a cell: its top is one heat with a mottle that the flow carries outward (tongue: how strong; scale: the size of the mottle), it falls toward the lane by (1 - way^out)^fall and is lost in the crease over the share seam of a lattice unit, wide here and a hair there (uneven)",
+   "note": "the heat of a cell: its top is one heat with a mottle that the flow carries outward (tongue: how strong; scale: the size of the mottle), it falls toward the lane by (1 - way^out)^fall and is lost in the crease over the share seam of a lattice unit, wide here and a hair there (uneven); light.boil.borne: the share of the mottle that lies in the cell's own chart and is carried outward with the threads' matter instead of changing in place (1: all of it is carried as a body), light.boil.round: how many of its patches lie round a cell; cells.thread.ride: the share by which the locks of a cell's threads travel with the threads' bright stretches (1: locks and stretches move as one)",
    "seam": 0.035,
-   "uneven": 0.7
+   "uneven": 0.7,
+   "flank": 0,
+   "lobes": 0
   },
   "fibre": {
-   "one": 0.9,
-   "two": 0.6,
+   "one": 1.15,
+   "two": 0.85,
    "least": 0.7,
    "rim": 0.05
   },
   "tongue": {
    "note": "the hot tongues that come out of the creases and run up the flanks. from: between which shares of the way from the middle to the lane a tongue begins, each group by its own reach; heat: how hot; groups: how many groups stand round a cell; soft: the share of the way over which a tongue comes in",
    "from": [
-    0.3,
-    0.9
+    0.25,
+    0.7
    ],
-   "heat": 0.55,
-   "groups": 5,
+   "heat": 0.6,
+   "groups": 7,
    "soft": 0.12
   },
   "farGlow": 0.25
  },
  "jets": {
-  "count": 48000,
+  "count": 80000,
   "seed": 20261123,
   "band": [
    4.6,
    9.5
   ],
   "segments": 6,
-  "length": 0.13,
-  "width": 0.013,
-  "gain": 0.55,
+  "length": 0.16,
+  "width": 0.01,
+  "gain": 0.7,
   "period": [
    2.5,
    5
   ],
   "share": 0.8,
-  "lean": 0.35,
+  "lean": 0.5,
   "sway": 0.06,
   "root": 0.02,
-  "bend": 0.15,
+  "bend": 0.35,
   "graze": -0.04,
   "hot": [
    1.0,
@@ -420,7 +442,14 @@
    0.85,
    0.3,
    0.08
-  ]
+  ],
+  "group": {
+   "note": "the jets by the place of their root: scale groups to a stage unit; gaps the share of the ground that holds none; tall how much taller than the rest the few tall ones are; spread how far one jet may turn off the lean of its group, in turns",
+   "scale": 1.2,
+   "gaps": 0.3,
+   "tall": 1.5,
+   "spread": 0.2
+  }
  },
  "glow": {
   "tight": [
@@ -439,26 +468,26 @@
   ]
  },
  "gas": {
-  "note": "the ground is a slab of glowing gas. lid, floor: the slab's top over the ball and its bottom under it (stage units). steps: level cuts of a ray through it. margin: how much wider than the picture the baked diagram is. fine: texels of the baked diagram to a pixel of the picture, each way. soft: half the height over which the top of the gas fades out. free: the way through the gas of a cell that takes all but 1/e of the light. top, deep: the gas at the very top gives the share top of its heat, full heat deep under the top. cool: the cooler gas between the cells, up to fill over the ball (soft each way), within reach over the ground, free its way, heat the light it gives. air: the thin glowing air over the tops (free its way at the top, scale the height it thins by, glow the share of the heat under it that it gives). strand: the threads (light and dense: how much brighter and denser a thread is, layer: the depth from one field of threads to the other, mean: the mean of a field, far: cells a pixel between which the threads merge). pit: the march goes on into the sunspot's funnel to depth with steps cuts",
+  "note": "the ground is a slab of glowing gas. lid, floor: the slab's top over the ball and its bottom under it (stage units). steps: level cuts of a ray through it. margin: how much wider than the picture the baked diagram is. fine: texels of the baked diagram to a pixel of the picture, each way. soft: half the height over which the top of the gas fades out. free: the way through the gas of a cell that takes all but 1/e of the light. top, deep: the gas at the very top gives the share top of its heat, full heat deep under the top. cool: the cooler gas between the cells, up to fill over the ball (soft each way), within reach over the ground, free its way, heat the light it gives. air: the thin glowing air over the tops (free its way at the top, scale the height it thins by, glow the share of the heat under it that it gives). strand: the threads (light and dense: how much brighter and denser a thread is, layer: the depth from one field of threads to the other, mean: the mean of a field, far: cells a pixel between which the threads merge). pit: the march goes on into the sunspot's funnel to depth with steps cuts (above: the march goes on wherever the top of the gas stands less than this over the slab's floor; veil: between which depths of the ground under the slab's floor the thin layer over the ground thins out) (strand.thin: a thread is drawn where a pixel covers less than the first share of its own width and is its mean where a pixel covers more than the second)",
   "lid": 0.075,
   "floor": 0.02,
   "steps": 64,
   "margin": 1.25,
-  "soft": 0.0055,
-  "free": 0.01,
+  "soft": 0.004,
+  "free": 0.007,
   "top": 0.55,
   "deep": 0.01,
   "cool": {
    "fill": -0.011,
    "soft": 0.003,
    "free": 0.02,
-   "heat": 0.12,
+   "heat": 0.14,
    "reach": 0.03,
    "under": -0.014
   },
   "air": {
    "free": 0.25,
-   "scale": 0.012,
+   "scale": 0.006,
    "glow": 0.8
   },
   "strand": {
@@ -470,11 +499,20 @@
     0.004,
     0.014
    ],
-   "flat": 1.0
+   "flat": 1.0,
+   "thin": [
+    0.3,
+    0.8
+   ]
   },
   "pit": {
-   "steps": 64,
-   "depth": 0.11
+   "steps": 80,
+   "depth": 0.14,
+   "above": 0.035,
+   "veil": [
+    0.002,
+    0.03
+   ]
   },
   "fine": 2,
   "cut": {
@@ -482,6 +520,12 @@
    "depth": 0.0015,
    "most": 12,
    "air": 0.02
+  },
+  "box": {
+   "note": "the bake is drawn only in the box round the ball in its buffer: edge and rim are how many points of the buffer's edge and of the ball's edge are walked to find the box, pad how many texels it is taken wider",
+   "edge": 1024,
+   "rim": 2048,
+   "pad": 16
   }
  }
 }

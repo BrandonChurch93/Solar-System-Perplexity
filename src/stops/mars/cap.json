@@ -12,7 +12,7 @@
   "fine": 1,
   "light": {
     "relief": 1,
-    "own": 0
+    "own": 1
   },
   "reachDeg": 17
 }

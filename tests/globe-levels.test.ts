@@ -8,7 +8,7 @@ import * as look from '../src/stops/mars/look'
 import { frozen } from './globe-frozen'
 
 const KEPT = '81b0189383d53555c8623467df803b233644cf143249b11aa3e3a28f5548a308'
-const OWN = '813ceb84dc79c7611030db7cc4a5a4d9213b916c218ec9ee5595bb1589deb5ec'
+const OWN = '6fbf99f928668ee11583b51e1063dbc94dc1d72d303e00678a6023fedcb6df65'
 
 function planetWith(levels: number, more: Partial<PatchSet> = {}, anisotropy = 16): Planet {
   const t = new THREE.Texture()

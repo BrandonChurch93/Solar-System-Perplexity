@@ -7,9 +7,10 @@ import { ramp, smooth } from '../../director/rig'
 import { Deck, Glow } from './deck'
 import deckJson from './deck.json'
 import deckRingsJson from './deck-rings.json'
-import { Globe } from './globe'
+import { Globe, TOP_PATH } from './globe'
 import { Halo } from './halo'
 import * as look from './look'
+import { bandHold } from '../../space/sky'
 import { Moon } from './moons'
 import patchJson from './patches.json'
 import platesJson from './plates.json'
@@ -32,6 +33,7 @@ async function heights(ctx: SetContext, path: string, width: number, height: num
 }
 
 export const createSet: SetFactory = async (ctx) => {
+  const holdBand = await bandHold(plan.id)
   const key = ctx.assets === 'full' ? 'full' : 'web'
   const base = 'uranus/' + ctx.assets + '/'
   const fit = plan.fit
@@ -40,7 +42,12 @@ export const createSet: SetFactory = async (ctx) => {
   const terrain = new THREE.Group()
   world.add(orbit, terrain)
 
+  const counted = (name: string, t: THREE.Texture, full: number): void => {
+    const width = (t.image as unknown as { width: number }).width
+    if (key === 'full' && width !== full) throw new Error('uranus: ' + name + ' is ' + width + ' texels wide in the full set and the look counts ' + full)
+  }
   const map = await ctx.texture(base + 'wrap-color.jpg', { srgb: true, anisotropy: 16, repeat: true })
+  counted('wrap-color.jpg', map, look.texels.map)
   const cloud = await ctx.texture(base + 'wrap-cloud.png', { srgb: false, channels: 1, anisotropy: 16, repeat: true })
   const shadow = await ctx.texture(base + 'wrap-shadow.png', { srgb: false, channels: 1, anisotropy: 16, repeat: true })
   const light = await ctx.dataTexture(base + 'light.bin', look.globe.lightSize[0], look.globe.lightSize[1], 4)
@@ -48,17 +55,21 @@ export const createSet: SetFactory = async (ctx) => {
   const haloLut = await ctx.dataTexture(base + 'halo.bin', look.halo.size[0], look.halo.size[1], 4)
   const patchTextures: THREE.Texture[] = []
   for (const level of patchJson.levels) patchTextures.push(await ctx.texture(base + level.file, { srgb: true, anisotropy: 16 }))
-  const patches = { textures: patchTextures, widthsDeg: patchJson.levels.map((l) => l.widthDeg), spot: new THREE.Vector3().fromArray(patchJson.spot), feather: patchJson.feather, fade: patchJson.fade as [number, number] }
+  patchTextures.forEach((t, i) => counted(patchJson.levels[i]!.file, t, look.texels.patches[i]!))
+  const patches = { textures: patchTextures, sizes: look.texels.patches, widthsDeg: patchJson.levels.map((l) => l.widthDeg), spot: new THREE.Vector3().fromArray(patchJson.spot), feather: patchJson.feather, fade: patchJson.fade as [number, number] }
   const face = { map: await ctx.texture(base + 'face.jpg', { srgb: false, anisotropy: 16 }), ...look.face }
   const deckLight = await ctx.dataTexture(base + 'deck-light.bin', deckJson.lightSize[0]!, deckJson.lightSize[1]!, 4)
   const plateTextures: THREE.Texture[] = []
   for (const level of platesJson.levels) plateTextures.push(await ctx.texture(base + level.file, { srgb: false, anisotropy: 16 }))
+  plateTextures.forEach((t, i) => counted(platesJson.levels[i]!.file, t, look.texels.plates[i]!))
   const globeTurn = new THREE.Quaternion().fromArray(fit.globe.quaternion)
+  const flight = plan.seg.terrain.end - plan.seg.terrain.start
+  const topPath = Array.from({ length: TOP_PATH }, (_, i) => plan.terrain(flight * i / (TOP_PATH - 1)).position.clone())
   const place = {
-    textures: plateTextures, halfTans: platesJson.levels.map((l) => l.halfTan), frame: platesJson, rot: plan.terrainFrame.clone().invert().multiply(globeTurn), field: await ctx.dataTexture(base + platesJson.field.file, platesJson.field.size, platesJson.field.size, 4), clockRef: platesJson.clockRef, aMax: platesJson.aMax, steep: look.place.steep, relitSoft: look.place.light.soft, topLight: look.place.tops, feather: platesJson.feather,
-    deck: { centre: deckJson.centre, radius: deckJson.radius, f0: deckJson.f0, r0: deckJson.r0, flow: look.deck.flow, flowAngle: deckJson.flowAngle, light: deckLight, lightSize: deckJson.lightSize, psiMax: deckJson.psiMax },
+    textures: plateTextures, sizes: look.texels.plates, halfTans: platesJson.levels.map((l) => l.halfTan), frame: platesJson, rot: plan.terrainFrame.clone().invert().multiply(globeTurn), field: await ctx.dataTexture(base + platesJson.field.file, platesJson.field.size, platesJson.field.size, 4), clockRef: platesJson.clockRef, aMax: platesJson.aMax, steep: look.place.steep, relitSoft: look.place.light.soft, topLight: { ...look.place.tops, path: topPath }, feather: platesJson.feather,
+    deck: { centre: deckJson.centre, radius: deckJson.radius, f0: deckJson.f0, r0: deckJson.r0, sun: deckJson.sun, flow: look.deck.flow, flowAngle: deckJson.flowAngle, light: deckLight, lightSize: deckJson.lightSize, psiMax: deckJson.psiMax },
   }
-  const globe = new Globe({ map, cloud, shadow, light, shade, patches, face, place, ...look.globe })
+  const globe = new Globe({ map, mapWidth: look.texels.map, cloud, shadow, light, shade, patches, face, place, ...look.globe })
   globe.mesh.quaternion.copy(globeTurn)
   const halo = new Halo(haloLut, look.halo.size, look.halo.range, { map, light, shade, lightSize: look.globe.lightSize, bandRate: look.globe.bandRate, turn: globe.mesh.quaternion, rim: look.halo.rim, rimSun: look.halo.rimSun })
   const shape = new THREE.Group()
@@ -91,6 +102,7 @@ export const createSet: SetFactory = async (ctx) => {
     const tone = look.moons.bodies[m.id]!
     const body = new Moon({
       map: await ctx.texture(base + m.id + '-color.jpg', { srgb: true, anisotropy: 16, repeat: true }),
+      mapWidth: look.texels.moon,
       height: ctx.floatTexture(await heights(ctx, base + m.id + '-height.bin', moonSize[0], moonSize[1]), moonSize[0], moonSize[1], true),
       heightWidth: moonSize[0], bump: look.moons.bump, wrap: look.moons.wrap, seeliger: tone.seeliger, knee: look.moons.knee, rim: tone.rim, sun: tone.sun, ambient: tone.ambient, bounce: look.moons.bounce, air: look.moons.air,
     })
@@ -103,14 +115,20 @@ export const createSet: SetFactory = async (ctx) => {
   orbit.add(far.points)
 
   const deckHalo = await ctx.dataTexture(base + 'deck-halo.bin', deckJson.haloSize[0]!, deckJson.haloSize[1]!, 4)
+  const deckColor = await ctx.texture(base + 'deck-color.jpg', { srgb: true, anisotropy: 16 })
+  const deckNear = await ctx.texture(base + 'deck-near.jpg', { srgb: true, anisotropy: 16 })
+  const deckCloud = await ctx.texture(base + 'deck-cloud.jpg', { srgb: false, anisotropy: 16, repeat: true })
+  counted('deck-color.jpg', deckColor, deckJson.imageSize.full[0]!)
+  counted('deck-near.jpg', deckNear, look.texels.near)
+  counted('deck-cloud.jpg', deckCloud, look.texels.cloud)
   const deck = new Deck({
-    color: await ctx.texture(base + 'deck-color.jpg', { srgb: true, anisotropy: 16 }),
-    near: await ctx.texture(base + 'deck-near.jpg', { srgb: true, anisotropy: 16 }),
-    cloud: await ctx.texture(base + 'deck-cloud.jpg', { srgb: false, anisotropy: 16, repeat: true }),
+    color: deckColor,
+    near: deckNear,
+    cloud: deckCloud,
     height: await ctx.dataTexture(base + 'deck-height.bin', deckJson.heightSize[0]!, deckJson.heightSize[1]!, 1),
     light: deckLight,
     halo: deckHalo,
-  }, key, look.deck, globe.plates(), look.place.deck.calm)
+  }, look.texels, look.deck, globe.plates(), look.place.deck.calm)
   terrain.add(deck.group)
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
   const deckCentre = new THREE.Vector3().fromArray(deckJson.centre)
@@ -137,10 +155,12 @@ export const createSet: SetFactory = async (ctx) => {
   const ringUnit = look.place.ringMove.match[1] / look.place.ringMove.match[0]
   const hoops = look.place.ringMove.hoops
   const glow = new Glow(deckHalo, 2000 / deckJson.radius)
+  glow.mesh.renderOrder = 3.5
   glow.material.uniforms.uUnder!.value = look.place.under
   const over = new THREE.Group()
   over.add(deck.cover, glow.mesh, lowArcs.mesh, riseArcs.mesh, riseRings.mesh)
   const coverEye = new THREE.Vector3()
+  const eyeNow = new THREE.Vector3()
   const steep: [number, number] = [look.place.steep[0], look.place.steep[1]]
   const origin = new THREE.Vector3()
   const ball = new THREE.Vector3()
@@ -152,6 +172,7 @@ export const createSet: SetFactory = async (ctx) => {
   const skyTurn = new THREE.Quaternion()
 
   const sun = new THREE.Vector3()
+  const topSun = new THREE.Vector3()
   const turn = new THREE.Quaternion()
   const placeEye = (): void => {
     world.updateMatrix()
@@ -189,9 +210,11 @@ export const createSet: SetFactory = async (ctx) => {
     sky: look.show.sky ? sky : [],
     update: (state, shot, view) => {
       const inOrbit = state.view === 'orbit'
+      if (shot.segment.stop === plan.id && shot.segment.kind === 'rise') holdBand(shot.u)
       orbit.visible = inOrbit && state.weight > 0
       const gain = 1 / shot.post.exposure
       const aspect = view.format.width / view.format.height
+      globe.tops(topSun.copy(plan.lightDir).applyQuaternion(plan.deckFrame(state.time).invert()))
       terrain.visible = !inOrbit
       if (!inOrbit) {
         placeEye()
@@ -228,16 +251,17 @@ export const createSet: SetFactory = async (ctx) => {
       globe.soften(left ? look.globe.soft : nearing, left ? look.globe.awayShade : 1)
       globe.near(look.near.tint, near)
       const relit = low && !look.show.down
-      const plated = low ? reach(look.place.plates[kind as 'dive' | 'rise'], altitude) : 0
       globe.rim(low ? reach(look.place.rim.span, altitude) * (1 - reach(look.place.rim.near, altitude)) : 0, look.place.rim.feather, look.place.rim.wave)
       const flat = low ? reach(look.place.light.down, altitude) : 0
       steep[0] = look.place.steep[0] + (look.place.steepLow[0] - look.place.steep[0]) * flat
       steep[1] = look.place.steep[1] + (look.place.steepLow[1] - look.place.steep[1]) * flat
       if (low) {
         const from = look.place.fixedEye ? eyes[kind as 'dive' | 'rise'] : eyeAt(kind as 'dive' | 'rise', state.time)
-        const over = from.length() - 1
-        globe.place(relit ? reach(look.place.light.up, altitude) : 0, relit ? flat : 0, plated, state.time - terrainMid, from, 1 - reach(look.place.tops.span, over), steep)
-      } else globe.place(0, 0, 0, state.time - terrainMid, eyes.dive, 0, steep)
+        globe.place(relit ? reach(look.place.light.up, altitude) : 0, relit ? flat : 0, state.time - terrainMid, from, steep)
+      } else {
+        placeEye()
+        globe.place(0, 0, state.time - terrainMid, eyeNow.copy(eye).applyQuaternion(turn.copy(plan.deckFrame(state.time)).invert()), steep)
+      }
       globe.face(left ? look.face.weight : 0)
       halo.update(sun, gain * state.weight * (1 + (look.near.halo - 1) * near) * (1 - sky), plan.spin(state.time), clock)
       placeEye()
@@ -283,7 +307,7 @@ export const createSet: SetFactory = async (ctx) => {
       const ringed = low ? (rising ? handed : 1 - reach(look.place.rings.dive, altitude)) : 1
       const settling = (!mine && kind === 'travel') || (mine && kind === 'hold') ? smooth(ramp(Math.log(look.arrival.rings[0]), Math.log(look.arrival.rings[1]), Math.log(distance))) : 1
       rings.update(sun, gain * state.weight * settling * ringed)
-      const lifted = mine && left ? look.departing.rings[2] + (1 - look.departing.rings[2]) * smooth(ramp(look.departing.rings[0], look.departing.rings[1], altitude)) : 1
+      const lifted = mine && left ? look.departing.rings[2] + (look.departing.rings[3] - look.departing.rings[2]) * smooth(ramp(look.departing.rings[0], look.departing.rings[1], altitude)) : 1
       farRings.update(sun, gain * state.weight * lifted * ringed)
       const mid = moving ? 1 - handed : 0
       riseRings.update(sun, gain * state.weight * lifted * mid)
