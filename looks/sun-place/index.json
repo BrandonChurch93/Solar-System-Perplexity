@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T21:51:13.112Z",
+ "pushed": "2026-11-25T22:08:30.487Z",
  "head": "6b6aca66dbee0a0d8bc2bff8f1cfe994c3dbf165",
- "note": "21:53 candidate arcade and limb at 60 and 360 (not named), film frames rendering at draft; sun-near 60: dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404 | distance 0.145",
+ "note": "candidate frozen: arcade T4 with three laws, limb L3, glow from inside; 60 draft whole 38.7760 top 14.4987; 360 final 11.9851; sun-near 60: dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404 | distance 0.145",
  "looks": [
+  {
+   "time": "2026-11-25T22:08:29.811Z",
+   "file": "20261125220829811-note-T3-360z.jpg",
+   "source": "../../../../tmp/v/T3-360z.png",
+   "kind": "note",
+   "label": "frame 360 draft, the arcade far: no blobs, a faint veil",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T22:08:29.230Z",
+   "file": "20261125220829230-note-F2-b.jpg",
+   "source": "../../../../tmp/v/F2-b.jpg",
+   "kind": "note",
+   "label": "candidate, draft film frames 180 to 221: the arcade is one body through the rise",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T22:08:28.585Z",
+   "file": "20261125220828585-note-T4-crop.jpg",
+   "source": "../../../../tmp/v/T4-crop.jpg",
+   "kind": "note",
+   "label": "frame 60 draft, approved over the candidate (arcade T4, limb L3, three new laws of the arcade)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T21:51:12.474Z",
    "file": "20261125215112474-note-T3-360z.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/v/J1-crop.jpg",
    "kind": "note",
    "label": "frame 60 draft, approved over trial J1 (arcade and limb numbers, sheath by the clamped light); not named",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T20:59:18.963Z",
-   "file": "20261125205918963-note-pmap-195.jpg",
-   "source": "../../../../tmp/v/pmap-195.jpg",
-   "kind": "note",
-   "label": "sun rise 195 against 203, inside law third state: red is where the pattern by the flow reads over 0.45, yellow over 0.3: all of it on the arcade, none on the gas or the open sky",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T20:59:18.383Z",
-   "file": "20261125205918383-note-D4-crop.jpg",
-   "source": "../../../../tmp/v/D4-crop.jpg",
-   "kind": "note",
-   "label": "sun 60 draft, arcade trial D4 (not committed): approved over trial; loose strands of sparks, fountains at each foot; ruler top 30 percent 14.41 (name 18.57), box 20.39 (28.38)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T20:41:32.007Z",
-   "file": "20261125204132007-note-n4-rise.jpg",
-   "source": "../../../../tmp/v/n4-rise.jpg",
-   "kind": "note",
-   "label": "Same state as drawn: 221, 223, 225, 227, 229, 231, 236, 241, 247, 253 (draft). Rays come in from 225 by distance. 0, 60, 90, 247 and 270, 360, 449 keep their draft bytes.",
    "stop": "sun"
   }
  ]
