@@ -372,7 +372,9 @@ export const createSet: SetFactory = async (ctx) => {
       const moving = !ending && state.segment.stop === plan.id && (state.segment.kind === 'dive' || state.segment.kind === 'rise')
       const c = closeJson.presence
       const there = moving ? 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-5)) - Math.log(c.low)) / (Math.log(c.high) - Math.log(c.low))) : 0
-      terrain.visible = moving
+      // CONTROL c, never merged: the close set held off over the frames 2454 to 2473 and 2681 to 2700 (2675 to 2680 are the surface view)
+      const ctlOff = (state.time * 30 >= 2454 && state.time * 30 < 2474) || (state.time * 30 >= 2681 && state.time * 30 < 2701)
+      terrain.visible = moving && !ctlOff
       // the globe's own air leaves as the close view's air comes: one share by the height
       shell.material.uniforms.uGain!.value = gain * state.weight * (1 - there)
       if (moving) {
@@ -386,7 +388,7 @@ export const createSet: SetFactory = async (ctx) => {
         lawAir.value.w = closeJson.law.need.on ? plateTexel / f.scale : 0
         lawTone.value.fromArray(ownGain)
         lawEye.value.copy(state.segment.kind === 'dive' ? takenDive : takenRise)
-        ground.presence(1, { air: there })
+        ground.presence(ctlOff ? 0 : 1, { air: ctlOff ? 0 : there })
         ground.update(state.time - terrainMid, gain, shot.post.vignette, view)
       }
       const distance = world.position.length()
@@ -397,7 +399,7 @@ export const createSet: SetFactory = async (ctx) => {
       shell.mesh.visible = visible
       halo.mesh.visible = visible && low < 1
       glint.mesh.visible = visible && low < 1
-      moon.mesh.visible = visible && !(state.time * 30 >= 2396 && state.time * 30 < 2415) // CONTROL b, never merged: the moon hidden over the frames 2396 to 2414
+      moon.mesh.visible = visible
       far.update(radiusPx, view, plan.p.tint, gain)
     },
     dispose: () => {
