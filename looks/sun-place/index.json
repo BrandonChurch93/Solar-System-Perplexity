@@ -1,9 +1,41 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T09:07:44.592Z",
+ "pushed": "2026-11-25T09:32:45.970Z",
  "head": "705444897fa41f6743de1402262513bd60a3a69e",
- "note": "09:08 state in work on 4b code (not committed): part 2 by my chain 0.484 at the top of the arcade, not cured by the map's light on the far ground nor by the arcade cut; spot collar trial; frame 60 lines of this state: dark 0.223 body 0.616 pale 0.084 white 0.023 | half width 8.2 px, 546 shapes, fine detail 0.0291, mean 0.326 | distance 0.070 (approved 0.185 0.642 0.082 0.010, 4.8 px 1153, 0.0373, 0.338)",
+ "note": "state of commit 5 in work: controls of both reds, texel cause, spot trial; nothing committed",
  "looks": [
+  {
+   "time": "2026-11-25T09:32:45.098Z",
+   "file": "20261125093245098-note-s4-90s.jpg",
+   "source": "../../../../tmp/v/s4-90s.jpg",
+   "kind": "note",
+   "label": "Spot trial at frame 90 under the approved: collar about one floor deep, ragged inner edge; strands still smooth and bright, not dense dark and bright fibres",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T09:32:44.237Z",
+   "file": "20261125093244237-note-tx0.jpg",
+   "source": "../../../../tmp/v/tx0.png",
+   "kind": "note",
+   "label": "Texel view 233 and 234 on 4b: soft pixels (map under 1 texel a pixel) where the ground has let go by distance; my count 2.114 and 6.191 percent, with onGlobe.away 1.0 to 2.4 nil on 231 to 236",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T09:32:43.375Z",
+   "file": "20261125093243375-note-p2-zoom.jpg",
+   "source": "../../../../tmp/v/p2-zoom.png",
+   "kind": "note",
+   "label": "Rise 218 + 1/2 to 226 + 1/2 at the red pixel (ring), preview at 4 to 1, six pictures in time. Top: the tree. Middle: the arcade not drawn. Bottom: its trim and cut off (the card shows as a pale box). The arch's crown stands 6 px under the pixel and is gone 8 film frames later",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T09:32:42.275Z",
+   "file": "20261125093242275-note-look-g2-60.jpg",
+   "source": "../../../../tmp/v/look-g2-60.png",
+   "kind": "note",
+   "label": "Tree at 09:10 (not committed), frame 60 near ground at 1 to 1 under the approved. sun-near.py frame 60: dark 0.223 body 0.616 pale 0.084 white 0.023 (approved 0.185 0.642 0.082 0.010); half width 8.2 px, 546 shapes (approved 4.8 px, 1153); fine detail 0.0291, mean 0.326, distance 0.070 (approved 0.0373, 0.338)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T09:02:11.513Z",
    "file": "20261125090211513-note-g2-217.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/v/f2-90s.jpg",
    "kind": "note",
    "label": "dome model in work, frame 90 spot at 1 to 1 under the approved",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T08:42:45.118Z",
-   "file": "20261125084245118-note-f2-90b.jpg",
-   "source": "../../../../tmp/v/f2-90b.jpg",
-   "kind": "note",
-   "label": "dome model in work, frame 90 near ground at 1 to 1 under the approved: thin creases, but pale shells",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T08:42:44.500Z",
-   "file": "20261125084244500-note-f4-limb.jpg",
-   "source": "../../../../tmp/v/f4-limb.jpg",
-   "kind": "note",
-   "label": "the same on the dome model in work (commit 5 code): top bounds 0.3 to 3.0, bottom 0.45 to 1.7",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T08:42:43.808Z",
-   "file": "20261125084243808-note-g1-limb.jpg",
-   "source": "../../../../tmp/v/g1-limb.jpg",
-   "kind": "note",
-   "label": "217 and 225 at the limb, master 2 to 1: top 4b, bottom 4b with the cells taking the map light in full where a pixel holds the map (light.wide.cell.open)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T08:20:06.834Z",
-   "file": "20261125082006834-note-p3-limb-master.jpg",
-   "source": "../../../../tmp/v/p3-limb-master.png",
-   "kind": "note",
-   "label": "4b master 217 and 225 at the limb, 3 to 1: the far ground gives way to the globe's map",
    "stop": "sun"
   }
  ]
