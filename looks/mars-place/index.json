@@ -1,75 +1,72 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T23:39:38.122Z",
- "head": "ef1bbb3a14fd518810e596aa9c975e88fd5c84ff",
- "note": "23:42 trial 19 plates in the frames: net of blocks gone at the foot, ground soft at 1 to 1 (bad, named); sides at T hold without the veil",
+ "pushed": "2026-11-25T23:55:47.037Z",
+ "head": "1fe9c1a29ae5e74238f238905354a93df42f63db",
+ "note": "23:58 state: veil out (sides at T hold without it), plates of trial 19; the horizon of the dive and rise with and without the veil, both have a fault (named)",
  "looks": [
   {
-   "time": "2026-11-25T23:39:36.825Z",
-   "file": "20261125233936825-note-veil-rise.jpg",
-   "source": "../../../../tmp/veil-rise.jpg",
+   "time": "2026-11-25T23:55:45.857Z",
+   "file": "20261125235545857-note-dive19-b.jpg",
+   "source": "../../../../tmp/dive19-b.jpg",
    "kind": "note",
-   "label": "rise T 2681 globe side: veil on | veil off, difference times 8: max 5 display values",
+   "label": "dive 2460 to 2476 every second frame, this state, draft",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T23:39:35.998Z",
-   "file": "20261125233935998-note-veil-dive.jpg",
-   "source": "../../../../tmp/veil-dive.jpg",
+   "time": "2026-11-25T23:55:44.975Z",
+   "file": "20261125235544975-note-dive19-a.jpg",
+   "source": "../../../../tmp/dive19-a.jpg",
    "kind": "note",
-   "label": "dive T 2477 globe side: veil on | veil off (near.json grazing.depth 0), difference times 8: a hairline at the horizon, max 8 display values",
+   "label": "dive 2440 to 2458 every second frame, this state, draft",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T23:39:35.092Z",
-   "file": "20261125233935092-note-p19-2474-c0.jpg",
-   "source": "../../../../tmp/p19-2474-c0.jpg",
+   "time": "2026-11-25T23:55:44.324Z",
+   "file": "20261125235544324-note-dp19-5.jpg",
+   "source": "../../../../tmp/dp19-5.jpg",
    "kind": "note",
-   "label": "2474 lower left at 1 to 1: the name | trial 19",
+   "label": "dive pair 5 of 5 (2456 to 2474 every second frame): the name 47b75341 | this state (veil out, plates of trial 19), draft, half size",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T23:39:34.226Z",
-   "file": "20261125233934226-note-p19-2686-m0.jpg",
-   "source": "../../../../tmp/p19-2686-m0.jpg",
+   "time": "2026-11-25T23:55:43.509Z",
+   "file": "20261125235543509-note-dp19-4.jpg",
+   "source": "../../../../tmp/dp19-4.jpg",
    "kind": "note",
-   "label": "2686 foot at 1 to 1: the name | trial 19 (no net, no hair; soft blobs, flat chute at right: still wrong)",
+   "label": "dive pair 4 of 5 (2456 to 2474 every second frame): the name 47b75341 | this state (veil out, plates of trial 19), draft, half size",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T23:39:33.285Z",
-   "file": "20261125233933285-note-p19-2684-m0.jpg",
-   "source": "../../../../tmp/p19-2684-m0.jpg",
+   "time": "2026-11-25T23:55:42.729Z",
+   "file": "20261125235542729-note-dp19-3.jpg",
+   "source": "../../../../tmp/dp19-3.jpg",
    "kind": "note",
-   "label": "2684 foot at 1 to 1: the name (tiles of the net) | trial 19 (no net; SOFT, the parent's 12.6 m ground enlarged: still wrong)",
+   "label": "dive pair 3 of 5 (2456 to 2474 every second frame): the name 47b75341 | this state (veil out, plates of trial 19), draft, half size",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T23:39:32.333Z",
-   "file": "20261125233932333-note-p19-rise-whole.jpg",
-   "source": "../../../../tmp/p19-rise-whole.jpg",
+   "time": "2026-11-25T23:55:41.910Z",
+   "file": "20261125235541910-note-dp19-2.jpg",
+   "source": "../../../../tmp/dp19-2.jpg",
    "kind": "note",
-   "label": "rise 2684 and 2686, draft: the name | trial 19 plates (veil on)",
+   "label": "dive pair 2 of 5 (2456 to 2474 every second frame): the name 47b75341 | this state (veil out, plates of trial 19), draft, half size",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T23:39:31.392Z",
-   "file": "20261125233931392-note-above19.jpg",
-   "source": "../../../../tmp/above19.jpg",
+   "time": "2026-11-25T23:55:41.130Z",
+   "file": "20261125235541130-note-dp19-horizon.jpg",
+   "source": "../../../../tmp/dp19-horizon.jpg",
    "kind": "note",
-   "label": "from above at the five plates, same ground spot, 1 to 1: set from above | picture alone | the name's plate | trial 19's plate (0.3: net of blocks gone, soft; 0.7 to 8.5: take's ground, walls by code)",
+   "label": "dive horizon right at 1 to 1, 2466 to 2474: the name (veil on: milky veil, a straight hard edge at 2470, 2472) | this state (veil out: the set's hazy far end stands beside the globe's clear far ground, a soft border in tone at about x 1360 at 2468, 2470; dark flat lens at the horizon). Both bad, named",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T23:33:19.596Z",
-   "file": "20261125233319596-compare-mars-rise-sides.jpg",
-   "source": "out/work/handover/mars-rise-sides.png",
-   "kind": "compare",
-   "label": "mars rise, both sides at T (frame 2681) and their difference times 8",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "frame": 2681,
-   "tier": "draft"
+   "time": "2026-11-25T23:48:16.652Z",
+   "file": "20261125234816652-note-sidesT19.jpg",
+   "source": "../../../../tmp/sidesT19.jpg",
+   "kind": "note",
+   "label": "the side difference at T, draft, this tree: globe side | close side | difference times 8 | the same at 1 to 1 round the largest; rows: dive veil OFF (depth 0), dive veil ON, rise veil OFF, rise veil ON. Harness: off dive mean 0.003 max 13, rise 0.002 max 20; on 0.008 and 0.005, the same largest",
+   "stop": "mars"
   }
  ]
 }
