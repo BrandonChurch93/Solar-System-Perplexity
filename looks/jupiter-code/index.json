@@ -1,9 +1,65 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T10:46:41.452Z",
+ "pushed": "2026-11-25T11:04:24.463Z",
  "head": "fa33e867991dacc386b60b868b4b5a6ae44f70c4",
- "note": "MAIL 1021 item 1: sheets built thick, density averaged along the ray; reader at 3246, 3246 + 1/2, 3247: 0.428 0.365 0.376 (as named 0.587 0.846 0.677); 3150 match at draft 8.129 to 7.673",
+ "note": "MAIL 1021 items 1, 2, 4 on the working tree: thick sheets by the ray, one Sun for the banks' shadows, sidestep in place.json; draft tier, not committed yet",
  "looks": [
+  {
+   "time": "2026-11-25T11:04:23.490Z",
+   "file": "20261125110423490-note-s1-3150.jpg",
+   "source": "../work/r13/off/s1-3150.jpg",
+   "kind": "note",
+   "label": "3150 as named, now (thick sheets, one Sun) and the approved, with difference maps (draft); match 8.129 as named, 7.806 now",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T11:04:22.404Z",
+   "file": "20261125110422404-note-viewchart-hidden.jpg",
+   "source": "../work/r13/off/viewchart-hidden.jpg",
+   "kind": "note",
+   "label": "item 4, the polar view chart about the wedge: colour and local detail; the smooth striped field at the lower left is the fill of ground the approved eye could not see, its side border a column of the chart",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T11:04:21.692Z",
+   "file": "20261125110421692-note-s1-3296.jpg",
+   "source": "../work/r13/off/s1-3296.jpg",
+   "kind": "note",
+   "label": "judged 3296 as named and now with the sidestep (draft)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T11:04:20.754Z",
+   "file": "20261125110420754-note-s1-rise-late.jpg",
+   "source": "../work/r13/off/s1-rise-late.jpg",
+   "kind": "note",
+   "label": "rise 3280 to 3300 now, whole frames small (draft)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T11:04:19.573Z",
+   "file": "20261125110419573-note-s1-limb-enters.jpg",
+   "source": "../work/r13/off/s1-limb-enters.jpg",
+   "kind": "note",
+   "label": "rise 3283 to 3288 + 1/2, lower left of the frame, now: the limb enters at the corner at 3283 + 1/2 and crosses the left edge 3284 to 3287 (draft); level step largest 0.74 at 3287",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T11:04:18.402Z",
+   "file": "20261125110418402-note-s1-corner.jpg",
+   "source": "../work/r13/off/s1-corner.jpg",
+   "kind": "note",
+   "label": "rise 3246 to 3255, top left of the frame, now: thick sheets, one Sun, sidestep 0.5 0.75 0.5 (draft); pattern reads 0.10 at 3246 to 3247",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T11:04:17.148Z",
+   "file": "20261125110417148-note-s1-vs-v3.jpg",
+   "source": "../work/r13/off/s1-vs-v3.jpg",
+   "kind": "note",
+   "label": "rise 3246 + 1/2 to 3254 + 1/2: thick sheets on the old path against thick sheets, one Sun and the sidestep (draft)",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T10:46:36.777Z",
    "file": "20261125104636777-note-v3-3150.jpg",
@@ -138,62 +194,6 @@
    "source": "../work/r13/ray015-rise.jpg",
    "kind": "note",
    "label": "working tree, ray law 0.15: 3252 and 3260 with the change of the pattern",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T09:02:00.855Z",
-   "file": "20261125090200855-note-ray015-dive.jpg",
-   "source": "../work/r13/ray015-dive.jpg",
-   "kind": "note",
-   "label": "working tree, ray law 0.15: 3029 and 3037 with the change of the pattern",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T09:02:00.243Z",
-   "file": "20261125090200243-note-ray04-dive.jpg",
-   "source": "../work/r13/ray04-dive.jpg",
-   "kind": "note",
-   "label": "working tree, ray law 0.4: 3029 and 3037 with the change of the pattern, red at the far ground under the limb",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T09:01:59.577Z",
-   "file": "20261125090159577-note-band-pers.jpg",
-   "source": "../work/r13/band-pers.jpg",
-   "kind": "note",
-   "label": "3150 upper part, working tree, not committed: approved, db67666d, the ray law at strength 0.1, 0.15 and 0.4 a unit of path",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T09:01:58.691Z",
-   "file": "20261125090158691-note-right-3150-marked.jpg",
-   "source": "../work/r13/right-3150-marked.jpg",
-   "kind": "note",
-   "label": "3150 right part, approved beside db67666d, lines at 5, 10 and 15 units from the eye: the approved is dark from the near ground on",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T08:33:39.504Z",
-   "file": "20261125083339504-note-pair-3150-big.jpg",
-   "source": "../work/r13/pair-3150-big.jpg",
-   "kind": "note",
-   "label": "3150: approved above, final of db67666d below (right third: far ground lit where the approved is dark blue)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T08:33:38.937Z",
-   "file": "20261125083338937-note-rise3256-ll.jpg",
-   "source": "../work/r13/rise3256-ll.jpg",
-   "kind": "note",
-   "label": "rise 3256 lower left: the same ground",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T08:33:38.322Z",
-   "file": "20261125083338322-note-dive3048-ll.jpg",
-   "source": "../work/r13/dive3048-ll.jpg",
-   "kind": "note",
-   "label": "dive 3048 lower left: the near plate south of the fore plate",
    "stop": "jupiter"
   }
  ]
