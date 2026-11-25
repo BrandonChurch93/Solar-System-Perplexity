@@ -1,9 +1,57 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T10:16:27.194Z",
+ "pushed": "2026-11-25T10:40:53.950Z",
  "head": "bfd6c3adaacb2fb02b3fac5066a60941256f1c20",
- "note": "law b first build: air by path, steep rule and pixel hand gone, glow by angle to the sun; 4035 bytes kept, 4290 moves on the left half; chain running",
+ "note": "MAIL 1020 b: air by path, forms B1 and C, 4290 foreground open",
  "looks": [
+  {
+   "time": "2026-11-25T10:40:52.964Z",
+   "file": "20261125104052964-note-p-B1-8341.jpg",
+   "source": "../../../../tmp/n53/p-B1-8341.jpg",
+   "kind": "note",
+   "label": "B1 chain 4170.5: pattern 1.32",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T10:40:51.821Z",
+   "file": "20261125104051821-note-p-B1-8305.jpg",
+   "source": "../../../../tmp/n53/p-B1-8305.jpg",
+   "kind": "note",
+   "label": "B1 chain 4152.5: pattern 1.26",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T10:40:50.766Z",
+   "file": "20261125104050766-note-c1-crop290.jpg",
+   "source": "../../../../tmp/n53/c1-crop290.jpg",
+   "kind": "note",
+   "label": "4290 lower part: state, B1, C. Foreground goes to the globe's own light (flat teal), worse than the approved navy",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T10:40:50.032Z",
+   "file": "20261125104050032-note-c1-b.jpg",
+   "source": "../../../../tmp/n53/c1-b.jpg",
+   "kind": "note",
+   "label": "law C: 4137, 4416, 4436 state left, C right",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T10:40:49.059Z",
+   "file": "20261125104049059-note-c1-a.jpg",
+   "source": "../../../../tmp/n53/c1-a.jpg",
+   "kind": "note",
+   "label": "law C (glow by ray direction, joined to own light): 4035, 4290, 4186, 4200 state left, C right",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T10:40:47.788Z",
+   "file": "20261125104047788-note-b1-c.jpg",
+   "source": "../../../../tmp/n53/b1-c.jpg",
+   "kind": "note",
+   "label": "B1 first build of the air by path: 4416, 4436 state left, B1 right",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T10:16:25.767Z",
    "file": "20261125101625767-note-b1-b.jpg",
@@ -194,54 +242,6 @@
    "source": "../../../../tmp/n50/cover-edge-4.png",
    "kind": "note",
    "label": "fault found on the round 3 tree: edge of the terrain picture's footprint at 4164 and 4168 (bottom), named 4160 and tree 4156 (top)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T06:58:54.392Z",
-   "file": "20261125065854392-note-sweep1.jpg",
-   "source": "../../../../tmp/n50/sweep1.jpg",
-   "kind": "note",
-   "label": "dive 4148 to 4168 step 4, rows: named af8898f2, round 3 tree layer scale 1.5 hT, 0.5 hT, 1.0 hT",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T06:34:59.368Z",
-   "file": "20261125063459368-note-reader-torn.jpg",
-   "source": "../../../../tmp/n50/reader-torn.jpg",
-   "kind": "note",
-   "label": "the reader's carried picture is torn: same pairs carried by the camera poses (top rows) against the reader of tools/img/smooth.py (bottom rows): aaace72a row 4164 0.35 against 1.40; round 3 tree row 4144 0.32 against 1.12, row 4152 0.91 against 1.37",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T06:30:24.929Z",
-   "file": "20261125063024929-note-rep-dive-a.jpg",
-   "source": "../../../../tmp/n50/rep-dive-a.jpg",
-   "kind": "note",
-   "label": "round 3 tree, dive 4138 to 4157, every whole frame, from the frames of the running smooth report (draft, rate 2)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T06:18:08.685Z",
-   "file": "20261125061808685-note-tr-all-4152.jpg",
-   "source": "../../../../tmp/n50/tr-all-4152.jpg",
-   "kind": "note",
-   "label": "4152 against 4160 carried by the camera's pose and the ground's turn, not by flow: own light, layer light everywhere, layer light by pixel size; later frame, earlier carried, pattern, reader's way off the true one in red",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T06:18:07.962Z",
-   "file": "20261125061807962-note-dive-look.jpg",
-   "source": "../../../../tmp/n50/dive-look.jpg",
-   "kind": "note",
-   "label": "dive 4138 to 4206 every 4th frame, draft, same tree",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T06:18:06.932Z",
-   "file": "20261125061806932-note-rise-look.jpg",
-   "source": "../../../../tmp/n50/rise-look.jpg",
-   "kind": "note",
-   "label": "rise 4380 to 4436 every 4th frame, draft, tree for round 3 (layer law, hand by pixel size, cover by pixel size), not yet committed",
    "stop": "uranus"
   }
  ]
