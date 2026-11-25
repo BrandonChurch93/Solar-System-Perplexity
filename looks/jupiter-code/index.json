@@ -1,9 +1,33 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T22:10:39.622Z",
- "head": "336de354d612f66480cfd58abbd8c8eeaa0835f3",
- "note": "First 3150 on the new ground at draft, as it is: flow, guide and code detail; light and shadows not yet built",
+ "pushed": "2026-11-25T22:21:14.983Z",
+ "head": "573431fb53a875f5a78cb152a458f82656ac6bb7",
+ "note": "First state of the ground by code at 3060, 3150, 3239 with the numbers of MAIL 1310. Stage 2 (relief by code, light on slopes, cast shadows) is being built",
  "looks": [
+  {
+   "time": "2026-11-25T22:21:14.287Z",
+   "file": "20261125222114287-note-a-3150.jpg",
+   "source": "../work/r23/t/a-3150.png",
+   "kind": "note",
+   "label": "3150 at draft, first state of the new ground, with the three numbers: low band 8.81 (main 3.539), bands 1 to 2: 0.52, 2 to 4: 0.50, 4 to 8: 0.52, 8 to 16: 0.67 (all red, line is 0.7 to 1.4), plain 14.10. Share by the page 1.26. Bad: detail is fur, no relief, no shadows, oval without bands. Relief and light are next",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T22:21:13.596Z",
+   "file": "20261125222113596-note-a-3239.jpg",
+   "source": "../work/r23/t/a-3239.png",
+   "kind": "note",
+   "label": "3239 at draft, first state of the new ground. Low band 12.57, bands 0.52 0.50 0.52 0.67. Share by the page 1.26",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T22:21:12.887Z",
+   "file": "20261125222112887-note-a-3060.jpg",
+   "source": "../work/r23/t/a-3060.png",
+   "kind": "note",
+   "label": "3060 at draft, first state of the new ground (stage 1: guide, flow, code detail, old light). Low band 13.68, bands 0.52 0.50 0.52 0.66 against the approved 3150. Share of detail by code as the page defines it 1.25: over 1, because the flat guide colour is brighter than the dark ground, so the measure needs the ground alone and the guide alone beside it; both follow",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T22:10:38.787Z",
    "file": "20261125221038787-note-a-3150.jpg",
@@ -170,30 +194,6 @@
    "source": "out/work/jupiter/final/p1-3150.png",
    "kind": "note",
    "label": "3150 final of the named tree 1c5b75fa, unchanged while the hold's disc is rebuilt",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T19:30:21.814Z",
-   "file": "20261125193021814-note-lee2.jpg",
-   "source": "../work/r19/lee2.jpg",
-   "kind": "note",
-   "label": "The place from above, 32 units: the body as the globe carries it now, the hero's ground in the wrap, the hero's ground at the finest patch, the body's darkness against the hero's ground (white is 1.5)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T19:30:21.173Z",
-   "file": "20261125193021173-note-wrap-main-mine-diff.jpg",
-   "source": "../work/r19/rings/wrap-main-mine-diff.jpg",
-   "kind": "note",
-   "label": "The rings named, the globe's wrap at the place at 6 times: main, mine, mine minus main times 4. Past the painted storm the plates are the globe's finest imagery and the upward write lays its arcs into the wrap as far as 13 to 16.5 units",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T19:07:27.546Z",
-   "file": "20261125190727546-note-p1-3150.jpg",
-   "source": "../work/r15/p1-3150.jpg",
-   "kind": "note",
-   "label": "jupiter 3150 final on 1c5b75fa, the named bytes",
    "stop": "jupiter"
   }
  ]
