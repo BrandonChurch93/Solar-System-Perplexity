@@ -1,21 +1,37 @@
 {
  "folder": "sun-lab",
- "pushed": "2026-11-25T06:36:29.642Z",
- "head": "d1b837cbd2b223b7b135e2d89aaa9e71146189d1",
- "note": "sun lab: first raw still of the ground as real domes",
+ "pushed": "2026-11-25T07:02:23.745Z",
+ "head": "b6744f2bd202613fa8d6a4d03c1f01647b478153",
+ "note": "lab ground after MAIL 949: heat alone, pillows, sunk spot",
  "looks": [
   {
-   "time": "2026-11-25T06:36:22.743Z",
-   "file": "20261125063622743-note-lab-90-b.jpg",
-   "source": "out/work/sun/lab/lab-90-b.png",
+   "time": "2026-11-25T07:02:23.190Z",
+   "file": "20261125070223190-note-pair-90-near.jpg",
+   "source": "out/work/sun/lab/pair-90-near.jpg",
    "kind": "note",
-   "label": "sun lab: first raw still of frame 90 with real dome geometry (too large, too pale, no umbra yet)",
+   "label": "lab pair near ground, approved left",
    "stop": "sun"
   },
   {
-   "time": "2026-11-25T06:35:26.841Z",
-   "file": "20261125063526841-frame-lab-90-b.jpg",
-   "source": "out/work/sun/lab/lab-90-b.png",
+   "time": "2026-11-25T07:02:22.650Z",
+   "file": "20261125070222650-note-pair-90-spot.jpg",
+   "source": "out/work/sun/lab/pair-90-spot.jpg",
+   "kind": "note",
+   "label": "lab pair spot, approved left",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T07:02:21.934Z",
+   "file": "20261125070221934-note-lab-90-o.jpg",
+   "source": "out/work/sun/lab/lab-90-o.png",
+   "kind": "note",
+   "label": "lab ground frame 90 draft, heat alone",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T07:01:26.935Z",
+   "file": "20261125070126935-frame-lab-90-o.jpg",
+   "source": "out/work/sun/lab/lab-90-o.png",
    "kind": "frame",
    "label": "sun.terrain frame 90, draft tier",
    "stop": "sun",
@@ -25,6 +41,14 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "822cc1bfb7014138"
+  },
+  {
+   "time": "2026-11-25T06:36:22.743Z",
+   "file": "20261125063622743-note-lab-90-b.jpg",
+   "source": "out/work/sun/lab/lab-90-b.png",
+   "kind": "note",
+   "label": "sun lab: first raw still of frame 90 with real dome geometry (too large, too pale, no umbra yet)",
+   "stop": "sun"
   }
  ]
 }
