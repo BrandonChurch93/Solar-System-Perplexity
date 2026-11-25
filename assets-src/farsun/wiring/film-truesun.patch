@@ -1,0 +1,17 @@
+# Far Sun wiring for the film (src/director/film.ts), MAIL 1113 item 3 and MAIL 1119.
+# Takes the ride with the stars out of dive and rise: the far Sun stands at sun.dir at every frame and its
+#   body keeps its place (it left sun.dir by up to 122 degrees). tests/farsun-share.test.ts is red until
+#   this hunk is laid onto film.ts.
+diff --git a/src/director/film.ts b/src/director/film.ts
+index b0b4edb9..3756af5a 100644
+--- a/src/director/film.ts
++++ b/src/director/film.ts
+@@ -1080,8 +1080,2 @@ export class FilmDirector implements Director {
+     if (sun.far && (segment.kind === 'dive' || segment.kind === 'rise')) {
+-      const held = this.sky.orbits[segment.kind === 'rise' && index > 0 ? this.plans[index + 1]?.id ?? config.endingId : this.plans[index]!.id]
+-      if (held) {
+-        const ride = skyTurn.clone().multiply(held.clone().invert())
+-        sun.far.dir = sun.dir.clone().applyQuaternion(ride)
+-        sun.far.body = ride.multiply(sun.far.body)
+-      }
+       sun.far.share *= 1 - (skyShare ?? 0)
