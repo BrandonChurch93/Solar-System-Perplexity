@@ -393,3 +393,22 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
     0.1, 1.66 at 0.2), box 1.60 E-W by 1.53 N-S, middle 0.06 east and 0.39 north of S. The map's knot (sun_builder):
     1.9 to 2.0 wide, 0.08 west and 0.32 south. So: width 0.8 of the knot, middles 0.72 degrees apart.
   - Still eye and film eye clips on the new span law: see the next entry.
+
+- 13:18 UTC, 25 Nov: NAMED 751af6d0a9ab9d6900f801ffd2dc4710f7532858 (g15) sent to /root with 10 attachments (text in
+  the desk's v/named.txt). Sent to sun_builder at 12:46: the far twin's answers (files, texels, umbra on the bake,
+  laws, the anchor to turn by 0.14 east and 0.71 north, ruling 1 open).
+  - MEASURED on g15: spans.ts: cells over 0.06 units: half of largest ground to nothing in at least 13 film frames
+    (1 percent 16, quartile 22, median 29); all cells ends median 25, 5 percent 5; whole lives least 50, median 87,
+    most 172. Still eye clip (clip-g15h, 121 pictures, 13.3 s each): reader largest 0.161 at capture 45 at
+    [1536, 1020], mean 0.110, share read 0.506; proxy 0.157 and 0.104, picture to next 0.004 (f2 0.054: the flowing
+    grain of the fibres and the points is turned down, so the low number is not the span law alone; whether the eye
+    sees flow outward is UNKNOWN).
+  - Draft still 43 s, of which the table about 13 s.
+  - Growth 2,681,925 bytes in my folders (JPGs 2,534,023, text 147,902).
+  - Owed in a second mail: film eye clip number, G17 at 0, 60, 90, rise stills 185 to 240, all on g15 (chain4.sh in
+    the desk's v folder, log v/chain4.log).
+  - Open: ruling 1 of MAIL 1088 (bake a second level with spot.umbra about 1.2 for an umbra of 1.9 degrees, hand it to
+    sun_builder, or read the hold at final 360 on a tree that reads the level). Law f (the map's low band above
+    about 0.55 degrees at full strength times my fine band; think of it in linear light: my colour times the map's
+    low band over my ground's mean light). Cells too large by about 1.6 against the approved and angular; far
+    cells are tiles; limb a hard line.
