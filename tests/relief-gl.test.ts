@@ -38,7 +38,7 @@ async function shot(o) {
   if (o.presence !== null) relief.presence(o.presence, o.airShare === undefined ? {} : { air: o.airShare })
   if (o.edge) relief.presenceEdge(o.edge, o.wholeAir ? { air: false } : {})
   if (o.detail !== undefined) relief.presenceDetail(o.detail, o.detailSize ? { size: o.detailSize } : {})
-  if (o.law) relief.presenceLaw(o.law.text, Object.fromEntries(Object.entries(o.law.uniforms || {}).map(([k, v]) => [k, { value: !Array.isArray(v) ? v : v.length === 2 ? new THREE.Vector2(...v) : v.length === 3 ? new THREE.Vector3(...v) : new THREE.Vector4(...v) }])))
+  if (o.law) relief.presenceLaw(o.law.text, Object.fromEntries(Object.entries(o.law.uniforms || {}).map(([k, v]) => [k, { value: !Array.isArray(v) ? v : v.length === 2 ? new THREE.Vector2(...v) : v.length === 3 ? new THREE.Vector3(...v) : new THREE.Vector4(...v) }])), o.law.tone ? { tone: true } : {})
   frameUniform.value = o.frame ?? 1
   const s = o.scale ?? 1
   const eye = o.eye ?? [0, 0, 0]
@@ -84,7 +84,7 @@ async function shot(o) {
 window.relief = { shot }
 `
 
-interface Shot { law?: { text: string; uniforms?: Record<string, number | number[]> }; airShare?: number; again?: { presence: number; airShare?: number }; detail?: [number, number] | null; detailSize?: [number, number]; frame?: number; wholeAir?: boolean; def: object; motion: object; files: Record<string, number[]>; dist: Record<string, number>; presence: number | null; drawn: boolean; width: number; height: number; back: [number, number, number]; scale?: number; eye?: [number, number, number]; early?: boolean; edge?: [number, number, number, number]; sizes?: Record<string, number> }
+interface Shot { law?: { text: string; uniforms?: Record<string, number | number[]>; tone?: boolean }; airShare?: number; again?: { presence: number; airShare?: number }; detail?: [number, number] | null; detailSize?: [number, number]; frame?: number; wholeAir?: boolean; def: object; motion: object; files: Record<string, number[]>; dist: Record<string, number>; presence: number | null; drawn: boolean; width: number; height: number; back: [number, number, number]; scale?: number; eye?: [number, number, number]; early?: boolean; edge?: [number, number, number, number]; sizes?: Record<string, number> }
 
 const W = 32
 const H = 16
@@ -737,6 +737,46 @@ describe.skipIf(!have)('the presence of a relief in a WebGL2 browser', () => {
     const plain2 = await shoot(big)
     const back2 = await shoot({ ...big, drawn: false })
     for (let c = 0; c < 4; c++) expect(at2(half2, 1, 1)[c]).toBeCloseTo(0.5 * at2(plain2, 1, 1)[c]! + 0.5 * at2(back2, 1, 1)[c]!, 4)
+    expect(errors).toEqual([])
+  }, 120000)
+
+  it('the tone of a law is a factor on the colour of the layers: 1 changes no bit, each colour takes its own factor, under 0 is held at 0, and the share goes on top', async () => {
+    const share = 'float lawShare(vec3 P, vec3 E, vec2 image) { return 1.0; }\n'
+    const tone = (r: number, g: number, b: number, lawShare = share): Shot['law'] => ({ text: lawShare + 'uniform vec3 uLawHue;\nvec3 lawTone(vec3 P, vec3 E, vec2 image) { return uLawHue; }', uniforms: { uLawHue: [r, g, b] }, tone: true })
+    for (const set of [base, aired, sided]) expect(await shoot({ ...set, law: tone(1, 1, 1) })).toEqual(await shoot(set))
+    const plain = await shoot(base)
+    const back = await shoot({ ...base, drawn: false })
+    const got = await shoot({ ...base, law: tone(0.5, 1, 2) })
+    const factor = [0.5, 1, 2]
+    let read = 0
+    for (let y = 0; y < H; y++) {
+      for (let x = 0; x < W; x++) {
+        if (x >= 7 && x <= 24 && y >= 3 && y <= 12) continue
+        read++
+        for (let c = 0; c < 3; c++) expect(pixel(got, x, y)[c]).toBeCloseTo(factor[c]! * pixel(plain, x, y)[c]!, 5)
+        expect(pixel(got, x, y)[3]).toBe(pixel(plain, x, y)[3])
+      }
+    }
+    expect(read).toBeGreaterThan(200)
+    // Where a layer lies over another each carries the factor, and the cover of both is as it was.
+    const far = pixel(plain, ...CORNER)
+    const near = pixel(plain, ...CENTRE).map((v, c) => v - far[c]! * (1 - ALPHA))
+    for (let c = 0; c < 3; c++) expect(pixel(got, ...CENTRE)[c]).toBeCloseTo(factor[c]! * (near[c]! + far[c]! * (1 - ALPHA)), 5)
+    expect(pixel(got, ...CENTRE)[3]).toBe(pixel(plain, ...CENTRE)[3])
+    // Under 0 is 0: the layers cover in black.
+    const none = await shoot({ ...base, law: tone(0, 0, 0) })
+    expect(await shoot({ ...base, law: tone(-1, -0.5, -3) })).toEqual(none)
+    for (let c = 0; c < 3; c++) expect(Math.abs(pixel(none, ...CORNER)[c]!)).toBe(0)
+    expect(pixel(none, ...CORNER)[3]).toBe(pixel(plain, ...CORNER)[3])
+    // The tone goes by the terms of the law: by the place in the picture here.
+    const byPlace = await shoot({ ...base, law: { text: share + 'vec3 lawTone(vec3 P, vec3 E, vec2 image) { return image.x < 0.5 ? vec3(1.0) : vec3(0.25); }', tone: true } })
+    for (let c = 0; c < 3; c++) {
+      expect(pixel(byPlace, 2, 1)[c]).toBe(pixel(plain, 2, 1)[c])
+      expect(pixel(byPlace, 29, 1)[c]).toBeCloseTo(0.25 * pixel(plain, 29, 1)[c]!, 5)
+    }
+    // With a share of a half the toned colour is mixed with the ground behind.
+    const halved = await shoot({ ...base, law: tone(0.5, 1, 2, 'float lawShare(vec3 P, vec3 E, vec2 image) { return 0.5; }\n') })
+    for (let c = 0; c < 3; c++) expect(pixel(halved, ...CORNER)[c]).toBeCloseTo(0.5 * factor[c]! * pixel(plain, ...CORNER)[c]! + 0.5 * pixel(back, ...CORNER)[c]!, 5)
     expect(errors).toEqual([])
   }, 120000)
 

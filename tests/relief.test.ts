@@ -765,7 +765,8 @@ describe('the law of a stop on its relief', () => {
       const r = await Relief.load(ctx, '', def, motion(withAir))
       for (const m of materials(r)) {
         expect(m.fragmentShader.includes('law')).toBe(false)
-        expect(m.fragmentShader.includes('uLaw')).toBe(false)
+        expect(m.fragmentShader.includes('Law')).toBe(false)
+        expect(m.fragmentShader.includes('reliefTone')).toBe(false)
         expect(Object.keys(m.uniforms).some((k) => k.startsWith('uLaw'))).toBe(false)
       }
     }
@@ -790,9 +791,9 @@ describe('the law of a stop on its relief', () => {
         return
       }
       expect(m.fragmentShader).toBe(withLaw(before.fragmentShader, LAW))
-      expect(m.fragmentShader.includes(LAW_GLSL.slice(1) + '\n' + LAW + '\n' + MAIN + '\n  float law = clamp(lawShare(vLocal, vEye, vImage), 0.0, 1.0);')).toBe(true)
-      expect(m.fragmentShader.includes(LIT + ' * law')).toBe(true)
-      expect(m.fragmentShader.includes('if (law <= 0.0) discard;\n  ' + VIG)).toBe(true)
+      expect(m.fragmentShader.includes(LAW_GLSL.slice(1) + '\n' + LAW + '\n' + MAIN + '\n  float reliefLaw = clamp(lawShare(vLocal, vEye, vImage), 0.0, 1.0);')).toBe(true)
+      expect(m.fragmentShader.includes(LIT + ' * reliefLaw')).toBe(true)
+      expect(m.fragmentShader.includes('if (reliefLaw <= 0.0) discard;\n  ' + VIG)).toBe(true)
       expect(m.version).toBe(versions[i]! + 1)
       expect(m.uniforms.uLawNear).toBe(given.uLawNear)
       expect(m.uniforms.uLawRange).toBe(given.uLawRange)
@@ -933,38 +934,93 @@ describe('the law of a stop on its relief', () => {
         if (step === 'presence') r.presence(0.5, { air: 0.75 })
         if (step === 'edge') r.presenceEdge([4, 4, 4, 0], { air: false })
       }
-      const parts: Record<string, string> = { law: ' * law', detail: ' * detail', presence: ' * uPresence', edge: ' * edgeShare(vImage)' }
+      const parts: Record<string, string> = { law: ' * reliefLaw', detail: ' * detail', presence: ' * uPresence', edge: ' * edgeShare(vImage)' }
       for (const m of materials(r)) {
         if (m.fragmentShader.includes(AIR_LIT)) {
           expect(m.fragmentShader.includes('law')).toBe(false)
+          expect(m.fragmentShader.includes('Law')).toBe(false)
           expect(m.fragmentShader.includes('detail')).toBe(false)
           continue
         }
         const text = m.fragmentShader
         expect(text.includes(LIT + [...order].reverse().map((step) => parts[step]).join(''))).toBe(true)
-        expect(text.split('float law = clamp(lawShare(vLocal, vEye, vImage), 0.0, 1.0);').length).toBe(2)
+        expect(text.split('float reliefLaw = clamp(lawShare(vLocal, vEye, vImage), 0.0, 1.0);').length).toBe(2)
         expect(text.split('float detail = detailShare(vImage);').length).toBe(2)
         const first = text.indexOf('discard', text.indexOf(MAIN))
-        expect(text.indexOf('float law = clamp(')).toBeLessThan(first)
+        expect(text.indexOf('float reliefLaw = clamp(')).toBeLessThan(first)
         expect(text.indexOf('float detail = detailShare(')).toBeLessThan(first)
-        expect(text.indexOf('float law = clamp(')).toBeGreaterThan(text.indexOf(MAIN))
+        expect(text.indexOf('float reliefLaw = clamp(')).toBeGreaterThan(text.indexOf(MAIN))
         expect(text.indexOf('float lawShare(')).toBeLessThan(text.indexOf(MAIN))
-        expect(text.includes('if (law <= 0.0) discard;')).toBe(true)
+        expect(text.includes('if (reliefLaw <= 0.0) discard;')).toBe(true)
         expect(text.includes('if (detail <= 0.0) discard;')).toBe(true)
       }
     }
+  })
+
+  it('with the tone asked for the text gives the factor on the colour of the layers too, read at the top and set where the colour is made, and the air is left to the letter', async () => {
+    const COL = 'vec3 col = inverseFilmic(texel.rgb) * uGain * vig;'
+    const toned = LAW + '\nuniform vec3 uLawHue;\nvec3 lawTone(vec3 P, vec3 E, vec2 image) { return uLawHue; }'
+    const plain = materials(await Relief.load(ctx, '', def, motion(true)))
+    const r = await Relief.load(ctx, '', def, motion(true))
+    const given = { ...lawGiven(), uLawHue: { value: new THREE.Vector3(1, 1, 1) } }
+    r.presenceLaw(toned, given, { tone: true })
+    let layers = 0
+    materials(r).forEach((m, i) => {
+      const before = plain[i]!
+      if (litOf(before) === AIR_LIT) {
+        expect(m.fragmentShader).toBe(before.fragmentShader)
+        expect(Object.keys(m.uniforms)).toEqual(Object.keys(before.uniforms))
+        return
+      }
+      layers++
+      expect(before.fragmentShader.split(COL).length).toBe(2)
+      expect(m.fragmentShader).toBe(withLaw(before.fragmentShader, toned, true))
+      expect(m.fragmentShader.includes(MAIN + '\n  float reliefLaw = clamp(lawShare(vLocal, vEye, vImage), 0.0, 1.0);\n  vec3 reliefTone = max(lawTone(vLocal, vEye, vImage), vec3(0.0));\n')).toBe(true)
+      expect(m.fragmentShader.includes('vec3 col = inverseFilmic(texel.rgb) * uGain * vig * reliefTone;')).toBe(true)
+      expect(m.fragmentShader.includes(COL)).toBe(false)
+      expect(m.fragmentShader.split('reliefTone').length).toBe(3)
+      // The mist of the valley keeps its own colour.
+      expect(m.fragmentShader.includes('col = mix(col, uValleyColor * uGain * vig, f);')).toBe(true)
+      expect(m.uniforms.uLawHue).toBe(given.uLawHue)
+      // Both are read before the first branch of main.
+      const first = m.fragmentShader.indexOf('discard', m.fragmentShader.indexOf(MAIN))
+      expect(m.fragmentShader.indexOf('vec3 reliefTone = ')).toBeLessThan(first)
+    })
+    expect(layers).toBe(2)
+    // Without the option the shader has no tone, and the text may not bring one; with it the text has to.
+    const bare = await Relief.load(ctx, '', def, motion(true))
+    const texts = materials(bare).map((m) => m.fragmentShader)
+    expect(() => bare.presenceLaw(toned, given)).toThrow(/has a lawTone and the set did not ask for the tone/)
+    expect(() => bare.presenceLaw(toned, given, { tone: false })).toThrow(/did not ask for the tone/)
+    expect(() => bare.presenceLaw(LAW, lawGiven(), { tone: true })).toThrow(/with a tone defines vec3 lawTone/)
+    expect(() => bare.presenceLaw(LAW + '\nfloat lawTone(vec3 P, vec3 E, vec2 image) { return 1.0; }', lawGiven(), { tone: true })).toThrow(/with a tone defines vec3 lawTone/)
+    expect(() => bare.presenceLaw(LAW + '\nvec3 lawTone(vec3 P) { return vec3(1.0); }', lawGiven())).toThrow(/did not ask for the tone/)
+    expect(materials(bare).map((m) => m.fragmentShader)).toEqual(texts)
+    bare.presenceLaw(LAW, lawGiven())
+    for (const m of materials(bare)) {
+      expect(m.fragmentShader.includes('reliefTone')).toBe(false)
+      expect(m.fragmentShader.includes('lawTone')).toBe(false)
+      if (litOf(m) !== AIR_LIT) expect(m.fragmentShader.includes(COL)).toBe(true)
+    }
+    expect(lawUniforms(toned, true)).toEqual(['uLawNear', 'uLawRange', 'uLawHue'])
   })
 
   it('the shader with the law needs one place for it and refuses none or two', () => {
     const one = 'precision highp float;\nin vec2 vImage;\nout vec4 outColor;\nvoid main() {\n  if (alpha < 0.004) discard;\n  ' + VIG + '\n  outColor = vec4(col * alpha, alpha);\n}'
     const share = 'float lawShare(vec3 P, vec3 E, vec2 image) { return 0.5; }'
     const made = withLaw(one, '\n' + share + '\n\n')
-    expect(made).toBe('precision highp float;\nin vec2 vImage;\nout vec4 outColor;\nuniform float uLawFocal;\nuniform float uLawFrame;\n' + share + '\nvoid main() {\n  float law = clamp(lawShare(vLocal, vEye, vImage), 0.0, 1.0);\n  if (alpha < 0.004) discard;\n  if (law <= 0.0) discard;\n  ' + VIG + '\n  outColor = vec4(col * alpha, alpha) * law;\n}')
+    expect(made).toBe('precision highp float;\nin vec2 vImage;\nout vec4 outColor;\nuniform float uLawFocal;\nuniform float uLawFrame;\n' + share + '\nvoid main() {\n  float reliefLaw = clamp(lawShare(vLocal, vEye, vImage), 0.0, 1.0);\n  if (alpha < 0.004) discard;\n  if (reliefLaw <= 0.0) discard;\n  ' + VIG + '\n  outColor = vec4(col * alpha, alpha) * reliefLaw;\n}')
     expect(() => withLaw(one.replace(LIT, 'vec4(1.0)'), share)).toThrow(/no single place/)
     expect(() => withLaw(one + ' vec4(col * alpha, alpha)', share)).toThrow(/no single place/)
     expect(() => withLaw(one.replace(VIG, ''), share)).toThrow(/no single place/)
     expect(() => withLaw(one + '\nvoid main() {', share)).toThrow(/no single place/)
     expect(() => withLaw(made, share)).toThrow(/no single place/)
     expect(() => withLaw(one, 'float share() { return 1.0; }')).toThrow(/defines float lawShare/)
+    // The tone needs the line the colour is made on.
+    const tone = share + '\nvec3 lawTone(vec3 P, vec3 E, vec2 image) { return vec3(0.5); }'
+    expect(() => withLaw(one, tone, true)).toThrow(/no single place/)
+    const colour = one.replace('  outColor', '  vec3 col = inverseFilmic(texel.rgb) * uGain * vig;\n  outColor')
+    expect(withLaw(colour, tone, true)).toBe('precision highp float;\nin vec2 vImage;\nout vec4 outColor;\nuniform float uLawFocal;\nuniform float uLawFrame;\n' + tone + '\nvoid main() {\n  float reliefLaw = clamp(lawShare(vLocal, vEye, vImage), 0.0, 1.0);\n  vec3 reliefTone = max(lawTone(vLocal, vEye, vImage), vec3(0.0));\n  if (alpha < 0.004) discard;\n  if (reliefLaw <= 0.0) discard;\n  ' + VIG + '\n  vec3 col = inverseFilmic(texel.rgb) * uGain * vig * reliefTone;\n  outColor = vec4(col * alpha, alpha) * reliefLaw;\n}')
+    expect(withLaw(colour, share)).toBe(withLaw(one, share).replace('  outColor', '  vec3 col = inverseFilmic(texel.rgb) * uGain * vig;\n  outColor'))
   })
 })

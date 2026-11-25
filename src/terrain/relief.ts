@@ -363,19 +363,27 @@ export function detailShareAt(tx: readonly [number, number], ty: readonly [numbe
 // the two numbers below: the focal length of the present lens in pixels of the master, and the buffer pixels a pixel of the master
 // takes in this pass, for a law that counts on the screen. The law is read first in main, before any branch, so it may take
 // derivatives of what it is given; it must not leave the shader itself. The share is held to 0..1; at 0 the fragment is not drawn and
-// writes no depth. Built when a relief asks; a relief that never asks keeps the shaders above to the letter.
+// writes no depth. With the tone asked for the text also defines vec3 lawTone(vec3 P, vec3 E, vec2 image), of the same terms: a factor
+// on the linear colour of the layer where it is made, before the valley mist and before the share, held at or above 0, so the picture's
+// colour can go with the eye as the ground round it does. The mist's own colour and the air do not take it. Built when a relief asks;
+// a relief that never asks keeps the shaders above to the letter.
 export const LAW_GLSL = /* glsl */ `
 uniform float uLawFocal;
 uniform float uLawFrame;`
 
 const LAW_OWN = ['uLawFocal', 'uLawFrame']
 const LAW_SHARE = /\bfloat\s+lawShare\s*\(\s*vec3\s+\w+\s*,\s*vec3\s+\w+\s*,\s*vec2\s+\w+\s*\)\s*\{/g
+const LAW_TONE = /\bvec3\s+lawTone\s*\(\s*vec3\s+\w+\s*,\s*vec3\s+\w+\s*,\s*vec2\s+\w+\s*\)\s*\{/g
+const COL = 'vec3 col = inverseFilmic(texel.rgb) * uGain * vig;'
 const LAW_UNIFORM = /\buniform\s+(?:(?:lowp|mediump|highp)\s+)?\w+\s+(\w+)\s*(?:\[[^\]]*\])?\s*;/g
 
-// The uniforms a law declares, by name. Throws for a text that is no law.
-export function lawUniforms(source: string): string[] {
+// The uniforms a law declares, by name. Throws for a text that is no law, and for one whose tone does not go with what the set asked.
+export function lawUniforms(source: string, tone = false): string[] {
   const text = source.replace(/\/\*[\s\S]*?\*\//g, ' ').replace(/\/\/[^\n]*/g, ' ')
   if ((text.match(LAW_SHARE) ?? []).length !== 1) throw new Error('the law of a relief defines float lawShare(vec3 P, vec3 E, vec2 image) once')
+  const tones = (text.match(LAW_TONE) ?? []).length
+  if (tone && tones !== 1) throw new Error('the law of a relief with a tone defines vec3 lawTone(vec3 P, vec3 E, vec2 image) once')
+  if (!tone && (tones !== 0 || /\blawTone\b/.test(text))) throw new Error('the law of a relief has a lawTone and the set did not ask for the tone')
   for (const word of ['void main', 'discard', 'outColor', 'gl_FragDepth']) if (text.includes(word)) throw new Error('the law of a relief gives a share and nothing else: it has no ' + word)
   const names = [...text.matchAll(LAW_UNIFORM)].map((m) => m[1]!)
   if ((text.match(/\buniform\b/g) ?? []).length !== names.length) throw new Error('the law of a relief declares each uniform on a line of its own kind: uniform type uLawName;')
@@ -386,10 +394,12 @@ export function lawUniforms(source: string): string[] {
   return names
 }
 
-export function withLaw(source: string, text: string): string {
-  if (source.split(MAIN).length !== 2 || source.split(VIG).length !== 2 || source.split(LIT).length !== 2 || source.includes('lawShare')) throw new Error('the relief shader has no single place for a law')
-  lawUniforms(text)
-  return source.replace(MAIN, LAW_GLSL.slice(1) + '\n' + text.trim() + '\n' + MAIN + '\n  float law = clamp(lawShare(vLocal, vEye, vImage), 0.0, 1.0);').replace(VIG, 'if (law <= 0.0) discard;\n  ' + VIG).replace(LIT, LIT + ' * law')
+export function withLaw(source: string, text: string, tone = false): string {
+  if (source.split(MAIN).length !== 2 || source.split(VIG).length !== 2 || source.split(LIT).length !== 2 || (tone && source.split(COL).length !== 2) || source.includes('lawShare')) throw new Error('the relief shader has no single place for a law')
+  lawUniforms(text, tone)
+  const read = '\n  float reliefLaw = clamp(lawShare(vLocal, vEye, vImage), 0.0, 1.0);' + (tone ? '\n  vec3 reliefTone = max(lawTone(vLocal, vEye, vImage), vec3(0.0));' : '')
+  const made = source.replace(MAIN, LAW_GLSL.slice(1) + '\n' + text.trim() + '\n' + MAIN + read).replace(VIG, 'if (reliefLaw <= 0.0) discard;\n  ' + VIG).replace(LIT, LIT + ' * reliefLaw')
+  return tone ? made.replace(COL, COL.slice(0, -1) + ' * reliefTone;') : made
 }
 
 // The share of the edge at a place of the whole picture, as the shader reads it (for the shield and for tests).
@@ -795,17 +805,19 @@ export class Relief {
   // relief that never calls it keeps its shaders to the letter and draws as before. With a law the relief is no shield, so what lies
   // behind it is drawn; a set whose law is 1 for every fragment over a span (a switch among its uniforms) may say so through whole,
   // which is asked whenever the shield is: while it answers true the relief shields as one that never asked, and the set stands for
-  // it that the law gives exactly 1 then. The law answers by place and by eye; a value that follows a frame number is not a law.
-  presenceLaw(text: string, uniforms: Record<string, THREE.IUniform> = {}, options: { whole?: () => boolean } = {}): void {
+  // it that the law gives exactly 1 then. With tone the text also gives the factor on the layers' colour (lawTone, LAW_GLSL above).
+  // The law answers by place and by eye; a value that follows a frame number is not a law.
+  presenceLaw(text: string, uniforms: Record<string, THREE.IUniform> = {}, options: { whole?: () => boolean; tone?: boolean } = {}): void {
     if (this.lawed) throw new Error('the law of a relief is given once, where the set is built')
-    const names = lawUniforms(text)
+    const tone = options.tone === true
+    const names = lawUniforms(text, tone)
     const given = Object.keys(uniforms)
     for (const name of names) if (!given.includes(name)) throw new Error('the law of a relief declares ' + name + ' and the set gives no such uniform')
     for (const name of given) if (!names.includes(name)) throw new Error('the set gives the law of a relief ' + name + ', which its text does not declare')
     this.lawed = true
     this.lawWhole = options.whole ?? null
     for (const l of this.layers) {
-      l.material.fragmentShader = withLaw(l.material.fragmentShader, text)
+      l.material.fragmentShader = withLaw(l.material.fragmentShader, text, tone)
       for (const name of names) l.material.uniforms[name] = uniforms[name]!
       l.material.uniforms.uLawFocal = this.lawFocal
       l.material.uniforms.uLawFrame = this.lawFrame
