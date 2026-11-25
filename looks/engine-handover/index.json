@@ -1,9 +1,23 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T12:46:40.615Z",
- "head": "dfe0aa905683a93feed947cdf6915379e7b01757",
- "note": "Mars 2668: the sawtooth on the crest traced to the relief grid over a step of distance inside one layer; suites alone on the two law commits running",
+ "pushed": "2026-11-25T13:05:57.020Z",
+ "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
+ "note": "sawtooth at Mars 2668 read four ways (mesh, filter, diagonal); both law commits pushed; air law chunk in work",
  "looks": [
+  {
+   "time": "2026-11-25T13:05:56.404Z",
+   "file": "20261125130556404-note-saw-4way-8x.jpg",
+   "source": "../../../../tmp/law/sheets/saw-4way-8x.png",
+   "kind": "note",
+   "label": "Mars 2668 draft, the lit crest at 8 to 1: mesh 420, mesh 840, filtered, other diagonal"
+  },
+  {
+   "time": "2026-11-25T13:05:55.342Z",
+   "file": "20261125130555342-note-saw-4way.jpg",
+   "source": "../../../../tmp/law/sheets/saw-4way.png",
+   "kind": "note",
+   "label": "Mars 2668 draft, the sawtooth four ways at 4 to 1: mesh 420 (naming), mesh 840, distance filtered by one texel, the other diagonal"
+  },
   {
    "time": "2026-11-25T12:28:00.310Z",
    "file": "20261125122800310-note-saw-locate.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/law/sheets/hold-2635-1x.png",
    "kind": "note",
    "label": "Mars 2635 (the view's fastest frame, 8.34 px) at review, 1 to 1, x 420..1060 y 440..800: box against the law (share 0.103). Mean difference 0.21 of 255"
-  },
-  {
-   "time": "2026-11-25T12:04:02.653Z",
-   "file": "20261125120402653-note-hold-2668-1x.jpg",
-   "source": "../../../../tmp/law/sheets/hold-2668-1x.png",
-   "kind": "note",
-   "label": "Mars 2668 (judged hold, last frames of the view) at review, 1 to 1, x 420..1060 y 440..800: box 14 samples against the law (share 0.069 at 7.87 px). Mean difference 0.13 of 255, 0.27 percent of pixels over 2"
-  },
-  {
-   "time": "2026-11-25T12:04:02.088Z",
-   "file": "20261125120402088-note-row-rise-start-2x.jpg",
-   "source": "../../../../tmp/law/sheets/row-rise-start-2x.png",
-   "kind": "note",
-   "label": "Mars rise's start at review, 2 times, x 800..1010 y 820..1000: 2670, 2671, 2672, box over law"
   }
  ]
 }
