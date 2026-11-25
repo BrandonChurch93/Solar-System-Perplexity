@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T15:22:51.508Z",
+ "pushed": "2026-11-25T15:51:37.615Z",
  "head": "701f7b7262b08e8811202f9bed870b56e19c65eb",
- "note": "one deck, steps 1 and 2 uncommitted: D1 hold fails in the disc (crop 3.483 against 1.893), outside the disc it is the hero's",
+ "note": "one law for the exchange: the share of the close picture by the eye's distance between the hold's last eye and the eye of T; hold equal to the byte",
  "looks": [
+  {
+   "time": "2026-11-25T15:51:36.771Z",
+   "file": "20261125155136771-note-L2-c.jpg",
+   "source": "../../../../tmp/v/sh/L2-c.jpg",
+   "kind": "note",
+   "label": "rise 1560 1576 1580 1586: left one law by the eye's distance (draft), right the fifth state",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T15:51:35.993Z",
+   "file": "20261125155135993-note-L2-a.jpg",
+   "source": "../../../../tmp/v/sh/L2-a.jpg",
+   "kind": "note",
+   "label": "dive 1287 1296 1308 1320: left one law by the eye's distance (draft), right the fifth state",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-25T15:22:50.887Z",
    "file": "20261125152250887-note-D1-hold.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/sh/n5/r5.jpg",
    "kind": "note",
    "label": "fifth state rise 1585 to 1599 + 1/2",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T14:44:58.050Z",
-   "file": "20261125144458050-note-r4.jpg",
-   "source": "../../../../tmp/v/sh/n5/r4.jpg",
-   "kind": "note",
-   "label": "fifth state rise 1570 to 1584 + 1/2",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T14:44:56.393Z",
-   "file": "20261125144456393-note-r3.jpg",
-   "source": "../../../../tmp/v/sh/n5/r3.jpg",
-   "kind": "note",
-   "label": "fifth state rise 1555 to 1569 + 1/2",
    "stop": "venus"
   }
  ]
