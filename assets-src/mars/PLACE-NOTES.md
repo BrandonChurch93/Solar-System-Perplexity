@@ -2564,3 +2564,27 @@ after the forms on the five land plates, and on the levels above by the share of
   2470 15637, 2472 7863, 2474 3440, 2476 0; 2477 and 2490 equal by bytes.
 - For the disk also deleted (scratch, none in the tree): out/work/place/code, m5, k3, depth, t61, eng56, the plates of
   w1 (its state drafts stay), n1/b, w10/b; unreachable loose objects pruned (the stash and all refs stand).
+- 19:16 UTC: committed take 10 as 74dca6470c2b50a4c808c2f1d8995d032dd5b922 and pushed (the login worked again); net
+  by the blobs against main 66912fc1: public plus 8,912,470, assets-src less 14,844,849, src plus 33,769, sum less
+  5,898,610. Looks pushed, 7c4e9138. NAMED mail to /root 19:18 with ten pictures, the reds of MAIL 1193 each with its
+  step, the heights red as its own line; handover_engineer told.
+- NEXT (MAIL 1251): the sky plate of the hold as its own commit on this name. Then the ledge of C2, d299, the air law.
+- 19:25 UTC, THE SKY PLATE OF THE HOLD (MAIL 1251, sky_builder's fill of the star pits), measured, NOT committed.
+  My plate is main's (sha256 0067b701...), so sky_builder's two files apply as they are (out/work/place/skyfill/).
+  Frame 2325, final tier, this machine, on 74dca647; main's plate against the filled plate:
+  G17 (tools/measure/g17.py, nograin, against references/approved/mars-hero.png): median 1.1674 to 1.1455 (falls by
+  0.0219), 25th 1.0263 to 1.0263, 80 tiles, the five worst tiles equal ((7,6) 0.6687, (5,7) 0.7647, (4,7) 0.8688 to
+  0.8687, (8,4) 0.8875, (6,5) 0.9264); both over the gate's 0.8.
+  Match with the approved hero (centre crop to 16 by 9, area resize; mean abs, rms, luma correlation): beauty
+  3.07562, 6.52168, 0.9929695 to 3.06308, 6.51263, 0.9929784; nograin 2.93792, 6.45255, 0.9931254 to 2.90852,
+  6.43785, 0.9931467 (better in all three).
+  Pixels, beauty: 203,505 of 2,073,600 differ, 35,844 by more than 2 codes, 1,018 by more than 8, largest 25; mean
+  luma plus 0.091 codes. The sky's mask is my own: the frame drawn twice with the plate all magenta and all green;
+  where those two differ by at most 64 of 255 (1,009,027 px: disc, moon, their glow) 598 px differ and none by more
+  than 1 code; where they do not differ at all (520,564 px) no pixel differs. At the limb (the marked plates differ
+  by 65 to 200, 35,949 px, the sky seen partly through the air's edge) the largest change is 10 codes.
+  Final 2325 with the fill: sha256 07e433cedceef537047064d834ddc593033f7c9a3d69eea4f311b89969d0a7c6.
+  BY THE LETTER of MAIL 1251 ("If either is worse than main's, it stays out and you send me the numbers") the fill
+  stays out: G17's median is lower than main's. Public restored to HEAD's plate. Numbers sent to /root.
+  Pictures: out/work/place/skyfill/pair-2325-sky.jpg (x 150 y 0, 400 px, 1 to 1), pair-2325-sky-x4.jpg (x 251 y 12,
+  times 4, the box with the most px over 4 codes: 568), pair-2325-whole.jpg.
