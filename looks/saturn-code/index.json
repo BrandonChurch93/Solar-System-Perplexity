@@ -1,9 +1,16 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T17:50:34.260Z",
- "head": "114ad7e9b0b699f187f1694da3b79ae97eb3e602",
- "note": "second name 114ad7e: rise frames; the measure of d312 reads 2.82 a frame at worst, cure by pacing in work",
+ "pushed": "2026-11-25T18:23:16.375Z",
+ "head": "f044d99f6e957bce193bf5b719ede2e59d43ef39",
+ "note": "the paced share on the rise: measured 1.64 levels a frame so far (3790 to 3815); rings' tone refit and the depth and ice table for the ruling of mail 1248 are next",
  "looks": [
+  {
+   "time": "2026-11-25T18:23:14.889Z",
+   "file": "20261125182314889-note-rise_a_paced.jpg",
+   "source": "../../../../tmp/v/c1/rise_a_paced.png",
+   "kind": "note",
+   "label": "rise 3790 to 3816 every second frame, draft, the paced share (one share by the logarithm of height, paced so the twilight moves under 2 levels a frame)"
+  },
   {
    "time": "2026-11-25T17:50:33.333Z",
    "file": "20261125175033333-note-rise_b.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/v/dark/p_hold_n2.png",
    "kind": "note",
    "label": "hold 3465 at 4 times: approved hero, main c92aad6 final, the name 114ad7e final"
-  },
-  {
-   "time": "2026-11-25T17:19:15.201Z",
-   "file": "20261125171915201-note-pair_3720_n2.jpg",
-   "source": "../../../../tmp/v/dark/pair_3720_n2.png",
-   "kind": "note",
-   "label": "3720 at full size, x 784 to 1920: approved, main c92aad6 final, the name 114ad7e final (clean foot, band 0 to 6 N left out)"
   }
  ]
 }
