@@ -397,7 +397,7 @@ export const createSet: SetFactory = async (ctx) => {
       shell.mesh.visible = visible
       halo.mesh.visible = visible && low < 1
       glint.mesh.visible = visible && low < 1
-      moon.mesh.visible = visible
+      moon.mesh.visible = visible && !(state.time * 30 >= 2396 && state.time * 30 < 2415) // CONTROL b, never merged: the moon hidden over the frames 2396 to 2414
       far.update(radiusPx, view, plan.p.tint, gain)
     },
     dispose: () => {
