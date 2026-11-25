@@ -1,9 +1,25 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T05:17:06.860Z",
+ "pushed": "2026-11-25T05:41:29.857Z",
  "head": "b9908e0352a26912e1440587e32e2a69343167d4",
- "note": "review 1884 of 3a136a1a soft land and two pictures at the place; K3 first tile take at true size",
+ "note": "step in place trial on the K4 line: dive tool run in flight, frames 1860 to 1868 beside b9908e03",
  "looks": [
+  {
+   "time": "2026-11-25T05:41:28.897Z",
+   "file": "20261125054128897-note-sh-a-s1.jpg",
+   "source": "../../../../tmp/gl/k7/sh-a-s1.jpg",
+   "kind": "note",
+   "label": "b9908e03 draft dive 1860 to 1868 for the pair",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T05:41:27.816Z",
+   "file": "20261125054127816-note-sh-a.jpg",
+   "source": "../../../../tmp/gl/k7/sh-a.jpg",
+   "kind": "note",
+   "label": "step 1 trial (share by the air path eased, kappa 0.55 cap 40 root 0.55 ends 0.15): draft dive 1860 to 1868, not judged yet",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-25T05:17:06.051Z",
    "file": "20261125051706051-note-cmp-p24-r1c2-t1-c.jpg",
@@ -55,24 +71,6 @@
    "first": 2100,
    "last": 2174,
    "tier": "draft"
-  },
-  {
-   "time": "2026-11-25T04:20:55.310Z",
-   "file": "20261125042055310-compare-earth-rise-step-in-place.jpg",
-   "source": "out/work/handover/earth-rise-step-in-place.png",
-   "kind": "compare",
-   "label": "earth rise, the largest step of the level in place (3.57): frame 2144, frame 2145, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2145
-  },
-  {
-   "time": "2026-11-25T04:04:04.566Z",
-   "file": "20261125040404566-note-k4-beside.jpg",
-   "source": "../../../../tmp/gl/k5/k4-beside.jpg",
-   "kind": "note",
-   "label": "1866, 1878, 1890, 1898 draft: 3a136a1a (left) beside K4 state 1 (right)",
-   "stop": "earth"
   }
  ]
 }
