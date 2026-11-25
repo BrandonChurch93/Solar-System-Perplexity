@@ -2298,6 +2298,44 @@ test gets eyes of 1.0 with the corner frame and the boxes 0.5..1 and 0.33..0.67.
 (0.6220, 0.2755), third point (0.6732, 0.3882)), drafts 2668 2477 2580 2672, review tier, teeth3 and cmp, commit, suite, build,
 NAMED with "merged main 172e7bcd", lines to mars_place_builder and mercury_builder.
 
+## 22:50 to 23:10 UTC, 25 Nov: the three faults' teeth measured, the map's rim is no end, unit tests green
+
+**Teeth of the three cures** (browser test, temporary switches, removed again; counts are open pixels in the frame; 0 with all
+three cures at every eye and cut tried):
+
+- Fault one (no `crestEnds`): eyes 0.5: (0, 0.5) UPPER 106, out 2 34, MIDDLE 111, out 2 36; (-0.5, 0.5) UPPER 280, out 2 178,
+  MIDDLE 291, out 2 183; (0, -0.5) LOWER 106; (-0.5, -0.5) LOWER 269. Eyes 1.0: (0, 1) UPPER 214, out 2 57, MIDDLE 183, out 2 53;
+  (-1, 1) UPPER 958, out 2 708, MIDDLE 683, out 2 554; (0, -1) LOWER 214; (-1, -1) LOWER 958, MIDDLE 681, out 2 550.
+- Fault two (render order k instead of k + 0.5), eyes 1.0: (-1, 0) UPPER 5, out 2 2, LOWER 4; (1, 0) UPPER out 2 4, MIDDLE out 2 1;
+  (0, -1) LOWER 3, MIDDLE 4; (-1, 1) UPPER 6, out 2 1, LOWER 2; (1, -1) LOWER 11, MIDDLE 7, out 2 7; (-1, -1) UPPER 5, out 2 1,
+  LOWER 5; (1, 1) UPPER 3, out 2 13, MIDDLE 7, out 2 8; eye (0.5, -0.5) MIDDLE 2.
+- Fault three (no ring, no rim), under 0.5 cells: eye (-1.5, 0) whole 1981, UPPER 1130, LOWER 1155; (-2, 0) 4932, 2820, 2845;
+  (-3, 0) 7971, 4537, 4614. With under 2 the eyes (-1, 1.5) and (1, -1.5) show 0 with and without the ring.
+
+**The map's rim is no end and no rim (found 22:58, mended 23:02).** The whole GL file at 22:55 failed two tests that had held
+before the ends: 'from the picture own eye the sheets give the painting back' (453 px moved) and 'with the cut moved out ...'
+(off by a whole step). Cause: `crestEnds` and `crestRim` both counted the rim of the map, so in the map's first and last row of
+cells the sheets were shut onto the mesh's wall and drew the painting out of true from its own eye. No wall lies beyond the rim
+of the map: the sheets end there with the map, each on its own distance, as the mesh's two grounds do (from a moved eye the
+layer's outline has a step at the cut there, which is true to two grounds, and no hole inside the outline). Now: `crestRim`
+names a vertex only for a kind 0 cell INSIDE the map among its cells; `crestEnds` looks only at sides with a cell on both sides.
+A ring cell that reaches the map's rim ends with the map: the far field's band (under + 1.5 cells + 2 texels) usually ends
+before it, and beyond the band the under sheet lies on the ground by itself (own times 1.001).
+
+**Unit map facts now** (stepMap(30, 3), 8 by 6 cells): whole: cells `00011220`, ring `00311223`, ends none, rim every row
+`111000000`. Under 4 texels: ring `00311230`, rim `111000011`. Box rows 16..31: ring rows 0 and 5 `00333333`, ends row 1
+`000110000`, row 5 `000111000`, rim `111000000`. Box rows 8..23: ring row 4 `00333333`, row 5 `00000000`, ends row 4
+`000111000` (out 2: `000110000`), rim rows 0 to 4 `111000000`, rows 5 and 6 all 1. Closed vertices (under sheet, far sheet,
+near sheet), met, behind: whole [0, 0, 0], 7, 7; under 4 [7, 0, 0], 7, 7; box 8..23 [7, 2, 2], 4, 7.
+
+**Tests**: `tests/crest.test.ts` 21 of 21 at 23:05. `tests/crest-gl.test.ts` rewritten (the end test at 8 eyes of 1.0 with whole,
+UPPER, UPPER out 2, LOWER, MIDDLE, MIDDLE out 2 and 4 diagonal eyes of 0.5; a new test for the eye that looks in further than
+under; helpers `frameOf`, `open`); its rerun after the rim's mend started 23:05.
+
+**Mail**: neptune_builder 22:59 asked for a glow and spikes on the far Sun (src/space/sky.ts). Answered 23:03: no from me, the
+file is the sky's and the far Sun is batch 14 on the Builder's list; the plumbing through src/director or src/core is mine on
+request. Nothing sent to /root (MAIL 520).
+
 ## E as built (23:45), the engine's one move
 
 - Switches: `handover.ownPath` (my config block): the stops that keep the path of their own class. Today all but mars. A builder takes its name off in its own commit. `--diag onemove` (probe.ts, `forceOneMove`) draws any stop on E without touching the config; the scene word carries `|onemove` so the caches do not mix.
