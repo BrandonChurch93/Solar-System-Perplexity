@@ -1113,3 +1113,37 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
     h2 31.4203 8.0387 12.4283 52.0166 [1.69 1.13 1.00 0.98 1.01 0.96 0.85]
     Outside the mask my frames are worse than the standing ground: the strip between my limb and the approved's
     is ground in my frame (gold, as ruled) and sky in the approved, and my air glows above the limb.
+- MAIL 1318 from /root, 22:12 UTC (d330 (4)): 1. the frame has three parts: ground (my mask), sky above the film's
+  own limb, the strip between the film's limb and the approved's. Plain match outside the mask is read on the sky
+  part alone; the strip is stated as its own number, no line. "Put the three part mask in mask.py and send it with
+  the next state (one png, three levels)". 2. the gas above the limb comes down until the sky part reads not worse
+  than the standing ground's. 3. finest band: "bring the band under 1 px and the band 1 to 2 px to the approved's
+  (ratio 1.0, within 0.15) by the form itself (soft shoulders, lanes that are broad dark blobs with pits, tops
+  with soft dark patches), not by a blur over the frame." 4. levels picture with every state; "your lights are
+  whole plates, the approved's lights are irregular blobs of about half a cell with dark patches on the tops; your
+  darks are thin lines, the approved's are broad lanes that swell where three cells meet. The streaks along the
+  shells (the satin) have no counterpart in the approved at this scale; take them out or break them up." 5. count
+  dropped. Date 23:15 stands: frame 90 at draft and final, strip, levels, the bands' rows with the three parts.
+- 22:08 to 22:35 UTC. TRIALS h4 to h11 (frame 90 draft). Tools in v: levels.sh NAME (both cut at the approved's
+  percentiles), fine.sh NAME (where the band under 1 px lives, times 8), zone.py NAME (band ratios by rows),
+  rows.py (percentiles by rows), x3.sh NAME X Y (approved over mine at 3 times).
+  h4 profile fall and big swells: cobblestones, plates with thin outlines.
+  h5 NEW cushion law in ground.ts: the light of a cell is one soft blob with an uneven outline: qEdge = blob[0] +
+    blob[1] (lobes round the cell, blob[6] of them) + blob[2] (labWell swell) + blob[3] (fan), light = 1 - smoothstep
+    (qEdge -+ blob[4], plan), heat mix(blob[5], 1, light); patches on the top: 1 - patch[0] smoothstep(patch[2],
+    patch[3], labWell(d patch[1] 1.7)); navel; fibres. h5 lichen on stones (patches small and crisp).
+  h6 swell 2.5, lobes 0.6, patches larger: levels picture near the approved's for the first time.
+  h7 BELL DOME: dome.base[5] 0.5 (shape (1 - e^2)^2: no slope at the border, so a lane is a smooth valley seen
+    from both sides; the parabola met its neighbour in a crease and the far flank was pressed to a hairline),
+    height 0.32, heat.thin a soft glow [0.2, 0.08, 40], lane 0.16: crisp outlines gone, liquid lumps.
+  h8 sparks soft (spark[6..11]: radius px, spread, core, where on plan, cut at the border), tubes.depth 0.03.
+  h9 fibre.counts [2, 4, 8], breaks off [2, 3, 0.3] (no parting lines): fine band unchanged (1.69), so the lines
+    were not fibres. At 3 times: the line on every border was the step between two cells' own heats.
+  h10 SEAM OF THE PLACE (cushion.seam): on the border the heat is a field of the place (crease[2] times 0.7 + 0.6
+    vn(vG 40), pits), the same from both sides; the cell's own heat comes in over laneWide, ragged by the fan.
+    Grain (cushion.grain). Soft gas for the first time; cells less clear. MEASURED h10: low64 8.00, bands
+    [1.69 1.11 0.97 0.98 1.03 0.98 0.90], lane width 6.5 px (approved 7.1), curve inside 0.07.
+  h11 rim filaments from fan with counts [2, 4, 8], amplitude 1.2: broad satin streaks again. Worse than h10.
+  zone.py: the approved's band under 1 px is strongest in rows 600 to 760 (rms 12 to 13) and weakest in the
+    nearest rows 960 to 1080 (3.9); mine is 1.4 to 1.6 times in the middle and 2 times at both ends. Even the
+    standing ground reads 1.95 in the nearest rows.

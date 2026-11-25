@@ -68,7 +68,7 @@ function rampTexture(): THREE.DataTexture {
 }
 
 const T = lab.tubes
-const Q = (lab.heat as { cushion?: { navel: number[]; fibre: number[]; patch: number[]; prof: number[] } }).cushion
+const Q = (lab.heat as { cushion?: { navel: number[]; fibre: number[]; patch: number[]; blob: number[]; grain?: number[]; seam?: number[]; rim?: number[] } }).cushion
 const CU = (lab.dome as { base?: number[] }).base
 const smooth = (a: number, b: number, x: number): number => {
   const t = Math.min(Math.max((x - a) / (b - a), 0), 1)
@@ -708,8 +708,8 @@ float labSparks(vec2 q, float seed, float t, float px) {
     vec2 g = q * zoom + vec2(17.0 * fract(gen * 0.6180339 + seed), 29.0 * fract(gen * 0.3819660 + seed * 5.0));
     vec2 i = floor(g);
     vec2 c = i + 0.3 + 0.4 * vec2(h1(i + 3.1), h1(i + 7.7));
-    float r = clamp(px * zoom * (1.2 + 1.6 * h1(i + 5.0)), 0.02, 0.3);
-    sum += step(${(1 - (lab.heat.spark?.[2] ?? 0.2)).toFixed(3)}, h1(i + 11.0)) * (1.0 - smoothstep(0.4 * r, r, length(g - c))) * min(2.0 - abs(4.0 * ph - 2.0), 1.0) * (1.0 - smoothstep(0.12, 0.3, px * zoom));
+    float r = clamp(px * zoom * (${(lab.heat.spark?.[6] ?? 1.2).toFixed(2)} + ${(lab.heat.spark?.[7] ?? 1.6).toFixed(2)} * h1(i + 5.0)), 0.02, 0.3);
+    sum += step(${(1 - (lab.heat.spark?.[2] ?? 0.2)).toFixed(3)}, h1(i + 11.0)) * (1.0 - smoothstep(${(lab.heat.spark?.[8] ?? 0.4).toFixed(2)} * r, r, length(g - c))) * min(2.0 - abs(4.0 * ph - 2.0), 1.0) * (1.0 - smoothstep(0.12, 0.3, px * zoom));
   }
   return min(sum, 1.0);
 }
@@ -808,10 +808,15 @@ void main() {
   float cell = top * mix(1.0, mix(${lab.fibre.cold.toFixed(2)}, uLabHeat.w, thread), uLabHeatB.z * smoothstep(${(T.on ? T.silk[0]! : 0.04).toFixed(2)}, ${(T.on ? T.silk[1]! : 0.4).toFixed(2)}, along));
   cell *= 1.0 + ${(2 * lab.heat.fine[0]!).toFixed(3)} * (labWell(d * ${lab.heat.fine[1]!.toFixed(2)}, seed + 0.37, uLabTime.x) - 0.5);
 #if ${Q && T.on ? 1 : 0}
-  // a cell as a cushion: light over most of its top, a cooler navel where the gas wells up, a lighter ring half way
-  // out, falling to the seam; the texture is fine fibres that fan from the navel and ride outward, and broad soft
-  // swells that ride with them
-  cell = (${lab.heat.tone[0]!.toFixed(2)} + ${lab.heat.tone[1]!.toFixed(2)} * wide) * mix(${(Q?.navel[0] ?? 1).toFixed(2)}, 1.0, smoothstep(0.0, ${(Q?.navel[1] ?? 0.4).toFixed(2)}, tr)) * (1.0 + ${(Q?.prof[0] ?? 0).toFixed(2)} * smoothstep(${(Q?.prof[1] ?? 0.3).toFixed(2)}, ${(Q?.prof[2] ?? 0.6).toFixed(2)}, plan) - ${(Q?.prof[3] ?? 0).toFixed(2)} * pow(smoothstep(${(Q?.prof[4] ?? 0.3).toFixed(2)}, 1.0, plan), ${(Q?.prof[5] ?? 1).toFixed(2)})) * max(1.0 + smoothstep(${(Q?.fibre[1] ?? 0.05).toFixed(2)}, ${(Q?.fibre[2] ?? 0.4).toFixed(2)}, tr) * (${(2 * (Q?.fibre[0] ?? 0)).toFixed(3)} * (fan - 0.5) + ${(Q?.fibre[3] ?? 0).toFixed(3)} * (thread - 0.3)), 0.25) * (1.0 + ${(2 * (Q?.patch[0] ?? 0)).toFixed(3)} * (labWell(d * ${(Q?.patch[1] ?? 2).toFixed(2)}, seed, uLabTime.x) - 0.5));
+  // a cell as a cushion: its light is one broad soft blob with an uneven outline, lobed round the cell, moved by
+  // the swells that ride outward and fringed by the fine fibres; round it the gas is cooler down to the seam. On
+  // the top lie soft cooler patches that ride outward too, and a cooler navel where the gas wells up
+  float qWell = labWell(d * ${(Q?.patch[1] ?? 0.5).toFixed(2)}, seed, uLabTime.x);
+  float qLobe = vnq(vec2(tb.w * ${(Q?.blob[6] ?? 4).toFixed(1)} + floor(seed * 23.0), seed * 11.0), ${(Q?.blob[6] ?? 4).toFixed(1)});
+  float qEdge = ${(Q?.blob[0] ?? 0.6).toFixed(3)} + ${(Q?.blob[1] ?? 0).toFixed(3)} * (qLobe - 0.5) + ${(Q?.blob[2] ?? 0).toFixed(3)} * (qWell - 0.5) + ${(Q?.blob[3] ?? 0).toFixed(3)} * (fan - 0.5) * smoothstep(${(Q?.fibre[1] ?? 0.05).toFixed(2)}, ${(Q?.fibre[2] ?? 0.4).toFixed(2)}, tr);
+  float qBlob = 1.0 - smoothstep(qEdge - ${(Q?.blob[4] ?? 0.2).toFixed(3)}, qEdge + ${(Q?.blob[4] ?? 0.2).toFixed(3)}, plan);
+  float qPatch = smoothstep(${(Q?.patch[2] ?? 0.5).toFixed(2)}, ${(Q?.patch[3] ?? 0.7).toFixed(2)}, labWell(d * ${((Q?.patch[1] ?? 0.5) * 1.7).toFixed(2)}, seed + 0.53, uLabTime.x));
+  cell = (${lab.heat.tone[0]!.toFixed(2)} + ${lab.heat.tone[1]!.toFixed(2)} * wide) * mix(${(Q?.navel[0] ?? 1).toFixed(2)}, 1.0, smoothstep(0.0, ${(Q?.navel[1] ?? 0.4).toFixed(2)}, tr)) * mix(${(Q?.blob[5] ?? 0.4).toFixed(2)}, 1.0, qBlob) * (1.0 - ${(Q?.patch[0] ?? 0).toFixed(2)} * qPatch) * max(1.0 + smoothstep(${(Q?.fibre[1] ?? 0.05).toFixed(2)}, ${(Q?.fibre[2] ?? 0.4).toFixed(2)}, tr) * (${(2 * (Q?.fibre[0] ?? 0)).toFixed(3)} * (fan - 0.5) + ${(Q?.fibre[3] ?? 0).toFixed(3)} * (thread - 0.3)), 0.25) * (1.0 + ${(2 * (Q?.grain?.[0] ?? 0)).toFixed(3)} * (labWell(d * ${(Q?.grain?.[1] ?? 2).toFixed(2)}, seed + 0.37, uLabTime.x) - 0.5)) * (1.0 + ${(Q?.rim?.[0] ?? 0).toFixed(2)} * smoothstep(${(Q?.rim?.[1] ?? 0.5).toFixed(2)}, ${(Q?.rim?.[2] ?? 0.75).toFixed(2)}, plan) * (smoothstep(${(Q?.rim?.[3] ?? 0.45).toFixed(2)}, ${(Q?.rim?.[4] ?? 0.7).toFixed(2)}, mix(0.5, fc, kc)) - ${(Q?.rim?.[5] ?? 0.35).toFixed(2)}));
 #endif
   float c0 = ${lab.heat.crease[0]!.toFixed(3)} * (vn(vG * uLabJoin.w * 2.9 + 41.0) + 0.5 * vn(vG * uLabJoin.w * 7.3 - 13.0)) / 1.5;
   float deep = isnan(vDeep) || isinf(vDeep) ? 1.0 : vDeep;
@@ -828,7 +833,7 @@ void main() {
   // falls into pieces before it fades
   float old = smoothstep(${lab.heat.breaks[0]!.toFixed(2)}, ${lab.heat.breaks[1]!.toFixed(2)}, age);
   float veins = labLobes(d, seed, 0.05 + 0.3 * rho + 0.12 * old) * smoothstep(mix(0.1, 0.0, old), mix(0.6, 0.2, old), rho);
-  cell *= (1.0 - mix(${lab.heat.vein.toFixed(2)}, ${lab.heat.breaks[2]!.toFixed(2)}, old) * veins) * (1.0 - ${lab.heat.groove.toFixed(2)} * groove * smoothstep(0.1, 0.5, rho)) * mix(${lab.heat.crease[2]!.toFixed(2)}, 1.0, smoothstep(${(lab.heat.lane[3] ?? 0).toFixed(2)} * laneWide, laneWide, edgeD + ${lab.heat.lane[2]!.toFixed(2)} * laneWide * (fan - 0.5) - laneTube)) * mix(${lab.heat.shade[0]!.toFixed(2)}, 1.0, smoothstep(0.0, ${lab.heat.shade[1]!.toFixed(2)} * (0.4 + 1.2 * smoothstep(0.3, 0.8, c0 / ${lab.heat.crease[0]!.toFixed(3)})), max(1.0 - fall, 0.0)));
+  cell *= (1.0 - mix(${lab.heat.vein.toFixed(2)}, ${lab.heat.breaks[2]!.toFixed(2)}, old) * veins) * (1.0 - ${lab.heat.groove.toFixed(2)} * groove * smoothstep(0.1, 0.5, rho)) * (${Q?.seam ? 1 : 0} > 0 ? 1.0 : mix(${lab.heat.crease[2]!.toFixed(2)}, 1.0, smoothstep(${(lab.heat.lane[3] ?? 0).toFixed(2)} * laneWide, laneWide, edgeD + ${lab.heat.lane[2]!.toFixed(2)} * laneWide * (fan - 0.5) - laneTube))) * mix(${lab.heat.shade[0]!.toFixed(2)}, 1.0, smoothstep(0.0, ${lab.heat.shade[1]!.toFixed(2)} * (0.4 + 1.2 * smoothstep(0.3, 0.8, c0 / ${lab.heat.crease[0]!.toFixed(3)})), max(1.0 - fall, 0.0)));
 #if ${T.on ? 1 : 0}
   // the heat of a tube: hot on its crest, cold in the groove between two tubes, where the gas of both sinks a
   // little; a groove finer than a pixel is the mean of both
@@ -847,6 +852,13 @@ void main() {
   float bundle = pn.y;
   float warm = uLabHeat.y * cell * life * mix(${lab.heat.near.toFixed(2)}, 1.0, smoothstep(2.4, 4.0, vReal / uLabPit.w));
   warm = warm < ${lab.heat.knee[0]!.toFixed(2)} ? warm : ${lab.heat.knee[0]!.toFixed(2)} + ${(lab.heat.knee[1]! - lab.heat.knee[0]!).toFixed(3)} * (1.0 - exp(-(warm - ${lab.heat.knee[0]!.toFixed(2)}) / ${(lab.heat.knee[1]! - lab.heat.knee[0]!).toFixed(3)}));
+#if ${Q?.seam ? 1 : 0}
+  // the seam: on the border both cells have the heat of the place, the same from either side, so no line stands
+  // there; the cell's own heat comes in over the lane's width, sooner along a fibre
+  float qSeam = smoothstep(0.0, laneWide, edgeD);
+  qSeam = clamp(qSeam + ${(4 * lab.heat.lane[2]!).toFixed(2)} * (fan - 0.5) * qSeam * (1.0 - qSeam), 0.0, 1.0);
+  warm = mix(uLabHeat.y * ${lab.heat.crease[2]!.toFixed(2)} * (${(Q?.seam?.[0] ?? 0.7).toFixed(2)} + ${(Q?.seam?.[1] ?? 0.6).toFixed(2)} * vn(vG * ${(Q?.seam?.[2] ?? 40).toFixed(1)} + 23.0)) * (1.0 - ${(lab.heat.pit ?? 0).toFixed(2)} * vJunc), warm, qSeam);
+#endif
   float heat = pen > 0.999 ? uLabHeat.y * bundle : mix(warm, uLabHeat.y * bundle, pen);
   // small hot points in the lanes
   vec2 gq = vG * 90.0;
@@ -856,7 +868,7 @@ void main() {
   // thin hot threads stand in the bottom of the lane, here and there
   heat += ${lab.heat.thin[0]!.toFixed(2)} * (1.0 - smoothstep(0.0, ${lab.heat.thin[1]!.toFixed(3)}, abs(edgeD))) * smoothstep(0.58, 0.78, vn(vG * ${lab.heat.thin[2]!.toFixed(1)} + 11.0)) * (1.0 - pen);
   vec2 sq = d * vCell.z;
-  heat += ${(lab.heat.spark?.[0] ?? 0).toFixed(2)} * labSparks(sq, seed, uLabTime.x, max(length(dFdx(sq)), length(dFdy(sq)))) * mix(${(lab.heat.spark?.[5] ?? 0.3).toFixed(2)}, 1.0, smoothstep(0.45, 0.85, plan)) * (1.0 - smoothstep(0.93, 1.0, plan)) * (1.0 - pen);
+  heat += ${(lab.heat.spark?.[0] ?? 0).toFixed(2)} * labSparks(sq, seed, uLabTime.x, max(length(dFdx(sq)), length(dFdy(sq)))) * mix(${(lab.heat.spark?.[5] ?? 0.3).toFixed(2)}, 1.0, smoothstep(${(lab.heat.spark?.[9] ?? 0.45).toFixed(2)}, ${(lab.heat.spark?.[10] ?? 0.85).toFixed(2)}, plan)) * (1.0 - ${(lab.heat.spark?.[11] ?? 1).toFixed(2)} * smoothstep(0.93, 1.0, plan)) * (1.0 - pen);
   heat *= pn.z;
   // (b) the angle of view: the ground has no lamp. A look that meets the surface aslant meets shallower, cooler gas:
   // the heat times a darkening by the angle between the surface's normal and the eye (heat.graze: at a look along
