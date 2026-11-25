@@ -1,9 +1,41 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T01:39:00.436Z",
- "head": "4797a5807360f50339cc3f075a5cd3e20b0c8f23",
- "note": "01:40 UTC 25 Nov. Proof chain of the commit to be named still runs (smooth pictures dive, then rise, path, parity, tests, handover, gate). Known reds in view: rings arriving in place 2988 to 2994 (wrap to patch-wide exchange), floating band above the limb 3031 to 3041 (haze painted in the surface view's sky plate), rise's lower left 3250 to 3257. Curve of the storm has no step from 2895 to 3059.",
+ "pushed": "2026-11-25T01:56:07.586Z",
+ "head": "e97f7d7eea254120fbf4a767fbd0d23c4c3c211d",
+ "note": "02:00 UTC: chain of proofs still running (rise report next). Tool's dive report is red: pattern 1.23 from 3031 at the upper right limb. Cause found: the surface sky plate's haze fill under its own horizon shows through the floor's feather. Cure designed, comes after naming.",
  "looks": [
+  {
+   "time": "2026-11-25T01:56:06.821Z",
+   "file": "20261125015606821-note-pair-3150-final.jpg",
+   "source": "../work/r6/pair-3150-final.jpg",
+   "kind": "note",
+   "label": "3150 final beside the approved image (bytes unchanged in this commit, match 7.974)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T01:56:06.082Z",
+   "file": "20261125015606082-note-c1-limb-3028.jpg",
+   "source": "../work/r8/c1-limb-3028.png",
+   "kind": "note",
+   "label": "upper right limb 3028 to 3043 frame by frame: grey band above the limb, parted by a dark gap, comes down by 3042 (cause: the sky plate's fill under its horizon)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T01:56:04.970Z",
+   "file": "20261125015604970-note-jupiter-dive-changes.jpg",
+   "source": "../work/r8/jupiter-dive-changes.png",
+   "kind": "note",
+   "label": "smooth tool, dive, commit e97f7d7e: red, pattern 1.23 from 3031 at the upper right limb (the floating band)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T01:56:03.709Z",
+   "file": "20261125015603709-note-levels-at-place.jpg",
+   "source": "../work/r8/levels-at-place.jpg",
+   "kind": "note",
+   "label": "the four levels at the place at equal scale: wrap alone, with wide, with mid, all (the rings are patch-wide's own imagery, the wrap is softer)",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T01:38:49.960Z",
    "file": "20261125013849960-note-pair-3150-final.jpg",
@@ -181,38 +213,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "c6c6edcaa80e1e1f"
-  },
-  {
-   "time": "2026-11-25T00:57:41.703Z",
-   "file": "20261125005741703-note-pair-3150-final.jpg",
-   "source": "../work/r6/pair-3150-final.jpg",
-   "kind": "note",
-   "label": "3150 final (bytes unchanged in this commit) beside the approved image",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T00:57:40.447Z",
-   "file": "20261125005740447-note-least-test.jpg",
-   "source": "../work/r8/least-test.png",
-   "kind": "note",
-   "label": "the fourth height law gone: with (left) and without, dive 3020 to 3050",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T00:57:39.537Z",
-   "file": "20261125005739537-note-storm-hold.jpg",
-   "source": "../work/r8/storm-hold.jpg",
-   "kind": "note",
-   "label": "c1 draft: the storm in the hold and the first dive frames, 2895 to 2994, 72 px across shown about 6 times (after the filter by the pixel's foot)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T00:43:01.228Z",
-   "file": "20261125004301228-note-pair-3150-final.jpg",
-   "source": "../work/r6/pair-3150-final.jpg",
-   "kind": "note",
-   "label": "3150 final beside the approved image",
-   "stop": "jupiter"
   }
  ]
 }
