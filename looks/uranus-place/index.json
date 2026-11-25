@@ -1,9 +1,49 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T13:07:32.938Z",
+ "pushed": "2026-11-25T13:27:25.195Z",
  "head": "82140079267d87735c341f33fe100c369dd89482",
- "note": "13:09 rulings 1 and 5 in work: one air number, bare ground at view cosine 1; 4290 against the approved image main 3.824, new tree 3.852 to 3.97 by depth, fitting; not yet proven",
+ "note": "13:28 new tree in proof: 4035 draft bytes kept, 4290 draft 3.833 against main 3.824 to the approved image, my chain 4152 + 1/2 0.81 red at the left limb, 4416 still pale; nothing committed yet",
  "looks": [
+  {
+   "time": "2026-11-25T13:27:24.064Z",
+   "file": "20261125132724064-note-p-N1-8305.jpg",
+   "source": "../../../../tmp/n55/p-N1-8305.jpg",
+   "kind": "note",
+   "label": "new tree, my chain at 4152 + 1/2: pattern 0.81 at 360, 404 (limit 0.45), red at the left limb",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T13:27:22.819Z",
+   "file": "20261125132722819-note-pair-4290.jpg",
+   "source": "../../../../tmp/n55/pair-4290.jpg",
+   "kind": "note",
+   "label": "4290 draft: main (left) against the new tree (right): 678 pixels over 4 levels, largest 5",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T13:27:21.712Z",
+   "file": "20261125132721712-note-pair-4416.jpg",
+   "source": "../../../../tmp/n55/pair-4416.jpg",
+   "kind": "note",
+   "label": "4416 draft: main (left) against the new tree (right): pale and flat, cause named in the notes",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T13:27:20.539Z",
+   "file": "20261125132720539-note-two-w1.jpg",
+   "source": "../../../../tmp/n55/two-w1.jpg",
+   "kind": "note",
+   "label": "new tree, draft, upper left of 4152 + 1/2, 4156 + 1/2, 4160 + 1/2: the blue glow outside the limb comes in, the star field goes",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T13:27:19.479Z",
+   "file": "20261125132719479-note-two-4148c.jpg",
+   "source": "../../../../tmp/n55/two-4148c.jpg",
+   "kind": "note",
+   "label": "new tree, draft, upper left of 4148, 4149, 4150, 4151, 4152: the star field and the arcs left of the limb move faster than the globe",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T13:07:32.016Z",
    "file": "20261125130732016-note-cmp-f13.jpg",
@@ -220,46 +260,6 @@
    "source": "../../../../tmp/n53/b1-c.jpg",
    "kind": "note",
    "label": "B1 first build of the air by path: 4416, 4436 state left, B1 right",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T10:16:25.767Z",
-   "file": "20261125101625767-note-b1-b.jpg",
-   "source": "../../../../tmp/n53/b1-b.jpg",
-   "kind": "note",
-   "label": "law b first build: 4137, 4186, 4200 state left, new right",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T10:16:24.685Z",
-   "file": "20261125101624685-note-b1-a.jpg",
-   "source": "../../../../tmp/n53/b1-a.jpg",
-   "kind": "note",
-   "label": "law b first build (glow by angle to the sun 30 to 50 degrees): 4035 bytes kept, 4290 state left, new right",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T10:16:23.593Z",
-   "file": "20261125101623593-note-b-p1.jpg",
-   "source": "../../../../tmp/n52/b-p1.jpg",
-   "kind": "note",
-   "label": "controls: state, own light, own light by path at 4165, 4182, 4185.5 (cover off)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T09:56:40.126Z",
-   "file": "20261125095640126-note-b-state.jpg",
-   "source": "../../../../tmp/n52/b-state.jpg",
-   "kind": "note",
-   "label": "state bfd6c3ad: dive 4130 to 4290 and the own light control at 4152 + 1/2",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T09:43:05.851Z",
-   "file": "20261125094305851-note-pairs-s.jpg",
-   "source": "../../../../tmp/n52/pairs-s.jpg",
-   "kind": "note",
-   "label": "the cure tried and not taken: state (left) against the steep rule off (right) at 4137, 4416, 4436, draft: the middle of the disc goes dark at 4137 and 4436",
    "stop": "uranus"
   }
  ]
