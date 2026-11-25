@@ -72,8 +72,22 @@ Pits filled: 377352 pixels of the full plate change (5.4 percent), 257932 by mor
 - The sky (1009820 pixels): 211533 differ (20.9 percent), 37322 by more than 2 codes, 2292 by more than 8, largest 25; mean luma +0.213 codes.
 - The globe (754787 pixels): 497 pixels differ by one code (largest 2). The Sun and its glare (308993 pixels): 294 pixels, by one code (largest 2). That is the bloom of the raised sky at the rounding; no pattern.
 - Stars: 7905 peaks before, 7867 on the same pixel after, 13 on the pixel beside (two equal neighbours), 25 at the counting threshold (their peak changes by one code at most). Peak value at the kept stars: median change 0, largest 2 codes (the post sharpen reads the raised neighbours). No star moves, none is widened: the ring is raised to the floor, never over it.
-- G17 against `references/approved/mercury-hero.png` (71 tiles, no grain): median 1.168 to 1.147, 25th 1.038 to 1.023. Five tiles are under 0.8 on main already and stay as they are (8,0 0.379 to 0.373; 10,3 0.485; 11,4 0.636 to 0.631; 9,3 0.659 to 0.646; 4,3 0.673); no tile crosses.
-- With `HUE` 1 as well: the sky differs in 77.5 percent of its pixels (100990 over 2 codes, largest 23), the globe in 885 (largest 3), the Sun's region in 4573 (largest 2); G17 median 1.147, 25th 1.023, the same five tiles.
+- G17 against `references/approved/mercury-hero.png` (71 tiles, no grain): median 1.168 to 1.147, 25th 1.038 to 1.023; the gate (median at 0.8 or over) is green both ways. Tiles under 0.8 on main: six (8,0 0.379; 10,3 0.485; 11,4 0.636; 9,3 0.660; 4,3 0.673; 6,6 0.742). With the fill seven: the six within 0.014 and (8,1), which crosses from 0.805 to 0.791. Per tile, fill over main: median 0.977, least 0.918; the dark ring pixels are fine detail and the fill takes that energy out. (My first mail said five tiles and none crossing; that was read from g17.py's list of the worst five and was wrong.)
+- With `HUE` 1 as well: the sky differs in 77.5 percent of its pixels (100990 over 2 codes, largest 23), the globe in 885 (largest 3), the Sun's region in 4573 (largest 2); G17 median 1.147, 25th 1.023, the same seven tiles.
+
+## Frames 560 and 680 of the hold with the pits filled (MAIL 1212, point 4)
+
+Final tier, no grain, main 53025569 against the same code with the filled plate; the pits read over the whole frame (box 20,20 to 1900,1060) and in the lower left sky (0,560 to 700,1080, the box of the finding). The approved picture is the view of 615, so G17 at 560 and 680 is no gate; the tile ratios are given for the fall alone. No mask of the globe was made for these two frames, so the split into sky and globe is not measured there.
+
+| frame | pits, whole frame | pits, lower left | ring pixel at code 3 or under, lower left | pixels that differ | over 2 codes | over 8 | largest | star peaks, same pixel, beside, at the threshold | per tile, fill over main: median, least | tiles under 0.8, main to fill |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 560 | 33 to 12 percent | 59 to 5 percent | 47 to 3 percent | 213594 (10.3 percent) | 37430 | 2980 | 27 | 7959, 7906, 22, 31 | 0.980, 0.932 at (2,1) | 17 to 17, none crosses |
+| 615 | 29 to 13 percent | 49 to 8 percent | 39 to 5 percent | 212324 (10.2 percent) | 37322 | 2292 | 25 | 7905, 7867, 13, 25 | 0.977, 0.918 at (3,7) | 6 to 7, (8,1) 0.805 to 0.791 |
+| 680 | 27 to 15 percent | 40 to 9 percent | 34 to 11 percent | 203748 (9.8 percent) | 32473 | 2053 | 28 | 8475, 8434, 15, 26 | 0.981, 0.931 at (7,0) | 7 to 8, (1,4) 0.800 to 0.776 |
+
+- 560: the pits fall as at 615; no star moves (peak change at the kept stars 2 codes at most, at the threshold ones one code); no tile falls by more than 0.1 of its own ratio.
+- 680: the same; the lower left sky is darker there (floor 0.046 against 0.053), so more of what the post sharpen leaves sits at code 3 or under (11 percent). One tile crosses 0.8, (1,4), by the same cause as (8,1) at 615: the ring pixels are fine detail and the fill takes that energy out.
+- Whole frame at 615, for the same reading: 29 to 13 percent (the lower left box holds the darkest sky, hence the larger share there).
 
 Pictures: `mercury-615-pits.png` (film x 200 to 395, y 640 to 752, times 4: approved at 1920, main, pits filled, pits filled and hue calmed), `mercury-615-pits-lifted.png` (the same, levels times 3).
 
@@ -90,4 +104,4 @@ Pictures: `mercury-615-pits.png` (film x 200 to 395, y 640 to 752, times 4: appr
 
 ## Tools
 
-`measure/pits.py BOX LO FILE...`, `measure/blot.py BOX SCALE FILE...` (scale 1 for the film, 1.467 for the plate). The renders: main clone at 53025569 with the plate swapped in `public/assets/mercury/full/`, a local factor on `uSharpen` for the sharpen off control; never committed, restored after.
+`measure/pits.py BOX LO FILE...`, `measure/g17tiles.py APPROVED FILM...` (every kept tile, the ones under 0.8 and the ones that cross against the first film), `measure/blot.py BOX SCALE FILE...` (scale 1 for the film, 1.467 for the plate). The renders: main clone at 53025569 with the plate swapped in `public/assets/mercury/full/`, a local factor on `uSharpen` for the sharpen off control; never committed, restored after.
