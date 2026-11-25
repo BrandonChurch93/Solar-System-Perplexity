@@ -1,6 +1,6 @@
 {
  "ground": "lab",
- "note": "ground: lab draws the ground of this folder (cells as real domes from a baked life), standing draws the ground of convect.ts. sim: the life of the cells, a power diagram of sites on a tile that repeats (tile and radius in stage units, times in seconds). dome: the shape of a cell (arc: the angle of its profile from crown to foot in degrees, more than 90 hangs over the foot; height: of the cell's mean radius; flat: how flat the top is, 1 a round arc). lod: a dome is drawn with the finest mesh above the first size in pixels of a 1080 frame, the middle above the second. spot: the warp that combs the cells toward the spot (pull, wide in stage units), the funnel of its pit and the umbra (of the approved umbra's half width). fibre.counts: fibres a radian of the fan from the root, three sizes. heat: the temperature of the matter (floor: the coldest, body: the dome's own, cool and hot: a cool and a hot thread, knot: a knot of rising matter, edge: what is left on a steep flank, pen: in the penumbra, bloom: how much brighter than white a heat over 1 is). haze: the thin glowing haze low over the ground (amount, scale: the height it thins by, level and tint: its light, power: how fast it thickens as the look flattens). dome.over: the footprint of a dome over its cell, more than 1 cuts into its neighbours; lobe: how deep the creases between the lobes of a top are; pen: the height left in the penumbra. fibre.root: how far the dark of the root reaches along the fibres. heat.core: how far from the crown the hot patch reaches, rim: the heat of the cooler matter round it, thread: how strong the threads are in the patch and round it, glint: the small points on a rim. heat.well: how fast the pattern of the hot matter spreads from the crown to the rim, in e folds of the distance a second. join: the field of the place that says where two cells stand on one level and have no crease between them (scale: its size, a unit; level: that level in stage units) and how the heat of the place runs over the borders (heat: its size). spot.strand: within how many umbra radii the ground is the threads of the penumbra, and by how much that differs from thread to thread. heat.core: how much the middle of a cell is hotter than its rim, rim: the heat of a cool place, thread[0]: how strong the fibres are, well: how fast the pattern runs along the fibres, in dome lengths a second. fibre.offset: how far from the crown the fibres' root lies, of the dome's radius (more than 1 is outside the foot); fibre.dark: how dark the root is. heat.thread: how much of the fibres shows at the rim and how much of that is left on the crown.",
+ "note": "ground: lab draws the ground of this folder (cells as real domes from a baked life), standing draws the ground of convect.ts. sim: the life of the cells, a power diagram of sites on a tile that repeats (tile and radius in stage units, times in seconds). dome: the shape of a cell (arc: the angle of its profile from crown to foot in degrees, more than 90 hangs over the foot; height: of the cell's mean radius; flat: how flat the top is, 1 a round arc). lod: a dome is drawn with the finest mesh above the first size in pixels of a 1080 frame, the middle above the second. spot: the warp that combs the cells toward the spot (pull, wide in stage units), the funnel of its pit and the umbra (of the approved umbra's half width). fibre.counts: fibres a radian of the fan from the root, three sizes. heat: the temperature of the matter (floor: the coldest, body: the dome's own, cool and hot: a cool and a hot thread, knot: a knot of rising matter, edge: what is left on a steep flank, pen: in the penumbra, bloom: how much brighter than white a heat over 1 is). haze: the thin glowing haze low over the ground (amount, scale: the height it thins by, level and tint: its light, power: how fast it thickens as the look flattens). dome.over: the footprint of a dome over its cell, more than 1 cuts into its neighbours; lobe: how deep the creases between the lobes of a top are; pen: the height left in the penumbra. fibre.root: how far the dark of the root reaches along the fibres. heat.core: how far from the crown the hot patch reaches, rim: the heat of the cooler matter round it, thread: how strong the threads are in the patch and round it, glint: the small points on a rim. heat.well: how fast the pattern of the hot matter spreads from the crown to the rim, in e folds of the distance a second. join: the field of the place that says where two cells stand on one level and have no crease between them (scale: its size, a unit; level: that level in stage units) and how the heat of the place runs over the borders (heat: its size). spot.strand: within how many umbra radii the ground is the threads of the penumbra, and by how much that differs from thread to thread. heat.core: how much the middle of a cell is hotter than its rim, rim: the heat of a cool place, thread[0]: how strong the fibres are, well: how fast the pattern runs along the fibres, in dome lengths a second. fibre.offset: how far from the crown the fibres' root lies, of the dome's radius (more than 1 is outside the foot); fibre.dark: how dark the root is. heat.thread: how much of the fibres shows at the rim and how much of that is left on the crown. far.px: under the first width of a mean cell in pixels of a 1080 frame a cell is no thing but the floor's map of the same cells, from the second down it sinks into it; far.map: the size of that map of the tile.",
  "sim": {
   "tile": 4,
   "slots": 5625,
@@ -82,7 +82,7 @@
   "core": 1.4,
   "thread": [
    1.0,
-   0.6
+   0.9
   ],
   "rim": 0.1,
   "well": 0.06
@@ -102,5 +102,12 @@
   "scale": 9,
   "heat": 8,
   "level": 0.009
+ },
+ "far": {
+  "px": [
+   6,
+   10
+  ],
+  "map": 2048
  }
 }

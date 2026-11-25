@@ -140,3 +140,30 @@ Everything by place, eye distance, angle and pixel size. Nothing by the clock.
 - Far end seen in y-far.jpg: red orange haze with few light patches against the approved's golden grain. The haze
   power 2.5 makes everything under a look of 4 degrees opaque. To try: power 1.5, amount 0.004, and smaller cells
   (sim slots 5625, radius 0.021 to 0.06) since the approved cells are about 0.8 of mine in the near pair.
+
+## 07:40 to 08:02: states z to zk (committed d741d77, ac24b9b), and what is written but not yet seen
+
+- The clip of state y was stopped at 59 pictures (240 to 298) to free the machine for the look. Proxy on those 59:
+  pattern over 16 capture frames, largest 99th percentile 0.089, picture to next 0.021 (clipstat.py).
+- z (root inside, soft fibres): flat pavers with a sharp bright top. FAILED as it stood. Cause found: the mesh's own
+  ring coordinate rho is not the plan radius (rho 0.7 is 0.87 of the radius seen from above), so everything written
+  by rho sat in a thin outer band. The heat profile now goes by the plan radius sin(a)/sin(arc).
+- What held (zf on): top = floor + pow(1 - plan^2, heat.core) times the wide field of the place, times a mottle of
+  three octaves (0.45 to 1.35); dark by depth (vDeep, the height of the surface over its foot, from the vertex
+  shader: black where two domes meet low, a soft halo above); flanks cooler by the lie (heat.edge 0.12); veins come
+  in from the rim (14 places a turn, 40 percent drawn); points down (knot 0.3); haze power 1.5 amount 0.004.
+- zi: cells smaller (sim slots 5625, radius 0.021 to 0.06): flat starfish. zj: dome height 0.42, flat 1.9, core 1.4,
+  rim 0.1: plump again. zk: fibre counts 6, 14, 32 a radian for the new size, join level 0.009, more joins.
+  Near ground of zk: mean rgb [0.611 0.369 0.184], percentiles [0.271 0.412 0.616 0.796 0.961 1.0] against the
+  approved [0.231 0.404 0.58 0.761 0.906 0.965].
+- Clip of zk running since 07:56 (out/work/sun/lab/clip-zk, life now 5 to 14 s, well 0.06).
+- Written, not seen: penumbra threads as level lines of the field about the spot (labPen, shared by dome and
+  floor); fibres at 0.9 strength on the crown; wider dark halo by depth.
+- Written, not seen: THE FAR END. A map of the tile (2048, half float, mips, anisotropy 16) is drawn each time the
+  time changes from the same cells with the same dome shader seen from above (define LAB_MAP, heat alone). The
+  floor reads it at the place in the cells' own chart (the comb toward the spot undone in closed form) wherever a
+  mean cell is under far.px[1] = 10 px of a 1080 frame; a dome sinks to the floor and takes the map's heat between
+  10 and 6 px and is left out under 6. So the cells in the map are the same cells at the same places as the domes,
+  and the mips carry them to their mean. In the surface view the horizon is 6.5 units off and a mean cell is 62/d px
+  wide, so every cell up to the horizon stays a real dome; the map is for the rise.
+- Known cost risk: on the rise, cells of 6 px and more can be 70000 and more; level 2 list raised to 512 x 512.
