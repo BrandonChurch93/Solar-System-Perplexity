@@ -1,71 +1,71 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T12:32:33.404Z",
+ "pushed": "2026-11-25T12:51:15.458Z",
  "head": "22820b17727af6c3ac68996bfceebac0aca83c2a",
- "note": "control of (c): trial 3 holds grounds (b) and (c) as one body; 2472 to 2477 worse than the state at the picture's sides (land near the eye is no wall rock yet, no air on the bare land, apron too short at 2477)",
+ "note": "trial 3 with wall law judged worse near T; (i) and (ii) traced; candidate N1 renders",
  "looks": [
   {
-   "time": "2026-11-25T12:32:32.362Z",
-   "file": "20261125123232362-note-w-track9-b.jpg",
-   "source": "out/work/place/m9/w-track9-b.jpg",
+   "time": "2026-11-25T12:51:14.483Z",
+   "file": "20261125125114483-note-far-1260.jpg",
+   "source": "out/work/place/m9/far-1260.jpg",
    "kind": "note",
-   "label": "trial 3, ground (b) followed 2460 to 2476 at rate 2: state above, trial below",
+   "label": "far ground (i): state 2460, 2468, trial 2460, 2468 at pixel 1260, 80, times 3",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T12:32:31.463Z",
-   "file": "20261125123231463-note-w-track9-c.jpg",
-   "source": "out/work/place/m9/w-track9-c.jpg",
+   "time": "2026-11-25T12:51:13.640Z",
+   "file": "20261125125113640-note-plate-ii.jpg",
+   "source": "out/work/place/m9/plate-ii.jpg",
    "kind": "note",
-   "label": "trial 3, ground (c) followed 2460 to 2476 at rate 2: state above (plain becomes streaked wall rock), trial below (one plain)",
+   "label": "the 0.3 plate at ground (ii), 1 to 1, state left, trial right: the take's blocky terrace",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T12:32:30.214Z",
-   "file": "20261125123230214-note-w-pair-2477.jpg",
-   "source": "out/work/place/m9/w-pair-2477.jpg",
+   "time": "2026-11-25T12:51:12.795Z",
+   "file": "20261125125112795-note-track-ii.jpg",
+   "source": "out/work/place/m9/track-ii.jpg",
    "kind": "note",
-   "label": "trial 3 at 2477: state above, trial below: cliff of the near mesa ends at the picture's lower side, block at right, grey corner (apron too short for the land's true distance)",
+   "label": "ground (ii) of MAIL 1095 followed 2464 to 2476: state, trial W, trial Y",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T12:32:28.811Z",
-   "file": "20261125123228811-note-control-c-2460-2476.jpg",
-   "source": "out/work/place/m9/control-c-2460-2476.jpg",
+   "time": "2026-11-25T12:51:11.920Z",
+   "file": "20261125125111920-note-h03.jpg",
+   "source": "out/work/place/m9/h03.jpg",
    "kind": "note",
-   "label": "control of (c), trial 3 (margins and aprons of the set are the land, band 320 px): 2460 to 2476 at rate 2, state above, trial below",
+   "label": "heights of the 0.3 level about the eye and their slope: a ramp made from the old aprons",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T12:17:56.366Z",
-   "file": "20261125121756366-note-v2-track-b.jpg",
-   "source": "out/work/place/m8/v2-track-b.jpg",
+   "time": "2026-11-25T12:51:11.124Z",
+   "file": "20261125125111124-note-walls-0p3.jpg",
+   "source": "out/work/place/m9/walls-0p3.jpg",
    "kind": "note",
-   "label": "trial 3 try 2 of (c): v2-track-b (state above or left, trial below)",
+   "label": "0.3 plate from above, trial left, with the wall law right: pale contour bands",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T12:17:55.776Z",
-   "file": "20261125121755776-note-v2-track-c.jpg",
-   "source": "out/work/place/m8/v2-track-c.jpg",
+   "time": "2026-11-25T12:51:10.091Z",
+   "file": "20261125125110091-note-x-sheet.jpg",
+   "source": "out/work/place/m9/x-sheet.jpg",
    "kind": "note",
-   "label": "trial 3 try 2 of (c): v2-track-c (state above or left, trial below)",
+   "label": "trial 3 new aprons: 2478 2480 2484 2489 2670 2676 2681 2684",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T12:17:54.896Z",
-   "file": "20261125121754896-note-v2-pair-2476.jpg",
-   "source": "out/work/place/m8/v2-pair-2476.jpg",
+   "time": "2026-11-25T12:51:09.132Z",
+   "file": "20261125125109132-note-y-sheet.jpg",
+   "source": "out/work/place/m9/y-sheet.jpg",
    "kind": "note",
-   "label": "trial 3 try 2 of (c): v2-pair-2476 (state above or left, trial below)",
+   "label": "trial 3 with the wall law: 2472, 2476, 2477, 2468",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T12:03:00.520Z",
-   "file": "20261125120300520-note-t2-track-b.jpg",
-   "source": "out/work/place/m7/t2-track-b.jpg",
+   "time": "2026-11-25T12:51:07.991Z",
+   "file": "20261125125107991-note-y-pair-2477.jpg",
+   "source": "out/work/place/m9/y-pair-2477.jpg",
    "kind": "note",
-   "label": "ground (b) at 2460 2464 2468 2472: state above, trial 2 below: forms there from 2464, smear at 2460",
+   "label": "trial 3 with the wall law at 2477, state above: the mesa stands cut along the picture's sides, worse",
    "stop": "mars"
   }
  ]
