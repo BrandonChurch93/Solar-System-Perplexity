@@ -68,6 +68,7 @@ function rampTexture(): THREE.DataTexture {
 }
 
 const T = lab.tubes
+const Q = (lab.heat as { cushion?: { navel: number[]; fibre: number[]; patch: number[]; prof: number[] } }).cushion
 const CU = (lab.dome as { base?: number[] }).base
 const smooth = (a: number, b: number, x: number): number => {
   const t = Math.min(Math.max((x - a) / (b - a), 0), 1)
@@ -806,6 +807,12 @@ void main() {
   top *= 1.0 - ${lab.heat.dimple[0]!.toFixed(2)} * exp(-rho * rho / ${(lab.heat.dimple[1]! * lab.heat.dimple[1]!).toFixed(4)});
   float cell = top * mix(1.0, mix(${lab.fibre.cold.toFixed(2)}, uLabHeat.w, thread), uLabHeatB.z * smoothstep(${(T.on ? T.silk[0]! : 0.04).toFixed(2)}, ${(T.on ? T.silk[1]! : 0.4).toFixed(2)}, along));
   cell *= 1.0 + ${(2 * lab.heat.fine[0]!).toFixed(3)} * (labWell(d * ${lab.heat.fine[1]!.toFixed(2)}, seed + 0.37, uLabTime.x) - 0.5);
+#if ${Q && T.on ? 1 : 0}
+  // a cell as a cushion: light over most of its top, a cooler navel where the gas wells up, a lighter ring half way
+  // out, falling to the seam; the texture is fine fibres that fan from the navel and ride outward, and broad soft
+  // swells that ride with them
+  cell = (${lab.heat.tone[0]!.toFixed(2)} + ${lab.heat.tone[1]!.toFixed(2)} * wide) * mix(${(Q?.navel[0] ?? 1).toFixed(2)}, 1.0, smoothstep(0.0, ${(Q?.navel[1] ?? 0.4).toFixed(2)}, tr)) * (1.0 + ${(Q?.prof[0] ?? 0).toFixed(2)} * smoothstep(${(Q?.prof[1] ?? 0.3).toFixed(2)}, ${(Q?.prof[2] ?? 0.6).toFixed(2)}, plan) - ${(Q?.prof[3] ?? 0).toFixed(2)} * pow(smoothstep(${(Q?.prof[4] ?? 0.3).toFixed(2)}, 1.0, plan), ${(Q?.prof[5] ?? 1).toFixed(2)})) * max(1.0 + smoothstep(${(Q?.fibre[1] ?? 0.05).toFixed(2)}, ${(Q?.fibre[2] ?? 0.4).toFixed(2)}, tr) * (${(2 * (Q?.fibre[0] ?? 0)).toFixed(3)} * (fan - 0.5) + ${(Q?.fibre[3] ?? 0).toFixed(3)} * (thread - 0.3)), 0.25) * (1.0 + ${(2 * (Q?.patch[0] ?? 0)).toFixed(3)} * (labWell(d * ${(Q?.patch[1] ?? 2).toFixed(2)}, seed, uLabTime.x) - 0.5));
+#endif
   float c0 = ${lab.heat.crease[0]!.toFixed(3)} * (vn(vG * uLabJoin.w * 2.9 + 41.0) + 0.5 * vn(vG * uLabJoin.w * 7.3 - 13.0)) / 1.5;
   float deep = isnan(vDeep) || isinf(vDeep) ? 1.0 : vDeep;
   float lane = smoothstep(c0 * (1.0 - join), c0 * (1.0 - join) + ${lab.heat.crease[1]!.toFixed(3)}, deep);

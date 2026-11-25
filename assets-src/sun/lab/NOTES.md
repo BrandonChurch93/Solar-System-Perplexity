@@ -1030,3 +1030,86 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   21:33 the push of looks and the dry run of a push of code both fail: github answers 401 (no user name); reading
     still works. Nothing changed on my side (no credential helper is set in git; the push of 21:10 went through).
     Commits are kept locally until it works again; pictures go by mail.
+- 21:34 UTC both pushes went through (the 401 was passing). b7 = c0c5dac2 pushed; looks pushed.
+- 21:45 UTC MAIL to /root (answer to 1296, not a name) with b7's numbers, costs, flicker, ten pictures.
+  FINDINGS after the chain, all at frame 90 draft:
+  match.py now prints four bands of rows (0 to 0.3, to 0.5, to 0.72, to 1): standing 6.693 14.205 47.78 53.294;
+    u24 6.693 22.199 43.895 51.282; b7 6.693 22.27 45.446 52.25. The whole loss against the standing ground is
+    rows 460 to 560: (1) my far field is a pale fog (haze.amount 0.002, power 3 over the limb law's darkening
+    0.6) where the approved shows gold cells with dark lanes to the limb, (2) the shot's horizon stands 25 to 30
+    px above the approved's (standing too; the camera, not mine). v/limb-b7.jpg, v/band-b7.jpg.
+  f1 haze.power 2: far field dark red brown, 33.468. f2 graze [0.85, 1, 0], haze.amount 0.0006: 33.996.
+  f3 graze [1.3, 1, 0] (a mild brightening toward the limb, still the limb law alone), haze.amount 0.0003: gold
+    cells to the limb as the approved; near field brighter by a tenth. f4 = f3 with the curve refit: 33.737 /
+    55.186 bands 6.693 21.694 54.263 55.186. The number rewards fog; ruling asked in the mail.
+    cells.py on f4: curve 0.672 0.673 0.671 0.66 0.646 0.624 0.588 0.536 0.462 0.383 0.331, sizes 10/50/90
+    20.3/34.6/73.4, one direction 0.14, lane 5.35 px depth 0.337.
+  A hard white line at the limb stays in f4; the standing ground on my branch does not show it; cause not found.
+  SEEN at 1 to 1 (v/strip-f4.jpg, v/duo-f4.jpg): b7 and f4 are glazed bronze PEBBLES (lumps with crisp outlines
+    and dark blotches). The approved is soft cushions that touch: a dark navel off the middle, fine light fibres
+    (2 to 4 px) fanning from the navel to the border, lightest in a ring at half to three quarters of the way,
+    then a thin dark seam; large cushions 100 to 150 px with small ones of 30 to 50 between. cells.py cuts the
+    approved's cushions at their inner folds, so its median (34.7 px) is of pieces: shrinking my cells to it (c1)
+    was a mistake by the number. NEXT: wider spread of sizes with larger cells, low relief, no lumps, no blotches,
+    navel and fibres, light ring, thin dark seam, soft orange sparks at the seams.
+- MAIL 1311 from /root, 21:56 UTC (answer to my mail of 21:45), core verbatim:
+  "1. THE RULING you asked for (d329 (5)). ... at frame 90: the plain match holds on the part of the frame that is
+  NOT ground (sky and the limb's line), no worse than main's own there. On the ground it is replaced by three
+  lines: (i) the low band, both pictures blurred with a Gaussian of sigma 64 px, mean absolute RGB over the whole
+  frame, no worse than main's own; (ii) luminance bands, differences of blurs at sigma 1, 2, 4, 8, 16, 32 and 64
+  px, root mean square over the ground, the ratio to the approved's within 0.7 and 1.4 in the six bands from 1 to
+  2 up to 32 to 64 px; (iii) my eye at 1 to 1 for the form. Take the far field of trial f4: cells to the limb, as
+  the approved shows them. The horizon standing 25 to 30 px above the approved's is the camera's and is not yours
+  to close; leave rows that lie on the approved's sky out of the ground mask and say which rows.
+  2. MY EYE on the strip, and I agree with your verdict. b7 is further from the approved than u24, in size and in
+  gloss. What reads as glaze in both: narrow hard highlights on a dark body. The approved's light is broad: most
+  of a cushion is light, its curve is flat to 0.3 and falls from there, and the texture is carried by fine fibres
+  of 2 to 4 px that fan from the navel, not by blotches. Its highlights have no hard edge. Its lanes are not
+  black: dark red brown, about 7 px, with a soft orange glow in places. It grows softer with distance. u24's
+  shells had the size and the sheet; they lacked the fibres, the navel off the middle, the low relief and the
+  soft light. Go back to u24's sizes with the wider spread you name (large cushions of 100 to 150 px with small
+  ones of 30 to 50 between), relief lower than u24's, then fibres, navel, ring and seam; the sparks soft and
+  orange along the seams or not at all.
+  3. YOUR READER. Do not shrink cells to match a count that splits the approved's cushions at their folds. Mend
+  the reader first (join pieces across a fold that is lighter than a lane and narrower than 3 px), or drop the
+  count as a line and keep the eye. Say which.
+  4. Costs: 67 s a draft frame is no limit. The handover comes after the near field, as ruled in 1296.
+  5. THE TOOL is attached: bands.py --top 64 FRAME APPROVED [MASK], pictures at 1920 by 1080, the mask a white on
+  black png of the ground. MEASURED by it on a machine's final of main's code at 90, whole frame without a mask:
+  plain 29.5582, low band at 64 px 10.9492, bands from 1 to 2 up to 32 to 64 px 0.94, 0.89, 0.93, 0.95, 0.89,
+  0.93. Send me your ground mask and I measure main's numbers and yours with it.
+  MAIN MOVED at 21:41: the fourth cut is on main (merge 6bdd87ec, tip 172e7bcd). Merge origin main before you
+  name. Give me the date of the next state."
+  The tool is kept as v/bands.py (the Builder's, not committed). Owed: the ground mask, the reader's mend or the
+  count dropped, the date of the next state.
+- sun_builder 21:47 (low): the smooth bright band at the limb and the flat glow over it are my haze and my air
+  (tau = amount / max(mu, 0.02)^power is 250 at the limb); his trial power 1.5 and air[1] 0.5 gives a thin gold
+  line with cells to the limb. He names the band as mine.
+- 21:50 to 22:08 UTC. CUSHION TRIALS (frame 90 draft; each refit with v/fit.sh; pictures v/strip-NAME.jpg):
+  ground.ts: heat.cushion (when set, with tubes on) replaces the heat of the top: tone times navel (cooler within
+    navel[1] of the fan's root) times a profile on the way to the border (prof: ring lift, from, to, fall, from,
+    power) times fibres (fibre: fan amplitude, from, to, thread amplitude; never under 0.25) times broad swells
+    (patch: amplitude, scale). The seam, folds, tubes and pits follow as before.
+  sim.radius [0.022, 0.09], slots 1675 (law: slots = 4.03 / mean of r squared with r = r0 + (r1 - r0) k^2).
+  haze.power 2, haze.amount 0.0003, haze.air [0.04, 0.4, 0.45], graze [1.3, 1, 0] (far field of f4).
+  g1 dome parabola (base[4] 2, [5] 1), height 0.3, lanes thin: touching cells, hairline black cracks, polished.
+  g2 strong fan and thread, soft lanes: crumpled leather, a black hole where the product went under 0.
+  g3, g4 dark mottled top and hot fibred flanks on a round dome (height 0.45): the right layout by my look at
+    the approved at 3 times (v/appr-x3.jpg: the near flank of a cushion is light and streaky, its top medium and
+    mottled, the far flank hidden), but glazed pebbles: narrow hard highlights on a dark body.
+  h1 to h3 after MAIL 1311 (light top, navel, ring, fibres; height 0.28, parabola; fibre.counts [3, 7, 14]):
+    satin shells, each cell still with broad dark parts; not there.
+  v/levels-h3.jpg (both pictures cut at the approved's percentiles): the approved's darks are broad soft blobs
+    of 10 to 30 px (lanes with their pits, and patches on the tops), its lights irregular soft blobs of 20 to 40
+    px; mine is clean plates with thin dark outlines and straight streaks. The approved has no crisp edge at all;
+    bands.py reads my finest band (under 1 px) at 1.7 to 2.2 times the approved's.
+  mask.py: the ground mask for the Builder's bands.py (approved's limb by eye at nine columns, cubic, 10 px
+    below). v/bd.sh NAME: bands.py with the mask. MEASURED (plain, low band 64, outside the mask, inside, ratios
+    under 1, 1 to 2, ... 32 to 64):
+    standing 29.8003 10.01 10.2255 51.0286 [0.81 0.81 0.85 0.92 0.99 1.04 1.03]
+    u24 29.9412 9.1214 15.5578 45.5396 [1.19 0.81 0.75 0.81 0.91 0.96 1.04]
+    b7 30.5724 9.3446 15.6437 46.7621 [1.82 1.17 0.94 0.84 0.80 0.77 1.00]
+    f4 33.2634 8.7372 14.8345 53.249 [2.20 1.36 1.08 0.96 0.91 0.86 0.90]
+    h2 31.4203 8.0387 12.4283 52.0166 [1.69 1.13 1.00 0.98 1.01 0.96 0.85]
+    Outside the mask my frames are worse than the standing ground: the strip between my limb and the approved's
+    is ground in my frame (gold, as ruled) and sky in the approved, and my air glows above the limb.
