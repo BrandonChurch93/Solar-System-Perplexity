@@ -1,9 +1,17 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-25T04:32:45.071Z",
+ "pushed": "2026-11-25T04:53:25.689Z",
  "head": "7b482c078a340454ff8fe1bbb7ce9b842d437e15",
- "note": "cap.cull (the cap's patches sifted by the lens), proof run in progress: Mars 2400 to 2488 step 8 and 2580 are byte equal on against off, seconds fall by a quarter where the cap is drawn; the rate 2 half frames 2440 to 2460 with the option off are still rendering",
+ "note": "cap.cull: every Mars frame rendered with the option on is byte equal to the same frame with it off (14 whole frames at rate 1, 41 capture frames at rate 2); the frame is about a quarter faster where the cap is drawn; still wrong: no gain near 2580 where this tree does not draw the cap, and the patches around the camera stay",
  "looks": [
+  {
+   "time": "2026-11-25T04:53:24.115Z",
+   "file": "20261125045324115-note-cull-proof-2.jpg",
+   "source": "../m835/cull-proof-2.png",
+   "kind": "note",
+   "label": "cap.cull on against off, Mars draft seconds: left rate 1 (14 of 14 byte equal), right rate 2 by halves 2440 to 2460 (41 of 41 byte equal)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T04:32:44.371Z",
    "file": "20261125043244371-note-cull-proof-1.jpg",
@@ -59,14 +67,6 @@
    "kind": "note",
    "label": "Uranus rise 8818 and 8834 with what the carry leaves: an exchange of pictures, the shape is the unit sphere there",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T01:22:14.228Z",
-   "file": "20261125012214228-note-moon-look.jpg",
-   "source": "../m835/moon-look.png",
-   "kind": "note",
-   "label": "Mars pairs 4780:4796, 4800:4816, 4806:4822: first frame, later frame, later carried back by the record with two bodies, pixels the record gives to the moon",
-   "stop": "mars"
   }
  ]
 }
