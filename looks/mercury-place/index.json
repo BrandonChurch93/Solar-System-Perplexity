@@ -1,9 +1,49 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T18:00:02.540Z",
+ "pushed": "2026-11-25T18:21:55.532Z",
  "head": "3da91ef177e8a7382a957c07bbc1e39d0ebd0b64",
- "note": "3da91ef1: crater in the dive, way C rise 998.5 to 1002 steady (0.21), main's rise row found (0.95)",
+ "note": "3da91ef1: dive 717 to 750 read on the commit, crater steady, 615 disc at 4 times beside approved and main",
  "looks": [
+  {
+   "time": "2026-11-25T18:21:54.876Z",
+   "file": "20261125182154876-note-dive-cr-c.jpg",
+   "source": "../../../../tmp/m/dive-cr-c.jpg",
+   "kind": "note",
+   "label": "dive 741 to 750 whole frames round the crater on 3da91ef1",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T18:21:54.231Z",
+   "file": "20261125182154231-note-dive-cr-b.jpg",
+   "source": "../../../../tmp/m/dive-cr-b.jpg",
+   "kind": "note",
+   "label": "dive 725 to 740 whole frames round the crater on 3da91ef1",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T18:11:45.185Z",
+   "file": "20261125181145185-note-dive-sky.jpg",
+   "source": "../../../../tmp/m/dive-sky.jpg",
+   "kind": "note",
+   "label": "dive 717 to 724.5 top right lifted 3 on 3da91ef1: the hold card under the far Sun",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T18:11:43.934Z",
+   "file": "20261125181143934-note-dive-cr-a.jpg",
+   "source": "../../../../tmp/m/dive-cr-a.jpg",
+   "kind": "note",
+   "label": "dive 717 to 724.5 at 1 to 1 on 3da91ef1: the crater's place, every half frame",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T18:01:08.455Z",
+   "file": "20261125180108455-note-disc4-615.jpg",
+   "source": "../../../../tmp/m/disc4-615.jpg",
+   "kind": "note",
+   "label": "615 disc at 4 times: approved, main 9ee7de11, name 3da91ef1",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T18:00:01.255Z",
    "file": "20261125180001255-note-rise-m9b.jpg",
@@ -26,46 +66,6 @@
    "source": "../../../../tmp/m/rise-c.jpg",
    "kind": "note",
    "label": "rise 998.5 to 1002 way C s14 final tree, pattern 0.17 to 0.21",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T17:41:05.638Z",
-   "file": "20261125174105638-note-rise-a.jpg",
-   "source": "../../../../tmp/m/rise-a.jpg",
-   "kind": "note",
-   "label": "rise 1002.5 to 1006.5 at rate 2, way C with the far Sun and the hero crater: the limb does not turn white here",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T17:41:04.456Z",
-   "file": "20261125174104456-note-b717-1to1.jpg",
-   "source": "../../../../tmp/m/b717-1to1.jpg",
-   "kind": "note",
-   "label": "717 at 1 to 1, lower right: old hold sky card left, margin laid again right (the stars no longer stop on a straight line)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T17:16:25.190Z",
-   "file": "20261125171625190-note-border-check.jpg",
-   "source": "out/work/mercury/border-check.jpg",
-   "kind": "note",
-   "label": "hold sky card lifted 6: before over after the border cure",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T17:16:24.519Z",
-   "file": "20261125171624519-note-cr3-735x3.jpg",
-   "source": "../../../../tmp/m/cr3-735x3.png",
-   "kind": "note",
-   "label": "735 at 3 times: 0.06 degrees, 0.02 degrees with specks, third form",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T17:16:23.831Z",
-   "file": "20261125171623831-note-cr3-dive.jpg",
-   "source": "../../../../tmp/m/cr3-dive.jpg",
-   "kind": "note",
-   "label": "the crater 717 725 735 745: first form over third form",
    "stop": "mercury"
   }
  ]
