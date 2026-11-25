@@ -1,71 +1,71 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T07:28:18.576Z",
+ "pushed": "2026-11-25T07:54:27.963Z",
  "head": "86237abe705bfc32ecbf4651d7c40cd5e150603a",
- "note": "venus 86237abe: one ground for every height, first state, dive and rise and hold at draft",
+ "note": "venus 86237abe: rise every frame 1540 to 1587, dive pattern panel at rate 2 (red 0.83), limb 1274 to 1282 before and after",
  "looks": [
   {
-   "time": "2026-11-25T07:28:17.334Z",
-   "file": "20261125072817334-note-dive-1302.jpg",
-   "source": "../../../../tmp/v/sh/q6all/dive-1302.jpg",
+   "time": "2026-11-25T07:54:26.626Z",
+   "file": "20261125075426626-note-q6-vs-b0-1274-82.jpg",
+   "source": "../../../../tmp/v/sh/q6-vs-b0-1274-82.jpg",
    "kind": "note",
-   "label": "q6 dive every frame from 1302, 86237abe draft",
+   "label": "dive 1274 1278 1282 lower right limb, tree before (top) and 86237abe (bottom): the same pale smear and rim in both",
    "stop": "venus"
   },
   {
-   "time": "2026-11-25T07:28:16.283Z",
-   "file": "20261125072816283-note-dive-1296.jpg",
-   "source": "../../../../tmp/v/sh/q6all/dive-1296.jpg",
+   "time": "2026-11-25T07:54:25.384Z",
+   "file": "20261125075425384-note-venus-dive-changes.jpg",
+   "source": "../../../../tmp/v/smooth-q6/venus-dive-changes.png",
    "kind": "note",
-   "label": "q6 dive every frame from 1296, 86237abe draft",
+   "label": "q6 dive rate 2 on 86237abe: the largest changes of the pattern (red, 0.83 from 1321 + 1/2)",
    "stop": "venus"
   },
   {
-   "time": "2026-11-25T07:28:15.273Z",
-   "file": "20261125072815273-note-dive-1290.jpg",
-   "source": "../../../../tmp/v/sh/q6all/dive-1290.jpg",
+   "time": "2026-11-25T07:54:24.483Z",
+   "file": "20261125075424483-note-rise-1582.jpg",
+   "source": "../../../../tmp/v/sh/q6all/rise-1582.jpg",
    "kind": "note",
-   "label": "q6 dive every frame from 1290, 86237abe draft",
+   "label": "q6 rise every frame from 1582, 86237abe draft",
    "stop": "venus"
   },
   {
-   "time": "2026-11-25T07:28:14.498Z",
-   "file": "20261125072814498-note-dive-1284.jpg",
-   "source": "../../../../tmp/v/sh/q6all/dive-1284.jpg",
+   "time": "2026-11-25T07:54:23.663Z",
+   "file": "20261125075423663-note-rise-1576.jpg",
+   "source": "../../../../tmp/v/sh/q6all/rise-1576.jpg",
    "kind": "note",
-   "label": "q6 dive every frame from 1284, 86237abe draft",
+   "label": "q6 rise every frame from 1576, 86237abe draft",
    "stop": "venus"
   },
   {
-   "time": "2026-11-25T07:28:13.382Z",
-   "file": "20261125072813382-note-q6-hold-1x.jpg",
-   "source": "../../../../tmp/v/sh/q6-hold-1x.jpg",
+   "time": "2026-11-25T07:54:22.733Z",
+   "file": "20261125075422733-note-rise-1570.jpg",
+   "source": "../../../../tmp/v/sh/q6all/rise-1570.jpg",
    "kind": "note",
-   "label": "q6-hold-1x one ground for every height first state 86237abe draft",
+   "label": "q6 rise every frame from 1570, 86237abe draft",
    "stop": "venus"
   },
   {
-   "time": "2026-11-25T07:28:12.269Z",
-   "file": "20261125072812269-note-q6-rise-b.jpg",
-   "source": "../../../../tmp/v/sh/q6-rise-b.jpg",
+   "time": "2026-11-25T07:54:21.941Z",
+   "file": "20261125075421941-note-rise-1564.jpg",
+   "source": "../../../../tmp/v/sh/q6all/rise-1564.jpg",
    "kind": "note",
-   "label": "q6-rise-b one ground for every height first state 86237abe draft",
+   "label": "q6 rise every frame from 1564, 86237abe draft",
    "stop": "venus"
   },
   {
-   "time": "2026-11-25T07:28:11.237Z",
-   "file": "20261125072811237-note-q6-rise-a.jpg",
-   "source": "../../../../tmp/v/sh/q6-rise-a.jpg",
+   "time": "2026-11-25T07:54:21.084Z",
+   "file": "20261125075421084-note-rise-1558.jpg",
+   "source": "../../../../tmp/v/sh/q6all/rise-1558.jpg",
    "kind": "note",
-   "label": "q6-rise-a one ground for every height first state 86237abe draft",
+   "label": "q6 rise every frame from 1558, 86237abe draft",
    "stop": "venus"
   },
   {
-   "time": "2026-11-25T07:28:10.460Z",
-   "file": "20261125072810460-note-q6-dive-b.jpg",
-   "source": "../../../../tmp/v/sh/q6-dive-b.jpg",
+   "time": "2026-11-25T07:54:19.819Z",
+   "file": "20261125075419819-note-rise-1552.jpg",
+   "source": "../../../../tmp/v/sh/q6all/rise-1552.jpg",
    "kind": "note",
-   "label": "q6-dive-b one ground for every height first state 86237abe draft",
+   "label": "q6 rise every frame from 1552, 86237abe draft",
    "stop": "venus"
   }
  ]
