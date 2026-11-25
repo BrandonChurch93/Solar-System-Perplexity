@@ -892,6 +892,7 @@ export class LabGround {
   private readonly order: { d: number; i: number; ox: number; oy: number }[][] = [[], [], []]
   private readonly map = new THREE.WebGLRenderTarget(lab.far.map, lab.far.map, { type: THREE.HalfFloatType, format: THREE.RGBAFormat, minFilter: THREE.LinearMipmapLinearFilter, magFilter: THREE.LinearFilter, wrapS: THREE.RepeatWrapping, wrapT: THREE.RepeatWrapping, depthBuffer: true, stencilBuffer: false, generateMipmaps: true, anisotropy: 16 })
   private readonly mapScene = new THREE.Scene()
+  private readonly wipe = new THREE.Color()
   private readonly mapEye = new THREE.Camera()
   private readonly mapList = new THREE.DataTexture(new Float32Array(128 * 128 * 4), 128, 128, THREE.RGBAFormat, THREE.FloatType)
   private mapGeometry: THREE.InstancedBufferGeometry | null = null
@@ -1150,7 +1151,7 @@ export class LabGround {
     for (let i = 0; i < SLOTS; i++) {
       const o = i * 32
       if (!d.on[i]) {
-        px[o + 2] = 0
+        px.fill(0, o, o + 32)
         continue
       }
       const r = Math.sqrt(d.area[i]! / Math.PI)
@@ -1233,8 +1234,13 @@ export class LabGround {
       const target = renderer.getRenderTarget()
       const xr = renderer.xr.enabled
       renderer.xr.enabled = false
+      const alpha = renderer.getClearAlpha()
+      renderer.getClearColor(this.wipe)
       renderer.setRenderTarget(this.map)
+      renderer.setClearColor(0x000000, 0)
+      renderer.clear(true, true, true)
       renderer.render(this.mapScene, this.mapEye)
+      renderer.setClearColor(this.wipe, alpha)
       renderer.setRenderTarget(target)
       renderer.xr.enabled = xr
     }
