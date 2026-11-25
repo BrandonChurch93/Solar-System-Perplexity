@@ -5,6 +5,7 @@ import { NOISE_GLSL } from '../../terrain/relief'
 import { GRADE_GLSL } from './grade'
 import { STAGE_GLSL, stage } from './stage'
 import data from './convect.json'
+import { fullSize } from './texels'
 import { formatUniform } from './format'
 
 /**
@@ -867,7 +868,7 @@ export class Surface {
         uCvWideFar: { value: new THREE.Vector4(l.wide.far.amount, l.wide.far.level, l.wide.far.power, l.wide.far.most) },
         uCvWideBand: { value: new THREE.Vector4(l.wide.band[0]!, l.wide.band[1]!, l.wide.region, 0) },
         uCvWideCell: { value: new THREE.Vector4(l.wide.cell.share, l.wide.cell.least, l.wide.cell.most, l.wide.cell.power) },
-        uCvWideMore: { value: new THREE.Vector4(l.wide.texels, (map.image as unknown as { width: number }).width, (map.image as unknown as { height: number }).height, 0) },
+        uCvWideMore: { value: new THREE.Vector4(l.wide.texels, ...fullSize('wrap'), 0) },
         uCvHeat: { value: new THREE.Vector4(0, l.middleWide, l.young, l.old) },
         uCvWell: { value: new THREE.Vector4(l.well.out, l.well.fall, l.well.tongue, 0) },
         uCvTone: { value: new THREE.Vector4(l.dark, l.top, l.spread, l.middle) },
