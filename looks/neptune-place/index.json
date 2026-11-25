@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T16:55:10.201Z",
+ "pushed": "2026-11-25T17:25:04.117Z",
  "head": "485d5807546cb45e3e66e3de6679c5b1bc182e50",
- "note": "4860: the pale plain as a veil by place with its own light; ground part under main's (preview, one frame, STATED)",
+ "note": "17:25 UTC: 4860 trial Y2 beside the approved: the eye with arms by the veil of the one body; ground 16.406 against main 19.622 at 960, G17 0.612/0.210; limb controls: the edge line and the veil are not the cause of 4694; 70 s a draft frame",
  "looks": [
+  {
+   "time": "2026-11-25T17:25:03.491Z",
+   "file": "20261125172503491-note-y-sheet2.jpg",
+   "source": "../../../../tmp/y-sheet2.jpg",
+   "kind": "note",
+   "label": "4860: approved, Y2 (storm patch 0.45, arms 2 by 2), Y6 (arms 2 by 3)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T17:25:02.900Z",
+   "file": "20261125172502900-note-look-y2.jpg",
+   "source": "../../../../tmp/look-y2.jpg",
+   "kind": "note",
+   "label": "4860: approved (left) beside trial Y2 (right, preview 960): the eye as a dark oval with pale arms winding in; G17 0.612 / 0.210 at preview; ground part 16.406 against main 19.622 at 960; 70 s a draft frame",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T16:55:08.756Z",
    "file": "20261125165508756-note-pg-P0-W5.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/n8-pairs.jpg",
    "kind": "note",
    "label": "rise pairs still over: second streamer changes kind 4968 to 4976, lower left wisps 4960 to 4970",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T15:55:36.680Z",
-   "file": "20261125155536680-note-n8-beside.jpg",
-   "source": "../../../../tmp/n8-beside.jpg",
-   "kind": "note",
-   "label": "4860 and 4605: approved, main, tip 66c70ae73 (G17 4860 0.544 draft proxy, 90.7 s the draft frame)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T15:25:10.898Z",
-   "file": "20261125152510898-note-n8-two.jpg",
-   "source": "../../../../tmp/n8-two.jpg",
-   "kind": "note",
-   "label": "4707 and 5006 on this tip: the stars stay points, the eye rides the globe as a small dark spot",
    "stop": "neptune"
   }
  ]
