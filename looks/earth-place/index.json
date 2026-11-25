@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T00:12:08.730Z",
- "head": "d00366598a0f0e83b0e47f6a8671cabe3355b9b3",
- "note": "K4 first pictures",
+ "pushed": "2026-11-25T00:32:34.406Z",
+ "head": "093c9b63f3ff702517fa262aed5f574476a4ff05",
+ "note": "K4 approved, state 1 in build: share by air path derived on the poses, review 2126 without a straight cloud border",
  "looks": [
+  {
+   "time": "2026-11-25T00:32:33.872Z",
+   "file": "20261125003233872-note-rv-2126-a.jpg",
+   "source": "../../../../tmp/gl/s21/rv-2126-a.jpg",
+   "kind": "note",
+   "label": "review tier 2126 on d0036659",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T00:32:33.298Z",
+   "file": "20261125003233298-note-S-b.jpg",
+   "source": "../../../../tmp/gl/k4/S-b.jpg",
+   "kind": "note",
+   "label": "K4 state 1 plan: the share by air path, derived on the poses",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T00:32:32.594Z",
+   "file": "20261125003232594-note-k4-shares-at-0.jpg",
+   "source": "../../../../tmp/gl/k4/k4-shares-at-0.jpg",
+   "kind": "note",
+   "label": "K4 trials: each share at 0 on d0036659",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-25T00:11:59.994Z",
    "file": "20261125001159994-note-rv-2130-b.jpg",
@@ -74,30 +98,6 @@
    "source": "../../../../tmp/gl/s21/sets-2155.jpg",
    "kind": "note",
    "label": "2155 web left, full right, draft, d0036659: mean difference 0.88 (was 4.97 on wf1)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T23:51:12.565Z",
-   "file": "20261124235112565-note-d253-1866.jpg",
-   "source": "../../../../tmp/gl/s21/d253-1866.jpg",
-   "kind": "note",
-   "label": "d253: dive frame 1866 in both sets at both sizes, draft, d0036659",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T23:35:20.304Z",
-   "file": "20261124233520304-note-sh-1904-1915.jpg",
-   "source": "../../../../tmp/gl/s20/sh-1904-1915.jpg",
-   "kind": "note",
-   "label": "811a5089 draft dive 1904-1915, every frame: the place still comes as a region (bad, K4)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T23:35:19.755Z",
-   "file": "20261124233519755-note-sh-1892-1903.jpg",
-   "source": "../../../../tmp/gl/s20/sh-1892-1903.jpg",
-   "kind": "note",
-   "label": "811a5089 draft dive 1892-1903, every frame: the place still comes as a region (bad, K4)",
    "stop": "earth"
   }
  ]
