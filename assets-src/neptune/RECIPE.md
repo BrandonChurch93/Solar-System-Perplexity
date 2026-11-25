@@ -34,8 +34,9 @@ Every file exists in `public/assets/neptune/full/` and `public/assets/neptune/we
 - Take kept: 3 of 6. Take 1 had smooth empty areas, so takes 2 and 3 asked for dense texture everywhere (the ending passes Triton at close range). Takes 2 and 3 were compared side by side in crops and take 3 was chosen.
 - Checks: hero cap sRGB (188, 173, 173) and plains (193, 193, 199) against the film crop `out/work/nep/triton-cmp.jpg`. Round 1 remake (08:25, same take 3, no new generation): fine detail contrast on the lit part (high pass sigma 3 px at 1920 wide) 6.2 in the hero, 12.4 before, 6.7 after; cap (194, 179, 179) against (199, 183, 184), plains (199, 200, 206) against (198, 199, 203).
 
-## public/assets/neptune/<set>/sky-hold.webp
+## The sky patch of the hold (deleted 25 Nov, history only)
 
+- 25 Nov, MAIL 774 and 878: this file (it was `sky` hyphen `hold`, webp, in both sets) is deleted and `src/stops/neptune/sky.json` is empty. Cause: with one sky turn for both views the patch's feathered edge stood in frame against the engine's Milky Way at 4707 (preview control K1 against K2, 41235 px differ), an exchange in place. The hold shows the engine's own sky and the engine's own Sun. What follows is history.
 - What: the sky patch of the hold, 4928x2772 lossless (`web` 2464x1386) since Phase 6: the hero's own sky with margin 0.375 (3520x1980 and 0.125 before).
 - Tool: `python3 assets-src/neptune/sky/patch.py hold references/approved/neptune-hero.png out/work/nep/sky/fill-t1.png out/work/nep/sky/glow-only.png public/assets/neptune`.
 - Inputs: the hero; `out/work/nep/sky/glow-only.png`, a review still of frame 4605 rendered with `sky.json` gain 0 (the film's own glow, ring off); the generated fill `out/work/nep/sky/fill-t1.png`.

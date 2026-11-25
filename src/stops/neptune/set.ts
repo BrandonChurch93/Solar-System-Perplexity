@@ -151,7 +151,8 @@ export const createSet: SetFactory = async (ctx) => {
   const cirrusPx = (high: number): number => move.cirrus.px * bufferFrame() * (1 - smooth((high - move.cirrus.height[0]!) / (move.cirrus.height[1]! - move.cirrus.height[0]!)))
 
   const sky: SkyPatch[] = []
-  for (const [view, def] of Object.entries(skyJson)) {
+  // sky.json is empty since 25 Nov: the stop has no sky plate of its own, the engine's one sky stands at every height (MAIL 774, 878).
+  for (const [view, def] of Object.entries(skyJson as Record<string, { file: string; vfovDeg: number; margin: number; gain: number; add: boolean; ring: number[] }>)) {
     const wide = 1 + 2 * def.margin
     const t = Math.tan(THREE.MathUtils.degToRad(def.vfovDeg) / 2) * wide
     sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, mips: false, anisotropy: 1 }), aim: new THREE.Quaternion(), tan: [t * 16 / 9, t], gain: def.gain, add: def.add, ring: def.ring as [number, number, number, number], edge: def.margin / wide })
