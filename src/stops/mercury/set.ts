@@ -143,6 +143,7 @@ export const createSet: SetFactory = async (ctx) => {
   const rimSun = new THREE.Vector3()
   const kick = new THREE.Vector3()
   const sunTurn = new THREE.Quaternion()
+  const sunRide = new THREE.Quaternion()
   const toCamera = new THREE.Quaternion()
   const plateBack = new THREE.Quaternion()
   const limbRay = new THREE.Vector3()
@@ -370,7 +371,8 @@ export const createSet: SetFactory = async (ctx) => {
       let plate = 1
       let ghosts = 1
       if (diving || rising) {
-        sunShown.applyQuaternion(skyRide(diving ? skyDive : skyRise, shot, view.camera, sunTurn))
+        skyRide(diving ? skyDive : skyRise, shot, view.camera, sunTurn)
+        sunShown.applyQuaternion(sunRide.identity().slerp(sunTurn, shot.skyShare ?? 0))
         rimSun.copy(sunShown)
         glareSun.copy(carriedSun(state.rotation, shot, view.camera))
         plate = 1 - (shot.skyShare ?? 0)
