@@ -1,71 +1,71 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T11:35:49.010Z",
+ "pushed": "2026-11-25T11:52:28.838Z",
  "head": "22820b17727af6c3ac68996bfceebac0aca83c2a",
- "note": "wall law with rock m4 pairs (beds read as contour stripes from above, not met), stair line control, tint at 2460 2468 2476 for (b) (c)",
+ "note": "control d (air off) far ground, (b) (c) ground followed with set on and off, (c) trial 1 thrown away (pale wedge), trial 2 plates from above (smeared fan)",
  "looks": [
   {
-   "time": "2026-11-25T11:35:48.435Z",
-   "file": "20261125113548435-note-bc-setoff.jpg",
-   "source": "out/work/place/m4/bc-setoff.jpg",
+   "time": "2026-11-25T11:52:28.201Z",
+   "file": "20261125115228201-note-body-0p7.jpg",
+   "source": "out/work/place/m7/look/body-0p7.jpg",
    "kind": "note",
-   "label": "(b) and (c) crops, set on left and set off right: equal, so the earlier picture is plates",
+   "label": "(c) trial 2, 0.7 plate from above: state left, the set's ground with aprons right",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T11:35:47.909Z",
-   "file": "20261125113547909-note-c-2468.jpg",
-   "source": "out/work/place/m4/c-2468.jpg",
+   "time": "2026-11-25T11:52:27.511Z",
+   "file": "20261125115227511-note-body-1p6.jpg",
+   "source": "out/work/place/m7/look/body-1p6.jpg",
    "kind": "note",
-   "label": "(c) crop (504, 844) at 1 to 1: 2468 state, 2468 tinted, 2472 state, 2476 tinted (set)",
+   "label": "(c) trial 2, 1.6 plate from above: state left, set's ground near and set's forms beyond right: a smeared fan with straight sides and apron streaks",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T11:35:47.368Z",
-   "file": "20261125113547368-note-b-2460.jpg",
-   "source": "out/work/place/m4/b-2460.jpg",
+   "time": "2026-11-25T11:50:11.453Z",
+   "file": "20261125115011453-note-margin-2472.jpg",
+   "source": "out/work/place/m6/margin-2472.jpg",
    "kind": "note",
-   "label": "(b) crop (780, 380) at 1 to 1: 2460 state, 2460 tinted, 2464 state, 2468 state",
+   "label": "2472: the picture's field of the set, its margins in red; outside them the set draws aprons",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T11:35:46.836Z",
-   "file": "20261125113546836-note-Y2476-small.jpg",
-   "source": "out/work/place/m4/Y2476-small.jpg",
+   "time": "2026-11-25T11:50:10.888Z",
+   "file": "20261125115010888-note-body-3p8.jpg",
+   "source": "out/work/place/m6/look/body-3p8.jpg",
    "kind": "note",
-   "label": "2476 plates tinted: nothing tinted, the whole frame is the set, one frame before T",
+   "label": "(c) trial 1 thrown away: 3.8 plate, state left, the set from above over its whole footprint right: a pale wedge of the picture's air",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T11:35:46.313Z",
-   "file": "20261125113546313-note-Y2468-small.jpg",
-   "source": "out/work/place/m4/Y2468-small.jpg",
+   "time": "2026-11-25T11:50:10.348Z",
+   "file": "20261125115010348-note-track-c.jpg",
+   "source": "out/work/place/m5/track-c.jpg",
    "kind": "note",
-   "label": "2468 plates tinted: crop (c) at (504, 844) is the 0.7 plate going over to 0.3; untinted middle is the set",
+   "label": "(c) ground followed 2456 to 2472: set on above, set off below",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T11:35:45.782Z",
-   "file": "20261125113545782-note-Y2460-small.jpg",
-   "source": "out/work/place/m4/Y2460-small.jpg",
+   "time": "2026-11-25T11:50:09.814Z",
+   "file": "20261125115009814-note-track-b.jpg",
+   "source": "out/work/place/m5/track-b.jpg",
    "kind": "note",
-   "label": "2460 plates tinted (0.3 red, 0.7 green, 1.6 blue, 3.8 yellow, 8.5 cyan): crop (b) at (780, 380) is the 1.6 plate",
+   "label": "(b) ground followed 2456 to 2472: set on above, set off below",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T11:33:13.085Z",
-   "file": "20261125113313085-note-stair-2466.jpg",
-   "source": "out/work/place/m4/stair-2466.jpg",
+   "time": "2026-11-25T11:50:09.256Z",
+   "file": "20261125115009256-note-pair-air-2460.jpg",
+   "source": "out/work/place/m5/pair-air-2460.jpg",
    "kind": "note",
-   "label": "control 2466 lower left: state above, paint of 0.7 and 1.6 plates low passed below, heights unchanged: stair lines gone, so they are paint",
+   "label": "2460 draft: state above, control d (air held off) below",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T11:33:12.515Z",
-   "file": "20261125113312515-note-whole-0p7.jpg",
-   "source": "out/work/place/m4/whole-0p7.jpg",
+   "time": "2026-11-25T11:50:08.503Z",
+   "file": "20261125115008503-note-far-air.jpg",
+   "source": "out/work/place/m5/far-air.jpg",
    "kind": "note",
-   "label": "0.7 plate whole, state left, wall law with rock right: walls stand as pale striped ribbons",
+   "label": "control d (air held off) far ground x 1000 to 1500, y 0 to 220 at 2456 2460 2464 2468 2472: state above, control below",
    "stop": "mars"
   }
  ]
