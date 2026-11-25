@@ -359,7 +359,7 @@ def main():
         g12 = cv2.resize(g12, (size, size), interpolation=cv2.INTER_LANCZOS4)
     whole = Win(P, deg, size)
     inside12 = (np.load(WORK / 'q12-inside.npy') > 0.99).astype(np.float32)
-    lw = PLATES['low']
+    lw = PLATES['haze']['layBack']
     cover = step(0.5, 1.0, cv2.GaussianBlur(inside12, (0, 0), lw['edgeDeg'] * size / deg))[..., None]
     g12 = wiped(g12, MEND['wipe'])
     fw = win_of(PLATES['levels'][1], P)
@@ -430,8 +430,8 @@ def main():
         raise SystemExit('the window of the low plate must lie on the plate raster')
     if float((cover[..., 0] * footprint_px(size, whole, FEATHER) * (1 - footprint_px(size, lwin, lw['feather']))).max()) > 0.02:
         raise SystemExit('the lay back reaches past the window of the low plate')
-    save(lw['file'], (f12 * (1 - cover) + (lay12 + detail) * cover)[int(lwin.y0):int(lwin.y0) + lwin.n, int(lwin.x0):int(lwin.x0) + lwin.n], lw['size'])
-    vl = lw['veil']
+    cv2.imwrite(str(WORK / lw['file']), np.clip(cv2.resize((f12 * (1 - cover) + (lay12 + detail) * cover)[int(lwin.y0):int(lwin.y0) + lwin.n, int(lwin.x0):int(lwin.x0) + lwin.n], (lw['size'], lw['size']), interpolation=cv2.INTER_AREA) + 0.5, 0, 255).astype(np.uint8), [cv2.IMWRITE_JPEG_QUALITY, 94])
+    vl = PLATES['haze']
     haze, share = veil((lay12 + detail - f12) * cover, cover[..., 0], vl, MEND['veil'], deg, from_nadir)
     for s in ('full', 'web'):
         (PUBLIC / s / vl['file']).write_bytes(np.concatenate([haze[..., ::-1] / 255, share[..., None]], axis=2)[::-1].astype(np.float16).tobytes())
