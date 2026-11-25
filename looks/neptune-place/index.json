@@ -1,9 +1,17 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T21:54:21.247Z",
- "head": "1914c0c1465ccf4f0e5846a02fe2e2a7186f741f",
- "note": "limb cure proven by pairs (all under 0.45, each a little higher); the eye's wall under trial for the hold's dot: number better, look not yet; 91 s per draft frame at 4860",
+ "pushed": "2026-11-25T22:04:05.499Z",
+ "head": "3e034198863b612ccb912b30b70f3b2fde72cd7e",
+ "note": "4860 on the merge beside the approved, G17 0.507, 90.7 s a draft frame; now reading the end of the dive (4753 to 4769) for MAIL 1313",
  "looks": [
+  {
+   "time": "2026-11-25T22:04:04.139Z",
+   "file": "20261125220404139-note-pair-N13.jpg",
+   "source": "../../../../tmp/pair-N13.jpg",
+   "kind": "note",
+   "label": "4860 on the merge of main's fourth cut (c825c8d3f) beside the approved image: the limb's cure stands, bytes equal to before the merge; my reader whole 22.446 (main 22.986), sky 3.203 (main 1.619, the film's sky against the plate), band 1.616, ground 17.627; G17 0.507; 90.7 s the draft frame",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T21:54:20.665Z",
    "file": "20261125215420665-note-n12-rise.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/pair-N12.jpg",
    "kind": "note",
    "label": "4860 beside the approved with the limb's cure (low haze scale 0.028 to 0.010, in the tree, not committed): whole 22.446 against main's 22.986 (the name 23.593); sky 3.203, band 1.616 (main 1.607), ground 17.627; G17 0.507 / p25 0.232 (the name 0.426 / 0.230); 91.0 s the draft frame at 1920",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T21:00:18.379Z",
-   "file": "20261125210018379-note-hold-right.jpg",
-   "source": "../../../../tmp/hold-right.jpg",
-   "kind": "note",
-   "label": "4605, the right limb at full size: approved, main, mine. The disc and its limb are main's pixels; what differs is the sky beside it (main's is the plate cut from the approved)",
    "stop": "neptune"
   }
  ]
