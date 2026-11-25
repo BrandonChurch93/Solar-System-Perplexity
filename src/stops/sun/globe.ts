@@ -10,6 +10,7 @@ import { LIFE_GLSL, LIFE_NAMES } from './life'
 import { formatUniform } from './format'
 import { STAGE_GLSL } from './stage'
 import terrain from './terrain.json'
+import { fullSize, setLod } from './texels'
 
 export interface GlobeLook {
   limb: [number, number]
@@ -48,7 +49,7 @@ export interface GlobeOptions {
 }
 
 const PLACE_SHARED: [string, string][] = [
-  ['uPlate', 'uPlate'], ['uSize', 'uSize'], ['uApron', 'uApron'], ['uApronSize', 'uApronSize'], ['uApronOn', 'uApronOn'], ['uApronOut', 'uApronOut'], ['uApronEdge', 'uApronEdge'], ['uApronCell', 'uApronCell'],
+  ['uPlate', 'uPlate'], ['uSize', 'uSize'], ['uSetLod', 'uSetLod'], ['uApron', 'uApron'], ['uApronSize', 'uApronSize'], ['uApronOn', 'uApronOn'], ['uApronOut', 'uApronOut'], ['uApronEdge', 'uApronEdge'], ['uApronCell', 'uApronCell'],
   ['uGlow', 'uGlow'], ['uField', 'uField'], ['uFieldSize', 'uFieldSize'], ['uFieldFine', 'uFieldFine'], ['uFieldFineMore', 'uFieldFineMore'], ['uOwn', 'uOwn'], ['uUp', 'uUp'], ['uLift', 'uLift'], ['uEven', 'uEven'], ['uEvenTint', 'uEvenTint'], ['uGlowReach', 'uGlowReach'],
   ['uBox', 'uBox'], ['uGlowBeat', 'uGlowBeat'], ['uCellSize', 'uCellSize'], ['uTwinkle', 'uTwinkle'], ['uInflow', 'uInflow'], ['uInflowRate', 'uInflowRate'],
   ['uEye', 'uCam'], ['uSightTurn', 'uSightTurn'], ['uPort', 'uPort'], ['uBand', 'uBand'], ['uLod', 'uLod'], ['uGSpot', 'uSpot'], ['uGSpotE', 'uSpotE'], ['uGSpotN', 'uSpotN'], ['uGTime', 'uTime'],
@@ -124,6 +125,8 @@ uniform vec4 uPulse;
 uniform vec4 uCell;
 uniform sampler2D uPlate;
 uniform vec2 uSize;
+uniform vec2 uSetLod;
+uniform float uMapLod;
 uniform sampler2D uApron;
 uniform vec2 uApronSize;
 uniform float uApronOn;
@@ -255,7 +258,7 @@ void main() {
   mapDx = vec2(abs(dFdx(uv0.x)) < abs(dFdx(uAlt)) ? dFdx(uv0.x) : dFdx(uAlt), dFdx(uv0.y)) * uGrad;
   mapDy = vec2(abs(dFdy(uv0.x)) < abs(dFdy(uAlt)) ? dFdy(uv0.x) : dFdy(uAlt), dFdy(uv0.y)) * uGrad;
   float e = uBoil.z;
-  float lod = log2(uMapWidth / 1024.0);
+  float lod = log2(uMapWidth / 1024.0) - uMapLod;
   float lE1 = lumAt(normalize(d + east * e), lod + 1.5);
   float lE0 = lumAt(normalize(d - east * e), lod + 1.5);
   float lN1 = lumAt(normalize(d + north * e), lod + 1.5);
@@ -355,7 +358,7 @@ void main() {
       float tone = clamp(stLimb(now) / stLimb(graze), 0.25, 5.0);
       float cellU = uCellSize / dist / (2.0 * ST_TAN.x * ST_CANVAS.z);
       vec2 cell = vec2(cellU, cellU * max(graze, 0.08) * uSize.x / uSize.y);
-      vec3 low = inverseFilmic(grade(textureLod(uPlate, uvP, log2(max(cell.y * uSize.y * 0.25, 1.0)) + uLowLod).rgb, 0.0));
+      vec3 low = inverseFilmic(grade(textureLod(uPlate, uvP, max(log2(max(cell.y * uSize.y * 0.25, 1.0)) - uSetLod.x, 0.0) + uLowLod).rgb, 0.0));
       vec2 mv;
       seen = lifeSeen(dxP, dyP, uSize);
       vec3 s = alive(uPlate, uCellsPlate, uSwellPlate, arc / uCellSize, uvP, dxP, dyP, cell, 1.0, uGTime, seen, spot, inner, mv);
@@ -386,7 +389,7 @@ void main() {
       float tone = clamp(stLimb(now) / stLimb(seen), 0.25, 5.0);
       float cellU = uApronCell.x / away / (2.0 * AP_TAN.x);
       vec2 cell = vec2(cellU, cellU * max(seen, 0.08) * uApronSize.x / uApronSize.y);
-      vec3 low = inverseFilmic(grade(textureLod(uApron, uvB, log2(max(cell.y * uApronSize.y * 0.25, 1.0)) + uLowLod).rgb, 0.0));
+      vec3 low = inverseFilmic(grade(textureLod(uApron, uvB, max(log2(max(cell.y * uApronSize.y * 0.25, 1.0)) - uSetLod.y, 0.0) + uLowLod).rgb, 0.0));
       vec2 mv;
       float in2;
       float seen2 = lifeSeen(dxB, dyB, uApronSize);
@@ -462,7 +465,8 @@ export class SunGlobe {
       const w = p?.widthsDeg[i]
       return w ? 1 / (2 * Math.tan(THREE.MathUtils.degToRad(w) / 2)) : 1
     }
-    const size = (i: number): number => (p?.textures[i]?.image as unknown as { width: number } | undefined)?.width ?? 1
+    // (a level's width in texels of the full set: the web set's levels are smaller by the map's own factor)
+    const size = (i: number): number => ((p?.textures[i]?.image as unknown as { width: number } | undefined)?.width ?? 1) * 2 ** setLod('wrap', { width: o.mapWidth })
     const spot = p?.spot.clone().normalize() ?? new THREE.Vector3(0, 0, 1)
     const east = new THREE.Vector3(0, 1, 0).cross(spot).normalize()
     const north = spot.clone().cross(east)
@@ -480,7 +484,7 @@ export class SunGlobe {
         uPatchCount: { value: p?.textures.length ?? 0 },
         uFeather: { value: p?.feather ?? 0.12 }, uPatchFade: { value: new THREE.Vector2(p?.fade[0] ?? 1.1, p?.fade[1] ?? 1.7) },
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
-        uMapWidth: { value: o.mapWidth },
+        uMapWidth: { value: fullSize('wrap')[0] }, uMapLod: { value: setLod('wrap', { width: o.mapWidth }) },
         uSpin: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uOpen: { value: 1 }, uWash: { value: new THREE.Vector4(1, 1, 1, 0) }, uShade: { value: new THREE.Vector2(0, 1) }, uTint: { value: new THREE.Vector3(1, 1, 1) }, uCalm: { value: new THREE.Vector4(1, 1, 1, 0) }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTime: { value: 0 },
         uLimb: { value: new THREE.Vector2(l.limb[0], l.limb[1]) },
         uRimColor: { value: new THREE.Vector3().fromArray(l.rim.color) },

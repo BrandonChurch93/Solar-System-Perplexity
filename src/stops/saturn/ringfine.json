@@ -259,7 +259,7 @@
     "span": 0.35
   },
   "near": {
-    "note": "the strengths of the ladder for a camera near the sheet (the skim); the values above are for the hold. set.ts blends the two by the logarithm of the camera's height (skim.json light.heights). level, groove, hue, edge as above. rough and even: the two values of rough for the octaves below even.from and from it on, in the dense and in the thin rings. hue.follow: how far a brighter ringlet is also warmer and rosier (per unit of the logarithm of its brightness), in the dense and in the thin rings. footprints: an octave is drawn in full where its ringlets are twice this many footprints wide and not at all where they are this many (1 in the hold; a footprint is the pixel times filterFloor when a frame takes many samples, so 1.34 draws no ringlet under one pixel and every ringlet over two in full: finer ones only beat with the pixel grid). filter: as filter above, for the skim: the half width, in footprints, that the edges and the thin lines of the ringlets are widened to (1.2 gives a line nearly two pixels wide, which a steep line needs to read as one line and not as a rope).",
+    "note": "the strengths of the ladder for a camera near the sheet (the skim); the values above are for the hold. set.ts blends the two by the logarithm of the camera's height (skim.json light.heights). level, groove, hue, edge as above. groove.dark and groove.bright: the depth of a dark line and the gain of a bright one near the sheet (groove.dark and groove.bright above in the hold): in the approved close the ringlets of the thin rings are parted by grooves darker than the ice, so the dark lines are deeper near the sheet and they stand at the edges of the two widest octaves too (strengthThin), which keep their width under the shutter of the moving lens. rough and even: the two values of rough for the octaves below even.from and from it on, in the dense and in the thin rings. hue.follow: how far a brighter ringlet is also warmer and rosier (per unit of the logarithm of its brightness), in the dense and in the thin rings. footprints: an octave is drawn in full where its ringlets are twice this many footprints wide and not at all where they are this many (1 in the hold; a footprint is the pixel times filterFloor when a frame takes many samples, so 1.34 draws no ringlet under one pixel and every ringlet over two in full: finer ones only beat with the pixel grid). filter: as filter above, for the skim: the half width, in footprints, that the edges and the thin lines of the ringlets are widened to (1.2 gives a line nearly two pixels wide, which a steep line needs to read as one line and not as a rope).",
     "level": {
       "dense": [
         0,
@@ -304,13 +304,15 @@
         0,
         0,
         0,
-        0,
-        0,
+        1.5,
+        1.5,
         1.3,
         1.8,
         1.8,
         1.0
-      ]
+      ],
+      "dark": 2.0,
+      "bright": 0.5
     },
     "hue": {
       "dense": {
@@ -396,7 +398,7 @@
         2.0
       ],
       "thin": [
-        0.1,
+        1.0,
         2.0
       ]
     },
