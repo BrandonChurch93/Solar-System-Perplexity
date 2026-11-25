@@ -1,9 +1,47 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T17:17:21.569Z",
- "head": "7805c29ab32838c6fe6bf02bf4c8a5a7e897ed37",
- "note": "17:18 controls on the hatch at 1857: level 96 patch and cloud map carry it, shadow and lights none; cut of the maps under the approved px on trial; bake runs",
+ "pushed": "2026-11-25T17:36:10.270Z",
+ "head": "20ad27c24dd51c774c597e4cb2670ddfd97bf087",
+ "note": "20ad27c2: wedge at a twentieth, hold 1755 in the wedge 15.24 against main 15.95; maps cut under the hero's px; finals and lines run",
  "looks": [
+  {
+   "time": "2026-11-25T17:36:09.632Z",
+   "file": "20261125173609632-note-hold-spots.jpg",
+   "source": "../../../../tmp/gl/k16/cut/hold-spots.png",
+   "kind": "note",
+   "label": "hold 1755, three spots at 5 for 1, before and after the cut",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T17:36:08.950Z",
+   "file": "20261125173608950-note-final-1755-c2.jpg",
+   "source": "../../../../tmp/gl/k16/final-1755-c2.png",
+   "kind": "note",
+   "label": "hold 1755 final on 20ad27c2 (wedge a twentieth, maps cut)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T17:36:08.248Z",
+   "file": "20261125173608248-note-disc4-c2.jpg",
+   "source": "../../../../tmp/gl/k16/disc4-c2.png",
+   "kind": "note",
+   "label": "hold 1755 final disc at 4 for 1: approved, main, ee321270, 20ad27c2",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T17:33:50.941Z",
+   "file": "20261125173350941-still-f01755-16x9-final-full.jpg",
+   "source": "out/work/stills/f01755-16x9-final-full.png",
+   "kind": "still",
+   "label": "earth.hold frame 1755, final tier",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1755,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "da1c454a83994f2f"
+  },
   {
    "time": "2026-11-25T17:17:20.225Z",
    "file": "20261125171720225-note-disc-b.jpg",
@@ -31,41 +69,6 @@
    "source": "../../../../tmp/gl/k16/cut/pair-closed.png",
    "kind": "note",
    "label": "1857 closed draft, lower left at 3 for 1: as it is, and with the maps cut under the approved picture's own px"
-  },
-  {
-   "time": "2026-11-25T17:17:15.374Z",
-   "file": "20261125171715374-note-rim-layers.jpg",
-   "source": "../../../../tmp/gl/k16/L/rim-layers.png",
-   "kind": "note",
-   "label": "1857 closed draft, rim at 5 for 1: as it is, cloud layer off, lights off, surface read twice as wide"
-  },
-  {
-   "time": "2026-11-25T17:17:14.744Z",
-   "file": "20261125171714744-note-pair-nocloud.jpg",
-   "source": "../../../../tmp/gl/k16/L/pair-nocloud.png",
-   "kind": "note",
-   "label": "1857 closed draft, lower left at 3 for 1: as it is, and with the cloud layer off (the cells that stay are in the level 96 patch)"
-  },
-  {
-   "time": "2026-11-25T17:17:14.126Z",
-   "file": "20261125171714126-note-hatch-hero.jpg",
-   "source": "../../../../tmp/gl/k16/hatch-hero.png",
-   "kind": "note",
-   "label": "1857 lower left at 3 for 1: film frame, the approved picture drawn to that size along the same motion, closed frame, approved still"
-  },
-  {
-   "time": "2026-11-25T17:16:08.793Z",
-   "file": "20261125171608793-still-f01755-16x9-final-full.jpg",
-   "source": "out/work/stills/f01755-16x9-final-full.png",
-   "kind": "still",
-   "label": "earth.hold frame 1755, final tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1755,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "da1c454a83994f2f"
   }
  ]
 }
