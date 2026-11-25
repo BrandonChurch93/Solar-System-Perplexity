@@ -75,7 +75,7 @@
       1.1,
       1.7
     ],
-    "levels": []
+    "levels": [{"file": "lab/place-far-0.jpg", "widthDeg": 40, "fineDeg": 0.55}]
   },
   "twin": {
     "position": [

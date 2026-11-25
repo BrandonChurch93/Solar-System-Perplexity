@@ -911,3 +911,24 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   out), tube relief finer than the mesh (now faded by the tube's width over the mesh's spacing, uLabMesh, kept),
   heat.fine. u24: fibre.beads [0.0, 9]: the patch is gone (v/glitch-u24.png).
   How to debug a term: add `outColor = vec4(a, b, c, 1.0);` after labOut in DOME_FRAG's main, render, crop.
+- 20:20 to 20:50 UTC. 80 sectors at the second level: draft frame 90 38.7 s against 35.4 s; taken (lod.sectors
+  [96, 80, 16]). Bake of film frame 233 about mapSpot: 1,821,925 and 519,257 bytes.
+  THE SWING, first run (whole patch on my globe): 221 live to bake 99th percentile 177 levels. FOUND by
+  correlation of windows (v/reg.py): the bake lay 21 to 33 px off the live cells at 221. Cause: my branch had the
+  turned anchor's numbers in place.json but not plan.ts params.spot (sun_builder's 1d0faacf: 0.569554, 0.396149;
+  the place moved 0.72 degrees over the map). With his spot: within 3 px. Edits outside my folders now: set.ts
+  (switch, fineDeg passed on), place.json (anchor numbers, plates.levels with fineDeg), plan.ts (spot), globe.ts
+  (his file of e1c18f46 whole: fine bands).
+  swing.ts now draws three: live whole (labStay), live whole in its far form (labFlat), live gone (labGone).
+  MEASURED (u24, fine bands, 99th percentile / median, levels): 221 live to bake 225 / 72, far form to bake
+  211 / 61, live to far form 154 / 36; 229: 210 / 68, 200 / 62, 139 / 18; 233: 194 / 64, 192 / 62, 59 / 4. Means
+  at 233: live 149, globe's face 194: the map's low band is far lighter and of far more contrast than my ground's
+  tone at the share of that height (0.49 at 221). So the swing is (1) the tone, (2) domes against far form,
+  (3) far form against bake (unknown until the tone is equal).
+  PLAN: the ONE share on both sides (the globe gives the level's low band the same share: level times mix(1,
+  mapLow / levelLow, share)), the bake with the share at 0; the live ground wholly in its far form before it
+  leaves (far.px against far.away); then far form against bake read alone.
+  SEEN at the strip (v/strip-u24.jpg): mine are shiny shells with broad sheen and wide dark gaps; the approved's
+  cells have darker mottled tops, light at the rims where two cells touch with a thin dark line between, fine
+  sparkle, one sheet. Next for the form: tubes' relief and heat contrast down (less satin), mottle on the top that
+  rides with the flow (labWell), light rims, lanes thinner.

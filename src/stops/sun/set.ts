@@ -38,9 +38,9 @@ export const createSet: SetFactory = async (ctx) => {
   const lifeMap = (file: string): Promise<THREE.Texture> => ctx.texture(base + file, { srgb: false, anisotropy: 4, mirror: true })
   const life = { cellsPlate: await lifeMap(look.files.cellsPlate), swellPlate: await lifeMap(look.files.swellPlate), cellsApron: await lifeMap(look.files.cellsApron), swellApron: await lifeMap(look.files.swellApron) }
   const ground = new Ground(plate, apron, field, await ctx.texture(base + look.files.loopsGlow, { srgb: true, mips: false, anisotropy: 1 }), grade, look.ground, life, opening.on ? look.opening.seethe : undefined)
-  const plates = place.plates.levels as { file: string; widthDeg: number }[]
+  const plates = place.plates.levels as { file: string; widthDeg: number; fineDeg?: number }[]
   const levels = await Promise.all(plates.map((l) => ctx.texture(base + l.file, { srgb: true, anisotropy: 16 })))
-  const patches = { textures: levels, widthsDeg: plates.map((l) => l.widthDeg), spot: new THREE.Vector3().fromArray(place.globe.mapSpot), feather: place.plates.feather, fade: place.plates.fade as [number, number] }
+  const patches = { textures: levels, widthsDeg: plates.map((l) => l.widthDeg), fineDeg: plates.map((l) => l.fineDeg ?? 0), spot: new THREE.Vector3().fromArray(place.globe.mapSpot), feather: place.plates.feather, fade: place.plates.fade as [number, number] }
   const fitTurn = new THREE.Quaternion().fromArray(fit.globe.quaternion)
   const mapToStage = new THREE.Matrix3().setFromMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().fromArray(place.stage.toBody).invert().multiply(fitTurn)))
   const globe = new SunGlobe({ map, grade, mapWidth: (map.image as unknown as { width: number }).width, look: look.globe, patches, place: { ground: ground.material.uniforms, toStage: mapToStage, capDeg: place.onGlobe.capDeg as [number, number], fade: place.onGlobe.fade as [number, number], lowLod: place.onGlobe.lowLod, spotKeep: place.onGlobe.spotKeep as [number, number] } })

@@ -24,6 +24,9 @@ export interface GlobeLook {
 export interface GlobePatches {
   textures: THREE.Texture[]
   widthsDeg: number[]
+  /** A level that brings only its bands finer than this many degrees (0 or none: the whole level): its own low band
+   *  is divided out and the map's low band of the same width stands in its place. */
+  fineDeg?: number[]
   spot: THREE.Vector3
   feather: number
   fade: [number, number]
@@ -80,7 +83,13 @@ const PATCH_SAMPLERS = Array.from({ length: MAX_PATCHES }, (_, i) => 'uniform sa
 const PATCH_LEVELS = Array.from({ length: MAX_PATCHES }, (_, i) => `    if (uPatchCount > ${i}.5) {
       vec2 q = g * uPatchScale[${i}];
       float w = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent));
-      if (w > 0.0) albedo = mix(albedo, textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb, w);
+      if (w > 0.0) {
+        vec3 level = textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb;
+        // a level of fine bands only: its own low band is taken out of it and the map's low band stands in its place,
+        // in linear light, so the level brings what the map has no texels for and the face keeps the map's tones
+        if (uPatchLow[${i}].x > 0.0) level *= textureLod(uMap, mapUv(d), uPatchLow[${i}].y).rgb / max(textureLod(uPatch${i}, q + 0.5, uPatchLow[${i}].x).rgb, vec3(0.004));
+        albedo = mix(albedo, level, w);
+      }
       parent = gd * uFormat * uPatchScale[${i}] * uPatchSize[${i}];
       texels = mix(texels, parent, step(0.5, w));
     }`).join('\n')
@@ -91,6 +100,7 @@ uniform sampler2D uMap;
 ${PATCH_SAMPLERS}
 uniform float uPatchScale[${MAX_PATCHES}];
 uniform float uPatchSize[${MAX_PATCHES}];
+uniform vec2 uPatchLow[${MAX_PATCHES}];
 uniform float uPatchCount;
 uniform float uFeather;
 uniform vec2 uPatchFade;
@@ -467,6 +477,12 @@ export class SunGlobe {
     }
     // (a level's width in texels of the full set: the web set's levels are smaller by the map's own factor)
     const size = (i: number): number => ((p?.textures[i]?.image as unknown as { width: number } | undefined)?.width ?? 1) * 2 ** setLod('wrap', { width: o.mapWidth })
+    // (the mip of the low band: of the level by its own texels, of the map by the texels of the set that is loaded)
+    const low = (i: number): THREE.Vector2 => {
+      const fine = p?.fineDeg?.[i] ?? 0
+      const width = (p?.textures[i]?.image as unknown as { width: number } | undefined)?.width ?? 1
+      return fine > 0 ? new THREE.Vector2(Math.log2((fine * width) / (p?.widthsDeg[i] ?? 1)), Math.log2((fine * o.mapWidth) / 360)) : new THREE.Vector2(0, 0)
+    }
     const spot = p?.spot.clone().normalize() ?? new THREE.Vector3(0, 0, 1)
     const east = new THREE.Vector3(0, 1, 0).cross(spot).normalize()
     const north = spot.clone().cross(east)
@@ -480,7 +496,7 @@ export class SunGlobe {
       uniforms: {
         uMap: { value: o.map }, uGrade: { value: o.grade },
         ...Object.fromEntries(levels.map((i) => ['uPatch' + i, { value: tex(i) }])),
-        uPatchScale: { value: levels.map(scale) }, uPatchSize: { value: levels.map(size) },
+        uPatchScale: { value: levels.map(scale) }, uPatchSize: { value: levels.map(size) }, uPatchLow: { value: levels.map(low) },
         uPatchCount: { value: p?.textures.length ?? 0 },
         uFeather: { value: p?.feather ?? 0.12 }, uPatchFade: { value: new THREE.Vector2(p?.fade[0] ?? 1.1, p?.fade[1] ?? 1.7) },
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },

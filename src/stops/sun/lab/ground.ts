@@ -1267,7 +1267,10 @@ export class LabGround {
   update(time: number, eye: THREE.Vector3, keep = 1, onGlobe = false): void {
     this.mesh.visible = keep > 0
     this.uniforms.uLabKeep!.value = keep
-    const away = (globalThis as { labGone?: boolean }).labGone ? [1e-4, 2e-4] : lab.far.away
+    const g = globalThis as { labGone?: boolean; labStay?: boolean; labFlat?: boolean }
+    const away = g.labGone ? [1e-4, 2e-4] : g.labStay ? [1e3, 2e3] : lab.far.away
+    ;(this.uniforms.uLabFar!.value as THREE.Vector4).x = g.labFlat ? 1e5 : lab.far.px[0]!
+    ;(this.uniforms.uLabFar!.value as THREE.Vector4).y = g.labFlat ? 2e5 : lab.far.px[1]!
     const red = place.onGlobe.red.over
     ;(this.uniforms.uLabAway!.value as THREE.Vector4).set(onGlobe ? away[0]! : 0, onGlobe ? away[1]! : 0, onGlobe ? red[0]! : 0, onGlobe ? red[1]! : 0)
     this.under.material = onGlobe ? this.floorLaid : this.floorMaterial
