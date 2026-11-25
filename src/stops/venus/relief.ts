@@ -16,6 +16,9 @@ export interface CloudLayerDef {
 
 export interface CloudReliefDef {
   imageSize: [number, number]
+  // The full set's texels a texel of this set (1 in the full set): a mip level named for the full set's picture is read this many
+  // levels lower in log2 (plates.json, texelsNote).
+  perFull: number
   vfovDeg: number
   up: [number, number, number]
   radius: number
@@ -118,7 +121,7 @@ void main() {
 // The same air on the globe side (the handover): the dome hangs in the globe's scene at the globe's scale, so the eye
 // is given (the globe camera brought into this scene by the similarity of the plan) and not read from the camera.
 // The air picture comes in two parts there. The rest of it (uAir) is laid from the limb upward as on the close side and
-// comes in with uWeight as the camera comes down to the place. The Sun's own light (uSunMap) is laid from the limb as it
+// has its weight by place (airField, below): the place is the ground point of the line of sight, or the limb point under it where it passes over the limb. The Sun's own light (uSunMap) is laid from the limb as it
 // stands at T (uUpT, uDipT): the Sun is at infinity and keeps its direction while the limb sinks under a climbing
 // camera. It comes in with uSunWeight, and with it the engine's Sun is hidden as on the close side. The two parts are a
 // smooth split (airsun.py) and their sum is not the air picture just over the limb beside the Sun, where the Sun's part
@@ -160,7 +163,7 @@ const swapOnce = (text: string, from: string, to: string): string => {
 }
 
 const GLOBE_SWAPS: [string, string][] = [
-  ['uniform float uGain;', 'uniform float uGain;\nuniform float uWeight;\nuniform float uSunWeight;\nuniform sampler2D uSunMap;\nuniform sampler2D uWhole;\nuniform float uExact;\nuniform vec4 uExactCore;\nuniform float uExactUnder;\nuniform vec3 uUpT;\nuniform float uDipT;\nuniform vec4 uSunBox;\nuniform vec2 uBand;\nfloat sunCore(vec2 at) {\n  vec2 off = vec2((at.x - uExactCore.x) * cos(uExactCore.y), at.y - uExactCore.y);\n  return (1.0 - smoothstep(uExactCore.z, uExactCore.w, length(off))) * smoothstep(-uExactUnder, 0.0, at.y);\n}'],
+  ['uniform float uGain;', 'uniform float uGain;\nuniform float uWeight;\nuniform float uSunWeight;\nuniform sampler2D uSunMap;\nuniform sampler2D uWhole;\nuniform float uExact;\nuniform vec4 uExactCore;\nuniform float uExactUnder;\nuniform vec3 uUpT;\nuniform float uDipT;\nuniform vec4 uSunBox;\nuniform vec2 uBand;\nuniform vec2 uField;\nfloat airField(vec3 d, vec3 up, float dip) {\n  float s = clamp(dot(d, up), -1.0, 1.0);\n  vec3 level = d - up * s;\n  float side = length(level);\n  float rim = cos(dip);\n  float arc = s < 0.0 && side < rim ? asin(side / rim) - acos(-s) : dip;\n  vec3 q = up * cos(arc) + level * (sin(arc) / max(side, 1e-6));\n  float x = clamp((acos(clamp(dot(q, uUpT), -1.0, 1.0)) - uField.x) / (uField.y - uField.x), 0.0, 1.0);\n  return 1.0 - x * x * x * (x * (x * 6.0 - 15.0) + 10.0);\n}\nfloat sunCore(vec2 at) {\n  vec2 off = vec2((at.x - uExactCore.x) * cos(uExactCore.y), at.y - uExactCore.y);\n  return (1.0 - smoothstep(uExactCore.z, uExactCore.w, length(off))) * smoothstep(-uExactUnder, 0.0, at.y);\n}'],
   [
     '  vec3 glow = inverseFilmic(textureLod(uAir, uv, 0.0).rgb);',
     `  vec3 glow = inverseFilmic(textureLod(uAir, uv, 0.0).rgb);
@@ -176,10 +179,11 @@ const GLOBE_SWAPS: [string, string][] = [
   glow = mix(glow, mix(whole - sunHeld, glow, sunCore(vec2(az, elev))), uExact);
   sunGlow = mix(sunGlow, mix(sunGlow, wholeT - restT, sunCore(atT)), uExact);`,
   ],
-  ['dot(glow, vec3(0.3, 0.5, 0.2))', 'dot(glow * uWeight + sunGlow * uSunWeight, vec3(0.3, 0.5, 0.2))'],
+  ['  vec3 up = normalize(vUp);', '  vec3 up = normalize(vUp);\n  float weight = uWeight * airField(d, up, vDip);'],
+  ['dot(glow, vec3(0.3, 0.5, 0.2))', 'dot(glow * weight + sunGlow * uSunWeight, vec3(0.3, 0.5, 0.2))'],
   ['cut = max(cut, 1.0 - smoothstep(uSunHide.x, uSunHide.y, off));', 'cut = max(cut, (1.0 - smoothstep(uSunHide.x, uSunHide.y, off)) * uSunWeight);'],
-  ['cut = mix(cut, 1.0, smoothstep(0.0, -0.003, elev));', 'cut = mix(cut, 1.0, smoothstep(0.0, -0.003, elev) * uWeight);'],
-  ['outColor = vec4(glow * uGain * vig, cut);', 'outColor = vec4(max(glow * uWeight + sunGlow * uSunWeight, 0.0) * uGain * vig, cut) * (1.0 - smoothstep(uBand.x, uBand.y, -elev));'],
+  ['cut = mix(cut, 1.0, smoothstep(0.0, -0.003, elev));', 'cut = mix(cut, 1.0, smoothstep(0.0, -0.003, elev) * weight);'],
+  ['outColor = vec4(glow * uGain * vig, cut);', 'outColor = vec4(max(glow * weight + sunGlow * uSunWeight, 0.0) * uGain * vig, cut) * (1.0 - smoothstep(uBand.x, uBand.y, -elev));'],
 ]
 const AIR_FRAG_GLOBE = GLOBE_SWAPS.reduce((text, [from, to]) => swapOnce(text, from, to), AIR_FRAG)
 
@@ -276,6 +280,9 @@ void main() {
 //   are let go there by the height of the camera (uLet.x, set.ts: 1 above the heights of release, none at T). Outside the frame of T
 //   nothing is let go, and the ground near the camera of T (uFrustum.zw) gives way to the plates over a wider margin (to uLet.z half
 //   frames outside, by its forms as well) or over the border of the outline, whichever leaves more of it.
+// - uKeep, the near ground: where the camera of T sees a point of the ground from above, at a sine of its elevation over uKeep.y, uTrue
+//   and uSkin take nothing out, at any height of the camera and on both sides of the frame of T; under uKeep.x they hold as told above.
+//   It is the ground that keeps its relief (uFlat), so its crests do not go out by height while the flat plate under it stands.
 // - uFrustum.zw, the far ground outside the frame of T: from above the far deck is drawn larger than it was stored, so uTrue would take it
 //   out and bring it back as the eye moves. Outside the frame of T it is left to the plates for good: the ground is whole where the camera
 //   of T sees a point from above at a sine of elevation over uFrustum.w and gone under uFrustum.z (its forms move the limit by uLet.y).
@@ -350,7 +357,8 @@ const TRUE_GLSL = /* glsl */ `
   float outT = (max(abs(frameT.x), abs(frameT.y)) - 1.0) * (1.0 + uLet.y * (1.0 - 2.0 * form));
   float inT = seenT.z < 0.0 ? 1.0 - smoothstep(uFrustum.x, uFrustum.y, outT) : 0.0;
   float aroundT = seenT.z < 0.0 ? 1.0 - smoothstep(uFrustum.x, uLet.z, outT) : 0.0;
-  float let = mix(1.0, uLet.x, inT);
+  float keeps = smoothstep(uKeep.x, uKeep.y, dot(-normalize(fromT), normalize(radial)));
+  float let = max(mix(1.0, uLet.x, inT) * (1.0 - keeps), 1e-6);
   float deck = smoothstep(uTrue.x * let, uTrue.y * let, closeScale(vModel, uEye + centre, face, uLens.y, projectionMatrix[1][1]));
   vec2 at = vImage * vec2(uSway.z, 1.0);
   float perHeight = 2.0 / max(abs(dFdy(vClip.y / vClip.z)), 1e-9);
@@ -391,7 +399,7 @@ const TONE_GLSL = /* glsl */ `
   }
 `
 const FRAG_GLOBE = ([
-  ['uniform float uGain;', 'uniform float uGain;\nuniform float uWeight;\nuniform vec2 uDepth;\nuniform vec2 uTrue;\nuniform vec2 uSkin;\nuniform vec2 uTall;\nuniform vec3 uOutline;\nuniform vec4 uMatte;\nuniform vec3 uEye;\nuniform vec3 uEyeT;\nuniform mat3 uAxesT;\nuniform vec2 uLensT;\nuniform vec4 uFrustum;\nuniform vec3 uLet;\nuniform vec4 uToneLook;\nuniform vec4 uToneLive;\nuniform vec4 uToneUnder;\nuniform sampler2D uBroad;\nuniform vec4 uBroadBox;\nuniform vec4 uRim;\nuniform mat4 projectionMatrix;' + CLOSE_GLSL],
+  ['uniform float uGain;', 'uniform float uGain;\nuniform float uWeight;\nuniform vec2 uDepth;\nuniform vec2 uTrue;\nuniform vec2 uSkin;\nuniform vec2 uTall;\nuniform vec3 uOutline;\nuniform vec4 uMatte;\nuniform vec3 uEye;\nuniform vec3 uEyeT;\nuniform mat3 uAxesT;\nuniform vec2 uLensT;\nuniform vec4 uFrustum;\nuniform vec3 uLet;\nuniform vec2 uKeep;\nuniform vec4 uToneLook;\nuniform vec4 uToneLive;\nuniform vec4 uToneUnder;\nuniform sampler2D uBroad;\nuniform vec4 uBroadBox;\nuniform vec4 uRim;\nuniform mat4 projectionMatrix;' + CLOSE_GLSL],
   ['in float vRim;', 'in float vRim;\nin vec3 vModel;\nin float vFlat;'],
   ['  float texels = diagTexels(uv * uSize);', TRUE_GLSL + '  float texels = diagTexels(uv * uSize);'],
   ['  vec3 col = inverseFilmic(texel.rgb) * uGain * vig;', '  vec3 col = inverseFilmic(texel.rgb) * uGain * vig;' + TONE_GLSL],
@@ -433,8 +441,8 @@ const GLOBE_DEPTH: [number, number] = [0.02, 4000]
 // by covers it. true, skin, tall, matte: where the ground is true from the eye and how its border gives way (uTrue, uSkin, uTall, uMatte above).
 // held: the share of true and skin that holds inside the frame of T at this height (uLet.x). atT: the axes of the camera of T in the close
 // scene and the tangent of half its field. frustum: the margin of that frame (uFrustum.xy) and the wider one of the near ground (uLet.z). near: the far limit outside it and the share of
-// the forms (uFrustum.zw, uLet.y). flat: where the ground lies flat on the deck (uFlat).
-export interface GroundShare { weight: number; under: number; band: [number, number]; true: [number, number]; skin: [number, number]; tall: [number, number]; held: number; atT: { axes: THREE.Matrix3; tan: number }; frustum: [number, number, number]; near: [number, number, number]; flat: [number, number, number, number]; matte: [number, number, number, number]; tone: { look: [number, number, number, number]; power: number; broad: number; most: number; contrast: number; under: [number, number, number]; colour: number } }
+// the forms (uFrustum.zw, uLet.y). flat: where the ground lies flat on the deck (uFlat). keep: the near ground that true and skin leave whole (uKeep).
+export interface GroundShare { weight: number; under: number; band: [number, number]; true: [number, number]; skin: [number, number]; tall: [number, number]; held: number; keep: [number, number]; atT: { axes: THREE.Matrix3; tan: number }; frustum: [number, number, number]; near: [number, number, number]; flat: [number, number, number, number]; matte: [number, number, number, number]; tone: { look: [number, number, number, number]; power: number; broad: number; most: number; contrast: number; under: [number, number, number]; colour: number } }
 
 const BLEND = {
   transparent: true,
@@ -458,6 +466,8 @@ export class CloudRelief {
   readonly globeGround = new THREE.Group()
   private readonly motion: CloudMotion
   private radius = 1
+  // Mip levels this set lies under the full set (log2 of the full set's texels a texel of this set), for levels named for the full set.
+  private levelsUnderFull = 0
   carry: { map: THREE.Texture; fwd: THREE.Vector3; right: THREE.Vector3; span: THREE.Vector3; cut: THREE.Vector3; gain: number } | null = null
   // The colours of the far deck by azimuth and the frame they are laid in (this scene's axes), for the haze of the globe side.
   deck: { colours: THREE.Vector3[]; fwd: THREE.Vector3; right: THREE.Vector3 } | null = null
@@ -469,6 +479,8 @@ export class CloudRelief {
   static async load(ctx: SetContext, base: string, def: CloudReliefDef, motion: CloudMotion): Promise<CloudRelief> {
     const r = new CloudRelief(motion)
     r.radius = def.radius
+    if (!(def.perFull >= 1)) throw new Error('the ground needs the full set at least as wide as this set')
+    r.levelsUnderFull = Math.log2(def.perFull)
     const [W, H] = def.imageSize
     const th = Math.tan(rad(def.vfovDeg) / 2)
     const aspect = W / H
@@ -507,6 +519,7 @@ export class CloudRelief {
     globeUniforms.uWeight = { value: 0 }
     globeUniforms.uSunWeight = { value: 0 }
     globeUniforms.uBand = { value: new THREE.Vector2(1e3, 2e3) }
+    globeUniforms.uField = { value: new THREE.Vector2(1e3, 2e3) }
     const sb = def.airSun
     globeUniforms.uAir = { value: await ctx.texture(base + sb.limbFile, { srgb: true, mips: false }) }
     globeUniforms.uSunMap = { value: await ctx.texture(base + sb.file, { srgb: true, mips: false }) }
@@ -528,7 +541,7 @@ export class CloudRelief {
     // the far deck fades into it. It is drawn where the globe has written its depth, the dome above only where it has not.
     // Under the horizon the close side reads the lowest row of the whole air picture, so this dome reads the whole picture too and takes
     // nothing from the Sun's own picture.
-    const underUniforms: Record<string, THREE.IUniform> = { ...globeUniforms, uAir: { value: airMap }, uWeight: { value: 0 }, uSunWeight: { value: 0 }, uExact: { value: 0 }, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uThrough: { value: 1 }, uBand: { value: new THREE.Vector2(1e3, 2e3) } }
+    const underUniforms: Record<string, THREE.IUniform> = { ...globeUniforms, uAir: { value: airMap }, uWeight: { value: 0 }, uSunWeight: { value: 0 }, uExact: { value: 0 }, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uThrough: { value: 1 }, uBand: { value: new THREE.Vector2(1e3, 2e3) }, uField: { value: new THREE.Vector2(1e3, 2e3) } }
     const underMaterial = new THREE.ShaderMaterial({ glslVersion: THREE.GLSL3, vertexShader: AIR_VERT_GLOBE, fragmentShader: AIR_FRAG_GLOBE, uniforms: underUniforms, ...BLEND, side: THREE.BackSide, depthTest: true, depthFunc: THREE.GreaterDepth, depthWrite: false })
     const underDome = new THREE.Mesh(dome.geometry, underMaterial)
     underDome.frustumCulled = false
@@ -640,6 +653,7 @@ export class CloudRelief {
       own.uFrustum = { value: new THREE.Vector4(0, 1, -2, -1) }
       own.uLet = { value: new THREE.Vector3(1, 0, 1) }
       own.uFlat = { value: new THREE.Vector4(-2, -1, -3, -4) }
+      own.uKeep = { value: new THREE.Vector2(2, 3) }
       own.uToneLook = { value: new THREE.Vector4(1, 1, 0, 1) }
       own.uToneLive = { value: new THREE.Vector4(1, 0, 1, 1) }
       own.uToneUnder = { value: new THREE.Vector4(1, 1, 1, 0) }
@@ -705,7 +719,7 @@ export class CloudRelief {
   // eyeT: the same eye at the T of the handover. weight: the air on the limb. sunWeight: the Sun's own light. exact: the share of the
   // rest that is taken as the whole air picture less the Sun's part (1 at T). own: a frame of the stop's own hold, dive or rise, where
   // what is not shown yet is drawn dry.
-  updateGlobe(eye: THREE.Vector3, eyeT: THREE.Vector3, turn: THREE.Quaternion, weight: number, sunWeight: number, exact: number, gain: number, vignette: number, view: RenderView, sun: THREE.Vector3, own: boolean): void {
+  updateGlobe(eye: THREE.Vector3, eyeT: THREE.Vector3, turn: THREE.Quaternion, weight: number, field: [number, number], sunWeight: number, exact: number, gain: number, vignette: number, view: RenderView, sun: THREE.Vector3, own: boolean): void {
     const g = this.globeAir!
     const shown = weight > 0 || sunWeight > 0
     g.mesh.visible = shown || own
@@ -717,6 +731,7 @@ export class CloudRelief {
     ;(u.uUpT!.value as THREE.Vector3).copy(eyeT).divideScalar(eyeT.length())
     u.uDipT!.value = Math.acos(this.radius / rT)
     u.uWeight!.value = weight
+    ;(u.uField!.value as THREE.Vector2).fromArray(field)
     u.uSunWeight!.value = sunWeight
     u.uExact!.value = exact
     u.uGain!.value = gain * this.motion.air.gain
@@ -755,12 +770,15 @@ export class CloudRelief {
       ;(l.material.uniforms.uSkin!.value as THREE.Vector2).fromArray(share.skin)
       ;(l.material.uniforms.uTall!.value as THREE.Vector2).fromArray(share.tall)
       ;(l.material.uniforms.uMatte!.value as THREE.Vector4).fromArray(share.matte)
+      // matte.level is a level of the full set's picture: this set reads the level that covers the same part of the image.
+      ;(l.material.uniforms.uMatte!.value as THREE.Vector4).z = Math.max(share.matte[2]! - this.levelsUnderFull, 0)
       ;(l.material.uniforms.uEyeT!.value as THREE.Vector3).copy(eyeT)
       ;(l.material.uniforms.uAxesT!.value as THREE.Matrix3).copy(share.atT.axes)
       ;(l.material.uniforms.uLensT!.value as THREE.Vector2).set(share.atT.tan * aspect, share.atT.tan)
       ;(l.material.uniforms.uFrustum!.value as THREE.Vector4).set(share.frustum[0], share.frustum[1], share.near[0], share.near[1])
       ;(l.material.uniforms.uLet!.value as THREE.Vector3).set(share.held, share.near[2], share.frustum[2])
       ;(l.material.uniforms.uFlat!.value as THREE.Vector4).fromArray(share.flat)
+      ;(l.material.uniforms.uKeep!.value as THREE.Vector2).fromArray(share.keep)
       ;(l.material.uniforms.uToneLook!.value as THREE.Vector4).fromArray(share.tone.look)
       ;(l.material.uniforms.uToneLive!.value as THREE.Vector4).set(share.tone.power, Math.log2(Math.max(share.tone.broad * this.broadPx[n]!, 1)), share.tone.most, share.tone.contrast)
       ;(l.material.uniforms.uToneUnder!.value as THREE.Vector4).set(share.tone.under[0], share.tone.under[1], share.tone.under[2], share.tone.colour)

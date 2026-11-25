@@ -5,7 +5,7 @@ import deckJson from './deck.json'
 import { frameUniform } from '../../core/frame'
 import nearJson from './deck-near.json'
 import cloudJson from './deck-cloud.json'
-import { PLATE_LEVELS, PLATE_SAMPLERS } from './globe'
+import { PLATE_LEVELS, PLATE_SAMPLERS, TOPS_GLSL } from './globe'
 
 export interface DeckLook {
   flow: [number, number, number, number]
@@ -82,7 +82,7 @@ vec3 deckLight(float mu, float psi) {
 const PLATE_UNIFORMS = PLATE_SAMPLERS + /* glsl */ `
 uniform float uPlateScale[4];
 uniform float uPlateSize[4];
-uniform vec3 uPlace;
+uniform vec2 uPlace;
 uniform sampler2D uPlaceField;
 uniform vec3 uPlaceN;
 uniform vec3 uPlaceE;
@@ -96,6 +96,8 @@ precision highp float;
 uniform sampler2D uColor;
 ${PLATE_UNIFORMS}
 uniform vec2 uColorSize;
+uniform float uNearWidth;
+uniform float uCloudWidth;
 uniform vec4 uWin;
 uniform vec3 uCamL;
 uniform vec2 uLimb;
@@ -134,6 +136,7 @@ ${COMMON}
 ${DECK_LIGHT_GLSL}
 ${INVERSE_FILMIC_GLSL}
 ${DIAG_GLSL}
+${TOPS_GLSL}
 float cell(vec2 p) {
   vec3 q = fract(vec3(p.xyx) * 0.1031);
   q += dot(q, q.yzx + 33.33);
@@ -226,7 +229,7 @@ void main() {
 ${FAR_LEVELS}
   vec2 q0 = pg * uPlateScale[0];
   vec3 calm = textureLod(uPlate0, q0 + 0.5, uPlateWide).rgb;
-  vec3 aS = mix(calm * calm * uPlace.z, aP, smoothstep(0.5, 0.5 - uPlace.y, max(abs(q0.x), abs(q0.y))) * textureLod(uPlaceField, q0 + 0.5, 0.0).a);
+  vec3 aS = mix(calm * calm * uPlace.y, aP, smoothstep(0.5, 0.5 - uPlace.x, max(abs(q0.x), abs(q0.y))) * textureLod(uPlaceField, q0 + 0.5, 0.0).a);
   vec2 nd = vClip.xy / vClip.z;
   vec2 unit = uBase.x * vec2(uAspect, 1.0) / (uWin.zw - uWin.xy);
   vec2 ka = dFdx(uvT) / max(abs(dFdx(nd.x)), 1e-9) / unit * uLens.x;
@@ -243,7 +246,7 @@ ${FAR_LEVELS}
   float c1 = billow(g + uSunG * 0.1, fw);
   float fl = smoothstep(0.08, 0.3, c0) * (1.0 - smoothstep(0.12, 0.35, fw * 4.0)) * smoothstep(0.5, 0.85, soft(g * 4.0 + 5.0));
   float shade = 1.0 + wD * (uDetail.x * 2.0 * c0 + uDetail.y * clamp((c0 - c1) * 5.0, -1.0, 1.0) + uDetail.z * fl);
-  vec3 col = mix(aS, aT, wT) * lNow * max(shade, 0.3);
+  vec3 col = (mix(aS, aT, wT) * lNow + topsLight(topsAt(pg, px, py), dot(n, uTopSun), topsSeen(p, n))) * max(shade, 0.3);
   vec3 oc = uCamL - uCentre;
   float rs = uRadius + uCloudA.x;
   float bq = dot(oc, dv);
@@ -258,12 +261,12 @@ ${FAR_LEVELS}
   float under = clamp(cloudAt(cloudPlace(uCentre + rs * n), 4.0 * uFrame) * uCloudB.x, 0.0, 1.0) * smoothstep(uCloudB.z, uCloudB.w, mu) * lit;
   col *= 1.0 - uCloudB.y * under;
   col = col * (1.0 - veilA) + deckLight(muQ, psi) * uCloudTint * dq;
-  float cloudT = diagTexels(gq * uCloudA.y * vec2(uCloudD.y, 1.0) * float(textureSize(uCloud, 0).x));
+  float cloudT = diagTexels(gq * uCloudA.y * vec2(uCloudD.y, 1.0) * uCloudWidth);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
-  float texels = mix(texP, plateT * (1.0 + wN * (float(textureSize(uNear, 0).x) / ((uNearWin.z - uNearWin.x) * uColorSize.x) - 1.0)), wT);
+  float texels = mix(texP, plateT * (1.0 + wN * (uNearWidth / ((uNearWin.z - uNearWin.x) * uColorSize.x) - 1.0)), wT);
   texels = mix(texels, min(texels, cloudT), veilA);
-  vec4 o = diagOut(vec4(col, 1.0), texels, 1.0, mix(vec3(0.2, 0.7, 0.75), vec3(0.85, 0.75, 0.3), wT), (pa - p).xz * 4.0, length(vView));
+  vec4 o = diagOut(vec4(col, 1.0), texels, 1.0, mix(vec3(0.2, 0.7, 0.75), vec3(0.85, 0.75, 0.3), wT), (pa - p).xz * 4.0, length(vView) / uRadius);
   outColor = vec4(o.rgb, uDiag >= 2 ? 1.0 : uFade);
   if (uDiag >= 2 && uFade < 0.5) discard;
 }`
@@ -386,7 +389,7 @@ export class Deck {
   private readonly centre = new THREE.Vector3().fromArray(deckJson.centre)
   private readonly unbloom: number
 
-  constructor(t: DeckTextures, key: 'full' | 'web', look: DeckLook, plates: Record<string, THREE.IUniform>, calm: number) {
+  constructor(t: DeckTextures, counted: { near: number; cloud: number }, look: DeckLook, plates: Record<string, THREE.IUniform>, calm: number) {
     this.unbloom = look.bloom
     const j = deckJson
     const up = new THREE.Vector3().fromArray(j.up)
@@ -407,9 +410,9 @@ export class Deck {
       uniforms: {
         ...shared,
         ...plates,
-        uPlateWide: { value: Math.log2((plates.uPlateSize!.value as number[])[0]! * calm) },
+        uPlateWide: { value: Math.log2(((plates.uPlate0!.value as THREE.Texture).image as unknown as { width: number }).width * calm) },
         uHeight: { value: t.height }, uLift: { value: look.lift }, uColor: { value: t.color }, uLight: { value: t.light },
-        uLightSize: { value: new THREE.Vector2().fromArray(j.lightSize) }, uColorSize: { value: new THREE.Vector2().fromArray(j.imageSize[key]) },
+        uLightSize: { value: new THREE.Vector2().fromArray(j.lightSize) }, uColorSize: { value: new THREE.Vector2().fromArray(j.imageSize.full) }, uNearWidth: { value: counted.near }, uCloudWidth: { value: counted.cloud },
         uWin: { value: new THREE.Vector4().fromArray(j.window) }, uCamL: { value: new THREE.Vector3() }, uLimb: { value: new THREE.Vector2().fromArray(look.limb) }, uEdge: { value: look.edge }, uInset: { value: new THREE.Vector2().fromArray(look.inset) }, uAMax: { value: j.aMax }, uEps: { value: j.eps },
         uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uFade: { value: 1 }, uDiag: diagUniform, uGrad: gradUniform, uFine: fineUniform, uFrame: frameUniform, uLens: { value: new THREE.Vector2(1, 1) }, uSharp: { value: look.sharp }, uBloom: { value: 0 },
         uDetail: { value: new THREE.Vector4(look.detail.tone, look.detail.relief, look.detail.fleck, look.detail.scale) },

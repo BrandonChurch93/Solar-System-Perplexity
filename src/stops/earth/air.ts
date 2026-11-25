@@ -69,6 +69,7 @@ uniform vec2 uNightSide;
 uniform vec2 uNightRim;
 uniform vec2 uLineEnd;
 uniform float uFree;
+uniform float uOut;
 uniform vec4 uMist;
 uniform vec3 uFog;
 uniform float uVignette;
@@ -110,6 +111,7 @@ void main() {
     float edge = 1.0 - smoothstep(0.7 * uTop, 0.98 * uTop, h);
     outColor = vec4((glow * seen.rgb * edge + line + night + curtain) * up * lens, 0.0);
   }
+  outColor *= uOut;
   if (uDiag >= 2) discard;
 }`
 
@@ -140,7 +142,7 @@ export class Air {
         uInner: { value: new THREE.Vector2(p.inner, p.innerStrength) },
         uInnerWide: { value: new THREE.Vector2().fromArray(p.innerWide) },
         uTop: { value: p.top },
-        uGain: { value: 1 }, uWide: { value: 1 }, uMist: { value: new THREE.Vector4(0, 0, 0, 1) }, uFog: { value: new THREE.Vector3() }, uAway: { value: 0 }, uFree: { value: 0 }, uNightLine: { value: new THREE.Vector2().fromArray(p.nightLine) }, uNightGlow: { value: new THREE.Vector4().fromArray(p.nightGlow) }, uNightAt: { value: new THREE.Vector2().fromArray(p.nightAt) }, uNightSide: { value: new THREE.Vector2().fromArray(p.nightSide) }, uNightRim: { value: new THREE.Vector2().fromArray(p.nightRim) }, uLineEnd: { value: new THREE.Vector2().fromArray(p.lineEnd) }, uLineAway: { value: new THREE.Vector2(p.lineAway[0], p.lineAway[1]) }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
+        uGain: { value: 1 }, uWide: { value: 1 }, uMist: { value: new THREE.Vector4(0, 0, 0, 1) }, uFog: { value: new THREE.Vector3() }, uAway: { value: 0 }, uFree: { value: 0 }, uOut: { value: 1 }, uNightLine: { value: new THREE.Vector2().fromArray(p.nightLine) }, uNightGlow: { value: new THREE.Vector4().fromArray(p.nightGlow) }, uNightAt: { value: new THREE.Vector2().fromArray(p.nightAt) }, uNightSide: { value: new THREE.Vector2().fromArray(p.nightSide) }, uNightRim: { value: new THREE.Vector2().fromArray(p.nightRim) }, uLineEnd: { value: new THREE.Vector2().fromArray(p.lineEnd) }, uLineAway: { value: new THREE.Vector2(p.lineAway[0], p.lineAway[1]) }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
         uDiag: diag,
         ...curtain.uniforms,
       },
