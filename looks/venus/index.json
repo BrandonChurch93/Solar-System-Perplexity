@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T21:26:37.172Z",
- "head": "5a508c0d9dfd1c16405944278128ef05edbbf590",
- "note": "Cure B stills: towers single at 1548 and 1554, hold stills byte equal; the straight line at 1326 still stands, cause being measured",
+ "pushed": "2026-11-25T21:44:45.257Z",
+ "head": "833b30b7c88919612af5258dce6107fadffa347d",
+ "note": "cure B alone (one carrier of the close picture a pixel): whole run going, stills seen",
  "looks": [
+  {
+   "time": "2026-11-25T21:44:44.173Z",
+   "file": "20261125214444173-note-B1-1554.jpg",
+   "source": "../../../../tmp/v/sh/B1-1554.jpg",
+   "kind": "note",
+   "label": "1554 at 2 to 1: towers single with cure B",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T21:44:43.216Z",
+   "file": "20261125214443216-note-cR0-1320.jpg",
+   "source": "../../../../tmp/v/sh/cR0-1320.jpg",
+   "kind": "note",
+   "label": "1320: sixth, B1, control without the ramp: the dark triangle goes with cure B",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-25T21:26:36.339Z",
    "file": "20261125212636339-note-B1-line1326.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/sh/a4H1-1320.jpg",
    "kind": "note",
    "label": "1320: the straight line stands in the fourth state and in H1 (not the cure's)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T20:42:49.940Z",
-   "file": "20261125204249940-note-cP0-1554.jpg",
-   "source": "../../../../tmp/v/sh/cP0-1554.jpg",
-   "kind": "note",
-   "label": "1554 at 2 to 1: sixth, H1 (double towers, fringes), control cP0 (plates give the hero only): single",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T20:16:41.602Z",
-   "file": "20261125201641602-note-H1-d-1320z.jpg",
-   "source": "../../../../tmp/v/sh/H1-d-1320z.jpg",
-   "kind": "note",
-   "label": "H1 1320 at 2 to 1: straight lines found, cause open",
    "stop": "venus"
   }
  ]
