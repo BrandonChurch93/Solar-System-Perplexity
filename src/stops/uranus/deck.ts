@@ -5,7 +5,7 @@ import deckJson from './deck.json'
 import { frameUniform } from '../../core/frame'
 import nearJson from './deck-near.json'
 import cloudJson from './deck-cloud.json'
-import { PLATE_LEVELS, PLATE_SAMPLERS, TOPS_GLSL } from './globe'
+import { AIR_GLSL, PLATE_LEVELS, PLATE_SAMPLERS, TOPS_GLSL } from './globe'
 
 export interface DeckLook {
   flow: [number, number, number, number]
@@ -101,7 +101,16 @@ uniform float uNearWidth;
 uniform float uCloudWidth;
 uniform vec4 uWin;
 uniform vec3 uCamL;
-uniform float uLayer;
+uniform float uJoin;
+uniform vec4 uPath;
+uniform vec2 uHaze;
+uniform vec3 uBare;
+uniform sampler2D uOwnLight;
+uniform vec2 uOwnLightSize;
+uniform sampler2D uShade;
+uniform float uShadeMix;
+uniform mat3 uPlaceRot;
+uniform float uSpin;
 uniform vec2 uLimb;
 uniform float uEdge;
 uniform vec2 uInset;
@@ -137,19 +146,18 @@ in vec3 vClip;
 out vec4 outColor;
 ${COMMON}
 ${DECK_LIGHT_GLSL}
-vec3 layerLight(float mu, float psi) {
-  float m = clamp(mu, 0.0, 1.0) * uLayer;
-  vec3 l = deckLight(m, psi);
-  for (int k = 0; k < (uLayer < 1.0 ? 1 : 0); k++) {
-    vec3 ring = vec3(0.0);
-    for (int i = 0; i < 8; i++) ring += deckLight(m, mod(psi + float(i) * 0.7853981634 + 3.14159265359, 6.28318530718) - 3.14159265359);
-    l = mix(ring / 8.0, l, sqrt(max(1.0 - mu * mu, 0.0) / max(1.0 - m * m, 1e-6)));
-  }
-  return l;
-}
+${AIR_GLSL}
 ${INVERSE_FILMIC_GLSL}
 ${DIAG_GLSL}
 ${TOPS_GLSL}
+vec3 ownLight(vec3 n, float mu) {
+  vec3 t = n * uPlaceRot;
+  float c = cos(uSpin);
+  float s = sin(uSpin);
+  vec3 d = vec3(c * t.x + s * t.z, t.y, c * t.z - s * t.x);
+  vec2 uv = vec2((clamp(dot(n, uTopSun) * 0.5 + 0.5, 0.0, 1.0) * (uOwnLightSize.x - 1.0) + 0.5) / uOwnLightSize.x, (clamp(mu, 0.0, 1.0) * (uOwnLightSize.y - 1.0) + 0.5) / uOwnLightSize.y);
+  return textureLod(uOwnLight, uv, 0.0).rgb * mix(vec3(1.0), textureLod(uShade, vec2(atan(d.x, d.z) / 6.28318530718 + 0.5, asin(clamp(d.y, -1.0, 1.0)) / 3.14159265359 + 0.5), 0.0).rgb, uShadeMix);
+}
 float cell(vec2 p) {
   vec3 q = fract(vec3(p.xyx) * 0.1031);
   q += dot(q, q.yzx + 33.33);
@@ -203,7 +211,7 @@ void main() {
   vec3 dv = normalize(p - uCamL);
   float mu = dot(n, -dv);
   float psi = atan(dot(dv, uR0), dot(dv, uF0));
-  vec3 lNow = layerLight(mu, psi);
+  vec3 lNow = airLight(mu, psi);
   vec3 lImg = deckLight(muI, psiI);
   vec2 uvC = clamp(uvT, 0.0, 1.0);
   vec2 cx = dFdx(uvT) * uGrad;
@@ -248,7 +256,12 @@ void main() {
 ${FAR_LEVELS}
   vec2 q0 = pg * uPlateScale[0];
   vec3 calm = textureLod(uPlate0, q0 + 0.5, uPlateWide).rgb;
-  vec3 aS = mix(calm * calm * uPlace.y, aP, smoothstep(0.5, 0.5 - uPlace.x, max(abs(q0.x), abs(q0.y))) * textureLod(uPlaceField, q0 + 0.5, 0.0).a);
+  vec4 field = textureLod(uPlaceField, q0 + 0.5, 0.0);
+  vec3 aS = mix(calm * calm * uPlace.y, aP, smoothstep(0.5, 0.5 - uPlace.x, max(abs(q0.x), abs(q0.y))) * field.a);
+  vec4 dim = bared(mu);
+  vec3 own = field.rgb * ownLight(n, mu) * dim.rgb;
+  float over = airOver(own, lNow, dim.a);
+  for (int k = 0; k < (over < 1.0 ? 1 : 0); k++) lNow = over > -1.0 ? joined(own, lNow, over) : own;
   vec2 nd = vClip.xy / vClip.z;
   vec2 unit = uBase.x * vec2(uAspect, 1.0) / (uWin.zw - uWin.xy);
   vec2 ka = dFdx(uvT) / max(abs(dFdx(nd.x)), 1e-9) / unit * uLens.x;
@@ -279,7 +292,12 @@ ${FAR_LEVELS}
   float veilA = clamp(dq * uCloudB.x, 0.0, 1.0);
   float under = clamp(cloudAt(cloudPlace(uCentre + rs * n), 4.0 * uFrame) * uCloudB.x, 0.0, 1.0) * smoothstep(uCloudB.z, uCloudB.w, mu) * lit;
   col *= 1.0 - uCloudB.y * under;
-  col = col * (1.0 - veilA) + layerLight(muQ, psi) * uCloudTint * dq;
+  vec3 lVeil = airLight(muQ, psi);
+  vec4 dimQ = bared(muQ);
+  vec3 ownQ = field.rgb * ownLight(n, muQ) * dimQ.rgb;
+  float overQ = airOver(ownQ, lVeil, dimQ.a);
+  for (int k = 0; k < (overQ < 1.0 ? 1 : 0); k++) lVeil = overQ > -1.0 ? joined(ownQ, lVeil, overQ) : ownQ;
+  col = col * (1.0 - veilA) + lVeil * uCloudTint * dq;
   float cloudT = diagTexels(gq * uCloudA.y * vec2(uCloudD.y, 1.0) * uCloudWidth);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
@@ -299,8 +317,8 @@ void main() {
   outColor = vec4(0.0);
 }`
 
-const COVER_FRAG = FRAG.replace('uniform float uFade;', 'uniform float uFade;\nuniform vec2 uBorder;\nuniform vec3 uPixel;\nuniform vec2 uSteep;').replace(`  outColor = vec4(o.rgb, uDiag >= 2 ? 1.0 : uFade);
-  if (uDiag >= 2 && uFade < 0.5) discard;`, `  float cover = (1.0 - smoothstep(uPixel.y, uPixel.z, log2(max(length(p - uCamL) / uRadius * uPixel.x, 1e-12)))) * (1.0 - smoothstep(uSteep.x, uSteep.y, mu)) * (1.0 - smoothstep(uBorder.x, uBorder.y, acos(clamp(dot(n, uUp), -1.0, 1.0))));
+const COVER_FRAG = FRAG.replace('uniform float uFade;', 'uniform float uFade;\nuniform vec2 uBorder;\nuniform vec3 uPixel;').replace(`  outColor = vec4(o.rgb, uDiag >= 2 ? 1.0 : uFade);
+  if (uDiag >= 2 && uFade < 0.5) discard;`, `  float cover = (1.0 - smoothstep(uPixel.y, uPixel.z, log2(max(length(p - uCamL) / uRadius * uPixel.x, 1e-12)))) * (1.0 - smoothstep(uBorder.x, uBorder.y, acos(clamp(dot(n, uUp), -1.0, 1.0))));
   outColor = vec4(o.rgb, uDiag >= 2 ? 1.0 : cover);
   if (uDiag >= 2 && cover < 0.5) discard;`)
 
@@ -432,7 +450,7 @@ export class Deck {
         uPlateWide: { value: Math.log2(((plates.uPlate0!.value as THREE.Texture).image as unknown as { width: number }).width * calm) },
         uHeight: { value: t.height }, uLift: { value: look.lift }, uColor: { value: t.color }, uLight: { value: t.light },
         uLightSize: { value: new THREE.Vector2().fromArray(j.lightSize) }, uColorSize: { value: new THREE.Vector2().fromArray(j.imageSize.full) }, uNearWidth: { value: counted.near }, uCloudWidth: { value: counted.cloud },
-        uWin: { value: new THREE.Vector4().fromArray(j.window) }, uCamL: { value: new THREE.Vector3() }, uLayer: { value: 1 }, uLimb: { value: new THREE.Vector2().fromArray(look.limb) }, uEdge: { value: look.edge }, uInset: { value: new THREE.Vector2().fromArray(look.inset) }, uAMax: { value: j.aMax }, uEps: { value: j.eps },
+        uWin: { value: new THREE.Vector4().fromArray(j.window) }, uCamL: { value: new THREE.Vector3() }, uLimb: { value: new THREE.Vector2().fromArray(look.limb) }, uEdge: { value: look.edge }, uInset: { value: new THREE.Vector2().fromArray(look.inset) }, uAMax: { value: j.aMax }, uEps: { value: j.eps },
         uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uFade: { value: 1 }, uDiag: diagUniform, uGrad: gradUniform, uFine: fineUniform, uFrame: frameUniform, uLens: { value: new THREE.Vector2(1, 1) }, uSharp: { value: look.sharp }, uBloom: { value: 0 },
         uDetail: { value: new THREE.Vector4(look.detail.tone, look.detail.relief, look.detail.fleck, look.detail.scale) },
         uBase: { value: new THREE.Vector4(Math.tan(THREE.MathUtils.degToRad(j.vfovDeg) / 2), 0, look.detail.stretch[0], look.detail.stretch[1]) },
@@ -516,7 +534,7 @@ export class Deck {
       glslVersion: THREE.GLSL3,
       vertexShader: COVER_VERT(false),
       fragmentShader: COVER_FRAG,
-      uniforms: { ...this.material.uniforms, uFade: { value: 0 }, uBorder: { value: new THREE.Vector2(4, 5) }, uPixel: { value: new THREE.Vector3(1e9, 1, 2) }, uSteep: { value: new THREE.Vector2(2, 3) } },
+      uniforms: { ...this.material.uniforms, uFade: { value: 0 }, uBorder: { value: new THREE.Vector2(4, 5) }, uPixel: { value: new THREE.Vector3(1e9, 1, 2) } },
       side: THREE.FrontSide,
       transparent: true,
       depthWrite: false,
@@ -536,9 +554,8 @@ export class Deck {
     this.cover.visible = false
   }
 
-  update(camera: THREE.Vector3, elapsed: number, gain: number, vignette: number, aspect: number, fade = 1, bloom = 0, lens: [number, number] = [1, 1], layer = 1): void {
+  update(camera: THREE.Vector3, elapsed: number, gain: number, vignette: number, aspect: number, fade = 1, bloom = 0, lens: [number, number] = [1, 1]): void {
     const u = this.material.uniforms
-    u.uLayer!.value = layer
     ;(u.uLens!.value as THREE.Vector2).set(lens[0], lens[1])
     u.uBloom!.value = this.unbloom * bloom / (1 - bloom)
     ;(u.uCamL!.value as THREE.Vector3).copy(camera)
@@ -552,8 +569,7 @@ export class Deck {
     this.haze.update(camera, this.centre, deckJson.radius, gain * fade, vignette, aspect)
   }
 
-  spread(pixel: number, span: [number, number], border: [number, number], steep: [number, number]): void {
-    ;(this.coverMaterial.uniforms.uSteep!.value as THREE.Vector2).set(steep[0], steep[1])
+  spread(pixel: number, span: [number, number], border: [number, number]): void {
     ;(this.coverMaterial.uniforms.uPixel!.value as THREE.Vector3).set(pixel, Math.log2(span[0]), Math.log2(span[1]))
     ;(this.coverMaterial.uniforms.uBorder!.value as THREE.Vector2).set(border[0], border[1])
     this.cover.visible = pixel > 0

@@ -2939,3 +2939,65 @@ What the rows say:
 1. The air from above as a thin veil over the globe's own light (MAIL 880: "from above, a thin veil"): above the layer the ground keeps the globe's light and the air adds only what its length adds; the table's full law is reached inside the layer, by the eye's depth in the air. It removes the factor 6 to 8 at the limb and the half straight down, and with it the steep rule. It gives up the rule that above and inside read one table at one argument (MAIL 880's c(hT) / c(h) form), and the light then changes with the eye's depth in the layer from about 0.11 R down (4168 to 4186), which the level line and the pop line judge.
 2. The cover's picture made the globe's where it comes in: one white for the tops and no grain at pixel sizes over 2.3e-4, so the cover adds only what a smaller pixel can show. Gives up nothing of 4290 if the grain and the cover's white are whole at the surface view's pixel sizes; it has to be proven on 4186 to 4200.
 3. The steep rule off alone: measured above, gives up the brightness of the disc's middle at 4137 and 4436.
+
+## MAIL 1020 from the Builder (/root), 09:47 UTC (word for word)
+
+Your STATE of bfd6c3ad is in. The controls are exactly what was owed: four things named, each with its share. Thank you for not taking the steep rule off for 0.26.
+
+RULED:
+a. The cover (thing 2): build it next as you say, its own commit: one white for the tops and no grain at pixel sizes over 2.3e-4, proven on 4186 to 4200 with 4290 untouched.
+
+b. The air and the steep rule (things 1 and 3): yes, start it. You have my word, and MAIL 880's form (above and inside read one table at one argument) is given up: it was there to avoid a switch at the layer's top, and it bought a factor of 6 to 8 on the same ground instead. The terms:
+1. One law of air by the path, at every height: a ground point shows the globe's own light, dimmed by the air between it and the eye, plus the air's own glow summed along that path. Above the layer the path is the chord through it (short straight down, long at the limb, so the pale band at the limb comes by itself and the ground under it is pressed flat only as far as the path is long); inside the layer the path grows smoothly as the eye sinks. The eye's height enters only through the path.
+2. So thing 4 goes with it: no factor by the eye's height. If the surface view at 4290 cannot be held to the bit by the path law, it may move: fit the air's density and glow so that 4290 stands beside the approved image no worse than now, G17 green, and send its number. A judged frame that is matched again is allowed; a light that changes in place on every ground point is not.
+3. 4035 and the whole hold keep their bytes. The steep rule goes.
+4. Nothing by the clock, and no hand by pixel size on the light of the ground: if a hand is still needed somewhere, name it and its range.
+5. Proof: dive parts 2, 3 and 4 and rise parts 2 and 3 on your chain under the limit, then on my reader; 4137, 4416 and 4436 beside the state.
+
+c. Stands or falls with b, as you say.
+
+The two pop reds (1.31 at 4151 + 1/2, 1.201 at 4180): after a and b, read them again before anything is built for them.
+
+Timetable: a state with the first numbers of b by 11:45 UTC; NAMED by 13:00 UTC, with a and b as far as they stand and your list of what is wrong, worst first. That one goes into a take and into Uranus's round 2 of 3 as it stands (d186).
+
+## MAIL 1046 from the Builder (/root), 10:57 UTC (word for word)
+
+Round 54, your round 2 of 3 of the second note, started at 10:38 UTC on take batch 9's Uranus af8898f2 (main fb0b4d17, round commit 9d59e699). The critics' words come to you when it closes.
+Cures a and b of MAIL 1020 are for round 3 of 3, your last. The state by 11:45 and the NAMED by 13:00 UTC stand.
+For your knowledge when you match 4290 again: handover_engineer's coming engine commit gives your hold 4200 to 4379 a sample footprint 2.3 to 4.5 percent wider than now, with a step at both seams. I have ruled that no step may stand at a seam and that a judged hold may not get softer for it, and asked for the pairs of 4259 and 4290. Nothing for you to do; match 4290 on the tree as it is.
+
+## The air by the path (MAIL 1020 b), built 10:06 to 11:20 UTC
+
+### The law as built
+- One ground point, one own light: the globe's light table at the point's sun angle times the shade map (the hold's law). The deck reads the same table and the same map (`ownLight` in `deck.ts`), so the surface view and the globe show one ground.
+- Dimmed by the air between: the own light is what is seen from space, that is bare ground under the whole column of haze. With a share `s` of the column under the eye (`s = 1 - exp(-h / place.air.haze.scale)`, 1 from space) and the chord `c = depth * z / (z * mu + 1)` (`mu` the view's cosine at the ground point, `z = sqrt(1 / place.air.scale)`), the light is `own * (bare * exp(-s c) + (1 - bare * exp(-c)) * (1 - exp(-s c)) / (1 - exp(-c)))` (`bared` in `globe.ts`). At `s = 1` the factor is 1 to the bit, so everything above the haze keeps the globe's light. `bare` is the bare ground against the light from space, by colour (`place.air.haze.bare [0.03, 0.03, 0.08]`).
+- Plus the air's own glow: the fitted table of the surface view, read at the cosine the same ray has at the pose's height (`from = sqrt(1 - ((1 + hT) / (1 + h))^2 (1 - mu^2))`), times the path's ratio `(1 - exp(-d p c(mu))) / (1 - exp(-d c(from)))` with `p` the column under the eye against the column under the pose. At the pose it is the table to the bit.
+- Joined, not handed: `over = log2(glow / (dimmed own + floor * veil))` with `veil = (1 - exp(-s c)) / (1 - exp(-c))`. Under -1 the ground's dimmed own light stands alone, over 1 the glow alone, between them one smooth curve (`joined`). There is no weight by height, by pixel size or by time in it.
+- The eye's height enters in three places, each a length of air: `s`, `p` and `from`. All three are rounded to 1 / 1048576 so that the hold reads 1 exactly.
+- Gone: the steep rule (`place.steep`, `uSteep`), the hand by pixel size on the light (`place.light.pixel`, `uPixel` of the globe), the factor by the eye's height (`uLayer`, `layerLight`).
+
+### What it gives up, and what still changes in place
+- 4290 moves. The two approved pictures do not agree on the near ground of the pose: the globe's own light there (sun 5 degrees under the horizontal) is 0.042 to 0.056 and green, the approved surface view 0.013 to 0.04 and navy. Without the dimming (form C, `bare [1, 1, 1]`) the foreground of 4290 goes flat teal: 863,995 pixels differ, 745,183 by more than 4 levels, 357,072 by more than 16, largest 63, mean 10.57 levels over the ground.
+- With the dimming fitted (`haze.scale 0.1`, `depth 1`, `bare [0.03, 0.03, 0.08]`): 456,232 pixels differ, 145,518 by more than 4, 119 by more than 16, none by more than 32, largest 20, mean 1.10 levels over the ground (draft tier). The upper two thirds of the ground are the state's bytes; what moves is the dark foreground, a little lighter and less blue at the left edge (8 to 14 levels of 255 where the state has 7 to 14).
+- The price, named: the near ground under the eye gets darker in place as the eye sinks into the haze, by the path. Factor on the own light straight down: 1.000 at 4137 and above, 0.969 at 4152, 0.913 at 4160, 0.831 at 4164, 0.727 at 4168, 0.613 at 4172, 0.495 at 4176, 0.392 at 4180, 0.295 at 4186, 0.225 at 4199, 0.222 at the pose. At a grazing view 1.000, 0.998, 0.995, 0.986, 0.965, 0.921, 0.851, 0.742, 0.625. Largest step 5.4 percent a frame (4172 to 4180). It is smooth in height and in the view's angle and carries no detail of its own.
+- Tried on the way: B1 (the glow by a lobe around the sun and a hand): chain 1.26, 0.66, 1.32, and the left third of 4186 to 4290 lost the horizon's pale band. Dropped.
+
+### Numbers of the built law (draft tier, tree before the cover's commit)
+- Hold: 4035 `45c0542e84eacac3` and 4110 `a69908ca06a9d43f`, the state's bytes.
+- 4137 `f584697198aa0913` (the globe's own light, the steep rule's dark middle gone: 890,842 pixels over 4 levels against the state, largest 57), 4186 `9593bca532e67088` (1,115,693 over 4, largest 66: the state's wide pale veil over all ground is gone), 4200 `878c0516665fcd46` (268,950 over 4, none over 16, largest 14), 4290 `ab0a8b1286d1c4cc` (145,518 over 4, 119 over 16, largest 20, box x 0 to 1215 from y 328 down).
+- My chain (pattern, limit 0.45; `/tmp/n52/pat2.py`, 17 half frames each):
+
+| window | state | built | onward | back | the globe's own light alone |
+| --- | --- | --- | --- | --- | --- |
+| 4152 + 1/2 (dive part 2) | 1.59 | 0.67 at x 288, y 520 | 0.67 on 7.0 percent | 0.15 on 0.2 percent | 0.61 |
+| 4170 + 1/2 (dive part 3) | 1.11 | 1.38 at x 1717, y 619 | 0.68 on 14.5 percent | 1.38 on 86.0 percent of a judged share 0.19 | 0.56 |
+| 4185 (dive part 4) | 0.98 | 1.11 at x 1208, y 818 | 0.48 on 1.9 percent | 1.11 on 35.1 percent of a judged share 0.08 | not run |
+| 4414 + 1/2 (rise part 2) | 1.61 | 1.02 at x 1348, y 292 | 1.02 on 15.0 percent | 0.79 on 40.5 percent of a judged share 0.06 | 0.71 |
+
+- Not under the limit in any window. What stands in each:
+  - 4152 + 1/2 and 4414 + 1/2: only the globe's own limb rim (the hold's law by the view's angle; red at the upper limb, `/tmp/n54/p-D3-8305.jpg`, `p-D3-8829.jpg`). Nothing of the place.
+  - 4170 + 1/2 and 4185: the zone under the glow of the low sun. The glow goes by the ray's angle against the eye's horizontal, so it rises over the far ground while the eye comes level: at the horizon 0.10 of the table's 0.715 at 4168, 0.26 at 4176, 0.66 at 4186, whole at the pose. For a ground point 0.1 R from the point under the eye the table is read at 0.32 at 4185 and at 0.59 at 4193. That is the pose's pale band coming in, in place, by angle. The first form (B1, the table read at the ground's own cosine, band at the limb from 4152 on) read 0.66 at 4185 and 1.26 at 4152; this form reads 0.67 at 4152 and 1.11 at 4185. Neither brings both under the limit: the hold has no pale band, the pose has one 5 times the globe's own light at the horizon, and it has to come in between them.
+- Final tier: 4035 `0e29f7824a1f3e8b1cfdfcb73976c35a915f018fb179458ff8d2c18daea79b30`, the ruled bytes. 4290 `0ef7e04c6ca87a374ad7eed00a947d4b5f548a2fc29a6d179b402ee1dd438774` (was `e7d7724e...`), moved on purpose (MAIL 1020 b.2).
+- `npm run measure -- --stop uranus --only G5,G17`, 467 s: "PASS G5 uranus: 4035 hold invalid 0 coverage 0.195; 4137 dive invalid 0 coverage 0.666; 4290 terrain invalid 0 coverage 0.519; 4436 rise invalid 0 coverage 0.591" and "PASS G17 uranus: 4035 median 1.178 p25 1.082 over 70 tiles; 4290 median 1.106 p25 1.014 over 59 tiles" (the state: 4290 median 1.071 p25 0.961).
+- 4290 against the state by level (draft): 456,232 pixels differ, 145,518 by more than 4 (box x 0 to 1215, y 328 to 1079), 3,861 by more than 8 (x 0 to 261), 119 by more than 16 (x 0 to 101, y 328 to 352). Right of x 1215 nothing moves by more than 4. Above the ground 2,028 sky pixels move by 1 level (the glare of the darker foreground).
+- Hands left: none on the ground's light. By pixel size there stay the cover's own weight (`place.deck.pixel [2.3e-4, 4.6e-4]`, which picture is drawn, not its light) and the levels of the ground's matter.

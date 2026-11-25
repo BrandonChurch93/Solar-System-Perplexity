@@ -35,6 +35,39 @@ vec3 lightAt(float ndl, float mu) {
   return textureLod(uLight, uv, 0.0).rgb;
 }`
 
+export const AIR_GLSL = /* glsl */ `
+vec3 airLight(float mu, float psi) {
+  float m = clamp(mu, 0.0, 1.0);
+  vec3 l = deckLight(m, psi);
+  for (int k = 0; k < (uPath.x != 1.0 || uPath.w != 1.0 ? 1 : 0); k++) {
+    float from = sqrt(max(1.0 - uPath.w * (1.0 - m * m), 0.0));
+    l = deckLight(from, psi) * (1.0 - exp(-uPath.y * uPath.x * uPath.z / (uPath.z * m + 1.0))) / (1.0 - exp(-uPath.y * uPath.z / (uPath.z * from + 1.0)));
+  }
+  return l;
+}
+vec4 bared(float mu) {
+  vec4 f = vec4(1.0);
+  for (int k = 0; k < (uHaze.x < 1.0 ? 1 : 0); k++) {
+    float chord = uHaze.y * uPath.z / (uPath.z * clamp(mu, 0.0, 1.0) + 1.0);
+    float all = exp(-chord);
+    float part = exp(-uHaze.x * chord);
+    float veil = (1.0 - part) / (1.0 - all);
+    f = vec4(uBare * part + (1.0 - uBare * all) * veil, veil);
+  }
+  return f;
+}
+float airOver(vec3 own, vec3 air, float veil) {
+  return log2(max(dot(air, vec3(0.2126, 0.7152, 0.0722)), 1e-9) / (dot(own, vec3(0.2126, 0.7152, 0.0722)) + uJoin * veil));
+}
+vec3 joined(vec3 own, vec3 air, float over) {
+  vec3 l = air;
+  for (int k = 0; k < (over < 1.0 ? 1 : 0); k++) {
+    float a = smoothstep(-1.0, 1.0, over);
+    l = own * exp2(a * log2(max(air, vec3(1e-9)) / max(own, vec3(1e-9))) + 0.25 * (over + 1.0) * (over + 1.0) - a * over);
+  }
+  return l;
+}`
+
 export const PATCH_COUNT = patchJson.levels.length
 
 const PATCH_SAMPLERS = Array.from({ length: PATCH_COUNT }, (_, i) => 'uniform sampler2D uPatch' + i + ';').join('\n')
@@ -117,9 +150,10 @@ ${PLATE_SAMPLERS}
 uniform float uPlateScale[${PLATE_COUNT}];
 uniform float uPlateSize[${PLATE_COUNT}];
 uniform vec2 uPlace;
-uniform vec2 uSteep;
-uniform float uLayer;
-uniform vec3 uPixel;
+uniform float uJoin;
+uniform vec4 uPath;
+uniform vec2 uHaze;
+uniform vec3 uBare;
 uniform sampler2D uPlaceField;
 uniform vec3 uPlaceEye;
 uniform float uPlaceRef;
@@ -196,16 +230,7 @@ vec3 deckLight(float mu, float psi) {
   vec2 uv = vec2((clamp(psi / uDeckLightSize.z * 0.5 + 0.5, 0.0, 1.0) * (uDeckLightSize.x - 1.0) + 0.5) / uDeckLightSize.x, (y * (uDeckLightSize.y - 1.0) + 0.5) / uDeckLightSize.y);
   return textureLod(uDeckLight, uv, 0.0).rgb;
 }
-vec3 layerLight(float mu, float psi) {
-  float m = clamp(mu, 0.0, 1.0) * uLayer;
-  vec3 l = deckLight(m, psi);
-  for (int k = 0; k < (uLayer < 1.0 ? 1 : 0); k++) {
-    vec3 ring = vec3(0.0);
-    for (int i = 0; i < 8; i++) ring += deckLight(m, mod(psi + float(i) * 0.7853981634 + 3.14159265359, 6.28318530718) - 3.14159265359);
-    l = mix(ring / 8.0, l, sqrt(max(1.0 - mu * mu, 0.0) / max(1.0 - m * m, 1e-6)));
-  }
-  return l;
-}
+${AIR_GLSL}
 vec3 shadeAt(vec3 d) {
   return textureLod(uShade, vec2(atan(d.x, d.z) / (2.0 * PI) + 0.5, asin(clamp(d.y, -1.0, 1.0)) / PI + 0.5), 0.0).rgb;
 }
@@ -284,7 +309,7 @@ ${PLATE_LEVELS}
   vec3 pD = uPlaceRot * spinY(d0, uSpin);
   vec3 dvD = normalize(pD - uPlaceEye);
   float muD = dot(pD, -dvD);
-  vec3 lD = layerLight(muD, atan(dot(dvD, uDeckR0), dot(dvD, uDeckF0)));
+  vec3 lD = airLight(muD, atan(dot(dvD, uDeckR0), dot(dvD, uDeckF0)));
   vec2 cloud = vec2(equirectGrad(uCloud, dc, uGrad).r, equirectGrad(uShadow, dc, uGrad).r) * (1.0 - wP);
   cloud.r = clamp(cloud.r * (1.0 + uCloudFine * (dot(albedo, vec3(1.0)) / max(dot(wide, vec3(1.0)), 1e-3) - 1.0)), 0.0, 1.0);
   vec2 fq = vec2(dot(d, uFaceE), dot(d, uFaceU)) * sqrt(2.0 / max(1.0 + dot(d, uFaceN), 0.05));
@@ -300,7 +325,6 @@ ${PLATE_LEVELS}
     for (int i = 0; i < 9; i++) light += lightAt(ndl + uSoft * (float(i) / 4.0 - 1.0), mu);
     light /= 9.0;
   }
-  vec3 plain = light;
   light *= mix(vec3(1.0), shadeAt(d0), uShadeMix);
   vec3 col = albedo * light * max(vec3(1.0) - cloud.g * uShadowTint, vec3(0.04));
   float lit = smoothstep(-0.02, 0.32, ndl);
@@ -311,15 +335,16 @@ ${PLATE_LEVELS}
   vec2 rg = vec2(dFdx(ru), dFdy(ru));
   for (int k = 0; k < (uRingShade.x > 0.0 && along > 0.0 && ru > 0.0 && ru < 1.0 ? 1 : 0); k++) col *= 1.0 - uRingShade.x * lit * textureGrad(uRingProfile, vec2(ru, 0.5), vec2(rg.x, 0.0), vec2(rg.y, 0.0)).r;
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
-  vec3 own = col * uNear;
-  vec3 turn = lD / max(field.rgb * plain, vec3(1e-4));
+  vec4 dim = bared(muD);
+  vec3 own = col * uNear * dim.rgb;
+  vec3 base = max(field.rgb * light, vec3(1e-6)) * dim.rgb;
+  float over = airOver(base, lD, dim.a);
   vec3 tops = vec3(0.0);
   float topShare = 0.0;
   for (int k = 0; k < (pn > 0.5 ? 1 : 0); k++) topShare = topsAt(pg, px, py);
   for (int k = 0; k < (topShare > 0.0 ? 1 : 0); k++) tops = topsLight(topShare, dot(pD, uTopSun), topsSeen(uDeckCentre + uDeckRadius * pD, pD));
-  float hand = (1.0 - smoothstep(uPixel.y, uPixel.z, log2(max(length(pD - uPlaceEye) * uPixel.x, 1e-12)))) * (1.0 - smoothstep(uSteep.x, uSteep.y, muD));
   col = own;
-  for (int k = 0; k < (hand > 0.0 ? 1 : 0); k++) col = own * exp2(hand * log2(max(turn, vec3(1e-6))));
+  for (int k = 0; k < (over > -1.0 ? 1 : 0); k++) col = own * joined(base, lD, over) / base;
   col += uNear * tops;
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.15, 0.45, 0.9), vec2(bandTurn, cloudTurn) * 4.0, length(vView));
@@ -354,8 +379,7 @@ export interface PlaceOptions {
   field: THREE.Texture
   clockRef: number
   aMax: number
-  steep: [number, number]
-  pixel: [number, number]
+  air: { scale: number; depth: number; floor: number; top: number; haze: { depth: number; bare: [number, number, number] } }
   topLight: { sun: [number, number]; white: [number, number, number]; fine: [number, number]; lane: [number, number, number]; path: THREE.Vector3[] }
   feather: number
   deck: { centre: number[]; radius: number; f0: number[]; r0: number[]; sun: number[]; flow: [number, number, number, number]; flowAngle: number; light: THREE.Texture; lightSize: number[]; psiMax: number }
@@ -401,7 +425,7 @@ export class Globe {
         ...Object.fromEntries(pl.textures.map((t, i) => ['uPlate' + i, { value: t }])),
         uPlateScale: { value: pl.halfTans.map((t) => 1 / (2 * t)) },
         uPlateSize: { value: pl.sizes },
-        uPlace: { value: new THREE.Vector2(pl.feather, pl.aMax) }, uSteep: { value: new THREE.Vector2().fromArray(pl.steep) }, uLayer: { value: 1 }, uPixel: { value: new THREE.Vector3(1e9, Math.log2(pl.pixel[0]), Math.log2(pl.pixel[1])) }, uTops: { value: new THREE.Vector2().fromArray(pl.topLight.sun) }, uTopWhite: { value: new THREE.Vector3().fromArray(pl.topLight.white) }, uTopLane: { value: new THREE.Vector3().fromArray(pl.topLight.lane) }, uTopSun: { value: v3(pl.deck.sun) }, uTopPath: { value: pl.topLight.path }, uTopFine: { value: new THREE.Vector2().fromArray(pl.topLight.fine) }, uPlaceField: { value: pl.field }, uPlaceRef: { value: pl.clockRef }, uPlaceEye: { value: new THREE.Vector3(0, 1, 0) }, uCloudTime: { value: 0 },
+        uPlace: { value: new THREE.Vector2(pl.feather, pl.aMax) }, uJoin: { value: pl.air.floor }, uHaze: { value: new THREE.Vector2(1, pl.air.haze.depth) }, uBare: { value: new THREE.Vector3().fromArray(pl.air.haze.bare) }, uPath: { value: new THREE.Vector4(1, pl.air.depth * pl.air.top, Math.sqrt(1 / pl.air.scale), 1) }, uTops: { value: new THREE.Vector2().fromArray(pl.topLight.sun) }, uTopWhite: { value: new THREE.Vector3().fromArray(pl.topLight.white) }, uTopLane: { value: new THREE.Vector3().fromArray(pl.topLight.lane) }, uTopSun: { value: v3(pl.deck.sun) }, uTopPath: { value: pl.topLight.path }, uTopFine: { value: new THREE.Vector2().fromArray(pl.topLight.fine) }, uPlaceField: { value: pl.field }, uPlaceRef: { value: pl.clockRef }, uPlaceEye: { value: new THREE.Vector3(0, 1, 0) }, uCloudTime: { value: 0 },
         uPlaceRot: { value: new THREE.Matrix3().setFromMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(pl.rot)) },
         uPlaceN: { value: v3(pl.frame.n) }, uPlaceE: { value: v3(pl.frame.e) }, uPlaceU: { value: v3(pl.frame.u) },
         uDeckCentre: { value: v3(pl.deck.centre) }, uDeckRadius: { value: pl.deck.radius }, uDeckF0: { value: v3(pl.deck.f0) }, uDeckR0: { value: v3(pl.deck.r0) },
@@ -451,10 +475,15 @@ export class Globe {
     ;(u.uPatchRim!.value as THREE.Vector2).set(base + (feather - base) * on, wave * on)
   }
 
-  place(deckTime: number, eye: THREE.Vector3, layer = 1, pixel = 1e9): void {
+  air(path: number, from: number, under: number): void {
+    const u = this.material.uniforms.uPath!.value as THREE.Vector4
+    u.x = path
+    u.w = from
+    ;(this.material.uniforms.uHaze!.value as THREE.Vector2).x = under
+  }
+
+  place(deckTime: number, eye: THREE.Vector3): void {
     const u = this.material.uniforms
-    u.uLayer!.value = layer
-    ;(u.uPixel!.value as THREE.Vector3).x = pixel
     ;(u.uPlaceEye!.value as THREE.Vector3).copy(eye)
     u.uDeckTime!.value = deckTime
   }
@@ -462,13 +491,16 @@ export class Globe {
   plates(): Record<string, THREE.IUniform> {
     const u = this.material.uniforms
     const out: Record<string, THREE.IUniform> = { uPlateScale: u.uPlateScale!, uPlateSize: u.uPlateSize!, uPlace: u.uPlace!, uPlaceField: u.uPlaceField!, uPlaceN: u.uPlaceN!, uPlaceE: u.uPlaceE!, uPlaceU: u.uPlaceU! }
-    for (const name of ['uTops', 'uTopWhite', 'uTopFine', 'uTopLane', 'uTopSun', 'uTopPath']) out[name] = u[name]!
+    for (const name of ['uTops', 'uTopWhite', 'uTopFine', 'uTopLane', 'uTopSun', 'uTopPath', 'uJoin', 'uPath', 'uHaze', 'uBare', 'uPlaceRot', 'uSpin', 'uShade', 'uShadeMix']) out[name] = u[name]!
+    out.uOwnLight = u.uLight!
+    out.uOwnLightSize = u.uLightSize!
     for (let i = 0; i < PLATE_COUNT; i++) out['uPlate' + i] = u['uPlate' + i]!
     return out
   }
 
-  tops(sun: THREE.Vector3): void {
+  tops(sun: THREE.Vector3, spin: number): void {
     ;(this.material.uniforms.uTopSun!.value as THREE.Vector3).copy(sun)
+    this.material.uniforms.uSpin!.value = spin
   }
 
   face(weight: number): void {
