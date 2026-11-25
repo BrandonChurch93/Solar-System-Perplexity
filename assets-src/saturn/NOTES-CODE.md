@@ -7019,3 +7019,48 @@ So in front of the lit globe all three looks cover by one law from the kept ring
 - NEXT: when the rise is measured: stop the proof before the dive; finals at 3720 of the refit (rings' tone,
   then the third pass of the globe's tone); the depth and ice table at both frames (drafts, finals of the
   best) with the four panel pictures; mail the table for the ruling; then one whole proof of the whole tree.
+
+## 18:38 to 19:10 UTC, 25 November: the pop's parts, the paced rise whole, the refit measured
+
+- MAILS: 1254 (the name's other three parts green, only red line the pop at 3874), 1260 (the pop went to
+  harness_builder as a fault of the reader; the lift's lower height stays unmoved; the line counts as it
+  stands until the reader is mended; send the split to harness_builder and /root; send the depth and ice
+  table when the finals are in, with a time).
+- THE PACED SHARE, WHOLE RISE (main faf2194 with the working folder, /tmp/v/c1): d312 measure largest 1.71
+  levels a frame (26 to 40 N, cosine -0.10, 3848 to 3849), 1.70 (8 to 16 N, 3826 to 3827), 1.62 (16 to 26 N,
+  3828 to 3829), pooled 1.42. The name read 2.82. Judge's rows of the same run: level step 0.13 at 3896, pop
+  1.21 from 3874 (3 frames over, first 3873 + 1/2: as the name), and NEW: the pattern reads 0.44995 at 3827
+  (limit 0.45), where the name read 0.29, and 0.38 at its largest (3829 + 1/2). Place: pixel 1152, 896, the
+  terminator's foot where the rim crosses it, at the edge of what the flow carries. With the paced share the
+  lens passes LESS share in the 8 frames after 3827 (0.128 against 0.195), so it is not the amount; my own
+  reading of two stills with a direct flow (/tmp/v/cure/pat2.py) gives 0.04 there and does not reproduce the
+  judge (its carry runs along the 16 capture frames). Only the judge can read it: slice --frames 7648-7664
+  on the tree to be named, about 10 minutes. lat_tone.py's head already notes this number as the one that
+  rises when the globe's bands are repainted while the lens climbs (0.58 at 3834 once).
+- THE POP BY PART (popparts.py, reader's own functions; my rows match the report's): the hill is all in the
+  sky under the plane's horizon (0.47 to 0.54 of the frame): 0.68 at 3865, 1.03 at 3870, 1.305 at 3873, 1.29
+  at 3874, 1.13 at 3876, 0.64 at 3880; the rest of the frame flat at 1.09.
+  CONTROL (test copy with sky.lift.power 0.01, the flight's sky held off, slice 7744-7752, /tmp/v/l0): that
+  sky keeps its level (24.4 at 3864, 27.2 at 3880; the real tree climbs to 38.2 at 3884); its part of what is
+  left: 0.68 at 3865, 1.10 at 3872, 1.09 at 3873, 1.06 at 3874, 0.91 at 3876, 0.48 at 3880. So two thirds of
+  the hill (0.41 of 0.62) is there with a still sky and one third comes with the flight's sky. Control rows:
+  left 2.14, median 1.85, pop 1.16. Sent to harness_builder and /root at 19:06.
+- THE RINGS' TONE REFIT (ring_tone.py on the name's final 3720; one free value every 0.06 radii from 1.27
+  outward, the dust's knots 1.03 to 1.25 held, old bounds; table by put_table.py): final 3720 28.1430 (the
+  name 28.6192, main 27.7989). The hold's draft is the same file (e17776f6). By part against main: rings all
+  together 18.20 against 18.27; so the rings are level with main.
+  Cost seen: G17 median at 3720 0.8449 (the name 0.9122, main 0.9739, floor 0.8): the near outer rings were
+  too bright and their fine contrast came down with their level. To name.
+- THE THIRD PASS OF THE GLOBE'S TONE (lat_tone.py --again, measure kept as code/lat_tone_again.json): final
+  3720 28.0507, G17 0.8427. Globe lit 0.83 to 0.79, twilight and night 1.60 to 1.54. Both are in the working
+  tree now (skim.json: light.grade.radial.gain, light.tone.gain and their notes).
+- What is left over main at 3720 (0.25): band 0 to 6 N 3.37 against 2.99 and thin sheet 3.35 against 2.72,
+  together 1.01, less the globe's gain 0.70 and the rings 0.07. Phase angles checked (rays.py): the gap of
+  the hold is seen at 88 to 111 degrees from the Sun, the sheet at the skim at 82 to 121: no law by the
+  Sun's angle can tell the two apart; only the sine of the view does (0.40 to 0.51 against 0.14 to 0.24),
+  which is the one law of cover already. A sheet as dense as the approved close image shows it (cover about
+  0.9 at sine 0.19, depth 0.44) would cover 0.6 of the hold's gap.
+- RUNNING 19:07: scan of depth and ice at draft, both frames, from the tree with both refits
+  (/tmp/v/dark/sc_B, sc_D0, sc_I30, sc_I100, sc_D15I30, sc_D15I100, sc_D30I100, sc_U30I100).
+- NEXT: the table and the four panel pictures to /root for the ruling; the judge's slice 7648-7664 on the
+  tree; then one whole proof (rise, dive, G13, gate, parity, path, handover, place, finals, vitest alone).
