@@ -1,9 +1,41 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T06:12:46.282Z",
- "head": "9fc760b3bdbce8f547340e88ba97f39f45fa719f",
- "note": "06:13 G13 named (count of a hidden mesh, 0.00 percent soft after), way C first variant looked at and refused at 615 and 717, second variant rendering",
+ "pushed": "2026-11-25T06:29:50.450Z",
+ "head": "2931e023cd473fb9b2ecc0367b88bba6a4ba0b0e",
+ "note": "way C drafts: state D (disc by height) looked at and not taken, state E (craters by texels, light by height) beside the mark at 725, 733, 741",
  "looks": [
+  {
+   "time": "2026-11-25T06:29:43.800Z",
+   "file": "20261125062943800-note-ce-1466-s.jpg",
+   "source": "../../../../tmp/m/ce-1466-s.png",
+   "kind": "note",
+   "label": "DRAFT, state E at 733, 1 to 1 beside the mark: the place's craters crisp, the hero's golden rims still over them as soft light. Named fault: those rims are soft here",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T06:29:42.519Z",
+   "file": "20261125062942519-note-cd-1466-s.jpg",
+   "source": "../../../../tmp/m/cd-1466-s.png",
+   "kind": "note",
+   "label": "DRAFT, state D at 733, 1 to 1 beside the mark: the hero's ground far past its texels with the place's craters as a ghost. This is why D is not taken",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T06:29:41.246Z",
+   "file": "20261125062941246-note-ce-full-733.jpg",
+   "source": "../../../../tmp/m/ce-full-733.jpg",
+   "kind": "note",
+   "label": "DRAFT, not a final: dive 733 whole frame. The mark, state D, state E. On the mark the place is a grey ground from 725 on; on E it stays in the hero's light and turns to its own by 749",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T06:29:39.715Z",
+   "file": "20261125062939715-note-ce-full-b.jpg",
+   "source": "../../../../tmp/m/ce-full-b.jpg",
+   "kind": "note",
+   "label": "DRAFT, not a final: dive 725 and 741 whole frame. Left the build b0b87889 (the mark), middle way C state D (the place's disc comes by eye height: no disc at 725 but soft from 727 to 741, not taken), right way C state E (the place's craters come by their texels as on the mark, only their light is graded by eye height from the hero's to their own)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T06:12:45.073Z",
    "file": "20261125061245073-note-c3A-717s.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/m/lk-779-low-native.png",
    "kind": "note",
    "label": "9fc760b3 frame 779 draft, native size, the lower part (x 480 to 1440, y 700 to 1080): the near ground that the texels view counts as soft.",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T05:46:10.910Z",
-   "file": "20261125054610910-note-lk-texels-770-779-970.jpg",
-   "source": "../../../../tmp/m/lk-texels-770-779-970.jpg",
-   "kind": "note",
-   "label": "9fc760b3 texels view 770, 779, 970 (draft, master): red is under 1 texel a pixel (soft share 21.3, 26.1, 15.8 percent, limit 2), green 1 to 2, blue not counted. Not cured.",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T05:46:10.319Z",
-   "file": "20261125054610319-note-lk-mail918-before-after.jpg",
-   "source": "../../../../tmp/m/lk-mail918-before-after.jpg",
-   "kind": "note",
-   "label": "MAIL 918 line on my tree (main's director): top row turnDeg 78, bottom row 111.27; frames 1016, 1064, 1072 draft. The sky behind turns, the bodies stand. Not committed.",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T05:46:09.631Z",
-   "file": "20261125054609631-note-lk-pop-1043-1046.jpg",
-   "source": "../../../../tmp/m/lk-pop-1043-1046.jpg",
-   "kind": "note",
-   "label": "9fc760b3 draft: the leaving 1043 to 1046 + 1/2 (crop x 1200 to 1560, y 60 to 560), below each the difference to the next times 6. No layer changes; the body starts across the frame from rest. The pop red of MAIL 916 lies here.",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T05:21:56.632Z",
-   "file": "20261125052156632-note-c1-728.jpg",
-   "source": "../../../../tmp/m/c1-728.jpg",
-   "kind": "note",
-   "label": "DRAFT way C step 1: 728 at native size, relief left, step 1 right",
    "stop": "mercury"
   }
  ]
