@@ -1,9 +1,25 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T22:28:37.848Z",
+ "pushed": "2026-11-25T22:48:27.058Z",
  "head": "573431fb53a875f5a78cb152a458f82656ac6bb7",
- "note": "Second state of the ground by code at 3150: relief by code with light and cast shadows, still rock and too dark",
+ "note": "22:50 UTC: third state of the ground by code at 3150, before and after the first albedo solve. Both bad, pushed as ruled. Next: sheared plateaus in the wound coordinates for the spiral bands, then the solve again.",
  "looks": [
+  {
+   "time": "2026-11-25T22:48:26.320Z",
+   "file": "20261125224826320-note-d-3150.jpg",
+   "source": "../work/r23/t/d-3150.png",
+   "kind": "note",
+   "label": "3150 draft, third state before the solve (relief by code: funnel, crest, lanes from the guide; rounded tops of three ages; fill 0.26): low band 17.541, plain 24.2426, bands 1.01 1.02 1.03 1.06, 126 s. Wrong: lumps where the approved image has sheared spiral bands, too dark on the left",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T22:48:25.587Z",
+   "file": "20261125224825587-note-e-3150.jpg",
+   "source": "../work/r23/t/e-3150.png",
+   "kind": "note",
+   "label": "3150 draft, third state, albedo solved once under the code's light with a floor of 0.07 (no darkness in the guide): low band 28.2625, plain 36.1885, bands 1.18 1.25 1.31 1.37. Bad: the lower right is lit and turns teal, relief still lumps, no spiral bands yet",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T22:28:37.059Z",
    "file": "20261125222837059-note-b-3150.jpg",
@@ -178,22 +194,6 @@
    "source": "out/work/jupiter/final/p1-3150.png",
    "kind": "note",
    "label": "surface view 3150 of the named tree at the final tier, unchanged by this design work (6.1102 against the approved close image)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T19:55:06.155Z",
-   "file": "20261125195506155-note-sim-a8g.jpg",
-   "source": "../work/r20/sim-a8g.png",
-   "kind": "note",
-   "label": "design test, not built: the hold's disc at 8 times, simulated. Left the approved hero, middle main, right the lit body written into the globe (simulated cost 0.0019 against 0.0203 of the named tree); the left dash is not yet kept",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T19:55:05.555Z",
-   "file": "20261125195505555-note-mask-a-mid.jpg",
-   "source": "../work/r20/mask-a-mid.jpg",
-   "kind": "note",
-   "label": "design test, not built: the storm at the place on the mid grid, 30.7 units wide. Left the body as carried now, middle the lee lit by the globe's own ground under a smooth mask, right the globe's own ground alone",
    "stop": "jupiter"
   }
  ]
