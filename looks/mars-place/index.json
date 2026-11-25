@@ -1,9 +1,55 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T08:51:26.930Z",
- "head": "100af532c9ff84ef23d5aaa107d1e9c425148a13",
- "note": "knob gone at 2444 to 2458 and 2695 to 2706 (pairs); still bad: flat shadow, hot line 2708, grey square of the 3.8 plate, strokes",
+ "pushed": "2026-11-25T09:14:56.035Z",
+ "head": "9cb92e38f3e0065a5d7c21655a7b21204e4a5b1f",
+ "note": "state 9cb92e38: strips of the dark field, set on against set off (control c)",
  "looks": [
+  {
+   "time": "2026-11-25T09:14:55.436Z",
+   "file": "20261125091455436-note-set-on-off-2468-2688.jpg",
+   "source": "out/work/place/k6/set-on-off-2468-2688.jpg",
+   "kind": "note",
+   "label": "9cb92e38 draft whole frame halved, left as it stands, right control c (set held off): 2468 above, 2688 below; black jagged line near the top only with the set",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T09:14:54.876Z",
+   "file": "20261125091454876-note-set-on-off-2460-2464.jpg",
+   "source": "out/work/place/k6/set-on-off-2460-2464.jpg",
+   "kind": "note",
+   "label": "9cb92e38 draft middle crop native, left as it stands, right control c (set held off): 2460 above, 2464 below; the plates alone carry the field",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T09:14:54.276Z",
+   "file": "20261125091454276-note-strip-first12.jpg",
+   "source": "out/work/place/k6/strip-first12.jpg",
+   "kind": "note",
+   "label": "9cb92e38 draft, middle crop 800 by 450 native: 2444 2448 2452 2456 2460 2464 2468 2688 2692 2696 (2700 2704 on sheet 2); the dark field is flat at 2452 to 2456",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T09:07:27.513Z",
+   "file": "20261125090727513-compare-mars-rise-sides.jpg",
+   "source": "out/work/handover/mars-rise-sides.png",
+   "kind": "compare",
+   "label": "mars rise, both sides at T (frame 2681) and their difference times 8",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "frame": 2681,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-25T09:06:53.010Z",
+   "file": "20261125090653010-compare-mars-dive-sides.jpg",
+   "source": "out/work/handover/mars-dive-sides.png",
+   "kind": "compare",
+   "label": "mars dive, both sides at T (frame 2477) and their difference times 8",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2477,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-25T08:51:25.649Z",
    "file": "20261125085125649-note-w2412.jpg",
@@ -26,46 +72,6 @@
    "source": "out/work/place/k5/p2468.jpg",
    "kind": "note",
    "label": "2468 pair native: black jagged line near the top (bad)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T08:51:22.899Z",
-   "file": "20261125085122899-note-p2464.jpg",
-   "source": "out/work/place/k5/p2464.jpg",
-   "kind": "note",
-   "label": "2464 pair native",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T08:51:22.182Z",
-   "file": "20261125085122182-note-p2460.jpg",
-   "source": "out/work/place/k5/p2460.jpg",
-   "kind": "note",
-   "label": "2460 pair native",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T08:51:21.388Z",
-   "file": "20261125085121388-note-rim85.jpg",
-   "source": "out/work/place/k5/rim85.jpg",
-   "kind": "note",
-   "label": "plates from above: the 3.8 plate stands in the 8.5 as a greyer square (bad)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T08:51:20.543Z",
-   "file": "20261125085120543-note-w2708.jpg",
-   "source": "out/work/place/k5/w2708.jpg",
-   "kind": "note",
-   "label": "2708, 2709, 2712 whole: hot line along the canyon rim still there (bad)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T08:51:19.801Z",
-   "file": "20261125085119801-note-likeness-panel.jpg",
-   "source": "out/work/place/lk/likeness-panel.jpg",
-   "kind": "note",
-   "label": "likeness of each plate to its parent, before and after the repaint (stage a)",
    "stop": "mars"
   }
  ]
