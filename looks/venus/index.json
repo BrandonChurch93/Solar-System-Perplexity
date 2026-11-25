@@ -1,9 +1,33 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T11:10:48.009Z",
- "head": "63752893cb7ae9cf12b9651fe340d6ba5a826053",
- "note": "fourth state whole dive read: 41 rows over, 0.72; place strips at 1 to 1 show soft blots 1281 to 1293; fifth state on trial",
+ "pushed": "2026-11-25T11:33:30.735Z",
+ "head": "9705f87458c73029f98726e8ace500c89d7e550f",
+ "note": "fifth state 9705f874 pushed: the place arrives by one weight of the eye's distance; control strips 1278 to 1289; controls for MAIL 1053 and 1054 running",
  "looks": [
+  {
+   "time": "2026-11-25T11:33:29.642Z",
+   "file": "20261125113329642-note-p02.jpg",
+   "source": "../../../../tmp/v/sh/a5w/p02.jpg",
+   "kind": "note",
+   "label": "the same control, the place at 1 to 1, whole frames 1284 to 1289, draft",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T11:33:28.882Z",
+   "file": "20261125113328882-note-p01.jpg",
+   "source": "../../../../tmp/v/sh/a5w/p01.jpg",
+   "kind": "note",
+   "label": "control of one weight for every form (the fifth state's law read by the side of a pixel), the place at 1 to 1, whole frames 1278 to 1283, draft",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T11:33:27.809Z",
+   "file": "20261125113327809-note-a5-1290.jpg",
+   "source": "../../../../tmp/v/sh/a5-1290.jpg",
+   "kind": "note",
+   "label": "1290 at 1 to 1, the place: before 8adf0940, the control of one weight for every form, the fourth state. The control shows before's towers sharp, the fourth state soft blots",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-25T11:10:47.305Z",
    "file": "20261125111047305-note-lr.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/v/sh/a4-1290.jpg",
    "kind": "note",
    "label": "a4 1290 before, first, a3, fourth",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T10:33:17.169Z",
-   "file": "20261125103317169-note-a4-1284.jpg",
-   "source": "../../../../tmp/v/sh/a4-1284.jpg",
-   "kind": "note",
-   "label": "a4 1284 third, first, a3, fourth",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T10:13:04.953Z",
-   "file": "20261125101304953-note-e-pair.jpg",
-   "source": "../../../../tmp/v/sh/e-pair.jpg",
-   "kind": "note",
-   "label": "1608 + 1/2 and 1616 + 1/2 moved back by my own rough fit: the body leaves over the top left corner",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T10:13:04.304Z",
-   "file": "20261125101304304-note-e-point.jpg",
-   "source": "../../../../tmp/v/sh/e-point.jpg",
-   "kind": "note",
-   "label": "MAIL 1014: the ground point of pixel 396, 232 at 1608 + 1/2 followed to 1616 + 1/2 at 5 to 1, third state, draft: the speckled ground comes up under the pale band of the limb",
    "stop": "venus"
   }
  ]
