@@ -1,9 +1,25 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T04:20:19.281Z",
+ "pushed": "2026-11-25T04:36:19.822Z",
  "head": "aaace72a250018b60fcc6755739ae146e57ed085",
- "note": "MAIL 880 work, trial: layer law with Hs 1.5 hT and the cover by pixel size against main and aaace72a at 4146 to 4172; the sheet 4150 to 4175 is rendering",
+ "note": "FIRST PICTURE of MAIL 880: sheet 4150 to 4175, main beside the layer law (Hs 1.5 hT trial) with the cover by pixel size. Red and said: pattern 1.49 at 4156 + 1/2, 50 of 51 rows over 0.45; pop 1.21 at 4179. The veil from above is too heavy at this Hs; next trial follows",
  "looks": [
+  {
+   "time": "2026-11-25T04:36:19.136Z",
+   "file": "20261125043619136-note-A-panel.jpg",
+   "source": "../../../../tmp/n48/A-panel.png",
+   "kind": "note",
+   "label": "the tool's own panel for the same run (rows 4150, 4156 + 1/2, 4168 + 1/2, 4175): where the pattern changes in place",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T04:36:18.136Z",
+   "file": "20261125043618136-note-first-4150-4175.jpg",
+   "source": "../../../../tmp/n48/first-4150-4175.jpg",
+   "kind": "note",
+   "label": "FIRST PICTURE (MAIL 880 point 6): 4150 to 4175 every frame, main 92c5f998 beside mine: layer law (Hs 1.5 hT, a trial value) with the deck's matter by pixel size; draft, rate 2. The sky's turn is not yet spread in it. RED: pattern largest 1.49 at 4156 + 1/2, 50 of 51 rows over 0.45 (aaace72a 1.61); the veil from above is heavier than main's look",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T04:20:15.329Z",
    "file": "20261125042015329-note-t4-vs.jpg",
@@ -256,22 +272,6 @@
    "source": "../../../../tmp/parA/pat4392-crop.jpg",
    "kind": "note",
    "label": "native size, the horizon at 4389 to 4403 every second frame: the far ground comes out of the limb's haze as the eye climbs (the pattern red)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T00:37:07.213Z",
-   "file": "20261125003707213-note-rise-changes.jpg",
-   "source": "../../../../tmp/parA/rise-changes.jpg",
-   "kind": "note",
-   "label": "pictures part of the rise, RED: the pattern changes in place by 0.70 against 0.45, always on the horizon line (the tool's own panel)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T00:37:05.867Z",
-   "file": "20261125003705867-note-rise-pops.jpg",
-   "source": "../../../../tmp/parA/rise-pops.jpg",
-   "kind": "note",
-   "label": "pictures part of the rise, RED: the four largest pops 4411 + 1/2 to 4413 (1.31 against 1.2), the tool's own panel",
    "stop": "uranus"
   }
  ]
