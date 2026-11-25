@@ -1,9 +1,44 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T04:36:43.100Z",
+ "pushed": "2026-11-25T04:55:47.389Z",
  "head": "7e3da15af46a1d9872d6be92f3e9fe25a836611e",
- "note": "the shutter that opens and closes (ends by stop): scratch pairs of Earth 1857 and 2156 at review; the real commit is being proven",
+ "note": "shutter that opens and closes (handover.shutterEnds, Earth 0.5): pairs of 1857 and 2156 at review against the box; neighbours and the border render now",
  "looks": [
+  {
+   "time": "2026-11-25T04:44:04.550Z",
+   "file": "20261125044404550-note-en-1857-wide.jpg",
+   "source": "../../../../tmp/law/dots/en-1857-wide.png",
+   "kind": "note",
+   "label": "shutterEnds Earth 0.5: 1857 review at full size x 200..1160 y 560..1080, box above, ends below"
+  },
+  {
+   "time": "2026-11-25T04:44:03.846Z",
+   "file": "20261125044403846-note-en-1857-land.jpg",
+   "source": "../../../../tmp/law/dots/en-1857-land.png",
+   "kind": "note",
+   "label": "shutterEnds Earth 0.5: 1857 review, the Andes x 1000..1400 y 560..1000 at 2 times, box beside ends: the ridges are less dragged"
+  },
+  {
+   "time": "2026-11-25T04:44:03.113Z",
+   "file": "20261125044403113-note-en-1857.jpg",
+   "source": "../../../../tmp/law/dots/en-1857.png",
+   "kind": "note",
+   "label": "shutterEnds Earth 0.5: 1857 review, clouds x 420..620 y 820..940 at 3 times, box beside ends: the bricks are soft specks"
+  },
+  {
+   "time": "2026-11-25T04:44:02.306Z",
+   "file": "20261125044402306-note-en-mid-2156.jpg",
+   "source": "../../../../tmp/law/dots/en-mid-2156.png",
+   "kind": "note",
+   "label": "shutterEnds Earth 0.5: 2156 review, the still middle x 760..1120 y 400..640 at 2 times, box beside ends: no change to name"
+  },
+  {
+   "time": "2026-11-25T04:44:01.461Z",
+   "file": "20261125044401461-note-en-land-2156.jpg",
+   "source": "../../../../tmp/law/dots/en-land-2156.png",
+   "kind": "note",
+   "label": "shutterEnds Earth 0.5 (7e3da15a): 2156 review, Brazil x 1240..1600 y 700..1060 at 2 times, box (7b3f4567) beside ends: the coast lights are small soft ovals, the stair along the coast is gone"
+  },
   {
    "time": "2026-11-25T04:36:42.446Z",
    "file": "20261125043642446-note-win-1857-wide.jpg",
@@ -24,41 +59,6 @@
    "source": "../../../../tmp/law/dots/win25-lr-2156.png",
    "kind": "note",
    "label": "Earth 2156 review, lower right at 3 times: box, ends 0.25, ends 0.5 (scratch)"
-  },
-  {
-   "time": "2026-11-25T04:36:40.632Z",
-   "file": "20261125043640632-note-win25-land-2156.jpg",
-   "source": "../../../../tmp/law/dots/win25-land-2156.png",
-   "kind": "note",
-   "label": "Earth 2156 review, Brazil at 2 times: box, ends 0.25, ends 0.5 (scratch)"
-  },
-  {
-   "time": "2026-11-25T04:36:39.917Z",
-   "file": "20261125043639917-note-win-land-2156.jpg",
-   "source": "../../../../tmp/law/dots/win-land-2156.png",
-   "kind": "note",
-   "label": "Earth 2156 review, Brazil at 2 times: box shutter beside a shutter that opens and closes (ends 0.5), scratch"
-  },
-  {
-   "time": "2026-11-25T03:58:45.587Z",
-   "file": "20261125035845587-note-ps-1857-draft.jpg",
-   "source": "../../../../tmp/law/dots/ps-1857-draft.png",
-   "kind": "note",
-   "label": "1857, same crop: the draft (one sample, no blur) beside the review frame: each cloud speck is drawn out into a bar of the shutter's length with hard ends"
-  },
-  {
-   "time": "2026-11-25T03:58:44.876Z",
-   "file": "20261125035844876-note-ps-1857.jpg",
-   "source": "../../../../tmp/law/dots/ps-1857.png",
-   "kind": "note",
-   "label": "sharpCover Earth 2: 1857 review, x 420..620 y 820..940 at 3 times, take batch 8 beside cover 2: the stripes inside the cloud bars are smoother, the bars stay bars"
-  },
-  {
-   "time": "2026-11-25T03:58:43.983Z",
-   "file": "20261125035843983-note-ps-mid-2156.jpg",
-   "source": "../../../../tmp/law/dots/ps-mid-2156.png",
-   "kind": "note",
-   "label": "sharpCover Earth 2: 2156 review, the still middle x 760..1120 y 400..640 at 2 times, take batch 8 beside cover 2: softer with the cover (footprint 1.0 against 0.5)"
   }
  ]
 }
