@@ -1,9 +1,37 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T10:04:46.287Z",
+ "pushed": "2026-11-25T10:29:38.484Z",
  "head": "ab362641b9d9a924f577d3ad73df9d28231e3ebd",
- "note": "r66 on ab36264: the whole rise is red on two lines (pattern at the foot 3810 to 3833, pop 1.21 at 3872), finding the causes",
+ "note": "rise of ab36264 red on the pattern line; cause found (cover by angle and dust going out in 8 frames); cure by height on trial, whole rise running",
  "looks": [
+  {
+   "time": "2026-11-25T10:29:37.841Z",
+   "file": "20261125102937841-note-v2_3720_foot.jpg",
+   "source": "../../../../tmp/v/x/v2_3720_foot.png",
+   "kind": "note",
+   "label": "3720 foot: ab36264 final beside the new tree at draft, the foot stays closed"
+  },
+  {
+   "time": "2026-11-25T10:29:37.105Z",
+   "file": "20261125102937105-note-v2_strip.jpg",
+   "source": "../../../../tmp/v/x/v2_strip.png",
+   "kind": "note",
+   "label": "cure on trial: the cover by the lens's height, evenly over 43 frames of the rise (lower row) against ab36264 (upper row), frames 3798 to 3836"
+  },
+  {
+   "time": "2026-11-25T10:29:36.441Z",
+   "file": "20261125102936441-note-v1_cmp.jpg",
+   "source": "../../../../tmp/v/x/v1_cmp.png",
+   "kind": "note",
+   "label": "trial: the cover by the angle switched off (lower row) against ab36264 at 3814, 3818, 3822"
+  },
+  {
+   "time": "2026-11-25T10:29:35.737Z",
+   "file": "20261125102935737-note-rise_gap_strip.jpg",
+   "source": "../../../../tmp/v/x/rise_gap_strip.png",
+   "kind": "note",
+   "label": "rise of ab36264 red: crop x 700 to 1100, y 480 to 780, frames 3806 to 3824, the cover over the globe and the gap goes out in 8 frames"
+  },
   {
    "time": "2026-11-25T10:04:44.905Z",
    "file": "20261125100444905-note-rise_ansa_3870_3877.jpg",
@@ -32,91 +60,6 @@
    "kind": "note",
    "label": "r66 rise on ab36264, the tool's pops sheet: pop 1.21 at 3872 + 1/2, RED",
    "stop": "saturn"
-  },
-  {
-   "time": "2026-11-25T10:04:41.168Z",
-   "file": "20261125100441168-note-saturn-rise-changes.jpg",
-   "source": "../../../../tmp/v/r66/saturn-rise-changes.png",
-   "kind": "note",
-   "label": "r66 rise on ab36264, the tool's changes sheet: pattern 0.97 at 3814 + 1/2 and 0.98 at 3830, RED",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-25T09:35:11.687Z",
-   "file": "20261125093511687-note-n3866_whole.jpg",
-   "source": "../../../../tmp/v/x/mail/n3866_whole.jpg",
-   "kind": "note",
-   "label": "ab36264 FINAL 3866 at half size: approved hero, named, this commit"
-  },
-  {
-   "time": "2026-11-25T09:35:10.952Z",
-   "file": "20261125093510952-note-n3720_whole.jpg",
-   "source": "../../../../tmp/v/x/mail/n3720_whole.jpg",
-   "kind": "note",
-   "label": "ab36264 FINAL 3720 at half size: approved close, named, this commit"
-  },
-  {
-   "time": "2026-11-25T09:35:10.286Z",
-   "file": "20261125093510286-note-n3567_whole.jpg",
-   "source": "../../../../tmp/v/x/mail/n3567_whole.jpg",
-   "kind": "note",
-   "label": "ab36264 FINAL 3567 at half size: approved hero, named, this commit"
-  },
-  {
-   "time": "2026-11-25T09:35:09.606Z",
-   "file": "20261125093509606-note-n3866_TUV.jpg",
-   "source": "../../../../tmp/v/x/mail/n3866_TUV.png",
-   "kind": "note",
-   "label": "ab36264 FINAL 3866 boxes T U V at 1 to 1: approved hero, named, this commit (lower arc soft under the shutter as before)"
-  },
-  {
-   "time": "2026-11-25T09:35:08.870Z",
-   "file": "20261125093508870-note-_3866_DI.jpg",
-   "source": "../../../../tmp/v/x/mail/_3866_DI.png",
-   "kind": "note",
-   "label": "ab36264 FINAL 3866 boxes D (left) and I (right) at 1 to 1: approved hero, named, this commit (stars off the rings, sky patch gone; a dim red streak stays in the soft edge of the night limb)"
-  },
-  {
-   "time": "2026-11-25T09:35:08.230Z",
-   "file": "20261125093508230-note-n3720_VW_low.jpg",
-   "source": "../../../../tmp/v/x/mail/n3720_VW_low.png",
-   "kind": "note",
-   "label": "ab36264 FINAL 3720 boxes V W at 1 to 1: approved, named, this commit"
-  },
-  {
-   "time": "2026-11-25T09:35:07.530Z",
-   "file": "20261125093507530-note-n3720_cap.jpg",
-   "source": "../../../../tmp/v/x/mail/n3720_cap.png",
-   "kind": "note",
-   "label": "ab36264 FINAL 3720 cap and terminator at 1 to 1: approved, named, this commit"
-  },
-  {
-   "time": "2026-11-25T09:35:06.825Z",
-   "file": "20261125093506825-note-n3720_T_bark_2x.jpg",
-   "source": "../../../../tmp/v/x/mail/n3720_T_bark_2x.png",
-   "kind": "note",
-   "label": "ab36264 FINAL 3720 lower left corner at 2 to 1: approved, named, this commit"
-  },
-  {
-   "time": "2026-11-25T09:35:06.134Z",
-   "file": "20261125093506134-note-n3720_TU_near.jpg",
-   "source": "../../../../tmp/v/x/mail/n3720_TU_near.png",
-   "kind": "note",
-   "label": "ab36264 FINAL 3720 boxes T U at 1 to 1: approved, named, this commit (the bark calmer, a faint hatch stays)"
-  },
-  {
-   "time": "2026-11-25T09:35:05.431Z",
-   "file": "20261125093505431-note-n3720_OP_near.jpg",
-   "source": "../../../../tmp/v/x/mail/n3720_OP_near.png",
-   "kind": "note",
-   "label": "ab36264 FINAL 3720 boxes O P at 1 to 1: approved, named, this commit (main division wider and hollow, no strands: not cured)"
-  },
-  {
-   "time": "2026-11-25T09:35:04.758Z",
-   "file": "20261125093504758-note-n3720_QR_foot.jpg",
-   "source": "../../../../tmp/v/x/mail/n3720_QR_foot.png",
-   "kind": "note",
-   "label": "ab36264 FINAL 3720 boxes Q R at 1 to 1: approved close, named 88ba2385, this commit (severe 2: lip, strips, mirror and seam gone; contact line 110 px lower than the approved, said)"
   }
  ]
 }
