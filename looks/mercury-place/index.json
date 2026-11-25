@@ -1,9 +1,49 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T07:47:33.718Z",
+ "pushed": "2026-11-25T08:11:45.847Z",
  "head": "45590da315c5d242180950c644cdeefbd29cde74",
- "note": "way C state F beside the mark, whole frames 727 to 745; trade refused by MAIL 961, ONE BODY repaint begins",
+ "note": "ONE BODY take s1 by code, not named: files alike (0.10) but the frames outside the disc are worse than the mark; painting next",
  "looks": [
+  {
+   "time": "2026-11-25T08:11:45.032Z",
+   "file": "20261125081145032-note-h615.jpg",
+   "source": "../../../../tmp/m/h615.png",
+   "kind": "note",
+   "label": "615 at twice: approved hero, main, take s1: s1 changes the box x 927 to 1051, y 640 to 765, reads as a dark matte patch, not good enough",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T08:11:44.326Z",
+   "file": "20261125081144326-note-o2.jpg",
+   "source": "../../../../tmp/m/o2.jpg",
+   "kind": "note",
+   "label": "745 and 760, mark left, take s1 right: inside the disc the mark's picture holds, toward the limb blue and orange bodies, worse",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T08:11:43.633Z",
+   "file": "20261125081143633-note-o1.jpg",
+   "source": "../../../../tmp/m/o1.jpg",
+   "kind": "note",
+   "label": "717 and 735, mark left, take s1 right: outside the small disc the map's bodies stand soft and coloured, worse than the mark",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T08:11:42.796Z",
+   "file": "20261125081142796-note-ob-m0.jpg",
+   "source": "../../../../tmp/m/ob-m0.png",
+   "kind": "note",
+   "label": "map to patch-1 on main's bytes: 0.69 OVER, all on one diagonal band",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T08:11:41.698Z",
+   "file": "20261125081141698-note-ob-s1.jpg",
+   "source": "../../../../tmp/m/ob-s1.png",
+   "kind": "note",
+   "label": "likeness panel take s1: patch-1 to patch-2 0.10, patch-2 to patch-3 0.01, patch-3 to patch-4 0.03 (limit 0.45)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T07:40:31.006Z",
    "file": "20261125074031006-note-s3.jpg",
@@ -26,46 +66,6 @@
    "source": "../../../../tmp/m/cj-rise-full.jpg",
    "kind": "note",
    "label": "DRAFT, the state as pushed (way C state F), rise 1001 and 1009 whole frame: the place's own light has gone back by the eye's height, the hero's planet stands without a grey disc",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T07:09:36.376Z",
-   "file": "20261125070936376-note-cj-1450-s.jpg",
-   "source": "../../../../tmp/m/cj-1450-s.png",
-   "kind": "note",
-   "label": "DRAFT, the state as pushed, 725, 1 to 1 beside the mark: where the mark shows the grey disc of the place, the hero's ground goes on (dusk, golden rims, faint night ground) and carries the place's small craters",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T07:09:35.026Z",
-   "file": "20261125070935026-note-cj-1474-s.jpg",
-   "source": "../../../../tmp/m/cj-1474-s.png",
-   "kind": "note",
-   "label": "DRAFT, the state as pushed (way C state F), 737, 1 to 1 beside the mark (b0b87889). The worst of it, named: soft pale patches of the hero's rim highlights with a little colour at their edges on the crisp ground, about 731 to 745",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T07:02:34.306Z",
-   "file": "20261125070234306-note-ci-1458-s.jpg",
-   "source": "../../../../tmp/m/ci-1458-s.png",
-   "kind": "note",
-   "label": "DRAFT, state F (mix as powers) at 729, 1 to 1 beside the mark: no grey disc, the hero's ground goes on with the place's small craters crisp in it; one cyan glint of the hero's own map in the night ground at x 556, y 818",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T07:02:33.629Z",
-   "file": "20261125070233629-note-ci-1466-s.jpg",
-   "source": "../../../../tmp/m/ci-1466-s.png",
-   "kind": "note",
-   "label": "DRAFT, state F at 733, 1 to 1: straight mix by height (left) against the mix as powers (right); the highlights lose contrast evenly",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T07:02:32.898Z",
-   "file": "20261125070232898-note-ci-1482-s.jpg",
-   "source": "../../../../tmp/m/ci-1482-s.png",
-   "kind": "note",
-   "label": "DRAFT, state F (mix as powers) at 741, 1 to 1 beside the mark: the pale patches are faint",
    "stop": "mercury"
   }
  ]
