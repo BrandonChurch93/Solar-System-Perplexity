@@ -1,0 +1,141 @@
+{
+ "critic": "R3",
+ "score": 4,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "crops A and F, storm eye and blue field below it",
+      "what": "The eye pinches into tight, combed grooves, and the smaller swirl below it repeats the same ribbed texture. The bright inner crescent breaks into angular white fragments instead of resolving as cloud.",
+      "fix": "Vary the flow and fine-scale detail independently in each swirl, and rebuild the bright crescent with layered, irregular cloud edges."
+     },
+     {
+      "severity": "major",
+      "file": "image-08.png",
+      "where": "crops V and W, lower-right surface of the close view",
+      "what": "The blue surface and white cloud bands smear into parallel diagonal streaks. Small cloud forms become soft dashes, even where the globe is brightly lit.",
+      "fix": "Increase texture detail at the close-view scale and correct directional stretching and filtering across the globe."
+     },
+     {
+      "severity": "major",
+      "file": "image-04.png",
+      "where": "crop W, lower-right limb of the wide view",
+      "what": "A narrow cyan arc is visibly separated from the bright body by a broad dark-blue trough, giving the atmosphere the appearance of a second outline.",
+      "fix": "Blend the inner and outer atmosphere into one continuous falloff and remove the dark gap between them."
+     },
+     {
+      "severity": "minor",
+      "file": "image-07.png",
+      "where": "crops J and O, cloud banks on the left side of the close view",
+      "what": "The cloud filaments lose their fine structure and become diffuse brushlike smears as they cross into shadow.",
+      "fix": "Retain fine cloud structure through the lighting transition and check that the shadow-side texture is not being overfiltered."
+     },
+     {
+      "severity": "minor",
+      "file": "image-04.png",
+      "where": "crops T, U and X, ring strands",
+      "what": "Several bright strands are short, soft, tapered streaks separated by nearly blank stretches, making parts of the ring look brushed in.",
+      "fix": "Give the strands continuous fine radial structure while letting their opacity vary along the arc."
+     },
+     {
+      "severity": "minor",
+      "file": "image-03.png",
+      "where": "crop J, lit face of the moon",
+      "what": "The face reads as fairly uniform fine-grained mottling, with little distinct crater or relief structure at the supplied scale.",
+      "fix": "Vary the scale of the mottling and add a few legible relief features shaped by the same illumination."
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 4,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "cloud band near the centre, around x 640-760, y 470-560 (crops A, I, O)",
+      "what": "the cloud has a regular comb or ladder of parallel stripes, a repeated sample or slicing artifact that no real cloud has",
+      "fix": "add more volume steps or jitter the ray-march samples in the clouds, and add noise so the slices do not show"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "day side of the globe, upper left and centre (crops B, J, K, H)",
+      "what": "the surface and clouds are smeared in one direction, like motion blur or a texture stretched along the curve. Up close the detail turns to streaks, not weather",
+      "fix": "use a sharper albedo and cloud texture with correct UV or cube mapping, and remove the directional blur"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "ring system right of the planet (crops C, E, F, I, L, Q, U)",
+      "what": "the rings are soft, smudged arcs that fade out before they reach the globe. They never pass in front of or behind the planet and cast no shadow, so they read as a painted overlay with an airbrushed look",
+      "fix": "model the rings as a real geometric plane at the correct tilt, so they cross the disc with occlusion and shadow, and give them crisp radial banding"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "clouds along the whole front band (crops H, G, M, N, U)",
+      "what": "the clouds look like brushstrokes or fluid sim, smeared and swirly with streaked tails, and give away how they were made",
+      "fix": "raise the cloud resolution and use billowy cumulus shapes with internal shading, not streaked advection"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "upper left limb (crops B, H, J)",
+      "what": "a thin bright line sits above a darker band below the horizon. The limb looks doubled, like a separate atmosphere shell offset from the surface",
+      "fix": "line up the atmosphere shell with the surface, and blend the scattering gradient smoothly into the ground"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "storm eye at the centre (crop A)",
+      "what": "the eye is a flat, featureless dark ellipse with no eyewall depth or structure, so it looks like a decal",
+      "fix": "add eyewall cloud walls, spiral bands that feed into the eye, and shading inside the eye"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "dark ocean, lower left and bottom (crops D, R, S, T)",
+      "what": "large soft dark blobs read as airbrushed shadow patches, and the dark ocean has faint banding and a flat, plastic look",
+      "fix": "add dither to the dark gradient, and tie the cloud shadows to the cloud shapes"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "storm feature, upper centre (crop K)",
+      "what": "a hard white crescent stroke inside the vortex looks painted on",
+      "fix": "break the crescent into cloud structure, softening it with noise"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "moon at the right edge (crop R)",
+      "what": "the moon is cut off by the frame and soft, with no surface detail. It looks like a plain shaded sphere",
+      "fix": "give the moon a detailed surface texture and frame it fully inside the image, or out of it on purpose"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "night side, lower left (crops D, N, O, S, T)",
+      "what": "a large, flat, featureless dark area with faint streaks shows no terminator detail",
+      "fix": "add a gradual terminator with some faint cloud relief and limb light on the night side"
+     }
+    ]
+   }
+  }
+ ]
+}
