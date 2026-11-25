@@ -201,3 +201,9 @@ WHY THE TUFTS (worked out on paper at 08:57): with dome.over 1.06 the border lie
 - The black slits in the penumbra are the floor seen between the low domes there (its threads stood at 0.55 of the domes'): now 0.9.
 - Read off the approved at native size (appr-native-near.jpg): the tops are mottled mid gold, the bright is thin lines and points at the lips of the domes where they turn down into the crease, the dark is pits where three cells meet with the fibres running into them. zze: knee on the heat of the tops (heat.knee 0.6, slope 0.45), points added after the knee, hot ends of the threads at the lip (heat.lip 0.45), veins as the thin creases between the lobes dying toward the crown (heat.vein 0.55), fibres bent by a place field (fibre.bend 1.3), crease shoulder narrower (0.28), dome.lobe 0.18.
 - Cost: life() 3.6 s once at load, cellsAt 20 ms a sample (node, while a clip ran).
+
+## 09:40 UTC mail sent (not NAMED), state zze faca211, clip of zzd
+- Clip of zzd (120 pictures): proxy over 16 capture frames largest 0.406 at k0308, mean 0.287; picture to next largest 0.042 at k0341 (not on a table step), mean 0.010. No jump.
+- Frame law tested: capture frame 300 after 297 to 299 on one page equals 300 on a fresh page, byte for byte (out/work/sun/lab/law-a, law-b).
+- zze near ground: mean rgb [0.592 0.347 0.154], percentiles [0.231 0.412 0.588 0.796 0.914 0.941]: the numbers fit the approved. The look does not: gold foil nuggets, satin swirls (fibre.bend 1.3 swirls too much), a brown gap round each cell, no glints. Spot: pit with wall 0.92 to 1.25 shows a brown cliff with a notched top edge (floor mesh too coarse there, 3 rings on the wall), dark still y 172 to 255 against 172 to 228.
+- Said to the Builder: next mail by 11:05 UTC. Next: one sheet (gap to a line, heat across borders), fibres into the pits, the wall of the pit, then the final tier pair of frame 90, cost by part.
