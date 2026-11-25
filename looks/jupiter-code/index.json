@@ -1,9 +1,61 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T11:45:11.759Z",
+ "pushed": "2026-11-25T12:06:44.558Z",
  "head": "d438b57b3312eda5d94a8c3f8bf6d74d1bbbf2a6",
- "note": "rise slice A green on d438b57b; the straight borders are the left and bottom borders of the approved eye's canvas on the ground",
+ "note": "d438b57b: finals in (2895 equal bytes, 3150 match 7.800); wedge cause is the canvas border, cure by code in work; dive and rise slices running",
  "looks": [
+  {
+   "time": "2026-11-25T12:06:43.339Z",
+   "file": "20261125120643339-note-n6-3150-trio.jpg",
+   "source": "../work/r13/off/n6-3150-trio.jpg",
+   "kind": "note",
+   "label": "3150 final tier on d438b57b: approved, d438b57b, db67666d",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T12:06:42.243Z",
+   "file": "20261125120642243-note-w1-comp-lines.jpg",
+   "source": "../work/r14/w1-comp-lines.jpg",
+   "kind": "note",
+   "label": "ground from above with the canvas borders drawn: the straight lines of rise 3251 to 3265 are the canvas left and bottom border",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T12:06:41.054Z",
+   "file": "20261125120641054-note-fl-sheet.jpg",
+   "source": "../work/r14/fl-sheet.jpg",
+   "kind": "note",
+   "label": "d438b57b draft: dive 3034, 3042 and flight 3060, 3075, 3090; the canvas border shows in the dive too",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T11:49:47.019Z",
+   "file": "20261125114947019-frame-n6-2895.jpg",
+   "source": "out/work/jupiter/final/n6-2895.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2895, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f200e17ad0e70237"
+  },
+  {
+   "time": "2026-11-25T11:48:51.483Z",
+   "file": "20261125114851483-frame-n6-3150.jpg",
+   "source": "out/work/jupiter/final/n6-3150.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3150, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f200e17ad0e70237"
+  },
   {
    "time": "2026-11-25T11:45:02.485Z",
    "file": "20261125114502485-note-s1-3150.jpg",
@@ -154,46 +206,6 @@
    "source": "../work/r13/off/v3-cmp.jpg",
    "kind": "note",
    "label": "rise 3246 to 3254, top left: as named, sheets 0.1 thick averaged along the ray, banks off (draft); reader 0.428 0.365 0.376 at 3246 to 3247",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T10:46:34.842Z",
-   "file": "20261125104634842-note-th30-cmp.jpg",
-   "source": "../work/r13/off/th30-cmp.jpg",
-   "kind": "note",
-   "label": "rise 3246 to 3254, top left: as named, sheets 0.3 thick, banks off (draft)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T10:23:45.824Z",
-   "file": "20261125102345824-note-th10-3150.jpg",
-   "source": "../work/r13/off/th10-3150.jpg",
-   "kind": "note",
-   "label": "3150: as named, sheets 0.1 thick, banks off, what the banks add",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T10:23:45.222Z",
-   "file": "20261125102345222-note-wedge-3252-x3-lift.jpg",
-   "source": "../work/r13/off/wedge-3252-x3-lift.jpg",
-   "kind": "note",
-   "label": "3252 lower left, lifted: the straight edge, cause being traced",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T10:23:44.618Z",
-   "file": "20261125102344618-note-th10-diff.jpg",
-   "source": "../work/r13/off/th10-diff.jpg",
-   "kind": "note",
-   "label": "what the banks add, times 4: as named above, 0.1 thick below",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T10:23:43.980Z",
-   "file": "20261125102343980-note-th10-cmp.jpg",
-   "source": "../work/r13/off/th10-cmp.jpg",
-   "kind": "note",
-   "label": "rise 3246 to 3254 upper left: as named, sheets 0.1 thick (not enough: 0.716 at 3246 + 1/2), banks off",
    "stop": "jupiter"
   }
  ]
