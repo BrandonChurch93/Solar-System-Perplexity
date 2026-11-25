@@ -1,9 +1,33 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T20:31:57.649Z",
+ "pushed": "2026-11-25T20:48:16.138Z",
  "head": "80d99af4c573b0875f794e6a9e1b4b22a4a8ab6d",
- "note": "s15 at 615: the crater in the set light at every height loses the hero ring at 4 times; bad, shown as it is",
+ "note": "MAIL 1289: s15 kept as proof; working on the crater's own turn by height; nothing new to judge yet",
  "looks": [
+  {
+   "time": "2026-11-25T20:48:15.454Z",
+   "file": "20261125204815454-note-c717.jpg",
+   "source": "../../../../tmp/m/c717.png",
+   "kind": "note",
+   "label": "the name at 717, crater at 4 times: the ring of 615 is already faint here (turn work, MAIL 1289)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T20:48:14.746Z",
+   "file": "20261125204814746-note-rise-s15-b.jpg",
+   "source": "../../../../tmp/m/rise-s15-b.jpg",
+   "kind": "note",
+   "label": "s15 scratch proof: rise 987 to 992",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T20:48:13.777Z",
+   "file": "20261125204813777-note-rise-s15-a.jpg",
+   "source": "../../../../tmp/m/rise-s15-a.jpg",
+   "kind": "note",
+   "label": "s15 scratch proof: rise 981 to 986 whole frames, the set's light at every height (not named: ring lost at 615)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T20:22:39.578Z",
    "file": "20261125202239578-note-crat8-s15.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/m/rise989-cr.jpg",
    "kind": "note",
    "label": "rise 989 to 999 round the two pits at 1 to 1: one ground, the light turns (rate 2 red 0.51 at 990)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T19:31:50.729Z",
-   "file": "20261125193150729-note-fo-sheet.jpg",
-   "source": "../../../../tmp/m/fo-sheet.jpg",
-   "kind": "note",
-   "label": "615 and 717 without the pit fill (33314fb8): whole, lifted 4, 717 lower right 1 to 1 beside 3da91ef1",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T18:54:32.182Z",
-   "file": "20261125185432182-note-limb-switch.jpg",
-   "source": "../../../../tmp/m/limb-switch.jpg",
-   "kind": "note",
-   "label": "rise 1000.5 to 1005.5 right half: main 53025569 above (the limb lights from the top), 9ee7de11 below (lit from the first frame)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T18:34:44.980Z",
-   "file": "20261125183444980-note-pair1016-1to1.jpg",
-   "source": "../../../../tmp/m/pair1016-1to1.jpg",
-   "kind": "note",
-   "label": "1016 judged at 1 to 1 on the place: main left, name right",
    "stop": "mercury"
   }
  ]
