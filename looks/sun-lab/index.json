@@ -1,9 +1,39 @@
 {
  "folder": "sun-lab",
- "pushed": "2026-11-25T15:41:12.962Z",
- "head": "6c6139dd95d1302f5b5c6549b33ba2bdd7a048b8",
- "note": "b5: light as heat, lower relief; cause of pair 416 found",
+ "pushed": "2026-11-25T15:58:26.399Z",
+ "head": "e799c1c4dd8d9eb1da849d0da248a2b920f873db",
+ "note": "c4 form and motion strips",
  "looks": [
+  {
+   "time": "2026-11-25T15:58:25.826Z",
+   "file": "20261125155825826-note-motion-c4.jpg",
+   "source": "../v/motion-c4.jpg",
+   "kind": "note",
+   "label": "c4 five captures 12 film frames apart, eye held (not named)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T15:58:25.178Z",
+   "file": "20261125155825178-note-strip-c4.jpg",
+   "source": "../v/strip-c4.jpg",
+   "kind": "note",
+   "label": "c4 frame 90 lower third at 1 to 1: approved, c3, c4 (not named)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T15:54:36.543Z",
+   "file": "20261125155436543-frame-lab-90-c4.jpg",
+   "source": "out/work/sun/lab/lab-90-c4.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 90, draft tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 90,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
   {
    "time": "2026-11-25T15:41:12.407Z",
    "file": "20261125154112407-note-n432.jpg",
@@ -37,41 +67,11 @@
    "stop": "sun"
   },
   {
-   "time": "2026-11-25T15:40:28.742Z",
-   "file": "20261125154028742-frame-lab-90-b6.jpg",
-   "source": "out/work/sun/lab/lab-90-b6.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 90, draft tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 90,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
-  },
-  {
    "time": "2026-11-25T15:19:56.937Z",
    "file": "20261125151956937-note-h20-0-60.jpg",
    "source": "../v/h20-0-60.jpg",
    "kind": "note",
    "label": "lab h20 eccae657 h20-0-60.jpg",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T15:19:56.371Z",
-   "file": "20261125151956371-note-pair416.jpg",
-   "source": "../v/pair416.jpg",
-   "kind": "note",
-   "label": "lab h20 eccae657 pair416.jpg",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T15:19:55.789Z",
-   "file": "20261125151955789-note-rise-h20-six.jpg",
-   "source": "../v/rise-h20-six.jpg",
-   "kind": "note",
-   "label": "lab h20 eccae657 rise-h20-six.jpg",
    "stop": "sun"
   }
  ]
