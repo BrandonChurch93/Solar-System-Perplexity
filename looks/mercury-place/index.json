@@ -1,9 +1,17 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T01:31:03.665Z",
- "head": "d9cddae560cfbc19131d1bf4cc48f420d3b2bbe7",
- "note": "Sun commit in work: hold Sun 11.69 deg at the approved place, globe unchanged; far Sun shows its map look where the Sun set is loaded (shared wear range, named)",
+ "pushed": "2026-11-25T01:58:34.202Z",
+ "head": "b173bb86366038360b18a2c1736c87696a1d9f46",
+ "note": "Sun commit: final pair at 615; globe unchanged (terminator 162.94 px both, lit 158.459 to 158.462); one shared test red (old swap distance 6.2546), main moved to aeffd516, merge built, tests running",
  "looks": [
+  {
+   "time": "2026-11-25T01:58:33.133Z",
+   "file": "20261125015833133-note-sn-pair615.jpg",
+   "source": "out/work/mercury/place/sheets/sn-pair615.jpg",
+   "kind": "note",
+   "label": "Sun commit, final tier on main 12c58853: approved, before (9.2 deg), after (11.69 deg at 1925.7, 46.0) at 615",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T01:30:51.010Z",
    "file": "20261125013051010-note-sn-out1.jpg",
@@ -58,14 +66,6 @@
    "source": "out/work/mercury/place/sheets/sn-flight-in.jpg",
    "kind": "note",
    "label": "Sun commit: flight in 490 to 530 before and after",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T01:30:42.716Z",
-   "file": "20261125013042716-note-sn-seam-in.jpg",
-   "source": "out/work/mercury/place/sheets/sn-seam-in.jpg",
-   "kind": "note",
-   "label": "Sun commit: seam in 538 to 540, 1 to 1 at the Sun (orange look: shared far Sun wear fault)",
    "stop": "mercury"
   }
  ]
