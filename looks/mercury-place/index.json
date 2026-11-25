@@ -1,71 +1,71 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T08:37:49.804Z",
+ "pushed": "2026-11-25T09:02:01.129Z",
  "head": "45590da315c5d242180950c644cdeefbd29cde74",
- "note": "ONE BODY by code: the levels of the place hold the parent's bodies, files read 0.41, 0.05, 0.01, 0.01; frames of it not yet rendered. b9 rise 987 to 992 reads 0.03 to 0.06 by my chain",
+ "note": "way C with ONE BODY take s5, not committed: files green (0.41, 0.07, 0.02, 0.03), rise 987 to 992 green as b9, 745 holds against the mark; RED by my look: 615 (cream mark in the disc) and 717 (soft grey zone round the place)",
  "looks": [
   {
-   "time": "2026-11-25T08:37:49.081Z",
-   "file": "20261125083749081-note-ob-s4.jpg",
-   "source": "../../../../tmp/m/ob-s4.png",
+   "time": "2026-11-25T09:02:00.007Z",
+   "file": "20261125090200007-note-s5-rise.jpg",
+   "source": "../../../../tmp/m/s5-rise.jpg",
    "kind": "note",
-   "label": "ONE BODY take s4, levels 1 to 2, 2 to 3, 3 to 4, both pictures and the change of their pattern: 0.05, 0.01, 0.01 (limit 0.45; was 1.09)",
+   "label": "rise 990, 994, 998, 1000: take b9, way C with take s5 (reader 987 to 992: 0.04 to 0.07, b9 0.03 to 0.06). The take is softer than b9 outside the disc at 994",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-25T08:37:47.963Z",
-   "file": "20261125083747963-note-ob-s4-map.jpg",
-   "source": "../../../../tmp/m/ob-s4-map.png",
+   "time": "2026-11-25T09:01:59.257Z",
+   "file": "20261125090159257-note-s5-dive.jpg",
+   "source": "../../../../tmp/m/s5-dive.jpg",
    "kind": "note",
-   "label": "ONE BODY take s4, the map against the first level on the band they share (limit 0.45): 0.41, was 0.69 on main's bytes. Left: the disc of the place only",
+   "label": "717, 735, 745 whole frames: the mark, way C with take s5",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-25T08:11:45.032Z",
-   "file": "20261125081145032-note-h615.jpg",
-   "source": "../../../../tmp/m/h615.png",
+   "time": "2026-11-25T09:01:58.087Z",
+   "file": "20261125090158087-note-s5-745.jpg",
+   "source": "../../../../tmp/m/s5-745.png",
    "kind": "note",
-   "label": "615 at twice: approved hero, main, take s1: s1 changes the box x 927 to 1051, y 640 to 765, reads as a dark matte patch, not good enough",
+   "label": "745 at 1 to 1 (x 160, y 540): the mark, way C with take s5. Holds",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-25T08:11:44.326Z",
-   "file": "20261125081144326-note-o2.jpg",
-   "source": "../../../../tmp/m/o2.jpg",
+   "time": "2026-11-25T09:01:56.823Z",
+   "file": "20261125090156823-note-s5-735.jpg",
+   "source": "../../../../tmp/m/s5-735.png",
    "kind": "note",
-   "label": "745 and 760, mark left, take s1 right: inside the disc the mark's picture holds, toward the limb blue and orange bodies, worse",
+   "label": "735 at 1 to 1 (x 160, y 540): the mark, way C with take s5. Rims clean, no coloured fringes; soft dark bodies of the map lie under the field where the mark is evenly lit",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-25T08:11:43.633Z",
-   "file": "20261125081143633-note-o1.jpg",
-   "source": "../../../../tmp/m/o1.jpg",
+   "time": "2026-11-25T09:01:55.506Z",
+   "file": "20261125090155506-note-s5-717.jpg",
+   "source": "../../../../tmp/m/s5-717.png",
    "kind": "note",
-   "label": "717 and 735, mark left, take s1 right: outside the small disc the map's bodies stand soft and coloured, worse than the mark",
+   "label": "717 at 1 to 1: the mark, way C with take s5. RED: a soft grey zone round the place without the gold rims, cream mark in it",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-25T08:11:42.796Z",
-   "file": "20261125081142796-note-ob-m0.jpg",
-   "source": "../../../../tmp/m/ob-m0.png",
+   "time": "2026-11-25T09:01:54.330Z",
+   "file": "20261125090154330-note-s5-615-twice.jpg",
+   "source": "../../../../tmp/m/s5-615-twice.png",
    "kind": "note",
-   "label": "map to patch-1 on main's bytes: 0.69 OVER, all on one diagonal band",
+   "label": "615 at twice: approved hero, way C with take s5 (not committed). The gleam is too hot",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-25T08:11:41.698Z",
-   "file": "20261125081141698-note-ob-s1.jpg",
-   "source": "../../../../tmp/m/ob-s1.png",
+   "time": "2026-11-25T09:01:53.120Z",
+   "file": "20261125090153120-note-s5-615-native.jpg",
+   "source": "../../../../tmp/m/s5-615-native.png",
    "kind": "note",
-   "label": "likeness panel take s1: patch-1 to patch-2 0.10, patch-2 to patch-3 0.01, patch-3 to patch-4 0.03 (limit 0.45)",
+   "label": "615 at native size: approved hero, main, way C with take s5 (not committed). RED by my own look: a cream mark with two pits inside the disc that the hero does not have",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-25T07:40:31.006Z",
-   "file": "20261125074031006-note-s3.jpg",
-   "source": "../../../../tmp/m/s3.jpg",
+   "time": "2026-11-25T09:01:51.993Z",
+   "file": "20261125090151993-note-ob-s5-map.jpg",
+   "source": "../../../../tmp/m/ob-s5-map.png",
    "kind": "note",
-   "label": "DRAFT 45590da3, whole frames 739, 743, 745: left the mark, right F. 739 is the worst: cream streaks of the map's highlights, stretched, on the grey ground; the mark is clean there. A cure is being rendered (the map gives up its own detail as the lens outruns it)",
+   "label": "ONE BODY take s5, the map against the first level: 0.41 (was 0.69): what is left is the disc of the place",
    "stop": "mercury"
   }
  ]
