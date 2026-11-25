@@ -123,9 +123,8 @@ share of a second set 2.3 times finer. It is a value noise of the place on the s
 and it fades where a cell is smaller than a pixel (by the angle a pixel spans, never by a count of
 pixels). `keep.soft` widens the angle over which the surface's grain is read, by one plus `soft` times
 the burn: the burnt face gives its finest grain to the light in the lens and keeps the mottle. All three
-go with the burn and are nothing at burn 0. MEASURED on the approved Mercury image the contrast of the
-face lies as much in the wide bands (5 to 30 px at frame 615) as in the fine ones; the look before this
-one had too little in the wide bands and the face read as washed white. The tint of `keep` now puts most
+go with the burn and are nothing at burn 0.
+The tint of `keep` now puts most
 of the mottle in the blue and the green, where the approved image has it (cream against white), and the
 ceiling `white` is higher in the green and the blue so the limb can go as white as the approved one.
 The mottle is not laid over the white of a knot: it fades out between 0.6 and 1 of the knot's light.
@@ -141,10 +140,7 @@ a light about the place `at` on the sphere (`width` in disc radii, `gain` by the
 the face under it to white and adds `colour` outside the body. It fades as its place goes behind the limb.
 `out` is the share of that light the lens shows outside the body and `body` the share that whitens the
 face (both 1 when absent). The entries with `out` 0 and no rays are the burn's own unevenness on the face,
-placed by position angle and radius read off the approved Mercury image (the first by hand, blue channel,
-mine against the approved in sectors of ten degrees; the later ones by a greedy fit of Gaussian patches to
-the difference of the two pictures on the face after a blur of 6 px, each patch held between -1.1 and 0.8
-and no narrower than 0.08 radii, so it stays mottle and is no spot): a negative `gain` leaves a patch creamier than the burnt face round
+placed by position angle and radius read off the approved Mercury image: a negative `gain` leaves a patch creamier than the burnt face round
 it, a positive one takes it nearer white. They move with the body, go with the exposure and are zero at
 burn 0, so no patch shows at the handover or in the Sun stop's own views.
 The knot of the left limb is three lights along the limb (four degrees apart, so the white zone runs along
@@ -153,9 +149,8 @@ the limb and is not a round bloom) with a wide weak patch on the face behind the
 cosine between the outward normal at its place and the direction to the camera is under `limb[0]`, and
 falls by `limb[0]` over that cosine, to the power `limb[1]`, as the body turns the place toward the
 camera. A thin bright layer seen along the surface is a long path of light and seen from above a short
-one. The four lights of the left limb carry it (0.2 and 3). Without it they stood on the face as a soft
-white oval once the body had turned 47 degrees from the hold's view (frames 1022 to 1047, where the Sun
-comes back into the frame): a knot with no `limb` is unchanged and costs nothing (a loop of count 0).
+one. The four lights of the left limb carry it (0.2 and 3);
+a knot with no `limb` is unchanged and costs nothing (a loop of count 0).
 The patches of positive gain on the face are at 0.7 of their fitted strength, so the mottle stands
 through them. The middle one carries
 the tuft (short rays kept to a narrow cone), the one at 193 a few long thin streamers of low gain and a long
@@ -181,8 +176,7 @@ place if absent), and `rays.from` the distance from the centre, in radii, of the
 streamer that leans one way and narrows, as the one at the bottom of the approved Mercury image does, not
 a burst that stands on the normal. The knot is still hidden by its own place going behind the limb.
 With `from` above 1 the point stands outside the body and the axis looks back at the limb: the rays then
-close on that point, a plume with a wide foot on the limb and a tip in the sky. No knot of this look is of
-that kind any more.
+close on that point, a plume with a wide foot on the limb and a tip in the sky.
 `knot.shade` is how a patch of negative gain colours the face: the darkening is mixed toward its own
 luminance by the first number and scaled by the second ([0, 0] is the plain darkening), so the mottle of
 the burnt face is a faint warm grey in all three colours and no yellow patch.
@@ -246,10 +240,8 @@ gain, its count as a share of `fine`, and its height as a multiple of the fine s
 is the hair of the whole sphere (strength and height scale in radii), so every limb the camera can see
 carries it; a lobe adds its own by `hair` (strength and height scale). A lobe with a negative strength
 thins the hair about its place by that share (under the loop, where the approved image is dark between
-the strands). The strands are few, long and curled (`fine` 27 where it was 45 and 70 before that, `curl`
-2.0 over a scale of 5, the height scale of `all` 0.075 where it was 0.06, the lobes at the lower left of
-the hold's view 0.09 and 0.10): MEASURED beside the approved image its flames at the lower left are
-fewer, longer and more curled than the hair of the look before. The two lobes at the bottom of the hold's
+the strands). The strands are few, long and curled (`fine` 27, `curl` 2.0 over a scale of 5,
+the height scale of `all` 0.075). The two lobes at the bottom of the hold's
 view carry taller hair and a few strands of the fringe with a longer `reach`, where the approved image
 has tongues of flame; their smooth low glow is halved to make room for them. The lobe that thins the hair
 under the loop is wider (10 degrees, 0.95 of the hair), so the taller hair does not stand in the loop. The hair has
@@ -295,15 +287,12 @@ bound (see "hold.ts, the map of place").
 ## The sphere of 11.69 degrees
 
 MEASURED on the approved Mercury image, the circle of its disc (a fit to its limb): centre 1892.1, 63.4,
-radius 443.7 px of the 1920 by 1080 frame, where the sphere of 9.2 degrees drew centre 1808.6, 132.1,
-radius 339.6. As a true sphere in the hold's lens that is 11.69 degrees of radius (plus or minus 0.09).
+radius 443.7 px of the 1920 by 1080 frame. As a true sphere in the hold's lens that is 11.69 degrees of radius (plus or minus 0.09).
 Mercury's plan hands that sphere from a4f61cec on (`plan.light.sunRadiusDeg` 11.69 and `sunDir`; the centre
 projects to 1925.7, 46.0 at 615). The far Sun draws the sphere it is handed and fakes no circle: the size
 and the place belong to Mercury's plan, and this look was set again on the larger sphere. Every number
 above this section is taken on the sphere of 9.2 degrees with the zones on its circle; the numbers of this
 section are taken on the larger sphere with the zones on the approved circle.
-
-How the look was moved from the small sphere to the large one is in this file as 3858184a has it.
 
 The contrast of the face by band and the colour of its darker quarter against the approved image, taken
 on the look before the final cut of batch 9, are in this file as 3858184a has it. The mottle is not
@@ -328,16 +317,10 @@ What changed in the body's law, each by an angle or a radius and none by the pix
   taper, strands), an analytic law of the ray and the tube's axis, where it was hair.
 - The corona has streamers by position (`corona.streamers`: place on the limb, width in degrees, gain,
   scale height in radii; `corona.streamerRays` is the share of the streamer that carries the corona's rays).
-  Two stand at position angles 137 and 184 with small gains (0.12 and 0.2). MEASURED at 615, draft: 4.34
-  with them and 4.46 without, where the gas from 1.1 to 1.3 radii is 8.1 and over its bound; stronger ones
-  (0.25 and 0.4) put the same zone at 8.1 from the other side.
-- The tongue's tube ends below its foot as it ends at its tip. Without that end the line of the tube
-  ran on through the body and out of its far side, and stood as a pale beam on the upper limb at 480 to
-  490 of the travel from the Sun (MEASURED by eye on the rows; 26b48f8a has no beam there).
+  Two stand at position angles 137 and 184 with small gains (0.12 and 0.2).
+- The tongue's tube ends below its foot as it ends at its tip.
 - The tongue fades toward its tip and is cut into strands (`fringe.tongues[0].fade` 0.8 where it was 0,
-  `strand` 0.9 where it was 0.5). With no fade it was a smooth cone with a hard point; at 615 it passed
-  beside the approved image's, but at 717 and 1016, where the exposure is lower, it stood as a thorn on
-  the lower limb (MEASURED by eye at draft; the box at 615 is 4.33 with either).
+  `strand` 0.9 where it was 0.5).
 ## hold.ts, the map of place (MAIL 979)
 
 A law that does not place each ray stops near 4.3 at frame 615. `src/space/farsun/hold.ts` is a small
@@ -363,15 +346,13 @@ axes of that frame from the film (`npx tsx assets-src/farsun/fit/holdframe.mts 6
   point out of the hold's plane of sky (`hold.depth`, the sine of the lean at which it has fallen to 1 / e).
   It is a gain in stops on the corona, the fringe, the hair, the tongue, the rays of the knots and the
   chromosphere. The loops take `hold.loops` of it and this look sets 0: with the gain on them the loop of
-  the lower limb lost its strands where the approved loop stands a few pixels beside them (MEASURED at
-  615, draft: 2.21 with the loops under the gain and 2.30 without, and the loop is wire again).
+  the lower limb lost its strands where the approved loop stands a few pixels beside them.
 - Both go with the exposure as the knots do (the share of the burn's gain above 1), and the gas also with
   one minus the wear. So the table is nothing at burn 0: the Sun stop's views and the start of the
   handover keep their bytes, and the map grows in with the burn along the flight from 474 on.
 - It belongs to the body. Its frame turns with the body's spin, and no term of it reads the clock.
 - `hold.face` and `hold.gas` are the strengths. The table was fitted at 1 and 1; `hold.gas` is 1.35 so
-  the rays of the upper left have the approved image's contrast (MEASURED at 615, draft: spike contrast
-  9.3 at 1.0, 10.3 at 1.2, 11.1 at 1.35, the approved image 11.0; the box 2.30, 2.37, 2.55).
+  the rays of the upper left have the approved image's contrast.
 
 The takes (`assets.maxTakesPerAsset` is 6, and 6 were made in this phase; the rejected ones stay under
 `out/work/farsun-hold/`). Each take is one pass of `make_hold.py step` on the render of the take before,
@@ -398,9 +379,7 @@ face 1.5, the limb 1.3, the gas 3.0, 3.7 and 3.5, beyond 1.6 radii 2.5; spike co
 
 What the table can not do: it is one number for the face and one for the gas, so it moves no hue. The gas
 from 1.1 to 1.3 radii stays 3 to 4 levels short of red and the gas from 1.3 to 1.6 radii 2 levels over in
-red and green; the face stays 1.5 to 2 levels over in red and green. Where the gain met its end (3 stops
-down, 799 texels of 8277, most of them under the lower limb beyond 1.5 radii) the light that is left is
-the lens's and not the gas's.
+red and green; the face stays 1.5 to 2 levels over in red and green.
 
 ## One body at the seam (MAIL 1002)
 
@@ -412,15 +391,12 @@ the three laws that flatten the burnt face (`spots.flat`, `spots.power`, `plage.
 exposure after the handover, not before. `faceLaw` in `farsun.ts`
 takes the burn; up to `burn.split` (0.2, the exposure the film reaches where the handover ends) the
 face is the stop's (`spots.power[0]`, `plage.gain[0]`, no flattening), and from there to burn 1 it goes
-evenly to the burnt look (`spots.power[1]`, `plage.gain[1]`, `spots.flat[0]`). At burn 1 the numbers are
-the ones 96a7a7ee had, so 615 and every later view keep their bytes against the state before the cure
-(MEASURED at 615, draft). `tests/farsun-share.test.ts` holds it: at 471, 475, 480, 484, 485, 495 and 500
+evenly to the burnt look (`spots.power[1]`, `plage.gain[1]`, `spots.flat[0]`). `tests/farsun-share.test.ts` holds it: at 471, 475, 480, 484, 485, 495 and 500
 the flattening is 0 and the power and the plage are the stop's.
 
 ## The wear by the burn (MAIL 1017, 1027 and 1043)
 
-The share shows nothing and the burn does the bleaching (47c2ef0d changed the face by 15.0 levels of the
-mean in one film frame, with the share).
+The share shows nothing and the burn does the bleaching.
 
 - At burn 0 the far Sun is the Sun stop's globe. The face is the stop's own map and law (`uWear` 1). The
   gas goes by `from(near, own)` in `farsun.ts`, which is `own` to the bit where the wear is 0: the corona's
@@ -433,9 +409,7 @@ mean in one film frame, with the share).
 - The burn is the film's (`sunBurn` of `src/director/film.ts`), a law of the place and never of the clock:
   from 0 to `burn.split` by the distance from the Sun stop's last view to the swap distance (film frames
   461 to 487), still while the camera turns to Mercury (487 to 503), and from `burn.split` to 1 by the
-  inverse distance to Mercury (504 to 538, the travel's pull). The disc is 424 px at 480 and 417 px from
-  487 on, the sphere of 11.69 degrees that Mercury's hold sees; it does not shrink further on this leg, it
-  slides to the upper right corner.
+  inverse distance to Mercury (504 to 538, the travel's pull).
 - At burn 1 the wear is 0 and every law gives the numbers of 47c2ef0d: MEASURED at draft, frames 60, 360,
   539, 540, 615, 717, 1016, 1110, 1150 and 1200 keep their bytes, and the previews of 440, 455 and 465 too.
 - No frame hangs on what is loaded: MEASURED on previews, 495 and 520 on a fresh page each are the bytes
@@ -477,12 +451,7 @@ spread of the difference of two blurs (8 and 40 px, 40 and 160 px, in pixels of 
 | frame | far Sun's share | burn | mean | R G B | band 8 to 40 | band 40 to 160 |
 |-------|-----------------|------|------|-------|--------------|----------------|
 | 470 | 0.00 | 0.019 | 121.0 | 187 109 49 | 19.0 | 14.2 |
-| 480 | 0.89 | 0.143 | 139.2 | 199 129 63 | 16.0 | 12.0 |
 | 495 | 1.00 | 0.200 | 160.3 | 211 153 81 | 13.6 | 10.3 |
-| 507 | 1.00 | 0.205 | 166.8 | 215 161 87 | 11.9 | 9.0 |
-| 510 | 1.00 | 0.230 | 174.4 | 219 169 95 | 10.2 | 7.4 |
-| 516 | 1.00 | 0.411 | 203.7 | 233 202 132 | 6.6 | 4.8 |
-| 522 | 1.00 | 0.731 | 232.2 | 245 233 186 | 3.4 | 2.5 |
 | 540 | 1.00 | 1.000 | 248.6 | 253 249 231 | 1.5 | 1.1 |
 
 The largest change of the mean in one film frame is 4.9 levels on the Sun's side (479 to 481) and 5.6 on
@@ -506,9 +475,7 @@ The page's load and the link are the first minus the next, about 20 s. Later loo
 march: a lobe's strands are computed only where its weight is not zero, a knot's march is skipped where
 the ray misses its sphere, the fringe where its share is zero, a loop with no gain at all. The strands of
 the fringe walk only the lobes that have strands, by a list of their numbers (`uStrandLobe`, the cut of
-the engine's profile, the same bytes at 615 and 470 as the look without it). The hair is now a march of
-200 steps of its own and the two cones of 256 steps are gone, which is where the rest of the gain is. The pictures of
-c0a7f5ef kept their bytes under those skips (MEASURED at 615 and 616 before the look changed).
+the engine's profile, the same bytes at 615 and 470 as the look without it).
 
 ## Nothing by the pixel
 
@@ -531,8 +498,7 @@ The lines the far Sun needs in files that belong to other owners, one patch per 
 `sh assets-src/farsun/wiring/make.sh` against the commit of main the branch started from. Each patch starts
 with the reason for every hunk. They reach main through their owners.
 
-The patches of the travel, the Sun and Mercury are in main and are no longer kept (MEASURED on the merge
-of main dac56ef3: 44 of 45, 17 of 17 and all of their added lines stand in the tree as they are). Their
+The patches of the travel, the Sun and Mercury are in main and are no longer kept. Their
 reasons stay beside (`travel.txt`, `sun.txt`, `mercury.txt`) and the history has the patches.
 `film-sunstart.patch` and `sun-gas.patch` (the stop's corona and prominences lent to the far Sun) are not
 in main yet and stay.
