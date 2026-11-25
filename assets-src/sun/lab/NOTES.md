@@ -1147,3 +1147,21 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   zone.py: the approved's band under 1 px is strongest in rows 600 to 760 (rms 12 to 13) and weakest in the
     nearest rows 960 to 1080 (3.9); mine is 1.4 to 1.6 times in the middle and 2 times at both ends. Even the
     standing ground reads 1.95 in the nearest rows.
+- 22:35 to 22:45 UTC. h12 rim filaments from the finest fibres only (counts [3, 6, 14]), amplitude 0.6, grain
+  [0.3, 1.5]: soft gas lumps, cushions unclear. h13 light nearer the lane (blob[0] 0.82, swell 1.6), lane 0.15,
+  seam 0.28, skirt steep (dome.base[6] 40): cushions clearer. h14 = h13 with haze.air depth 0 (no gas past the
+  limb). MEASURED h13: low64 7.88, bands [1.62 1.09 0.98 1.02 1.09 1.02 0.90]; h14 curve [0.728 0.722 0.717
+  0.699 0.67 0.621 0.567 0.511 0.448 0.388 0.344] (approved 0.667 0.662 0.657 0.647 0.619 0.586 0.547 0.496
+  0.433 0.369 0.324: middle 0.06 too light), lane 6.3 px (7.1).
+  mask.py now writes the three part png (255 ground, 128 strip, 0 sky). The film's limb: topmost row where the
+  lab's frame with haze.air off differs from the standing ground's frame by more than 6 levels, cubic through
+  1877 columns, rms 1.44 px: rows 584.0, 503.7, 483.4, 524.2, 626.8 at x 0, 480, 960, 1440, 1919 (17 to 38 px
+  above the approved's). parts.py PARTS FRAME...: plain match on the three parts. MEASURED (ground, strip, sky):
+  standing 51.3722 40.8483 8.4355; b7 47.1275 74.8329 11.7807; h13 (air 0.4) 52.7269 54.7915 9.9224;
+  h14 (air 0) 52.7469 51.0511 8.5568. Still 0.12 over the standing ground on the sky: 0 to 5 px above the
+  fitted limb mine is 8 to 10 levels lighter (the limb's own ragged line and the bloom of my lighter far
+  ground), 5 to 40 px above about 1 level (bloom), nothing above 100 px.
+  SEEN at 0.75 (v/half-h14.jpg, approved over mine, rows 580 to 1080): the approved is a net of thin dark red
+  lanes round cushions that are textured inside (fibres, olive middles, light rims); mine is smooth gold lumps
+  in soft dark valleys. Next: lane about 7 px and a net, light nearer the lane, fine fibres over the whole top
+  from the finest count, fewer blotches.
