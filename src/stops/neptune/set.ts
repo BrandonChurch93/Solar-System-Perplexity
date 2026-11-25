@@ -142,6 +142,8 @@ export const createSet: SetFactory = async (ctx) => {
   // begins at, since the rise shows the globe without it (the eye travels from groundOff[0] to groundOff[1] degrees there, one way).
   const bodyBack = planet.mesh.quaternion.clone().invert()
   const toBody = new THREE.Quaternion()
+  const eyeAt = new THREE.Vector3()
+  ;(planet.material.uniforms.uEyeMake!.value as THREE.Vector4).set(deepLook.on ? deepLook.storm.dark : 0, deepLook.storm.wall[0]!, deepLook.storm.wall[1]!, deepLook.storm.ragged)
   const seen = new THREE.Vector3()
   const offGround = (time: number): number => THREE.MathUtils.radToDeg(plan.twin(plan.terrain(time - plan.seg.terrain.start), time).position.angleTo(holdPose.position))
   const groundOff = [offGround(plan.seg.terrain.start), offGround(plan.seg.terrain.end)]
@@ -167,6 +169,9 @@ export const createSet: SetFactory = async (ctx) => {
       orbit.visible = inOrbit && state.weight > 0
       terrain.visible = !inOrbit
       const gain = 1 / shot.post.exposure
+      // The eye of the place's storm rides the globe with the scene: its middle in the globe's frame, for both shaders (planet.ts, eyeShade).
+      eyeAt.copy(deepView.eyeUp).applyQuaternion(toBody.copy(bodyBack).multiply(plan.laid(state.time)))
+      ;(planet.material.uniforms.uEyeAt!.value as THREE.Vector4).set(eyeAt.x, eyeAt.y, eyeAt.z, deepView.eyeAngle)
       if (!inOrbit) {
         camera.copy(world.position).negate().applyQuaternion(turn.copy(state.rotation).invert())
         if (deepLook.on) {

@@ -129,6 +129,9 @@ ${globe(mapGlsl(patches.place.shownFrom))}
 ${FALL_GLSL}
 ${COUNT_GLSL}// The thin bright streaks of the deck at the place deckField was last asked about (0 to about 1): the ridges of its finer octaves.
 float gWisp = 0.0;
+// The deck's structure at the point the ray meets the deck (0 where the deck's own block is not run): it moves the wall of the
+// storm's eye in and out (planet.ts, eyeShade).
+float gEyeField = 0.0;
 // The pixel's run on the deck, set where the deck is shaded (xy: the run along the sight line, whole, in the deck's own measure;
 // z: the count of points along it, 0 where no run is asked; w: the shortest wave one point may hold).
 vec4 gRun = vec4(0.0);
@@ -769,6 +772,7 @@ void main() {
     vec3 fine = uDeckFine.x * vec3(cover.y, cover.x, fp * sqrt(0.5 + 0.5 / (mu * mu)));
     gRun = vec4(sight * (fp / mu), uDeckRun.x, uDeckRun.y * uDeckFine.x * fp);
     float h0 = deckHeight(g.xy, fine, t, p0, deckFinest);
+    gEyeField = p0.x;
     float wisp = gWisp;
     float hE = deckHeight(g.xy + vec2(e, 0.0), fine, t, p1, f1);
     float hN = deckHeight(g.xy + vec2(0.0, e), fine, t, p1, f1);
@@ -881,7 +885,7 @@ void main() {
       keep = mix(1.0, far.r * smoothstep(uGClump.x, uGClump.y, far.b) * mix(uGCirrus.w, 1.0, smoothstep(uGClump.y, uGClump.z, far.b)), uGCirrus.x);
       deepen = 1.0 + uGCirrus.x * uGCirrus.z * (1.0 - smoothstep(0.9, 1.0, far.b));
     }
-    vec3 mapDeck = layerAt(dd, 1.0, 0.0, tx).rgb / uGCode;
+    vec3 mapDeck = layerAt(dd, 1.0, 0.0, tx).rgb / uGCode * eyeShade(pb, gEyeField);
     farTexels = tx;
     float softCloud = max(uGCloudSoft, uGCirrusPx);
     float mapCloud = layerAt(dcl, softCloud, 0.0, tx).a;
@@ -1167,6 +1171,10 @@ export class Deep {
   readonly material: THREE.ShaderMaterial
   readonly centre: THREE.Vector3
   readonly up: THREE.Vector3
+  // The middle of the storm's eye as a direction from the planet's centre in the scene's frame, and the eye's radius as an angle:
+  // the set turns the direction into the globe's frame for the one eye both shaders shade (planet.ts, eyeShade).
+  readonly eyeUp: THREE.Vector3
+  readonly eyeAngle: number
   private readonly seat = new THREE.Vector3()
   private readonly back = new THREE.Quaternion()
   private readonly turned = new THREE.Matrix4()
@@ -1180,6 +1188,8 @@ export class Deep {
     const e0 = ground.e0.clone()
     const e1 = ground.e1.clone()
     const s = look.storm
+    this.eyeUp = e0.clone().multiplyScalar(Math.cos(s.at[0]! / radius)).addScaledVector(e1, Math.sin(s.at[0]! / radius)).multiplyScalar(Math.cos(s.at[1]! / radius)).addScaledVector(axis, Math.sin(s.at[1]! / radius)).normalize()
+    this.eyeAngle = s.eye / radius
     const d = look.deck
     const ci = look.cirrus
     const h = look.haze
@@ -1219,7 +1229,7 @@ export class Deep {
         uDeckMake: { value: v4(d.gain, d.octaves, d.life, w.row) },
         uSpiral: { value: v4(d.spiral.across, d.spiral.along, look.steps.lightGrow, look.steps.lightLimit) },
         uNight: { value: v3(d.night) }, uBlue: { value: v3(d.blue) }, uPale: { value: v3(d.pale) },
-        uDeckTone: { value: v4(d.contrast, d.level, s.dark, d.march) },
+        uDeckTone: { value: v4(d.contrast, d.level, 0, d.march) },
         uBounds: { value: new THREE.Vector2(d.bounds[0], d.bounds[1]) },
         uShell: { value: new THREE.Vector2(ci.shell[0], ci.shell[1]) },
         uStreamLine: { value: ci.streamers.map((x) => v4(x.line[0]!, x.line[1]!, x.line[2]!, x.line[3]!)) },
