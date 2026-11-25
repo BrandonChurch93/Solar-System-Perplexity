@@ -1,9 +1,41 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T14:17:18.699Z",
- "head": "cb54abd75f86c0356604ec8f3a521ea3f956b59a",
- "note": "eye as one body (efd32eb4), sky_builder's low sky laid: 4860 G17 0.216 to 0.560 by my reader, hold same bytes",
+ "pushed": "2026-11-25T14:51:31.482Z",
+ "head": "a42f77f3d1854ab1c4ddf1d834b176b737a7b17d",
+ "note": "14:52 UTC: 4860 beside the approved with the low sky (G17 0.560 proxy, 88.8 s a frame); three trials not taken (air share, lumpShare, hold aim); tests on the merge of main aed412aeb running",
  "looks": [
+  {
+   "time": "2026-11-25T14:51:29.570Z",
+   "file": "20261125145129570-note-h1-4605.jpg",
+   "source": "../../../../tmp/h1-4605.jpg",
+   "kind": "note",
+   "label": "trial, not taken: 4605 with the hold's sky turned to bring the band top right (H1): mean absolute against the approved 11.376 (the tip 7.542): worse; the hold keeps its aim",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T14:51:27.550Z",
+   "file": "20261125145127550-note-f-six.jpg",
+   "source": "../../../../tmp/f-six.jpg",
+   "kind": "note",
+   "label": "trial, not taken: 4968, 4972, 4976 upper left, the third streamer with lumpShare 0.2 below the tip: more hard bits, worse. Next: the streamer as a thin veil by the slant path law (MAIL 1126 point 4)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T14:51:25.960Z",
+   "file": "20261125145125960-note-a-four.jpg",
+   "source": "../../../../tmp/a-four.jpg",
+   "kind": "note",
+   "label": "trial, not taken: the air's share 0.75 (A1) and the low haze depth 0.11 (A2) at 4860 preview beside the approved and the tip: the far plain comes up from 58,85,123 to 70,95,131 (approved 90,128,165) and the eye is veiled; a lead for round 1",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T14:51:23.800Z",
+   "file": "20261125145123800-note-k1-4860.jpg",
+   "source": "../../../../tmp/k1-4860.jpg",
+   "kind": "note",
+   "label": "4860 approved, before, after the low sky (as committed, cb54abd75): G17 median 0.560 by my reader, a proxy (bar 0.8, RED and named); 88.8 s a draft frame at 1920",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T14:17:18.092Z",
    "file": "20261125141718092-note-k1-four.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/k3-corner.jpg",
    "kind": "note",
    "label": "Control for the flecks at 4968, 4972, 4976 (upper left corner): left as it stands, right with the third streamer's density 0. The row of flecks is the third streamer; the flecks at the bank's end are the first streamer's tail. Not cured yet",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T13:53:17.893Z",
-   "file": "20261125135317893-note-sl-4976.jpg",
-   "source": "../../../../tmp/sl-4976.jpg",
-   "kind": "note",
-   "label": "4976: slab off above, on below. The white patch at the lower right is a cloud of the map's sheet: with the slab a soft round blob. 37 s per draft frame (35 off)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T13:53:17.310Z",
-   "file": "20261125135317310-note-sl-4974.jpg",
-   "source": "../../../../tmp/sl-4974.jpg",
-   "kind": "note",
-   "label": "4974: slab off above, on below (control). The dot, the speckle field lower left and the hard limb lines are the map's cloud sheet read as a flat picture: with the slab a soft haze and one soft band. 43 s per draft frame (39 off)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T13:53:16.715Z",
-   "file": "20261125135316715-note-look-s3b.jpg",
-   "source": "../../../../tmp/look-s3b.jpg",
-   "kind": "note",
-   "label": "4860 beside the approved (left), with the run and the slab. G17 tile median by my reader 0.216 (0.254 without the slab: the far cloud streaks at the limb are softer, a cost, named). The eye and the streaks are not there yet. 105 s per draft frame (101 without the slab)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T13:22:41.234Z",
-   "file": "20261125132241234-note-look-r1.jpg",
-   "source": "../../../../tmp/look-r1.jpg",
-   "kind": "note",
-   "label": "4860 beside the approved, with the deck's run (trial of 12:39; the committed widths 1.2 and the slab are not in this one, that 4860 renders next). G17 tile map median 0.254 (my reader, draft). 81 to 83 s per frame",
    "stop": "neptune"
   }
  ]
