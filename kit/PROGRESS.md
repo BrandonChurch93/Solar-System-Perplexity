@@ -219,13 +219,13 @@ State is one of `not started`, `stand-in`, `in progress` or `finished`. A finish
 | Stop | State | Rounds run | R1 | R2 | R3 | R4 | R8 | Open items |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | sun | in progress | 1 | 5 | pass | 4 | 4 | pass | 46 to 53 |
-| mercury | in progress | 3 | 8 | pass | 3 | 8 | pass | 69 to 78 |
+| mercury | in progress | 2 | 8 | pass | 3 | 8 | pass | 69 to 78 |
 | venus | in progress | 2 | 8 | pass | 5 | 6 | pass | 28 to 32 |
-| earth | in progress | 3 | 9 | pass | 3 | 8 | pass | 54 to 61 |
+| earth | in progress | 1 | 9 | pass | 3 | 8 | pass | 54 to 61 |
 | mars | in progress | 1 | 9 | pass | 4 | 4 | pass | 6 to 15 |
 | jupiter | in progress | 1 | 6 | pass | 6 | 3 | pass | 33 to 37 |
 | saturn | in progress | 2 | 7 | fail | 4 | 8 | pass | 38 to 45 |
-| uranus | in progress | 3 | 7 | pass | 6 | 5 | pass | 62 to 68 |
+| uranus | in progress | 2 | 7 | pass | 6 | 5 | pass | 62 to 68 |
 | neptune | in progress | 2 | 5 | fail | 4 | 4 | pass | 18 to 27 |
 
 ## Workspace record
@@ -1531,10 +1531,10 @@ One line per round, written when the round starts: number, phase, stop. Scores a
 - Round 47, Phase 6, earth, round 1 of 3 of the second note (round 40 was its round of the first note). Started 2026-11-24 21:00 UTC. Judged on main at 73809f4. Measures not green. R1 9, R2 pass, R3 3, R4 8, R8 pass. 10 severe, 9 major. Next: see the summary `scorecards/round-047/`.
 - Round 50, Phase 6, sun, round 1 of 3 of the third note (round 49 was its round of the second note). Started 2026-11-25 04:14 UTC. Judged on main at 579400e. Measures not green. R1 5, R2 pass, R3 4, R4 4, R8 pass. 7 severe, 17 major. Next: see the summary `scorecards/round-050/`.
 - Round 51, Phase 6, saturn, round 2 of 3. Started 2026-11-25 04:14 UTC. Judged on main at 579400e. Measures G5, G13 and G17 green; the smooth report was not placed at the close (its four picture slices sj2 01 to 04 green on render machines, landing green, counts still running), which the round tool writes as not measured. The whole smooth report of the build was joined at 09:23 UTC on 2026-11-25 from the machines' parts (path, place, parity; the pictures of both moves in four slices; counts), is green and is placed after the close as `scorecards/round-051/smooth-saturn.md` and `.json`. R1 7, R2 fail (0 of 10 against 4 of 10), R3 4, R4 8, R8 pass. 2 severe, 11 major. Closed 07:24 UTC. Next: Saturn round 3 of 3 on a commit named by saturn_coder (d186) that cures, causes first: the inner ring and its crossing of the globe (both severe issues: the bright patch of sky between globe and inner ring at 3567, the puck on a glossy table with its mirror picture and seam at 3720), the globe's light (the straight soft boundary of day and night, the lumpy dark limb), the coarse near ring field and the wide main division at 3720, the blocky lower globe, stars on top of opaque rings at 3866; the whole list is the summary `scorecards/round-051/`.
-- Round 52, Phase 6, mercury, round 3 of 3. Started 2026-11-25 10:38 UTC.
-- Round 53, Phase 6, venus, round 2 of 3. Started 2026-11-25 10:38 UTC.
-- Round 54, Phase 6, uranus, round 3 of 3. Started 2026-11-25 10:38 UTC.
-- Round 55, Phase 6, earth, round 3 of 3. Started 2026-11-25 10:38 UTC.
+- Round 52, Phase 6, mercury, round 2 of 3 of the second note (round 37 was its round of the first note). Started 2026-11-25 10:38 UTC.
+- Round 53, Phase 6, venus, round 2 of 3 of the second note. Started 2026-11-25 10:38 UTC.
+- Round 54, Phase 6, uranus, round 2 of 3 of the second note (round 38 was its round of the first note). Started 2026-11-25 10:38 UTC.
+- Round 55, Phase 6, earth, round 1 of 3 of the third note (round 47 was its round of the second note, round 40 of the first). Started 2026-11-25 10:38 UTC.
 
 ## Final scores
 
