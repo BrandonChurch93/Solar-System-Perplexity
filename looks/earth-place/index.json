@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T18:47:36.789Z",
+ "pushed": "2026-11-25T19:06:21.906Z",
  "head": "20ad27c24dd51c774c597e4cb2670ddfd97bf087",
- "note": "dive lines red at 1860 by the pattern (the disc), web crop, sheet 1904; rise lines running",
+ "note": "rise sheet 2104 to 2115, the plate with its edge, two takes for the ground round the canvas",
  "looks": [
+  {
+   "time": "2026-11-25T19:06:20.723Z",
+   "file": "20261125190620723-note-look-t12.jpg",
+   "source": "../../../../tmp/gl/k16/gen/look-t12.jpg",
+   "kind": "note",
+   "label": "skirt takes 1 and 2 for the ground round the canvas, not in the picture yet",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T19:06:19.619Z",
+   "file": "20261125190619619-note-p5-small.jpg",
+   "source": "../../../../tmp/gl/k16/p5-small.jpg",
+   "kind": "note",
+   "label": "place-5 plate whole, the lay back ends on the canvas outline with bare navy outside, bad",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T19:06:18.693Z",
+   "file": "20261125190618693-note-s-2104.jpg",
+   "source": "../../../../tmp/gl/k16/S/s-2104.jpg",
+   "kind": "note",
+   "label": "rise 2104 to 2115 draft every frame, lines still running",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-25T18:47:35.978Z",
    "file": "20261125184735978-note-s-1904.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/gl/k16/strip2/place-1870-1874.jpg",
    "kind": "note",
    "label": "20ad27c2 draft frames 1870 and 1874, rows 300 to 839 at 1 to 1, plain and marked: the place reads as a pale wedge on navy sea (red, not cured)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T18:29:37.601Z",
-   "file": "20261125182937601-note-lower-1886-1890.jpg",
-   "source": "../../../../tmp/gl/k16/strip2/lower-1886-1890.jpg",
-   "kind": "note",
-   "label": "20ad27c2 draft frames 1886 and 1890, lower half 1 to 1, plain and with the rim of the close canvas marked (yellow) and the 2.5 degree ring (red): the edge I still see",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T18:29:36.873Z",
-   "file": "20261125182936873-note-plate-foot2.jpg",
-   "source": "../../../../tmp/gl/k16/plate-foot2.jpg",
-   "kind": "note",
-   "label": "CORRECTION of the look of 18:13 with the lay back outline: that outline lay wrongly (grid shifted by x 598, y 204). Right: place-12, the same with the canvas outline and rings of 1, 2, 3 degrees, the lay back",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T18:13:01.364Z",
-   "file": "20261125181301364-note-plate-foot.jpg",
-   "source": "../../../../tmp/gl/k16/plate-foot.jpg",
-   "kind": "note",
-   "label": "the level's own picture place-12 beside the same with the lay back's outline: the dark round and the end of the cloud field are in the picture itself",
    "stop": "earth"
   }
  ]
