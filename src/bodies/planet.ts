@@ -110,24 +110,38 @@ export interface PatchShader { slots: number; own: boolean; gain: boolean; minor
 
 const patchRead = (i: number): string => `textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb`
 
-const patchLevels = (o: PatchShader): string => Array.from({ length: o.slots }, (_, i) => `    if (uPatchCount > ${i}.5) {
-      vec2 q = ${o.centres ? `(g - uPatchCentre[${i}])` : 'g'} * uPatchScale[${i}];
-      float w = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, ${o.minor ? 'fine' : 'parent'}));
-      ${o.own ? `if (w > 0.0) {
-        vec3 t = ${patchRead(i)};
-        float o = uPatchOwn[${i}];
-        albedo = mix(albedo, t, w * (1.0 - o));
-        ownSum = ownSum * (1.0 - w) + t * (w * o);
-        own = own * (1.0 - w) + w * o;
-      }` : `if (w > 0.0) albedo = mix(albedo, ${patchRead(i)}, w);`}
-      parent = gd * uPatchScale[${i}] * uPatchSize[${i}];${o.minor ? `
+const patchWeight = (o: PatchShader, i: number): string => `vec2 q = ${o.centres ? `(g - uPatchCentre[${i}])` : 'g'} * uPatchScale[${i}];
+      float w = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, ${o.minor ? 'fine' : 'parent'}));`
+
+const patchSeen = (o: PatchShader, i: number): string => `parent = gd * uPatchScale[${i}] * uPatchSize[${i}];${o.minor ? `
       float thin = ga * uPatchScale[${i}] * uPatchSize[${i}];
       float cap = gd / uPatchAniso[${i}] * uPatchScale[${i}] * uPatchSize[${i}];
       fine = max(thin, cap);
       drawn = mix(drawn, thin / max(cap, 1.0), step(0.5, w));` : ''}
       texels = mix(texels, parent, step(0.5, w));${o.detail ? `
       seen = mix(seen, gm * uPatchScale[${i}] * uPatchSize[${i}], step(0.5, w));` : ''}
-      near = max(near, w * uPatchNear[${i}]);
+      near = max(near, w * uPatchNear[${i}]);`
+
+const patchLevels = (o: PatchShader): string => o.own ? `    float whole = -1.0;
+${Array.from({ length: o.slots }, (_, i) => `    float w${i} = 0.0;
+    if (uPatchCount > ${i}.5) {
+      ${patchWeight(o, i)}
+      w${i} = w;
+      if (w == 1.0) whole = ${i}.0;
+      ${patchSeen(o, i)}
+    }`).join('\n')}
+${Array.from({ length: o.slots }, (_, i) => `    if (w${i} > 0.0 && !(whole > ${i}.5 && w${i} * (1.0 - uPatchOwn[${i}]) == 0.0)) {
+      vec2 q = ${o.centres ? `(g - uPatchCentre[${i}])` : 'g'} * uPatchScale[${i}];
+      float w = w${i};
+      vec3 t = ${patchRead(i)};
+      float o = uPatchOwn[${i}];
+      albedo = mix(albedo, t, w * (1.0 - o));
+      ownSum = ownSum * (1.0 - w) + t * (w * o);
+      own = own * (1.0 - w) + w * o;
+    }`).join('\n')}` : Array.from({ length: o.slots }, (_, i) => `    if (uPatchCount > ${i}.5) {
+      ${patchWeight(o, i)}
+      if (w > 0.0) albedo = mix(albedo, ${patchRead(i)}, w);
+      ${patchSeen(o, i)}
     }`).join('\n')
 
 export const planetFrag = (o: PatchShader): string => /* glsl */ `

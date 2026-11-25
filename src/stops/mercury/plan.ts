@@ -20,7 +20,7 @@ export const params: MoveParams = {
   dive: { headingDeg: 278, altitude: 0.03234, back: 0.06, ahead: 0.12, bow: 0.2, rollDeg: 6, swoop: true, surge: { glide: 0.1, rise: 16, fall: 2, swell: [0.35, 5, 2] } },
   terrain: { vfov: 60, gather: 0.2, forward: 0.5, rise: 0.05, side: -0.1, yawDeg: 3, pitchDeg: 0.5, entryHeight: 1, entryBack: 0.6, entryPitchDeg: -4, entryDipDeg: -4.07, horizonDeg: 19.8, dipDeg: 10.25, rollDeg: 11.27, exitHeight: 0.3, exitForward: 0.25, exitPitchDeg: 1.5, exitDipDeg: 1.54 },
   rise: { azimuthDeg: 0, elevationDeg: 0, distance: 4.8, offset: [-0.002, -0.189], driftSpeed: 0.08, rollDeg: 80, ahead: 0.01174, from: 0.02085, hug: 1.7, settle: 8, level: true, pan: 0.3 },
-  travel: { turnDeg: 111.27, side: 1 },
+  travel: { turnDeg: 108, side: 1 },
   arrive: { swingDeg: 0, axis: [0, 1, 0], offset: [0.5, -0.1] },
   light: { exposure: 1, skyExposure: 0.25, sunRadiusDeg: 11.69, sunGlare: 0.012, flare: 1, sunDir: [0.420737, 0.215224, -0.881283] },
   handover: { dive: { at: shareOf('dive'), picture: false, skyFrames: 0, place: { valid: [0.004, 0.004, 0.0045, 0.125], seen: 1, maxEnlarge: 3, enlargeSoft: 0.95, edgeIn: [0.4, 0.4, 0.4, 0.25] } }, rise: { at: shareOf('rise'), picture: false, skyFrames: 0, pullBack: { speed: 0.47, over: 0.28, from: 18.5 / 30 }, place: { valid: [0.03, 0.03, 0.05, 0.125], seen: 1, maxEnlarge: 1.2, enlargeSoft: 0.4, edgeIn: [0.4, 0.4, 0.4, 0.25] } } },
