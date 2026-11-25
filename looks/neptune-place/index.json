@@ -1,75 +1,71 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T01:00:55.750Z",
- "head": "7f22b7d9071ad5aa952269178338627a45772cc5",
- "note": "7f22b7d9: dive and rise every frame looked at; red: dark chunks 4705 to 4712, cause open; sky flash 4722 and 4723 is the engine's sky turning; web count cure in work",
+ "pushed": "2026-11-25T01:21:45.414Z",
+ "head": "47ea885526742944dc3c0c1e1e15679d353ecefe",
+ "note": "47ea8855: web count cure (grooves gone), main merged, tests 56 of 56, both handovers pass; 4860 beside the approved close G17 1.095 full, 0.972 web, 38 and 32 s per draft frame; reds: chunks at 4705 to 4712 (cause open), sky flash 4722, 4860 too blue",
  "looks": [
   {
-   "time": "2026-11-25T01:00:54.464Z",
-   "file": "20261125010054464-note-named-4860.jpg",
+   "time": "2026-11-25T01:21:44.832Z",
+   "file": "20261125012144832-note-chunk-e.jpg",
+   "source": "out/work/nep/weave/ev/chunk-e.jpg",
+   "kind": "note",
+   "label": "RED 4709: dark chunks with stepped edges round the spiral stay with cirrus cast 0 and with deck shadow 0; cause open",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T01:21:44.261Z",
+   "file": "20261125012144261-note-webrise-4950.jpg",
+   "source": "out/work/nep/weave/ev/webrise-4950.jpg",
+   "kind": "note",
+   "label": "web set rise every fifth frame 4950 to 5005",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T01:21:43.723Z",
+   "file": "20261125012143723-note-webdive-4752.jpg",
+   "source": "out/work/nep/weave/ev/webdive-4752.jpg",
+   "kind": "note",
+   "label": "web set dive every third frame 4752 to 4767",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T01:21:43.169Z",
+   "file": "20261125012143169-note-webdive-4716.jpg",
+   "source": "out/work/nep/weave/ev/webdive-4716.jpg",
+   "kind": "note",
+   "label": "web set dive every third frame 4716 to 4749",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T01:21:42.630Z",
+   "file": "20261125012142630-note-webdive-4680.jpg",
+   "source": "out/work/nep/weave/ev/webdive-4680.jpg",
+   "kind": "note",
+   "label": "web set dive every third frame 4680 to 4713, with the mean against the full set",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T01:21:42.042Z",
+   "file": "20261125012142042-note-oval2-4605.jpg",
+   "source": "out/work/nep/weave/oval2-4605.png",
+   "kind": "note",
+   "label": "4605 oval 3 times: full, web before, web with the full set's count (eecfa475): the grooves are gone",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T01:21:41.397Z",
+   "file": "20261125012141397-note-named-4605.jpg",
+   "source": "out/work/nep/weave/named-4605.png",
+   "kind": "note",
+   "label": "4605 beside the approved hero, full and web set, 47ea8855, draft 1920: 29.6 and 19.5 s per frame",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T01:21:40.573Z",
+   "file": "20261125012140573-note-named-4860.jpg",
    "source": "out/work/nep/weave/named-4860.jpg",
    "kind": "note",
-   "label": "4860 approved close | full | web on 7f22b7d9; G17 full 1.095 0.482, web 1.023 0.317; 38.2 s full, 27.7 s web per draft frame; bluer than the approved slate (red, named)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T01:00:53.589Z",
-   "file": "20261125010053589-note-rise-4998.jpg",
-   "source": "out/work/nep/weave/ev/rise-4998.jpg",
-   "kind": "note",
-   "label": "rise 4998 to 5009, every frame, full set draft preview on 7f22b7d9, about 6 s per frame; handover says every frame: pass for dive and rise",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T01:00:52.877Z",
-   "file": "20261125010052877-note-curve.jpg",
-   "source": "out/work/nep/weave/curve.png",
-   "kind": "note",
-   "label": "MAIL 806 3 (d): darkest and brightest 5 by 5 mean inside the place, hold 4605 then 4680 to 4758, full set draft preview (a proxy); it has a step by the dark chunks at 4705 to 4712",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T01:00:51.702Z",
-   "file": "20261125010051702-note-place-a.jpg",
-   "source": "out/work/nep/weave/ev/place-a.jpg",
-   "kind": "note",
-   "label": "RED, dive 4702 to 4713, the place at twice the size, full set draft preview on 7f22b7d9: dark chunks with hard edges round the spiral, 4705 to 4712; NOT the cirrus cast (control with cast 0 shows the same chunks); cause open",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T00:57:21.058Z",
-   "file": "20261125005721058-compare-neptune-rise-step-in-place.jpg",
-   "source": "out/work/handover/neptune-rise-step-in-place.png",
-   "kind": "compare",
-   "label": "neptune rise, the largest step of the level in place (3.4): frame 5001, frame 5002, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "neptune",
-   "segment": "neptune.rise",
-   "frame": 5002
-  },
-  {
-   "time": "2026-11-25T00:46:01.381Z",
-   "file": "20261125004601381-compare-neptune-dive-step-body.jpg",
-   "source": "out/work/handover/neptune-dive-step-body.png",
-   "kind": "compare",
-   "label": "neptune dive, the largest step of the mean level of the body (2.95): frame 4708, frame 4709, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "neptune",
-   "segment": "neptune.dive",
-   "frame": 4709
-  },
-  {
-   "time": "2026-11-25T00:35:14.399Z",
-   "file": "20261125003514399-note-dive-4680.jpg",
-   "source": "out/work/nep/weave/ev/dive-4680.jpg",
-   "kind": "note",
-   "label": "dive 4680 to 4691, every frame, full set, draft preview on 7f22b7d9, 6 to 23 s per frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T00:35:13.210Z",
-   "file": "20261125003513210-note-named-4860.jpg",
-   "source": "out/work/nep/weave/named-4860.jpg",
-   "kind": "note",
-   "label": "4860 approved close | full | web on 7f22b7d9; G17 full 1.095 0.482, web 1.023 0.317 (fell when the terrain sky patch went); 38.2 s full, 27.7 s web per draft frame; still bluer than the approved slate",
+   "label": "4860 beside the approved close, full and web set, 47ea8855, draft preview: G17 full 1.095 p25 0.482, web 0.972 p25 0.317; 38.2 and 32.0 s per frame",
    "stop": "neptune"
   }
  ]
