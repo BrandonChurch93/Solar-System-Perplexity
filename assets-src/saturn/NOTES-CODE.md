@@ -7064,3 +7064,44 @@ So in front of the lit globe all three looks cover by one law from the kept ring
   (/tmp/v/dark/sc_B, sc_D0, sc_I30, sc_I100, sc_D15I30, sc_D15I100, sc_D30I100, sc_U30I100).
 - NEXT: the table and the four panel pictures to /root for the ruling; the judge's slice 7648-7664 on the
   tree; then one whole proof (rise, dive, G13, gate, parity, path, handover, place, finals, vitest alone).
+
+## 19:10 to 19:40 UTC, 25 November: the table for the ruling on the thin sheet (depth and ice), sent 19:37
+
+- Tree of every row: main faf2194 with the working stop folder (the name f044d99f plus the paced share, the
+  rings' refit, the third pass of the globe's tone; not committed). Stop folder copy /tmp/v/t2src.
+- FINALS (mean absolute level against the approved pictures; hold 3465, 3720):
+  main 4.7807, 27.7989. The name 4.7784, 28.6192.
+  A dark ice 0.05, depth 0.05 (the working tree): 4.7784, 28.0507 (+0.2518 against main at 3720).
+  B no sheet (depth 0): 4.7768, 28.0406 (+0.2417).
+  C bright ice 1.0, depth 0.05: 4.9556, 27.7928 (-0.0061 at 3720, +0.1749 at the hold).
+  Sums: main 32.5796, A 32.8291, B 32.8174, C 32.7484.
+- DRAFTS (main 4.6919, 27.0159): ice 0.05 depth 0.05 4.6885, 27.0741; depth 0 4.6866, 27.0647; ice 0.3 depth
+  0.05 4.7256, 26.9873; ice 1.0 depth 0.05 4.8661, 26.8070; ice 0.3 depth 0.15 4.8075, 26.9085; ice 1.0 depth
+  0.15 5.1229, 26.5944; ice 1.0 depth 0.3 5.3360, 26.4810; ice 1.0 depth 0.3 at both ends 5.6603, 26.5114.
+  The draft tier shows the working tree only 0.058 over main at 3720 where the final shows 0.252: the draft
+  under reads the foot. Rule on finals only.
+- What it says: each level won at 3720 by a brighter or deeper sheet costs about one at the hold. No row is
+  no worse than main at both frames. With the hold no worse the best is no sheet (by 0.0016 and 0.0101 against
+  the dark sheet). The dark sheet at 0.05 changes 1.5 percent of the pixels of 3720 by over 2 levels (mean 4,
+  most 29) and 0.64 percent of the hold's (most 15): a soft shade on the globe's foot above the inner rim.
+- The hold's gap (holdgap.py, finals; core of the gap against the sky, lit side): hero 25.6, main 31.5,
+  working tree 31.4; in front of the lit globe hero 158.9, main 167.5, working tree 163.7; black sky hero
+  9.8, ours 8.2. The glow in the gap is about 6 over the hero on 0.5 percent of the frame: worth about 0.02 of
+  the hold's number, not followed.
+- G17 at 3720 on A and B: median 0.8427, p25 0.5613; worst tiles 7,4 10,5 11,5 8,4 9,5 (ratios 0.006 to 0.17):
+  the foot, where the approved has streaked rings in front of the globe and the film the smooth globe.
+- Seen at full size (foot3.png, b_d0_3720.png, rule_skim.png, rule_hold.png): in the approved close image the
+  rings cross in front of the globe about 6 degrees of latitude higher than a true plane does at this pose:
+  its dark ring band lies on my globe at 0 to 6 N and its bright rings on my gap and thin sheet. That is the
+  whole of the +1.02 of those two parts against main; everything else is 0.77 better than main.
+- CORRECTION owed to /root: in the mail I wrote "the five ring parts together 18.27, 18.20"; those sums are of
+  the five ring parts AND the plane beyond 2.27 (six parts). The five ring parts alone: 16.47, 16.47.
+- The paced share against the old law by frame (/tmp/v/cure/shares.py): the paced share moves LESS in the
+  frames round 3827 (0.014 a frame against 0.023; 0.128 against 0.195 over the next 8), yet the pattern
+  line reads higher there (0.45 against 0.34 to 0.38). So it is not the pace. The judge's own picture
+  (saturn-rise-changes.png row 3) puts it at the foot of the globe where the inner rim, which the lens's
+  climb slides over the globe, crosses the terminator; the reader counts only where both frames hold
+  detail over 1 level, and with more share left at 3835 (0.57 against 0.48) the twilight there is narrower
+  and holds more detail. Not proven: a reading, not a measure.
+- RUNNING 19:36: the judge's slice 7648-7664 on the working tree (/tmp/v/p2).
+- Asked of /root: A, B or C. Time said: proof ends about 21:30, name about 21:40 with a ruling by 19:50.
