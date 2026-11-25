@@ -4153,3 +4153,46 @@ Attachments: l-mercury-rise.jpg (four crops 1000.5, 1002.0, 1003.5, 1005.0: the 
 - SEEN `/tmp/m/fo-sheet.jpg` (615 and 717 whole, both lifted 4, 717 lower right at 1 to 1 lifted 6 beside the name's): the hold and 717 as before; the stars thin out over the margin with either card, no straight end.
 - Findings for the bloom step, measured at 615 on the name (the same on main): circle of the approved disc at 1920: centre (832.9, 562.0), radius 490.2 px. The film's lit limb stands 3 to 4.25 px OUTSIDE the approved's at position angles -15 to 90 degrees (half place of the edge: approved -2.0 to +1.0 px, film +1.25 to +4.25 px), so the first band outside the fitted circle reads 2 to 5 times too bright in the film (30 degrees: 960 against 200, scene luma times 1000). Likely cause by the code: `look.light.silhouette.amp` 0.012 (globe.ts `crest`, it only adds to the radius). At equal distance from its own limb the film's glow is within 4 to 20 percent of the approved's. The approved's glow is more even than its limb's light (glow over limb 0.03 to 0.04 at 15 to 45 degrees, 0.07 to 0.08 at 60 to 90). Not acted on yet.
 - Ghosts as optics, groundwork only, NOT in the tree (kept in `/tmp/m/gh/wip`: `optics.py`, `ghosts.ts`, `ghosts.json`, the edited `set.ts`): the approved's ghost plate measured spot by spot along the line from the Sun through the frame's centre; 9 ghosts, each a 6 blade opening on that line with the plate's light (drawn 542.23 of 549.44, the red streak's 7.21 left out). The places off the line that would be given up: streak 69.1 px, band 35.7, tail 28.9, dot 19.1, others under 10 px of the approved's 2816. Not built, not rendered, not judged.
+
+## 19:24 to 19:33 UTC: the name 33314fb8, tests, the NAMED mail
+
+- Commit e549a857fe86a4b373b163e9230458e27c6c893a (the fill out), merged with origin main 84812134 (kit/PROGRESS.md only) as 33314fb8026b85894a43a6facd6ab38235f71614; pushed to agent/mercury-place 19:24.
+- Smooth, path, on the merge: red, the same five lines (0.176 at 1028, falls 0.874 lowest 1022, rate 2 0.177, 0.089 at 1027 + 1/2, falls 0.851).
+- Gate on the merge: "PASS G11  every asset has a row or a recipe", "PASS G15  at most 2 sets per frame; finished stops: mercury/web 353 MB, mercury/full 1397 MB". tsc clean. vitest without the GL file: 80 files, 911 of 911, 248 s. tests/skylift-gl.test.ts not yet run on this merge.
+- Net of my folders against origin main: +3.589 MB (157358541 to 160947065 bytes).
+- Looks pushed 19:31 (agent/mercury-place-looks 352a143a): `fo-sheet.jpg`, `rise989-cr.jpg`, `optics-check.jpg`.
+- 19:32 NAMED mail sent for 33314fb8 (text `/tmp/m/named2-draft.txt`): what differs from 3da91ef1, smooth, 615 against main, the rate 2 reads above, the list, tests; MAIL 982 not met in full (rise 1009 to 1020 at rate 2 missing), the blocker of the push lifted.
+- 19:31 chain into `fo` on this tree: K 2040 and 1990 (to check the rise stills are the name's bytes), then odd K 2031 to 2043 and every K 2045 to 2056 for the rate 2 rows 1009 to 1020.
+
+## 19:33 to 19:46 UTC: my false line found and corrected, MAIL 1265, the red's extent on the name
+
+- 19:33 K 2040 and 1990 on this tree (`fo`) against the name's stills (`fin`): 0 px differ at both. Later K 1500: 0 px differ. The card is not in those views.
+- 19:35 FAULT OF MINE, found in my own notes (12:33 entry): in the NAMED mail I wrote that way C before the crater read 0.47 at 990. Wrong: 0.47 at 990 was state F on the Builder's machines; way C on my tree at 12:33 read 989 to 998 GREEN at rate 2 (0.08 to 0.19). So the red 989 to 992 is new since 12:33 and main has not got it. Correction mailed 19:36 (start "NAMED 33314fb8..., CORRECTION"). Lesson: a number from memory or from a summary is checked against the notes before it goes into a mail.
+- 19:36 the chain for 1009 to 1020 stopped again (done on this tree: K 2031, 2033, 2035, 2037); the extent of the new red comes first.
+
+MAIL 1265 from the Builder (/root), 19:40 UTC, word for word:
+"MAIL 1265 from the Builder (/root), 19:40 UTC. Your NAMED 33314fb8 of 19:24 and its correction of 19:36 are both in.
+1. The fill's removal is as d320 (2) rules and is taken. The name is not read on my machines yet: by your own rows its rise carries a pattern line (989 to 992, 0.51 at rate 2) that main has not, and a name with a line worse than main's row cannot go on (d311).
+2. CURE BY CAUSE, not by giving the crater up first. By your poses the light on the crater's ground turns from the hero's to the set's with the eye's height (share 0.80 to 0.43 from 988 to 998). A light that changes with the eye's height is a second light law. The ground of a place has one light at any height: the film's Sun at that place. So the crater's tone is made for the set's light at every height, and what the hold shows of it at 615 is that same light seen from far. If the hero's light and the set's differ at that place, the set's stands and the difference at 615 is named with its number (the crater at 615 is inside d302 (4)'s 0.01 so far).
+3. Separate first as you plan (the same frames with the crater's light held still). If the red goes with the turn held, cure as in 2. If it stays, it is the far Sun's merge with your four lines: then say which line.
+4. Then name again. I read all four parts, 615, 717, 870 and 1016 at final and units and gate on machines at once; 16 machines stand free.
+5. Your list D 4 and 5 (the ghosts as optics, the limb standing 3 to 4.25 px outside the approved's at 615, the hole of the hold's card at 719 to 724) stay open in that order after the red. The third stretch of MAIL 982 (1009 to 1020 at rate 2) comes with the next name.
+Send back: the separation's rows, then the name."
+
+- The red's extent on the name, whole frames (`pic1.py` step 2; K 1962 to 1976 of `fo`, the rest of `fin`, the same bytes): rise 981 to 992: 0.05, 0.04, 0.04, 0.05, 0.11, 0.20, 0.28, 0.38, 0.46, 0.49, 0.49, 0.47. Red 989 to 992, rising from 985; pops 0.96 to 1.08 with the whole window (the 1.21 to 1.26 of the rate 2 list stood at the list's head: the window was one sided).
+- Dive 743 to 750 on whole frames (K 1486 to 1516 even; 1502 to 1516 of `fo`): 0.32, 0.37, 0.33, 0.25, 0.17, 0.14, 0.15, 0.16. Green, most 0.37 at 744 at [1168, 914].
+- 19:45 the separation, trial e1: inside the hero's patch the grade is held at 1 at every height (`globe.ts`: `grade = core * max(uToneSet.x, gold)`), so the crater's ground is the level times tone.png, the set's light, from the hold to the ground; outside the patch nothing changes. Stills into `out/work/mercury/place/e1`.
+
+## 19:46 to 19:56 UTC: the separation's rows, the answer, MAIL 1276
+
+- Trial e1 (the crater's light held still: `grade = core * max(uToneSet.x, gold)`; stills `out/work/mercury/place/e1`), whole frames 989 to 992: 0.13, 0.14, 0.15, 0.14 (the name 0.46, 0.49, 0.49, 0.47), largest at the frame's edge. So the red is the crater's light turn, not the far Sun's merge.
+- e1 at 615: d296 5.8825 (main 5.8694, the name 5.8715), disc box 14.878 (main 13.122). SEEN `/tmp/m/disc4-e1.jpg` (approved, main, the name, e1 at 3 times): in e1 the patch is a pale grey round spot with a black pit in the hold's golden ground; the hero's ring is gone. A disc in the judged frame: not a cure. The line is taken out of globe.ts again.
+- Read in onebody.py: R is the map's part over `overDeg` 0.02 degrees against the place's, so inside the patch the level is the map's own ground (the hero's ring, about 1.25 degrees radius) and tone.png takes it back to the place's ground (the first pit, 0.34 degrees radius) near the ground. Two grounds change places by the eye's height: that is the exchange.
+- 19:54 the separation's rows mailed (start "ANSWER to MAIL 1265 point 3"), with the cure I proposed: the ring stays in the ground at every height.
+
+MAIL 1276 from the Builder (/root), 19:55 UTC, word for word:
+"MAIL 1276 from the Builder (/root), 19:55 UTC. Mercury, answer to your separation of 19:54.
+1. Taken: the red at 989 to 992 is the crater's light turn (0.46 to 0.49 on the name, 0.13 to 0.15 with the turn held), not the far Sun's merge and not your four lines. And you were right not to name the trial by the letter: 615 at 5.8825 is past d302 (4), and a pale round spot where the hero has its ring is a disc in a judged frame.
+2. YOUR CURE IS THE RIGHT READING OF ONE BODY: the hero's ring of 1.25 degrees is the crater, at every height. So it stays in the place's ground, and the set carries it too wherever its rim or floor falls in view from the set's heights: a crater that is there from far and gone from near is two bodies again, only later. Say what 870 pays; the terms are 870 and 615 no worse than main's by d296 (615 with d302 (4)'s 0.01) and G17 no lower at both.
+3. With the name: the handover rows 745 to 760 and 960 to 975 and the rows 981 to 998 on whole frames beside main's, and 615, 717, 870, 1016 as you have them. I read all four parts, the four finals and units and gate on machines at once. Main's own rows for your dive part 2 of 2 and rise part 1 of 2 are being read now (mb6-01, mb6-02), so every part has main's row beside it.
+Send back: the name with those numbers."
