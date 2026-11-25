@@ -7901,3 +7901,256 @@ Pictures attached: n-dive-9388.jpg, n-dive-9412.jpg (frames, the later one carri
 MAIL 1244 from the Builder (/root), 17:50 UTC. Copy to harness_builder. MAIN'S OWN ROW of Neptune's rise, part 2 of 2, read on main 53025569 itself (job mb1-03): "the pattern of the picture changes in place by 1.48 from frame 4993 to 8 film frames later, band 8 px, limit 0.45 (31 frames over it, first 4987 + 1/2)". That is the same row the travel's first cure read (1.48 from 4993, 30 over), so the travel's change did not move it. Your name 66c70ae7 reads green on rise parts 3 and 4 and red by 0.01 on part 2 in its own four part split, so on the rise your name is far better than main.
 
 The harness's reading of your dive (17:41, sent to you both) is taken as the lead: at 4694 the same ground loses 16 levels in eight film frames as the limb's bright rim passes over it, and the band of 40 px under the limb reads 1.46 to 1.60 by the camera's map on all four rows. The cure asked: the rim's light is tied to the ground it lies on, or changes over that ground no faster than the ground's own light does, at every height of the dive alike (no window, no clock). The row at 4706 may stay over in the standing reader by its own chain; it is then shown with its panels before it counts. Dive parts 2 to 4 of main's own rows are still out.
+
+## Lab log 17:46 to 17:52 UTC: the sheet lit from the deck (G1 to G3), the commits, the merge
+
+- G trials at 4860, preview, on Y2 (three parts whole | sky | band | ground; mid right detail; G17 at the preview):
+  G1 fan.veil.below [0.7, 2]: 23.151 | 3.421 | 2.666 | 17.064; mid right 137.0: 0.053 0.059 0.071.
+  G2 below [1, 2]: 23.471 | 3.421 | 2.666 | 17.384; 137.7: 0.056 0.062 0.072.
+  G3 below [1, 3] and deck.relief 0.12: 23.816 | 3.408 | 2.677 | 17.731; 136.6: 0.060 0.065 0.075; G17 median 0.705, p25
+  0.490 (Y2: 0.612, 0.210). To the eye the plain round the eye now holds fine swirls that wind round it, lit from the right.
+  The ground part rises by 1.3 (the detail does not lie pixel on pixel on the approved's) and stays under main's 19.622.
+  G3 is taken.
+- 17:50:08 looks pushed (71f01603, 8 looks): G3 beside the approved, the eye at 2 times, the dive with the field on the body.
+- Commits (each its own cause): b39d72322 the held field on the body; 9b41bce06 the sheet round the storm and its arms;
+  7e340e51d the sheet lit from the deck, relief 0.12; 25b5cef5d notes. 17:51 merged origin main faf21943c (only
+  kit/PROGRESS.md differed): 5baaaad36. The chain runs on the merge.
+- The sky's level (MAIL 1214 point 3), read in the code and not changed: the film's stars are drawn by the engine with
+  light.sky times the stop's skyGain (src/director/film.ts line 1066; the hook skyGain of the plan, src/director/moves.ts
+  line 957). Neptune's skyGain reads its lowSky knots through the engine's one air curve airAt (src/core/air.ts) by the
+  eye's height: the hold's own level at and above 2 radii, 0.38 of the hold's exposure scale at and under 0.03 radii
+  (plan.ts lines 36 to 48). Saturn and Venus override the same hook with their own numbers (saturn/plan.ts line 384,
+  venus/plan.ts line 291). No stop's air is read by the engine itself yet (tests/air.test.ts), so it is one hook and
+  one curve, not yet one law in the engine; the knots move to params.air when the Builder says (MAIL 1182). 0.38 and not
+  lower: with 0.27 the sky's tiles of G17 at 4860 held 0.35 to 1.24 of the approved's fine energy (0.50 to 1.70 at
+  0.38), and trial X6 (0.27) read the sky part 3.583 against 3.418.
+
+## Lab log 17:52 to 18:01 UTC: the judged frames on the merge 5baaaad36 (N9), the hold's cost, the limb by number
+
+- Chain /tmp/j.sh N9 at 1920 by 1080, draft, 17:51:55 to 17:57:00:
+  4605 d163a2eecd0469b8, 35.8 s; 4707 1a19311a23239651, 23.1 s; 4860 717b5adc97194606, 89.6 s; 5006 d1ee12dd19a33702,
+  23.5 s; texels at 4860: G13 soft 2.643 percent of 1570666, mean 1.65, OVER (N8: 2.621).
+- /tmp/meas.py: 4605 MAD 7.623, G17 median 0.674, p25 0.436, 65 tiles. 4860 MAD 23.843, G17 median 0.570, p25 0.403,
+  75 tiles (N8: 28.439, 0.544, 0.194).
+- The three parts at 1920 (/tmp/pg1920.py; shares of the frame: sky 0.228, band 0.045, ground 0.726):
+  main whole 22.986 | sky 1.619 | band 1.607 | ground 19.759
+  N8   whole 28.439 | sky 3.482 | band 2.568 | ground 22.389
+  N9   whole 23.843 | sky 3.407 | band 2.656 | ground 17.780
+  The ground part is under main's by 1.979.
+- THE HOLD MOVED, and I had written that it would not. 4605 against N8: 70098 pixels differ, all at x 682 to 1384, y 424
+  to 1065 (inside the disc); over 2 levels only at x 881 to 1184, y 591 to 874, 17572 pixels; over 8 levels 1307 pixels
+  round (1092, 688), the largest 22. It is the place on the globe: the eye now shows one arm winding into it and the
+  plain round it is finer (viewed at 3 times, /tmp/hold-zoom.jpg). The match costs 0.002 (7.621 to 7.623), G17 the same
+  to three places. Nothing outside the disc differs. Under d302 that is within 0.01. Which commit moves it is not yet
+  shown by a control: the field's line gives w = 0 at the hold by the code, the sheet and the relief belong to the deep
+  set that the globe shows at the place. Control owed: 4605 on b39d72322's files alone.
+- 5006 against N8: 37547 pixels, x 683 to 1273, y 39 to 653 (the place on the disc again), largest 26. 4707: the whole
+  frame, mean 2.07, largest 53 (the field on the body and the place).
+- 4707, 4860, 5006 viewed at full size. 4860: the eye is a dark oval with pale rings and faint arms; the plain holds
+  fine swirls lit from the right; the streamer is still whiter and blockier than the approved's (c); the brown band of
+  the film's Milky Way stands at the upper middle left.
+- The limb at 4860 by number (row where the smoothed blue passes 100, at x 240, 480, 720, 960, 1200, 1440, 1680):
+  approved 160, 180, 205, 236, 275, 322, 378; main 148, 170, 197, 230, 269, 316, 368 (6 to 12 px higher);
+  N9 134, 157, 183, 221, 262, 307, 358 (13 to 26 px higher). The band's mean colour above the approved's limb:
+  approved 19, 44, 69; main 32, 61, 97; N9 75, 107, 142. Under it: approved 65, 112, 153; main 98, 135, 171; N9 118,
+  153, 188. So my limb's glow reaches about 20 px higher than the approved's and is paler: (d) of MAIL 1214, open.
+  The sky's mean: approved 13, 21, 30; main 16, 24, 36; N9 16, 21, 27. By thirds: left approved 8, 17, 27, N9 22, 34,
+  49 (the limb's glow in the corner); middle approved 20, 28, 39, N9 21, 21, 20 (the band's hue: no blue in it);
+  right approved 12, 19, 27, N9 9, 14, 18. Points more than 40 over their surround in the sky: approved 1395, main
+  1224, N9 1411.
+- Net of my folders (git ls-tree -r -l): 63.596 MB in 196 files against origin main's 80.827 in 203.
+- 17:59:17 looks pushed (c4daf07c, 8 looks): the pair at full size, the hold's place at 3 times, 4707.
+- 17:58:33 the pairs started (/tmp/proofs3.sh N9: rise 4960 to 4978, dive 4690 to 4714, dive 4736 to 4760, rise 4992 to
+  5000; poses out/work/nep/weave/poses-n9.json).
+
+## Mail from /root/sky_builder, read 18:19 UTC (word for word; attachments sky-hold-full.webp, sky-hold-web.webp, CARD.md, neptune-4605-pits.png, neptune-4605-cloud.png, calm.py under /home/user/.perplexity/attachments/0d21ff4034824837a62a1c45ef9fad17/)
+
+From sky_builder, by the Builder's MAIL 1212 point 3 (d312): the hold sky plate of Neptune with the star pits filled, for you to lay in with your next name (aim: the cut after 20:00 UTC). No answer needed to me.
+
+THE FILES (attached, and on agent/flightsky 0236ea9f4fe51812630af57a05b4ec1afbd6d580 under assets-src/flightsky/plates/neptune/):
+- sky-hold-full.webp, 4928 x 2772 lossless, 6891588 bytes (main 6962270, minus 70682), sha256 d90ec9468f59ce254a42ac9a735c99fb916bf96303466d1fa6ca73d13fdb3464. Goes to public/assets/neptune/full/sky-hold.webp.
+- sky-hold-web.webp, 2464 x 1386, 2116936 bytes (main 2190470, minus 73534), sha256 52084a2471097241ac261fc753a6378731ab6d38862ae009846ac7382e706ce8. Goes to public/assets/neptune/web/sky-hold.webp. It is the Lanczos half of the full card, as yours is.
+- CARD.md, neptune-4605-pits.png, neptune-4605-cloud.png.
+Made from main's plate (f348295e, sha256 7018ee9dbd7e7b39e43a059099f80cc0dea0e06f3458cec3957fdcef6fcaec58). If your plate has changed since, run the script on yours instead: `python3 assets-src/flightsky/mercury-hold/calm.py FULL_IN FULL_OUT WEB_OUT` (copy it into your own folder for your recipe).
+
+WHAT IT DOES: star pixels keep their bytes; a pixel within 7 texels of a star pixel that lies under the sky's floor by more than 1 noise is raised to the floor; nothing is lowered; no star moves or widens. 501399 plate pixels change (3.7 percent); 495 of them by more than 40 codes (largest 75), narrow dark gaps between bright specks in the densest star cloud.
+
+THE CARD, frame 4605 (judged hold frame), final tier, no grain, main against the filled plate:
+- Pits (stars with a ring pixel under 0.4 of the floor): plate 49 to 3 percent, frame 16 to 7 percent.
+- G17: median 1.027 to 1.000, gate green both ways. Tiles under 0.8 on main, eight: (7,7) 0.577, (3,2) 0.591, (6,6) 0.662, (7,6) 0.710, (8,7) 0.778, (1,2) 0.778, (10,5) 0.791, (9,7) 0.797. With the fill the same eight: (7,7) 0.577, (3,2) 0.587, (6,6) 0.662, (7,6) 0.710, (10,5) 0.758, (1,2) 0.776, (8,7) 0.778, (9,7) 0.797. None crosses. Per tile least 0.951 (the Builder's rule of MAIL 1215: no kept tile falls by more than 0.1 of its own ratio: held).
+- Outside the sky (1080415 pixels, by a pair of marked plates): 606 pixels differ by one code, none by more. In the sky 19.3 percent of the pixels differ; 84 pixels by more than 16 codes, 4 by more than 32, the largest 41 at film 714, 77 (a single deep gap beside bright specks; the cloud picture shows it).
+- Stars: 5485 peaks, 5448 on the same pixel, 8 on the pixel beside, 29 at the counting threshold; peak change at most 2 of 255.
+
+NOT MEASURED: grain on, other frames of the hold, the web tier in the film, frames outside the hold. The plate is the hold's alone; your terrain sky and the low sky patch of MAIL 1099 are not touched by it.
+
+- What I do with it: nothing before the Builder says so himself. This branch has no sky plate at the hold or at the terrain
+  (git ls-tree HEAD -- public/assets/neptune names no sky file; main has full and web sky-hold.webp and sky-terrain.webp), by
+  MAIL 1126 ("NO PLATE AT THE HOLD, confirmed") and MAIL 1207 ("No plate comes back (the film's one sky, as ruled)"). The
+  mail names a MAIL 1212 that did not come to me. It is not from the Builder, it asks for an asset to come in against two of
+  his rulings to me, and its aim is the cut after 20:00, not the name of 19:15. I ask him in the NAMED mail and lay in nothing.
+
+## Lab log 18:01 to 18:20 UTC: the pairs on 5baaaad36, the rolls' shadow in the rise found and taken back
+
+- /tmp/proofs3.sh N9 (preview, capture rate 2, my copy of the reader, 16 steps, limit 0.45), 17:58:33:
+  rise 4960 to 4968: 0.54, largest at 68, 772 of 1920 (N8: 0.48). rise 4962 to 4970: 0.52 at 176, 764 (0.56).
+  rise 4968 to 4976: 0.44 at 1792, 684 (0.55). rise 4970 to 4978: 0.42 at 1688, 668 (no number of mine on N8; the
+  Builder's reader 0.46 from 4970 + 1/2). T1 18:08:53.
+  dive 4690 to 4698: 0.14. 4692: 0.15. 4694: 0.11. 4696: 0.11. 4698: 0.12 (the largest at 576 to 608, 144 to 216).
+  dive 4702 to 4710: 0.42 at 356, 176, flows agree on 0.58 of the body. 4704: 0.16 at 1360, 264 (N8: 0.29).
+  dive 4706 to 4714: 0.42 at 1492, 248, flows agree on 0.51 of the body. T2 18:15:16.
+  So the row at 4694 is gone by the reader's own chain at half frames (the Builder: 0.51; my K0 at step 2: 0.49). The
+  place of 4706 (1492, 248; the harness: 1496, 248) reads 0.42 at 16 steps where my step of 2 read 0.05: that is the
+  chain, as the harness wrote, and it stands just under the limit by my copy. 4702 at 356, 176: not looked at yet.
+- The rise at 4960 rose (0.48 to 0.54) at the lower left. Looked at the frames 4960 to 4970 there (x 0 to 320, y 290 to
+  480 of 960 by 540, at 2.4 times): on N9 a sheaf of thin dark lines comes in between 4966 and 4970; on N8 one faint
+  line. 18:16 I stopped the batch (the low dive and the rise's end had not begun) and ran a control of two frames
+  (/tmp/rctl.sh, 4966 and 4970, preview): pixels more than 6 levels under their surround (9 px box) in that crop at
+  4970: N8 1287 (deepest 18.8); N9 3411 (46.2); R1c the rolls at 0.05, the light from below on: 1316 (19.1); R2c the
+  rolls at 0.12, the light from below off: 3413 (46.2). Viewed (/tmp/rctl.jpg): the same. The rolls' own shadow draws
+  them; the sheet's light from below has no part in it.
+- 18:19 commit 27624e6f4: deck.relief back to 0.05 (its own cause; the text in deep.json says why).
+  What 0.12 gave at 4860 at the preview was small: E1 on Y2 16.587 against 16.406 on the ground, the detail share
+  0.060 0.065 0.075 against 0.056 0.062 0.072 without it (G2, with below [1, 2]).
+- 18:19:40 the chain on 27624e6f4 started (/tmp/proofs4.sh N10: 4605, 4707, 4860, 5006 at 1920; rise 4960 to 4978;
+  dive 4744 to 4760). Not run again on this tree for want of time: the texel view (G13 soft), the dive's start (the rolls
+  are not what the globe shows there; said as measured on 5baaaad36), the pair 4736 to 4744, the rise's end 4992 to 5000.
+
+## MAIL 1251 from the Builder (/root), 18:24 UTC (word for word)
+
+MAIL 1251 from the Builder (/root), 18:24 UTC, to the builders of the Sun, Venus, Earth, Mars and Neptune (Uranus has the same in MAIL 1250). sky_builder mailed you at 18:18 your stop's hold sky plate with the star pits filled and named my MAIL 1212. That mail went to sky_builder alone, so here is the ruling for you.
+1. The order stands. Stars with a dark ring are a fault of the whole film's sky, and the fill is its cure (measured first on Mercury's plate).
+2. It never rides inside a place's name or inside any other step. It is its own commit, after your current name, and never onto a name that is being read on machines. Whatever earlier mail holds your hold byte equal binds your place's work; this step is the one ordered change of the hold's sky.
+3. Before you name it: your own G17 and the d296 match at your judged hold frame at the final tier, beside main's own numbers from the same machine. If either is worse than main's, it stays out and you send me the numbers. Outside the sky no pixel may move by more than one code; say the count.
+4. In the report: one crop of the sky at full size, main beside the plate, where the fill does the most.
+5. It does not hold up your running work. If your name for the cut of 20:00 is not out yet, that name comes first.
+Mars: this answers point 3 of your 18:24. Its own commit after the name, with the pair at 2325 at the final tier. Your new time of 19:35 and the reading of the north band are accepted; put the red of the heights (the 0.3 level's north band is not its parent's ground) into the report as its own line so that it gets an owner.
+
+- Read against my tree: this branch has no sky plate (git ls-tree -r HEAD -- public/assets/neptune: 0 files named sky; origin
+  main: 4), by MAIL 1126 and MAIL 1207; the hold's sky here is the film's one sky. So the fill has no plate to replace on
+  this branch. The name of 19:15 comes first (point 5). I put the question into the NAMED mail in two lines and lay in
+  nothing until he answers.
+
+## Lab log 18:20 to 18:26 UTC: the judged frames on 27624e6f4 (N10); a claim of mine corrected; teal blots seen
+
+- Chain at 1920 by 1080, draft, 18:19:44 to 18:22:54: 4605 76b23919e0801bca, 36.6 s; 4707 e0e2da17eb22c160, 23.9 s; 4860
+  bc656c4928eee5f3, 89.9 s; 5006 1d0171f8588a429c, 23.1 s.
+- 4605: MAD 7.621, G17 median 0.674, p25 0.436, 65 tiles: the same three numbers as the eighth name. Against N8's
+  frame 69134 pixels differ, all at x 682 to 1384, y 424 to 1065, 7565 by more than 2 levels, 1171 by more than 8, the
+  largest 18: the place on the globe (the eye's arm and the sheet round it).
+- 4860: whole 23.616 | sky 3.420 | band 2.646 | ground 17.550 (main 22.986 | 1.619 | 1.607 | 19.759). G17 median 0.426,
+  p25 0.230, 75 tiles. THE G17 FELL with the rolls: 0.570 and 0.403 at 0.12 (N9), 0.544 and 0.194 on the eighth name. So
+  the rolls at 0.12 carried the fine energy my reader counts, and their shadow drew the hairlines into the rise: one
+  lever, two effects. I keep 0.05 for this name (a line that comes in during the rise is what Brandon's sentence is
+  about; G17 at 4860 was red by my reader on the eighth name too) and name the fall as a red. The cure is the shadow's
+  own (deep.ts, the deck's own shadow: it must not be cut finer than the pixel that shows it at the low Sun of the
+  lower left), then the rolls can stand higher again. Not begun.
+- A CLAIM OF MINE CORRECTED: at 18:20 I wrote that the rolls are not what the globe shows at the dive's start. False.
+  4707 on N10 against N9: 262377 pixels differ, mean 0.14 levels, 1347 by more than 8, the largest 52, all at x 452 to
+  1432, y 294 to 1079 (the place on the disc). The three places my pairs read largest at the dive's start (580 to 650,
+  140 to 216; 356, 176; 1492, 248) lie outside that box at 4707, but I have not shown that for 4690 to 4714. So the
+  dive's start is proven on 5baaaad36 and not on the tree after the rolls went back, unless I run it again.
+- TEAL BLOTS at 4860, seen on N10 at full size and then on N9: two faint green blue patches on the plain, round (1168,
+  752) and (1564, 849) of 1920. By a teal index (green over the mean of red and blue, 5 px box, at 960 by 540, x 450 to
+  900, y 300 to 480; largest, pixels over 6): main 3.9, 0; N8 3.0, 0; Y2 (the sheet round the storm, no light from
+  below) 7.9, 28; G1 (below 0.7, 2) 12.1, 70; G2 (1, 2) 13.3, 100; G3 (1, 3) 16.2, 129; N9 15.9, 127; N10 15.5, 211.
+  So they come with the sheet and grow with its light from below. Lead, not a control: where the sheet is brightest its
+  blue bends in the film's tone curve before its green does. RED, named; not cured in this name.
+- 18:24:27 looks pushed (10b5b09d, 8 looks): N10 beside the approved at full size, the rolls' control, the dive's start.
+
+## Lab log 18:26 to 18:47 UTC: the pairs on 27624e6f4 (N10), the hold's control, the tests begun
+
+- /tmp/proofs4.sh N10 (preview, capture rate 2, my copy of the reader, 16 steps, limit 0.45):
+  rise 4960 to 4968: 0.50, largest at 44, 764 of 1920 (N9 0.54, N8 0.48).
+  rise 4962 to 4970: 0.59 at 144, 756 (N9 0.52, N8 0.56).
+  rise 4968 to 4976: 0.43 at 128, 664 (N9 0.44, N8 0.55).
+  rise 4970 to 4978: 0.37 at 1688, 668 (N9 0.42). T3 18:33:25.
+  dive 4744 to 4752: 0.31 at 1516, 624 (N8 0.40). 4750: 0.29 at 1736, 436 (0.23). 4751: 0.28 at 1760, 444 (0.22).
+  4752: 0.27 at 856, 860 (0.26). DONE 18:44:42.
+- So taking the rolls back did NOT win the rise's first pairs: 0.50 and 0.59 against 0.54 and 0.52 with the rolls at
+  0.12 and 0.48 and 0.56 on the eighth name. The hairlines are gone from the frames (seen), the number stays. The
+  change maps of the four rise pairs (looked at, /tmp/n10-chains-rise.jpg) show a web of change over the whole dark
+  ground under the streamer with its brightest knots at the lower left, the mean 0.11 to 0.14 against 0.06 in the
+  dive: not one thing that comes in but the deck's fine structure changing in place as the eye rises. Frames 4960 to
+  4970 at the lower left at 3 times (/tmp/n10q-ll.jpg): the navy ground turns mid blue, short pale streaks come in by
+  4968. No control yet. Lead for the next step: the deck's octaves go through the filter by the pixel's foot, and the
+  foot grows fast in the rise.
+- The second streamer as one kind (flat 1): 4968 reads 0.43 for 0.55 and its place is no longer the largest; 4970
+  0.37, largest at 1688, 668, the far end of that bank.
+- The low dive stays under the limit; the pair from 4744 is lower than on the eighth name, the three from 4750 to
+  4752 read 0.01 to 0.06 higher. The Builder's row at 4753 (0.52) is not seen by my copy on either tree.
+- All eight chain sheets of N10 and the three of N9's dive start looked at.
+- THE HOLD'S CONTROL (/tmp/holdctl.sh, 18:44:50 to 18:45:48): 4605 at 1920 on the files of b39d72322 alone (the field on
+  the body, nothing else): ceabf0253c5d1a57, the bytes of the eighth name. So the limb's cure costs the hold nothing,
+  and what moves the hold's place on the disc is the sheet round the storm and its light (9b41bce06, 7e340e51d). The
+  tree was restored after it (git status: NOTES.md only).
+- The texture box on N10 (x 620 to 940, y 250 to 370 of 960 by 540, the full frame reduced as main's is): level
+  138.2, detail 0.055, 0.061, 0.072 (N9 137.1: 0.059, 0.065, 0.074; main 134.6: 0.059, 0.062, 0.075; N8 77.7: 0.104,
+  0.103, 0.101; approved 133.0: 0.089, 0.097, 0.109).
+- 18:46:36 looks pushed (7d28da26, 8 looks): the rise's and the low dive's chain sheets, 4860 beside the approved.
+- 18:45:55 tests begun, alone: tsc, my own vitest config, G11, then the whole run (npx vitest run --reporter=tap,
+  /tmp/vitest-n10.log).
+
+## Lab log 18:47 to 18:59 UTC: the tests on 27624e6f4, main since the merge
+
+- The whole run, alone, 18:45:59 to 18:58:09 (npx vitest run --reporter=tap, /tmp/vitest-n10.log): 81 ok, 0 not ok, exit 0.
+  My own test (assets-src/neptune/count.test.ts) ok. G11 PASS. tsc exit 0, no line.
+- 18:55 origin main fetched: 66912fc1b (Status 327 and decision d319); against my tree it differs in kit/PROGRESS.md only.
+  Not merged again: a merge now would have to carry its own test run before the name of 19:15. The name stands on the
+  merge of faf21943c (5baaaad36).
+- Net of my folders with this commit (git ls-tree -r -l): 63.628 MB against origin main's 80.827.
+
+## 25 Nov, 18:59 UTC: the ninth NAMED mail to the Builder (word for word; attached n10-three.jpg, n9s-chains.jpg, rctl.jpg, hold-zoom10.jpg, n10-chains-rise.jpg)
+
+> NAMED 27624e6f44de796d7761c24bd391044558a4cfe4 (agent/neptune-place, pushed; the tip above it is notebook only). Ninth named commit, for MAIL 1207 (d312), 1214, 1221, 1225 and 1244. It stands on the merge of main faf21943c; main is at 66912fc1b now and differs from that merge in kit/PROGRESS.md only. All numbers are my draft proxies and are read as STATED. I did not run your checks.
+>
+> WHAT IS IN IT since 66c70ae7, one commit per cause:
+> 1. b39d72322: the limb's held field lies on the body from the dive's first moment (rows 4694 and 4706).
+> 2. 9b41bce06: the sheet of ice haze stands round the storm and is wound into its arms (MAIL 1214 a); the second streamer is one kind at every distance (row 4970 + 1/2).
+> 3. 7e340e51d: the sheet is lit from the deck under it (MAIL 1214 b).
+> 4. 27624e6f4: the deck's rolls back at 0.05. Commit 3 had raised them to 0.12 and their own shadow drew thin dark lines into the rise (red 1).
+>
+> 4860 UNDER d312 (bc656c4928eee5f3, 89.9 s the draft frame at 1920; attached n10-three.jpg: the approved, main, this name, each at full size):
+> - The three parts at full size (mean absolute level against the approved fitted as G17 fits it; split at the approved's own limb, band 24 px each side; shares of the frame 0.228, 0.045, 0.726):
+>   main: whole 22.986, sky 1.619, band 1.607, ground 19.759.
+>   66c70ae7: whole 28.439, sky 3.482, band 2.568, ground 22.389.
+>   this name: whole 23.616, sky 3.420, band 2.646, ground 17.550. The ground part is under main's by 2.209.
+> - G17 at 4860 by my draft reader: median 0.426, p25 0.230, 75 tiles (66c70ae7: 0.544, 0.194; bar 0.8). RED, and its median is lower than the last name's: red 1.
+> - (a) The eye: the sheet of ice haze now has its hole over the storm and is wound into two arms round it, so the dark oval stands in pale rings with soft arms. They read more as rings than as the approved's spiral.
+> - (b) Where the approved's fine texture goes in my picture: it is in the deck, and it is lost under two layers of smooth added light, the sheet of ice haze and the low haze. Not a level of the map, not the light. Detail share in the mid right box (x 620 to 940, y 250 to 370 of 960 by 540; bands 1 to 5, 3 to 10, 6 to 20 px): approved 0.089, 0.097, 0.109 at level 133; main 0.059, 0.062, 0.075; the sheet off 0.117, 0.117, 0.119 at level 75 (ground part 23.087 at the preview); sheet and low haze off 0.179, 0.183, 0.209 at level 57 (27.912). Kept so: the sheet's light is multiplied by the deck's own detail under it (commit 3). This name: 0.055, 0.061, 0.072 at level 138, so main's level and about 0.6 of the approved's. Not met.
+> - (c) the streamer's body and (d) the limb's haze: not touched in this name. RED, in the list below.
+>
+> THE OWNED LIST at 4860, sky and band, for your eye:
+> Sky (3.420; main's 1.619 is the plate cut from the approved):
+> 1. The Milky Way is the film's own. It stands at x 536 to 1519, y 7 to 229 and is brown (mean 62, 50, 41); the approved has a cool faint band, brightest round (1076, 103) at 29, 38, 49. The middle third of the sky reads 21, 21, 20 against 20, 28, 39: the level is met, the blue is not. Place and hue are the engine's sky, not my folder.
+> 2. The left third is brighter (22, 34, 49 against 8, 17, 27): my limb's glow reaches into the corner.
+> 3. The right third is darker (9, 14, 18 against 12, 19, 27).
+> 4. Points more than 40 levels over their surround: 1409 against 1395 (main 1224).
+> Band (2.646; main 1.607):
+> 5. My limb stands 13 to 26 px higher than the approved's (row where the smoothed blue passes 100, at x 240 to 1680 in steps of 240: approved 160, 180, 205, 236, 275, 322, 378; mine 134, 157, 183, 221, 262, 307, 358; main 6 to 12 higher).
+> 6. Its glow is wider and paler, which is (d): above the approved's limb inside the band 75, 107, 142 against 19, 44, 69 (main 32, 61, 97); under it 118, 153, 188 against 65, 112, 153 (main 98, 135, 171).
+>
+> WHICH LAW DIMS THE SKY: the engine draws the stars with light.sky times the stop's skyGain (src/director/film.ts line 1066; the hook in src/director/moves.ts line 957). Neptune's skyGain reads two knots (lowSky in plan.ts) through the engine's one air curve airAt (src/core/air.ts) by the eye's height: the hold's own level at and above 2 radii, 0.38 of it at and under 0.03. Saturn and Venus use the same hook with numbers of their own (saturn/plan.ts line 384, venus/plan.ts line 291). So I can say: the same hook and the same curve. I cannot say: one law that every stop reads, and not: by the measured light of the ground. It goes by the eye's height, and nothing in the engine reads a shot's air yet (tests/air.test.ts). The knots go to params.air when you say (MAIL 1182).
+>
+> THE ROWS, what changes in place at each:
+> - 4694 (0.51 on your machine): CURED AT ITS CAUSE by my copy. What changed in place: the limb's held field, the smooth light the globe keeps toward its edge, was aimed by the eye's view of the moment, so over 8 frames it slid across the ground under it. Controls on my tree of 17:20 (66c70ae7 with the eye's trial in it), pair 4694 to 4702, my copy at steps of 2 frames: as it stood 0.49; the held field alone off 0.05; the edge line off 0.50; twilight and cut off 0.22 (that one rendered while a second batch overlapped for 40 s, my error); the sheet off no change. Now the field is laid by the eye of the dive's first moment and carried with the body's turn: at every height of the dive alike, no window, no clock. By the reader's own chain at half frames (16 steps): 4690 0.14, 4692 0.15, 4694 0.11, 4696 0.11, 4698 0.12. Frames 4680 to 4720 looked at: no step at the dive's start. Not tied: the bright edge line and the twilight, which are the edge of the disc as seen; the control gives the edge line no part in the row.
+> - 4706 (0.64): the same field. The pair 4704 to 4712 reads 0.16 (66c70ae7: 0.29, same reader, same steps). From 4706 my copy reads 0.42 at (1492, 248) and from 4702 0.42 at (356, 176), both where the limb leaves the frame and the flows agree on 0.51 and 0.58 of the body: the chain losing the ground, as the harness wrote. It may stay over on your machine; my panels are attached (n9s-chains.jpg).
+>   These dive start pairs were read on 5baaaad36, one commit before the rolls went back. The rolls move the place on the disc (4707: mean 0.14 levels, all at x 452 to 1432, y 294 to 1079); the places the pairs read largest lie outside that box. Not run again on the name.
+> - 4753 (0.52): NOT CURED, no cause. My copy reads 0.29 from 4750, 0.28 from 4751, 0.27 from 4752 and 0.31 from 4744 on this name (66c70ae7: 0.23, 0.22, 0.26 and 0.40), so it does not see what your reader sees. I need the panels of nq5-03 to find the place.
+> - 4970 + 1/2 (0.46): what changed in place: the second streamer changed its kind with the distance, a marched body of heaps near and a flat thin form far, so the bank at (1512, 588) went from heaps to a line within 8 frames. Now it is the flat form at every distance (deep.json, streamers, flat 1). My copy: 4968 to 4976 0.43 (66c70ae7: 0.55), 4970 to 4978 0.37.
+> - NOT CURED, the rise before it: 4960 to 4968 0.50 and 4962 to 4970 0.59 at the lower left (44 to 144, 756 to 764 of 1920); 0.48 and 0.56 on the last name. Your rise part 1 is still out and may read it. What I see there between 4964 and 4970: the navy ground turns mid blue and short pale streaks of the deck come in. No control yet.
+>
+> THE HOLD: 4605 76b23919e0801bca, 36.6 s. Match 7.621 and G17 0.674, p25 0.436: the same three numbers as 66c70ae7. 69134 pixels differ from the last name's, all inside the disc at x 682 to 1384, y 424 to 1065, 1171 of them by more than 8 levels, the largest 18: the place on the globe, where the eye now shows its arm (attached hold-zoom10.jpg). Nothing outside the disc differs. The limb's cure costs the hold nothing: 4605 on the files of b39d72322 alone has the last name's bytes (ceabf0253c5d1a57). What moves the place on the disc is the sheet round the storm and its light. Under d302: the match costs 0.000 of the 0.01, G17 has not fallen, nothing outside the disc changes, and I see no feature of the approved lost inside it.
+>
+> REDS, worst first:
+> 1. G17 at 4860: 0.426 against the bar 0.8, and under the last name's 0.544. With the rolls at 0.12 it read 0.570 (p25 0.403, ground 17.780), but in the rise their own shadow drew a sheaf of thin dark lines into the lower left between 4966 and 4970. Control at 4970 (attached rctl.jpg): pixels more than 6 levels under their surround: 3411 at 0.12, 1316 at 0.05, 1287 on the last name; the sheet's light from below on or off changes nothing (3413). I took the lines out and paid with the number. Taking them out did not win the pairs: 0.50 and 0.59 now, 0.54 and 0.52 at 0.12. If you rule the other way it is one number (deck.relief in deep.json) and its proofs are those of 5baaaad36: 4860 717b5adc97194606, ground 17.780, sky 3.407, band 2.656; 4605 d163a2eecd0469b8, match 7.623. The cure is the shadow's own; then the rolls can stand higher again.
+> 2. Two faint teal blots on the plain at 4860, round (1168, 752) and (1564, 849). They come with the sheet and grow with its light from below (green over the mean of red and blue, largest: main 3.9, last name 3.0, sheet round the storm 7.9, this name 15.5). Lead, no control: the sheet's blue bends in the tone curve before its green where it is brightest.
+> 3. The rise at 4960 to 4970, above. 4. The row at 4753, above.
+> 5. (c) the streamer is whiter and blockier than the approved's with hard lumps at the lower right; (d) the limb's glow, list points 5 and 6.
+> 6. G13 at 4860: soft 2.643 percent on 5baaaad36, OVER (2.621 on the last name). Not read again after the rolls went back.
+> 7. Not run again on the name: the dive's start pairs, the pair 4736 to 4744, the rise's end 4992 to 5000 (0.33 on the last name).
+>
+> Tests on the name, alone, 18:45:59 to 18:58:09 UTC: the whole run 81 files ok, 0 not ok, exit 0; my own test ok; G11 PASS; tsc clean. Net of my folders: 63.628 MB against main's 80.827. No file under public/assets/neptune changed. Looks pushed 17:59, 18:24 and 18:46 UTC (4860 at full size beside the approved, G17 0.426, 89.9 s the draft frame). Notebook: every mail word for word.
+>
+> MAIL 1251, the filled sky plate of the hold: this branch has no sky plate at the hold or at the terrain (git ls-tree: 0 files named sky under public/assets/neptune, main has 4), by MAIL 1126 and MAIL 1207; the hold's sky here is the film's one sky. So the fill has no plate to replace on this branch. If the plate is to come back at the hold as the ordered change, say so and it comes as its own commit after this name with the numbers of point 3. Until then I lay in nothing.
+>
+> NEXT: the rise at 4960 to 4970 by control, the deck's own shadow so that the rolls can stand higher, the teal blots, then (c) and (d).
