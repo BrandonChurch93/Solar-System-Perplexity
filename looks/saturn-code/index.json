@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T01:43:17.747Z",
+ "pushed": "2026-11-25T02:06:10.782Z",
  "head": "a9545ffae0453e7727d110e34bb1d65f3a351153",
- "note": "5e094e5 merged with main 9c59fe7 (a9545ff, local): slices of rise and dive on main's engine equal r57 to the pixel and the row; parity, place, gate, handover green; d253 pairs; G17 running",
+ "note": "the tree to be named: G5 and G17 pass on main's engine (3720 median 0.971), path green there, finals of 3567 and 3866; tests running, then the frames outside the dive and the rise",
  "looks": [
+  {
+   "time": "2026-11-25T02:06:09.829Z",
+   "file": "20261125020609829-note-f3866_right.jpg",
+   "source": "../../../../tmp/v/t22/f3866_right.png",
+   "kind": "note",
+   "label": "3866 final, x 900 to 1700, y 560 to 1080 at full size: the Milky Way in the gap ends hard at the inner ring inside the globe's shadow"
+  },
+  {
+   "time": "2026-11-25T02:06:08.848Z",
+   "file": "20261125020608848-note-final_3866.jpg",
+   "source": "../../../../tmp/v/r58/final_3866.png",
+   "kind": "note",
+   "label": "3866 rise, final tier, the tree to be named on main's engine. Not cured: the near ring at the lower left soft under the shutter (my item 16), the shadow on the rings near black, the stars end hard at the inner ring"
+  },
+  {
+   "time": "2026-11-25T02:06:07.658Z",
+   "file": "20261125020607658-note-final_3567.jpg",
+   "source": "../../../../tmp/v/r58/final_3567.png",
+   "kind": "note",
+   "label": "3567 dive, final tier, the tree to be named on main's engine. Not cured: the globe's shadow on the rings near black, the night side brown, the stars in the gap end hard at the inner ring (round item 5), the blue white rim on the outer edge (item 4)"
+  },
   {
    "time": "2026-11-25T01:43:16.693Z",
    "file": "20261125014316693-note-saturn-parity.jpg",
@@ -42,29 +63,6 @@
    "kind": "note",
    "label": "r57 tree 5e094e5 engine 7026711: dive, the largest pops (pop 1.07, limit 1.2)",
    "stop": "saturn"
-  },
-  {
-   "time": "2026-11-25T01:03:37.272Z",
-   "file": "20261125010337272-note-saturn-dive-changes.jpg",
-   "source": "../../../../tmp/v/r57/saturn-dive-changes.png",
-   "kind": "note",
-   "label": "r57 smooth report, dive, the tool's sheet of the largest changes: green, pattern 0.33 from 3576 at pixel 1404 428 (limit 0.45), pop 1.07, level step 0.02",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-25T01:03:36.551Z",
-   "file": "20261125010336551-note-saturn-rise-changes.jpg",
-   "source": "../../../../tmp/v/r57/saturn-rise-changes.png",
-   "kind": "note",
-   "label": "r57 smooth report, rise, the tool's sheet of the largest changes: green, pattern 0.40 from 3813 and a half at pixel 1136 792 (limit 0.45), the dust in front of the globe's foot",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-25T00:48:57.569Z",
-   "file": "20261125004857569-note-f57_ll.jpg",
-   "source": "../../../../tmp/v/t21/f57_ll.png",
-   "kind": "note",
-   "label": "3720 final, lower left at full size (x 0 to 760, y 600 to 1080): approved left, film right. Not cured: near ringlets soft under the shutter, grains read as pale dashes, the dark gap blacker and wider than the approved"
   }
  ]
 }
