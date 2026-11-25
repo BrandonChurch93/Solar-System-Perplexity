@@ -100,11 +100,30 @@ def told(pose):
     return {**pose, 'bodies': [{'place': [0, 0, 0], 'turn': pose.get('turn') or UNIT}, {'place': [0, 0, 0], 'turn': UNIT}]}
 
 
+def form(body):
+    """The drawn shape of a body at its frame as a matrix of the pose frame, None where the record names none: a point g of the turned body
+    stands at place + shape g. The shape sits outside the body's turn."""
+    return np.array(body['shape'], dtype=np.float64).reshape(3, 3) if body.get('shape') else None
+
+
+def plain(body, x):
+    """A point of the pose frame about the body's place with its drawn shape taken out."""
+    f = form(body)
+    v = x - np.array(body['place'], dtype=np.float64)
+    return v if f is None else v @ np.linalg.inv(f).T
+
+
+def formed(body, g):
+    f = form(body)
+    return g if f is None else g @ f.T
+
+
 def carry(depth, which, a, b):
     """The camera's own map from a frame to another: for every pixel of the frame with the pose a its place in the frame with the pose b, in
     pixels of the same grid. depth is the distance from the lens along the pixel's ray to the surface it shows, which names the body the
     surface belongs to (0: no body, the sky; v: bodies[v - 1] of both poses). A point of a body keeps its place on the body: it is taken into
-    the body's own frame with the body's place and turn at a and out of it with those at b. The sky has no place, only a direction, and is
+    the body's own frame with the body's place, drawn shape and turn at a and out of it with those at b (the shape, where the record names
+    one, sits outside the turn: a point g of the turned body stands at place + shape g). The sky has no place, only a direction, and is
     carried by the camera's rotation alone (the pose's sky quaternion when it has one). Poses: p, q (x, y, z, w; the camera looks down its
     own minus z), vfov in degrees, bodies: [{place, turn}], all in one frame. Gives the places x and y, the distance of the carried point
     from the lens of b (nan for the sky), and where the point lies before that lens and inside its frame."""
@@ -123,7 +142,7 @@ def carry(depth, which, a, b):
         m = solid & (which == v)
         ba, bb = a['bodies'][v - 1], b['bodies'][v - 1]
         x = pa + spin(a['q'], cam[m]) * depth[m][:, None]
-        x = np.array(bb['place'], dtype=np.float64) + spin(bb['turn'], spin(back(ba['turn']), x - np.array(ba['place'], dtype=np.float64)))
+        x = np.array(bb['place'], dtype=np.float64) + formed(bb, spin(bb['turn'], spin(back(ba['turn']), plain(ba, x))))
         far[m] = np.linalg.norm(x - pb, axis=-1)
         there[m] = spin(back(b['q']), x - pb)
     with np.errstate(all='ignore'):
@@ -316,7 +335,7 @@ def packed(depth, form, unit=1.0):
 
 def shaped(body, x):
     """A point in the body's own frame with its scale taken out: there the body is the unit sphere."""
-    return spin(back(body.get('axes') or UNIT), x - np.array(body['place'], dtype=np.float64)) / np.array(body.get('scale') or [1, 1, 1], dtype=np.float64)
+    return spin(back(body.get('axes') or UNIT), plain(body, x)) / np.array(body.get('scale') or [1, 1, 1], dtype=np.float64)
 
 
 def ranged(rgb, pose, shape):

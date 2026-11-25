@@ -16,6 +16,7 @@ interface Made {
   moon: { known: Reading; moonUnderMap: number; moonPixels: number; unknown: Reading; unknownMoonUnderMap: number; oneBody: Reading; oneBodyMoonUnderMap: number; covered: { pixels: number; seen: number } }
   oblate: { clean: Reading; ballOff: number; ballAgrees: number; asSphere: Reading }
   relief: { clean: Reading; asSphere: Reading }
+  shape: { told: Reading; untold: Reading; oneTold: Reading }
   sky: { clean: Reading }
   skyFlow: { clean: SkyFlow; exchange: SkyFlow }
   refusal: { clean: Reading; shell: Reading; grounds: Reading }
@@ -112,6 +113,17 @@ describe('the pattern of a pair read by the camera\'s own map, on made bodies wi
     expect(made.oblate.ballOff).toBeLessThan(1e-9)
     expect(made.oblate.ballAgrees).toBe(1)
     expect(made.oblate.asSphere.by!.flow).toBeGreaterThan(made.oblate.clean.by!.flow + 0.1)
+  })
+
+  it('carries a body through the shape it is drawn in at each frame, outside its turn, and refuses the pair where the record names none', () => {
+    expect(made.shape.told.no).toBeNull()
+    expect(made.shape.told.value!).toBeLessThan(0.05)
+    expect(made.shape.told.bulk!).toBeLessThan(1)
+    for (const r of [made.shape.untold, made.shape.oneTold]) {
+      expect(r.value).toBeNull()
+      expect(r.no).toBe('the range does not carry the pattern')
+      expect(r.bulk!).toBeGreaterThan(made.tool.limits.bulkPx)
+    }
   })
 
   it('follows relief near the lens by its depth picture, where a sphere leaves most of the frame to the flow', () => {

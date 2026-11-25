@@ -68,7 +68,7 @@ def bumps(seed, height, width):
 
 def draw(pose, bodies, shape, sky=None):
     """The picture, the depth picture and the body of every pixel: each body is the unit sphere scaled along its own axes (scale), at its
-    place, turned by its turn, with relief when it has one (the radius grows by relief(direction)); the nearest one is drawn."""
+    place, turned by its turn and then drawn in its shape (a matrix of the pose frame, outside the turn), with relief when it has one (the radius grows by relief(direction)); the nearest one is drawn."""
     ray = C.rays(pose, shape)
     p = np.array(pose['p'], dtype=np.float64)
     picture = np.full(shape, 8.0) if sky is None else sky(C.rays(pose, shape, pose.get('sky')))
@@ -76,7 +76,8 @@ def draw(pose, bodies, shape, sky=None):
     which = np.zeros(shape, np.int32)
     for v, b in enumerate(bodies, 1):
         gs = np.array(b.get('scale', [1, 1, 1]), dtype=np.float64)
-        own = lambda x: C.spin(C.back(b['turn']), x) / gs
+        f = np.linalg.inv(np.array(b['shape'], dtype=np.float64).reshape(3, 3)) if b.get('shape') else None
+        own = lambda x: C.spin(C.back(b['turn']), x if f is None else x @ f.T) / gs
         o, d = own(p - np.array(b['place'], dtype=np.float64)) / b.get('radius', 1), own(ray) / b.get('radius', 1)
         a = (d * d).sum(-1)
         near = -(d @ o)
@@ -107,7 +108,7 @@ def frame(pose, bodies, sky=None, source='depth'):
     """A frame as the reader takes it: drawn at the full size and reduced, its depth picture and bodies at the reduced size."""
     full, _, _ = draw(pose, bodies, FULL, sky)
     grey = S.small(full, SCALE)
-    told = {**pose, 'bodies': [{'place': b['place'], 'turn': b['turn']} for b in bodies]}
+    told = {**pose, 'bodies': [{'place': b['place'], 'turn': b['turn'], **({'shape': b['shape']} if b.get('shape') else {})} for b in bodies]}
     if source == 'ball':
         told = C.told({**pose, 'turn': bodies[0]['turn']})
         depth, which = C.ball(told, grey.shape)
@@ -224,6 +225,11 @@ def main():
     both = np.isfinite(made) & np.isfinite(oa['depth'])
     out['oblate'] = {'clean': read(oa, ob)[0], 'ballOff': float(np.abs(made - oa['depth'])[both].max()), 'ballAgrees': float((np.isfinite(made) == np.isfinite(oa['depth'])).mean()),
                      'asSphere': read(frame(first, [globe(t0, **flat)], source='ball'), frame(later, [globe(t1, **flat)], source='ball'))[0]}
+
+    sa, sb = [1, 0, 0, 0, 0.97, 0, 0, 0, 1], [1, 0.02, 0, 0.03, 0.9, 0, 0, 0, 1.03]
+    ga, gb = frame(first, [globe(t0, shape=sa)]), frame(later, [globe(t1, shape=sb)])
+    bare = lambda f: {**f, 'pose': {**f['pose'], 'bodies': [{k: v for k, v in b.items() if k != 'shape'} for b in f['pose']['bodies']]}}
+    out['shape'] = {'told': read(ga, gb)[0], 'untold': read(bare(ga), bare(gb))[0], 'oneTold': read(ga, bare(gb))[0]}
 
     low, high = camera([0.25, 0.12, 1.06], [0.9, 0.2, 0.6], 60), camera([0.3, 0.14, 1.2], [0.9, 0.2, 0.6], 60, 3)
     rough = {'relief': bumps(9, 0.012, 0.15), 'top': 0.03}
