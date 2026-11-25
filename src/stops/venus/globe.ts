@@ -181,6 +181,7 @@ uniform float uShowMap;
 uniform vec3 uToneEye;
 uniform vec3 uHeldEye;
 uniform float uOver;
+uniform float uHeldFoot;
 uniform vec4 uToneLook;
 uniform float uTonePower;
 uniform vec4 uDusk;
@@ -311,6 +312,15 @@ void main() {
   float mu = clamp(dot(n, -dir), 0.0, 1.0);
   float ndl = dot(n, uSunW);
   float grad = uGrad * uSmear * (1.0 + uGraze.x * smoothstep(uGraze.y, uGraze.z, mu));
+  // Scale by scale (plates.json, show): the mesh over (uOver 2) reads the hold's picture through the footprint of the hold's last eye
+  // at this ground point, never a smaller one, so it shows no form the hold did not show. soft is that footprint over the present
+  // one: the two distances to the ground point times the angle of a pixel of the hold's last frame over the present one (uHeldFoot).
+  float soft = 1.0;
+  if (uOver > 1.5) {
+    vec3 dp0 = spinY(onSphere(uCamObj, normalize(vLocal - uCamObj)), uSpin);
+    soft = max(length(dp0 - uHeldEye) * uHeldFoot / max(length(dp0 - spinY(uCamObj, uSpin)), 1e-9), 1.0);
+    grad *= soft;
+  }
   vec3 albedo = equirectGrad(uMap, dc, grad).rgb;
   float texels = diagTexelsDir(uSwirl.w != 0.0 ? dc : d, uMapWidth);
   float dn = dot(dc, uSpotN);
@@ -550,7 +560,50 @@ ${TAP_LEVELS}
     // where no ground stands, and under the ground no second, flat picture of what the ground shows in relief. The air below and
     // the gain are the same in both, so the sum is the sum under them. Out of a move uOver is 0 and nothing here differs.
     heldShare = 1.0 - arrive;
-    if (uOver > 1.5) break;
+    // Scale by scale (uOver 2). The forms of the close picture finer than the hold's footprint were never the hold's: no picture
+    // gives way for them. They stand at their full share from the first frame of a move and come as their cells come to the
+    // footprint of the pixel: the plates read through the present footprint over the plates read through the hold's (soft), as light
+    // over the hold's picture. With the eye at the hold's last eye the two readings are one and nothing is added. The forms the hold
+    // did show give way by arrive alone.
+    if (uOver > 1.5) {
+      vec3 fineLaid = vec3(0.0);
+      float fineCover = 0.0;
+      {
+        vec3 laid = vec3(0.0);
+        float cover = 0.0;
+        float parentPlace = 0.0;
+        float placeTexels = texels;
+${PLACE_COLOURS}
+${PLACE_GLSL}
+        fineLaid = laid;
+        fineCover = cover;
+      }
+      vec3 softLaid = vec3(0.0);
+      float softCover = 0.0;
+      vec2 sgx = pgx * soft;
+      vec2 sgy = pgy * soft;
+      float sgd = pgd * soft;
+      {
+        vec2 pgx = sgx;
+        vec2 pgy = sgy;
+        float pgd = sgd;
+        vec3 laid = vec3(0.0);
+        float cover = 0.0;
+        float parentPlace = 0.0;
+        float placeTexels = texels;
+${PLACE_COLOURS}
+${PLACE_GLSL}
+        softLaid = laid;
+        softCover = cover;
+      }
+      float both = min(fineCover, softCover);
+      for (int k = 0; k < (both > 0.0 ? 1 : 0); k++) {
+        float fineLum = max(dot(inverseFilmic(fineLaid / fineCover), vec3(0.2126, 0.7152, 0.0722)), 1e-5);
+        float softLum = max(dot(inverseFilmic(softLaid / softCover), vec3(0.2126, 0.7152, 0.0722)), 1e-5);
+        col *= mix(1.0, pow(clamp(fineLum / softLum, 1.0 / uLiveLook.z, uLiveLook.z), uLive.z), both * uPlaceOn);
+      }
+      break;
+    }
     vec3 laid = vec3(0.0);
     float cover = 0.0;
     float parentPlace = 0.0;
@@ -714,6 +767,7 @@ export class Globe {
         uToneEye: { value: new THREE.Vector3(0, 0, 5) },
         uHeldEye: { value: new THREE.Vector3(0, 0, 5) },
         uOver: { value: 0 },
+        uHeldFoot: { value: 1 },
         uToneLook: { value: new THREE.Vector4(o.place.tone.air, 0, o.place.tone.cos[0], o.place.tone.cos[1]) },
         uTonePower: { value: o.place.tone.power },
         uAirDeck: { value: o.air.deck }, uAirFwd: { value: new THREE.Vector3(0, 0, -1) }, uAirRight: { value: new THREE.Vector3(1, 0, 0) }, uAirHaze: { value: new THREE.Vector4(0, 0.05, 1, THREE.MathUtils.degToRad(o.air.deckSpanDeg)) }, uAirField: { value: new THREE.Vector3(1e3, 2e3, 1) },

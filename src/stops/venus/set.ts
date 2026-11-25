@@ -163,6 +163,7 @@ export const createSet: SetFactory = async (ctx) => {
   }
   // The nearest eye of the hold in the frame of the body: its last (globe.ts, arrive).
   const heldEye = plan.hold(plan.seg.hold.end - plan.seg.hold.start).position.clone().applyQuaternion(plan.turn(plan.seg.hold.end).multiply(globeTurn).invert())
+  const heldFov = plan.hold(plan.seg.hold.end - plan.seg.hold.start).vfov
   const carry = { ...ground.carry!, soft: look.veil.sunSoft, tint: look.veil.sunTint }
   // The cover veil is never drawn any more (plan.veilAmount is 0 and plan.release is 1 on every frame of both moves), so its cloud
   // picture is not loaded: the sheet keeps a texture it never shows.
@@ -322,6 +323,8 @@ export const createSet: SetFactory = async (ctx) => {
       for (let i = 0; i < placeTextures.length; i++) gu['uPlace' + i]!.value = (after ? placeRise : placeTextures)[i]
       ;(gu.uToneEye!.value as THREE.Vector3).copy(bodyEyeAtT(after ? 'rise' : 'dive'))
       ;(gu.uHeldEye!.value as THREE.Vector3).copy(heldEye)
+      // The angle of a pixel of the hold's last frame over the present one (globe.ts, soft).
+      gu.uHeldFoot!.value = Math.tan(THREE.MathUtils.degToRad(heldFov) / 2) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2)
       ;(gu.uDusk!.value as THREE.Vector4).set(duskGain * Math.pow(place.dusk.tint[0], pl.dusk), duskGain * Math.pow(place.dusk.tint[1], pl.dusk), duskGain * Math.pow(place.dusk.tint[2], pl.dusk), duskGain / place.dusk.gain)
       // The plates hold the light of the place at the full gain and the full tint,
       // so they are drawn with the share of both that the globe has now: the place and the globe about it keep one colour at every exposure.
