@@ -138,6 +138,9 @@ export const createSet: SetFactory = async (ctx) => {
     return plan.eye(kind, time, 'orbit').position.clone().applyQuaternion(plan.laid(time).invert())
   }
   const layRef = { dive: seatAt('dive'), rise: seatAt('rise') }
+  // The eye the dive begins at, in the body's own frame (the body's turn taken out): the held field is read by it through the dive.
+  const diveEye = plan.eye('dive', plan.seg.dive!.start, 'orbit').position.clone().applyQuaternion(plan.turn(plan.seg.dive!.start).invert())
+  const fieldEye = new THREE.Vector3()
   // The scene from code reads the globe's own map (deep.json, far). toBody: the turn from the scene's frame to the globe's. In the view
   // from the ground the globe is not drawn, so the state of its map is set there for the scene alone, by the same laws: the hold's
   // share by the eye's angle from the hold's axis as in the dive, and through the surface view down to none at the angle the rise
@@ -285,6 +288,12 @@ export const createSet: SetFactory = async (ctx) => {
       ;(pu.uEdgeWideDir!.value as THREE.Vector3).copy(edgeSun).multiplyScalar(Math.cos(edgeTurn)).addScaledVector(side, -Math.sin(edgeTurn))
       ;(pu.uEdgeShape!.value as THREE.Vector4).w = home * look.limb.edge.amount * line
       ;(pu.uFieldSide!.value as THREE.Vector4).set(side.x, side.y, side.z, home * look.field.amount * (1 - low))
+      // The held field on the body (planet.ts, uFieldEye): in the dive it is read by the eye the dive began at, carried with the body.
+      if (kind === 'dive' && !ending) {
+        fieldEye.copy(diveEye).applyQuaternion(plan.turn(state.time)).applyQuaternion(state.rotation)
+        ;(pu.uFieldEye!.value as THREE.Vector4).set(fieldEye.x, fieldEye.y, fieldEye.z, 1)
+      }
+      else (pu.uFieldEye!.value as THREE.Vector4).w = 0
       ;(pu.uHold!.value as THREE.Vector2).x = home * look.held.amount
       ;(pu.uPlace!.value as THREE.Vector3).z = lay
       pu.uShown!.value = lay

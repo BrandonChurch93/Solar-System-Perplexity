@@ -417,6 +417,7 @@ uniform vec3 uClump;
 uniform sampler2D uField;
 uniform vec4 uFieldRange;
 uniform vec4 uFieldSide;
+uniform vec4 uFieldEye;
 uniform vec2 uDarkEdge;
 uniform vec3 uEnd;
 uniform vec2 uEndCloud;
@@ -584,7 +585,12 @@ ${FALL_GLSL}void main() {
   float dw = smoothstep(uDarkEdge.x, uDarkEdge.y, dot(n, uDarkDir));
   float dm = 0.6 + 0.4 * dw;
   col *= 1.0 - uLimbDark.x * pow(dw, 0.7) * (1.0 - smoothstep(uLimbDark.y * dm, uLimbDark.z * dm, mu));
-  vec2 fuv = vec2(clamp(mu / uFieldRange.x, 0.5 / uFieldRange.z, 1.0 - 0.5 / uFieldRange.z) * 0.5, (ndl - uFieldRange.y) / (1.0 - uFieldRange.y));
+  // The held field lies on the body. In the hold it is read by the eye's own angle to the ground (mu). From the dive's first moment
+  // on it is read by the angle of the eye the dive began at, which is carried with the body (uFieldEye: its place from the body's
+  // middle in the world's axes; w says that it is set): every point of the ground keeps the share the hold gave it, so the field's
+  // bands near the limb do not run over the ground with the closing horizon (the Builder's MAIL 1207, point 3).
+  float muField = uFieldEye.w > 0.0 ? clamp(dot(n, normalize(uFieldEye.xyz - n)), 0.0, 1.0) : mu;
+  vec2 fuv = vec2(clamp(muField / uFieldRange.x, 0.5 / uFieldRange.z, 1.0 - 0.5 / uFieldRange.z) * 0.5, (ndl - uFieldRange.y) / (1.0 - uFieldRange.y));
   vec3 fa = textureLod(uField, fuv, 0.0).rgb;
   vec3 fb = textureLod(uField, fuv + vec2(0.5, 0.0), 0.0).rgb;
   vec3 field = exp2((mix(fa, fb, smoothstep(-0.06, 0.06, dot(n, uFieldSide.xyz))) - 0.5) * uFieldRange.w);
@@ -687,7 +693,7 @@ export class NeptunePlanet {
         uTwi: { value: new THREE.Vector3().fromArray(l.twilight) }, uTwiSun: { value: new THREE.Vector4().fromArray(l.twilightSun) }, uAirShade: { value: new THREE.Vector4(l.shade[0], l.shade[1], l.shade[2], 1) }, uAirGround: { value: 1 }, uDistant: { value: new THREE.Vector4(0, 0.1, 0.5, 4) }, uDistantAir: { value: new THREE.Vector4(1, 1, 1, 0) },
         uForward: { value: new THREE.Vector3().fromArray(l.forward) }, uForwardShape: { value: new THREE.Vector2(l.forwardWidth, l.forwardPower) },
         uNear: { value: new THREE.Vector4(0, 1, o.near.power, o.near.saturation) }, uNearTint: { value: new THREE.Vector4(o.near.tint[0], o.near.tint[1], o.near.tint[2], o.near.pivot) }, uNearFall: { value: new THREE.Vector3(0, 1, 1) },
-        uField: { value: o.field.texture }, uFieldRange: { value: new THREE.Vector4(o.field.muMax, o.field.ndlMin, o.field.width, o.field.span) }, uFieldSide: { value: new THREE.Vector4(1, 0, 0, 0) }, uMelt: { value: new THREE.Vector2(l.melt[0], l.melt[2]) }, uNight: { value: new THREE.Vector4(0, o.night.edge[0], o.night.edge[1], Math.log2(o.mapWidth / o.night.texels)) },
+        uField: { value: o.field.texture }, uFieldRange: { value: new THREE.Vector4(o.field.muMax, o.field.ndlMin, o.field.width, o.field.span) }, uFieldSide: { value: new THREE.Vector4(1, 0, 0, 0) }, uFieldEye: { value: new THREE.Vector4(0, 0, 0, 0) }, uMelt: { value: new THREE.Vector2(l.melt[0], l.melt[2]) }, uNight: { value: new THREE.Vector4(0, o.night.edge[0], o.night.edge[1], Math.log2(o.mapWidth / o.night.texels)) },
         uBodyToWorld: { value: this.bodyToWorld },
         uDiag: diagUniform, uGrad: gradUniform,
       },
