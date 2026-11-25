@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T02:16:52.260Z",
+ "pushed": "2026-11-25T02:31:36.664Z",
  "head": "f2a418731e617071cfe34e445e300fa9ad997e0f",
- "note": "trial for MAIL 815 (b): fine forms of the place by pixel width on the ground, no height; hold and 1260 keep their bytes; not a commit",
+ "note": "trials for MAIL 815 (b), no commit: a disc of the place at every height shows at the hold as a dark speckled patch; outside it fine forms by pixel width read as another material at 1308 to 1317",
  "looks": [
+  {
+   "time": "2026-11-25T02:31:36.010Z",
+   "file": "20261125023136010-note-cmpB.jpg",
+   "source": "../../../../tmp/v/st/q2/cmpB.jpg",
+   "kind": "note",
+   "label": "trial, not a commit: left f2a41873, right the disc of the place with its forms at every height and the fine forms outside it by pixel width, frames 1308, 1314, 1317",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T02:31:35.226Z",
+   "file": "20261125023135226-note-hold11.jpg",
+   "source": "../../../../tmp/v/st/q2/hold11.png",
+   "kind": "note",
+   "label": "trial, not a commit: the hold 1259 at 1 to 1, left f2a41873, right with the forms of the place standing at every height inside a disc of 6 degrees round the place: a dark speckled patch on the night side",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-25T02:16:51.590Z",
    "file": "20261125021651590-note-cmp.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/cmp/st/H-topleft.jpg",
    "kind": "note",
    "label": "dive 1314 to 1319 + 1/2 top left corner at full size: the star cloud comes up between 1316 and 1316 + 1/2",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T01:02:11.984Z",
-   "file": "20261125010211984-note-H-dive-pops.jpg",
-   "source": "../../../../tmp/v/H-dive-pops.png",
-   "kind": "note",
-   "label": "dive pops, working tree: largest 1.12 at 1316, green",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T01:02:10.792Z",
-   "file": "20261125010210792-note-H-dive-changes.jpg",
-   "source": "../../../../tmp/v/H-dive-changes.png",
-   "kind": "note",
-   "label": "dive changes over 8 film frames, working tree: pattern 0.55 from 1311, 0.53 from 1322, red",
    "stop": "venus"
   }
  ]
