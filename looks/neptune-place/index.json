@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T15:25:12.375Z",
- "head": "91ada652c847245695997361e71f0595cb3317ad",
- "note": "15:27 UTC: 4860 beside the approved and main (G17 0.544 proxy, 90.7 s a frame); the veil taken; the far Sun stands in its place at the hold; rise and dive pairs rendering",
+ "pushed": "2026-11-25T15:55:45.241Z",
+ "head": "485d5807546cb45e3e66e3de6679c5b1bc182e50",
+ "note": "eighth named 66c70ae73: 4860 beside approved and main, G17 0.544 (draft proxy), 90.7 s a draft frame at 1920; rise pairs 0.48 0.56 0.55 still over, causes on the sheet",
  "looks": [
+  {
+   "time": "2026-11-25T15:55:38.738Z",
+   "file": "20261125155538738-note-n8-pairs.jpg",
+   "source": "../../../../tmp/n8-pairs.jpg",
+   "kind": "note",
+   "label": "rise pairs still over: second streamer changes kind 4968 to 4976, lower left wisps 4960 to 4970",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T15:55:36.680Z",
+   "file": "20261125155536680-note-n8-beside.jpg",
+   "source": "../../../../tmp/n8-beside.jpg",
+   "kind": "note",
+   "label": "4860 and 4605: approved, main, tip 66c70ae73 (G17 4860 0.544 draft proxy, 90.7 s the draft frame)",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T15:25:10.898Z",
    "file": "20261125152510898-note-n8-two.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/h1-4605.jpg",
    "kind": "note",
    "label": "trial, not taken: 4605 with the hold's sky turned to bring the band top right (H1): mean absolute against the approved 11.376 (the tip 7.542): worse; the hold keeps its aim",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T14:51:27.550Z",
-   "file": "20261125145127550-note-f-six.jpg",
-   "source": "../../../../tmp/f-six.jpg",
-   "kind": "note",
-   "label": "trial, not taken: 4968, 4972, 4976 upper left, the third streamer with lumpShare 0.2 below the tip: more hard bits, worse. Next: the streamer as a thin veil by the slant path law (MAIL 1126 point 4)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T14:51:25.960Z",
-   "file": "20261125145125960-note-a-four.jpg",
-   "source": "../../../../tmp/a-four.jpg",
-   "kind": "note",
-   "label": "trial, not taken: the air's share 0.75 (A1) and the low haze depth 0.11 (A2) at 4860 preview beside the approved and the tip: the far plain comes up from 58,85,123 to 70,95,131 (approved 90,128,165) and the eye is veiled; a lead for round 1",
    "stop": "neptune"
   }
  ]
