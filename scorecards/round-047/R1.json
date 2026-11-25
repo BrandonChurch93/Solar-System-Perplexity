@@ -1,0 +1,63 @@
+{
+ "critic": "R1",
+ "score": 9,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-01-b.png",
+   "where": "night-side middle-right limb and lower-right limb below South America",
+   "what": "The distinct emerald aurora patches at the right edge are reduced to weak hints, and the clear green streak southeast of South America is almost gone.",
+   "fix": "Restore the two compact mid-right green accents and the separate lower-right streak at the target positions, with bright green cores and soft falloff."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "upper-right auroral arc (pair-02-b.png, crop C)",
+   "what": "The green aurora reads as a wider, softer haze with less distinct upright rays, and the red upper fringe is more muted.",
+   "fix": "Separate and sharpen the green rays, pull back the diffuse green spill and recover the faint red fringe above them."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "sunlit upper and left rim, and shadow-side right rim (pair-02-b.png, crops B, D, F, G and I)",
+   "what": "The sunlit blue atmosphere is more spread out and less distinctly separated from its bright core. The shadow-side outline is slightly more cyan and visible.",
+   "fix": "Tighten the sunlit halo around the thin, bright blue-white limb and bring down the blue contour on the far right."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "crops A, F, G and H: the Americas, Pacific cloud bands and eastern South American city lights",
+   "what": "The fine cloud filaments, ice and ridgeline detail are a little softer. The Andes look warmer and broader, coastal lights look more smeared, and the turquoise shallows are slightly duller.",
+   "fix": "Restore fine surface and cloud texture, keep city lights pinpoint-sharp, cool and narrow the Andes highlight slightly, and recover the saturated turquoise coastal separation."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "star field on both sides of the globe and upper-right Moon",
+   "what": "Smaller stars and dust detail in the diagonal band are slightly softer against darker empty sky. The Moon retains its position and phase, but some crater contrast is lost and its dark side is more visible.",
+   "fix": "Recover the target's fine points and mottled galactic dust while keeping the black sky; restore lunar relief and darken the lunar night side slightly."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "blue horizon and adjoining sky (pair-04-b.png, crops B and C)",
+   "what": "The horizon has a subtly thicker, softer blue transition, and the surrounding dark sky is fractionally darker.",
+   "fix": "Concentrate the atmospheric glow closer to the curved limb and match the target's faint blue lift just above it."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "crops A, D, F, G and H: sun glitter, cloud edges and long foreground shadows",
+   "what": "The direction and placement of the lighting match, but the gold reflection has smoother water microtexture, the cloud silver linings lose small highlights, and the long shadows are a touch softer.",
+   "fix": "Bring back the rippled sparkle in the reflection and the fine cloud-edge structure and shadow definition without moving or substantially brightening them."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "crops E and I: island chain and turquoise shallows",
+   "what": "Fine shoreline and reef detail is slightly softened, and blue-green shallows are less cleanly separated from the deeper water.",
+   "fix": "Restore the small coastline and reef textures and increase the local separation of turquoise shallows from deep navy water."
+  }
+ ]
+}

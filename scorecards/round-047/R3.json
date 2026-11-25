@@ -1,0 +1,141 @@
+{
+ "critic": "R3",
+ "score": 3,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 3,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-05.png",
+      "where": "clouds across the western half of the globe and near the left limb (image-06 D, F; image-07 M, N, R)",
+      "what": "clouds break up into small square blocks and smeared rectangles, like low-res tiles or compression blocks; you can see pixels and tile edges at native size",
+      "fix": "use a higher-resolution cloud layer with mipmapping or filtering, and remove the blocky upscale or temporal artifact before you output the frame"
+     },
+     {
+      "severity": "severe",
+      "file": "image-05.png",
+      "where": "bottom third of the frame: South America, the Pacific clouds and the night side (image-08 S, T, U; image-06 E, G)",
+      "what": "heavy directional smearing and streaks: the land, clouds and city lights are dragged into lines, so the near terrain is soft and the detail is gone",
+      "fix": "cut or remove the motion blur or warp at the bottom of the frame, or render it with correct per-pixel motion vectors, so the surface stays sharp"
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "Caribbean, Gulf of Mexico and Central America (image-06 A, I; image-07 O)",
+      "what": "hundreds of tiny bright cloud specks sit on the water like scattered white pixels or noise. They look like confetti, not cumulus",
+      "fix": "filter the cloud mask and drop the isolated speckles, or blend the small clouds softly into the layer"
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "Rockies and Andes (image-07 J; image-06 B, G)",
+      "what": "the terrain looks like plastic relief extruded straight up from a heightmap, with stepped ridges and too much contrast, so it looks like a clay model at native size",
+      "fix": "lower the displacement exaggeration, soften the normal map, and add subtle atmospheric scattering over the land"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "upper right limb, the aurora (image-02 C; image-03 L, M)",
+      "what": "the aurora is a flat green band painted along the limb, with a uniform comb of streaks and a red haze behind it. It reads as a separate layer stuck on, with no depth or curvature into the atmosphere",
+      "fix": "make the aurora a volumetric curtain that follows the shape of the oval, with height falloff and varying brightness and spacing, and blend it into the limb glow"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "right edge of the night side (image-02 E, I; image-03 R)",
+      "what": "the night limb has a hard edge with no atmosphere, and a lighter band or doubled edge near the silhouette makes it look like two layered discs",
+      "fix": "carry a thin atmosphere rim onto the night side and fix the offset between the shadowed globe and the surface layer"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "eastern Brazil (image-02 H; image-03 Q)",
+      "what": "city lights shine on ground that is still in daylight. The night lights layer is masked wrong for the terminator",
+      "fix": "drive the night lights mask from the sun angle so the lights only appear past the terminator, with a soft blend"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "Atlantic and Pacific cloud swirls (image-02 A, F; image-03 L)",
+      "what": "the swirls repeat the same spiral shape over and over and look airbrushed. The clouds feel stamped on, not like real weather",
+      "fix": "vary the shapes of the cloud systems and use real or more varied cloud data"
+     },
+     {
+      "severity": "minor",
+      "file": "image-05.png",
+      "where": "upper left sky (image-06 H)",
+      "what": "the star field is a dense orange speckle patch that looks like noise, not stars",
+      "fix": "use a star field with proper point stars and a gentle, smooth falloff in density"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "moon, upper right (image-03 M)",
+      "what": "the moon is small and slightly soft, with flat shading and only a little surface detail",
+      "fix": "use a sharper texture on the moon and give it a crisper terminator"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 4,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-13.png",
+      "where": "lower half and outer flanks of the globe (image-14.png crops D, E, F, H; image-15.png crops O, P, Q; image-16.png crops S, T, U, V)",
+      "what": "heavy stepped radial smear and blocky directional blur stretch the Pacific clouds, Amazon and Andes terrain, and Brazilian coastal city lights into pixelated streaks while adjacent background stars remain pin-sharp",
+      "fix": "remove the undersampled radial or motion blur on the globe pass, or increase motion-blur sampling and apply consistent camera blur across all composited layers"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "northern and central Atlantic globe surface and clouds (image-14.png crop C; image-15.png crops L, Q)",
+      "what": "clouds and ocean surface are soft, muddy, and low-resolution compared with the crisp North American continent",
+      "fix": "use higher-resolution cloud and ocean maps on the Atlantic side and match sharpness across the full visible hemisphere"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "upper right aurora along the limb (image-14.png crop C; image-15.png crop L)",
+      "what": "aurora curtains look airbrushed and show horizontal stepped banding at the base of the brightest green ray near the limb",
+      "fix": "render the aurora with finer volumetric ray structure, higher bit-depth alpha falloff, and smooth integration into the atmospheric limb"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "upper left Milky Way sky region (image-14.png crops B, G)",
+      "what": "dust lanes have coarse stippled noise and posterized blotches, and dense stars merge into blocky blobs with an abrupt transition to clean black sky",
+      "fix": "replace or denoise the Milky Way background plate at higher native resolution, keep star point-spread profiles crisp, and feather the galactic dust falloff"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "night-side right limb and western mountain ranges (image-15.png crops J, P, R; image-16.png crop V)",
+      "what": "mountain relief on western North America and the northern Andes looks slightly embossed and plastic, and the dark night limb shows a faint thin greenish-cyan rim line against the starfield",
+      "fix": "reduce normal or displacement exaggeration on continental relief and soften the night-side atmospheric rim falloff"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "upper-center dark sky above the limb and coastal land (image-11.png crops K, L, Q, R; image-10.png crop I)",
+      "what": "the solar-glow falloff in the upper sky shows faint concentric gradient banding and subtle color blotching, and inland island terrain is slightly painterly next to crisp clouds",
+      "fix": "dither the high-dynamic-range sky flare gradient in 16-bit before output and sharpen fine land-cover detail on the islands"
+     }
+    ]
+   }
+  }
+ ]
+}
