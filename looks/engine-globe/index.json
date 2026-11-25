@@ -1,9 +1,25 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-24T22:29:38.524Z",
- "head": "767f8d1161e9c440327557a61d1589aba60bb183",
- "note": "limb air option of src/bodies, scratch on Mars only, option off by default; 0.0005 to 0.001 takes the stair step and the dark line off the lit edge, 0.002 and more reads as a soft band",
+ "pushed": "2026-11-25T00:00:04.260Z",
+ "head": "a76f725c080b3126097834150133586c478123c4",
+ "note": "d253 (b): the web set brought Mars's colour and height levels in at about twice the height; with counts (off by default, Mars's patch not in the tree) the web set's levels stand where the full set's do. Full set bytes unchanged.",
  "looks": [
+  {
+   "time": "2026-11-25T00:00:03.338Z",
+   "file": "20261125000003338-note-beauty-2427-crop.jpg",
+   "source": "../m752/count/beauty-2427-crop.png",
+   "kind": "note",
+   "label": "Mars 2427 draft beauty crop: full, web before, web with counts",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T00:00:02.189Z",
+   "file": "20261125000002189-note-texels-panel.jpg",
+   "source": "../m752/count/texels-panel.png",
+   "kind": "note",
+   "label": "Mars dive 2400, 2427, 2450, draft, texels view: full set, web set before, web set with counts (levels arrive where the full set brings them)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-24T22:29:37.947Z",
    "file": "20261124222937947-note-limb-2325-film-1to1.jpg",
@@ -50,22 +66,6 @@
    "source": "../m741/look-ur-8794-8810.jpg",
    "kind": "note",
    "label": "Uranus rise capture 8794 against 8810 carried by range and pose: 19.92 as it is, 15.90 carried; white clouds come in in place, limb air changes level",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T21:17:28.576Z",
-   "file": "20261124211728576-note-look-ju-6522-6538.jpg",
-   "source": "../m741/look-ju-6522-6538.jpg",
-   "kind": "note",
-   "label": "Jupiter rise capture 6522 against 6538 carried by the range picture and the pose, no flow: 50.18 as it is, 14.08 carried",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T21:17:27.603Z",
-   "file": "20261124211727603-note-look-4400-depth.jpg",
-   "source": "../m741/look-4400-depth.png",
-   "kind": "note",
-   "label": "Uranus 4400 old depth view",
    "stop": "uranus"
   }
  ]
