@@ -1,64 +1,64 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T18:59:48.935Z",
+ "pushed": "2026-11-25T19:36:17.234Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "The name is sent on cdd5de66 (suite 919 of 919, build green); the lookup trial at 1857 renders again with the gate at 1 to 3 px; design (c) written, tests next",
+ "note": "lookup trial at Earth 1857 done (control, as it is, A and B at 1 to 1 and 3 times); design (c) crest sheets: first Mars drafts, teeth gone, two defects found (blocks at the matte rim, near colour on the far sheet), curing",
  "looks": [
   {
-   "time": "2026-11-25T18:59:47.480Z",
-   "file": "20261125185947480-note-f01857.jpg",
-   "source": "../t-c2a/out/work/blur/t-finB/f01857.png",
+   "time": "2026-11-25T19:36:16.618Z",
+   "file": "20261125193616618-note-kx-under0.jpg",
+   "source": "../../../../tmp/crest/kx-under0.png",
    "kind": "note",
-   "label": "1857 final, lookup trial B with the gate 6 to 14 px, whole frame"
+   "label": "Mars 2668 draft, design (c) on L1 with under 0: the blocks go, a few specks stay"
   },
   {
-   "time": "2026-11-25T18:59:46.234Z",
-   "file": "20261125185946234-note-sheet-first-3x.jpg",
-   "source": "../../../../tmp/trial/sheet-first-3x.png",
+   "time": "2026-11-25T19:36:16.075Z",
+   "file": "20261125193616075-note-k1-2668-blocks.jpg",
+   "source": "../../../../tmp/crest/k1-2668-blocks.png",
    "kind": "note",
-   "label": "Lookup trial at 1857 final, first pass: as it is against two reads across the way with the gate 6 to 14 px; the gate is nearly shut in this crop, so the two are almost alike"
+   "label": "Mars 2668 draft, design (c) on L1: the blocks at the layer's rim, close"
   },
   {
-   "time": "2026-11-25T18:37:33.870Z",
-   "file": "20261125183733870-note-f01857.jpg",
-   "source": "../t-c2a/out/work/blur/t-fin0/f01857.png",
+   "time": "2026-11-25T19:36:15.464Z",
+   "file": "20261125193615464-note-k1-2668-whole.jpg",
+   "source": "../../../../tmp/crest/k1-2668-whole.png",
    "kind": "note",
-   "label": "Earth 1857 final as it is, control of the lookup trial"
+   "label": "Mars 2668 draft, design (c) on L1, whole frame: blocks above the plateau rim (defect 1)"
   },
   {
-   "time": "2026-11-25T18:02:43.832Z",
-   "file": "20261125180243832-note-pair-eight.jpg",
-   "source": "../../../../tmp/probe/pair-eight.png",
+   "time": "2026-11-25T19:36:14.889Z",
+   "file": "20261125193614889-note-k-2668-b.jpg",
+   "source": "../../../../tmp/crest/k-2668-b.png",
    "kind": "note",
-   "label": "PROBE (MAIL 1235), Mars dive at draft with the orbit at plus 2.25 degrees a second and the sidestep right -0.37: the eight frames 2400 to 2430, no moon in the dive, 12.12 radii at the closest"
+   "label": "Mars 2668 draft, design (c) on L1 (trial numbers), the lit crest at 5 times: teeth gone, an outline of near colour left on the far sheet (defect 2)"
   },
   {
-   "time": "2026-11-25T18:02:43.097Z",
-   "file": "20261125180243097-note-run-2403-2412.jpg",
-   "source": "../../../../tmp/probe/run-2403-2412.png",
+   "time": "2026-11-25T19:36:14.280Z",
+   "file": "20261125193614280-note-k-2668-a.jpg",
+   "source": "../../../../tmp/crest/k-2668-a.png",
    "kind": "note",
-   "label": "PROBE (MAIL 1235), Mars dive at draft, consecutive frames 2403 to 2412: rows 1 and 3 today's line, rows 2 and 4 the 12 radii line. The moon leaves as fast and five frames sooner, and the globe swings left"
+   "label": "Mars 2668 draft, as it is, the lit crest at 5 times (teeth)"
   },
   {
-   "time": "2026-11-25T18:02:42.313Z",
-   "file": "20261125180242313-note-eight-b.jpg",
-   "source": "../../../../tmp/probe/eight-b.png",
+   "time": "2026-11-25T19:22:58.457Z",
+   "file": "20261125192258457-note-L1-002-teeth.jpg",
+   "source": "../../../../tmp/crest/mars/L1-002-teeth.png",
    "kind": "note",
-   "label": "PROBE (MAIL 1235), Mars dive at draft: today's line left, the 12 radii line right, frames 2410, 2412, 2420, 2430"
+   "label": "design (c): the teeth crest of L1 as found at step 0.002"
   },
   {
-   "time": "2026-11-25T18:02:41.519Z",
-   "file": "20261125180241519-note-eight-a.jpg",
-   "source": "../../../../tmp/probe/eight-a.png",
+   "time": "2026-11-25T19:22:57.401Z",
+   "file": "20261125192257401-note-L1-002-whole.jpg",
+   "source": "../../../../tmp/crest/mars/L1-002-whole.png",
    "kind": "note",
-   "label": "PROBE (MAIL 1235), Mars dive at draft: today's line left, the line that passes Phobos's place of 2415 at 12 radii (sidestep right -1.12) right, frames 2400, 2404, 2406, 2408 with the moon's px a frame under each"
+   "label": "design (c): the crests found on Mars layer L1 at step 0.002 (sheet cells and near cells over the layer)"
   },
   {
-   "time": "2026-11-25T17:56:40.373Z",
-   "file": "20261125175640373-note-pair-2168-lights-4x.jpg",
-   "source": "../../../../tmp/name/pair-2168-lights-4x.png",
+   "time": "2026-11-25T19:22:56.427Z",
+   "file": "20261125192256427-note-pair-3x.jpg",
+   "source": "../../../../tmp/trial/pair-3x.png",
    "kind": "note",
-   "label": "Earth rise end at review, the city lights at 4 times: 2168 main (ends 0.5) and the law (ends 0.18), 2166 main and the law (0.40). Under the law the lights are longer streaks: the frame moves 9.3 px and the ends are nearly a box there"
+   "label": "lookup trial pair at 3 times: 1857 final as it is, and with reads across the way at the pixel's own size (trial A)"
   }
  ]
 }
