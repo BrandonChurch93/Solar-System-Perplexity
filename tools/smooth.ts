@@ -14,7 +14,7 @@ import type { Pose } from '../src/core/types'
 import { plans } from '../src/director/plans'
 import { LANDING_FROM, MIN_POINTS, SEAM_OWN, SEAM_REACH, afterRise, carriedCamera, curves, eyeCurves, landingCurves, ringPlane, sampleLanding, sampleLeave, sampleSeam, sampleWindow, sphereHit, type Kind, type Plane, type Ring } from './smooth/camera'
 import { IN_PLACE } from './lib/steps'
-import { BLOOM, NOT_CARRIED, apart, byFlow, glowPx, look, mapFaults, moving, outrun, shownRows, worded } from './smooth/maps'
+import { BLOOM, NOT_CARRIED, apart, byFlow, chained, glowPx, look, mapFaults, moving, outrun, shownRows, worded } from './smooth/maps'
 import { placeReadings } from './smooth/place'
 import { missing, partOwn, popContext, sliceName, sliceNeed, type Span } from './smooth/slice'
 import { MOVES, PIECES, buildFault, differ, gather, gatherFaults, pieceStem, runFacts, type Facts, type Given } from './smooth/whole'
@@ -401,7 +401,7 @@ function sumsOf(kind: Kind, seg: { firstFrame: number; endFrame: number }, first
   over('pop', limit(P.maxPop), (row) => 'pop score ' + shown(row.pop!, 2, P.maxPop) + ' from frame ' + position(row.k, r) + ' to the next')
   over('popBlock', limit(P.maxPopBlock), (row) => 'pop score of one block ' + shown(row.popBlock!, 2, P.maxPopBlock) + ' from frame ' + position(row.k, r) + ' to the next')
   over('change', CHANGE.max, (row) => 'the picture changes in place by ' + shown(row.change!, 1, CHANGE.max) + ' from frame ' + position(row.k, r) + ' to ' + CHANGE.frames + ' film frames later')
-  over('pattern', PATTERN.max, (row) => 'the pattern of the picture changes in place by ' + shown(row.pattern!, 2, PATTERN.max) + ' from frame ' + position(row.k, r) + ' to ' + CHANGE.frames + ' film frames later' + banded(row.patternBand) + ', the later frame carried by the chain of the ' + CHANGE.frames * r + ' flows from frame to frame' + ((row.patternMapMoved ?? null) !== null ? ' (that chain parts from the camera\'s map on the body by ' + row.patternMapMoved!.toFixed(1) + ' px)' : ''), rows.filter((row) => !worded(row) || byFlow(row)))
+  over('pattern', PATTERN.max, (row) => 'the pattern of the picture changes in place by ' + shown(row.pattern!, 2, PATTERN.max) + ' from frame ' + position(row.k, r) + ' to ' + CHANGE.frames + ' film frames later' + banded(row.patternBand) + chained(row, CHANGE.frames * r), rows.filter((row) => !worded(row) || byFlow(row)))
   const carriedBy = (row: PictureRow): string => (row.patternMapAlone === undefined ? 'carried by the camera\'s map and then one flow on what is left' : moving(row) && !outrun(row) ? 'carried by the chain of the ' + CHANGE.frames * r + ' flows from frame to frame, which parts from the camera\'s map by ' + row.patternMapMoved!.toFixed(1) + ' px where its drawer names ' + row.patternMapMoves!.toFixed(1) + ' px for the surface\'s own motion' : 'carried by the camera\'s map alone' + ((row.patternMapMoved ?? null) !== null ? ' (the chain of the flows parts from it by ' + row.patternMapMoved!.toFixed(1) + ' px)' : ''))
   for (const f of mapFaults(rows, PATTERN.max)) {
     const more = f.rows > 1 ? ' (' + f.rows + ' frames, first ' + position(f.first, r) + ')' : ''

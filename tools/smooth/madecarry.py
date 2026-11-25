@@ -159,7 +159,8 @@ def tool(folder):
     other = S.pictures(job([0, 1, 3], carry=True, depths=[depths[j] for j in (0, 1, 3)]))
     ball = S.pictures(job([0, 1, 2], carry=True))
     return {'plainKeys': sorted(plain.keys()), 'mainSame': all(plain[k] == beside[k] for k in plain), 'more': sorted(set(beside) - set(plain)), 'main': plain['pattern'][0],
-            'limits': beside['patternMapLimits'], 'clean': {k: beside[k][0] for k in beside if k.startswith('patternMap') and k != 'patternMapLimits'}, 'exchange': {k: other[k][0] for k in other if k.startswith('patternMap') and k != 'patternMapLimits'}, 'ball': ball['patternMap'][0], 'ballUnits': ball['patternMapUnits'][0], 'rows': [v is not None for v in beside['patternMap']]}
+            'limits': beside['patternMapLimits'], 'clean': {k: beside[k][0] for k in beside if k.startswith('patternMap') and k != 'patternMapLimits'}, 'exchange': {k: other[k][0] for k in other if k.startswith('patternMap') and k != 'patternMapLimits'}, 'ball': ball['patternMap'][0], 'ballUnits': ball['patternMapUnits'][0], 'rows': [v is not None for v in beside['patternMap']],
+            'jobs': [job(order, window=2, floor=0.25, grid=[16, 9], first=0, total=3, own=[0, 3], lead=0, tail=0) for order in ([0, 1, 2], [0, 1, 3])]}
 
 
 def main():

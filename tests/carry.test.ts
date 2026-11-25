@@ -4,7 +4,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { BLOOM, NOT_CARRIED as REFUSED_BY_RANGE, NOT_FOLLOWED, apart, byFlow, flowed, glowPx, look, mapFaults, mapOf, moving, outrun, shownRows, unfollowed, worded } from '../tools/smooth/maps'
+import { BLOOM, NOT_CARRIED as REFUSED_BY_RANGE, NOT_FOLLOWED, apart, byFlow, chained, flowed, glowPx, look, mapFaults, mapOf, moving, outrun, shownRows, unfollowed, worded } from '../tools/smooth/maps'
 
 interface Reading { value: number | null; at: [number, number] | null; share: number; on: number; by: { map: number; sky: number; flow: number } | null; rule: string | null; left: number | null; bulk: number | null; apart: number | null; no: string | null; refused: number | null; body: number | null; sky: number | null; alone: number | null; moves: number | null; moved: number | null }
 interface SkyFlow { value: number | null; share: number; far: number | null; farShare: number; none: [number | null, number | null]; limb: (number | null)[]; covered: number; coveredOnBody: number }
@@ -23,7 +23,7 @@ interface Made {
   skyFlow: { clean: SkyFlow; exchange: SkyFlow }
   refusal: { clean: Reading; shell: Reading; grounds: Reading }
   range: { off: number; none: boolean; reduced: number; units: number; picked: boolean; pickedSmall: number[]; near: number[] }
-  tool: { plainKeys: string[]; mainSame: boolean; more: string[]; limits: { bulkPx: number; apart: number }; main: number | null; clean: Record<string, unknown>; exchange: Record<string, unknown>; ball: number | null; ballUnits: number[] | null; rows: boolean[] }
+  tool: { plainKeys: string[]; mainSame: boolean; more: string[]; limits: { bulkPx: number; apart: number }; main: number | null; clean: Record<string, unknown>; exchange: Record<string, unknown>; ball: number | null; ballUnits: number[] | null; rows: boolean[]; jobs: Record<string, unknown>[] }
 }
 
 const LIMIT = 0.45
@@ -217,6 +217,21 @@ describe('the pattern of a pair read by the camera\'s own map, on made bodies wi
     expect(made.range.near[2]).toBe(0)
   })
 
+  it('is main\'s reader to the last digit with the flag off: the same jobs through this reader and through main\'s of 5179b435 give the same text', () => {
+    const through = (file: string, job: Record<string, unknown>): string => execFileSync('python3', [fileURLToPath(new URL(file, import.meta.url))], { input: JSON.stringify(job), encoding: 'utf8', stdio: ['pipe', 'pipe', 'ignore'], maxBuffer: 1 << 24 })
+    expect(made.tool.jobs).toHaveLength(2)
+    const read = made.tool.jobs.map((job) => {
+      expect(Object.keys(job).some((k) => k === 'carry' || k === 'depths' || k === 'filmFrames')).toBe(false)
+      const mine = through('../tools/img/smooth.py', job)
+      expect(mine).toBe(through('./fixtures/reader-main-5179b435.py', job))
+      const out = JSON.parse(mine) as { pattern: (number | null)[] } & Record<string, unknown>
+      expect(Object.keys(out).some((k) => k.startsWith('patternMap'))).toBe(false)
+      return out.pattern[0] ?? null
+    })
+    expect(read[0]).toBe(made.tool.main)
+    expect(read[0]!).toBeLessThan(LIMIT)
+  }, 120_000)
+
   it('stands beside main\'s reader in the pictures part: main\'s numbers do not move, the new ones have keys of their own', () => {
     expect(made.tool.mainSame).toBe(true)
     expect(made.tool.plainKeys).toContain('pattern')
@@ -323,6 +338,19 @@ describe('what the map\'s reader judges and what it hands to the eye', () => {
     expect(apart([no(1, 0.2), no(2, 0.9), no(3, null)], 0.45, 0.45)).toEqual([])
     expect(mapFaults([no(1, 0.2), no(2, 0.9)], 0.45)).toEqual([])
     expect(mapFaults([no(1, 0.2), no(2, 0.9), no(3, null)], 0.45)).toEqual([{ kind: 'refused', rows: 1, first: 3, k: 3, value: null, no: REFUSED_BY_RANGE }])
+  })
+
+  it('leaves main\'s red line as it is on a row read without the map, and names the carry and its distance from the map on a row read beside it', () => {
+    const plain = { k: 1, pattern: 0.6 }
+    expect(chained(plain, 16)).toBe('')
+    expect(worded(plain)).toBe(false)
+    expect(byFlow(plain)).toBe(false)
+    expect(mapFaults([plain], 0.45)).toEqual([])
+    expect(apart([plain], 0.45, 0.45)).toEqual([])
+    expect(shownRows([plain], 0.45, 0.45, 6)).toEqual([])
+    expect(look(plain, 0.45)).toBe(false)
+    expect(chained({ k: 1, pattern: 0.6, patternMap: null, patternMapNo: REFUSED_BY_RANGE, patternMapMoved: 25.84 }, 16)).toBe(', the later frame carried by the chain of the 16 flows from frame to frame (that chain parts from the camera\'s map on the body by 25.8 px)')
+    expect(chained({ k: 1, pattern: 0.6, patternMap: null, patternMapMoved: null }, 16)).toBe(', the later frame carried by the chain of the 16 flows from frame to frame')
   })
 
   it('judges a rigid body by the map alone and a body whose drawer names its surface\'s own motion by the picture\'s own flow, within that motion of the map', () => {

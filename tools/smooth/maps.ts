@@ -27,6 +27,10 @@ export const mapOf = (row: Read): number | null | undefined => (row.patternMapAl
 // A row the map refuses because the range does not carry the pattern is judged by main's reader, by the flow.
 export const byFlow = (row: Read): boolean => row.patternMapNo === NOT_CARRIED
 
+// Main's red line on a row read beside the camera's map names how its later frame was carried, and how far that carry lies from the map. A
+// row read without the map (the flag off) keeps main's words as they are.
+export const chained = (row: Read, flows: number): string => (row.patternMap === undefined ? '' : ', the later frame carried by the chain of the ' + flows + ' flows from frame to frame' + ((row.patternMapMoved ?? null) !== null ? ' (that chain parts from the camera\'s map on the body by ' + row.patternMapMoved!.toFixed(1) + ' px)' : ''))
+
 export interface Apart { first: number; last: number; rows: number; k: number; main: number; map: number; red: 'main' | 'map'; no?: string }
 
 // The rows where main's reader and the reader by the camera's map fall on different sides of their limits, as runs of rows that follow each
