@@ -8556,3 +8556,39 @@ Read of the report (the name 27624e6f, rate 2, 82.31 s a frame): rows over the l
 4760 + 1/2 and stands at 0.58 from 4761 on (pattern 0.39 falling to 0.16). The place at 4760: pixel (894, 902), on the
 dark near ground at the bottom of the frame under the first streamer. My pairs stopped at 4752 (to 4760); the pairs
 from 4753 to 4761 were never drawn here (named as unproven in every mail).
+
+## MAIL 1321 from the Builder (/root), 22:21 UTC (read 22:22 by my clock, during control batch W; word for word)
+
+> MAIL 1321 from the Builder (/root), 22:21 UTC. nq6-05 is back, MEASURED here on your name 27624e6f: rise 1 of 2 is green where main is red. Pattern 0.3572 at 4950 against main's 1.3434 at 4986; level step 0.0880 at 4985 against 0.1591 at 4979; pop 1.0937 at 4968 against main's 1.0816 at 4963, both under the limit of 1.2, so no line by d318.
+> So the name is held by one part alone: dive 4 of 4, pattern 0.6171 at 4760 against main's green 0.1357 (limit 0.45). Everything else of the name is at or better than main. nq8-01 is still out on a machine; I send its row when it lands.
+> What I need from you: the cause of the pattern at 4760 on the dive's last part, shown on the panel, and a cure that keeps the rise as it now is. Name the commit when it stands; I put it through the same readers at once.
+
+## Lab log 22:01 to 22:25 UTC: the dive's end read by my copy of the report's path; the knot at 4760 found and named by layers
+
+All pair numbers are my proxy (the report's own path, `W/chainr.py`, on my preview frames, 960 wide, draft, rate 2), STATED.
+
+- 22:03:04 to 22:11:04: the merge as it stands, 4760 + 1/2 to 4769 at half frames (N13w, 18 frames, about 26 s each; 4752
+  to 4760 are N12v's, equal to the merge to the byte where compared). Poses `W/poses-end.json` (weave.ts, 4752 to 4769).
+- Looks pushed 22:04 (ff54ce6b, 8 looks): 4860 on the merge beside the approved (G17 0.507, 90.7 s).
+- The rows (limit 0.45; the larger of onward and from the other end; the Builder's row on the name in brackets):
+  4753 0.25, 4753 + 1/2 0.50 (0.60), 4754 0.25 (0.24), 4754 + 1/2 0.29 (0.53), 4755 0.40 (0.31), 4755 + 1/2 0.26, 4756
+  0.34, 4756 + 1/2 0.37, 4757 0.33, 4757 + 1/2 0.35, 4758 0.30, 4758 + 1/2 0.41, 4759 0.46 (0.61), 4759 + 1/2 0.69
+  (0.58), 4760 0.78 (0.62), 4760 + 1/2 0.64 (0.60), 4761 0.29 (0.39). Every one over 0.26 is the reading from the other
+  end; onward 0.23 to 0.29 in every row. So it stands on the tree as it is now (the cure of 4753 did not reach it), and
+  my copy sees it: I had never drawn the pairs after 4752.
+- The place: (904, 926) of 1920 in frame 4760; in the later frame at 480 px the knot (pattern over 0.40) is 377 px, x 209
+  to 241, y 231 to 248, on the dark near ground at the bottom of the frame under the foot of the first streamer; level
+  there about (10, 25, 50). The share judged is 0.07 (the reading from the other end counts only where the earlier frame
+  is drawn smaller). Sheets `/tmp/end-knot.jpg`, `/tmp/end-pair.jpg` looked at: to the eye the two crops are the same
+  mottled dark ground, the later a little darker.
+- Control batch W (22:12:33 to 22:24:24, `/tmp/wctl.sh`, frames 4760 and 4768 at the preview, the way of N13w kept;
+  pattern / mean in the knot): the tree 0.78 / 0.65.
+  - WK the clock stopped at -3.2 s: 0.75 at another place (386, 226: a streamer, which the kept way no longer fits) / 0.05.
+    THE CLOCK.
+  - W1 cirrus cast 0: 0.09 / 0.05. THE SHADOW.
+  - W6 first streamer density 0: 0.26 / 0.06. THE FIRST STREAMER'S.
+  - W5 low haze depth 0: 0.47 / 0.42 (the low haze carries the same shadow).
+  - W3 deck relief 0: 0.93 / 0.78 (worse: the flat deck shows the shadow alone).
+  - W2 deck run 0 points 0.78 / 0.65; W0 veil depth 0 0.71 / 0.59; W4 wisp light 0 0.78 / 0.65: no part.
+  So: the first streamer's shadow on the dark near deck, sliding with the clock over the deck under it, as at 4753; the
+  cure of 985341693 took the streamer's thick and thin parts out of the shadow and that was not all of it.
