@@ -1,71 +1,71 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T03:12:43.281Z",
- "head": "f2a418731e617071cfe34e445e300fa9ad997e0f",
- "note": "MAIL 815 5c: survey from the eye of T; in the dive the ground's picture ends at the lower border of the frame of T, so the line needs new picture below it; rise has picture to 1.85 heights, being laid",
+ "pushed": "2026-11-25T03:49:47.173Z",
+ "head": "a45346566e95e2554fc6390b9c6d2afbd8e81f02",
+ "note": "slabs 1337 to 1340: cause is the end of the ground inside the frame of T; trial with a continuation of the ground under it (upper f2a41873, lower trial); rise round step r3 rejected; limb strip 1604 to 1616",
  "looks": [
   {
-   "time": "2026-11-25T03:12:42.697Z",
-   "file": "20261125031242697-note-survey-dive.jpg",
-   "source": "../../../../tmp/v/st/c0/survey-dive.jpg",
+   "time": "2026-11-25T03:49:46.509Z",
+   "file": "20261125034946509-note-rise-limb-ul.jpg",
+   "source": "../../../../tmp/v/st/c0/rise-limb-ul.png",
    "kind": "note",
-   "label": "the close side at the T of the dive from the eye of T turned left, down and right (survey), and its layers: the ground ends where the frame of T ends, under it nothing",
+   "label": "venus rise-limb-ul (MAIL 876 slabs, MAIL 883)",
    "stop": "venus"
   },
   {
-   "time": "2026-11-25T03:12:42.095Z",
-   "file": "20261125031242095-note-r2-1332-right.jpg",
-   "source": "../../../../tmp/v/st/c0/r2-1332-right.jpg",
+   "time": "2026-11-25T03:49:45.766Z",
+   "file": "20261125034945766-note-r3-1554.jpg",
+   "source": "../../../../tmp/v/st/c0/r3-1554.png",
    "kind": "note",
-   "label": "trial, not kept as it stands: dive 1332 right lower quarter at 1 to 1, f2a41873 left, plates with the picture of the aprons laid round the frame of T right; the straight end of the near towers stays: measured, the close side's ground ends at 0.99 to 1.03 image heights of T in the dive, there is no picture below the frame of T",
+   "label": "venus r3-1554 (MAIL 876 slabs, MAIL 883)",
    "stop": "venus"
   },
   {
-   "time": "2026-11-25T02:44:35.485Z",
-   "file": "20261125024435485-note-lay.jpg",
-   "source": "../../../../tmp/v/st/c0/lay.jpg",
+   "time": "2026-11-25T03:49:45.214Z",
+   "file": "20261125034945214-note-takes-12.jpg",
+   "source": "../../../../tmp/v/st/c0/takes-12.jpg",
    "kind": "note",
-   "label": "f2a41873 dive 1334 (top) and 1329 with the layers: the ground (yellow) ends on a straight line, the plates (pale) below it hold another picture",
+   "label": "venus takes-12 (MAIL 876 slabs, MAIL 883)",
    "stop": "venus"
   },
   {
-   "time": "2026-11-25T02:44:34.884Z",
-   "file": "20261125024434884-note-plate-c.jpg",
-   "source": "../../../../tmp/v/st/c0/plate-c.jpg",
+   "time": "2026-11-25T03:49:44.642Z",
+   "file": "20261125034944642-note-slabs-11.jpg",
+   "source": "../../../../tmp/v/st/c0/slabs-11.png",
    "kind": "note",
-   "label": "f2a41873 plate c of the dive from above: red the frame of T (inside it the picture of the place laid back), green the canvas of the ground, blue the aprons; outside red the old plate, the cause of the straight lines at 1322 to 1339",
+   "label": "venus slabs-11 (MAIL 876 slabs, MAIL 883)",
    "stop": "venus"
   },
   {
-   "time": "2026-11-25T02:31:36.010Z",
-   "file": "20261125023136010-note-cmpB.jpg",
-   "source": "../../../../tmp/v/st/q2/cmpB.jpg",
+   "time": "2026-11-25T03:49:43.904Z",
+   "file": "20261125034943904-note-g1-1323-mid.jpg",
+   "source": "../../../../tmp/v/st/c0/g1-1323-mid.png",
    "kind": "note",
-   "label": "trial, not a commit: left f2a41873, right the disc of the place with its forms at every height and the fine forms outside it by pixel width, frames 1308, 1314, 1317",
+   "label": "venus g1-1323-mid (MAIL 876 slabs, MAIL 883)",
    "stop": "venus"
   },
   {
-   "time": "2026-11-25T02:31:35.226Z",
-   "file": "20261125023135226-note-hold11.jpg",
-   "source": "../../../../tmp/v/st/q2/hold11.png",
+   "time": "2026-11-25T03:49:43.288Z",
+   "file": "20261125034943288-note-g1-1329-lr.jpg",
+   "source": "../../../../tmp/v/st/c0/g1-1329-lr.png",
    "kind": "note",
-   "label": "trial, not a commit: the hold 1259 at 1 to 1, left f2a41873, right with the forms of the place standing at every height inside a disc of 6 degrees round the place: a dark speckled patch on the night side",
+   "label": "venus g1-1329-lr (MAIL 876 slabs, MAIL 883)",
    "stop": "venus"
   },
   {
-   "time": "2026-11-25T02:16:51.590Z",
-   "file": "20261125021651590-note-cmp.jpg",
-   "source": "../../../../tmp/v/st/q1/cmp.jpg",
+   "time": "2026-11-25T03:49:42.690Z",
+   "file": "20261125034942690-note-g1-1338-strip.jpg",
+   "source": "../../../../tmp/v/st/c0/g1-1338-strip.png",
    "kind": "note",
-   "label": "trial, not a commit: left the build f2a41873, right the fine forms of the place by the width of a pixel on the ground over the globe's own colour (no show.heights), frames 1290, 1302, 1314",
+   "label": "venus g1-1338-strip (MAIL 876 slabs, MAIL 883)",
    "stop": "venus"
   },
   {
-   "time": "2026-11-25T01:53:11.837Z",
-   "file": "20261125015311837-note-star-step-1316h.jpg",
-   "source": "../../../../tmp/v/st/k7/star-step-1316h.jpg",
+   "time": "2026-11-25T03:49:41.802Z",
+   "file": "20261125034941802-note-g1-sheet.jpg",
+   "source": "../../../../tmp/v/st/c0/g1-sheet.jpg",
    "kind": "note",
-   "label": "dive film time 1316.5 over 1316.5078 at capture rate 128: the band cloud steps up where the sky glow passes 0.999 (shared sky shader), not a law of the stop",
+   "label": "venus g1-sheet (MAIL 876 slabs, MAIL 883)",
    "stop": "venus"
   }
  ]
