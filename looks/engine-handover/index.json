@@ -1,9 +1,37 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T21:48:43.902Z",
+ "pushed": "2026-11-25T22:01:38.067Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "five judged finals of Mars: vertices against fragment at most 1 step on all five; second drafts of the crests (v4) render",
+ "note": "crests v4 drafts: the teeth are gone at 2668, a one pixel dash at the sheets' top end to cure; the air's fourth commit in its suite",
  "looks": [
+  {
+   "time": "2026-11-25T22:01:36.916Z",
+   "file": "20261125220136916-note-v4-2668-z3.jpg",
+   "source": "../../../../tmp/crest/v4-2668-z3.png",
+   "kind": "note",
+   "label": "crests v4 draft, frame 2668, z3: base, out 0.35, out 0.5, tinted"
+  },
+  {
+   "time": "2026-11-25T22:01:36.077Z",
+   "file": "20261125220136077-note-v4-2668-z2.jpg",
+   "source": "../../../../tmp/crest/v4-2668-z2.png",
+   "kind": "note",
+   "label": "crests v4 draft, frame 2668, z2: base, out 0.35, out 0.5, tinted"
+  },
+  {
+   "time": "2026-11-25T22:01:35.182Z",
+   "file": "20261125220135182-note-v4-2668-z1.jpg",
+   "source": "../../../../tmp/crest/v4-2668-z1.png",
+   "kind": "note",
+   "label": "crests v4 draft, frame 2668, z1: base, out 0.35, out 0.5, tinted"
+  },
+  {
+   "time": "2026-11-25T22:01:34.199Z",
+   "file": "20261125220134199-note-v4-2668-over.jpg",
+   "source": "../../../../tmp/crest/v4-2668-over.png",
+   "kind": "note",
+   "label": "crests v4 draft, frame 2668, over: base, out 0.35, out 0.5, tinted"
+  },
   {
    "time": "2026-11-25T21:48:42.853Z",
    "file": "20261125214842853-note-f02325.jpg",
@@ -31,34 +59,6 @@
    "source": "../t-c2a/out/work/blur/fin5-vs/f02477.png",
    "kind": "note",
    "label": "Mars final tier f02477, the air's mean share at the mesh's vertices (fin5-vs); against the law by the fragment at most 1 step of 255"
-  },
-  {
-   "time": "2026-11-25T21:48:39.146Z",
-   "file": "20261125214839146-note-f02476.jpg",
-   "source": "../t-c2a/out/work/blur/fin5-vs/f02476.png",
-   "kind": "note",
-   "label": "Mars final tier f02476, the air's mean share at the mesh's vertices (fin5-vs); against the law by the fragment at most 1 step of 255"
-  },
-  {
-   "time": "2026-11-25T21:48:38.342Z",
-   "file": "20261125214838342-note-ov4-at2b.jpg",
-   "source": "../../../../tmp/crest/ov4-at2b.png",
-   "kind": "note",
-   "label": "crests v4: Mars L1 map, the teeth crest named by two points, the far sheet under the near side only along the ramp's own lines (233 sheet cells, 0 texels before the kept ground)"
-  },
-  {
-   "time": "2026-11-25T21:22:56.364Z",
-   "file": "20261125212256364-note-ov4-at2.jpg",
-   "source": "../../../../tmp/crest/ov4-at2.png",
-   "kind": "note",
-   "label": "design (c) rework: the same crest named by two points (the new key at), the neighbours stay the mesh's wall; the gap at 1643..1671 is a third bit of ramp that is not named"
-  },
-  {
-   "time": "2026-11-25T21:22:55.188Z",
-   "file": "20261125212255188-note-ov3-teeth.jpg",
-   "source": "../../../../tmp/crest/ov3-teeth.png",
-   "kind": "note",
-   "label": "design (c) rework: Mars L1 map around the teeth crest, left the paint, right every ramp found on the whole layer (green near half, red far half, white the cut, yellow cells drawn as sheets, cyan cells with the far sheet under): three crests within a few cells, the cut lines between them are the zigzag fault"
   }
  ]
 }
