@@ -5356,3 +5356,55 @@ After a break in the session (00:53 to 00:57) the job was found running as left;
   that the picture parts by batch 6's reader are running. Its text is kept in /tmp/v/mail/named5.md.
 - After the mail: watch r59; mail the rise's lines when they are in, then the rest. If the new reader reads
   a line red: say so at once, find the frame, cure it within 90 minutes of the mail.
+
+## 02:48 UTC Nov 25. After the fourth NAMED mail (88ba238): what is running, what was found, what comes next
+
+- State: head and remote head 88ba2385ea8a0e9f2bb77ba8dd5eefabf071fe5e (merge of main 75102d4, base
+  7fd2923; main's change was kit/PROGRESS.md only: status 276 and d263). The NAMED mail went out about
+  02:40 (text in /tmp/v/mail/named5.md). It says which numbers come from which engine (7026711, af6ba5f,
+  7fd2923), that on 7fd2923 only tsc, vitest, the finals of 3465 and 3720 and the path part are measured,
+  and that my own run of the picture parts by batch 6's reader goes on (rise, then dive, then parity,
+  place, G13).
+- Read in kit/PROGRESS.md on main, no mail to me. d261: batch 6 moves no picture (115 of 115 draft frames
+  equal) and the new reader's proving run on main's Saturn pictures is green. d263, written about another
+  stop: a commit that brings new visible faults and moves a judged frame outside its folders is not taken;
+  a builder does not draw the pictures part of dive and rise itself, the Builder's machines draw it at
+  every NAMED line, and slices on request.
+- Decision: r59 runs until the rise's pictures are read (about 03:01), because the reader is new and my
+  rise's pop stood at 1.196 of 1.2 by the old one. Then I stop the job before the dive unless the Builder
+  writes otherwise, and the machine goes to draft trials of the cures. Dive, parity, place and G13 on the
+  newest engine are then his machines' numbers, not mine, and the mail says so.
+- CORRECTION to the entry above ("FOUND for round item 4"): the row of dark single pixels on the upper
+  limb is of the draft tier only. The finals of 3465, 3567 and 3720 at six times
+  (/tmp/v/r58/limbs_final.png, in the looks) show a smooth limb with no dots. So it is no film fault and
+  no finding for item 4. Lesson: a fault seen at the draft tier is checked at the final tier before it is
+  called a fault of the film. Item 4 is still open and not found.
+- Looks pushed 02:47: the finals' limbs at six times; the approved close image beside final 3720 whole,
+  the right foot region at full size, the lower left near field at full size.
+- Reading of the approved image against final 3720 (full size crops, numbers are rows of the 1920 by 1080
+  picture at the right foot, x about 1500):
+  - 21, the foot. Approved: the lit globe ends at y 572 with a grey shadow band under it, dim grey ringlets
+    from there to the bright rings, which begin at y 652. Mine: the globe runs to y 604, a tan band of about
+    11 rows sits where the grey shadow band should be, the bright rings begin at y 724.
+  - 22, the globe's shadow on the rings. Approved: grey ringlets can be read under the night side. Mine:
+    a near black wedge.
+  - 24, the dark gap. Approved: blacker and wider than mine, with a soft upper edge and thin dark grey
+    ringlets inside it.
+  - 23, the near field. Approved: crisp slate, pink and cream ringlets with fine sparkling grains. Mine:
+    grey with pale dashes.
+- Code facts for 22, read while the rise renders. The code look (sheet.ts) shades the ice inside the
+  globe's shadow with mix(uFloor, 1, lit) times uShade.z, uFloor from sheet.json shadow.floor
+  [0.006, 0.008, 0.012]. The far look inside the model (keptSheet) has its own floor:
+  uKFloorHold times (uKFloorTone.x + uKFloorTone.y * dense) times ramp times body. Which of the two looks
+  a pixel shows is decided per pixel by distance (wfar, skim.json handover.kept.reach). Not known yet
+  which look draws the black wedge at 3720: a draft trial decides.
+- Plan for 22: a fill of the shadow as a slow grade by the height of the lens, a table in skim.json and a
+  function in grade.ts beside gradeShare, zoneShare, innerShare, duskAt, dustAt and hazeDayAt, none at the
+  hold's heights so the hold keeps its bytes, the same in both looks so no exchange shows. Target at 3720:
+  grey ringlets under the night side. By mail 785 a slow grade by height through the whole move is allowed;
+  a layer that comes in by height is not: the fill changes the tone of ice that is there at every height.
+- Lens heights over the ring plane (out/scratch/lens.ts): 3700 0.395, 3720 0.362, 3740 0.333, 3760 0.318
+  (the lowest), 3780 0.335, 3800 0.391, 3810 0.434, 3820 0.534, 3832 0.823, 3840 1.132.
+- Order of work after the rise is read: 22, 21, 24, 23 (round items 1 and 2), each by draft trials at 3720
+  with 3465 checked for its bytes; then item 3 (the globe: paler, grey blue band near the top limb, tight
+  terminator to a black night side); item 5 under mail 729's condition; item 4 (not found yet).
