@@ -1,71 +1,71 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T04:18:58.982Z",
- "head": "6df8bbd2a262a52a7ee211756d09d896b9a9bf41",
- "note": "the dive's sky proven at 1920 on every frame 4716 to 4762; frame law for the scene from code committed (1920 unchanged to the byte); tests 62 of 62 on the merge of main 7ecd813b; controls for the swirl and the night side render now, then the rise at 1920",
+ "pushed": "2026-11-25T04:42:49.743Z",
+ "head": "285f709f6a2e19544e51e8c4b3ccb55f8ba7f29c",
+ "note": "the rise drawn on every frame 4945 to 5030 at the preview and looked at: no exchange at the change of view, but the engine's Milky Way core sweeps the right side from 4988 to 5009; causes named for the swirl (the storm's dark and rings) and the night side (the map's clouds, the fall's power by channel); 1920 frames of the rise render now",
  "looks": [
+  {
+   "time": "2026-11-25T04:42:49.122Z",
+   "file": "20261125044249122-note-point4-specks.jpg",
+   "source": "out/work/nep/weave/ev/point4-specks.jpg",
+   "kind": "note",
+   "label": "point 4: main's own picture at 4720 (draft, 1920, 8x): the red and green specks stand in the web set and in the full set alike (23 red and 4 green pixels against 24 and 5); on my head none on the deck",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T04:42:48.566Z",
+   "file": "20261125044248566-note-night2-4713.jpg",
+   "source": "out/work/nep/weave/ev/night2-4713.jpg",
+   "kind": "note",
+   "label": "controls for the night side at 4713 (native, lifted 5x): head, night flatten off (22 px move by 1 level), fall power neutral (the pink turns blue), the map alone (the lumps stand): the lumps are the map's clouds, the tint is the fall's power by channel",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T04:42:48.007Z",
+   "file": "20261125044248007-note-swirl2-4720.jpg",
+   "source": "out/work/nep/weave/ev/swirl2-4720.jpg",
+   "kind": "note",
+   "label": "controls for the swirl with the dark eye at 4720 (preview, 2x): head, arms off, collar off, the storm's dark and rings at 0, the globe's map alone. It goes only with dark and rings at 0: the cause is the storm block of the scene from code",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T04:42:47.445Z",
+   "file": "20261125044247445-note-r1p-rise-5001.jpg",
+   "source": "out/work/nep/weave/ev/r1p-rise-5001.jpg",
+   "kind": "note",
+   "label": "the rise, every frame 5001 to 5012: the Milky Way core crosses the upper right corner and leaves over the top edge at 5009 (corner box red 134 of 255 at 5006, the judged frame); the rings and Triton come in by the camera",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T04:42:46.818Z",
+   "file": "20261125044246818-note-r1p-rise-4989.jpg",
+   "source": "out/work/nep/weave/ev/r1p-rise-4989.jpg",
+   "kind": "note",
+   "label": "the rise, every frame 4989 to 5000: the engine's Milky Way core comes in over the lower right at 4988 and runs up the right side behind the limb; it moves with the stars (one sky turn, the camera turns), no exchange, but it comes: named red",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T04:42:46.116Z",
+   "file": "20261125044246116-note-r1p-rise-4953.jpg",
+   "source": "out/work/nep/weave/ev/r1p-rise-4953.jpg",
+   "kind": "note",
+   "label": "the rise, draft preview, every frame 4953 to 4964, across the change of view at 4957: nothing comes or goes at the change (frame step mean 8.51 at 4956, 9.17 at 4957); the streamer's next piece comes in over the lower edge at 4960",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T04:42:45.262Z",
+   "file": "20261125044245262-note-4860-f1p.jpg",
+   "source": "out/work/nep/weave/ev/4860-f1p.jpg",
+   "kind": "note",
+   "label": "4860 draft preview beside the approved close, 3ca662a4, no change of the stop's code since: G17 proxy median 1.077 p25 0.348; the plain's box (24, 58, 98) against (90, 134, 176), the haze is not built; 22 s a draft frame at the preview in the surface view, 5 s on the globe side, 70 s at 1920",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T04:18:58.168Z",
    "file": "20261125041858168-note-agree-4713.jpg",
    "source": "out/work/nep/weave/ev/agree-4713.jpg",
    "kind": "note",
    "label": "frame law (c), 4713: the 1920 frame halved, the preview after, and the difference of the preview against it before and after (6x): the patch on the scene from code is gone, the rest is the map's cloud edges and the stars",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T04:18:57.497Z",
-   "file": "20261125041857497-note-p1-corner-4748.jpg",
-   "source": "out/work/nep/weave/ev/p1-corner-4748.jpg",
-   "kind": "note",
-   "label": "proof (a), 1920 draft: the upper right corner every frame 4748 to 4762, lifted 2x: the same stars across the change of view at 4758, shift 10, 9, 8 px a frame; nothing comes or goes",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T04:18:56.854Z",
-   "file": "20261125041856854-note-judged-f1p.jpg",
-   "source": "out/work/nep/weave/ev/judged-f1p.jpg",
-   "kind": "note",
-   "label": "the four judged frames, draft preview, 3ca662a4: 4605 and 5006 with the engine's sky and the engine's Sun, no plate",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T04:18:55.975Z",
-   "file": "20261125041855975-note-4860-f1p.jpg",
-   "source": "out/work/nep/weave/ev/4860-f1p.jpg",
-   "kind": "note",
-   "label": "4860 draft preview beside the approved close, 3ca662a4 (one sky, no plate, frame law for the scene from code): G17 proxy median 1.077 p25 0.348; the plain's box (24, 58, 98) against (90, 134, 176): the haze of MAIL 840 point 4 is not built; 22 s a draft frame at the preview, 70 s at 1920",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T03:52:39.227Z",
-   "file": "20261125035239227-note-p1-corner-4732.jpg",
-   "source": "out/work/nep/weave/ev/p1-corner-4732.jpg",
-   "kind": "note",
-   "label": "proof (a), 1920 draft: the upper right corner every frame 4732 to 4747, lifted 2x: dark sky, the same stars sliding, the limb sinks out; nothing comes or goes",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T03:52:37.302Z",
-   "file": "20261125035237302-note-p1-corner-4716.jpg",
-   "source": "out/work/nep/weave/ev/p1-corner-4716.jpg",
-   "kind": "note",
-   "label": "proof (a), 1920 draft, fdebc88a: the upper right corner (480 by 270 px native, lifted 2x) every frame 4716 to 4731. One rigid sky, the star field shifts 55 to 47 px a frame by the camera's turn; the engine's Milky Way haze slides out with it from 4716 to 4719; no field comes; 25 to 37 s a frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T03:32:33.290Z",
-   "file": "20261125033233290-note-sky-k2b.jpg",
-   "source": "out/work/nep/weave/ev/sky-k2b.jpg",
-   "kind": "note",
-   "label": "top strips 4660, 4690, 4707, 4716 at preview with the one sky, no plate: the engine's Milky Way stands upper right at 4707",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T03:32:32.495Z",
-   "file": "20261125033232495-note-hold-k2.jpg",
-   "source": "out/work/nep/weave/ev/hold-k2.jpg",
-   "kind": "note",
-   "label": "4605 draft preview beside the hero: the hold's sky plate is gone (fdebc88a), the engine's sky and the engine's Sun stand; planet bytes unchanged; 22 s a draft frame",
    "stop": "neptune"
   }
  ]
