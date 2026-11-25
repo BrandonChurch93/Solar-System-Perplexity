@@ -1,9 +1,16 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T09:48:34.275Z",
- "head": "5de1a1142071c1928fc61a87a4185225f59d220a",
- "note": "Mars under the shutter law, rows across the px where the share comes in; question 4 answered by the twin, commit 4 being built",
+ "pushed": "2026-11-25T10:07:53.685Z",
+ "head": "66a1302f65cf5b3ded1e27eab6ab4cbef621cf19",
+ "note": "commit 4 (the measure reads the twin's globe, list empty) written, plans and shots byte equal, suite running; Mars trial rows",
  "looks": [
+  {
+   "time": "2026-11-25T10:07:52.217Z",
+   "file": "20261125100752217-note-m-rise-in-c.jpg",
+   "source": "../../../../tmp/law/m-rise-in-c.png",
+   "kind": "note",
+   "label": "Mars rise in at review, 2671 to 2673, 1 to 1 crop: shutter law from 6, 5 and 4.5 px to 14 (trials on the old px; the rows are drawn again on the true px)"
+  },
   {
    "time": "2026-11-25T09:48:33.219Z",
    "file": "20261125094833219-note-m-rise-in-a.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/law/dots/ma-2427-pair-1x.png",
    "kind": "note",
    "label": "Mars 2427 review (49 samples, 29.0 px), x 1200..1920 y 600..1080 at 1 to 1: box, ends 0.5 (scratch). The painted strokes become land in motion, cliffs and ridges keep their shape"
-  },
-  {
-   "time": "2026-11-25T07:36:17.386Z",
-   "file": "20261125073617386-note-fl-2757-cap-3x.jpg",
-   "source": "../../../../tmp/law/dots/fl-2757-cap-3x.png",
-   "kind": "note",
-   "label": "Flight 2757 review, the white patch x 690..930 y 290..500 at 3 times: box, ends 0.5 (scratch). The fine lines along the way stay, their blunt ends taper"
   }
  ]
 }
