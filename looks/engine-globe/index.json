@@ -1,9 +1,17 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-25T12:36:42.318Z",
- "head": "d69b8640fb1f481dbb58cf26cb831f3bd2ecd392",
- "note": "MAIL 1072, measurement only: with the air off the red of the Mars dive falls only at 2456 to 2459; the far ground stays red from 2458 and the near ground from 2465. Bad as it stands.",
+ "pushed": "2026-11-25T13:35:59.922Z",
+ "head": "69cf344886789d03b77fffd8f77ceabe272c757f",
+ "note": "MAIL 1092, scratch, nothing committed. Left: Mars as it is (69cf3448), frames 2325, 2427, 2455, 2464, draft. Right: the globe and its shell under the one air law (option airLaw, a stand in of my own for the chunk until handover_engineer's file arrives), numbers of my own guess (density 14.7 a radius, scale height 0.0045, light 0.5 0.42 0.34), halo and glint off, grazing air off. Not a look to judge: it shows that the option draws. Seen: the blue rim of the hold is gone with halo and glint; at 2464 the pale band at the horizon is wider.",
  "looks": [
+  {
+   "time": "2026-11-25T13:35:58.998Z",
+   "file": "20261125133558998-note-mars-law-sheet.jpg",
+   "source": "../m1092/mars-law-sheet.jpg",
+   "kind": "note",
+   "label": "air law on the globe, scratch",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T12:36:41.724Z",
    "file": "20261125123641724-note-mars-1072-crops.jpg",
@@ -58,14 +66,6 @@
    "source": "../m1032/mars-2460-far.png",
    "kind": "note",
    "label": "Mars dive on 22820b17, frame 2460 far ground at pixel 1260, 60: the same ground 8 film frames later lies in the haze under the horizon",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T11:13:07.815Z",
-   "file": "20261125111307815-note-mars-2460.jpg",
-   "source": "../m1032/mars-2460.png",
-   "kind": "note",
-   "label": "Mars dive on 22820b17, frame 2460 against 8 film frames later: reader with its flows (A), real pair carried by the range pictures (E), one picture redrawn (C)",
    "stop": "mars"
   }
  ]
