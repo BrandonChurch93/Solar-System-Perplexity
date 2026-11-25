@@ -396,6 +396,16 @@
   ],
   "bandShare": 0.35
  },
+ "relay": {
+  "old": "e1a94e2f952da478fbf3a57ea307a2a8c46b0fbe",
+  "base": "",
+  "tiles": "u-",
+  "featherPx": 240,
+  "ringDeg": [4.5, 5.5],
+  "alpha": [0.0, 0.5],
+  "clip": [0.6, 0.9],
+  "floor": 0.05
+ },
  "first": {
   "old": "27f1ba3e",
   "widthDeg": 76,
