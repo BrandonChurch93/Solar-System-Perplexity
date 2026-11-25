@@ -1,9 +1,38 @@
 {
  "folder": "belt",
- "pushed": "2026-11-25T09:09:52.357Z",
- "head": "96a7a7eecdc25b7112ea7dcc9fa8d46aef79631f",
- "note": "far Sun: map of place, state before the NAMED",
+ "pushed": "2026-11-25T10:11:59.635Z",
+ "head": "47c2ef0da731c6d54b1f8cb6d81788f6421e11fd",
+ "note": "47c2ef0d: map of place at 615 (final 2.57), spots back through the handover; 470 globe against far Sun worn at burn 0",
  "looks": [
+  {
+   "time": "2026-11-25T10:11:58.874Z",
+   "file": "20261125101158874-note-limb3840-1to1-96a7a7ee-left-map-right.jpg",
+   "source": "../../../../tmp/farsun/send/limb3840-1to1-96a7a7ee-left-map-right.jpg",
+   "kind": "note",
+   "label": "47c2ef0d limb3840-1to1-96a7a7ee-left-map-right.jpg"
+  },
+  {
+   "time": "2026-11-25T10:11:58.158Z",
+   "file": "20261125101158158-note-pair615-box-map12-final.jpg",
+   "source": "../../../../tmp/farsun/send/pair615-box-map12-final.jpg",
+   "kind": "note",
+   "label": "47c2ef0d pair615-box-map12-final.jpg"
+  },
+  {
+   "time": "2026-11-25T10:11:57.433Z",
+   "file": "20261125101157433-note-470-globe-left-farsun-worn-share1-burn0-right.jpg",
+   "source": "../../../../tmp/farsun/send/470-globe-left-farsun-worn-share1-burn0-right.jpg",
+   "kind": "note",
+   "label": "47c2ef0d 470-globe-left-farsun-worn-share1-burn0-right.jpg",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T10:11:56.542Z",
+   "file": "20261125101156542-note-seam-474-480-485-490-500-96a7a7ee-above-cured-below.jpg",
+   "source": "../../../../tmp/farsun/send/seam-474-480-485-490-500-96a7a7ee-above-cured-below.jpg",
+   "kind": "note",
+   "label": "47c2ef0d seam-474-480-485-490-500-96a7a7ee-above-cured-below.jpg"
+  },
   {
    "time": "2026-11-25T09:09:50.562Z",
    "file": "20261125090950562-note-pair1016-map12.jpg",
@@ -31,35 +60,6 @@
    "source": "../../../../tmp/farsun/send/pair615-final-96a7a7ee.jpg",
    "kind": "note",
    "label": "615 box final tier, approved left, 96a7a7ee right, blur 4.34"
-  },
-  {
-   "time": "2026-11-25T08:05:37.497Z",
-   "file": "20261125080537497-note-row474-480-485-96a7a7ee.jpg",
-   "source": "../../../../tmp/farsun/send/row474-480-485-96a7a7ee.jpg",
-   "kind": "note",
-   "label": "474, 480, 485 on 96a7a7ee"
-  },
-  {
-   "time": "2026-11-25T08:05:36.734Z",
-   "file": "20261125080536734-note-row490-500-96a7a7ee.jpg",
-   "source": "../../../../tmp/farsun/send/row490-500-96a7a7ee.jpg",
-   "kind": "note",
-   "label": "490 and 500 on 96a7a7ee"
-  },
-  {
-   "time": "2026-11-25T08:05:35.992Z",
-   "file": "20261125080535992-note-row539-540-96a7a7ee.jpg",
-   "source": "../../../../tmp/farsun/send/row539-540-96a7a7ee.jpg",
-   "kind": "note",
-   "label": "539 and 540 on 96a7a7ee"
-  },
-  {
-   "time": "2026-11-25T08:05:35.281Z",
-   "file": "20261125080535281-note-sun717-33cc2353-left-96a7a7ee-right.jpg",
-   "source": "../../../../tmp/farsun/send/sun717-33cc2353-left-96a7a7ee-right.jpg",
-   "kind": "note",
-   "label": "717, the far Sun: 33cc2353 left, 96a7a7ee right",
-   "stop": "sun"
   }
  ]
 }
