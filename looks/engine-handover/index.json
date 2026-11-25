@@ -1,9 +1,53 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T15:34:28.840Z",
+ "pushed": "2026-11-25T16:16:09.379Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "gate G3 drawing on the merge 4bae298b; the plumb of the glide measured on poses (Sun rise 3.42 to 0.63 deg beyond the ends), no new frames yet",
+ "note": "plumb named (e9d262a4); design c study of Mars's stepped cells; the shutter's ends: what main has for Earth",
  "looks": [
+  {
+   "time": "2026-11-25T16:16:08.765Z",
+   "file": "20261125161608765-note-earth-1857-review-ends-ll-3x.jpg",
+   "source": "../../../../tmp/ends/earth-1857-review-ends-ll-3x.png",
+   "kind": "note",
+   "label": "Earth 1857 review with the ends 0.5, part of the lower left at 3 times",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T16:16:08.210Z",
+   "file": "20261125161608210-note-earth-1857-review-ends-ll-1to1.jpg",
+   "source": "../../../../tmp/ends/earth-1857-review-ends-ll-1to1.png",
+   "kind": "note",
+   "label": "Earth 1857 review with the shutter's ends 0.5 (this morning, 7e3da15a), lower left at 1 to 1",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T16:16:07.599Z",
+   "file": "20261125161607599-note-z2668.jpg",
+   "source": "../../../../tmp/saw/z2668.png",
+   "kind": "note",
+   "label": "Mars 2668 draft, the crest of the teeth: lit texels pulled apart cell by cell"
+  },
+  {
+   "time": "2026-11-25T16:16:07.017Z",
+   "file": "20261125161607017-note-cells-L2.jpg",
+   "source": "../../../../tmp/saw/cells-L2.png",
+   "kind": "note",
+   "label": "design c study: Mars layer L2, stepped cells marked"
+  },
+  {
+   "time": "2026-11-25T16:16:06.412Z",
+   "file": "20261125161606412-note-cells-L0.jpg",
+   "source": "../../../../tmp/saw/cells-L0.png",
+   "kind": "note",
+   "label": "design c study: Mars layer L0, stepped cells marked"
+  },
+  {
+   "time": "2026-11-25T16:16:05.639Z",
+   "file": "20261125161605639-note-cells-L1.jpg",
+   "source": "../../../../tmp/saw/cells-L1.png",
+   "kind": "note",
+   "label": "design c study: Mars layer L1, cells that tear by 2 to 4 px (yellow), 4 px or more (orange), folded (red), at the alpha border (blue)"
+  },
   {
    "time": "2026-11-25T14:58:54.402Z",
    "file": "20261125145854402-note-al-topright.jpg",
@@ -17,48 +61,6 @@
    "source": "../../../../tmp/air/sheets/al-offb-pair.png",
    "kind": "note",
    "label": "engine-air smoke, NOT a fitted set: Mars 2481 and 2668 at draft, law off against the law with mars_place_builder's first fitted numbers and the knots at the mesh's vertices. The painting's own air is not baked out and the stop's old sky is still drawn: the dark band over the glow and the bright stars are the scratch, not a claim"
-  },
-  {
-   "time": "2026-11-25T14:41:28.315Z",
-   "file": "20261125144128315-note-al-knots-2477-left.jpg",
-   "source": "../../../../tmp/air/sheets/al-knots-2477-left.png",
-   "kind": "note",
-   "label": "SMOKE TEST, same made up numbers, 2477 left horizon at 2x: above with the law and the knots, below the law off. The far ground at the left falls to the floor at black because the painting holds less air than these numbers take out of it (it is not baked to them); the stop's numbers and bake are not in yet"
-  },
-  {
-   "time": "2026-11-25T14:41:27.578Z",
-   "file": "20261125144127578-note-al-knots-6.jpg",
-   "source": "../../../../tmp/air/sheets/al-knots-6.png",
-   "kind": "note",
-   "label": "SMOKE TEST, made up numbers (light 0.27 0.19 0.14, density 200, scale height 0.0009 radii, knots at 2, 1, 0 units under and at the rim with shares 0.3, 0.6, 1), the painting is NOT baked to them: draft frames 2477, 2481, 2560, 2600, 2668, 2673 of Mars with the air law and the light by height. Only to show that the frames draw and to time them: 3.8 to 4.0 s a sample against 2.5 to 2.8 without the knots"
-  },
-  {
-   "time": "2026-11-25T14:09:30.294Z",
-   "file": "20261125140930294-note-al-02668-horizon-3x.jpg",
-   "source": "../../../../tmp/air/sheets/al-02668-horizon-3x.png",
-   "kind": "note",
-   "label": "Mars 2668 at draft, the horizon 3 times: law off over law on, made up numbers"
-  },
-  {
-   "time": "2026-11-25T14:09:29.701Z",
-   "file": "20261125140929701-note-al-02477-horizon-3x.jpg",
-   "source": "../../../../tmp/air/sheets/al-02477-horizon-3x.png",
-   "kind": "note",
-   "label": "Mars 2477 at draft, the horizon 3 times: law off over law on, made up numbers"
-  },
-  {
-   "time": "2026-11-25T14:09:29.022Z",
-   "file": "20261125140929022-note-al-02477-off-on.jpg",
-   "source": "../../../../tmp/air/sheets/al-02477-off-on.png",
-   "kind": "note",
-   "label": "Mars 2477 at draft, air law smoke test: top the law off, bottom on with the same made up numbers. A soft darker band over the horizon, the sky's air too thick"
-  },
-  {
-   "time": "2026-11-25T14:09:28.364Z",
-   "file": "20261125140928364-note-al-02668-off-on.jpg",
-   "source": "../../../../tmp/air/sheets/al-02668-off-on.png",
-   "kind": "note",
-   "label": "Mars 2668 at draft, air law smoke test: top the law off, bottom on with made up numbers (light 0.27 0.19 0.14, density 45, scale height 0.0045). Ground stays, the sky band far too thick and flat, stars gone. The numbers are the stop's to fit"
   }
  ]
 }
