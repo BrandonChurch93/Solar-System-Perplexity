@@ -1,9 +1,33 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T10:51:35.125Z",
+ "pushed": "2026-11-25T11:10:48.009Z",
  "head": "63752893cb7ae9cf12b9651fe340d6ba5a826053",
- "note": "control tone.near 0 beside the fourth state (0.5) and before at 1290 and 1296, crop 950 to 1500 by 200 to 700, draft",
+ "note": "fourth state whole dive read: 41 rows over, 0.72; place strips at 1 to 1 show soft blots 1281 to 1293; fifth state on trial",
  "looks": [
+  {
+   "time": "2026-11-25T11:10:47.305Z",
+   "file": "20261125111047305-note-lr.jpg",
+   "source": "../../../../tmp/v/sh/w/lr.jpg",
+   "kind": "note",
+   "label": "fourth state, lower right limb 1273 to 1287 at 1 to 1: where the reader is over 0.45 at 1273 + 1/2 to 1277 + 1/2 (before the same, 0.63)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T11:10:46.626Z",
+   "file": "20261125111046626-note-p02.jpg",
+   "source": "../../../../tmp/v/sh/w/p02.jpg",
+   "kind": "note",
+   "label": "fourth state 63752893, the place at 1 to 1, whole frames 1284 to 1289, draft: soft blots among sharp streaks, not cured",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T11:10:45.843Z",
+   "file": "20261125111045843-note-p01.jpg",
+   "source": "../../../../tmp/v/sh/w/p01.jpg",
+   "kind": "note",
+   "label": "fourth state 63752893, the place at 1 to 1, whole frames 1278 to 1283, draft: soft blots among sharp streaks, not cured",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-25T10:51:34.093Z",
    "file": "20261125105134093-note-n0-d.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/v/sh/e-point.jpg",
    "kind": "note",
    "label": "MAIL 1014: the ground point of pixel 396, 232 at 1608 + 1/2 followed to 1616 + 1/2 at 5 to 1, third state, draft: the speckled ground comes up under the pale band of the limb",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T09:47:42.215Z",
-   "file": "20261125094742215-note-a3-1284.jpg",
-   "source": "../../../../tmp/v/sh/a3-1284.jpg",
-   "kind": "note",
-   "label": "dive 1284 at 1 to 1 round the place: first state, pair 0.0113 to 0.034, pair 0.063 to 0.095 (soft patch in the middle, still wrong)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T09:47:41.139Z",
-   "file": "20261125094741139-note-a3-cmp.jpg",
-   "source": "../../../../tmp/v/sh/a3-cmp.jpg",
-   "kind": "note",
-   "label": "dive 1278 1284 1290: before, first state, third state with the place arriving by the pixel on the ground 0.063 to 0.095 deg",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T09:25:16.981Z",
-   "file": "20261125092516981-note-ar-cmp-rise.jpg",
-   "source": "../../../../tmp/v/sh/ar-cmp-rise.jpg",
-   "kind": "note",
-   "label": "rise 1556 1566 1576 1586: tree of 8adf0940 (top), first state (middle, 1564 for 1566), third state in work (bottom), draft",
    "stop": "venus"
   }
  ]
