@@ -1,9 +1,17 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T22:43:28.916Z",
+ "pushed": "2026-11-25T22:49:41.981Z",
  "head": "ef1bbb3a14fd518810e596aa9c975e88fd5c84ff",
- "note": "22:44 trial 17 on the 0.7 and 3.8 plates; controls A to F for the rise's pattern on /root's machines; 1.6 still writing",
+ "note": "22:50 BAD: trial 17's plain on the 0.7, 1.6 and 3.8 plates is a flat felt, 3.8 with a weave; those three are being written again with the plain by code on the 0.3 plate alone",
  "looks": [
+  {
+   "time": "2026-11-25T22:49:41.031Z",
+   "file": "20261125224941031-note-rings.jpg",
+   "source": "out/work/place/w17/rings.jpg",
+   "kind": "note",
+   "label": "BAD, trial 17 on the coarser plates: in each plate's own ring the take's ground (left, the name) is replaced by a flat felt, at 3.8 degrees with a weave (streaks finer than 2 texels). Not taken: the plain by code stays on the 0.3 plate alone",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T22:42:27.478Z",
    "file": "20261125224227478-note-lv-07-38.jpg",
@@ -58,14 +66,6 @@
    "source": "out/work/place/w16/over.jpg",
    "kind": "note",
    "label": "0.3 plate from above, trial 16, half size (BAD: plain's broad tone reads as cloud)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T21:40:02.686Z",
-   "file": "20261125214002686-note-cmpA.jpg",
-   "source": "out/work/place/w16/cmpA.png",
-   "kind": "note",
-   "label": "0.3 plate from above at 1 to 1, crop A: before, trial 15, trial 16 (BAD: the plain reads as smoke, mottle too strong)",
    "stop": "mars"
   }
  ]
