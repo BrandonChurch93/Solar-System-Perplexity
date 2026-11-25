@@ -2737,3 +2737,87 @@ after the forms on the five land plates, and on the levels above by the share of
   2475 99.3; 2476 99.94; 2477 and 2478 100 (surface view). So set and plates share the frame in 2457 to 2476, and
   the set grows from a quarter to nine tenths of the ground in the 8 frames 2464 to 2472.
   Rise on main's eye: being rendered (out/work/place/t3).
+- (the dive's list above was written at 20:33, not 20:36; my sense of time runs fast, read date -u.)
+- 20:36 UTC, ITEM 2 (a) TRACED by tint test (apron atlases tinted in public, frames drawn into out/work/place/t2,
+  atlases restored from /tmp/apron, tree clean): the straight border of set and plate is the OUTER END OF THE
+  APRONS. 2683 and 2475 lower right: L0's apron (right strip 1184 px out, bottom strip 1456 down). 2474 and 2475
+  lower left: L1's apron (3600 left, 2104 down). At 2474 to 2476 the aprons fill the left third, the foot and the
+  right edge of the frame. Pictures t2/tint-sheet.jpg, tint-corners.jpg (looks 20:37, 50dd0cc8).
+- ITEM 2 (b): the ground drawn down the wall at 2475 foot left is L1's apron: the picture's last rows drawn out and
+  sheared, on distances carried on from the picture's side. Mine by folder, made by the set's first builder, same
+  on main. Cure by cause: d299, the aprons' ground from the body (country heights, plates' ground, wall by code),
+  then count 3 of the law lets the apron go over into the plate toward its outer end.
+- ITEM 2 (c): the net of blocks is the take's paint at a wrong scale: on the 0.3 plate at 1 to 1 slabs of 10 to 40
+  texels and boulders of 5 to 15 (80 to 330 m and 40 to 120 m at 8.16 m a texel); fine structure peaks at a period
+  of 11.1 texels (91 m) on a 512 texel field of the plain (x 1320 y 700). Picture t2/net-plate.jpg. Cure: ground
+  at true scale, by a take (limit 6 of 6) or by code from the heights; /root rules.
+- 20:37 UTC: DISK FULL during the build (ENOSPC). Cause: the g<frame>.bin maps of texel139.ts are 24.9 MB each.
+  Removed t1/g*.bin, eng105, c2fix, w1; 1.4 GB free, the build needs about 0.4 of it. .git is 11 GB. The sides
+  measure needs 3.0 GB free and cannot run here: asked /root to run it on the machines. Mail to /root 20:38 with
+  item 2 (a), (b), (c).
+- 20:39 UTC, MAIL 1290 from /root, RULED: (1) the net of blocks: by code (way 2), takes stay closed; order: the
+  wall first, then the plain's fine ground from the heights at true scale (ripples, small craters, scarps), judged
+  at 2473 to 2476 at the foot and the rise corners at 1 to 1. (2) streaks and border: cure by d299 as stated (the
+  aprons written from the plates' sources, walls by code on steep faces, then the field lets the apron go over
+  into the plate toward its outer end); no longer aprons. (3) when (a) to (c) stand: say the widest hand over the
+  dive's path allows in frames and what keeps it from being wider, with handover_engineer; tell it the list.
+  (4) the sides measure runs on /root's machines on the sha I name. (5) name the rise state (ledge, main's eye)
+  first and alone; (a) to (c) are the next name.
+- 20:43 UTC, WALLS, why takes 10 to 12 read as hair, worked out on the numbers (not yet a picture):
+  (1) The lit wall faces the Sun nearly head on (60 degree face to the north west, Sun 22.4 up from 309.7): n.s is
+  0.99, so fine relief changes the light only in second order. Flutes and beds as heights do not show there; in
+  take 10 all the wall's contrast was the grain drawn out along the fall line at the take's strength (rms 0.2166,
+  which is the take's boulders): hair.
+  (2) country.light.rock.wall (0.0568, 0.0374, 0.0297, read on the approved picture's lit wall) is 0.42 of the
+  plateau's colour in red. Under 2.05 times the light (1 + lift with wrap 0.2) the law's rock is about as bright
+  as the level plateau and greyer (0.87, 1.16, 1.42 of it). So "2.3 times the plateau's light" is light, not
+  tone: TELL /root, the wall band is not a bright band by the approved picture.
+  (3) The flow field of the gullies is made on the 3.8 plate's grid (cell 0.11 km, gul mean 0.02): no gully on
+  the 0.3 plate.
+  What a sunlit wall shows from above is then tone, not relief: rock spurs (rock colour, beds along the contour)
+  between chutes of loose ground (the plateau's dust under the slope's light, about twice as bright), the chutes
+  none at the rim and everything at the foot. Trial 13 (out/work/place/w13/walls13.py, scratch, values in
+  w13/plates.json): pos = place between rim and foot read on the heights within relKm 1.5; chutes = the ground's
+  noise drawn out along the fall line at 0.24, 0.12, 0.06 km, more of them with pos; grain at 0.35 of the take's
+  strength, 0.8 of it without direction. Runs on the 0.3 plate.
+- 20:46 UTC, the rise list on main's eye (layers drafts in scratch t3, seen139.py): the set's share of the ground
+  in frame, percent: 2682 100; 2683 99.4; 2684 95.1; 2685 79.2; 2686 65.9; 2687 57.2; 2688 48.3; 2689 40.9;
+  2690 32.5; 2691 19.3; 2692 11.6; 2693 6.4; 2694 2.7. Plates in frame, px a texel at most: 0.3 plate 0.94 at
+  2683 falling to 0.29 at 2694; 0.7 plate 1.45 at 2683 (0.41 percent of the frame), 1.39 at 2684, 1.02 at 2689;
+  1.6 plate at most 1.30 (2691); 3.8 at most 1.24; 8.5 at most 1.33. So on main's eye too the 0.7 plate is the
+  one stretched (over 1 px a texel from 2683 to 2689). Border of set and plate (border140.py): none at 2682;
+  2683 340 px in the two lower corners, line fit rms 6.1 (left) and 2.2 (right); 2684 1108 px; 2685 2221; 2686
+  4051. Angle from the place 0.108 to 0.187 deg at 2683: the aprons' outer ends again, not the reach circle.
+- 20:52 UTC, WALL TRIAL 13 seen from above at 1 to 1 against take 10 and the plate before walls (scratch
+  w13/cmpA.png x 1400 y 200, cmpB.png x 1000 y 560; in the looks, pushed 20:52 acd2d0a3 with the rise corners
+  2683 and 2684 on main's eye, bad). The hair is gone: the band reads as a rock face with beds and joints between
+  chutes of lighter loose ground that are pointed, of several widths, and end. Run 8 minutes for the 0.3 plate.
+  Numbers of the run: wall on 0.127 of the plate, talus 0.008, the picture's own on 0.182 of the wall; grain under
+  2.5 texels rms: the take beside 0.2166, the rock without grain 0.0578, with it 0.0793.
+  STILL WRONG in trial 13: (1) the border of the wall band and the take's boulder plain is a hard outline (two
+  materials side by side: smooth rock and chutes, then slabs and boulders 40 to 300 m); the plain's fine ground
+  by code is the cure (order of MAIL 1290). (2) the chutes read a little as brush strokes where they are alone on
+  a dark face. (3) not yet judged in the dive (2473 to 2476 at the foot) nor in the rise corners: the renderer is
+  with the proof of the rise state.
+  The yellow green speck on main's eye: 2686 x 1038 y 339 (two pixels 92,100,49 and 96,105,55), 2684 x 1049
+  y 341 (66,68,46), on card C2 by the layers picture; no such pixel is in relief-C2-color.png, so it is made in
+  drawing, not in the atlas. Cause not traced yet.
+- 20:58 UTC, PROOF of the rise state on head 10c72f63 (ledge of C2 + main's rise eye), proof140.sh:
+  final 2325 sha256 ba09dc6338ec96a9e79158722080cb743aa295f63607cad078d91901e722a4cc (byte equal, as required);
+  final 2580 equal to the ledge cure's final, match 7.21272 / 14.25716 / 0.9448602 (kept 7.21347, 14.26101,
+  0.9448307: not fallen); build exit 0; memory full 1,399,833,865 bytes, web 417,574,115; the gate's lines word
+  for word "PASS G11  every asset has a row or a recipe" and "PASS G15  at most 2 sets per frame; finished stops:
+  mars/web 418 MB, mars/full 1400 MB"; path "smooth mars: green", no number of the path over its limit. The sides
+  measure refused to start here (2.7 GB free, it needs 3): it runs on /root's machines on the named sha (MAIL
+  1290 item 4).
+  The dark dot (2476, 2477 near x 1135 y 306), TRACED: two pixels of L2 (62,57,53 at x 1141 y 314 and 68,62,58 at
+  x 1140 y 315 in draft 2476; yellow in the layers picture) seen through a one pixel gap between L0's crest and
+  C2's cut. Open, not cured in this state.
+- 20:58 UTC, WALL TRIAL 14 started (scratch w14/walls14.py = trial 13 + the plain's fine ground by code from the
+  heights at true scale: roughness in octaves 0.32 to 0.02 km, craters 0.3 to 0.04 km, scarps on level 0 with
+  risers of 14 and 6 m, ripples 0.09 and 0.05 km in hollows across the wind of bearing 285, dust streaks along
+  it; colour = the take's broad tone (Gaussian 12 px of the take) times the light ratio by the cap's law times
+  albedo; the picture's own ground from above is left as it is). Values in w14/plates.json block takes.plain.
+- 21:11 UTC, tests on head 10c72f63: 81 files, 917 of 917 passed (837 s). The proof of the rise state is whole
+  but for the sides measure (machines). The dive in 19 frames (2440 to 2476, every second) is being drawn on the
+  head into scratch d140. Wall trial 14 done at 21:09 (11 minutes beside the tests); to be looked at.
