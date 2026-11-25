@@ -178,9 +178,10 @@ export function sampleStep(plan: { samples: number; seen: number; near?: number 
 // follows the larger of seen and near, up to the tier's maxSamplesPerFrame. The cap of the shutter does not read it.
 // sharp is there only in a dive or a rise of a stop that hands over and that handover.sharpCover names with a cover above 0: the count that
 // sharpens the lookups of a sample in place of the count of the whole frame (sharpCount).
+// cover is there with sharp: the cover itself, for the count by the way of each point (frameWay).
 // ends is there only in a dive or a rise of a stop that hands over and that handover.shutterEnds names with a share above 0: the share of
 // its time over which the shutter of the frame opens, and closes (samplesFor).
-export interface FramePlan { samples: number; raw: number; seen: number; soft: number; split: boolean; shutter: number; near?: number; sharp?: number; ends?: number }
+export interface FramePlan { samples: number; raw: number; seen: number; soft: number; split: boolean; shutter: number; near?: number; sharp?: number; cover?: number; ends?: number }
 
 // The samples that see one pixel of the path. In a frame that stands still all samples of the frame lie over one another, each at its own
 // place inside the pixel. In a frame that moves they are spread along the path: a point of the picture that moves by seen px across the open
@@ -376,13 +377,63 @@ export function framePlan(source: ShotSource, frame: number, tier: string): Fram
     const samples = cap <= base ? base : samplesNeeded(base, cap, Math.max(seen, near))
     const cover = sharpCoverOf(segment.stop)
     const ends = shutterEndsOf(segment.stop)
-    return { samples, raw, seen, soft: 0, split, shutter, ...(near > 0 ? { near } : {}), ...(cover > 0 ? { sharp: sharpCount({ samples, seen }, cover) } : {}), ...(ends > 0 ? { ends } : {}) }
+    return { samples, raw, seen, soft: 0, split, shutter, ...(near > 0 ? { near } : {}), ...(cover > 0 ? { sharp: sharpCount({ samples, seen }, cover), cover } : {}), ...(ends > 0 ? { ends } : {}) }
   }
   const mid = at(spanMid())
   const raw = rawMotion(at(0), mid, at(shutterSpan()))
   const seen = raw * seenShare(mid)
   const near = nearOver(source, frame, false, 0, shutterSpan()) * seenShare(mid)
   return { samples: cap <= base ? base : samplesNeeded(base, cap, Math.max(seen, near)), raw, seen, soft: softness(raw), split: false, shutter: 1, ...(near > 0 ? { near } : {}) }
+}
+
+// Where the lens of one end of the shutter sees a point of a sample: the matrix that takes the point from the view space of the sample
+// (the lens at the origin, looking down -z, as the engine draws it) to (x, y, unused, 1) times its distance in front of the lens of the end,
+// with x and y in px of the master from the middle of the frame, times share. The point is carried as a point of the surface of the set:
+// fixed in the set's frame, and turned with it where the state names a turn (the globe side of a dive or a rise). It is the measure of
+// rawMotion, point for point, put into one matrix in doubles; what is left to the shader is one product and one division.
+export function wayMatrix(shot: Shot, state: SetState, end: Shot, at: SetState, share = 1): THREE.Matrix4 {
+  const half = config.formats[config.formatKeys.master]!.height / 2
+  const k = (share * half) / Math.tan((end.camera.vfov * RAD) / 2)
+  const from = state.turn ? state.rotation.clone().multiply(state.turn) : state.rotation.clone()
+  const to = at.turn ? at.rotation.clone().multiply(at.turn) : at.rotation.clone()
+  const carried = to.multiply(from.invert())
+  const there = state.origin.clone().sub(shot.camera.position)
+  const here = at.origin.clone().sub(end.camera.position)
+  const m = new THREE.Matrix4().makeRotationFromQuaternion(shot.camera.quaternion)
+  m.premultiply(new THREE.Matrix4().makeTranslation(-there.x, -there.y, -there.z))
+  m.premultiply(new THREE.Matrix4().makeRotationFromQuaternion(carried))
+  m.premultiply(new THREE.Matrix4().makeTranslation(here.x, here.y, here.z))
+  m.premultiply(new THREE.Matrix4().makeRotationFromQuaternion(end.camera.quaternion.clone().invert()))
+  return m.premultiply(new THREE.Matrix4().set(k, 0, 0, 0, 0, k, 0, 0, 0, 0, 1, 0, 0, 0, -1, 0))
+}
+
+// The way of the points of a frame across its open shutter, sample by sample, for the lookups that are read by each point's own way
+// (gradAt of src/diagnostics/diag.ts). null where the plan has no cover (FramePlan.cover: a dive or a rise of a stop that
+// handover.sharpCover names) and at one sample: then nothing is fed and gradAt returns uGrad. Else a function that gives a sample's shot
+// its two matrices (wayMatrix), from the shots at the opening and at the closing of the frame's shutter on the sample's own side, as
+// framePlan measures the frame: on the frame's side, and inside the handover window on each side by itself. share is the share of the
+// picture that is seen (seenShare of the middle), which the plan's motion carries too. A shot that is not one set of the same side at
+// both ends gets none.
+export function frameWay(source: ShotSource, frame: number, plan: FramePlan, mid: Shot): ((shot: Shot) => { cover: number; open: number[]; close: number[] } | null) | null {
+  const cover = plan.cover ?? 0
+  if (!(cover > 0) || !(plan.samples > 1)) return null
+  const share = plan.split ? 1 : seenShare(mid)
+  const ends = new Map<ViewKind, { open: Shot; close: Shot }>()
+  const at = (offset: number, side?: ViewKind): Shot => source.shotAt(frame, (frame + offset) / config.fps, side)
+  return (shot) => {
+    const state = shot.sets[0]
+    if (!state || shot.sets.length !== 1) return null
+    let end = ends.get(state.view)
+    if (!end) {
+      const side = plan.split ? state.view : undefined
+      end = { open: at(shutterOffset(0, plan.shutter), side), close: at(shutterOffset(1, plan.shutter), side) }
+      ends.set(state.view, end)
+    }
+    const a = end.open.sets[0]
+    const b = end.close.sets[0]
+    if (!a || !b || end.open.sets.length !== 1 || end.close.sets.length !== 1 || a.id !== state.id || b.id !== state.id || a.view !== state.view || b.view !== state.view) return null
+    return { cover, open: wayMatrix(shot, state, end.open, a, share).elements.slice(), close: wayMatrix(shot, state, end.close, b, share).elements.slice() }
+  }
 }
 
 export function frameSamples(source: ShotSource, frame: number, tier: string): number {
