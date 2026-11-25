@@ -5822,3 +5822,214 @@ After a break in the session (00:53 to 00:57) the job was found running as left;
   grainTaken giving its depth back to the sheet.
 - 09:16 the tree stands: commit, then the proof r66 (finals first for the hash of 3465, then the whole
   rise and the whole dive at rate 2, path, G13, G17, gate, parity, place, handover).
+
+## 2026-11-25, 09:16 UTC: the tree of round 3 committed (ab362641), the proof r66 runs
+
+- Commit ab362641b9d9a924f577d3ad73df9d28231e3ebd on agent/saturn-code, local, not pushed yet (it is pushed
+  with main merged in when the proof stands). The sand trial is not in it (ice.ts, ice.json as named).
+- r66 from the committed tree, started 09:16:43: finals 3465, 3567, 3720, 3866, then the whole rise and the
+  whole dive at rate 2 on the tool's own lines, path, G13, G17, gate G11 and G15, parity, place, handover.
+  Log /tmp/v/r66.log, pictures /tmp/v/r66/. Nothing under src is edited until it ends.
+- 09:18:25 final 3465: sha256 4077873a1a2005c40bed0e9f225e2ebbe3cf153ee06f75b93a2c3a4735002f0f, byte for
+  byte the named frame of round 2 (88ba2385) and of da02133. The hold does not move.
+- Looks pushed 09:17 (head 7a744474): the sand pair at the final tier with the zoom, the lower globe, the
+  crops of 3866. Next push due by 09:47.
+- The pictures of the NAMED mail come from /tmp/v/x/mail_pics.py /tmp/v/r66 (rows: approved, named 88ba2385,
+  this commit; boxes by the critic's tiles: 3567 Q R and K L; 3720 Q R, O P, T U, the cap, V W; 3866 D, I,
+  T U V, A), into /tmp/v/x/mail/.
+- AFTER A COMPACTION: wait for "ALL DONE" in /tmp/v/r66.log; look at every sheet; then merge origin/main with
+  merge-tree (see the entry of the last NAMED), tsc, vitest alone, push, NAMED mail before 12:00 UTC.
+
+## 09:28 UTC, Nov 25: MAIL 1009 (a line for set.ts, NOT NOW), finals of r66
+
+- MAIL 1009, word for word: "One line for your set from the engine's shutter owner (handover_engineer,
+  commit 1c85affe on take/b10e, named 09:25, not on a take yet). Nothing to do now: it can only stand on a
+  tree that has that commit. Put it in your first commit after I tell you the engine take carries it.
+  src/stops/saturn/set.ts line 64 (line numbers of b1721d2c):
+    const order = ((view.sample * stride) % count + 0.5) / count
+  becomes
+    const order = view.weights ? sampleOrder(view.weights, view.sample, stride) : ((view.sample * stride) % count + 0.5) / count
+  with: import { sampleOrder } from '../../core/sampler'
+  Why, in its words: without shutter ends view.weights is absent and the line is today's. Under ends the
+  samples carry unequal weights, and a set that spreads something over the samples has to spread it by
+  summed weight. Proof I ask with it: the hash of 3465, 3589 and 3720 at draft equal before and after the
+  line. Also for your record: the whole smooth report of round 51's build (690afebe: path, place, parity,
+  the pictures of both moves, counts) was joined at 09:23 and is green. It is in
+  scorecards/round-051/smooth-saturn.md on main. Your NAMED by 12:00 stands."
+- So: the line is NOT in the commit to be named. It waits for the Builder's word that the engine take
+  carries src/core/sampler.
+- r66 finals: 3465 4077873a... (identical to the named); 3567
+  92cd367987bfff8077565d504ea0dd51bcc4f412a2dc199769ea7bd917c16306 (09:24:19); 3720
+  63564b1628b4a60bb40716a97be02725893b6f783bf887495ef9c2db282445cd (09:28:55), G17 by the tool's script
+  median 1.000, p25 0.664 over 62 tiles.
+- 3567 final looked at at 1 to 1 (mail/n3567_QR_gap.png): the sky patch is gone, the night limb is the
+  body's own ellipse against the unlit plane. Left of the globe the stars no longer shine through the thin
+  inner ring; they stand in the empty space inside the rim alone, as in the hero. Against the named: 59942
+  pixels over 4 of 255, in the boxes x 480 to 790, y 263 to 776 (stars behind the thin ring) and x 1200 to
+  1700, y 430 to 1063 (the space in the shadow). SEEN AND NAMED: one dim star in the soft edge of the night
+  limb at x 1439, y 677 to 683 (38 to 41 of 255 on 25).
+- 3866 final: sha256 2a21654461435dc511223d3e1798cf35feb3b34187cdf1cecd9e30df839f0cfe (09:33:06).
+- FINALS OF ab362641 LOOKED AT at 1 to 1 beside the approved and the named (pictures in /tmp/v/x/mail/, in
+  the looks of 09:36, head 13b48156, 16 pictures; the tool pushes 8 unless --max is given):
+  - 3720 Q R (the foot): lip, brown strip, black strip, mirror image and the seam at x 932 are gone; the globe
+    meets the plane in one clean curve over dark ringlets of dust. The approved's contact lies higher (said)
+    and is a soft grey band of strands; mine is a harder edge.
+  - 3720 O P: the main division is wider (about 130 px against about 60) and empty; the approved has faint
+    strands in it and a strand filled grey margin. NOT CURED (issue 3). Outer ring greyer than the approved.
+  - 3720 T U and the corner at 2 to 1: the bark of the named (a strong hatch down the frame) is down to a
+    faint hatch. Laplacian RMS of the box 0,880 to 300,1080: named 49.0, da02133 41.0, this commit 41.0,
+    approved 50.8 (its grain with sparks); mean level 100.8, 115.5, 115.5, approved 112.2. The calmer field
+    came with f7991ad (finer grains: grains.json level 1 cell 0.0012, size 0.0005 to 0.0013, pixels
+    [1.1, 2.2], spread 0.15; ringfine.json the octaves from 0.032 radii on, near.wide.first), not with the
+    sand. So issue 11: less, not gone.
+  - 3720 cap: terminator half level at rows 140, 200, 260, 320, 380, 440, 500, 560: approved x 1606, 1590,
+    1553, 1545, 1502, 1506, 1497, 1474; named 1656, 1621, 1593, 1557, 1531, 1489, 1468, 1428; this commit
+    1609, 1586, 1563, 1535, 1526, 1508, 1509, 1474 (within 24 px, named up to 50). Night side box x 1780 to
+    1900, y 300 to 500: approved 11, named 12, this commit 8 of 255. Cap, box x 1380 to 1560, y 105 to
+    150: approved (185,178,161) blue minus red -24, named (213,190,154) -59, this commit (180,168,140) -41:
+    half way. Crest: y 88 at x 1520 against the approved's y 76 at x 1610 (limb at x 1600: y 90 against
+    77): the approved's globe is larger to the right; one camera, not moved.
+  - 3720 V W: smooth warm stripes with some pink; the approved has grain, pink and cool grey. NOT CURED
+    (issue 6).
+  - 3866 D and I: no star on the rings, the sky patch is gone. SEEN AND NAMED: a dim red streak of the
+    sky's knot in the soft edge of the night limb, x 1085 to 1100, y 790 to 820, up to 88 of 255 on about 30
+    (most pixels 15 to 25 over). Cause read in kept/rings.ts line 555: the solid shade counts from the true
+    radius 0.992 on (uShadeRamp); a ray that ends in the globe's soft edge near the equator crosses the
+    plane inside that radius, so the sky shows through the 2 to 3 pixels of that edge. The cure would be
+    to let the solid shade count in the whole soft edge whatever the radius. Not built: no trial can run
+    beside the proof.
+  - 3866 T U V: the lower arc is as soft as in the named (the shutter along the pull back; a draft of one
+    take is sharp there). NOT CURED.
+
+## 09:41 UTC, Nov 25: MAIL 1016, the rings' fine lines at 3870 to 3876 (pop score at the end of the rise)
+
+- MAIL 1016, word for word: "For your record, the last quarter of Saturn's way up on three engines, pop
+  score at rate 2, draft, limit 1.2: main's engine 1.196 at 3872 + 1/2; take/b10e 1.19 at 3873 + 1/2 (green);
+  take/b10f 1.21 at 3874 (red by 0.01). The panel is attached: what is left without the motion is the stars
+  over the bright band (the sky's owner has that, MAIL 1012) and the fine lines of your rings, which change
+  from one frame to the next as they move over the grid. The second is yours: in your NAMED by 12:00 say what
+  the rings' lines do at 3870 to 3876 (their width in pixels there, how they are drawn under a pixel) and
+  cure it by cause if they are thinner than the grid can hold. No softening of the rings elsewhere to pass
+  the number."
+- The panel: /home/user/.perplexity/attachments/156da66db1ec46f2970e059c1bdb9466/saturn-rise-end-pops-b10f.jpg
+- Disk: old proofs deleted from /tmp/v (r44, r45, r48, r54, r58c, s1, s2, t17, t18), 5.4 GB free at 09:42.
+
+## 10:00 UTC, Nov 25: MAIL 1023 (the engine's motion measure at my borders) and what the rings' lines do
+
+- MAIL 1023, word for word: "A question from the handover engineer's work that only you can answer. It
+  changes nothing in your timetable (NAMED by 12:00). The engine measures how far the picture moves across
+  the shutter on each side of a border, and from that it takes the number of samples and the blur. For the
+  surface views it measures on a plane (y = -terrain.ground in the set); for the globe side on the ball. At
+  your borders, computed from the plans on the engine commit 1c85affe: dive border 3589: globe side 2.94 px,
+  surface side 8.80 px (your plane is the ring plane, ground 0); rise border 3852: globe side 17.80 px,
+  surface side 17.37 px. My reader measures 4.6 px a capture frame over the whole picture from 3585 to 3593,
+  flat across the border, and 11.1 px at 3852 (round 51's report). For seven stops the engineer cures the
+  difference by measuring the surface view on the globe as the plan's twin has it. Saturn stays out of that,
+  since your surface view is the ring plane and the ball is the wrong shape for it. So, at 3589: what fills
+  the frame and moves there, the rings (then 8.80 is true and the globe side under-reads, and the dive takes
+  too few samples before the border) or the ball (then 2.94 is true)? Answer from your set, by what is drawn
+  in the frame at 3585 to 3593 and how far its sharpest lines move across the shutter (the rings' fine lines
+  are the thing you are curing at 3870 to 3876 anyway). One paragraph with the numbers, with your next
+  state. I pass it to the engineer."
+- Counted from the plan alone (out/scratch/border.ts FROM TO STEP [inner outer]: a grid of 96 by 54 pixels,
+  the ray of each at the frame's time, what it meets first, where that same point of the ring plane or of the
+  globe turned by its spin stands on screen one film frame later):
+  - 3585 to 3593 (lens height 1.479 to 1.218, 4.33 to 4.10 radii from the centre): rings (radius 1.239 to
+    2.27) 33.3 to 31.3 percent of the frame, ball 19.0 to 18.1, sky 47.7 to 50.5. Rings, px a film frame:
+    median 3.85 to 4.08, 90th percentile 6.30 to 6.80, most 8.56 to 9.29 (8.70 at 3589, 8.80 at 3590);
+    across their lines (along the radius on screen): median 2.89 to 3.12, 90th percentile 4.61 to 5.24, most
+    7.19 to 7.59. Ball with its spin: median 3.53 to 3.84, 90th percentile 4.19 to 4.38, most 4.30 to 4.55.
+    The whole ring plane in frame (no edges): median 5.2, most 16.9 at 3589.
+  - 3852 (height 1.681): rings 28.0 percent, ball 26.0, sky 46.0. Rings median 15.20, 90th percentile 27.29,
+    most 33.56; across the lines 14.02, 26.81, 33.19. Ball median 17.41, 90th percentile 21.27, most 23.03.
+- The dive's border is frame 3589 + 1/2 (skim.json handover.dive.at 0.55 of 3540 to 3629), the rise's 3852
+  (0.56 of 3810 to 3884).
+- MAIL 1016, found by code and on the proof's own draft frames of the rise (r66, this commit):
+  - Which set draws: from the end of the dive on every take is the model's (set.ts line 61, share 1 after
+    dive.end); the kept set's pose weight plays no part on the rise (my 09:46 guess was wrong: model.ts
+    line 149 sets poseW 0).
+  - At heights over 0.93 the model's rings are the far look (sheet.ts keptSheet): the kept profile read from
+    its ladder of levels at the level whose texel is 1.2 times the pixel's footprint in radius times the
+    scale of the take (1 at one take, 1 over the root of the takes at more), linear between texels and
+    between levels. So no line is drawn narrower than about 1.2 px at one take; what is narrower is tone.
+    The clumps (value noise, 640 cells a turn, 70 a radius, strength 0.05) are not filtered: a cell is 5.7 px
+    wide across the radius at the ansa and 1.3 px on the far side.
+  - Scale at 3870 (out/scratch/ringpx.ts): a radius of the globe is 392 to 406 px at the left ansa, 277 to
+    431 px on the near side, 88 to 112 px on the far side; at 3876: 364 to 377, 244 to 362, 85 to 106.
+    The ansa at radius 1.95 moves from x 1 to x 33 in six frames: 5.3 px a frame.
+  - The move of the take: ice.move is multiplied by close (0 over height 0.93) and the far look does not
+    count it in any case: one take is an instant, the lines are not blurred along the motion in the sample.
+  - Measured (/tmp/v/x/ringline.py with out/scratch/ringline.ts: the brightness along one radial line of the
+    ring plane at the left ansa, 1400 points from radius 1.25 to 2.3, read from every half frame at the
+    places the plan gives, so a line of the rings stands at the same point in every frame): fine contrast
+    of the lines 11.4 to 12.7 of 255 rms; change from one half frame to the next 1.33 to 3.54 rms, in a beat:
+    3.54 at 3860, 1.33 at 3865, 3.24 at 3868, 1.77 at 3872, 3.09 at 3877, 1.83 at 3881 + 1/2. Near side:
+    2.2 to 2.75 all the way. The beat is the place of the lines on the grid: least where the picture has
+    moved a whole number of pixels between two frames, most at half a pixel.
+  - After 3885 the plan's flight no longer gives the lens (same measure: correlation 0.99 up to 3885, 0.2
+    after): the travel moves the lens and my set does not know how far it moves in a take there.
+
+10:02 to 10:12 UTC. THE WHOLE RISE OF r66 (ab36264, main's engine 64c4ccb) IS RED ON TWO LINES.
+  - Red 1: "the pattern of the picture changes in place by 0.98 from frame 3830 to 8 film frames later, band
+    8 px, limit 0.45 (35 frames over it, first 3809 + 1/2)". By frame: 3809.5 0.53; 3810 0.62; 3811 0.72;
+    3812 0.83; 3813 0.90; 3814 0.95; 3814.5 0.97 (most at pixel 912, 672); 3815 0.94; 3816 0.81; 3817 0.44;
+    3818 to 3821 0.45 to 0.53; 3822 to 3829.5 0.26 to 0.41; 3830 0.98 (most at pixel 1528, 960); 3831 0.81;
+    3832 0.62; 3833 0.52; from 3849.5 on 0.07 to 0.23. r64 on da02133 had this slice green (0.37 at
+    3832 + 1/2): what ab36264 added causes it.
+  - Red 2: "pop score 1.21 from frame 3872 + 1/2 to the next, limit 1.2" (1.05 at 3870 up to 1.21 at 3872.5,
+    1.07 at 3876). The frame's mean level, which falls steadily otherwise, rises from 74.33 (3870) to 75.44
+    (3875 + 1/2) and is back at 74.36 by 3878: a brightening that is not motion, not located yet.
+  - What the frames show (strip /tmp/v/x/rise_gap_strip.png, crop x 700 to 1100, y 480 to 780, frames 3806 to
+    3824 in steps of 2; lens height 0.416 at 3806, 0.434 at 3810, 0.460 at 3814, 0.505 at 3818, 0.568 at
+    3822, 0.608 at 3824, 0.760 at 3830): the plane in front of the lower globe is a solid dark band up to
+    3810, a brown band with stripes at 3812 to 3816, tan at 3818, pale at 3820, clear at 3822; the gap
+    between globe and inner rim beside it is dark up to 3816, stars show faintly at 3818 and it is clear sky
+    at 3822. So a cover over the globe and the gap goes out within 8 to 10 frames of the rise.
+  - The two things in the tree that can do that: sheet.json graze [0.3, 0.4] (the sheet hides the globe like
+    the stars where the sine of the view to the plane is under 0.3, true depth over 0.4: by the angle, but
+    the angle at a place of the picture changes with the lens's height, fast in the rise) and skim.json
+    inner.by with inner.depth [3, 3] (the dust inside the rim, by the lens's height, falling by 1.22 a frame
+    of the rise: my own model of the pattern measure gave 0.25 for that, the tool gives up to 0.97).
+  - r66 killed at 10:09 (the dive of a tree that has to change). Trials one thing at a time at draft:
+    v1 = graze off.
+
+10:09 to 10:30 UTC. THE CAUSE OF THE RED PATTERN LINE OF THE RISE, BY LAYER, AND THE CURE ON TRIAL.
+  - Counted from the plan (out/scratch/mu.ts FRAME...: the sine of the view to the plane for plane points
+    drawn in front of the globe, by band of radius): hold 3390 to 3539 at least 0.416 (gap band 1 to 1.2458),
+    0.467 (thin inner ring 1.2458 to 1.53); 3720 0.149 to 0.243 (gap), 0.210 to 0.298 (inner ring); rise,
+    medians gap / inner ring: 3806 0.261 / 0.318, 3814 0.275 / 0.331, 3822 0.310 / 0.366, 3830 0.362 / 0.419,
+    3836 0.411 / 0.465, 3844 0.474 / 0.523. So a cover by the angle that is whole at 3720 and gone in the
+    hold has only the sines 0.3 to 0.41 to go out in, and the rise crosses them in 15 to 30 frames; it went
+    by the depth (60 times the depth under 0.3, once over 0.4), and an opacity that is 1 - exp of that
+    changes nearly all within a third of the window: 4 to 8 frames. That is the brown band over the globe
+    at 3812 to 3820 and the dark soft edge in front of the night side at 3830 to 3838 (the shaded plane in
+    front of the globe, solid by the same law).
+  - Trial v1 (graze off by its numbers) at 3814, 3818, 3822 (/tmp/v/x/v1_cmp.png): the brown band is gone,
+    the globe looks alike in the three frames; the gap still goes from dark to stars: that part is the dust
+    inside the rim (inner.by, 1.22 a frame, seen 60 times its depth against the sky).
+  - The cure (v2, the tree of proof r67): what hides the globe and the stars with the lens low goes by the
+    height of the lens alone and in the opacity itself. skim.json inner.cover: share 1 at 0.364 and under
+    (3720 is at 0.362), 0 at 0.928, knots at the lens's heights at the frames of the rise (3792 to 3835),
+    the same step at each: 1 part in 43 a frame, so at most 0.19 of it in 8 frames. sheet.ts: uOpen =
+    1 - share; far look: a = mix(a with the sheet counting as against the sky, a as it is, uOpen); shade in
+    front of the globe by max(edge, 1 - uOpen); what the globe adds to the ice in front of it times uOpen;
+    near look: alpha = mix(1 - exp(-60 depth), alpha by the true depth, uOpen), and the dust inside the rim
+    counts by its true depth against the sky too (it is no ice of the sheet), so the gap follows the same
+    share. inner.by: as it was down to 0.48, then a floor of 0.004 up to 0.823, gone at 0.93: at 0.004 the
+    dust is too deep for a star at 60 times and too thin to see by itself, so one law shows, not two.
+    sheet.json graze [-2, -1]: the angle law of the kept set is off by its numbers (the kept set draws only
+    above 0.93, where the cover is none); kept/rings.ts is not touched, so the hold's shader is the same
+    text. The model alone draws under 0.93 (handover.kept.heights 0.93 to 1.03), so both sets show the same
+    picture where they are mixed.
+  - Trial stills at draft (v2_strip.png: 3798 to 3836 against ab36264): the band over the globe goes from
+    brown at 3798 to pale at 3814 to clear at 3830 with no step; the gap from dust to stars over the same
+    frames. 3720 at draft beside the final of ab36264 (v2_3720_foot.png): the foot is closed as before.
+  - What it changes elsewhere, expected: 3465, 3567 and 3866 not at all (their sines are over 0.4 and the
+    cover is none at their heights): the proof's hashes will say. 3720: only ice in front of the globe at
+    sines over 0.3 (the dense ring, deep anyway). The first part of the skim (3628 to 3719, lens 0.544 to
+    0.364): the gap is closed by the share only (0.33 at 3628, 0.47 at 3660, 1 at 3719), so stars show
+    through the dust there where ab36264 had it closed from 3625 on. This is a law by the lens's height:
+    under mail 729 and 905 (ring matter in the ring plane), against the letter of 785; said in the NAMED.
+  - Proof r67 started 10:28:51 on this working tree, order: rise, dive, finals (3465 3567 3720 3866), g17,
+    place, handover, g13, gate, parity, path. main moved to dde6df5 since 64c4ccb in kit/PROGRESS.md only,
+    so the proof worktree's engine is main's.

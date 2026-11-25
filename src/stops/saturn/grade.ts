@@ -51,6 +51,9 @@ export const zoneShare = (height: number): number => byHeight(grade.by.heights, 
 // skim. Its knots are set so that the dust closes at an even pace on the fastest way through these heights (the
 // rise). It follows the height alone.
 export const innerShare = (height: number): number => byHeight(skimJson.inner.by.heights, skimJson.inner.by.depth, height)
+// How far the sheet hides what is behind it with the lens at this height (skim.json inner.cover): all of it at the
+// height of the approved close image and under, none from the upper height of the far look on.
+export const coverShare = (height: number): number => byHeight(skimJson.inner.cover.heights, skimJson.inner.cover.share, height)
 
 // How much of the fall of the night side of the globe shows with the lens at this height (skim.json light.dusk
 // nightHeights): none at the upper height and above, all at the lower and under, by the logarithm of the height,
