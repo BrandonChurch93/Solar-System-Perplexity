@@ -1,9 +1,17 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T17:20:06.011Z",
+ "pushed": "2026-11-25T17:42:17.545Z",
  "head": "9c8a46df4b0a760960ed3dfa2d62cb3a31146915",
- "note": "report of 17:30 sent; pin trial in two forms, not committed; 4416 control next",
+ "note": "layer hunt running (air, cover, plates, limb light off, rise 4414 to 4426 first); 4416's teal is the hold's own colour at the same Sun angle",
  "looks": [
+  {
+   "time": "2026-11-25T17:42:16.325Z",
+   "file": "20261125174216325-note-crop5.jpg",
+   "source": "../../../../tmp/n57/crop5.jpg",
+   "kind": "note",
+   "label": "4416 beside the hold and the approved: same place on the globe (left two) and same angle to the Sun (right two), 5 degrees half width, 8.3 degrees north of the place",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T17:20:05.359Z",
    "file": "20261125172005359-note-r-4290.jpg",
@@ -240,14 +248,6 @@
    "source": "../../../../tmp/n55/two-4170n.jpg",
    "kind": "note",
    "label": "new tree draft: 4170 + 1/2, 4174 + 1/2, 4178 + 1/2, the lit band grows down the screen",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T13:50:14.489Z",
-   "file": "20261125135014489-note-p-N1-8341.jpg",
-   "source": "../../../../tmp/n55/p-N1-8341.jpg",
-   "kind": "note",
-   "label": "new tree: chain panel dive 4170 + 1/2, pattern 1.35 (82140079 1.29), red along the lower edge of the lit band, not cured",
    "stop": "uranus"
   }
  ]
