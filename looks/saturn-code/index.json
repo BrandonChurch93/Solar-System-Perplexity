@@ -1,9 +1,37 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T13:13:18.594Z",
+ "pushed": "2026-11-25T13:21:31.253Z",
  "head": "0025b0b5b7007c550a021474ae60f67fc08b515b",
- "note": "one law of cover built (sine of the hold's eye 0.55); finals 3465 and 3720, rise and dive slices rendering",
+ "note": "one law finals 3465 and 3720 and the dark inner ring control at 3720; whole rise rendering",
  "looks": [
+  {
+   "time": "2026-11-25T13:21:30.493Z",
+   "file": "20261125132130493-note-skim_3720_foot.jpg",
+   "source": "../../../../tmp/v/ctl2/skim_3720_foot.png",
+   "kind": "note",
+   "label": "3720 foot, finals: approved close, one law, dark inner ring control"
+  },
+  {
+   "time": "2026-11-25T13:21:29.649Z",
+   "file": "20261125132129649-note-skim_3720_whole.jpg",
+   "source": "../../../../tmp/v/ctl2/skim_3720_whole.png",
+   "kind": "note",
+   "label": "3720 final: approved close, one law, control with the inner ring dark as the hold has it (reads worse: 34.659 against 28.611)"
+  },
+  {
+   "time": "2026-11-25T13:21:28.894Z",
+   "file": "20261125132128894-note-skim_3720_foot.jpg",
+   "source": "../../../../tmp/v/law2/skim_3720_foot.png",
+   "kind": "note",
+   "label": "3720 foot, finals: approved close, named, one law (no dark foot, the gap is open)"
+  },
+  {
+   "time": "2026-11-25T13:21:28.040Z",
+   "file": "20261125132128040-note-skim_3720_whole.jpg",
+   "source": "../../../../tmp/v/law2/skim_3720_whole.png",
+   "kind": "note",
+   "label": "3720 final: approved close, named 6e96b4cb, one law of cover"
+  },
   {
    "time": "2026-11-25T13:13:17.886Z",
    "file": "20261125131317886-note-sheet6.jpg",
@@ -31,34 +59,6 @@
    "source": "../../../../tmp/v/law2/hold_3465_whole.png",
    "kind": "note",
    "label": "3465 whole: approved hero, named final, one law final"
-  },
-  {
-   "time": "2026-11-25T13:13:14.746Z",
-   "file": "20261125131314746-note-hold_3465_band.jpg",
-   "source": "../../../../tmp/v/law2/hold_3465_band.png",
-   "kind": "note",
-   "label": "3465 where the inner ring crosses the globe: approved hero, named 6e96b4cb final, one law of cover final (view 0.55)"
-  },
-  {
-   "time": "2026-11-25T12:51:23.147Z",
-   "file": "20261125125123147-note-pair_rise.jpg",
-   "source": "../../../../tmp/v/law0/pair_rise.png",
-   "kind": "note",
-   "label": "3806 and 3814 on the law control (draft): nothing opens"
-  },
-  {
-   "time": "2026-11-25T12:51:22.493Z",
-   "file": "20261125125122493-note-foot3.jpg",
-   "source": "../../../../tmp/v/law0/foot3.png",
-   "kind": "note",
-   "label": "the foot at 3720: top the approved close, middle the named final, bottom the law control (draft)"
-  },
-  {
-   "time": "2026-11-25T12:51:21.862Z",
-   "file": "20261125125121862-note-pair_3720.jpg",
-   "source": "../../../../tmp/v/law0/pair_3720.png",
-   "kind": "note",
-   "label": "3720: left the named final, right the near look with no share by height and no dust (control of the law, draft)"
   }
  ]
 }
