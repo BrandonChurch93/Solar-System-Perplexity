@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T16:21:15.821Z",
+ "pushed": "2026-11-25T16:47:21.858Z",
  "head": "0a7289553e74c4c80ebd6bdb63fd3a53051bdfa3",
- "note": "16:22 the crater: take s14 (hero light R on every level, light file L over R) is in the make; globe gets the gold tint by the hue law share",
+ "note": "the hero's ring crater laid into the place's ground; first try, ring too pale at 615, remake under way",
  "looks": [
+  {
+   "time": "2026-11-25T16:47:21.162Z",
+   "file": "20261125164721162-note-cr1-615-x4.jpg",
+   "source": "../../../../tmp/m/cr1-615-x4.png",
+   "kind": "note",
+   "label": "615 disc at 4 times: approved, main, the crater's first try (ring too pale, cure under way)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T16:47:20.131Z",
+   "file": "20261125164720131-note-cr1-strip.jpg",
+   "source": "../../../../tmp/m/cr1-strip.jpg",
+   "kind": "note",
+   "label": "crater in the place's ground, first try (blur 0.06 deg): 710 717 725 730 735 740 745, the crater at one size",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T16:21:14.589Z",
    "file": "20261125162114589-note-crat3s.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/m/sun-under-2x2.jpg",
    "kind": "note",
    "label": "MAIL 1151 (1): 717 and 1008 on take/ts1 with the small commit, lifted 6: top the far Sun as it is, bottom the far Sun's opacity at zero (the hole of the hold sky picture at 717, plain stars at 1008)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T15:17:21.001Z",
-   "file": "20261125151721001-note-look-skyhold-hole.jpg",
-   "source": "../../../../tmp/m/look-skyhold-hole.jpg",
-   "kind": "note",
-   "label": "hold sky patch upper right at gain 8: the hole where the Sun was taken out, its glow rim and the margin line",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T14:53:27.266Z",
-   "file": "20261125145327266-note-bac-726.jpg",
-   "source": "../../../../tmp/m/bac-726.png",
-   "kind": "note",
-   "label": "726 right limb times 2 on take/ts1: before and after the ride is out of sunShown; the rim glow now lies where the far Sun stands behind the limb",
    "stop": "mercury"
   }
  ]
