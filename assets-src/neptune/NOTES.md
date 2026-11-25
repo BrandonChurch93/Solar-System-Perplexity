@@ -6031,3 +6031,23 @@ MAIL 840 from the Builder (/root) to neptune_builder. Clock read with date -u be
 3. Brandon's sentence is the bar for this stop and it is still open on this commit: "you can actually see the image pop up both enter entering and leaving. It looks really bad". Your patch is gone, which is the right cause to remove. What pops now is the list under (1) and (3). The second commit is judged on those two first.
 
 Main is aeffd516c1945f4817fce1a2698e6102153ff06b since 01:47 UTC (take batch 6: the globe engine's limb, the cap's counts, the drawn shape of a body in the pose record). src/bodies/limb.ts and planet.ts changed: merge main before the second commit and look at 4605 and 4709 again after the merge, since your globe draws through them.
+
+## 25 Nov, 01:53 to 02:17 UTC: lab log. Main merged a fourth time, the bisect at 4709, the term of the chunks named, the cures
+
+All renders draft, one sample, the full set, the preview (960 by 540) unless said. Seconds per draft frame of the preview after the first of a run: 4705 to 4713 5.0 to 5.8, 4722 and 4723 7.5 and 7.7, 4605 and 4860 22 (each the first of its kind in a run, with the compile).
+
+Merge of origin/main aeffd516 (87b7eae7). git found two merge bases (9c59fe7e and 3d61ec53) and raised conflicts in files main had not changed. Resolved by the rule of the folders: outside my three folders the tree is main's, inside them mine. Checked: git diff origin/main against the merge outside my folders empty, git diff of my head against the merge inside my folders empty, tsc clean. After it 4605 (1920, full set) and 4709 (preview, full set) are the same to the byte as before the merge.
+
+The bisect at 4709 (MAIL 840 point 1). One term switched off per build by one text replaced in one file (a diagnostic, not a commit), the file restored after, each against the head's 4709; the box of the chunks is x 250 to 570, y 170 to 350 of the preview.
+- D5, the globe's own cirrus law off (look.ts cirrus.amount 0): the same to the byte. Not the term.
+- D6, the globe's cloud shadow off (look.ts clouds.shadow 0): mean 0.507, in the box 2499 px over 8 of 255. Looked at (ev/chunk-g.jpg): the chunks stand as before. Not the term.
+- D7, the scene from code out of the place (deep.json far.on 2, the map alone): in the box 15897 px over 8. Looked at (ev/chunk-h.jpg): the chunks, the spiral and the row of white dashes are all gone. So all three lie in my scene (deep.ts), nothing in src/bodies, and no mail to globe_engineer is due.
+- D8, the deck's own shadow off (deep.json steps.shade 0): in the box 9300 px over 8. Looked at (ev/chunk-i.jpg): the navy chunks with stepped edges are gone; the spiral stays as a soft swirl and the dashes stay.
+- My control D2 of 01:20 was no control: light.shadow is the softness of that shadow (uLightMake.w), so 0 made it harder, it did not switch it off. Named here as my error.
+The term: the deck's own shadow in deep.ts (the loop of steps.shade taps toward the Sun over the relief). It read the relief at deck.march (0.09 units) whatever the pixel covered, cut its edge within two pixels (0.12 of the tap's distance plus 0.004 in height) and took all of the Sun; the grade of the fall then drew the rest as navy.
+
+The cures, each tried on 4709 before the next:
+- C1: the shadow through the filter by the pixel's foot (the relief that casts read no finer than the foot, the edge as wide as light.shadeFoot 0.5 of the foot in height) and its depth a value (light.shade 0.25 of the Sun at most). The chunks are gone at 4709 (ev/chunk-j.jpg). The dashes stood: they are not a streamer under the foot as a whole, they are its thick and thin parts (lump 0.09 units long) read under their own length.
+- C2: a streamer narrower than the foot it is read with is not drawn at that distance (cirrus.thin 0.5 to 1.5: whole while two pixels are under half its width, none from one and a half), and its thick and thin parts go to their mean by the same law. The dashes are gone at 4705 to 4713 and the white bit at the hold with them (ev/chunk-k.jpg, ev/dive-c2.jpg, ev/hold-c2.jpg).
+- The sky (MAIL 840 point 3): plan.ts skyAim.terrain dropped, so the sky keeps the hold's turn all the way down. 4722 and 4723 beside the same frames of 7f22b7d9 (ev/sky-d.jpg): the bright field of stars that came into the upper right corner is not there.
+- What stands after C2: the spiral, as a small pale disc with a dark eye and one arm, about 15 px across at the hold in the preview (ev/hold-c2.jpg). By the storm's numbers it is the light of the arms (arms.light 0.6 on a level of 0.75, so the arms stand on the top of the albedo) and the collar (0.3). C3 tries them at 0.2 and 0.12.
