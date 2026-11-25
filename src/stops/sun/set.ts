@@ -13,6 +13,7 @@ import { Ground } from './ground'
 import { Arcade } from './arcs'
 import leaveFit from './leave.json'
 import place from './place.json'
+import ring from './corona-ring.json'
 import * as look from './look'
 import { opening, plan } from './plan'
 import { Prominences } from './prominence'
@@ -52,7 +53,7 @@ export const createSet: SetFactory = async (ctx) => {
   globe.mesh.quaternion.copy(fitTurn)
   orbit.add(globe.mesh)
 
-  const corona = new Corona(await ctx.texture(base + look.files.corona, { srgb: true, anisotropy: 4, repeat: true }), look.corona)
+  const corona = new Corona(await ctx.texture(base + look.files.corona, { srgb: true, anisotropy: 4, repeat: true }), look.corona, place.onGlobe.gas.near, ring.light)
   orbit.add(corona.mesh)
 
   const prominences = new Prominences(await ctx.texture(base + look.files.prominence, { srgb: true, anisotropy: 8 }), await ctx.texture(base + look.files.prominenceFlow, { srgb: false }), look.prominence)

@@ -30,11 +30,11 @@ in vec4 aStrand;
 in vec2 aFlow;
 uniform vec3 uCam;
 uniform float uFormat;
-uniform vec2 uLeast;
+uniform vec3 uLeast;
 uniform vec2 uHalo;
 out vec4 vAcross;
 out vec4 vStrand;
-out vec2 vFlow;
+out vec4 vFlow;
 out vec3 vClip;
 out vec3 vAt;
 void main() {
@@ -42,14 +42,24 @@ void main() {
   across /= max(length(across), 1e-6);
   vec4 mid = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
   // the half width in pixels of the buffer (uLeast.y: the rows of the master's frame)
-  float px = aStrand.y * length(mat3(modelViewMatrix) * across) * projectionMatrix[1][1] / max(mid.w, 1e-6) * 0.5 * uLeast.y * uFormat;
-  float shown = max(px, uLeast.x);
-  // the band is as wide as the tube's thin sheath (uHalo.x times the tube's width)
-  vAt = position + across * (aAcross.x * aStrand.y * uHalo.x * shown / max(px, 1e-6));
+  float scale = projectionMatrix[1][1] / max(mid.w, 1e-6) * 0.5 * uLeast.y * uFormat;
+  float px = aStrand.y * length(mat3(modelViewMatrix) * across) * scale;
+  // how many steps of the strand's own pattern along its length lie under one pixel: the length is seen short by the
+  // angle between the strand and the look
+  vec3 look = uCam - position;
+  float seen = length(cross(aTan, look)) / max(length(look), 1e-6);
+  float steps = 1.0 / max(seen * length(mat3(modelViewMatrix) * aTan) * scale * aFlow.x, 1e-6);
+  // the band is as wide as the tube's thin sheath (uHalo.x times the tube's width) and never narrower on the screen
+  // than its own least (uLeast.z, pixels). The least belongs to the band and not to the tube: a wider sheath does not
+  // widen what a far strand is drawn with, so no light is laid where no gas is
+  float band = max(px * uHalo.x, uLeast.z);
+  vAt = position + across * (aAcross.x * aStrand.y * band / max(px, 1e-6));
   gl_Position = projectionMatrix * modelViewMatrix * vec4(vAt, 1.0);
   vAcross = aAcross;
-  vStrand = vec4(aStrand.x, px / shown, aStrand.z, aStrand.w);
-  vFlow = aFlow;
+  // y: the share of the drawn band that the true band has (the light falls by it); vFlow.z: the tube's true half
+  // width against the width under which it is no line any more (uLeast.x); vFlow.w: the pattern's steps under a pixel
+  vStrand = vec4(aStrand.x, px * uHalo.x / band, aStrand.z, aStrand.w);
+  vFlow = vec4(aFlow, px / uLeast.x, steps);
   vClip = gl_Position.xyw;
 }`
 
@@ -70,11 +80,12 @@ uniform float uThick;
 uniform vec2 uTone;
 uniform vec2 uHalo;
 uniform vec2 uThin;
+uniform vec4 uAlong;
 uniform vec3 uCam;
 uniform vec4 uBall;
 in vec4 vAcross;
 in vec4 vStrand;
-in vec2 vFlow;
+in vec4 vFlow;
 in vec3 vClip;
 in vec3 vAt;
 out vec4 outColor;
@@ -108,22 +119,27 @@ void main() {
   // the light of a thin round tube across its width, and of the thin sheath around it
   float x = vAcross.x * uHalo.x;
   float sheath = 1.0 - vAcross.x * vAcross.x;
-  float tube = max(1.0 - x * x, 0.0) + uHalo.y * sheath * sheath;
   // the plasma: the pattern is laid along the length and carried at the strand's own steady speed
   float q = (vAcross.y - vStrand.w * uTime) / vFlow.x + vStrand.x * 251.0;
-  float blobs = pow(an(q, vStrand.x), uPlasma.z);
-  float sparks = pow(an(q * uPlasmaMore.x + 17.0, vStrand.x + 0.37), uPlasmaMore.y);
+  // a pattern finer along the strand than the pixels that draw it is not a row of points any more: over the range
+  // uAlong.xy of its steps under one pixel it goes to its own mean (uAlong.z the blobs', uAlong.w the sparks'), so the
+  // strand gives the same light at every distance and a far strand does not glitter as its plasma moves
+  float blobs = mix(pow(an(q, vStrand.x), uPlasma.z), uAlong.z, smoothstep(uAlong.x, uAlong.y, vFlow.w));
+  float sparks = mix(pow(an(q * uPlasmaMore.x + 17.0, vStrand.x + 0.37), uPlasmaMore.y), uAlong.w, smoothstep(uAlong.x, uAlong.y, vFlow.w * uPlasmaMore.x));
   float plasma = uPlasma.x + uPlasma.y * blobs + uPlasma.w * sparks;
   float low = 1.0 + uFoot.x * exp(-max(vAcross.z, 0.0) / uFoot.y);
   float ends = smoothstep(0.0, uFoot.z, vAcross.w) * smoothstep(0.0, uFoot.z, 1.0 - vAcross.w);
   float gives = vStrand.z * plasma * low * mix(1.0, ends, vFlow.y);
   vec3 base = mix(uCool, uHot, gives / (gives + uTone.x)) * (gives * uPlasmaMore.z);
-  vec3 lit = inverseFilmic(min(base * tube, vec3(uTone.y)));
+  // the sheath is the thin gas about the tube: it gives its share (uHalo.y) of what the tube's own gas gives at the most,
+  // so a strand that is many times over the white in its core keeps a faint sheath and does not grow into a white post
+  vec3 thin = min(base, vec3(uTone.y)) * uHalo.y;
+  vec3 lit = inverseFilmic(min(base * max(1.0 - x * x, 0.0) + thin * (sheath * sheath), vec3(uTone.y)));
   // a strand thinner than a pixel is not a line any more: the light of its tube and sheath, summed across the band
   // in linear light (three points over the tube, two over the sheath beyond it), is laid as one bell over the whole
   // band. The sum across is the same as the tube's own, so the strand gives the pixel the share of it that its true
   // width covers and nothing more; many of them over each other are a glow in the shape of their lines
-  float soft = 1.0 - smoothstep(uThin.x, uThin.y, vStrand.y);
+  float soft = 1.0 - smoothstep(uThin.x, uThin.y, vFlow.z);
   if (soft > 0.0) {
     float edge = 1.0 / uHalo.x;
     vec3 sum = vec3(0.0);
@@ -131,12 +147,12 @@ void main() {
       float a = edge * (k == 0 ? 0.1127017 : k == 1 ? 0.5 : 0.8872983);
       float s = 1.0 - a * a;
       float t = a * uHalo.x;
-      sum += edge * (k == 1 ? 0.4444444 : 0.2777778) * inverseFilmic(min(base * (1.0 - t * t + uHalo.y * s * s), vec3(uTone.y)));
+      sum += edge * (k == 1 ? 0.4444444 : 0.2777778) * inverseFilmic(min(base * (1.0 - t * t) + thin * (s * s), vec3(uTone.y)));
     }
     for (int k = 0; k < 2; k++) {
       float a = edge + (1.0 - edge) * (k == 0 ? 0.2113249 : 0.7886751);
       float s = 1.0 - a * a;
-      sum += (1.0 - edge) * 0.5 * inverseFilmic(min(base * (uHalo.y * s * s), vec3(uTone.y)));
+      sum += (1.0 - edge) * 0.5 * inverseFilmic(thin * (s * s));
     }
     lit = mix(lit, sum * (1.875 * sheath * sheath), soft);
   }
@@ -149,6 +165,25 @@ void main() {
   float cover = min(max(col.r, max(col.g, col.b)) / (inverseFilmic(vec3(uTone.y)).r * uThick), 1.0);
   outColor = vec4(col, cover);
 }`
+
+/** The mean along a strand of its pattern raised to a power: the pattern stands at whole steps on values spread evenly
+ *  from 0 to 1 and runs smoothly between two of them (the shader's an()). Summed over a fixed grid, the same at every run. */
+function patternMean(power: number): number {
+  const n = 48
+  let sum = 0
+  for (let i = 0; i < n; i++) {
+    const a = (i + 0.5) / n
+    for (let j = 0; j < n; j++) {
+      const b = (j + 0.5) / n
+      for (let k = 0; k < n; k++) {
+        const f = (k + 0.5) / n
+        const w = f * f * (3 - 2 * f)
+        sum += Math.pow(a + (b - a) * w, power)
+      }
+    }
+  }
+  return sum / (n * n * n)
+}
 
 /** A whole number and a slot give one fixed value from 0 to 1: the same at every run. */
 function fixed(seed: number): (id: number, slot: number) => number {
@@ -381,9 +416,10 @@ export class Arcade {
         uDiag: diagUniform, uFormat: formatUniform,
         uCam: { value: new THREE.Vector3() }, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
         uKeep: this.keep, uTime: this.time, uBall: this.ball,
-        uLeast: { value: new THREE.Vector2(data.least, config.raw.formats.master.height) },
+        uLeast: { value: new THREE.Vector3(data.least, config.raw.formats.master.height, data.band) },
         uHalo: { value: new THREE.Vector2(l.sheath[0]!, l.sheath[1]!) },
         uThin: { value: new THREE.Vector2(data.thin[0]!, data.thin[1]!) },
+        uAlong: { value: new THREE.Vector4(data.along[0]!, data.along[1]!, patternMean(l.blobs[1]!), patternMean(l.sparks[1]!)) },
         uPlasma: { value: new THREE.Vector4(l.floor, l.blobs[0]!, l.blobs[1]!, l.sparks[0]!) },
         uPlasmaMore: { value: new THREE.Vector4(l.fine, l.sparks[1]!, l.level, 0) },
         uFoot: { value: new THREE.Vector4(l.foot[0]!, l.foot[1]!, l.ends, 0) },
