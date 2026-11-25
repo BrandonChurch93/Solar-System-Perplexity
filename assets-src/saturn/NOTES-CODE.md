@@ -6852,3 +6852,29 @@ So in front of the lit globe all three looks cover by one law from the kept ring
   to the globe and a dark band on the globe; main has a brown veil with a hard lit edge in front of the night
   side; ours has a clean gap with stars at the left and a faint veil.
 - Looks pushed 16:56. Next due by 17:25.
+
+## 17:00 to 17:10 UTC: the second name's tree 8c52928 pushed, its proof on main's engine
+
+- Pushed 17:00:53: a4af1b5 (set.ts line 64 alone), 7d91da2 (the one share and the dark ice), 8c52928 (merge of
+  main f348295). Main moved on to c92aad6 (status 321, d312 recorded: PROGRESS alone); merge it before the
+  NAMED mail. The stop folder of 8c52928 is the proven folder: do not touch src/stops/saturn until the name is
+  sent, or prove again.
+- Proof: /tmp/v/dark/proof.sh (log /tmp/v/dark/proof.log, out /tmp/v/n2), on mainref at c92aad6 with the stop
+  folder taken from the commit (git archive 8c52928 into /tmp/v/n2src). Order: finals 3465 3720, drafts 3830
+  3838 3465 3720 3589, main's own finals 3465 3720 into /tmp/v/dark/M0 (folder /tmp/v/mainsrc), then rise, G13,
+  gate, parity, dive, path, handover, place (frames kept in mainref/out/work/smooth/saturn/frames). Vitest
+  alone after it.
+- FINALS of 8c52928 on main's engine: 3465 4.7784, G17 median 1.0618 (sha b23808e3f1726921); 3720 28.6192, G17
+  median 0.9122. Main's finals of the engine before (/tmp/v/r58): 4.7807 and 27.8012 (new ones render).
+- 3720 at the final tier by region (reg3.py; part of the whole frame's number, main then the name): band 0 to
+  6 N 2.9888, 3.3748; thin sheet 2.7197, 3.3536; rest 22.0928, 21.8907. The rest further (reg3b.py): globe's
+  twilight and night -0.458, lit globe -0.148, rings 1.2458 to 1.53 +0.046, 1.53 to 1.95 +0.117, the division
+  -0.007, 2.03 to 2.27 +0.227 (level 105.7 against main's 98.9 and the approved's 96.1), plane beyond +0.013,
+  sky +0.007. So the globe is better than main's by 0.61 and the rings are worse by 0.40: the near look's
+  grade was fitted under main's cover and wants a new fit of its tone by radius under the one law (next).
+- 3830 against 3838 with the eased line (drafts in /tmp/v/n2): over 8 to 40 N the largest 1.56 levels a frame
+  at the cosine -0.10; by bands 1.43, 1.66, 2.01 (26 to 40 N at -0.06).
+- The hold at 4 times (/tmp/v/dark/p_hold_n2.png): hero, main, the name: no new form in the gap against main.
+- Pair at full size /tmp/v/dark/pair_3720_n2.png: the name's foot is a clean gap (stars at the left, the globe
+  down to the rim); the approved has translucent grey rings up to the globe and a dark band on it; main a brown
+  veil. By eye the name is the emptiest of the three there. Named.
