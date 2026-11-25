@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { config, type Segment } from '../config'
-import { dissolveWeight, forcedWord, handoverOf, sideForced, type Handover } from '../director/handover'
+import { dissolveWeight, drawnWord, forcedWord, handoverOf, sideForced, type Handover } from '../director/handover'
 import { handoverChanges, segmentAtFrame } from '../director/timeline'
 import { clockStamp, shutterSpan, spanMid, wholeFrame } from './clock'
 import { sampleCount, shutterOffset, shutterWeights, splitSides } from './sampler'
@@ -56,11 +56,20 @@ export function rawMotion(open: Shot, mid: Shot, close: Shot, probe?: MotionProb
       if (c && Math.abs(c.x) <= half * aspect + slack && Math.abs(c.y) <= half + slack) track(CENTRE)
     }
     const height = eye.y + (s.ground ?? 0)
+    // The ground of a surface view: the globe as the plan's twin places it in the set, where the state names it (SetState.ball), else the
+    // plane y = -ground. Either way the points are fixed in the set.
+    const ball = orbit ? undefined : s.ball
+    const out = ball ? eye.clone().sub(ball.centre) : null
     for (let y = 0; y < rows; y++) {
       for (let x = 0; x < cols; x++) {
         const ray = new THREE.Vector3(((x / (cols - 1)) * 2 - 1) * tan * aspect, ((y / (rows - 1)) * 2 - 1) * tan, -1).normalize().applyQuaternion(mid.camera.quaternion).applyQuaternion(inverse)
         if (!orbit) {
-          if (height > 0 && ray.y < -1e-9) track(eye.clone().addScaledVector(ray, height / -ray.y), x, y)
+          if (ball && out) {
+            const along = -out.dot(ray)
+            const disc = along * along - out.lengthSq() + ball.radius * ball.radius
+            const t = disc > 0 ? along - Math.sqrt(disc) : 0
+            if (t > 0) track(eye.clone().addScaledVector(ray, t), x, y)
+          } else if (height > 0 && ray.y < -1e-9) track(eye.clone().addScaledVector(ray, height / -ray.y), x, y)
           continue
         }
         const along = -eye.dot(ray)
@@ -285,7 +294,7 @@ const caps = new WeakMap<ShotSource, Cap>()
 const CAP_KEPT = 1 << 15
 
 function capOf(source: ShotSource): Cap {
-  const stamp = handoverChanges() + '|' + config.raw.handover.maxBlurPx + '|' + config.raw.handover.blurEaseFrames + '|' + config.raw.handover.minShutter + '|' + forcedWord() + '|' + clockStamp()
+  const stamp = handoverChanges() + '|' + config.raw.handover.maxBlurPx + '|' + config.raw.handover.blurEaseFrames + '|' + config.raw.handover.minShutter + '|' + forcedWord() + '|' + drawnWord() + '|' + clockStamp()
   let cap = caps.get(source)
   if (!cap || cap.stamp !== stamp) {
     cap = { stamp, raw: new Map(), scale: new Map() }

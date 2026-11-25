@@ -42,8 +42,14 @@ export interface SetState {
   // measured through the twin. What follows the height (air, haze, the reach of the close ground) reads it here and not from the clock.
   height: number
   ground?: number
+  // Where the unit sphere of the body lies in a surface set at this time, in the set's own frame and units: the globe as the plan's twin
+  // places it there (StopPlan.ballIn). Given in the surface view of a stop that handover.drawnMeasure names: raw motion then tracks the
+  // points of that sphere, fixed in the set, in place of the plane y = -ground.
+  ball?: { centre: THREE.Vector3; radius: number }
   // The turn of the body's surface at this time, in the set's own frame. Given on the globe side of a dive and a rise of a stop that opted in,
-  // where the camera follows the turning place: raw motion then tracks points that turn with the body.
+  // where the camera follows the turning place: raw motion then tracks points that turn with the body. It is the plan's turn, and for a
+  // stop that handover.drawnMeasure names the turn the stop draws its body by (StopPlan.drawn). Only the measure reads it: rawMotion, and
+  // wayMatrix, which is the same measure point for point.
   turn?: THREE.Quaternion
   // The near bodies the stop names at this time (StopPlan.nearBodies), on the globe side only and only where it names any: the sample count of a
   // frame follows the fastest of them that is in the frame (core/motion nearMotion). Nothing else reads them.
