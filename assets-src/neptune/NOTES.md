@@ -8410,3 +8410,38 @@ All pair numbers are my proxy (the report's own path on my preview frames, 960 w
 - Tests on 985341693: NOT yet run (named red until they are).
 - Next: the hold and 4707 under gain 0.62 and under lump 0.35 (d302: the hold may lose at most 0.01, G17 there may
   not fall); then a tone of the fine sizes that does not go through the relief (so no creases), in code.
+
+
+## MAIL 1295 from the Builder (/root), 20:49 UTC (read 20:53 by my clock, during control batch J; word for word)
+
+> MAIL 1295 from the Builder (/root), 20:49 UTC. Your name 27624e6f, state of the proofs.
+> 1. Reader: dive 1 of 4 green (pattern 0.2599 against main's 0.7166); dive 2 of 4 red by pattern 0.4653 at 4706 (main 1.3008 at 4721; pop 1.0935 against 1.0405, under the limit, no line); rise 2 of 2 green (pattern 0.4040 against main's 1.4761, pop 1.0777 against 1.1301). Units and gate green (nq7-01). Dive 3, 4 and rise 1 still drawing (rise 1 a second time on a faster machine). That is a large gain and I want it on main.
+> 2. Finals (nq7-02, picture attached: approved, main, your name): both judged frames differ from main's.
+> 4860: d296 stands there. My quick reader (mean absolute RGB against the approved picture resized to the frame; it gives main 23.02 where yours gave 22.986) reads your name at 23.70: worse than main. By thirds of the frame, main | name: top row 31.4 | 27.0, 15.2 | 26.2, 4.1 | 12.7; middle 29.2 | 33.6, 35.1 | 29.9, 26.4 | 28.2; bottom 8.0 | 9.4, 19.0 | 18.6, 38.8 | 27.6. So the loss is the top middle and top right: the sky over the limb (it stands reddish and lighter in your frame, top third mean RGB 32.7 49.0 67.6 against the approved 29.0 45.8 63.7) and the haze at the limb; the body itself matches better than main's. The name does not go onto main until 4860 reads no worse than main's by your reader. State your reader's numbers and cure the sky and limb band by cause (what draws that sky at 4860, and why it differs from the hold's).
+> 4605: by d310 (5) the hold is judged by look, each difference named and owned. I see four: (a) the lit globe is narrower in the frame: its blue reaches x 564 to 1707 where main's reaches 488 to 1878 and the approved 499 to 1864 (at 1920 wide); (b) the Sun at the upper right is smaller and has lost its glow and spikes (top right third reads 23.0 against the approved where main reads 1.9); (c) a dark spot stands on the disc left of the centre that the approved picture does not have; (d) the sky is darker, the Milky Way band thinner. For each: say what it is, whether it is wanted, and by when it is cured. (a) and (b) I take as faults until you show otherwise: the approved hold is the target for the eye even where the bytes are yours now.
+> 3. Name again when 4860 is cured and (a) to (d) are answered; the reader parts need not be drawn again for files that do not change the dive and the rise.
+> Attached: neptune-finals.jpg (/home/user/.perplexity/attachments/21a51a2d197b41719a84c2210b988f09/neptune-finals.jpg)
+
+- WHAT MAIL 1295 CHANGES FOR MY WORK: the order is now (1) 4860 as a WHOLE frame no worse than main's by my reader
+  (mine on 985341693: whole 23.593, sky 3.420, band 2.646, ground 17.527; main 22.986, 1.619, 1.607, 19.759): the sky
+  over the limb and the limb's band, cured by cause; (2) the hold's four differences (a) to (d), each said: what it
+  is, whether wanted, by when cured; (3) name again. The reader's parts need not be drawn again for files that do not
+  change the dive and the rise. His rows on the name: dive 1 of 4 green 0.2599 (main 0.7166), dive 2 of 4 red 0.4653
+  at 4706 (main 1.3008 at 4721), rise 2 of 2 green 0.4040 (main 1.4761). My proxy read 0.43 at 4706: 0.035 under his.
+
+## Lab log 20:39 to 20:54 UTC: the hold and 4707 under the candidates; the tone's own weights tried in code (not kept)
+
+- I1 (deck.gain 0.62) and I2 (lump 0.35 and gain 0.62) at 4605 and 4707, 1920, draft: the hold's match 7.627 and 7.623
+  (N11 7.621: inside d302's 0.01), G17 0.674 and 0.675 (0.674); changed pixels at 4605 49547 and 69319, the largest 21
+  and 30 levels, all inside the disc (x 750 to 1384, y 477 to 977). At 4707 238487 and 312136 px, largest 26 and 41
+  (`/tmp/i-4605.jpg`, `/tmp/i-4707.jpg`, `/tmp/i-4707-crop.jpg` looked at: I1 adds thin dark curled creases low on the
+  disc, I2 long streaks along the bands).
+- TRIED IN CODE, NOT KEPT (the patch is `/tmp/tone.patch`): the deck's tone with its own weights for the octaves from
+  number 3 on (deck.tone.gain), the height keeping deck.gain, so the fine sizes show in the tone without steeper
+  slopes. Null control J0 (tone gain 0.5): 4860 is N11's bytes. J1 tone gain 0.7: G17 0.460 / 0.278 | ground rows
+  0.369 | ground part 17.596. J2 with lump 0.35: 0.465 / 0.254 | 0.342 | 18.035. J3 tone gain 0.78 and lump 0.35:
+  0.506 / 0.296 | 0.395 | 18.065. Teal blots unchanged (17.1, 13.9, 13.6 at (1168, 752)).
+  READ: the tone alone gives a tenth of what the same gain gives through the relief (G3 0.604). The fine band of G17
+  on the ground is the SHADING of fine slopes, not the tone. So the way to the grain goes through the relief and its
+  light, and the creases must be cured there (the slope's reading step and the shadow's threshold), not round it.
+  The tree is back at 985341693's files.
