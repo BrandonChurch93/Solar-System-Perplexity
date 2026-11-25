@@ -1,9 +1,87 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T17:51:14.825Z",
+ "pushed": "2026-11-25T18:34:09.421Z",
  "head": "1c5b75fa8f007ab95b2fc0e6425350ec0cf7a256",
- "note": "1c5b75f: rise slices a and b green on my reader (every drawn frame looked at), finals of 2895 and 3150 equal bytes with the last name; far band crops as they stand; dive, parity, tests, gate, levels, controls still running",
+ "note": "Tip 1c5b75fa: dive 3011 to 3055 + 1/2 every half frame (slice green: pop 1.03, pattern 0.43), rise 3296 at the final tier, the hold 2895 at the place beside the approved picture and main (the storm on the globe costs the match 0.0203, Io's soft edge 0.0036), terrain 3150 last",
  "looks": [
+  {
+   "time": "2026-11-25T18:34:01.573Z",
+   "file": "20261125183401573-note-p1-3150.jpg",
+   "source": "../work/r15/p1-3150.jpg",
+   "kind": "note",
+   "label": "terrain 3150 on the tip, final tier",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T18:34:00.901Z",
+   "file": "20261125183400901-note-disc-8x.jpg",
+   "source": "../work/r18/disc-8x.jpg",
+   "kind": "note",
+   "label": "hold 2895, the place's disc at 8 times: approved, main, the tip",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T18:34:00.080Z",
+   "file": "20261125183400080-note-place-2895.jpg",
+   "source": "../work/r18/place-2895.jpg",
+   "kind": "note",
+   "label": "hold 2895 at the place and Io's shadow: approved, main, the tip, difference times 4",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T18:33:59.086Z",
+   "file": "20261125183359086-note-dive-d.jpg",
+   "source": "../work/r15/sheets/dive-d.jpg",
+   "kind": "note",
+   "label": "dive 3047 to 3055 + 1/2 on the tip, every half frame",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T18:16:49.023Z",
+   "file": "20261125181649023-note-dive-c.jpg",
+   "source": "../work/r15/sheets/dive-c.jpg",
+   "kind": "note",
+   "label": "dive 3035 to 3046 + 1/2, every drawn frame, draft, on 1c5b75f; the lower left dark and plain from 3037 (the wedge's ground, listed)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T18:16:48.271Z",
+   "file": "20261125181648271-note-dive-b.jpg",
+   "source": "../work/r15/sheets/dive-b.jpg",
+   "kind": "note",
+   "label": "dive 3023 to 3034 + 1/2, every drawn frame, draft, on 1c5b75f",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T18:16:46.873Z",
+   "file": "20261125181646873-note-dive-a.jpg",
+   "source": "../work/r15/sheets/dive-a.jpg",
+   "kind": "note",
+   "label": "dive 3011 to 3022 + 1/2, every drawn frame, draft, on 1c5b75f",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T18:16:45.365Z",
+   "file": "20261125181645365-note-p1-3296.jpg",
+   "source": "../work/r17/p1-3296.jpg",
+   "kind": "note",
+   "label": "3296 final on 1c5b75f (the rise's pull back at 2.4 over 1.75 s): drawn from 1.562 radii, was 1.45",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T17:56:42.010Z",
+   "file": "20261125175642010-frame-p1-3296.jpg",
+   "source": "out/work/jupiter/final/p1-3296.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3296, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3296,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "da1c454a83994f2f"
+  },
   {
    "time": "2026-11-25T17:50:58.599Z",
    "file": "20261125175058599-note-p1-3150.jpg",
@@ -134,78 +212,6 @@
    "source": "../work/r15/sheets/rise-b-a.jpg",
    "kind": "note",
    "label": "Rise 3270 to 3279 + 1/2 on the tree 1c5b75f (path cure), every half frame, draft",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T17:12:07.866Z",
-   "file": "20261125171207866-note-n9-3150.jpg",
-   "source": "out/work/jupiter/final/n9-3150.png",
-   "kind": "note",
-   "label": "3150 final as it stands (named 001113e7, the path cure changes no pixel of it)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T17:12:07.146Z",
-   "file": "20261125171207146-note-thirds-final.jpg",
-   "source": "../work/r15/air/thirds-final.jpg",
-   "kind": "note",
-   "label": "Trial, not in the tree: far band at 3150, approved, named (air share 1), air share 0.3 (final); level and relief of the three thirds",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T17:12:06.440Z",
-   "file": "20261125171206440-note-rise-new-5.jpg",
-   "source": "../work/r15/rise-new-5.jpg",
-   "kind": "note",
-   "label": "Rise with the pull back at 2.4 radii a second over 1.75 s, drafts of 3270, 3283, 3296, 3305, 3314 (commit 1c5b75fa)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T16:52:20.132Z",
-   "file": "20261125165220132-note-k006300-r2-draft.jpg",
-   "source": "../work/r15/air/s015/k006300-r2-draft.png",
-   "kind": "note",
-   "label": "3150 draft, trial: air share 0.15 (left third relief 12.43 against 13.86 approved; match 7.096 draft against 6.437 draft at share 1)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T16:52:19.217Z",
-   "file": "20261125165219217-note-thirds.jpg",
-   "source": "../work/r15/air/thirds.jpg",
-   "kind": "note",
-   "label": "far band thirds at 3150, drafts: approved, kept still, air share 1, 0.3, 0.15 (trial, not committed)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T16:27:05.363Z",
-   "file": "20261125162705363-note-look-3150.jpg",
-   "source": "../work/r14/w/look-3150.jpg",
-   "kind": "note",
-   "label": "3150 final on the named tree, bytes of 0e5c0362, match 6.113",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T16:27:04.061Z",
-   "file": "20261125162704061-note-strays-2895.jpg",
-   "source": "../work/r14/w/strays-2895.jpg",
-   "kind": "note",
-   "label": "2895: the pixels that differ by 1 level from the kept still, drawn by place",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T16:27:02.687Z",
-   "file": "20261125162702687-note-dive-w-de.jpg",
-   "source": "../work/r14/w/sheets/dive-w-de.jpg",
-   "kind": "note",
-   "label": "dive on 001113e7, every half frame, last sheets",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T16:27:01.494Z",
-   "file": "20261125162701494-note-dive-w-c.jpg",
-   "source": "../work/r14/w/sheets/dive-w-c.jpg",
-   "kind": "note",
-   "label": "dive on 001113e7, every half frame, third sheet",
    "stop": "jupiter"
   }
  ]
