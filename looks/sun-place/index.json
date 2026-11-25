@@ -1,9 +1,41 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T08:20:23.380Z",
+ "pushed": "2026-11-25T08:42:46.351Z",
  "head": "705444897fa41f6743de1402262513bd60a3a69e",
- "note": "point 3 test on 4b (my chain, preview, capture 437 to 453): 4b 0.495; onGlobe.away off 0.662; heights.loops off 0.499; heights.strands off 0.410; red off 0.471; fringe off 0.497; corona and sky off 0.494; arcade hidden 0.273 at another place. sun-near frame 60 of 4b: dark 0.223 body 0.616 pale 0.084 white 0.023 | brightest 15 percent: half width 8.2 px, 546 shapes, fine detail 0.0291, mean 0.326 | distance 0.070",
+ "note": "one body on the rise, in work. Part 2 by my chain (preview): 4b 0.495, 4b with the map light opened 0.471 (the arcade top still carries it), dome model 0.248, dome model with the map light opened 0.190. Frame 60 of these states is not drawn yet; sun-near frame 60 of 4b, on which the first pair stands: dark 0.223 body 0.616 pale 0.084 white 0.023 | brightest 15 percent: half width 8.2 px, 546 shapes, fine detail 0.0291, mean 0.326 | distance 0.070",
  "looks": [
+  {
+   "time": "2026-11-25T08:42:45.725Z",
+   "file": "20261125084245725-note-f2-90s.jpg",
+   "source": "../../../../tmp/v/f2-90s.jpg",
+   "kind": "note",
+   "label": "dome model in work, frame 90 spot at 1 to 1 under the approved",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T08:42:45.118Z",
+   "file": "20261125084245118-note-f2-90b.jpg",
+   "source": "../../../../tmp/v/f2-90b.jpg",
+   "kind": "note",
+   "label": "dome model in work, frame 90 near ground at 1 to 1 under the approved: thin creases, but pale shells",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T08:42:44.500Z",
+   "file": "20261125084244500-note-f4-limb.jpg",
+   "source": "../../../../tmp/v/f4-limb.jpg",
+   "kind": "note",
+   "label": "the same on the dome model in work (commit 5 code): top bounds 0.3 to 3.0, bottom 0.45 to 1.7",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T08:42:43.808Z",
+   "file": "20261125084243808-note-g1-limb.jpg",
+   "source": "../../../../tmp/v/g1-limb.jpg",
+   "kind": "note",
+   "label": "217 and 225 at the limb, master 2 to 1: top 4b, bottom 4b with the cells taking the map light in full where a pixel holds the map (light.wide.cell.open)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T08:20:06.834Z",
    "file": "20261125082006834-note-p3-limb-master.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/v/f1-90.jpg",
    "kind": "note",
    "label": "commit 5 in work (f1: the combed domes with the cured spot of 4b), frame 90 at the master, 1 to 1 under the approved: far field and spot",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T07:33:59.084Z",
-   "file": "20261125073359084-note-4b-60.jpg",
-   "source": "../../../../tmp/v/4b-60.jpg",
-   "kind": "note",
-   "label": "frame 60, 1 to 1: approved, commit 4b, and not taken: the commit 3 values of threads, tongues, boil and points (reads 0.452 by my chain, the fibres gone)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T07:33:57.872Z",
-   "file": "20261125073357872-note-4b-225.jpg",
-   "source": "../../../../tmp/v/4b-225.jpg",
-   "kind": "note",
-   "label": "commit 4b, frame 225 at the master: the paler patch left of the spot is still there",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T07:33:56.995Z",
-   "file": "20261125073356995-note-4b-217.jpg",
-   "source": "../../../../tmp/v/4b-217.jpg",
-   "kind": "note",
-   "label": "frame 217 at half size: commit 4 (d91c0f63), commit 4b: one ground in both",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T07:33:55.421Z",
-   "file": "20261125073355421-note-4b-90-full.jpg",
-   "source": "../../../../tmp/v/4b-90-full.jpg",
-   "kind": "note",
-   "label": "frame 90 whole at half size: take batch 9 Sun files, commit 4b",
    "stop": "sun"
   }
  ]
