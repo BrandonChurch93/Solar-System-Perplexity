@@ -56,6 +56,7 @@ export class Engine {
   private readonly place = new Place()
   private readonly over = new THREE.Scene()
   private readonly camera = new THREE.PerspectiveCamera(30, 16 / 9, 0.01, 1000)
+  private readonly twin = new THREE.PerspectiveCamera(30, 16 / 9, 0.01, 1000)
   private readonly world = new THREE.Scene()
   private readonly near = new THREE.Scene()
   private sampleTarget: THREE.WebGLRenderTarget
@@ -372,7 +373,61 @@ export class Engine {
       this.sky.setStarLift(shot.skyStars ?? 0, config.raw.travel.sky.starLevel / Math.max(shot.skyExposure, 1e-3), config.raw.travel.sky.flightStars.level)
       this.sky.setBandLook(shot.skyLook ?? 0)
     }
-    const view: RenderView = { camera: cam, diag, format: this.format, sample: index, samples: count, cameraPosition: shot.camera.position, farLight: shot.farLight, shutter: this.shutter, shutterSeconds: shutterSeconds() }
+    const base: RenderView = { camera: cam, diag, format: this.format, sample: index, samples: count, cameraPosition: shot.camera.position, farLight: shot.farLight, shutter: this.shutter, shutterSeconds: shutterSeconds() }
+    const held = this.held
+    const trims = this.trims
+    const sky = (open: Tiles | null): void => {
+      cam.fov = mid.camera.vfov
+      cam.updateProjectionMatrix()
+      const glare = this.director?.glareOf?.(mid)
+      const sun = glare ? { ...shot.sun, dir: glare } : shot.sun
+      this.sky.render(r, this.sampleTarget, cam, mid.skyQuaternion, shot.skyExposure, shot.skyGlow, mid.skyTurn, height, sun, shot.post.vignette, width / height, open)
+      if (shot.dust > 0) this.dust.render(r, this.sampleTarget, this.director!, shot, base, sun)
+      cam.fov = shot.camera.vfov
+      cam.updateProjectionMatrix()
+      if (picture) this.place.keepSky(r, this.sampleTarget)
+      r.setRenderTarget(this.sampleTarget)
+    }
+    // The one ground (Shot.under): the sky by the shot's lens, then the stop's set as the globe view draws it, by the twin of the lens,
+    // and the depth cleared, so that what the surface view draws next lies over it wherever it draws. No shield and no early pass in
+    // such a sample: both judge what the surface view covers, and here the globe shows wherever the surface view lets it.
+    const under = shot.under && shot.sets.length === 1 && shot.sets[0]!.id === shot.under.set.id ? shot.under : null
+    if (under) {
+      const twin = this.twin
+      twin.fov = under.camera.vfov
+      twin.near = under.near
+      twin.far = under.far
+      twin.aspect = cam.aspect
+      twin.setViewOffset(width, height, jx, jy, width, height)
+      twin.position.set(0, 0, 0)
+      twin.quaternion.copy(under.camera.quaternion)
+      twin.updateProjectionMatrix()
+      twin.updateMatrixWorld(true)
+      const set = this.sets.get(under.set.id)!
+      set.world.position.copy(under.set.origin).sub(under.camera.position)
+      set.world.quaternion.copy(under.set.rotation)
+      // The set is told what a globe view at this time would tell it: the twin as the shot's lens, the globe's state as the shot's one set.
+      const globe: Shot = { ...shot, camera: under.camera, sets: [under.set], near: under.near, far: under.far }
+      delete globe.under
+      set.update(under.set, globe, { ...base, camera: twin, cameraPosition: under.camera.position, under: 'globe' })
+      held.length = 0
+      if (shot !== mid && mid.under) this.hold(globe, { ...mid, camera: mid.under.camera, sets: [mid.under.set] })
+      trims.length = 0
+      if (!raw && this.sky.cull) {
+        this.world.traverseVisible((o) => {
+          const t = o.userData.trim as Trim | undefined
+          if (t) trims.push(t)
+        })
+      }
+      for (const t of trims) t.hide()
+      r.setRenderTarget(this.sampleTarget)
+      if (!raw) sky(null)
+      r.render(this.world, twin)
+      for (const t of trims) t.show()
+      for (const o of held) o.matrixWorldAutoUpdate = true
+      r.clearDepth()
+    }
+    const view: RenderView = under ? { ...base, under: 'relief' } : base
     for (const state of shot.sets) {
       const set = this.sets.get(state.id)!
       set.world.position.copy(state.origin).sub(shot.camera.position)
@@ -383,10 +438,8 @@ export class Engine {
       }
       set.update(state, shot, view)
     }
-    const held = this.held
     held.length = 0
     if (shot !== mid) this.hold(shot, mid)
-    const trims = this.trims
     trims.length = 0
     if (!raw && this.sky.cull) {
       this.world.traverseVisible((o) => {
@@ -395,10 +448,10 @@ export class Engine {
       })
     }
     for (const t of trims) t.hide()
-    const ground = !raw && this.sky.cull ? this.shield() : null
+    const ground = !raw && this.sky.cull && !under ? this.shield() : null
     const covered = ground !== null && ground.screen(r, cam, width, height, TILE)
     r.setRenderTarget(this.sampleTarget)
-    const early = !place && !covered && !raw && this.sky.cull && this.sortWorld()
+    const early = !under && !place && !covered && !raw && this.sky.cull && this.sortWorld()
     let open: Tiles | null = null
     if (early) {
       this.renderWorld(cam, this.veiled)
@@ -416,18 +469,7 @@ export class Engine {
       open = { tile: TILE, cols, rows: Math.ceil(height / TILE), open: Uint8Array.from(marks, (m) => m & 1) }
       r.clear(true, true, true)
     }
-    if (!raw) {
-      cam.fov = mid.camera.vfov
-      cam.updateProjectionMatrix()
-      const glare = this.director?.glareOf?.(mid)
-      const sun = glare ? { ...shot.sun, dir: glare } : shot.sun
-      this.sky.render(r, this.sampleTarget, cam, mid.skyQuaternion, shot.skyExposure, shot.skyGlow, mid.skyTurn, height, sun, shot.post.vignette, width / height, open)
-      if (shot.dust > 0) this.dust.render(r, this.sampleTarget, this.director!, shot, view, sun)
-      cam.fov = shot.camera.vfov
-      cam.updateProjectionMatrix()
-      if (picture) this.place.keepSky(r, this.sampleTarget)
-      r.setRenderTarget(this.sampleTarget)
-    }
+    if (!raw && !under) sky(open)
     if (early) this.renderWorld(cam, this.solid)
     else r.render(this.world, cam)
     if (ground && covered) ground.show()
@@ -482,6 +524,7 @@ export class Engine {
     })
     if (states.map((s) => s.id).join('|') !== this.attached.join('|')) return null
     const pshot: Shot = { ...at, time: now.time, u: now.u, sets: states, post: { ...at.post, vignette: 0 } }
+    delete pshot.under
     const cam = this.place.camera
     placeCamera(cam, this.format, layout, at.camera, at.near, at.far)
     const view: RenderView = { camera: cam, diag, format: { ...this.format, width: this.format.width * layout.scale, height: this.format.height * layout.scale }, sample: 0, samples: 1, cameraPosition: at.camera.position, farLight: at.farLight, place: true, placeScale: layout.scale }

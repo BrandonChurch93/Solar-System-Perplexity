@@ -949,6 +949,15 @@ export class StopPlan {
     return undefined
   }
 
+  // The globe under the surface view (Shot.under, the one ground): true where a sample of the surface view of this stop is to draw the
+  // stop's set as the globe view first, by the twin of its lens, and the surface view over it. Asked for a sample of the surface view
+  // alone, in the dive, the surface segment and the rise. False by default: the surface view is drawn alone, as it was. A stop answers by
+  // the place of the eye (its height, what of the globe is in the frame); an answer that changes at a time changes the picture at that
+  // time, so the two sides of it have to be the same picture.
+  under(_seg: Segment, _time: number): boolean {
+    return false
+  }
+
   // Three schedules of the sky on the globe side of a dive or rise that hands over run on the film's clock. A stop whose path runs at a pace of
   // its own may give each of them itself. Every one returns null by default, and then the engine's own schedule is taken.
 

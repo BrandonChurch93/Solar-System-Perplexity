@@ -3,7 +3,7 @@ import { config, type Segment } from '../config'
 import { spanMid } from '../core/clock'
 import type { Director } from '../core/engine'
 import { shutterScale } from '../core/motion'
-import type { CoverState, PlaceState, Pose, SetState, Shot, SkyFloor, SunState, ViewKind } from '../core/types'
+import type { CoverState, PlaceState, Pose, SetState, Shot, SkyFloor, SunState, UnderDraw, ViewKind } from '../core/types'
 import { defaultPost } from '../post/chain'
 import { StopPlan, easeInOut, type OrbitShot } from './moves'
 import { arc, drift, forward, lookAt, lookbackLight, mix, ramp, slerpDir, smooth, smoother } from './rig'
@@ -19,6 +19,9 @@ import farLook from '../space/farsun/look.json'
 import sunFit from '../stops/sun/fit.json'
 
 const NO_TURN = new THREE.Quaternion()
+// The range of a globe view, in units of its set: the far plane, and the near plane of a lens at a height d over the unit globe.
+const ORBIT_FAR = 80000
+const orbitNear = (d: number, handsOver: boolean): number => Math.min(Math.max(0.02 * d, handsOver ? Math.min(0.0004, 0.2 * d) : 0.0004), 1)
 
 export interface StopFrame { rotation: THREE.Quaternion; origin: THREE.Vector3 }
 
@@ -665,7 +668,8 @@ export class FilmDirector implements Director {
     let pose: Pose
     let sets: SetState[]
     let near = 0.01
-    let far = 80000
+    let far = ORBIT_FAR
+    let under: UnderDraw | undefined
     let dust = 0
     let farLight: number | undefined
     let dustLook = 0
@@ -855,6 +859,13 @@ export class FilmDirector implements Director {
       }
       pose = inSet(s, local)
       sets = [s]
+      if (view === 'terrain' && p.under(segment, time)) {
+        // The one ground: the globe view's state at this time and the twin of the lens, with the range the globe view gives a lens there.
+        const globe = state(index, 'orbit')
+        const twin = p.twin(local, time)
+        const d = Math.abs(twin.position.length() - 1)
+        under = { set: globe, camera: inSet(globe, twin), near: orbitNear(d, p.handsOver), far: ORBIT_FAR }
+      }
       const hand = (segment.kind === 'dive' || segment.kind === 'rise') && p.handsOver ? handoverOf(p.id, segment.kind) : null
       if (hand && view === 'orbit' && (segment.kind === 'dive' || segment.kind === 'rise')) {
         const kind = segment.kind
@@ -905,7 +916,7 @@ export class FilmDirector implements Director {
         far = 4000
       } else {
         const d = Math.abs(local.position.length() - 1)
-        near = Math.min(Math.max(0.02 * d, p.handsOver ? Math.min(0.0004, 0.2 * d) : 0.0004), 1)
+        near = orbitNear(d, p.handsOver)
         const low = p.p.light.skyLow
         if (low && segment.kind !== 'hold') light = { ...light, sky: light.sky * (skyShare === undefined ? mix(low[2], 1, smooth(ramp(low[0], low[1], d))) : mix(mix(low[2], 1, smooth(ramp(low[0], low[1], d))), 1, skyShare)) }
       }
@@ -932,7 +943,9 @@ export class FilmDirector implements Director {
     }
 
     for (const s of sets) s.height = this.heightOver(s, pose)
+    if (under) under.set.height = this.heightOver(under.set, under.camera)
     pose.quaternion.multiply(drift(time))
+    if (under) under.camera.quaternion.multiply(drift(time))
     if (cover.amount > 0) light = { ...light, sky: light.sky * this.plans[index]!.skyUnderCover(cover.amount, time) }
     post.exposure = light.exposure
     post.flare = flare
@@ -957,6 +970,7 @@ export class FilmDirector implements Director {
     if (skyShareHigh !== undefined) out.skyShareHigh = skyShareHigh
     if (skyFloor) out.skyFloor = skyFloor
     if (place) out.place = place
+    if (under) out.under = under
     return out
   }
 
