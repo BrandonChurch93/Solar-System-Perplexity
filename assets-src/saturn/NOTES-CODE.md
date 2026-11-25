@@ -6932,3 +6932,90 @@ So in front of the lit globe all three looks cover by one law from the kept ring
 - NEXT: the NAMED mail for 18:05; G13, gate, parity by mail when they end; then the paced share in grade.ts
   (byHeight over light.body heights and share, the generator and the response in assets-src/saturn/code), its
   proof, its name; then the three finals by depth, the rings' tone by radius under the one law, 1200 point 4.
+
+## 17:53 to 18:08 UTC: the second name f044d99f, its checks, the paced share goes to proof
+
+- 17:52: notebook commit 1b732cd, merge of main faf2194 (PROGRESS alone) as
+  f044d99f6e957bce193bf5b719ede2e59d43ef39, pushed. Stop folder tree eddc0e16 as in 114ad7e. Net plus 0.215 MB.
+- 18:02: NAMED f044d99f sent (high) with the pair, the hold panel, the finals, main's final at 3720 and two rise
+  sheets. Text in /tmp/v/mail/named_f044.txt.
+- CHECKS ON THAT TREE (main's engine c92aad6 with its stop folder): G13 PASS 0 of 83 over 0.02 (18:00); gate
+  PASS G11, PASS G15, web 274 MB, full 747 MB (18:01); parity GREEN (18:06): mean 1.878, coarse 0.413, block
+  -4.326, whole frame -0.283, all at 3720. Sent by low mail 18:07. Rise red on the pop of 1.21 in the stars.
+  NOT RUN on it: dive, path, handover, place, vitest (the queue was stopped before the dive).
+- THE PACED SHARE (working tree, not committed until proven): grade.ts bodyShare = byHeight over skim.json
+  light.body heights and share (33 knots; easedLine and light.body.ease are out); the knots are made by
+  assets-src/saturn/code/body_pace.py from body_response.json (the measured levels of the rise of 7d91da2 by
+  bin and frame, and the lens's height at every frame 3540 to 3889). The generator prints the same table as
+  the model of 17:45 to the fourth place. tsc clean. Stop folder copy for the proof: /tmp/v/c1src (differs
+  from the name's in grade.ts and skim.json alone).
+- 18:07: proof started: /tmp/v/cure/proof_c.sh (log /tmp/v/cure/proof_c.log, out /tmp/v/c1) on mainref at
+  faf2194: drafts 3465 and 3720 (hashes must be e17776f671bfafee and 748c5c929f1ed339), rise with frames kept
+  and the measure (seq_rise.txt, resp_rise.json, then the film frames as JPEG in /tmp/v/c1/rise_jpg and the
+  PNGs deleted for the disk), dive with the measure (seq_dive.txt, dive_jpg), then g13, gate, parity, path,
+  handover, place, finals 3567 and 3866. Sheets from the JPEGs: /tmp/v/cure/sheetj.py OUT DIR F0:F1:STEP COLS
+  WIDTH [crop]. Kill list as before plus pkill -f proof_c.sh.
+- Disk 3.96 GB free at the start (the old rise frames, 986 MB, are deleted by the script).
+
+## 18:07 to 18:38 UTC: mails 1248, 1252, 1254; the measure on the paced share; where 3720 loses; the pop found
+
+- MAIL 1248 (18:07): f044d99f does NOT go onto main: 3720 is 28.6192 against main's 27.7989 (d296 with d316, no
+  tolerance) and the d312 measure read 2.82 against 2. The next name: both judged frames no worse than main's
+  at the final tier on its own tree (3465 at or under 4.7807, 3720 at or under 27.7989), the measure under 2
+  on rise and dive. Fit the rings' tone under the one law FIRST (mine alone, worth 0.40). Foot and band: one
+  body, no second law by height. If the dark ice at 0.05 cannot reach main's 3720 with the hold no worse: say
+  which depth and ice give the best sum of both frames and what each costs, the Builder rules with the
+  pictures; do NOT name a state worse than main at either judged frame without that ruling.
+- MAIL 1252 (18:24): rise part 2 of 2, pop: mine 1.2129 from 3874, main's own 1.2105 (limit 1.2, 3 frames over
+  on both, first 3873 + 1/2). "it is a line you own: the next name must read at or under 1.2105 there, and
+  under 1.2 is the aim ... do not tune toward the limit, find the event." Pattern mine 0.2789, main 0.2626;
+  level step equal.
+- MAIL 1254 (18:33): the other three parts of f044d99f are green (dive 1 and 2 of 2, rise 1 of 2). Its only
+  red line is the pop at 3874.
+- THE MEASURE ON THE PACED SHARE (proof running, rise frames kept): frames 3790 to 3836: largest 1.70 levels a
+  frame at 8 to 16 N, cosine -0.14, 3826 to 3827; 1.62 at 16 to 26 N; 1.68 at 26 to 40 N; pooled 1.42. The old
+  tree read 2.82 at 3819 to 3820. The whole rise's number follows when the render ends.
+- WHERE 3720 LOSES AGAINST MAIN (finals, parts of the frame's number, /tmp/v/cure/parts.py, parts2.py,
+  globe2.py, ringdiff.py, fine.py):
+  - rings worse by 0.40, nearly all of it outward of 2.03: the near outer rings are 7 to 12 levels brighter
+    than main's (main's larger sand grains shade each other there; mine are finer since the crisp ringlets).
+    The radial table is the same as main's from 1.27 outward, so a refit of the broad tone is the cure.
+    Predicted from the film's scene light (ringopt2.py, one free value every 0.06 radii, straight across the
+    gap, the old bounds): 18.2166 to 17.8128, a gain of 0.40. The script of record is
+    assets-src/saturn/code/ring_tone.py (measure, and --write TABLE.json which keeps the layout of skim.json).
+  - the fine pattern of the rings is as strong as the approved's (rms over a bell of 6 px: mine 20.5, 28.9,
+    29.4, 28.6, 31.5 by radius band from the rim outward, approved 17.7, 22.1, 31.0, 29.2, 29.1) and not alike
+    it (correlation 0.00 to 0.08): the 30 levels of mean difference in the rings are the places of the
+    ringlets, not a tone. Nothing to take there without flattening the ringlets (not done).
+  - the approved's division lies about 0.07 radii further out than the true one: 1.95 to 2.03 costs 2.40 and
+    the first 0.08 radii outward of it about 1; the table goes straight across it by its own rule.
+  - the thin sheet (1.0 to 1.2458), 0.0333 of the frame: the approved has it as bright as the rings
+    everywhere (171 before the lit globe, 185 before the dark globe, 110 against the sky); mine 226, 62, 48;
+    main's 140, 91, 45 (its dust by height). Dark ice by depth (drafts at depth 0, 0.05, 0.15): before the lit
+    globe 0.5069, 0.4784, 0.4226; before the dark globe 1.8999, 1.9261, 1.9837; against the sky 0.3999,
+    0.4099, 0.4293: what it wins in front of the day it loses in front of the dusk. Bright ice would win at
+    3720 and cost the hold many times its margin of 0.0023 (the gap is about 3.4 percent of the hold's frame
+    and the display curve turns 2 percent of the ring's light into about 20 levels over a dark sky).
+  - the band at 0 to 6 N: in the approved the plane crosses the globe further north than in the film, so the
+    band is the approved's rings in front of the globe (night side 112.8 against my 18.8) and a dark band on
+    the day side (128 against 227). Ruled out by mail 1198; costs 0.39 against main.
+  - the globe by latitude: lit 6 to 20 N is 12 to 15 levels over the approved, dusk 6 to 20 N 15 to 28 over;
+    20 N and above within 4. A third pass of lat_tone.py on the name's final, smoothed by the same bell, reads
+    0.94 to 0.96 under 20 N and 1.06 to 1.11 at 28 to 44 N: small.
+- THE POP AT 3874, FOUND (not an event of the picture): the reader carries the next frame back along the flow
+  at a quarter of the size with a two point filter. One still frame moved sideways by whole pixels of the
+  full picture and read by the reader's own functions (/tmp/v/cure/shifttest.py) leaves 0.00 at 0 px, 1.08 at
+  1, 1.46 at 2, 1.22 at 3, 0.50 at 4, 1.19 at 5, 1.45 at 6, 1.07 at 7, 0.00 at 8: what is left swings with
+  the part of a quarter size pixel the drift has, most at a half. In the rise the lens's turn falls evenly to
+  nothing at 3881 (cams: 0.1375 degrees a frame at 3872, 0.0967 at 3874, 0.0629 at 3876; 36 px a degree), so
+  the stars drift 0.62, 0.44, 0.28 quarter pixels a capture frame there: the half is passed at 3873.3, the
+  top of the hill (left 1.95 at 3869 + 1/2, 2.38 at 3874, 1.98 at 3878). In the same frames the faint stars
+  of the open sky come in by height (sky.lift, 2.42 to 2.9377: 3869.7 to 3885), so the hill at the half
+  pixel stands on a field of points that grows. By part of the picture: /tmp/v/cure/popparts.py on the kept
+  frames (/tmp/v/c1/pop_png, k 7716 to 7796), numbers below when the render has passed 3884.
+- The stars' lift cannot be made wider (the lower height must lie over every height of the hold, 2.4116, the
+  upper under the height at the end of the rise) and moving it to dodge the half pixel would be tuning to the
+  limit: not done. To report with the evidence.
+- NEXT: when the rise is measured: stop the proof before the dive; finals at 3720 of the refit (rings' tone,
+  then the third pass of the globe's tone); the depth and ice table at both frames (drafts, finals of the
+  best) with the four panel pictures; mail the table for the ruling; then one whole proof of the whole tree.
