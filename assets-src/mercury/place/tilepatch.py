@@ -18,18 +18,39 @@ def rep(s, a, b):
 
 
 def noglare(f):
-    f['set.ts'] = rep(f['set.ts'], "glare.update(on ? keep(Math.pow(Math.max((above(plan.low(state.time)) - above(null)) / (above(plan.low(covers[first ? 0 : 1]!)) - above(null)), 0), look.glare.height)) : 0,", "glare.update(0,")
+    f['set.ts'] = rep(f['set.ts'], "glare.update(on ? glow(state.time, first ? 0 : 1) : 0, lowSunAt(", "glare.update(on && first ? 0 : 0, lowSunAt(")
 
 
-def tiles(f, kind):
+def every(s, a, b):
+    assert a in s, a[:80]
+    return s.replace(a, b)
+
+
+def tiles(f, kind, matte=False, sky=False, dim=False):
     noglare(f)
-    for line in ["ground.update(state.time - terrainMid, gain, shot.post.vignette, view)", "under.update(state.time - terrainMid, gain, shot.post.vignette, view)", "limb.update(low.gain * shot.skyGlow * shot.skyExposure, shot.post.vignette, aspect)", "rim.update(gain, shot.post.vignette, aspect)"]:
-        f['set.ts'] = rep(f['set.ts'], line, line.replace('shot.post.vignette', '0'))
+    s = f['set.ts']
+    for line in ["ground.update(state.time - terrainMid, gain, shot.post.vignette, view)", "under.update(state.time - terrainMid, gain, shot.post.vignette, view)"]:
+        s = every(s, line, line.replace('shot.post.vignette', '0').replace('gain', 'gain * %r' % SPEC['dim'] if dim else 'gain'))
+    s = rep(s, "limb.update(low.gain * shot.skyGlow * shot.skyExposure * halo, shot.post.vignette, aspect)", "limb.update(halo > 2 ? low.gain : 0, 0, aspect)")
+    s = rep(s, "const shown = on && (kind === 'dive' || kind === 'rise') ? 1 - Math.pow(1 - THREE.MathUtils.clamp(Math.log(plan.low(state.time).position.dot(nearUp) / floor) / Math.log(look.under.top[kind] / floor), 0, 1), look.under.power) : 0", "const shown = on && floor > -1 ? 1 : 1")
+    s = rep(s, "shell.mesh.visible = past > 0", "shell.mesh.visible = false")
+    s = rep(s, "border.value.z = past", "border.value.z = 0")
+    s = rep(s, "if (past > 0) {\n          shellCut.cut.set(", "if (past > 2) {\n          shellCut.cut.set(")
+    if sky:
+        s = rep(s, "near.visible = shows > 0", "near.visible = shows > 2")
+    if matte:
+        s = rep(s, ".replace(BORDER_CUT, BORDER_GLSL + BORDER_CUT)", ".replace(BORDER_CUT, BORDER_GLSL + BORDER_CUT).replace('vec3 col = inverseFilmic(texel.rgb) * uGain * vig;', 'vec3 col = vec3(%r) * uGain * vig;')" % SPEC['matte'])
+    f['set.ts'] = s
     t = SPEC[kind]
     s = f['plan.ts']
-    s = rep(s, "import { ramp, smoother } from '../../director/rig'", "import { drift, ramp, smoother } from '../../director/rig'")
-    s = rep(s, "  override dive(time: number): OrbitShot {\n", "  override dive(time: number): OrbitShot {\n    if (time * config.fps >= %d) return this.tile(time)\n" % t['firstFrame'])
-    s = rep(s, "  private lowShot(time: number): OrbitShot {", """  tile(time: number): OrbitShot {
+    s = rep(s, "import { mix, ramp, slerpDir } from '../../director/rig'", "import { drift, mix, ramp, slerpDir } from '../../director/rig'")
+    s = rep(s, "import { StopPlan, type Fit, type MoveParams } from '../../director/moves'", "import { StopPlan, type Fit, type MoveParams, type OrbitShot } from '../../director/moves'")
+    s = rep(s, "  override divePose(time: number, view: ViewKind): Pose {", """  override dive(time: number): OrbitShot {
+    if (time * config.fps >= %d) return this.tile(time)
+    return super.dive(time)
+  }
+
+  tile(time: number): OrbitShot {
     const views: [number, number][] = %s
     const k = Math.min(Math.max(Math.floor(time * config.fps + 1e-6) - %d, 0), views.length - 1)
     const low = this.low(%r / config.fps)
@@ -38,7 +59,7 @@ def tiles(f, kind):
     return { pose: { position: low.position, quaternion: q, vfov: %r }, view: 'terrain' }
   }
 
-  private lowShot(time: number): OrbitShot {""" % (json.dumps(t['views']), t['firstFrame'], t['atFrame'], t['vfovDeg']))
+  override divePose(time: number, view: ViewKind): Pose {""" % (t['firstFrame'], json.dumps(t['views']), t['firstFrame'], t['atFrame'], t['vfovDeg']))
     f['plan.ts'] = s
 
 
@@ -63,7 +84,7 @@ def on(name):
     elif name == 'topdown':
         topdown(f)
     else:
-        tiles(f, name)
+        tiles(f, name.split('-')[0], name.endswith('-matte'), name.endswith('-sky'), name.endswith('-dim'))
     for n, s in f.items():
         (SRC / n).write_text(s)
         (KEEP / (n + '.patched')).write_text(s)

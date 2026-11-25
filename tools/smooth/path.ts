@@ -445,10 +445,10 @@ export function minLeaveOf(path: { minLeave?: unknown }): number {
   return v
 }
 
-// The picture round the seam from a rise into its travel: the lowest speed, the speeds at the two ends of the window, and the lowest over the
-// smaller of those two. A rise and its travel are one flight: the speed falls once and rises once and does not come to rest. Judged: the
-// lowest over the slower end against min.
-export function judgeLeave(speed: (number | null)[], k0: number, rate: number, min: number | null): LeaveResult {
+// The picture round the seam from a rise into the move after it (after: the kind of that move, a travel or the retreat of the ending): the
+// lowest speed, the speeds at the two ends of the window, and the lowest over the smaller of those two. A rise and the move after it are one
+// flight: the speed falls once and rises once and does not come to rest. Judged: the lowest over the slower end against min.
+export function judgeLeave(speed: (number | null)[], k0: number, rate: number, min: number | null, after = 'travel'): LeaveResult {
   let lowest: LeaveResult['lowest'] = null
   let first: LeaveResult['first'] = null
   let last: LeaveResult['last'] = null
@@ -464,7 +464,7 @@ export function judgeLeave(speed: (number | null)[], k0: number, rate: number, m
   const end = a && b ? Math.min(a.value, b.value) : null
   const over = low && end !== null && end > 0 ? low.value / end : null
   const fault: Fault | null = low && over !== null && min !== null && over < min
-    ? { curve: 'rest', rule: 'rest', k: low.k, frame: Math.floor(low.k / rate), value: over, limit: min, text: 'rest: the picture comes to rest between the rise and the travel: the fastest point of the body\'s edge moves ' + low.value.toFixed(2) + ' px a film frame at frame ' + position(low.k, rate) + ', ' + shown(over, 3, min) + ' of the slower end of the window, limit ' + min }
+    ? { curve: 'rest', rule: 'rest', k: low.k, frame: Math.floor(low.k / rate), value: over, limit: min, text: 'rest: the picture comes to rest between the rise and the ' + after + ': the fastest point of the body\'s edge moves ' + low.value.toFixed(2) + ' px a film frame at frame ' + position(low.k, rate) + ', ' + shown(over, 3, min) + ' of the slower end of the window, limit ' + min }
     : null
   return { rate, k0, speed, lowest: low, first: a, last: b, over, fault }
 }

@@ -48,6 +48,9 @@ export interface SetState {
   // The near bodies the stop names at this time (StopPlan.nearBodies), on the globe side only and only where it names any: the sample count of a
   // frame follows the fastest of them that is in the frame (core/motion nearMotion). Nothing else reads them.
   near?: NearBody[]
+  // The share of the way the light of the last stop has gone to the look back's Sun, from the moment the retreat's glides begin (before the
+  // seam, in the last frames of the rise) to the end of the retreat; absent at every other time. The set draws its light by it.
+  lookback?: number
 }
 
 export interface CoverHorizon { normal: [number, number]; offset: number; soft: number }
@@ -158,7 +161,16 @@ export interface Shot {
   // PLAN F: the one air of the stop this shot belongs to, at the height of this shot's lens over its body. Set in the hold, the dive, the
   // surface view and the rise of a stop that names an air; absent everywhere else.
   air?: Air
+  // The globe drawn under the surface view, where the stop's plan asks for it (StopPlan.under); absent in every other shot.
+  under?: UnderDraw
 }
+
+// The one ground of a stop, the globe under its surface view. A sample of the surface view whose shot carries this is drawn in two
+// parts: first the stop's set as the globe view draws it at this time, by the lens that stands over the globe where the shot's lens
+// stands over the place (the twin: the same angle and the same picture of the ground, in radii), then, with the depth cleared, the
+// surface view over it. set is the state the set is given for the first part, camera the twin in the world, near and far its range.
+// The sky is drawn once, before both, by the shot's own lens. The set is told which part it is drawn for in RenderView.under.
+export interface UnderDraw { set: SetState; camera: Pose; near: number; far: number }
 
 export interface SkyFloor { nadir: THREE.Vector3; dip: number }
 
@@ -178,7 +190,10 @@ export interface SetContext {
 // time step from the shutter (one sample's share of it, for a smear along the motion) multiplies the step by this.
 // shutterSeconds: how long the full shutter of the frame being drawn is open, in seconds, at the capture rate (film.shutterDegrees of the capture
 // frame; shutterFraction / fps at rate 1). One sample's share of it is shutterSeconds / samples.
-export interface RenderView { camera: THREE.PerspectiveCamera; diag: string; format: FormatDef; sample: number; samples: number; cameraPosition: THREE.Vector3; farLight?: number; place?: boolean; placeScale?: number; shutter?: number; shutterSeconds?: number }
+// under: set in the two updates of a sample that draws the globe under the surface view (Shot.under), and in no other. 'globe': this
+// update is for the first part, the state is the globe view's and camera is the twin; the set shows what stands under the place.
+// 'relief': this update is for the second part, the state is the surface view's as ever; the set shows what lies over the globe.
+export interface RenderView { camera: THREE.PerspectiveCamera; diag: string; format: FormatDef; sample: number; samples: number; cameraPosition: THREE.Vector3; farLight?: number; place?: boolean; placeScale?: number; shutter?: number; shutterSeconds?: number; under?: 'globe' | 'relief' }
 
 export interface SkyPatch {
   view: ViewKind
