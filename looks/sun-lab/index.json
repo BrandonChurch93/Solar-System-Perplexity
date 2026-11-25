@@ -1,77 +1,71 @@
 {
  "folder": "sun-lab",
- "pushed": "2026-11-25T10:22:28.633Z",
- "head": "388a03f0e65909a174cbcf8be98389abf1c756e3",
- "note": "state c4: heat without a lamp, funnel pit, threads",
+ "pushed": "2026-11-25T10:47:02.239Z",
+ "head": "1081ea251cc8c798231beab13d2604ae6e1a6bdb",
+ "note": "state c7: no lamp, blotch heat, funnel pit, clip 120 to 150",
  "looks": [
   {
-   "time": "2026-11-25T10:22:28.083Z",
-   "file": "20261125102228083-note-c4-near.jpg",
-   "source": "../v/c4-near.jpg",
+   "time": "2026-11-25T10:47:01.641Z",
+   "file": "20261125104701641-note-clip-c7.mp4.jpg",
+   "source": "../v/clip-c7.mp4",
    "kind": "note",
-   "label": "sun lab frame 90 state c4, near field, approved left",
+   "label": "sun lab state c7 clip film frames 120 to 150 at 60 a second",
    "stop": "sun"
   },
   {
-   "time": "2026-11-25T10:22:27.547Z",
-   "file": "20261125102227547-note-c4-spot.jpg",
-   "source": "../v/c4-spot.jpg",
+   "time": "2026-11-25T10:47:01.111Z",
+   "file": "20261125104701111-note-lab-179-c7.jpg",
+   "source": "../v/lab-179-c7.jpg",
    "kind": "note",
-   "label": "sun lab frame 90 state c4, spot, approved left",
+   "label": "sun lab state c7 lab-179-c7",
    "stop": "sun"
   },
   {
-   "time": "2026-11-25T10:22:26.970Z",
-   "file": "20261125102226970-note-lab-90-c4.jpg",
-   "source": "../v/lab-90-c4.jpg",
+   "time": "2026-11-25T10:47:00.582Z",
+   "file": "20261125104700582-note-lab-0-c7.jpg",
+   "source": "../v/lab-0-c7.jpg",
    "kind": "note",
-   "label": "sun lab frame 90 state c4: no lamp, funnel pit with threads",
+   "label": "sun lab state c7 lab-0-c7",
    "stop": "sun"
   },
   {
-   "time": "2026-11-25T10:21:40.238Z",
-   "file": "20261125102140238-frame-lab-90-c4.jpg",
-   "source": "out/work/sun/lab/lab-90-c4.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 90, draft tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 90,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
-  },
-  {
-   "time": "2026-11-25T09:39:52.289Z",
-   "file": "20261125093952289-note-clip-zzd.mp4.jpg",
-   "source": "out/work/sun/lab/clip-zzd.mp4",
+   "time": "2026-11-25T10:47:00.048Z",
+   "file": "20261125104700048-note-clip-c7-sheet.jpg",
+   "source": "../v/clip-c7-sheet.jpg",
    "kind": "note",
-   "label": "sun lab state zze clip-zzd.mp4",
+   "label": "sun lab state c7 clip-c7-sheet",
    "stop": "sun"
   },
   {
-   "time": "2026-11-25T09:39:51.771Z",
-   "file": "20261125093951771-note-lab-90-whole.jpg",
-   "source": "out/work/sun/lab/lab-90-whole.jpg",
+   "time": "2026-11-25T10:46:59.533Z",
+   "file": "20261125104659533-note-control-lamp.jpg",
+   "source": "../v/control-lamp.jpg",
    "kind": "note",
-   "label": "sun lab state zze lab-90-whole.jpg",
+   "label": "sun lab state c7 control-lamp",
    "stop": "sun"
   },
   {
-   "time": "2026-11-25T09:39:51.260Z",
-   "file": "20261125093951260-note-pair-90-spot.jpg",
-   "source": "out/work/sun/lab/pair-90-spot.jpg",
+   "time": "2026-11-25T10:46:59.011Z",
+   "file": "20261125104659011-note-c7r-far.jpg",
+   "source": "../v/c7r-far.jpg",
    "kind": "note",
-   "label": "sun lab state zze pair-90-spot.jpg",
+   "label": "sun lab state c7 c7r-far",
    "stop": "sun"
   },
   {
-   "time": "2026-11-25T09:39:50.716Z",
-   "file": "20261125093950716-note-pair-90-near.jpg",
-   "source": "out/work/sun/lab/pair-90-near.jpg",
+   "time": "2026-11-25T10:46:58.480Z",
+   "file": "20261125104658480-note-c7r-spot.jpg",
+   "source": "../v/c7r-spot.jpg",
    "kind": "note",
-   "label": "sun lab state zze pair-90-near.jpg",
+   "label": "sun lab state c7 c7r-spot",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T10:46:57.946Z",
+   "file": "20261125104657946-note-c7r-near.jpg",
+   "source": "../v/c7r-near.jpg",
+   "kind": "note",
+   "label": "sun lab state c7 c7r-near",
    "stop": "sun"
   }
  ]
