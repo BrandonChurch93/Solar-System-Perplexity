@@ -1,9 +1,61 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T11:53:14.679Z",
+ "pushed": "2026-11-25T12:14:30.053Z",
  "head": "350bd0b42e9ce56568cd8be4231eb32bb87dee69",
- "note": "a pushed as 350bd0b4 (cover without grain over 2.3e-4); ruling 2a of MAIL 1060 in work: glow by one minus the dimming; hold and 4290 keep draft bytes; chain rendering",
+ "note": "law 2a (glow by one minus the dimming): pairs against the state and two chain maps; reds stay",
  "looks": [
+  {
+   "time": "2026-11-25T12:14:28.763Z",
+   "file": "20261125121428763-note-p-E1-8341.jpg",
+   "source": "../../../../tmp/n54/p-E1-8341.jpg",
+   "kind": "note",
+   "label": "chain 4170.5 to 4178.5 on law 2a: 1.29 where band and ground meet",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T12:14:27.634Z",
+   "file": "20261125121427634-note-p-E1-8305.jpg",
+   "source": "../../../../tmp/n54/p-E1-8305.jpg",
+   "kind": "note",
+   "label": "chain 4152.5 to 4160.5 on law 2a: 0.72 at the left rim",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T12:14:26.414Z",
+   "file": "20261125121426414-note-e1-c.jpg",
+   "source": "../../../../tmp/n54/e1-c.jpg",
+   "kind": "note",
+   "label": "state (left) against law 2a (right) at 4137, 4416, 4436",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T12:06:45.751Z",
+   "file": "20261125120645751-frame-E1-4035.jpg",
+   "source": "out/work/u/fin/E1-4035.png",
+   "kind": "frame",
+   "label": "uranus.hold frame 4035, final tier",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f200e17ad0e70237"
+  },
+  {
+   "time": "2026-11-25T12:05:52.895Z",
+   "file": "20261125120552895-frame-E1-4290.jpg",
+   "source": "out/work/u/fin/E1-4290.png",
+   "kind": "frame",
+   "label": "uranus.terrain frame 4290, final tier",
+   "stop": "uranus",
+   "segment": "uranus.terrain",
+   "frame": 4290,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f200e17ad0e70237"
+  },
   {
    "time": "2026-11-25T11:53:14.022Z",
    "file": "20261125115314022-note-a1-cover.jpg",
@@ -41,34 +93,6 @@
    "format": "16x9",
    "diag": "nograin",
    "job": "measure"
-  },
-  {
-   "time": "2026-11-25T11:16:26.547Z",
-   "file": "20261125111626547-frame-D3-4290.jpg",
-   "source": "out/work/u/fin/D3-4290.png",
-   "kind": "frame",
-   "label": "uranus.terrain frame 4290, final tier",
-   "stop": "uranus",
-   "segment": "uranus.terrain",
-   "frame": 4290,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
-  },
-  {
-   "time": "2026-11-25T11:14:13.089Z",
-   "file": "20261125111413089-frame-D3-4035.jpg",
-   "source": "out/work/u/fin/D3-4035.png",
-   "kind": "frame",
-   "label": "uranus.hold frame 4035, final tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
   },
   {
    "time": "2026-11-25T11:12:46.198Z",
@@ -236,30 +260,6 @@
    "source": "../../../../tmp/n52/p2-Lc-8370.jpg",
    "kind": "note",
    "label": "control, 4185 to 4193, cover on, the layer's factor held at 0.85: pattern 0.35, green: the factor by the eye's height is the cause of dive part 4",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T09:43:03.279Z",
-   "file": "20261125094303279-note-p2-st-8370.jpg",
-   "source": "../../../../tmp/n52/p2-st-8370.jpg",
-   "kind": "note",
-   "label": "reader's own chain, state, 4185 to 4193: pattern 0.98 (the back reading on 3 percent of the frame)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T09:18:23.775Z",
-   "file": "20261125091823775-note-p2-s-8305.jpg",
-   "source": "../../../../tmp/n52/p2-s-8305.jpg",
-   "kind": "note",
-   "label": "reader's own chain, steep rule off, cover on, 4152.5 to 4160.5: pattern 1.33 (state 1.59), back share over 0.45 51 percent (state 70)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T09:18:22.635Z",
-   "file": "20261125091822635-note-cmp-rise.jpg",
-   "source": "../../../../tmp/n52/cmp-rise.jpg",
-   "kind": "note",
-   "label": "rise 4414.5 and 4422.5: place light with the steep rule off (top) against the globe's own light whole (bottom): the pale band under the limb covers the ground's detail at 4414.5 and has left it at 4422.5",
    "stop": "uranus"
   }
  ]
