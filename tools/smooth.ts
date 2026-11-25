@@ -11,9 +11,11 @@ import { setCapture, spanMid } from '../src/core/clock'
 import type { Pose } from '../src/core/types'
 import { plans } from '../src/director/plans'
 import { LANDING_FROM, MIN_POINTS, SEAM_OWN, SEAM_REACH, carriedCamera, curves, eyeCurves, landingCurves, ringPlane, sampleLanding, sampleLeave, sampleSeam, sampleWindow, sphereHit, type Kind, type Plane, type Ring } from './smooth/camera'
+import { IN_PLACE } from './lib/steps'
+import { placeReadings } from './smooth/place'
 import { missing, partOwn, popContext, sliceName, sliceNeed, type Span } from './smooth/slice'
 import { MOVES, PIECES, buildFault, differ, gather, gatherFaults, pieceStem, runFacts, type Facts, type Given } from './smooth/whole'
-import { LANDING_FLOOR, LANDING_LATE, LANDING_SHOWN, changeNote, judgeCurve, judgeLanding, judgeLeave, judgeSeam, longestGap, parityFrames, peakRows, position, shown, table, type CurveResult, type Fault, type LandingResult, type LeaveResult, type Row, type SeamResult } from './smooth/path'
+import { LANDING_FLOOR, LANDING_LATE, LANDING_SHOWN, changeNote, judgeCurve, judgeLanding, judgeLeave, judgeSeam, longestGap, minLeaveOf, parityFrames, peakRows, position, shown, table, type CurveResult, type Fault, type LandingResult, type LeaveResult, type Row, type SeamResult } from './smooth/path'
 
 // The measures of a smooth dive and rise (kit/PROGRESS.md, second review note of 2026-11-23, plan I). One stop.
 //   npm run smooth -- --stop ID [--kind dive|rise|landing] [--only path,pictures,place,parity,counts] [--rate N] [--calibrate] [--ring picture|ground]
@@ -29,7 +31,7 @@ import { LANDING_FLOOR, LANDING_LATE, LANDING_SHOWN, changeNote, judgeCurve, jud
 //           part along the surface view's own direction of motion are shown. At the seam from a rise into the travel that leaves the stop
 //           (smooth.reachFrames film frames to each side, at the capture rate): the lowest speed of the fastest point of the body's edge over
 //           the smaller of that speed at the two ends of the window; near 0 the picture comes to rest between the rise and the travel.
-//           Judged against smooth.path.minLeave once the config has it; shown until then.
+//           Judged against smooth.path.minLeave: a reading under it is red in the path part.
 // pictures  from draft frames, every frame of the dive and of the rise and smooth.reachFrames film frames into each neighbour (capture frames once
 //           the page knows a rate, whole film frames until then): the step of the frame's level against the line through its two neighbours,
 //           and the pop score: what is left of the difference between a frame and the next once the motion between them is taken out, over the
@@ -40,7 +42,8 @@ import { LANDING_FLOOR, LANDING_LATE, LANDING_SHOWN, changeNote, judgeCurve, jud
 //           The rings of a stop named in smooth.pictures.ringBodies count as its body. The change of the pattern alone: the same two pictures
 //           reduced to their detail (local mean out, divided by the local contrast), 0 the same pattern and 1 an unrelated one, so a veil
 //           of air counts little and a new texture in full. It is the judged test for a dissolve (smooth.pictures.maxPattern); the change in
-//           place is shown beside it. The longest run of frames without a measured pattern is shown: a new pattern can hide in a long one. Both numbers on the frames of the surface view beside the move stand next to
+//           place is shown beside it. The pair is read on the nearer of its two frames, the farther one carried from its finer picture
+//           (smooth.py readings), and the band of each reading is printed: the width in px of the nearer frame under which the window at its place read nothing. The longest run of frames without a measured pattern is shown: a new pattern can hide in a long one. Both numbers on the frames of the surface view beside the move stand next to
 //           them: the life of the ground itself.
 //           Frames at whole film frames are shared with npm run handover (out/work/handover/<stop>/frames), so nothing is rendered twice.
 // place     the handover with the place picture switched off (the noplace view), draft tier: both sides at T, and every frame from one before the
@@ -146,7 +149,7 @@ interface PartResult { measured: boolean; pass: boolean; why: string[]; note?: s
 interface PathRun { rate: number; curves: CurveResult[] }
 interface PathKind { segment: string; firstFrame: number; endFrame: number; frameT: number | null; window: [number, number]; runs: PathRun[]; rows: Row[]; sides: string[]; heights: (number | null)[]; faults: Fault[]; eye: (SeamResult & { seam: number; own: number | null }) | null; leave?: LeaveResult & { seam: number; into: string; reach: number } }
 
-const MIN_LEAVE: number | null = (S.path as { minLeave?: number | null }).minLeave ?? null
+const MIN_LEAVE: number | null = joined ? (S.path as { minLeave?: number | null }).minLeave ?? null : minLeaveOf(cfg.raw.smooth.path)
 
 const UNITS: ['fall' | 'turn' | 'speed', string, string, number | null][] = [
   ['fall', 'rate', 'log of the height a film frame', null],
@@ -307,14 +310,15 @@ async function still(k: number, tier: string, diag: string, fmt = format): Promi
   }
 }
 
-interface PictureNumbers { level: number[]; levelStep: (number | null)[]; residual: (number | null)[]; base: (number | null)[]; popAll: (number | null)[]; popCarried: (number | null)[]; pop: (number | null)[]; motionPx: (number | null)[]; unsure: (number | null)[]; popBlock: (number | null)[]; popBlockAt: ([number, number] | null)[]; grid: [number, number]; change: (number | null)[]; changeTop: (number | null)[]; changeAt: ([number, number] | null)[]; changeShare: (number | null)[]; pattern: (number | null)[]; patternAt: ([number, number] | null)[]; patternShare: (number | null)[] }
-interface PictureRow { k: number; frame: number; level: number; levelStep: number | null; residual: number | null; base: number | null; popAll: number | null; popCarried: number | null; pop: number | null; motionPx: number | null; unsure: number | null; popBlock: number | null; popBlockAt: [number, number] | null; change: number | null; changeTop: number | null; changeAt: [number, number] | null; changeShare: number | null; pattern: number | null; patternAt: [number, number] | null; patternShare: number | null }
+interface PictureNumbers { level: number[]; levelStep: (number | null)[]; residual: (number | null)[]; base: (number | null)[]; popAll: (number | null)[]; popCarried: (number | null)[]; pop: (number | null)[]; motionPx: (number | null)[]; unsure: (number | null)[]; popBlock: (number | null)[]; popBlockAt: ([number, number] | null)[]; grid: [number, number]; change: (number | null)[]; changeTop: (number | null)[]; changeAt: ([number, number] | null)[]; changeShare: (number | null)[]; pattern: (number | null)[]; patternAt: ([number, number] | null)[]; patternShare: (number | null)[]; patternBand: (number | null)[] }
+interface PictureRow { k: number; frame: number; level: number; levelStep: number | null; residual: number | null; base: number | null; popAll: number | null; popCarried: number | null; pop: number | null; motionPx: number | null; unsure: number | null; popBlock: number | null; popBlockAt: [number, number] | null; change: number | null; changeTop: number | null; changeAt: [number, number] | null; changeShare: number | null; pattern: number | null; patternAt: [number, number] | null; patternShare: number | null; patternBand: number | null }
 interface Most { k: number; frame: number; value: number }
 interface PictureKind { segment: string; firstFrame: number; endFrame: number; window: [number, number]; rate: number; frames: number; rows: PictureRow[]; levelStep: Most | null; pop: Most | null; popBlock: (Most & { at: [number, number] | null }) | null; change: (Most & { at: [number, number] | null }) | null; pattern: (Most & { at: [number, number] | null }) | null; changeFrames: number; silent: { frames: number; first: number; last: number; body: number } | null; ground: { value: number; pattern: number | null; first: number; last: number } | null; panel: string | null; changePanel: string | null; why: string[]; context?: [number, number]; lead?: string[]; tail?: string[] }
 interface SliceInfo { name: string; part: number | null; of: number | null; total: number; own: [number, number]; need: [number, number]; pops: number[]; changes: number[] }
 let slice: SliceInfo | null = null
 
 const CHANGE = { frames: (S.pictures as { changeFrames?: number }).changeFrames ?? 8, blurPx: (S.pictures as { changeBlurPx?: number }).changeBlurPx ?? 20, max: (S.pictures as { maxChange?: number | null }).maxChange ?? null, rings: (S.pictures as { ringBodies?: string[] }).ringBodies ?? [] }
+const banded = (px: number | null): string => (px === null ? '' : ', band ' + (Number.isInteger(px) ? px : px.toFixed(1)) + ' px')
 const PATTERN = { px: (S.pictures as { patternPx?: number }).patternPx ?? 40, floor: (S.pictures as { patternFloor?: number }).patternFloor ?? 1, max: (S.pictures as { maxPattern?: number | null }).maxPattern ?? null }
 
 function poseOf(k: number, r: number): { p: number[]; q: number[]; vfov: number; rings?: { normal: number[]; inner: number; outer: number }; globe?: { quaternion: number[]; scale: number[] } } {
@@ -356,7 +360,7 @@ function sumsOf(kind: Kind, seg: { firstFrame: number; endFrame: number }, first
   over('pop', limit(P.maxPop), (row) => 'pop score ' + shown(row.pop!, 2, P.maxPop) + ' from frame ' + position(row.k, r) + ' to the next')
   over('popBlock', limit(P.maxPopBlock), (row) => 'pop score of one block ' + shown(row.popBlock!, 2, P.maxPopBlock) + ' from frame ' + position(row.k, r) + ' to the next')
   over('change', CHANGE.max, (row) => 'the picture changes in place by ' + shown(row.change!, 1, CHANGE.max) + ' from frame ' + position(row.k, r) + ' to ' + CHANGE.frames + ' film frames later')
-  over('pattern', PATTERN.max, (row) => 'the pattern of the picture changes in place by ' + shown(row.pattern!, 2, PATTERN.max) + ' from frame ' + position(row.k, r) + ' to ' + CHANGE.frames + ' film frames later')
+  over('pattern', PATTERN.max, (row) => 'the pattern of the picture changes in place by ' + shown(row.pattern!, 2, PATTERN.max) + ' from frame ' + position(row.k, r) + ' to ' + CHANGE.frames + ' film frames later' + banded(row.patternBand))
   const top = rows.filter((row) => row.pop !== null).sort((x, y) => y.pop! - x.pop!).slice(0, 4).sort((x, y) => x.k - y.k)
   const peaks = peakRows(rows, CHANGE.frames * r)
   const reach = CHANGE.frames * r
@@ -404,7 +408,7 @@ async function picturesOf(kind: Kind): Promise<PictureKind | null> {
   }
   const poses = ks.map((k) => poseOf(k, r))
   const n = measure<PictureNumbers>({ op: 'pictures', paths, poses, scale: P.flowScale, window: P.popWindow * r, floor: P.popFloor, grid: P.grid, changeFrames: CHANGE.frames * r, changeBlur: CHANGE.blurPx, patternPx: PATTERN.px, patternFloor: PATTERN.floor, first: lo, total, own: [own.first, own.end], lead: context[0] * r, tail: context[1] * r })
-  const rows: PictureRow[] = ks.map((k, i) => ({ k, frame: Math.floor(k / r), level: n.level[i]!, levelStep: n.levelStep[i] ?? null, residual: n.residual[i] ?? null, base: n.base[i] ?? null, popAll: n.popAll[i] ?? null, popCarried: n.popCarried[i] ?? null, pop: n.pop[i] ?? null, motionPx: n.motionPx[i] ?? null, unsure: n.unsure[i] ?? null, popBlock: n.popBlock[i] ?? null, popBlockAt: n.popBlockAt[i] ?? null, change: n.change[i] ?? null, changeTop: n.changeTop[i] ?? null, changeAt: n.changeAt[i] ?? null, changeShare: n.changeShare[i] ?? null, pattern: n.pattern[i] ?? null, patternAt: n.patternAt[i] ?? null, patternShare: n.patternShare[i] ?? null })).filter((row) => row.k - k0 >= own.first && row.k - k0 < own.end)
+  const rows: PictureRow[] = ks.map((k, i) => ({ k, frame: Math.floor(k / r), level: n.level[i]!, levelStep: n.levelStep[i] ?? null, residual: n.residual[i] ?? null, base: n.base[i] ?? null, popAll: n.popAll[i] ?? null, popCarried: n.popCarried[i] ?? null, pop: n.pop[i] ?? null, motionPx: n.motionPx[i] ?? null, unsure: n.unsure[i] ?? null, popBlock: n.popBlock[i] ?? null, popBlockAt: n.popBlockAt[i] ?? null, change: n.change[i] ?? null, changeTop: n.changeTop[i] ?? null, changeAt: n.changeAt[i] ?? null, changeShare: n.changeShare[i] ?? null, pattern: n.pattern[i] ?? null, patternAt: n.patternAt[i] ?? null, patternShare: n.patternShare[i] ?? null, patternBand: n.patternBand[i] ?? null })).filter((row) => row.k - k0 >= own.first && row.k - k0 < own.end)
   const sums = sumsOf(kind, seg, first, r, total, rows)
   let panel: string | null = null
   if (sums.top.length > 0) {
@@ -626,7 +630,7 @@ function picturesText(kind: Kind, p: PictureKind | null): string[] {
   if (p.pop) lines.push('Largest pop score: ' + shown(p.pop.value, 2, P.maxPop) + ' from frame ' + position(p.pop.k, p.rate) + ' to the next, ' + lim(P.maxPop) + '.' + (p.context && p.context[0] + p.context[1] > 0 ? ' Every frame is read against the median of the ' + P.popWindow + ' film frames round it: for the ends of the window ' + p.context[0] + ' film frames before it and ' + p.context[1] + ' after it are drawn and not judged.' : ''))
   if (p.popBlock) lines.push('Largest pop score of one block (a grid of ' + P.grid.join(' by ') + '): ' + shown(p.popBlock.value, 2, P.maxPopBlock) + ' from frame ' + position(p.popBlock.k, p.rate) + ' to the next' + (p.popBlock.at ? ', block column ' + p.popBlock.at[0] + ' row ' + p.popBlock.at[1] + ' from the top left' : '') + ', ' + (P.maxPopBlock === null ? 'shown, not judged' : 'limit ' + P.maxPopBlock) + '.')
   if (p.change) lines.push('Largest change in place: ' + shown(p.change.value, 1, CHANGE.max) + ' from frame ' + position(p.change.k, p.rate) + ' to ' + p.changeFrames + ' film frames later' + (p.change.at ? ', most at pixel ' + p.change.at.join(', ') : '') + ' (display values 0 to 255: the later frame carried back along the motion, the difference smoothed over ' + CHANGE.blurPx + ' px, its 99th percentile on the body), ' + (CHANGE.max === null ? 'shown, not judged' : 'limit ' + CHANGE.max) + '.')
-  if (p.pattern) lines.push('Largest change of the pattern alone: ' + shown(p.pattern.value, 2, PATTERN.max) + ' from frame ' + position(p.pattern.k, p.rate) + ' to ' + p.changeFrames + ' film frames later' + (p.pattern.at ? ', most at pixel ' + p.pattern.at.join(', ') : '') + ' (0 the same pattern, 1 an unrelated one: both pictures reduced to their detail between ' + PATTERN.px / 5 + ' and ' + PATTERN.px + ' px, the local mean taken out, divided by the local contrast, only where both have detail over ' + PATTERN.floor + '; its 99th percentile on the body), ' + lim(PATTERN.max) + '.')
+  if (p.pattern) lines.push('Largest change of the pattern alone: ' + shown(p.pattern.value, 2, PATTERN.max) + ' from frame ' + position(p.pattern.k, p.rate) + ' to ' + p.changeFrames + ' film frames later' + (p.pattern.at ? ', most at pixel ' + p.pattern.at.join(', ') : '') + banded(p.rows.find((row) => row.k === p.pattern!.k)?.patternBand ?? null) + ' (0 the same pattern, 1 an unrelated one: both pictures reduced to their detail between ' + PATTERN.px / 5 + ' and ' + PATTERN.px + ' px, the local mean taken out, divided by the local contrast, only where both have detail over ' + PATTERN.floor + '; its 99th percentile on the body. Read on the nearer of the two frames, the farther one carried from its finer picture; the band is the width in px of the nearer frame under which the window at that pixel read nothing), ' + lim(PATTERN.max) + '.')
   if (p.ground) lines.push('The ground beside it, the same numbers on the surface view alone (frames ' + position(p.ground.first, p.rate) + ' to ' + position(p.ground.last, p.rate) + '): change ' + shown(p.ground.value, 1, CHANGE.max) + (CHANGE.max !== null && p.ground.value > CHANGE.max ? ', over the limit by itself' : '') + (p.ground.pattern !== null ? ', pattern ' + shown(p.ground.pattern, 2, PATTERN.max) + (PATTERN.max !== null && p.ground.pattern > PATTERN.max ? ', over the limit by itself' : '') : '') + '.')
   lines.push(p.silent ? 'Longest run without a measured pattern: ' + (Number.isInteger(p.silent.frames) ? p.silent.frames : p.silent.frames.toFixed(1)) + ' film frames, frames ' + position(p.silent.first, p.rate) + ' to ' + position(p.silent.last, p.rate) + ', each against the frame ' + p.changeFrames + ' film frames later (too little of the picture has detail in both, or too little of the body is carried; the judged body held at most ' + p.silent.body.toFixed(2) + ' of the picture there), shown, not judged. A new pattern can come in unseen where such a run is ' + 2 * p.changeFrames + ' film frames or longer.' : 'The pattern is measured in every row.')
   if (p.panel) lines.push('The four largest pops, each with the next frame and what is left without the motion: ' + p.panel.slice(ROOT.length + 1))
@@ -634,8 +638,8 @@ function picturesText(kind: Kind, p: PictureKind | null): string[] {
   if (p.tail) lines.push(...p.tail)
   lines.push('')
   if (p.why.length) lines.push(...p.why.map((w) => '- RED ' + w), '')
-  lines.push('| frame | level | level step | motion px | left | median round it | pop, every pixel | pop, carried only | pop | not carried | pop of one block | block | change in place | its largest | judged | pattern | judged |', '|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|')
-  for (const row of p.rows) lines.push('| ' + [position(row.k, p.rate) + (row.frame === p.firstFrame && row.k % p.rate === 0 ? ' first' : row.frame === p.endFrame - 1 && row.k % p.rate === 0 ? ' last' : ''), row.level.toFixed(2), cell(row.levelStep, 2, P.maxLevelStep), cell(row.motionPx, 1), cell(row.residual, 2), cell(row.base, 2), cell(row.popAll, 2), cell(row.popCarried, 2), cell(row.pop, 2, P.maxPop), cell(row.unsure, 3), cell(row.popBlock, 2), row.popBlockAt ? row.popBlockAt.join(',') : '', cell(row.change, 1, CHANGE.max), cell(row.changeTop, 1), cell(row.changeShare, 2), cell(row.pattern, 2, PATTERN.max), cell(row.patternShare, 2)].join(' | ') + ' |')
+  lines.push('| frame | level | level step | motion px | left | median round it | pop, every pixel | pop, carried only | pop | not carried | pop of one block | block | change in place | its largest | judged | pattern | judged | band px |', '|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|')
+  for (const row of p.rows) lines.push('| ' + [position(row.k, p.rate) + (row.frame === p.firstFrame && row.k % p.rate === 0 ? ' first' : row.frame === p.endFrame - 1 && row.k % p.rate === 0 ? ' last' : ''), row.level.toFixed(2), cell(row.levelStep, 2, P.maxLevelStep), cell(row.motionPx, 1), cell(row.residual, 2), cell(row.base, 2), cell(row.popAll, 2), cell(row.popCarried, 2), cell(row.pop, 2, P.maxPop), cell(row.unsure, 3), cell(row.popBlock, 2), row.popBlockAt ? row.popBlockAt.join(',') : '', cell(row.change, 1, CHANGE.max), cell(row.changeTop, 1), cell(row.changeShare, 2), cell(row.pattern, 2, PATTERN.max), cell(row.patternShare, 2), cell(row.patternBand, 1)].join(' | ') + ' |')
   lines.push('')
   return lines
 }
@@ -654,8 +658,9 @@ function bodyGrid(p: Pose): number[][] {
 
 interface SideNumbers { mean: number; p50: number; p99: number; p999: number; max: number; shareOver16: number }
 interface BodyNumbers { level: number; colour: number[]; bodyShare: number; bodyLevel: number; bodyColour: number[]; flatShare: number; contrast: number }
-interface PlaceRow { k: number; frame: number; level: number; bodyShare: number; bodyLevel: number; bodyLevelStep: number | null; bodyColourStep: number | null; levelStep: number | null; pop: number | null; popBlock: number | null }
-interface PlaceKind { segment: string; frameT: number; window: [number, number]; frames: [number, number]; rate: number; sides: (SideNumbers & { panel: string }) | null; rows: PlaceRow[]; bodyLevelStep: Most | null; bodyColourStep: Most | null; levelStep: Most | null; pop: Most | null; note?: string; why: string[] }
+interface PlaceRow { k: number; frame: number; level: number; bodyShare: number; bodyLevel: number; bodyLevelStep: number | null; bodyColourStep: number | null; seen?: number | null; placeLevelStep?: number | null; placeColourStep?: number | null; levelStep: number | null; pop: number | null; popBlock: number | null }
+interface PlaceSeen { share: number; level: Most | null; colour: Most | null; least: { k: number; share: number } | null; read: number; unread: number; unreadLevel: Most | null; unreadColour: Most | null; would: string[] }
+interface PlaceKind { segment: string; frameT: number; window: [number, number]; frames: [number, number]; rate: number; sides: (SideNumbers & { panel: string }) | null; rows: PlaceRow[]; bodyLevelStep: Most | null; bodyColourStep: Most | null; inPlace?: PlaceSeen; levelStep: Most | null; pop: Most | null; note?: string; why: string[] }
 
 async function placeOf(kind: Kind): Promise<PlaceKind | null> {
   const seg = cfg.segments.find((s) => s.stop === stop && s.kind === kind)
@@ -682,22 +687,36 @@ async function placeOf(kind: Kind): Promise<PlaceKind | null> {
   const sides = handoverMeasure<SideNumbers>({ op: 'sides', close, globe, difference: stem + '-place-difference.png', panel: stem + '-place-sides.png', gain: L.differenceGain, limit: cfg.raw.critics.maxImageLongEdgePx })
   const paths: string[] = []
   const bodies: number[][][] = []
+  const poses: { position: number[]; quaternion: number[]; vfov: number; turn: number[] }[] = []
   for (const k of ks) {
     paths.push(await still(k, 'draft', 'beauty/noplace'))
-    bodies.push(bodyGrid(carriedCamera(film, plan, stop!, k / r, (k / r + spanMid()) / cfg.fps).pose))
+    const time = (k / r + spanMid()) / cfg.fps
+    const pose = carriedCamera(film, plan, stop!, k / r, time).pose
+    bodies.push(bodyGrid(pose))
+    poses.push({ position: pose.position.toArray(), quaternion: pose.quaternion.toArray(), vfov: pose.vfov, turn: plan.turn(time).toArray() })
   }
   const body = handoverMeasure<BodyNumbers[]>({ op: 'frames', paths, bodies, floor: L.flatFloor })
+  const seenOf = L as typeof L & { inPlaceScale?: number; inPlaceShare?: number }
+  const share = seenOf.inPlaceShare ?? IN_PLACE.share
+  const laid = handoverMeasure<({ seen: number; level: number; colour: number[] } | null)[]>({ op: 'inPlace', paths, poses, scale: seenOf.inPlaceScale ?? IN_PLACE.scale })
+  const both = placeReadings(ks.map((k, i) => ({ k, ...body[i]!, inPlace: laid[i] ?? null })), { bodyShare: L.bodyShare, levelStep: P.levelStep, colourStep: P.colourStep, inPlaceShare: share })
   const pic = measure<PictureNumbers>({ op: 'pictures', paths, scale: S.pictures.flowScale, window: S.pictures.popWindow * r, floor: S.pictures.popFloor, grid: S.pictures.grid })
   const rows: PlaceRow[] = ks.map((k, i) => {
     const b = body[i]!
-    const p = body[i - 1]
-    const seen = p !== undefined && Math.min(b.bodyShare, p.bodyShare) >= L.bodyShare
-    return {
-      k, frame: Math.floor(k / r), level: b.level, bodyShare: b.bodyShare, bodyLevel: b.bodyLevel,
-      bodyLevelStep: seen ? Math.abs(b.bodyLevel - p.bodyLevel) : null, bodyColourStep: seen ? Math.max(...b.bodyColour.map((v, j) => Math.abs(v - p.bodyColour[j]!))) : null,
-      levelStep: pic.levelStep[i] ?? null, pop: pic.pop[i] ?? null, popBlock: pic.popBlock[i] ?? null,
-    }
+    return { k, frame: Math.floor(k / r), level: b.level, bodyShare: b.bodyShare, bodyLevel: b.bodyLevel, ...both.pairs[i]!, levelStep: pic.levelStep[i] ?? null, pop: pic.pop[i] ?? null, popBlock: pic.popBlock[i] ?? null }
   })
+  const top = (m: { frame: number; step: number }): Most | null => (m.frame < 0 ? null : { k: m.frame, frame: Math.floor(m.frame / r), value: m.step })
+  const n = both.inPlace
+  const would: string[] = []
+  const hold = (m: Most | null, max: number, text: string, note = ''): void => {
+    if (m && m.value > max) would.push(text + ' steps by ' + shown(m.value, 2, max) + ' into frame ' + position(m.k, r) + note + ', limit ' + max)
+  }
+  const unreadNote = ' (a frame that shares too little ground with the one before to be read in place)'
+  hold(top(n.level), P.levelStep, 'the level of the ground two frames both show')
+  hold(top(n.colour), P.colourStep, 'the colour of the ground two frames both show')
+  hold(top(n.unreadLevel), P.levelStep, 'the mean level of the body', unreadNote)
+  hold(top(n.unreadColour), P.colourStep, 'the mean colour of the body', unreadNote)
+  const inPlace: PlaceSeen = { share, level: top(n.level), colour: top(n.colour), least: n.least.frame < 0 ? null : { k: n.least.frame, share: n.least.share }, read: n.read, unread: n.unread, unreadLevel: top(n.unreadLevel), unreadColour: top(n.unreadColour), would }
   const most = (key: 'bodyLevelStep' | 'bodyColourStep' | 'levelStep' | 'pop'): Most | null => {
     let out: Most | null = null
     for (const row of rows) {
@@ -717,7 +736,7 @@ async function placeOf(kind: Kind): Promise<PlaceKind | null> {
   judge(found.bodyLevelStep?.value, lim(P.levelStep), 'the mean level of the body steps by ' + shown(found.bodyLevelStep?.value ?? 0, 2, P.levelStep) + ' into frame ' + position(found.bodyLevelStep?.k ?? 0, r))
   judge(found.bodyColourStep?.value, lim(P.colourStep), 'the mean colour of the body steps by ' + shown(found.bodyColourStep?.value ?? 0, 2, P.colourStep) + ' into frame ' + position(found.bodyColourStep?.k ?? 0, r))
   judge(found.pop?.value, lim(P.maxPop), 'pop score ' + shown(found.pop?.value ?? 0, 2, P.maxPop) + ' from frame ' + position(found.pop?.k ?? 0, r) + ' to the next')
-  return { segment: seg.id, frameT, window: [h.placeFirstFrame, h.placeLastFrame], frames: [first, last], rate: r, sides: { mean: sides.mean, p50: sides.p50, p99: sides.p99, p999: sides.p999, max: sides.max, shareOver16: sides.shareOver16, panel: stem + '-place-sides.png' }, rows, ...found, why }
+  return { segment: seg.id, frameT, window: [h.placeFirstFrame, h.placeLastFrame], frames: [first, last], rate: r, sides: { mean: sides.mean, p50: sides.p50, p99: sides.p99, p999: sides.p999, max: sides.max, shareOver16: sides.shareOver16, panel: stem + '-place-sides.png' }, rows, ...found, inPlace, why }
 }
 
 async function placePart(): Promise<PartResult & { kinds: Record<string, PlaceKind | null> }> {
@@ -742,10 +761,15 @@ function placeText(kind: Kind, p: PlaceKind | null): string[] {
   if (!p.sides) return lines
   lines.push('Both sides at T, the globe side without the place picture (display values 0 to 255): mean difference ' + shown(p.sides.mean, 3, P.sideMean) + ' (' + lim(P.sideMean, H.sideMean) + '), 99th percentile ' + p.sides.p99 + ' (' + lim(P.sideP99, H.sideP99) + '), 99.9th ' + p.sides.p999 + ', max ' + p.sides.max + ', ' + (p.sides.shareOver16 * 100).toFixed(2) + ' percent of pixels over 16. Picture: ' + p.sides.panel.slice(ROOT.length + 1))
   if (p.bodyLevelStep) lines.push('Largest step between two frames on the body: mean level ' + shown(p.bodyLevelStep.value, 2, P.levelStep) + ' into frame ' + position(p.bodyLevelStep.k, p.rate) + ' (' + lim(P.levelStep, H.levelStep) + ')' + (p.bodyColourStep ? ', mean colour ' + shown(p.bodyColourStep.value, 2, P.colourStep) + ' into frame ' + position(p.bodyColourStep.k, p.rate) + ' (' + lim(P.colourStep, H.colourStep) + ')' : '') + '.')
+  if (p.inPlace) {
+    const n = p.inPlace
+    const at = (m: Most | null, max: number): string => (m ? shown(m.value, 2, max) + ' into frame ' + position(m.k, p.rate) : 'none')
+    lines.push('The same step in place, on the ground both frames show (tools/img/handover.py, op inPlace; shown, not judged): level ' + at(n.level, P.levelStep) + ', colour ' + at(n.colour, P.colourStep) + '. ' + n.read + ' of ' + (n.read + n.unread) + ' pairs are read in place: the frame before shows at least ' + n.share + ' of the frame\'s body' + (n.least ? ' (least ' + n.least.share.toFixed(3) + ' into frame ' + position(n.least.k, p.rate) + ')' : '') + (n.unread ? '; the largest steps of the ' + n.unread + ' that are not, on the mean of the body: level ' + at(n.unreadLevel, P.levelStep) + ', colour ' + at(n.unreadColour, P.colourStep) : '') + '. Held to the same limits it would ' + (n.would.length ? 'be red: ' + n.would.join('; ') : 'pass') + '.')
+  }
   if (p.levelStep) lines.push('Largest level step of the whole frame against the middle of its two neighbours: ' + p.levelStep.value.toFixed(2) + ' at frame ' + position(p.levelStep.k, p.rate) + '.')
   if (p.pop) lines.push('Largest pop score: ' + shown(p.pop.value, 2, P.maxPop) + ' from frame ' + position(p.pop.k, p.rate) + ' to the next (' + (P.maxPop === null ? 'no limit yet, not judged' : 'limit ' + P.maxPop) + ').')
-  lines.push('', '| frame | level | body share | body level | body level step | body colour step | level step | pop | pop of one block |', '|---|---|---|---|---|---|---|---|---|')
-  for (const row of p.rows) lines.push('| ' + [position(row.k, p.rate) + (row.k === p.frameT * p.rate ? ' T' : ''), row.level.toFixed(2), row.bodyShare.toFixed(3), row.bodyLevel.toFixed(2), cell(row.bodyLevelStep, 2), cell(row.bodyColourStep, 2), cell(row.levelStep, 2), cell(row.pop, 2), cell(row.popBlock, 2)].join(' | ') + ' |')
+  lines.push('', '| frame | level | body share | body level | body level step | body colour step | seen in the frame before | level step in place | colour step in place | level step | pop | pop of one block |', '|---|---|---|---|---|---|---|---|---|---|---|---|')
+  for (const row of p.rows) lines.push('| ' + [position(row.k, p.rate) + (row.k === p.frameT * p.rate ? ' T' : ''), row.level.toFixed(2), row.bodyShare.toFixed(3), row.bodyLevel.toFixed(2), cell(row.bodyLevelStep, 2), cell(row.bodyColourStep, 2), cell(row.seen, 3), cell(row.placeLevelStep, 2), cell(row.placeColourStep, 2), cell(row.levelStep, 2), cell(row.pop, 2), cell(row.popBlock, 2)].join(' | ') + ' |')
   lines.push('')
   return lines
 }

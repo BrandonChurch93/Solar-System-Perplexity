@@ -12,7 +12,7 @@ import { plans } from '../src/director/plans'
 import { SEAM_OWN, SEAM_REACH, curves, eyeCurves, landingCurves, planeHit, ringPlane, sampleLanding, sampleLeave, sampleSeam, sampleWindow, seen, type SeamWindow } from '../tools/smooth/camera'
 import { missing, partOwn, popContext, popSpan, sliceName, sliceNeed } from '../tools/smooth/slice'
 import { buildFault, differ, gather, gatherFaults, pieceStem, roleOf, runFacts, type Given } from '../tools/smooth/whole'
-import { changeNote, judgeCurve, judgeLanding, judgeLeave, judgeSeam, longestGap, parityFrames, peakRows, position, shown, table } from '../tools/smooth/path'
+import { changeNote, judgeCurve, judgeLanding, judgeLeave, judgeSeam, longestGap, minLeaveOf, parityFrames, peakRows, position, shown, table } from '../tools/smooth/path'
 
 const limits = { maxStep: 0.08, maxRebound: 0.03, seamFrames: 2 }
 const bell = (n: number, edge = 0): number[] => Array.from({ length: n }, (_, i) => edge + 1 - Math.cos((2 * Math.PI * (i + 0.5)) / n))
@@ -488,6 +488,125 @@ describe('the pattern measure on made pictures, a judged area with a limb, a fra
   })
 })
 
+interface MadeRead { main: number | null; mainShare: number; now: number | null; share: number | null; band: number | null; onward: number | null; back: number | null; same: boolean; grown: number | null }
+interface MadeRigid extends MadeRead { way: 'rise' | 'dive'; zoom: number }
+interface MadeExchange extends MadeRigid { width: number; weight: 'whole' | 'half' | 'cut' }
+interface MadeStill extends MadeRead { speed: number; weight: string }
+interface MadeThrough { pattern: number | null; band: number | null; at: [number, number] | null }
+interface MadeCarried { rigid: MadeRigid[]; exchange: MadeExchange[]; still: MadeStill[]; through: Record<'rise' | 'dive' | 'riseExchange' | 'diveExchange', MadeThrough> }
+
+describe('the pattern measure on made films at the full size, the pair read on the nearer of its two frames', () => {
+  let c: MadeCarried
+  const limit = config.raw.smooth.pictures.maxPattern
+  const zooms = [2, 3, 3.7, 4.4, 5.3]
+  beforeAll(() => {
+    c = (JSON.parse(execFileSync('python3', [fileURLToPath(new URL('../tools/smooth/made.py', import.meta.url)), 'carried'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 1 << 24 })) as { carried: MadeCarried }).carried
+  }, 900_000)
+  const rigid = (way: string): MadeRigid[] => c.rigid.filter((x) => x.way === way)
+  const exchange = (way: string, weight: string): MadeExchange[] => c.exchange.filter((x) => x.way === way && x.weight === weight)
+
+  it('reads a ground in which nothing changes under 0.15 on the nearer frame, rising and diving, at every shrink up to 5.3', () => {
+    expect(rigid('rise').map((x) => x.zoom)).toEqual(zooms)
+    expect(rigid('dive').map((x) => x.zoom)).toEqual(zooms)
+    for (const x of rigid('rise')) {
+      expect(x.share!).toBeGreaterThan(0.9)
+      expect(x.now!).toBeLessThan(0.15)
+    }
+    for (const x of rigid('dive')) expect(x.back!).toBeLessThan(0.15)
+  })
+
+  it('reads the diving ground in which nothing changes under 0.3: what the first frame read as the measure stood, on the part it could judge', () => {
+    for (const x of rigid('dive')) {
+      expect(x.now!).toBeLessThan(0.3)
+      expect(x.now).toBe(Math.max(x.main ?? 0, x.back!))
+    }
+  })
+
+  it('read the rising ground higher the more it shrinks, over the limit at 5.3, as long as the later frame was carried from the reduced picture', () => {
+    const main = rigid('rise').map((x) => x.main!)
+    for (let i = 1; i < main.length; i++) expect(main[i]!).toBeGreaterThan(main[i - 1]!)
+    expect(main[main.length - 1]!).toBeGreaterThan(limit)
+  })
+
+  it('reads from the flows how many times the carried frame is enlarged, within a tenth', () => {
+    for (const x of rigid('rise')) expect(Math.abs(x.grown! / x.zoom - 1)).toBeLessThan(0.1)
+    for (const x of rigid('dive')) expect(Math.abs(x.grown! * x.zoom - 1)).toBeLessThan(0.1)
+  })
+
+  it('reads all detail finer than 16, 32 and 64 px exchanged over the window, and cut in one frame, over the limit at every shrink, rising and diving', () => {
+    for (const way of ['rise', 'dive']) {
+      expect(exchange(way, 'whole').map((x) => [x.zoom, x.width])).toEqual(zooms.flatMap((z) => [16, 32, 64].map((w) => [z, w])))
+      expect(exchange(way, 'cut').map((x) => [x.zoom, x.width])).toEqual(zooms.map((z) => [z, 16]))
+      for (const x of [...exchange(way, 'whole'), ...exchange(way, 'cut')]) expect(x.now!).toBeGreaterThan(limit)
+    }
+  })
+
+  it('reads the exchange of the finest detail in a dive only on the later frame: on the first one, as it stood, it reads under the limit or nothing', () => {
+    for (const x of exchange('dive', 'whole').filter((y) => y.width === 16)) {
+      expect(x.main ?? 0).toBeLessThan(limit)
+      expect(x.back!).toBeGreaterThan(limit)
+      expect(x.now).toBe(x.back)
+    }
+  })
+
+  it('reads half an exchange under the whole one, and higher the wider the detail that is exchanged', () => {
+    for (const z of zooms) {
+      const half = [16, 32, 64].map((w) => exchange('rise', 'half').find((x) => x.zoom === z && x.width === w)!.now!)
+      const whole = [16, 32, 64].map((w) => exchange('rise', 'whole').find((x) => x.zoom === z && x.width === w)!.now!)
+      for (let i = 0; i < 3; i++) expect(half[i]!).toBeLessThan(whole[i]!)
+      expect(half[0]!).toBeLessThan(half[1]!)
+      expect(half[1]!).toBeLessThan(half[2]!)
+      expect(half[2]!).toBeGreaterThan(limit)
+    }
+  })
+
+  it('is the measure as it stood, every pixel of it, without a shrink: still, panned, exchanged, cut', () => {
+    expect(c.still.map((x) => [x.speed, x.weight])).toEqual([[0, 'none'], [8, 'none'], [32, 'none'], [0, 'whole'], [8, 'whole'], [0, 'half'], [0, 'cut']])
+    for (const x of c.still) {
+      expect(x.same).toBe(true)
+      expect(x.now).toBe(x.main)
+      expect(x.share).toBe(x.mainShare)
+      expect(x.back).toBeNull()
+      expect(Math.abs(x.band! - 8)).toBeLessThan(0.25)
+    }
+  })
+
+  it('leaves the first frame of a dive as the measure stood, every pixel of it, and never reads the pair lower', () => {
+    for (const x of [...rigid('dive'), ...c.exchange.filter((y) => y.way === 'dive')]) {
+      expect(x.same).toBe(true)
+      expect(x.onward).toBe(x.main)
+      if (x.main !== null) expect(x.now!).toBeGreaterThanOrEqual(x.main)
+    }
+  })
+
+  it('names the band of each reading at its place: 8 px of the nearer frame while the full size of the farther one is fine enough, a quarter of the shrink times that beyond, and the shrink times 8 px where a dive is read on its first frame', () => {
+    for (const x of [...c.rigid, ...c.exchange]) {
+      const first = x.way === 'dive' && x.now === x.onward
+      const most = first ? 8 * x.zoom : 8 * Math.max(1, x.zoom / 4)
+      expect(x.band!).toBeGreaterThan(7.99)
+      expect(Math.abs(x.band! / most - 1)).toBeLessThan(first ? 0.1 : 0.2)
+    }
+    expect(c.exchange.filter((x) => x.way === 'dive' && x.now === x.back).length).toBeGreaterThanOrEqual(15)
+  })
+
+  it('reads the same through the pictures part, from files, and gives the band there', () => {
+    expect(c.through.rise.pattern!).toBeLessThan(0.15)
+    expect(c.through.dive.pattern!).toBeLessThan(0.3)
+    expect(c.through.riseExchange.pattern!).toBeGreaterThan(limit)
+    expect(c.through.diveExchange.pattern!).toBeGreaterThan(limit)
+    expect(Math.abs(c.through.dive.band! / (8 * 4.4) - 1)).toBeLessThan(0.1)
+    for (const x of [c.through.rise, c.through.riseExchange, c.through.diveExchange]) {
+      expect(x.band!).toBeGreaterThan(7.99)
+      expect(x.band!).toBeLessThan(10.6)
+    }
+    for (const x of Object.values(c.through)) {
+      expect(x.at![0]).toBeGreaterThanOrEqual(0)
+      expect(x.at![0]).toBeLessThan(960)
+      expect(x.at![1]).toBeLessThan(540)
+    }
+  })
+})
+
 describe('the body of a globe that the stop draws flattened', () => {
   it('is the unit sphere where the globe has the scale 1, however it is turned', () => {
     const b = made().bodies
@@ -721,6 +840,59 @@ describe('the picture between a rise and the travel that leaves the stop', () =>
     const r = judgeLeave([null, null, null], 0, 2, 0.3)
     expect(r.over).toBeNull()
     expect(r.fault).toBeNull()
+  })
+
+  it('takes the limit from smooth.path.minLeave of the config, 0.07 by the ruling, and refuses a config without it', () => {
+    expect(config.raw.smooth.path.minLeave).toBe(0.07)
+    expect(minLeaveOf(config.raw.smooth.path)).toBe(0.07)
+    expect(minLeaveOf({ minLeave: 0.5 })).toBe(0.5)
+    for (const bad of [undefined, null, 0, 1, -0.07, 7, NaN, Infinity, '0.07', [0.07]]) expect(() => minLeaveOf({ minLeave: bad })).toThrow('smooth.path.minLeave in config/showcase.json needs a number over 0 and under 1')
+    expect(() => minLeaveOf({})).toThrow('it is undefined')
+    expect(() => minLeaveOf({ minLeave: '0.07' })).toThrow('it is "0.07"')
+  })
+
+  it('rules the seven seams as measured on the plans of the ruling: five come to rest, Earth and Saturn do not', () => {
+    const min = minLeaveOf(config.raw.smooth.path)
+    const reach = config.raw.smooth.reachFrames
+    const measured: [string, number, number, number, number, number, number, boolean][] = [
+      ['mercury', 1035, 0.30, 1037, 24.21, 97.87, 0.012, true],
+      ['venus', 1605, 0.25, 1605.5, 14.59, 92.90, 0.017, true],
+      ['earth', 2175, 1.80, 2176, 18.70, 102.85, 0.096, false],
+      ['mars', 2745, 0.36, 2745.5, 42.89, 65.78, 0.008, true],
+      ['jupiter', 3315, 0.36, 3315.5, 14.68, 43.78, 0.024, true],
+      ['saturn', 3885, 3.36, 3889, 8.96, 34.77, 0.375, false],
+      ['uranus', 4455, 0.16, 4457, 31.64, 121.49, 0.005, true],
+    ]
+    const red: string[] = []
+    for (const [stop, seam, low, at, first, last, over, rests] of measured) {
+      const k0 = (seam - reach) * 2 - 1
+      const n = reach * 4
+      const dip = at * 2 - k0
+      const speed = [null, ...Array.from({ length: n }, (_, j) => {
+        const i = j + 1
+        return i <= dip ? first + (low - first) * (i - 1) / (dip - 1) : low + (last - low) * (i - dip) / (n - dip)
+      })]
+      const r = judgeLeave(speed, k0, 2, min)
+      expect(r.first).toEqual({ value: first, k: (seam - reach) * 2 })
+      expect(r.last!.k).toBe((seam + reach) * 2 - 1)
+      expect(r.lowest!.k).toBe(at * 2)
+      expect(r.over).toBeCloseTo(low / first, 12)
+      expect(Math.abs(r.over! - over)).toBeLessThan(0.001)
+      expect(r.fault !== null).toBe(rests)
+      if (r.fault) {
+        red.push(stop + ' ' + r.fault.frame)
+        expect(r.fault.value).toBe(r.over)
+        expect(r.fault.limit).toBe(0.07)
+        expect(r.fault.rule).toBe('rest')
+        expect(r.fault.text).toContain('at frame ' + position(at * 2, 2) + ', ')
+        expect(r.fault.text).toContain('limit 0.07')
+      }
+    }
+    expect(red).toEqual(['mercury 1037', 'venus 1605', 'mars 2745', 'jupiter 3315', 'uranus 4457'])
+    const mercury = judgeLeave([null, 24.21, 0.3, 97.87], 2070, 2, min).fault!
+    expect(mercury.text).toBe('rest: the picture comes to rest between the rise and the travel: the fastest point of the body\'s edge moves 0.30 px a film frame at frame 1036, ' + shown(0.3 / 24.21, 3, min) + ' of the slower end of the window, limit 0.07')
+    expect(judgeLeave([null, 100, 7, 100], 0, 2, min).fault).toBeNull()
+    expect(judgeLeave([null, 100, 6.9, 100], 0, 2, min).fault).not.toBeNull()
   })
 
   it('is sampled at the seven seams from a rise into a travel: not at the first stop, whose travel follows its hold, and not at the last', () => {
