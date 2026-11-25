@@ -121,6 +121,8 @@ ${FALL_GLSL}// The thin bright streaks of the deck at the place deckField was la
 float gWisp = 0.0;
 // The foot the cirrus is read with at this place (two pixels on the ground or in the air), set by who asks for the cirrus.
 float gFoot = 0.0;
+// The share of the streamer found at this place that is drawn at this foot (cirrusBody).
+float gKeep = 1.0;
 
 float hash3(ivec3 p) {
   uint h = uint(p.x) * 0x9E3779B1u ^ uint(p.y) * 0x85EBCA77u ^ uint(p.z) * 0xC2B2AE3Du;
@@ -381,11 +383,6 @@ float cirrusBody(vec3 straight, vec3 bent, float t, out float lee, out float cre
     lump2 = mix(0.5, lump2, 1.0 - smoothstep(uShade.z, uShade.w, gFoot / (make.y * 0.37)));
     float strength = body.w * ends * mix(1.0 - make.z, 1.0, smoothstep(0.25, 0.75, lump));
     float width = semi * (0.65 + 0.7 * lump2);
-    // A streamer narrower than the foot it is read with is not drawn at that distance (MAIL 840 point 1, the row of white dashes
-    // at 4705 to 4713: a thin streamer read under its own width, its lumps alone standing over the floor): its strength goes
-    // from whole to none while two pixels grow from uShade.z to uShade.w of its width (deep.json cirrus.thin), so it thins away
-    // and never breaks up.
-    strength *= 1.0 - smoothstep(uShade.z, uShade.w, gFoot / width);
     float y = off - 0.6 * semi * (lump2 - 0.5);
     float side = step(y, 0.0);
     float across = y / (width * mix(1.0, uCirrusMake.z, side));
@@ -397,6 +394,12 @@ float cirrusBody(vec3 straight, vec3 bent, float t, out float lee, out float cre
     away = min(away, e > 0.002 ? 0.0 : max(abs(across) - edge, 0.0) * width * mix(1.0, uCirrusMake.z, side) * uStreamWide[i].w);
     if (e > best) {
       best = e;
+      // A streamer narrower than the foot it is read with is not drawn at that distance (MAIL 840 point 1, the row of white
+      // dashes at 4705 to 4713: a thin streamer read under its own width): what is drawn of it goes from whole to none while two
+      // pixels grow from uShade.z to uShade.w of its width (deep.json cirrus.thin). The share is laid on its density and not on
+      // its strength: a weaker body stands over its floor at its thickest parts alone, which is a row of dashes again (seen at
+      // 1920 wide at 4708 to 4715), a thinner cloud of the same shape does not break up.
+      gKeep = 1.0 - smoothstep(uShade.z, uShade.w, gFoot / width);
       lee = mix(uCirrusFringe.y, 1.0, side) * smoothstep(0.0, 1.0, abs(across));
       crest = strength * exp(-(y * y) / (width * width)) * up - uCirrusStep.w;
       low = 1.0 - smoothstep(uCirrusFringe.z, uCirrusFringe.w, z);
@@ -507,7 +510,7 @@ float cirrusInside(vec3 p, float least, float t, int most, out float finest, out
   float heap = clamp((crest - uCirrusMake.x * (1.0 - n) * (1.0 - uCirrusBend.z * crest)) / uCirrusMake.y, 0.0, 3.0);
   // The fringe: fibres blown off the crest, thin enough to see the deck through; widest on the side away from the Sun.
   float fibre = clamp((body - uCirrusMake.x * (1.0 + uCirrusBend.w) * (1.0 - n)) / uCirrusFringe.x, 0.0, 1.0);
-  return max(heap * heap / 3.0, uCirrusBillow.z * fibre * smoothstep(0.0, 0.5, lee) * low);
+  return gKeep * max(heap * heap / 3.0, uCirrusBillow.z * fibre * smoothstep(0.0, 0.5, lee) * low);
 }
 float cirrusDensity(vec3 p, float least, float t, int most, out float finest) {
   finest = least;
