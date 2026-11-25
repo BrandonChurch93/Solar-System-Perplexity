@@ -1,9 +1,41 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T10:49:48.711Z",
- "head": "04d3b81062ee1864db14bfb4cd814ffc90c70d79",
- "note": "commit 5 frame 60 by sun-near: dark 0.249 body 0.609 pale 0.073 white 0.016; half width 8.1 px, 542 shapes; fine detail 0.0287; mean 0.310; distance 0.081",
+ "pushed": "2026-11-25T11:16:20.175Z",
+ "head": "e6428c506544b946a205a4b3467a32fe1edc0119",
+ "note": "named e6428c50; frame 60 by sun-near: dark 0.249 body 0.609 pale 0.073 white 0.016; half width 8.1 px, 542 shapes; fine detail 0.0287; mean 0.310; distance 0.081",
  "looks": [
+  {
+   "time": "2026-11-25T11:16:19.606Z",
+   "file": "20261125111619606-note-wrap-place.jpg",
+   "source": "../../../../tmp/v/wrap-place.jpg",
+   "kind": "note",
+   "label": "the globe's map at the place, 28 by 17.6 degrees",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T11:16:18.942Z",
+   "file": "20261125111618942-note-m5c-p4.jpg",
+   "source": "../../../../tmp/v/m5c-p4.jpg",
+   "kind": "note",
+   "label": "named merge, 250 + 1/2 to 258 + 1/2, every film frame",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T11:16:18.321Z",
+   "file": "20261125111618321-note-m5c-p3.jpg",
+   "source": "../../../../tmp/v/m5c-p3.jpg",
+   "kind": "note",
+   "label": "named merge, 240 + 1/2 to 248 + 1/2, every film frame",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T11:16:17.676Z",
+   "file": "20261125111617676-note-b10f-pairs.jpg",
+   "source": "../../../../tmp/v/b10f-pairs.jpg",
+   "kind": "note",
+   "label": "212 to 247: main above, take b10f below (my folders on both)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T10:49:47.585Z",
    "file": "20261125104947585-note-c5b-cells-60fps.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/v/c5c-p2.jpg",
    "kind": "note",
    "label": "commit 5, 218 + 1/2 to 226 + 1/2, every film frame",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T10:49:43.088Z",
-   "file": "20261125104943088-note-pairs50.jpg",
-   "source": "../../../../tmp/v/pairs50.jpg",
-   "kind": "note",
-   "label": "212, 220, 229, 237, 247: round 50 over commit 5",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T10:28:48.381Z",
-   "file": "20261125102848381-note-c5c-0.jpg",
-   "source": "../../../../tmp/v/c5c-0.jpg",
-   "kind": "note",
-   "label": "frame 0: approved over commit 5 candidate",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T10:28:47.727Z",
-   "file": "20261125102847727-note-sp-c5c-90.jpg",
-   "source": "../../../../tmp/v/sp-c5c-90.jpg",
-   "kind": "note",
-   "label": "frame 90 spot: candidate keeps 4b's spot, trial s6 not taken",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T10:28:47.036Z",
-   "file": "20261125102847036-note-near-c5c-60.jpg",
-   "source": "../../../../tmp/v/near-c5c-60.jpg",
-   "kind": "note",
-   "label": "frame 60: approved, commit 5 candidate, 4b",
    "stop": "sun"
   }
  ]
