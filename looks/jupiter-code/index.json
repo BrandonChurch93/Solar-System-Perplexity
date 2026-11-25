@@ -1,9 +1,41 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T09:02:02.703Z",
+ "pushed": "2026-11-25T09:30:43.395Z",
  "head": "53a0ee4e235bb59257f69df781f9de694c68817e",
- "note": "round 3 of 3, working tree tests of the ray law, nothing committed",
+ "note": "09:31 UTC: rise reds of the reader traced (pattern 3246 on, level 3287 + 1/2); controls rendering; ray law of the air only in the working tree",
  "looks": [
+  {
+   "time": "2026-11-25T09:30:42.391Z",
+   "file": "20261125093042391-note-ray015-3150-pair.jpg",
+   "source": "../work/r13/ray015-3150-pair.jpg",
+   "kind": "note",
+   "label": "3150, working tree with the air by the ray alone at 0.15 (not committed) beside the approved",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T09:30:41.610Z",
+   "file": "20261125093041610-note-limb-enters.jpg",
+   "source": "../work/r13/off/limb-enters.jpg",
+   "kind": "note",
+   "label": "rise 3286 to 3288 + 1/2: the limb comes in along the whole left edge within one capture frame (level step 1.36 at 3287 + 1/2)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T09:30:41.024Z",
+   "file": "20261125093041024-note-crop-far-6493-6501-6509.jpg",
+   "source": "../work/r13/off/crop-far-6493-6501-6509.jpg",
+   "kind": "note",
+   "label": "rise, the same far ground at 3246 + 1/2, 3250 + 1/2, 3254 + 1/2: pale veil with streaks first, pink and brown patches 8 frames later",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T09:30:40.295Z",
+   "file": "20261125093040295-note-view-back-6493.jpg",
+   "source": "../work/r13/off/view-back-6493.jpg",
+   "kind": "note",
+   "label": "rise 3246 + 1/2: where the reader reads the pattern change in place, 0.85 (the far ground under the limb, upper left)",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T09:02:02.075Z",
    "file": "20261125090202075-note-ray015-3150-pair.jpg",
@@ -168,38 +200,6 @@
    "source": "../work/r12/rise-pair.jpg",
    "kind": "note",
    "label": "rise pair, second named commit against this one",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T07:43:26.793Z",
-   "file": "20261125074326793-note-jupiter-rise-k6500-6506-changes.jpg",
-   "source": "../work/r12/slices/jupiter-rise-k6500-6506-changes.png",
-   "kind": "note",
-   "label": "rise slice 3250 to 3253: change picture, pattern 0.61 against 0.45 (second named commit 1.26)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T07:43:26.022Z",
-   "file": "20261125074326022-note-rise-3242-3261.jpg",
-   "source": "../work/r12/rise-3242-3261.jpg",
-   "kind": "note",
-   "label": "rise 3242 to 3261, every film frame, draft tier, commit 2ad37054 (slab of haze)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T07:30:57.007Z",
-   "file": "20261125073057007-note-trio-3150.jpg",
-   "source": "../work/r12/trio-3150.jpg",
-   "kind": "note",
-   "label": "3150 final tier: approved image, this commit 2ad37054 (match 8.215 at the round's size: worse, the far right stays lit), second named commit (7.358), kept still",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T07:30:56.323Z",
-   "file": "20261125073056323-note-dive-pair.jpg",
-   "source": "../work/r12/dive-pair.jpg",
-   "kind": "note",
-   "label": "3029 and 3037: second named commit, this commit, no air",
    "stop": "jupiter"
   }
  ]
