@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-24T23:55:31.179Z",
+ "pushed": "2026-11-25T00:19:27.328Z",
  "head": "15d489e9e70ff9fb2c598d02ba7fb0288f6d799e",
- "note": "MAIL 770: 690 to 735 beside b0b87889 at 60 a second, the planet is b0's to 1 code away from the Sun; rise renders",
+ "note": "round 2 state: rise 1004 to 1029 rendered and looked at; pattern measure and smooth run queued",
  "looks": [
+  {
+   "time": "2026-11-25T00:19:25.991Z",
+   "file": "20261125001925991-note-a1-r2.jpg",
+   "source": "out/work/mercury/place/sheets/a1-r2.jpg",
+   "kind": "note",
+   "label": "round 2 state, rise 1016 to 1029 every whole frame",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T00:19:24.594Z",
+   "file": "20261125001924594-note-a1-r1z.jpg",
+   "source": "out/work/mercury/place/sheets/a1-r1z.jpg",
+   "kind": "note",
+   "label": "round 2 state, rise 1004 to 1011.5 every half frame at the place: b0's exchange back (the ruled red's twin)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-24T23:55:29.745Z",
    "file": "20261124235529745-note-b0a1-e08.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/mercury/place/sheets/a1-d3.jpg",
    "kind": "note",
    "label": "round 2 state, dive 772 to 783, every frame, draft, true far Sun",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T23:29:10.421Z",
-   "file": "20261124232910421-note-a1-d2.jpg",
-   "source": "out/work/mercury/place/sheets/a1-d2.jpg",
-   "kind": "note",
-   "label": "round 2 state, dive 760 to 771, every frame, draft, true far Sun",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T23:29:09.451Z",
-   "file": "20261124232909451-note-a1-d1.jpg",
-   "source": "out/work/mercury/place/sheets/a1-d1.jpg",
-   "kind": "note",
-   "label": "round 2 state, dive 748 to 759, every frame, draft, true far Sun",
    "stop": "mercury"
   }
  ]
