@@ -1,9 +1,17 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T00:46:05.484Z",
- "head": "7793e81130002568278611542aaaf8dc15ad15ee",
- "note": "A1 rise 940 to 991 and the sheet of the rise's T; Sun order of mail 820 next",
+ "pushed": "2026-11-25T01:14:43.011Z",
+ "head": "d9cddae560cfbc19131d1bf4cc48f420d3b2bbe7",
+ "note": "615 final before the Sun order; the Sun's size and direction render now",
  "looks": [
+  {
+   "time": "2026-11-25T01:14:41.638Z",
+   "file": "20261125011441638-note-f615.jpg",
+   "source": "out/work/mercury/place/c1f/f615.png",
+   "kind": "note",
+   "label": "d9cddae5 (round 2 state) hold 615 at the final tier, before the Sun order of mail 820",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T00:46:04.034Z",
    "file": "20261125004604034-note-a1-t.jpg",
@@ -58,14 +66,6 @@
    "source": "out/work/mercury/place/sheets/b0a1-e08.jpg",
    "kind": "note",
    "label": "b0b87889 on top, round 2 state below, half frames, sheet e08",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T23:55:28.460Z",
-   "file": "20261124235528460-note-b0a1-e06.jpg",
-   "source": "out/work/mercury/place/sheets/b0a1-e06.jpg",
-   "kind": "note",
-   "label": "b0b87889 on top, round 2 state below, half frames, sheet e06",
    "stop": "mercury"
   }
  ]
