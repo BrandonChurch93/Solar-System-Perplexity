@@ -1,0 +1,70 @@
+{
+ "critic": "R4",
+ "score": 5,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-01.png",
+   "where": "whole terrain segment, frames 0-179",
+   "what": "the camera barely moves, so the near granulation and the horizon never move against each other; the view reads as a flat still with no depth, and the granulation cells look frozen with no visible convective flow",
+   "fix": "add a slow, eased forward or lateral drift low over the surface so near cells sweep past faster than the limb, and animate the granulation (cells slowly evolving and churning)"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "upper sky and limb, frames 218-222",
+   "what": "the coronal streamers and a red chromosphere rim appear within about four frames, while the Milky Way in the upper sky fades out at the same time; this reads as a pop and an exposure shift inside the cover, not one continuous move",
+   "fix": "ramp the corona, limb rim and sky exposure in over at least 30-40 frames, starting well before the cover, and keep the background star field and Milky Way at constant brightness"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "frames 220 to 229",
+   "what": "a large jump in a short span: the disc goes from a dim, partly cropped limb to an overexposed bright face, prominences appear at right and the streamers jump in brightness; the color and exposure do not carry across",
+   "fix": "smooth the pull-back speed through this span, add intermediate scale, and match the tone-mapping and exposure on both sides of the hand-off"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "loop arcade and surface texture, frames 211-214",
+   "what": "the magnetic loops fade to ghosts over two or three frames, and the granulation switches to a mottled facula texture (an LOD swap) instead of shrinking smoothly with distance",
+   "fix": "fade the loops with distance over the whole rise and cross-blend the near-field granulation into the far-field texture over many frames, keyed to the camera altitude"
+  },
+  {
+   "severity": "major",
+   "file": "pack",
+   "where": "contact sheets supplied",
+   "what": "there is no dive sheet and no frame sheet for the cover into the terrain view; only the terrain, rise, rise-cover and hold segments can be judged, so the round trip cannot be verified",
+   "fix": "render and include the dive contact sheet and a consecutive-frame sheet across the dive-to-terrain cover"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "right loop footpoint, frame 49",
+   "what": "stray strands shoot up off the right loop for this one sampled frame and are gone by frame 65; the loop height also changes noticeably between frames 16, 33 and 49",
+   "fix": "check for a particle or strand spawn spike and smooth the loop's height animation"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "sunspot penumbra, frames 81-179",
+   "what": "the penumbra filaments around the sunspot grow from faint to strong and hard-edged over the segment, which looks like a shader parameter drifting rather than real evolution",
+   "fix": "keep the penumbra look constant or change it far more slowly"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "solar disc and prominences, frames 270-449",
+   "what": "during the hold the sunspots, active regions and prominences are almost exactly where they were for 180 frames; the globe looks frozen, with little visible life",
+   "fix": "add a slight, steady rotation or surface churn and a gentle animation of the prominences and streamers so the hold reads as a living star"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-02.png",
+   "where": "background, frames 229-253",
+   "what": "the Milky Way band moves and brightens a lot across the background while the camera eases out, more than the change in framing explains",
+   "fix": "lock the background sky to the camera's rotation only and keep its exposure fixed"
+  }
+ ]
+}

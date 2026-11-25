@@ -9,8 +9,9 @@ import { CHROME, CHROME_FLAGS } from '../tools/lib/browser'
 import { CAP_PATCHES, ReliefCap, capCells, capFinest, capGrids, capHeightBytes, capHeights, capOverlap, capVert, type CapOptions } from '../src/bodies/cap'
 import { Planet, planetFrag } from '../src/bodies/planet'
 import * as look from '../src/stops/mars/look'
+import { frozen } from './globe-frozen'
 
-const hash = (text: string): string => createHash('sha256').update(text).digest('hex')
+const hash = (text: string): string => createHash('sha256').update(frozen(text)).digest('hex')
 const KEPT = '81b0189383d53555c8623467df803b233644cf143249b11aa3e3a28f5548a308'
 const MARS = [8.5, 3.8, 1.6, 0.7, 0.3]
 const scaleOf = (deg: number): number => 1 / (2 * Math.tan((deg * Math.PI) / 360))
