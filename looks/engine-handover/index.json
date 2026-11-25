@@ -1,9 +1,37 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T16:16:09.379Z",
+ "pushed": "2026-11-25T16:48:34.880Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "plumb named (e9d262a4); design c study of Mars's stepped cells; the shutter's ends: what main has for Earth",
+ "note": "Shutter's ends by the law of the motion: flight line, Earth, merges of Mercury and Mars pushed; proof list and the field of 1857 and 2156 sent; hatch across the motion measured, not the samples",
  "looks": [
+  {
+   "time": "2026-11-25T16:48:33.614Z",
+   "file": "20261125164833614-note-e-box-01857-ll.jpg",
+   "source": "../../../../tmp/ends/e-box-01857-ll.png",
+   "kind": "note",
+   "label": "Earth 1857 final as a box, lower left quarter at 1 to 1"
+  },
+  {
+   "time": "2026-11-25T16:48:32.795Z",
+   "file": "20261125164832795-note-e-ends-01857-ll.jpg",
+   "source": "../../../../tmp/ends/e-ends-01857-ll.png",
+   "kind": "note",
+   "label": "Earth 1857 final with the cosine ends, lower left quarter at 1 to 1"
+  },
+  {
+   "time": "2026-11-25T16:48:31.552Z",
+   "file": "20261125164831552-note-pair-1857-cloud-8x.jpg",
+   "source": "../../../../tmp/ends/pair-1857-cloud-8x.png",
+   "kind": "note",
+   "label": "Earth 1857 final, crop 440,980,560,1060 at 8 times: box left, cosine ends right. The hatch of strokes one px wide across the motion, in both"
+  },
+  {
+   "time": "2026-11-25T16:48:30.391Z",
+   "file": "20261125164830391-note-pair-1857-hatch-3x.jpg",
+   "source": "../../../../tmp/ends/pair-1857-hatch-3x.png",
+   "kind": "note",
+   "label": "Earth 1857 final, 64 samples, crop 330,860,650,1080 at 3 times: box left, cosine ends right. Bars become lozenges; a hatch along the motion stays in both"
+  },
   {
    "time": "2026-11-25T16:16:08.765Z",
    "file": "20261125161608765-note-earth-1857-review-ends-ll-3x.jpg",
@@ -33,34 +61,6 @@
    "source": "../../../../tmp/saw/cells-L2.png",
    "kind": "note",
    "label": "design c study: Mars layer L2, stepped cells marked"
-  },
-  {
-   "time": "2026-11-25T16:16:06.412Z",
-   "file": "20261125161606412-note-cells-L0.jpg",
-   "source": "../../../../tmp/saw/cells-L0.png",
-   "kind": "note",
-   "label": "design c study: Mars layer L0, stepped cells marked"
-  },
-  {
-   "time": "2026-11-25T16:16:05.639Z",
-   "file": "20261125161605639-note-cells-L1.jpg",
-   "source": "../../../../tmp/saw/cells-L1.png",
-   "kind": "note",
-   "label": "design c study: Mars layer L1, cells that tear by 2 to 4 px (yellow), 4 px or more (orange), folded (red), at the alpha border (blue)"
-  },
-  {
-   "time": "2026-11-25T14:58:54.402Z",
-   "file": "20261125145854402-note-al-topright.jpg",
-   "source": "../../../../tmp/air/sheets/al-topright.png",
-   "kind": "note",
-   "label": "engine-air smoke, top right of 2481 at 1 to 1: law off, knots per fragment (d6bebf0c), knots at the vertices (the cost cure). The two lower rows differ by 1 level of 255 on 0.21 percent of the pixels"
-  },
-  {
-   "time": "2026-11-25T14:58:53.713Z",
-   "file": "20261125145853713-note-al-offb-pair.jpg",
-   "source": "../../../../tmp/air/sheets/al-offb-pair.png",
-   "kind": "note",
-   "label": "engine-air smoke, NOT a fitted set: Mars 2481 and 2668 at draft, law off against the law with mars_place_builder's first fitted numbers and the knots at the mesh's vertices. The painting's own air is not baked out and the stop's old sky is still drawn: the dark band over the glow and the bright stars are the scratch, not a claim"
   }
  ]
 }
