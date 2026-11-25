@@ -1,9 +1,41 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T10:23:46.462Z",
+ "pushed": "2026-11-25T10:46:41.452Z",
  "head": "fa33e867991dacc386b60b868b4b5a6ae44f70c4",
- "note": "MAIL 1021 item 1: first thickness 0.1 reads 0.52 0.716 0.587 at 3246 to 3247, still red; 0.3 with the density averaged rendering",
+ "note": "MAIL 1021 item 1: sheets built thick, density averaged along the ray; reader at 3246, 3246 + 1/2, 3247: 0.428 0.365 0.376 (as named 0.587 0.846 0.677); 3150 match at draft 8.129 to 7.673",
  "looks": [
+  {
+   "time": "2026-11-25T10:46:36.777Z",
+   "file": "20261125104636777-note-v3-3150.jpg",
+   "source": "../work/r13/off/v3-3150.jpg",
+   "kind": "note",
+   "label": "3150 as named and with sheets 0.1 thick (draft), below each minus banks off times 4; match 8.129 to 7.673",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T10:46:36.095Z",
+   "file": "20261125104636095-note-v3-3150-ll.jpg",
+   "source": "../work/r13/off/v3-3150-ll.jpg",
+   "kind": "note",
+   "label": "3150 lower left: as named, sheets 0.1 thick, approved",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T10:46:35.511Z",
+   "file": "20261125104635511-note-v3-cmp.jpg",
+   "source": "../work/r13/off/v3-cmp.jpg",
+   "kind": "note",
+   "label": "rise 3246 to 3254, top left: as named, sheets 0.1 thick averaged along the ray, banks off (draft); reader 0.428 0.365 0.376 at 3246 to 3247",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T10:46:34.842Z",
+   "file": "20261125104634842-note-th30-cmp.jpg",
+   "source": "../work/r13/off/th30-cmp.jpg",
+   "kind": "note",
+   "label": "rise 3246 to 3254, top left: as named, sheets 0.3 thick, banks off (draft)",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T10:23:45.824Z",
    "file": "20261125102345824-note-th10-3150.jpg",
@@ -162,44 +194,6 @@
    "source": "../work/r13/dive3048-ll.jpg",
    "kind": "note",
    "label": "dive 3048 lower left: the near plate south of the fore plate",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T08:33:37.722Z",
-   "file": "20261125083337722-note-probes1.jpg",
-   "source": "../work/r13/probes1.jpg",
-   "kind": "note",
-   "label": "probe stills, not in any commit: 3150, 1 unit ahead, 2 units ahead, 30 deg round the storm, 60 deg, minus 30 deg, minus 60 deg, 1 unit higher",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T08:33:37.100Z",
-   "file": "20261125083337100-note-terrain-a.jpg",
-   "source": "../work/r13/terrain-a.jpg",
-   "kind": "note",
-   "label": "surface view of the current commit every 15 frames 3060 to 3239: nearly one picture, a slow push in",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T08:25:53.602Z",
-   "file": "20261125082553602-frame-p-up1.jpg",
-   "source": "out/work/jupiter/t13/p-up1.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3150, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
-  },
-  {
-   "time": "2026-11-25T08:07:03.053Z",
-   "file": "20261125080703053-note-trio-3150.jpg",
-   "source": "../work/r12/trio-3150.jpg",
-   "kind": "note",
-   "label": "3150 final tier: approved pack, this commit, second named commit, kept still (match 6.578 for round 46, 8.215 now, 7.358 second named)",
    "stop": "jupiter"
   }
  ]
