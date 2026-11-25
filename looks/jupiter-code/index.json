@@ -1,9 +1,89 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T03:43:48.943Z",
+ "pushed": "2026-11-25T03:53:22.479Z",
  "head": "e41572b266f5705f8b14f5f0895f6b5b8fa1f94a",
- "note": "03:44 UTC: sky plate without haze under its horizon and with its own stars carried there (cddb41f, merged with main as e41572b); rise pace green; proof chain running on e41572b",
+ "note": "03:55 UTC: proof chain runs on e41572b; finals done: 2895 keeps its bytes, 3150 moves 410 pixels by at most 4 levels; judged 3296 after the new pace",
  "looks": [
+  {
+   "time": "2026-11-25T03:53:21.870Z",
+   "file": "20261125035321870-note-pair-3150-final.jpg",
+   "source": "../work/r9/pair-3150-final.jpg",
+   "kind": "note",
+   "label": "frame 3150, final tier, commit e41572b (right) beside the approved close image (left); 410 pixels differ from the still before the plate changed, largest 4 levels",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T03:53:21.253Z",
+   "file": "20261125035321253-note-f3296-crop.jpg",
+   "source": "../work/r9/f3296-crop.png",
+   "kind": "note",
+   "label": "frame 3296 on commit e41572b, draft, 1 to 1: the place in the pale oval right of the red storm",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T03:53:20.585Z",
+   "file": "20261125035320585-note-pair-3296-draft.jpg",
+   "source": "../work/r9/pair-3296-draft.jpg",
+   "kind": "note",
+   "label": "judged frame 3296, draft: before the rise's pace was set again (left) and on commit e41572b (right); the camera stands lower at 3296 now",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T03:52:59.798Z",
+   "file": "20261125035259798-frame-f3012-uhd-web.jpg",
+   "source": "out/work/jupiter/d253c/f3012-uhd-web.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 3012, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 3012,
+   "tier": "draft",
+   "format": "uhd",
+   "diag": "beauty",
+   "engine": "ee785742acc8b67e"
+  },
+  {
+   "time": "2026-11-25T03:50:03.204Z",
+   "file": "20261125035003204-frame-f3296.jpg",
+   "source": "out/work/jupiter/h5/f3296.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3296, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3296,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "ee785742acc8b67e"
+  },
+  {
+   "time": "2026-11-25T03:49:31.301Z",
+   "file": "20261125034931301-frame-f3150.jpg",
+   "source": "out/work/jupiter/h5/f3150.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3150, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "ee785742acc8b67e"
+  },
+  {
+   "time": "2026-11-25T03:48:20.616Z",
+   "file": "20261125034820616-frame-f2895.jpg",
+   "source": "out/work/jupiter/h5/f2895.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2895, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "ee785742acc8b67e"
+  },
   {
    "time": "2026-11-25T03:43:48.312Z",
    "file": "20261125034348312-note-pair-3150-final.jpg",
@@ -53,34 +133,6 @@
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-25T03:43:16.071Z",
-   "file": "20261125034316071-frame-d3040.jpg",
-   "source": "out/work/jupiter/frames/f2/d3040.png",
-   "kind": "frame",
-   "label": "jupiter.dive frame 3040, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 3040,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "ee785742acc8b67e"
-  },
-  {
-   "time": "2026-11-25T03:42:00.129Z",
-   "file": "20261125034200129-frame-d3062.jpg",
-   "source": "out/work/jupiter/frames/f2/d3062.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3062, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3062,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "ee785742acc8b67e"
-  },
-  {
    "time": "2026-11-25T03:37:22.503Z",
    "file": "20261125033722503-note-rise-b.jpg",
    "source": "../work/r8/f1/rise-b.jpg",
@@ -105,20 +157,6 @@
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-25T03:36:35.511Z",
-   "file": "20261125033635511-frame-r3247.jpg",
-   "source": "out/work/jupiter/frames/f1/r3247.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3247, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3247,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "ee785742acc8b67e"
-  },
-  {
    "time": "2026-11-25T03:23:30.112Z",
    "file": "20261125032330112-note-pair-3150-final.jpg",
    "source": "../work/r6/pair-3150-final.jpg",
@@ -141,20 +179,6 @@
    "kind": "note",
    "label": "03:24 sky plate of the surface view, lifted: left as it was (haze fill under its horizon, the floating band), right with the plate's own sky level carried under the horizon by code",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T03:05:39.906Z",
-   "file": "20261125030539906-frame-after-2895.jpg",
-   "source": "out/work/jupiter/h4/after-2895.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2895, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "ee785742acc8b67e"
   },
   {
    "time": "2026-11-25T02:54:30.130Z",
@@ -194,30 +218,6 @@
    "source": "../work/r6/pair-3150-final.jpg",
    "kind": "note",
    "label": "3150 final beside the approved image (unchanged bytes at 220328cc)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T02:29:14.682Z",
-   "file": "20261125022914682-note-lift-right.jpg",
-   "source": "../work/r8/sky2/lift-right.jpg",
-   "kind": "note",
-   "label": "UNFINISHED sky plate for the surface view, lifted 3.5 times: top new (sky carried under the plate's horizon, stars too dense, seam visible), bottom as it is (haze fill under the horizon, the cause of the floating band 3028 to 3041)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T02:29:13.723Z",
-   "file": "20261125022913723-note-c1-upleft-b.jpg",
-   "source": "../work/r8/c1-upleft-b.jpg",
-   "kind": "note",
-   "label": "dive, upper left at 1.5 times, frames 3036 to 3056 (set c1, commit 220328cc): far deck going into the horizon haze, the tool reads 0.48 at 3038 to 3040 (limit 0.45)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T02:08:25.611Z",
-   "file": "20261125020825611-note-pair-3150-final.jpg",
-   "source": "../work/r6/pair-3150-final.jpg",
-   "kind": "note",
-   "label": "3150 final beside the approved image (bytes unchanged in this commit, match 7.974)",
    "stop": "jupiter"
   }
  ]
