@@ -1,9 +1,33 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T07:54:27.963Z",
- "head": "86237abe705bfc32ecbf4651d7c40cd5e150603a",
- "note": "venus 86237abe: rise every frame 1540 to 1587, dive pattern panel at rate 2 (red 0.83), limb 1274 to 1282 before and after",
+ "pushed": "2026-11-25T08:26:53.033Z",
+ "head": "e5ca8c0133de9c041a8a3638127762c9ad6632ea",
+ "note": "where the reds of the first state lie: rise far deck under the limb 1542 to 1556, dive limb 1268 to 1291",
  "looks": [
+  {
+   "time": "2026-11-25T08:26:52.033Z",
+   "file": "20261125082652033-note-q6-dive-lr.jpg",
+   "source": "../../../../tmp/v/sh/q6-dive-lr.jpg",
+   "kind": "note",
+   "label": "dive 1268 to 1291 lower right limb, state 86237abe: the rim of the hold goes out by height",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T08:26:51.190Z",
+   "file": "20261125082651190-note-r0-rise-ul.jpg",
+   "source": "../../../../tmp/v/sh/r0-rise-ul.jpg",
+   "kind": "note",
+   "label": "the same crop on the tree of 8adf0940 (before the one ground)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T08:26:50.006Z",
+   "file": "20261125082650006-note-q6-rise-ul.jpg",
+   "source": "../../../../tmp/v/sh/q6-rise-ul.jpg",
+   "kind": "note",
+   "label": "rise 1542 to 1556 upper left under the limb, state 86237abe: the far deck goes from smooth air to a field of lumps",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-25T07:54:26.626Z",
    "file": "20261125075426626-note-q6-vs-b0-1274-82.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/v/sh/q6all/rise-1570.jpg",
    "kind": "note",
    "label": "q6 rise every frame from 1570, 86237abe draft",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T07:54:21.941Z",
-   "file": "20261125075421941-note-rise-1564.jpg",
-   "source": "../../../../tmp/v/sh/q6all/rise-1564.jpg",
-   "kind": "note",
-   "label": "q6 rise every frame from 1564, 86237abe draft",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T07:54:21.084Z",
-   "file": "20261125075421084-note-rise-1558.jpg",
-   "source": "../../../../tmp/v/sh/q6all/rise-1558.jpg",
-   "kind": "note",
-   "label": "q6 rise every frame from 1558, 86237abe draft",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T07:54:19.819Z",
-   "file": "20261125075419819-note-rise-1552.jpg",
-   "source": "../../../../tmp/v/sh/q6all/rise-1552.jpg",
-   "kind": "note",
-   "label": "q6 rise every frame from 1552, 86237abe draft",
    "stop": "venus"
   }
  ]
