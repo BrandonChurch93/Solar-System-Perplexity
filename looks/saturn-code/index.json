@@ -1,9 +1,37 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T08:08:45.017Z",
+ "pushed": "2026-11-25T08:24:50.126Z",
  "head": "da021335659e0efa1aafcc4ea362938b640121e3",
- "note": "round 3 trial of both severe places, drafts",
+ "note": "round 3 state: both severe places before and after at 1 to 1, drafts of the working tree; smooth slices running",
  "looks": [
+  {
+   "time": "2026-11-25T08:24:48.612Z",
+   "file": "20261125082448612-note-t7_leftfoot.jpg",
+   "source": "../../../../tmp/v/x/t7_leftfoot.png",
+   "kind": "note",
+   "label": "3720 left foot at 1 to 1 (820,430 to 1220,700): named final top left, working tree draft top right; the vertical seam at x 932 is gone"
+  },
+  {
+   "time": "2026-11-25T08:24:47.587Z",
+   "file": "20261125082447587-note-state_3720_QR.jpg",
+   "source": "../../../../tmp/v/x/state_3720_QR.png",
+   "kind": "note",
+   "label": "SEVERE 2, 3720 boxes Q and R (912,433 to 1824,866) at 1 to 1: approved, named 88ba2385 final, working tree draft. No layer on the globe, the dust hides the globe by its depth, the far look adds nothing of the globe behind where the view grazes the plane"
+  },
+  {
+   "time": "2026-11-25T08:24:46.497Z",
+   "file": "20261125082446497-note-state_3567_gap.jpg",
+   "source": "../../../../tmp/v/x/state_3567_gap.png",
+   "kind": "note",
+   "label": "SEVERE 1, 3567 box 1100,440 to 1920,900 at 1 to 1: named final above, working tree draft below"
+  },
+  {
+   "time": "2026-11-25T08:24:45.506Z",
+   "file": "20261125082445506-note-state_3567_QR.jpg",
+   "source": "../../../../tmp/v/x/state_3567_QR.png",
+   "kind": "note",
+   "label": "SEVERE 1, 3567 boxes Q and R (912,433 to 1824,866) at 1 to 1: named 88ba2385 final above, working tree draft below. The sky through the empty space inside the rim in the globe's shadow is closed; the night side is the body's own ellipse"
+  },
   {
    "time": "2026-11-25T08:08:35.048Z",
    "file": "20261125080835048-note-t3_whole_pair.jpg",
@@ -31,34 +59,6 @@
    "source": "../../../../tmp/v/x/t3_gap.png",
    "kind": "note",
    "label": "3567 at 1 to 1, gap between globe and inner rim in the globe's shadow: named 88ba2385 final above, trial T3 draft below (shaded plane solid from the globe on)"
-  },
-  {
-   "time": "2026-11-25T07:46:29.690Z",
-   "file": "20261125074629690-note-foot_pair_da.jpg",
-   "source": "../../../../tmp/v/x/foot_pair_da.png",
-   "kind": "note",
-   "label": "3720 foot at 1 to 1, final: approved over the local tree before the cure (band on the globe, globe through the dust, black strip)"
-  },
-  {
-   "time": "2026-11-25T07:46:29.094Z",
-   "file": "20261125074629094-note-t1_foot.jpg",
-   "source": "../../../../tmp/v/x/t1_foot.png",
-   "kind": "note",
-   "label": "3720 foot at 1 to 1, draft: approved over trial 1 (inner sheet deep enough to hide the globe, no band on the globe); shadow wedge and tone still open"
-  },
-  {
-   "time": "2026-11-25T07:46:28.484Z",
-   "file": "20261125074628484-note-gap4.jpg",
-   "source": "../../../../tmp/v/x/gap4.png",
-   "kind": "note",
-   "label": "3567 low right of the globe at 1 to 1: hero, my 3465, named tree 3567, local tree 3567 (the sky through the gap inside the rim, in the globe's shadow)"
-  },
-  {
-   "time": "2026-11-25T07:20:27.677Z",
-   "file": "20261125072027677-note-r64_3866_gap_pair.jpg",
-   "source": "../../../../tmp/v/x/r64_3866_gap_pair.png",
-   "kind": "note",
-   "label": "3866 at full size, box 940,620 to 1300,1030: named 88ba2385 left (sky ends in a hard ellipse), local da02133 right (sky thins out through the shaded inner ring)"
   }
  ]
 }
