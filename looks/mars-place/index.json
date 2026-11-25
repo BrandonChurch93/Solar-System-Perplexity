@@ -1,9 +1,33 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T21:49:21.907Z",
- "head": "47b7534197a50175cdfd682dbfa8b46e9ff5487e",
- "note": "trial 17 of wall and plain by code goes to the other levels; plain still soft under the take's broad tone",
+ "pushed": "2026-11-25T22:10:54.870Z",
+ "head": "ef1bbb3a14fd518810e596aa9c975e88fd5c84ff",
+ "note": "22:12 the rise's pattern lines by layers: main's panel beside the name's; control states A, B, C on the ctl branch for /root's machines; wall and plain levels still running",
  "looks": [
+  {
+   "time": "2026-11-25T22:10:54.118Z",
+   "file": "20261125221054118-note-quad.jpg",
+   "source": "out/work/place/pt1/quad.jpg",
+   "kind": "note",
+   "label": "name 47b75341, drafts 2708 and 2716 with layers and texels pictures: the worst pattern pixel of rise part 2 lies on the 8.5 degree plate under the air",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T22:10:53.524Z",
+   "file": "20261125221053524-note-panel-name-p1.jpg",
+   "source": "../../../../tmp/panel-name-p1.jpg",
+   "kind": "note",
+   "label": "the NAME 47b75341's reader panel, rise part 1 (from /root, mx2-03): at 2685 to 2693 the ground holds its pattern, white only in the band under the horizon; BAD at 2693 to 2701 and 2706 to 2714: white blobs on the plates where main has none",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T22:10:52.664Z",
+   "file": "20261125221052664-note-panel-main-p1.jpg",
+   "source": "../../../../tmp/panel-main-p1.jpg",
+   "kind": "note",
+   "label": "MAIN's reader panel, rise part 1 (from /root, row mb1-09): pattern white over large parts of the ground at 2687 to 2695",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T21:49:21.119Z",
    "file": "20261125214921119-note-cmpA.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/place/d140/dive-sheet.jpg",
    "kind": "note",
    "label": "NAMED 47b75341 (ledge of C2, main's rise eye): the dive 2440 to 2476 every second frame, drafts. Equal to take 10 by pixels to 2470; 2474 and 2476 differ on the crest (the ledge)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T21:14:14.844Z",
-   "file": "20261125211414844-note-rise-sheet.jpg",
-   "source": "out/work/place/t3/rise-sheet.jpg",
-   "kind": "note",
-   "label": "rise state 47b75341 (ledge, main's eye): rise drafts 2682 to 2744",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T21:14:14.071Z",
-   "file": "20261125211414071-note-cmpB.jpg",
-   "source": "out/work/place/w14/cmpB.png",
-   "kind": "note",
-   "label": "BAD wall trial 14, 0.3 plate from above 1 to 1 at x 1000 y 560: before walls, trial 13, trial 14",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T21:14:12.941Z",
-   "file": "20261125211412941-note-cmpA.jpg",
-   "source": "out/work/place/w14/cmpA.png",
-   "kind": "note",
-   "label": "BAD wall trial 14, 0.3 plate from above 1 to 1 at x 1400 y 200: before walls, trial 13, trial 14 (plain by code reads as contour lines and corduroy)",
    "stop": "mars"
   }
  ]
