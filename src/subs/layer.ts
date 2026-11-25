@@ -1,9 +1,10 @@
 import * as THREE from 'three'
 import { Haze } from './haze'
-import { kernel, layout, stateAt, type Item, type Layout } from './layout'
+import { cues, kernel, layout, stateAt, type Item, type Layout } from './layout'
 import { SHADE_FAR, SHADE_NEAR, SHADOW } from './look'
 
 export const FAMILY = 'Subs Sans'
+const KEY_RATE = 60000
 
 const VERT = /* glsl */ `
 uniform vec4 uRect;
@@ -253,8 +254,6 @@ class Sized {
   }
 }
 
-import { cues } from './layout'
-
 function lineWords(cue: number): string[] {
   return cues[cue]!.words.map((w) => w.w)
 }
@@ -271,7 +270,7 @@ export class Layer {
 
   constructor(private readonly renderer: THREE.WebGLRenderer) {}
 
-  draw(t: number, key: number): boolean {
+  draw(t: number): boolean {
     const r = this.renderer
     const size = r.getDrawingBufferSize(new THREE.Vector2())
     const W = size.x
@@ -290,6 +289,9 @@ export class Layer {
     s.write(state.cue)
     const gl = r.getContext() as WebGL2RenderingContext
     const bh = L.bh
+    const keep = { color: r.getClearColor(new THREE.Color()), alpha: r.getClearAlpha(), auto: r.autoClear }
+    r.autoClear = false
+    r.setClearColor(0x000000, 0)
     for (const target of [s.words, s.near, s.far]) {
       r.setRenderTarget(target)
       r.clear(true, false, false)
@@ -332,7 +334,7 @@ export class Layer {
       }
     }
     r.setRenderTarget(s.frame)
-    r.state.bindFramebuffer(gl.READ_FRAMEBUFFER, null)
+    gl.bindFramebuffer(gl.READ_FRAMEBUFFER, null)
     gl.blitFramebuffer(0, H - L.y1, W, H - L.y0, 0, 0, W, bh, gl.COLOR_BUFFER_BIT, gl.NEAREST)
     this.over.set('uFrame', s.frame.texture)
     this.over.set('uHaze', s.hazeTex)
@@ -344,8 +346,10 @@ export class Layer {
     this.over.set('uTop', L.y0)
     this.over.set('uHeight', H)
     this.over.set('uBand', bh)
-    this.over.set('uKey', key >>> 0)
+    this.over.set('uKey', Math.round(t * KEY_RATE) >>> 0)
     this.over.draw(r, null, 0, H - L.y1, W, bh, W, H)
+    r.setClearColor(keep.color, keep.alpha)
+    r.autoClear = keep.auto
     this.last = performance.now() - began
     return true
   }

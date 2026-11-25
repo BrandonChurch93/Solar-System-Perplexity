@@ -17,41 +17,40 @@ function wrap(i: number, n: number): number {
   return ((i % n) + n) % n
 }
 
-function noise(L: Float32Array, x: number, y: number, t: number): number {
-  const xf = Math.floor(x)
-  const yf = Math.floor(y)
+function slice(L: Float32Array, t: number): Float32Array {
   const tf = Math.floor(t)
-  let fx = x - xf
-  let fy = y - yf
   let ft = t - tf
-  fx = fx * fx * (3 - 2 * fx)
-  fy = fy * fy * (3 - 2 * fy)
   ft = ft * ft * (3 - 2 * ft)
-  const x0 = wrap(xf, NX)
-  const y0 = wrap(yf, NY)
-  const x1 = (x0 + 1) % NX
-  const y1 = (y0 + 1) % NY
   const a = wrap(tf, NT) * NY * NX
   const b = wrap(tf + 1, NT) * NY * NX
-  const r0 = y0 * NX
-  const r1 = y1 * NX
-  const lo = (L[a + r0 + x0]! * (1 - fx) + L[a + r0 + x1]! * fx) * (1 - fy) + (L[a + r1 + x0]! * (1 - fx) + L[a + r1 + x1]! * fx) * fy
-  const hi = (L[b + r0 + x0]! * (1 - fx) + L[b + r0 + x1]! * fx) * (1 - fy) + (L[b + r1 + x0]! * (1 - fx) + L[b + r1 + x1]! * fx) * fy
-  return lo * (1 - ft) + hi * ft
+  const out = new Float32Array(NY * NX)
+  for (let i = 0; i < out.length; i++) out[i] = L[a + i]! * (1 - ft) + L[b + i]! * ft
+  return out
 }
 
-function fbm(L: Float32Array, x: number, y: number, t: number, octs: number): number {
-  let s = 0
-  let amp = 0.5
-  let f = 1
-  let tot = 0
-  for (let o = 0; o < octs; o++) {
-    s += amp * noise(L, x * f + 17.3 * o, y * f + 9.1 * o, t * (1 + 0.5 * o) + 5.7 * o)
-    tot += amp
-    amp *= 0.5
-    f *= 2
-  }
-  return s / tot
+function noise(S: Float32Array, x: number, y: number): number {
+  const xf = Math.floor(x)
+  const yf = Math.floor(y)
+  let fx = x - xf
+  let fy = y - yf
+  fx = fx * fx * (3 - 2 * fx)
+  fy = fy * fy * (3 - 2 * fy)
+  const x0 = xf & (NX - 1)
+  const x1 = (x0 + 1) & (NX - 1)
+  const r0 = (yf & (NY - 1)) * NX
+  const r1 = ((yf + 1) & (NY - 1)) * NX
+  return (S[r0 + x0]! * (1 - fx) + S[r0 + x1]! * fx) * (1 - fy) + (S[r1 + x0]! * (1 - fx) + S[r1 + x1]! * fx) * fy
+}
+
+type Field = (x: number, y: number) => number
+
+function fbm(L: Float32Array, t: number, octs: number): Field {
+  const slices: Float32Array[] = []
+  for (let o = 0; o < octs; o++) slices.push(slice(L, t * (1 + 0.5 * o) + 5.7 * o))
+  const tot = octs === 2 ? 0.75 : 0.875
+  const [s0, s1, s2] = slices as [Float32Array, Float32Array, Float32Array | undefined]
+  if (!s2) return (x, y) => (0.5 * noise(s0, x, y) + 0.25 * noise(s1, x * 2 + 17.3, y * 2 + 9.1)) / tot
+  return (x, y) => (0.5 * noise(s0, x, y) + 0.25 * noise(s1, x * 2 + 17.3, y * 2 + 9.1) + 0.125 * noise(s2, x * 4 + 34.6, y * 4 + 18.2)) / tot
 }
 
 function sstep(a: number, b: number, x: number): number {
@@ -73,28 +72,62 @@ function mirror(i: number, n: number): number {
   return i
 }
 
+interface Taps { k: Float32Array; r: number; ix: Int32Array; rows: Float32Array }
+const taps = new Map<string, Taps>()
+
+function tapsFor(sigma: number, w: number, h: number): Taps {
+  const key = sigma + ' ' + w + ' ' + h
+  let t = taps.get(key)
+  if (!t) {
+    const k = kernel(sigma)
+    const r = (k.length - 1) / 2
+    const ix = new Int32Array(w + 2 * r)
+    for (let i = 0; i < ix.length; i++) ix[i] = mirror(i - r, w)
+    const rows = new Float32Array(h * h)
+    for (let y = 0; y < h; y++) for (let j = 0; j < k.length; j++) rows[y * h + mirror(y + j - r, h)] = rows[y * h + mirror(y + j - r, h)]! + k[j]!
+    t = { k, r, ix, rows }
+    taps.set(key, t)
+  }
+  return t
+}
+
 export function blur(src: Float32Array, w: number, h: number, sigma: number): Float32Array {
-  const k = kernel(sigma)
-  const r = (k.length - 1) / 2
-  const mid = new Float32Array(w * h)
+  const { k, r, ix, rows } = tapsFor(sigma, w, h)
   const out = new Float32Array(w * h)
-  const ix = new Int32Array(w + 2 * r)
-  for (let i = 0; i < ix.length; i++) ix[i] = mirror(i - r, w)
-  const iy = new Int32Array(h + 2 * r)
-  for (let i = 0; i < iy.length; i++) iy[i] = mirror(i - r, h)
+  let ya = h
+  let yb = -1
+  let xa = w
+  let xb = -1
   for (let y = 0; y < h; y++) {
-    const row = y * w
     for (let x = 0; x < w; x++) {
+      if (src[y * w + x] === 0) continue
+      if (y < ya) ya = y
+      yb = y
+      if (x < xa) xa = x
+      if (x > xb) xb = x
+    }
+  }
+  if (yb < 0) return out
+  const ca = Math.max(0, xa - r)
+  const cb = Math.min(w - 1, xb + r)
+  const n = cb - ca + 1
+  const mid = new Float32Array((yb - ya + 1) * n)
+  for (let y = ya; y <= yb; y++) {
+    const row = y * w
+    const to = (y - ya) * n
+    for (let x = ca; x <= cb; x++) {
       let s = 0
       for (let j = 0; j < k.length; j++) s += k[j]! * src[row + ix[x + j]!]!
-      mid[row + x] = s
+      mid[to + x - ca] = s
     }
   }
   for (let y = 0; y < h; y++) {
-    for (let x = 0; x < w; x++) {
-      let s = 0
-      for (let j = 0; j < k.length; j++) s += k[j]! * mid[iy[y + j]! * w + x]!
-      out[y * w + x] = s
+    const at = y * w + ca
+    for (let yy = ya; yy <= yb; yy++) {
+      const wt = rows[y * h + yy]!
+      if (wt === 0) continue
+      const from = (yy - ya) * n
+      for (let x = 0; x < n; x++) out[at + x] = out[at + x]! + wt * mid[from + x]!
     }
   }
   return out
@@ -151,20 +184,25 @@ export class Haze {
     const out = this.data
     const alpha = new Float32Array(gw * gh)
     const tt = t * 0.26 + ci * 2.3
+    const fWarp = fbm(N3, t * 0.09 + ci * 3.1, 2)
+    const fCloud = fbm(N0, tt, 3)
+    const fHue = fbm(N1, tt * 0.8, 2)
+    const fThread = fbm(N2, tt * 1.2, 3)
+    const fEdge = fbm(N4, t * 0.2 + ci, 2)
     for (let gy = 0; gy < gh; gy++) {
       const V = gy / GRID_EM
       for (let gx = 0; gx < gw; gx++) {
         const U = gx / GRID_EM
         const at = gy * gw + gx
-        const warp = fbm(N3, U * 0.13, V * 0.3, t * 0.09 + ci * 3.1, 2) - 0.5
+        const warp = fWarp(U * 0.13, V * 0.3) - 0.5
         const X = U * 0.3 - t * 0.075 + 1.9 * warp + ci * 7.7
         const Y = V * 0.8 + 1.1 * warp
-        const n1 = fbm(N0, X, Y, tt, 3)
+        const n1 = fCloud(X, Y)
         const cloud = 0.3 + 0.7 * sstep(0.3, 0.76, n1)
-        const q = (U * 0.045 + t * 0.022 + ci * 0.37 + 0.35 * (fbm(N1, X * 0.6 + 31.0, Y * 0.7, tt * 0.8, 2) - 0.5)) * 2 * Math.PI
+        const q = (U * 0.045 + t * 0.022 + ci * 0.37 + 0.35 * (fHue(X * 0.6 + 31.0, Y * 0.7) - 0.5)) * 2 * Math.PI
         const kb = 0.5 + 0.5 * Math.cos(q)
         const km = 0.5 + 0.5 * Math.cos(q - 2.3)
-        const n2 = fbm(N2, X * 1.7 + 63.0, Y * 1.9, tt * 1.2, 3)
+        const n2 = fThread(X * 1.7 + 63.0, Y * 1.9)
         const thread = clip(1 - Math.abs(n2 - 0.5) * 9.0) ** 2 * sstep(0.35, 0.7, n1)
         const s = S[at]!
         const hv = (1 - 0.75 * kb) * (1 - 0.7 * km)
@@ -176,7 +214,7 @@ export class Haze {
         r = clip(r * k)
         g = clip(g * k)
         b = clip(b * k)
-        const edge = fbm(N4, U * 0.26 - t * 0.05, V * 0.7, t * 0.2 + ci, 2)
+        const edge = fEdge(U * 0.26 - t * 0.05, V * 0.7)
         const a = Math.min(A_MAX, A_CORE * sstep(0.06, 0.52, core[at]! * (0.8 + 0.4 * edge)) + A_WIDE * sstep(0.0, 0.6, wide[at]!) * (0.35 + 0.95 * cloud) + 0.1 * s)
         alpha[at] = a
         out[at * 4] = r
